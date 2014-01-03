@@ -64,7 +64,7 @@ void ScanDir( long dirID, short VRefNum, Boolean recurse)
 	CInfoPBRec		info;
 	FSSpec			spec;
 	
-	if( remonte) return;
+	if (remonte) return;
 	
 	info.hFileInfo.ioNamePtr = asc_WorkStr;
 	info.hFileInfo.ioVRefNum = VRefNum;
@@ -83,7 +83,7 @@ void ScanDir( long dirID, short VRefNum, Boolean recurse)
 		
 		if(	OpenableFile( info.hFileInfo.ioFlFndrInfo.fdType, &spec))
 		{
-			if( info.hFileInfo.ioFlFndrInfo.fdType != 'sTAT' && info.hFileInfo.ioFlFndrInfo.fdType != 'STCf')
+			if (info.hFileInfo.ioFlFndrInfo.fdType != 'sTAT' && info.hFileInfo.ioFlFndrInfo.fdType != 'STCf')
 				AddMODList( 	false,
 						   info.hFileInfo.ioNamePtr,
 						   info.hFileInfo.ioVRefNum,
@@ -95,7 +95,7 @@ void ScanDir( long dirID, short VRefNum, Boolean recurse)
 		}
 		
 		GetKeys( km);
-		if( IsPressed( 0x37) && IsPressed( 0x2F)) {remonte = true;	break;}
+		if (IsPressed( 0x37) && IsPressed( 0x2F)) {remonte = true;	break;}
 	}
 }
 
@@ -116,7 +116,7 @@ void PathNameFromDirID(long dirID, short vRefNum, StringPtr fullPathName)
 		block.dirInfo.ioFDirIndex = -1;
 		block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
 		err = PBGetCatInfoSync(&block);
-		if( fullPathName[ 0] < 200)
+		if (fullPathName[ 0] < 200)
 		{
 			pstrcat(directoryName, (StringPtr)"\p: ");//\r
 			pstrinsert(fullPathName, directoryName);

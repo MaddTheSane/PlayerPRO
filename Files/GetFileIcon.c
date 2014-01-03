@@ -60,7 +60,7 @@ pascal OSErr GetFileIcon(
 
 	*theSuite = NULL;
 
-	if( IsVolEjected(thing->vRefNum) )
+	if (IsVolEjected(thing->vRefNum) )
 	{
 		err = volOffLinErr;
 	}
@@ -72,9 +72,9 @@ pascal OSErr GetFileIcon(
 		cpb.hFileInfo.ioFDirIndex	= 0;
 		err = PBGetCatInfoSync( &cpb );
 
-		if( !err )
+		if (!err )
 		{
-			if( (cpb.hFileInfo.ioFlAttrib & ioDirMask) == 0)	// file
+			if ((cpb.hFileInfo.ioFlAttrib & ioDirMask) == 0)	// file
 			{
 				if(cpb.hFileInfo.ioFlFndrInfo.fdFlags & kHasCustomIcon)
 				{
@@ -139,9 +139,9 @@ OSErr	GetCustomFileIcon(
 	else
 	{
 		err = GetResourceIcons(theSuite, kCustomIconResource, iconSelector);
-		if( !err )
+		if (!err )
 		{
-			if( IsSuiteEmpty( *theSuite ) )
+			if (IsSuiteEmpty( *theSuite ) )
 			{
 				err = GetResourceIcons(theSuite, kVolumeAliasIconResource, iconSelector);
 			}
@@ -175,7 +175,7 @@ OSErr	GetNormalFileIcon(
 	iconID = FindGenericIconID(cpb->hFileInfo.ioFlFndrInfo.fdType, &inFinder );
 	saveResFile = CurResFile();
 
-	if( inFinder )
+	if (inFinder )
 	{
 		FindFolder(kOnSystemDisk, kSystemFolderType, kDontCreateFolder, &sysVRefNum, &sysDirID);
 
@@ -202,7 +202,7 @@ OSErr	GetNormalFileIcon(
 		if(getData.DTRefNum != 0)	// the right icons are in some desktop
 		{
 			err = NewIconSuite( theSuite );
-			if( !err )
+			if (!err )
 			{
 				getData.fileCreator	= cpb->hFileInfo.ioFlFndrInfo.fdCreator;
 				getData.fileType	= cpb->hFileInfo.ioFlFndrInfo.fdType;
@@ -215,7 +215,7 @@ OSErr	GetNormalFileIcon(
 				DisposeIconActionUPP( getIconProcPtr );
 			}
 		}
-		if( (getData.DTRefNum == 0) || IsSuiteEmpty( *theSuite ) )
+		if ((getData.DTRefNum == 0) || IsSuiteEmpty( *theSuite ) )
 		{
 			UseResFile( 0 );
 			err = GetResourceIcons(theSuite, iconID, iconSelector);
@@ -235,7 +235,7 @@ void GetFinderFilename(
 	StringPtr       _lowMemFinderName;
 
 	_lowMemFinderName = LMGetFinderName();
-	if( (_lowMemFinderName != (StringPtr )nil) && (_lowMemFinderName[0] > 0))
+	if ((_lowMemFinderName != (StringPtr )nil) && (_lowMemFinderName[0] > 0))
 		BlockMoveData(_lowMemFinderName, _finderFilename, _lowMemFinderName[0]+1);
 	else
 		BlockMoveData(_defaultFinderFilename, _finderFilename, _defaultFinderFilename[0]+1);
@@ -257,7 +257,7 @@ void GetFinderFilename(
 	data = (GetIconData *)yourDataPtr;
 	*theIcon = NewHandle( kLarge8BitIconSize );
 
-	if( !(*theIcon) )
+	if (!(*theIcon) )
 	{
 		err = memFullErr;
 	}
@@ -339,7 +339,7 @@ void GetFinderFilename(
 		for(vpb.ioVolIndex = 1; PBXGetVolInfoSync( &vpb) == noErr; ++vpb.ioVolIndex) {
 			if(vpb.ioVRefNum == firstVRefNum)
 				continue;
-			if( InOneDesktop(vpb.ioVRefNum, fileCreator, &DTRefNum) )
+			if (InOneDesktop(vpb.ioVRefNum, fileCreator, &DTRefNum) )
 				break;
 		}
 	}
@@ -381,7 +381,7 @@ void GetFinderFilename(
 		return( retVal );
 
 	err = PBDTGetPath( &deskRec );
-	if( !err )
+	if (!err )
 	{
 		/*	We want to ignore any non-icon data, such as the 'paul'
 			item that is used for drag-and-drop. */
@@ -522,7 +522,7 @@ pascal OSErr Get1IconSuite(
 	IconActionUPP	get1IconProc;
 
 	err = NewIconSuite( theSuite );
-	if( !err )
+	if (!err )
 	{
 		get1IconProc = NewIconActionUPP( Get1Icon );
 		err = ForEachIconDo(*theSuite, theSelector, get1IconProc, &theID);

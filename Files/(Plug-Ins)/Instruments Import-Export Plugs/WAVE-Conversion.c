@@ -16,7 +16,7 @@
 
 OSErr TestWAV( PCMWavePtr CC)
 {
-	if( EndianU32_BtoN(CC->ckid) =='RIFF') return noErr;
+	if (EndianU32_BtoN(CC->ckid) =='RIFF') return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -88,7 +88,7 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 					*sampleSize = (*WAVERsrc).wBitsPerSample;
 					*rate		= (*WAVERsrc).nSamplesPerSec;
 					
-					if( (*WAVERsrc).nCannels == 2) *stereo = true;
+					if ((*WAVERsrc).nCannels == 2) *stereo = true;
 					else *stereo = false;
 					
 					if((*WAVERsrc).wFormatTag != 1)
@@ -163,14 +163,14 @@ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug
 	Boolean					dataRefWasChanged;
 	
 	iErr = EnterMovies();
-	if( iErr)
+	if (iErr)
 	{
 		return -1;
 	}
 	
 	myCursH = GetCursor( 357);
 	
-	if( myCursH == NULL) Debugger();
+	if (myCursH == NULL) Debugger();
 	DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 	watchCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 	
@@ -184,13 +184,13 @@ OSErr ConvertDataToWAVE( FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug
 	
 	canceled = FALSE;
 	
-	if( !canceled && iErr == noErr)
+	if (!canceled && iErr == noErr)
 	{
 		short tmpvRef;
 		long tmpDirID;
 		
 		iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tmpvRef, &tmpDirID);
-		if( iErr == noErr)
+		if (iErr == noErr)
 		{
 			iErr = FSMakeFSSpec(tmpvRef, tmpDirID, file.name, newfile);
 			/////////////////////////////////////////////////

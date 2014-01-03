@@ -80,7 +80,7 @@ pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRe
 	Point				theMouse, localMouse, theCell;
 	Rect				tempRect, caRect;
 
-	if( !mainSystemDrag) return noErr;
+	if (!mainSystemDrag) return noErr;
 
 	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return( noErr);
 
@@ -117,7 +117,7 @@ pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRe
 			
 			GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
 
-			if( PtInRect( localMouse, &caRect))
+			if (PtInRect( localMouse, &caRect))
 			{
 				RectRgn(theRgn = NewRgn(), &caRect);
 				
@@ -164,7 +164,7 @@ pascal OSErr MyReceiveTools(WindowPtr theWindow, void* handlerRefCon, DragRefere
 	AEDesc				target, listElem, fileList;
 	//
 
-	if( !mainSystemDrag) return dragNotAcceptedErr;
+	if (!mainSystemDrag) return dragNotAcceptedErr;
 
 	SetPortWindowPort(theWindow);
 	
@@ -212,7 +212,7 @@ pascal OSErr MyReceiveTools(WindowPtr theWindow, void* handlerRefCon, DragRefere
 			AECreateDesc(typeFSS, (Ptr) &myFlavor.fileSpec, sizeof( myFlavor.fileSpec), &listElem);
 			
 			iErr = AEPutDesc( &fileList, 0, &listElem);
-			if( iErr) return iErr;
+			if (iErr) return iErr;
 			
 			AEDisposeDesc( &listElem);
 			
@@ -230,7 +230,7 @@ pascal OSErr MyReceiveTools(WindowPtr theWindow, void* handlerRefCon, DragRefere
 					kAEDefaultTimeout,
 					NULL,
 					NULL);
-	if( iErr) return iErr;
+	if (iErr) return iErr;
 	
 	SetCursor( GetQDGlobalsArrow( &qdarrow));
 	
@@ -246,11 +246,11 @@ void DrawTimeBar(void)
 		Handle			itemHandle;
 		PenState		penState;
 
-	if( curMusic == NULL) return;
+	if (curMusic == NULL) return;
 	GetPort( &SavePort);
 	SetPortDialogPort( ToolsDlog);
 	
-	if( AppearanceManager)
+	if (AppearanceManager)
 	{
 		SetControlValue( progCntl, (oldTime * 100) / maxTime);
 	}
@@ -260,7 +260,7 @@ void DrawTimeBar(void)
 		InsetRect( &itemRect, 2, 2);
 		i = itemRect.right;
 		itemRect.right = itemRect.left + (long) (oldTime * (long) (itemRect.right - itemRect.left) / maxTime);
-		if( itemRect.right > i) itemRect.right = i;
+		if (itemRect.right > i) itemRect.right = i;
 		
 		GetPenState( &penState);
 		PenPixPat( workPixPat);
@@ -288,14 +288,14 @@ void DoNullTools(void)
 	GetPort( &savePort);
 	SetPortDialogPort( ToolsDlog);
 
-	if( oldPartition != MADDriver->PartitionReader || oldPL != MADDriver->PL)
+	if (oldPartition != MADDriver->PartitionReader || oldPL != MADDriver->PL)
 	{
 		oldPartition	= MADDriver->PartitionReader;
 		oldPL			= MADDriver->PL;
 		
-		if( oldPL < curMusic->header->numPointers)
+		if (oldPL < curMusic->header->numPointers)
 		{
-			if( oldTime != (TimeScanPtr[ oldPL])[ oldPartition])
+			if (oldTime != (TimeScanPtr[ oldPL])[ oldPartition])
 			{
 				DateTimeRec		dtrp;
 				Str255			aStr, bStr;
@@ -328,22 +328,22 @@ void DoNullTools(void)
 
 if ((theEvent.modifiers & alphaLock) !=0)
 {
-	if( PreviousLoop != true) tro = true;
+	if (PreviousLoop != true) tro = true;
 
 	PreviousLoop = true;
 }
 else
 {
-	if( PreviousLoop != false) tro = false;
+	if (PreviousLoop != false) tro = false;
 
 	PreviousLoop = false;
 }
 
-if( LoopCntlState != tro)
+if (LoopCntlState != tro)
 {
 	LoopCntlState = tro;
 	
-	if( LoopCntlState)
+	if (LoopCntlState)
 	{
 		HiliteControl( LoopCntl, kControlButtonPart);
 		MADDriver->JumpToNextPattern = false;
@@ -394,7 +394,7 @@ void UpdateToolsWindow( DialogPtr	GetSelection)
 		
  		DrawTimeBar();
  		
-		if( !AppearanceManager)
+		if (!AppearanceManager)
 		{
 	 		GetDialogItem( ToolsDlog, 10, &itemType, &itemHandle, &itemRect);
 	 		
@@ -431,7 +431,7 @@ void CreateToolsDlog(void)
 	ForeUPP = NewControlActionUPP( myForeAction);
 	BackUPP = NewControlActionUPP( myBackAction);
 	
-	if( AppearanceManager)
+	if (AppearanceManager)
 	{
 		GetDialogItem( ToolsDlog, 10, &itemType, &itemHandle, &itemRect);
 		progCntl = NewControl( 	GetDialogWindow( ToolsDlog),
@@ -539,7 +539,7 @@ void CreateToolsDlog(void)
 	
 	TextFont(4);	TextSize(9);
 	
-	if( DragManagerUse)
+	if (DragManagerUse)
 	{
 		MyTrackingToolsUPP = NewDragTrackingHandlerUPP( MyTrackingTools);
 		MyReceiveToolsUPP = NewDragReceiveHandlerUPP( MyReceiveTools);
@@ -570,7 +570,7 @@ void DoRecord()
 {
 	PianoRecording = !PianoRecording;
 	
-	if( PianoRecording) HiliteControl( RecordCntl, kControlButtonPart);
+	if (PianoRecording) HiliteControl( RecordCntl, kControlButtonPart);
 	else HiliteControl( RecordCntl, 0);
 }
 
@@ -580,7 +580,7 @@ void DoRecule( void)
 	{
 		MADDriver->PartitionReader -= 2;
 		
-		if( MADDriver->PartitionReader < 0 && MADDriver->PL >= 2)
+		if (MADDriver->PartitionReader < 0 && MADDriver->PL >= 2)
 		{
 			MADDriver->PL -= 2;
 			MADDriver->Pat = (curMusic->header)->oPointers[ MADDriver->PL];
@@ -588,7 +588,7 @@ void DoRecule( void)
 			MADDriver->PartitionReader = 62;
 		}
 		
-		if( MADDriver->PartitionReader < 0 ) MADDriver->PartitionReader = 62;
+		if (MADDriver->PartitionReader < 0 ) MADDriver->PartitionReader = 62;
 		
 		oldPartition2 = MADDriver->PartitionReader;
 	}
@@ -596,7 +596,7 @@ void DoRecule( void)
 
 void DoPause(void)
 {
-	if( PianoDlog != NULL) ResetPiano();
+	if (PianoDlog != NULL) ResetPiano();
 	
 	FlushPlugin();
 
@@ -607,7 +607,7 @@ void DoPause(void)
 	MADCleanDriver( MADDriver);	
 //	PurgeVSTEffects();
 	
-	if( thePrefs.GoToStop)
+	if (thePrefs.GoToStop)
 	{
 		MADDriver->Pat = RememberPat;
 		MADDriver->PartitionReader = RememberReader;
@@ -617,9 +617,9 @@ void DoPause(void)
 	HiliteControl( playCntl, 0);
 	HiliteControl( stopCntl, kControlButtonPart);
 	
-	if( MIDIHardwareAlreadyOpen)
+	if (MIDIHardwareAlreadyOpen)
 	{
-		if( MADDriver->DriverSettings.driverMode == MIDISoundDriver)
+		if (MADDriver->DriverSettings.driverMode == MIDISoundDriver)
 		{
 #if MACOS9VERSION
 			OMSAllNotesOff();
@@ -647,7 +647,7 @@ short	newPL, newPartitionReader = 0;
 
 	newPL = MADDriver->PL;
 	newPL++;
-	if( newPL >= curMusic->header->numPointers) newPL--;
+	if (newPL >= curMusic->header->numPointers) newPL--;
 	
 	MADPurgeTrack( MADDriver);
 
@@ -664,7 +664,7 @@ short	newPL, newPartitionReader = 0;
 
 	newPL = MADDriver->PL;
 	newPL--;
-	if( newPL <= 0) newPL = 0;
+	if (newPL <= 0) newPL = 0;
 	
 	MADPurgeTrack( MADDriver);
 
@@ -728,7 +728,7 @@ void DoPlay(void)
 	ScanTime();
 	MADCheckSpeed( curMusic, MADDriver);
 	
-	if( MusicPlayActive == true) return;
+	if (MusicPlayActive == true) return;
 	MusicPlayActive = true;
 
 	RememberPat 		= MADDriver->Pat;
@@ -745,12 +745,12 @@ static Boolean IsPlay;
 
 pascal void myBackAction( ControlHandle theCntl, short ctlPart)
 {
-	if( ctlPart == kControlButtonPart)
+	if (ctlPart == kControlButtonPart)
 	{
-		if( !IsPlay) DoPlay();
+		if (!IsPlay) DoPlay();
 		DoRecule();
 	}
-	else if( !IsPlay) DoPause();
+	else if (!IsPlay) DoPause();
 
 	DoGlobalNull();
 	
@@ -762,12 +762,12 @@ static	Boolean		alreadyReady;
 
 pascal void myForeAction( ControlHandle theCntl, short ctlPart)
 {
-	if( ctlPart == kControlButtonPart)
+	if (ctlPart == kControlButtonPart)
 	{
-		if( !alreadyReady)
+		if (!alreadyReady)
 		{
 			alreadyReady = true;
-			if( IsPlay)
+			if (IsPlay)
 			{
 				MADDriver->VExt = doubleSpeed;
 			//	ChangeSpeed();
@@ -777,10 +777,10 @@ pascal void myForeAction( ControlHandle theCntl, short ctlPart)
 	}
 	else
 	{
-		if( alreadyReady)
+		if (alreadyReady)
 		{
 			alreadyReady = false;
-			if( IsPlay)
+			if (IsPlay)
 			{
 				MADDriver->VExt = doubleSpeed / 2;
 			//	ChangeSpeed();
@@ -813,7 +813,7 @@ void ScanTime()
 	
 	for( i = 0; i < curMusic->header->numPointers; i++)
 	{
-		if( TimeScanPtr[ i] != NULL) DisposePtr( (Ptr) TimeScanPtr[ i]);
+		if (TimeScanPtr[ i] != NULL) DisposePtr( (Ptr) TimeScanPtr[ i]);
 		
 		TimeScanPtr[ i] = (long*) NewPtr( curMusic->partition[ curMusic->header->oPointers[ i]]->header.size * sizeof( long) );
 		
@@ -826,14 +826,14 @@ void ScanTime()
 			for( y = 0; y <  curMusic->header->numChn; y++)
 			{
 				aCmd = GetMADCommand( x, y, curMusic->partition[ curMusic->header->oPointers[ i]]);
-				if( aCmd == NULL) 
+				if (aCmd == NULL) 
 				{
 					MyDebugStr(__LINE__, __FILE__, "Could not find the selected command!");
 					return;
 				}
 				/** SpeedE **/
 				
-				if( aCmd->cmd == speedE)
+				if (aCmd->cmd == speedE)
 				{
 					/** Compute time for this interval **/
 
@@ -842,19 +842,19 @@ void ScanTime()
 					
 					/************************************/
 					
-					if( aCmd->arg < 32)
+					if (aCmd->arg < 32)
 					{
-						if( aCmd->arg != 0) speed = aCmd->arg;
+						if (aCmd->arg != 0) speed = aCmd->arg;
 					}
 					else
 					{
-						if( aCmd->arg != 0) finespeed = aCmd->arg;
+						if (aCmd->arg != 0) finespeed = aCmd->arg;
 					}
 				}
 				
 				/** SkipE **/
 				
-				if( aCmd->cmd == skipE)
+				if (aCmd->cmd == skipE)
 				{
 					for( ; x < curMusic->partition[ curMusic->header->oPointers[ i]]->header.size; x++)
 					{
@@ -916,35 +916,35 @@ void ScanTime()
 			{
 				aCmd = GetMADCommand( x, y, curMusic->partition[ curMusic->header->oPointers[ i]]);
 				
-				if( aCmd->cmd == speedE)
+				if (aCmd->cmd == speedE)
 				{					
-					if( aCmd->arg < 32)
+					if (aCmd->arg < 32)
 					{
-						if( aCmd->arg != 0)
+						if (aCmd->arg != 0)
 						{
-							if( CmdSpeed == false) MADDriver->speed = aCmd->arg;
+							if (CmdSpeed == false) MADDriver->speed = aCmd->arg;
 							CmdSpeed = true;
 						}
 					}
 					else
 					{
-						if( aCmd->arg != 0)
+						if (aCmd->arg != 0)
 						{
-							if( FineFound == false) MADDriver->finespeed = aCmd->arg;
+							if (FineFound == false) MADDriver->finespeed = aCmd->arg;
 							FineFound = true;
 						}
 					}
 				}
 			}
-			if( CmdSpeed == true && FineFound == true) return;
+			if (CmdSpeed == true && FineFound == true) return;
 		}
 		newPartitionReader = 63;
 	}
 		
-	if( dstPL == 0)
+	if (dstPL == 0)
 	{
-		if( !CmdSpeed) 	MADDriver->speed 		= curMusic->header->speed;
-		if( !FineFound) MADDriver->finespeed 	= curMusic->header->tempo;
+		if (!CmdSpeed) 	MADDriver->speed 		= curMusic->header->speed;
+		if (!FineFound) MADDriver->finespeed 	= curMusic->header->tempo;
 	}
 }*/
 
@@ -952,7 +952,7 @@ void DoChangeLoop( void)
 {
 	LoopCntlState = !LoopCntlState;
 	
-	if( LoopCntlState)
+	if (LoopCntlState)
 	{
 		HiliteControl( LoopCntl, kControlButtonPart);
 		MADDriver->JumpToNextPattern = false;
@@ -980,7 +980,7 @@ void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 	switch( whichItem)
 	{
 		case 2:
-			if( MyTrackControl( JumpBeforeCntl, theEvent.where, NULL))
+			if (MyTrackControl( JumpBeforeCntl, theEvent.where, NULL))
 			{
 				DoSearchDown();
 			}
@@ -989,32 +989,32 @@ void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 		case 3:
 			IsPlay = MusicPlayActive;
 			MyTrackControl(BackCntl, theEvent.where, BackUPP);
-			if( !IsPlay) DoPause();
+			if (!IsPlay) DoPause();
 			break;
 			
 		case 44:
-			if( MyTrackControl( RecordCntl, theEvent.where, NULL))
+			if (MyTrackControl( RecordCntl, theEvent.where, NULL))
 			{
 				DoRecord();
 			}
 			break;
 			
 		case 46:
-			if( MyTrackControl( LoopCntl, theEvent.where, NULL))
+			if (MyTrackControl( LoopCntl, theEvent.where, NULL))
 			{
 				DoChangeLoop();
 			}
 			break;
 			
 		case 4:
-			if( MyTrackControl( stopCntl, theEvent.where, NULL))
+			if (MyTrackControl( stopCntl, theEvent.where, NULL))
 			{
 				DoPause();
 			}
 			break;
 			
 		case 5:
-			if( MyTrackControl( playCntl, theEvent.where, NULL))
+			if (MyTrackControl( playCntl, theEvent.where, NULL))
 			{
 				DoPlay();
 			}
@@ -1028,7 +1028,7 @@ void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 			
 			MyTrackControl( ForCntl, theEvent.where, ForeUPP);
 			
-			if( IsPlay)
+			if (IsPlay)
 			{
 				MADDriver->VExt = doubleSpeed / 2;
 				//	ChangeSpeed();
@@ -1037,7 +1037,7 @@ void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 			break;
 			
 		case 7:
-			if( MyTrackControl( JumpNextCntl, theEvent.where, NULL))
+			if (MyTrackControl( JumpNextCntl, theEvent.where, NULL))
 			{
 				DoSearchUp();
 			}
@@ -1053,11 +1053,11 @@ void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 				
 				WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 				
-				if( temp != myPt.h)
+				if (temp != myPt.h)
 				{
 					short i;
 					
-					if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
+					if (myPt.h < itemRect.left) 		myPt.h = itemRect.left;
 					else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
 					
 					temp = myPt.h;

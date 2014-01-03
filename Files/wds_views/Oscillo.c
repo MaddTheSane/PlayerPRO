@@ -115,7 +115,7 @@ Byte	SwitchColorLV( short i)
 	CGrafPtr			oldPort;
 	GDHandle			oldGDeviceH;
 	
-	if( gGWorld == NULL) MyDebugStr( __LINE__, __FILE__, "gGWorld = NULL");
+	if (gGWorld == NULL) MyDebugStr( __LINE__, __FILE__, "gGWorld = NULL");
 	
 	GetGWorld( &oldPort, &oldGDeviceH);
 	SetGWorld( gGWorld, NULL);
@@ -134,7 +134,7 @@ void GetWorkingZone( Rect	*myRect)
 	
 	GetPortBounds( GetDialogPort( OscilloDlog), &caRect);
 	
-	if( OsciType == OutPutAudio) myRect->left = 15;
+	if (OsciType == OutPutAudio) myRect->left = 15;
 	else myRect->left = 0;
 	myRect->right = caRect.right - 15;
 	myRect->top = OsciVStart;
@@ -155,10 +155,10 @@ void AdjustZoomOscillo2( Rect	*vRect)
 	GetWindowStandardState( GetDialogWindow( OscilloDlog), &stdRect);
 	
 	tempA = OsciL 		+ 15;
-	if( thePrefs.osciTile) tempB = OsciVStart 	+ 15 + 1 * (InterText + OsciH);
+	if (thePrefs.osciTile) tempB = OsciVStart 	+ 15 + 1 * (InterText + OsciH);
 	else tempB = OsciVStart 	+ 15 + OsciNo * (InterText + OsciH);
 	
-	if( stdRect.top + tempB > vRect->bottom)
+	if (stdRect.top + tempB > vRect->bottom)
 	{
 		tempB = vRect->bottom - stdRect.top;
 		
@@ -178,7 +178,7 @@ void ComputeCurrentQuickPixMap()
 {
 	long	i, rowBytes = (*osciPixMap[ 0])->rowBytes &0xFFF;
 	
-	if( CurrentQuickPixMap != NULL) DisposePtr( (Ptr) CurrentQuickPixMap);
+	if (CurrentQuickPixMap != NULL) DisposePtr( (Ptr) CurrentQuickPixMap);
 	
 	CurrentQuickPixMap = (long*) NewPtr( sizeof( long) * (*osciPixMap[ 0])->bounds.bottom);
 	
@@ -201,17 +201,17 @@ void SetControlOscillo(void)
 	SetControlMinimum( HControl, 0);
 	SetControlMaximum( HControl, OsciL - (caRect.right - 15));
 	
-	if( gUseControlSize) SetControlViewSize( HControl, (caRect.right - 15));
+	if (gUseControlSize) SetControlViewSize( HControl, (caRect.right - 15));
 	
 	MyMoveControl( VControl, caRect.right -15, OsciVStart);
 	MySizeControl( VControl, 16, caRect.bottom - 14 - OsciVStart);
 	
 	SetControlMinimum( VControl, 0);
 	
-	if( thePrefs.osciTile) SetControlMaximum( VControl, 0);
+	if (thePrefs.osciTile) SetControlMaximum( VControl, 0);
 	else SetControlMaximum( VControl, OsciNo - (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText));
 	
-	if( gUseControlSize) SetControlViewSize( VControl, (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText));
+	if (gUseControlSize) SetControlViewSize( VControl, (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText));
 	
 	ResetOscilloscope();
 }
@@ -231,7 +231,7 @@ void DoGrowOscillo(void)
 	
 	temp.top = OsciVStart + InterText + OsciH + 15;
 	
-	if( thePrefs.osciTile) temp.bottom = OsciVStart + 15 + 1 * (InterText + OsciH);
+	if (thePrefs.osciTile) temp.bottom = OsciVStart + 15 + 1 * (InterText + OsciH);
 	else temp.bottom = OsciVStart + 15 + OsciNo * (InterText + OsciH);
 	
 #if MACOS9VERSION
@@ -242,9 +242,9 @@ void DoGrowOscillo(void)
 #endif
 	
 	lSizeVH = 0;
-	if( theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( OscilloDlog), theEvent.where, &temp);
+	if (theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( OscilloDlog), theEvent.where, &temp);
 	
-	if( lSizeVH != 0)
+	if (lSizeVH != 0)
 	{
 		tempA = LoWord( lSizeVH);
 		tempB = HiWord( lSizeVH);
@@ -254,7 +254,7 @@ void DoGrowOscillo(void)
 		GetPortBounds( GetDialogPort( OscilloDlog), &caRect);
 		
 		tempA = caRect.right;
-		if( tempA > temp.right) tempA = temp.right;
+		if (tempA > temp.right) tempA = temp.right;
 		tempB = caRect.bottom;
 	}
 
@@ -278,7 +278,7 @@ Ptr	TransformationDSP( Ptr thePtr, short i)
 #endif
 	register Byte		bb = 0x80;
 	
-	if( i > AUDIODSPSIZE * 4L) MyDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
+	if (i > AUDIODSPSIZE * 4L) MyDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
 	
 	do
 	{
@@ -296,7 +296,7 @@ Ptr	Transformation8( Ptr thePtr)
 	register short		i = MADDriver->ASCBUFFERReal;
 	
 	
-	if( i > AUDIODSPSIZE * 4L) MyDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
+	if (i > AUDIODSPSIZE * 4L) MyDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
 	
 	do
 	{
@@ -312,7 +312,7 @@ Ptr	Inverse8( register Ptr thePtr, long Size)
 {
 	register short		i = Size;
 	
-	if( i > AUDIODSPSIZE * 4L) MyDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
+	if (i > AUDIODSPSIZE * 4L) MyDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
 	
 	do
 	{
@@ -327,7 +327,7 @@ Ptr	Inverse16( register Ptr thePtr, long Size)
 {
 	register short		i = Size;
 	
-	if( i > AUDIODSPSIZE * 4L) MyDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
+	if (i > AUDIODSPSIZE * 4L) MyDebugStr( __LINE__, __FILE__, "AudioDSPPtr too small");
 	
 	do
 	{
@@ -355,7 +355,7 @@ Ptr GetAudioChannel( Boolean LeftChannel, long Size)
 				case StereoOutPut:
 				case DeluxeStereoOutPut:
 				
-				/*	if( MADDriver->DriverSettings.driverMode == SoundManagerDriver && VMMode == true)
+				/*	if (MADDriver->DriverSettings.driverMode == SoundManagerDriver && VMMode == true)
 					{
 						Ptr	 tempSoundPtr;
 						
@@ -363,7 +363,7 @@ Ptr GetAudioChannel( Boolean LeftChannel, long Size)
 						
 						MADDriver->TheHeader.dbhBufferPtr[ MiniSwitch]->dbUserInfo[ 1] = false;
 						
-						if( LeftChannel) return TransformationDSP( tempSoundPtr + 2, Size);
+						if (LeftChannel) return TransformationDSP( tempSoundPtr + 2, Size);
 						else return TransformationDSP( tempSoundPtr, Size);
 					}
 					else */
@@ -375,9 +375,9 @@ Ptr GetAudioChannel( Boolean LeftChannel, long Size)
 						
 						OscilloPtr = PreviousOscilloPtr;
 						
-						if( LeftChannel == 0)
+						if (LeftChannel == 0)
 						{
-							if( MADDriver->curTime>= TickCount() && lastCurTime != MADDriver->curTime)
+							if (MADDriver->curTime>= TickCount() && lastCurTime != MADDriver->curTime)
 							{
 								short	PreviousCurDrawPtr;
 								
@@ -391,9 +391,9 @@ Ptr GetAudioChannel( Boolean LeftChannel, long Size)
 								VASY:
 								
 								DrawDraw++;
-								if( DrawDraw >= MAXDRAW) DrawDraw = 0;
+								if (DrawDraw >= MAXDRAW) DrawDraw = 0;
 								
-								if( MADDriver->newData[ DrawDraw])
+								if (MADDriver->newData[ DrawDraw])
 								{
 									OscilloPtr = MADDriver->OsciDrawPtr[ DrawDraw];
 									MADDriver->newData[ DrawDraw] = false;
@@ -402,14 +402,14 @@ Ptr GetAudioChannel( Boolean LeftChannel, long Size)
 								{
 									DrawDraw = MADDriver->curDrawPtr;	//PreviousDraw;
 								//	testMAXDRAW++;
-								//	if( testMAXDRAW < MAXDRAW) goto VASY;
+								//	if (testMAXDRAW < MAXDRAW) goto VASY;
 								}
 							}
 						}
 						
 						PreviousOscilloPtr = OscilloPtr;
 						
-						if( LeftChannel) return TransformationDSP( OscilloPtr + 2, Size);
+						if (LeftChannel) return TransformationDSP( OscilloPtr + 2, Size);
 						else return TransformationDSP( OscilloPtr, Size);
 					}
 				break;
@@ -425,7 +425,7 @@ Ptr GetAudioChannel( Boolean LeftChannel, long Size)
 				*/
 				case StereoOutPut:
 				case DeluxeStereoOutPut:
-					if( LeftChannel) return Transformation8( MADDriver->OscilloWavePtr + 1);
+					if (LeftChannel) return Transformation8( MADDriver->OscilloWavePtr + 1);
 					else return Transformation8( MADDriver->OscilloWavePtr);
 				break;
 			}
@@ -452,7 +452,7 @@ Ptr	 tempPtr = (Ptr) -1L;
 		break;
 	}
 	
-	if( LeftChannel) tempPtr = Transformation8( tempPtr + 1);
+	if (LeftChannel) tempPtr = Transformation8( tempPtr + 1);
 	else tempPtr = Transformation8( tempPtr);
 	
 	return tempPtr;
@@ -460,7 +460,7 @@ Ptr	 tempPtr = (Ptr) -1L;
 
 Ptr GetAudioInPut( Boolean LeftChannel, long Size)
 {
-	if( outPutPtr == (Ptr) -1L)
+	if (outPutPtr == (Ptr) -1L)
 	{
 		return GetAudioChannel( false, Size);
 	}
@@ -488,10 +488,10 @@ short		i, *curQuickShort, color, ioffsetH;
 color = 0x1BFF;
 
 i = SIter;
-if( i + offsetH >= VA[ 0].frame.right)
+if (i + offsetH >= VA[ 0].frame.right)
 {
 	i = VA[ 0].frame.right - offsetH - 1;
-	if( i < 0) return;
+	if (i < 0) return;
 	tempPtr2 += SIter - i;
 	tempPtr += SIter - i;
 }
@@ -503,7 +503,7 @@ while( i > 0)
 {
 	thePt.h = i;
 	thePt.v = *tempPtr2 + LocalV;
-	if( PtInRgn( thePt, dlogptrRgn))
+	if (PtInRgn( thePt, dlogptrRgn))
 	{
 		curQuickShort = (short*) CurrentQuickInt[ *tempPtr2];
 		*(curQuickShort + ioffsetH) = 0x0000;
@@ -511,7 +511,7 @@ while( i > 0)
 	
 	*tempPtr2 = ((*tempPtr) >> OsciDD);
 	thePt.v = *tempPtr2 + LocalV;
-	if( PtInRgn( thePt, dlogptrRgn))
+	if (PtInRgn( thePt, dlogptrRgn))
 	{
 		curQuickShort = (short*) CurrentQuickInt[ *tempPtr2];
 		*(curQuickShort + ioffsetH) = color;
@@ -531,10 +531,10 @@ short		i, *curQuickShort, color, ioffsetH;
 color = 0x1BFF;
 
 i = SIter;
-if( i + offsetH >= VA[ 0].frame.right)
+if (i + offsetH >= VA[ 0].frame.right)
 {
 	i = VA[ 0].frame.right - offsetH - 1;
-	if( i < 0) return;
+	if (i < 0) return;
 	tempPtr2 += SIter - i;
 	tempPtr += SIter - i;
 }
@@ -565,10 +565,10 @@ Point		thePt;
 short		i, ioffsetH;
 
 i = SIter;
-if( i + offsetH >= VA[ 0].frame.right)
+if (i + offsetH >= VA[ 0].frame.right)
 {
 	i = VA[ 0].frame.right - offsetH - 1;
-	if( i < 0) return;
+	if (i < 0) return;
 	tempPtr2 += SIter - i;
 	tempPtr += SIter - i;
 }
@@ -580,14 +580,14 @@ while( i > 0)
 {
 	thePt.h = i;
 	thePt.v = *tempPtr2 + LocalV;
-	if( PtInRgn( thePt, dlogptrRgn))
+	if (PtInRgn( thePt, dlogptrRgn))
 	{
 		*(CurrentQuickInt[ *tempPtr2] + ioffsetH) = 0xFF;
 	}
 	
 	*tempPtr2 = ((*tempPtr) >> OsciDD);
 	thePt.v = *tempPtr2 + LocalV;
-	if( PtInRgn( thePt, dlogptrRgn))
+	if (PtInRgn( thePt, dlogptrRgn))
 	{
 		*(CurrentQuickInt[ *tempPtr2] + ioffsetH) = OsciColor;
 	}
@@ -605,10 +605,10 @@ Ptr			*CurrentQuickInt = CurrentQuick;
 short		i, ioffsetH;
 
 i = SIter;
-if( i + offsetH >= VA[ 0].frame.right)
+if (i + offsetH >= VA[ 0].frame.right)
 {
 	i = VA[ 0].frame.right - offsetH - 1;
-	if( i < 0) return;
+	if (i < 0) return;
 	tempPtr2 += SIter - i;
 	tempPtr += SIter - i;
 }
@@ -663,7 +663,7 @@ void C8BitOsciPixMap( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 	{
 		i = (*osciPixMap[ 0])->bounds.bottom - 2;
 		pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ 1] + (x * ((*osciPixMap[ 0])->bounds.right - (*osciPixMap[ 0])->bounds.left)) / 4;
-		if( x == 4) pixMapPtr--;
+		if (x == 4) pixMapPtr--;
 		while( i-- > 0) *(pixMapPtr + CurrentQuickPixMap[ i]) = 0xE5;
 	}
 	
@@ -692,7 +692,7 @@ register 	long			loopD3, loopD2;
 register 	Ptr				outPtr, oPtr;
 register	unsigned short	dColor = (color << 8) + color;
 
-if( x1 < x2)
+if (x1 < x2)
 {
 	deltaX = x2;
 	x2 = x1;
@@ -705,14 +705,14 @@ if( x1 < x2)
 
 deltaX = x1 - x2;
 deltaY = y1 - y2;
-if( deltaY < 0) deltaY = -deltaY;
+if (deltaY < 0) deltaY = -deltaY;
 
 oPtr = src + CurrentQuickPixMap[ y1] + x1;
 outPtr = src + CurrentQuickPixMap[ y2] + x2;
 
-if( y1 < y2) row = -row;
+if (y1 < y2) row = -row;
 
-if( deltaY >= deltaX)
+if (deltaY >= deltaX)
 {
 	loopD3 = loopD2 = deltaY>>1;
 
@@ -728,7 +728,7 @@ if( deltaY >= deltaX)
 		
 		loopD2 -= deltaX;
 	
-		if( loopD2 < 0)
+		if (loopD2 < 0)
 		{
 			outPtr ++;
 			oPtr --;
@@ -753,7 +753,7 @@ else
 		
 		loopD2      -= deltaY;
 
-		if( loopD2 < 0)
+		if (loopD2 < 0)
 		{
 			outPtr += row;
 			oPtr   -= row;
@@ -806,7 +806,7 @@ void C8BitOsciPixMapLine( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 	{
 		i = (*osciPixMap[ 0])->bounds.bottom - 2;
 		pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ 1] + (x * ((*osciPixMap[ 0])->bounds.right - (*osciPixMap[ 0])->bounds.left)) / 4;
-		if( x == 4) pixMapPtr--;
+		if (x == 4) pixMapPtr--;
 		while( i-- > 0) *(pixMapPtr + CurrentQuickPixMap[ i]) = 0xE5;
 	}
 	
@@ -844,7 +844,7 @@ Ptr			tempPtrCopy;
 short		realno = no;
 Rect		caRect, inRect;
 	
-	if( thePrefs.osciTile)
+	if (thePrefs.osciTile)
 	{
 		no = 0;
 	}
@@ -856,7 +856,7 @@ Rect		caRect, inRect;
 	
 	GetPortBounds( GetDialogPort( OscilloDlog), &caRect);
 	
-	if( OsciType == OutPutAudio) tempRect.left	= 16;
+	if (OsciType == OutPutAudio) tempRect.left	= 16;
 	else tempRect.left = 0;
 	tempRect.right	=  caRect.right-16;
 	
@@ -865,18 +865,18 @@ Rect		caRect, inRect;
 	
 	dstRect = tempRect;
 	
-	if( osciPixMap[ no] != NULL)
+	if (osciPixMap[ no] != NULL)
 	{
 		for( i = 0; i < SIter; i++)
 		{
-			if( gmax < osciPtr->SavePtr[ i]) gmax = osciPtr->SavePtr[ i];
-			if( gmin > osciPtr->SavePtr[ i]) gmin = osciPtr->SavePtr[ i];
+			if (gmax < osciPtr->SavePtr[ i]) gmax = osciPtr->SavePtr[ i];
+			if (gmin > osciPtr->SavePtr[ i]) gmin = osciPtr->SavePtr[ i];
 		}
 		
 		//
 		
 		
-		if( thePrefs.OscilloLine) C8BitOsciPixMapLine(	(Byte*) GetAudioSource( realno) + OsciOffSet,
+		if (thePrefs.OscilloLine) C8BitOsciPixMapLine(	(Byte*) GetAudioSource( realno) + OsciOffSet,
 							(Byte*) osciPtr->SavePtr,
 							(*osciPixMap[ no])->baseAddr);
 		
@@ -890,14 +890,14 @@ Rect		caRect, inRect;
 		
 		for( i = 0; i < SIter; i++)
 		{
-			if( gmax < osciPtr->SavePtr[ i]) gmax = osciPtr->SavePtr[ i];
-			if( gmin > osciPtr->SavePtr[ i]) gmin = osciPtr->SavePtr[ i];
+			if (gmax < osciPtr->SavePtr[ i]) gmax = osciPtr->SavePtr[ i];
+			if (gmin > osciPtr->SavePtr[ i]) gmin = osciPtr->SavePtr[ i];
 		}
 		
 		inRect = (*osciPixMap[ no])->bounds;
 		
 		
-		if( lastCall || !thePrefs.osciTile)
+		if (lastCall || !thePrefs.osciTile)
 		{
 			gmax++;
 			
@@ -927,21 +927,21 @@ Rect		caRect, inRect;
 		}
 		
 		// compute level
-			if( OsciType == OutPutAudio)
+			if (OsciType == OutPutAudio)
 			{
-					if( realno != 0) soundlevel = MADDriver->levelR;
+					if (realno != 0) soundlevel = MADDriver->levelR;
 					else soundlevel = MADDriver->levelL;
 					
 					soundlevel = (soundlevel * (long) (OsciH-3)) / 65536;
 					
-					if( !thePrefs.osciTile)
+					if (!thePrefs.osciTile)
 					{
 						inRect.left  = 2;
 						inRect.right = 13;
 					}
 					else
 					{
-						if( realno == 0)
+						if (realno == 0)
 						{
 							inRect.left  = 2;
 							inRect.right = 7;
@@ -955,23 +955,23 @@ Rect		caRect, inRect;
 					inRect.bottom = soundlevel;
 					inRect.top = osci[ no].VPos +3;
 					inRect.bottom = osci[ no].VPos + OsciH -3 - soundlevel;
-					if( inRect.bottom < inRect.top) inRect.bottom = inRect.top;
+					if (inRect.bottom < inRect.top) inRect.bottom = inRect.top;
 					ForeColor( blackColor);
 					PaintRect( &inRect);
 					
 					RGBForeColor( &myBlueColor);
-					if( realno != 0) {if( MADDriver->clipR) ForeColor( redColor);}
-					else {if( MADDriver->clipL) ForeColor( redColor);}
+					if (realno != 0) {if (MADDriver->clipR) ForeColor( redColor);}
+					else {if (MADDriver->clipL) ForeColor( redColor);}
 					
-					if( realno != 0)
+					if (realno != 0)
 					{
 						timeLevelR--;
 						maxLevelR -= 1;
-					//	if( timeLevelR < 0) {timeLevelR = 60; maxLevelR = soundlevel;}
-						if( soundlevel > maxLevelR) {maxLevelR = soundlevel;  timeLevelR = 60;}
+					//	if (timeLevelR < 0) {timeLevelR = 60; maxLevelR = soundlevel;}
+						if (soundlevel > maxLevelR) {maxLevelR = soundlevel;  timeLevelR = 60;}
 						
 						temp = osci[ no].VPos + OsciH -3 - maxLevelR;
-						if( temp < inRect.top) temp = inRect.top;
+						if (temp < inRect.top) temp = inRect.top;
 						
 						MoveTo( inRect.left, temp);
 						LineTo( inRect.right-1, temp);
@@ -980,11 +980,11 @@ Rect		caRect, inRect;
 					{
 						timeLevelL--;
 						maxLevelL -= 1;
-					//	if( timeLevelL < 0) {timeLevelL = 60; fallL = 1;	maxLevelL = soundlevel;}
-						if( soundlevel > maxLevelL) {maxLevelL = soundlevel; timeLevelL = 60;}
+					//	if (timeLevelL < 0) {timeLevelL = 60; fallL = 1;	maxLevelL = soundlevel;}
+						if (soundlevel > maxLevelL) {maxLevelL = soundlevel; timeLevelL = 60;}
 						
 						temp = osci[ no].VPos + OsciH -3 - maxLevelL;
-						if( temp < inRect.top) temp = inRect.top;
+						if (temp < inRect.top) temp = inRect.top;
 						
 						MoveTo( inRect.left, temp);
 						LineTo( inRect.right-1, temp);
@@ -1018,14 +1018,14 @@ GrafPtr			myPort;
 Rect			caRect, tempRect, CursRect;
 Handle			itemHandle;
 
-	if( OscilloDlog == NULL) return;
+	if (OscilloDlog == NULL) return;
 	
 	// ******* ******* ******* ******* ******* ******* ******* *******
 	
 	
 	// ******* ******* ******* ******* ******* ******* ******* *******
 	
-	if( TickCount() <= oldNullTicks) return;
+	if (TickCount() <= oldNullTicks) return;
 	oldNullTicks = TickCount()+1;
 	
 	GetPort( &myPort);
@@ -1033,22 +1033,22 @@ Handle			itemHandle;
 	
 	GetPortBounds( GetDialogPort( OscilloDlog), &caRect);
 	
-	if( thePrefs.osciTile) OsciSee = OsciNo-1;
+	if (thePrefs.osciTile) OsciSee = OsciNo-1;
 	else OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
 	
 	gmin = 512;
 	gmax = 0;
 	
-/*	if( MADDriver->DriverSettings.driverMode == SoundManagerDriver)
+/*	if (MADDriver->DriverSettings.driverMode == SoundManagerDriver)
 	{
-		if( MiniSwitch == 0)
+		if (MiniSwitch == 0)
 		{
-			if( MADDriver->TheHeader.dbhBufferPtr[ 1]->dbUserInfo[ 1] == true) MiniSwitch = 1;
+			if (MADDriver->TheHeader.dbhBufferPtr[ 1]->dbUserInfo[ 1] == true) MiniSwitch = 1;
 			else goto End;
 		}
 		else
 		{
-			if( MADDriver->TheHeader.dbhBufferPtr[ 0]->dbUserInfo[ 1] == true) MiniSwitch = 0;
+			if (MADDriver->TheHeader.dbhBufferPtr[ 0]->dbUserInfo[ 1] == true) MiniSwitch = 0;
 			else goto End;
 		}
 	}*/
@@ -1056,7 +1056,7 @@ Handle			itemHandle;
 	for( i = GetControlValue( VControl); i < GetControlValue( VControl) + OsciSee; i++)
 		DrawOscilloscope2( &osci[ i], i, false);
 	
-	if( thePrefs.osciTile)
+	if (thePrefs.osciTile)
 	{
 		DrawOscilloscope2( &osci[ i], i, true);
 	}
@@ -1089,7 +1089,7 @@ void FillInterText( Rect *tempRect, short i)
 	
 	pStrcat( aStr, osci[ i].Name);
 	pStrcat( aStr, "\p (");
-	if( thePrefs.osciTile) NumToString( OsciNo, bStr);
+	if (thePrefs.osciTile) NumToString( OsciNo, bStr);
 	else NumToString( i + 1, bStr);
 	pStrcat( aStr, bStr);
 	pStrcat( aStr, "\p)");
@@ -1143,22 +1143,22 @@ void  UpdateOscilloWindow(DialogPtr GetSelection)
 		
 		GetPortBounds( GetDialogPort( OscilloDlog), &caRect);
 		
-		if( thePrefs.osciTile) OsciSee = 1;			// OscinO
+		if (thePrefs.osciTile) OsciSee = 1;			// OscinO
 		else OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
 		
 		for( i = GetControlValue( VControl); i < GetControlValue( VControl) + OsciSee; i++)
 		{
-			if( OsciType == OutPutAudio) tempRect.left	= 15;
+			if (OsciType == OutPutAudio) tempRect.left	= 15;
 			else tempRect.left	= 0;
 			tempRect.right	= caRect.right - 15;
 			
 			
 			
-			if( thePrefs.osciTile) osci[ i].VPos = OsciVStart;
+			if (thePrefs.osciTile) osci[ i].VPos = OsciVStart;
 			else osci[ i].VPos = tempRect.top;
 			
 			BackColor( whiteColor);
-			if( thePrefs.osciTile)
+			if (thePrefs.osciTile)
 				CopyBits (  (BitMap *) (*osciPixMap[ 0]),
 					(BitMap*) *GetPortPixMap(GetDialogPort( OscilloDlog)),
 					&(*osciPixMap[ 0])->bounds,
@@ -1175,7 +1175,7 @@ void  UpdateOscilloWindow(DialogPtr GetSelection)
 			RGBBackColor( &theColor);
 			
 			// Sound Level
-			if( OsciType == OutPutAudio)
+			if (OsciType == OutPutAudio)
 			{
 				inRect.left  = 0;
 				inRect.right = 15;
@@ -1232,7 +1232,7 @@ long			lRefCon;
 short			CurWin, maxValue, minValue, curVal, sVal, OsciSee;
 Rect			caRect, aRect;
 
-if( ctlPart <= 0) return;
+if (ctlPart <= 0) return;
 
 lRefCon = GetControlReference( theControl);
 maxValue = GetControlMaximum( theControl);
@@ -1246,27 +1246,27 @@ OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
 	switch( ctlPart)
 	{
 		case kControlUpButtonPart:
-			if( lRefCon == hID) curVal -= OSCILLODEF;
+			if (lRefCon == hID) curVal -= OSCILLODEF;
 			else curVal -= 1;
-			if( curVal < minValue) curVal = minValue;
+			if (curVal < minValue) curVal = minValue;
 		break;
 		
 		case kControlDownButtonPart:
-			if( lRefCon == hID) curVal += OSCILLODEF;
+			if (lRefCon == hID) curVal += OSCILLODEF;
 			else curVal += 1;
-			if( curVal > maxValue) curVal = maxValue;
+			if (curVal > maxValue) curVal = maxValue;
 		break;
 		
 		case kControlPageUpPart:
-			if( lRefCon == hID) curVal -= SIter;
+			if (lRefCon == hID) curVal -= SIter;
 			else curVal -= OsciSee;
-			if( curVal < minValue) curVal = minValue;
+			if (curVal < minValue) curVal = minValue;
 		break;
 		
 		case kControlPageDownPart:
-			if( lRefCon == hID) curVal += SIter;
+			if (lRefCon == hID) curVal += SIter;
 			else curVal += OsciSee;
-			if( curVal > maxValue) curVal = maxValue;
+			if (curVal > maxValue) curVal = maxValue;
 		break;
 		
 		case kControlIndicatorPart:
@@ -1277,9 +1277,9 @@ OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
 	
 	SetControlValue( theControl, curVal);
 	
-	if( sVal != curVal)
+	if (sVal != curVal)
 	{
-		if( lRefCon == vID)
+		if (lRefCon == vID)
 		{
 			GetWorkingZone( &aRect);
 			EraseRect( &aRect);
@@ -1295,279 +1295,290 @@ OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
 	else DoGlobalNull();
 }
 
-void DoItemPressOscillo( short whichItem, DialogPtr whichDialog)	/* Item hit ID to pass to Dialog function */
+void DoItemPressOscillo(short whichItem, DialogPtr whichDialog)	/* Item hit ID to pass to Dialog function */
 {
-		Cell				theCell;
-		long				mresult;
- 		short				temp, bogus, itemType, ctlPart, curSelec;
- 		Rect				tempRect;
- 		Handle				itemHandle;
- 		GrafPtr				SavePort;
- 		ControlHandle		theControl;
- 		Str255				aStr;
- 		Point				myPt;
-		ControlActionUPP	MyControlUPP;
+	Cell				theCell;
+	long				mresult;
+	short				temp, bogus, itemType, ctlPart, curSelec;
+	Rect				tempRect;
+	Handle				itemHandle;
+	GrafPtr				SavePort;
+	ControlHandle		theControl;
+	Str255				aStr;
+	Point				myPt;
+	ControlActionUPP	MyControlUPP;
+	
+	GetPort( &SavePort);
+	SetPortDialogPort( OscilloDlog);
+	
+	if (theEvent.what == mouseDown)
+	{
+		myPt = theEvent.where;
+		GlobalToLocal(&myPt);
 		
- 		GetPort( &SavePort);
- 		SetPortDialogPort( OscilloDlog);
- 
-	 	if (theEvent.what == mouseDown)
-		{
-			myPt = theEvent.where;
-			GlobalToLocal(&myPt);
-			
-			theControl = NULL;
-			if( TestControl(  HControl, myPt)) theControl = HControl;
-			if( TestControl(  VControl, myPt)) theControl = VControl;
-			
-			if( theControl == HControl || theControl == VControl)
+		theControl = NULL;
+		if (TestControl(HControl, myPt))
+			theControl = HControl;
+		if (TestControl(VControl, myPt))
+			theControl = VControl;
+		
+		if (theControl == HControl || theControl == VControl) {
+			/*	if (ctlPart == kControlIndicatorPart && gUseControlSize == false)
+			 {
+			 bogus = TrackControl( theControl, myPt, NULL);
+			 if (bogus != 0)
+			 {
+			 Rect aRect;
+			 
+			 GetWorkingZone( &aRect);
+			 EraseRect( &aRect);
+			 InvalWindowRect( GetDialogWindow( theDialogControl), &aRect);
+			 UpdateOscilloWindow( theDialogControl);
+			 }
+			 }
+			 else if (ctlPart > 0)*/
 			{
-			/*	if( ctlPart == kControlIndicatorPart && gUseControlSize == false)
-				{
-					bogus = TrackControl( theControl, myPt, NULL);
-					if( bogus != 0)
-					{
-						Rect aRect;
-						
-						GetWorkingZone( &aRect);
-						EraseRect( &aRect);
-						InvalWindowRect( GetDialogWindow( theDialogControl), &aRect);
-						UpdateOscilloWindow( theDialogControl);
-					}
-				}
-				else if( ctlPart > 0)*/
-				{
-					theDialogControl = whichDialog;
-					MyControlUPP = NewControlActionUPP( actionProcOscillo);
-					gThumbPrev = GetControlValue( theControl);
-					TrackControl(theControl, myPt, MyControlUPP);
-					DisposeControlActionUPP( MyControlUPP);
-				}
+				theDialogControl = whichDialog;
+				MyControlUPP = NewControlActionUPP( actionProcOscillo);
+				gThumbPrev = GetControlValue( theControl);
+				TrackControl(theControl, myPt, MyControlUPP);
+				DisposeControlActionUPP( MyControlUPP);
 			}
 		}
- 
- 
- 		switch( whichItem)
- 		{
- 			case 5:
-				InsertMenu( OsciTypeMenu, hierMenu);
-				GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &tempRect);
-				curSelec = OsciType;
-				
-				myPt.v = tempRect.top;	myPt.h = tempRect.left;
-				LocalToGlobal( &myPt);
-				
-				SetItemMark( OsciTypeMenu, curSelec + 1, 0xa5);
-				
-				mresult = PopUpMenuSelect(	OsciTypeMenu,
-											myPt.v,
-											myPt.h,
-											curSelec + 1);
-				
-				SetItemMark( OsciTypeMenu, curSelec + 1, 0);
-				
-				if( HiWord( mresult) != 0)
+	}
+	
+	
+	switch( whichItem)
+	{
+		case 5:
+			InsertMenu( OsciTypeMenu, hierMenu);
+			GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &tempRect);
+			curSelec = OsciType;
+			
+			myPt.v = tempRect.top;	myPt.h = tempRect.left;
+			LocalToGlobal( &myPt);
+			
+			SetItemMark( OsciTypeMenu, curSelec + 1, 0xa5);
+			
+			mresult = PopUpMenuSelect(	OsciTypeMenu,
+									  myPt.v,
+									  myPt.h,
+									  curSelec + 1);
+			
+			SetItemMark( OsciTypeMenu, curSelec + 1, 0);
+			
+			if (HiWord( mresult) != 0)
+			{
+				switch( LoWord( mresult) - 1)
 				{
-					switch( LoWord( mresult) - 1)
-					{
-						case OutPutAudio:
-							OsciType = OutPutAudio;
-							if( SpectrumMicrophone == false) MicroOff();
-							OscilloMicrophone = false;
-							SetDText( OscilloDlog, 6, "\pAudio OutPut");
+					case OutPutAudio:
+						OsciType = OutPutAudio;
+						if (SpectrumMicrophone == false) MicroOff();
+						OscilloMicrophone = false;
+						SetDText( OscilloDlog, 6, "\pAudio OutPut");
 						break;
 						
-						case InPutAudio:
-							if( ActiveSoundInput( false, NULL, "\p") == noErr)
-							{
-								OsciType = InPutAudio;
-								OscilloMicrophone = true;
-								SetDText( OscilloDlog, 6, "\pAudio InPut");
-							}
-							
-							CloseSoundInput();
+					case InPutAudio:
+						if (ActiveSoundInput( false, NULL, "\p") == noErr)
+						{
+							OsciType = InPutAudio;
+							OscilloMicrophone = true;
+							SetDText( OscilloDlog, 6, "\pAudio InPut");
+						}
+						
+						CloseSoundInput();
 						break;
 						
-						case TrackAudio:
-							OsciType = TrackAudio;
-							if( MicroPhone == true && SpectrumMicrophone == false) MicroOff();
-							OscilloMicrophone = false;
-							SetDText( OscilloDlog, 6, "\pDriver Tracks");
+					case TrackAudio:
+						OsciType = TrackAudio;
+						if (MicroPhone == true && SpectrumMicrophone == false) MicroOff();
+						OscilloMicrophone = false;
+						SetDText( OscilloDlog, 6, "\pDriver Tracks");
 						break;
 						
-						case QuicktimeMovie:
-							OsciType = QuicktimeMovie;
-							if( MicroPhone == true && SpectrumMicrophone == false) MicroOff();
-							OscilloMicrophone = false;
-							SetDText( OscilloDlog, 6, "\pQuicktime Sound Channel");
+					case QuicktimeMovie:
+						OsciType = QuicktimeMovie;
+						if (MicroPhone == true && SpectrumMicrophone == false) MicroOff();
+						OscilloMicrophone = false;
+						SetDText( OscilloDlog, 6, "\pQuicktime Sound Channel");
 						break;
-					}
-					SetWindowEnviron();
 				}
-				DeleteMenu( GetMenuID( OsciTypeMenu));
+				SetWindowEnviron();
+			}
+			DeleteMenu( GetMenuID( OsciTypeMenu));
  			break;
  			
- 			case 12:
-				InsertMenu( OsciModeMenu, hierMenu);
-				GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &tempRect);
-				
-				if( thePrefs.osciTile) curSelec = 0;
-				else curSelec = 1;
-				
-				myPt.v = tempRect.top;	myPt.h = tempRect.left;
-				LocalToGlobal( &myPt);
-				
-				SetItemMark( OsciModeMenu, curSelec + 1, 0xa5);
-				
-				mresult = PopUpMenuSelect(	OsciModeMenu,
-											myPt.v,
-											myPt.h,
-											curSelec + 1);
-				
-				SetItemMark( OsciModeMenu, curSelec + 1, 0);
-				
-				if( HiWord( mresult) != 0)
+		case 12:
+			InsertMenu( OsciModeMenu, hierMenu);
+			GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &tempRect);
+			
+			if (thePrefs.osciTile) curSelec = 0;
+			else curSelec = 1;
+			
+			myPt.v = tempRect.top;	myPt.h = tempRect.left;
+			LocalToGlobal( &myPt);
+			
+			SetItemMark( OsciModeMenu, curSelec + 1, 0xa5);
+			
+			mresult = PopUpMenuSelect(	OsciModeMenu,
+									  myPt.v,
+									  myPt.h,
+									  curSelec + 1);
+			
+			SetItemMark( OsciModeMenu, curSelec + 1, 0);
+			
+			if (HiWord( mresult) != 0)
+			{
+				switch( LoWord( mresult))
 				{
-					switch( LoWord( mresult))
-					{
-						case 1:	thePrefs.osciTile = true;	pStrcpy( aStr, "\pStack");	break;
-						case 2:	thePrefs.osciTile = false;	pStrcpy( aStr, "\pTile");	break;
-					}
-					
-					SetDText( OscilloDlog, 13, aStr);
-					
-					SetWindowEnviron();
+					case 1:	thePrefs.osciTile = true;	pStrcpy( aStr, "\pStack");	break;
+					case 2:	thePrefs.osciTile = false;	pStrcpy( aStr, "\pTile");	break;
 				}
-				DeleteMenu( GetMenuID( OsciModeMenu));
+				
+				SetDText( OscilloDlog, 13, aStr);
+				
+				SetWindowEnviron();
+			}
+			DeleteMenu( GetMenuID( OsciModeMenu));
  			break;
  			
- 			case 8:
-				InsertMenu( OsciHMenu, hierMenu);
-				GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &tempRect);
-				
-				switch( OsciH)
+		case 8:
+			InsertMenu( OsciHMenu, hierMenu);
+			GetDialogItem( whichDialog, whichItem, &itemType, &itemHandle, &tempRect);
+			
+			switch( OsciH)
+		{
+			default:
+			case 16:	curSelec = 0;		break;
+			case 32:	curSelec = 1;		break;
+			case 64:	curSelec = 2;		break;
+			case 128:	curSelec = 3;		break;
+			case 256:	curSelec = 4;		break;
+		}
+			
+			myPt.v = tempRect.top;	myPt.h = tempRect.left;
+			LocalToGlobal( &myPt);
+			
+			SetItemMark( OsciHMenu, curSelec + 1, 0xa5);
+			
+			mresult = PopUpMenuSelect(	OsciHMenu,
+									  myPt.v,
+									  myPt.h,
+									  curSelec + 1);
+			
+			SetItemMark( OsciHMenu, curSelec + 1, 0);
+			
+			if (HiWord( mresult) != 0)
+			{
+				switch( LoWord( mresult))
 				{
-					default:
-					case 16:	curSelec = 0;		break;
-					case 32:	curSelec = 1;		break;
-					case 64:	curSelec = 2;		break;
-					case 128:	curSelec = 3;		break;
-					case 256:	curSelec = 4;		break;
+					case 1:	OsciH = 16;		OsciDD = 4; 	break;
+					case 2:	OsciH = 32;		OsciDD = 3;		break;
+					case 3:	OsciH = 64;		OsciDD = 2; 	break;
+					case 4:	OsciH = 128;	OsciDD = 1;		break;
+					case 5:	OsciH = 256;	OsciDD = 0;		break;
 				}
 				
-				myPt.v = tempRect.top;	myPt.h = tempRect.left;
-				LocalToGlobal( &myPt);
+				NumToString( OsciH, aStr);
+				SetDText( OscilloDlog, 9, aStr);
 				
-				SetItemMark( OsciHMenu, curSelec + 1, 0xa5);
-				
-				mresult = PopUpMenuSelect(	OsciHMenu,
-											myPt.v,
-											myPt.h,
-											curSelec + 1);
-				
-				SetItemMark( OsciHMenu, curSelec + 1, 0);
-				
-				if( HiWord( mresult) != 0)
-				{
-					switch( LoWord( mresult))
-					{
-						case 1:	OsciH = 16;		OsciDD = 4; 	break;
-						case 2:	OsciH = 32;		OsciDD = 3;		break;
-						case 3:	OsciH = 64;		OsciDD = 2; 	break;
-						case 4:	OsciH = 128;	OsciDD = 1;		break;
-						case 5:	OsciH = 256;	OsciDD = 0;		break;
-					}
-					
-					NumToString( OsciH, aStr);
-					SetDText( OscilloDlog, 9, aStr);
-					
-					SetWindowEnviron();
-				}
-				DeleteMenu( GetMenuID( OsciHMenu));
+				SetWindowEnviron();
+			}
+			DeleteMenu( GetMenuID( OsciHMenu));
  			break;
- 		}
- 
-		SetPort( SavePort);
+	}
+	
+	SetPort( SavePort);
 }
 
 void SetWindowEnviron(void)
 {
-short		itemType, tempB, tempA, prevRight, prevBot;
-Handle		itemHandle;
-long		i;
-Rect		caRect, itemRect;
-GrafPtr		savePort;
-Str255		tempStr, aStr;
-
-	if( OscilloDlog == NULL) return;
+	short		itemType, tempB, tempA, prevRight, prevBot;
+	Handle		itemHandle;
+	long		i;
+	Rect		caRect, itemRect;
+	GrafPtr		savePort;
+	Str255		tempStr, aStr;
 	
-	GetPort( &savePort);
-	SetPortDialogPort( OscilloDlog);
-		
+	if (OscilloDlog == NULL)
+		return;
+	
+	GetPort(&savePort);
+	SetPortDialogPort(OscilloDlog);
+	
 	/**** Oscillo ******/
 	
 	OsciL		= GetAudioSize();
 	
-	switch( OsciType)
+	switch (OsciType)
 	{
 		case OutPutAudio:
 			osci[ 0].VPos		=	OsciVStart ;
 			osci[ 0].SavePtr	=	(Byte*) ValSaveData;
 			osci[ 0].Size		=	GetAudioSize();
 			
-		//	if( MADDriver->DriverSettings.outPutMode != MonoOutPut)
-			{
-				if( thePrefs.osciTile) pStrcpy( osci[ 0].Name, "\pLeft/Right Channels");
-				else pStrcpy( osci[ 0].Name, "\pLeft Channel");
-				
-				if( thePrefs.osciTile) osci[ 1].VPos		=	OsciVStart;
-				else osci[ 1].VPos		=	OsciVStart + OsciH + InterText;
-				osci[ 1].SavePtr	=	osci[ 0].SavePtr + osci[ 0].Size;
-				osci[ 1].Size		=	GetAudioSize();
-				pStrcpy( osci[ 1].Name, "\pRight Channel");
-				
-				OsciNo = 2;
-			}
-		/*	else
+			//if (MADDriver->DriverSettings.outPutMode != MonoOutPut)
+		{
+			if (thePrefs.osciTile)
+				pStrcpy(osci[0].Name, "\pLeft/Right Channels");
+			else
+				pStrcpy(osci[0].Name, "\pLeft Channel");
+			
+			if (thePrefs.osciTile)
+				osci[1].VPos		=	OsciVStart;
+			else
+				osci[1].VPos		=	OsciVStart + OsciH + InterText;
+			osci[1].SavePtr		=	osci[ 0].SavePtr + osci[ 0].Size;
+			osci[1].Size		=	GetAudioSize();
+			pStrcpy(osci[ 1].Name, "\pRight Channel");
+			
+			OsciNo = 2;
+		}
+#if 0
+			else
 			{
 				pStrcpy( osci[ 0].Name, "\pMono Channel");
 				OsciNo = 1;
-			}*/
-		break;
-	
+			}
+#endif
+			break;
+			
 		case InPutAudio:
-			osci[ 0].VPos		=	OsciVStart;
-			osci[ 0].SavePtr	=	(Byte*) ValSaveData;
-			osci[ 0].Size		=	GetAudioSize();
-			pStrcpy( osci[ 0].Name, InPutName);
+			osci[0].VPos		=	OsciVStart;
+			osci[0].SavePtr		=	(Byte*) ValSaveData;
+			osci[0].Size		=	GetAudioSize();
+			pStrcpy(osci[ 0].Name, InPutName);
 			
 			OsciNo = 1;
-		break;
-		
+			break;
+			
 		case TrackAudio:
-			for( i = 0; i < MADDriver->DriverSettings.numChn; i++)
-			{
-				osci[ i].VPos		=	OsciVStart;
-				osci[ i].SavePtr	=	(Byte*) (ValSaveData + i * GetAudioSize());
-				if( i * GetAudioSize() > VALSIZE) MyDebugStr( __LINE__, __FILE__, "");
+			for (i = 0; i < MADDriver->DriverSettings.numChn; i++) {
+				osci[i].VPos		=	OsciVStart;
+				osci[i].SavePtr	=	(Byte*) (ValSaveData + i * GetAudioSize());
+				if (i * GetAudioSize() > VALSIZE) MyDebugStr( __LINE__, __FILE__, "");
 				osci[ i].Size		=	GetAudioSize();
 				
-				if( thePrefs.osciTile) pStrcpy( osci[ i].Name, "\pAll Channels");
-				else pStrcpy( osci[ i].Name, "\pTrack");
+				if(thePrefs.osciTile)
+					pStrcpy(osci[i].Name, "\pAll Channels");
+				else
+					pStrcpy(osci[i].Name, "\pTrack");
 			}
 			
 			OsciNo = MADDriver->DriverSettings.numChn;
-		break;
-		
+			break;
+			
 		case QuicktimeMovie:
 			osci[ 0].VPos		=	OsciVStart;
 			osci[ 0].SavePtr	=	(Byte*) ValSaveData;
 			osci[ 0].Size		=	GetAudioSize();
 			
-			if( thePrefs.osciTile) pStrcpy( osci[ 0].Name, "\pLeft/Right Channels");
-			else pStrcpy( osci[ 0].Name, "\pLeft Channel");
-				
-			if( thePrefs.osciTile) osci[ 1].VPos		=	OsciVStart;
+			if (thePrefs.osciTile)
+				pStrcpy(osci[ 0].Name, "\pLeft/Right Channels");
+			else
+				pStrcpy(osci[ 0].Name, "\pLeft Channel");
+			
+			if (thePrefs.osciTile) osci[ 1].VPos		=	OsciVStart;
 			else osci[ 1].VPos		=	OsciVStart + OsciH + InterText;
 			
 			osci[ 1].SavePtr	=	osci[ 0].SavePtr + osci[ 0].Size;
@@ -1575,7 +1586,7 @@ Str255		tempStr, aStr;
 			pStrcpy( osci[ 1].Name, "\pRight Channel");
 			
 			OsciNo = 2;	//GetQuicktimeChannels();
-		break;
+			break;
 	}
 	
 	/**** Check Window Size ****/
@@ -1585,17 +1596,18 @@ Str255		tempStr, aStr;
 	prevRight	= caRect.right;
 	prevBot		= caRect.bottom;
 	
-	if( thePrefs.osciTile)
-	{
-		if( prevBot > OsciVStart + 15 + 1 * (InterText + OsciH)) prevBot = OsciVStart + 15 + 1 * (InterText + OsciH);
+	if (thePrefs.osciTile) {
+		if (prevBot > OsciVStart + 15 + 1 * (InterText + OsciH))
+			prevBot = OsciVStart + 15 + 1 * (InterText + OsciH);
+	} else {
+		if (prevBot > OsciVStart + 15 + OsciNo * (InterText + OsciH))
+			prevBot = OsciVStart + 15 + OsciNo * (InterText + OsciH);
 	}
-	else
-	{
-		if( prevBot > OsciVStart + 15 + OsciNo * (InterText + OsciH)) prevBot = OsciVStart + 15 + OsciNo * (InterText + OsciH);
-	}
-	if( prevBot < OsciVStart + InterText + OsciH + 15) prevBot = OsciVStart + InterText + OsciH + 15;
+	if (prevBot < OsciVStart + InterText + OsciH + 15)
+		prevBot = OsciVStart + InterText + OsciH + 15;
 	
-	if( prevRight > OsciL + 15) prevRight = OsciL + 15;
+	if (prevRight > OsciL + 15)
+		prevRight = OsciL + 15;
 	
 	
 	prevBot -= OsciVStart + 15;
@@ -1610,13 +1622,14 @@ Str255		tempStr, aStr;
 	GetPortBounds( GetDialogPort( OscilloDlog), &caRect);
 	EraseRect( &caRect);
 	InvalWindowRect( GetDialogWindow( OscilloDlog), &caRect);
-
+	
 	SIter = caRect.right - 16 - 15;
-//	if( SIter > 740) MyDebugStr( __LINE__, __FILE__, "SIter is VERY BIG !");
-	for(i=0; i < VALSIZE; i++)
-	{
-		if( i % 2 == 0) ValSaveData[i] = 0;
-		else ValSaveData[ i] = OsciH-1;
+	//if (SIter > 740) MyDebugStr( __LINE__, __FILE__, "SIter is VERY BIG !");
+	for (i = 0; i < VALSIZE; i++) {
+		if (i % 2 == 0)
+			ValSaveData[i] = 0;
+		else
+			ValSaveData[i] = OsciH-1;
 	}
 	
 	/********/
@@ -1625,42 +1638,46 @@ Str255		tempStr, aStr;
 	OsciOffSet	= GetControlValue( HControl);
 	
 	/********/
-	switch( OsciType)
+	switch (OsciType)
 	{
 		case OutPutAudio:
-			SetDText( OscilloDlog, 6, "\pAudio OutPut");
-		break;
-		
+			SetDText(OscilloDlog, 6, "\pAudio OutPut");
+			break;
+			
 		case InPutAudio:
-			SetDText( OscilloDlog, 6, "\pAudio InPut");
-		break;
-		
+			SetDText(OscilloDlog, 6, "\pAudio InPut");
+			break;
+			
 		case TrackAudio:
-			SetDText( OscilloDlog, 6, "\pDriver Tracks");
-		break;
-		
+			SetDText(OscilloDlog, 6, "\pDriver Tracks");
+			break;
+			
 		case QuicktimeMovie:
-			SetDText( OscilloDlog, 6, "\pQuicktime Channel");
-		break;
+			SetDText(OscilloDlog, 6, "\pQuicktime Channel");
+			break;
 	}
 	
-	NumToString( OsciH, aStr);
-	SetDText( OscilloDlog, 9, aStr);
+	NumToString(OsciH, aStr);
+	SetDText(OscilloDlog, 9, aStr);
 	
-	if( thePrefs.osciTile) pStrcpy( aStr, "\pStack");
-	else pStrcpy( aStr, "\pTile");
-	SetDText( OscilloDlog, 13, aStr);
+	if (thePrefs.osciTile)
+		pStrcpy(aStr, "\pStack");
+	else
+		pStrcpy(aStr, "\pTile");
+	SetDText(OscilloDlog, 13, aStr);
 	
-//	AdjustZoomOscillo();
+	//AdjustZoomOscillo();
 	
-	if( thePrefs.osciTile) SetMaxWindow( OsciL + 15, OsciVStart + 15 + 1 * (InterText + OsciH), OscilloDlog);
-	else SetMaxWindow( OsciL + 15, OsciVStart + 15 + OsciNo * (InterText + OsciH), OscilloDlog);
+	if (thePrefs.osciTile)
+		SetMaxWindow(OsciL + 15, OsciVStart + 15 + 1 * (InterText + OsciH), OscilloDlog);
+	else
+		SetMaxWindow(OsciL + 15, OsciVStart + 15 + OsciNo * (InterText + OsciH), OscilloDlog);
 	
-	GetWorkingZone( &itemRect);
-	EraseRect( &itemRect);
-	InvalWindowRect( GetDialogWindow( OscilloDlog), &itemRect);
+	GetWorkingZone(&itemRect);
+	EraseRect(&itemRect);
+	InvalWindowRect(GetDialogWindow(OscilloDlog), &itemRect);
 	
-	SetPort( savePort);
+	SetPort(savePort);
 }
 
 void InitOscillo(void)
@@ -1740,59 +1757,60 @@ Ptr GetAudioSource( short item)
 		case OutPutAudio:
 			OsciColor = 0x90;
 			
-			if( item != 0)
-			{
-				if( MADDriver->clipR) OsciColor = 215;
-			//	MADDriver->clipR = false;
-			}
-			else
-			{
-				if( MADDriver->clipL) OsciColor = 215;
-			//	MADDriver->clipL = false;
+			if (item != 0) {
+				if (MADDriver->clipR) OsciColor = 215;
+				//MADDriver->clipR = false;
+			} else {
+				if (MADDriver->clipL) OsciColor = 215;
+				//MADDriver->clipL = false;
 			}
 
 			
-			if( item == 0) return GetAudioChannel( false, MADDriver->ASCBUFFERReal);
-			else return GetAudioChannel( true, MADDriver->ASCBUFFERReal);
+			if (item == 0)
+				return GetAudioChannel(false, MADDriver->ASCBUFFERReal);
+			else
+				return GetAudioChannel(true, MADDriver->ASCBUFFERReal);
 		break;
 		
 		case InPutAudio:
 			OsciColor = 0x90;
-			return GetAudioInPut( false, deviceBufferSize);
+			return GetAudioInPut(false, deviceBufferSize);
 		break;
 		
 		case QuicktimeMovie:
 			OsciColor = 0x90;
 			
-			if( item == 0) return GetQuicktimeChannel( false, GetAudioSize());
-			else return GetQuicktimeChannel( true, GetAudioSize());
+			if (item == 0)
+				return GetQuicktimeChannel(false, GetAudioSize());
+			else
+				return GetQuicktimeChannel(true, GetAudioSize());
 		break;
 		
 		case TrackAudio:
 			OsciColor = SwitchColorLV( item);
-			if( MADDriver->chan[ item].curPtr + TRACKSIZE >= MADDriver->chan[ item].maxPtr)
-			{
-				if( MADDriver->chan[ item].loopSize > 2 && MADDriver->chan[ item].curPtr < MADDriver->chan[ item].maxPtr)
-				{
-					sourcePtr = MADDriver->chan[ item].begPtr + MADDriver->chan[ item].loopBeg;
-					if( sourcePtr + TRACKSIZE >= MADDriver->chan[ item].maxPtr) return PseudoSilence;
-					else goto RENVOISOURCE;
-				}
-				else return PseudoSilence;
-			}
-			else
-			{
-				sourcePtr = MADDriver->chan[ item].curPtr;
+			if (MADDriver->chan[item].curPtr + TRACKSIZE >= MADDriver->chan[item].maxPtr) {
+				if(MADDriver->chan[item].loopSize > 2 && MADDriver->chan[item].curPtr < MADDriver->chan[item].maxPtr) {
+					sourcePtr = MADDriver->chan[item].begPtr + MADDriver->chan[item].loopBeg;
+					if (sourcePtr + TRACKSIZE >= MADDriver->chan[item].maxPtr)
+						return PseudoSilence;
+					else
+						goto RENVOISOURCE;
+				} else
+					return PseudoSilence;
+			} else {
+				sourcePtr = MADDriver->chan[item].curPtr;
 				
 				RENVOISOURCE:
 				
-				if( MADDriver->chan[ item].amp == 8) return Inverse8( sourcePtr, TRACKSIZE);
-				else return Inverse16( sourcePtr, TRACKSIZE);
+				if (MADDriver->chan[item].amp == 8)
+					return Inverse8(sourcePtr, TRACKSIZE);
+				else
+					return Inverse16(sourcePtr, TRACKSIZE);
 			}
 		break;
 	}
 	
-	return (Ptr) -1L;
+	return (Ptr)-1L;
 }
 
 void CreateOscilloWindow(void)
@@ -1805,19 +1823,20 @@ void CreateOscilloWindow(void)
 	Str255		String;
 	GrafPtr		savePort;
 
-	if( OscilloDlog != NULL)
-	{
-		SetWindEtat( GetDialogWindow(OscilloDlog));
+	if (OscilloDlog != NULL) {
+		SetWindEtat(GetDialogWindow(OscilloDlog));
 		return;
 	}
 
 
-	ValSaveData	= (Ptr) NewPtrClear( VALSIZE);
-	if( ValSaveData == NULL) return;
+	ValSaveData	= (Ptr)NewPtrClear(VALSIZE);
+	if (ValSaveData == NULL)
+		return;
 
 	GetPort( &savePort);
 
-	for( i = 0 ; i < MAXTRACK; i++) osciPixMap[ i] = NULL;
+	for (i = 0 ; i < MAXTRACK; i++)
+		osciPixMap[i] = NULL;
 	CurrentQuickPixMap = NULL;
 	
 	SetItemMark( ViewsMenu, mOscilloV, checkMark);
@@ -1829,15 +1848,16 @@ void CreateOscilloWindow(void)
 	
 	
 	SetWindEtat( GetDialogWindow(OscilloDlog));
-	SetPortDialogPort( OscilloDlog);
+	SetPortDialogPort(OscilloDlog);
 
-	TextFont( kFontIDGeneva);	TextSize(9);
+	TextFont(kFontIDGeneva);
+	TextSize(9);
 	
-	ShowWindow( GetDialogWindow( OscilloDlog));
-	SelectWindow2( GetDialogWindow( OscilloDlog));
+	ShowWindow(GetDialogWindow(OscilloDlog));
+	SelectWindow2(GetDialogWindow(OscilloDlog));
 	
-	SetRect( &itemRect, 0, 0, -30, -16);
-	HControl = NewControl( 	GetDialogWindow( OscilloDlog),
+	SetRect(&itemRect, 0, 0, -30, -16);
+	HControl = NewControl(GetDialogWindow(OscilloDlog),
 							&itemRect,
 							"\p.",
 							true,
@@ -1847,8 +1867,8 @@ void CreateOscilloWindow(void)
 							gScrollBarID,
 							hID);
 							
-	SetRect( &itemRect, 0, 0, -16, -30);
-	VControl = NewControl( 	GetDialogWindow( OscilloDlog),
+	SetRect(&itemRect, 0, 0, -16, -30);
+	VControl = NewControl(GetDialogWindow(OscilloDlog),
 							&itemRect,
 							"\p.",
 							true,
@@ -1859,45 +1879,61 @@ void CreateOscilloWindow(void)
 							vID);
 
 	OsciType	= thePrefs.OscilloType;
-	if( OsciType == InPutAudio) OsciType = OutPutAudio;
+	if (OsciType == InPutAudio)
+		OsciType = OutPutAudio;
 	OsciH		= thePrefs.OscilloSize;
 	
-	switch( OsciH)
+	switch (OsciH)
 	{
-		case 16:	OsciDD = 4; 	break;
-		case 32:	OsciDD = 3;		break;
-		case 64:	OsciDD = 2; 	break;
-		case 128:	OsciDD = 1;		break;
-		case 256:	OsciDD = 0;		break;
+		case 16:
+			OsciDD = 4;
+			break;
+			
+		case 32:
+			OsciDD = 3;
+			break;
+			
+		case 64:
+			OsciDD = 2;
+			break;
+			
+		case 128:
+			OsciDD = 1;
+			break;
+			
+		case 256:
+			OsciDD = 0;
+			break;
 	}
 
 	SetWindowEnviron();
 
-	SetPort( savePort);
+	SetPort(savePort);
 }
 
 void CloseOscillo(void)
 {
 	short i;
 	
-	if( OscilloDlog != NULL) 
-	{
+	if (OscilloDlog != NULL)  {
 		thePrefs.OscilloType = OsciType;
 		thePrefs.OscilloSize = OsciH;
 		DisposePtr( ValSaveData);
 		DisposeDialog( OscilloDlog);
 		
-		for( i = 0; i < MAXTRACK; i++)
-		{
-			if( osciPixMap[ i] != NULL) ZapPixMap( &osciPixMap[ i]);
+		for (i = 0; i < MAXTRACK; i++) {
+			if (osciPixMap[i] != NULL)
+				ZapPixMap(&osciPixMap[i]);
 		}
-		if( CurrentQuickPixMap != NULL) DisposePtr( (Ptr) CurrentQuickPixMap);
+		if (CurrentQuickPixMap != NULL)
+			DisposePtr((Ptr)CurrentQuickPixMap);
 		
-		SetItemMark( ViewsMenu, mOscilloV, noMark);
+		SetItemMark(ViewsMenu, mOscilloV, noMark);
 		
 		MADDriver->useOsciBuffers = false;
 		
-		for( i = 0; i < MAXDRAW; i++) MADDriver->newData[ i] = false;
+		for (i = 0; i < MAXDRAW; i++)
+			MADDriver->newData[i] = false;
 	}
 	OscilloDlog = NULL;
 }
@@ -1908,7 +1944,8 @@ void ResetOscilloscope(void)
 	long	i;
 	Rect	caRect;
 
-	if( OscilloDlog == NULL) return;
+	if (OscilloDlog == NULL)
+		return;
 
 	GetPort( &savePort );
 	SetPortDialogPort( OscilloDlog );
@@ -1916,28 +1953,24 @@ void ResetOscilloscope(void)
 	InvalWindowRect( GetDialogWindow( OscilloDlog), &caRect);
 	
 	{
-		for( i = 0; i < OsciNo; i++)
-		{
+		for (i = 0; i < OsciNo; i++) {
 			Rect	tempRect;
 			long	bb, rowbytes;
 			
-			if( osciPixMap[ i] != NULL) ZapPixMap( &osciPixMap[ i]);
+			if (osciPixMap[i] != NULL)
+				ZapPixMap(&osciPixMap[i]);
 			
 			tempRect.left	= 15;
 			tempRect.right	= caRect.right-15;
 			tempRect.top	= 0;
 			tempRect.bottom	= OsciH;
 			
-			if( NewOffscreenPixMap( &osciPixMap[ i], &tempRect) != noErr)
-			{
+			if (NewOffscreenPixMap(&osciPixMap[i], &tempRect) != noErr) {
 				osciPixMap[ i] = NULL;
-			}
-			else
-			{
-				rowbytes = (*osciPixMap[ i])->rowBytes + 0x8000;
-				for( bb = 0; bb < (*osciPixMap[ i])->bounds.bottom * rowbytes; bb++)
-				{
-					*((*osciPixMap[ i])->baseAddr + bb) = 0xFF;
+			} else {
+				rowbytes = (*osciPixMap[i])->rowBytes + 0x8000;
+				for (bb = 0; bb < (*osciPixMap[i])->bounds.bottom * rowbytes; bb++) {
+					*((*osciPixMap[i])->baseAddr + bb) = 0xFF;
 				}
 			}
 		}
@@ -1945,11 +1978,12 @@ void ResetOscilloscope(void)
 		ComputeCurrentQuickPixMap();
 	}
 	
-	for(i=0; i < VALSIZE; i++)
-	{
-		if( i % 2 == 0) ValSaveData[i] = 0;
-		else ValSaveData[ i] = OsciH-1;
+	for (i=0; i < VALSIZE; i++) {
+		if (i % 2 == 0)
+			ValSaveData[i] = 0;
+		else
+			ValSaveData[i] = OsciH - 1;
 	}
 	
-	SetPort( savePort );
+	SetPort(savePort);
 }

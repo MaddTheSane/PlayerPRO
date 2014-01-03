@@ -44,9 +44,9 @@ long LogChangePos( long x)
 
 void CloseFourier(void)
 {
-	if( x != NULL) DisposePtr( (Ptr) x);					x = NULL;
-	if( xInt != NULL) DisposePtr( (Ptr) xInt);				xInt = NULL;
-	if( logoScale != NULL) DisposePtr( (Ptr) logoScale);	logoScale = NULL;
+	if (x != NULL) DisposePtr( (Ptr) x);					x = NULL;
+	if (xInt != NULL) DisposePtr( (Ptr) xInt);				xInt = NULL;
+	if (logoScale != NULL) DisposePtr( (Ptr) logoScale);	logoScale = NULL;
 }
 
 #define SWAP( a, b) tempr = (a); (a) = (b);  (b) = tempr
@@ -60,7 +60,7 @@ void four1( float *data, unsigned long nn, int isign)
 	j = 1;
 	for( i = 1; i < n; i+= 2)
 	{
-		if( j > i)
+		if (j > i)
 		{
 			SWAP( data[ j], data[ i]);
 			SWAP( data[ j+1], data[ i+1]);	
@@ -115,7 +115,7 @@ void realft( float *data, unsigned long n, int isign)
 	
 	theta = PI / (double) (n>> 1);
 	
-	if( isign == 1)
+	if (isign == 1)
 	{
 		c2 = -0.5;
 		four1( data, n>>1, 1);
@@ -151,7 +151,7 @@ void realft( float *data, unsigned long n, int isign)
 		wi	= wi*wpr + wtemp*wpi + wi;
 	}
 	
-	if( isign == 1)
+	if (isign == 1)
 	{
 		data[ 1]	= (h1r=data[1]) + data[ 2];
 		data[ 2]	= h1r - data[ 2];
@@ -177,16 +177,16 @@ Ptr MakeCalculusSpectrum( Ptr srcPtr, Boolean logScale)
 		temp = x[ i];
 		temp >>= 3;
 		
-		if( temp < 0) temp = -temp;
+		if (temp < 0) temp = -temp;
 		
-		if( temp > 255) temp = 255;
+		if (temp > 255) temp = 255;
 		//	else temp = logoScale[ temp];
 		
 		xInt[ i-1] = temp;
 	}
 	xInt[ 0] = 0;
 	
-	if( logScale)
+	if (logScale)
 	{
 		long	sumL;
 		
@@ -195,7 +195,7 @@ Ptr MakeCalculusSpectrum( Ptr srcPtr, Boolean logScale)
 		for(i= 255; i >= 0; i--)
 		{
 			
-			if( logoScale[ i] == lastLog) temp = xInt[ logoScale[ i]];
+			if (logoScale[ i] == lastLog) temp = xInt[ logoScale[ i]];
 			else for( xx = logoScale[ i], temp = 0; xx < lastLog; xx++) temp += xInt[ xx];
 			
 			//	FINIR ICI
@@ -207,7 +207,7 @@ Ptr MakeCalculusSpectrum( Ptr srcPtr, Boolean logScale)
 		
 		/*	for( xx = 0, sumL = 0, i = 0; i < 256; i++)
 		 {
-		 if( xx == 16)
+		 if (xx == 16)
 		 {
 		 sumL /= 16;
 		 

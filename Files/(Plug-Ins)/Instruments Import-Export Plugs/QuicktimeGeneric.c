@@ -33,11 +33,11 @@ static OSErr mainQTInst(OSType					order,				// Order to execute
 			FSSpec			newFile;
 			
 			myErr = ConvertDataToWAVE( *AlienFileFSSpec, &newFile, thePPInfoPlug);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				theSound = ConvertWAV( &newFile, &lS, &lE, &sS, &rate, &stereo);
 				
-				if( theSound) inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, newFile.name, InsHeader, sample, sampleID);
+				if (theSound) inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, newFile.name, InsHeader, sample, sampleID);
 				else
 				{
 					myErr = MADNeedMemory;
@@ -54,13 +54,13 @@ static OSErr mainQTInst(OSType					order,				// Order to execute
 			
 			FSpGetFInfo( AlienFileFSSpec, &fInfo);
 			
-			if( fInfo.fdType == thePPInfoPlug->fileType) myErr = noErr;
+			if (fInfo.fdType == thePPInfoPlug->fileType) myErr = noErr;
 			else myErr = MADFileNotSupportedByThisPlug;
 		}
 		break;
 		
 		case 'EXPL':
-			if( *sampleID >= 0)
+			if (*sampleID >= 0)
 			{
 				OSType				compType = 'NONE';
 				unsigned long		rate;
@@ -70,12 +70,12 @@ static OSErr mainQTInst(OSType					order,				// Order to execute
 				myErr = FSpCreate( AlienFileFSSpec, 'TVOD', 'AIFF', smCurrentScript);
 				if(myErr == noErr) myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
 				
-				if( myErr == noErr)
+				if (myErr == noErr)
 				{
 					inOutBytes 	= curData->size;
 					rate		= curData->c2spd;
 					
-					if( curData->stereo) numChan = 2;
+					if (curData->stereo) numChan = 2;
 					else numChan = 1;
 					
 					myErr = SetupAIFFHeader(	iFileRefI,

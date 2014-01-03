@@ -31,7 +31,7 @@ void ImportAudioCD()
 	FInfo			fndrInfo;
 	MovieProgressUPP	progressUPP;
 	
-	if( !GetIns( &ins, &samp))
+	if (!GetIns( &ins, &samp))
 	{
 		Erreur( 13, ins);
 		return;
@@ -39,13 +39,13 @@ void ImportAudioCD()
 	
 	progressUPP = NewMovieProgressUPP( MyProgressUPP);
 	
-	if( DoStandardOpen( &file, "\pAudio CD", kQTFileTypeAudioCDTrack) == noErr)
+	if (DoStandardOpen( &file, "\pAudio CD", kQTFileTypeAudioCDTrack) == noErr)
 	{
 		iErr = FSpGetFInfo( &file, &fndrInfo);
 		
 		ci = OpenDefaultComponent (MovieImportType, kQTFileTypeAudioCDTrack);
 		
-		if( ci)
+		if (ci)
 		{
 			iErr = MovieImportDoUserDialog(		ci, 
 								&file, 
@@ -56,12 +56,12 @@ void ImportAudioCD()
 			
 			UpdateALLWindow();
 			
-			if( !canceled && iErr == noErr)
+			if (!canceled && iErr == noErr)
 			{
 				pStrcpy( newfile.name, file.name);
 				
 				iErr = FindFolder( kOnSystemDisk, kTrashFolderType, kCreateFolder, &newfile.vRefNum, &newfile.parID);	// kDesktopFolderType, kTemporaryFolderType 
-				if( iErr == noErr)
+				if (iErr == noErr)
 				{
 					/////////////////////////////////////////////////
 					//		AIFF CONVERSION
@@ -79,7 +79,7 @@ void ImportAudioCD()
 					      		       createMovieFileDeleteCurFile,
 					      		       &resRefNum,
 					      		       &theMovie);
-					if( !iErr)
+					if (!iErr)
 					{
 						usedTrack = 0;
 						addedDuration = 0;
@@ -91,7 +91,7 @@ void ImportAudioCD()
 						
 						DisposeMovie( theMovie);
 						
-						if( !iErr)
+						if (!iErr)
 						{
 							/////////////////////////////////////////////////
 							
@@ -141,25 +141,25 @@ void ImportAudioCD()
 	short					ins, samp;
 	FInfo					fndrInfo;
 	
-	if( !GetIns( &ins, &samp))
+	if (!GetIns( &ins, &samp))
 	{
 		Erreur( 13, ins);
 		return;
 	}
 	
-	if( DoStandardOpen( &file, "\pAudio CD", 'MPEG') == noErr)
+	if (DoStandardOpen( &file, "\pAudio CD", 'MPEG') == noErr)
 	{
 		ci = OpenDefaultComponent (MovieImportType, 'MPEG');
 		
-		if( ci)
+		if (ci)
 		{
 			canceled = false;
-			if( !canceled && iErr == noErr)
+			if (!canceled && iErr == noErr)
 			{
 				pStrcpy( newfile2.name, file.name);
 				
 				iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newfile2.vRefNum, &newfile2.parID);	//
-				if( iErr == noErr)
+				if (iErr == noErr)
 				{
 					/////////////////////////////////////////////////
 					//		AIFF CONVERSION
@@ -169,7 +169,7 @@ void ImportAudioCD()
 					
 					theMovie = NewMovie( 0);
 					
-					if( !iErr)
+					if (!iErr)
 					{
 						usedTrack = 0;
 						addedDuration = 0;
@@ -191,7 +191,7 @@ void ImportAudioCD()
 						
 						DisposeMovie( theMovie);
 						
-						if( !iErr)
+						if (!iErr)
 						{
 							/////////////////////////////////////////////////
 							
@@ -243,31 +243,31 @@ void ImportAudioCD()
 	
 	myCursH = GetCursor( 357);
 	
-	if( myCursH == NULL) Debugger();
+	if (myCursH == NULL) Debugger();
 	DetachResource( (Handle) myCursH);		HLock( (Handle) myCursH);
 	watchCrsr = **myCursH;					HUnlock( (Handle) myCursH);		DisposeHandle((Handle) myCursH);
 	
 	ci = OpenDefaultComponent (MovieExportType, kQTFileTypeAIFF);
 	
-	if( ci)
+	if (ci)
 	{
 		resRefNum = 0;
 		
 		iErr = OpenMovieFile ( &file, &resRefNum, fsCurPerm);
-		if( iErr) DebugStr("\p1");
+		if (iErr) DebugStr("\p1");
 		
 		resId = 0;
 		iErr = NewMovieFromFile( &theMovie, resRefNum, &resId, resName, 0, &dataRefWasChanged);
-		if( iErr) DebugStr("\p2");
+		if (iErr) DebugStr("\p2");
 		
 		canceled = false;
 		
-		if( !canceled && iErr == noErr)
+		if (!canceled && iErr == noErr)
 		{
 			pStrcpy( newfile->name, file.name);
 			
 			iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newfile->vRefNum, &newfile->parID);
-			if( iErr == noErr)
+			if (iErr == noErr)
 			{
 				/////////////////////////////////////////////////
 				//		AIFF CONVERSION
@@ -292,7 +292,7 @@ void ImportAudioCD()
 				
 				CloseMovieFile( resRefNum);
 				
-				if( !iErr)
+				if (!iErr)
 				{
 					/////////////////////////////////////////////////
 					

@@ -55,11 +55,11 @@ pascal void NewMyDisposePtr( & Ptr myPtr)
 	long aSize;
 
 	aSize = GetPtrSize( myPtr);
-	if( aSize <= 0 || aSize >= 400000) MyDebugStr( __LINE__, __FILE__, "MyDisposePtrError");
+	if (aSize <= 0 || aSize >= 400000) MyDebugStr( __LINE__, __FILE__, "MyDisposePtrError");
 
 //	CallPascal( myPtr, oldMyDisposePtr);
 	
-	if( MemError() != noErr) MyDebugStr( __LINE__, __FILE__, "MyDisposePtrError");
+	if (MemError() != noErr) MyDebugStr( __LINE__, __FILE__, "MyDisposePtrError");
 }
 
 
@@ -95,8 +95,8 @@ void NNumToString( short no, Str255 aStr)
 	NumToString( no, tStr);
 	
 	pStrcpy( aStr, "\p");
-	if( no < 100) pStrcat( aStr, "\p0");
-	if( no < 10) pStrcat( aStr, "\p0");
+	if (no < 100) pStrcat( aStr, "\p0");
+	if (no < 10) pStrcat( aStr, "\p0");
 	pStrcat( aStr, tStr);
 }
 
@@ -108,7 +108,7 @@ void oldFrameButton( DialogPtr theDlg)
 	
 	GetDialogItem (theDlg, 1, &iType, &iHndl, &iRect );
 	
-	if( iHndl == NULL) MyDebugStr( __LINE__, __FILE__, "oldFrameButton itemHandle = NULL");
+	if (iHndl == NULL) MyDebugStr( __LINE__, __FILE__, "oldFrameButton itemHandle = NULL");
 	
 	/*	PenSize( 3,3 );
 	 InsetRect( &iRect, -4,-4);
@@ -155,9 +155,9 @@ pascal Boolean MyDlgFilter( DialogPtr theDlg, EventRecord *theEvt, short *itemHi
 	dialogModifiers = theEvt->modifiers;
 	*itemHit = 0;
 
-	if( theEvt->what == updateEvt)
+	if (theEvt->what == updateEvt)
 	{
-		if( (WindowPtr) theEvt->message == GetDialogWindow( theDlg))
+		if ((WindowPtr) theEvt->message == GetDialogWindow( theDlg))
 		{
 			switch( GetWRefCon( GetDialogWindow( theDlg)))
 			{
@@ -183,11 +183,11 @@ pascal Boolean MyDlgFilter( DialogPtr theDlg, EventRecord *theEvt, short *itemHi
 	{
 		thePart = FindWindow( theEvt->where, &whichWindow);
 		
-		if( thePart == inDrag)
+		if (thePart == inDrag)
 		{
 			BitMap		screenBits;
 			
-			if( whichWindow != GetDialogWindow( theDlg)) return( false);
+			if (whichWindow != GetDialogWindow( theDlg)) return( false);
 			
 			GetQDGlobalsScreenBits( &screenBits);
 			
@@ -196,7 +196,7 @@ pascal Boolean MyDlgFilter( DialogPtr theDlg, EventRecord *theEvt, short *itemHi
 		}
 		else return( false);
 	}
-	else if( theEvt->what == keyDown)
+	else if (theEvt->what == keyDown)
 	{
 		switch ( (theEvt->message) & charCodeMask )
 		{
@@ -211,14 +211,14 @@ pascal Boolean MyDlgFilter( DialogPtr theDlg, EventRecord *theEvt, short *itemHi
 			return( false );
 		}
 	}
-	else if( theEvt->what == nullEvent)
+	else if (theEvt->what == nullEvent)
 	{
 		//ProcessSerialNumber	PSN;
 
 		LoopSet = thePrefs.LoopType;
 		thePrefs.LoopType = 4;
 		
-		if( GetWRefCon( GetDialogWindow( theDlg)) != 9996) DoGlobalNull();
+		if (GetWRefCon( GetDialogWindow( theDlg)) != 9996) DoGlobalNull();
 		
 		thePrefs.LoopType = LoopSet;
 
@@ -232,11 +232,11 @@ pascal Boolean MyDlgFilter( DialogPtr theDlg, EventRecord *theEvt, short *itemHi
 		*itemHit = -5;
 		return( true );
 	}
-/*	else if( theEvt->what == activateEvt)
+/*	else if (theEvt->what == activateEvt)
 	{
-		if( AHelpDlog != NULL)
+		if (AHelpDlog != NULL)
 		{
-			if( MacIsWindowVisible( GetDialogWindow( AHelpDlog))) ActivateProcedure( true);
+			if (MacIsWindowVisible( GetDialogWindow( AHelpDlog))) ActivateProcedure( true);
 		}
 	}	*/
 	
@@ -275,9 +275,9 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 	dialogModifiers = myIntEvent->modifiers;
 	*itemHit = 0;
 	
-	if( myIntEvent->what == updateEvt)
+	if (myIntEvent->what == updateEvt)
 	{
-		if( (WindowPtr) myIntEvent->message == GetDialogWindow( theDlg))
+		if ((WindowPtr) myIntEvent->message == GetDialogWindow( theDlg))
 		{
 			switch( GetWRefCon( GetDialogWindow( theDlg)))
 			{
@@ -318,11 +318,11 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 				
 		}
 		
-		if( thePart == inDrag)
+		if (thePart == inDrag)
 		{
 			BitMap		screenBits;
 			
-			if( whichWindow != GetDialogWindow( theDlg)) return( false);
+			if (whichWindow != GetDialogWindow( theDlg)) return( false);
 			
 			GetQDGlobalsScreenBits( &screenBits);
 			
@@ -330,13 +330,13 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 			
 			return( true);
 		}
-		else if( thePart == inContent)
+		else if (thePart == inContent)
 		{
-			if( DialogSelect( myIntEvent, &whichDialog, itemHit) == false ) return false;
+			if (DialogSelect( myIntEvent, &whichDialog, itemHit) == false ) return false;
 			else return true;
 		}
 	}
-	else if( myIntEvent->what == keyDown)
+	else if (myIntEvent->what == keyDown)
 	{
 		switch( GetWRefCon( GetDialogWindow( theDlg)))
 		{
@@ -352,7 +352,7 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 				break;
 				
 			case 0x0d:
-				if( GetWRefCon( GetDialogWindow( theDlg)) != 8775)
+				if (GetWRefCon( GetDialogWindow( theDlg)) != 8775)
 				{
 					*itemHit = 1;
 					return true;
@@ -373,16 +373,16 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 				break;
 		}
 	}
-	else if( myIntEvent->what == nullEvent)
+	else if (myIntEvent->what == nullEvent)
 	{
 		TEHandle	textEdit;
 		
 		///////
 		
 		/*	textEdit = GetDialogTextEditHandle( theDlg);
-		 if( textEdit) TEIdle( textEdit);*/
+		 if (textEdit) TEIdle( textEdit);*/
 		
-		//if( aDiaPeek->textH != NULL && aDiaPeek->editField != -1) TEIdle( aDiaPeek->textH);
+		//if (aDiaPeek->textH != NULL && aDiaPeek->editField != -1) TEIdle( aDiaPeek->textH);
 		
 		///////
 		
@@ -391,18 +391,18 @@ Boolean MyIntModalDialog( DialogPtr theDlg, short *itemHit, EventRecord *myIntEv
 		LoopSet = thePrefs.LoopType;
 		thePrefs.LoopType = 4;
 		
-		if( GetWRefCon( GetDialogWindow( theDlg)) != 9996) DoGlobalNull();
+		if (GetWRefCon( GetDialogWindow( theDlg)) != 9996) DoGlobalNull();
 		
 		thePrefs.LoopType = LoopSet;
 		
 		/*		GetFrontProcess( &PSN);
-		 if( PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
+		 if (PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
 		 PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN) SetFrontProcess( &playerPROPSN);*/
 		
 		*itemHit = -5;
 		return( true );
 	}
-	else if( myIntEvent->what == osEvt)
+	else if (myIntEvent->what == osEvt)
 	{
 		DoOSEvent( myIntEvent, true);
 	}
@@ -414,15 +414,15 @@ Boolean MyModalDialog( DialogPtr theDlg, short *itemHit)
 {
 	EventRecord		gModalDialogEvent;
 	
-	if( MyIntModalDialog( theDlg, itemHit, &gModalDialogEvent) == false)
+	if (MyIntModalDialog( theDlg, itemHit, &gModalDialogEvent) == false)
 	{
 #if 0
-		if( IsDialogEvent( &gModalDialogEvent))
+		if (IsDialogEvent( &gModalDialogEvent))
 		{
 			short 		whichItem;
 			DialogPtr	whichDialog;
 			
-			if( DialogSelect( &gModalDialogEvent, &whichDialog, &whichItem))
+			if (DialogSelect( &gModalDialogEvent, &whichDialog, &whichItem))
 			{
 				*itemHit = whichItem;
 			}
@@ -450,7 +450,7 @@ pascal void MyDlgFilterNav(		NavEventCallbackMessage 	callBackSelector,
 			switch (callBackParms->eventData.eventDataParms.event->what)
 			{
 				case updateEvt:
-					if( (WindowPtr) callBackParms->eventData.eventDataParms.event->message == callBackParms->window)
+					if ((WindowPtr) callBackParms->eventData.eventDataParms.event->message == callBackParms->window)
 					{
 						
 					}
@@ -485,10 +485,10 @@ void InverseRadio( short item, DialogPtr dlog)
 
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 
-	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "InverseRadio itemHandle = NULL");
+	if (itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "InverseRadio itemHandle = NULL");
 
-	if( itemType >= 128) itemType -= 128;
-	if( itemType != 6 && itemType != 5) MyDebugStr( __LINE__, __FILE__, "Error in InverseRadio");
+	if (itemType >= 128) itemType -= 128;
+	if (itemType != 6 && itemType != 5) MyDebugStr( __LINE__, __FILE__, "Error in InverseRadio");
 
 	SetControlValue( (ControlHandle) itemHandle,!GetControlValue( (ControlHandle) itemHandle));
 }
@@ -502,12 +502,12 @@ void TurnRadio( short item, DialogPtr dlog, Boolean alors)
 	
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 	
-	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "TurnRadio itemHandle = NULL");
+	if (itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "TurnRadio itemHandle = NULL");
 	
-	if( itemType >= 128) itemType -= 128;
-	if( itemType != 6 && itemType != 5) MyDebugStr( __LINE__, __FILE__, "Error in TurnRadio");
+	if (itemType >= 128) itemType -= 128;
+	if (itemType != 6 && itemType != 5) MyDebugStr( __LINE__, __FILE__, "Error in TurnRadio");
 	
-	if( alors)
+	if (alors)
 	{
 		SetControlValue( (ControlHandle) itemHandle, 1);
 	}
@@ -526,7 +526,7 @@ void ControlSwitch(short item, DialogPtr dlog, short Switch)
 	
 	//GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 	
-	//if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "ControlSwitch itemHandle = NULL");
+	//if (itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "ControlSwitch itemHandle = NULL");
 	
 	GetDialogItemAsControl( dlog, item, &control );
 	
@@ -539,11 +539,11 @@ void MyMoveControl( ControlHandle ah, short x, short y)
 {
 	Rect	rect;
 
-	if( ah == 0) MyDebugStr( __LINE__, __FILE__, "MyMoveControl ah == 0");
+	if (ah == 0) MyDebugStr( __LINE__, __FILE__, "MyMoveControl ah == 0");
 	
 	GetControlBounds( ah, &rect);
 
-	if( rect.top  != y ||
+	if (rect.top  != y ||
 		rect.left != x)
 		MoveControl( ah, x, y);
 }
@@ -552,11 +552,11 @@ void MySizeControl( ControlHandle ah, short x, short y)
 {
 	Rect	rect;
 	
-	if( ah == 0) MyDebugStr( __LINE__, __FILE__, "MySizeControl ah == 0");
+	if (ah == 0) MyDebugStr( __LINE__, __FILE__, "MySizeControl ah == 0");
 	
 	GetControlBounds( ah, &rect);
 	
-	if( rect.right - rect.left != x ||
+	if (rect.right - rect.left != x ||
 		rect.bottom - rect.top != y)
 		SizeControl( ah, x, y);
 }
@@ -567,10 +567,10 @@ void MySizeWindow( DialogPtr dlg, short right, short bottom, Boolean v)
 	
 	GetPortBounds( GetDialogPort( dlg), &caRect);
 	
-	if( bottom != caRect.bottom || right != caRect.right)
+	if (bottom != caRect.bottom || right != caRect.right)
 	{
-		if( right <= 0) return;
-		if( bottom <= 0) return;
+		if (right <= 0) return;
+		if (bottom <= 0) return;
 		
 		SizeWindow( GetDialogWindow( dlg), right, bottom, v);
 	}
@@ -605,7 +605,7 @@ Boolean MyTrackControl( ControlHandle	myCtl, Point where, ControlActionUPP funct
 	SetControlVisibility( myCtl, true, false);
 	HiliteControl( myCtl, kControlButtonPart);
 	
-	if( function == NULL)
+	if (function == NULL)
 	{
 		ControlActionUPP	MyControlUPP = NewControlActionUPP( myTrackAction);
 		
@@ -713,7 +713,7 @@ void SetDText (DialogPtr dlog, short item, Str255 str)
 
 	GetDialogItemAsControl( dlog, item, &control );
 	err = SetControlData( control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
-	if( err) MyDebugStr( __LINE__, __FILE__, "Error in SetDText");
+	if (err) MyDebugStr( __LINE__, __FILE__, "Error in SetDText");
 	DrawOneControl( control);
 }
 
@@ -725,7 +725,7 @@ void WriteCText (DialogPtr dlog, short item, char *str)
 	
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 	
-	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "WriteCText itemHandle = NULL");
+	if (itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "WriteCText itemHandle = NULL");
 	
 	MyC2PStr( str);
 	
@@ -744,9 +744,9 @@ void GetDText (DialogPtr dlog, short item, StringPtr str)
 	Rect	itemRect;
 	
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
-	if( itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "Error in SetDText");
-	if( itemType >= 128) itemType -= 128;
-	if( itemType != 8 && itemType != 16) MyDebugStr( __LINE__, __FILE__, "Error in itemType");
+	if (itemHandle == NULL) MyDebugStr( __LINE__, __FILE__, "Error in SetDText");
+	if (itemType >= 128) itemType -= 128;
+	if (itemType != 8 && itemType != 16) MyDebugStr( __LINE__, __FILE__, "Error in itemType");
 	
 	GetDialogItemText (itemHandle, str);
 }
@@ -761,7 +761,7 @@ void OSType2Str( OSType type, Str255 str)
 	
 	for( i = 4; i > 0; i--)
 	{
-		if( str[ i] == ' ') str[ 0]--;
+		if (str[ i] == ' ') str[ 0]--;
 		else return;
 	}
 }
@@ -848,7 +848,7 @@ short NewOffscreenPixMap(PixMapHandle *thePixMap, Rect *picRect)
 	
 	(*offscreenPixMap)->pmTable = GetCTable( 8);
 //	DetachResource( (Handle) (*offscreenPixMap)->pmTable);
-//	if( HandToHand( (Handle*) &(*offscreenPixMap)->pmTable) != noErr) MyDebugStr( __LINE__, __FILE__, "HandToHand Error");
+//	if (HandToHand( (Handle*) &(*offscreenPixMap)->pmTable) != noErr) MyDebugStr( __LINE__, __FILE__, "HandToHand Error");
 //	DisposeHandle( (*offscreenPixMap)->pmTable);
 
 	*thePixMap = offscreenPixMap;
@@ -865,7 +865,7 @@ Ptr NewADDRPtrI( short SizeBuffer)
 
 void ZapPixMap(PixMapHandle *offscreenPixMap)
 {
-	if( (**offscreenPixMap)->pmTable != NULL)
+	if ((**offscreenPixMap)->pmTable != NULL)
 	{
 		MyDisposHandle( (Handle*) &(**offscreenPixMap)->pmTable);
 		(**offscreenPixMap)->pmTable = NULL;
@@ -946,7 +946,7 @@ short PicToPix (PicHandle thePic, PixMapHandle *offscreenPixMap)
 				(GWorldFlags) 0);
 	
 	errCode = NewOffscreenPixMap( &*offscreenPixMap, &picRect);
-	if( errCode != noErr) MyDebugStr( __LINE__, __FILE__, "Error in PicToPix");
+	if (errCode != noErr) MyDebugStr( __LINE__, __FILE__, "Error in PicToPix");
 	
 	LockPixels( GetPortPixMap( theGWorld));
 	SetGWorld( theGWorld, NULL);
@@ -984,7 +984,7 @@ short IclToPix (Handle theIcon, PixMapHandle *offscreenPixMap)
 			return(errCode);
 			}
 	
-	if( theDepth == 8)
+	if (theDepth == 8)
 	{
 		for( i = 0; i < picRect.bottom * picRect.right; i++)
 		(***offscreenPixMap).baseAddr[i] = (char) (*theIcon)[i];
@@ -1051,7 +1051,7 @@ short SetScroll(ControlHandle vScroll, TEHandle TEH)
 
 	SetControlMaximum( vScroll, n > 0 ? n : 0);
 	
-	if( gUseControlSize) SetControlViewSize( vScroll, ((**TEH).viewRect.bottom-(**TEH).viewRect.top) / height);
+	if (gUseControlSize) SetControlViewSize( vScroll, ((**TEH).viewRect.bottom-(**TEH).viewRect.top) / height);
 
 	return 0;
 }
@@ -1064,7 +1064,7 @@ void FrameRectRelief( Rect *theRect)
 #define GrisClair	0xFFFF
 #define GrisFonce	0x4000
 	
-	if( (**(**GetMainDevice()).gdPMap).pixelSize < 8)
+	if ((**(**GetMainDevice()).gdPMap).pixelSize < 8)
 	{
 		aCopy.left = theRect->left ;
 		aCopy.right = theRect->right +1;

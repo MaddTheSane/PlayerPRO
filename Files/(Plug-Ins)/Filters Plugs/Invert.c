@@ -27,7 +27,7 @@ static OSErr mainInvert(sData					*theData,
 				
 				*SamplePtr++ = temp;
 				
-				if( StereoMode)
+				if (StereoMode)
 				{
 					SamplePtr++;
 					i++;
@@ -47,7 +47,7 @@ static OSErr mainInvert(sData					*theData,
 				
 				*SamplePtr++ = temp;
 				
-				if( StereoMode)
+				if (StereoMode)
 				{
 					SamplePtr++;
 					i++;

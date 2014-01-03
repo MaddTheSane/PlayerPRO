@@ -12,7 +12,7 @@ void DragManagerInstalled(void)
 	 // we're just going to return true.
 	long  gestaltResponse;
 	
-	if( (Gestalt(gestaltDragMgrAttr, &gestaltResponse) != noErr) ||
+	if ((Gestalt(gestaltDragMgrAttr, &gestaltResponse) != noErr) ||
 	   (!(gestaltResponse & (1 << gestaltDragMgrPresent))))
 	{
 		DragManagerUse = false;

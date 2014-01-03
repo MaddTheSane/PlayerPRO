@@ -31,7 +31,7 @@ static HRESULT CFPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
 	CFUUIDRef interfaceID = CFUUIDCreateFromUUIDBytes( kCFAllocatorDefault, iid );
 	
 	// Test the requested ID against the valid interfaces.
-	if( CFEqual( interfaceID, kPlayerPRODigitalPlugInterfaceID ) ) {
+	if (CFEqual( interfaceID, kPlayerPRODigitalPlugInterfaceID ) ) {
 		
 		//  If the TestInterface was requested, bump the ref count, set the ppv parameter
 		//  equal to the instance, and return good status.
@@ -41,7 +41,7 @@ static HRESULT CFPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
 		CFRelease(interfaceID);
 		return S_OK;
 	}
-	else if( CFEqual( interfaceID, IUnknownUUID ) ) 
+	else if (CFEqual( interfaceID, IUnknownUUID ) ) 
 	{
 		
 		//  If the IUnknown interface was requested, same as above.

@@ -60,7 +60,7 @@ OSErr NCallPlugIns( 		short						PlugNo,					// CODE du plug
 	
 	SetPort( savedPort);
 
-	if( myErr != noErr)
+	if (myErr != noErr)
 	{
 		Erreur( 40, myErr);
 		return( myErr);
@@ -149,7 +149,7 @@ void InitPlug(void)
 				tempPlugRef = CFBundleGetPlugIn(tempBundleRef);
 				tempMADPlug = PPFilterLoadPlug(tempPlugRef);
 				if (tempMADPlug) {
-					if( tPlug > MAXFILTERSPLUGS) 
+					if (tPlug > MAXFILTERSPLUGS) 
 					{
 						MyDebugStr( __LINE__, __FILE__, "Too many plugs");
 						break;

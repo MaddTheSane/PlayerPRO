@@ -97,16 +97,16 @@ Rect	caRect;
 	MyMoveControl( theCtl, -1, caRect.bottom-15);
 //	SizeControl( theCtl, ClassicDlog->portRect.right -13, 16);
 
-	if( NoteZone.right < caRect.right -13)
+	if (NoteZone.right < caRect.right -13)
 		MySizeControl( theCtl, NoteZone.right + 2, 16);
 	else MySizeControl( theCtl, caRect.right -13, 16);
 	
-	if( ZoomLevelPat != 1)
+	if (ZoomLevelPat != 1)
 	{
 		SetControlMinimum( theCtl, 0);
 		SetControlMaximum( theCtl, PatternLength - PatternLength/ZoomLevelPat);
 
-		if( gUseControlSize) SetControlViewSize( theCtl, PatternLength/ZoomLevelPat);
+		if (gUseControlSize) SetControlViewSize( theCtl, PatternLength/ZoomLevelPat);
 	}
 	else
 	{
@@ -123,14 +123,14 @@ void SetWClassic( short No)
 	Str255		String, aStr, theStr;
 	short		x;
 
-	if( ClassicDlog == NULL) return;
+	if (ClassicDlog == NULL) return;
 
 	No = PatCopyXIM;
 
 	NumToString( (long) No, String);
 	pStrcpy( aStr, "\p");
-	if( No< 10) pStrcat( aStr, "\p0");
-	if( No< 100) pStrcat( aStr, "\p0");
+	if (No< 10) pStrcat( aStr, "\p0");
+	if (No< 100) pStrcat( aStr, "\p0");
 	pStrcat( aStr, String);
 	
 	pStrcpy( String, "\pPattern: ");
@@ -138,7 +138,7 @@ void SetWClassic( short No)
 	
 	theStr[ 0] = 20;
 	for( x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ PatCopyXIM]->header.name[ x];
-	for( x = 1; x < 20; x++) if( theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
+	for( x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
 	pStrcat( String, "\p ");
 	pStrcat( String, theStr);
 	
@@ -158,7 +158,7 @@ short	NCount = 1;
 
     while( NCount <= 84)
     {
-    	if( myFrq >= GetOldPeriod( NCount, NOFINETUNE)) return NCount;	//if( myFrq >= MADDriver->pitchTable[ NCount][ 0] ) return NCount;
+    	if (myFrq >= GetOldPeriod( NCount, NOFINETUNE)) return NCount;	//if (myFrq >= MADDriver->pitchTable[ NCount][ 0] ) return NCount;
     	NCount++;
   	}
   	
@@ -208,11 +208,11 @@ Rect	caRect;
 	temp.bottom = NUMBER_NOTES*16 + NoteZone.top + 16;
 	
 	lSizeVH = 0;
-	if( theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( ClassicDlog), theEvent.where, &temp);
+	if (theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( ClassicDlog), theEvent.where, &temp);
 	
 	GetPortBounds( GetDialogPort( ClassicDlog), &caRect);
 
-	if( lSizeVH != 0)
+	if (lSizeVH != 0)
 	{
 		tempA = LoWord( lSizeVH);
 		tempB = HiWord( lSizeVH) - NoteZone.top;
@@ -222,13 +222,13 @@ Rect	caRect;
 		tempA = caRect.right;
 		tempB = caRect.bottom - NoteZone.top;
 		
-		if( tempA >= temp.right) tempA = temp.right-1;
-		if( tempB >= temp.bottom) tempB = temp.bottom-1;
+		if (tempA >= temp.right) tempA = temp.right-1;
+		if (tempB >= temp.bottom) tempB = temp.bottom-1;
 	}
 	
-	if( tempA < PatternLength) tempA = PatternLength;
+	if (tempA < PatternLength) tempA = PatternLength;
 
-	if( (theEvent.modifiers & optionKey) != 0)
+	if ((theEvent.modifiers & optionKey) != 0)
 	{
 		tempA = tempA / PatternLength;
 		tempA = tempA * PatternLength;
@@ -266,33 +266,33 @@ Rect				destRect;
 
 	Note = false;
 	
-	if( tt < 0) return;
-	if( tt >= curMusic->partition[ PatCopyXIM]->header.size) return;
+	if (tt < 0) return;
+	if (tt >= curMusic->partition[ PatCopyXIM]->header.size) return;
 	
 	theCommand = GetMADCommand( tt, i, curMusic->partition[ PatCopyXIM]);
 	
 	val = theCommand->ins;
-	if( val != 0)
+	if (val != 0)
 	{
-		if( curSelecInstru == -1) Note = true;
-		else if( curSelecInstru == val - 1) Note = true;
+		if (curSelecInstru == -1) Note = true;
+		else if (curSelecInstru == val - 1) Note = true;
 	}
 	
 	val = theCommand->note;
-	if( val == 0xFF) Note = false;
-	if( val == 0xFE) Note = false;
+	if (val == 0xFF) Note = false;
+	if (val == 0xFE) Note = false;
 	
 	Pos = NUMBER_NOTES - val;
 	
-	if( Note == true)
+	if (Note == true)
 	{
 		destRect.left = (tt - GetControlValue( theCtl)) * CurLarg;
 		destRect.right = destRect.left + CurLarg;
 		destRect.top = Pos * CurHaut + NoteZone.top;
-		if( destRect.top < NoteZone.top) destRect.top = NoteZone.top;
+		if (destRect.top < NoteZone.top) destRect.top = NoteZone.top;
 		
 		destRect.bottom = destRect.top + CurHaut;
-		if( destRect.bottom > NoteZone.bottom) destRect.bottom = NoteZone.bottom;
+		if (destRect.bottom > NoteZone.bottom) destRect.bottom = NoteZone.bottom;
 		
  		SwitchColor( i);
  		PaintRect( &destRect);
@@ -305,7 +305,7 @@ void DrawCurrentNote( short tt)
 	Rect				destRect;
 	GrafPtr				savePort;
 
-	if( ClassicDlog == NULL) return;
+	if (ClassicDlog == NULL) return;
 	
 	GetPort( &savePort);
 	SetPortDialogPort( ClassicDlog);
@@ -319,13 +319,13 @@ void DrawCurrentNote( short tt)
 	ForeColor( blackColor);
 	PaintRect( &destRect);
 	
-	if( curSelecTrack != -1) AfficheClassicRect( tt, curSelecTrack);
+	if (curSelecTrack != -1) AfficheClassicRect( tt, curSelecTrack);
 	else
 	{
 		for(i=0; i< curMusic->header->numChn; i++) AfficheClassicRect( tt, i);
 	}
 	
-	if( tt == InvertN)
+	if (tt == InvertN)
 	{
 		GetInvertRect( InvertN, &destRect);
 		InvertRect( &destRect);
@@ -345,7 +345,7 @@ void DrawCurrentClassic(void)
 	RgnHandle			saveClipRgn;
 	Rect				caRect;
 	
-	if( ClassicDlog == NULL) return;
+	if (ClassicDlog == NULL) return;
 
 	GetPort( &SavePort);
 	SetPortDialogPort( ClassicDlog);
@@ -372,13 +372,13 @@ void DrawCurrentClassic(void)
 	
 	ClipRect( &NoteZone);
 
-	if( curMusic != NULL)
+	if (curMusic != NULL)
 	{
 		for(tt=0; tt<PatternLength; tt++)
 		{	
 			cSize.v = tt;
 			
-			if( curSelecTrack != -1) AfficheClassicRect( tt, curSelecTrack);
+			if (curSelecTrack != -1) AfficheClassicRect( tt, curSelecTrack);
 			else
 			{
 				for(i=0; i< curMusic->header->numChn; i++) AfficheClassicRect( tt, i);
@@ -405,7 +405,7 @@ void DoNullClassic(void)
 	RgnHandle	visibleRegion;
 
 
- 	if( ClassicDlog == NULL) return;
+ 	if (ClassicDlog == NULL) return;
  
  	GetPort( &SavePort);
  	SetPortDialogPort( ClassicDlog);
@@ -413,11 +413,11 @@ void DoNullClassic(void)
 	TextFont( 4);
 	TextSize( 9);
 
-	if( PatCopyXIM != MADDriver->Pat || PLCopyXIM != MADDriver->PL || PatternLength != curMusic->partition[ PatCopyXIM]->header.size)
+	if (PatCopyXIM != MADDriver->Pat || PLCopyXIM != MADDriver->PL || PatternLength != curMusic->partition[ PatCopyXIM]->header.size)
 	{
 		PatCopyXIM = MADDriver->Pat;
 		PLCopyXIM = MADDriver->PL;
-		if( PatternLength != curMusic->partition[ PatCopyXIM]->header.size)
+		if (PatternLength != curMusic->partition[ PatCopyXIM]->header.size)
 		{
 			PatternLength = curMusic->partition[ PatCopyXIM]->header.size;
 			theEvent.what = 0;
@@ -441,14 +441,14 @@ void DoNullClassic(void)
 		InvertN = -1;
 	}
 
-	if( InvertN != MADDriver->PartitionReader)
+	if (InvertN != MADDriver->PartitionReader)
 	{
 		zz = InvertN;
 		InvertN = MADDriver->PartitionReader;
-		if( zz != -1) DrawCurrentNote( zz);
+		if (zz != -1) DrawCurrentNote( zz);
 		
 		GetInvertRect( InvertN, &tempRect);
-		if( !SectRect( &tempRect, &NoteZone, &resulRect))
+		if (!SectRect( &tempRect, &NoteZone, &resulRect))
 		{
 			SetControlValue( theCtl, InvertN);
 			DrawCurrentClassic();
@@ -459,7 +459,7 @@ void DoNullClassic(void)
 		InvertRect( &tempRect);
 	}
 		
-	if( GetDialogWindow( ClassicDlog) == oldWindow)
+	if (GetDialogWindow( ClassicDlog) == oldWindow)
 	{
 		pt = theEvent.where;
 		GlobalToLocal( &pt);
@@ -468,23 +468,23 @@ void DoNullClassic(void)
 		
 		GetPortVisibleRegion( GetWindowPort( oldWindow), visibleRegion);
 		
-		if( PtInRgn( pt, visibleRegion))
+		if (PtInRgn( pt, visibleRegion))
 		{
-			if( PtInRect( pt, &NoteZone))
+			if (PtInRect( pt, &NoteZone))
 			{
 				GetKeys( km);
-				if( IsPressed( 0x003A) && ZoomLevelPat != 1)
+				if (IsPressed( 0x003A) && ZoomLevelPat != 1)
 				{
 					SetCursor( &ZoomOutCrsr);
 				}
-				else if( IsPressed( 0x0037) && ZoomLevelPat < 32)
+				else if (IsPressed( 0x0037) && ZoomLevelPat < 32)
 				{
 					SetCursor( &ZoomInCrsr);
 				}
 				else
 				{
-					if( SelectMode == ePlay) SetCursor( &PlayCrsr);
-					else if( SelectMode == eZoom) SetCursor( &ZoomInCrsr);
+					if (SelectMode == ePlay) SetCursor( &PlayCrsr);
+					else if (SelectMode == eZoom) SetCursor( &ZoomInCrsr);
 				}
 			}
 			else SetCursor( GetQDGlobalsArrow( &qdarrow));
@@ -502,7 +502,7 @@ void UpdateClassicInfo(void)
 {
 	GrafPtr		SavePort;
 	
-	if( ClassicDlog == NULL) return;
+	if (ClassicDlog == NULL) return;
 	
  	GetPort( &SavePort);
  	SetPortDialogPort( ClassicDlog);
@@ -538,7 +538,7 @@ void  UpdateClassicWindow( DialogPtr GetSelection)  	/* Pointer to this dialog *
 
 		GetDialogItem( ClassicDlog, 13, &itemType, &itemHandle, &itemRect);
 		
-		if( curSelecTrack >= 0)
+		if (curSelecTrack >= 0)
 		{
 			SwitchColor( curSelecTrack);
 			PaintRect( &itemRect);
@@ -567,7 +567,7 @@ long			lRefCon;
 short			maxValue, minValue, curVal, XX, sVal;
 RgnHandle		aRgn;
 
-if( ctlPart <= 0) return;
+if (ctlPart <= 0) return;
 
 lRefCon = GetControlReference( theControl);
 maxValue = GetControlMaximum( theControl);
@@ -578,28 +578,28 @@ curVal = sVal = GetControlValue( theControl);
 	{
 		case kControlUpButtonPart:
 			curVal -= 1;
-			if( curVal < minValue) curVal = minValue;
+			if (curVal < minValue) curVal = minValue;
 		break;
 		
 		case kControlDownButtonPart:
 			curVal += 1;
-			if( curVal > maxValue) curVal = maxValue;
+			if (curVal > maxValue) curVal = maxValue;
 		break;
 		
 		case kControlPageUpPart:
 			curVal -= PatternLength;
-			if( curVal < minValue) curVal = minValue;
+			if (curVal < minValue) curVal = minValue;
 		break;
 		
 		case kControlPageDownPart:
 			curVal += PatternLength;
-			if( curVal > maxValue) curVal = maxValue;
+			if (curVal > maxValue) curVal = maxValue;
 		break;
 	}
 	
 	SetControlValue( theControl, curVal);
 	
-	if( sVal != curVal)
+	if (sVal != curVal)
 	{
 		aRgn = NewRgn();
 		ScrollRect( &NoteZone, (sVal - curVal)*CurLarg, 0, aRgn);
@@ -640,10 +640,10 @@ void DoItemPressClassic( short whichItem, DialogPtr whichDialog)    			/* Item h
 			if(PtInRect( myPt, &NoteZone))
 			{
 				GetKeys( km);
-				if( IsPressed( 0x003A))
+				if (IsPressed( 0x003A))
 				{
 					while( Button()) {};
-					if( ZoomLevelPat > 1)
+					if (ZoomLevelPat > 1)
 					{
 						ZoomLevelPat /= 2;
 						CurLarg	/= 2;
@@ -655,10 +655,10 @@ void DoItemPressClassic( short whichItem, DialogPtr whichDialog)    			/* Item h
 						InvertN = -1;
 					}
 				}
-				else if( IsPressed( 0x0037) || SelectMode == eZoom)
+				else if (IsPressed( 0x0037) || SelectMode == eZoom)
 				{
 					while( Button()) {};
-					if( ZoomLevelPat < 32)
+					if (ZoomLevelPat < 32)
 					{
 						ZoomLevelPat *= 2;
 						CurLarg	*= 2;
@@ -674,7 +674,7 @@ void DoItemPressClassic( short whichItem, DialogPtr whichDialog)    			/* Item h
 						InvertN = -1;
 					}
 				}
-				else if( SelectMode == ePlay)
+				else if (SelectMode == ePlay)
 				{
 					IsPlay = MusicPlayActive;
 					
@@ -682,10 +682,10 @@ void DoItemPressClassic( short whichItem, DialogPtr whichDialog)    			/* Item h
 					myPt.h /= CurLarg;
 					myPt.h += GetControlValue( theCtl);
 					MADDriver->PartitionReader = myPt.h;
-					if( MADDriver->PartitionReader < 0) MADDriver->PartitionReader = 0;
-					else if( MADDriver->PartitionReader >= curMusic->partition[ PatCopyXIM]->header.size) MADDriver->PartitionReader = curMusic->partition[ PatCopyXIM]->header.size - 1;
+					if (MADDriver->PartitionReader < 0) MADDriver->PartitionReader = 0;
+					else if (MADDriver->PartitionReader >= curMusic->partition[ PatCopyXIM]->header.size) MADDriver->PartitionReader = curMusic->partition[ PatCopyXIM]->header.size - 1;
 					
-					if( IsPlay == false) DoPlay();
+					if (IsPlay == false) DoPlay();
 					
 					while( Button())
 					{
@@ -693,23 +693,23 @@ void DoItemPressClassic( short whichItem, DialogPtr whichDialog)    			/* Item h
 						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 					}
 					
-					if( IsPlay == false) DoPause();
+					if (IsPlay == false) DoPause();
 				}
 			}
 			else	// *** Press in scrollbars !!! ***
 			{
 				ctlPart = FindControl( myPt, GetDialogWindow( whichDialog), &theControl);
-				if( theControl == theCtl)
+				if (theControl == theCtl)
 				{
-					if( ctlPart == kControlIndicatorPart)
+					if (ctlPart == kControlIndicatorPart)
 					{
 						bogus = TrackControl( theControl, myPt, NULL);
-						if( bogus != 0)
+						if (bogus != 0)
 						{
 							DrawCurrentClassic();
 						}
 					}
-					else if( ctlPart > 0)
+					else if (ctlPart > 0)
 					{
 						MyControlUPP = NewControlActionUPP( actionProcClassic);
 						TrackControl(theControl, myPt, MyControlUPP);
@@ -723,14 +723,14 @@ void DoItemPressClassic( short whichItem, DialogPtr whichDialog)    			/* Item h
 		switch( whichItem)
 		{
 			case 12:
-				if( GetControlHilite( InfoBut) == 0  && MyTrackControl( InfoBut, theEvent.where, NULL))
+				if (GetControlHilite( InfoBut) == 0  && MyTrackControl( InfoBut, theEvent.where, NULL))
 				{
 					DialogPatternInfo( PatCopyXIM);
 				}
 			break;
 
 			case 14:
-				if( GetControlHilite( PlayBut)	 == 0 && MyTrackControl( PlayBut, theEvent.where, NULL))
+				if (GetControlHilite( PlayBut)	 == 0 && MyTrackControl( PlayBut, theEvent.where, NULL))
 				{
 					SelectMode = ePlay;
 					HiliteControl( PlayBut, kControlButtonPart);
@@ -739,7 +739,7 @@ void DoItemPressClassic( short whichItem, DialogPtr whichDialog)    			/* Item h
 			break;
 
 			case 15:
-				if( GetControlHilite( ZoomBut) == 0 && MyTrackControl( ZoomBut, theEvent.where, NULL))
+				if (GetControlHilite( ZoomBut) == 0 && MyTrackControl( ZoomBut, theEvent.where, NULL))
 				{
 					SelectMode = eZoom;
 					HiliteControl( PlayBut, 0);
@@ -772,7 +772,7 @@ void DoItemPressClassic( short whichItem, DialogPtr whichDialog)    			/* Item h
 				{
 					curSelecTrack = (Byte) LoWord( mresult) - 2;
 
-					if( curSelecTrack == -1)
+					if (curSelecTrack == -1)
 					{
 						SetDText( whichDialog, 5, "\pAll Channels");
 					}
@@ -782,7 +782,7 @@ void DoItemPressClassic( short whichItem, DialogPtr whichDialog)    			/* Item h
 						SetDText( whichDialog, 5, theStr);
 					}
 					GetDialogItem( whichDialog, 13, &itemType, &itemHandle, &itemRect);
-					if( curSelecTrack >= 0)
+					if (curSelecTrack >= 0)
 					{
 						SwitchColor( curSelecTrack);
 						PaintRect( &itemRect);
@@ -821,7 +821,7 @@ void DoItemPressClassic( short whichItem, DialogPtr whichDialog)    			/* Item h
 				{
 					curSelecInstru = (Byte) LoWord( mresult) - 2;
 					
-					if( curSelecInstru == -1)
+					if (curSelecInstru == -1)
 					{
 						SetDText( whichDialog, 6, "\pAll instruments");
 					}
@@ -852,7 +852,7 @@ void CreateClassicWindow(void)
 	short		itemType;
 	Str255		aStr;
 
-	if( ClassicDlog != NULL)
+	if (ClassicDlog != NULL)
 	{
 		SetWindEtat( GetDialogWindow( ClassicDlog));
 		return;
@@ -956,7 +956,7 @@ void CreateClassicWindow(void)
 
 void CloseClassicWindow(void)
 {
-	if( ClassicDlog != NULL)
+	if (ClassicDlog != NULL)
 	{
 		DisposeDialog( ClassicDlog);
 		SetItemMark( ViewsMenu, mPatternV, noMark);
@@ -966,5 +966,5 @@ void CloseClassicWindow(void)
 
 void DoKeyPressClassic( short theChar)
 {
-	if( theChar == getinfo) DialogPatternInfo( PatCopyXIM);
+	if (theChar == getinfo) DialogPatternInfo( PatCopyXIM);
 }

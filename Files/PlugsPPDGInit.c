@@ -44,7 +44,7 @@ OSErr CallPPDGPlugIns(short PlugNo, Pcmd *myPcmd)
 	SetPort(savedPort);
 	
 	
-	if( iErr != noErr)
+	if (iErr != noErr)
 	{
 		Erreur( 40, iErr);
 	}	
@@ -84,7 +84,7 @@ void InitPPDGPlug(void)
 				tempPlugRef = CFBundleGetPlugIn(tempBundleRef);
 				tempMADPlug = PPDGLoadPlug(tempPlugRef);
 				if (tempMADPlug) {
-					if( tPlug > FilterPlugMax) {
+					if (tPlug > FilterPlugMax) {
 						MyDebugStr( __LINE__, __FILE__, "Too many plugs!");
 						break;
 					}

@@ -51,7 +51,7 @@ Rect	caRect;
 	
 	GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
 
-	if( caRect.bottom == SMALLH) MySizeWindow( ToolsDlog, caRect.right, LARGEH, true);
+	if (caRect.bottom == SMALLH) MySizeWindow( ToolsDlog, caRect.right, LARGEH, true);
 	else
 	{
 		MySizeWindow( ToolsDlog, SMALLL, SMALLH, true);
@@ -63,10 +63,10 @@ void SizeCommandWindow( Boolean L, Boolean H)
 {
 	short l, h;
 
-	if( L) l = LARGEL;
+	if (L) l = LARGEL;
 	else l = SMALLL;
 	
-	if( H) h = LARGEH;
+	if (H) h = LARGEH;
 	else h = SMALLH;
 	
 	MySizeWindow( ToolsDlog, l, h, true);
@@ -74,7 +74,7 @@ void SizeCommandWindow( Boolean L, Boolean H)
 
 Cmd* GetCmdDlogActif()
 {	
-	if( (*TEH[ curActif])->active != 0)
+	if ((*TEH[ curActif])->active != 0)
 		return GetMADCommand( oldPos, oldTrack, curMusic->partition[ oldPat]);
 	else
 		return (Cmd*) -1L;
@@ -86,7 +86,7 @@ Rect	caRect;
 	
 	GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
 
-	if( caRect.bottom == SMALLH) MySizeWindow( ToolsDlog, caRect.right, LARGEH, true);
+	if (caRect.bottom == SMALLH) MySizeWindow( ToolsDlog, caRect.right, LARGEH, true);
 	UpdateNow = true;
 	
 //	HandleViewsChoice( 10);
@@ -101,7 +101,7 @@ void UpdatePatternMenu(void)
 short	i,x ;
 Str255	aStr, theStr;
 
-	if( thePatternMenu == NULL) Debugger();
+	if (thePatternMenu == NULL) Debugger();
 	
 	x = CountMenuItems( thePatternMenu);
 	for( i = 0; i < x;i++) DeleteMenuItem( thePatternMenu, 1);
@@ -126,10 +126,10 @@ StScrpHandle	theStyle;
 RGBColor		color;
 short			textID;
 
-	if( effect == 14) textID = 300 + HI( arg);
+	if (effect == 14) textID = 300 + HI( arg);
 	else textID = 200 + effect;
 
-	if( ActualShowEffect != textID)
+	if (ActualShowEffect != textID)
 	{
 		GetBackColor( &color);
 		RGBBackColor( &theColor);
@@ -175,13 +175,13 @@ short	Analyse( short	menuType)
 			
 			cHdle = TEGetText( TEH[ VolumeTE]);
 			
-			if( (*cHdle)[ 1] >= 'A' && (*cHdle)[ 1] <= 'F') Oct = 10 + (*cHdle)[ 1] - 'A';
-			if( (*cHdle)[ 1] >= '0' && (*cHdle)[ 1] <= '9') Oct = (*cHdle)[ 1] - '0';
+			if ((*cHdle)[ 1] >= 'A' && (*cHdle)[ 1] <= 'F') Oct = 10 + (*cHdle)[ 1] - 'A';
+			if ((*cHdle)[ 1] >= '0' && (*cHdle)[ 1] <= '9') Oct = (*cHdle)[ 1] - '0';
 			
-			if( (*cHdle)[ 0] >= 'A' && (*cHdle)[ 0] <= 'F') Oct += (10 + (*cHdle)[ 0] - 'A')<<4;
-			if( (*cHdle)[ 0] >= '0' && (*cHdle)[ 0] <= '9') Oct += ((*cHdle)[ 0] - '0')<<4;
+			if ((*cHdle)[ 0] >= 'A' && (*cHdle)[ 0] <= 'F') Oct += (10 + (*cHdle)[ 0] - 'A')<<4;
+			if ((*cHdle)[ 0] >= '0' && (*cHdle)[ 0] <= '9') Oct += ((*cHdle)[ 0] - '0')<<4;
 			
-			if( Oct >= 0 && Oct < 256) return Oct;
+			if (Oct >= 0 && Oct < 256) return Oct;
 			break;
 			
 		case InstruTE:
@@ -193,10 +193,10 @@ short	Analyse( short	menuType)
 			aStr[ 2] = (*cHdle)[ 1];
 			aStr[ 3] = (*cHdle)[ 2];
 			
-			if( aStr[ 2] == '-') ltemp = 0;
+			if (aStr[ 2] == '-') ltemp = 0;
 			else StringToNum( aStr, &ltemp);
 			
-			if( ltemp >= 0 && ltemp < MAXINSTRU) return ltemp;
+			if (ltemp >= 0 && ltemp < MAXINSTRU) return ltemp;
 			break;
 			
 		case NoteTE:
@@ -208,14 +208,14 @@ short	Analyse( short	menuType)
 			aStr[ 2] = (*cHdle)[ 1];
 			aStr[ 3] = (*cHdle)[ 2];
 			
-			if( EqualString( aStr, "\pOFF", false, false))
+			if (EqualString( aStr, "\pOFF", false, false))
 			{
 				return NUMBER_NOTES+1;
 			}
 			else
 			{
 				Oct = ConvertNote2No( aStr);
-				if( Oct >= 0 && Oct < NUMBER_NOTES) return Oct;
+				if (Oct >= 0 && Oct < NUMBER_NOTES) return Oct;
 				else return NUMBER_NOTES;
 			}
 			break;
@@ -227,12 +227,12 @@ short	Analyse( short	menuType)
 			
 			Oct = -1;
 			
-			if( **cHdle >= 'L') Oct = 17;
-			if( **cHdle >= 'O') Oct = 18;
-			if( **cHdle >= 'A' && **cHdle <= 'G') Oct = 10 + **cHdle - 'A';
-			if( **cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
+			if (**cHdle >= 'L') Oct = 17;
+			if (**cHdle >= 'O') Oct = 18;
+			if (**cHdle >= 'A' && **cHdle <= 'G') Oct = 10 + **cHdle - 'A';
+			if (**cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
 			
-			if( Oct >= 0 && Oct < 19) return (Oct + 1);
+			if (Oct >= 0 && Oct < 19) return (Oct + 1);
 			break;
 			
 		case ArguTE:
@@ -240,13 +240,13 @@ short	Analyse( short	menuType)
 			
 			cHdle = TEGetText( TEH[ ArguTE]);
 			
-			if( (*cHdle)[ 1] >= 'A' && (*cHdle)[ 1] <= 'F') Oct = 10 + (*cHdle)[ 1] - 'A';
-			if( (*cHdle)[ 1] >= '0' && (*cHdle)[ 1] <= '9') Oct = (*cHdle)[ 1] - '0';
+			if ((*cHdle)[ 1] >= 'A' && (*cHdle)[ 1] <= 'F') Oct = 10 + (*cHdle)[ 1] - 'A';
+			if ((*cHdle)[ 1] >= '0' && (*cHdle)[ 1] <= '9') Oct = (*cHdle)[ 1] - '0';
 			
-			if( (*cHdle)[ 0] >= 'A' && (*cHdle)[ 0] <= 'F') Oct += (10 + (*cHdle)[ 0] - 'A')<<4;
-			if( (*cHdle)[ 0] >= '0' && (*cHdle)[ 0] <= '9') Oct += ((*cHdle)[ 0] - '0')<<4;
+			if ((*cHdle)[ 0] >= 'A' && (*cHdle)[ 0] <= 'F') Oct += (10 + (*cHdle)[ 0] - 'A')<<4;
+			if ((*cHdle)[ 0] >= '0' && (*cHdle)[ 0] <= '9') Oct += ((*cHdle)[ 0] - '0')<<4;
 			
-			if( Oct >= 0 && Oct < 256) return Oct;
+			if (Oct >= 0 && Oct < 256) return Oct;
 			break;
 	}
 	
@@ -266,7 +266,7 @@ void SetCmdValue( short	menuType)
 	
 	allCellCopy = AllCellApply;
 	
-	if( EditorDlog == NULL) AllCellApply = false;
+	if (EditorDlog == NULL) AllCellApply = false;
 	
 	curMusic->hasChanged = true;
 	
@@ -276,28 +276,28 @@ void SetCmdValue( short	menuType)
 			aStr[ 0] = (*TEH[ VolumeTE])->teLength;
 			
 			ltemp = 0;
-			if( aStr[ 0] == 1)
+			if (aStr[ 0] == 1)
 			{
 				cHdle = TEGetText( TEH[ VolumeTE]);
 				
-				if( **cHdle >= 'A' && **cHdle <= 'F') ltemp = 10 + **cHdle - 'A';
-				if( **cHdle >= '0' && **cHdle <= '9') ltemp = **cHdle - '0';
+				if (**cHdle >= 'A' && **cHdle <= 'F') ltemp = 10 + **cHdle - 'A';
+				if (**cHdle >= '0' && **cHdle <= '9') ltemp = **cHdle - '0';
 			}
-			else if( aStr[ 0] >= 2)
+			else if (aStr[ 0] >= 2)
 			{
 				cHdle = TEGetText( TEH[ VolumeTE]);
 				
-				if( **cHdle >= 'A' && **cHdle <= 'F') ltemp = 10 + **cHdle - 'A';
-				if( **cHdle >= '0' && **cHdle <= '9') ltemp = **cHdle - '0';
+				if (**cHdle >= 'A' && **cHdle <= 'F') ltemp = 10 + **cHdle - 'A';
+				if (**cHdle >= '0' && **cHdle <= '9') ltemp = **cHdle - '0';
 				
-				if( (*cHdle)[ 1] >= 'A' && (*cHdle)[ 1] <= 'F') tt = 10 + (*cHdle)[ 1] - 'A';
-				if( (*cHdle)[ 1] >= '0' && (*cHdle)[ 1] <= '9') tt = (*cHdle)[ 1] - '0';
+				if ((*cHdle)[ 1] >= 'A' && (*cHdle)[ 1] <= 'F') tt = 10 + (*cHdle)[ 1] - 'A';
+				if ((*cHdle)[ 1] >= '0' && (*cHdle)[ 1] <= '9') tt = (*cHdle)[ 1] - '0';
 				
 				ltemp = ltemp*16 + tt;
 			}
-			if( ltemp < 0x10 || ltemp > 0xFF) ltemp = 0xFF;
+			if (ltemp < 0x10 || ltemp > 0xFF) ltemp = 0xFF;
 			
-			if( AllCellApply)
+			if (AllCellApply)
 			{
 				ApplyOnAllCell( -1, -1, -1, -1, ltemp);
 			}
@@ -314,8 +314,8 @@ void SetCmdValue( short	menuType)
 			
 			cHdle = TEGetText( TEH[ InstruTE]);
 			
-			if( (*cHdle)[ 1] == '-') ltemp = 0;
-			else if( aStr[ 0] > 0)
+			if ((*cHdle)[ 1] == '-') ltemp = 0;
+			else if (aStr[ 0] > 0)
 			{
 				aStr[ 1] = (*cHdle)[ 0];
 				aStr[ 2] = (*cHdle)[ 1];
@@ -324,9 +324,9 @@ void SetCmdValue( short	menuType)
 				StringToNum( aStr, &ltemp);
 			}
 			else ltemp = 0;
-			if( ltemp < 0 || ltemp > MAXINSTRU) ltemp = 0;
+			if (ltemp < 0 || ltemp > MAXINSTRU) ltemp = 0;
 			
-			if( AllCellApply)
+			if (AllCellApply)
 			{
 				ApplyOnAllCell( ltemp, -1, -1, -1, -1);
 			}
@@ -342,7 +342,7 @@ void SetCmdValue( short	menuType)
 		case NoteTE:
 			aStr[ 0] = (*TEH[ NoteTE])->teLength;
 			
-			if( aStr[ 0] > 1)
+			if (aStr[ 0] > 1)
 			{
 				cHdle = TEGetText( TEH[ NoteTE]);
 				
@@ -350,13 +350,13 @@ void SetCmdValue( short	menuType)
 				aStr[ 2] = (*cHdle)[ 1];
 				aStr[ 3] = (*cHdle)[ 2];
 				
-				if( EqualString( aStr, "\pOFF", false, false))
+				if (EqualString( aStr, "\pOFF", false, false))
 				{
 					Oct = 0xFE;
 				}
 				else
 				{
-					if( aStr[ 2] >= '0' && aStr[ 2] <= '9')
+					if (aStr[ 2] >= '0' && aStr[ 2] <= '9')
 					{
 						aStr[ 3] = aStr[ 2];
 						aStr[ 2] = ' ';
@@ -364,12 +364,12 @@ void SetCmdValue( short	menuType)
 					
 					Oct = ConvertNote2No( aStr);
 					
-					if( Oct < 0 || Oct > NUMBER_NOTES) Oct = 0xFF;
+					if (Oct < 0 || Oct > NUMBER_NOTES) Oct = 0xFF;
 				}
 			}
 			else Oct = 0xFF;
 			
-			if( AllCellApply)
+			if (AllCellApply)
 			{
 				ApplyOnAllCell( -1, Oct, -1, -1, -1);
 			}
@@ -384,18 +384,18 @@ void SetCmdValue( short	menuType)
 			aStr[ 0] = (*TEH[ EffectTE])->teLength;
 			Oct = -1;
 			
-			if( aStr[ 0] > 0)
+			if (aStr[ 0] > 0)
 			{
 				cHdle = TEGetText( TEH[ EffectTE]);
 				
-				if( **cHdle == 'L') Oct = 17;
-				if( **cHdle == 'O') Oct = 18;
-				if( **cHdle >= 'A' && **cHdle <= 'G') Oct = 10 + **cHdle - 'A';
-				if( **cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
+				if (**cHdle == 'L') Oct = 17;
+				if (**cHdle == 'O') Oct = 18;
+				if (**cHdle >= 'A' && **cHdle <= 'G') Oct = 10 + **cHdle - 'A';
+				if (**cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
 			}
-			if( Oct < 0 || Oct >= 19) Oct = 0;
+			if (Oct < 0 || Oct >= 19) Oct = 0;
 			
-			if( AllCellApply)
+			if (AllCellApply)
 			{
 				ApplyOnAllCell( -1, -1, Oct, -1, -1);
 			}
@@ -412,27 +412,27 @@ void SetCmdValue( short	menuType)
 			aStr[ 0] = (*TEH[ ArguTE])->teLength;
 			
 			Oct = 0;
-			if( aStr[ 0] == 1)
+			if (aStr[ 0] == 1)
 			{
 				cHdle = TEGetText( TEH[ ArguTE]);
 				
-				if( **cHdle >= 'A' && **cHdle <= 'F') Oct = 10 + **cHdle - 'A';
-				if( **cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
+				if (**cHdle >= 'A' && **cHdle <= 'F') Oct = 10 + **cHdle - 'A';
+				if (**cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
 			}
-			else if( aStr[ 0] >= 2)
+			else if (aStr[ 0] >= 2)
 			{
 				cHdle = TEGetText( TEH[ ArguTE]);
 				
-				if( **cHdle >= 'A' && **cHdle <= 'F') Oct = 10 + **cHdle - 'A';
-				if( **cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
+				if (**cHdle >= 'A' && **cHdle <= 'F') Oct = 10 + **cHdle - 'A';
+				if (**cHdle >= '0' && **cHdle <= '9') Oct = **cHdle - '0';
 				
-				if( (*cHdle)[ 1] >= 'A' && (*cHdle)[ 1] <= 'F') tt = 10 + (*cHdle)[ 1] - 'A';
-				if( (*cHdle)[ 1] >= '0' && (*cHdle)[ 1] <= '9') tt = (*cHdle)[ 1] - '0';
+				if ((*cHdle)[ 1] >= 'A' && (*cHdle)[ 1] <= 'F') tt = 10 + (*cHdle)[ 1] - 'A';
+				if ((*cHdle)[ 1] >= '0' && (*cHdle)[ 1] <= '9') tt = (*cHdle)[ 1] - '0';
 				
 				Oct = Oct*16 + tt;
 			}
 			
-			if( AllCellApply)
+			if (AllCellApply)
 			{
 				ApplyOnAllCell( -1, -1, -1, Oct, -1);
 			}
@@ -448,9 +448,9 @@ void SetCmdValue( short	menuType)
 	
 	/*** Update du Digital Editor ***/
 	
-	if( !AllCellApply)
+	if (!AllCellApply)
 	{
-		if( aCmd != NULL)
+		if (aCmd != NULL)
 		{
 			UPDATE_Note( oldPos, oldTrack);
 		}
@@ -464,7 +464,7 @@ void myTESetText( Ptr textPtr, long length, TEHandle hTE)
 {
 short	i;
 
-	if( (*hTE)->teLength != length)
+	if ((*hTE)->teLength != length)
 	{
 		TESetText( textPtr, length, hTE);
 		TEUpdate( &(*hTE)->viewRect, hTE);
@@ -473,7 +473,7 @@ short	i;
 	{
 		for( i = 0; i < (*hTE)->teLength; i++)
 		{
-			if( (*(*hTE)->hText)[ i] != textPtr[ i])
+			if ((*(*hTE)->hText)[ i] != textPtr[ i])
 			{
 				TESetText( textPtr, length, hTE);
 				TEUpdate( &(*hTE)->viewRect, hTE);
@@ -499,12 +499,12 @@ void DoNullCmdWindow(void)
 	
 	for( i = InstruTE; i<= VolumeTE; i++) TEIdle( TEH[ i]);
 	
-	if( oldPat != MADDriver->Pat || UpdateNow == true)
+	if (oldPat != MADDriver->Pat || UpdateNow == true)
 	{
 		oldPat = MADDriver->Pat;
 		UpdateNow = true;
 		
-		if( curTrack >= curMusic->header->numChn)
+		if (curTrack >= curMusic->header->numChn)
 		{
 			curTrack = 1;
 		}
@@ -513,7 +513,7 @@ void DoNullCmdWindow(void)
 		SetDText( ToolsDlog, 15, tempStr);
 	}
 
-	if( oldTrack != curTrack || UpdateNow == true)
+	if (oldTrack != curTrack || UpdateNow == true)
 	{
 		oldTrack = curTrack;
 		UpdateNow = true;
@@ -522,23 +522,23 @@ void DoNullCmdWindow(void)
 		SetDText( ToolsDlog, 17, tempStr);
 	}
 
-	if( thePrefs.MusicTrace == true || curPos == -1)
+	if (thePrefs.MusicTrace == true || curPos == -1)
 	{
-		if( oldPos != MADDriver->PartitionReader) UpdateNow = true;
+		if (oldPos != MADDriver->PartitionReader) UpdateNow = true;
 		newVal = MADDriver->PartitionReader;
 	}
 	else
 	{
-		if( oldPos != curPos) UpdateNow = true;
+		if (oldPos != curPos) UpdateNow = true;
 		newVal = curPos;
 	}
 	
-	if( UpdateNow == true)
+	if (UpdateNow == true)
 	{
 		Rect	caRect;
 		
 		oldPos = newVal;
-		if( oldPos >= curMusic->partition[ oldPat]->header.size) oldPos = curMusic->partition[ oldPat]->header.size - 1;
+		if (oldPos >= curMusic->partition[ oldPat]->header.size) oldPos = curMusic->partition[ oldPat]->header.size - 1;
 		NumToString( oldPos, tempStr);
 		SetDText( ToolsDlog, 16, tempStr);
 
@@ -551,12 +551,12 @@ void DoNullCmdWindow(void)
 		myTESetText( (Ptr) &EEffect[ theCommand->cmd], 1, TEH[ EffectTE]);
 		myTESetText( (Ptr) EArgu[ theCommand->arg], 2, TEH[ ArguTE]);
 		
-		if( theCommand->vol == 0xFF) myTESetText( (Ptr) EInstru[ 0], 2, TEH[ VolumeTE]);
+		if (theCommand->vol == 0xFF) myTESetText( (Ptr) EInstru[ 0], 2, TEH[ VolumeTE]);
 		else myTESetText( (Ptr) EArgu[ theCommand->vol], 2, TEH[ VolumeTE]);
 		
 		GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
 		
-		if( caRect.right > 240) AfficheGoodEffect( theCommand->cmd, theCommand->arg);
+		if (caRect.right > 240) AfficheGoodEffect( theCommand->cmd, theCommand->arg);
 		
 		TESetSelect( 0, 32000, TEH[ curActif]);
 
@@ -622,7 +622,7 @@ void  UpdateCmdDlogWindow(DialogPtr GetSelection)
 		
 		for( i = InstruTE; i<= VolumeTE; i++) TEUpdate( &caRect, TEH[ i]);
 				
-		if( (**(**GetMainDevice()).gdPMap).pixelSize == 1) BackColor( whiteColor);
+		if ((**(**GetMainDevice()).gdPMap).pixelSize == 1) BackColor( whiteColor);
 		else RGBBackColor( &theColor);
 
 		TEUpdate( &caRect, EfTE);
@@ -674,10 +674,10 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
  		switch( whichItem)
  		{
 			case 35:
-				//if( (*keyMapCntl) != 255 && MyTrackControl( keyMapCntl, theEvent.where, NULL))
-				if( GetControlHilite( FlipBut) != 255 && MyTrackControl( FlipBut, theEvent.where, NULL))
+				//if ((*keyMapCntl) != 255 && MyTrackControl( keyMapCntl, theEvent.where, NULL))
+				if (GetControlHilite( FlipBut) != 255 && MyTrackControl( FlipBut, theEvent.where, NULL))
 				{
-					if( caRect.right == LARGEL)
+					if (caRect.right == LARGEL)
 					{
 						MySizeWindow( whichDialog, SMALLL , caRect.bottom, true);
 						HiliteControl( FlipBut, 0);
@@ -702,7 +702,7 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
  				TEActivate( TEH[ whichItem - 31]);
  			//	TEClick( myPt, false, TEH[ whichItem - 31]);
  				
- 				if( whichItem - 31 != curActif) SetCmdValue( curActif);
+ 				if (whichItem - 31 != curActif) SetCmdValue( curActif);
 				
 				TESetSelect( 0, 300, TEH[ whichItem - 31]);
 				
@@ -718,7 +718,7 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
  				TEActivate( TEH[ VolumeTE]);
  			//	TEClick( myPt, false, TEH[ VolumeTE]);
  				
- 				if( VolumeTE != curActif) SetCmdValue( curActif);
+ 				if (VolumeTE != curActif) SetCmdValue( curActif);
 
  				curActif = VolumeTE;
  				
@@ -909,10 +909,10 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
 	 					
 	 					iTick = TickCount();
 		 				SetCmdValue( curActif);
-		 				if( MADDriver->PartitionReader > 0) MADDriver->PartitionReader--;
+		 				if (MADDriver->PartitionReader > 0) MADDriver->PartitionReader--;
 		 				else
 		 				{
-		 					if( MADDriver->PL > 0)
+		 					if (MADDriver->PL > 0)
 		 					{
 		 						MADDriver->PartitionReader = 63;
 		 						MADDriver->PL--;
@@ -930,7 +930,7 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
  			break;*/
  			
  			case 21:
- 				if( MyTrackControl( DelBut, theEvent.where, NULL))
+ 				if (MyTrackControl( DelBut, theEvent.where, NULL))
 	 			{
 	 				Point	theCell;
 	 			
@@ -942,9 +942,9 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
  			break;
  			
  			case 45:
- 				if( GetControlHilite( keyMapCntl) != 255 && MyTrackControl( keyMapCntl, theEvent.where, NULL))
+ 				if (GetControlHilite( keyMapCntl) != 255 && MyTrackControl( keyMapCntl, theEvent.where, NULL))
 				{
-					if( keyMapNote == false)
+					if (keyMapNote == false)
 					{
 						HiliteControl( keyMapCntl, kControlButtonPart);
 						keyMapNote = true;
@@ -960,9 +960,9 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
  			break;
  			
  			case 40:
- 				if( GetControlHilite( AllBut) != 255 && MyTrackControl( AllBut, theEvent.where, NULL))
+ 				if (GetControlHilite( AllBut) != 255 && MyTrackControl( AllBut, theEvent.where, NULL))
 				{
-					if( AllCellApply == false)
+					if (AllCellApply == false)
 					{
 						HiliteControl( AllBut, kControlButtonPart);
 						AllCellApply = true;
@@ -991,10 +991,10 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
 	 					
 	 					iTick = TickCount();
 		 				SetCmdValue( curActif);
-		 				if( MADDriver->PartitionReader < 63) MADDriver->PartitionReader++;
+		 				if (MADDriver->PartitionReader < 63) MADDriver->PartitionReader++;
 		 				else
 		 				{	
-		 					if( MADDriver->PL < 127)
+		 					if (MADDriver->PL < 127)
 		 					{
 		 						MADDriver->PartitionReader = 0;
 		 						MADDriver->PL++;
@@ -1012,7 +1012,7 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
  			break;*/
  			
  			case 22:
- 				if( MyTrackControl( PlayCntl, theEvent.where, NULL))
+ 				if (MyTrackControl( PlayCntl, theEvent.where, NULL))
 	 			{
 	 				SetCmdValue( curActif);
 	 				
@@ -1162,7 +1162,7 @@ void CreateCmdDlog(void)
 							201,
 							kControlBevelButtonNormalBevelProc,
 							0);
-	if( keyMapNote) HiliteControl( keyMapCntl, kControlButtonPart);
+	if (keyMapNote) HiliteControl( keyMapCntl, kControlButtonPart);
 	
 	
 	GetDialogItem( ToolsDlog , 40, &itemType, &itemHandle, &itemRect);
@@ -1176,7 +1176,7 @@ void CreateCmdDlog(void)
 							141,
 							kControlBevelButtonNormalBevelProc,
 							0);
-	if( EditorDlog == NULL) ApplyBut( 255);
+	if (EditorDlog == NULL) ApplyBut( 255);
 
 	GetDialogItem( ToolsDlog , 25, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
@@ -1220,7 +1220,7 @@ void CloseCmdDlog(void)
 {
 short	i;
 
-	if( ToolsDlog != NULL)
+	if (ToolsDlog != NULL)
 	{
 		SetCmdValue( curActif);
 		
@@ -1233,43 +1233,43 @@ short	i;
 
 Boolean TakeDecimal( short	*theChar)
 {
-	if( *theChar >= '0' && *theChar <= '9') return true;
+	if (*theChar >= '0' && *theChar <= '9') return true;
 	
 	return false;
 }
 
 Boolean HexaDecimal( short	*theChar)
 {
-	if( *theChar >= 'a' && *theChar <= 'f')
+	if (*theChar >= 'a' && *theChar <= 'f')
 	{
 		*theChar -= 0x20;
 		return true;
 	}
-	if( *theChar >= 'A' && *theChar <= 'F') return true;
-	if( *theChar >= '0' && *theChar <= '9') return true;
+	if (*theChar >= 'A' && *theChar <= 'F') return true;
+	if (*theChar >= '0' && *theChar <= '9') return true;
 	
 	return false;
 }
 
 Boolean TakeEffect( short	*theChar)
 {
-	if( *theChar >= 'a' && *theChar <= 'z') *theChar -= 0x20; 
-	if( *theChar == 'L') return true;
-	if( *theChar == 'O') return true;
-	if( *theChar >= 'A' && *theChar <= 'G') return true;
-	if( *theChar >= '0' && *theChar <= '9') return true;
+	if (*theChar >= 'a' && *theChar <= 'z') *theChar -= 0x20; 
+	if (*theChar == 'L') return true;
+	if (*theChar == 'O') return true;
+	if (*theChar >= 'A' && *theChar <= 'G') return true;
+	if (*theChar >= '0' && *theChar <= '9') return true;
 	
 	return false;
 }
 
 Boolean TakeNote( short	*theChar)
 {
-	if( HexaDecimal( theChar)) return true;
-	if( *theChar == 'G') return true;
-	if( *theChar == 'g') { *theChar -= 0x20; return true; }
+	if (HexaDecimal( theChar)) return true;
+	if (*theChar == 'G') return true;
+	if (*theChar == 'g') { *theChar -= 0x20; return true; }
 	
-	if( *theChar == '#') return true;
-	if( *theChar == ' ') return true;
+	if (*theChar == '#') return true;
+	if (*theChar == ' ') return true;
 	return false;
 }
 
@@ -1279,12 +1279,12 @@ Rect	caRect;
 	
 	GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
 
-	if( caRect.bottom <= 50)
+	if (caRect.bottom <= 50)
 	{
-		if( EditorDlog != NULL) if( GetDialogWindow( EditorDlog) != oldWindow) return false;
+		if (EditorDlog != NULL) if (GetDialogWindow( EditorDlog) != oldWindow) return false;
 	}
 	
-	if( (*TEH[ curActif])->active != 0) return true;
+	if ((*TEH[ curActif])->active != 0) return true;
 	else return false;
 }
 
@@ -1294,9 +1294,9 @@ Boolean		GoodNote = false;
 GrafPtr		savePort;
 Point		myPt;
 
-	if( theChar != 9)
+	if (theChar != 9)
 	{
-		if( AcceptKeysTools() == false) return;
+		if (AcceptKeysTools() == false) return;
 	}
 	
 	GetPort( &savePort);
@@ -1307,16 +1307,16 @@ Point		myPt;
 	switch( curActif)
 	{
 		case VolumeTE:
-			if( HexaDecimal( &theChar))
+			if (HexaDecimal( &theChar))
 			{
-				if( (*TEH[ curActif])->teLength < 2 ||
+				if ((*TEH[ curActif])->teLength < 2 ||
 					(*TEH[ curActif])->selStart != (*TEH[ curActif])->selEnd)
 					{
 						curMusic->hasChanged = true;
 						SaveUndo( UPattern, oldPat, "\pUndo 'Command Editing'");
 						TEKey( (char) theChar, TEH[ curActif]);
 					}
-				if( (*TEH[ curActif])->teLength >= 2)
+				if ((*TEH[ curActif])->teLength >= 2)
 				{
 					TESetSelect( 0, 32000, TEH[ curActif]);
 				}
@@ -1324,9 +1324,9 @@ Point		myPt;
 		break;
 	
 		case InstruTE:
-			if( TakeDecimal( &theChar))
+			if (TakeDecimal( &theChar))
 			{
-				if( (*TEH[ curActif])->teLength < 3 ||
+				if ((*TEH[ curActif])->teLength < 3 ||
 					(*TEH[ curActif])->selStart != (*TEH[ curActif])->selEnd)
 					{
 						curMusic->hasChanged = true;
@@ -1335,7 +1335,7 @@ Point		myPt;
 						
 					//	UpdateEditorInfo();
 					}
-				if( (*TEH[ curActif])->teLength >= 3)
+				if ((*TEH[ curActif])->teLength >= 3)
 				{
 					TESetSelect( 0, 32000, TEH[ curActif]);
 				}
@@ -1343,9 +1343,9 @@ Point		myPt;
 		break;
 		
 		case EffectTE:
-			if( TakeEffect( &theChar))
+			if (TakeEffect( &theChar))
 			{
-				if( (*TEH[ curActif])->teLength < 1 ||
+				if ((*TEH[ curActif])->teLength < 1 ||
 					(*TEH[ curActif])->selStart != (*TEH[ curActif])->selEnd)
 					{
 						curMusic->hasChanged = true;
@@ -1353,7 +1353,7 @@ Point		myPt;
 						TEKey( (char) theChar, TEH[ curActif]);
 					}
 				
-				if( (*TEH[ curActif])->teLength >= 1)
+				if ((*TEH[ curActif])->teLength >= 1)
 				{
 					TESetSelect( 0, 32000, TEH[ curActif]);
 				}
@@ -1361,10 +1361,10 @@ Point		myPt;
 		break;
 		
 		case NoteTE:
-			if( keyMapNote)
+			if (keyMapNote)
 			{
 				short note = ConvertCharToNote( theChar);
-				if( note != -1)
+				if (note != -1)
 				{
 					Str32 str;
 					Rect	caRect;
@@ -1382,9 +1382,9 @@ Point		myPt;
 			}
 			else
 			{
-				if( TakeNote( &theChar))
+				if (TakeNote( &theChar))
 				{
-					if( (*TEH[ curActif])->teLength < 3 ||
+					if ((*TEH[ curActif])->teLength < 3 ||
 						(*TEH[ curActif])->selStart != (*TEH[ curActif])->selEnd)
 						{
 							curMusic->hasChanged = true;
@@ -1392,7 +1392,7 @@ Point		myPt;
 							TEKey( (char) theChar, TEH[ curActif]);
 						}
 						
-					if( (*TEH[ curActif])->teLength >= 3)
+					if ((*TEH[ curActif])->teLength >= 3)
 					{
 						TESetSelect( 0, 32000, TEH[ curActif]);
 					}
@@ -1401,9 +1401,9 @@ Point		myPt;
 		break;
 		
 		case ArguTE:
-			if( HexaDecimal( &theChar))
+			if (HexaDecimal( &theChar))
 			{
-				if( (*TEH[ curActif])->teLength < 2 ||
+				if ((*TEH[ curActif])->teLength < 2 ||
 					(*TEH[ curActif])->selStart != (*TEH[ curActif])->selEnd)
 					{
 						curMusic->hasChanged = true;
@@ -1411,7 +1411,7 @@ Point		myPt;
 						TEKey( (char) theChar, TEH[ curActif]);
 					}
 				
-				if( (*TEH[ curActif])->teLength >= 2)
+				if ((*TEH[ curActif])->teLength >= 2)
 				{
 					TESetSelect( 0, 32000, TEH[ curActif]);
 				}
@@ -1419,16 +1419,16 @@ Point		myPt;
 		break;
 	}
 	
-	if( theChar == 27)	// ESC Key
+	if (theChar == 27)	// ESC Key
 	{
-		if( (*TEH[ curActif])->active != 0)
+		if ((*TEH[ curActif])->active != 0)
 		{
 			TEDeactivate( TEH[ curActif]);
 			
 			SetCmdValue( curActif);
 		}
 	}
-	if( theChar == 8)
+	if (theChar == 8)
 	{
 		curMusic->hasChanged = true;
 		SaveUndo( UPattern, oldPat, "\pUndo 'Command Editing'");
@@ -1436,9 +1436,9 @@ Point		myPt;
 		
 	//	UpdateEditorInfo();
 	}
-	else if( theChar == 9)
+	else if (theChar == 9)
 	{
-		if( (*TEH[ curActif])->active != 0)
+		if ((*TEH[ curActif])->active != 0)
 		{
 			Boolean		next;
 			short		loop;
@@ -1452,34 +1452,34 @@ Point		myPt;
 			
 			while( next == true && loop-- >= 0)
 			{
-				if( theEvent.modifiers & shiftKey) curActif--;
+				if (theEvent.modifiers & shiftKey) curActif--;
 				else curActif++;
 				
-				if( curActif > VolumeTE) curActif = InstruTE;
-				if( curActif < InstruTE) curActif = VolumeTE;
+				if (curActif > VolumeTE) curActif = InstruTE;
+				if (curActif < InstruTE) curActif = VolumeTE;
 				
 				next = false;
 				
-				if( curActif == InstruTE && thePrefs.DigitalInstru == false) next = true;
-				if( curActif == NoteTE && thePrefs.DigitalNote == false) next = true;
-				if( curActif == EffectTE && thePrefs.DigitalEffect == false) next = true;
-				if( curActif == ArguTE && thePrefs.DigitalArgu == false) next = true;
-				if( curActif == VolumeTE && thePrefs.DigitalVol == false) next = true;
+				if (curActif == InstruTE && thePrefs.DigitalInstru == false) next = true;
+				if (curActif == NoteTE && thePrefs.DigitalNote == false) next = true;
+				if (curActif == EffectTE && thePrefs.DigitalEffect == false) next = true;
+				if (curActif == ArguTE && thePrefs.DigitalArgu == false) next = true;
+				if (curActif == VolumeTE && thePrefs.DigitalVol == false) next = true;
 			}
 		}
 		else
 		{
 			curActif = InstruTE;
 			
-			if( curActif == InstruTE && thePrefs.DigitalInstru == false) curActif++;;
-			if( curActif == NoteTE && thePrefs.DigitalNote == false) curActif++;;
-			if( curActif == EffectTE && thePrefs.DigitalEffect == false) curActif++;;
-			if( curActif == ArguTE && thePrefs.DigitalArgu == false) curActif++;;
-			if( curActif == VolumeTE && thePrefs.DigitalVol == false) curActif = InstruTE;
+			if (curActif == InstruTE && thePrefs.DigitalInstru == false) curActif++;;
+			if (curActif == NoteTE && thePrefs.DigitalNote == false) curActif++;;
+			if (curActif == EffectTE && thePrefs.DigitalEffect == false) curActif++;;
+			if (curActif == ArguTE && thePrefs.DigitalArgu == false) curActif++;;
+			if (curActif == VolumeTE && thePrefs.DigitalVol == false) curActif = InstruTE;
 		}
 		
-		if( curActif > VolumeTE) curActif = InstruTE;
-		if( curActif < InstruTE) curActif = VolumeTE;
+		if (curActif > VolumeTE) curActif = InstruTE;
+		if (curActif < InstruTE) curActif = VolumeTE;
 		
 		TEActivate( TEH[ curActif]);
 		TESetSelect( 0, 32000, TEH[ curActif]);
@@ -1495,7 +1495,7 @@ Point		myPt;
  					DoKeyPressEditor( theChar);
 				}
 				
-	if( (**(**GetMainDevice()).gdPMap).pixelSize == 1) BackColor( whiteColor);
+	if ((**(**GetMainDevice()).gdPMap).pixelSize == 1) BackColor( whiteColor);
 	else RGBBackColor( &theColor);
 	
 	SetPatternCell( oldPos, oldTrack);
@@ -1510,16 +1510,16 @@ Rect	caRect;
 	
 	
 
-	if( ToolsDlog != NULL)
+	if (ToolsDlog != NULL)
 	{
 		GetPort( &savePort);
 		SetPortDialogPort( ToolsDlog);
 		
 		GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
 		
-		if( caRect.bottom > 50)
+		if (caRect.bottom > 50)
 		{
-			if( (*TEH[ curActif])->active != 0)
+			if ((*TEH[ curActif])->active != 0)
 			{
 				BackColor( whiteColor);
 				SetCmdValue( curActif);
@@ -1542,9 +1542,9 @@ GrafPtr	savePort;
 
 	DesactivateCmdWindow();
 	
-	if( whichItem < 0) return;
+	if (whichItem < 0) return;
 	
-	if( ToolsDlog != NULL)
+	if (ToolsDlog != NULL)
 	{
 		GetPort( &savePort);
 		SetPortDialogPort( ToolsDlog);
@@ -1572,16 +1572,16 @@ Rect	caRect;
 	
 	
 
-	if( ToolsDlog != NULL)
+	if (ToolsDlog != NULL)
 	{
 		GetPort( &savePort);
 		SetPortDialogPort( ToolsDlog);
 		
 		GetPortBounds( GetDialogPort( ToolsDlog), &caRect);
 		
-		if( caRect.bottom > 50)
+		if (caRect.bottom > 50)
 		{
-			if( (*TEH[ curActif])->active != 0)
+			if ((*TEH[ curActif])->active != 0)
 			{
 				BackColor( whiteColor);
 				TEDeactivate( TEH[ curActif]);
@@ -1593,7 +1593,7 @@ Rect	caRect;
 		}
 		else
 		{
-			if( (*TEH[ curActif])->active != 0)
+			if ((*TEH[ curActif])->active != 0)
 			{
 				TEDeactivate( TEH[ curActif]);
 				SetCmdValue( curActif);

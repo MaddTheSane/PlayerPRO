@@ -55,7 +55,7 @@ static OSErr mainWave(OSType					order,						// Order to execute
 			
 			theSound = ConvertWAV( AlienFileFSSpec, &lS, &lE, &sS, &rate, &stereo);
 			
-			if( theSound != 0L)
+			if (theSound != 0L)
 			{
 				myErr = CallRPlaySoundUPP( theSound, GetPtrSize( theSound), 0, 0xFF, sS, lS, lE, rate, stereo);
 				
@@ -76,7 +76,7 @@ static OSErr mainWave(OSType					order,						// Order to execute
 			
 			theSound = ConvertWAV( AlienFileFSSpec, &lS, &lE, &sS, &rate, &stereo);
 			
-			if( theSound != NULL)
+			if (theSound != NULL)
 				inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
 		}
 			break;
@@ -86,11 +86,11 @@ static OSErr mainWave(OSType					order,						// Order to execute
 			Ptr	theSound;
 			
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				inOutBytes = 100L;
 				theSound = NewPtr( inOutBytes);
-				if( theSound == NULL) myErr = MADNeedMemory;
+				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
 					FSRead( iFileRefI, &inOutBytes, theSound);

@@ -71,7 +71,7 @@ void DoFullScreenNow(WindowPtr mWind)
 	
 	success = EnterFullscreen(GetDisplayID(mFullscreenDevice), &mFullscreenSize, mFullscreenDepth, mWind, mFullscreenFreq);
 	
-	if( success)
+	if (success)
 	{
 		currentPort = BeginFrame();
 		
@@ -86,9 +86,9 @@ void DoFullScreenNow(WindowPtr mWind)
 			CallVisualFonction( MADDriver, GetCurrentID(), 'vrnd', (CGrafPtr) currentPort, 0, 0);
 			
 			WaitNextEvent( everyEvent, &theEvent, 1, NULL);
-			if( theEvent.what == keyDown) CallVisualFonction( MADDriver, GetCurrentID(), 'vevt', (CGrafPtr) currentPort, 0, 0);
+			if (theEvent.what == keyDown) CallVisualFonction( MADDriver, GetCurrentID(), 'vevt', (CGrafPtr) currentPort, 0, 0);
 			
-			if( MADDriver->musicEnd == true) DoLoadOtherMusic( true);
+			if (MADDriver->musicEnd == true) DoLoadOtherMusic( true);
 		}
 		EndFrame();
 		
@@ -171,9 +171,9 @@ void DoGrowVisual(void)
 	}
 	
 	lSizeVH = 0;
-	if( theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( VisualDlog), theEvent.where, &temp);
+	if (theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( VisualDlog), theEvent.where, &temp);
 	
-	if( lSizeVH != 0) {
+	if (lSizeVH != 0) {
 		tempA = LoWord( lSizeVH);
 		tempB = HiWord( lSizeVH);
 		
@@ -237,7 +237,7 @@ void CallVisualMain(long PlugNo, OSType msg)
 	
 	myErr = GetDiskFragment(&VisualPlug[PlugNo].file, 0, kCFragGoesToEOF, VisualPlug[PlugNo].file.name, kLoadCFrag, &VisualPlug[ PlugNo].connID, (Ptr *) &mainPLUG, errName);
 	
-	if( myErr == noErr) {
+	if (myErr == noErr) {
 		
 		VisualPlug[ PlugNo].msgInfo.u.initMessage.playerProc = PlayerPROProc;
 		VisualPlug[ PlugNo].msgInfo.u.initMessage.appCookie = (void*) PlugNo;
@@ -369,7 +369,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 	
 	Err = VisualPlug[ PlugNo].msgPlayer.u.registerVisualPluginMessage.handler(msg, &msgVisual, VisualPlug[ PlugNo].refCon);
 	
-	if( Err ) {
+	if (Err ) {
 		//Debugger();//Erreur( Err, Err);
 	} else {
 		switch( msg)		// OutPut
@@ -385,7 +385,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 				}
 #endif
 				
-				//if( temp != msgVisual.u.processSamplesMessage.maxSamples) Debugger();
+				//if (temp != msgVisual.u.processSamplesMessage.maxSamples) Debugger();
 			}
 				//Erreur( 0, msgVisual.u.processSamplesMessage.numOutputSamples);
 				break;
@@ -401,14 +401,14 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 		}
 	}
 	
-	if( msg != kVisualPluginProcessSamplesMessage) {
+	if (msg != kVisualPluginProcessSamplesMessage) {
 		CloseResFile( fileID);
 	}
 }
 
 void DoVisualNull()
 {
-	if( VisualDlog == NULL) return;
+	if (VisualDlog == NULL) return;
 	
 	CallVisualFonction( MADDriver, currentID, kVisualPluginRenderMessage, 0, NULL, 0);
 	
@@ -465,7 +465,7 @@ void LoadVisualPLUG(short No, StringPtr theName)
 	
 	GetIndString( tStr, 1000, 5);
 	BlockMoveData( tStr + 1, &ThePPINPlug[ No].InsSamp, 4);
-	if( ThePPINPlug[ No].InsSamp != 'SAMP' && ThePPINPlug[ No].InsSamp != 'INST') MyDebugStr( __LINE__, __FILE__, "Plug-Ins SAMP/INST Error");
+	if (ThePPINPlug[ No].InsSamp != 'SAMP' && ThePPINPlug[ No].InsSamp != 'INST') MyDebugStr( __LINE__, __FILE__, "Plug-Ins SAMP/INST Error");
 	
 	CloseResFile( fileID);
 #endif
@@ -492,21 +492,21 @@ void ScanDirVisualPlug(long dirID, short VRefNum)
 		if (PBGetCatInfoSync(&info) != noErr)
 			break;
 		
-		if( info.hFileInfo.ioFlFndrInfo.fdType == 'PLUG') {	
+		if (info.hFileInfo.ioFlFndrInfo.fdType == 'PLUG') {	
 			HGetVol( NULL, &vRefNum, &dirIDCopy);
 			
 			iErr = HSetVol( NULL, info.hFileInfo.ioVRefNum, dirID);
 			
-			if( tPlug > 50) MyDebugStr(__LINE__, __FILE__, "Too many plugs");
+			if (tPlug > 50) MyDebugStr(__LINE__, __FILE__, "Too many plugs");
 			
 			LoadVisualPLUG(tPlug, info.hFileInfo.ioNamePtr);
 			
 			tPlug++;
 			
 			iErr = HSetVol(NULL, vRefNum, dirIDCopy);
-			if( iErr != noErr) MyDebugStr(__LINE__, __FILE__, "HSetVol error...");
+			if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "HSetVol error...");
 		} else if((info.hFileInfo.ioFlAttrib & 16)) {
-			if( EqualString( info.hFileInfo.ioNamePtr, "\pPlugs", false, false) || PlugsFolderOK > 0) {
+			if (EqualString( info.hFileInfo.ioNamePtr, "\pPlugs", false, false) || PlugsFolderOK > 0) {
 				PlugsFolderOK++;
 				ScanDirVisualPlug(info.dirInfo.ioDrDirID, VRefNum);
 				PlugsFolderOK--;
@@ -530,13 +530,13 @@ void CreateVisualWindow(short ID)
 	Str255		String;
 	GrafPtr		savePort;
 	
-	if( ID >= tPlug) {
+	if (ID >= tPlug) {
 		VisualFullScreen();
 		return;
 	}
 	
-	if( VisualDlog != NULL) {
-		if( currentID == ID) {
+	if (VisualDlog != NULL) {
+		if (currentID == ID) {
 			SelectWindow2( GetDialogWindow( VisualDlog));
 			return;
 		} else {
@@ -590,7 +590,7 @@ void CloseVisual(void)
 	Point	Start;
 	GrafPtr	savedPort;
 	
-	if( VisualDlog != NULL)
+	if (VisualDlog != NULL)
 	{
 		GetPort( &savedPort);
 		SetPortDialogPort( VisualDlog);
@@ -624,7 +624,7 @@ void CloseVisual(void)
 	}
 	VisualDlog = NULL;
 	
-	if( tPlug > 0) DisableMenuItem( ViewsMenu, tPlug + 1 + mVisual);
+	if (tPlug > 0) DisableMenuItem( ViewsMenu, tPlug + 1 + mVisual);
 	
 //	SetItemMark( ViewsMenu, m3D, noMark);
 }
@@ -638,7 +638,7 @@ void DoItemPressVisual( short whichItem, DialogPtr whichDialog)
 	
 	GetPortBounds( GetDialogPort( whichDialog), &caRect);
 	
-	if( Location.h > caRect.right-16 &&
+	if (Location.h > caRect.right-16 &&
 		Location.h > caRect.right-16)
 		{
 			DoGrowVisual();
@@ -648,7 +648,7 @@ void DoItemPressVisual( short whichItem, DialogPtr whichDialog)
 
 void DoKeyVisual( DialogPtr whichDialog)
 {
-	if( whichDialog == NULL) return;
+	if (whichDialog == NULL) return;
 	
 	CallVisualFonction( MADDriver, currentID, kVisualPluginEventMessage, 0, NULL, 0);
 }
@@ -657,13 +657,13 @@ static	Boolean actuallyUse;
 
 void ProcessVisualPlug( MADDriverRec *intDriver, short* in, long inNum)
 {
-	if( actuallyUse) return;
+	if (actuallyUse) return;
 	
 	actuallyUse = true;
 
-	if( VisualDlog != NULL)
+	if (VisualDlog != NULL)
 	{
-		if( ReadyToProcess)
+		if (ReadyToProcess)
 		{
 			CallVisualFonction( intDriver, currentID, kVisualPluginProcessSamplesMessage, 0, in, inNum);
 		}
@@ -674,9 +674,9 @@ void ProcessVisualPlug( MADDriverRec *intDriver, short* in, long inNum)
 
 void FlushPlugin( void)
 {
-	if( VisualDlog != NULL)
+	if (VisualDlog != NULL)
 	{
-		if( ReadyToProcess)
+		if (ReadyToProcess)
 		{
 			CallVisualFonction( MADDriver, currentID, kVisualPluginFlushSamplesMessage, 0, 0, 0);
 		}
@@ -704,9 +704,9 @@ void InitVisual(void)
 
 	HSetVol( NULL, vRefNum, dirID);
 	
-	if( MacOSXSystem) tPlug = 0;
+	if (MacOSXSystem) tPlug = 0;
 	
-	if( tPlug > 0)
+	if (tPlug > 0)
 	{
 		AppendMenu( ViewsMenu, "\p-");
 		

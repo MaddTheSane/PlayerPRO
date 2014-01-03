@@ -99,7 +99,7 @@ void DoScrollText( DialogPtr aDia)
 
 	ScrollRect( &(*GetPortPixMap( gGWorldAbout))->bounds, 0, -1, NULL);
 
-	if( (curPosT % 60) == 0)
+	if ((curPosT % 60) == 0)
 	{
 		TextSize( 24);
 		TextFont( kFontIDHelvetica);
@@ -122,7 +122,7 @@ void DoScrollText( DialogPtr aDia)
 		
 		ForeColor( blackColor);
 		
-		if( tempStr[ 0] == 0) curPosT = 1;
+		if (tempStr[ 0] == 0) curPosT = 1;
 	}
 
 	curPosT++;
@@ -192,9 +192,9 @@ void ShowPerformance(void)
 	do
 	{
 		ModalDialog( MyDlgFilterDesc, &itemHit);
-		if( itemHit == 7) DebuggingMode = true;
+		if (itemHit == 7) DebuggingMode = true;
 		else if(itemHit == 8) DebuggingMode = false;
-		else if( itemHit == 1)
+		else if (itemHit == 1)
 		{
 			SetCursor( &watchCrsr);
 		
@@ -251,7 +251,7 @@ void ShowPerformance(void)
 			
 			SetCursor( GetQDGlobalsArrow( &qdarrow));
 		}
-		else if( itemHit == 9) MegaPurge();
+		else if (itemHit == 9) MegaPurge();
 	
 	}while( itemHit != 2);
 	
@@ -275,7 +275,7 @@ void DoAbout(void)
 	GetPort( &myPort);
 	
 	GetKeys( km);
-	if( IsPressed( 0x31) == true)
+	if (IsPressed( 0x31) == true)
 	{
 		ShowPerformance();
 		SetPort( myPort);
@@ -397,7 +397,7 @@ void DoAbout(void)
 	
 	curPosT = 50;
 	
-//	if( theDepth == 8) InitBounceBall( zeroPt.h, zeroPt.v, 0);
+//	if (theDepth == 8) InitBounceBall( zeroPt.h, zeroPt.v, 0);
 
 	while( !Button())
 	{
@@ -412,7 +412,7 @@ void DoAbout(void)
     					QDFlushPortBuffer( GetDialogPort( aDialog), NULL);
 
 	}
-//	if( theDepth == 8) CloseBounceBall();
+//	if (theDepth == 8) CloseBounceBall();
 	
 	ReleaseResource( (Handle) backPict);
 
@@ -536,15 +536,15 @@ Boolean DoHelp(void)
 		switch( itemHit)
 		{
 			case 1:
-				if( StartupWait != 0) itemHit = 0;
+				if (StartupWait != 0) itemHit = 0;
 				break;
 				
 			case -5:
 				DoGlobalNull();
 				
-				if( StartupWait != 0)
+				if (StartupWait != 0)
 				{
-					if( TickCount() >= StartupWait)
+					if (TickCount() >= StartupWait)
 					{
 						ControlSwitch( 7, theDialog, 0);
 						
@@ -624,7 +624,7 @@ void DoContent(WindowPtr theWindow, EventRecord *theEventI)
 	switch( cntlCode)
 	{
 	case kControlIndicatorPart:
-		if( gUseControlSize) goto LiveScroll;
+		if (gUseControlSize) goto LiveScroll;
 		else TrackControl(theControl, theEventI->where, NULL);
 		MyAdjustText( theControl);
 	break;
@@ -686,7 +686,7 @@ pascal void ScrollProc (ControlHandle theControl, short theCode)
 		break;
 	}
 	
-	if( theCode != kControlIndicatorPart) SetControlValue(theControl, oldCtl+scrollAmt);
+	if (theCode != kControlIndicatorPart) SetControlValue(theControl, oldCtl+scrollAmt);
 
 	MyAdjustText( theControl);
 }
@@ -707,7 +707,7 @@ pascal Boolean AboutFilter (DialogPtr theDialog, EventRecord *theEventI, short *
 		case updateEvt:
 			GetPort(&CurrentPort);
 			
-			if( (WindowPtr) theEventI->message == GetDialogWindow( theDialog))
+			if ((WindowPtr) theEventI->message == GetDialogWindow( theDialog))
 			{
 				whichWindow = (WindowPtr) theEventI->message;
 				
@@ -715,7 +715,7 @@ pascal Boolean AboutFilter (DialogPtr theDialog, EventRecord *theEventI, short *
 				BeginUpdate( whichWindow);
 					DrawDialog( GetDialogFromWindow( whichWindow));
 					
-					if( !AboutFirstCall)
+					if (!AboutFirstCall)
 					{
 						Rect	caRect;
 						
@@ -749,7 +749,7 @@ pascal Boolean AboutFilter (DialogPtr theDialog, EventRecord *theEventI, short *
 		case mouseDown:
 			thePart = FindWindow(theEventI->where, &whichWindow);
 			
-			if( whichWindow != GetDialogWindow( theDialog)) break;
+			if (whichWindow != GetDialogWindow( theDialog)) break;
 			
 			if(GetWRefCon( whichWindow) == GetWRefCon( FrontWindow()))
 			{

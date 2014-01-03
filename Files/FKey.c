@@ -23,7 +23,7 @@ void InitFKeyMenu( void)
 	Ptr		tempPtr;
 	
 	PKEYRes = GetResource( 'PKEY', 128);
-	if( PKEYRes == NULL) MyDebugStr( __LINE__, __FILE__, "Error loading PKEY Resource");
+	if (PKEYRes == NULL) MyDebugStr( __LINE__, __FILE__, "Error loading PKEY Resource");
 	
 	DetachResource( PKEYRes);
 	HLock( PKEYRes);
@@ -71,7 +71,7 @@ void GetFKeyDesc( short whichFKey, Str255 str)
 	
 	for( i = 0 ; i < FKeymaxItems; i++)
 	{
-		if( thePrefs.FKeyItem[ whichFKey] == FKeyItem[ i] &&
+		if (thePrefs.FKeyItem[ whichFKey] == FKeyItem[ i] &&
 			thePrefs.FKeyWind[ whichFKey] == FKeyWind[ i])
 			{
 				pStrcpy( str, PKEYDesc[ i]);
@@ -104,11 +104,11 @@ Boolean PressFKeyMenu( short itemID, DialogPtr dia, short whichFKey, Str255	str)
 	
 	curSelec = 1;
 	
-	if( thePrefs.FKeyItem[ whichFKey] != 0)
+	if (thePrefs.FKeyItem[ whichFKey] != 0)
 	{
 		for( i = 0 ; i < FKeymaxItems; i++)
 		{
-			if( thePrefs.FKeyItem[ whichFKey] == FKeyItem[ i] &&
+			if (thePrefs.FKeyItem[ whichFKey] == FKeyItem[ i] &&
 				thePrefs.FKeyWind[ whichFKey] == FKeyWind[ i])
 				{
 					curSelec = i+1;
@@ -151,7 +151,7 @@ WindowPtr FindRefWindow( long ref)
 	
 	while( aWind != NULL)
 	{
-		if( ref == GetWRefCon( aWind)) return (WindowPtr) aWind;
+		if (ref == GetWRefCon( aWind)) return (WindowPtr) aWind;
 		
 		aWind = GetNextWindow( aWind);
 	}
@@ -164,21 +164,21 @@ void PressFKey( short whichFKey)
 	DialogPtr	curDia;
 	short		i;
 	
-	if( thePrefs.FKeyTracks)
+	if (thePrefs.FKeyTracks)
 	{
-		if( (theEvent.modifiers & optionKey) != 0)	// Solo
+		if ((theEvent.modifiers & optionKey) != 0)	// Solo
 		{
 			short	noActive;
 			
 			for( i = 0, noActive = 0; i < curMusic->header->numChn; i++)
 			{
-				if( MADDriver->Active[ i] == true)
+				if (MADDriver->Active[ i] == true)
 				{
 					noActive++;
 				}
 			}
 			
-			if( noActive <= 1 && MADDriver->Active[ whichFKey] == true)
+			if (noActive <= 1 && MADDriver->Active[ whichFKey] == true)
 			{
 				for( i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
 			}
@@ -197,10 +197,10 @@ void PressFKey( short whichFKey)
 	}
 	else
 	{
-		if( !thePrefs.FKeyActive[ whichFKey]) return;
-		if( !thePrefs.FKeyItem[ whichFKey]) return;
+		if (!thePrefs.FKeyActive[ whichFKey]) return;
+		if (!thePrefs.FKeyItem[ whichFKey]) return;
 		
-		if( !FindRefWindow( thePrefs.FKeyWind[ whichFKey]))
+		if (!FindRefWindow( thePrefs.FKeyWind[ whichFKey]))
 		{
 			switch( thePrefs.FKeyWind[ whichFKey])
 			{
@@ -228,7 +228,7 @@ void PressFKey( short whichFKey)
 		
 		curDia = GetDialogFromWindow( FindRefWindow( thePrefs.FKeyWind[ whichFKey]));
 		
-		if( curDia)
+		if (curDia)
 		{
 			GrafPtr		curPort;
 			short		itemType;

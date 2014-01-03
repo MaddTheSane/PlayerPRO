@@ -32,9 +32,9 @@ static void AutoPosition( DialogPtr aDia)
 	do
 	{
 		aH = GetNextDevice( aH);
-		if( aH != NULL)
+		if (aH != NULL)
 		{
-			if( PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
@@ -46,12 +46,12 @@ static void AutoPosition( DialogPtr aDia)
 	while( aH != NULL);
 	
 	Position.h = mouse.h - XSize/2;
-	if( Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
-	else if( Position.h <= ViewRect.left) Position.h = ViewRect.left;
+	if (Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
+	else if (Position.h <= ViewRect.left) Position.h = ViewRect.left;
 
 	Position.v = mouse.v - YSize/2;
-	if( Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
-	else if( Position.v <= ViewRect.top) Position.v = ViewRect.top;
+	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
+	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
 	SetDialogDefaultItem( aDia, 1 );
 	SetDialogCancelItem( aDia, 2 );
@@ -96,7 +96,7 @@ static Ptr ConvertSampleC4SPD( Ptr src, long srcSize, short amp, long srcC4SPD, 
 	newSize = (srcSize * dstC4SPD) / srcC4SPD;
 	
 	dst = NewPtr( newSize);
-	if( dst == NULL) return NULL;
+	if (dst == NULL) return NULL;
 	
 	dst16 = (short*) dst;
 	dst8 = (char*) dst;
@@ -110,20 +110,20 @@ static Ptr ConvertSampleC4SPD( Ptr src, long srcSize, short amp, long srcC4SPD, 
 			right		= pos & ((1 << LRVAL)-1);
 			left		= (1 << LRVAL) - right;
 			
-			if( stereo)
+			if (stereo)
 			{
 				pos >>= LRVAL;
 				pos /= 2;
 				pos *= 2;
 				
-				if( 1 + pos >= srcSize) {}
+				if (1 + pos >= srcSize) {}
 				else tempL = (left * src8[ pos] + right * src8[ 2 + pos]) >> LRVAL;
 				
 				dst8[ x] = tempL;
 				
 				x++;
 				
-				if( 3 + pos >= srcSize) {}
+				if (3 + pos >= srcSize) {}
 				else tempR = (left * src8[ 1 + pos] + right * src8[ 3 + pos]) >> LRVAL;
 				
 				dst8[ x] = tempR;
@@ -132,7 +132,7 @@ static Ptr ConvertSampleC4SPD( Ptr src, long srcSize, short amp, long srcC4SPD, 
 			{
 				pos >>= LRVAL;
 				
-				if( pos < 0 ||  1 + pos >= srcSize) {}
+				if (pos < 0 ||  1 + pos >= srcSize) {}
 				else tempL = (left * src8[ pos] + right * src8[ 1 + pos]) >> LRVAL;
 				
 				dst8[ x] = tempL;
@@ -147,20 +147,20 @@ static Ptr ConvertSampleC4SPD( Ptr src, long srcSize, short amp, long srcC4SPD, 
 			right		= pos & ((1 << LRVAL)-1);
 			left		= (1 << LRVAL) - right;
 			
-			if( stereo)
+			if (stereo)
 			{
 				pos >>= LRVAL;
 				pos /= 2;
 				pos *= 2;
 				
-				if( 1 + pos >= srcSize/2) {}
+				if (1 + pos >= srcSize/2) {}
 				else tempL = (left * src16[ pos] + right * src16[ 2 + pos]) >> LRVAL;
 				
 				dst16[ x] = tempL;
 				
 				x++;
 				
-				if( 3 + pos >= srcSize/2) {}
+				if (3 + pos >= srcSize/2) {}
 				else tempL = (left * src16[ 1 + pos] + right * src16[ 3 + pos]) >> LRVAL;
 				
 				dst16[ x] = tempL;
@@ -169,7 +169,7 @@ static Ptr ConvertSampleC4SPD( Ptr src, long srcSize, short amp, long srcC4SPD, 
 			{
 				pos >>= LRVAL;
 				
-				if( 1 + pos >= srcSize/2) {}
+				if (1 + pos >= srcSize/2) {}
 				else tempL = (left * src16[ pos] + right * src16[ 1 + pos]) >> LRVAL;
 				
 				dst16[ x] = tempL;
@@ -211,13 +211,13 @@ static OSErr mainSampRate(	sData			*theData,
 	}
 	while( itemHit != 1 && itemHit != 2);
 	
-	if( itemHit == 1)
+	if (itemHit == 1)
 	{
 		long	newFreq;
 		Ptr		newPtr;
 		
 		GetDText( myDia, 7, tStr);		StringToNum( tStr, &newFreq);
-		if( newFreq < 2000L || newFreq > 50000)
+		if (newFreq < 2000L || newFreq > 50000)
 		{
 			SysBeep( 1);
 			SelectDialogItemText( myDia, 7, 0, 10000);
@@ -234,7 +234,7 @@ static OSErr mainSampRate(	sData			*theData,
 		theData->loopBeg = (theData->loopBeg * (newFreq/100)) / (long) (theData->c2spd/100);
 		theData->loopSize = (theData->loopSize * (newFreq/100)) / (long) (theData->c2spd/100);
 		
-		if( newPtr != NULL)
+		if (newPtr != NULL)
 		{
 			DisposePtr( theData->data);
 			theData->data		= newPtr;
@@ -243,10 +243,10 @@ static OSErr mainSampRate(	sData			*theData,
 		}
 		
 		
-		if( theData->loopBeg < 0) { theData->loopSize += theData->loopBeg;	theData->loopBeg = 0;}
-		if( theData->loopBeg > theData->size) {theData->loopBeg = 0;	theData->loopSize = 0;}
-		if( theData->loopSize < 0) theData->loopSize = 0;
-		if( theData->loopBeg + theData->loopSize > theData->size) theData->loopSize = theData->size - theData->loopBeg;
+		if (theData->loopBeg < 0) { theData->loopSize += theData->loopBeg;	theData->loopBeg = 0;}
+		if (theData->loopBeg > theData->size) {theData->loopBeg = 0;	theData->loopSize = 0;}
+		if (theData->loopSize < 0) theData->loopSize = 0;
+		if (theData->loopBeg + theData->loopSize > theData->size) theData->loopSize = theData->size - theData->loopBeg;
 	}
 	
 	DisposeDialog( myDia);

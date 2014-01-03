@@ -61,24 +61,24 @@ int main( int argc, char* argv[])
 		OSErr				err;
 		
 		err = MADInitLibrary(NULL, false, &MADLib);
-		if( err) DebugStr("\pMADInitLibrary Err");
+		if (err) DebugStr("\pMADInitLibrary Err");
 		
 		MADGetBestDriver( &init);
 		
 		err = MADCreateDriver( &init, MADLib, &MADDriver);
-		if( err) DebugStr("\pMADCreateDriver Err");
+		if (err) DebugStr("\pMADCreateDriver Err");
 	}
 	
 	/***************************************************/
 	/***   Open MADK Resource ID 3214 and play it !   **/
 	/***************************************************/
 	
-	if( MADLoadMusicRsrc( &Music, kMADType, kMADKmusic) != noErr)
+	if (MADLoadMusicRsrc( &Music, kMADType, kMADKmusic) != noErr)
 		DebugStr("\pMADLoadMusicRsrc Err");
 	
 	MADAttachDriverToMusic( MADDriver, Music, NULL);
 	
-	if( MADStartDriver( MADDriver) != noErr) DebugStr("\pMADStartDriver Err");
+	if (MADStartDriver( MADDriver) != noErr) DebugStr("\pMADStartDriver Err");
 	
 	/******************************************/
 	/***        Open my dialog              ***/
@@ -96,7 +96,7 @@ int main( int argc, char* argv[])
 				GetDialogItem( TheDia, 2, &itemType, &itemHandle, &itemRect);
 				SetControlValue( (ControlHandle) itemHandle, !GetControlValue( (ControlHandle) itemHandle));
 				
-				if( GetControlValue( (ControlHandle) itemHandle)) MADPlayMusic( MADDriver);
+				if (GetControlValue( (ControlHandle) itemHandle)) MADPlayMusic( MADDriver);
 				else
 				{
 					MADStopMusic( MADDriver);

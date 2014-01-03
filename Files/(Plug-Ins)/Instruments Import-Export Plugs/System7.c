@@ -54,8 +54,8 @@ void AddLoopToSndHandle( Handle sound, long Start, long End)
 	{
 		case cmpSH:
 			CmpHeader = (CmpSoundHeader*) header;
-			if( CmpHeader->sampleSize == 16) { Start /= 2; End /= 2; }
-			if( CmpHeader->numChannels > 1) { Start /= CmpHeader->numChannels; End /= CmpHeader->numChannels; }
+			if (CmpHeader->sampleSize == 16) { Start /= 2; End /= 2; }
+			if (CmpHeader->numChannels > 1) { Start /= CmpHeader->numChannels; End /= CmpHeader->numChannels; }
 			
 			CmpHeader->loopStart	= Start;
 			CmpHeader->loopEnd		= End;
@@ -63,8 +63,8 @@ void AddLoopToSndHandle( Handle sound, long Start, long End)
 		
 		case extSH:
 			ExtHeader = (ExtSoundHeader*) header;
-			if( ExtHeader->sampleSize == 16) { Start /= 2; End /= 2; }
-			if( ExtHeader->numChannels > 1) { Start /= ExtHeader->numChannels; End /= ExtHeader->numChannels; }
+			if (ExtHeader->sampleSize == 16) { Start /= 2; End /= 2; }
+			if (ExtHeader->numChannels > 1) { Start /= ExtHeader->numChannels; End /= ExtHeader->numChannels; }
 			ExtHeader->loopStart	= Start;
 			ExtHeader->loopEnd		= End;
 		break;
@@ -137,15 +137,15 @@ Ptr inNSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize
 			*loopStart = CmpHeader->loopStart;
 			*loopEnd = CmpHeader->loopEnd;
 			*sampleSize = CmpHeader->sampleSize;
-			if( numChannels == 2) *stereo = true;
+			if (numChannels == 2) *stereo = true;
 			else *stereo = false;
 			
-			if( sampleRate != NULL)	*sampleRate	= CmpHeader->sampleRate;
-			if( baseFreq != NULL) 	*baseFreq 	= CmpHeader->baseFrequency;
+			if (sampleRate != NULL)	*sampleRate	= CmpHeader->sampleRate;
+			if (baseFreq != NULL) 	*baseFreq 	= CmpHeader->baseFrequency;
 			
 			MusSize = (*CmpHeader).numFrames;
 			
-			if( *stereo)
+			if (*stereo)
 			{
 				*loopStart *=2;
 				*loopEnd *=2;
@@ -176,7 +176,7 @@ Ptr inNSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize
 			inputFormat.reserved = 0;
 			
 			outputFormat = inputFormat;
-			if( *sampleSize == 8) outputFormat.format = kOffsetBinary;
+			if (*sampleSize == 8) outputFormat.format = kOffsetBinary;
 			else outputFormat.format = k16BitBigEndianFormat;
 			
 			err = SoundConverterOpen(&inputFormat, &outputFormat, &sc);
@@ -190,7 +190,7 @@ Ptr inNSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize
 			inputFrames = MusSize;
 			
 			dstPtr = NewPtr( inputFrames * numChannels * (*sampleSize/8) * cp.samplesPerPacket);
-			if( dstPtr == NULL) 
+			if (dstPtr == NULL) 
 			{
 				DisposePtr( soundPtr);
 				return NULL;
@@ -206,7 +206,7 @@ Ptr inNSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize
 			if (err != noErr)
 			DebugStr("\pEnd Conversion failed");
 			
-			if( outputBytes != 0) Debugger();
+			if (outputBytes != 0) Debugger();
 			
 			err = SoundConverterClose(sc);
 			if (err != noErr)
@@ -228,31 +228,31 @@ Ptr inNSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize
 			*loopEnd = ExtHeader->loopEnd;
 			*sampleSize = ExtHeader->sampleSize;
 			
-			if( sampleRate != NULL)	*sampleRate	= ExtHeader->sampleRate;
-			if( baseFreq != NULL) 	*baseFreq 	= ExtHeader->baseFrequency;
+			if (sampleRate != NULL)	*sampleRate	= ExtHeader->sampleRate;
+			if (baseFreq != NULL) 	*baseFreq 	= ExtHeader->baseFrequency;
 			
-			if( numChannels == 2) *stereo = true;
+			if (numChannels == 2) *stereo = true;
 			else *stereo = false;
 			
-			if( *stereo)
+			if (*stereo)
 			{
 				MusSize *= 2;
 				*loopStart *=2;
 				*loopEnd *=2;
 			}
 			
-			if( *sampleSize == 16)
+			if (*sampleSize == 16)
 			{
 				MusSize *= 2;
 				*loopStart *= 2;
 				*loopEnd *= 2;
 			}
 			
-			if( numChannels == 1) BlockMoveData( ExtHeader->sampleArea, soundPtr, MusSize);
-			else if( numChannels == 2) BlockMoveData( ExtHeader->sampleArea, soundPtr, MusSize);
+			if (numChannels == 1) BlockMoveData( ExtHeader->sampleArea, soundPtr, MusSize);
+			else if (numChannels == 2) BlockMoveData( ExtHeader->sampleArea, soundPtr, MusSize);
 			else
 			{
-				if( *sampleSize == 8)
+				if (*sampleSize == 8)
 				{
 					for( i = 0; i < MusSize; i ++)
 					{
@@ -277,29 +277,29 @@ Ptr inNSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize
 			*loopStart = header->loopStart;
 			*loopEnd = header->loopEnd;
 			
-			if( sampleRate != NULL) *sampleRate	= header->sampleRate;
-			if( baseFreq != NULL) 	*baseFreq 	= header->baseFrequency;
+			if (sampleRate != NULL) *sampleRate	= header->sampleRate;
+			if (baseFreq != NULL) 	*baseFreq 	= header->baseFrequency;
 			
 			MusSize = header->length;
 			BlockMoveData( (*header).sampleArea, soundPtr, MusSize);
 		break;
 	}
 	
-	if( *sampleSize == 8)
+	if (*sampleSize == 8)
 	{
 		ConvertInstrumentIn( (Byte*) soundPtr, MusSize);
 	}
 	
 	SetPtrSize( soundPtr, MusSize);
 	
-	if( *loopEnd - *loopStart < 4) { *loopEnd = 0;	*loopStart = 0;}
+	if (*loopEnd - *loopStart < 4) { *loopEnd = 0;	*loopStart = 0;}
 	
 	return soundPtr;
 }
 
 OSErr TestSND( short *soundPtr)
 {
-	if( *soundPtr == 1 || *soundPtr == 2) return noErr;
+	if (*soundPtr == 1 || *soundPtr == 2) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -312,25 +312,25 @@ Ptr IMPL( long *lS, long *lE, long *bFreq, short *sS, unsigned long *rate, FSSpe
 	
 	iFileRefI = FSpOpenResFile( AlienFileFSSpec, fsCurPerm);
 	
-	if( ResError())
+	if (ResError())
 	{
 		CloseResFile( iFileRefI);	myErr = ResError();		goto End;
 	}
 	
 	UseResFile( iFileRefI);
 	
-	if( Count1Resources( 'snd ') == 0)
+	if (Count1Resources( 'snd ') == 0)
 	{
 		CloseResFile( iFileRefI);	myErr = ResError();		goto End;
 	}
 	
 	tempHandle = Get1IndResource('snd ', 1);
-	if( tempHandle != NULL)
+	if (tempHandle != NULL)
 	{
 		DetachResource( tempHandle);
 		
 		theSound = NewPtr( GetHandleSize( tempHandle));
-		if( theSound != NULL)
+		if (theSound != NULL)
 		{
 			HLock( tempHandle);
 			BlockMoveData( *tempHandle, theSound, GetHandleSize( tempHandle));
@@ -338,7 +338,7 @@ Ptr IMPL( long *lS, long *lE, long *bFreq, short *sS, unsigned long *rate, FSSpe
 			
 			theSound = inNSndToPtr( theSound, lS, lE, sS, rate, bFreq, stereo);
 			
-			if( theSound == NULL)
+			if (theSound == NULL)
 			{
 				DisposeHandle( tempHandle);
 				CloseResFile( iFileRefI);
@@ -367,7 +367,7 @@ Ptr IMPL( long *lS, long *lE, long *bFreq, short *sS, unsigned long *rate, FSSpe
 	
 	End:;
 	
-	if( myErr != noErr) return NULL;
+	if (myErr != noErr) return NULL;
 	else return theSound;
 }
 
@@ -396,7 +396,7 @@ OSErr main(		OSType					order,						// Order to execute
 			
 			theSound = IMPL( &lS, &lE, &bFreq, &sS, &rate, AlienFileFSSpec, &stereo);
 			
-			if( theSound != 0L)
+			if (theSound != 0L)
 			{
 				myErr = CallRPlaySoundUPP( theSound, GetPtrSize( theSound), 0, 0xFF, sS, lS, lE, rate, stereo);
 				
@@ -416,7 +416,7 @@ OSErr main(		OSType					order,						// Order to execute
 			
 			theSound = IMPL( &lS, &lE, &bFreq, &sS, &rate, AlienFileFSSpec, &stereo);
 			
-			if( theSound != NULL)
+			if (theSound != NULL)
 			{
 				inAddSoundToMAD( theSound, lS, lE, sS, bFreq, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
 				myErr = noErr;
@@ -430,20 +430,20 @@ OSErr main(		OSType					order,						// Order to execute
 			
 			iFileRefI = FSpOpenResFile( AlienFileFSSpec, fsCurPerm);
 			
-			if( ResError())
+			if (ResError())
 			{
 				CloseResFile( iFileRefI);	myErr = ResError();		goto End;
 			}
 			
 			UseResFile( iFileRefI);
 			
-			if( Count1Resources( 'snd ') == 0) myErr = MADFileNotSupportedByThisPlug;
+			if (Count1Resources( 'snd ') == 0) myErr = MADFileNotSupportedByThisPlug;
 			
 			CloseResFile( iFileRefI);
 			break;
 		
 		case 'EXPL':
-			if( *sampleID >= 0)
+			if (*sampleID >= 0)
 			{
 				sData 	*curData = sample[ *sampleID];
 				short	temp, fRefNum, numChan;
@@ -453,7 +453,7 @@ OSErr main(		OSType					order,						// Order to execute
 				
 				inOutBytes = curData->size;
 				
-				if( curData->stereo) numChan = 2;
+				if (curData->stereo) numChan = 2;
 				else numChan = 1;
 				
 				SetupSndHeader(		(SndListHandle) tempHandle,
@@ -470,7 +470,7 @@ OSErr main(		OSType					order,						// Order to execute
 				HLock( tempHandle);
 				BlockMoveData( curData->data, *tempHandle + temp, inOutBytes);
 				
-				if( curData->amp == 8) ConvertInstrumentIn( (Byte*) *tempHandle + temp, inOutBytes);
+				if (curData->amp == 8) ConvertInstrumentIn( (Byte*) *tempHandle + temp, inOutBytes);
 				
 				HUnlock( tempHandle);
 				

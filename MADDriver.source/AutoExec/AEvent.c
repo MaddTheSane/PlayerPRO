@@ -26,7 +26,7 @@ void OSType2Str( OSType type, Str255 str)
 
 	for( i = 4; i > 0; i--)
 	{
-		if( str[ i] == ' ') str[ 0]--;
+		if (str[ i] == ' ') str[ 0]--;
 		else return;
 	}
 }
@@ -94,12 +94,12 @@ void ReadAndPlayMusic( Str255	myFile, OSType	fdType)
 	
 	OSType2Ptr( fdType, str);
 	
-	if( !MADPlugAvailable( MADLib, str)) return;
+	if (!MADPlugAvailable( MADLib, str)) return;
 
 	MADStopDriver( MADDriver);
 	MADDisposeMusic( &music, MADDriver);
 
-	if( MADPlugAvailable( MADLib, str))		// Is available a plug to open this file?
+	if (MADPlugAvailable( MADLib, str))		// Is available a plug to open this file?
 	{
 		MADLoadMusicFilePString( MADLib, &music, str, myFile);
 	}
@@ -149,7 +149,7 @@ pascal OSErr MyHandleODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, l
 		
 		err = HSetVol( 0L, myFSS.vRefNum, myFSS.parID);
 
-		if( err == noErr)
+		if (err == noErr)
 		{
 			ReadAndPlayMusic( myFSS.name, fndrInfo.fdType);
 		}

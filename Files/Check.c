@@ -40,12 +40,12 @@ short				srcFile;
 long					fileSize;
 
 	theErr = FSpOpenDF( name, 0, &srcFile);
-	if( theErr) return -1L;
+	if (theErr) return -1L;
 	
 	GetEOF( srcFile, &fileSize);
 
 	theErr = FSRead( srcFile, &bytesToRead, outPtr);
-	if( theErr) return -1L;
+	if (theErr) return -1L;
 	
 	FSClose( srcFile);
 	
@@ -71,7 +71,7 @@ Boolean OpenableFile( OSType theType, FSSpec *file)
 		
 		case 'APPL':
 			OSType2Ptr( theType, tempC);
-			if( MADPlugAvailable( gMADLib, tempC))
+			if (MADPlugAvailable( gMADLib, tempC))
 			{
 				OSErr	err;
 				
@@ -79,7 +79,7 @@ Boolean OpenableFile( OSType theType, FSSpec *file)
 				err = PPTestFile( gMADLib, tempC, (Ptr) file->name);
 				MyC2PStr( (Ptr) file->name);
 				
-				if( !err) bol = true;
+				if (!err) bol = true;
 			}
 		break;
 		
@@ -87,7 +87,7 @@ Boolean OpenableFile( OSType theType, FSSpec *file)
 			OSType2Ptr( theType, tempC);
 			bol = MADPlugAvailable( gMADLib, tempC);
 			
-			if( bol == false)	// Try a Quicktime Conversion
+			if (bol == false)	// Try a Quicktime Conversion
 			{
 				bol = QTTypeConversion( theType);
 			}
@@ -116,7 +116,7 @@ Boolean CheckFileType( FSSpec theSpec, OSType theType)
 	{
 		case 'MADK':
 			MyP2CStr( theSpec.name);
-			if( CheckMADFile( (Ptr) theSpec.name) == noErr) Response = true;
+			if (CheckMADFile( (Ptr) theSpec.name) == noErr) Response = true;
 			else Response = false;
 			MyC2PStr( (Ptr) theSpec.name);
 			break;
@@ -127,10 +127,10 @@ Boolean CheckFileType( FSSpec theSpec, OSType theType)
 			err = PPTestFile( gMADLib, tempC, (Ptr) theSpec.name);
 			MyC2PStr( (Ptr) theSpec.name);
 			
-			if( err) Response = false;
+			if (err) Response = false;
 			else Response = true;
 			
-			if( Response == false)	// Try to import it with Quicktime
+			if (Response == false)	// Try to import it with Quicktime
 			{
 				Response = QTTestConversion( &theSpec, theType);
 			}
@@ -159,7 +159,7 @@ Ptr ConvertCurrentMusicToPtr(void)
 		}
 	}
 	tempPtr = MyNewPtr( fileSize);
-	if( tempPtr == NULL) MyDebugStr( __LINE__, __FILE__, "Memory !!!");
+	if (tempPtr == NULL) MyDebugStr( __LINE__, __FILE__, "Memory !!!");
 	
 	tt = 0;
 	inOutCount = GetPtrSize( (Ptr) curMusic->header);
@@ -168,7 +168,7 @@ Ptr ConvertCurrentMusicToPtr(void)
 	
 	for( i = 0; i < curMusic->header->numPat ; i++)
 	{
-		if( curMusic->partition[ i]->header.compMode == 'MAD1')
+		if (curMusic->partition[ i]->header.compMode == 'MAD1')
 		{
 			PatMAD = CompressPartitionMAD1( curMusic, curMusic->partition[ i]);
 			inOutCount = PatMAD->header.patBytes + sizeof( PatternHeader);
@@ -216,11 +216,11 @@ void InitSoundQualityExport( 	DialogPtr				aDialog,
 	long 	tempLong;
 	Str255	str1, str2;
 	
-	if( *CompressionType == 'MPG4')
+	if (*CompressionType == 'MPG4')
 	{
 		SetDText( aDialog, 34, "\pMPEG 4 - Quicktime");
 	}
-	else if( *CompressionType != 'NONE')
+	else if (*CompressionType != 'NONE')
 	{
 		CompressionInfo		cp;
 		
@@ -240,10 +240,10 @@ void InitSoundQualityExport( 	DialogPtr				aDialog,
 	}
 	else SetDText( aDialog, 34, "\pNo compression");
 	
-	if( EditorDlog) ActiveControl( 39, aDialog);
+	if (EditorDlog) ActiveControl( 39, aDialog);
 	else InactiveControl( 39, aDialog);
 	
-	if( OnlyCurrent)
+	if (OnlyCurrent)
 	{
 		*PatternID = -2;
 		//drive->MicroDelaySize = 0;
@@ -252,7 +252,7 @@ void InitSoundQualityExport( 	DialogPtr				aDialog,
 	}
 	
 	// Music
-	if( *PatternID == -1)
+	if (*PatternID == -1)
 	{
 		TurnRadio( 37, aDialog, true);
 		TurnRadio( 38, aDialog, false);
@@ -260,7 +260,7 @@ void InitSoundQualityExport( 	DialogPtr				aDialog,
 		
 		SetDText( aDialog, 6, "\p");
 	}
-	else if( *PatternID == -2)
+	else if (*PatternID == -2)
 	{
 		TurnRadio( 37, aDialog, false);
 		TurnRadio( 38, aDialog, false);
@@ -282,7 +282,7 @@ void InitSoundQualityExport( 	DialogPtr				aDialog,
 		strcpy( (Ptr) str2, curMusic->partition[ *PatternID]->header.name);
 		MyC2PStr( (Ptr) str2);
 		
-		if( str2[ 0] > 0) pStrcat( str, "\p - ");
+		if (str2[ 0] > 0) pStrcat( str, "\p - ");
 		
 		pStrcat( str, str2);
 		
@@ -291,7 +291,7 @@ void InitSoundQualityExport( 	DialogPtr				aDialog,
 	
 	// Mode
 	
-	if( *ChannelNo == 2)
+	if (*ChannelNo == 2)
 	{
 		TurnRadio( 16, aDialog, true);
 		TurnRadio( 17, aDialog, false);
@@ -327,11 +327,11 @@ void InitSoundQualityExport( 	DialogPtr				aDialog,
 	
 	// OutPut Type
 	
-	if( drive->surround)		TurnRadio( 27, aDialog, true);
+	if (drive->surround)		TurnRadio( 27, aDialog, true);
 	else						TurnRadio( 27, aDialog, false);
-	if( drive->MicroDelaySize)	TurnRadio( 19, aDialog, true);
+	if (drive->MicroDelaySize)	TurnRadio( 19, aDialog, true);
 	else						TurnRadio( 19, aDialog, false);
-	if( drive->Reverb)			TurnRadio( 29, aDialog, true);
+	if (drive->Reverb)			TurnRadio( 29, aDialog, true);
 	else						TurnRadio( 29, aDialog, false);
 	
 	ActiveControl( 19, aDialog);
@@ -344,7 +344,7 @@ void InitSoundQualityExport( 	DialogPtr				aDialog,
 	
 #if defined(HAS_LONG_LONG) && defined (HAS_LONG_DOUBLE)
 	// OverSampling
-	if( drive->oversampling > 1)
+	if (drive->oversampling > 1)
 	{
 		tempLong = (unsigned long) ((unsigned long) *FrequenceSpeed >> 16UL);
 		//	tempLong = tempLong >> 16;
@@ -408,7 +408,7 @@ Boolean SoundQualityExport( 	Boolean OnlyCurrent,
 	*CompressionType = 'NONE';
 	*PatternID = -1;
 	
-	if( MPG4)
+	if (MPG4)
 	{
 		*CompressionType = 'MPG4';
 	}
@@ -468,7 +468,7 @@ Boolean SoundQualityExport( 	Boolean OnlyCurrent,
 				
 			case 32:
 			case 34:
-				if( !MPG4)
+				if (!MPG4)
 				{
 					long			mresult, i, curSelec;
 					Point			Zone;
@@ -517,7 +517,7 @@ Boolean SoundQualityExport( 	Boolean OnlyCurrent,
 							inputFormat.format = 'NONE';
 							
 							iErr = SoundConverterOpen(&inputFormat, &outputFormat, &sc);
-							if( iErr) DisableMenuItem( tMenu, i+1);
+							if (iErr) DisableMenuItem( tMenu, i+1);
 							else
 							{
 								iErr = SoundConverterClose(sc);
@@ -543,7 +543,7 @@ Boolean SoundQualityExport( 	Boolean OnlyCurrent,
 						
 						str[ 0] = 4;
 						
-						if( *((OSType*) (str+1)) == *CompressionType) curSelec = i+1;
+						if (*((OSType*) (str+1)) == *CompressionType) curSelec = i+1;
 					}
 					
 					SetItemMark( tMenu, curSelec, 0xa5);
@@ -561,7 +561,7 @@ Boolean SoundQualityExport( 	Boolean OnlyCurrent,
 						
 						temp = LoWord( mresult );
 						
-						if( temp == 1)
+						if (temp == 1)
 						{
 							*CompressionType = 'NONE';
 						}
@@ -590,7 +590,7 @@ Boolean SoundQualityExport( 	Boolean OnlyCurrent,
 				
 #if defined(HAS_LONG_LONG) && defined (HAS_LONG_DOUBLE)
 			case 23:
-				if( driver->oversampling > 1) driver->oversampling = 1;
+				if (driver->oversampling > 1) driver->oversampling = 1;
 				else driver->oversampling = 4;
 				
 				InitSoundQualityExport( aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver, OnlyCurrent);
@@ -628,7 +628,7 @@ Boolean SoundQualityExport( 	Boolean OnlyCurrent,
 				break;
 				
 			case 19:
-				if( driver->MicroDelaySize) driver->MicroDelaySize = 0;
+				if (driver->MicroDelaySize) driver->MicroDelaySize = 0;
 				else driver->MicroDelaySize = 25;
 				
 				InitSoundQualityExport( aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver, OnlyCurrent);
@@ -710,7 +710,7 @@ Boolean SoundQualityExport( 	Boolean OnlyCurrent,
 	
 	lastChannelChoice = *ChannelNo;
 	
-	if( itemHit == 1) return true;
+	if (itemHit == 1) return true;
 	else return false;
 }
 
@@ -730,15 +730,15 @@ void ExportFile( OSType theType, FSSpec *newFile)
 	
 	if(theType == 'MADK' || theType == 'AIFF' ||theType == 'sfil' || theType == 'MADS')	// theType == 'MADC' || 
 	{
-		if( theType == 'sfil') FSpDelete( newFile);
+		if (theType == 'sfil') FSpDelete( newFile);
 		
 		iErr = FSpOpenDF( newFile, fsCurPerm, &fRefNum);
 		
-		if( iErr != noErr)
+		if (iErr != noErr)
 		{
 			iErr = FSpCreate( newFile, 'SNPL', theType, smSystemScript);
 			iErr = FSpOpenDF( newFile, fsCurPerm, &fRefNum);
-			if( iErr == noErr)
+			if (iErr == noErr)
 			{
 				inOutCount = 1;
 				iErr = FSWrite( fRefNum, &inOutCount, theTypePtr);
@@ -747,20 +747,20 @@ void ExportFile( OSType theType, FSSpec *newFile)
 			
 		}
 		
-		if( iErr)
+		if (iErr)
 		{
 			Erreur( 75, iErr);
 			goto END;
 		}
 		
 		FSpGetFInfo( newFile, &fndrInfo);
-		if( theType == 'AIFF') fndrInfo.fdCreator = 'TVOD';
-		else if( theType == 'MPG4') fndrInfo.fdCreator = 'TVOD';
-		else if( theType == 'MADS') fndrInfo.fdCreator = 'TVOD';
-		else if( theType == 'sfil') fndrInfo.fdCreator = 'movr';
+		if (theType == 'AIFF') fndrInfo.fdCreator = 'TVOD';
+		else if (theType == 'MPG4') fndrInfo.fdCreator = 'TVOD';
+		else if (theType == 'MADS') fndrInfo.fdCreator = 'TVOD';
+		else if (theType == 'sfil') fndrInfo.fdCreator = 'movr';
 		else fndrInfo.fdCreator = 'SNPL';
 		
-		if( theType == 'MADS') fndrInfo.fdType = 'AIFF';
+		if (theType == 'MADS') fndrInfo.fdType = 'AIFF';
 		else fndrInfo.fdType = theType;
 		
 		FSpSetFInfo( newFile, &fndrInfo);
@@ -793,7 +793,7 @@ void ExportFile( OSType theType, FSSpec *newFile)
 								   200,
 								   50);
 			
-			if( iErr != noErr)
+			if (iErr != noErr)
 			{
 				MyDebugStr( __LINE__, __FILE__, "");
 			}
@@ -808,7 +808,7 @@ void ExportFile( OSType theType, FSSpec *newFile)
 			{
 				curMusic->fid[ i].no = i;
 				
-				if( curMusic->fid[ i].numSamples > 0 || curMusic->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
+				if (curMusic->fid[ i].numSamples > 0 || curMusic->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
 				{
 					x++;
 				}
@@ -821,16 +821,16 @@ void ExportFile( OSType theType, FSSpec *newFile)
 			iErr = FSWrite( fRefNum, &inOutCount, curMusic->header);
 			//Just in case...
 			ByteSwapMADSpec(curMusic->header);
-			if( iErr) Erreur( 75, iErr);
+			if (iErr) Erreur( 75, iErr);
 			
 			// PATTERNS
 			for( i = 0; i < curMusic->header->numPat ; i++)
 			{
-				if( thePrefs.MADCompression) curMusic->partition[ i]->header.compMode = 'MAD1';
+				if (thePrefs.MADCompression) curMusic->partition[ i]->header.compMode = 'MAD1';
 				
 				//	curMusic->partition[ i]->header.compMode = 'NONE';
 				
-				if( curMusic->partition[ i]->header.compMode == 'MAD1')
+				if (curMusic->partition[ i]->header.compMode == 'MAD1')
 				{
 					PatMAD = CompressPartitionMAD1( curMusic, curMusic->partition[ i]);
 					inOutCount = PatMAD->header.patBytes + sizeof( PatternHeader);
@@ -855,7 +855,7 @@ void ExportFile( OSType theType, FSSpec *newFile)
 			
 			for( i = 0; i < MAXINSTRU; i++)
 			{
-				if( curMusic->fid[ i].numSamples > 0 || curMusic->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
+				if (curMusic->fid[ i].numSamples > 0 || curMusic->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
 				{
 					curMusic->fid[ i].no = i;
 					ByteSwapInstrData(&(curMusic->fid[ i]));
@@ -892,7 +892,7 @@ void ExportFile( OSType theType, FSSpec *newFile)
 			alpha = 0;
 			for( i = 0; i < 10 ; i++)	// Global Effects
 			{
-				if( curMusic->header->globalEffect[ i])
+				if (curMusic->header->globalEffect[ i])
 				{
 					inOutCount = sizeof( FXSets);
 					iErr = FSWrite( fRefNum, &inOutCount, &curMusic->sets[ alpha]);
@@ -904,7 +904,7 @@ void ExportFile( OSType theType, FSSpec *newFile)
 			{
 				for( x = 0; x < 4; x++)
 				{
-					if( curMusic->header->chanEffect[ i][ x])
+					if (curMusic->header->chanEffect[ i][ x])
 					{
 						inOutCount = sizeof( FXSets);
 						iErr = FSWrite( fRefNum, &inOutCount, &curMusic->sets[ alpha]);
@@ -918,7 +918,7 @@ void ExportFile( OSType theType, FSSpec *newFile)
 			GetFPos( fRefNum, &tt);
 			SetEOF( fRefNum, tt);
 			
-			if( theType == 'MADS')
+			if (theType == 'MADS')
 			{
 				SetFPos( fRefNum, fsFromStart, 0);
 				
@@ -950,7 +950,7 @@ void ExportFile( OSType theType, FSSpec *newFile)
 				pStrcpy( spec.name, "\pPlayerPRO.AIFF");
 				
 				iErr = FindFolder( kOnAppropriateDisk, kTemporaryFolderType, kCreateFolder, &spec.vRefNum, &spec.parID);	//kTemporaryFolderType
-				if( iErr == noErr)
+				if (iErr == noErr)
 				{
 					iErr = FSpDelete( &spec);
 					iErr = FSpCreate( &spec, 'SNPL', 'AIFF', smSystemScript);
@@ -992,19 +992,19 @@ void CheckInstrument(void)
 {
 	short	i, x;
 	
-	if( curMusic == NULL) MyDebugStr( __LINE__, __FILE__, "Header == NULL");
+	if (curMusic == NULL) MyDebugStr( __LINE__, __FILE__, "Header == NULL");
 	
-	if( curMusic->header->speed < 0) MyDebugStr( __LINE__, __FILE__, "curMusic->header->speed");
-	if( curMusic->header->tempo < 0) MyDebugStr( __LINE__, __FILE__, "curMusic->header->tempo");
-	if( curMusic->header->numPat < 1) MyDebugStr( __LINE__, __FILE__, "curMusic->header->numPat");
+	if (curMusic->header->speed < 0) MyDebugStr( __LINE__, __FILE__, "curMusic->header->speed");
+	if (curMusic->header->tempo < 0) MyDebugStr( __LINE__, __FILE__, "curMusic->header->tempo");
+	if (curMusic->header->numPat < 1) MyDebugStr( __LINE__, __FILE__, "curMusic->header->numPat");
 	
 	for( i = 0; i < MAXINSTRU; i++)
 	{
 		for( x = 0; x < 96; x++)
 		{
-			if( curMusic->fid[ i].what[ x])
+			if (curMusic->fid[ i].what[ x])
 			{
-				if( curMusic->fid[ i].what[ x] >= curMusic->fid[ i].numSamples)
+				if (curMusic->fid[ i].what[ x] >= curMusic->fid[ i].numSamples)
 				{
 					curMusic->fid[ i].what[ x] = 0;
 				}
@@ -1015,24 +1015,24 @@ void CheckInstrument(void)
 		{
 			sData	*curData = curMusic->sample[ curMusic->fid[i].firstSample + x];
 			
-			if( curData == NULL)		MyDebugStr( __LINE__, __FILE__, "CheckIns Err");
-			if( curData->data == NULL)	MyDebugStr( __LINE__, __FILE__, "CheckIns Err");
+			if (curData == NULL)		MyDebugStr( __LINE__, __FILE__, "CheckIns Err");
+			if (curData->data == NULL)	MyDebugStr( __LINE__, __FILE__, "CheckIns Err");
 			
-			if( curData->size <= 0)
+			if (curData->size <= 0)
 			{
 				curData->loopBeg = 0;
 				curData->loopSize = 0;
 			}
 			
-			if( curData->loopSize < 0) curData->loopSize = 0;
+			if (curData->loopSize < 0) curData->loopSize = 0;
 			
-			if( curData->loopBeg > curData->size)
+			if (curData->loopBeg > curData->size)
 			{
 				curData->loopBeg = 0;
 				curData->loopSize = 0;
 			}
 			
-			if( curData->loopBeg + curData->loopSize > curData->size)
+			if (curData->loopBeg + curData->loopSize > curData->size)
 			{
 				curData->loopBeg = 0;
 				curData->loopSize = 0;
@@ -1054,7 +1054,7 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 	char					theTypePtr[ 5];
 	Str255					MissingPlugs;
 	
-	if( curMusic != NULL)
+	if (curMusic != NULL)
 	{
 		thePrefs.previousSpec.generalPitch	= 252;
 		thePrefs.previousSpec.generalSpeed	= 252;
@@ -1082,9 +1082,9 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 //	}
 	//thePrefs.previousSpec = *curMusic->header;
 	
-//	if( curMusic)
+//	if (curMusic)
 //	{
-		if( GereChanged() != noErr) return false;
+		if (GereChanged() != noErr) return false;
 	}
 	
 	StopAIFFExporting();
@@ -1097,23 +1097,23 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 	aSpec.vRefNum = vRefNum;
 	aSpec.parID = parID;
 	
-	if( theType != 'Rsrc')
+	if (theType != 'Rsrc')
 	{
 		HSetVol( NULL, vRefNum, parID);
 		iErr = FSpGetFInfo( &aSpec, &fndrInfo);
-		if( iErr != noErr)
+		if (iErr != noErr)
 		{
-			if( iErr == fnfErr) Erreur( 62, iErr);
+			if (iErr == fnfErr) Erreur( 62, iErr);
 			else Erreur( 44, iErr);
 			return false;
 		}
 	}
 	
-	if( theType == 0)  theType = fndrInfo.fdType;
+	if (theType == 0)  theType = fndrInfo.fdType;
 	
-	/*if( IsCodeOK())
+	/*if (IsCodeOK())
 	 {
-	 if( 	theType != 'STCf' && 
+	 if (	theType != 'STCf' && 
 	 theType != 'sTAT' && 
 	 theType != 'Rsrc' && 
 	 theType != 'STrk' && 
@@ -1134,7 +1134,7 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 	
 	iErr = noErr;
 	
-	if( curMusic != NULL) oldTracks = curMusic->header->numChn;
+	if (curMusic != NULL) oldTracks = curMusic->header->numChn;
 	else oldTracks = 0;
 	
 	IsReading = MADDriver->Reading;
@@ -1150,10 +1150,10 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 	switch( theType)
 	{
 		case 'Rsrc':
-			if( vRefNum == -55)
+			if (vRefNum == -55)
 			{
 				TempHandle = GetResource( 'MADK', 128);
-				if( TempHandle)
+				if (TempHandle)
 				{
 					DetachResource( TempHandle);
 					HLock( TempHandle);
@@ -1168,7 +1168,7 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 				MADDisposeMusic( &curMusic, MADDriver);
 				
 				TempHandle = GetResource( 'MADK', vRefNum);
-				if( TempHandle)
+				if (TempHandle)
 				{
 					DetachResource( TempHandle);
 					HLock( TempHandle);
@@ -1189,13 +1189,13 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 			break;
 			
 		default:
-			if( !MADPlugAvailable( gMADLib, theTypePtr))
+			if (!MADPlugAvailable( gMADLib, theTypePtr))
 			{
-				if( MADMusicIdentifyFSp( gMADLib, theTypePtr, &aSpec) != noErr)
+				if (MADMusicIdentifyFSp( gMADLib, theTypePtr, &aSpec) != noErr)
 				{
 					// Try to read this file with QUICKTIME !
 					
-					if( !CreateQTWindow( &aSpec))
+					if (!CreateQTWindow( &aSpec))
 					{
 						// TEST SI PKZIP !
 						
@@ -1203,15 +1203,15 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 						iErr = FSpOpenDF( &aSpec, fsCurPerm, &iFileRefI);
 						GetEOF( iFileRefI, &sndSize);
 						
-						if( sndSize > 4)
+						if (sndSize > 4)
 						{
 							OSType	type;
 							
 							sndSize = 4;
 							iErr = FSRead( iFileRefI, &sndSize, &type);
-							if( iErr == noErr)
+							if (iErr == noErr)
 							{
-								if( type == 'PK\3\4')
+								if (type == 'PK\3\4')
 								{
 									Erreur( 106, 106);
 								}
@@ -1230,13 +1230,13 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 					
 					theType = Ptr2OSType( theTypePtr);
 					
-					if( FSpGetFInfo( &aSpec, &fndrInfo) == noErr)
+					if (FSpGetFInfo( &aSpec, &fndrInfo) == noErr)
 					{
-						if( FSpSetFInfo( &aSpec, &fndrInfo) == noErr)		// write permission?
+						if (FSpSetFInfo( &aSpec, &fndrInfo) == noErr)		// write permission?
 						{
-							if( fndrInfo.fdType != theType)
+							if (fndrInfo.fdType != theType)
 							{
-								if( InfoL( 60))
+								if (InfoL( 60))
 								{
 									fndrInfo.fdType		= theType;
 									fndrInfo.fdCreator	= 'SNPL';
@@ -1250,7 +1250,7 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 			}
 			SetCursor( &watchCrsr);
 			
-			if( IsCodeOK())
+			if (IsCodeOK())
 			{
 				if(	theType != 'STCf' && 
 				   theType != 'sTAT' && 
@@ -1282,18 +1282,18 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 			
 		case 'STCf':
 			OpenMODListSTCf( aSpec);
-			if( thePrefs.AutomaticOpen)
+			if (thePrefs.AutomaticOpen)
 			{
-				if( !OpenFirst2( 0)) folderFailed = true;
+				if (!OpenFirst2( 0)) folderFailed = true;
 			}
 			else folderFailed = true;
 			break;
 			
 		/*case 'sTAT':
 			OpenMODList2( fName, 0);
-			if( thePrefs.AutomaticOpen)
+			if (thePrefs.AutomaticOpen)
 			{
-				if( !OpenFirst2( 0)) folderFailed = true;
+				if (!OpenFirst2( 0)) folderFailed = true;
 			}
 			else folderFailed = true;
 			break;*/
@@ -1302,7 +1302,7 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 			
 			EnableMenuItem( FileMenu, 3);
 			
-			if( CheckFileType( aSpec, 'MADK'))
+			if (CheckFileType( aSpec, 'MADK'))
 			{
 				MADDriver->curMusic = NULL;
 				MADDisposeMusic( &curMusic, MADDriver);
@@ -1313,20 +1313,20 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 				FSCloseFork (iFileRefI);
 				
 				tempPtr = MyNewPtr( (sndSize * 3L) / 2L);
-				if( tempPtr == NULL) { iErr = MADNeedMemory;  break; }
+				if (tempPtr == NULL) { iErr = MADNeedMemory;  break; }
 				else MyDisposePtr( & tempPtr);
 				/****/
 				
 				iErr = MADLoadMusicFilePString( gMADLib, &curMusic, "MADK", fName);
 				
-				if( thePrefs.AutoCreator == true)
+				if (thePrefs.AutoCreator == true)
 				{
 					fndrInfo.fdCreator = 'SNPL';
 					fndrInfo.fdType = 'MADK';
 					FSpSetFInfo( &aSpec, &fndrInfo);
 				}
 				
-				/*	if( thePrefs.ADAPuse)
+				/*	if (thePrefs.ADAPuse)
 				 {
 				 LoadAdaptatorsRsrc( &aSpec);
 				 }*/
@@ -1346,7 +1346,7 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 	
 	curMusic->header->numInstru = MAXINSTRU;
 	
-	if( iErr != noErr)
+	if (iErr != noErr)
 	{
 		MADDriver->curMusic = NULL;
 		MADDisposeMusic( &curMusic, MADDriver);
@@ -1361,13 +1361,13 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 		MADErreur( iErr);
 	}
 	
-	if( curMusic == NULL) MyDebugStr( __LINE__, __FILE__, "curMusic == NULL");
-	if( curMusic->header->MAD != 'MADK') MyDebugStr( __LINE__, __FILE__, "ERR");
+	if (curMusic == NULL) MyDebugStr( __LINE__, __FILE__, "curMusic == NULL");
+	if (curMusic->header->MAD != 'MADK') MyDebugStr( __LINE__, __FILE__, "ERR");
 	
 	curMusic->originalFormat = theType;
-	if( curMusic->originalFormat == 'Rsrc') curMusic->originalFormat = 'MADK';
+	if (curMusic->originalFormat == 'Rsrc') curMusic->originalFormat = 'MADK';
 	
-	if( thePrefs.DontUseFilesMix)
+	if (thePrefs.DontUseFilesMix)
 	{
 		curMusic->header->generalPitch	= 252;//thePrefs.previousSpec.generalPitch;
 		curMusic->header->generalSpeed	= 252;//thePrefs.previousSpec.generalSpeed;
@@ -1396,9 +1396,9 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 	
 	MADAttachDriverToMusic( MADDriver, curMusic, MissingPlugs);
 	
-	if( curMusic->header->numChn != oldTracks)
+	if (curMusic->header->numChn != oldTracks)
 	{
-		if( vRefNum == -55 && theType == 'Rsrc')
+		if (vRefNum == -55 && theType == 'Rsrc')
 		{
 			ChangeTracksNo( thePrefs.numChn);
 			curMusic->hasChanged = false;
@@ -1411,7 +1411,7 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 		}
 	}
 	
-	if( theType != 'sTAT' && theType != 'STCf')
+	if (theType != 'sTAT' && theType != 'STCf')
 	{
 		pStrcpy( curMusic->musicFileName, fName);
 		//pStrcpy( curMusic->musicFileName, fName);
@@ -1427,9 +1427,9 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 	MADReset( MADDriver);
 	MADDriver->Reading = IsReading;
 	
-	if( theType != 'STCf' && theType != 'sTAT')
+	if (theType != 'STCf' && theType != 'sTAT')
 	{
-		if( theType != 'Rsrc')
+		if (theType != 'Rsrc')
 		{
 			curvRefNum	= vRefNum;
 			curparID		= parID;
@@ -1446,12 +1446,12 @@ Boolean	ImportFile( Str255	fName, short vRefNum, long parID, OSType	theType)
 	
 	MODListSelectThisMusic( fName);
 	
-	if( MissingPlugs[ 0] > 0)
+	if (MissingPlugs[ 0] > 0)
 	{
 		OtherIntErreur( 107, 22, MissingPlugs);
 	}
 	
-	if( iErr != noErr || folderFailed == true) return false;
+	if (iErr != noErr || folderFailed == true) return false;
 	else
 	{
 		ShowCopyrightNote();

@@ -51,11 +51,11 @@ void InitRollCrsr(void)
 
 void RollCursor(void)
 {
-	if( previousTime + 10 >= TickCount()) return;
+	if (previousTime + 10 >= TickCount()) return;
 
 	previousTime = TickCount();
 	MyCrsrRec.current ++;
-	if( MyCrsrRec.current >= MyCrsrRec.total) MyCrsrRec.current = 0;
+	if (MyCrsrRec.current >= MyCrsrRec.total) MyCrsrRec.current = 0;
 	
 	SetCursor( &myCursor[ MyCrsrRec.current]);
 }

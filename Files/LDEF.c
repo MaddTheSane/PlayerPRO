@@ -14,7 +14,7 @@ extern	DialogPtr	MODListDlog;
 
 void MDrawTheText( Rect *bounds, Str255 data, Boolean selected, Str63 Str)
 {	
-	if( selected)
+	if (selected)
 	{
 		Rect	aRect;
 	
@@ -32,7 +32,7 @@ void MDrawTheText( Rect *bounds, Str255 data, Boolean selected, Str63 Str)
 	MoveTo( bounds->left + 24, bounds->top + 14);
 	DrawString( data);
 	
-	if( selected)
+	if (selected)
 	{
 		ForeColor( blackColor);
 		BackColor( whiteColor);
@@ -56,9 +56,9 @@ void MDrawItem( Boolean selected, Rect* bounds, Str255 data, Str63 Str, FSSpec	*
 	iconRect.bottom	= iconRect.top + 16;
 	iconRect.right		= iconRect.left + 16;
 	
-	if( !thePrefs.FastMusicList)
+	if (!thePrefs.FastMusicList)
 	{
-		if( !selected) PlotIconID(&iconRect, atNone, ttNone, 133);
+		if (!selected) PlotIconID(&iconRect, atNone, ttNone, 133);
 		else PlotIconID(&iconRect, atNone, ttSelected, 133);
 	}
 	else
@@ -68,24 +68,24 @@ void MDrawItem( Boolean selected, Rect* bounds, Str255 data, Str63 Str, FSSpec	*
 		
 		iErr = GetIconRefFromFile( spec, &iconref, &label);
 		
-		if( iErr == noErr)
+		if (iErr == noErr)
 		{
-			if( !selected) PlotIconRef( &iconRect, kAlignNone, kTransformNone, kIconServicesNormalUsageFlag, iconref);
+			if (!selected) PlotIconRef( &iconRect, kAlignNone, kTransformNone, kIconServicesNormalUsageFlag, iconref);
 			else PlotIconRef( &iconRect, kAlignNone, kTransformSelected, kIconServicesNormalUsageFlag, iconref);
 			ReleaseIconRef( iconref);
 		}
 		else
 		{
 			iErr=GetIconRef( kOnSystemDisk, 'SNPL', 'MADK', &iconref);
-			if( iErr == noErr)
+			if (iErr == noErr)
 			{
-				if( !selected) PlotIconRef( &iconRect, kAlignNone, kTransformOffline, kIconServicesNormalUsageFlag, iconref);
+				if (!selected) PlotIconRef( &iconRect, kAlignNone, kTransformOffline, kIconServicesNormalUsageFlag, iconref);
 				else PlotIconRef( &iconRect, kAlignNone, kTransformSelectedOffline, kIconServicesNormalUsageFlag, iconref);
 				ReleaseIconRef( iconref);
 			}
 			else
 			{
-				if( !selected) PlotIconID(&iconRect, atNone, kTransformOffline, 188);
+				if (!selected) PlotIconID(&iconRect, atNone, kTransformOffline, 188);
 				else PlotIconID(&iconRect, atNone, kTransformSelectedOffline, 188);
 			}
 		}

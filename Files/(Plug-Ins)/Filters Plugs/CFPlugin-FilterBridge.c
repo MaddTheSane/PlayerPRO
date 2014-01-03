@@ -30,7 +30,7 @@ static HRESULT CFPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
 	CFUUIDRef interfaceID = CFUUIDCreateFromUUIDBytes( kCFAllocatorDefault, iid );
 	
 	// Test the requested ID against the valid interfaces.
-	if( CFEqual( interfaceID, kPlayerPROFiltersPlugInterfaceID ) ) {
+	if (CFEqual( interfaceID, kPlayerPROFiltersPlugInterfaceID ) ) {
 		
 		//  If the TestInterface was requested, bump the ref count, set the ppv parameter
 		//  equal to the instance, and return good status.
@@ -38,7 +38,7 @@ static HRESULT CFPlugQueryInterface( void *myInstance, REFIID iid, LPVOID *ppv )
 		*ppv = myInstance;
 		CFRelease( interfaceID );
 		return S_OK;
-	} else if( CFEqual( interfaceID, IUnknownUUID ) ) {
+	} else if (CFEqual( interfaceID, IUnknownUUID ) ) {
 		
 		//  If the IUnknown interface was requested, same as above.
 		( (CFPlugType *) myInstance )->_PPROCFPlugFormat->AddRef( myInstance );

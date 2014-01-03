@@ -73,7 +73,7 @@ void MyNullHook()
 
 void CloseMIDIHarware(void)
 {
-	if( MIDIHardware)
+	if (MIDIHardware)
 	{
 		OSStatus MIDIErr = MIDIClientDispose(MADMIDICliRef);
 	}

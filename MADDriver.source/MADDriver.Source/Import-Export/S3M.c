@@ -33,8 +33,8 @@ static	Byte	LastAEffect[ MAXTRACK], LastJEffect[ MAXTRACK];
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
-	if( PosX < 0) PosX = 0;
-	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
+	if (PosX < 0) PosX = 0;
+	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
@@ -58,24 +58,24 @@ static void ConvertS3MEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chan
 		case 'C':	*Cmd = skipE;			*Arg = B1;	break;
 			
 		case 'D':
-			if( LoB1 == 0 || HiB1 == 0)		// Slide volume
+			if (LoB1 == 0 || HiB1 == 0)		// Slide volume
 			{
 				*Cmd = slidevolE;		*Arg = B1;
 				
-				/*	if( *Arg == 0)				// Use last command
+				/*	if (*Arg == 0)				// Use last command
 				 {
 				 *Arg = LastAEffect[ channel];
 				 }
 				 else LastAEffect[ channel] = *Arg;*/
 				
 			}
-			else if( HiB1 == 0x0F)		// Fine Slide volume DOWN
+			else if (HiB1 == 0x0F)		// Fine Slide volume DOWN
 			{
 				*Cmd = extendedE;
 				*Arg = 11 << 4;
 				*Arg += LoB1;
 			}
-			else if( LoB1 == 0x0F)		// Fine Slide volume UP
+			else if (LoB1 == 0x0F)		// Fine Slide volume UP
 			{
 				*Cmd = extendedE;
 				*Arg = 10 << 4;
@@ -84,13 +84,13 @@ static void ConvertS3MEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chan
 			break;
 			
 		case 'E':
-			if( HiB1 == 0x0F)		// FineSlide DOWN
+			if (HiB1 == 0x0F)		// FineSlide DOWN
 			{
 				*Cmd = extendedE;
 				*Arg = 2 << 4;		//not supported
 				*Arg += LoB1;
 			}
-			else if( HiB1 == 0x0E)	// ExtraFineSlide DOWN
+			else if (HiB1 == 0x0E)	// ExtraFineSlide DOWN
 			{
 				*Cmd = 0;			*Arg = 0;		//not supported
 			}
@@ -101,13 +101,13 @@ static void ConvertS3MEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chan
 			break;
 			
 		case 'F':
-			if( HiB1 == 0x0F)		// FineSlide UP
+			if (HiB1 == 0x0F)		// FineSlide UP
 			{
 				*Cmd = extendedE;
 				*Arg = 1 << 4;		//not supported
 				*Arg += LoB1;
 			}
-			else if( HiB1 == 0x0E)	// ExtraFineSlide UP
+			else if (HiB1 == 0x0E)	// ExtraFineSlide UP
 			{
 				*Cmd = 0;			*Arg = 0;		//not supported
 			}
@@ -124,7 +124,7 @@ static void ConvertS3MEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chan
 			*Cmd = arpeggioE;
 			*Arg = B1;
 			
-			if( *Arg == 0)				// Use last command
+			if (*Arg == 0)				// Use last command
 			{
 				*Arg = LastJEffect[ channel];
 			}
@@ -151,11 +151,11 @@ static void ConvertS3MEffect( Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chan
 			break;
 			
 		case 'X':
-			if( B1 <= 128)
+			if (B1 <= 128)
 			{
 				*Cmd = panningE;
 				
-				if( B1 == 128) *Arg = 255;
+				if (B1 == 128) *Arg = 255;
 				else *Arg = B1<<1;
 			}
 			break;
@@ -172,7 +172,7 @@ static void ConvertMADEffect( Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 	switch( Cmd)
 	{
 		case speedE:
-			if( Arg < 32)
+			if (Arg < 32)
 			{
 				*B0 = 'A' - 0x40;	*B1 = Arg;
 			}
@@ -239,7 +239,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 	NoIns = 0;
 	for( i = 0; i < 64 ; i++)
 	{
-		if( theMAD->fid[ i].numSamples > 0)
+		if (theMAD->fid[ i].numSamples > 0)
 		{
 			InstruSize			+= 16 + theMAD->sample[ i*MAXSAMPLE + 0]->size;
 			//NoIns++;
@@ -266,7 +266,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 	
 	finalS3MCopy = finalS3M = MADPlugNewPtr( *sndSize, init);
 	maxfinalS3M = finalS3M + *sndSize;
-	if( finalS3M == NULL) return NULL;
+	if (finalS3M == NULL) return NULL;
 	
 	
 	
@@ -302,7 +302,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 		
 		for( i = 0; i < 32; i++) s3minfo->chanset[ i] = 255;
 		
-		if( theMAD->header->numChn < 32) for( i = 0; i < theMAD->header->numChn; i++) s3minfo->chanset[ i] = i;
+		if (theMAD->header->numChn < 32) for( i = 0; i < theMAD->header->numChn; i++) s3minfo->chanset[ i] = i;
 		else for( i = 0; i < 32; i++) s3minfo->chanset[ i] = i;
 		
 		finalS3MCopy += 96;
@@ -349,7 +349,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 	/*********************************/
 	for (i = 0; i < NoIns; i++)
 	{
-		if( theMAD->fid[ i].numSamples > 0)
+		if (theMAD->fid[ i].numSamples > 0)
 		{
 			sData		*curData = theMAD->sample[ i*MAXSAMPLE + 0];
 			
@@ -369,14 +369,14 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 			ins[ i]->insloopbeg			=	curData->loopBeg;
 			ins[ i]->insloopend			=	curData->loopBeg + curData->loopSize;
 			
-			if( curData->amp == 16)
+			if (curData->amp == 16)
 			{
 				ins[ i]->inslength /= 2;
 				ins[ i]->insloopbeg /= 2;
 				ins[ i]->insloopend /= 2;
 			}
 			
-			if( curData->stereo)
+			if (curData->stereo)
 			{
 				ins[ i]->inslength /= 2;
 				ins[ i]->insloopbeg /= 2;
@@ -392,8 +392,8 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 			ins[ i]->inspack			=	0;
 			
 			ins[ i]->insflags			= 	0;
-			if( curData->loopSize != 0) 	ins[ i]->insflags += 1;
-			if( curData->amp == 16) 		ins[ i]->insflags += 4;
+			if (curData->loopSize != 0) 	ins[ i]->insflags += 1;
+			if (curData->amp == 16) 		ins[ i]->insflags += 4;
 			
 			ins[ i]->c2spd				=	curData->c2spd;						INT32(  &ins[ i]->c2spd);
 			for( x = 0; x < 4; x++)		ins[ i]->inssig2[ x] = 0;
@@ -447,7 +447,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 	
 	for (i = 0; i < NoIns; i++)
 	{
-		if( theMAD->fid[ i].numSamples > 0)
+		if (theMAD->fid[ i].numSamples > 0)
 		{
 			sData			*curData = theMAD->sample[ i*MAXSAMPLE + 0];
 			long			tempL, dstSize;
@@ -461,15 +461,15 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 			
 			finalS3MCopy = finalS3M + tempL*16L;
 			
-		//	if( finalS3MCopy + curData->size >= maxfinalS3M) Debugger();
+		//	if (finalS3MCopy + curData->size >= maxfinalS3M) Debugger();
 			
 			BlockMoveData( curData->data, finalS3MCopy, curData->size);
 			
 			dstSize = curData->size;
 			
-			if( curData->stereo == true)
+			if (curData->stereo == true)
 			{
-				if( curData->amp == 8)
+				if (curData->amp == 8)
 				{
 					for( x = 0 ; x < dstSize; x+=2)
 					{
@@ -488,7 +488,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 				dstSize /= 2;
 			}
 			
-			if( curData->amp == 8)
+			if (curData->amp == 8)
 			{
 				for( tempL = 0; tempL < dstSize; tempL++) *(finalS3MCopy + tempL) += 0x80;
 			}
@@ -536,13 +536,13 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 		while( Row < 64)
 		{
 			maxtrackp = theMAD->header->numChn;
-			if( maxtrackp > 16) maxtrackp = 16;
+			if (maxtrackp > 16) maxtrackp = 16;
 			
 			for( z = 0; z < maxtrackp; z++)
 			{
 				Byte		*tempChar = (Byte*) finalS3MCopy;
 				
-				if( Row < theMAD->partition[ i]->header.size)
+				if (Row < theMAD->partition[ i]->header.size)
 				{
 					aCmd = GetMADCommand( Row, z, theMAD->partition[ i]);
 				}
@@ -564,17 +564,17 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 					
 					// PERIOD
 					
-					if( aCmd->note != 0xFF || aCmd->ins != 0)
+					if (aCmd->note != 0xFF || aCmd->ins != 0)
 					{
 						short Octave, Note;
 						
 						*tempChar += 32;
 						
-						if( aCmd->note == 0xFF)
+						if (aCmd->note == 0xFF)
 						{
 							finalS3MCopy[ 0] = 0xFF;
 						}
-						else if( aCmd->note == 0xFE)
+						else if (aCmd->note == 0xFE)
 						{
 							finalS3MCopy[ 0] = 254;
 						}
@@ -582,9 +582,9 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 						{
 							short curNote;
 							
-							if( aCmd->ins != 0)
+							if (aCmd->ins != 0)
 							{
-								if( theMAD->fid[ aCmd->ins-1].numSamples > 0)
+								if (theMAD->fid[ aCmd->ins-1].numSamples > 0)
 									curNote = aCmd->note + theMAD->sample[ (aCmd->ins-1)*MAXSAMPLE + 0]->relNote;
 								else 	curNote = aCmd->note;
 							}
@@ -603,11 +603,11 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 					
 					// VOLUME
 					
-					if( aCmd->vol != 0xFF || aCmd->cmd == volumeE)
+					if (aCmd->vol != 0xFF || aCmd->cmd == volumeE)
 					{
 						*tempChar += 64;
 						
-						if( aCmd->cmd == volumeE) finalS3MCopy[ 0] = aCmd->arg;
+						if (aCmd->cmd == volumeE) finalS3MCopy[ 0] = aCmd->arg;
 						else finalS3MCopy[ 0] = aCmd->vol - 0x10;
 						
 						finalS3MCopy += 1L;
@@ -615,7 +615,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 					
 					// PARAMETER
 					
-					if( aCmd->cmd != 0 || aCmd->arg != 0)
+					if (aCmd->cmd != 0 || aCmd->arg != 0)
 					{
 						*tempChar += 128;
 						
@@ -638,7 +638,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 	
 //	SetPtrSize( finalS3M, finalS3MCopy - finalS3M);
 	
-//	if( finalS3MCopy > maxfinalS3M) Debugger();
+//	if (finalS3MCopy > maxfinalS3M) Debugger();
 	
 	*sndSize = finalS3MCopy - finalS3M;
 	
@@ -672,7 +672,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 	/**** Header principal *****/
 	theS3MCopy = (Byte*) theS3M;
 	
-	//if( sizeof( s3minfo) < 96) Debugger();		// Just a test..
+	//if (sizeof( s3minfo) < 96) Debugger();		// Just a test..
 	
 	BlockMoveData( theS3MCopy, &s3minfo, 96);
 	theS3MCopy += 96;
@@ -686,13 +686,13 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 
 	/**** Order Num *****/
 	s3minfo.orders = (unsigned char *) MADPlugNewPtr( s3minfo.ordernum, init);
-	if( s3minfo.orders == NULL) return MADNeedMemory;
+	if (s3minfo.orders == NULL) return MADNeedMemory;
 	BlockMoveData( theS3MCopy, s3minfo.orders, s3minfo.ordernum);
 	theS3MCopy += s3minfo.ordernum;
 	
 	/**** Ins Num *****/
 	s3minfo.parapins = (unsigned short *) MADPlugNewPtr( s3minfo.insnum * 2L, init);
-	if( s3minfo.parapins == NULL)
+	if (s3minfo.parapins == NULL)
 	{
 		DisposePtr((Ptr)s3minfo.orders);
 		return MADNeedMemory;
@@ -707,7 +707,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 	
 	/**** Pat Num *****/
 	s3minfo.parappat = (unsigned short *) MADPlugNewPtr( s3minfo.patnum * 2L, init);
-	if( s3minfo.parappat == NULL) {
+	if (s3minfo.parappat == NULL) {
 		DisposePtr((Ptr)s3minfo.orders);
 		DisposePtr((Ptr)s3minfo.parapins);
 		return MADNeedMemory;
@@ -720,15 +720,15 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 	}
 	
 	// Panning information
-	if( s3minfo.pantable == 252)
+	if (s3minfo.pantable == 252)
 	{
 		BlockMoveData( theS3MCopy, &S3Mpan, 32 * sizeof( Byte));
 	}
 	
 	/**** Ins Data ****/
-	if( s3minfo.insnum > MAXINSTRU) s3minfo.insnum = MAXINSTRU;
+	if (s3minfo.insnum > MAXINSTRU) s3minfo.insnum = MAXINSTRU;
 	s3minfo.insdata = (s3minsform *) MADPlugNewPtr( sizeof(s3minsform) * s3minfo.insnum, init);
-	if( s3minfo.insdata == NULL)
+	if (s3minfo.insdata == NULL)
 	{
 		DisposePtr((Ptr)s3minfo.orders);
 		DisposePtr((Ptr)s3minfo.parapins);
@@ -747,7 +747,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 		INT16( &s3minfo.insdata[i].memsegl);
 		INT32( &s3minfo.insdata[i].inslength);
 		
-		if( s3minfo.insdata[i].insflags&1)
+		if (s3minfo.insdata[i].insflags&1)
 		{
 			INT32( &s3minfo.insdata[i].insloopbeg);
 			INT32( &s3minfo.insdata[i].insloopend);
@@ -789,7 +789,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 	/******** Copie des informations dans le MAD ***/
 	
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( sizeof( MADSpec), init);
-	if( theMAD->header == NULL) {
+	if (theMAD->header == NULL) {
 		DisposePtr((Ptr)s3minfo.orders);
 		DisposePtr((Ptr)s3minfo.parapins);
 		DisposePtr((Ptr)s3minfo.parappat);
@@ -813,11 +813,11 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 	{
 		theMAD->header->oPointers[ i] = s3minfo.orders[i];
 		
-		if( theMAD->header->oPointers[ i] < 0 || theMAD->header->oPointers[ i] >= s3minfo.patnum)
+		if (theMAD->header->oPointers[ i] < 0 || theMAD->header->oPointers[ i] >= s3minfo.patnum)
 		{
 			theMAD->header->oPointers[ i] = 0;
 			
-			if( s3minfo.orders[i] == 255)
+			if (s3minfo.orders[i] == 255)
 			{
 				theMAD->header->numPointers = i;
 				break;
@@ -828,7 +828,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 	x = 1;
 	for( i = 0; i < MAXTRACK; i++)
 	{
-		if( x > 0)
+		if (x > 0)
 		{
 			theMAD->header->chanPan[ i] = MAX_PANNING/4;
 			x = -1;
@@ -843,11 +843,11 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 	}
 
 	
-	if( s3minfo.pantable == 252)
+	if (s3minfo.pantable == 252)
 	{
 		for( i = 0; i < 32; i++)
 		{
-			if( (S3Mpan[ i] & 0x0F) != 0) theMAD->header->chanPan[ i] = (MAX_PANNING * (S3Mpan[ i] & 0x0F)) / 16;
+			if ((S3Mpan[ i] & 0x0F) != 0) theMAD->header->chanPan[ i] = (MAX_PANNING * (S3Mpan[ i] & 0x0F)) / 16;
 		}
 	}
 	
@@ -870,7 +870,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 	/************************/
 	
 	theMAD->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
-	if( !theMAD->fid) {
+	if (!theMAD->fid) {
 		free(s3minfo.orders);
 		free(s3minfo.parapins);
 		free(s3minfo.parappat);
@@ -881,7 +881,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 	}
 	
 	theMAD->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
-	if( !theMAD->sample) {
+	if (!theMAD->sample) {
 		DisposePtr((Ptr)s3minfo.orders);
 		DisposePtr((Ptr)s3minfo.parapins);
 		DisposePtr((Ptr)s3minfo.parappat);
@@ -907,7 +907,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 		
 		for( x = 0; x < 28; x++) theMAD->fid[i].name[x] = s3minfo.insdata[i].insname[x];
 		
-		if( theInstrument[ i] != NULL)
+		if (theInstrument[ i] != NULL)
 		{
 			sData	*curData;
 			
@@ -915,7 +915,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 			curIns->volFade = DEFAULT_VOLFADE;
 			
 			curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear( sizeof( sData), init);
-			if( curData == NULL) {
+			if (curData == NULL) {
 				DisposePtr((Ptr)s3minfo.orders);
 				DisposePtr((Ptr)s3minfo.parapins);
 				DisposePtr((Ptr)s3minfo.parappat);
@@ -941,12 +941,12 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 			curData->vol		= s3minfo.insdata[i].insvol;
 			curData->c2spd		= s3minfo.insdata[i].c2spd;
 			curData->loopType	= 0;
-			curData->amp		= 8;		if( s3minfo.insdata[i].insflags&4)	curData->amp		= 16;
+			curData->amp		= 8;		if (s3minfo.insdata[i].insflags&4)	curData->amp		= 16;
 			
 			curData->relNote	= 0;
 		//	for( x = 0; x < 28; x++) theMAD->fid[i].name[x] = s3minfo.insdata[i].insname[x];
 			
-			if( curData->amp == 16)
+			if (curData->amp == 16)
 			{
 				curData->size *= 2;
 				curData->loopBeg *= 2;
@@ -954,7 +954,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 			}
 			
 			curData->data 		= (Ptr)MADPlugNewPtr( curData->size, init);
-			if( curData->data == NULL) {
+			if (curData->data == NULL) {
 				DisposePtr((Ptr)s3minfo.orders);
 				DisposePtr((Ptr)s3minfo.parapins);
 				DisposePtr((Ptr)s3minfo.parappat);
@@ -988,13 +988,13 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 						{
 							INT16( (b16 + temp));
 							
-							if( s3minfo.ffv != 1) *(b16 + temp) -= 0x8000;
+							if (s3minfo.ffv != 1) *(b16 + temp) -= 0x8000;
 						}
 					}
 						break;
 						
 					case 8:
-						if( s3minfo.ffv != 1)
+						if (s3minfo.ffv != 1)
 						{
 							long temp;
 							
@@ -1028,7 +1028,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 	{
 		Row = 0;
 		
-		if( s3minfo.parappat[ i] > 0)
+		if (s3minfo.parappat[ i] > 0)
 		{
 			theS3MCopy = (Byte*) theS3M;
 			theS3MCopy += ( (long) s3minfo.parappat[i] )*16L;
@@ -1039,16 +1039,16 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 				tempChar = *theS3MCopy;
 				theS3MCopy++;
 				
-				if( tempChar == 0) Row++;
+				if (tempChar == 0) Row++;
 				else
 				{	// Channel
 					channel = tempChar;
 					channel &= 31;
 					
-					if( channel > maxTrack) maxTrack = channel;
-					if( (tempChar & 32) != 0) theS3MCopy += 2L;
-					if( (tempChar & 64) != 0) theS3MCopy += 1L;
-					if( (tempChar & 128) != 0) theS3MCopy += 2L;
+					if (channel > maxTrack) maxTrack = channel;
+					if ((tempChar & 32) != 0) theS3MCopy += 2L;
+					if ((tempChar & 64) != 0) theS3MCopy += 1L;
+					if ((tempChar & 128) != 0) theS3MCopy += 2L;
 				}
 			}
 		}
@@ -1075,7 +1075,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 	for( i = 0; i < theMAD->header->numPat ; i++)
 	{
 		theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear( sizeof( PatHeader) + theMAD->header->numChn * 64L * sizeof( Cmd), init);
-		if( theMAD->partition[ i] == NULL) {
+		if (theMAD->partition[ i] == NULL) {
 			DisposePtr((Ptr)s3minfo.orders);
 			DisposePtr((Ptr)s3minfo.parapins);
 			DisposePtr((Ptr)s3minfo.parappat);
@@ -1125,7 +1125,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 			}
 		}
 		
-		if( s3minfo.parappat[ i] > 0)
+		if (s3minfo.parappat[ i] > 0)
 		{
 			theS3MCopy = (Byte*) theS3M;
 			theS3MCopy += ( (long) s3minfo.parappat[i] )*16L;
@@ -1146,29 +1146,29 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 				tempChar = *theS3MCopy;
 				theS3MCopy++;
 				
-				if( tempChar == 0) Row++;
+				if (tempChar == 0) Row++;
 				else
 				{
 					// Channel
 					
 					channel = tempChar;
 					channel &= 31;
-					if( channel >= 0 && channel < theMAD->header->numChn) aCmd = GetMADCommand( Row, channel, theMAD->partition[ i]);
+					if (channel >= 0 && channel < theMAD->header->numChn) aCmd = GetMADCommand( Row, channel, theMAD->partition[ i]);
 					else aCmd = NULL;
 					
 					// PERIOD
 					
-					if( (tempChar & 32) != 0)
+					if ((tempChar & 32) != 0)
 					{
-						if( aCmd != NULL)
+						if (aCmd != NULL)
 						{
 							aCmd->note = theS3MCopy[ 0];
 							
-							if( aCmd->note == 255)
+							if (aCmd->note == 255)
 							{
 								aCmd->note = 0xFF;
 							}
-							else if( aCmd->note == 254) // Note-OFF
+							else if (aCmd->note == 254) // Note-OFF
 							{
 								aCmd->note = 0xFE;
 								//	Debugger();
@@ -1179,7 +1179,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 								Note = (aCmd->note & 0x0F);
 								
 								aCmd->note = Octave*12 + Note;
-								if( aCmd->note < 0 || aCmd->note >= NUMBER_NOTES) aCmd->note = 0xFF;
+								if (aCmd->note < 0 || aCmd->note >= NUMBER_NOTES) aCmd->note = 0xFF;
 							}
 							aCmd->ins = theS3MCopy[ 1];
 						}
@@ -1188,25 +1188,25 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 					
 					// VOLUME
 					
-					if( (tempChar & 64) != 0)
+					if ((tempChar & 64) != 0)
 					{
-						if( aCmd != NULL)
+						if (aCmd != NULL)
 						{
 							aCmd->vol = theS3MCopy[ 0];
-							if( aCmd->vol > 64) aCmd->vol = 64;
+							if (aCmd->vol > 64) aCmd->vol = 64;
 							aCmd->vol += 0x10;
 						}
 						theS3MCopy += 1L;
 					}
-					else if( aCmd != NULL) aCmd->vol = 255;
+					else if (aCmd != NULL) aCmd->vol = 255;
 					
 					// PARAMETER
 					
-					if( (tempChar & 128) != 0)
+					if ((tempChar & 128) != 0)
 					{
-						if( aCmd != NULL)
+						if (aCmd != NULL)
 						{
-							if( theS3MCopy[ 0] != 255)
+							if (theS3MCopy[ 0] != 255)
 							{
 								ConvertS3MEffect( theS3MCopy[ 0], theS3MCopy[ 1], &aCmd->cmd, &aCmd->arg, channel);
 							}
@@ -1305,11 +1305,11 @@ static OSErr mainS3M( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 		case 'EXPL':
 			AlienFile = ConvertMad2S3M( MadFile, init, &sndSize);
 			
-			if( AlienFile != NULL)
+			if (AlienFile != NULL)
 			{
 				iFileCreate( AlienFileName, 'S3M ');
 				iFileRefI = iFileOpen( AlienFileName);
-				if( iFileRefI)
+				if (iFileRefI)
 				{
 					iWrite( sndSize, AlienFile, iFileRefI);
 					iClose( iFileRefI);
@@ -1321,13 +1321,13 @@ static OSErr mainS3M( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 		
 		case 'IMPL':
 			iFileRefI = iFileOpen( AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				sndSize = iGetEOF( iFileRefI);
 				
 				// ** MEMORY Test Start
 				AlienFile = MADPlugNewPtr( sndSize * 2L, init);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
 				else
@@ -1335,13 +1335,13 @@ static OSErr mainS3M( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 					DisposePtr( AlienFile);
 					
 					AlienFile = MADPlugNewPtr( sndSize, init);
-					if( AlienFile == NULL) myErr = MADNeedMemory;
+					if (AlienFile == NULL) myErr = MADNeedMemory;
 					else
 					{
 						iRead( sndSize, AlienFile, iFileRefI);
 						
 						myErr = TestS3MFile( AlienFile);
-						if( myErr == noErr)
+						if (myErr == noErr)
 						{
 							myErr = ConvertS3M2Mad( AlienFile,  sndSize, MadFile, init);
 						}
@@ -1355,12 +1355,12 @@ static OSErr mainS3M( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 		
 		case 'TEST':
 			iFileRefI = iFileOpen( AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				sndSize = 1024L;
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
@@ -1376,21 +1376,21 @@ static OSErr mainS3M( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 
 		case 'INFO':
 			iFileRefI = iFileOpen( AlienFileName);
-			if( iFileRefI)
+			if (iFileRefI)
 			{
 				info->fileSize = iGetEOF( iFileRefI);
 			
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = MADPlugNewPtr( sndSize, init);
-				if( AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
 					myErr = iRead( sndSize, AlienFile, iFileRefI);
-					if( myErr == noErr)
+					if (myErr == noErr)
 					{
 						myErr = TestS3MFile( AlienFile);
-						if( !myErr) myErr = ExtractS3MInfo( info, AlienFile);
+						if (!myErr) myErr = ExtractS3MInfo( info, AlienFile);
 					}
 					DisposePtr( AlienFile);	AlienFile = NULL;
 				}

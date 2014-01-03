@@ -37,7 +37,7 @@ void CreateCubeWindow(void)
 	Str255		String;
 	GrafPtr		savePort;
 
-	if( CubeDlog != NULL)
+	if (CubeDlog != NULL)
 	{
 		SelectWindow2( GetDialogWindow( CubeDlog));
 		return;
@@ -54,7 +54,7 @@ void CreateCubeWindow(void)
 
 void CloseCube(void)
 {
-	if( CubeDlog != NULL)
+	if (CubeDlog != NULL)
 	{
 		DisposeDialog( CubeDlog);
 	}

@@ -67,7 +67,7 @@ OSErr	InitDBSoundManager( MADDriverRec *inMADDriver, long init)
 
 	inMADDriver->MusicChannelPP = NULL;
 	inMADDriver->MusicChannelPP = CreateSndChannel( init);
-	if( inMADDriver->MusicChannelPP == NULL) return MADSoundManagerErr;
+	if (inMADDriver->MusicChannelPP == NULL) return MADSoundManagerErr;
 	
 	err = DBSndPlay( inMADDriver, inMADDriver->MusicChannelPP);
 	return err;
@@ -106,7 +106,7 @@ OSErr DBSndPlay ( MADDriverRec *inMADDriver, SndChannelPtr chan)
 	inMADDriver->TheHeader.dbhSampleRate = inMADDriver->DriverSettings.outPutRate;
 	inMADDriver->TheHeader.dbhSampleSize = inMADDriver->DriverSettings.outPutBits;
 	
-	if( inMADDriver->DriverSettings.outPutMode == MonoOutPut) inMADDriver->TheHeader.dbhNumChannels = 1;
+	if (inMADDriver->DriverSettings.outPutMode == MonoOutPut) inMADDriver->TheHeader.dbhNumChannels = 1;
 	else inMADDriver->TheHeader.dbhNumChannels = 2;
 	
 	for (i = 0; i <= 1; i++)
@@ -116,7 +116,7 @@ OSErr DBSndPlay ( MADDriverRec *inMADDriver, SndChannelPtr chan)
 #else
 		doubleBuffer = (PPSndDoubleBufferPtr) MADNewPtrClear( sizeof (PPSndDoubleBuffer) + inMADDriver->BufSize + 20, inMADDriver->lib);
 #endif
-		if( doubleBuffer == NULL) return MADNeedMemory;
+		if (doubleBuffer == NULL) return MADNeedMemory;
 
 		doubleBuffer->dbNumFrames 		= 0;
 		doubleBuffer->dbFlags 			= 0;
@@ -133,7 +133,7 @@ OSErr DBSndPlay ( MADDriverRec *inMADDriver, SndChannelPtr chan)
 	err = MySndPlayDoubleBuffer( chan, &inMADDriver->TheHeader);
 #endif
 	
-	if( err != noErr) return MADSoundManagerErr;
+	if (err != noErr) return MADSoundManagerErr;
 	return err;
 }
 

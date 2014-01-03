@@ -65,15 +65,15 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 	long 	inOutBytes, i;
 	sData	*curData;
 
-	if( theSound == NULL) return MADParametersErr;
+	if (theSound == NULL) return MADParametersErr;
 
-	if( *sampleID > MAXSAMPLE) return MADParametersErr;
+	if (*sampleID > MAXSAMPLE) return MADParametersErr;
 
 	inOutBytes = GetPtrSize( theSound);
 	
 	///////
 	
-	if( *sampleID >= 0)		// replace this sample
+	if (*sampleID >= 0)		// replace this sample
 	{
 		curData = sample[ *sampleID];
 	}
@@ -85,7 +85,7 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 		curData = sample[ *sampleID] = inMADCreateSample();
 	}
 	
-	if( curData->data != NULL) DisposePtr( curData->data);
+	if (curData->data != NULL) DisposePtr( curData->data);
 	curData->data = theSound;
 	
 	curData->size		= inOutBytes;
@@ -99,7 +99,7 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 	
 	for(i=0; i<32; i++)
 	{
-		if( i < name[ 0]) curData->name[i] = name[i+1];
+		if (i < name[ 0]) curData->name[i] = name[i+1];
 		else curData->name[i] = '\0';
 	}
 	

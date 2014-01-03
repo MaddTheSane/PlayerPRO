@@ -34,9 +34,9 @@ void DoGrowInstruView(void)
 
 	GetPortBounds( GetDialogPort( InstruViewDlog), &caRect);
 	
-	if( caRect.bottom >= WLARG2) temp = WSMALL;
-	else if( caRect.bottom >= WLARG) temp = WLARG2;
-	else if( caRect.bottom >= WMEDIUM) temp = WLARG;
+	if (caRect.bottom >= WLARG2) temp = WSMALL;
+	else if (caRect.bottom >= WLARG) temp = WLARG2;
+	else if (caRect.bottom >= WMEDIUM) temp = WLARG;
 	else temp = WMEDIUM;
 	
 	MySizeWindow( InstruViewDlog, 212, temp, true);		//caRect.right
@@ -54,8 +54,8 @@ void DoNullInstruView(void)
 	short		itemType;
 	Rect		itemRect;
 
- 	if( InstruViewDlog == NULL) return;
-	if( TickCount() <= oldInstruTicks) return;
+ 	if (InstruViewDlog == NULL) return;
+	if (TickCount() <= oldInstruTicks) return;
 	oldInstruTicks = TickCount();
 	
  	GetPort( &SavePort);
@@ -63,18 +63,18 @@ void DoNullInstruView(void)
 	
 	GetPortBounds( GetDialogPort( InstruViewDlog), &caRect);
 	
-	if( caRect.bottom >= WLARG2) max = 128;
-	else if( caRect.bottom >= WLARG) max = 64;
-	else if( caRect.bottom >= WMEDIUM) max = 32;
+	if (caRect.bottom >= WLARG2) max = 128;
+	else if (caRect.bottom >= WLARG) max = 64;
+	else if (caRect.bottom >= WMEDIUM) max = 32;
 	else max = 16;
 	
 	for( i = 0; i < max; i++)
 	{
-		if( MADDriver->InstruTube[i] > 0)
+		if (MADDriver->InstruTube[i] > 0)
 		{
 			itemRect = InstruBox[i];
 			
-			if( MADDriver->InstruTube[i] == 64)
+			if (MADDriver->InstruTube[i] == 64)
 			{
 				MADDriver->InstruTube[i]--;
 				SwitchColor( MADDriver->InstruActif[ i]);
@@ -137,9 +137,9 @@ void UpdateInstruView(DialogPtr GetSelection)  	/* Pointer to this dialog */
 	
 	GetPortBounds( GetDialogPort( InstruViewDlog), &caRect);
 	
-	if( caRect.bottom >= WLARG2) max = 128;
-	else if( caRect.bottom >= WLARG) max = 64;
-	else if( caRect.bottom >= WMEDIUM) max = 32;
+	if (caRect.bottom >= WLARG2) max = 128;
+	else if (caRect.bottom >= WLARG) max = 64;
+	else if (caRect.bottom >= WMEDIUM) max = 32;
 	else max = 16;
 	
 	for( i = 0; i < max; i++)
@@ -173,7 +173,7 @@ void CreateInstruView(void)
 	FontInfo	ThisFontInfo;
 	Str255		String;
 
-	if( InstruViewDlog != NULL)
+	if (InstruViewDlog != NULL)
 	{
 		SetWindEtat( GetDialogWindow(InstruViewDlog));
 		return;
@@ -196,7 +196,7 @@ void CreateInstruView(void)
 		itemRect.left += ILARG;
 		itemRect.right += ILARG;
 		
-		if( (i+1) % 16 == 0)
+		if ((i+1) % 16 == 0)
 		{
 			short high;
 			
@@ -214,7 +214,7 @@ void CreateInstruView(void)
 
 void CloseInstruViewDlog(void)
 {
-	if( InstruViewDlog != NULL) DisposeDialog( InstruViewDlog);
+	if (InstruViewDlog != NULL) DisposeDialog( InstruViewDlog);
 	InstruViewDlog = NULL;
 	
 	SetItemMark( ViewsMenu, mInsV, noMark);

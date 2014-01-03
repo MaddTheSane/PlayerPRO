@@ -15,8 +15,8 @@ void ChangeMapping( ICInstance inst, Handle prefh, long pos, OSType type, unsign
 	
 	entry->MIMEType[ 9] = extension[ 2];
 	entry->MIMEType[10] = extension[ 3];
-	if( extension[ 0] > 2) entry->MIMEType[11] = extension[ 4];
-	if( extension[ 0] > 3) entry->MIMEType[12] = extension[ 5];
+	if (extension[ 0] > 2) entry->MIMEType[11] = extension[ 4];
+	if (extension[ 0] > 3) entry->MIMEType[12] = extension[ 5];
 	
 	entry->MIMEType[ 0] += extension[ 0];
 	
@@ -24,15 +24,15 @@ void ChangeMapping( ICInstance inst, Handle prefh, long pos, OSType type, unsign
 	pStrcpy( entry->postAppName, "\pPlayerPRO");
 	pStrcpy( entry->entryName, "\pPlayerPRO");
 	
-	if( add)
+	if (add)
 	{
 		err = ICAddMapEntry( inst, prefh, entry);
-		if( err) Debugger();
+		if (err) Debugger();
 	}
 	else
 	{
 		err = ICSetMapEntry( inst, prefh, pos, entry);
-		if( err) Debugger();
+		if (err) Debugger();
 	}
 }
 
@@ -64,15 +64,15 @@ void SetInternetMapping( void)
                 prefh = NewHandle( 1);
                 
                 err = ICFindPrefHandle( inst, kICMapping, &attr, prefh);
-                if( err) Debugger();
+                if (err) Debugger();
                 
                 err = ICCountMapEntries( inst, prefh, &count);
-                if( err) Debugger();
+                if (err) Debugger();
                  
                 for( i = 1; i < count; i++)
                 {
                 	 err = ICGetIndMapEntry( inst, prefh, i, &pos, &entry);
-                	 if( err) Debugger();
+                	 if (err) Debugger();
                 	 
                 	 switch( entry.fileType)
                 	 {
@@ -120,26 +120,26 @@ void SetInternetMapping( void)
                 	 	break;
                 	 	
                 	 	default:
-                	 			 if( EqualString( entry.extension, "\p.xm", false, false))		{xm = true;		ChangeMapping( inst, prefh, pos, 'XM  ', "\p.xm", &entry, false);}
-                	 		else if( EqualString( entry.extension, "\p.mod", false, false))		{mod = true;	ChangeMapping( inst, prefh, pos, 'STrk', "\p.mod", &entry, false);}
-                	 		else if( EqualString( entry.extension, "\p.STrk", false, false))	{mod = true;	ChangeMapping( inst, prefh, pos, 'STrk', "\p.mod", &entry, false);}
-                	 		else if( EqualString( entry.extension, "\p.s3m", false, false))		{s3m = true;	ChangeMapping( inst, prefh, pos, 'S3M ', "\p.s3m", &entry, false);}
-                	 		else if( EqualString( entry.extension, "\p.it", false, false))		{it = true;		ChangeMapping( inst, prefh, pos, 'IT  ', "\p.it", &entry, false);}
+                	 			 if (EqualString( entry.extension, "\p.xm", false, false))		{xm = true;		ChangeMapping( inst, prefh, pos, 'XM  ', "\p.xm", &entry, false);}
+                	 		else if (EqualString( entry.extension, "\p.mod", false, false))		{mod = true;	ChangeMapping( inst, prefh, pos, 'STrk', "\p.mod", &entry, false);}
+                	 		else if (EqualString( entry.extension, "\p.STrk", false, false))	{mod = true;	ChangeMapping( inst, prefh, pos, 'STrk', "\p.mod", &entry, false);}
+                	 		else if (EqualString( entry.extension, "\p.s3m", false, false))		{s3m = true;	ChangeMapping( inst, prefh, pos, 'S3M ', "\p.s3m", &entry, false);}
+                	 		else if (EqualString( entry.extension, "\p.it", false, false))		{it = true;		ChangeMapping( inst, prefh, pos, 'IT  ', "\p.it", &entry, false);}
                 	 	break;
                 	 }
                 }
                 
-                if( xm == false) 	ChangeMapping( inst, prefh, pos, 'XM  ', "\p.xm", &entry, true);
-                if( mad == false) 	ChangeMapping( inst, prefh, pos, 'MADK', "\p.mad", &entry, true);
-                if( madi == false) 	ChangeMapping( inst, prefh, pos, 'MADI', "\p.madi", &entry, true);
-                if( madk == false) 	ChangeMapping( inst, prefh, pos, 'MADK', "\p.madk", &entry, true);
-                if( madh == false) 	ChangeMapping( inst, prefh, pos, 'MADH', "\p.madh", &entry, true);
-                if( mod == false) 	ChangeMapping( inst, prefh, pos, 'STrk', "\p.mod", &entry, true);
-                if( s3m == false) 	ChangeMapping( inst, prefh, pos, 'S3M ', "\p.s3m", &entry, true);
-                if( it == false) 	ChangeMapping( inst, prefh, pos, 'IT  ', "\p.it", &entry, true);
+                if (xm == false) 	ChangeMapping( inst, prefh, pos, 'XM  ', "\p.xm", &entry, true);
+                if (mad == false) 	ChangeMapping( inst, prefh, pos, 'MADK', "\p.mad", &entry, true);
+                if (madi == false) 	ChangeMapping( inst, prefh, pos, 'MADI', "\p.madi", &entry, true);
+                if (madk == false) 	ChangeMapping( inst, prefh, pos, 'MADK', "\p.madk", &entry, true);
+                if (madh == false) 	ChangeMapping( inst, prefh, pos, 'MADH', "\p.madh", &entry, true);
+                if (mod == false) 	ChangeMapping( inst, prefh, pos, 'STrk', "\p.mod", &entry, true);
+                if (s3m == false) 	ChangeMapping( inst, prefh, pos, 'S3M ', "\p.s3m", &entry, true);
+                if (it == false) 	ChangeMapping( inst, prefh, pos, 'IT  ', "\p.it", &entry, true);
                 
                 err = ICSetPrefHandle( inst, kICMapping, attr, prefh);
-                if( err) Debugger();
+                if (err) Debugger();
         }
   //     #endif
         

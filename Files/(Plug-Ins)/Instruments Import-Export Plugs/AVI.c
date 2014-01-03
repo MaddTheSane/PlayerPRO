@@ -33,11 +33,11 @@ OSErr main(		OSType					order,						// Order to execute
 			FSSpec			newFile;
 			
 			myErr = ConvertDataToWAVE( *AlienFileFSSpec, &newFile, thePPInfoPlug);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				theSound = ConvertWAV( &newFile, &lS, &lE, &sS, &rate, &stereo);
 				
-				if( theSound) inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, newFile.name, InsHeader, sample, sampleID);
+				if (theSound) inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, newFile.name, InsHeader, sample, sampleID);
 				else myErr = MADNeedMemory;
 				
 				FSpDelete( &newFile);
@@ -51,7 +51,7 @@ OSErr main(		OSType					order,						// Order to execute
 			
 			FSpGetFInfo( AlienFileFSSpec, &fInfo);
 			
-			if( fInfo.fdType == kQTFileTypeAVI) myErr = noErr;
+			if (fInfo.fdType == kQTFileTypeAVI) myErr = noErr;
 			else myErr = MADFileNotSupportedByThisPlug;
 		}
 		break;

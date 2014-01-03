@@ -67,7 +67,7 @@ void OpenWorkingWindow( short NumberCalls)
 	WorkStatus = 0;
 	WorkTotal = NumberCalls;
 	
-//	if( WorkTotal < MINIMUS) return;
+//	if (WorkTotal < MINIMUS) return;
 	
 	
 	GetPort( &SavePort);
@@ -82,7 +82,7 @@ void OpenWorkingWindow( short NumberCalls)
 	
 	FirstCall = TickCount();
 	
-	if( AppearanceManager)
+	if (AppearanceManager)
 	{
 		GetDialogItem( theProgressDia, 1, &itemType, &itemHandle, &itemRect);
 		progCntl = NewControl( 	GetDialogWindow( theProgressDia),
@@ -110,7 +110,7 @@ void UpdateWorkingWindow()
 	Rect		itemRect;
 	long		temp;
 	
-	if( theProgressDia == NULL) return;
+	if (theProgressDia == NULL) return;
 	
 	GetPort( &SavePort);
 	SetPortDialogPort( theProgressDia);
@@ -119,7 +119,7 @@ void UpdateWorkingWindow()
 	
 	DrawDialog( theProgressDia);
 	
-	if( AppearanceManager)
+	if (AppearanceManager)
 	{
 		
 	}
@@ -176,17 +176,17 @@ Boolean DoWorkingWindow(void)
 	Point		pt;
 	DateTimeRec	dtrp;
 	
-//	if( WorkTotal < MINIMUS) return false;
+//	if (WorkTotal < MINIMUS) return false;
 	
-	if( theProgressDia == NULL) return false;
+	if (theProgressDia == NULL) return false;
 	
 	GetPort( &SavePort);
 	SetPortDialogPort( theProgressDia);
 	
 	WorkStatus ++;
-	if( WorkStatus > WorkTotal) WorkStatus = WorkTotal;
+	if (WorkStatus > WorkTotal) WorkStatus = WorkTotal;
 	
-	if( AppearanceManager)
+	if (AppearanceManager)
 	{
 		SetControlValue( progCntl, (100 * WorkStatus) / WorkTotal);
 	}
@@ -197,7 +197,7 @@ Boolean DoWorkingWindow(void)
 		temp = itemRect.right - itemRect.left;
 		temp = (temp * WorkStatus) / WorkTotal;
 		
-		if( oldPos != temp)
+		if (oldPos != temp)
 		{
 			oldPos = temp;
 		
@@ -210,12 +210,12 @@ Boolean DoWorkingWindow(void)
 		}
 	}
 	
-	if( WorkStatus == 1)
+	if (WorkStatus == 1)
 	{
 		FirstCall = TickCount();
 		goto NOW;
 	}
-	else if( WorkStatus == WorkTotal)
+	else if (WorkStatus == WorkTotal)
 	{
 		curTicks = TickCount();
 		
@@ -230,14 +230,14 @@ Boolean DoWorkingWindow(void)
 	{
 		curTicks = TickCount();
 		
-		if( curTicks - FirstCall > 30)
+		if (curTicks - FirstCall > 30)
 		{
 			Ltemp = ((long) (curTicks - FirstCall) * ((long) WorkTotal))/ ( (long) WorkStatus);	// Temps total
 			Ltemp -= (long) (curTicks - FirstCall);
 		
 			Ltemp /= 60;
 			
-			if( oldTime != Ltemp)
+			if (oldTime != Ltemp)
 			{
 				oldTime = Ltemp;
 				
@@ -278,7 +278,7 @@ Boolean DoWorkingWindow(void)
 				
 				// KBytes written
 				
-				if( totalSize > finalSize) temp = finalSize;
+				if (totalSize > finalSize) temp = finalSize;
 				else temp = totalSize;
 				
 				NumToString( temp / 1024L, str);
@@ -298,7 +298,7 @@ Boolean DoWorkingWindow(void)
 				Ltemp = curTicks - FirstCall;
 				Ltemp /= 60;
 				
-				if( Ltemp != 0)
+				if (Ltemp != 0)
 				{
 					NumToString( (totalSize / 1024L) / Ltemp, str);
 					pStrcat( str, "\p Kb / s");
@@ -314,7 +314,7 @@ Boolean DoWorkingWindow(void)
 	SetPort( SavePort);
 	
 	GetKeys( km);
-	if( IsPressed( 0x37) && IsPressed( 0x2F)) return true;
+	if (IsPressed( 0x37) && IsPressed( 0x2F)) return true;
 	else return false;
 }
 
@@ -384,24 +384,24 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	sndHandle = NULL;
 	
 	theAIFFSpec = *newFile;
-	if( dstFile) DestFile = *dstFile;
+	if (dstFile) DestFile = *dstFile;
 	theType = type;
 	fRefNum = fRef;
 	curVolRefNumFF = newFile->vRefNum;
 	
-	if( theType == 'MPG4') MPG4 = true;
+	if (theType == 'MPG4') MPG4 = true;
 	else MPG4 = false;
 	
 //	thePrefs.DirectDriverType = MADDriver->DriverSettings;
 	
-	if( !SoundQualityExport( OnlyCurrent, &thePrefs.channelNumber, &thePrefs.Compressor, &thePrefs.FrequenceSpeed, &thePrefs.amplitude, &patternID, &thePrefs.DirectDriverType, MPG4))
+	if (!SoundQualityExport( OnlyCurrent, &thePrefs.channelNumber, &thePrefs.Compressor, &thePrefs.FrequenceSpeed, &thePrefs.amplitude, &patternID, &thePrefs.DirectDriverType, MPG4))
 	{
 		FSCloseFork( fRefNum);
 		FSpDelete( newFile);
 		return false;
 	}
 	
-	if( theType == 'MPG4') thePrefs.Compressor = 'NONE';
+	if (theType == 'MPG4') thePrefs.Compressor = 'NONE';
 	
 	thePrefs.DirectDriverType.numChn			= 	MADDriver->DriverSettings.numChn;
 	thePrefs.DirectDriverType.outPutBits		= 	thePrefs.amplitude;
@@ -417,7 +417,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	copyMusic = (MADMusic*) NewPtr( sizeof( MADMusic));
 	memcpy( copyMusic, curMusic, sizeof( MADMusic));
 	
-	if( MADCreateDriver( &thePrefs.DirectDriverType, gMADLib, &copyDriver) != noErr) return false;
+	if (MADCreateDriver( &thePrefs.DirectDriverType, gMADLib, &copyDriver) != noErr) return false;
 	
 	
 	copyDriver->currentlyExporting	= true;
@@ -485,7 +485,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 			/****** ALLOCATION *********/
 		
 			copyMusic->partition[ copyMusic->header->numPat] = ( PatData*) NewPtrClear( sizeof( PatHeader) + copyMusic->header->numChn * DEndPos * sizeof( Cmd));
-			if( MemError()) MyDebugStr( __LINE__, __FILE__, "Error in AddAPattern...");
+			if (MemError()) MyDebugStr( __LINE__, __FILE__, "Error in AddAPattern...");
 			
 			copyMusic->partition[ copyMusic->header->numPat]->header.size = DEndPos;
 			copyMusic->partition[ copyMusic->header->numPat]->header.compMode = 'NONE';
@@ -503,7 +503,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 					
 					cmd2 = GetMADCommand(  v,  u, copyMusic->partition[ currentPat]);
 					
-					if( u >= DStartTrack && u < DEndTrack) *cmd1 = *cmd2;
+					if (u >= DStartTrack && u < DEndTrack) *cmd1 = *cmd2;
 					else MADKillCmd( cmd1);
 				}
 			}
@@ -513,7 +513,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 			copyMusic->header->numPat++;
 			
 		//	for( i = 0; i < DStartTrack; i++) copyDriver->Active[ i] = false;
-		//	for( i = DStartTrack; i < DEndTrack; i++) if( copyDriver->Active[ i] = true;
+		//	for( i = DStartTrack; i < DEndTrack; i++) if (copyDriver->Active[ i] = true;
 		//	for( i = DEndTrack; i < MAXTRACK; i++) copyDriver->Active[ i] = false;
 		}
 		break;
@@ -525,7 +525,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 		default:
 			for( i = 0; i < copyMusic->header->numPointers; i++)
 			{
-				if( copyMusic->header->oPointers[ i] == patternID)
+				if (copyMusic->header->oPointers[ i] == patternID)
 				{
 					copyDriver->PL = i;
 					copyDriver->Pat = patternID;
@@ -547,26 +547,26 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	Packet = MaxBlock()/ (copyDriver->ASCBUFFERReal *thePrefs.amplitude/8);
 	Packet /= ( 2L*2L + 1L);
 	
-	if( Packet > 20) Packet = 20;
-	if( Packet <= 0) MyDebugStr( __LINE__, __FILE__, "Memory Error, Increase Memory");
+	if (Packet > 20) Packet = 20;
+	if (Packet <= 0) MyDebugStr( __LINE__, __FILE__, "Memory Error, Increase Memory");
 	
 	
-	if( patternID != -1 || patternID == -2) OpenWorkingWindow( 1);
+	if (patternID != -1 || patternID == -2) OpenWorkingWindow( 1);
 	else OpenWorkingWindow( copyMusic->header->numPointers);
 	
 	sndPtr =  NewPtrClear( (copyDriver->ASCBUFFER*2L*thePrefs.amplitude) / 8L);
-	if( sndPtr == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error, Increase Memory");
+	if (sndPtr == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error, Increase Memory");
 	
 	outSound = NewPtrClear( (copyDriver->ASCBUFFERReal*Packet*2L*thePrefs.amplitude) / 8L);
-	if( outSound == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error, Increase Memory");
+	if (outSound == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error, Increase Memory");
 	
 	compSound = NewPtrClear( (copyDriver->ASCBUFFERReal*Packet*2L*thePrefs.amplitude) / 8L);
-	if( compSound == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error, Increase Memory");
+	if (compSound == NULL) MyDebugStr( __LINE__, __FILE__, "Memory Error, Increase Memory");
 	
 	////////
 	
 	inputFormat.flags = 0;
-	if( thePrefs.DirectDriverType.outPutBits == 8) inputFormat.format = kOffsetBinary;
+	if (thePrefs.DirectDriverType.outPutBits == 8) inputFormat.format = kOffsetBinary;
 	else inputFormat.format = k16BitBigEndianFormat;	//k16BitBigEndianFormat;
 	inputFormat.numChannels = 2;
 	inputFormat.sampleSize = thePrefs.DirectDriverType.outPutBits;
@@ -612,7 +612,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 	
 	///////////////////////////////////	
 	
-	if( theType == 'sfil')
+	if (theType == 'sfil')
 	{
 		short	headerLen;
 		FInfo		fndrInfo;
@@ -620,7 +620,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 		FSCloseFork( fRefNum);
 		
 		iErr = FSpGetFInfo( newFile, &fndrInfo);
-		if( iErr != noErr)
+		if (iErr != noErr)
 		{
 			fndrInfo.fdCreator = '\?\?\?\?';
 			fndrInfo.fdType = '\?\?\?\?';
@@ -632,14 +632,14 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 			FSpCreateResFile( newFile, fndrInfo.fdCreator, fndrInfo.fdType, smSystemScript);
 			
 			RsrcRefNum = FSpOpenResFile( newFile, fsCurPerm);
-			if( RsrcRefNum == -1)
+			if (RsrcRefNum == -1)
 			{
 				CloseWorkingWindow();
 				return false;
 			}
 			
 			sndHandle = NewHandle( 20000);
-			if( sndHandle == NULL) {MyDebugStr( __LINE__, __FILE__, "Need MEMORY");	CloseWorkingWindow(); return false;}
+			if (sndHandle == NULL) {MyDebugStr( __LINE__, __FILE__, "Need MEMORY");	CloseWorkingWindow(); return false;}
 			
 			iErr = SetupSndHeader(		(SndListHandle) sndHandle,
 										thePrefs.channelNumber,
@@ -660,9 +660,9 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 			SetResLoad( true);
 		}
 	}
-	else if( theType == 'AIFF' | theType == 'MPG4')
+	else if (theType == 'AIFF' | theType == 'MPG4')
 	{
-	/*	if( thePrefs.ChannelType == MultiFiles)
+	/*	if (thePrefs.ChannelType == MultiFiles)
 		{
 			FSClose( fRefNum);
 			
@@ -702,7 +702,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 									thePrefs.Compressor,
 									copyDriver->ASCBUFFERReal*Packet*thePrefs.channelNumber,
 									0);
-		if( iErr) MyDebugStr( __LINE__, __FILE__, "");
+		if (iErr) MyDebugStr( __LINE__, __FILE__, "");
 		}
 	}
 	else MyDebugStr( __LINE__, __FILE__, "");
@@ -719,7 +719,7 @@ Boolean CreateAIFFExporting( Boolean OnlyCurrent, short  fRef, FSSpec *newFile, 
 		
 		finalSize		*= (fullTime+1) / 60;
 	}
-	if( patternID != -1 || patternID == -2) finalSize = 1;
+	if (patternID != -1 || patternID == -2) finalSize = 1;
 	
 	switch( thePrefs.Compressor)
 	{
@@ -743,7 +743,7 @@ Ptr DeInterlace( long inOutCount, Ptr outFile)
 	
 	short	*dec16Ptr, *outFile16;
 	
-	if( thePrefs.amplitude == 8)
+	if (thePrefs.amplitude == 8)
 	{
 		for( i = 0; i < thePrefs.channelNumber; i ++)
 		{
@@ -774,7 +774,7 @@ void DoAIFFExporting( void)
 	Boolean	OnContinue;
 	OSErr	stopErr = noErr, iErr = noErr;
 	
-	if( theProgressDia == NULL) return;
+	if (theProgressDia == NULL) return;
 	
 	inOutCount 	= 0;
 	tempPtr 	= outSound;
@@ -783,11 +783,11 @@ void DoAIFFExporting( void)
 	{
 		OnContinue = DirectSave( sndPtr, &thePrefs.DirectDriverType, copyDriver);
 		
-		if( thePrefs.amplitude == 8)
+		if (thePrefs.amplitude == 8)
 		{
 			full = (copyDriver->ASCBUFFERReal - copyDriver->BytesToRemoveAtEnd) * 2L;
 			
-			if( theType == 'sfil')
+			if (theType == 'sfil')
 			{
 				memcpy( tempPtr, sndPtr, full);
 				tempPtr += full;
@@ -810,21 +810,21 @@ void DoAIFFExporting( void)
 		
 		val = (((long) (copyDriver->ASCBUFFERReal - copyDriver->BytesToRemoveAtEnd)* (long) 2L* (long) thePrefs.amplitude) / 8L);
 		
-		if( thePrefs.channelNumber == 1) totalSize += val/2;
+		if (thePrefs.channelNumber == 1) totalSize += val/2;
 		else totalSize += val;
 		
 		inOutCount += val;
 		
-		if( OnContinue == false)
+		if (OnContinue == false)
 		{
 			stopErr = 1;
 			i = Packet;
 			
 		}
 		
-		if( oldPart != copyDriver->PL) 
+		if (oldPart != copyDriver->PL) 
 		{
-			if( DoWorkingWindow())
+			if (DoWorkingWindow())
 			{
 				stopErr = 1;
 				i = Packet;
@@ -840,17 +840,17 @@ void DoAIFFExporting( void)
 	if (iErr != noErr)
 	MyDebugStr( __LINE__, __FILE__, "Conversion failed");
 	
-	if( outputBytes > inOutCount) MyDebugStr( __LINE__, __FILE__, "Err in memory size");
+	if (outputBytes > inOutCount) MyDebugStr( __LINE__, __FILE__, "Err in memory size");
 	
 	inOutCount = outputBytes;
 	
 	//totalSize += inOutCount;
 	
-	//if( thePrefs.channelNumber == 1) inOutCount /= 2;
+	//if (thePrefs.channelNumber == 1) inOutCount /= 2;
 	
 	outFile = compSound;
 	
-	if( theType == 'sfil')
+	if (theType == 'sfil')
 	{
 		{
 			SetResourceSize( sndHandle, SndOffset + inOutCount);
@@ -864,7 +864,7 @@ void DoAIFFExporting( void)
 	}
 	else
 	{
-	/*	if( thePrefs.ChannelType == MultiFiles)
+	/*	if (thePrefs.ChannelType == MultiFiles)
 		{
 			Ptr 	inter;
 			long	ss = inOutCount / thePrefs.channelNumber;
@@ -884,7 +884,7 @@ void DoAIFFExporting( void)
 		}
 	}
 	
-	if( iErr != noErr || stopErr != noErr) StopAIFFExporting();
+	if (iErr != noErr || stopErr != noErr) StopAIFFExporting();
 }
 
 void StopAIFFExporting( void)
@@ -893,8 +893,8 @@ void StopAIFFExporting( void)
 	long	inOutCount, i;
 	
 	
-	if( theProgressDia == NULL) return;
-	if( curMusic == NULL) return;
+	if (theProgressDia == NULL) return;
+	if (curMusic == NULL) return;
 	
 	//DoWorkingWindow();
 	
@@ -902,13 +902,13 @@ void StopAIFFExporting( void)
 	if (iErr != noErr)
 	MyDebugStr( __LINE__, __FILE__, "End Conversion failed");
 	
-	if( outputBytes)
+	if (outputBytes)
 	{
 		Ptr outFile = compSound;
 		
 		inOutCount = outputBytes;
 			
-		if( theType == 'sfil')
+		if (theType == 'sfil')
 		{
 			{
 				SetResourceSize( sndHandle, SndOffset + inOutCount);
@@ -922,7 +922,7 @@ void StopAIFFExporting( void)
 		}
 		else
 		{
-		/*	if( thePrefs.ChannelType == MultiFiles)
+		/*	if (thePrefs.ChannelType == MultiFiles)
 			{
 				Ptr 	inter;
 				long	ss = inOutCount / thePrefs.channelNumber;
@@ -948,13 +948,13 @@ void StopAIFFExporting( void)
 	if (iErr != noErr)
 	MyDebugStr( __LINE__, __FILE__, "Close failed");
 	
-	if( theType == 'sfil')
+	if (theType == 'sfil')
 	{
 		Handle 	sndHandle2;
 		short	headerLen;
 		
 		sndHandle2 = NewHandle( 20000);
-		if( sndHandle2 == NULL) {MyDebugStr( __LINE__, __FILE__, "Need MEMORY");	return;}
+		if (sndHandle2 == NULL) {MyDebugStr( __LINE__, __FILE__, "Need MEMORY");	return;}
 		
 		iErr = SetupSndHeader(		(SndListHandle) sndHandle2,
 									thePrefs.channelNumber,
@@ -983,7 +983,7 @@ void StopAIFFExporting( void)
 	{
 		long filePos;
 		
-	/*	if( thePrefs.ChannelType == MultiFiles)
+	/*	if (thePrefs.ChannelType == MultiFiles)
 		{
 			for( i = 0; i < thePrefs.channelNumber; i++)
 			{
@@ -1020,7 +1020,7 @@ void StopAIFFExporting( void)
 			SetEOF( fRefNum, filePos);
 			FSCloseFork( fRefNum);
 			
-			if( theType == 'MPG4')
+			if (theType == 'MPG4')
 			{
 				FSSpec	newFile;
 				

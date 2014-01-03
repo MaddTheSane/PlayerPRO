@@ -36,7 +36,7 @@ void DoGrowTrackView(void)
 
 	GetPortBounds( GetDialogPort( TrackViewDlog), &caRect);
 	
-	if( caRect.bottom >= 136) temp = 69;
+	if (caRect.bottom >= 136) temp = 69;
 	else temp = 136;
 	
 	MySizeWindow( TrackViewDlog, 212, temp, true);
@@ -50,8 +50,8 @@ void DoNullTrackView(void)
 	short		i, max;
 	Rect		caRect, itemRect;
 
- 	if( TrackViewDlog == NULL) return;
-	if( TickCount() <= oldTrackTicks) return;
+ 	if (TrackViewDlog == NULL) return;
+	if (TickCount() <= oldTrackTicks) return;
 	oldTrackTicks = TickCount();
 	
  	GetPort( &SavePort);
@@ -59,22 +59,22 @@ void DoNullTrackView(void)
 	
 	GetPortBounds( GetDialogPort( TrackViewDlog), &caRect);
 
-	if( caRect.bottom >= 136) max = 32;
+	if (caRect.bottom >= 136) max = 32;
 	else max = 16;
 	
 	for( i = 0; i < max; i++)
 	{
-		if( MADDriver->Tube[i] >= 0)
+		if (MADDriver->Tube[i] >= 0)
 		{
 			itemRect = TracksBox[i];
 		
-			if( MADDriver->Tube[ i] == oldTube[ i])
+			if (MADDriver->Tube[ i] == oldTube[ i])
 			{
 				itemRect.bottom -= MADDriver->Tube[i];
 				MADDriver->Tube[i]--;
 				oldTube[ i] = MADDriver->Tube[i];
 				
-				if( oldTube[i] >= 0)
+				if (oldTube[i] >= 0)
 				{
 					MoveTo( itemRect.left, itemRect.bottom);
 					LineTo( itemRect.right-1, itemRect.bottom);
@@ -82,7 +82,7 @@ void DoNullTrackView(void)
 			}
 			else
 			{
-				if( MicroPhone)
+				if (MicroPhone)
 				{
 					ForeColor( blueColor);
 				}
@@ -90,13 +90,13 @@ void DoNullTrackView(void)
 				{
 					SwitchColor( i);
 				}
-				if( MADDriver->Tube[i] <= 0) MADDriver->Tube[i] = 1;
+				if (MADDriver->Tube[i] <= 0) MADDriver->Tube[i] = 1;
 				
 				itemRect.top = itemRect.bottom - MADDriver->Tube[i]+1;
 				PaintRect( &itemRect);
 				ForeColor( blackColor);
 				
-				if( MADDriver->Tube[ i] != 64)
+				if (MADDriver->Tube[ i] != 64)
 				{
 					itemRect.bottom = itemRect.top;
 					itemRect.top = TracksBox[i].top;
@@ -129,7 +129,7 @@ void  UpdateTrackView(DialogPtr GetSelection)  	/* Pointer to this dialog */
 		
 		GetPortBounds( GetDialogPort( TrackViewDlog), &caRect);
 
-		if( caRect.bottom >= 136) max = 32;
+		if (caRect.bottom >= 136) max = 32;
 		else max = 16;
 
 		GetDialogItem (TrackViewDlog, 1, &itemType, &itemHandle, &itemRect);
@@ -146,12 +146,12 @@ void  UpdateTrackView(DialogPtr GetSelection)  	/* Pointer to this dialog */
 			PaintRect( &itemRect);
 			itemRect.top++;	itemRect.left++;
 			
-			if( MicroPhone) ForeColor( blueColor);
+			if (MicroPhone) ForeColor( blueColor);
 			else
 			{
 				SwitchColor( i);
 			}
-			if( MADDriver->Tube[i] > 80) MADDriver->Tube[i] = 80;
+			if (MADDriver->Tube[i] > 80) MADDriver->Tube[i] = 80;
 			itemRect.top = itemRect.bottom - MADDriver->Tube[i]+1;
 			PaintRect( &itemRect);
 			ForeColor( blackColor);
@@ -209,7 +209,7 @@ void CreateTrackView(void)
 
 void CloseTrackViewDlog(void)
 {
-	if( TrackViewDlog != NULL) DisposeDialog( TrackViewDlog);
+	if (TrackViewDlog != NULL) DisposeDialog( TrackViewDlog);
 	TrackViewDlog = NULL;
 
 	SetItemMark( ViewsMenu, 5, noMark);

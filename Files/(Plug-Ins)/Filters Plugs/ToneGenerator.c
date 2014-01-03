@@ -45,9 +45,9 @@ static void AutoPosition( DialogPtr aDia)
 	do
 	{
 		aH = GetNextDevice( aH);
-		if( aH != NULL)
+		if (aH != NULL)
 		{
-			if( PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
@@ -59,12 +59,12 @@ static void AutoPosition( DialogPtr aDia)
 	while( aH != NULL);
 	
 	Position.h = mouse.h - XSize/2;
-	if( Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
-	else if( Position.h <= ViewRect.left) Position.h = ViewRect.left;
+	if (Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
+	else if (Position.h <= ViewRect.left) Position.h = ViewRect.left;
 
 	Position.v = mouse.v - YSize/2;
-	if( Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
-	else if( Position.v <= ViewRect.top) Position.v = ViewRect.top;
+	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
+	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
 	SetDialogDefaultItem( aDia, 1 );
 	SetDialogCancelItem( aDia, 2 );
@@ -99,10 +99,10 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 	long	i, temp, inter = 0, x, dest;
 	Boolean	UpDown;
 	
-	if( stereo) AudioLength *= 2L;
+	if (stereo) AudioLength *= 2L;
 	
 	Audio8Ptr = NewPtr( AudioLength);
-	if( Audio8Ptr == NULL) return NULL;
+	if (Audio8Ptr == NULL) return NULL;
 	
 	switch( AudioType)
 	{
@@ -116,11 +116,11 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 				temp /= 100;
 				
 				/** Overshoot **/
-				if( temp >= 127) temp = 127;
-				else if( temp <= -127 ) temp = -127;
+				if (temp >= 127) temp = 127;
+				else if (temp <= -127 ) temp = -127;
 				
 				Audio8Ptr[ i] = temp;
-				if( stereo)
+				if (stereo)
 				{
 					i++;
 					Audio8Ptr[ i] = temp;
@@ -135,12 +135,12 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 		case square:
 			for( i = 0, x = 0, dest = -1; i < AudioLength; i++)
 			{
-				if( i > dest)
+				if (i > dest)
 				{
 					x++;
 					dest = (x * KHZ) / (AudioFreq * 2);
-					if( stereo) dest *= 2;
-					if( inter == -127) inter = 127;
+					if (stereo) dest *= 2;
+					if (inter == -127) inter = 127;
 					else inter = -127;
 				}
 				
@@ -151,11 +151,11 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 				temp /= 100;
 				
 				/** Overshoot **/
-				if( temp >= 127) temp = 127;
-				else if( temp <= -127 ) temp = -127;
+				if (temp >= 127) temp = 127;
+				else if (temp <= -127 ) temp = -127;
 				
 				Audio8Ptr[ i] = temp;
-				if( stereo)
+				if (stereo)
 				{
 					i++;
 					Audio8Ptr[ i] = temp;
@@ -167,17 +167,17 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 			UpDown = true;
 			for( i = 0, x = 0, dest = -1; i < AudioLength; i++)
 			{
-				if( i > dest)
+				if (i > dest)
 				{
 					x++;
 					dest = (x * KHZ) / (AudioFreq * 2);
-					if( stereo) dest *= 2;
+					if (stereo) dest *= 2;
 					inter = dest - i;
 					
 					UpDown = !UpDown;
 				}
 				
-				if( UpDown) temp = (256 * (dest - i)) / inter;
+				if (UpDown) temp = (256 * (dest - i)) / inter;
 				else temp = (256 * (inter - (dest - i))) / inter;
 				
 				temp -= 127;
@@ -187,11 +187,11 @@ static Ptr CreateAudio8Ptr( long AudioLength, long AudioFreq, long AudioAmp, lon
 				temp /= 100;
 				
 				/** Overshoot **/
-				if( temp >= 127) temp = 127;
-				else if( temp <= -127 ) temp = -127;
+				if (temp >= 127) temp = 127;
+				else if (temp <= -127 ) temp = -127;
 				
 				Audio8Ptr[ i] = temp;
-				if( stereo)
+				if (stereo)
 				{
 					i++;
 					Audio8Ptr[ i] = temp;
@@ -209,10 +209,10 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 	long	i, temp, inter = 0, x, dest;
 	Boolean	UpDown;
 	
-	if( stereo) AudioLength *= 2L;
+	if (stereo) AudioLength *= 2L;
 	
 	Audio16Ptr = (short*) NewPtr( AudioLength*2);
-	if( Audio16Ptr == NULL) return NULL;
+	if (Audio16Ptr == NULL) return NULL;
 	
 	switch( AudioType)
 	{
@@ -226,11 +226,11 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 				temp /= 100;
 				
 				/** Overshoot **/
-				if( temp >= (short) 0x7FFF) temp = 0x7FFF;
-				else if( temp <= (short) 0x8000 ) temp = (short) 0x8000;
+				if (temp >= (short) 0x7FFF) temp = 0x7FFF;
+				else if (temp <= (short) 0x8000 ) temp = (short) 0x8000;
 				
 				Audio16Ptr[ i] = temp;
-				if( stereo)
+				if (stereo)
 				{
 					i++;
 					Audio16Ptr[ i] = temp;
@@ -245,12 +245,12 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 		case square:
 			for( i = 0, x = 0, dest = -1; i < AudioLength; i++)
 			{
-				if( i > dest)
+				if (i > dest)
 				{
 					x++;
 					dest = (x * KHZ) / (AudioFreq * 2);
-					if( stereo) dest *= 2;
-					if( inter == -32767L) inter = 32767L;
+					if (stereo) dest *= 2;
+					if (inter == -32767L) inter = 32767L;
 					else inter = -32767L;
 				}
 				
@@ -261,11 +261,11 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 				temp /= 100;
 				
 				/** Overshoot **/
-				if( temp >= (short) 0x7FFF) temp = 0x7FFF;
-				else if( temp <= (short) 0x8000 ) temp = (short) 0x8000;
+				if (temp >= (short) 0x7FFF) temp = 0x7FFF;
+				else if (temp <= (short) 0x8000 ) temp = (short) 0x8000;
 				
 				Audio16Ptr[ i] = temp;
-				if( stereo)
+				if (stereo)
 				{
 					i++;
 					Audio16Ptr[ i] = temp;
@@ -277,17 +277,17 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 			UpDown = true;
 			for( i = 0, x = 0, dest = -1; i < AudioLength; i++)
 			{
-				if( i > dest)
+				if (i > dest)
 				{
 					x++;
 					dest = (x * KHZ) / (AudioFreq * 2);
-					if( stereo) dest *= 2;
+					if (stereo) dest *= 2;
 					inter = dest - i;
 					
 					UpDown = !UpDown;
 				}
 				
-				if( UpDown) temp = (65535L * (dest - i)) / inter;
+				if (UpDown) temp = (65535L * (dest - i)) / inter;
 				else temp = (65535L * (inter - (dest - i))) / inter;
 				
 				temp -= 32767L;
@@ -297,11 +297,11 @@ static short* CreateAudio16Ptr( long AudioLength, long AudioFreq, long AudioAmp,
 				temp /= 100;
 				
 				/** Overshoot **/
-				if( temp >= (short) 0x7FFF) temp = 0x7FFF;
-				else if( temp <= (short) 0x8000 ) temp = (short) 0x8000;
+				if (temp >= (short) 0x7FFF) temp = 0x7FFF;
+				else if (temp <= (short) 0x8000 ) temp = (short) 0x8000;
 				
 				Audio16Ptr[ i] = temp;
-				if( stereo)
+				if (stereo)
 				{
 					i++;
 					Audio16Ptr[ i] = temp;
@@ -346,7 +346,7 @@ static OSErr mainToneGenerator(sData			*theData,
 		break;
 	}
 	
-	if( theData->size > 0)	// We CANNOT change stereo mode, since data is already here....
+	if (theData->size > 0)	// We CANNOT change stereo mode, since data is already here....
 	{
 		GetDialogItem( myDia, 22, &itemType, &itemHandle, &itemRect);		HiliteControl( (ControlHandle) itemHandle, 255);
 		GetDialogItem( myDia, 23, &itemType, &itemHandle, &itemRect);		HiliteControl( (ControlHandle) itemHandle, 255);
@@ -357,9 +357,9 @@ static OSErr mainToneGenerator(sData			*theData,
 	SetControlValue( (ControlHandle) itemHandle, true);
 	
 	AudioLength = SelectionEnd - SelectionStart;
-	if( theData->amp == 16) AudioLength /= 2;
-	if( theData->stereo) AudioLength /= 2;
-	if( AudioLength <= 0) AudioLength = 2000;
+	if (theData->amp == 16) AudioLength /= 2;
+	if (theData->stereo) AudioLength /= 2;
+	if (AudioLength <= 0) AudioLength = 2000;
 	NumToString( AudioLength, tStr);	SetDText( myDia, 8, tStr);
 	
 	AudioFreq	= 440;								NumToString( AudioFreq, tStr);		SetDText( myDia, 9, tStr);
@@ -405,18 +405,18 @@ static OSErr mainToneGenerator(sData			*theData,
 				switch( theData->amp)
 				{
 					case 8:
-						if( Audio8Ptr != NULL) { DisposePtr( Audio8Ptr);			Audio8Ptr = NULL;}
+						if (Audio8Ptr != NULL) { DisposePtr( Audio8Ptr);			Audio8Ptr = NULL;}
 						Audio8Ptr	= CreateAudio8Ptr( AudioLength, AudioFreq, AudioAmp, AudioType, theData->stereo);
-						if( Audio8Ptr != NULL)
+						if (Audio8Ptr != NULL)
 						{
 						//	iErr = mPlay( Audio8Ptr, AudioLength, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
 						}
 					break;
 					
 					case 16:
-						if( Audio16Ptr != NULL) { DisposePtr( (Ptr) Audio16Ptr);	Audio16Ptr = NULL;}
+						if (Audio16Ptr != NULL) { DisposePtr( (Ptr) Audio16Ptr);	Audio16Ptr = NULL;}
 						Audio16Ptr	= CreateAudio16Ptr( AudioLength, AudioFreq, AudioAmp, AudioType, theData->stereo);
-						if( Audio16Ptr != NULL)
+						if (Audio16Ptr != NULL)
 						{
 						//	iErr = mPlay( (Ptr) Audio16Ptr, AudioLength*2, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
 						}
@@ -458,7 +458,7 @@ static OSErr mainToneGenerator(sData			*theData,
 		
 	}while( itemHit != 1 && itemHit != 2);
 	
-	if( itemHit == 1)
+	if (itemHit == 1)
 	{
 		Ptr		resultPtr;
 		
@@ -466,8 +466,8 @@ static OSErr mainToneGenerator(sData			*theData,
 		GetDText( myDia, 9, tStr);		StringToNum( tStr, &AudioFreq);
 		GetDText( myDia, 10, tStr);		StringToNum( tStr, &AudioAmp);
 		
-		if( Audio16Ptr != NULL)	{	DisposePtr( (Ptr) Audio16Ptr);			Audio16Ptr = NULL;}
-		if( Audio8Ptr != NULL)	{	DisposePtr( (Ptr) Audio8Ptr);			Audio8Ptr = NULL;}
+		if (Audio16Ptr != NULL)	{	DisposePtr( (Ptr) Audio16Ptr);			Audio16Ptr = NULL;}
+		if (Audio8Ptr != NULL)	{	DisposePtr( (Ptr) Audio8Ptr);			Audio8Ptr = NULL;}
 		
 		switch( theData->amp)
 		{
@@ -478,13 +478,13 @@ static OSErr mainToneGenerator(sData			*theData,
 			break;
 		}
 		
-		if( theData->stereo) AudioLength *= 2;
+		if (theData->stereo) AudioLength *= 2;
 		
 		resultPtr = NewPtr( theData->size - (SelectionEnd - SelectionStart) + AudioLength);
 		
 		BlockMoveData( theData->data, resultPtr, SelectionStart);
 		
-		if( theData->amp == 8) BlockMoveData( Audio8Ptr, resultPtr + SelectionStart, AudioLength);
+		if (theData->amp == 8) BlockMoveData( Audio8Ptr, resultPtr + SelectionStart, AudioLength);
 		else BlockMoveData( Audio16Ptr, resultPtr + SelectionStart, AudioLength);
 		
 		BlockMoveData( theData->data + SelectionEnd, resultPtr + SelectionStart + AudioLength, theData->size - SelectionEnd);

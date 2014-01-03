@@ -38,7 +38,7 @@ void CloseEffect( Channel *ch, short notUsed, MADDriverRec *intDriver)
 	switch( ch->cmd)
 	{
 		case arpeggioE:
-			if( ch->arpUse)
+			if (ch->arpUse)
 			{
 				ch->period = ch->arp[ 0];
 				ch->arpUse = false;
@@ -113,23 +113,23 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 	switch( ch->cmd)
 	{
 		case arpeggioE:						// OK
-			if( ch->arg != 0 && ch->arpUse == true)
+			if (ch->arg != 0 && ch->arpUse == true)
 			{
 				ch->arpindex++;
-				if( ch->arpindex >= MAX_ARP) ch->arpindex = 0;
+				if (ch->arpindex >= MAX_ARP) ch->arpindex = 0;
 				
 				ch->period = ch->arp[ ch->arpindex];
 			}
 			break;
 			
 		case skipE:							// OK
-			if( call == intDriver->speed - 1)
+			if (call == intDriver->speed - 1)
 			{
 				intDriver->endPattern = true;
 				
-				if( intDriver->JumpToNextPattern)
+				if (intDriver->JumpToNextPattern)
 				{
-					if( intDriver->PartitionReader != 0)
+					if (intDriver->PartitionReader != 0)
 					{
 						intDriver->PL++;
 						intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
@@ -137,13 +137,13 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 					
 					intDriver->PartitionReader = HI( ch->arg) * 10 + LOW( ch->arg);
 					
-					if( intDriver->PL >= intDriver->curMusic->header->numPointers)
+					if (intDriver->PL >= intDriver->curMusic->header->numPointers)
 					{
 						intDriver->PL = 0;
 						intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
 						
 						MADCleanDriver( intDriver);
-						if( !intDriver->DriverSettings.repeatMusic) intDriver->Reading = false;
+						if (!intDriver->DriverSettings.repeatMusic) intDriver->Reading = false;
 						
 						intDriver->musicEnd = true;
 					}
@@ -158,29 +158,29 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 			break;
 			
 		case fastskipE:						// OK
-			if( call == intDriver->speed - 1)
+			if (call == intDriver->speed - 1)
 			{
 				intDriver->endPattern = true;
 				
-				if( intDriver->JumpToNextPattern)
+				if (intDriver->JumpToNextPattern)
 				{
-					if( intDriver->PL > ch->arg)		// Evite les boucles
+					if (intDriver->PL > ch->arg)		// Evite les boucles
 					{
 						intDriver->musicEnd = true;
 						
-						if( !intDriver->DriverSettings.repeatMusic) intDriver->Reading = false;
+						if (!intDriver->DriverSettings.repeatMusic) intDriver->Reading = false;
 					}
 					
 					intDriver->PL = ch->arg;
 					intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
 					
-					if( intDriver->PL >= intDriver->curMusic->header->numPointers)
+					if (intDriver->PL >= intDriver->curMusic->header->numPointers)
 					{
 						intDriver->PL = 0;
 						intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
 						
 						MADCleanDriver( intDriver);
-						if( !intDriver->DriverSettings.repeatMusic) intDriver->Reading = false;
+						if (!intDriver->DriverSettings.repeatMusic) intDriver->Reading = false;
 						
 						intDriver->musicEnd = true;
 					}
@@ -192,31 +192,31 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 			break;
 			
 		case downslideE:						// OK
-			if( intDriver->MODMode)
+			if (intDriver->MODMode)
 			{
-				/*	if( ch->period > intDriver->MOD_MIN_PITCH)
+				/*	if (ch->period > intDriver->MOD_MIN_PITCH)
 				 ch->period -= ch->slide*4;*/
 				ch->period -= ch->slide*4;
-				if( ch->period < intDriver->MOD_MIN_PITCH) ch->period = intDriver->MOD_MIN_PITCH;
+				if (ch->period < intDriver->MOD_MIN_PITCH) ch->period = intDriver->MOD_MIN_PITCH;
 			}
 			else
 			{
-				if( ch->period > intDriver->MIN_PITCH)
+				if (ch->period > intDriver->MIN_PITCH)
 					ch->period -= ch->slide*4;
 			}
 			break;
 			
 		case upslideE:							// OK
-			if( intDriver->MODMode)
+			if (intDriver->MODMode)
 			{
-				/*	if( ch->period < intDriver->MOD_MAX_PITCH)
+				/*	if (ch->period < intDriver->MOD_MAX_PITCH)
 				 ch->period += ch->slide*4;*/
 				ch->period += ch->slide*4;
-				if( ch->period > intDriver->MOD_MAX_PITCH) ch->period = intDriver->MOD_MAX_PITCH;
+				if (ch->period > intDriver->MOD_MAX_PITCH) ch->period = intDriver->MOD_MAX_PITCH;
 			}
 			else
 			{
-				if( ch->period < intDriver->MAX_PITCH)
+				if (ch->period < intDriver->MAX_PITCH)
 					ch->period += ch->slide*4;
 			}
 			break;
@@ -246,7 +246,7 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 			offset >>= 7;
 			offset <<= 2;
 			
-			if( ch->viboffset >= 0) ch->period = ch->periodOld + offset;
+			if (ch->viboffset >= 0) ch->period = ch->periodOld + offset;
 			else ch->period = ch->periodOld - offset;
 			
 			ch->viboffset += ch->vibrate;
@@ -256,18 +256,18 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 		case slidevolE:						// OK
 			ch->vol += ch->volumerate;
 			
-			if( ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
-			else if( ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
+			if (ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
+			else if (ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
 			break;
 			
 		case portamentoE:
-			//	if( ch->period == 0) MyDebugStr( __LINE__, __FILE__, "Goal");
-			if( ch->period != ch->pitchgoal)
+			//	if (ch->period == 0) MyDebugStr( __LINE__, __FILE__, "Goal");
+			if (ch->period != ch->pitchgoal)
 			{
 				if (ch->period < ch->pitchgoal)
 	        	{
 	        		ch->period += ch->pitchrate*4;
-	        		if( ch->period > ch->pitchgoal)
+	        		if (ch->period > ch->pitchgoal)
 	        		{
 	        			ch->cmd = 0;
 						ch->arg = 0;
@@ -277,7 +277,7 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 	    		else if (ch->period > ch->pitchgoal)
 	        	{
 	        		ch->period -= ch->pitchrate*4;
-	        		if( ch->period < ch->pitchgoal)
+	        		if (ch->period < ch->pitchgoal)
 	        		{
 	        			ch->cmd = 0;
 						ch->arg = 0;
@@ -311,13 +311,13 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 			switch( HI( ch->arg))
 		{
 			case 12:
-				if( call >= LOW( ch->arg)) ch->vol = 0;
+				if (call >= LOW( ch->arg)) ch->vol = 0;
 				break;
 				
 			case 9:
 				if(LOW( ch->arg))
 				{
-					if( ch->trig == 0)
+					if (ch->trig == 0)
 					{
 						ch->curPtr	= ch->begPtr;
 						StartPanning( ch);
@@ -330,19 +330,19 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 				break;
 				
 			case 6:
-				if( call == intDriver->speed - 1)
+				if (call == intDriver->speed - 1)
 				{
-					if( LOW( ch->arg) == 0)		// Set Pattern loop
+					if (LOW( ch->arg) == 0)		// Set Pattern loop
 					{
 						ch->PatternLoopE6 = intDriver->PartitionReader;
 						ch->PatternLoopE6ID = intDriver->PL;
 					}
 					else
 					{
-						if( ch->PatternLoopE6Count == 0) ch->PatternLoopE6Count = LOW( ch->arg);
+						if (ch->PatternLoopE6Count == 0) ch->PatternLoopE6Count = LOW( ch->arg);
 						else ch->PatternLoopE6Count--;
 						
-						if( ch->PatternLoopE6Count > 0)
+						if (ch->PatternLoopE6Count > 0)
 						{
 							intDriver->PartitionReader = ch->PatternLoopE6-1;
 							intDriver->PL = ch->PatternLoopE6ID;
@@ -361,7 +361,7 @@ void DoEffect( Channel *ch, short call, MADDriverRec *intDriver)
 			break;
 	}
 	
-	/*	if( call == intDriver->speed - 1)
+	/*	if (call == intDriver->speed - 1)
 	 {
 	 ch->arg = 0;
 	 ch->cmd = 0;
@@ -429,7 +429,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 	short 	temp, note;
 	long	aL;
 	
-	if( ch->arg == 0)
+	if (ch->arg == 0)
 	{
 		switch( ch->cmd)
 		{
@@ -454,18 +454,18 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 	switch( ch->cmd)
 	{
 		case upslideE:							// OK
-			if( ch->arg) ch->slide = ch->arg;
+			if (ch->arg) ch->slide = ch->arg;
 			break;
 			
 		case downslideE:						// OK
-			if( ch->arg) ch->slide = ch->arg;
+			if (ch->arg) ch->slide = ch->arg;
 			break;
 			
 		case vibratoE:							// OK
-			if( HI( ch->arg)) ch->vibrate = (ch->arg & 0xf0)>>2;	//HI( ch->arg);
+			if (HI( ch->arg)) ch->vibrate = (ch->arg & 0xf0)>>2;	//HI( ch->arg);
 			else ch->vibrate = ch->oldVibrate;
 			
-			if( LOW( ch->arg)) ch->vibdepth = LOW( ch->arg);
+			if (LOW( ch->arg)) ch->vibdepth = LOW( ch->arg);
 			else ch->vibdepth = ch->oldVibdepth;
 			
 			ch->oldVibdepth = ch->vibdepth;
@@ -476,14 +476,14 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			break;
 			
 		case arpeggioE:						// OK
-			if( ch->arg == 0) ch->arpUse = false;
+			if (ch->arg == 0) ch->arpUse = false;
 			else
 			{
 				long	inNote = ch->note;
 				
-				if( inNote == 0xFF) inNote = ch->noteOld;
+				if (inNote == 0xFF) inNote = ch->noteOld;
 				
-				if( inNote != 0xFF)
+				if (inNote != 0xFF)
 				{
 					note = inNote + HI( ch->arg);
 					if (note < NUMBER_NOTES) ch->arp[ 1] = GetOldPeriod( note, ch->fineTune, intDriver);
@@ -570,8 +570,8 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 				
 				ch->pann = ( (long) ch->pann * (long)  MAX_PANNING) / (long) 0xFF;
 				
-				if( ch->pann < 0) ch->pann = 0;
-				else if( ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
+				if (ch->pann < 0) ch->pann = 0;
+				else if (ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
 				
 				ch->PanningE8 = true;
 				break;
@@ -579,7 +579,7 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			case 9:
 				if(LOW( ch->arg))
 				{
-					if( ch->trig == 0)
+					if (ch->trig == 0)
 					{
 						//ch->kick	= 1;
 						ch->trig	= LOW( ch->arg);
@@ -591,15 +591,15 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			case 10:	// Fine volume slide up
 				ch->vol += LOW( ch->arg);
 				
-				if( ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
-				else if( ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
+				if (ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
+				else if (ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
 				break;
 				
 			case 11:	// Fine volume slide down
 				ch->vol -= LOW( ch->arg);
 				
-				if( ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
-				else if( ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
+				if (ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
+				else if (ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
 				break;
 				
 			case 12:	// Cut sample
@@ -624,13 +624,13 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			
 			ch->pitchrate = ch->arg;
 			
-			if( inNote == 0xFF) inNote = ch->noteOld;
+			if (inNote == 0xFF) inNote = ch->noteOld;
 			
-			if( inNote != 0xFF)
+			if (inNote != 0xFF)
 			{
 				ch->pitchgoal = GetOldPeriod( inNote, ch->fineTune, intDriver);
 			}
-			else if( ch->pitchgoal == 0) ch->pitchgoal = ch->period;
+			else if (ch->pitchgoal == 0) ch->pitchgoal = ch->period;
 		}
 			break;
 			
@@ -638,13 +638,13 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 		{
 			long	inNote = ch->note;
 			
-			if( inNote == 0xFF) inNote = ch->noteOld;
+			if (inNote == 0xFF) inNote = ch->noteOld;
 			
-			if( inNote != 0xFF)
+			if (inNote != 0xFF)
 			{
 				ch->pitchgoal = GetOldPeriod( inNote, ch->fineTune, intDriver);
 			}
-			else if( ch->pitchgoal == 0) ch->pitchgoal = ch->period;
+			else if (ch->pitchgoal == 0) ch->pitchgoal = ch->period;
 			
 			parse_slidevol(ch, ch->arg);
 		}
@@ -657,9 +657,9 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			break;
 			
 		case speedE:
-			if( ch->arg < 32)		/** Setting de la speed + reset de la finespeed **/
+			if (ch->arg < 32)		/** Setting de la speed + reset de la finespeed **/
 			{
-				if( ch->arg != 0) intDriver->speed = ch->arg;
+				if (ch->arg != 0) intDriver->speed = ch->arg;
 			}
 			else		/** Setting de finespeed **/
 			{
@@ -674,23 +674,23 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			break;
 			
 		case LoopE:
-			if( ch->loopSize > 2)
+			if (ch->loopSize > 2)
 			{
 				short direction = (char) ch->arg;
 				
-				if( ch->amp == 16) direction *= 2;
-				if( ch->stereo == true) direction *= 2;
+				if (ch->amp == 16) direction *= 2;
+				if (ch->stereo == true) direction *= 2;
 				
 				ch->loopBeg 	+= direction;
 				
-				if( ch->loopBeg >= ch->sizePtr) ch->loopBeg = ch->sizePtr;
+				if (ch->loopBeg >= ch->sizePtr) ch->loopBeg = ch->sizePtr;
 				
 				ch->maxPtr 	= (Ptr) ((long) ch->begPtr + ch->loopBeg + ch->loopSize);
 				
-				if( ch->maxPtr < ch->begPtr) ch->maxPtr = ch->begPtr;
-				if( ch->maxPtr > ch->begPtr + ch->sizePtr) ch->maxPtr = ch->begPtr + ch->sizePtr;
+				if (ch->maxPtr < ch->begPtr) ch->maxPtr = ch->begPtr;
+				if (ch->maxPtr > ch->begPtr + ch->sizePtr) ch->maxPtr = ch->begPtr + ch->sizePtr;
 				
-				if( ch->loopBeg < 0) ch->loopBeg = 0;
+				if (ch->loopBeg < 0) ch->loopBeg = 0;
 			}
 			break;
 			
@@ -699,18 +699,18 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			
 			aL = ( (unsigned long) ch->arg * (unsigned long) ( ch->sizePtr)) / 255UL;
 			
-			if( ch->amp == 16) aL /= 2;
-			if( ch->stereo == true) aL /= 2;
+			if (ch->amp == 16) aL /= 2;
+			if (ch->stereo == true) aL /= 2;
 			
-			if( ch->amp == 16) aL *= 2;
-			if( ch->stereo == true) aL *= 2;
+			if (ch->amp == 16) aL *= 2;
+			if (ch->stereo == true) aL *= 2;
 			
 			ch->curPtr += aL;
 			
-			if( ch->curPtr > ch->maxPtr) ch->maxPtr = ch->begPtr + ch->sizePtr;
+			if (ch->curPtr > ch->maxPtr) ch->maxPtr = ch->begPtr + ch->sizePtr;
 			else
 			{
-				if( ch->loopSize > 2)
+				if (ch->loopSize > 2)
 				{
 					ch->maxPtr 	= (Ptr) ((long) ch->begPtr + ch->loopBeg + ch->loopSize);
 				}
@@ -723,8 +723,8 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			aL = ch->arg;
 			aL *= 256L;
 			
-			if( ch->amp == 16) aL *= 2;
-			if( ch->stereo == true) aL *= 2;
+			if (ch->amp == 16) aL *= 2;
+			if (ch->stereo == true) aL *= 2;
 			
 			ch->curPtr += aL;
 			break;
@@ -734,15 +734,15 @@ void SetUpEffect( Channel *ch, MADDriverRec *intDriver)
 			
 			ch->pann = ( (long) ch->pann * (long)  MAX_PANNING) / (long) 0xFF;
 			
-			if( ch->pann < 0) ch->pann = 0;
-			else if( ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
+			if (ch->pann < 0) ch->pann = 0;
+			else if (ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
 			break;
 			
 		case volumeE:
 			ch->vol = ch->arg;
 			
-			if( ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
-			else if( ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
+			if (ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
+			else if (ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
 			break;
 	}
 }
@@ -757,15 +757,15 @@ void DoVolCmd( Channel *ch, short call, MADDriverRec *intDriver)
 		case 0x6:					// volslide down
 			ch->vol -= volLO;
 			
-			if( ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
-			else if( ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
+			if (ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
+			else if (ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
 			break;
 			
 		case 0x7:					// volslide up
 			ch->vol += volLO;
 			
-			if( ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
-			else if( ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
+			if (ch->vol < MIN_VOLUME) ch->vol = MIN_VOLUME;
+			else if (ch->vol > MAX_VOLUME) ch->vol = MAX_VOLUME;
 			break;
 			
 			// volume-row fine volume slide is compatible with protracker
@@ -793,8 +793,8 @@ void DoVolCmd( Channel *ch, short call, MADDriverRec *intDriver)
 			{
 				ch->pann -= volLO/4;
 				
-				if( ch->pann < 0) ch->pann = 0;
-				else if( ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
+				if (ch->pann < 0) ch->pann = 0;
+				else if (ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
 			}
 			break;
 			
@@ -803,8 +803,8 @@ void DoVolCmd( Channel *ch, short call, MADDriverRec *intDriver)
 			{
 				ch->pann += volLO/4;
 				
-				if( ch->pann < 0) ch->pann = 0;
-				else if( ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
+				if (ch->pann < 0) ch->pann = 0;
+				else if (ch->pann > MAX_PANNING) ch->pann = MAX_PANNING;
 			}
 			break;
 			

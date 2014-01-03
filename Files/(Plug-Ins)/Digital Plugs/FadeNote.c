@@ -72,7 +72,7 @@ static pascal void MyMenuNoteDefProc(short msg, MenuRef whichMenu, Rect *menuRec
 			GetMDEFRect( &tempRect, menuRect, j);
 			
 			
-			if( GetMenuID( whichMenu) == j) ForeColor( redColor);
+			if (GetMenuID( whichMenu) == j) ForeColor( redColor);
 			else ForeColor( blackColor);
 			TETextBox( str+1, str[ 0], &tempRect, teJustCenter);
 		}
@@ -83,7 +83,7 @@ static pascal void MyMenuNoteDefProc(short msg, MenuRef whichMenu, Rect *menuRec
 	case kMenuFindItemMsg:
 		mTracking = (MenuTrackingDataPtr) itemID;
 	
-		if( !PtInRect( hitPt, menuRect)) mouseItem = 0;
+		if (!PtInRect( hitPt, menuRect)) mouseItem = 0;
 		else
 		{
 			mouseItem = (hitPt.v - menuRect->top) / HIM;
@@ -92,7 +92,7 @@ static pascal void MyMenuNoteDefProc(short msg, MenuRef whichMenu, Rect *menuRec
 			mouseItem += (hitPt.h - menuRect->left) / WIM;
 			mouseItem++;
 			
-			if( mouseItem >= itemCount) mouseItem = itemCount;
+			if (mouseItem >= itemCount) mouseItem = itemCount;
 		}
 		
 		if (mouseItem == 0)
@@ -120,7 +120,7 @@ static pascal void MyMenuNoteDefProc(short msg, MenuRef whichMenu, Rect *menuRec
 		for ( j=1;  j<=itemCount;  j++ )
 		{
 			GetMenuItemText( whichMenu, j, str);
-			if( StringWidth( str) > mSize) mSize = StringWidth( str);
+			if (StringWidth( str) > mSize) mSize = StringWidth( str);
 		}
 		
 		SetMenuWidth( whichMenu, mSize + 2);
@@ -148,16 +148,16 @@ static pascal void MyMenuNoteDefProc(short msg, MenuRef whichMenu, Rect *menuRec
 		aH = GetDeviceList();
 		do
 		{
-			if( aH != NULL)
+			if (aH != NULL)
 			{
-				if( PtInRect( hitPt, &(*(*aH)->gdPMap)->bounds))
+				if (PtInRect( hitPt, &(*(*aH)->gdPMap)->bounds))
 				{
 					Rect 		ar = (*(*aH)->gdPMap)->bounds;
 					
-					if( menuRect->bottom > ar.bottom) 	OffsetRect( menuRect, 0, ar.bottom - menuRect->bottom);
-					if( menuRect->top < ar.top)			OffsetRect( menuRect, 0, ar.top - menuRect->top);
-					if( menuRect->right > ar.right) 	OffsetRect( menuRect, ar.right - menuRect->right, 0);
-					if( menuRect->left < ar.left)		OffsetRect( menuRect, ar.left - menuRect->left, 0);
+					if (menuRect->bottom > ar.bottom) 	OffsetRect( menuRect, 0, ar.bottom - menuRect->bottom);
+					if (menuRect->top < ar.top)			OffsetRect( menuRect, 0, ar.top - menuRect->top);
+					if (menuRect->right > ar.right) 	OffsetRect( menuRect, ar.right - menuRect->right, 0);
+					if (menuRect->left < ar.left)		OffsetRect( menuRect, ar.left - menuRect->left, 0);
 				}
 			}
 			
@@ -217,9 +217,9 @@ static void AutoPosition( DialogPtr aDia)
 	do
 	{
 		aH = GetNextDevice( aH);
-		if( aH != NULL)
+		if (aH != NULL)
 		{
-			if( PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
@@ -231,12 +231,12 @@ static void AutoPosition( DialogPtr aDia)
 	while( aH != NULL);
 	
 	Position.h = mouse.h - XSize/2;
-	if( Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
-	else if( Position.h <= ViewRect.left) Position.h = ViewRect.left;
+	if (Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
+	else if (Position.h <= ViewRect.left) Position.h = ViewRect.left;
 
 	Position.v = mouse.v - YSize/2;
-	if( Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
-	else if( Position.v <= ViewRect.top) Position.v = ViewRect.top;
+	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
+	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
 	SetDialogDefaultItem( aDia, 1 );
 	SetDialogCancelItem( aDia, 2 );
@@ -248,11 +248,11 @@ static void AutoPosition( DialogPtr aDia)
 
 static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 {
-	if( row < 0) row = 0;
-	else if( row >= myPcmd->length) row = myPcmd->length -1;
+	if (row < 0) row = 0;
+	else if (row >= myPcmd->length) row = myPcmd->length -1;
 
-	if( track < 0) track = 0;
-	else if( track >= myPcmd->tracks) track = myPcmd->tracks -1;
+	if (track < 0) track = 0;
+	else if (track >= myPcmd->tracks) track = myPcmd->tracks -1;
 	
 	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
@@ -262,7 +262,7 @@ static void OctavesName(short	id, Str255	String)
 	short			NNames[ 12] =	{'C ','C#','D ','D#','E ','F ','F#','G ','G#','A ','A#','B '};
 	Str255			WorkStr;
 	
-	if( id == 0xFF)
+	if (id == 0xFF)
 	{
 		pStrcpy( String, "\p---");
 		return;
@@ -315,11 +315,11 @@ static short Text2Note( Str255 myTT)
 		default:	Oct = 0xFF;		break;
 	}
 	
-	if( Oct != 0xFF)
+	if (Oct != 0xFF)
 	{
-		if( myTT[ 2] == '#') Oct++;
-		if( Oct >= 96) Oct = 0xFF;
-		if( Oct < 0) Oct = 0xFF;
+		if (myTT[ 2] == '#') Oct++;
+		if (Oct >= 96) Oct = 0xFF;
+		if (Oct < 0) Oct = 0xFF;
 	}
 	
 	return( Oct);
@@ -389,7 +389,7 @@ static OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		}
 	}while( itemHit != 1 && itemHit != 2);
 	
-	if( itemHit == 1)
+	if (itemHit == 1)
 	{
 		short	track, row;
 		long	from, to;
@@ -400,14 +400,14 @@ static OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		
 		// Check values
 		
-		if( from < 0 || from >= 96)
+		if (from < 0 || from >= 96)
 		{
 			SelectDialogItemText( myDia, 3, 0, 200);
 			SysBeep( 1);
 			goto RESTART;
 		}
 		
-		if( to < 0 || to >= 96)
+		if (to < 0 || to >= 96)
 		{
 			SelectDialogItemText( myDia, 4, 0, 200);
 			SysBeep( 1);
@@ -420,7 +420,7 @@ static OSErr mainFadeNote( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 			{
 				myCmd = GetCmd( row, track, myPcmd);
 				
-				if( myPcmd->length > 1)			// no zero div !!
+				if (myPcmd->length > 1)			// no zero div !!
 					myCmd->note	= from + ((to-from) * row) / (myPcmd->length-1);
 				
 				// my fade command : 0x10 min vol, 0x50 : max vol

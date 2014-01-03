@@ -47,7 +47,7 @@ void PrintPixMap( PixMapHandle aPix)
 	OSErr		err;
 	Rect		caRect, destRect;
 
-	if( aPix == NULL) return;
+	if (aPix == NULL) return;
 	
 	GetPort( &curPort);
 	
@@ -150,10 +150,10 @@ void Print(void)
 	
 	PrOpen();
 	
-	if( PrJobDialog( hPrint))
+	if (PrJobDialog( hPrint))
 	{
 		printPort = PrOpenDoc( hPrint, nil, nil);
-		if( PrError() == noErr)
+		if (PrError() == noErr)
 		{			
 			switch( WindType)
 			{
@@ -186,7 +186,7 @@ void Print(void)
 					return;
 				break;
 			}
-			if( (*hPrint)->prJob.bJDocLoop == bSpoolLoop  && PrError() == noErr )
+			if ((*hPrint)->prJob.bJDocLoop == bSpoolLoop  && PrError() == noErr )
 				PrPicFile( hPrint, NULL, NULL, NULL, &prStatus );
 
 			PrCloseDoc( printPort);
@@ -292,7 +292,7 @@ void PrintTEHandle( TEHandle hTE)
 		TEScroll( 0, -scrollAmount, hTE ); 					//{ scroll the page so we can print the next one }
 		(*hTE)->viewRect.bottom = rView.bottom; 			//{ reset bottom to full page }
 
-		if( PrError() == iPrAbort) abort = true;
+		if (PrError() == iPrAbort) abort = true;
 		PrClosePage( printPort ); 						//{ close everything up }
 	}
 	

@@ -51,19 +51,19 @@ static inline void pStrCpy( unsigned char *s1, unsigned char *s2)
 
 Handle MADGet1Resource( OSType type, short id, MADLibrary* init)
 {
-	if( init->sysMemory)
+	if (init->sysMemory)
 	{
 		Handle	tH, dH;
 		
 		tH = Get1Resource( type, id);
-		if( tH == NULL) return NULL;
+		if (tH == NULL) return NULL;
 		
 		DetachResource( tH);
 		HNoPurge( tH);
 		
 		dH = NewHandle( GetHandleSize( tH));
-		if( dH == NULL) MyDebugStr( __LINE__, __FILE__, "");
-		if( MemError() != noErr) MyDebugStr( __LINE__, __FILE__, "");
+		if (dH == NULL) MyDebugStr( __LINE__, __FILE__, "");
+		if (MemError() != noErr) MyDebugStr( __LINE__, __FILE__, "");
 		
 		HLock( dH);
 		HLock( tH);
@@ -81,7 +81,7 @@ Handle MADGet1Resource( OSType type, short id, MADLibrary* init)
 	else
 	{
 		Handle dH = Get1Resource( type, id);
-		if( dH == NULL) return NULL;
+		if (dH == NULL) return NULL;
 		
 		DetachResource( dH);
 		HNoPurge( dH);
@@ -109,7 +109,7 @@ OSErr CallImportPlug( 		MADLibrary		*inMADDriver,
 
 	driverSettings.sysMemory = false;
 
-	if( !EqualString( RSRCNAME, inMADDriver->ThePlug[ PlugNo].file.name, false, false))
+	if (!EqualString( RSRCNAME, inMADDriver->ThePlug[ PlugNo].file.name, false, false))
 	{
 		fileID = FSpOpenResFile( &inMADDriver->ThePlug[ PlugNo].file, fsCurPerm);
 		UseResFile( fileID);
@@ -117,7 +117,7 @@ OSErr CallImportPlug( 		MADLibrary		*inMADDriver,
 	
 	myErr = GetDiskFragment( &inMADDriver->ThePlug[ PlugNo].file, 0, kCFragGoesToEOF, inMADDriver->ThePlug[ PlugNo].file.name, kLoadCFrag, &connID, (Ptr *) &mainPLUG, errName);
 
-	if( myErr == noErr)
+	if (myErr == noErr)
 	{
 		myErr = mainPLUG ( order, AlienFile, theNewMAD, info, &driverSettings);
 		
@@ -128,7 +128,7 @@ OSErr CallImportPlug( 		MADLibrary		*inMADDriver,
 
 //	myErr = TESTmain( order, AlienFile, theNewMAD, info, &driverSettings);
 	
-	if( !EqualString( RSRCNAME, inMADDriver->ThePlug[ PlugNo].file.name, false, false))
+	if (!EqualString( RSRCNAME, inMADDriver->ThePlug[ PlugNo].file.name, false, false))
 		CloseResFile( fileID);
 	
 //	theNewMAD->currentDriver = NULL;
@@ -144,7 +144,7 @@ OSErr	PPTestFile( MADLibrary		*inMADDriver, char	*kindFile, char	*AlienFile)
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( !MADstrcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		if (!MADstrcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
 			return( CallImportPlug( inMADDriver, i, 'TEST', AlienFile, &aMAD, &InfoRec));
 		}
@@ -161,7 +161,7 @@ OSErr PPMADInfoFile( char	*AlienFile, PPInfoRec	*InfoRec)
 	theMAD = (MADSpec*) NewPtr( sizeof( MADSpec) + 200);
 		
 	fileID = iFileOpen( AlienFile);
-	if( !fileID)
+	if (!fileID)
 	{
 		DisposePtr( (Ptr) theMAD);
 		return -1;
@@ -192,7 +192,7 @@ OSErr	PPInfoFile( MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile, PPIn
 	short			i;
 	MADMusic	aMAD;
 	
-	if( !strcmp( kindFile, "MADK"))
+	if (!strcmp( kindFile, "MADK"))
 	{
 		PPMADInfoFile( AlienFile, InfoRec);
 		
@@ -201,7 +201,7 @@ OSErr	PPInfoFile( MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile, PPIn
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
 			return( CallImportPlug( inMADDriver, i, 'INFO', AlienFile, &aMAD, InfoRec));
 		}
@@ -216,7 +216,7 @@ OSErr	PPExportFile( MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile, MA
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( !MADstrcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		if (!MADstrcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
 			return( CallImportPlug( inMADDriver, i, 'EXPL', AlienFile, theNewMAD, &InfoRec));
 		}
@@ -231,10 +231,10 @@ OSErr	PPImportFile( MADLibrary *inMADDriver, char	*kindFile, char *AlienFile, MA
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( !MADstrcmp( kindFile, inMADDriver->ThePlug[ i].type))
+		if (!MADstrcmp( kindFile, inMADDriver->ThePlug[ i].type))
 		{
 			*theNewMAD = (MADMusic*) MADNewPtrClear( sizeof( MADMusic), inMADDriver);
-			if( !*theNewMAD) return -1L;
+			if (!*theNewMAD) return -1L;
 			
 			return( CallImportPlug( inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec));
 		}
@@ -249,12 +249,12 @@ OSErr CheckMADFile( Ptr name)
 	OSErr			err;
 	
 	refNum = iFileOpen( name);
-	if( !refNum) return -1;
+	if (!refNum) return -1;
 	else
 	{
 		iRead( 10, charl, refNum);
 		
-		if( charl[ 0] == 'M' &&							// MADK
+		if (charl[ 0] == 'M' &&							// MADK
 				charl[ 1] == 'A' &&
 				charl[ 2] == 'D' &&
 				charl[ 3] == 'K') err = noErr;
@@ -277,17 +277,17 @@ OSErr	PPIdentifyFile( MADLibrary *inMADDriver, char *type, char *AlienFile)
 	
 	// Check if we have access to this file
 	refNum = iFileOpen( AlienFile);
-	if( !refNum) return -1;
+	if (!refNum) return -1;
 	else
 	{
-		if( iGetEOF( refNum) < 100) iErr = -36;
+		if (iGetEOF( refNum) < 100) iErr = -36;
 		iClose( refNum);
-		if( iErr) return iErr;
+		if (iErr) return iErr;
 	}
 	
 	// Is it a MAD file?
 	iErr = CheckMADFile( AlienFile);
-	if( iErr == noErr)
+	if (iErr == noErr)
 	{
 		strcpy( type, "MADK");
 		return noErr;
@@ -295,7 +295,7 @@ OSErr	PPIdentifyFile( MADLibrary *inMADDriver, char *type, char *AlienFile)
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( CallImportPlug( inMADDriver, i, 'TEST', AlienFile, NULL, &InfoRec) == noErr)
+		if (CallImportPlug( inMADDriver, i, 'TEST', AlienFile, NULL, &InfoRec) == noErr)
 		{
 			strcpy( type, inMADDriver->ThePlug[ i].type);
 			
@@ -311,19 +311,19 @@ OSType	GetPPPlugType( MADLibrary *inMADDriver, short ID, OSType mode)
 {
 	short	i, x;
 
-	if( ID >= inMADDriver->TotalPlug) MyDebugStr( __LINE__, __FILE__, "PP-Plug ERROR. ");
+	if (ID >= inMADDriver->TotalPlug) MyDebugStr( __LINE__, __FILE__, "PP-Plug ERROR. ");
 
 	for( i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == 'EXIM')
+		if (inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == 'EXIM')
 		{
-			if( ID == x)
+			if (ID == x)
 			{
 				short 	xx;
 				OSType	type;
 				
 				xx = strlen( inMADDriver->ThePlug[ i].type);
-				if( xx > 4) xx = 4;
+				if (xx > 4) xx = 4;
 				type = '    ';
 				BlockMoveData( inMADDriver->ThePlug[ i].type, &type, xx);
 
@@ -342,11 +342,11 @@ Boolean	MADPlugAvailable( MADLibrary		*inMADDriver, char	*kindFile)
 {
 	short		i;
 
-	if( !strcmp( kindFile, "MADK")) return true;
+	if (!strcmp( kindFile, "MADK")) return true;
 	
 	for( i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if( !strcmp( kindFile, inMADDriver->ThePlug[ i].type)) return true;
+		if (!strcmp( kindFile, inMADDriver->ThePlug[ i].type)) return true;
 	}
 	return false;
 }
@@ -410,11 +410,11 @@ void NScanDirImportPlug( MADLibrary		*inMADDriver, long dirID, short VRefNum, St
 		ResolveAliasFile( &theSpec, true, &targetIsFolder, &wasAliased);
 		FSpGetFInfo( &theSpec, &fndrInfo);
 		
-		if( targetIsFolder)			//if((info.hFileInfo.ioFlAttrib & 16))
+		if (targetIsFolder)			//if((info.hFileInfo.ioFlAttrib & 16))
 		{
-			if( Fname[ 0] > 0)
+			if (Fname[ 0] > 0)
 			{
-				if( EqualString( info.hFileInfo.ioNamePtr, Fname, false, false) || PlugsFolderOK > 0)	// == true ||
+				if (EqualString( info.hFileInfo.ioNamePtr, Fname, false, false) || PlugsFolderOK > 0)	// == true ||
 				//	EqualString( theSpec.name, Fname, false, false) == true)
 				{
 					CInfoPBRec		ci;
@@ -434,9 +434,9 @@ void NScanDirImportPlug( MADLibrary		*inMADDriver, long dirID, short VRefNum, St
 				}
 			}
 		}
-		else if( fndrInfo.fdType == 'IMPL')
+		else if (fndrInfo.fdType == 'IMPL')
 		{
-			if( inMADDriver->TotalPlug < MAXPLUG)
+			if (inMADDriver->TotalPlug < MAXPLUG)
 			{
 				LoadImportPLUG( inMADDriver, inMADDriver->TotalPlug, &theSpec);
 				inMADDriver->TotalPlug++;
@@ -490,7 +490,7 @@ void NScanResource( MADLibrary *inMADDriver)
 		ResourceOK = true;
 		
 		aRes = MADGet1Resource( 'CODE', BASERES + i, inMADDriver);
-		if( aRes == NULL) ResourceOK = false;
+		if (aRes == NULL) ResourceOK = false;
 		else
 		{
 			DisposeHandle( aRes);
@@ -498,14 +498,14 @@ void NScanResource( MADLibrary *inMADDriver)
 		}
 		
 		bRes = MADGet1Resource( 'STR#', BASERES + i, inMADDriver);
-		if( bRes == NULL) ResourceOK = false;
+		if (bRes == NULL) ResourceOK = false;
 		else
 		{
 			DisposeHandle( bRes);
 			bRes = NULL;
 		}
 		
-		if( inMADDriver->TotalPlug < MAXPLUG && ResourceOK == true)
+		if (inMADDriver->TotalPlug < MAXPLUG && ResourceOK == true)
 		{
 			short		No = inMADDriver->TotalPlug;
 			Handle		theRes;
@@ -562,7 +562,7 @@ void MInitImportPlug( MADLibrary *inMADDriver, FSSpec *PlugsFolderName)
 	inMADDriver->ThePlug = (PlugInfo*) MADNewPtr( MAXPLUG * sizeof( PlugInfo), inMADDriver);
 	inMADDriver->TotalPlug = 0;
 	
-	if( PlugsFolderName != NULL)
+	if (PlugsFolderName != NULL)
 	{
 		PlugsFolderOK = 0;
 		NScanDirImportPlug( inMADDriver, PlugsFolderName->parID, PlugsFolderName->vRefNum, PlugsFolderName->name);

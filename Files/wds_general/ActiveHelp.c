@@ -40,9 +40,9 @@ void DoAHelpInfo(void)
 	ProcessSerialNumber			PSN;
 	unsigned long				outFeatures;
 	
-	if( !HelpAvalaible) return;
-	if( AHelpDlog == NULL) return;
-	if( MacIsWindowVisible( GetDialogWindow( AHelpDlog)) == false) return;
+	if (!HelpAvalaible) return;
+	if (AHelpDlog == NULL) return;
+	if (MacIsWindowVisible( GetDialogWindow( AHelpDlog)) == false) return;
 	
 	GetFrontProcess( &PSN);
 	if(PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
@@ -52,7 +52,7 @@ void DoAHelpInfo(void)
 	
 	GetMouse( &pt);
 	LocalToGlobal( &pt);
-	if( pt.h == savept.h && pt.v == savept.v) return;
+	if (pt.h == savept.h && pt.v == savept.v) return;
 	
 	savept = pt;
 	
@@ -63,12 +63,12 @@ void DoAHelpInfo(void)
 		strucRgn = NewRgn();
 		
 		/*	GetWindowFeatures( aWin, &outFeatures);
-		 if( outFeatures & kWindowCanGetWindowRegion) aWin = aWin;
+		 if (outFeatures & kWindowCanGetWindowRegion) aWin = aWin;
 		 else Debugger();*/
 		
 		GetWindowRegion( aWin, kWindowStructureRgn, strucRgn);
 		
-		if( PtInRgn( pt, strucRgn))
+		if (PtInRgn( pt, strucRgn))
 		{
 			wref = GetWRefCon( aWin);
 			
@@ -136,7 +136,7 @@ void DoAHelpInfo(void)
 			}
 			//////
 			
-			if( lsize > 0)
+			if (lsize > 0)
 			{
 				SetPortWindowPort( aWin);
 				
@@ -144,9 +144,9 @@ void DoAHelpInfo(void)
 				for( i = 0; i < lsize; i++)
 				{
 					GetDialogItem( GetDialogFromWindow( aWin), items[ i], &iType, &iHandle, &iRect);
-					if( PtInRect( ptLocal, &iRect))
+					if (PtInRect( ptLocal, &iRect))
 					{
-						if( lastitem != i || lastwref != wref)
+						if (lastitem != i || lastwref != wref)
 						{
 							lastitem = i;
 							lastwref = wref;
@@ -194,7 +194,7 @@ void FrameRectRelief2( Rect *theRect)
 #define GrisClair	0xEEEE
 #define GrisFonce	0x8888
 	
-	if( (**(**GetMainDevice()).gdPMap).pixelSize < 8)
+	if ((**(**GetMainDevice()).gdPMap).pixelSize < 8)
 	{
 		aCopy.left = theRect->left ;
 		aCopy.right = theRect->right;
@@ -268,9 +268,9 @@ void MyFindControl( Point localPt, WindowPtr wind, ControlHandle *myCtl)
 	
 	while( aCtl != NULL)
 	{
-		if( PtInRect( localPt, &(*aCtl)->contrlRect))
+		if (PtInRect( localPt, &(*aCtl)->contrlRect))
 		{
-			if( (*aCtl)->contrlRect.right - (*aCtl)->contrlRect.left == 2)
+			if ((*aCtl)->contrlRect.right - (*aCtl)->contrlRect.left == 2)
 			{
 				*myCtl = aCtl;
 				return;
@@ -308,15 +308,15 @@ void AdjustZoomIn( WindowPtr	wind)
 	aH = GetDeviceList();
 	ar = (*(*aH)->gdPMap)->bounds;
 	SetRect( &ViewRect, ar.left + BORD, ar.top + BORD + 7, ar.right - BORD, ar.bottom - BORD);
-	if( AHelpDlog != NULL) ViewRect.top += WINDOWHIGH + 33;
+	if (AHelpDlog != NULL) ViewRect.top += WINDOWHIGH + 33;
 	else ViewRect.top += 35;
 	
 	do
 	{
 		aH = GetNextDevice( aH);
-		if( aH != NULL)
+		if (aH != NULL)
 		{
-			if( PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				ar = (*(*aH)->gdPMap)->bounds;
 				
@@ -332,7 +332,7 @@ void AdjustZoomIn( WindowPtr	wind)
 	
 	GetWindowStandardState( wind, &stdRect);
 	
-	/*	if( aCtl != NULL)
+	/*	if (aCtl != NULL)
 	 {
 	 long lRefCon = GetControlReference( aCtl);
 	 
@@ -345,8 +345,8 @@ void AdjustZoomIn( WindowPtr	wind)
 		v = stdRect.bottom - stdRect.top;
 	}
 	
-	if( v == 0) v = ViewRect.bottom - ViewRect.top;
-	if( h == 0) h = ViewRect.right - ViewRect.left;
+	if (v == 0) v = ViewRect.bottom - ViewRect.top;
+	if (h == 0) h = ViewRect.right - ViewRect.left;
 	
 	stdRect.top = ViewRect.top;
 	stdRect.left = ViewRect.left;
@@ -373,8 +373,8 @@ void AdjustZoomIn( WindowPtr	wind)
 	
 	GetWindowStandardState( wind, &stdRect);
 	
-	if( stdRect.bottom > ViewRect.bottom) stdRect.bottom = ViewRect.bottom;
-	if( stdRect.right > ViewRect.right) stdRect.right = ViewRect.right;
+	if (stdRect.bottom > ViewRect.bottom) stdRect.bottom = ViewRect.bottom;
+	if (stdRect.right > ViewRect.right) stdRect.right = ViewRect.right;
 	
 	SetWindowStandardState( wind, &stdRect);
 	
@@ -423,8 +423,8 @@ void CreateAHelpWindow(void)
 	
 	SetItemMark( HelpMenu, 1, checkMark);
 	
-	if( !HelpAvalaible) return;
-	if( AHelpDlog != NULL) return;
+	if (!HelpAvalaible) return;
+	if (AHelpDlog != NULL) return;
 	
 	GetPort( &savePort);
 	
@@ -450,7 +450,7 @@ void CreateAHelpWindow(void)
 
 void CloseAHelp(void)
 {
-	if( AHelpDlog != NULL)
+	if (AHelpDlog != NULL)
 	{
 		//SetMenuItemText( HelpMenu, 1, "\pShow Online Help");
 		RemoveWindowBar();

@@ -32,8 +32,8 @@ void DoGrowMem( DialogPtr theDialog)
 
 	GetQDGlobalsScreenBits( &screenBits);
 
-	if( temp.right < temp.left) temp.bottom = temp.top;
-	else if( temp.right > screenBits.bounds.right - aPt.h) temp.right = screenBits.bounds.right - aPt.h -2;
+	if (temp.right < temp.left) temp.bottom = temp.top;
+	else if (temp.right > screenBits.bounds.right - aPt.h) temp.right = screenBits.bounds.right - aPt.h -2;
 
 	GetPortBounds( GetDialogPort( theDialog), &caRect);
 
@@ -45,9 +45,9 @@ void DoGrowMem( DialogPtr theDialog)
 #endif
 	
 	lSizeVH = 0;
-	if( theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( theDialog), theEvent.where, &temp);
+	if (theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( theDialog), theEvent.where, &temp);
 
-	if( lSizeVH != 0)
+	if (lSizeVH != 0)
 	{
 		tempA = LoWord( lSizeVH);
 		tempB = HiWord( lSizeVH);
@@ -85,14 +85,14 @@ void DoNullMemWindow(void)
  	long		val, UsedMem, tempLong, tAlpha;
  	Boolean		GrafUpdate = false;
 	
-	if( MemoryDlog == NULL) return;
+	if (MemoryDlog == NULL) return;
 	
 	GetPort( &savePort);
 	SetPortDialogPort( MemoryDlog);
 	
 	tAlpha = FreeMem() / 1024;
 	
-	if( tAlpha != FreeMemGlobalK)
+	if (tAlpha != FreeMemGlobalK)
 	{
 		FreeMemGlobalK = tAlpha;
 		
@@ -106,16 +106,16 @@ void DoNullMemWindow(void)
 		SetDText( MemoryDlog, 3, tempStr);
 		tAlpha = 0;
 		
-		if( AppearanceManager) SetControlValue( progCntl, (UsedMem * 100) / (FreeMemGlobalK + UsedMem));
+		if (AppearanceManager) SetControlValue( progCntl, (UsedMem * 100) / (FreeMemGlobalK + UsedMem));
 		
 		//***** Driver ********
 		tempLong = 0;
-	//	if( MADDriver->Vol != NULL) 			tempLong += GetPtrSize( MADDriver->Vol);
-		if( MADDriver->IntDataPtr != NULL) 	tempLong += GetPtrSize( MADDriver->IntDataPtr);
+	//	if (MADDriver->Vol != NULL) 			tempLong += GetPtrSize( MADDriver->Vol);
+		if (MADDriver->IntDataPtr != NULL) 	tempLong += GetPtrSize( MADDriver->IntDataPtr);
 		
 	/*	for( i = 0; i < MAX_PITCH; i++)
 		{
-			if( MADDriver->FreqHandle[ i] != NULL) tempLong += GetPtrSize( (Ptr) MADDriver->FreqHandle[ i]);
+			if (MADDriver->FreqHandle[ i] != NULL) tempLong += GetPtrSize( (Ptr) MADDriver->FreqHandle[ i]);
 		}*/
 		tempLong /= 1024;
 		NumToString( tempLong, tempStr);
@@ -123,7 +123,7 @@ void DoNullMemWindow(void)
 		SetDText( MemoryDlog, 9, tempStr);		// Driver
 		
 		NumToString( (tempLong * 100)/ UsedMem, tempStr);
-		if( tempStr[ 0] == 1)
+		if (tempStr[ 0] == 1)
 		{
 			pStrcpy( aStr, "\p0");
 			pStrcat( aStr, tempStr);
@@ -140,7 +140,7 @@ void DoNullMemWindow(void)
 		{
 			for( x = 0; x < curMusic->fid[i].numSamples; x++)
 			{
-				if( curMusic->sample[ curMusic->fid[ i].firstSample + x] == NULL) MyDebugStr( __LINE__, __FILE__, "numSamples ERR");
+				if (curMusic->sample[ curMusic->fid[ i].firstSample + x] == NULL) MyDebugStr( __LINE__, __FILE__, "numSamples ERR");
 				tempLong += curMusic->sample[ curMusic->fid[ i].firstSample + x]->size;
 			}
 		}
@@ -150,7 +150,7 @@ void DoNullMemWindow(void)
 		SetDText( MemoryDlog, 12, tempStr);		// Instruments
 
 		NumToString( (tempLong * 100)/ UsedMem, tempStr);
-		if( tempStr[ 0] == 1)
+		if (tempStr[ 0] == 1)
 		{
 			pStrcpy( aStr, "\p0");
 			pStrcat( aStr, tempStr);
@@ -174,7 +174,7 @@ void DoNullMemWindow(void)
 		SetDText( MemoryDlog, 15, tempStr);		// Partition
 
 		NumToString( (tempLong * 100)/ UsedMem, tempStr);
-		if( tempStr[ 0] == 1)
+		if (tempStr[ 0] == 1)
 		{
 			pStrcpy( aStr, "\p0");
 			pStrcat( aStr, tempStr);
@@ -192,7 +192,7 @@ void DoNullMemWindow(void)
 		SetDText( MemoryDlog, 18, tempStr);		// Player PRO
 
 		NumToString( (tempLong * 100)/ UsedMem, tempStr);
-		if( tempStr[ 0] == 1)
+		if (tempStr[ 0] == 1)
 		{
 			pStrcpy( aStr, "\p0");
 			pStrcat( aStr, tempStr);
@@ -203,7 +203,7 @@ void DoNullMemWindow(void)
 		GrafUpdate = true;
 	}
 
-	if( GrafUpdate)
+	if (GrafUpdate)
 	{
 		GetDialogItem ( MemoryDlog, 1, &itemType, &itemHandle, &itemRect);
 		PaintMemory( &itemRect);
@@ -218,7 +218,7 @@ void PaintMemory( Rect	*theRect)
 	short		longRec, temp;
 	Rect	CopyRect;
 	
-	if( AppearanceManager)
+	if (AppearanceManager)
 	{
 		Draw1Control( progCntl);
 		return;
@@ -275,7 +275,7 @@ void  UpdateMemWindow(DialogPtr GetSelection)
 		
 		DisposeRgn( visibleRegion);
 		
-		if( !AppearanceManager)
+		if (!AppearanceManager)
 		{
 			GetDialogItem ( MemoryDlog, 1, &itemType, &itemHandle, &itemRect);
 			FrameRectRelief( &itemRect);
@@ -284,7 +284,7 @@ void  UpdateMemWindow(DialogPtr GetSelection)
 		}
 		
 	/*	GetDialogItem ( MemoryDlog, 4, &itemType, &itemHandle, &itemRect);
-		if( AppearanceManager)
+		if (AppearanceManager)
 		{
 			RGBColor rgb;
 	
@@ -331,7 +331,7 @@ void CreateMemWindow(void)
 	Str255		String;
 	GrafPtr		savePort;
 
-	if( MemoryDlog != NULL)
+	if (MemoryDlog != NULL)
 	{
 		SetWindEtat( GetDialogWindow(MemoryDlog));
 		return;
@@ -352,7 +352,7 @@ void CreateMemWindow(void)
 	
 	FreeMemGlobalK = 0;
 	
-	if( AppearanceManager)
+	if (AppearanceManager)
 	{
 		GetDialogItem( MemoryDlog, 1, &itemType, &itemHandle, &itemRect);
 		progCntl = NewControl( 	GetDialogWindow( MemoryDlog),
@@ -369,7 +369,7 @@ void CreateMemWindow(void)
 
 void CloseMem(void)
 {
-	if( MemoryDlog != NULL) DisposeDialog( MemoryDlog);
+	if (MemoryDlog != NULL) DisposeDialog( MemoryDlog);
 	MemoryDlog = NULL;
 	
 	SetItemMark( ViewsMenu, mMemory, noMark);

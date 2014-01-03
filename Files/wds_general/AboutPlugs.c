@@ -67,7 +67,7 @@ void DrawPlugInfo( short iD)
 	MoveTo( myList.rect.left + POSINS, myList.rect.top + 10 + myList.HCell*pos);
 	DrawString( aStr);
 	
-	if( iD >= myList.select.top && iD <= myList.select.bottom)
+	if (iD >= myList.select.top && iD <= myList.select.bottom)
 	{
 		Rect 			t;
 		RGBColor		hilite;
@@ -78,7 +78,7 @@ void DrawPlugInfo( short iD)
 		t.top = myList.rect.top + myList.HCell*pos;		t.bottom = t.top + myList.HCell-1;
 		
 		
-		if( hilite.red == 0 &&
+		if (hilite.red == 0 &&
 		   hilite.green == 0 &&
 		   hilite.blue == 0)
 		{

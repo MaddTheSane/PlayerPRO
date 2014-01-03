@@ -145,14 +145,14 @@ static void AnalyzePtune(Tune *ptune)
 	    	if (-1 != pei->pitch) {
 		        pei->vol = midivolume[ pei->vol];					// ** Convert volumes **
 				
-				if( pei->inst < 0) {
+				if (pei->inst < 0) {
 					pei->inst = 128;
 					//	pei->pitch = MIDDLEC;
 				}
-				if( pei->inst > 128)
+				if (pei->inst > 128)
 					Debugger();
 				
-				if( MIDIInstMOD[ pei->inst] == -1) {					// A new instrument !!
+				if (MIDIInstMOD[ pei->inst] == -1) {					// A new instrument !!
 					MIDIInstMOD[ pei->inst] = NewIns;
 					NewIns++;
 				}

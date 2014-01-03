@@ -26,7 +26,7 @@ static OSErr mainSilence(	sData			*theData,				// Sample Informations
 	Ptr		Sample8Ptr = theData->data;
 	short	*Sample16Ptr = (short*) theData->data;
 	
-	if( Sample8Ptr == NULL) return noErr;
+	if (Sample8Ptr == NULL) return noErr;
 	
 	switch( theData->amp)
 	{
@@ -37,7 +37,7 @@ static OSErr mainSilence(	sData			*theData,				// Sample Informations
 			{
 				*Sample8Ptr = 0;
 				
-				if( StereoMode)
+				if (StereoMode)
 				{
 					Sample8Ptr++;
 					i++;
@@ -54,7 +54,7 @@ static OSErr mainSilence(	sData			*theData,				// Sample Informations
 			{
 				*Sample16Ptr = 0;
 				
-				if( StereoMode)
+				if (StereoMode)
 				{
 					Sample16Ptr++;
 					i++;

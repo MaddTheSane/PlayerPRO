@@ -55,9 +55,9 @@ static void AutoPosition( DialogPtr aDia)
 	do
 	{
 		aH = GetNextDevice( aH);
-		if( aH != NULL)
+		if (aH != NULL)
 		{
-			if( PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
@@ -69,12 +69,12 @@ static void AutoPosition( DialogPtr aDia)
 	while( aH != NULL);
 	
 	Position.h = mouse.h - XSize/2;
-	if( Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
-	else if( Position.h <= ViewRect.left) Position.h = ViewRect.left;
+	if (Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
+	else if (Position.h <= ViewRect.left) Position.h = ViewRect.left;
 
 	Position.v = mouse.v - YSize/2;
-	if( Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
-	else if( Position.v <= ViewRect.top) Position.v = ViewRect.top;
+	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
+	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
 	SetDialogDefaultItem( aDia, 1 );
 	SetDialogCancelItem( aDia, 2 );
@@ -86,11 +86,11 @@ static void AutoPosition( DialogPtr aDia)
 
 static Cmd* GetCmd( short row, short	track, Pcmd*	myPcmd)
 {
-	if( row < 0) row = 0;
-	else if( row >= myPcmd->length) row = myPcmd->length -1;
+	if (row < 0) row = 0;
+	else if (row >= myPcmd->length) row = myPcmd->length -1;
 
-	if( track < 0) track = 0;
-	else if( track >= myPcmd->tracks) track = myPcmd->tracks -1;
+	if (track < 0) track = 0;
+	else if (track >= myPcmd->tracks) track = myPcmd->tracks -1;
 	
 	return( &(myPcmd->myCmd[ (myPcmd->length * track) + row]));
 }
@@ -117,7 +117,7 @@ static OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		
 	} while( itemHit != 1 && itemHit != 2);
 	
-	if( itemHit == 1)
+	if (itemHit == 1)
 	{
 		short	track, row;
 		long	trans;
@@ -127,7 +127,7 @@ static OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		
 		// Check values
 		
-		if( trans < -96 || trans > 96)
+		if (trans < -96 || trans > 96)
 		{
 			SelectDialogItemText( myDia, 3, 0, 200);
 			SysBeep( 1);
@@ -140,10 +140,10 @@ static OSErr mainNoteTrans( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 			{
 				myCmd = GetCmd( row, track, myPcmd);
 				
-				if( myCmd->note != 0xFF && myCmd->note != 0xFE)		// no notes = 0xFF
+				if (myCmd->note != 0xFF && myCmd->note != 0xFE)		// no notes = 0xFF
 				{
-					if( (long) myCmd->note + trans < 0) myCmd->note = 0;
-					else if( (long) myCmd->note + trans >= 96) myCmd->note = 96-1;
+					if ((long) myCmd->note + trans < 0) myCmd->note = 0;
+					else if ((long) myCmd->note + trans >= 96) myCmd->note = 96-1;
 					else myCmd->note += trans;
 				}
 			}

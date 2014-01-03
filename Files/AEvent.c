@@ -98,7 +98,7 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 		
 		err = HGetFInfo( myFSS.vRefNum, myFSS.parID, myFSS.name, &fndrInfo);
 		
-		if( err != noErr)
+		if (err != noErr)
 		{
 			info.dirInfo.ioVRefNum = myFSS.vRefNum;
 			info.dirInfo.ioDrDirID = myFSS.parID;
@@ -112,18 +112,18 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 			{
 				DoScanDir( info.dirInfo.ioDrDirID, myFSS.vRefNum);
 				
-				if( index == 1)
+				if (index == 1)
 				{
 					Boolean 	rrr;
 					
-					if( thePrefs.AutomaticOpen)
+					if (thePrefs.AutomaticOpen)
 					{
-						if( DropZone >= 0) rrr = OpenFirst2( DropZone);
+						if (DropZone >= 0) rrr = OpenFirst2( DropZone);
 						else rrr = OpenFirst2( 0);
 						
 						DropZone = -1;
 						
-						if( thePrefs.AutoPlayWhenOpen && rrr) DoPlay();		// WANT TO PLAY ?
+						if (thePrefs.AutoPlayWhenOpen && rrr) DoPlay();		// WANT TO PLAY ?
 					}
 				}
 			}
@@ -133,44 +133,44 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 			OSType 	tempType;
 			char	tempC[ 5];
 			
-			if( OpenableFile( fndrInfo.fdType, &myFSS) == true ||
+			if (OpenableFile( fndrInfo.fdType, &myFSS) == true ||
 				fndrInfo.fdType == 'sTAT' ||
 				fndrInfo.fdType == 'STCf' ||
 				MADMusicIdentifyFSp( gMADLib, tempC, &myFSS) == noErr)
 			{
-				if( fndrInfo.fdType != 'sTAT' && fndrInfo.fdType != 'STCf')
+				if (fndrInfo.fdType != 'sTAT' && fndrInfo.fdType != 'STCf')
 				{
 					AddMODList( 	false,
 									myFSS.name,
 									myFSS.vRefNum,
 									myFSS.parID);
 					
-					if( !ReceivedAMusicInMusicList)
+					if (!ReceivedAMusicInMusicList)
 					{
-						if( index == 1)
+						if (index == 1)
 						{
-							if( ImportFile( myFSS.name, myFSS.vRefNum, myFSS.parID, fndrInfo.fdType))
+							if (ImportFile( myFSS.name, myFSS.vRefNum, myFSS.parID, fndrInfo.fdType))
 							{
-								if( thePrefs.AutoPlayWhenOpen) DoPlay();		// WANT TO PLAY ?
+								if (thePrefs.AutoPlayWhenOpen) DoPlay();		// WANT TO PLAY ?
 							}
 						}
 					}
 					else
 					{
-						if( index == 1) MODListSelectThisMusic( myFSS.name);
+						if (index == 1) MODListSelectThisMusic( myFSS.name);
 					}
 				}
 				else	// Music File List
 				{
-					if( GereMusicListChanged() == noErr)
+					if (GereMusicListChanged() == noErr)
 					{
 						ClearMODList();
 						
-						if( index == 1)
+						if (index == 1)
 						{
-							if( ImportFile( myFSS.name, myFSS.vRefNum, myFSS.parID, fndrInfo.fdType))
+							if (ImportFile( myFSS.name, myFSS.vRefNum, myFSS.parID, fndrInfo.fdType))
 							{
-								if( thePrefs.AutoPlayWhenOpen) DoPlay();		// WANT TO PLAY ?
+								if (thePrefs.AutoPlayWhenOpen) DoPlay();		// WANT TO PLAY ?
 							}
 						}
 					}
@@ -246,7 +246,7 @@ pascal OSErr  AEErreur( const AppleEvent *theAppleEvent, AppleEvent *reply, long
 	err = AEGetNthPtr (&docList, 1, 'dErr', &keywd, &returnedType, (Ptr) &dErr, sizeof( dErr), &actualSize);
 		
 	GetFrontProcess( &PSN);
-	if( PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
+	if (PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
 		PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN)
 	{
 		notif = true;
@@ -263,13 +263,13 @@ pascal OSErr  AEErreur( const AppleEvent *theAppleEvent, AppleEvent *reply, long
 		myNotification.nmRefCon	= 0;				//not needed
 		
 		err = NMInstall( &myNotification);
-		if( err) notif = false;
+		if (err) notif = false;
 	}
 	else notif = false;
 	
 	IntErreur( dErr[ 0], dErr[ 1]);
 	
-	if( notif)
+	if (notif)
 	{
 		NMRemove( &myNotification);
 		err = DisposeIconSuite( hd, true);
@@ -313,7 +313,7 @@ short		AESpeed;
 	err = AEGetParamPtr(	event, keyDirectObject, typeChar,
 							&actualtype, (Ptr)( &AESpeed), 2, &actualSize);
 
-	if( AESpeed > 0 && AESpeed < 20)
+	if (AESpeed > 0 && AESpeed < 20)
 	{
 	//	speed = AESpeed;
 	//	ChangeSpeed();
@@ -457,7 +457,7 @@ void AESendOpenFile( FSSpec *spec)
 	AECreateDesc(typeFSS, (Ptr) spec, sizeof( *spec), &listElem);
 	
 	iErr = AEPutDesc( &fileList, 0, &listElem);
-	if( iErr) return;
+	if (iErr) return;
 	
 	AEDisposeDesc( &listElem);
 	
@@ -475,6 +475,6 @@ void AESendOpenFile( FSSpec *spec)
 	
 	iErr = AEDisposeDesc( &target);
 
-	if( iErr) return;
+	if (iErr) return;
 	
 }

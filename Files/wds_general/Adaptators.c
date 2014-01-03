@@ -94,7 +94,7 @@ void DrawValueIndicator( double val, Boolean percent, Str255 text)
 	
 	ClipRect( &caRect);
 	
-	if( val == -1)
+	if (val == -1)
 	{
 	//	TextFont( 0);	TextSize( 0);
 		SetDText( AdapDlog, 40, "\p");
@@ -104,12 +104,12 @@ void DrawValueIndicator( double val, Boolean percent, Str255 text)
 	{
 		Str255	str;
 		
-		if( text) pStrcpy( str, text);
+		if (text) pStrcpy( str, text);
 		else
 		{
 			long intval = val;
 			
-			if( (double) intval == val)
+			if ((double) intval == val)
 			{
 				sprintf( (Ptr) str, "%.0f", val);
 				MyC2PStr( (Ptr) str);
@@ -121,7 +121,7 @@ void DrawValueIndicator( double val, Boolean percent, Str255 text)
 			}
 		}
 		
-		if( percent) pStrcat( str, "\p %");
+		if (percent) pStrcat( str, "\p %");
 		
 	//	TextFont( 0);	TextSize( 0);
 		SetDText( AdapDlog, 40, str);
@@ -177,17 +177,17 @@ void FineSpeedPitchSettings()
 		
 		MyModalDialog( aDia, &itemHit);
 		
-		if( itemHit == -5 || itemHit == 0)
+		if (itemHit == -5 || itemHit == 0)
 		{
 			GetDText( aDia, 5, theString);
 			MyP2CStr( theString);
 			val = atof( (Ptr) theString);
 			temp = (8000. * 100.) / val;
-			if( temp >= 160 && temp <= 16000)
+			if (temp >= 160 && temp <= 16000)
 			{
 				SetControlVisibility( pitchCntl, true, false);
 				
-				if( temp != MADDriver->FreqExt) SetControlValue( pitchCntl, 16000- temp);
+				if (temp != MADDriver->FreqExt) SetControlValue( pitchCntl, 16000- temp);
 				MADDriver->FreqExt = temp;
 				
 				SetControlVisibility( pitchCntl, false, false);
@@ -197,11 +197,11 @@ void FineSpeedPitchSettings()
 			MyP2CStr( theString);
 			val = atof( (Ptr) theString);
 			temp = ( val * 8000.) / 100.;
-			if( temp >= 160 && temp <= 16000)
+			if (temp >= 160 && temp <= 16000)
 			{
 				SetControlVisibility( speedCntl, true, false);
 				
-				if( temp != MADDriver->VExt) SetControlValue( speedCntl, temp);
+				if (temp != MADDriver->VExt) SetControlValue( speedCntl, temp);
 				MADDriver->VExt = temp;
 				
 				SetControlVisibility( speedCntl, false, false);
@@ -212,13 +212,13 @@ void FineSpeedPitchSettings()
 	
 	UpdateALLWindow();
 	
-	if( itemHit == 1)
+	if (itemHit == 1)
 	{
 		GetDText( aDia, 5, theString);
 		MyP2CStr( theString);
 		val = atof( (Ptr) theString);
 		temp = (8000. * 100.) / val;
-		if( temp >= 160 && temp <= 16000) MADDriver->FreqExt = temp;
+		if (temp >= 160 && temp <= 16000) MADDriver->FreqExt = temp;
 		else
 		{
 			SelectDialogItemText( aDia, 5, 0, 32767);
@@ -230,7 +230,7 @@ void FineSpeedPitchSettings()
 		MyP2CStr( theString);
 		val = atof( (Ptr) theString);
 		temp = ( val * 8000.) / 100.;
-		if( temp >= 160 && temp <= 16000) MADDriver->VExt = temp;
+		if (temp >= 160 && temp <= 16000) MADDriver->VExt = temp;
 		else
 		{
 			SelectDialogItemText( aDia, 6, 0, 32767);
@@ -241,16 +241,16 @@ void FineSpeedPitchSettings()
 		curMusic->hasChanged = true;
 	}
 	
-	if( itemHit == 2)	// CANCEL
+	if (itemHit == 2)	// CANCEL
 	{
 		MADDriver->FreqExt = previousPitch;
 		MADDriver->VExt = previousSpeed;
 	}
 	
-	if( MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
+	if (MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
 	else HiliteControl( ResetPitchBut, 255);
 	
-	if( MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
+	if (MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
 	else HiliteControl( ResetSpeedBut, 255);
 	
 	
@@ -271,16 +271,16 @@ void DoNullAdap( void)
 	RgnHandle	visibleRegion;
 	Str255		TextVal;
 
-	if( !AdapDlog) return;
+	if (!AdapDlog) return;
 
 	GetPort( &SavePort);
 	
 	SetPortDialogPort( AdapDlog);
 	
-	if( TickCount() <= oldNullTicks) return;
+	if (TickCount() <= oldNullTicks) return;
 	oldNullTicks = TickCount();
 	
-	if( MADGetHardwareVolume() != thePrefs.volumeLevel)
+	if (MADGetHardwareVolume() != thePrefs.volumeLevel)
 	{
 		thePrefs.volumeLevel = MADGetHardwareVolume();
 		SetControlVisibility( hardvolCntl, true, false);
@@ -288,7 +288,7 @@ void DoNullAdap( void)
 		SetControlVisibility( hardvolCntl, false, false);
 	}
 	
-	if( oldTempo != MADDriver->finespeed || oldSpeed != MADDriver->speed)
+	if (oldTempo != MADDriver->finespeed || oldSpeed != MADDriver->speed)
 	{
 		oldTempo = MADDriver->finespeed;
 		oldSpeed = MADDriver->speed;
@@ -318,15 +318,15 @@ void DoNullAdap( void)
 	
 	for( i = 0; i < curMusic->header->numChn; i++)
 	{
-		if( MADDriver->Tube[i] >= -MINPULSE*2-1)
+		if (MADDriver->Tube[i] >= -MINPULSE*2-1)
 		{
 			itemRect = pulseRect[i];
 			
 			InsetRect( &itemRect, 2, 2);
 			
-			if( MADDriver->Tube[ i] == oldTube[ i])
+			if (MADDriver->Tube[ i] == oldTube[ i])
 			{
-				if( MADDriver->chan[ i].maxPtr > MADDriver->chan[ i].curPtr && MADDriver->chan[ i].curPtr != NULL && MADDriver->Tube[i] <= 0)
+				if (MADDriver->chan[ i].maxPtr > MADDriver->chan[ i].curPtr && MADDriver->chan[ i].curPtr != NULL && MADDriver->Tube[i] <= 0)
 			 	{
 			 		
 			 	}
@@ -337,7 +337,7 @@ void DoNullAdap( void)
 				
 					oldTube[ i] = MADDriver->Tube[i];
 					
-				 	if( oldTube[i] >= -MINPULSE*2-1)
+				 	if (oldTube[i] >= -MINPULSE*2-1)
 					{
 						MoveTo( val, itemRect.top);
 						LineTo( val, itemRect.bottom);
@@ -348,13 +348,13 @@ void DoNullAdap( void)
 			{
 				SwitchColor( i);
 				
-				if( MADDriver->Tube[i] <= 0) MADDriver->Tube[i] = 1;
+				if (MADDriver->Tube[i] <= 0) MADDriver->Tube[i] = 1;
 				
 				itemRect.right = itemRect.left + MINPULSE + MADDriver->Tube[i]/2;
 				PaintRect( &itemRect);
 				ForeColor( blackColor);
 				
-				if( MADDriver->Tube[ i] != 64)
+				if (MADDriver->Tube[ i] != 64)
 				{
 					itemRect.left = itemRect.right;
 					itemRect.right = pulseRect[i].right-2;
@@ -374,12 +374,12 @@ void DoNullAdap( void)
 	SetClip( saveClip);
 	DisposeRgn( saveClip);
 		
-	if( Button()) return;
+	if (Button()) return;
 	
-	if( TickCount() <= oldNullTicks2) return;
+	if (TickCount() <= oldNullTicks2) return;
 	oldNullTicks2 = TickCount() + 10;
 	
-//	if( oldWindow == AdapDlog)
+//	if (oldWindow == AdapDlog)
 	{
 		double val;
 		
@@ -391,7 +391,7 @@ void DoNullAdap( void)
 		
 		TextVal[ 0] = 0;
 		
-		if( PtInRgn( pt, visibleRegion))
+		if (PtInRgn( pt, visibleRegion))
 		{
 			Rect	contrlRect;
 			Boolean	percent = false;
@@ -404,59 +404,59 @@ void DoNullAdap( void)
 				
 				GetControlBounds( volCntl[ i], &contrlRect);
 				
-				if( PtInRect( pt, &contrlRect)) { found = true;	val = (100*curMusic->header->chanVol[ i])/64; percent = true;}
+				if (PtInRect( pt, &contrlRect)) { found = true;	val = (100*curMusic->header->chanVol[ i])/64; percent = true;}
 				
 				GetControlBounds( pannCntl[ i], &contrlRect);
 				
-				if( PtInRect( pt, &contrlRect)) { found = true;	val = 100. * ((curMusic->header->chanPan[ i] - 32)/32.); percent = true;}
+				if (PtInRect( pt, &contrlRect)) { found = true;	val = 100. * ((curMusic->header->chanPan[ i] - 32)/32.); percent = true;}
 				
 				for( x = 0; x < 4; x++)
 				{
 					GetControlBounds( VSTFx[ i][ x], &contrlRect);
 					
-					if( PtInRect( pt, &contrlRect))
+					if (PtInRect( pt, &contrlRect))
 					{
-						if( curMusic->header->chanBus[ i].copyId == i)
+						if (curMusic->header->chanBus[ i].copyId == i)
 						{
 							found = true;
-							if( MADDriver->chanVST[ i][ x]) pStrcpy( TextVal, MADDriver->chanVST[ i][ x]->name);
+							if (MADDriver->chanVST[ i][ x]) pStrcpy( TextVal, MADDriver->chanVST[ i][ x]->name);
 							else pStrcpy( TextVal, "\pNo Effect");
 						}
 					}
 				}
 				
-				if( found) break;
+				if (found) break;
 			}
 			
 			for( x = 0; x < 10; x++)
 			{
 				GetControlBounds( MainFx[ x], &contrlRect);
 			
-				if( PtInRect( pt, &contrlRect)) { found = true;	 if( MADDriver->masterVST[ x]) pStrcpy( TextVal, MADDriver->masterVST[ x]->name); else pStrcpy( TextVal, "\pNo Effect");}
+				if (PtInRect( pt, &contrlRect)) { found = true;	 if (MADDriver->masterVST[ x]) pStrcpy( TextVal, MADDriver->masterVST[ x]->name); else pStrcpy( TextVal, "\pNo Effect");}
 			}
 			GetControlBounds( hardvolCntl, &contrlRect);
 			
-			if( PtInRect( pt, &contrlRect)) { found = true;	val = (100 * thePrefs.volumeLevel)/256L; percent = true;}
+			if (PtInRect( pt, &contrlRect)) { found = true;	val = (100 * thePrefs.volumeLevel)/256L; percent = true;}
 			
 			GetControlBounds( softvolCntl, &contrlRect);
 			
-			if( PtInRect( pt, &contrlRect)) { found = true;	val = (100 * MADDriver->VolGlobal)/64L; percent = true;}
+			if (PtInRect( pt, &contrlRect)) { found = true;	val = (100 * MADDriver->VolGlobal)/64L; percent = true;}
 			
 			GetControlBounds( speedCntl, &contrlRect);
 			
-			if( PtInRect( pt, &contrlRect)) { found = true;	val = 100. * (MADDriver->VExt / 8000.); percent = true;}
+			if (PtInRect( pt, &contrlRect)) { found = true;	val = 100. * (MADDriver->VExt / 8000.); percent = true;}
 			
 			GetControlBounds( pitchCntl, &contrlRect);
 			
-			if( PtInRect( pt, &contrlRect)) { found = true;	 val = 100.*(8000./ (MADDriver->FreqExt)); percent = true;}
+			if (PtInRect( pt, &contrlRect)) { found = true;	 val = 100.*(8000./ (MADDriver->FreqExt)); percent = true;}
 			
 			GetControlBounds( panCntl, &contrlRect);
 			
-			if( PtInRect( pt, &contrlRect)) { found = true;	val = 100. *((MADDriver->globPan - 64)/64.); percent = true;}
+			if (PtInRect( pt, &contrlRect)) { found = true;	val = 100. *((MADDriver->globPan - 64)/64.); percent = true;}
 			
-			if( found)
+			if (found)
 			{
-				if( TextVal[ 0]) DrawValueIndicator( val, false, TextVal);
+				if (TextVal[ 0]) DrawValueIndicator( val, false, TextVal);
 				else DrawValueIndicator( val, percent, NULL);
 			}
 			else DrawValueIndicator( -1, false, NULL);
@@ -482,15 +482,15 @@ void SetUpScroll(void)
 	
 	SetControlMinimum( ScrollAdap, 0);
 	
-	if( MADDriver->DriverSettings.outPutMode == DeluxeStereoOutPut)
+	if (MADDriver->DriverSettings.outPutMode == DeluxeStereoOutPut)
 	{
 		SetControlMaximum( ScrollAdap, gCurrentTrack - (viewRect.bottom - viewRect.top) / DISVOL);
 	}
 	else SetControlMaximum( ScrollAdap, gCurrentTrack - (viewRect.bottom - viewRect.top) / DISVOL);
 	
-	if( GetControlMaximum( ScrollAdap) < 0) SetControlMaximum( ScrollAdap, 0);
+	if (GetControlMaximum( ScrollAdap) < 0) SetControlMaximum( ScrollAdap, 0);
 	
-	if( gUseControlSize) SetControlViewSize( ScrollAdap, (viewRect.bottom - viewRect.top) / DISVOL);
+	if (gUseControlSize) SetControlViewSize( ScrollAdap, (viewRect.bottom - viewRect.top) / DISVOL);
 }
 
 void DoGrowAdap( DialogPtr theDialog)
@@ -516,8 +516,8 @@ void DoGrowAdap( DialogPtr theDialog)
 	
 	GetQDGlobalsScreenBits( &screenBits);
 	
-	if( temp.bottom < temp.top) temp.bottom = temp.top;
-	else if( temp.bottom > screenBits.bounds.bottom - aPt.v) temp.bottom = screenBits.bounds.bottom - aPt.v -2;
+	if (temp.bottom < temp.top) temp.bottom = temp.top;
+	else if (temp.bottom > screenBits.bounds.bottom - aPt.v) temp.bottom = screenBits.bounds.bottom - aPt.v -2;
 	
 	GetPortBounds( GetDialogPort( theDialog), &caRect);
 	
@@ -530,9 +530,9 @@ void DoGrowAdap( DialogPtr theDialog)
 #endif
 	
 	lSizeVH = 0;
-	if( theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( theDialog), theEvent.where, &temp);
+	if (theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( theDialog), theEvent.where, &temp);
 	
-	if( lSizeVH != 0)
+	if (lSizeVH != 0)
 	{
 		tempA = LoWord( lSizeVH);
 		tempB = HiWord( lSizeVH);
@@ -567,7 +567,7 @@ void FillOnOffControl( short id, short curval)
 {
 	Rect	contrlRect;
 	
-	if( curval)
+	if (curval)
 	{
 		HiliteControl( volCntl[ id], 0);
 		HiliteControl( pannCntl[ id], 0);
@@ -593,7 +593,7 @@ void FillVSTOnOffControl( short id, short curval)
 {
 	Rect	contrlRect;
 	
-	if( curval)
+	if (curval)
 	{
 		SetControlValue( VSTOnOff[ id], 1);
 	}
@@ -626,22 +626,22 @@ void FillFxControl( short id)
 		
 		GetControlBounds( VSTFx[ id][ x], &contrlRect);
 		
-		if( curMusic->header->chanBus[ id].copyId == id || curMusic->header->chanBus[ id].Active == false)
+		if (curMusic->header->chanBus[ id].copyId == id || curMusic->header->chanBus[ id].Active == false)
 		{
-			if( curMusic->header->chanBus[ id].Active == false)
+			if (curMusic->header->chanBus[ id].Active == false)
 			{
 				HiliteControl( VSTFx[ id][ x], 255);
 			}
 			else
 			{
-				if( MADDriver->chanVST[ id][ x] != NULL) HiliteControl( VSTFx[ id][ x], kControlButtonPart);
+				if (MADDriver->chanVST[ id][ x] != NULL) HiliteControl( VSTFx[ id][ x], kControlButtonPart);
 				else HiliteControl( VSTFx[ id][ x], 0);
 			}
 			Draw1Control( VSTFx[ id][ x]);
 		}
 		else
 		{
-			if( x == 0)
+			if (x == 0)
 			{
 				MoveTo( contrlRect.left, contrlRect.bottom-3);
 				
@@ -675,7 +675,7 @@ void FillFxDestControl( short id)
 	MyMoveControl( VSTDest[ id], contrlRect.left, VolumeRect.top - (GetControlValue( ScrollAdap) - id)*DISVOL);
 	SetControlVisibility( VSTDest[ id], true, false);
 	
-/*	if( MADDriver->chanVST[ id][ x] != NULL) HiliteControl( VSTDest[ id], kControlButtonPart);
+/*	if (MADDriver->chanVST[ id][ x] != NULL) HiliteControl( VSTDest[ id], kControlButtonPart);
 	else HiliteControl( VSTDest[ id], 0);	*/
 	
 	Draw1Control( VSTDest[ id]);
@@ -687,14 +687,14 @@ void FillMonoControl( short id)
 {
 	Rect	contrlRect;
 	
-/*	if( curval)
+/*	if (curval)
 	{
 		HiliteControl( pannCntl[ id], 255);
 		HiliteControl( Mono[ id], inButton);
 	}
 	else
 	{
-		if( GetControlValue( OnOff[ id])) HiliteControl( pannCntl[ id], 0);
+		if (GetControlValue( OnOff[ id])) HiliteControl( pannCntl[ id], 0);
 		HiliteControl( Mono[ id], 0);
 	}*/
 	
@@ -713,7 +713,7 @@ void FillBarControl( short id, short curval, short maxval)
 	Str255		str;
 	RGBColor	color;
 	
-	if( id == -1) MyDebugStr( __LINE__, __FILE__, "");
+	if (id == -1) MyDebugStr( __LINE__, __FILE__, "");
 	
 	SetControlValue( volCntl[ id], (curval * 100) / maxval);
 	
@@ -729,7 +729,7 @@ void FillBarStereo( short id, short curval, short maxval)
 {
 	Rect	contrlRect;
 
-	if( id < 0) MyDebugStr( __LINE__, __FILE__, "");
+	if (id < 0) MyDebugStr( __LINE__, __FILE__, "");
 	
 	GetControlBounds( pannCntl[ id], &contrlRect);
 	
@@ -745,7 +745,7 @@ void FillPulseRect( short id)
 	Str255	str2;
 	Rect	itemRect;
 	
-	if( id < 0) MyDebugStr( __LINE__, __FILE__, "");
+	if (id < 0) MyDebugStr( __LINE__, __FILE__, "");
 	
 	pulseRect[ id].top = VolumeRect.top - (GetControlValue( ScrollAdap) - id)*DISVOL;
 	pulseRect[ id].bottom = pulseRect[ id].top + 14;
@@ -762,7 +762,7 @@ void FillPulseRect( short id)
 	PaintRect( &itemRect);
 	ForeColor( blackColor);
 	
-	if( MADDriver->Tube[ id] != 64)
+	if (MADDriver->Tube[ id] != 64)
 	{
 		itemRect.left = itemRect.right;
 		itemRect.right = pulseRect[ id].right-2;
@@ -829,11 +829,11 @@ void UpdateAdapWindow( DialogPtr	GetSelection)
 	max = (caRect.bottom - 15 - VolumeRect.top) / (VolumeRect.bottom - VolumeRect.top);
 	max++;
 	
-	if( GetControlValue( ScrollAdap) + max > gCurrentTrack) max = gCurrentTrack - GetControlValue( ScrollAdap);
+	if (GetControlValue( ScrollAdap) + max > gCurrentTrack) max = gCurrentTrack - GetControlValue( ScrollAdap);
 	
 	for(i = 0; i < gCurrentTrack; i++)
 	{
-		if( i >= 0 && i < gCurrentTrack)
+		if (i >= 0 && i < gCurrentTrack)
 		{
 			FillFxDestControl( i);
 			
@@ -890,20 +890,20 @@ void UpdateAdapWindow( DialogPtr	GetSelection)
 	
 	MoveTo( 0, viewRect.bottom);	LineTo( caRect.right, viewRect.bottom);
 	
-	if( MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
+	if (MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
 	else HiliteControl( ResetPitchBut, 255);
 	
-	if( MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
+	if (MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
 	else HiliteControl( ResetSpeedBut, 255);
 	
-	if( MADDriver->globPan != 64) HiliteControl( ResetPanBut, 0);
+	if (MADDriver->globPan != 64) HiliteControl( ResetPanBut, 0);
 	else HiliteControl( ResetPanBut, 255);
 	
 	for( i = 0; i < 10; i++)
 	{
-		if( curMusic->header->globalFXActive == true)
+		if (curMusic->header->globalFXActive == true)
 		{
-			if( MADDriver->masterVST[ i] != NULL) HiliteControl( MainFx[ i], kControlButtonPart);
+			if (MADDriver->masterVST[ i] != NULL) HiliteControl( MainFx[ i], kControlButtonPart);
 			else HiliteControl( MainFx[ i], 0);
 		}
 		else
@@ -928,9 +928,9 @@ void ResetAdaptators(void)
 	
 	gCurrentTrack = 4;
 	
-	if( curMusic)
+	if (curMusic)
 	{
-		if( curMusic->header)
+		if (curMusic->header)
 		{
 			gCurrentTrack = curMusic->header->numChn;
 		}
@@ -968,7 +968,7 @@ void ResetAdaptators(void)
 	theEvent.what = 0;
 	DoGrowAdap( AdapDlog);
 	
-	if( MADDriver->DriverSettings.outPutMode == DeluxeStereoOutPut) HiliteControl( FlipBut, 0);
+	if (MADDriver->DriverSettings.outPutMode == DeluxeStereoOutPut) HiliteControl( FlipBut, 0);
 	else HiliteControl( FlipBut, 255);
 	
 	SetControlVisibility( pitchCntl, true, false);		SetControlValue( pitchCntl, 16000 - MADDriver->FreqExt);	SetControlVisibility( pitchCntl, false, false);
@@ -977,17 +977,17 @@ void ResetAdaptators(void)
 	SetControlVisibility( softvolCntl, true, false);	SetControlValue( softvolCntl, MADDriver->VolGlobal);	SetControlVisibility( softvolCntl, false, false);
 	SetControlValue( panCntl, MADDriver->globPan);
 	
-	if( MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
+	if (MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
 	else HiliteControl( ResetPitchBut, 255);
 	
-	if( MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
+	if (MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
 	else HiliteControl( ResetSpeedBut, 255);
 	
 	for( i = 0; i < 10; i++)
 	{
-		if( curMusic->header->globalFXActive == true)
+		if (curMusic->header->globalFXActive == true)
 		{
- 			if( MADDriver->masterVST[ i] != NULL)
+ 			if (MADDriver->masterVST[ i] != NULL)
  			{
  				HiliteControl( MainFx[ i], 0);
  				HiliteControl( MainFx[ i], kControlButtonPart);
@@ -1010,17 +1010,17 @@ void ResetAdaptators(void)
 	{
 		for( x = 0; x < 4; x++)
 		{
-			if( MADDriver->chanVST[ i][ x] != NULL) HiliteControl( VSTFx[ i][ x], kControlButtonPart);
+			if (MADDriver->chanVST[ i][ x] != NULL) HiliteControl( VSTFx[ i][ x], kControlButtonPart);
 			else HiliteControl( VSTFx[ i][ x], 0);
 		}
 	}
 	
 	for( i = 0; i < MAXTRACK; i++)
 	{
-		if( curMusic->header->chanBus[ i].ByPass) HiliteControl( VSTDest[ i], kControlButtonPart);
+		if (curMusic->header->chanBus[ i].ByPass) HiliteControl( VSTDest[ i], kControlButtonPart);
 		else HiliteControl( VSTDest[ i], 0);
 		
-		if( curMusic->header->chanBus[ i].Active)
+		if (curMusic->header->chanBus[ i].Active)
 		{
 			SetControlValue( VSTOnOff[ i], 1);
 		}
@@ -1041,7 +1041,7 @@ void CreateControlAdap()
 	Rect	itemRect, cRect;
 	Handle	itemHandle;
 
-	if( AppearanceManager)
+	if (AppearanceManager)
 	{
 		cntlID = 57;
 		cntlID2 = 57;
@@ -1056,17 +1056,17 @@ void CreateControlAdap()
 	
 	for( i = 0; i < MAXTRACK; i++)
 	{
-		if( volCntl[ i]) { DisposeControl( volCntl[ i]);	volCntl[ i] = NULL;}
-		if( Mono[ i]) { DisposeControl( Mono[ i]);	Mono[ i] = NULL;}
-		if( pannCntl[ i]) { DisposeControl( pannCntl[ i]);	pannCntl[ i] = NULL;}
+		if (volCntl[ i]) { DisposeControl( volCntl[ i]);	volCntl[ i] = NULL;}
+		if (Mono[ i]) { DisposeControl( Mono[ i]);	Mono[ i] = NULL;}
+		if (pannCntl[ i]) { DisposeControl( pannCntl[ i]);	pannCntl[ i] = NULL;}
 		
-		if( VSTOnOff[ i]) { DisposeControl( VSTOnOff[ i]);	VSTOnOff[ i] = NULL;}
-		if( VSTDest[ i]) { DisposeControl( VSTDest[ i]);	VSTDest[ i] = NULL;}
-		if( OnOff[ i]) { DisposeControl( OnOff[ i]);	OnOff[ i] = NULL;}
+		if (VSTOnOff[ i]) { DisposeControl( VSTOnOff[ i]);	VSTOnOff[ i] = NULL;}
+		if (VSTDest[ i]) { DisposeControl( VSTDest[ i]);	VSTDest[ i] = NULL;}
+		if (OnOff[ i]) { DisposeControl( OnOff[ i]);	OnOff[ i] = NULL;}
 		
 		for( x = 0; x < 4; x++)
 		{
-			if( VSTFx[ i][ x]) { DisposeControl( VSTFx[ i][ x]);	VSTFx[ i][ x] = NULL;}
+			if (VSTFx[ i][ x]) { DisposeControl( VSTFx[ i][ x]);	VSTFx[ i][ x] = NULL;}
 		}
 	}
 	
@@ -1233,7 +1233,7 @@ void InitAdapWindow(void)
 		
 	oldNullTicks = oldNullTicks2 = 0;
 	
-	if( AppearanceManager)
+	if (AppearanceManager)
 	{
 		cntlID = 57;
 		cntlID2 = 57;
@@ -1400,7 +1400,7 @@ void InitAdapWindow(void)
 	
 	ResetAdaptators();
 	
-/*	if( thePrefs.ADAPremember)
+/*	if (thePrefs.ADAPremember)
 	{
 		FSSpec spec;
 	
@@ -1412,7 +1412,7 @@ void InitAdapWindow(void)
 	
 	SetUpScroll();
 	
-	if( DragManagerUse)
+	if (DragManagerUse)
 	{
 		MyTrackingAdapUPP = NewDragTrackingHandlerUPP( MyTrackingAdap);
 		MyReceiveAdapUPP = NewDragReceiveHandlerUPP( MyReceiveAdap);
@@ -1448,7 +1448,7 @@ pascal void actionProcAdap(ControlHandle theControl, short ctlPart)
 	RgnHandle		aRgn;
 	Rect			tempRect;
 
-	if( ctlPart <= 0) return;
+	if (ctlPart <= 0) return;
 
 	lRefCon = GetControlReference( theControl);
 	maxValue = GetControlMaximum( theControl);
@@ -1459,24 +1459,24 @@ pascal void actionProcAdap(ControlHandle theControl, short ctlPart)
 		{
 			case kControlUpButtonPart:
 				curVal -= 1;
-				if( curVal < minValue) curVal = minValue;
+				if (curVal < minValue) curVal = minValue;
 				break;
 			
 			case kControlDownButtonPart:
 				curVal += 1;
-				if( curVal > maxValue) curVal = maxValue;
+				if (curVal > maxValue) curVal = maxValue;
 				break;
 			
 			case kControlPageUpPart:
 				curVal -= (viewRect.bottom - viewRect.top) / DISVOL;
 				curVal++;
-				if( curVal < minValue) curVal = minValue;
+				if (curVal < minValue) curVal = minValue;
 				break;
 			
 			case kControlPageDownPart:
 				curVal += (viewRect.bottom - viewRect.top) / DISVOL;
 				curVal--;
-				if( curVal > maxValue) curVal = maxValue;
+				if (curVal > maxValue) curVal = maxValue;
 				break;
 			
 			case kControlIndicatorPart:
@@ -1487,13 +1487,13 @@ pascal void actionProcAdap(ControlHandle theControl, short ctlPart)
 		
 		SetControlValue( theControl, curVal);
 		
-		if( sVal != curVal)
+		if (sVal != curVal)
 		{
 			SetRect( &tempRect, viewRect.left, viewRect.top+1, viewRect.right, viewRect.bottom);
 			
 			aRgn = NewRgn();
 			
-			if( MADDriver->DriverSettings.outPutMode == DeluxeStereoOutPut) ScrollRect( &tempRect, 0, (sVal - curVal)*DISVOL, aRgn);
+			if (MADDriver->DriverSettings.outPutMode == DeluxeStereoOutPut) ScrollRect( &tempRect, 0, (sVal - curVal)*DISVOL, aRgn);
 			else ScrollRect( &tempRect, 0, (sVal - curVal)*DISVOL, aRgn);
 			EraseRgn( aRgn);
 			InvalWindowRgn( GetDialogWindow( AdapDlog), aRgn);
@@ -1522,8 +1522,8 @@ void LoadAdaptatorsInt( FSSpec *file)
 	
 	inOutBytes = sizeof( MADDriver->FreqExt);
 	iErr = FSRead( fRefNum, &inOutBytes, &MADDriver->FreqExt);
-	if( MADDriver->FreqExt <= 0) 	MADDriver->FreqExt = 1;
-	if( MADDriver->FreqExt <= 160)	MADDriver->FreqExt *= 100;
+	if (MADDriver->FreqExt <= 0) 	MADDriver->FreqExt = 1;
+	if (MADDriver->FreqExt <= 160)	MADDriver->FreqExt *= 100;
 	
 	inOutBytes = sizeof( thePrefs.volumeLevel);
 	iErr = FSRead( fRefNum, &inOutBytes, &thePrefs.volumeLevel);
@@ -1531,15 +1531,15 @@ void LoadAdaptatorsInt( FSSpec *file)
 	
 	inOutBytes = sizeof( MADDriver->VExt);
 	iErr = FSRead( fRefNum, &inOutBytes, &MADDriver->VExt);
-	if( MADDriver->VExt <= 0) 	MADDriver->VExt = 1;
-	if( MADDriver->VExt <= 160)	MADDriver->VExt *= 100;
+	if (MADDriver->VExt <= 0) 	MADDriver->VExt = 1;
+	if (MADDriver->VExt <= 160)	MADDriver->VExt *= 100;
 	
 	inOutBytes = sizeof( MADDriver->VolGlobal);
 	iErr = FSRead( fRefNum, &inOutBytes, &MADDriver->VolGlobal);
 	
 	inOutBytes = sizeof( MADDriver->globPan);
 	iErr = FSRead( fRefNum, &inOutBytes, &MADDriver->globPan);
-	if( iErr) MADDriver->globPan = 64;
+	if (iErr) MADDriver->globPan = 64;
 	
 	inOutBytes = sizeof( curMusic->header->globalEffect);
 	iErr = FSRead( fRefNum, &inOutBytes, &curMusic->header->globalEffect);
@@ -1558,7 +1558,7 @@ void LoadAdaptatorsInt( FSSpec *file)
 		
 		for( i = 0; i < 10 ; i++)	// Global Effects
 		{
-			if( curMusic->header->globalEffect[ i])
+			if (curMusic->header->globalEffect[ i])
 			{
 				inOutBytes = sizeof( FXSets);
 				iErr = FSRead( fRefNum, &inOutBytes, &curMusic->sets[ alpha]);
@@ -1570,7 +1570,7 @@ void LoadAdaptatorsInt( FSSpec *file)
 		{
 			for( x = 0; x < 4; x++)
 			{
-				if( curMusic->header->chanEffect[ i][ x])
+				if (curMusic->header->chanEffect[ i][ x])
 				{
 					inOutBytes = sizeof( FXSets);
 					iErr = FSRead( fRefNum, &inOutBytes, &curMusic->sets[ alpha]);
@@ -1597,17 +1597,17 @@ void LoadAdaptatorsInt( FSSpec *file)
 	SetControlVisibility( softvolCntl, true, false);	SetControlValue( softvolCntl, MADDriver->VolGlobal);	SetControlVisibility( softvolCntl, false, false);
 	SetControlValue( panCntl, MADDriver->globPan);
 	
-	if( MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
+	if (MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
 	else HiliteControl( ResetPitchBut, 255);
 	
-	if( MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
+	if (MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
 	else HiliteControl( ResetSpeedBut, 255);
 	
 	for( i = 0; i < 10; i++)
 	{
-		if( curMusic->header->globalFXActive == true)
+		if (curMusic->header->globalFXActive == true)
 		{
- 			if( MADDriver->masterVST[ i] != NULL) HiliteControl( MainFx[ i], kControlButtonPart);
+ 			if (MADDriver->masterVST[ i] != NULL) HiliteControl( MainFx[ i], kControlButtonPart);
 			else HiliteControl( MainFx[ i], 0);
 		}
 		else
@@ -1685,7 +1685,7 @@ void LoadAdaptatorsInt( FSSpec *file)
 	}
 	else iErr = -1;
 	
-	if( !iErr)
+	if (!iErr)
 	{
 		LoadAdaptatorsInt( &spec);
 	}
@@ -1698,7 +1698,7 @@ void LoadAdaptators(void)
 	
 	iErr = DoStandardOpen( &spec, "\pmixer file", TUNINGTYPE);
 	
-	if( !iErr) LoadAdaptatorsInt( &spec);
+	if (!iErr) LoadAdaptatorsInt( &spec);
 }
 
 /*void LoadAdaptatorsRsrc( FSSpec *file)
@@ -1707,12 +1707,12 @@ void LoadAdaptators(void)
 	short	refNum;
 	
 	refNum = FSpOpenResFile( file, fsCurPerm);
-	if( refNum != -1)
+	if (refNum != -1)
 	{
 		Handle rsrc;
 		
 		rsrc = Get1Resource( 'ADAP', 452);
-		if( rsrc != NULL)
+		if (rsrc != NULL)
 		{
 			Ptr 	tempPtr;
 			GrafPtr	myPort;
@@ -1762,7 +1762,7 @@ void SaveAdaptatorsRsrc( FSSpec *file)
 	FInfo	fndrInfo;
 	
 	iErr = FSpGetFInfo( file, &fndrInfo);
-	if( iErr != noErr)
+	if (iErr != noErr)
 	{
 		fndrInfo.fdCreator = '????';
 		fndrInfo.fdType = '????';
@@ -1771,7 +1771,7 @@ void SaveAdaptatorsRsrc( FSSpec *file)
 	FSpCreateResFile( file, fndrInfo.fdCreator, fndrInfo.fdType, smSystemScript);
 	
 	refNum = FSpOpenResFile( file, fsCurPerm);
-	if( refNum != -1)
+	if (refNum != -1)
 	{
 		Handle	rsrc;
 		Ptr		tempPtr;
@@ -1779,7 +1779,7 @@ void SaveAdaptatorsRsrc( FSSpec *file)
 		// Remove previous one
 		
 		rsrc = Get1Resource( 'ADAP', 452);
-		if( rsrc != NULL)
+		if (rsrc != NULL)
 		{
 			RmveResource( rsrc);
 			DisposeHandle( rsrc);
@@ -1837,7 +1837,7 @@ void SaveAdaptorsFile( FSSpec *file)
 
 	FSpDelete( file);
 	iErr = FSpCreate( file, 'SNPL', TUNINGTYPE,smSystemScript);
-	if( iErr == noErr)
+	if (iErr == noErr)
 	{
 		iErr = FSpOpenDF( file, fsCurPerm, &fRefNum);
 		
@@ -1879,7 +1879,7 @@ void SaveAdaptorsFile( FSSpec *file)
 			
 			for( i = 0; i < 10 ; i++)	// Global Effects
 			{
-				if( curMusic->header->globalEffect[ i])
+				if (curMusic->header->globalEffect[ i])
 				{
 					inOutBytes = sizeof( FXSets);
 					iErr = FSWrite( fRefNum, &inOutBytes, &curMusic->sets[ alpha]);
@@ -1891,7 +1891,7 @@ void SaveAdaptorsFile( FSSpec *file)
 			{
 				for( x = 0; x < 4; x++)
 				{
-					if( curMusic->header->chanEffect[ i][ x])
+					if (curMusic->header->chanEffect[ i][ x])
 					{
 						inOutBytes = sizeof( FXSets);
 						iErr = FSWrite( fRefNum, &inOutBytes, &curMusic->sets[ alpha]);
@@ -1923,7 +1923,7 @@ void SaveAdaptators(void)
 	pStrcpy( theStr, "\pTuning #");
 	pStrcat( theStr, str2);
 
-	if( DoCustomSave( "\pSave mixer settings as:", theStr, TUNINGTYPE, &spec)) return;
+	if (DoCustomSave( "\pSave mixer settings as:", theStr, TUNINGTYPE, &spec)) return;
 
 	TuningId++;
 
@@ -1960,20 +1960,20 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 		GlobalToLocal( &myPt);
 		
 		theControl = NULL;
-		if( TestControl( ScrollAdap, myPt)) theControl = ScrollAdap;
+		if (TestControl( ScrollAdap, myPt)) theControl = ScrollAdap;
 		
-		if( theControl == ScrollAdap)
+		if (theControl == ScrollAdap)
 		{
-			/*if( ctlPart == kControlIndicatorPart && gUseControlSize == false)
+			/*if (ctlPart == kControlIndicatorPart && gUseControlSize == false)
 			 {
 			 bogus = TrackControl( theControl, myPt, NULL);
-			 if( bogus != 0)
+			 if (bogus != 0)
 			 {
 			 EraseRect( &viewRect);
 			 InvalWindowRect( GetDialogWindow( whichDialog), &viewRect);
 			 }
 			 }
-			 else if( ctlPart > 0)*/
+			 else if (ctlPart > 0)*/
 			{
 				MyControlUPP = NewControlActionUPP( actionProcAdap);
 				gThumbPrev = GetControlValue( theControl);
@@ -1986,11 +1986,11 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 	switch( whichItem)
 	{
 			/*	case 18:
-			 if( GetControlHilite( MaxBut) == 0 && MyTrackControl( MaxBut, theEvent.where, NULL))
+			 if (GetControlHilite( MaxBut) == 0 && MyTrackControl( MaxBut, theEvent.where, NULL))
 			 {
 			 EraseGrowIcon( whichDialog);
 			 
-			 if( whichDialog->portRect.right == 300)
+			 if (whichDialog->portRect.right == 300)
 			 {
 			 MySizeWindow( whichDialog, 200, whichDialog->portRect.bottom, true);
 			 SetControlValue( MaxBut, 203);
@@ -2028,20 +2028,20 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 					SetPortDialogPort( whichDialog);
 					GetMouse( &Location);
 					
-					if( oldH != Location.h)
+					if (oldH != Location.h)
 					{
 						oldH = Location.h;
 						
-						if( Location.h < itemRect.left) 		Location.h = itemRect.left;
+						if (Location.h < itemRect.left) 		Location.h = itemRect.left;
 						else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
 						
 						MADDriver->VExt = (8000 * 2 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
-						if( MADDriver->VExt <= 0) MADDriver->VExt = 1;
-						if( MADDriver->VExt <= 160)	MADDriver->VExt = 160;
+						if (MADDriver->VExt <= 0) MADDriver->VExt = 1;
+						if (MADDriver->VExt <= 160)	MADDriver->VExt = 160;
 						
 						SetControlValue( speedCntl, MADDriver->VExt);
 						
-						if( MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
+						if (MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
 						else HiliteControl( ResetSpeedBut, 255);
 						
 						DrawValueIndicator( 100. * (MADDriver->VExt / 8000.), true, NULL);
@@ -2051,13 +2051,13 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 						if ((theEvent.modifiers & cmdKey) != 0)
 						{
 							MADDriver->FreqExt = 16000 - (16000 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
-							if( MADDriver->FreqExt <= 0) MADDriver->FreqExt = 1;
-							if( 16000 - MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 16000 - 160;
-							if( MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 160;
+							if (MADDriver->FreqExt <= 0) MADDriver->FreqExt = 1;
+							if (16000 - MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 16000 - 160;
+							if (MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 160;
 							
 							SetControlValue( pitchCntl, 16000 - MADDriver->FreqExt);
 							
-							if( MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
+							if (MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
 							else HiliteControl( ResetPitchBut, 255);
 							
 							DrawValueIndicator( 100.*(8000./ (MADDriver->FreqExt)), true, NULL);
@@ -2090,19 +2090,19 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 					SetPortDialogPort( whichDialog);
 					GetMouse( &Location);
 					
-					if( oldH != Location.h)
+					if (oldH != Location.h)
 					{
 						oldH = Location.h;
 						
-						if( Location.h < itemRect.left) 		Location.h = itemRect.left;
+						if (Location.h < itemRect.left) 		Location.h = itemRect.left;
 						else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
 						
 						MADDriver->globPan = (64 * 2 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
-						if( MADDriver->globPan <= 0) MADDriver->globPan = 0;
+						if (MADDriver->globPan <= 0) MADDriver->globPan = 0;
 						
 						SetControlValue( panCntl, MADDriver->globPan);
 						
-						if( MADDriver->globPan != 64) HiliteControl( ResetPanBut, 0);
+						if (MADDriver->globPan != 64) HiliteControl( ResetPanBut, 0);
 						else HiliteControl( ResetPanBut, 255);
 						
 						DrawValueIndicator( 100.*((MADDriver->globPan - 64)/64.), true, NULL);
@@ -2138,21 +2138,21 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 					
 					GetMouse( &Location);
 					
-					if( oldH != Location.h)
+					if (oldH != Location.h)
 					{
 						oldH = Location.h;
 						
-						if( Location.h < itemRect.left) 		Location.h = itemRect.left;
+						if (Location.h < itemRect.left) 		Location.h = itemRect.left;
 						else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
 						
 						MADDriver->FreqExt = 16000 - (16000 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
-						if( MADDriver->FreqExt <= 0) MADDriver->FreqExt = 1;
-						if( 16000 - MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 16000 - 160;
-						if( MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 160;
+						if (MADDriver->FreqExt <= 0) MADDriver->FreqExt = 1;
+						if (16000 - MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 16000 - 160;
+						if (MADDriver->FreqExt <= 160)	MADDriver->FreqExt = 160;
 						
 						SetControlValue( pitchCntl, 16000 - MADDriver->FreqExt);
 						
-						if( MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
+						if (MADDriver->FreqExt != 8000) HiliteControl( ResetPitchBut, 0);
 						else HiliteControl( ResetPitchBut, 255);
 						
 						DrawValueIndicator( 100.*(8000./ (MADDriver->FreqExt)), true, NULL);
@@ -2162,12 +2162,12 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 						if ((theEvent.modifiers & cmdKey) != 0)
 						{
 							MADDriver->VExt = (8000 * 2 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
-							if( MADDriver->VExt <= 0) MADDriver->VExt = 1;
-							if( MADDriver->VExt <= 160)	MADDriver->VExt = 160;
+							if (MADDriver->VExt <= 0) MADDriver->VExt = 1;
+							if (MADDriver->VExt <= 160)	MADDriver->VExt = 160;
 							
 							SetControlValue( speedCntl, MADDriver->VExt);
 							
-							if( MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
+							if (MADDriver->VExt != 8000) HiliteControl( ResetSpeedBut, 0);
 							else HiliteControl( ResetSpeedBut, 255);
 							
 							DrawValueIndicator( 100. * (MADDriver->VExt / 8000.), true, NULL);
@@ -2185,11 +2185,11 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 		case 26:
 			SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
 			
-			if( GetControlHilite( FlipBut) == 0 && MyTrackControl( FlipBut, theEvent.where, NULL))
+			if (GetControlHilite( FlipBut) == 0 && MyTrackControl( FlipBut, theEvent.where, NULL))
 			{
 				for( i = 1; i < gCurrentTrack; i++)
 				{
-					if( i % 2 == 0) curMusic->header->chanPan[ i] = curMusic->header->chanPan[ 0];
+					if (i % 2 == 0) curMusic->header->chanPan[ i] = curMusic->header->chanPan[ 0];
 					else curMusic->header->chanPan[ i] = MAX_PANNING -curMusic->header->chanPan[ 0];
 				}
 				
@@ -2200,21 +2200,21 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 			break;
 			
 		case 41:
-			if( GetControlHilite( FineBut) == 0  && MyTrackControl( FineBut, theEvent.where, NULL))
+			if (GetControlHilite( FineBut) == 0  && MyTrackControl( FineBut, theEvent.where, NULL))
 			{
 				FineSpeedPitchSettings();
 			}
 			break;
 			
 		case 25:
-			if( GetControlHilite( LoadBut) == 0  && MyTrackControl( LoadBut, theEvent.where, NULL))
+			if (GetControlHilite( LoadBut) == 0  && MyTrackControl( LoadBut, theEvent.where, NULL))
 			{
 				LoadAdaptators();
 			}
 			break;
 			
 		case 17:
-			if( GetControlHilite( SaveBut) == 0  && MyTrackControl( SaveBut, theEvent.where, NULL))
+			if (GetControlHilite( SaveBut) == 0  && MyTrackControl( SaveBut, theEvent.where, NULL))
 			{
 				SaveAdaptators();
 			}
@@ -2223,7 +2223,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 		case 44:
 			//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
 			
-			if( GetControlHilite( ResetPanBut) == 0  && MyTrackControl( ResetPanBut, theEvent.where, NULL))
+			if (GetControlHilite( ResetPanBut) == 0  && MyTrackControl( ResetPanBut, theEvent.where, NULL))
 			{
 				HiliteControl( ResetPanBut, 255);
 				
@@ -2238,7 +2238,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 		case 22:
 			//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
 			
-			if( GetControlHilite( ResetSpeedBut) == 0  && MyTrackControl( ResetSpeedBut, theEvent.where, NULL))
+			if (GetControlHilite( ResetSpeedBut) == 0  && MyTrackControl( ResetSpeedBut, theEvent.where, NULL))
 			{
 				HiliteControl( ResetSpeedBut, 255);
 				
@@ -2257,7 +2257,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 		case 23:
 			//SaveUndo( UHeader, 0, "\pUndo 'Mixer Changes'");
 			
-			if( GetControlHilite( ResetPitchBut) == 0  && MyTrackControl( ResetPitchBut, theEvent.where, NULL))
+			if (GetControlHilite( ResetPitchBut) == 0  && MyTrackControl( ResetPitchBut, theEvent.where, NULL))
 			{
 				HiliteControl( ResetPitchBut, 255);
 				
@@ -2274,7 +2274,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 			break;
 			
 			/*	case 23:
-			 if( GetControlHilite( PrefBut)	 == 0 && MyTrackControl( PrefBut, theEvent.where, NULL))
+			 if (GetControlHilite( PrefBut)	 == 0 && MyTrackControl( PrefBut, theEvent.where, NULL))
 			 {
 			 #include "Help.h"
 			 
@@ -2303,11 +2303,11 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 					SetPortDialogPort( whichDialog);
 					GetMouse( &Location);
 					
-					if( oldH != Location.h)
+					if (oldH != Location.h)
 					{
 						oldH = Location.h;
 						
-						if( Location.h < itemRect.left) 		Location.h = itemRect.left;
+						if (Location.h < itemRect.left) 		Location.h = itemRect.left;
 						else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
 						
 						thePrefs.volumeLevel = (430* (Location.h - itemRect.left)) / ( itemRect.right-itemRect.left);
@@ -2347,11 +2347,11 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 					SetPortDialogPort( whichDialog);
 					GetMouse( &Location);
 					
-					if( oldH != Location.h)
+					if (oldH != Location.h)
 					{
 						oldH = Location.h;
 						
-						if( Location.h < itemRect.left) 		Location.h = itemRect.left;
+						if (Location.h < itemRect.left) 		Location.h = itemRect.left;
 						else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
 						
 						MADDriver->VolGlobal = (128* (Location.h - itemRect.left)) / ( itemRect.right-itemRect.left);
@@ -2380,7 +2380,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 				
 				GetControlBounds( MainFx[ i], &contrlRect);
 				
-				if( PtInRect( myPt, &contrlRect) && curMusic->header->globalFXActive == true)
+				if (PtInRect( myPt, &contrlRect) && curMusic->header->globalFXActive == true)
 				{
 					long		mresult, temp;
 					Point		Zone;
@@ -2393,7 +2393,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 					
 					LocalToGlobal( &Zone);
 					
-					if( MADDriver->masterVST[ i])
+					if (MADDriver->masterVST[ i])
 					{
 						item = MADDriver->masterVST[ i]->id+3;
 						SetItemMark( VSTMenu, item, diamondMark);
@@ -2405,7 +2405,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 											  Zone.h,
 											  item);
 					
-					if( item)
+					if (item)
 					{
 						SetItemMark( VSTMenu, item, noMark);
 					}
@@ -2419,7 +2419,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 						switch( temp)
 						{
 							case 1:	// No Effect 
-								if( MADDriver->masterVST[ i])
+								if (MADDriver->masterVST[ i])
 								{
 									CheckVSTEditor( MADDriver->masterVST[ i]);
 									DisposeVSTEffect( MADDriver->masterVST[ i]);
@@ -2428,9 +2428,9 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 								break;
 								
 							default:
-								if( MADDriver->masterVST[ i])
+								if (MADDriver->masterVST[ i])
 								{
-									if( temp-3 != MADDriver->masterVST[ i]->id)
+									if (temp-3 != MADDriver->masterVST[ i]->id)
 									{
 										DisposeVSTEffect( MADDriver->masterVST[ i]);
 										MADDriver->masterVST[ i] = NULL;
@@ -2441,7 +2441,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 								break;
 						}
 						
-						if( MADDriver->masterVST[ i] != NULL) HiliteControl( MainFx[ i], kControlButtonPart);
+						if (MADDriver->masterVST[ i] != NULL) HiliteControl( MainFx[ i], kControlButtonPart);
 						else HiliteControl( MainFx[ i], 0);
 						
 						curMusic->hasChanged = true;
@@ -2449,12 +2449,12 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 				}
 			}
 			
-			if( MyTrackControl( MainFXOnOff, theEvent.where, NULL))
+			if (MyTrackControl( MainFXOnOff, theEvent.where, NULL))
 			{
 				Rect contrlRect;
 				
 				GetControlBounds( MainFXOnOff, &contrlRect);
-				if( PtInRect( myPt, &contrlRect))
+				if (PtInRect( myPt, &contrlRect))
 				{
 					curMusic->header->globalFXActive = !curMusic->header->globalFXActive;
 					
@@ -2482,39 +2482,39 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 				
 				GetControlBounds( VSTDest[ i], &contrlRect);
 				
-				if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'D';	theControl = VSTDest[ i];	}
+				if (PtInRect( myPt, &contrlRect)) {	kindCntl = 'D';	theControl = VSTDest[ i];	}
 				
 				GetControlBounds( VSTOnOff[ i], &contrlRect);
 				
-				if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'E';	theControl = VSTOnOff[ i];	}
+				if (PtInRect( myPt, &contrlRect)) {	kindCntl = 'E';	theControl = VSTOnOff[ i];	}
 				
 				GetControlBounds( volCntl[ i], &contrlRect);
 				
-				if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'V';	theControl = volCntl[ i];	}
+				if (PtInRect( myPt, &contrlRect)) {	kindCntl = 'V';	theControl = volCntl[ i];	}
 				
 				GetControlBounds( pannCntl[ i], &contrlRect);
 				
-				if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'P';	theControl = pannCntl[ i];	}
+				if (PtInRect( myPt, &contrlRect)) {	kindCntl = 'P';	theControl = pannCntl[ i];	}
 				
 				GetControlBounds( OnOff[ i], &contrlRect);
 				
-				if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'O';	theControl = OnOff[ i];	}
+				if (PtInRect( myPt, &contrlRect)) {	kindCntl = 'O';	theControl = OnOff[ i];	}
 				
 				GetControlBounds( Mono[ i], &contrlRect);
 				
-				if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'M';	theControl = Mono[ i];	}
+				if (PtInRect( myPt, &contrlRect)) {	kindCntl = 'M';	theControl = Mono[ i];	}
 				
 				for( x = 0; x < 4; x++)
 				{
 					GetControlBounds( VSTFx[ i][ x], &contrlRect);
 					
-					if( PtInRect( myPt, &contrlRect)) {	kindCntl = 'F';	theControl = VSTFx[ i][ x];	whichFxTrack = x;}
+					if (PtInRect( myPt, &contrlRect)) {	kindCntl = 'F';	theControl = VSTFx[ i][ x];	whichFxTrack = x;}
 				}
 				
-				if( theControl) break;
+				if (theControl) break;
 			}
 			
-			if( theControl)
+			if (theControl)
 			{
 				Rect contrlRect;
 				
@@ -2534,7 +2534,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 				{
 						
 					case 'D':
-						if(  curMusic->header->chanBus[ i].Active == true)
+						if ( curMusic->header->chanBus[ i].Active == true)
 						{
 							long		mresult, temp;
 							Point		Zone;
@@ -2557,7 +2557,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 							
 							for( x = 0; x < curMusic->header->numChn; x++)
 							{
-								if( curMusic->header->chanBus[ x].copyId != x) DisableMenuItem( VSTDestMenu, x + 4);
+								if (curMusic->header->chanBus[ x].copyId != x) DisableMenuItem( VSTDestMenu, x + 4);
 							}
 							
 							InsertMenu( VSTDestMenu, hierMenu);
@@ -2567,13 +2567,13 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 							
 							LocalToGlobal( &Zone);
 							
-							if( curMusic->header->chanBus[ i].copyId != i)
+							if (curMusic->header->chanBus[ i].copyId != i)
 							{
 								item = curMusic->header->chanBus[ i].copyId + 4;
 							}
 							else
 							{
-								if( curMusic->header->chanBus[ i].ByPass) item = 2;
+								if (curMusic->header->chanBus[ i].ByPass) item = 2;
 								else item = 1;
 							}
 							
@@ -2584,7 +2584,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 													  Zone.h,
 													  item);
 							
-							if( item)
+							if (item)
 							{
 								SetItemMark( VSTDestMenu, item, noMark);
 							}
@@ -2614,7 +2614,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 										
 										for( x = 0; x < curMusic->header->numChn; x++)
 										{
-											if( curMusic->header->chanBus[ x].copyId == i) curMusic->header->chanBus[ x].copyId = x;
+											if (curMusic->header->chanBus[ x].copyId == i) curMusic->header->chanBus[ x].copyId = x;
 										}
 										break;
 								}
@@ -2628,7 +2628,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 						
 						
 					case 'F':
-						if( curMusic->header->chanBus[ i].copyId == i && curMusic->header->chanBus[ i].Active == true)
+						if (curMusic->header->chanBus[ i].copyId == i && curMusic->header->chanBus[ i].Active == true)
 						{
 							long		mresult, temp;
 							Point		Zone;
@@ -2641,7 +2641,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 							
 							LocalToGlobal( &Zone);
 							
-							if( MADDriver->chanVST[ i][ whichFxTrack])
+							if (MADDriver->chanVST[ i][ whichFxTrack])
 							{
 								item = MADDriver->chanVST[ i][ whichFxTrack]->id+3;
 								SetItemMark( VSTMenu, item, diamondMark);
@@ -2653,7 +2653,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 													  Zone.h,
 													  item);
 							
-							if( item)
+							if (item)
 							{
 								SetItemMark( VSTMenu, item, noMark);
 							}
@@ -2667,7 +2667,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 								switch( temp)
 								{
 									case 1:	// No Effect 
-										if( MADDriver->chanVST[ i][ whichFxTrack])
+										if (MADDriver->chanVST[ i][ whichFxTrack])
 										{
 											CheckVSTEditor( MADDriver->chanVST[ i][ whichFxTrack]);
 											DisposeVSTEffect( MADDriver->chanVST[ i][ whichFxTrack]);
@@ -2676,9 +2676,9 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 										break;
 										
 									default:
-										if( MADDriver->chanVST[ i][ whichFxTrack])
+										if (MADDriver->chanVST[ i][ whichFxTrack])
 										{
-											if( temp-3 != MADDriver->chanVST[ i][ whichFxTrack]->id)
+											if (temp-3 != MADDriver->chanVST[ i][ whichFxTrack]->id)
 											{
 												DisposeVSTEffect( MADDriver->chanVST[ i][ whichFxTrack]);
 												MADDriver->chanVST[ i][ whichFxTrack] = NULL;
@@ -2699,21 +2699,21 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 						break;
 						
 					case 'M':
-						if( GetControlHilite( Mono[ i]) == 0 && MyTrackControl( Mono[ i], theEvent.where, NULL))
+						if (GetControlHilite( Mono[ i]) == 0 && MyTrackControl( Mono[ i], theEvent.where, NULL))
 						{
-							if( IsPressed( 0x3A))
+							if (IsPressed( 0x3A))
 							{
 								short		ww;
 								Boolean		newVal;
 								
-								if( GetControlHilite( Mono[ i]) == false) newVal = true;
+								if (GetControlHilite( Mono[ i]) == false) newVal = true;
 								else newVal = false;
 								
 								for( ww = 0; ww < gCurrentTrack; ww++)
 								{
 									FillMonoControl( ww);
 									
-									if( newVal) curMusic->header->chanPan[ ww] = 32;
+									if (newVal) curMusic->header->chanPan[ ww] = 32;
 									FillBarStereo( ww, curMusic->header->chanPan[ ww], MAX_PANNING);
 								}
 							}
@@ -2728,11 +2728,11 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 						break;
 						
 					case 'V':
-						//	if( GetControlHilite( volCntl[ i]) == 0)
+						//	if (GetControlHilite( volCntl[ i]) == 0)
 					{
-						/*	if( !AppearanceManager)
+						/*	if (!AppearanceManager)
 						 {
-						 if( MyTrackControl( volCntl[ i], theEvent.where, NULL))
+						 if (MyTrackControl( volCntl[ i], theEvent.where, NULL))
 						 {
 						 
 						 }
@@ -2750,14 +2750,14 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 								SetPortDialogPort( whichDialog);
 								GetMouse( &Location);
 								
-								if( oldH != Location.h)
+								if (oldH != Location.h)
 								{
 									oldH = Location.h;
 									
-									if( Location.h < itemRect.left) 		Location.h = itemRect.left;
+									if (Location.h < itemRect.left) 		Location.h = itemRect.left;
 									else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
 									
-									if( IsPressed( 0x3A))
+									if (IsPressed( 0x3A))
 									{
 										short	ww;
 										
@@ -2783,16 +2783,16 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 						break;
 						
 					case 'P':
-						//	if( GetControlHilite( pannCntl[ i]) == 0)
+						//	if (GetControlHilite( pannCntl[ i]) == 0)
 					{
-						/*	if( !AppearanceManager) 
+						/*	if (!AppearanceManager) 
 						 {
-						 if( MyTrackControl( pannCntl[ i], theEvent.where, NULL))
+						 if (MyTrackControl( pannCntl[ i], theEvent.where, NULL))
 						 {
 						 
 						 }
 						 }*/
-						if( GetControlHilite( Mono[ i]) == 0)
+						if (GetControlHilite( Mono[ i]) == 0)
 						{
 							do
 							{
@@ -2800,29 +2800,29 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 								SetPortDialogPort( whichDialog);
 								GetMouse( &Location);
 								
-								if( oldH != Location.h)
+								if (oldH != Location.h)
 								{
 									oldH = Location.h;
 									
-									if( Location.h < itemRect.left) 		Location.h = itemRect.left;
+									if (Location.h < itemRect.left) 		Location.h = itemRect.left;
 									else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
 									
 									MADDriver->chan[ i].pann = curMusic->header->chanPan[ i] = ((Location.h - itemRect.left) * MAX_PANNING) / (itemRect.right - itemRect.left);
 									FillBarStereo( i, curMusic->header->chanPan[ i], MAX_PANNING);
 									
-									if( IsPressed( 0x3A))
+									if (IsPressed( 0x3A))
 									{
 										short	ww;
 										short	OnOff;
 										
-										if( i % 2 == 0 ) OnOff = 0;
+										if (i % 2 == 0 ) OnOff = 0;
 										else OnOff = 1;
 										
 										for( ww = 0; ww < gCurrentTrack; ww++)
 										{
-											if( GetControlHilite( Mono[ ww]) == 0)
+											if (GetControlHilite( Mono[ ww]) == 0)
 											{
-												if( ww % 2 == OnOff) MADDriver->chan[ ww].pann = curMusic->header->chanPan[ ww] = curMusic->header->chanPan[ i];
+												if (ww % 2 == OnOff) MADDriver->chan[ ww].pann = curMusic->header->chanPan[ ww] = curMusic->header->chanPan[ i];
 												else MADDriver->chan[ ww].pann = curMusic->header->chanPan[ ww] = MAX_PANNING -curMusic->header->chanPan[ i];
 												
 												FillBarStereo( ww, curMusic->header->chanPan[ ww], MAX_PANNING);
@@ -2847,21 +2847,21 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 					case 'E':
 						
 						SetControlVisibility( VSTOnOff[ i], true, false);
-						if( GetControlHilite( VSTOnOff[ i]) == 0 && MyTrackControl( VSTOnOff[ i], theEvent.where, NULL))
+						if (GetControlHilite( VSTOnOff[ i]) == 0 && MyTrackControl( VSTOnOff[ i], theEvent.where, NULL))
 						{
-							if( IsPressed( 0x3A))
+							if (IsPressed( 0x3A))
 							{
 								short		ww, noActive;
 								Boolean		newVal;
 								
 								for( ww = 0, noActive = 0; ww < curMusic->header->numChn; ww++)
 								{
-									if( curMusic->header->chanBus[ ww].Active == true)
+									if (curMusic->header->chanBus[ ww].Active == true)
 									{
 										noActive++;
 									}
 								}
-								if( noActive <= 1 && curMusic->header->chanBus[ i].Active == true) newVal = true;
+								if (noActive <= 1 && curMusic->header->chanBus[ i].Active == true) newVal = true;
 								else newVal = false;
 								
 								for( ww = 0; ww < gCurrentTrack; ww++)
@@ -2869,7 +2869,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 									curMusic->header->chanBus[ ww].Active = newVal;
 								}
 								
-								if( newVal == false)
+								if (newVal == false)
 								{
 									curMusic->header->chanBus[ i].Active = !newVal;
 								}
@@ -2884,21 +2884,21 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 						break;
 						
 					case 'O':
-						if( GetControlHilite( OnOff[ i]) == 0 && MyTrackControl( OnOff[ i], theEvent.where, NULL))
+						if (GetControlHilite( OnOff[ i]) == 0 && MyTrackControl( OnOff[ i], theEvent.where, NULL))
 						{
-							if( IsPressed( 0x3A))
+							if (IsPressed( 0x3A))
 							{
 								short		ww, noActive;
 								Boolean		newVal;
 								
 								for( ww = 0, noActive = 0; ww < curMusic->header->numChn; ww++)
 								{
-									if( MADDriver->Active[ ww] == true)
+									if (MADDriver->Active[ ww] == true)
 									{
 										noActive++;
 									}
 								}
-								if( noActive <= 1 && MADDriver->Active[ i] == true) newVal = true;
+								if (noActive <= 1 && MADDriver->Active[ i] == true) newVal = true;
 								else newVal = false;
 								
 								for( ww = 0; ww < gCurrentTrack; ww++)
@@ -2910,7 +2910,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 									FillBarStereo( ww, curMusic->header->chanPan[ ww], MAX_PANNING);
 								}
 								
-								if( newVal == false)
+								if (newVal == false)
 								{
 									MADDriver->Active[ i] = !newVal;
 									
@@ -2953,7 +2953,7 @@ pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRef
 	Point				theMouse, localMouse, theCell;
 	Rect				tempRect;
 
-	if( !mainSystemDrag) return noErr;
+	if (!mainSystemDrag) return noErr;
 
 	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return( noErr);
 
@@ -2987,9 +2987,9 @@ pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRef
 				
 				HSetVol( NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
 				result = FSpGetFInfo( &myFlavor.fileSpec, &fndrInfo);
-				if( result != noErr) return false;		// <- Folder
+				if (result != noErr) return false;		// <- Folder
 				
-				if( fndrInfo.fdType == TUNINGTYPE) canAcceptDrag = true;
+				if (fndrInfo.fdType == TUNINGTYPE) canAcceptDrag = true;
 			}
 		}
 		break;
@@ -3019,7 +3019,7 @@ pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRef
 	
 			GetPortBounds( GetDialogPort( AdapDlog), &caRect);
 			
-			if( PtInRect( localMouse, &caRect))
+			if (PtInRect( localMouse, &caRect))
 			{
 				RectRgn(theRgn = NewRgn(), &caRect);
 				
@@ -3071,8 +3071,8 @@ pascal OSErr MyReceiveAdap(WindowPtr theWindow, void* handlerRefCon, DragReferen
 	CInfoPBRec			info;
 	OSErr				err;
 
-	if( !mainSystemDrag) return dragNotAcceptedErr;
-	if( !canAcceptDrag) return dragNotAcceptedErr;
+	if (!mainSystemDrag) return dragNotAcceptedErr;
+	if (!canAcceptDrag) return dragNotAcceptedErr;
 
 	SetPortWindowPort(theWindow);
 	
@@ -3105,7 +3105,7 @@ pascal OSErr MyReceiveAdap(WindowPtr theWindow, void* handlerRefCon, DragReferen
 			
 			err = HGetFInfo( myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID, myFlavor.fileSpec.name, &fndrInfo);
 		
-			if( err == noErr)
+			if (err == noErr)
 			{
 				LoadAdaptatorsInt( &myFlavor.fileSpec);
 			}

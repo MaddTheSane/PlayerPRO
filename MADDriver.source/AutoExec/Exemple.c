@@ -266,7 +266,7 @@ void InitDriverString()
 {
 	Str255	str;
 	
-	if( MADDriver->DriverSettings.Reverb)
+	if (MADDriver->DriverSettings.Reverb)
 	{
 		NumToString( MADDriver->DriverSettings.ReverbSize, str);
 		pStrcat( str, "\pms");
@@ -285,7 +285,7 @@ void InitDriverString()
 		SetDText( myDialog, 29, str);
 	}
 	
-	if( MADDriver->DriverSettings.MicroDelaySize)
+	if (MADDriver->DriverSettings.MicroDelaySize)
 	{
 		NumToString( MADDriver->DriverSettings.MicroDelaySize, str);
 		pStrcat( str, "\pms");
@@ -293,7 +293,7 @@ void InitDriverString()
 	}
 	else SetDText( myDialog, 7, "\pDelay OFF");
 	
-	if( MADDriver->DriverSettings.surround) SetDText( myDialog, 24, "\pSurround ON");
+	if (MADDriver->DriverSettings.surround) SetDText( myDialog, 24, "\pSurround ON");
 	else SetDText( myDialog, 24, "\pSurround OFF");
 	
 	switch( MADDriver->DriverSettings.outPutRate)
@@ -382,7 +382,7 @@ pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRe
 				
 				OSType2Ptr( fndrInfo.fdType, str);
 				
-				if( MADPlugAvailable( MADLib, str)) canAcceptDrag = true;
+				if (MADPlugAvailable( MADLib, str)) canAcceptDrag = true;
 			}
 			break;
 			
@@ -409,7 +409,7 @@ pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRe
 			Rect dRect;
 			GetDialogItem(myDialog, 0, 0, NULL, &dRect);
 			
-			if( PtInRect( localMouse, &dRect))
+			if (PtInRect( localMouse, &dRect))
 			{
 				RectRgn(theRgn = NewRgn(), &dRect);
 				
@@ -469,7 +469,7 @@ pascal OSErr MyReceiveTools(WindowPtr theWindow, unsigned long handlerRefCon, Dr
 		
 		err = HGetFInfo( myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID, myFlavor.fileSpec.name, &fndrInfo);
 		
-		if( err == noErr)
+		if (err == noErr)
 		{
 			ReadAndPlayMusic( myFlavor.fileSpec.name, fndrInfo.fdType);
 			
@@ -488,10 +488,10 @@ void SetDText (DialogPtr dlog, short item, Str255 str)
 	Str255	myStr;
 	
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
-	if( itemHandle == 0L) MyDebugStr( __LINE__, __FILE__, "Error in SetDText");
+	if (itemHandle == 0L) MyDebugStr( __LINE__, __FILE__, "Error in SetDText");
 	
 	GetDialogItemText (itemHandle, myStr);
-	if( RelString( myStr, str, true, true) != 0) SetDialogItemText (itemHandle, str);
+	if (RelString( myStr, str, true, true) != 0) SetDialogItemText (itemHandle, str);
 }
 
 void SetUpSize()
@@ -501,7 +501,7 @@ void SetUpSize()
 	long	fileSize;
 	
 	hRsrc = GetResource( 'SIZE', -1);
-	if( hRsrc == 0L) Debugger();
+	if (hRsrc == 0L) Debugger();
 	
 	HNoPurge( hRsrc);
 	HLock( hRsrc);
@@ -532,9 +532,9 @@ void	SKVolume( short vol)
 	if(vol>8) vol = 8;
 	if(vol<0) vol = 0;
 	
-	if( vol > 0)
+	if (vol > 0)
 	{
-		if( NewSoundManager)
+		if (NewSoundManager)
 		{
 			tempL.v = vol * 32L;
 			tempL.h = vol * 32L;
@@ -577,20 +577,20 @@ short PressTypeMenu( short whichMenu, short item)
 	switch( whichMenu)
 	{
 		case 128:
-			if( !Stereo) DisableMenuItem( MenuDriver, 2);
+			if (!Stereo) DisableMenuItem( MenuDriver, 2);
 			
 			
-			if( MADDriver->DriverSettings.surround) startitem = 2;
+			if (MADDriver->DriverSettings.surround) startitem = 2;
 			else startitem = 1;
 			break;
 			
 		case 165:
-			if( !Stereo)
+			if (!Stereo)
 			{
 				for( i = 1 ; i < CountMenuItems( MenuDriver); i++) DisableMenuItem( MenuDriver, i+1);
 			}
 			
-			if( MADDriver->DriverSettings.MicroDelaySize)
+			if (MADDriver->DriverSettings.MicroDelaySize)
 			{
 				startitem = 2;
 				for( i = 1 ; i < CountMenuItems( MenuDriver); i++)
@@ -602,19 +602,19 @@ short PressTypeMenu( short whichMenu, short item)
 					
 					str[ 0] -= 3;	StringToNum( str, &r);	str[ 0] += 3;
 					
-					if( r == MADDriver->DriverSettings.MicroDelaySize) startitem = i+1;
+					if (r == MADDriver->DriverSettings.MicroDelaySize) startitem = i+1;
 				}
 			}
 			else startitem = 1;
 			break;
 			
 		case 170:
-			if( !Stereo)
+			if (!Stereo)
 			{
 				for( i = 1 ; i < CountMenuItems( MenuDriver); i++) DisableMenuItem( MenuDriver, i+1);
 			}
 			
-			if( MADDriver->DriverSettings.Reverb)
+			if (MADDriver->DriverSettings.Reverb)
 			{
 				startitem = 2;
 				for( i = 1 ; i < CountMenuItems( MenuDriver); i++)
@@ -626,7 +626,7 @@ short PressTypeMenu( short whichMenu, short item)
 					
 					str[ 0] -= 3;	StringToNum( str, &r);	str[ 0] += 3;
 					
-					if( r == MADDriver->DriverSettings.ReverbSize) startitem = i+1;
+					if (r == MADDriver->DriverSettings.ReverbSize) startitem = i+1;
 				}
 			}
 			else startitem = 1;
@@ -643,12 +643,12 @@ short PressTypeMenu( short whichMenu, short item)
 				
 				str[ 0] -= 2;	StringToNum( str, &r);	str[ 0] += 2;
 				
-				if( r == MADDriver->DriverSettings.ReverbStrength) startitem = i+1;
+				if (r == MADDriver->DriverSettings.ReverbStrength) startitem = i+1;
 			}
 			break;
 			
 		case 131:
-			if( !has16Bit) { DisableMenuItem( MenuDriver, 3);}
+			if (!has16Bit) { DisableMenuItem( MenuDriver, 3);}
 			
 			switch( MADDriver->DriverSettings.outPutRate)
 		{
@@ -660,7 +660,7 @@ short PressTypeMenu( short whichMenu, short item)
 			break;
 			
 		case 132:
-			if( !Stereo) { DisableMenuItem( MenuDriver, 2);		DisableMenuItem( MenuDriver, 3);}
+			if (!Stereo) { DisableMenuItem( MenuDriver, 2);		DisableMenuItem( MenuDriver, 3);}
 			
 			switch( MADDriver->DriverSettings.outPutMode)
 		{
@@ -672,7 +672,7 @@ short PressTypeMenu( short whichMenu, short item)
 			break;
 			
 		case 133:
-			if( !has16Bit) { DisableMenuItem( MenuDriver, 2); }
+			if (!has16Bit) { DisableMenuItem( MenuDriver, 2); }
 			
 			switch( MADDriver->DriverSettings.outPutBits)
 		{
@@ -689,7 +689,7 @@ short PressTypeMenu( short whichMenu, short item)
 	ApFontID = i;
 	MenuID TheMenu = GetMenuID(MenuDriver);
 	
-	if( HiWord( mresult) != 0)
+	if (HiWord( mresult) != 0)
 	{
 		Boolean	IsPlaying;
 		long	fulltime, curTime;
@@ -701,8 +701,8 @@ short PressTypeMenu( short whichMenu, short item)
 		
 		MADGetMusicStatus( MADDriver, &fulltime, &curTime);
 		
-		if( MADStopDriver( MADDriver) != noErr) 			ExitToShell();
-		if( MADDisposeDriver( MADDriver) != noErr) 	ExitToShell();
+		if (MADStopDriver( MADDriver) != noErr) 			ExitToShell();
+		if (MADDisposeDriver( MADDriver) != noErr) 	ExitToShell();
 		
 		MADDriver = NULL;
 		
@@ -747,7 +747,7 @@ short PressTypeMenu( short whichMenu, short item)
 				break;
 				
 			case 165:
-				if( LoWord( mresult) == 1)
+				if (LoWord( mresult) == 1)
 				{
 					Init.MicroDelaySize = 0;
 				}
@@ -758,12 +758,12 @@ short PressTypeMenu( short whichMenu, short item)
 					StringToNum( str, &r);
 					str[ 0] += 3;
 					
-					if( r >= 0 && r <= 1000) Init.MicroDelaySize = r;
+					if (r >= 0 && r <= 1000) Init.MicroDelaySize = r;
 				}
 				break;
 				
 			case 170:
-				if( LoWord( mresult) == 1)
+				if (LoWord( mresult) == 1)
 				{
 					Init.Reverb = false;
 				}
@@ -776,7 +776,7 @@ short PressTypeMenu( short whichMenu, short item)
 					StringToNum( str, &r);
 					str[ 0] += 3;
 					
-					if( r >= 0 && r <= 1000) Init.ReverbSize = r;
+					if (r >= 0 && r <= 1000) Init.ReverbSize = r;
 				}
 				break;
 				
@@ -786,12 +786,12 @@ short PressTypeMenu( short whichMenu, short item)
 				StringToNum( str, &r);
 				str[ 0] += 2;
 				
-				if( r >= 0 && r <= 1000) Init.ReverbStrength = r;
+				if (r >= 0 && r <= 1000) Init.ReverbStrength = r;
 				break;
 				
 				
 		}
-		if( MADCreateDriver( &Init, MADLib, &MADDriver)  != noErr) ExitToShell();
+		if (MADCreateDriver( &Init, MADLib, &MADDriver)  != noErr) ExitToShell();
 		
 		InitDriverString();
 		
@@ -801,7 +801,7 @@ short PressTypeMenu( short whichMenu, short item)
 		
 		MADSetMusicStatus( MADDriver, 0, fulltime, curTime);
 		
-		if( IsPlaying) MADDriver->Reading = true;
+		if (IsPlaying) MADDriver->Reading = true;
 		DeleteMenu( TheMenu);
 		return 0;
 	}
@@ -829,14 +829,14 @@ void DrawTimeBar()
 	
 	tempL = ((long) (itemRect.right - itemRect.left) * curTime) / fullTime;
 	
-	if( tempL != oldTempL)
+	if (tempL != oldTempL)
 	{
 		oldTempL = tempL;
 		
 		
 		i = itemRect.right;
 		itemRect.right = itemRect.left + tempL;
-		if( itemRect.right > i) itemRect.right = i;
+		if (itemRect.right > i) itemRect.right = i;
 		
 		ForeColor( blackColor);
 		PaintRect( &itemRect);
@@ -853,7 +853,7 @@ void DrawTimeBar()
 		GetDialogItem (myDialog, 4, &itemType, &itemHandle, &itemRect);
 		MoveTo( itemRect.left + 2, itemRect.bottom - 1);
 		TextMode( srcXor);
-		if( tempL > 100) tempL = 100;
+		if (tempL > 100) tempL = 100;
 		NumToString( tempL, aStr);	pStrcat( aStr, "\p %");
 		DrawString( aStr);
 		TextMode( srcCopy);
@@ -882,7 +882,7 @@ void MegaLoop()
 	{
 		WaitNextEvent( everyEvent, &theEvent, 60L, 0L);
 		
-		if( theEvent.what == nullEvent)
+		if (theEvent.what == nullEvent)
 		{
 			GetPort( &savePort);
 			SetPort( GetDialogPort(myDialog));
@@ -893,12 +893,12 @@ void MegaLoop()
 			
 			SetPort( savePort);
 		}
-		else if( theEvent.what == mouseDown)
+		else if (theEvent.what == mouseDown)
 		{
 			switch( thePart = FindWindow( theEvent.where, &whichWindow))
 			{
 				case inContent:
-					if( DialogSelect( &theEvent, &whichDialog, &whichItem ))
+					if (DialogSelect( &theEvent, &whichDialog, &whichItem ))
 					{
 						GetPort( &savePort);
 						SetPort( GetDialogPort(whichDialog));
@@ -911,11 +911,11 @@ void MegaLoop()
 									GetDialogItem (whichDialog, 2, &itemType, &itemHandle, &itemRect);
 									GetMouse( &Location);
 									
-									if( oldH != Location.h)
+									if (oldH != Location.h)
 									{
 										oldH = Location.h;
 										
-										if( Location.h < itemRect.left) 		Location.h = itemRect.left;
+										if (Location.h < itemRect.left) 		Location.h = itemRect.left;
 										else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
 										
 										VolumeH = Location.h - itemRect.left;
@@ -952,11 +952,11 @@ void MegaLoop()
 									GetDialogItem (whichDialog, 18, &itemType, &itemHandle, &itemRect);
 									GetMouse( &Location);
 									
-									if( oldH != Location.h)
+									if (oldH != Location.h)
 									{
 										oldH = Location.h;
 										
-										if( Location.h < itemRect.left) 		Location.h = itemRect.left;
+										if (Location.h < itemRect.left) 		Location.h = itemRect.left;
 										else if ( Location.h > itemRect.right)	Location.h = itemRect.right;
 										
 										SpeedH = Location.h - itemRect.left;
@@ -983,7 +983,7 @@ void MegaLoop()
 										GetDialogItem (whichDialog, 2, &itemType, &itemHandle, &itemRect);
 										
 										MADDriver->VExt = (160 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
-										if( MADDriver->VExt <= 0) MADDriver->VExt = 1;
+										if (MADDriver->VExt <= 0) MADDriver->VExt = 1;
 									}
 								}while( Button());
 								break;
@@ -996,9 +996,9 @@ void MegaLoop()
 									GetDialogItem( whichDialog , 4, &itemType, &itemHandle, &itemRect);
 									GetMouse( &myPt);
 									
-									if( temp != myPt.h)
+									if (temp != myPt.h)
 									{
-										if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
+										if (myPt.h < itemRect.left) 		myPt.h = itemRect.left;
 										else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
 										
 										MADSetMusicStatus( MADDriver, itemRect.left, itemRect.right, myPt.h);
@@ -1026,7 +1026,7 @@ void MegaLoop()
 					break;
 					
 				case inGoAway:
-					if( TrackGoAway( whichWindow, theEvent.where)) OnTourne = false;
+					if (TrackGoAway( whichWindow, theEvent.where)) OnTourne = false;
 					break;
 					
 				case inDrag:
@@ -1039,18 +1039,18 @@ void MegaLoop()
 					
 				case inZoomIn:
 				case inZoomOut:
-					if( TrackBox( whichWindow, theEvent.where, thePart))
+					if (TrackBox( whichWindow, theEvent.where, thePart))
 					{
 						Rect theDiagBounds;
 						GetWindowBounds(whichWindow, kWindowContentRgn, &theDiagBounds);
 						
-						if( theDiagBounds.bottom > 29) SizeWindow( whichWindow, theDiagBounds.right, 29, true);
+						if (theDiagBounds.bottom > 29) SizeWindow( whichWindow, theDiagBounds.right, 29, true);
 						else SizeWindow( whichWindow, theDiagBounds.right, 100, true); 
 					}
 					break;
 			}
 		}
-		else if( theEvent.what == updateEvt)
+		else if (theEvent.what == updateEvt)
 		{
 			BeginUpdate( GetDialogWindow(myDialog));
 			DrawDialog( myDialog);
@@ -1126,13 +1126,13 @@ void MegaLoop()
 			
 			EndUpdate( GetDialogWindow(myDialog));
 		}
-		else if( theEvent.what == keyDown)
+		else if (theEvent.what == keyDown)
 		{
 			theChar=theEvent.message & charCodeMask;
 			
 			if ((theEvent.modifiers & cmdKey) !=0)
 			{
-				if( theChar =='Q' ||
+				if (theChar =='Q' ||
 				   theChar =='q' ||
 				   theChar == 'w' ||
 				   theChar == 'W' ||
@@ -1142,7 +1142,7 @@ void MegaLoop()
 					OnTourne = false;
 			}
 		}
-		else if( theEvent.what == kHighLevelEvent) AEProcessAppleEvent (&theEvent);
+		else if (theEvent.what == kHighLevelEvent) AEProcessAppleEvent (&theEvent);
 	}while( OnTourne == true);
 }
 
@@ -1169,7 +1169,7 @@ void MusiqueDriverInit(void)
 	init.oversampling	= thePrefs.oversampling;
 	
 	iErr = MADCreateDriver( &init, MADLib, &MADDriver);
-	if( iErr) MyDebugStr( __LINE__, __FILE__, "MusicDriver ERROR !");
+	if (iErr) MyDebugStr( __LINE__, __FILE__, "MusicDriver ERROR !");
 }
 
 void DoPreferences2()
@@ -1192,20 +1192,20 @@ void DoPreferences2()
 	FSMakeFSSpec(vRefNum, DirID, PLAYERPREF, &PrefsSpec);
 	
 	iErr = FSpOpenDF(&PrefsSpec, fsCurPerm, &fRefNum);
-	if( iErr == noErr)
+	if (iErr == noErr)
 	{
 		inOutBytes = sizeof( Prefs);
 		iErr = FSRead( fRefNum, &inOutBytes, &thePrefs);
 		iErr = FSClose( fRefNum);
 		
-		if( thePrefs.Version >= 0x0500)
+		if (thePrefs.Version >= 0x0500)
 		{
 			MusiqueDriverInit();
 			initOK = true;
 		}
 	}
 	
-	if( initOK == false)
+	if (initOK == false)
 	{
 		OSErr				iErr;
 		MADDriverSettings	init;
@@ -1226,7 +1226,7 @@ void DoPreferences2()
 		init.oversampling	= 1;
 		
 		iErr = MADCreateDriver( &init, MADLib, &MADDriver);
-		if( iErr) MyDebugStr( __LINE__, __FILE__, "MusicDriver ERROR !");
+		if (iErr) MyDebugStr( __LINE__, __FILE__, "MusicDriver ERROR !");
 	}
 	
 	HSetVol( 0L, SvRefNum, SdirID);
@@ -1272,7 +1272,7 @@ int main()
 	
 	NewSoundManager = true;
 	
-	//	if( NewSoundManager)
+	//	if (NewSoundManager)
 	{
 		GetDefaultOutputVolume( (long*) &Svolume);
 		Svolume.h /= 32;
@@ -1292,7 +1292,7 @@ int main()
 	
 	InitDriverString();
 	
-	if( MADLoadMusicRsrc( &music, 'MADI', 3214) != noErr)
+	if (MADLoadMusicRsrc( &music, 'MADI', 3214) != noErr)
 	{
 		ExitToShell();
 	}

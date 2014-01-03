@@ -94,12 +94,12 @@ OSErr CreateNameListQuicktime25(void)
 
 	iErr = FindFolder( kOnSystemDisk, kExtensionFolderType, kDontCreateFolder, &foundVRefNum, &foundDirID);
 	
-	if( iErr == noErr)
+	if (iErr == noErr)
 	{
 		HSetVol( NULL, foundVRefNum, foundDirID);	
 		
 		iFileRef = OpenResFileQK( foundDirID, foundVRefNum);
-		if( iFileRef != -1)
+		if (iFileRef != -1)
 		{
 			UseResFile( iFileRef);
 			
@@ -107,7 +107,7 @@ OSErr CreateNameListQuicktime25(void)
 			GM = 1;
 			for( i = 1; i <= 128; i++)
 			{
-				if( ((i-1) % 8) == 0)
+				if (((i-1) % 8) == 0)
 				{
 					x++;
 					QKInstruMenu[ x] = NewMenu( x, "\p");
@@ -116,12 +116,12 @@ OSErr CreateNameListQuicktime25(void)
 				}
 				
 				hRsrc = GetResource( 'ssai', i);
-				if( hRsrc != NULL)
+				if (hRsrc != NULL)
 				{
 					DetachResource( hRsrc);
 					HLock( hRsrc);
 					
-					if( GetHandleSize( hRsrc) > 600)
+					if (GetHandleSize( hRsrc) > 600)
 					{
 						QuictimeRsrc25	*rsrc, *maxrsrc = (QuictimeRsrc25*) ((*hRsrc) + GetHandleSize( hRsrc));
 						
@@ -133,8 +133,8 @@ OSErr CreateNameListQuicktime25(void)
 						
 						for( z = 1; z <= tPtr[ 0]; z++)
 						{
-							if( tPtr[ z] == '(') tPtr[ z] = ' ';
-							if( tPtr[ z] == ')') tPtr[ z] = ' ';
+							if (tPtr[ z] == '(') tPtr[ z] = ' ';
+							if (tPtr[ z] == ')') tPtr[ z] = ' ';
 						}
 						
 						AppendMenu( QKInstruMenu[ x], (unsigned char*) tPtr);
@@ -149,7 +149,7 @@ OSErr CreateNameListQuicktime25(void)
 			/** Drums **/
 			
 			hRsrc = GetResource( 'ssai', 16385);
-			if( hRsrc != NULL)
+			if (hRsrc != NULL)
 			{
 				QuictimeRsrc25	*rsrc, *maxrsrc = (QuictimeRsrc25*) ((*hRsrc) + GetHandleSize( hRsrc));
 				
@@ -161,8 +161,8 @@ OSErr CreateNameListQuicktime25(void)
 				
 				for( z = 1; z <= tPtr[ 0]; z++)
 				{
-					if( tPtr[ z] == '(') tPtr[ z] = ' ';
-					if( tPtr[ z] == ')') tPtr[ z] = ' ';
+					if (tPtr[ z] == '(') tPtr[ z] = ' ';
+					if (tPtr[ z] == ')') tPtr[ z] = ' ';
 				}
 				
 				x++;
@@ -193,16 +193,16 @@ OSErr CreateNameListQuicktime(void)
 	QuicktimeInst			*QuickInst;
 	Ptr						tPtr;
 	
-	if( QK50) return CreateNameListQuicktime25();
+	if (QK50) return CreateNameListQuicktime25();
 	
 	iErr = FindFolder( kOnSystemDisk, kExtensionFolderType, kDontCreateFolder, &foundVRefNum, &foundDirID);
 	
-	if( iErr == noErr)
+	if (iErr == noErr)
 	{
 		HSetVol( NULL, foundVRefNum, foundDirID);	
 		
 		iFileRef = OpenResFileQK( foundDirID, foundVRefNum);
-		if( iFileRef != -1)
+		if (iFileRef != -1)
 		{
 			UseResFile( iFileRef);
 			
@@ -210,7 +210,7 @@ OSErr CreateNameListQuicktime(void)
 			GM = 1;
 			for( i = 1; i <= 128; i++)
 			{
-				if( ((i-1) % 8) == 0)
+				if (((i-1) % 8) == 0)
 				{
 					x++;
 					QKInstruMenu[ x] = NewMenu( x, "\p");
@@ -219,15 +219,15 @@ OSErr CreateNameListQuicktime(void)
 				}
 				
 				hRsrc = GetResource( 'INST', i);
-				if( hRsrc != NULL)
+				if (hRsrc != NULL)
 				{
 					QuickInst = (QuicktimeInst*) *hRsrc;
 					tPtr = (Ptr) (((Ptr) &QuickInst->no) + 4L + QuickInst->no * sizeof( QuictimeSs));
 					
 					for( z = 1; z <= tPtr[ 0]; z++)
 					{
-						if( tPtr[ z] == '(') tPtr[ z] = ' ';
-						if( tPtr[ z] == ')') tPtr[ z] = ' ';
+						if (tPtr[ z] == '(') tPtr[ z] = ' ';
+						if (tPtr[ z] == ')') tPtr[ z] = ' ';
 					}
 					
 					AppendMenu( QKInstruMenu[ x], (unsigned char*) tPtr);
@@ -241,15 +241,15 @@ OSErr CreateNameListQuicktime(void)
 			/** Drums **/
 			
 			hRsrc = GetResource( 'INST', 16385);
-			if( hRsrc != NULL)
+			if (hRsrc != NULL)
 			{
 				QuickInst = (QuicktimeInst*) *hRsrc;
 				tPtr = (Ptr) (((Ptr) &QuickInst->no) + 4L + QuickInst->no * sizeof( QuictimeSs));
 				
 				for( z = 1; z <= tPtr[ 0]; z++)
 				{
-					if( tPtr[ z] == '(') tPtr[ z] = ' ';
-					if( tPtr[ z] == ')') tPtr[ z] = ' ';
+					if (tPtr[ z] == '(') tPtr[ z] = ' ';
+					if (tPtr[ z] == ')') tPtr[ z] = ' ';
 				}
 				
 				x++;
@@ -309,19 +309,19 @@ void PressSmallPianoQ( DialogPtr TheDia, InstrData	*inst, short ins)
 		Position = -1;
 		for( i = 0; i < NUMBER_NOTES; i++)
 		{
-			if( PtInRect( Mouse, &SPianoRect[ i]))
+			if (PtInRect( Mouse, &SPianoRect[ i]))
 			{
 				Position = i;
-				if( SPianoRect[ i].right - SPianoRect[ i].left == 5) goto OK;
+				if (SPianoRect[ i].right - SPianoRect[ i].left == 5) goto OK;
 			}
 		}
 		
-		if( Position >= 0)
+		if (Position >= 0)
 		{
 			OK:
-			if( Position != curSPos)
+			if (Position != curSPos)
 			{
-				if( curSPos != -1) DrawSmallPianoKey( curSPos, normalKey, SPianoRect[ curSPos]);
+				if (curSPos != -1) DrawSmallPianoKey( curSPos, normalKey, SPianoRect[ curSPos]);
 				DrawSmallPianoKey( Position, greenKey, SPianoRect[ Position]);
 				curSPos = Position;
 				
@@ -339,7 +339,7 @@ void PressSmallPianoQ( DialogPtr TheDia, InstrData	*inst, short ins)
 			}
 			else
 			{
-				if( firstTime)
+				if (firstTime)
 				{
 					firstTime = false;
 					NDoPlayInstru( curSPos, ins, 0, 0, 0xFF);
@@ -372,7 +372,7 @@ void DLSImport(void)
 	
 	for( i = 0; i < 18; i++) QKInstruMenu[ i] = NULL;
 	
-	if( CreateNameListQuicktime() != noErr) return;
+	if (CreateNameListQuicktime() != noErr) return;
 	
 	aDialog = GetNewDialog( 176, NULL, (WindowPtr) -1L);
 	SetPortDialogPort( aDialog);
@@ -392,7 +392,7 @@ void DLSImport(void)
 	CategoryMenu = GetMenu( 152);
 	for( i = 1; i <= 16; i++)
 	{
-		if( CountMenuItems( QKInstruMenu[ i]) < 1)
+		if (CountMenuItems( QKInstruMenu[ i]) < 1)
 		{
 			DisableMenuItem( CategoryMenu, i);
 		}
@@ -547,7 +547,7 @@ void DLSImport(void)
 		
 	}while( itemHit != 1 && itemHit != 2);
 	
-	if( itemHit == 1)
+	if (itemHit == 1)
 	{
 		
 	}
@@ -575,7 +575,7 @@ void DLSImport(void)
 		{
 			sData	*curData;
 			
-			if( curMusic != NULL)
+			if (curMusic != NULL)
 			{
 				curData = MADCreateSample( curMusic, ins, x);
 			}
@@ -608,7 +608,7 @@ void DLSImport(void)
 	DisposeMenu( CategoryMenu);
 	for( i = 0; i < 18; i++)
 	{
-		if( QKInstruMenu[ i] != NULL) DisposeMenu( QKInstruMenu[ i]);
+		if (QKInstruMenu[ i] != NULL) DisposeMenu( QKInstruMenu[ i]);
 	}
 	UpdateALLWindow();
 }

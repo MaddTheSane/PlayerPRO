@@ -253,12 +253,12 @@ void DrawQTItem( Boolean selected, Rect* bounds, Str255 data, FSSpec	*spec, RgnH
 	
 	iErr = GetIconRefFromFile( spec, &iconref, &label);
 	
-	if( iErr == noErr)
+	if (iErr == noErr)
 	{
-		if( !selected) PlotIconRef( &iconRect, kAlignNone, kTransformNone, kIconServicesNormalUsageFlag, iconref);
+		if (!selected) PlotIconRef( &iconRect, kAlignNone, kTransformNone, kIconServicesNormalUsageFlag, iconref);
 		else PlotIconRef( &iconRect, kAlignNone, kTransformSelected, kIconServicesNormalUsageFlag, iconref);
 		
-		if( rgn)
+		if (rgn)
 		{
 			IconRefToRgn( rgn, bounds, 0, kIconServicesNormalUsageFlag, iconref);
 		}
@@ -273,11 +273,11 @@ void DrawQTItem( Boolean selected, Rect* bounds, Str255 data, FSSpec	*spec, RgnH
 	itemRect.left = itemRect.left +  (itemRect.right - itemRect.left)/2 - StringWidth( data)/2;
 	itemRect.right = itemRect.left + 2 + StringWidth( data);
 	
-	if( itemRect.right > srcRect.right) itemRect.right = srcRect.right;
-	if( itemRect.left < srcRect.left) itemRect.left = srcRect.left;
+	if (itemRect.right > srcRect.right) itemRect.right = srcRect.right;
+	if (itemRect.left < srcRect.left) itemRect.left = srcRect.left;
 	
 	TETextBox( data+1, data[ 0], &itemRect, teCenter);
-	if( selected)
+	if (selected)
 	{
 		InvertRect( &itemRect);
 	}
@@ -355,7 +355,7 @@ void DoNullQT( void)
 	Str255				aStr, bStr;
 	ComponentResult		result;
 	
-	if( QuicktimeDlog == NULL) return;
+	if (QuicktimeDlog == NULL) return;
 	
 	GetPort( &SavePort);
 	SetPortDialogPort( QuicktimeDlog);
@@ -406,7 +406,7 @@ void DoNullQT( void)
 			
 			SndDoCommand(pSoundChannel, pPlayCmd, true);			// play the next buffer
 		}
-		if( BufferSwitch < 128) BufferSwitch++;
+		if (BufferSwitch < 128) BufferSwitch++;
 	}
 #endif
 	////////
@@ -415,7 +415,7 @@ void DoNullQT( void)
 	
 	aTime = GetMovieTime( QTMovie, &currentTime);
 	
-	if( lastSeconds != aTime / currentTime.scale)
+	if (lastSeconds != aTime / currentTime.scale)
 	{
 		lastSeconds = aTime / currentTime.scale;
 		
@@ -434,7 +434,7 @@ void DoNullQT( void)
 	MCIsPlayerEvent( gMovieController, &theEvent);
 	SetPort( SavePort);
 	
-	if( IsMovieDone( QTMovie) && QTCheckLoop)
+	if (IsMovieDone( QTMovie) && QTCheckLoop)
 	{
 		QTCheckLoop = false;
 		switch( thePrefs.LoopType)
@@ -459,7 +459,7 @@ void DoNullQT( void)
 	}
 	
 #if 0
-	if( gSoundMediaHandler)
+	if (gSoundMediaHandler)
 	{
 		SoundComponentDataPtr sourceData;
 		Component	outputComponent;
@@ -467,15 +467,15 @@ void DoNullQT( void)
 		SoundComponentDataPtr	sd;
 		
 		result = MediaGetSoundOutputComponent( gSoundMediaHandler, &outputComponent);
-		if( result) DebugStr("\pError");
+		if (result) DebugStr("\pError");
 		
 		result = SoundComponentGetSourceData( gSoundMediaHandler, &sourceData);
-		if( result) DebugStr("\pError");
+		if (result) DebugStr("\pError");
 		
 		Debugger();
 	}
 	
-	if( gSoundMediaHandler)
+	if (gSoundMediaHandler)
 	{
 		MediaGetSoundBassAndTreble( gSoundMediaHandler, &gBass, &gTreble);
 		
@@ -484,14 +484,14 @@ void DoNullQT( void)
 	}
 #endif
 	
-	if( gSoundMediaHandler && newQuicktime)
+	if (gSoundMediaHandler && newQuicktime)
 	{
 		LevelMeterInfo	info;
 		ComponentResult	cResult;
 		
 		cResult = MediaGetSoundLevelMeterInfo( gSoundMediaHandler, &info);
 		
-		if( cResult == 0)
+		if (cResult == 0)
 		{
 			SetControlValue( LeftCntl, info.leftMeter);
 			SetControlValue( RightCntl, info.rightMeter);
@@ -509,9 +509,9 @@ void QTDoAction( Boolean play)
 {
 	Fixed playRate;
 	
-	if( QuicktimeDlog == NULL) return;
+	if (QuicktimeDlog == NULL) return;
 	
-	if( play)
+	if (play)
 	{
 		playRate = 1;
 		MCDoAction( gMovieController, mcActionPrerollAndPlay, (void*) playRate);
@@ -549,7 +549,7 @@ void SelectQTFile( FSSpec	*file)
 	GetPort( &savePort);
 	SetPortDialogPort( QuicktimeDlog);
 	
-	if( QTMovie != NULL)
+	if (QTMovie != NULL)
 	{
 		MyDebugStr(__LINE__, __FILE__, "QTMovie != NULL");
 	}
@@ -565,15 +565,15 @@ void SelectQTFile( FSSpec	*file)
 	
 	fileSize = 0;
 	iErr = FSpOpenDF( &QTFile, fsCurPerm, &QTresRefNum);
-	if( iErr == noErr)
+	if (iErr == noErr)
 	{
 		iErr = GetEOF( QTresRefNum, &fileSize);
 		FSCloseFork( QTresRefNum);
 		
-		if( fileSize == 0)
+		if (fileSize == 0)
 		{
 			iErr = FSpOpenRF( &QTFile, fsCurPerm, &QTresRefNum);
-			if( iErr == noErr)
+			if (iErr == noErr)
 			{
 				iErr = GetEOF( QTresRefNum, &fileSize);
 				FSCloseFork( QTresRefNum);
@@ -584,7 +584,7 @@ void SelectQTFile( FSSpec	*file)
 RETRY:
 	
 	iErr = OpenMovieFile( &QTFile, &QTresRefNum, fsCurPerm);
-	if( iErr) MyDebugStr(__LINE__, __FILE__, "OpenMovieFile");
+	if (iErr) MyDebugStr(__LINE__, __FILE__, "OpenMovieFile");
 	
 	resId = 0;
 	iErr = NewMovieFromFile( &QTMovie, QTresRefNum, &resId, NULL, 0, &dataRefWasChanged);
@@ -592,25 +592,25 @@ RETRY:
 	CloseMovieFile( QTresRefNum);
 	
 #if 0
-	if( iErr != noErr)
+	if (iErr != noErr)
 	{
 		return;
 	}
 #endif
 	
-	if( iErr == -2048 && QTTemporaryFile == false)	// TRY A CONVERSION FILE->MOVIE
+	if (iErr == -2048 && QTTemporaryFile == false)	// TRY A CONVERSION FILE->MOVIE
 	{
 		newFile = QTFile;
 		pStrcpy( newFile.name, "\pPlayerPRO.temp");
 		
 		iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newFile.vRefNum, &newFile.parID);
-		if( iErr == noErr)
+		if (iErr == noErr)
 		{
 			FSpDelete( &newFile);
 			
 			resId = 0;
 			iErr = ConvertFileToMovieFile( &QTFile, &newFile, 'TVOD', smCurrentScript, &resId, createMovieFileDeleteCurFile, 0, 0, 0);
-			if( iErr == noErr)
+			if (iErr == noErr)
 			{
 				QTFile = newFile;
 				QTTemporaryFile = true;
@@ -621,7 +621,7 @@ RETRY:
 		}
 		else return;
 	}
-	else if( iErr != noErr) return;
+	else if (iErr != noErr) return;
 	
 	////////////////////////////////
 	
@@ -785,7 +785,7 @@ RETRY:
 	
 	GetPortBounds( GetDialogPort( QuicktimeDlog), &caRect);
 	
-	if( EmptyRect( &dispBounds))
+	if (EmptyRect( &dispBounds))
 	{
 		QTMovieRect.left = 0;
 		QTMovieRect.right = MINWIDTH;	//caRect.right;
@@ -797,7 +797,7 @@ RETRY:
 		QTMovieRect.right = QTMovieRect.left + dispBounds.right;
 		QTMovieRect.bottom = QTMovieRect.top + dispBounds.bottom - dispBounds.top;
 		
-		if( QTMovieRect.right < MINWIDTH)
+		if (QTMovieRect.right < MINWIDTH)
 		{
 			QTMovieRect.left = MINWIDTH/2 - dispBounds.right/2;
 			
@@ -808,7 +808,7 @@ RETRY:
 	EraseRect( &caRect);
 	InvalWindowRect( GetDialogWindow( QuicktimeDlog), &caRect);
 	
-	if( QTMovieRect.right < MINWIDTH) SizeWindow( GetDialogWindow( QuicktimeDlog), MINWIDTH, QTMovieRect.bottom + 16, true);
+	if (QTMovieRect.right < MINWIDTH) SizeWindow( GetDialogWindow( QuicktimeDlog), MINWIDTH, QTMovieRect.bottom + 16, true);
 	else SizeWindow( GetDialogWindow( QuicktimeDlog), QTMovieRect.right, QTMovieRect.bottom + 16, true);
 	
 	SetMovieBox( QTMovie, &QTMovieRect);
@@ -843,7 +843,7 @@ RETRY:
 			
 			GetMediaHandlerDescription( aMedia, &mediaType, creatorName, &creatorManufacturer);
 			
-			if( mediaType == SoundMediaType)	// Bingo !
+			if (mediaType == SoundMediaType)	// Bingo !
 			{
 				gSoundMediaHandler = GetMediaHandler( aMedia);
 				gDataHandler = GetMediaDataHandler( aMedia, 1);
@@ -857,7 +857,7 @@ RETRY:
 				
 				// QT 4.0
 				
-				if( newQuicktime)
+				if (newQuicktime)
 				{
 					MediaGetSoundBassAndTreble( gSoundMediaHandler, &gBass, &gTreble);
 					
@@ -874,7 +874,7 @@ RETRY:
 #if 0
 				fileSize = 0;
 				iErr = FSpOpenDF( &QTFile, fsCurPerm, &refNum);
-				if( iErr == noErr)
+				if (iErr == noErr)
 				{
 					iErr = GetEOF( refNum, &fileSize);
 					FSClose( refNum);
@@ -882,7 +882,7 @@ RETRY:
 #endif
 				fileSize /= 1024L;
 				
-				if( fileSize > 1000)
+				if (fileSize > 1000)
 				{
 					sprintf( (Ptr) aStr, "%.2f", (double) fileSize / (double) 1024.);
 					MyC2PStr( (Ptr) aStr);
@@ -924,9 +924,9 @@ RETRY:
 				OSType2Str( fndrInfo.fdType, aStr);
 				pStrcat( aStr, "\p/");
 				
-				if( (*descH)->numChannels == 1) pStrcat( aStr, "\pmono");
-				if( (*descH)->numChannels == 2) pStrcat( aStr, "\pstereo");
-				if( (*descH)->numChannels > 2)
+				if ((*descH)->numChannels == 1) pStrcat( aStr, "\pmono");
+				if ((*descH)->numChannels == 2) pStrcat( aStr, "\pstereo");
+				if ((*descH)->numChannels > 2)
 				{
 					NumToString( (*descH)->numChannels, bStr);
 					pStrcat( aStr, bStr);
@@ -968,7 +968,7 @@ RETRY:
 	
 	SetMovieActive( QTMovie, true);
 	
-	if( gMovieController) DisposeMovieController( gMovieController);
+	if (gMovieController) DisposeMovieController( gMovieController);
 	
 	//QTMovieRect.left--;
 	//QTMovieRect.right++;
@@ -1035,9 +1035,9 @@ Boolean CreateQTWindow( FSSpec	*file)
 	
 	lastSeconds = -1;
 	
-	if( !QTTestConversion( file, fndrInfo.fdType)) return false;
+	if (!QTTestConversion( file, fndrInfo.fdType)) return false;
 	
-	if( QuicktimeDlog != NULL)
+	if (QuicktimeDlog != NULL)
 	{
 		
 		SelectWindow2( NextWindowVisible( GetDialogWindow( QuicktimeDlog)));
@@ -1141,7 +1141,7 @@ Boolean CreateQTWindow( FSSpec	*file)
 	
 	SelectQTFile( file);
 	
-	if( QTMovie == NULL)	// Quicktime wasn't able to open it....
+	if (QTMovie == NULL)	// Quicktime wasn't able to open it....
 	{
 		CloseQT();
 		
@@ -1155,7 +1155,7 @@ Boolean CreateQTWindow( FSSpec	*file)
 	ShowWindow( GetDialogWindow( QuicktimeDlog));
 	
 	
-	if( thePrefs.AutoPlayWhenOpen)
+	if (thePrefs.AutoPlayWhenOpen)
 	{
 		Fixed	playRate;
 		
@@ -1164,7 +1164,7 @@ Boolean CreateQTWindow( FSSpec	*file)
 		
 	}
 	
-	if( thePrefs.LoopType == 0)	// LOOP
+	if (thePrefs.LoopType == 0)	// LOOP
 	{
 		MCDoAction( gMovieController, mcActionSetLooping, (void*) (Boolean) true);
 	}
@@ -1175,7 +1175,7 @@ Boolean CreateQTWindow( FSSpec	*file)
 	
 	QTCheckLoop = true;
 	
-	if( DragManagerUse)
+	if (DragManagerUse)
 	{
 		MyTrackingQTUPP = NewDragTrackingHandlerUPP( MyTrackingQuicktime);
 		MyReceiveQTUPP = NewDragReceiveHandlerUPP( MyReceiveQuicktime);
@@ -1194,7 +1194,7 @@ Boolean QTTestConversion( FSSpec	*file, OSType fileType)
 	short	QTresRefNum;
 	
 	iErr = OpenMovieFile( file, &QTresRefNum, fsCurPerm);
-	if( iErr) return false;
+	if (iErr) return false;
 	
 	iErr = CloseMovieFile( QTresRefNum);
 	
@@ -1246,25 +1246,25 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 	GetPort( &savePort);
 	SetPortDialogPort( whichDialog);
 	
-	if( !MCIsPlayerEvent( gMovieController, &theEvent))
+	if (!MCIsPlayerEvent( gMovieController, &theEvent))
 	{
 		switch( whichItem)
 		{
 			case 20:
-				if( GetControlHilite( LoadBut) == 0 && MyTrackControl( LoadBut, theEvent.where, NULL))
+				if (GetControlHilite( LoadBut) == 0 && MyTrackControl( LoadBut, theEvent.where, NULL))
 				{
 					HandleFileChoice( 2);
 				}
 				break;
 				
 			case 25:
-				if( GetControlHilite( ResetBassBut)  == 0 && MyTrackControl( ResetBassBut, theEvent.where, NULL))
+				if (GetControlHilite( ResetBassBut)  == 0 && MyTrackControl( ResetBassBut, theEvent.where, NULL))
 				{
 					HiliteControl( ResetBassBut, 255);
 					
 					gBass = 0;
 					
-					if( newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
+					if (newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
 					NumToString( gBass, str);	SetDText( QuicktimeDlog, 19, str);
 					
 					SetControlValue( BassCntl, gBass);
@@ -1272,13 +1272,13 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 				break;
 				
 			case 24:
-				if( GetControlHilite( ResetTrebleBut) == 0 && MyTrackControl( ResetTrebleBut, theEvent.where, NULL))
+				if (GetControlHilite( ResetTrebleBut) == 0 && MyTrackControl( ResetTrebleBut, theEvent.where, NULL))
 				{
 					HiliteControl( ResetTrebleBut, 255);
 					
 					gTreble = 0;
 					
-					if( newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
+					if (newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
 					NumToString( gTreble, str);	SetDText( QuicktimeDlog, 18, str);
 					
 					SetControlValue( TrebleCntl, gTreble);
@@ -1286,7 +1286,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 				break;
 				
 			case 21:
-				if( GetControlHilite( ResetBalanceBut) == 0 && MyTrackControl( ResetBalanceBut, theEvent.where, NULL))
+				if (GetControlHilite( ResetBalanceBut) == 0 && MyTrackControl( ResetBalanceBut, theEvent.where, NULL))
 				{
 					HiliteControl( ResetBalanceBut, 255);
 					
@@ -1312,11 +1312,11 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 						SetPortDialogPort( whichDialog);
 						GetMouse( &myPt);
 						
-						if( oldH != myPt.h)
+						if (oldH != myPt.h)
 						{
 							oldH = myPt.h;
 							
-							if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
+							if (myPt.h < itemRect.left) 		myPt.h = itemRect.left;
 							else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
 							
 							gBalance = (255* (myPt.h - itemRect.left)) / ( itemRect.right-itemRect.left);
@@ -1328,7 +1328,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 							
 							NumToString( gBalance, str);	SetDText( QuicktimeDlog, 30, str);
 							
-							if( gBalance != 0) HiliteControl( ResetBalanceBut, 0);
+							if (gBalance != 0) HiliteControl( ResetBalanceBut, 0);
 							else HiliteControl( ResetBalanceBut, 255);
 						}
 					}
@@ -1348,11 +1348,11 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 						SetPortDialogPort( whichDialog);
 						GetMouse( &myPt);
 						
-						if( oldH != myPt.h)
+						if (oldH != myPt.h)
 						{
 							oldH = myPt.h;
 							
-							if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
+							if (myPt.h < itemRect.left) 		myPt.h = itemRect.left;
 							else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
 							
 							gBass = (512* (myPt.h - itemRect.left)) / ( itemRect.right-itemRect.left);
@@ -1360,11 +1360,11 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 							
 							SetControlValue( BassCntl, gBass);
 							
-							if( newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
+							if (newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
 							
 							NumToString( gBass, str);	SetDText( QuicktimeDlog, 19, str);
 							
-							if( gBass != 0) HiliteControl( ResetBassBut, 0);
+							if (gBass != 0) HiliteControl( ResetBassBut, 0);
 							else HiliteControl( ResetBassBut, 255);
 						}
 					}
@@ -1384,11 +1384,11 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 						SetPortDialogPort( whichDialog);
 						GetMouse( &myPt);
 						
-						if( oldH != myPt.h)
+						if (oldH != myPt.h)
 						{
 							oldH = myPt.h;
 							
-							if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
+							if (myPt.h < itemRect.left) 		myPt.h = itemRect.left;
 							else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
 							
 							gTreble = (512* (myPt.h - itemRect.left)) / ( itemRect.right-itemRect.left);
@@ -1396,11 +1396,11 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 							
 							SetControlValue( TrebleCntl, gTreble);
 							
-							if( newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
+							if (newQuicktime) MediaSetSoundBassAndTreble( gSoundMediaHandler, gBass, gTreble);
 							
 							NumToString( gTreble, str);	SetDText( QuicktimeDlog, 18, str);
 							
-							if( gTreble != 0) HiliteControl( ResetTrebleBut, 0);
+							if (gTreble != 0) HiliteControl( ResetTrebleBut, 0);
 							else HiliteControl( ResetTrebleBut, 255);
 						}
 					}
@@ -1420,11 +1420,11 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 						SetPortDialogPort( whichDialog);
 						GetMouse( &myPt);
 						
-						if( oldH != myPt.h)
+						if (oldH != myPt.h)
 						{
 							oldH = myPt.h;
 							
-							if( myPt.h < itemRect.left) 		myPt.h = itemRect.left;
+							if (myPt.h < itemRect.left) 		myPt.h = itemRect.left;
 							else if ( myPt.h > itemRect.right)	myPt.h = itemRect.right;
 							
 							gVolume = (255* (myPt.h - itemRect.left)) / ( itemRect.right-itemRect.left);
@@ -1435,7 +1435,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 							
 							//	NumToString( gTreble, str);	SetDText( QuicktimeDlog, 18, str);
 							
-							/*	if( gTreble != 0) HiliteControl( ResetTrebleBut, 0);
+							/*	if (gTreble != 0) HiliteControl( ResetTrebleBut, 0);
 							 else HiliteControl( ResetTrebleBut, 255);	*/
 						}
 					}
@@ -1443,7 +1443,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 				break;
 				
 			case 12:
-				if( GetControlHilite( SaveBut) == 0 && MyTrackControl( SaveBut, theEvent.where, NULL))
+				if (GetControlHilite( SaveBut) == 0 && MyTrackControl( SaveBut, theEvent.where, NULL))
 				{
 					/*	mcActionGetSelectionBegin
 					 mcActionGetSelectionDuration*/
@@ -1461,7 +1461,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 				GetDialogItem( QuicktimeDlog , 2, &itemType, &itemHandle, &itemRect);
 				DrawQTItem( true, &itemRect, QTFileName, &QTFile, NULL);
 				
-				if( WaitMouseMoved( theEvent.where))
+				if (WaitMouseMoved( theEvent.where))
 				{
 					RgnHandle	dstRgn;
 					Handle		gTheSuite;
@@ -1474,7 +1474,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 					GetDialogItem( QuicktimeDlog , 2, &itemType, &itemHandle, &itemRect);
 					
 					iErr = GetIconRefFromFile( &QTFile, &iconref, &label);
-					if( iErr == noErr)
+					if (iErr == noErr)
 					{
 						IconRefToRgn( dstRgn, &itemRect, 0, kIconServicesNormalUsageFlag, iconref);
 						
@@ -1513,7 +1513,7 @@ void CloseQT(void)
 {
 	OSErr	iErr, err;
 	
-	if( QuicktimeDlog != NULL)
+	if (QuicktimeDlog != NULL)
 	{
 		//////////////////
 #if 0
@@ -1555,19 +1555,19 @@ void CloseQT(void)
 #endif
 		//////////////////
 		
-		if( gMovieController) DisposeMovieController( gMovieController);
+		if (gMovieController) DisposeMovieController( gMovieController);
 		gMovieController = NULL;
 		
-		if( QTMovie) DisposeMovie( QTMovie);
+		if (QTMovie) DisposeMovie( QTMovie);
 		QTMovie = NULL;
 		
-		if( QTTemporaryFile)
+		if (QTTemporaryFile)
 		{
 			FSpDelete( &QTFile);
 			QTTemporaryFile = false;
 		}
 		
-		if( MyTrackingQTUPP != NULL && MyReceiveQTUPP != NULL)
+		if (MyTrackingQTUPP != NULL && MyReceiveQTUPP != NULL)
 		{
 			RemoveTrackingHandler( MyTrackingQTUPP, GetDialogWindow( QuicktimeDlog));
 			RemoveReceiveHandler( MyReceiveQTUPP, GetDialogWindow( QuicktimeDlog));
@@ -1613,7 +1613,7 @@ Boolean IsQTDrag( DragReference theDrag)
 		
 		HSetVol( NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
 		result = FSpGetFInfo( &myFlavor.fileSpec, &fndrInfo);
-		if( result != noErr) return false;		// <- Il s'agit d'un FOLDER, pas d'un FICHIER !!!
+		if (result != noErr) return false;		// <- Il s'agit d'un FOLDER, pas d'un FICHIER !!!
 		
 		return QTTypeConversion( fndrInfo.fdType);
     }
@@ -1641,7 +1641,7 @@ OSErr ConvertMovieToAIFF(FSSpec *inputFile, FSSpec *outputFile)
 	
 	GetMovieSelection( QTMovie, &selectionTime, &selectionDuration);
 	
-	if( selectionDuration == 0)
+	if (selectionDuration == 0)
 	{
 		aMovie = QTMovie;
 	}
@@ -1653,7 +1653,7 @@ OSErr ConvertMovieToAIFF(FSSpec *inputFile, FSSpec *outputFile)
 	
 	SetCursor( GetQDGlobalsArrow( &qdarrow));
 	
-	if( selectionDuration != 0) DisposeMovie( aMovie);
+	if (selectionDuration != 0) DisposeMovie( aMovie);
 	
 	return (err);
 }
@@ -1703,7 +1703,7 @@ Boolean DragQTFile( RgnHandle myRgn, EventRecord *theEvent)
 	GWorldPtr			theGWorld = NULL;
 	Rect				dragRegionRect;
 	
-	if( !DragManagerUse) return false;
+	if (!DragManagerUse) return false;
 	
 	//******************************************
 	//******************************************
@@ -1763,8 +1763,8 @@ Boolean DragQTFile( RgnHandle myRgn, EventRecord *theEvent)
 		itemRect.left = itemRect.left  +  (itemRect.right - itemRect.left)/2 - StringWidth( QTFileName)/2;
 		itemRect.right = itemRect.left + 2 + StringWidth( QTFileName);
 		
-		if( itemRect.right > picRect.right) itemRect.right = picRect.right;
-		if( itemRect.left < picRect.left) itemRect.left = picRect.left;
+		if (itemRect.right > picRect.right) itemRect.right = picRect.right;
+		if (itemRect.left < picRect.left) itemRect.left = picRect.left;
 		
 		//TETextBox( QTFileName+1, QTFileName[0], &itemRect, teJustCenter);
 		//InvertRect( &itemRect);
@@ -1838,7 +1838,7 @@ pascal OSErr MyTrackingQuicktime(short message, WindowPtr theWindow, void *handl
 	Rect				caRect, tempRect;
 	GrafPtr				savePort;
 	
-	if( !mainSystemDrag) return noErr;
+	if (!mainSystemDrag) return noErr;
 	
 	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return( noErr);
 	
@@ -1850,7 +1850,7 @@ pascal OSErr MyTrackingQuicktime(short message, WindowPtr theWindow, void *handl
 	switch (message) {
 			
 		case kDragTrackingEnterHandler:
-			if( attributes & kDragInsideSenderWindow) canAcceptDrag = false;
+			if (attributes & kDragInsideSenderWindow) canAcceptDrag = false;
 			else canAcceptDrag = IsQTDrag( theDrag);
 			break;
 			
@@ -1876,7 +1876,7 @@ pascal OSErr MyTrackingQuicktime(short message, WindowPtr theWindow, void *handl
 			//
 			GetPortBounds( GetDialogPort( QuicktimeDlog), &caRect);
 			
-			if( PtInRect( localMouse, &caRect))
+			if (PtInRect( localMouse, &caRect))
 			{
 				RectRgn(theRgn = NewRgn(), &caRect);
 				
@@ -1933,7 +1933,7 @@ void COPYQuicktime()
 	
 	GetMovieSelection( QTMovie, &selectionTime, &selectionDuration);
 	
-	if( selectionDuration == 0)
+	if (selectionDuration == 0)
 	{
 		aMovie = QTMovie;
 	}
@@ -1943,7 +1943,7 @@ void COPYQuicktime()
 	
 	anErr = PutMovieIntoTypedHandle( QTMovie, gSoundTrack, 'AIFF', myHandle, selectionTime, selectionDuration, 0, 0);
 	
-	if( anErr)
+	if (anErr)
 	{
 		NumToString( anErr, str);
 		DebugStr( str);
@@ -1974,7 +1974,7 @@ pascal OSErr MyReceiveQuicktime(WindowPtr theWindow, void* handlerRefCon, DragRe
 	AEDesc				target, listElem, fileList;
 	//
 	
-	if( !mainSystemDrag) return dragNotAcceptedErr;
+	if (!mainSystemDrag) return dragNotAcceptedErr;
 	
 	GetPort( &SavedPort);
 	SetPortWindowPort(theWindow);
@@ -1982,7 +1982,7 @@ pascal OSErr MyReceiveQuicktime(WindowPtr theWindow, void* handlerRefCon, DragRe
 	GetDragAttributes(theDrag, &attributes);
 	GetDragModifiers(theDrag, NULL, &mouseDownModifiers, &mouseUpModifiers);
 	
-	if( (attributes & kDragInsideSenderWindow)) return dragNotAcceptedErr;
+	if ((attributes & kDragInsideSenderWindow)) return dragNotAcceptedErr;
 	
 	HideDragHilite( theDrag);
 	
@@ -2025,7 +2025,7 @@ pascal OSErr MyReceiveQuicktime(WindowPtr theWindow, void* handlerRefCon, DragRe
 			AECreateDesc(typeFSS, (Ptr) &myFlavor.fileSpec, sizeof( myFlavor.fileSpec), &listElem);
 			
 			iErr = AEPutDesc( &fileList, 0, &listElem);
-			if( iErr) return iErr;
+			if (iErr) return iErr;
 			
 			AEDisposeDesc( &listElem);
 			
@@ -2043,7 +2043,7 @@ pascal OSErr MyReceiveQuicktime(WindowPtr theWindow, void* handlerRefCon, DragRe
 				  kAEDefaultTimeout,
 				  NULL,
 				  NULL);
-	if( iErr) return iErr;
+	if (iErr) return iErr;
 	
 	SetCursor( GetQDGlobalsArrow( &qdarrow));
 	

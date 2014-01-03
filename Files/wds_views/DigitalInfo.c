@@ -28,7 +28,7 @@ void SetUpScrollDigi(void)
 	SetControlMinimum( ControlDigi, 0);
 	SetControlMaximum( ControlDigi, MAXTRACK - (viewRect.right - viewRect.left) / TEXTLARG);
 	
-	if( gUseControlSize) SetControlViewSize( ControlDigi, (viewRect.right - viewRect.left) / TEXTLARG);
+	if (gUseControlSize) SetControlViewSize( ControlDigi, (viewRect.right - viewRect.left) / TEXTLARG);
 }
 
 void DoGrowDigi( DialogPtr theDialog)
@@ -48,8 +48,8 @@ void DoGrowDigi( DialogPtr theDialog)
 	
 	LocalToGlobal( &aPt);
 	
-	if( temp.right < temp.left) temp.bottom = temp.top;
-	//	else if( temp.right > qd.screenBits.bounds.right - aPt.h) temp.right = qd.screenBits.bounds.right - aPt.h -2;
+	if (temp.right < temp.left) temp.bottom = temp.top;
+	//	else if (temp.right > qd.screenBits.bounds.right - aPt.h) temp.right = qd.screenBits.bounds.right - aPt.h -2;
 	
 	GetPortBounds( GetDialogPort( theDialog), &caRect);
 	
@@ -61,9 +61,9 @@ void DoGrowDigi( DialogPtr theDialog)
 #endif
 	
 	lSizeVH = 0;
-	if( theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( theDialog), theEvent.where, &temp);
+	if (theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( theDialog), theEvent.where, &temp);
 	
-	if( lSizeVH != 0)
+	if (lSizeVH != 0)
 	{
 		tempA = LoWord( lSizeVH);
 		tempB = HiWord( lSizeVH);
@@ -109,7 +109,7 @@ void NoteName( short	Period, Ptr	String)
 	NCount = 1;
     while( NCount <= 61)
     {
-    	if( Period >= MADDriver->pitchTable[ NCount][ 0] )
+    	if (Period >= MADDriver->pitchTable[ NCount][ 0] )
     	{
     		OctavesName( NCount, String);
     		
@@ -129,7 +129,7 @@ void DoNullDigiWindow(void)
  	long		val;
  	RgnHandle	saveClip;
 	
-	if( !DigitalDlog) return;
+	if (!DigitalDlog) return;
 	
 	GetPort( &savePort);
 	SetPortDialogPort( DigitalDlog);
@@ -149,7 +149,7 @@ void DoNullDigiWindow(void)
 	
 	start = GetControlValue( ControlDigi);
 	end = start + 1 + (viewRect.right - viewRect.left) / TEXTLARG;
-	if( end > MAXTRACK) end = MAXTRACK;
+	if (end > MAXTRACK) end = MAXTRACK;
 	
 	for( x = 0; x < ITEMNO; x++)
 	{
@@ -165,7 +165,7 @@ void DoNullDigiWindow(void)
 				break;
 				
 				case 1:
-					if( MADDriver->chan[ i].note < NUMBER_NOTES)
+					if (MADDriver->chan[ i].note < NUMBER_NOTES)
 					{
 						val = MADDriver->chan[ i].note;
 						GetNoteString( val, tempStr);
@@ -180,7 +180,7 @@ void DoNullDigiWindow(void)
 				
 				case 3:
 					val = MADDriver->chan[ i].cmd;
-					if( val == -1) pStrcpy( tempStr, "\p--");
+					if (val == -1) pStrcpy( tempStr, "\p--");
 					else
 					{
 						val = MADDriver->chan[ i].cmd;
@@ -190,7 +190,7 @@ void DoNullDigiWindow(void)
 				break;
 				
 				case 4:
-					if( MADDriver->chan[ i].cmd == -1) pStrcpy( tempStr, "\p--");
+					if (MADDriver->chan[ i].cmd == -1) pStrcpy( tempStr, "\p--");
 					else
 					{
 						val = MADDriver->chan[ i].arg;
@@ -206,13 +206,13 @@ void DoNullDigiWindow(void)
 				break;
 				
 				case 6:
-					if( MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].curPtr < 0) val = 0;
+					if (MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].curPtr < 0) val = 0;
 					else val = MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].curPtr;
 					NumToString( val, tempStr);
 				break;
 				
 				case 7:
-					if( MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].begPtr < 0) val = 0;
+					if (MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].begPtr < 0) val = 0;
 					else val = MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].begPtr;
 					NumToString( val, tempStr);
 				break;
@@ -228,14 +228,14 @@ void DoNullDigiWindow(void)
 				break;
 				
 				case 10:
-					if( MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].begPtr > 0 &&
+					if (MADDriver->chan[ i].maxPtr - MADDriver->chan[ i].begPtr > 0 &&
 						MADDriver->chan[ i].curPtr > MADDriver->chan[ i].begPtr + MADDriver->chan[ i].loopBeg &&
 						MADDriver->chan[ i].loopSize > 2) val = 1;
 					else val = 0;
 					
-					if( oldDigiValue[ x][ i] != val)
+					if (oldDigiValue[ x][ i] != val)
 					{
-						if( val ) ForeColor( redColor);
+						if (val ) ForeColor( redColor);
 						else ForeColor( blackColor);
 						
 						aRect = tempRect;
@@ -249,7 +249,7 @@ void DoNullDigiWindow(void)
 				break;
 				
 				case 13:
-					if( oldDigiValue[ x][ i] != val)
+					if (oldDigiValue[ x][ i] != val)
 					{
 						val = 10;
 						oldDigiValue[ x][ i] = val;
@@ -266,12 +266,12 @@ void DoNullDigiWindow(void)
 				break;
 				
 				case 11:
-					if( MADDriver->chan[ i].maxPtr > MADDriver->chan[ i].curPtr) val = 1;
+					if (MADDriver->chan[ i].maxPtr > MADDriver->chan[ i].curPtr) val = 1;
 					else val = 0;
 					
-					if( oldDigiValue[ x][ i] != val)
+					if (oldDigiValue[ x][ i] != val)
 					{
-						if( val ) ForeColor( redColor);
+						if (val ) ForeColor( redColor);
 						else ForeColor( blackColor);
 						
 						aRect = tempRect;
@@ -285,13 +285,13 @@ void DoNullDigiWindow(void)
 				break;
 				
 				case 12:
-					if( i < MADDriver->DriverSettings.numChn) val = 1;
+					if (i < MADDriver->DriverSettings.numChn) val = 1;
 					else val = 0;
 						
 						
-					if( oldDigiValue[ x][ i] != val)
+					if (oldDigiValue[ x][ i] != val)
 					{
-						if( val ) ForeColor( redColor);
+						if (val ) ForeColor( redColor);
 						else ForeColor( blackColor);
 						
 						aRect = tempRect;
@@ -305,7 +305,7 @@ void DoNullDigiWindow(void)
 				break;
 			}
 			
-			if( oldDigiValue[ x][ i] != val)
+			if (oldDigiValue[ x][ i] != val)
 			{
 				oldDigiValue[ x][ i] = val;
 				TETextBox( tempStr + 1, tempStr[0], &tempRect, teCenter);
@@ -330,7 +330,7 @@ void DoNullDigiWindow(void)
 	tempRect.top += TEXTHI;		tempRect.bottom += TEXTHI;
 	tempRect.top += TEXTHI;		tempRect.bottom += TEXTHI;
 	tempRect.right = tempRect.left + 20;
-	if( oldDigiValue2[ 0] != MADDriver->speed)
+	if (oldDigiValue2[ 0] != MADDriver->speed)
 	{
 		oldDigiValue2[ 0] = MADDriver->speed;
 		NumToString( MADDriver->speed, tempStr);
@@ -338,7 +338,7 @@ void DoNullDigiWindow(void)
 	}
 	tempRect.left += 2*TEXTLARG;		tempRect.right += 2*TEXTLARG;
 	
-	if( oldDigiValue2[ 1] != MADDriver->finespeed)
+	if (oldDigiValue2[ 1] != MADDriver->finespeed)
 	{
 		oldDigiValue2[ 1] = MADDriver->finespeed;
 		NumToString( MADDriver->finespeed, tempStr);
@@ -347,7 +347,7 @@ void DoNullDigiWindow(void)
 	tempRect.left -= 2*TEXTLARG;		tempRect.right -= 2*TEXTLARG;
 	tempRect.top += TEXTHI;		tempRect.bottom += TEXTHI;
 	
-	if( oldDigiValue2[ 2] != MADDriver->Pat)
+	if (oldDigiValue2[ 2] != MADDriver->Pat)
 	{
 		oldDigiValue2[ 2] = MADDriver->Pat;
 		NumToString( MADDriver->Pat, tempStr);
@@ -355,7 +355,7 @@ void DoNullDigiWindow(void)
 	}
 	tempRect.left += 2*TEXTLARG;		tempRect.right += 2*TEXTLARG;
 	
-	if( oldDigiValue2[ 3] != MADDriver->PartitionReader)
+	if (oldDigiValue2[ 3] != MADDriver->PartitionReader)
 	{
 		oldDigiValue2[ 3] = MADDriver->PartitionReader;
 		NumToString( MADDriver->PartitionReader, tempStr);
@@ -364,7 +364,7 @@ void DoNullDigiWindow(void)
 	tempRect.left -= 2*TEXTLARG;		tempRect.right -= 2*TEXTLARG;
 	tempRect.top += TEXTHI;		tempRect.bottom += TEXTHI;
 	
-	if( oldDigiValue2[ 4] != MADDriver->DriverSettings.numChn)
+	if (oldDigiValue2[ 4] != MADDriver->DriverSettings.numChn)
 	{
 		oldDigiValue2[ 4] = MADDriver->DriverSettings.numChn;
 		NumToString( MADDriver->DriverSettings.numChn, tempStr);
@@ -372,7 +372,7 @@ void DoNullDigiWindow(void)
 	}
 	tempRect.left += 2*TEXTLARG;		tempRect.right += 2*TEXTLARG;
 	
-	if( oldDigiValue2[ 5] != curMusic->header->numChn)
+	if (oldDigiValue2[ 5] != curMusic->header->numChn)
 	{
 		oldDigiValue2[ 5] = curMusic->header->numChn;
 		NumToString( curMusic->header->numChn, tempStr);
@@ -532,7 +532,7 @@ void  UpdateDigiListWindow(DialogPtr GetSelection)
 		
 		start = GetControlValue( ControlDigi);
 		end = start + 1 + (viewRect.right - viewRect.left) / TEXTLARG;
-		if( end > MAXTRACK) end = MAXTRACK;
+		if (end > MAXTRACK) end = MAXTRACK;
 		
 		for( x = GetControlValue( ControlDigi); x < MAXTRACK; x++)
 		{
@@ -571,7 +571,7 @@ short			maxValue, minValue, curVal, sVal;
 RgnHandle		aRgn;
 Rect			tempRect;
 
-if( ctlPart <= 0) return;
+if (ctlPart <= 0) return;
 
 lRefCon = GetControlReference( theControl);
 maxValue = GetControlMaximum( theControl);
@@ -582,30 +582,30 @@ curVal = sVal = GetControlValue( theControl);
 		{
 			case kControlUpButtonPart:
 				curVal -= 1;
-				if( curVal < minValue) curVal = minValue;
+				if (curVal < minValue) curVal = minValue;
 			break;
 			
 			case kControlDownButtonPart:
 				curVal += 1;
-				if( curVal > maxValue) curVal = maxValue;
+				if (curVal > maxValue) curVal = maxValue;
 			break;
 			
 			case kControlPageUpPart:
 				curVal -= (viewRect.right - viewRect.left) / TEXTLARG;
 				curVal++;
-				if( curVal < minValue) curVal = minValue;
+				if (curVal < minValue) curVal = minValue;
 			break;
 			
 			case kControlPageDownPart:
 				curVal += (viewRect.right - viewRect.left) / TEXTLARG;
 				curVal--;
-				if( curVal > maxValue) curVal = maxValue;
+				if (curVal > maxValue) curVal = maxValue;
 			break;
 		}
 		
 		SetControlValue( theControl, curVal);
 		
-		if( sVal != curVal)
+		if (sVal != curVal)
 		{
 			SetRect( &tempRect, viewRect.left, viewRect.top - TEXTHI + 2, viewRect.right, viewRect.bottom);
 		
@@ -641,10 +641,10 @@ void DoItemPressDigiList( short whichItem, DialogPtr whichDialog)    			/* Item 
 			
 			ctlPart = FindControl( myPt, GetDialogWindow( whichDialog), &theControl);
 	
-			if( ctlPart == kControlIndicatorPart)
+			if (ctlPart == kControlIndicatorPart)
 			{
 				bogus = TrackControl( theControl, myPt, NULL);
-				if( bogus != 0)
+				if (bogus != 0)
 				{
 					tempRect = viewRect;
 					tempRect.top -= TEXTHI + 2;
@@ -653,7 +653,7 @@ void DoItemPressDigiList( short whichItem, DialogPtr whichDialog)    			/* Item 
 					InvalWindowRect( GetDialogWindow( whichDialog), &tempRect);
 				}
 			}
-			else if( ctlPart > 0)
+			else if (ctlPart > 0)
 			{
     			MyControlUPP = NewControlActionUPP( actionProcDigi);
 				TrackControl(theControl, myPt, MyControlUPP);
@@ -673,7 +673,7 @@ void DoItemPressDigiList( short whichItem, DialogPtr whichDialog)    			/* Item 
 	
 	wspd = (WStateData*) *(wPeek->dataHandle);
 	
-	if( maxRight > qd.screenBits.bounds.bottom - 2) maxRight = qd.screenBits.bounds.bottom - 2;
+	if (maxRight > qd.screenBits.bounds.bottom - 2) maxRight = qd.screenBits.bounds.bottom - 2;
 	wspd->stdState.bottom = maxRight;
 }*/
 
@@ -687,7 +687,7 @@ void CreateDigiListWindow(void)
 	
 	
 
-	if( DigitalDlog != NULL)
+	if (DigitalDlog != NULL)
 	{
 		SetWindEtat( GetDialogWindow(DigitalDlog));
 		return;
@@ -732,7 +732,7 @@ void CreateDigiListWindow(void)
 
 void CloseDigiList(void)
 {
-	if( DigitalDlog != NULL)
+	if (DigitalDlog != NULL)
 	{
 		DisposeDialog( DigitalDlog);
 		SetItemMark( ViewsMenu, 4, noMark);

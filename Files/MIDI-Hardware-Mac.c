@@ -100,39 +100,39 @@ void MyNullHook()
 	GrafPtr				savePort;
 	OMSPacket 			*pkt = &pktCopy;
 	
-	if( !newPacket) return;
+	if (!newPacket) return;
 	
 	newPacket = false;
 	
 	pLength = pkt->len;	
 	
-	if( pkt->data[ 0] >= 0x90 && pkt->data[ 0] <= 0x9F)							// NOTE ON
+	if (pkt->data[ 0] >= 0x90 && pkt->data[ 0] <= 0x9F)							// NOTE ON
 	{
 		myNote = pkt->data[ 1] - 12;
-		if( myNote >= 0 && myNote < NUMBER_NOTES)
+		if (myNote >= 0 && myNote < NUMBER_NOTES)
 		{
-			if( thePrefs.MIDIChanInsTrack) curins = pkt->data[ 0] - 0x90;
+			if (thePrefs.MIDIChanInsTrack) curins = pkt->data[ 0] - 0x90;
 			else
 			{
 				curins = -1;
 				GetIns( &curins, NULL);
 			}
 			
-			if( thePrefs.MIDIVelocity) curvol = MidiVolume[ pkt->data[ 2]];
+			if (thePrefs.MIDIVelocity) curvol = MidiVolume[ pkt->data[ 2]];
 			else curvol = 0xFF;
 			
 			/*****************************/
-			if( pkt->data[ 2] == 0)
+			if (pkt->data[ 2] == 0)
 			{
 				pkt->data[ 0] -= 0x10;
 				goto NOTEOFF; 							// This is a NOTE-OFF
 			}
 			/*****************************/
 			
-			if( thePrefs.MIDIChanInsTrack)
+			if (thePrefs.MIDIChanInsTrack)
 			{
 				track = curins;
-				if( track >= curMusic->header->numChn) track = curMusic->header->numChn-1;
+				if (track >= curMusic->header->numChn) track = curMusic->header->numChn-1;
 			}
 			else
 			{
@@ -140,31 +140,31 @@ void MyNullHook()
 			}
 			
 			DoMidiSpeaker( myNote, curins, curvol);
-			if( PianoRecording) NPianoRecordProcess( myNote, curins, curvol, track);
-			else if( oldWindow == GetDialogWindow( EditorDlog)) DigitalEditorProcess( myNote, NULL, NULL, NULL);
+			if (PianoRecording) NPianoRecordProcess( myNote, curins, curvol, track);
+			else if (oldWindow == GetDialogWindow( EditorDlog)) DigitalEditorProcess( myNote, NULL, NULL, NULL);
 			
-			if( thePrefs.MIDIChanInsTrack) SelectTouche( myNote, curins);
+			if (thePrefs.MIDIChanInsTrack) SelectTouche( myNote, curins);
 			else SelectTouche( myNote, curins);
 			
 			TouchIn++;
-			if( TouchIn < 0 || TouchIn >= 10) TouchIn = 0;
+			if (TouchIn < 0 || TouchIn >= 10) TouchIn = 0;
 			TouchMem[ TouchIn] = myNote;
 			TrackMem[ TouchIn] = track;			// + 1
-			if( TrackMem[ TouchIn] < 0 || TrackMem[ TouchIn] >= MADDriver->DriverSettings.numChn) TrackMem[ TouchIn] = 0;
+			if (TrackMem[ TouchIn] < 0 || TrackMem[ TouchIn] >= MADDriver->DriverSettings.numChn) TrackMem[ TouchIn] = 0;
 		}
 	}
-	else if( pkt->data[ 0] >= 0x80 && pkt->data[ 0] <= 0x8F)							// NOTE OFF
+	else if (pkt->data[ 0] >= 0x80 && pkt->data[ 0] <= 0x8F)							// NOTE OFF
 	{
 	NOTEOFF:
 	
 		myNote = pkt->data[ 1] - 12;
-		if( myNote >= 0 && myNote < NUMBER_NOTES)
+		if (myNote >= 0 && myNote < NUMBER_NOTES)
 		{
 			for(i=0; i<10;i++)
 			{
-				if( TouchMem[ i] == myNote)
+				if (TouchMem[ i] == myNote)
 				{
-					if( PianoDlog != NULL)
+					if (PianoDlog != NULL)
 					{
 						GetPort( &savePort);
 						SetPortDialogPort( PianoDlog);
@@ -175,14 +175,14 @@ void MyNullHook()
 						switch( thePrefs.KeyUpMode)
 						{
 							case eStop:
-								if( PianoRecording)
+								if (PianoRecording)
 								{
 									NPianoRecordProcess( 0xFF, 0xFF, 0x10, TrackMem[ i]);
 								}
 							break;
 							
 							case eNoteOFF:
-								if( PianoRecording)
+								if (PianoRecording)
 								{
 									NPianoRecordProcess( 0xFE, 0xFF, 0xFF, TrackMem[ i]);
 								}
@@ -209,7 +209,7 @@ pascal void	MyReadHook(OMSPacket *pkt, long myRefCon)
 	Rect				tempRect;
 	GrafPtr				savePort;
 	
-	if( thePrefs.MidiKeyBoard)
+	if (thePrefs.MidiKeyBoard)
 	{
 		pktCopy = *pkt;
 		newPacket = true;
@@ -221,12 +221,12 @@ pascal void	MyReadHook(OMSPacket *pkt, long myRefCon)
 
 void CloseMIDIHarware(void)
 {
-	if( MIDIHardware)
+	if (MIDIHardware)
 	{
 		if (gSignedInToMIDIMgr)
 		gSignedInToMIDIMgr = false;
 		
-		if( MIDIHardwareAlreadyOpen)
+		if (MIDIHardwareAlreadyOpen)
 		{
 			OMSSignOut(MySignature);
 			MIDIHardwareAlreadyOpen = false;
@@ -282,9 +282,9 @@ errexit:
 
 void OpenMIDIHardware( void)	
 {
-	if( MIDIHardware == false) return;
+	if (MIDIHardware == false) return;
 	
-	if( MIDIHardwareAlreadyOpen == true) return;
+	if (MIDIHardwareAlreadyOpen == true) return;
 	
 	if (InitOMS( 'SNPL', 'in  ', 'out ') != noErr)
 	{
@@ -311,7 +311,7 @@ void InitMIDIHarware(void)
 	if (OMSVersion() == 0) MIDIHardware = false;
 	else MIDIHardware = true;
 	
-//	if( thePrefs.SendMIDIClockData) OpenMIDIHardware();
+//	if (thePrefs.SendMIDIClockData) OpenMIDIHardware();
 	
 	return;
 }
@@ -323,22 +323,22 @@ void DoMidiSpeaker( short note, short Instru, long arg)
 	Point	theCell;
 	short	vol, chan;
 
-	if( thePrefs.MIDIVelocity)
+	if (thePrefs.MIDIVelocity)
 	{
 		vol = MidiVolume[ arg];
 		vol += 0x10;
 	}
 	else vol = 0xFF;
 	
-	if( !thePrefs.MIDIChanInsTrack)
+	if (!thePrefs.MIDIChanInsTrack)
 	{
-		if( !GetIns( &Instru, NULL)) return;
+		if (!GetIns( &Instru, NULL)) return;
 		chan = LastCanal;
 	}
 	else
 	{
 		chan = Instru;
-		if( chan >= curMusic->header->numChn) chan = curMusic->header->numChn-1;
+		if (chan >= curMusic->header->numChn) chan = curMusic->header->numChn-1;
 	}
 	
 	DoPlayInstruInt( note, Instru, 0, 0, vol, &MADDriver->chan[ chan], 0, 0);
@@ -380,14 +380,14 @@ void SelectOMSConnections( Boolean Input)
 	
 	OpenMIDIHardware();
 	
-	if( Input)
+	if (Input)
 	{
 		OMSIDListH	in;
 		
 		in = OMSChooseNodes( prevSelectionIN, "\pSelect Input", false, omsIncludeInputs + omsIncludeReal + omsIncludeVirtual + omsIncludeSync, NULL);
-		if( in)
+		if (in)
 		{
-			if( prevSelectionIN) OMSDisposeHandle( prevSelectionIN);
+			if (prevSelectionIN) OMSDisposeHandle( prevSelectionIN);
 			prevSelectionIN = in;
 			
 			OpenOrCloseConnection( false);
@@ -402,9 +402,9 @@ void SelectOMSConnections( Boolean Input)
 		OMSIDListH	out;
 		
 		out = OMSChooseNodes( prevSelectionOUT, "\pSelect Output", false, omsIncludeOutputs + omsIncludeReal + omsIncludeVirtual, NULL);
-		if( out)
+		if (out)
 		{
-			if( prevSelectionOUT) OMSDisposeHandle( prevSelectionOUT);
+			if (prevSelectionOUT) OMSDisposeHandle( prevSelectionOUT);
 			prevSelectionOUT = out;
 			
 			gChosenOutputID = (*prevSelectionOUT)->id[ 0];
@@ -420,9 +420,9 @@ void SendMIDIClock( MADDriverRec *intDriver, Byte MIDIByte)
 {
 	OMSMIDIPacket pack;
 	
-	if( MIDIHardware == false) return;
+	if (MIDIHardware == false) return;
 	
-	if( gOutNodeRefNum == -1) return;
+	if (gOutNodeRefNum == -1) return;
 	
 	/*** Timing Clock: 0xF8, Start: 0xFA, Continue: 0xFB, Stop: 0xFC ***/
 	
@@ -443,15 +443,15 @@ void SendMIDITimingClock( MADDriverRec *MDriver)
 	long			high, low, time, timeResult, curTime;
 	long			speed, finespeed;
 	
-	if( MIDIHardware == false) return;
+	if (MIDIHardware == false) return;
 	
-	if( gOutNodeRefNum == -1) return;
+	if (gOutNodeRefNum == -1) return;
 	
 	//////
 	
-	if( MDriver == NULL) Debugger();
-	if( MDriver->curMusic == NULL) Debugger();
-	if( MDriver->curMusic->header == NULL) Debugger();
+	if (MDriver == NULL) Debugger();
+	if (MDriver->curMusic == NULL) Debugger();
+	if (MDriver->curMusic->header == NULL) Debugger();
 	
 	time				= 0;
 	speed				= MDriver->curMusic->header->speed;
@@ -465,7 +465,7 @@ void SendMIDITimingClock( MADDriverRec *MDriver)
 		{
 			time ++;
 			
-			if( i == MDriver->PL	&&
+			if (i == MDriver->PL	&&
 				x == MDriver->PartitionReader)
 				{
 					curTime = time;
@@ -477,7 +477,7 @@ void SendMIDITimingClock( MADDriverRec *MDriver)
 				
 				/** SpeedE **/
 				
-			/*	if( aCmd->cmd == speedE)
+			/*	if (aCmd->cmd == speedE)
 				{
 					// Compute time for this interval
 
@@ -486,23 +486,23 @@ void SendMIDITimingClock( MADDriverRec *MDriver)
 					
 					//
 					
-					if( aCmd->arg < 32)
+					if (aCmd->arg < 32)
 					{
-						if( aCmd->arg != 0) speed = aCmd->arg;
+						if (aCmd->arg != 0) speed = aCmd->arg;
 					}
 					else
 					{
-						if( aCmd->arg != 0) finespeed = aCmd->arg;
+						if (aCmd->arg != 0) finespeed = aCmd->arg;
 					}
 				}*/
 				
 				/** SkipE **/
 				
-				if( aCmd->cmd == skipE)
+				if (aCmd->cmd == skipE)
 				{
 					for( ; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
 					{
-						if( i == MDriver->PL	&&
+						if (i == MDriver->PL	&&
 							x == MDriver->PartitionReader)
 						{
 							curTime = time;

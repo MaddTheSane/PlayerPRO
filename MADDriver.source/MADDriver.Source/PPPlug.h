@@ -51,7 +51,7 @@
 //
 //	If you want to reallocate theData or theData->data:
 //	
-//	if( theData->data != 0L) DisposPtr( theData->data);		// VERY IMPORTANT to free memory
+//	if (theData->data != 0L) DisposPtr( theData->data);		// VERY IMPORTANT to free memory
 //	theData->data = NewPtr( newsize);						// Use NewPtr ONLY to allocate memory!
 //	
 //	theData->size = newsize;								// In bytes !! Even for 16 bits !
@@ -128,7 +128,7 @@ typedef struct _PPFiltersPlugin {
 //
 //	If you want to reallocate Pcmd:
 //	
-//	if( Pcmd != 0L) DisposPtr( (Ptr) Pcmd);							// VERY IMPORTANT
+//	if (Pcmd != 0L) DisposPtr( (Ptr) Pcmd);							// VERY IMPORTANT
 //	Pcmd = NewPtrClear( sizeof( Pcmd) + noCell * sizeof( Cmd));		// Use NewPtr ONLY to allocate memory!
 //
 //	myPcmd->structSize 	= sizeof( Pcmd) + noCell * sizeof( Cmd);

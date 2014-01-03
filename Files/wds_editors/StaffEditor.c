@@ -121,7 +121,7 @@ short GetMaxXStaff()
 	short	ret;
 
 	ret = 1 + GetControlValue( xScroll) + (StaffRect.right - StaffRect.left) / XSize;
-	if( ret > curMusic->partition[ CurrentPat]->header.size) ret = curMusic->partition[ CurrentPat]->header.size;
+	if (ret > curMusic->partition[ CurrentPat]->header.size) ret = curMusic->partition[ CurrentPat]->header.size;
 	
 	return ret;
 }
@@ -131,7 +131,7 @@ short GetMaxYStaff()
 	short	ret;
 
 	ret = 1 + GetControlValue( yScroll) + (StaffRect.bottom - StaffRect.top) / YSize;
-	if( ret > curMusic->header->numChn) ret = curMusic->header->numChn;
+	if (ret > curMusic->header->numChn) ret = curMusic->header->numChn;
 	
 	return ret;
 }
@@ -143,7 +143,7 @@ void SetStaffControl()
 	
 	// XScroll
 	
-	if( xScroll != 0)
+	if (xScroll != 0)
 	{
 		GetPortBounds( GetDialogPort( StaffDlog), &caRect);
 		
@@ -152,15 +152,15 @@ void SetStaffControl()
 		
 		SetControlMinimum( xScroll, 0);
 		
-		tt = curMusic->partition[ CurrentPat]->header.size - ((caRect.right - 14) - StaffRect.left) / XSize;		if( tt < 0) tt = 0;
+		tt = curMusic->partition[ CurrentPat]->header.size - ((caRect.right - 14) - StaffRect.left) / XSize;		if (tt < 0) tt = 0;
 		SetControlMaximum( xScroll, tt);
 		
-		if( gUseControlSize) SetControlViewSize( xScroll, ((caRect.right - 14) - StaffRect.left) / XSize);
+		if (gUseControlSize) SetControlViewSize( xScroll, ((caRect.right - 14) - StaffRect.left) / XSize);
 	}
 	
 	// YScroll
 	
-	if( yScroll != 0)
+	if (yScroll != 0)
 	{
 		GetPortBounds( GetDialogPort( StaffDlog), &caRect);
 		
@@ -169,10 +169,10 @@ void SetStaffControl()
 		
 		SetControlMinimum( yScroll, 0);
 		
-		tt = curMusic->header->numChn  - ((caRect.bottom - 14) - StaffRect.top) / YSize;	if( tt < 0) tt = 0;
+		tt = curMusic->header->numChn  - ((caRect.bottom - 14) - StaffRect.top) / YSize;	if (tt < 0) tt = 0;
 		SetControlMaximum( yScroll, tt);
 		
-		if( gUseControlSize) SetControlViewSize( yScroll, ((caRect.bottom - 14) - StaffRect.top) / YSize);
+		if (gUseControlSize) SetControlViewSize( yScroll, ((caRect.bottom - 14) - StaffRect.top) / YSize);
 	}
 	
 	SetMaxWindow(StaffRect.left + curMusic->partition[ CurrentPat]->header.size*XSize + 14,
@@ -189,7 +189,7 @@ void CreateCurStaffRect()
 	StaffRect.right = caRect.right - 15;
 	StaffRect.bottom = caRect.bottom - 15;
 	
-	if( startXSelec == -1 && startYSelec == -1 && endXSelec == -1 && endYSelec == -1)
+	if (startXSelec == -1 && startYSelec == -1 && endXSelec == -1 && endYSelec == -1)
 	{
 		SetRect( &CurRect, 0, 0, 0, 0);
 	}
@@ -212,16 +212,16 @@ void ConvertPt2Note( Point pt, short *position, short *track, short *note)
 	pt.h /= XSize;
 	pt.h += GetControlValue( xScroll);
 	
-	if( pt.h < 0) pt.h = 0;
-	else if( pt.h >= curMusic->partition[ CurrentPat]->header.size) pt.h = curMusic->partition[ CurrentPat]->header.size - 1;
+	if (pt.h < 0) pt.h = 0;
+	else if (pt.h >= curMusic->partition[ CurrentPat]->header.size) pt.h = curMusic->partition[ CurrentPat]->header.size - 1;
 	
 	pt.v -= StaffRect.top;
 	ptv   = pt.v + GetControlValue( yScroll)*YSize;
 	pt.v /= YSize;
 	pt.v += GetControlValue( yScroll);
 	
-	if( pt.v < 0) pt.v = 0;
-	else if( pt.v >= curMusic->header->numChn) pt.v = curMusic->header->numChn - 1;
+	if (pt.v < 0) pt.v = 0;
+	else if (pt.v >= curMusic->header->numChn) pt.v = curMusic->header->numChn - 1;
 	
 	tempf = ptv - pt.v*YSize;
 	tempf -= YSize/2;
@@ -236,14 +236,14 @@ void ConvertPt2Note( Point pt, short *position, short *track, short *note)
 	
 	tempf = 0 + (((short)tempf)*12) - tondemi[ 6 - temp2%7];
 	
-	if( note != NULL)
+	if (note != NULL)
 	{
 		*note = 96 - tempf;
-		if( *note < 0) *note = 0;
-		if( *note >= 96) *note = 95;
+		if (*note < 0) *note = 0;
+		if (*note >= 96) *note = 95;
 	}
-	if( position != NULL) 	*position = pt.h;
-	if( track != NULL) 		*track = pt.v;
+	if (position != NULL) 	*position = pt.h;
+	if (track != NULL) 		*track = pt.v;
 }
 
 Boolean aNoteStaff( Point pt, short *whichNote)
@@ -253,11 +253,11 @@ Boolean aNoteStaff( Point pt, short *whichNote)
 	
 	ConvertPt2Note( pt, &pos, &track, &note);
 	
-	if( whichNote != NULL) *whichNote = note;
+	if (whichNote != NULL) *whichNote = note;
 	
 	cmd = GetMADCommand( pos, track, curMusic->partition[ CurrentPat]);
 	
-	if( cmd->note == note || cmd->note == note+1)
+	if (cmd->note == note || cmd->note == note+1)
 	{
 		return true;
 	}
@@ -274,7 +274,7 @@ void DrawNoteCarre( Point *myPt)
 	GetDialogItem( StaffDlog, 12, &iType, &iHandle, &iRect);
 	iRect.right--;	iRect.top++;
 	
-	if( myPt == NULL)
+	if (myPt == NULL)
 	{
 		TETextBox( curDisplayedNote+1, curDisplayedNote[ 0], &iRect, teCenter);
 	}
@@ -283,7 +283,7 @@ void DrawNoteCarre( Point *myPt)
 		ConvertPt2Note( *myPt, NULL, NULL, &note);
 		GetNoteString( note, str);
 		
-		if( !EqualString( str, curDisplayedNote, true, true))
+		if (!EqualString( str, curDisplayedNote, true, true))
 		{
 			pStrcpy( curDisplayedNote, str);
 			TETextBox( curDisplayedNote+1, curDisplayedNote[ 0], &iRect, teCenter);
@@ -300,20 +300,20 @@ void DoNullStaff(void)
  	Rect		caRect, tempRect;
  	Boolean		MakeUpdate = false;
 	
- 	if( StaffDlog == NULL) return;
+ 	if (StaffDlog == NULL) return;
 	
  	GetPort( &SavePort);
  	SetPortDialogPort( StaffDlog);
 	
-	if( ReaderCopy != MADDriver->PartitionReader)
+	if (ReaderCopy != MADDriver->PartitionReader)
 	{
 		EraseStaffReader();
 		
 		ReaderCopy = MADDriver->PartitionReader;
 		
-		if( ReaderCopy < curMusic->partition[ CurrentPat]->header.size)
+		if (ReaderCopy < curMusic->partition[ CurrentPat]->header.size)
 		{
-			if( ReaderCopy > GetMaxXStaff() || ReaderCopy < GetControlValue( xScroll))
+			if (ReaderCopy > GetMaxXStaff() || ReaderCopy < GetControlValue( xScroll))
 			{
 				SetControlValue( xScroll, ReaderCopy);
 				
@@ -323,14 +323,14 @@ void DoNullStaff(void)
 		}
 	}
 	
-	if( CurrentPat != MADDriver->Pat || PatternSizeCopy != curMusic->partition[ CurrentPat]->header.size)
+	if (CurrentPat != MADDriver->Pat || PatternSizeCopy != curMusic->partition[ CurrentPat]->header.size)
 	{
 		Str255			theStr;
 		short			x;
 		
 		CurrentPat = MADDriver->Pat;
 		
-		if( curMusic->partition[ CurrentPat]->header.size != PatternSizeCopy)
+		if (curMusic->partition[ CurrentPat]->header.size != PatternSizeCopy)
 		{
 			PatternSizeCopy = curMusic->partition[ CurrentPat]->header.size;
 			
@@ -343,8 +343,8 @@ void DoNullStaff(void)
 		
 		NumToString( (long) CurrentPat, String);
 		pStrcpy( aStr, "\p");
-		if( CurrentPat < 10) pStrcat( aStr, "\p0");
-		if( CurrentPat < 100) pStrcat( aStr, "\p0");
+		if (CurrentPat < 10) pStrcat( aStr, "\p0");
+		if (CurrentPat < 100) pStrcat( aStr, "\p0");
 		pStrcat( aStr, String);
 		
 		pStrcpy( String, "\pPattern: ");
@@ -352,7 +352,7 @@ void DoNullStaff(void)
 		
 		theStr[ 0] = 20;
 		for( x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ CurrentPat]->header.name[ x];
-		for( x = 1; x < 20; x++) if( theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
+		for( x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
 		pStrcat( String, "\p ");
 		pStrcat( String, theStr);
 		
@@ -363,9 +363,9 @@ void DoNullStaff(void)
 		MakeUpdate = true;
 	}
 	
-	if( curMusic->header->numChn != CurrentNumChn) MakeUpdate = true;
+	if (curMusic->header->numChn != CurrentNumChn) MakeUpdate = true;
 	
-	if( oldWindow == GetDialogWindow( StaffDlog))
+	if (oldWindow == GetDialogWindow( StaffDlog))
 	{
 		short 		note;
 		RgnHandle	visibleRegion;
@@ -377,22 +377,22 @@ void DoNullStaff(void)
 		
 		GetPortVisibleRegion( GetWindowPort( oldWindow), visibleRegion);
 		
-		if( PtInRgn( myPt, visibleRegion))
+		if (PtInRgn( myPt, visibleRegion))
 		{
-			if( PtInRect( myPt, &StaffRect))
+			if (PtInRect( myPt, &StaffRect))
 			{
 				DrawNoteCarre( &myPt);
 				
 				/*	temp = (myPt.v - StaffRect.top) / YSize;
 				 //	temp = (myPt.v - StaffRect.top) - YSize*temp;
-				 if( (myPt.v - StaffRect.top) - YSize*temp == YSize)
+				 if ((myPt.v - StaffRect.top) - YSize*temp == YSize)
 				 {
 				 SetCursor( &HandCrsr);
 				 }
 				 else*/
 				{
 					GetKeys( km);
-					if( IsPressed( 0x37) && PtInRect( myPt, &CurRect))	// On joue la note = PlayCrsr
+					if (IsPressed( 0x37) && PtInRect( myPt, &CurRect))	// On joue la note = PlayCrsr
 					{
 						SetCursor( &PlayCrsr);
 					}
@@ -401,12 +401,12 @@ void DoNullStaff(void)
 						switch( mode)
 						{
 							case noteM:
-							if( aNoteStaff( myPt, NULL)) SetCursor( &HandCrsr);
+							if (aNoteStaff( myPt, NULL)) SetCursor( &HandCrsr);
 							else SetCursor( &NoteCrsr);
 							break;
 							
 							case selecM:
-							if( PtInRect( myPt, &CurRect)) SetCursor( &HandCrsr);
+							if (PtInRect( myPt, &CurRect)) SetCursor( &HandCrsr);
 							else SetCursor( &beamCrsr);
 							break;
 						}
@@ -422,7 +422,7 @@ void DoNullStaff(void)
 				tempRect.left = StaffRect.left;
 				tempRect.right = StaffRect.right;
 				
-				if( PtInRect( myPt, &tempRect)) SetCursor( &PlayCrsr);
+				if (PtInRect( myPt, &tempRect)) SetCursor( &PlayCrsr);
 				else
 				{
 					GetDialogItem( StaffDlog, 4, &itemType, &itemHandle, &tempRect);
@@ -431,7 +431,7 @@ void DoNullStaff(void)
 					tempRect.top = StaffRect.top;
 					tempRect.bottom = StaffRect.bottom;
 					
-					if( PtInRect( myPt, &tempRect)) SetCursor( &PlayCrsr);
+					if (PtInRect( myPt, &tempRect)) SetCursor( &PlayCrsr);
 					else SetCursor( GetQDGlobalsArrow( &qdarrow));
 				}
 			}
@@ -441,7 +441,7 @@ void DoNullStaff(void)
 		DisposeRgn( visibleRegion);
 	}
 	
-	if( MakeUpdate)
+	if (MakeUpdate)
 	{
 		UpdateStaffInfo();
 		UpdateStaffWindow( StaffDlog);
@@ -474,13 +474,13 @@ void DoGrowStaff(void)
 	
 	GetQDGlobalsScreenBits( &screenBits);
 	
-	if( temp.bottom < temp.top) temp.bottom = temp.top;
-	else if( temp.bottom > screenBits.bounds.bottom - aPt.v) temp.bottom = screenBits.bounds.bottom - aPt.v -2;
+	if (temp.bottom < temp.top) temp.bottom = temp.top;
+	else if (temp.bottom > screenBits.bounds.bottom - aPt.v) temp.bottom = screenBits.bounds.bottom - aPt.v -2;
 	
 	lSizeVH = 0;
-	if( theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( StaffDlog), theEvent.where, &temp);
+	if (theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( StaffDlog), theEvent.where, &temp);
 	
-	if( lSizeVH != 0)
+	if (lSizeVH != 0)
 	{
 		tempA = LoWord( lSizeVH);
 		tempB = HiWord( lSizeVH);
@@ -489,10 +489,10 @@ void DoGrowStaff(void)
 	{
 		GetPortBounds( GetDialogPort( StaffDlog), &caRect);
 		
-		if( caRect.right >= temp.right) tempA = temp.right-1;
+		if (caRect.right >= temp.right) tempA = temp.right-1;
 		else tempA = caRect.right;
 		
-		if( caRect.bottom >= temp.bottom) tempB = temp.bottom-1;
+		if (caRect.bottom >= temp.bottom) tempB = temp.bottom-1;
 		else tempB = caRect.bottom;
 	}
 	
@@ -519,7 +519,7 @@ void DrawStaffReader()
 	Rect			tRect;
 	RgnHandle		savedClip;
 	
-	if( curMusic->partition[ CurrentPat]->header.size > 100) temp = 3;
+	if (curMusic->partition[ CurrentPat]->header.size > 100) temp = 3;
 	else temp = 2;
 	
 	savedClip = NewRgn();
@@ -558,7 +558,7 @@ void EraseStaffReader()
 	Rect			tRect;
 	RgnHandle		savedClip;
 	
-	if( curMusic->partition[ CurrentPat]->header.size > 100) temp = 3;
+	if (curMusic->partition[ CurrentPat]->header.size > 100) temp = 3;
 	else temp = 2;
 	
 	savedClip = NewRgn();
@@ -575,16 +575,16 @@ void EraseStaffReader()
 	tRect.left	= StaffRect.left + (ReaderCopy - GetControlValue( xScroll)) * XSize + XSize/2 - (add*XSize)/2;
 	tRect.right	= tRect.left + (add*XSize);
 	
-	if( thePrefs.UseMarkers)
+	if (thePrefs.UseMarkers)
 	{
-		if( ReaderCopy < thePrefs.MarkersOffSet) ForeColor( whiteColor);
+		if (ReaderCopy < thePrefs.MarkersOffSet) ForeColor( whiteColor);
 		else
 		{
 			RGBColor				yellC = { 65535, 65535, 39321};
 			short					tempB;
 			
 			tempB = (ReaderCopy - thePrefs.MarkersOffSet) / thePrefs.MarkersSize;
-			if( tempB % 2 == 0) RGBForeColor( &yellC);
+			if (tempB % 2 == 0) RGBForeColor( &yellC);
 			else ForeColor( whiteColor);
 		}
 	}
@@ -629,20 +629,20 @@ void DrawStaffFrame()
 	tRect.right = StaffRect.right;
 	ClipRect( &tRect);
 	
-	if( curMusic->partition[ CurrentPat]->header.size > 100) temp = 3;
+	if (curMusic->partition[ CurrentPat]->header.size > 100) temp = 3;
 	else temp = 2;
 	
-	if( temp <= 2)
+	if (temp <= 2)
 	{
-		if( XSize > 8) 			add = 1;
-		else if( XSize > 4)		add = 2;
+		if (XSize > 8) 			add = 1;
+		else if (XSize > 4)		add = 2;
 		else 					add = 4;
 	}
-	else if( temp == 3)
+	else if (temp == 3)
 	{
-		if( XSize > 16) 		add = 1;
-		else if( XSize > 8) 	add = 2;
-		else if( XSize > 4)		add = 4;
+		if (XSize > 16) 		add = 1;
+		else if (XSize > 8) 	add = 2;
+		else if (XSize > 4)		add = 4;
 		else 					add = 8;
 	}
 	
@@ -666,16 +666,16 @@ void DrawStaffFrame()
 		NTStr( temp, i , (Ptr) String);
 		tRect.right--;
 		
-		if( thePrefs.UseMarkers)
+		if (thePrefs.UseMarkers)
 		{
-			if( i < thePrefs.MarkersOffSet) ForeColor( whiteColor);
+			if (i < thePrefs.MarkersOffSet) ForeColor( whiteColor);
 			else
 			{
 				RGBColor				yellC = { 65535, 65535, 39321};
 				short					tempB;
 				
 				tempB = (i - thePrefs.MarkersOffSet) / thePrefs.MarkersSize;
-				if( tempB % 2 == 0) RGBForeColor( &yellC);
+				if (tempB % 2 == 0) RGBForeColor( &yellC);
 				else ForeColor( whiteColor);
 			}
 		}
@@ -689,7 +689,7 @@ void DrawStaffFrame()
 		MoveTo( tRect.right-1, tRect.top);
 		LineTo( tRect.right-1, tRect.bottom);
 		
-		if( add != 1)
+		if (add != 1)
 		{
 			MoveTo( tRect.left + (tRect.right-tRect.left)/2, tRect.bottom-1);
 			LineTo( tRect.left + (tRect.right-tRect.left)/2, tRect.bottom);
@@ -698,7 +698,7 @@ void DrawStaffFrame()
 	
 	GetPortBounds( GetDialogPort( StaffDlog), &caRect);
 	
-	if( tRect.right < caRect.right)
+	if (tRect.right < caRect.right)
 	{
 		tRect.left = tRect.right;
 		tRect.right = caRect.right;
@@ -736,7 +736,7 @@ void DrawStaffFrame()
 		
 		MoveTo( 1, tRect.top + 3 +(tRect.bottom - tRect.top)/2);
 		
-		if( MADDriver->Active[ i]) ForeColor( blackColor);
+		if (MADDriver->Active[ i]) ForeColor( blackColor);
 		else RGBForeColor( &Gray);
 		
 		DrawString( MyC2PStr( String));
@@ -761,7 +761,7 @@ void DrawStaffFrame()
 		tRect.top = tRect.top + (tRect.bottom - tRect.top - ((*MainNote)->picFrame.bottom - (*MainNote)->picFrame.top))/2;
 		tRect.bottom = tRect.top + ((*MainNote)->picFrame.bottom - (*MainNote)->picFrame.top);
 		
-		if( MADDriver->Active[ i]) ForeColor( blackColor);
+		if (MADDriver->Active[ i]) ForeColor( blackColor);
 		else RGBForeColor( &Gray);
 		
 		DrawPicture( MainNote, &tRect);
@@ -770,11 +770,11 @@ void DrawStaffFrame()
 		TextFace( bold);
 		TextSize( 20);
 		
-		if( MADDriver->Active[ i]) ForeColor( blackColor);
+		if (MADDriver->Active[ i]) ForeColor( blackColor);
 		else RGBForeColor( &Gray);
 		
 		
-		if( thePrefs.TempsNum > 9 || thePrefs.TempsUnit > 9) add = -8;
+		if (thePrefs.TempsNum > 9 || thePrefs.TempsUnit > 9) add = -8;
 		else add = 0;
 		
 		MoveTo( tRect.left + 32 + add, tRect.top + 23);	NumToString( thePrefs.TempsNum, str);		DrawString( str);
@@ -795,7 +795,7 @@ void DrawStaffFrame()
 	
 	GetPortBounds( GetDialogPort( StaffDlog), &caRect);
 	
-	if( tRect.bottom < caRect.bottom)
+	if (tRect.bottom < caRect.bottom)
 	{
 		tRect.top = tRect.bottom+1;
 		tRect.bottom = caRect.bottom;
@@ -825,7 +825,7 @@ void UpdateStaffInfo()
 	short		x;
 	Str255		aStr;
 
-	if( StaffDlog == NULL) return;
+	if (StaffDlog == NULL) return;
 		
 	/**/
 	
@@ -836,14 +836,14 @@ void UpdateStaffInfo()
 	
 	YSize = thePrefs.TrackHeight;
 	TempsSize = (thePrefs.TempsNum * 16) / thePrefs.TempsUnit;
-	if( TempsSize < 1) TempsSize = 1;
+	if (TempsSize < 1) TempsSize = 1;
 	
 	SetStaffControl();
 	CreateCurStaffRect();
 	
 	ReaderCopy = MADDriver->PartitionReader;		CurrentPat = MADDriver->Pat;
 	
-	if( curMusic->header->numChn != 	CurrentNumChn)
+	if (curMusic->header->numChn != 	CurrentNumChn)
 	{
 		GetPortBounds( GetDialogPort( StaffDlog), &caRect);
 		
@@ -853,7 +853,7 @@ void UpdateStaffInfo()
 		ctlUpdate = true;
 	}
 	
-	if( ctlUpdate) SetStaffControl();
+	if (ctlUpdate) SetStaffControl();
 	
 	CreateCurStaffRect();
 	
@@ -877,7 +877,7 @@ void UpdateStaffNote( short track)
 	GrafPtr		SavePort;
 	Rect		aR;
 
-	if( StaffDlog == NULL) return;
+	if (StaffDlog == NULL) return;
 	
  	GetPort( &SavePort);
  	SetPortDialogPort( StaffDlog);
@@ -887,7 +887,7 @@ void UpdateStaffNote( short track)
 	aR.top		= StaffRect.top + 1 + (track - GetControlValue( yScroll)) * YSize;
 	aR.bottom	= aR.top + YSize;
 	
-	if( SectRect( &aR, &StaffRect, &aR)) InvalWindowRect( GetDialogWindow( StaffDlog), &aR);
+	if (SectRect( &aR, &StaffRect, &aR)) InvalWindowRect( GetDialogWindow( StaffDlog), &aR);
 	
 	SetPort( SavePort);
 }
@@ -918,7 +918,7 @@ void DrawStaffNotes()
 		
 		tRect.top		= StaffRect.top + 1 + (x - GetControlValue( yScroll)) * YSize;
 		tRect.bottom	= tRect.top + YSize;
-		if( tRect.bottom > StaffRect.bottom) tRect.bottom = StaffRect.bottom;
+		if (tRect.bottom > StaffRect.bottom) tRect.bottom = StaffRect.bottom;
 		
 		ClipRect( &tRect);
 		
@@ -938,7 +938,7 @@ void DrawStaffNotes()
  		{
  			tRect.left	= StaffRect.left + (i - GetControlValue( xScroll)) * XSize;
 			
-			if( i%TempsSize == 0)
+			if (i%TempsSize == 0)
 			{
 				MoveTo( tRect.left-1, tRect.top);
 				LineTo( tRect.left-1, tRect.bottom);
@@ -962,7 +962,7 @@ void DrawStaffNotes()
 			LineTo( StaffRect.right, tRect.top + 16 + 5*FULLINE + z*FULLINE);
 		}
  		
- 	//	if( thePrefs.StaffShowAllNotes)
+ 	//	if (thePrefs.StaffShowAllNotes)
  		{
  			startTT  = x;
  			endTT = x+1;
@@ -975,7 +975,7 @@ void DrawStaffNotes()
  		
  		for( tr = startTT; tr < endTT; tr++)
  		{
- 			if( tr == x)
+ 			if (tr == x)
  			{
  				ForeColor( blackColor);
  			}
@@ -984,7 +984,7 @@ void DrawStaffNotes()
  				ForeColor( redColor);
  			}
  			
- 		//	if( MADDriver->Active[ tr]) ForeColor( blackColor);
+ 		//	if (MADDriver->Active[ tr]) ForeColor( blackColor);
 		//	else RGBForeColor( &Gray);
  			
 		 	for( i = 0; i < GetMaxXStaff() ;)
@@ -1001,25 +1001,25 @@ void DrawStaffNotes()
 				{
 					cmd = GetMADCommand( i, tr, curMusic->partition[ CurrentPat]);
 					
-					if( cmd->note != 0xFF && cmd->note != 0xFE) { note = cmd;		break; }
-					if( i >= curMusic->partition[ CurrentPat]->header.size) break;
+					if (cmd->note != 0xFF && cmd->note != 0xFE) { note = cmd;		break; }
+					if (i >= curMusic->partition[ CurrentPat]->header.size) break;
 				}
 				startNote = i;
 				i++;
 				
-				if( note)
+				if (note)
 				{
 					for(;; i++) // Scan pour la fin de la note - NOTE OFF
 					{
 						cmd = GetMADCommand( i, tr, curMusic->partition[ CurrentPat]);
 						
-						if( cmd->note != 0xFF) break;
-						if( i >= curMusic->partition[ CurrentPat]->header.size) break;
+						if (cmd->note != 0xFF) break;
+						if (i >= curMusic->partition[ CurrentPat]->header.size) break;
 					}
 					endNote = i;
 				}
 				
-				if( startScan < startNote && startNote >= GetControlValue( xScroll))		// Ajout d'un SILENCE
+				if (startScan < startNote && startNote >= GetControlValue( xScroll))		// Ajout d'un SILENCE
 				{
 					CIconHandle	silIcon;
 					
@@ -1035,21 +1035,21 @@ void DrawStaffNotes()
 						
 						ttt = (startNote - silenceLength + TempsSize)/TempsSize;			// Verifie si passe une barriere
 						ttt = ttt * TempsSize;
-						if( startScan + silenceLength > ttt)
+						if (startScan + silenceLength > ttt)
 						{
 							silenceLength = ttt - (startNote - silenceLength);
 						}
 						SilenceEncore :
 						
-						if( silenceLength > TempsSize) silenceLength = TempsSize;
+						if (silenceLength > TempsSize) silenceLength = TempsSize;
 						
 						tRect.left		= StaffRect.left + BEMOLSIZE/2 + (startNote - silenceLengthCopy - GetControlValue( xScroll)) * XSize;
 						
-								if( silenceLength >= 16) { silIcon = silence[ 0];	remove = 16; }
-						else	if( silenceLength >=  8) { silIcon = silence[ 1];	remove = 8;  }
-						else	if( silenceLength >=  4) { silIcon = silence[ 2];	remove = 4;  }
-						else	if( silenceLength >=  2) { silIcon = silence[ 3];	remove = 2;  }
-						else	if( silenceLength >=  1) { silIcon = silence[ 4];	remove = 1;  }
+								if (silenceLength >= 16) { silIcon = silence[ 0];	remove = 16; }
+						else	if (silenceLength >=  8) { silIcon = silence[ 1];	remove = 8;  }
+						else	if (silenceLength >=  4) { silIcon = silence[ 2];	remove = 4;  }
+						else	if (silenceLength >=  2) { silIcon = silence[ 3];	remove = 2;  }
+						else	if (silenceLength >=  1) { silIcon = silence[ 4];	remove = 1;  }
 						else	MyDebugStr( __LINE__, __FILE__, "");
 						
 						tRect.right		= tRect.left + (*silIcon)->iconPMap.bounds.right;
@@ -1057,24 +1057,24 @@ void DrawStaffNotes()
 						tRect.top 		+= Note2PosStaff( 48);
 						tRect.bottom	= tRect.top + (*silIcon)->iconPMap.bounds.bottom;
 						
-						if( silIcon) PlotCIcon( &tRect, silIcon);
+						if (silIcon) PlotCIcon( &tRect, silIcon);
 						else MyDebugStr( __LINE__, __FILE__, "");
 						
 						silenceLengthCopy	-= remove;
 						silenceLength		-= remove;
 						
-						if( silenceLength != silenceLengthCopy)
+						if (silenceLength != silenceLengthCopy)
 						{
-							if( silenceLength > 0) goto SilenceEncore;
+							if (silenceLength > 0) goto SilenceEncore;
 						}
 						
 						silenceLength = silenceLengthCopy;
 					}
 				}
 				
-				if( note != NULL && endNote >= GetControlValue( xScroll))
+				if (note != NULL && endNote >= GetControlValue( xScroll))
 				{
-					if( note->note != 0xFF && note->note != 0xFE)
+					if (note->note != 0xFF && note->note != 0xFE)
 					{
 						Boolean			P1;
 						CIconHandle		silIcon;
@@ -1093,26 +1093,26 @@ void DrawStaffNotes()
 							
 							ttt = (endNote - silenceLength + TempsSize)/TempsSize;			// Verifie si passe une barriere
 							ttt = ttt * TempsSize;
-							if( startNote + silenceLength > ttt)
+							if (startNote + silenceLength > ttt)
 							{
 								silenceLength = ttt - (endNote - silenceLength);
 							}
 							NoteEncore:
-							if( silenceLength > TempsSize) silenceLength = TempsSize;
+							if (silenceLength > TempsSize) silenceLength = TempsSize;
 							
 							silIcon = NULL;
 							P1 = false;
 							
 							tRect.left		= StaffRect.left + (endNote - silenceLengthCopy - GetControlValue( xScroll)) * XSize;
 							
-									if( silenceLength >= 16) { silIcon = noteIcn[ 0];				remove = 16; }
-							else	if( silenceLength >= 12) { silIcon = noteIcn[ 1]; P1 = true;	remove = 12; }
-							else	if( silenceLength >=  8) { silIcon = noteIcn[ 1];				remove = 8;  }
-							else	if( silenceLength >=  6) { silIcon = noteIcn[ 2]; P1 = true;	remove = 6;  }
-							else	if( silenceLength >=  4) { silIcon = noteIcn[ 2];				remove = 4;  }
-							else	if( silenceLength >=  3) { silIcon = noteIcn[ 3]; P1 = true;	remove = 3;  }
-							else	if( silenceLength >=  2) { silIcon = noteIcn[ 3];				remove = 2;  }
-							else	if( silenceLength >=  1) { silIcon = noteIcn[ 4];				remove = 1;  }
+									if (silenceLength >= 16) { silIcon = noteIcn[ 0];				remove = 16; }
+							else	if (silenceLength >= 12) { silIcon = noteIcn[ 1]; P1 = true;	remove = 12; }
+							else	if (silenceLength >=  8) { silIcon = noteIcn[ 1];				remove = 8;  }
+							else	if (silenceLength >=  6) { silIcon = noteIcn[ 2]; P1 = true;	remove = 6;  }
+							else	if (silenceLength >=  4) { silIcon = noteIcn[ 2];				remove = 4;  }
+							else	if (silenceLength >=  3) { silIcon = noteIcn[ 3]; P1 = true;	remove = 3;  }
+							else	if (silenceLength >=  2) { silIcon = noteIcn[ 3];				remove = 2;  }
+							else	if (silenceLength >=  1) { silIcon = noteIcn[ 4];				remove = 1;  }
 							else	MyDebugStr( __LINE__, __FILE__, "");
 							
 							prevleft 		= tRect.right;
@@ -1121,14 +1121,14 @@ void DrawStaffNotes()
 							tRect.top 		+= Note2PosStaff( note->note);
 							tRect.bottom	= tRect.top + (*demitonIcon[ 1])->iconPMap.bounds.bottom;
 							
-							if( !first)			// Dessine la liaison
+							if (!first)			// Dessine la liaison
 							{
 								Rect tempr;
 								
 								tempr.left 	= prevleft; 	tempr.top = tRect.top;
 								tempr.right = tRect.left; 	tempr.bottom = tRect.bottom;
 								
-								if( tempr.left == tempr.right)
+								if (tempr.left == tempr.right)
 								{
 									tempr.left = prevleft - 10;
 									
@@ -1140,7 +1140,7 @@ void DrawStaffNotes()
 								FrameArc( &tempr, 270, 180);
 								PenSize( 1, 1);
 							}
-							else if( thePrefs.StaffShowLength)
+							else if (thePrefs.StaffShowLength)
 							{
 								RGBColor	rgb;
 								Rect		tempr = tRect;
@@ -1159,17 +1159,17 @@ void DrawStaffNotes()
 							}
 							
 							// Diese? Bemol?
-							if( BlackWhite[ note->note%12])
+							if (BlackWhite[ note->note%12])
 							{
-								if( first)
+								if (first)
 								{
-									if( prevNote == -1) demitonID = 2;
-									else if( prevNote <= note->note) demitonID = 2;
-									else if( prevNote > note->note) demitonID = 1;
+									if (prevNote == -1) demitonID = 2;
+									else if (prevNote <= note->note) demitonID = 2;
+									else if (prevNote > note->note) demitonID = 1;
 								}
 								
-								if( demitonID == 2) PlotCIcon( &tRect, demitonIcon[ 2]);
-								else if( demitonID == 1)
+								if (demitonID == 2) PlotCIcon( &tRect, demitonIcon[ 2]);
+								else if (demitonID == 1)
 								{
 									tRect.top		= StaffRect.top + 1 + (x - GetControlValue( yScroll)) * YSize;
 									tRect.top		+= Note2PosStaff( note->note+1);
@@ -1183,20 +1183,20 @@ void DrawStaffNotes()
 							}
 							else tRect.left += BEMOLSIZE/2;
 							
-							if( silIcon == NULL) MyDebugStr( __LINE__, __FILE__, "");
-							if( ptIcon == NULL) MyDebugStr( __LINE__, __FILE__, "");
+							if (silIcon == NULL) MyDebugStr( __LINE__, __FILE__, "");
+							if (ptIcon == NULL) MyDebugStr( __LINE__, __FILE__, "");
 							
 							tRect.right = tRect.left + (*silIcon)->iconPMap.bounds.right;
 							
-							if( silIcon)	PlotCIcon( &tRect, silIcon);
-							if( P1)			PlotCIcon( &tRect, ptIcon);
+							if (silIcon)	PlotCIcon( &tRect, silIcon);
+							if (P1)			PlotCIcon( &tRect, ptIcon);
 							
 							// Lignes suplemantaires
 							
 							tRect.left = StaffRect.left + (endNote - silenceLengthCopy - GetControlValue( xScroll)) * XSize;
 							tRect.right = tRect.left + XSize;
 							
-							if( note->note >= 60 && note->note <= 61)
+							if (note->note >= 60 && note->note <= 61)
 							{
 								short temp = Note2PosStaff( 62);
 								short	yy = StaffRect.top + 1 + (x - GetControlValue( yScroll)) * YSize;
@@ -1205,16 +1205,16 @@ void DrawStaffNotes()
 								LineTo( tRect.right, 19 + yy + temp);
 							}
 							
-							if( note->note > 70)
+							if (note->note > 70)
 							{
 								Boolean		OnOff = true;
 								short		yy = StaffRect.top + 1 + (x - GetControlValue( yScroll)) * YSize;
 								
 								for( z = 78; z <  note->note + 3; z ++)
 								{
-									if( !BlackWhite[ z%12])
+									if (!BlackWhite[ z%12])
 									{
-										if( OnOff)
+										if (OnOff)
 										{
 											short temp = Note2PosStaff( z);
 											
@@ -1228,16 +1228,16 @@ void DrawStaffNotes()
 								}
 							}
 							
-							if( note->note < 41)
+							if (note->note < 41)
 							{
 								Boolean		OnOff = true;
 								short		yy = StaffRect.top + 1 + (x - GetControlValue( yScroll)) * YSize;
 								
 								for( z = 41; z > note->note; z --)
 								{
-									if( !BlackWhite[ z%12])
+									if (!BlackWhite[ z%12])
 									{
-										if( OnOff)
+										if (OnOff)
 										{
 											short temp = Note2PosStaff( z);
 											
@@ -1251,7 +1251,7 @@ void DrawStaffNotes()
 								}
 							}
 							
-							if( first)				// Affiche le no de l'instrument
+							if (first)				// Affiche le no de l'instrument
 							{
 								Str255	str;
 								Rect	strRect;
@@ -1286,9 +1286,9 @@ void DrawStaffNotes()
 							silenceLengthCopy	-= remove;
 							silenceLength		-= remove;
 							
-							if( silenceLength != silenceLengthCopy)
+							if (silenceLength != silenceLengthCopy)
 							{
-								if( silenceLength > 0) goto NoteEncore;
+								if (silenceLength > 0) goto NoteEncore;
 							}
 							
 							silenceLength = silenceLengthCopy;
@@ -1356,7 +1356,7 @@ void  UpdateStaffWindow(DialogPtr GetSelection)
 	tempRect = StaffRect;
 	tempRect.left = 0;
 	tempRect.top = StaffRect.top + 1 + (curMusic->header->numChn - GetControlValue( yScroll)) * YSize;
-	if( SectRect( &tempRect, &StaffRect, &tempRect)) EraseRect( &tempRect);
+	if (SectRect( &tempRect, &StaffRect, &tempRect)) EraseRect( &tempRect);
 	
 	DrawGrowIcon( GetDialogWindow( StaffDlog));
 	
@@ -1386,13 +1386,13 @@ Pcmd* CreatePcmdFromSelectionStaff(void)
 	Pcmd		*myPcmd;
 	short		X, Y, count;
 	
-	if( startXSelec == -1) return NULL;
+	if (startXSelec == -1) return NULL;
 	
 	count = (endXSelec - startXSelec + 1) * (endYSelec - startYSelec + 1);
-	if( count <= 0) return NULL;
+	if (count <= 0) return NULL;
 	
 	myPcmd = (Pcmd*) NewPtrClear( sizeof( Pcmd) + count * sizeof( Cmd));
-	if( myPcmd == NULL) 
+	if (myPcmd == NULL) 
 	{
 		MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
 		return NULL;
@@ -1423,12 +1423,12 @@ Pcmd* CreatePcmdFromNoteStaff( Point myPt)
 	Cmd			*cmd;
 	Pcmd		*myPcmd;
 	
-	if( aNoteStaff( myPt, NULL))
+	if (aNoteStaff( myPt, NULL))
 	{
 		short	pos, track, note;
 		
 		myPcmd = (Pcmd*) NewPtrClear( sizeof( Pcmd) + sizeof( Cmd));
-		if( myPcmd == NULL) {
+		if (myPcmd == NULL) {
 			MyDebugStr( __LINE__, __FILE__, "Memory WARNING");
 			return NULL;
 		}
@@ -1461,18 +1461,18 @@ void OpenPcmdStaff( FSSpec	*mySpec)
 	Pcmd				*myPcmd;
 	SFTypeList			typeList;
 	
-	if( mySpec == NULL)
+	if (mySpec == NULL)
 	{
 		SaveUndo( UPattern, CurrentPat, "\pUndo 'Open Pcmd File'");
 		
 		iErr = DoStandardOpen( mySpec, "\pPcmd file", 'Pcmd');
 		
-		if( iErr) return;
+		if (iErr) return;
 	}
 	
 //	HSetVol( NULL, mySpec->vRefNum, mySpec->parID);
 	
-	if( FSpOpenDF( mySpec, fsCurPerm, &fRefNum) == noErr)
+	if (FSpOpenDF( mySpec, fsCurPerm, &fRefNum) == noErr)
 	{
 		GetEOF( fRefNum, &inOutBytes);
 		myPcmd = (Pcmd*) MyNewPtr( inOutBytes);
@@ -1512,7 +1512,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 		if (PtInRect( myPt, &StaffRect))
 		{
 			GetKeys( km);
-			if( IsPressed( 0x37) && PtInRect( myPt, &CurRect))	// On joue la note = PlayCrsr
+			if (IsPressed( 0x37) && PtInRect( myPt, &CurRect))	// On joue la note = PlayCrsr
 			{
 				short		VolExtCopy[ MAXTRACK];
 				
@@ -1555,7 +1555,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 				switch( mode)
 				{
 					case selecM:
-					if( PtInRect( myPt, &CurRect))
+					if (PtInRect( myPt, &CurRect))
 					{
 						Point		myCPt;
 						RgnHandle	tempRgn;
@@ -1565,15 +1565,15 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 						while( Button())
 						{
 							GetMouse( &myPt);
-							if( myCPt.h != myPt.h || myCPt.v != myPt.v) break;
+							if (myCPt.h != myPt.h || myCPt.v != myPt.v) break;
 						}
-						if( !Button()) goto newSelec;
+						if (!Button()) goto newSelec;
 						
 						tempRgn = NewRgn();
 						RectRgn( tempRgn, &CurRect);
 						
 						myPcmd = CreatePcmdFromSelectionStaff();
-						if( myPcmd != NULL)
+						if (myPcmd != NULL)
 						{
 							CalculDiffStartStaff();
 							
@@ -1596,11 +1596,11 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 						
 						ConvertPt2Note( myPt, 	&start.h, &start.v, NULL);
 						
-						if( theEvent.modifiers & shiftKey)
+						if (theEvent.modifiers & shiftKey)
 						{
-							if( start.h < startXSelec)  start.h		= 	cendXSelec;
+							if (start.h < startXSelec)  start.h		= 	cendXSelec;
 							else start.h		= 	cstartXSelec;
-							if( start.v < startYSelec)  start.v		= 	cendYSelec;
+							if (start.v < startYSelec)  start.v		= 	cendYSelec;
 							else start.v	= 	cstartYSelec;
 						}
 						
@@ -1611,20 +1611,20 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 							
 							GetMouse( &curPt);
 							
-							if( !PtInRect( curPt, &StaffRect))
+							if (!PtInRect( curPt, &StaffRect))
 							{
-								if( curPt.h > StaffRect.right) actionProcStaff( xScroll, kControlDownButtonPart);
-								else if( curPt.h < StaffRect.left) actionProcStaff( xScroll, kControlUpButtonPart);
+								if (curPt.h > StaffRect.right) actionProcStaff( xScroll, kControlDownButtonPart);
+								else if (curPt.h < StaffRect.left) actionProcStaff( xScroll, kControlUpButtonPart);
 								
-								if( curPt.v > StaffRect.bottom) actionProcStaff( yScroll, kControlDownButtonPart);
-								else if( curPt.v < StaffRect.top) actionProcStaff( yScroll, kControlUpButtonPart);
+								if (curPt.v > StaffRect.bottom) actionProcStaff( yScroll, kControlDownButtonPart);
+								else if (curPt.v < StaffRect.top) actionProcStaff( yScroll, kControlUpButtonPart);
 							}
 							
 							ConvertPt2Note( curPt, 		&aRect.left, &aRect.top, NULL);
 							
 							SetMobiusRect( &aRect, aRect.left, aRect.top, start.h, start.v);
 							
-							if( !EqualRect( &aRect, &prevRect))
+							if (!EqualRect( &aRect, &prevRect))
 							{
 								RgnHandle	tempRgn;
 								Rect		oldRect;
@@ -1669,7 +1669,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 					break;
 					
 					case noteM:
-					if( aNoteStaff( myPt, NULL))
+					if (aNoteStaff( myPt, NULL))
 					{
 						Point		myCPt;
 						RgnHandle	tempRgn;
@@ -1680,9 +1680,9 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 					/*	while( Button())
 						{
 							GetMouse( &myPt);
-							if( myCPt.h != myPt.h || myCPt.v != myPt.v) break;
+							if (myCPt.h != myPt.h || myCPt.v != myPt.v) break;
 						}*/
-						if( !Button()) goto newSelec;
+						if (!Button()) goto newSelec;
 						
 						// Select current note
 						
@@ -1706,7 +1706,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 						OffsetRgn( tempRgn, myPt.h - 8, myPt.v - 16);
 						
 						myPcmd = CreatePcmdFromNoteStaff( myPt);
-						if( myPcmd != NULL)
+						if (myPcmd != NULL)
 						{
 							//CalculDiffStartStaff();
 							
@@ -1737,8 +1737,8 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 						
 						cmd = GetMADCommand( pos, track, curMusic->partition[ CurrentPat]);
 						
-						if( curModif == cUp)		note++;
-						if( curModif == cDown)		note--;
+						if (curModif == cUp)		note++;
+						if (curModif == cDown)		note--;
 						
 						cmd->note	= note;
 						cmd->ins	= curInstru;
@@ -1746,9 +1746,9 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 						UPDATE_NoteBOUCLE( pos, track);
 						
 						tte = 0;
-					//	if( curDur & cPoint) tte = curNoteLength/2;
+					//	if (curDur & cPoint) tte = curNoteLength/2;
 						
-						if( curNoteLength == 0)	// ONLY KEY OFF
+						if (curNoteLength == 0)	// ONLY KEY OFF
 						{
 							cmd->note = 0xFE;
 							cmd->ins = 0;
@@ -1758,13 +1758,13 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 						{
 							for( i = 1; i <= curNoteLength; i++)
 							{
-								if( pos + i < curMusic->partition[ CurrentPat]->header.size)
+								if (pos + i < curMusic->partition[ CurrentPat]->header.size)
 								{
 									cmd = GetMADCommand( pos + i, track, curMusic->partition[ CurrentPat]);
 									
-									if( i == curNoteLength)
+									if (i == curNoteLength)
 									{
-										if( cmd->note == 0xFF)
+										if (cmd->note == 0xFF)
 										{
 											cmd->note = 0xFE;
 											cmd->ins = 0;
@@ -1800,7 +1800,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 			tempRect.left = StaffRect.left;
 			tempRect.right = StaffRect.right;
 			
-			if( PtInRect( myPt, &tempRect))
+			if (PtInRect( myPt, &tempRect))
 			{
 				Boolean		IsPlay = MusicPlayActive;
 				Boolean		IsJump = MADDriver->JumpToNextPattern;
@@ -1812,11 +1812,11 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 				myPt.h /= XSize;
 				myPt.h += GetControlValue( xScroll);
 				
-				if( myPt.h < 0) myPt.h = 0;
-				else if( myPt.h >= curMusic->partition[ CurrentPat]->header.size) myPt.h = curMusic->partition[ CurrentPat]->header.size - 1;
+				if (myPt.h < 0) myPt.h = 0;
+				else if (myPt.h >= curMusic->partition[ CurrentPat]->header.size) myPt.h = curMusic->partition[ CurrentPat]->header.size - 1;
 				MADDriver->PartitionReader = myPt.h;
 				
-				if( IsPlay == false) DoPlay();
+				if (IsPlay == false) DoPlay();
 				
 				while( Button())
 				{
@@ -1826,14 +1826,14 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 				
 				MADDriver->JumpToNextPattern = IsJump;
 				
-				if( IsPlay == false) DoPause();
+				if (IsPlay == false) DoPause();
 			}
 			
 			tempRect.top = StaffRect.top;
 			tempRect.bottom = StaffRect.bottom;
 			tempRect.left	= 0;
 			tempRect.right	= StaffRect.left - ((*MainNote)->picFrame.right - (*MainNote)->picFrame.left);
-			if( PtInRect( myPt, &tempRect))
+			if (PtInRect( myPt, &tempRect))
 			{
 				short 	track, note;
 				Point	tPt;
@@ -1842,25 +1842,25 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 					
 				ConvertPt2Note( tPt, NULL, &track, &note);
 				
-				if( (theEvent.modifiers & cmdKey) != 0)			// Mute
+				if ((theEvent.modifiers & cmdKey) != 0)			// Mute
 				{
 					MADDriver->Active[ track] = !MADDriver->Active[ track];
 					
 					UPDATE_TrackActive();
 				}
-				else if( (theEvent.modifiers & optionKey) != 0)	// Solo
+				else if ((theEvent.modifiers & optionKey) != 0)	// Solo
 				{
 					short	noActive;
 					
 					for( i = 0, noActive = 0; i < curMusic->header->numChn; i++)
 					{
-						if( MADDriver->Active[ i] == true)
+						if (MADDriver->Active[ i] == true)
 						{
 							noActive++;
 						}
 					}
 					
-					if( noActive <= 1 && MADDriver->Active[ track] == true)
+					if (noActive <= 1 && MADDriver->Active[ track] == true)
 					{
 						for( i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
 					}
@@ -1880,7 +1880,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 			tempRect.left	= StaffRect.left - ((*MainNote)->picFrame.right - (*MainNote)->picFrame.left);
 			tempRect.right	= StaffRect.left;
 			
-			if( PtInRect( myPt, &tempRect))
+			if (PtInRect( myPt, &tempRect))
 			{
 				short prevV = 0;
 				
@@ -1893,7 +1893,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 					
 					ConvertPt2Note( tPt, NULL, &track, &note);
 					
-					if( prevV != note)
+					if (prevV != note)
 					{
 						DoPlayInstruInt( note, curInstru-1, 0, 0, 0xFF, &MADDriver->chan[ track], 0, 0);
 					
@@ -1915,10 +1915,10 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 		//	ctlPart = FindControl( myPt, GetDialogWindow( whichDialog), &theControl);
 			
 			theControl = NULL;
-			if( TestControl(  xScroll, myPt)) theControl = xScroll;
-			if( TestControl(  yScroll, myPt)) theControl = yScroll;
+			if (TestControl(  xScroll, myPt)) theControl = xScroll;
+			if (TestControl(  yScroll, myPt)) theControl = yScroll;
 			
-			if( theControl == xScroll || theControl == yScroll)
+			if (theControl == xScroll || theControl == yScroll)
 			{
 				MyControlUPP = NewControlActionUPP( actionProcStaff);
 				gThumbPrev = GetControlValue( theControl);
@@ -1931,26 +1931,26 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 switch( whichItem)
 {
 	case 21:
-			if( MyTrackControl( saveBut, theEvent.where, NULL))
+			if (MyTrackControl( saveBut, theEvent.where, NULL))
 			SavePcmdFile( CreatePcmdFromSelectionStaff());
 	break;
 	
 	case 8:
-		if( GetControlHilite( loadBut) == 0 && MyTrackControl( loadBut, theEvent.where, NULL))
+		if (GetControlHilite( loadBut) == 0 && MyTrackControl( loadBut, theEvent.where, NULL))
 		{
 			OpenPcmdStaff( NULL);
 		}
 	break;
 	
 	case 22:
-		if( GetControlHilite( infoBut) == 0 && MyTrackControl( infoBut, theEvent.where, NULL))
+		if (GetControlHilite( infoBut) == 0 && MyTrackControl( infoBut, theEvent.where, NULL))
 		{
 			DialogPatternInfo( CurrentPat);
 		}
 	break;
 	
 	case 6:
-		if( GetControlHilite( prefBut) == 0 && MyTrackControl( prefBut, theEvent.where, NULL))
+		if (GetControlHilite( prefBut) == 0 && MyTrackControl( prefBut, theEvent.where, NULL))
 		{
 #include "Help.h"
 
@@ -1959,7 +1959,7 @@ switch( whichItem)
 	break;
 	
 	case 23:
-		if( GetControlHilite( FXBut) == 0 && MyTrackControl( FXBut, theEvent.where, NULL))
+		if (GetControlHilite( FXBut) == 0 && MyTrackControl( FXBut, theEvent.where, NULL))
 		{
 			short	itemType;
 			Rect	itemRect;
@@ -1972,7 +1972,7 @@ switch( whichItem)
 			itemRect.left += 20;
 			temp = PressPPDGMenu( &itemRect);
 			
-			if( temp != -1)
+			if (temp != -1)
 			{
 				Pcmd*	myPcmd;
 				
@@ -2017,13 +2017,13 @@ switch( whichItem)
 	
 /*		case 21:
 	case 22:
-		if( GetControlHilite( durIcl[ whichItem-21]) == kControlButtonPart) HiliteControl( durIcl[ whichItem-21], 0);
+		if (GetControlHilite( durIcl[ whichItem-21]) == kControlButtonPart) HiliteControl( durIcl[ whichItem-21], 0);
 		else HiliteControl( durIcl[ whichItem-21], kControlButtonPart);
 		
 		switch( whichItem)
 		{
-			case 21:	if( curDur & cPoint) 	curDur -= cPoint; 	else curDur += cPoint;		break;
-			case 22:	if( curDur & cLiaison)	curDur -= cLiaison; else curDur += cLiaison;	break;
+			case 21:	if (curDur & cPoint) 	curDur -= cPoint; 	else curDur += cPoint;		break;
+			case 22:	if (curDur & cLiaison)	curDur -= cLiaison; else curDur += cLiaison;	break;
 		}
 	break;	*/
 	
@@ -2042,7 +2042,7 @@ switch( whichItem)
 	break;
 	
 	case 7:
-		if( GetControlHilite( playBut) == 0)
+		if (GetControlHilite( playBut) == 0)
 		{
 			whichItem = -1;
 			goto PlaySelection;
@@ -2094,7 +2094,7 @@ switch( whichItem)
 			
 		//	TextFont( 0);	TextSize( 0);
 			
-			if( curInstru > 0)
+			if (curInstru > 0)
 			{
 				NumToString( curInstru, aStr);
 				SetDText( StaffDlog, 11, aStr);
@@ -2129,7 +2129,7 @@ pascal void actionProcStaff(ControlHandle theControl, short ctlPart)
 	Handle			itemHandle;
 	Rect			tRect;
 
-	if( ctlPart <= 0) return;
+	if (ctlPart <= 0) return;
 
 	lRefCon = GetControlReference( theControl);
 	maxValue = GetControlMaximum( theControl);
@@ -2140,12 +2140,12 @@ pascal void actionProcStaff(ControlHandle theControl, short ctlPart)
 	{
 		case kControlUpButtonPart:
 			curVal -= 1;
-			if( curVal < minValue) curVal = minValue;
+			if (curVal < minValue) curVal = minValue;
 			break;
 		
 		case kControlDownButtonPart:
 			curVal += 1;
-			if( curVal > maxValue) curVal = maxValue;
+			if (curVal > maxValue) curVal = maxValue;
 			break;
 		
 		case kControlPageUpPart:
@@ -2155,7 +2155,7 @@ pascal void actionProcStaff(ControlHandle theControl, short ctlPart)
 				case xScrollNum:	curVal -= GetMaxXStaff() - GetControlValue( xScroll) - 1;	break;
 			}
 			
-			if( curVal < minValue) curVal = minValue;
+			if (curVal < minValue) curVal = minValue;
 			break;
 		
 		case kControlPageDownPart:
@@ -2164,7 +2164,7 @@ pascal void actionProcStaff(ControlHandle theControl, short ctlPart)
 				case yScrollNum:	curVal += GetMaxYStaff() - GetControlValue( yScroll) - 1;	break;
 				case xScrollNum:	curVal += GetMaxXStaff() - GetControlValue( xScroll) - 1;	break;
 			}
-			if( curVal > maxValue) curVal = maxValue;
+			if (curVal > maxValue) curVal = maxValue;
 			break;
 		
 		case kControlIndicatorPart:
@@ -2173,7 +2173,7 @@ pascal void actionProcStaff(ControlHandle theControl, short ctlPart)
 			break;
 	}
 	
-	if( sVal != curVal)
+	if (sVal != curVal)
 	{
 		RgnHandle		aRgn;
 		
@@ -2218,13 +2218,13 @@ void CreateStaffWindow(void)
 	Str255			String, aStr;
 	Cmd				aCmd;
 	
-	if( !DragManagerUse)
+	if (!DragManagerUse)
 	{
 		Erreur( 89, 89);
 		return;
 	}
 	
-	if( StaffDlog != NULL)
+	if (StaffDlog != NULL)
 	{
 		SetWindEtat( GetDialogWindow(StaffDlog));
 		return;
@@ -2448,7 +2448,7 @@ void CreateStaffWindow(void)
 	TextFont( kFontIDGeneva);		TextSize(9);
 	
 	TempsSize = (thePrefs.TempsNum * 16) / thePrefs.TempsUnit;
-	if( TempsSize < 1) TempsSize = 1;
+	if (TempsSize < 1) TempsSize = 1;
 	YSize = thePrefs.TrackHeight;
 	XSize = BEMOLSIZE + 12;
 	GetDialogItem( StaffDlog, 1, &itemType, &itemHandle, &StaffRect);
@@ -2482,7 +2482,7 @@ void CreateStaffWindow(void)
 	for( i = 0; i < 5; i++) noteinv[ i] 		= GetCIcon( 600+i);
 	for( i = 0; i < 3; i++) demitonIcon[ i] 	= GetCIcon( 700+i);
 	
-	if( DragManagerUse)
+	if (DragManagerUse)
 	{
 		MyTrackingHandlerUPP 		= NewDragTrackingHandlerUPP( MyTrackingStaff);
 		MyReceiveDropHandlerUPP 	= NewDragReceiveHandlerUPP( MyReceiveDropStaff);
@@ -2499,11 +2499,11 @@ Point	Start;
 short	i;
 Rect	caRect;
 
-	if( StaffDlog != NULL)
+	if (StaffDlog != NULL)
 	{
 		SetPortDialogPort( StaffDlog);
 		
-		if( DragManagerUse)
+		if (DragManagerUse)
 		{
 			RemoveTrackingHandler( MyTrackingHandlerUPP, GetDialogWindow( StaffDlog));
 			RemoveReceiveHandler( MyReceiveDropHandlerUPP, GetDialogWindow( StaffDlog));
@@ -2548,12 +2548,12 @@ void DoKeyPressStaff( short theChar)
 	Cmd					*theCommand;
 	GrafPtr				SavePort;
 	
- 	if( curMusic == NULL) return;
+ 	if (curMusic == NULL) return;
  	
  	GetPort( &SavePort);
  	SetPortDialogPort( StaffDlog);
  	
-	if( theChar == deletekey) // Delete
+	if (theChar == deletekey) // Delete
  	{
 		short	X, Y;
 		Rect	tRect;
@@ -2573,7 +2573,7 @@ void DoKeyPressStaff( short theChar)
 		
 		UPDATE_NoteFINISH();
  	}
- 	else if( theChar == selectAll)
+ 	else if (theChar == selectAll)
  	{
  		startXSelec = startYSelec = 0;
  		
@@ -2584,13 +2584,13 @@ void DoKeyPressStaff( short theChar)
  		
  		InvalWindowRect( GetDialogWindow( StaffDlog), &caRect);
  	}
- 	else if( theChar ==  9)
+ 	else if (theChar ==  9)
  	{
  		HiliteControl( noteBut, 0);
 		HiliteControl( selecBut, 0);
 		
 		mode++;
-		if( mode > 1) mode = 0;
+		if (mode > 1) mode = 0;
 		switch( mode)
 		{
 			case selecM:	HiliteControl( selecBut, kControlButtonPart);	break;
@@ -2625,7 +2625,7 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 	OSErr				iErr;
 	Str255				pStr;
 
-	if( !mainSystemDrag) return noErr;
+	if (!mainSystemDrag) return noErr;
 	
 	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return(noErr);
 	
@@ -2639,20 +2639,20 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 			GetDragItemReferenceNumber(theDrag, 1, &theItem);
 			
 			result = GetFlavorFlags(theDrag, theItem, 'Pcmd', &theFlags);
-			if( result == noErr)
+			if (result == noErr)
 			{
 				canAcceptDrag = true;
 				
 				result = GetFlavorDataSize(theDrag, theItem, 'Pcmd', &textSize);
-				if( result == noErr)
+				if (result == noErr)
 				{
 					/****************/
 					myPcmd = (Pcmd*) MyNewPtr( textSize);
 					GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
 					PcmdTracks = myPcmd->tracks;
-					if( PcmdTracks <= 0) PcmdTracks = 1;
+					if (PcmdTracks <= 0) PcmdTracks = 1;
 					PcmdLength = myPcmd->length;
-					if( PcmdLength <= 0) PcmdLength = 1;
+					if (PcmdLength <= 0) PcmdLength = 1;
 					MyDisposePtr( (Ptr*) &myPcmd);
 					/****************/
 				}
@@ -2662,7 +2662,7 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 					PcmdLength = 1;
 				}
 			}
-			else if( GetFlavorFlags(theDrag, theItem, flavorTypeHFS, &theFlags) == noErr)
+			else if (GetFlavorFlags(theDrag, theItem, flavorTypeHFS, &theFlags) == noErr)
 			{
 				Boolean	targetIsFolder, wasAliased;
 			
@@ -2680,7 +2680,7 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 						/****************/
 						PcmdTracks = 1;	PcmdLength = 1;
 						iErr = FSpOpenDF( &myFlavor.fileSpec, fsCurPerm, &fRefNum);
-						if( iErr == noErr)
+						if (iErr == noErr)
 						{
 							GetEOF( fRefNum, &inOutBytes);
 							myPcmd = (Pcmd*) MyNewPtr( inOutBytes);
@@ -2721,10 +2721,10 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 				Rect coRect;
 				
 				GetControlBounds( saveBut, &coRect);
-				if( PtInRect( localMouse, &coRect) && selectedControl == NULL) { HiliteControl( saveBut, kControlButtonPart);		selectedControl = saveBut;}
+				if (PtInRect( localMouse, &coRect) && selectedControl == NULL) { HiliteControl( saveBut, kControlButtonPart);		selectedControl = saveBut;}
 				else HiliteControl( saveBut, 0);
 				
-			/*	if( PtInRect( localMouse, &(*poubBut)->contrlRect) && selectedControl == NULL)	{ HiliteControl( poubBut, kControlButtonPart);		selectedControl = poubBut;}
+			/*	if (PtInRect( localMouse, &(*poubBut)->contrlRect) && selectedControl == NULL)	{ HiliteControl( poubBut, kControlButtonPart);		selectedControl = poubBut;}
 				else HiliteControl( poubBut, 0);	*/
 			}
 			
@@ -2732,7 +2732,7 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 	 		GetClip( saveClip);
 	 		ClipRect( &StaffRect);
 			
-			if( PtInRect( localMouse, &StaffRect))
+			if (PtInRect( localMouse, &StaffRect))
 			{
 				short pos, track, note;
 				
@@ -2765,7 +2765,7 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 				if (attributes & kDragInsideSenderWindow) DropNote	= note;
 				else DropNote = -1;
 				
-				if( tempRect.left != dragRect.left || tempRect.top != dragRect.top)
+				if (tempRect.left != dragRect.left || tempRect.top != dragRect.top)
 				{
 					RectRgn( theRgn = NewRgn(), &tempRect);
 					
@@ -2815,7 +2815,7 @@ Boolean DragStaff( RgnHandle myRgn, Pcmd	*myPcmd, EventRecord *theEvent)
 	PromiseHFSFlavor	myNewFile;
 	Rect				reRect;
 	
-	if( !DragManagerUse) return false;
+	if (!DragManagerUse) return false;
 	
 	dragRegion = NewRgn();
 	
@@ -2873,9 +2873,9 @@ pascal OSErr MyReceiveDropStaff(WindowPtr theWindow, void* handlerRefCon, DragRe
 	Pcmd				*myPcmd;
 	HFSFlavor			myFlavor;
 
-	if( !mainSystemDrag) return dragNotAcceptedErr;
-	if( !canAcceptDrag) return( dragNotAcceptedErr);
-	if( DropX == -1 && DropY == -1 && selectedControl == NULL) return( dragNotAcceptedErr);
+	if (!mainSystemDrag) return dragNotAcceptedErr;
+	if (!canAcceptDrag) return( dragNotAcceptedErr);
+	if (DropX == -1 && DropY == -1 && selectedControl == NULL) return( dragNotAcceptedErr);
 	
 	SetPortWindowPort( theWindow);
 	
@@ -2884,14 +2884,14 @@ pascal OSErr MyReceiveDropStaff(WindowPtr theWindow, void* handlerRefCon, DragRe
 	GetDragAttributes(theDrag, &attributes);
 	GetDragModifiers(theDrag, NULL, &mouseDownModifiers, &mouseUpModifiers);
 
-	if( attributes & kDragInsideSenderWindow)
+	if (attributes & kDragInsideSenderWindow)
 	{
-		if( selectedControl != NULL)
+		if (selectedControl != NULL)
 		{
 			HiliteControl( selectedControl, 0);
 			
-			if( selectedControl == saveBut)		SavePcmdFile( CreatePcmdFromSelectionStaff());
-		//	if( selectedControl == poubBut) 	DoKeyPressStaff( 8);
+			if (selectedControl == saveBut)		SavePcmdFile( CreatePcmdFromSelectionStaff());
+		//	if (selectedControl == poubBut) 	DoKeyPressStaff( 8);
 			selectedControl = NULL;
 			
 			return noErr;
@@ -2912,11 +2912,11 @@ pascal OSErr MyReceiveDropStaff(WindowPtr theWindow, void* handlerRefCon, DragRe
 	if (result == noErr)
 	{	
 		myPcmd = (Pcmd*) MyNewPtr( textSize);
-		if( myPcmd != NULL)
+		if (myPcmd != NULL)
 		{
 			GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
 			
-			if( movePcmd)		// Delete source
+			if (movePcmd)		// Delete source
 			{
 				// La source est déjà selectionnée...
 				
@@ -2993,7 +2993,7 @@ void PasteCmdStaff( Pcmd *myPcmd)
 				
 				*cmd = *cmd2;
 				
-				if( DropNote != -1)
+				if (DropNote != -1)
 				{
 					switch( mode)
 					{
@@ -3009,11 +3009,11 @@ void PasteCmdStaff( Pcmd *myPcmd)
 	
 	UPDATE_NoteFINISH();
 	
-	if( startXSelec < 0) startXSelec = 0;
-	if( endXSelec >= curMusic->partition[ CurrentPat]->header.size) endXSelec = curMusic->partition[ CurrentPat]->header.size-1;
+	if (startXSelec < 0) startXSelec = 0;
+	if (endXSelec >= curMusic->partition[ CurrentPat]->header.size) endXSelec = curMusic->partition[ CurrentPat]->header.size-1;
 	
-	if( startYSelec < 0) startYSelec = 0;
-	if( endYSelec >= curMusic->header->numChn) endYSelec = curMusic->header->numChn-1;
+	if (startYSelec < 0) startYSelec = 0;
+	if (endYSelec >= curMusic->header->numChn) endYSelec = curMusic->header->numChn-1;
 	
 	/*** Update de la région ***/
 	
@@ -3035,7 +3035,7 @@ void COPYStaff(void)
  	SetPortDialogPort( StaffDlog);
 	
 	myPcmd = CreatePcmdFromSelectionStaff();
-	if( myPcmd == NULL)
+	if (myPcmd == NULL)
 	{
 		MyDebugStr( __LINE__, __FILE__, "CopyStaff Internal ERROR");
 		SetPort( SavePort);
@@ -3078,9 +3078,9 @@ void PASTEStaff(void)
 	lCntOrErr = 0;
 	anErr = GetCurrentScrap( &scrap);
 	anErr = GetScrapFlavorFlags( scrap, 'Pcmd', &flags);
-	if( anErr == noErr) GetScrapFlavorSize( scrap, 'Pcmd', &lCntOrErr);
+	if (anErr == noErr) GetScrapFlavorSize( scrap, 'Pcmd', &lCntOrErr);
 
-	if( lCntOrErr > 0)
+	if (lCntOrErr > 0)
 	{
 		SetCursor( &watchCrsr);
 	

@@ -12,7 +12,7 @@ static OSErr TestXI( Ptr CC)
 	OSType Ident = *((OSType*) CC);
 	MOT32(&Ident);
 	
-	if( Ident == 'Exte') return noErr;
+	if (Ident == 'Exte') return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -23,9 +23,9 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 
 	for( i = 0; i < curIns->numSamples; i++)
 	{
-		if( sample[ i] != NULL)
+		if (sample[ i] != NULL)
 		{
-			if( sample[ i]->data != NULL)
+			if (sample[ i]->data != NULL)
 			{
 				DisposePtr( (Ptr) sample[ i]->data);
 				sample[ i]->data = NULL;
@@ -132,19 +132,19 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 			short			numSamples;
 			
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				GetEOF( iFileRefI, &inOutCount);
 				
 				theXI = NewPtr( inOutCount);
-				if( theXI == NULL) myErr = MADNeedMemory;
+				if (theXI == NULL) myErr = MADNeedMemory;
 				else
 				{
 					MAD2KillInstrument( InsHeader, sample);
 					
 					for( x = 0; x < 32; x++)
 					{
-						if( x < AlienFileFSSpec->name[ 0]) InsHeader->name[ x] = AlienFileFSSpec->name[ x + 1];
+						if (x < AlienFileFSSpec->name[ 0]) InsHeader->name[ x] = AlienFileFSSpec->name[ x + 1];
 						else InsHeader->name[ x] = '\0';
 					}
 					
@@ -217,11 +217,11 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 						curData->c2spd		= finetune[ (wh->finetune + 128)/16];
 						curData->loopType	= 0;
 						curData->amp		= 8;
-						if( wh->type & 0x10)		// 16 Bits
+						if (wh->type & 0x10)		// 16 Bits
 						{
 							curData->amp = 16;
 						}
-						if( !(wh->type & 0x3))
+						if (!(wh->type & 0x3))
 						{
 							curData->loopBeg = 0;
 							curData->loopSize = 0;
@@ -243,11 +243,11 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 							sData *curData = sample[ x];
 							
 							curData->data = NewPtr( curData->size);
-							if( curData->data != NULL)
+							if (curData->data != NULL)
 							{
 								BlockMoveData( reader, curData->data, curData->size);
 								
-								if( curData->amp == 16)
+								if (curData->amp == 16)
 								{
 									short	*tt;
 									long	tL;
@@ -306,11 +306,11 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 			Ptr	theSound;
 			
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				inOutCount = 50L;
 				theSound = NewPtr( inOutCount);
-				if( theSound == NULL) myErr = MADNeedMemory;
+				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
 					FSRead( iFileRefI, &inOutCount, theSound);
@@ -329,7 +329,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 			myErr = FSpCreate( AlienFileFSSpec, 'SNPL', 'XI  ', smCurrentScript);
 			if(myErr == noErr) myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				// Write instrument header
 				
@@ -393,7 +393,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					
 					curData = sample[ u];
 					
-					if( curData->stereo) wh.length = curData->size / 2;
+					if (curData->stereo) wh.length = curData->size / 2;
 					else wh.length = curData->size;
 					
 					inOutCount += wh.length;
@@ -401,7 +401,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					wh.loopstart	= curData->loopBeg;
 					wh.looplength	= curData->loopSize;
 					
-					if( curData->stereo)
+					if (curData->stereo)
 					{
 						wh.loopstart /=2;
 						wh.looplength /=2;
@@ -410,7 +410,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					wh.volume		= curData->vol;
 					
 					wh.finetune = -128;
-					if( curData->c2spd > 8757) wh.finetune = 127;
+					if (curData->c2spd > 8757) wh.finetune = 127;
 					else
 					{
 						while( finetune[ (wh.finetune + 128)/16] < curData->c2spd)
@@ -419,8 +419,8 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 						}
 					}
 					wh.type = 0;
-					if( curData->amp == 16) wh.type += 0x10;
-					if( curData->loopSize > 0) wh.type += 0x3;
+					if (curData->amp == 16) wh.type += 0x10;
+					if (curData->loopSize > 0) wh.type += 0x3;
 					
 				//	wh.panning = curData->panning;
 					wh.relnote = curData->relNote;
@@ -443,13 +443,13 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					tempPtr = NewPtr( curData->size);
 						
 					/// WriteData
-					if( tempPtr != NULL)
+					if (tempPtr != NULL)
 					{
 						BlockMoveData( curData->data, tempPtr, curData->size);
 						
 						dstSize = curData->size;
 						
-						if( curData->amp == 16)
+						if (curData->amp == 16)
 						{
 							short	*tt = (short*) tempPtr;
 							long	tL;
@@ -458,7 +458,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 							long	oldV, newV;
 							long	xL;
 							
-							if( curData->stereo)
+							if (curData->stereo)
 							{
 								for( i = 0; i < dstSize; i++) tt[ i] = tt[ i*2];
 								dstSize /= 2;
@@ -485,7 +485,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 							long	xL;
 							Ptr		tt = ( Ptr) tempPtr;
 							
-							if( curData->stereo)
+							if (curData->stereo)
 							{
 								for( i = 0; i < dstSize; i++) tt[ i] = tt[ i*2];
 								dstSize /= 2;

@@ -34,9 +34,9 @@ void ShowSection( short selectionID)
 	short		i;
 	double		height;
 
-	if( HelpDlog == NULL)
+	if (HelpDlog == NULL)
 	{
-		if( HelpAvalaible) CreateHelpOnline( selectionID);
+		if (HelpAvalaible) CreateHelpOnline( selectionID);
 	}
 	else
 	{
@@ -44,7 +44,7 @@ void ShowSection( short selectionID)
 
 		for( i=0; i < (*hTE)->nLines; i++)
 		{
-			if( lineList[ curSect] <= (*hTE)->lineStarts[ i]) break;
+			if (lineList[ curSect] <= (*hTE)->lineStarts[ i]) break;
 		}
 		
 		height = TEGetHeight( 0, (*hTE)->nLines, hTE);
@@ -79,7 +79,7 @@ void ChangeMenuName( Str255 curN)
 	
 	}while( itemHit != 1 && itemHit != 2);
 
-	if( itemHit == 1) GetDText( TheDia, 4, curN);
+	if (itemHit == 1) GetDText( TheDia, 4, curN);
 	
 	DisposeDialog( TheDia);
 }
@@ -95,13 +95,13 @@ void WriteLineList(void)
 	HGetVol( NULL, &cVRef, &cParID);
 	HSetVol( NULL, mainVRefNum, mainParID);
 
-	if( iHelpPP != -1)
+	if (iHelpPP != -1)
 	{
 		UseResFile( iHelpPP);
 		for( i = 0; i < CountMenuItems( sectMenu); i++)
 		{
 			myRes = GetResource( 'SECT', i + 128);
-			if( myRes != NULL)
+			if (myRes != NULL)
 			{
 				RemoveResource( myRes);
 				MyDisposHandle( & myRes);
@@ -132,7 +132,7 @@ void CreateMenuHelp(void)
 	do
 	{
 		myRes = GetResource( 'SECT', i);
-		if( myRes != NULL)
+		if (myRes != NULL)
 		{
 			GetResInfo( myRes, &rID, &rType, rName);
 			AppendMenu( sectMenu, rName);
@@ -160,11 +160,11 @@ void CreateHelpOnline( short whichSection)
 	OSErr			iErr;
 	FSSpec			spec;
 	
-	if( HelpDlog != NULL)
+	if (HelpDlog != NULL)
 	{
 		SelectWindow2( GetDialogWindow( HelpDlog));
 		SetPortDialogPort( HelpDlog);
-		if( curSect != whichSection)
+		if (curSect != whichSection)
 		{
 			curSect = whichSection;
 			UpdateSection();
@@ -188,7 +188,7 @@ void CreateHelpOnline( short whichSection)
 	spec.parID = mainParID;
 	
 	iErr = FSpOpenDF( &spec, fsCurPerm, &iFileRefI);
-	if( iErr)
+	if (iErr)
 	{
 		Erreur(56 , iErr);
 		return;
@@ -201,10 +201,10 @@ void CreateHelpOnline( short whichSection)
 	/*******************/
 	
 	/*
-	 if( iHelpPP != -1)
+	 if (iHelpPP != -1)
 	 {
 	 theStyle = (StScrpHandle) Get1Resource( 'styl', 128);
-	 if( theStyle != NULL) DetachResource( (Handle) theStyle);
+	 if (theStyle != NULL) DetachResource( (Handle) theStyle);
 	 
 	 CreateMenuHelp();
 	 }*/
@@ -242,7 +242,7 @@ void CreateHelpOnline( short whichSection)
 	SetControlReference( vScroll, 1);
 	
 	TESetAlignment( teCenter, hTE);
-	if( theStyle != NULL) TEStyleInsert( Text, GetPtrSize( Text), theStyle, hTE);
+	if (theStyle != NULL) TEStyleInsert( Text, GetPtrSize( Text), theStyle, hTE);
 	TEAutoView( true, hTE);
 	TECalText( hTE);
 	SetScroll( vScroll, hTE);
@@ -253,12 +253,12 @@ void CreateHelpOnline( short whichSection)
 
 void CloseHelpOnline(void)
 {
-	if( HelpDlog != NULL)
+	if (HelpDlog != NULL)
 	{
 		DisposeDialog( HelpDlog);		HelpDlog = NULL;
 		TEDispose( hTE);
 		MyDisposePtr( & Text);
-		if( theStyle != NULL) MyDisposHandle(  (Handle*) & theStyle);
+		if (theStyle != NULL) MyDisposHandle(  (Handle*) & theStyle);
 		theStyle = NULL;
 		MyDisposePtr( (Ptr*) &lineList);
 		DisposeMenu(sectMenu);
@@ -284,9 +284,9 @@ void DoGrowHelpOnline(void)
 	temp.bottom = 5000;
 	
 	lSizeVH = 0;
-	if( theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( HelpDlog), theEvent.where, &temp);
+	if (theEvent.what == mouseDown) lSizeVH = GrowWindow( GetDialogWindow( HelpDlog), theEvent.where, &temp);
 
-	if( lSizeVH != 0)
+	if (lSizeVH != 0)
 	{
 		tempA = LoWord( lSizeVH);
 		tempB = HiWord( lSizeVH);
@@ -357,7 +357,7 @@ void DoItemPressHelpOnline( short whichItem, DialogPtr whichDialog)
 		myPt = theEvent.where;
 		GlobalToLocal( &myPt);
 		
-		if( PtInRect( myPt, &itemRect))
+		if (PtInRect( myPt, &itemRect))
 		{
 			InsertMenu( sectMenu, hierMenu );
 
@@ -383,7 +383,7 @@ void DoItemPressHelpOnline( short whichItem, DialogPtr whichDialog)
 				InvalWindowRect( GetDialogWindow( HelpDlog), &itemRect);
 				
 				GetKeys( km);
-				if( IsPressed( 0x37) == true)		// Change the current item
+				if (IsPressed( 0x37) == true)		// Change the current item
 				{
 					myPt.v = 2;	myPt.h = 2;
 					lineList[ curSect] = TEGetOffset( myPt, hTE);
@@ -394,7 +394,7 @@ void DoItemPressHelpOnline( short whichItem, DialogPtr whichDialog)
 					
 					WriteLineList();
 				}
-				else if( IsPressed( 0x31) == true)	// Add a new item
+				else if (IsPressed( 0x31) == true)	// Add a new item
 				{
 					myPt.v = 2;	myPt.h = 2;
 					lineList[ CountMenuItems( sectMenu)] = TEGetOffset( myPt, hTE);

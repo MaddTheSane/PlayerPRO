@@ -52,9 +52,9 @@ static void AutoPosition( DialogPtr aDia)
 	do
 	{
 		aH = GetNextDevice( aH);
-		if( aH != NULL)
+		if (aH != NULL)
 		{
-			if( PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
@@ -66,12 +66,12 @@ static void AutoPosition( DialogPtr aDia)
 	while( aH != NULL);
 	
 	Position.h = mouse.h - XSize/2;
-	if( Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
-	else if( Position.h <= ViewRect.left) Position.h = ViewRect.left;
+	if (Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
+	else if (Position.h <= ViewRect.left) Position.h = ViewRect.left;
 
 	Position.v = mouse.v - YSize/2;
-	if( Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
-	else if( Position.v <= ViewRect.top) Position.v = ViewRect.top;
+	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
+	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
 	SetDialogDefaultItem( aDia, 1 );
 	SetDialogCancelItem( aDia, 2 );
@@ -155,8 +155,8 @@ static Boolean getParams ( short dlgID, long *p1, long *p2, PPInfoPlug *thePPInf
 #if 0
 static int checkMax (int v)
 {
-	if( v >= 127) return 127;
-	else if( v <= -127 ) return -127;
+	if (v >= 127) return 127;
+	else if (v <= -127 ) return -127;
 	else return v;
 }
 #endif
@@ -192,8 +192,8 @@ static OSErr mainEcho(	sData			*theData,
 					
 					temp1 += temp2;
 					
-					if( temp1 >= 127) temp1 = 127;	// overflow ?
-					else if( temp1 <= -128 ) temp1 = -128;
+					if (temp1 >= 127) temp1 = 127;	// overflow ?
+					else if (temp1 <= -128 ) temp1 = -128;
 					
 					*destPtr++ = temp1;
 				}
@@ -214,8 +214,8 @@ static OSErr mainEcho(	sData			*theData,
 					
 					temp1 += temp2;
 					
-					if( temp1 >= (short)0x7FFF) temp1 = 0x7FFF;	// overflow ?
-					else if( temp1 <= (short)0x8000 ) temp1 = (short)0x8000;
+					if (temp1 >= (short)0x7FFF) temp1 = 0x7FFF;	// overflow ?
+					else if (temp1 <= (short)0x8000 ) temp1 = (short)0x8000;
 					
 					*destPtr++ = temp1;
 				}

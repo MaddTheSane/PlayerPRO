@@ -11,7 +11,7 @@ void InitThreadSystem( void)
 	long		threadGestaltInfo;
 
 
-	if( Gestalt( gestaltThreadMgrAttr, &threadGestaltInfo) != noErr ||
+	if (Gestalt( gestaltThreadMgrAttr, &threadGestaltInfo) != noErr ||
 		threadGestaltInfo & (1<<gestaltThreadsLibraryPresent) == 0 ||
 		(Ptr) NewThread == kUnresolvedCFragSymbolAddress ||
 		threadGestaltInfo & (1<<gestaltThreadMgrPresent) == 0)

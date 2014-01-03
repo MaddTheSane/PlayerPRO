@@ -8,7 +8,7 @@
 
 static OSErr TestMINS( InstrData *CC)
 {
-	if( CC->type == 0 && CC->numSamples >= 0 && CC->numSamples < MAXSAMPLE) return noErr;
+	if (CC->type == 0 && CC->numSamples >= 0 && CC->numSamples < MAXSAMPLE) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -19,9 +19,9 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 
 	for( i = 0; i < curIns->numSamples; i++)
 	{
-		if( sample[ i] != NULL)
+		if (sample[ i] != NULL)
 		{
-			if( sample[ i]->data != NULL)
+			if (sample[ i]->data != NULL)
 			{
 				DisposePtr( (Ptr) sample[ i]->data);
 				sample[ i]->data = NULL;
@@ -123,12 +123,12 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 	{
 		case 'IMPL':
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				GetEOF( iFileRefI, &inOutCount);
 				
 				theSound = NewPtr( inOutCount);
-				if( theSound == NULL) myErr = MADNeedMemory;
+				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
 					DisposePtr( theSound);
@@ -156,13 +156,13 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 						ByteswapsData(curData);
 						
 						curData->data = NewPtr( curData->size);
-						if( curData->data != NULL)
+						if (curData->data != NULL)
 						{
 							inOutCount = curData->size;
 							myErr = FSRead( iFileRefI, &inOutCount, curData->data);
 						}
 						
-						if( curData->amp == 16)
+						if (curData->amp == 16)
 						{
 							SInt32 	ll;
 							short	*shortPtr = (short*) curData->data;
@@ -180,11 +180,11 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 		
 		case 'TEST':
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				inOutCount = 50L;
 				theSound = NewPtr( inOutCount);
-				if( theSound == NULL) myErr = MADNeedMemory;
+				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
 					FSRead( iFileRefI, &inOutCount, theSound);
@@ -206,7 +206,7 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 			myErr = FSpCreate( AlienFileFSSpec, 'SNPL', 'MINs', smCurrentScript);
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				// Write instrument header
 				
@@ -231,7 +231,7 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 					copydataData = NewPtr(curData->size);
 					BlockMoveData(curData->data, copydataData, curData->size);
 #ifdef __LITTLE_ENDIAN__
-					if( curData->amp == 16)
+					if (curData->amp == 16)
 					{
 						SInt32 	ll;
 						short	*shortPtr = (short*) copydataData;

@@ -69,7 +69,7 @@ static OSStatus CAAudioCallback(void                            *inRefCon,
         }
     }
 	
-	/*if( BuffSize - pos > tickadd)	theRec->OscilloWavePtr = theRec->CABuffer + (int)pos;
+	/*if (BuffSize - pos > tickadd)	theRec->OscilloWavePtr = theRec->CABuffer + (int)pos;
 	 else */ theRec->OscilloWavePtr = theRec->CABuffer;
 	return noErr;
 }

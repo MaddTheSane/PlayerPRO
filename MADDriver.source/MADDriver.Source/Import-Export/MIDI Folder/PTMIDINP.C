@@ -49,16 +49,16 @@ static short MADopen( void)
 	MADpos[ MADcur] = 0;
 	MADcur++;
 	
-	if( MADcur >= MAXFILES) DebugStr("\pMADopen");
+	if (MADcur >= MAXFILES) DebugStr("\pMADopen");
 	
 	return MADcur-1;
 }
 
 static short MADread( short id, Ptr dst, long size)
 {
-	if( MADpos[ id] >= GetPtrSize( MIDIGenPtr)) return 0;
+	if (MADpos[ id] >= GetPtrSize( MIDIGenPtr)) return 0;
 	
-	if( MADpos[ id] + size >= GetPtrSize( MIDIGenPtr)) size = GetPtrSize( MIDIGenPtr) - MADpos[ id];
+	if (MADpos[ id] + size >= GetPtrSize( MIDIGenPtr)) size = GetPtrSize( MIDIGenPtr) - MADpos[ id];
 	
 	BlockMoveData( MIDIGenPtr + MADpos[ id], dst, size);
 	
@@ -79,8 +79,8 @@ static short MADseek( short id, long size, short mode)
 		break;
 	}
 	
-	if( MADpos[ id] < 0) return -1;
-	if( MADpos[ id] >= GetPtrSize( MIDIGenPtr)) return -1;
+	if (MADpos[ id] < 0) return -1;
+	if (MADpos[ id] >= GetPtrSize( MIDIGenPtr)) return -1;
 	
 	return 0;
 }
@@ -432,7 +432,7 @@ static void Freearray(void)
 			{ 
 				pnrlT2 = pnrlT->pnrl;
 				
-				if( pnrlT->pfxTail != NULL)
+				if (pnrlT->pfxTail != NULL)
 				{
 					pfxT = pnrlT->pfxTail->pfx;
 					if (NULL != pfxT)

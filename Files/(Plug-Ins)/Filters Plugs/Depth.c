@@ -45,9 +45,9 @@ static void AutoPosition( DialogPtr aDia)
 	do
 	{
 		aH = GetNextDevice( aH);
-		if( aH != NULL)
+		if (aH != NULL)
 		{
-			if( PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
@@ -59,12 +59,12 @@ static void AutoPosition( DialogPtr aDia)
 	while( aH != NULL);
 	
 	Position.h = mouse.h - XSize/2;
-	if( Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
-	else if( Position.h <= ViewRect.left) Position.h = ViewRect.left;
+	if (Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
+	else if (Position.h <= ViewRect.left) Position.h = ViewRect.left;
 
 	Position.v = mouse.v - YSize/2;
-	if( Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
-	else if( Position.v <= ViewRect.top) Position.v = ViewRect.top;
+	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
+	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
 	SetDialogDefaultItem( aDia, 1 );
 	SetDialogCancelItem( aDia, 2 );
@@ -112,7 +112,7 @@ static Boolean getParams ( long *p1, PPInfoPlug *thePPInfoPlug)
 			GetDialogItemText( iHandle, textStr);
 			StringToNum( textStr, p1);
 			
-			if( *p1 < 1 || *p1 > 16)
+			if (*p1 < 1 || *p1 > 16)
 			{
 				SysBeep( 1);
 				
@@ -139,9 +139,9 @@ static OSErr mainDepth( 	sData					*theData,
 	short			*Sample16Ptr = ( short*) theData->data;
 
 	Inc = 8;
-	if( getParams( &Inc, thePPInfoPlug))
+	if (getParams( &Inc, thePPInfoPlug))
 	{
-		if( Inc == 0) Inc = 1;
+		if (Inc == 0) Inc = 1;
 		switch( theData->amp)
 		{
 			case 8:
@@ -159,7 +159,7 @@ static OSErr mainDepth( 	sData					*theData,
 					
 					*Sample8Ptr = temp;
 					
-					if( StereoMode)
+					if (StereoMode)
 					{
 						Sample8Ptr++;
 						i++;
@@ -184,7 +184,7 @@ static OSErr mainDepth( 	sData					*theData,
 					
 					*Sample16Ptr = temp;
 					
-					if( StereoMode)
+					if (StereoMode)
 					{
 						Sample16Ptr++;
 						i++;

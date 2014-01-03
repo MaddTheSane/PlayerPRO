@@ -1616,7 +1616,7 @@
 		88E0C3EE0C2F21DD00D6C081 /* Help.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Help.c; sourceTree = "<group>"; };
 		88E0C3EF0C2F21DD00D6C081 /* Help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Help.h; sourceTree = "<group>"; };
 		88E0C3F00C2F21DD00D6C081 /* HelpOnline.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = HelpOnline.c; sourceTree = "<group>"; };
-		88E0C3F10C2F21DD00D6C081 /* InstruList.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = InstruList.c; sourceTree = "<group>"; };
+		88E0C3F10C2F21DD00D6C081 /* InstruList.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = InstruList.c; sourceTree = "<group>"; };
 		88E0C3F20C2F21DD00D6C081 /* InstruView.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = InstruView.c; sourceTree = "<group>"; };
 		88E0C3F30C2F21DD00D6C081 /* LDEF.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = LDEF.c; sourceTree = "<group>"; };
 		88E0C3F40C2F21DD00D6C081 /* Main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Main.c; sourceTree = "<group>"; };

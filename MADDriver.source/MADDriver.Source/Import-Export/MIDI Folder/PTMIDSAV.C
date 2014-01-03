@@ -20,8 +20,8 @@
 
 Cmd* GetMADCommand( register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
 {
-	if( PosX < 0) PosX = 0;
-	else if( PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
+	if (PosX < 0) PosX = 0;
+	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 		
 	return( & (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
 }
@@ -67,7 +67,7 @@ sData	* MADCreateSample( MADMusic *MDriver, short ins, short sample)
 	Debugger();
 	
 	curData = (sData*) NewPtrClear( sizeof( sData));
-	if( curData)
+	if (curData)
 	{
 		curData->size		= 0;
 		curData->loopBeg	= 0;
@@ -106,7 +106,7 @@ static Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short 
 	Boolean			change = false;
 	Str255			aStr;
 	
-	if( !sound) DebugStr("\pNSndToHandle");
+	if (!sound) DebugStr("\pNSndToHandle");
 	
 	*loopStart = 0;
 	*loopEnd = 0;
@@ -151,14 +151,14 @@ static Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short 
 			*loopStart = CmpHeader->loopStart;
 			*loopEnd = CmpHeader->loopEnd;
 			*sampleSize = CmpHeader->sampleSize;
-			if( numChannels == 2) *stereo = true;
+			if (numChannels == 2) *stereo = true;
 			else *stereo = false;
 			
-			if( sampleRate != NULL) 	*sampleRate	= CmpHeader->sampleRate;
-			if( baseFreq != NULL) 	*baseFreq 	= CmpHeader->baseFrequency;
+			if (sampleRate != NULL) 	*sampleRate	= CmpHeader->sampleRate;
+			if (baseFreq != NULL) 	*baseFreq 	= CmpHeader->baseFrequency;
 
 			MusSize = (*CmpHeader).numFrames;
-			if( *stereo)
+			if (*stereo)
 			{
 				MusSize *= 2;
 				*loopStart *=2;
@@ -198,20 +198,20 @@ static Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short 
 			*loopEnd = ExtHeader->loopEnd;
 			*sampleSize = ExtHeader->sampleSize;
 			
-			if( sampleRate != NULL) 	*sampleRate	= ExtHeader->sampleRate;
-			if( baseFreq != NULL) 	*baseFreq 	= ExtHeader->baseFrequency;
+			if (sampleRate != NULL) 	*sampleRate	= ExtHeader->sampleRate;
+			if (baseFreq != NULL) 	*baseFreq 	= ExtHeader->baseFrequency;
 			
-			if( numChannels == 2) *stereo = true;
+			if (numChannels == 2) *stereo = true;
 			else *stereo = false;
 			
-			if( *stereo)
+			if (*stereo)
 			{
 				MusSize *= 2;
 				*loopStart *=2;
 				*loopEnd *=2;
 			}
 			
-			if( *sampleSize == 16)
+			if (*sampleSize == 16)
 			{
 				MusSize *= 2;
 				*loopStart *= 2;
@@ -219,14 +219,14 @@ static Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short 
 			}
 			
 			HLock( sound);
-			if( numChannels == 1) BlockMoveData( ExtHeader->sampleArea, *sound, MusSize);
-			else if( numChannels == 2)
+			if (numChannels == 1) BlockMoveData( ExtHeader->sampleArea, *sound, MusSize);
+			else if (numChannels == 2)
 			{
 				BlockMoveData( ExtHeader->sampleArea, *sound, MusSize);
 			}
 			else
 			{
-				if( *sampleSize == 8)
+				if (*sampleSize == 8)
 				{
 					for( i = 0; i < MusSize; i ++)
 					{
@@ -251,8 +251,8 @@ static Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short 
 			*loopStart = header->loopStart;
 			*loopEnd = header->loopEnd;
 			
-			if( sampleRate != NULL) 	*sampleRate	= header->sampleRate;
-			if( baseFreq != NULL) 	*baseFreq 	= header->baseFrequency;
+			if (sampleRate != NULL) 	*sampleRate	= header->sampleRate;
+			if (baseFreq != NULL) 	*baseFreq 	= header->baseFrequency;
 			
 			MusSize = header->length;
 			BlockMoveData( (*header).sampleArea, *sound, MusSize);
@@ -263,9 +263,9 @@ static Handle NSndToHandle( Handle sound, long *loopStart, long *loopEnd, short 
 	HUnlock( sound);
 	SetHandleSize( sound, MusSize);
 	
-	if( MemError() != noErr) Erreur( 2, MemError());
+	if (MemError() != noErr) Erreur( 2, MemError());
 	
-	if( *loopEnd - *loopStart < 4) { *loopEnd = 0;	*loopStart = 0;}
+	if (*loopEnd - *loopStart < 4) { *loopEnd = 0;	*loopStart = 0;}
 	
 	return( sound);
 }
@@ -299,11 +299,11 @@ static void WritePfile( PatData *Pat, short pos, short track, unsigned bSam, uns
 	aCmd->cmd = wEff >> 8;
 	aCmd->vol = 0xFF;
 	
-	if( aCmd->cmd == 0x0C)
+	if (aCmd->cmd == 0x0C)
 	{
 		aCmd->cmd = 0;
 		
-		if( aCmd->arg == 0)
+		if (aCmd->arg == 0)
 		{
 			aCmd->note = 0xFE;
 		}
@@ -420,7 +420,7 @@ static int PutpatternsPtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettin
 		/******************************************/
 		
 		theMAD->partition[ wPat] = (PatData*) MADPlugNewPtrClear( sizeof( PatHeader) + wMaxchan * 64L * sizeof( Cmd), init);
-		if( theMAD->partition[ wPat] == NULL) return MADNeedMemory;
+		if (theMAD->partition[ wPat] == NULL) return MADNeedMemory;
 		
 		theMAD->partition[ wPat]->header.size 		= 64L;
 		theMAD->partition[ wPat]->header.compMode 	= 'NONE';
@@ -630,11 +630,11 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	
 	inOutCount = sizeof( MADSpec);
 	theMAD->header = (MADSpec*) MADPlugNewPtrClear( inOutCount, init);	
-	if( theMAD->header == NULL) DebugStr("\pHeader: I NEED MEMORY !!! NOW !");
+	if (theMAD->header == NULL) DebugStr("\pHeader: I NEED MEMORY !!! NOW !");
 	
 	for( i = 0; i < MAXTRACK; i++)
 	{
-		if( i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
+		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
 		
 		theMAD->header->chanVol[ i] = MAX_VOLUME;
@@ -653,7 +653,7 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	
 	for (cSamps = 0, x = 0; x < 129; x++)
 	{
-		if( MIDIInstMOD[ x] != -1) cSamps++;
+		if (MIDIInstMOD[ x] != -1) cSamps++;
 	}
 	
 	theMAD->header->numChn			=	wMaxchan;
@@ -662,10 +662,10 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	for( i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 	
 	theMAD->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
-	if( !theMAD->fid) return;
+	if (!theMAD->fid) return;
 	
 	theMAD->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
-	if( !theMAD->sample) return;
+	if (!theMAD->sample) return;
 	
 	for( i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
@@ -677,15 +677,15 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 		MidiIns = 0;
 		for( x = 0; x < 129; x++)
 		{
-			if( MIDIInstMOD[ x] == iT) MidiIns = x;
+			if (MIDIInstMOD[ x] == iT) MidiIns = x;
 		}
 		
 		NumToString( MidiIns+1, tStr);
 		for( x = 1; x <= tStr[ 0]; x++) theMAD->fid[ iT].name[ x-1] = tStr[ x];
 		
-		if( UseQKIns)
+		if (UseQKIns)
 		{
-			if( MidiIns == 128) MidiIns = 16385;
+			if (MidiIns == 128) MidiIns = 16385;
 			ComputeQuicktimeSound( MidiIns, theMAD->sample, &theMAD->fid[ iT], iT);
 		}
 	}
@@ -694,7 +694,7 @@ void SavePtunePfile( Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	
 	theMAD->header->numPat			=	cPatterns;
 	theMAD->header->numPointers		=	cPatterns;
-	if( theMAD->header->numPointers > 128) theMAD->header->numPointers = 128;
+	if (theMAD->header->numPointers > 128) theMAD->header->numPointers = 128;
 	
 	for( x = 0; x < theMAD->header->numPointers; x++) theMAD->header->oPointers[ x] = x;
 	

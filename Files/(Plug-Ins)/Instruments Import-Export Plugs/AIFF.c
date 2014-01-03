@@ -34,13 +34,13 @@ OSErr				result;
 	numChannels = 1;
 	soundSize = 0;
 	
-	if( CC->formType == AIFCID) Compression = true;
-	else if( CC->formType == AIFFID) Compression = false;
+	if (CC->formType == AIFCID) Compression = true;
+	else if (CC->formType == AIFFID) Compression = false;
 
 	for( i = sizeof( ContainerChunk); i < CC->ckSize;)
 	{
 		CH = (ChunkHeader*) (sound + i);
-		if( CH->ckID == CommonID)
+		if (CH->ckID == CommonID)
 		{
 			CommC = (ExtCommonChunk*) CH;			
 			numChannels = CommC->numChannels;
@@ -66,19 +66,19 @@ OSErr				result;
 			
 			soundSize = numSampleFrames;
 			
-			if( *sampleSize == 16) soundSize *= 2;
-			if( numChannels == 2) soundSize *= 2;
+			if (*sampleSize == 16) soundSize *= 2;
+			if (numChannels == 2) soundSize *= 2;
 
 		}
-		else if( CH->ckID == SoundDataID)
+		else if (CH->ckID == SoundDataID)
 		{
 			SData = (SoundDataChunk*) CH;
 			StartId = i;
 		}
-		else if( CH->ckID == MarkerID)
+		else if (CH->ckID == MarkerID)
 		{
 			marker = (MarkerChunk*) CH;
-			if( marker->numMarkers == 2)
+			if (marker->numMarkers == 2)
 			{
 				*loopStart = marker->Markers[ 0].position;
 				mm = (Marker*) marker->Markers;
@@ -86,7 +86,7 @@ OSErr				result;
 				mm = (Marker*) ((Ptr) mm + marker->Markers[ 0].markerName[0]);
 				*loopEnd = mm->position;
 				
-				if( *sampleSize == 16)
+				if (*sampleSize == 16)
 				{
 					*loopStart *= 2;
 					*loopEnd *= 2;
@@ -101,18 +101,18 @@ OSErr				result;
 	StartId += 16;
 	
 	SizeH = GetPtrSize( sound);
-	if( numChannels == 1)
+	if (numChannels == 1)
 	{
 		BlockMoveData( sound + StartId, sound, SizeH - StartId);
 	}
-	else if( numChannels == 2)
+	else if (numChannels == 2)
 	{
 		BlockMoveData( sound + StartId, sound, SizeH - StartId);
 		*stereo = true;
 	}
 	else
 	{
-		if( *sampleSize == 8)
+		if (*sampleSize == 8)
 		{
 			for( i = 0; i < SizeH - StartId; i++)
 			{
@@ -128,7 +128,7 @@ OSErr				result;
 		}
 	}
 	
-	if( Compression)
+	if (Compression)
 	{
 			CompressionInfo 		cp;
 			
@@ -155,7 +155,7 @@ OSErr				result;
 			inputFormat.reserved = 0;
 			
 			outputFormat = inputFormat;
-			if( *sampleSize == 8) outputFormat.format = kOffsetBinary;
+			if (*sampleSize == 8) outputFormat.format = kOffsetBinary;
 			else outputFormat.format = k16BitBigEndianFormat;
 			
 			err = SoundConverterOpen(&inputFormat, &outputFormat, &sc);
@@ -169,7 +169,7 @@ OSErr				result;
 			inputFrames = (SizeH - StartId) / cp.bytesPerFrame;
 			
 			dstPtr = NewPtr( inputFrames * numChannels * (*sampleSize/8) * cp.samplesPerPacket);
-			if( dstPtr == 0L)
+			if (dstPtr == 0L)
 			{
 				DisposePtr( sound);
 				return 0L;
@@ -184,8 +184,8 @@ OSErr				result;
 			if (err != noErr)
 			DebugStr("\pEnd Conversion failed");
 			
-			if( outputFrames != 0) Debugger();
-			if( outputBytes != 0) Debugger();
+			if (outputFrames != 0) Debugger();
+			if (outputBytes != 0) Debugger();
 			
 			err = SoundConverterClose(sc);
 			if (err != noErr)
@@ -203,8 +203,8 @@ OSErr				result;
 
 static OSErr TestAIFF( ContainerChunk* CC)
 {
-	if( CC->formType == AIFCID) return noErr;
-	else if( CC->formType == AIFFID) return noErr;
+	if (CC->formType == AIFCID) return noErr;
+	else if (CC->formType == AIFFID) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
@@ -233,11 +233,11 @@ EXP OSErr main(		OSType					order,						// Order to execute
 			FSSpec			newFile;
 			
 			myErr = ConvertDataToWAVE( *AlienFileFSSpec, &newFile, thePPInfoPlug);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				theSound = ConvertWAV( &newFile, &lS, &lE, &sS, &rate, &stereo);
 				
-				if( theSound) inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
+				if (theSound) inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
 				else
 				{
 					myErr = MADNeedMemory;
@@ -253,11 +253,11 @@ EXP OSErr main(		OSType					order,						// Order to execute
 			Ptr	theSound;
 			
 			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if( myErr == noErr)
+			if (myErr == noErr)
 			{
 				inOutBytes = 50L;
 				theSound = NewPtr( inOutBytes);
-				if( theSound == NULL) myErr = MADNeedMemory;
+				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
 					FSRead( iFileRefI, &inOutBytes, theSound);
@@ -273,7 +273,7 @@ EXP OSErr main(		OSType					order,						// Order to execute
 		break;
 		
 		case 'EXPL':
-			if( *sampleID >= 0)
+			if (*sampleID >= 0)
 			{
 				OSType				compType = 'NONE';
 				unsigned long		rate;
@@ -283,12 +283,12 @@ EXP OSErr main(		OSType					order,						// Order to execute
 				myErr = FSpCreate( AlienFileFSSpec, 'TVOD', 'AIFF', smCurrentScript);
 				myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
 				
-				if( myErr == noErr)
+				if (myErr == noErr)
 				{
 					inOutBytes 	= curData->size;
 					rate		= curData->c2spd;
 					
-					if( curData->stereo) numChan = 2;
+					if (curData->stereo) numChan = 2;
 					else numChan = 1;
 					
 					myErr = SetupAIFFHeader(	iFileRefI,
@@ -303,7 +303,7 @@ EXP OSErr main(		OSType					order,						// Order to execute
 					
 					/*
 					marker = (MarkerChunk*) CH;
-					if( marker->numMarkers == 2)
+					if (marker->numMarkers == 2)
 					{
 						*loopStart = marker->Markers[ 0].position;
 						mm = (Marker*) marker->Markers;
@@ -311,7 +311,7 @@ EXP OSErr main(		OSType					order,						// Order to execute
 						mm = (Marker*) ((Ptr) mm + marker->Markers[ 0].markerName[0]);
 						*loopEnd = mm->position;
 						
-						if( *sampleSize == 16)
+						if (*sampleSize == 16)
 						{
 							*loopStart *= 2;
 							*loopEnd *= 2;

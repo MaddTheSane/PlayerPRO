@@ -22,21 +22,21 @@ void PLCheckSelect( PrivateList	*aL)
 {
 Boolean	needChange = false;
 
-	if( aL->select.left >= aL->maxX )	needChange = true;
-	if( aL->select.right >= aL->maxX ) 	needChange = true;
+	if (aL->select.left >= aL->maxX )	needChange = true;
+	if (aL->select.right >= aL->maxX ) 	needChange = true;
 	
-	if( aL->select.top >= aL->maxY ) 	needChange = true;
-	if( aL->select.bottom >= aL->maxY ) 	needChange = true;
+	if (aL->select.top >= aL->maxY ) 	needChange = true;
+	if (aL->select.bottom >= aL->maxY ) 	needChange = true;
 	
 	
 	
-	if( aL->select.left < 0 ) 			needChange = true;
-	if( aL->select.right < 0) 			needChange = true;
+	if (aL->select.left < 0 ) 			needChange = true;
+	if (aL->select.right < 0) 			needChange = true;
 	
-	if( aL->select.top < 0 ) 			needChange = true;
-	if( aL->select.bottom < 0 ) 		needChange = true;
+	if (aL->select.top < 0 ) 			needChange = true;
+	if (aL->select.bottom < 0 ) 		needChange = true;
 	
-	if( needChange)
+	if (needChange)
 	{
 		Rect cRect = aL->select;
 	
@@ -62,10 +62,10 @@ void PLUpdateItem( Point cell, PrivateList *aL)
 	RgnHandle	saveClipRgn;
 	RGBColor	color;
 	
-	if( cell.v < 0 ) cell.v = 0;
-	if( cell.h < 0 ) cell.h = 0;
-	if( cell.v >= aL->maxY ) cell.v = aL->maxY-1;
-	if( cell.h >= aL->maxX ) cell.h = aL->maxX-1;
+	if (cell.v < 0 ) cell.v = 0;
+	if (cell.h < 0 ) cell.h = 0;
+	if (cell.v >= aL->maxY ) cell.v = aL->maxY-1;
+	if (cell.h >= aL->maxX ) cell.h = aL->maxX-1;
 	
 	GetPort( &savePort);
 	SetPortDialogPort( aL->aDia);
@@ -141,13 +141,13 @@ void PLUpdate( PrivateList *aL)
 
 void PLScrollInt( short curVal, short sVal, long lRefCon, PrivateList *aL)
 {
-	if( GetWRefCon( GetDialogWindow( aL->aDia)) == RefPartition)
+	if (GetWRefCon( GetDialogWindow( aL->aDia)) == RefPartition)
 	{
 		PLScrollIntPartition( curVal, sVal, lRefCon);
 		return;
 	}
 
-	if( sVal != curVal)
+	if (sVal != curVal)
 	{
 		RGBColor		bColor;
 		RgnHandle		aRgn;
@@ -163,7 +163,7 @@ void PLScrollInt( short curVal, short sVal, long lRefCon, PrivateList *aL)
 				
 				ScrollRect( &aRect, 0, (sVal - curVal) * aL->HCell, aRgn);
 				
-				if( sVal - curVal == 1 && IsRegionRectangular( aRgn))
+				if (sVal - curVal == 1 && IsRegionRectangular( aRgn))
 				{
 					Point		cPt;
 					
@@ -172,7 +172,7 @@ void PLScrollInt( short curVal, short sVal, long lRefCon, PrivateList *aL)
 				
 					PLUpdateItem( cPt, aL);
 				}
-				else if( sVal - curVal == -1 && IsRegionRectangular( aRgn))
+				else if (sVal - curVal == -1 && IsRegionRectangular( aRgn))
 				{
 					Point		cPt;
 					
@@ -180,10 +180,10 @@ void PLScrollInt( short curVal, short sVal, long lRefCon, PrivateList *aL)
 					cPt.v = PLGetMaxYValue( aL);
 					
 					cPt.v--;
-					if( cPt.v >= 0)	PLUpdateItem( cPt, aL);
+					if (cPt.v >= 0)	PLUpdateItem( cPt, aL);
 					
 					cPt.v--;
-					if( cPt.v >= 0)	PLUpdateItem( cPt, aL);
+					if (cPt.v >= 0)	PLUpdateItem( cPt, aL);
 				}
 				else
 				{
@@ -223,8 +223,8 @@ long			lRefCon;
 short		maxValue, minValue, curVal, XX, sVal, itemType;
 Handle		itemHandle;
 
-if( ctlPart <= 0) return;
-if( theControl == NULL) return;
+if (ctlPart <= 0) return;
+if (theControl == NULL) return;
 
 lRefCon = GetControlReference( theControl);
 maxValue = GetControlMaximum( theControl);
@@ -235,12 +235,12 @@ curVal = sVal = GetControlValue( theControl);
 	{
 		case kControlUpButtonPart:
 			curVal -= 1;
-			if( curVal < minValue) curVal = minValue;
+			if (curVal < minValue) curVal = minValue;
 		break;
 		
 		case kControlDownButtonPart:
 			curVal += 1;
-			if( curVal > maxValue) curVal = maxValue;
+			if (curVal > maxValue) curVal = maxValue;
 		break;
 		
 		case kControlPageUpPart:
@@ -250,7 +250,7 @@ curVal = sVal = GetControlValue( theControl);
 				case xScrollNum:	curVal -= PLGetMaxXValue( myIntList) - GetControlValue( myIntList->xScroll) - 1;	break;
 			}
 			
-			if( curVal < minValue) curVal = minValue;
+			if (curVal < minValue) curVal = minValue;
 		break;
 		
 		case kControlPageDownPart:
@@ -259,16 +259,16 @@ curVal = sVal = GetControlValue( theControl);
 				case yScrollNum:	curVal += PLGetMaxYValue( myIntList) - GetControlValue( myIntList->yScroll) - 1;	break;
 				case xScrollNum:	curVal += PLGetMaxXValue( myIntList) - GetControlValue( myIntList->xScroll) - 1;	break;
 			}
-			if( curVal > maxValue) curVal = maxValue;
+			if (curVal > maxValue) curVal = maxValue;
 		break;
 	}
 	
-	if( curVal != sVal)
+	if (curVal != sVal)
 	{
 		PLSetCtlValue( theControl, curVal);
 		PLScrollInt( curVal, sVal, lRefCon, myIntList);
 	}
-	else if( ctlPart == kControlIndicatorPart)
+	else if (ctlPart == kControlIndicatorPart)
 	{
 		PLScrollInt( curVal, myIntList->thumb, lRefCon, myIntList);
 		myIntList->thumb = curVal;
@@ -277,7 +277,7 @@ curVal = sVal = GetControlValue( theControl);
 
 short PLGetCtlValue( ControlHandle	aH)
 {
-	if( aH == NULL) return 0;
+	if (aH == NULL) return 0;
 	else
 	{
 		return GetControlValue( aH);
@@ -286,7 +286,7 @@ short PLGetCtlValue( ControlHandle	aH)
 
 void PLSetCtlValue( ControlHandle	aH, short val)
 {
-	if( aH != NULL)
+	if (aH != NULL)
 	{
 		SetControlValue( aH, val);
 	}
@@ -297,7 +297,7 @@ short PLGetMaxYValue( PrivateList	*aL)
 short	ret;
 
 	ret = 1 + PLGetCtlValue( aL->yScroll) + (aL->rect.bottom - aL->rect.top) / aL->HCell;
-	if( ret > aL->maxY) ret = aL->maxY;
+	if (ret > aL->maxY) ret = aL->maxY;
 
 	return ret;
 }
@@ -307,7 +307,7 @@ short PLGetMaxXValue( PrivateList	*aL)
 short	ret;
 
 	ret = 1 + PLGetCtlValue( aL->xScroll) + (aL->rect.right - aL->rect.left) / aL->LCell;
-	if( ret > aL->maxX) ret = aL->maxX;
+	if (ret > aL->maxX) ret = aL->maxX;
 	
 	return ret;
 }
@@ -319,17 +319,17 @@ Boolean PLConvertPoint( Point *cPt, PrivateList	*aL)
 	cPt->h -= aL->rect.left;				cPt->v -= aL->rect.top;
 	cPt->h /= aL->LCell;					cPt->v /= aL->HCell;
 	
-	if( aL->xScroll != NULL)
+	if (aL->xScroll != NULL)
 		cPt->h += PLGetCtlValue( aL->xScroll);
 	
-	if( aL->yScroll != NULL)
+	if (aL->yScroll != NULL)
 		cPt->v += PLGetCtlValue( aL->yScroll);
 
-	if( cPt->h < 0) {cPt->h = 0;	result = false;}
-	if( cPt->v < 0) {cPt->v = 0;	result = false;}
+	if (cPt->h < 0) {cPt->h = 0;	result = false;}
+	if (cPt->v < 0) {cPt->v = 0;	result = false;}
 	
-	if( cPt->h >= aL->maxX ) {cPt->h = aL->maxX - 1;	result = false;}
-	if( cPt->v >= aL->maxY ) {cPt->v = aL->maxY - 1;	result = false;}
+	if (cPt->h >= aL->maxX ) {cPt->h = aL->maxX - 1;	result = false;}
+	if (cPt->v >= aL->maxY ) {cPt->v = aL->maxY - 1;	result = false;}
 	
 	return result;
 }
@@ -343,16 +343,16 @@ Boolean PLGetSelect( Point *myPt, PrivateList	*aL)
 	}
 	else
 	{
-		if( myPt->v < aL->select.top)
+		if (myPt->v < aL->select.top)
 		{
 			myPt->v = aL->select.top;
 			myPt->h = aL->select.left;
 		}
-		else if( myPt->v > aL->select.bottom) return false;
+		else if (myPt->v > aL->select.bottom) return false;
 		else
 		{
 			myPt->h = aL->select.left;
-			if( myPt->h > aL->select.right) myPt->v++;
+			if (myPt->h > aL->select.right) myPt->v++;
 		}
 	}
 	
@@ -362,7 +362,7 @@ void PLGetSelectRect( Rect *dstRect, PrivateList	*aL)
 {
 	long temp;
 	
-	if( aL->select.left == -1 && aL->select.top == -1 && aL->select.right == -1 && aL->select.bottom == -1)
+	if (aL->select.left == -1 && aL->select.top == -1 && aL->select.right == -1 && aL->select.bottom == -1)
 	{
 		SetRect( dstRect, 0, 0 ,0 ,0);
 		return;
@@ -373,10 +373,10 @@ void PLGetSelectRect( Rect *dstRect, PrivateList	*aL)
 	
 	
 	temp = aL->rect.top + (aL->select.top - PLGetCtlValue( aL->yScroll)) * aL->HCell;
-	if( temp < -32000) temp = -32000;
+	if (temp < -32000) temp = -32000;
 	dstRect->top = temp;
 	temp = dstRect->top + (aL->select.bottom - aL->select.top + 1) * aL->HCell;
-	if( temp > 32000) temp = 32000;
+	if (temp > 32000) temp = 32000;
 	dstRect->bottom = temp;
 
 }
@@ -389,9 +389,9 @@ void PLSetSelect( short left, short top, short right, short bottom, PrivateList	
 	
 	/* Erase previous selection */
 	
-	if( (aL->type & onlyOne) != 0 && aL->select.left != -1) // || aL->type == dragItem
+	if ((aL->type & onlyOne) != 0 && aL->select.left != -1) // || aL->type == dragItem
 	{
-		if( aL->select.top == aL->select.bottom)
+		if (aL->select.top == aL->select.bottom)
 		{
 			Point aa;
 			
@@ -404,7 +404,7 @@ void PLSetSelect( short left, short top, short right, short bottom, PrivateList	
 		}
 	}
 	
-	if( left == -1 && top == -1 && right == -1 && bottom == -1)
+	if (left == -1 && top == -1 && right == -1 && bottom == -1)
 	{
 		PLGetSelectRect( &tt, aL);
 		InvalWindowRect( GetDialogWindow( aL->aDia), &tt);
@@ -414,15 +414,15 @@ void PLSetSelect( short left, short top, short right, short bottom, PrivateList	
 		return;
 	}
 	
-	if( top < 0) top = 0;
-	if( top >= aL->maxY) top = aL->maxY-1;
-	if( bottom < 0) bottom = 0;
-	if( bottom >= aL->maxY) bottom = aL->maxY-1;
+	if (top < 0) top = 0;
+	if (top >= aL->maxY) top = aL->maxY-1;
+	if (bottom < 0) bottom = 0;
+	if (bottom >= aL->maxY) bottom = aL->maxY-1;
 	
-	if( left < 0) left = 0;
-	if( left >= aL->maxX) left = aL->maxX-1;
-	if( right < 0) right = 0;
-	if( right >= aL->maxX) right = aL->maxX-1;
+	if (left < 0) left = 0;
+	if (left >= aL->maxX) left = aL->maxX-1;
+	if (right < 0) right = 0;
+	if (right >= aL->maxX) right = aL->maxX-1;
 	
 	SetRect( &aL->select, left, top, right, bottom);
 	
@@ -442,18 +442,18 @@ void PLSetSelect( short left, short top, short right, short bottom, PrivateList	
 	//	PLGetSelectRect( &tt, aL);
 	//	InvalWindowRect( GetDialogWindow( &tt);
 		
-		if( SectRect( &oldRect, &aL->rect, &uRect)) InvalWindowRect( GetDialogWindow( aL->aDia), &uRect);
+		if (SectRect( &oldRect, &aL->rect, &uRect)) InvalWindowRect( GetDialogWindow( aL->aDia), &uRect);
 		
 		PLGetSelectRect( &tRect, aL);	tRect.left++;
-		if( SectRect( &tRect, &aL->rect, &uRect)) InvalWindowRect( GetDialogWindow( aL->aDia), &uRect);
+		if (SectRect( &tRect, &aL->rect, &uRect)) InvalWindowRect( GetDialogWindow( aL->aDia), &uRect);
 		
-		if( SectRect( &oldRect, &tRect, &tRect)) ValidWindowRect( GetDialogWindow( aL->aDia),  &tRect);
+		if (SectRect( &oldRect, &tRect, &tRect)) ValidWindowRect( GetDialogWindow( aL->aDia),  &tRect);
 	}
 }
 
 void PLAutoScroll( PrivateList	*aL)
 {
-	if( aL->select.left == -1 && aL->select.top == -1 && aL->select.right == -1 && aL->select.bottom == -1)
+	if (aL->select.left == -1 && aL->select.top == -1 && aL->select.right == -1 && aL->select.bottom == -1)
 	{
 		return;
 	}
@@ -464,7 +464,7 @@ void PLAutoScroll( PrivateList	*aL)
 		XDist = aL->rect.left + (aL->select.left - PLGetCtlValue( aL->xScroll)) * aL->LCell;
 		YDist = aL->rect.top + (aL->select.top - PLGetCtlValue( aL->yScroll)) * aL->HCell;
 		
-		if( YDist < aL->rect.top || YDist > aL->rect.bottom - aL->HCell)
+		if (YDist < aL->rect.top || YDist > aL->rect.bottom - aL->HCell)
 		{
 			Rect		aa = aL->rect;
 			short	prevVal = GetControlValue( aL->yScroll);
@@ -477,7 +477,7 @@ void PLAutoScroll( PrivateList	*aL)
 			PLScrollInt( GetControlValue( aL->yScroll), prevVal, GetControlReference( aL->yScroll), aL);
 		}
 		
-		if( XDist < aL->rect.left || XDist > aL->rect.right - aL->LCell)
+		if (XDist < aL->rect.left || XDist > aL->rect.right - aL->LCell)
 		{
 			Rect		aa = aL->rect;
 			short	prevVal = GetControlValue( aL->xScroll);
@@ -498,32 +498,32 @@ short	tt;
 
 	// XScroll
 	
-	if( aL->xScroll != NULL)
+	if (aL->xScroll != NULL)
 	{
 		MyMoveControl( aL->xScroll, aL->rect.left, aL->rect.bottom);
 		MySizeControl( aL->xScroll, aL->rect.right + 1 - aL->rect.left, 16);
 		
 		SetControlMinimum( aL->xScroll, 0);
 		
-		tt = aL->maxX - (aL->rect.right - aL->rect.left) / aL->LCell;		if( tt < 0) tt = 0;
+		tt = aL->maxX - (aL->rect.right - aL->rect.left) / aL->LCell;		if (tt < 0) tt = 0;
 		SetControlMaximum( aL->xScroll, tt);
 		
-		if( gUseControlSize) SetControlViewSize( aL->xScroll, (aL->rect.right - aL->rect.left) / aL->LCell);
+		if (gUseControlSize) SetControlViewSize( aL->xScroll, (aL->rect.right - aL->rect.left) / aL->LCell);
 	}
 	
 	// YScroll
 	
-	if( aL->yScroll != NULL)
+	if (aL->yScroll != NULL)
 	{
 		MyMoveControl( aL->yScroll, aL->rect.right, aL->rect.top - 1);
 		MySizeControl( aL->yScroll, 16, aL->rect.bottom - aL->rect.top + 2);
 	
 		SetControlMinimum( aL->yScroll, 0);
 	
-		tt = aL->maxY  - (aL->rect.bottom - aL->rect.top) / aL->HCell;		if( tt < 0) tt = 0;
+		tt = aL->maxY  - (aL->rect.bottom - aL->rect.top) / aL->HCell;		if (tt < 0) tt = 0;
 		SetControlMaximum( aL->yScroll, tt);
 		
-		if( gUseControlSize) SetControlViewSize( aL->yScroll, (aL->rect.bottom - aL->rect.top) / aL->HCell);
+		if (gUseControlSize) SetControlViewSize( aL->yScroll, (aL->rect.bottom - aL->rect.top) / aL->HCell);
 	}
 }
 
@@ -541,29 +541,29 @@ Boolean		ddTime = false;
 	oldPt.v = aL->select.top;
 	
 	cPt = pt;
-	if( !PLConvertPoint( &cPt, aL))			// Click outside list
+	if (!PLConvertPoint( &cPt, aL))			// Click outside list
 	{
 		PLSetSelect( -1, -1, -1, -1, aL);
 		goto End;
 	}
 	
-	if(  (aL->type & dragItem) != 0)
+	if ( (aL->type & dragItem) != 0)
 	{
 		PLGetSelectRect( &oldRect, aL);
-		if( PtInRect( pt, &oldRect))
+		if (PtInRect( pt, &oldRect))
 		{
 			curPt = cPt;
 			goto End;
 		}
 	}
 	
-	if( modifiers & shiftKey)
+	if (modifiers & shiftKey)
 	{
 		theCell.v = theCell.h = 0;
 		
-		if( PLGetSelect( &theCell, aL))
+		if (PLGetSelect( &theCell, aL))
 		{
-			if( cPt.v < theCell.v)
+			if (cPt.v < theCell.v)
 			{
 				theCell.v += aL->select.bottom - aL->select.top;
 			}
@@ -571,7 +571,7 @@ Boolean		ddTime = false;
 			cPt = theCell;
 		}
 	}
-	else if( aL->select.top != aL->select.bottom)
+	else if (aL->select.top != aL->select.bottom)
 	{
 		PLGetSelectRect( &tRect, aL);
 		InvalWindowRect( GetDialogWindow( aL->aDia), &tRect);
@@ -585,22 +585,22 @@ Boolean		ddTime = false;
 		
 		GetMouse( &curPt);
 		
-		if( !PtInRect( curPt, &aL->rect))
+		if (!PtInRect( curPt, &aL->rect))
 		{
 			myIntList = aL;
 			
-			if( curPt.v < aL->rect.top)		PLactionProcPartition( aL->yScroll, kControlUpButtonPart);
-			if( curPt.v > aL->rect.bottom)	PLactionProcPartition( aL->yScroll, kControlDownButtonPart);
+			if (curPt.v < aL->rect.top)		PLactionProcPartition( aL->yScroll, kControlUpButtonPart);
+			if (curPt.v > aL->rect.bottom)	PLactionProcPartition( aL->yScroll, kControlDownButtonPart);
 
-			if( curPt.h < aL->rect.left)	PLactionProcPartition( aL->xScroll, kControlUpButtonPart);
-			if( curPt.h > aL->rect.right)	PLactionProcPartition( aL->xScroll, kControlDownButtonPart);
+			if (curPt.h < aL->rect.left)	PLactionProcPartition( aL->xScroll, kControlUpButtonPart);
+			if (curPt.h > aL->rect.right)	PLactionProcPartition( aL->xScroll, kControlDownButtonPart);
 			
 			Moved = true;
 		}
 		
 		PLConvertPoint( &curPt, aL);
 		
-		if( curPt.v != oldPt.v || curPt.h != oldPt.h || Moved == true)
+		if (curPt.v != oldPt.v || curPt.h != oldPt.h || Moved == true)
 		{
 			oldPt = curPt;
 			
@@ -608,7 +608,7 @@ Boolean		ddTime = false;
 			PLGetSelectRect( &oldRect, aL);
 			
 			/* Set New Selection Rect */			
-			if( (aL->type & onlyOne) != 0 && aL->select.left != -1)	//dragItem
+			if ((aL->type & onlyOne) != 0 && aL->select.left != -1)	//dragItem
 			{
 				Point aa;
 				
@@ -620,11 +620,11 @@ Boolean		ddTime = false;
 				PLUpdateItem( aa, aL);		// old item
 			}
 			
-			if( (aL->type & onlyOne) != 0) cPt = curPt;			// dragItem
+			if ((aL->type & onlyOne) != 0) cPt = curPt;			// dragItem
 			SetMobiusRect( &aL->select, cPt.h, cPt.v, curPt.h, curPt.v);
 			
 			/* Update */
-			if(  (aL->type & onlyOne) != 0)	// dragItem
+			if ( (aL->type & onlyOne) != 0)	// dragItem
 			{
 				Point aa;
 				
@@ -635,27 +635,27 @@ Boolean		ddTime = false;
 			}
 			else
 			{
-				if( SectRect( &oldRect, &aL->rect, &uRect)) InvalWindowRect( GetDialogWindow( aL->aDia), &uRect);
+				if (SectRect( &oldRect, &aL->rect, &uRect)) InvalWindowRect( GetDialogWindow( aL->aDia), &uRect);
 				
 				PLGetSelectRect( &tRect, aL);
-				if( SectRect( &tRect, &aL->rect, &uRect)) InvalWindowRect( GetDialogWindow( aL->aDia), &uRect);
+				if (SectRect( &tRect, &aL->rect, &uRect)) InvalWindowRect( GetDialogWindow( aL->aDia), &uRect);
 				
-				if( SectRect( &oldRect, &tRect, &tRect)) ValidWindowRect( GetDialogWindow( aL->aDia), &tRect);
+				if (SectRect( &oldRect, &tRect, &tRect)) ValidWindowRect( GetDialogWindow( aL->aDia), &tRect);
 				
 				PLUpdate( aL);
 			}			
 			
 		}
 		
-		if(  (aL->type & dragItem) != 0) goto End;
+		if ( (aL->type & dragItem) != 0) goto End;
 	}
 	while( Button());
 	
 	End:
 	
-	if( TickCount() - lastTickCount < GetDblTime())
+	if (TickCount() - lastTickCount < GetDblTime())
 	{
-		if( curPt.h == lastCell.h && curPt.v == lastCell.v) return true;
+		if (curPt.h == lastCell.h && curPt.v == lastCell.v) return true;
 	}
 	lastTickCount = TickCount();
 	lastCell = curPt;
@@ -671,14 +671,14 @@ void PLScroll( Point myPt, PrivateList *aL)
 
 	theCtl = NULL;
 	
-	if( TestControl(  aL->yScroll, myPt)) theCtl = aL->yScroll;
-	if( TestControl(  aL->xScroll, myPt)) theCtl = aL->xScroll;
+	if (TestControl(  aL->yScroll, myPt)) theCtl = aL->yScroll;
+	if (TestControl(  aL->xScroll, myPt)) theCtl = aL->xScroll;
 	
-	if( theCtl == aL->xScroll || theCtl == aL->yScroll)
+	if (theCtl == aL->xScroll || theCtl == aL->yScroll)
 	{
 		myIntList = aL;
 		
-		if( gUseControlSize)
+		if (gUseControlSize)
 		{
 			ControlActionUPP	MyControlUPP;
 			
@@ -689,10 +689,10 @@ void PLScroll( Point myPt, PrivateList *aL)
 		}
 		else
 		{
-			/*if( ctlPart == kControlIndicatorPart)
+			/*if (ctlPart == kControlIndicatorPart)
 			{
 				bogus = TrackControl( theCtl, myPt, NULL);
-				if( bogus != 0)
+				if (bogus != 0)
 				{
 					InvalWindowRect( GetDialogWindow( aL->aDia), &aL->rect);
 					
@@ -705,7 +705,7 @@ void PLScroll( Point myPt, PrivateList *aL)
 					PLUpdate( aL);
 				}
 			}
-			else if( ctlPart > 0)*/
+			else if (ctlPart > 0)*/
 			{
 				ControlActionUPP	MyControlUPP;
 				
@@ -758,9 +758,9 @@ GrafPtr	savePort;
 	}
 	
 	theCell.v = 0;	theCell.h = 0;
-	if( PLGetSelect( &theCell, aL))
+	if (PLGetSelect( &theCell, aL))
 	{
-		if( aL->select.top != aL->select.bottom)
+		if (aL->select.top != aL->select.bottom)
 		{
 			PLGetSelectRect( &tRect, aL);
 			InvalWindowRect( GetDialogWindow( aL->aDia), &tRect);
@@ -769,13 +769,13 @@ GrafPtr	savePort;
 		switch( theChar)
 		{
 			case 0x1E:
-				if( theCell.v > 0)
+				if (theCell.v > 0)
 				{
 					PLAutoScroll( aL);
 				
 					theCell.v--;
 					PLSetSelect( theCell.h, theCell.v, theCell.h, theCell.v, aL);
-					if( theCell.v < PLGetCtlValue( aL->yScroll))
+					if (theCell.v < PLGetCtlValue( aL->yScroll))
 					{
 						PLSetCtlValue( aL->yScroll, PLGetCtlValue( aL->yScroll)-1);
 						PLScrollInt( 0, 1, yScrollNum, aL);
@@ -784,7 +784,7 @@ GrafPtr	savePort;
 			break;
 			
 			case 0x1F:
-				if( theCell.v < aL->maxY -1)
+				if (theCell.v < aL->maxY -1)
 				{
 					theCell.v++;
 					PLSetSelect( theCell.h, theCell.v, theCell.h, theCell.v, aL);

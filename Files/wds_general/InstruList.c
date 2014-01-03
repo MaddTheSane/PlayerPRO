@@ -97,14 +97,14 @@ pascal OSErr IconIDToRgn (RgnHandle theRgn, const Rect *iconRect, short alignmen
 {
 	CInfoPBRec tempPB;
 	
-	if( theFile != NULL)
+	if (theFile != NULL)
 	{
 		tempPB.dirInfo.ioNamePtr = NULL;
 		tempPB.dirInfo.ioVRefNum = theFile->vRefNum;
 		tempPB.dirInfo.ioFDirIndex = -1;
 		tempPB.dirInfo.ioDrDirID = theFile->parID;
 		
-		if( PBGetCatInfoSync( &tempPB) == noErr)
+		if (PBGetCatInfoSync( &tempPB) == noErr)
 		{
 			tempPB.dirInfo.ioDrMdDat = LMGetTime();
 			tempPB.dirInfo.ioDrDirID = theFile->parID;
@@ -121,10 +121,10 @@ Ptr MyExp1to3( Ptr sound, unsigned long numSampleFrames)
 
 	outState = NewPtrClear( 128);
 	inState = NewPtrClear( 128);
-	if( inState == nil) return NULL;
+	if (inState == nil) return NULL;
 	
 	outBuffer = NewPtr( numSampleFrames*6);
-	if( outBuffer == nil) return NULL;
+	if (outBuffer == nil) return NULL;
 		
 	DisposePtr( sound);
 	sound = outBuffer;
@@ -143,10 +143,10 @@ Ptr MyExp1to6( Ptr sound, unsigned long numSampleFrames)
 
 	outState = NewPtrClear( 128);
 	inState = NewPtrClear( 128);
-	if( inState == nil) return NULL;
+	if (inState == nil) return NULL;
 	
 	outBuffer = NewPtr( numSampleFrames * 6);
-	if( outBuffer == nil)  return NULL;
+	if (outBuffer == nil)  return NULL;
 		
 	DisposePtr( sound);
 	sound = outBuffer;
@@ -211,14 +211,14 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 			*loopStart = CmpHeader->loopStart;
 			*loopEnd = CmpHeader->loopEnd;
 			*sampleSize = CmpHeader->sampleSize;
-			if( numChannels == 2) *stereo = true;
+			if (numChannels == 2) *stereo = true;
 			else *stereo = false;
 			
-			if( sampleRate != NULL) 	*sampleRate	= CmpHeader->sampleRate;
-			if( baseFreq != NULL) 	*baseFreq 	= CmpHeader->baseFrequency;
+			if (sampleRate != NULL) 	*sampleRate	= CmpHeader->sampleRate;
+			if (baseFreq != NULL) 	*baseFreq 	= CmpHeader->baseFrequency;
 
 			MusSize = (*CmpHeader).numFrames;
-			if( *stereo)
+			if (*stereo)
 			{
 				MusSize *= 2;
 				*loopStart *=2;
@@ -256,34 +256,34 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 			*loopEnd = ExtHeader->loopEnd;
 			*sampleSize = ExtHeader->sampleSize;
 			
-			if( sampleRate != NULL) 	*sampleRate	= ExtHeader->sampleRate;
-			if( baseFreq != NULL) 	*baseFreq 	= ExtHeader->baseFrequency;
+			if (sampleRate != NULL) 	*sampleRate	= ExtHeader->sampleRate;
+			if (baseFreq != NULL) 	*baseFreq 	= ExtHeader->baseFrequency;
 			
-			if( numChannels == 2) *stereo = true;
+			if (numChannels == 2) *stereo = true;
 			else *stereo = false;
 			
-			if( *stereo)
+			if (*stereo)
 			{
 				MusSize *= 2;
 				*loopStart *=2;
 				*loopEnd *=2;
 			}
 			
-			if( *sampleSize == 16)
+			if (*sampleSize == 16)
 			{
 				MusSize *= 2;
 				*loopStart *= 2;
 				*loopEnd *= 2;
 			}
 			
-			if( numChannels == 1) BlockMoveData( ExtHeader->sampleArea, soundPtr, MusSize);
-			else if( numChannels == 2)
+			if (numChannels == 1) BlockMoveData( ExtHeader->sampleArea, soundPtr, MusSize);
+			else if (numChannels == 2)
 			{
 				BlockMoveData( ExtHeader->sampleArea, soundPtr, MusSize);
 			}
 			else
 			{
-				if( *sampleSize == 8)
+				if (*sampleSize == 8)
 				{
 					for( i = 0; i < MusSize; i ++)
 					{
@@ -307,8 +307,8 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 			*loopStart = header->loopStart;
 			*loopEnd = header->loopEnd;
 			
-			if( sampleRate != NULL) 	*sampleRate	= header->sampleRate;
-			if( baseFreq != NULL) 	*baseFreq 	= header->baseFrequency;
+			if (sampleRate != NULL) 	*sampleRate	= header->sampleRate;
+			if (baseFreq != NULL) 	*baseFreq 	= header->baseFrequency;
 			
 			MusSize = header->length;
 			BlockMoveData( (*header).sampleArea, soundPtr, MusSize);
@@ -321,7 +321,7 @@ Ptr NSndToPtr( Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, 
 		case 8:	ConvertInstrumentIn( (Byte*) soundPtr, MusSize);	break;
 	}
 	
-	if( *loopEnd - *loopStart < 4) { *loopEnd = 0;	*loopStart = 0;}
+	if (*loopEnd - *loopStart < 4) { *loopEnd = 0;	*loopStart = 0;}
 	
 	return soundPtr;
 }
@@ -341,25 +341,25 @@ OSErr AddSoundToMAD(	Ptr				theSound,
 	long 	inOutBytes, i;
 	sData	*curData;
 
-//	if( *sampleID > MAXSAMPLE) return MADParametersErr;
+//	if (*sampleID > MAXSAMPLE) return MADParametersErr;
 
 	inOutBytes = GetPtrSize( theSound);
 	
 	///////
 	
-	if( *sampleID >= 0)		// replace this sample
+	if (*sampleID >= 0)		// replace this sample
 	{
 		curData = curMusic->sample[ curMusic->fid[ ins].firstSample + *sampleID];
 	}
 	else					// add a sample : why? because *sampleID == -1
 	{
 		*sampleID = curMusic->fid[ ins].numSamples;
-//		if( InsHeader->numSamples >= MAXSAMPLE) return -1;
+//		if (InsHeader->numSamples >= MAXSAMPLE) return -1;
 		
 		curData = MADCreateSample( curMusic, ins, *sampleID);
 	}
 	
-	if( curData->data != NULL) DisposePtr( curData->data);
+	if (curData->data != NULL) DisposePtr( curData->data);
 	curData->data = theSound;
 	
 	curData->size		= inOutBytes;
@@ -373,7 +373,7 @@ OSErr AddSoundToMAD(	Ptr				theSound,
 	
 	for(i=0; i<32; i++)
 	{
-		if( i < name[ 0]) curData->name[i] = name[i+1];
+		if (i < name[ 0]) curData->name[i] = name[i+1];
 		else curData->name[i] = '\0';
 	}
 	
@@ -400,7 +400,7 @@ void DrawBottomInfo()
 		
 		sampleNum += curMusic->fid[ i].numSamples;
 		
-		if( curMusic->fid[ i].numSamples > 0) insNum++;
+		if (curMusic->fid[ i].numSamples > 0) insNum++;
 	}
 	
 	GetPortBounds( GetDialogPort( InstruListDlog), &caRect);
@@ -439,7 +439,7 @@ void DrawBottomInfo()
 
 void ActiveInstrumentMenu( Boolean Activ)
 {
-	if( Activ)
+	if (Activ)
 	{
 		EnableMenuItem( InstruEditMenu, 3);
 		EnableMenuItem( InstruEditMenu, 4);
@@ -488,12 +488,12 @@ void DoGrowInstruList( DialogPtr	theDialog)
 	
 	GetQDGlobalsScreenBits( &screenBits);
 	
-	if( temp.bottom < temp.top) temp.bottom = temp.top;
-	else if( temp.bottom > screenBits.bounds.bottom - aPt.v) temp.bottom = screenBits.bounds.bottom - aPt.v -2;
+	if (temp.bottom < temp.top) temp.bottom = temp.top;
+	else if (temp.bottom > screenBits.bounds.bottom - aPt.v) temp.bottom = screenBits.bounds.bottom - aPt.v -2;
 	
 	lSizeVH = 0;
 
-	if( theEvent.what == mouseDown)
+	if (theEvent.what == mouseDown)
 	{
 #if MACOS9VERSION
 		temp.left++;
@@ -502,7 +502,7 @@ void DoGrowInstruList( DialogPtr	theDialog)
 		lSizeVH = GrowWindow( GetDialogWindow( theDialog), theEvent.where, &temp);
 	}
 	
-	if( lSizeVH != 0)
+	if (lSizeVH != 0)
 	{
 		tempA = LoWord( lSizeVH);
 		tempB = HiWord( lSizeVH);
@@ -584,9 +584,9 @@ void AutoPosition( DialogPtr aDia)
 	do
 	{
 		aH = GetNextDevice( aH);
-		if( aH != NULL)
+		if (aH != NULL)
 		{
-			if( PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
@@ -597,15 +597,15 @@ void AutoPosition( DialogPtr aDia)
 	}
 	while( aH != NULL);
 	
-	if( AHelpDlog != NULL) ViewRect.top += 17;
+	if (AHelpDlog != NULL) ViewRect.top += 17;
 
 	Position.h = mouse.h - XSize/2;
-	if( Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
-	else if( Position.h <= ViewRect.left) Position.h = ViewRect.left;
+	if (Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
+	else if (Position.h <= ViewRect.left) Position.h = ViewRect.left;
 
 	Position.v = mouse.v - YSize/2;
-	if( Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
-	else if( Position.v <= ViewRect.top) Position.v = ViewRect.top;
+	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
+	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
 	SetDialogDefaultItem( aDia, 1 );
 	SetDialogCancelItem( aDia, 2 );
@@ -635,7 +635,7 @@ void DrawSmallPianoKey( short i, short color, Rect aRect)
 {
 	Rect	cRect = aRect;
 
-	if( BlackWhite[ i % 12])		// Black Key
+	if (BlackWhite[ i % 12])		// Black Key
 	{
 		RGBColor myRed = { 30583, 0, 0};
 		
@@ -668,12 +668,12 @@ void DrawSmallPianoKey( short i, short color, Rect aRect)
 		
 		PenSize( 2, 1);
 		
-		if( i > 0 && BlackWhite[ (i-1) % 12]) MoveTo( aRect.left+1, aRect.bottom - 21);
+		if (i > 0 && BlackWhite[ (i-1) % 12]) MoveTo( aRect.left+1, aRect.bottom - 21);
 		else MoveTo( aRect.left+1, aRect.top + 1);
 		LineTo( aRect.left+1, aRect.bottom - 2);
 		
 		
-		if( BlackWhite[ (i+1) % 12]) MoveTo( aRect.right-3, aRect.bottom - 21);
+		if (BlackWhite[ (i+1) % 12]) MoveTo( aRect.right-3, aRect.bottom - 21);
 		else MoveTo( aRect.right-3, aRect.top + 1);
 		LineTo( aRect.right-3, aRect.bottom - 2);
 		
@@ -700,7 +700,7 @@ void NInitSmallPiano( Rect mainRect, Rect *listRect)
 	{
 		listRect[ i] = itemRect;
 	
-		if( BlackWhite[ i % 12])
+		if (BlackWhite[ i % 12])
 		{
 			listRect[ i].left = prevP;
 			listRect[ i].right = listRect[ i].left + BLACKSIZE;
@@ -713,7 +713,7 @@ void NInitSmallPiano( Rect mainRect, Rect *listRect)
 			listRect[ i].left = prevP;
 			listRect[ i].right = listRect[ i].left + WHITESIZE;
 			
-			if( BlackWhite[ (i + 1) % 12]) prevP += WHITESIZE - 3;
+			if (BlackWhite[ (i + 1) % 12]) prevP += WHITESIZE - 3;
 			else prevP += WHITESIZE - 1;
 		}
 	}
@@ -726,7 +726,7 @@ void DrawWhatSample( short ins, short samp)
 	
 	for( i = 0; i < NUMBER_NOTES; i++)
 	{
-		if( curMusic->fid[ ins].what[ i] == samp)
+		if (curMusic->fid[ ins].what[ i] == samp)
 		{
 			DrawSmallPianoKey( i, redKey, SPianoRect[ i]);
 		}
@@ -743,10 +743,10 @@ void NPressSmallPiano( short itemHit, DialogPtr TheDia, short theInstru)
 	long		newSize, curSPos = -1;
 	Boolean		firstTime = true;
 	
-	if( curMusic->fid[ theInstru].numSamples == 0) return;
+	if (curMusic->fid[ theInstru].numSamples == 0) return;
 	
-	if( CloseSampleData( TheDia) != noErr) return;
-	if( CloseInstruData( TheDia) != noErr) return;
+	if (CloseSampleData( TheDia) != noErr) return;
+	if (CloseInstruData( TheDia) != noErr) return;
 
 	CreateInstruList();
 	DrawInfoInstrument();
@@ -768,27 +768,27 @@ void NPressSmallPiano( short itemHit, DialogPtr TheDia, short theInstru)
 		Position = -1;
 		for( i = 0; i < NUMBER_NOTES; i++)
 		{
-			if( PtInRect( Mouse, &SPianoRect[ i]))
+			if (PtInRect( Mouse, &SPianoRect[ i]))
 			{
 				Position = i;
-				if( SPianoRect[ i].right - SPianoRect[ i].left == 5) goto OK;
+				if (SPianoRect[ i].right - SPianoRect[ i].left == 5) goto OK;
 			}
 		}
 		
-		if( Position >= 0)
+		if (Position >= 0)
 		{
 			OK:
-			if( Position != curSPos)
+			if (Position != curSPos)
 			{
-				if( curSPos != -1)
+				if (curSPos != -1)
 				{
-					if( curMusic->fid[ theInstru].what[ curSPos] == sampleEID) DrawSmallPianoKey( curSPos, redKey, SPianoRect[ curSPos]);
+					if (curMusic->fid[ theInstru].what[ curSPos] == sampleEID) DrawSmallPianoKey( curSPos, redKey, SPianoRect[ curSPos]);
 					else DrawSmallPianoKey( curSPos, normalKey, SPianoRect[ curSPos]);
 				}
 				DrawSmallPianoKey( Position, greenKey, SPianoRect[ Position]);	
 				curSPos = Position;
 				
-				if( dialogModifiers & optionKey)	// Key assignement
+				if (dialogModifiers & optionKey)	// Key assignement
 				{
 					curMusic->fid[ theInstru].what[ curSPos] = sampleEID;
 				}
@@ -807,7 +807,7 @@ void NPressSmallPiano( short itemHit, DialogPtr TheDia, short theInstru)
 			}
 			else
 			{
-				if( firstTime)
+				if (firstTime)
 				{
 					firstTime = false;
 					NDoPlayInstru( curSPos, theInstru, 0, 0, 0xFF);
@@ -818,9 +818,9 @@ void NPressSmallPiano( short itemHit, DialogPtr TheDia, short theInstru)
 	
 	MADDriver->chan[ LastCanal].KeyOn = false;
 	
-	if( curSPos != -1)
+	if (curSPos != -1)
 	{
-		if( curMusic->fid[ theInstru].what[ curSPos] == sampleEID) DrawSmallPianoKey( curSPos, redKey, SPianoRect[ curSPos]);
+		if (curMusic->fid[ theInstru].what[ curSPos] == sampleEID) DrawSmallPianoKey( curSPos, redKey, SPianoRect[ curSPos]);
 		else DrawSmallPianoKey( curSPos, normalKey, SPianoRect[ curSPos]);
 	}
 	GetDialogItem( EditInfoDlog, 14, &itemType, &itemHandle, &itemRect);
@@ -847,7 +847,7 @@ void UpdateEditInstruWindow( DialogPtr theDia)
 	
 	GetDialogItem( theDia, 44, &itemType, &itemHandle, &itemRect);
 	itemRect.left = LEFTBOX;
-	if( curMusic->fid[ insEID].numSamples == 0)
+	if (curMusic->fid[ insEID].numSamples == 0)
 	{
 		pStrcpy( aStr, "\pNo samples in this instrument");
 		
@@ -858,7 +858,7 @@ void UpdateEditInstruWindow( DialogPtr theDia)
 	
 	FrameRect( &itemRect);
 	
-	if( curMusic->fid[ insEID].numSamples != 0)
+	if (curMusic->fid[ insEID].numSamples != 0)
 	{
 		DrawWhatSample( insEID, sampleEID);
 	}
@@ -875,7 +875,7 @@ void UpdateEditInstruWindow( DialogPtr theDia)
 	pStrcpy( aStr, "\pSample Info ( ");
 	NumToString( curMusic->fid[ insEID].numSamples, bStr);
 	pStrcat( aStr, bStr);
-	if( curMusic->fid[ insEID].numSamples > 1) pStrcat( aStr, "\p samples)");
+	if (curMusic->fid[ insEID].numSamples > 1) pStrcat( aStr, "\p samples)");
 	else pStrcat( aStr, "\p sample)");
 	TextFace( bold);
 	TETextBox( aStr+1, aStr[ 0], &itemRect, teJustCenter);
@@ -904,13 +904,13 @@ void ChangeDialogFont( DialogPtr aDia)
 		GetDialogItem( aDia, i, &iType, &iHandle, &iRect);
 		GetDialogItemAsControl( aDia, i, &ctl);
 		
-		if( iType >= 128) iType -= 128;
+		if (iType >= 128) iType -= 128;
 		
-		if( iType == 5 || iType == 6 || iType == 8)
+		if (iType == 5 || iType == 6 || iType == 8)
 		{
 			GetControlData( ctl, kControlNoPart, kControlFontStyleTag, sizeof(inStyle), (Ptr) &inStyle, &actualSize);
 			
-			if( inStyle.flags == 0)
+			if (inStyle.flags == 0)
 			{
 				inStyle.flags = kControlUseFontMask + kControlUseSizeMask;
 				inStyle.font = kFontIDGeneva;
@@ -920,11 +920,11 @@ void ChangeDialogFont( DialogPtr aDia)
 			}
 		}
 		
-		if( iType == 16)
+		if (iType == 16)
 		{
 			GetControlData( ctl, kControlNoPart, kControlFontStyleTag, sizeof(inStyle), (Ptr) &inStyle, &actualSize);
 			
-			if( inStyle.flags == 0)
+			if (inStyle.flags == 0)
 			{
 				inStyle.flags = kControlUseFontMask + kControlUseSizeMask;
 				inStyle.font = kFontIDGeneva;
@@ -941,7 +941,7 @@ pascal void actionProcInstru( ControlHandle theControl, short ctlPart)
 	short			maxValue, minValue, curVal, sVal, itemType;
 	RgnHandle		aRgn;
 
-	if( ctlPart <= 0) return;
+	if (ctlPart <= 0) return;
 
 	maxValue = GetControlMaximum( theControl);
 	minValue = GetControlMinimum( theControl);
@@ -952,13 +952,13 @@ pascal void actionProcInstru( ControlHandle theControl, short ctlPart)
 		case kControlUpButtonPart:
 		case kControlPageUpPart:
 			curVal -= 1;
-			if( curVal < minValue) curVal = minValue;
+			if (curVal < minValue) curVal = minValue;
 			break;
 		
 		case kControlDownButtonPart:
 		case kControlPageDownPart:
 			curVal += 1;
-			if( curVal > maxValue) curVal = maxValue;
+			if (curVal > maxValue) curVal = maxValue;
 			break;
 		
 		case kControlIndicatorPart:
@@ -966,9 +966,9 @@ pascal void actionProcInstru( ControlHandle theControl, short ctlPart)
 			break;
 	}
 	
-	if( sVal != curVal)
+	if (sVal != curVal)
 	{
-		if( CloseSampleData( EditInfoDlog) == noErr)
+		if (CloseSampleData( EditInfoDlog) == noErr)
 		{
 			short 	i, itemType;
 			Handle	itemHandle;
@@ -984,7 +984,7 @@ pascal void actionProcInstru( ControlHandle theControl, short ctlPart)
 			
 		/*	#define STEP 20
 			
-			if( ctlPart != kControlIndicatorPart)
+			if (ctlPart != kControlIndicatorPart)
 			{
 				for( i = 0; i < STEP; i++)
 				{
@@ -993,7 +993,7 @@ pascal void actionProcInstru( ControlHandle theControl, short ctlPart)
 					itemRect.right -= 16;
 					itemRect.top++;		itemRect.bottom--;
 					
-					if( curVal < sVal) ScrollRect( &itemRect, 0, (itemRect.bottom - itemRect.top) / STEP, NULL);
+					if (curVal < sVal) ScrollRect( &itemRect, 0, (itemRect.bottom - itemRect.top) / STEP, NULL);
 					else ScrollRect( &itemRect, 0, - (itemRect.bottom - itemRect.top) / STEP, NULL);
 					
 					Delay( 1, &tL);
@@ -1019,7 +1019,7 @@ void ShowSampleData( DialogPtr	TheDia)
 {
 	Str255	theStr, aStr;
 
-	if( curEData != NULL)
+	if (curEData != NULL)
 	{
 		NumToString( sampleEID+1, theStr);				SetDText( TheDia, 30, theStr);
 		NumToString( curEData->loopBeg, theStr);		SetDText( TheDia, 4, theStr);
@@ -1029,7 +1029,7 @@ void ShowSampleData( DialogPtr	TheDia)
 		NumToString( curEData->amp, theStr);			SetDText( TheDia, 21, theStr);
 		NumToString( curEData->c2spd, theStr);			SetDText( TheDia, 6, theStr);
 		
-		if( curEData->stereo) SetDText( TheDia, 52, "\pStereo");
+		if (curEData->stereo) SetDText( TheDia, 52, "\pStereo");
 		else SetDText( TheDia, 52, "\pMono");
 		
 		strcpy( (Ptr) theStr, curEData->name);			MyC2PStr( (Ptr) theStr);				SetDText( TheDia, 45, theStr);
@@ -1068,17 +1068,17 @@ OSErr CloseInstruData( DialogPtr	TheDia)
 	GetDText( TheDia, 3, (StringPtr) &theStr);
 	SetInstruName( insEID, theStr);
 	
-	if( !EqualString( theStr, Str2, true, true)) curMusic->hasChanged = true;
+	if (!EqualString( theStr, Str2, true, true)) curMusic->hasChanged = true;
 	
 	GetDText(TheDia, 32, (StringPtr) &theStr);
 	StringToNum( theStr, &res);
-	if( res < 0 || res > 32767)
+	if (res < 0 || res > 32767)
 	{
 		Erreur( 78, -1);
 		SelectDialogItemText( TheDia, 32, 0, 32767);
 		return -1;
 	}
-	if( curMusic->fid[ insEID].volFade != res) curMusic->hasChanged = true;
+	if (curMusic->fid[ insEID].volFade != res) curMusic->hasChanged = true;
 	curMusic->fid[ insEID].volFade = res;
 	
 	return noErr;
@@ -1089,14 +1089,14 @@ OSErr CloseSampleData( DialogPtr	TheDia)
 	Str255	theStr;
 	long	res;
 
-	if( curEData == NULL) return noErr;
+	if (curEData == NULL) return noErr;
 	
 	MADPurgeTrackIfInstru( MADDriver, insEID);
 	
 	GetDText( TheDia, 45, theStr);	SetSampName( insEID, sampleEID, theStr);
 	GetDText( TheDia, 4, theStr);	StringToNum( theStr, &res);		curEData->loopBeg = res;
 	GetDText( TheDia, 5, theStr);	StringToNum( theStr, &res);		curEData->loopSize = res;
-	if( curEData->loopBeg + curEData->loopSize > curEData->size)
+	if (curEData->loopBeg + curEData->loopSize > curEData->size)
 	{
 		Erreur(20, -1);
 		SelectDialogItemText( TheDia, 5, 0, 32767);
@@ -1104,7 +1104,7 @@ OSErr CloseSampleData( DialogPtr	TheDia)
 	}
 
 	GetDText ( TheDia, 7, theStr);	StringToNum( theStr, &res);		
-	if( res < 0 || res > 64)
+	if (res < 0 || res > 64)
 	{
 		Erreur( 77, -1);
 		SelectDialogItemText( TheDia, 7, 0, 32767);
@@ -1113,7 +1113,7 @@ OSErr CloseSampleData( DialogPtr	TheDia)
 	curEData->vol = res;
 
 	GetDText( TheDia, 6, theStr);	StringToNum( theStr, &res);
-	if( res < 1 || res >= 50000)
+	if (res < 1 || res >= 50000)
 	{
 		Erreur( 66, -1);
 		SelectDialogItemText( TheDia, 6, 0, 32767);
@@ -1122,7 +1122,7 @@ OSErr CloseSampleData( DialogPtr	TheDia)
 	curEData->c2spd = res;
 	
 	GetDText( TheDia, 18, theStr);	StringToNum( theStr, &res);
-	if( res < -96 || res >= 96)
+	if (res < -96 || res >= 96)
 	{
 		Erreur( 76, -1);
 		SelectDialogItemText( TheDia, 18, 0, 32767);
@@ -1157,7 +1157,7 @@ void NEditInstruInfo( short ins, short samp)
 	
 	AutoPosition( TheDia);
 	
-	if( curMusic->fid[ ins].numSamples == 0) noScroll = 0;
+	if (curMusic->fid[ ins].numSamples == 0) noScroll = 0;
 	
 	GetDialogItem( TheDia, 44, &itemType, &itemHandle, &itemRect);
 	sScroll = NewControl( 	GetDialogWindow( TheDia),
@@ -1181,7 +1181,7 @@ CHANGEINSTRU:
 	
 	changeInstru = false;
 	
-	if( curMusic->fid[ ins].numSamples == 0)
+	if (curMusic->fid[ ins].numSamples == 0)
 	{
 		noScroll = 0;
 		HideDialogItem( TheDia, 17);	HideDialogItem( TheDia, 30);	HideDialogItem( TheDia, 4);
@@ -1218,10 +1218,10 @@ CHANGEINSTRU:
 	/******************/
 	// Set Sample Infos
 	
-	if( samp >= 0) { sampleEID = samp;		SetControlValue( sScroll, samp);}
+	if (samp >= 0) { sampleEID = samp;		SetControlValue( sScroll, samp);}
 	else sampleEID = 0;
 	insEID = ins;
-	if( curMusic->fid[ ins].numSamples > 0) curEData = curMusic->sample[ curMusic->fid[ ins].firstSample + sampleEID];
+	if (curMusic->fid[ ins].numSamples > 0) curEData = curMusic->sample[ curMusic->fid[ ins].firstSample + sampleEID];
 	else curEData = NULL;
 	
 	/******************/
@@ -1236,31 +1236,31 @@ CHANGEINSTRU:
 	
 	// Volume
 	
-	if( curMusic->fid[ ins].volType & EFON)			TurnRadio( 33, TheDia, true);
+	if (curMusic->fid[ ins].volType & EFON)			TurnRadio( 33, TheDia, true);
 	else TurnRadio( 35, TheDia, true);
-	if( curMusic->fid[ ins].volType & EFSUSTAIN)	TurnRadio( 36, TheDia, true);
-	if( curMusic->fid[ ins].volType & EFLOOP)		TurnRadio( 39, TheDia, true);
-	if( !(curMusic->fid[ ins].volType & EFNOTE))		TurnRadio( 22, TheDia, true);
+	if (curMusic->fid[ ins].volType & EFSUSTAIN)	TurnRadio( 36, TheDia, true);
+	if (curMusic->fid[ ins].volType & EFLOOP)		TurnRadio( 39, TheDia, true);
+	if (!(curMusic->fid[ ins].volType & EFNOTE))		TurnRadio( 22, TheDia, true);
 	
 	// Panning
 	
-	if( curMusic->fid[ ins].pannType & EFON)			TurnRadio( 48, TheDia, true);
+	if (curMusic->fid[ ins].pannType & EFON)			TurnRadio( 48, TheDia, true);
 	else TurnRadio( 15, TheDia, true);
-	if( curMusic->fid[ ins].pannType & EFSUSTAIN)		TurnRadio( 43, TheDia, true);
-	if( curMusic->fid[ ins].pannType & EFLOOP)			TurnRadio( 40, TheDia, true);
-	if( !(curMusic->fid[ ins].pannType & EFNOTE))		TurnRadio( 41, TheDia, true);
+	if (curMusic->fid[ ins].pannType & EFSUSTAIN)		TurnRadio( 43, TheDia, true);
+	if (curMusic->fid[ ins].pannType & EFLOOP)			TurnRadio( 40, TheDia, true);
+	if (!(curMusic->fid[ ins].pannType & EFNOTE))		TurnRadio( 41, TheDia, true);
 	
 	ShowSampleData( TheDia);
 	
-	if( samp < 0)
+	if (samp < 0)
 		SelectDialogItemText( TheDia, 3, 0, 32767);
 	else
 		SelectDialogItemText( TheDia, 45, 0, 32767);
 	
-	if( ins == 0) ControlSwitch( 58, TheDia, 255);
+	if (ins == 0) ControlSwitch( 58, TheDia, 255);
 	else ControlSwitch( 58, TheDia, 0);
 	
-	if( ins == MAXINSTRU-1) ControlSwitch( 59, TheDia, 255);
+	if (ins == MAXINSTRU-1) ControlSwitch( 59, TheDia, 255);
 	else ControlSwitch( 59, TheDia, 0);
 	
 OnRepart:
@@ -1273,7 +1273,7 @@ OnRepart:
 		switch( itemHit)
 		{
 			case 58:		// Previous
-				if( ins > 0)
+				if (ins > 0)
 				{
 					ins--;
 					samp = 0;
@@ -1287,7 +1287,7 @@ OnRepart:
 				break;
 				
 			case 59:		// Next
-				if( ins < MAXINSTRU-1)
+				if (ins < MAXINSTRU-1)
 				{
 					ins++;
 					samp = 0;
@@ -1302,10 +1302,10 @@ OnRepart:
 				
 			case 15:
 			case 48:
-				if( itemHit == 48) if( !(curMusic->fid[ ins].pannType & EFON))	curMusic->fid[ ins].pannType += EFON;
-				if( itemHit == 15) if( curMusic->fid[ ins].pannType & EFON)		curMusic->fid[ ins].pannType -= EFON;
+				if (itemHit == 48) if (!(curMusic->fid[ ins].pannType & EFON))	curMusic->fid[ ins].pannType += EFON;
+				if (itemHit == 15) if (curMusic->fid[ ins].pannType & EFON)		curMusic->fid[ ins].pannType -= EFON;
 				
-				if( curMusic->fid[ ins].pannType & EFON)	
+				if (curMusic->fid[ ins].pannType & EFON)	
 				{
 					TurnRadio( 48, TheDia, true);
 					TurnRadio( 15, TheDia, false);
@@ -1319,40 +1319,40 @@ OnRepart:
 				break;
 				
 			case 41:
-				if( curMusic->fid[ ins].pannType & EFNOTE) curMusic->fid[ ins].pannType -= EFNOTE;
+				if (curMusic->fid[ ins].pannType & EFNOTE) curMusic->fid[ ins].pannType -= EFNOTE;
 				else curMusic->fid[ ins].pannType += EFNOTE;
 				
-				if( !(curMusic->fid[ ins].pannType & EFNOTE))		TurnRadio( 41, TheDia, true);
+				if (!(curMusic->fid[ ins].pannType & EFNOTE))		TurnRadio( 41, TheDia, true);
 				else TurnRadio( 41, TheDia, false);
 				
 				curMusic->hasChanged = true;
 				break;
 				
 			case 22:
-				if( curMusic->fid[ ins].volType & EFNOTE) curMusic->fid[ ins].volType -= EFNOTE;
+				if (curMusic->fid[ ins].volType & EFNOTE) curMusic->fid[ ins].volType -= EFNOTE;
 				else curMusic->fid[ ins].volType += EFNOTE;
 				
-				if( !(curMusic->fid[ ins].volType & EFNOTE))		TurnRadio( 22, TheDia, true);
+				if (!(curMusic->fid[ ins].volType & EFNOTE))		TurnRadio( 22, TheDia, true);
 				else TurnRadio( 22, TheDia, false);
 				
 				curMusic->hasChanged = true;
 				break;
 				
 			case 43:
-				if( curMusic->fid[ ins].pannType & EFSUSTAIN) curMusic->fid[ ins].pannType -= EFSUSTAIN;
+				if (curMusic->fid[ ins].pannType & EFSUSTAIN) curMusic->fid[ ins].pannType -= EFSUSTAIN;
 				else curMusic->fid[ ins].pannType += EFSUSTAIN;
 				
-				if( curMusic->fid[ ins].pannType & EFSUSTAIN)		TurnRadio( 43, TheDia, true);
+				if (curMusic->fid[ ins].pannType & EFSUSTAIN)		TurnRadio( 43, TheDia, true);
 				else TurnRadio( 43, TheDia, false);
 				
 				curMusic->hasChanged = true;
 				break;
 				
 			case 40:
-				if( curMusic->fid[ ins].pannType & EFLOOP) curMusic->fid[ ins].pannType -= EFLOOP;
+				if (curMusic->fid[ ins].pannType & EFLOOP) curMusic->fid[ ins].pannType -= EFLOOP;
 				else curMusic->fid[ ins].pannType += EFLOOP;
 				
-				if( curMusic->fid[ ins].pannType & EFLOOP)		TurnRadio( 40, TheDia, true);
+				if (curMusic->fid[ ins].pannType & EFLOOP)		TurnRadio( 40, TheDia, true);
 				else TurnRadio( 40, TheDia, false);
 				
 				curMusic->hasChanged = true;
@@ -1360,10 +1360,10 @@ OnRepart:
 				
 			case -5:
 				GetDText( TheDia, 18, aStr);
-				if( aStr[ 0] > 0)
+				if (aStr[ 0] > 0)
 				{
 					StringToNum( aStr, &Result);
-					if( Result > -96 && Result < 96)
+					if (Result > -96 && Result < 96)
 					{
 						NumToString( 60 - Result, aStr);
 						pStrcat( aStr, "\p/");
@@ -1377,10 +1377,10 @@ OnRepart:
 				
 			case 35:
 			case 33:
-				if( itemHit == 33) if( !(curMusic->fid[ ins].volType & EFON))	curMusic->fid[ ins].volType += EFON;
-				if( itemHit == 35) if( curMusic->fid[ ins].volType & EFON)		curMusic->fid[ ins].volType -= EFON;
+				if (itemHit == 33) if (!(curMusic->fid[ ins].volType & EFON))	curMusic->fid[ ins].volType += EFON;
+				if (itemHit == 35) if (curMusic->fid[ ins].volType & EFON)		curMusic->fid[ ins].volType -= EFON;
 				
-				if( curMusic->fid[ ins].volType & EFON)	
+				if (curMusic->fid[ ins].volType & EFON)	
 				{
 					TurnRadio( 33, TheDia, true);
 					TurnRadio( 35, TheDia, false);
@@ -1394,20 +1394,20 @@ OnRepart:
 				break;
 				
 			case 36:
-				if( curMusic->fid[ ins].volType & EFSUSTAIN) curMusic->fid[ ins].volType -= EFSUSTAIN;
+				if (curMusic->fid[ ins].volType & EFSUSTAIN) curMusic->fid[ ins].volType -= EFSUSTAIN;
 				else curMusic->fid[ ins].volType += EFSUSTAIN;
 				
-				if( curMusic->fid[ ins].volType & EFSUSTAIN)		TurnRadio( 36, TheDia, true);
+				if (curMusic->fid[ ins].volType & EFSUSTAIN)		TurnRadio( 36, TheDia, true);
 				else TurnRadio( 36, TheDia, false);
 				
 				curMusic->hasChanged = true;
 				break;
 				
 			case 39:
-				if( curMusic->fid[ ins].volType & EFLOOP) curMusic->fid[ ins].volType -= EFLOOP;
+				if (curMusic->fid[ ins].volType & EFLOOP) curMusic->fid[ ins].volType -= EFLOOP;
 				else curMusic->fid[ ins].volType += EFLOOP;
 				
-				if( curMusic->fid[ ins].volType & EFLOOP)		TurnRadio( 39, TheDia, true);
+				if (curMusic->fid[ ins].volType & EFLOOP)		TurnRadio( 39, TheDia, true);
 				else TurnRadio( 39, TheDia, false);
 				
 				curMusic->hasChanged = true;
@@ -1428,10 +1428,10 @@ OnRepart:
 				{
 					GetMenuItemText( tempMenu, i, aStr);
 					aStr[ 0] = theStr[ 0];
-					if( EqualString( theStr, aStr, false, false)) break;
+					if (EqualString( theStr, aStr, false, false)) break;
 				}
 				
-				if( i <= CountMenuItems( tempMenu)) SetItemMark( tempMenu, i, 0xa5);
+				if (i <= CountMenuItems( tempMenu)) SetItemMark( tempMenu, i, 0xa5);
 				else i = 1;
 				
 				mresult = PopUpMenuSelect(	tempMenu,
@@ -1439,18 +1439,18 @@ OnRepart:
 										  myPt.h,
 										  i);
 				
-				if( i <= CountMenuItems( tempMenu)) SetItemMark( tempMenu, i, 0);
+				if (i <= CountMenuItems( tempMenu)) SetItemMark( tempMenu, i, 0);
 				
 				if ( HiWord(mresult ) != 0 )
 				{
 					long	tempL;
 					
-					if( CloseSampleData( TheDia) != noErr) goto OnRepart;
+					if (CloseSampleData( TheDia) != noErr) goto OnRepart;
 					
 					GetMenuItemText( tempMenu, LoWord( mresult), theStr);
 					for( i = 1; i <= theStr[ 0]; i++)
 					{
-						if( theStr[ i] == ' ') break;
+						if (theStr[ i] == ' ') break;
 					}
 					theStr[ 0] = i-1;
 					
@@ -1470,17 +1470,17 @@ OnRepart:
 				
 				GetMouse( &myPt);
 				
-				if( TestControl(  sScroll, myPt))
+				if (TestControl(  sScroll, myPt))
 					//	ctlPart = FindControl( myPt, GetDialogWindow( TheDia), &theControl);
-				/*	if( ctlPart == kControlIndicatorPart)
+				/*	if (ctlPart == kControlIndicatorPart)
 				 {
 				 bogus = TrackControl( theControl, myPt, NULL);
-				 if( bogus != 0)
+				 if (bogus != 0)
 				 {
 				 actionProcInstru( theControl, kControlIndicatorPart);
 				 }
 				 }
-				 else if( ctlPart > 0)*/
+				 else if (ctlPart > 0)*/
 				{
 					ControlActionUPP	MyControlUPP;
 					
@@ -1515,7 +1515,7 @@ OnRepart:
 				
 				if ( HiWord( Result ) != 0 )
 				{
-					if( LoWord( Result) != curEData->loopType + 1)
+					if (LoWord( Result) != curEData->loopType + 1)
 					{
 						curEData->loopType = LoWord( Result) - 1;
 						
@@ -1538,7 +1538,7 @@ OnRepart:
 				
 				SetItemMark( tempMenu, curEData->stereo + 1, 0xa5);
 				
-				if( curEData->stereo == false)
+				if (curEData->stereo == false)
 				{
 					DisableMenuItem( tempMenu, 4);
 					DisableMenuItem( tempMenu, 5);
@@ -1554,11 +1554,11 @@ OnRepart:
 				
 				if ( HiWord( Result ) != 0 )
 				{
-					if( LoWord( Result) != curEData->stereo + 1)
+					if (LoWord( Result) != curEData->stereo + 1)
 					{
-						if( InfoL( 91) == true)
+						if (InfoL( 91) == true)
 						{
-							if( CloseSampleData( TheDia) != noErr) goto OnRepart;
+							if (CloseSampleData( TheDia) != noErr) goto OnRepart;
 							
 							ConvertInstrumentMode( curEData, LoWord( Result));
 							
@@ -1593,11 +1593,11 @@ OnRepart:
 				
 				if ( HiWord( Result ) != 0 )
 				{
-					if( LoWord( Result) * 8 != curEData->amp)
+					if (LoWord( Result) * 8 != curEData->amp)
 					{
-						if( InfoL( 53) == true)
+						if (InfoL( 53) == true)
 						{
-							if( CloseSampleData( TheDia) != noErr) goto OnRepart;
+							if (CloseSampleData( TheDia) != noErr) goto OnRepart;
 							
 							ConvertInstrumentAmpli( curEData, LoWord( Result) * 8);
 							
@@ -1615,15 +1615,15 @@ OnRepart:
 		
 	}while( itemHit != 1 && itemHit != 2 && itemHit != 61 && itemHit != 60);
 	
-	if( itemHit != 2)
+	if (itemHit != 2)
 	{
 		// Sample Infos
 		
-		if( CloseSampleData( TheDia) != noErr) goto OnRepart;
+		if (CloseSampleData( TheDia) != noErr) goto OnRepart;
 		
 		// Instrument Infos
 		
-		if( CloseInstruData( TheDia) != noErr) goto OnRepart;
+		if (CloseInstruData( TheDia) != noErr) goto OnRepart;
 		
 		CreateInstruList();
 		DrawInfoInstrument();
@@ -1635,10 +1635,10 @@ OnRepart:
 		DoUndo();
 	}
 	
-	if( changeInstru) goto CHANGEINSTRU;
+	if (changeInstru) goto CHANGEINSTRU;
 	
-	if( itemHit == 61) NCreateSampleWindow( ins, -2);
-	if( itemHit == 60) NCreateSampleWindow( ins, -1);
+	if (itemHit == 61) NCreateSampleWindow( ins, -2);
+	if (itemHit == 60) NCreateSampleWindow( ins, -1);
 	
 	DisposeDialog( TheDia);
 	SetPort( myPort);
@@ -1648,18 +1648,18 @@ void DoPlayInstruInt2( sData *curData, InstrData *insData, short Note, short Ins
 {
 //	short	samp;
 	
-	if( Instru < 0) Instru = 0;
+	if (Instru < 0) Instru = 0;
 	
-	if( Note < 0 || Note > NUMBER_NOTES) return;
+	if (Note < 0 || Note > NUMBER_NOTES) return;
 	
 	MADCheckSpeed( curMusic, MADDriver);
 	
 	/***********************/
 	/* Pour le MIDI Driver */
 	/***********************/
-	if( MADDriver->DriverSettings.driverMode == MIDISoundDriver)
+	if (MADDriver->DriverSettings.driverMode == MIDISoundDriver)
 	{
-		if( MADDriver->NoteOld[ curVoice->ID] != -1)
+		if (MADDriver->NoteOld[ curVoice->ID] != -1)
 		{
 			NoteOff( MADDriver->InstuNoOld[ curVoice->ID], MADDriver->NoteOld[ curVoice->ID], MADDriver->VelocityOld[ curVoice->ID], MADDriver);
 			MADDriver->NoteOld[ curVoice->ID] = -1;
@@ -1672,12 +1672,12 @@ void DoPlayInstruInt2( sData *curData, InstrData *insData, short Note, short Ins
 		MADDriver->VelocityOld[ curVoice->ID]	= curVoice->vol;
 	}
 	
-	if( insData->numSamples == 0) return;
+	if (insData->numSamples == 0) return;
 	
-	if( samp == 0xFF) samp					= insData->what[ Note];
+	if (samp == 0xFF) samp					= insData->what[ Note];
 	
-	if( curData == NULL) return;
-	if( curData->size <= 0) return;
+	if (curData == NULL) return;
+	if (curData->size <= 0) return;
 	
 	curVoice->TrackID		= curVoice->ID;
 	curVoice->prevPtr		= NULL;
@@ -1707,18 +1707,18 @@ void DoPlayInstruInt2( sData *curData, InstrData *insData, short Note, short Ins
 	curVoice->preVal		= 0;
 	curVoice->spreVal		= 0;
 	curVoice->preVal2		= *curVoice->curPtr;
-	if( curVoice->amp == 8) curVoice->preVal2R	= *(curVoice->curPtr+1);
+	if (curVoice->amp == 8) curVoice->preVal2R	= *(curVoice->curPtr+1);
 	else curVoice->preVal2R	= *(curVoice->curPtr+2);
 	curVoice->spreVal2		= *(short*) curVoice->curPtr;
 	curVoice->spreVal2R		= *(short*) (curVoice->curPtr+2);
 	
-	if( end != 0) curVoice->maxPtr	= curData->data + end;
+	if (end != 0) curVoice->maxPtr	= curData->data + end;
 	else curVoice->maxPtr 		+= curData->size;
 	curVoice->viboffset 	= 0;
 	
-	if( end == 0 && start == 0)
+	if (end == 0 && start == 0)
 	{
-		if( curData->loopSize > 2)
+		if (curData->loopSize > 2)
 		{
 			curVoice->maxPtr = (Ptr) (	(long) curData->data +
 										(long) curData->loopBeg +
@@ -1734,13 +1734,13 @@ void DoPlayInstruInt2( sData *curData, InstrData *insData, short Note, short Ins
 		curVoice->loopType		= 0;
 	}
 	
-	if( vol != 0xFF)
+	if (vol != 0xFF)
 	{
 		if(vol >= 0x10 && vol <= 0x50)
 		{
 			curVoice->vol = vol - 0x10;
-			if( curVoice->vol < MIN_VOLUME) curVoice->vol = MIN_VOLUME;
-			else if( curVoice->vol > MAX_VOLUME) curVoice->vol = MAX_VOLUME;
+			if (curVoice->vol < MIN_VOLUME) curVoice->vol = MIN_VOLUME;
+			else if (curVoice->vol > MAX_VOLUME) curVoice->vol = MAX_VOLUME;
 			
 			curVoice->volcmd = 0;
 		}
@@ -1768,7 +1768,7 @@ void DoPlayInstruInt( short	Note, short Instru, short effect, short arg, short v
 	//sData	*curData;
 	short	samp;
 	
-	if( Instru < 0) return;
+	if (Instru < 0) return;
 	
 	samp = curMusic->fid[ Instru].what[ Note];
 	
@@ -1781,7 +1781,7 @@ void NDoPlayInstru(short	Note, short Instru, short effect, short arg, short vol)
 	Channel			*curVoice;
 	short			track;
 	
-	if( Note >= NUMBER_NOTES) return;
+	if (Note >= NUMBER_NOTES) return;
 	
 	track = GetWhichTrackPlay();
 	curVoice = &MADDriver->chan[ track];
@@ -1793,9 +1793,9 @@ void DoKeyPlay( short note)
 {
 	short	ins;
 	
-	if( InstruListDlog == NULL) return;
+	if (InstruListDlog == NULL) return;
 	
-	if( GetIns( &ins, NULL))
+	if (GetIns( &ins, NULL))
 	{
 		NDoPlayInstru( note, ins, 0, 0, 0xFF);
 	}
@@ -1811,14 +1811,14 @@ void CreateInstruList( void)
 	short				dataLen;		
 	GrafPtr				SavePort;
 	
-	if( InstruListDlog == NULL) return;
+	if (InstruListDlog == NULL) return;
 	
 	GetPort( &SavePort);
 	SetPortDialogPort( InstruListDlog);
 	
 	InvalWindowRect( GetDialogWindow( InstruListDlog), &myList.rect);
 	
-	if( myList.maxY != ComputeMaxY())
+	if (myList.maxY != ComputeMaxY())
 	{
 		myList.maxY = ComputeMaxY();
 		PLSetControl( &myList);
@@ -1838,9 +1838,9 @@ void FreeInstruList( short iD)
 
 	ConvertIDtoInsSamp( iD, &ins, &samp);
 	
-	if( thePrefs.OCArrow[ ins])
+	if (thePrefs.OCArrow[ ins])
 	{
-		if( samp >= 0)
+		if (samp >= 0)
 		{
 			sData	*curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
 			
@@ -1849,10 +1849,10 @@ void FreeInstruList( short iD)
 			itemRect.top = myList.rect.top + 2 + (iD - GetControlValue( myList.yScroll))*myList.HCell;
 			itemRect.bottom = itemRect.top + 7;
 			
-			if( curMusic->fid[ ins].numSamples == 0) RGBForeColor( &theColor);
+			if (curMusic->fid[ ins].numSamples == 0) RGBForeColor( &theColor);
 			else RGBForeColor( &theColor);
 			
-			if( curData->size <= 0) ForeColor( whiteColor);
+			if (curData->size <= 0) ForeColor( whiteColor);
 			
 			PaintRect( &itemRect);
 		
@@ -1919,7 +1919,7 @@ void DoNullInstruList(void)
 	Rect		tRect;
 	Point		pt;
 
-	if( InstruListDlog == NULL) return;
+	if (InstruListDlog == NULL) return;
 
 	GetPort( &savedPort);
 	SetPortDialogPort( InstruListDlog);
@@ -1935,7 +1935,7 @@ void DoNullInstruList(void)
 	for( i = GetControlValue( myList.yScroll); i < max; i++) InstrUsed[ i] = false;
 	
 	maxChannels = MADDriver->MultiChanNo;
-	if( MADDriver->DriverSettings.numChn > maxChannels) maxChannels = MADDriver->DriverSettings.numChn;
+	if (MADDriver->DriverSettings.numChn > maxChannels) maxChannels = MADDriver->DriverSettings.numChn;
 	
 	for(i=0; i<maxChannels; i++)		//MADDriver->DriverSettings.numChn
 	{
@@ -1944,9 +1944,9 @@ void DoNullInstruList(void)
 		InstruNo	= MADDriver->chan[ i].ins;
 		SampNo		= MADDriver->chan[ i].samp;
 		
-			if( InstruNo >= GetControlValue( myList.yScroll) || InstruNo < max)
+			if (InstruNo >= GetControlValue( myList.yScroll) || InstruNo < max)
 			{
-				if( SampNo < curMusic->fid[ InstruNo].numSamples)
+				if (SampNo < curMusic->fid[ InstruNo].numSamples)
 				{
 					sData	*curData = SampleDataN( InstruNo, SampNo);
 					
@@ -1956,7 +1956,7 @@ void DoNullInstruList(void)
 			  		curVal = (long) MADDriver->chan[ i].curPtr;
 			 	//	curVal -= (long) curData->data;
 			 		*/
-			 		if( MADDriver->chan[ i].maxPtr > MADDriver->chan[ i].curPtr && MADDriver->chan[ i].curPtr != NULL)
+			 		if (MADDriver->chan[ i].maxPtr > MADDriver->chan[ i].curPtr && MADDriver->chan[ i].curPtr != NULL)
 			 		{
 			 			short temp;
 			 			
@@ -1965,10 +1965,10 @@ void DoNullInstruList(void)
 			 			InstrUsed[ temp] = true;
 			 			SAButState[ temp] = true;
 			 			
-			 			if( thePrefs.OCArrow[ InstruNo]) PaintInstruList( temp, MADDriver->chan[ i].TrackID);
+			 			if (thePrefs.OCArrow[ InstruNo]) PaintInstruList( temp, MADDriver->chan[ i].TrackID);
 			 			else PaintArrowList( temp, MADDriver->chan[ i].TrackID);
 			 			
-			 		/*	if( myList.select.top == temp && InstruListDlog->portRect.right == 300)
+			 		/*	if (myList.select.top == temp && InstruListDlog->portRect.right == 300)
 			 			{
 			 				Handle	iHandle;
 			 				Rect	iRect;
@@ -1978,7 +1978,7 @@ void DoNullInstruList(void)
 			 				GetDialogItem( InstruListDlog, 30, &iType, &iHandle, &iRect);
 			 				
 			 				tL = (((long) (iRect.right - iRect.left) * curVal) / maxVal);
-			 				if( tL != lastPosS[ i])
+			 				if (tL != lastPosS[ i])
 			 				{
 			 					lastPosS[ i] = tL;
 				 				iRect.left = iRect.left + tL;
@@ -1999,9 +1999,9 @@ void DoNullInstruList(void)
 	
 	for( i = GetControlValue( myList.yScroll); i < max; i++)
 	{
-		if( !InstrUsed[ i])
+		if (!InstrUsed[ i])
 		{
-	 		if( SAButState[ i])
+	 		if (SAButState[ i])
 	 		{
 	 			SAButState[ i] = false;
 	 			
@@ -2013,11 +2013,11 @@ void DoNullInstruList(void)
 	SetClip( saveClipRgn);
  	DisposeRgn( saveClipRgn);
  	
- /*	if( oldWindow == InstruListDlog)
+ /*	if (oldWindow == InstruListDlog)
 	{
  		PLGetSelectRect( &tRect, &myList);
  		GetMouse( &pt);
- 		if( PtInRect( pt, &tRect))
+ 		if (PtInRect( pt, &tRect))
  		{
  			SetCursor( &HandCrsr);
  		}
@@ -2036,7 +2036,7 @@ void ConvertIDtoInsSamp( short iD, short *ins, short *samp)
 
 	while( iD >= totsamp + *ins)
 	{
-		if( thePrefs.OCArrow[ *ins])
+		if (thePrefs.OCArrow[ *ins])
 		{
 			totsamp += curMusic->fid[ *ins].numSamples;
 		}
@@ -2044,11 +2044,11 @@ void ConvertIDtoInsSamp( short iD, short *ins, short *samp)
 	}
 	
 	(*ins)--;
-	if( samp != NULL)
+	if (samp != NULL)
 	{
 		*samp = -1;
 		
-		if( thePrefs.OCArrow[ *ins]) *samp = curMusic->fid[ *ins].numSamples - (totsamp + *ins - iD) - 1;
+		if (thePrefs.OCArrow[ *ins]) *samp = curMusic->fid[ *ins].numSamples - (totsamp + *ins - iD) - 1;
 		else *samp = 0 - (totsamp + *ins - iD) - 1;
 	}
 }
@@ -2060,12 +2060,12 @@ short ConvertInsSampToID( short ins, short samp)
 	ret = 0;
 	for( i = 0; i < ins; i++)
 	{
-		if( thePrefs.OCArrow[ i]) ret += curMusic->fid[ i].numSamples;
+		if (thePrefs.OCArrow[ i]) ret += curMusic->fid[ i].numSamples;
 	}
 	ret += ins;
 	
-	if( samp >= curMusic->fid[ ins].numSamples) samp = curMusic->fid[ ins].numSamples-1;
-	if( samp >= 0 && thePrefs.OCArrow[ ins] == true) ret += samp + 1;
+	if (samp >= curMusic->fid[ ins].numSamples) samp = curMusic->fid[ ins].numSamples-1;
+	if (samp >= 0 && thePrefs.OCArrow[ ins] == true) ret += samp + 1;
 	
 	return ret;
 }
@@ -2078,7 +2078,7 @@ short ComputeMaxY()
 	tot = MAXINSTRU;
 	for( i = 0; i < MAXINSTRU; i++)
 	{
-		if( thePrefs.OCArrow[ i]) tot += curMusic->fid[ i].numSamples;
+		if (thePrefs.OCArrow[ i]) tot += curMusic->fid[ i].numSamples;
 	}
 	
 	return tot;
@@ -2097,7 +2097,7 @@ void DrawInstruListItem( short iD)
 	
 	ConvertIDtoInsSamp( iD, &ins, &samp);
 	
-	if( samp < 0)	// Instrument
+	if (samp < 0)	// Instrument
 	{	
 		/**/
 		
@@ -2105,7 +2105,7 @@ void DrawInstruListItem( short iD)
 		destRect.top = myList.rect.top + myList.HCell*pos;
 		destRect.bottom = destRect.top + myList.HCell;
 		
-		if( curMusic->fid[ ins].numSamples <= 0)
+		if (curMusic->fid[ ins].numSamples <= 0)
 		{
 			RGBForeColor( &theColor);
 			PaintRect( &destRect);
@@ -2117,7 +2117,7 @@ void DrawInstruListItem( short iD)
 			destRect.top = myList.rect.top + myList.HCell*pos;
 			destRect.bottom = destRect.top + (*OP)->bounds.bottom;
 			
-			if( thePrefs.OCArrow[ ins])
+			if (thePrefs.OCArrow[ ins])
 			{
 				CopyBits(	(BitMap*) *(OP),
 							(BitMap*) *GetPortPixMap(GetDialogPort( InstruListDlog)),
@@ -2179,7 +2179,7 @@ void DrawInstruListItem( short iD)
 		
 		/**/
 		
-		if( curData->loopSize > 0)
+		if (curData->loopSize > 0)
 		{
 			destRect = (*ArrowPix)->bounds;
 			destRect.left = myList.rect.left + POSINS + 3;
@@ -2204,7 +2204,7 @@ void DrawInstruListItem( short iD)
 		DrawString( aStr);
 	}
 	
-	if( samp == curMusic->fid[ ins].numSamples-1 || thePrefs.OCArrow[ ins] == false)
+	if (samp == curMusic->fid[ ins].numSamples-1 || thePrefs.OCArrow[ ins] == false)
 	{
 		MoveTo( myList.rect.left, myList.rect.top -1+ myList.HCell*(pos+1));
 		LineTo( myList.rect.right, myList.rect.top -1+ myList.HCell*(pos+1));
@@ -2218,7 +2218,7 @@ void DrawInstruListItem( short iD)
 	}
 
 	
-	if( iD >= myList.select.top && iD <= myList.select.bottom)
+	if (iD >= myList.select.top && iD <= myList.select.bottom)
 	{
 		Rect 			t;
 		
@@ -2249,21 +2249,21 @@ void DrawSmallSamplePreview()
 	
 	GetPortBounds( GetDialogPort( InstruListDlog), &caRect);
 	
-	if( caRect.right != 300) return;
+	if (caRect.right != 300) return;
 	
 	GetDialogItem( InstruListDlog, 30, &iType, &iHandle, &iRect);
 	iRect.right = caRect.right-1;
 	
-	if( myList.select.top >= 0)
+	if (myList.select.top >= 0)
 	{
 		ConvertIDtoInsSamp( myList.select.top, &ins, &samp);
 		
-		if( samp < 0)
+		if (samp < 0)
 		{
-			if( curMusic->fid[ ins].numSamples > 0) samp = 0;
+			if (curMusic->fid[ ins].numSamples > 0) samp = 0;
 		}
 		
-		if( samp >= 0) 
+		if (samp >= 0) 
 		{
 			sData		*curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
 			Rect		loopRect;
@@ -2280,7 +2280,7 @@ void DrawSmallSamplePreview()
 			
 			ForeColor( whiteColor);
 			
-			if( curData->size <= 0) 
+			if (curData->size <= 0) 
 			{
 				Str255		aStr;
 				short		itemType;
@@ -2297,7 +2297,7 @@ void DrawSmallSamplePreview()
 			}
 			else
 			{
-				if( curData->stereo)
+				if (curData->stereo)
 				{
 					ForeColor( blueColor);
 					DrawSampleInt(	curData->size,
@@ -2327,7 +2327,7 @@ void DrawSmallSamplePreview()
 				ForeColor( whiteColor);
 				}
 			
-			if( curData->loopSize > 0)
+			if (curData->loopSize > 0)
 			{
 				loopRect = iRect;
 				loopRect.left = iRect.left + (curData->loopBeg * (iRect.right - iRect.left)) / curData->size;
@@ -2485,8 +2485,8 @@ void NSelectInstruList( short instru, short sample)
 	GrafPtr		savePort;
 	Point		theCell;
 
-	if( InstruListDlog == NULL) return;
-	if( instru < 0 || instru >= MAXINSTRU) return;
+	if (InstruListDlog == NULL) return;
+	if (instru < 0 || instru >= MAXINSTRU) return;
 
 	GetPort( &savePort);
 	SetPortDialogPort( InstruListDlog);
@@ -2511,7 +2511,7 @@ void DrawInfoInstrument(void)
 	short		Result;
 	GrafPtr		SavePort;
  
- 	if( InstruListDlog == NULL) return;
+ 	if (InstruListDlog == NULL) return;
  
  	GetPort( &SavePort);
  	SetPortDialogPort( InstruListDlog);
@@ -2519,7 +2519,7 @@ void DrawInfoInstrument(void)
 	DrawSmallSamplePreview();
 	
 	cSize.v = cSize.h = 0;
-	if( PLGetSelect( &cSize, &myList))
+	if (PLGetSelect( &cSize, &myList))
 	{
 		short ins, samp;
 		
@@ -2543,7 +2543,7 @@ void DrawInfoInstrument(void)
 		NumToString( curMusic->fid[ ins].numSamples, String);
 		SetDText( InstruListDlog, 29,String);
 		
-		if( samp == -1)
+		if (samp == -1)
 		{
 			long	x, fileSize = 0;
 			
@@ -2559,14 +2559,14 @@ void DrawInfoInstrument(void)
 			SetDText( InstruListDlog, 9, String);
 		}
 		
-		if( curMusic->header != NULL)
+		if (curMusic->header != NULL)
 		{
 			// Instrument informations
 			
-			if( curMusic->fid[ ins].numSamples > 0) HiliteControl( SaveBut, 0);
-			else if( samp < 0) HiliteControl( SaveBut, 255);
+			if (curMusic->fid[ ins].numSamples > 0) HiliteControl( SaveBut, 0);
+			else if (samp < 0) HiliteControl( SaveBut, 255);
 			
-			if( samp >= 0)		// Sample informations
+			if (samp >= 0)		// Sample informations
 			{
 				sData	*curData = curMusic->sample[ curMusic->fid[ ins].firstSample +  samp];
 				
@@ -2577,10 +2577,10 @@ void DrawInfoInstrument(void)
 				NumToString( curData->c2spd, String);					SetDText( InstruListDlog, 13,String);
 				NumToString( curData->amp, String);						SetDText( InstruListDlog, 17,String);
 				NumToString( curData->relNote, String);					SetDText( InstruListDlog, 15,String);
-				if( curData->stereo)									SetDText( InstruListDlog, 32, "\pStereo");
+				if (curData->stereo)									SetDText( InstruListDlog, 32, "\pStereo");
 				else													SetDText( InstruListDlog, 32, "\pMono");
 				
-				if( curData->size) HiliteControl( SaveBut, 0);
+				if (curData->size) HiliteControl( SaveBut, 0);
 				else HiliteControl( SaveBut, 255);
 			}
 			else EraseSampleInfo();
@@ -2608,15 +2608,15 @@ Boolean DragInstruSelect( void)
 	RgnHandle	tempRgn;
 	short		ins, samp;
 
-	if( DragManagerUse)
+	if (DragManagerUse)
 	{
-		if( GetIns( &ins, &samp))
+		if (GetIns( &ins, &samp))
 		{
-			if( WaitMouseMoved( theEvent.where))
+			if (WaitMouseMoved( theEvent.where))
 			{
 				PLGetSelectRect( &cellRect, &myList);
 				cellRect.left += (*mySABut)->bounds.right + 1;
-				if( samp < 0 && thePrefs.OCArrow[ ins] == true)
+				if (samp < 0 && thePrefs.OCArrow[ ins] == true)
 				{
 					cellRect.bottom = cellRect.top + (curMusic->fid[ ins].numSamples+1) * myList.HCell;
 				}
@@ -2670,10 +2670,10 @@ Boolean IsMyTypeAvailable( DragReference theDrag)
 	GetDragItemReferenceNumber(theDrag, 1, &theItem);
     
     result = GetFlavorFlags(theDrag, theItem, 'Pcmd', &theFlags);
-	if( result == noErr) return true;
+	if (result == noErr) return true;
 	
 	result = GetFlavorFlags(theDrag, theItem, 'snd ', &theFlags);
-	if( result == noErr) return true;
+	if (result == noErr) return true;
 	
 	result = GetFlavorFlags(theDrag, theItem, flavorTypeHFS, &theFlags);
 	if (result == noErr)
@@ -2689,14 +2689,14 @@ Boolean IsMyTypeAvailable( DragReference theDrag)
 	//	HSetVol( NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
 		FSpGetFInfo( &myFlavor.fileSpec, &fndrInfo);
 		
-		if( fndrInfo.fdType == 'INso')
+		if (fndrInfo.fdType == 'INso')
 		{
 			DragType = fndrInfo.fdType;
 			return true;
 		}
 		
-		if( PPINAvailablePlug( fndrInfo.fdType, &DragType) == noErr) return true;
-		else if( PPINIdentifyFile( &DragType, &myFlavor.fileSpec) == noErr) return true;
+		if (PPINAvailablePlug( fndrInfo.fdType, &DragType) == noErr) return true;
+		else if (PPINIdentifyFile( &DragType, &myFlavor.fileSpec) == noErr) return true;
 		else return false;
     }
 
@@ -2716,7 +2716,7 @@ pascal OSErr MyTrackingHandler(short message, WindowPtr theWindow, void *handler
 	Point				theMouse, localMouse, theCell;
 	Rect				tempRect;
 
-	if( !mainSystemDrag) return noErr;
+	if (!mainSystemDrag) return noErr;
 
 	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return(noErr);
 
@@ -2729,7 +2729,7 @@ pascal OSErr MyTrackingHandler(short message, WindowPtr theWindow, void *handler
 	{
 		case kDragTrackingEnterHandler:
 			DragType = 0;
-			if( attributes & kDragInsideSenderWindow) canAcceptDrag = true;
+			if (attributes & kDragInsideSenderWindow) canAcceptDrag = true;
 			else canAcceptDrag = IsMyTypeAvailable( theDrag);
 			break;
 		
@@ -2746,9 +2746,9 @@ pascal OSErr MyTrackingHandler(short message, WindowPtr theWindow, void *handler
 			DestSamp = -1;
 			selectedControl = NULL;
 			
-			if( PtInRect( localMouse, &myList.rect))
+			if (PtInRect( localMouse, &myList.rect))
 			{
-				if( DragType == 'INso')	// If it is an instrument list !
+				if (DragType == 'INso')	// If it is an instrument list !
 				{
 					DestIns = 0;		// To avoid an err from Receive function
 				
@@ -2765,11 +2765,11 @@ pascal OSErr MyTrackingHandler(short message, WindowPtr theWindow, void *handler
 					for( theCell.v = 0; theCell.v < myList.maxY; theCell.v++)
 					{
 						PLRect( &tempRect, theCell, &myList);
-						if( PtInRect( localMouse, &tempRect))
+						if (PtInRect( localMouse, &tempRect))
 						{
 							ConvertIDtoInsSamp( theCell.v, &DestIns, &DestSamp);
 							
-							if( DragType == 'INST' || (DragIns >= 0 && DragSamp < 0))
+							if (DragType == 'INST' || (DragIns >= 0 && DragSamp < 0))
 							{
 								Point	tCell;
 								
@@ -2778,7 +2778,7 @@ pascal OSErr MyTrackingHandler(short message, WindowPtr theWindow, void *handler
 								tCell.h = 0;
 								PLRect( &tempRect, tCell, &myList);
 								
-								if( thePrefs.OCArrow[ DestIns])
+								if (thePrefs.OCArrow[ DestIns])
 									tempRect.bottom = tempRect.top + (curMusic->fid[ DestIns].numSamples+1) * myList.HCell;
 								else
 									tempRect.bottom = tempRect.top + myList.HCell;
@@ -2793,41 +2793,51 @@ pascal OSErr MyTrackingHandler(short message, WindowPtr theWindow, void *handler
 						}
 					}
 				}
-			}
-			else if (attributes & kDragInsideSenderWindow)
-			{
+			} else if (attributes & kDragInsideSenderWindow) {
 				Rect	contrlRect;
 				
-				HideDragHilite( theDrag);
+				HideDragHilite(theDrag);
 				
-				GetControlBounds( SaveBut, &contrlRect);
+				GetControlBounds(SaveBut, &contrlRect);
 				
-				if( PtInRect( localMouse, &contrlRect) && selectedControl == NULL) { HiliteControl( SaveBut, kControlButtonPart);	selectedControl = SaveBut;}
-				else HiliteControl( SaveBut, 0);
+				if (PtInRect( localMouse, &contrlRect) && selectedControl == NULL) {
+					HiliteControl(SaveBut, kControlButtonPart);
+					selectedControl = SaveBut;
+				} else
+					HiliteControl(SaveBut, 0);
 				
 				GetControlBounds( PlayBut, &contrlRect);
 				
-				if( PtInRect( localMouse, &contrlRect) && selectedControl == NULL) { HiliteControl( PlayBut, kControlButtonPart);	selectedControl = PlayBut;}
-				else HiliteControl( PlayBut, 0);
+				if (PtInRect(localMouse, &contrlRect) && selectedControl == NULL) {
+					HiliteControl(PlayBut, kControlButtonPart);
+					selectedControl = PlayBut;
+				} else
+					HiliteControl(PlayBut, 0);
 				
-				GetControlBounds( DelBut, &contrlRect);
+				GetControlBounds(DelBut, &contrlRect);
 				
-				if( PtInRect( localMouse, &contrlRect) && selectedControl == NULL) 	{ HiliteControl( DelBut, kControlButtonPart);		selectedControl = DelBut;}
-				else HiliteControl( DelBut, 0);
+				if (PtInRect(localMouse, &contrlRect) && selectedControl == NULL) {
+					HiliteControl(DelBut, kControlButtonPart);
+					selectedControl = DelBut;
+				} else
+					HiliteControl(DelBut, 0);
 				
-				GetControlBounds( OpenBut, &contrlRect);
+				GetControlBounds(OpenBut, &contrlRect);
 				
-				if( PtInRect( localMouse, &contrlRect) && selectedControl == NULL) { HiliteControl( OpenBut, kControlButtonPart);	selectedControl = OpenBut;}
-				else HiliteControl( OpenBut, 0);
+				if (PtInRect(localMouse, &contrlRect) && selectedControl == NULL) {
+					HiliteControl(OpenBut, kControlButtonPart);
+					selectedControl = OpenBut;
+				} else
+					HiliteControl(OpenBut, 0);
 				
 				GetControlBounds( RecBut, &contrlRect);
 				
-				if( PtInRect( localMouse, &contrlRect) && selectedControl == NULL) { HiliteControl( RecBut, kControlButtonPart);		selectedControl = RecBut;}
+				if (PtInRect( localMouse, &contrlRect) && selectedControl == NULL) { HiliteControl( RecBut, kControlButtonPart);		selectedControl = RecBut;}
 				else HiliteControl( RecBut, 0);
 				
 				GetControlBounds( LoadBut, &contrlRect);
 				
-				if( PtInRect( localMouse, &contrlRect) && selectedControl == NULL) { HiliteControl( LoadBut, kControlButtonPart);	selectedControl = LoadBut;}
+				if (PtInRect( localMouse, &contrlRect) && selectedControl == NULL) { HiliteControl( LoadBut, kControlButtonPart);	selectedControl = LoadBut;}
 				else HiliteControl( LoadBut, 0);
 			}
 			break;
@@ -2862,31 +2872,31 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 	Point				theCell;
 	Str255				myStr;
 
-	if( !mainSystemDrag) return dragNotAcceptedErr;
+	if (!mainSystemDrag) return dragNotAcceptedErr;
 	
 	SetPortWindowPort(theWindow);
-	if( DestIns == -1 && selectedControl == NULL)
+	if (DestIns == -1 && selectedControl == NULL)
 	{
 		return( dragNotAcceptedErr);
 	}
-	if( !canAcceptDrag) return( dragNotAcceptedErr);
+	if (!canAcceptDrag) return( dragNotAcceptedErr);
 
 	GetDragAttributes(theDrag, &attributes);
 	GetDragModifiers(theDrag, NULL, &mouseDownModifiers, &mouseUpModifiers);
 
-	if( selectedControl != NULL)	// Drag sur un bouton !!!!
+	if (selectedControl != NULL)	// Drag sur un bouton !!!!
 	{
 		HiliteControl( selectedControl, 0);
 		
-		if( selectedControl == SaveBut)		HandleInstruChoice( 4);
-	//	if( selectedControl == PlayBut)		DoKeyPressInstruList( getinfo, 0);
-		if( selectedControl == DelBut)		HandleInstruChoice( 5);
-		if( selectedControl == RecBut)		HandleNewSound( 3);
-		if( selectedControl == LoadBut)		HandleNewSound( 1);
-		if( selectedControl == OpenBut)
+		if (selectedControl == SaveBut)		HandleInstruChoice( 4);
+	//	if (selectedControl == PlayBut)		DoKeyPressInstruList( getinfo, 0);
+		if (selectedControl == DelBut)		HandleInstruChoice( 5);
+		if (selectedControl == RecBut)		HandleNewSound( 3);
+		if (selectedControl == LoadBut)		HandleNewSound( 1);
+		if (selectedControl == OpenBut)
 		{
 			theCell.v = 0;	theCell.h = 0;
-			if( PLGetSelect( &theCell, &myList))
+			if (PLGetSelect( &theCell, &myList))
 			{
 				short	ins, samp;
 				
@@ -2902,7 +2912,7 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 	}
 	
 	moveInstru = (attributes & kDragInsideSenderWindow) && (!((mouseDownModifiers & optionKey) | (mouseUpModifiers & optionKey)));
-	if( moveInstru && DragIns == DestIns && DragSamp == DestSamp) return noErr;
+	if (moveInstru && DragIns == DestIns && DragSamp == DestSamp) return noErr;
 	
 	BackColor( whiteColor);
 
@@ -2914,9 +2924,9 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 	
 	//  Un instrument & sample déplacé à l'intérieur de la fenêtre
 	
-	if((attributes & kDragInsideSenderWindow) && (DragIns != DestIns || DragSamp != DestSamp))		// Delete the source, if moving without option key.
+	if ((attributes & kDragInsideSenderWindow) && (DragIns != DestIns || DragSamp != DestSamp))		// Delete the source, if moving without option key.
 	{
-		if( DragSamp < 0)			// Déplacement d'un instrument
+		if (DragSamp < 0)			// Déplacement d'un instrument
 		{
 			InstrData	*srcIns, *dstIns;
 			sData		*srcData, *dstData;
@@ -2924,28 +2934,24 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 			
 			SaveUndo( UAllSamples, 0, "\pUndo 'Move instrument'");
 			
-			srcIns = &curMusic->fid[ DragIns];
-			dstIns = &curMusic->fid[ DestIns];
+			srcIns = &curMusic->fid[DragIns];
+			dstIns = &curMusic->fid[DestIns];
 			MADKillInstrument( curMusic, DestIns);
 			
-			for( x = 0; x < srcIns->numSamples; x++)
-			{
-				dstData = MADCreateSample( curMusic, DestIns, x);
-				srcData = curMusic->sample[ curMusic->fid[ DragIns].firstSample +  x];
+			for (x = 0; x < srcIns->numSamples; x++) {
+				dstData = MADCreateSample(curMusic, DestIns, x);
+				srcData = curMusic->sample[curMusic->fid[DragIns].firstSample +  x];
 								
 				*dstData = *srcData;
 				
-				dstData->data = NewPtr( dstData->size);
-				if( dstData->data != NULL)
-				{
-					BlockMoveData( srcData->data, dstData->data, dstData->size);
-				}
-				else
-				{
-					Erreur( 63, MemError());
-					MADKillInstrument( curMusic, DestIns);
+				dstData->data = NewPtr(dstData->size);
+				if (dstData->data != NULL) {
+					BlockMoveData(srcData->data, dstData->data, dstData->size);
+				} else {
+					Erreur(63, MemError());
+					MADKillInstrument(curMusic, DestIns);
 					
-					return( dragNotAcceptedErr);
+					return dragNotAcceptedErr;
 				}
 			}
 			
@@ -2953,23 +2959,19 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 			*dstIns = *srcIns;
 			dstIns->firstSample = x;
 			
-			if( moveInstru)
-			{
+			if (moveInstru) {
 				MADKillInstrument( curMusic, DragIns);
 			}
-		}
-		else							// Déplacement d'un sample
-		{
-			if( DestSamp < 0)			// Rajout d'un sample à un instrument
-			{
+		} else {							// Déplacement d'un sample
+			if (DestSamp < 0) {			// Rajout d'un sample à un instrument
 				sData		*srcData, *dstData;
 				
 				SaveUndo( UAllSamples, 0, "\pUndo 'Move sample'");
 				
 				DestSamp = curMusic->fid[ DestIns].numSamples;
-			//	if( DestSamp >= MAXSAMPLE) return -1;
+				//if (DestSamp >= MAXSAMPLE) return -1;
 				
-			//	curMusic->fid[ DestIns].numSamples++;
+				//curMusic->fid[ DestIns].numSamples++;
 				
 				dstData = MADCreateSample( curMusic, DestIns, DestSamp);
 				srcData = curMusic->sample[ curMusic->fid[ DragIns].firstSample +  DragSamp];
@@ -2977,7 +2979,7 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 				*dstData = *srcData;
 					
 				dstData->data = NewPtr( dstData->size);
-				if( dstData->data != NULL)
+				if (dstData->data != NULL)
 				{
 					BlockMoveData( srcData->data, dstData->data, dstData->size);
 				}
@@ -2989,9 +2991,9 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 					return( dragNotAcceptedErr);
 				}
 				
-				if( moveInstru)
+				if (moveInstru)
 				{
-					if( DestIns == DragIns && DestSamp <= DragSamp) DragSamp++;
+					if (DestIns == DragIns && DestSamp <= DragSamp) DragSamp++;
 					MADPurgeTrackIfInstru( MADDriver, DragIns);
 					MADKillSample( curMusic, DragIns, DragSamp);
 				}
@@ -3005,16 +3007,16 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 				srcData = curMusic->sample[ curMusic->fid[ DragIns].firstSample +  DragSamp];
 				dstData = curMusic->sample[ curMusic->fid[ DestIns].firstSample +  DestSamp];
 				
-				if( dstData == NULL) {
+				if (dstData == NULL) {
 					MyDebugStr( __LINE__, __FILE__, "Arggggggg");
 					return cantGetFlavorErr;
 				}
-				if( dstData->data != NULL) { DisposePtr( dstData->data);	dstData->data = NULL;}
+				if (dstData->data != NULL) { DisposePtr( dstData->data);	dstData->data = NULL;}
 				
 				*dstData = *srcData;
 					
 				dstData->data = NewPtr( dstData->size);
-				if( dstData->data != NULL)
+				if (dstData->data != NULL)
 				{
 					BlockMoveData( srcData->data, dstData->data, dstData->size);
 				}
@@ -3026,9 +3028,9 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 					return( dragNotAcceptedErr);
 				}
 				
-				if( moveInstru)
+				if (moveInstru)
 				{
-				//	if( DestIns == DragIns && DestSamp <= DragSamp) DragSamp++;
+				//	if (DestIns == DragIns && DestSamp <= DragSamp) DragSamp++;
 					MADPurgeTrackIfInstru( MADDriver, DragIns);
 					MADKillSample( curMusic, DragIns, DragSamp);
 				}
@@ -3058,7 +3060,7 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 		
 		SaveUndo( UAllSamples, 0, "\pUndo 'Drop sound file'");
 		
-		if( gMovieQuicktime)
+		if (gMovieQuicktime)
 		{
 			FSSpec			tempFile;
 			Movie			aMovie;
@@ -3066,24 +3068,24 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 			
 			GetMovieSelection( QTMovie, &selectionTime, &selectionDuration);
 			
-			if( selectionDuration == 0) aMovie = QTMovie;
+			if (selectionDuration == 0) aMovie = QTMovie;
 			else aMovie = CopyMovieSelection( QTMovie);
 			
 			pStrcpy( tempFile.name, QTFile.name);
 			iErr = FindFolder( kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tempFile.vRefNum, &tempFile.parID);
-			if( iErr) MyDebugStr( __LINE__, __FILE__, "FindFolder");
+			if (iErr) MyDebugStr( __LINE__, __FILE__, "FindFolder");
 			
 			FSpDelete( &tempFile);
 			
 			iErr = ConvertMovieToFile( aMovie, nil, &tempFile, 'WAVE', 'TVOD', 0, nil, 0, nil);
-			if( iErr) MyDebugStr( __LINE__, __FILE__, "ConvertMovieToFile");
+			if (iErr) MyDebugStr( __LINE__, __FILE__, "ConvertMovieToFile");
 			
 			iErr = NOpenSampleInt( DestIns, DestSamp, tempFile);
-			if( iErr) MyDebugStr( __LINE__, __FILE__, "NOpenSampleInt");
+			if (iErr) MyDebugStr( __LINE__, __FILE__, "NOpenSampleInt");
 			
 			FSpDelete( &tempFile);
 			
-			if( selectionDuration != 0) DisposeMovie( aMovie);
+			if (selectionDuration != 0) DisposeMovie( aMovie);
 		}
 		else
 		{
@@ -3119,14 +3121,14 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 		
 		pStrcpy( newFile.name, "\pDigital Selection");
 		iErr = FindFolder( kOnSystemDisk, kDesktopFolderType, kCreateFolder, &newFile.vRefNum, &newFile.parID);
-		if( iErr) MyDebugStr( __LINE__, __FILE__, "FindFolder");
+		if (iErr) MyDebugStr( __LINE__, __FILE__, "FindFolder");
 		
 		FSpDelete( &newFile);
 		
 		iErr = FSpCreate( &newFile, 'TVOD', 'AIFF', smSystemScript);
 		iErr = FSpOpenDF( &newFile, fsCurPerm, &fRefNum);
 		
-		if( CreateAIFFExporting( true, fRefNum, &newFile, 'AIFF', NULL))
+		if (CreateAIFFExporting( true, fRefNum, &newFile, 'AIFF', NULL))
 		{
 			while( theProgressDia != NULL) DoAIFFExporting();
 			
@@ -3140,7 +3142,7 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 			
 			iErr = NOpenSampleInt( DestIns, DestSamp, newFile);
 			
-			if( iErr == -10) MADErreur( iErr);
+			if (iErr == -10) MADErreur( iErr);
 			
 			CreateInstruList();
 			DrawInfoInstrument();
@@ -3175,13 +3177,13 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 		
 		theSound = MyNewPtr( textSize);
 		
-		if( theSound != NULL)
+		if (theSound != NULL)
 		{
 			GetFlavorData( theDrag, theItem, 'snd ', theSound, &textSize, 0);
 			
 			theSound = NSndToPtr( theSound, &lS, &lE, &sS, &rate, &bFreq, &stereo);
 			
-			if( theSound != NULL)
+			if (theSound != NULL)
 				AddSoundToMAD(	theSound,
 								lS,
 								lE,
@@ -3197,7 +3199,7 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 		//////////////////////////////////////
 		
 		result = GetFlavorDataSize(theDrag, theItem, 'STR ', &textSize);
-		if( result == noErr)
+		if (result == noErr)
 		{
 			GetFlavorData(theDrag, theItem, 'STR ', &myStr, &textSize, 0);
 			SetSampName( DestIns, DestSamp, myStr);
@@ -3251,7 +3253,7 @@ pascal OSErr MySendDataProc(FlavorType theFlavor,  void *refCon, ItemReference t
 		PBHSetVolSync( &wdpb);
 		HGetVol( NULL, &target.vRefNum, &target.parID);
 		
-		if( NSoundQualityExportSnd( DragIns, DragSamp, &SoundType, sName) == noErr)
+		if (NSoundQualityExportSnd( DragIns, DragSamp, &SoundType, sName) == noErr)
 		{
 			FSMakeFSSpec(target.vRefNum, target.parID, sName, &target);
 			beginNumber = 1;
@@ -3260,18 +3262,18 @@ pascal OSErr MySendDataProc(FlavorType theFlavor,  void *refCon, ItemReference t
 			
 		//	HSetVol( NULL, target.vRefNum, target.parID);
 			err = FSpOpenDF( &target, fsCurPerm, &fRefNum);
-			if( err == noErr)
+			if (err == noErr)
 			{
 				FSCloseFork( fRefNum);
 				beginNumber++;
 				
 				pStrcpy( target.name, sName);
 				NumToString( beginNumber, tempStr);
-				if( target.name[ 0] > 27) target.name[ 0] = 27;
+				if (target.name[ 0] > 27) target.name[ 0] = 27;
 				pStrcat( target.name, "\p #");
 				pStrcat( target.name, tempStr);
 				
-				if( beginNumber > 90)
+				if (beginNumber > 90)
 				{
 					Erreur( 63, -754);
 					return dragNotAcceptedErr;
@@ -3279,7 +3281,7 @@ pascal OSErr MySendDataProc(FlavorType theFlavor,  void *refCon, ItemReference t
 				
 				goto ReEXPORT;
 			}
-			else if( err == fnfErr)
+			else if (err == fnfErr)
 			{
 				NSaveSampleInt( DragIns, DragSamp, SoundType, &target);
 				
@@ -3318,7 +3320,7 @@ Boolean DragInstrument( RgnHandle myRgn, short no, EventRecord *theEvent)
 	Rect				dragRegionRect;
 	Pcmd				*myPcmd;
 	
-	if( !DragManagerUse) return false;
+	if (!DragManagerUse) return false;
 
 	//******************************************
 	// Prepare l'instrument pour etre exporte !!
@@ -3326,30 +3328,30 @@ Boolean DragInstrument( RgnHandle myRgn, short no, EventRecord *theEvent)
 	
 	ConvertIDtoInsSamp( no, &DragIns, &DragSamp);
 	
-	if( DragSamp >= 0)
+	if (DragSamp >= 0)
 	{
 		sData				*curData;
 		short				numChan;
 		
 		curData		= curMusic->sample[ curMusic->fid[ DragIns].firstSample +  DragSamp];
-		if( curData == NULL) {
+		if (curData == NULL) {
 			MyDebugStr( __LINE__, __FILE__, "Errorrr");
 			return false;
 		}
-		if( curData->data == NULL) {
+		if (curData->data == NULL) {
 			MyDebugStr( __LINE__, __FILE__, "Errorrr");
 			return false;
 		}
 		
-		if( curData->size == 0) return false;
+		if (curData->size == 0) return false;
 		
 		theSound = MyNewHandle( 4096L);
-		if( theSound == NULL) return false;
+		if (theSound == NULL) return false;
 		
 		inOutBytes = GetPtrSize( curData->data);
-		if( inOutBytes != curData->size) return false;
+		if (inOutBytes != curData->size) return false;
 		
-		if( curData->stereo) numChan = 2;
+		if (curData->stereo) numChan = 2;
 		else numChan = 1;
 		
 		SetupSndHeader(		(SndListHandle) theSound,
@@ -3362,7 +3364,7 @@ Boolean DragInstrument( RgnHandle myRgn, short no, EventRecord *theEvent)
 							&temp);
 		
 		SetHandleSize( theSound, inOutBytes + temp);
-		if( MemError() != noErr) { MyDisposHandle( &theSound);	Erreur( 63, MemError());	return false;}
+		if (MemError() != noErr) { MyDisposHandle( &theSound);	Erreur( 63, MemError());	return false;}
 		
 		AddLoopToSndHandle(	theSound,
 							curData->loopBeg,
@@ -3370,7 +3372,7 @@ Boolean DragInstrument( RgnHandle myRgn, short no, EventRecord *theEvent)
 		
 		HLock( theSound);
 		BlockMoveData( curData->data, *theSound + temp, inOutBytes);
-		if( curData->amp == 8) ConvertInstrumentIn( (Byte*) (*theSound + temp), inOutBytes);
+		if (curData->amp == 8) ConvertInstrumentIn( (Byte*) (*theSound + temp), inOutBytes);
 		else ConvertInstrumentIn16( (short*) (*theSound + temp), inOutBytes);
 	}
 	//******************************************
@@ -3384,7 +3386,7 @@ Boolean DragInstrument( RgnHandle myRgn, short no, EventRecord *theEvent)
 
 	NewDrag( &theDrag);
 	
-	if( DragSamp >= 0)	// Drag d'un sample
+	if (DragSamp >= 0)	// Drag d'un sample
 	{
 		sData	*curData = curData = curMusic->sample[ curMusic->fid[ DragIns].firstSample +  DragSamp];
 	
@@ -3426,7 +3428,7 @@ Boolean DragInstrument( RgnHandle myRgn, short no, EventRecord *theEvent)
 	MADKillCmd( cmd);
 	cmd->ins	=	DragIns + 1;
 	
-	if( curMusic->fid[ DragIns].numSamples > 0)
+	if (curMusic->fid[ DragIns].numSamples > 0)
 	{
 		cmd->note	=	48 - curMusic->sample[ curMusic->fid[ DragIns].firstSample]->relNote;
 	}
@@ -3486,7 +3488,7 @@ Boolean DragInstrument( RgnHandle myRgn, short no, EventRecord *theEvent)
 	DisposeDrag( theDrag);
 	DisposeRgn( dragRegion);
 	
-	if( DragSamp >= 0)
+	if (DragSamp >= 0)
 	{
 		HUnlock( theSound);
 		MyDisposHandle( &theSound);
@@ -3508,7 +3510,7 @@ void CreateInstruListWindow(void)
 	Str255		String;
 	PicHandle	myPict;
 
-	if( InstruListDlog != NULL)
+	if (InstruListDlog != NULL)
 	{
 		SetWindEtat( GetDialogWindow(InstruListDlog));
 		return;
@@ -3523,7 +3525,7 @@ void CreateInstruListWindow(void)
 	
 	GetPortBounds( GetDialogPort( InstruListDlog), &caRect);
 	
-	if( caRect.right != 200)
+	if (caRect.right != 200)
 		MySizeWindow( InstruListDlog, 200, caRect.bottom, true);
 
 	SetPortDialogPort( InstruListDlog);
@@ -3675,7 +3677,7 @@ void CreateInstruListWindow(void)
 	
 	SetRect( &ButtonRect, myList.rect.left, myList.rect.top, myList.rect.left + (*mySABut)->bounds.right, myList.rect.bottom);
 	
-	if( DragManagerUse)
+	if (DragManagerUse)
 	{
 
 		MyTrackingHandlerUPP 		= NewDragTrackingHandlerUPP( MyTrackingHandler);
@@ -3689,7 +3691,7 @@ void CreateInstruListWindow(void)
 
 void CloseInstruListWindow(void)
 {
-	if( InstruListDlog != NULL)
+	if (InstruListDlog != NULL)
 	{
 		DisposePtr( (Ptr) SAButState);
 		DisposePtr( (Ptr) InstrUsed);
@@ -3701,7 +3703,7 @@ void CloseInstruListWindow(void)
 		ZapPixMap( &CPB);
 		ZapPixMap( &OPB);
 	
-		if( DragManagerUse)
+		if (DragManagerUse)
 		{
 			RemoveTrackingHandler( MyTrackingHandlerUPP, GetDialogWindow( InstruListDlog));
 			RemoveReceiveHandler( MyReceiveDropHandlerUPP, GetDialogWindow( InstruListDlog));
@@ -3721,14 +3723,14 @@ Boolean GetIns( short *ins, short *samp)
 {
 Point	theCell;
 
-	if( InstruListDlog == NULL) return false;
+	if (InstruListDlog == NULL) return false;
 	
 	theCell.h = 0;
 //	theCell.v = *ins;
 	theCell.v = 0;
 	
 	
-	if( PLGetSelect( &theCell, &myList))
+	if (PLGetSelect( &theCell, &myList))
 	{
 		ConvertIDtoInsSamp( theCell.v, ins, samp);
 		
@@ -3764,7 +3766,7 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 		itemRect = myList.rect;
 		itemRect.left = 0;
 		itemRect.right = (*mySABut)->bounds.right;
-		if( PtInRect( myPt, &itemRect))
+		if (PtInRect( myPt, &itemRect))
 		{
 			short	ins, samp;
 			Boolean	inBB;
@@ -3774,7 +3776,7 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 			
 			ConvertIDtoInsSamp( theCell.v, &ins, &samp);
 			
-			if( curMusic->fid[ ins].numSamples > 0 && samp < 0)
+			if (curMusic->fid[ ins].numSamples > 0 && samp < 0)
 			{
 				itemRect.top = myList.rect.top + (theCell.v - PLGetCtlValue( myList.yScroll)) * myList.HCell;
 				itemRect.bottom = itemRect.top + (*OP)->bounds.bottom;
@@ -3783,14 +3785,14 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 				do
 				{
 					GetMouse( &myPt);
-					if( PtInRect( myPt, &itemRect))
+					if (PtInRect( myPt, &itemRect))
 					{
-						if( !inBB)
+						if (!inBB)
 						{
 							inBB = true;
 							// Paint IN
 							
-							if( thePrefs.OCArrow[ ins])
+							if (thePrefs.OCArrow[ ins])
 							{
 							itemRect.bottom = itemRect.top + (*OPB)->bounds.bottom;
 							
@@ -3816,12 +3818,12 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 					}
 					else
 					{
-						if( inBB)
+						if (inBB)
 						{
 							inBB = false;
 							// Paint OUT
 							
-							if( thePrefs.OCArrow[ ins])
+							if (thePrefs.OCArrow[ ins])
 							{
 							itemRect.bottom = itemRect.top + (*OP)->bounds.bottom;
 							
@@ -3848,13 +3850,13 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 				}
 				while( Button());
 				
-				if( inBB)
+				if (inBB)
 				{
-					if( samp < 0)
+					if (samp < 0)
 					{
 						thePrefs.OCArrow[ ins] = !thePrefs.OCArrow[ ins];
 						
-						if( (theEvent.modifiers & optionKey) != 0)
+						if ((theEvent.modifiers & optionKey) != 0)
 						{
 							for( i = 0; i < MAXINSTRU ; i++) thePrefs.OCArrow[ i] = thePrefs.OCArrow[ ins];
 						}
@@ -3868,7 +3870,7 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 					}
 				}
 			}
-			else if( curMusic->fid[ ins].numSamples > 0 && samp >= 0)
+			else if (curMusic->fid[ ins].numSamples > 0 && samp >= 0)
 			{
 				short 	track = GetWhichTrackPlay();
 				Channel	*curVoice = &MADDriver->chan[ track];
@@ -3885,23 +3887,23 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 				MADDriver->chan[ track].maxPtr = MADDriver->chan[ track].curPtr;
 			}
 		}
-		else if( PtInRect( myPt, &myList.rect))
+		else if (PtInRect( myPt, &myList.rect))
 		{
 			firstCall = true;
 			
 			DoubleClick = PLClick( myPt, theEvent.modifiers, &myList);
-			if( DoubleClick)
+			if (DoubleClick)
 			{
 				theCell.v = 0;	theCell.h = 0;
-				if( PLGetSelect( &theCell, &myList))
+				if (PLGetSelect( &theCell, &myList))
 				{
 					short	ins, samp;
 					
 					ConvertIDtoInsSamp( theCell.v, &ins, &samp);
 					
-					if( samp < 0)
+					if (samp < 0)
 					{
-						if( GetIns( &temp, &samp)) NEditInstruInfo( temp, samp);
+						if (GetIns( &temp, &samp)) NEditInstruInfo( temp, samp);
 					}
 					else NCreateSampleWindow( ins, samp);
 				}
@@ -3909,7 +3911,7 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 			else
 			{
 				PLGetSelectRect( &itemRect, &myList);
-				if( PtInRect( myPt, &itemRect))
+				if (PtInRect( myPt, &itemRect))
 				{
 					DragInstruSelect();
 				}
@@ -3923,18 +3925,18 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 	switch( whichItem)
 	{
 		case 18:
-			if( GetControlHilite( PlayBut) == 0)// && MyTrackControl( PlayBut, theEvent.where, NULL))
+			if (GetControlHilite( PlayBut) == 0)// && MyTrackControl( PlayBut, theEvent.where, NULL))
 			{
 				HiliteControl( PlayBut, kControlButtonPart);
 			
 				theCell.v = 0;	theCell.h = 0;
-				if( PLGetSelect( &theCell, &myList))
+				if (PLGetSelect( &theCell, &myList))
 				{
 					short	ins, samp;
 				
 					ConvertIDtoInsSamp( theCell.v, &ins, &samp);
 					
-					if( curMusic->fid[ ins].numSamples > 0 && samp >= 0)
+					if (curMusic->fid[ ins].numSamples > 0 && samp >= 0)
 					{
 						short 	track = GetWhichTrackPlay();
 						Channel	*curVoice = &MADDriver->chan[ track];
@@ -3973,28 +3975,28 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 			break;
 
 		case 19:
-			if( GetControlHilite( DelBut) == 0   && MyTrackControl( DelBut, theEvent.where, NULL))
+			if (GetControlHilite( DelBut) == 0   && MyTrackControl( DelBut, theEvent.where, NULL))
 			{
 				DoKeyPressInstruList( 0x08, -1);
 			}
 			break;
 
 		case 20:
-			if( GetControlHilite( LoadBut) == 0  && MyTrackControl( LoadBut, theEvent.where, NULL))
+			if (GetControlHilite( LoadBut) == 0  && MyTrackControl( LoadBut, theEvent.where, NULL))
 			{
 				HandleNewSound( 1);
 			}
 			break;
 
 		case 21:
-			if( GetControlHilite( SaveBut) == 0  && MyTrackControl( SaveBut, theEvent.where, NULL))
+			if (GetControlHilite( SaveBut) == 0  && MyTrackControl( SaveBut, theEvent.where, NULL))
 			{
 				HandleInstruChoice( 4);
 			}
 			break;
 		
 		case HRec:
-			//if( GetControlHilite( RecBut) == 0)
+			//if (GetControlHilite( RecBut) == 0)
 			{
 				Point		Zone;
 				long		mresult;
@@ -4027,18 +4029,18 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 			break;
 			
 		case 23:
-			if( GetControlHilite( OpenBut) == 0  && MyTrackControl( OpenBut, theEvent.where, NULL))
+			if (GetControlHilite( OpenBut) == 0  && MyTrackControl( OpenBut, theEvent.where, NULL))
 			{
 				theCell.v = 0;	theCell.h = 0;
-				if( PLGetSelect( &theCell, &myList))
+				if (PLGetSelect( &theCell, &myList))
 				{
 					short	ins, samp;
 				
 					ConvertIDtoInsSamp( theCell.v, &ins, &samp);
 				
-					if( samp < 0)
+					if (samp < 0)
 					{
-						if( GetIns( &temp, &samp)) NEditInstruInfo( temp, samp);
+						if (GetIns( &temp, &samp)) NEditInstruInfo( temp, samp);
 					}
 					else NCreateSampleWindow( ins, samp);
 				}
@@ -4046,7 +4048,7 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 			break;
 			
 		case 24:
-			if( GetControlHilite( FlipBut) == 0  && MyTrackControl( FlipBut, theEvent.where, NULL))
+			if (GetControlHilite( FlipBut) == 0  && MyTrackControl( FlipBut, theEvent.where, NULL))
 			{
 				Rect	caRect;
 				
@@ -4054,7 +4056,7 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 				
 				GetPortBounds( GetDialogPort( whichDialog), &caRect);
 				
-				if( caRect.right == 300)
+				if (caRect.right == 300)
 				{
 					MySizeWindow( whichDialog, 200, caRect.bottom, true);
 				//	SetControlValue( FlipBut, 161);
@@ -4070,7 +4072,7 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 				EraseGrowIcon( whichDialog);
 				SetMaxWindow( caRect.right + 3, 0, whichDialog);
 				
-				if( caRect.right == 300) SetControlValue( FlipBut, 0);
+				if (caRect.right == 300) SetControlValue( FlipBut, 0);
 				else SetControlValue( FlipBut, 1);
 			}
 			break;
@@ -4087,7 +4089,7 @@ void DoKeyPressInstruList( short theChar, short xxxxxxx)
 	Rect		cellRect;
 	Boolean		Delete;
 
-	if( InstruListDlog == NULL) return;
+	if (InstruListDlog == NULL) return;
 	
 	GetPort( &SavePort);
 	SetPortDialogPort( InstruListDlog);
@@ -4096,41 +4098,41 @@ void DoKeyPressInstruList( short theChar, short xxxxxxx)
 
 	PLDoArrows( theChar, &myList);
 	
-	if( theChar == deletekey)
+	if (theChar == deletekey)
 	{
 		curMusic->hasChanged = true;
 
 		SaveUndo( UAllSamples, 0, "\pUndo 'Delete instrument'");
 		
-		if( GetIns( &ins, &samp))
+		if (GetIns( &ins, &samp))
 		{
 			MADPurgeTrackIfInstru( MADDriver, ins);
 			
-			if( samp >= 0) MADKillSample( curMusic, ins, samp);
+			if (samp >= 0) MADKillSample( curMusic, ins, samp);
 			else MADKillInstrument( curMusic, ins);
 		}
 		
 		CreateInstruList();
 		UpdateSampleWindows();
 	}
-	else if( theChar == 0x0D || theChar == 0x03)
+	else if (theChar == 0x0D || theChar == 0x03)
 	{
 		theCell.v = 0;
 		theCell.h = 0;
-		if( PLGetSelect( &theCell, &myList))
+		if (PLGetSelect( &theCell, &myList))
 		{
 			short	ins, samp, temp;
 			
 			ConvertIDtoInsSamp( theCell.v, &ins, &samp);
 			
-			if( samp < 0)
+			if (samp < 0)
 			{
-				if( GetIns( &temp, &samp)) NEditInstruInfo( temp, samp);
+				if (GetIns( &temp, &samp)) NEditInstruInfo( temp, samp);
 			}
 			else NCreateSampleWindow( ins, samp);
 		}
 	}
-	else if( theChar == selectAll)
+	else if (theChar == selectAll)
 	{
 		/*
 		theCell.v = 0;	theCell.h = 0;
@@ -4140,34 +4142,34 @@ void DoKeyPressInstruList( short theChar, short xxxxxxx)
 		}while( LNextCell( true, true, &theCell, InstruList));
 		*/
 	}
-	else if( theChar == getinfo)
+	else if (theChar == getinfo)
 	{
 		short temp;
 		
-		if( GetIns( &temp, &samp)) NEditInstruInfo( temp, samp);
+		if (GetIns( &temp, &samp)) NEditInstruInfo( temp, samp);
 	}
-	else if( theChar == '/' || theChar == '*')
+	else if (theChar == '/' || theChar == '*')
 	{
 		short 	temp;
 		
-		if( GetIns( &temp, &samp))
+		if (GetIns( &temp, &samp))
 		{
-			if( samp >= 0)
+			if (samp >= 0)
 			{
 				sData	*curData;
 				
 				curData = curMusic->sample[ curMusic->fid[ temp].firstSample +  samp];
 				
-				if( theChar == '/')
+				if (theChar == '/')
 				{
-					if( curData->c2spd > 5)
+					if (curData->c2spd > 5)
 						curData->c2spd -= 5;
 						
 					curMusic->hasChanged = true;
 				}
 				else
 				{
-					if( curData->c2spd < 60000)
+					if (curData->c2spd < 60000)
 						curData->c2spd += 5;
 						
 					curMusic->hasChanged = true;
@@ -4179,7 +4181,7 @@ void DoKeyPressInstruList( short theChar, short xxxxxxx)
 //	RGBBackColor( &theColor);
 	
 	theCell.v = 0;	theCell.h = 0;
-	if( PLGetSelect( &theCell, &myList)) DrawInfoInstrument();
+	if (PLGetSelect( &theCell, &myList)) DrawInfoInstrument();
 	else EraseInstrumentInfo();
 	
 	SetPort( SavePort);
@@ -4187,9 +4189,9 @@ void DoKeyPressInstruList( short theChar, short xxxxxxx)
 
 void PASTEInstruList()
 {
-	if( GetIns( &DestIns, &DestSamp))
+	if (GetIns( &DestIns, &DestSamp))
 	{
-		if( DestSamp < 0)			// Rajout d'un sample à un instrument
+		if (DestSamp < 0)			// Rajout d'un sample à un instrument
 		{
 			SaveUndo( UAllSamples, 0, "\pUndo 'Paste sample'");
 			
@@ -4206,7 +4208,7 @@ void PASTEInstruList()
 		//	MADKillSample( curMusic, DestIns, DestSamp);
 						
 			// Delete old sample
-			if( curMusic->sample[ DestIns * MAXSAMPLE + DestSamp]->data) DisposePtr( curMusic->sample[ DestIns * MAXSAMPLE + DestSamp]->data);
+			if (curMusic->sample[ DestIns * MAXSAMPLE + DestSamp]->data) DisposePtr( curMusic->sample[ DestIns * MAXSAMPLE + DestSamp]->data);
 			DisposePtr( (Ptr) curMusic->sample[ DestIns * MAXSAMPLE + DestSamp]);
 			curMusic->sample[ DestIns * MAXSAMPLE + DestSamp] = NULL;
 			
@@ -4226,7 +4228,7 @@ void PASTEInstruList()
 			curMusic->sample[ DestIns * MAXSAMPLE + DestSamp] = dstData;
 			
 			dstData->data = NewPtr( 0);
-			if( dstData->data)
+			if (dstData->data)
 			{
 				NPASTESample( 0, DestIns, DestSamp);
 			}
@@ -4248,7 +4250,7 @@ void SaveInstrumentsList()
 	pStrcpy( str, "\pInstruments List #");
 	pStrcat( str, str2);
 	
-	if( DoCustomSave( "\pSave this instruments list as:", str, 'INso', &spec)) return;
+	if (DoCustomSave( "\pSave this instruments list as:", str, 'INso', &spec)) return;
 	
 	ILindex++;
 	
@@ -4262,7 +4264,7 @@ void SaveInstrumentsList()
 		iErr = FSpCreate( &spec, 'SNPL', 'INso', smSystemScript);
 		iErr = FSpOpenDF( &spec, fsCurPerm, &refNum);
 		
-		if( iErr == noErr)
+		if (iErr == noErr)
 		{
 			inOutCount = sizeof( InstrData) * MAXINSTRU;
 			iErr = FSWrite( refNum, &inOutCount, curMusic->fid);
@@ -4296,7 +4298,7 @@ OSErr OpenInstrumentsList( FSSpec *file)
 	SaveUndo( UAllSamples, 0, "\pUndo 'Open Instruments List file'");
 	
 	theErr = FSpOpenDF( file, fsCurPerm, &srcFile);
-	if( theErr) return theErr;
+	if (theErr) return theErr;
 	
 	for( x = 0; x < MAXINSTRU ; x++) MADKillInstrument( curMusic, x);
 	
@@ -4314,7 +4316,7 @@ OSErr OpenInstrumentsList( FSSpec *file)
 			// ** Read Sample header **
 		
 			curData = curMusic->sample[ i * MAXSAMPLE +  x] = (sData*) MADNewPtr( sizeof( sData), MADDriver->lib);
-			if( curData == NULL) return MADNeedMemory;
+			if (curData == NULL) return MADNeedMemory;
 			
 			inOutCount = sizeof( sData);
 			theErr = FSRead( srcFile, &inOutCount, curData);
@@ -4322,7 +4324,7 @@ OSErr OpenInstrumentsList( FSSpec *file)
 			// ** Read Sample DATA
 			
 			curData->data = MADNewPtr( curData->size, MADDriver->lib);
-			if( curData->data == NULL) return MADNeedMemory;
+			if (curData->data == NULL) return MADNeedMemory;
 			
 			inOutCount = curData->size;
 			theErr = FSRead( srcFile, &inOutCount, curData->data);
