@@ -533,7 +533,7 @@ static Ptr	ConvertMad2S3M( MADMusic *theMAD, MADDriverSettings *init, long *sndS
 		finalS3MCopy++;
 		finalS3MCopy++;		// A short is 2 bytes...
 		
-		while( Row < 64)
+		while (Row < 64)
 		{
 			maxtrackp = theMAD->header->numChn;
 			if (maxtrackp > 16) maxtrackp = 16;
@@ -1034,7 +1034,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 			theS3MCopy += ( (long) s3minfo.parappat[i] )*16L;
 			theS3MCopy++;
 			
-			while( Row < 64)
+			while (Row < 64)
 			{
 				tempChar = *theS3MCopy;
 				theS3MCopy++;
@@ -1133,7 +1133,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, long size, MADMusic *theMAD, MADDriverS
 			theS3MCopy++;
 			
 			Row = 0;
-			while( Row < 64)
+			while (Row < 64)
 			{
 				/*
 				 BYTE:flag, 	0		=	end of row

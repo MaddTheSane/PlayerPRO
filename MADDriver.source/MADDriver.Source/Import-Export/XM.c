@@ -977,7 +977,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 					
 					wh.finetune = 0;			// <- 8363 Hz
 					
-					while( XMGetPeriod( BASECALC, curData->c2spd) < XMGetPeriod( BASECALC + modifc2spd, 8363))
+					while (XMGetPeriod( BASECALC, curData->c2spd) < XMGetPeriod( BASECALC + modifc2spd, 8363))
 					{
 						modifc2spd++;
 					}
@@ -1002,7 +1002,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 					if (curData->c2spd > 8757) wh.finetune = 127;
 					else
 					{
-						while( finetune[ (wh.finetune + 128)/16] < curData->c2spd)
+						while (finetune[ (wh.finetune + 128)/16] < curData->c2spd)
 						{
 							wh.finetune += 16;
 						}

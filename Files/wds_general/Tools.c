@@ -1072,7 +1072,7 @@ void DoItemPressTools( short whichItem, DialogPtr whichDialog)
 					
 					DrawTimeBar();
 				}
-			}while( Button());
+			}while (Button());
 			break;
 	}
 	

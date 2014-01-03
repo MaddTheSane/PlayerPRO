@@ -94,7 +94,7 @@ static void Settings()
 			break;
 		}
 	
-	}while( itemHit != 1);
+	}while (itemHit != 1);
 	
 	GetDialogItem( aDialog, 4, &itemType, &itemHandle, &itemRect);
 	GetDialogItemText( itemHandle, str);

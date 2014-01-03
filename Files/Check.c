@@ -704,7 +704,7 @@ Boolean SoundQualityExport( 	Boolean OnlyCurrent,
 				 break;*/
 		}
 		
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 	
 	DisposeDialog( aDialog);
 	

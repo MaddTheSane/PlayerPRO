@@ -1025,7 +1025,7 @@ void DrawStaffNotes()
 					
 					short silenceLength = startNote - startScan;
 					
-					while( silenceLength > 0)
+					while (silenceLength > 0)
 					{
 						short remove, silenceLengthCopy, ttt;
 						
@@ -1083,7 +1083,7 @@ void DrawStaffNotes()
 						short 	silenceLength = endNote - startNote;
 						Boolean	first = true;
 						
-						while( silenceLength > 0)
+						while (silenceLength > 0)
 						{
 							short	prevleft, remove;
 							short 	silenceLengthCopy, ttt;
@@ -1533,13 +1533,13 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 				for (i = endYSelec+1; i < MAXTRACK; i++)	MADDriver->TrackReading[ i] = false;
 				
 				MADDriver->Reading = true;
-				while( Button() == true  && MADDriver->PartitionReader <= endXSelec) 
+				while (Button() == true  && MADDriver->PartitionReader <= endXSelec) 
 				{
 					DoGlobalNull();
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 				}
 				MADDriver->Reading = false;
-				while( Button() == true)
+				while (Button() == true)
 				{
 					DoGlobalNull();
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
@@ -1562,7 +1562,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 						Pcmd		*myPcmd;
 						
 						myCPt = myPt;
-						while( Button())
+						while (Button())
 						{
 							GetMouse( &myPt);
 							if (myCPt.h != myPt.h || myCPt.v != myPt.v) break;
@@ -1659,7 +1659,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 						//	if (QDIsPortBuffered( GetDialogPort( whichDialog)))
 						//	QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
 						}
-						while( Button());
+						while (Button());
 						
 						SetDigitalSelection( startYSelec, startXSelec, endYSelec+1, endXSelec+1);
 						
@@ -1677,7 +1677,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 						short		pos, track, note;
 						
 						myCPt = myPt;
-					/*	while( Button())
+					/*	while (Button())
 						{
 							GetMouse( &myPt);
 							if (myCPt.h != myPt.h || myCPt.v != myPt.v) break;
@@ -1818,7 +1818,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 				
 				if (IsPlay == false) DoPlay();
 				
-				while( Button())
+				while (Button())
 				{
 					DoGlobalNull();
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
@@ -1907,7 +1907,7 @@ void DoItemPressStaff( short whichItem, DialogPtr whichDialog)
 					if (QDIsPortBuffered( GetDialogPort( StaffDlog)))
 							QDFlushPortBuffer( GetDialogPort( StaffDlog), NULL);
 					
-				}while( Button());
+				}while (Button());
 				
 				MADKeyOFF( MADDriver, -1);
 			}

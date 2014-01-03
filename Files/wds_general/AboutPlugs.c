@@ -178,7 +178,7 @@ void AboutPlugs()
 				break;
 		}
 		
-	}while( itemHit != 1);
+	}while (itemHit != 1);
 	
 	DisposeDialog( aDialog);
 }

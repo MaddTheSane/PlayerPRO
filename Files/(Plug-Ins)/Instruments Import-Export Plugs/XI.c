@@ -413,7 +413,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					if (curData->c2spd > 8757) wh.finetune = 127;
 					else
 					{
-						while( finetune[ (wh.finetune + 128)/16] < curData->c2spd)
+						while (finetune[ (wh.finetune + 128)/16] < curData->c2spd)
 						{
 							wh.finetune += 16;
 						}

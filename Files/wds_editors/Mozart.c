@@ -455,7 +455,7 @@ void MozartHelp(void)
 	{
 		ModalDialog( MyDlgFilterDesc, &itemHit);
 			
-	}while( itemHit != 1);
+	}while (itemHit != 1);
 
 	DisposeDialog( TheDia);
 	SetPort( myPort);
@@ -665,7 +665,7 @@ short TrackMarquee(Point start, Rect *resultRect, Rect *maxRect)
 			thenRect = nowRect;
 		}
 	}
-	while( StillDown());
+	while (StillDown());
 	
 	*resultRect = thenRect;
 	
@@ -2169,7 +2169,7 @@ void PressPartition( Point myPt)
 				if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
     					QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
 			}
-			while( Button());
+			while (Button());
 		break;
 	
 		case PlayM:
@@ -2194,7 +2194,7 @@ void PressPartition( Point myPt)
 				if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
     					QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
 			}
-			while( Button());
+			while (Button());
 			
 			SelectToucheMozart( -1, track);
 			MADKeyOFF( MADDriver, -1);
@@ -2298,7 +2298,7 @@ void PressPartition( Point myPt)
 				SetCursor( &CHandCrsr);
 				
 				myCPt = myPt;
-				while( Button())
+				while (Button())
 				{
 					GetMouse( &myPt);
 					if (myCPt.h != myPt.h || myCPt.v != myPt.v) break;
@@ -2569,7 +2569,7 @@ void DoItemPressMozart( short whichItem, DialogPtr whichDialog)
 						if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
     					QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
 						
-					}while( Button());
+					}while (Button());
 	
 					if (IsPlay == false) DoPause();
 					MADDriver->JumpToNextPattern = Jump2;
@@ -2603,7 +2603,7 @@ void DoItemPressMozart( short whichItem, DialogPtr whichDialog)
 					if (QDIsPortBuffered( GetDialogPort( MozartDlog)))
     					QDFlushPortBuffer( GetDialogPort( MozartDlog), NULL);
 				}
-				while( Button());
+				while (Button());
 				
 				SelectToucheMozart( -1, track);
 				MADKeyOFF( MADDriver, -1);

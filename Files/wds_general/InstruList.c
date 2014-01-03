@@ -595,7 +595,7 @@ void AutoPosition( DialogPtr aDia)
 			}
 		}
 	}
-	while( aH != NULL);
+	while (aH != NULL);
 	
 	if (AHelpDlog != NULL) ViewRect.top += 17;
 
@@ -814,7 +814,7 @@ void NPressSmallPiano( short itemHit, DialogPtr TheDia, short theInstru)
 				}
 			}
 		}
-	}while( Button());
+	}while (Button());
 	
 	MADDriver->chan[ LastCanal].KeyOn = false;
 	
@@ -1613,7 +1613,7 @@ OnRepart:
 				break;
 		}
 		
-	}while( itemHit != 1 && itemHit != 2 && itemHit != 61 && itemHit != 60);
+	}while (itemHit != 1 && itemHit != 2 && itemHit != 61 && itemHit != 60);
 	
 	if (itemHit != 2)
 	{
@@ -2034,7 +2034,7 @@ void ConvertIDtoInsSamp( short iD, short *ins, short *samp)
 	*ins		= 0;
 	totsamp		= 0;
 
-	while( iD >= totsamp + *ins)
+	while (iD >= totsamp + *ins)
 	{
 		if (thePrefs.OCArrow[ *ins])
 		{
@@ -3130,7 +3130,7 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 		
 		if (CreateAIFFExporting( true, fRefNum, &newFile, 'AIFF', NULL))
 		{
-			while( theProgressDia != NULL) DoAIFFExporting();
+			while (theProgressDia != NULL) DoAIFFExporting();
 			
 			/////////////////
 			
@@ -3848,7 +3848,7 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 						}
 					}
 				}
-				while( Button());
+				while (Button());
 				
 				if (inBB)
 				{
@@ -3877,7 +3877,7 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 				
 				DoPlayInstruInt2( curMusic->sample[ curMusic->fid[ ins].firstSample + samp], &curMusic->fid[ ins], 48 - curMusic->sample[ curMusic->fid[ ins].firstSample + samp]->relNote, ins, 0, 0, 0xFF, curVoice, 0, 0, samp);
 				
-				while( Button())
+				while (Button())
 				{
 					DoGlobalNull();
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
@@ -3943,7 +3943,7 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 						
 						DoPlayInstruInt2( curMusic->sample[ curMusic->fid[ ins].firstSample + samp], &curMusic->fid[ ins], 48 - curMusic->sample[ curMusic->fid[ ins].firstSample + samp]->relNote, ins, 0, 0, 0xFF, curVoice, 0, 0, samp);
 						
-						while( Button())
+						while (Button())
 						{
 							DoGlobalNull();
 							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
@@ -3959,7 +3959,7 @@ void DoItemPressInstruList( short whichItem, DialogPtr whichDialog)
 						
 						DoPlayInstruInt( 48, ins, 0, 0, 0xFF, curVoice, 0, 0);
 						
-						while( Button())
+						while (Button())
 						{
 							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 							DoGlobalNull();
@@ -4139,7 +4139,7 @@ void DoKeyPressInstruList( short theChar, short xxxxxxx)
 		do
 		{
 			LSetSelect( true, theCell, InstruList);
-		}while( LNextCell( true, true, &theCell, InstruList));
+		}while (LNextCell( true, true, &theCell, InstruList));
 		*/
 	}
 	else if (theChar == getinfo)

@@ -173,7 +173,7 @@ REGODIA:
 				break;
 		}
 		
-	} while( itemHit != 1 && itemHit != 2);
+	} while (itemHit != 1 && itemHit != 2);
 	
 	if (itemHit == 1) {
 		GetDText( aDialog, 9, sName);
@@ -2200,7 +2200,7 @@ REGODIA:
 							if (iErr == noErr) {
 								SetCursor( &PlayCrsr);
 								continueLoop = true;
-								while( continueLoop) {
+								while (continueLoop) {
 									GetKeys( km);
 									
 									if (MADDriver->chan[ 0].samplePtr == NULL) continueLoop = false;
@@ -2389,7 +2389,7 @@ REGODIA:
 				break;
 		}
 		
-	} while( itemHit != 1 && itemHit != 2);
+	} while (itemHit != 1 && itemHit != 2);
 	
 	if (itemHit == 1) {
 		curData = ComputeRAWSound( fileBuf, curEOF);

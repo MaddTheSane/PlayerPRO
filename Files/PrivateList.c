@@ -649,7 +649,7 @@ Boolean		ddTime = false;
 		
 		if ( (aL->type & dragItem) != 0) goto End;
 	}
-	while( Button());
+	while (Button());
 	
 	End:
 	

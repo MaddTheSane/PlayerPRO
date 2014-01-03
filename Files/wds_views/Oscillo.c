@@ -285,7 +285,7 @@ Ptr	TransformationDSP( Ptr thePtr, short i)
 		AudioDSPPtr[ --i] = *tempPtr - bb;
 		tempPtr += 4L;
 	}
-	while( i != 0);
+	while (i != 0);
 	
 	return( AudioDSPPtr);
 }
@@ -303,7 +303,7 @@ Ptr	Transformation8( Ptr thePtr)
 		AudioDSPPtr[ --i] = *tempPtr;
 		tempPtr += 2;
 	}
-	while( i != 0);
+	while (i != 0);
 	
 	return( AudioDSPPtr);
 }
@@ -318,7 +318,7 @@ Ptr	Inverse8( register Ptr thePtr, long Size)
 	{
 		AudioDSPPtr[ --i] = *thePtr++ + 0x80;
 	}
-	while( i != 0);
+	while (i != 0);
 	
 	return( AudioDSPPtr);
 }
@@ -334,7 +334,7 @@ Ptr	Inverse16( register Ptr thePtr, long Size)
 		AudioDSPPtr[ --i] = *thePtr + 0x80;
 		thePtr += 2;
 	}
-	while( i != 0);
+	while (i != 0);
 	
 	return( AudioDSPPtr);
 }
@@ -499,7 +499,7 @@ if (i + offsetH >= VA[ 0].frame.right)
 CurrentQuickInt += offsetV;
 ioffsetH		= offsetH + i;
 
-while( i > 0)
+while (i > 0)
 {
 	thePt.h = i;
 	thePt.v = *tempPtr2 + LocalV;
@@ -542,7 +542,7 @@ if (i + offsetH >= VA[ 0].frame.right)
 CurrentQuickInt += offsetV;
 ioffsetH		= offsetH + i;
 
-while( i > 0)
+while (i > 0)
 {
 	curQuickShort = (short*) CurrentQuickInt[ *tempPtr2];
 	*(curQuickShort + ioffsetH) = 0x0000;
@@ -576,7 +576,7 @@ if (i + offsetH >= VA[ 0].frame.right)
 CurrentQuickInt += offsetV;
 ioffsetH		= offsetH + i;
 
-while( i > 0)
+while (i > 0)
 {
 	thePt.h = i;
 	thePt.v = *tempPtr2 + LocalV;
@@ -616,7 +616,7 @@ if (i + offsetH >= VA[ 0].frame.right)
 CurrentQuickInt += offsetV;
 ioffsetH		= offsetH + i;
 
-while( i > 0)
+while (i > 0)
 {
 	*(CurrentQuickInt[ *tempPtr2] + ioffsetH) = 0xFF;
 	*tempPtr2 = ((*tempPtr) >> OsciDD);
@@ -638,7 +638,7 @@ void C8BitOsciPixMap( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 	// Erase pts
 	
 	i = SIter;
-	while( i > 0)
+	while (i > 0)
 	{
 		*(pixMapPtr + CurrentQuickPixMap[ *tempPtr2] + i) = 0xFF;
 		
@@ -649,22 +649,22 @@ void C8BitOsciPixMap( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 	// Draw Frame
 	i = SIter;
 	pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ 1];
-	while( i-- > 0) *(pixMapPtr++) = 0xE5;
+	while (i-- > 0) *(pixMapPtr++) = 0xE5;
 	
 	i = SIter;
 	pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ (*osciPixMap[ 0])->bounds.bottom-2];
-	while( i-- > 0) *(pixMapPtr++) = 0xE5;
+	while (i-- > 0) *(pixMapPtr++) = 0xE5;
 	
 	i = SIter;
 	pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ (*osciPixMap[ 0])->bounds.bottom/2];
-	while( i-- > 0) *(pixMapPtr++) = 0xE5;
+	while (i-- > 0) *(pixMapPtr++) = 0xE5;
 	
 	for (x = 0; x < 5; x++)
 	{
 		i = (*osciPixMap[ 0])->bounds.bottom - 2;
 		pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ 1] + (x * ((*osciPixMap[ 0])->bounds.right - (*osciPixMap[ 0])->bounds.left)) / 4;
 		if (x == 4) pixMapPtr--;
-		while( i-- > 0) *(pixMapPtr + CurrentQuickPixMap[ i]) = 0xE5;
+		while (i-- > 0) *(pixMapPtr + CurrentQuickPixMap[ i]) = 0xE5;
 	}
 	
 	// Draw pts
@@ -673,7 +673,7 @@ void C8BitOsciPixMap( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 	pixMapPtr = cpixMapPtr;
 	
 	i = SIter;
-	while( i > 0)
+	while (i > 0)
 	{
 		*tempPtr2 = ((*tempPtr) >> OsciDD);
 		*(pixMapPtr + CurrentQuickPixMap[ *tempPtr2] + i) = OsciColor;
@@ -716,7 +716,7 @@ if (deltaY >= deltaX)
 {
 	loopD3 = loopD2 = deltaY>>1;
 
-	while( loopD3 >= 0)
+	while (loopD3 >= 0)
 	{
 		//*outPtr	= color;	*(outPtr+1)	= color;	//*(outPtr+row)	= color;	*(outPtr+row+1)	= color;
 		*((unsigned short*) outPtr) = dColor;
@@ -743,7 +743,7 @@ else
 {
 	loopD3 = loopD2 = deltaX>>1;
 	
-	while( loopD3 >= 0)
+	while (loopD3 >= 0)
 	{
 		//*(outPtr ++) = color;		*(outPtr)	= color;	//*(outPtr+row-1)	= color;	*(outPtr+row)	= color;
 		//*(oPtr --)   = color;		*(oPtr)		= color;		//*(oPtr+row-1)	= color;	*(oPtr+row)	= color;
@@ -778,7 +778,7 @@ void C8BitOsciPixMapLine( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 	i = SIter-1;
 	lasti = i;
 	lasttempPtr2 = *tempPtr2;
-	while( i > 0)
+	while (i > 0)
 	{
 		Bresenham( i, *tempPtr2, lasti, lasttempPtr2, rowBytes, 0xFF, pixMapPtr);
 		
@@ -792,22 +792,22 @@ void C8BitOsciPixMapLine( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 	// Draw Frame
 	i = SIter;
 	pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ 1];
-	while( i-- > 0) *(pixMapPtr++) = 0xE5;
+	while (i-- > 0) *(pixMapPtr++) = 0xE5;
 	
 	i = SIter;
 	pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ (*osciPixMap[ 0])->bounds.bottom-2];
-	while( i-- > 0) *(pixMapPtr++) = 0xE5;
+	while (i-- > 0) *(pixMapPtr++) = 0xE5;
 	
 	i = SIter;
 	pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ (*osciPixMap[ 0])->bounds.bottom/2];
-	while( i-- > 0) *(pixMapPtr++) = 0xE5;
+	while (i-- > 0) *(pixMapPtr++) = 0xE5;
 	
 	for (x = 0; x < 5; x++)
 	{
 		i = (*osciPixMap[ 0])->bounds.bottom - 2;
 		pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ 1] + (x * ((*osciPixMap[ 0])->bounds.right - (*osciPixMap[ 0])->bounds.left)) / 4;
 		if (x == 4) pixMapPtr--;
-		while( i-- > 0) *(pixMapPtr + CurrentQuickPixMap[ i]) = 0xE5;
+		while (i-- > 0) *(pixMapPtr + CurrentQuickPixMap[ i]) = 0xE5;
 	}
 	
 	// Draw pts
@@ -818,7 +818,7 @@ void C8BitOsciPixMapLine( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 	i = SIter-1;
 	lasti = i;
 	lasttempPtr2 = ((*tempPtr) >> OsciDD);
-	while( i > 0)
+	while (i > 0)
 	{
 		*tempPtr2 = ((*tempPtr) >> OsciDD);
 		Bresenham( i, *tempPtr2, lasti, lasttempPtr2, rowBytes, OsciColor, pixMapPtr);

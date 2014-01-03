@@ -43,7 +43,7 @@ void MegaPurge(void)
 	
 	contigSize = FreeMem();
 
-	while( aPtr == NULL)
+	while (aPtr == NULL)
 	{
 		aPtr = MyNewPtr( contigSize);
 		contigSize -= 2;
@@ -253,7 +253,7 @@ void ShowPerformance(void)
 		}
 		else if (itemHit == 9) MegaPurge();
 	
-	}while( itemHit != 2);
+	}while (itemHit != 2);
 	
 	FlushEvents( everyEvent, 0);
 	DisposeDialog( aDialog);
@@ -399,9 +399,9 @@ void DoAbout(void)
 	
 //	if (theDepth == 8) InitBounceBall( zeroPt.h, zeroPt.v, 0);
 
-	while( !Button())
+	while (!Button())
 	{
-		while( oldTicks >= TickCount()) DoGlobalNull();
+		while (oldTicks >= TickCount()) DoGlobalNull();
 		oldTicks = TickCount() + 1;
 		
 		DoScrollText( aDialog);
@@ -425,7 +425,7 @@ void DoAbout(void)
 	UnlockPixels( GetPortPixMap( gMaskWorld));			DisposeGWorld( gMaskWorld);
 	UnlockPixels( GetPortPixMap( gFreePict));			DisposeGWorld( gFreePict);
 	
-	while( Button()) {};
+	while (Button()) {};
 	
 	WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 	
@@ -565,7 +565,7 @@ Boolean DoHelp(void)
 				break;
 		}
 		
-	}while( itemHit != 1 && itemHit != 6 && itemHit != 7);
+	}while (itemHit != 1 && itemHit != 6 && itemHit != 7);
 	
 	DisposeDialog( theDialog);
 	TEDispose( hTE);

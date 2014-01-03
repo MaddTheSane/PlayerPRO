@@ -321,7 +321,7 @@ pascal OSErr MyPATReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, D
 	
 		BackColor( whiteColor);
 		theCell.v = 0;	theCell.h = 0;
-		while( LGetSelect( true, &theCell, PatList2)) LSetSelect( false, theCell, PatList2);
+		while (LGetSelect( true, &theCell, PatList2)) LSetSelect( false, theCell, PatList2);
 		theCell.v = curMusic->header->numPat - 1;
 		LSetSelect( true, theCell, PatList2);
 		LAutoScroll( PatList2);
@@ -786,7 +786,7 @@ Ptr					tempPtr;
 	/** Select loaded pattern **/
 	
 	theCell.h = theCell.v = 0;
-	while( LGetSelect( true, &theCell, PatList2)) LSetSelect( false, theCell, PatList2);
+	while (LGetSelect( true, &theCell, PatList2)) LSetSelect( false, theCell, PatList2);
 	theCell.h = 0;	theCell.v = (*PatList2)->dataBounds.bottom - 1;
 	LSetSelect( true, theCell, PatList2);
 	HiliteControl( InfoBut, 0);		HiliteControl( DelBut, 0);
@@ -838,7 +838,7 @@ Point					theCell = { 0, 0};
 	UpdatePatListInfo();
 	UpdatePartiInfo();
 	
-	while( LGetSelect( true, &theCell, PatList2)) LSetSelect( false, theCell, PatList2);
+	while (LGetSelect( true, &theCell, PatList2)) LSetSelect( false, theCell, PatList2);
 	
 	theCell.v = curMusic->header->numPat - 1;
 	LSetSelect( true, theCell, PatList2);
@@ -1102,7 +1102,7 @@ Boolean DialogPatternInfo( short thePos)
 		break;
 		}
 		
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 
 	if (itemHit == 1)
 	{
@@ -1377,7 +1377,7 @@ void DoNullPattern(void)
 		BackColor( whiteColor);
 		
 		theCell.v = theCell.h = 0;
-		while( LGetSelect( true, &theCell, PatList2)) LSetSelect( false, theCell, PatList2);
+		while (LGetSelect( true, &theCell, PatList2)) LSetSelect( false, theCell, PatList2);
 	
 		theCell.v = PatCopy;
 		LSetSelect( true, theCell, PatList2);
@@ -1480,7 +1480,7 @@ void DoReplace(void)
 			break;
 		}
 	
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 
 	if (itemHit == 1)
 	{
@@ -1571,7 +1571,7 @@ void DialogTracks(void)
 			break;
 		}
 	
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 
 	if (itemHit == 1)
 	{
@@ -2101,7 +2101,7 @@ void DoKeyPressPatList( short theChar)
 		MADDriver->Reading = false;
 
 		theCell.v = theCell.h = 0;
-		while( LGetSelect( true, &theCell, PatList2))
+		while (LGetSelect( true, &theCell, PatList2))
 		{
 			DuplicatePattern( theCell.v);
 			if (!LNextCell( true, true, &theCell, PatList2)) break;
@@ -2112,7 +2112,7 @@ void DoKeyPressPatList( short theChar)
 		UpdatePartiInfo();
 
 		theCell.v = theCell.h = 0;
-		while( LGetSelect( true, &theCell, PatList2)) LSetSelect( false, theCell, PatList2);
+		while (LGetSelect( true, &theCell, PatList2)) LSetSelect( false, theCell, PatList2);
 		for (theCell.v = maxCell; theCell.v < (*PatList2)->dataBounds.bottom; theCell.v++) LSetSelect( true, theCell, PatList2);
 	}
 
@@ -2126,7 +2126,7 @@ void DoKeyPressPatList( short theChar)
 		do
 		{
 			LSetSelect( true, theCell, PatList2);
-		}while( LNextCell( true, true, &theCell, PatList2));
+		}while (LNextCell( true, true, &theCell, PatList2));
  	}
 	
 	theCell.v = theCell.h = 0;

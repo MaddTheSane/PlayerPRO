@@ -943,7 +943,7 @@ void MegaLoop()
 										
 										SKVolume( 1 + (8 * (Location.h - itemRect.left) / (itemRect.right - itemRect.left)));
 									}
-								}while( Button());
+								}while (Button());
 								break;
 								
 							case 18:
@@ -985,7 +985,7 @@ void MegaLoop()
 										MADDriver->VExt = (160 * (Location.h - itemRect.left)) / (itemRect.right - itemRect.left);
 										if (MADDriver->VExt <= 0) MADDriver->VExt = 1;
 									}
-								}while( Button());
+								}while (Button());
 								break;
 								
 								
@@ -1007,7 +1007,7 @@ void MegaLoop()
 										
 										temp = myPt.h;
 									}
-								}while( Button());
+								}while (Button());
 								break;
 								
 							case 21:	PressTypeMenu( 129, whichItem);	break;
@@ -1143,7 +1143,7 @@ void MegaLoop()
 			}
 		}
 		else if (theEvent.what == kHighLevelEvent) AEProcessAppleEvent (&theEvent);
-	}while( OnTourne == true);
+	}while (OnTourne == true);
 }
 
 extern	Boolean		Reading;

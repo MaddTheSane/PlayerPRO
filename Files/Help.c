@@ -61,7 +61,7 @@ short GetWhichTrackPlay()
 			
 			LastCanal++;
 			
-			while( (curMusic->header->chanVol[ LastCanal] == 0 || MADDriver->Active[ LastCanal] == false) && xxx <= curMusic->header->numChn)
+			while ((curMusic->header->chanVol[ LastCanal] == 0 || MADDriver->Active[ LastCanal] == false) && xxx <= curMusic->header->numChn)
 			{
 				xxx++;
 				LastCanal++;
@@ -87,7 +87,7 @@ short GetWhichTrackPlay()
 			
 			LastCanal++;
 			
-			while( (curMusic->header->chanVol[ LastCanal] == 0 || thePrefs.SelectedTracks[ LastCanal] == false || MADDriver->Active[ LastCanal] == false) && xxx <= curMusic->header->numChn)
+			while ((curMusic->header->chanVol[ LastCanal] == 0 || thePrefs.SelectedTracks[ LastCanal] == false || MADDriver->Active[ LastCanal] == false) && xxx <= curMusic->header->numChn)
 			{
 				xxx++;
 				LastCanal++;
@@ -1054,7 +1054,7 @@ void DrawChooseColorWindow(void)
 		//ModalDialog( MyDlgFilterDesc, &itemHit);
 		MyModalDialog( TheDia, &itemHit);
 		
-	}while( itemHit != 1);
+	}while (itemHit != 1);
 	
 	GetDialogItem( TheDia, 1, &itemType, &itemHandle, &itemRect);
 	ForeColor( blackColor);
@@ -1079,7 +1079,7 @@ void DrawChooseColorWindow(void)
 			if (myPt.h < 0) myPt.h = 0;
 			if (myPt.h >= 32) myPt.h = 31;
 		}
-		while( sPt.v == myPt.v && sPt.h == myPt.h && Button());
+		while (sPt.v == myPt.v && sPt.h == myPt.h && Button());
 		
 		sPt = myPt;
 		ForeColor( blackColor);
@@ -1099,7 +1099,7 @@ void DrawChooseColorWindow(void)
 		ForeColor( redColor);
 		PaintMyRect();
 	}
-	while( Button());
+	while (Button());
 		
 	DisposeDialog( TheDia);
 }*/
@@ -1143,7 +1143,7 @@ void DoCOLOR( short	itemHit)
 			InsetRect( &aRc, -1, -1);
 			FrameRect( &aRc);
 			
-			while( Button()) {}
+			while (Button()) {}
 			
 			ForeColor( blackColor);
 			FrameRect( &aRc);
@@ -2938,7 +2938,7 @@ void ShowPrefs( short PrefStartup)
 				DoDIGITAL( itemHit);
 				break;
 		}
-	} while( itemHit != 1 && itemHit != 2);
+	} while (itemHit != 1 && itemHit != 2);
 	
 	switch( PrefsType)
 	{

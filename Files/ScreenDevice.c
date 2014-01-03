@@ -516,7 +516,7 @@ long GetDisplayID( long inX, long inY ) {
 	** now and make your software DisplayManager-centric.
 	*/
 	theGDevice = DMGetFirstScreenDevice( false );
-	while( theGDevice && ! id ) {
+	while (theGDevice && ! id ) {
 		
 		if ( PtInRect( inPt, &(**theGDevice).gdRect ) ) {
 		

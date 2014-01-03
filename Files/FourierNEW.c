@@ -67,7 +67,7 @@ void four1( float *data, unsigned long nn, int isign)
 		}
 		
 		m = n >> 1;
-		while( m >= 2 && j > m)
+		while (m >= 2 && j > m)
 		{
 			j -= m;
 			m >>= 1;
@@ -76,7 +76,7 @@ void four1( float *data, unsigned long nn, int isign)
 	}
 	
 	mmax = 2;
-	while( n > mmax)
+	while (n > mmax)
 	{
 		istep = mmax << 1;
 		theta = isign * (PI2 / mmax);

@@ -208,7 +208,7 @@ void FineSpeedPitchSettings()
 			}
 		}
 		
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 	
 	UpdateALLWindow();
 	
@@ -2017,7 +2017,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 				SetControlVisibility( pitchCntl, true, false);
 				SetControlVisibility( speedCntl, true, false);
 				
-				while( Button())
+				while (Button())
 				{
 					
 					
@@ -2080,7 +2080,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 			
 			if(PtInRect( Location, &itemRect))
 			{
-				while( Button())
+				while (Button())
 				{
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 							if (QDIsPortBuffered( GetDialogPort( whichDialog)))
@@ -2126,7 +2126,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 				SetControlVisibility( pitchCntl, true, false);
 				SetControlVisibility( speedCntl, true, false);
 				
-				while( Button())
+				while (Button())
 				{
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 					
@@ -2292,7 +2292,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 			{
 				SetControlVisibility( hardvolCntl, true, false);
 				
-				while( Button())
+				while (Button())
 				{
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 					
@@ -2336,7 +2336,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 			{
 				SetControlVisibility( softvolCntl, true, false);
 				
-				while( Button())
+				while (Button())
 				{
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 					
@@ -2739,7 +2739,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 						 }
 						 else*/
 						{
-							while( Button())
+							while (Button())
 							{
 								WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 								
@@ -2837,7 +2837,7 @@ void DoItemPressAdap( short whichItem, DialogPtr whichDialog)
 								if (QDIsPortBuffered( GetDialogPort( whichDialog)))
 									QDFlushPortBuffer( GetDialogPort( whichDialog), NULL);
 								
-							}while( Button());
+							}while (Button());
 							
 							DrawValueIndicator( -1, false, NULL);
 						}

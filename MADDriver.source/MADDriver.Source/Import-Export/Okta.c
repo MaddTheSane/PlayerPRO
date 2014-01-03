@@ -68,7 +68,7 @@ short FoundNote( short Period)
 {
 short	NCount = 1;
 	
-	while( NCount < NUMBER_NOTES+1)
+	while (NCount < NUMBER_NOTES+1)
     {
     	if (Period >= MADpitchTable[ NCount]) return( NCount);
     	NCount++;
@@ -121,7 +121,7 @@ static OSErr ConvertOKTA2Mad( Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDr
 	
 	theOktaPos += 8L;
 	
-	while( theOktaPos < MaxPtr)
+	while (theOktaPos < MaxPtr)
 	{
 		aSect = ( sectheader*) theOktaPos;
 		aSect->length = decode32 (&aSect->length);
@@ -422,7 +422,7 @@ static OSErr ExtractOKTAInfo( PPInfoRec *info, Ptr theOkta, long MODSize)
 		
 		theOktaPos += 8L;
 		
-		while( theOktaPos < MaxPtr)
+		while (theOktaPos < MaxPtr)
 		{
 			aSect = ( sectheader*) theOktaPos;
 			aSect->length = decode32 (&aSect->length);

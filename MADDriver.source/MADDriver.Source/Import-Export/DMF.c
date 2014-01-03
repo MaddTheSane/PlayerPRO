@@ -699,7 +699,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 			Boolean		NeedChannelToRead = true;
 			
 			Row = 0;
-			while( Row < curITPat->row)
+			while (Row < curITPat->row)
 			{
 				tempChar = *curDataPat;
 				curDataPat++;

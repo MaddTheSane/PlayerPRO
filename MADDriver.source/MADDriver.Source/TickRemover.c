@@ -27,7 +27,7 @@
 void MADTickLoopFill8( Channel *curVoice, long *ASCBuffer1, long *ASCBuffer2, long size, short left, short right)
 {
 	size++;
-	while( size-- > 0)
+	while (size-- > 0)
 	{
 		*ASCBuffer1 += left;		ASCBuffer1 += 2;
 		*ASCBuffer2 += right;		ASCBuffer2 += 2;
@@ -43,7 +43,7 @@ void MADTickLoop8( long size, Channel *curVoice, long *ASCBuffer1, long *ASCBuff
 	
 	if (TICKREMOVESIZE == 0) return;
 	
-	while( size-- > 0)
+	while (size-- > 0)
 	{
 		if (LevelDirectionL)
 		{

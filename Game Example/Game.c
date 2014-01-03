@@ -121,7 +121,7 @@ int main( int argc, char* argv[])
 				break;
 		}
 		
-	}while( itemHit != 1);
+	}while (itemHit != 1);
 	
 	DisposeDialog( TheDia);
 	

@@ -118,7 +118,7 @@ int main( int argc, char* argv[])
 	MADStartDriver( MADDriver);				// Turn interrupt driver function ON
 	
 	/****** Open a music file via Plugs ********/
-	while( End == false)
+	while (End == false)
 	{
 		OSErr					iErr;
 		FSSpec				spec;
@@ -211,7 +211,7 @@ int main( int argc, char* argv[])
 					MADAttachDriverToMusic( MADDriver, MADMusic, NULL);
 					MADPlayMusic( MADDriver);					// Read the current partition in memory
 					
-					while( !Button())
+					while (!Button())
 					{
 						/// Do what you want here....
 						/// Bla bla...

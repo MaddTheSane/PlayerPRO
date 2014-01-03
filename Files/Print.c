@@ -268,7 +268,7 @@ void PrintTEHandle( TEHandle hTE)
 	abort = false;
 	currentLine = 1;
 	
-	while( abort != true && currentLine <= totalLines)
+	while (abort != true && currentLine <= totalLines)
 	{
 		PrOpenPage( printPort, NULL );
 		scrollAmount = 0;

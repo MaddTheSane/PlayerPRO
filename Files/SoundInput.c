@@ -498,7 +498,7 @@ void ConvertInstrument16LL( register short *tempPtr, register long sSize)
 
 	sSize /= 2;
 
-	while( sSize > 0)
+	while (sSize > 0)
 	{
 		sSize--;
 		*(tempPtr + sSize) += val;
@@ -633,7 +633,7 @@ OSErr ActiveSoundInput( Boolean RecordingMode, Handle *RecordedSound, Str255 nam
 			AppendMenu( soundDrivers, deviceName[ nameNo]);
 		}
 		nameNo++;
-	}while( myErr == noErr);
+	}while (myErr == noErr);
 	
 	if (MicroPhone == false)
 	{
@@ -1104,7 +1104,7 @@ onrecommence:
 		
 		SetPort( savePort);
 		
-	}while( itemHit != 1 && itemHit != 16 && itemHit != 46);
+	}while (itemHit != 1 && itemHit != 16 && itemHit != 46);
 	
 	if (RecordingVBL)
 	{

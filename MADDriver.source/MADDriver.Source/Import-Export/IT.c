@@ -253,7 +253,7 @@ static OSErr DecompressSample( short bits, Ptr reader, long length, Ptr destPtr)
 	
 	if (bits == 16) length/=2;
 	
-	while( length)
+	while (length)
 	{
 		stodo=(length<SLBUFSIZE)?length:SLBUFSIZE;
 		
@@ -1102,7 +1102,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 				for (xx = 0; xx < MAXTRACK; xx++) prevmaskvariable[ xx] = 0;
 				
 				Row = 0;
-				while( Row < curITPat->row)
+				while (Row < curITPat->row)
 				{
 					tempChar = *curDataPat;
 					curDataPat++;
@@ -1239,7 +1239,7 @@ static OSErr ConvertIT2Mad( Ptr theIT, long MODSize, MADMusic *theMAD, MADDriver
 			for (xx = 0; xx < MAXTRACK; xx++) prevmaskvariable[ xx] = 0;
 			
 			Row = 0;
-			while( Row < curITPat->row)
+			while (Row < curITPat->row)
 			{
 				tempChar = *curDataPat;
 				curDataPat++;

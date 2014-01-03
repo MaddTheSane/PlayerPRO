@@ -24,7 +24,7 @@ void ConvertInstrumentIn( register Byte *tempPtr, register long sSize)
 {
 	register Byte val = 0x80;
 
-	while( sSize > 0)
+	while (sSize > 0)
 	{
 		sSize--;
 		*(tempPtr + sSize) -= val;

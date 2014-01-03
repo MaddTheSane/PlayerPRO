@@ -735,7 +735,7 @@ void  UpdatePianoWindow( DialogPtr  GetSelection)  	/* Pointer to this dialog */
 {
 InvertRect( itemRect);
 
-while( Button())
+while (Button())
 {
 	DoGlobalNull();
 	WaitNextEvent( everyEvent, &theEvent, 1, NULL);
@@ -1027,7 +1027,7 @@ void DoItemPressPiano( short whichItem, DialogPtr whichDialog)    			/* Item hit
 							}
 						}
 					}
-					while( Button());
+					while (Button());
 					
 					GetToucheRect( &tempRect,  oldtemp);
 					EffaceTouche( oldtemp, &tempRect);

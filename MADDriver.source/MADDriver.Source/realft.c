@@ -242,7 +242,7 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 			do
 			{
 				powersize *= 2;
-			}while( powersize < size/2);
+			}while (powersize < size/2);
 			
 			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
 			didInitFData = 1;
@@ -257,7 +257,7 @@ void FFT8S( char* SData, long size, double *filter, MADDriverRec *intDriver, sho
 			do
 			{
 				powersize *= 2;
-			}while( powersize < size);
+			}while (powersize < size);
 			
 			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
 			didInitFData = 1;
@@ -456,7 +456,7 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 			do
 			{
 				powersize *= 2;
-			}while( powersize < size/2);
+			}while (powersize < size/2);
 			
 			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
 			didInitFData = 1;
@@ -471,7 +471,7 @@ void FFT16S( short* SData, long size, double *filter, MADDriverRec *intDriver, s
 			do
 			{
 				powersize *= 2;
-			}while( powersize < size);
+			}while (powersize < size);
 			
 			fDataCopy = (double*) NewPtr( sizeof( double) * (powersize+2));
 			didInitFData = 1;

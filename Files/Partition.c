@@ -128,7 +128,7 @@ void UpdatePartiInfo(void)
 	do
 	{
 		ModalDialog( MyDlgFilterDesc, &itemHit);
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 
 	if (itemHit == 1)
 	{
@@ -944,7 +944,7 @@ Rect		itemRect;
 	if (theChar == deletekey)
 	{
 		theCell.v = theCell.h = 0;
-		while( PLGetSelect( &theCell, &myList))
+		while (PLGetSelect( &theCell, &myList))
 		{
 			if (CheckValidParti( 0, theCell.v)) curMusic->header->oPointers[ theCell.v] = 0;
 			theCell.v++;
@@ -1001,7 +1001,7 @@ void COPYParti(void)
 		
 		count = 0;
 		theCell.h = theCell.v = 0;
-		while( PLGetSelect( &theCell, &myList))
+		while (PLGetSelect( &theCell, &myList))
 		{
 			(*theHandle)[ count++] = curMusic->header->oPointers[ theCell.v];
 			theCell.v++;

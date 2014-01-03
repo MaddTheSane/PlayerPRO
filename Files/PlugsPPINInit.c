@@ -562,10 +562,10 @@ ENDPLAY:
 		
 		SetCursor( &PlayCrsr);
 		
-		while( Button()) {};
+		while (Button()) {};
 		
 		continueLoop = true;
-		while( continueLoop)
+		while (continueLoop)
 		{
 			GetKeys( km);
 			

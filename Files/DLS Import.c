@@ -127,7 +127,7 @@ OSErr CreateNameListQuicktime25(void)
 						
 						rsrc = (QuictimeRsrc25*) ((*hRsrc) + 0x20);
 						
-						while( rsrc < maxrsrc && rsrc->type != kaiToneDescType) rsrc = (QuictimeRsrc25*) (((Ptr) rsrc) + rsrc->size);			// Find the name
+						while (rsrc < maxrsrc && rsrc->type != kaiToneDescType) rsrc = (QuictimeRsrc25*) (((Ptr) rsrc) + rsrc->size);			// Find the name
 						
 						tPtr = (Ptr) rsrc->data + 36;
 						
@@ -155,7 +155,7 @@ OSErr CreateNameListQuicktime25(void)
 				
 				rsrc = (QuictimeRsrc25*) ((*hRsrc) + 0x20);
 				
-				while( rsrc < maxrsrc && rsrc->type != kaiToneDescType) rsrc = (QuictimeRsrc25*) (((Ptr) rsrc) + rsrc->size);			// Find the name
+				while (rsrc < maxrsrc && rsrc->type != kaiToneDescType) rsrc = (QuictimeRsrc25*) (((Ptr) rsrc) + rsrc->size);			// Find the name
 				
 				tPtr = (Ptr) rsrc->data + 36;
 				
@@ -346,7 +346,7 @@ void PressSmallPianoQ( DialogPtr TheDia, InstrData	*inst, short ins)
 				}
 			}
 		}
-	}while( Button());
+	}while (Button());
 	
 	MADDriver->chan[ LastCanal].KeyOn = false;
 }
@@ -545,7 +545,7 @@ void DLSImport(void)
 			break;
 		}
 		
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 	
 	if (itemHit == 1)
 	{

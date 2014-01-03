@@ -632,7 +632,7 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 		prevReader = WaveCopyDriver->PartitionReader;
 		
 		ptrsize = GetPtrSize( WavePtr);
-		while( ptrsize-- > 0) *alpha++ = 0x80;
+		while (ptrsize-- > 0) *alpha++ = 0x80;
 		
 		OnContinue = DirectSave( (Ptr) WavePtr, &WaveDriverType, WaveCopyDriver);
 	//	if (WaveCopyDriver->curMusic->musicUnderModification) MyDebugStr( __LINE__, __FILE__, "");
@@ -703,7 +703,7 @@ OSErr ComputeWave( short fromX, short toX, short chan)
 		
 		dataX += WaveCopyDriver->ASCBUFFER;
 	}
-	while( ReadyToGoOut == false && WaveCopyDriver->PartitionReader <= destReader);
+	while (ReadyToGoOut == false && WaveCopyDriver->PartitionReader <= destReader);
 	
 	/**********/
 		
@@ -1057,7 +1057,7 @@ void DoItemPressWave( short whichItem, DialogPtr whichDialog)
 					
 					if (IsPlay == false) DoPlay();
 					
-					while( Button())
+					while (Button())
 					{
 						DoGlobalNull();
 						WaitNextEvent( everyEvent, &theEvent, 1, NULL);

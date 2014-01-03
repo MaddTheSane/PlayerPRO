@@ -326,7 +326,7 @@ void ConvertTo64Rows( MADMusic *music)
 			long 		patsize = 0;
 			PatData*	srcPat = music->partition[ i];
 			
-			while( patsize < srcPat->header.size)
+			while (patsize < srcPat->header.size)
 			{
 				newPat = ( PatData*) NewPtrClear( newSize);
 				
@@ -3250,7 +3250,7 @@ OSErr MADPlaySoundDataSYNC( MADDriverRec *MDriver, Ptr soundPtr, long size, long
 	if (iErr == noErr)
 	{
 		continueLoop = true;
-		while( continueLoop)
+		while (continueLoop)
 		{
 			GetKeys( km);
 			
@@ -3750,7 +3750,7 @@ PatData* DecompressPartitionMAD1( MADMusic *MDriver, PatData* myPat)
 	
 	/*** Decompression Routine ***/
 	
-	while( maxCmd != 0)
+	while (maxCmd != 0)
 	{
 		maxCmd--;
 		
@@ -3793,7 +3793,7 @@ PatData* CompressPartitionMAD1( MADMusic *MDriver, PatData* myPat)
 	set 		= 0;
 	NewPtrSize 	= 0;
 	
-	while( maxCmd != 0)
+	while (maxCmd != 0)
 	{
 		maxCmd--;
 		

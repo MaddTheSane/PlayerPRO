@@ -901,7 +901,7 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
  				
  				goto inBoucle;
  				
- 				while( Button())
+ 				while (Button())
  				{
  					if(TickCount() - iTick > 5L && TickCount() - oTicks > GetDblTime())
  					{
@@ -983,7 +983,7 @@ void DoItemPressCmdDlog( short whichItem, DialogPtr whichDialog)
  				
  				goto inBoucle2;
  				
- 				while( Button())
+ 				while (Button())
  				{
  					if(TickCount() - iTick > 5L && TickCount() - oTicks > GetDblTime())
  					{
@@ -1450,7 +1450,7 @@ Point		myPt;
 			next = true;
 			loop = 6;
 			
-			while( next == true && loop-- >= 0)
+			while (next == true && loop-- >= 0)
 			{
 				if (theEvent.modifiers & shiftKey) curActif--;
 				else curActif++;

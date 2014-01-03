@@ -392,7 +392,7 @@ void GetFinderFilename(
 			deskRec.ioTagInfo = 0;
 			err = PBDTGetIconInfoSync( &deskRec );
 			deskRec.ioIndex += 1;
-		}while( (err == noErr) && (deskRec.ioIconType <= 0) );
+		}while ((err == noErr) && (deskRec.ioIconType <= 0) );
 	
 		if(err == noErr)
 		{

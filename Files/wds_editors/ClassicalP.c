@@ -156,7 +156,7 @@ short FindVal( short myFrq)
 {
 short	NCount = 1;
 
-    while( NCount <= 84)
+    while (NCount <= 84)
     {
     	if (myFrq >= GetOldPeriod( NCount, NOFINETUNE)) return NCount;	//if (myFrq >= MADDriver->pitchTable[ NCount][ 0] ) return NCount;
     	NCount++;
@@ -642,7 +642,7 @@ void DoItemPressClassic( short whichItem, DialogPtr whichDialog)    			/* Item h
 				GetKeys( km);
 				if (IsPressed( 0x003A))
 				{
-					while( Button()) {};
+					while (Button()) {};
 					if (ZoomLevelPat > 1)
 					{
 						ZoomLevelPat /= 2;
@@ -657,7 +657,7 @@ void DoItemPressClassic( short whichItem, DialogPtr whichDialog)    			/* Item h
 				}
 				else if (IsPressed( 0x0037) || SelectMode == eZoom)
 				{
-					while( Button()) {};
+					while (Button()) {};
 					if (ZoomLevelPat < 32)
 					{
 						ZoomLevelPat *= 2;
@@ -687,7 +687,7 @@ void DoItemPressClassic( short whichItem, DialogPtr whichDialog)    			/* Item h
 					
 					if (IsPlay == false) DoPlay();
 					
-					while( Button())
+					while (Button())
 					{
 						DoGlobalNull();
 						WaitNextEvent( everyEvent, &theEvent, 1, NULL);

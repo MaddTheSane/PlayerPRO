@@ -143,7 +143,7 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 					unsigned short	*tt = (unsigned short*) WAVERsrc;
 					
 					i = sndSize/2;
-					while( i-- > 0) tt[ i] = shrtswap( tt[ i]);
+					while (i-- > 0) tt[ i] = shrtswap( tt[ i]);
 				}
 			break;
 		}

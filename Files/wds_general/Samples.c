@@ -2504,7 +2504,7 @@ void DrawPencil( DialogPtr	theDia, short InstruNo)
 			}
 		}
 		
-	}while( Button());
+	}while (Button());
 	
 	SetClip( saveClipRgn);
 	DisposeRgn( saveClipRgn);
@@ -3645,7 +3645,7 @@ void MoveLoopSelection( short InstruNo)
 		if (QDIsPortBuffered( GetDialogPort( SampleDlog[ InstruNo])))
     		QDFlushPortBuffer( GetDialogPort( SampleDlog[ InstruNo]), NULL);
 		
-	}while( Button());
+	}while (Button());
 	
 	gNowMovingLoop = false;
 	
@@ -3748,7 +3748,7 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 			GetKeys( km);
 			if (IsPressed( 0x003A))
 			{
-				while( Button()){};
+				while (Button()){};
 				CurWin = FindSample( GetDialogFromWindow( oldWindow));
 				if (ZoomLevel[ CurWin] > 1)
 				{
@@ -3764,7 +3764,7 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 			}
 			else if (IsPressed( 0x0037) || SelectMode[ InstruNo] == eZoom)
 			{
-				while( Button()){};
+				while (Button()){};
 				CurWin = FindSample( GetDialogFromWindow( oldWindow));
 				if (ZoomLevel[ CurWin] < 1024)
 				{
@@ -3811,7 +3811,7 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
 						GetMouse( &aPt);
 					
 						TickEnd = TickCount() + 20;
-						while( Button() && TickCount() < TickEnd){};
+						while (Button() && TickCount() < TickEnd){};
 						
 						if (TickCount() >= TickEnd && curSample[ InstruNo] != volumeEnv && curSample[ InstruNo] != panningEnv)
 						{
@@ -4020,7 +4020,7 @@ void DoItemPressSample( short whichItem, DialogPtr whichDialog)
     					QDFlushPortBuffer( GetDialogPort( SampleDlog[ InstruNo]), NULL);
     				
 					}
-					while( Button());
+					while (Button());
 					
 					UpdateDisplaySelec( InstruNo);
 				}
@@ -4938,7 +4938,7 @@ pascal OSErr MyReceiveSampleHandler(WindowPtr theWindow, unsigned long handlerRe
 	HideDragHilite(theDrag);
 	
 	theCell.v = 0;	theCell.h = 0;
-//	while( LGetSelect( true, &theCell, InstruList)) LSetSelect( false, theCell, InstruList);
+//	while (LGetSelect( true, &theCell, InstruList)) LSetSelect( false, theCell, InstruList);
 	theCell.v = CurInstruDrag;
 //	LSetSelect( true, theCell, InstruList);
 	

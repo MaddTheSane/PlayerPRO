@@ -67,7 +67,7 @@ static void AutoPosition( DialogPtr aDia)
 			}
 		}
 	}
-	while( aH != NULL);
+	while (aH != NULL);
 	
 	Position.h = mouse.h - XSize/2;
 	if (Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
@@ -116,7 +116,7 @@ static OSErr mainFadeVol( Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	
 		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 		
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 	
 	if (itemHit == 1)
 	{

@@ -64,7 +64,7 @@ static oldPatData* oldDecompressPartitionMAD1( oldMADSpec *header, oldPatData* m
 	
 	/*** Decompression Routine ***/
 	
-	while( maxCmd != 0)
+	while (maxCmd != 0)
 	{
 		maxCmd--;
 		

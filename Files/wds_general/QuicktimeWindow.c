@@ -1305,7 +1305,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 				
 				if(PtInRect( myPt, &itemRect))
 				{
-					while( Button())
+					while (Button())
 					{
 						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 						DoGlobalNull();
@@ -1341,7 +1341,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 				
 				if(PtInRect( myPt, &itemRect))
 				{
-					while( Button())
+					while (Button())
 					{
 						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 						DoGlobalNull();
@@ -1377,7 +1377,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 				
 				if(PtInRect( myPt, &itemRect))
 				{
-					while( Button())
+					while (Button())
 					{
 						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 						DoGlobalNull();
@@ -1413,7 +1413,7 @@ void DoItemPressQT( short whichItem, DialogPtr whichDialog)
 				
 				if(PtInRect( myPt, &itemRect))
 				{
-					while( Button())
+					while (Button())
 					{
 						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 						DoGlobalNull();

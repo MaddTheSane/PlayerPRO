@@ -77,7 +77,7 @@ void ChangeMenuName( Str255 curN)
 	{
 		ModalDialog( MyDlgFilterDesc, &itemHit);
 	
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 
 	if (itemHit == 1) GetDText( TheDia, 4, curN);
 	
@@ -141,7 +141,7 @@ void CreateMenuHelp(void)
 		}
 		i++;
 	}
-	while( myRes != NULL);
+	while (myRes != NULL);
 }
 
 void UpdateSection(void)

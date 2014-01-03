@@ -398,7 +398,7 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 					WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 					DoGlobalNull();
 				}
-				while( Button());
+				while (Button());
 				
 				BlockMoveData( SData.data, SDataSrc->data, SDataSrc->size);
 				
@@ -428,7 +428,7 @@ void FFTSampleFilter( sData *SDataSrc, short instru, Boolean filter)
 				break;
 		}
 	
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 
 
 	if (itemHit == 1)

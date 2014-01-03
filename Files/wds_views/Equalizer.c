@@ -423,7 +423,7 @@ void DoItemPressEQ( short whichItem, DialogPtr whichDialog)
 				if(PtInRect( myPt, &itemRect))
 				{
 					
-					while( Button())
+					while (Button())
 					{
 						DoGlobalNull();
 						SetPortDialogPort( whichDialog);

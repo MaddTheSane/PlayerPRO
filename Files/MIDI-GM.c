@@ -425,7 +425,7 @@ long CountAtomById( MyAtom at, long type)
 		listSize /= 2;
 		listSize *= 2;
 		
-	}while( iErr == noErr && listSize > 0);
+	}while (iErr == noErr && listSize > 0);
 	
 	if (listSize < 0 ) Debugger();
 	
@@ -505,7 +505,7 @@ OSErr FindAtomById( MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 		listSize /= 2;
 		listSize *= 2;
 		
-	}while( iErr == noErr && listSize > 0);
+	}while (iErr == noErr && listSize > 0);
 	
 	if (listSize < 0 ) Debugger();
 	
@@ -1155,7 +1155,7 @@ void Quicktime2Converter(void)
 		
 		synthCount = NAGetRegisteredMusicDevice( na, 0, nil, nil, nil, nil);
 		
-		while( synthCount)
+		while (synthCount)
 		{
 			iErr = NAGetRegisteredMusicDevice(na,synthCount, &synthType, synthName, nil, &mc);
 			
@@ -1286,7 +1286,7 @@ void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, s
 		
 		synthCount = NAGetRegisteredMusicDevice( na, 0, nil, nil, nil, nil);
 		
-		while( synthCount)
+		while (synthCount)
 		{
 			iErr = NAGetRegisteredMusicDevice(na,synthCount, &synthType, synthName, nil, &mc);
 			

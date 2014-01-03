@@ -58,7 +58,7 @@ void DoAHelpInfo(void)
 	
 	aWin = FrontWindow();
 	
-	while( aWin != NULL)
+	while (aWin != NULL)
 	{
 		strucRgn = NewRgn();
 		
@@ -266,7 +266,7 @@ void MyFindControl( Point localPt, WindowPtr wind, ControlHandle *myCtl)
 	
 	*myCtl = 0;
 	
-	while( aCtl != NULL)
+	while (aCtl != NULL)
 	{
 		if (PtInRect( localPt, &(*aCtl)->contrlRect))
 		{
@@ -325,7 +325,7 @@ void AdjustZoomIn( WindowPtr	wind)
 			}
 		}
 	}
-	while( aH != NULL);
+	while (aH != NULL);
 	
 	//wPeek = (WindowPeek) wind;
 	//wspd = (WStateData*) *(wPeek->dataHandle);

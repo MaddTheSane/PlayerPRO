@@ -50,7 +50,7 @@ void Sampler8in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short 
 	SndBuffer		= (char*) 	curVoice->curPtr;
 	volChn			= DoVolPanning256( 3, curVoice, intDriver, true)/256;
 	
-	while( i-- > 0)
+	while (i-- > 0)
 	{
 		off = 2*(aCC>>BYTEDIV);
 		if ((Ptr) SndBuffer + off >= curVoice->maxPtr)
@@ -108,7 +108,7 @@ void Sampler8in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanNo
 	SndBuffer		= (char*) 	curVoice->curPtr;
 	volChn			= DoVolPanning256( 3, curVoice, intDriver, true)/256;
 	
-	while( i-- > 0)
+	while (i-- > 0)
 	{
 		off = (aCC>>BYTEDIV);
 		if ((Ptr) SndBuffer + off >= curVoice->maxPtr)
@@ -163,7 +163,7 @@ void Sampler16in8AddPolyStereo( Channel *curVoice, register Ptr	ASCBuffer, short
 	SndBuffer		= (char*) 	curVoice->curPtr;
 	volChn			= DoVolPanning256( 3, curVoice, intDriver, true)/256;
 	
-	while( i-- > 0)
+	while (i-- > 0)
 	{
 		off = 4*(aCC>>BYTEDIV);
 		if ((Ptr) SndBuffer + off >= curVoice->maxPtr)
@@ -221,7 +221,7 @@ void Sampler16in8AddPoly( Channel *curVoice, register Ptr	ASCBuffer, short chanN
 	SndBuffer		= (char*) 	curVoice->curPtr;
 	volChn			= DoVolPanning256( 3, curVoice, intDriver, true)/256;
 	
-	while( i-- > 0)
+	while (i-- > 0)
 	{
 		off = 2*(aCC>>BYTEDIV);
 		if ((Ptr) SndBuffer + off >= curVoice->maxPtr)
@@ -271,7 +271,7 @@ void Play8PolyPhonic( MADDriverRec *intDriver)
 	//Byte	*alpha = (Byte*) intDriver->IntDataPtr;
 	
 	//	x = intDriver->ASCBUFFER * intDriver->DriverSettings.numChn;
-	//	while( x-- > 0) *alpha++ = 0x80;
+	//	while (x-- > 0) *alpha++ = 0x80;
 	
 	for (i = 0 ; i < intDriver->DriverSettings.numChn; i++)	//
 	{

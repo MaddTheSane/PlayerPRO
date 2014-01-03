@@ -2173,7 +2173,7 @@ void ShowCopyrightNote()
 			break;
 		}
 	
-	}while( itemHit != 1);
+	}while (itemHit != 1);
 	
 	DisposeDialog( TheDia);
 	SetPort( myPort);
@@ -2316,7 +2316,7 @@ void DoChangeMODName(void)
 			break;
 		}
 	
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 
 
 	if (itemHit == 1)
@@ -2699,7 +2699,7 @@ void FileInformations( short whichItem)
 			break;
 		}
 		
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 
 	if (itemHit == 1)
 	{
@@ -3057,7 +3057,7 @@ OSErr CheckFileAvailable( short ID)
 			//ModalDialog( MyDlgFilterDesc, &itemHit);
 			MyModalDialog( aDia, &itemHit);
 		
-		}while( itemHit != 1 && itemHit != 2 && itemHit != 3);
+		}while (itemHit != 1 && itemHit != 2 && itemHit != 3);
 	
 		DisposeDialog( aDia);
 		SetPort( savedPort);
@@ -3284,7 +3284,7 @@ void DoLoadOtherMusic( Boolean Affiche)
 		
 		case 2:			// shuffle
 			ttt = TickCount();
-			while( ttt > 0) { Random(); ttt--;}
+			while (ttt > 0) { Random(); ttt--;}
 			theCell.v = RangedRdm( 0, myList.maxY);
 			if (theCell.v < 0 || theCell.v >= myList.maxY) theCell.v = 0;
 		break;
@@ -3358,7 +3358,7 @@ OSErr GereMusicListChanged()
 		//ModalDialog( MyDlgFilterDesc, &itemHit);
 		MyModalDialog( aDia, &itemHit);
 		
-	}while( itemHit != 1 && itemHit != 2 && itemHit != 3);
+	}while (itemHit != 1 && itemHit != 2 && itemHit != 3);
 	
 	DisposeDialog( aDia);
 	SetPort( savedPort);

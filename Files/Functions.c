@@ -450,7 +450,7 @@ void CreateFind(void)
 
 		DoItemPressFind( itemHit, FindDlog);
 		
-	}while( itemHit != 2);
+	}while (itemHit != 2);
 	
 	DisposeDialog( FindDlog);
 	FindDlog = NULL;

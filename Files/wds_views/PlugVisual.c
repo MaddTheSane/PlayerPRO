@@ -81,7 +81,7 @@ void DoFullScreenNow(WindowPtr mWind)
 		CallVisualFonction( MADDriver, GetCurrentID(), kVisualPluginUpdateMessage, (CGrafPtr) currentPort, 0, 0);
 		CallVisualFonction( MADDriver, GetCurrentID(), kVisualPluginEnableMessage, (CGrafPtr) currentPort, 0, 0);
 		
-		while( !Button()) 
+		while (!Button()) 
 		{
 			CallVisualFonction( MADDriver, GetCurrentID(), 'vrnd', (CGrafPtr) currentPort, 0, 0);
 			

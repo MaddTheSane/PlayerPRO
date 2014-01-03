@@ -378,7 +378,7 @@ for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 	
 	high		= VFast;
 	thePt.v		= LocalV - *tempPtr2;
-	while( high-- > 0 && *tempPtr2 > 0)
+	while (high-- > 0 && *tempPtr2 > 0)
 	{
 		if (PtInRgn( thePt, dlogptrRgn)) *(CurrentQuickInt[ -*tempPtr2] + ioffsetH) = 0xFF;
 		thePt.v++;
@@ -390,7 +390,7 @@ for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 	{
 		high = *tempPtr - *tempPtr2;
 		thePt.v = LocalV - *tempPtr2 - high;
-		while( high-- > 0)
+		while (high-- > 0)
 		{
 			thePt.v++;
 			if (PtInRgn( thePt, dlogptrRgn)) *(CurrentQuickInt[ -*tempPtr2 - high] + ioffsetH) = 0x90;
@@ -411,7 +411,7 @@ void C8BitSpectrumPixMap( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr, Byte *sp
 	for (i = 0; i < SIter; i+= 2)
 	{
 		high		= VFast;
-		while( high-- > 0 && *tempPtr2 > 0)
+		while (high-- > 0 && *tempPtr2 > 0)
 		{
 			*(pixMapPtr + CurrentQuickInt[ -*tempPtr2] + i) = 0xFF;
 			(*tempPtr2)--;			// Descente de la fréquence
@@ -435,7 +435,7 @@ void C8BitSpectrumPixMap( Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr, Byte *sp
 			}*/
 			
 			high = *tempPtr - *tempPtr2;
-			while( high-- > 0)
+			while (high-- > 0)
 			{
 				*(pixMapPtr + CurrentQuickInt[ -*tempPtr2 - high] + i) = 0x90;
 			}
@@ -478,7 +478,7 @@ VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
 for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 {
 	high		= VFast;
-	while( high-- > 0 && *tempPtr2 > 0)
+	while (high-- > 0 && *tempPtr2 > 0)
 	{
 		*(CurrentQuickInt[ -*tempPtr2] + ioffsetH) = 0xFF;
 		(*tempPtr2)--;			// Descente de la fréquence
@@ -489,7 +489,7 @@ for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 	if (*tempPtr > *tempPtr2)
 	{
 		high = *tempPtr - *tempPtr2;
-		while( high-- > 0)
+		while (high-- > 0)
 		{
 			*(CurrentQuickInt[ -*tempPtr2 - high] + ioffsetH) = 0x90;
 		}
@@ -524,7 +524,7 @@ for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 
 	high		= VFast;
 	thePt.v		= LocalV - *tempPtr2;
-	while( high-- > 0 && *tempPtr2 > 0)
+	while (high-- > 0 && *tempPtr2 > 0)
 	{
 		if (PtInRgn( thePt, dlogptrRgn))
 		{
@@ -540,7 +540,7 @@ for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 	if (*tempPtr > *tempPtr2)
 	{
 		high = *tempPtr - *tempPtr2;
-		while( high-- > 0)
+		while (high-- > 0)
 		{
 			thePt.v = LocalV - *tempPtr2 - high;
 			if (PtInRgn( thePt, dlogptrRgn))
@@ -576,7 +576,7 @@ VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
 for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 {
 	high		= VFast;
-	while( high-- > 0 && *tempPtr2 > 0)
+	while (high-- > 0 && *tempPtr2 > 0)
 	{
 		curQuickShort = (short*) CurrentQuickInt[ -*tempPtr2];
 		*(curQuickShort + ioffsetH) = 0x0000;
@@ -588,7 +588,7 @@ for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 	if (*tempPtr > *tempPtr2)
 	{
 		high = *tempPtr - *tempPtr2;
-		while( high-- > 0)
+		while (high-- > 0)
 		{
 			curQuickShort = (short*) CurrentQuickInt[ -*tempPtr2 - high];
 			*(curQuickShort + ioffsetH) = 0x1BFF;
@@ -1078,7 +1078,7 @@ void DoItemPressSpectrum( short whichItem, DialogPtr whichDialog)
 			{
 				if (PtInRect( myPt, &osci[ i].rect))
 				{
-					while( Button())
+					while (Button())
 					{
 						DoGlobalNull();
 					

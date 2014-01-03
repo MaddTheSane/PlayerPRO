@@ -107,7 +107,7 @@ void NoteName( short	Period, Ptr	String)
     }
    
 	NCount = 1;
-    while( NCount <= 61)
+    while (NCount <= 61)
     {
     	if (Period >= MADDriver->pitchTable[ NCount][ 0] )
     	{

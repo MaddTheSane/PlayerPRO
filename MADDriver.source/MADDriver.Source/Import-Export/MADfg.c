@@ -53,7 +53,7 @@ static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myP
 	First Byte = 0x00 -> nothing
 	*/
 	
-	while( maxCmd != 0)
+	while (maxCmd != 0)
 	{
 		maxCmd--;
 		

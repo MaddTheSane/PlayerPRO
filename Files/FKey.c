@@ -149,7 +149,7 @@ WindowPtr FindRefWindow( long ref)
 	
 	aWind = FrontWindow();
 	
-	while( aWind != NULL)
+	while (aWind != NULL)
 	{
 		if (ref == GetWRefCon( aWind)) return (WindowPtr) aWind;
 		

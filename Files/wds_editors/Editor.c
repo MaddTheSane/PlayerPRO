@@ -2050,7 +2050,7 @@ Boolean MLClick( Point pt, short modifiers)
 					QDFlushPortBuffer( GetDialogPort( EditorDlog), NULL);
 				
 			}
-			while( Button());
+			while (Button());
 		}
 	}
 	
@@ -2220,13 +2220,13 @@ void DoItemPressPartition( short whichItem, DialogPtr whichDialog)    			/* Item
 						for (i = myList.select.right+1; i < MAXTRACK; i++)	MADDriver->TrackReading[ i] = false;
 						
 						MADDriver->Reading = true;
-						while( Button() == true  && MADDriver->PartitionReader <= myList.select.bottom && MADDriver->PartitionReader >= myList.select.top && rePat == MADDriver->Pat)
+						while (Button() == true  && MADDriver->PartitionReader <= myList.select.bottom && MADDriver->PartitionReader >= myList.select.top && rePat == MADDriver->Pat)
 						{
 							DoGlobalNull();
 							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
 						}
 						MADDriver->Reading = false;
-						while( Button() == true)
+						while (Button() == true)
 						{
 							DoGlobalNull();
 							WaitNextEvent( everyEvent, &theEvent, 1, NULL);
@@ -2775,7 +2775,7 @@ void DoItemPressPartition( short whichItem, DialogPtr whichDialog)    			/* Item
 					
 					DoPlay();
 					
-					while( Button())
+					while (Button())
 					{
 						DoGlobalNull();
 						WaitNextEvent( everyEvent, &theEvent, 1, NULL);
@@ -4298,7 +4298,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 				
 				if (CreateAIFFExporting( true, fRefNum, &target, 'AIFF', NULL))
 				{
-					while( theProgressDia != NULL) DoAIFFExporting();
+					while (theProgressDia != NULL) DoAIFFExporting();
 				}
 			}
 			else

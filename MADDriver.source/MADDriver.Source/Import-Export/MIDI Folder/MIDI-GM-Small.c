@@ -366,7 +366,7 @@ void ComputeQuicktimeSound25( short GMInstruID, sData **sample, InstrData* inst,
 			
 			ENCORE:
 			
-			while( (hRsrc = GetResource( 'ssai', GMInstruID)) == NULL) GMInstruID++;
+			while ((hRsrc = GetResource( 'ssai', GMInstruID)) == NULL) GMInstruID++;
 			if (SizeResource( hRsrc) < 600) goto ENCORE;
 			
 			if (hRsrc != NULL)
@@ -386,13 +386,13 @@ void ComputeQuicktimeSound25( short GMInstruID, sData **sample, InstrData* inst,
 				
 				rsrc = (QuictimeRsrc25*) ((*hRsrc) + 0x20);
 				
-				while( rsrc < maxrsrc && rsrc->type != kaiToneDescType) rsrc = (QuictimeRsrc25*) (((Ptr) rsrc) + rsrc->size);			// Find the name
+				while (rsrc < maxrsrc && rsrc->type != kaiToneDescType) rsrc = (QuictimeRsrc25*) (((Ptr) rsrc) + rsrc->size);			// Find the name
 				
 				SetInstruNameM( ins, (unsigned char*) rsrc->data + 36, GMInstruID, inst->name);
 				
-				while( rsrc < maxrsrc && rsrc->type != kaiKeyRangeInfoType) rsrc = (QuictimeRsrc25*) (((Ptr) rsrc) + rsrc->size);
+				while (rsrc < maxrsrc && rsrc->type != kaiKeyRangeInfoType) rsrc = (QuictimeRsrc25*) (((Ptr) rsrc) + rsrc->size);
 				
-				while( rsrc->type == kaiKeyRangeInfoType)
+				while (rsrc->type == kaiKeyRangeInfoType)
 				{
 					QuictimeRsrc25	*rsrcCopy = rsrc;
 					
@@ -436,7 +436,7 @@ void ComputeQuicktimeSound25( short GMInstruID, sData **sample, InstrData* inst,
 							Boolean	Founded = false;
 							
 							rsrc2 = (QuictimeRsrc25*) ((*hRsrc) + 0x20);
-							while( rsrc2 < maxrsrc && Founded == false)
+							while (rsrc2 < maxrsrc && Founded == false)
 							{
 								rsrc2 = (QuictimeRsrc25*) (((Ptr) rsrc2) + rsrc2->size);
 								
@@ -444,7 +444,7 @@ void ComputeQuicktimeSound25( short GMInstruID, sData **sample, InstrData* inst,
 								{
 									rsrc3 = (QuictimeRsrc25*) (((Ptr) rsrc2) + 5L*4L);
 									
-									while( rsrc3->type != kaiSampleDataType) rsrc3 = (QuictimeRsrc25*) (((Ptr) rsrc3) + rsrc3->size);
+									while (rsrc3->type != kaiSampleDataType) rsrc3 = (QuictimeRsrc25*) (((Ptr) rsrc3) + rsrc3->size);
 									
 									if (rsrc3->type == kaiSampleDataType)
 									{
@@ -635,7 +635,7 @@ void ComputeQuicktimeSound( short GMInstruID, sData **sample, InstrData* inst, s
 		
 		synthCount = NAGetRegisteredMusicDevice( na, 0, nil, nil, nil, nil);
 		
-		while( synthCount)
+		while (synthCount)
 		{
 			iErr = NAGetRegisteredMusicDevice(na,synthCount, &synthType, synthName, nil, &mc);
 			
@@ -1492,7 +1492,7 @@ static long CountAtomById( MyAtom at, long type)
 		listSize /= 2;
 		listSize *= 2;
 		
-	}while( iErr == noErr && listSize > 0);
+	}while (iErr == noErr && listSize > 0);
 	
 	if (listSize < 0 ) Debugger();
 	
@@ -1572,7 +1572,7 @@ static OSErr FindAtomById( MyAtom at, MyAtom *retat, Boolean LIST, long type, sh
 		listSize /= 2;
 		listSize *= 2;
 		
-	}while( iErr == noErr && listSize > 0);
+	}while (iErr == noErr && listSize > 0);
 	
 	if (listSize < 0 ) Debugger();
 	

@@ -214,7 +214,7 @@ OSErr inMADPlaySoundData( Ptr soundPtr, long size, long channel, long note, long
 	if (iErr == noErr)
 	{
 		continueLoop = true;
-		while( continueLoop)
+		while (continueLoop)
 		{
 			GetKeys( km);
 			
@@ -281,7 +281,7 @@ void CloseALLWindow(void)
 	tempWind = FrontWindow();
 	aWind = GetNextWindow( tempWind);
 	
-	while( aWind != NULL)
+	while (aWind != NULL)
 	{
 		ClosePlayerWindow( GetDialogFromWindow( aWind));
 		
@@ -302,7 +302,7 @@ void TESTBugs(void)
 		SetHandleSize( ttHdl, FreeMem() - 5000);
 		if (ttHdl != NULL) MyDisposHandle( & ttHdl);
 		
-	}while( Button() == false);
+	}while (Button() == false);
 	if (MemError() != noErr) MyDebugStr( __LINE__, __FILE__, "");
 }
 
@@ -594,7 +594,7 @@ void SaveWindowState( short id)
 		
 		pWindow = NextWindowVisible( pWindow);
 		
-	} while( pWindow != NULL);
+	} while (pWindow != NULL);
 }
 
 void CheckShowWindow(void)
@@ -637,7 +637,7 @@ void CheckShowWindow(void)
 			
 			ClosePlayerWindow( GetDialogFromWindow( pWindow));
 		}
-	} while( pWindow != NULL);
+	} while (pWindow != NULL);
 	
 	oldWindow = NULL;
 	SelectWindow2( NULL);
@@ -655,7 +655,7 @@ void ShowWindowPref( short whichState)
 	}
 	
 	order = 29;
-	while( order >= 0)
+	while (order >= 0)
 	{
 		if (whichState == -1) ID = thePrefs.WinID[ order];
 		else
@@ -712,7 +712,7 @@ WindowPtr NextWindowVisible( WindowPtr	whichWindow)
 		if (temp == NULL) return( NULL);
 		else if (MacIsWindowVisible( temp) != true) whichWindow = (WindowPtr) MacGetNextWindow( myWin);
 		else Sortie = true;
-	} while( Sortie == false);
+	} while (Sortie == false);
 	
 	return( temp);
 }
@@ -1056,7 +1056,7 @@ pascal void MyMenuNoteDefProc(short msg, MenuRef whichMenu, Rect *menuRect, Poin
 				
 				aH = GetNextDevice( aH);
 			}
-			while( aH != NULL);
+			while (aH != NULL);
 			break;
 			
 	}
@@ -1318,7 +1318,7 @@ pascal void MyMenu0xFFDefProc(short msg, MenuRef whichMenu, Rect *menuRect, Poin
 				
 				aH = GetNextDevice( aH);
 			}
-			while( aH != NULL);
+			while (aH != NULL);
 		}
 			break;
 	}
@@ -2423,7 +2423,7 @@ void ActivateAllWindows()
 		
 		theWindow = GetNextWindow( theWindow);
 	}
-	while( theWindow != NULL);
+	while (theWindow != NULL);
 }
 
 void EventLoop2(void)
@@ -3215,7 +3215,7 @@ void DoMouseDown(EventRecord theEventI)
 			{
 				SetCursor( &HelpCrsr);
 				
-				while( Button());
+				while (Button());
 				
 				switch( GetWRefCon( whichWindow))
 				{
@@ -3505,7 +3505,7 @@ void UpdateALLWindow(void)
 	
 	aWind = FrontWindow();
 	
-	while( aWind != NULL)
+	while (aWind != NULL)
 	{
 		if (IsWindowVisible( aWind))
 		{
@@ -3537,7 +3537,7 @@ void ForceUpdateALLWindow(void)
 	
 	aWind = FrontWindow();
 	
-	while( aWind != NULL)
+	while (aWind != NULL)
 	{
 		if (IsWindowVisible( aWind))
 		{
@@ -3928,13 +3928,13 @@ pascal short MyDlgHook2( short item, DialogPtr theDialog, void *myDataPtr)
 								MADCheckSpeed( savedPartition, MADDriver);
 								MADDriver->Reading = true;		// Read the current partition in memory
 								
-								while( !Button())
+								while (!Button())
 								{
 									/** Do what you want here....					**/
 									/** Bla bla...									**/
 									/** By example:	Run your realtime 3D game... 	**/
 								}
-								while( Button()) {};
+								while (Button()) {};
 								
 								MADDriver->Reading = false;		// Stop reading current partition
 								//	MADStopDriver();						// Stop driver interrupt function
@@ -4282,7 +4282,7 @@ short		IntInfoL( short ID)
 		
 		MyModalDialog( aDia, &itemHit);
 		
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 	
 	DisposeDialog( aDia);
 	SetPort( savedPort);
@@ -4346,7 +4346,7 @@ void IntErreur( short ID, OSErr theErr)
 	
 	do {
 		MyModalDialog( aDia, &itemHit);	//ModalDialog( MyDlgFilterDesc, &itemHit);
-	} while( itemHit != 1);
+	} while (itemHit != 1);
 	
 	DisposeDialog( aDia);
 	SetPort( savedPort);
@@ -4383,7 +4383,7 @@ void OtherIntErreur( short ID, OSErr theErr, Str255 otherstr)
 	do {
 		MyModalDialog( aDia, &itemHit);	//ModalDialog( MyDlgFilterDesc, &itemHit);
 		
-	} while( itemHit != 1);
+	} while (itemHit != 1);
 	
 	DisposeDialog( aDia);
 	SetPort( savedPort);
@@ -4482,7 +4482,7 @@ OSErr GereChanged(void)
 		//ModalDialog( MyDlgFilterDesc, &itemHit);
 		MyModalDialog( aDia, &itemHit);
 		
-	}while( itemHit != 1 && itemHit != 2 && itemHit != 3);
+	}while (itemHit != 1 && itemHit != 2 && itemHit != 3);
 	
 	DisposeDialog( aDia);
 	SetPort( savedPort);
@@ -4597,7 +4597,7 @@ void WindowsSettingsOption()
 				break;
 		}
 		
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 	
 	DisposeMenu( tMenu);
 	
@@ -5278,7 +5278,7 @@ void HandleOtherChoice(short theItem)
 					
 					MyModalDialog( aDia, &itemHit);
 					
-				}while( itemHit != 1);
+				}while (itemHit != 1);
 				
 				DisposeDialog( aDia);
 				SetPort( savedPort);
@@ -6121,7 +6121,7 @@ void DoReset()
 				break;
 		}
 		
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 	
 	if (itemHit == 1)
 	{
@@ -6894,7 +6894,7 @@ void AddRemoveBookmarks()
 				break;
 		}
 		
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 	
 	if (itemHit == 1)
 	{
@@ -6998,7 +6998,7 @@ void InitBookMarks()
 	RETRY1:
 		
 		prev = i;
-		while( i < eof && data[ i] != '\r') i++;
+		while (i < eof && data[ i] != '\r') i++;
 		if (i - prev == 0 && i < eof) { i++; goto RETRY1;}
 		
 		URLs[ URLsNo][ 0] = i - prev;
@@ -7010,7 +7010,7 @@ void InitBookMarks()
 	RETRY2:
 		
 		prev = i;
-		while( i < eof && data[ i] != '\r') i++;
+		while (i < eof && data[ i] != '\r') i++;
 		if (i - prev == 0 && i < eof) { i++; goto RETRY2;}
 		
 		URLsDesc[ URLsNo][ 0] = i - prev;
@@ -7071,7 +7071,7 @@ void InitBookMarks()
 	RETRY3:
 		
 		prev = i;
-		while( i < eof && data[ i] != '\r') i++;
+		while (i < eof && data[ i] != '\r') i++;
 		if (i - prev == 0 && i < eof) { i++; goto RETRY3;}
 		
 		URLs[ URLsNo][ 0] = i - prev;
@@ -7083,7 +7083,7 @@ void InitBookMarks()
 	RETRY4:
 		
 		prev = i;
-		while( i < eof && data[ i] != '\r') i++;
+		while (i < eof && data[ i] != '\r') i++;
 		if (i - prev == 0 && i < eof) { i++; goto RETRY4;}
 		
 		URLsDesc[ URLsNo][ 0] = i - prev;
@@ -7241,7 +7241,7 @@ void HandleNewSound( short theItem)
 				
 				if (CreateAIFFExporting( true, fRefNum, &newFile, 'AIFF', NULL))
 				{
-					while( theProgressDia != NULL) DoAIFFExporting();
+					while (theProgressDia != NULL) DoAIFFExporting();
 					
 					/////////////////
 					

@@ -152,7 +152,7 @@ void GetVSTPrefName( Str255 str, long *flag)
 			break;
 		}
 	
-	}while( itemHit != 1 && itemHit != 2);
+	}while (itemHit != 1 && itemHit != 2);
 
 	if (itemHit == 1)
 	{
@@ -380,7 +380,7 @@ void ApplyVSTFilter( VSTEffect *effect, sData *SDataSrc, long Start, long End)
 	data16 = (short*) (SDataSrc->data + Start);
 	data8 = (char*) (SDataSrc->data + Start);
 	
-	while( byteleft > 0)
+	while (byteleft > 0)
 	{
 		if (SDataSrc->stereo)
 		{
@@ -1122,7 +1122,7 @@ void InitVSTPlug( void)
 				i++;
 			}
 		}
-		while( iErr == noErr);
+		while (iErr == noErr);
 		
 		FSCloseFork( fRefNum);
 	}
@@ -1181,7 +1181,7 @@ void InitVSTPlug( void)
 			}
 			FXCounter++;
 		}
-		while( iErr == noErr);
+		while (iErr == noErr);
 		
 		FSClose( fRefNum);
 	}*/
@@ -1275,7 +1275,7 @@ void VSTSampleEditor( short item, sData	*curData, long Start, long End, Boolean 
 			
 			VSTEditorDoItemPress( itemHit, VSTDlog);
 		
-		}while( itemHit != 11 && itemHit != 14);
+		}while (itemHit != 11 && itemHit != 14);
 		
 		VSTEditorClose( VSTDlog, itemHit);
 	}
@@ -1679,7 +1679,7 @@ void VSTEditorDoItemPress( short itemHit, DialogPtr aDia)
 				
 				if (theControl)
 				{
-					while( Button())
+					while (Button())
 					{
 						DoGlobalNull();
 						
