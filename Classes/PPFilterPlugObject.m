@@ -11,7 +11,12 @@
 
 #define PPFilterLoadPlug(theBundle) (PPFiltersPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROFiltersPlugTypeID, kPlayerPROFiltersPlugInterfaceID)
 
+@interface PPFilterPlugObject ()
+@property PPFiltersPlugin **plugData;
+@end
+
 @implementation PPFilterPlugObject
+@synthesize plugData;
 
 - (BOOL)isEqual:(id)object
 {
@@ -41,14 +46,14 @@
 {
 	if (self = [super initWithBundle:aBund]) {
 		NSURL *bundleURL = [aBund bundleURL];
-		CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef) bundleURL);
+		CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)bundleURL);
 		
 		plugData = PPFilterLoadPlug(cfBundle);
 		CFRelease(cfBundle);
 
-		if (!plugData) {
+		if (!plugData)
 			return nil;
-		}
+		
 		type = 'PLug';
 	}
 	return self;

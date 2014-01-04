@@ -9,7 +9,14 @@
 #import "PPDigitalPlugInObject.h"
 #import "PPPlugInCommon.h"
 
+#define PPDGLoadPlug(theBundle) (PPDigitalPlugin**)GetCOMPlugInterface(theBundle, kPlayerPRODigitalPlugTypeID, kPlayerPRODigitalPlugInterfaceID)
+
+@interface PPDigitalPlugInObject ()
+@property PPDigitalPlugin **plugCode;
+@end
+
 @implementation PPDigitalPlugInObject
+@synthesize plugCode;
 
 - (BOOL)isEqual:(id)object
 {
@@ -36,8 +43,6 @@
 	return [self.menuName hash];
 }
 
-#define PPDGLoadPlug(theBundle) (PPDigitalPlugin**)GetCOMPlugInterface(theBundle, kPlayerPRODigitalPlugTypeID, kPlayerPRODigitalPlugInterfaceID)
-
 - (instancetype)initWithBundle:(NSBundle*)toInit
 {
 	if (self = [super initWithBundle:toInit]) {
@@ -47,9 +52,8 @@
 		plugCode = PPDGLoadPlug(tempBundle);
 		CFRelease(tempBundle);
 
-		if (!plugCode) {
+		if (!plugCode)
 			return nil;
-		}
 		
 		type = 'PPDG';
 	}

@@ -12,11 +12,6 @@
 #import "PPPlugInObject.h"
 
 @interface PPInstrumentImporterObject : PPPlugInObject
-{
-	@private
-	PPInstrumentPlugin	**xxxx;
-}
-
 @property (readonly, copy) NSArray *UTITypes;
 @property (readonly) OSType mode;
 @property (readonly) BOOL isSample;

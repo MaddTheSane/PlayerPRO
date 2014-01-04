@@ -34,12 +34,14 @@ static inline BOOL getBoolFromId(id NSType)
 @property (readwrite, copy) NSArray *UTITypes;
 @property (readwrite) OSType mode;
 @property (readwrite) BOOL isSample;
+@property PPInstrumentPlugin **xxxx;
 @end
 
 @implementation PPInstrumentImporterObject
 @synthesize UTITypes;
 @synthesize mode;
 @synthesize isSample = isSamp;
+@synthesize xxxx;
 
 typedef enum _MADPlugCapabilities {
 	PPMADCanDoNothing	= 0,
@@ -157,7 +159,6 @@ static Class numClass;
 	if (xxxx) {
 		(*xxxx)->Release(xxxx);
 	}
-	
 }
 
 - (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insSamp function:(OSType)imporexp plugInfo:(PPInfoPlug*)plugInfo
@@ -173,11 +174,6 @@ static Class numClass;
 	CFRelease(tempRef);
 	
 	return returnType;
-}
-
-- (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insSamp function:(OSType)imporexp
-{
-	return [self importInstrument:fileToImport instrumentDataReference:insData sampleDataReference:sdataref instrumentSample:insSamp function:imporexp plugInfo:NULL];
 }
 
 @end

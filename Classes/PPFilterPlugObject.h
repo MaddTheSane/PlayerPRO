@@ -12,9 +12,6 @@
 #import "PPPlugInObject.h"
 
 @interface PPFilterPlugObject : PPPlugInObject
-{
-	PPFiltersPlugin	**plugData;
-}
 
 - (instancetype)initWithBundle:(NSBundle *)aBund;
 

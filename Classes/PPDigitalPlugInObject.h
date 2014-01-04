@@ -12,9 +12,6 @@
 #import "PPPlugInObject.h"
 
 @interface PPDigitalPlugInObject : PPPlugInObject
-{
-	PPDigitalPlugin	**plugCode;
-}
 
 - (instancetype)initWithBundle:(NSBundle*)toInit;
 
