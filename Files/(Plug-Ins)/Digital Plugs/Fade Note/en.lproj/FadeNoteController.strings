@@ -1,0 +1,15 @@
+
+/* Class = "NSWindow"; title = "Note Fade"; ObjectID = "1"; */
+"1.title" = "Note Fade";
+
+/* Class = "NSTextFieldCell"; title = "From:"; ObjectID = "16"; */
+"16.title" = "From:";
+
+/* Class = "NSTextFieldCell"; title = "To:"; ObjectID = "20"; */
+"20.title" = "To:";
+
+/* Class = "NSButtonCell"; title = "OK"; ObjectID = "26"; */
+"26.title" = "OK";
+
+/* Class = "NSButtonCell"; title = "Cancel"; ObjectID = "30"; */
+"30.title" = "Cancel";
