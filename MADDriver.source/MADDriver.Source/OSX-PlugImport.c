@@ -15,10 +15,6 @@
 #include "FileUtils.h"
 #include "PPPrivate.h"
 
-#define BASERES 1000
-
-extern void NSLog(CFStringRef format, ...);
-
 #define MAXPLUG	40
 #define RSRCNAME "\pRsrc Plug Sys##"
 
@@ -31,8 +27,10 @@ const CFStringRef kMadPlugAuthorNameKey =	CFSTR("MADPlugAuthorName");
 const CFStringRef kMadPlugUTITypesKey =		CFSTR("MADPlugUTITypes");
 const CFStringRef kMadPlugTypeKey =			CFSTR("MADPlugType");
 const CFStringRef kMadPlugModeKey =			CFSTR("MADPlugMode");
-//const CFStringRef kMadPlugModeKey =		CFSTR("");
 
+static CFTypeID stringtype = 0;
+static CFTypeID numbertype;
+static CFTypeID arraytype;
 
 static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
@@ -40,9 +38,11 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 		MyDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
 		return;
 	}
-	CFTypeID stringtype =	CFStringGetTypeID();
-	CFTypeID numbertype =	CFNumberGetTypeID();
-	CFTypeID arraytype =	CFArrayGetTypeID();
+	if (stringtype == 0) {
+		stringtype =	CFStringGetTypeID();
+		numbertype =	CFNumberGetTypeID();
+		arraytype =		CFArrayGetTypeID();
+	}
 	
 	short PlugNum = inMADDriver->TotalPlug;
 	PlugInfo *FillPlug = &(inMADDriver->ThePlug[PlugNum]);
@@ -55,15 +55,15 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
 			FillPlug->MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
-		}
-		else goto badplug;
+		} else
+			goto badplug;
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugAuthorNameKey);
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == stringtype) {
 			FillPlug->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
-		}
-		else goto badplug2;
+		} else 
+			goto badplug2;
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugTypeKey);
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
@@ -74,12 +74,14 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 			for (i=0; i < 4; i++) {
 				if (tempstring[i] == 0) {
 					FillPlug->type[i] = ' ';
-				}else FillPlug->type[i] = tempstring[i];
+				} else {
+					FillPlug->type[i] = tempstring[i];
+				}
 			}
 			FillPlug->type[4] = 0;
 			
-		}
-		else goto badplug3;
+		} else 
+			goto badplug3;
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugModeKey);
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
@@ -87,29 +89,25 @@ static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriv
 			char *thecOSType = (char*)CFStringGetCStringPtr((CFStringRef)OpaqueDictionaryType, kCFStringEncodingMacRoman);
 			
 			FillPlug->mode = Ptr2OSType(thecOSType);
-		}
-		else if(InfoDictionaryType == numbertype)
-		{
+		} else if(InfoDictionaryType == numbertype) {
 			OSType theplugType;
 			CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberSInt32Type, &theplugType);
 			//MOT32(&theplugType);
 			FillPlug->mode = theplugType;
-		}
-		else goto badplug3;
+		} else
+			goto badplug3;
 		
 		OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugUTITypesKey);
 		InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 		if (InfoDictionaryType == arraytype) {
 			FillPlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, (CFArrayRef)OpaqueDictionaryType);
-		}
-		else if(InfoDictionaryType == stringtype)
-		{
+		} else if(InfoDictionaryType == stringtype) {
 			CFMutableArrayRef UTIMutableArray = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
 			CFArrayAppendValue(UTIMutableArray, CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)InfoDictionaryType));
 			FillPlug->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, UTIMutableArray);
 			CFRelease(UTIMutableArray);
-		}
-		else goto badplug3;
+		} else 
+			goto badplug3;
 	}
 	
 	FillPlug->IOPlug = tempMADPlug;
@@ -124,7 +122,7 @@ badplug3:
 badplug2:
 	CFRelease(FillPlug->MenuName);
 badplug:
-	NSLog(CFSTR("Error with plug-in %@"), tempBundle);
+	//NSLog(CFSTR("Error with plug-in %@"), tempBundle);
 	(*tempMADPlug)->Release(tempMADPlug);
 	return;
 }
@@ -134,15 +132,9 @@ badplug:
 /*
  * Possible plugin places:
  - * Local Application Support/PlayerPRO/PlugIns
- - * User Application Support/PlayerPRO/PlugIns
  - * Application Contents/PlugIns
- * Local Framework PlugIns
- * User Framework PlugIns
- * Application Contents/Frameworks/PlugIns
- 
+ * Framework PlugIns
  */
-//static const CFStringRef PluginFolderLocations[] = {CFSTR("/Library/Application Support/PlayerPRO/Plugins"), 
-//CFSTR("~/Library/Application Support/PlayerPRO/Plugins"),CFSTR("")};
 
 CFMutableArrayRef GetDefaultPluginFolderLocations()
 {
@@ -161,10 +153,12 @@ CFMutableArrayRef GetDefaultPluginFolderLocations()
 	temp1 = NULL;
 	
 	//User plugins
+#if 0
 	temp1 = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, CFSTR("~/Library/Application Support/PlayerPRO/Plugins"), kCFURLPOSIXPathStyle, true);
 	CFArrayAppendValue(PlugFolds, temp1);
 	CFRelease(temp1);
 	temp1 = NULL;
+#endif
 	
 	return PlugFolds;
 }
@@ -351,14 +345,15 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 void MInitImportPlug(MADLibrary *inMADDriver, FSSpecPtr PlugsFolderName)
 {
 	FSRef convDir;
-	if(PlugsFolderName != NULL)
-	{
+	if(PlugsFolderName != NULL) {
 		OSErr iErr = FSpMakeFSRef(PlugsFolderName, &convDir);
 		if (iErr == noErr) {
 			MADInitImportPlug(inMADDriver, &convDir);
 		} else {
 			MADInitImportPlug(inMADDriver, NULL);
 		}
+	} else {
+		MADInitImportPlug(inMADDriver, NULL);
 	}
 }
 
@@ -367,8 +362,7 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 	short	i;
 	ULONG	RelCount = 0;
 	
-	for (i = 0; i < inMADDriver->TotalPlug; i++)
-	{
+	for (i = 0; i < inMADDriver->TotalPlug; i++) {
 		MADFileFormatPlugin	**formatPlugA = inMADDriver->ThePlug[i].IOPlug;
 
 		RelCount = (*formatPlugA)->Release(formatPlugA);
@@ -379,7 +373,7 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 		CFRelease(inMADDriver->ThePlug[i].MenuName);
 
 	}
-	DisposePtr((Ptr) inMADDriver->ThePlug);		inMADDriver->ThePlug = NULL;
+	DisposePtr((Ptr)inMADDriver->ThePlug);		inMADDriver->ThePlug = NULL;
 }
 
 void GetPStrFromCFString(const CFStringRef source, Str255 pStrOut)
@@ -392,18 +386,13 @@ OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInf
 	short			i;
 	MADMusic	aMAD;
 	
-	if (!strcmp(kindFile, "MADK"))
-	{
-		PPMADInfoFile(AlienFile, InfoRec);
-		
-		return noErr;
+	if (!strcmp(kindFile, "MADK")) {
+		return PPMADInfoFile(AlienFile, InfoRec);
 	}
 	
-	for (i = 0; i < inMADDriver->TotalPlug; i++)
-	{
-		if (!strcmp(kindFile, inMADDriver->ThePlug[ i].type))
-		{
-			return(CallImportPlug(inMADDriver, i, 'INFO', AlienFile, &aMAD, InfoRec));
+	for (i = 0; i < inMADDriver->TotalPlug; i++) {
+		if (!strcmp(kindFile, inMADDriver->ThePlug[ i].type)) {
+			return CallImportPlug(inMADDriver, i, 'INFO', AlienFile, &aMAD, InfoRec);
 		}
 	}
 	return MADCannotFindPlug;
@@ -414,14 +403,12 @@ OSErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MAD
 	short		i;
 	PPInfoRec	InfoRec;
 	
-	for (i = 0; i < inMADDriver->TotalPlug; i++)
-	{
-		if (!strcmp(kindFile, inMADDriver->ThePlug[ i].type))
-		{
+	for (i = 0; i < inMADDriver->TotalPlug; i++) {
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
 			*theNewMAD = (MADMusic*) MADNewPtrClear(sizeof(MADMusic), inMADDriver);
 			if (!*theNewMAD) return MADNeedMemory;
 			
-			return(CallImportPlug(inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec));
+			return CallImportPlug(inMADDriver, i, 'IMPL', AlienFile, *theNewMAD, &InfoRec);
 		}
 	}
 	return MADCannotFindPlug;
@@ -434,16 +421,18 @@ OSErr CheckMADFile(char* name)
 	OSErr				err;
 	
 	refNum = iFileOpen(name);
-	if (!refNum) return MADReadingErr;
-	else
-	{
+	if (!refNum) 
+		return MADReadingErr;
+	else {
 		iRead(CharlMADcheckLength, charl, refNum);
 		
-		if (charl[ 0] == 'M' &&							// MADK
-		   charl[ 1] == 'A' &&
-		   charl[ 2] == 'D' &&
-		   charl[ 3] == 'K') err = noErr;
-		else err = MADIncompatibleFile;
+		if (charl[0] == 'M' &&							// MADK
+			charl[1] == 'A' &&
+			charl[2] == 'D' &&
+			charl[3] == 'K') 
+			err = noErr;
+		else
+			err = MADIncompatibleFile;
 		
 		iClose(refNum);
 	}
@@ -461,26 +450,25 @@ OSErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 	
 	// Check if we have access to this file
 	refNum = iFileOpen(AlienFile);
-	if (!refNum) return MADReadingErr;
-	else
-	{
-		if (iGetEOF(refNum) < 100) iErr = -36;
+	if (!refNum) 
+		return MADReadingErr;
+	else {
+		if (iGetEOF(refNum) < 100) 
+			iErr = MADIncompatibleFile;
 		iClose(refNum);
-		if (iErr) return iErr;
+		if (iErr) 
+			return iErr;
 	}
 	
 	// Is it a MAD file?
 	iErr = CheckMADFile(AlienFile);
-	if (iErr == noErr)
-	{
+	if (iErr == noErr) {
 		strcpy(type, "MADK");
 		return noErr;
 	}
 	
-	for (i = 0; i < inMADDriver->TotalPlug; i++)
-	{
-		if (CallImportPlug(inMADDriver, i, 'TEST', AlienFile, NULL, &InfoRec) == noErr)
-		{
+	for (i = 0; i < inMADDriver->TotalPlug; i++) {
+		if (CallImportPlug(inMADDriver, i, 'TEST', AlienFile, NULL, &InfoRec) == noErr) {
 			strcpy(type, inMADDriver->ThePlug[i].type);
 			return noErr;
 		}
@@ -494,10 +482,11 @@ Boolean	MADPlugAvailable(MADLibrary *inMADDriver, char* kindFile)
 {
 	short		i;
 	
-	if (!strcmp(kindFile, "MADK")) return TRUE;
-	for (i = 0; i < inMADDriver->TotalPlug; i++)
-	{
-		if (!strcmp(kindFile, inMADDriver->ThePlug[ i].type)) return TRUE;
+	if (!strcmp(kindFile, "MADK")) 
+		return TRUE;
+	for (i = 0; i < inMADDriver->TotalPlug; i++) {
+		if (!strcmp(kindFile, inMADDriver->ThePlug[ i].type)) 
+			return TRUE;
 	}
 	return FALSE;
 }
@@ -523,11 +512,9 @@ OSErr PPTestFile(MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
 	MADMusic		aMAD;
 	PPInfoRec		InfoRec;
 	
-	for (i = 0; i < inMADDriver->TotalPlug; i++)
-	{
-		if (!strcmp(kindFile, inMADDriver->ThePlug[ i].type))
-		{
-			return(CallImportPlug(inMADDriver, i, 'TEST', AlienFile, &aMAD, &InfoRec));
+	for (i = 0; i < inMADDriver->TotalPlug; i++) {
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
+			return CallImportPlug(inMADDriver, i, 'TEST', AlienFile, &aMAD, &InfoRec);
 		}
 	}
 	return MADCannotFindPlug;
@@ -543,15 +530,14 @@ OSType GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 	{
 		if (inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == 'EXIM')
 		{
-			if (ID == x)
-			{
+			if (ID == x) {
 				short 	xx;
-				OSType	type;
+				OSType	type = '    ';
 				
-				xx = strlen(inMADDriver->ThePlug[ i].type);
-				if (xx > 4) xx = 4;
-				type = '    ';
-				memcpy(&type, inMADDriver->ThePlug[ i].type, xx);
+				xx = strlen(inMADDriver->ThePlug[i].type);
+				if (xx > 4) 
+					xx = 4;
+				memcpy(&type, inMADDriver->ThePlug[i].type, xx);
 				
 				MOT32(&type);
 				return type;
@@ -562,5 +548,5 @@ OSType GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 	
 	MyDebugStr(__LINE__, __FILE__, "PP-Plug ERROR II.");
 	
-	return noErr;
+	return '!!!!';
 }

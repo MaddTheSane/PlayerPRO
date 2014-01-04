@@ -1006,7 +1006,7 @@ void StopAIFFExporting(void)
 		else*/
 		{
 			GetFPos(fRefNum, &filePos);
-			SetFPos(fRefNum, fsFromStart, 0);
+			FSSetForkPosition(fRefNum, fsFromStart, 0);
 			
 			SetupAIFFHeader(		fRefNum,
 									thePrefs.channelNumber, 
@@ -1016,8 +1016,8 @@ void StopAIFFExporting(void)
 									totalSize,
 									0);
 			
-			SetFPos(fRefNum, fsFromStart, filePos);
-			SetEOF(fRefNum, filePos);
+			FSSetForkPosition(fRefNum, fsFromStart, filePos);
+			FSSetForkSize(fRefNum, fsFromStart, filePos);
 			FSCloseFork(fRefNum);
 			
 			if (theType == 'MPG4')

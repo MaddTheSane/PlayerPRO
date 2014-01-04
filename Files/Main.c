@@ -248,11 +248,11 @@ void DeleteTempFile()
 	iErr = FSpDelete(&spec);
 }
 
-extern void NSLog(CFStringRef format, ...);
+//extern void NSLog(CFStringRef format, ...);
 
 EXP void MyDebugStr(short line, Ptr file, Ptr text)
 {
-	NSLog(CFSTR("%s:%u error text:%s!"), file, line, text);
+	fprintf(stderr, "PlayerPRO: %s:%u error text:%s!\n", file, line, text);
 	
 	Str255	fileS, lineS, dateS, textS;
 	
@@ -5363,17 +5363,15 @@ ReLoadPrefs:
 		SwapPrefs(outPrefs);
 		
 		iErr = HSetVol(NULL, vRefNum, DirID);
-		if (iErr == noErr)
-		{
+		if (iErr == noErr) {
 			iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
-			if (iErr == noErr)
-			{
-				iErr = SetFPos(fRefNum, fsFromStart, 0);
+			if (iErr == noErr) {
+				iErr = FSSetForkPosition(fRefNum, fsFromStart, 0);
 				
 				inOutBytes = sizeof(Prefs);
 				iErr = FSWrite(fRefNum, &inOutBytes, outPrefs);
 				
-				iErr = FSClose(fRefNum);
+				iErr = FSCloseFork(fRefNum);
 			}
 		}
 		DisposePtr((Ptr)outPrefs);
@@ -5707,7 +5705,7 @@ ReLoadPrefs:
 		// Ecriture sur disque des preferences
 		
 		inOutBytes = sizeof(Prefs);
-		iErr = SetFPos(fRefNum, fsFromStart, 0);
+		iErr = FSSetForkPosition(fRefNum, fsFromStart, 0);
 #ifdef __LITTLE_ENDIAN__
 		Prefs *outPrefs = (Prefs*)NewPtr(sizeof(Prefs));
 		*outPrefs = thePrefs;
@@ -7049,7 +7047,7 @@ void InitBookMarks()
 			HUnlock(Text);
 			MyDisposHandle(& Text);
 			
-			iErr = FSClose(fRefNum);
+			iErr = FSCloseFork(fRefNum);
 		}
 #endif
 		

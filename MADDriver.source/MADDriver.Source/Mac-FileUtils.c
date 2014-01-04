@@ -24,12 +24,6 @@
 #include "FileUtils.h"
 #include <Carbon/Carbon.h>
 #include <CoreFoundation/CoreFoundation.h>
-
-extern void NSLog(CFStringRef format, ...);
-
-//TODO: migrate PlayerPRO away from FSSpec!
-//TODO: HSetVol isn't available in 64-bit code :(
-//TODO: Also, FSSpec is defined as UInt8 hidden[70]
  
 unsigned char* MYC2PStr(Ptr cStr)
 {

@@ -877,7 +877,7 @@ RETRY:
 				if (iErr == noErr)
 				{
 					iErr = GetEOF(refNum, &fileSize);
-					FSClose(refNum);
+					FSCloseFork(refNum);
 				}
 #endif
 				fileSize /= 1024L;

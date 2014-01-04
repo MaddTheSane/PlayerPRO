@@ -183,8 +183,6 @@
 		55356A1E102C06550093F21D /* MIDI-GM.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F60C2F21DD00D6C081 /* MIDI-GM.c */; };
 		55356A97102C08650093F21D /* PlugsPPINInit.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C60C2F21DD00D6C081 /* PlugsPPINInit.c */; };
 		5547CE5F10C6E5490041DEF6 /* ByteUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 5547CE5E10C6E5490041DEF6 /* ByteUtils.c */; };
-		554E0DAD10D619D700BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
-		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		554E10E010D6EF8200BB619C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -1901,7 +1899,6 @@
 				5573A39310B50F6000FF8B50 /* CoreAudio.framework in Frameworks */,
 				5573A39410B50F6500FF8B50 /* Carbon.framework in Frameworks */,
 				5573A39510B50F6900FF8B50 /* CoreFoundation.framework in Frameworks */,
-				554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */,
 				554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */,
 				9EE24022164A04800046BE6F /* AudioUnit.framework in Frameworks */,
 			);
@@ -2196,7 +2193,6 @@
 				55EE8EC6100404EB00E75E63 /* QuickTime.framework in Frameworks */,
 				5573A51C10B52EB500FF8B50 /* DrawSprocket.framework in Frameworks */,
 				55ED547410D5F9CD00824C61 /* CoreMIDI.framework in Frameworks */,
-				554E0DAD10D619D700BB619C /* Foundation.framework in Frameworks */,
 				9EE24021164A04800046BE6F /* AudioUnit.framework in Frameworks */,
 				55F7DBF517FCD39E00338025 /* ApplicationServices.framework in Frameworks */,
 				55F7DBF617FCD3A700338025 /* CoreServices.framework in Frameworks */,

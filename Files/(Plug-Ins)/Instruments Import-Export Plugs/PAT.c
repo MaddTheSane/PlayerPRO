@@ -307,7 +307,9 @@ static OSErr mainPAT(		OSType					order,						// Order to execute
 			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr)
 			{
-				GetEOF(iFileRefI, &inOutCount);
+				SInt64 forkSize;
+				FSGetForkSize(iFileRefI, &forkSize);
+				inOutCount = forkSize;
 				
 				theSound = NewPtr(inOutCount);
 				if (theSound == NULL) myErr = MADNeedMemory;
@@ -322,7 +324,7 @@ static OSErr mainPAT(		OSType					order,						// Order to execute
 					DisposePtr(theSound);
 				}
 				
-				FSClose(iFileRefI);
+				FSCloseFork(iFileRefI);
 			}
 		}
 		break;
@@ -346,7 +348,7 @@ static OSErr mainPAT(		OSType					order,						// Order to execute
 				
 				DisposePtr(theSound);
 				
-				FSClose(iFileRefI);
+				FSCloseFork(iFileRefI);
 			}
 		}
 		break;

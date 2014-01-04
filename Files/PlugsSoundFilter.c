@@ -35,7 +35,6 @@ OSErr TESTmain(	Ptr,
 
 typedef OSErr (*MyProcPtr) (sData*, long , long , PPInfoPlug*, long);
 OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
-extern void NSLog(CFStringRef format, ...);
 
 OSErr NCallPlugIns(		short						PlugNo,					// CODE du plug
 												sData						*theInsData,
@@ -70,7 +69,7 @@ OSErr NCallPlugIns(		short						PlugNo,					// CODE du plug
 
 void LoadPLUGSE(short No, StringPtr theName)
 {
-	NSLog(CFSTR("Umm... what is this?"));
+	//NSLog(CFSTR("Umm... what is this?"));
 }
 
 static long PlugsFolderOK;

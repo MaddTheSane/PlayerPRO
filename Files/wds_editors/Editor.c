@@ -1775,7 +1775,7 @@ void SavePcmdFile(Pcmd *myPcmd)
 		iErr = FSpOpenDF(&reply, fsCurPerm, &fRefNum);
 		if (iErr) goto EndPcmd;
 	}
-	iErr = SetFPos(fRefNum, fsFromStart, 0);
+	iErr = FSSetForkPosition(fRefNum, fsFromStart, 0);
 
 	inOutBytes = GetPtrSize((Ptr) myPcmd);
 	SwapPcmd(myPcmd);

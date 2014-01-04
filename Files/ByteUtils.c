@@ -13,7 +13,6 @@
 void SwapPrefs(Prefs *swapPrefs)
 {
 #ifdef __LITTLE_ENDIAN__
-//TODO: Floats and double byteswap?
 	int i, x;
 	swapPrefs->Version = EndianS16_BtoN(swapPrefs->Version);
 	swapPrefs->Frequence = EndianS32_BtoN(swapPrefs->Frequence);

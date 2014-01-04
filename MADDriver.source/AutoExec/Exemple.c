@@ -1196,7 +1196,7 @@ void DoPreferences2()
 	{
 		inOutBytes = sizeof(Prefs);
 		iErr = FSRead(fRefNum, &inOutBytes, &thePrefs);
-		iErr = FSClose(fRefNum);
+		iErr = FSCloseFork(fRefNum);
 		
 		if (thePrefs.Version >= 0x0500)
 		{

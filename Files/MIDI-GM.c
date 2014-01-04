@@ -268,7 +268,7 @@ short GenerateDLSFromBundle()
 					FSWrite(ff, &count, *rsrc);
 					HUnlock(rsrc);
 					
-					SetFPos(ff, fsFromStart, 0);
+					FSSetForkPosition(ff, fsFromStart, 0);
 				}
 			}
 			
@@ -342,7 +342,7 @@ OSErr GetAtomData(MyAtom at, void* data, long size)
 	OSErr	iErr;
 	MyAtom	retat;
 	
-	iErr = SetFPos(at.ref, fsFromStart, at.pos -4);
+	iErr = FSSetForkPosition(at.ref, fsFromStart, at.pos -4);
 	
 	fSize = sizeof(sck);
 	iErr = FSRead(at.ref, &fSize, &sck);
@@ -373,7 +373,7 @@ OSErr GetAtomString(MyAtom sat4, Ptr text)
 	long	fSize = sat4.size;
 	OSErr	iErr;
 	
-	iErr = SetFPos(sat4.ref, fsFromStart, sat4.pos + 4);	// + 4 pourquoi? Paske y a la taille de la string
+	iErr = FSSetForkPosition(sat4.ref, fsFromStart, sat4.pos + 4);	// + 4 pourquoi? Paske y a la taille de la string
 	
 	iErr = FSRead(sat4.ref, &fSize, text);
 	
@@ -391,10 +391,9 @@ long CountAtomById(MyAtom at, long type)
 	listSize -= 4;
 	index = 0;
 	
-	iErr = SetFPos(at.ref, fsFromStart, at.pos);
+	iErr = FSSetForkPosition(at.ref, fsFromStart, at.pos);
 	
-	do
-	{
+	do {
 		fSize = sizeof(sck);
 		iErr = FSRead(at.ref, &fSize, &sck);
 		if (iErr) DebugLong(iErr);
@@ -417,7 +416,7 @@ long CountAtomById(MyAtom at, long type)
 				break;
 		}
 		
-		iErr = SetFPos(at.ref, fsFromStart, prePos + sck.cksize);
+		iErr = FSSetForkPosition(at.ref, fsFromStart, prePos + sck.cksize);
 		if (iErr) DebugLong(iErr);
 		
 		listSize -= sck.cksize;
@@ -443,7 +442,7 @@ OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 	listSize -= 4;
 	index = 0;
 	
-	iErr = SetFPos(at.ref, fsFromStart, at.pos);
+	iErr = FSSetForkPosition(at.ref, fsFromStart, at.pos);
 	
 	do
 	{
@@ -497,7 +496,7 @@ OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 				break;
 		}
 		
-		iErr = SetFPos(at.ref, fsFromStart, prePos + sck.cksize);
+		iErr = FSSetForkPosition(at.ref, fsFromStart, prePos + sck.cksize);
 		if (iErr) DebugLong(iErr);
 		
 		listSize -= sck.cksize;

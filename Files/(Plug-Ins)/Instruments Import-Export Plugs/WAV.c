@@ -100,7 +100,7 @@ static OSErr mainWave(OSType					order,						// Order to execute
 				
 				DisposePtr(theSound);
 				
-				FSClose(iFileRefI);
+				FSCloseFork(iFileRefI);
 			}
 		}
 			break;

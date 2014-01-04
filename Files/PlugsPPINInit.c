@@ -44,7 +44,6 @@ pascal void myCustomEventNAVProc(	NavEventCallbackMessage 	callBackSelector,
 								 NavCallBackUserData 		callBackUD);
 void HandleCustomMouseNAVDown(NavCBRecPtr callBackParms);
 void InitPPINMenu(void);
-extern void NSLog(CFStringRef format, ...);
 
 
 static	PPInfoPlug		thePPInfoPlug;
@@ -947,7 +946,7 @@ badplug2:
 badplug:
 	
 	(*tempPPINPlug)->Release(tempPPINPlug);
-	NSLog(CFSTR("Error with plug-in"));
+	//NSLog(CFSTR("Error with plug-in"));
 	
 	return;
 }

@@ -334,7 +334,7 @@ OSErr main(		OSType					order,						// Order to execute
 					}
 				}
 				
-				FSClose(iFileRefI);
+				FSCloseFork(iFileRefI);
 			}
 		}
 		break;
@@ -358,7 +358,7 @@ OSErr main(		OSType					order,						// Order to execute
 				
 				DisposePtr(theSound);
 				
-				FSClose(iFileRefI);
+				FSCloseFork(iFileRefI);
 			}
 		}
 		break;

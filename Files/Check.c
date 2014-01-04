@@ -742,7 +742,7 @@ void ExportFile(OSType theType, FSSpec *newFile)
 			{
 				inOutCount = 1;
 				iErr = FSWrite(fRefNum, &inOutCount, theTypePtr);
-				SetFPos(fRefNum, fsFromStart, 0);
+				FSSetForkPosition(fRefNum, fsFromStart, 0);
 			}
 			
 		}
@@ -920,7 +920,7 @@ void ExportFile(OSType theType, FSSpec *newFile)
 			
 			if (theType == 'MADS')
 			{
-				SetFPos(fRefNum, fsFromStart, 0);
+				FSSetForkPosition(fRefNum, fsFromStart, 0);
 				
 				iErr = SetupAIFFHeader(		fRefNum,
 									   2, 
@@ -1218,7 +1218,7 @@ Boolean	ImportFile(Str255	fName, short vRefNum, long parID, OSType	theType)
 							}
 						}
 						
-						FSCloseFork (iFileRefI);
+						FSCloseFork(iFileRefI);
 					}
 					else pStrcpy(lastLoadMODListName, fName);
 					return false;
@@ -1310,7 +1310,7 @@ Boolean	ImportFile(Str255	fName, short vRefNum, long parID, OSType	theType)
 				/** TEST MEMOIRE :  Environ 1 fois la taille du fichier**/
 				iErr = FSpOpenDF(&aSpec, fsCurPerm, &iFileRefI);
 				GetEOF(iFileRefI, &sndSize);
-				FSCloseFork (iFileRefI);
+				FSCloseFork(iFileRefI);
 				
 				tempPtr = MyNewPtr((sndSize * 3L) / 2L);
 				if (tempPtr == NULL) { iErr = MADNeedMemory;  break; }

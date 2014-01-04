@@ -32,7 +32,6 @@
 
 #ifdef _MAC_H
 #include <CoreFoundation/CoreFoundation.h>
-extern void NSLog(CFStringRef format, ...);
 #endif
 
 #ifdef _MIDIHARDWARE_
@@ -1342,7 +1341,7 @@ OSErr MADInitLibraryNew(FSRefPtr PlugsFolder, MADLibrary **lib)
 OSErr MADInitLibrary(FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
 {
 	FSRef TempRef;
-	if(sysMemory == TRUE) NSLog(CFSTR("sysMemory definition in MADInitLibrary is ignored"));
+	if(sysMemory == TRUE) fprintf(stderr, "PlayerPROCore: sysMemory Definition in MADInitLibrary is ignored\n");
 	
 	if(PlugsFolderName != NULL)
 	{

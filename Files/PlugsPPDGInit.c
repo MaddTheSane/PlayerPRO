@@ -6,8 +6,6 @@
 #include "PPPrivate.h"
 #define FilterPlugMax 100
 
-extern void NSLog(CFStringRef format, ...);
-
 typedef struct FilterInfo
 {
 	PPDigitalPlugin	**PlugCode;
@@ -131,7 +129,7 @@ void InitPPDGMenu(void)
 	}
 }
 
-short PressPPDGMenu(Rect	*PopUpRect)
+short PressPPDGMenu(Rect *PopUpRect)
 {
 	long	mresult;
 	Point	Zone;
@@ -148,9 +146,8 @@ short PressPPDGMenu(Rect	*PopUpRect)
 	
 	DeleteMenu(GetMenuID(PPDGMenu));
 	
-	if (HiWord(mresult ) != 0 )
-	{
-		return LoWord(mresult );
-	}
-	else return -1;
+	if (HiWord(mresult) != 0 ) {
+		return LoWord(mresult);
+	} else
+		return -1;
 }
