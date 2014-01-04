@@ -771,8 +771,7 @@ void ProcessVSTPlug(MADDriverRec *intDriver, long *data, long datasize, short ch
 						}
 					}
 					
-					if (ChanToApply > 1)
-					{
+					if (ChanToApply > 1) {
 						BlockMoveData(out1, in1, sizeof(float) * datasize);
 						BlockMoveData(out2, in2, sizeof(float) * datasize);
 					}
@@ -823,15 +822,12 @@ void CloseVSTPlug(void)
 	iErr = FSpCreate(&spec, 'SNPL', 'PREF',smSystemScript);
 	
 	iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
-	if (iErr == noErr)
-	{
-		for (i = 0; i < MAXVSTPREF; i++)
-		{
-			if (VSTPref[ i] != NULL)
-			{
+	if (iErr == noErr) {
+		for (i = 0; i < MAXVSTPREF; i++) {
+			if (VSTPref[i] != NULL) {
 				inOutBytes = sizeof(VSTPrefsStruct);
 			
-				iErr = FSWrite(fRefNum, &inOutBytes, VSTPref[ i]);
+				iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, VSTPref[i], NULL);
 			}
 		}
 		

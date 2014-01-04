@@ -214,7 +214,7 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 				InstrData *tempIns = (InstrData*)NewPtr(inOutCount);
 				BlockMoveData(InsHeader, tempIns, inOutCount);
 				ByteswapInstrument(tempIns);
-				myErr = FSWrite(iFileRefI, &inOutCount, (Ptr)tempIns);
+				myErr = FSWriteFork(iFileRefI, fsAtMark, 0, inOutCount, tempIns, NULL);
 				DisposePtr((Ptr)tempIns);
 				
 				// Write samples headers & data
@@ -243,10 +243,10 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 					copyData->data = 0;
 					
 					inOutCount = sizeof(sData);
-					FSWrite(iFileRefI, &inOutCount, copyData);
+					FSWriteFork(iFileRefI, fsAtMark, 0, inOutCount, copyData, NULL);
 					
 					inOutCount = curData->size;
-					FSWrite(iFileRefI, &inOutCount, copydataData);
+					FSWriteFork(iFileRefI, fsAtMark, 0, inOutCount, copydataData, NULL);
 					DisposePtr((Ptr)copyData);
 					DisposePtr(copydataData);
 

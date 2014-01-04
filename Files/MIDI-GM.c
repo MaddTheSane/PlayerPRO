@@ -265,7 +265,7 @@ short GenerateDLSFromBundle()
 					
 					HLock(rsrc);
 					count = GetHandleSize(rsrc);
-					FSWrite(ff, &count, *rsrc);
+					FSWriteFork(ff, fsAtMark, 0, count, *rsrc, NULL);
 					HUnlock(rsrc);
 					
 					FSSetForkPosition(ff, fsFromStart, 0);

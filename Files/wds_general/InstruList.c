@@ -4273,7 +4273,7 @@ void SaveInstrumentsList()
 		if (iErr == noErr)
 		{
 			inOutCount = sizeof(InstrData) * MAXINSTRU;
-			iErr = FSWrite(refNum, &inOutCount, curMusic->fid);
+			iErr = FSWriteFork(refNum, fsAtMark, 0, inOutCount, curMusic->fid, NULL);
 			
 			for (i = 0; i < MAXINSTRU ; i++)
 			{
@@ -4284,10 +4284,10 @@ void SaveInstrumentsList()
 					curData = curMusic->sample[ curMusic->fid[ i].firstSample +  x];
 					
 					inOutCount = sizeof(sData);
-					iErr = FSWrite(refNum, &inOutCount, curData);
+					iErr = FSWriteFork(refNum, fsAtMark, 0, inOutCount, curData, NULL);
 					
 					inOutCount = curData->size;
-					iErr = FSWrite(refNum, &inOutCount, curData->data);
+					iErr = FSWriteFork(refNum, fsAtMark, 0, inOutCount, curData->data, NULL);
 				}
 			}
 		}

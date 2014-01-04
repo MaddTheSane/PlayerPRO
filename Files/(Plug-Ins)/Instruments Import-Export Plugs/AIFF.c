@@ -299,7 +299,7 @@ EXP OSErr main(		OSType					order,						// Order to execute
 												inOutBytes,
 												0);
 					
-					myErr = FSWrite(iFileRefI, &inOutBytes, curData->data);
+					myErr = FSWriteFork(iFileRefI, fsAtMark, 0, inOutBytes, curData->, NULL);
 					
 					/*
 					marker = (MarkerChunk*) CH;

@@ -1777,9 +1777,9 @@ void SavePcmdFile(Pcmd *myPcmd)
 	}
 	iErr = FSSetForkPosition(fRefNum, fsFromStart, 0);
 
-	inOutBytes = GetPtrSize((Ptr) myPcmd);
+	inOutBytes = GetPtrSize((Ptr)myPcmd);
 	SwapPcmd(myPcmd);
-	iErr = FSWrite(fRefNum, &inOutBytes, myPcmd);
+	iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, myPcmd, NULL);
 	iErr = FSCloseFork(fRefNum);
 
 	EndPcmd:
@@ -4325,8 +4325,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 		}
 		else
 		{
-			if (theFlavor == 'VCT5')
-			{
+			if (theFlavor == 'VCT5') {
 				err = FSpCreate(&target, 'TVOD', 'AIFF', smSystemScript);
 				err = FSpOpenDF(&target, fsCurPerm, &fRefNum);
 				
@@ -4334,12 +4333,10 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 				{
 					while (theProgressDia != NULL) DoAIFFExporting();
 				}
-			}
-			else
-			{
+			} else {
 				FSpCreate(&target, 'SNPL', 'Pcmd', smSystemScript);
 				FSpOpenDF(&target, fsCurPerm, &fRefNum);
-				FSWrite(fRefNum, &textSize, myPcmd);
+				FSWriteFork(fRefNum, fsAtMark, 0, textSize, myPcmd, NULL);
 				FSCloseFork(fRefNum);
 			}
 			

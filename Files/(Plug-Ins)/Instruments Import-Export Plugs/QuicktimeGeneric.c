@@ -68,17 +68,19 @@ static OSErr mainQTInst(OSType					order,				// Order to execute
 				short				numChan;
 				
 				myErr = FSpCreate(AlienFileFSSpec, 'TVOD', 'AIFF', smCurrentScript);
-				if(myErr == noErr) myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
+				if(myErr == noErr)
+					myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 				
-				if (myErr == noErr)
-				{
+				if (myErr == noErr) {
 					inOutBytes 	= curData->size;
 					rate		= curData->c2spd;
 					
-					if (curData->stereo) numChan = 2;
-					else numChan = 1;
+					if (curData->stereo)
+						numChan = 2;
+					else 
+						numChan = 1;
 					
-					myErr = SetupAIFFHeader(	iFileRefI,
+					myErr = SetupAIFFHeader(iFileRefI,
 												numChan,
 												rate << 16L,
 												curData->amp,
@@ -86,7 +88,8 @@ static OSErr mainQTInst(OSType					order,				// Order to execute
 												inOutBytes,
 												0);
 					
-					if(myErr == noErr) myErr = FSWrite(iFileRefI, &inOutBytes, curData->data);
+					if(myErr == noErr) 
+						myErr = FSWriteFork(iFileRefI, fsAtMark, 0, inOutBytes, curData->data, NULL);
 					FSCloseFork(iFileRefI);
 				}
 			}

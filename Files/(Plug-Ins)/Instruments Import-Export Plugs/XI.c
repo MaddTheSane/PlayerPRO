@@ -342,12 +342,11 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 				BlockMoveData("Extended Instrument:                       FastTracker v2.00   ", start, 0x42);
 				
 				inOutCount = 0x42;
-				FSWrite(iFileRefI, &inOutCount, start);
+				FSWriteFork(iFileRefI, fsAtMark, 0, inOutCount, start, NULL);
 				
 				BlockMoveData(InsHeader->what, pth.what, 96);
 				BlockMoveData(InsHeader->volEnv, pth.volenv, 48);
-				for (x = 0; x < 24; x++)
-				{
+				for (x = 0; x < 24; x++) {
 					pth.volenv[ x] = Tdecode16(&pth.volenv[ x]);
 				}
 				
@@ -372,12 +371,12 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 				pth.panend = InsHeader->pannEnd;
 				
 				inOutCount = sizeof(XMPATCHHEADER);
-				FSWrite(iFileRefI, &inOutCount, &pth);
+				FSWriteFork(iFileRefI, fsAtMark, 0, inOutCount, &pth, NULL);
 				
 				inOutCount = 2;
 				x = InsHeader->numSamples;
 				x = Tdecode16(&x);
-				FSWrite(iFileRefI, &inOutCount, &x);
+				FSWriteFork(iFileRefI, fsAtMark, 0, inOutCount, &x, NULL);
 				
 				/** WRITE samples */
 				
@@ -431,11 +430,10 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					wh.looplength 	= Tdecode32(&wh.looplength);
 					
 					inOutCount = sizeof(wh);
-					FSWrite(iFileRefI, &inOutCount, &wh);
+					FSWriteFork(iFileRefI, fsAtMark, 0, inOutCount, &wh, NULL);
 				}
 				
-				for (u = 0 ; u < InsHeader->numSamples ; u++)
-				{
+				for (u = 0; u < InsHeader->numSamples; u++) {
 					sData 	*curData = sample[ u];
 					Ptr		tempPtr;
 					long	dstSize;
@@ -502,7 +500,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 						}
 						
 						inOutCount = dstSize;
-						FSWrite(iFileRefI, &inOutCount, tempPtr);
+						FSWriteFork(iFileRefI, fsAtMark, 0, inOutCount, tempPtr, NULL);
 						
 						DisposePtr(tempPtr);
 					}

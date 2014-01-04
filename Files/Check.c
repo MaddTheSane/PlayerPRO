@@ -916,13 +916,12 @@ void ExportFile(OSType theType, FSSpec *newFile)
 			// *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 			
 			GetFPos(fRefNum, &tt);
-			SetEOF(fRefNum, tt);
+			FSSetForkSize(fRefNum, fsFromStart, tt);
 			
-			if (theType == 'MADS')
-			{
+			if (theType == 'MADS') {
 				FSSetForkPosition(fRefNum, fsFromStart, 0);
 				
-				iErr = SetupAIFFHeader(		fRefNum,
+				iErr = SetupAIFFHeader(fRefNum,
 									   2, 
 									   rate44khz, 
 									   16, 

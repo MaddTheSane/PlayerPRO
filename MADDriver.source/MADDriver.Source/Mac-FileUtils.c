@@ -29,16 +29,16 @@ unsigned char* MYC2PStr(Ptr cStr)
 {
 	long size = strlen(cStr);
 	memmove(cStr + 1, cStr, size);
-	cStr[ 0] = size;
+	cStr[0] = size;
 
 	return (unsigned char*) cStr;
 }
 
 void MYP2CStr(unsigned char *cStr)
 {
-	long size = cStr[ 0];
+	long size = cStr[0];
 	memmove(cStr, cStr + 1, size);
-	cStr[ size] = 0;
+	cStr[size] = 0;
 }
 
 UNFILE iFileOpen(Ptr name)
@@ -55,7 +55,8 @@ UNFILE iFileOpen(Ptr name)
 	MYP2CStr((unsigned char*)name);
 	
 	iErr = FSpMakeFSRef(&spec, &Ref);
-	if(iErr != noErr) return 0;
+	if(iErr != noErr) 
+		return 0;
 	Boolean	UnusedBoolean, UnusedBoolean2;
 #if CHECKDATAFORKNAME
 	HFSUniStr255 whythis;
@@ -66,16 +67,16 @@ UNFILE iFileOpen(Ptr name)
 	FSResolveAliasFile(&Ref, TRUE, &UnusedBoolean, &UnusedBoolean2);
 	iErr = FSOpenFork(&Ref, 0, 0, fsCurPerm, &temp);
 #endif
-	if(iErr != noErr) return 0;
-	else return temp;
+	if(iErr != noErr) 
+		return 0;
+	else 
+		return temp;
 }
 
 long iGetEOF(UNFILE iFileRefI)
 {
 	SInt64 curEOF;
-	
 	FSGetForkSize(iFileRefI, &curEOF);
-	
 	return curEOF;
 }
 
@@ -91,10 +92,9 @@ OSErr iSeekCur(long size, UNFILE iFileRefI)
 
 void iFileCreate(Ptr name, OSType type)
 {
-	FSRef	ref;
-	FSCatalogInfo	fileCat;
+	FSRef			ref;
+	FSCatalogInfo	fileCat = {0};
 	FileInfo		*fInfo = (FileInfo*)&fileCat.finderInfo;
-	memset(&fileCat, 0, sizeof(fileCat));
 	
 	MYC2PStr(name);
 	{
@@ -103,16 +103,14 @@ void iFileCreate(Ptr name, OSType type)
 		Str31 blankName = {0};
 		
 		FSMakeFSSpec(spec.vRefNum, spec.parID, (unsigned char*)name, &spec);
-		if (FSpMakeFSRef(&spec, &ref) == noErr)
-		{
+		if (FSpMakeFSRef(&spec, &ref) == noErr) {
 			FSDeleteObject(&ref);
 		}
 		FSMakeFSSpec(spec.vRefNum, spec.parID, blankName, &spec);
 		FSpMakeFSRef(&spec, &ref);
 	}
 	CFStringRef fileName = CFStringCreateWithPascalString(kCFAllocatorDefault, (unsigned char*)name, kCFStringEncodingMacRoman);
-	if (!fileName)
-	{
+	if (!fileName) {
 		fileName = CFStringCreateWithPascalString(kCFAllocatorDefault, (unsigned char*)name, CFStringGetSystemEncoding());
 	}
 	
@@ -154,17 +152,17 @@ EXP void OSType2Ptr(OSType type, Ptr str)
 {
 	MOT32(&type);
 	memcpy(str, &type, 4);
-	str[ 4] = 0;
+	str[4] = 0;
 }
 
 EXP OSType Ptr2OSType(char* str)
 {
 	short 	i;
-	OSType	type;
+	OSType	type = '    ';
 	
 	i = strlen(str);
-	if (i > 4) i = 4;
-	type = '    ';
+	if (i > 4) 
+		i = 4;
 	memcpy(&type, str, i);
 	MOT32(&type);
 	
