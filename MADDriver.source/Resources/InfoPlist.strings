@@ -6,6 +6,7 @@
 
 */
 
+CFBundleGetInfoString = "PlayerPRO Main Library";
 "PPMTMFile" = "MultiTracker Audio";
 "PPS3MFile" = "ScreamTracker Audio";
 "PPMODFile" = "ProTracker Audio";
