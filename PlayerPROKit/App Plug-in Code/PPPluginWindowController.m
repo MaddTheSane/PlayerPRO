@@ -48,7 +48,7 @@ NSString * const PPPlugReturnCode = @"PlayerPROKit Return Code";
 {
 	[super windowDidLoad];
 	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-	if (isMultipleIstanceSafe) {
+	if (isMultipleIstanceSafe && infoPlug) {
 		parentWindow = (__bridge NSWindow*)(infoPlug->NSWindow);
 		infoPlug->OutWindowController = CFBridgingRetain(self);
 	}
@@ -56,10 +56,10 @@ NSString * const PPPlugReturnCode = @"PlayerPROKit Return Code";
 
 - (IBAction)okOrCancel:(id)sender
 {
-	if (!_isRunningModal) {
-		[parentWindow endSheet:self.window returnCode:[sender tag] == 1 ? NSOffState : NSOnState];
-	}else {
+	if (_isRunningModal) {
 		[NSApp stopModalWithCode:([sender tag] == 1) ? NSOffState : NSOnState];
+	} else {
+		[parentWindow endSheet:self.window returnCode:[sender tag] == 1 ? NSOffState : NSOnState];
 	}
 }
 
@@ -77,6 +77,16 @@ NSString * const PPPlugReturnCode = @"PlayerPROKit Return Code";
 - (OSErr)runAsSheet
 {
 	if (isMultipleIstanceSafe) {
+		if (!parentWindow) {
+			self.isRunningModal = YES;
+			NSInteger retVal = [NSApp runModalForWindow:self.window];
+			if (self.plugBlock) {
+				plugBlock();
+			}
+			[self close];
+			return retVal;
+		}
+		
 		self.isRunningModal = NO;
 		[parentWindow beginSheet:self.window completionHandler:^(NSModalResponse returnCode) {
 			if (returnCode == NSOnState) {

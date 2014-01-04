@@ -9,8 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PPPlug.h>
 
-extern NSString * const PPPlugInSheetDidEnd;
-extern NSString * const PPPlugReturnCode;
+EXP NSString * const PPPlugInSheetDidEnd;
+EXP NSString * const PPPlugReturnCode;
 
 @interface PPPluginWindowController : NSWindowController
 {
