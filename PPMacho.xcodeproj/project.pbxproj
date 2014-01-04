@@ -110,7 +110,7 @@
 		55096A3C10E0A74A000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
-		550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; settings = {COMPILER_FLAGS = "-std=gnu99 -no-pedantic"; }; };
+		550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
 		550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */; };
 		550FFAE617CEA4570003A2F3 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		550FFAE717CEA4570003A2F3 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -163,7 +163,7 @@
 		5523EC73169265AC0067B22A /* PPPlugInInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC71169265AB0067B22A /* PPPlugInInfoController.m */; };
 		5523EC77169265C30067B22A /* PPPlugInInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC76169265C30067B22A /* PPPlugInInfo.m */; };
 		5523EC79169358470067B22A /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
-		5523EC7C169361A00067B22A /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */; settings = {COMPILER_FLAGS = "-std=gnu99 -no-pedantic"; }; };
+		5523EC7C169361A00067B22A /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */; };
 		5523EC8116936F880067B22A /* PPDigitalPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */; };
 		5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */; };
 		552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552581FC16C6FC350016A31C /* InstrumentInfoController.m */; };
@@ -171,6 +171,7 @@
 		55268A521874CA8F00A82269 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55268A541874CA8F00A82269 /* Localizable.strings */; };
 		55268A5B1877EB7A00A82269 /* FadeVolumeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55268A5D1877EB7A00A82269 /* FadeVolumeController.xib */; };
 		55268A601877EB8E00A82269 /* FadeNoteController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55268A621877EB8E00A82269 /* FadeNoteController.xib */; };
+		55268AAC1877EF2500A82269 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55268AAA1877EF0000A82269 /* InfoPlist.strings */; };
 		552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 552A662816B5EBEB007C63F7 /* PPPlugInObject.m */; };
 		552AFC7F167A8C8B00F32481 /* PPPause.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 552AFC7E167A8C8B00F32481 /* PPPause.pdf */; };
@@ -249,7 +250,7 @@
 		555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		555C5FCB18445CBC00DBD5DA /* libPlayerPROCompact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */; };
 		555C5FCC18445CBC00DBD5DA /* libPlayerPROKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */; };
-		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; settings = {COMPILER_FLAGS = "-std=gnu99 -no-pedantic"; }; };
+		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		557139E61685007B00831A5A /* OpenPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139E41685007B00831A5A /* OpenPanelViewController.m */; };
 		557139E71685007B00831A5A /* OpenPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557139E51685007B00831A5A /* OpenPanelViewController.xib */; };
@@ -567,7 +568,7 @@
 		55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B1B4F6166A861900820424 /* PPMusicObject.m */; };
 		55B1B4FA166A8ED500820424 /* PPMusicObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */; };
 		55B23D0F1687D1D700DCE923 /* RDriverCarbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55B23D131687D22700DCE923 /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; settings = {COMPILER_FLAGS = "-std=gnu99 -no-pedantic"; }; };
+		55B23D131687D22700DCE923 /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
 		55B23D1E1689314500DCE923 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B23D1F1689314E00DCE923 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B23D201689315500DCE923 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -630,7 +631,7 @@
 		55C358BE16C42D1800FB9FA6 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* FileUtils.h */; };
 		55C358F716C42F7100FB9FA6 /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */; };
 		55C358F816C42F7600FB9FA6 /* MIDI-Hardware-Stub.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */; };
-		55C930391819E68700D9E072 /* CocoaFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C930381819E68700D9E072 /* CocoaFuncs.m */; settings = {COMPILER_FLAGS = "-std=gnu99 -no-pedantic"; }; };
+		55C930391819E68700D9E072 /* CocoaFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C930381819E68700D9E072 /* CocoaFuncs.m */; };
 		55C9303A1819E68700D9E072 /* CocoaFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C930381819E68700D9E072 /* CocoaFuncs.m */; };
 		55C9303B1819F6EC00D9E072 /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */; };
 		55CB01A711EB82FA0028C6BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CB01A611EB82FA0028C6BB /* main.m */; };
@@ -1906,6 +1907,8 @@
 		55268A5F1877EB8200A82269 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FadeVolumeController.strings; sourceTree = "<group>"; };
 		55268A611877EB8E00A82269 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/FadeNoteController.xib; sourceTree = "<group>"; };
 		55268A641877EB9500A82269 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FadeNoteController.strings; sourceTree = "<group>"; };
+		55268A651877ECF100A82269 /* Pedantic.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Pedantic.xcconfig; sourceTree = "<group>"; };
+		55268AAA1877EF0000A82269 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		552711E3124881F4005120FC /* UserDefaultKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserDefaultKeys.h; path = ../Classes/UserDefaultKeys.h; sourceTree = "<group>"; };
 		552711E4124881F4005120FC /* UserDefaultKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = UserDefaultKeys.m; path = ../Classes/UserDefaultKeys.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		552A662716B5EBEA007C63F7 /* PPPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugInObject.h; sourceTree = "<group>"; };
@@ -3435,6 +3438,14 @@
 			name = "Instrument Code";
 			sourceTree = "<group>";
 		};
+		55268AA91877EECF00A82269 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				55268AAA1877EF0000A82269 /* InfoPlist.strings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		552C70C210CDAF8C00C0E0D4 /* Documentation */ = {
 			isa = PBXGroup;
 			children = (
@@ -3502,6 +3513,7 @@
 				553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */,
 				553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */,
 				55E527A7186A24BF0020F3D6 /* PlayerPROCore.xcconfig */,
+				55268A651877ECF100A82269 /* Pedantic.xcconfig */,
 			);
 			path = Xcconfigs;
 			sourceTree = "<group>";
@@ -3787,6 +3799,7 @@
 		55868B1810BFC0BB00FCC24D /* PlayerPROCore */ = {
 			isa = PBXGroup;
 			children = (
+				55268AA91877EECF00A82269 /* Resources */,
 				55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */,
 				55ADC3E617D7E4A4001F27D4 /* MADDriver.h */,
 				554E105010D6C79E00BB619C /* SndUtils.c */,
@@ -5633,6 +5646,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55268AAC1877EF2500A82269 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7923,6 +7937,1129 @@
 			};
 			name = Debug;
 		};
+		55268A671877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55268A651877ECF100A82269 /* Pedantic.xcconfig */;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"__MAC_OS_X_MEMORY_MANAGER_CLEAN__=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNKNOWN_PRAGMAS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				LLVM_LTO = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = "non-global";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Pedantic;
+		};
+		55268A681877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = EditorIcon;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Classes/PlayerPRO-PrefixHeader.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PLAYERPRO6=1",
+				);
+				INFOPLIST_FILE = "Cocoa-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				PRODUCT_NAME = "PlayerPRO 6";
+				SKIP_INSTALL = NO;
+				USER_HEADER_SEARCH_PATHS = Shared;
+			};
+			name = Pedantic;
+		};
+		55268A691877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = NO;
+				USER_HEADER_SEARCH_PATHS = Shared;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Pedantic;
+		};
+		55268A6A1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "updateInfoPlist/updateInfoPlist-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				MACOSX_DEPLOYMENT_TARGET = "";
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Pedantic;
+		};
+		55268A6B1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS PlayerPRO Player/iOS PlayerPRO Player-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GENERATE_PKGINFO_FILE = NO;
+				INFOPLIST_FILE = "iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = NO;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Pedantic;
+		};
+		55268A6C1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "iOS PlayerPRO Player/iOS PlayerPRO Player-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				INFOPLIST_FILE = "iOS PlayerPRO PlayerTests/iOS PlayerPRO PlayerTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Pedantic;
+		};
+		55268A6D1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				SKIP_INSTALL = NO;
+				VALID_ARCHS = i386;
+			};
+			name = Pedantic;
+		};
+		55268A6E1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_EMPTY_BODY = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source/MADDriver.Source";
+				INFOPLIST_FILE = "PPImport copy-Info.plist";
+				INSTALL_PATH = /Library/Spotlight;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "PPImport Cocoa";
+				WRAPPER_EXTENSION = mdimporter;
+			};
+			name = Pedantic;
+		};
+		55268A6F1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PPQuickView/PPQuickView-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$PROJECT_DIR\"/MADDriver.source/MADDriver.Source",
+				);
+				INFOPLIST_FILE = "PPQuickView/PPQuickView-Info.plist";
+				INSTALL_PATH = /Library/QuickLook;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = qlgenerator;
+			};
+			name = Pedantic;
+		};
+		55268A701877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55E527A7186A24BF0020F3D6 /* PlayerPROCore.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "@rpath";
+				PRODUCT_NAME = PlayerPROCore;
+			};
+			name = Pedantic;
+		};
+		55268A711877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Old Plug-in Bridge/Old Plug-in Bridge-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"BUILDINGPPRO=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_PEDANTIC = NO;
+				INFOPLIST_FILE = "Old Plug-in Bridge/Old Plug-in Bridge-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../../../../../Frameworks @executable_path/../../../.. /Library/Frameworks";
+				MACH_O_TYPE = mh_execute;
+				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				WRAPPER_EXTENSION = xpc;
+			};
+			name = Pedantic;
+		};
+		55268A721877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55E527A7186A24BF0020F3D6 /* PlayerPROCore.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				INSTALL_PATH = "@rpath";
+				LD_DYLIB_INSTALL_NAME = "@rpath/PlayerPROCore.framework/Versions/${FRAMEWORK_VERSION}/PlayerPROCore";
+				PRODUCT_NAME = PlayerPROCoreTemp;
+			};
+			name = Pedantic;
+		};
+		55268A731877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"BUILDINGPPRO=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
+				INSTALL_PATH = "@rpath";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Pedantic;
+		};
+		55268A741877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/.";
+				MACH_O_TYPE = mh_execute;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Pedantic;
+		};
+		55268A751877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"NOEXPORTFUNCS=1",
+					"$(inherited)",
+					"BUILDINGPPRO=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = PlayerPROCompact;
+				STRIP_INSTALLED_PRODUCT = NO;
+			};
+			name = Pedantic;
+		};
+		55268A761877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				DEAD_CODE_STRIPPING = NO;
+				DSTROOT = /tmp/iOSPlayerPROCore.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MADDriver.source/MADDriver.Source/PlayerPROCore-OSX.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"NOEXPORTFUNCS=1",
+					"$(inherited)",
+					"BUILDINGPPRO=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				MACOSX_DEPLOYMENT_TARGET = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
+			};
+			name = Pedantic;
+		};
+		55268A771877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				DEAD_CODE_STRIPPING = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"BUILDINGPPRO=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				PRODUCT_NAME = PlayerPROKit;
+				STRIP_INSTALLED_PRODUCT = NO;
+			};
+			name = Pedantic;
+		};
+		55268A781877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				DEAD_CODE_STRIPPING = NO;
+				DSTROOT = /tmp/PlayerPROKit_iOS.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"BUILDINGPPRO=1",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
+			};
+			name = Pedantic;
+		};
+		55268A791877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Import-export";
+			};
+			name = Pedantic;
+		};
+		55268A7A1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A7B1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A7C1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A7D1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A7E1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A7F1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A801877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A811877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A821877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A831877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A841877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A851877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A861877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A871877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A881877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A891877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI.pch";
+				GCC_WARN_PEDANTIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				ONLY_ACTIVE_ARCH = NO;
+			};
+			name = Pedantic;
+		};
+		55268A8A1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_WARN_PEDANTIC = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+			};
+			name = Pedantic;
+		};
+		55268A8B1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Digital Plugs";
+			};
+			name = Pedantic;
+		};
+		55268A8C1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A8D1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A8E1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/Fade Vol/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A8F1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A901877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A911877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A921877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Instrument Plugs";
+			};
+			name = Pedantic;
+		};
+		55268A931877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+				);
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A941877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+				);
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A951877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(HEADER_SEARCH_PATHS)",
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+				);
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A961877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+					"$(inherited)",
+				);
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A971877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+					"USEDEPRECATEDFUNCS=0",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
+				);
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A981877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A991877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = "Filters Plugs";
+			};
+			name = Pedantic;
+		};
+		55268A9A1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A9B1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A9C1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A9D1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A9E1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268A9F1877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268AA01877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268AA11877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268AA21877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268AA31877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268AA41877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268AA51877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268AA61877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268AA71877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
+		55268AA81877EDF500A82269 /* Pedantic */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					ISUSINGPPPLUG,
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Pedantic;
+		};
 		5533410A10BB5460005208D1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
@@ -9888,6 +11025,7 @@
 			buildConfigurations = (
 				550FFAE917CEA4570003A2F3 /* Release */,
 				550FFAEA17CEA4570003A2F3 /* Debug */,
+				55268A931877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9897,6 +11035,7 @@
 			buildConfigurations = (
 				551292E8163DD68500C2C639 /* Release */,
 				551292E9163DD68500C2C639 /* Debug */,
+				55268A731877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9906,6 +11045,7 @@
 			buildConfigurations = (
 				55151F7E10DEDBDB0054ABC4 /* Release */,
 				55151F7F10DEDBDB0054ABC4 /* Debug */,
+				55268A941877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9915,6 +11055,7 @@
 			buildConfigurations = (
 				55151F7010DEDBD80054ABC4 /* Release */,
 				55151F7110DEDBD80054ABC4 /* Debug */,
+				55268A921877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9924,6 +11065,7 @@
 			buildConfigurations = (
 				5518107510C35A4600ADA9F4 /* Release */,
 				5518107610C35A4600ADA9F4 /* Debug */,
+				55268A6D1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9933,6 +11075,7 @@
 			buildConfigurations = (
 				551FEA6910E727AD00EDF2F1 /* Release */,
 				551FEA6A10E727AD00EDF2F1 /* Debug */,
+				55268A951877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9942,6 +11085,7 @@
 			buildConfigurations = (
 				551FEAD810E727B100EDF2F1 /* Release */,
 				551FEAD910E727B100EDF2F1 /* Debug */,
+				55268A961877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9951,6 +11095,7 @@
 			buildConfigurations = (
 				5533410A10BB5460005208D1 /* Release */,
 				5533410B10BB5460005208D1 /* Debug */,
+				55268A791877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9960,6 +11105,7 @@
 			buildConfigurations = (
 				5533411410BB547D005208D1 /* Release */,
 				5533411510BB547D005208D1 /* Debug */,
+				55268A7A1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9969,6 +11115,7 @@
 			buildConfigurations = (
 				5533415010BB572C005208D1 /* Release */,
 				5533415110BB572C005208D1 /* Debug */,
+				55268A7B1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9978,6 +11125,7 @@
 			buildConfigurations = (
 				553341D010BB5FE0005208D1 /* Release */,
 				553341D110BB5FE0005208D1 /* Debug */,
+				55268A7C1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9987,6 +11135,7 @@
 			buildConfigurations = (
 				553341E610BB5FFA005208D1 /* Release */,
 				553341E710BB5FFA005208D1 /* Debug */,
+				55268A7D1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -9996,6 +11145,7 @@
 			buildConfigurations = (
 				553341F910BB600A005208D1 /* Release */,
 				553341FA10BB600A005208D1 /* Debug */,
+				55268A7E1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10005,6 +11155,7 @@
 			buildConfigurations = (
 				554E110310D6F09F00BB619C /* Release */,
 				554E110410D6F09F00BB619C /* Debug */,
+				55268A8D1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10014,6 +11165,7 @@
 			buildConfigurations = (
 				554E114A10D6F1BF00BB619C /* Release */,
 				554E114B10D6F1BF00BB619C /* Debug */,
+				55268A8E1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10023,6 +11175,7 @@
 			buildConfigurations = (
 				554E11B710D6F32900BB619C /* Release */,
 				554E11B810D6F32900BB619C /* Debug */,
+				55268A8F1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10032,6 +11185,7 @@
 			buildConfigurations = (
 				554E11FB10D6F3E100BB619C /* Release */,
 				554E11FC10D6F3E100BB619C /* Debug */,
+				55268A901877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10041,6 +11195,7 @@
 			buildConfigurations = (
 				554E122E10D6F3E600BB619C /* Release */,
 				554E122F10D6F3E600BB619C /* Debug */,
+				55268A911877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10050,6 +11205,7 @@
 			buildConfigurations = (
 				55534AD61817C388006D6BCB /* Release */,
 				55534AD71817C388006D6BCB /* Debug */,
+				55268A6A1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10059,6 +11215,7 @@
 			buildConfigurations = (
 				555776D317EBF9000019D008 /* Release */,
 				555776D417EBF9000019D008 /* Debug */,
+				55268A6B1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10068,6 +11225,7 @@
 			buildConfigurations = (
 				555776D617EBF9000019D008 /* Release */,
 				555776D717EBF9000019D008 /* Debug */,
+				55268A6C1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10077,6 +11235,7 @@
 			buildConfigurations = (
 				5573A10D1656FAF100A5AECA /* Release */,
 				5573A10E1656FAF100A5AECA /* Debug */,
+				55268A761877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10086,6 +11245,7 @@
 			buildConfigurations = (
 				5573A34210B50D2900FF8B50 /* Release */,
 				5573A34310B50D2900FF8B50 /* Debug */,
+				55268A701877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10095,6 +11255,7 @@
 			buildConfigurations = (
 				5578C49617D9E8570057D11B /* Release */,
 				5578C49717D9E8570057D11B /* Debug */,
+				55268A691877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10104,6 +11265,7 @@
 			buildConfigurations = (
 				5578C50F17DB8FA00057D11B /* Release */,
 				5578C51017DB8FA00057D11B /* Debug */,
+				55268A771877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10113,6 +11275,7 @@
 			buildConfigurations = (
 				5578C52D17DB94A50057D11B /* Release */,
 				5578C52E17DB94A50057D11B /* Debug */,
+				55268A6E1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10122,6 +11285,7 @@
 			buildConfigurations = (
 				557DE43210E06BF200177B4C /* Release */,
 				557DE43310E06BF200177B4C /* Debug */,
+				55268A9A1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10131,6 +11295,7 @@
 			buildConfigurations = (
 				557DE3EF10E06BB500177B4C /* Release */,
 				557DE3F010E06BB500177B4C /* Debug */,
+				55268A991877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10140,6 +11305,7 @@
 			buildConfigurations = (
 				557DE5DD10E0882800177B4C /* Release */,
 				557DE5DE10E0882800177B4C /* Debug */,
+				55268A9B1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10149,6 +11315,7 @@
 			buildConfigurations = (
 				557DE62010E0884100177B4C /* Release */,
 				557DE62110E0884100177B4C /* Debug */,
+				55268A9C1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10158,6 +11325,7 @@
 			buildConfigurations = (
 				557DE66110E0885C00177B4C /* Release */,
 				557DE66210E0885C00177B4C /* Debug */,
+				55268A9D1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10167,6 +11335,7 @@
 			buildConfigurations = (
 				557DE6A210E0886400177B4C /* Release */,
 				557DE6A310E0886400177B4C /* Debug */,
+				55268A9E1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10176,6 +11345,7 @@
 			buildConfigurations = (
 				557DE6E310E0886A00177B4C /* Release */,
 				557DE6E410E0886A00177B4C /* Debug */,
+				55268A9F1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10185,6 +11355,7 @@
 			buildConfigurations = (
 				557DE7BA10E08D8300177B4C /* Release */,
 				557DE7BB10E08D8300177B4C /* Debug */,
+				55268AA01877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10194,6 +11365,7 @@
 			buildConfigurations = (
 				557DE7FD10E08D8900177B4C /* Release */,
 				557DE7FE10E08D8900177B4C /* Debug */,
+				55268AA11877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10203,6 +11375,7 @@
 			buildConfigurations = (
 				557DE84010E08D9E00177B4C /* Release */,
 				557DE84110E08D9E00177B4C /* Debug */,
+				55268AA21877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10212,6 +11385,7 @@
 			buildConfigurations = (
 				557DE88310E08DA300177B4C /* Release */,
 				557DE88410E08DA300177B4C /* Debug */,
+				55268AA31877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10221,6 +11395,7 @@
 			buildConfigurations = (
 				557DE8C610E08DA800177B4C /* Release */,
 				557DE8C710E08DA800177B4C /* Debug */,
+				55268AA41877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10230,6 +11405,7 @@
 			buildConfigurations = (
 				557DE90910E08DAC00177B4C /* Release */,
 				557DE90A10E08DAC00177B4C /* Debug */,
+				55268AA51877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10239,6 +11415,7 @@
 			buildConfigurations = (
 				557DE91910E08DB000177B4C /* Release */,
 				557DE91A10E08DB000177B4C /* Debug */,
+				55268AA61877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10248,6 +11425,7 @@
 			buildConfigurations = (
 				557DE95C10E08DB900177B4C /* Release */,
 				557DE95D10E08DB900177B4C /* Debug */,
+				55268AA71877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10257,6 +11435,7 @@
 			buildConfigurations = (
 				557DE99F10E08DC100177B4C /* Release */,
 				557DE9A010E08DC100177B4C /* Debug */,
+				55268AA81877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10266,6 +11445,7 @@
 			buildConfigurations = (
 				5586870D10BF5C4700FCC24D /* Release */,
 				5586870E10BF5C4700FCC24D /* Debug */,
+				55268A7F1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10275,6 +11455,7 @@
 			buildConfigurations = (
 				5586871C10BF5C4A00FCC24D /* Release */,
 				5586871D10BF5C4A00FCC24D /* Debug */,
+				55268A801877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10284,6 +11465,7 @@
 			buildConfigurations = (
 				5586872B10BF5C4E00FCC24D /* Release */,
 				5586872C10BF5C4E00FCC24D /* Debug */,
+				55268A811877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10293,6 +11475,7 @@
 			buildConfigurations = (
 				5586874B10BF5D3700FCC24D /* Release */,
 				5586874C10BF5D3700FCC24D /* Debug */,
+				55268A821877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10302,6 +11485,7 @@
 			buildConfigurations = (
 				5586876010BF5E4D00FCC24D /* Release */,
 				5586876110BF5E4D00FCC24D /* Debug */,
+				55268A831877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10311,6 +11495,7 @@
 			buildConfigurations = (
 				558687DC10BF620500FCC24D /* Release */,
 				558687DD10BF620500FCC24D /* Debug */,
+				55268A841877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10320,6 +11505,7 @@
 			buildConfigurations = (
 				558687F810BF624E00FCC24D /* Release */,
 				558687F910BF624E00FCC24D /* Debug */,
+				55268A851877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10329,6 +11515,7 @@
 			buildConfigurations = (
 				5586881910BF62F100FCC24D /* Release */,
 				5586881A10BF62F100FCC24D /* Debug */,
+				55268A861877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10338,6 +11525,7 @@
 			buildConfigurations = (
 				5586882710BF62F500FCC24D /* Release */,
 				5586882810BF62F500FCC24D /* Debug */,
+				55268A871877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10347,6 +11535,7 @@
 			buildConfigurations = (
 				5586883B10BF62FB00FCC24D /* Release */,
 				5586883C10BF62FB00FCC24D /* Debug */,
+				55268A881877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10356,6 +11545,7 @@
 			buildConfigurations = (
 				5586889510BF67F100FCC24D /* Release */,
 				5586889610BF67F100FCC24D /* Debug */,
+				55268A891877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10365,6 +11555,7 @@
 			buildConfigurations = (
 				55868A6410BFB46100FCC24D /* Release */,
 				55868A6510BFB46100FCC24D /* Debug */,
+				55268A8A1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10374,6 +11565,7 @@
 			buildConfigurations = (
 				55879F8D164CA65D009068D5 /* Release */,
 				55879F8E164CA65D009068D5 /* Debug */,
+				55268A741877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10383,6 +11575,7 @@
 			buildConfigurations = (
 				559C419D183EB4AC004A073C /* Release */,
 				559C419E183EB4AC004A073C /* Debug */,
+				55268A6F1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10392,6 +11585,7 @@
 			buildConfigurations = (
 				55A84338185D22800072250E /* Release */,
 				55A84339185D22800072250E /* Debug */,
+				55268A721877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10401,6 +11595,7 @@
 			buildConfigurations = (
 				55A8434C185D230F0072250E /* Release */,
 				55A8434D185D230F0072250E /* Debug */,
+				55268A711877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10410,6 +11605,7 @@
 			buildConfigurations = (
 				55ADC3D917D6F390001F27D4 /* Release */,
 				55ADC3DA17D6F390001F27D4 /* Debug */,
+				55268A971877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10419,6 +11615,7 @@
 			buildConfigurations = (
 				55B0F5A817DF0F0600653BCD /* Release */,
 				55B0F5A917DF0F0600653BCD /* Debug */,
+				55268A781877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10428,6 +11625,7 @@
 			buildConfigurations = (
 				55B797D610D6E6A60073E379 /* Release */,
 				55B797D710D6E6A60073E379 /* Debug */,
+				55268A8B1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10437,6 +11635,7 @@
 			buildConfigurations = (
 				55B797DF10D6E6C70073E379 /* Release */,
 				55B797E010D6E6C70073E379 /* Debug */,
+				55268A8C1877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10446,6 +11645,7 @@
 			buildConfigurations = (
 				55C358C016C42D1800FB9FA6 /* Release */,
 				55C358C116C42D1800FB9FA6 /* Debug */,
+				55268A751877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10455,6 +11655,7 @@
 			buildConfigurations = (
 				55CBF9A911EB77780028C6BB /* Release */,
 				55CBF9AA11EB77780028C6BB /* Debug */,
+				55268A681877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10464,6 +11665,7 @@
 			buildConfigurations = (
 				55E898B510F17C2B004EB52B /* Release */,
 				55E898B610F17C2B004EB52B /* Debug */,
+				55268A981877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -10473,6 +11675,7 @@
 			buildConfigurations = (
 				5569FF521024B44400DDDF39 /* Release */,
 				559344191002F01700F95B82 /* Debug */,
+				55268A671877EDF500A82269 /* Pedantic */,
 			);
 			defaultConfigurationIsVisible = 1;
 			defaultConfigurationName = Release;

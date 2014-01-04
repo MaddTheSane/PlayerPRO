@@ -1,0 +1,12 @@
+//
+//  Pedantic-PPC.xcconfig
+//  PPMacho
+//
+//  Created by C.W. Betts on 1/4/14.
+//
+//
+
+//For MSVC compatibility checking.
+GCC_C_LANGUAGE_STANDARD = gnu89
+GCC_WARN_PEDANTIC = YES
+CLANG_CXX_LANGUAGE_STANDARD = gnu++98
