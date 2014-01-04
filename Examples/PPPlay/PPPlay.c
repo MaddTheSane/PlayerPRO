@@ -12,38 +12,37 @@
 "Maintained by Charles \"Madd the Sane \" Betts\n"\
 "=======================================================================\n" \
 "       This program is FREEWARE - Read README.TXT for more info\n" \
-"\n" \
+"\n"
+
+#define PPBanner2 \
 "     E-Mail : computers57@hotmail.com    \n"\
 "=======================================================================\n" \
 " Current settings: 44Khz-16bits-Stereo-MicroDelay 35ms-Interpolation \n" \
 "=======================================================================\n"
 
-void debugger( Ptr a)
+void debugger(const char *a)
 {
-	printf( "%s", a);
+	printf("%s", a);
 	getchar();
 }
 
-int main( int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	MADDriverSettings	init;
 	MADDriverRec		*aDriver;
 	MADLibrary			*lib;
 	MADMusic 			*aMusic;
-  	long				fT, cT;
-  	char 				type[ 5];
-  	int returntype = EXIT_SUCCESS;
-
-
-  	printf( PPbanner);
-  	
-  	if (argc < 2)
-  	{
-		printf("Usage: %s MyMusicFile\n", argv[0]);
+	long				fT, cT;
+	char 				type[5];
+	int					returntype = EXIT_SUCCESS;
+	
+	
+	printf("%s%s", PPbanner, PPBanner2);
+	
+	if (argc != 2) {
+		fprintf(stderr ,"Usage: %s MyMusicFile\n", argv[0]);
 		return EXIT_FAILURE;
-	}
-  	else
-  	{
+	} else {
 		MADGetBestDriver(&init);
 		init.numChn				= 4;
 		init.outPutBits 		= 16;
@@ -62,42 +61,28 @@ int main( int argc, char *argv[])
 		init.TickRemover		= false;
 		init.oversampling		= 1;
 		
-		if (MADInitLibrary( "Plugins", &lib))
-		{
-			debugger( "ERR MADInitLibrary\n");
+		if (MADInitLibrary("Plugins", &lib)) {
+			debugger("ERR MADInitLibrary\n");
 			returntype = EXIT_FAILURE;
-		}
-		else
-		{
-			if (MADCreateDriver( &init, lib, &aDriver)) 
-			{
-				debugger( "ERR MADCreateDriver\n");
+		} else {
+			if (MADCreateDriver(&init, lib, &aDriver)) {
+				debugger("ERR MADCreateDriver\n");
 				returntype = EXIT_FAILURE;
-			}
-			else
-			{
-				if (MADMusicIdentifyCString( lib, type, argv[ 1]))  
-				{
-					debugger( "ERR MADMusicIdentifyCString\n");
+			} else {
+				if (MADMusicIdentifyCString(lib, type, argv[1])) {
+					debugger("ERR MADMusicIdentifyCString\n");
 					returntype = EXIT_FAILURE;
-				}
-				else
-				{
-					if (MADLoadMusicFileCString( lib, &aMusic, type, argv[ 1])) 
-					{
-						debugger( "ERR MADLoadMusicFile\n");
+				} else {
+					if (MADLoadMusicFileCString(lib, &aMusic, type, argv[ 1])) {
+						debugger("ERR MADLoadMusicFile\n");
 						returntype = EXIT_FAILURE;
-					}
-					else
-					{
+					} else {
 						double fTd = 0;
-						MADAttachDriverToMusic( aDriver, aMusic, NULL);
+						MADAttachDriverToMusic(aDriver, aMusic, NULL);
 						
-						MADStartDriver( aDriver);
-						
-						MADPlayMusic( aDriver);
-						
-						MADGetMusicStatus( aDriver, &fT, &cT);
+						MADStartDriver(aDriver);
+						MADPlayMusic(aDriver);
+						MADGetMusicStatus(aDriver, &fT, &cT);
 						
 						fTd = fT / 60.0;
 						
@@ -106,15 +91,15 @@ int main( int argc, char *argv[])
 						
 						getchar();
 						
-						MADDisposeMusic( &aMusic, aDriver);
+						MADDisposeMusic(&aMusic, aDriver);
 					}
 				}
-				MADStopMusic( aDriver);
-				MADStopDriver( aDriver);
-						
-				MADDisposeDriver( aDriver);
+				MADStopMusic(aDriver);
+				MADStopDriver(aDriver);
+				
+				MADDisposeDriver(aDriver);
 			}
-			MADDisposeLibrary( lib);
+			MADDisposeLibrary(lib);
 		}
 	}
 	return returntype;

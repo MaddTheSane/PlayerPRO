@@ -30,39 +30,36 @@
 // ***	PATTERN DESCRIPTION
 // ***	
 
-struct oldCmd							// COMMAND
+typedef struct oldCmd					// COMMAND
 {
-	Byte	ins;						// Instrument no		0x00: no ins cmd
-	Byte 	note;					// Note, see table		0xFF : no note cmd
-	Byte 	cmd;					// Effect cmd
-	Byte 	arg;					// Effect argument
-	Byte	vol;					// Volume				0xFF : no volume cmd
+	Byte	ins;		// Instrument no		0x00: no ins cmd
+	Byte 	note;		// Note, see table		0xFF : no note cmd
+	Byte 	cmd;		// Effect cmd
+	Byte 	arg;		// Effect argument
+	Byte	vol;		// Volume				0xFF : no volume cmd
 	Byte	unused;
-};
-typedef struct oldCmd oldCmd;
+} oldCmd;
 
-struct oldPatHeader					// HEADER
+typedef struct oldPatHeader					// HEADER
 {
 	SInt32	size;					// Length of pattern: standard = 64
 	OSType	compMode;				// Compression mode, none = 'NONE'
 	char	name[ 32];
 	SInt32	patBytes;				// Pattern Size in Bytes
 	SInt32	unused2;
-};
-typedef struct oldPatHeader oldPatHeader;
+} oldPatHeader;
 
-struct oldPatData						// DATA STRUCTURE : HEADER + COMMANDS
+typedef struct oldPatData				// DATA STRUCTURE : HEADER + COMMANDS
 {									// Pattern = 64 notes to play
 	oldPatHeader	header;
 	oldCmd			Cmds[];
-};
-typedef struct oldPatData oldPatData;
+} oldPatData;
 
 // ***	
 // ***	INSTRUMENT DESCRIPTION
 // ***	
 
-struct oldsData								// SAMPLE
+typedef struct oldsData							// SAMPLE
 {
 	SInt32 				size;				// Sample length
 	SInt32				loopBeg;			// LoopStart
@@ -75,17 +72,15 @@ struct oldsData								// SAMPLE
 	char				relNote;
 	char 				name[ 32];			// Sample name
 	UInt32				data;				// Used only in memory, not in files
-};
-typedef struct oldsData oldsData;
+} oldsData;
 
-struct oldEnvRec				// Volume Enveloppe
+typedef struct oldEnvRec				// Volume Enveloppe
 {
 	short 	pos;				// pos
 	short	val;				// val
-};
-typedef struct oldEnvRec oldEnvRec;
+} oldEnvRec;
 
-struct oldInstrData				// INSTRUMENT
+typedef struct oldInstrData				// INSTRUMENT
 {
 	char 	name[ 32];			// instrument name
 	Byte 	type;				// Instrument type = 0
@@ -116,14 +111,13 @@ struct oldInstrData				// INSTRUMENT
 	
 	Byte	vibDepth;
 	Byte	vibRate;
-};
-typedef struct oldInstrData oldInstrData;
+} oldInstrData;
 
 // ***	
 // ***	MAD FILE HEADER DESCRIPTION
 // ***	
 
-struct oldMADSpec
+typedef struct oldMADSpec
 {
 	OSType			MAD;					// Mad Identification: MADG in version 2.0
 	char			name[ 32];				// Music's name
@@ -135,8 +129,7 @@ struct oldMADSpec
 	short			speed;					// Default speed
 	short			tempo;					// Default tempo
 	oldInstrData 	fid[ 64];				// Instruments description
-};
-typedef struct oldMADSpec oldMADSpec;
+} oldMADSpec;
 
 #pragma pack(pop)
 
