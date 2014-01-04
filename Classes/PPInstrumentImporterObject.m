@@ -21,9 +21,12 @@ static inline OSType NSStringToOSType(NSString *CFstri)
 	return Ptr2OSType(thecOSType);
 }
 
+static Class strClass;
+static Class numClass;
+
 static inline BOOL getBoolFromId(id NSType)
 {
-	if ([NSType isKindOfClass:[NSNumber class]] || [NSType isKindOfClass:[NSString class]]) {
+	if ([NSType isKindOfClass:numClass] || [NSType isKindOfClass:strClass]) {
 		return [NSType boolValue];
 	} else {
 		return NO;
@@ -57,29 +60,25 @@ typedef enum _MADPlugCapabilities {
 	return [NSString stringWithFormat:@"%@ - %@ Sample: %@ Type: %@ UTIs: %@", self.menuName, [self.file bundlePath], isSamp ? @"YES": @"NO", [NSString stringWithCString:typeString encoding:NSMacOSRomanStringEncoding], [UTITypes description]];
 }
 
-static Class strClass;
-static Class numClass;
-
 - (instancetype)initWithBundle:(NSBundle *)tempBundle
 {
-	if (self = [super initWithBundle:tempBundle]) {
-		static dispatch_once_t onceToken;
-		dispatch_once(&onceToken, ^{
-			strClass = [NSString class];
-			numClass = [NSNumber class];
-		});
-		{
-			NSURL *tempBundleRef = [tempBundle bundleURL];
-			
-			CFBundleRef tempCFBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)tempBundleRef);
-			
-			xxxx = PPINLoadPlug(tempCFBundle);
-			
-			CFRelease(tempCFBundle);
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		strClass = [NSString class];
+		numClass = [NSNumber class];
+	});
 
-			if (!xxxx) {
-				return nil;
-			}
+	if (self = [super initWithBundle:tempBundle]) {
+		NSURL *tempBundleRef = [tempBundle bundleURL];
+		
+		CFBundleRef tempCFBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)tempBundleRef);
+		
+		xxxx = PPINLoadPlug(tempCFBundle);
+		
+		CFRelease(tempCFBundle);
+		
+		if (!xxxx) {
+			return nil;
 		}
 		
 		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
