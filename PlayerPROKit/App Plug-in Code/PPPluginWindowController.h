@@ -27,6 +27,6 @@ extern NSString * const PPPlugReturnCode;
 @property PPInfoPlug *infoPlug;
 @property (copy) dispatch_block_t plugBlock;
 - (IBAction)okOrCancel:(id)sender;
-- (OSErr)runAsModal;
-- (OSErr)runAsSheet DEPRECATED_ATTRIBUTE;
+- (OSErr)runAsModal DEPRECATED_ATTRIBUTE;
+- (OSErr)runAsSheet;
 @end
