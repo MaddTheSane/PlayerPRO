@@ -60,13 +60,6 @@
 	return self;
 }
 
-- (OSErr)callWithPcmd:(Pcmd*)myPcmd
-{
-	PPInfoPlug theInfo = {0};
-	
-	return [self callWithPcmd:myPcmd plugInfo:&theInfo];
-}
-
 - (OSErr)callWithPcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug*)pi
 {
 	NSURL *tempURL = [self.file bundleURL];

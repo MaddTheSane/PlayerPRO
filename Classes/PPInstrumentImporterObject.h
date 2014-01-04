@@ -17,7 +17,6 @@
 @property (readonly) BOOL isSample;
 
 - (instancetype)initWithBundle:(NSBundle *)theBund;
-- (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insNum function:(OSType)imporexp UNAVAILABLE_ATTRIBUTE;
 - (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insSamp function:(OSType)imporexp plugInfo:(PPInfoPlug*)plugInfo;
 
 @end
