@@ -160,7 +160,7 @@ static OSErr mainFadeNote(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	controller.initialFrom = @"C 3";
 	controller.initialTo = @"C 7";
 	
-	return [controller runAsModal];
+	return [controller runAsSheet];
 }
 
 #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x95, 0x45, 0xDB, 0x21, 0x5A, 0xDE, 0x49, 0xDC, 0x97, 0x17, 0x09, 0x3D, 0x09, 0xEC, 0x4D, 0x39)

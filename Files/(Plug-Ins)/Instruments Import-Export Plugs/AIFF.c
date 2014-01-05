@@ -1,49 +1,25 @@
-/*	AIFF/AIFC		*/
-/*  IMPORT/EXPORT	*/
-/*	v 1.0			*/
-/*	1996 by ANR		*/
+/*	AIFF/AIFC						*/
+/*  IMPORT/EXPORT					*/
+/*	v 1.0							*/
+/*	1996 by ANR						*/
+/*  2013 rewrite by Madd the Sane	*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <AudioToolbox/AudioToolbox.h>
 
-static inline OSErr TestAIFF(const ContainerChunk* CC)
-{
 #if 0
-	switch (CC->formType) {
-		case AIFCID:
-		case AIFFID:
-		case 'CFIA':
-		case 'FFIA':
-			return noErr;
-			break;
-			
-		default:
-			return MADFileNotSupportedByThisPlug;
-			break;
-	}
-#else
-	if (CC->formType == AIFCID)
-		return noErr;
-	else if (CC->formType == AIFFID)
-		return noErr;
-	else if (CFSwapInt32(CC->formType) == AIFCID)
-		return noErr;
-	else if (CFSwapInt32(CC->formType) == AIFFID)
-		return noErr;
-	else
-		return MADFileNotSupportedByThisPlug;
-#endif
-}
-
 static OSErr mainAIFF(void					*unused,
 					  OSType				order,			// Order to execute
 					  InstrData				*InsHeader,		// Ptr on instrument header
 					  sData					**sample,		// Ptr on samples data
 					  short					*sampleID,		// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
-															// If sampleID == -1 : add sample else replace selected sample.
+					  // If sampleID == -1 : add sample else replace selected sample.
 					  CFURLRef				AlienFileURL,	// IN/OUT file
 					  PPInfoPlug			*thePPInfoPlug)
+#endif
+
+static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **sample, short *sampleID, CFURLRef AlienFileURL, PPInfoPlug *thePPInfoPlug)
 {
 	OSErr	myErr = noErr;
 	//char	*AlienFile;
@@ -177,4 +153,3 @@ static OSErr mainAIFF(void					*unused,
 #define PLUGMAIN mainAIFF //The old main function, renamed please
 
 #include "CFPlugin-InstrBridge.c"
-
