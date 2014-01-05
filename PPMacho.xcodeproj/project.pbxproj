@@ -427,6 +427,8 @@
 		557DEA5D10E0930100177B4C /* Smooth.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102310D6C79E00BB619C /* Smooth.c */; };
 		557EC3E9121711280082B80A /* PPPlay.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 557EC3E8121711280082B80A /* PPPlay.pdf */; };
 		557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */; };
+		557F296818790DDA009D4BC8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
+		557F296918790DF2009D4BC8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
 		557F9AF117D927DB00325C78 /* PPToneGeneratorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557F9AF317D927DB00325C78 /* PPToneGeneratorController.xib */; };
 		55801EB113D1ED9A007E24FC /* NSColor+PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */; };
 		5582135717E4200900B84F51 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
@@ -1903,9 +1905,9 @@
 		55268A551874CA9800A82269 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		55268A561874CDD100A82269 /* CompFadeNoteFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompFadeNoteFormatter.h; sourceTree = "<group>"; };
 		55268A571874CDD200A82269 /* CompFadeNoteFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompFadeNoteFormatter.m; sourceTree = "<group>"; };
-		55268A5C1877EB7A00A82269 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/FadeVolumeController.xib; sourceTree = "<group>"; };
+		55268A5C1877EB7A00A82269 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FadeVolumeController.xib; sourceTree = "<group>"; };
 		55268A5F1877EB8200A82269 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FadeVolumeController.strings; sourceTree = "<group>"; };
-		55268A611877EB8E00A82269 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/FadeNoteController.xib; sourceTree = "<group>"; };
+		55268A611877EB8E00A82269 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FadeNoteController.xib; sourceTree = "<group>"; };
 		55268A641877EB9500A82269 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FadeNoteController.strings; sourceTree = "<group>"; };
 		55268A651877ECF100A82269 /* Pedantic.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Pedantic.xcconfig; sourceTree = "<group>"; };
 		55268AAA1877EF0000A82269 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
@@ -2521,6 +2523,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5578C4CF17DA6D2C0057D11B /* CoreFoundation.framework in Frameworks */,
+				557F296818790DDA009D4BC8 /* AudioToolbox.framework in Frameworks */,
 				5578C48217D9E8560057D11B /* Cocoa.framework in Frameworks */,
 				5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */,
 				55149C621832D176009C850B /* AVFoundation.framework in Frameworks */,
@@ -2875,6 +2878,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */,
+				557F296918790DF2009D4BC8 /* AudioToolbox.framework in Frameworks */,
 				55085D811836EC82004A152F /* CoreMIDI.framework in Frameworks */,
 				55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */,
 				55149C611832D16C009C850B /* AVFoundation.framework in Frameworks */,
@@ -10480,7 +10484,6 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI.pch";
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_PEDANTIC = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 			};
 			name = Release;
@@ -10495,7 +10498,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI.pch";
-				GCC_WARN_PEDANTIC = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				ONLY_ACTIVE_ARCH = NO;
 			};
@@ -10506,7 +10508,6 @@
 			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_WARN_PEDANTIC = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 			};
 			name = Release;
@@ -10517,7 +10518,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_WARN_PEDANTIC = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 			};
 			name = Debug;
