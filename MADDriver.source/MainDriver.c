@@ -44,11 +44,11 @@ void debugger(Ptr a) DEPRECATED_ATTRIBUTE;
 
 //#define  NO_ASM
 
-enum {
+typedef enum InputType {
 	MADFileType = 1,
 	MADCFReadStreamType,
 	MADPtrType
-};
+} MADInputType;
 
 void		CheckVSTEditor(VSTEffect *ce);
 void		SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte);
@@ -56,7 +56,7 @@ void		DisposeVSTEffect(VSTEffect *myEffect);
 VSTEffect*	CreateVSTEffect(short effectID);
 short		ConvertUniqueIDToIndex(UInt32);
 void		ApplyVSTSets(VSTEffect* myEffect, FXSets* set);
-static OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStreamRef MADRsrc, Ptr MADPtr);
+static OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFReadStreamRef MADRsrc, Ptr MADPtr);
 
 MADMusic* CreateFreeMADK()
 {
@@ -1824,7 +1824,7 @@ static inline void ByteSwapPatHeader(PatHeader *toSwap)
 	PPBE32(&toSwap->unused2);
 }
 
-OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStreamRef MADReadStream, Ptr MADPtr)
+OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFReadStreamRef MADReadStream, Ptr MADPtr)
 {
 	short 					i, x;
 	size_t 					inOutCount, OffSetToSample = 0;
@@ -1834,6 +1834,8 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 	MADMusic 				*MDriver;
 	
 #ifdef _MAC_H
+	CFIndex					bytesRead = 0;
+	
 	if (InPutType == MADCFReadStreamType) {
 		CFStreamStatus theStat;
 		CFReadStreamOpen(MADReadStream);
@@ -1850,7 +1852,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 	
 	*music = NULL;
 	
-	MDriver = (MADMusic*) calloc(sizeof(MADMusic), 1);
+	MDriver = (MADMusic*)calloc(sizeof(MADMusic), 1);
 	if (!MDriver)
 		return MADNeedMemory;
 	
@@ -1873,18 +1875,15 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 			
 #ifdef _MAC_H
 		case MADCFReadStreamType:
-		{
-			CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)MDriver->header, inOutCount);
+			bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)MDriver->header, inOutCount);
 			if (bytesRead == -1)
 				theErr = MADReadingErr;
 			else if (bytesRead != inOutCount)
 				theErr = MADIncompatibleFile;
-		}
 			break;
 #endif
 			
 		case MADPtrType:
-			OffSetToSample = 0;
 			memcpy(MDriver->header, MADPtr, inOutCount);
 			OffSetToSample += inOutCount;
 			break;
@@ -1911,7 +1910,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 	
 	/**** PARTITION ****/
 	for (i = MDriver->header->numPat; i < MAXPATTERN; i++)
-		MDriver->partition[ i] = NULL;
+		MDriver->partition[i] = NULL;
 	
 	for (i = 0; i < MDriver->header->numPat; i++) {
 		/** Lecture du header de la partition **/
@@ -1926,13 +1925,11 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 				
 #ifdef _MAC_H
 			case MADCFReadStreamType:
-			{
-				CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)&tempPatHeader, inOutCount);
+				bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)&tempPatHeader, inOutCount);
 				if (bytesRead == -1)
 					theErr = MADReadingErr;
 				else if (bytesRead != inOutCount)
 					theErr = MADIncompatibleFile;
-			}
 				break;
 #endif
 				
@@ -1978,14 +1975,13 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 				
 #ifdef _MAC_H
 			case MADCFReadStreamType:
+				inOutCount -= sizeof(PatHeader);
 				memcpy(&MDriver->partition[i]->header, &tempPatHeader, sizeof(PatHeader));
-			{
-				CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)&(MDriver->partition[i]->Cmds), inOutCount);
+				bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)&(MDriver->partition[i]->Cmds), inOutCount);
 				if (bytesRead == -1)
 					theErr = MADReadingErr;
-				else if (bytesRead != inOutCount - sizeof(PatHeader))
+				else if (bytesRead != inOutCount)
 					theErr = MADIncompatibleFile;
-			}
 				break;
 #endif
 				
@@ -2039,13 +2035,11 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 			
 #ifdef _MAC_H
 		case MADCFReadStreamType:
-		{
-			CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)MDriver->fid, inOutCount);
+			bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)MDriver->fid, inOutCount);
 			if (bytesRead == -1)
 				theErr = MADReadingErr;
 			else if (bytesRead != inOutCount)
 				theErr = MADIncompatibleFile;
-		}
 			break;
 #endif
 			
@@ -2114,13 +2108,11 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 					
 #ifdef _MAC_H
 				case MADCFReadStreamType:
-				{
-					CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)curData, inOutCount);
+					bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)curData, inOutCount);
 					if (bytesRead == -1)
 						theErr = MADReadingErr;
 					else if (bytesRead != inOutCount)
 						theErr = MADIncompatibleFile;
-				}
 					break;
 #endif
 					
@@ -2158,13 +2150,11 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 					
 #ifdef _MAC_H
 				case MADCFReadStreamType:
-				{
-					CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)curData->data, inOutCount);
+					bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)curData->data, inOutCount);
 					if (bytesRead == -1)
 						theErr = MADReadingErr;
 					else if (bytesRead != inOutCount)
 						theErr = MADIncompatibleFile;
-				}
 					break;
 #endif
 					
@@ -2217,13 +2207,11 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 						
 #ifdef _MAC_H
 					case MADCFReadStreamType:
-					{
-						CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)&MDriver->sets[alpha], inOutCount);
+						bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)&MDriver->sets[alpha], inOutCount);
 						if (bytesRead == -1)
 							theErr = MADReadingErr;
 						else if (bytesRead != inOutCount)
 							theErr = MADIncompatibleFile;
-					}
 						break;
 #endif
 						
@@ -2249,13 +2237,11 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 							
 #ifdef _MAC_H
 						case MADCFReadStreamType:
-						{
-							CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)&MDriver->sets[alpha], inOutCount);
+							bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)&MDriver->sets[alpha], inOutCount);
 							if (bytesRead == -1)
 								theErr = MADReadingErr;
 							else if (bytesRead != inOutCount)
 								theErr = MADIncompatibleFile;
-						}
 							break;
 #endif
 							
@@ -2281,9 +2267,8 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 	*music = MDriver;
 	
 #ifdef _MAC_H
-	if (InPutType == MADCFReadStreamType) {
+	if (InPutType == MADCFReadStreamType)
 		CFReadStreamClose(MADReadStream);
-	}
 #endif
 	
 	return noErr;
