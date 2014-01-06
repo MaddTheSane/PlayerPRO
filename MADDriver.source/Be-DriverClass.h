@@ -42,39 +42,32 @@
 
 //	Debugging.
 //	Set to 1 if debugging messages are needed.
-
 #define	DRIVERCLASS_DEBUG	1
 
 
 //	Audio formats available
 
 enum {	/* for "format" */
-		B_AUDIO_UCHAR = 0x11,	/* 128 == mid, 1 == bottom, 255 == top */
-		B_AUDIO_SHORT = 0x2,	/* 0 == mid, -32767 == bottom, +32767 == top */
-		B_AUDIO_FLOAT = 0x24,	/* 0 == mid, -1.0 == bottom, 1.0 == top */
-		B_AUDIO_INT = 0x4		/* 0 == mid, 0x80000001 == bottom, 0x7fffffff == top */
-	};
+	B_AUDIO_UCHAR = 0x11,	/* 128 == mid, 1 == bottom, 255 == top */
+	B_AUDIO_SHORT = 0x2,	/* 0 == mid, -32767 == bottom, +32767 == top */
+	B_AUDIO_FLOAT = 0x24,	/* 0 == mid, -1.0 == bottom, 1.0 == top */
+	B_AUDIO_INT = 0x4		/* 0 == mid, 0x80000001 == bottom, 0x7fffffff == top */
+};
 
 //	Inline functions.
 //	Convert an OSType (MacOS) to a string.
-
 static inline char* TypeToString(OSType type, char *string)
 {
-	OSType *typePtr = (OSType*)string;
-	PPBE32(&type);
-	*typePtr = type;
-	string[4] = 0;
+	OSType2Ptr(type, string);
 	return string;
 }
 
 //	Main MADDriver class:
-
 #pragma	mark	MADDriverClass
 _EXPORT	class	MADDriverClass
 {
 public:
 	//	Flavourful constructors.
-	
 	MADDriverClass();
 	MADDriverClass(MADDriverSettings *init);
 	
@@ -82,12 +75,11 @@ public:
 	virtual ~MADDriverClass();
 	
 	//	Loading/checking music files.
-	
 	bool	LoadMusic(entry_ref* ref, OSType type, bool playIt = true);
 	bool	LoadMADHMusic(BFile& file, bool playIt = true);
 	bool	ValidMusicFile(entry_ref* ref, OSType* type);
 	bool	ValidMADHFile(BFile& file, OSType* type);
-	BList*	FindMusics(const char *musicPath );
+	BList*	FindMusics(const char *musicPath);
 	
 	//	Music control.
 	void			StartMusic(void);
@@ -115,7 +107,6 @@ public:
 private:
 	
 	//	Library initialization.
-	
 	static MADDriverSettings	CreateDefaultDriver(void);
 	bool						InitLibrary(MADDriverSettings *init);
 	

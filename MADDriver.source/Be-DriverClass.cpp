@@ -76,10 +76,10 @@ MADDriverClass::~MADDriverClass()
 }
 
 //	Driver initialization: optimal values for BeOS.
-
 static MADDriverSettings MADDriverClass::CreateDefaultDriver(void)
 {
-	MADDriverSettings	init;
+#if 0
+	MADDriverSettings	init = {0};
 	init.numChn			= 4;
 	init.outPutBits 	= 16;
 	init.outPutRate		= 44100;
@@ -92,7 +92,22 @@ static MADDriverSettings MADDriverClass::CreateDefaultDriver(void)
 	init.ReverbSize		= 45;
 	init.ReverbStrength	= 60;
 	init.TickRemover	= true;
-
+#else
+	MADDriverSettings	init = {
+		.numChn			= 4,
+		.outPutBits 	= 16,
+		.outPutRate		= 44100,
+		.outPutMode		= DeluxeStereoOutPut,
+		.driverMode		= BeOSSoundDriver,
+		.repeatMusic	= true,
+		.MicroDelaySize = 0,
+		.surround		= false,
+		.Reverb			= false,
+		.ReverbSize		= 45,
+		.ReverbStrength	= 60,
+		.TickRemover	= true
+	};
+#endif
 	return	init;
 }
 
@@ -130,7 +145,6 @@ bool MADDriverClass::InitLibrary(MADDriverSettings *init)
 	}
 
 	//	Init system streamers.
-	
 	media_raw_audio_format format;
 	
 	format.frame_rate = init->outPutRate;
@@ -148,7 +162,6 @@ bool MADDriverClass::InitLibrary(MADDriverSettings *init)
 }
 
 //	Load a music file into memory and optionally play it.
-
 bool MADDriverClass::LoadMusic(entry_ref* ref, OSType type, bool playIt)
 {
 	//	Safety check.
@@ -156,7 +169,6 @@ bool MADDriverClass::LoadMusic(entry_ref* ref, OSType type, bool playIt)
 		return false;
 	
 	//	Try to import the file.
-		
 	BEntry		fileEntry(ref);
 	BPath		filePath;
 	fileEntry.GetPath(&filePath);
@@ -179,11 +191,9 @@ bool MADDriverClass::LoadMusic(entry_ref* ref, OSType type, bool playIt)
 }
 
 //	Start playing current music.
-
 void MADDriverClass::StartMusic(void)
 {
 	//	Safety check.
-	
 	if (!inited)
 		return;
 	
@@ -197,23 +207,21 @@ void MADDriverClass::StartMusic(void)
 }
 
 //	Pause/play music.
-
 void MADDriverClass::PauseMusic(void)
 {
 	//	Safety check.
-	
 	if (!inited)
 		return;
 
 	if (musicPlay) {
-		//	Music is playing: halt it without resetting it.
 		
+		//	Music is playing: halt it without resetting it.
 		MADStopMusic(curDriverRec);
 		MADStopDriver(curDriverRec);
 		musicPlay = false;
 	} else {
-		//	Start driver and music.
 		
+		//	Start driver and music.
 		MADStartDriver(curDriverRec);
 		MADPlayMusic(curDriverRec);
 		musicPlay = true;
@@ -221,23 +229,19 @@ void MADDriverClass::PauseMusic(void)
 }
 
 //	Stop playing current music and optionally discard it.
-
 void MADDriverClass::StopMusic(bool discardIt)
 {
 	//	Safety check.
-	
 	if (!inited)
 		return;
 
 	//	Stop music and reset its position.
-	
 	MADStopMusic(curDriverRec);
 	MADReset(curDriverRec);
 	MADStopDriver(curDriverRec);
 	musicPlay = false;
 
 	//	Possibly dispose of current music.
-	
 	if (discardIt) {
 		if (curMusic) {
 			MADDisposeMusic(&curMusic);
@@ -250,15 +254,13 @@ void MADDriverClass::StopMusic(bool discardIt)
 bool MADDriverClass::MusicEnd(void)
 {
 	//	Safety checks.
-	
 	if (!inited)
 		return false;
 	
-	if ( musicPlay)
+	if (musicPlay)
 		return false;
 		
 	//	Return library flag.
-	
 	return MADIsDonePlaying(curDriverRec);
 }
 
@@ -270,17 +272,14 @@ static void	trackerStreamPlay(void *user, void *inbuffer, size_t count, const me
 	
 	
 	//	Driver object.
-	
 	MADDriverClass* curDriver = (MADDriverClass*)user;
 	MADDriverRec*	curMADDriver = curDriver->curDriverRec;
 	
 	//	If playing is disabled, do not alter the current buffer.
-	
 	if (!curDriver->musicPlay)
 		return;
 	
 	//	Check buffer size.
-	
 	if (count/sizeof(float) != curMADDriver->BufSize / (curMADDriver->DriverSettings.outPutBits / 8)) {
 #if	DRIVERCLASS_DEBUG
 		debugger("count error");
@@ -295,20 +294,19 @@ static void	trackerStreamPlay(void *user, void *inbuffer, size_t count, const me
 		case B_AUDIO_FLOAT:
 			float 	*floatbuffer = (float*)buffer;
 			
-			switch(curMADDriver->DriverSettings.outPutBits)
-		{
-			case 16:
-				short *shortbuffer = (short*)curMADDriver->IntDataPtr;
-				for(i = 0; i < count/sizeof(float); i++)
-					floatbuffer[i] = ((float)shortbuffer[i] * 1.0) / 32767.0;
-				break;
-				
-			case 8:
-				Byte *charbuffer = (Byte*)curMADDriver->IntDataPtr;
-				for(i = 0; i < count/sizeof(float); i++)
-					floatbuffer[i] = (((float)charbuffer[i]- 0x80) * 1.0) / 127.0;
-				break;
-		}
+			switch(curMADDriver->DriverSettings.outPutBits) {
+				case 16:
+					short *shortbuffer = (short*)curMADDriver->IntDataPtr;
+					for(i = 0; i < count/sizeof(float); i++)
+						floatbuffer[i] = ((float)shortbuffer[i] * 1.0) / 32767.0;
+					break;
+					
+				case 8:
+					Byte *charbuffer = (Byte*)curMADDriver->IntDataPtr;
+					for(i = 0; i < count/sizeof(float); i++)
+						floatbuffer[i] = (((float)charbuffer[i]- 0x80) * 1.0) / 127.0;
+					break;
+			}
 			break;
 			
 		default:
