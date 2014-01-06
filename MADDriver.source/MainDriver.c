@@ -1103,6 +1103,8 @@ OSErr MADDisposeDriver(MADDriverRec* MDriver)
 			break;
 #endif
 			
+		default:
+			break;
 	}
 	
 	MADDisposeDriverBuffer(MDriver);
@@ -1116,7 +1118,7 @@ OSErr MADDisposeDriver(MADDriverRec* MDriver)
 
 OSErr MADInitLibrary(const char *PlugsFolderName, MADLibrary **lib)
 {
-	SInt32 i, mytab[12] = {
+	SInt32 mytab[12] = {
 		1712*16, 1616*16, 1524*16, 1440*16, 1356*16, 1280*16,
 		1208*16, 1140*16, 1076*16, 1016*16, 960*16, 907*16
 	};
@@ -1872,7 +1874,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 #ifdef _MAC_H
 		case MADCFReadStreamType:
 		{
-			CFIndex bytesRead = CFReadStreamRead(MADReadStream, MDriver->header, inOutCount);
+			CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)MDriver->header, inOutCount);
 			if (bytesRead == -1)
 				theErr = MADReadingErr;
 			else if (bytesRead != inOutCount)
@@ -1925,7 +1927,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 #ifdef _MAC_H
 			case MADCFReadStreamType:
 			{
-				CFIndex bytesRead = CFReadStreamRead(MADReadStream, &tempPatHeader, inOutCount);
+				CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)&tempPatHeader, inOutCount);
 				if (bytesRead == -1)
 					theErr = MADReadingErr;
 				else if (bytesRead != inOutCount)
@@ -1978,11 +1980,11 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 			case MADCFReadStreamType:
 				memcpy(&MDriver->partition[i]->header, &tempPatHeader, sizeof(PatHeader));
 			{
-				CFIndex bytesRead = CFReadStreamRead(MADReadStream, &(MDriver->partition[i]->Cmds), inOutCount);
+				CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)&(MDriver->partition[i]->Cmds), inOutCount);
 				if (bytesRead == -1)
 					theErr = MADReadingErr;
-				else if (bytesRead != inOutCount - sizeof(PatHeader));
-				theErr = MADIncompatibleFile;
+				else if (bytesRead != inOutCount - sizeof(PatHeader))
+					theErr = MADIncompatibleFile;
 			}
 				break;
 #endif
@@ -2038,7 +2040,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 #ifdef _MAC_H
 		case MADCFReadStreamType:
 		{
-			CFIndex bytesRead = CFReadStreamRead(MADReadStream, MDriver->fid, inOutCount);
+			CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)MDriver->fid, inOutCount);
 			if (bytesRead == -1)
 				theErr = MADReadingErr;
 			else if (bytesRead != inOutCount)
@@ -2113,7 +2115,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 #ifdef _MAC_H
 				case MADCFReadStreamType:
 				{
-					CFIndex bytesRead = CFReadStreamRead(MADReadStream, curData, inOutCount);
+					CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)curData, inOutCount);
 					if (bytesRead == -1)
 						theErr = MADReadingErr;
 					else if (bytesRead != inOutCount)
@@ -2157,7 +2159,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 #ifdef _MAC_H
 				case MADCFReadStreamType:
 				{
-					CFIndex bytesRead = CFReadStreamRead(MADReadStream, curData->data, inOutCount);
+					CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)curData->data, inOutCount);
 					if (bytesRead == -1)
 						theErr = MADReadingErr;
 					else if (bytesRead != inOutCount)
@@ -2216,7 +2218,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 #ifdef _MAC_H
 					case MADCFReadStreamType:
 					{
-						CFIndex bytesRead = CFReadStreamRead(MADReadStream, &MDriver->sets[alpha], inOutCount);
+						CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)&MDriver->sets[alpha], inOutCount);
 						if (bytesRead == -1)
 							theErr = MADReadingErr;
 						else if (bytesRead != inOutCount)
@@ -2248,7 +2250,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, CFReadStream
 #ifdef _MAC_H
 						case MADCFReadStreamType:
 						{
-							CFIndex bytesRead = CFReadStreamRead(MADReadStream, &MDriver->sets[alpha], inOutCount);
+							CFIndex bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)&MDriver->sets[alpha], inOutCount);
 							if (bytesRead == -1)
 								theErr = MADReadingErr;
 							else if (bytesRead != inOutCount)
