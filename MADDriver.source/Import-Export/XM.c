@@ -1173,7 +1173,7 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 	return finalXMPtr;
 }
 
-static __inline__ Boolean compMem(const void *a, const void *b, size_t s)
+static inline Boolean compMem(const void *a, const void *b, size_t s)
 {
 	if (memcmp(a, b, s) == 0) {
 		return true;

@@ -110,7 +110,7 @@ static oldCmd* GetOldCommand(short PosX, short	TrackIdX, oldPatData*	tempMusicPa
 	return &(tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]);
 }
 
-static __inline__ void MOToldsData(struct oldsData * s)
+static inline void MOToldsData(struct oldsData * s)
 {
 	PPBE32(&s->size);
 	PPBE32(&s->loopBeg);
@@ -118,7 +118,7 @@ static __inline__ void MOToldsData(struct oldsData * s)
 	PPBE16(&s->c2spd);
 }
 
-static __inline__ void MOToldPatHeader(struct oldPatHeader * p)
+static inline void MOToldPatHeader(struct oldPatHeader * p)
 {
 	PPBE32(&p->size);
 	PPBE32(&p->compMode);
@@ -126,13 +126,13 @@ static __inline__ void MOToldPatHeader(struct oldPatHeader * p)
 	PPBE32(&p->unused2); // this is probably superfluous
 }
 
-static __inline__ void MOToldEnvRec(struct oldEnvRec * e)
+static inline void MOToldEnvRec(struct oldEnvRec * e)
 {
 	PPBE16(&e->pos);
 	PPBE16(&e->val);
 }
 
-static __inline__ void MOToldInstrData(struct oldInstrData * i)
+static inline void MOToldInstrData(struct oldInstrData * i)
 {
 	PPBE16(&i->firstSample);
 	PPBE16(&i->numSamples);

@@ -34,6 +34,7 @@
 
 void iFileCreate(const char *path, OSType type)
 {
+
 #if defined _MAC_H && !TARGET_OS_IPHONE
 	CFURLRef fileURL;
 #endif
@@ -57,11 +58,20 @@ void iFileCreate(const char *path, OSType type)
 	}
 	
 	//FIXME: does this work on Windows?
+#ifdef WIN32
+	{
+		FILE *tmpFile = fopen(path, "wb");
+		if (tmpFile != NULL) {
+			fclose(tmpFile);
+		}
+	}
+#else	
 	fd = open(path, O_WRONLY|O_CREAT|O_TRUNC, 0644);
 	if (fd == -1) {
 		return;
 	}
 	close(fd);
+#endif
 
 #if defined _MAC_H && !TARGET_OS_IPHONE
 	fileURL = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8*)path, strlen(path), false);

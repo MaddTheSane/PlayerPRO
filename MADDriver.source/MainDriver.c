@@ -1448,7 +1448,7 @@ OSErr MADLoadMADFileCString(MADMusic **music, const char *fName)
 
 #ifdef _MAC_H
 //hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
-static __inline__ CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
+static inline CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
 {
 	CFURLRef toDeref = theRef;
 	CFStringRef fileString;
@@ -1841,7 +1841,7 @@ OSErr MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime)
 	return noErr;
 }
 
-static __inline__ void ByteSwapsData(sData *toSwap)
+static inline void ByteSwapsData(sData *toSwap)
 {
 	PPBE32(&toSwap->size);
 	PPBE32(&toSwap->loopBeg);
@@ -1849,7 +1849,7 @@ static __inline__ void ByteSwapsData(sData *toSwap)
 	PPBE16(&toSwap->c2spd);
 }
 
-static __inline__ void SwapFXSets(FXSets *set)
+static inline void SwapFXSets(FXSets *set)
 {
 #ifndef __BLOCKS__
 	int y;
@@ -1869,7 +1869,7 @@ static __inline__ void SwapFXSets(FXSets *set)
 #endif
 }
 
-static __inline__ void ByteSwapInstrData(InstrData *toSwap)
+static inline void ByteSwapInstrData(InstrData *toSwap)
 {
 #ifndef __BLOCKS__
 	int x;
@@ -1905,7 +1905,7 @@ static __inline__ void ByteSwapInstrData(InstrData *toSwap)
 #endif
 }
 
-static __inline__ void ByteSwapMADSpec(MADSpec *toSwap)
+static inline void ByteSwapMADSpec(MADSpec *toSwap)
 {
 	PPBE32(&toSwap->MAD);
 	PPBE16(&toSwap->speed);
@@ -1914,7 +1914,7 @@ static __inline__ void ByteSwapMADSpec(MADSpec *toSwap)
 	PPBE32(&toSwap->ESpeed);
 }
 
-static __inline__ void ByteSwapPatHeader(PatHeader *toSwap)
+static inline void ByteSwapPatHeader(PatHeader *toSwap)
 {
 	PPBE32(&toSwap->size);
 	PPBE32(&toSwap->compMode);

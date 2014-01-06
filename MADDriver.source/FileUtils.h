@@ -152,7 +152,7 @@ PPEXPORT void	iClose(UNFILE iFileRefI);
  *					A pointer to a 32-bit value. On output, the value will be byte-swapped.
  * @discussion  Refrain from using this function directly: use either PPLE32 or PPBE32
  */
-static __inline__ void MADByteSwap32(void *msg_buf)
+static inline void MADByteSwap32(void *msg_buf)
 {
 	uint32_t temp = *((uint32_t*)msg_buf);
 #ifdef _MAC_H
@@ -172,7 +172,7 @@ static __inline__ void MADByteSwap32(void *msg_buf)
  *					a pointer to a 16-bit value. On output, the value will be byte-swapped.
  * @discussion  Refrain from using this function directly: use either PPLE16 or PPBE16
  */
-static __inline__ void MADByteSwap16(void *msg_buf)
+static inline void MADByteSwap16(void *msg_buf)
 {
 	uint16_t buf = *((uint16_t*)msg_buf);
 #ifdef _MAC_H
@@ -201,12 +201,12 @@ static __inline__ void MADByteSwap16(void *msg_buf)
  */
 
 #ifdef __LITTLE_ENDIAN__
-static __inline__ void PPBE32(void *msg_buf)
+static inline void PPBE32(void *msg_buf)
 {
 	MADByteSwap32(msg_buf);
 }
 
-static __inline__ void PPBE16(void *msg_buf)
+static inline void PPBE16(void *msg_buf)
 {
 	MADByteSwap16(msg_buf);
 }
@@ -234,12 +234,12 @@ static __inline__ void PPBE16(void *msg_buf)
  */
 
 #ifdef __BIG_ENDIAN__
-static __inline__ void PPLE32(void *msg_buf)
+static inline void PPLE32(void *msg_buf)
 {
 	MADByteSwap32(msg_buf);
 }
 
-static __inline__ void PPLE16(void *msg_buf)
+static inline void PPLE16(void *msg_buf)
 {
 	MADByteSwap16(msg_buf);
 }
@@ -260,7 +260,7 @@ static __inline__ void PPLE16(void *msg_buf)
  * @discussion  str must be at least five chars long: four for the size of the OSType, and one for the terminating null.
  *				Note that OSTypes use the Mac OS Roman encoding. If needed, use iconv to convert from the Mac OS Roman encoding.
  */
-static __inline__ void OSType2Ptr(OSType type, char *str)
+static inline void OSType2Ptr(OSType type, char *str)
 {
 	PPBE32(&type);
 	memcpy(str, &type, 4);
@@ -275,7 +275,7 @@ static __inline__ void OSType2Ptr(OSType type, char *str)
  *					The string to convert to an OSType, null-terminated.
  * @discussion  Note that OSTypes use the Mac OS Roman encoding. UTF-8 special characters may cause issues. If needed, use iconv to convert to the Mac OS Roman encoding.
  */
-static __inline__ OSType Ptr2OSType(const char *str)
+static inline OSType Ptr2OSType(const char *str)
 {
 	short	i;
 	OSType	type = '    ';
