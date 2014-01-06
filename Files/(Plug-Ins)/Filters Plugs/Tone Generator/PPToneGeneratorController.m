@@ -246,6 +246,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 @property BOOL disabledData;
 @property char *audio8Ptr;
 @property short *audio16Ptr;
+- (void)clearAudioPointers;
 @end
 
 @implementation PPToneGeneratorController
@@ -286,15 +287,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 				}
 			}
 			char *resultPtr;
-			
-			if (audio16Ptr != NULL)	{
-				free(audio16Ptr);
-				audio16Ptr = NULL;
-			}
-			if (audio8Ptr != NULL) {
-				free(audio8Ptr);
-				audio8Ptr = NULL;
-			}
+			[self clearAudioPointers];
 			
 			switch (theData->amp)
 			{
@@ -378,14 +371,12 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 {
 	static RPlaySoundUPP mPlay;
 	mPlay = infoPlug->RPlaySound;
-		
+	
+	[self clearAudioPointers];
+	
 	switch(theData->amp)
 	{
 		case 8:
-			if (audio8Ptr != NULL) {
-				free(audio8Ptr);
-				audio8Ptr = NULL;
-			}
 			audio8Ptr = CreateAudio8Ptr(audioLength, audioFrequency, audioAmplitude, generator, theData->stereo);
 			if (audio8Ptr != NULL) {
 				mPlay(infoPlug->driverRec, audio8Ptr, audioLength, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
@@ -393,10 +384,6 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 			break;
 			
 		case 16:
-			if (audio16Ptr != NULL) {
-				free(audio16Ptr);
-				audio16Ptr = NULL;
-			}
 			audio16Ptr	= CreateAudio16Ptr(audioLength, audioFrequency, audioAmplitude, generator, theData->stereo);
 			if (audio16Ptr != NULL) {
 				mPlay(infoPlug->driverRec, (Ptr)audio16Ptr, audioLength*2, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
@@ -406,6 +393,11 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 }
 
 - (void)dealloc
+{
+	[self clearAudioPointers];
+}
+
+- (void)clearAudioPointers
 {
 	//Stop any audio that's playing on the driver
 	MADStopDriver(self.infoPlug->driverRec);
