@@ -24,8 +24,7 @@ static OSErr mainNormalize(void			*unused,
 {
 	long	i, peak = 0, temp;
 	
-	switch (theData->amp)
-	{
+	switch (theData->amp) {
 		case 8:
 		{
 			Ptr	SamplePtr = (theData->data) + SelectionStart;

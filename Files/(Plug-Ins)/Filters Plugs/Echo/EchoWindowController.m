@@ -10,7 +10,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 
-#define timeConvert		22254 //≈22KHZ
+#define timeConvert 22254 //≈22KHZ
 
 @implementation EchoWindowController
 
@@ -27,8 +27,7 @@
 			
 			pDelay = (pDelay * timeConvert) / 1000;	//convert ms to samples
 			
-			switch (theData->amp)
-			{
+			switch (theData->amp) {
 				case 8:
 				{
 					Ptr	orgPtr = (theData->data) + selectionStart, destPtr = orgPtr + pDelay;

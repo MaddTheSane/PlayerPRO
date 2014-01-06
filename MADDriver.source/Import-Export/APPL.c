@@ -175,7 +175,7 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			curData->data = malloc(inOutCount);
 			if (curData->data == NULL) {
 				for (x = 0; x < MAXINSTRU ; x++)
-					MADKillInstrument( MadFile, x);
+					MADKillInstrument(MadFile, x);
 				
 				for (x = 0; x < MadFile->header->numPat; x++) {
 					if (MadFile->partition[x] != NULL)

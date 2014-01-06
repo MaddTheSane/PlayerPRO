@@ -25,8 +25,7 @@ static Ptr CreateAudio8Ptr(long AudioLength, long AudioFreq, long AudioAmp, Tone
 	if (Audio8Ptr == NULL)
 		return NULL;
 	
-	switch (AudioType)
-	{
+	switch (AudioType) {
 		case wave:
 			for (i = 0, x = 0; i < AudioLength; i++, x++) {
 				temp = 127.0 * sin((((double)x * (double)AudioFreq * M_PI * 2.0) / KHZ));
@@ -138,8 +137,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 	if (Audio16Ptr == NULL)
 		return NULL;
 	
-	switch (AudioType)
-	{
+	switch (AudioType) {
 		case wave:
 			for (i = 0, x = 0; i < AudioLength; i++, x++) {
 				temp = 32767.0 * sin((((double)x * (double)AudioFreq * M_PI * 2.0) / KHZ));
@@ -289,8 +287,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 			char *resultPtr;
 			[self clearAudioPointers];
 			
-			switch (theData->amp)
-			{
+			switch (theData->amp) {
 				case 8:
 					audio8Ptr = CreateAudio8Ptr(audioLength, audioFrequency, audioAmplitude * 100, generator, theData->stereo);
 					break;

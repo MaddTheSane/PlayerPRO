@@ -12,5 +12,4 @@
 @interface FadeWindowController : PPFilterPluginWindowController
 @property double fadeFrom;
 @property double fadeTo;
-
 @end

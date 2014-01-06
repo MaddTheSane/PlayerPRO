@@ -10,7 +10,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 
-#define LRVAL	3L
+#define LRVAL 3
 
 static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int srcC4SPD, int dstC4SPD, Boolean stereo, size_t *newsize)
 {
@@ -34,8 +34,7 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
 	dst16 = (short*)dst;
 	dst8 = (char*)dst;
 	
-	switch(amp)
-	{
+	switch(amp) {
 		case 8:
 			for (x = 0; x < newSize; x++) {
 				pos		= (x * srcC4SPD << LRVAL) / dstC4SPD;

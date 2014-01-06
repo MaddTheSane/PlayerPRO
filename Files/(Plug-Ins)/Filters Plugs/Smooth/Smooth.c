@@ -20,12 +20,10 @@ static OSErr mainSmooth(void		*unused,
 						PPInfoPlug	*thePPInfoPlug,
 						short		StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	long	i, length, temp, prevtemp, nexttemp, work;
-	
+	long i, length, temp, prevtemp, nexttemp, work;
 	length = SelectionEnd - SelectionStart - 1;
 	
-	switch (theData->amp)
-	{
+	switch (theData->amp) {
 		case 8:
 		{
 			Ptr	SamplePtr = (theData->data) + SelectionStart;

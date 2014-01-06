@@ -30,18 +30,18 @@
 
 typedef struct PPInfoRec32
 {
-	char	internalFileName[60];
-	char	formatDescription[60];
+	int		totalPatterns;
+	int		partitionLength;
 	
-	SInt32	totalPatterns;
-	SInt32	partitionLength;
+	SInt32	fileSize;
+	
+	OSType	signature;
 	
 	short	totalTracks;
 	short	totalInstruments;
 	
-	OSType	signature;
-	
-	SInt32	fileSize;
+	char	internalFileName[60];
+	char	formatDescription[60];
 } PPInfoRec32;
 
 #pragma pack(pop)

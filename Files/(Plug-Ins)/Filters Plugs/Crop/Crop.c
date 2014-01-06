@@ -13,10 +13,9 @@ static OSErr mainCrop(void			*unused,
 					  PPInfoPlug	*thePPInfoPlug,
 					  short			StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	long i;
+	size_t i;
 	
-	switch (theData->amp)
-	{
+	switch (theData->amp) {
 		case 8:
 		{
 			char *SamplePtr = theData->data + SelectionStart;

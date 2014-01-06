@@ -20,12 +20,10 @@
 		dispatch_block_t tmp = ^{
 			long	i, per;
 			double	from = self.fadeFrom, to = self.fadeTo, temp;
-			char	*Sample8Ptr = theData->data;
-			short	*Sample16Ptr = (short*)theData->data;
+			char	*Sample8Ptr = self.theData->data;
+			short	*Sample16Ptr = (short*)Sample8Ptr;
 			
-			
-			switch (theData->amp)
-			{
+			switch (theData->amp) {
 				case 8:
 					Sample8Ptr += selectionStart;
 					
@@ -55,7 +53,7 @@
 					break;
 					
 				case 16:
-					Sample16Ptr += selectionStart / 2;						// Div 2, because it's in bytes !!!
+					Sample16Ptr += selectionStart / 2;							// Div 2, because it's in bytes !!!
 					
 					for (i = 0; i < (selectionEnd - selectionStart) / 2; i++) {	// Div 2, because it's in bytes !!!
 						temp = *Sample16Ptr;
@@ -80,7 +78,6 @@
 					}
 					break;
 			}
-			
 		};
 		self.plugBlock = tmp;
 	}

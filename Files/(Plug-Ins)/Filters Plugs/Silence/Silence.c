@@ -29,8 +29,7 @@ static OSErr mainSilence(void		*unused,
 	if (Sample8Ptr == NULL)
 		return noErr;
 	
-	switch (theData->amp)
-	{
+	switch (theData->amp) {
 		case 8:
 			Sample8Ptr += SelectionStart;
 			

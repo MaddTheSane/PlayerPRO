@@ -6,8 +6,7 @@
 //	Invert the selected part or all the waveform if
 //	there is no selection.
 
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
+#include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 
 static OSErr mainBackwards(void			*unused,
@@ -17,11 +16,10 @@ static OSErr mainBackwards(void			*unused,
 						   PPInfoPlug	*thePPInfoPlug,
 						   short		StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	long	i;
+	size_t			i;
 	unsigned short	temp1, temp2;
 	
-	switch (theData->amp)
-	{
+	switch (theData->amp) {
 		case 8:
 		{
 			char *orgPtr = theData->data, *destPtr = orgPtr;

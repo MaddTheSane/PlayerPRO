@@ -13,10 +13,9 @@ static OSErr mainInvert(void		*unused,
 						PPInfoPlug	*thePPInfoPlug,
 						short		StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	SInt32	i, temp;
+	SInt32 i, temp;
 	
-	switch (theData->amp)
-	{
+	switch (theData->amp) {
 		case 8:
 		{
 			char *SamplePtr = (theData->data) + SelectionStart;
@@ -35,8 +34,7 @@ static OSErr mainInvert(void		*unused,
 			
 		case 16:
 		{
-			short	*SamplePtr = (short*) theData->data + (SelectionStart / 2);
-			
+			short *SamplePtr = (short*) theData->data + (SelectionStart / 2);
 			for (i = 0; i < (SelectionEnd - SelectionStart) / 2; i++) {
 				temp = (SInt32)*SamplePtr;
 				temp = 0xFFFF - temp;

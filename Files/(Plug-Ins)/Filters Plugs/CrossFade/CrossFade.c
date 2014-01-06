@@ -12,7 +12,7 @@
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
 
-#define min(a,b) (((a) < (b)) ? (a) : (b))
+#define min(a, b) (((a) < (b)) ? (a) : (b))
 
 static OSErr mainCrossFade(void			*unused,
 						   sData		*theData,
@@ -21,8 +21,7 @@ static OSErr mainCrossFade(void			*unused,
 						   PPInfoPlug	*thePPInfoPlug,
 						   short		StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	switch (theData->amp)
-	{
+	switch (theData->amp) {
 		case 8:
 		{
 			long	i, j, length = (SelectionEnd - SelectionStart) / 2;

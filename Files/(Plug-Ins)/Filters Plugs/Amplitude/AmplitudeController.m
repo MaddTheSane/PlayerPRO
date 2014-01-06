@@ -50,7 +50,7 @@
 					break;
 					
 				case 16:
-					Sample16Ptr += selectionStart / 2;						// Div 2, because it's in bytes !!!
+					Sample16Ptr += selectionStart / 2;							// Div 2, because it's in bytes !!!
 					
 					for (i = 0; i < (selectionEnd - selectionStart) / 2; i++) {	// Div 2, because it's in bytes !!!
 						temp = *Sample16Ptr;
@@ -74,9 +74,7 @@
 					}
 					break;
 			}
-			
 		};
-		
 		self.plugBlock = ampPlugBlock;
 	}
 	
