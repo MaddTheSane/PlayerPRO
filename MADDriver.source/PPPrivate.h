@@ -145,7 +145,17 @@ void	DirectSoundClose(MADDriverRec* driver);
 Boolean	W95_Init(MADDriverRec* driver);
 void	W95_Exit(MADDriverRec* driver);
 #endif
-	
+
+#ifdef HAVE_PULSEAUDIO
+OSErr initPulseAudio(MADDriverRec *inMADDriver);
+OSErr closePulseAudio(MADDriverRec *inMADDriver);
+#endif
+
+#ifdef HAVE_PORTAUDIO
+OSErr initPortAudio(MADDriverRec *inMADDriver);
+OSErr closePortAudio(MADDriverRec *inMADDriver);
+#endif
+
 OSErr	CallImportPlug(MADLibrary	*inMADDriver,
 					   short		PlugNo,			// CODE du plug
 					   OSType		order,

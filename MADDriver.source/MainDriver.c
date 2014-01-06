@@ -858,7 +858,6 @@ OSErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADDr
 	switch(MDriver->DriverSettings.driverMode) {
 			
 #ifdef _MAC_H
-			
 		case CoreAudioDriver:
 			MDriver->ASCBUFFER = 1024L * MDriver->DriverSettings.oversampling;
 			break;
@@ -958,8 +957,7 @@ OSErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADDr
 			
 #if 0
 			theErr = InitDBSoundManager( MDriver, initStereo);
-			if (theErr != noErr)
-			{
+			if (theErr != noErr) {
 				MADCloseEqualizer(MDriver);
 				MADDisposeReverb(MDriver);
 				MADDisposeDriverBuffer(MDriver);
@@ -968,13 +966,11 @@ OSErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADDr
 			}
 #endif
 			break;
-			//#endif
 			
 #ifdef _MAC_H
 		case CoreAudioDriver:
 			theErr = initCoreAudio(MDriver);
-			if (theErr != noErr)
-			{
+			if (theErr != noErr) {
 				MADCloseEqualizer(MDriver);
 				MADDisposeReverb(MDriver);
 				MADDisposeDriverBuffer(MDriver);
@@ -984,16 +980,11 @@ OSErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADDr
 			break;
 #endif
 			
-			
-		case BeOSSoundDriver:
-			
-			break;
-			
 #ifdef WIN32
 		case DirectSound95NT:
-			if (!DirectSoundInit( MDriver)) theErr = MADUnknowErr;
-			if (theErr != noErr)
-			{
+			if (!DirectSoundInit(MDriver))
+				theErr = MADUnknowErr;
+			if (theErr != noErr) {
 				MADCloseEqualizer(MDriver);
 				MADDisposeReverb(MDriver);
 				MADDisposeDriverBuffer(MDriver);
@@ -1003,9 +994,9 @@ OSErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADDr
 			break;
 			
 		case Wave95NT:
-			if (!W95_Init( MDriver)) theErr = MADUnknowErr;
-			if (theErr != noErr)
-			{
+			if (!W95_Init(MDriver))
+				theErr = MADUnknowErr;
+			if (theErr != noErr) {
 				MADCloseEqualizer(MDriver);
 				MADDisposeReverb(MDriver);
 				MADDisposeDriverBuffer(MDriver);
@@ -1018,8 +1009,7 @@ OSErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADDr
 #ifdef _ESOUND
 		case ESDDriver:
 			theErr = initESD(MDriver);
-			if (theErr != noErr)
-			{
+			if (theErr != noErr) {
 				MADCloseEqualizer(MDriver);
 				MADDisposeReverb(MDriver);
 				MADDisposeDriverBuffer(MDriver);
@@ -1029,11 +1019,10 @@ OSErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADDr
 			break;
 #endif
 			
-#ifdef LINUX
-		case ALSADriver:
-			theErr = initALSA(MDriver);
-			if (theErr != noErr)
-			{
+#ifdef HAVE_PULSEAUDIO
+		case PulseAudioDriver:
+			theErr = initPulseAudio(MDriver);
+			if (theErr != noErr) {
 				MADCloseEqualizer(MDriver);
 				MADDisposeReverb(MDriver);
 				MADDisposeDriverBuffer(MDriver);
@@ -1043,11 +1032,10 @@ OSErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADDr
 			break;
 #endif
 			
-#ifdef _OSSSOUND
-		case OSSDriver:
-			theErr = initOSS(MDriver);
-			if (theErr != noErr)
-			{
+#ifdef HAVE_PORTAUDIO
+		case PortAudioDriver:
+			theErr = initPortAudio(MDriver);
+			if (theErr != noErr) {
 				MADCloseEqualizer(MDriver);
 				MADDisposeReverb(MDriver);
 				MADDisposeDriverBuffer(MDriver);
@@ -1058,6 +1046,7 @@ OSErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADDr
 #endif
 			
 		case NoHardwareDriver:
+		case BeOSSoundDriver:
 			break;
 	}
 	
@@ -1102,14 +1091,14 @@ OSErr MADDisposeDriver(MADDriverRec* MDriver)
 			break;
 #endif
 			
-#ifdef LINUX
-		case ALSADriver:
-			closeALSA(MDriver);
+#ifdef HAVE_PULSEAUDIO
+		case PulseAudioDriver:
+			closePulseAudio(MDriver);
 			break;
 #endif
 			
-#ifdef _OSSSOUND
-		case OSSDriver:
+#ifdef HAVE_PORTAUDIO
+		case PortAudioDriver:
 			closeOSS(MDriver);
 			break;
 #endif
@@ -2888,15 +2877,15 @@ OSErr MADStartDriver(MADDriverRec *MDriver)
 			break;
 #endif
 			
-#ifdef LINUX
-		case ALSADriver:
-			PlayChannelALSA(MDriver);
+#ifdef HAS_PULSEAUDIO
+		case PulseAudioDriver:
+			PlayChannellPulseAudio(MDriver);
 			break;
 #endif
 			
-#ifdef _OSSSOUND
-		case OSSDriver:
-			PlayChannelOSS(MDriver);
+#ifdef HAS_PORTAUDIO
+		case PortAudioDriver:
+			PlayChannelPortAudio(MDriver);
 			break;
 #endif
 	}
@@ -2935,15 +2924,15 @@ OSErr MADStopDriver(MADDriverRec *MDriver)
 			break;
 #endif
 			
-#ifdef LINUX
-		case ALSADriver:
-			StopChannelALSA(MDriver);
+#ifdef HAS_PULSEAUDIO
+		case PulseAudioDriver:
+			StopChannelPulseAudio(MDriver);
 			break;
 #endif
 			
-#ifdef _OSSSOUND
-		case OSSDriver:
-			StopChannelOSS(MDriver);
+#ifdef HAS_PORTAUDIO
+		case PortAudioDriver:
+			StopChannelPortAudio(MDriver);
 			break;
 #endif
 		default:
