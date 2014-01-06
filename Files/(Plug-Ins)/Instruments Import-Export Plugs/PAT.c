@@ -117,9 +117,7 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 		4186073, 4434930, 4698645, 4978041, 5274051, 5587663, 5919922, 6271939, 6644889, 7040015, 7458636, 7902150};
 	
 	
-	
 	// PATCH HEADER
-	
 	PATHeader = (PatchHeader*)PATData;
 	PATData += 129;
 	
@@ -129,7 +127,6 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 	InsHeader->numSamples = (PATHeader->LoSamp << 8) + PATHeader->HiSamp;
 	
 	// INS HEADER -- Read only the first instrument
-	
 	PATIns = (PatInsHeader*) PATData;
 	
 	PATIns->size = Tdecode32(&PATIns->size);
@@ -266,16 +263,9 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 //hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
 static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
 {
-	CFURLRef toDeref = theRef;
-	if (resolveAgainstBase) {
-		toDeref = CFURLCopyAbsoluteURL(theRef);
-	}
-	CFStringRef fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
+	CFStringRef fileString = CFURLCopyFileSystemPath(theRef, kCFURLPOSIXPathStyle);
 	CFIndex strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
 	CFRelease(fileString);
-	if (resolveAgainstBase) {
-		CFRelease(toDeref);
-	}
 	return strLength;
 }
 
@@ -306,13 +296,10 @@ static OSErr mainPAT(void					*unused,
 			return MADReadingErr;
 		}
 		size_t StrLen = strlen(longStr);
-		file = malloc(++StrLen);
+		file = realloc(longStr, ++StrLen);
 		if (!file) {
 			file = longStr;
-			break;
 		}
-		strlcpy(file, longStr, StrLen);
-		free(longStr);
 	} while (0);
 	
 	switch(order)

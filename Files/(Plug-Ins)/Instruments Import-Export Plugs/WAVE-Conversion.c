@@ -47,15 +47,9 @@ OSErr TestWAV(PCMWavePtr CC)
 
 static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
 {
-	CFURLRef toDeref = theRef;
-	if (resolveAgainstBase)
-		toDeref = CFURLCopyAbsoluteURL(theRef);
-	
-	CFStringRef fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
+	CFStringRef fileString = CFURLCopyFileSystemPath(theRef, kCFURLPOSIXPathStyle);
 	CFIndex strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
 	CFRelease(fileString);
-	if (resolveAgainstBase)
-		CFRelease(toDeref);
 	
 	return strLength;
 }

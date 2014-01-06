@@ -117,16 +117,9 @@ static inline void ByteswapInstrument(InstrData *toswap)
 //hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
 static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
 {
-	CFURLRef toDeref = theRef;
-	if (resolveAgainstBase) {
-		toDeref = CFURLCopyAbsoluteURL(theRef);
-	}
-	CFStringRef fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
+	CFStringRef fileString = CFURLCopyFileSystemPath(theRef, kCFURLPOSIXPathStyle);
 	CFIndex strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
 	CFRelease(fileString);
-	if (resolveAgainstBase) {
-		CFRelease(toDeref);
-	}
 	return strLength;
 }
 
@@ -159,13 +152,10 @@ static OSErr mainMINs(void		*unused,
 			return MADReadingErr;
 		}
 		size_t StrLen = strlen(longStr);
-		file = malloc(++StrLen);
+		file = realloc(longStr, ++StrLen);
 		if (!file) {
 			file = longStr;
-			break;
 		}
-		strlcpy(file, longStr, StrLen);
-		free(longStr);
 	} while (0);
 	
 	switch (order)

@@ -117,16 +117,9 @@ static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 //hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
 static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
 {
-	CFURLRef toDeref = theRef;
-	if (resolveAgainstBase) {
-		toDeref = CFURLCopyAbsoluteURL(theRef);
-	}
-	CFStringRef fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
+	CFStringRef fileString = CFURLCopyFileSystemPath(theRef, kCFURLPOSIXPathStyle);
 	CFIndex strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
 	CFRelease(fileString);
-	if (resolveAgainstBase) {
-		CFRelease(toDeref);
-	}
 	return strLength;
 }
 
@@ -159,13 +152,10 @@ static OSErr mainXI(void		*unused,
 			return MADReadingErr;
 		}
 		size_t StrLen = strlen(longStr);
-		file = malloc(++StrLen);
+		file = realloc(longStr, ++StrLen);
 		if (!file) {
 			file = longStr;
-			break;
 		}
-		strlcpy(file, longStr, StrLen);
-		free(longStr);
 	} while (0);
 	do {
 		char *FileNameLong = NULL;
@@ -177,13 +167,11 @@ static OSErr mainXI(void		*unused,
 		CFStringGetCString(filenam, FileNameLong, filenamLen, kCFStringEncodingMacRoman);
 		CFRelease(filenam);
 		filenamshortlen = strlen(FileNameLong);
-		fileName = malloc(++filenamshortlen);
+		fileName = realloc(FileNameLong, ++filenamshortlen);
 		if (!fileName) {
 			fileName = FileNameLong;
 			break;
 		}
-		strlcpy(fileName, FileNameLong, filenamshortlen);
-		free(FileNameLong);
 	} while (0);
 	
 	switch (order)

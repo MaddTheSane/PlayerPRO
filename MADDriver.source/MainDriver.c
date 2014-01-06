@@ -1450,25 +1450,18 @@ OSErr MADLoadMADFileCString(MADMusic **music, const char *fName)
 //hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
 static inline CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
 {
-	CFURLRef toDeref = theRef;
 	CFStringRef fileString;
 	CFIndex strLength;
-	if (resolveAgainstBase) {
-		toDeref = CFURLCopyAbsoluteURL(theRef);
-	}
-	fileString = CFURLCopyFileSystemPath(toDeref, kCFURLPOSIXPathStyle);
+	fileString = CFURLCopyFileSystemPath(theRef, kCFURLPOSIXPathStyle);
 	strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
 	CFRelease(fileString);
-	if (resolveAgainstBase) {
-		CFRelease(toDeref);
-	}
+	
 	return strLength;
 }
 
 static OSErr getCStringFromCFURL(CFURLRef theRef, char **cStrOut)
 {
 	char *URLcString = NULL, *trimURLcString = NULL;
-	size_t StrLen = 0;
 	CFIndex pathLen;
 	Boolean pathOK;
 	if (cStrOut == NULL) {
@@ -1490,28 +1483,23 @@ static OSErr getCStringFromCFURL(CFURLRef theRef, char **cStrOut)
 		*cStrOut = NULL;
 		return MADReadingErr;
 	}
-	StrLen = strlen(URLcString);
-	trimURLcString = malloc(++StrLen);
+	trimURLcString = realloc(URLcString, strlen(URLcString) + 1);
 	if (!trimURLcString) {
 		*cStrOut = URLcString;
 		return noErr;
 	}
-	strlcpy(trimURLcString, URLcString, StrLen);
-	free(URLcString);
 	
 	*cStrOut = trimURLcString;
 	return noErr;
 }
 
-OSErr MADLoadMusicCFURLFile( MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef)
+OSErr MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef)
 {
 	char *URLcString = NULL;
-	
 	OSErr theErr = getCStringFromCFURL(theRef, &URLcString);
 	
-	if (theErr != noErr) {
+	if (theErr != noErr)
 		return theErr;
-	}
 	
 	theErr = MADLoadMusicFileCString(lib, music, type, URLcString);
 	free(URLcString);
@@ -1566,12 +1554,10 @@ OSErr MADCopyCurrentPartition(MADMusic *aPartition)
 OSErr MADMusicIdentifyCFURL(MADLibrary *lib, char *type, CFURLRef URLRef)
 {
 	char *URLcString = NULL;
-	
 	OSErr theErr = getCStringFromCFURL(URLRef, &URLcString);
 	
-	if (theErr != noErr) {
+	if (theErr != noErr)
 		return theErr;
-	}
 	
 	theErr = MADMusicIdentifyCString(lib, type, URLcString);
 	free(URLcString);
@@ -1581,12 +1567,10 @@ OSErr MADMusicIdentifyCFURL(MADLibrary *lib, char *type, CFURLRef URLRef)
 OSErr MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec)
 {
 	char *URLcString = NULL;
-	
 	OSErr theErr = getCStringFromCFURL(theRef, &URLcString);
 	
-	if (theErr != noErr) {
+	if (theErr != noErr)
 		return theErr;
-	}
 	
 	theErr = MADMusicInfoCString(lib, type, URLcString, InfoRec);
 	free(URLcString);
@@ -1596,12 +1580,10 @@ OSErr MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec 
 OSErr MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL)
 {
 	char *URLcString = NULL;
-	
 	OSErr theErr = getCStringFromCFURL(fileURL, &URLcString);
 	
-	if (theErr) {
+	if (theErr)
 		return theErr;
-	}
 	
 	theErr = MADMusicExportCString(lib, music, type, URLcString);
 	free(URLcString);
@@ -1611,7 +1593,6 @@ OSErr MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRef
 OSErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, Boolean compressMAD)
 {
 	char *URLcString = NULL;
-	
 	OSErr theErr = getCStringFromCFURL(urlRef, &URLcString);
 	
 	if (theErr)
@@ -1620,7 +1601,6 @@ OSErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, Boolean compressMAD)
 	theErr = MADMusicSaveCString(music, URLcString, compressMAD);
 	free(URLcString);
 	return theErr;
-
 }
 #endif
 
@@ -1641,7 +1621,7 @@ OSErr MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, PPInfoRec *I
 	return PPInfoFile(lib, type, cName, InfoRec);
 }
 
-OSErr MADMusicIdentifyCString(MADLibrary *lib, char *type, Ptr fName)
+OSErr MADMusicIdentifyCString(MADLibrary *lib, char *type, char *fName)
 {
 	if (lib == NULL || type == NULL || fName == NULL) {
 		return MADParametersErr;
@@ -1649,7 +1629,7 @@ OSErr MADMusicIdentifyCString(MADLibrary *lib, char *type, Ptr fName)
 	return PPIdentifyFile(lib, type, fName);
 }
 
-OSErr MADLoadMusicFileCString(MADLibrary *lib, MADMusic **music, char *plugType, Ptr fName)
+OSErr MADLoadMusicFileCString(MADLibrary *lib, MADMusic **music, char *plugType, char *fName)
 {
 	OSErr iErr = noErr;
 	
@@ -1658,7 +1638,7 @@ OSErr MADLoadMusicFileCString(MADLibrary *lib, MADMusic **music, char *plugType,
 	}
 	
 	if (!strcmp("MADK", plugType))
-		iErr = MADLoadMADFileCString( music, fName);
+		iErr = MADLoadMADFileCString(music, fName);
 	else {
 		iErr = PPImportFile(lib, plugType, fName, music);
 	}
