@@ -7849,7 +7849,6 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				SKIP_INSTALL = NO;
-				VALID_ARCHS = i386;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -7865,7 +7864,6 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				SKIP_INSTALL = NO;
-				VALID_ARCHS = i386;
 			};
 			name = Debug;
 		};
@@ -8119,7 +8117,6 @@
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				SKIP_INSTALL = NO;
-				VALID_ARCHS = i386;
 			};
 			name = Pedantic;
 		};
@@ -8159,7 +8156,6 @@
 				);
 				INFOPLIST_FILE = "PPQuickView/PPQuickView-Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = qlgenerator;
 			};
@@ -8198,7 +8194,9 @@
 				INFOPLIST_FILE = "Old Plug-in Bridge/Old Plug-in Bridge-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../../../../../Frameworks @executable_path/../../../.. /Library/Frameworks";
 				MACH_O_TYPE = mh_execute;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				VALID_ARCHS = i386;
 				WRAPPER_EXTENSION = xpc;
 			};
 			name = Pedantic;
@@ -8265,7 +8263,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/.";
 				MACH_O_TYPE = mh_execute;
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Pedantic;
@@ -8794,6 +8791,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				ONLY_ACTIVE_ARCH = NO;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Pedantic;
@@ -10559,7 +10557,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/.";
 				MACH_O_TYPE = mh_execute;
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -10602,6 +10599,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -10652,7 +10650,6 @@
 				);
 				INFOPLIST_FILE = "PPQuickView/PPQuickView-Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
-				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = qlgenerator;
 			};
@@ -10704,7 +10701,9 @@
 				INFOPLIST_FILE = "Old Plug-in Bridge/Old Plug-in Bridge-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../../../../../Frameworks @executable_path/../../../.. /Library/Frameworks";
 				MACH_O_TYPE = mh_execute;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				VALID_ARCHS = i386;
 				WRAPPER_EXTENSION = xpc;
 			};
 			name = Release;
@@ -10731,7 +10730,9 @@
 				INFOPLIST_FILE = "Old Plug-in Bridge/Old Plug-in Bridge-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../../../../../Frameworks @executable_path/../../../.. /Library/Frameworks";
 				MACH_O_TYPE = mh_execute;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				VALID_ARCHS = i386;
 				WRAPPER_EXTENSION = xpc;
 			};
 			name = Debug;
@@ -10992,6 +10993,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				ONLY_ACTIVE_ARCH = NO;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -11009,6 +11011,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				ONLY_ACTIVE_ARCH = NO;
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
