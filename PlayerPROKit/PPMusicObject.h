@@ -34,19 +34,24 @@
 - (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib;
 
 //Creates a music object from the supplied MADK (PPMusicObject) or MAD bundle (PPMusicObjectWrapper)
-- (id)initWithURL:(NSURL *)url;
-- (id)initWithPath:(NSString *)url;
+- (instancetype)initWithURL:(NSURL *)url;
+- (instancetype)initWithPath:(NSString *)url;
 
 //Creates a music object from any supported tracker type.
-- (id)initWithURL:(NSURL *)url library:(PPLibrary *)theLib;
-- (id)initWithPath:(NSString *)url library:(PPLibrary *)theLib;
+- (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib;
+- (instancetype)initWithPath:(NSString *)url library:(PPLibrary *)theLib;
 
 //Creates a music object from any supported tracker type, also attaching a driver to the music.
-- (id)initWithURL:(NSURL *)url driver:(PPDriver *)theLib;
-- (id)initWithPath:(NSString *)url driver:(PPDriver *)theLib;
+- (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib;
+- (instancetype)initWithPath:(NSString *)url driver:(PPDriver *)theLib;
 
 //This method sets the music object as the playback music
 - (void)attachToDriver:(PPDriver *)theDriv;
+
+//Creates a music struct for use outside of PlayerPROKit.
+- (MADMusic *)copyMadMusicStruct;
+
+- (MADMusic *)internalMadMusicStruct NS_RETURNS_INNER_POINTER;
 
 @end
 
@@ -59,29 +64,26 @@
 @property (copy) NSString *madAuthor;
 
 //Use to create a blank music object.
-- (id)init;
+- (instancetype)init;
 
 //Import from another PPMusicObject
-- (id)initFromMusicObject:(PPMusicObject*)oldFormat;
+- (instancetype)initFromMusicObject:(PPMusicObject*)oldFormat;
 
 //Creates a MADK tracker file
 - (OSErr)exportMusicToURL:(NSURL *)tosave;
 
 //Load a MAD bundle from a path
-- (id)initWithPath:(NSString *)url;
+- (instancetype)initWithPath:(NSString *)url;
 
 //Load a MAD bundle from a URL
-- (id)initWithURL:(NSURL *)url;
-
-//Creates a music struct for use outside of PlayerPROKit.
-- (MADMusic *)newMadMusicStruct;
+- (instancetype)initWithURL:(NSURL *)url;
 
 + (OSErr)info:(PPInfoRec *)theInfo fromTrackerAtURL:(NSURL *)thURL;
 
 #pragma mark Document-based code
 //For use with document classes, like NSDocument or UIDocument
 //Load a MAD bundle from a file wrapper.
-- (id)initWithFileWrapper:(NSFileWrapper*)wrapper;
+- (instancetype)initWithFileWrapper:(NSFileWrapper*)wrapper;
 
 //The file wrapper
 @property (strong, readonly) NSFileWrapper* musicWrapper;

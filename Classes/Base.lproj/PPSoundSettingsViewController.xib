@@ -37,10 +37,6 @@
                             <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="220">
                                 <rect key="frame" x="18" y="14" width="150" height="78"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="78" id="cGC-d5-2Oi"/>
-                                    <constraint firstAttribute="width" constant="150" id="lYI-Ti-WHN"/>
-                                </constraints>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 <size key="cellSize" width="150" height="18"/>
                                 <size key="intercellSpacing" width="4" height="2"/>
