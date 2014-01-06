@@ -13,8 +13,8 @@
 - (instancetype)initWithWindow:(NSWindow *)window
 {
 	if (self = [super initWithWindow:window]) {
-		isMultipleIstanceSafe = YES;
 		// Initialization code here.
+		isMultipleIstanceSafe = YES;
 		dispatch_block_t tmpBlock = ^{
 			short	track, row;
 			long	from, to;
@@ -47,15 +47,15 @@
 	return self;
 }
 
+#if 0
 - (void)windowDidLoad
 {
-    [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	[super windowDidLoad];
+	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
+#endif
 
 @end
-
 
 static OSErr mainFadeVol(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
@@ -73,4 +73,3 @@ static OSErr mainFadeVol(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 #define PLUGMAIN mainFadeVol //The old main function, renamed please
 
 #include "CFPlugin-DigitalBridge.c"
-

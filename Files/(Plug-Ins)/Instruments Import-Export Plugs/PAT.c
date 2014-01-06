@@ -7,66 +7,47 @@
 #include <PlayerPROCore/PPPlug.h>
 #include "PAT.h"
 
-#ifdef _MAC_H
 #define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
 #define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
-#else
-#ifdef __LITTLE_ENDIAN__
-#define Tdecode16(msg_buf) *(short*)msg_buf
-#define Tdecode32(msg_buf) *(int*)msg_buf
-#else
 
-static inline UInt32 Tdecode32( void *msg_buf)
+static inline OSErr TestPAT(char *CC)
 {
-	UInt32 toswap = *((UInt32*) msg_buf);
-	PPLE32(&toswap);
-	return toswap;
-}
-
-static inline UInt16 Tdecode16( void *msg_buf)
-{
-	UInt16 toswap = *((UInt16*) msg_buf);
-	PPLE16(&toswap);
-	return toswap;
-}
-
-#endif
-#endif
-
-static OSErr TestPAT( Ptr CC)
-{
-	char	IDStr[ 50] = "GF1PATCH110";
+	char	IDStr[12] = "GF1PATCH110";
 	short	i;
 	
-	for (i = 0; i < 12; i++)
-	{
-		if (CC[ i] != IDStr[ i]) return MADFileNotSupportedByThisPlug;
+	for (i = 0; i < 12; i++) {
+		if (CC[i] != IDStr[i])
+			return MADFileNotSupportedByThisPlug;
 	}
 	
 	return noErr;
 }
 
-static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
+static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 {
-	short			i;
-//	Boolean			IsReading;
-
-	for (i = 0; i < curIns->numSamples; i++)
-	{
-		if (sample[ i] != NULL)
-		{
-			if (sample[ i]->data != NULL)
-			{
-				free ( sample[ i]->data);
-				sample[ i]->data = NULL;
+	short firstSample;
+	
+	if (!curIns || !sample)
+		return MADParametersErr;
+	
+	dispatch_apply(curIns->numSamples, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		if (sample[i] != NULL) {
+			if (sample[i]->data != NULL) {
+				free(sample[i]->data);
+				sample[i]->data = NULL;
 			}
-			free( sample[ i]);
-			sample[ i] = NULL;
+			free(sample[i]);
+			sample[i] = NULL;
 		}
-	}
+	});
 	
+	firstSample = curIns->firstSample;
 	
-	for (i = 0; i < 32; i++) curIns->name[ i]	= 0;
+	memset(curIns, 0, sizeof(*curIns));
+	curIns->firstSample = firstSample;
+	
+#if 0
+	for (i = 0; i < 32; i++) curIns->name[i]	= 0;
 	curIns->type		= 0;
 	curIns->numSamples	= 0;
 	
@@ -80,7 +61,7 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 		
 		curIns->pannEnv[ i].pos		= 0;
 		curIns->pannEnv[ i].val		= 0;
-
+		
 		curIns->pitchEnv[ i].pos	= 0;
 		curIns->pitchEnv[ i].val	= 0;
 	}
@@ -106,82 +87,83 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	curIns->pannSus		= 0;
 	curIns->pannBeg		= 0;
 	curIns->pannEnd		= 0;
-
+	
 	curIns->volType		= 0;
 	curIns->pannType	= 0;
 	
 	curIns->volFade		= 0;
 	curIns->vibDepth	= 0;
 	curIns->vibRate		= 0;
-	
+#endif
 	return noErr;
 }
 
-static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
+static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 {
 	PatchHeader		*PATHeader;
 	PatInsHeader	*PATIns;
-//	LayerHeader		*PATLayer;
+	//LayerHeader		*PATLayer;
 	PatSampHeader	*PATSamp;
 	long			i, x;
-	unsigned int	  scale_table[ 200] = {
-	16351, 17323, 18354, 19445, 20601, 21826, 23124, 24499, 25956, 27500, 29135, 30867,
-	32703, 34647, 36708, 38890, 41203, 43653, 46249, 48999, 51913, 54999, 58270, 61735,
-	65406, 69295, 73416, 77781, 82406, 87306, 92498, 97998, 103826, 109999, 116540, 123470,
-	130812, 138591, 146832, 155563, 164813, 174614, 184997, 195997, 207652, 219999, 233081, 246941,
-	261625, 277182, 293664, 311126, 329627, 349228, 369994, 391995, 415304, 440000, 466163, 493883,
-	523251, 554365, 587329, 622254, 659255, 698456, 739989, 783991, 830609, 880000, 932328, 987767,
-	1046503, 1108731, 1174660, 1244509, 1318511, 1396914, 1479979, 1567983, 1661220, 1760002, 1864657, 1975536,
-	2093007, 2217464, 2349321, 2489019, 2637024, 2793830, 2959960, 3135968, 3322443, 3520006, 3729316, 3951073,
-	4186073, 4434930, 4698645, 4978041, 5274051, 5587663, 5919922, 6271939, 6644889, 7040015, 7458636, 7902150};
-
+	unsigned int	  scale_table[200] = {
+		16351, 17323, 18354, 19445, 20601, 21826, 23124, 24499, 25956, 27500, 29135, 30867,
+		32703, 34647, 36708, 38890, 41203, 43653, 46249, 48999, 51913, 54999, 58270, 61735,
+		65406, 69295, 73416, 77781, 82406, 87306, 92498, 97998, 103826, 109999, 116540, 123470,
+		130812, 138591, 146832, 155563, 164813, 174614, 184997, 195997, 207652, 219999, 233081, 246941,
+		261625, 277182, 293664, 311126, 329627, 349228, 369994, 391995, 415304, 440000, 466163, 493883,
+		523251, 554365, 587329, 622254, 659255, 698456, 739989, 783991, 830609, 880000, 932328, 987767,
+		1046503, 1108731, 1174660, 1244509, 1318511, 1396914, 1479979, 1567983, 1661220, 1760002, 1864657, 1975536,
+		2093007, 2217464, 2349321, 2489019, 2637024, 2793830, 2959960, 3135968, 3322443, 3520006, 3729316, 3951073,
+		4186073, 4434930, 4698645, 4978041, 5274051, 5587663, 5919922, 6271939, 6644889, 7040015, 7458636, 7902150};
+	
 	
 	
 	// PATCH HEADER
 	
-	PATHeader = (PatchHeader*) PATData;
+	PATHeader = (PatchHeader*)PATData;
 	PATData += 129;
 	
-	if (PATHeader->InsNo != 1) return MADFileNotSupportedByThisPlug;
+	if (PATHeader->InsNo != 1)
+		return MADFileNotSupportedByThisPlug;
 	
-	InsHeader->numSamples = ((long) PATHeader->LoSamp << 8) + (long) PATHeader->HiSamp;
+	InsHeader->numSamples = (PATHeader->LoSamp << 8) + PATHeader->HiSamp;
 	
 	// INS HEADER -- Read only the first instrument
 	
 	PATIns = (PatInsHeader*) PATData;
 	
-	PATIns->size = Tdecode32( &PATIns->size);
+	PATIns->size = Tdecode32(&PATIns->size);
 	PATData += 63;
 	
-	for (x = 0; x < 16; x++) InsHeader->name[ x] = PATIns->name[ x];
+	strlcpy(InsHeader->name, PATIns->name, sizeof(PATIns->name));
 	
 	
 	// LAYERS
 	
-	for (i = 0; i < PATIns->layer; i++) PATData += 47;
+	for (i = 0; i < PATIns->layer; i++)
+		PATData += 47;
 	
 	
 	// SAMPLES
 	
-	for (x = 0; x < InsHeader->numSamples; x++)
-	{
+	for (x = 0; x < InsHeader->numSamples; x++) {
 		sData		*curData;
 		Boolean		signedData;
 		
 		
-		PATSamp = (PatSampHeader*) PATData;
+		PATSamp = (PatSampHeader*)PATData;
 		
 		
-		curData = sample[ x] = inMADCreateSample();
+		curData = sample[x] = inMADCreateSample();
 		
-		for (i = 0; i < 6; i++) curData->name[ i] = PATSamp->name[ i];
+		strlcpy(curData->name, PATSamp->name, sizeof(PATSamp->name));
 		
-		PATSamp->size		= Tdecode32( &PATSamp->size);
+		PATSamp->size		= Tdecode32(&PATSamp->size);
 		curData->size		= PATSamp->size;
 		
-		PATSamp->startLoop	= Tdecode32( &PATSamp->startLoop);
+		PATSamp->startLoop	= Tdecode32(&PATSamp->startLoop);
 		curData->loopBeg 	= PATSamp->startLoop;
-		PATSamp->endLoop	= Tdecode32( &PATSamp->endLoop);
+		PATSamp->endLoop	= Tdecode32(&PATSamp->endLoop);
 		curData->loopSize 	= PATSamp->endLoop - PATSamp->startLoop;
 		
 		PATSamp->rate		= Tdecode16( &PATSamp->rate);
@@ -201,8 +183,7 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		else
 			signedData = false;
 		
-		if (!(PATSamp->Flag & 0x04))
-		{
+		if (!(PATSamp->Flag & 0x04)) {
 			curData->loopBeg = 0;
 			curData->loopSize = 0;
 		}
@@ -214,15 +195,13 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		///////////////
 		
-		PATSamp->minFreq	= Tdecode32( &PATSamp->minFreq);
-		PATSamp->maxFreq	= Tdecode32( &PATSamp->maxFreq);
+		PATSamp->minFreq	= Tdecode32(&PATSamp->minFreq);
+		PATSamp->maxFreq	= Tdecode32(&PATSamp->maxFreq);
 		
-		PATSamp->originRate	= Tdecode32( &PATSamp->originRate);
+		PATSamp->originRate	= Tdecode32(&PATSamp->originRate);
 		
-		for (i = 0; i < 107; i++)
-		{
-			if (scale_table[ i] >= PATSamp->originRate)
-			{
+		for (i = 0; i < 107; i++) {
+			if (scale_table[i] >= PATSamp->originRate) {
 				PATSamp->originRate = (SInt32)i;
 				i = 108;
 			}
@@ -230,29 +209,23 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		curData->relNote = 60 - (12 + PATSamp->originRate);
 		
-		for (i = 0; i < 107; i++)
-		{
-			if (scale_table[ i] >= PATSamp->minFreq)
-			{
+		for (i = 0; i < 107; i++) {
+			if (scale_table[i] >= PATSamp->minFreq) {
 				PATSamp->minFreq = (SInt32)i;
 				i = 108;
 			}
 		}
 		
-		for (i = 0; i < 107; i++)
-		{
-			if (scale_table[ i] >= PATSamp->maxFreq)
-			{
+		for (i = 0; i < 107; i++) {
+			if (scale_table[i] >= PATSamp->maxFreq) {
 				PATSamp->maxFreq = (SInt32)i;
 				i = 108;
 			}
 		}
 		
-		for (i = PATSamp->minFreq; i < PATSamp->maxFreq; i++)
-		{
-			if (i < 96 && i >= 0)
-			{
-				InsHeader->what[ i] = x;
+		for (i = PATSamp->minFreq; i < PATSamp->maxFreq; i++) {
+			if (i < 96 && i >= 0) {
+				InsHeader->what[i] = x;
 			}
 		}
 		
@@ -261,31 +234,25 @@ static OSErr PATImport( InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		// DATA
 		
-		curData->data = malloc( curData->size);
+		curData->data = malloc(curData->size);
 		
-		if (curData->data != NULL)
-		{
+		if (curData->data != NULL) {
 			memcpy(curData->data, PATData, curData->size);
-
-			if (curData->amp == 16)
-			{
-				short	*tt;
-				long	tL;
+			
+			if (curData->amp == 16) {
+				short *tt = (short*) curData->data;
 				
-				tt = (short*) curData->data;
-
-				for (tL = 0; tL < curData->size/2; tL++)
-				{
-					*(tt + tL) = Tdecode16( (Ptr) (tt + tL));
+				dispatch_apply(curData->size / 2, dispatch_get_global_queue(0, 0), ^(size_t tL) {
+					*(tt + tL) = Tdecode16((Ptr)(tt + tL));
 					
-					if (signedData) *(tt + tL) += 0x8000;
-				}
-			}
-			else
-			{
-				for (i = 0; i < curData->size; i++)
-				{
-					if (signedData) curData->data[ i] = curData->data[i] + 0x80;
+					if (signedData)
+						*(tt + tL) += 0x8000;
+				});
+			} else {
+				if (signedData) {
+					dispatch_apply(curData->size, dispatch_get_global_queue(0, 0), ^(size_t ixi) {
+						curData->data[i] += 0x80;
+					});
 				}
 			}
 		}
@@ -324,10 +291,9 @@ static OSErr mainPAT(void					*unused,
 {
 	OSErr	myErr = noErr;
 	UNFILE	iFileRefI;
-//	short	x;
 	long	inOutCount;
 	char *file = NULL;
-	do{
+	do {
 		char *longStr = NULL;
 		CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
 		longStr = malloc(pathLen);
@@ -349,66 +315,65 @@ static OSErr mainPAT(void					*unused,
 		free(longStr);
 	} while (0);
 	
-	switch( order)
+	switch(order)
 	{
 		case 'IMPL':
 		{
 			Ptr				theSound;
 			
 			iFileRefI = iFileOpenRead(file);
-			if (iFileRefI != NULL)
-			{
-				inOutCount = iGetEOF( iFileRefI);
+			if (iFileRefI != NULL) {
+				inOutCount = iGetEOF(iFileRefI);
 				
-				theSound = malloc( inOutCount);
-				if (theSound == NULL) myErr = MADNeedMemory;
-				else
-				{
+				theSound = malloc(inOutCount);
+				if (theSound == NULL)
+					myErr = MADNeedMemory;
+				else {
 					iRead(inOutCount, theSound, iFileRefI);
 					
-					MAD2KillInstrument( InsHeader, sample);
+					MAD2KillInstrument(InsHeader, sample);
 					
-					myErr = PATImport( InsHeader, sample, theSound);
+					myErr = PATImport(InsHeader, sample, theSound);
 					
-					free( theSound);
+					free(theSound);
 				}
 				
 				iClose(iFileRefI);
-			}
+			} else
+				myErr = MADReadingErr;
 		}
-		break;
-		
+			break;
+			
 		case 'TEST':
 		{
 			Ptr	theSound;
 			
 			iFileRefI = iFileOpenRead(file);
-			if (myErr == noErr)
-			{
+			if (myErr == noErr) {
 				inOutCount = 50L;
-				theSound = malloc( inOutCount);
-				if (theSound == NULL) myErr = MADNeedMemory;
-				else
-				{
+				theSound = malloc(inOutCount);
+				if (theSound == NULL)
+					myErr = MADNeedMemory;
+				else {
 					iRead(inOutCount, theSound, iFileRefI);
 					
-					myErr = TestPAT( theSound);
+					myErr = TestPAT(theSound);
 				}
 				
-				free( theSound);
-				
-				iClose( iFileRefI);
-			}
+				free(theSound);
+				iClose(iFileRefI);
+			} else
+				myErr = MADIncompatibleFile;
 		}
-		break;
-		
+			break;
+			
 		default:
 			myErr = MADOrderNotImplemented;
-		break;
+			break;
 	}
-	if (file) {
+	if (file)
 		free(file);
-	}
+	
 	
 	return myErr;
 }

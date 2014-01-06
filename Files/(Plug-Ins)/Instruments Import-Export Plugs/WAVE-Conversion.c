@@ -7,6 +7,8 @@
 #include <CoreFoundation/CFByteOrder.h>
 #include "WAV.h"
 
+//TODO: re-write this to use the AudioToolbox OS X framework: it can natively handle wave audio.
+
 #ifndef __LP64__
 #include <QuickTime/QuickTime.h>
 #endif
@@ -16,6 +18,7 @@ enum {
 	WAVE_FORMAT_PCM = 1,
 	kmaxVolume = 7
 };
+
 
 #ifndef USEDEPRECATEDFUNCS
 #define USEDEPRECATEDFUNCS 1
@@ -66,18 +69,10 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *l
 	
 	{
 		CFIndex theLen = getCFURLFilePathRepresentationLength(theURL, true);
-		char *cfPath = calloc(theLen, 1), *file;
+		char *cfPath = calloc(theLen, 1);
 		CFURLGetFileSystemRepresentation(theURL, true, (unsigned char*)cfPath, theLen);
-		size_t StrLen = strlen(cfPath);
-		file = malloc(++StrLen);
-		if (!file) {
-			file = cfPath;
-		} else {
-			strlcpy(file, cfPath, StrLen);
-			free(cfPath);
-		}
-		fRef = iFileOpenRead(file);
-		free(file);
+		fRef = iFileOpenRead(cfPath);
+		free(cfPath);
 	}
 	
 	*stereo = false;

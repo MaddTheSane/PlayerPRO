@@ -14,79 +14,85 @@
 
 #define min(a,b) (((a) < (b)) ? (a) : (b))
 
-static OSErr mainCrossFade(void				*unused,
-					sData					*theData,
-					long					SelectionStart,
-					long					SelectionEnd,
-					PPInfoPlug				*thePPInfoPlug,
-					short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainCrossFade(void			*unused,
+						   sData		*theData,
+						   long			SelectionStart,
+						   long			SelectionEnd,
+						   PPInfoPlug	*thePPInfoPlug,
+						   short		StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	switch( theData->amp)
+	switch (theData->amp)
 	{
 		case 8:
 		{
 			long	i, j, length = (SelectionEnd - SelectionStart) / 2;
 			long	temp, tempStart, tempEnd;
 			Ptr		StartPtr, EndPtr;
-		
-			length = min (length, theData->size - SelectionEnd);
-			length = min (length, SelectionStart);
+			
+			length = min(length, theData->size - SelectionEnd);
+			length = min(length, SelectionStart);
 			length *= 2;
 			
-			for (j = 0; j < 2; j++)	//do it twice
-			{
+			for (j = 0; j < 2; j++) {	//do it twice
 				StartPtr = theData->data + SelectionStart - (length / 2);
 				EndPtr = theData->data + SelectionEnd - (length / 2);
-				for (i = 0; i < length; i++)
-				{
+				for (i = 0; i < length; i++) {
 					tempStart = *StartPtr;
 					tempEnd = *EndPtr;
 					
 					temp = ((tempEnd * i) + (tempStart * (length - i))) / length;
-					if (temp > 127) temp = 127;
-					else if (temp < -127 ) temp = -127;
+					if (temp > 127)
+						temp = 127;
+					else if (temp < -127 )
+						temp = -127;
 					*StartPtr++ = temp;
-			
+					
 					temp = ((tempStart * i) + (tempEnd * (length - i))) / length;
-					if (temp > 127) temp = 127;
-					else if (temp < -127 ) temp = -127;
+					if (temp > 127)
+						temp = 127;
+					else if (temp < -127 )
+						temp = -127;
 					*EndPtr++ = temp;
 				}
 			}
-		} break;
-
+		}
+			break;
+			
 		default:
 		case 16:
 		{
 			long	i, j, length = (SelectionEnd - SelectionStart) / 2;
 			long	temp, tempStart, tempEnd;
 			short	*StartPtr, *EndPtr;
-		
-			length = min (length, theData->size - SelectionEnd);
-			length = min (length, SelectionStart);
-//			length *= 2;
 			
-			for (j = 0; j < 2; j++)	//do it twice
-			{
+			length = min(length, theData->size - SelectionEnd);
+			length = min(length, SelectionStart);
+			//length *= 2;
+			
+			for (j = 0; j < 2; j++) {	//do it twice
 				StartPtr = (short*) theData->data + (SelectionStart / 2) - (length / 2);
 				EndPtr = (short*) theData->data + (SelectionEnd / 2) - (length / 2);
-				for (i = 0; i < length; i++)
-				{
+				for (i = 0; i < length; i++) {
 					tempStart = *StartPtr;
 					tempEnd = *EndPtr;
-			
+					
 					temp = ((tempEnd * i) + (tempStart * (length - i))) / length;
-					if (temp >= (short)0x7FFF) temp = 0x7FFF;	// overflow ?
-					else if (temp <= (short)0x8000 ) temp = (short)0x8000;
+					if (temp >= (short)0x7FFF)
+						temp = 0x7FFF;	// overflow ?
+					else if (temp <= (short)0x8000)
+						temp = (short)0x8000;
 					*StartPtr++ = temp;
-			
+					
 					temp = ((tempStart * i) + (tempEnd * (length - i))) / length;
-					if (temp >= (short)0x7FFF) temp = 0x7FFF;	// overflow ?
-					else if (temp <= (short)0x8000 ) temp = (short)0x8000;
+					if (temp >= (short)0x7FFF)
+						temp = 0x7FFF;	// overflow ?
+					else if (temp <= (short)0x8000)
+						temp = (short)0x8000;
 					*EndPtr++ = temp;
 				}
 			}
-		} break;
+		}
+			break;
 	}
 	
 	return noErr;

@@ -1,11 +1,13 @@
 #ifndef __PAT_H
 #define __PAT_H
 
+#pragma pack(push, 2)
+
 typedef struct _PatchHeader
 {
-	char	ID[ 12];
-	char	GravisID[ 10];
-	char	Description[ 60];
+	char	ID[12];
+	char	GravisID[10];
+	char	Description[60];
 	
 	Byte	InsNo;
 	Byte	VoiceNo;
@@ -22,17 +24,16 @@ typedef struct _PatchHeader
 	Byte	Size3;
 	Byte	Size4;
 	
-	char	reserved[ 36];
-	
+	char	reserved[36];
 } PatchHeader;
 
 typedef struct _PatInsHeader
 {
 	short	ID;
-	char	name[ 16];
+	char	name[16];
 	SInt32	size;
 	Byte	layer;
-	char	reserved[ 40];
+	char	reserved[40];
 } PatInsHeader;
 
 typedef struct _LayerHeader
@@ -41,7 +42,7 @@ typedef struct _LayerHeader
 	Byte	id;
 	SInt32	size;
 	Byte	SampNo;
-	char	reserved[ 40];
+	char	reserved[40];
 } LayerHeader;
 
 typedef struct _PatSampHeader
@@ -57,8 +58,8 @@ typedef struct _PatSampHeader
 	SInt32			originRate;
 	short			tune;
 	Byte			balance;
-	Byte			Filter[ 6];
-	Byte			FilterOffset[ 6];
+	Byte			Filter[6];
+	Byte			FilterOffset[6];
 	Byte			TremoloSweep;
 	Byte			TremoloRate;
 	Byte			TremoloDepth;
@@ -69,9 +70,11 @@ typedef struct _PatSampHeader
 	Byte			Flag;
 	short			FreqScale;
 	unsigned short	FreqScaleFactor;
-	char			reserved[ 36];
+	char			reserved[36];
 	
 } PatSampHeader;
+
+#pragma pack(pop)
 
 /*
 Document converted to plain ASCII for inclusion in Wotsit's Format

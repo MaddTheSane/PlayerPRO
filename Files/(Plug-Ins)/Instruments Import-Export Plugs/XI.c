@@ -28,40 +28,47 @@ typedef UInt8			UBYTE;
 
 #include "XM.h"
 
-static OSErr TestXI( Ptr CC)
+static inline OSErr TestXI(void *CC)
 {
-	OSType Ident = *((OSType*) CC);
+	OSType Ident = *((OSType*)CC);
 	PPBE32(&Ident);
 	
-	if (Ident == 'Exte') return noErr;
-	else return MADFileNotSupportedByThisPlug;
+	if (Ident == 'Exte')
+		return noErr;
+	else
+		return MADFileNotSupportedByThisPlug;
 }
 
-static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
+static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 {
-	short			i;
-//	Boolean			IsReading;
-
-	for (i = 0; i < curIns->numSamples; i++)
-	{
-		if (sample[ i] != NULL)
-		{
-			if (sample[ i]->data != NULL)
-			{
-				free( sample[ i]->data);
-				sample[ i]->data = NULL;
+	short firstSample;
+	
+	if (!curIns || !sample)
+		return MADParametersErr;
+	
+	dispatch_apply(curIns->numSamples, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		if (sample[i] != NULL) {
+			if (sample[i]->data != NULL) {
+				free(sample[i]->data);
+				sample[i]->data = NULL;
 			}
-			free( sample[ i]);
-			sample[ i] = NULL;
+			free(sample[i]);
+			sample[i] = NULL;
 		}
-	}
+	});
 	
+	firstSample = curIns->firstSample;
 	
-	for (i = 0; i < 32; i++) curIns->name[ i]	= 0;
+	memset(curIns, 0, sizeof(*curIns));
+	curIns->firstSample = firstSample;
+	
+#if 0
+	for (i = 0; i < 32; i++) curIns->name[i]	= 0;
 	curIns->type		= 0;
 	curIns->numSamples	= 0;
 	
 	/**/
+	
 #if 1
 	memset(curIns->what, 0, sizeof(curIns->what));
 	memset(curIns->volEnv, 0, sizeof(curIns->volEnv));
@@ -69,7 +76,7 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	memset(curIns->pitchEnv, 0, sizeof(curIns->pitchEnv));
 #else
 	for (i = 0; i < 96; i++) curIns->what[ i]		= 0;
-
+	
 	for (i = 0; i < 12; i++)
 	{
 		curIns->volEnv[ i].pos		= 0;
@@ -80,7 +87,7 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 		
 		curIns->pitchEnv[ i].pos	= 0;
 		curIns->pitchEnv[ i].val	= 0;
-
+		
 	}
 #endif
 	curIns->volSize		= 0;
@@ -93,42 +100,19 @@ static OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
 	curIns->pannSus		= 0;
 	curIns->pannBeg		= 0;
 	curIns->pannEnd		= 0;
-
+	
 	curIns->volType		= 0;
 	curIns->pannType	= 0;
 	
 	curIns->volFade		= 0;
 	curIns->vibDepth	= 0;
 	curIns->vibRate		= 0;
-	
+#endif
 	return noErr;
 }
 
-#ifdef _MAC_H
 #define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
 #define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
-#else
-#ifdef __LITTLE_ENDIAN__
-#define Tdecode16(msg_buf) *(short*)msg_buf
-#define Tdecode32(msg_buf) *(int*)msg_buf
-#else
-
-static inline UInt32 Tdecode32( void *msg_buf)
-{
-	UInt32 toswap = *((UInt32*) msg_buf);
-	PPLE32(&toswap);
-	return toswap;
-}
-
-static inline UInt16 Tdecode16( void *msg_buf)
-{
-	UInt16 toswap = *((UInt16*) msg_buf);
-	PPLE16(&toswap);
-	return toswap;
-}
-
-#endif
-#endif
 
 //hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
 static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
@@ -162,7 +146,7 @@ static OSErr mainXI(void		*unused,
 	
 	char *file = NULL;
 	char *fileName = NULL;
-	do{
+	do {
 		char *longStr = NULL;
 		CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
 		longStr = malloc(pathLen);
@@ -213,7 +197,6 @@ static OSErr mainXI(void		*unused,
 			
 			iFileRefI = iFileOpenRead(file);
 			if (iFileRefI != NULL) {
-				
 				inOutCount = iGetEOF(iFileRefI);
 				
 				theXI = malloc(inOutCount);
@@ -243,15 +226,15 @@ static OSErr mainXI(void		*unused,
 					numSamples = *((short*)(theXI + 0x42 + sizeof(XMPATCHHEADER)));
 					InsHeader->numSamples = Tdecode16(&numSamples);
 					
-					pth->volfade 	= Tdecode16( &pth->volfade);
+					pth->volfade 	= Tdecode16(&pth->volfade);
 					
 					memcpy(InsHeader->what, pth->what, 96);
 					memcpy(InsHeader->volEnv, pth->volenv, 48);
 #ifdef __BIG_ENDIAN__
 					for (x = 0; x < 12; x++)
 					{
-						//						InsHeader->volEnv[ x].pos = Tdecode16( &InsHeader->volEnv[ x].pos);	//
-						//						InsHeader->volEnv[ x].val = Tdecode16( &InsHeader->volEnv[ x].val);	// 00...64
+						//InsHeader->volEnv[ x].pos = Tdecode16( &InsHeader->volEnv[ x].pos);	//
+						//InsHeader->volEnv[ x].val = Tdecode16( &InsHeader->volEnv[ x].val);	// 00...64
 						PPLE16(&InsHeader->volEnv[x].pos);
 						PPLE16(&InsHeader->volEnv[x].val);
 					}
@@ -290,7 +273,7 @@ static OSErr mainXI(void		*unused,
 							8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
 						};
 						
-						wh = (XMWAVHEADER*) (theXI + 0x42 + 0x02 + sizeof(XMPATCHHEADER) + x * sizeof(XMWAVHEADER));
+						wh = (XMWAVHEADER*)(theXI + 0x42 + 0x02 + sizeof(XMPATCHHEADER) + x * sizeof(XMWAVHEADER));
 						
 						wh->length 		= Tdecode32(&wh->length);
 						wh->loopstart 	= Tdecode32(&wh->loopstart);
@@ -305,7 +288,7 @@ static OSErr mainXI(void		*unused,
 						curData->loopSize 	= wh->looplength;
 						
 						curData->vol		= wh->volume;
-						curData->c2spd		= finetune[ (wh->finetune + 128)/16];
+						curData->c2spd		= finetune[(wh->finetune + 128) / 16];
 						curData->loopType	= 0;
 						curData->amp		= 8;
 						if (wh->type & 0x10) {		// 16 Bits
@@ -324,7 +307,7 @@ static OSErr mainXI(void		*unused,
 					
 					// Read SAMPLE DATA
 					{
-						Ptr reader = (Ptr) wh;
+						Ptr reader = (Ptr)wh;
 						
 						reader += sizeof(XMWAVHEADER);
 						
@@ -336,14 +319,15 @@ static OSErr mainXI(void		*unused,
 								memcpy(curData->data, reader, curData->size);
 								
 								if (curData->amp == 16) {
-									short	*tt;
-									long	tL;
+									short	*tt = (short*)curData->data;
 									
-									tt = (short*)curData->data;
+#ifdef __BIG_ENDIAN__
+									long	tL;
 									
 									for (tL = 0; tL < curData->size / 2; tL++) {
 										PPLE16((Ptr)(tt + tL));
 									}
+#endif
 									
 									{
 										/* Delta to Real */
@@ -377,9 +361,9 @@ static OSErr mainXI(void		*unused,
 						}
 					}
 				}
-				
 				iClose(iFileRefI);
-			}
+			} else
+				myErr = MADReadingErr;
 		}
 			break;
 			
@@ -389,7 +373,7 @@ static OSErr mainXI(void		*unused,
 			
 			iFileRefI = iFileOpenRead(file);
 			if (iFileRefI != NULL) {
-				inOutCount = 50L;
+				inOutCount = 50;
 				theSound = malloc(inOutCount);
 				if (theSound == NULL)
 					myErr = MADNeedMemory;
@@ -401,7 +385,8 @@ static OSErr mainXI(void		*unused,
 				
 				free(theSound);
 				iClose(iFileRefI);
-			}
+			} else
+				myErr = MADReadingErr;
 		}
 			break;
 			
@@ -415,11 +400,11 @@ static OSErr mainXI(void		*unused,
 				short			u, i, x;
 				long			inOutCount = 0;
 				XMPATCHHEADER	pth;
-				char			start[ 0x42];
+				char			start[0x42];
 				
-				//FIXME: get the proper escape sequences
 				//BlockMoveData( "Extended Instrument:                       FastTracker v2.00   ", start, 0x42);
 				
+				//FIXME: get the proper escape sequences
 				memcpy(start, "Extended Instrument:                       FastTracker v2.00   ", 0x42);
 				
 				inOutCount = 0x42;
@@ -463,8 +448,7 @@ static OSErr mainXI(void		*unused,
 				for (u = 0 ; u < InsHeader->numSamples ; u++) {
 					XMWAVHEADER		wh;
 					sData			*curData;
-					int 	finetune[16] =
-					{
+					int				finetune[16] = {
 						7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280,
 						8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
 					};
@@ -492,13 +476,15 @@ static OSErr mainXI(void		*unused,
 					if (curData->c2spd > 8757)
 						wh.finetune = 127;
 					else {
-						while (finetune[(wh.finetune + 128)/16] < curData->c2spd) {
+						while (finetune[(wh.finetune + 128) / 16] < curData->c2spd) {
 							wh.finetune += 16;
 						}
 					}
 					wh.type = 0;
-					if (curData->amp == 16) wh.type += 0x10;
-					if (curData->loopSize > 0) wh.type += 0x3;
+					if (curData->amp == 16)
+						wh.type |= 0x10;
+					if (curData->loopSize > 0)
+						wh.type |= 0x3;
 					
 					//	wh.panning = curData->panning;
 					wh.relnote = curData->relNote;
@@ -508,8 +494,8 @@ static OSErr mainXI(void		*unused,
 					wh.loopstart 	= Tdecode32(&wh.loopstart);
 					wh.looplength 	= Tdecode32(&wh.looplength);
 					
-					inOutCount = sizeof( wh);
-					iWrite(inOutCount, (Ptr)&wh, iFileRefI);
+					inOutCount = sizeof(wh);
+					iWrite(inOutCount, &wh, iFileRefI);
 				}
 				
 				for (u = 0 ; u < InsHeader->numSamples ; u++) {
@@ -540,13 +526,13 @@ static OSErr mainXI(void		*unused,
 							
 							oldV = 0;
 							
-							for (xL = 0; xL < dstSize/2; xL++) {
-								newV = tt[ xL];
-								tt[ xL] -= oldV;
+							for (xL = 0; xL < dstSize / 2; xL++) {
+								newV = tt[xL];
+								tt[xL] -= oldV;
 								oldV = newV;
 							}
 							
-							for (tL = 0; tL < dstSize/2; tL++) {
+							for (tL = 0; tL < dstSize / 2; tL++) {
 								*(tt + tL) = Tdecode16((void*)(tt + tL));
 							}
 						} else {
@@ -573,13 +559,13 @@ static OSErr mainXI(void		*unused,
 						inOutCount = dstSize;
 						iWrite(inOutCount, tempPtr, iFileRefI);
 						
-						
 						free(tempPtr);
-					}
+					} else
+						myErr = MADNeedMemory;
 				}
-				
 				iClose(iFileRefI);
-			}
+			} else
+				myErr = MADWritingErr;
 			break;
 			
 		default:

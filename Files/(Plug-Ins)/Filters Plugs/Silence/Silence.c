@@ -15,21 +15,21 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
-static OSErr mainSilence(void			*unused,
-						 sData			*theData,				// Sample Informations
-						 long			SelectionStart,			// SelectionStart in bytes ! Even for 16bits audio and stereo
-						 long			SelectionEnd,			// SelectionEnd in bytes ! Even for 16bits audio and stereo
-						 PPInfoPlug		*thePPInfoPlug,
-						 short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainSilence(void		*unused,
+						 sData		*theData,		// Sample Informations
+						 long		SelectionStart,	// SelectionStart in bytes ! Even for 16bits audio and stereo
+						 long		SelectionEnd,	// SelectionEnd in bytes ! Even for 16bits audio and stereo
+						 PPInfoPlug	*thePPInfoPlug,
+						 short		StereoMode)		// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long	i;
 	Ptr		Sample8Ptr = theData->data;
-	short	*Sample16Ptr = (short*) theData->data;
+	short	*Sample16Ptr = (short*)theData->data;
 	
 	if (Sample8Ptr == NULL)
 		return noErr;
 	
-	switch( theData->amp)
+	switch (theData->amp)
 	{
 		case 8:
 			Sample8Ptr += SelectionStart;
@@ -44,8 +44,8 @@ static OSErr mainSilence(void			*unused,
 				
 				Sample8Ptr++;
 			}
-		break;
-		
+			break;
+			
 		case 16:
 			Sample16Ptr += SelectionStart / 2;							// Div 2, because it's in bytes !!!
 			
@@ -59,7 +59,7 @@ static OSErr mainSilence(void			*unused,
 				
 				Sample16Ptr++;
 			}
-		break;
+			break;
 	}
 	
 	return noErr;

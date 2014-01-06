@@ -10,17 +10,17 @@
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
 
-static OSErr mainBackwards(void					*unused,
-					sData					*theData,
-					long					SelectionStart,
-					long					SelectionEnd,
-					PPInfoPlug				*thePPInfoPlug,
-					short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainBackwards(void			*unused,
+						   sData		*theData,
+						   long			SelectionStart,
+						   long			SelectionEnd,
+						   PPInfoPlug	*thePPInfoPlug,
+						   short		StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long	i;
 	unsigned short	temp1, temp2;
 	
-	switch( theData->amp)
+	switch (theData->amp)
 	{
 		case 8:
 		{
@@ -29,22 +29,21 @@ static OSErr mainBackwards(void					*unused,
 			orgPtr += SelectionStart;
 			destPtr += SelectionEnd - 1;
 			
-			for (i = 0; i < (SelectionEnd - SelectionStart) / 2; i++)	//just swap values
-			{
+			for (i = 0; i < (SelectionEnd - SelectionStart) / 2; i++) {	//just swap values
 				temp1 = *orgPtr;
 				temp2 = *destPtr;
 				
 				*orgPtr++ = temp2;
 				*destPtr-- = temp1;
 				
-				if (StereoMode)
-				{
+				if (StereoMode) {
 					orgPtr++;
 					destPtr--;
 					i++;
 				}
 			}
-		} break;
+		}
+			break;
 		
 		case 16:
 		{
@@ -53,21 +52,20 @@ static OSErr mainBackwards(void					*unused,
 			orgPtr += SelectionStart / 2;
 			destPtr += (SelectionEnd - 1) / 2;
 			
-			for (i = 0; i < (SelectionEnd - SelectionStart) / 4; i++)
-			{
+			for (i = 0; i < (SelectionEnd - SelectionStart) / 4; i++) {
 				temp1 = *orgPtr;
 				temp2 = *destPtr;
 				*orgPtr++ = temp2;
 				*destPtr-- = temp1;
 				
-				if (StereoMode)
-				{
+				if (StereoMode) {
 					orgPtr++;
 					destPtr--;
 					i++;
 				}
 			}
-		} break;
+		}
+			break;
 	}
 
 	return noErr;

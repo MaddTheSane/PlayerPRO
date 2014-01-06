@@ -38,37 +38,36 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
 	{
 		case 8:
 			for (x = 0; x < newSize; x++) {
-				pos			= (x * srcC4SPD << LRVAL) / dstC4SPD;
-				right		= pos & ((1 << LRVAL)-1);
-				left		= (1 << LRVAL) - right;
+				pos		= (x * srcC4SPD << LRVAL) / dstC4SPD;
+				right	= pos & ((1 << LRVAL)-1);
+				left	= (1 << LRVAL) - right;
 				
 				if (stereo) {
 					pos >>= LRVAL;
 					pos /= 2;
 					pos *= 2;
 					
-					if (1 + pos >= srcSize)
-					{}
-					else
+					if (1 + pos >= srcSize) {
+						
+					} else
 						tempL = (left * src8[pos] + right * src8[2 + pos]) >> LRVAL;
 					
 					dst8[x] = tempL;
 					
 					x++;
 					
-					if (3 + pos >= srcSize)
-					{}
-					else
+					if (3 + pos >= srcSize) {
+						
+					} else
 						tempR = (left * src8[1 + pos] + right * src8[3 + pos]) >> LRVAL;
 					
 					dst8[x] = tempR;
 				} else {
 					pos >>= LRVAL;
 					
-					if (pos < 0 ||  1 + pos >= srcSize)
-					{
-					}
-					else
+					if ( 1 + pos >= srcSize) {
+						
+					} else
 						tempL = (left * src8[pos] + right * src8[1 + pos]) >> LRVAL;
 					
 					dst8[x] = tempL;
@@ -78,39 +77,38 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
 			
 		case 16:
 			for (x = 0; x < newSize / 2; x++) {
-				pos			= (x * srcC4SPD << LRVAL) / dstC4SPD;
-				right		= pos & ((1 << LRVAL)-1);
-				left		= (1 << LRVAL) - right;
+				pos		= (x * srcC4SPD << LRVAL) / dstC4SPD;
+				right	= pos & ((1 << LRVAL)-1);
+				left	= (1 << LRVAL) - right;
 				
 				if (stereo) {
 					pos >>= LRVAL;
 					pos /= 2;
 					pos *= 2;
 					
-					if (1 + pos >= srcSize/2)
-					{
-					}
-					else
+					if (1 + pos >= srcSize / 2) {
+						
+					} else
 						tempL = (left * src16[pos] + right * src16[2 + pos]) >> LRVAL;
 					
 					dst16[x] = tempL;
 					
 					x++;
 					
-					if (3 + pos >= srcSize/2)
-					{
-					}
-					else
-						tempL = (left * src16[ 1 + pos] + right * src16[ 3 + pos]) >> LRVAL;
+					if (3 + pos >= srcSize / 2) {
+						
+					} else
+						tempL = (left * src16[1 + pos] + right * src16[3 + pos]) >> LRVAL;
 					
-					dst16[ x] = tempL;
+					dst16[x] = tempL;
 				} else {
 					pos >>= LRVAL;
 					
-					if (1 + pos >= srcSize/2) {}
-					else tempL = (left * src16[ pos] + right * src16[ 1 + pos]) >> LRVAL;
+					if (1 + pos >= srcSize / 2) {
+						
+					} else tempL = (left * src16[pos] + right * src16[1 + pos]) >> LRVAL;
 					
-					dst16[ x] = tempL;
+					dst16[x] = tempL;
 				}
 			}
 			break;
@@ -137,8 +135,7 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
 			theData->loopBeg = (theData->loopBeg * (newFreq/100)) / (long) (theData->c2spd/100);
 			theData->loopSize = (theData->loopSize * (newFreq/100)) / (long) (theData->c2spd/100);
 			
-			if (newPtr != NULL)
-			{
+			if (newPtr != NULL) {
 				free(theData->data);
 				theData->data	= newPtr;
 				theData->size	= (SInt32)newPtrSize;
@@ -165,12 +162,13 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
     return self;
 }
 
+#if 0
 - (void)windowDidLoad
 {
-    [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	[super windowDidLoad];
+	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
+#endif
 
 @end
 
@@ -179,7 +177,7 @@ static OSErr mainSampRate(void			*unused,
 						  long			SelectionStart,
 						  long			SelectionEnd,
 						  PPInfoPlug	*thePPInfoPlug,
-						  short			StereoMode)			// StereoMode = 0 apply on all channels, = 1 apply on current channel
+						  short			StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	
 	SamplingRateWindowController *controller = [[SamplingRateWindowController alloc] initWithWindowNibName:@"SamplingRateWindowController" infoPlug:thePPInfoPlug];

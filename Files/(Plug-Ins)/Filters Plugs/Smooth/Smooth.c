@@ -13,18 +13,18 @@
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
 
-static OSErr mainSmooth(void			*unused,
-						sData			*theData,
-						long			SelectionStart,
-						long			SelectionEnd,
-						PPInfoPlug		*thePPInfoPlug,
-						short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainSmooth(void		*unused,
+						sData		*theData,
+						long		SelectionStart,
+						long		SelectionEnd,
+						PPInfoPlug	*thePPInfoPlug,
+						short		StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	long	i, length, temp, prevtemp, nexttemp, work;
-
+	
 	length = SelectionEnd - SelectionStart - 1;
-
-	switch( theData->amp)
+	
+	switch (theData->amp)
 	{
 		case 8:
 		{
@@ -32,8 +32,7 @@ static OSErr mainSmooth(void			*unused,
 			
 			prevtemp = *SamplePtr++;
 			temp = *SamplePtr++;
-			for (i = 1; i < length; i++)
-			{
+			for (i = 1; i < length; i++) {
 				nexttemp = *SamplePtr--;
 				
 				work = ((prevtemp + nexttemp) + (temp * 6)) >> 3;
@@ -43,17 +42,34 @@ static OSErr mainSmooth(void			*unused,
 				temp = nexttemp;
 				SamplePtr++;
 			}
-		} break;
-
+		}
+			break;
+			
 		case 16:
 		{
+#if 1
+			short	*SamplePtr = (short*)theData->data + (SelectionStart / 2);
+			
+			prevtemp = *SamplePtr++;
+			temp = *SamplePtr++;
+			for (i = 1; i < length / 2; i++) {
+				nexttemp = *SamplePtr--;
+				
+				work = ((prevtemp + nexttemp) + (temp * 6)) >> 3;
+				
+				*SamplePtr++ = work;
+				prevtemp = temp;
+				temp = nexttemp;
+				SamplePtr++;
+			}
+#else
 			__block short *SamplePtr = (short*)theData->data + (SelectionStart / 2);
 			__block long prevtemp, temp;
 			prevtemp = *SamplePtr++;
 			temp = *SamplePtr++;
 			dispatch_apply(length / 2 - 1, dispatch_get_global_queue(0, 0), ^(size_t theSize) {
 				long	nexttemp, work;
-
+				
 				theSize++;
 				nexttemp = *SamplePtr--;
 				
@@ -63,11 +79,13 @@ static OSErr mainSmooth(void			*unused,
 				prevtemp = temp;
 				temp = nexttemp;
 				SamplePtr++;
-
 			});
-		} break;
+			
+#endif
+		}
+			break;
 	}
-
+	
 	return noErr;
 }
 

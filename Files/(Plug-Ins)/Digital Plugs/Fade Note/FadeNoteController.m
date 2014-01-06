@@ -52,10 +52,6 @@ static short NSStringToNote(NSString *myTT)
 	return Oct;
 }
 
-@interface FadeNoteController ()
-
-@end
-
 @implementation FadeNoteController
 
 - (instancetype)initWithWindow:(NSWindow *)window

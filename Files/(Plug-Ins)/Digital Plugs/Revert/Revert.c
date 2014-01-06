@@ -16,25 +16,24 @@ static OSErr mainRevert(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	memSize = myPcmd->structSize;
 	
 	srcCmd = (Pcmd*)calloc(memSize, 1);
-	
 	srcCmd->length = myPcmd->length;
 	srcCmd->tracks = myPcmd->tracks;
 	
 	for (track = 0; track < myPcmd->tracks; track ++) {
 		for (row = 0; row < myPcmd->length; row ++) {
 			Cmd *myCmd, *myCmdsrc;
-			myCmdsrc = GetCmd(row, track, srcCmd);
-			myCmd	 = GetCmd(row, track, myPcmd);
-			*myCmdsrc = *myCmd;
+			myCmdsrc	= GetCmd(row, track, srcCmd);
+			myCmd		= GetCmd(row, track, myPcmd);
+			*myCmdsrc	= *myCmd;
 		}
 	}
 	
 	for (track = 0; track < myPcmd->tracks; track ++) {
 		for (row = 0; row < myPcmd->length; row ++) {
 			Cmd *myCmd, *myCmdsrc;
-			myCmdsrc = GetCmd(myPcmd->length - 1 - row, track, srcCmd);
-			myCmd	 = GetCmd(row, track, myPcmd);
-			*myCmd = *myCmdsrc;
+			myCmdsrc	= GetCmd(myPcmd->length - 1 - row, track, srcCmd);
+			myCmd		= GetCmd(row, track, myPcmd);
+			*myCmd		= *myCmdsrc;
 		}
 	}
 	

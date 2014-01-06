@@ -10,31 +10,26 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 
-@interface DepthController ()
-
-@end
-
 @implementation DepthController
 
 - (instancetype)initWithWindow:(NSWindow *)window
 {
-    self = [super initWithWindow:window];
-    if (self) {
+	if (self = [super initWithWindow:window]) {
 		isMultipleIstanceSafe = YES;
-
+		
 		dispatch_block_t tmp = ^{
-			SInt32			i, temp, Inc = self.depthAmmount;
-			char			*Sample8Ptr = (char*) theData->data;
-			short			*Sample16Ptr = ( short*) theData->data;
+			SInt32	i, temp, Inc = self.depthAmmount;
+			char	*Sample8Ptr = (char*)theData->data;
+			short	*Sample16Ptr = (short*)theData->data;
 			
-			if (Inc == 0) Inc = 1;
-			switch( theData->amp)
+			if (Inc == 0)
+				Inc = 1;
+			switch (theData->amp)
 			{
 				case 8:
 					Sample8Ptr += selectionStart;
 					
-					for (i = 0; i < selectionEnd - selectionStart; i++)
-					{
+					for (i = 0; i < selectionEnd - selectionStart; i++) {
 						temp = *Sample8Ptr;
 						
 						temp *= Inc;
@@ -45,8 +40,7 @@
 						
 						*Sample8Ptr = temp;
 						
-						if (stereoMode)
-						{
+						if (stereoMode) {
 							Sample8Ptr++;
 							i++;
 						}
@@ -58,8 +52,7 @@
 				case 16:
 					Sample16Ptr += selectionStart/2;						// Div 2, because it's in bytes !!!
 					
-					for (i = 0; i < (selectionEnd - selectionStart)/2; i++)	// Div 2, because it's in bytes !!!
-					{
+					for (i = 0; i < (selectionEnd - selectionStart)/2; i++) {	// Div 2, because it's in bytes !!!
 						temp = *Sample16Ptr;
 						
 						temp *= Inc;
@@ -70,8 +63,7 @@
 						
 						*Sample16Ptr = temp;
 						
-						if (stereoMode)
-						{
+						if (stereoMode) {
 							Sample16Ptr++;
 							i++;
 						}
@@ -80,31 +72,29 @@
 					}
 					break;
 			}
-
-
 		};
-		
 		self.plugBlock = tmp;
-    }
-    
-    return self;
+	}
+	
+	return self;
 }
 
+#if 0
 - (void)windowDidLoad
 {
-    [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	[super windowDidLoad];
+	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
+#endif
 
 @end
 
-static OSErr mainDepth(void						*unused,
-					   sData					*theData,
-					   long					SelectionStart,
-					   long					SelectionEnd,
-					   PPInfoPlug				*thePPInfoPlug,
-					   short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainDepth(void			*unused,
+					   sData		*theData,
+					   long			SelectionStart,
+					   long			SelectionEnd,
+					   PPInfoPlug	*thePPInfoPlug,
+					   short		StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	DepthController *controller = [[DepthController alloc] initWithWindowNibName:@"DepthController" infoPlug:thePPInfoPlug];
 	controller.depthAmmount = 8;

@@ -10,47 +10,40 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 
-
-@interface EchoWindowController ()
-
-@end
-
 #define timeConvert		22254 //≈22KHZ
 
 @implementation EchoWindowController
 
 - (instancetype)initWithWindow:(NSWindow *)window
 {
-    self = [super initWithWindow:window];
-    if (self) {
-        // Initialization code here.
+	if (self = [super initWithWindow:window]) {
+		// Initialization code here.
 		isMultipleIstanceSafe = YES;
 		dispatch_block_t tmp = ^{
 			SInt32 i, length, temp1, temp2, pDelay = self.echoDelay;
 			double pStrength = self.echoStrength;
-
 			
 			length = (int)(selectionEnd - selectionStart - 1);
 			
 			pDelay = (pDelay * timeConvert) / 1000;	//convert ms to samples
 			
-			switch( theData->amp)
+			switch (theData->amp)
 			{
 				case 8:
 				{
 					Ptr	orgPtr = (theData->data) + selectionStart, destPtr = orgPtr + pDelay;
 					
-					for (i = 0; i < (length - pDelay); i++)
-					{
+					for (i = 0; i < (length - pDelay); i++) {
 						temp1 = *orgPtr++;
 						temp1 = (pStrength * temp1);
 						
 						temp2 = *destPtr;
-						
 						temp1 += temp2;
 						
-						if (temp1 >= 127) temp1 = 127;	// overflow ?
-						else if (temp1 <= -128 ) temp1 = -128;
+						if (temp1 >= 127)
+							temp1 = 127;	// overflow ?
+						else if (temp1 <= -128)
+							temp1 = -128;
 						
 						*destPtr++ = temp1;
 					}
@@ -62,37 +55,37 @@
 					short	*orgPtr = (short*) theData->data + (selectionStart / 2),
 					*destPtr = orgPtr + pDelay;
 					
-					for (i = 0; i < length / 2 - pDelay; i++)
-					{
+					for (i = 0; i < length / 2 - pDelay; i++) {
 						temp1 = *orgPtr++;
 						temp1 = (pStrength * temp1);
 						
 						temp2 = *destPtr;
-						
 						temp1 += temp2;
 						
-						if (temp1 >= (short)0x7FFF) temp1 = 0x7FFF;	// overflow ?
-						else if (temp1 <= (short)0x8000 ) temp1 = (short)0x8000;
+						if (temp1 >= (short)0x7FFF)
+							temp1 = 0x7FFF;	// overflow ?
+						else if (temp1 <= (short)0x8000)
+							temp1 = (short)0x8000;
 						
 						*destPtr++ = temp1;
 					}
 				}
 					break;
 			}
-			
 		};
 		self.plugBlock = tmp;
-    }
-    
-    return self;
+	}
+	
+	return self;
 }
 
+#if 0
 - (void)windowDidLoad
 {
-    [super windowDidLoad];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	[super windowDidLoad];
+	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
+#endif
 
 @end
 
@@ -100,8 +93,8 @@ static OSErr mainEcho(void			*unused,
 					  sData			*theData,
 					  long			SelectionStart,
 					  long			SelectionEnd,
-					  PPInfoPlug		*thePPInfoPlug,
-					  short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+					  PPInfoPlug	*thePPInfoPlug,
+					  short			StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
 	EchoWindowController *controller = [[EchoWindowController alloc] initWithWindowNibName:@"EchoWindowController" infoPlug:thePPInfoPlug];
 	controller.echoStrength = 0.50;
