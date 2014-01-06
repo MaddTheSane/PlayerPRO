@@ -284,51 +284,49 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 					//also SHOULD be true
 					theData->amp = 16;
 				}
-				
-				char *resultPtr;
-				
-				if (audio16Ptr != NULL)	{
-					free(audio16Ptr);
-					audio16Ptr = NULL;
-				}
-				if (audio8Ptr != NULL) {
-					free(audio8Ptr);
-					audio8Ptr = NULL;
-				}
-				
-				switch (theData->amp)
-				{
-					case 8:
-						audio8Ptr = CreateAudio8Ptr(audioLength, audioFrequency, audioAmplitude * 100, generator, theData->stereo);
-						break;
-						
-					case 16:
-					default:
-						audio16Ptr	= CreateAudio16Ptr(audioLength, audioFrequency, audioAmplitude * 100, generator, theData->stereo);
-						audioLength *= 2;
-						break;
-				}
-				
-				if (theData->stereo)
-					audioLength *= 2;
-				
-				resultPtr = malloc(theData->size - (self.selectionEnd - self.selectionStart) + audioLength);
-				
-				memmove(theData->data, resultPtr, self.selectionStart);
-				
-				if (theData->amp == 8)
-					memmove(audio8Ptr, resultPtr + self.selectionStart, audioLength);
-				else
-					memmove(audio16Ptr, resultPtr + self.selectionStart, audioLength);
-				
-				memmove(theData->data + self.selectionEnd, resultPtr + self.selectionStart + audioLength, theData->size - self.selectionEnd);
-				
-				free(theData->data);
-				
-				theData->data = resultPtr;
-				theData->size = (SInt32)(theData->size  - (self.selectionEnd - self.selectionStart) + audioLength);
-				
 			}
+			char *resultPtr;
+			
+			if (audio16Ptr != NULL)	{
+				free(audio16Ptr);
+				audio16Ptr = NULL;
+			}
+			if (audio8Ptr != NULL) {
+				free(audio8Ptr);
+				audio8Ptr = NULL;
+			}
+			
+			switch (theData->amp)
+			{
+				case 8:
+					audio8Ptr = CreateAudio8Ptr(audioLength, audioFrequency, audioAmplitude * 100, generator, theData->stereo);
+					break;
+					
+				case 16:
+				default:
+					audio16Ptr = CreateAudio16Ptr(audioLength, audioFrequency, audioAmplitude * 100, generator, theData->stereo);
+					audioLength *= 2;
+					break;
+			}
+			
+			if (theData->stereo)
+				audioLength *= 2;
+			
+			resultPtr = malloc(theData->size - (self.selectionEnd - self.selectionStart) + audioLength);
+			
+			memmove(theData->data, resultPtr, self.selectionStart);
+			
+			if (theData->amp == 8)
+				memmove(audio8Ptr, resultPtr + self.selectionStart, audioLength);
+			else
+				memmove(audio16Ptr, resultPtr + self.selectionStart, audioLength);
+			
+			memmove(theData->data + self.selectionEnd, resultPtr + self.selectionStart + audioLength, theData->size - self.selectionEnd);
+			
+			free(theData->data);
+			
+			theData->data = resultPtr;
+			theData->size = (SInt32)(theData->size  - (self.selectionEnd - self.selectionStart) + audioLength);
 		};
 		
 		self.plugBlock = tmpBlock;
@@ -409,6 +407,9 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 
 - (void)dealloc
 {
+	//Stop any audio that's playing on the driver
+	MADStopDriver(self.infoPlug->driverRec);
+	
 	if (audio8Ptr) {
 		free(audio8Ptr);
 		audio8Ptr = NULL;
