@@ -1860,6 +1860,9 @@
 		551FEAC910E727AD00EDF2F1 /* MINs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MINs-Info.plist"; path = "../../../MINs-Info.plist"; sourceTree = "<group>"; };
 		551FEADA10E727B100EDF2F1 /* PAT.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PAT.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		551FEB2810E727B100EDF2F1 /* PAT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PAT-Info.plist"; path = "../../../PAT-Info.plist"; sourceTree = "<group>"; };
+		552097B3187B0917004FD220 /* Be-DriverClass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "Be-DriverClass.cpp"; sourceTree = "<group>"; };
+		552097B4187B0917004FD220 /* Be-DriverClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Be-DriverClass.h"; sourceTree = "<group>"; };
+		552097B5187B0917004FD220 /* Be-PlugImport.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "Be-PlugImport.c"; sourceTree = "<group>"; };
 		5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPluginWindowController.h; sourceTree = "<group>"; };
 		5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentPluginWindowController.m; sourceTree = "<group>"; };
 		5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPlugController.h; sourceTree = "<group>"; };
@@ -3806,6 +3809,9 @@
 			isa = PBXGroup;
 			children = (
 				55268AA91877EECF00A82269 /* Resources */,
+				552097B3187B0917004FD220 /* Be-DriverClass.cpp */,
+				552097B4187B0917004FD220 /* Be-DriverClass.h */,
+				552097B5187B0917004FD220 /* Be-PlugImport.c */,
 				55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */,
 				55ADC3E617D7E4A4001F27D4 /* MADDriver.h */,
 				554E105010D6C79E00BB619C /* SndUtils.c */,

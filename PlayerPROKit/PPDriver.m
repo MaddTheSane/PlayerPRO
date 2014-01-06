@@ -124,11 +124,21 @@
 
 - (NSInteger)audioLength
 {
+	return [self audioDataLength];
+}
+
+- (NSInteger)audioDataLength
+{
 	return MADAudioLength(theRec);
 }
 
 - (OSErr)play
 {
+	OSErr iErr = MADStartDriver(theRec);
+	if (iErr) {
+		return iErr;
+	}
+	
 	return MADPlayMusic(theRec);
 }
 
@@ -138,8 +148,7 @@
 	if (iErr) {
 		return iErr;
 	}
-	MADCleanDriver(theRec);
-	return noErr;
+	return MADStopDriver(theRec);
 }
 
 - (OSErr)stop
@@ -148,8 +157,11 @@
 	if (theErr) {
 		return theErr;
 	}
-	MADCleanDriver(theRec);
-	return MADSetMusicStatus(theRec, 0, 100, 0);
+	MADReset(theRec);
+	if (theErr) {
+		return theErr;
+	}
+	return MADStopDriver(theRec);
 }
 
 - (id)init

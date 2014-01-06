@@ -27,28 +27,27 @@
 
 //	System headers.
 
-#include	<Path.h>
-#include	<Directory.h>
-#include	<List.h>
-#include	<string.h>
+#include <Path.h>
+#include <Directory.h>
+#include <List.h>
+#include <string.h>
 
 //	Local headers.
 
-#define		DRIVERCLASS_MODULE	1
-#include	"Be-DriverClass.h"
+#define DRIVERCLASS_MODULE	1
+#include "Be-DriverClass.h"
+#include "MADDriver.h"
 
 //	Streaming function interfacing with BeOS.
-
 static void trackerStreamPlay(void *theCookie, void *buffer, size_t size, const media_raw_audio_format &format);
 
-//	Low-level streaming function from MADLibrary.
+//	Low-level streaming function from PlayerPROCore.
 
 extern "C" {
 Boolean	DirectSave(char	*myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
 }
 
 //	Constructors.
-
 MADDriverClass::MADDriverClass()
 {
 	MADDriverSettings init = CreateDefaultDriver();
@@ -61,13 +60,14 @@ MADDriverClass::MADDriverClass(MADDriverSettings *init)
 }
 
 //	Destructor: remove system streamers before disposing of the library.
-
 MADDriverClass::~MADDriverClass()
 {
 	if (streamPlayer) {
 		streamPlayer->Stop();
 		delete streamPlayer;
 	}
+	
+	StopMusic(true);
 	
 	if (curDriverRec) {
 		MADDisposeDriver(curDriverRec);
@@ -88,7 +88,6 @@ static MADDriverSettings MADDriverClass::CreateDefaultDriver(void)
 	init.repeatMusic	= true;
 	init.MicroDelaySize = 0;
 	init.surround		= false;
-	init.sysMemory		= false;
 	init.Reverb			= false;
 	init.ReverbSize		= 45;
 	init.ReverbStrength	= 60;
@@ -292,8 +291,7 @@ static void	trackerStreamPlay(void *user, void *inbuffer, size_t count, const me
 	
 	DirectSave(curMADDriver->IntDataPtr, &curMADDriver->DriverSettings, curMADDriver);
 	
-	switch(format.format)
-	{
+	switch(format.format) {
 		case B_AUDIO_FLOAT:
 			float 	*floatbuffer = (float*)buffer;
 			

@@ -3612,6 +3612,7 @@ Boolean MADIsExporting(MADDriverRec *driver)
 
 SInt32 MADAudioLength(MADDriverRec *theRec)
 {
-	if (!theRec) return 0;
+	if (!theRec)
+		return 0;
 	return (theRec->ASCBUFFERReal - theRec->BytesToRemoveAtEnd);
 }

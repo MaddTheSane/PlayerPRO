@@ -201,7 +201,7 @@ SInt32 DoVolPanning256(short whichChannel, Channel *ch, MADDriverRec *intDriver,
 	return temp;
 }
 
-void MADCleanDriver( MADDriverRec *intDriver)
+void MADCleanDriver(MADDriverRec *intDriver)
 {
 	SInt32		i, x/*, size*/;
 	

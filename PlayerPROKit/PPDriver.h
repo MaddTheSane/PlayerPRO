@@ -31,7 +31,8 @@
 - (void)cleanDriver;
 
 - (BOOL)directSaveToPointer:(void*)thePtr settings:(MADDriverSettings*)theSett;
-- (NSInteger)audioLength;
+- (NSInteger)audioLength DEPRECATED_ATTRIBUTE;
+- (NSInteger)audioDataLength;
 
 - (OSErr)getMusicStatusWithCurrentTime:(long*)curTime totalTime:(long*)totTime;
 
