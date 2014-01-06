@@ -21,6 +21,9 @@
 //
 /********************						***********************/
 
+//Needed to quiet a few warnings on Windows.
+#define _CRT_SECURE_NO_WARNINGS 1
+
 #ifdef __APPLE__
 #include <PlayerPROCore/PlayerPROCore.h>
 #else

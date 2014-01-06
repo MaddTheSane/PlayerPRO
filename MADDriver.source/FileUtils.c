@@ -57,9 +57,9 @@ void iFileCreate(const char *path, OSType type)
 		}
 	}
 	
-	//FIXME: does this work on Windows?
 #ifdef WIN32
 	{
+		//Not the most elegant solution, but it should work.
 		FILE *tmpFile = fopen(path, "wb");
 		if (tmpFile != NULL) {
 			fclose(tmpFile);
