@@ -31,5 +31,4 @@ typedef NS_ENUM(char, ToneGenerator)
 @property ToneGenerator generator;
 
 - (IBAction)toggleToneType:(id)sender;
-
 @end

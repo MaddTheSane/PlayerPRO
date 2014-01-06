@@ -369,24 +369,21 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 
 - (IBAction)playSample:(id)sender
 {
-	static RPlaySoundUPP mPlay;
-	mPlay = infoPlug->RPlaySound;
-	
+	RPlaySoundUPP mPlay = self.infoPlug->RPlaySound;
 	[self clearAudioPointers];
 	
-	switch(theData->amp)
-	{
+	switch(theData->amp) {
 		case 8:
 			audio8Ptr = CreateAudio8Ptr(audioLength, audioFrequency, audioAmplitude, generator, theData->stereo);
 			if (audio8Ptr != NULL) {
-				mPlay(infoPlug->driverRec, audio8Ptr, audioLength, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
+				mPlay(self.infoPlug->driverRec, audio8Ptr, audioLength, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
 			}
 			break;
 			
 		case 16:
 			audio16Ptr	= CreateAudio16Ptr(audioLength, audioFrequency, audioAmplitude, generator, theData->stereo);
 			if (audio16Ptr != NULL) {
-				mPlay(infoPlug->driverRec, (Ptr)audio16Ptr, audioLength*2, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
+				mPlay(self.infoPlug->driverRec, (Ptr)audio16Ptr, audioLength*2, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
 			}
 			break;
 	}
