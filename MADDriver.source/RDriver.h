@@ -141,7 +141,7 @@ typedef struct Channel
 	
 	int		eventTime;
 	
-	char	*samplePtr;			// Used internaly by MADPlaySoundData & MADPlaySndHandle
+	char	*samplePtr;			// Used internaly by MADPlaySoundData
 	
 	/**/
 	

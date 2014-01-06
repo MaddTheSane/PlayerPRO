@@ -855,9 +855,9 @@ return; \
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPMusicDidChange object:self];
 	
-	if (theErr) {
+	if (theErr)
 		*theErr = nil;
-	}
+	
 	return YES;
 }
 
@@ -870,8 +870,8 @@ return; \
 {
 	if (!preferences) {
 		preferences = [[PPPreferences alloc] init];
+		[[preferences window] center];
 	}
-	[[preferences window] center];
 	[preferences showWindow:sender];
 }
 
@@ -912,9 +912,7 @@ return; \
 	NSError *err = nil;
 	currentlyPlayingIndex.index = [tableView selectedRow];
 	if ([self loadMusicFromCurrentlyPlayingIndexWithError:&err] == NO)
-	{
 		[[NSAlert alertWithError:err] runModal];
-	}
 }
 
 - (IBAction)showPlugInInfo:(id)sender
@@ -927,16 +925,11 @@ return; \
 	PPPlugInInfoController *infoCont = [[PPPlugInInfoController alloc] initWithPlugInInfo:inf];
 	[[infoCont window] center];
 	[NSApp runModalForWindow:[infoCont window]];
-	//[infoCont showWindow:sender];
 }
 
 - (void)updatePlugInInfoMenu
 {
-	NSInteger i;
-	
-	//[plugInInfos removeAllObjects];
-	
-	for (i = 0; i < madLib->TotalPlug ; i++) {
+	for (short i = 0; i < madLib->TotalPlug ; i++) {
 		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:(__bridge NSString*) madLib->ThePlug[i].MenuName author:(__bridge NSString*) madLib->ThePlug[i].AuthorString plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name") plugURL:CFBridgingRelease(CFBundleCopyBundleURL(madLib->ThePlug[i].file))];
 		if (![self.plugInInfos containsObject:tmpInfo]) {
 			[self.plugInInfos addObject:tmpInfo];
@@ -952,7 +945,7 @@ return; \
 	
 	[aboutPlugInMenu removeAllItems];
 	
-	for (i = 0; i < [self.plugInInfos count]; i++) {
+	for (NSInteger i = 0; i < [self.plugInInfos count]; i++) {
 		PPPlugInInfo *pi = (self.plugInInfos)[i];
 		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:pi.plugName action:@selector(showPlugInInfo:) keyEquivalent:@""];
 		[mi setTag:i];
@@ -992,8 +985,7 @@ return; \
 	MADAttachDriverToMusic(madDriver, music, NULL);
 	[self setTitleForSongLabelBasedOnMusic];
 	
-	NSInteger i;
-	for (i = 0; i < madLib->TotalPlug; i++) {
+	for (short i = 0; i < madLib->TotalPlug; i++) {
 		if (madLib->ThePlug[i].mode == MADPlugImportExport || madLib->ThePlug[i].mode == MADPlugExport) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@...", (__bridge NSString*) madLib->ThePlug[i].MenuName] action:@selector(exportMusicAs:) keyEquivalent:@""];
 			[mi setTag:i];
@@ -1032,7 +1024,7 @@ return; \
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
 {
 	if (MADIsExporting(madDriver)) {
-		NSInteger selection = NSRunAlertPanel(@"Exporting", @"PlayerPRO is currently exporting a tracker file.\nQuitting will stop this. Do you really wish to quit?", @"Wait", @"Quit", @"Cancel");
+		NSInteger selection = NSRunAlertPanel(@"Exporting", @"PlayerPRO is currently exporting a tracker file.\nQuitting will stop this. Do you really wish to quit?", @"Wait", @"Quit", @"Cancel"); //TODO: localize
 		switch (selection) {
 			default:
 			case NSAlertOtherReturn:
@@ -1061,7 +1053,6 @@ return; \
 - (void)applicationWillTerminate:(NSNotification *)notification
 {
 	[timeChecker invalidate];
-	
 	[self removeObserver:self forKeyPath:@"paused"];
 	
 	if (music != NULL) {
@@ -1320,7 +1311,6 @@ enum PPMusicToolbarTypes {
 			{
 				PPInfoRec rec;
 				char ostype[5] = {0};
-				//theURL = [theURL fileReferenceURL];
 				if (MADMusicIdentifyCFURL(madLib, ostype, (__bridge CFURLRef) theURL) != noErr || MADMusicInfoCFURL(madLib, ostype, (__bridge CFURLRef) theURL, &rec) != noErr) {
 					NSRunCriticalAlertPanel(NSLocalizedString(@"Unknown File", @"unknown file"), NSLocalizedString(@"The file type could not be identified.", @"Unidentified file"), nil, nil, nil);
 					return NO;

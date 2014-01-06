@@ -2666,10 +2666,8 @@ OSErr MADKillCmd(Cmd *aCmd)
 	if (aCmd == NULL)
 		return MADParametersErr;
 	
-	aCmd->cmd 	= 0;
+	memset(aCmd, 0, sizeof(Cmd));
 	aCmd->note 	= 0xFF;
-	aCmd->arg 	= 0;
-	aCmd->ins 	= 0;
 	aCmd->vol 	= 0xFF;
 	
 	return noErr;
@@ -3163,178 +3161,19 @@ void MADKeyOFF(MADDriverRec *MDriver, short track)
 		MDriver->chan[track].KeyOn = false;
 }
 
-#if 0
-OSErr MADPlaySndHandle( MADDriverRec *MDriver, Handle sound, long channel, long note)
-{
-	Ptr 			soundPtr;
-	short 			soundFormat;
-	short 			numSynths, numCmds;
-	long 			offset;
-	SoundHeaderPtr 	header;
-	CmpSoundHeader	*CmpHeader = NULL;
-	ExtSoundHeader	*ExtHeader = NULL;
-	long			i;
-	Boolean			stereo = false;
-	Channel			*curVoice;
-	OSType			Scomp;
-	unsigned long	Ssize, Samp, SbaseFreq, Sc2spd, Sstart, Send;
-	Ptr				rPtr;
-	
-	/* make the sound safe to use at interrupt time. */
-	HLock( sound);
-	
-	soundPtr = *sound;
-	
-	/* determine what format sound we have. */
-	soundFormat = *(short*)soundPtr;
-	
-	switch(soundFormat)
-	{
-		case 1:						/* format 1 sound. */
-			/* look inside the format 1 resource and deduce offsets. */
-			numSynths = ((short*)soundPtr)[1];					/* get # synths. */
-			numCmds = *(short*)(soundPtr+4+numSynths*6);		/* get # commands. */
-			break;
-			
-		case 2:						/* format 2 sound. */
-			numSynths = 0;			/* format 2 sounds have no synth's. */
-			numCmds = ((short*)soundPtr)[2];
-			break;
-			
-		default:					/* jack says, what about 12? or 6? */
-			HUnlock( sound);
-			return MADUnknowErr;
-			break;
-	}
-	
-	/* compute address of sound header. */
-	offset = 6 + 6*numSynths + 8*numCmds;
-	header = (SoundHeaderPtr) ((*sound) + offset);
-	
-	switch( header->encode)
-	{
-		case cmpSH:
-			CmpHeader = (CmpSoundHeader*) header;
-			if (CmpHeader->numChannels > 2)
-			{
-				HUnlock( sound);
-				return MADUnknowErr;
-			}
-			
-			if (CmpHeader->numChannels == 2) stereo = true;
-			else stereo = false;
-			
-			Sstart		= CmpHeader->loopStart;
-			Send		= CmpHeader->loopEnd;
-			Samp		= CmpHeader->sampleSize;
-			Sc2spd		= CmpHeader->sampleRate;
-			SbaseFreq 	= CmpHeader->baseFrequency;
-			Ssize 		= CmpHeader->numFrames;
-			rPtr 		= (Ptr) CmpHeader->sampleArea;
-			Scomp		= CmpHeader->compressionID;
-			break;
-			
-		case extSH:
-			ExtHeader	= (ExtSoundHeader*) header;
-			if (ExtHeader->numChannels > 2)
-			{
-				HUnlock( sound);
-				return MADUnknowErr;
-			}
-			
-			if (ExtHeader->numChannels == 2) stereo = true;
-			else stereo = false;
-			
-			Sstart		= ExtHeader->loopStart;
-			Send		= ExtHeader->loopEnd;
-			Samp		= ExtHeader->sampleSize;
-			Sc2spd		= ExtHeader->sampleRate;
-			SbaseFreq 	= ExtHeader->baseFrequency;
-			Ssize 		= ExtHeader->numFrames;
-			rPtr 		= (Ptr) ExtHeader->sampleArea;
-			Scomp		= 'NONE';
-			break;
-			
-		default:
-		case stdSH:
-			Sstart		= header->loopStart;
-			Send		= header->loopEnd;
-			if (header->encode == 0x40) Samp		= 0;
-			else Samp		= 8;
-			Sc2spd		= header->sampleRate;
-			SbaseFreq 	= header->baseFrequency;
-			Ssize 		= header->length;
-			rPtr 		= (Ptr) header->sampleArea;
-			Scomp		= 'NONE';
-			break;
-	}
-	
-	if (Samp == 16)
-	{
-		Ssize 	*= 2L;
-		Sstart 	*= 2L;
-		Send 	*= 2L;
-		
-		if (stereo)
-		{
-			Ssize 	*= 2L;
-			Sstart 	*= 2L;
-			Send 	*= 2L;
-		}
-	}
-	else
-	{
-		if (Samp == 8)
-		{
-			if (stereo)
-			{
-				Ssize 	*= 2L;
-				Sstart 	*= 2L;
-				Send 	*= 2L;
-			}
-			
-			for (i = 0; i < Ssize; i++) rPtr[ i] = rPtr[ i] - 0x80;
-			
-			switch( header->encode)
-			{
-				case extSH:
-					ExtHeader->sampleSize = 0;
-					break;
-					
-				case cmpSH:
-					CmpHeader->sampleSize = 0;
-					break;
-					
-				default:
-				case stdSH:
-					header->encode = 0x40;
-					break;
-			}
-		}
-		Samp = 8;
-	}
-	
-	/*********************/
-	
-	if (note == 0xFF) note = 48;
-	
-	return MADPlaySoundData( MDriver, rPtr, Ssize, channel, note + (60 - SbaseFreq), Samp, Sstart, Send - Sstart, Sc2spd, stereo);
-}
-
-#endif
-
 #pragma pack(pop)
 
-Cmd* GetMADCommand( short PosX, short	TrackIdX, PatData*	tempMusicPat)
+Cmd* GetMADCommand(short PosX, short TrackIdX, PatData*	tempMusicPat)
 {
-	if (tempMusicPat == NULL) {
+	if (tempMusicPat == NULL)
 		return NULL;
-	}
 	
-	if (PosX < 0) PosX = 0;
-	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
+	if (PosX < 0)
+		PosX = 0;
+	else if (PosX >= tempMusicPat->header.size)
+		PosX = tempMusicPat->header.size -1;
 	
-	return( &(tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
+	return &(tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]);
 }
 
 void MADDisposeVolumeTable( MADDriverRec *intDriver)
@@ -3342,45 +3181,51 @@ void MADDisposeVolumeTable( MADDriverRec *intDriver)
 	if (intDriver == NULL) {
 		return;
 	}
-	if (intDriver->DriverSettings.outPutMode == DeluxeStereoOutPut) MADKillOverShoot( intDriver);
+	if (intDriver->DriverSettings.outPutMode == DeluxeStereoOutPut)
+		MADKillOverShoot(intDriver);
 }
 
 OSErr MADCreateVolumeTable( MADDriverRec *intDriver)
 {
 	SInt32 Tracks = 0;
 	OSErr theErr;
-	if (intDriver == NULL) {
+	if (intDriver == NULL)
 		return MADParametersErr;
-	}
+	
 	Tracks = intDriver->DriverSettings.numChn;
+	theErr = MADCreateMicroDelay(intDriver);
+	if (theErr != noErr)
+		return theErr;
 	
-	
-	theErr = MADCreateMicroDelay( intDriver);			if (theErr != noErr) return theErr;
-	
-	switch( intDriver->DriverSettings.outPutMode)
-	{
-		case DeluxeStereoOutPut:			Tracks	= 1;		MADCreateOverShoot( intDriver);	break;
-		case PolyPhonic:					Tracks 	= 1;		break;
+	switch(intDriver->DriverSettings.outPutMode) {
+		case DeluxeStereoOutPut:
+			Tracks	= 1;
+			MADCreateOverShoot(intDriver);
+			break;
+			
+		case PolyPhonic:
+			Tracks 	= 1;
+			break;
 	}
 	
 	return noErr;
 }
 
-void MADChangeTracks( MADDriverRec *MDriver, short newVal)
+void MADChangeTracks(MADDriverRec *MDriver, short newVal)
 {
 	Boolean	play = MDriver->MADPlay, reading = MDriver->Reading;
 	
-	MADStopDriver( MDriver);
-	
+	MADStopDriver(MDriver);
 	MDriver->DriverSettings.numChn = newVal;
-	
-	MADDisposeVolumeTable( MDriver);
-	MADCreateVolumeTable( MDriver);
+	MADDisposeVolumeTable(MDriver);
+	MADCreateVolumeTable(MDriver);
 	
 	MDriver->trackDiv = MDriver->DriverSettings.numChn;
 	
-	if (play) MADStartDriver( MDriver);
-	if (reading) MADPlayMusic( MDriver);
+	if (play)
+		MADStartDriver(MDriver);
+	if (reading)
+		MADPlayMusic(MDriver);
 }
 
 void UpdateTracksNumber(MADDriverRec *MDriver)
@@ -3395,8 +3240,7 @@ void UpdateTracksNumber(MADDriverRec *MDriver)
 
 OSErr MADCreateVibrato(MADDriverRec *MDriver)
 {
-	short vibrato_table[64] =
-	{
+	short vibrato_table[64] = {
 		0,24,49,74,97,120,141,161,
 		180,197,212,224,235,244,250,253,
 		255,253,250,244,235,224,212,197,
@@ -3438,7 +3282,7 @@ PatData* DecompressPartitionMAD1(MADMusic *MDriver, PatData* myPat)
 	if (finalPtr == NULL)
 		return NULL;
 	
-	memcpy(finalPtr, myPat, sizeof( PatHeader));
+	memcpy(finalPtr, myPat, sizeof(PatHeader));
 	
 	srcPtr = (Byte*)myPat->Cmds;
 	myCmd = (Cmd*)finalPtr->Cmds;
@@ -3449,7 +3293,7 @@ PatData* DecompressPartitionMAD1(MADMusic *MDriver, PatData* myPat)
 	while (maxCmd != 0) {
 		maxCmd--;
 		
-		MADKillCmd( myCmd);
+		MADKillCmd(myCmd);
 		
 		set = *srcPtr++;
 		
@@ -3481,13 +3325,12 @@ PatData* CompressPartitionMAD1(MADMusic *MDriver, PatData* myPat)
 	Cmd			*myCmd;
 	SInt32		maxCmd;
 	size_t		NewPtrSize = 0;
-	UInt8		set;
 	
 	finalPtr = (PatData*)malloc(sizeof(PatHeader) + myPat->header.size * MDriver->header->numChn * 6L);
 	if (finalPtr == NULL)
 		return NULL;
 	
-	memcpy(finalPtr, myPat, sizeof( PatHeader));
+	memcpy(finalPtr, myPat, sizeof(PatHeader));
 	
 	dstPtr = (UInt8*)finalPtr->Cmds;
 	myCmd = (Cmd*)myPat->Cmds;
@@ -3499,44 +3342,40 @@ PatData* CompressPartitionMAD1(MADMusic *MDriver, PatData* myPat)
 		maxCmd--;
 		
 		// Set byte
-		set			= 0;
 		setByte 	= dstPtr;
 		*dstPtr++ 	= 0x00;
 		NewPtrSize++;
 		////////
 		
 		if (myCmd->ins > 0) {
-			set |= ins;
+			(*setByte) |= ins;
 			*dstPtr++ = myCmd->ins;
 			NewPtrSize++;
 		}
 		
 		if (myCmd->note != 0xFF) {
-			set |= note;
+			(*setByte) |= note;
 			*dstPtr++ = myCmd->note;
 			NewPtrSize++;
 		}
 		
 		if (myCmd->cmd > 0) {
-			set |= cmd;
+			(*setByte) |= cmd;
 			*dstPtr++ = myCmd->cmd;
 			NewPtrSize++;
 		}
 		
 		if (myCmd->arg > 0) {
-			set |= argu;
+			(*setByte) |= argu;
 			*dstPtr++ = myCmd->arg;
 			NewPtrSize++;
 		}
 		
 		if (myCmd->vol != 0xFF) {
-			set |= vol;
+			(*setByte) |= vol;
 			*dstPtr++ = myCmd->vol;
 			NewPtrSize++;
 		}
-		// Set byte
-		*setByte = set;
-		////////
 		
 		myCmd++;
 	}
