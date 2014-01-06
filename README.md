@@ -36,12 +36,12 @@ OS X tracker plug-ins no longer uses the CFPlugInCom code: instead, they must im
 
 ###Additional Notes
 
-Refrain from accessing the MADDriverRec struct directly: the size may differ from the compiled version due to differences in preprocessor macros. This will most likely to be an issue on Linux/UNIX platforms.
+Refrain from accessing the `MADDriverRec` struct directly: the size may differ from the compiled version due to differences in preprocessor macros. This will most likely to be an issue on Linux/UNIX platforms.
 
 ##Installation
 
 To install this on Unix derivatives like Linux, follow the instructions in **INSTALL**. Note that Unix support is lacking at the moment.
 
-To build the PlayerPRO application and library on OS X, either type `make` in Terminal or open the PPMacho project or PlayerPRO Workspace.
+To build the PlayerPRO application and library on OS X, either type `make` in Terminal or open the PPMacho project or the PlayerPRO Workspace.
 
 A Microsoft Visual C++ is available for those building on Windows.
