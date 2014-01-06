@@ -139,6 +139,7 @@
 		551FEB7C10E728D400EDF2F1 /* MINS.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E103710D6C79E00BB619C /* MINS.c */; };
 		551FEB7E10E728F100EDF2F1 /* PAT.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E104110D6C79E00BB619C /* PAT.c */; };
 		552097B2187AB8B9004FD220 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
+		552097BC187B11BF004FD220 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5521F3FD17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5521F3FF17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */; };
 		5521F40F17F75DAF002CDBA9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
@@ -2691,6 +2692,7 @@
 			files = (
 				557DE99B10E08DC100177B4C /* CoreFoundation.framework in Frameworks */,
 				55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */,
+				552097BC187B11BF004FD220 /* PlayerPROCore.framework in Frameworks */,
 				5582136717E4225A00B84F51 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
