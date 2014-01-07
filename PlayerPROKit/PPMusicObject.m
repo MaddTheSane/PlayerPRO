@@ -236,7 +236,7 @@ end:
 		theInfo->fileSize = [[tmpVal.musicWrapper fileAttributes][NSFileSize] longValue];
 	}
 	@catch (NSException *exception) {
-		memset(theInfo, 0, sizeof(PPInfoRec));
+		bzero(theInfo, sizeof(PPInfoRec));
 		theErr = MADIncompatibleFile;
 	}
 	@finally {

@@ -27,7 +27,7 @@ static OSStatus CAAudioCallback(void                            *inRefCon,
 				break;
 							
 			case 16:
-				memset(theRec->CABuffer, 0, theRec->BufSize);
+				bzero(theRec->CABuffer, theRec->BufSize);
 				break;
 		}
 	}
@@ -51,7 +51,7 @@ static OSStatus CAAudioCallback(void                            *inRefCon,
 							
 						case 16:
 						default:
-							memset(theRec->CABuffer, 0, theRec->BufSize);
+							bzero(theRec->CABuffer, theRec->BufSize);
 							break;
 					}
 				}

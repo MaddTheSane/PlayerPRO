@@ -314,26 +314,24 @@ static OSErr LoadMMD0Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 		
 		//memset( mmd0pat, 0, of.numchn * maxlines * sizeof(MMD0NOTE));
 		
-		for (x = 0; x < theMAD->header->numChn * maxlines * sizeof(MMD0NOTE); x++)
-		{
-			((Ptr) mmd0pat)[ x] = 0;
+		for (x = 0; x < theMAD->header->numChn * maxlines * sizeof(MMD0NOTE); x++) {
+			((Ptr)mmd0pat)[x] = 0;
 		}
 		
-		for (row = 0 ; row < numlines; row++)
-		{
+		for (row = 0 ; row < numlines; row++) {
 			short ztz;
 			
 			for (ztz = 0; ztz < numtracks; ztz++)
-				READMEDFILE( &d0note( row, ztz), 3);		// sizeof(MMD0NOTE) != 3 probleme compilation alignement
+				READMEDFILE(&d0note(row, ztz), 3);		// sizeof(MMD0NOTE) != 3 probleme compilation alignement
 		}
 		
-		MED_Convert0( t, theMAD);
+		MED_Convert0(t, theMAD);
 	}
 	
 	return noErr;
 }
 
-static OSErr LoadMMD1Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *init)
+static OSErr LoadMMD1Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *init)
 {
 	int t,row,col;
 	UWORD numtracks,numlines,maxlines=0,track=0;

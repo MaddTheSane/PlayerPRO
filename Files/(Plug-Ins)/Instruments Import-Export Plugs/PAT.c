@@ -43,7 +43,7 @@ static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 	
 	firstSample = curIns->firstSample;
 	
-	memset(curIns, 0, sizeof(*curIns));
+	bzero(curIns, sizeof(InstrData));
 	curIns->firstSample = firstSample;
 	
 #if 0

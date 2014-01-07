@@ -1314,8 +1314,8 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 			if (theMAD->partition[i] == NULL)
 				return MADNeedMemory;
 			
-			theMAD->partition[ i]->header.size 		= DEFSIZE;
-			theMAD->partition[ i]->header.compMode 	= 'NONE';
+			theMAD->partition[i]->header.size 		= DEFSIZE;
+			theMAD->partition[i]->header.compMode 	= 'NONE';
 			
 			strlcpy(theMAD->partition[i]->header.name, "Not used pattern", sizeof(theMAD->partition[ i]->header.name));
 			
@@ -1337,7 +1337,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 			char		maskvariable = 0, prevmaskvariable[ MAXTRACK];
 			Boolean		NeedChannelToRead = true;
 			
-			char		lastnote[MAXTRACK], lastins[ MAXTRACK], lastvol[ MAXTRACK], lastcmd[ MAXTRACK], lasteff[ MAXTRACK];
+			char		lastnote[MAXTRACK], lastins[MAXTRACK], lastvol[MAXTRACK], lastcmd[MAXTRACK], lasteff[MAXTRACK];
 			
 			memset(prevmaskvariable, 0, sizeof(prevmaskvariable));
 			

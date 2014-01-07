@@ -93,8 +93,7 @@ QuickLookGeneratorPluginType *AllocQuickLookGeneratorPluginType(CFUUIDRef inFact
 {
     QuickLookGeneratorPluginType *theNewInstance;
 
-    theNewInstance = (QuickLookGeneratorPluginType *)malloc(sizeof(QuickLookGeneratorPluginType));
-    memset(theNewInstance,0,sizeof(QuickLookGeneratorPluginType));
+    theNewInstance = (QuickLookGeneratorPluginType *)calloc(sizeof(QuickLookGeneratorPluginType), 1);
 
         /* Point to the function table Malloc enough to store the stuff and copy the filler from myInterfaceFtbl over */
     theNewInstance->conduitInterface = malloc(sizeof(QLGeneratorInterfaceStruct));

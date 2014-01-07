@@ -49,7 +49,7 @@ static Ptr CreateAudio8Ptr(long AudioLength, long AudioFreq, long AudioAmp, Tone
 			break;
 			
 		case silence:
-			memset(Audio8Ptr, 0, AudioLength);
+			bzero(Audio8Ptr, AudioLength);
 			break;
 			
 		case square:
@@ -161,7 +161,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 			break;
 			
 		case silence:
-			memset(Audio16Ptr, 0, AudioLength);
+			bzero(Audio16Ptr, AudioLength);
 			break;
 			
 		case square:
