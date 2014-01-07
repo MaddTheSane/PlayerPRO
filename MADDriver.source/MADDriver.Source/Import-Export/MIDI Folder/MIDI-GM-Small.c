@@ -1470,20 +1470,25 @@ static long CountAtomById(MyAtom at, long type)
 		if (iErr) DebugLong(iErr);
 		sck.cksize = EndianU32_NtoL(sck.cksize);
 		
-		GetFPos(at.ref, &prePos);
+		{
+			SInt64 tempPos;
+			FSGetForkPosition(at.ref, &tempPos);
+			prePos = (long)tempPos;
+		}
 		
 		listSize -= sizeof(sck);
 		
-		if (sck.ckid == type) index++;
+		if (sck.ckid == type)
+			index++;
 		
-		switch(sck.ckid)
-		{
+		switch(sck.ckid) {
 			case 'LIST':
 				
 				fSize = 4;
 				iErr = FSRead(at.ref, &fSize, &ilistType);
 				
-				if (ilistType == type) index++;
+				if (ilistType == type)
+					index++;
 				break;
 		}
 		
@@ -1521,14 +1526,16 @@ static OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, long type, sho
 		if (iErr) DebugLong(iErr);
 		sck.cksize = EndianU32_NtoL(sck.cksize);
 		
-		GetFPos(at.ref, &prePos);
+		{
+			SInt64 tempPos;
+			FSGetForkPosition(at.ref, &tempPos);
+			prePos = (long)tempPos;
+		}
 		
 		listSize -= sizeof(sck);
 		
-		if (sck.ckid == type)
-		{
-			if (index == id)
-			{
+		if (sck.ckid == type) {
+			if (index == id) {
 				// We found it !!!!!
 				retat->pos = prePos -4;
 				retat->id = sck.ckid;
@@ -1540,18 +1547,19 @@ static OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, long type, sho
 			index++;
 		}
 		
-		switch(sck.ckid)
-		{
+		switch(sck.ckid) {
 			case 'LIST':
 				//	case 'INFO':
 				fSize = 4;
 				iErr = FSRead(at.ref, &fSize, &ilistType);
 				
-				if (ilistType == type)
-				{
-					if (index == id)
-					{
-						GetFPos(at.ref, &prePos);
+				if (ilistType == type) {
+					if (index == id) {
+						{
+							SInt64 tmpSize;
+							FSGetForkPosition(at.ref, &tmpSize);
+							prePos = (long)tmpSize;
+						}
 						
 						// We found it !!!!!
 						retat->pos = prePos;
@@ -1574,7 +1582,7 @@ static OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, long type, sho
 		listSize /= 2;
 		listSize *= 2;
 		
-	}while (iErr == noErr && listSize > 0);
+	} while (iErr == noErr && listSize > 0);
 	
 	if (listSize < 0 ) Debugger();
 	

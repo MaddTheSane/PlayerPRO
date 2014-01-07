@@ -22,14 +22,7 @@ OSErr ConvertMovieToMPEG4(FSSpec *inputFile, FSSpec *outputFile);
 void FlushPlugin(void);
 void GetDigitalSelection(short *XStart, short *YStart, short *XEnd, short *YEnd, short*);
 void MADCheckSpeedPattern(MADMusic *MDriver, MADDriverRec *intDriver);
-Boolean SoundQualityExport(	Boolean OnlyCurrent,
-								short *ChannelNo,
-								OSType *CompressionType,
-								Fixed *FrequenceSpeed,
-								short *amplitude,
-								short *PatternID,
-								MADDriverSettings 		*driver,
-								Boolean	MPG4);
+Boolean SoundQualityExport(Boolean OnlyCurrent, short *ChannelNo, OSType *CompressionType, Fixed *FrequenceSpeed, short *amplitude, short *PatternID, MADDriverSettings *driver, Boolean	MPG4);
 						
 #define 	MINIMUS	4
 
@@ -894,23 +887,21 @@ void StopAIFFExporting(void)
 	long	inOutCount, i;
 	
 	
-	if (theProgressDia == NULL) return;
-	if (curMusic == NULL) return;
+	if (theProgressDia == NULL || curMusic == NULL)
+		return;
 	
 	//DoWorkingWindow();
 	
 	iErr = SoundConverterEndConversion(sc, compSound, &outputFrames, &outputBytes);
 	if (iErr != noErr)
-	MyDebugStr(__LINE__, __FILE__, "End Conversion failed");
+		MyDebugStr(__LINE__, __FILE__, "End Conversion failed");
 	
-	if (outputBytes)
-	{
+	if (outputBytes) {
 		Ptr outFile = compSound;
 		
 		inOutCount = outputBytes;
-			
-		if (theType == 'sfil')
-		{
+		
+		if (theType == 'sfil') {
 			{
 				SetResourceSize(sndHandle, SndOffset + inOutCount);
 				
@@ -923,7 +914,8 @@ void StopAIFFExporting(void)
 		}
 		else
 		{
-		/*	if (thePrefs.ChannelType == MultiFiles)
+#if 0
+			if (thePrefs.ChannelType == MultiFiles)
 			{
 				Ptr 	inter;
 				long	ss = inOutCount / thePrefs.channelNumber;
@@ -937,7 +929,8 @@ void StopAIFFExporting(void)
 				
 				DisposePtr(inter);
 			}
-			else*/
+			else
+#endif
 			{
 				iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutCount, outFile, NULL);
 			}
@@ -947,24 +940,23 @@ void StopAIFFExporting(void)
 	
 	iErr = SoundConverterClose(sc);
 	if (iErr != noErr)
-	MyDebugStr(__LINE__, __FILE__, "Close failed");
+		MyDebugStr(__LINE__, __FILE__, "Close failed");
 	
-	if (theType == 'sfil')
-	{
+	if (theType == 'sfil') {
 		Handle 	sndHandle2;
 		short	headerLen;
 		
 		sndHandle2 = NewHandle(20000);
 		if (sndHandle2 == NULL) {MyDebugStr(__LINE__, __FILE__, "Need MEMORY");	return;}
 		
-		iErr = SetupSndHeader(		(SndListHandle) sndHandle2,
-									thePrefs.channelNumber,
-									thePrefs.FrequenceSpeed,
-									thePrefs.amplitude,
-									thePrefs.Compressor,
-									60,
-									totalSize,
-									&headerLen);
+		iErr = SetupSndHeader((SndListHandle)sndHandle2,
+							  thePrefs.channelNumber,
+							  thePrefs.FrequenceSpeed,
+							  thePrefs.amplitude,
+							  thePrefs.Compressor,
+							  60,
+							  totalSize,
+							  &headerLen);
 		
 		inOutCount = headerLen;
 		
@@ -979,12 +971,10 @@ void StopAIFFExporting(void)
 		CloseResFile(RsrcRefNum);
 		
 		DisposeHandle(sndHandle2);
-	}
-	else
-	{
+	} else {
 		long filePos;
-		
-	/*	if (thePrefs.ChannelType == MultiFiles)
+#if 0
+		if (thePrefs.ChannelType == MultiFiles)
 		{
 			for (i = 0; i < thePrefs.channelNumber; i++)
 			{
@@ -992,61 +982,67 @@ void StopAIFFExporting(void)
 				SetFPos(MultiRef[ i], fsFromStart, NULL);
 				
 				SetupAIFFHeader(		MultiRef[ i],
-										1, 
-										thePrefs.FrequenceSpeed, 
-										thePrefs.amplitude, 
-										thePrefs.Compressor,
-										totalSize,
-										0);
+								1,
+								thePrefs.FrequenceSpeed,
+								thePrefs.amplitude,
+								thePrefs.Compressor,
+								totalSize,
+								0);
 				
 				SetFPos(MultiRef[ i], fsFromStart, filePos);
 				SetEOF(MultiRef[ i], filePos);
 				FSClose(MultiRef[ i]);
 			}
 		}
-		else*/
+		else
+#endif
 		{
-			GetFPos(fRefNum, &filePos);
+			{
+				SInt64 tmpPos;
+				FSGetForkPosition(fRefNum, &tmpPos);
+				filePos = (long)tmpPos;
+			}
 			FSSetForkPosition(fRefNum, fsFromStart, 0);
 			
-			SetupAIFFHeader(		fRefNum,
-									thePrefs.channelNumber, 
-									thePrefs.FrequenceSpeed, 
-									thePrefs.amplitude, 
-									thePrefs.Compressor,
-									totalSize,
-									0);
+			SetupAIFFHeader(fRefNum,
+							thePrefs.channelNumber,
+							thePrefs.FrequenceSpeed,
+							thePrefs.amplitude,
+							thePrefs.Compressor,
+							totalSize,
+							0);
 			
 			FSSetForkPosition(fRefNum, fsFromStart, filePos);
 			FSSetForkSize(fRefNum, fsFromStart, filePos);
 			FSCloseFork(fRefNum);
 			
-			if (theType == 'MPG4')
-			{
+			if (theType == 'MPG4') {
 				FSSpec	newFile;
 				
 				ConvertMovieToMPEG4(&theAIFFSpec, &DestFile);
 			}
 		}
 	}
-	MyDisposePtr(& bufferSin);		MyDisposePtr(& bufferSout);		MyDisposePtr(& sndPtr);
-	MyDisposePtr(& outSound);		MyDisposePtr(& compSound);
+	MyDisposePtr(&bufferSin);
+	MyDisposePtr(&bufferSout);
+	MyDisposePtr(&sndPtr);
+	MyDisposePtr(&outSound);
+	MyDisposePtr(&compSound);
 	
 	/***********/
 	
-	switch(patternID)
-	{
+	switch(patternID) {
 		case -2:
 		{
 			copyMusic->header->numPat--;
 			
-			MyDisposePtr((Ptr*) &  copyMusic->partition[ copyMusic->header->numPat]);
-			copyMusic->partition[ copyMusic->header->numPat] = NULL;
+			MyDisposePtr((Ptr*)&copyMusic->partition[copyMusic->header->numPat]);
+			copyMusic->partition[copyMusic->header->numPat] = NULL;
 		}
 	}
 	
 	MADDisposeDriver(copyDriver);
-	DisposePtr((Ptr) copyMusic);
+	DisposePtr((Ptr)copyMusic);
 	
 	FlushPlugin();
 	

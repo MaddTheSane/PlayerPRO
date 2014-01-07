@@ -785,21 +785,19 @@ void ExportFile(OSType theType, FSSpec *newFile)
 	
 	FillVSTEffects();
 	
-	switch(theType)
-	{			
+	switch(theType) {
 		case 'MADS':
 			// Export to the MADS format
 			
 			iErr = SetupAIFFHeader(fRefNum,
-								   2, 
-								   rate22khz, 
-								   16, 
+								   2,
+								   rate22khz,
+								   16,
 								   'MADS',
 								   200,
 								   50);
 			
-			if (iErr != noErr)
-			{
+			if (iErr != noErr) {
 				MyDebugStr(__LINE__, __FILE__, "");
 			}
 			
@@ -809,8 +807,7 @@ void ExportFile(OSType theType, FSSpec *newFile)
 			// HEADER
 			// We need to compute number of valid instruments !!! See above....
 			
-			for (i = 0, x = 0; i < MAXINSTRU; i++)
-			{
+			for (i = 0, x = 0; i < MAXINSTRU; i++) {
 				curMusic->fid[ i].no = i;
 				
 				if (curMusic->fid[ i].numSamples > 0 || curMusic->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
@@ -829,8 +826,7 @@ void ExportFile(OSType theType, FSSpec *newFile)
 			if (iErr) Erreur(75, iErr);
 			
 			// PATTERNS
-			for (i = 0; i < curMusic->header->numPat ; i++)
-			{
+			for (i = 0; i < curMusic->header->numPat ; i++) {
 				if (thePrefs.MADCompression)
 					curMusic->partition[i]->header.compMode = 'MAD1';
 				else
@@ -849,14 +845,13 @@ void ExportFile(OSType theType, FSSpec *newFile)
 					iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutCount, &curMusic->partition[i]->header, NULL);
 					//Because of how we're doing it...
 					ByteSwapPatHeader(&curMusic->partition[i]->header);
-
+					
 				}
 			}
 			
 			// INSTRUMENTS
 			
-			for (i = 0; i < MAXINSTRU; i++)
-			{
+			for (i = 0; i < MAXINSTRU; i++) {
 				if (curMusic->fid[ i].numSamples > 0 || curMusic->fid[ i].name[ 0] != 0)	// Is there something in this instrument?
 				{
 					curMusic->fid[ i].no = i;
@@ -865,16 +860,14 @@ void ExportFile(OSType theType, FSSpec *newFile)
 					iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutCount, &curMusic->fid[i], NULL);
 					//Just in case...
 					ByteSwapInstrData(&(curMusic->fid[ i]));
-
+					
 				}
 			}
 			
 			// SAMPLES
 			
-			for (i = 0; i < MAXINSTRU ; i++)
-			{
-				for (x = 0; x < curMusic->fid[i].numSamples; x++)
-				{
+			for (i = 0; i < MAXINSTRU ; i++) {
+				for (x = 0; x < curMusic->fid[i].numSamples; x++) {
 					sData	*curData;
 					
 					curData = curMusic->sample[ curMusic->fid[i].firstSample + x];
@@ -913,20 +906,17 @@ void ExportFile(OSType theType, FSSpec *newFile)
 			}
 			
 			// *** *** *** *** *** *** *** *** *** *** *** *** *** ***
-			
-			GetFPos(fRefNum, &tt);
+		{
+			SInt64 tmpForkSize;
+			FSGetForkPosition(fRefNum, &tmpForkSize);
+			tt = (long)tmpForkSize;
+		}
 			FSSetForkSize(fRefNum, fsFromStart, tt);
 			
 			if (theType == 'MADS') {
 				FSSetForkPosition(fRefNum, fsFromStart, 0);
 				
-				iErr = SetupAIFFHeader(fRefNum,
-									   2, 
-									   rate44khz, 
-									   16, 
-									   'MADS',
-									   tt,
-									   tt*4);
+				iErr = SetupAIFFHeader(fRefNum, 2, rate44khz, 16, 'MADS', tt, tt * 4);
 			}
 			
 			FSCloseFork(fRefNum);
@@ -943,22 +933,18 @@ void ExportFile(OSType theType, FSSpec *newFile)
 			FSSpec	spec;
 			
 			result = Gestalt(gestaltQuickTime,&version);
-			if ((result == noErr) && (version >= 0x06008000))
-			{
+			if ((result == noErr) && (version >= 0x06008000)) {
 				pStrcpy(spec.name, "\pPlayerPRO.AIFF");
 				
 				iErr = FindFolder(kOnAppropriateDisk, kTemporaryFolderType, kCreateFolder, &spec.vRefNum, &spec.parID);	//kTemporaryFolderType
-				if (iErr == noErr)
-				{
+				if (iErr == noErr) {
 					iErr = FSpDelete(&spec);
 					iErr = FSpCreate(&spec, 'SNPL', 'AIFF', smSystemScript);
 					iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
 					
 					CreateAIFFExporting(false, fRefNum, &spec, 'MPG4', newFile);
 				}
-			}
-			else
-			{
+			} else {
 				Erreur(108, -6999);
 			}
 		}
@@ -1065,11 +1051,11 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 		for (i = 0 ; i < MAXTRACK; i++) thePrefs.Previous_chanBus[i] = curMusic->header->chanBus[i];
 		
 		BlockMoveData(curMusic->sets, &thePrefs.Previous_Sets, MAXTRACK * sizeof(FXSets));
-//	}
-	//thePrefs.previousSpec = *curMusic->header;
-	
-//	if (curMusic)
-//	{
+		//	}
+		//thePrefs.previousSpec = *curMusic->header;
+		
+		//	if (curMusic)
+		//	{
 		if (GereChanged() != noErr) return false;
 	}
 	
@@ -1099,11 +1085,11 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	
 	/*if (IsCodeOK())
 	 {
-	 if (	theType != 'STCf' && 
-	 theType != 'sTAT' && 
-	 theType != 'Rsrc' && 
-	 theType != 'STrk' && 
-	 theType != 'MADF' && 
+	 if (	theType != 'STCf' &&
+	 theType != 'sTAT' &&
+	 theType != 'Rsrc' &&
+	 theType != 'STrk' &&
+	 theType != 'MADF' &&
 	 theType != 'MADH' &&
 	 theType != 'MADI' &&
 	 theType != 'XM  ' &&
@@ -1204,9 +1190,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 					}
 					else pStrcpy(lastLoadMODListName, fName);
 					return false;
-				}
-				else
-				{
+				} else {
 					FInfo		fndrInfo;
 					OSErr	iErr;
 					
@@ -1234,11 +1218,11 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 			
 			if (IsCodeOK())
 			{
-				if(	theType != 'STCf' && 
-				   theType != 'sTAT' && 
-				   theType != 'Rsrc' && 
-				   theType != 'STrk' && 
-				   theType != 'MADF' && 
+				if(theType != 'STCf' &&
+				   theType != 'sTAT' &&
+				   theType != 'Rsrc' &&
+				   theType != 'STrk' &&
+				   theType != 'MADF' &&
 				   theType != 'MADH' &&
 				   theType != 'MADI' &&
 				   theType != 'MADK' &&
@@ -1264,21 +1248,23 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 			
 		case 'STCf':
 			OpenMODListSTCf(aSpec);
-			if (thePrefs.AutomaticOpen)
-			{
-				if (!OpenFirst2(0)) folderFailed = true;
-			}
-			else folderFailed = true;
+			if (thePrefs.AutomaticOpen) {
+				if (!OpenFirst2(0))
+					folderFailed = true;
+			} else
+				folderFailed = true;
 			break;
 			
-		/*case 'sTAT':
+#if 0
+		case 'sTAT':
 			OpenMODList2(fName, 0);
-			if (thePrefs.AutomaticOpen)
-			{
-				if (!OpenFirst2(0)) folderFailed = true;
-			}
-			else folderFailed = true;
-			break;*/
+			if (thePrefs.AutomaticOpen) {
+				if (!OpenFirst2(0))
+					folderFailed = true;
+			} else
+				folderFailed = true;
+			break;
+#endif
 			
 		case 'MADK':
 			
@@ -1312,7 +1298,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 				 {
 				 LoadAdaptatorsRsrc(&aSpec);
 				 }*/
-			} 
+			}
 			else iErr = MADFileNotSupportedByThisPlug;
 			break;
 	}
@@ -1321,15 +1307,13 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	
 	/**** Updates obligatoires *******/
 	
-	for (i = 0; i < curMusic->header->numChn; i++)
-	{
+	for (i = 0; i < curMusic->header->numChn; i++) {
 		MADDriver->Active[ i] = true;
 	}
 	
 	curMusic->header->numInstru = MAXINSTRU;
 	
-	if (iErr != noErr)
-	{
+	if (iErr != noErr) {
 		MADDriver->curMusic = NULL;
 		MADDisposeMusic(&curMusic, MADDriver);
 		
@@ -1347,10 +1331,10 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	if (curMusic->header->MAD != 'MADK') MyDebugStr(__LINE__, __FILE__, "ERR");
 	
 	curMusic->originalFormat = theType;
-	if (curMusic->originalFormat == 'Rsrc') curMusic->originalFormat = 'MADK';
+	if (curMusic->originalFormat == 'Rsrc')
+		curMusic->originalFormat = 'MADK';
 	
-	if (thePrefs.DontUseFilesMix)
-	{
+	if (thePrefs.DontUseFilesMix) {
 		curMusic->header->generalPitch	= 252;//thePrefs.previousSpec.generalPitch;
 		curMusic->header->generalSpeed	= 252;//thePrefs.previousSpec.generalSpeed;
 		curMusic->header->generalPan	= thePrefs.previousSpec.generalPan;
@@ -1378,23 +1362,18 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	
 	MADAttachDriverToMusic(MADDriver, curMusic, MissingPlugs);
 	
-	if (curMusic->header->numChn != oldTracks)
-	{
-		if (vRefNum == -55 && theType == 'Rsrc')
-		{
+	if (curMusic->header->numChn != oldTracks) {
+		if (vRefNum == -55 && theType == 'Rsrc') {
 			ChangeTracksNo(thePrefs.numChn);
 			curMusic->hasChanged = false;
-		}
-		else
-		{
+		} else {
 			thePrefs.numChn = curMusic->header->numChn;
 			SetUpTracksMenu();
 			SetWindowEnviron();
 		}
 	}
 	
-	if (theType != 'sTAT' && theType != 'STCf')
-	{
+	if (theType != 'sTAT' && theType != 'STCf') {
 		pStrcpy(curMusic->musicFileName, fName);
 		//pStrcpy(curMusic->musicFileName, fName);
 		pStrcpy(lastLoadMODListName, fName);
@@ -1428,14 +1407,13 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	
 	MODListSelectThisMusic(fName);
 	
-	if (MissingPlugs[ 0] > 0)
-	{
+	if (MissingPlugs[0] > 0) {
 		OtherIntErreur(107, 22, MissingPlugs);
 	}
 	
-	if (iErr != noErr || folderFailed == true) return false;
-	else
-	{
+	if (iErr != noErr || folderFailed == true)
+		return false;
+	else {
 		ShowCopyrightNote();
 		return true;
 	}
