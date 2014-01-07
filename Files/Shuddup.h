@@ -44,8 +44,8 @@ enum
 struct OLDMADSpec
 {
 	OSType		MAD;						// Mad Identification
-	char 		name[ 32];					// Music's name
-	char		infos[ INFOSSIZE];			// Informations & Author name of the music
+	char 		name[32];					// Music's name
+	char		infos[INFOSSIZE];			// Informations & Author name of the music
 	Byte		generalPan;					// General Panning
 	Byte		MultiChanNo;				// Number of chan for multichannel
 	Byte		MultiChan;					// MultiChannel per tracks?
@@ -62,11 +62,11 @@ struct OLDMADSpec
 	Byte 		numPointers;				// Partition length
 	Byte		numInstru;					// Instruments number
 	Byte		numSamples;					// Samples number
-	Byte		oPointers[ MAXPOINTER];		// Partition : Patterns ID List
+	Byte		oPointers[MAXPOINTER];		// Partition : Patterns ID List
 	short		speed;						// Default speed
 	short		tempo;						// Default tempo
-	Byte		chanPan[ MAXTRACK];			// Channel settings, from 0 to 256
-	Byte		chanVol[ MAXTRACK];			// Channel Volume, from 0 to 64
+	Byte		chanPan[MAXTRACK];			// Channel settings, from 0 to 256
+	Byte		chanVol[MAXTRACK];			// Channel Volume, from 0 to 64
 };
 
 //TODO: Make this 64-bit safe?
@@ -101,8 +101,8 @@ typedef struct
 	long			Mz;
 	unsigned long	firstStart;
 	short			a4[ 30];
-	RGBColor		tracksColor[ MAXTRACK];
-	short			unused[ MAXTRACK];
+	RGBColor		tracksColor[MAXTRACK];
+	short			unused[MAXTRACK];
 	short			PianoPos;
 	short			volumeLevel;
 	Boolean			MADCompression;
@@ -117,14 +117,14 @@ typedef struct
 	Boolean			FSinScroll;
 	Boolean			RememberMusicList;
 	Boolean			OscilloLine;
-	long			a5[ 30];
+	long			a5[30];
 	Boolean			DigitalInstru;
 	Boolean			DigitalNote;
 	Boolean			DigitalEffect;
 	Boolean			DigitalArgu;
 	Boolean			DigitalVol;
 	Boolean			GoToStop;
-	Boolean			DriverEffects[ 20];
+	Boolean			DriverEffects[20];
 	Boolean			MADC;
 	short			OscilloSize;
 	short			OscilloType;
@@ -178,7 +178,7 @@ typedef struct
 
 	/** News 4.5.2	**/
 
-	Boolean			OCArrow[ MAXINSTRU];
+	Boolean			OCArrow[MAXINSTRU];
 	short			MozartC1h, MozartC2h;
 	OSType			SoundTypeSamp;
 	OSType			SoundTypeIns;
@@ -223,14 +223,14 @@ typedef struct
 	short			TempsUnit;
 	short			TrackHeight;
 	
-	short			FKeyActive[ 20];
-	short			FKeyItem[ 20];
-	short			FKeyWind[ 20];
+	short			FKeyActive[20];
+	short			FKeyItem[20];
+	short			FKeyWind[20];
 	
 	/** News 4.5.7 **/
 	
 	Boolean			NewPrefSystem;
-	unsigned char	NewPrefsCode[ 30];	
+	unsigned char	NewPrefsCode[30];
 	
 	/** News 4.5.8 **/
 	
@@ -254,15 +254,14 @@ typedef struct
 	long			RAWLength;
 	long			RAWHeader;
 	
-	Byte			SelectedTracks[ MAXTRACK];
+	Byte			SelectedTracks[MAXTRACK];
 	
-	Point			a6[ 3][ 30];
-	short			a7[ 3][ 30];
-	short			a8[ 3][ 30];
-	short			a9[ 3][ 30];
-	long			a10[ 3][ 30];
-	
-	Str32			WinNames[ 3];
+	Point			a6[3][30];
+	short			a7[3][30];
+	short			a8[3][30];
+	short			a9[3][30];
+	long			a10[3][30];
+	Str32			WinNames[3];
 	
 	// 5.2
 	Boolean			clickSound;
@@ -276,17 +275,17 @@ typedef struct
 	
 	// 5.5
 	
-	Point			WinPosO[ 3][ MAXWINDOWS];
-	short			WinEtatO[ 3][ MAXWINDOWS];
-	short			WinLargO[ 3][ MAXWINDOWS];
-	short			WinHiO[ 3][ MAXWINDOWS];
-	long			WinIDO[ 3][ MAXWINDOWS];
-	Point			WinPos[ MAXWINDOWS];
-	short			WinEtat[ MAXWINDOWS];
-	short			WinHi[ MAXWINDOWS];
-	short			WinLarg[ MAXWINDOWS];
-	long			WinID[ MAXWINDOWS];
-	double			Filter[ EQPACKET*2];
+	Point			WinPosO[3][MAXWINDOWS];
+	short			WinEtatO[3][MAXWINDOWS];
+	short			WinLargO[3][MAXWINDOWS];
+	short			WinHiO[3][MAXWINDOWS];
+	long			WinIDO[3][MAXWINDOWS];
+	Point			WinPos[MAXWINDOWS];
+	short			WinEtat[MAXWINDOWS];
+	short			WinHi[MAXWINDOWS];
+	short			WinLarg[MAXWINDOWS];
+	long			WinID[MAXWINDOWS];
+	double			Filter[EQPACKET * 2];
 	Boolean			useEQ;
 	
 	// 5.6
@@ -464,68 +463,67 @@ pascal OSStatus CarbonWindowEventHandler(EventHandlerCallRef myHandler, EventRef
 #endif
 
 #ifdef MAINSYSTEM2
+		ModalFilterUPP		MyDlgFilterDesc;
+		ListClickLoopUPP	mylClickLoopDesc;
+		NavEventUPP			MyDlgFilterNavDesc;
 
-				ModalFilterUPP		MyDlgFilterDesc;
-				ListClickLoopUPP	mylClickLoopDesc;
-				NavEventUPP			MyDlgFilterNavDesc;
-		
-				Boolean		gUseControlSize, MusicPlayActive, UseAEErreur, AppearanceManager;
-				short		gScrollBarID, curvRefNum;
-				long		MacOSXSystem, curparID, StartTime;
-				Boolean		gUseNavigation, Micro, hasASC, End, Record;
-				DialogPtr	ToolsDlog;
-				Str63		lastLoadMODListName;
-				Cursor		watchCrsr, qdarrow;
-		
-				Boolean		mainSystemDrag, Direct, Stereo, StereoMixing, NewSoundManager, NewSoundManager31, Audio16;
-				short		theDepth, RowBytes;
-				Prefs		thePrefs;
-			//	Rect		ScreenBounds;
-				MenuHandle 	InternetMenu, AppleMenu, NoteMenu, InstruMenu, EffectMenu, TracksNumberMenu, BaseNote, InstruEditMenu, PatternEditMenu;
-				MenuHandle	ExportMenu, EditorMenu, FileMenu, VSTMenu, ViewsMenu, EditMenu, WindowMenu, HelpMenu;
-				EventRecord	theEvent;
-		
-				char		ENote[ 257][ 3];
-				char		EInstru[ MAXINSTRU + 2][ 3], EArgu[ 257][ 2];
-				char		EEffect[ 30];
-				MADDriverRec	*MADDriver;
-				MADMusic		*curMusic;
-				MADLibrary		*gMADLib;
-				EventTypeSpec	CarbonWinlist[] = { {kEventClassWindow, kEventWindowClose },
-							   { kEventClassWindow, kEventWindowDrawContent },
-							   { kEventClassWindow, kEventWindowBoundsChanged } };
+		Boolean		gUseControlSize, MusicPlayActive, UseAEErreur, AppearanceManager;
+		short		gScrollBarID, curvRefNum;
+		long		MacOSXSystem, curparID, StartTime;
+		Boolean		gUseNavigation, Micro, hasASC, End, Record;
+		DialogPtr	ToolsDlog;
+		Str63		lastLoadMODListName;
+		Cursor		watchCrsr, qdarrow;
+
+		Boolean		mainSystemDrag, Direct, Stereo, StereoMixing, NewSoundManager, NewSoundManager31, Audio16;
+		short		theDepth, RowBytes;
+		Prefs		thePrefs;
+		//Rect		ScreenBounds;
+		MenuHandle 	InternetMenu, AppleMenu, NoteMenu, InstruMenu, EffectMenu, TracksNumberMenu, BaseNote, InstruEditMenu, PatternEditMenu;
+		MenuHandle	ExportMenu, EditorMenu, FileMenu, VSTMenu, ViewsMenu, EditMenu, WindowMenu, HelpMenu;
+		EventRecord	theEvent;
+
+		char		ENote[257][3];
+		char		EInstru[MAXINSTRU + 2][3], EArgu[257][2];
+		char		EEffect[30];
+		MADDriverRec	*MADDriver;
+		MADMusic		*curMusic;
+		MADLibrary		*gMADLib;
+		EventTypeSpec	CarbonWinlist[] = { {kEventClassWindow, kEventWindowClose },
+					   { kEventClassWindow, kEventWindowDrawContent },
+					   { kEventClassWindow, kEventWindowBoundsChanged } };
 
 #else
 
-		extern	EventTypeSpec		CarbonWinlist[];
-		extern	ModalFilterUPP		MyDlgFilterDesc;
-		extern	ModalFilterYDUPP	MyDlgFilterSFDesc;
-		extern	ListClickLoopUPP	mylClickLoopDesc;
-		extern	NavEventUPP			MyDlgFilterNavDesc;
-		
-		extern	MADDriverRec	*MADDriver;
-		extern	MADMusic		*curMusic;
-		extern	MADLibrary		*gMADLib;
-		
-		extern	Boolean		gUseControlSize, MusicPlayActive, UseAEErreur, AppearanceManager;
-		extern	short		gScrollBarID, VolumeH, SpeedH, PitchH, curvRefNum;
-		extern	long		MacOSXSystem, curparID, StartTime;
-		extern	Boolean		gUseNavigation, Micro, hasASC, End, Record;
-		extern	DialogPtr	ToolsDlog;
-		extern	Str63		lastLoadMODListName, curSoundName;
-		extern	Cursor		watchCrsr, qdarrow;
-		
-		extern	Boolean		mainSystemDrag, Direct, Stereo, StereoMixing, NewSoundManager, NewSoundManager31, Audio16;
-		extern	short		theDepth, RowBytes;
-		extern	Prefs		thePrefs;
-	//	extern	Rect		ScreenBounds;
-		extern	MenuHandle 	InternetMenu, AppleMenu, NoteMenu, InstruMenu, EffectMenu, TracksNumberMenu, BaseNote, InstruEditMenu, PatternEditMenu;
-		extern	MenuHandle	ExportMenu, EditorMenu, FileMenu, VSTMenu, ViewsMenu, EditMenu, WindowMenu, HelpMenu;
-		extern	EventRecord	theEvent;
-		
-		extern	char		ENote[ 257][ 3];
-		extern	char		EInstru[ MAXINSTRU + 2][ 3], EArgu[ 257][ 2];
-		extern	char		EEffect[ 30];
+extern	EventTypeSpec		CarbonWinlist[];
+extern	ModalFilterUPP		MyDlgFilterDesc;
+extern	ModalFilterYDUPP	MyDlgFilterSFDesc;
+extern	ListClickLoopUPP	mylClickLoopDesc;
+extern	NavEventUPP			MyDlgFilterNavDesc;
+
+extern	MADDriverRec	*MADDriver;
+extern	MADMusic		*curMusic;
+extern	MADLibrary		*gMADLib;
+
+extern	Boolean		gUseControlSize, MusicPlayActive, UseAEErreur, AppearanceManager;
+extern	short		gScrollBarID, VolumeH, SpeedH, PitchH, curvRefNum;
+extern	long		MacOSXSystem, curparID, StartTime;
+extern	Boolean		gUseNavigation, Micro, hasASC, End, Record;
+extern	DialogPtr	ToolsDlog;
+extern	Str63		lastLoadMODListName, curSoundName;
+extern	Cursor		watchCrsr, qdarrow;
+
+extern	Boolean		mainSystemDrag, Direct, Stereo, StereoMixing, NewSoundManager, NewSoundManager31, Audio16;
+extern	short		theDepth, RowBytes;
+extern	Prefs		thePrefs;
+//extern	Rect		ScreenBounds;
+extern	MenuHandle 	InternetMenu, AppleMenu, NoteMenu, InstruMenu, EffectMenu, TracksNumberMenu, BaseNote, InstruEditMenu, PatternEditMenu;
+extern	MenuHandle	ExportMenu, EditorMenu, FileMenu, VSTMenu, ViewsMenu, EditMenu, WindowMenu, HelpMenu;
+extern	EventRecord	theEvent;
+
+extern	char		ENote[257][3];
+extern	char		EInstru[MAXINSTRU + 2][3], EArgu[257][2];
+extern	char		EEffect[30];
 void RollCursor(void);
 Boolean QTTypeConversion(OSType fileType);
 Boolean CheckFileType(FSSpec theSpec, OSType theType);
