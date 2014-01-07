@@ -215,12 +215,11 @@ typedef struct _PPDigitalPlugin {
 //
 /********************						***********************/
 
-//TODO: Rewrite to take advantage of UTIs
-OSErr	PPINImportFile(OSType	kindFile, short ins, short *samp, FSSpec	*AlienFile);
-OSErr	PPINTestFile(OSType	kindFile, FSSpec	*AlienFile);
-OSErr	PPINExportFile(OSType	kindFile, short ins, short samp, FSSpec	*AlienFile);
-OSType	PressPPINMenu(Rect	*PopUpRect, OSType curType, short, Str255);
-OSErr	PPINAvailablePlug(OSType	kindFile, OSType *plugType); // plugType == 'INST' or 'SAMP'
+OSErr	PPINImportFile(OSType kindFile, short ins, short *samp, FSSpec	*AlienFile);
+OSErr	PPINTestFile(OSType	kindFile, FSSpec *AlienFile);
+OSErr	PPINExportFile(OSType kindFile, short ins, short samp, FSSpec	*AlienFile);
+OSType	PressPPINMenu(Rect *PopUpRect, OSType curType, short, Str255);
+OSErr	PPINAvailablePlug(OSType kindFile, OSType *plugType); // plugType == 'INST' or 'SAMP'
 OSErr	PPINGetPlugByID(OSType *type, short id, short samp);
 
 #define kPlayerPROInstrumentPlugTypeID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x0B, 0x3A, 0x46, 0x73, 0x91, 0x18, 0x46, 0x7E, 0xA4, 0x96, 0x84, 0x6F, 0x5E, 0x1C, 0x92, 0x76))
@@ -236,13 +235,13 @@ typedef struct _PPInstrumentPlugin {
 
 // SndUtils.c Definition :
 
-Ptr		ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo);
+Ptr		ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *rate, Boolean *stereo);
 OSErr	ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug);
 void	pStrcpy(register unsigned char *s1, register const unsigned char *s2);
 Ptr		MyExp1to6(Ptr sound, unsigned long numSampleFrames);
 Ptr		MyExp1to3(Ptr sound, unsigned long numSampleFrames);
 void	ConvertInstrumentIn(register	Byte	*tempPtr,	register long sSize);
-OSErr	inAddSoundToMAD(	Ptr				theSound,
+OSErr	inAddSoundToMAD(Ptr				theSound,
 						long			lS,
 						long			lE,
 						short			sS,
@@ -253,7 +252,7 @@ OSErr	inAddSoundToMAD(	Ptr				theSound,
 						InstrData		*InsHeader,					// Ptr on instrument header
 						sData			**sample,					// Ptr on samples data
 						short			*sampleID);
-sData	* inMADCreateSample();
+sData	*inMADCreateSample();
 
 
 #if PRAGMA_STRUCT_ALIGN

@@ -14,23 +14,22 @@
 #include "dls.h"
 #include "dls2.h"
 
-//FIXME: Is this the proper way to do this?
 //Tip: the original code was written thus:
 //long GetNELong(BigEndianLong toget)
 //{
 //#ifdef __BIG_ENDIAN__
-//return toget;
+//	return toget;
 //#else
-//return EndianU32_BtoL(toget.bigEndianValue);
+//	return EndianU32_BtoL(toget.bigEndianValue);
 //#endif
 //}
 //
 //void SetNEOSType(BigEndianOSType *toset, OSType theval)
 //{
 //#ifdef __BIG_ENDIAN__
-//*toset = theval;
+//	*toset = theval;
 //#else
-//toset->bigEndianValue = EndianU32_LtoB(theval);
+//	toset->bigEndianValue = EndianU32_LtoB(theval);
 //#endif
 //}
 //As such, you can substitute in your mind what the function would have

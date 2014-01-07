@@ -1,6 +1,4 @@
 #include "Shuddup.h"
-//#include "Packages.h"
-//#include "Printing.h"
 #include <Carbon/Carbon.h>
 //FIXME: Make this work with OS X.  Currently non-OS X compatible bits are commented out.
 

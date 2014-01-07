@@ -288,7 +288,7 @@ void MADInitImportPlug(MADLibrary *inMADDriver, FSRefPtr PluginFolder)
 	}
 #ifndef MAINPLAYERPRO
 	{
-		//TODO: Add Framework plug-in paths. I'm thankful I made it a mutable data type.
+		
 	}
 #endif
 	PlugLocNums	= CFArrayGetCount(PlugLocations );

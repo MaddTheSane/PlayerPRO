@@ -151,9 +151,10 @@ OSErr	MySndPlayDoubleBuffer (SndChannelPtr chan, PPSndDoubleBufferHeaderPtr theP
 		gNMRecPtr->nmRefCon = 0;
 	}
 
-	perChanInfoPtr = (PerChanInfoPtr)NewPtr (sizeof (PerChanInfo));//FIXME: this leaks in PlayerPRO!
+	perChanInfoPtr = (PerChanInfoPtr)NewPtr(sizeof(PerChanInfo));//FIXME: this leaks in PlayerPRO!
 	err = MemError ();
-	if (noErr != err) goto exit;
+	if (noErr != err)
+		goto exit;
 
 	// Init basic per channel information
 	perChanInfoPtr->qLink = nil;
@@ -192,7 +193,7 @@ OSErr	MySndPlayDoubleBuffer (SndChannelPtr chan, PPSndDoubleBufferHeaderPtr theP
 	// Is the sound compressed?  If so, we need to treat theParams as a SndDoubleBufferHeader2Ptr.
 	if (0 != theParams->dbhCompressionID) {
 		// Sound is compressed
-		err = GetCompressionInfo (theParams->dbhCompressionID,
+		err = GetCompressionInfo(theParams->dbhCompressionID,
 								((PPSndDoubleBufferHeader2Ptr)theParams)->dbhFormat,
 								theParams->dbhNumChannels,
 								theParams->dbhSampleSize,

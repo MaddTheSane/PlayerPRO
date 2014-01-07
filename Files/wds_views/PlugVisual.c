@@ -1,4 +1,3 @@
-//TODO: rewrite this plug-in architecture!
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"

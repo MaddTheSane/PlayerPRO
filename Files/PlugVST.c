@@ -1,5 +1,3 @@
-//TODO: rewrite this plug-in architecture!
-//TODO: or use OS X's VST and AU plug-ins
 #include "Shuddup.h"
 #include "MAD.h"
 #include <stdio.h>

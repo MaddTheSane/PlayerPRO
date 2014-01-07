@@ -212,13 +212,11 @@ static OSErr AMF2Mad(Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSetti
 				curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear(sizeof(sData), init);
 				
 				curData->size		= Tdecode32(&oi.size);
-				//FIXME: were loopstart and loopend supposed to be byteswapped on PowerPC?
 				oiloopstart = Tdecode16(&oi.loopstart);
 				oiloopend = Tdecode16(&oi.loopend);
 				curData->loopBeg 	= oiloopstart;
 				curData->loopSize 	= oiloopend - oiloopstart;
-				if (oiloopend == 65535)
-				{
+				if (oiloopend == 65535) {
 					curData->loopSize = curData->loopBeg = 0;
 				}
 				curData->vol		= oi.volume;

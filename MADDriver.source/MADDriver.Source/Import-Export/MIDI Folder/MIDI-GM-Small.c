@@ -1032,21 +1032,16 @@ static void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst
 					
 					curData->data = NewPtr(dataAt.size);
 					
-					if (curData->data == NULL)
-					{
+					if (curData->data == NULL) {
 						Erreur(63, -2);
 						
 						curData->size = 0;
-					}
-					else
-					{
+					} else {
 						if(dataAt.size)
 							BlockMoveData(data, curData->data, dataAt.size);
 						DisposePtr(data);
 						
-						switch(fmt.wBitsPerSample)
-						{
-								//TODO: Handle 24-bit sound?
+						switch(fmt.wBitsPerSample) {
 							case 8:
 								ConvertInstrumentIn((Byte*) curData->data, dataAt.size);
 								break;
