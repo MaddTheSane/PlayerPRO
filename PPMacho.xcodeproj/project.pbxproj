@@ -2223,7 +2223,6 @@
 		55DEBFED1801DFF70089B940 /* Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Example-Info.plist"; sourceTree = "<group>"; };
 		55DEBFEE1801DFF70089B940 /* Example.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Example.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55DEBFEF1801DFF70089B940 /* Example.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example.h; sourceTree = "<group>"; };
-		55E527A7186A24BF0020F3D6 /* PlayerPROCore.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PlayerPROCore.xcconfig; sourceTree = "<group>"; };
 		55E527A8186A2A690020F3D6 /* MIDI.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIDI.pch; sourceTree = "<group>"; };
 		55E52E271245640500315307 /* PPFastForward.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPFastForward.pdf; sourceTree = "<group>"; };
 		55E52E281245640500315307 /* PPReverse.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPReverse.pdf; sourceTree = "<group>"; };
@@ -3484,7 +3483,6 @@
 				553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */,
 				553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */,
 				553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */,
-				55E527A7186A24BF0020F3D6 /* PlayerPROCore.xcconfig */,
 				55268A651877ECF100A82269 /* Pedantic.xcconfig */,
 			);
 			path = Xcconfigs;
@@ -7980,12 +7978,25 @@
 		};
 		55268A701877EDF500A82269 /* Pedantic */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 55E527A7186A24BF0020F3D6 /* PlayerPROCore.xcconfig */;
+			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
+				DYLIB_COMPATIBILITY_VERSION = 2;
+				DYLIB_CURRENT_VERSION = 6.1;
+				FRAMEWORK_VERSION = B;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"BUILDINGPPRO=1",
+				);
+				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "@rpath";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = PlayerPROCore;
+				SDKROOT = macosx;
 			};
 			name = Pedantic;
 		};
@@ -9397,23 +9408,49 @@
 		};
 		5573A34210B50D2900FF8B50 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 55E527A7186A24BF0020F3D6 /* PlayerPROCore.xcconfig */;
+			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
+				DYLIB_COMPATIBILITY_VERSION = 2;
+				DYLIB_CURRENT_VERSION = 6.1;
+				FRAMEWORK_VERSION = B;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"BUILDINGPPRO=1",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "@rpath";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = PlayerPROCore;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
 		5573A34310B50D2900FF8B50 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 55E527A7186A24BF0020F3D6 /* PlayerPROCore.xcconfig */;
+			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
+				DYLIB_COMPATIBILITY_VERSION = 2;
+				DYLIB_CURRENT_VERSION = 6.1;
+				FRAMEWORK_VERSION = B;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"BUILDINGPPRO=1",
+				);
+				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "@rpath";
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = PlayerPROCore;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
