@@ -115,8 +115,8 @@ typedef struct _PPInfoPlug
 //
 //	If you want to reallocate theData or theData->data:
 //
-//	if (theData->data != 0L) free( theData->data);		// VERY IMPORTANT to free memory
-//	theData->data = malloc( newsize);						// Use malloc ONLY to allocate memory!
+//	if (theData->data != NULL) free(theData->data);			// VERY IMPORTANT to free memory
+//	theData->data = malloc(newsize);						// Use malloc ONLY to allocate memory!
 //
 //	theData->size = newsize;								// In bytes !! Even for 16 bits !
 //
@@ -133,7 +133,7 @@ typedef struct _PPInfoPlug
 
 typedef struct _PPFiltersPlugin {
     IUNKNOWN_C_GUTS;
-	OSErr (STDMETHODCALLTYPE *FiltersMain) (void* thisInterface, sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short stereoMode);
+	OSErr (STDMETHODCALLTYPE *FiltersMain)(void* thisInterface, sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short stereoMode);
 } PPFiltersPlugin;
 
 #pragma mark Instruments Import/Export Plugs
@@ -142,13 +142,13 @@ typedef struct _PPFiltersPlugin {
 //******************* INSTRUMENTS IMPORT/EXPORT PLUGS  ************/
 //
 //	Your main function have to be in this form:
-//	OSErr main( 	OSType					order,						// Order to execute
-//					InstrData				*InsHeader,					// Ptr on instrument header
-//					sData					**sample,					// Ptr on samples data
-//					short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
-//																		// If sampleID == -1 : add sample else replace selected sample.
-//					FSSpec					*AlienFile,					// IN/OUT file
-//					PPInfoPlug				*thePPInfoPlug)				// Some functions of PlayerPRO that you can use in your plugs
+//	OSErr main( 	OSType					order,			// Order to execute
+//					InstrData				*InsHeader,		// Ptr on instrument header
+//					sData					**sample,		// Ptr on samples data
+//					short					*sampleID,		// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+//															// If sampleID == -1 : add sample else replace selected sample.
+//					FSSpec					*AlienFile,		// IN/OUT file
+//					PPInfoPlug				*thePPInfoPlug)	// Some functions of PlayerPRO that you can use in your plugs
 //
 //
 //	*****************						***********************/
@@ -170,7 +170,7 @@ typedef struct _PPFiltersPlugin {
 
 typedef struct _PPInstrumentPlugin {
     IUNKNOWN_C_GUTS;
-	OSErr (STDMETHODCALLTYPE *InstrMain) (void* thisInterface, OSType,  InstrData*, sData**, short*, CFURLRef, PPInfoPlug*);
+	OSErr (STDMETHODCALLTYPE *InstrMain)(void* thisInterface, OSType,  InstrData*, sData**, short*, CFURLRef, PPInfoPlug*);
 } PPInstrumentPlugin;
 
 #pragma mark Digital Editor Plugs
@@ -187,10 +187,10 @@ typedef struct _PPInstrumentPlugin {
 //
 //	If you want to reallocate Pcmd:
 //
-//	if (Pcmd != 0L) free( (Ptr) Pcmd);							// VERY IMPORTANT
-//	Pcmd = malloc( sizeof( Pcmd) + noCell * sizeof( Cmd));		// Use malloc ONLY to allocate memory!
+//	if (Pcmd != 0L) free(Pcmd);								// VERY IMPORTANT
+//	Pcmd = malloc sizeof(Pcmd) + noCell * sizeof(Cmd));		// Use malloc ONLY to allocate memory!
 //
-//	myPcmd->structSize 	= sizeof( Pcmd) + noCell * sizeof( Cmd);
+//	myPcmd->structSize 	= sizeof(Pcmd) + noCell * sizeof(Cmd);
 //
 //	Don't forget to UPDATE the myPcmd->structSize !!!!!!!!!!!!
 //
@@ -207,7 +207,7 @@ typedef struct _PPInstrumentPlugin {
 
 typedef struct _PPDigitalPlugin {
     IUNKNOWN_C_GUTS;
-	OSErr (STDMETHODCALLTYPE *MyProcPtr) (void* thisInterface, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug);
+	OSErr (STDMETHODCALLTYPE *MyProcPtr)(void* thisInterface, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug);
 } PPDigitalPlugin;
 
 #endif

@@ -157,7 +157,6 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 	thePlug->IOPlug = CFBundleGetFunctionPointerForName(theBundle, CFSTR("PPImpExpMain"));
 	if (!thePlug->IOPlug)
 		goto badplug4;
-goodWrap:
 	thePlug->file = theBundle;
 	CFRetain(thePlug->file);
 	
@@ -338,7 +337,7 @@ static Boolean CompareTwoNSURLs(NSURL *urla, NSURL *urlb)
 	}
 }
 
-static inline Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
+CF_INLINE Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
 {
 	@autoreleasepool {
 		return CompareTwoNSURLs((__bridge NSURL*)urla, (__bridge NSURL*)urlb);
@@ -568,7 +567,7 @@ Boolean	MADPlugAvailable(MADLibrary *inMADDriver, char* kindFile)
 	if (!strcmp(kindFile, "MADK"))
 		return TRUE;
 	for (int i = 0; i < inMADDriver->TotalPlug; i++) {
-		if (!strcmp( kindFile, inMADDriver->ThePlug[i].type))
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type))
 			return TRUE;
 	}
 	return FALSE;

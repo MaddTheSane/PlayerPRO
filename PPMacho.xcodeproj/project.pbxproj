@@ -248,7 +248,7 @@
 		555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		555C125116378B3500735225 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		555C5FC818445C3600DBD5DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
-		555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
+		555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		555C5FCB18445CBC00DBD5DA /* libPlayerPROCompact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */; };
 		555C5FCC18445CBC00DBD5DA /* libPlayerPROKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */; };
@@ -536,6 +536,10 @@
 		55B1B4F7166A861900820424 /* PPMusicObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F5166A861900820424 /* PPMusicObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B1B4F6166A861900820424 /* PPMusicObject.m */; };
 		55B1B4FA166A8ED500820424 /* PPMusicObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */; };
+		55B1D402187C9B0D002754C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
+		55B1D403187C9B25002754C5 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
+		55B1D404187C9B31002754C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
+		55B1D405187C9B5C002754C5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
 		55B23D0F1687D1D700DCE923 /* RDriverCarbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55B23D131687D22700DCE923 /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
 		55B23D1E1689314500DCE923 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -2272,6 +2276,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55B1D403187C9B25002754C5 /* CoreFoundation.framework in Frameworks */,
+				55B1D402187C9B0D002754C5 /* Foundation.framework in Frameworks */,
 				55085D821836EC8D004A152F /* CoreMIDI.framework in Frameworks */,
 				551292F2163DDA8E00C2C639 /* PlayerPROCore.framework in Frameworks */,
 				551292D9163DD68500C2C639 /* Cocoa.framework in Frameworks */,
@@ -2448,6 +2454,7 @@
 			files = (
 				55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */,
 				5573A39510B50F6900FF8B50 /* CoreFoundation.framework in Frameworks */,
+				55B1D405187C9B5C002754C5 /* AudioToolbox.framework in Frameworks */,
 				555C125116378B3500735225 /* AudioUnit.framework in Frameworks */,
 				554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */,
 				554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */,
@@ -2744,10 +2751,11 @@
 				555C5FCB18445CBC00DBD5DA /* libPlayerPROCompact.a in Frameworks */,
 				555C5FCC18445CBC00DBD5DA /* libPlayerPROKit.a in Frameworks */,
 				555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */,
+				555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */,
 				559C418E183EB4AB004A073C /* CoreFoundation.framework in Frameworks */,
 				555C5FC818445C3600DBD5DA /* Cocoa.framework in Frameworks */,
 				559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */,
-				555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */,
+				55B1D404187C9B31002754C5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

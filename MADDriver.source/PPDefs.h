@@ -16,12 +16,7 @@
 #ifndef TARGET_OS_IPHONE
 #define TARGET_OS_IPHONE 0
 #endif
-#if TARGET_OS_IPHONE
 #include <MacTypes.h>
-#else
-//For MacTypes.h on older OSes
-#include <CoreServices/CoreServices.h>
-#endif
 #endif
 
 #include <stdio.h>
