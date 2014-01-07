@@ -375,15 +375,12 @@ typedef struct PlugInfo
 #endif
 	CFArrayRef	UTItypes;		// CFStrings of supported UTIs
 	char		type[5];		// OSType of file support.
-#ifdef __x86_64__
-	Boolean		is32BitOnly;	// if the specified plug-in is only 32-bit
-#endif
 } PlugInfo;
 #endif
 
 #ifdef WIN32
 #include <windows.h>
-typedef OSErr (*PLUGDLLFUNC)(OSType, char *, MADMusic*, PPInfoRec *, MADDriverSettings *);
+typedef OSErr (*PLUGDLLFUNC)(OSType, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
 	OSType		mode;				// Mode support : Import +/ Export
@@ -399,7 +396,7 @@ typedef struct PlugInfo
 
 #ifdef _BE_H
 //TODO: include BeOS headers!
-typedef	OSErr (*MADPlug)(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+typedef	OSErr (*MADPlug)(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 typedef struct PlugInfo
 {

@@ -22,30 +22,6 @@
 #warning this header should NOT be used outside of PlayerPROCore! The functions and datatypes here may change FOR ANY REASON, including differing compiler includes and defines.
 #endif
 
-#ifdef __OBJC__
-#import <Foundation/NSURL.h>
-#endif
-
-#pragma pack(push, 2)
-
-typedef struct PPInfoRec32
-{
-	int		totalPatterns;
-	int		partitionLength;
-	
-	SInt32	fileSize;
-	
-	OSType	signature;
-	
-	short	totalTracks;
-	short	totalInstruments;
-	
-	char	internalFileName[60];
-	char	formatDescription[60];
-} PPInfoRec32;
-
-#pragma pack(pop)
-
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -181,10 +157,6 @@ PPEXPORT void ConvertInstrumentIn(Byte *tempPtr, size_t sSize);
 
 #if defined _MAC_H && !TARGET_OS_IPHONE
 void SetOSType(CFURLRef, OSType);
-#endif
-
-#ifdef __OBJC__
-PPEXPORT BOOL MakeMADPlugFromNSURL(MADLibrary *inMADDriver, NSURL* theURL);
 #endif
 
 #ifdef __cplusplus

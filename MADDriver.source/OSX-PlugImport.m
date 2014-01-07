@@ -40,43 +40,6 @@ typedef enum _MADPlugCapabilities {
 	PPMADCanDoBoth = PPMADCanImport | PPMADCanExport
 } MADPlugCapabilities;
 
-#ifdef __x86_64__
-static OSErr BlankPlugFunc(OSType order, char *fileName, MADMusic *theMusic, PPInfoRec *theInfo, MADDriverSettings *unused)
-{
-	PPDebugStr(__LINE__, __FILE__, "Calling the XPC stub function!");
-	return MADOrderNotImplemented;
-}
-
-static Boolean LoadPlugInXPC(CFBundleRef theBundle)
-{
-	//TODO: implement!
-	return false;
-}
-
-static OSErr CallImportPlugXPC(MADLibrary *inMADDriver, char *plugSig, OSType order, char *AlienFile, MADMusic *theNewMAD, PPInfoRec *info)
-{
-	switch (order) {
-		case MADPlugImport:
-			//TODO: implement
-			break;
-			
-		case MADPlugInfo:
-			//TODO: implement
-			break;
-			
-		case MADPlugTest:
-			//TODO: implement
-			break;
-			
-		case MADPlugExport: //No, we won't support exporting using the bridge
-		default:
-			return MADOrderNotImplemented;
-			break;
-	}
-	return MADOrderNotImplemented;
-}
-#endif
-
 static Boolean GetBoolFromType(CFTypeRef theType)
 {
 	CFTypeID theID = CFGetTypeID(theType);
@@ -191,28 +154,6 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 			goto badplug3;
 	}
 	
-#ifdef __x86_64__
-	{
-		NSArray *bundleArchs = nil;
-		{
-			CFArrayRef tmpBundleArchs = CFBundleCopyExecutableArchitectures(theBundle);
-			if (!tmpBundleArchs)
-				goto badplug4;
-			bundleArchs = CFBridgingRelease(tmpBundleArchs);
-		}
-		
-		if (![bundleArchs containsObject:@(kCFBundleExecutableArchitectureX86_64)] &&
-			[bundleArchs containsObject:@(kCFBundleExecutableArchitectureI386)]) {
-			if (LoadPlugInXPC(theBundle)) {
-				thePlug->IOPlug = BlankPlugFunc;
-				thePlug->is32BitOnly = true;
-				goto goodWrap;
-			} else
-				goto badplug4;
-		}
-	}
-#endif
-	
 	thePlug->IOPlug = CFBundleGetFunctionPointerForName(theBundle, CFSTR("PPImpExpMain"));
 	if (!thePlug->IOPlug)
 		goto badplug4;
@@ -278,7 +219,8 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 			for (int i = 0; i < strlength; i++) {
 				if (tempstring[i] == 0) {
 					FillPlug->type[i] = ' ';
-				} else FillPlug->type[i] = tempstring[i];
+				} else
+					FillPlug->type[i] = tempstring[i];
 			}
 			FillPlug->type[4] = 0;
 		} else if (InfoDictionaryType == numbertype) {
@@ -335,20 +277,6 @@ badplug:
 	return false;
 }
 
-BOOL MakeMADPlugFromNSURL(MADLibrary *inMADDriver, NSURL *theURL)
-{
-	@autoreleasepool {
-		BOOL yesOrNo = NO;
-		CFBundleRef theBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)theURL);
-		if (!theBundle) {
-			return NO;
-		}
-		yesOrNo = MakeMADPlug(inMADDriver, theBundle) ? YES : NO;
-		CFRelease(theBundle);
-		return yesOrNo;
-	}
-}
-
 #pragma mark Plug-in Locations
 //There are many places that a plug-in might be kept in OS X
 /*
@@ -370,7 +298,6 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 			[PlugFolds addObject:[mainBundle builtInPlugInsURL]];
 		}
 		
-#ifndef MAINPLAYERPRO
 		mainBundle = [NSBundle bundleWithIdentifier:@"net.sourceforge.playerpro.PlayerPROCore"];
 		if (mainBundle != NULL) {
 			[PlugFolds addObject:[mainBundle builtInPlugInsURL]];
@@ -380,7 +307,6 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 		if (mainBundle != NULL) {
 			[PlugFolds addObject:[mainBundle builtInPlugInsURL]];
 		}
-#endif
 		
 		//Local systemwide plugins
 		[PlugFolds addObject:[NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
@@ -481,12 +407,6 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 					 MADMusic				*theNewMAD,
 					 PPInfoRec				*info)
 {
-#ifdef __x86_64__
-	if (inMADDriver->ThePlug[PlugNo].is32BitOnly) {
-		return CallImportPlugXPC(inMADDriver, inMADDriver->ThePlug[PlugNo].type, order, AlienFile, theNewMAD, info);
-	}
-#endif
-	
 	OSErr					iErr = noErr;
 	CFBundleRefNum			resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
 	MADDriverSettings		driverSettings = {0};
