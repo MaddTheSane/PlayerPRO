@@ -1632,15 +1632,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
-		5596C10B1863CF85001C32F8 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
-			dstSubfolderSpec = 16;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		55B0F59C17DF0F0500653BCD /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2281,8 +2272,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				551292F2163DDA8E00C2C639 /* PlayerPROCore.framework in Frameworks */,
 				55085D821836EC8D004A152F /* CoreMIDI.framework in Frameworks */,
+				551292F2163DDA8E00C2C639 /* PlayerPROCore.framework in Frameworks */,
 				551292D9163DD68500C2C639 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4555,7 +4546,6 @@
 				5573A33B10B50D2600FF8B50 /* Resources */,
 				5573A33C10B50D2600FF8B50 /* Sources */,
 				5573A33D10B50D2600FF8B50 /* Frameworks */,
-				5596C10B1863CF85001C32F8 /* CopyFiles */,
 			);
 			buildRules = (
 			);
