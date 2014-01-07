@@ -604,6 +604,16 @@
 		55C358BE16C42D1800FB9FA6 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* FileUtils.h */; };
 		55C358F716C42F7100FB9FA6 /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */; };
 		55C358F816C42F7600FB9FA6 /* MIDI-Hardware-Stub.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */; };
+		55C8EDE1187CC8B200CC8C1B /* PPPatternObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287216A8968C009013D8 /* PPPatternObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55C8EDE2187CC8B200CC8C1B /* PPPatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287316A8968C009013D8 /* PPPatternObject.m */; };
+		55C8EDE3187CC8B200CC8C1B /* PPMadCommandObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287616A89A9C009013D8 /* PPMadCommandObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55C8EDE4187CC8B200CC8C1B /* PPMadCommandObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287716A89A9C009013D8 /* PPMadCommandObject.m */; };
+		55C8EDE5187CC96900CC8C1B /* PPPatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287316A8968C009013D8 /* PPPatternObject.m */; };
+		55C8EDE6187CC96A00CC8C1B /* PPPatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287316A8968C009013D8 /* PPPatternObject.m */; };
+		55C8EDE9187CC98200CC8C1B /* PPPatternObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287216A8968C009013D8 /* PPPatternObject.h */; };
+		55C8EDEA187CC98200CC8C1B /* PPMadCommandObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287616A89A9C009013D8 /* PPMadCommandObject.h */; };
+		55C8EDEB187CC99100CC8C1B /* PPPatternObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55F4287216A8968C009013D8 /* PPPatternObject.h */; };
+		55C8EDEC187CC99500CC8C1B /* PPMadCommandObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55F4287616A89A9C009013D8 /* PPMadCommandObject.h */; };
 		55C930391819E68700D9E072 /* CocoaFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C930381819E68700D9E072 /* CocoaFuncs.m */; };
 		55C9303A1819E68700D9E072 /* CocoaFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C930381819E68700D9E072 /* CocoaFuncs.m */; };
 		55C9303B1819F6EC00D9E072 /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */; };
@@ -652,8 +662,6 @@
 		55EE2D8C17E12F9300FED42A /* Length.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE84210E08D9E00177B4C /* Length.plugin */; };
 		55EE2D8E17E12F9300FED42A /* Sampling Rate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE90B10E08DAC00177B4C /* Sampling Rate.plugin */; };
 		55F41A3717EF96B000605DF8 /* PPExportObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F41A3617EF96AF00605DF8 /* PPExportObject.m */; };
-		55F4287416A8968C009013D8 /* PPPatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287316A8968C009013D8 /* PPPatternObject.m */; };
-		55F4287816A89A9C009013D8 /* PPMadCommandObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287716A89A9C009013D8 /* PPMadCommandObject.m */; };
 		55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; };
 		55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
@@ -1644,6 +1652,8 @@
 			files = (
 				55B0F5B517DF101000653BCD /* PlayerPROKit.h in CopyFiles */,
 				55B0F5B617DF101000653BCD /* PPLibrary.h in CopyFiles */,
+				55C8EDEC187CC99500CC8C1B /* PPMadCommandObject.h in CopyFiles */,
+				55C8EDEB187CC99100CC8C1B /* PPPatternObject.h in CopyFiles */,
 				55B0F5B717DF101000653BCD /* PPDriver.h in CopyFiles */,
 				55B0F5B817DF101000653BCD /* PPMusicObject.h in CopyFiles */,
 				55B0F5B317DF0FF700653BCD /* PPSampleObject.h in CopyFiles */,
@@ -1743,10 +1753,10 @@
 		550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "OSX-CoreAudio.c"; sourceTree = "<group>"; };
 		550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentCellView.h; sourceTree = "<group>"; };
 		550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentCellView.m; sourceTree = "<group>"; };
-		550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPSampleObject.h; path = ../Classes/PPSampleObject.h; sourceTree = "<group>"; };
-		550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPSampleObject.m; path = ../Classes/PPSampleObject.m; sourceTree = "<group>"; };
-		550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPInstrumentObject.h; path = ../Classes/PPInstrumentObject.h; sourceTree = "<group>"; };
-		550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPInstrumentObject.m; path = ../Classes/PPInstrumentObject.m; sourceTree = "<group>"; };
+		550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject.h; sourceTree = "<group>"; };
+		550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSampleObject.m; sourceTree = "<group>"; };
+		550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentObject.h; sourceTree = "<group>"; };
+		550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentObject.m; sourceTree = "<group>"; };
 		550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embeddedPlugs.h; sourceTree = "<group>"; };
 		550FFAEB17CEA4570003A2F3 /* AIFF.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AIFF.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		550FFAEC17CEA4590003A2F3 /* AIFF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AIFF-Info.plist"; path = "../../../AIFF-Info.plist"; sourceTree = "<group>"; };
@@ -2834,6 +2844,10 @@
 				550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */,
 				550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */,
 				550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */,
+				55F4287216A8968C009013D8 /* PPPatternObject.h */,
+				55F4287316A8968C009013D8 /* PPPatternObject.m */,
+				55F4287616A89A9C009013D8 /* PPMadCommandObject.h */,
+				55F4287716A89A9C009013D8 /* PPMadCommandObject.m */,
 				551292EE163DD7CE00C2C639 /* PPLibrary.h */,
 				558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */,
 				551292EF163DD7CE00C2C639 /* PPLibrary.m */,
@@ -3501,10 +3515,6 @@
 		55469C2416BF341500175A1F /* Pattern Code */ = {
 			isa = PBXGroup;
 			children = (
-				55F4287216A8968C009013D8 /* PPPatternObject.h */,
-				55F4287316A8968C009013D8 /* PPPatternObject.m */,
-				55F4287616A89A9C009013D8 /* PPMadCommandObject.h */,
-				55F4287716A89A9C009013D8 /* PPMadCommandObject.m */,
 				55469C2516BF34D200175A1F /* PatternHandler.h */,
 				55469C2616BF34D200175A1F /* PatternHandler.m */,
 			);
@@ -4112,12 +4122,14 @@
 			files = (
 				55DEBFE918008D970089B940 /* PPSoundSettingsViewController.h in Headers */,
 				551292ED163DD74100C2C639 /* PlayerPROKit.h in Headers */,
+				55C8EDE3187CC8B200CC8C1B /* PPMadCommandObject.h in Headers */,
 				551292F0163DD7CE00C2C639 /* PPLibrary.h in Headers */,
 				558D4DDA1666F14E00A333E8 /* PPDriver.h in Headers */,
 				558D4DDD1666F19600A333E8 /* PPLibrary_PPKPrivate.h in Headers */,
 				55B1B4F3166A850E00820424 /* PPDriver_Private.h in Headers */,
 				55B1B4F7166A861900820424 /* PPMusicObject.h in Headers */,
 				55B1B4FA166A8ED500820424 /* PPMusicObject_PPKPrivate.h in Headers */,
+				55C8EDE1187CC8B200CC8C1B /* PPPatternObject.h in Headers */,
 				5578C4FF17DB8A5C0057D11B /* PPSampleObject.h in Headers */,
 				5521F3FD17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h in Headers */,
 				5578C50017DB8A640057D11B /* PPInstrumentObject.h in Headers */,
@@ -4167,6 +4179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5578C51617DB901F0057D11B /* PPLibrary_PPKPrivate.h in Headers */,
+				55C8EDEA187CC98200CC8C1B /* PPMadCommandObject.h in Headers */,
 				5578C51717DB901F0057D11B /* PPDriver_Private.h in Headers */,
 				5578C51117DB90110057D11B /* PlayerPROKit.h in Headers */,
 				5578C51217DB901F0057D11B /* PPLibrary.h in Headers */,
@@ -4174,6 +4187,7 @@
 				5578C51817DB901F0057D11B /* PPMusicObject.h in Headers */,
 				55B0F5AF17DF0FB000653BCD /* PPSampleObject.h in Headers */,
 				55B0F5B217DF0FC100653BCD /* PPInstrumentObject.h in Headers */,
+				55C8EDE9187CC98200CC8C1B /* PPPatternObject.h in Headers */,
 				5578C51A17DB901F0057D11B /* PPMusicObject_PPKPrivate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5931,6 +5945,7 @@
 				55A934F917F2121D00493DC5 /* PPFilterPluginWindowController.m in Sources */,
 				551292F1163DD7CE00C2C639 /* PPLibrary.m in Sources */,
 				558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */,
+				55C8EDE4187CC8B200CC8C1B /* PPMadCommandObject.m in Sources */,
 				55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */,
 				5578C4FE17DB8A580057D11B /* PPSampleObject.m in Sources */,
 				5578C50117DB8A6E0057D11B /* PPInstrumentObject.m in Sources */,
@@ -5938,6 +5953,7 @@
 				55DEBFEA18008D9E0089B940 /* PPSoundSettingsViewController.m in Sources */,
 				5582135A17E4201B00B84F51 /* PPPluginWindowController.m in Sources */,
 				5582135B17E4201D00B84F51 /* PPDigitalPluginWindowController.m in Sources */,
+				55C8EDE2187CC8B200CC8C1B /* PPPatternObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6171,6 +6187,7 @@
 				5578C51917DB901F0057D11B /* PPMusicObject.m in Sources */,
 				55B0F5AD17DF0FA900653BCD /* PPSampleObject.m in Sources */,
 				55B0F5B017DF0FBD00653BCD /* PPInstrumentObject.m in Sources */,
+				55C8EDE5187CC96900CC8C1B /* PPPatternObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6441,6 +6458,7 @@
 				55B0F5AC17DF0F7800653BCD /* PPMusicObject.m in Sources */,
 				55B0F5AE17DF0FAA00653BCD /* PPSampleObject.m in Sources */,
 				55B0F5B117DF0FBE00653BCD /* PPInstrumentObject.m in Sources */,
+				55C8EDE6187CC96A00CC8C1B /* PPPatternObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6518,8 +6536,6 @@
 				5523EC8116936F880067B22A /* PPDigitalPlugHandler.m in Sources */,
 				5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */,
 				550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */,
-				55F4287416A8968C009013D8 /* PPPatternObject.m in Sources */,
-				55F4287816A89A9C009013D8 /* PPMadCommandObject.m in Sources */,
 				55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */,
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
 				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,

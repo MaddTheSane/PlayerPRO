@@ -17,6 +17,7 @@
 #else
 #include <PlayerPROCore/MAD.h>
 #endif
+#include <CoreServices/CoreServices.h>
 
 #ifndef WIN32
 //Windows Defines

@@ -12,6 +12,7 @@
 #import "PPDriver_Private.h"
 #import "PPMusicObject.h"
 #import "PPMusicObject_PPKPrivate.h"
+#include <PlayerPROCore/RDriverInt.h>
 
 @implementation PPDriver
 @synthesize rec = theRec;
