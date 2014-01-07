@@ -587,7 +587,7 @@ void SaveAPatternInt(FSSpec	sFile, short theID)
 			curMusic->partition[theID]->header.name[x] = 0;
 		
 		inOutBytes = GetPtrSize((Ptr)curMusic->partition[theID]);
-		iErr = FSWrite(fRefNum, &inOutBytes, curMusic->partition[theID]);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, curMusic->partition[theID], NULL);
 		iErr = FSCloseFork(fRefNum);
 	}
 

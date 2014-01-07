@@ -5354,8 +5354,7 @@ void WritePreferences(void)
 ReLoadPrefs:
 	
 	iErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &vRefNum, &DirID);
-	if (iErr == noErr)
-	{
+	if (iErr == noErr) {
 		FSMakeFSSpec(vRefNum, DirID, PLAYERPREF, &spec);
 		
 		Prefs *outPrefs = (Prefs*)NewPtr(sizeof(Prefs));
@@ -5369,7 +5368,7 @@ ReLoadPrefs:
 				iErr = FSSetForkPosition(fRefNum, fsFromStart, 0);
 				
 				inOutBytes = sizeof(Prefs);
-				iErr = FSWrite(fRefNum, &inOutBytes, outPrefs);
+				iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, outPrefs, NULL);
 				
 				iErr = FSCloseFork(fRefNum);
 			}
@@ -5710,10 +5709,10 @@ ReLoadPrefs:
 		Prefs *outPrefs = (Prefs*)NewPtr(sizeof(Prefs));
 		*outPrefs = thePrefs;
 		SwapPrefs(outPrefs);
-		iErr = FSWrite(fRefNum, &inOutBytes, outPrefs);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, outPrefs, NULL);
 		DisposePtr((Ptr)outPrefs);
 #else
-		iErr = FSWrite(fRefNum, &inOutBytes, &thePrefs);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &thePrefs, NULL);
 #endif
 		iErr = FSCloseFork(fRefNum);
 		
@@ -5730,18 +5729,14 @@ ReLoadPrefs:
 		iErr = FSCloseFork(fRefNum);
 		SwapPrefs(tempPrefs);
 		
-		if (tempPrefs->Version != VERSION || inOutBytes != sizeof(Prefs))
-		{
+		if (tempPrefs->Version != VERSION || inOutBytes != sizeof(Prefs)) {
 			
 			//iErr = RstFLock(PLAYERPREF, 0);
 			iErr = FSpDelete(&spec);
 			
-			if (tempPrefs->Version >= 0x0500)
-			{
+			if (tempPrefs->Version >= 0x0500) {
 				// RECUPERATION DES VIEILLES PREFS
-			}
-			else
-			{
+			} else {
 				// DESTRUCTION TOTALE DES VIEILLES PREFS
 				
 				DisposePtr((Ptr) tempPrefs);
@@ -5749,9 +5744,7 @@ ReLoadPrefs:
 			}
 			
 			goto ReLoadPrefs;
-		}
-		else
-		{
+		} else {
 			// SUCCES
 			
 			thePrefs = *tempPrefs;
@@ -5760,7 +5753,8 @@ ReLoadPrefs:
 		}
 	}
 	
-	if (!HelpAvalaible) thePrefs.ActiveHelp = false;
+	if (!HelpAvalaible)
+		thePrefs.ActiveHelp = false;
 	
 	/*for (i = 0; i < 7; i++)
 	 {
@@ -5774,8 +5768,7 @@ void HandleEdit(short item)
 {
 	short		theNo, lastNo, samp;
 	
-	switch(item)
-	{
+	switch (item) {
 		case 1:		// UNDO
 			DoUndo();
 			break;
@@ -5788,90 +5781,91 @@ void HandleEdit(short item)
 			break;
 			
 		case 4:		// copy
-			if (oldWindow == NULL) break;
+			if (oldWindow == NULL)
+				break;
 			
-			switch(GetWRefCon(oldWindow))
-		{
-			case RefMODList:
-				COPYMODList();
-				break;
-				
-			case RefStaff:
-				COPYStaff();
-				break;
-				
-			case RefSample:
-				COPYSampleInt(GetDialogFromWindow(oldWindow));
-				break;
-				
-			case RefQuicktime:
-				COPYQuicktime();
-				break;
-				
-			case RefMozart:
-				COPYMozart();
-				break;
-				
-			case RefInstruList:
-				if (GetIns(&theNo, &samp)) NCOPYSample(0, -1L, theNo, samp);
-				else Erreur(13, theNo);
-				break;
-				
-			case RefPartition:
-				COPYEditor();
-				break;
-				
-			case RefParti:
-				COPYParti();
-				break;
-				
-			case RefPatList:
-				COPYPatList();
-				break;
-		}
+			switch (GetWRefCon(oldWindow)) {
+				case RefMODList:
+					COPYMODList();
+					break;
+					
+				case RefStaff:
+					COPYStaff();
+					break;
+					
+				case RefSample:
+					COPYSampleInt(GetDialogFromWindow(oldWindow));
+					break;
+					
+				case RefQuicktime:
+					COPYQuicktime();
+					break;
+					
+				case RefMozart:
+					COPYMozart();
+					break;
+					
+				case RefInstruList:
+					if (GetIns(&theNo, &samp)) NCOPYSample(0, -1L, theNo, samp);
+					else Erreur(13, theNo);
+					break;
+					
+				case RefPartition:
+					COPYEditor();
+					break;
+					
+				case RefParti:
+					COPYParti();
+					break;
+					
+				case RefPatList:
+					COPYPatList();
+					break;
+			}
 			break;
 			
 		case 5:		// paste
-			if (oldWindow == NULL) break;
+			if (oldWindow == NULL)
+				break;
 			
-			switch(GetWRefCon(oldWindow))
-		{
-			case RefMODList:
-				PASTEMODList();
-				break;
-				
-			case RefSample:
-				PASTESampleInt(GetDialogFromWindow(oldWindow));
-				break;
-				
-			case RefStaff:
-				PASTEStaff();
-				break;
-				
-			case RefMozart:
-				PASTEMozart();
-				break;
-				
-			case RefInstruList:
-				PASTEInstruList();
-				break;
-				
-			case RefPartition:
-				PASTEEditor();
-				break;
-				
-			case RefParti:
-				PASTEParti();
-				break;
-				
-			case RefPatList:
-				PASTEPatList();
-				break;
-		}
+			switch(GetWRefCon(oldWindow)) {
+				case RefMODList:
+					PASTEMODList();
+					break;
+					
+				case RefSample:
+					PASTESampleInt(GetDialogFromWindow(oldWindow));
+					break;
+					
+				case RefStaff:
+					PASTEStaff();
+					break;
+					
+				case RefMozart:
+					PASTEMozart();
+					break;
+					
+				case RefInstruList:
+					PASTEInstruList();
+					break;
+					
+				case RefPartition:
+					PASTEEditor();
+					break;
+					
+				case RefParti:
+					PASTEParti();
+					break;
+					
+				case RefPatList:
+					PASTEPatList();
+					break;
+			}
 			break;
 			
 		case 6:		// clear
-			if (oldWindow == NULL) break;
+			if (oldWindow == NULL)
+				break;
 			
 			GlobalDoKey(oldWindow, 0x08);
 			break;
@@ -5908,13 +5902,10 @@ void HandleEdit(short item)
 			
 			AlternateBuffer = !AlternateBuffer;
 			
-			if (AlternateBuffer)
-			{
+			if (AlternateBuffer) {
 				SetMenuItemText(EditMenu, item, "\pUse Main Music Buffer");
 				SetWTitle(GetDialogWindow(ToolsDlog), "\pSecond Music Buffer");
-			}
-			else
-			{
+			} else {
 				SetMenuItemText(EditMenu,item, "\pUse Second Music Buffer");
 				SetWTitle(GetDialogWindow(ToolsDlog), "\pTools");
 				
@@ -6090,78 +6081,79 @@ void DoReset()
 	GetDialogItem(aDia, 5, &itemType, &itemHandle, &tempRect);	SetControlValue((ControlHandle) itemHandle, ResetInstrus);
 	GetDialogItem(aDia, 6, &itemType, &itemHandle, &tempRect);	SetControlValue((ControlHandle) itemHandle, PurgePatterns);
 	
-	if (!ResetPatterns && !ResetInstrus && !PurgePatterns) ControlSwitch(1, aDia, 255);
-	else ControlSwitch(1, aDia, 0);
+	if (!ResetPatterns && !ResetInstrus && !PurgePatterns)
+		ControlSwitch(1, aDia, 255);
+	else
+		ControlSwitch(1, aDia, 0);
 	
-	do
-	{
-		//	ModalDialog(MyDlgFilterDesc, &itemHit);
-		
+	do {
+		//ModalDialog(MyDlgFilterDesc, &itemHit);
 		MyModalDialog(aDia, &itemHit);
 		
-		switch(itemHit)
-		{
+		switch(itemHit) {
 			case 3:
 			case 5:
 			case 6:
 				GetDialogItem(aDia, itemHit, &itemType, &itemHandle, &tempRect);
 				SetControlValue((ControlHandle) itemHandle, !GetControlValue((ControlHandle) itemHandle));
 				
-				switch(itemHit)
-			{
-				case 3:	ResetPatterns = !ResetPatterns;		break;
-				case 5:	ResetInstrus = !ResetInstrus;		break;
-				case 6:	PurgePatterns = !PurgePatterns;		break;
-			}
+				switch(itemHit) {
+					case 3:
+						ResetPatterns = !ResetPatterns;
+						break;
+						
+					case 5:
+						ResetInstrus = !ResetInstrus;
+						break;
+						
+					case 6:
+						PurgePatterns = !PurgePatterns;
+						break;
+				}
 				
-				if (!ResetPatterns && !ResetInstrus && !PurgePatterns) ControlSwitch(1, aDia, 255);
-				else ControlSwitch(1, aDia, 0);
+				if (!ResetPatterns && !ResetInstrus && !PurgePatterns)
+					ControlSwitch(1, aDia, 255);
+				else
+					ControlSwitch(1, aDia, 0);
 				break;
 		}
 		
-	}while (itemHit != 1 && itemHit != 2);
+	} while (itemHit != 1 && itemHit != 2);
 	
-	if (itemHit == 1)
-	{
+	if (itemHit == 1) {
 		DoStop();
 		
 		MADPurgeTrack(MADDriver);
 		MADCleanDriver(MADDriver);
 		
 		GetDialogItem(aDia, 3, &itemType, &itemHandle, &tempRect);	// DELETE Patterns
-		if (ResetPatterns)
-		{
-			for (x = 1; x < curMusic->header->numPat ; x++)
-			{
-				if (curMusic->partition[ x] != NULL) DisposePtr((Ptr)  curMusic->partition[ x]);
-				curMusic->partition[ x] = NULL;
+		if (ResetPatterns) {
+			for (x = 1; x < curMusic->header->numPat ; x++) {
+				if (curMusic->partition[ x] != NULL)
+					DisposePtr((Ptr) curMusic->partition[x]);
+				curMusic->partition[x] = NULL;
 			}
 			curMusic->header->numPat = 1;
 			
 			// Purge Track
-			for (tracks = 0; tracks < curMusic->header->numChn; tracks++)
-			{
-				for (position = 0; position < curMusic->partition[ 0]->header.size; position++)
-				{
+			for (tracks = 0; tracks < curMusic->header->numChn; tracks++) {
+				for (position = 0; position < curMusic->partition[ 0]->header.size; position++) {
 					aCmd = GetMADCommand(position, tracks, curMusic->partition[ 0]);
 					MADKillCmd(aCmd);
 				}
 			}
 			
 			// DELETE Partition
-			for (i = 0; i < 128; i++)
-			{
-				curMusic->header->oPointers[ i] = 0;
+			for (i = 0; i < 128; i++) {
+				curMusic->header->oPointers[i] = 0;
 			}
 			
 			curMusic->header->numPointers = 1;
 		}
 		
 		GetDialogItem(aDia, 5, &itemType, &itemHandle, &tempRect);	// Instrus
-		if (ResetInstrus)
-		{
-			for (x = 0; x < MAXINSTRU ; x++)
-			{
+		if (ResetInstrus) {
+			for (x = 0; x < MAXINSTRU ; x++) {
 				MADKillInstrument(curMusic, x);
 			}
 		}
@@ -6921,7 +6913,8 @@ void AddRemoveBookmarks()
 void CloseBookMarks()
 {
 	short		vRefNum, fRefNum;
-	long		inOutBytes, dirID, i, eof, prev;
+	ByteCount	inOutBytes;
+	long		dirID, i, eof, prev;
 	OSErr		iErr;
 	FSSpec		theSpec, spec;
 	Str255		url, desc;
@@ -6937,28 +6930,28 @@ void CloseBookMarks()
 	
 	
 	iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
-	if (iErr) return;
+	if (iErr)
+		return;
 	
 	achar = '\r';
 	
 	for (i = 0; i < URLsNo; i++)
 	{
-		inOutBytes = URLs[ i][ 0];
-		iErr = FSWrite(fRefNum, &inOutBytes, &URLs[ i][ 1]);
+		inOutBytes = URLs[i][0];
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &URLs[i][1], &inOutBytes);
 		
 		inOutBytes = 1;
-		iErr = FSWrite(fRefNum, &inOutBytes, &achar);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &achar, &inOutBytes);
 		
-		inOutBytes = URLsDesc[ i][ 0];
-		iErr = FSWrite(fRefNum, &inOutBytes, &URLsDesc[ i][ 1]);
+		inOutBytes = URLsDesc[i][0];
+		FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &URLsDesc[ i][ 1], &inOutBytes);
 		
-		if (i != URLsNo-1)
-		{
+		if (i != URLsNo - 1) {
 			inOutBytes = 1;
-			iErr = FSWrite(fRefNum, &inOutBytes, &achar);
+			iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &achar, &inOutBytes);
 			
 			inOutBytes = 1;
-			iErr = FSWrite(fRefNum, &inOutBytes, &achar);
+			iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &achar, &inOutBytes);
 		}
 	}
 	
@@ -7028,8 +7021,7 @@ void InitBookMarks()
 	FSMakeFSSpec(vRefNum, dirID, PLAYERBOOK, &theSpec);
 	
 	iErr = FSpOpenDF(&theSpec, fsCurPerm, &fRefNum);
-	if (iErr)
-	{
+	if (iErr) {
 #if 0
 		if (iErr == fnfErr)
 		{
@@ -7053,8 +7045,11 @@ void InitBookMarks()
 		
 		return;
 	}
-	
-	iErr = GetEOF(fRefNum, &eof);
+	{
+		SInt64 fsize;
+		iErr = FSGetForkSize(fRefNum, &fsize);
+		eof = (long)fsize;
+	}
 	
 	data = NewPtrClear(eof);
 	if (data == NULL) goto END;
@@ -7062,18 +7057,21 @@ void InitBookMarks()
 	iErr = FSRead(fRefNum, &eof, data);
 	
 	URLsNo = 0;
-	for (i = 0; i < eof;)
-	{
+	for (i = 0; i < eof;) {
 		//////////////////////
 		
 	RETRY3:
 		
 		prev = i;
-		while (i < eof && data[ i] != '\r') i++;
-		if (i - prev == 0 && i < eof) { i++; goto RETRY3;}
+		while (i < eof && data[ i] != '\r')
+			i++;
+		if (i - prev == 0 && i < eof) {
+			i++;
+			goto RETRY3;
+		}
 		
-		URLs[ URLsNo][ 0] = i - prev;
-		BlockMoveData(&data[ prev], &URLs[ URLsNo][ 1], i - prev);
+		URLs[URLsNo][0] = i - prev;
+		BlockMoveData(&data[prev], &URLs[URLsNo][1], i - prev);
 		i++;
 		
 		//////////////////////
@@ -7081,11 +7079,15 @@ void InitBookMarks()
 	RETRY4:
 		
 		prev = i;
-		while (i < eof && data[ i] != '\r') i++;
-		if (i - prev == 0 && i < eof) { i++; goto RETRY4;}
+		while (i < eof && data[ i] != '\r')
+			i++;
+		if (i - prev == 0 && i < eof) {
+			i++;
+			goto RETRY4;
+		}
 		
-		URLsDesc[ URLsNo][ 0] = i - prev;
-		BlockMoveData(&data[ prev], &URLsDesc[ URLsNo][ 1], i - prev);
+		URLsDesc[URLsNo][0] = i - prev;
+		BlockMoveData(&data[prev], &URLsDesc[URLsNo][1], i - prev);
 		i++;
 		
 		//////////////////////

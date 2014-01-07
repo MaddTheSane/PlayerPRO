@@ -1829,50 +1829,49 @@ static short TuningId = 1;
 void SaveAdaptorsFile(FSSpec *file)
 {
 	short			itemType,i;
-	long			inOutBytes;
+	ByteCount		inOutBytes;
 	OSErr			iErr;
 	Ptr				tempPtr;
 	short			fRefNum;
 	Str255			theStr, str2;
 
 	FSpDelete(file);
-	iErr = FSpCreate(file, 'SNPL', TUNINGTYPE,smSystemScript);
-	if (iErr == noErr)
-	{
+	iErr = FSpCreate(file, 'SNPL', TUNINGTYPE, smSystemScript);
+	if (iErr == noErr) {
 		iErr = FSpOpenDF(file, fsCurPerm, &fRefNum);
 		
 		inOutBytes = sizeof(curMusic->header->chanVol);
-		iErr = FSWrite(fRefNum, &inOutBytes, curMusic->header->chanVol);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, curMusic->header->chanVol, &inOutBytes);
 		
 		inOutBytes = sizeof(curMusic->header->chanPan);
-		iErr = FSWrite(fRefNum, &inOutBytes, curMusic->header->chanPan);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, curMusic->header->chanPan, &inOutBytes);
 		
 		inOutBytes = sizeof(MADDriver->FreqExt);
-		iErr = FSWrite(fRefNum, &inOutBytes, &MADDriver->FreqExt);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &MADDriver->FreqExt, &inOutBytes);
 
 		inOutBytes = sizeof(thePrefs.volumeLevel);
-		iErr = FSWrite(fRefNum, &inOutBytes, &thePrefs.volumeLevel);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &thePrefs.volumeLevel, &inOutBytes);
 		
 		inOutBytes = sizeof(MADDriver->VExt);
-		iErr = FSWrite(fRefNum, &inOutBytes, &MADDriver->VExt);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &MADDriver->VExt, &inOutBytes);
 		
 		inOutBytes = sizeof(MADDriver->VolGlobal);
-		iErr = FSWrite(fRefNum, &inOutBytes, &MADDriver->VolGlobal);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &MADDriver->VolGlobal, &inOutBytes);
 		
 		inOutBytes = sizeof(MADDriver->globPan);
-		iErr = FSWrite(fRefNum, &inOutBytes, &MADDriver->globPan);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &MADDriver->globPan, &inOutBytes);
 		
 		inOutBytes = sizeof(curMusic->header->globalEffect);
-		iErr = FSWrite(fRefNum, &inOutBytes, &curMusic->header->globalEffect);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &curMusic->header->globalEffect, &inOutBytes);
 		
 		inOutBytes = sizeof(curMusic->header->globalFXActive);
-		iErr = FSWrite(fRefNum, &inOutBytes, &curMusic->header->globalFXActive);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &curMusic->header->globalFXActive, &inOutBytes);
 		
 		inOutBytes = sizeof(curMusic->header->chanEffect);
-		iErr = FSWrite(fRefNum, &inOutBytes, &curMusic->header->chanEffect);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &curMusic->header->chanEffect, &inOutBytes);
 		
 		inOutBytes = sizeof(curMusic->header->chanBus);
-		iErr = FSWrite(fRefNum, &inOutBytes, &curMusic->header->chanBus);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &curMusic->header->chanBus, &inOutBytes);
 		
 		{
 			short 	x, alpha = 0;
@@ -1882,7 +1881,7 @@ void SaveAdaptorsFile(FSSpec *file)
 				if (curMusic->header->globalEffect[ i])
 				{
 					inOutBytes = sizeof(FXSets);
-					iErr = FSWrite(fRefNum, &inOutBytes, &curMusic->sets[ alpha]);
+					iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &curMusic->sets[alpha], &inOutBytes);
 					alpha++;
 				}
 			}
@@ -1894,7 +1893,7 @@ void SaveAdaptorsFile(FSSpec *file)
 					if (curMusic->header->chanEffect[ i][ x])
 					{
 						inOutBytes = sizeof(FXSets);
-						iErr = FSWrite(fRefNum, &inOutBytes, &curMusic->sets[ alpha]);
+						iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &curMusic->sets[ alpha], &inOutBytes);
 						alpha++;
 					}
 				}

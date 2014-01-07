@@ -229,13 +229,14 @@ void SaveEQ(void)
 {
 	FSSpec				spec;
 	Str255				theStr;
-	long				inOutBytes;
+	ByteCount			inOutBytes;
 	OSErr				iErr;
 	short				fRefNum;
 	
 	pStrcpy(theStr, "\pEQ file");
 	
-	if (DoCustomSave("\pSave EQ settings as:", theStr, 'EQ  ', &spec)) return;
+	if (DoCustomSave("\pSave EQ settings as:", theStr, 'EQ  ', &spec))
+		return;
 	
 	FSpDelete(&spec);
 	iErr = FSpCreate(&spec, 'SNPL', 'EQ  ',smSystemScript);
@@ -243,8 +244,8 @@ void SaveEQ(void)
 	{
 		iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
 		
-		inOutBytes = sizeof(double) * EQPACKET*2;
-		iErr = FSWrite(fRefNum, &inOutBytes, MADDriver->Filter);
+		inOutBytes = sizeof(double) * EQPACKET * 2;
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, MADDriver->Filter, &inOutBytes);
 		
 		iErr = FSCloseFork(fRefNum);
 	}

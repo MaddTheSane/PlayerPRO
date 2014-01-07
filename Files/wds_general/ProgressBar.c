@@ -880,11 +880,12 @@ void DoAIFFExporting(void)
 		}
 		else*/
 		{
-			iErr = FSWrite(fRefNum, &inOutCount, outFile);
+			iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutCount, outFile, NULL);
 		}
 	}
 	
-	if (iErr != noErr || stopErr != noErr) StopAIFFExporting();
+	if (iErr != noErr || stopErr != noErr)
+		StopAIFFExporting();
 }
 
 void StopAIFFExporting(void)
@@ -938,7 +939,7 @@ void StopAIFFExporting(void)
 			}
 			else*/
 			{
-				iErr = FSWrite(fRefNum, &inOutCount, outFile);
+				iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutCount, outFile, NULL);
 			}
 		}
 	}

@@ -313,8 +313,8 @@ typedef struct
 typedef struct MADSpec
 {
 	OSType		MAD;						// Mad Identification
-	char 		name[ 32];					// Music's name
-	char		infos[ INFOSSIZE];			// Informations & Author name of the music
+	char 		name[32];					// Music's name
+	char		infos[INFOSSIZE];			// Informations & Author name of the music
 	Byte		generalPan;					// General Panning
 	Byte		MultiChanNo;				// Number of chan for multichannel
 	Byte		MultiChan;					// MultiChannel per tracks?
@@ -331,17 +331,17 @@ typedef struct MADSpec
 	Byte 		numPointers;				// Partition length
 	Byte		numInstru;					// Instruments number
 	Byte		numSamples;					// Samples number
-	Byte		oPointers[ MAXPOINTER];		// Partition : Patterns ID List
+	Byte		oPointers[MAXPOINTER];		// Partition : Patterns ID List
 	short		speed;						// Default speed
 	short		tempo;						// Default tempo
-	Byte		chanPan[ MAXTRACK];			// Channel settings, from 0 to 256
-	Byte		chanVol[ MAXTRACK];			// Channel Volume, from 0 to 64
+	Byte		chanPan[MAXTRACK];			// Channel settings, from 0 to 256
+	Byte		chanVol[MAXTRACK];			// Channel Volume, from 0 to 64
 	
-	long		globalEffect[ 10];			// Global Effects IDs
+	long		globalEffect[10];			// Global Effects IDs
 	Boolean		globalFXActive;				// Global FX Active?
 	
-	long		chanEffect[ MAXTRACK][ 4];	// Channel Effect IDs
-	FXBus		chanBus[ MAXTRACK];
+	long		chanEffect[MAXTRACK][ 4];	// Channel Effect IDs
+	FXBus		chanBus[MAXTRACK];
 } MADSpec;
 
 typedef struct FXSets
