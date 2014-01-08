@@ -64,6 +64,10 @@ Boolean GetMetadataForURL(void* thisInterface,
 						  CFURLRef urlForFile)
 {
 	@autoreleasepool {
+		MADDriverRec		*MADDriver;
+		MADMusic			*MADMusic1;
+		MADLibrary			*MADLib;
+		MADDriverSettings	init;
 		NSMutableDictionary *NSattribs = (__bridge NSMutableDictionary*)attributes;
 		NSURL *NSFileURL = (__bridge NSURL*)urlForFile;
 		
@@ -83,10 +87,6 @@ Boolean GetMetadataForURL(void* thisInterface,
 		if (UTTypeConformsTo(contentTypeUTI, CFSTR("net.sourceforge.playerpro.mad-bundle"))) {
 			return GetMetadataForPackage(NSattribs, NSFileURL);
 		}
-		MADDriverRec		*MADDriver;
-		MADMusic			*MADMusic1;
-		MADLibrary			*MADLib;
-		MADDriverSettings	init;
 		
 		MADGetBestDriver(&init);
 		init.driverMode = NoHardwareDriver;
@@ -94,7 +94,6 @@ Boolean GetMetadataForURL(void* thisInterface,
 		if (MADInitLibrary(NULL, &MADLib) != noErr)
 			return FALSE;
 		if (MADCreateDriver(&init, MADLib, &MADDriver) != noErr) {
-			
 			MADDisposeLibrary(MADLib);
 			return FALSE;
 		}
@@ -111,11 +110,10 @@ Boolean GetMetadataForURL(void* thisInterface,
 				info = UTGetOSTypeFromString(ostypes);
 				if (ostypes)
 					CFRelease(ostypes);
-				if (info) {
+				if (info)
 					OSType2Ptr(info, utiType);
-				} else {
+				else
 					strcpy(utiType, "!!!!");
-				}
 			}
 			
 			if (MADMusicIdentifyCFURL(MADLib, type, urlForFile) != noErr) {
@@ -137,9 +135,8 @@ Boolean GetMetadataForURL(void* thisInterface,
 				if (err != noErr) {
 					goto fail1;
 				}
-			} else {
+			} else
 				goto fail1;
-			}
 			
 			{
 				//Get info
@@ -147,9 +144,9 @@ Boolean GetMetadataForURL(void* thisInterface,
 				//Hence why we're only letting the MADK tracker show it.
 				
 				NSString *infoString = [[NSString alloc] initWithCString:MADMusic1->header->infos encoding:NSMacOSRomanStringEncoding];
-				if (!infoString) {
+				if (!infoString)
 					infoString = @"";
-				}
+				
 				NSattribs[kPPMDMADKInfo] = infoString;
 				
 			}
@@ -205,16 +202,15 @@ Boolean GetMetadataForURL(void* thisInterface,
 			for (int i = 0; i < MAXINSTRU; i++) {
 				InstrData *tempData = &MADMusic1->fid[i];
 				NSString *temp = [[NSString alloc] initWithCString:tempData->name encoding:NSMacOSRomanStringEncoding];
-				if (![NSString PPstringIsEmpty:temp]) {
+				if (![NSString PPstringIsEmpty:temp])
 					[InstruArray addObject:temp];
-				}
+				
 				int sDataCount = tempData->firstSample + tempData->numSamples;
 				for (int x = tempData->firstSample; x < sDataCount; x++) {
 					sData *tempSData = MADMusic1->sample[x];
 					temp = [[NSString alloc] initWithCString:tempSData->name encoding:NSMacOSRomanStringEncoding];
-					if (![NSString PPstringIsEmpty:temp]) {
+					if (![NSString PPstringIsEmpty:temp])
 						[InstruArray addObject:temp];
-					}
 				}
 			}
 			
@@ -224,8 +220,7 @@ Boolean GetMetadataForURL(void* thisInterface,
 		{
 			NSMutableArray *PatArray = [[NSMutableArray alloc] initWithCapacity:MAXPATTERN];
 			for (int i = 0; i < MAXPATTERN; i++) {
-				if (MADMusic1->partition != NULL && MADMusic1->partition[i] != NULL)
-				{
+				if (MADMusic1->partition != NULL && MADMusic1->partition[i] != NULL) {
 					NSString *temp = [[NSString alloc] initWithCString:MADMusic1->partition[i]->header.name encoding:NSMacOSRomanStringEncoding];
 					if (![NSString PPstringIsEmpty:temp])
 						[PatArray addObject:temp];
