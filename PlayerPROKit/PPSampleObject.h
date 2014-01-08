@@ -10,10 +10,6 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 
 @interface PPSampleObject : NSObject <NSCopying, NSCoding>
-{
-	sData		theSample;
-}
-
 @property (readwrite) short sampleIndex;
 @property (readwrite) short instrumentIndex;
 

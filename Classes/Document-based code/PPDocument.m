@@ -24,6 +24,11 @@
 @implementation PPDocument
 @synthesize exportSettings;
 
+- (PPMusicObjectWrapper*)wrapper
+{
+	return self.theMusic;
+}
+
 - (NSString*)musicName
 {
 	return self.theMusic.internalFileName;

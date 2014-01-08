@@ -30,48 +30,17 @@
 @implementation PPInstrumentViewController
 @synthesize currentDocument;
 @synthesize importer;
-@synthesize curMusic;
 @synthesize theDriver;
 @synthesize undoManager;
 @synthesize filterHandler;
-
-- (void)setCurMusic:(MADMusic **)acurMusic
-{
-	curMusic = acurMusic;
-	[self loadInstrumentsFromMusic];
-}
 
 - (void)colorsDidChange:(NSNotification*)aNot
 {
 	
 }
 
-- (void)writeInstrumentsBackToMusic
-{
-	for (PPInstrumentObject *obj in instruments) {
-		[obj writeBackToMusic];
-	}
-}
-
-- (void)writeInstrumentAtIndexBackToMusic:(short)idx
-{
-	[instruments[idx] writeBackToMusic];
-}
-
-- (void)writeSampleAtIndex:(short)sampIdx withInstrumentAtIndexBackToMusic:(short)insIdx
-{
-	PPInstrumentObject *obj = instruments[insIdx];
-	[obj writeSampleAtIndexBackToMusic:sampIdx];
-}
-
 - (void)loadInstrumentsFromMusic
 {
-	int i;
-	[instruments removeAllObjects];
-	for (i = 0; i < MAXINSTRU; i++) {
-		PPInstrumentObject *obj = [[PPInstrumentObject alloc] initWithMusic:*curMusic instrumentIndex:i];
-		[instruments addObject:obj];
-	}
 	if (instrumentView) {
 		[instrumentView reloadData];
 		[instrumentView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
@@ -91,7 +60,6 @@
 		NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 		[center addObserver:self selector:@selector(colorsDidChange:) name:PPColorsDidChange object:nil];
 		[center addObserver:self selector:@selector(musicDidChange:) name:PPMusicDidChange object:nil];
-		instruments = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU];
 		instrumentInfo = [[InstrumentInfoController alloc] init];
 		instrumentInfo.delegate = self;
     }
@@ -138,10 +106,10 @@
 		if (theErr)
 			*theErr = nil;
 		
-		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:*curMusic instrumentIndex:theIns];
+		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:currentDocument.wrapper instrumentIndex:theIns];
 		[self replaceObjectInInstrumentsAtIndex:theIns withObject:insObj];
 		[instrumentView reloadData];
-		(*curMusic)->hasChanged = TRUE;
+		//(*curMusic)->hasChanged = TRUE;
 		return YES;
 	}
 }
@@ -159,7 +127,7 @@
 		if (!tempInstrData) {
 			return MADNeedMemory;
 		}
-		memcpy(tempInstrData, (*curMusic)->fid, sizeof(InstrData) * MAXINSTRU);
+		memcpy(tempInstrData, [currentDocument.wrapper internalMadMusicStruct]->fid, sizeof(InstrData) * MAXINSTRU);
 		
 		dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
 			ByteSwapInstrData(&tempInstrData[x]);
@@ -169,9 +137,9 @@
 	}
 	for (i = 0; i < MAXINSTRU ; i++)
 	{
-		for (x = 0; x < (*curMusic)->fid[ i].numSamples ; x++)
+		for (x = 0; x < [currentDocument.wrapper internalMadMusicStruct]->fid[i].numSamples ; x++)
 		{
-			sData tempData, *curData = (*curMusic)->sample[ i * MAXSAMPLE +  x];
+			sData tempData, *curData = [currentDocument.wrapper internalMadMusicStruct]->sample[i * MAXSAMPLE +  x];
 			sData32 writeData;
 			memcpy(&tempData, curData, sizeof(sData));
 			ByteSwapsData(&tempData);
@@ -180,9 +148,9 @@
 			[outData appendBytes:&writeData length:sizeof(sData32)];
 			{
 				Ptr dataData = malloc(curData->size);
-				if (!dataData) {
+				if (!dataData)
 					return MADNeedMemory;
-				}
+				
 				memcpy(dataData, curData->data, curData->size);
 				if (curData->amp == 16) {
 					__block short *shortPtr = (short*) dataData;
@@ -316,7 +284,7 @@
 	if (theErr) {
 		*theErr = nil;
 	}
-	
+#if 0
 	for (x = 0; x < MAXINSTRU ; x++) MADKillInstrument(*curMusic, x);
 	memcpy((*curMusic)->fid, tempInstrData, inOutCount);
 	free(tempInstrData);
@@ -336,6 +304,7 @@
 	[instrumentView reloadData];
 	[instrumentView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
 	[instrumentView scrollToBeginningOfDocument:nil];
+#endif
 	
 	return YES;
 }
@@ -404,7 +373,7 @@
 	if ([object isKindOfClass:[PPInstrumentObject class]]) {
 		ctxt = object;
 	} else if ([object isKindOfClass:[PPSampleObject class]]) {
-		ctxt = instruments[[object instrumentIndex]];
+		ctxt = currentDocument.wrapper.instruments[[object instrumentIndex]];
 	}
 	instrumentInfo.instrument = ctxt;
 	
@@ -673,7 +642,7 @@ static void DrawCGSampleInt(long 	start,
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
 	if (item == nil) {
-		return [instruments count];
+		return [currentDocument.wrapper.instruments count];
 	}
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
 		return [item countOfChildren];
@@ -684,7 +653,7 @@ static void DrawCGSampleInt(long 	start,
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	if (item == nil) {
-		return instruments[index];
+		return currentDocument.wrapper.instruments[index];
 	}
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
 		return [item childAtIndex:index];
@@ -726,8 +695,8 @@ static void DrawCGSampleInt(long 	start,
 
 - (void)replaceObjectInInstrumentsAtIndex:(NSUInteger)index withObject:(id)object
 {
-	instruments[index] = object;
-	(*curMusic)->hasChanged = TRUE;
+	currentDocument.wrapper.instruments[index] = object;
+	//(*curMusic)->hasChanged = TRUE;
 }
 
 @end

@@ -8,9 +8,15 @@
 
 #import "PPInstrumentObject.h"
 #import "PPSampleObject.h"
+#import "PPMusicObject.h"
+#import "PPMusicObject_PPKPrivate.h"
+
+@interface PPInstrumentObject ()
+@property InstrData theInstrument;
+@end
 
 @implementation PPInstrumentObject
-
+@synthesize theInstrument;
 @synthesize number;
 @synthesize name;
 
@@ -243,18 +249,18 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	return [[PPInstrumentObject allocWithZone:zone] initWithMusic:theMus instrumentIndex:theInstrument.no];
+	return [[PPInstrumentObject allocWithZone:zone] initWithMusic:_theMus instrumentIndex:theInstrument.no];
 }
 
-- (id)initWithMusic:(MADMusic*)mus instrumentIndex:(short)insIdx;
+- (id)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
 {
 	if (self = [super init]) {
 		if (!mus) {
 			return nil;
 		}
-		theMus = mus;
+		_theMus = mus;
 		
-		InstrData *tempData = &mus->fid[insIdx];
+		InstrData *tempData = &mus._currentMusic->fid[insIdx];
 		memcpy(&theInstrument, tempData, sizeof(InstrData));
 		samples = [[NSMutableArray alloc] initWithCapacity:tempData->numSamples];
 		{
@@ -262,7 +268,8 @@
 			
 			int i = 0;
 			for (i = tempData->firstSample; i < sDataCount; i++) {
-				PPSampleObject *sObj = [[PPSampleObject alloc] initWithsData:mus->sample[i]];
+				//TODO:
+				PPSampleObject *sObj = nil;//[[PPSampleObject alloc] initWithsData:mus->sample[i]];
 				sObj.sampleIndex = i % MAXSAMPLE;
 				sObj.instrumentIndex = insIdx;
 				[samples addObject:sObj];
@@ -281,6 +288,7 @@
 	return [NSString stringWithFormat:@"%@: Sample index %d count %d samples: %@", name, self.firstSample, self.sampleCount, [samples description]];
 }
 
+#if 0
 - (void)writeSampleAtIndexBackToMusic:(short)idx
 {
 	if (idx >= MAXSAMPLE) {
@@ -339,6 +347,7 @@
 	
 	theMus->hasChanged = TRUE;
 }
+#endif
 
 - (void)addSamplesObject:(PPSampleObject *)object
 {
@@ -347,7 +356,7 @@
 	}
 	[samples addObject:object];
 	theInstrument.numSamples++;
-	theMus->hasChanged = TRUE;
+	//theMus->hasChanged = TRUE;
 }
 
 - (void)replaceObjectInSamplesAtIndex:(short)index withObject:(PPSampleObject *)object
@@ -356,7 +365,7 @@
 		return;
 	}
 	samples[index] = object;
-	theMus->hasChanged = TRUE;
+	//theMus->hasChanged = TRUE;
 }
 
 - (NSUInteger)countOfSamples

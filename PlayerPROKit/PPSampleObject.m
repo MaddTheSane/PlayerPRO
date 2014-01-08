@@ -22,7 +22,13 @@
 #define SAMPLEINDEXKEY @"Sample Index"
 #define INSTRUMENTINDEXKEY @"Instrument Index"
 
+@interface PPSampleObject ()
+@property sData theSample;
+
+@end
+
 @implementation PPSampleObject
+@synthesize theSample;
 @synthesize name;
 @synthesize data;
 

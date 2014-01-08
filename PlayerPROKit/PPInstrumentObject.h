@@ -10,21 +10,18 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 
 @class PPSampleObject;
+@class PPMusicObjectWrapper;
 
 @interface PPInstrumentObject : NSObject <NSCopying>
 {
-	MADMusic		*theMus;
-	InstrData		theInstrument;
-	
 	NSMutableArray	*samples;
 	NSString		*name;				// instrument name
 	NSInteger		number;				// Instrument number
 }
 
-- (id)initWithMusic:(MADMusic*)mus instrumentIndex:(short)insIdx;
-- (void)writeBackToMusic;
-- (void)writeSampleAtIndexBackToMusic:(short)idx;
+- (id)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
 
+@property (weak) PPMusicObjectWrapper *theMus;
 @property (copy) NSString *name;
 @property (readonly) NSArray *samples;
 @property (readonly) NSInteger number;
