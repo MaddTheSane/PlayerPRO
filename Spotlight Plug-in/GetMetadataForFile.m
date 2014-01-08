@@ -1,7 +1,9 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h>
 #import <Foundation/Foundation.h>
-#import <PlayerPROKit/PPMusicObject.h>
+#import <PlayerPROKit/PPSampleObject.h>
+#import <PlayerPROKit/PPInstrumentObject.h>
+#import <PlayerPROKit/PPPatternObject.h>
 #include "RDriver.h"
 #include "FileUtils.h"
 #include "GetMetadataForFile.h"
@@ -274,12 +276,34 @@ static Boolean GetMetadataForPackage(NSMutableDictionary *attributes, NSURL *pat
 	attributes[kPPMDTotalInstruments] = @(musFile.totalInstruments);
 	attributes[kPPMDTotalTracks] = @(musFile.totalTracks);
 	
-	attributes[kPPMDFormatDescription] = @"MAD Bundle"; //TODO: localize
+	attributes[kPPMDFormatDescription] = @"MAD Bundle"; //TODO: localize?
 	attributes[kPPMDMADKInfo] = musFile.madInfo;
 	
-	//TODO: fill these out!
-	attributes[kPPMDInstumentsList] = @[];
-	attributes[kPPMDPatternList] = @[];
+	NSMutableArray *tmpArray = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU * (MAXSAMPLE + 1)];
+	for (PPInstrumentObject *insObj in musFile.instruments) {
+		NSString *tmpStr = insObj.name;
+		if (![NSString PPstringIsEmpty:tmpStr]) {
+			[tmpArray addObject:tmpStr];
+		}
+		for (PPSampleObject *sampObj in insObj.samples) {
+			tmpStr = sampObj.name;
+			if (![NSString PPstringIsEmpty:tmpStr]) {
+				[tmpArray addObject:tmpStr];
+			}
+		}
+	}
+	attributes[kPPMDInstumentsList] = [tmpArray copy];
+	
+	tmpArray = [[NSMutableArray alloc] init];
+	for (PPPatternObject *obj in musFile.patterns) {
+		NSString *patStr = obj.patternName;
+		if (![NSString PPstringIsEmpty:patStr]) {
+			[tmpArray addObject:patStr];
+		}
+	}
+	attributes[kPPMDPatternList] = [tmpArray copy];
+
+	//TODO: fill this out!
 	attributes[(NSString*)kMDItemDurationSeconds] = @0.0;
 	
 	return TRUE;
