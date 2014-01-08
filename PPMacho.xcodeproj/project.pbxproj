@@ -642,6 +642,8 @@
 		55DE87BD187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87BB187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h */; };
 		55DE87BF187E051F00C36533 /* PPPatternObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87BE187E051100C36533 /* PPPatternObject_PPKPrivate.h */; };
 		55DE87C0187E052400C36533 /* PPPatternObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87BE187E051100C36533 /* PPPatternObject_PPKPrivate.h */; };
+		55DE87C1187E131700C36533 /* PPMadCommandObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287716A89A9C009013D8 /* PPMadCommandObject.m */; };
+		55DE87C2187E131800C36533 /* PPMadCommandObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287716A89A9C009013D8 /* PPMadCommandObject.m */; };
 		55DEBFE918008D970089B940 /* PPSoundSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55DEBFEA18008D9E0089B940 /* PPSoundSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */; };
 		55E52E2512455E5100315307 /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
@@ -6196,6 +6198,7 @@
 			files = (
 				5578C51317DB901F0057D11B /* PPLibrary.m in Sources */,
 				5578C51517DB901F0057D11B /* PPDriver.m in Sources */,
+				55DE87C1187E131700C36533 /* PPMadCommandObject.m in Sources */,
 				5578C51917DB901F0057D11B /* PPMusicObject.m in Sources */,
 				55B0F5AD17DF0FA900653BCD /* PPSampleObject.m in Sources */,
 				55B0F5B017DF0FBD00653BCD /* PPInstrumentObject.m in Sources */,
@@ -6467,6 +6470,7 @@
 			files = (
 				55B0F5AA17DF0F7800653BCD /* PPLibrary.m in Sources */,
 				55B0F5AB17DF0F7800653BCD /* PPDriver.m in Sources */,
+				55DE87C2187E131800C36533 /* PPMadCommandObject.m in Sources */,
 				55B0F5AC17DF0F7800653BCD /* PPMusicObject.m in Sources */,
 				55B0F5AE17DF0FAA00653BCD /* PPSampleObject.m in Sources */,
 				55B0F5B117DF0FBE00653BCD /* PPInstrumentObject.m in Sources */,
