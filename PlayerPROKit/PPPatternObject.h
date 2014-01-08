@@ -8,17 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
-
-@class PPMadCommandObject;
+#import <PlayerPROKit/PPMadCommandObject.h>
+#import <PlayerPROKit/PPMusicObject.h>
 
 @interface PPPatternObject : NSObject
-{
-	MADMusic *curMusic;
-	NSInteger index;
-	NSMutableArray *commands;
-	PatHeader patternHeader;
-}
-
-- (id)initWithMusic:(MADMusic *)mus patternAtIndex:(short)ptnIdx;
+@property (readonly) NSInteger index;
+@property (copy) NSString *patternName;
+@property (readonly, weak) PPMusicObjectWrapper *musicWrapper;
+- (id)initWithMusic:(PPMusicObjectWrapper *)mus patternAtIndex:(short)ptnIdx;
 
 @end

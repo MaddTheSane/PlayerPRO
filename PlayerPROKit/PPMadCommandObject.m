@@ -7,6 +7,7 @@
 //
 
 #import "PPMadCommandObject.h"
+#include <PlayerPROCore/RDriverInt.h>
 
 @implementation PPMadCommandObject
 @synthesize theCommand;
@@ -71,13 +72,9 @@
 {
 	if (self = [super init]) {
 		if (!theCmd) {
-			theCommand.arg = 0;
-			theCommand.cmd = 0;
-			theCommand.note = 0xFF;
-			theCommand.ins = 0;
-			theCommand.vol = 0xFF;
+			MADKillCmd(&theCommand);
 		} else {
-			memcpy(&theCommand, theCmd, sizeof(Cmd));
+			theCommand = *theCmd;
 		}
 	}
 	return self;
