@@ -14,6 +14,8 @@
 #import <PlayerPROKit/PPMusicObject.h>
 #import <PlayerPROKit/PPSampleObject.h>
 #import <PlayerPROKit/PPInstrumentObject.h>
+#import <PlayerPROKit/PPPatternObject.h>
+#import <PlayerPROKit/PPMadCommandObject.h>
 #if !TARGET_OS_IPHONE
 #import <PlayerPROKit/PPSoundSettingsViewController.h>
 #if defined(ISUSINGPPPLUG)
