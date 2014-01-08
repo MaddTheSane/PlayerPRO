@@ -269,7 +269,7 @@
 	[_theMusic attachToDriver:theRec];
 	
 	char *soundPtr = NULL;
-	NSUInteger full = [theRec audioLength];
+	NSUInteger full = [theRec audioDataLength];
 	if (theSet->outPutBits == 16) {
 		full *= 2;
 	} else if (theSet->outPutBits == 20 || theSet->outPutBits == 24 ) {
