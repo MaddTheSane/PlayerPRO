@@ -14,7 +14,6 @@
 
 @interface PPInstrumentObject : NSObject <NSCopying>
 {
-	NSMutableArray	*samples;
 	NSString		*name;				// instrument name
 	NSInteger		number;				// Instrument number
 }

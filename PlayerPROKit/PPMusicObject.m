@@ -14,6 +14,8 @@
 #import "PPMusicObject_PPKPrivate.h"
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
+#import "PPInstrumentObject.h"
+#import "PPInstrumentObject_PPKPrivate.h"
 
 static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 {
@@ -198,6 +200,7 @@ end:
 @interface PPMusicObjectWrapper ()
 @property (readwrite) OSType madType;
 @property (strong, readwrite) NSFileWrapper *musicWrapper;
+@property (readwrite, strong) NSMutableArray *instruments;
 - (void)syncMusicDataTypes;
 @end
 
@@ -222,7 +225,7 @@ end:
 	@try {
 		NSData *nameData = [tmpVal.internalFileName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 		if (!nameData || nameData.length == 0) {
-			theInfo->internalFileName[0] = '\0';
+			bzero(theInfo->internalFileName, sizeof(theInfo->internalFileName));
 		} else {
 			char fileNameInt[60] = {0};
 			[nameData getBytes:fileNameInt length:MIN(nameData.length, (sizeof(fileNameInt)))];
@@ -285,6 +288,21 @@ end:
 	self.madInfo = [NSString stringWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
 	self.madAuthor = @"";
 	self.madType = currentMusic->header->MAD;
+	self.instruments = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU];
+	for (int i = 0; i < MAXINSTRU; i++) {
+		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusicStruct:currentMusic musicObject:self instrumentIndex:i];
+		[self.instruments addObject:insObj];
+	}
+}
+
+- (NSArray*)sDatas
+{
+	NSMutableArray *tmpMutArray = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU * MAXSAMPLE];
+	for (PPInstrumentObject *theObj in self.instruments) {
+		[tmpMutArray addObjectsFromArray:theObj.samples];
+	}
+	
+	return [[NSArray alloc] initWithArray:tmpMutArray];
 }
 
 - (instancetype)init

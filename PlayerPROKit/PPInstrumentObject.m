@@ -8,12 +8,9 @@
 
 #import "PPInstrumentObject.h"
 #import "PPSampleObject.h"
+#import "PPInstrumentObject_PPKPrivate.h"
 #import "PPMusicObject.h"
 #import "PPMusicObject_PPKPrivate.h"
-
-@interface PPInstrumentObject ()
-@property InstrData theInstrument;
-@end
 
 @implementation PPInstrumentObject
 @synthesize theInstrument;
@@ -280,6 +277,37 @@
 		//In case it's malformed, i.e. from CreateFreeMADK()
 		theInstrument.firstSample = MAXSAMPLE * insIdx; /*tempData->firstSample;*/
 	}
+	return self;
+}
+
+- (id)initWithMusicStruct:(MADMusic*)mus musicObject:(PPMusicObjectWrapper*)musObj instrumentIndex:(short)insIdx
+{
+	if (!mus || !musObj) {
+		return nil;
+	}
+	if (self = [super init]) {
+		_theMus = musObj;
+		
+		theInstrument = mus->fid[insIdx];
+		samples = [[NSMutableArray alloc] initWithCapacity:theInstrument.numSamples];
+		{
+			int sDataCount = theInstrument.numSamples + theInstrument.firstSample;
+			
+			for (int i = theInstrument.firstSample; i < sDataCount; i++) {
+				PPSampleObject *sObj = [[PPSampleObject alloc] initWithsData:mus->sample[i]];
+				sObj.sampleIndex = i % MAXSAMPLE;
+				sObj.instrumentIndex = insIdx;
+				[samples addObject:sObj];
+			}
+		}
+		
+		self.name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
+		theInstrument.no = number = insIdx;/*tempData->no;*/
+		//In case it's malformed, i.e. from CreateFreeMADK()
+		theInstrument.firstSample = MAXSAMPLE * insIdx; /*tempData->firstSample;*/
+
+	}
+	
 	return self;
 }
 
