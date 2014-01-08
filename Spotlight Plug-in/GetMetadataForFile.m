@@ -200,7 +200,7 @@ Boolean GetMetadataForURL(void* thisInterface,
 		}
 		
 		{
-			NSMutableArray *InstruArray = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU * MAXSAMPLE];
+			NSMutableArray *InstruArray = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU * (MAXSAMPLE + 1)];
 			
 			for (int i = 0; i < MAXINSTRU; i++) {
 				InstrData *tempData = &MADMusic1->fid[i];
