@@ -16,6 +16,7 @@
 #include "PPByteswap.h"
 #import "PPInstrumentObject.h"
 #import "PPInstrumentObject_PPKPrivate.h"
+#import "PPPatternObject.h"
 
 static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 {
@@ -201,6 +202,7 @@ end:
 @property (readwrite) OSType madType;
 @property (strong, readwrite) NSFileWrapper *musicWrapper;
 @property (readwrite, strong) NSMutableArray *instruments;
+@property (readwrite, strong) NSMutableArray *patterns;
 - (void)syncMusicDataTypes;
 @end
 
@@ -292,6 +294,11 @@ end:
 	for (int i = 0; i < MAXINSTRU; i++) {
 		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusicStruct:currentMusic musicObject:self instrumentIndex:i];
 		[self.instruments addObject:insObj];
+	}
+	self.patterns = [[NSMutableArray alloc] initWithCapacity:currentMusic->header->numPat];
+	for (int i = 0; i < currentMusic->header->numPat; i++) {
+		PPPatternObject *obj = [[PPPatternObject alloc] initWithMusic:self patternAtIndex:i];
+		[self.patterns addObject:obj];
 	}
 }
 

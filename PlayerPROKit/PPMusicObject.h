@@ -58,6 +58,7 @@
 @interface PPMusicObjectWrapper : PPMusicObject <NSCopying>
 @property (readonly, unsafe_unretained) NSArray *sDatas;
 @property (readonly, strong) NSMutableArray *instruments;
+@property (readonly, strong) NSMutableArray *patterns;
 @property (readonly) OSType madType;
 @property (readwrite, strong, nonatomic) NSString *internalFileName; //This is actually copied, but I don't want Clang to complain
 @property (readwrite, strong, nonatomic) NSString *madInfo; //Ditto
