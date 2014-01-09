@@ -11,7 +11,6 @@
 @class PPLibrary;
 @class PPPreferences;
 @class PPMusicList;
-@class PPInstrumentWindowController;
 @class PPDigitalPlugHandler;
 @class PPCurrentlyPlayingIndex;
 @class PPFilterPlugHandler;
@@ -30,7 +29,6 @@ extern __weak PPLibrary *globalMadLib;
 	
 	IBOutlet NSMenu			*newInstrumentMenu;
 	IBOutlet NSMenu			*instrumentExportMenu;
-	PPInstrumentWindowController *instrumentController;
 	
 	PPPreferences			*preferences;
 	PPInstrumentPlugHandler	*instrumentImporter;

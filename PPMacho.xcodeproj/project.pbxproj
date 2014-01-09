@@ -2848,23 +2848,19 @@
 			isa = PBXGroup;
 			children = (
 				551292E5163DD68500C2C639 /* PlayerPROKit.h */,
+				55DE87C3187E18A500C36533 /* Private headers */,
 				550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */,
 				550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */,
-				55DE87BB187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h */,
 				550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */,
 				550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */,
-				55DE87BE187E051100C36533 /* PPPatternObject_PPKPrivate.h */,
 				55F4287216A8968C009013D8 /* PPPatternObject.h */,
 				55F4287316A8968C009013D8 /* PPPatternObject.m */,
 				55F4287616A89A9C009013D8 /* PPMadCommandObject.h */,
 				55F4287716A89A9C009013D8 /* PPMadCommandObject.m */,
-				558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */,
 				551292EE163DD7CE00C2C639 /* PPLibrary.h */,
 				551292EF163DD7CE00C2C639 /* PPLibrary.m */,
-				55B1B4F2166A850D00820424 /* PPDriver_Private.h */,
 				558D4DD81666F14E00A333E8 /* PPDriver.h */,
 				558D4DD91666F14E00A333E8 /* PPDriver.m */,
-				55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */,
 				55B1B4F5166A861900820424 /* PPMusicObject.h */,
 				55B1B4F6166A861900820424 /* PPMusicObject.m */,
 				55453526186CD32900F69F4D /* OS X-specific code */,
@@ -3921,6 +3917,18 @@
 				55F41A3417EF918100605DF8 /* Document-based code */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		55DE87C3187E18A500C36533 /* Private headers */ = {
+			isa = PBXGroup;
+			children = (
+				55DE87BB187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h */,
+				55DE87BE187E051100C36533 /* PPPatternObject_PPKPrivate.h */,
+				558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */,
+				55B1B4F2166A850D00820424 /* PPDriver_Private.h */,
+				55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */,
+			);
+			name = "Private headers";
 			sourceTree = "<group>";
 		};
 		55DEBFEC1801DFF70089B940 /* Plug-in example */ = {
