@@ -94,7 +94,7 @@
 
 - (id)initWithPlugInURL:(NSURL *)URL
 {
-	return [self initWithPlugInCPath:[[URL path] fileSystemRepresentation]];
+	return [self initWithPlugInPath:[URL path]];
 }
 
 - (PPLibraryObject *)pluginAtIndex:(NSUInteger)idx
