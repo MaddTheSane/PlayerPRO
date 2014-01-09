@@ -55,8 +55,7 @@ static OSErr mainWave(void					*unused,
 {
 	OSErr	myErr = noErr;
 		
-	switch( order)
-	{
+	switch (order) {
 #if 0
 		case 'PLAY':
 		{
@@ -79,7 +78,7 @@ static OSErr mainWave(void					*unused,
 			break;
 #endif
 			
-		case 'IMPL':
+		case MADPlugImport:
 		{
 			void			*theSound;
 			long			lS, lE;
@@ -109,7 +108,7 @@ static OSErr mainWave(void					*unused,
 		}
 			break;
 			
-		case 'TEST':
+		case MADPlugTest:
 		{
 			char cPath[PATH_MAX] = {0};
 			CFURLGetFileSystemRepresentation(AlienFileRef, true, (unsigned char*)cPath, PATH_MAX);
@@ -120,7 +119,7 @@ static OSErr mainWave(void					*unused,
 				myErr = MADNeedMemory;
 			} else {
 				iRead(inOutBytes, AlienPtr, iFileRef);
-				myErr = TestWAV( (PCMWavePtr) AlienPtr);
+				myErr = TestWAV((PCMWavePtr)AlienPtr);
 				free(AlienPtr);
 			}
 			iClose(iFileRef);

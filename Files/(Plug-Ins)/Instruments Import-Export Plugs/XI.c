@@ -139,44 +139,35 @@ static OSErr mainXI(void		*unused,
 	
 	char *file = NULL;
 	char *fileName = NULL;
-	do {
-		char *longStr = NULL;
-		CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
-		longStr = malloc(pathLen);
-		if (!longStr) {
-			return MADNeedMemory;
-		}
-		Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)longStr, pathLen);
-		if (!pathOK) {
-			free(longStr);
-			return MADReadingErr;
-		}
-		size_t StrLen = strlen(longStr);
-		file = realloc(longStr, ++StrLen);
-		if (!file) {
-			file = longStr;
-		}
-	} while (0);
-	do {
-		char *FileNameLong = NULL;
-		CFStringRef filenam = CFURLCopyLastPathComponent(AlienFileCFURL);
-		CFIndex filenamLen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(filenam), kCFStringEncodingMacRoman);
-		filenamLen *= 2;
-		size_t filenamshortlen = 0;
-		FileNameLong = malloc(filenamLen);
-		CFStringGetCString(filenam, FileNameLong, filenamLen, kCFStringEncodingMacRoman);
-		CFRelease(filenam);
-		filenamshortlen = strlen(FileNameLong);
-		fileName = realloc(FileNameLong, ++filenamshortlen);
-		if (!fileName) {
-			fileName = FileNameLong;
-			break;
-		}
-	} while (0);
 	
-	switch (order)
-	{
-		case 'IMPL':
+	char *longStr = NULL;
+	CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
+	longStr = malloc(pathLen);
+	if (!longStr) {
+		return MADNeedMemory;
+	}
+	Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)longStr, pathLen);
+	if (!pathOK) {
+		free(longStr);
+		return MADReadingErr;
+	}
+	file = realloc(longStr, strlen(longStr) + 1);
+	if (!file)
+		file = longStr;
+
+	char *FileNameLong = NULL;
+	CFStringRef filenam = CFURLCopyLastPathComponent(AlienFileCFURL);
+	CFIndex filenamLen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(filenam), kCFStringEncodingMacRoman);
+	filenamLen *= 2;
+	FileNameLong = malloc(filenamLen);
+	CFStringGetCString(filenam, FileNameLong, filenamLen, kCFStringEncodingMacRoman);
+	CFRelease(filenam);
+	fileName = realloc(FileNameLong, strlen(FileNameLong) + 1);
+	if (!fileName)
+		fileName = FileNameLong;
+	
+	switch (order) {
+		case MADPlugImport:
 		{
 			Ptr				theXI;
 			XMPATCHHEADER	*pth;
@@ -355,7 +346,7 @@ static OSErr mainXI(void		*unused,
 		}
 			break;
 			
-		case 'TEST':
+		case MADPlugTest:
 		{
 			Ptr	theSound;
 			
@@ -378,7 +369,7 @@ static OSErr mainXI(void		*unused,
 		}
 			break;
 			
-		case 'EXPL':
+		case MADPlugExport:
 			iFileCreate(file, 'XI  ');
 			iFileRefI = iFileOpenWrite(file);
 			

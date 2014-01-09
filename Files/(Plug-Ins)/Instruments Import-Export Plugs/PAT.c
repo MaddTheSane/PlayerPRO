@@ -283,28 +283,24 @@ static OSErr mainPAT(void					*unused,
 	UNFILE	iFileRefI;
 	long	inOutCount;
 	char *file = NULL;
-	do {
-		char *longStr = NULL;
-		CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
-		longStr = malloc(pathLen);
-		if (!longStr) {
-			return MADNeedMemory;
-		}
-		Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)longStr, pathLen);
-		if (!pathOK) {
-			free(longStr);
-			return MADReadingErr;
-		}
-		size_t StrLen = strlen(longStr);
-		file = realloc(longStr, ++StrLen);
-		if (!file) {
-			file = longStr;
-		}
-	} while (0);
 	
-	switch(order)
-	{
-		case 'IMPL':
+	char *longStr = NULL;
+	CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
+	longStr = malloc(pathLen);
+	if (!longStr) {
+		return MADNeedMemory;
+	}
+	Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)longStr, pathLen);
+	if (!pathOK) {
+		free(longStr);
+		return MADReadingErr;
+	}
+	file = realloc(longStr, strlen(longStr) + 1);
+	if (!file)
+		file = longStr;
+	
+	switch (order) {
+		case MADPlugImport:
 		{
 			Ptr				theSound;
 			
@@ -331,7 +327,7 @@ static OSErr mainPAT(void					*unused,
 		}
 			break;
 			
-		case 'TEST':
+		case MADPlugTest:
 		{
 			Ptr	theSound;
 			
