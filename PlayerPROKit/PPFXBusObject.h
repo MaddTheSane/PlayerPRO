@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 
-@interface PPFXBusObject : NSObject <NSCopying>
+@interface PPFXBusObject : NSObject <NSCopying, NSCoding>
 @property (readonly) FXBus theBus;
 @property BOOL bypass;
 @property short copyId;
