@@ -199,10 +199,42 @@ end:
 @end
 
 @interface PPMusicObjectWrapper ()
+#if 0
+{
+	Byte		generalPan;					// General Panning
+	Byte		MultiChanNo;				// Number of chan for multichannel
+	Byte		MultiChan;					// MultiChannel per tracks?
+	int			EPitch;						// New Pitch
+	int			ESpeed;						// New Speed
+	Byte		XMLinear;					// Linear picth table?
+	Byte		MODMode;					// Limit pitch to MOD pitch table
+	Byte		showCopyright;				// Show infos at startup? true or false
+	Byte		generalPitch;				// General Pitch
+	Byte		generalSpeed;				// General Speed
+	Byte		generalVol;					// Software general volume
+	Byte		numPat;						// Patterns number
+	Byte		numChn;						// Channels number
+	Byte 		numPointers;				// Partition length
+	Byte		numInstru;					// Instruments number
+	Byte		numSamples;					// Samples number
+	Byte		oPointers[MAXPOINTER];		// Partition : Patterns ID List
+	short		speed;						// Default speed
+	short		tempo;						// Default tempo
+	Byte		chanPan[MAXTRACK];			// Channel settings, from 0 to 256
+	Byte		chanVol[MAXTRACK];			// Channel Volume, from 0 to 64
+	
+	int			globalEffect[10];			// Global Effects IDs
+	BOOL		globalFXActive;				// Global FX Active?
+	
+	int			chanEffect[MAXTRACK][4];	// Channel Effect IDs
+	FXBus		chanBus[MAXTRACK];
+}
+#endif
 @property (readwrite) OSType madType;
-@property (strong, readwrite) NSFileWrapper *musicWrapper;
+@property (readwrite, strong) NSFileWrapper *musicWrapper;
 @property (readwrite, strong) NSMutableArray *instruments;
 @property (readwrite, strong) NSMutableArray *patterns;
+@property (readwrite, strong) NSMutableArray *buses;
 - (void)syncMusicDataTypes;
 @end
 
