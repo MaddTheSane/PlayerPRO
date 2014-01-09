@@ -39,8 +39,8 @@ extern int	cmsDecided, wVolfract;
  */
 static void Init(void)
 {
-	bzero(rgppsiIns, sizeof(rgppsiIns));
-	bzero(rgpsiDrum, sizeof(rgpsiDrum));
+	memset(rgppsiIns, 0, sizeof(rgppsiIns));
+	memset(rgpsiDrum, 0, sizeof(rgpsiDrum));
 }
 
 #ifdef QD_HEADERS_ARE_PRIVATE

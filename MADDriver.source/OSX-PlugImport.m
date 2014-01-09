@@ -246,7 +246,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 							inMADDriver->ThePlug[i] = newInfo;
 							inMADDriver->ThePlug[i].version = CFBundleGetVersionNumber(tempBundle);
 							//strcpy(inMADDriver->ThePlug[i].type, FillPlug->type);
-							bzero(FillPlug, sizeof(PlugInfo));
+							memset(FillPlug, 0, sizeof(PlugInfo));
 							//NSLog(@"Using %@ (Newer than previous)", tempBundle);
 							return true;
 						} else {
@@ -255,7 +255,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 						}
 					} else {
 						//NSLog(@"NOT using %@ (Not newer than previous)", tempBundle);
-						bzero(FillPlug, sizeof(PlugInfo));
+						memset(FillPlug, 0, sizeof(PlugInfo));
 						return false;
 					}
 				}
@@ -272,7 +272,7 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 	}
 badplug:
 	NSLog(@"PlayerPROCore: Error with plug-in %@", tempBundle);
-	bzero(FillPlug, sizeof(PlugInfo));
+	memset(FillPlug, 0, sizeof(PlugInfo));
 	return false;
 }
 

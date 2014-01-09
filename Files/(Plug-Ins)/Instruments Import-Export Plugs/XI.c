@@ -59,7 +59,7 @@ static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 	
 	firstSample = curIns->firstSample;
 	
-	bzero(curIns, sizeof(InstrData));
+	memset(curIns, 0, sizeof(InstrData));
 	curIns->firstSample = firstSample;
 	
 #if 0
@@ -184,7 +184,7 @@ static OSErr mainXI(void		*unused,
 				else {
 					MAD2KillInstrument(InsHeader, sample);
 					
-					bzero(InsHeader->name, sizeof(InsHeader->name));
+					memset(InsHeader->name, 0, sizeof(InsHeader->name));
 					
 					for (x = 0; x < 32; x++) {
 						if (fileName[x] == '\0') {

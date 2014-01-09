@@ -403,7 +403,7 @@ int PutpatternsPtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init
 		/******************************************/
 		
 		for (cDiv = 64; cDiv--;) {					/** For each division in a pattern **/
-			bzero(pwNote, ipwMax * sizeof(unsigned)); /** Clear next notes **/
+			memset(pwNote, 0, ipwMax * sizeof(unsigned)); /** Clear next notes **/
 			
 			for (iT = wMaxchan; iT--; ) { 			/** With any currently playing notes **/
 				if (pwLen[iT]) {

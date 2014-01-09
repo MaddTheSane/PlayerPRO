@@ -25,13 +25,14 @@ static OSStatus CAAudioCallback(void                            *inRefCon,
 			case 8:
 				memset(theRec->CABuffer, 0x80, theRec->BufSize);
 				break;
-							
+				
+			default:
 			case 16:
-				bzero(theRec->CABuffer, theRec->BufSize);
+				memset(theRec->CABuffer, 0, theRec->BufSize);
 				break;
 		}
 	}
-
+	
 	size_t remaining, len;
 	AudioBuffer *abuf;
 	void *ptr;
@@ -51,7 +52,7 @@ static OSStatus CAAudioCallback(void                            *inRefCon,
 							
 						case 16:
 						default:
-							bzero(theRec->CABuffer, theRec->BufSize);
+							memset(theRec->CABuffer, 0, theRec->BufSize);
 							break;
 					}
 				}
@@ -69,7 +70,7 @@ static OSStatus CAAudioCallback(void                            *inRefCon,
     }
 	
 	/*if (BuffSize - pos > tickadd)	theRec->OscilloWavePtr = theRec->CABuffer + (int)pos;
-	else */
+	 else */
 	theRec->OscilloWavePtr = theRec->CABuffer;
 	return noErr;
 }
