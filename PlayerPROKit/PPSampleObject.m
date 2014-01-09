@@ -163,7 +163,7 @@
 - (id)copyWithZone:(NSZone *)zone
 {
 	PPSampleObject *obj = nil;
-	if ((obj = [[PPSampleObject allocWithZone:zone] init])) {
+	if ((obj = [[[self class] allocWithZone:zone] init])) {
 		obj.name = name;
 		obj.data = data;
 		obj.amplitude = theSample.amp;
