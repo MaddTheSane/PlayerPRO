@@ -14,7 +14,6 @@
 
 @interface PPInstrumentObject : NSObject <NSCopying, NSFastEnumeration>
 {
-	NSString		*name;				// instrument name
 	NSInteger		number;				// Instrument number
 }
 
