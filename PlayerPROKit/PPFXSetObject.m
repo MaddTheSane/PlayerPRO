@@ -19,6 +19,9 @@
 - (id)initWithFXSet:(FXSets*)theSett
 {
 	if (self = [super init]) {
+		if (!theSett) {
+			return nil;
+		}
 		theSet = *theSett;
 		_sets = [[NSMutableArray alloc] initWithCapacity:100];
 		for (int i = 0; i < 100; i++) {

@@ -22,4 +22,47 @@
 	return self;
 }
 
+- (BOOL)bypass
+{
+	return theBus.ByPass;
+}
+
+- (void)setBypass:(BOOL)bypass
+{
+	[self willChangeValueForKey:@"bypass"];
+	theBus.ByPass = bypass;
+	[self didChangeValueForKey:@"bypass"];
+}
+
+- (short)copyId
+{
+	return theBus.copyId;
+}
+
+- (void)setCopyId:(short)copyId
+{
+	[self willChangeValueForKey:@"copyId"];
+	theBus.copyId = copyId;
+	[self didChangeValueForKey:@"copyId"];
+}
+
+- (BOOL)isActive
+{
+	return theBus.Active;
+}
+
+- (void)setActive:(BOOL)active
+{
+	[self willChangeValueForKey:@"active"];
+	theBus.Active = active;
+	[self didChangeValueForKey:@"active"];
+}
+
+#pragma mark NSCoding protocol
+
+- (id)copyWithZone:(NSZone *)zone
+{
+	return [[[self class] allocWithZone:zone] initWithFXBus:&theBus];
+}
+
 @end
