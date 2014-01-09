@@ -8,6 +8,13 @@
 
 #import "PPFXSetObject.h"
 
+#define kPPTrack @"PlayerPROKit FXSets Track"
+#define kPPIdentifier @"PlayerPROKit FXSets Identifier"
+#define kPPFXIdentifier @"PlayerPROKit FXSets FXIdentifier"
+#define kPPArgumentNumbers @"PlayerPROKit FXSets Argument Numbers"
+#define kPPValues @"PlayerPROKit FXSets Values"
+#define kPPName @"PlayerPROKit FXSets Name"
+
 @interface PPFXSetObject ()
 @property (readwrite, strong) NSMutableArray *sets;
 - (void)writeBackToStruct;
@@ -142,6 +149,32 @@
 	}
 	
 	return new;
+}
+
+#pragma mark NSCoding protocol
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	if (self = [super init]) {
+		self.name = [aDecoder decodeObjectForKey:kPPName];
+		self.fxIdentifier = [aDecoder decodeIntForKey:kPPFXIdentifier];
+		self.sets = [(NSArray*)[aDecoder decodeObjectForKey:kPPValues] mutableCopy];
+		self.track = [(NSNumber*)[aDecoder decodeObjectForKey:kPPTrack] shortValue];
+		self.identifier = [(NSNumber*)[aDecoder decodeObjectForKey:kPPIdentifier] shortValue];
+		self.argumentNumbers = [(NSNumber*)[aDecoder decodeObjectForKey:kPPArgumentNumbers] shortValue];
+		[self writeBackToStruct];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+	[aCoder encodeObject:_name forKey:kPPName];
+	[aCoder encodeObject:_sets forKey:kPPValues];
+	[aCoder encodeInt:theSet.FXID forKey:kPPFXIdentifier];
+	[aCoder encodeObject:@(theSet.track) forKey:kPPTrack];
+	[aCoder encodeObject:@(theSet.noArg) forKey:kPPArgumentNumbers];
+	[aCoder encodeObject:@(theSet.id) forKey:kPPIdentifier];
 }
 
 @end

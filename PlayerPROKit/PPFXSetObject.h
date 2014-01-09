@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 
-@interface PPFXSetObject : NSObject <NSCopying>
+@interface PPFXSetObject : NSObject <NSCopying, NSCoding>
 @property (readonly) FXSets theSet;
 @property short track;
 @property short identifier;
