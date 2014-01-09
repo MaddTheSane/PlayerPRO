@@ -24,7 +24,6 @@
 
 @interface PPSampleObject ()
 @property sData theSample;
-
 @end
 
 @implementation PPSampleObject
@@ -32,32 +31,32 @@
 @synthesize name;
 @synthesize data;
 
-- (void)setAmplitude:(unsigned char)amplitude
+- (void)setAmplitude:(Byte)amplitude
 {
 	theSample.amp = amplitude;
 }
 
-- (unsigned char)amplitude
+- (Byte)amplitude
 {
 	return theSample.amp;
 }
 
-- (void)setLoopSize:(SInt32)loopSize
+- (void)setLoopSize:(int)loopSize
 {
 	theSample.loopSize = loopSize;
 }
 
-- (SInt32)loopSize
+- (int)loopSize
 {
 	return theSample.loopSize;
 }
 
-- (void)setLoopBegin:(SInt32)loopBegin
+- (void)setLoopBegin:(int)loopBegin
 {
 	theSample.loopBeg = loopBegin;
 }
 
-- (SInt32)loopBegin
+- (int)loopBegin
 {
 	return theSample.loopBeg;
 }
@@ -72,12 +71,12 @@
 	return theSample.c2spd;
 }
 
-- (void)setLoopType:(unsigned char)loopType
+- (void)setLoopType:(Byte)loopType
 {
 	theSample.loopType = loopType;
 }
 
-- (unsigned char)loopType
+- (Byte)loopType
 {
 	return theSample.loopType;
 }
@@ -92,12 +91,12 @@
 	return theSample.relNote;
 }
 
-- (unsigned char)volume
+- (Byte)volume
 {
 	return theSample.vol;
 }
 
-- (void)setVolume:(unsigned char)avolume
+- (void)setVolume:(Byte)avolume
 {
 	theSample.vol = avolume;
 }
@@ -137,7 +136,7 @@
 			theSample.loopSize = 0;
 			theSample.relNote = 0;
 		} else {
-			memcpy(&theSample, theData, sizeof(sData));
+			theSample = *theData;
 			data = [[NSData alloc] initWithBytes:theData->data length:theData->size];
 			name = [[NSString alloc] initWithCString:theData->name encoding:NSMacOSRomanStringEncoding];
 		}
@@ -195,35 +194,35 @@
 {
 	[aCoder encodeObject:name forKey:NAMEKEY];
 	[aCoder encodeObject:data forKey:DATAKEY];
-	[aCoder encodeObject:@(theSample.loopBeg) forKey:LOOPBEGINKEY];
-	[aCoder encodeObject:@(theSample.loopSize) forKey:LOOPSIZEKEY];
+	[aCoder encodeInt:theSample.loopBeg forKey:LOOPBEGINKEY];
+	[aCoder encodeInt:theSample.loopSize forKey:LOOPSIZEKEY];
 	[aCoder encodeObject:@(theSample.vol) forKey:VOLUMEKEY];
 	[aCoder encodeObject:@(theSample.c2spd) forKey:C2SPDKEY];
 	[aCoder encodeObject:@(theSample.loopType) forKey:LOOPTYPEKEY];
 	[aCoder encodeObject:@(theSample.amp) forKey:AMPLITUDEKEY];
 	[aCoder encodeObject:@(theSample.relNote) forKey:RELATIVENOTEKEY];
-	[aCoder encodeObject:@(self.stereo) forKey:STEREOKEY];
+	[aCoder encodeBool:self.stereo forKey:STEREOKEY];
 	
-	[aCoder encodeObject:@(self.sampleIndex) forKey:SAMPLEINDEXKEY];
-	[aCoder encodeObject:@(self.instrumentIndex) forKey:INSTRUMENTINDEXKEY];
+	[aCoder encodeInteger:self.sampleIndex forKey:SAMPLEINDEXKEY];
+	[aCoder encodeInteger:self.instrumentIndex forKey:INSTRUMENTINDEXKEY];
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
-		self.name = [aDecoder decodeObjectForKey:NAMEKEY];
-		self.data = [aDecoder decodeObjectForKey:DATAKEY];
-		theSample.loopBeg = [[aDecoder decodeObjectForKey:LOOPBEGINKEY] intValue];
-		theSample.loopSize = [[aDecoder decodeObjectForKey:LOOPSIZEKEY] intValue];
+		name = [aDecoder decodeObjectForKey:NAMEKEY];
+		data = [aDecoder decodeObjectForKey:DATAKEY];
+		theSample.loopBeg = [aDecoder decodeIntForKey:LOOPBEGINKEY];
+		theSample.loopSize = [aDecoder decodeIntForKey:LOOPSIZEKEY];
 		theSample.vol = [[aDecoder decodeObjectForKey:VOLUMEKEY] unsignedCharValue];
 		theSample.c2spd = [[aDecoder decodeObjectForKey:C2SPDKEY] unsignedShortValue];
 		theSample.loopType = [[aDecoder decodeObjectForKey:LOOPTYPEKEY] unsignedCharValue];
 		theSample.amp = [[aDecoder decodeObjectForKey:AMPLITUDEKEY] unsignedCharValue];
 		theSample.relNote = [[aDecoder decodeObjectForKey:RELATIVENOTEKEY] charValue];
-		self.stereo = [[aDecoder decodeObjectForKey:STEREOKEY] boolValue];
+		self.stereo = [aDecoder decodeBoolForKey:STEREOKEY];
 		
-		self.sampleIndex = [[aDecoder decodeObjectForKey:SAMPLEINDEXKEY] shortValue];
-		self.instrumentIndex = [[aDecoder decodeObjectForKey:INSTRUMENTINDEXKEY] shortValue];
+		self.sampleIndex = [aDecoder decodeIntegerForKey:SAMPLEINDEXKEY];
+		self.instrumentIndex = [aDecoder decodeIntegerForKey:INSTRUMENTINDEXKEY];
 	}
 	return self;
 }

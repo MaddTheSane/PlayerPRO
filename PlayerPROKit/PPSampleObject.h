@@ -10,20 +10,20 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 
 @interface PPSampleObject : NSObject <NSCopying, NSCoding>
-@property (readwrite) short sampleIndex;
-@property (readwrite) short instrumentIndex;
+@property (readwrite) NSInteger sampleIndex;
+@property (readwrite) NSInteger instrumentIndex;
 
 - (id)init;
 - (id)initWithsData:(sData *)theData;
 - (sData *)createSData;
 
-@property (readonly) SInt32 dataSize;
-@property SInt32 loopBegin;
-@property SInt32 loopSize;
-@property unsigned char volume;
+@property (readonly) SInt32 dataSize DEPRECATED_ATTRIBUTE;
+@property int loopBegin;
+@property int loopSize;
+@property Byte volume;
 @property unsigned short c2spd;
-@property unsigned char loopType;
-@property unsigned char amplitude;
+@property Byte loopType;
+@property Byte amplitude;
 @property char relativeNote;
 @property (copy) NSString *name;
 @property (getter = isStereo) BOOL stereo;
