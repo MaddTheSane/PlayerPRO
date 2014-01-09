@@ -14,5 +14,4 @@
 }
 
 @property InstrData theInstrument;
-- (id)initWithMusicStruct:(MADMusic*)mus musicObject:(PPMusicObjectWrapper*)musObj instrumentIndex:(short)insIdx;
 @end

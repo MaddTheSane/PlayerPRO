@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 
-@interface PPMadCommandObject : NSObject <NSCopying>
+@interface PPMadCommandObject : NSObject <NSCopying, NSCoding>
 
 - (id)initWithCmd:(Cmd *)theCmd;
 

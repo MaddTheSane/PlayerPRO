@@ -292,7 +292,7 @@ end:
 	self.madType = currentMusic->header->MAD;
 	self.instruments = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU];
 	for (int i = 0; i < MAXINSTRU; i++) {
-		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusicStruct:currentMusic musicObject:self instrumentIndex:i];
+		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:self instrumentIndex:i];
 		[self.instruments addObject:insObj];
 	}
 	self.patterns = [[NSMutableArray alloc] initWithCapacity:currentMusic->header->numPat];

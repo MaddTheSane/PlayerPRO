@@ -257,57 +257,24 @@
 		}
 		_theMus = mus;
 		
-		InstrData *tempData = &mus._currentMusic->fid[insIdx];
-		memcpy(&theInstrument, tempData, sizeof(InstrData));
-		samples = [[NSMutableArray alloc] initWithCapacity:tempData->numSamples];
-		{
-			int sDataCount = tempData->numSamples + tempData->firstSample;
-			
-			int i = 0;
-			for (i = tempData->firstSample; i < sDataCount; i++) {
-				//TODO:
-				PPSampleObject *sObj = nil;//[[PPSampleObject alloc] initWithsData:mus->sample[i]];
-				sObj.sampleIndex = i % MAXSAMPLE;
-				sObj.instrumentIndex = insIdx;
-				[samples addObject:sObj];
-			}
-		}
-		self.name = [[NSString alloc] initWithCString:tempData->name encoding:NSMacOSRomanStringEncoding];
-		theInstrument.no = number = insIdx;/*tempData->no;*/
-		//In case it's malformed, i.e. from CreateFreeMADK()
-		theInstrument.firstSample = MAXSAMPLE * insIdx; /*tempData->firstSample;*/
-	}
-	return self;
-}
-
-- (id)initWithMusicStruct:(MADMusic*)mus musicObject:(PPMusicObjectWrapper*)musObj instrumentIndex:(short)insIdx
-{
-	if (!mus || !musObj) {
-		return nil;
-	}
-	if (self = [super init]) {
-		_theMus = musObj;
-		
-		theInstrument = mus->fid[insIdx];
+		theInstrument = mus._currentMusic->fid[insIdx];
 		samples = [[NSMutableArray alloc] initWithCapacity:theInstrument.numSamples];
 		{
 			int sDataCount = theInstrument.numSamples + theInstrument.firstSample;
 			
 			for (int i = theInstrument.firstSample; i < sDataCount; i++) {
-				PPSampleObject *sObj = [[PPSampleObject alloc] initWithsData:mus->sample[i]];
+				//TODO:
+				PPSampleObject *sObj = [[PPSampleObject alloc] initWithsData:mus._currentMusic->sample[i]];
 				sObj.sampleIndex = i % MAXSAMPLE;
 				sObj.instrumentIndex = insIdx;
 				[samples addObject:sObj];
 			}
 		}
-		
 		self.name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
 		theInstrument.no = number = insIdx;/*tempData->no;*/
 		//In case it's malformed, i.e. from CreateFreeMADK()
 		theInstrument.firstSample = MAXSAMPLE * insIdx; /*tempData->firstSample;*/
-
 	}
-	
 	return self;
 }
 

@@ -10,6 +10,10 @@
 #import "PPPatternObject_PPKPrivate.h"
 #import "PPMusicObject_PPKPrivate.h"
 
+#define kPPPatternName @"PlayerPROKit Pattern Name"
+#define kPPPatternCommands @"PlayerPROKit Pattern Commands"
+#define kPPPatternIndex @"PlayerPROKit Pattern Index"
+
 @implementation PPPatternObject
 @synthesize commands;
 @synthesize index;
@@ -32,6 +36,23 @@
 		self.patternName = [[NSString alloc] initWithCString:patternHeader.name encoding:NSMacOSRomanStringEncoding];
 	}
 	return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	if (self = [super init]) {
+		self.patternName = [aDecoder decodeObjectForKey:kPPPatternName];
+		self.commands = [(NSArray*)[aDecoder decodeObjectForKey:kPPPatternCommands] mutableCopy];
+		index = [aDecoder decodeIntegerForKey:kPPPatternIndex];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+	[aCoder encodeObject:_patternName forKey:kPPPatternName];
+	[aCoder encodeObject:commands forKey:kPPPatternCommands];
+	[aCoder encodeInteger:index forKey:kPPPatternIndex];
 }
 
 @end
