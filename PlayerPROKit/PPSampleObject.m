@@ -33,7 +33,9 @@
 
 - (void)setAmplitude:(Byte)amplitude
 {
+	[self willChangeValueForKey:@"amplitude"];
 	theSample.amp = amplitude;
+	[self didChangeValueForKey:@"amplitude"];
 }
 
 - (Byte)amplitude
@@ -43,7 +45,9 @@
 
 - (void)setLoopSize:(int)loopSize
 {
+	[self willChangeValueForKey:@"loopSize"];
 	theSample.loopSize = loopSize;
+	[self didChangeValueForKey:@"loopSize"];
 }
 
 - (int)loopSize
@@ -53,7 +57,9 @@
 
 - (void)setLoopBegin:(int)loopBegin
 {
+	[self willChangeValueForKey:@"loopBegin"];
 	theSample.loopBeg = loopBegin;
+	[self didChangeValueForKey:@"loopBegin"];
 }
 
 - (int)loopBegin
@@ -63,7 +69,9 @@
 
 - (void)setC2spd:(unsigned short)c2spd
 {
+	[self willChangeValueForKey:@"c2spd"];
 	theSample.c2spd = c2spd;
+	[self didChangeValueForKey:@"c2spd"];
 }
 
 - (unsigned short)c2spd
@@ -73,7 +81,9 @@
 
 - (void)setLoopType:(Byte)loopType
 {
+	[self willChangeValueForKey:@"loopType"];
 	theSample.loopType = loopType;
+	[self didChangeValueForKey:@"loopType"];
 }
 
 - (Byte)loopType
@@ -83,7 +93,9 @@
 
 - (void)setRelativeNote:(char)relativeNote
 {
+	[self willChangeValueForKey:@"relativeNote"];
 	theSample.relNote = relativeNote;
+	[self didChangeValueForKey:@"relativeNote"];
 }
 
 - (char)relativeNote
@@ -98,7 +110,9 @@
 
 - (void)setVolume:(Byte)avolume
 {
+	[self willChangeValueForKey:@"volume"];
 	theSample.vol = avolume;
+	[self didChangeValueForKey:@"volume"];
 }
 
 - (BOOL)isStereo
@@ -108,7 +122,9 @@
 
 - (void)setStereo:(BOOL)astereo
 {
+	[self willChangeValueForKey:@"stereo"];
 	theSample.stereo = astereo ? TRUE : FALSE;
+	[self didChangeValueForKey:@"stereo"];
 }
 
 - (SInt32)dataSize
@@ -186,7 +202,7 @@
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@: size: %ld stereo: %@ Loop type: %d size: %ld volume: %d amp: %d", name, (long)self.dataSize, self.stereo ? @"Yes": @"No", self.loopType, (long)self.loopSize, self.volume, self.amplitude];
+	return [NSString stringWithFormat:@"%@: size: %ld stereo: %@ Loop type: %d start: %d size: %d volume: %d amp: %d", name, (long)[data length], self.stereo ? @"Yes": @"No", self.loopType, self.loopBegin, self.loopSize, self.volume, self.amplitude];
 }
 
 #pragma mark NSCoding implementation
