@@ -441,7 +441,7 @@
             </items>
         </menu>
         <customObject id="373" customClass="NSFontManager"/>
-        <customObject id="811" customClass="PPApp_AppDelegate">
+        <customObject id="811" userLabel="App Delegate" customClass="PPApp_AppDelegate">
             <connections>
                 <outlet property="aboutPlugInMenu" destination="1311" id="1313"/>
                 <outlet property="instrumentExportMenu" destination="1307" id="1309"/>

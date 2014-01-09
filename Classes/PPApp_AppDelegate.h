@@ -38,7 +38,7 @@ extern __weak PPLibrary *globalMadLib;
 	BOOL isQuitting;
 }
 
-@property (weak) IBOutlet NSWindow *window;
+@property (weak) IBOutlet NSPanel *window;
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)openFile:(id)sender;
 

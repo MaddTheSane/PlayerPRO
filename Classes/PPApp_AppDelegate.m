@@ -334,9 +334,6 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	isQuitting = NO;
 	PPRegisterDebugFunc(CocoaDebugStr);
 	self.madLib = [[PPLibrary alloc] init];
-
-	//[self addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionNew context:NULL];
-	//self.paused = YES;
 	
 	filterHandler = [[PPFilterPlugHandler alloc] init];
 	digitalHandler = [[PPDigitalPlugHandler alloc] init];
