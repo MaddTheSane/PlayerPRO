@@ -62,52 +62,6 @@ static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 	memset(curIns, 0, sizeof(InstrData));
 	curIns->firstSample = firstSample;
 	
-#if 0
-	for (i = 0; i < 32; i++) curIns->name[i]	= 0;
-	curIns->type		= 0;
-	curIns->numSamples	= 0;
-	
-	/**/
-	
-#if 1
-	memset(curIns->what, 0, sizeof(curIns->what));
-	memset(curIns->volEnv, 0, sizeof(curIns->volEnv));
-	memset(curIns->pannEnv, 0, sizeof(curIns->pannEnv));
-	memset(curIns->pitchEnv, 0, sizeof(curIns->pitchEnv));
-#else
-	for (i = 0; i < 96; i++) curIns->what[ i]		= 0;
-	
-	for (i = 0; i < 12; i++)
-	{
-		curIns->volEnv[ i].pos		= 0;
-		curIns->volEnv[ i].val		= 0;
-		
-		curIns->pannEnv[ i].pos	= 0;
-		curIns->pannEnv[ i].val	= 0;
-		
-		curIns->pitchEnv[ i].pos	= 0;
-		curIns->pitchEnv[ i].val	= 0;
-		
-	}
-#endif
-	curIns->volSize		= 0;
-	curIns->pannSize	= 0;
-	
-	curIns->volSus		= 0;
-	curIns->volBeg		= 0;
-	curIns->volEnd		= 0;
-	
-	curIns->pannSus		= 0;
-	curIns->pannBeg		= 0;
-	curIns->pannEnd		= 0;
-	
-	curIns->volType		= 0;
-	curIns->pannType	= 0;
-	
-	curIns->volFade		= 0;
-	curIns->vibDepth	= 0;
-	curIns->vibRate		= 0;
-#endif
 	return noErr;
 }
 
