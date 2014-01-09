@@ -153,6 +153,8 @@ static OSErr mainMINs(void			*unused,
 					CFReadStreamRead(readStream, theSound, inOutCount);
 					ByteswapInstrument((InstrData*)theSound);
 					myErr = TestMINS((InstrData*)theSound);
+					free(theSound);
+					theSound = NULL;
 				}
 				
 				CFReadStreamClose(readStream);
