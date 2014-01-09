@@ -76,6 +76,13 @@
 }
 #endif
 
+#pragma mark NSFastEnumeration protocol
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len
+{
+	return [self.commands countByEnumeratingWithState:state objects:buffer count:len];
+}
+
+#pragma mark NSCoding protocol
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {

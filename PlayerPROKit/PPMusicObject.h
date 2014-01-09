@@ -79,6 +79,8 @@
 //Load a MAD bundle from a URL
 - (instancetype)initWithURL:(NSURL *)url;
 
+- (OSErr)createCopyMusicToURL:(NSURL *)tosave;
+
 + (OSErr)info:(PPInfoRec *)theInfo fromTrackerAtURL:(NSURL *)thURL;
 
 #pragma mark Document-based code

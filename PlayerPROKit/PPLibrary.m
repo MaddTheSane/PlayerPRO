@@ -113,11 +113,6 @@
 		MADDisposeLibrary(theLibrary);
 }
 
-- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len
-{
-	return [trackerLibs countByEnumeratingWithState:state objects:buffer count:len];
-}
-
 - (OSErr)identifyFileAtPath:(NSString*)apath type:(char*)atype
 {
 	return [self identifyFileAtURL:[NSURL fileURLWithPath:apath] type:atype];
@@ -138,5 +133,11 @@
 	return MADMusicInfoCFURL(theLibrary, atype, (__bridge CFURLRef)apath, infoRec);
 }
 
+#pragma mark NSFastEnumeration protocol
+
+- (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len
+{
+	return [trackerLibs countByEnumeratingWithState:state objects:buffer count:len];
+}
 
 @end

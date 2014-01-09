@@ -98,9 +98,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	PPMadCommandObject *ret = [[PPMadCommandObject alloc] initWithCmd:&theCommand];
-
-	return ret;
+	return [[[self class] alloc] initWithCmd:&theCommand];
 }
 
 - (void)resetCommand;
@@ -124,6 +122,8 @@
 {
 	return [NSString stringWithFormat:@"ins: %u note: %u cmd: %u arg: %u vol: %u", theCommand.ins, theCommand.note, theCommand.cmd, theCommand.arg, theCommand.vol];
 }
+
+#pragma mark NSCoding protocol
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {

@@ -332,7 +332,6 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	isQuitting = NO;
-	srandom(time(NULL) & 0xffffffff);
 	PPRegisterDebugFunc(CocoaDebugStr);
 	self.madLib = [[PPLibrary alloc] init];
 

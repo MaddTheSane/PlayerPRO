@@ -11,7 +11,7 @@
 #import <PlayerPROKit/PPMadCommandObject.h>
 #import <PlayerPROKit/PPMusicObject.h>
 
-@interface PPPatternObject : NSObject <NSCoding>
+@interface PPPatternObject : NSObject <NSCoding, NSFastEnumeration>
 @property (readonly) NSInteger index;
 @property (copy) NSString *patternName;
 @property (readonly, weak) PPMusicObjectWrapper *musicWrapper;

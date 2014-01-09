@@ -252,7 +252,20 @@ end:
 - (id)copyWithZone:(NSZone *)zone
 {
 	[self syncMusicDataTypes];
-	return [[[self class] alloc] initFromMusicObject:self];
+	PPMusicObjectWrapper *copyWrap = [[[self class] alloc] init];
+	if (self.filePath) {
+		copyWrap.filePath = self.filePath;
+	}
+	{
+		copyWrap.madInfo = madInfo;
+		copyWrap.internalFileName = internalFileName;
+		copyWrap.madAuthor = _madAuthor;
+		copyWrap.madType = madType;
+		copyWrap.instruments = [[NSMutableArray alloc] initWithArray:_instruments copyItems:YES];
+		copyWrap.patterns = [[NSMutableArray alloc] initWithArray:_patterns copyItems:YES];
+		[copyWrap syncMusicDataTypes];
+	}
+	return copyWrap;
 }
 
 - (NSString*)internalFileName
@@ -392,6 +405,16 @@ end:
 }
 
 - (OSErr)saveMusicToURL:(NSURL *)tosave
+{
+	if (![self.musicWrapper writeToURL:tosave options:NSFileWrapperWritingWithNameUpdating originalContentsURL:self.filePath error:NULL]) {
+		return MADWritingErr;
+	} else {
+		self.filePath = tosave;
+		return noErr;
+	}
+}
+
+- (OSErr)createCopyMusicToURL:(NSURL *)tosave
 {
 	if (![self.musicWrapper writeToURL:tosave options:NSFileWrapperWritingWithNameUpdating originalContentsURL:self.filePath error:NULL]) {
 		return MADWritingErr;
