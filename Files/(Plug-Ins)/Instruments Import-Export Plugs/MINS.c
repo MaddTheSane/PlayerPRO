@@ -201,7 +201,7 @@ static OSErr mainMINs(void			*unused,
 					
 					memcpy(&toWrite, copyData, sizeof(sData32));
 					toWrite.data = 0;
-					free(copyData);
+					
 					inOutCount = sizeof(sData32);
 					CFWriteStreamWrite(writeStream, (UInt8*)&toWrite, inOutCount);
 					
