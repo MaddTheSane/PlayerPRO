@@ -34,17 +34,23 @@
 
 - (OSErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett
 {
+	[self willChangeValueForKey:@"driverSettings"];
 	return MADChangeDriverSettings(&theSett, &theRec);
+	[self didChangeValueForKey:@"driverSettings"];
 }
 
 - (void)beginExport
 {
+	[self willChangeValueForKey:@"isExporting"];
 	MADBeginExport(theRec);
+	[self didChangeValueForKey:@"isExporting"];
 }
 
 - (void)endExport
 {
+	[self willChangeValueForKey:@"isExporting"];
 	MADEndExport(theRec);
+	[self didChangeValueForKey:@"isExporting"];
 }
 
 - (BOOL)isExporting
@@ -54,10 +60,16 @@
 
 - (void)setIsExporting:(BOOL)isExp
 {
+	if (isExp == MADIsExporting(theRec)) {
+		return;
+	}
+	
+	[self willChangeValueForKey:@"isExporting"];
 	if (isExp)
-		[self beginExport];
+		MADBeginExport(theRec);
 	else
-		[self endExport];
+		MADEndExport(theRec);
+	[self didChangeValueForKey:@"isExporting"];
 }
 
 - (OSErr)getMusicStatusWithCurrentTime:(long*)curTime totalTime:(long*)totTime
@@ -87,10 +99,12 @@
 	if (iErr) {
 		return; //This will probably be a thrown exception in the future
 	}
+	[self willChangeValueForKey:@"musicPosition"];
 	iErr = MADSetMusicStatus(theRec, 0, tempTotV, curV);
 	if (iErr) {
-		return; //This will probably be a thrown exception in the future
+		//return; //This will probably be a thrown exception in the future
 	}
+	[self didChangeValueForKey:@"musicPosition"];
 }
 
 - (void)cleanDriver
