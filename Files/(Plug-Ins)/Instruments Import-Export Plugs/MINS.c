@@ -33,7 +33,6 @@ static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 	});
 	
 	firstSample = curIns->firstSample;
-	
 	memset(curIns, 0, sizeof(InstrData));
 	curIns->firstSample = firstSample;
 	
@@ -154,6 +153,8 @@ static OSErr mainMINs(void			*unused,
 					CFReadStreamRead(readStream, theSound, inOutCount);
 					ByteswapInstrument((InstrData*)theSound);
 					myErr = TestMINS((InstrData*)theSound);
+					free(theSound);
+					theSound = NULL;
 				}
 				
 				CFReadStreamClose(readStream);

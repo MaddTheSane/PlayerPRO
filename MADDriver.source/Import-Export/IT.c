@@ -56,25 +56,22 @@ typedef struct ITPACK {
 static inline Byte _mm_read_UBYTE(char **samplePtr)
 {
 	Byte val = *((Byte*)*samplePtr);
-	
 	*samplePtr += 1;
-	
 	return val;
 }
 
 //TODO: byteswapping?
 static inline unsigned short ReadUS(char **samplePtr)
 {
-	unsigned short result=_mm_read_UBYTE(samplePtr);
+	unsigned short result = _mm_read_UBYTE(samplePtr);
 	result |= ((unsigned short)_mm_read_UBYTE(samplePtr)) << 8;
-	
 	return result;
 }
 
 
 /* unpack a 8bit IT packed sample */
 
-static uintptr_t read_itcompr8(ITPACK* status, Ptr *reader, Byte *sl_buffer, unsigned short count, unsigned short* incnt)
+static uintptr_t read_itcompr8(ITPACK* status, char **reader, Byte *sl_buffer, unsigned short count, unsigned short* incnt)
 {
 	Byte 				*dest=sl_buffer,*end=sl_buffer+count;
 	unsigned short 		x,y,needbits,havebits,new_count=0;
@@ -86,25 +83,25 @@ static uintptr_t read_itcompr8(ITPACK* status, Ptr *reader, Byte *sl_buffer, uns
 	//FIXME: Static analyzer says that this assignment may be garbage under certain circumstances.
 	buf = status->buf;
 	
-	while (dest<end) {
-		needbits=new_count?3:bits;
-		x=havebits=0;
+	while (dest < end) {
+		needbits = new_count ? 3 : bits;
+		x = havebits = 0;
 		while (needbits) {
 			// feed buffer
 			if (!bufbits) {
 				if((*incnt)--)
-					buf=_mm_read_UBYTE(reader);
+					buf = _mm_read_UBYTE(reader);
 				else
-					buf=0;
-				bufbits=8;
+					buf = 0;
+				bufbits = 8;
 			}
 			// get as many bits as necessary
-			y = needbits<bufbits?needbits:bufbits;
-			x|= (buf & ((1<<y)- 1))<<havebits;
-			buf>>=y;
-			bufbits-=y;
-			needbits-=y;
-			havebits+=y;
+			y = needbits < bufbits ? needbits : bufbits;
+			x |= (buf & ((1 << y)- 1)) << havebits;
+			buf >>= y;
+			bufbits -= y;
+			needbits -= y;
+			havebits += y;
 		}
 		if (new_count) {
 			new_count = 0;
@@ -113,22 +110,20 @@ static uintptr_t read_itcompr8(ITPACK* status, Ptr *reader, Byte *sl_buffer, uns
 			bits = x;
 			continue;
 		}
-		if (bits<7) {
-			if (x==(1<<(bits-1))) {
+		if (bits < 7) {
+			if (x == (1 << (bits - 1))) {
 				new_count = 1;
 				continue;
 			}
-		}
-		else if (bits<9) {
-			y = (0xff >> (9-bits)) - 4;
-			if ((x>y)&&(x<=y+8)) {
+		} else if (bits < 9) {
+			y = (0xff >> (9 - bits)) - 4;
+			if ((x > y) && (x <= y + 8)) {
 				if ((x-=y)>=bits)
 					x++;
 				bits = x;
 				continue;
 			}
-		}
-		else if (bits<10) {
+		} else if (bits < 10) {
 			if (x>=0x100) {
 				bits=x-0x100+1;
 				continue;
@@ -139,11 +134,11 @@ static uintptr_t read_itcompr8(ITPACK* status, Ptr *reader, Byte *sl_buffer, uns
 			return 0;
 		}
 		
-		if (bits<8) // extend sign
+		if (bits < 8) // extend sign
 			x = ((char)(x <<(8-bits))) >> (8-bits);
 		//	*(dest++)= (last+=x) << 8; // convert to 16 bit
 		
-		*(dest++)= (last+=x);
+		*(dest++) = (last += x);
 	}
 	status->bits = bits;
 	status->bufbits = bufbits;
@@ -153,7 +148,7 @@ static uintptr_t read_itcompr8(ITPACK* status, Ptr *reader, Byte *sl_buffer, uns
 }
 
 // unpack a 16bit IT packed sample
-static uintptr_t read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,unsigned short count,unsigned short* incnt)
+static uintptr_t read_itcompr16(ITPACK *status,Ptr *reader,short *sl_buffer,unsigned short count,unsigned short* incnt)
 {
 	short 			*dest=sl_buffer,*end=sl_buffer+ count;// (short*) ((Ptr) sl_buffer+ count);
 	SInt32 			x,y,needbits,havebits,new_count=0;
@@ -165,25 +160,25 @@ static uintptr_t read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,uns
 	//FIXME: Static analyzer says that this assignment may be garbage under certain circumstances.
 	buf = status->buf;
 	
-	while (dest<end) {
-		needbits=new_count?4:bits;
-		x=havebits=0;
+	while (dest < end) {
+		needbits = new_count ? 4 : bits;
+		x = havebits = 0;
 		while (needbits) {
 			// feed buffer
 			if (!bufbits) {
 				if((*incnt)--)
-					buf=_mm_read_UBYTE(reader);
+					buf = _mm_read_UBYTE(reader);
 				else
-					buf=0;
-				bufbits=8;
+					buf = 0;
+				bufbits = 8;
 			}
 			// get as many bits as necessary
-			y=needbits<bufbits?needbits:bufbits;
-			x|=(buf &((1<<y)-1))<<havebits;
-			buf>>=y;
-			bufbits-=y;
-			needbits-=y;
-			havebits+=y;
+			y = needbits < bufbits ? needbits : bufbits;
+			x |= (buf &((1 << y) - 1)) << havebits;
+			buf >>= y;
+			bufbits -= y;
+			needbits -= y;
+			havebits += y;
 		}
 		if (new_count) {
 			new_count = 0;
@@ -192,24 +187,22 @@ static uintptr_t read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,uns
 			bits = x;
 			continue;
 		}
-		if (bits<7) {
-			if (x==(1<<(bits-1))) {
-				new_count=1;
+		if (bits < 7) {
+			if (x == (1 << (bits - 1))) {
+				new_count = 1;
 				continue;
 			}
-		}
-		else if (bits<17) {
-			y=(0xffff>>(17-bits))-8;
-			if ((x>y)&&(x<=y+16)) {
-				if ((x-=y)>=bits)
+		} else if (bits < 17) {
+			y = (0xffff >> (17 - bits)) - 8;
+			if ((x > y) && (x <= y + 16)) {
+				if ((x -= y) >= bits)
 					x++;
 				bits = x;
 				continue;
 			}
-		}
-		else if (bits<18) {
-			if (x>=0x10000) {
-				bits=x-0x10000+1;
+		} else if (bits < 18) {
+			if (x >= 0x10000) {
+				bits = x - 0x10000 + 1;
 				continue;
 			}
 		} else {
@@ -219,9 +212,9 @@ static uintptr_t read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,uns
 			return 0;
 		}
 		
-		if (bits<16) // extend sign
+		if (bits < 16) // extend sign
 			x = ((short)(x<<(16-bits)))>>(16-bits);
-		*(dest++)=(last+=x);
+		*(dest++) = (last += x);
 	}
 	status->bits = bits;
 	status->bufbits = bufbits;
@@ -234,7 +227,7 @@ static uintptr_t read_itcompr16( ITPACK *status,Ptr *reader,short *sl_buffer,uns
 
 #define SLBUFSIZE 2048
 
-static OSErr DecompressSample( short bits, Ptr reader, size_t length, Ptr destPtr)		// sloader.c
+static OSErr DecompressSample(short bits, Ptr reader, size_t length, Ptr destPtr)		// sloader.c
 {
 	size_t			stodo;
 	size_t			result, c_block=0;	/* compression bytes until next block */
@@ -247,17 +240,20 @@ static OSErr DecompressSample( short bits, Ptr reader, size_t length, Ptr destPt
 	while(length) {
 		stodo = (length < SLBUFSIZE) ? length : SLBUFSIZE;
 		
-		if (!c_block)
-		{
-			if (bits == 16) status.bits = 17;
-			else status.bits = 9;
+		if (!c_block) {
+			if (bits == 16)
+				status.bits = 17;
+			else
+				status.bits = 9;
 			
 			status.last = status.bufbits = 0;
 			
-			incnt = ReadUS( &reader);
+			incnt = ReadUS(&reader);
 			
-			if (bits == 16) c_block = 0x4000;
-			else c_block = 0x8000;
+			if (bits == 16)
+				c_block = 0x4000;
+			else
+				c_block = 0x8000;
 		}
 		
 		if (bits == 16) {
@@ -268,8 +264,7 @@ static OSErr DecompressSample( short bits, Ptr reader, size_t length, Ptr destPt
 				return 1;
 		}
 		
-		if (result!=stodo)
-		{
+		if (result!=stodo) {
 			//_mm_errno=MMERR_ITPACK_INVALID_DATA;
 			
 			return 1;
@@ -302,8 +297,7 @@ static void ConvertITEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short channe
 	Byte HiB1 = HI(B1);
 	Byte B0X40 = B0 + 0x40;
 	
-	switch(B0X40)
-	{
+	switch(B0X40) {
 			// Speed
 		case 'A':
 			*Cmd = speedE;
@@ -388,9 +382,9 @@ static void ConvertITEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short channe
 			*Cmd = arpeggioE;
 			*Arg = B1;
 			
-			if (*Arg == 0) {				// Use last command
+			if (*Arg == 0) 				// Use last command
 				*Arg = LastJEffect[channel];
-			} else
+			else
 				LastJEffect[channel] = *Arg;
 			
 			break;
@@ -411,8 +405,7 @@ static void ConvertITEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short channe
 			break;
 			
 		case 'S':		// Special Effects
-			switch(HiB1)
-		{
+			switch(HiB1) {
 			case 2:		// FineTune
 				*Cmd = extendedE;
 				*Arg = 5 << 4;
@@ -636,16 +629,9 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	
 	/**** Variables pour le IT ****/
 	
-	ITForm				ITinfo;
+	ITForm				ITinfo = {0};
 	/********************************/
-	
-	ITinfo.orders		= NULL;
-	ITinfo.parapins		= NULL;
-	ITinfo.parappat		= NULL;
-	ITinfo.insdata		= NULL;
-	ITinfo.parapsamp	= NULL;
-	ITinfo.sampdata		= NULL;
-	
+		
 	memset(theInstrument, 0, sizeof(theInstrument));
 		
 	/**** Header principal *****/
@@ -670,43 +656,43 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	
 	if(ITinfo.flags&8) {
 		useLinear = true;	//(UF_XMPERIODS | UF_LINEAR);
-		old_effect|=2;
+		old_effect |= 2;
 	}
-	if((ITinfo.cwtv>=0x106)&&(ITinfo.flags&16))
-		old_effect|=1;
+	if((ITinfo.cwtv >= 0x106) && (ITinfo.flags & 16))
+		old_effect |= 1;
 	
 	/**** Order Num *****/
-	ITinfo.orders = (unsigned char *) malloc(ITinfo.orderNum);
+	ITinfo.orders = (unsigned char *)malloc(ITinfo.orderNum);
 	if (ITinfo.orders == NULL)
 		return MADNeedMemory;
-	memcpy( ITinfo.orders, theITCopy, ITinfo.orderNum);
+	memcpy(ITinfo.orders, theITCopy, ITinfo.orderNum);
 	theITCopy += ITinfo.orderNum;
 	
 	/**** Ins Num *****/
-	ITinfo.parapins = (SInt32 *)malloc(ITinfo.insNum * 4L);
+	ITinfo.parapins = (SInt32 *)malloc(ITinfo.insNum * 4);
 	if (ITinfo.parapins == NULL)
 		return MADNeedMemory;
-	memcpy(ITinfo.parapins, theITCopy, ITinfo.insNum * 4L);
-	theITCopy += ITinfo.insNum * 4L;
+	memcpy(ITinfo.parapins, theITCopy, ITinfo.insNum * 4);
+	theITCopy += ITinfo.insNum * 4;
 	for (i = 0; i < ITinfo.insNum; i++)
 		PPLE32(&ITinfo.parapins[i]);
 	//if (ITinfo.insNum > 0) DebugStr("\pInsNum");
 	
 	/**** Samp Num *****/
-	ITinfo.parapsamp = (SInt32 *)malloc(ITinfo.smpNum * 4L);
+	ITinfo.parapsamp = (SInt32 *)malloc(ITinfo.smpNum * 4);
 	if (ITinfo.parapsamp == NULL)
 		return MADNeedMemory;
-	memcpy(ITinfo.parapsamp, theITCopy, ITinfo.smpNum * 4L);
-	theITCopy += ITinfo.smpNum * 4L;
+	memcpy(ITinfo.parapsamp, theITCopy, ITinfo.smpNum * 4);
+	theITCopy += ITinfo.smpNum * 4;
 	for (i = 0; i < ITinfo.smpNum; i++)
 		PPLE32(&ITinfo.parapsamp[i]);
 	
 	/**** Pat Num *****/
-	ITinfo.parappat = (SInt32 *)malloc(ITinfo.patNum * 4L);
+	ITinfo.parappat = (SInt32 *)malloc(ITinfo.patNum * 4);
 	if (ITinfo.parappat == NULL)
 		return MADNeedMemory;
-	memcpy(ITinfo.parappat, theITCopy, ITinfo.patNum * 4L);
-	theITCopy += ITinfo.patNum * 4L;
+	memcpy(ITinfo.parappat, theITCopy, ITinfo.patNum * 4);
+	theITCopy += ITinfo.patNum * 4;
 	for (i = 0; i < ITinfo.patNum; i++)
 		PPLE32(&ITinfo.parappat[i]);
 	
@@ -733,14 +719,15 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 			}
 		}
 	} else
-		ITinfo.insdata = (ITInsForm *) malloc(4); //FIXME!!
+		ITinfo.insdata = (ITInsForm *)malloc(4); //FIXME!!
 	
 	/**** Samp Data ****/
 	//if (ITinfo.insNum > 64) ITinfo.insNum = 64;
-	ITinfo.sampdata = (ITSampForm *) malloc( sizeof(ITSampForm) * ITinfo.smpNum);
-	if (ITinfo.sampdata == NULL) return MADNeedMemory;
+	ITinfo.sampdata = (ITSampForm *) malloc(sizeof(ITSampForm) * ITinfo.smpNum);
+	if (ITinfo.sampdata == NULL)
+		return MADNeedMemory;
 	for (i = 0; i < ITinfo.smpNum; i++) {
-		theITCopy = (Byte*) theIT;
+		theITCopy = (Byte*)theIT;
 		theITCopy += ITinfo.parapsamp[i];
 		
 		memcpy(&ITinfo.sampdata[i], theITCopy, sizeof(ITSampForm));
@@ -811,9 +798,9 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 				theMAD->header->chanVol[i] = 64;
 		} else {
 			if (i % 2 == 0)
-				theMAD->header->chanPan[i] = MAX_PANNING/4;
+				theMAD->header->chanPan[i] = MAX_PANNING / 4;
 			else
-				theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING/4;
+				theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING / 4;
 			
 			theMAD->header->chanVol[i] = MAX_VOLUME;
 		}
@@ -822,7 +809,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
 	
-	theMAD->sets = (FXSets*) calloc( MAXTRACK, sizeof(FXSets));
+	theMAD->sets = (FXSets*) calloc(MAXTRACK, sizeof(FXSets));
 	for (i = 0; i < MAXTRACK; i++)
 		theMAD->header->chanBus[i].copyId = i;
 	
@@ -839,11 +826,11 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 		return MADNeedMemory;
 	
 	for (i = 0; i < MAXINSTRU; i++)
-		theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+		theMAD->fid[i].firstSample = i * MAXSAMPLE;
 	
 	for(i  = 0 ; i < MAXINSTRU; i++) {
 		for (x = 0; x < MAXSAMPLE; x++)
-			theMAD->sample[ i*MAXSAMPLE + x] = NULL;
+			theMAD->sample[i * MAXSAMPLE + x] = NULL;
 		
 		theMAD->fid[i].numSamples	= 0;
 	}
@@ -902,12 +889,11 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 					//CHECK ALL PREVIOUS SAMPLES !!!!
 					prevSamp = false;
 					for (bb = 0; bb < zz; bb++) {
-						if (ITinfo.insdata[ i].keyMap[ zz].samp-1 == ITinfo.insdata[ i].keyMap[ bb].samp-1)
+						if (ITinfo.insdata[i].keyMap[zz].samp - 1 == ITinfo.insdata[i].keyMap[bb].samp - 1)
 							prevSamp = true;
 					}
 					
 					if (prevSamp == false && ITinfo.insdata[i].keyMap[zz].samp != 0) {
-						//Str32 str;
 						
 						prevSamp = ITinfo.insdata[i].keyMap[zz].samp-1;
 						if (prevSamp >= 0 && prevSamp < ITinfo.smpNum) {
@@ -917,7 +903,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 							
 							curData->size			= ITinfo.sampdata[prevSamp].length;
 							
-							if (ITinfo.sampdata[prevSamp].Flag&16) {
+							if (ITinfo.sampdata[prevSamp].Flag & 16) {
 								curData->loopBeg 	= ITinfo.sampdata[prevSamp].loopBegin;
 								curData->loopSize	= ITinfo.sampdata[prevSamp].loopEnd - ITinfo.sampdata[prevSamp].loopBegin;
 							} else {
@@ -925,7 +911,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 								curData->loopSize = 0;
 							}
 							
-							if (ITinfo.sampdata[prevSamp].Flag&64)
+							if (ITinfo.sampdata[prevSamp].Flag & 64)
 								curData->loopType = ePingPongLoop;
 							else
 								curData->loopType = eClassicLoop;
@@ -935,7 +921,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 							curData->loopType		= 0;
 							curData->amp			= 8;
 							
-							if (ITinfo.sampdata[prevSamp].Flag&2) {
+							if (ITinfo.sampdata[prevSamp].Flag & 2) {
 								curData->amp		= 16;
 								
 								curData->size		*= 2;
@@ -969,7 +955,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 								if (ITinfo.sampdata[prevSamp].Flag&8) {	// Compressed Sample
 									OSErr	err;
 									
-									err = DecompressSample(curData->amp, theInstrument[ prevSamp], curData->size, curData->data);
+									err = DecompressSample(curData->amp, theInstrument[prevSamp], curData->size, curData->data);
 									
 									if (err) {
 										size_t temp;
@@ -987,25 +973,25 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 										*(curData->data + temp) -= 0x80;
 								}
 								
-								if (curData->amp == 16 && !(ITinfo.sampdata[prevSamp].Flag&8)) {
+								if (curData->amp == 16 && !(ITinfo.sampdata[prevSamp].Flag & 8)) {
 									unsigned short *tempShort = (unsigned short*)curData->data;
 									size_t temp;
 									
-									for (temp = 0; temp < curData->size/2; temp++) {
-										PPLE16(  &( (tempShort[ temp])));
+									for (temp = 0; temp < curData->size / 2; temp++) {
+										PPLE16(&((tempShort[temp])));
 										
 										if (!(ITinfo.sampdata[prevSamp].Convert & 1))
 											*(tempShort + temp) -= 0x8000;
 									}
 								}
 								
-								if ((ITinfo.sampdata[ prevSamp].Convert & 2)) {
+								if ((ITinfo.sampdata[prevSamp].Convert & 2)) {
 									//Str255 str;
 									//NumToString( i, str);
 									//DebugStr( str);
 								}
 								
-								if ((ITinfo.sampdata[ prevSamp].Convert & 4)) {		// Delta values -> Real
+								if ((ITinfo.sampdata[prevSamp].Convert & 4)) {		// Delta values -> Real
 									if (curData->amp == 16) {
 										short *tt;
 										
@@ -1017,7 +1003,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 											SInt32	xL;
 											
 											oldV = 0;
-											for (xL = 0; xL < curData->size/2; xL++) {
+											for (xL = 0; xL < curData->size / 2; xL++) {
 												newV = tt[xL] + oldV;
 												oldV = newV;
 												if (xL  % 16383 == 0)
@@ -1033,11 +1019,11 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 										
 										oldV = 0;
 										for (xL = 0; xL < curData->size; xL++) {
-											newV = curData->data[ xL] + oldV;
+											newV = curData->data[xL] + oldV;
 											oldV = newV;
 											if (xL  % (32768) == 0)
 												oldV = 0;
-											curData->data[ xL] = newV;
+											curData->data[xL] = newV;
 										}
 									}
 								}
@@ -1056,7 +1042,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 		}
 	} else {										// USE SAMPLES AS INSTRUMENTS
 		for(i=0; i<ITinfo.smpNum; i++) {
-			InstrData *curIns = &theMAD->fid[ i];
+			InstrData *curIns = &theMAD->fid[i];
 			curIns->type	= 0;
 			
 			if (theInstrument[i] != NULL) {
@@ -1106,10 +1092,10 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 					return MADNeedMemory;
 				
 				if (curData->data != NULL) {
-					if (ITinfo.sampdata[i].Flag&8) {	// Compressed Sample
+					if (ITinfo.sampdata[i].Flag & 8) {	// Compressed Sample
 						OSErr	err;
 						
-						err = DecompressSample( curData->amp, theInstrument[ i], curData->size, curData->data);
+						err = DecompressSample(curData->amp, theInstrument[ i], curData->size, curData->data);
 						
 						if (err) {
 							size_t temp;
@@ -1149,7 +1135,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 							*(curData->data + temp) -= 0x80;
 					}
 					
-					if (curData->amp == 16 && !(ITinfo.sampdata[i].Flag&8)) {
+					if (curData->amp == 16 && !(ITinfo.sampdata[i].Flag & 8)) {
 						unsigned short 	*tempShort = (unsigned short*)curData->data;
 						SInt32 			temp;
 						
@@ -1298,7 +1284,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 			
 			for (Row = 0; Row < curITPat->row; Row++) {
 				for(z = 0; z < theMAD->header->numChn; z++) {
-					aCmd = GetMADCommand(Row, z, theMAD->partition[ i]);
+					aCmd = GetMADCommand(Row, z, theMAD->partition[i]);
 					
 					aCmd->note	= 0xFF;
 					aCmd->ins	= 0;
@@ -1475,7 +1461,6 @@ static OSErr ExtractITInfo(PPInfoRec *info, void *AlienFile)
 	
 	/*** Internal name ***/
 	
-	//ITinfo.name[ 25] = '\0';
 	strlcpy(info->internalFileName, ITinfo.name, sizeof(ITinfo.name));
 	
 	/*** Total Patterns ***/
@@ -1539,8 +1524,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 	long		sndSize;
 	UNFILE		iFileRefI;
 	
-	switch(order)
-	{
+	switch (order) {
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI) {
