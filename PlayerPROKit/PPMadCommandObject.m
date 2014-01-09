@@ -88,7 +88,7 @@
 {
 	if (self = [super init]) {
 		if (!theCmd) {
-			MADKillCmd(&theCommand);
+			[self resetCommand];
 		} else {
 			theCommand = *theCmd;
 		}
@@ -101,6 +101,23 @@
 	PPMadCommandObject *ret = [[PPMadCommandObject alloc] initWithCmd:&theCommand];
 
 	return ret;
+}
+
+- (void)resetCommand;
+{
+	[self willChangeValueForKey:@"instrument"];
+	[self willChangeValueForKey:@"note"];
+	[self willChangeValueForKey:@"command"];
+	[self willChangeValueForKey:@"argument"];
+	[self willChangeValueForKey:@"volume"];
+
+	MADKillCmd(&theCommand);
+	
+	[self didChangeValueForKey:@"instrument"];
+	[self didChangeValueForKey:@"note"];
+	[self didChangeValueForKey:@"command"];
+	[self didChangeValueForKey:@"argument"];
+	[self didChangeValueForKey:@"volume"];
 }
 
 - (NSString*)description

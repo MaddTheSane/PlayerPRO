@@ -11,6 +11,7 @@
 
 @interface PPMadCommandObject : NSObject <NSCopying, NSCoding>
 
+- (id)init;
 - (id)initWithCmd:(Cmd *)theCmd;
 
 @property (readonly) Cmd theCommand;
@@ -19,4 +20,5 @@
 @property Byte command;
 @property Byte argument;
 @property Byte volume;
+- (void)resetCommand;
 @end
