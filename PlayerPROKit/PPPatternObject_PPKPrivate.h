@@ -10,7 +10,7 @@
 #import "PPPatternObject.h"
 
 @interface PPPatternObject ()
-@property PatHeader patternHeader;
+@property (nonatomic) PatHeader patternHeader;
 @property (strong) NSMutableArray *commands;
 @property (readwrite, weak) PPMusicObjectWrapper *musicWrapper;
 @property (readwrite) NSInteger index;

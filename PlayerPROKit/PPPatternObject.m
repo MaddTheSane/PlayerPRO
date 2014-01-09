@@ -19,6 +19,17 @@
 @synthesize index;
 @synthesize patternHeader;
 
+- (void)writeBackToStruct
+{
+	
+}
+
+- (PatHeader)patternHeader
+{
+	[self writeBackToStruct];
+	return patternHeader;
+}
+
 - (int)patternSize
 {
 	return patternHeader.size;
@@ -98,6 +109,17 @@
 	[aCoder encodeObject:_patternName forKey:kPPPatternName];
 	[aCoder encodeObject:commands forKey:kPPPatternCommands];
 	[aCoder encodeInteger:index forKey:kPPPatternIndex];
+}
+
+#pragma mark NSCopying protocol
+
+- (id)copyWithZone:(NSZone *)zone
+{
+	PPPatternObject *new = [[[self class] alloc] initWithMusic:_musicWrapper];
+	new.commands = [[NSMutableArray alloc] initWithArray:commands copyItems:YES];
+	new.index = -1;
+	
+	return new;
 }
 
 @end

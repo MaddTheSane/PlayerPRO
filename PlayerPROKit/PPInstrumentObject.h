@@ -8,11 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#import <PlayerPROKit/PPObjectProtocol.h>
 
 @class PPSampleObject;
 @class PPMusicObjectWrapper;
 
-@interface PPInstrumentObject : NSObject <NSCopying, NSFastEnumeration>
+@interface PPInstrumentObject : NSObject <NSCopying, NSFastEnumeration, PPObject>
 {
 	NSInteger		number;				// Instrument number
 }

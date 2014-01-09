@@ -8,10 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#import <PlayerPROKit/PPObjectProtocol.h>
 
-@interface PPSampleObject : NSObject <NSCopying, NSCoding>
+@interface PPSampleObject : NSObject <NSCopying, NSCoding, PPObject>
 @property (readwrite) NSInteger sampleIndex;
 @property (readwrite) NSInteger instrumentIndex;
+@property (readonly) sData theSample;
 
 - (id)init;
 - (id)initWithsData:(sData *)theData;

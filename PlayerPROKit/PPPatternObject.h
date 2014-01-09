@@ -10,8 +10,9 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPMadCommandObject.h>
 #import <PlayerPROKit/PPMusicObject.h>
+#import <PlayerPROKit/PPObjectProtocol.h>
 
-@interface PPPatternObject : NSObject <NSCoding, NSFastEnumeration>
+@interface PPPatternObject : NSObject <NSCoding, NSFastEnumeration, NSCopying, PPObject>
 @property (readonly) NSInteger index;
 @property (copy) NSString *patternName;
 @property (readonly, weak) PPMusicObjectWrapper *musicWrapper;

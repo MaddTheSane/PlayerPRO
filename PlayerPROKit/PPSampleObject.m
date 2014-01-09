@@ -23,13 +23,41 @@
 #define INSTRUMENTINDEXKEY @"Instrument Index"
 
 @interface PPSampleObject ()
-@property sData theSample;
+//@property sData theSample;
 @end
 
 @implementation PPSampleObject
 @synthesize theSample;
 @synthesize name;
 @synthesize data;
+
+- (void)writeBackToStruct
+{
+	char theName[32] = {0};
+	NSData *tmpCStr = [name dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+	NSInteger cStrLen = [tmpCStr length];
+	if (cStrLen > sizeof(theName) - 1) {
+		cStrLen = sizeof(theName) - 1;
+	}
+	[tmpCStr getBytes:theName length:cStrLen];
+	tmpCStr = nil;
+	
+	strlcpy(theSample.name, theName, sizeof(theSample.name));
+	NSInteger dataSize2 = [data length];
+	theSample.size = (SInt32)dataSize2;
+	if (theSample.data) {
+		free(theSample.data);
+		theSample.data = NULL;
+	}
+	theSample.data = malloc(dataSize2);
+	[data getBytes:theSample.data length:dataSize2];
+}
+
+- (sData)theSample
+{
+	[self writeBackToStruct];
+	return theSample;
+}
 
 - (void)setAmplitude:(Byte)amplitude
 {
@@ -153,11 +181,20 @@
 			theSample.relNote = 0;
 		} else {
 			theSample = *theData;
+			theSample.data = NULL;
 			data = [[NSData alloc] initWithBytes:theData->data length:theData->size];
 			name = [[NSString alloc] initWithCString:theData->name encoding:NSMacOSRomanStringEncoding];
 		}
 	}
 	return self;
+}
+
+- (void)dealloc
+{
+	if (theSample.data) {
+		free(theSample.data);
+		theSample.data = NULL;
+	}
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -217,7 +254,7 @@
 	[aCoder encodeObject:@(theSample.loopType) forKey:LOOPTYPEKEY];
 	[aCoder encodeObject:@(theSample.amp) forKey:AMPLITUDEKEY];
 	[aCoder encodeObject:@(theSample.relNote) forKey:RELATIVENOTEKEY];
-	[aCoder encodeBool:self.stereo forKey:STEREOKEY];
+	[aCoder encodeBool:theSample.stereo forKey:STEREOKEY];
 	
 	[aCoder encodeInteger:self.sampleIndex forKey:SAMPLEINDEXKEY];
 	[aCoder encodeInteger:self.instrumentIndex forKey:INSTRUMENTINDEXKEY];

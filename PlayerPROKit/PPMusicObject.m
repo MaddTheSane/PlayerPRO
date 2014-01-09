@@ -375,6 +375,11 @@ end:
 	return self;
 }
 
+- (void)writeBackToStruct
+{
+	[self syncMusicDataTypes];
+}
+
 - (void)syncMusicDataTypes
 {
 	

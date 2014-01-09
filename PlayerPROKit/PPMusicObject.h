@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#import <PlayerPROKit/PPObjectProtocol.h>
 
 @class PPDriver;
 @class PPLibrary;
@@ -55,7 +56,7 @@
 
 @end
 
-@interface PPMusicObjectWrapper : PPMusicObject <NSCopying>
+@interface PPMusicObjectWrapper : PPMusicObject <NSCopying, PPObject>
 @property (readonly, unsafe_unretained) NSArray *sDatas;
 @property (readonly, strong) NSMutableArray *instruments;
 @property (readonly, strong) NSMutableArray *patterns;

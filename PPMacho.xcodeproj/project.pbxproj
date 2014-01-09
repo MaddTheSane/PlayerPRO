@@ -677,6 +677,11 @@
 		55EE2D8B17E12F9300FED42A /* Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE7BC10E08D8400177B4C /* Fade.plugin */; };
 		55EE2D8C17E12F9300FED42A /* Length.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE84210E08D9E00177B4C /* Length.plugin */; };
 		55EE2D8E17E12F9300FED42A /* Sampling Rate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE90B10E08DAC00177B4C /* Sampling Rate.plugin */; };
+		55F013E5187F5AB6002488D5 /* PPObjectProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55F013E6187F5AB6002488D5 /* PPObjectProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; };
+		55F013E7187F5D5D002488D5 /* PPObjectProtocol.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; };
+		55F013E8187F5D6E002488D5 /* PPFXBusObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55DE87C4187E5B9100C36533 /* PPFXBusObject.h */; };
+		55F013E9187F5D70002488D5 /* PPFXSetObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55DE87CB187E60F400C36533 /* PPFXSetObject.h */; };
 		55F41A3717EF96B000605DF8 /* PPExportObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F41A3617EF96AF00605DF8 /* PPExportObject.m */; };
 		55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; };
@@ -1667,13 +1672,16 @@
 			dstSubfolderSpec = 16;
 			files = (
 				55B0F5B517DF101000653BCD /* PlayerPROKit.h in CopyFiles */,
+				55B0F5B417DF0FF700653BCD /* PPInstrumentObject.h in CopyFiles */,
+				55F013E7187F5D5D002488D5 /* PPObjectProtocol.h in CopyFiles */,
 				55B0F5B617DF101000653BCD /* PPLibrary.h in CopyFiles */,
 				55C8EDEC187CC99500CC8C1B /* PPMadCommandObject.h in CopyFiles */,
 				55C8EDEB187CC99100CC8C1B /* PPPatternObject.h in CopyFiles */,
+				55F013E8187F5D6E002488D5 /* PPFXBusObject.h in CopyFiles */,
 				55B0F5B717DF101000653BCD /* PPDriver.h in CopyFiles */,
 				55B0F5B817DF101000653BCD /* PPMusicObject.h in CopyFiles */,
+				55F013E9187F5D70002488D5 /* PPFXSetObject.h in CopyFiles */,
 				55B0F5B317DF0FF700653BCD /* PPSampleObject.h in CopyFiles */,
-				55B0F5B417DF0FF700653BCD /* PPInstrumentObject.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2266,6 +2274,7 @@
 		55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		55EE8EBF100404EB00E75E63 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		55EE8EC0100404EB00E75E63 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
+		55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPObjectProtocol.h; sourceTree = "<group>"; };
 		55F16D1C186F918F00E75C3E /* getAIFF.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = getAIFF.i; sourceTree = "<group>"; };
 		55F41A2217EF800B00605DF8 /* version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = version.sh; sourceTree = "<group>"; };
 		55F41A2D17EF853C00605DF8 /* PlayerPRO Player-Info.plistvers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPRO Player-Info.plistvers.plist"; sourceTree = "<group>"; };
@@ -2863,6 +2872,7 @@
 			children = (
 				551292E5163DD68500C2C639 /* PlayerPROKit.h */,
 				55DE87C3187E18A500C36533 /* Private headers */,
+				55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */,
 				550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */,
 				550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */,
 				550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */,
@@ -4159,6 +4169,7 @@
 				55DE87C6187E5B9100C36533 /* PPFXBusObject.h in Headers */,
 				55DEBFE918008D970089B940 /* PPSoundSettingsViewController.h in Headers */,
 				551292ED163DD74100C2C639 /* PlayerPROKit.h in Headers */,
+				55F013E5187F5AB6002488D5 /* PPObjectProtocol.h in Headers */,
 				55DE87BF187E051F00C36533 /* PPPatternObject_PPKPrivate.h in Headers */,
 				55C8EDE3187CC8B200CC8C1B /* PPMadCommandObject.h in Headers */,
 				551292F0163DD7CE00C2C639 /* PPLibrary.h in Headers */,
@@ -4219,6 +4230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5578C51617DB901F0057D11B /* PPLibrary_PPKPrivate.h in Headers */,
+				55F013E6187F5AB6002488D5 /* PPObjectProtocol.h in Headers */,
 				55DE87CE187E60F400C36533 /* PPFXSetObject.h in Headers */,
 				55C8EDEA187CC98200CC8C1B /* PPMadCommandObject.h in Headers */,
 				5578C51717DB901F0057D11B /* PPDriver_Private.h in Headers */,

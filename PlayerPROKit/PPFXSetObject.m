@@ -17,7 +17,6 @@
 
 @interface PPFXSetObject ()
 @property (readwrite, strong) NSMutableArray *sets;
-- (void)writeBackToStruct;
 @end
 
 @implementation PPFXSetObject

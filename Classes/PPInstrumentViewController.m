@@ -406,7 +406,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 	CGContextSaveGState(ctxRef);
 	
 	long		i;
-	size_t		sampleSize = [curData dataSize];
+	size_t		sampleSize = [curData.data length];
 	CGFloat		temp;
 	const char	*theSample = [curData.data bytes];
 	const short	*theShortSample = (const short*)theSample;
@@ -567,9 +567,9 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 		NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(2, 2)];
 		NSSize padSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
 		CGContextSetLineWidth(bitmapContext, lineSize.height);
-		loopRect.origin.x =  ([theDat loopBegin] * imageSize.width / (double)[theDat dataSize]);
+		loopRect.origin.x =  ([theDat loopBegin] * imageSize.width / (double)[theDat.data length]);
 		loopRect.origin.y += padSize.width;
-		loopRect.size.width = [theDat loopSize] * imageSize.width / (double)[theDat dataSize];
+		loopRect.size.width = [theDat loopSize] * imageSize.width / (double)[theDat.data length];
 		loopRect.size.height -= padSize.width * 2;
 		CGContextStrokeRect(bitmapContext, loopRect);
 	}

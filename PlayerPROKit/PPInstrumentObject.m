@@ -17,6 +17,11 @@
 @synthesize number;
 @synthesize name;
 
+- (void)writeBackToStruct
+{
+	//TODO: implement
+}
+
 - (short)firstSample
 {
 	return theInstrument.firstSample;

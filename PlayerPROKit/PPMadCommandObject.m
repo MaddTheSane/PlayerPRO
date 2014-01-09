@@ -127,7 +127,7 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-	if (self = [self init]) {
+	if (self = [super init]) {
 		theCommand.ins = [(NSNumber*)[aDecoder decodeObjectForKey:kPPMadCommandInstrument] unsignedCharValue];
 		theCommand.arg = [(NSNumber*)[aDecoder decodeObjectForKey:kPPMadCommandArgument] unsignedCharValue];
 		theCommand.cmd = [(NSNumber*)[aDecoder decodeObjectForKey:kPPMadCommandCommand] unsignedCharValue];

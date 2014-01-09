@@ -66,6 +66,11 @@
 	[self didChangeValueForKey:@"active"];
 }
 
+- (void)writeBackToStruct
+{
+	//We don't need to do anything here.
+}
+
 #pragma mark NSCopying protocol
 
 - (id)copyWithZone:(NSZone *)zone
