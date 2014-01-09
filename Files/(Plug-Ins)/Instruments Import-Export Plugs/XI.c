@@ -383,8 +383,7 @@ static OSErr mainXI(void		*unused,
 				
 				//BlockMoveData( "Extended Instrument:                       FastTracker v2.00   ", start, 0x42);
 				
-				//FIXME: get the proper escape sequences
-				memcpy(start, "Extended Instrument:                       FastTracker v2.00   ", 0x42);
+				memcpy(start, "Extended Instrument:                       \xA1\x46\x61stTracker v2.00   \x02\x01", 0x42);
 				
 				inOutCount = 0x42;
 				iWrite(inOutCount, start, iFileRefI);
