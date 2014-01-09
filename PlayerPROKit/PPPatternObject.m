@@ -17,14 +17,45 @@
 @implementation PPPatternObject
 @synthesize commands;
 @synthesize index;
+@synthesize patternHeader;
 
-- (id)initWithMusic:(PPMusicObjectWrapper *)mus patternAtIndex:(short)ptnIdx
+- (int)patternSize
+{
+	return patternHeader.size;
+}
+
+- (void)setPatternSize:(int)patternSize
+{
+	[self willChangeValueForKey:@"patternSize"];
+	//TODO: more work here!
+	patternHeader.size = patternSize;
+	[self didChangeValueForKey:@"patternSize"];
+}
+
+- (id)initWithMusic:(PPMusicObjectWrapper *)mus
 {
 	if (self = [super init]) {
 		if (!mus) {
 			return nil;
 		}
+		//TODO: add watchers for changes in number of channels
+		index = -1;
 		_musicWrapper = mus;
+		NSInteger size = _musicWrapper._currentMusic->header->numChn * 64;
+		self.commands = [[NSMutableArray alloc] initWithCapacity:size];
+		for (int i = 0; i < size; i++) {
+			PPMadCommandObject *tmpObj = [[PPMadCommandObject alloc] initWithCmd:NULL];
+			[self.commands addObject:tmpObj];
+		}
+		self.patternName = @"";
+
+	}
+	return self;
+}
+
+- (id)initWithMusic:(PPMusicObjectWrapper *)mus patternAtIndex:(short)ptnIdx
+{
+	if (self = [self initWithMusic:mus]) {
 		patternHeader = _musicWrapper._currentMusic->partition[ptnIdx]->header;
 		index = ptnIdx;
 		NSInteger size = _musicWrapper._currentMusic->header->numChn * patternHeader.size;
@@ -37,6 +68,13 @@
 	}
 	return self;
 }
+
+#if 0
+- (void)dealloc
+{
+	
+}
+#endif
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
