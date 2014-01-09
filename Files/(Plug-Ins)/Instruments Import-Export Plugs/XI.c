@@ -59,55 +59,9 @@ static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 	
 	firstSample = curIns->firstSample;
 	
-	bzero(curIns, sizeof(InstrData));
+	memset(curIns, 0, sizeof(InstrData));
 	curIns->firstSample = firstSample;
 	
-#if 0
-	for (i = 0; i < 32; i++) curIns->name[i]	= 0;
-	curIns->type		= 0;
-	curIns->numSamples	= 0;
-	
-	/**/
-	
-#if 1
-	memset(curIns->what, 0, sizeof(curIns->what));
-	memset(curIns->volEnv, 0, sizeof(curIns->volEnv));
-	memset(curIns->pannEnv, 0, sizeof(curIns->pannEnv));
-	memset(curIns->pitchEnv, 0, sizeof(curIns->pitchEnv));
-#else
-	for (i = 0; i < 96; i++) curIns->what[ i]		= 0;
-	
-	for (i = 0; i < 12; i++)
-	{
-		curIns->volEnv[ i].pos		= 0;
-		curIns->volEnv[ i].val		= 0;
-		
-		curIns->pannEnv[ i].pos	= 0;
-		curIns->pannEnv[ i].val	= 0;
-		
-		curIns->pitchEnv[ i].pos	= 0;
-		curIns->pitchEnv[ i].val	= 0;
-		
-	}
-#endif
-	curIns->volSize		= 0;
-	curIns->pannSize	= 0;
-	
-	curIns->volSus		= 0;
-	curIns->volBeg		= 0;
-	curIns->volEnd		= 0;
-	
-	curIns->pannSus		= 0;
-	curIns->pannBeg		= 0;
-	curIns->pannEnd		= 0;
-	
-	curIns->volType		= 0;
-	curIns->pannType	= 0;
-	
-	curIns->volFade		= 0;
-	curIns->vibDepth	= 0;
-	curIns->vibRate		= 0;
-#endif
 	return noErr;
 }
 
@@ -139,44 +93,35 @@ static OSErr mainXI(void		*unused,
 	
 	char *file = NULL;
 	char *fileName = NULL;
-	do {
-		char *longStr = NULL;
-		CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
-		longStr = malloc(pathLen);
-		if (!longStr) {
-			return MADNeedMemory;
-		}
-		Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)longStr, pathLen);
-		if (!pathOK) {
-			free(longStr);
-			return MADReadingErr;
-		}
-		size_t StrLen = strlen(longStr);
-		file = realloc(longStr, ++StrLen);
-		if (!file) {
-			file = longStr;
-		}
-	} while (0);
-	do {
-		char *FileNameLong = NULL;
-		CFStringRef filenam = CFURLCopyLastPathComponent(AlienFileCFURL);
-		CFIndex filenamLen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(filenam), kCFStringEncodingMacRoman);
-		filenamLen *= 2;
-		size_t filenamshortlen = 0;
-		FileNameLong = malloc(filenamLen);
-		CFStringGetCString(filenam, FileNameLong, filenamLen, kCFStringEncodingMacRoman);
-		CFRelease(filenam);
-		filenamshortlen = strlen(FileNameLong);
-		fileName = realloc(FileNameLong, ++filenamshortlen);
-		if (!fileName) {
-			fileName = FileNameLong;
-			break;
-		}
-	} while (0);
 	
-	switch (order)
-	{
-		case 'IMPL':
+	char *longStr = NULL;
+	CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
+	longStr = malloc(pathLen);
+	if (!longStr) {
+		return MADNeedMemory;
+	}
+	Boolean pathOK = CFURLGetFileSystemRepresentation(AlienFileCFURL, true, (unsigned char*)longStr, pathLen);
+	if (!pathOK) {
+		free(longStr);
+		return MADReadingErr;
+	}
+	file = realloc(longStr, strlen(longStr) + 1);
+	if (!file)
+		file = longStr;
+
+	char *FileNameLong = NULL;
+	CFStringRef filenam = CFURLCopyLastPathComponent(AlienFileCFURL);
+	CFIndex filenamLen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(filenam), kCFStringEncodingMacRoman);
+	filenamLen *= 2;
+	FileNameLong = malloc(filenamLen);
+	CFStringGetCString(filenam, FileNameLong, filenamLen, kCFStringEncodingMacRoman);
+	CFRelease(filenam);
+	fileName = realloc(FileNameLong, strlen(FileNameLong) + 1);
+	if (!fileName)
+		fileName = FileNameLong;
+	
+	switch (order) {
+		case MADPlugImport:
 		{
 			Ptr				theXI;
 			XMPATCHHEADER	*pth;
@@ -193,7 +138,7 @@ static OSErr mainXI(void		*unused,
 				else {
 					MAD2KillInstrument(InsHeader, sample);
 					
-					bzero(InsHeader->name, sizeof(InsHeader->name));
+					memset(InsHeader->name, 0, sizeof(InsHeader->name));
 					
 					for (x = 0; x < 32; x++) {
 						if (fileName[x] == '\0') {
@@ -355,7 +300,7 @@ static OSErr mainXI(void		*unused,
 		}
 			break;
 			
-		case 'TEST':
+		case MADPlugTest:
 		{
 			Ptr	theSound;
 			
@@ -378,7 +323,7 @@ static OSErr mainXI(void		*unused,
 		}
 			break;
 			
-		case 'EXPL':
+		case MADPlugExport:
 			iFileCreate(file, 'XI  ');
 			iFileRefI = iFileOpenWrite(file);
 			
@@ -392,8 +337,7 @@ static OSErr mainXI(void		*unused,
 				
 				//BlockMoveData( "Extended Instrument:                       FastTracker v2.00   ", start, 0x42);
 				
-				//FIXME: get the proper escape sequences
-				memcpy(start, "Extended Instrument:                       FastTracker v2.00   ", 0x42);
+				memcpy(start, "Extended Instrument:                       \xA1\x46\x61stTracker v2.00   \x02\x01", 0x42);
 				
 				inOutCount = 0x42;
 				iWrite(inOutCount, start, iFileRefI);

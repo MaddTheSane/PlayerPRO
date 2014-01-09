@@ -857,9 +857,12 @@ static Ptr	ConvertMad2XM( MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 	
 	strncpy( mh->id, "Extended Module: ", sizeof(mh->id));
 	strncpy( mh->trackername, "FastTracker v2.00   ", sizeof(mh->trackername));
-	mh->version			= 0x104;													PPLE16( &mh->version);
-	mh->headersize		= HEADERSIZE;												PPLE32( &mh->headersize);
-	mh->songlength 		= theMAD->header->numPointers;	PPLE16( &mh->songlength);
+	mh->version			= 0x104;
+	PPLE16(&mh->version);
+	mh->headersize		= HEADERSIZE;
+	PPLE32(&mh->headersize);
+	mh->songlength 		= theMAD->header->numPointers;
+	PPLE16(&mh->songlength);
 	mh->restart 		= 0;															PPLE16( &mh->restart);
 	mh->numchn 			= theMAD->header->numChn;					PPLE16( &mh->numchn);
 	mh->numpat 			= theMAD->header->numPat;					PPLE16( &mh->numpat);

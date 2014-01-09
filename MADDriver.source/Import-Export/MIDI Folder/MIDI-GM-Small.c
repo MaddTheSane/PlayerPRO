@@ -247,7 +247,7 @@ void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, sh
 		}
 	}
 	
-	bzero(inst, sizeof(InstrData));
+	memset(inst, 0, sizeof(InstrData));
 	inst->no			= ins;
 	inst->volFade	= 900;
 	
