@@ -7,7 +7,7 @@
 //
 
 #import "PPInstrumentViewController.h"
-#import "PPInstrumentImporter.h"
+#import "PPInstrumentPlugHandler.h"
 #import "PPInstrumentImporterObject.h"
 #import "PPInstrumentObject.h"
 #import "PPSampleObject.h"
@@ -22,8 +22,10 @@
 #include "PPByteswap.h"
 #import "PPErrors.h"
 #import "UserDefaultKeys.h"
+#import "PPApp_AppDelegate.h"
 
 @interface PPInstrumentViewController ()
+@property (weak) PPDriver *theDriver;
 - (void)loadInstrumentsFromMusic;
 @end
 
@@ -55,16 +57,17 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Initialization code here.
+	if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
+		// Initialization code here.
 		NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
 		[center addObserver:self selector:@selector(colorsDidChange:) name:PPColorsDidChange object:nil];
-		[center addObserver:self selector:@selector(musicDidChange:) name:PPMusicDidChange object:nil];
 		instrumentInfo = [[InstrumentInfoController alloc] init];
 		instrumentInfo.delegate = self;
-    }
-    
-    return self;
+		self.filterHandler = [(PPApp_AppDelegate*)[[NSApplication sharedApplication] delegate] filterHandler];
+		self.importer = [(PPApp_AppDelegate*)[[NSApplication sharedApplication] delegate] instrumentPlugHandler];
+	}
+	
+	return self;
 }
 
 - (IBAction)toggleInfo:(id)sender
@@ -82,6 +85,7 @@
 	return [self importSampleFromURL:sampURL makeUserSelectInstrument:NO error:theErr];
 }
 
+#if 0
 - (BOOL)importSampleFromURL:(NSURL *)sampURL makeUserSelectInstrument:(BOOL)selIns error:(out NSError *__autoreleasing*)theErr;
 {
 	//TODO: handle selIns
@@ -307,6 +311,7 @@
 	
 	return YES;
 }
+#endif
 
 - (IBAction)importInstrument:(id)sender
 {
@@ -388,10 +393,10 @@
 
 - (void)awakeFromNib
 {
-    [super awakeFromNib];
-    
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	[super awakeFromNib];
+	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 	[instrumentView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
+	self.theDriver = self.currentDocument.theDriver;
 }
 
 - (void)dealloc
@@ -606,7 +611,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 		[waveFormImage setImage:nil];
 		return;
 	}
-	[instrumentSize setIntegerValue:[object dataSize]];
+	[instrumentSize setIntegerValue:[[object data] length]];
 	[instrumentLoopStart setIntegerValue:[object loopBegin]];
 	[instrumentLoopSize setIntegerValue:[object loopSize]];
 	[instrumentVolume setIntegerValue:[(PPSampleObject*)object volume]];

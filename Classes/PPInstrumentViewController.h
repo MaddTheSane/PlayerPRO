@@ -8,15 +8,15 @@
 
 #import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
-@class PPInstrumentImporter;
+@class PPInstrumentPlugHandler;
 @class InstrumentInfoController;
 @class PPFilterPlugHandler;
 @class PPDocument;
 
 @interface PPInstrumentViewController : NSViewController <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
-	PPInstrumentImporter *importer;
 	IBOutlet NSDrawer *infoDrawer;
 	IBOutlet NSTextField *instrumentSize;
 	IBOutlet NSTextField *instrumentLoopStart;
@@ -34,11 +34,9 @@
 	NSUndoManager *undoManager;
 }
 
-@property (strong) PPInstrumentImporter *importer;
-@property (nonatomic) MADMusic **curMusic;
-@property MADDriverRec **theDriver;
+@property (weak) PPInstrumentPlugHandler *importer;
 @property (strong) NSUndoManager *undoManager;
-@property (weak) IBOutlet PPFilterPlugHandler *filterHandler;
+@property (weak) PPFilterPlugHandler *filterHandler;
 @property (weak) IBOutlet PPDocument *currentDocument;
 
 - (BOOL)importSampleFromURL:(NSURL *)sampURL;

@@ -66,6 +66,9 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 @end
 
 @implementation PPApp_AppDelegate
+@synthesize digitalHandler;
+@synthesize filterHandler;
+@synthesize instrumentPlugHandler = instrumentImporter;
 @synthesize window;
 @synthesize madLib;
 - (void)setMadLib:(PPLibrary *)madLibb

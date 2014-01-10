@@ -37,6 +37,9 @@ extern __weak PPLibrary *globalMadLib;
 	
 	BOOL isQuitting;
 }
+@property (strong, readonly) PPInstrumentPlugHandler *instrumentPlugHandler;
+@property (strong, readonly) PPDigitalPlugHandler *digitalHandler;
+@property (strong, readonly) PPFilterPlugHandler *filterHandler;
 
 @property (weak) IBOutlet NSPanel *window;
 - (IBAction)showPreferences:(id)sender;
