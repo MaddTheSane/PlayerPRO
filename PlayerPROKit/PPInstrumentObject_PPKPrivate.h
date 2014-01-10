@@ -12,6 +12,7 @@
 {
 	NSMutableArray	*samples;
 }
+- (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus;
 
 @property InstrData theInstrument;
 @property (readwrite) NSInteger number;

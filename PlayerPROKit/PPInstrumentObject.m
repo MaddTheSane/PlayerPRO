@@ -34,7 +34,9 @@
 
 - (void)setMIDI:(short)MIDI
 {
+	[self willChangeValueForKey:@"MIDI"];
 	theInstrument.MIDI = MIDI;
+	[self didChangeValueForKey:@"MIDI"];
 }
 
 - (BOOL)isSoundOut
@@ -51,8 +53,14 @@
 	}
 }
 
+- (short)MIDIType
+{
+	return theInstrument.MIDIType;
+}
+
 - (void)setSoundOut:(BOOL)soundOut
 {
+	[self willChangeValueForKey:@"MIDIType"];
 	if (soundOut) {
 		if ([self isMIDIOut]) {
 			theInstrument.MIDIType = 2;
@@ -66,6 +74,7 @@
 			theInstrument.MIDIType = 3;
 		}
 	}
+	[self didChangeValueForKey:@"MIDIType"];
 }
 
 - (BOOL)isMIDIOut
@@ -84,6 +93,7 @@
 
 - (void)setMIDIOut:(BOOL)MIDIOut
 {
+	[self willChangeValueForKey:@"MIDIType"];
 	if (MIDIOut) {
 		if ([self isSoundOut]) {
 			theInstrument.MIDIType = 2;
@@ -97,6 +107,7 @@
 			theInstrument.MIDIType = 3;
 		}
 	}
+	[self didChangeValueForKey:@"MIDIType"];
 }
 
 - (Byte)volumeSize
@@ -106,7 +117,9 @@
 
 - (void)setVolumeSize:(Byte)volumeSize
 {
+	[self willChangeValueForKey:@"volumeSize"];
 	theInstrument.volSize = volumeSize;
+	[self didChangeValueForKey:@"volumeSize"];
 }
 
 - (Byte)panningSize
@@ -116,7 +129,9 @@
 
 - (void)setPanningSize:(Byte)panningSize
 {
+	[self willChangeValueForKey:@"panningSize"];
 	theInstrument.pannSize = panningSize;
+	[self didChangeValueForKey:@"panningSize"];
 }
 
 - (Byte)pitchSize
@@ -126,7 +141,9 @@
 
 - (void)setPitchSize:(Byte)pitchSize
 {
+	[self willChangeValueForKey:@"pitchSize"];
 	theInstrument.pitchSize = pitchSize;
+	[self didChangeValueForKey:@"pitchSize"];
 }
 
 - (Byte)volumeSustain
@@ -136,7 +153,9 @@
 
 - (void)setVolumeSustain:(Byte)volumeSustain
 {
+	[self willChangeValueForKey:@"volumeSustain"];
 	theInstrument.volSus = volumeSustain;
+	[self didChangeValueForKey:@"volumeSustain"];
 }
 
 - (Byte)volumeBegin
@@ -146,7 +165,9 @@
 
 - (void)setVolumeBegin:(Byte)volumeBegin
 {
+	[self willChangeValueForKey:@"volumeBegin"];
 	theInstrument.volBeg = volumeBegin;
+	[self didChangeValueForKey:@"volumeBegin"];
 }
 
 - (Byte)volumeEnd
@@ -156,7 +177,9 @@
 
 - (void)setVolumeEnd:(Byte)volumeEnd
 {
+	[self willChangeValueForKey:@"volumeEnd"];
 	theInstrument.volEnd = volumeEnd;
+	[self didChangeValueForKey:@"volumeEnd"];
 }
 
 - (Byte)panningSustain
@@ -166,7 +189,9 @@
 
 - (void)setPanningSustain:(Byte)panningSustain
 {
+	[self willChangeValueForKey:@"panningSustain"];
 	theInstrument.pannSus = panningSustain;
+	[self didChangeValueForKey:@"panningSustain"];
 }
 
 - (Byte)panningBegin
@@ -176,7 +201,9 @@
 
 - (void)setPanningBegin:(Byte)panningBegin
 {
+	[self willChangeValueForKey:@"panningBegin"];
 	theInstrument.pannBeg = panningBegin;
+	[self didChangeValueForKey:@"panningBegin"];
 }
 
 - (Byte)panningEnd
@@ -186,7 +213,9 @@
 
 - (void)setPanningEnd:(Byte)panningEnd
 {
+	[self willChangeValueForKey:@"panningEnd"];
 	theInstrument.pannEnd = panningEnd;
+	[self willChangeValueForKey:@"panningEnd"];
 }
 
 - (Byte)pitchSustain
@@ -196,7 +225,9 @@
 
 - (void)setPitchSustain:(Byte)pitchSustain
 {
+	[self willChangeValueForKey:@"pitchSustain"];
 	theInstrument.pitchSus = pitchSustain;
+	[self didChangeValueForKey:@"pitchSustain"];
 }
 
 - (Byte)pitchBegin
@@ -206,7 +237,9 @@
 
 - (void)setPitchBegin:(Byte)pitchBegin
 {
+	[self willChangeValueForKey:@"pitchBegin"];
 	theInstrument.pitchBeg = pitchBegin;
+	[self didChangeValueForKey:@"pitchBegin"];
 }
 
 - (Byte)pitchEnd
@@ -216,7 +249,9 @@
 
 - (void)setPitchEnd:(Byte)pitchEnd
 {
+	[self willChangeValueForKey:@"pitchEnd"];
 	theInstrument.pitchEnd = pitchEnd;
+	[self didChangeValueForKey:@"pitchEnd"];
 }
 
 - (Byte)vibratoDepth
@@ -226,7 +261,9 @@
 
 - (void)setVibratoDepth:(Byte)vibratoDepth
 {
+	[self willChangeValueForKey:@"vibratoDepth"];
 	theInstrument.vibDepth = vibratoDepth;
+	[self didChangeValueForKey:@"vibratoDepth"];
 }
 
 - (Byte)vibratoRate
@@ -236,7 +273,9 @@
 
 - (void)setVibratoRate:(Byte)vibratoRate
 {
+	[self willChangeValueForKey:@"vibratoRate"];
 	theInstrument.vibRate = vibratoRate;
+	[self didChangeValueForKey:@"vibratoRate"];
 }
 
 - (NSArray*)samples
@@ -389,7 +428,7 @@
 	theInstrument.numSamples++;
 }
 
-- (void)replaceObjectInSamplesAtIndex:(short)index withObject:(PPSampleObject *)object
+- (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(PPSampleObject *)object
 {
 	NSAssert(number != -1, @"The instrument should be in a Music Object wrapper BEFORE adding samples");
 	if (index >= MAXSAMPLE || index < 0) {
@@ -407,19 +446,30 @@
 	return [samples count];
 }
 
+- (Byte)volumeType
+{
+	return theInstrument.volType;
+}
+
 - (void)setVolumeTypeOn
 {
+	[self willChangeValueForKey:@"volumeType"];
 	theInstrument.volType = 0;
+	[self didChangeValueForKey:@"volumeType"];
 }
 
 - (void)setVolumeTypeSustain
 {
+	[self willChangeValueForKey:@"volumeType"];
 	theInstrument.volType = 1;
+	[self didChangeValueForKey:@"volumeType"];
 }
 
 - (void)setVolumeTypeLoop
 {
+	[self willChangeValueForKey:@"volumeType"];
 	theInstrument.volType = 2;
+	[self didChangeValueForKey:@"volumeType"];
 }
 
 - (BOOL)isVolumeTypeOn
@@ -437,19 +487,30 @@
 	return theInstrument.volType == 2;
 }
 
+- (Byte)panningType
+{
+	return theInstrument.pannType;
+}
+
 - (void)setPanningTypeOn
 {
+	[self willChangeValueForKey:@"panningType"];
 	theInstrument.pannType = 0;
+	[self didChangeValueForKey:@"panningType"];
 }
 
 - (void)setPanningTypeSustain
 {
+	[self willChangeValueForKey:@"panningType"];
 	theInstrument.pannType = 1;
+	[self didChangeValueForKey:@"panningType"];
 }
 
 - (void)setPanningTypeLoop
 {
+	[self willChangeValueForKey:@"panningType"];
 	theInstrument.pannType = 2;
+	[self didChangeValueForKey:@"panningType"];
 }
 
 - (BOOL)isPanningTypeOn
@@ -486,6 +547,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
+	[self writeBackToStruct];
 	return [[[self class] allocWithZone:zone] initWithMusic:_theMus instrumentIndex:theInstrument.no];
 }
 

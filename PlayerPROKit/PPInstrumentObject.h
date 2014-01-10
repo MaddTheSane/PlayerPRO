@@ -18,8 +18,6 @@
 	NSInteger		number;				// Instrument number
 }
 + (instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObjectWrapper*)mus;
-
-- (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus;
 - (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
 
 @property (weak) PPMusicObjectWrapper *theMus;
@@ -30,6 +28,7 @@
 @property (readonly) short firstSample;
 
 @property short MIDI;
+@property (readonly) short MIDIType;
 @property (getter = isSoundOut) BOOL soundOut;
 @property (getter = isMIDIOut) BOOL MIDIOut;
 
@@ -52,12 +51,16 @@
 @property Byte vibratoDepth;
 @property Byte vibratoRate;
 
+@property (readonly) Byte volumeType;
+
 - (BOOL)isVolumeTypeOn;
 - (void)setVolumeTypeOn;
 - (BOOL)isVolumeTypeSustain;
 - (void)setVolumeTypeSustain;
 - (BOOL)isVolumeTypeLoop;
 - (void)setVolumeTypeLoop;
+
+@property (readonly) Byte panningType;
 
 - (BOOL)isPanningTypeOn;
 - (void)setPanningTypeOn;
@@ -67,11 +70,11 @@
 - (void)setPanningTypeLoop;
 
 - (void)addSamplesObject:(PPSampleObject *)object;
-- (void)replaceObjectInSamplesAtIndex:(short)index withObject:(PPSampleObject *)object;
+- (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(PPSampleObject *)object;
 - (NSUInteger)countOfSamples;
 
-- (NSArray *)children;
+- (NSArray *)children DEPRECATED_ATTRIBUTE;
 - (PPSampleObject*)childAtIndex:(NSUInteger)idx;
-- (NSUInteger)countOfChildren;
+- (NSUInteger)countOfChildren DEPRECATED_ATTRIBUTE;
 
 @end
