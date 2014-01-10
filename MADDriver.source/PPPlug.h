@@ -62,8 +62,8 @@ PPEXPORT OSErr inAddSoundToMAD(void			*theSound,
 
 PPEXPORT OSErr inAddSoundToMADCString(void			*theSound,
 									  size_t		sndLen,
-									  long			loopStart,
-									  long			loopEnd,
+									  int			loopStart,
+									  int			loopEnd,
 									  short			sS,
 									  short			bFreq,
 									  unsigned int	rate,
@@ -74,9 +74,7 @@ PPEXPORT OSErr inAddSoundToMADCString(void			*theSound,
 									  short			*sampleID);
 
 PPEXPORT sData* inMADCreateSample();
-#ifndef __PLAYERPROCORE_PPPRIVATE__
 PPEXPORT void ConvertInstrumentIn(Byte *tempPtr, size_t sSize);
-#endif
 PPEXPORT Cmd* GetCmd(short row, short track, Pcmd* myPcmd);
 
 PPEXPORT const CFStringRef kMadPlugMenuNameKey;

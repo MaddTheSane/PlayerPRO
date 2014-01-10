@@ -183,7 +183,7 @@ static OSErr PPMADInfoFile(const char *AlienFile, PPInfoRec	*InfoRec)
 	long	fileSize;
 	UNFILE	fileID;
 	
-	theMAD = (MADSpec*) malloc(sizeof( MADSpec) + 200);
+	theMAD = (MADSpec*) malloc(sizeof(MADSpec) + 200);
 	
 	fileID = iFileOpenRead(AlienFile);
 	if (!fileID) {
@@ -205,18 +205,13 @@ static OSErr PPMADInfoFile(const char *AlienFile, PPInfoRec	*InfoRec)
 	InfoRec->totalInstruments = theMAD->numInstru;
 	InfoRec->fileSize = fileSize;
 	
-	free( theMAD);	
+	free(theMAD);
 	theMAD = NULL;
 	
 	return noErr;
 }
 
-OSErr CallImportPlug(MADLibrary				*inMADDriver,
-					 short					PlugNo,			// CODE du plug
-					 OSType					order,
-					 char					*AlienFile,
-					 MADMusic				*theNewMAD,
-					 PPInfoRec				*info)
+OSErr CallImportPlug(MADLibrary *inMADDriver, short PlugNo, OSType order, char *AlienFile, MADMusic *theNewMAD, PPInfoRec *info)
 {
 	MADDriverSettings driverSettings = {0};
 	
@@ -303,7 +298,7 @@ OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
 		if (!strcmp( kindFile, inMADDriver->ThePlug[i].type)) {
-			*theNewMAD = (MADMusic*) calloc(sizeof(MADMusic), 1);
+			*theNewMAD = (MADMusic*)calloc(sizeof(MADMusic), 1);
 			if (!theNewMAD)
 				return MADNeedMemory;
 			
@@ -330,10 +325,10 @@ OSErr CheckMADFile(char* name)
 	else {
 		iRead(CharlMADcheckLength, charl, refNum);
 		
-		if (charl[ 0] == 'M' &&							// MADK
-		   charl[ 1] == 'A' &&
-		   charl[ 2] == 'D' &&
-		   charl[ 3] == 'K')
+		if (charl[0] == 'M' &&	// MADK
+			charl[1] == 'A' &&
+			charl[2] == 'D' &&
+			charl[3] == 'K')
 			err = noErr;
 		else
 			err = MADIncompatibleFile;
@@ -372,7 +367,7 @@ OSErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 	}
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
-		if (CallImportPlug( inMADDriver, i, MADPlugTest, AlienFile, NULL, &InfoRec) == noErr) {
+		if (CallImportPlug(inMADDriver, i, MADPlugTest, AlienFile, NULL, &InfoRec) == noErr) {
 			strcpy(type, inMADDriver->ThePlug[i].type);
 			return noErr;
 		}
@@ -400,9 +395,8 @@ OSErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MAD
 	PPInfoRec	InfoRec;
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
-		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type))
 			return CallImportPlug(inMADDriver, i, MADPlugExport, AlienFile, theNewMAD, &InfoRec);
-		}
 	}
 	return MADCannotFindPlug;
 }
@@ -414,9 +408,8 @@ OSErr PPTestFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile)
 	PPInfoRec	InfoRec;
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
-		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type))
 			return CallImportPlug(inMADDriver, i, MADPlugTest, AlienFile, &aMAD, &InfoRec);
-		}
 	}
 	return MADCannotFindPlug;
 }

@@ -69,15 +69,15 @@ void 	Play8PolyPhonic(MADDriverRec *intDriver);
 
 /*** 16 Bits ***/
 
-void 	Sampler16Add( Channel *curVoice,  short	*ASCBuffer, MADDriverRec* intDriver);
-void 	Sampler16Addin16( Channel *curVoice,  short	*ASCBuffer, MADDriverRec* intDriver);
-void 	Sample16BufferAdd( Channel *curVoice,  short	*ASCBuffer, MADDriverRec* intDriver);
-void 	Play16Stereo( MADDriverRec* intDriver);
-void 	Sampler16AddPoly( Channel *curVoice,  short	*ASCBuffer, short chanNo, MADDriverRec* intDriver);
-void 	Sampler16Addin16Poly( Channel *curVoice,  short	*ASCBuffer, short chanNo, MADDriverRec* intDriver);
-void 	Sample16BufferAddPoly( Channel *curVoice,  short	*ASCBuffer, short chanNo, MADDriverRec* intDriver);
-void 	Play16PolyPhonic( MADDriverRec* intDriver);
-void 	Play16Mono( MADDriverRec* intDriver);
+void 	Sampler16Add(Channel *curVoice, short *ASCBuffer, MADDriverRec* intDriver);
+void 	Sampler16Addin16(Channel *curVoice, short *ASCBuffer, MADDriverRec* intDriver);
+void 	Sample16BufferAdd(Channel *curVoice, short *ASCBuffer, MADDriverRec* intDriver);
+void 	Play16Stereo(MADDriverRec* intDriver);
+void 	Sampler16AddPoly(Channel *curVoice, short *ASCBuffer, short chanNo, MADDriverRec* intDriver);
+void 	Sampler16Addin16Poly(Channel *curVoice, short *ASCBuffer, short chanNo, MADDriverRec* intDriver);
+void 	Sample16BufferAddPoly(Channel *curVoice, short *ASCBuffer, short chanNo, MADDriverRec* intDriver);
+void 	Play16PolyPhonic(MADDriverRec* intDriver);
+void 	Play16Mono(MADDriverRec* intDriver);
 
 /*** 20 Bits ***/
 //TODO
@@ -87,9 +87,9 @@ void 	Play16Mono( MADDriverRec* intDriver);
 
 /*** Effects ***/
 
-void 	DoEffect( Channel *ch, short call, MADDriverRec *intDriver);
-void 	SetUpEffect( Channel *ch, MADDriverRec *intDriver);
-void	DoVolCmd( Channel *ch, short call, MADDriverRec *intDriver);
+void 	DoEffect(Channel *ch, short call, MADDriverRec *intDriver);
+void 	SetUpEffect(Channel *ch, MADDriverRec *intDriver);
+void	DoVolCmd(Channel *ch, short call, MADDriverRec *intDriver);
 
 /*** Interruption Functions ***/
 
@@ -151,9 +151,7 @@ void	MInitImportPlug(MADLibrary *inMADDriver, const char*);
 void	CloseImportPlug(MADLibrary *inMADDriver);
 OSErr	CheckMADFile(char *AlienFile);
 
-#ifndef __PPPLUGH__
 PPEXPORT void ConvertInstrumentIn(Byte *tempPtr, size_t sSize);
-#endif
 
 #if defined _MAC_H && !TARGET_OS_IPHONE
 void SetOSType(CFURLRef, OSType);

@@ -29,14 +29,9 @@ sData* inMADCreateSample()
 	if (curData == NULL)
 		return NULL;
 	
-	curData->size		= 0;
-	curData->loopBeg	= 0;
-	curData->loopSize	= 0;
 	curData->vol		= MAX_VOLUME;
 	curData->c2spd		= NOFINETUNE;
-	curData->loopType	= 0;
 	curData->amp		= 8;
-	curData->relNote	= 0;
 	curData->data		= NULL;
 	
 	return curData;
@@ -71,11 +66,10 @@ OSErr inAddSoundToMAD(void			*theSound,
 					  short			*sampleID)
 {
 	OSErr theErr = noErr;
-	char *cName = malloc(name[0] + 1);
+	char *cName = calloc(name[0] + 1, 1);
 	if (!cName)
 		return MADNeedMemory;
 	memcpy(cName, &name[1], name[0]);
-	cName[name[0]] = '\0';
 	
 	theErr = inAddSoundToMADCString(theSound, sndLen, lS, lE, sS, bFreq, rate, stereo, cName, InsHeader, sample, sampleID);
 	
@@ -86,8 +80,8 @@ OSErr inAddSoundToMAD(void			*theSound,
 
 OSErr inAddSoundToMADCString(void			*theSound,
 							 size_t			sndLen,
-							 long			loopStart,
-							 long			loopEnd,
+							 int			loopStart,
+							 int			loopEnd,
 							 short			sS,
 							 short			bFreq,
 							 unsigned int	rate,
@@ -100,13 +94,8 @@ OSErr inAddSoundToMADCString(void			*theSound,
 	long 	inOutBytes;
 	sData	*curData;
 	
-	if (theSound == NULL)
-		return MADParametersErr;
-	
-	if (!sampleID || !InsHeader || !sample)
-		return MADParametersErr;
-	
-	if (*sampleID > MAXSAMPLE)
+	if (theSound == NULL || !sampleID || !InsHeader ||
+		!sample ||*sampleID > MAXSAMPLE)
 		return MADParametersErr;
 	
 	inOutBytes = sndLen;
@@ -130,8 +119,8 @@ OSErr inAddSoundToMADCString(void			*theSound,
 	curData->data = theSound;
 	
 	curData->size		= (int)inOutBytes;
-	curData->loopBeg	= (int)loopStart;
-	curData->loopSize	= (int)(loopEnd - loopStart);
+	curData->loopBeg	= loopStart;
+	curData->loopSize	= loopEnd - loopStart;
 	curData->vol		= 64;
 	curData->amp		= sS;
 	curData->c2spd		= rate;

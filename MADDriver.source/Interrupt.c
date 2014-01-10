@@ -31,16 +31,16 @@
 extern short		gOutNodeRefNum, gOutputPortRefNum;
 #endif
 
-void SampleMIDI( Channel *curVoice, short channel, short curN, MADDriverRec *intDriver);
-void ApplyFilters( MADDriverRec *intDriver);
-void ApplySurround( MADDriverRec *intDriver);
-void SendMIDIClock( MADDriverRec *intDriver, Byte MIDIByte);
-void SendMIDITimingClock( MADDriverRec *intDriver);
-void ConvertInstrument( Byte *tempPtr, size_t sSize);
-Boolean IsVSTChanEffect( MADDriverRec *, short channel);
+void SampleMIDI(Channel *curVoice, short channel, short curN, MADDriverRec *intDriver);
+void ApplyFilters(MADDriverRec *intDriver);
+void ApplySurround(MADDriverRec *intDriver);
+void SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte);
+void SendMIDITimingClock(MADDriverRec *intDriver);
+void ConvertInstrument(Byte *tempPtr, size_t sSize);
 
-void ProcessVisualPlug( MADDriverRec*, short*, SInt32);
-void ProcessVSTPlug( MADDriverRec*, SInt32*, SInt32, SInt32);
+Boolean IsVSTChanEffect(MADDriverRec *, short channel);
+void ProcessVisualPlug(MADDriverRec*, short*, SInt32);
+void ProcessVSTPlug(MADDriverRec*, SInt32*, SInt32, SInt32);
 
 void ConvertInstrument(Byte *tempPtr, size_t sSize)
 {
