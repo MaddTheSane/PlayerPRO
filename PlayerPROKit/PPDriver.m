@@ -32,6 +32,86 @@
 	return MADGetDriverSettings(theRec);
 }
 
+- (OSErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo
+{
+	return [self playSoundDataFromPointer:theSnd withSize:sndSize fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:0xFF withLoopStartingAt:0 andLoopLength:0];
+
+}
+
+- (OSErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote
+{
+	return [self playSoundDataFromPointer:theSnd withSize:sndSize fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:theNote withLoopStartingAt:0 andLoopLength:0];
+}
+
+- (OSErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopInRange:(NSRange)loopRange
+{
+	if (loopRange.location == NSNotFound) {
+		return MADParametersErr;
+	}
+	return [self playSoundDataFromPointer:theSnd withSize:sndSize fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:0xFF withLoopStartingAt:loopRange.location andLoopLength:loopRange.length];
+}
+
+- (OSErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopInRange:(NSRange)loopRange
+{
+	if (loopRange.location == NSNotFound) {
+		return MADParametersErr;
+	}
+	return [self playSoundDataFromPointer:theSnd withSize:sndSize fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:theNote withLoopStartingAt:loopRange.location andLoopLength:loopRange.length];
+
+}
+
+- (OSErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen
+{
+	return [self playSoundDataFromPointer:theSnd withSize:sndSize fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:0xFF withLoopStartingAt:loopStart andLoopLength:loopLen];
+}
+
+- (OSErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen
+{
+	return MADPlaySoundData(theRec, theSnd, sndSize, theChan, theNote, amp, loopStart, loopLen, rate, stereo);
+}
+
+- (OSErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo
+{
+	return [self playSoundDataFromPointer:[theSnd bytes] withSize:[theSnd length] fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:0xFF withLoopStartingAt:0 andLoopLength:0];
+
+}
+
+- (OSErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote
+{
+	return [self playSoundDataFromPointer:[theSnd bytes] withSize:[theSnd length] fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:theNote withLoopStartingAt:0 andLoopLength:0];
+}
+
+- (OSErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopInRange:(NSRange)loopRange
+{
+	if (loopRange.location == NSNotFound) {
+		return MADParametersErr;
+	}
+	return [self playSoundDataFromPointer:[theSnd bytes] withSize:[theSnd length] fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:0xFF withLoopStartingAt:loopRange.location andLoopLength:loopRange.length];
+}
+
+- (OSErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopInRange:(NSRange)loopRange
+{
+	if (loopRange.location == NSNotFound) {
+		return MADParametersErr;
+	}
+	return [self playSoundDataFromPointer:[theSnd bytes] withSize:[theSnd length] fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:theNote withLoopStartingAt:loopRange.location andLoopLength:loopRange.length];
+}
+
+- (OSErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen
+{
+	return [self playSoundDataFromPointer:[theSnd bytes] withSize:[theSnd length] fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:0xFF withLoopStartingAt:loopStart andLoopLength:loopLen];
+}
+
+- (OSErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen
+{
+	return [self playSoundDataFromPointer:[theSnd bytes] withSize:[theSnd length] fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:theNote withLoopStartingAt:loopStart andLoopLength:loopLen];
+}
+
+- (int)availableChannel
+{
+	return 0; //TODO:implement!
+}
+
 - (OSErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett
 {
 	[self willChangeValueForKey:@"driverSettings"];

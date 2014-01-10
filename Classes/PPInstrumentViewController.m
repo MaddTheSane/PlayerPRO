@@ -384,6 +384,16 @@
 	[NSApp beginSheet:[instrumentInfo window] modalForWindow:[self.currentDocument windowForSheet] modalDelegate:instrumentInfo didEndSelector:@selector(instrumentSheetDidEnd:returnCode:contextInfo:) contextInfo:NULL];
 }
 
+- (void)playSampleFromInstrument:(short)insNum sampleNumber:(short)sampNum volume:(Byte)theVol note:(Byte)theNote
+{
+	
+}
+
+- (void)playSampleFromInstrument:(short)insNum sampleNumber:(short)sampNum
+{
+	[self playSampleFromInstrument:insNum sampleNumber:sampNum volume:0xFF note:0xFF];
+}
+
 - (IBAction)playSample:(id)sender
 {
 	NSInteger tag = [sender tag];
