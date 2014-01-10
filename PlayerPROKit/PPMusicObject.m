@@ -380,6 +380,19 @@ end:
 	
 }
 
+- (BOOL)addInstrument:(PPInstrumentObject*)theIns
+{
+	if ([[self instruments] count] >= MAXINSTRU) {
+		return NO;
+	}
+	NSIndexSet *addIDXSet =[NSIndexSet indexSetWithIndex:[self.instruments count]];
+	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:addIDXSet forKey:@"instruments"];
+	theIns.number = [self.instruments count];
+	[self.instruments addObject:theIns];
+	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:addIDXSet forKey:@"instruments"];
+	return YES;
+}
+
 - (instancetype)initWithPath:(NSString *)url
 {
 	return self = [self initWithURL:[NSURL fileURLWithPath:url]];

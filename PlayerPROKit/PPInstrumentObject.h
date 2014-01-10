@@ -17,8 +17,10 @@
 {
 	NSInteger		number;				// Instrument number
 }
++ (instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObjectWrapper*)mus;
 
-- (id)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
+- (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus;
+- (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
 
 @property (weak) PPMusicObjectWrapper *theMus;
 @property (copy) NSString *name;

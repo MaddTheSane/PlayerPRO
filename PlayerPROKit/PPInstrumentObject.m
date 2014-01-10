@@ -249,34 +249,60 @@
 	return [samples count];
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (void)setNumber:(NSInteger)numberr
 {
-	return [[PPInstrumentObject allocWithZone:zone] initWithMusic:_theMus instrumentIndex:theInstrument.no];
+	[self willChangeValueForKey:@"number"];
+	theInstrument.no = number = numberr;
+	theInstrument.firstSample = MAXSAMPLE * numberr;
+	[self didChangeValueForKey:@"number"];
 }
 
-- (id)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
+- (NSInteger)number
 {
+	return number;
+}
+
++ (instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObjectWrapper*)mus
+{
+	PPInstrumentObject *insObj = [[self alloc] initWithMusic:mus];
+	[mus addInstrument:insObj];
+	
+	return insObj;
+}
+
+- (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus;
+{
+	if (!mus) {
+		return nil;
+	}
 	if (self = [super init]) {
-		if (!mus) {
-			return nil;
-		}
 		_theMus = mus;
-		
+		samples = [[NSMutableArray alloc] init];
+		theInstrument.no = number = -1;
+		theInstrument.firstSample = 0;
+		MADResetInstrument(&theInstrument);
+		name = @"";
+	}
+	return self;
+}
+
+- (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
+{
+	if (self = [self initWithMusic:mus]) {
 		theInstrument = mus._currentMusic->fid[insIdx];
 		samples = [[NSMutableArray alloc] initWithCapacity:theInstrument.numSamples];
 		{
 			int sDataCount = theInstrument.numSamples + theInstrument.firstSample;
 			
 			for (int i = theInstrument.firstSample; i < sDataCount; i++) {
-				//TODO:
 				PPSampleObject *sObj = [[PPSampleObject alloc] initWithsData:mus._currentMusic->sample[i]];
 				sObj.sampleIndex = i % MAXSAMPLE;
 				sObj.instrumentIndex = insIdx;
 				[samples addObject:sObj];
 			}
 		}
-		self.name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
-		theInstrument.no = number = insIdx;/*tempData->no;*/
+		name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
+		theInstrument.no = number = insIdx;
 		//In case it's malformed, i.e. from CreateFreeMADK()
 		theInstrument.firstSample = MAXSAMPLE * insIdx; /*tempData->firstSample;*/
 	}
@@ -351,21 +377,29 @@
 
 - (void)addSamplesObject:(PPSampleObject *)object
 {
+	NSAssert(number != -1, @"The instrument should be in a Music Object wrapper BEFORE adding samples");
 	if (self.sampleCount >= MAXSAMPLE) {
 		return;
 	}
+	object = [object copy];
+	object.sampleIndex = self.sampleCount;
+	object.instrumentIndex = number;
+	
 	[samples addObject:object];
 	theInstrument.numSamples++;
-	//theMus->hasChanged = TRUE;
 }
 
 - (void)replaceObjectInSamplesAtIndex:(short)index withObject:(PPSampleObject *)object
 {
+	NSAssert(number != -1, @"The instrument should be in a Music Object wrapper BEFORE adding samples");
 	if (index >= MAXSAMPLE || index < 0) {
 		return;
 	}
+	object = [object copy];
+	object.sampleIndex = index;
+	object.instrumentIndex = number;
+	
 	samples[index] = object;
-	//theMus->hasChanged = TRUE;
 }
 
 - (NSUInteger)countOfSamples
@@ -446,6 +480,13 @@
 - (NSUInteger)countOfChildren
 {
 	return [samples count];
+}
+
+#pragma mark NSCopying protocol
+
+- (id)copyWithZone:(NSZone *)zone
+{
+	return [[[self class] allocWithZone:zone] initWithMusic:_theMus instrumentIndex:theInstrument.no];
 }
 
 #pragma mark NSFastEnumeration protocol

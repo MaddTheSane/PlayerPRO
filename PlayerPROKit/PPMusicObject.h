@@ -12,6 +12,7 @@
 
 @class PPDriver;
 @class PPLibrary;
+@class PPInstrumentObject;
 
 @interface PPMusicObject : NSObject
 
@@ -84,6 +85,8 @@
 - (OSErr)createCopyMusicToURL:(NSURL *)tosave;
 
 + (OSErr)info:(PPInfoRec *)theInfo fromTrackerAtURL:(NSURL *)thURL;
+
+- (BOOL)addInstrument:(PPInstrumentObject*)theIns;
 
 #pragma mark Document-based code
 //For use with document classes, like NSDocument or UIDocument

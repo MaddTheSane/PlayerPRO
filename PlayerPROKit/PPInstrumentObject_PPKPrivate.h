@@ -14,4 +14,5 @@
 }
 
 @property InstrData theInstrument;
+@property (readwrite) NSInteger number;
 @end
