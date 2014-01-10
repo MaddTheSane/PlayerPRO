@@ -102,7 +102,7 @@ static OSErr mainWave(void					*unused,
 				}
 				CFRelease(lastPath);
 				
-				inAddSoundToMADCString(theSound, sndLen, lS, lE, sS, 60, rate, stereo, shortName, InsHeader, sample, sampleID);
+				inAddSoundToMADCString(theSound, sndLen, (int)lS, (int)lE, sS, 60, rate, stereo, shortName, InsHeader, sample, sampleID);
 				free(shortName);
 			}
 		}

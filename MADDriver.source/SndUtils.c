@@ -71,7 +71,7 @@ OSErr inAddSoundToMAD(void			*theSound,
 		return MADNeedMemory;
 	memcpy(cName, &name[1], name[0]);
 	
-	theErr = inAddSoundToMADCString(theSound, sndLen, lS, lE, sS, bFreq, rate, stereo, cName, InsHeader, sample, sampleID);
+	theErr = inAddSoundToMADCString(theSound, sndLen, (int)lS, (int)lE, sS, bFreq, rate, stereo, cName, InsHeader, sample, sampleID);
 	
 	free(cName);
 	return theErr;
