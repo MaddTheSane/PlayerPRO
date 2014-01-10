@@ -176,7 +176,7 @@ bool MADDriverClass::LoadMusic(entry_ref* ref, OSType type, bool playIt)
 	
 	libraryError = MADMusicIdentifyCString(MADLib, plugName, filePath.Path());
 	if (libraryError == noErr) {
-		libraryError = MADLoadMusicFileCString( MADLib, &curMusic, plugName, filePath.Path() );
+		libraryError = MADLoadMusicFileCString(MADLib, &curMusic, plugName, filePath.Path());
 		if (libraryError == noErr) {
 			MADAttachDriverToMusic(curDriverRec, curMusic);
 			if (playIt)

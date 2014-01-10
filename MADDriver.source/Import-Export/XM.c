@@ -659,7 +659,7 @@ static OSErr XMReadInstruments(MADMusic *theMAD, MADDriverSettings *init)
 static OSErr XM_Load(Ptr theXM, size_t XMSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	int		i;
-	SInt32	inOutCount, x;
+	SInt32	inOutCount;
 	OSErr	iErr = noErr;
 	
 	theXMRead = theXM;
@@ -689,7 +689,7 @@ static OSErr XM_Load(Ptr theXM, size_t XMSize, MADMusic *theMAD, MADDriverSettin
 	/** MAD ALLOCATION **/
 	/********************/
 	
-	inOutCount = sizeof( MADSpec);
+	inOutCount = sizeof(MADSpec);
 	theMAD->header = (MADSpec*)calloc(inOutCount, 1);
 	if (theMAD->header == NULL)
 		return MADNeedMemory;
@@ -722,7 +722,6 @@ static OSErr XM_Load(Ptr theXM, size_t XMSize, MADMusic *theMAD, MADDriverSettin
 	if (mh->flags & 1)
 		theMAD->header->XMLinear = true;
 	
-	x = 1;
 	for (i = 0; i < MAXTRACK; i++) {
 		/*	if (x > 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
 		 else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;

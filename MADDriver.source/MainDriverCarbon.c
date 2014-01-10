@@ -12,9 +12,8 @@
 
 OSErr MADLoadMusicFSRef(MADLibrary *lib, MADMusic **music, char *plugType, FSRefPtr theRef)
 {
-	if (theRef == NULL) {
+	if (theRef == NULL)
 		return MADParametersErr;
-	}
 	
 	CFURLRef tempURL;
 	OSErr returnErr = noErr;
@@ -29,9 +28,8 @@ OSErr MADLoadMusicFSpFile(MADLibrary *lib, MADMusic **music, char *plugType, FSS
 #ifdef __LP64__
 	return MADOrderNotImplemented;
 #else
-	if (theSpec == NULL) {
+	if (theSpec == NULL)
 		return MADParametersErr;
-	}
 	
 	FSRef tempRef;
 	FSpMakeFSRef(theSpec, &tempRef);
@@ -41,9 +39,8 @@ OSErr MADLoadMusicFSpFile(MADLibrary *lib, MADMusic **music, char *plugType, FSS
 
 OSErr MADMusicIdentifyFSRef(MADLibrary *lib, char *type, FSRefPtr theRef)
 {
-	if (theRef == NULL) {
+	if (theRef == NULL)
 		return MADParametersErr;
-	}
 
 	CFURLRef tempURL;
 	OSErr returnErr = noErr;
@@ -58,9 +55,8 @@ OSErr MADMusicIdentifyFSpFile(MADLibrary *lib, char *type, FSSpecPtr theSpec)
 #ifdef __LP64__
 	return MADOrderNotImplemented;
 #else
-	if (theSpec == NULL) {
+	if (theSpec == NULL)
 		return MADParametersErr;
-	}
 	
 	FSRef tempRef;
 	FSpMakeFSRef(theSpec, &tempRef);

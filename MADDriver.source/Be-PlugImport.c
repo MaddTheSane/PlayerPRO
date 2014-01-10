@@ -84,7 +84,7 @@ OSErr PPTestFile(char *kindFile, char *AlienFile)
 	
 	for(i = 0; i < inMADDriver->TotalPlug; i++) {
 		if(!strcmp(kindFile, inMADDriver->ThePlug[i].type))
-			return(CallImportPlug( i, MADPlugTest, AlienFile, &aMAD, &InfoRec));
+			return (CallImportPlug(i, MADPlugTest, AlienFile, &aMAD, &InfoRec));
 	}
 	return MADCannotFindPlug;
 }
@@ -158,7 +158,7 @@ OSErr PPImportFile(MADLibrary *MADLib, char *kindFile, char *AlienFile, MADMusic
 	for(i = 0; i < inMADDriver->TotalPlug; i++) {
 		if(!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
 			*theNewMAD = (MADMusic*)calloc(sizeof(MADMusic), 1);
-			if( !*theNewMAD)
+			if (!*theNewMAD)
 				return MADNeedsMemory;
 			//TODO: clean-up if there's a failure.
 			return CallImportPlug(i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
@@ -210,7 +210,7 @@ Boolean	MADPlugAvailable(char *kindFile)
 	if(!strcmp(kindFile, "MADK"))
 		return true;
 	
-	for( i = 0; i < inMADDriver->TotalPlug; i++) {
+	for (i = 0; i < inMADDriver->TotalPlug; i++) {
 		if(!strcmp(kindFile, inMADDriver->ThePlug[i].type))
 			return true;
 	}
@@ -305,7 +305,7 @@ void CloseImportPlug(MADLibrary *lib)
 {
 	short i;
 	
-	for( i = 0; i < lib->TotalPlug; i++)
+	for (i = 0; i < lib->TotalPlug; i++)
 		unload_add_on(lib->ThePlug[i].hLibrary);
 	
 	free(lib->ThePlug);

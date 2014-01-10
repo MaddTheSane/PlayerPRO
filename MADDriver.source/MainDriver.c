@@ -3076,7 +3076,7 @@ OSErr MADPlaySoundDataSYNC( MADDriverRec *MDriver, char *soundPtr, long size, lo
 }
 #endif
 
-OSErr MADPlaySoundData( MADDriverRec *MDriver, char *soundPtr, size_t size, SInt32 channel, SInt32 note, SInt32 amplitude, size_t loopBeg, size_t loopSize, unsigned int rate, Boolean stereo)
+OSErr MADPlaySoundData(MADDriverRec *MDriver, const char *soundPtr, size_t size, int channel, Byte note, int amplitude, size_t loopBeg, size_t loopSize, unsigned int rate, Boolean stereo)
 {
 	Channel *curVoice;
 	
@@ -3089,10 +3089,10 @@ OSErr MADPlaySoundData( MADDriverRec *MDriver, char *soundPtr, size_t size, SInt
 	curVoice = &MDriver->chan[channel];
 	
 	curVoice->prevPtr		= NULL;
-	curVoice->samplePtr		= soundPtr;
+	curVoice->samplePtr		= (char*)soundPtr;
 	curVoice->stereo		= stereo;
 	
-	curVoice->maxPtr = curVoice->curPtr = curVoice->begPtr = soundPtr;
+	curVoice->maxPtr = curVoice->curPtr = curVoice->begPtr = (char*)soundPtr;
 	curVoice->maxPtr		+= size;
 	curVoice->sizePtr		= size;
 	curVoice->lAC			= 0;

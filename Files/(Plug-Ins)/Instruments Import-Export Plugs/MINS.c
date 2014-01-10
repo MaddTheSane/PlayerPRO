@@ -125,9 +125,9 @@ static OSErr mainMINs(void			*unused,
 				}
 				
 				CFReadStreamClose(readStream);
-				CFRelease(readStream);
 			} else
 				myErr = MADReadingErr;
+			CFRelease(readStream);
 			
 			break;
 			
@@ -148,7 +148,7 @@ static OSErr mainMINs(void			*unused,
 				if (theSound == NULL) {
 					CFReadStreamClose(readStream);
 					CFRelease(readStream);
-					myErr = MADNeedMemory;
+					return MADNeedMemory;
 				} else {
 					CFReadStreamRead(readStream, theSound, inOutCount);
 					ByteswapInstrument((InstrData*)theSound);
@@ -158,9 +158,9 @@ static OSErr mainMINs(void			*unused,
 				}
 				
 				CFReadStreamClose(readStream);
-				CFRelease(readStream);
 			} else
 				myErr = MADReadingErr;
+			CFRelease(readStream);
 			
 			break;
 			
@@ -211,9 +211,9 @@ static OSErr mainMINs(void			*unused,
 					free(copydataData);
 				}
 				CFWriteStreamClose(writeStream);
-				CFRelease(writeStream);
 			} else
 				myErr = MADWritingErr;
+			CFRelease(writeStream);
 			
 			break;
 			

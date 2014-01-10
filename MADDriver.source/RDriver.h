@@ -653,11 +653,11 @@ PPEXPORT Cmd*	GetMADCommand(short		position,						// Extract a Command from a Pa
 							  PatData*	aPatData);
 
 PPEXPORT OSErr	MADPlaySoundData(MADDriverRec	*MDriver,
-								 Ptr			soundPtr,				// Sound Pointer to data
+								 const char		*soundPtr,				// Sound Pointer to data
 								 size_t			size,					// Sound size in bytes
-								 SInt32			channel,				// channel ID on which to play sound
-								 SInt32			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
-								 SInt32			amplitude,				// 8 or 16 bits
+								 int			channel,				// channel ID on which to play sound
+								 Byte			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
+								 int			amplitude,				// 8 or 16 bits
 								 size_t			loopBeg,				// loop beginning
 								 size_t			loopSize,				// loop size in bytes
 								 unsigned int	rate,					// sample rate of the sound data, by ex: rate22khz
