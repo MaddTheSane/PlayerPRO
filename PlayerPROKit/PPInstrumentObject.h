@@ -13,7 +13,7 @@
 @class PPSampleObject;
 @class PPMusicObjectWrapper;
 
-@interface PPInstrumentObject : NSObject <NSCopying, NSFastEnumeration, PPObject>
+@interface PPInstrumentObject : NSObject <NSFastEnumeration, PPObject>
 {
 	NSInteger		number;				// Instrument number
 }

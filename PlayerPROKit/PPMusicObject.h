@@ -56,7 +56,7 @@
 
 @end
 
-@interface PPMusicObjectWrapper : PPMusicObject <NSCopying, PPObject>
+@interface PPMusicObjectWrapper : PPMusicObject <NSCopying>
 @property (readonly, unsafe_unretained) NSArray *sDatas;
 @property (readonly, strong) NSMutableArray *instruments;
 @property (readonly, strong) NSMutableArray *patterns;

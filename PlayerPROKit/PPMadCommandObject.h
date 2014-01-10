@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#import <PlayerPROKit/PPObjectProtocol.h>
 
-@interface PPMadCommandObject : NSObject <NSCopying, NSCoding>
+@interface PPMadCommandObject : NSObject <PPObject>
 
 - (id)init;
 - (id)initWithCmd:(Cmd *)theCmd;

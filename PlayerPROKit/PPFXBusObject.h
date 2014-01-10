@@ -10,7 +10,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
-@interface PPFXBusObject : NSObject <NSCopying, NSCoding, PPObject>
+@interface PPFXBusObject : NSObject <PPObject>
 @property (readonly) FXBus theBus;
 @property BOOL bypass;
 @property short copyId;

@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@protocol PPObject <NSObject>
+@protocol PPObject <NSCopying, NSCoding, NSObject>
 - (void)writeBackToStruct;
 @end

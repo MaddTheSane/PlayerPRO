@@ -10,7 +10,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
-@interface PPSampleObject : NSObject <NSCopying, NSCoding, PPObject>
+@interface PPSampleObject : NSObject <PPObject>
 @property (readwrite) NSInteger sampleIndex;
 @property (readwrite) NSInteger instrumentIndex;
 @property (readonly) sData theSample;

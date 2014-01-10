@@ -290,7 +290,7 @@ static Boolean GetMetadataForPackage(NSMutableDictionary *attributes, NSURL *pat
 	}
 	attributes[kPPMDInstumentsList] = [tmpArray copy];
 	
-	tmpArray = [[NSMutableArray alloc] init];
+	tmpArray = [[NSMutableArray alloc] initWithCapacity:[musFile.patterns count]];
 	for (PPPatternObject *obj in musFile.patterns) {
 		NSString *patStr = obj.patternName;
 		if (![NSString PPstringIsEmpty:patStr]) {

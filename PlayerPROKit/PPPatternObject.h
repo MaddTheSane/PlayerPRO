@@ -12,7 +12,7 @@
 #import <PlayerPROKit/PPMusicObject.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
-@interface PPPatternObject : NSObject <NSCoding, NSFastEnumeration, NSCopying, PPObject>
+@interface PPPatternObject : NSObject <NSFastEnumeration, PPObject>
 @property (readonly) NSInteger index;
 @property (copy) NSString *patternName;
 @property (readonly, weak) PPMusicObjectWrapper *musicWrapper;

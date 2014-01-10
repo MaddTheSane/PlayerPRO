@@ -123,6 +123,11 @@
 	return [NSString stringWithFormat:@"ins: %u note: %u cmd: %u arg: %u vol: %u", theCommand.ins, theCommand.note, theCommand.cmd, theCommand.arg, theCommand.vol];
 }
 
+- (void)writeBackToStruct
+{
+	//We don't need to do anything here
+}
+
 #pragma mark NSCoding protocol
 
 - (id)initWithCoder:(NSCoder *)aDecoder
