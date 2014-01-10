@@ -2618,15 +2618,17 @@ OSErr MADCleanCurrentMusic(MADMusic *MDriver, MADDriverRec *intDriver)
 
 OSErr MADResetInstrument(InstrData *curIns)
 {
-	short firstSample;
+	short firstSample, num;
 	if (curIns == NULL)
 		return MADParametersErr;
 	
 	firstSample = curIns->firstSample;
+	num = curIns->no;
 	
 	memset(curIns, 0, sizeof(InstrData));
 	curIns->firstSample = firstSample;
 	curIns->volFade = DEFAULT_VOLFADE;
+	curIns->no = num;
 	return noErr;
 }
 

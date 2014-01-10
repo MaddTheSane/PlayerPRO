@@ -125,9 +125,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 
 - (NSUInteger)hash
 {
-	@autoreleasepool {
-		return [[[[musicUrl filePathURL] absoluteURL] path] hash];
-	}
+	return [[[[musicUrl filePathURL] absoluteURL] path] hash];
 }
 
 - (NSString *)fileName
