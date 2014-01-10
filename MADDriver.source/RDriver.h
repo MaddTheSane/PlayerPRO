@@ -689,6 +689,10 @@ PPEXPORT SInt32	MADAudioLength(MADDriverRec *theRec);
 
 PPEXPORT size_t MADGetMusicSize(MADMusic*);
 
+PPEXPORT void	MADDriverClearChannel(MADDriverRec *theRec, int channel);
+
+PPEXPORT Boolean MADDriverChannelIsDonePlaying(MADDriverRec *theRec, int chan);
+
 #ifdef __cplusplus
 }
 #endif

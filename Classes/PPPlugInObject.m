@@ -8,7 +8,7 @@
 
 #import "PPPlugInObject.h"
 #import "PPPlugInCommon.h"
-#include <PlayerPROCore/MADDriver.h>
+//#include <PlayerPROCore/MADDriver.h>
 
 void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
 {
@@ -99,13 +99,13 @@ OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 c
 		while (continueLoop) {
 			//GetKeys( km);
 			
-			if (theRec->chan[channel].samplePtr == NULL)
+			if (MADDriverChannelIsDonePlaying(theRec, channel))
 				continueLoop = false;
 			//if (MADIsPressed( (unsigned char*) km, 0x37) && MADIsPressed( (unsigned char*) km, 0x2F)) continueLoop = false;
 			//if (Button()) continueLoop = false;
 			//DoGlobalNull();
 		}
-		
+#if 0
 		if (theRec->chan[channel].samplePtr != NULL) {
 			theRec->chan[channel].curPtr 	= theRec->chan[ channel].maxPtr;
 			theRec->chan[channel].samplePtr	= NULL;
@@ -113,6 +113,7 @@ OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 c
 			theRec->chan[channel].loopBeg	= 0;
 			theRec->chan[channel].loopSize 	= 0;
 		}
+#endif
 	}
 	
 	return iErr;
