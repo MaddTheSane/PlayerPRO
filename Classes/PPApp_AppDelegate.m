@@ -96,6 +96,7 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	return _trackerDict;
 }
 
+@synthesize trackerUTIs = _trackerUTIs;
 - (NSArray *)trackerUTIs
 {
 	if (!_trackerUTIs) {
