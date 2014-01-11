@@ -39,6 +39,8 @@ extern __weak PPLibrary *globalMadLib;
 	
 	BOOL isQuitting;
 }
+@property (readonly, strong) NSDictionary *trackerDict;
+@property (readonly, strong) NSArray *trackerUTIs;
 
 @property (weak) IBOutlet NSWindow *window;
 - (IBAction)showPreferences:(id)sender;
