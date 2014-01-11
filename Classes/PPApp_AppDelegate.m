@@ -61,7 +61,6 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 }
 
 @interface PPApp_AppDelegate ()
-@property (readonly, strong) NSDictionary *trackerDict;
 @property (nonatomic, strong) PPLibrary *madLib;
 @end
 
@@ -99,6 +98,22 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	
 	return _trackerDict;
 }
+
+@synthesize trackerUTIs = _trackerUTIs;
+- (NSArray *)trackerUTIs
+{
+	if (!_trackerUTIs) {
+		NSArray *arrayOfUTIs = [self.trackerDict allValues];
+		NSMutableArray *toAddUTIArray = [[NSMutableArray alloc] init];
+		for (NSArray *anArray in arrayOfUTIs) {
+			[toAddUTIArray addObjectsFromArray:anArray];
+		}
+		_trackerUTIs = [[NSArray alloc] initWithArray:toAddUTIArray];
+	}
+	
+	return _trackerUTIs;
+}
+
 
 + (void)initialize
 {

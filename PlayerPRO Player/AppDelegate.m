@@ -426,8 +426,9 @@ static NSInteger selMusFromList = -1;
 	NSMutableData *mutData = [[NSMutableData alloc] init];
 	soundPtr = calloc(full, 1);
 	
-	while (DirectSave(soundPtr, theSet, theRec))
+	while (DirectSave(soundPtr, theSet, theRec)) {
 		[mutData appendBytes:soundPtr length:full];
+	}
 	
 	MADStopMusic(theRec);
 	MADCleanDriver(theRec);
@@ -987,7 +988,7 @@ return; \
 	
 	for (short i = 0; i < madLib->TotalPlug; i++) {
 		if (madLib->ThePlug[i].mode == MADPlugImportExport || madLib->ThePlug[i].mode == MADPlugExport) {
-			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@...", (__bridge NSString*) madLib->ThePlug[i].MenuName] action:@selector(exportMusicAs:) keyEquivalent:@""];
+			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@...", (__bridge NSString*)madLib->ThePlug[i].MenuName] action:@selector(exportMusicAs:) keyEquivalent:@""];
 			[mi setTag:i];
 			[mi setTarget:self];
 			[musicExportMenu addItem:mi];
@@ -1122,8 +1123,7 @@ return; \
 {
 	NSError *error = nil;
 	currentlyPlayingIndex.index = [tableView selectedRow];
-	if ([self loadMusicFromCurrentlyPlayingIndexWithError:&error] == NO)
-	{
+	if ([self loadMusicFromCurrentlyPlayingIndexWithError:&error] == NO) {
 		[[NSAlert alertWithError:error] runModal];
 	}
 }
@@ -1379,7 +1379,8 @@ enum PPMusicToolbarTypes {
 - (IBAction)openFile:(id)sender
 {
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
-	NSDictionary *playlistDict = @{@"PlayerPRO Music List" : @[PPMusicListUTI], @"PlayerPRO Old Music List" : @[PPOldMusicListUTI]};
+	NSDictionary *playlistDict = @{@"PlayerPRO Music List" : @[PPMusicListUTI],
+								   @"PlayerPRO Old Music List" : @[PPOldMusicListUTI]};
 	
 	NSMutableDictionary *samplesDict = nil;
 	
@@ -1437,7 +1438,8 @@ enum PPMusicToolbarTypes {
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
 			[[NSAlert alertWithError:err] runModal];
 		}
-	} else NSBeep();
+	} else
+		NSBeep();
 }
 
 - (IBAction)playButtonPressed:(id)sender
@@ -1457,7 +1459,8 @@ enum PPMusicToolbarTypes {
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
 			[[NSAlert alertWithError:err] runModal];
 		}
-	} else NSBeep();
+	} else
+		NSBeep();
 }
 
 - (IBAction)rewindButtonPressed:(id)sender
@@ -1497,42 +1500,44 @@ enum PPMusicToolbarTypes {
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
 	NSIndexSet *selected = [tableView selectedRowIndexes];
-	do {
-		if ([selected count] > 0) {
-			musicList.selectedMusic = [selected firstIndex];
-		}
-		
-		if ([selected count] != 1)
-			break;
-		
-		PPMusicListObject *obj = [musicList objectInMusicListAtIndex:[selected lastIndex]];
-		
-		NSURL *musicURL = obj.musicUrl;
-		PPInfoRec theInfo;
-		char info[5] = {0};
-		if (MADMusicIdentifyCFURL(madLib, info, (__bridge CFURLRef) musicURL) != noErr)
-			break;
-		if (MADMusicInfoCFURL(madLib, info, (__bridge CFURLRef) musicURL, &theInfo) != noErr)
-			break;
-		[fileName setStringValue:obj.fileName];
-		[internalName setStringValue:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
-		[fileSize setIntegerValue:theInfo.fileSize];
-		[musicInstrument setStringValue:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
-		[musicPatterns setStringValue:[NSString stringWithFormat:@"%ld", (long)theInfo.totalPatterns]];
-		[musicPlugType setStringValue:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
-		{
-			char sig[5] = {0};
-			OSType2Ptr(theInfo.signature, sig);
-			NSString *NSSig = [NSString stringWithCString:sig encoding:NSMacOSRomanStringEncoding];
-			if (!NSSig) {
-				NSSig = [NSString stringWithFormat:@"0x%08X", (unsigned int)theInfo.signature];
-			}
-			[musicSignature setStringValue:NSSig];
-		}
-		[fileLocation setStringValue:[musicURL path]];
-		return;
-	} while (0);
+	NSURL *musicURL;
+	PPInfoRec theInfo;
+	PPMusicListObject *obj;
+	char info[5] = {0};
 	
+	if ([selected count] > 0) {
+		musicList.selectedMusic = [selected firstIndex];
+	}
+	
+	if ([selected count] != 1)
+		goto badTracker;
+	
+	obj = [musicList objectInMusicListAtIndex:[selected lastIndex]];
+	
+	musicURL = obj.musicUrl;
+	if (MADMusicIdentifyCFURL(madLib, info, (__bridge CFURLRef) musicURL) != noErr)
+		goto badTracker;
+	if (MADMusicInfoCFURL(madLib, info, (__bridge CFURLRef) musicURL, &theInfo) != noErr)
+		goto badTracker;
+	[fileName setStringValue:obj.fileName];
+	[internalName setStringValue:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
+	[fileSize setIntegerValue:theInfo.fileSize];
+	[musicInstrument setStringValue:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
+	[musicPatterns setStringValue:[NSString stringWithFormat:@"%ld", (long)theInfo.totalPatterns]];
+	[musicPlugType setStringValue:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
+	{
+		char sig[5] = {0};
+		OSType2Ptr(theInfo.signature, sig);
+		NSString *NSSig = [NSString stringWithCString:sig encoding:NSMacOSRomanStringEncoding];
+		if (!NSSig) {
+			NSSig = [NSString stringWithFormat:@"0x%08X", (unsigned int)theInfo.signature];
+		}
+		[musicSignature setStringValue:NSSig];
+	}
+	[fileLocation setStringValue:[musicURL path]];
+	return;
+	
+badTracker:
 	[fileName setStringValue:PPDoubleDash];
 	[internalName setStringValue:PPDoubleDash];
 	[fileSize setStringValue:PPDoubleDash];
@@ -1718,19 +1723,29 @@ enum PPMusicToolbarTypes {
 	NSPasteboard *dragPB = [info draggingPasteboard];
 	NSArray *tmpArray = [dragPB readObjectsForClasses:@[[PPMusicListDragClass class]] options:nil];
 	if (tmpArray) {
+		NSUInteger minRow = 0;
 		PPMusicListDragClass *dragClass = tmpArray[0];
 		NSIndexSet *dragIndexSet = dragClass.theIndexSet;
+		
+		NSUInteger currentIndex = [dragIndexSet firstIndex];
+		while (currentIndex != NSNotFound) {
+			if (currentIndex <= row) {
+				minRow++;
+			}
+			currentIndex = [dragIndexSet indexGreaterThanIndex:currentIndex];
+		}
 		[self willChangeValueForKey:kMusicListKVO];
 
 		NSArray *selArray = [musicList arrayOfObjectsInMusicListAtIndexes:dragIndexSet];
 		[musicList removeObjectsInMusicListAtIndexes:dragIndexSet];
-		[musicList insertObjects:selArray inMusicListAtIndex:row];
+		[musicList insertObjects:selArray inMusicListAtIndex:row - minRow];
 		
 		[self didChangeValueForKey:kMusicListKVO];
 		[self musicListContentsDidMove];
 		return YES;
-	} else if ((tmpArray = [dragPB readObjectsForClasses:@[[NSURL class]] options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES, NSPasteboardURLReadingContentsConformToTypesKey : self.trackerUTIs}])) {
-		
+	} else if ((tmpArray = [dragPB readObjectsForClasses:
+							@[[NSURL class]] options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES,
+													   NSPasteboardURLReadingContentsConformToTypesKey : self.trackerUTIs}])) {
 		if ([tmpArray count] < 1)
 			return NO;
 		
