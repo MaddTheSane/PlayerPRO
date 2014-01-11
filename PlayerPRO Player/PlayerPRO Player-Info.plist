@@ -346,6 +346,10 @@
 			<string>669</string>
 			<key>CFBundleTypeName</key>
 			<string>PP669File</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>6669</string>
+			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
@@ -354,10 +358,6 @@
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>6669</string>
-			</array>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
@@ -416,7 +416,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.1</string>
 	<key>CFBundleSignature</key>
 	<string>PPly</string>
 	<key>CFBundleVersion</key>

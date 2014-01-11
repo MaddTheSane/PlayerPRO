@@ -27,8 +27,7 @@ PPCOLORPOPULATE();
 -(void)awakeFromNib
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-#define PPCOLOR(num) if (colorWell ## num)\
-[colorWell ## num setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor ## num]]]
+#define PPCOLOR(num) [colorWell ## num setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor ## num]]]
 	PPCOLORPOPULATE();
 #undef PPCOLOR
 }

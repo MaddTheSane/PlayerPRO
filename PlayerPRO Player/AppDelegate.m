@@ -1522,8 +1522,8 @@ enum PPMusicToolbarTypes {
 	[fileName setStringValue:obj.fileName];
 	[internalName setStringValue:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
 	[fileSize setIntegerValue:theInfo.fileSize];
-	[musicInstrument setStringValue:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
-	[musicPatterns setStringValue:[NSString stringWithFormat:@"%ld", (long)theInfo.totalPatterns]];
+	[musicInstrument setIntegerValue:theInfo.totalInstruments];
+	[musicPatterns setIntegerValue:theInfo.totalPatterns];
 	[musicPlugType setStringValue:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
 	{
 		char sig[5] = {0};
@@ -1722,7 +1722,7 @@ badTracker:
 	}
 	NSPasteboard *dragPB = [info draggingPasteboard];
 	NSArray *tmpArray = [dragPB readObjectsForClasses:@[[PPMusicListDragClass class]] options:nil];
-	if (tmpArray) {
+	if (tmpArray && [tmpArray count] != 0) {
 		NSUInteger minRow = 0;
 		PPMusicListDragClass *dragClass = tmpArray[0];
 		NSIndexSet *dragIndexSet = dragClass.theIndexSet;
