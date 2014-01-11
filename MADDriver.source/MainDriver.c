@@ -1909,6 +1909,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRea
 	
 	
 	/**** PARTITION ****/
+	//TODO: dispatch this
 	for (i = MDriver->header->numPat; i < MAXPATTERN; i++)
 		MDriver->partition[i] = NULL;
 	

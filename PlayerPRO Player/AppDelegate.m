@@ -1722,7 +1722,7 @@ badTracker:
 	}
 	NSPasteboard *dragPB = [info draggingPasteboard];
 	NSArray *tmpArray = [dragPB readObjectsForClasses:@[[PPMusicListDragClass class]] options:nil];
-	if (tmpArray) {
+	if (tmpArray && [tmpArray count] != 0) {
 		NSUInteger minRow = 0;
 		PPMusicListDragClass *dragClass = tmpArray[0];
 		NSIndexSet *dragIndexSet = dragClass.theIndexSet;
