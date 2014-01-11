@@ -677,6 +677,9 @@
 		55EE2D8B17E12F9300FED42A /* Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE7BC10E08D8400177B4C /* Fade.plugin */; };
 		55EE2D8C17E12F9300FED42A /* Length.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE84210E08D9E00177B4C /* Length.plugin */; };
 		55EE2D8E17E12F9300FED42A /* Sampling Rate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE90B10E08DAC00177B4C /* Sampling Rate.plugin */; };
+		55F013EB1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
+		55F013EC1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
+		55F013ED1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
 		55F013E5187F5AB6002488D5 /* PPObjectProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55F013E6187F5AB6002488D5 /* PPObjectProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; };
 		55F013E7187F5D5D002488D5 /* PPObjectProtocol.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; };
@@ -2213,7 +2216,7 @@
 		55ABFD51125E6D4400B182F1 /* PPNextTrack.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPNextTrack.pdf; sourceTree = "<group>"; };
 		55ABFD52125E6D4400B182F1 /* PPPrevTrack.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPPrevTrack.pdf; sourceTree = "<group>"; };
 		55ABFD53125E6D4400B182F1 /* PPRecord.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = PPRecord.pdf; sourceTree = "<group>"; };
-		55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPROCore-OSX.pch"; sourceTree = "<group>"; };
+		55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PlayerPROCore-OSX.pch"; path = "../PlayerPROCore-OSX.pch"; sourceTree = "<group>"; };
 		55ADC3DB17D6F390001F27D4 /* Wave.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Wave.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55ADC3DC17D6F411001F27D4 /* Wave-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Wave-Info.plist"; sourceTree = SOURCE_ROOT; };
 		55ADC3E517D7CBF8001F27D4 /* Midi-rsrc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Midi-rsrc.h"; sourceTree = "<group>"; };
@@ -2274,6 +2277,7 @@
 		55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		55EE8EBF100404EB00E75E63 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		55EE8EC0100404EB00E75E63 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
+		55F013EA1880A2EA002488D5 /* MADDriver.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MADDriver.c; sourceTree = "<group>"; };
 		55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPObjectProtocol.h; sourceTree = "<group>"; };
 		55F16D1C186F918F00E75C3E /* getAIFF.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = getAIFF.i; sourceTree = "<group>"; };
 		55F41A2217EF800B00605DF8 /* version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = version.sh; sourceTree = "<group>"; };
@@ -3460,6 +3464,7 @@
 		55268AA91877EECF00A82269 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */,
 				55268AAA1877EF0000A82269 /* InfoPlist.strings */,
 			);
 			path = Resources;
@@ -3817,10 +3822,8 @@
 				552097B7187B0DF0004FD220 /* OS X/iOS-specific */,
 				552097B8187B0E0A004FD220 /* Windows-specific */,
 				552097B9187B0E29004FD220 /* Linux/UNIX-specific */,
-				55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */,
-				554E105010D6C79E00BB619C /* SndUtils.c */,
-				5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */,
-				55113CBB133688D60008C2AF /* FileUtils.c */,
+				550B001B10BA0243004FC5D7 /* PlayerPROCore.h */,
+				550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */,
 				55ADC3E617D7E4A4001F27D4 /* MADDriver.h */,
 				88E0C47F0C2F21E400D6C081 /* PPPlug.h */,
 				5573A41010B5160000FF8B50 /* PPDefs.h */,
@@ -3829,6 +3832,10 @@
 				88E0C47B0C2F21E400D6C081 /* RDriver.h */,
 				88E0C47D0C2F21E400D6C081 /* RDriverInt.h */,
 				550B011310BA1E1C004FC5D7 /* PPPrivate.h */,
+				554E105010D6C79E00BB619C /* SndUtils.c */,
+				5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */,
+				55113CBB133688D60008C2AF /* FileUtils.c */,
+				55F013EA1880A2EA002488D5 /* MADDriver.c */,
 				88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */,
 				88E0C3D10C2F21DD00D6C081 /* Effects.c */,
 				88E0C3D20C2F21DD00D6C081 /* Interrupt.c */,
@@ -3837,8 +3844,6 @@
 				88E0C3DA0C2F21DD00D6C081 /* realft.c */,
 				88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */,
 				5573A3E810B5147C00FF8B50 /* MyDebugStr.c */,
-				550B001B10BA0243004FC5D7 /* PlayerPROCore.h */,
-				550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */,
 				55268AA91877EECF00A82269 /* Resources */,
 			);
 			name = PlayerPROCore;
@@ -6187,6 +6192,7 @@
 				5573A12E1656FC0700A5AECA /* 669.c in Sources */,
 				5573A12F1656FC0700A5AECA /* AMF.c in Sources */,
 				5573A1311656FCC200A5AECA /* iOS-PlugImport.c in Sources */,
+				55F013ED1880A2EA002488D5 /* MADDriver.c in Sources */,
 				55C358F816C42F7600FB9FA6 /* MIDI-Hardware-Stub.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6205,6 +6211,7 @@
 				5573A3EA10B5147C00FF8B50 /* MyDebugStr.c in Sources */,
 				55C930391819E68700D9E072 /* CocoaFuncs.m in Sources */,
 				550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
+				55F013EB1880A2EA002488D5 /* MADDriver.c in Sources */,
 				55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */,
 				55007E9D161A552C00297A3F /* FileUtils.c in Sources */,
 				55B23D131687D22700DCE923 /* MainDriverCarbon.c in Sources */,
@@ -6562,6 +6569,7 @@
 				55C358AC16C42D1800FB9FA6 /* ULT.c in Sources */,
 				55C358AD16C42D1800FB9FA6 /* UMX.c in Sources */,
 				55C358AE16C42D1800FB9FA6 /* XM.c in Sources */,
+				55F013EC1880A2EA002488D5 /* MADDriver.c in Sources */,
 				55C358AF16C42D1800FB9FA6 /* 669.c in Sources */,
 				55C358B016C42D1800FB9FA6 /* AMF.c in Sources */,
 				55C358B116C42D1800FB9FA6 /* iOS-PlugImport.c in Sources */,
