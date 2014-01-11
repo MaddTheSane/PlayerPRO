@@ -1522,8 +1522,8 @@ enum PPMusicToolbarTypes {
 	[fileName setStringValue:obj.fileName];
 	[internalName setStringValue:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
 	[fileSize setIntegerValue:theInfo.fileSize];
-	[musicInstrument setStringValue:[NSString stringWithFormat:@"%d", theInfo.totalInstruments]];
-	[musicPatterns setStringValue:[NSString stringWithFormat:@"%ld", (long)theInfo.totalPatterns]];
+	[musicInstrument setIntegerValue:theInfo.totalInstruments];
+	[musicPatterns setIntegerValue:theInfo.totalPatterns];
 	[musicPlugType setStringValue:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
 	{
 		char sig[5] = {0};
