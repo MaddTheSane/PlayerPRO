@@ -78,7 +78,6 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	[self didChangeValueForKey:@"madLib"];
 }
 
-
 @synthesize trackerDict = _trackerDict;
 - (NSDictionary *)trackerDict
 {
@@ -113,7 +112,6 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	
 	return _trackerUTIs;
 }
-
 
 + (void)initialize
 {
@@ -279,7 +277,11 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 
 - (IBAction)showPlugInInfo:(id)sender
 {
-	PPPlugInInfo *inf = plugInInfos[[sender tag]];
+	NSInteger tag = [sender tag];
+	if (tag < 0 || tag >= [plugInInfos count]) {
+		return;
+	}
+	PPPlugInInfo *inf = plugInInfos[tag];
 	if (!inf) {
 		return;
 	}
@@ -293,8 +295,6 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 - (void)updatePlugInInfoMenu
 {
 	NSInteger i;
-
-	//[plugInInfos removeAllObjects];
 	
 	for (PPLibraryObject *obj in madLib) {
 		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name") plugURL:[obj.plugFile bundleURL]];
