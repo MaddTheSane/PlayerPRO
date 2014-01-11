@@ -93,8 +93,7 @@
 	NSMenu *menu = [popUp menu];
 	NSInteger itemCount = [viewControllers count];
 	
-	for(NSInteger i = 0; i < itemCount; i++)
-	{
+	for (NSInteger i = 0; i < itemCount; i++) {
 		NSViewController *vc = viewControllers[i];
 		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:vc.title action:@selector(changeViewController:) keyEquivalent:@""];
 		[mi setTag:i];

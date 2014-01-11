@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-enum {
+typedef NS_ENUM(NSInteger, PPPlaylistMode) {
 	PPStopPlaying = 0,
 	PPLoopMusic,
 	PPLoadNext,
