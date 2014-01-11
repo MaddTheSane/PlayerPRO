@@ -6,9 +6,8 @@
 //
 //
 
+#import <PlayerPROKit/PlayerPROKit.h>
 #import "InstrumentInfoController.h"
-#import "PPInstrumentObject.h"
-#import "PPSampleObject.h"
 #import "PPInstrumentViewController.h"
 
 @interface InstrumentInfoController ()

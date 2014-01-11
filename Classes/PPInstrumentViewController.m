@@ -6,11 +6,10 @@
 //
 //
 
+#import <PlayerPROKit/PlayerPROKit.h>
 #import "PPInstrumentViewController.h"
 #import "PPInstrumentPlugHandler.h"
 #import "PPInstrumentImporterObject.h"
-#import "PPInstrumentObject.h"
-#import "PPSampleObject.h"
 #import "PPInstrumentCellView.h"
 #import "OpenPanelViewController.h"
 #import "InstrumentInfoController.h"

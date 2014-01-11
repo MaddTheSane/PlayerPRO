@@ -6,6 +6,7 @@
 //
 //
 
+#import <PlayerPROKit/PlayerPROKit.h>
 #import "PPInstrumentCellView.h"
 #import "PPInstrumentViewController.h"
 
