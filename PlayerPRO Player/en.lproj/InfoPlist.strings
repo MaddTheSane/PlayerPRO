@@ -1,6 +1,7 @@
 /* Localized versions of Info.plist keys */
 
 CFBundleName = "PlayerPRO Player";
+NSHumanReadableCopyright = "Copyright © 2013 SourceForge.";
 "PPMTMFile" = "MultiTracker Audio";
 "PPS3MFile" = "ScreamTracker Audio";
 "PPMODFile" = "ProTracker Audio";
