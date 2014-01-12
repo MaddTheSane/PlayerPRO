@@ -584,7 +584,7 @@ PPEXPORT void	PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char
  @function MADInitLibrary
  @abstract MADLibrary initialization
  @result The error encountered, if any. Will be of type MADErrors unless zero (noErr)
- @param PlugsFulderName
+ @param PlugsFolderName
  The folder location for the plug-ins for PlayerPROCore to look for.
  On certain platforms, this can be NULL
  @param MADLib
