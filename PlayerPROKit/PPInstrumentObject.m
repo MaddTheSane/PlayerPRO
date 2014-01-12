@@ -558,4 +558,19 @@
 	return [samples countByEnumeratingWithState:state objects:buffer count:len];
 }
 
+#pragma mark NSCoding protocol
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	if (self = [super init]) {
+		
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+	
+}
+
 @end
