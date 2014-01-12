@@ -677,14 +677,14 @@
 		55EE2D8B17E12F9300FED42A /* Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE7BC10E08D8400177B4C /* Fade.plugin */; };
 		55EE2D8C17E12F9300FED42A /* Length.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE84210E08D9E00177B4C /* Length.plugin */; };
 		55EE2D8E17E12F9300FED42A /* Sampling Rate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE90B10E08DAC00177B4C /* Sampling Rate.plugin */; };
-		55F013EB1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
-		55F013EC1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
-		55F013ED1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
 		55F013E5187F5AB6002488D5 /* PPObjectProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55F013E6187F5AB6002488D5 /* PPObjectProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; };
 		55F013E7187F5D5D002488D5 /* PPObjectProtocol.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; };
 		55F013E8187F5D6E002488D5 /* PPFXBusObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55DE87C4187E5B9100C36533 /* PPFXBusObject.h */; };
 		55F013E9187F5D70002488D5 /* PPFXSetObject.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55DE87CB187E60F400C36533 /* PPFXSetObject.h */; };
+		55F013EB1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
+		55F013EC1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
+		55F013ED1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
 		55F41A3717EF96B000605DF8 /* PPExportObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F41A3617EF96AF00605DF8 /* PPExportObject.m */; };
 		55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; };
@@ -2277,8 +2277,8 @@
 		55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		55EE8EBF100404EB00E75E63 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		55EE8EC0100404EB00E75E63 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
-		55F013EA1880A2EA002488D5 /* MADDriver.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MADDriver.c; sourceTree = "<group>"; };
 		55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPObjectProtocol.h; sourceTree = "<group>"; };
+		55F013EA1880A2EA002488D5 /* MADDriver.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MADDriver.c; sourceTree = "<group>"; };
 		55F16D1C186F918F00E75C3E /* getAIFF.i */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c.preprocessed; path = getAIFF.i; sourceTree = "<group>"; };
 		55F41A2217EF800B00605DF8 /* version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = version.sh; sourceTree = "<group>"; };
 		55F41A2D17EF853C00605DF8 /* PlayerPRO Player-Info.plistvers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPRO Player-Info.plistvers.plist"; sourceTree = "<group>"; };
@@ -7874,7 +7874,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -7882,7 +7881,6 @@
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				STRIP_STYLE = "non-global";
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Pedantic;
 		};
@@ -7952,7 +7950,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -7973,6 +7970,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Pedantic;
@@ -7984,7 +7982,6 @@
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -7998,10 +7995,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				INFOPLIST_FILE = "iOS PlayerPRO PlayerTests/iOS PlayerPRO PlayerTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -8194,6 +8192,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Pedantic;
 		};
@@ -8240,6 +8239,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Pedantic;
 		};
@@ -9262,7 +9262,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
@@ -9283,6 +9282,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
@@ -9296,7 +9296,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -9317,6 +9316,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -9328,7 +9328,6 @@
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -9342,9 +9341,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				INFOPLIST_FILE = "iOS PlayerPRO PlayerTests/iOS PlayerPRO PlayerTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = xctest;
@@ -9358,7 +9358,6 @@
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -9372,10 +9371,11 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				INFOPLIST_FILE = "iOS PlayerPRO PlayerTests/iOS PlayerPRO PlayerTests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -9416,7 +9416,6 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INFOPLIST_OUTPUT_FORMAT = binary;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PLIST_FILE_OUTPUT_FORMAT = binary;
@@ -9426,7 +9425,6 @@
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
 				STRIP_INSTALLED_PRODUCT = YES;
 				STRIP_STYLE = "non-global";
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -9457,6 +9455,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -9488,6 +9487,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -10492,7 +10492,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
@@ -10501,7 +10500,6 @@
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				STRIP_STYLE = "non-global";
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -10610,6 +10608,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -10636,6 +10635,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
