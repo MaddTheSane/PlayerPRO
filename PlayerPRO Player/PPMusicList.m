@@ -17,6 +17,9 @@
 #define kMUSICLISTKEY2 @"Music List Key2"
 #define kMusicListLocation2 @"Music Key Location2"
 
+#define kMusicListKey3 @"Music List Key 3"
+#define kMusicListLocation3 @"Music Key Location 3"
+
 #if !TARGET_OS_IPHONE
 // GetIndString isn't supported on 64-bit Mac OS X
 // This code is emulation for GetIndString.
@@ -66,15 +69,6 @@ static inline NSURL *PPHomeURL()
 		homeURL = [NSURL fileURLWithPath:NSHomeDirectory() isDirectory:YES];
 	}
 	return homeURL;
-}
-
-static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
-{
-	if ([otherURL isFileReferenceURL])
-		return otherURL;
-	
-	NSURL *tmpURL = [otherURL fileReferenceURL];
-	return tmpURL ? tmpURL : otherURL;
 }
 
 @interface PPMusicListObject ()
@@ -156,14 +150,19 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 		if (!aURL) {
 			return nil;
 		}
-		self.musicUrl = aURL;
+		if ([aURL isFileReferenceURL]) {
+			self.musicUrl = aURL;
+		} else {
+			NSURL *tmpURL = [aURL fileReferenceURL];
+			self.musicUrl = tmpURL ? tmpURL : aURL;
+		}
 	}
 	return self;
 }
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@:%@ - %@", [musicUrl description], [musicUrl path], self.fileName];
+	return [NSString stringWithFormat:@"%@ : %@ - %@", [musicUrl description], [musicUrl path], self.fileName];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -188,10 +187,40 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	return [NSString stringWithFormat:@"Size: %ld, selection: %ld, Contents: %@", (long)[musicList count], (long)selectedMusic, [musicList description]];
 }
 
-- (void)saveMusicListToPreferences
+- (BOOL)saveApplicationMusicList
 {
+	NSFileManager *manager = [NSFileManager defaultManager];
+	NSURL *PPPPath = [[[manager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Player"];
+	if (![PPPPath checkResourceIsReachableAndReturnError:NULL]) {
+		//Just making sure...
+		[manager createDirectoryAtURL:PPPPath withIntermediateDirectories:YES attributes:nil error:NULL];
+	}
+
+	return [self saveMusicListToURL:[PPPPath URLByAppendingPathComponent:@"Player List" isDirectory:NO]];
+}
+
+- (BOOL)loadApplicationMusicList
+{
+	NSAssert([self countOfMusicList] == 0, @"Music list should be empty!");
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:self] forKey:PPMMusicList];
+	NSData *listData = [defaults dataForKey:@"PlayerPRO Music List"];
+	if (listData) {
+		[self loadMusicListFromData:listData];
+		[defaults removeObjectForKey:@"PlayerPRO Music List"];
+		[self saveApplicationMusicList];
+		//Technically we did succeed...
+		return YES;
+	}
+	
+	NSFileManager *manager = [NSFileManager defaultManager];
+	NSURL *PPPPath = [[[manager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Player"];
+	if (![PPPPath checkResourceIsReachableAndReturnError:NULL]) {
+		//Set up our directory for later use...
+		[manager createDirectoryAtURL:PPPPath withIntermediateDirectories:YES attributes:nil error:NULL];
+		//...Then say we failed
+		return NO;
+	}
+	return [self loadMusicListAtURL:[PPPPath URLByAppendingPathComponent:@"Player List" isDirectory:NO]];
 }
 
 - (BOOL)saveMusicListToURL:(NSURL *)toSave
@@ -204,12 +233,10 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 {
 	[self willChangeValueForKey:kMusicListKVO];
 	[musicList sortWithOptions:(NSSortConcurrent | NSSortStable) usingComparator:^(id rhs, id lhs) {
-		@autoreleasepool {
-			NSString *rhsString = [rhs fileName];
-			NSString *lhsString = [lhs fileName];
-			NSComparisonResult result = [rhsString localizedStandardCompare:lhsString];
-			return result;
-		}
+		NSString *rhsString = [rhs fileName];
+		NSString *lhsString = [lhs fileName];
+		NSComparisonResult result = [rhsString localizedStandardCompare:lhsString];
+		return result;
 	}];
 	[self didChangeValueForKey:kMusicListKVO];
 }
@@ -246,15 +273,6 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	return YES;
 }
 
-- (void)loadMusicListFromPreferences
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSData *listData = [defaults dataForKey:PPMMusicList];
-	NSAssert([self countOfMusicList] == 0, @"Music list should be empty!");
-	[self loadMusicListFromData:listData];
-}
-
-
 #if !TARGET_OS_IPHONE
 // Ssh, we're using deprecated functions.
 // We're using them because there is no easy replacement
@@ -290,7 +308,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	CloseResFile(refNum);
 	
 	HLock(aHandle);
-	theNo = *((UInt16*)(*aHandle));          // number of musics...
+	theNo = *((UInt16*)(*aHandle));
 	PPBE16(&theNo);
 	
 	theNo /= 2;
@@ -319,9 +337,8 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 		
 		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef) together, kCFURLHFSPathStyle, false));
 		together = nil;
-		BOOL validPath = [[NSFileManager defaultManager] fileExistsAtPath:[fullPath path]];
-		if (validPath) {
-			PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullPath)];
+		if ([fullPath checkResourceIsReachableAndReturnError:NULL]) {
+			PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullPath];
 			[newArray addObject:obj];
 		} else {
 			if (location != -1 && location == (i / 2)) {
@@ -365,7 +382,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 
 - (BOOL)addMusicURL:(NSURL *)musicToLoad
 {
-	PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(musicToLoad)];
+	PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:musicToLoad];
 	
 	if (!obj)
 		return NO;
@@ -416,45 +433,66 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 {
 	if ((self = [super init]))  {
 		lostMusicCount = 0;
-		NSMutableArray *BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY2];
+		NSMutableArray *BookmarkArray = [decoder decodeObjectForKey:kMusicListKey3];
 		if (!BookmarkArray) {
-			BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY];
-			if (!BookmarkArray)
-				return nil;
-			
-			musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
-			for (NSData *bookData in BookmarkArray) {
-				BOOL isStale = NO;
-				NSURL *fullURL = [NSURL URLByResolvingBookmarkData:bookData options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:&isStale error:nil];
+			BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY2];
+			if (!BookmarkArray) {
+				BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY];
+				if (!BookmarkArray)
+					return nil;
+				
+				musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
+				for (NSData *bookData in BookmarkArray) {
+					BOOL isStale = NO;
+					NSURL *fullURL = [NSURL URLByResolvingBookmarkData:bookData options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:&isStale error:nil];
 #ifdef DEBUG
-				if (isStale) {
-					NSLog(@"Bookmark pointing to %@ is stale", [fullURL path]);
-				}
+					if (isStale) {
+						NSLog(@"Bookmark pointing to %@ is stale", [fullURL path]);
+					}
 #endif
-				if (!fullURL) {
-					lostMusicCount++;
-					continue;
+					if (!fullURL) {
+						lostMusicCount++;
+						continue;
+					}
+					PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullURL];
+					[musicList addObject:obj];
 				}
-				PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullURL)];
-				[musicList addObject:obj];
-			}
-			selectedMusic = -1;
-		} else {
-			NSNumber *curSel = nil;
-			if ((curSel = [decoder decodeObjectForKey:kMusicListLocation2])) {
-				selectedMusic = [curSel integerValue];
-			} else
 				selectedMusic = -1;
-			musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
-			for (NSData *bookData in BookmarkArray) {
-				BOOL isStale = NO;
-				NSURL *fullURL = [NSURL URLByResolvingBookmarkData:bookData options:NSURLBookmarkResolutionWithoutUI relativeToURL:PPHomeURL() bookmarkDataIsStale:&isStale error:nil];
+			} else {
+				NSNumber *curSel;
+				if ((curSel = [decoder decodeObjectForKey:kMusicListLocation2])) {
+					selectedMusic = [curSel integerValue];
+				} else
+					selectedMusic = -1;
+				musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
+				for (NSData *bookData in BookmarkArray) {
+					BOOL isStale = NO;
+					NSURL *fullURL = [NSURL URLByResolvingBookmarkData:bookData options:NSURLBookmarkResolutionWithoutUI relativeToURL:PPHomeURL() bookmarkDataIsStale:&isStale error:nil];
 #ifdef DEBUG
-				if (isStale) {
-					NSLog(@"Bookmark pointing to %@ is stale.", [fullURL path]);
-				}
+					if (isStale) {
+						NSLog(@"Bookmark pointing to %@ is stale.", [fullURL path]);
+					}
 #endif
-				if (!fullURL) {
+					if (!fullURL) {
+						if (selectedMusic == -1) {
+							//Do nothing
+						} else if (selectedMusic == [musicList count] + 1) {
+							selectedMusic = -1;
+						} else if (selectedMusic > [musicList count] + 1) {
+							selectedMusic--;
+						}
+						lostMusicCount++;
+						continue;
+					}
+					PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullURL];
+					[musicList addObject:obj];
+				}
+			}
+		} else {
+			selectedMusic = [decoder decodeIntegerForKey:kMusicListLocation3];
+			musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
+			for (NSURL *bookURL in BookmarkArray) {
+				if (![bookURL checkResourceIsReachableAndReturnError:NULL]) {
 					if (selectedMusic == -1) {
 						//Do nothing
 					} else if (selectedMusic == [musicList count] + 1) {
@@ -465,9 +503,10 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 					lostMusicCount++;
 					continue;
 				}
-				PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullURL)];
+				PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:bookURL];
 				[musicList addObject:obj];
 			}
+			
 		}
 	}
 	return self;
@@ -476,15 +515,14 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
 	NSMutableArray *BookmarkArray = [[NSMutableArray alloc] initWithCapacity:[musicList count]];
-	NSInteger changedIndex = selectedMusic;
 	for (PPMusicListObject *obj in musicList) {
-		NSData *bookData = [obj.musicUrl bookmarkDataWithOptions:0 includingResourceValuesForKeys:nil relativeToURL:PPHomeURL() error:nil];
+		NSURL *bookData = obj.musicUrl;
 		if (bookData)
 			[BookmarkArray addObject:bookData];
 	}
 	//TODO: check for failed data initialization, and decrement changedIndex to match.
-	[encoder encodeObject:@(changedIndex) forKey:kMusicListLocation2];
-	[encoder encodeObject:BookmarkArray forKey:kMUSICLISTKEY2];
+	[encoder encodeInteger:selectedMusic forKey:kMusicListLocation3];
+	[encoder encodeObject:BookmarkArray forKey:kMusicListKey3];
 }
 
 #pragma mark Key-valued Coding

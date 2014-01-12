@@ -33,8 +33,9 @@
 - (void)sortMusicList DEPRECATED_ATTRIBUTE;
 - (void)sortMusicListByName;
 
-- (void)loadMusicListFromPreferences;
-- (void)saveMusicListToPreferences;
+- (BOOL)saveApplicationMusicList;
+- (BOOL)loadApplicationMusicList;
+
 - (BOOL)saveMusicListToURL:(NSURL *)toSave;
 - (BOOL)loadMusicListAtURL:(NSURL *)fromURL;
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen UNAVAILABLE_IPHONE;

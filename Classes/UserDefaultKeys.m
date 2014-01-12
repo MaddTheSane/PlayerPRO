@@ -92,5 +92,3 @@ NSString * const PPCEMarkerLoop = @"Classical Editor Marker Loop";
 NSString * const PPCETempoNum = @"Classical Editor Temo Num.";
 NSString * const PPCETempoUnit = @"Classical Editor Tempo Unit";
 NSString * const PPCETrackHeight = @"Classical Editor Track Height";
-
-NSString * const PPMMusicList = @"PlayerPRO Music List";
