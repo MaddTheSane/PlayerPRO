@@ -33,9 +33,6 @@
 - (void)sortMusicList DEPRECATED_ATTRIBUTE;
 - (void)sortMusicListByName;
 
-- (void)saveMusicListToPreferences DEPRECATED_ATTRIBUTE;
-- (void)loadMusicListFromPreferences DEPRECATED_ATTRIBUTE;
-
 - (BOOL)saveApplicationMusicList;
 - (BOOL)loadApplicationMusicList;
 

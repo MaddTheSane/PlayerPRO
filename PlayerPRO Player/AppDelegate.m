@@ -963,7 +963,7 @@ return; \
 	[self willChangeValueForKey:kMusicListKVO];
 	musicList = [[PPMusicList alloc] init];
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
-		[musicList loadMusicListFromPreferences];
+		[musicList loadApplicationMusicList];
 	}
 	NSInteger selMus = musicList.selectedMusic;
 	[self didChangeValueForKey:kMusicListKVO];

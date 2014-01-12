@@ -202,6 +202,16 @@ static inline NSURL *PPHomeURL()
 - (BOOL)loadApplicationMusicList
 {
 	NSAssert([self countOfMusicList] == 0, @"Music list should be empty!");
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSData *listData = [defaults dataForKey:@"PlayerPRO Music List"];
+	if (listData) {
+		[self loadMusicListFromData:listData];
+		[defaults removeObjectForKey:@"PlayerPRO Music List"];
+		[self saveApplicationMusicList];
+		//Technically we did succeed...
+		return YES;
+	}
+	
 	NSFileManager *manager = [NSFileManager defaultManager];
 	NSURL *PPPPath = [[[manager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Player"];
 	if (![PPPPath checkResourceIsReachableAndReturnError:NULL]) {
@@ -211,11 +221,6 @@ static inline NSURL *PPHomeURL()
 		return NO;
 	}
 	return [self loadMusicListAtURL:[PPPPath URLByAppendingPathComponent:@"Player List" isDirectory:NO]];
-}
-
-- (void)saveMusicListToPreferences
-{
-	[self saveApplicationMusicList];
 }
 
 - (BOOL)saveMusicListToURL:(NSURL *)toSave
@@ -267,21 +272,6 @@ static inline NSURL *PPHomeURL()
 	self.selectedMusic = preList.selectedMusic;
 	return YES;
 }
-
-- (void)loadMusicListFromPreferences
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSData *listData = [defaults dataForKey:@"PlayerPRO Music List"];
-	if (listData) {
-		NSAssert([self countOfMusicList] == 0, @"Music list should be empty!");
-		[self loadMusicListFromData:listData];
-		[defaults removeObjectForKey:@"PlayerPRO Music List"];
-		[self saveApplicationMusicList];
-	} else {
-		[self loadApplicationMusicList];
-	}
-}
-
 
 #if !TARGET_OS_IPHONE
 // Ssh, we're using deprecated functions.
