@@ -190,7 +190,12 @@ static inline NSURL *PPHomeURL()
 - (void)saveMusicListToPreferences
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:self] forKey:PPMMusicList];
+	[defaults setInteger:selectedMusic forKey:PPMMusicListIndex];
+	NSMutableArray *toSet = [NSMutableArray new];
+	for (PPMusicListObject *theO in musicList) {
+		[toSet addObject:[theO.musicUrl path]];
+	}
+	[defaults setObject:toSet forKey:PPMMusicListArray];
 }
 
 - (BOOL)saveMusicListToURL:(NSURL *)toSave
@@ -245,10 +250,33 @@ static inline NSURL *PPHomeURL()
 
 - (void)loadMusicListFromPreferences
 {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSData *listData = [defaults dataForKey:PPMMusicList];
 	NSAssert([self countOfMusicList] == 0, @"Music list should be empty!");
-	[self loadMusicListFromData:listData];
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSData *listData = [defaults dataForKey:@"PlayerPRO Music List"];
+	if (listData) {
+		[defaults removeObjectForKey:@"PlayerPRO Music List"];
+		[self loadMusicListFromData:listData];
+		[self saveMusicListToPreferences];
+		return;
+	}
+	NSArray *theArray = [defaults arrayForKey:PPMMusicListArray];
+	self.selectedMusic = [defaults integerForKey:PPMMusicListIndex];
+	//musicList = [NSMutableArray new];
+	for (NSString *theStr in theArray) {
+		NSURL *theURL = [NSURL fileURLWithPath:theStr];
+		if ([theURL checkResourceIsReachableAndReturnError:NULL]) {
+			[musicList addObject:[[PPMusicListObject alloc] initWithURL:theURL]];
+		} else {
+			lostMusicCount++;
+			if (selectedMusic == -1) {
+				//Do nothing
+			} else if (selectedMusic == [musicList count] + 1) {
+				selectedMusic = -1;
+			} else if (selectedMusic > [musicList count] + 1) {
+				selectedMusic--;
+			}
+		}
+	}
 }
 
 
