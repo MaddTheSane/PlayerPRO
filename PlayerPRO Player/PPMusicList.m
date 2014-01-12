@@ -71,15 +71,6 @@ static inline NSURL *PPHomeURL()
 	return homeURL;
 }
 
-static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
-{
-	if ([otherURL isFileReferenceURL])
-		return otherURL;
-	
-	NSURL *tmpURL = [otherURL fileReferenceURL];
-	return tmpURL ? tmpURL : otherURL;
-}
-
 @interface PPMusicListObject ()
 @property (strong, readwrite, setter = setTheMusicUrl:) NSURL *musicUrl;
 @end
@@ -159,14 +150,19 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 		if (!aURL) {
 			return nil;
 		}
-		self.musicUrl = aURL;
+		if ([aURL isFileReferenceURL]) {
+			self.musicUrl = aURL;
+		} else {
+			NSURL *tmpURL = [aURL fileReferenceURL];
+			self.musicUrl = tmpURL ? tmpURL : aURL;
+		}
 	}
 	return self;
 }
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@:%@ - %@", [musicUrl description], [musicUrl path], self.fileName];
+	return [NSString stringWithFormat:@"%@ : %@ - %@", [musicUrl description], [musicUrl path], self.fileName];
 }
 
 - (id)copyWithZone:(NSZone *)zone
@@ -207,12 +203,10 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 {
 	[self willChangeValueForKey:kMusicListKVO];
 	[musicList sortWithOptions:(NSSortConcurrent | NSSortStable) usingComparator:^(id rhs, id lhs) {
-		@autoreleasepool {
-			NSString *rhsString = [rhs fileName];
-			NSString *lhsString = [lhs fileName];
-			NSComparisonResult result = [rhsString localizedStandardCompare:lhsString];
-			return result;
-		}
+		NSString *rhsString = [rhs fileName];
+		NSString *lhsString = [lhs fileName];
+		NSComparisonResult result = [rhsString localizedStandardCompare:lhsString];
+		return result;
 	}];
 	[self didChangeValueForKey:kMusicListKVO];
 }
@@ -293,7 +287,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 	CloseResFile(refNum);
 	
 	HLock(aHandle);
-	theNo = *((UInt16*)(*aHandle));          // number of musics...
+	theNo = *((UInt16*)(*aHandle));
 	PPBE16(&theNo);
 	
 	theNo /= 2;
@@ -322,9 +316,8 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 		
 		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef) together, kCFURLHFSPathStyle, false));
 		together = nil;
-		BOOL validPath = [[NSFileManager defaultManager] fileExistsAtPath:[fullPath path]];
-		if (validPath) {
-			PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullPath)];
+		if ([fullPath checkResourceIsReachableAndReturnError:NULL]) {
+			PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullPath];
 			[newArray addObject:obj];
 		} else {
 			if (location != -1 && location == (i / 2)) {
@@ -368,7 +361,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 
 - (BOOL)addMusicURL:(NSURL *)musicToLoad
 {
-	PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(musicToLoad)];
+	PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:musicToLoad];
 	
 	if (!obj)
 		return NO;
@@ -440,7 +433,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 						lostMusicCount++;
 						continue;
 					}
-					PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullURL)];
+					PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullURL];
 					[musicList addObject:obj];
 				}
 				selectedMusic = -1;
@@ -470,7 +463,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 						lostMusicCount++;
 						continue;
 					}
-					PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(fullURL)];
+					PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullURL];
 					[musicList addObject:obj];
 				}
 			}
@@ -489,7 +482,7 @@ static inline NSURL *GenerateFileReferenceURLFromURLIfPossible(NSURL *otherURL)
 					lostMusicCount++;
 					continue;
 				}
-				PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:GenerateFileReferenceURLFromURLIfPossible(bookURL)];
+				PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:bookURL];
 				[musicList addObject:obj];
 			}
 			
