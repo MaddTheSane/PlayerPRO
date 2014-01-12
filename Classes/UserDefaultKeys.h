@@ -191,6 +191,5 @@ extern NSString * const PPCETempoUnit;
 extern NSString * const PPCETrackHeight;
 
 //Misc./other
-extern NSString * const PPMMusicList;
 extern NSString * const PPDoubleDash;
 extern NSString * const kMusicListKVO;

@@ -187,10 +187,35 @@ static inline NSURL *PPHomeURL()
 	return [NSString stringWithFormat:@"Size: %ld, selection: %ld, Contents: %@", (long)[musicList count], (long)selectedMusic, [musicList description]];
 }
 
+- (BOOL)saveApplicationMusicList
+{
+	NSFileManager *manager = [NSFileManager defaultManager];
+	NSURL *PPPPath = [[[manager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Player"];
+	if (![PPPPath checkResourceIsReachableAndReturnError:NULL]) {
+		//Just making sure...
+		[manager createDirectoryAtURL:PPPPath withIntermediateDirectories:YES attributes:nil error:NULL];
+	}
+
+	return [self saveMusicListToURL:[PPPPath URLByAppendingPathComponent:@"Player List" isDirectory:NO]];
+}
+
+- (BOOL)loadApplicationMusicList
+{
+	NSAssert([self countOfMusicList] == 0, @"Music list should be empty!");
+	NSFileManager *manager = [NSFileManager defaultManager];
+	NSURL *PPPPath = [[[manager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Player"];
+	if (![PPPPath checkResourceIsReachableAndReturnError:NULL]) {
+		//Set up our directory for later use...
+		[manager createDirectoryAtURL:PPPPath withIntermediateDirectories:YES attributes:nil error:NULL];
+		//...Then say we failed
+		return NO;
+	}
+	return [self loadMusicListAtURL:[PPPPath URLByAppendingPathComponent:@"Player List" isDirectory:NO]];
+}
+
 - (void)saveMusicListToPreferences
 {
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[defaults setObject:[NSKeyedArchiver archivedDataWithRootObject:self] forKey:PPMMusicList];
+	[self saveApplicationMusicList];
 }
 
 - (BOOL)saveMusicListToURL:(NSURL *)toSave
@@ -246,9 +271,15 @@ static inline NSURL *PPHomeURL()
 - (void)loadMusicListFromPreferences
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSData *listData = [defaults dataForKey:PPMMusicList];
-	NSAssert([self countOfMusicList] == 0, @"Music list should be empty!");
-	[self loadMusicListFromData:listData];
+	NSData *listData = [defaults dataForKey:@"PlayerPRO Music List"];
+	if (listData) {
+		NSAssert([self countOfMusicList] == 0, @"Music list should be empty!");
+		[self loadMusicListFromData:listData];
+		[defaults removeObjectForKey:@"PlayerPRO Music List"];
+		[self saveApplicationMusicList];
+	} else {
+		[self loadApplicationMusicList];
+	}
 }
 
 
