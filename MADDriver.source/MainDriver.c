@@ -1417,8 +1417,6 @@ OSErr MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, char *type, CFURL
 	char *URLcString = NULL;
 	OSErr theErr = noErr;
 	
-	//We don't need to worry about memory constraints on OS X as opposed to iOS
-#if !TARGET_OS_IPHONE
 	if (!strcmp("MADK", type)) {
 		CFReadStreamRef tmpDatRef = CFReadStreamCreateWithFile(kCFAllocatorDefault, theRef);
 		
@@ -1427,7 +1425,6 @@ OSErr MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, char *type, CFURL
 		CFRelease(tmpDatRef);
 		return theErr;
 	}
-#endif
 	
 	theErr = getCStringFromCFURL(theRef, &URLcString);
 	
