@@ -430,7 +430,7 @@ static NSInteger selMusFromList = -1;
 	return mutData;
 }
 
-#import "getAIFF.i"
+#import "getAIFF.mi"
 
 - (NSInteger)showExportSettings
 {

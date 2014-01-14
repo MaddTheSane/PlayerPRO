@@ -297,7 +297,7 @@
 	return mutData;
 }
 
-#import "getAIFF.i"
+#import "getAIFF.mi"
 
 - (void)showExportSettingsWithExportType:(NSInteger)expType URL:(NSURL*)theURL
 {
