@@ -445,6 +445,21 @@
 	return insObj;
 }
 
+- (void)setUpKVO
+{
+	[self addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionNew context:NULL];
+}
+
+- (void)shutDownKVO
+{
+	[self removeObserver:self forKeyPath:@"paused"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	
+}
+
 - (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus;
 {
 	if (!mus) {
@@ -465,6 +480,7 @@
 			[_volumeEnvelope addObject:[[PPEnvelopeObject alloc] init]];
 			[_pitchEnvelope addObject:[[PPEnvelopeObject alloc] init]];
 		}
+		[self setUpKVO];
 
 	}
 	return self;
@@ -473,6 +489,8 @@
 - (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
 {
 	if (self = [self initWithMusic:mus]) {
+		//So we don't accidentally get sent a lot of KVO/KVC calls
+		[self shutDownKVO];
 		theInstrument = mus._currentMusic->fid[insIdx];
 		samples = [[NSMutableArray alloc] initWithCapacity:theInstrument.numSamples];
 		{
@@ -498,8 +516,14 @@
 			[_pitchEnvelope addObject:[[PPEnvelopeObject alloc] initWithEnvRec:theInstrument.pitchEnv[i]]];
 
 		}
+		[self setUpKVO];
 	}
 	return self;
+}
+
+- (void)dealloc
+{
+	[self shutDownKVO];
 }
 
 - (NSString*)description
@@ -607,46 +631,46 @@
 
 - (void)setVolumeTypeOn:(BOOL)typeOn
 {
-	[self willChangeValueForKey:@"volumeType"];
+	[self willChangeValueForKey:@"volumeTypeOn"];
 	if (typeOn) {
 		theInstrument.volType |= (Byte)EFON;
 	} else {
 		theInstrument.volType &= ~(Byte)EFON;
 	}
-	[self didChangeValueForKey:@"volumeType"];
+	[self didChangeValueForKey:@"volumeTypeOn"];
 }
 
 - (void)setVolumeTypeSustain:(BOOL)typeSus
 {
-	[self willChangeValueForKey:@"volumeType"];
+	[self willChangeValueForKey:@"volumeTypeSustain"];
 	if (typeSus) {
 		theInstrument.volType |= (Byte)EFSUSTAIN;
 	} else {
 		theInstrument.volType &= ~(Byte)EFSUSTAIN;
 	}
-	[self didChangeValueForKey:@"volumeType"];
+	[self didChangeValueForKey:@"volumeTypeSustain"];
 }
 
 - (void)setVolumeTypeLoop:(BOOL)typeLoop
 {
-	[self willChangeValueForKey:@"volumeType"];
+	[self willChangeValueForKey:@"volumeTypeLoop"];
 	if (typeLoop) {
 		theInstrument.volType |= (Byte)EFLOOP;
 	} else {
 		theInstrument.volType &= ~(Byte)EFLOOP;
 	}
-	[self didChangeValueForKey:@"volumeType"];
+	[self didChangeValueForKey:@"volumeTypeLoop"];
 }
 
 - (void)setVolumeTypeNote:(BOOL)theLoop
 {
-	[self willChangeValueForKey:@"panningType"];
+	[self willChangeValueForKey:@"volumeTypeNote"];
 	if (theLoop) {
 		theInstrument.volType |= (Byte)EFNOTE;
 	} else {
 		theInstrument.volType &= ~(Byte)EFNOTE;
 	}
-	[self didChangeValueForKey:@"panningType"];
+	[self didChangeValueForKey:@"volumeTypeNote"];
 }
 
 - (BOOL)isVolumeTypeOn
@@ -676,46 +700,46 @@
 
 - (void)setPanningTypeOn:(BOOL)typeOn
 {
-	[self willChangeValueForKey:@"panningType"];
+	[self willChangeValueForKey:@"panningTypeOn"];
 	if (typeOn) {
 		theInstrument.pannType |= (Byte)EFON;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFON;
 	}
-	[self didChangeValueForKey:@"panningType"];
+	[self didChangeValueForKey:@"panningTypeOn"];
 }
 
 - (void)setPanningTypeSustain:(BOOL)typeSus
 {
-	[self willChangeValueForKey:@"panningType"];
+	[self willChangeValueForKey:@"panningTypeSustain"];
 	if (typeSus) {
 		theInstrument.pannType |= (Byte)EFSUSTAIN;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFSUSTAIN;
 	}
-	[self didChangeValueForKey:@"panningType"];
+	[self didChangeValueForKey:@"panningTypeSustain"];
 }
 
 - (void)setPanningTypeLoop:(BOOL)theLoop
 {
-	[self willChangeValueForKey:@"panningType"];
+	[self willChangeValueForKey:@"panningTypeLoop"];
 	if (theLoop) {
 		theInstrument.pannType |= (Byte)EFLOOP;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFLOOP;
 	}
-	[self didChangeValueForKey:@"panningType"];
+	[self didChangeValueForKey:@"panningTypeLoop"];
 }
 
 - (void)setPanningTypeNote:(BOOL)theLoop
 {
-	[self willChangeValueForKey:@"panningType"];
+	[self willChangeValueForKey:@"panningTypeNote"];
 	if (theLoop) {
 		theInstrument.pannType |= (Byte)EFNOTE;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFNOTE;
 	}
-	[self didChangeValueForKey:@"panningType"];
+	[self didChangeValueForKey:@"panningTypeNote"];
 }
 
 - (BOOL)isPanningTypeOn
