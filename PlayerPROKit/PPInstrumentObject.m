@@ -12,6 +12,105 @@
 #import "PPMusicObject.h"
 #import "PPMusicObject_PPKPrivate.h"
 
+#pragma mark PlayerPROKit Envelope NSCoding keys
+#define PPEnvPos @"PlayerPROKit EnvRec Position"
+#define PPEnvVal @"PlayerPROKit EnvRec Value"
+
+#pragma mark PlayerPROKit Sample NSCoding keys
+#define PPName @"PlayerPROKit Sample Name"
+#define PPLocation @"PlayerPROKit Sample Location"
+#define PPSampCount @"PlayerPROKit Sample Count"
+#define PPMIDI @"PlayerPROKit Sample MIDI"
+#define PPMIDIType @"PlayerPROKit Sample MIDI Type"
+#define PPVolSize @"PlayerPROKit Sample Volume Size"
+#define PPPannSize @"PlayerPROKit Sample Panning Size"
+#define PPPitchSize @"PlayerPROKit Sample Pitch Size"
+#define PPVolSus @"PlayerPROKit Sample Volume Sustain"
+#define PPVolBeg @"PlayerPROKit Sample Volume Begin"
+#define PPVolEnd @"PlayerPROKit Sample Volume End"
+#define PPPanSus @"PlayerPROKit Sample Panning Sustain"
+#define PPPanBeg @"PlayerPROKit Sample Panning Begin"
+#define PPPanEnd @"PlayerPROKit Sample Panning End"
+#define PPPitchSus @"PlayerPROKit Sample Pitch Sustain"
+#define PPPitchBeg @"PlayerPROKit Sample Pitch Begin"
+#define PPPitchEnd @"PlayerPROKit Sample Pitch End"
+#define PPVibDepth @"PlayerPROKit Sample Vibrato Depth"
+#define PPVibRate @"PlayerPROKit Sample Vibrato Rate"
+#define PPVolType @"PlayerPROKit Sample Volume Type"
+#define PPPannType @"PlayerPROKit Sample Panning Type"
+#define PPVolFade @"PlayerPROKit Sample Volume Fade"
+#define PPNotes @"PlayerPROKit Sample Notes"
+
+@interface PPEnvelopeObject ()
+@end
+
+@implementation PPEnvelopeObject
+@synthesize envelopeRec;
+
+- (short)position
+{
+	return envelopeRec.pos;
+}
+
+- (void)setPosition:(short)position
+{
+	[self willChangeValueForKey:@"position"];
+	[self willChangeValueForKey:@"envelopeRec"];
+	envelopeRec.pos = position;
+	[self didChangeValueForKey:@"position"];
+	[self didChangeValueForKey:@"envelopeRec"];
+}
+
+- (short)value
+{
+	return envelopeRec.val;
+}
+
+- (void)setValue:(short)value
+{
+	[self willChangeValueForKey:@"value"];
+	[self willChangeValueForKey:@"envelopeRec"];
+	envelopeRec.val = value;
+	[self didChangeValueForKey:@"value"];
+	[self didChangeValueForKey:@"envelopeRec"];
+}
+
+- (void)writeBackToStruct
+{
+	//Do nothing
+}
+
+- (instancetype)initWithEnvRec:(EnvRec)theRec
+{
+	if (self = [super init]) {
+		envelopeRec = theRec;
+	}
+	
+	return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	if (self = [super init]) {
+		envelopeRec.pos = [aDecoder decodeIntForKey:PPEnvPos];
+		envelopeRec.val = [aDecoder decodeIntForKey:PPEnvVal];
+	}
+	return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+	[aCoder encodeInt:envelopeRec.pos forKey:PPEnvPos];
+	[aCoder encodeInt:envelopeRec.val forKey:PPEnvVal];
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+	return [[[self class] alloc] initWithEnvRec:envelopeRec];
+}
+
+@end
+
 @implementation PPInstrumentObject
 @synthesize theInstrument;
 @synthesize number;
@@ -321,6 +420,15 @@
 		theInstrument.firstSample = 0;
 		MADResetInstrument(&theInstrument);
 		name = @"";
+		_panningEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		_volumeEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		_pitchEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		for (int i = 0; i < 12; i++) {
+			[_panningEnvelope addObject:[[PPEnvelopeObject alloc] init]];
+			[_volumeEnvelope addObject:[[PPEnvelopeObject alloc] init]];
+			[_pitchEnvelope addObject:[[PPEnvelopeObject alloc] init]];
+		}
+
 	}
 	return self;
 }
@@ -344,6 +452,15 @@
 		theInstrument.no = number = insIdx;
 		//In case it's malformed, i.e. from CreateFreeMADK()
 		theInstrument.firstSample = MAXSAMPLE * insIdx; /*tempData->firstSample;*/
+		_panningEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		_volumeEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		_pitchEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		for (int i = 0; i < 12; i++) {
+			[_panningEnvelope addObject:[[PPEnvelopeObject alloc] initWithEnvRec:theInstrument.pannEnv[i]]];
+			[_volumeEnvelope addObject:[[PPEnvelopeObject alloc] initWithEnvRec:theInstrument.volEnv[i]]];
+			[_pitchEnvelope addObject:[[PPEnvelopeObject alloc] initWithEnvRec:theInstrument.pitchEnv[i]]];
+
+		}
 	}
 	return self;
 }
@@ -451,40 +568,68 @@
 	return theInstrument.volType;
 }
 
-- (void)setVolumeTypeOn
+- (void)setVolumeTypeOn:(BOOL)typeOn
 {
 	[self willChangeValueForKey:@"volumeType"];
-	theInstrument.volType = 0;
+	if (typeOn) {
+		theInstrument.volType |= (Byte)EFON;
+	} else {
+		theInstrument.volType &= ~(Byte)EFON;
+	}
 	[self didChangeValueForKey:@"volumeType"];
 }
 
-- (void)setVolumeTypeSustain
+- (void)setVolumeTypeSustain:(BOOL)typeSus
 {
 	[self willChangeValueForKey:@"volumeType"];
-	theInstrument.volType = 1;
+	if (typeSus) {
+		theInstrument.volType |= (Byte)EFSUSTAIN;
+	} else {
+		theInstrument.volType &= ~(Byte)EFSUSTAIN;
+	}
 	[self didChangeValueForKey:@"volumeType"];
 }
 
-- (void)setVolumeTypeLoop
+- (void)setVolumeTypeLoop:(BOOL)typeLoop
 {
 	[self willChangeValueForKey:@"volumeType"];
-	theInstrument.volType = 2;
+	if (typeLoop) {
+		theInstrument.volType |= (Byte)EFLOOP;
+	} else {
+		theInstrument.volType &= ~(Byte)EFLOOP;
+	}
 	[self didChangeValueForKey:@"volumeType"];
+}
+
+- (void)setVolumeTypeNote:(BOOL)theLoop
+{
+	[self willChangeValueForKey:@"panningType"];
+	if (theLoop) {
+		theInstrument.volType |= (Byte)EFNOTE;
+	} else {
+		theInstrument.volType &= ~(Byte)EFNOTE;
+	}
+	[self didChangeValueForKey:@"panningType"];
 }
 
 - (BOOL)isVolumeTypeOn
 {
-	return theInstrument.volType == 0;
+	return theInstrument.volType & EFON;
 }
 
 - (BOOL)isVolumeTypeSustain
 {
-	return theInstrument.volType == 1;
+	return theInstrument.volType & EFSUSTAIN;
 }
 
 - (BOOL)isVolumeTypeLoop
 {
-	return theInstrument.volType == 2;
+	return theInstrument.volType & EFLOOP;
+}
+
+- (BOOL)isVolumeTypeNote
+{
+	return theInstrument.volType & EFNOTE;
 }
 
 - (Byte)panningType
@@ -492,40 +637,68 @@
 	return theInstrument.pannType;
 }
 
-- (void)setPanningTypeOn
+- (void)setPanningTypeOn:(BOOL)typeOn
 {
 	[self willChangeValueForKey:@"panningType"];
-	theInstrument.pannType = 0;
+	if (typeOn) {
+		theInstrument.pannType |= (Byte)EFON;
+	} else {
+		theInstrument.pannType &= ~(Byte)EFON;
+	}
 	[self didChangeValueForKey:@"panningType"];
 }
 
-- (void)setPanningTypeSustain
+- (void)setPanningTypeSustain:(BOOL)typeSus
 {
 	[self willChangeValueForKey:@"panningType"];
-	theInstrument.pannType = 1;
+	if (typeSus) {
+		theInstrument.pannType |= (Byte)EFSUSTAIN;
+	} else {
+		theInstrument.pannType &= ~(Byte)EFSUSTAIN;
+	}
 	[self didChangeValueForKey:@"panningType"];
 }
 
-- (void)setPanningTypeLoop
+- (void)setPanningTypeLoop:(BOOL)theLoop
 {
 	[self willChangeValueForKey:@"panningType"];
-	theInstrument.pannType = 2;
+	if (theLoop) {
+		theInstrument.pannType |= (Byte)EFLOOP;
+	} else {
+		theInstrument.pannType &= ~(Byte)EFLOOP;
+	}
+	[self didChangeValueForKey:@"panningType"];
+}
+
+- (void)setPanningTypeNote:(BOOL)theLoop
+{
+	[self willChangeValueForKey:@"panningType"];
+	if (theLoop) {
+		theInstrument.pannType |= (Byte)EFNOTE;
+	} else {
+		theInstrument.pannType &= ~(Byte)EFNOTE;
+	}
 	[self didChangeValueForKey:@"panningType"];
 }
 
 - (BOOL)isPanningTypeOn
 {
-	return theInstrument.pannType == 0;
+	return theInstrument.pannType & EFON;
 }
 
 - (BOOL)isPanningTypeSustain
 {
-	return theInstrument.pannType == 1;
+	return theInstrument.pannType & EFSUSTAIN;
 }
 
 - (BOOL)isPanningTypeLoop
 {
-	return theInstrument.pannType == 2;
+	return theInstrument.pannType & EFLOOP;
+}
+
+- (BOOL)isPanningTypeNote
+{
+	return theInstrument.pannType & EFNOTE;
 }
 
 - (NSArray *)children;
@@ -570,7 +743,34 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
+	[aCoder encodeObject:name forKey:PPName];
+	[aCoder encodeInteger:number forKey:PPLocation];
+	[aCoder encodeInteger:self.firstSample forKey:PPSampCount];
+	[aCoder encodeObject:@(theInstrument.MIDI) forKey:PPMIDI];
+	[aCoder encodeObject:@(theInstrument.MIDIType) forKey:PPMIDIType];
+	[aCoder encodeBytes:&theInstrument.volSize length:1 forKey:PPVolSize];
+	[aCoder encodeBytes:&theInstrument.pannSize length:1 forKey:PPPannSize];
+	[aCoder encodeBytes:&theInstrument.pitchSize length:1 forKey:PPPitchSize];
+	[aCoder encodeBytes:theInstrument.what length:sizeof(theInstrument.what) forKey:PPNotes];
+	[aCoder encodeInt:theInstrument.volFade forKey:PPVolFade];
 	
+	[aCoder encodeBytes:&theInstrument.volSus length:1 forKey:PPVolSus];
+	[aCoder encodeBytes:&theInstrument.volBeg length:1 forKey:PPVolBeg];
+	[aCoder encodeBytes:&theInstrument.volEnd length:1 forKey:PPVolEnd];
+	
+	[aCoder encodeBytes:&theInstrument.pannSus length:1 forKey:PPPanSus];
+	[aCoder encodeBytes:&theInstrument.pannBeg length:1 forKey:PPPanBeg];
+	[aCoder encodeBytes:&theInstrument.pannEnd length:1 forKey:PPPanEnd];
+	
+	[aCoder encodeBytes:&theInstrument.pitchSus length:1 forKey:PPPitchSus];
+	[aCoder encodeBytes:&theInstrument.pitchBeg length:1 forKey:PPPitchBeg];
+	[aCoder encodeBytes:&theInstrument.pitchEnd length:1 forKey:PPPitchEnd];
+	
+	[aCoder encodeBytes:&theInstrument.volType length:1 forKey:PPVolType];
+	[aCoder encodeBytes:&theInstrument.pannType length:1 forKey:PPPannType];
+	
+	[aCoder encodeBytes:&theInstrument.vibDepth length:1 forKey:PPVibDepth];
+	[aCoder encodeBytes:&theInstrument.vibRate length:1 forKey:PPVibRate];
 }
 
 @end

@@ -16,4 +16,7 @@
 
 @property InstrData theInstrument;
 @property (readwrite) NSInteger number;
+@property NSMutableArray *volumeEnvelope;
+@property NSMutableArray *panningEnvelope;
+@property NSMutableArray *pitchEnvelope;
 @end

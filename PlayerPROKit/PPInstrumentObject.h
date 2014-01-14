@@ -13,6 +13,13 @@
 @class PPSampleObject;
 @class PPMusicObjectWrapper;
 
+@interface PPEnvelopeObject : NSObject <PPObject>
+@property (readonly) EnvRec envelopeRec;
+@property short position;
+@property short value;
+- (instancetype)initWithEnvRec:(EnvRec)theRec;
+@end
+
 @interface PPInstrumentObject : NSObject <NSFastEnumeration, PPObject>
 {
 	NSInteger		number;				// Instrument number
@@ -52,22 +59,16 @@
 @property Byte vibratoRate;
 
 @property (readonly) Byte volumeType;
-
-- (BOOL)isVolumeTypeOn;
-- (void)setVolumeTypeOn;
-- (BOOL)isVolumeTypeSustain;
-- (void)setVolumeTypeSustain;
-- (BOOL)isVolumeTypeLoop;
-- (void)setVolumeTypeLoop;
+@property (getter = isVolumeTypeOn) BOOL volumeTypeOn;
+@property (getter = isVolumeTypeSustain) BOOL volumeTypeSustain;
+@property (getter = isVolumeTypeLoop) BOOL volumeTypeLoop;
+@property (getter = isVolumeTypeNote) BOOL volumeTypeNote;
 
 @property (readonly) Byte panningType;
-
-- (BOOL)isPanningTypeOn;
-- (void)setPanningTypeOn;
-- (BOOL)isPanningTypeSustain;
-- (void)setPanningTypeSustain;
-- (BOOL)isPanningTypeLoop;
-- (void)setPanningTypeLoop;
+@property (getter = isPanningTypeOn) BOOL panningTypeOn;
+@property (getter = isPanningTypeSustain) BOOL panningTypeSustain;
+@property (getter = isPanningTypeLoop) BOOL panningTypeLoop;
+@property (getter = isPanningTypeNote) BOOL panningTypeNote;
 
 - (void)addSamplesObject:(PPSampleObject *)object;
 - (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(PPSampleObject *)object;
