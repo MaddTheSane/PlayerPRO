@@ -41,6 +41,25 @@
 #define PPVolFade @"PlayerPROKit Sample Volume Fade"
 #define PPNotes @"PlayerPROKit Sample Notes"
 
+#pragma mark PlayerPROKit KVO/KVC keys
+#define kPPVolumeType @"volumeType"
+#define kPPPanningType @"panningType"
+
+#define kPPEFON @"On"
+#define kPPEFSUS @"Sustain"
+#define kPPEFLOOP @"Loop"
+#define kPPEFNOTE @"Note"
+
+#define kPPVolumeTypeOn kPPVolumeType kPPEFON
+#define kPPVolumeTypeSustain kPPVolumeType kPPEFSUS
+#define kPPVolumeTypeLoop kPPVolumeType kPPEFLOOP
+#define kPPVolumeTypeNote kPPVolumeType kPPEFNOTE
+
+#define kPPPanningTypeOn kPPPanningType kPPEFON
+#define kPPPanningTypeSustain kPPPanningType kPPEFSUS
+#define kPPPanningTypeLoop kPPPanningType kPPEFLOOP
+#define kPPPanningTypeNote kPPPanningType kPPEFNOTE
+
 @interface PPEnvelopeObject ()
 @end
 
@@ -631,46 +650,46 @@
 
 - (void)setVolumeTypeOn:(BOOL)typeOn
 {
-	[self willChangeValueForKey:@"volumeTypeOn"];
+	[self willChangeValueForKey:kPPVolumeTypeOn];
 	if (typeOn) {
 		theInstrument.volType |= (Byte)EFON;
 	} else {
 		theInstrument.volType &= ~(Byte)EFON;
 	}
-	[self didChangeValueForKey:@"volumeTypeOn"];
+	[self didChangeValueForKey:kPPVolumeTypeOn];
 }
 
 - (void)setVolumeTypeSustain:(BOOL)typeSus
 {
-	[self willChangeValueForKey:@"volumeTypeSustain"];
+	[self willChangeValueForKey:kPPVolumeTypeSustain];
 	if (typeSus) {
 		theInstrument.volType |= (Byte)EFSUSTAIN;
 	} else {
 		theInstrument.volType &= ~(Byte)EFSUSTAIN;
 	}
-	[self didChangeValueForKey:@"volumeTypeSustain"];
+	[self didChangeValueForKey:kPPVolumeTypeSustain];
 }
 
 - (void)setVolumeTypeLoop:(BOOL)typeLoop
 {
-	[self willChangeValueForKey:@"volumeTypeLoop"];
+	[self willChangeValueForKey:kPPVolumeTypeLoop];
 	if (typeLoop) {
 		theInstrument.volType |= (Byte)EFLOOP;
 	} else {
 		theInstrument.volType &= ~(Byte)EFLOOP;
 	}
-	[self didChangeValueForKey:@"volumeTypeLoop"];
+	[self didChangeValueForKey:kPPVolumeTypeLoop];
 }
 
 - (void)setVolumeTypeNote:(BOOL)theLoop
 {
-	[self willChangeValueForKey:@"volumeTypeNote"];
+	[self willChangeValueForKey:kPPVolumeTypeNote];
 	if (theLoop) {
 		theInstrument.volType |= (Byte)EFNOTE;
 	} else {
 		theInstrument.volType &= ~(Byte)EFNOTE;
 	}
-	[self didChangeValueForKey:@"volumeTypeNote"];
+	[self didChangeValueForKey:kPPVolumeTypeNote];
 }
 
 - (BOOL)isVolumeTypeOn
@@ -700,46 +719,46 @@
 
 - (void)setPanningTypeOn:(BOOL)typeOn
 {
-	[self willChangeValueForKey:@"panningTypeOn"];
+	[self willChangeValueForKey:kPPPanningTypeOn];
 	if (typeOn) {
 		theInstrument.pannType |= (Byte)EFON;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFON;
 	}
-	[self didChangeValueForKey:@"panningTypeOn"];
+	[self didChangeValueForKey:kPPPanningTypeOn];
 }
 
 - (void)setPanningTypeSustain:(BOOL)typeSus
 {
-	[self willChangeValueForKey:@"panningTypeSustain"];
+	[self willChangeValueForKey:kPPPanningTypeSustain];
 	if (typeSus) {
 		theInstrument.pannType |= (Byte)EFSUSTAIN;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFSUSTAIN;
 	}
-	[self didChangeValueForKey:@"panningTypeSustain"];
+	[self didChangeValueForKey:kPPPanningTypeSustain];
 }
 
 - (void)setPanningTypeLoop:(BOOL)theLoop
 {
-	[self willChangeValueForKey:@"panningTypeLoop"];
+	[self willChangeValueForKey:kPPPanningTypeLoop];
 	if (theLoop) {
 		theInstrument.pannType |= (Byte)EFLOOP;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFLOOP;
 	}
-	[self didChangeValueForKey:@"panningTypeLoop"];
+	[self didChangeValueForKey:kPPPanningTypeLoop];
 }
 
 - (void)setPanningTypeNote:(BOOL)theLoop
 {
-	[self willChangeValueForKey:@"panningTypeNote"];
+	[self willChangeValueForKey:kPPPanningTypeNote];
 	if (theLoop) {
 		theInstrument.pannType |= (Byte)EFNOTE;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFNOTE;
 	}
-	[self didChangeValueForKey:@"panningTypeNote"];
+	[self didChangeValueForKey:kPPPanningTypeNote];
 }
 
 - (BOOL)isPanningTypeOn

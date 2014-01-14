@@ -268,7 +268,7 @@ typedef struct InstrData		// INSTRUMENT
 	Byte	vibRate;
 } InstrData;
 
-enum
+enum EFTypes
 {
 	EFON		= 1,
 	EFSUSTAIN	= 1 << 1,
