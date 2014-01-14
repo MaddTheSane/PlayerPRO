@@ -231,19 +231,24 @@ static inline NSURL *PPHomeURL()
 
 - (void)sortMusicListByName
 {
-	[self willChangeValueForKey:kMusicListKVO];
-	[musicList sortWithOptions:(NSSortConcurrent | NSSortStable) usingComparator:^(id rhs, id lhs) {
-		NSString *rhsString = [rhs fileName];
-		NSString *lhsString = [lhs fileName];
+	[self sortMusicListWithOptions:(NSSortConcurrent | NSSortStable) usingComparator:^NSComparisonResult(id obj1, id obj2) {
+		NSString *rhsString = [obj1 fileName];
+		NSString *lhsString = [obj2 fileName];
 		NSComparisonResult result = [rhsString localizedStandardCompare:lhsString];
 		return result;
 	}];
+}
+
+- (void)sortMusicListWithOptions:(NSSortOptions)opts usingComparator:(NSComparator)comp
+{
+	[self willChangeValueForKey:kMusicListKVO];
+	[musicList sortWithOptions:(NSSortConcurrent | opts) usingComparator:comp];
 	[self didChangeValueForKey:kMusicListKVO];
 }
 
-- (void)sortMusicList
+- (void)sortMusicListUsingComparator:(NSComparator)comp
 {
-	[self sortMusicListByName];
+	[self sortMusicListWithOptions:NSSortStable usingComparator:comp];
 }
 
 - (void)loadMusicList:(NSArray *)newArray
