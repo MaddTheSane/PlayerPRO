@@ -115,10 +115,47 @@
 @synthesize theInstrument;
 @synthesize number;
 @synthesize name;
+@synthesize _pitchEnvelope;
+@synthesize _volumeEnvelope;
+@synthesize _panningEnvelope;
+
+- (NSArray*)volumeEnvelope
+{
+	return [NSArray arrayWithArray:_volumeEnvelope];
+}
+
+- (NSArray*)panningEnvelope
+{
+	return [NSArray arrayWithArray:_panningEnvelope];
+}
+
+- (NSArray*)pitchEnvelope
+{
+	return [NSArray arrayWithArray:_pitchEnvelope];
+}
 
 - (void)writeBackToStruct
 {
-	//TODO: implement
+	char tempstr[32] = {0};
+	
+	NSData *tmpCStr = [name dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+	NSInteger cStrLen = [tmpCStr length];
+	if (cStrLen > sizeof(tempstr) - 1) {
+		cStrLen = sizeof(tempstr) - 1;
+	}
+	[tmpCStr getBytes:tempstr length:cStrLen];
+	tmpCStr = nil;
+	
+	//memcpy(newData, &theInstrument, sizeof(InstrData));
+	strlcpy(theInstrument.name, tempstr, sizeof(theInstrument.name));
+	
+	theInstrument.numSamples = [samples count];
+	
+	for (char i = 0; i < 12; i++) {
+		theInstrument.pitchEnv[i] = [_pitchEnvelope[i] envelopeRec];
+		theInstrument.volEnv[i] = [_volumeEnvelope[i] envelopeRec];
+		theInstrument.pannEnv[i] = [_panningEnvelope[i] envelopeRec];
+	}
 }
 
 - (short)firstSample
@@ -467,7 +504,7 @@
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@: Sample index %d count %d samples: %@", name, self.firstSample, self.sampleCount, [samples description]];
+	return [NSString stringWithFormat:@"%@: Sample index %d count %lu samples: %@", name, self.firstSample, (unsigned long)[samples count], [samples description]];
 }
 
 #if 0
@@ -534,11 +571,11 @@
 - (void)addSamplesObject:(PPSampleObject *)object
 {
 	NSAssert(number != -1, @"The instrument should be in a Music Object wrapper BEFORE adding samples");
-	if (self.sampleCount >= MAXSAMPLE) {
+	if ([samples count] >= MAXSAMPLE) {
 		return;
 	}
 	object = [object copy];
-	object.sampleIndex = self.sampleCount;
+	object.sampleIndex = [samples count];
 	object.instrumentIndex = number;
 	
 	[samples addObject:object];
@@ -703,7 +740,7 @@
 
 - (NSArray *)children;
 {
-	return [NSArray arrayWithArray:samples];
+	return [self samples];
 }
 
 - (PPSampleObject*)childAtIndex:(NSUInteger)idx
@@ -713,7 +750,7 @@
 
 - (NSUInteger)countOfChildren
 {
-	return [samples count];
+	return [self countOfSamples];
 }
 
 #pragma mark NSCopying protocol
@@ -721,7 +758,10 @@
 - (id)copyWithZone:(NSZone *)zone
 {
 	[self writeBackToStruct];
-	return [[[self class] allocWithZone:zone] initWithMusic:_theMus instrumentIndex:theInstrument.no];
+	PPInstrumentObject *newObj = [[[self class] allocWithZone:zone] initWithMusic:_theMus instrumentIndex:theInstrument.no];
+	
+	
+	return newObj;
 }
 
 #pragma mark NSFastEnumeration protocol
@@ -737,6 +777,9 @@
 {
 	if (self = [super init]) {
 		
+		
+		
+		[self setUpKVO];
 	}
 	return self;
 }

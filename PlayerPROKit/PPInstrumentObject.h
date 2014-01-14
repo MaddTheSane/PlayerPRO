@@ -27,12 +27,16 @@
 + (instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObjectWrapper*)mus;
 - (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
 
+- (NSArray*)volumeEnvelope;
+- (NSArray*)panningEnvelope;
+- (NSArray*)pitchEnvelope;
+
 @property (weak) PPMusicObjectWrapper *theMus;
 @property (copy) NSString *name;
 @property (readonly) NSArray *samples;
 @property (readonly) NSInteger number;
-@property (readonly) short sampleCount;
-@property (readonly) short firstSample;
+- (short)sampleCount DEPRECATED_ATTRIBUTE;
+- (short)firstSample;
 
 @property short MIDI;
 @property (readonly) short MIDIType;
