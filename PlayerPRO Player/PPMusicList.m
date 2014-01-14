@@ -239,11 +239,6 @@ static inline NSURL *PPHomeURL()
 	}];
 }
 
-- (void)sortMusicList
-{
-	[self sortMusicListByName];
-}
-
 - (void)sortMusicListWithOptions:(NSSortOptions)opts usingComparator:(NSComparator)comp
 {
 	[self willChangeValueForKey:kMusicListKVO];

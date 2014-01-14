@@ -30,7 +30,6 @@
 
 - (instancetype)init;
 
-- (void)sortMusicList DEPRECATED_ATTRIBUTE;
 - (void)sortMusicListByName;
 - (void)sortMusicListUsingComparator:(NSComparator)comp;
 - (void)sortMusicListWithOptions:(NSSortOptions)opts usingComparator:(NSComparator)comp;
