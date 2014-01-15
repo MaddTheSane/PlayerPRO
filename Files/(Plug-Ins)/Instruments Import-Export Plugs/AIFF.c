@@ -127,30 +127,6 @@ static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **
 	
 	switch(order)
 	{
-#if 0
-		case 'IMPL':
-		{
-			char			*theSound;
-			long			lS, lE;
-			short			sS;
-			unsigned long	rate;
-			Boolean			stereo;
-			FSSpec			newFile;
-			
-			myErr = ConvertDataToWAVE(*AlienFileFSSpec, &newFile, thePPInfoPlug);
-			if (myErr == noErr) {
-				theSound = ConvertWAV(&newFile, &lS, &lE, &sS, &rate, &stereo);
-				
-				if (theSound)
-					myErr = inAddSoundToMAD(theSound, lS, lE, sS, 60, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
-				else
-					myErr = MADNeedMemory;
-				
-				FSpDelete(&newFile);
-			}
-		}
-			break;
-#endif
 		case MADPlugImport:
 			res = AudioFileOpenURL(AlienFileURL, kAudioFileReadPermission, kAudioFileAIFFType, &audioFile);
 			if (res != noErr) {
@@ -161,11 +137,9 @@ static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **
 					AudioFileGetProperty(audioFile, kAudioFilePropertyDataFormat, &datSize, &fromFormat);
 					toFormat = GetBestApproximationFromAudioStream(fromFormat);
 					res = AudioConverterNew(&fromFormat, &toFormat, &convRef);
-					AudioStreamPacketDescription packDes = {0};
-					AudioBufferList *mOutputBufferList;
-
+					AudioBufferList *mOutputBufferList = NULL;
 					
-					AudioConverterFillComplexBuffer(convRef, NULL, NULL, &datSize, mOutputBufferList, &packDes);
+					AudioConverterFillComplexBuffer(convRef, NULL, NULL, &datSize, mOutputBufferList, NULL);
 					
 					AudioConverterDispose(convRef);
 					AudioFileClose(audioFile);
