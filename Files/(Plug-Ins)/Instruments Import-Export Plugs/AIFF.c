@@ -9,6 +9,101 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <AudioToolbox/AudioToolbox.h>
 
+char *GetFileNameFromCFURL(CFURLRef theRef)
+{
+	char *fileName;
+	CFIndex filenamLen;
+	CFRange theDotWav;
+	char *FileNameLong = NULL;
+	CFStringRef filenam = CFURLCopyLastPathComponent(theRef);
+	if (CFStringFindWithOptions(filenam, CFSTR(".wav"), CFRangeMake(0, CFStringGetLength(filenam)), kCFCompareCaseInsensitive | kCFCompareBackwards, &theDotWav)) {
+		CFRange withoutDotWav = CFRangeMake(0, CFStringGetLength(filenam));
+		withoutDotWav.length -= theDotWav.length;
+		CFStringRef shortRef = CFStringCreateWithSubstring(kCFAllocatorDefault, filenam, withoutDotWav);
+		CFRelease(filenam);
+		filenam = shortRef;
+	}
+	filenamLen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(filenam), kCFStringEncodingMacRoman);
+	filenamLen *= 2;
+	FileNameLong = malloc(filenamLen);
+	if (!CFStringGetCString(filenam, FileNameLong, filenamLen, kCFStringEncodingMacRoman)) {
+		free(FileNameLong);
+		CFRelease(filenam);
+		return NULL;
+	}
+	CFRelease(filenam);
+	fileName = realloc(FileNameLong, strlen(FileNameLong) + 1);
+	if (!fileName)
+		fileName = FileNameLong;
+
+	return fileName;
+}
+
+static Boolean AudioStreamNeedsConversion(AudioStreamBasicDescription fromFormat)
+{
+	if (fromFormat.mFramesPerPacket != 1) {
+		return TRUE;
+	}
+	if (fromFormat.mFormatID != kAudioFormatLinearPCM) {
+		return TRUE;
+	}
+	if (fromFormat.mFormatFlags != (kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked)) {
+		return TRUE;
+	}
+	if (fromFormat.mSampleRate < 5000 || fromFormat.mSampleRate > 48000 || fromFormat.mSampleRate != floor(fromFormat.mSampleRate)) {
+		return TRUE;
+	}
+	if (fromFormat.mBitsPerChannel != 16 && fromFormat.mBitsPerChannel != 8) {
+		return TRUE;
+	}
+	if (fromFormat.mChannelsPerFrame != 1 && fromFormat.mChannelsPerFrame != 2) {
+		return TRUE;
+	}
+	
+	return FALSE;
+}
+
+static AudioStreamBasicDescription GetBestApproximationFromAudioStream(AudioStreamBasicDescription fromFormat)
+{
+	AudioStreamBasicDescription toFormat = {0};
+	toFormat.mFramesPerPacket = 1;
+	toFormat.mFormatID = kAudioFormatLinearPCM;
+	toFormat.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+	if (fromFormat.mSampleRate < 5000) {
+		toFormat.mSampleRate = 5000;
+	} else if(fromFormat.mSampleRate > 48000) {
+		toFormat.mSampleRate = 48000;
+	} else {
+		toFormat.mSampleRate = floor(fromFormat.mSampleRate);
+	}
+	
+	switch (fromFormat.mBitsPerChannel) {
+		case 8:
+		case 16:
+			toFormat.mBitsPerChannel = fromFormat.mBitsPerChannel;
+			break;
+			
+		default:
+			toFormat.mBitsPerChannel = 16;
+			break;
+	}
+	
+	switch (fromFormat.mChannelsPerFrame) {
+		case 2:
+		case 1:
+			toFormat.mChannelsPerFrame = toFormat.mChannelsPerFrame;
+			break;
+			
+		default:
+			toFormat.mChannelsPerFrame = 2;
+			break;
+	}
+	toFormat.mBytesPerFrame = toFormat.mBitsPerChannel * toFormat.mChannelsPerFrame / 8;
+	toFormat.mBytesPerPacket = toFormat.mBytesPerFrame * toFormat.mFramesPerPacket;
+	
+	return toFormat;
+}
+
 #if 0
 static OSErr mainAIFF(void					*unused,
 					  OSType				order,			// Order to execute
@@ -25,7 +120,10 @@ static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **
 	OSErr		myErr = noErr;
 	AudioFileID	audioFile;
 	OSStatus	res = noErr;
-	//Boolean		isAIFC = FALSE;
+	char		*fileName = GetFileNameFromCFURL(AlienFileURL);
+	
+	AudioStreamBasicDescription toFormat = {0};
+	AudioStreamBasicDescription fromFormat = {0};
 	
 	switch(order)
 	{
@@ -58,17 +156,37 @@ static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **
 			if (res != noErr) {
 				res = AudioFileOpenURL(AlienFileURL, kAudioFileReadPermission, kAudioFileAIFCType, &audioFile);
 				if (res == noErr) {
-					//isAIFC = TRUE;
 					AudioConverterRef convRef = NULL;
-					AudioStreamBasicDescription toFormat = {0};
-					AudioStreamBasicDescription fromFormat = {0};
-					
+					UInt32 datSize = sizeof(fromFormat);
+					AudioFileGetProperty(audioFile, kAudioFilePropertyDataFormat, &datSize, &fromFormat);
+					toFormat = GetBestApproximationFromAudioStream(fromFormat);
 					res = AudioConverterNew(&fromFormat, &toFormat, &convRef);
+					AudioStreamPacketDescription packDes = {0};
+					AudioBufferList *mOutputBufferList;
+
+					
+					AudioConverterFillComplexBuffer(convRef, NULL, NULL, &datSize, mOutputBufferList, &packDes);
+					
+					AudioConverterDispose(convRef);
 					AudioFileClose(audioFile);
 				} else {
 					myErr = MADReadingErr;
 				}
 			} else {
+				UInt32 datSize = sizeof(fromFormat);
+				AudioFileGetProperty(audioFile, kAudioFilePropertyDataFormat, &datSize, &fromFormat);
+				
+				if (AudioStreamNeedsConversion(fromFormat)) {
+					AudioConverterRef convRef = NULL;
+					toFormat = GetBestApproximationFromAudioStream(fromFormat);
+					res = AudioConverterNew(&fromFormat, &toFormat, &convRef);
+					
+					
+					AudioConverterDispose(convRef);
+				} else {
+					
+				}
+				
 				AudioFileClose(audioFile);
 			}
 			break;
@@ -146,6 +264,10 @@ static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **
 		default:
 			myErr = MADOrderNotImplemented;
 			break;
+	}
+	
+	if (fileName) {
+		free(fileName);
 	}
 	
 	return myErr;
