@@ -60,9 +60,6 @@
 #define kPPPanningTypeLoop kPPPanningType kPPEFLOOP
 #define kPPPanningTypeNote kPPPanningType kPPEFNOTE
 
-@interface PPEnvelopeObject ()
-@end
-
 @implementation PPEnvelopeObject
 @synthesize envelopeRec;
 
@@ -217,13 +214,13 @@
 {
 	[self willChangeValueForKey:@"MIDIType"];
 	if (soundOut) {
-		if ([self isMIDIOut]) {
+		if (self.MIDIOut) {
 			theInstrument.MIDIType = 2;
 		} else {
 			theInstrument.MIDIType = 0;
 		}
 	} else {
-		if ([self isMIDIOut]) {
+		if (self.MIDIOut) {
 			theInstrument.MIDIType = 1;
 		} else {
 			theInstrument.MIDIType = 3;
@@ -250,13 +247,13 @@
 {
 	[self willChangeValueForKey:@"MIDIType"];
 	if (MIDIOut) {
-		if ([self isSoundOut]) {
+		if (self.soundOut) {
 			theInstrument.MIDIType = 2;
 		} else {
 			theInstrument.MIDIType = 1;
 		}
 	} else {
-		if ([self isSoundOut]) {
+		if (self.soundOut) {
 			theInstrument.MIDIType = 0;
 		} else {
 			theInstrument.MIDIType = 3;
@@ -466,17 +463,43 @@
 
 - (void)setUpKVO
 {
-	[self addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionNew context:NULL];
+	[self addObserver:self forKeyPath:kPPVolumeTypeLoop options:NSKeyValueObservingOptionNew context:NULL];
+	[self addObserver:self forKeyPath:kPPVolumeTypeNote options:NSKeyValueObservingOptionNew context:NULL];
+	[self addObserver:self forKeyPath:kPPVolumeTypeOn options:NSKeyValueObservingOptionNew context:NULL];
+	[self addObserver:self forKeyPath:kPPVolumeTypeSustain options:NSKeyValueObservingOptionNew context:NULL];
+	
+	[self addObserver:self forKeyPath:kPPPanningTypeLoop options:NSKeyValueObservingOptionNew context:NULL];
+	[self addObserver:self forKeyPath:kPPPanningTypeNote options:NSKeyValueObservingOptionNew context:NULL];
+	[self addObserver:self forKeyPath:kPPPanningTypeOn options:NSKeyValueObservingOptionNew context:NULL];
+	[self addObserver:self forKeyPath:kPPPanningTypeSustain options:NSKeyValueObservingOptionNew context:NULL];
+	
 }
 
 - (void)shutDownKVO
 {
-	[self removeObserver:self forKeyPath:@"paused"];
+	[self removeObserver:self forKeyPath:kPPVolumeTypeLoop];
+	[self removeObserver:self forKeyPath:kPPVolumeTypeNote];
+	[self removeObserver:self forKeyPath:kPPVolumeTypeOn];
+	[self removeObserver:self forKeyPath:kPPVolumeTypeSustain];
+	
+	[self removeObserver:self forKeyPath:kPPPanningTypeLoop];
+	[self removeObserver:self forKeyPath:kPPPanningTypeNote];
+	[self removeObserver:self forKeyPath:kPPPanningTypeOn];
+	[self removeObserver:self forKeyPath:kPPPanningTypeSustain];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	
+	//FIXME: is this right?
+	if ([keyPath isEqualToString:kPPVolumeTypeLoop] || [keyPath isEqualToString:kPPVolumeTypeNote] ||
+		[keyPath isEqualToString:kPPVolumeTypeOn] || [keyPath isEqualToString:kPPVolumeTypeSustain]) {
+		[self willChangeValueForKey:kPPVolumeType];
+		[self didChangeValueForKey:kPPVolumeType];
+	} else if ([keyPath isEqualToString:kPPPanningTypeLoop] || [keyPath isEqualToString:kPPPanningTypeNote] ||
+			   [keyPath isEqualToString:kPPPanningTypeOn] || [keyPath isEqualToString:kPPPanningTypeSustain]) {
+		[self willChangeValueForKey:kPPPanningType];
+		[self didChangeValueForKey:kPPPanningType];
+	}
 }
 
 - (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus;
@@ -495,9 +518,9 @@
 		_volumeEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
 		_pitchEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
 		for (int i = 0; i < 12; i++) {
-			[_panningEnvelope addObject:[[PPEnvelopeObject alloc] init]];
-			[_volumeEnvelope addObject:[[PPEnvelopeObject alloc] init]];
-			[_pitchEnvelope addObject:[[PPEnvelopeObject alloc] init]];
+			[_panningEnvelope addObject:[PPEnvelopeObject new]];
+			[_volumeEnvelope addObject:[PPEnvelopeObject new]];
+			[_pitchEnvelope addObject:[PPEnvelopeObject new]];
 		}
 		[self setUpKVO];
 
@@ -832,8 +855,8 @@
 	[aCoder encodeObject:name forKey:PPName];
 	[aCoder encodeInteger:number forKey:PPLocation];
 	[aCoder encodeInteger:self.firstSample forKey:PPSampCount];
-	[aCoder encodeObject:@(theInstrument.MIDI) forKey:PPMIDI];
-	[aCoder encodeObject:@(theInstrument.MIDIType) forKey:PPMIDIType];
+	[aCoder encodeInt:theInstrument.MIDI forKey:PPMIDI];
+	[aCoder encodeInt:theInstrument.MIDIType forKey:PPMIDIType];
 	[aCoder encodeBytes:&theInstrument.volSize length:1 forKey:PPVolSize];
 	[aCoder encodeBytes:&theInstrument.pannSize length:1 forKey:PPPannSize];
 	[aCoder encodeBytes:&theInstrument.pitchSize length:1 forKey:PPPitchSize];
