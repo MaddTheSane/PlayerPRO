@@ -37,7 +37,7 @@
 	<key>MADCanImport</key>
 	<true/>
 	<key>MADPlugAuthorName</key>
-	<string>Copyright 99 Antoine ROSSET</string>
+	<string>Copyright © 1999 Antoine ROSSET</string>
 	<key>MADPlugIsSample</key>
 	<false/>
 	<key>MADPlugMenuName</key>
@@ -48,5 +48,7 @@
 	<array>
 		<string>net.sourceforge.playerpro.pat</string>
 	</array>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 1999 Antoine ROSSET</string>
 </dict>
 </plist>
