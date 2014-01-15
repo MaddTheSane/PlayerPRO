@@ -1,10 +1,9 @@
 /*	WAV		*/
 /*  IMPORT	*/
 
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/PPDefs.h>
-#include <PlayerPROCore/FileUtils.h>
+#include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
+#include <AudioToolbox/AudioToolbox.h>
 #include "WAV.h"
 
 /*______________________________________________________________________
@@ -54,7 +53,9 @@ static OSErr mainWave(void					*unused,
 					  PPInfoPlug			*thePPInfoPlug)
 {
 	OSErr	myErr = noErr;
-		
+	AudioFileID audioFile;
+	OSStatus res = noErr;
+	
 	switch (order) {
 #if 0
 		case 'PLAY':
@@ -109,21 +110,12 @@ static OSErr mainWave(void					*unused,
 			break;
 			
 		case MADPlugTest:
-		{
-			char cPath[PATH_MAX] = {0};
-			CFURLGetFileSystemRepresentation(AlienFileRef, true, (unsigned char*)cPath, PATH_MAX);
-			UNFILE iFileRef = iFileOpenRead(cPath);
-			long inOutBytes = 100L;
-			Ptr AlienPtr = malloc(inOutBytes);
-			if (AlienPtr == NULL) {
-				myErr = MADNeedMemory;
+			res = AudioFileOpenURL(AlienFileRef, kAudioFileReadPermission, kAudioFileWAVEType, &audioFile);
+			if (res != noErr) {
+				myErr = MADFileNotSupportedByThisPlug;
 			} else {
-				iRead(inOutBytes, AlienPtr, iFileRef);
-				myErr = TestWAV((PCMWavePtr)AlienPtr);
-				free(AlienPtr);
+				AudioFileClose(audioFile);
 			}
-			iClose(iFileRef);
-		}
 			break;
 			
 		default:

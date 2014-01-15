@@ -5,6 +5,7 @@
 /*  2013 rewrite by Madd the Sane	*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/PPPlug.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include <AudioToolbox/AudioToolbox.h>
 
@@ -21,9 +22,10 @@ static OSErr mainAIFF(void					*unused,
 
 static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **sample, short *sampleID, CFURLRef AlienFileURL, PPInfoPlug *thePPInfoPlug)
 {
-	OSErr	myErr = noErr;
-	//char	*AlienFile;
-
+	OSErr		myErr = noErr;
+	AudioFileID	audioFile;
+	OSStatus	res = noErr;
+	//Boolean		isAIFC = FALSE;
 	
 	switch(order)
 	{
@@ -52,22 +54,26 @@ static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **
 			break;
 #endif
 		case MADPlugImport:
-		{
-			AudioFileID theInID;
-			OSStatus myStat = AudioFileOpenURL(AlienFileURL, kAudioFileReadPermission, 0, &theInID);
-			if (myStat != noErr) {
-				myErr = MADReadingErr;
+			res = AudioFileOpenURL(AlienFileURL, kAudioFileReadPermission, kAudioFileAIFFType, &audioFile);
+			if (res != noErr) {
+				res = AudioFileOpenURL(AlienFileURL, kAudioFileReadPermission, kAudioFileAIFCType, &audioFile);
+				if (res == noErr) {
+					//isAIFC = TRUE;
+					AudioConverterRef convRef = NULL;
+					AudioStreamBasicDescription toFormat = {0};
+					AudioStreamBasicDescription fromFormat = {0};
+					
+					res = AudioConverterNew(&fromFormat, &toFormat, &convRef);
+					AudioFileClose(audioFile);
+				} else {
+					myErr = MADReadingErr;
+				}
 			} else {
-				AudioFileClose(theInID);
-				myErr = MADOrderNotImplemented;
+				AudioFileClose(audioFile);
 			}
-		}
+			break;
 			
 		case MADPlugTest:
-		{
-			AudioFileID audioFile;
-			OSStatus res;
-
 			res = AudioFileOpenURL(AlienFileURL, kAudioFileReadPermission, kAudioFileAIFFType, &audioFile);
 			if (res != noErr) {
 				res = AudioFileOpenURL(AlienFileURL, kAudioFileReadPermission, kAudioFileAIFCType, &audioFile);
@@ -79,12 +85,10 @@ static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **
 			} else {
 				AudioFileClose(audioFile);
 			}
-		}
 			break;
 			
 		case MADPlugExport:
-			if (*sampleID >= 0)
-			{
+			if (*sampleID >= 0) {
 				char* data = NULL;
 				sData *curData = sample[*sampleID];
 				AudioStreamBasicDescription asbd = {0};
