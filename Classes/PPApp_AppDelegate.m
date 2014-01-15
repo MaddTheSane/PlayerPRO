@@ -72,10 +72,8 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 @synthesize madLib;
 - (void)setMadLib:(PPLibrary *)madLibb
 {
-	[self willChangeValueForKey:@"madLib"];
 	madLib = madLibb;
 	globalMadLib = madLib;
-	[self didChangeValueForKey:@"madLib"];
 }
 
 @synthesize trackerDict = _trackerDict;

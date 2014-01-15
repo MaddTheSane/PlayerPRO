@@ -37,10 +37,8 @@
 
 - (void)setPatternSize:(int)patternSize
 {
-	[self willChangeValueForKey:@"patternSize"];
 	//TODO: more work here!
 	patternHeader.size = patternSize;
-	[self didChangeValueForKey:@"patternSize"];
 }
 
 - (id)initWithMusic:(PPMusicObjectWrapper *)mus

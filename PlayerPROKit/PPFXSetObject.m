@@ -45,9 +45,7 @@
 
 - (void)setTrack:(short)track
 {
-	[self willChangeValueForKey:@"track"];
 	theSet.track = track;
-	[self didChangeValueForKey:@"track"];
 }
 
 - (short)identifier
@@ -57,9 +55,7 @@
 
 - (void)setIdentifier:(short)identifier
 {
-	[self willChangeValueForKey:@"identifier"];
 	theSet.id = identifier;
-	[self didChangeValueForKey:@"identifier"];
 }
 
 - (int)fxIdentifier
@@ -69,9 +65,7 @@
 
 - (void)setFxIdentifier:(int)fxIdentifier
 {
-	[self willChangeValueForKey:@"fxIdentifier"];
 	theSet.FXID = fxIdentifier;
-	[self didChangeValueForKey:@"fxIdentifier"];
 }
 
 - (short)argumentNumbers
@@ -81,9 +75,7 @@
 
 - (void)setArgumentNumbers:(short)argumentNumbers
 {
-	[self willChangeValueForKey:@"argumentNumbers"];
 	theSet.noArg = argumentNumbers;
-	[self didChangeValueForKey:@"argumentNumbers"];
 }
 
 - (NSArray*)values

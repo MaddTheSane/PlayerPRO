@@ -37,21 +37,17 @@
 
 - (void)setBypass:(BOOL)bypass
 {
-	[self willChangeValueForKey:@"bypass"];
 	theBus.ByPass = bypass;
-	[self didChangeValueForKey:@"bypass"];
 }
 
-- (short)copyId
+- (short)copyID
 {
 	return theBus.copyId;
 }
 
-- (void)setCopyId:(short)copyId
+- (void)setCopyID:(short)copyId
 {
-	[self willChangeValueForKey:@"copyId"];
 	theBus.copyId = copyId;
-	[self didChangeValueForKey:@"copyId"];
 }
 
 - (BOOL)isActive
@@ -61,9 +57,7 @@
 
 - (void)setActive:(BOOL)active
 {
-	[self willChangeValueForKey:@"active"];
 	theBus.Active = active;
-	[self didChangeValueForKey:@"active"];
 }
 
 - (void)writeBackToStruct

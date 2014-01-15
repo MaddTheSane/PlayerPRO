@@ -45,21 +45,6 @@
 #define kPPVolumeType @"volumeType"
 #define kPPPanningType @"panningType"
 
-#define kPPEFON @"On"
-#define kPPEFSUS @"Sustain"
-#define kPPEFLOOP @"Loop"
-#define kPPEFNOTE @"Note"
-
-#define kPPVolumeTypeOn kPPVolumeType kPPEFON
-#define kPPVolumeTypeSustain kPPVolumeType kPPEFSUS
-#define kPPVolumeTypeLoop kPPVolumeType kPPEFLOOP
-#define kPPVolumeTypeNote kPPVolumeType kPPEFNOTE
-
-#define kPPPanningTypeOn kPPPanningType kPPEFON
-#define kPPPanningTypeSustain kPPPanningType kPPEFSUS
-#define kPPPanningTypeLoop kPPPanningType kPPEFLOOP
-#define kPPPanningTypeNote kPPPanningType kPPEFNOTE
-
 @implementation PPEnvelopeObject
 @synthesize envelopeRec;
 
@@ -70,11 +55,7 @@
 
 - (void)setPosition:(short)position
 {
-	[self willChangeValueForKey:@"position"];
-	[self willChangeValueForKey:@"envelopeRec"];
 	envelopeRec.pos = position;
-	[self didChangeValueForKey:@"position"];
-	[self didChangeValueForKey:@"envelopeRec"];
 }
 
 - (short)value
@@ -84,11 +65,7 @@
 
 - (void)setValue:(short)value
 {
-	[self willChangeValueForKey:@"value"];
-	[self willChangeValueForKey:@"envelopeRec"];
 	envelopeRec.val = value;
-	[self didChangeValueForKey:@"value"];
-	[self didChangeValueForKey:@"envelopeRec"];
 }
 
 - (void)writeBackToStruct
@@ -186,9 +163,7 @@
 
 - (void)setMIDI:(short)MIDI
 {
-	[self willChangeValueForKey:@"MIDI"];
 	theInstrument.MIDI = MIDI;
-	[self didChangeValueForKey:@"MIDI"];
 }
 
 - (BOOL)isSoundOut
@@ -269,9 +244,7 @@
 
 - (void)setVolumeSize:(Byte)volumeSize
 {
-	[self willChangeValueForKey:@"volumeSize"];
 	theInstrument.volSize = volumeSize;
-	[self didChangeValueForKey:@"volumeSize"];
 }
 
 - (Byte)panningSize
@@ -281,9 +254,7 @@
 
 - (void)setPanningSize:(Byte)panningSize
 {
-	[self willChangeValueForKey:@"panningSize"];
 	theInstrument.pannSize = panningSize;
-	[self didChangeValueForKey:@"panningSize"];
 }
 
 - (Byte)pitchSize
@@ -293,9 +264,7 @@
 
 - (void)setPitchSize:(Byte)pitchSize
 {
-	[self willChangeValueForKey:@"pitchSize"];
 	theInstrument.pitchSize = pitchSize;
-	[self didChangeValueForKey:@"pitchSize"];
 }
 
 - (Byte)volumeSustain
@@ -305,9 +274,7 @@
 
 - (void)setVolumeSustain:(Byte)volumeSustain
 {
-	[self willChangeValueForKey:@"volumeSustain"];
 	theInstrument.volSus = volumeSustain;
-	[self didChangeValueForKey:@"volumeSustain"];
 }
 
 - (Byte)volumeBegin
@@ -317,9 +284,7 @@
 
 - (void)setVolumeBegin:(Byte)volumeBegin
 {
-	[self willChangeValueForKey:@"volumeBegin"];
 	theInstrument.volBeg = volumeBegin;
-	[self didChangeValueForKey:@"volumeBegin"];
 }
 
 - (Byte)volumeEnd
@@ -329,9 +294,7 @@
 
 - (void)setVolumeEnd:(Byte)volumeEnd
 {
-	[self willChangeValueForKey:@"volumeEnd"];
 	theInstrument.volEnd = volumeEnd;
-	[self didChangeValueForKey:@"volumeEnd"];
 }
 
 - (Byte)panningSustain
@@ -341,9 +304,7 @@
 
 - (void)setPanningSustain:(Byte)panningSustain
 {
-	[self willChangeValueForKey:@"panningSustain"];
 	theInstrument.pannSus = panningSustain;
-	[self didChangeValueForKey:@"panningSustain"];
 }
 
 - (Byte)panningBegin
@@ -353,9 +314,7 @@
 
 - (void)setPanningBegin:(Byte)panningBegin
 {
-	[self willChangeValueForKey:@"panningBegin"];
 	theInstrument.pannBeg = panningBegin;
-	[self didChangeValueForKey:@"panningBegin"];
 }
 
 - (Byte)panningEnd
@@ -365,9 +324,7 @@
 
 - (void)setPanningEnd:(Byte)panningEnd
 {
-	[self willChangeValueForKey:@"panningEnd"];
 	theInstrument.pannEnd = panningEnd;
-	[self willChangeValueForKey:@"panningEnd"];
 }
 
 - (Byte)pitchSustain
@@ -377,9 +334,7 @@
 
 - (void)setPitchSustain:(Byte)pitchSustain
 {
-	[self willChangeValueForKey:@"pitchSustain"];
 	theInstrument.pitchSus = pitchSustain;
-	[self didChangeValueForKey:@"pitchSustain"];
 }
 
 - (Byte)pitchBegin
@@ -389,9 +344,7 @@
 
 - (void)setPitchBegin:(Byte)pitchBegin
 {
-	[self willChangeValueForKey:@"pitchBegin"];
 	theInstrument.pitchBeg = pitchBegin;
-	[self didChangeValueForKey:@"pitchBegin"];
 }
 
 - (Byte)pitchEnd
@@ -401,9 +354,7 @@
 
 - (void)setPitchEnd:(Byte)pitchEnd
 {
-	[self willChangeValueForKey:@"pitchEnd"];
 	theInstrument.pitchEnd = pitchEnd;
-	[self didChangeValueForKey:@"pitchEnd"];
 }
 
 - (Byte)vibratoDepth
@@ -413,9 +364,7 @@
 
 - (void)setVibratoDepth:(Byte)vibratoDepth
 {
-	[self willChangeValueForKey:@"vibratoDepth"];
 	theInstrument.vibDepth = vibratoDepth;
-	[self didChangeValueForKey:@"vibratoDepth"];
 }
 
 - (Byte)vibratoRate
@@ -425,9 +374,7 @@
 
 - (void)setVibratoRate:(Byte)vibratoRate
 {
-	[self willChangeValueForKey:@"vibratoRate"];
 	theInstrument.vibRate = vibratoRate;
-	[self didChangeValueForKey:@"vibratoRate"];
 }
 
 - (NSArray*)samples
@@ -442,10 +389,8 @@
 
 - (void)setNumber:(NSInteger)numberr
 {
-	[self willChangeValueForKey:@"number"];
 	theInstrument.no = number = numberr;
 	theInstrument.firstSample = MAXSAMPLE * numberr;
-	[self didChangeValueForKey:@"number"];
 }
 
 - (NSInteger)number
@@ -461,6 +406,7 @@
 	return insObj;
 }
 
+#if 0
 - (void)setUpKVO
 {
 	[self addObserver:self forKeyPath:kPPVolumeTypeLoop options:NSKeyValueObservingOptionNew context:NULL];
@@ -501,6 +447,7 @@
 		[self didChangeValueForKey:kPPPanningType];
 	}
 }
+#endif
 
 - (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus;
 {
@@ -522,7 +469,6 @@
 			[_volumeEnvelope addObject:[PPEnvelopeObject new]];
 			[_pitchEnvelope addObject:[PPEnvelopeObject new]];
 		}
-		[self setUpKVO];
 
 	}
 	return self;
@@ -531,8 +477,6 @@
 - (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
 {
 	if (self = [self initWithMusic:mus]) {
-		//So we don't accidentally get sent a lot of KVO/KVC calls
-		[self shutDownKVO];
 		theInstrument = mus._currentMusic->fid[insIdx];
 		samples = [[NSMutableArray alloc] initWithCapacity:theInstrument.numSamples];
 		{
@@ -558,81 +502,14 @@
 			[_pitchEnvelope addObject:[[PPEnvelopeObject alloc] initWithEnvRec:theInstrument.pitchEnv[i]]];
 
 		}
-		[self setUpKVO];
 	}
 	return self;
-}
-
-- (void)dealloc
-{
-	[self shutDownKVO];
 }
 
 - (NSString*)description
 {
 	return [NSString stringWithFormat:@"%@: Sample index %d count %lu samples: %@", name, self.firstSample, (unsigned long)[samples count], [samples description]];
 }
-
-#if 0
-- (void)writeSampleAtIndexBackToMusic:(short)idx
-{
-	if (idx >= MAXSAMPLE) {
-		return;
-	}
-	NSInteger firstSample = self.firstSample;
-	
-	if (theMus->sample[idx + firstSample]) {
-		if (theMus->sample[idx + firstSample]->data)
-		{
-			free(theMus->sample[idx + firstSample]->data);
-		}
-		free(theMus->sample[idx + firstSample]);
-	}
-	
-	theMus->sample[idx + firstSample] = [samples[idx] createSData];
-}
-
-- (void)writeBackToMusic
-{
-	NSInteger i, ii;
-	int firstSample = self.firstSample;
-	int totalSamples = self.sampleCount + firstSample;
-	int totalPossibleSamples = firstSample + MAXSAMPLE - 1;
-	for (i = firstSample; i < totalPossibleSamples; i++) {
-		if (theMus->sample[i]) {
-			//We can probably call the free of the data without the check
-			//but better safe than sorry
-			if (theMus->sample[i]->data) {
-				free(theMus->sample[i]->data);
-			}
-			free(theMus->sample[i]);
-			theMus->sample[i] = NULL;
-		}
-	}
-	
-	for (i = firstSample, ii = 0; i < totalSamples; i++, ii++) {
-		PPSampleObject *sampObj = samples[ii];
-		theMus->sample[i] = [sampObj createSData];
-	}
-	InstrData *newData = &theMus->fid[number];
-	char tempstr[32] = {0};
-	
-	NSData *tmpCStr = [name dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
-	NSInteger cStrLen = [tmpCStr length];
-	if (cStrLen > sizeof(tempstr) - 1) {
-		cStrLen = sizeof(tempstr) - 1;
-	}
-	[tmpCStr getBytes:tempstr length:cStrLen];
-	tmpCStr = nil;
-	
-	memcpy(newData, &theInstrument, sizeof(InstrData));
-	strlcpy(newData->name, tempstr, sizeof(newData->name));
-		
-	newData->numSamples = self.sampleCount;
-	
-	theMus->hasChanged = TRUE;
-}
-#endif
 
 - (void)addSamplesObject:(PPSampleObject *)object
 {
@@ -673,46 +550,46 @@
 
 - (void)setVolumeTypeOn:(BOOL)typeOn
 {
-	[self willChangeValueForKey:kPPVolumeTypeOn];
+	[self willChangeValueForKey:kPPVolumeType];
 	if (typeOn) {
 		theInstrument.volType |= (Byte)EFON;
 	} else {
 		theInstrument.volType &= ~(Byte)EFON;
 	}
-	[self didChangeValueForKey:kPPVolumeTypeOn];
+	[self didChangeValueForKey:kPPVolumeType];
 }
 
 - (void)setVolumeTypeSustain:(BOOL)typeSus
 {
-	[self willChangeValueForKey:kPPVolumeTypeSustain];
+	[self willChangeValueForKey:kPPVolumeType];
 	if (typeSus) {
 		theInstrument.volType |= (Byte)EFSUSTAIN;
 	} else {
 		theInstrument.volType &= ~(Byte)EFSUSTAIN;
 	}
-	[self didChangeValueForKey:kPPVolumeTypeSustain];
+	[self didChangeValueForKey:kPPVolumeType];
 }
 
 - (void)setVolumeTypeLoop:(BOOL)typeLoop
 {
-	[self willChangeValueForKey:kPPVolumeTypeLoop];
+	[self willChangeValueForKey:kPPVolumeType];
 	if (typeLoop) {
 		theInstrument.volType |= (Byte)EFLOOP;
 	} else {
 		theInstrument.volType &= ~(Byte)EFLOOP;
 	}
-	[self didChangeValueForKey:kPPVolumeTypeLoop];
+	[self didChangeValueForKey:kPPVolumeType];
 }
 
 - (void)setVolumeTypeNote:(BOOL)theLoop
 {
-	[self willChangeValueForKey:kPPVolumeTypeNote];
+	[self willChangeValueForKey:kPPVolumeType];
 	if (theLoop) {
 		theInstrument.volType |= (Byte)EFNOTE;
 	} else {
 		theInstrument.volType &= ~(Byte)EFNOTE;
 	}
-	[self didChangeValueForKey:kPPVolumeTypeNote];
+	[self didChangeValueForKey:kPPVolumeType];
 }
 
 - (BOOL)isVolumeTypeOn
@@ -742,46 +619,46 @@
 
 - (void)setPanningTypeOn:(BOOL)typeOn
 {
-	[self willChangeValueForKey:kPPPanningTypeOn];
+	[self willChangeValueForKey:kPPPanningType];
 	if (typeOn) {
 		theInstrument.pannType |= (Byte)EFON;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFON;
 	}
-	[self didChangeValueForKey:kPPPanningTypeOn];
+	[self didChangeValueForKey:kPPPanningType];
 }
 
 - (void)setPanningTypeSustain:(BOOL)typeSus
 {
-	[self willChangeValueForKey:kPPPanningTypeSustain];
+	[self willChangeValueForKey:kPPPanningType];
 	if (typeSus) {
 		theInstrument.pannType |= (Byte)EFSUSTAIN;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFSUSTAIN;
 	}
-	[self didChangeValueForKey:kPPPanningTypeSustain];
+	[self didChangeValueForKey:kPPPanningType];
 }
 
 - (void)setPanningTypeLoop:(BOOL)theLoop
 {
-	[self willChangeValueForKey:kPPPanningTypeLoop];
+	[self willChangeValueForKey:kPPPanningType];
 	if (theLoop) {
 		theInstrument.pannType |= (Byte)EFLOOP;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFLOOP;
 	}
-	[self didChangeValueForKey:kPPPanningTypeLoop];
+	[self didChangeValueForKey:kPPPanningType];
 }
 
 - (void)setPanningTypeNote:(BOOL)theLoop
 {
-	[self willChangeValueForKey:kPPPanningTypeNote];
+	[self willChangeValueForKey:kPPPanningType];
 	if (theLoop) {
 		theInstrument.pannType |= (Byte)EFNOTE;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFNOTE;
 	}
-	[self didChangeValueForKey:kPPPanningTypeNote];
+	[self didChangeValueForKey:kPPPanningType];
 }
 
 - (BOOL)isPanningTypeOn
@@ -843,9 +720,6 @@
 {
 	if (self = [super init]) {
 		
-		
-		
-		[self setUpKVO];
 	}
 	return self;
 }

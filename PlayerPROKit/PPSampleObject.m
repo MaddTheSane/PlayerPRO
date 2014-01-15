@@ -61,9 +61,7 @@
 
 - (void)setAmplitude:(Byte)amplitude
 {
-	[self willChangeValueForKey:@"amplitude"];
 	theSample.amp = amplitude;
-	[self didChangeValueForKey:@"amplitude"];
 }
 
 - (Byte)amplitude
@@ -73,9 +71,7 @@
 
 - (void)setLoopSize:(int)loopSize
 {
-	[self willChangeValueForKey:@"loopSize"];
 	theSample.loopSize = loopSize;
-	[self didChangeValueForKey:@"loopSize"];
 }
 
 - (int)loopSize
@@ -85,9 +81,7 @@
 
 - (void)setLoopBegin:(int)loopBegin
 {
-	[self willChangeValueForKey:@"loopBegin"];
 	theSample.loopBeg = loopBegin;
-	[self didChangeValueForKey:@"loopBegin"];
 }
 
 - (int)loopBegin
@@ -97,9 +91,7 @@
 
 - (void)setC2spd:(unsigned short)c2spd
 {
-	[self willChangeValueForKey:@"c2spd"];
 	theSample.c2spd = c2spd;
-	[self didChangeValueForKey:@"c2spd"];
 }
 
 - (unsigned short)c2spd
@@ -109,9 +101,7 @@
 
 - (void)setLoopType:(Byte)loopType
 {
-	[self willChangeValueForKey:@"loopType"];
 	theSample.loopType = loopType;
-	[self didChangeValueForKey:@"loopType"];
 }
 
 - (Byte)loopType
@@ -121,9 +111,7 @@
 
 - (void)setRelativeNote:(char)relativeNote
 {
-	[self willChangeValueForKey:@"relativeNote"];
 	theSample.relNote = relativeNote;
-	[self didChangeValueForKey:@"relativeNote"];
 }
 
 - (char)relativeNote
@@ -138,21 +126,17 @@
 
 - (void)setVolume:(Byte)avolume
 {
-	[self willChangeValueForKey:@"volume"];
 	theSample.vol = avolume;
-	[self didChangeValueForKey:@"volume"];
 }
 
 - (BOOL)isStereo
 {
-	return theSample.stereo ? YES : NO;
+	return theSample.stereo;
 }
 
 - (void)setStereo:(BOOL)astereo
 {
-	[self willChangeValueForKey:@"stereo"];
-	theSample.stereo = astereo ? TRUE : FALSE;
-	[self didChangeValueForKey:@"stereo"];
+	theSample.stereo = astereo;
 }
 
 - (SInt32)dataSize

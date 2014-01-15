@@ -307,9 +307,7 @@ end:
 
 - (void)setInternalFileName:(NSString *)_internalFileName
 {
-	[self willChangeValueForKey:@"internalFileName"];
 	internalFileName = [_internalFileName copy];
-	[self didChangeValueForKey:@"internalFileName"];
 }
 
 - (NSString*)madInfo
@@ -319,9 +317,7 @@ end:
 
 - (void)setMadInfo:(NSString *)_madInfo
 {
-	[self willChangeValueForKey:@"madInfo"];
 	madInfo = [_madInfo copy];
-	[self didChangeValueForKey:@"madInfo"];
 }
 
 #define kMADMusicName @"Mad Name"

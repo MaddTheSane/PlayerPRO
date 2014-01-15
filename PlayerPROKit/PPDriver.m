@@ -144,12 +144,10 @@
 		return;
 	}
 	
-	[self willChangeValueForKey:@"isExporting"];
 	if (isExp)
 		MADBeginExport(theRec);
 	else
 		MADEndExport(theRec);
-	[self didChangeValueForKey:@"isExporting"];
 }
 
 - (OSErr)getMusicStatusWithCurrentTime:(long*)curTime totalTime:(long*)totTime
@@ -179,12 +177,11 @@
 	if (iErr) {
 		return; //This will probably be a thrown exception in the future
 	}
-	[self willChangeValueForKey:@"musicPosition"];
+	
 	iErr = MADSetMusicStatus(theRec, 0, tempTotV, curV);
 	if (iErr) {
 		//return; //This will probably be a thrown exception in the future
 	}
-	[self didChangeValueForKey:@"musicPosition"];
 }
 
 - (void)cleanDriver

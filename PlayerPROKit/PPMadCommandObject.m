@@ -25,9 +25,7 @@
 
 - (void)setInstrument:(Byte)instrument
 {
-	[self willChangeValueForKey:@"instrument"];
 	theCommand.ins = instrument;
-	[self didChangeValueForKey:@"instrument"];
 }
 
 - (Byte)note
@@ -37,9 +35,7 @@
 
 - (void)setNote:(Byte)note
 {
-	[self willChangeValueForKey:@"note"];
 	theCommand.note = note;
-	[self didChangeValueForKey:@"note"];
 }
 
 - (Byte)command
@@ -49,9 +45,7 @@
 
 - (void)setCommand:(Byte)command
 {
-	[self willChangeValueForKey:@"command"];
 	theCommand.cmd = command;
-	[self didChangeValueForKey:@"command"];
 }
 
 - (Byte)argument
@@ -61,9 +55,7 @@
 
 - (void)setArgument:(Byte)argument
 {
-	[self willChangeValueForKey:@"argument"];
 	theCommand.arg = argument;
-	[self didChangeValueForKey:@"argument"];
 }
 
 - (Byte)volume
@@ -73,11 +65,8 @@
 
 - (void)setVolume:(Byte)volume
 {
-	[self willChangeValueForKey:@"volume"];
 	theCommand.vol = volume;
-	[self didChangeValueForKey:@"volume"];
 }
-
 
 - (id)init
 {

@@ -13,7 +13,7 @@
 @interface PPFXBusObject : NSObject <PPObject>
 @property (readonly) FXBus theBus;
 @property BOOL bypass;
-@property short copyId;
+@property short copyID;
 @property (getter = isActive) BOOL active;
 
 - (id)initWithFXBus:(FXBus *)set;
