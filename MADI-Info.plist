@@ -23,7 +23,7 @@
 	<key>MADCanImport</key>
 	<true/>
 	<key>MADPlugAuthorName</key>
-	<string>Written by A.ROSSET 2000</string>
+	<string>Written by A.ROSSET © 2000</string>
 	<key>MADPlugMenuName</key>
 	<string>MADI</string>
 	<key>MADPlugType</key>
@@ -32,5 +32,7 @@
 	<array>
 		<string>com.quadmation.playerpro.madi</string>
 	</array>
+	<key>NSHumanReadableCopyright</key>
+	<string>Written by A.ROSSET © 2000</string>
 </dict>
 </plist>

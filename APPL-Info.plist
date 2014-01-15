@@ -23,9 +23,9 @@
 	<key>MADCanImport</key>
 	<true/>
 	<key>MADPlugAuthorName</key>
-	<string>Written by A.ROSSET 95</string>
+	<string>Written by A.ROSSET © 1995</string>
 	<key>MADPlugMenuName</key>
-	<string>Application</string>
+	<string>MADK Application</string>
 	<key>MADPlugMode</key>
 	<string>IMPL</string>
 	<key>MADPlugType</key>
@@ -34,5 +34,7 @@
 	<array>
 		<string>com.apple.application-file</string>
 	</array>
+	<key>NSHumanReadableCopyright</key>
+	<string>Written by A.ROSSET © 1995</string>
 </dict>
 </plist>

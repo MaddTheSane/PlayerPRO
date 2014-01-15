@@ -23,7 +23,7 @@
 	<key>MADCanImport</key>
 	<true/>
 	<key>MADPlugAuthorName</key>
-	<string>Written by A.ROSSET 96</string>
+	<string>Written by A.ROSSET © 1996</string>
 	<key>MADPlugMenuName</key>
 	<string>DMF</string>
 	<key>MADPlugType</key>
@@ -32,5 +32,7 @@
 	<array>
 		<string>net.sourceforge.playerpro.dmf</string>
 	</array>
+	<key>NSHumanReadableCopyright</key>
+	<string>Written by A.ROSSET © 1996</string>
 </dict>
 </plist>

@@ -37,7 +37,7 @@
 	<key>MADCanImport</key>
 	<false/>
 	<key>MADPlugAuthorName</key>
-	<string>Copyright 2014, Charles "Madd the Sane" Betts, Sourceforge</string>
+	<string>Copyright © 2014, Charles "Madd the Sane" Betts, Sourceforge</string>
 	<key>MADPlugIsSample</key>
 	<true/>
 	<key>MADPlugMenuName</key>
@@ -49,5 +49,7 @@
 		<string>public.aiff-audio</string>
 		<string>public.aifc-audio</string>
 	</array>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 2014, Charles "Madd the Sane" Betts, Sourceforge</string>
 </dict>
 </plist>
