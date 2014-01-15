@@ -94,52 +94,39 @@
 
 #pragma mark NSOutlineView delegates and data ref calls
 
-static void DrawCGSampleInt(long 	start,
-							long 	tSS,
-							long 	tSE,
-							long 	high,
-							long	larg,
-							long	trueV,
-							long	trueH,
-							short	channel,
-							PPSampleObject	*curData,
-							CGContextRef ctxRef)
+static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg, long trueV, long trueH, short channel, PPSampleObject *curData, CGContextRef ctxRef)
 {
 	CGContextSaveGState(ctxRef);
 	
-	long long		i;
-	long			sampleSize = [curData dataSize];
-	CGFloat			temp;
-	const char*		theSample = [curData.data bytes];
-	const short		*theShortSample = (const short*) theSample;
-	long long		BS, BE, x;
-	BOOL isStereo = curData.stereo;
-	CGFloat			minY, maxY;
+	long		i;
+	size_t		sampleSize = [curData dataSize];
+	CGFloat		temp;
+	const char	*theSample = [curData.data bytes];
+	const short	*theShortSample = (const short*)theSample;
+	long		BS, BE, x;
+	BOOL		isStereo = curData.stereo;
+	CGFloat		minY, maxY;
 	
-	if (curData.amplitude == 16)
-	{
+	if (curData.amplitude == 16) {
 		sampleSize /= 2;
 		start /= 2;
 		
 		BS = start + (tSS * sampleSize) / larg;
-		if (isStereo)
-		{
+		if (isStereo) {
 			BS /= 2;
 			BS *=2;
 			BS += channel;
 		}
-		temp = (theShortSample[ BS]  + 0x8000);
+		temp = (theShortSample[BS]  + 0x8000);
 		temp *= high;
 		temp  /= (1 << 16);
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
 		
-		for (i = tSS; i < tSE; i++)
-		{
+		for (i = tSS; i < tSE; i++) {
 			BS = start + (i * sampleSize) / larg;
-			BE = start + ((i+1) * sampleSize) / larg;
+			BE = start + ((i + 1) * sampleSize) / larg;
 			
-			if (isStereo)
-			{
+			if (isStereo) {
 				BS /=2;
 				BS *=2;
 				BE /=2;
@@ -149,22 +136,23 @@ static void DrawCGSampleInt(long 	start,
 				BE += channel;
 			}
 			
-			temp =(theShortSample[ BS]  + 0x8000);
+			temp =(theShortSample[BS] + 0x8000);
 			minY = maxY = temp;
 			temp *= high;
-			temp  /= (1 << 16);
+			temp /= (1 << 16);
 			CGContextAddLineToPoint(ctxRef, trueH + i, temp + trueV);
 			
-			if (BS != BE)
-			{
-				for (x = BS; x < BE; x++)
-				{
-					temp = (theShortSample[ x]  + 0x8000);
+			if (BS != BE) {
+				for (x = BS; x < BE; x++) {
+					temp = (theShortSample[x] + 0x8000);
 					
-					if (temp > maxY) maxY = temp;
-					if (temp < minY) minY = temp;
+					if (temp > maxY)
+						maxY = temp;
+					if (temp < minY)
+						minY = temp;
 					
-					if (isStereo) x++;
+					if (isStereo)
+						x++;
 				}
 				
 				maxY *= high;
@@ -176,30 +164,25 @@ static void DrawCGSampleInt(long 	start,
 				CGContextAddLineToPoint(ctxRef, trueH + i, maxY + trueV);
 			}
 		}
-	}
-	else
-	{
+	} else {
 		BS = start + (tSS * sampleSize) / larg;
-		if (isStereo)
-		{
+		if (isStereo) {
 			BS /= 2;
 			BS *=2;
 			BS += channel;
 		}
 		
-		temp = (unsigned char) (theSample[ BS] - 0x80);
+		temp = (unsigned char)(theSample[BS] - 0x80);
 		temp *= high;
 		temp /= (1 << 8);
 		
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
 		
-		for (i = tSS; i < tSE; i++)
-		{
+		for (i = tSS; i < tSE; i++) {
 			BS = start + (i * sampleSize) / larg;
-			BE = start + ((i+1) * sampleSize) / larg;
+			BE = start + ((i + 1) * sampleSize) / larg;
 			
-			if (isStereo)
-			{
+			if (isStereo) {
 				BS /=2;
 				BS *=2;
 				BE /=2;
@@ -209,22 +192,23 @@ static void DrawCGSampleInt(long 	start,
 				BE += channel;
 			}
 			
-			temp = (unsigned char) (theSample[ BS] - 0x80);
+			temp = (unsigned char)(theSample[BS] - 0x80);
 			minY = maxY = temp;
 			temp *= high;
 			temp /= (1 << 8);
 			CGContextAddLineToPoint(ctxRef, trueH + i, temp + trueV);
 			
-			if (BS != BE)
-			{
-				for (x = BS; x < BE; x++)
-				{
-					temp = (unsigned char) (theSample[ x] - 0x80);
+			if (BS != BE) {
+				for (x = BS; x < BE; x++) {
+					temp = (unsigned char)(theSample[x] - 0x80);
 					
-					if (temp > maxY) maxY = temp;
-					if (temp < minY) minY = temp;
+					if (temp > maxY)
+						maxY = temp;
+					if (temp < minY)
+						minY = temp;
 					
-					if (isStereo) x++;
+					if (isStereo)
+						x++;
 				}
 				maxY *= high;
 				maxY /= (1 << 8);
@@ -249,30 +233,26 @@ static void DrawCGSampleInt(long 	start,
 	CGImageRef theCGimg = NULL;
 	NSUInteger rowBytes = 4 * imageSize.width;
 	static CGColorSpaceRef defaultSpace = NULL;
-	if (defaultSpace == NULL) {
+	if (defaultSpace == NULL)
 		defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-	}
 	
 	CGContextRef bitmapContext = CGBitmapContextCreateWithData(NULL, imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, (CGBitmapInfo)kCGImageAlphaPremultipliedLast, NULL, NULL);
 	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
-	{
-		NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
-		CGContextSetLineWidth(bitmapContext, lineSize.height);
-	}
+	NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
+	CGContextSetLineWidth(bitmapContext, lineSize.height);
 	if (datIsStereo){
 		CGColorRef colorRef = CGColorCreateGenericRGB(0, 0, 1, .75);
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
 		CGColorRelease(colorRef);
 		DrawCGSampleInt(0, 0, imageSize.width, imageSize.height, imageSize.width, 0, 0, 1, theDat, bitmapContext);
 	}
-	{
-		CGColorRef colorRef = CGColorCreateGenericRGB(1, 0, 0, datIsStereo ? .75 : 1);
-		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
-		CGColorRelease(colorRef);
-		DrawCGSampleInt(0, 0, imageSize.width, imageSize.height, imageSize.width, 0, 0, 0, theDat, bitmapContext);
-	}
-	if ([theDat loopSize])
-	{
+	
+	CGColorRef colorRef = CGColorCreateGenericRGB(1, 0, 0, datIsStereo ? 0.75 : 1);
+	CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
+	CGColorRelease(colorRef);
+	DrawCGSampleInt(0, 0, imageSize.width, imageSize.height, imageSize.width, 0, 0, 0, theDat, bitmapContext);
+	
+	if ([theDat loopSize]) {
 		CGColorRef colorRef = CGColorCreateGenericRGB(1, 0.1, .5, 0.8);
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
 		CGColorRelease(colorRef);
@@ -286,14 +266,13 @@ static void DrawCGSampleInt(long 	start,
 		loopRect.size.height -= padSize.width * 2;
 		CGContextStrokeRect(bitmapContext, loopRect);
 	}
-
-	theCGimg = CGBitmapContextCreateImage(bitmapContext);
 	
+	theCGimg = CGBitmapContextCreateImage(bitmapContext);
 	CGContextRelease(bitmapContext);
 	
 	NSImage *img = [[NSImage alloc] initWithCGImage:theCGimg size:[waveFormImage frame].size];
 	CGImageRelease(theCGimg);
-
+	
 	return img;
 }
 
