@@ -9,11 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 @interface OpenPanelViewController : NSViewController
-{
-	NSOpenPanel *openPanel;
-	NSArray *utiObjects;
-	IBOutlet NSPopUpButton *popUp;
-}
+@property BOOL allowsMultipleSelectionOfTrackers;
+@property (weak) IBOutlet NSPopUpButton *popUp;
 
 - (IBAction)selectUTI:(id)sender;
 - (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd;
