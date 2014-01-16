@@ -353,7 +353,7 @@
 	id object = [instrumentView itemAtRow:[instrumentView selectedRow]];
 	
 	if ([object isKindOfClass:[PPInstrumentObject class]]) {
-		if ([object sampleCount] > 0) {
+		if ([object countOfSamples] > 0) {
 			object = [object childAtIndex:0];
 		} else {
 			object = nil;
@@ -602,7 +602,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 	id object = [instrumentView itemAtRow:[instrumentView selectedRow]];
 	
 	if ([object isKindOfClass:[PPInstrumentObject class]]) {
-		if ([object sampleCount] > 0)
+		if ([object countOfSamples] > 0)
 			object = [object childAtIndex:0];
 		else
 			object = nil;
@@ -637,7 +637,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 		return [currentDocument.wrapper.instruments count];
 	}
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
-		return [item countOfChildren];
+		return [item countOfSamples];
 	}
 	return 0;
 }
@@ -656,7 +656,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
 {
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
-		return [item countOfChildren] != 0;
+		return [item countOfSamples] != 0;
 	}
 	return NO;
 }
@@ -669,7 +669,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 		theView.isSample = NO;
 		[theView.textField setStringValue:[item name]];
 		[theView.numField setStringValue:[NSString stringWithFormat:@"%03ld", (long)[item number] + 1]];
-		theView.isBlank = [item countOfChildren] <= 0;
+		theView.isBlank = [item countOfSamples] <= 0;
 	} else if ([item isKindOfClass:[PPSampleObject class]]) {
 		theView.isSample = YES;
 		[theView.textField setStringValue:[item name]];

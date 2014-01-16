@@ -33,10 +33,9 @@
 
 @property (weak) PPMusicObjectWrapper *theMus;
 @property (copy) NSString *name;
-@property (readonly) NSArray *samples;
 @property (readonly) NSInteger number;
-- (short)sampleCount DEPRECATED_ATTRIBUTE;
 - (short)firstSample;
+- (NSArray*)samples;
 
 @property short MIDI;
 @property (readonly) short MIDIType;
@@ -77,9 +76,6 @@
 - (void)addSamplesObject:(PPSampleObject *)object;
 - (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(PPSampleObject *)object;
 - (NSUInteger)countOfSamples;
-
-- (NSArray *)children DEPRECATED_ATTRIBUTE;
-- (PPSampleObject*)childAtIndex:(NSUInteger)idx;
-- (NSUInteger)countOfChildren DEPRECATED_ATTRIBUTE;
+- (PPSampleObject*)samplesObjectAtIndex:(NSUInteger)idx;
 
 @end

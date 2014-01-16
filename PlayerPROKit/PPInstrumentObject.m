@@ -382,11 +382,6 @@
 	return [NSArray arrayWithArray:samples];
 }
 
-- (short)sampleCount
-{
-	return [samples count];
-}
-
 - (void)setNumber:(NSInteger)numberr
 {
 	theInstrument.no = number = numberr;
@@ -552,7 +547,7 @@
 {
 	[self willChangeValueForKey:kPPVolumeType];
 	if (typeOn) {
-		theInstrument.volType |= (Byte)EFON;
+		theInstrument.volType |= EFON;
 	} else {
 		theInstrument.volType &= ~(Byte)EFON;
 	}
@@ -563,7 +558,7 @@
 {
 	[self willChangeValueForKey:kPPVolumeType];
 	if (typeSus) {
-		theInstrument.volType |= (Byte)EFSUSTAIN;
+		theInstrument.volType |= EFSUSTAIN;
 	} else {
 		theInstrument.volType &= ~(Byte)EFSUSTAIN;
 	}
@@ -574,7 +569,7 @@
 {
 	[self willChangeValueForKey:kPPVolumeType];
 	if (typeLoop) {
-		theInstrument.volType |= (Byte)EFLOOP;
+		theInstrument.volType |= EFLOOP;
 	} else {
 		theInstrument.volType &= ~(Byte)EFLOOP;
 	}
@@ -585,7 +580,7 @@
 {
 	[self willChangeValueForKey:kPPVolumeType];
 	if (theLoop) {
-		theInstrument.volType |= (Byte)EFNOTE;
+		theInstrument.volType |= EFNOTE;
 	} else {
 		theInstrument.volType &= ~(Byte)EFNOTE;
 	}
@@ -621,7 +616,7 @@
 {
 	[self willChangeValueForKey:kPPPanningType];
 	if (typeOn) {
-		theInstrument.pannType |= (Byte)EFON;
+		theInstrument.pannType |= EFON;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFON;
 	}
@@ -632,7 +627,7 @@
 {
 	[self willChangeValueForKey:kPPPanningType];
 	if (typeSus) {
-		theInstrument.pannType |= (Byte)EFSUSTAIN;
+		theInstrument.pannType |= EFSUSTAIN;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFSUSTAIN;
 	}
@@ -643,7 +638,7 @@
 {
 	[self willChangeValueForKey:kPPPanningType];
 	if (theLoop) {
-		theInstrument.pannType |= (Byte)EFLOOP;
+		theInstrument.pannType |= EFLOOP;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFLOOP;
 	}
@@ -654,7 +649,7 @@
 {
 	[self willChangeValueForKey:kPPPanningType];
 	if (theLoop) {
-		theInstrument.pannType |= (Byte)EFNOTE;
+		theInstrument.pannType |= EFNOTE;
 	} else {
 		theInstrument.pannType &= ~(Byte)EFNOTE;
 	}
@@ -681,19 +676,9 @@
 	return theInstrument.pannType & EFNOTE;
 }
 
-- (NSArray *)children;
-{
-	return [self samples];
-}
-
-- (PPSampleObject*)childAtIndex:(NSUInteger)idx
+- (PPSampleObject*)samplesObjectAtIndex:(NSUInteger)idx;
 {
 	return samples[idx];
-}
-
-- (NSUInteger)countOfChildren
-{
-	return [self countOfSamples];
 }
 
 #pragma mark NSCopying protocol
