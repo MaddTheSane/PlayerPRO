@@ -12,6 +12,7 @@
 #if !TARGET_OS_IPHONE
 #include <CoreServices/CoreServices.h>
 #endif
+#import <PlayerPROKit/PlayerPROKit.h>
 
 #define kMUSICLISTKEY @"Music List Key1"
 
@@ -63,6 +64,8 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 #pragma clang diagnostic pop
 #endif
 
+extern PPLibrary *theObjCLib;
+
 static inline NSURL *PPHomeURL()
 {
 	static NSURL *homeURL;
@@ -82,12 +85,18 @@ static inline NSURL *PPHomeURL()
 - (unsigned long long)fileSize
 {
 	if (_fileSize == 0) {
-		NSFileManager *fm = [NSFileManager defaultManager];
-		NSDictionary *theparam = [fm attributesOfItemAtPath:[musicUrl path] error:NULL];
-		if (!theparam) {
-			return 0;
+		PPInfoRec theInfo;
+		OSErr theErr = [PPMusicObjectWrapper info:&theInfo fromTrackerAtURL:musicUrl usingLibrary:theObjCLib];
+		if (theErr) {
+			NSFileManager *fm = [NSFileManager defaultManager];
+			NSDictionary *theparam = [fm attributesOfItemAtPath:[musicUrl path] error:NULL];
+			if (!theparam) {
+				return 0;
+			}
+			_fileSize = [theparam fileSize];
+		} else {
+			_fileSize = theInfo.fileSize;
 		}
-		_fileSize = [theparam fileSize];
 	}
 	
 	return _fileSize;

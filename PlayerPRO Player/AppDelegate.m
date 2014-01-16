@@ -24,6 +24,8 @@
 #define kUnresolvableFile @"Unresolvable files"
 #define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."
 
+PPLibrary *theObjCLib = nil;
+
 @interface PPCurrentlyPlayingIndex : NSObject
 @property NSInteger index;
 @property (strong) NSURL *playbackURL;
@@ -953,6 +955,7 @@ return; \
 {
 	isQuitting = NO;
 	srandom(time(NULL) & 0xffffffff);
+	theObjCLib = [[PPLibrary alloc] init];
 	PPRegisterDebugFunc(CocoaDebugStr);
 	MADInitLibrary(NULL, &madLib);
 	//the NIB won't store the value anymore, so do this hackery to make sure there's some value in it.
