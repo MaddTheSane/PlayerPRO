@@ -12,6 +12,7 @@
 @property (readwrite, copy)		NSString *plugName;
 @property (readwrite, copy)		NSString *authorName;
 @property (readwrite, copy)		NSString *plugType;
+@property (readwrite, copy)		NSString *plugCopyright;
 @property (readwrite, retain)	NSURL    *plugURL;
 @end
 
@@ -20,6 +21,7 @@
 @synthesize plugName;
 @synthesize plugType;
 @synthesize plugURL;
+@synthesize plugCopyright;
 
 - (id)initWithPlugName:(NSString*)pn author:(NSString*)aut
 {
@@ -34,17 +36,23 @@
 - (id)initWithPlugName:(NSString*)pn author:(NSString*)aut plugType:(NSString*)pt plugURL:(NSURL*)pu;
 {
 	if (self = [super init]) {
+		NSString *tmpCopyRight = [[NSBundle bundleWithURL:pu] infoDictionary][@"NSHumanReadableCopyright"];
 		self.plugName = pn;
 		self.authorName = aut;
 		self.plugType = pt;
 		self.plugURL = pu;
+		if (tmpCopyRight) {
+			self.plugCopyright = tmpCopyRight;
+		} else {
+			self.plugCopyright = @"No Copyright Info available";
+		}
 	}
 	return self;
 }
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@: %@, %@", plugName, authorName, plugType];
+	return [NSString stringWithFormat:@"%@: %@ (%@), %@", plugName, authorName, plugCopyright, plugType];
 }
 
 - (BOOL)isEqual:(id)object
@@ -70,7 +78,7 @@
 
 - (NSUInteger)hash
 {
-	return [plugName hash] ^ [plugType hash] ^ [authorName hash];
+	return [plugName hash] ^ [plugType hash] ^ [authorName hash] ^ [plugCopyright hash];
 }
 
 @end

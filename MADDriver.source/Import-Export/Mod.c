@@ -985,17 +985,15 @@ static OSErr TestMODFile(char *AlienFile, long EOFo)
 }
 
 
-EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 #ifndef _MAC_H
+EXP OSErr FillPlug(PlugInfo *p);
+EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug( PlugInfo *p);
-
-
-EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC, BeOS, and UNIX
+OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC, BeOS, and UNIX
 {
-	strlcpy( p->type, 		"MOD ", sizeof(p->type));		// NEVER MORE THAN 4 CHARS !!!!!!!!
-	strlcpy( p->MenuName, 	"MOD Files", sizeof(p->MenuName));
+	strlcpy(p->type, 		"MOD ", sizeof(p->type));		// NEVER MORE THAN 4 CHARS !!!!!!!!
+	strlcpy(p->MenuName, 	"MOD Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImportExport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
@@ -1020,12 +1018,11 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 	
 	myErr = noErr;
 	
-	switch( order)
-	{
+	switch (order) {
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI) {
-				sndSize = iGetEOF( iFileRefI);
+				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
 				AlienFile = (Ptr)malloc(sndSize * 2L);
@@ -1039,20 +1036,21 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					AlienFile = (Ptr)malloc(sndSize);
 					iRead(sndSize, AlienFile, iFileRefI);
 					
-					myErr = TestMODFile( AlienFile, sndSize);
+					myErr = TestMODFile(AlienFile, sndSize);
 					if (myErr == noErr) {
 						myErr = PPConvertMod2Mad(AlienFile, sndSize, MadFile, init);
 					}
 					
-					free(AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
-				iClose( iFileRefI);
+				iClose(iFileRefI);
 			} else
 				myErr = MADReadingErr;
 			break;
 			
 		case MADPlugTest:
-			iFileRefI = iFileOpenRead( AlienFileName);
+			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI) {
 				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
@@ -1066,7 +1064,8 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					
 					myErr = TestMODFile(AlienFile, sndSize);
 					
-					free(AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else
@@ -1085,7 +1084,8 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 				} else {
 					myErr = MADWritingErr;
 				}
-				free(AlienFile);	AlienFile = NULL;
+				free(AlienFile);
+				AlienFile = NULL;
 			} else
 				myErr = MADReadingErr;
 			break;
@@ -1108,7 +1108,8 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					if (!myErr)
 						myErr = ExtractMODInfo(info, AlienFile);
 					
-					free(AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else

@@ -10,14 +10,13 @@
 @class PPPlugInInfo;
 
 @interface PPPlugInInfoController : NSWindowController
-{
-	PPPlugInInfo *info;
-	IBOutlet NSTextField *nameField;
-	IBOutlet NSTextField *authorField;
-	IBOutlet NSTextField *typeField;
-	IBOutlet NSImageView *pluginImage;
-}
-- (id)initWithPlugInInfo:(PPPlugInInfo *)plugInfo;
-- (IBAction)closeWindow:(id)sender;
+@property (weak) IBOutlet NSTextField *nameField;
+@property (weak) IBOutlet NSTextField *authorField;
+@property (weak) IBOutlet NSTextField *typeField;
+@property (weak) IBOutlet NSTextField *theCopyrightField;
+@property (weak) IBOutlet NSImageView *pluginImage;
 
+- (id)initWithPlugInInfo:(PPPlugInInfo *)plugInfo;
+
+- (IBAction)closeWindow:(id)sender;
 @end
