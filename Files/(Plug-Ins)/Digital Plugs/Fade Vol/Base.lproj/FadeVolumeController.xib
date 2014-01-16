@@ -17,7 +17,7 @@
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="211" height="133"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1080"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="211" height="133"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -113,6 +113,7 @@ Gw
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="4"/>
+                <outlet property="initialFirstResponder" destination="5" id="65y-QK-S5n"/>
             </connections>
         </window>
     </objects>

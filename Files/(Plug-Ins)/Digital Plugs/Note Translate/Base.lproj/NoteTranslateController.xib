@@ -105,6 +105,7 @@ Gw
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="4"/>
+                <outlet property="initialFirstResponder" destination="9" id="gzq-Rg-2Yc"/>
             </connections>
         </window>
     </objects>

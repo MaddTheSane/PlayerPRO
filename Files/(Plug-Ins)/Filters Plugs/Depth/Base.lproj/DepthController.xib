@@ -93,6 +93,7 @@ Gw
             </view>
             <connections>
                 <outlet property="delegate" destination="-2" id="4"/>
+                <outlet property="initialFirstResponder" destination="5" id="3g3-dI-YZz"/>
             </connections>
         </window>
     </objects>
