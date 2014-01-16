@@ -43,6 +43,102 @@
 
 /*_______________________________________________________________________*/
 
+static char *GetFileNameFromCFURL(CFURLRef theRef)
+{
+	char *fileName;
+	CFIndex filenamLen;
+	CFRange theDotWav;
+	char *FileNameLong = NULL;
+	CFStringRef filenam = CFURLCopyLastPathComponent(theRef);
+	if (CFStringFindWithOptions(filenam, CFSTR(".wave"), CFRangeMake(0, CFStringGetLength(filenam)), kCFCompareCaseInsensitive | kCFCompareBackwards, &theDotWav) ||
+		CFStringFindWithOptions(filenam, CFSTR(".wav"), CFRangeMake(0, CFStringGetLength(filenam)), kCFCompareCaseInsensitive | kCFCompareBackwards, &theDotWav)) {
+		CFRange withoutDotWav = CFRangeMake(0, CFStringGetLength(filenam));
+		withoutDotWav.length -= theDotWav.length;
+		CFStringRef shortRef = CFStringCreateWithSubstring(kCFAllocatorDefault, filenam, withoutDotWav);
+		CFRelease(filenam);
+		filenam = shortRef;
+	}
+	filenamLen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(filenam), kCFStringEncodingMacRoman);
+	filenamLen *= 2;
+	FileNameLong = malloc(filenamLen);
+	if (!CFStringGetCString(filenam, FileNameLong, filenamLen, kCFStringEncodingMacRoman)) {
+		free(FileNameLong);
+		CFRelease(filenam);
+		return NULL;
+	}
+	CFRelease(filenam);
+	fileName = realloc(FileNameLong, strlen(FileNameLong) + 1);
+	if (!fileName)
+		fileName = FileNameLong;
+	
+	return fileName;
+}
+
+static Boolean AudioStreamNeedsConversion(AudioStreamBasicDescription fromFormat)
+{
+	if (fromFormat.mFramesPerPacket != 1) {
+		return TRUE;
+	}
+	if (fromFormat.mFormatID != kAudioFormatLinearPCM) {
+		return TRUE;
+	}
+	if (fromFormat.mFormatFlags != (kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked)) {
+		return TRUE;
+	}
+	if (fromFormat.mSampleRate < 5000 || fromFormat.mSampleRate > 48000 || fromFormat.mSampleRate != floor(fromFormat.mSampleRate)) {
+		return TRUE;
+	}
+	if (fromFormat.mBitsPerChannel != 16 && fromFormat.mBitsPerChannel != 8) {
+		return TRUE;
+	}
+	if (fromFormat.mChannelsPerFrame != 1 && fromFormat.mChannelsPerFrame != 2) {
+		return TRUE;
+	}
+	
+	return FALSE;
+}
+
+static AudioStreamBasicDescription GetBestApproximationFromAudioStream(AudioStreamBasicDescription fromFormat)
+{
+	AudioStreamBasicDescription toFormat = {0};
+	toFormat.mFramesPerPacket = 1;
+	toFormat.mFormatID = kAudioFormatLinearPCM;
+	toFormat.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+	if (fromFormat.mSampleRate < 5000) {
+		toFormat.mSampleRate = 5000;
+	} else if(fromFormat.mSampleRate > 48000) {
+		toFormat.mSampleRate = 48000;
+	} else {
+		toFormat.mSampleRate = floor(fromFormat.mSampleRate);
+	}
+	
+	switch (fromFormat.mBitsPerChannel) {
+		case 8:
+		case 16:
+			toFormat.mBitsPerChannel = fromFormat.mBitsPerChannel;
+			break;
+			
+		default:
+			toFormat.mBitsPerChannel = 16;
+			break;
+	}
+	
+	switch (fromFormat.mChannelsPerFrame) {
+		case 1:
+		case 2:
+			toFormat.mChannelsPerFrame = toFormat.mChannelsPerFrame;
+			break;
+			
+		default:
+			toFormat.mChannelsPerFrame = 2;
+			break;
+	}
+	toFormat.mBytesPerFrame = toFormat.mBitsPerChannel * toFormat.mChannelsPerFrame / 8;
+	toFormat.mBytesPerPacket = toFormat.mBytesPerFrame * toFormat.mFramesPerPacket;
+	
+	return toFormat;
+}
+
 static OSErr mainWave(void					*unused,
 					  OSType				order,						// Order to execute
 					  InstrData				*InsHeader,					// Ptr on instrument header

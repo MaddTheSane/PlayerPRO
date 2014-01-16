@@ -9,22 +9,23 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <AudioToolbox/AudioToolbox.h>
 
-char *GetFileNameFromCFURL(CFURLRef theRef)
+static char *GetFileNameFromCFURL(CFURLRef theRef)
 {
 	char *fileName;
-	CFIndex filenamLen;
 	CFRange theDotWav;
 	char *FileNameLong = NULL;
 	CFStringRef filenam = CFURLCopyLastPathComponent(theRef);
-	if (CFStringFindWithOptions(filenam, CFSTR(".wav"), CFRangeMake(0, CFStringGetLength(filenam)), kCFCompareCaseInsensitive | kCFCompareBackwards, &theDotWav)) {
-		CFRange withoutDotWav = CFRangeMake(0, CFStringGetLength(filenam));
+	CFIndex filenamLen = CFStringGetLength(filenam);
+	if (CFStringFindWithOptions(filenam, CFSTR(".aiff"), CFRangeMake(0, filenamLen), kCFCompareCaseInsensitive | kCFCompareBackwards, &theDotWav) ||
+		CFStringFindWithOptions(filenam, CFSTR(".aifc"), CFRangeMake(0, filenamLen), kCFCompareCaseInsensitive | kCFCompareBackwards, &theDotWav) ||
+		CFStringFindWithOptions(filenam, CFSTR(".aif"), CFRangeMake(0, filenamLen), kCFCompareCaseInsensitive | kCFCompareBackwards, &theDotWav)) {
+		CFRange withoutDotWav = CFRangeMake(0, filenamLen);
 		withoutDotWav.length -= theDotWav.length;
 		CFStringRef shortRef = CFStringCreateWithSubstring(kCFAllocatorDefault, filenam, withoutDotWav);
 		CFRelease(filenam);
 		filenam = shortRef;
 	}
-	filenamLen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(filenam), kCFStringEncodingMacRoman);
-	filenamLen *= 2;
+	filenamLen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(filenam), kCFStringEncodingMacRoman) * 2;
 	FileNameLong = malloc(filenamLen);
 	if (!CFStringGetCString(filenam, FileNameLong, filenamLen, kCFStringEncodingMacRoman)) {
 		free(FileNameLong);
@@ -89,8 +90,8 @@ static AudioStreamBasicDescription GetBestApproximationFromAudioStream(AudioStre
 	}
 	
 	switch (fromFormat.mChannelsPerFrame) {
-		case 2:
 		case 1:
+		case 2:
 			toFormat.mChannelsPerFrame = toFormat.mChannelsPerFrame;
 			break;
 			
@@ -121,13 +122,20 @@ static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **
 	AudioFileID	audioFile;
 	OSStatus	res = noErr;
 	char		*fileName = GetFileNameFromCFURL(AlienFileURL);
+	int			i;
 	
 	AudioStreamBasicDescription toFormat = {0};
 	AudioStreamBasicDescription fromFormat = {0};
 	
-	switch(order)
-	{
+	switch (order) {
 		case MADPlugImport:
+		{
+			sData *theCurData;
+			if (*sampleID == -1) {
+				theCurData = sample[InsHeader->numSamples] = calloc(sizeof(sData), 1);
+			} else {
+				theCurData = sample[*sampleID];
+			}
 			res = AudioFileOpenURL(AlienFileURL, kAudioFileReadPermission, kAudioFileAIFFType, &audioFile);
 			if (res != noErr) {
 				res = AudioFileOpenURL(AlienFileURL, kAudioFileReadPermission, kAudioFileAIFCType, &audioFile);
@@ -137,11 +145,22 @@ static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **
 					AudioFileGetProperty(audioFile, kAudioFilePropertyDataFormat, &datSize, &fromFormat);
 					toFormat = GetBestApproximationFromAudioStream(fromFormat);
 					res = AudioConverterNew(&fromFormat, &toFormat, &convRef);
-					AudioBufferList *mOutputBufferList = NULL;
+					UInt32 BufSize = (4096 * toFormat.mBytesPerFrame);
+					char* mExtractionBuffer = (char *)malloc(BufSize * toFormat.mChannelsPerFrame);
+					AudioBufferList *mOutputBufferList = (AudioBufferList *)calloc(1, offsetof(AudioBufferList, mBuffers[toFormat.mChannelsPerFrame]));
 					
-					AudioConverterFillComplexBuffer(convRef, NULL, NULL, &datSize, mOutputBufferList, NULL);
+					mOutputBufferList->mNumberBuffers = toFormat.mChannelsPerFrame;
+					for (i = 0; i < toFormat.mChannelsPerFrame; i++) {
+						mOutputBufferList->mBuffers[i].mNumberChannels = 1;
+						mOutputBufferList->mBuffers[i].mDataByteSize = BufSize;
+						mOutputBufferList->mBuffers[i].mData = &mExtractionBuffer[i * BufSize];
+					}
+					
+					AudioConverterFillComplexBuffer(convRef, NULL, theCurData, &datSize, mOutputBufferList, NULL);
 					
 					AudioConverterDispose(convRef);
+					free(mOutputBufferList);
+					free(mExtractionBuffer);
 					AudioFileClose(audioFile);
 				} else {
 					myErr = MADReadingErr;
@@ -163,6 +182,7 @@ static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **
 				
 				AudioFileClose(audioFile);
 			}
+		}
 			break;
 			
 		case MADPlugTest:
