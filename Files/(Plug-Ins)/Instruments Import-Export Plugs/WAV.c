@@ -50,16 +50,13 @@ static char *GetFileNameFromCFURL(CFURLRef theRef)
 	CFRange theDotWav;
 	char *FileNameLong = NULL;
 	CFStringRef filenam = CFURLCopyLastPathComponent(theRef);
-	if (CFStringFindWithOptions(filenam, CFSTR(".wave"), CFRangeMake(0, CFStringGetLength(filenam)), kCFCompareCaseInsensitive | kCFCompareBackwards, &theDotWav) ||
-		CFStringFindWithOptions(filenam, CFSTR(".wav"), CFRangeMake(0, CFStringGetLength(filenam)), kCFCompareCaseInsensitive | kCFCompareBackwards, &theDotWav)) {
-		CFRange withoutDotWav = CFRangeMake(0, CFStringGetLength(filenam));
-		withoutDotWav.length -= theDotWav.length;
-		CFStringRef shortRef = CFStringCreateWithSubstring(kCFAllocatorDefault, filenam, withoutDotWav);
+	if (CFStringFindWithOptions(filenam, CFSTR(".wav"), CFRangeMake(0, CFStringGetLength(filenam)), kCFCompareCaseInsensitive | kCFCompareBackwards, &theDotWav)) {
+		CFURLRef tmpRef = CFURLCreateCopyDeletingPathExtension(kCFAllocatorDefault, theRef);
 		CFRelease(filenam);
-		filenam = shortRef;
+		filenam = CFURLCopyLastPathComponent(tmpRef);
+		CFRelease(tmpRef);
 	}
-	filenamLen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(filenam), kCFStringEncodingMacRoman);
-	filenamLen *= 2;
+	filenamLen = CFStringGetMaximumSizeForEncoding(CFStringGetLength(filenam), kCFStringEncodingMacRoman) * 2;
 	FileNameLong = malloc(filenamLen);
 	if (!CFStringGetCString(filenam, FileNameLong, filenamLen, kCFStringEncodingMacRoman)) {
 		free(FileNameLong);
@@ -69,7 +66,7 @@ static char *GetFileNameFromCFURL(CFURLRef theRef)
 	CFRelease(filenam);
 	fileName = realloc(FileNameLong, strlen(FileNameLong) + 1);
 	if (!fileName)
-		fileName = FileNameLong;
+		return FileNameLong;
 	
 	return fileName;
 }
