@@ -1124,6 +1124,7 @@ return; \
 	
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:self.trackerDict playlistDictionary:nil instrumentDictionary:nil additionalDictionary:nil];
 	[av setupDefaults];
+	panel.allowsMultipleSelection = YES;
 	if ([panel runModal] == NSFileHandlingPanelOKButton) {
 		[self addMusicToMusicList:[panel URL]];
 	}
@@ -1378,6 +1379,7 @@ enum PPMusicToolbarTypes {
 	
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:self.trackerDict playlistDictionary:playlistDict instrumentDictionary:samplesDict additionalDictionary:otherDict];
 	[av setupDefaults];
+	panel.allowsMultipleSelection = YES;
 	if ([panel runModal] == NSFileHandlingPanelOKButton) {
 		NSURL *panelURL = [panel URL];
 		NSString *filename = [panelURL path];
