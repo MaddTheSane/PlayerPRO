@@ -14,6 +14,7 @@
 #endif
 
 #define kMUSICLISTKEY @"Music List Key1"
+
 #define kMUSICLISTKEY2 @"Music List Key2"
 #define kMusicListLocation2 @"Music Key Location2"
 
@@ -77,6 +78,20 @@ static inline NSURL *PPHomeURL()
 
 @implementation PPMusicListObject
 @synthesize musicUrl;
+@synthesize fileSize = _fileSize;
+- (unsigned long long)fileSize
+{
+	if (_fileSize == 0) {
+		NSFileManager *fm = [NSFileManager defaultManager];
+		NSDictionary *theparam = [fm attributesOfItemAtPath:[musicUrl path] error:NULL];
+		if (!theparam) {
+			return 0;
+		}
+		_fileSize = [theparam fileSize];
+	}
+	
+	return _fileSize;
+}
 
 - (BOOL)isEqual:(id)object
 {

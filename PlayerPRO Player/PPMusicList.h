@@ -20,6 +20,7 @@
 #if !TARGET_OS_IPHONE
 @property (unsafe_unretained, readonly) NSImage *fileIcon;
 #endif
+@property (readonly) unsigned long long fileSize;
 
 - (instancetype)initWithURL:(NSURL *)aURL;
 @end
