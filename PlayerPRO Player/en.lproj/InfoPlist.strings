@@ -2,22 +2,27 @@
 
 CFBundleName = "PlayerPRO Player";
 NSHumanReadableCopyright = "Copyright © 2013 SourceForge.";
-"PPMTMFile" = "MultiTracker Audio";
-"PPS3MFile" = "ScreamTracker Audio";
-"PPMODFile" = "ProTracker Audio";
-"PPXMFile" = "FastTracker Audio";
-"PPITFile" = "ImpulseTracker Audio";
-"PPAMFFile" = "AMF Tracker Audio";
-"PP669File" = "669 Tracker Audio";
-"PPOKTAFile" = "OKTAmed Tracker Audio";
 
-"PPMADFile" = "PlayerPRO MAD Tracker";
-"PPMADFGFile" = "PlayerPRO MADfg Tracker";
-"PPMADIFile" = "PlayerPRO MADI Tracker";
-"PPMADKFile" = "PlayerPRO MADK Tracker";
-"PPMADHFile" = "PlayerPRO MADH Tracker";
-"PPMADBundle" = "PlayerPRO Tracker Bundle";
+
+PPMTMFile = "MultiTracker Audio";
+PPS3MFile = "ScreamTracker Audio";
+PPMODFile = "ProTracker Audio";
+PPXMFile = "FastTracker Audio";
+PPITFile = "ImpulseTracker Audio";
+PPAMFFile = "AMF Tracker Audio";
+PP669File = "669 Tracker Audio";
+PPOKTAFile = "OKTAmed Tracker Audio";
+
+PPMADFile = "PlayerPRO MAD Tracker";
+PPMADFGFile = "PlayerPRO MADfg Tracker";
+PPMADIFile = "PlayerPRO MADI Tracker";
+PPMADKFile = "PlayerPRO MADK Tracker";
+PPMADHFile = "PlayerPRO MADH Tracker";
+PPMADBundle = "PlayerPRO MAD Tracker Bundle";
 "Music Tracker" = "Music Tracker";
 
+"Old PlayerPRO Music List" = "Old PlayerPRO Music List";
+"PlayerPRO Music List" = "PlayerPRO Music List";
+
 "MIDI File" = "MIDI File";
-"PPImpExpBundle" = "PlayerPRO Import/Export PlugIn";
+PPImpExpBundle = "PlayerPRO Import/Export PlugIn";
