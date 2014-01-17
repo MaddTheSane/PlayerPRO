@@ -7,6 +7,7 @@
 //
 
 #import "PPSampleObject.h"
+#import "PPSampleObject_PPKPrivate.h"
 
 #define LOOPBEGINKEY @"Loop Begin"
 #define LOOPSIZEKEY @"Loop Size"
@@ -21,10 +22,6 @@
 
 #define SAMPLEINDEXKEY @"Sample Index"
 #define INSTRUMENTINDEXKEY @"Instrument Index"
-
-@interface PPSampleObject ()
-//@property sData theSample;
-@end
 
 @implementation PPSampleObject
 @synthesize theSample;
@@ -263,5 +260,60 @@
 	}
 	return self;
 }
+
+@end
+
+@implementation PPSampleObjectImmutable
+
+- (id)copyWithZone:(NSZone *)zone
+{
+	return nil;
+}
+
+- (void)setData:(NSData *)data
+{
+	NSAssert(NO, @"Mutable command called on immutable object!");
+}
+
+- (void)setAmplitude:(Byte)amplitude
+{
+	NSAssert(NO, @"Mutable command called on immutable object!");
+}
+
+- (void)setLoopSize:(int)loopSize
+{
+	NSAssert(NO, @"Mutable command called on immutable object!");
+}
+
+- (void)setLoopBegin:(int)loopBegin
+{
+	NSAssert(NO, @"Mutable command called on immutable object!");
+}
+
+- (void)setC2spd:(unsigned short)c2spd
+{
+	NSAssert(NO, @"Mutable command called on immutable object!");
+}
+
+- (void)setLoopType:(Byte)loopType
+{
+	NSAssert(NO, @"Mutable command called on immutable object!");
+}
+
+- (void)setRelativeNote:(char)relativeNote
+{
+	NSAssert(NO, @"Mutable command called on immutable object!");
+}
+
+- (void)setVolume:(Byte)avolume
+{
+	NSAssert(NO, @"Mutable command called on immutable object!");
+}
+
+- (void)setStereo:(BOOL)astereo
+{
+	NSAssert(NO, @"Mutable command called on immutable object!");
+}
+
 
 @end

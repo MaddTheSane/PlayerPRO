@@ -252,6 +252,8 @@
 		555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		555C5FCB18445CBC00DBD5DA /* libPlayerPROCompact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */; };
 		555C5FCC18445CBC00DBD5DA /* libPlayerPROKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */; };
+		5561700A1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
+		5561700B1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		557139E61685007B00831A5A /* OpenPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139E41685007B00831A5A /* OpenPanelViewController.m */; };
@@ -2074,6 +2076,7 @@
 		555776CE17EBF9000019D008 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		555776D017EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOS_PlayerPRO_PlayerTests.m; sourceTree = "<group>"; };
 		555C125016378B3500735225 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject_PPKPrivate.h; sourceTree = "<group>"; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		556AE4BB16E290650074BBF9 /* PPByteswap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPByteswap.h; sourceTree = "<group>"; };
 		557139CD1684EF7500831A5A /* PPHilightableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHilightableButton.h; sourceTree = "<group>"; };
@@ -3956,6 +3959,7 @@
 				558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */,
 				55B1B4F2166A850D00820424 /* PPDriver_Private.h */,
 				55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */,
+				556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */,
 			);
 			name = "Private headers";
 			sourceTree = "<group>";
@@ -4190,6 +4194,7 @@
 				55DE87BC187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h in Headers */,
 				5578C50017DB8A640057D11B /* PPInstrumentObject.h in Headers */,
 				5582135817E4201300B84F51 /* PPPluginWindowController.h in Headers */,
+				5561700A1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */,
 				55A934F817F2121D00493DC5 /* PPFilterPluginWindowController.h in Headers */,
 				5582135917E4201700B84F51 /* PPDigitalPluginWindowController.h in Headers */,
 			);
@@ -4239,6 +4244,7 @@
 				55DE87CE187E60F400C36533 /* PPFXSetObject.h in Headers */,
 				55C8EDEA187CC98200CC8C1B /* PPMadCommandObject.h in Headers */,
 				5578C51717DB901F0057D11B /* PPDriver_Private.h in Headers */,
+				5561700B1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */,
 				5578C51117DB90110057D11B /* PlayerPROKit.h in Headers */,
 				55DE87C0187E052400C36533 /* PPPatternObject_PPKPrivate.h in Headers */,
 				5578C51217DB901F0057D11B /* PPLibrary.h in Headers */,

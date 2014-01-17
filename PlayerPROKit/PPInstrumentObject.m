@@ -8,6 +8,7 @@
 
 #import "PPInstrumentObject.h"
 #import "PPSampleObject.h"
+#import "PPSampleObject_PPKPrivate.h"
 #import "PPInstrumentObject_PPKPrivate.h"
 #import "PPMusicObject.h"
 #import "PPMusicObject_PPKPrivate.h"
@@ -44,6 +45,11 @@
 #pragma mark PlayerPROKit KVO/KVC keys
 #define kPPVolumeType @"volumeType"
 #define kPPPanningType @"panningType"
+
+
+@interface PPEnvelopeObjectImmutable : PPEnvelopeObject
+
+@end
 
 @implementation PPEnvelopeObject
 @synthesize envelopeRec;
@@ -469,6 +475,38 @@
 	return self;
 }
 
+- (instancetype)initWithMusicStruct:(MADMusic*)theMus atIndex:(NSInteger)ind
+{
+	if (self = [super init]) {
+		theInstrument = theMus->fid[ind];
+		samples = [[NSMutableArray alloc] initWithCapacity:theInstrument.numSamples];
+		{
+			int sDataCount = theInstrument.numSamples + theInstrument.firstSample;
+			
+			for (int i = theInstrument.firstSample; i < sDataCount; i++) {
+				PPSampleObjectImmutable *sObj = [[PPSampleObjectImmutable alloc] initWithsData:theMus->sample[i]];
+				sObj.sampleIndex = i % MAXSAMPLE;
+				sObj.instrumentIndex = ind;
+				[samples addObject:sObj];
+			}
+		}
+		name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
+		theInstrument.no = number = ind;
+		//In case it's malformed, i.e. from CreateFreeMADK()
+		theInstrument.firstSample = MAXSAMPLE * ind; /*tempData->firstSample;*/
+		_panningEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		_volumeEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		_pitchEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		for (int i = 0; i < 12; i++) {
+			[_panningEnvelope addObject:[[PPEnvelopeObjectImmutable alloc] initWithEnvRec:theInstrument.pannEnv[i]]];
+			[_volumeEnvelope addObject:[[PPEnvelopeObjectImmutable alloc] initWithEnvRec:theInstrument.volEnv[i]]];
+			[_pitchEnvelope addObject:[[PPEnvelopeObjectImmutable alloc] initWithEnvRec:theInstrument.pitchEnv[i]]];
+		}
+
+	}
+	return self;
+}
+
 - (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
 {
 	if (self = [self initWithMusic:mus]) {
@@ -739,6 +777,20 @@
 	
 	[aCoder encodeBytes:&theInstrument.vibDepth length:1 forKey:PPVibDepth];
 	[aCoder encodeBytes:&theInstrument.vibRate length:1 forKey:PPVibRate];
+}
+
+@end
+
+@implementation PPEnvelopeObjectImmutable
+
+- (void)setPosition:(short)position
+{
+	NSAssert(NO, @"Mutable command called on immutable object!");
+}
+
+- (void)setValue:(short)value
+{
+	NSAssert(NO, @"Mutable command called on immutable object!");
 }
 
 @end

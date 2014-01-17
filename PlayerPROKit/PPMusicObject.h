@@ -14,6 +14,7 @@
 @class PPLibrary;
 @class PPInstrumentObject;
 
+//Only use this class for playback!
 @interface PPMusicObject : NSObject
 
 + (OSErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib;
@@ -29,6 +30,8 @@
 
 @property (readonly, weak) PPDriver *attachedDriver;
 @property (readonly) NSURL *filePath;
+
+- (NSDictionary*)musicClasses;
 
 //Save music to a URL in MADK format in PPMusicObject, and MAD bundle in PPMusicObjectWrapper
 - (OSErr)saveMusicToURL:(NSURL *)tosave;

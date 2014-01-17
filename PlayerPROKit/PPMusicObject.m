@@ -32,6 +32,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	MADMusic *currentMusic;
 	NSString *internalFileName;
 	NSString *madInfo;
+	NSDictionary* madClasses;
 }
 @property (readwrite, strong, nonatomic) NSString *internalFileName;
 @property (readwrite, strong, nonatomic) NSString *madInfo;
@@ -43,6 +44,17 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 @synthesize attachedDriver;
 @synthesize _currentMusic = currentMusic;
 @synthesize internalFileName;
+
+- (NSDictionary*)musicClasses
+{
+	if (!madClasses) {
+		NSMutableArray *instru;
+		for (int i = 0; i < MAXINSTRU; i++) {
+			
+		}
+	}
+	return madClasses;
+}
 
 + (OSErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib
 {
@@ -462,6 +474,11 @@ end:
 	} else {
 		return noErr;
 	}
+}
+
+- (NSDictionary*)musicClasses
+{
+	
 }
 
 - (MADMusic *)copyMadMusicStruct
