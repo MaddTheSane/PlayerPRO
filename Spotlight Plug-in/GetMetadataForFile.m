@@ -18,9 +18,7 @@
 - (NSString *)PPtrimWhiteSpace
 {
 	NSMutableString *s = [[NSMutableString alloc] initWithString:self];
-	
 	CFStringTrimWhitespace((CFMutableStringRef)s);
-	
 	return [[NSString alloc] initWithString:s];
 }
 
@@ -154,7 +152,7 @@ Boolean GetMetadataForURL(void* thisInterface,
 				
 			}
 			
-			NSString *title = nil;
+			NSString *title;
 			{
 				PPInfoRec rec;
 				{

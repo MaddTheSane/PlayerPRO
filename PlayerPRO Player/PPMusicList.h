@@ -14,7 +14,7 @@
 #define UNAVAILABLE_IPHONE UNAVAILABLE_ATTRIBUTE
 #endif
 
-@interface PPMusicListObject : NSObject <NSCopying>
+@interface PPMusicListObject : NSObject <NSCopying, NSCoding>
 @property (strong, readonly) NSURL *musicUrl;
 @property (unsafe_unretained, readonly) NSString *fileName;
 #if !TARGET_OS_IPHONE

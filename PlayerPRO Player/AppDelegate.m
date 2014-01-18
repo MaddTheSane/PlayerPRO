@@ -165,7 +165,7 @@ static NSInteger selMusFromList = -1;
 		currentlyPlayingIndex.index = [musicList countOfMusicList] - 1;
 		//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
 		[self selectCurrentlyPlayingMusic];
-		NSError *err = nil;
+		NSError *err;
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
 			[[NSAlert alertWithError:err] runModal];
 		}
@@ -312,7 +312,7 @@ static NSInteger selMusFromList = -1;
 		{
 			if ([musicList countOfMusicList] > ++currentlyPlayingIndex.index) {
 				[self selectCurrentlyPlayingMusic];
-				NSError *err = nil;
+				NSError *err;
 				if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 				{
 					[[NSAlert alertWithError:err] runModal];
@@ -321,7 +321,7 @@ static NSInteger selMusFromList = -1;
 				if ([userDefaults boolForKey:PPLoopMusicWhenDone]) {
 					currentlyPlayingIndex.index = 0;
 					[self selectCurrentlyPlayingMusic];
-					NSError *err = nil;
+					NSError *err;
 					if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 					{
 						[[NSAlert alertWithError:err] runModal];
@@ -341,7 +341,7 @@ static NSInteger selMusFromList = -1;
 		{
 			currentlyPlayingIndex.index = random() % [musicList countOfMusicList];
 			[self selectCurrentlyPlayingMusic];
-			NSError *err = nil;
+			NSError *err;
 			if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
 			{
 				[[NSAlert alertWithError:err] runModal];
@@ -906,7 +906,7 @@ return; \
 
 - (void)doubleClickMusicList
 {
-	NSError *err = nil;
+	NSError *err;
 	currentlyPlayingIndex.index = [tableView selectedRow];
 	if ([self loadMusicFromCurrentlyPlayingIndexWithError:&err] == NO)
 		[[NSAlert alertWithError:err] runModal];
@@ -1116,7 +1116,7 @@ return; \
 
 - (IBAction)playSelectedMusic:(id)sender
 {
-	NSError *error = nil;
+	NSError *error;
 	currentlyPlayingIndex.index = [tableView selectedRow];
 	if ([self loadMusicFromCurrentlyPlayingIndexWithError:&error] == NO) {
 		[[NSAlert alertWithError:error] runModal];
@@ -1322,7 +1322,7 @@ enum PPMusicToolbarTypes {
 				OSType2Ptr(rec.signature, ostype);
 				
 				NSURL *tmpURL = [[theURL URLByDeletingPathExtension] URLByAppendingPathExtension:[[NSString stringWithCString:ostype encoding:NSMacOSRomanStringEncoding] lowercaseString]];
-				NSError *err = nil;
+				NSError *err;
 				if (![[NSFileManager defaultManager] moveItemAtURL:theURL toURL:tmpURL error:&err]) {
 					NSLog(@"Could not move file, error: %@", err);
 					NSRunInformationalAlertPanel(NSLocalizedString(@"Rename Error", @"Rename Error"), NSLocalizedString(@"The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", @"Could not rename file"), nil, nil, nil, [tmpURL lastPathComponent], [theURL lastPathComponent]);
@@ -1385,39 +1385,22 @@ enum PPMusicToolbarTypes {
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	NSDictionary *playlistDict = @{@"PlayerPRO Music List" : @[PPMusicListUTI],
 								   @"PlayerPRO Old Music List" : @[PPOldMusicListUTI]};
-	
-	NSMutableDictionary *samplesDict = nil;
-	
-	NSDictionary *otherDict = nil;
-	
-	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:self.trackerDict playlistDictionary:playlistDict instrumentDictionary:samplesDict additionalDictionary:otherDict];
+		
+	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:self.trackerDict playlistDictionary:playlistDict instrumentDictionary:nil additionalDictionary:nil];
 	[av setupDefaults];
 	av.allowsMultipleSelectionOfTrackers = YES;
 	if ([panel runModal] == NSFileHandlingPanelOKButton) {
 		NSArray *panelURLS = [panel URLs];
-		if ([panelURLS count] > 1) {
-			for (NSURL *theURL in panelURLS) {
-				NSString *filename = [theURL path];
-				NSError *err = nil;
-				NSString *utiFile = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
-				if (err) {
-					NSRunAlertPanel(@"Error opening file", @"Unable to open %@: %@",
-									nil, nil, nil, [filename lastPathComponent], [err localizedFailureReason]);
-					return;
-				}
-				[self handleFile:theURL ofType:utiFile]; //TODO: more efficient way of doing this!
-			}
-		}else {
-			NSURL *panelURL = [panel URL];
-			NSString *filename = [panelURL path];
-			NSError *err = nil;
+		for (NSURL *theURL in panelURLS) {
+			NSString *filename = [theURL path];
+			NSError *err;
 			NSString *utiFile = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
 			if (err) {
 				NSRunAlertPanel(@"Error opening file", @"Unable to open %@: %@",
 								nil, nil, nil, [filename lastPathComponent], [err localizedFailureReason]);
 				return;
 			}
-			[self handleFile:panelURL ofType:utiFile];
+			[self handleFile:theURL ofType:utiFile]; //TODO: more efficient way of doing this!
 		}
 	}
 }
@@ -1445,17 +1428,17 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)nextButtonPressed:(id)sender
 {
+	NSError *err;
+
 	if (currentlyPlayingIndex.index + 1 < [musicList countOfMusicList]) {
 		currentlyPlayingIndex.index++;
 		[self selectCurrentlyPlayingMusic];
-		NSError *err = nil;
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
 			[[NSAlert alertWithError:err] runModal];
 		}
 	} else if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoopMusicWhenDone]) {
 		currentlyPlayingIndex.index = 0;
 		[self selectCurrentlyPlayingMusic];
-		NSError *err = nil;
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
 			[[NSAlert alertWithError:err] runModal];
 		}
@@ -1476,7 +1459,7 @@ enum PPMusicToolbarTypes {
 	if (currentlyPlayingIndex.index > 0) {
 		currentlyPlayingIndex.index--;
 		[self selectCurrentlyPlayingMusic];
-		NSError *err = nil;
+		NSError *err;
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
 			[[NSAlert alertWithError:err] runModal];
 		}
@@ -1590,7 +1573,7 @@ badTracker:
 		MADDisposeMusic(&music, madDriver);
 	}
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
-		NSError *err = nil;
+		NSError *err;
 		currentlyPlayingIndex.index = selMusFromList != -1 ? selMusFromList : 0;
 		[self selectCurrentlyPlayingMusic];
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
@@ -1633,7 +1616,7 @@ badTracker:
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
 {
-	NSError *err = nil;
+	NSError *err;
 	NSString *utiFile = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
 	if (err) {
 		NSRunAlertPanel(@"Error opening file", @"Unable to open %@: %@", nil, nil, nil, [filename lastPathComponent], [err localizedFailureReason]);
