@@ -108,7 +108,7 @@ typedef enum _MADPlugCapabilities {
 			return nil;
 		
 		{
-			id canImportValue = nil, canExportValue = nil;
+			id canImportValue, canExportValue;
 			canImportValue = [tempDict valueForKey:(__bridge NSString*)kMadPlugDoesImport];
 			canExportValue = [tempDict valueForKey:(__bridge NSString*)kMadPlugDoesExport];
 			if (canImportValue || canExportValue) {

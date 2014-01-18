@@ -154,7 +154,7 @@ static NSInteger selMusFromList = -1;
 		if (load && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
 			currentlyPlayingIndex.index = similarMusicIndex;
 			[self selectCurrentlyPlayingMusic];
-			NSError *err = nil;
+			NSError *err;
 			if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
 				[[NSAlert alertWithError:err] runModal];
 			}

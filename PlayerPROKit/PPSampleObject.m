@@ -180,7 +180,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	PPSampleObject *obj = nil;
+	PPSampleObject *obj;
 	if ((obj = [[[self class] allocWithZone:zone] init])) {
 		obj.name = name;
 		obj.data = data;

@@ -323,7 +323,7 @@
 	OpenPanelViewController *vc = [[OpenPanelViewController alloc] initWithOpenPanel:openPanel trackerDictionary:nil playlistDictionary:nil instrumentDictionary:fileDict additionalDictionary:nil];
 	[vc setupDefaults];
 	if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
-		NSError *err = nil;
+		NSError *err;
 		if ([self importSampleFromURL:[openPanel URL] makeUserSelectInstrument:NO error:&err] == NO)
 		{
 			[[NSAlert alertWithError:err] runModal];
@@ -371,7 +371,7 @@
 
 - (IBAction)showInstrumentInfo:(id)sender
 {
-	PPInstrumentObject *ctxt = nil;
+	PPInstrumentObject *ctxt;
 	id object = [instrumentView itemAtRow:[instrumentView selectedRow]];
 	if ([object isKindOfClass:[PPInstrumentObject class]]) {
 		ctxt = object;

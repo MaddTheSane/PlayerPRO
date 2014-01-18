@@ -406,7 +406,7 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 
 				NSURL *tmpURL = [theURL URLByDeletingPathExtension];
 				tmpURL = [tmpURL URLByAppendingPathExtension:[[NSString stringWithCString:ostype encoding:NSMacOSRomanStringEncoding] lowercaseString]];
-				NSError *err = nil;
+				NSError *err;
 				if (![[NSFileManager defaultManager] moveItemAtURL:theURL toURL:tmpURL error:&err]) {
 					NSLog(@"Could not move file, error: %@", err);
 					NSRunInformationalAlertPanel(NSLocalizedString(@"Rename Error", @"Rename Error"), NSLocalizedString(@"The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", @"Could not rename file"), nil, nil, nil, [tmpURL lastPathComponent], [theURL lastPathComponent]);
@@ -437,7 +437,7 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 		}
 		return YES;
 	} else if ([sharedWorkspace type:theUTI conformsToType:PPInstrumentListUTI]) {
-		NSError *err = nil;
+		NSError *err;
 		if (![instrumentController importInstrumentListFromURL:theURL error:&err]) {
 			[[NSAlert alertWithError:err] runModal];
 		} else return YES;
@@ -472,7 +472,7 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 				if ([sharedWorkspace type:theUTI conformsToType:aUTI]) {
 #if 0
 					if ([instrumentController isWindowLoaded]) {
-						NSError *theErr = nil;
+						NSError *theErr;
 						if (![instrumentController importSampleFromURL:theURL makeUserSelectInstrument:YES error:&theErr])
 						{
 							[[NSAlert alertWithError:theErr] runModal];
@@ -505,7 +505,7 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	NSDictionary *trackerDict = self.trackerDict;
 	
-	NSMutableDictionary *samplesDict = nil;
+	NSMutableDictionary *samplesDict;
 	NSInteger plugCount = [instrumentImporter plugInCount];
 	samplesDict = [[NSMutableDictionary alloc] initWithCapacity:plugCount];
 	for (PPInstrumentImporterObject *obj in instrumentImporter) {
@@ -521,7 +521,7 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	if ([panel runModal] == NSFileHandlingPanelOKButton) {
 		NSURL *panelURL = [panel URL];
 		NSString *filename = [panelURL path];
-		NSError *err = nil;
+		NSError *err;
 		NSString *utiFile = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
 		if (err) {
 			NSRunAlertPanel(@"Error opening file", @"Unable to open %@: %@", nil, nil, nil, [filename lastPathComponent], [err localizedFailureReason]);
@@ -533,7 +533,7 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
 {
-	NSError *err = nil;
+	NSError *err;
 	NSString *utiFile = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
 	if (err) {
 		NSRunAlertPanel(@"Error opening file", @"Unable to open %@: %@", nil, nil, nil, [filename lastPathComponent], [err localizedFailureReason]);
