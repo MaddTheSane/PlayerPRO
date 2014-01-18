@@ -9,16 +9,17 @@
 #import "OpenPanelViewController.h"
 
 @interface OpenPanelViewController ()
-
+@property (strong) NSOpenPanel *openPanel;
+@property (strong) NSArray *utiObjects;
 @end
 
-enum utiType {
+typedef NS_ENUM(int, utiType) {
 	utiAllType = -1,
 	utiTrackerType = -2,
 	utiPlaylistType = -3,
 	utiInstrumentType = -4,
 	utiOtherType = -5
-	};
+};
 
 typedef struct _trackerType {
 	unsigned int tracker:1;
@@ -46,16 +47,16 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 
 @interface OpenPanelViewItem : NSObject
 {
-	trackerType utiType;
+	trackerType theUtiType;
 	NSArray *utis;
 	NSString *name;
 }
 
 @property (readonly) NSString *name;
-@property (readonly) trackerType utiType;
+@property (readonly) trackerType theUtiType;
 @property (readonly) NSArray *utis;
 
-- (id)initWithType:(int)typ utis:(NSArray*)ut name:(NSString*)nam;
+- (id)initWithType:(utiType)typ utis:(NSArray*)ut name:(NSString*)nam;
 
 @end
 
@@ -68,27 +69,27 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 }
 
 @synthesize name;
-@synthesize utiType;
+@synthesize theUtiType;
 @synthesize utis;
 
-- (id)initWithType:(int)typ utis:(NSArray*)ut name:(NSString*)nam;
+- (id)initWithType:(utiType)typ utis:(NSArray*)ut name:(NSString*)nam;
 {
 	if (self = [super init]) {
 		switch (typ) {
 			case utiTrackerType:
-				utiType.tracker = 1;
+				theUtiType.tracker = 1;
 				break;
 				
 			case utiPlaylistType:
-				utiType.playlist = 1;
+				theUtiType.playlist = 1;
 				break;
 				
 			case utiInstrumentType:
-				utiType.instrument = 1;
+				theUtiType.instrument = 1;
 				break;
 				
 			case utiOtherType:
-				utiType.other = 1;
+				theUtiType.other = 1;
 				break;
 				
 			default:
@@ -104,13 +105,13 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 - (NSString* )description
 {
 	NSString *des = nil;
-	if (utiType.playlist) {
+	if (theUtiType.playlist) {
 		des = @"Playlist";
-	} else if (utiType.instrument) {
+	} else if (theUtiType.instrument) {
 		des = @"Instrument";
-	} else if (utiType.tracker) {
+	} else if (theUtiType.tracker) {
 		des = @"Tracker";
-	} else if (utiType.other) {
+	} else if (theUtiType.other) {
 		des = @"Other";
 	}
 	
@@ -120,6 +121,21 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 @end
 
 @implementation OpenPanelViewController
+@synthesize allowsMultipleSelectionOfTrackers;
+- (BOOL)allowsMultipleSelectionOfTrackers
+{
+	return allowsMultipleSelectionOfTrackers;
+}
+
+- (void)setAllowsMultipleSelectionOfTrackers:(BOOL)theVal
+{
+	allowsMultipleSelectionOfTrackers = theVal;
+	[openPanel setAllowsMultipleSelection:allowsMultipleSelectionOfTrackers];
+}
+
+@synthesize openPanel;
+@synthesize popUp;
+@synthesize utiObjects;
 
 - (id)init
 {
@@ -181,7 +197,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		}
 
 		[mutArray sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-			trackerType obj1Type = [obj1 utiType], obj2Type = [obj2 utiType];
+			trackerType obj1Type = [obj1 theUtiType], obj2Type = [obj2 theUtiType];
 			if (obj1Type.tracker != obj2Type.tracker) {
 				if (obj1Type.tracker) {
 					return NSOrderedAscending;
@@ -218,20 +234,25 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		[fileUTIs addObjectsFromArray:obj.utis];
 	}
 	
-	[openPanel setAllowsMultipleSelection:NO];
+	if (!allowsMultipleSelectionOfTrackers) {
+		[openPanel setAllowsMultipleSelection:NO];
+	}
+	
 	[openPanel setAllowedFileTypes:fileUTIs];
 	[openPanel setAccessoryView:[self view]];
 }
 
-/*- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+#if 0
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
-}*/
+	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+	if (self) {
+		// Initialization code here.
+	}
+	
+	return self;
+}
+#endif
 
 - (BOOL)hasMoreThanTwoTypes
 {
@@ -244,7 +265,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	for (i = 1; i < utiCount; i++) {
 		OpenPanelViewItem *obj1 = utiObjects[i - 1];
 		OpenPanelViewItem *obj2 = utiObjects[i];
-		if (!isTwoTrackerTypesEqual(obj1.utiType, obj2.utiType)) {
+		if (!isTwoTrackerTypesEqual(obj1.theUtiType, obj2.theUtiType)) {
 			return YES;
 		}
 	}
@@ -266,7 +287,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	}
 	
 	for (OpenPanelViewItem *item in utiObjects) {
-		if (item.utiType.tracker) {
+		if (item.theUtiType.tracker) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:@"All Trackers" action:@selector(selectUTI:) keyEquivalent:@""];
 			[mi setTag:utiTrackerType];
 			[mi setTarget:self];
@@ -276,7 +297,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	}
 	
 	for (OpenPanelViewItem *item in utiObjects) {
-		if (item.utiType.playlist) {
+		if (item.theUtiType.playlist) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:@"All Playlists" action:@selector(selectUTI:) keyEquivalent:@""];
 			[mi setTag:utiPlaylistType];
 			[mi setTarget:self];
@@ -285,7 +306,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		}
 	}
 	for (OpenPanelViewItem *item in utiObjects) {
-		if (item.utiType.instrument) {
+		if (item.theUtiType.instrument) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:@"All Instruments" action:@selector(selectUTI:) keyEquivalent:@""];
 			[mi setTag:utiInstrumentType];
 			[mi setTarget:self];
@@ -295,7 +316,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	}
 	
 	for (OpenPanelViewItem *item in utiObjects) {
-		if (item.utiType.other) {
+		if (item.theUtiType.other) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:@"All Other" action:@selector(selectUTI:) keyEquivalent:@""];
 			[mi setTag:utiOtherType];
 			[mi setTarget:self];
@@ -311,7 +332,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		if (moreThanTwoTypes) {
 			if (i - 1 >= 0) {
 				OpenPanelViewItem *prevItem = utiObjects[i - 1];
-				if (!isTwoTrackerTypesEqual(curItem.utiType, prevItem.utiType)) {
+				if (!isTwoTrackerTypesEqual(curItem.theUtiType, prevItem.theUtiType)) {
 					[fileTypeSelectionMenu addItem:[NSMenuItem separatorItem]];
 				}
 			}
@@ -336,6 +357,9 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 				[allUtis addObjectsFromArray:obj.utis];
 			}
 			[openPanel setAllowedFileTypes:allUtis];
+			if (allowsMultipleSelectionOfTrackers) {
+				[openPanel setAllowsMultipleSelection:YES];
+			}
 		}
 			break;
 			
@@ -343,11 +367,14 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		{
 			NSMutableArray *trackerUTIs = [NSMutableArray array];
 			for (OpenPanelViewItem *obj in utiObjects) {
-				if (obj.utiType.tracker) {
+				if (obj.theUtiType.tracker) {
 					[trackerUTIs addObjectsFromArray:obj.utis];
 				}
 			}
 			[openPanel setAllowedFileTypes:trackerUTIs];
+			if (allowsMultipleSelectionOfTrackers) {
+				[openPanel setAllowsMultipleSelection:YES];
+			}
 		}
 			break;
 			
@@ -355,11 +382,14 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		{
 			NSMutableArray *trackerUTIs = [NSMutableArray array];
 			for (OpenPanelViewItem *obj in utiObjects) {
-				if (obj.utiType.playlist) {
+				if (obj.theUtiType.playlist) {
 					[trackerUTIs addObjectsFromArray:obj.utis];
 				}
 			}
 			[openPanel setAllowedFileTypes:trackerUTIs];
+			if (allowsMultipleSelectionOfTrackers) {
+				[openPanel setAllowsMultipleSelection:NO];
+			}
 		}
 			break;
 			
@@ -367,11 +397,14 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		{
 			NSMutableArray *instrumentUTIs = [NSMutableArray array];
 			for (OpenPanelViewItem *obj in utiObjects) {
-				if (obj.utiType.instrument) {
+				if (obj.theUtiType.instrument) {
 					[instrumentUTIs addObjectsFromArray:obj.utis];
 				}
 			}
 			[openPanel setAllowedFileTypes:instrumentUTIs];
+			if (allowsMultipleSelectionOfTrackers) {
+				[openPanel setAllowsMultipleSelection:NO];
+			}
 		}
 			break;
 			
@@ -379,21 +412,30 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		{
 			NSMutableArray *otherUTIs = [NSMutableArray array];
 			for (OpenPanelViewItem *obj in utiObjects) {
-				if (obj.utiType.other) {
+				if (obj.theUtiType.other) {
 					[otherUTIs addObjectsFromArray:obj.utis];
 				}
 			}
 			[openPanel setAllowedFileTypes:otherUTIs];
+			if (allowsMultipleSelectionOfTrackers) {
+				[openPanel setAllowsMultipleSelection:YES];
+			}
 		}
 			break;
 			
 		default:
-		{
 			if (tag < [utiObjects count] && tag >= 0) {
 				OpenPanelViewItem *selObj = utiObjects[tag];
 				[openPanel setAllowedFileTypes:selObj.utis];
+				if (allowsMultipleSelectionOfTrackers) {
+					if (selObj.theUtiType.tracker) {
+						[openPanel setAllowsMultipleSelection:YES];
+					} else {
+						[openPanel setAllowsMultipleSelection:NO];
+					}
+				}
+
 			}
-		}
 			break;
 	}
 }

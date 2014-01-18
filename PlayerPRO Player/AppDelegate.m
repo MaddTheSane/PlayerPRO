@@ -24,6 +24,8 @@
 #define kUnresolvableFile @"Unresolvable files"
 #define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."
 
+PPLibrary *theObjCLib = nil;
+
 @interface PPCurrentlyPlayingIndex : NSObject
 @property NSInteger index;
 @property (strong) NSURL *playbackURL;
@@ -235,30 +237,32 @@ static NSInteger selMusFromList = -1;
 
 + (void)initialize
 {
-	[[NSUserDefaults standardUserDefaults] registerDefaults:@{PPRememberMusicList: @YES,
-															  PPLoadMusicAtListLoad: @NO,
-															  PPAfterPlayingMusic: @(PPStopPlaying),
-															  PPGotoStartupAfterPlaying: @YES,
-															  PPSaveModList: @YES,
-															  PPLoadMusicAtMusicLoad: @NO,
-															  PPLoopMusicWhenDone: @NO,
-															  
-															  PPSoundOutBits: @16,
-															  PPSoundOutRate: @44100,
-															  PPSoundDriver: @(CoreAudioDriver),
-															  PPStereoDelayToggle: @YES,
-															  PPReverbToggle: @NO,
-															  PPSurroundToggle: @NO,
-															  PPOversamplingToggle: @NO,
-															  PPStereoDelayAmount: @30,
-															  PPReverbAmount: @25,
-															  PPReverbStrength: @30,
-															  PPOversamplingAmount: @1,
-															  
-															  PPMAddExtension: @YES,
-															  PPMMadCompression: @YES,
-															  PPMNoLoadMixerFromFiles: @NO,
-															  PPMOscilloscopeDrawLines: @YES}];
+	[[NSUserDefaults standardUserDefaults]
+	 registerDefaults:
+	 @{PPRememberMusicList: @YES,
+	   PPLoadMusicAtListLoad: @NO,
+	   PPAfterPlayingMusic: @(PPStopPlaying),
+	   PPGotoStartupAfterPlaying: @YES,
+	   PPSaveModList: @YES,
+	   PPLoadMusicAtMusicLoad: @NO,
+	   PPLoopMusicWhenDone: @NO,
+	   
+	   PPSoundOutBits: @16,
+	   PPSoundOutRate: @44100,
+	   PPSoundDriver: @(CoreAudioDriver),
+	   PPStereoDelayToggle: @YES,
+	   PPReverbToggle: @NO,
+	   PPSurroundToggle: @NO,
+	   PPOversamplingToggle: @NO,
+	   PPStereoDelayAmount: @30,
+	   PPReverbAmount: @25,
+	   PPReverbStrength: @30,
+	   PPOversamplingAmount: @1,
+	   
+	   PPMAddExtension: @YES,
+	   PPMMadCompression: @YES,
+	   PPMNoLoadMixerFromFiles: @NO,
+	   PPMOscilloscopeDrawLines: @YES}];
 }
 
 - (IBAction)showMusicList:(id)sender
@@ -951,6 +955,7 @@ return; \
 {
 	isQuitting = NO;
 	srandom(time(NULL) & 0xffffffff);
+	theObjCLib = [[PPLibrary alloc] init];
 	PPRegisterDebugFunc(CocoaDebugStr);
 	MADInitLibrary(NULL, &madLib);
 	//the NIB won't store the value anymore, so do this hackery to make sure there's some value in it.
@@ -1118,14 +1123,23 @@ return; \
 	}
 }
 
+- (void)addMusicsToMusicList:(NSArray*)theMusList
+{
+	for (NSInteger i = 0; i < [theMusList count] - 1; i++) {
+		[self addMusicToMusicList:theMusList[i] loadIfPreferencesAllow:NO];
+	}
+	[self addMusicToMusicList:[theMusList lastObject] loadIfPreferencesAllow:YES];
+}
+
 - (IBAction)addMusic:(id)sender
 {
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:self.trackerDict playlistDictionary:nil instrumentDictionary:nil additionalDictionary:nil];
 	[av setupDefaults];
+	av.allowsMultipleSelectionOfTrackers = YES;
 	if ([panel runModal] == NSFileHandlingPanelOKButton) {
-		[self addMusicToMusicList:[panel URL]];
+		[self addMusicsToMusicList:[panel URLs]];
 	}
 }
 
@@ -1378,16 +1392,33 @@ enum PPMusicToolbarTypes {
 	
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:self.trackerDict playlistDictionary:playlistDict instrumentDictionary:samplesDict additionalDictionary:otherDict];
 	[av setupDefaults];
+	av.allowsMultipleSelectionOfTrackers = YES;
 	if ([panel runModal] == NSFileHandlingPanelOKButton) {
-		NSURL *panelURL = [panel URL];
-		NSString *filename = [panelURL path];
-		NSError *err = nil;
-		NSString *utiFile = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
-		if (err) {
-			NSRunAlertPanel(@"Error opening file", @"Unable to open %@: %@", nil, nil, nil, [filename lastPathComponent], [err localizedFailureReason]);
-			return;
+		NSArray *panelURLS = [panel URLs];
+		if ([panelURLS count] > 1) {
+			for (NSURL *theURL in panelURLS) {
+				NSString *filename = [theURL path];
+				NSError *err = nil;
+				NSString *utiFile = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
+				if (err) {
+					NSRunAlertPanel(@"Error opening file", @"Unable to open %@: %@",
+									nil, nil, nil, [filename lastPathComponent], [err localizedFailureReason]);
+					return;
+				}
+				[self handleFile:theURL ofType:utiFile]; //TODO: more efficient way of doing this!
+			}
+		}else {
+			NSURL *panelURL = [panel URL];
+			NSString *filename = [panelURL path];
+			NSError *err = nil;
+			NSString *utiFile = [[NSWorkspace sharedWorkspace] typeOfFile:filename error:&err];
+			if (err) {
+				NSRunAlertPanel(@"Error opening file", @"Unable to open %@: %@",
+								nil, nil, nil, [filename lastPathComponent], [err localizedFailureReason]);
+				return;
+			}
+			[self handleFile:panelURL ofType:utiFile];
 		}
-		[self handleFile:panelURL ofType:utiFile];
 	}
 }
 

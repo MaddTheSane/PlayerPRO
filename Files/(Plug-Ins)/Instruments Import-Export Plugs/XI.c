@@ -333,9 +333,6 @@ static OSErr mainXI(void		*unused,
 				long			inOutCount = 0;
 				XMPATCHHEADER	pth;
 				char			start[0x42];
-				
-				//BlockMoveData( "Extended Instrument:                       FastTracker v2.00   ", start, 0x42);
-				
 				memcpy(start, "Extended Instrument:                       \xA1\x46\x61stTracker v2.00   \x02\x01", 0x42);
 				
 				inOutCount = 0x42;
