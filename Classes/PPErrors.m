@@ -13,9 +13,9 @@ NSString * const PPMADErrorDomain = @"net.sourceforge.playerpro.PlayerPRO_Cocoa.
 
 NSError *CreateErrorFromMADErrorType(OSErr theErr)
 {
-	NSString *ErrorDescription = nil;
-	NSString *errorReason = nil;
-	NSString *recoverySuggestion = nil;
+	NSString *ErrorDescription;
+	NSString *errorReason;
+	NSString *recoverySuggestion;
 	
 	switch (theErr) {
 		case noErr:

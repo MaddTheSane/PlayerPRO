@@ -71,7 +71,7 @@ void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUID
 
 NSArray *DefaultPlugInLocations()
 {
-	static NSArray *immPlugLocs = nil;
+	static NSArray *immPlugLocs;
 	if (immPlugLocs == nil) {
 		NSMutableArray *plugLocs = [[NSMutableArray alloc] initWithCapacity:3];
 		

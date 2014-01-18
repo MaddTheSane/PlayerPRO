@@ -34,7 +34,7 @@ PPCOLORPOPULATE();
 
 - (IBAction)changeColorWell:(id)sender
 {
-	NSString *keyToChange = nil;
+	NSString *keyToChange;
 #define PPCOLOR(num) } else if (sender == colorWell ## num) \
 {\
 keyToChange = PPCColor ## num

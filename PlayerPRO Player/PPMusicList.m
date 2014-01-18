@@ -170,10 +170,10 @@ static inline NSURL *PPHomeURL()
 
 - (instancetype)initWithURL:(NSURL *)aURL
 {
+	if (!aURL) {
+		return nil;
+	}
 	if (self = [super init]) {
-		if (!aURL) {
-			return nil;
-		}
 		if ([aURL isFileReferenceURL]) {
 			self.musicUrl = aURL;
 		} else {
@@ -192,6 +192,16 @@ static inline NSURL *PPHomeURL()
 - (id)copyWithZone:(NSZone *)zone
 {
 	return self; // this class is immutable
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+	return self = [self initWithURL:[aDecoder decodeObject]];
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+	[aCoder encodeObject:musicUrl];
 }
 
 @end
@@ -357,14 +367,14 @@ static inline NSURL *PPHomeURL()
 		if (!aStr || !aStr2) {
 			break;
 		}
-		NSString *CFaStr = nil, *CFaStr2 = nil;
+		NSString *CFaStr, *CFaStr2;
 		CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman));
 		CFaStr2 = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman));
 
 		NSString *together = [@[CFaStr, CFaStr2] componentsJoinedByString:@":"];
 		CFaStr = CFaStr2 = nil;
 		
-		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef) together, kCFURLHFSPathStyle, false));
+		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)together, kCFURLHFSPathStyle, false));
 		together = nil;
 		if ([fullPath checkResourceIsReachableAndReturnError:NULL]) {
 			PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullPath];

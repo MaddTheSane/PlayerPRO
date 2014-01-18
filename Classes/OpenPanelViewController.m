@@ -104,7 +104,7 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 
 - (NSString* )description
 {
-	NSString *des = nil;
+	NSString *des;
 	if (theUtiType.playlist) {
 		des = @"Playlist";
 	} else if (theUtiType.instrument) {
@@ -113,6 +113,8 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 		des = @"Tracker";
 	} else if (theUtiType.other) {
 		des = @"Other";
+	} else {
+		des = @"Unknown";
 	}
 	
 	return [NSString stringWithFormat:@"%@: %@ - %@", name, des, [utis description]];
