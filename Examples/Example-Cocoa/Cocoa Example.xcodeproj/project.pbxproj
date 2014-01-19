@@ -31,13 +31,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		550FFADB17CD341A0003A2F3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55BE997817978AEF00D6DECC;
-			remoteInfo = PPImport;
-		};
 		550FFADD17CD341A0003A2F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
@@ -45,12 +38,75 @@
 			remoteGlobalIDString = 55C358C216C42D1800FB9FA6;
 			remoteInfo = PlayerPROCompact;
 		};
-		5570E9AB12A4C24900167E1A /* PBXContainerItemProxy */ = {
+		5526ACDD188C9B93008D0C14 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 88E0C3B50C2F21DD00D6C081;
-			remoteInfo = Carbon;
+			remoteGlobalIDString = 5578C48117D9E8560057D11B;
+			remoteInfo = "PlayerPRO Player";
+		};
+		5526ACDF188C9B93008D0C14 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55534ACD1817C387006D6BCB;
+			remoteInfo = updateInfoPlist;
+		};
+		5526ACE1188C9B93008D0C14 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5557769F17EBF8FE0019D008;
+			remoteInfo = "iOS PlayerPRO Player";
+		};
+		5526ACE3188C9B93008D0C14 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 555776C317EBF8FF0019D008;
+			remoteInfo = "iOS PlayerPRO PlayerTests";
+		};
+		5526ACE5188C9B93008D0C14 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5578C52F17DB94A50057D11B;
+			remoteInfo = "PPImport-app";
+		};
+		5526ACE7188C9B93008D0C14 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 559C4187183EB4AB004A073C;
+			remoteInfo = PPQuickView;
+		};
+		5526ACE9188C9B93008D0C14 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5578C50617DB8F9E0057D11B;
+			remoteInfo = libPlayerPROKit;
+		};
+		5526ACEB188C9B93008D0C14 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55B0F59E17DF0F0500653BCD;
+			remoteInfo = "PlayerPROKit-iOS";
+		};
+		5526ACED188C9B93008D0C14 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 550FFAEB17CEA4570003A2F3;
+			remoteInfo = AIFF;
+		};
+		5526ACEF188C9B93008D0C14 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55ADC3DB17D6F390001F27D4;
+			remoteInfo = Wave;
 		};
 		5570E9AD12A4C24900167E1A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -58,20 +114,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 55CBF9A611EB77760028C6BB;
 			remoteInfo = Cocoa;
-		};
-		5570E9AF12A4C24900167E1A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5518107210C35A4500ADA9F4;
-			remoteInfo = "PlayerPRO Example";
-		};
-		5570E9B112A4C24900167E1A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 550BFF1010BA0179004FC5D7;
-			remoteInfo = "Game Example";
 		};
 		5570E9B312A4C24900167E1A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -374,13 +416,6 @@
 			remoteGlobalIDString = 557DE9A110E08DC100177B4C;
 			remoteInfo = "Tone Generator";
 		};
-		55835DD81650989A00FC1A7D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55879F85164CA65D009068D5;
-			remoteInfo = PPPlay;
-		};
 		558678A61659A7DD00BCFB70 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
@@ -556,16 +591,19 @@
 		5570E97612A4C24900167E1A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5570E9AC12A4C24900167E1A /* PlayerPRO.app */,
 				5570E9AE12A4C24900167E1A /* PlayerPRO 6.app */,
-				5570E9B012A4C24900167E1A /* PlayerPRO Example.app */,
-				5570E9B212A4C24900167E1A /* Game Example.app */,
-				550FFADC17CD341A0003A2F3 /* PlayerPROImporter.mdimporter */,
+				5526ACDE188C9B93008D0C14 /* PlayerPRO Player.app */,
+				5526ACE0188C9B93008D0C14 /* updateInfoPlist */,
+				5526ACE2188C9B93008D0C14 /* iOS PlayerPRO Player.app */,
+				5526ACE4188C9B93008D0C14 /* iOS PlayerPRO PlayerTests.xctest */,
+				5526ACE6188C9B93008D0C14 /* PPImport Cocoa.mdimporter */,
+				5526ACE8188C9B93008D0C14 /* PPQuickView.qlgenerator */,
 				5570E9B412A4C24900167E1A /* PlayerPROCore.framework */,
 				5598692916432693008C55FC /* PlayerPROKit.framework */,
-				55835DD91650989A00FC1A7D /* PPPlay */,
-				558678A71659A7DD00BCFB70 /* libiOSPlayerPROCore.a */,
 				550FFADE17CD341A0003A2F3 /* libPlayerPROCompact.a */,
+				558678A71659A7DD00BCFB70 /* libiOSPlayerPROCore.a */,
+				5526ACEA188C9B93008D0C14 /* libPlayerPROKit.a */,
+				5526ACEC188C9B93008D0C14 /* libPlayerPROKit-iOS.a */,
 				5570E9B612A4C24900167E1A /* MOD.ppimpexp */,
 				5570E9B812A4C24900167E1A /* 669.ppimpexp */,
 				5570E9BA12A4C24900167E1A /* AMF.ppimpexp */,
@@ -589,9 +627,11 @@
 				5570E9DE12A4C24900167E1A /* Note Translate.plugin */,
 				5570E9E012A4C24900167E1A /* Propagate.plugin */,
 				5570E9E212A4C24900167E1A /* Revert.plugin */,
+				5526ACEE188C9B93008D0C14 /* AIFF.plugin */,
 				5570E9E412A4C24900167E1A /* XI.plugin */,
 				5570E9E612A4C24900167E1A /* MINs.plugin */,
 				5570E9E812A4C24900167E1A /* PAT.plugin */,
+				5526ACF0188C9B93008D0C14 /* Wave.plugin */,
 				5570E9EA12A4C24900167E1A /* QuickTime.plugin */,
 				5570E9EC12A4C24900167E1A /* Amplitude.plugin */,
 				5570E9EE12A4C24900167E1A /* Backwards.plugin */,
@@ -671,13 +711,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		550FFADC17CD341A0003A2F3 /* PlayerPROImporter.mdimporter */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = PlayerPROImporter.mdimporter;
-			remoteRef = 550FFADB17CD341A0003A2F3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		550FFADE17CD341A0003A2F3 /* libPlayerPROCompact.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -685,11 +718,74 @@
 			remoteRef = 550FFADD17CD341A0003A2F3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		5570E9AC12A4C24900167E1A /* PlayerPRO.app */ = {
+		5526ACDE188C9B93008D0C14 /* PlayerPRO Player.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
-			path = PlayerPRO.app;
-			remoteRef = 5570E9AB12A4C24900167E1A /* PBXContainerItemProxy */;
+			path = "PlayerPRO Player.app";
+			remoteRef = 5526ACDD188C9B93008D0C14 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5526ACE0188C9B93008D0C14 /* updateInfoPlist */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = updateInfoPlist;
+			remoteRef = 5526ACDF188C9B93008D0C14 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5526ACE2188C9B93008D0C14 /* iOS PlayerPRO Player.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "iOS PlayerPRO Player.app";
+			remoteRef = 5526ACE1188C9B93008D0C14 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5526ACE4188C9B93008D0C14 /* iOS PlayerPRO PlayerTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "iOS PlayerPRO PlayerTests.xctest";
+			remoteRef = 5526ACE3188C9B93008D0C14 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5526ACE6188C9B93008D0C14 /* PPImport Cocoa.mdimporter */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "PPImport Cocoa.mdimporter";
+			remoteRef = 5526ACE5188C9B93008D0C14 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5526ACE8188C9B93008D0C14 /* PPQuickView.qlgenerator */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = PPQuickView.qlgenerator;
+			remoteRef = 5526ACE7188C9B93008D0C14 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5526ACEA188C9B93008D0C14 /* libPlayerPROKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libPlayerPROKit.a;
+			remoteRef = 5526ACE9188C9B93008D0C14 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5526ACEC188C9B93008D0C14 /* libPlayerPROKit-iOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPlayerPROKit-iOS.a";
+			remoteRef = 5526ACEB188C9B93008D0C14 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5526ACEE188C9B93008D0C14 /* AIFF.plugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = AIFF.plugin;
+			remoteRef = 5526ACED188C9B93008D0C14 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5526ACF0188C9B93008D0C14 /* Wave.plugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Wave.plugin;
+			remoteRef = 5526ACEF188C9B93008D0C14 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5570E9AE12A4C24900167E1A /* PlayerPRO 6.app */ = {
@@ -697,20 +793,6 @@
 			fileType = wrapper.application;
 			path = "PlayerPRO 6.app";
 			remoteRef = 5570E9AD12A4C24900167E1A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		5570E9B012A4C24900167E1A /* PlayerPRO Example.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "PlayerPRO Example.app";
-			remoteRef = 5570E9AF12A4C24900167E1A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		5570E9B212A4C24900167E1A /* Game Example.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = "Game Example.app";
-			remoteRef = 5570E9B112A4C24900167E1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5570E9B412A4C24900167E1A /* PlayerPROCore.framework */ = {
@@ -1014,13 +1096,6 @@
 			remoteRef = 5570EA0712A4C24900167E1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		55835DD91650989A00FC1A7D /* PPPlay */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = PPPlay;
-			remoteRef = 55835DD81650989A00FC1A7D /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		558678A71659A7DD00BCFB70 /* libiOSPlayerPROCore.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1134,7 +1209,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 			};
@@ -1147,7 +1222,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
 			};
 			name = Release;
