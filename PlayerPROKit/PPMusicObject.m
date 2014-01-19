@@ -478,7 +478,7 @@ end:
 
 - (NSDictionary*)musicClasses
 {
-	
+	return nil;
 }
 
 - (MADMusic *)copyMadMusicStruct
