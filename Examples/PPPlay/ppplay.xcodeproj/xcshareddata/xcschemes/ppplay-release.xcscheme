@@ -14,24 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "55879F84164CA65D009068D5"
-               BuildableName = "PPPlay"
-               BlueprintName = "PPPlay"
-               ReferencedContainer = "container:PPMacho.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "551292D7163DD68500C2C639"
-               BuildableName = "PlayerPROKit.framework"
-               BlueprintName = "PlayerPROKit"
-               ReferencedContainer = "container:PPMacho.xcodeproj">
+               BlueprintIdentifier = "5526ABCE188C988B008D0C14"
+               BuildableName = "ppplay"
+               BlueprintName = "ppplay"
+               ReferencedContainer = "container:ppplay.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "55879F84164CA65D009068D5"
-            BuildableName = "PPPlay"
-            BlueprintName = "PPPlay"
-            ReferencedContainer = "container:PPMacho.xcodeproj">
+            BlueprintIdentifier = "5526ABCE188C988B008D0C14"
+            BuildableName = "ppplay"
+            BlueprintName = "ppplay"
+            ReferencedContainer = "container:ppplay.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -65,10 +51,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "55879F84164CA65D009068D5"
-            BuildableName = "PPPlay"
-            BlueprintName = "PPPlay"
-            ReferencedContainer = "container:PPMacho.xcodeproj">
+            BlueprintIdentifier = "5526ABCE188C988B008D0C14"
+            BuildableName = "ppplay"
+            BlueprintName = "ppplay"
+            ReferencedContainer = "container:ppplay.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -83,10 +69,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "55879F84164CA65D009068D5"
-            BuildableName = "PPPlay"
-            BlueprintName = "PPPlay"
-            ReferencedContainer = "container:PPMacho.xcodeproj">
+            BlueprintIdentifier = "5526ABCE188C988B008D0C14"
+            BuildableName = "ppplay"
+            BlueprintName = "ppplay"
+            ReferencedContainer = "container:ppplay.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

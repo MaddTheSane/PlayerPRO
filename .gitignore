@@ -9,3 +9,4 @@ Release
 ipch
 **/*vers.plist
 PlayerPROCore.suo
+**/project.xcworkspace

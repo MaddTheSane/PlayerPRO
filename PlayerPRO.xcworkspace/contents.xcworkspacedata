@@ -4,7 +4,17 @@
    <FileRef
       location = "group:PPMacho.xcodeproj">
    </FileRef>
-   <FileRef
-      location = "group:Examples/Example-Cocoa/Cocoa Example.xcodeproj">
-   </FileRef>
+   <Group
+      location = "container:"
+      name = "Examples and Samples">
+      <FileRef
+         location = "group:Examples/Carbon Example/Carbon Example.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Examples/Example-Cocoa/Cocoa Example.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Examples/PPPlay/ppplay.xcodeproj">
+      </FileRef>
+   </Group>
 </Workspace>
