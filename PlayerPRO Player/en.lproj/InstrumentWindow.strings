@@ -27,7 +27,8 @@
 "40.title" = "Bit Rate:";
 
 /* Class = "NSTextFieldCell"; title = "Real Note:"; ObjectID = "42"; */
-"42.title" = "Real Note:";
+"42.title" = "Rel. Note:";
+"42.toolTip" = "Relative Note";
 
 /* Class = "NSTextFieldCell"; title = "Bits:"; ObjectID = "44"; */
 "44.title" = "Bits:";
