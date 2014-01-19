@@ -18,7 +18,7 @@
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="PlayerPRO 6" systemMenu="apple" id="830">
                         <items>
-                            <menuItem title="About PlayerPRO" id="841">
+                            <menuItem title="About PlayerPRO 6" id="841">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="orderFrontStandardAboutPanel:" target="-3" id="1038"/>
@@ -321,10 +321,6 @@
                             <menuItem title="Convert Pattern to 64 Rows" id="985">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
-                            <menuItem isSeparatorItem="YES" id="984"/>
-                            <menuItem title="Music Info" id="983">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>
@@ -460,14 +456,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="472" height="216"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView autohidesScrollers="YES" horizontalLineScroll="44" horizontalPageScroll="10" verticalLineScroll="44" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYs-5M-nWT">
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYs-5M-nWT">
                         <rect key="frame" x="-1" y="-1" width="474" height="218"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" id="9lj-jK-gOB">
                             <rect key="frame" x="1" y="1" width="472" height="216"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="42" rowSizeStyle="automatic" viewBased="YES" id="EGb-c2-NE8">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="EGb-c2-NE8">
                                     <rect key="frame" x="0.0" y="0.0" width="472" height="216"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -567,6 +563,6 @@
         </window>
     </objects>
     <resources>
-        <image name="NSStopProgressFreestandingTemplate" width="83" height="83"/>
+        <image name="NSStopProgressFreestandingTemplate" width="12" height="12"/>
     </resources>
 </document>
