@@ -460,14 +460,14 @@
                 <rect key="frame" x="0.0" y="0.0" width="472" height="216"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYs-5M-nWT">
+                    <scrollView autohidesScrollers="YES" horizontalLineScroll="44" horizontalPageScroll="10" verticalLineScroll="44" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LYs-5M-nWT">
                         <rect key="frame" x="-1" y="-1" width="474" height="218"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <clipView key="contentView" id="9lj-jK-gOB">
                             <rect key="frame" x="1" y="1" width="472" height="216"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="EGb-c2-NE8">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="42" rowSizeStyle="automatic" viewBased="YES" id="EGb-c2-NE8">
                                     <rect key="frame" x="0.0" y="0.0" width="472" height="216"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
@@ -501,7 +501,7 @@
                                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="NSStopProgressFreestandingTemplate" id="yQO-T3-r44"/>
                                                         </imageView>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eSN-g0-qjV">
-                                                            <rect key="frame" x="43" y="25" width="405" height="14"/>
+                                                            <rect key="frame" x="43" y="23" width="405" height="14"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="File Name" id="Ou3-tp-z64">
                                                                 <font key="font" metaFont="smallSystem"/>
@@ -525,16 +525,17 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstAttribute="bottom" secondItem="tcp-7r-gO2" secondAttribute="bottom" constant="5" id="6Ha-CJ-iHd"/>
-                                                        <constraint firstItem="JAA-MZ-Zcz" firstAttribute="top" relation="greaterThanOrEqual" secondItem="eSN-g0-qjV" secondAttribute="bottom" constant="8" symbolic="YES" id="87A-lp-PNM"/>
+                                                        <constraint firstItem="JAA-MZ-Zcz" firstAttribute="top" secondItem="eSN-g0-qjV" secondAttribute="bottom" constant="8" symbolic="YES" id="87A-lp-PNM"/>
                                                         <constraint firstItem="cwu-Wk-sId" firstAttribute="leading" secondItem="eSN-g0-qjV" secondAttribute="trailing" constant="8" symbolic="YES" id="Ahk-oR-8UH"/>
                                                         <constraint firstItem="JAA-MZ-Zcz" firstAttribute="leading" secondItem="eSN-g0-qjV" secondAttribute="leading" id="DvP-8T-TRd"/>
                                                         <constraint firstAttribute="bottom" secondItem="JAA-MZ-Zcz" secondAttribute="bottom" constant="3" id="GBV-ma-X0w"/>
                                                         <constraint firstAttribute="trailing" secondItem="cwu-Wk-sId" secondAttribute="trailing" constant="3" id="HkH-WO-1vl"/>
+                                                        <constraint firstItem="JAA-MZ-Zcz" firstAttribute="leading" secondItem="tcp-7r-gO2" secondAttribute="trailing" constant="8" symbolic="YES" id="JDn-dD-8MF"/>
                                                         <constraint firstItem="tcp-7r-gO2" firstAttribute="top" secondItem="r34-Wc-GeB" secondAttribute="top" constant="5" id="OBU-Pj-67L"/>
-                                                        <constraint firstItem="eSN-g0-qjV" firstAttribute="top" secondItem="r34-Wc-GeB" secondAttribute="top" constant="3" id="RD3-dV-aPr"/>
                                                         <constraint firstItem="eSN-g0-qjV" firstAttribute="leading" secondItem="tcp-7r-gO2" secondAttribute="trailing" constant="8" symbolic="YES" id="Z3N-de-cIW"/>
                                                         <constraint firstAttribute="centerY" secondItem="cwu-Wk-sId" secondAttribute="centerY" id="e0A-68-Wb2"/>
                                                         <constraint firstItem="JAA-MZ-Zcz" firstAttribute="trailing" secondItem="eSN-g0-qjV" secondAttribute="trailing" id="inI-bN-J6T"/>
+                                                        <constraint firstItem="tcp-7r-gO2" firstAttribute="top" secondItem="eSN-g0-qjV" secondAttribute="top" id="pQJ-kW-0DP"/>
                                                         <constraint firstItem="tcp-7r-gO2" firstAttribute="leading" secondItem="r34-Wc-GeB" secondAttribute="leading" constant="5" id="pV3-uL-8NR"/>
                                                         <constraint firstItem="cwu-Wk-sId" firstAttribute="leading" secondItem="JAA-MZ-Zcz" secondAttribute="trailing" constant="8" symbolic="YES" id="uot-uR-f9t"/>
                                                     </constraints>

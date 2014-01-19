@@ -1898,8 +1898,6 @@
 		55268A641877EB9500A82269 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FadeNoteController.strings; sourceTree = "<group>"; };
 		55268A651877ECF100A82269 /* Pedantic.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Pedantic.xcconfig; sourceTree = "<group>"; };
 		55268AAA1877EF0000A82269 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
-		5526AB13188C8DBE008D0C14 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPDocument.strings; sourceTree = "<group>"; };
-		5526AB15188C8E0B008D0C14 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		552711E3124881F4005120FC /* UserDefaultKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultKeys.h; sourceTree = "<group>"; };
 		552711E4124881F4005120FC /* UserDefaultKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UserDefaultKeys.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		552A662716B5EBEA007C63F7 /* PPPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugInObject.h; sourceTree = "<group>"; };
@@ -7415,7 +7413,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				55771DC21873714800AED8DC /* Base */,
-				5526AB13188C8DBE008D0C14 /* en */,
 			);
 			name = PPDocument.xib;
 			sourceTree = "<group>";
@@ -7574,7 +7571,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				55149C3E1832CC64009C850B /* Base */,
-				5526AB15188C8E0B008D0C14 /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
