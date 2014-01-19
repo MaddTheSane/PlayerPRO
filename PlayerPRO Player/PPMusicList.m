@@ -64,7 +64,6 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 #pragma clang diagnostic pop
 #endif
 
-extern PPLibrary *theObjCLib;
 
 static inline NSURL *PPHomeURL()
 {
@@ -85,18 +84,12 @@ static inline NSURL *PPHomeURL()
 - (unsigned long long)fileSize
 {
 	if (_fileSize == 0) {
-		PPInfoRec theInfo;
-		OSErr theErr = [PPMusicObjectWrapper info:&theInfo fromTrackerAtURL:musicUrl usingLibrary:theObjCLib];
-		if (theErr) {
-			NSFileManager *fm = [NSFileManager defaultManager];
-			NSDictionary *theparam = [fm attributesOfItemAtPath:[musicUrl path] error:NULL];
-			if (!theparam) {
-				return 0;
-			}
-			_fileSize = [theparam fileSize];
-		} else {
-			_fileSize = theInfo.fileSize;
+		NSFileManager *fm = [NSFileManager defaultManager];
+		NSDictionary *theparam = [fm attributesOfItemAtPath:[musicUrl path] error:NULL];
+		if (!theparam) {
+			return 0;
 		}
+		_fileSize = [theparam fileSize];
 	}
 	
 	return _fileSize;
