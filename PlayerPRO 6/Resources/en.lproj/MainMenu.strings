@@ -269,6 +269,9 @@
 /* Class = "NSMenuItem"; title = "Enter Full Screen"; ObjectID = "OFt-Fe-VZe"; */
 "OFt-Fe-VZe.title" = "Enter Full Screen";
 
+/* Class = "NSTextFieldCell"; placeholderString = "File Name"; ObjectID = "Ou3-tp-z64"; */
+"Ou3-tp-z64.placeholderString" = "File Name";
+
 /* Class = "NSTextFieldCell"; title = "Label"; ObjectID = "Ou3-tp-z64"; */
 "Ou3-tp-z64.title" = "Label";
 

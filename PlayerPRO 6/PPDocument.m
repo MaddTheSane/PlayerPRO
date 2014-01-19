@@ -134,15 +134,13 @@
 {
 	self.theMusic = [[PPMusicObjectWrapper alloc] initWithFileWrapper:fileWrapper];
 	if (self.theMusic) {
-		if (outError) {
+		if (outError)
 			*outError = nil;
-		}
 		
 		return YES;
 	} else {
-		if (outError) {
+		if (outError)
 			*outError = CreateErrorFromMADErrorType(MADReadingErr);
-		}
 		
 		return NO;
 	}
@@ -515,11 +513,6 @@
 			if (tag > [globalMadLib pluginCount] || tag < 0) {
 				NSBeep();
 				[_theDriver endExport];
-#if 0
-				if (isQuitting) {
-					[NSApp replyToApplicationShouldTerminate:YES];
-				}
-#endif
 				
 				return;
 			}

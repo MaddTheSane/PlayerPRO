@@ -503,7 +503,7 @@
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eSN-g0-qjV">
                                                             <rect key="frame" x="43" y="25" width="405" height="14"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="Ou3-tp-z64">
+                                                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" placeholderString="File Name" id="Ou3-tp-z64">
                                                                 <font key="font" metaFont="smallSystem"/>
                                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -566,6 +566,6 @@
         </window>
     </objects>
     <resources>
-        <image name="NSStopProgressFreestandingTemplate" width="12" height="12"/>
+        <image name="NSStopProgressFreestandingTemplate" width="83" height="83"/>
     </resources>
 </document>
