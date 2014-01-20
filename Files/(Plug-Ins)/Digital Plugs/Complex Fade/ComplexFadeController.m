@@ -50,7 +50,7 @@ static short NSStringToNote(NSString *myTT)
 	if (Oct != 0xFF) {
 		if ([val2 isEqualToString:@"#"] || [val2 isEqualToString:@"♯"]/*Unicode sharp sign, just in case*/)
 			Oct++;
-		if (Oct >= 96)
+		if (Oct > 95)
 			Oct = 0xFF;
 		if (Oct < 0)
 			Oct = 0xFF;
