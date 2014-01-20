@@ -8,3 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import "NSColor+PPPreferences.h"
+
+void RegisterCFDefaults()
+{
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	[[NSUserDefaults standardUserDefaults]
+	 registerDefaults:[NSDictionary dictionaryWithObjectsAndKeys:nil]];
+	
+	
+	[pool drain];
+}
