@@ -50,12 +50,15 @@ typedef enum InputType {
 	MADPtrType
 } MADInputType;
 
+#if !TARGET_OS_IPHONE
 void		CheckVSTEditor(VSTEffect *ce);
-void		SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte);
 void		DisposeVSTEffect(VSTEffect *myEffect);
 VSTEffect*	CreateVSTEffect(short effectID);
 short		ConvertUniqueIDToIndex(UInt32);
 void		ApplyVSTSets(VSTEffect* myEffect, FXSets* set);
+#endif
+
+void		SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte);
 static OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFReadStreamRef MADRsrc, Ptr MADPtr);
 
 MADMusic* CreateFreeMADK()

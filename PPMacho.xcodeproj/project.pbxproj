@@ -7827,7 +7827,7 @@
 				DSTROOT = /tmp/iOSPlayerPROCore.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MADDriver.source/MADDriver.Source/PlayerPROCore-OSX.pch";
+				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NOEXPORTFUNCS=1",
 					"$(inherited)",
@@ -9031,7 +9031,7 @@
 				DSTROOT = /tmp/iOSPlayerPROCore.dst;
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MADDriver.source/MADDriver.Source/PlayerPROCore-OSX.pch";
+				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NOEXPORTFUNCS=1",
 					"$(inherited)",
@@ -9057,7 +9057,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DSTROOT = /tmp/iOSPlayerPROCore.dst;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MADDriver.source/MADDriver.Source/PlayerPROCore-OSX.pch";
+				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"NOEXPORTFUNCS=1",
 					"$(inherited)",

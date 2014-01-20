@@ -110,10 +110,12 @@ struct __MADDriverRec {
 	
 	
 	//#ifdef _MAC_H
+#if !TARGET_OS_IPHONE
 	VSTEffect		*masterVST[ 10];
 	VSTEffect		*chanVST[ MAXTRACK][ 4];
 	//PPSndDoubleBufferHeader 	TheHeader;
 	//#endif
+#endif
 #ifdef _MAC_H
 	AudioUnit		CAAudioUnit;
 	size_t			CABufOff;

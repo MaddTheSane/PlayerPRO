@@ -7,7 +7,9 @@
 //
 
 #import "UserDefaultKeys.h"
+#if !TARGET_OS_IPHONE
 #import "NSColor+PPPreferences.h"
+#endif
 
 NSString * const PPListPreferencesDidChange = @"Music List Preferences Changed";
 NSString * const PPSoundPreferencesDidChange = @"Sound Preferences changed";
@@ -70,9 +72,11 @@ NSString * const PPDEMusicTraceOn = @"Digital Editor Trace On?";
 NSString * const PPDEPatternWrappingPartition = @"Digital Editor Pattern Wrapping Partition?";
 NSString * const PPDEDragAsPcmd = @"Digital Editor Drag as Pcmd?";
 
+#if !TARGET_OS_IPHONE
 #define PPCOLOR(num) NSString * const PPCColor##num = @"PPColor " @#num
 PPCOLORPOPULATE();
 #undef PPCOLOR
+#endif
 
 NSString * const PPBEMarkersEnabled = @"Box Editor Markers On?";
 NSString * const PPBEMarkersOffset = @"Box Editor Markers Offset";
