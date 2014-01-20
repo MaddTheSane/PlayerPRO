@@ -5426,6 +5426,7 @@ void DoPreferences()
 	}
 #else
 	Stereo = StereoMixing = Audio16 = true;
+	hasASC = false;
 #endif
 	
 ReLoadPrefs:

@@ -14,6 +14,8 @@
 extern CFStringRef const PPPreferencesSet;
 extern CFStringRef const PPPreferencesVersion;
 extern CFStringRef const PPLoop;
+extern CFStringRef const PPXxx;
+extern CFStringRef const PPMainFreq;
 
 //UTIs
 extern CFStringRef const MADNativeUTI;

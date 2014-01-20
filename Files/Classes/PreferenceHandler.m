@@ -34,8 +34,9 @@ void RegisterCFDefaults()
 	  [NSNumber numberWithShort:VERSION], PPPreferencesVersion,
 	  [NSNumber numberWithBool:YES], PPMAddExtension,
 	  [NSNumber numberWithBool:YES], PPMMadCompression,
+	  [NSNumber numberWithBool:NO], PPXxx,
+	  [NSNumber numberWithUnsignedInt:57821163], PPMainFreq,
 	  nil]];
-	
 	
 	[pool drain];
 }
@@ -65,6 +66,8 @@ void ReadCFPreferences()
 #else
 	thePrefs.PPCMachine = false;
 #endif
+	thePrefs.xxxxxxxx = [defaults boolForKey:(NSString*)PPXxx];
+	thePrefs.Frequence = [defaults integerForKey:(NSString*)PPMainFreq];
 	[pool drain];
 }
 
@@ -78,6 +81,8 @@ void WriteCFPreferences()
 #define PPCOLOR(val) WriteCFPreferencesWithQDColor(PPCColor ## val, thePrefs.tracksColor[val - 1])
 	PPCOLORPOPULATE();
 #undef PPCOLOR
+	[defaults setBool:thePrefs.xxxxxxxx forKey:(NSString*)PPXxx];
+	[defaults setInteger:thePrefs.Frequence forKey:(NSString*)PPMainFreq];
 	[pool drain];
 }
 
