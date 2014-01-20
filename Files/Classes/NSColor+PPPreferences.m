@@ -21,4 +21,23 @@
 	return [NSKeyedUnarchiver unarchiveObjectWithData:theData];
 }
 
++ (NSColor*)PPColorFromQDColor:(RGBColor)qdColor
+{
+	return [self colorWithCalibratedRed:qdColor.red / (float)USHRT_MAX green:qdColor.green / (float)USHRT_MAX blue:qdColor.blue / (float)USHRT_MAX alpha:1];
+}
+
+- (RGBColor)PPQDColor
+{
+	RGBColor toRet;
+	CGFloat CGRed, CGGreen, CGBlue;
+	NSColor *calColor = [self colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	[calColor getRed:&CGRed green:&CGGreen blue:&CGBlue alpha:NULL];
+	
+	toRet.red = CGRed * USHRT_MAX;
+	toRet.green = CGGreen * USHRT_MAX;
+	toRet.blue = CGBlue * USHRT_MAX;
+	
+	return toRet;
+}
+
 @end

@@ -10,7 +10,9 @@
 
 @interface NSColor (PPPreferences) 
 - (NSData *)PPencodeColor;
-+ (NSColor *)PPDecodeColorWithData:(NSData *)theData;
++ (NSColor*)PPDecodeColorWithData:(NSData *)theData;
++ (NSColor*)PPColorFromQDColor:(RGBColor)qdColor;
+- (RGBColor)PPQDColor;
 @end
 
 #define PPCOLORPOPULATE() PPCOLOR(1); PPCOLOR(2); PPCOLOR(3); PPCOLOR(4); \
