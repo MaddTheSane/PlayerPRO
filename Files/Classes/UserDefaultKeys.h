@@ -12,6 +12,8 @@
 #include <CoreFoundation/CFBase.h>
 
 extern CFStringRef const PPPreferencesSet;
+extern CFStringRef const PPPreferencesVersion;
+extern CFStringRef const PPLoop;
 
 //UTIs
 extern CFStringRef const MADNativeUTI;

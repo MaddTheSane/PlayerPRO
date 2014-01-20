@@ -5441,7 +5441,6 @@ void DoPreferences()
 	long			gestaltAnswer;
 	Handle			aHandle;
 	Point			tempL;
-	Prefs			*tempPrefs = NULL;
 	FSSpec			spec;
 	
 	if (CFPreferencesHaveBeenSet()) {
@@ -5449,7 +5448,8 @@ void DoPreferences()
 	} else {
 		RegisterCFDefaults();
 	}
-		
+	
+#if 0
 	Gestalt(gestaltHardwareAttr, &gestaltAnswer);
 	myBit = gestaltHasASC;
 	
@@ -5474,14 +5474,51 @@ void DoPreferences()
 		if (sSize >= 16)
 			Audio16 = true;
 	}
+#else
+	Stereo = StereoMixing = Audio16 = true;
+#endif
 	
 ReLoadPrefs:
 	
+	// Look for and load old preferences
 	iErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &vRefNum, &DirID);
-	
 	FSMakeFSSpec(vRefNum, DirID, PLAYERPREF, &spec);
-	
-	iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
+	iErr = FSpOpenDF(&spec, fsRdPerm, &fRefNum);
+	if (iErr == noErr) {
+		//If found, also delete old preferences
+		SInt64	inOutBytes;
+		Prefs	*tempPrefs;
+		
+		iErr = FSGetForkSize(fRefNum, &inOutBytes);
+		tempPrefs = (Prefs*)NewPtr(inOutBytes);
+		iErr = FSReadFork(fRefNum, fsAtMark, 0, inOutBytes, tempPrefs, NULL);
+		iErr = FSCloseFork(fRefNum);
+		SwapPrefs(tempPrefs);
+		
+		if (tempPrefs->Version != VERSION || inOutBytes != sizeof(Prefs)) {
+			iErr = FSpDelete(&spec);
+			
+			if (tempPrefs->Version >= 0x0500) {
+				// RECUPERATION DES VIEILLES PREFS
+			} else {
+				// DESTRUCTION TOTALE DES VIEILLES PREFS
+				
+				DisposePtr((Ptr)tempPrefs);
+				tempPrefs = NULL;
+			}
+			
+			goto ReLoadPrefs;
+		} else {
+			// SUCCES
+			
+			thePrefs = *tempPrefs;
+			DisposePtr((Ptr)tempPrefs);
+			tempPrefs = NULL;
+			WriteCFPreferences();
+			FSpDelete(&spec);
+		}
+	}
+#if 0
 	if (iErr == fnfErr) {
 		iErr = FSpCreate(&spec, 'SNPL', 'PREF', smSystemScript);
 		iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
@@ -5749,40 +5786,7 @@ ReLoadPrefs:
 		
 		goto ReLoadPrefs;
 	}
-	else if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "ERROR PLAYER PREFS");
-	else if (iErr == noErr)
-	{
-		iErr = GetEOF(fRefNum, &inOutBytes);
-		
-		tempPrefs = (Prefs*) NewPtr(inOutBytes);
-		
-		iErr = FSRead(fRefNum, &inOutBytes, tempPrefs);
-		iErr = FSCloseFork(fRefNum);
-		SwapPrefs(tempPrefs);
-		
-		if (tempPrefs->Version != VERSION || inOutBytes != sizeof(Prefs)) {
-			
-			//iErr = RstFLock(PLAYERPREF, 0);
-			iErr = FSpDelete(&spec);
-			
-			if (tempPrefs->Version >= 0x0500) {
-				// RECUPERATION DES VIEILLES PREFS
-			} else {
-				// DESTRUCTION TOTALE DES VIEILLES PREFS
-				
-				DisposePtr((Ptr) tempPrefs);
-				tempPrefs = NULL;
-			}
-			
-			goto ReLoadPrefs;
-		} else {
-			// SUCCES
-			
-			thePrefs = *tempPrefs;
-			DisposePtr((Ptr) tempPrefs);
-			tempPrefs = NULL;
-		}
-	}
+#endif
 	
 	if (!HelpAvalaible)
 		thePrefs.ActiveHelp = false;

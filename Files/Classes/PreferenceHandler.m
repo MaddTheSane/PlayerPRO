@@ -10,6 +10,9 @@
 #import "NSColor+PPPreferences.h"
 #include "UserDefaultKeys.h"
 #include "PreferenceHandler.h"
+#include "Shuddup.h"
+
+#define	VERSION			0x0592
 
 Boolean CFPreferencesHaveBeenSet()
 {
@@ -28,6 +31,9 @@ void RegisterCFDefaults()
 	 registerDefaults:
 	 [NSDictionary dictionaryWithObjectsAndKeys:
 	  [NSNumber numberWithBool:YES], PPPreferencesSet,
+	  [NSNumber numberWithShort:VERSION], PPPreferencesVersion,
+	  [NSNumber numberWithBool:YES], PPMAddExtension,
+	  [NSNumber numberWithBool:YES], PPMMadCompression,
 	  nil]];
 	
 	
@@ -37,7 +43,15 @@ void RegisterCFDefaults()
 void ReadCFPreferences()
 {
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-
+	memset(&thePrefs, 0, sizeof(Prefs));
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	thePrefs.addExtension = [defaults boolForKey:(NSString*)PPMAddExtension];
+	thePrefs.MADCompression = [defaults boolForKey:(NSString*)PPMMadCompression];
+	thePrefs.Version = [defaults integerForKey:(NSString*)PPPreferencesVersion];
+	thePrefs.OscilloLine = [defaults boolForKey:(NSString*)PPMOscilloscopeDrawLines];
+#define PPCOLOR(val) ReadCFPreferencesWithQDColor(PPCColor ## val, &thePrefs.tracksColor[val - 1])
+	PPCOLORPOPULATE();
+#undef PPCOLOR
 	[pool drain];
 }
 
