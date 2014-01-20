@@ -128,7 +128,15 @@ static int NSStringToHex(NSString *str)
 		return;
 	}
 	if (![self validateSettings]) {
+		NSBeep();
+		NSAlert *badSettings = [[NSAlert alloc] init];
+		badSettings.messageText = @"Invalid Value";
+		badSettings.informativeText = @"There is one or more invalid value.";
+		[badSettings addButtonWithTitle:@"OK"];
 		
+		[badSettings beginSheetModalForWindow:[self window] completionHandler:^(NSModalResponse returnCode) {
+			;//Do nothing right now
+		}];
 	} else
 		[super okOrCancel:sender];
 }
