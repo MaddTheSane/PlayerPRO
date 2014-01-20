@@ -9,6 +9,29 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>pppatn</string>
+				<string>patn</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string>PATN</string>
+			<key>CFBundleTypeName</key>
+			<string>PlayerPRO Pattern</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>PATN</string>
+			</array>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.quadmation.playerpro.pattern</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>pcmd</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -337,13 +360,12 @@
 				<string>pat</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>PATN</string>
+			<string>INS</string>
 			<key>CFBundleTypeName</key>
 			<string>PPPATFile</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>PAT </string>
-				<string>PATN</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
@@ -691,6 +713,30 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>ppimpexp</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PlayerPRO Pattern</string>
+			<key>UTTypeIconFile</key>
+			<string>PATN</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.quadmation.playerpro.pattern</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>PATN</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>pppatn</string>
+					<string>patn</string>
 				</array>
 			</dict>
 		</dict>
