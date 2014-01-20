@@ -3834,8 +3834,6 @@
 				55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */,
 				55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */,
 				55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */,
-				5523EC78169276AA0067B22A /* Instrument Code */,
-				55469C2416BF341500175A1F /* Pattern Code */,
 				55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */,
 				5523EC7F16936F870067B22A /* PPDigitalPlugHandler.h */,
 				5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */,
@@ -3855,6 +3853,8 @@
 				5578C53E17DBABBF0057D11B /* PPDocument.m */,
 				5521F41317FA4365002CDBA9 /* BoxViewController.h */,
 				5521F41417FA4365002CDBA9 /* BoxViewController.m */,
+				5523EC78169276AA0067B22A /* Instrument Code */,
+				55469C2416BF341500175A1F /* Pattern Code */,
 				5526AB0F188C7D94008D0C14 /* Resources */,
 			);
 			path = "PlayerPRO 6";
