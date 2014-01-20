@@ -40,6 +40,14 @@ void RegisterCFDefaults()
 	[pool drain];
 }
 
+void ResetCFPreferences()
+{
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+	[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+	[pool drain];
+}
+
 void ReadCFPreferences()
 {
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];

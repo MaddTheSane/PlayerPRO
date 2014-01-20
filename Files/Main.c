@@ -5375,62 +5375,12 @@ void HandleOtherChoice(short theItem)
 
 void WritePreferences(void)
 {
-	OSErr		iErr;
-	short		vRefNum, fRefNum, vRefNumOld;
-	long		DirID, inOutBytes, DirIDOld;
-	FSSpec		spec;
-	
-	HGetVol(NULL, &vRefNumOld, &DirIDOld);
-ReLoadPrefs:
-	
-	iErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &vRefNum, &DirID);
-	if (iErr == noErr) {
-		FSMakeFSSpec(vRefNum, DirID, PLAYERPREF, &spec);
-		
-		Prefs *outPrefs = (Prefs*)NewPtr(sizeof(Prefs));
-		*outPrefs = thePrefs;
-		SwapPrefs(outPrefs);
-		
-		iErr = HSetVol(NULL, vRefNum, DirID);
-		if (iErr == noErr) {
-			iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
-			if (iErr == noErr) {
-				iErr = FSSetForkPosition(fRefNum, fsFromStart, 0);
-				
-				inOutBytes = sizeof(Prefs);
-				iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, outPrefs, NULL);
-				
-				iErr = FSCloseFork(fRefNum);
-			}
-		}
-		DisposePtr((Ptr)outPrefs);
-	}
-	
-	HSetVol(NULL, vRefNumOld, DirIDOld);
+	WriteCFPreferences();
 }
 
 void DeletePreferences()
 {
-	OSErr		iErr;
-	short		vRefNum, fRefNum, vRefNumOld;
-	long		DirID, inOutBytes, DirIDOld;
-	FSSpec		spec;
-	
-	HGetVol(NULL, &vRefNumOld, &DirIDOld);
-	
-ReLoadPrefs:
-	
-	iErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &vRefNum, &DirID);
-	if (iErr == noErr)
-	{
-		FSMakeFSSpec(vRefNum, DirID, PLAYERPREF, &spec);
-		iErr = HSetVol(NULL, vRefNum, DirID);
-		if (iErr == noErr)
-		{
-			iErr = FSpDelete(&spec);
-		}
-	}
-	HSetVol(NULL, vRefNumOld, DirIDOld);
+	ResetCFPreferences();
 }
 
 void DoPreferences()

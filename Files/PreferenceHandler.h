@@ -14,6 +14,8 @@
 
 Boolean CFPreferencesHaveBeenSet();
 void RegisterCFDefaults();
+void ResetCFPreferences();
+
 void ReadCFPreferences();
 void WriteCFPreferences();
 void WriteCFPreferencesWithQDColor(CFStringRef valName, RGBColor valVal);
