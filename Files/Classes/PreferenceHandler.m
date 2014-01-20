@@ -52,14 +52,24 @@ void ReadCFPreferences()
 #define PPCOLOR(val) ReadCFPreferencesWithQDColor(PPCColor ## val, &thePrefs.tracksColor[val - 1])
 	PPCOLORPOPULATE();
 #undef PPCOLOR
+#if defined(powerc) || defined (__powerc) || defined(__ppc__)
+	thePrefs.PPCMachine = true;
+#else
+	thePrefs.PPCMachine = false;
+#endif
 	[pool drain];
 }
 
 void WriteCFPreferences()
 {
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-
-	
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	[defaults setBool:thePrefs.addExtension forKey:(NSString*)PPMAddExtension];
+	[defaults setBool:thePrefs.MADCompression forKey:(NSString*)PPMMadCompression];
+	[defaults setInteger:thePrefs.Version forKey:(NSString*)PPPreferencesVersion];
+#define PPCOLOR(val) WriteCFPreferencesWithQDColor(PPCColor ## val, thePrefs.tracksColor[val - 1])
+	PPCOLORPOPULATE();
+#undef PPCOLOR
 	[pool drain];
 }
 
