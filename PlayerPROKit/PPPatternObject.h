@@ -21,3 +21,8 @@
 - (id)initWithMusic:(PPMusicObjectWrapper *)mus patternAtIndex:(short)ptnIdx;
 
 @end
+
+@interface PPPatternObject (PcmdHandling)
++ (OSErr)testPcmdFileAtURL:(NSURL*)theURL;
+- (OSErr)importPcmdFromURL:(NSURL*)theURL;
+@end

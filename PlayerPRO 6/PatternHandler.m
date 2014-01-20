@@ -48,7 +48,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (OSErr)testPcmdFileAtURL:(NSURL*)theURL
++ (OSErr)testPcmdFileAtURL:(NSURL*)theURL
 {
 	OSErr err = noErr;
 	Pcmd thePcmd;
@@ -67,7 +67,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 - (OSErr)importPcmdFromURL:(NSURL*)theURL
 {
 	OSErr theErr = noErr;
-	theErr = [self testPcmdFileAtURL:theURL];
+	theErr = [[self class] testPcmdFileAtURL:theURL];
 	if (theErr) {
 		return theErr;
 	}

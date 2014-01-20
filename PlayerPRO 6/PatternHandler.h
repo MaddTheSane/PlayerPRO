@@ -22,7 +22,7 @@
 @property MADDriverRec **theRec;
 @property (strong) NSUndoManager *undoManager;
 
-- (OSErr)testPcmdFileAtURL:(NSURL*)theURL;
++ (OSErr)testPcmdFileAtURL:(NSURL*)theURL;
 - (OSErr)importPcmdFromURL:(NSURL*)theURL;
 
 @end

@@ -14,6 +14,18 @@
 #define kPPPatternCommands @"PlayerPROKit Pattern Commands"
 #define kPPPatternIndex @"PlayerPROKit Pattern Index"
 
+static inline void SwapPcmd(Pcmd *toswap)
+{
+	if (!toswap) {
+		return;
+	}
+	PPBE32(&toswap->structSize);
+	PPBE16(&toswap->length);
+	PPBE16(&toswap->posStart);
+	PPBE16(&toswap->tracks);
+	PPBE16(&toswap->trackStart);
+}
+
 @implementation PPPatternObject
 @synthesize commands;
 @synthesize index;
@@ -118,6 +130,60 @@
 	new.index = -1;
 	
 	return new;
+}
+
++ (OSErr)testPcmdFileAtURL:(NSURL*)theURL
+{
+	OSErr err = noErr;
+	Pcmd thePcmd;
+	NSData *pcmdData = [[NSData alloc] initWithContentsOfURL:theURL];
+	if (!pcmdData) {
+		return MADReadingErr;
+	}
+	[pcmdData getBytes:&thePcmd length:sizeof(thePcmd)];
+	SwapPcmd(&thePcmd);
+	if (thePcmd.structSize != [pcmdData length]) {
+		err = MADIncompatibleFile;
+	}
+	return err;
+}
+
+- (OSErr)importPcmdFromURL:(NSURL*)theURL
+{
+	OSErr theErr = noErr;
+	NSNumber *curNum;
+	theErr = [[self class] testPcmdFileAtURL:theURL];
+	if (theErr) {
+		return theErr;
+	}
+	const Pcmd *thePcmd;
+	NSMutableData *pcmdData = [[NSMutableData alloc] initWithContentsOfURL:theURL];
+	if (!pcmdData) {
+		return MADReadingErr;
+	}
+	unsigned long pcmdLen;
+	[theURL getResourceValue:&curNum forKey:NSURLFileSizeKey error:NULL];
+	
+	if (!curNum) {
+		pcmdLen = [pcmdData length];
+	} else {
+		pcmdLen = [curNum unsignedLongValue];
+	}
+	
+	//thePcmd = malloc(pcmdLen);
+	//if (!thePcmd) {
+	//	return MADNeedMemory;
+	//}
+	//[pcmdData getBytes:thePcmd length:pcmdLen];
+	SwapPcmd([pcmdData mutableBytes]);
+	
+	
+	thePcmd = [pcmdData bytes];
+	//TODO: put cmd data into the pattern
+	
+	//free(thePcmd);
+	
+	return noErr;
 }
 
 @end
