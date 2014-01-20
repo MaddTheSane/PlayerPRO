@@ -17,6 +17,11 @@ extern CFStringRef const PPLoop;
 extern CFStringRef const PPXxx;
 extern CFStringRef const PPMainFreq;
 
+//Windows
+extern CFStringRef const PPWindowName1;
+extern CFStringRef const PPWindowName2;
+extern CFStringRef const PPWindowName3;
+
 //UTIs
 extern CFStringRef const MADNativeUTI;
 extern CFStringRef const MADGenericUTI;

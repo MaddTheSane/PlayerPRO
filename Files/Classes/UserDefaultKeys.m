@@ -85,3 +85,7 @@ CFStringRef const PPCEMarkerLoop = CFSTR("Classical Editor Marker Loop");
 CFStringRef const PPCETempoNum = CFSTR("Classical Editor Temo Num.");
 CFStringRef const PPCETempoUnit = CFSTR("Classical Editor Tempo Unit");
 CFStringRef const PPCETrackHeight = CFSTR("Classical Editor Track Height");
+
+CFStringRef const PPWindowName1 = CFSTR("PPWindowName1");
+CFStringRef const PPWindowName2 = CFSTR("PPWindowName2");
+CFStringRef const PPWindowName3 = CFSTR("PPWindowName3");
