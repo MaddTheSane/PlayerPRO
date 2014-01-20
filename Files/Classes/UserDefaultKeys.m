@@ -6,8 +6,10 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "UserDefaultKeys.h"
+#include "UserDefaultKeys.h"
 #import "NSColor+PPPreferences.h"
+
+CFStringRef const PPPreferencesSet = CFSTR("PlayerPRO 5 CoreFoundation Preferences set?");
 
 CFStringRef const MADNativeUTI = CFSTR("com.quadmation.playerpro.madk");
 CFStringRef const MADGenericUTI = CFSTR("com.quadmation.playerpro.mad");

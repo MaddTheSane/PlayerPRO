@@ -5,7 +5,13 @@
 //  Created by C.W. Betts on 9/21/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
-#import <Foundation/NSString.h>
+
+#ifndef __PPUSERDEFAULTKEYS__
+#define __PPUSERDEFAULTKEYS__
+
+#include <CoreFoundation/CFBase.h>
+
+extern CFStringRef const PPPreferencesSet;
 
 //UTIs
 extern CFStringRef const MADNativeUTI;
@@ -179,6 +185,4 @@ extern CFStringRef const PPCETempoNum;
 extern CFStringRef const PPCETempoUnit;
 extern CFStringRef const PPCETrackHeight;
 
-//Misc./other
-extern CFStringRef const PPDoubleDash;
-extern CFStringRef const kMusicListKVO;
+#endif
