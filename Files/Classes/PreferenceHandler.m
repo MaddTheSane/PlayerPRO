@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "NSColor+PPPreferences.h"
 #include "UserDefaultKeys.h"
+#include "PreferenceHandler.h"
 
 void RegisterCFDefaults()
 {
