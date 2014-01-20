@@ -12,6 +12,7 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <CoreFoundation/CoreFoundation.h>
 
+Boolean CFPreferencesHaveBeenSet();
 void RegisterCFDefaults();
 void ReadCFPreferences();
 void WriteCFPreferences();

@@ -12,6 +12,7 @@
 #include "ByteUtils.h"
 #include "PPPrivate.h"
 #include <CoreMIDI/CoreMIDI.h>
+#include "PreferenceHandler.h"
 
 void DoChangeLoop(void);
 void VSTEditorDoNull(void);
@@ -1439,31 +1440,6 @@ int main(int argc, char* argv[])
 	HGetVol(NULL, &mainVRefNum, &mainParID);
 	
 #if 0
-	{
-		FSSpec			rsrcSpec;
-		short			fileID;
-		CInfoPBRec		info;
-		long			dirID;
-		Boolean			targetIsFolder, wasAliased;
-		
-		if (GetExecutableParentFSSpecFromBundle(&rsrcSpec) != noErr) DebugStr("\pError");
-		
-		pStrcpy(rsrcSpec.name, "\pPlayerPROCarbon.rsrc");
-		
-		ResolveAliasFile(&rsrcSpec, true, &targetIsFolder, &wasAliased);
-		
-		fileID = FSpOpenResFile(&rsrcSpec, fsCurPerm);
-		if (fileID == -1)
-		{
-			i = ResError();
-			NumToString(i, str);
-			DebugStr(str);
-		}
-		
-		UseResFile(fileID);
-		
-	}
-	
 	MIDImain(0, NULL);
 	
 	//////////////////////////
@@ -1530,13 +1506,15 @@ int main(int argc, char* argv[])
 	
 	/////////////////////// 
 	
-	InSound = (SndListHandle) GetResource('snd ', 128);
-	if (InSound == NULL) ExitToShell();
-	DetachResource((Handle) InSound);
+	InSound = (SndListHandle)GetResource('snd ', 128);
+	if (InSound == NULL)
+		abort();
+	DetachResource((Handle)InSound);
 	
-	OutSound = (SndListHandle) GetResource('snd ', 129);
-	if (OutSound == NULL) ExitToShell();
-	DetachResource((Handle) OutSound);
+	OutSound = (SndListHandle)GetResource('snd ', 129);
+	if (OutSound == NULL)
+		abort();
+	DetachResource((Handle)OutSound);
 #ifdef DEBUG_MODE
 	DebuggingMode = true;
 #else
@@ -1593,101 +1571,154 @@ int main(int argc, char* argv[])
 	{
 		CursHandle myCursH;
 		
-		myCursH = GetCursor(357);				if (myCursH == NULL)
+		myCursH = GetCursor(357);
+		if (myCursH == NULL)
 			MyDebugStr(__LINE__, __FILE__, "");
 		else {
-			DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
-			watchCrsr = **myCursH;					HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
+			DetachResource((Handle) myCursH);
+			HLock((Handle) myCursH);
+			watchCrsr = **myCursH;
+			HUnlock((Handle) myCursH);
+			DisposeHandle((Handle) myCursH);
 		}
 		
-		myCursH = GetCursor(iBeamCursor);		if (myCursH == NULL)
+		myCursH = GetCursor(iBeamCursor);
+		if (myCursH == NULL)
 			MyDebugStr(__LINE__, __FILE__, "");
 		else {
-			DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
-			beamCrsr = **myCursH;					HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
-		}
-		myCursH = GetCursor(300);				if (myCursH == NULL)
-			MyDebugStr(__LINE__, __FILE__, "");
-		else {
-			DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
-			pencilCrsr = **myCursH;					HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
+			DetachResource((Handle) myCursH);
+			HLock((Handle) myCursH);
+			beamCrsr = **myCursH;
+			HUnlock((Handle) myCursH);
+			DisposeHandle((Handle) myCursH);
 		}
 		
-		myCursH = GetCursor(137);				if (myCursH == NULL)
+		myCursH = GetCursor(300);
+		if (myCursH == NULL)
 			MyDebugStr(__LINE__, __FILE__, "");
 		else {
-			DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
-			pencilCrsrStereo = **myCursH;			HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
+			DetachResource((Handle) myCursH);
+			HLock((Handle) myCursH);
+			pencilCrsr = **myCursH;
+			HUnlock((Handle) myCursH);
+			DisposeHandle((Handle) myCursH);
 		}
 		
-		myCursH = GetCursor(135);				if (myCursH == NULL)
+		myCursH = GetCursor(137);
+		if (myCursH == NULL)
 			MyDebugStr(__LINE__, __FILE__, "");
 		else {
-			DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
-			HelpCrsr = **myCursH;					HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
+			DetachResource((Handle) myCursH);
+			HLock((Handle) myCursH);
+			pencilCrsrStereo = **myCursH;
+			HUnlock((Handle) myCursH);
+			DisposeHandle((Handle) myCursH);
 		}
 		
-		myCursH = GetCursor(134);				if (myCursH == NULL)
+		myCursH = GetCursor(135);
+		if (myCursH == NULL)
 			MyDebugStr(__LINE__, __FILE__, "");
 		else {
-			DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
-			DelCrsr = **myCursH;					HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
+			DetachResource((Handle) myCursH);
+			HLock((Handle) myCursH);
+			HelpCrsr = **myCursH;
+			HUnlock((Handle) myCursH);
+			DisposeHandle((Handle) myCursH);
 		}
 		
-		myCursH = GetCursor(130);				if (myCursH == NULL)
+		myCursH = GetCursor(134);
+		if (myCursH == NULL)
 			MyDebugStr(__LINE__, __FILE__, "");
 		else {
-			DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
-			NoteCrsr = **myCursH;					HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
+			DetachResource((Handle) myCursH);
+			HLock((Handle) myCursH);
+			DelCrsr = **myCursH;
+			HUnlock((Handle) myCursH);
+			DisposeHandle((Handle) myCursH);
 		}
 		
-		myCursH = GetCursor(133);				if (myCursH == NULL)
+		myCursH = GetCursor(130);
+		if (myCursH == NULL)
 			MyDebugStr(__LINE__, __FILE__, "");
 		else {
-			DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
-			PlayCrsr = **myCursH;					HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
+			DetachResource((Handle) myCursH);
+			HLock((Handle) myCursH);
+			NoteCrsr = **myCursH;
+			HUnlock((Handle) myCursH);
+			DisposeHandle((Handle) myCursH);
 		}
 		
-		myCursH = GetCursor(132);				if (myCursH == NULL) 
+		myCursH = GetCursor(133);
+		if (myCursH == NULL)
 			MyDebugStr(__LINE__, __FILE__, "");
 		else {
-			DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
-			CHandCrsr = **myCursH;					HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
+			DetachResource((Handle) myCursH);
+			HLock((Handle) myCursH);
+			PlayCrsr = **myCursH;
+			HUnlock((Handle) myCursH);
+			DisposeHandle((Handle) myCursH);
 		}
 		
-		myCursH = GetCursor(131);				if (myCursH == NULL)
+		myCursH = GetCursor(132);
+		if (myCursH == NULL)
 			MyDebugStr(__LINE__, __FILE__, "");
 		else {
-			DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
-			HandCrsr = **myCursH;					HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
+			DetachResource((Handle) myCursH);
+			HLock((Handle) myCursH);
+			CHandCrsr = **myCursH;
+			HUnlock((Handle) myCursH);
+			DisposeHandle((Handle) myCursH);
 		}
 		
-		myCursH = GetCursor(128);				if (myCursH == NULL)
+		myCursH = GetCursor(131);
+		if (myCursH == NULL)
 			MyDebugStr(__LINE__, __FILE__, "");
 		else {
-			DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
-			ZoomInCrsr = **myCursH;					HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
+			DetachResource((Handle) myCursH);
+			HLock((Handle) myCursH);
+			HandCrsr = **myCursH;
+			HUnlock((Handle) myCursH);
+			DisposeHandle((Handle) myCursH);
 		}
 		
-		myCursH = GetCursor(129);				if (myCursH == NULL)
+		myCursH = GetCursor(128);
+		if (myCursH == NULL)
 			MyDebugStr(__LINE__, __FILE__, "");
 		else {
-			DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
-			ZoomOutCrsr = **myCursH;				HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
+			DetachResource((Handle) myCursH);
+			HLock((Handle) myCursH);
+			ZoomInCrsr = **myCursH;
+			HUnlock((Handle) myCursH);
+			DisposeHandle((Handle) myCursH);
 		}
-		myCursH = GetCursor(138);				if (myCursH == NULL) 
+		
+		myCursH = GetCursor(129);
+		if (myCursH == NULL)
 			MyDebugStr(__LINE__, __FILE__, "");
 		else {
-			DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
-			ContextCrsr = **myCursH;				HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
+			DetachResource((Handle) myCursH);
+			HLock((Handle) myCursH);
+			ZoomOutCrsr = **myCursH;
+			HUnlock((Handle) myCursH);
+			DisposeHandle((Handle) myCursH);
+		}
+		
+		myCursH = GetCursor(138);
+		if (myCursH == NULL)
+			MyDebugStr(__LINE__, __FILE__, "");
+		else {
+			DetachResource((Handle) myCursH);
+			HLock((Handle) myCursH);
+			ContextCrsr = **myCursH;
+			HUnlock((Handle) myCursH);
+			DisposeHandle((Handle) myCursH);
 		}
 	}
 	/************/
 	
-	if (TestProcessorChip() == false)
-	{
+	if (TestProcessorChip() == false) {
 		Erreur(101, 101);
-		ExitToShell();
+		abort();
 	}
 	
 	
@@ -1714,7 +1745,7 @@ int main(int argc, char* argv[])
 	InitFindReplace();
 	InitPlayWhenClicked();
 	InitStringEditor();
-	//	InitPrintRegistration();
+	//InitPrintRegistration();
 	InitPrefs();
 	InitQuicktimeInstruments();
 	InitSoundInput();
@@ -3615,7 +3646,8 @@ void StartDialog(void)
 	SetCursor(&watchCrsr);
 	
 	myStartUpDlog = GetNewDialog(171, NULL, (WindowPtr) -1L);
-	if (myStartUpDlog == NULL) ExitToShell();
+	if (myStartUpDlog == NULL)
+		abort();
 	SetPortDialogPort(myStartUpDlog);
 	
 	{
@@ -5411,6 +5443,12 @@ void DoPreferences()
 	Point			tempL;
 	Prefs			*tempPrefs = NULL;
 	FSSpec			spec;
+	
+	if (CFPreferencesHaveBeenSet()) {
+		ReadCFPreferences();
+	} else {
+		RegisterCFDefaults();
+	}
 		
 	Gestalt(gestaltHardwareAttr, &gestaltAnswer);
 	myBit = gestaltHasASC;
@@ -5433,37 +5471,32 @@ void DoPreferences()
 	{
 		short sSize;
 		GetSoundOutputInfo(NULL, siSampleSize, &sSize);
-		if (sSize >= 16) Audio16 = true;
+		if (sSize >= 16)
+			Audio16 = true;
 	}
 	
 ReLoadPrefs:
 	
 	iErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &vRefNum, &DirID);
 	
-	//iErr = HSetVol(NULL, vRefNum, DirID);
-	
 	FSMakeFSSpec(vRefNum, DirID, PLAYERPREF, &spec);
 	
 	iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
-	if (iErr == fnfErr)
-	{
+	if (iErr == fnfErr) {
 		iErr = FSpCreate(&spec, 'SNPL', 'PREF', smSystemScript);
 		iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
 		if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "PlayerPREF ERROR 32");
 		aHandle = GetResource('AGGA', DEFAULTPREFSNUM);
-		if (aHandle != NULL)
-		{
+		if (aHandle != NULL) {
 			DetachResource(aHandle);
 			HLock(aHandle);
 			BlockMoveData(*aHandle, &thePrefs, GetHandleSize(aHandle));
 			HUnlock(aHandle);
 			DisposeHandle(aHandle);
 			SwapPrefs(&thePrefs);
-		}
-		else
-		{
+		} else {
 			Erreur(87, 87);
-			ExitToShell();
+			abort();
 		}
 		
 		thePrefs.Version = VERSION;
@@ -5538,8 +5571,8 @@ ReLoadPrefs:
 		
 		GetDateTime(&thePrefs.firstStart);
 		
-		thePrefs.WinHi[ RefTools] = 0;
-		thePrefs.WinPos[ RefTools].h = 0;
+		thePrefs.WinHi[RefTools] = 0;
+		thePrefs.WinPos[RefTools].h = 0;
 		thePrefs.SoundTypeSamp = '\?\?\?\?';
 		thePrefs.SoundTypeIns = '\?\?\?\?';
 		thePrefs.LinesHeight = 0;

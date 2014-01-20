@@ -11,6 +11,16 @@
 #include "UserDefaultKeys.h"
 #include "PreferenceHandler.h"
 
+Boolean CFPreferencesHaveBeenSet()
+{
+	BOOL isSet = NO;
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	isSet = [[NSUserDefaults standardUserDefaults] boolForKey:(NSString*)PPPreferencesSet];
+	[pool drain];
+	
+	return isSet;
+}
+
 void RegisterCFDefaults()
 {
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];

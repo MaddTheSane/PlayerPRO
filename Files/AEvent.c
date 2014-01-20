@@ -401,11 +401,9 @@ short InstallAE(void)
 			err = AEInstallEventHandler (kPlayerPROClass, kGotoPatternID	, AEGotoPatternDesc, 0, false);
 			err = AEInstallEventHandler (kPlayerPROClass, kGotoPositionID	, AEGotoPositionDesc, 0, false);
 			err = AEInstallEventHandler (kPlayerPROClass, kGotoPercentID	, AEGotoPercentDesc, 0, false);
-	}
-	else
-	{
+	} else {
 		 Erreur(33, -1);
-		 ExitToShell();
+		 abort();
 	}
 	return 0;
 }

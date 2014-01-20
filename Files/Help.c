@@ -348,19 +348,19 @@ void PrefFilterPiano(DialogPtr theDialog, EventRecord *theEventI, short *itemHit
 	return;
 }
 
-void AppendPref(short	theID, DialogPtr	theDia)
+void AppendPref(short theID, DialogPtr theDia)
 {
-	Handle theDITL;
-	short		numberItems;
+	Handle	theDITL;
+	short	numberItems = CountDITL(theDia);
 	
-	numberItems = CountDITL(theDia);
-	
-	if (numberItems - base > 0) ShortenDITL(theDia, numberItems - base);
+	if (numberItems - base > 0)
+		ShortenDITL(theDia, numberItems - base);
 	
 	DrawDialog(theDia);
 	
 	theDITL = GetResource('DITL', theID);
-	if (theDITL == NULL) ExitToShell();
+	if (theDITL == NULL)
+		abort();
 	
 	AppendDITL(theDia, theDITL, overlayDITL);
 	ReleaseResource(theDITL);
@@ -382,8 +382,10 @@ void InitCLASSICAL(void)
 	TurnRadio(11 + base, prefDlog, thePrefs.UseOctaveMarkers);
 	TurnRadio(4 + base, prefDlog, thePrefs.ClassicalProjection);	
 	
-	NumToString(thePrefs.MarkersSize,	aStr);		SetDText(prefDlog, base + 9, aStr);
-	NumToString(thePrefs.MarkersOffSet,aStr);		SetDText(prefDlog, base + 7, aStr);
+	NumToString(thePrefs.MarkersSize, aStr);
+	SetDText(prefDlog, base + 9, aStr);
+	NumToString(thePrefs.MarkersOffSet, aStr);
+	SetDText(prefDlog, base + 7, aStr);
 }
 
 void CloseCLASSICAL()
@@ -391,8 +393,12 @@ void CloseCLASSICAL()
 	Str255		aStr;
 	long		temp;
 	
-	GetDText(prefDlog, base + 9, aStr);	StringToNum(aStr, &temp);	thePrefs.MarkersSize = temp;
-	GetDText(prefDlog, base + 7, aStr);	StringToNum(aStr, &temp);	thePrefs.MarkersOffSet = temp;
+	GetDText(prefDlog, base + 9, aStr);
+	StringToNum(aStr, &temp);
+	thePrefs.MarkersSize = temp;
+	GetDText(prefDlog, base + 7, aStr);
+	StringToNum(aStr, &temp);
+	thePrefs.MarkersOffSet = temp;
 	
 	ComputeGrilleGWorld();
 	UpdateMozartInfo();
@@ -407,43 +413,63 @@ void InitDIGITAL(void)
 	Rect		itemRect;
 	Str255		aStr;
 	
-	if (thePrefs.DigitalInstru) TurnRadio(base + 1, prefDlog, true);
-	if (thePrefs.DigitalNote) TurnRadio(base + 2, prefDlog, true);
-	if (thePrefs.DigitalEffect) TurnRadio(base + 3, prefDlog, true);
-	if (thePrefs.DigitalArgu) TurnRadio(base + 4, prefDlog, true);
-	if (thePrefs.DigitalVol) TurnRadio(base + 6, prefDlog, true);
+	if (thePrefs.DigitalInstru)
+		TurnRadio(base + 1, prefDlog, true);
+	if (thePrefs.DigitalNote)
+		TurnRadio(base + 2, prefDlog, true);
+	if (thePrefs.DigitalEffect)
+		TurnRadio(base + 3, prefDlog, true);
+	if (thePrefs.DigitalArgu)
+		TurnRadio(base + 4, prefDlog, true);
+	if (thePrefs.DigitalVol)
+		TurnRadio(base + 6, prefDlog, true);
 	
-	if (thePrefs.FastDigitalEdition & controlKey) 	TurnRadio(base + 16, prefDlog, true);
-	if (thePrefs.FastDigitalEdition & shiftKey) 	TurnRadio(base + 17, prefDlog, true);
-	if (thePrefs.FastDigitalEdition & cmdKey) 		TurnRadio(base + 18, prefDlog, true);
-	if (thePrefs.FastDigitalEdition & optionKey) 	TurnRadio(base + 19, prefDlog, true);
+	if (thePrefs.FastDigitalEdition & controlKey)
+		TurnRadio(base + 16, prefDlog, true);
+	if (thePrefs.FastDigitalEdition & shiftKey)
+		TurnRadio(base + 17, prefDlog, true);
+	if (thePrefs.FastDigitalEdition & cmdKey)
+		TurnRadio(base + 18, prefDlog, true);
+	if (thePrefs.FastDigitalEdition & optionKey)
+		TurnRadio(base + 19, prefDlog, true);
 	
 	TurnRadio(8 + base, prefDlog, thePrefs.UseMarkers);
 	
-	NumToString(thePrefs.MarkersSize,	aStr);		SetDText(prefDlog, base + 10, aStr);
-	NumToString(thePrefs.MarkersOffSet,aStr);		SetDText(prefDlog, base + 12, aStr);
+	NumToString(thePrefs.MarkersSize, aStr);
+	SetDText(prefDlog, base + 10, aStr);
+	NumToString(thePrefs.MarkersOffSet, aStr);
+	SetDText(prefDlog, base + 12, aStr);
 	
-	switch(thePrefs.LinesHeight)
-	{
-		case 0:		TurnRadio(22 + base, prefDlog, true);		break;
-		case 2:		TurnRadio(23 + base, prefDlog, true);		break;
-			//	case 2:		TurnRadio(24 + base, prefDlog, true);		break;
+	switch (thePrefs.LinesHeight) {
+		case 0:
+			TurnRadio(22 + base, prefDlog, true);
+			break;
+			
+		case 2:
+			TurnRadio(23 + base, prefDlog, true);
+			break;
 	}
 	
 	TurnRadio(27 + base, prefDlog, false);
 	TurnRadio(28 + base, prefDlog, false);
 	
-	if (thePrefs.MusicTrace) TurnRadio(28 + base, prefDlog, true);
-	else TurnRadio(27 + base, prefDlog, true);
+	if (thePrefs.MusicTrace)
+		TurnRadio(28 + base, prefDlog, true);
+	else
+		TurnRadio(27 + base, prefDlog, true);
 	
 	TurnRadio(base + 30, prefDlog, false);
 	TurnRadio(base + 31, prefDlog, false);
 	
-	if (thePrefs.patternWrapping) TurnRadio(30 + base, prefDlog, true);
-	else TurnRadio(31 + base, prefDlog, true);
+	if (thePrefs.patternWrapping)
+		TurnRadio(30 + base, prefDlog, true);
+	else
+		TurnRadio(31 + base, prefDlog, true);
 	
-	if (thePrefs.editorSoundDrag) TurnRadio(34 + base, prefDlog, true);
-	else TurnRadio(35 + base, prefDlog, true);
+	if (thePrefs.editorSoundDrag)
+		TurnRadio(34 + base, prefDlog, true);
+	else
+		TurnRadio(35 + base, prefDlog, true);
 }
 
 void CloseDIGITAL()
@@ -454,8 +480,12 @@ void CloseDIGITAL()
 	Str255		aStr;
 	long		temp;
 	
-	GetDText(prefDlog, base + 10, aStr);	StringToNum(aStr, &temp);	thePrefs.MarkersSize = temp;
-	GetDText(prefDlog, base + 12, aStr);	StringToNum(aStr, &temp);	thePrefs.MarkersOffSet = temp;
+	GetDText(prefDlog, base + 10, aStr);
+	StringToNum(aStr, &temp);
+	thePrefs.MarkersSize = temp;
+	GetDText(prefDlog, base + 12, aStr);
+	StringToNum(aStr, &temp);
+	thePrefs.MarkersOffSet = temp;
 	
 	ComputeGrilleGWorld();
 	UpdateMozartInfo();
@@ -2079,8 +2109,7 @@ void DoDIGITAL(short itemHit)
 	GrafPtr		curPort;
 	Point		where = { -1, -1};
 	
-	switch(itemHit - base)
-	{
+	switch (itemHit - base) {
 		case 35:
 		case 34:
 			thePrefs.editorSoundDrag = !thePrefs.editorSoundDrag;
@@ -2110,8 +2139,7 @@ void DoDIGITAL(short itemHit)
 		case 6:
 			InverseRadio(itemHit, prefDlog);
 			
-			switch(itemHit - base)
-		{
+			switch(itemHit - base) {
 			case 1:
 				thePrefs.DigitalInstru = !thePrefs.DigitalInstru;
 				break;
@@ -2142,8 +2170,7 @@ void DoDIGITAL(short itemHit)
 			GetDialogItem(prefDlog, base + 14, &itemType, &itemHandle, &itemRect);
 			InvalWindowRect(GetDialogWindow(prefDlog), &itemRect);
 			
-			if (EditorDlog != NULL)
-			{
+			if (EditorDlog != NULL) {
 				SetPortDialogPort(EditorDlog);
 				GetPortBounds(GetDialogPort(EditorDlog), &caRect);
 				InvalWindowRect(GetDialogWindow(EditorDlog), &caRect);
@@ -2250,8 +2277,7 @@ void UpdatePrefWindow(DialogPtr	theDia)
 	DrawDialog(theDia);
 	oldFrameButton(theDia);
 	
-	switch(PrefsType)
-	{
+	switch(PrefsType) {
 		case COLOR:
 			InitCOLOR(-1);
 			break;
@@ -2337,10 +2363,9 @@ short GetTracksMenuVal(short Noni)
 	return curSelec;
 }
 
-short GetRateMenuPos(unsigned long Noni)
+short GetRateMenuPos(UnsignedFixed Noni)
 {
-	switch(Noni)
-	{
+	switch(Noni) {
 		case rate5khz:
 			return 1;
 			break;
@@ -2369,13 +2394,13 @@ short GetRateMenuPos(unsigned long Noni)
 	}
 }
 
-unsigned long GetRateMenuVal(short Noni)
+UnsignedFixed GetRateMenuVal(short Noni)
 {
-	switch(Noni)
-	{
+	switch (Noni) {
 		case 1:
 			return rate5khz;
 			break;
+			
 		case 2:
 			return rate11khz;
 			break;
@@ -2389,15 +2414,12 @@ unsigned long GetRateMenuVal(short Noni)
 			break;
 			
 		case 5:
+		default:
 			return rate44khz;
 			break;
 			
 		case 6:
 			return rate48khz;
-			break;
-			
-		default:
-			return 1;
 			break;
 	}
 }	
@@ -2533,8 +2555,7 @@ void DoDRIVER(short	itemHit)
 	Ptr			tempPtr;
 	MenuHandle	RateMenu;
 	
-	switch(itemHit - base)
-	{
+	switch (itemHit - base) {
 		case 28:
 			SelectOMSConnections(false);
 			break;
@@ -2620,11 +2641,18 @@ void DoDRIVER(short	itemHit)
 			
 			TurnRadio(itemHit, prefDlog, true);
 			
-			switch(itemHit - base)
-		{
-			case 2:	thePrefs.driverMode = SoundManagerDriver;	break;
-			case 3:	thePrefs.driverMode = ASIOSoundManager;		break;
-			case 5:	thePrefs.driverMode = MIDISoundDriver;		break;
+			switch(itemHit - base) {
+			case 2:
+				thePrefs.driverMode = SoundManagerDriver;
+				break;
+				
+			case 3:
+				thePrefs.driverMode = ASIOSoundManager;
+				break;
+				
+			case 5:
+				thePrefs.driverMode = MIDISoundDriver;
+				break;
 		}
 			InitDRIVER();
 			SwitchDriverTo(0);

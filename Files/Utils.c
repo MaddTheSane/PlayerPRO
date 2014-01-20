@@ -980,7 +980,7 @@ short IclToPix (Handle theIcon, PixMapHandle *offscreenPixMap)
 
 	errCode = NewOffscreenPixMap(&*offscreenPixMap, &picRect);
 	if(errCode != noErr) {
-			ExitToShell();
+			abort();
 			return(errCode);
 			}
 	
