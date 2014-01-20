@@ -9,6 +9,8 @@
 #import "ComplexFadeController.h"
 //#import "CompFadeNoteFormatter.h"
 
+#define kNoteCompareOptions (NSCaseInsensitiveSearch | NSWidthInsensitiveSearch | NSDiacriticInsensitiveSearch)
+
 @interface ComplexFadeController ()
 
 @end
@@ -28,19 +30,19 @@ static short NSStringToNote(NSString *myTT)
 	
 	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
 	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
-	if ([val1 compare:@"C" options:(NSCaseInsensitiveSearch | NSWidthInsensitiveSearch)] == NSOrderedSame) {
+	if ([val1 compare:@"C" options:kNoteCompareOptions] == NSOrderedSame) {
 		Oct += 0;
-	} else if ([val1 compare:@"D" options:(NSCaseInsensitiveSearch | NSWidthInsensitiveSearch)] == NSOrderedSame) {
+	} else if ([val1 compare:@"D" options:kNoteCompareOptions] == NSOrderedSame) {
 		Oct += 2;
-	} else if ([val1 compare:@"E" options:(NSCaseInsensitiveSearch | NSWidthInsensitiveSearch)] == NSOrderedSame) {
+	} else if ([val1 compare:@"E" options:kNoteCompareOptions] == NSOrderedSame) {
 		Oct += 4;
-	} else if ([val1 compare:@"F" options:(NSCaseInsensitiveSearch | NSWidthInsensitiveSearch)] == NSOrderedSame) {
+	} else if ([val1 compare:@"F" options:kNoteCompareOptions] == NSOrderedSame) {
 		Oct += 5;
-	} else if ([val1 compare:@"G" options:(NSCaseInsensitiveSearch | NSWidthInsensitiveSearch)] == NSOrderedSame) {
+	} else if ([val1 compare:@"G" options:kNoteCompareOptions] == NSOrderedSame) {
 		Oct += 7;
-	} else if ([val1 compare:@"A" options:(NSCaseInsensitiveSearch | NSWidthInsensitiveSearch)] == NSOrderedSame) {
+	} else if ([val1 compare:@"A" options:kNoteCompareOptions] == NSOrderedSame) {
 		Oct += 9;
-	} else if ([val1 compare:@"B" options:(NSCaseInsensitiveSearch | NSWidthInsensitiveSearch)] == NSOrderedSame) {
+	} else if ([val1 compare:@"B" options:kNoteCompareOptions] == NSOrderedSame) {
 		Oct += 11;
 	} else
 		Oct = 0xFF;
