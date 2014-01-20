@@ -8,6 +8,10 @@
 #include "PPPlug.h"
 #include "PPPrivate.h"
 
+#ifdef __OBJC__
+#include <Cocoa/Cocoa.h>
+#endif
+
 typedef OSType SFTypeList[4];
 
 #include "3D.proto.h"

@@ -248,8 +248,6 @@ void DeleteTempFile()
 	iErr = FSpDelete(&spec);
 }
 
-//extern void NSLog(CFStringRef format, ...);
-
 EXP void MyDebugStr(short line, Ptr file, Ptr text)
 {
 	fprintf(stderr, "PlayerPRO: %s:%u error text:%s!\n", file, line, text);

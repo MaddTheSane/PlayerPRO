@@ -183,6 +183,10 @@
 		55356A1E102C06550093F21D /* MIDI-GM.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F60C2F21DD00D6C081 /* MIDI-GM.c */; };
 		55356A97102C08650093F21D /* PlugsPPINInit.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C60C2F21DD00D6C081 /* PlugsPPINInit.c */; };
 		5547CE5F10C6E5490041DEF6 /* ByteUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 5547CE5E10C6E5490041DEF6 /* ByteUtils.c */; };
+		554CBD4C188CD1C1002E137B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		554CBD50188CD468002E137B /* NSColor+PPPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 554CBD4E188CD468002E137B /* NSColor+PPPreferences.h */; };
+		554CBD51188CD468002E137B /* NSColor+PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CBD4F188CD468002E137B /* NSColor+PPPreferences.m */; };
+		554CBD53188CD4AA002E137B /* PreferenceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CBD52188CD4AA002E137B /* PreferenceHandler.m */; };
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		554E10E010D6EF8200BB619C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -1407,6 +1411,9 @@
 		554240C810DBF91300C08864 /* CFPlugin-DigitalBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "CFPlugin-DigitalBridge.c"; sourceTree = "<group>"; };
 		5547CE5C10C6E4C50041DEF6 /* ByteUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ByteUtils.h; path = Files/ByteUtils.h; sourceTree = "<group>"; };
 		5547CE5E10C6E5490041DEF6 /* ByteUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ByteUtils.c; sourceTree = "<group>"; };
+		554CBD4E188CD468002E137B /* NSColor+PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+PPPreferences.h"; sourceTree = "<group>"; };
+		554CBD4F188CD468002E137B /* NSColor+PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+PPPreferences.m"; sourceTree = "<group>"; };
+		554CBD52188CD4AA002E137B /* PreferenceHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceHandler.m; sourceTree = "<group>"; };
 		554E0FE110D6C79D00BB619C /* CompFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = CompFade.c; sourceTree = "<group>"; };
 		554E0FE210D6C79D00BB619C /* CompFade.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = CompFade.r; sourceTree = "<group>"; };
 		554E0FE610D6C79D00BB619C /* FadeNote.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = FadeNote.c; sourceTree = "<group>"; };
@@ -2186,6 +2193,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				554CBD4C188CD1C1002E137B /* Cocoa.framework in Frameworks */,
 				55A290BA17B6A0C200764F80 /* CoreFoundation.framework in Frameworks */,
 				88E0C4970C2F21E500D6C081 /* Carbon.framework in Frameworks */,
 				55EE8EC2100404EB00E75E63 /* CoreAudio.framework in Frameworks */,
@@ -2819,6 +2827,16 @@
 			path = "MIDI Folder";
 			sourceTree = "<group>";
 		};
+		554CBD4D188CD45C002E137B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				554CBD4E188CD468002E137B /* NSColor+PPPreferences.h */,
+				554CBD4F188CD468002E137B /* NSColor+PPPreferences.m */,
+				554CBD52188CD4AA002E137B /* PreferenceHandler.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
 		554E0FDD10D6C79D00BB619C /* (Plug-Ins) */ = {
 			isa = PBXGroup;
 			children = (
@@ -3173,6 +3191,7 @@
 				55F0DA6610CC808500835D4E /* wds_general */,
 				55F0DA6710CC80E600835D4E /* wds_editors */,
 				55F0DA6810CC813500835D4E /* wds_views */,
+				554CBD4D188CD45C002E137B /* Classes */,
 				88E0C3E00C2F21DD00D6C081 /* AEvent.c */,
 				88E0C3E10C2F21DD00D6C081 /* AudioCD.c */,
 				88E0C3E20C2F21DD00D6C081 /* Check.c */,
@@ -3350,6 +3369,7 @@
 				88E0C4E90C2F21E500D6C081 /* Partition.proto.h in Headers */,
 				88E0C4EB0C2F21E500D6C081 /* Pattern.proto.h in Headers */,
 				88E0C4ED0C2F21E500D6C081 /* Piano.proto.h in Headers */,
+				554CBD50188CD468002E137B /* NSColor+PPPreferences.h in Headers */,
 				88E0C4EF0C2F21E500D6C081 /* PlugImport.proto.h in Headers */,
 				88E0C4F10C2F21E500D6C081 /* PlugsInit.proto.h in Headers */,
 				88E0C4F30C2F21E500D6C081 /* PlugsPPDGInit.proto.h in Headers */,
@@ -5318,8 +5338,10 @@
 				88E0C43D0C2F21DE00D6C081 /* Oscillo.c in Sources */,
 				88E0C43E0C2F21DE00D6C081 /* Pattern.c in Sources */,
 				88E0C43F0C2F21DE00D6C081 /* Piano.c in Sources */,
+				554CBD51188CD468002E137B /* NSColor+PPPreferences.m in Sources */,
 				88E0C4410C2F21DE00D6C081 /* ProgressBar.c in Sources */,
 				88E0C4420C2F21DE00D6C081 /* Record.c in Sources */,
+				554CBD53188CD4AA002E137B /* PreferenceHandler.m in Sources */,
 				88E0C4430C2F21DE00D6C081 /* PrivateList.c in Sources */,
 				88E0C4470C2F21DE00D6C081 /* Samples.c in Sources */,
 				88E0C4480C2F21DE00D6C081 /* Tools.c in Sources */,
@@ -6523,6 +6545,10 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				EXPORTED_SYMBOLS_FILE = Files/FileUtils.exp;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_DIR)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks",
+				);
 				GCC_DEBUGGING_SYMBOLS = full;
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -7588,6 +7614,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_DIR)/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.9.sdk/System/Library/Frameworks",
+				);
 				GCC_ENABLE_CPP_RTTI = NO;
 				GCC_ENABLE_SYMBOL_SEPARATION = NO;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
