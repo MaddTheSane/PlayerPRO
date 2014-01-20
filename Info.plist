@@ -7,20 +7,10 @@
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
-			<key>CFBundleTypeIconFile</key>
-			<string>PATN</string>
-			<key>CFBundleTypeName</key>
-			<string>PlayerPRO Pattern</string>
-			<key>CFBundleTypeOSTypes</key>
+			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>PATN</string>
+				<string>pcmd</string>
 			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
 			<key>CFBundleTypeIconFile</key>
 			<string>PCMD</string>
 			<key>CFBundleTypeName</key>
@@ -347,12 +337,13 @@
 				<string>pat</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string>INS</string>
+			<string>PATN</string>
 			<key>CFBundleTypeName</key>
 			<string>PPPATFile</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>PAT </string>
+				<string>PATN</string>
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
@@ -472,15 +463,13 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>5.10.0, © 1990-2002 Antoine ROSSET</string>
+	<string>5.10.0, © 1990-2002 Antoine ROSSET, © 2009-2014 SourceForge</string>
 	<key>CFBundleIconFile</key>
 	<string>ppApp</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.sourceforge.playerpro.playerpro5</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
-	<key>CFBundleLongVersionString</key>
-	<string>5.10.0 - Copyright © 1990-2002 Antoine ROSSET</string>
 	<key>CFBundleName</key>
 	<string>PlayerPRO</string>
 	<key>CFBundlePackageType</key>
@@ -505,6 +494,8 @@
 		<key>ppc</key>
 		<string>10.3.9</string>
 	</dict>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 1990-2002 Antoine ROSSET, © 2009-2014 SourceForge</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
@@ -524,6 +515,8 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADFile</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.mad</string>
 			<key>UTTypeTagSpecification</key>
@@ -546,6 +539,8 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADKFile</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madk</string>
 			<key>UTTypeTagSpecification</key>
@@ -568,6 +563,8 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADHFile</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madh</string>
 			<key>UTTypeTagSpecification</key>
@@ -590,6 +587,8 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADFGFile</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madfg</string>
 			<key>UTTypeTagSpecification</key>
@@ -614,6 +613,8 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PPMADIFile</string>
+			<key>UTTypeIconFile</key>
+			<string>MAD</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.madi</string>
 			<key>UTTypeTagSpecification</key>
@@ -635,6 +636,8 @@
 			</array>
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO Instrument List</string>
+			<key>UTTypeIconFile</key>
+			<string>List</string>
 			<key>UTTypeIdentifier</key>
 			<string>com.quadmation.playerpro.list</string>
 			<key>UTTypeTagSpecification</key>

@@ -2197,16 +2197,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554CBD4C188CD1C1002E137B /* Cocoa.framework in Frameworks */,
+				55F7DBF617FCD3A700338025 /* CoreServices.framework in Frameworks */,
 				55A290BA17B6A0C200764F80 /* CoreFoundation.framework in Frameworks */,
-				88E0C4970C2F21E500D6C081 /* Carbon.framework in Frameworks */,
+				55F7DBF517FCD39E00338025 /* ApplicationServices.framework in Frameworks */,
 				55EE8EC2100404EB00E75E63 /* CoreAudio.framework in Frameworks */,
+				9EE24021164A04800046BE6F /* AudioUnit.framework in Frameworks */,
+				55ED547410D5F9CD00824C61 /* CoreMIDI.framework in Frameworks */,
+				88E0C4970C2F21E500D6C081 /* Carbon.framework in Frameworks */,
 				55EE8EC6100404EB00E75E63 /* QuickTime.framework in Frameworks */,
 				5573A51C10B52EB500FF8B50 /* DrawSprocket.framework in Frameworks */,
-				55ED547410D5F9CD00824C61 /* CoreMIDI.framework in Frameworks */,
-				9EE24021164A04800046BE6F /* AudioUnit.framework in Frameworks */,
-				55F7DBF517FCD39E00338025 /* ApplicationServices.framework in Frameworks */,
-				55F7DBF617FCD3A700338025 /* CoreServices.framework in Frameworks */,
+				554CBD4C188CD1C1002E137B /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3283,8 +3283,8 @@
 				55EE8EBF100404EB00E75E63 /* CoreServices.framework */,
 				55EE8EC0100404EB00E75E63 /* QuickTime.framework */,
 				88E0C4960C2F21E500D6C081 /* Carbon.framework */,
-				5573A3EB10B5151700FF8B50 /* AppKit.framework */,
 				5573A3ED10B5151700FF8B50 /* Cocoa.framework */,
+				5573A3EB10B5151700FF8B50 /* AppKit.framework */,
 				5573A3EF10B5151700FF8B50 /* Foundation.framework */,
 				55ED547310D5F9CD00824C61 /* CoreMIDI.framework */,
 			);
