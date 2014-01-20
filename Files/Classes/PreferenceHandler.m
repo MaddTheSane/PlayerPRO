@@ -38,3 +38,18 @@ void WriteCFPreferences()
 	
 	[pool drain];
 }
+
+void WriteCFPreferencesWithQDColor(CFStringRef valName, RGBColor valVal)
+{
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	[[NSUserDefaults standardUserDefaults] setObject:[[NSColor PPColorFromQDColor:valVal] PPencodeColor] forKey:(NSString*)valName];
+	[pool drain];
+}
+
+Boolean ReadCFPreferencesWithQDColor(CFStringRef valName, RGBColor *valVal)
+{
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	*valVal = [[NSColor PPDecodeColorWithData:[[NSUserDefaults standardUserDefaults] valueForKey:(NSString*)valName]] PPQDColor];
+	[pool drain];
+	return true;
+}

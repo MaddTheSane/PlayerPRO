@@ -9,8 +9,13 @@
 #ifndef PPMacho_PreferenceHandler_h
 #define PPMacho_PreferenceHandler_h
 
+#include <ApplicationServices/ApplicationServices.h>
+#include <CoreFoundation/CoreFoundation.h>
+
 void RegisterCFDefaults();
 void ReadCFPreferences();
 void WriteCFPreferences();
+void WriteCFPreferencesWithQDColor(CFStringRef valName, RGBColor valVal);
+Boolean ReadCFPreferencesWithQDColor(CFStringRef valName, RGBColor *valVal);
 
 #endif
