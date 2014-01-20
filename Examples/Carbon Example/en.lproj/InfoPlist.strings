@@ -5,3 +5,6 @@
   Created by C.W. Betts on 10/19/13.
 
 */
+
+PPMODFile = "SoundTracker Tracker";
+PPMADKFile = "PlayerPRO MADK Tracker";

@@ -468,7 +468,7 @@
 		5526ABC7188C9673008D0C14 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		5570E97512A4C24900167E1A /* PPMacho.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PPMacho.xcodeproj; path = ../../PPMacho.xcodeproj; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* PlayerPRO Example-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PlayerPRO Example-Info.plist"; sourceTree = "<group>"; };
-		8D1107320486CEB800E47090 /* Cocoa Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Cocoa Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8D1107320486CEB800E47090 /* Carbon Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Carbon Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -513,7 +513,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8D1107320486CEB800E47090 /* Cocoa Example.app */,
+				8D1107320486CEB800E47090 /* Carbon Example.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -636,7 +636,7 @@
 			name = "Carbon Example";
 			productInstallPath = "$(HOME)/Applications";
 			productName = "Cocoa Example";
-			productReference = 8D1107320486CEB800E47090 /* Cocoa Example.app */;
+			productReference = 8D1107320486CEB800E47090 /* Carbon Example.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1135,7 +1135,7 @@
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				PRODUCT_NAME = "Cocoa Example";
+				PRODUCT_NAME = "Carbon Example";
 			};
 			name = Debug;
 		};
@@ -1149,7 +1149,7 @@
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				PRODUCT_NAME = "Cocoa Example";
+				PRODUCT_NAME = "Carbon Example";
 			};
 			name = Release;
 		};
