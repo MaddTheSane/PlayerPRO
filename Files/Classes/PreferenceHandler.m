@@ -49,7 +49,15 @@ void WriteCFPreferencesWithQDColor(CFStringRef valName, RGBColor valVal)
 Boolean ReadCFPreferencesWithQDColor(CFStringRef valName, RGBColor *valVal)
 {
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	*valVal = [[NSColor PPDecodeColorWithData:[[NSUserDefaults standardUserDefaults] valueForKey:(NSString*)valName]] PPQDColor];
+	NSData *colorDat = [[NSUserDefaults standardUserDefaults] valueForKey:(NSString*)valName];
+	if (colorDat) {
+		NSColor *colorClass = [NSColor PPDecodeColorWithData:colorDat];
+		if (colorClass) {
+			*valVal = [colorClass PPQDColor];
+			[pool drain];
+			return true;
+		}
+	}
 	[pool drain];
-	return true;
+	return false;
 }
