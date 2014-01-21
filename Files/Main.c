@@ -167,21 +167,15 @@ static short FKEYCo[ 16] = { 0x7A, 0x78, 0x63, 0x76, 0x60, 0x61, 0x62, 0x64, 0x6
 
 void GetSizeString(long size, Str255 str, Boolean Convert)
 {
-	if (Convert)
-	{
-		if (size < 9999)
-		{
+	if (Convert) {
+		if (size < 9999) {
 			NumToString(size, str);
-			pStrcat(str, "\p b");
-		}
-		else
-		{
+			pStrcat(str, "\p B");
+		} else {
 			NumToString(size/1024, str);
-			pStrcat(str, "\p Kb");
+			pStrcat(str, "\p KiB");
 		}
-	}
-	else
-	{
+	} else {
 		NumToString(size, str);
 	}
 }
@@ -192,18 +186,9 @@ void CreateTempFile()
 	OSErr	iErr;
 	
 	iErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &spec.vRefNum, &spec.parID);
-	if (iErr == noErr)
-	{
-		pStrcpy(spec.name, TEMPNAME);
-		iErr = FSpCreate(&spec, 'xxxx', 'xxxx' , smSystemScript);
-		
-		if (iErr != noErr)		// ALREADY HERE --> Crash during previous load
-		{
-			pStrcpy(spec.name, PLAYERPREF);
-			iErr = FSpDelete(&spec);
-			
-			Erreur(87, 87);
-		}
+	if (iErr == noErr) {
+		FSMakeFSSpec(spec.vRefNum, spec.parID, TEMPNAME, &spec);
+		iErr = FSpCreate(&spec, 'xxxx', 'xxxx', smSystemScript);
 	}
 }
 
@@ -5716,6 +5701,134 @@ static void LoadOldFilePrefs(FSIORefNum fRefNum)
 #endif
 	if (oldPrefs.Version == VERSION && inOutBytes == sizeof(oldPrefs)) {
 		// SUCCES
+#define MoveBasicDatatype(val) thePrefs.val = oldPrefs.val
+#define MoveArray(val) memcpy(thePrefs.val, oldPrefs.val, sizeof(thePrefs.val))
+		MoveBasicDatatype(yellC);
+		MoveBasicDatatype(addExtension);
+		MoveBasicDatatype(amplitude);
+		MoveBasicDatatype(antiAliasing);
+		MoveBasicDatatype(AutoCreator);
+		MoveBasicDatatype(AutomaticOpen);
+		MoveBasicDatatype(AutoPlayWhenOpen);
+		MoveBasicDatatype(channelNumber);
+		MoveBasicDatatype(ClassicalProjection);
+		MoveBasicDatatype(clickSound);
+		MoveBasicDatatype(Compressor);
+		MoveBasicDatatype(DigitalArgu);
+		MoveBasicDatatype(DigitalEffect);
+		MoveBasicDatatype(DigitalInstru);
+		MoveBasicDatatype(DigitalNote);
+		MoveBasicDatatype(DigitalVol);
+		MoveBasicDatatype(DirectDriverType);
+		MoveBasicDatatype(DontUseFilesMix);
+		MoveBasicDatatype(driverMode);
+		MoveBasicDatatype(editorSoundDrag);
+		MoveBasicDatatype(FastDigitalEdition);
+		MoveBasicDatatype(FastMusicList);
+		MoveBasicDatatype(FBalls);
+		MoveArray(Filter);
+		MoveBasicDatatype(FinePositioning);
+		MoveArray(FKeyActive);
+		MoveArray(FKeyItem);
+		MoveBasicDatatype(FKeyTracks);
+		MoveBasicDatatype(FrequenceSpeed);
+		MoveBasicDatatype(FSinScroll);
+		MoveBasicDatatype(FStars);
+		MoveBasicDatatype(FText);
+		MoveBasicDatatype(GoToStop);
+		MoveBasicDatatype(keyMapNote);
+		MoveBasicDatatype(KeyUpMode);
+		MoveBasicDatatype(lastVisualPlugin);
+		MoveBasicDatatype(LinesHeight);
+		MoveBasicDatatype(LoopType);
+		MoveBasicDatatype(MacKeyBoard);
+		MoveBasicDatatype(MADCompression);
+		MoveBasicDatatype(MarkersOffSet);
+		MoveBasicDatatype(MarkersSize);
+		MoveBasicDatatype(MicroDelaySize);
+		MoveBasicDatatype(MIDIChanInsTrack);
+		MoveBasicDatatype(MidiKeyBoard);
+		MoveBasicDatatype(MIDIVelocity);
+		MoveBasicDatatype(MozartC1h);
+		MoveBasicDatatype(MozartC2h);
+		MoveBasicDatatype(MozartX);
+		MoveBasicDatatype(MusicTrace);
+		MoveBasicDatatype(NoStart);
+		MoveBasicDatatype(numChn);
+		MoveArray(OCArrow);
+		MoveBasicDatatype(OscilloLine);
+		MoveBasicDatatype(OscilloSize);
+		MoveBasicDatatype(OscilloType);
+		MoveBasicDatatype(osciTile);
+		MoveBasicDatatype(outPutBits);
+		MoveBasicDatatype(outPutMode);
+		MoveBasicDatatype(outPutRate);
+		MoveBasicDatatype(oversampling);
+		MoveBasicDatatype(patternWrapping);
+		MoveArray(PianoKey);
+		MoveBasicDatatype(PianoOctaveMarkers);
+		MoveBasicDatatype(pianoOffset);
+		MoveBasicDatatype(PianoPos);
+		MoveArray(Previous_chanBus);
+		MoveArray(Previous_chanEffect);
+		MoveArray(Previous_globalEffect);
+		MoveArray(Previous_Sets);
+		MoveBasicDatatype(Previous_globalFXActive);
+		MoveBasicDatatype(previousSpec);
+		MoveBasicDatatype(RAWBits);
+		MoveBasicDatatype(RAWEOF);
+		MoveBasicDatatype(RAWHeader);
+		MoveBasicDatatype(RAWLength);
+		MoveBasicDatatype(RAWLittleEndian);
+		MoveBasicDatatype(RAWRate);
+		MoveBasicDatatype(RAWSigned);
+		MoveBasicDatatype(RAWStereo);
+		MoveBasicDatatype(RecordAllTrack);
+		MoveBasicDatatype(RememberMusicList);
+		MoveBasicDatatype(Reverb);
+		MoveBasicDatatype(ReverbSize);
+		MoveBasicDatatype(ReverbStrength);
+		MoveBasicDatatype(SaveMusicList);
+		MoveArray(SelectedTracks);
+		MoveBasicDatatype(SendMIDIClockData);
+		MoveBasicDatatype(SmallPiano);
+		MoveBasicDatatype(softVolumeLevel);
+		MoveBasicDatatype(SoundTypeIns);
+		MoveBasicDatatype(SoundTypeSamp);
+		MoveBasicDatatype(SpectrumScale);
+		MoveBasicDatatype(SpectrumSize);
+		MoveBasicDatatype(SpectrumType);
+		MoveBasicDatatype(SSJumping);
+		MoveBasicDatatype(SSStars);
+		MoveBasicDatatype(SSText);
+		MoveBasicDatatype(StaffShowAllNotes);
+		MoveBasicDatatype(StaffShowLength);
+		MoveBasicDatatype(surround);
+		MoveBasicDatatype(TempsNum);
+		MoveBasicDatatype(TempsUnit);
+		//MoveBasicDatatype(ThreadUse);
+		MoveBasicDatatype(TickRemover);
+		MoveBasicDatatype(TrackHeight);
+		MoveArray(tracksColor);
+		MoveBasicDatatype(useEQ);
+		MoveBasicDatatype(UseMarkers);
+		MoveBasicDatatype(UseOctaveMarkers);
+		MoveBasicDatatype(volumeLevel);
+		MoveBasicDatatype(whichEditorPatterns);
+		MoveArray(WinEtat);
+		MoveArray(WinEtatO);
+		MoveArray(WinHi);
+		MoveArray(WinHiO);
+		MoveArray(WinID);
+		MoveArray(WinIDO);
+		MoveArray(WinLarg);
+		MoveArray(WinLargO);
+		MoveArray(WinNames);
+		MoveArray(WinPos);
+		MoveArray(WinPosO);
+		MoveBasicDatatype(yellC);
+#undef MoveBasicDatatypes
+#undef MoveArray
 		
 		WriteCFPreferences();
 	}
@@ -5731,12 +5844,9 @@ void DoPreferences()
 	Point			tempL;
 	FSSpec			spec;
 	
-	if (CFPreferencesHaveBeenSet()) {
-		ReadCFPreferences();
-	} else {
-		RegisterCFDefaults();
-	}
-	
+	RegisterCFDefaults();
+	ReadCFPreferences();
+
 #if 0
 	Gestalt(gestaltHardwareAttr, &gestaltAnswer);
 	myBit = gestaltHasASC;
@@ -5767,16 +5877,15 @@ void DoPreferences()
 	hasASC = false;
 #endif
 	
-ReLoadPrefs:
-	
 	// Look for and load old preferences
 	iErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &vRefNum, &DirID);
 	FSMakeFSSpec(vRefNum, DirID, PLAYERPREF, &spec);
 	iErr = FSpOpenDF(&spec, fsRdPerm, &fRefNum);
 	if (iErr == noErr) {
-		//If found, also delete old preferences
 		LoadOldFilePrefs(fRefNum);
-		iErr = FSpDelete(&spec);
+		//If found, also delete old preferences
+		//iErr = FSpDelete(&spec);
+		ReadCFPreferences();
 	}
 #if 0
 	if (iErr == fnfErr) {

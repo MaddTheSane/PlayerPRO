@@ -29,3 +29,4 @@
 "MIDI File" = "MIDI File";
 "PPImpExpBundle" = "PlayerPRO Import/Export PlugIn";
 
+CFBundleShortVersionString = "5.10.0 DP 7";

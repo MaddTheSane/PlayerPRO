@@ -10,7 +10,9 @@
 #import "NSColor+PPPreferences.h"
 
 CFStringRef const PPPreferencesSet = CFSTR("PlayerPRO 5 CoreFoundation Preferences set?");
-CFStringRef const PPAutoCreator = CFSTR("PlayerPRO5AutoCreator");
+CFStringRef const PPAutoCreator = CFSTR("PlayerPRO 5 AutoCreator");
+CFStringRef const PPStartNumber = CFSTR("PlayerPRO 5 NoStart");
+CFStringRef const PPPianoKeys = CFSTR("PlayerPRO 5 PianoKeys");
 
 CFStringRef const MADNativeUTI = CFSTR("com.quadmation.playerpro.madk");
 CFStringRef const MADGenericUTI = CFSTR("com.quadmation.playerpro.mad");

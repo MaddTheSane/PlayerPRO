@@ -13,6 +13,8 @@
 
 extern CFStringRef const PPPreferencesSet;
 extern CFStringRef const PPAutoCreator;
+extern CFStringRef const PPStartNumber;
+extern CFStringRef const PPPianoKeys;
 
 //Windows
 extern CFStringRef const PPWindowName1;
