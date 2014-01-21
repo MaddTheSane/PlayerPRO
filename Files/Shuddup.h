@@ -71,7 +71,7 @@ typedef struct
 	short			PianoKey[300];
 	short			LoopType;
 	//Str32			AutorName;
-	RGBColor		tracksColor[MAXTRACK];
+	RGBColor		tracksColor[96];
 	short			PianoPos;
 	short			volumeLevel;
 	Boolean			MADCompression;
