@@ -20,8 +20,6 @@ short OpenResFileQK(long dirID, short VRefNum);
 Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, Boolean *stereo);
 void InitMapQK25();
 
-static NoteRequest					myNoteRequest;
-
 /**** Resource Format ****/
 typedef struct
 {
@@ -80,7 +78,7 @@ static	Boolean			QK50;
 static	short			QKInstruSndID[ 18][ 9];
 extern	short			LastCanal;
 static	short			vers1, vers2;
-static	short			QK25Resources[ 500];
+//static	short			QK25Resources[ 500];
 
 
 OSErr CreateNameListQuicktime25(void)
@@ -293,15 +291,11 @@ GrafPtr	savePort;
 void PressSmallPianoQ(DialogPtr TheDia, InstrData	*inst, short ins)
 {
 	Point	Mouse;
-	Handle	itemHandle;
-	short	Position, itemType, i;
+	short	Position, i;
 	Str255	str;
-	Rect	itemRect;
-	long	newSize;
 	Boolean	firstTime = true;
 	
-	do
-	{
+	do {
 		DoGlobalNull();
 		
 		GetMouse(&Mouse);
@@ -355,13 +349,12 @@ void DLSImport(void)
 {
 	DialogPtr				aDialog;
 	short					itemHit, itemType, i;
-	char					cstr[ 200];
 	Str255					aStr, str;
-	Rect					tempRect, itemRect;
+	Rect					tempRect;
 	Point					myPt;
 	Handle					itemHandle;
 	long					mresult;
-	short					ins, samp, x;
+	short					ins = 0;
 	
 	short					CategoryID;
 	short					QKInstruID;
@@ -409,7 +402,7 @@ void DLSImport(void)
 	SetDText(aDialog, 8, aStr);
 	
 	
-	inst = &curMusic->fid[ ins];
+	inst = &curMusic->fid[ins];
 	
 	MADPurgeTrackIfInstru(MADDriver, ins);
 	ComputeQuicktimeSound(QKInstruSndID[ CategoryID][ QKInstruID], curMusic->sample, &curMusic->fid[ ins], ins);
