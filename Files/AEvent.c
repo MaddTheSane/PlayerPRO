@@ -108,7 +108,7 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 			info.hFileInfo.ioDirID = myFSS.parID;
 			info.hFileInfo.ioFDirIndex = 0;
 			
-			if (PBGetCatInfo(&info, false) == noErr)
+			if (PBGetCatInfoSync(&info) == noErr)
 			{
 				DoScanDir(info.dirInfo.ioDrDirID, myFSS.vRefNum);
 				

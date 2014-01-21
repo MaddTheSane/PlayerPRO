@@ -374,15 +374,15 @@ OSErr PathNameFromDirIDTRUE(long dirID, short vRefNum, StringPtr fullPathName)
 			block.dirInfo.ioVRefNum = vRefNum;
 			block.dirInfo.ioFDirIndex = -1;
 			block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
-			err = PBGetCatInfo(&block, false);
-			if (fullPathName[ 0] < 200)
-			{
+			err = PBGetCatInfoSync(&block);
+			if (fullPathName[0] < 200) {
 				pstrcat(directoryName, (StringPtr)"\p:");
 				pstrinsert(fullPathName, directoryName);
 			}
 	} while (block.dirInfo.ioDrDirID != 2 && err == noErr);
 	
-	if (fullPathName[ 0] > 0) fullPathName[ 0]--;
+	if (fullPathName[0] > 0)
+		fullPathName[0]--;
 	
 	return err;
 }

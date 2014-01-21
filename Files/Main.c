@@ -1413,8 +1413,7 @@ OSErr GetExecutableParentFSSpecFromBundle(FSSpecPtr theFSSpecPtr)
 	Boolean ok = CFURLGetFSRef(myBundleURL, &myBundleRef);
 	CFRelease(myBundleURL);
 	if (!ok) return err;
-	return FSGetCatalogInfo(&myBundleRef, kFSCatInfoNone,
-							NULL, NULL, theFSSpecPtr, NULL);
+	return FSGetCatalogInfo(&myBundleRef, kFSCatInfoNone, NULL, NULL, theFSSpecPtr, NULL);
 }
 
 int main(int argc, char* argv[])
@@ -4039,7 +4038,7 @@ void NOpenMusic()
 				block.dirInfo.ioVRefNum = reply.vRefNum;
 				block.dirInfo.ioFDirIndex = -1;
 				block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
-				if (PBGetCatInfo(&block, false) == noErr) {
+				if (PBGetCatInfoSync(&block) == noErr) {
 					pStrcpy(reply.name, directoryName);
 					reply.parID = block.dirInfo.ioDrParID;
 					AESendOpenFile(&reply);
@@ -6633,7 +6632,7 @@ void HandleFileChoice(short theItem)
 				{
 					info.hFileInfo.ioDirID = specFolder.parID;
 					info.hFileInfo.ioFDirIndex = i;
-					if (PBGetCatInfo(&info, false) != noErr)
+					if (PBGetCatInfoSync(&info) != noErr)
 						break;
 					
 					if (info.hFileInfo.ioFlFndrInfo.fdType == 'cdev' &&
@@ -6686,7 +6685,7 @@ void HandleFileChoice(short theItem)
 						{
 							info.hFileInfo.ioDirID = specFolder.parID;
 							info.hFileInfo.ioFDirIndex = i;
-							if (PBGetCatInfo(&info, false) != noErr)
+							if (PBGetCatInfoSync(&info) != noErr)
 								break;
 							
 							if (info.hFileInfo.ioFlFndrInfo.fdCreator == 'alav')		//info.hFileInfo.ioFlFndrInfo.fdType == 'APPL' &&

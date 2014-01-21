@@ -974,7 +974,7 @@ void ScanDirVSTPlug(long dirID, short VRefNum)
 		info.hFileInfo.ioDirID = dirID;
 		info.hFileInfo.ioFDirIndex = i;
 		
-		if (PBGetCatInfo(&info, false) != noErr) break;
+		if (PBGetCatInfoSync(&info) != noErr) break;
 		
 		if (info.hFileInfo.ioFlFndrInfo.fdType == 'aPcs')
 		{	

@@ -304,7 +304,7 @@ void HandleCustomMouseDown(NavCBRecPtr callBackParms)
 				block.dirInfo.ioVRefNum = spec.vRefNum;
 				block.dirInfo.ioFDirIndex = -1;
 				block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
-				if (PBGetCatInfo(&block, false) == noErr)
+				if (PBGetCatInfoSync(&block) == noErr)
 				{
 					pStrcpy(spec.name, directoryName);
 					spec.parID = block.dirInfo.ioDrParID;
