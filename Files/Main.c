@@ -1836,10 +1836,6 @@ int main(int argc, char* argv[])
 	
 	EndDialog();
 	
-	thePrefs.Registred = true;
-	
-	if (thePrefs.Registred == false) DoHelp();
-	
 	ShowWindowPref(-1);
 	
 	NoSelectWindow2 = false;
@@ -1864,16 +1860,8 @@ OnRefaitEvent:
 	
 	DeleteTempFile();
 	
-	if (thePrefs.ActiveHelp)
-	{
+	if (thePrefs.ActiveHelp) {
 		CreateAHelpWindow();
-	}
-	
-	if (thePrefs.Registred == false)
-	{
-		//		CreateCubeWindow();
-		//	SelectWindow(GetDialogWindow (CubeDlog));
-		thePrefs.Registred = true;
 	}
 	
 	UpdateALLWindow();
@@ -1883,31 +1871,29 @@ OnRefaitEvent:
 	/***********/
 	
 	/*****/
-	if (curMusic->hasChanged) 
-	{	
-		if (GereChanged() != noErr) goto OnRefaitEvent;
+	if (curMusic->hasChanged)  {
+		if (GereChanged() != noErr)
+			goto OnRefaitEvent;
 	}
 	
 	tempCurMusic = curMusic;
 	curMusic = SwitchCurMusic;
 	SwitchCurMusic = tempCurMusic;
 	
-	if (curMusic->hasChanged) 
-	{	
-		if (GereChanged() != noErr) goto OnRefaitEvent;
+	if (curMusic->hasChanged)  {
+		if (GereChanged() != noErr)
+			goto OnRefaitEvent;
 	}
 	/*****/
 	
-	if (GereMusicListChanged() != noErr) goto OnRefaitEvent;
+	if (GereMusicListChanged() != noErr)
+		goto OnRefaitEvent;
 	
-	if (thePrefs.RememberMusicList)
-	{
+	if (thePrefs.RememberMusicList) {
 		FSSpec	prefMusicList;
 		
 		FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &prefMusicList.vRefNum, &prefMusicList.parID);
-		//HSetVol(NULL, prefMusicList.vRefNum, prefMusicList.parID);
-		
-		pStrcpy(prefMusicList.name, MLSAVENAME);
+		FSMakeFSSpec(prefMusicList.vRefNum, prefMusicList.parID, MLSAVENAME, &prefMusicList);
 		
 		SaveMyMODListSTCf(prefMusicList);
 	}
@@ -1929,7 +1915,7 @@ OnRefaitEvent:
 	for (i = 0 ; i < MAXTRACK; i++) thePrefs.previousSpec.chanVol[ i] = curMusic->header->chanVol[ i];
 	
 	
-	WritePreferences();
+	WriteCFPreferences();
 	
 	MADStopDriver(MADDriver);
 	MADDisposeDriver(MADDriver);
@@ -1958,15 +1944,14 @@ End:;
 	ExitMovies();
 	MADDisposeLibrary(gMADLib);
 	
-	//DePatchMyDisposePtr(&);
 	return EXIT_SUCCESS;
 }
 
 static	Boolean 		PressInDialog;
 static	long			checkMemory;
-short			TouchMem[11];
-short			TrackMem[11];
-short			TouchIn;
+short					TouchMem[11];
+short					TrackMem[11];
+short					TouchIn;
 
 short NEWdoDlgEvt(EventRecord *evp, WindowPtr whichWindow)
 {
@@ -2012,8 +1997,7 @@ short NEWdoDlgEvt(EventRecord *evp, WindowPtr whichWindow)
 
 void ProcessDoItemPress(long ref, short whichItem, DialogPtr whichDialog)
 {
-	switch(ref)
-	{
+	switch (ref) {
 		case RefVST:
 			VSTEditorDoItemPress(whichItem, whichDialog);
 			break;
@@ -2104,7 +2088,7 @@ void ProcessDoItemPress(long ref, short whichItem, DialogPtr whichDialog)
 	}
 }
 
-void DoGlobalNull(void)
+void DoGlobalNull()
 {
 	GrafPtr		savePort;
 	Str255		str1, str2;
@@ -2163,8 +2147,7 @@ void DoGlobalNull(void)
 		
 	}
 	
-	if (MADDriver->musicEnd == true)
-	{
+	if (MADDriver->musicEnd == true) {
 		DoLoadOtherMusic(true);
 	}
 	
@@ -2192,8 +2175,7 @@ void DoGlobalNull(void)
 	//DoNullTrackView();
 	MyNullHook();
 	
-	if (checkMemory < TickCount())
-	{
+	if (checkMemory < TickCount()) {
 		checkMemory = TickCount() + 60;
 		DoNullMemWindow();
 		//if (FreeMem() < 50000) Erreur(9, 0);
@@ -2223,52 +2205,51 @@ void DoGlobalNull(void)
 	SetPort(savePort);
 }
 
-void GlobalDoKey(WindowPtr	theWind, char theChar)
+void GlobalDoKey(WindowPtr theWind, char theChar)
 {
 	//if (theChar == 8) return;
 	
-	switch(GetWRefCon(theWind))
-	{
+	switch (GetWRefCon(theWind)) {
 		case RefInstruList:
-			DoKeyPressInstruList((short) theChar, -1);
+			DoKeyPressInstruList(theChar, -1);
 			break;
 			
 		case RefClassic:
-			DoKeyPressClassic((short) theChar);
+			DoKeyPressClassic(theChar);
 			break;
 			
 #if 0
 		case RefCmd:
-			DoKeyPressCmdDlog((short) theChar);
+			DoKeyPressCmdDlog(theChar);
 			break;
 #endif
 			
 		case RefPatList:
-			DoKeyPressPatList((short) theChar);
+			DoKeyPressPatList(theChar);
 			break;
 			
 		case RefParti:
-			DoKeyPressParti((short) theChar);
+			DoKeyPressParti(theChar);
 			break;
 			
 		case RefMODList:
-			DoKeyPressMODList((short) theChar);
+			DoKeyPressMODList(theChar);
 			break;
 			
 		case RefPartition:
-			DoKeyPressEditor((short) theChar);
+			DoKeyPressEditor(theChar);
 			break;
 			
 		case RefStaff:
-			DoKeyPressStaff((short) theChar);
+			DoKeyPressStaff(theChar);
 			break;
 			
 		case RefWave:
-			DoKeyPressWave((short) theChar);
+			DoKeyPressWave(theChar);
 			break;
 			
 		case RefSample:
-			DoKeyPressSample(GetDialogFromWindow(theWind), (short) theChar);
+			DoKeyPressSample(GetDialogFromWindow(theWind), theChar);
 			break;
 			
 		case RefQuicktime:
@@ -2276,7 +2257,7 @@ void GlobalDoKey(WindowPtr	theWind, char theChar)
 			break;
 			
 		case RefMozart:
-			DoKeyPressMozart((short) theChar);
+			DoKeyPressMozart(theChar);
 			break;
 	}
 }
@@ -2290,18 +2271,13 @@ void ActivateProcedure(Boolean ModalCall)
 	//ShowWindow(GetDialogWindow(ToolsDlog));
 	//if (!ModalCall) SelectWindow(GetDialogWindow(ToolsDlog));
 	
-	if (!ModalCall)
-	{
-		if (oldWindow != NULL)
-		{
+	if (!ModalCall) {
+		if (oldWindow != NULL) {
 			SelectWindow2(oldWindow);
 			EraseGrowIcon(GetDialogFromWindow(oldWindow));
 		}
-	}
-	else
-	{
-		if (oldWindow != NULL)
-		{
+	} else {
+		if (oldWindow != NULL) {
 			HiliteWindow(oldWindow, true);
 			EraseGrowIcon(GetDialogFromWindow(oldWindow));
 		}
@@ -2310,25 +2286,23 @@ void ActivateProcedure(Boolean ModalCall)
 	SetCursor(GetQDGlobalsArrow(&qdarrow));
 }
 
-void	DoOSEvent(EventRecord *event, Boolean ModalCall)
+void DoOSEvent(EventRecord *event, Boolean ModalCall)
 {
-	switch ((event->message >> 24) & 0xFF)
-	{
-		case mouseMovedMessage:				break;
+	switch ((event->message >> 24) & 0xFF) {
+		case mouseMovedMessage:
+			break;
+			
 		case suspendResumeMessage:
-			if (event->message & resumeFlag)
-			{
+			if (event->message & resumeFlag) {
 				ActivateProcedure(ModalCall);
 				HiliteMenu(0);
 				
 				ShowFloatingWindows();
-			}
-			else
-			{
-				if (AHelpDlog != NULL) HideWindow(GetDialogWindow(AHelpDlog));
+			} else {
+				if (AHelpDlog != NULL)
+					HideWindow(GetDialogWindow(AHelpDlog));
 				HideFloatingWindows();	//HideWindow(GetDialogWindow(ToolsDlog));
-				if (oldWindow != NULL)
-				{
+				if (oldWindow != NULL) {
 					HiliteWindow(oldWindow, false);
 					EraseGrowIcon(GetDialogFromWindow(oldWindow));
 				}
@@ -2388,26 +2362,24 @@ short ConvertCharToNote(char theChar)
 {
 	short i;
 	
-	if ((short) theChar >= 0 && (short) theChar < 300)
-	{
-		i = thePrefs.PianoKey[ (short) theChar];
+	if ((short) theChar >= 0 && (short) theChar < 300) {
+		i = thePrefs.PianoKey[theChar];
 		
-		if (i != 0xFF && i != -1) i += thePrefs.pianoOffset*12;
+		if (i != 0xFF && i != -1)
+			i += thePrefs.pianoOffset * 12;
 		
-		if((i >= 0 && i < NUMBER_NOTES) || i == 0xFF) return i;
-		else return -1;
-	}
-	else return -1;
+		if((i >= 0 && i < NUMBER_NOTES) || i == 0xFF)
+			return i;
+		else
+			return -1;
+	} else
+		return -1;
 }
 
-static Boolean IsDialogWindow(WindowPtr window )
+static Boolean IsDialogWindow(WindowPtr window)
 {
-	//WindowAttributes	outAttributes;
-	
-	if (window == NULL )
+	if (window == NULL)
 		return FALSE;
-	
-	//GetWindowAttributes(window, &outAttributes);
 	
     return(GetWindowKind(window ) == dialogKind);
 }
@@ -2418,18 +2390,17 @@ void ActivateAllWindows()
 	
 	theWindow = GetNextWindow(FrontWindow());
 	
-	if (theWindow == NULL) return;
+	if (theWindow == NULL)
+		return;
 	
-	do
-	{
+	do {
 		theEvent.message = (unsigned long) theWindow;
 		theEvent.modifiers = activeFlag;
 		theEvent.what = activateEvt;
 		
-		theWindow = (WindowPtr) theEvent.message;
+		theWindow = (WindowPtr)theEvent.message;
 		
-		if (IsDialogWindow(theWindow ) )
-		{
+		if (IsDialogWindow(theWindow)) {
 			DialogRef		dialog;
 			SInt16			itemHit;
 			GrafPtr			savePort;
@@ -2467,13 +2438,12 @@ void EventLoop2(void)
 	gotEvent = WaitNextEvent(everyEvent, &theEvent, 1, gCursorRgn);
 	
 	//	PressInDialog = false;
-	switch(theEvent.what)
-	{
+	switch (theEvent.what) {
 			
 		case activateEvt:
 			//	DoActivateEvent(&theEvent, (theEvent.modifiers & activeFlag) != 0, false);
 		{
-			WindowPtr theWindow = (WindowPtr) theEvent.message;
+			WindowPtr theWindow = (WindowPtr)theEvent.message;
 			
 			//	ShowWindow(theWindow);
 			
@@ -2484,8 +2454,7 @@ void EventLoop2(void)
 			 }
 			 #endif*/
 			
-			if (IsDialogWindow(theWindow ) )
-			{
+			if (IsDialogWindow(theWindow)) {
 				DialogRef		dialog;
 				SInt16			itemHit;
 				
@@ -2521,27 +2490,22 @@ void EventLoop2(void)
 			break;
 			
 		case keyUp:
-			if (thePrefs.MacKeyBoard)
-			{
+			if (thePrefs.MacKeyBoard) {
 				theChar = theEvent.message & charCodeMask;
 				str1[0] = 1;	str1[1] = theChar;
 				//	UpperString(str1, true);
 				theChar = str1[1];
 				
-				if ((short) theChar >= 0 && (short) theChar < 300)
-				{
-					i = thePrefs.PianoKey[ (short) theChar];
+				if (theChar >= 0 && theChar < 300) {
+					i = thePrefs.PianoKey[theChar];
 					
-					if (i != 0xFF) i += thePrefs.pianoOffset*12;
+					if (i != 0xFF)
+						i += thePrefs.pianoOffset*12;
 					
-					if((i >= 0 && i < NUMBER_NOTES) || i == 0xFF)
-					{
-						for(x=0; x<10;x++)
-						{
-							if (TouchMem[x] == i && TouchMem[x] >= 0)
-							{
-								if (PianoDlog != NULL)
-								{
+					if((i >= 0 && i < NUMBER_NOTES) || i == 0xFF) {
+						for(x = 0; x < 10;x++) {
+							if (TouchMem[x] == i && TouchMem[x] >= 0) {
+								if (PianoDlog != NULL) {
 									GetPort(&savePort);
 									SetPortDialogPort(PianoDlog);
 									
@@ -2551,29 +2515,29 @@ void EventLoop2(void)
 									SetPort(savePort);
 								}
 								
-								switch(thePrefs.KeyUpMode)
-								{
+								switch(thePrefs.KeyUpMode) {
 									case eStop:
-										MADDriver->chan[ TrackMem[ x]].loopBeg = 0;
-										MADDriver->chan[ TrackMem[ x]].loopSize = 0;
-										MADDriver->chan[ TrackMem[ x]].maxPtr = MADDriver->chan[ TrackMem[ x]].curPtr;
+										MADDriver->chan[TrackMem[x]].loopBeg = 0;
+										MADDriver->chan[TrackMem[x]].loopSize = 0;
+										MADDriver->chan[TrackMem[x]].maxPtr = MADDriver->chan[TrackMem[x]].curPtr;
 										
-										if (PianoRecording) NPianoRecordProcess(0xFF, 0xFF, 0x10, TrackMem[ x]);
+										if (PianoRecording)
+											NPianoRecordProcess(0xFF, 0xFF, 0x10, TrackMem[ x]);
 										break;
 										
 									case eNoteOFF:
-										MADDriver->chan[ TrackMem[ x]].KeyOn = false;
+										MADDriver->chan[TrackMem[x]].KeyOn = false;
 										
-										if (PianoRecording) NPianoRecordProcess(0xFE, 0xFF, 0xFF, TrackMem[ x]);
+										if (PianoRecording)
+											NPianoRecordProcess(0xFE, 0xFF, 0xFF, TrackMem[x]);
 										break;
 								}
 								
-								if (MADDriver->DriverSettings.driverMode == MIDISoundDriver)
-								{
-									if (MADDriver->NoteOld[ TrackMem[ x]] != -1)
+								if (MADDriver->DriverSettings.driverMode == MIDISoundDriver) {
+									if (MADDriver->NoteOld[TrackMem[x]] != -1)
 									{
-										NoteOff(MADDriver->InstuNoOld[ TrackMem[ x]], MADDriver->NoteOld[ TrackMem[ x]], MADDriver->VelocityOld[ TrackMem[ x]], MADDriver);
-										MADDriver->NoteOld[ TrackMem[ x]] = -1;
+										NoteOff(MADDriver->InstuNoOld[TrackMem[x]], MADDriver->NoteOld[TrackMem[x]], MADDriver->VelocityOld[TrackMem[x]], MADDriver);
+										MADDriver->NoteOld[TrackMem[x]] = -1;
 									}
 								}
 								
@@ -2597,25 +2561,23 @@ void EventLoop2(void)
 			
 		case nullEvent:
 			mainSystemDrag = true;
-			if (!thePrefs.ThreadUse) DoGlobalNull();
-			else YieldToAnyThread();
+			if (!thePrefs.ThreadUse)
+				DoGlobalNull();
+			else
+				YieldToAnyThread();
 			break;
 			
 		case keyDown:
 		case autoKey:
-			if (VisualDlog != NULL)
-			{
-				if (oldWindow == GetDialogWindow(VisualDlog))
-				{
+			if (VisualDlog != NULL) {
+				if (oldWindow == GetDialogWindow(VisualDlog)) {
 					DoKeyVisual(VisualDlog);
 				}
 			}
 			
 		{
-			for (i = 0; i < 15; i++)
-			{
-				if (FKEYCo[ i] == (theEvent.message & keyCodeMask) >> 8L)
-				{
+			for (i = 0; i < 15; i++) {
+				if (FKEYCo[ i] == (theEvent.message & keyCodeMask) >> 8L) {
 					PressFKey(i);
 					break;
 				}
@@ -2624,83 +2586,83 @@ void EventLoop2(void)
 			theChar = theEvent.message & charCodeMask;
 			
 			
-			if ((theEvent.modifiers & cmdKey) != 0)
-			{
+			if ((theEvent.modifiers & cmdKey) != 0) {
 				HandleMenuChoice(MenuKey(theChar));
 				
-				if (theChar == deletekey)
-				{
-					if (GetWRefCon(oldWindow) == RefMODList)
-					{
+				if (theChar == deletekey) {
+					if (GetWRefCon(oldWindow) == RefMODList) {
 						GlobalDoKey(oldWindow, theChar);
 					} 
 				}
 				
 				break;
-			}
-			else if (oldWindow != NULL)
-			{
-				if (AcceptKeysTools() || (theChar == 9)) DoKeyPressCmdDlog(theChar);
-				else GlobalDoKey(oldWindow, theChar);
+			} else if (oldWindow != NULL) {
+				if (AcceptKeysTools() || (theChar == 9))
+					DoKeyPressCmdDlog(theChar);
+				else
+					GlobalDoKey(oldWindow, theChar);
 			}
 			
 			//
 			
-			if (theChar == '+') DoSearchUp();
-			else if (theChar == '-') DoSearchDown();
-			if (theChar == 27) DoPause();	// ESC = Pause
+			if (theChar == '+')
+				DoSearchUp();
+			else if (theChar == '-')
+				DoSearchDown();
+			if (theChar == 27)
+				DoPause();	// ESC = Pause
 			//	if (theChar == '/') DoChangeLoop();
 			
 			//
 			
-			if (theEvent.what != autoKey)
-			{
+			if (theEvent.what != autoKey) {
 				short	 ins;
 				
 				///
 				
-				if (oldWindow != NULL)
-				{
-					if (GetWRefCon(oldWindow) == RefSample) break;
+				if (oldWindow != NULL) {
+					if (GetWRefCon(oldWindow) == RefSample)
+						break;
 				}
 				
 				if (AcceptKeysTools()) break;
 				
-				if (EditorDlog != NULL)
-				{
-					if (!GetIns(&ins, NULL) && oldWindow != GetDialogWindow(EditorDlog)) break;
+				if (EditorDlog != NULL) {
+					if (!GetIns(&ins, NULL) && oldWindow != GetDialogWindow(EditorDlog))
+						break;
 				}
 				
 				///
 				
-				if (thePrefs.MacKeyBoard)
-				{
+				if (thePrefs.MacKeyBoard) {
 					i = ConvertCharToNote(theChar);
-					if (i != -1)
-					{
+					if (i != -1) {
 						short	track = GetWhichTrackPlay();
 						short	eff = 0, arg = 0, volCmd = 0xFF;
 						
-						if (PianoRecording) NPianoRecordProcess(i, -1, 0xFF, track);
-						else if (EditorDlog != NULL)
-						{
-							if (oldWindow == GetDialogWindow(EditorDlog)) DigitalEditorProcess(i, &eff, &arg, &volCmd);
+						if (PianoRecording)
+							NPianoRecordProcess(i, -1, 0xFF, track);
+						else if (EditorDlog != NULL) {
+							if (oldWindow == GetDialogWindow(EditorDlog))
+								DigitalEditorProcess(i, &eff, &arg, &volCmd);
 						}
 						
 						SelectTouche(i, -1);
 						SelectToucheMozart(i, 0);
 						
 						TouchIn++;
-						if (TouchIn < 0 || TouchIn >= 10) TouchIn = 0;
-						TouchMem[ TouchIn] = i;
-						TrackMem[ TouchIn] = track;
-						if (TrackMem[ TouchIn] < 0 || TrackMem[ TouchIn] >= MADDriver->DriverSettings.numChn) TrackMem[ TouchIn] = 0;
+						if (TouchIn < 0 || TouchIn >= 10)
+							TouchIn = 0;
+						TouchMem[TouchIn] = i;
+						TrackMem[TouchIn] = track;
+						if (TrackMem[TouchIn] < 0 || TrackMem[TouchIn] >= MADDriver->DriverSettings.numChn) TrackMem[TouchIn] = 0;
 						
-						if (GetIns(&ins, NULL)) DoPlayInstruInt(i, ins, eff, arg, volCmd, &MADDriver->chan[ track], 0, 0);
+						if (GetIns(&ins, NULL))
+							DoPlayInstruInt(i, ins, eff, arg, volCmd, &MADDriver->chan[ track], 0, 0);
 					}
 				}
-			}
-			else DoNullInstrument();
+			} else
+				DoNullInstrument();
 		}
 			break;
 	}
@@ -2722,10 +2684,8 @@ void EventLoop(void)
 	gCursorRgn = NULL;
 	
 	//#if MACOS9VERSION
-	do
-	{
+	do {
 		EventLoop2();
-		
 	} while (End == false);
 	//#else
 	//	CarbonEventLoop();
@@ -2780,13 +2740,11 @@ pascal short MyGetDirHook(short item, DialogPtr dPtr)
 	Rect				itemRect;
 	Boolean				MiseAjour = false;
 	
-	switch(item)
-	{
+	switch(item) {
 		case 10:
 		case 11:
 		case 12:
-			for (i = 10; i <= 12; i++)
-			{
+			for (i = 10; i <= 12; i++) {
 				GetDialogItem (dPtr, i, &itemType, &itemHandle, &itemRect);
 				SetControlValue((ControlHandle) itemHandle, 0);
 			}
@@ -2797,8 +2755,7 @@ pascal short MyGetDirHook(short item, DialogPtr dPtr)
 			
 		case 14:
 		case 15:
-			for (i = 14; i <= 15; i++)
-			{
+			for (i = 14; i <= 15; i++) {
 				GetDialogItem (dPtr, i, &itemType, &itemHandle, &itemRect);
 				SetControlValue((ControlHandle) itemHandle, 0);
 			}
@@ -2834,8 +2791,7 @@ void DragReferencedWindow(WindowPtr windowToDrag, Point startPoint, const Rect *
 	Boolean		commandKeyDown = false;
 	Point		pt;
 	
-	if (WaitMouseUp())
-	{
+	if (WaitMouseUp()) {
 		topLimit = GetMBarHeight() + 4;
 		if (AHelpDlog != NULL) AddWindowBar();
 		
@@ -2857,8 +2813,8 @@ void DragReferencedWindow(WindowPtr windowToDrag, Point startPoint, const Rect *
 		dragResult = DragGrayRgn(dragRegion, startPoint, &dragRect, &dragRect, 0, nil);
 		
 		// Restore the port for coordinate conversion.
-		
-		if (AHelpDlog != NULL) RemoveWindowBar();
+		if (AHelpDlog != NULL)
+			RemoveWindowBar();
 		
 		SetPort(savePort);
 		
@@ -2868,16 +2824,13 @@ void DragReferencedWindow(WindowPtr windowToDrag, Point startPoint, const Rect *
 			verticalOffset = dragResult >> 16;
 			
 			// Only move it if it stayed inside the dragging box.
-			
 			if (verticalOffset != -32768)
 			{
 				Rect	rgnBBox;
 				
-				//	windowContentRegion = NewRgn();
-				
-				//	GetWindowRegion(windowToDrag, kWindowContentRgn, windowContentRegion);
-				
-				//	GetRegionBounds(windowContentRegion, &rgnBBox);
+				//windowContentRegion = NewRgn();
+				//GetWindowRegion(windowToDrag, kWindowContentRgn, windowContentRegion);
+				//GetRegionBounds(windowContentRegion, &rgnBBox);
 				
 				SetPortWindowPort(windowToDrag);
 				
@@ -2893,7 +2846,7 @@ void DragReferencedWindow(WindowPtr windowToDrag, Point startPoint, const Rect *
 				newHorizontalWindowPosition = pt.h + horizontalOffset;
 				newVerticalWindowPosition = pt.v + verticalOffset;
 				
-				MoveWindow((WindowPtr) windowToDrag, newHorizontalWindowPosition, newVerticalWindowPosition, false);
+				MoveWindow((WindowPtr)windowToDrag, newHorizontalWindowPosition, newVerticalWindowPosition, false);
 				
 				//	DisposeRgn(windowContentRegion);
 			}
@@ -2917,7 +2870,7 @@ void UseSameLeft(WindowPtr whichWindow)
 	
 	GetPortBounds(GetWindowPort(whichWindow), &caRect);
 	
-	stdRect.left = thePrefs.WinPos[ GetWRefCon(whichWindow)].h;
+	stdRect.left = thePrefs.WinPos[GetWRefCon(whichWindow)].h;
 	stdRect.right = stdRect.left + caRect.right;
 	
 	SetWindowStandardState(whichWindow, &stdRect);
@@ -2959,19 +2912,20 @@ void DoMouseDown(EventRecord theEventI)
 	{
 		case inContent:
 			PressInDialog = true;
-			/*	if (whichWindow != FrontNonFloatingWindow() )
-			 {
-			 SelectWindow(whichWindow );
-			 }
-			 else //if (IsDialogEvent(&theEvent))
-			 {
-			 NEWdoDlgEvt(&theEvent, whichWindow);
-			 }*/
+#if 0
+			if (whichWindow != FrontNonFloatingWindow() )
+			{
+				SelectWindow(whichWindow );
+			}
+			else //if (IsDialogEvent(&theEvent))
+			{
+				NEWdoDlgEvt(&theEvent, whichWindow);
+			}
+#endif
 			
 			// A REMETTRE
 			
-			if (whichWindow == GetDialogWindow(ToolsDlog))
-			{
+			if (whichWindow == GetDialogWindow(ToolsDlog)) {
 				//	SelectWindow(whichWindow);
 				//if (IsDialogEvent(&theEvent))
 				{
@@ -2995,27 +2949,20 @@ void DoMouseDown(EventRecord theEventI)
 					
 					SetPort(savedPort);
 				}
-			}
-			else
-			{
-				if (GetWRefCon(whichWindow) != RefActiveHelp)
-				{
+			} else {
+				if (GetWRefCon(whichWindow) != RefActiveHelp) {
 					mouseInDown = true;
-					if (oldWindow != whichWindow)
-					{
+					if (oldWindow != whichWindow) 	{
 						SelectWindow2(whichWindow);
-						//	SelectWindow(whichWindow);
+						//SelectWindow(whichWindow);
 						
-						//	theEventI.message = (long) whichWindow;
-						//	DoUpdateEvent(&theEventI);
-						//	if (GetWRefCon(whichWindow) == RefMozart) mouseInDown = false;
+						//theEventI.message = (long) whichWindow;
+						//DoUpdateEvent(&theEventI);
+						//if (GetWRefCon(whichWindow) == RefMozart) mouseInDown = false;
 						
 						PostEvent(mouseDown, 0);
-					}
-					else
-					{					
-						if (mouseInDown)
-						{
+					} else {
+						if (mouseInDown) {
 							//	if (IsDialogEvent(&theEvent))
 							{
 								NEWdoDlgEvt(&theEvent, whichWindow);
@@ -3030,8 +2977,7 @@ void DoMouseDown(EventRecord theEventI)
 			
 		case inZoomIn:
 		case inZoomOut:
-			if (TrackBox(whichWindow, theEventI.where, thePart))
-			{
+			if (TrackBox(whichWindow, theEventI.where, thePart)) {
 				theEvent.what = 0;
 				
 				AdjustZoomIn(whichWindow);
@@ -3040,8 +2986,7 @@ void DoMouseDown(EventRecord theEventI)
 				
 				SetPortWindowPort(whichWindow);
 				
-				switch(GetWRefCon(whichWindow))
-				{
+				switch(GetWRefCon(whichWindow)) {
 					case RefVisual:
 						VisualFullScreen();
 						break;
@@ -3294,17 +3239,13 @@ void DoMouseDown(EventRecord theEventI)
 			
 		case inGoAway:
 			stillInGoAway = TrackGoAway(whichWindow, theEventI.where);
-			if (stillInGoAway )
-			{	
+			if (stillInGoAway) {
 				GetKeys(km);
-				if (IsPressed(0x3A))
-				{
+				if (IsPressed(0x3A)) {
 					CloseALLWindow();
 					
 					SelectWindow2(FrontWindow());
-				}
-				else
-				{
+				} else {
 					SelectWindow2(NextWindowVisible(whichWindow));
 					
 					CheckOneWindow(whichWindow);
@@ -3322,8 +3263,7 @@ void DoMouseDown(EventRecord theEventI)
 			break;
 			
 		case inGrow:
-			switch(GetWRefCon(whichWindow))
-		{
+			switch(GetWRefCon(whichWindow)) {
 			case RefPiano:
 				DoGrowPiano();
 				break;
@@ -3694,10 +3634,11 @@ void EndDialog(void)
 	
 	SetPortDialogPort(myStartUpDlog);
 	thePrefs.NoStart++;
-	WritePreferences();
+	WriteCFPreferences();
 	
 	ForeColor(whiteColor);
-	TextFont(21);		TextSize(12);
+	TextFont(21);
+	TextSize(12);
 	
 	oldTicks = 0;
 	
@@ -3708,7 +3649,7 @@ void EndDialog(void)
 	
 	FlushEvents(everyEvent, 0);
 	
-	//	Delay(180, &oldTicks);
+	//Delay(180, &oldTicks);
 	
 	DisposeDialog(myStartUpDlog);
 }
@@ -3717,7 +3658,7 @@ extern pascal Boolean MyDlgFilterSF(DialogPtr theDlg, EventRecord *theEvt, short
 
 static OSType		specificType;
 
-pascal Boolean MyCustomFileFilter2(CInfoPBRec	*pb, void *myDataPtr)
+pascal Boolean MyCustomFileFilter2(CInfoPBRec *pb, void *myDataPtr)
 {
 	Boolean		ready = false;
 	short		i;
@@ -3733,8 +3674,7 @@ pascal Boolean MyCustomFileFilter2(CInfoPBRec	*pb, void *myDataPtr)
 	
 	if (pb->hFileInfo.ioFlAttrib & 16) return false;
 	
-	switch(showWhat)
-	{
+	switch(showWhat) {
 		case allMusics:
 			if (pb->hFileInfo.ioFlFndrInfo.fdType == 'sTAT') return false;
 			if (pb->hFileInfo.ioFlFndrInfo.fdType == 'STCf') return false;
@@ -3782,8 +3722,7 @@ void WriteSupportedFormat(DialogPtr	aDia)
 	
 	pStrcpy(text, "\pMADK");
 	
-	for (i = 0; i < gMADLib->TotalPlug; i++)
-	{
+	for (i = 0; i < gMADLib->TotalPlug; i++) {
 		Str255 pMenuName;
 		GetPStrFromCFString(gMADLib->ThePlug[ i].MenuName, pMenuName);
 		
@@ -4066,18 +4005,19 @@ pascal short MyDlgHook2(short item, DialogPtr theDialog, void *myDataPtr)
 	
 	SetPort(savePort);
 	
-	return(item);
+	return item;
 }
 #endif
 
-OSErr NGetFileName(	FSSpec *spec)
+OSErr NGetFileName(FSSpec *spec)
 {
 	return DoCustomOpen(spec);
 }
 
 void NOpenMusic()
 {
-	if (GereChanged() != noErr) return;
+	if (GereChanged() != noErr)
+		return;
 	
 	{
 		FSSpec	reply;
@@ -4089,8 +4029,7 @@ void NOpenMusic()
 		{
 			SetCursor(GetQDGlobalsArrow(&qdarrow));
 			
-			if (AddAll)
-			{
+			if (AddAll) {
 				CInfoPBRec	block;
 				Str255		directoryName;
 				
@@ -4100,8 +4039,7 @@ void NOpenMusic()
 				block.dirInfo.ioVRefNum = reply.vRefNum;
 				block.dirInfo.ioFDirIndex = -1;
 				block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
-				if (PBGetCatInfo(&block, false) == noErr)
-				{
+				if (PBGetCatInfo(&block, false) == noErr) {
 					pStrcpy(reply.name, directoryName);
 					reply.parID = block.dirInfo.ioDrParID;
 					AESendOpenFile(&reply);
@@ -5373,14 +5311,415 @@ void HandleOtherChoice(short theItem)
 	}	
 }
 
-void WritePreferences(void)
-{
-	WriteCFPreferences();
-}
-
 void DeletePreferences()
 {
 	ResetCFPreferences();
+}
+
+static void LoadOldFilePrefs(FSIORefNum fRefNum)
+{
+#pragma pack(push, 2)
+	struct {
+		short			Version;
+		Boolean			Loop;
+		Boolean			Stereo;
+		Boolean			PPCMachine;
+		Boolean 		xxxxxxxx;
+		Fixed			Frequence;
+		Boolean			LargeWindow;
+		Boolean			AutoCreator;
+		Boolean			MicroRecording;
+		short			oldShort;
+		Boolean			AffichageDIGI;
+		short			NoStart;
+		Point			a1[30];
+		short			a2[30];
+		short			PianoKey[300];
+		Boolean			oldBool;
+		Boolean			InstruListBig;
+		Boolean			PatListBig;
+		Boolean			AutoScroll;
+		short			LoopType;
+		short			a3[30];
+		Boolean			Registred;
+		long			SNumber;
+		Byte			Decode;
+		Str32			AutorName;
+		long			checkSum;
+		long			Mz;
+		unsigned long	firstStart;
+		short			a4[30];
+		RGBColor		tracksColor[MAXTRACK];
+		short			unused[MAXTRACK];
+		short			PianoPos;
+		short			volumeLevel;
+		Boolean			MADCompression;
+		Boolean			SSText;
+		Boolean			SSStars;
+		Boolean			SSJumping;
+		Boolean			FText;
+		Boolean			FStars;
+		Boolean			FBalls;
+		short			TextS;
+		Boolean			ThreadUse;
+		Boolean			FSinScroll;
+		Boolean			RememberMusicList;
+		Boolean			OscilloLine;
+		long			a5[30];
+		Boolean			DigitalInstru;
+		Boolean			DigitalNote;
+		Boolean			DigitalEffect;
+		Boolean			DigitalArgu;
+		Boolean			DigitalVol;
+		Boolean			GoToStop;
+		Boolean			DriverEffects[20];
+		Boolean			MADC;
+		short			OscilloSize;
+		short			OscilloType;
+		short			fileTypeExportSND;
+		OSType			CompressionExportSND;
+		Boolean			ActiveHelp;
+		short			SpectrumSize;
+		short			SpectrumType;
+		
+		/** Driver Settings **/
+		
+		short			numChn;								// Active tracks from 2 to 32, automatically setup when a new music is loaded
+		short			outPutBits;							// 8 or 16 Bits
+		UnsignedFixed	outPutRate;							// Fixed number, by example : rate44khz, rate22050hz, rate22khz, rate11khz, rate11025hz
+		short			outPutMode;							// MonoOutPut, StereoOutPut or DeluxeStereoOutPut ?
+		short			driverMode;							// ASCSoundDriver, AWACSoundDriver, MIDISoundDriver or SoundManagerDriver
+		Boolean			antiAliasing;						// Use AntiAliasing filter ?
+		
+		/** Mozart Prefs **/
+		
+		Boolean			UseOctaveMarkers;
+		Boolean			UseMarkers;
+		short			MarkersSize;
+		short			MarkersOffSet;
+		short			MozartX;
+		
+		/** News 4.5	**/
+		
+		Boolean			SpectrumScale;
+		Boolean			ClassicalProjection;
+		Boolean			PianoOctaveMarkers;
+		Boolean			SmallPiano;
+		Boolean			FastMusicList;
+		long			FastDigitalEdition;
+		
+		Boolean			MacKeyBoard;
+		Boolean			MidiKeyBoard;
+		Boolean			QKMidiKeyBoard;
+		
+		Boolean			MIDIVelocity;
+		Boolean			MIDIChanInsTrack;
+		
+		short			KeyUpMode;
+		
+		/** News 4.5.1	**/
+		
+		Boolean			Interpolation;
+		Boolean			MicroDelay;
+		long			MicroDelaySize;
+		Boolean			surround;
+		
+		/** News 4.5.2	**/
+		
+		Boolean			OCArrow[MAXINSTRU];
+		short			MozartC1h, MozartC2h;
+		OSType			SoundTypeSamp;
+		OSType			SoundTypeIns;
+		short			LinesHeight;
+		Boolean			SaveMusicList;
+		short			softVolumeLevel;
+		
+		Boolean			oADAPremember;
+		Boolean			oADAPsave;
+		Boolean			oADAPuse;
+		
+		Boolean			osciTile;
+		
+		Boolean			addExtension;
+		
+		Boolean			AutoPlayWhenOpen;
+		
+		Boolean			Reverb;
+		long			ReverbSize;
+		long			ReverbStrength;
+		
+		Boolean			oldDirectVideo;
+		
+		/** News 4.5.3 **/
+		
+		Boolean			TickRemover;
+		Boolean			AutomaticOpen;
+		Boolean			FinePositioning;
+		
+		short			ChannelType;
+		short			amplitude;
+		OSType			Compressor;
+		Fixed			FrequenceSpeed;
+		
+		Byte			RecordAllTrack;			// 0 : a track, 1 : all tracks, 2 : current track
+		
+		/** News 4.5.4	**/
+		
+		Boolean			StaffShowAllNotes;
+		Boolean			StaffShowLength;
+		short			TempsNum;
+		short			TempsUnit;
+		short			TrackHeight;
+		
+		short			FKeyActive[20];
+		short			FKeyItem[20];
+		short			FKeyWind[20];
+		
+		/** News 4.5.7 **/
+		
+		Boolean			NewPrefSystem;
+		unsigned char	NewPrefsCode[30];
+		
+		/** News 4.5.8 **/
+		
+		Boolean			keyMapNote;
+		
+		/** News 5.0.0 **/
+		
+		RGBColor		yellC;
+		short			whichEditorPatterns;
+		Boolean			MusicTrace;
+		long			oversampling;
+		
+		/** News 5.0.3 **/
+		
+		short			RAWBits;
+		long			RAWRate;
+		Boolean			RAWStereo;
+		Boolean			RAWSigned;
+		Boolean			RAWLittleEndian;
+		Boolean			RAWEOF;
+		long			RAWLength;
+		long			RAWHeader;
+		
+		Byte			SelectedTracks[MAXTRACK];
+		
+		Point			a6[3][30];
+		short			a7[3][30];
+		short			a8[3][30];
+		short			a9[3][30];
+		long			a10[3][30];
+		Str32			WinNames[3];
+		
+		// 5.2
+		Boolean			clickSound;
+		Boolean			patternWrapping;
+		Boolean			SendMIDIClockData;
+		short			pianoOffset;
+		
+		// 5.3
+		Boolean				DontUseFilesMix;
+		struct OLDMADSpec	previousSpec;
+		
+		// 5.5
+		
+		Point			WinPosO[3][MAXWINDOWS];
+		short			WinEtatO[3][MAXWINDOWS];
+		short			WinLargO[3][MAXWINDOWS];
+		short			WinHiO[3][MAXWINDOWS];
+		long			WinIDO[3][MAXWINDOWS];
+		Point			WinPos[MAXWINDOWS];
+		short			WinEtat[MAXWINDOWS];
+		short			WinHi[MAXWINDOWS];
+		short			WinLarg[MAXWINDOWS];
+		long			WinID[MAXWINDOWS];
+		double			Filter[EQPACKET * 2];
+		Boolean			useEQ;
+		
+		// 5.6
+		
+		short				lastVisualPlugin;
+		Boolean				editorSoundDrag;
+		MADDriverSettings	DirectDriverType;
+		short				channelNumber;
+		Boolean				FKeyTracks;
+		
+		// 5.7
+		
+		long				Previous_globalEffect[10];
+		Boolean				Previous_globalFXActive;
+		long				Previous_chanEffect[MAXTRACK][4];
+		FXBus				Previous_chanBus[MAXTRACK];
+		FXSets				Previous_Sets[MAXTRACK];
+		
+		// 5.8
+		
+		Str255				ASIODriverName;
+	} oldPrefs;
+#pragma pack(pop)
+	OSErr iErr;
+	SInt64	inOutBytes;
+	
+	iErr = FSGetForkSize(fRefNum, &inOutBytes);
+	iErr = FSReadFork(fRefNum, fsAtMark, 0, inOutBytes, &oldPrefs, NULL);
+	iErr = FSCloseFork(fRefNum);
+#ifdef __LITTLE_ENDIAN__
+	{
+		int i, x;
+		oldPrefs.Version = EndianS16_BtoN(oldPrefs.Version);
+		oldPrefs.Frequence = EndianS32_BtoN(oldPrefs.Frequence);
+		oldPrefs.oldShort = EndianS16_BtoN(oldPrefs.oldShort);
+		oldPrefs.NoStart = EndianS16_BtoN(oldPrefs.NoStart);
+		for (i=0; i < 30; i++) {
+			oldPrefs.a1[i].v = EndianS16_BtoN(oldPrefs.a1[i].v);
+			oldPrefs.a1[i].h = EndianS16_BtoN(oldPrefs.a1[i].h);
+			oldPrefs.a2[i] = EndianS16_BtoN(oldPrefs.a2[i]);
+			oldPrefs.a3[i] = EndianS16_BtoN(oldPrefs.a3[i]);
+			oldPrefs.a4[i] = EndianS16_BtoN(oldPrefs.a4[i]);
+			oldPrefs.a5[i] = EndianS32_BtoN(oldPrefs.a5[i]);
+			for (x = 0; x<3; x++) {
+				oldPrefs.a6[x][i].v = EndianS16_BtoN(oldPrefs.a6[x][i].v);
+				oldPrefs.a6[x][i].h = EndianS16_BtoN(oldPrefs.a6[x][i].h);
+				oldPrefs.a7[x][i] = EndianS16_BtoN(oldPrefs.a7[x][i]);
+				oldPrefs.a8[x][i] = EndianS16_BtoN(oldPrefs.a8[x][i]);
+				oldPrefs.a9[x][i] = EndianS16_BtoN(oldPrefs.a9[x][i]);
+				oldPrefs.a10[x][i] = EndianS32_BtoN(oldPrefs.a10[x][i]);
+			}
+		}
+		for (i=0; i < 300; i++) {
+			oldPrefs.PianoKey[i] = EndianS16_BtoN(oldPrefs.PianoKey[i]);
+		}
+		
+		oldPrefs.LoopType = EndianS16_BtoN(oldPrefs.LoopType);
+		oldPrefs.SNumber = EndianS32_BtoN(oldPrefs.SNumber);
+		oldPrefs.checkSum = EndianS32_BtoN(oldPrefs.checkSum);
+		oldPrefs.Mz = EndianS32_BtoN(oldPrefs.Mz);
+		oldPrefs.firstStart = EndianU32_BtoN(oldPrefs.firstStart);
+		for (i=0; i < MAXTRACK; i++) {
+			oldPrefs.tracksColor[i].red = EndianU16_BtoN(oldPrefs.tracksColor[i].red);
+			oldPrefs.tracksColor[i].green = EndianU16_BtoN(oldPrefs.tracksColor[i].green);
+			oldPrefs.tracksColor[i].blue = EndianU16_BtoN(oldPrefs.tracksColor[i].blue);
+			//		oldPrefs.unused[i] = EndianS16_BtoL(oldPrefs.unused[i]);
+			oldPrefs.Previous_chanBus[i].copyId = EndianS16_BtoL(oldPrefs.Previous_chanBus[i].copyId);
+			oldPrefs.Previous_Sets[i].track = EndianS16_BtoL(oldPrefs.Previous_Sets[i].track);
+			oldPrefs.Previous_Sets[i].id = EndianS16_BtoL(oldPrefs.Previous_Sets[i].id);
+			oldPrefs.Previous_Sets[i].FXID = EndianS32_BtoL(oldPrefs.Previous_Sets[i].FXID);
+			oldPrefs.Previous_Sets[i].noArg = EndianS16_BtoL(oldPrefs.Previous_Sets[i].noArg);
+			for (x=0; x < 4; x++) {
+				oldPrefs.Previous_chanEffect[i][x] = EndianS32_BtoN(oldPrefs.Previous_chanEffect[i][x]);
+			}
+		}
+		
+		oldPrefs.PianoPos = EndianS16_BtoN(oldPrefs.PianoPos);
+		oldPrefs.volumeLevel = EndianS16_BtoN(oldPrefs.volumeLevel);
+		oldPrefs.TextS = EndianS16_BtoN(oldPrefs.TextS);
+		oldPrefs.OscilloSize = EndianS16_BtoN(oldPrefs.OscilloSize);
+		oldPrefs.OscilloType = EndianS16_BtoN(oldPrefs.OscilloType);
+		oldPrefs.fileTypeExportSND = EndianS16_BtoN(oldPrefs.fileTypeExportSND);
+		oldPrefs.CompressionExportSND = EndianU32_BtoN(oldPrefs.CompressionExportSND);
+		oldPrefs.SpectrumSize = EndianS16_BtoN(oldPrefs.SpectrumSize);
+		oldPrefs.SpectrumType = EndianS16_BtoN(oldPrefs.SpectrumType);
+		oldPrefs.numChn = EndianS16_BtoN(oldPrefs.numChn);
+		oldPrefs.outPutBits = EndianS16_BtoN(oldPrefs.outPutBits);
+		oldPrefs.outPutRate = EndianU32_BtoN(oldPrefs.outPutRate);
+		oldPrefs.outPutMode = EndianS16_BtoN(oldPrefs.outPutMode);
+		oldPrefs.driverMode = EndianS16_BtoN(oldPrefs.driverMode);
+		oldPrefs.MarkersSize = EndianS16_BtoN(oldPrefs.MarkersSize);
+		oldPrefs.MarkersOffSet = EndianS16_BtoN(oldPrefs.MarkersOffSet);
+		oldPrefs.MozartX = EndianS16_BtoN(oldPrefs.MozartX);
+		oldPrefs.FastDigitalEdition = EndianS32_BtoN(oldPrefs.FastDigitalEdition);
+		oldPrefs.KeyUpMode = EndianS16_BtoN(oldPrefs.KeyUpMode);
+		oldPrefs.MicroDelaySize = EndianS32_BtoN(oldPrefs.MicroDelaySize);
+		oldPrefs.MozartC1h = EndianS16_BtoN(oldPrefs.MozartC1h);
+		oldPrefs.MozartC2h = EndianS16_BtoN(oldPrefs.MozartC2h);
+		oldPrefs.SoundTypeSamp = EndianU32_BtoN(oldPrefs.SoundTypeSamp);
+		oldPrefs.SoundTypeIns = EndianU32_BtoN(oldPrefs.SoundTypeIns);
+		oldPrefs.LinesHeight = EndianS16_BtoN(oldPrefs.LinesHeight);
+		oldPrefs.softVolumeLevel = EndianS16_BtoN(oldPrefs.softVolumeLevel);
+		oldPrefs.ReverbSize = EndianS32_BtoN(oldPrefs.ReverbSize);
+		oldPrefs.ReverbStrength = EndianS32_BtoN(oldPrefs.ReverbStrength);
+		oldPrefs.ChannelType = EndianS16_BtoN(oldPrefs.ChannelType);
+		oldPrefs.amplitude = EndianS16_BtoN(oldPrefs.amplitude);
+		oldPrefs.Compressor = EndianU32_BtoN(oldPrefs.Compressor);
+		oldPrefs.FrequenceSpeed = EndianS32_BtoN(oldPrefs.FrequenceSpeed);
+		oldPrefs.TempsNum = EndianS16_BtoN(oldPrefs.TempsNum);
+		oldPrefs.TempsUnit = EndianS16_BtoN(oldPrefs.TempsUnit);
+		oldPrefs.TrackHeight = EndianS16_BtoN(oldPrefs.TrackHeight);
+		
+		for (i=0; i < 20; i++) {
+			oldPrefs.FKeyActive[i] = EndianS16_BtoN(oldPrefs.FKeyActive[i]);
+			oldPrefs.FKeyItem[i] = EndianS16_BtoN(oldPrefs.FKeyItem[i]);
+			oldPrefs.FKeyWind[i] = EndianS16_BtoN(oldPrefs.FKeyWind[i]);
+		}
+		
+		oldPrefs.yellC.red = EndianU16_BtoN(oldPrefs.yellC.red);
+		oldPrefs.yellC.green = EndianU16_BtoN(oldPrefs.yellC.green);
+		oldPrefs.yellC.blue = EndianU16_BtoN(oldPrefs.yellC.blue);
+		
+		oldPrefs.whichEditorPatterns = EndianS16_BtoN(oldPrefs.whichEditorPatterns);
+		oldPrefs.oversampling = EndianS32_BtoN(oldPrefs.oversampling);
+		oldPrefs.RAWBits = EndianS16_BtoN(oldPrefs.RAWBits);
+		oldPrefs.RAWRate = EndianS32_BtoN(oldPrefs.RAWRate);
+		oldPrefs.RAWLength = EndianS32_BtoN(oldPrefs.RAWLength);
+		oldPrefs.RAWHeader = EndianS32_BtoN(oldPrefs.RAWHeader);
+		oldPrefs.pianoOffset = EndianS16_BtoN(oldPrefs.pianoOffset);
+		oldPrefs.previousSpec.MAD = EndianU32_BtoN(oldPrefs.previousSpec.MAD);
+		oldPrefs.previousSpec.EPitch = EndianS32_BtoN(oldPrefs.previousSpec.EPitch);
+		oldPrefs.previousSpec.ESpeed = EndianS32_BtoN(oldPrefs.previousSpec.ESpeed);
+		oldPrefs.previousSpec.speed = EndianS16_BtoN(oldPrefs.previousSpec.speed);
+		oldPrefs.previousSpec.tempo = EndianS16_BtoN(oldPrefs.previousSpec.tempo);
+		
+		for (x = 0; x < EQPACKET*2; x++)
+		{
+			union {
+				UInt64 inte;
+				double doub;
+			} v;
+			v.doub = oldPrefs.Filter[x];
+			v.inte = EndianU64_BtoN(v.inte);
+			oldPrefs.Filter[x] = v.doub;
+		}
+		for (i=0; i < MAXWINDOWS; i++) {
+			oldPrefs.WinPos[i].v = EndianS16_BtoN(oldPrefs.WinPos[i].v);
+			oldPrefs.WinPos[i].h = EndianS16_BtoN(oldPrefs.WinPos[i].h);
+			oldPrefs.WinEtat[i] = EndianS16_BtoN(oldPrefs.WinEtat[i]);
+			oldPrefs.WinHi[i] = EndianS16_BtoN(oldPrefs.WinHi[i]);
+			oldPrefs.WinLarg[i] = EndianS16_BtoN(oldPrefs.WinLarg[i]);
+			oldPrefs.WinID[i] = EndianS32_BtoN(oldPrefs.WinID[i]);
+			
+			for (x = 0; x < 3; x++) {
+				oldPrefs.WinPosO[x][i].v = EndianS16_BtoN(oldPrefs.WinPosO[x][i].v);
+				oldPrefs.WinPosO[x][i].h = EndianS16_BtoN(oldPrefs.WinPosO[x][i].h);
+				oldPrefs.WinEtatO[x][i] = EndianS16_BtoN(oldPrefs.WinEtatO[x][i]);
+				oldPrefs.WinLargO[x][i] = EndianS16_BtoN(oldPrefs.WinLargO[x][i]);
+				oldPrefs.WinIDO[x][i] = EndianS32_BtoN(oldPrefs.WinIDO[x][i]);
+				oldPrefs.WinHiO[x][i] = EndianS16_BtoN(oldPrefs.WinHiO[x][i]);
+			}
+		}
+		
+		oldPrefs.lastVisualPlugin = EndianS16_BtoN(oldPrefs.lastVisualPlugin);
+		oldPrefs.channelNumber = EndianS16_BtoN(oldPrefs.channelNumber);
+		
+		oldPrefs.DirectDriverType.numChn = EndianS16_BtoN(oldPrefs.DirectDriverType.numChn);
+		oldPrefs.DirectDriverType.outPutBits = EndianS16_BtoN(oldPrefs.DirectDriverType.outPutBits);
+		oldPrefs.DirectDriverType.outPutRate = EndianU32_BtoN(oldPrefs.DirectDriverType.outPutRate);
+		oldPrefs.DirectDriverType.outPutMode = EndianS16_BtoN(oldPrefs.DirectDriverType.outPutMode);
+		oldPrefs.DirectDriverType.driverMode = EndianS16_BtoN(oldPrefs.DirectDriverType.driverMode);
+		oldPrefs.DirectDriverType.MicroDelaySize = EndianS32_BtoN(oldPrefs.DirectDriverType.MicroDelaySize);
+		oldPrefs.DirectDriverType.ReverbSize = EndianS32_BtoN(oldPrefs.DirectDriverType.ReverbSize);
+		oldPrefs.DirectDriverType.ReverbStrength = EndianS32_BtoN(oldPrefs.DirectDriverType.ReverbStrength);
+		oldPrefs.DirectDriverType.oversampling = EndianS32_BtoN(oldPrefs.DirectDriverType.oversampling);
+		for (i=0; i < 10; i++) {
+			oldPrefs.Previous_globalEffect[i] = EndianS16_BtoN(oldPrefs.Previous_globalEffect[i]);
+		}
+		
+	}
+#endif
+	if (oldPrefs.Version == VERSION && inOutBytes == sizeof(oldPrefs)) {
+		// SUCCES
+		
+		WriteCFPreferences();
+	}
 }
 
 void DoPreferences()
@@ -5437,37 +5776,8 @@ ReLoadPrefs:
 	iErr = FSpOpenDF(&spec, fsRdPerm, &fRefNum);
 	if (iErr == noErr) {
 		//If found, also delete old preferences
-		SInt64	inOutBytes;
-		Prefs	*tempPrefs;
-		
-		iErr = FSGetForkSize(fRefNum, &inOutBytes);
-		tempPrefs = (Prefs*)NewPtr(inOutBytes);
-		iErr = FSReadFork(fRefNum, fsAtMark, 0, inOutBytes, tempPrefs, NULL);
-		iErr = FSCloseFork(fRefNum);
-		SwapPrefs(tempPrefs);
-		
-		if (tempPrefs->Version != VERSION || inOutBytes != sizeof(Prefs)) {
-			iErr = FSpDelete(&spec);
-			
-			if (tempPrefs->Version >= 0x0500) {
-				// RECUPERATION DES VIEILLES PREFS
-			} else {
-				// DESTRUCTION TOTALE DES VIEILLES PREFS
-				
-				DisposePtr((Ptr)tempPrefs);
-				tempPrefs = NULL;
-			}
-			
-			goto ReLoadPrefs;
-		} else {
-			// SUCCES
-			
-			thePrefs = *tempPrefs;
-			DisposePtr((Ptr)tempPrefs);
-			tempPrefs = NULL;
-			WriteCFPreferences();
-			FSpDelete(&spec);
-		}
+		LoadOldFilePrefs(fRefNum);
+		iErr = FSpDelete(&spec);
 	}
 #if 0
 	if (iErr == fnfErr) {

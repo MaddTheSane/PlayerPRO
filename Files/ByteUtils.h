@@ -6,5 +6,3 @@
  *  Copyright 2009 __MyCompanyName__. All rights reserved.
  *
  */
-
-void SwapPrefs(Prefs *swapPrefs);

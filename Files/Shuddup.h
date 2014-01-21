@@ -8,13 +8,13 @@
 #include <Carbon/Carbon.h>
 #include <QuickTime/QuickTime.h>
 
-#pragma pack(push, 2)
-
 #define IsCodeOK() false
 static inline OSErr CallPlug(short item)
 {
 	return 0;
 }
+
+#pragma pack(push, 2)
 
 typedef struct MIDISettings
 {
@@ -33,7 +33,7 @@ enum
 	VolumeTE
 };
 
-#define MAXWINDOWS	90
+#define MAXWINDOWS 90
 
 struct OLDMADSpec
 {
@@ -65,37 +65,13 @@ struct OLDMADSpec
 
 typedef struct
 {
-	short			Version;
-	Boolean			Loop;
-	Boolean			Stereo;
 	Boolean			PPCMachine;
-	Boolean 		xxxxxxxx;
-	Fixed			Frequence;
-	Boolean			LargeWindow;
 	Boolean			AutoCreator;
-	Boolean			MicroRecording;
-	short			oldShort;
-	Boolean			AffichageDIGI;
 	short			NoStart;
-	Point			a1[ 30];
-	short			a2[ 30];
-	short			PianoKey[ 300];
-	Boolean			oldBool;
-	Boolean			InstruListBig;
-	Boolean			PatListBig;
-	Boolean			AutoScroll;
+	short			PianoKey[300];
 	short			LoopType;
-	short			a3[ 30];
-	Boolean			Registred;
-	long			SNumber;
-	Byte			Decode;
-	Str32			AutorName;
-	long			checkSum;
-	long			Mz;
-	unsigned long	firstStart;
-	short			a4[ 30];
+	//Str32			AutorName;
 	RGBColor		tracksColor[MAXTRACK];
-	short			unused[MAXTRACK];
 	short			PianoPos;
 	short			volumeLevel;
 	Boolean			MADCompression;
@@ -105,24 +81,18 @@ typedef struct
 	Boolean			FText;
 	Boolean			FStars;
 	Boolean			FBalls;
-	short			TextS;
 	Boolean			ThreadUse;
 	Boolean			FSinScroll;
 	Boolean			RememberMusicList;
 	Boolean			OscilloLine;
-	long			a5[30];
 	Boolean			DigitalInstru;
 	Boolean			DigitalNote;
 	Boolean			DigitalEffect;
 	Boolean			DigitalArgu;
 	Boolean			DigitalVol;
 	Boolean			GoToStop;
-	Boolean			DriverEffects[20];
-	Boolean			MADC;
 	short			OscilloSize;
 	short			OscilloType;
-	short			fileTypeExportSND;
-	OSType			CompressionExportSND;
 	Boolean			ActiveHelp;
 	short			SpectrumSize;
 	short			SpectrumType;
@@ -155,7 +125,6 @@ typedef struct
 	
 	Boolean			MacKeyBoard;
 	Boolean			MidiKeyBoard;
-	Boolean			QKMidiKeyBoard;
 	
 	Boolean			MIDIVelocity;
 	Boolean			MIDIChanInsTrack;
@@ -164,8 +133,6 @@ typedef struct
 	
 	/** News 4.5.1	**/
 	
-	Boolean			Interpolation;
-	Boolean			MicroDelay;
 	long			MicroDelaySize;
 	Boolean			surround;
 
@@ -179,10 +146,6 @@ typedef struct
 	Boolean			SaveMusicList;
 	short			softVolumeLevel;
 	
-	Boolean			oADAPremember;
-	Boolean			oADAPsave;
-	Boolean			oADAPuse;
-	
 	Boolean			osciTile;
 	
 	Boolean			addExtension;
@@ -192,8 +155,6 @@ typedef struct
 	Boolean			Reverb;
 	long			ReverbSize;
 	long			ReverbStrength;
-	
-	Boolean			oldDirectVideo;
 
 	/** News 4.5.3 **/
 	
@@ -201,7 +162,7 @@ typedef struct
 	Boolean			AutomaticOpen;
 	Boolean			FinePositioning;
 	
-	short			ChannelType;
+	//short			ChannelType;
 	short			amplitude;
 	OSType			Compressor;
 	Fixed			FrequenceSpeed;
@@ -219,11 +180,6 @@ typedef struct
 	short			FKeyActive[20];
 	short			FKeyItem[20];
 	short			FKeyWind[20];
-	
-	/** News 4.5.7 **/
-	
-	Boolean			NewPrefSystem;
-	unsigned char	NewPrefsCode[30];
 	
 	/** News 4.5.8 **/
 	
@@ -249,11 +205,6 @@ typedef struct
 	
 	Byte			SelectedTracks[MAXTRACK];
 	
-	Point			a6[3][30];
-	short			a7[3][30];
-	short			a8[3][30];
-	short			a9[3][30];
-	long			a10[3][30];
 	Str32			WinNames[3];
 	
 	// 5.2
@@ -291,17 +242,12 @@ typedef struct
 	
 	// 5.7
 	
-	long				Previous_globalEffect[ 10];
+	long				Previous_globalEffect[10];
 	Boolean				Previous_globalFXActive;
-	long				Previous_chanEffect[ MAXTRACK][ 4];
-	FXBus				Previous_chanBus[ MAXTRACK];
+	long				Previous_chanEffect[MAXTRACK][4];
+	FXBus				Previous_chanBus[MAXTRACK];
 	FXSets				Previous_Sets[MAXTRACK];
-	
-	// 5.8
-	
-	Str255				ASIODriverName;
-	
-}	Prefs;
+} Prefs;
 
 #pragma pack(pop)
 
@@ -384,7 +330,6 @@ void			AddMODList(Boolean, Str255 , short , long );
 pascal Boolean 	MyDlgFilter(DialogPtr, EventRecord *, short * );
 pascal Boolean 	MyDlgFilterSF(DialogPtr , EventRecord *, short *, void *);
 pascal Boolean 	mylClickLoop(void);
-void 			WritePreferences(void);
 void 			SwitchColor(short);
 void 			SetUpTracksMenu(void);
 void			CloseSoundInput(void);

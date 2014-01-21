@@ -1115,7 +1115,7 @@ Str255	str, bstr;
 	{
 		for (i = 0; i < 300; i++)
 		{
-			if (thePrefs.PianoKey[ (short) i] == x)
+			if (thePrefs.PianoKey[i] == x)
 			{
 				if (x + thePrefs.pianoOffset*12 >= 0 && x + thePrefs.pianoOffset*12 < NUMBER_NOTES)
 				{

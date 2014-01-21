@@ -5,6 +5,7 @@
 #include "Help.h"
 #include <stdio.h>
 #include <CoreMIDI/CoreMIDI.h>
+#include "PreferenceHandler.h"
 
 //#include "asiodrivers.h"
 
@@ -2993,7 +2994,7 @@ void ShowPrefs(short PrefStartup)
 	
 	if (itemHit == 1)
 	{
-		WritePreferences();
+		WriteCFPreferences();
 	}
 	else
 	{

@@ -12,10 +12,7 @@
 #include <CoreFoundation/CFBase.h>
 
 extern CFStringRef const PPPreferencesSet;
-extern CFStringRef const PPPreferencesVersion;
-extern CFStringRef const PPLoop;
-extern CFStringRef const PPXxx;
-extern CFStringRef const PPMainFreq;
+extern CFStringRef const PPAutoCreator;
 
 //Windows
 extern CFStringRef const PPWindowName1;

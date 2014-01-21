@@ -4749,7 +4749,7 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 				if (thePrefs.PianoKey[ (short) theChar] == MADDriver->pitchTable[ i * MAXSAMPLE +  0] ) break;
 			}*/
 			
-			i = thePrefs.PianoKey[ (short) theChar];
+			i = thePrefs.PianoKey[theChar];
 			
 			if (i != 0xFF && i != -1) i += thePrefs.pianoOffset*12;
 			

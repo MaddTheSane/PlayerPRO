@@ -31,11 +31,9 @@ void RegisterCFDefaults()
 	 registerDefaults:
 	 [NSDictionary dictionaryWithObjectsAndKeys:
 	  [NSNumber numberWithBool:YES], PPPreferencesSet,
-	  [NSNumber numberWithShort:VERSION], PPPreferencesVersion,
 	  [NSNumber numberWithBool:YES], PPMAddExtension,
 	  [NSNumber numberWithBool:YES], PPMMadCompression,
-	  [NSNumber numberWithBool:NO], PPXxx,
-	  [NSNumber numberWithUnsignedInt:57821163], PPMainFreq,
+	  [NSNumber numberWithBool:YES], PPAutoCreator,
 	  @"State 1", PPWindowName1,
 	  @"State 2", PPWindowName2,
 	  @"State 3", PPWindowName3,
@@ -60,7 +58,6 @@ void ReadCFPreferences()
 	NSString *tempStr;
 	thePrefs.addExtension = [defaults boolForKey:(NSString*)PPMAddExtension];
 	thePrefs.MADCompression = [defaults boolForKey:(NSString*)PPMMadCompression];
-	thePrefs.Version = [defaults integerForKey:(NSString*)PPPreferencesVersion];
 	thePrefs.OscilloLine = [defaults boolForKey:(NSString*)PPMOscilloscopeDrawLines];
 #define PPCOLOR(val) ReadCFPreferencesWithQDColor(PPCColor ## val, &thePrefs.tracksColor[val - 1])
 	PPCOLORPOPULATE();
@@ -70,8 +67,6 @@ void ReadCFPreferences()
 #else
 	thePrefs.PPCMachine = false;
 #endif
-	thePrefs.xxxxxxxx = [defaults boolForKey:(NSString*)PPXxx];
-	thePrefs.Frequence = [defaults integerForKey:(NSString*)PPMainFreq];
 	tempStr = [defaults stringForKey:(NSString*)PPWindowName1];
 	CFStringGetPascalString((CFStringRef)tempStr, thePrefs.WinNames[0], sizeof(thePrefs.WinNames[0]), kCFStringEncodingMacRoman);
 	tempStr = [defaults stringForKey:(NSString*)PPWindowName2];
@@ -88,12 +83,9 @@ void WriteCFPreferences()
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setBool:thePrefs.addExtension forKey:(NSString*)PPMAddExtension];
 	[defaults setBool:thePrefs.MADCompression forKey:(NSString*)PPMMadCompression];
-	[defaults setInteger:thePrefs.Version forKey:(NSString*)PPPreferencesVersion];
 #define PPCOLOR(val) WriteCFPreferencesWithQDColor(PPCColor ## val, thePrefs.tracksColor[val - 1])
 	PPCOLORPOPULATE();
 #undef PPCOLOR
-	[defaults setBool:thePrefs.xxxxxxxx forKey:(NSString*)PPXxx];
-	[defaults setInteger:thePrefs.Frequence forKey:(NSString*)PPMainFreq];
 	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs.WinNames[0], kCFStringEncodingMacRoman) autorelease] forKey:(NSString*)PPWindowName1];
 	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs.WinNames[1], kCFStringEncodingMacRoman) autorelease] forKey:(NSString*)PPWindowName2];
 	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs.WinNames[2], kCFStringEncodingMacRoman) autorelease] forKey:(NSString*)PPWindowName3];

@@ -10,10 +10,7 @@
 #import "NSColor+PPPreferences.h"
 
 CFStringRef const PPPreferencesSet = CFSTR("PlayerPRO 5 CoreFoundation Preferences set?");
-CFStringRef const PPPreferencesVersion = CFSTR("PreferenceVersion");
-CFStringRef const PPLoop = CFSTR("PlayerPROLoop");
-CFStringRef const PPXxx = CFSTR("xxxxxxxx");
-CFStringRef const PPMainFreq = CFSTR("PlayerPRO Main frequency");
+CFStringRef const PPAutoCreator = CFSTR("PlayerPRO5AutoCreator");
 
 CFStringRef const MADNativeUTI = CFSTR("com.quadmation.playerpro.madk");
 CFStringRef const MADGenericUTI = CFSTR("com.quadmation.playerpro.mad");
