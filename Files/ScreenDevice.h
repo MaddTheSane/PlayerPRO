@@ -10,7 +10,7 @@ GrafPtr	BeginFrame();
 void	EndFrame();
 void	ExitFullscreen();
 long	GetDisplayID(long inDeviceNum );
-long	GetDisplayIDWithXandY(long inX, long inY );
+long	GetDisplayIDWithXandY(long inX, long inY);
 void	DoFullScreenNow(WindowPtr mWind);
 
 

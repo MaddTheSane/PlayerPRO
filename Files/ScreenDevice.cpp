@@ -309,7 +309,7 @@ long ScreenDevice::GetDisplayID(long inDeviceNum)
 
 long ScreenDevice::GetDisplayID(long inX, long inY)
 {
-	OSStatus			err;
+	OSStatus			err = noErr;
 	DisplayIDType		id = 0;
 	Point				inPt;
 	

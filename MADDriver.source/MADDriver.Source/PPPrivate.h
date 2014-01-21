@@ -23,7 +23,7 @@ OSErr closeCoreAudio(MADDriverRec *inMADDriver);
 void StopChannelCA(MADDriverRec *inMADDriver);
 void PlayChannelCA(MADDriverRec *inMADDriver);
 
-CFMutableArrayRef GetDefaultPluginFolderLocations();
+CFMutableArrayRef GetDefaultPluginFolderLocations() CF_RETURNS_RETAINED;
 
 void GetPStrFromCFString(const CFStringRef source, StringPtr pStrOut);
 void **GetCOMPlugInterface(CFPlugInRef plugToTest, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID);

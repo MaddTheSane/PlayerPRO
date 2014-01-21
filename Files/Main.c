@@ -250,11 +250,18 @@ EXP void MyDebugStr(short line, Ptr file, Ptr text)
 	MyC2PStr((Ptr) dateS);
 	
 	ParamText(textS, fileS, lineS, dateS);
-	switch(Alert(130, NULL))
-	{
-		case 1:	return;				break;
-		case 5: Debugger();			break;
-		case 6: abort();			break;
+	switch (Alert(130, NULL)) {
+		case 1:
+			return;
+			break;
+			
+		case 5:
+			Debugger();
+			break;
+			
+		case 6:
+			abort();
+			break;
 	}
 }
 
@@ -265,8 +272,7 @@ void CloseALLWindow(void)
 	tempWind = FrontWindow();
 	aWind = GetNextWindow(tempWind);
 	
-	while (aWind != NULL)
-	{
+	while (aWind != NULL) {
 		ClosePlayerWindow(GetDialogFromWindow(aWind));
 		
 		aWind = GetNextWindow(aWind);
@@ -279,14 +285,13 @@ void TESTBugs(void)
 {
 	Handle	ttHdl;
 	
-	do
-	{
+	do {
 		ttHdl = NewHandleClear(5410);
 		if (ttHdl == NULL) MyDebugStr(__LINE__, __FILE__, "");
 		SetHandleSize(ttHdl, FreeMem() - 5000);
 		if (ttHdl != NULL) MyDisposHandle(& ttHdl);
 		
-	}while (Button() == false);
+	} while (Button() == false);
 	if (MemError() != noErr) MyDebugStr(__LINE__, __FILE__, "");
 }
 
