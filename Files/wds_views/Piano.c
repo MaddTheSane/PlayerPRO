@@ -5,62 +5,57 @@
 #include "PPPlug.h"
 #include "PrivateList.h"
 	
-	/******** HELP MODULE ********/
-	enum
-	{
-		HPiano	= 1,
-		HLeft	= 4,
-		HPref	= 5
-	};
-#define	AHELPSIZE	3
+/******** HELP MODULE ********/
+enum
+{
+	HPiano	= 1,
+	HLeft	= 4,
+	HPref	= 5
+};
+static short AHelp[] = {HPiano, HLeft, HPref};
 
-	static	short					AHelp[ AHELPSIZE] = { HPiano, HLeft, HPref};
-	
-	void DoHelpPiano(short **items, short *lsize)
-	{
-		*lsize = AHELPSIZE;
-		*items = AHelp;
-	}
+void DoHelpPiano(short **items, short *lsize)
+{
+	*lsize = sizeof(AHelp) / sizeof(AHelp[0]);
+	*items = AHelp;
+}
 
-	/*****************************/
+/*****************************/
 
-	enum
-	{
-		eLargePiano = 0,
-		eSmallPiano = 1
-	};
+enum
+{
+	eLargePiano = 0,
+	eSmallPiano = 1
+};
 
-	struct	LPoint
-	{
-			long		start;
-			long		end;
-	};
-	typedef		struct LPoint	LPoint;
+typedef struct LPoint {
+		long		start;
+		long		end;
+} LPoint;
 
+extern	EventRecord				theEvent;
+extern	DialogPtr				SampleDlog[], InstruListDlog, EditorDlog;
+extern	LPoint					SelecRect[65];
+extern	RGBColor				theColor;
+extern	Boolean					MIDIHardware, DragManagerUse;
+extern	WindowPtr				oldWindow;
 
-	extern	EventRecord				theEvent;
-	extern	DialogPtr				SampleDlog[], InstruListDlog, EditorDlog;
-	extern	LPoint					SelecRect[ 65];
-	extern	RGBColor				theColor;
-	extern	Boolean					MIDIHardware, DragManagerUse;
-	extern	WindowPtr				oldWindow;
-	
-			DialogPtr				PianoDlog;
-			short					LastCanal;
-	
-			PixMapHandle			PianoPix;
-	
-	extern	Boolean					PianoRecording;
-			
-	static	ControlHandle			PianoCtl, prefBut, leftBut, rightBut;
-	static 	char					thePressChar[ NUMBER_NOTES];
-	static	RGBColor				MyBlack = { 13107, 13107, 13107};
-			short					BlackWhite[ 12] ={	0,1,0,1,0,0,1,0,1,0,1,0};
-	static	short					PianoL, PianoH, pianoType;
-	static	Rect					PianoRect;
-	static	Rect					SPianoRect[ NUMBER_NOTES];
-	static	short 					gThumbPrev;
-	
+		DialogPtr				PianoDlog;
+		short					LastCanal;
+
+		PixMapHandle			PianoPix;
+
+extern	Boolean					PianoRecording;
+		
+static	ControlHandle			PianoCtl, prefBut, leftBut, rightBut;
+static 	char					thePressChar[NUMBER_NOTES];
+static	RGBColor				MyBlack = {13107, 13107, 13107};
+		short					BlackWhite[12] ={0, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 0};
+static	short					PianoL, PianoH, pianoType;
+static	Rect					PianoRect;
+static	Rect					SPianoRect[NUMBER_NOTES];
+static	short 					gThumbPrev;
+
 #define ToucheLarg		17
 #define ToucheHaut		29
 
@@ -75,7 +70,7 @@ void NPianoRecordProcess(short, short, short, short);
 
 short NewOffscreenPixMap(PixMapHandle *thePixMap, Rect *picRect);
 void DoPlaySamplePart(short Note, short Instru, long start, long end);
-void TurnRadio(short	item, DialogPtr	dlog, Boolean alors);
+void TurnRadio(short item, DialogPtr dlog, Boolean alors);
 short PicToPix (PicHandle thePic, PixMapHandle *offscreenPixMap);
 void DoPlayInstruInt(short	Note, short Instru, short effect, short arg, short vol, Channel *curVoice, long start, long end);
 
@@ -86,7 +81,6 @@ Boolean DragCommand(RgnHandle myRgn, Cmd myCmd, EventRecord *theEvent)
 	RgnHandle			dragRegion, tempRgn;
 	Point				theLoc;
 	DragReference		theDrag;
-	short				mouseDownModifiers, mouseUpModifiers;
 	Pcmd				*myPcmd;
 	Ptr					myText;
 	Rect				dragRegionRect;
@@ -140,52 +134,54 @@ Boolean DragCommand(RgnHandle myRgn, Cmd myCmd, EventRecord *theEvent)
 void CreatePianoPixMap(void)
 {
 	GDHandle			oldGDeviceH;
-	OSErr				errCode;
 	CGrafPtr			oldPort;
 	GWorldPtr			theGWorld = NULL;
-	Rect				aRect, nRect, tRect;
+	Rect				aRect, nRect;
 	short				i;
 	Str32				str;
 	
-	if (PianoPix != NULL) ZapPixMap(&PianoPix);
+	if (PianoPix != NULL)
+		ZapPixMap(&PianoPix);
 	
 	GetGWorld(&oldPort, &oldGDeviceH);
-
-	switch(pianoType)
-	{
+	
+	switch (pianoType) {
 		case eLargePiano:
-			 SetRect(&aRect, 0, 0, ToucheLarg * NUMBER_NOTES, ToucheHaut);
-		break;
-		
+			SetRect(&aRect, 0, 0, ToucheLarg * NUMBER_NOTES, ToucheHaut);
+			break;
+			
 		case eSmallPiano:
-			 SetRect(&aRect, 0, 0, SmallPianoLarg, SmallPianoHi);
-		break;
+			SetRect(&aRect, 0, 0, SmallPianoLarg, SmallPianoHi);
+			break;
 	}
-
-	NewGWorld(	&theGWorld, 8, &aRect, nil, nil, (GWorldFlags) 0);
+	
+	NewGWorld(&theGWorld, 8, &aRect, nil, nil, (GWorldFlags)0);
 	
 	if (NewOffscreenPixMap(&PianoPix, &aRect) != noErr) MyDebugStr(__LINE__, __FILE__, "Memory Error !!!");
-
+	
 	LockPixels(GetPortPixMap(theGWorld));
 	SetGWorld(theGWorld, NULL);
-
-	switch(pianoType)
-	{
+	
+	switch(pianoType) {
 		case eLargePiano:
-			ForeColor(blackColor);	BackColor(whiteColor);
-		
-			TextFont(4);	TextSize(9);
-		
+			ForeColor(blackColor);	
+			BackColor(whiteColor);
+			
+			TextFont(4);	
+			TextSize(9);
+			
 			SetRect(&nRect, 0, 0, ToucheLarg, ToucheHaut);
 			for (i = 0; i < NUMBER_NOTES; i++)
 			{
 				/** Touche **/
 				
-				if (BlackWhite[ i % 12])	RGBForeColor(&MyBlack);
-				else
-				{
-					if (thePrefs.PianoOctaveMarkers) SwitchColor(i/12);
-					else RGBForeColor(&theColor);
+				if (BlackWhite[i % 12])	
+					RGBForeColor(&MyBlack);
+				else {
+					if (thePrefs.PianoOctaveMarkers) 
+						SwitchColor(i/12);
+					else 
+						RGBForeColor(&theColor);
 				}
 				
 				PaintRect(&nRect);
@@ -213,97 +209,92 @@ void CreatePianoPixMap(void)
 			for (i = 0; i < NUMBER_NOTES; i++)
 			{
 				GetNoteString(i, str);
-			
+				
 				if (!BlackWhite[ i % 12]) ForeColor(blackColor);
 				else ForeColor(whiteColor);
-		
+				
 				MoveTo(2 + i * 17, 7);
 				DrawString(str);
 			}
 			ForeColor(blackColor);	BackColor (whiteColor);
-		break;
-		
+			break;
+			
 		case eSmallPiano:
 			ForeColor(blackColor);	BackColor(whiteColor);
+		{
+			PicHandle	aPict;
+			
+			aPict = GetPicture(225);
+			DrawPicture(aPict, &aRect);		//(*aPict)->picFrame
+			ReleaseResource((Handle) aPict);
+			
+			TextFont(4);	TextSize(9);
+			
+			for (i = 0; i < NUMBER_NOTES; i++)
 			{
-				PicHandle	aPict;
+				/** Caractre **/
 				
-				aPict = GetPicture(225);
-				DrawPicture(aPict, &aRect);		//(*aPict)->picFrame
-				ReleaseResource((Handle) aPict);
+				GetToucheRect(&aRect, i);
 				
-				TextFont(4);	TextSize(9);
+				MoveTo(aRect.left + 1 - PianoRect.left, aRect.bottom -3);
 				
-				for (i = 0; i < NUMBER_NOTES; i++)
+				if (!BlackWhite[ i % 12])
 				{
-					/** Caractre **/
-					
-					GetToucheRect(&aRect, i);
-					
-					MoveTo(aRect.left + 1 - PianoRect.left, aRect.bottom -3);
-					
-					if (!BlackWhite[ i % 12])
-					{
-						ForeColor(blackColor);
-						DrawChar(thePressChar[ i]);
-					}
-				}
-				
-				if (thePrefs.PianoOctaveMarkers)
-				{
-#define OCLARG 56
-				
-					SetRect(&aRect, 0, PianoRect.bottom - 10, OCLARG, PianoRect.bottom);
-				
-					for (i = 0 ; i < 8; i++)
-					{
-						SwitchColorBack(i);
-						
-						NumToString(i, str);
-						TETextBox(str+1, str[ 0], &aRect, teCenter);
-						
-						aRect.left += OCLARG;
-						aRect.right += OCLARG;
-					}
-					BackColor (whiteColor);
-					
-					SetRect(&aRect, 0, PianoRect.bottom - 10, OCLARG, PianoRect.bottom);
-					for (i = 0 ; i < 8; i++)
-					{
-						MoveTo(aRect.right, aRect.top);
-						LineTo(aRect.right, aRect.bottom);
-						aRect.left += OCLARG;
-						aRect.right += OCLARG;
-					}
+					ForeColor(blackColor);
+					DrawChar(thePressChar[ i]);
 				}
 			}
-			ForeColor(blackColor);	BackColor (whiteColor);
-		break;
+			
+			if (thePrefs.PianoOctaveMarkers)
+			{
+#define OCLARG 56
+				
+				SetRect(&aRect, 0, PianoRect.bottom - 10, OCLARG, PianoRect.bottom);
+				
+				for (i = 0 ; i < 8; i++)
+				{
+					SwitchColorBack(i);
+					
+					NumToString(i, str);
+					TETextBox(str+1, str[ 0], &aRect, teCenter);
+					
+					aRect.left += OCLARG;
+					aRect.right += OCLARG;
+				}
+				BackColor (whiteColor);
+				
+				SetRect(&aRect, 0, PianoRect.bottom - 10, OCLARG, PianoRect.bottom);
+				for (i = 0 ; i < 8; i++) {
+					MoveTo(aRect.right, aRect.top);
+					LineTo(aRect.right, aRect.bottom);
+					aRect.left += OCLARG;
+					aRect.right += OCLARG;
+				}
+			}
+		}
+			ForeColor(blackColor);	
+			BackColor(whiteColor);
+			break;
 	}
 	
-	CopyBits(	(BitMap*) *GetPortPixMap(theGWorld),
- 				(BitMap*) *PianoPix,
- 				&(*PianoPix)->bounds,
- 				&(*PianoPix)->bounds,
- 				srcCopy,
- 				NULL);
-
+	CopyBits((BitMap*)*GetPortPixMap(theGWorld),
+			 (BitMap*)*PianoPix,
+			 &(*PianoPix)->bounds,
+			 &(*PianoPix)->bounds,
+			 srcCopy,
+			 NULL);
+	
 	SetGWorld(oldPort, oldGDeviceH);
-
+	
  	UnlockPixels(GetPortPixMap(theGWorld));
 	DisposeGWorld(theGWorld);
 }
 
 void GetToucheRect(Rect *theRect, short Id)
 {
-short 	itemType;
-Handle 	itemHandle;
-Rect 	itemRect;
-
-	switch(pianoType)
-	{
+	switch(pianoType) {
 		case eSmallPiano:
-			*theRect = SPianoRect[ Id];
+			*theRect = SPianoRect[Id];
 			theRect->right -= GetControlValue(PianoCtl);
 			theRect->left -= GetControlValue(PianoCtl);
 			
@@ -327,36 +318,34 @@ Rect 	itemRect;
 
 void SetControlPiano(void)
 {
-long	maxValue, beforemax;
-long	beforeValue, aftervalue;
-short	itemType;
-Handle	itemHandle;
-Rect	caRect, itemRect;
+	Rect	caRect;
 	
 	// X Scroll
 	
 	GetPortBounds(GetDialogPort(PianoDlog), &caRect);
 	
 	MyMoveControl(PianoCtl, PianoRect.left, caRect.bottom-15);
-	MySizeControl(PianoCtl, caRect.right -14 - PianoRect.left, 16);
+	MySizeControl(PianoCtl, caRect.right - 14 - PianoRect.left, 16);
 	
-	if (caRect.right - PianoRect.left < PianoL) SetControlMaximum(PianoCtl, PianoL - (caRect.right - PianoRect.left));
-	else SetControlMaximum(PianoCtl, 0);
+	if (caRect.right - PianoRect.left < PianoL) 
+		SetControlMaximum(PianoCtl, PianoL - (caRect.right - PianoRect.left));
+	else
+		SetControlMaximum(PianoCtl, 0);
 	
 	SetControlMinimum(PianoCtl, 0);
 	
-	if (gUseControlSize) SetControlViewSize(PianoCtl, (caRect.right - PianoRect.left));
+	if (gUseControlSize)
+		SetControlViewSize(PianoCtl, (caRect.right - PianoRect.left));
 }
 
 void DoGrowPiano(void)
 {
-long		lSizeVH;
-GrafPtr		SavePort;
-Handle		itemHandle;
-Rect		caRect, itemRect, cellRect, temp;
-Point		theCell = { 0, 0}, aPt = { 0, 0};
-short		tempA, tempB, itemType;
-
+	long		lSizeVH;
+	GrafPtr		SavePort;
+	Rect		caRect, itemRect, cellRect, temp;
+	Point		aPt = { 0, 0};
+	short		tempA, tempB;
+	
 	GetPort(&SavePort);
  	SetPortDialogPort(PianoDlog);
 	
@@ -399,7 +388,7 @@ short		tempA, tempB, itemType;
 	GetPortBounds(GetDialogPort(PianoDlog), &caRect);
 	
 	InvalWindowRect(GetDialogWindow(PianoDlog), &caRect);
-
+	
 	SetPort(SavePort);
 }
 
@@ -409,30 +398,36 @@ void UpdatePianoInfo(void)
 	long		val;
 	Rect		caRect;
 	
-	if (PianoDlog == NULL) return;
+	if (PianoDlog == NULL)
+		return;
 
  	GetPort(&SavePort);
  	SetPortDialogPort(PianoDlog);
 	
 	val = GetControlValue(PianoCtl);
 	
-	if (thePrefs.SmallPiano) pianoType = eSmallPiano;
-	else pianoType = eLargePiano;
+	if (thePrefs.SmallPiano)
+		pianoType = eSmallPiano;
+	else
+		pianoType = eLargePiano;
 	
-	switch(pianoType)
-	{
+	switch (pianoType) {
 		case eLargePiano:
 			PianoL = ToucheLarg * NUMBER_NOTES;
 			PianoH = ToucheHaut;
-			PianoRect.left = 26;	PianoRect.right = PianoRect.left + PianoL;
-			PianoRect.top = 0;		PianoRect.bottom = PianoH;
+			PianoRect.left = 26;
+			PianoRect.right = PianoRect.left + PianoL;
+			PianoRect.top = 0;
+			PianoRect.bottom = PianoH;
 		break;
 		
 		case eSmallPiano:
 			PianoL = SmallPianoLarg;
 			PianoH = SmallPianoHi;
-			PianoRect.left = 26;	PianoRect.right = PianoRect.left + PianoL;
-			PianoRect.top = 0;		PianoRect.bottom = PianoH;
+			PianoRect.left = 26;
+			PianoRect.right = PianoRect.left + PianoL;
+			PianoRect.top = 0;
+			PianoRect.bottom = PianoH;
 			
 			NInitSmallPiano(PianoRect, SPianoRect);
 		break;
@@ -470,23 +465,21 @@ void MyTETextBox2(Str255 aStr, Rect *Zone)
 	
 	ForeColor(blackColor);
 	
-	MoveTo(Zone->left + ((Zone->right - Zone->left) - StringWidth(aStr))/2, Zone->bottom-3);
+	MoveTo(Zone->left + ((Zone->right - Zone->left) - StringWidth(aStr)) / 2, Zone->bottom - 3);
 
 	DrawString(aStr);
 }
 
 void AfficheTouche(short myTT, Rect *Zone, short Instru, short note)
 {
-Str32		aStr;
-RgnHandle	saveClip;
-Handle		itemHandle;
-Rect 		itemRect, rect2;
-short 		itemType;
-
+	Str32		aStr;
+	RgnHandle	saveClip;
+	Rect 		itemRect, rect2;
+	
 	Instru++;
 	NTStr(2, Instru, (Ptr) aStr+1);
 	aStr[ 0 ] = 2;
-
+	
 	saveClip = NewRgn();
  	GetClip(saveClip);
 	PianoRect.left++;
@@ -499,8 +492,8 @@ short 		itemType;
 			SwitchColor(myTT);
 			MyTETextBox2(aStr, Zone);
 			ForeColor(blackColor);
-		break;
-		
+			break;
+			
 		case eSmallPiano:
 			SwitchColor(myTT);
 			BackColor(whiteColor);
@@ -522,7 +515,7 @@ short 		itemType;
 			PaintRect(&rect2);
 			
 			ForeColor(blackColor);
-		break;
+			break;
 	}
 	
 	RGBBackColor(&theColor);
@@ -533,104 +526,94 @@ short 		itemType;
 
 void EffaceTouche(short Type, Rect *Zone)
 {
-short		i;
-RgnHandle	saveClip;
-Handle		itemHandle;
-Rect 		itemRect, tempRect;
-short 		itemType;
-
+	Rect 		tempRect;
+	
 	if (Type < 0) return;
-
-	if (Zone->left <= PianoRect.left)
-	{
+	
+	if (Zone->left <= PianoRect.left) {
 		Zone->left = PianoRect.left+1;
-		if (Zone->right <= PianoRect.left) return;
+		if (Zone->right <= PianoRect.left)
+			return;
 	}
-
+	
 	tempRect.left = GetControlValue(PianoCtl) + Zone->left - PianoRect.left;
 	tempRect.right = GetControlValue(PianoCtl) + Zone->right - PianoRect.left;
 	tempRect.top = Zone->top;
 	tempRect.bottom = Zone->bottom;
 	
 	CopyBits(	(BitMap*) *PianoPix,
- 				(BitMap*) *GetPortPixMap(GetDialogPort(PianoDlog)),
- 				&tempRect,
- 				Zone,
- 				srcCopy,
- 				NULL);
+			 (BitMap*) *GetPortPixMap(GetDialogPort(PianoDlog)),
+			 &tempRect,
+			 Zone,
+			 srcCopy,
+			 NULL);
 }
 
 void SelectTouche(short	i, short instru)
 {
-Rect		cellRect, itemRect;
-GrafPtr		SavePort;
-Point 		theCell;
-short		itemType;
-Handle		itemHandle;
-RgnHandle	saveClip;
-
-if (i < 0) return;
-if (PianoDlog == NULL) return;
-
-GetPort(&SavePort);
-SetPortDialogPort(PianoDlog);
-TextFont(4);	TextSize(9);
-
-saveClip = NewRgn();
-GetClip(saveClip);
-PianoRect.left++;
-ClipRect(&PianoRect);
-PianoRect.left--;
-
-GetToucheRect(&cellRect, i);
-
-if (instru == -1)
-{
-	instru = 0;
-	if (!GetIns(&instru, NULL)) goto Away;
-}
-
-AfficheTouche(LastCanal, &cellRect, instru, i);
-
+	Rect		cellRect;
+	GrafPtr		SavePort;
+	RgnHandle	saveClip;
+	
+	if (i < 0 || PianoDlog == NULL)
+		return;
+	
+	GetPort(&SavePort);
+	SetPortDialogPort(PianoDlog);
+	TextFont(4);
+	TextSize(9);
+	
+	saveClip = NewRgn();
+	GetClip(saveClip);
+	PianoRect.left++;
+	ClipRect(&PianoRect);
+	PianoRect.left--;
+	
+	GetToucheRect(&cellRect, i);
+	
+	if (instru == -1) {
+		instru = 0;
+		if (!GetIns(&instru, NULL))
+			goto Away;
+	}
+	
+	AfficheTouche(LastCanal, &cellRect, instru, i);
+	
 Away:
-
-SetClip(saveClip);
-DisposeRgn(saveClip);
+	
+	SetClip(saveClip);
+	DisposeRgn(saveClip);
 	
 	SetPort(SavePort);
 }
 
 void ResetPiano(void)
 {
-short			i;
-Rect		tempRect;
-GrafPtr		SavePort;
-
-if (PianoDlog == NULL) return;
-
-
-GetPort(&SavePort);
-SetPortDialogPort(PianoDlog);
-
-for(i=0; i<MAXTRACK;i++)
-{
-	if (OldTouches[i] != -1)
-	{
-		GetToucheRect(&tempRect, OldTouches[i]);
-		EffaceTouche(OldTouches[i], &tempRect);
+	short	i;
+	Rect	tempRect;
+	GrafPtr	SavePort;
+	
+	if (PianoDlog == NULL)
+		return;
+	
+	GetPort(&SavePort);
+	SetPortDialogPort(PianoDlog);
+	
+	for(i = 0; i<MAXTRACK; i++) {
+		if (OldTouches[i] != -1) {
+			GetToucheRect(&tempRect, OldTouches[i]);
+			EffaceTouche(OldTouches[i], &tempRect);
+		}
 	}
-}
-SetPort(SavePort);
+	SetPort(SavePort);
 }
 
 void DoNullPiano(void)
 {
-	Str255				String;
 	GrafPtr				SavePort;
-	short				temp, val,i, tag, InstruNo;
+	short				val,i;
  	Rect				tempRect;
  	Cmd					*theCommand;
- 	Boolean				memeTouche;
  	
  	if (PianoDlog == NULL) return;
  	if (OldPartitionReader == MADDriver->PartitionReader) return;
@@ -642,19 +625,15 @@ void DoNullPiano(void)
 	TextFont(4);
 	TextSize(9);
 
-	if (MusicPlayActive)
-	{
-		for(i=0; i<curMusic->header->numChn; i++)
-		{
+	if (MusicPlayActive) {
+		for (i = 0; i < curMusic->header->numChn; i++) {
 			theCommand = GetMADCommand(MADDriver->PartitionReader, i, curMusic->partition[ MADDriver->Pat ]);
 			val = theCommand->note;
 			
-			if (val != 0xFF)
-			{
+			if (val != 0xFF) {
 				// EFFACE LES VIEILLES TOUCHES
 				
-				if (OldTouches[i] != -1)
-				{
+				if (OldTouches[i] != -1) {
 					GetToucheRect(&tempRect, OldTouches[i]);
 					EffaceTouche(OldTouches[i], &tempRect);
 				}
@@ -673,62 +652,56 @@ void DoNullPiano(void)
 	SetPort(SavePort);
 }
 
-void  UpdatePianoWindow(DialogPtr  GetSelection)  	/* Pointer to this dialog */
+void  UpdatePianoWindow(DialogPtr GetSelection)  	/* Pointer to this dialog */
 { 
-		Rect   		caRect, tempRect, itemRect, srcRect;
- 		GrafPtr		SavePort;
- 		Point		theCell;
- 		Ptr			theStr;
- 		Str255		tempStr;
- 		short		i,itemType;
- 		Handle		itemHandle;
- 		PicHandle	aPict;
- 		RgnHandle	saveClip;
- 		RgnHandle	visibleRegion;
- 		
- 		
- 		GetPort(&SavePort);
- 		SetPortDialogPort(PianoDlog);
-
-		BeginUpdate(GetDialogWindow(PianoDlog));
-
-		GetDialogItem (GetSelection, 1, &itemType, &itemHandle, &itemRect);
-		
-		GetPortBounds(GetDialogPort(PianoDlog), &caRect);
-		
-		itemRect.bottom = PianoRect.top + (*PianoPix)->bounds.bottom;
-		itemRect.right = caRect.right;
-
-		tempRect.left = GetControlValue(PianoCtl);
-		tempRect.right = GetControlValue(PianoCtl) + itemRect.right - itemRect.left;
-		tempRect.top = 0;
-		tempRect.bottom = (*PianoPix)->bounds.bottom;
-		
-		CopyBits(	(BitMap*) *PianoPix,
- 					(BitMap*) *GetPortPixMap(GetDialogPort(GetSelection)),
- 					&tempRect,
- 					&itemRect,
- 					srcCopy,
- 					NULL);
-		
-		GetPortBounds(GetDialogPort(PianoDlog), &caRect);
-		
-		MoveTo(itemRect.left, 0);
-		LineTo(itemRect.left, caRect.bottom);
-		
-		visibleRegion = NewRgn();
-		
-		GetPortVisibleRegion(GetDialogPort(PianoDlog), visibleRegion);
-		
-		UpdateDialog(PianoDlog, visibleRegion);
-		
-		DisposeRgn(visibleRegion);
-		
-		DrawGrowIconP(PianoDlog);
-		
-		EndUpdate(GetDialogWindow(PianoDlog));
-
-		SetPort(SavePort);
+	Rect			caRect, tempRect, itemRect;
+	GrafPtr			SavePort;
+	Handle			itemHandle;
+	RgnHandle		visibleRegion;
+	DialogItemType	itemType;
+	
+	GetPort(&SavePort);
+	SetPortDialogPort(PianoDlog);
+	
+	BeginUpdate(GetDialogWindow(PianoDlog));
+	
+	GetDialogItem(GetSelection, 1, &itemType, &itemHandle, &itemRect);
+	
+	GetPortBounds(GetDialogPort(PianoDlog), &caRect);
+	
+	itemRect.bottom = PianoRect.top + (*PianoPix)->bounds.bottom;
+	itemRect.right = caRect.right;
+	
+	tempRect.left = GetControlValue(PianoCtl);
+	tempRect.right = GetControlValue(PianoCtl) + itemRect.right - itemRect.left;
+	tempRect.top = 0;
+	tempRect.bottom = (*PianoPix)->bounds.bottom;
+	
+	CopyBits((BitMap*)*PianoPix,
+			 (BitMap*)*GetPortPixMap(GetDialogPort(GetSelection)),
+			 &tempRect,
+			 &itemRect,
+			 srcCopy,
+			 NULL);
+	
+	GetPortBounds(GetDialogPort(PianoDlog), &caRect);
+	
+	MoveTo(itemRect.left, 0);
+	LineTo(itemRect.left, caRect.bottom);
+	
+	visibleRegion = NewRgn();
+	
+	GetPortVisibleRegion(GetDialogPort(PianoDlog), visibleRegion);
+	
+	UpdateDialog(PianoDlog, visibleRegion);
+	
+	DisposeRgn(visibleRegion);
+	
+	DrawGrowIconP(PianoDlog);
+	
+	EndUpdate(GetDialogWindow(PianoDlog));
+	
+	SetPort(SavePort);
 }
 
 /*void TrackRect(Rect	*itemRect)
@@ -745,61 +718,58 @@ InvertRect(itemRect);
 
 extern	DialogPtr	AdapDlog;
 
-pascal void actionPiano( ControlHandle	theControl,  short			ctlPart)
+pascal void actionPiano(ControlHandle theControl, short ctlPart)
 {
-long			lRefCon;
-Handle			itemHandle;
-short			itemType, maxValue, minValue, curVal, copyval;
-RgnHandle		aRgn;
-Rect			caRect, itemRect;
-
-if (ctlPart <= 0) return;
-
-maxValue = GetControlMaximum(theControl);
-minValue = GetControlMinimum(theControl);
-copyval = curVal = GetControlValue(theControl);
-
-GetPortBounds(GetDialogPort(PianoDlog), &caRect);
-
-	switch(ctlPart)
-	{
+	short			maxValue, minValue, curVal, copyval;
+	Rect			caRect, itemRect;
+	
+	if (ctlPart <= 0) 
+		return;
+	
+	maxValue = GetControlMaximum(theControl);
+	minValue = GetControlMinimum(theControl);
+	copyval = curVal = GetControlValue(theControl);
+	
+	GetPortBounds(GetDialogPort(PianoDlog), &caRect);
+	
+	switch (ctlPart) {
 		case kControlUpButtonPart:
 			curVal -= ToucheLarg;
 			if (curVal < minValue) curVal = minValue;
-		break;
-		
+			break;
+			
 		case kControlDownButtonPart:
 			curVal += ToucheLarg;
 			if (curVal > maxValue) curVal = maxValue;
-		break;
-		
+			break;
+			
 		case kControlPageUpPart:
 			curVal -= caRect.right;
 			
 			if (curVal < minValue) curVal = minValue;
-		break;
-		
+			break;
+			
 		case kControlPageDownPart:
 			curVal += caRect.right;
 			
-			if (curVal > maxValue) curVal = maxValue;
-		break;
-		
+			if (curVal > maxValue) 
+				curVal = maxValue;
+			break;
+			
 		case kControlIndicatorPart:
 			copyval = gThumbPrev;
 			gThumbPrev = curVal;
-		break;
+			break;
 	}
-		
-	if (copyval != curVal)
-	{
-		RgnHandle	aRgn;
 	
+	if (copyval != curVal) {
+		RgnHandle	aRgn;
+		
 		SetControlValue(theControl, curVal);
 		
 		itemRect = PianoRect;
 		itemRect.left++;
-	//	itemRect.bottom--;
+		//	itemRect.bottom--;
 		itemRect.right = caRect.right;
 		
 		aRgn = NewRgn();
@@ -814,8 +784,6 @@ GetPortBounds(GetDialogPort(PianoDlog), &caRect);
 
 void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit ID to pass to Dialog function */
 {
-	Cell				theCell;
-	long				tempLong;
 	short				temp = 0, ctlPart, oldtemp, itemType, bogus, i;
 	Rect				caRect, cellRect, tempRect, aRect;
 	GrafPtr				SavePort;
@@ -836,15 +804,13 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 		GlobalToLocal(&myPt);
 		
 		GetDialogItem(whichDialog, 1, &itemType, &itemHandle, &tempRect);
-		if (PtInRect(myPt, &tempRect))
-		{
+		if (PtInRect(myPt, &tempRect)) {
 			theControl = NULL;
 			if (TestControl( PianoCtl, myPt)) theControl = PianoCtl;
 			
 			GetPortBounds(GetDialogPort(whichDialog), &caRect);
 			
-			if (theControl)
-			{
+			if (theControl) {
 				MyControlUPP = NewControlActionUPP(actionPiano);
 				gThumbPrev = GetControlValue(theControl);
 				TrackControl(theControl, myPt, MyControlUPP);
@@ -880,10 +846,8 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 								tPt = myPt;
 								tPt.h += GetControlValue(PianoCtl);
 								
-								for (i = 0; i < NUMBER_NOTES; i++)
-								{
-									if (PtInRect(tPt, &SPianoRect[ i]))
-									{
+								for (i = 0; i < NUMBER_NOTES; i++) {
+									if (PtInRect(tPt, &SPianoRect[i])) {
 										temp = i;
 										if (SPianoRect[ i].right - SPianoRect[ i].left == 5) break;
 									}
@@ -891,15 +855,12 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 								break;
 						}
 						
-						if (temp >= 0 && temp < NUMBER_NOTES)
-						{
-							if (oldtemp != temp)
-							{
-								GetToucheRect(&tempRect,  oldtemp);
+						if (temp >= 0 && temp < NUMBER_NOTES) {
+							if (oldtemp != temp) {
+								GetToucheRect(&tempRect, oldtemp);
 								EffaceTouche(oldtemp, &tempRect);
 								
-								switch(thePrefs.KeyUpMode)
-								{
+								switch(thePrefs.KeyUpMode) {
 									case eStop:
 										MADDriver->chan[ LastCanal].loopBeg = 0;
 										MADDriver->chan[ LastCanal].loopSize = 0;
@@ -914,10 +875,8 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 							
 							GetPortBounds(GetDialogPort(PianoDlog), &caRect);
 							
-							if (myPt.h < PianoRect.left)
-							{
-								if (GetControlValue(PianoCtl) - ToucheLarg >= 0)
-								{
+							if (myPt.h < PianoRect.left) {
+								if (GetControlValue(PianoCtl) - ToucheLarg >= 0) {
 									SetControlValue(PianoCtl, GetControlValue(PianoCtl) - ToucheLarg);
 									InvalWindowRect(GetDialogWindow(PianoDlog), &PianoRect);
 									UpdatePianoWindow(PianoDlog);
@@ -925,9 +884,7 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 									myPt.h += ToucheLarg;
 									
 									oldtemp = -1;
-								}
-								else if (GetControlValue(PianoCtl) - 1 >= 0)
-								{
+								} else if (GetControlValue(PianoCtl) - 1 >= 0) {
 									SetControlValue(PianoCtl, GetControlMinimum(PianoCtl));
 									InvalWindowRect(GetDialogWindow(PianoDlog), &PianoRect);
 									UpdatePianoWindow(PianoDlog);
@@ -936,11 +893,8 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 									
 									oldtemp = -1;
 								}
-							}
-							else if (myPt.h > caRect.right)
-							{
-								if (GetControlValue(PianoCtl) + ToucheLarg + caRect.right - PianoRect.left <= PianoL)
-								{
+							} else if (myPt.h > caRect.right) {
+								if (GetControlValue(PianoCtl) + ToucheLarg + caRect.right - PianoRect.left <= PianoL) {
 									SetControlValue(PianoCtl, GetControlValue(PianoCtl) + ToucheLarg);
 									InvalWindowRect(GetDialogWindow(PianoDlog), &PianoRect);
 									UpdatePianoWindow(PianoDlog);
@@ -948,9 +902,7 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 									myPt.h -= ToucheLarg;
 									
 									oldtemp = -1;
-								}
-								else if (GetControlValue(PianoCtl) + 1 + caRect.right - PianoRect.left <= PianoL)
-								{
+								} else if (GetControlValue(PianoCtl) + 1 + caRect.right - PianoRect.left <= PianoL) {
 									SetControlValue(PianoCtl, GetControlMaximum(PianoCtl));
 									InvalWindowRect(GetDialogWindow(PianoDlog), &PianoRect);
 									UpdatePianoWindow(PianoDlog);
@@ -961,34 +913,30 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 								}
 							}
 							
-							if (oldtemp != temp)
-							{
+							if (oldtemp != temp) {
 								oldtemp = temp;
 								
 								SelectTouche(temp, -1);
 								SelectToucheMozart(temp + 1, 0);
 								
-								if (GetIns(&bogus, NULL))
-								{
+								if (GetIns(&bogus, NULL)) {
 									short	track = GetWhichTrackPlay();
 									short	eff = 0, arg = 0, volCmd = 0xFF;
 									
-									if (PianoRecording) NPianoRecordProcess(temp, -1, 0xFF, track);
-									else if (oldWindow == GetDialogWindow(EditorDlog)) DigitalEditorProcess(temp  + 2, &eff, &arg, &volCmd);
+									if (PianoRecording) 
+										NPianoRecordProcess(temp, -1, 0xFF, track);
+									else if (oldWindow == GetDialogWindow(EditorDlog))
+										DigitalEditorProcess(temp  + 2, &eff, &arg, &volCmd);
 									
 									
-									if(	SampleDlog[ bogus] != NULL &&
-									   SelecRect[ bogus].end != SelecRect[ bogus].start)
-									{
+									if (SampleDlog[bogus] != NULL &&
+									   SelecRect[bogus].end != SelecRect[bogus].start) {
 										DoPlayInstruInt(temp, bogus, eff, arg, volCmd, &MADDriver->chan[ track], SelecRect[ bogus].start, SelecRect[ bogus].end);
-									}
-									else
-									{
+									} else {
 										DoPlayInstruInt(temp , bogus, eff, arg, volCmd, &MADDriver->chan[ track], 0, 0);
 									}
 									
-									if (pianoType == eSmallPiano)
-									{
+									if (pianoType == eSmallPiano) {
 										Rect	 itemRect;
 										
 										GetDialogItem(whichDialog, 6, &itemType, &itemHandle, &itemRect);
@@ -1000,8 +948,7 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 								}
 							}
 							
-							if (myPt.v < 0 && DragManagerUse == true)
-							{
+							if (myPt.v < 0 && DragManagerUse == true) {
 								myRgn = NewRgn();
 								
 								GetToucheRect(&aRect,  temp);
@@ -1013,8 +960,7 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 								theEvent.where.h = aRect.left + (aRect.right - aRect.left)/2;
 								LocalToGlobal(&theEvent.where);
 								
-								if (GetIns(&bogus, NULL))
-								{
+								if (GetIns(&bogus, NULL)) {
 									myCmd.ins = bogus + 1;
 									myCmd.note = temp;
 									myCmd.cmd = 0;
@@ -1026,40 +972,35 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 								DisposeRgn(myRgn);
 							}
 						}
-					}
-					while (Button());
+					} while (Button());
 					
 					GetToucheRect(&tempRect,  oldtemp);
 					EffaceTouche(oldtemp, &tempRect);
 					SelectToucheMozart(-1, 0);
 					
-					if (pianoType == eSmallPiano)
-					{
+					if (pianoType == eSmallPiano) {
 						Rect	 itemRect;
 						
 						GetDialogItem(whichDialog, 6, &itemType, &itemHandle, &itemRect);
 						EraseRect(&itemRect);
 					}
 					
-					switch(thePrefs.KeyUpMode)
-					{
+					switch(thePrefs.KeyUpMode) {
 						case eStop:
-							MADDriver->chan[ LastCanal].loopBeg = 0;
-							MADDriver->chan[ LastCanal].loopSize = 0;
-							MADDriver->chan[ LastCanal].maxPtr = MADDriver->chan[ LastCanal].curPtr;
+							MADDriver->chan[LastCanal].loopBeg = 0;
+							MADDriver->chan[LastCanal].loopSize = 0;
+							MADDriver->chan[LastCanal].maxPtr = MADDriver->chan[ LastCanal].curPtr;
 							break;
 							
 						case eNoteOFF:
-							MADDriver->chan[ LastCanal].KeyOn = false;
+							MADDriver->chan[LastCanal].KeyOn = false;
 							break;
 					}
 					
-					if (MADDriver->DriverSettings.driverMode == MIDISoundDriver)
-					{
-						if (MADDriver->NoteOld[ LastCanal] != -1)
-						{
-							NoteOff(MADDriver->InstuNoOld[ LastCanal], MADDriver->NoteOld[ LastCanal], MADDriver->VelocityOld[ LastCanal], MADDriver);
-							MADDriver->NoteOld[ LastCanal] = -1;
+					if (MADDriver->DriverSettings.driverMode == MIDISoundDriver) {
+						if (MADDriver->NoteOld[LastCanal] != -1) {
+							NoteOff(MADDriver->InstuNoOld[LastCanal], MADDriver->NoteOld[LastCanal], MADDriver->VelocityOld[LastCanal], MADDriver);
+							MADDriver->NoteOld[LastCanal] = -1;
 						}
 					}
 				}
@@ -1069,8 +1010,7 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 		switch(whichItem)
 		{
 			case 5:
-				if (GetControlHilite(prefBut) == 0 && MyTrackControl(prefBut, theEvent.where, NULL))
-				{
+				if (GetControlHilite(prefBut) == 0 && MyTrackControl(prefBut, theEvent.where, NULL)) {
 #include "Help.h"
 					
 					ShowPrefs(EDITOR);
@@ -1080,8 +1020,7 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 			case 7:	// Right
 				if (GetControlHilite(rightBut) == 0 && MyTrackControl(rightBut, theEvent.where, NULL))
 				{
-					if (thePrefs.pianoOffset < 7)
-					{
+					if (thePrefs.pianoOffset < 7) {
 						thePrefs.pianoOffset++;
 						UpdatePianoInfo();
 					}
@@ -1089,10 +1028,8 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 				break;
 				
 			case 4:	// Left
-				if (GetControlHilite(leftBut) == 0 && MyTrackControl(leftBut, theEvent.where, NULL))
-				{
-					if (thePrefs.pianoOffset > -7)
-					{
+				if (GetControlHilite(leftBut) == 0 && MyTrackControl(leftBut, theEvent.where, NULL)) {
+					if (thePrefs.pianoOffset > -7) {
 						thePrefs.pianoOffset--;
 						UpdatePianoInfo();
 					}
