@@ -9,9 +9,6 @@ extern	KeyMap			km;
 extern	Boolean			HelpAvalaible;
 
 static	TEHandle 			hTE;
-static	long				curPosT;
-static	Rect				scrollRect, textRect;
-static	Point				zeroPt;
 		DialogPtr			HelpDlog;
 static	StScrpHandle		theStyle;
 static	Ptr				Text;
@@ -57,12 +54,9 @@ void ShowSection(short selectionID)
 
 void ChangeMenuName(Str255 curN)
 {
-	long		Result;
-	short	PourCent, itemHit,i;
+	short		itemHit;
 	DialogPtr	TheDia;
-	Str255	theStr, aStr, aStr2;
-	GrafPtr	myPort;
-	Point		theCell;
+	GrafPtr		myPort;
 	
 	GetPort(&myPort);
 
@@ -73,13 +67,13 @@ void ChangeMenuName(Str255 curN)
 	SetDText(TheDia, 4, curN);
 	SelectDialogItemText(TheDia, 4, 0, 32767);
 	
-	do
-	{
+	do {
 		ModalDialog(MyDlgFilterDesc, &itemHit);
 	
-	}while (itemHit != 1 && itemHit != 2);
+	} while (itemHit != 1 && itemHit != 2);
 
-	if (itemHit == 1) GetDText(TheDia, 4, curN);
+	if (itemHit == 1)
+		GetDText(TheDia, 4, curN);
 	
 	DisposeDialog(TheDia);
 }
@@ -151,12 +145,10 @@ void UpdateSection(void)
 
 void CreateHelpOnline(short whichSection)
 {
-	short			itemType,itemHit, iFileRefI, iFileRef, cVRef;
+	short			iFileRefI;
 	GrafPtr			myPort;
-	Handle			itemHandle;
 	Rect			itemRect;
-	Boolean			ScrollBasActive;
-	long			GestaltResponse, inOutBytes, cParID;
+	long			inOutBytes;
 	OSErr			iErr;
 	FSSpec			spec;
 	
@@ -269,11 +261,10 @@ void CloseHelpOnline(void)
 
 void DoGrowHelpOnline(void)
 {
-	long		lSizeVH;
-	GrafPtr		SavePort;
-	Rect		caRect, temp, cellRect, tempRect;
-	short		cur, tempB, tempA, itemType, avant;
-	Handle		itemHandle;
+	long	lSizeVH;
+	GrafPtr	SavePort;
+	Rect	caRect, temp;
+	short	tempB, tempA;
 
 	GetPort(&SavePort);
  	SetPortDialogPort(HelpDlog);
@@ -328,23 +319,18 @@ void DoGrowHelpOnline(void)
 
 void DoItemPressHelpOnline(short whichItem, DialogPtr whichDialog)
 {
-	short		bogus,itemType, ctlPart, i;
-	Point			Location, myPt;
-	Handle		itemHandle;
-	Rect			caRect, itemRect;
-	ControlHandle	theControl;
-	RgnHandle		saveClip;
-	GrafPtr		savePort;
-	long			mresult;
-	Str255		rName;
+	Point	myPt;
+	Rect	caRect, itemRect;
+	GrafPtr	savePort;
+	long	mresult;
+	Str255	rName;
 	
 	GetPort(&savePort);
 	SetPortDialogPort(whichDialog);
 	
 	TextFont(4);	TextSize(9);
 	
-	if (theEvent.what == mouseDown) /* See if a mouse click */
-	{
+	if (theEvent.what == mouseDown) { /* See if a mouse click */
 		DoContentHelp(GetDialogWindow(HelpDlog), &theEvent);
 		
 		GetPortBounds(GetDialogPort(HelpDlog), &caRect);
@@ -357,8 +343,7 @@ void DoItemPressHelpOnline(short whichItem, DialogPtr whichDialog)
 		myPt = theEvent.where;
 		GlobalToLocal(&myPt);
 		
-		if (PtInRect(myPt, &itemRect))
-		{
+		if (PtInRect(myPt, &itemRect)) {
 			InsertMenu(sectMenu, hierMenu );
 
 			myPt.v = itemRect.top + 4;	myPt.h = itemRect.left;
@@ -366,18 +351,18 @@ void DoItemPressHelpOnline(short whichItem, DialogPtr whichDialog)
 			
 			SetItemMark(sectMenu, curSect + 1, 0xa5);
 			
-			mresult = PopUpMenuSelect(	sectMenu,
-									myPt.v,
-									myPt.h,
-									curSect + 1);
+			mresult = PopUpMenuSelect(sectMenu,
+									  myPt.v,
+									  myPt.h,
+									  curSect + 1);
 										
 			SetItemMark(sectMenu, curSect + 1, 0);
 		
-			if (HiWord(mresult ) != 0 )
-			{
-				curSect = (Byte) LoWord(mresult) - 1;
+			if (HiWord(mresult ) != 0) {
+				curSect = (Byte)LoWord(mresult) - 1;
 				
-				itemRect.left = 0;		itemRect.right = 170;
+				itemRect.left = 0;
+				itemRect.right = 170;
 				itemRect.top += 2;
 				EraseRect(&itemRect);
 				InvalWindowRect(GetDialogWindow(HelpDlog), &itemRect);

@@ -192,9 +192,8 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 					for (x = 0; x < InsHeader->numSamples; x++)
 					{
 						sData	*curData;
-						long	size, i;
-						long 	finetune[ 16] = 
-						{
+						long	i;
+						long 	finetune[16] =  {
 							7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280,
 							8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
 						};
@@ -333,7 +332,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 			{
 				// Write instrument header
 				
-				short			u, v, p, i, x;
+				short			u, i, x;
 				long			inOutCount = 0;
 				//long			ihsizecopy, ihssizecopy;
 				XMPATCHHEADER	pth;

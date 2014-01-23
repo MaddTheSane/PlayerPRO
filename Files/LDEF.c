@@ -41,15 +41,8 @@ void MDrawTheText(Rect *bounds, Str255 data, Boolean selected, Str63 Str)
 
 void MDrawItem(Boolean selected, Rect* bounds, Str255 data, Str63 Str, FSSpec	*spec)
 {
-	PenState			ps;
-	short			iconID;
-	Boolean			doNewWay;
-	IconTransformType	iconTransform;
-	Rect				iconRect;
-	Boolean			itemEnabled = true;
-	Handle			gTheSuite;
-	OSErr			iErr;
-	FInfo				fndrInfo;
+	Rect	iconRect;
+	OSErr	iErr;
 	
 	iconRect.left		= bounds->left + 6;			// 21
 	iconRect.top		= bounds->top + 2;

@@ -65,14 +65,9 @@ enum
 	extern	MenuHandle				OsciHMenu, SpectrumTypeMenu;
 	extern	long					deviceBufferSize;
 
-	static	RgnHandle				dlogptrRgn;
-	static	Point					PP, De;
-	static	Point					WinZero;
-			
-	static	Ptr						PseudoSilence, ValSaveData, SpotData, SpotTimeData;
+	static	Ptr						ValSaveData, SpotData, SpotTimeData;
 	static	long					oldNullTicks;
 	static	ControlHandle			HControl, VControl;
-	static	Ptr						*CurrentQuick;
 	static	Boolean					KOKO;
 	static	PixMapHandle			specPixMap[ 2];
 	static	long					*CurrentQuickPixMap;
@@ -120,7 +115,7 @@ void GetWorkingZoneSpectrum(Rect	*myRect)
 
 void FillInterTextSpectrum(Rect *tempRect, short i)
 {
-	Str255		aStr, bStr, cStr;
+	Str255		aStr, bStr;
 	long		defV = 1;
 	
 	switch(OsciType)
@@ -244,25 +239,25 @@ void SetControlSpectrum(void)
 	{
 		short i;
 		
-		for (i = 0; i < OsciNo; i++)
-		{
+		for (i = 0; i < OsciNo; i++) {
 			Rect	tempRect;
-			long	bb, rowbytes;
 			
-			if (specPixMap[ i] != NULL) ZapPixMap(&specPixMap[ i]);
+			if (specPixMap[i] != NULL)
+				ZapPixMap(&specPixMap[i]);
 			
 			tempRect.left	= 0;
 			tempRect.right	= caRect.right-15;
 			tempRect.top	= 0;
 			tempRect.bottom	= OsciH;
 			
-			NewOffscreenPixMap(&specPixMap[ i], &tempRect);
-			ErasePixMap(specPixMap[ i]);
+			NewOffscreenPixMap(&specPixMap[i], &tempRect);
+			ErasePixMap(specPixMap[i]);
 			
-			if (i == 0) ComputeCurrentQuickPixMapSpec();
+			if (i == 0)
+				ComputeCurrentQuickPixMapSpec();
 			
 			ForeColor(redColor);
-			DrawOsciFreq2(osci[ i].Freq, osci[ i].VPos, (OsciOffSet/2)*2, i, 215);
+			DrawOsciFreq2(osci[i].Freq, osci[i].VPos, (OsciOffSet / 2) * 2, i, 215);
 			ForeColor(blackColor);
 		}
 	}

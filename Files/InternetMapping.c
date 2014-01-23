@@ -38,14 +38,13 @@ void ChangeMapping(ICInstance inst, Handle prefh, long pos, OSType type, unsigne
 
 void SetInternetMapping(void)
 {
-	OSStatus		err;
-    ICInstance		inst;
-    long			startSel, count, i, pos = 0;
-    long			endSel;
-	ICAttr			attr;
-	Handle			prefh;
-	ICMapEntry		entry;
-	Boolean			madk, madi, madh, mad, xm, mod, s3m, it;
+	OSStatus	err;
+    ICInstance	inst;
+    long		count, i, pos = 0;
+	ICAttr		attr;
+	Handle		prefh;
+	ICMapEntry	entry;
+	Boolean		madk, madi, madh, mad, xm, mod, s3m, it;
 	
 	madk = madi = madh = mad = xm = mod = s3m = it = false;
 	

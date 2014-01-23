@@ -18,7 +18,6 @@ pascal OSErr MyProgressUPP(Movie theMovie, short message, short whatOperation, F
 void ImportAudioCD()
 {
 	MovieImportComponent	ci;
-	OSType			fileType;
 	FSSpec			newfile;
 	OSErr			iErr;
 	Boolean			canceled;
@@ -31,8 +30,7 @@ void ImportAudioCD()
 	FInfo			fndrInfo;
 	MovieProgressUPP	progressUPP;
 	
-	if (!GetIns(&ins, &samp))
-	{
+	if (!GetIns(&ins, &samp)) {
 		Erreur(13, ins);
 		return;
 	}

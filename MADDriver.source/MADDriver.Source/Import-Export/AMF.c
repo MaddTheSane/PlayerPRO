@@ -71,9 +71,6 @@ static OSErr AMF2Mad(Ptr AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSetti
 {
 	Byte			tempByte;
 	short			i, x, noIns, tempShort, trackCount, trckPtr, t;
-	long			inOutCount, OffSetToSample = 0, z;
-	OSErr			theErr = noErr;
-	Ptr				tempPtr;
 	OSType			AMFType;
 	/*SInt32			finetune[16] =
 	{

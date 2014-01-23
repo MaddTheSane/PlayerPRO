@@ -336,7 +336,7 @@ void FFT8S(char* SData, long size, double *filter, MADDriverRec *intDriver, shor
 		
 		if (shift)
 		{
-			long shiftval, a;//, b;
+			long a;
 			
 			for (i = 0 ; i < powersize; i++)
 			{
@@ -561,7 +561,7 @@ void FFT16S(short* SData, long size, double *filter, MADDriverRec *intDriver, sh
 		
 		if (shift)
 		{
-			long shiftval, a, b;
+			long a, b;
 			
 			for (i = 0 ; i < powersize; i++)
 			{

@@ -68,10 +68,8 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 	Size		actualSize;
 	AEKeyword	keywd;
 	DescType	returnedType;
-	Point		theCell;
 	FInfo		fndrInfo;
 	CInfoPBRec	info;
-	Str255		aStr;
 	
 	// get the direct parameter--a descriptor list--and put it into a docList
 	
@@ -130,8 +128,7 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 		}
 		else
 		{
-			OSType 	tempType;
-			char	tempC[ 5];
+			char	tempC[5];
 			
 			if (OpenableFile(fndrInfo.fdType, &myFSS) == true ||
 				fndrInfo.fdType == 'sTAT' ||
@@ -189,12 +186,8 @@ pascal OSErr  AEODoc (const AppleEvent *theAppleEvent, AppleEvent* reply, long h
 	return noErr;
 }
 
-static pascal OSErr  ANEQApp (const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon)
+static pascal OSErr ANEQApp(const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon)
 {
-	AEDescList	docList;
-	OSErr		err;
-	long		itemsInList;
-
 	End = true;
 /*	// get the direct parameter--a descriptor list--and put it into a docList
 	err = AEGetParamDesc (theAppleEvent, keyDirectObject, typeAEList, &docList);
@@ -214,18 +207,18 @@ static pascal OSErr  ANEQApp (const AppleEvent *theAppleEvent, AppleEvent *reply
 
 pascal OSErr  AEErreur(const AppleEvent *theAppleEvent, AppleEvent *reply, long refcon)
 {
-	AEDescList				docList;
-	OSErr					err;
-	long					index, itemsInList;
-	Size					actualSize;
-	AEKeyword				keywd;
-	DescType				returnedType;
-	OSErr					dErr[ 2];
+	AEDescList			docList;
+	OSErr				err;
+	long				itemsInList;
+	Size				actualSize;
+	AEKeyword			keywd;
+	DescType			returnedType;
+	OSErr				dErr[2];
 	
-	NMRec					myNotification;
-	Boolean					notif;
-	ProcessSerialNumber		PSN;
-	Handle					hd;
+	NMRec				myNotification;
+	Boolean				notif;
+	ProcessSerialNumber	PSN;
+	Handle				hd;
 		
 
 	// get the direct parameter--a descriptor list--and put it into a docList
@@ -433,7 +426,7 @@ OSStatus LaunchURLC(ConstStr255Param urlStr)
 void AESendOpenFile(FSSpec *spec)
 {
 	//FIXME: Instruments seems to think that this function leaks quite a bit
-	OSType				sign = 'SNPL';
+	//OSType				sign = 'SNPL';
 	AppleEvent			aeEvent, replyAE;
 	AEDesc				target, listElem, fileList;
 	OSErr				iErr;

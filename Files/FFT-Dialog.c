@@ -32,14 +32,11 @@ void InitFFTSampleFilter(void)
 
 void FFTSampleUpdate(DialogPtr TheDia, Boolean filter)
 {
-	long		Result, mresult;
-	short		PourCent, itemHit, i, z, itemType;
+	short		i, z, itemType;
 	Rect		itemRect;
 	Handle		itemHandle;
-	Str255		theStr;
 	GDHandle	oldGDeviceH;
 	CGrafPtr	oldPort;
-	Boolean		IsPlaying;
 	GWorldPtr	theGWorld = NULL;
 	
 	GetDialogItem(TheDia, 3, &itemType, &itemHandle, &itemRect);
@@ -147,7 +144,7 @@ void FFTSampleUpdate(DialogPtr TheDia, Boolean filter)
 
 void ApplyFilter(Boolean filter, sData *SDataSrc)
 {
-	short	i, last, z, cur;
+	short	i, last, cur;
 
 	if (logMode)
 	{
@@ -187,16 +184,13 @@ void ApplyFilter(Boolean filter, sData *SDataSrc)
 
 void FFTSampleFilter(sData *SDataSrc, short instru, Boolean filter)
 {
-	long		Result, mresult;
-	short		PourCent, itemHit, i, itemType, prev;
+	short		itemHit, i, itemType, prev;
 	Rect		itemRect;
 	Handle		itemHandle, rsrc;
 	DialogPtr	TheDia;
-	Str255		theStr;
 	GrafPtr		myPort;
-	Point		theCell, myPt;
+	Point		myPt;
 	long		oldValue, NewValue, lastValue, lastPt;
-	Boolean		IsPlaying;
 	sData		SData;
 	
 	GetPort(&myPort);

@@ -89,17 +89,15 @@ static NoteRequest	myNoteRequest;
 
 Boolean				QuicktimeInstruAvailable;
 static	Boolean		QK50;
-static	short		vers1, vers2;
+//static	short		vers1, vers2;
 
 void InitQuicktimeInstruments(void)
 {
-	long					lS, lE, inOutBytes, result;
-	//	short					sS, qQ;
-	//	short 					i;
-	short					foundVRefNum, vRefNum;
-	UNFILE					iFileRef;
-	long					foundDirID, dirID;
-	OSErr					iErr;
+	long	result;
+	short	foundVRefNum, vRefNum;
+	UNFILE	iFileRef;
+	long	foundDirID, dirID;
+	OSErr	iErr;
 	
 	HGetVol(NULL, &vRefNum, &dirID);
 	
@@ -306,7 +304,7 @@ short OpenDataFileQK(long dirID, short VRefNum)
 	CInfoPBRec		info;
 	Str255			tempStr;
 	//	long			dirIDCopy;
-	short			i, vRefNum;
+	short			i;
 	OSErr			iErr;
 	FSSpec			spec;
 	short			iRefNum = -1;
@@ -344,10 +342,9 @@ short OpenDataFileQK(long dirID, short VRefNum)
 
 OSErr GetAtomData(MyAtom at, void* data, long size)
 {
-	long 	prePos, fSize, ilistType, nlistType, index, listSize;
+	long 	fSize;
 	CK		sck;
 	OSErr	iErr;
-	MyAtom	retat;
 	
 	iErr = FSSetForkPosition(at.ref, fsFromStart, at.pos -4);
 	
@@ -389,7 +386,7 @@ OSErr GetAtomString(MyAtom sat4, Ptr text)
 
 long CountAtomById(MyAtom at, long type)
 {
-	long 	prePos, fSize, ilistType, nlistType, index, listSize;
+	long 	prePos, fSize, ilistType, index, listSize;
 	CK		sck;
 	OSErr	iErr;
 	
@@ -445,7 +442,7 @@ long CountAtomById(MyAtom at, long type)
 
 OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 {
-	long 	prePos, fSize, ilistType, nlistType, index, listSize;
+	long 	prePos, fSize, ilistType, index, listSize;
 	CK		sck;
 	OSErr	iErr;
 	
@@ -552,17 +549,16 @@ static Boolean TestRunningOnCarbonX(void)
 
 void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 {
-	short 						foundVRefNum, iFileRef, no, ii, i, x;
-	OSErr 						iErr;
-	NoteAllocator 				na;
-	Str255						aStr, bStr;
-	sData						*curData;
-	long						size, inOutBytes, foundDirID;
-	Ptr							data;
-	CK							ck;
-	long						listType, noIns, fSize, tot;
-	MyAtom						at, sat, insAt, insHe, rgnAt, sat3, sat4, InfoAt, InfoData;
-	INSTHEADER 					curIns;
+	short 		foundVRefNum, iFileRef, ii, i, x;
+	OSErr 		iErr;
+	Str255		aStr, bStr;
+	sData		*curData;
+	long		foundDirID;
+	Ptr			data;
+	CK			ck;
+	long		listType, noIns, fSize, tot;
+	MyAtom		at, sat, insAt, insHe, rgnAt;
+	INSTHEADER	curIns;
 	
 	if (TestRunningOnCarbonX()) {
 		iFileRef = GenerateDLSFromBundle();
@@ -635,7 +631,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 				//Apple protects many of the following info in a Big-endian wrapper. We need to work around this
 				if (GetNELong(NoteRequest->tone.instrumentNumber) >= 16384) { // DRUM KIT
 					if (BitTst(&curIns.Locale.ulBank, 31-31)) {
-						long	valeurQT, gmID, valeurBank;
+						long	gmID;
 						
 						gmID = GetNELong(NoteRequest->tone.instrumentNumber);
 						gmID = gmID & 0x000000FF;
@@ -893,10 +889,6 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 {
 	short 						no, ii, i;
 	OSErr 						iErr;
-	OSType						synthType;
-	Str31						synthName;
-	SynthesizerDescription		sd;
-	MusicComponent 				mc;
 	
 	Str255						aStr, bStr;
 	
@@ -908,16 +900,11 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 	QTAtom						mySampleInfoAtom = 0;
 	QTAtom						mySampleDescAtom = 0;
 	QTAtom						mySampleDataAtom = 0;
-	QTAtom						myInstInfoAtom = 0;
-	QTAtom						myToneDescAtom = 0;
-	QTAtom						myInstrumentRefAtom = 0;
 	QTAtomID					atomID;
 	
-	short						x;
+	short						sampleIDMap[500];
 	
-	short						sampleIDMap[ 500];
-	
-	for (i = 0; i < 500; i++) sampleIDMap[ i] = -1;
+	for (i = 0; i < 500; i++) sampleIDMap[i] = -1;
 	
 	/***************/
 	
@@ -1119,13 +1106,12 @@ void Quicktime2Converter(void)
 	/*********/
 	
 	{
-		short 						synthCount, foundVRefNum, iFileRef, no, ii, i;
+		short 						synthCount;
 		OSErr 						iErr;
 		NoteAllocator 				na;
 		OSType						synthType;
 		Str31						synthName;
 		AtomicInstrument			ai;
-		SynthesizerDescription		sd;
 		MusicComponent 				mc;
 		
 		na = OpenDefaultComponent(kNoteAllocatorComponentType,0);
@@ -1195,14 +1181,11 @@ BAIL:
 // FOR MIDI IMPORT FUNCTION
 void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, short ins)
 {
-	short 		samp, i;
+	short i;
 	
-	for (i = 0; i < inst->numSamples; i++)
-	{
-		if (sample[ inst->firstSample + i] != NULL)
-		{
-			if (sample[ inst->firstSample + i]->data != NULL)
-			{
+	for (i = 0; i < inst->numSamples; i++) {
+		if (sample[ inst->firstSample + i] != NULL) {
+			if (sample[ inst->firstSample + i]->data != NULL) {
 				DisposePtr((Ptr) sample[ inst->firstSample + i]->data);
 				sample[ inst->firstSample + i]->data = NULL;
 			}
@@ -1249,13 +1232,12 @@ void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, sh
 	/*********/
 	
 	{
-		short 						synthCount, foundVRefNum, iFileRef, no, ii, i;
+		short 						synthCount;
 		OSErr 						iErr;
 		NoteAllocator 				na;
 		OSType						synthType;
 		Str31						synthName;
 		AtomicInstrument			ai;
-		SynthesizerDescription		sd;
 		MusicComponent 				mc;
 		
 		na = OpenDefaultComponent(kNoteAllocatorComponentType,0);
@@ -1344,9 +1326,7 @@ short OpenResFileQK(long dirID, short VRefNum)
 {
 	CInfoPBRec		info;
 	Str255			tempStr;
-	long			dirIDCopy;
-	short			i, vRefNum;
-	OSErr			iErr;
+	short			i;
 	FSSpec			spec;
 	short			ret;
 	

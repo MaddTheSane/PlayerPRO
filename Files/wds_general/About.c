@@ -23,7 +23,6 @@ static	Boolean			AboutFirstCall;
 static	short 			gThumbPrev;
 static	GWorldPtr		gGWorldAbout = NULL, gMaskWorld = NULL, gResultWorld = NULL, gFreePict = NULL;
 static	PicHandle		backPict;
-static	RgnHandle		maskHndl;
 
 Boolean	IsPressed(unsigned short );
 
@@ -87,10 +86,6 @@ void DoScrollText(DialogPtr aDia)
 	Str255		tempStr;
 	GDHandle	oldGDeviceH;
 	CGrafPtr	oldPort;
-	PicHandle	tempPict;
-	short		itemType;
-	Rect		itemRect;
-	Handle		itemHandle;
 	RGBColor	color;
 
 	GetGWorld(&oldPort, &oldGDeviceH);
@@ -182,7 +177,6 @@ void ShowPerformance(void)
 	short			itemHit;
 	long			oldTicks, i, normal, proto = 1;
 	Ptr				tempPtr;
-	Boolean			MusiqueOn;
 	
 	aDialog = GetNewDialog(158, NULL, (WindowPtr) -1L);
 	SetPortDialogPort(aDialog);

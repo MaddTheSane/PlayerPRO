@@ -160,9 +160,6 @@ OSErr	GetNormalFileIcon(
 /* <-- */	Handle				*theSuite)
 {
 	OSErr			err = noErr;
-	long			dataSize;
-	Handle			iconData;
-	Byte			iconType;
 	GetIconData		getData;
 	short			iconID;
 	Boolean			inFinder;
@@ -330,7 +327,6 @@ void GetFinderFilename(
 /* --> */	short	firstVRefNum,
 /* --> */	OSType	fileCreator)	// returns a DT refnum or 0
 {
-	OSErr			err;
 	XVolumeParam	vpb;
 	short			DTRefNum = 0;
 	

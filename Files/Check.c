@@ -29,7 +29,6 @@ void OtherIntErreur(short ID, OSErr theErr, Str255 otherstr);
 OSErr ConvertMovieToMPEG4(FSSpec *inputFile, FSSpec *outputFile);
 Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, OSType type, FSSpec *dstFile);
 
-static long				gCompressionID = 0;
 extern MenuHandle		thePatternMenu;
 extern DialogPtr		EditorDlog;
 
@@ -103,11 +102,10 @@ void PathNameFromDirID(long dirID, short vRefNum, StringPtr fullPathName);
 
 Boolean CheckFileType(FSSpec theSpec, OSType theType)
 {
-	Ptr				theFile;
-	Boolean			Response = false;
-	OSErr			err;
-	FSSpec			saved;
-	char			tempC[ 5];
+	Boolean	Response = false;
+	OSErr	err;
+	FSSpec	saved;
+	char	tempC[5];
 	
 	HGetVol(NULL, &saved.vRefNum, &saved.parID);
 	HSetVol(NULL, theSpec.vRefNum, theSpec.parID);
@@ -386,7 +384,7 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 						   Boolean	MPG4)
 {
 	DialogPtr	aDialog;
-	short		itemType, itemHit, i, currentPattern;
+	short		itemType, itemHit, currentPattern;
 	Str255		aStr;
 	long		mresult;
 	Point		myPt;
@@ -469,13 +467,10 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 					Point			Zone;
 					short			temp;
 					MenuHandle		tMenu;
-					Boolean			returnVal = false;
 					
 					short			itemType;
 					Handle			itemHandle;
 					Rect			itemRect;
-					
-					CompressionInfo	cp;
 					
 					GetDialogItem(aDialog, itemHit, &itemType, &itemHandle, &itemRect);
 					
@@ -528,10 +523,8 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 					
 					curSelec = 1;
 					
-					for (i = 0 ; i < CountMenuItems(tMenu); i++)
-					{
+					for (i = 0 ; i < CountMenuItems(tMenu); i++) {
 						Str255	str;
-						long	r;
 						
 						GetMenuItemText(tMenu, i+1, str);
 						
@@ -549,22 +542,17 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 					
 					SetItemMark(tMenu, curSelec, 0);
 					
-					if (HiWord(mresult ) != 0 )
-					{
-						long	r;
+					if (HiWord(mresult) != 0) {
 						
-						temp = LoWord(mresult );
+						temp = LoWord(mresult);
 						
-						if (temp == 1)
-						{
+						if (temp == 1) {
 							*CompressionType = 'NONE';
-						}
-						else
-						{
+						} else {
 							GetMenuItemText(tMenu, temp, aStr);
-							aStr[ 0] = 4;
+							aStr[0] = 4;
 							
-							*CompressionType = *((OSType*) (aStr+1));
+							*CompressionType = *((OSType*)(aStr+1));
 						}
 						
 						InitSoundQualityExport(aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver, OnlyCurrent);
@@ -1018,8 +1006,8 @@ void CheckInstrument(void)
 
 Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 {
-	short					iFileRefI = 0,fRefNum = 0, i, x;
-	long					sndSize, inOutCount, z, oldTracks;
+	short					iFileRefI = 0, i, x;
+	long					sndSize, oldTracks;
 	OSErr					iErr;
 	FInfo					fndrInfo;
 	Ptr						tempPtr = NULL;
@@ -1191,8 +1179,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 					else pStrcpy(lastLoadMODListName, fName);
 					return false;
 				} else {
-					FInfo		fndrInfo;
-					OSErr	iErr;
+					FInfo	fndrInfo;
 					
 					theType = Ptr2OSType(theTypePtr);
 					

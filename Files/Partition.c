@@ -47,9 +47,7 @@ extern	Cursor					pencilCrsr;
 		DialogPtr				PartiDlog;
 		
 static	PixMapHandle			myPopUp;
-static	Rect					CurRect, CurChar;
 static	short					LChar;
-static	short					CurrentPat, CharNo;
 static	short					PatCopy2;
 static	ControlHandle			InfoBut, OpenBut, FlipBut, AddBut, RemoveBut;
 static	PrivateList				myList;
@@ -66,9 +64,7 @@ void OpenSelectedPattern(short no);
 void UpdatePartiInfo(void)
 {
 	GrafPtr		SavePort;
-	short		itemType;
 	Rect		caRect, itemRect;
-	Handle		itemHandle;
 	
 	if (PartiDlog == NULL) return;
 	
@@ -153,10 +149,9 @@ void DoGrowParti(DialogPtr theDialog)
 {
 	long		lSizeVH;
 	GrafPtr		SavePort;
-	Rect		caRect, temp, cellRect, tempRect;
-	short		cur, tempB, tempA, itemType;
-	Handle		itemHandle;
-	Point		theCell = { 0, 0}, aPt = { 0, 0};
+	Rect		caRect, temp;
+	short		tempB, tempA;
+	Point		aPt = { 0, 0};
 	BitMap		screenBits;
 	
 	
@@ -217,15 +212,9 @@ void DoGrowParti(DialogPtr theDialog)
 
 void DrawPartiListItem(short iD)
 {
-	Rect   		tempRect, cellRect;
-	GrafPtr		SavePort;
-	Point		theCell;
-	Ptr			theStr;
+	Rect   		tempRect;
 	Str255		tempStr, aStr;
 	short		pos;
-	PicHandle	aPict;
-	RgnHandle	saveClipRgn;
-	short		curVal, maxI;
 	
 	if (iD >= myList.maxY)
 		return;
@@ -317,8 +306,6 @@ void DrawPartiListItem(short iD)
 		DrawString(aStr);
 		
 		if (iD >= myList.select.top && iD <= myList.select.bottom) {
-			RGBColor	hilite;
-			
 			tempRect.left = myList.rect.left + 6;
 			tempRect.right = myList.rect.right;
 			
@@ -336,15 +323,11 @@ void DrawPartiListItem(short iD)
 
 void  UpdatePartiWindow(DialogPtr GetSelection)  	/* Pointer to this dialog */
 { 
-	Rect   		caRect, tempRect, cellRect;
+	Rect   		caRect, tempRect;
 	GrafPtr		SavePort;
-	Point		theCell;
-	Ptr			theStr;
 	Str255		tempStr, aStr;
-	short		i, iD;
-	PicHandle	aPict;
+	short		i;
 	RgnHandle	saveClipRgn;
-	short		curVal, maxI;
 	RgnHandle	visibleRegion;
 	
 	GetPort(&SavePort);
@@ -422,9 +405,6 @@ void SelectCurrentParti(void)
 {
 	Cell		theCell;
 	GrafPtr		SavePort;
-	Rect		itemRect;
-	short		temp, itemType;
-	Handle		itemHandle;
 	
 	if (PartiDlog == NULL)
 		return;
@@ -449,14 +429,13 @@ void SelectCurrentParti(void)
 	}
 }
 
-static long lastWhen = 0;
+//static long lastWhen = 0;
 
 Boolean CheckValidParti(Byte theValue, short thePos)
 {
 	short		i, numPat, temp;
 	
-	for (i = 0, numPat = 0; i<256; i++)
-	{
+	for (i = 0, numPat = 0; i<256; i++) {
 		if (curMusic->header->oPointers[i] >= numPat) {
 			numPat = curMusic->header->oPointers[i];
 		}
@@ -486,11 +465,10 @@ Boolean CheckValidParti(Byte theValue, short thePos)
 
 void DoNullParti(void)
 {
-	Str255		String;
 	GrafPtr		SavePort;
-	short		temp, itemType, track;
-	Rect		tempRect, clipRect, itemRect;
-	Point		pt, pt2, pt3;
+	short		itemType;
+	Rect		itemRect;
+	Point		pt;
 	Handle		itemHandle;
 	
 	if (PartiDlog == NULL)
@@ -516,17 +494,15 @@ void DoNullParti(void)
 	SetPort(SavePort);
 }
 
-static Boolean firstList;
+//static Boolean firstList;
 
 void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit ID to pass to Dialog function */
 {
-	Cell				theCell, destCell;
-	long				tempLong, lDistVH, mresult;
-	short				i, temp, temp2, itemType, newPL, newPartitionReader, newPat;
-	RgnHandle			theRgn;
-	Rect				caRect, cellRect, itemRect;
+	Cell				theCell;
+	long				mresult;
+	short				i, itemType, newPL, newPartitionReader, newPat;
+	Rect				caRect, itemRect;
 	GrafPtr				SavePort;
-	Cmd					theCommand;
 	Point				myPt = {0};
 	Handle				itemHandle;
 	Boolean				DoubleClick;
@@ -758,12 +734,11 @@ void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 
 void CreatePartiWindow(void)
 {
-	Rect		caRect, itemRect, tempRect, dataBounds;
+	Rect		caRect, itemRect;
 	Handle		itemHandle;
-	short		itemType, itemHit, temp, i;
+	short		itemType;
 	Point		cSize;
 	FontInfo	ThisFontInfo;
-	Str255		String;
 	PicHandle	aPict;
 	
 	if (PartiDlog != NULL)
@@ -913,9 +888,6 @@ void DoKeyPressParti(short theChar)
 {
 	GrafPtr		SavePort;
 	Point		theCell;
-	short		temp, itemType;
-	Handle		itemHandle;
-	Rect		itemRect;
 	
 	if (PartiDlog == NULL) return;
 	
@@ -964,7 +936,6 @@ void DoKeyPressParti(short theChar)
 void COPYParti(void)
 {
 	Cell				theCell;
-	Cmd					*theCommand, *handleCo;
 	short				count;
 	Handle				theHandle;
 	OSErr				anErr;
@@ -999,8 +970,8 @@ void COPYParti(void)
 
 void PASTEParti(void)
 {
-	short				itemType,i,fRefNum, count, temp;
-	long				inOutBytes, iL, scrapOffset, lCntOrErr;
+	short				count;
+	long				lCntOrErr;
 	Handle				theHandle;
 	Point				theCell;
 	ScrapRef			scrap;

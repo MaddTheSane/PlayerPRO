@@ -363,11 +363,10 @@ void DoNullStaff(void)
 		MakeUpdate = true;
 	}
 	
-	if (curMusic->header->numChn != CurrentNumChn) MakeUpdate = true;
+	if (curMusic->header->numChn != CurrentNumChn)
+		MakeUpdate = true;
 	
-	if (oldWindow == GetDialogWindow(StaffDlog))
-	{
-		short 		note;
+	if (oldWindow == GetDialogWindow(StaffDlog)) {
 		RgnHandle	visibleRegion;
 		
 		myPt = theEvent.where;

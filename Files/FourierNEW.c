@@ -14,7 +14,6 @@ static		short			*logoScale;
 
 void InitFourier(void)
 {
-	short	i;
 	Handle	rsrc;
 
 	x = (float*)			NewPtrClear(512 * sizeof(float));
@@ -186,11 +185,8 @@ Ptr MakeCalculusSpectrum(Ptr srcPtr, Boolean logScale)
 	}
 	xInt[ 0] = 0;
 	
-	if (logScale)
-	{
-		long	sumL;
-		
-		lastLog = logoScale[ 255];
+	if (logScale) {
+		lastLog = logoScale[255];
 		
 		for(i= 255; i >= 0; i--)
 		{

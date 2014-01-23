@@ -34,11 +34,9 @@ void DoAHelpInfo(void)
 	Point						pt, ptLocal;
 	long						wref;
 	GrafPtr						savePort;
-	GrafPtr						windowManagerPort;
 	WindowPtr					aWin;
 	RgnHandle					strucRgn;
 	ProcessSerialNumber			PSN;
-	unsigned long				outFeatures;
 	
 	if (!HelpAvalaible) return;
 	if (AHelpDlog == NULL) return;

@@ -236,8 +236,7 @@ void PrefFilterPiano(DialogPtr theDialog, EventRecord *theEventI, short *itemHit
 	short		thePart,i, theChar;
 	GrafPtr		oldPort;
 	Point		aPoint, theCell;
-	Str255		str1, str2;
-	Boolean		DrawAll;
+	Str255		str2;
 	
 	GetPort(&oldPort);
 	SetPortDialogPort(prefDlog);
@@ -374,9 +373,6 @@ void InitGENERAL(void)
 
 void InitCLASSICAL(void)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
 	Str255		aStr;
 	
 	TurnRadio(5 + base, prefDlog, thePrefs.UseMarkers);
@@ -409,10 +405,7 @@ void CloseCLASSICAL()
 
 void InitDIGITAL(void)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
-	Str255		aStr;
+	Str255	aStr;
 	
 	if (thePrefs.DigitalInstru)
 		TurnRadio(base + 1, prefDlog, true);
@@ -475,9 +468,6 @@ void InitDIGITAL(void)
 
 void CloseDIGITAL()
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
 	Str255		aStr;
 	long		temp;
 	
@@ -496,27 +486,29 @@ void CloseDIGITAL()
 
 void InitSCREENSAVER(void)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
-	Str255		aStr;
+	if (thePrefs.SSText)
+		TurnRadio(base + 1, prefDlog, true);
+	if (thePrefs.SSStars)
+		TurnRadio(base + 2, prefDlog, true);
+	if (thePrefs.SSJumping)
+		TurnRadio(base + 5, prefDlog, true);
 	
-	if (thePrefs.SSText) TurnRadio(base + 1, prefDlog, true);
-	if (thePrefs.SSStars) TurnRadio(base + 2, prefDlog, true);
-	if (thePrefs.SSJumping) TurnRadio(base + 5, prefDlog, true);
-	
-	if (thePrefs.FText) TurnRadio(base + 6, prefDlog, true);
-	if (thePrefs.FStars) TurnRadio(base + 7, prefDlog, true);
-	if (thePrefs.FBalls) TurnRadio(base + 8, prefDlog, true);
-	if (thePrefs.FSinScroll) TurnRadio(base + 10, prefDlog, true);
+	if (thePrefs.FText)
+		TurnRadio(base + 6, prefDlog, true);
+	if (thePrefs.FStars)
+		TurnRadio(base + 7, prefDlog, true);
+	if (thePrefs.FBalls)
+		TurnRadio(base + 8, prefDlog, true);
+	if (thePrefs.FSinScroll)
+		TurnRadio(base + 10, prefDlog, true);
 }
 
 void InitDRIVER(void)
 {
-	short			itemType,i;
+	short			itemType;
 	Handle			itemHandle;
 	Rect			itemRect;
-	Str255			aStr, bStr, str;
+	Str255			aStr, bStr;
 	NumVersion		nVers;
 	long			nVersLong;
 	/////
@@ -802,28 +794,32 @@ void InitDRIVER(void)
 
 void InitMUSICLIST(void)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
+	if (thePrefs.LoopType == 0)
+		InverseRadio(base + 1, prefDlog);
+	else if (thePrefs.LoopType == 1)
+		InverseRadio(base + 2, prefDlog);
+	else if (thePrefs.LoopType == 2)
+		InverseRadio(base + 3, prefDlog);
+	else if (thePrefs.LoopType == 3)
+		InverseRadio(base + 7, prefDlog);
 	
-	if (thePrefs.LoopType == 0) 		InverseRadio(base + 1, prefDlog);
-	else if (thePrefs.LoopType == 1) 	InverseRadio(base + 2, prefDlog);
-	else if (thePrefs.LoopType == 2) 	InverseRadio(base + 3, prefDlog);
-	else if (thePrefs.LoopType == 3)	InverseRadio(base + 7, prefDlog);
-	
-	if (thePrefs.AutomaticOpen) InverseRadio(base + 8, prefDlog);
-	if (thePrefs.RememberMusicList) InverseRadio(base + 15, prefDlog);
-	if (thePrefs.GoToStop) InverseRadio(base + 11, prefDlog);
-	if (thePrefs.FastMusicList) InverseRadio(base + 6, prefDlog);
-	if (thePrefs.SaveMusicList) InverseRadio(base + 12, prefDlog);
-	if (thePrefs.AutoPlayWhenOpen) InverseRadio(base + 13, prefDlog);
+	if (thePrefs.AutomaticOpen)
+		InverseRadio(base + 8, prefDlog);
+	if (thePrefs.RememberMusicList)
+		InverseRadio(base + 15, prefDlog);
+	if (thePrefs.GoToStop)
+		InverseRadio(base + 11, prefDlog);
+	if (thePrefs.FastMusicList)
+		InverseRadio(base + 6, prefDlog);
+	if (thePrefs.SaveMusicList)
+		InverseRadio(base + 12, prefDlog);
+	if (thePrefs.AutoPlayWhenOpen)
+		InverseRadio(base + 13, prefDlog);
 }
 
 void InitCOMPRESSION(void)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
+	short		i;
 	MenuHandle	tMenu;
 	Str255		str;
 	
@@ -1137,7 +1133,7 @@ void DrawChooseColorWindow(void)
 
 void DoCOLOR(short	itemHit)
 {
-	short		itemType,i, x, larg, haut;
+	short		itemType,larg, haut;
 	Handle		itemHandle;
 	Rect		itemRect, aRc;
 	Point		myPt, where = { -1, -1};
@@ -1211,14 +1207,12 @@ void DoCOLOR(short	itemHit)
 
 void CreateTrackList()
 {
-	short		itemType,i,x;
+	short		itemType, i;
 	Handle		itemHandle;
-	Rect		itemRect, tempRect, dataBounds;
-	Ptr			String;
+	Rect		tempRect, dataBounds;
 	Point		cSize;
 	FontInfo	ThisFontInfo;
-	Str255		aStr, bStr;
-	NumVersion	nVers;
+	Str255		aStr;
 	
 	TextFont(4);	TextSize(9);
 	
@@ -1281,14 +1275,12 @@ void CreateTrackList()
 
 void InitEDITOR(void)
 {
-	short		itemType,i,x;
+	short		itemType;
 	Handle		itemHandle;
-	Rect		itemRect, tempRect, dataBounds;
-	Ptr			String;
+	Rect		tempRect, dataBounds;
 	Point		cSize;
 	FontInfo	ThisFontInfo;
 	Str255		aStr, bStr;
-	NumVersion	nVers;
 	
 	TextFont(4);
 	TextSize(9);
@@ -1394,23 +1386,14 @@ void InitEDITOR(void)
 
 void InitMIDI()
 {
-	short		itemType,i,x;
-	Handle		itemHandle;
-	Rect		itemRect, tempRect, dataBounds;
-	Ptr			String;
-	Point		cSize;
-	FontInfo	ThisFontInfo;
 	Str255		aStr, bStr;
 	NumVersion	nVers;
 	long		nVersLong;
 	
-	if (MIDIHardware)
-	{
+	if (MIDIHardware) {
 		TurnRadio(base + 6, prefDlog, thePrefs.MidiKeyBoard);
 		TurnRadio(base + 10, prefDlog, thePrefs.SendMIDIClockData);
-	}
-	else
-	{
+	} else {
 		ControlSwitch(base + 6, prefDlog, 255);		// MIDI Input
 		ControlSwitch(base + 10, prefDlog, 255);		// MIDI Clock
 		
@@ -1463,22 +1446,14 @@ void InitMIDI()
 
 void DoMIDI(short itemHit)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
-	Point		myPt;
-	long		mresult;
-	Str255		theStr;
-	
-	switch(itemHit - base)
-	{
+	switch (itemHit - base) {
 		case 10:
-			InverseRadio(itemHit, prefDlog);	thePrefs.SendMIDIClockData = !thePrefs.SendMIDIClockData;
+			InverseRadio(itemHit, prefDlog);
+			thePrefs.SendMIDIClockData = !thePrefs.SendMIDIClockData;
 			
 			MADDriver->SendMIDIClockData = thePrefs.SendMIDIClockData;
 			
-			if (MADDriver->SendMIDIClockData)
-			{
+			if (MADDriver->SendMIDIClockData) {
 				OpenMIDIHardware();
 			}
 			break;
@@ -1722,7 +1697,7 @@ void CloseEDITORF()
 
 void DoCOMPRESSION(short itemHit)
 {
-	short		itemType,i;
+	short		itemType;
 	Handle		itemHandle;
 	Rect		itemRect;
 	Str255		str;
@@ -1770,7 +1745,7 @@ void DoCOMPRESSION(short itemHit)
 		{
 			long		mresult;
 			Point		Zone;
-			short		i, temp = 0;
+			short		temp = 0;
 			MenuHandle	tMenu;
 			
 			GetDialogItem(prefDlog, base + 2, &itemType, &itemHandle, &itemRect);
@@ -1783,8 +1758,7 @@ void DoCOMPRESSION(short itemHit)
 			
 			LocalToGlobal(&Zone);
 			
-			switch(thePrefs.whichEditorPatterns)
-			{
+			switch (thePrefs.whichEditorPatterns) {
 				case -1:
 					temp = 1;
 					break;
@@ -1860,12 +1834,7 @@ void DoCOMPRESSION(short itemHit)
 
 void DoSCREENSAVER(short itemHit)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
-	
-	switch(itemHit - base)
-	{
+	switch (itemHit - base) {
 		case 1:
 		case 2:
 		case 5:
@@ -1875,8 +1844,7 @@ void DoSCREENSAVER(short itemHit)
 		case 10:
 			InverseRadio(itemHit, prefDlog);
 			
-			switch(itemHit - base)
-		{
+			switch (itemHit - base) {
 			case 1:
 				thePrefs.SSText =!thePrefs.SSText;
 				break;
@@ -1910,12 +1878,7 @@ void DoSCREENSAVER(short itemHit)
 
 void DoCLASSICAL(short itemHit)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
-	
-	switch(itemHit - base)
-	{
+	switch (itemHit - base) {
 		case 5:
 			thePrefs.UseMarkers = !thePrefs.UseMarkers;
 			TurnRadio(5 + base, prefDlog, thePrefs.UseMarkers);
@@ -1935,21 +1898,17 @@ void DoCLASSICAL(short itemHit)
 
 void DoKEY(short itemHit)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
-	Str255		str;
+	short	i;
+	Str255	str;
 	
-	switch(itemHit - base)
-	{
+	switch (itemHit - base) {
 		case 42:
 			TurnRadio(base + 42, prefDlog, true);
 			TurnRadio(base + 1, prefDlog, false);
 			
 			thePrefs.FKeyTracks = true;
 			
-			for (i = 0; i < 13; i++)
-			{
+			for (i = 0; i < 13; i++) {
 				//	TurnRadio(base + 2 + i, prefDlog, thePrefs.FKeyActive[ i]);
 				InactiveControl(base + 2 + i, prefDlog);
 			}
@@ -2104,10 +2063,9 @@ Boolean CloseSTAFF()
 
 void DoDIGITAL(short itemHit)
 {
-	short		itemType,i;
+	short		itemType;
 	Handle		itemHandle;
 	Rect		caRect, itemRect;
-	GrafPtr		curPort;
 	Point		where = { -1, -1};
 	
 	switch (itemHit - base) {
@@ -2433,7 +2391,7 @@ void TestProcessor(void)
 	short		proto = 1;
 	long		oldTicks, i, normal;
 	short		dItem;
-	Str255		theString, theString2;
+	Str255		theString;
 	GrafPtr		savedPort;
 	Boolean		MyRead;
 
@@ -2546,15 +2504,7 @@ Boolean PressMenuItem(short menuID, short itemID, DialogPtr dia, long *curVal, s
 
 void DoDRIVER(short	itemHit)
 {
-	short		itemType,i,curSelec;
-	Handle		itemHandle;
-	Rect		itemRect;
-	Point		myPt;
-	Boolean	 	IsPlaying;
-	long		mresult;
 	Str255		aStr;
-	Ptr			tempPtr;
-	MenuHandle	RateMenu;
 	
 	switch (itemHit - base) {
 		case 28:
@@ -2570,8 +2520,7 @@ void DoDRIVER(short	itemHit)
 			
 			TurnRadio(itemHit, prefDlog, true);
 			
-			switch(itemHit - base)
-		{
+			switch(itemHit - base) {
 			case 6:
 				thePrefs.outPutRate = rate11khz;
 				
@@ -2817,7 +2766,7 @@ void ShowPrefs(short PrefStartup)
 	short			itemType,i;
 	Handle			itemHandle;
 	Rect			itemRect;
-	short			itemHit, myBit, temp;
+	short			itemHit, temp;
 	GrafPtr			OldPort;
 	Prefs			*copyPrefs;
 	

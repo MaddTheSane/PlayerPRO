@@ -153,7 +153,6 @@ void SetUpDeviceInfo()
 	short			i, infoData;
 	Str255			str;
 	float			tByte;
-	OSType			aa;
 	short			ChannelsList;
 	short			on = 1;
 	
@@ -302,21 +301,14 @@ void SetUpDeviceInfo()
 
 void DeviceFilterMouseDown(EventRecord *theEventI)
 {
-	char			xMyFilter;
 	WindowPtr	whichWindow;
-	short		thePart,i, theChar, remember, itemType, infoData;
-	GrafPtr		oldPort;
+	short		thePart, remember, infoData;
 	Point			aPoint, theCell;
-	Rect			itemRect;
-	Str255		str1, str2;
-	Boolean		DrawAll;
-	Handle		deviceIconHandle, itemHandle;
 	OSErr		myErr;
 
 	thePart = FindWindow(theEventI->where, &whichWindow);
 
-	if (whichWindow == GetDialogWindow(deviceDialog))
-	{
+	if (whichWindow == GetDialogWindow(deviceDialog)) {
 		Rect tempRect = (*myList)->rView;
 		
 		aPoint.v = theEventI->where.v;
@@ -324,23 +316,20 @@ void DeviceFilterMouseDown(EventRecord *theEventI)
 		GlobalToLocal(&aPoint);
 		
 		tempRect.right += 16;
-		if (PtInRect(aPoint, &tempRect) == true)
-		{
+		if (PtInRect(aPoint, &tempRect) == true) {
 			Boolean isDbl;
 			
 			theCell.v = theCell.h = 0;
-			if(LGetSelect(true, &theCell, myList))
-			{
+			if(LGetSelect(true, &theCell, myList)) {
 				remember = theCell.v;
-			}
-			else remember = - 10;
+			} else
+				remember = - 10;
 		
 			TextFont(kFontIDGeneva);	TextSize(9);
 			isDbl = LClick(aPoint, theEventI->modifiers, myList);
 			
 			theCell.v = theCell.h = 0;
-			if(LGetSelect(true, &theCell, myList))
-			{
+			if(LGetSelect(true, &theCell, myList)) {
 				if (remember != theCell.v && theCell.v != inputSourceID-1)
 				{
 					short infoData;

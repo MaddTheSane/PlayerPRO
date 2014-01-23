@@ -88,11 +88,6 @@ OSErr ExtractFile(NavCBRecPtr callBackParms, FSSpec	*finalSpec)
 	if (NavCustomControl(callBackParms->context, kNavCtlGetSelection, &selectionList ) == noErr)
 	{
 		long		count = 0;
-		UInt16 		firstItem = 0;
-		Cell		beforeCell = {0,0};
-		Handle		itemH;
-		Rect		itemRect;
-		short		itemType;
 		long		index;
 		
 		if (AECountItems(&selectionList, &count ) == noErr)
@@ -433,7 +428,6 @@ pascal void myCustomEventProc(	NavEventCallbackMessage 	callBackSelector,
 								NavCallBackUserData 		callBackUD)
 {
 	OSErr		theErr = noErr;
-	short 		index = 0;
 	FSSpec		spec;
 	
 	//if (callBackUD != 2) return;
@@ -450,9 +444,7 @@ pascal void myCustomEventProc(	NavEventCallbackMessage 	callBackSelector,
 			case nullEvent:
 				if (gEraseAdd != gEraseAddCurrent)
 				{
-					short			itemType, firstItem;
-					Handle			itemHandle;
-					Rect			itemRect;
+					short	firstItem;
 					
 					gEraseAddCurrent = gEraseAdd;
 					
@@ -513,24 +505,19 @@ pascal void myCustomEventProc(	NavEventCallbackMessage 	callBackSelector,
 			break;
 			
 		case kNavCBSelectEntry:
-			if (ExtractFile(callBackParms, &spec) == noErr)
-			{
+			if (ExtractFile(callBackParms, &spec) == noErr) {
 				FInfo	fndrInfo;
-				char	tempC[ 5];
 				
-				if (FSpGetFInfo(&spec, &fndrInfo) == noErr)
-				{
+				if (FSpGetFInfo(&spec, &fndrInfo) == noErr) {
 					gEraseAdd = false;
-				}
-				else
-				{
+				} else {
 					gEraseAdd = true;
 				}
 			}
 			break;
 			
 		case kNavCBCustomize:
-		{								
+		{
 			// here are the desired dimensions for our custom area:
 			short neededWidth = callBackParms->customRect.left + kCustomWidth;
 			short neededHeight = callBackParms->customRect.top + kCustomHeight;
@@ -649,18 +636,16 @@ pascal void myCustomEventProc(	NavEventCallbackMessage 	callBackSelector,
 		case kNavCBTerminate:
 			// release our appended popup menu:
 			if (gDitlList)
-				ReleaseResource(gDitlList);	
+				ReleaseResource(gDitlList);
 			break;
 	}
 }
 
 pascal Boolean MyCustomFilter(AEDesc *theItem, void *info, NavCallBackUserData callBackUD, NavFilterModes filterMode)
 {
-	Boolean		ready = false;
 	short		i;
 	FSSpec		spec;
-	OSType		type;
-	char		tempC[ 5];
+	char		tempC[5];
 	FInfo		fndrInfo;
 
 	if (MyAEGetDescData (theItem, NULL, &spec, sizeof (FSSpec ), NULL ) == noErr)
@@ -706,11 +691,7 @@ pascal Boolean MyCustomFilter(AEDesc *theItem, void *info, NavCallBackUserData c
 
 pascal Boolean MyCustomFilter2(AEDesc *theItem, void *info, NavCallBackUserData callBackUD, NavFilterModes filterMode)
 {
-	Boolean		ready = false;
-	short		i;
 	FSSpec		spec;
-	OSType		type;
-	char		tempC[ 5];
 	FInfo		fndrInfo;
 	
 	if (MyAEGetDescData (theItem, NULL, &spec, sizeof (FSSpec ), NULL ) == noErr)
@@ -734,7 +715,6 @@ OSErr DoCustomOpen(FSSpec	*spec)
 	NavReplyRecord		theReply;
 	NavDialogOptions	dialogOptions;
 	OSErr				theErr = noErr;
-	NavTypeListHandle	typeList = NULL;
 	long				count = 0, i;
 	NavEventUPP			eventUPP = NewNavEventUPP(myCustomEventProc);
 	NavObjectFilterUPP 	filterProcUPP = NewNavObjectFilterUPP(MyCustomFilter);
@@ -809,7 +789,6 @@ OSErr DoCustomOpen(FSSpec	*spec)
 	if (theReply.validRecord && theErr == noErr)
 	{
 		AEDesc 	resultDesc;
-		FInfo	fileInfo;
 		long	index;
 		
 		// we are ready to open the document(s), grab information about each file for opening:

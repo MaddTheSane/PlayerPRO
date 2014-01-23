@@ -763,11 +763,10 @@ void SelectWindow2(	WindowPtr	whichWindow)
 	}
 }
 
-static Boolean HasDoneSwith;
+//static Boolean HasDoneSwith;
 
 void MusiqueDriverInit(void)
 {
-	short				i, x;
 	OSErr				iErr;
 	MADDriverSettings	init;
 	
@@ -809,13 +808,13 @@ void MusiqueDriverInit(void)
 
 Handle MyNewHandle(long	size)
 {
-	long		aL;
 	Handle		aPtr;
 	
 	if (size < 0) MyDebugStr(__LINE__, __FILE__, "MyNewHandle 1");
 	
 	aPtr = NewHandle(size);
-	if (aPtr == NULL) return NULL;
+	if (aPtr == NULL)
+		return NULL;
 	
 	/*	HLock(aPtr);
 	 for (aL = 0; aL < size; aL++) (*aPtr)[ aL] = 0xEE;
@@ -828,11 +827,13 @@ Handle MyNewHandle(long	size)
 
 
 void MyDisposeHandle(Handle *aHandle)
-{	MyDisposHandle(aHandle);}
+{
+	MyDisposHandle(aHandle);
+}
 
 void MyDisposHandle(Handle *aHandle)
 {
-	long	aL, size;
+	long	size;
 	char	cMemTags;
 	
 	if (*aHandle == NULL) MyDebugStr(__LINE__, __FILE__, "*aHandle2");
@@ -855,9 +856,8 @@ void MyDisposHandle(Handle *aHandle)
 	if (MemError()) MyDebugStr(__LINE__, __FILE__, "aHandle55");
 }
 
-Ptr MyNewPtr(long	size)
+Ptr MyNewPtr(long size)
 {
-	long	aL;
 	Ptr		aPtr;
 	
 	if (size < 0) MyDebugStr(__LINE__, __FILE__, "MyNewPtr 1");
@@ -870,9 +870,9 @@ Ptr MyNewPtr(long	size)
 	return aPtr;
 }
 
-void MyDisposePtr(Ptr	*aPtr)
+void MyDisposePtr(Ptr *aPtr)
 {
-	long	aL, size;
+	long	size;
 	
 	if (*aPtr == NULL) MyDebugStr(__LINE__, __FILE__, "pCodeMyDisposePtr == NULL");
 	
@@ -1408,17 +1408,12 @@ OSErr GetExecutableParentFSSpecFromBundle(FSSpecPtr theFSSpecPtr)
 
 int main(int argc, char* argv[])
 {
-	Handle 					itemHandle;
-	short					itemType, OldVolS, vRefNum;
-	Rect					itemRect;
-	long					OldVolL, DirID, result;
+	long					OldVolL;
 	OSErr					iErr;
 	unsigned long			secs, i;
-	NumVersion				nVers;
 	DateTimeRec				dtrp;
 	MenuDefSpec				defSpec;
 	MenuDefSpec				defSpec2;
-	Str255					str;
 	
 	WindowStateNOW = -1;
 	ShowIt = true;
@@ -1945,11 +1940,7 @@ short					TouchIn;
 short NEWdoDlgEvt(EventRecord *evp, WindowPtr whichWindow)
 {
 	DialogPtr		whichDialog;
-	short			i, itemType, whichItem = -1;
-	ControlHandle	ctl;
-	Point			pt;
-	Handle			item;
-	Rect			box;
+	short			whichItem = -1;
 	
 	SetPortWindowPort(whichWindow);
 	
@@ -2080,9 +2071,6 @@ void ProcessDoItemPress(long ref, short whichItem, DialogPtr whichDialog)
 void DoGlobalNull()
 {
 	GrafPtr		savePort;
-	Str255		str1, str2;
-	short		i, x;
-	Point		pt;
 	
 	theDepth = (*(*GetGDevice())->gdPMap)->pixelSize;
 	
@@ -2094,10 +2082,11 @@ void DoGlobalNull()
 	
 	if (DebuggingMode)
 	{
+#if 0
 		unsigned long			secs;
 		NumVersion				nVers;
 		DateTimeRec				dtrp;
-#if 0
+		
 		if (MemError() != noErr)
 		{
 			pStrcpy(str1, "\pMemError ID:");
@@ -2727,7 +2716,6 @@ pascal short MyGetDirHook(short item, DialogPtr dPtr)
 	short				itemType,i;
 	Handle				itemHandle;
 	Rect				itemRect;
-	Boolean				MiseAjour = false;
 	
 	switch(item) {
 		case 10:
@@ -2766,18 +2754,14 @@ pascal short MyGetDirHook(short item, DialogPtr dPtr)
 void DragReferencedWindow(WindowPtr windowToDrag, Point startPoint, const Rect *draggingBounds)
 {
 	Rect		dragRect;
-	KeyMap		keyMap;
 	GrafPtr		savePort;
-	GrafPtr		windowManagerPort;
 	RgnHandle	dragRegion;
-	RgnHandle	windowContentRegion;
 	long		dragResult;
 	short		topLimit;
 	short		newHorizontalWindowPosition;
 	short		newVerticalWindowPosition;
 	short		horizontalOffset;
 	short		verticalOffset;
-	Boolean		commandKeyDown = false;
 	Point		pt;
 	
 	if (WaitMouseUp()) {
@@ -2885,7 +2869,6 @@ void DoMouseDown(EventRecord theEventI)
 	char			stillInGoAway;
 	//GrafPtr			savedPort;
 	long			menuChoice;
-	Str255			sStr;
 	Boolean			mouseInDown;
 	Rect			caRect;
 	GrafPtr			savedPort;
@@ -3569,9 +3552,6 @@ static DialogPtr	myStartUpDlog;
 
 void StartDialog(void)
 {
-	DialogPtr	whichDialog;
-	short		itemHit;
-	
 	SetCursor(&watchCrsr);
 	
 	myStartUpDlog = GetNewDialog(171, NULL, (WindowPtr) -1L);
@@ -3580,10 +3560,9 @@ void StartDialog(void)
 	SetPortDialogPort(myStartUpDlog);
 	
 	{
-		short				itemType,i;
-		Handle				itemHandle;
-		Rect				itemRect;
-		Str255				text;
+		short	itemType;
+		Handle	itemHandle;
+		Rect	itemRect;
 		
 		GetDialogItem(myStartUpDlog, 2, &itemType, &itemHandle, &itemRect);
 		OffsetRect(&itemRect, 0, -50);
@@ -3619,7 +3598,6 @@ void StartDialog(void)
 void EndDialog(void)
 {
 	long		oldTicks;
-	short		itemHit;
 	
 	SetPortDialogPort(myStartUpDlog);
 	thePrefs.NoStart++;
@@ -3649,19 +3627,17 @@ static OSType		specificType;
 
 pascal Boolean MyCustomFileFilter2(CInfoPBRec *pb, void *myDataPtr)
 {
-	Boolean		ready = false;
-	short		i;
-	FSSpec		spec;
-	OSType		type;
-	char		tempC[ 5];
+	short	i;
+	FSSpec	spec;
+	char	tempC[5];
 	
-	if (pb == NULL) 
-	{
+	if (pb == NULL)  {
 		MyDebugStr(__LINE__, __FILE__, "pb is NULL!");
 		return false;
 	}
 	
-	if (pb->hFileInfo.ioFlAttrib & 16) return false;
+	if (pb->hFileInfo.ioFlAttrib & 16)
+		return false;
 	
 	switch(showWhat) {
 		case allMusics:
@@ -3722,10 +3698,10 @@ void WriteSupportedFormat(DialogPtr	aDia)
 	SetDText(aDia, 14, text);
 }
 
-static Boolean 		needUp;
+//static Boolean 		needUp;
 static Boolean		AddAll;
-static MenuHandle	showWhatMenu;
-static OSType		plugListO[ 25];
+//static MenuHandle	showWhatMenu;
+//static OSType		plugListO[ 25];
 
 #if 0
 pascal short MyDlgHook2(short item, DialogPtr theDialog, void *myDataPtr)
@@ -4207,14 +4183,12 @@ void MenuBarInit(void)
 	//TODO: Window and Help menus
 }
 
-short		IntInfoL(short ID)
+short IntInfoL(short ID)
 {
 	short					itemHit;
-	Str255					theString, theString2;
+	Str255					theString;
 	GrafPtr					savedPort;
 	DialogPtr				aDia;
-	EventRecord				tRecord;
-	OSErr					err;
 	ProcessSerialNumber		PSN;
 	
 	GetFrontProcess(&PSN);
@@ -4233,8 +4207,7 @@ short		IntInfoL(short ID)
 	
 	SetCursor(GetQDGlobalsArrow(&qdarrow));
 	
-	do
-	{
+	do {
 		//	ModalDialog(MyDlgFilterDesc, &itemHit);
 		
 		MyModalDialog(aDia, &itemHit);
@@ -4256,24 +4229,42 @@ short InfoL(short ID)
 	
 	GetFrontProcess(&PSN);
 	if(PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
-	   PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN)
-	{
+	   PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN) {
 		return true;
-	}
-	else return IntInfoL(ID);
+	} else
+		return IntInfoL(ID);
 }
 
 void MADErreur(OSErr err)
 {
 	switch(err)
 	{
-		case noErr:	break;
-		case MADOrderNotImplemented:		Erreur(67, err);		break;
-		case MADNeedMemory:					Erreur(68, err);		break;
-		case MADFileNotSupportedByThisPlug:	Erreur(69, err);		break;
-		case MADUnknowErr:					Erreur(70, err);		break;
-		case MADCannotFindPlug:				Erreur(71, err);		break;
-		default:							Erreur(70, err);		break;
+		case noErr:
+			break;
+			
+		case MADOrderNotImplemented:
+			Erreur(67, err);
+			break;
+			
+		case MADNeedMemory:
+			Erreur(68, err);
+			break;
+			
+		case MADFileNotSupportedByThisPlug:
+			Erreur(69, err);
+			break;
+			
+		case MADUnknowErr:
+			Erreur(70, err);
+			break;
+			
+		case MADCannotFindPlug:
+			Erreur(71, err);
+			break;
+			
+		default:
+			Erreur(70, err);
+			break;
 	}
 }
 
@@ -4714,26 +4705,19 @@ void HandleAppleChoice(short theItem)
 
 void HandleInstruChoice(short theItem)
 {
-	short		temp;
-	
-	switch(theItem)
-	{
+	switch (theItem) {
 		case 1:
-			if (InstruListDlog != NULL)
-			{
-				if (GetDialogWindow(InstruListDlog) == oldWindow)
-				{
+			if (InstruListDlog != NULL) {
+				if (GetDialogWindow(InstruListDlog) == oldWindow) {
 					SelectWindow2(NextWindowVisible(GetDialogWindow(InstruListDlog)));
 					CheckOneWindow(GetDialogWindow(InstruListDlog));
 					ClosePlayerWindow(InstruListDlog);
-				}
-				else
-				{
+				} else {
 					SelectWindow2(GetDialogWindow(InstruListDlog));
 					SetPortDialogPort(InstruListDlog);
 				}
-			}
-			else CreateInstruListWindow();
+			} else
+				CreateInstruListWindow();
 			break;
 			
 		case 3:
@@ -5841,13 +5825,10 @@ static void LoadOldFilePrefs(FSIORefNum fRefNum)
 
 void DoPreferences()
 {
-	OSErr			iErr;
-	short			vRefNum, fRefNum, myBit, i, x;
-	long			DirID, inOutBytes;
-	long			gestaltAnswer;
-	Handle			aHandle;
-	Point			tempL;
-	FSSpec			spec;
+	OSErr	iErr;
+	short	vRefNum, fRefNum;
+	long	DirID;
+	FSSpec	spec;
 	
 	RegisterCFDefaults();
 	ReadCFPreferences();
@@ -6175,7 +6156,7 @@ void DoPreferences()
 
 void HandleEdit(short item)
 {
-	short		theNo, lastNo, samp;
+	short		theNo, samp;
 	
 	switch (item) {
 		case 1:		// UNDO
@@ -6305,7 +6286,6 @@ void HandleEdit(short item)
 		case 12:
 		{
 			Boolean changedCopy;
-			long	tempL;
 			
 			MADGetMusicStatus(MADDriver, &curMusic->fullTime, &curMusic->position);
 			
@@ -6463,16 +6443,13 @@ static	Boolean ResetPatterns = false, ResetInstrus = false, PurgePatterns = fals
 
 void DoReset()
 {
-	Str255		theString;
-	long 		mresult, i, x;
+	long 		i, x;
 	GrafPtr		savedPort;
 	DialogPtr	aDia;
-	short		itemHit, curSelec, itemType;
+	short		itemHit, itemType;
 	Rect		tempRect;
 	Handle		itemHandle;
-	Point		myPt;
-	Boolean		DoWindowState = false;
-	short		thePos, tracks, position;
+	short		tracks, position;
 	Cmd			*aCmd;
 	
 	
@@ -6737,7 +6714,6 @@ void HandleFileChoice(short theItem)
 				CInfoPBRec		info;
 				FSSpec			spec;
 				Str255			asc_WorkStr;
-				OSErr			iErr;
 				Boolean			sucess = false;
 				
 				info.hFileInfo.ioNamePtr = asc_WorkStr;
@@ -6752,7 +6728,6 @@ void HandleFileChoice(short theItem)
 					if (info.hFileInfo.ioFlFndrInfo.fdType == 'cdev' &&
 					   info.hFileInfo.ioFlFndrInfo.fdCreator == 'soun')
 					{
-						LaunchParamBlockRec		myLaunchParams;
 						
 						pStrcpy(spec.name, info.hFileInfo.ioNamePtr);
 						spec.vRefNum = info.hFileInfo.ioVRefNum;
@@ -6768,7 +6743,6 @@ void HandleFileChoice(short theItem)
 					if (info.hFileInfo.ioFlFndrInfo.fdType == 'APPC' &&
 					   info.hFileInfo.ioFlFndrInfo.fdCreator == 'soun')
 					{
-						LaunchParamBlockRec		myLaunchParams;
 						
 						pStrcpy(spec.name, info.hFileInfo.ioNamePtr);
 						spec.vRefNum = info.hFileInfo.ioVRefNum;
@@ -6790,7 +6764,6 @@ void HandleFileChoice(short theItem)
 						CInfoPBRec		info;
 						FSSpec			spec;
 						Str255			asc_WorkStr;
-						OSErr			iErr;
 						Boolean			sucess = false;
 						
 						info.hFileInfo.ioNamePtr = asc_WorkStr;
@@ -6804,8 +6777,6 @@ void HandleFileChoice(short theItem)
 							
 							if (info.hFileInfo.ioFlFndrInfo.fdCreator == 'alav')		//info.hFileInfo.ioFlFndrInfo.fdType == 'APPL' &&
 							{
-								LaunchParamBlockRec		myLaunchParams;
-								
 								pStrcpy(spec.name, info.hFileInfo.ioNamePtr);
 								spec.vRefNum = info.hFileInfo.ioVRefNum;
 								spec.parID = specFolder.parID;
@@ -6884,17 +6855,16 @@ void HandleHelpChoice(short theItem)
 static	Rect		BookmarkRectList;
 static	ListHandle	BookmarkList;
 
-void UpdateBookmarks(DialogPtr	theDia)
+void UpdateBookmarks(DialogPtr theDia)
 {
-	GrafPtr		savePort;
-	Rect		itemRect;
-	TEHandle	hTE;
-	short		itemType;
- 	Handle		Text, itemHandle;
-	Rect		destRect;
- 	TextStyle	style;
+	GrafPtr			savePort;
+	Rect			itemRect;
+	TEHandle		hTE;
+	short			itemType;
+ 	Handle			Text, itemHandle;
+	Rect			destRect;
  	StScrpHandle	theStyle;
- 	RgnHandle	visibleRegion;
+ 	RgnHandle		visibleRegion;
  	
 	GetPort(&savePort);
 	SetPortDialogPort(theDia);
@@ -6958,11 +6928,9 @@ void UpdateBookmarks(DialogPtr	theDia)
 void AddRemoveBookmarksFilter(DialogPtr theDialog, EventRecord *theEventI, short *itemHit)
 {
 	WindowPtr	whichWindow;
-	short		thePart,i, theChar;
+	short		thePart;
 	GrafPtr		oldPort;
-	Point		aPoint, theCell;
-	Str255		str1, str2;
-	Boolean		DrawAll;
+	Point		aPoint;
 	
 	GetPort(&oldPort);
 	SetPortDialogPort(theDialog);
@@ -7047,10 +7015,8 @@ void AddRemoveBookmarksFilter(DialogPtr theDialog, EventRecord *theEventI, short
 
 void DrawAllBookMarks()
 {
-	Str255	String;
-	Point	cSize, theCell;
-	short	i,x;
-	Str255	tempString;
+	Point	cSize;
+	short	i;
 	
 	/*	theCell.v = 0;
 	 theCell.h = 0;
@@ -7081,16 +7047,13 @@ static	Str255		cURLs[ MAXURL], cURLsDesc[ MAXURL];
 
 void AddRemoveBookmarks()
 {
-	long		x, Result, mresult;
-	short		PourCent, itemHit,i, itemType;
+	long		x;
+	short		itemHit,i, itemType;
 	Rect		itemRect, tempRect, dataBounds;
 	Handle		itemHandle;
 	DialogPtr	TheDia;
-	Str255		theStr;
 	GrafPtr		myPort;
-	Point		cSize, theCell, myPt;
-	long		oldValue, NewValue, curSelec;
-	Boolean		IsPlaying;
+	Point		cSize, theCell;
 	FontInfo	ThisFontInfo;
 	
 	long		cURLsNo, lastSelected = -2;
@@ -7321,15 +7284,12 @@ void AddRemoveBookmarks()
 
 void CloseBookMarks()
 {
-	short		vRefNum, fRefNum;
+	short		fRefNum;
 	ByteCount	inOutBytes;
-	long		dirID, i, eof, prev;
+	long		i;
 	OSErr		iErr;
-	FSSpec		theSpec, spec;
-	Str255		url, desc;
-	Ptr			data;
+	FSSpec		spec;
 	char		achar;
-	Handle		Text;
 	
 	FSMakeFSSpec(mainVRefNum, mainParID, PLAYERBOOK, &spec);
 	
@@ -7370,10 +7330,9 @@ void CloseBookMarks()
 void InitBookMarks()
 {
 	short		vRefNum, fRefNum;
-	long		inOutBytes, dirID, i, eof, prev;
+	long		dirID, i, eof, prev;
 	OSErr		iErr;
 	FSSpec		theSpec;
-	Str255		url, desc;
 	Ptr			data;
 	Handle		Text;
 	

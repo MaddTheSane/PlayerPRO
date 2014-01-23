@@ -26,7 +26,7 @@ enum
 
 		
 static	short		FindInstru,  FindNote,  FindEffect,  FindArgu, FindVol, FindWhere;
-static	short		RInstru,  RNote,  REffect,  RArgu, RVol, RWhere;
+static	short		RInstru,  RNote,  REffect,  RArgu, RVol;
 static	Boolean		FInstruActi, FNoteActi, FEffectActi, FArguActi, FVolActi;
 static	Boolean		RInstruActi, RNoteActi, REffectActi, RArguActi, RVolActi;
 static	Boolean		FindModify;
@@ -74,22 +74,28 @@ void InitFindReplace(void)
 	FindTrack = -1;
 }
 
-static	short	DStartPos, DEndPos, DPat, DStartTrack, DEndTrack;
+static	short	DStartPos, DEndPos, DStartTrack, DEndTrack;
 static	short	FStartPos, FEndPos, FStartPat, FEndPat, FStartTrack, FEndTrack;
 static	short 	FPat, FPos, FTrack;
 
-void NReplaceInt(Cmd	*myCmd, short track, short position, Boolean MakeUpdate)
+void NReplaceInt(Cmd *myCmd, short track, short position, Boolean MakeUpdate)
 {
-	Point	cell;
+	if (RInstruActi)
+		myCmd->ins = RInstru;
+	if (RNoteActi)
+		myCmd->note = RNote;
+	if (REffectActi)
+		myCmd->cmd = REffect;
+	if (RArguActi)
+		myCmd->arg = RArgu;
+	if (RVolActi) {
+		if (RVol == 0)
+			myCmd->vol = 0xFF;
+		else
+			myCmd->vol = RVol;
+	}
 
-	if (RInstruActi)	myCmd->ins = RInstru;
-	if (RNoteActi)		myCmd->note = RNote;
-	if (REffectActi)	myCmd->cmd = REffect;
-	if (RArguActi)		myCmd->arg = RArgu;
-	if (RVolActi)		{ if (RVol == 0) myCmd->vol = 0xFF; else myCmd->vol = RVol;}
-
-	if (MakeUpdate)
-	{
+	if (MakeUpdate) {
 		UPDATE_Note(position, track);
 	}
 	
@@ -101,8 +107,7 @@ void ReplaceCommand(void)
 	Cmd		*myCmd;
 	short	track, position;
 
-	switch(GetWRefCon(oldWindow))
-	{
+	switch (GetWRefCon(oldWindow)) {
 		default:
 		case RefPartition:
 			if (EditorDlog == NULL) break;
@@ -354,27 +359,25 @@ void SetUpButtons(void)
 
 void CreateFind(void)
 {
-	long					mresult, MusicSize;
-	short					whichItem, itemHit, itemType, i, x, curSelecPat;
-	Str255					theStr, aStr;
-	GrafPtr					myPort;
-	MenuHandle				thePatternMenu;
-	Handle					itemHandle;
-	Point					myPt;
-	Rect					itemRect;
-/*
+	short	itemHit;
+	Str255	aStr;
+	GrafPtr	myPort;
+
+#if 0
 	if (FindDlog != NULL)
 	{
 		SelectWindow2(FindDlog);
 		SetPortDialogPort(FindDlog);
 		return;
 	}
-*/
+#endif
+	
 	SaveUndo(UAllPatterns, 0, "\pUndo 'Find & Replace'");
 
 	GetPort(&myPort);
 
-	if (MADDriver->Reading) DoPause();
+	if (MADDriver->Reading)
+		DoPause();
 	
 	GetDigitalSelection(&DStartTrack, &DStartPos, &DEndTrack, &DEndPos, NULL);
 	
@@ -575,11 +578,9 @@ Boolean SetUpFind(void)
 
 void DoItemPressFind(short whichItem, DialogPtr whichDialog)
 {
-	Cell			theCell;
-	long			tempLong;
 	Handle			itemHandle;
 	Rect			itemRect;
-	short			temp, bogus, itemType, i, *shortPtr, tempInstru, track, position;
+	short			itemType, i, *shortPtr, tempInstru, track, position;
 	long			mresult;
 	GrafPtr			SavePort;
 	Point			myPt;
@@ -899,12 +900,7 @@ void DoItemPressFind(short whichItem, DialogPtr whichDialog)
 
 void DoKeyPressFind(short theChar)
 {
-	Boolean		GoodNote = false;
 	GrafPtr		savePort;
-	Point		myPt;
-	Rect		itemRect;
-	Handle		itemHandle;
-	short		itemType;
 
 	GetPort(&savePort);
 	SetPortDialogPort(FindDlog);

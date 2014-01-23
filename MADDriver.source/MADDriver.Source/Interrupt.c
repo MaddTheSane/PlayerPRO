@@ -214,7 +214,7 @@ long DoVolPanning256(short whichChannel, Channel *ch, MADDriverRec *intDriver, B
 
 void MADCleanDriver(MADDriverRec *intDriver)
 {
-	long		i, x, size;
+	long		i, x;
 	
 	if (!intDriver) {
 		return;
@@ -797,7 +797,6 @@ LOGFAC*453,LOGFAC*450,LOGFAC*447,LOGFAC*443,LOGFAC*440,LOGFAC*437,LOGFAC*434,LOG
 long getlogperiod(short note,long fine, MADDriverRec *intDriver)
 {
 	Byte n,o;
-	short p1,p2;
 	long i;
 	
 	n = note%12;
@@ -1252,7 +1251,7 @@ void ApplyVSTEffects(MADDriverRec *intDriver, Boolean ByPass)
 		{
 			if (intDriver->curMusic->header->chanBus[ intDriver->EffectBufferID[ i]].ByPass == ByPass)
 			{
-				long		*eee, *ASCBuffer, ii, x;
+				long		*eee, *ASCBuffer, ii;
 				
 				if (intDriver->DriverSettings.oversampling > 1)
 				{
