@@ -23,6 +23,11 @@ OSErr closeCoreAudio(MADDriverRec *inMADDriver);
 void StopChannelCA(MADDriverRec *inMADDriver);
 void PlayChannelCA(MADDriverRec *inMADDriver);
 
+//If we are building on an older OS/compiler, like 10.5/gcc 4.0
+#ifndef CF_RETURNS_RETAINED
+#define CF_RETURNS_RETAINED
+#endif
+
 CFMutableArrayRef GetDefaultPluginFolderLocations() CF_RETURNS_RETAINED;
 
 void GetPStrFromCFString(const CFStringRef source, StringPtr pStrOut);
