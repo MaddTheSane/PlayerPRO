@@ -249,7 +249,6 @@
 		5573A41210B5160000FF8B50 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573A51C10B52EB500FF8B50 /* DrawSprocket.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */; };
 		55784A1117FA2A7100B78840 /* PPMenus.r in Rez */ = {isa = PBXBuildFile; fileRef = 55784A1017FA2A7100B78840 /* PPMenus.r */; };
-		557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */ = {isa = PBXBuildFile; fileRef = 557B8FD910CE01BF00B9A37D /* DefaultPref.r */; };
 		557DE27710E04C1500177B4C /* PPResDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 557DE27610E04C1500177B4C /* PPResDefs.h */; };
 		557DE42D10E06BF200177B4C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		557DE42E10E06BF200177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -4905,7 +4904,6 @@
 				88E0C4690C2F21DE00D6C081 /* Carbon.r in Rez */,
 				55DB45D50FEAB8CD0088C375 /* DFTB.r in Rez */,
 				55EE8C741003E83A00E75E63 /* General-rez.r in Rez */,
-				557B8FDA10CE01BF00B9A37D /* DefaultPref.r in Rez */,
 				55784A1117FA2A7100B78840 /* PPMenus.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

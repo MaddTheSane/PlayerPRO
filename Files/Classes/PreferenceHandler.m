@@ -342,6 +342,8 @@ void RegisterCFDefaults()
 	  @"State 3", PPWindowName3,
 	  [NSNumber numberWithInt:0], PPStartNumber,
 	  pianoArray, PPPianoKeys,
+	  [NSNumber numberWithShort:eNoteOFF], PPLoopType,
+	  [NSNumber numberWithShort:3], PPVolumeLevel,
 	  nil]];
 	
 	[pianoArray release];
@@ -386,6 +388,8 @@ void ReadCFPreferences()
 	for (i = 0; i < 300; i++) {
 		thePrefs.PianoKey[i] = [[tempArray objectAtIndex:i] shortValue];
 	}
+	thePrefs.LoopType = [defaults integerForKey:(NSString*)PPLoopType];
+	thePrefs.volumeLevel = [defaults integerForKey:(NSString*)PPVolumeLevel];
 	
 	[pool drain];
 }
@@ -412,6 +416,8 @@ void WriteCFPreferences()
 	[defaults setObject:tmpMutable forKey:(NSString*)PPPianoKeys];
 	[tmpMutable release];
 	tmpMutable = nil;
+	[defaults setInteger:thePrefs.LoopType forKey:(NSString*)PPLoopType];
+	[defaults setInteger:thePrefs.volumeLevel forKey:(NSString*)PPVolumeLevel];
 	
 	
 	[defaults synchronize];

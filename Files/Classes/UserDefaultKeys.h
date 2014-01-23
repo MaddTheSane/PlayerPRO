@@ -15,6 +15,8 @@ extern CFStringRef const PPPreferencesSet;
 extern CFStringRef const PPAutoCreator;
 extern CFStringRef const PPStartNumber;
 extern CFStringRef const PPPianoKeys;
+extern CFStringRef const PPLoopType;
+extern CFStringRef const PPVolumeLevel;
 
 //Windows
 extern CFStringRef const PPWindowName1;
