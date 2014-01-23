@@ -1497,7 +1497,6 @@
 		5573A41010B5160000FF8B50 /* PPDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PPDefs.h; path = ../../PPDefs.h; sourceTree = "<group>"; };
 		5573A51B10B52EB500FF8B50 /* DrawSprocket.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DrawSprocket.framework; path = System/Library/Frameworks/DrawSprocket.framework; sourceTree = SDKROOT; };
 		5573A59F10B542F300FF8B50 /* Proto.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Proto.c; path = "(Proto)/Proto.c"; sourceTree = "<group>"; };
-		557B8FD910CE01BF00B9A37D /* DefaultPref.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = DefaultPref.r; path = Files/DefaultPref.r; sourceTree = "<group>"; };
 		557DE1F110E0158C00177B4C /* English */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = English; path = Files/English.lproj/PPMenus.r; sourceTree = "<group>"; };
 		557DE27610E04C1500177B4C /* PPResDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPResDefs.h; path = Files/PPResDefs.h; sourceTree = "<group>"; };
 		557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "CFPlugin-FilterBridge.c"; sourceTree = "<group>"; };
@@ -3158,7 +3157,6 @@
 				55EE8C731003E83A00E75E63 /* General-rez.r */,
 				550B00CF10BA17BC004FC5D7 /* Icons */,
 				550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */,
-				557B8FD910CE01BF00B9A37D /* DefaultPref.r */,
 				55784A1017FA2A7100B78840 /* PPMenus.r */,
 				557DE27610E04C1500177B4C /* PPResDefs.h */,
 			);
