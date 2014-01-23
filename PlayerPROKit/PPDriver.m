@@ -114,9 +114,11 @@
 
 - (OSErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett
 {
+	OSErr theErr;
 	[self willChangeValueForKey:@"driverSettings"];
-	return MADChangeDriverSettings(&theSett, &theRec);
+	theErr = MADChangeDriverSettings(&theSett, &theRec);
 	[self didChangeValueForKey:@"driverSettings"];
+	return theErr;
 }
 
 - (void)beginExport
@@ -180,7 +182,7 @@
 	
 	iErr = MADSetMusicStatus(theRec, 0, tempTotV, curV);
 	if (iErr) {
-		//return; //This will probably be a thrown exception in the future
+		return; //This will probably be a thrown exception in the future
 	}
 }
 
