@@ -6569,7 +6569,10 @@
 				GCC_MODEL_TUNING = G4;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = OldCarbHeaders.h;
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"__MAC_OS_X_MEMORY_MANAGER_CLEAN__=1",
+				);
 				GCC_VERSION = 4.2;
 				"GCC_VERSION[sdk=macosx*][arch=ppc]" = 4.0;
 				"GCC_VERSION[sdk=macosx10.3.9][arch=ppc]" = 3.3;
@@ -7725,6 +7728,7 @@
 					"$(inherited)",
 					DEBUG_MODE,
 					"DEBUG=1",
+					"__MAC_OS_X_MEMORY_MANAGER_CLEAN__=1",
 				);
 				GCC_VERSION = 4.2;
 				"GCC_VERSION[sdk=macosx*][arch=ppc]" = 4.0;
@@ -7891,6 +7895,7 @@
 					"$(inherited)",
 					DEBUG_MODE,
 					"DEBUG=1",
+					"__MAC_OS_X_MEMORY_MANAGER_CLEAN__=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -8930,7 +8935,10 @@
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = OldCarbHeaders.h;
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"__MAC_OS_X_MEMORY_MANAGER_CLEAN__=1",
+				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
