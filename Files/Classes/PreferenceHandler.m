@@ -12,7 +12,7 @@
 #include "PreferenceHandler.h"
 #include "Shuddup.h"
 
-#define	VERSION			0x0592
+#define MakeNSRGB(red1, green1, blue1) [NSColor colorWithCalibratedRed:red1 / (CGFloat)USHRT_MAX green:green1 / (CGFloat)USHRT_MAX blue:blue1 / (CGFloat)USHRT_MAX alpha:1]
 
 Boolean CFPreferencesHaveBeenSet()
 {
@@ -351,8 +351,10 @@ void RegisterCFDefaults()
 	  [NSNumber numberWithLong:NO], PPReverbToggle,
 	  [NSNumber numberWithLong:25], PPReverbAmount,
 	  [NSNumber numberWithLong:60], PPReverbStrength,
-	  [NSNumber numberWithLong:4], PPOversamplingAmount,
+	  [NSNumber numberWithLong:1], PPOversamplingAmount,
 	  [NSNumber numberWithInt:0], PPStereoDelayAmount,
+	  [NSNumber numberWithBool:NO], PPStereoDelayToggle,
+	  [MakeNSRGB(65535, 65535, 39321) PPencodeColor], PPDEMarkerColorPref,
 	  nil]];
 	
 	[pianoArray release];
@@ -400,7 +402,7 @@ void ReadCFPreferences()
 	thePrefs.LoopType = [defaults integerForKey:(NSString*)PPLoopType];
 	thePrefs.volumeLevel = [defaults integerForKey:(NSString*)PPVolumeLevel];
 	thePrefs.Compressor = 'NONE';
-	thePrefs.DirectDriverType.outPutMode = DeluxeStereoOutPut;	// force DeluxeStereoOutPut
+	thePrefs.outPutMode = thePrefs.DirectDriverType.outPutMode = DeluxeStereoOutPut;	// force DeluxeStereoOutPut
 	thePrefs.channelNumber = 2;
 	thePrefs.DirectDriverType.numChn = 4;
 	thePrefs.DirectDriverType.TickRemover = thePrefs.TickRemover = true;
@@ -411,6 +413,14 @@ void ReadCFPreferences()
 	thePrefs.FrequenceSpeed = thePrefs.DirectDriverType.outPutRate = [defaults integerForKey:(NSString*)PPSoundOutRate];
 	thePrefs.amplitude = thePrefs.DirectDriverType.outPutBits = [defaults integerForKey:(NSString*)PPSoundOutBits];
 	thePrefs.driverMode = thePrefs.DirectDriverType.driverMode = [defaults integerForKey:(NSString*)PPSoundDriver];
+	thePrefs.surround = thePrefs.DirectDriverType.surround = [defaults boolForKey:(NSString*)PPSurroundToggle];
+	if (![defaults boolForKey:(NSString*)PPStereoDelayToggle]) {
+		thePrefs.MicroDelaySize = thePrefs.DirectDriverType.MicroDelaySize = [defaults integerForKey:(NSString*)PPStereoDelayAmount];
+	} else {
+		thePrefs.MicroDelaySize = thePrefs.DirectDriverType.MicroDelaySize = false;
+	}
+	
+	ReadCFPreferencesWithQDColor(PPDEMarkerColorPref, &thePrefs.yellC);
 	
 	[pool drain];
 }
@@ -445,6 +455,17 @@ void WriteCFPreferences()
 	[defaults setInteger:thePrefs.FrequenceSpeed forKey:(NSString*)PPSoundOutRate];
 	[defaults setInteger:thePrefs.amplitude forKey:(NSString*)PPSoundOutBits];
 	[defaults setInteger:thePrefs.driverMode forKey:(NSString*)PPSoundDriver];
+	[defaults setBool:thePrefs.surround forKey:(NSString*)PPSurroundToggle];
+	if (thePrefs.MicroDelaySize > 0) {
+		[defaults setBool:YES forKey:(NSString*)PPStereoDelayToggle];
+		[defaults setInteger:thePrefs.MicroDelaySize forKey:(NSString*)PPStereoDelayAmount];
+	} else {
+		[defaults setBool:NO forKey:(NSString*)PPStereoDelayToggle];
+		[defaults setInteger:thePrefs.MicroDelaySize forKey:(NSString*)PPStereoDelayAmount];
+	}
+	
+	WriteCFPreferencesWithQDColor(PPDEMarkerColorPref, thePrefs.yellC);
+	
 	
 	[defaults synchronize];
 	
