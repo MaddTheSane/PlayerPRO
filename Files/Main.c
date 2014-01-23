@@ -9,7 +9,6 @@
 #include "Help.h"
 #include <QuickTime/QuickTime.h>
 #include "PPResDefs.h"
-#include "ByteUtils.h"
 #include "PPPrivate.h"
 #include <CoreMIDI/CoreMIDI.h>
 #include "PreferenceHandler.h"
