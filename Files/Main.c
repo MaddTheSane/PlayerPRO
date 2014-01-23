@@ -6040,8 +6040,7 @@ void DoPreferences()
 			thePrefs.outPutBits		= 8;					// 8 or 16 Bits
 			thePrefs.outPutRate		= rate22khz;			// Fixed number, by example : rate44khz, rate22050hz, rate22khz, rate11khz, rate11025hz
 		}
-		thePrefs.antiAliasing	= false;				// Use AntiAliasing filter ?
-		thePrefs.surround		= false;	
+		thePrefs.surround		= false;
 		thePrefs.TickRemover	= true;
 		thePrefs.keyMapNote		= false;
 		thePrefs.MusicTrace		= true;
