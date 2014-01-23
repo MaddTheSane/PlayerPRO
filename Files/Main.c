@@ -5993,7 +5993,6 @@ void DoPreferences()
 		//thePrefs.DirectVideo = true;
 		thePrefs.FinePositioning = true;
 		
-		thePrefs.ChannelType		= DeluxeStereoOutPut;
 		thePrefs.amplitude			= 16;
 		thePrefs.Compressor			= 'NONE';
 		thePrefs.FrequenceSpeed		= rate44khz;
@@ -7255,25 +7254,20 @@ void AddRemoveBookmarks()
 				break;
 		}
 		
-	}while (itemHit != 1 && itemHit != 2);
+	} while (itemHit != 1 && itemHit != 2);
 	
-	if (itemHit == 1)
-	{
+	if (itemHit == 1) {
 		x = CountMenuItems(InternetMenu);
 		for (i = 8; i <= x;i++) DeleteMenuItem(InternetMenu, 8);
 		
-		for (i = 0; i < URLsNo; i++)
-		{
-			AppendMenu(InternetMenu, URLsDesc[ i]);
+		for (i = 0; i < URLsNo; i++) {
+			AppendMenu(InternetMenu, URLsDesc[i]);
 		}
-	}
-	else
-	{
+	} else {
 		URLsNo = cURLsNo;
-		for (i = 0; i < URLsNo; i++)
-		{
-			pStrcpy(URLs[ i], cURLs[ i]);
-			pStrcpy(URLsDesc[ i], cURLsDesc[ i]);
+		for (i = 0; i < URLsNo; i++) {
+			pStrcpy(URLs[i], cURLs[i]);
+			pStrcpy(URLsDesc[i], cURLsDesc[i]);
 		}
 	}
 	
@@ -7293,7 +7287,7 @@ void CloseBookMarks()
 	FSMakeFSSpec(mainVRefNum, mainParID, PLAYERBOOK, &spec);
 	
 	iErr = FSpDelete(&spec);
-	iErr = FSpCreate(&spec,  'ttxt', 'TEXT', smSystemScript);
+	iErr = FSpCreate(&spec, 'ttxt', 'TEXT', smSystemScript);
 	if (iErr) return;
 	
 	
@@ -7303,8 +7297,7 @@ void CloseBookMarks()
 	
 	achar = '\r';
 	
-	for (i = 0; i < URLsNo; i++)
-	{
+	for (i = 0; i < URLsNo; i++) {
 		inOutBytes = URLs[i][0];
 		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &URLs[i][1], &inOutBytes);
 		

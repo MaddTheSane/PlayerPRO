@@ -344,6 +344,15 @@ void RegisterCFDefaults()
 	  pianoArray, PPPianoKeys,
 	  [NSNumber numberWithShort:eNoteOFF], PPLoopType,
 	  [NSNumber numberWithShort:3], PPVolumeLevel,
+	  [NSNumber numberWithUnsignedInt:rate44khz], PPSoundOutRate,
+	  [NSNumber numberWithShort:SoundManagerDriver], PPSoundDriver,
+	  [NSNumber numberWithShort:16], PPSoundOutBits,
+	  [NSNumber numberWithBool:NO], PPSurroundToggle,
+	  [NSNumber numberWithLong:NO], PPReverbToggle,
+	  [NSNumber numberWithLong:25], PPReverbAmount,
+	  [NSNumber numberWithLong:60], PPReverbStrength,
+	  [NSNumber numberWithLong:4], PPOversamplingAmount,
+	  [NSNumber numberWithInt:0], PPStereoDelayAmount,
 	  nil]];
 	
 	[pianoArray release];
@@ -390,6 +399,18 @@ void ReadCFPreferences()
 	}
 	thePrefs.LoopType = [defaults integerForKey:(NSString*)PPLoopType];
 	thePrefs.volumeLevel = [defaults integerForKey:(NSString*)PPVolumeLevel];
+	thePrefs.Compressor = 'NONE';
+	thePrefs.DirectDriverType.outPutMode = DeluxeStereoOutPut;	// force DeluxeStereoOutPut
+	thePrefs.channelNumber = 2;
+	thePrefs.DirectDriverType.numChn = 4;
+	thePrefs.DirectDriverType.TickRemover = thePrefs.TickRemover = true;
+	
+	thePrefs.Reverb = thePrefs.DirectDriverType.Reverb = [defaults boolForKey:(NSString*)PPReverbToggle];
+	thePrefs.ReverbSize = thePrefs.DirectDriverType.ReverbSize = [defaults integerForKey:(NSString*)PPReverbAmount];
+	thePrefs.ReverbStrength = thePrefs.DirectDriverType.ReverbStrength = [defaults integerForKey:(NSString*)PPReverbStrength];
+	thePrefs.FrequenceSpeed = thePrefs.DirectDriverType.outPutRate = [defaults integerForKey:(NSString*)PPSoundOutRate];
+	thePrefs.amplitude = thePrefs.DirectDriverType.outPutBits = [defaults integerForKey:(NSString*)PPSoundOutBits];
+	thePrefs.driverMode = thePrefs.DirectDriverType.driverMode = [defaults integerForKey:(NSString*)PPSoundDriver];
 	
 	[pool drain];
 }
@@ -418,7 +439,12 @@ void WriteCFPreferences()
 	tmpMutable = nil;
 	[defaults setInteger:thePrefs.LoopType forKey:(NSString*)PPLoopType];
 	[defaults setInteger:thePrefs.volumeLevel forKey:(NSString*)PPVolumeLevel];
-	
+	[defaults setInteger:thePrefs.ReverbStrength forKey:(NSString*)PPReverbStrength];
+	[defaults setInteger:thePrefs.ReverbSize forKey:(NSString*)PPReverbAmount];
+	[defaults setBool:thePrefs.Reverb forKey:(NSString*)PPReverbToggle];
+	[defaults setInteger:thePrefs.FrequenceSpeed forKey:(NSString*)PPSoundOutRate];
+	[defaults setInteger:thePrefs.amplitude forKey:(NSString*)PPSoundOutBits];
+	[defaults setInteger:thePrefs.driverMode forKey:(NSString*)PPSoundDriver];
 	
 	[defaults synchronize];
 	
