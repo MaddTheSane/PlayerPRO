@@ -5529,12 +5529,16 @@ static void LoadOldFilePrefs(FSIORefNum fRefNum)
 		Str255				ASIODriverName;
 	} oldPrefs;
 #pragma pack(pop)
-	OSErr iErr;
+	OSErr theErr;
 	SInt64	inOutBytes;
 	
-	iErr = FSGetForkSize(fRefNum, &inOutBytes);
-	iErr = FSReadFork(fRefNum, fsAtMark, 0, inOutBytes, &oldPrefs, NULL);
-	iErr = FSCloseFork(fRefNum);
+	theErr = FSGetForkSize(fRefNum, &inOutBytes);
+	if (inOutBytes == 0) {
+		theErr = FSCloseFork(fRefNum);
+		return;
+	}
+	theErr = FSReadFork(fRefNum, fsAtMark, 0, inOutBytes, &oldPrefs, NULL);
+	theErr = FSCloseFork(fRefNum);
 #ifdef __LITTLE_ENDIAN__
 	{
 		int i, x;
