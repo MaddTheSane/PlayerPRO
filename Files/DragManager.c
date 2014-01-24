@@ -7,17 +7,9 @@ Boolean DragManagerUse;
 
 void DragManagerInstalled(void)
 {
-	/* 
-	 //Since Mac OS X always has the Drag manager installed,
-	 // we're just going to return true.
-	long  gestaltResponse;
-	
-	if ((Gestalt(gestaltDragMgrAttr, &gestaltResponse) != noErr) ||
-	   (!(gestaltResponse & (1 << gestaltDragMgrPresent))))
-	{
-		DragManagerUse = false;
-	}
-	else */DragManagerUse = true;
+	//Since Mac OS X always has the Drag manager installed,
+	// we're just going to return true.
+	DragManagerUse = true;
 }
 
 void ReceiveNewFSSpec(AEDesc *dropLocation, FSSpec	*newFSSpec)
@@ -33,8 +25,7 @@ void ReceiveNewFSSpec(AEDesc *dropLocation, FSSpec	*newFSSpec)
 	//
 	
 	if ((dropLocation->descriptorType != typeNull) &&
-		(AECoerceDesc(dropLocation, typeFSS, &dropSpec) == noErr))
-	{
+		(AECoerceDesc(dropLocation, typeFSS, &dropSpec) == noErr)) {
 		
 		result = MyAEGetDescData(&dropSpec, NULL, &theSpec, sizeof(theSpec), NULL);
 		if (result != noErr) return;
@@ -57,13 +48,15 @@ void ReceiveNewFSSpec(AEDesc *dropLocation, FSSpec	*newFSSpec)
 		//	HUnlock(dropSpec.dataHandle);
 		AEDisposeDesc(&dropSpec);
 		
-		if (result != noErr) return;
+		if (result != noErr)
+			return;
 		
 		//
 		//	If the result is not a directory, it must not be the Trash.
 		//
 		
-		if (!(thePB.dirInfo.ioFlAttrib & (1 << 4))) return;
+		if (!(thePB.dirInfo.ioFlAttrib & (1 << 4)))
+			return;
 		
 		//
 		//	Get information about the Trash folder.
@@ -93,7 +86,8 @@ Boolean DropLocationIsFinderTrash(AEDesc *dropLocation)
 	{
 		
 		result = MyAEGetDescData(&dropSpec, NULL, &theSpec, sizeof(theSpec), NULL);
-		if (result != noErr) return false;
+		if (result != noErr)
+			return false;
 		
 		//	HLock(dropSpec.dataHandle);
 		//	theSpec = (FSSpec *) *dropSpec.dataHandle;
@@ -134,8 +128,9 @@ Boolean DropLocationIsFinderTrash(AEDesc *dropLocation)
 		//	returned by FindFolder, then the drop must have occurred into the Trash.
 		//
 		
-		if (thePB.dirInfo.ioDrDirID == trashDirID) return(true);
+		if (thePB.dirInfo.ioDrDirID == trashDirID)
+			return true;
 	}
 	
-	return(false);
+	return false;
 }

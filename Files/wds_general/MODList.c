@@ -1647,26 +1647,23 @@ void CreateMODListWindow(void)
 	curMusicListFile = false;
 	pStrcpy(curMusicList.name, MLNONAME);
 	
-//	mySearchUPP = NewListSearchProc(MyOMatchNextAlphabetically);
-//	mySearchUPP2 = NewListSearchProc(MyOMatchNextList);
+	//mySearchUPP = NewListSearchProc(MyOMatchNextAlphabetically);
+	//mySearchUPP2 = NewListSearchProc(MyOMatchNextList);
 	
-	MODListDlog = GetNewDialog(142, NULL, (WindowPtr) ToolsDlog);
+	MODListDlog = GetNewDialog(142, NULL, GetDialogWindow(ToolsDlog));
 	SetWindEtat(GetDialogWindow(MODListDlog));
-
-/*	#if MACOS9VERSION
-	#else
-	{
-	EventHandlerRef	ref;
 	
-	myWinEvtHandler = NewEventHandlerUPP(CarbonWindowEventHandler);
-    InstallWindowEventHandler(GetDialogWindow(MODListDlog), myWinEvtHandler, 3, CarbonWinlist, 0, &ref);
+	{
+		EventHandlerRef	ref;
+		
+		myWinEvtHandler = NewEventHandlerUPP(CarbonWindowEventHandler);
+		InstallWindowEventHandler(GetDialogWindow(MODListDlog), myWinEvtHandler, 3, CarbonWinlist, 0, &ref);
 	}
-	#endif*/
-
+	
 	GetPortBounds(GetDialogPort(MODListDlog), &caRect);
 	
 	MySizeWindow(MODListDlog, 200, caRect.bottom, true);
-
+	
 	SetPortDialogPort(MODListDlog);
 	TextFont(kFontIDGeneva);
 	TextSize(9);
@@ -1674,20 +1671,20 @@ void CreateMODListWindow(void)
 	DropZone = -1;
 	
 	/** PrivateList **/
-
+	
 	SetRect(&myList.select, -1, -1, -1, -1);
 	myList.HCell	= 20;
 	myList.xScroll	= NULL;
 	SetRect(&itemRect, 0, 0, 30, 16);
-	myList.yScroll = NewControl(	GetDialogWindow(MODListDlog),
-									&itemRect,
-									"\p",
-									true,
-									0,
-									0,
-									0,
-									gScrollBarID,
-									0);
+	myList.yScroll = NewControl(GetDialogWindow(MODListDlog),
+								&itemRect,
+								"\p",
+								true,
+								0,
+								0,
+								0,
+								gScrollBarID,
+								0);
 	
 	GetDialogItem(MODListDlog , 2, &itemType, &itemHandle, &myList.rect);
 	
@@ -1701,96 +1698,18 @@ void CreateMODListWindow(void)
 	myList.maxX	= 1;
 	
 	pStrcpy(PathNameStr, "\p-");
-
+	
 	/** Small buttons **/
-
-/*	GetDialogItem(MODListDlog , 32, &itemType, &itemHandle, &itemRect);
-//	//itemRect.right = itemRect.left;
-	AZBut = NewControl(	GetDialogWindow(MODListDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,		//icl8 id - AZ List
-							1,
-							171,
-							33,
-							0);*/
+	
 	GetDialogItemAsControl(MODListDlog, 32, &AZBut);
-//	SetControlAction(AZBut, );
-
+	
 	GetDialogItemAsControl(MODListDlog, 31, &DelBut);
-//	GetDialogItem(MODListDlog , 31, &itemType, &itemHandle, &itemRect);
-//	//itemRect.right = itemRect.left;
-/*	DelBut = NewControl(	GetDialogWindow(MODListDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,		//icl8 id - Record
-							1,
-							150,
-							33,
-							0);*/
 	GetDialogItemAsControl(MODListDlog, 27, &InfoBut);
-/*	GetDialogItem(MODListDlog , 27, &itemType, &itemHandle, &itemRect);
-//	itemRect.right = itemRect.left + 32;
-	InfoBut = NewControl(	GetDialogWindow(MODListDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,		//icl8 id - Record
-							1,
-							149,
-							33,
-							0);*/
 	GetDialogItemAsControl(MODListDlog, 28, &OpenBut);
-/*	GetDialogItem(MODListDlog , 28, &itemType, &itemHandle, &itemRect);
-//	itemRect.right = itemRect.left + 32;
-	OpenBut = NewControl(	GetDialogWindow(MODListDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,		//icl8 id - Record
-							1,
-							159,
-							33,
-							0);*/
 	GetDialogItemAsControl(MODListDlog, 29, &LoadBut );
-/*	GetDialogItem(MODListDlog , 29, &itemType, &itemHandle, &itemRect);
-//	itemRect.right = itemRect.left + 32;
-	LoadBut = NewControl(	GetDialogWindow(MODListDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,		//icl8 id - Record
-							1,
-							152,
-							33,
-							0);*/
 	GetDialogItemAsControl(MODListDlog, 19, &prefBut);
-/*	GetDialogItem(MODListDlog , 19, &itemType, &itemHandle, &itemRect);
-//	itemRect.right = itemRect.left + 32;
-	prefBut = NewControl(	GetDialogWindow(MODListDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,		//icl8 id - Record
-							1,
-							174,
-							33,
-							0);*/
 	GetDialogItemAsControl(MODListDlog, 30, &FlipBut);
-/*	GetDialogItem(MODListDlog , 30, &itemType, &itemHandle, &itemRect);
-//	itemRect.right = itemRect.left + 32;
-	FlipBut = NewControl(	GetDialogWindow(MODListDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,		//icl8 id - Flip
-							1,
-							161,
-							33,
-							0);*/
-		
+	
 	HiliteControl(InfoBut, 255);
 	HiliteControl(DelBut, 255);
 	HiliteControl(OpenBut, 255);
@@ -1798,26 +1717,20 @@ void CreateMODListWindow(void)
 	GetPortBounds(GetDialogPort(MODListDlog), &caRect);
 	
 	SetMaxWindow(caRect.right + 3, 0, MODListDlog);
-
+	
 	theEvent.what = 0;
 	DoGrowMODList(MODListDlog);
 	
-	if (DragManagerUse)
-	{
-		MyTrackingMODListUPP = NewDragTrackingHandlerUPP(MyTrackingMODList);
-		MyReceiveMODListUPP = NewDragReceiveHandlerUPP(MyReceiveMODList);
-		
-		InstallTrackingHandler((DragTrackingHandlerUPP) MyTrackingMODListUPP, GetDialogWindow(MODListDlog), (void *) NULL);
-		InstallReceiveHandler((DragReceiveHandlerUPP) MyReceiveMODListUPP, GetDialogWindow(MODListDlog), (void *) NULL);
-	}
+	MyTrackingMODListUPP = NewDragTrackingHandlerUPP(MyTrackingMODList);
+	MyReceiveMODListUPP = NewDragReceiveHandlerUPP(MyReceiveMODList);
 	
-	{
-		short i;
-		for (i = 0; i < MAXITEM;i++)
-		{
-			specList[ i] = (FSSpec*) -1L;
-			pathStrList[ i] = (unsigned char*) -1L;
-		}
+	InstallTrackingHandler((DragTrackingHandlerUPP) MyTrackingMODListUPP, GetDialogWindow(MODListDlog), (void *) NULL);
+	InstallReceiveHandler((DragReceiveHandlerUPP) MyReceiveMODListUPP, GetDialogWindow(MODListDlog), (void *) NULL);
+	
+	short i;
+	for (i = 0; i < MAXITEM;i++) {
+		specList[ i] = (FSSpec*) -1L;
+		pathStrList[ i] = (unsigned char*) -1L;
 	}
 }
 
@@ -1835,14 +1748,14 @@ void PathNameFromDirID(long dirID, short vRefNum, StringPtr fullPathName);
 
 void DrawPathName(void)
 {
-RgnHandle	saveClipRgn;
-Rect		caRect, itemRect, destRect;
-Handle		itemHandle, gTheSuite;
-short		itemType;
-TEHandle	hTE;
-
-// 	saveClipRgn = NewRgn();
-// 	GetClip(saveClipRgn);
+	RgnHandle	saveClipRgn;
+	Rect		caRect, itemRect, destRect;
+	Handle		itemHandle;
+	short		itemType;
+	TEHandle	hTE;
+	
+ 	saveClipRgn = NewRgn();
+ 	GetClip(saveClipRgn);
  	
  	GetDialogItem(MODListDlog, 26, &itemType, &itemHandle, &itemRect);
  	
@@ -1851,10 +1764,10 @@ TEHandle	hTE;
  	itemRect.bottom = myList.rect.bottom;
  	itemRect.right = caRect.right;
  	
-// 	ClipRect(&itemRect);
-
-// 	GetDialogItem(MODListDlog, 26, &itemType, &itemHandle, &itemRect);
-	//TETextBox(PathNameStr + 1, PathNameStr[ 0], &itemRect, teJustLeft);
+ 	ClipRect(&itemRect);
+	
+ 	GetDialogItem(MODListDlog, 26, &itemType, &itemHandle, &itemRect);
+	TETextBox(PathNameStr + 1, PathNameStr[ 0], &itemRect, teJustLeft);
 	
 	destRect = itemRect;
 	destRect.bottom = 1000;
@@ -1868,8 +1781,8 @@ TEHandle	hTE;
 	
 	TEDispose(hTE);
 	
-//	SetClip(saveClipRgn);
-// 	DisposeRgn(saveClipRgn);
+	SetClip(saveClipRgn);
+ 	DisposeRgn(saveClipRgn);
 }
 
 void ShowMusicInfo(Str255 name, short VRef, long parID, short id)
@@ -1886,20 +1799,18 @@ void ShowMusicInfo(Str255 name, short VRef, long parID, short id)
 	FSSpec			fss;
 	char			tempC[ 5];
 	Rect			caRect;
-
+	
 	GetPortBounds(GetDialogPort(MODListDlog), &caRect);
 	
- 	if (caRect.right == BIGMUSICLIST)
-	{
+	if (caRect.right == BIGMUSICLIST) {
 		FSMakeFSSpec(VRef, parID, name, &fss);
-	
-	//	iErr = HSetVol(NULL, VRef, parID);
+		
 		iErr = FSpGetFInfo(&fss, &fndrInfo);
 		if (iErr == fnfErr || iErr == fLckdErr)
 		{
 			WDPBRec		wdpb;
 			
-			wdpb.ioNamePtr = pathStrList[ id];
+			wdpb.ioNamePtr = pathStrList[id];
 			iErr = PBHSetVol(&wdpb, false);
 			if (iErr == noErr) HGetVol(NULL, &VRef, &parID);
 			else {VRef	= 0;	parID	= 0;}
@@ -1908,8 +1819,7 @@ void ShowMusicInfo(Str255 name, short VRef, long parID, short id)
 		FSMakeFSSpec(VRef, parID, name, &fss);
 		iErr = HSetVol(NULL, VRef, parID);
 		iErr = FSpGetFInfo(&fss, &fndrInfo);
-		if (iErr)
-		{
+		if (iErr) {
 			fndrInfo.fdType = '-   ';
 		}
 		
@@ -1933,26 +1843,24 @@ void ShowMusicInfo(Str255 name, short VRef, long parID, short id)
 		fileSize /= 1024;
 		
 		OSType2Ptr(fndrInfo.fdType, tempC);
-	 	if (OpenableFile(fndrInfo.fdType, &fss) == false && MADMusicIdentifyFSp(gMADLib, tempC, &fss) != noErr)
-	 	{
-	 		EraseMODInfo();
-	 		
-	 		pStrcpy(PathNameStr, pathStrList[ id]);
-	 		DrawPathName();
-	 		SetDText(MODListDlog, 12, name);
-	 		
-	 		if (fileSize > 1000)
-			{
-				sprintf((Ptr) StrTemp, "%.2f", (double) fileSize / (double) 1024.);
-				MyC2PStr((Ptr) StrTemp);
+		if (OpenableFile(fndrInfo.fdType, &fss) == false && MADMusicIdentifyFSp(gMADLib, tempC, &fss) != noErr)
+		{
+			EraseMODInfo();
+			
+			pStrcpy(PathNameStr, pathStrList[ id]);
+			DrawPathName();
+			SetDText(MODListDlog, 12, name);
+			
+			if (fileSize > 1000) {
+				sprintf((Ptr)StrTemp, "%.2f", (double)fileSize / (double)1024.0);
+				MyC2PStr((Ptr)StrTemp);
 				pStrcat(StrTemp, "\p MiB");
-			}
-			else
-			{
+			} else {
 				NumToString(fileSize, StrTemp);
 				pStrcat(StrTemp, "\p kiB");
 				
-				if (fileSize == 0) pStrcpy(StrTemp, "\p-");
+				if (fileSize == 0)
+					pStrcpy(StrTemp, "\p-");
 			}
 			
 			SetDText(MODListDlog, 18, StrTemp);
@@ -1961,37 +1869,32 @@ void ShowMusicInfo(Str255 name, short VRef, long parID, short id)
 			((long*) (StrTemp + 1 ))[ 0] = fndrInfo.fdType;
 			SetDText(MODListDlog, 15, StrTemp);
 			
-	 		return;
-	 	}
-	 	
-	 	GetPort(&savePort);
-	 	SetPortDialogPort(MODListDlog);
+			return;
+		}
+		
+		GetPort(&savePort);
+		SetPortDialogPort(MODListDlog);
 		
 		fndrInfo.fdType = Ptr2OSType(tempC);
 		
-		if (fileSize > 1000)
-		{
+		if (fileSize > 1000) {
 			sprintf((Ptr) StrTemp, "%.2f", (double) fileSize / (double) 1024.);
 			MyC2PStr((Ptr) StrTemp);
 			pStrcat(StrTemp, "\p MiB");
-		}
-		else
-		{
+		} else {
 			NumToString(fileSize, StrTemp);
 			pStrcat(StrTemp, "\p kiB");
 		}
 		SetDText(MODListDlog, 18, StrTemp);
 		
-		switch(fndrInfo.fdType)
-		{
+		switch (fndrInfo.fdType) {
 			default:
 				MyP2CStr(name);
 				iErr = HSetVol(NULL, VRef, parID);
 				iErr = PPInfoFile(gMADLib, tempC, (Ptr) name, &info);
 				MyC2PStr((Ptr) name);
 				
-				if (iErr == noErr)
-				{
+				if (iErr == noErr) {
 					MyC2PStr(info.internalFileName);
 					SetDText(MODListDlog, 13, (unsigned char*) info.internalFileName);
 					MyP2CStr((unsigned char*) info.internalFileName);
@@ -2009,9 +1912,7 @@ void ShowMusicInfo(Str255 name, short VRef, long parID, short id)
 					StrTemp[ 0] = 4;
 					((UInt32*) (StrTemp + 1 ))[ 0] = EndianU32_NtoB(info.signature);
 					SetDText(MODListDlog, 15, StrTemp);
-				}
-				else
-				{
+				} else {
 					StrTemp[ 0] = 4;
 					((long*) (StrTemp + 1 ))[ 0] = fndrInfo.fdType;
 					SetDText(MODListDlog, 15, StrTemp);
@@ -2019,32 +1920,28 @@ void ShowMusicInfo(Str255 name, short VRef, long parID, short id)
 					SetDText(MODListDlog, 16, "\pQuicktime Sound");
 					MyP2CStr((unsigned char*) info.formatDescription);
 				}
-			break;
+				break;
 		}
 		
-		PathNameFromDirID(		parID,
-								VRef,
-								PathNameStr);
+		PathNameFromDirID(parID, VRef, PathNameStr);
 		DrawPathName();
-	
+		
 		SetDText(MODListDlog, 12, name);
-				
+		
 		SetPort(savePort);
 	}
 }
 
 OSErr DoShowInfo(Point	theCell)
 {
-Str255			StrTemp;
-long			lTemp;
-short			temp,i,dataLen;
-OSErr			iErr;
-FSSpec			myFSS;
-Rect			caRect;
-GrafPtr		SavePort;
-
-	if (MODListDlog == NULL) return noErr;
-			
+	Str255	StrTemp;
+	FSSpec	myFSS;
+	Rect	caRect;
+	GrafPtr	SavePort;
+	
+	if (MODListDlog == NULL)
+		return noErr;
+	
 	HiliteControl(DelBut, 0);
 	HiliteControl(InfoBut, 0);
 	HiliteControl(OpenBut, 0);
@@ -2054,7 +1951,7 @@ GrafPtr		SavePort;
 	if (caRect.right != BIGMUSICLIST) return noErr;
 	
 	GetPort(&SavePort);
- 	SetPortDialogPort(MODListDlog);
+	SetPortDialogPort(MODListDlog);
 	
 	pStrcpy(StrTemp, "\p-");
 	SetDText(MODListDlog, 12, StrTemp);
@@ -2066,12 +1963,12 @@ GrafPtr		SavePort;
 	SetDText(MODListDlog, 18, StrTemp);
 	pStrcpy(PathNameStr, "\p-");
 	DrawPathName();
-		
+	
 	myFSS = *specList[ theCell.v];
 	ShowMusicInfo(myFSS.name, myFSS.vRefNum, myFSS.parID, theCell.v);
 	
 	SetPort(SavePort);
-		
+	
 	return noErr;
 }
 
@@ -2082,21 +1979,16 @@ Boolean OpenFirst2(short pos)
 	FSSpec		myFSS;
 	Point		tCell;
 	
-	if (myList.maxY > pos && pos >= 0)
-	{
+	if (myList.maxY > pos && pos >= 0) {
 		myFSS = *specList[ pos];
 		
 		tCell.v = tCell.h = 0;
-		if (PLGetSelect(&tCell, &myList))
-		{
-			if (tCell.v != pos)
-			{
+		if (PLGetSelect(&tCell, &myList)) {
+			if (tCell.v != pos) {
 				PLSetSelect(0, pos, 0, pos, &myList);
 				PLAutoScroll(&myList);
 			}
-		}
-		else
-		{
+		} else {
 			PLSetSelect(0, pos, 0, pos, &myList);
 			PLAutoScroll(&myList);
 		}
@@ -2114,7 +2006,7 @@ void ChangeTracksNo(short NewValue)
 	
 	// Update au niveau du fichier
 	SetUpPartition(NewValue);
-
+	
 	// Update au niveau du driver
 	MADDriver->DriverSettings.numChn = curMusic->header->numChn;
 	MADChangeTracks(MADDriver, MADDriver->DriverSettings.numChn);
@@ -2125,40 +2017,32 @@ void ChangeTracksNo(short NewValue)
 	SetCurrentMOD(curMusic->musicFileName);
 	
 	MADDriver->Reading = IsPlaying;
-
 }
 
 void ShowCopyrightNote()
 {
-	long		Result, mresult;
-	short		PourCent, itemHit = 0,i, itemType;
+	short		itemHit = 0, itemType;
 	Rect		itemRect;
 	Handle		itemHandle;
 	DialogPtr	TheDia;
-	Str255		theStr;
 	GrafPtr		myPort;
-	Point		theCell, myPt;
-	long		oldValue, NewValue, curSelec;
-	Boolean		IsPlaying;
 	
 	if (curMusic->header->showCopyright == false) return;
 	
 	GetPort(&myPort);
-
+	
 	TheDia = GetNewDialog(177,NULL, (WindowPtr) -1L);
 	SetPortDialogPort(TheDia);
-//	AutoPosition(TheDia);
+	//AutoPosition(TheDia);
 	
 	goto updateCopy;
 	
-	do
-	{
+	do {
 		MyModalDialog(TheDia, &itemHit);
 		
-		switch(itemHit)
-		{
+		switch (itemHit) {
 			case -updateEvt:
-				updateCopy:
+			updateCopy:
 				GetDialogItem(TheDia, 2, &itemType, &itemHandle, &itemRect);
 				BackColor(whiteColor);
 				TETextBox((curMusic->header)->infos, strlen((curMusic->header)->infos), &itemRect, teJustCenter);
@@ -2170,10 +2054,10 @@ void ShowCopyrightNote()
 				FrameRoundRect(&itemRect, 4, 4);
 				PenSize(1, 1);
 				ForeColor(blackColor);
-			break;
+				break;
 		}
-	
-	}while (itemHit != 1);
+		
+	} while (itemHit != 1);
 	
 	DisposeDialog(TheDia);
 	SetPort(myPort);
@@ -2193,7 +2077,7 @@ void DoChangeMODName(void)
 	Boolean		IsPlaying;
 	
 	GetPort(&myPort);
-
+	
 	TheDia = GetNewDialog(148,NULL, (WindowPtr) -1L);
 	SetPortDialogPort(TheDia);
 	AutoPosition(TheDia);
@@ -2216,8 +2100,8 @@ void DoChangeMODName(void)
 	if (curMusic->header->showCopyright) TurnRadio(15, TheDia, true);
 	else TurnRadio(15, TheDia, false);
 	
-/*	if (curMusic->header->MODMode) TurnRadio(18, TheDia, true);
-	else TurnRadio(18, TheDia, false);*/
+	/*if (curMusic->header->MODMode) TurnRadio(18, TheDia, true);
+	 else TurnRadio(18, TheDia, false);*/
 	
 	if (curMusic->header->XMLinear) TurnRadio(19, TheDia, true);
 	else TurnRadio(19, TheDia, false);
@@ -2232,57 +2116,55 @@ void DoChangeMODName(void)
 	SetDText(TheDia, 22, theStr);
 	NewValue2 = curMusic->header->MultiChanNo;
 	
-	do
-	{
+	do {
 		//ModalDialog(MyDlgFilterDesc, &itemHit);
 		MyModalDialog(TheDia, &itemHit);
 		
-	//	SetPortDialogPort(TheDia);
+		//SetPortDialogPort(TheDia);
 		
-	//	ChangeDialogFont(TheDia);
+		//ChangeDialogFont(TheDia);
 		
-		switch(itemHit)
-		{
+		switch (itemHit) {
 			case 21:
 				InsertMenu(TracksNumberMenu, hierMenu);
 				GetDialogItem(TheDia, itemHit, &itemType, &itemHandle, &itemRect);
 				
 				curSelec = GetTracksMenuPos(curMusic->header->MultiChanNo);
 				
-				myPt.v = itemRect.top;	myPt.h = itemRect.left;
+				myPt.v = itemRect.top;
+				myPt.h = itemRect.left;
 				LocalToGlobal(&myPt);
 				
 				SetItemMark(TracksNumberMenu, curSelec, 0xa5);
 				
-				mresult = PopUpMenuSelect(	TracksNumberMenu,
-											myPt.v,
-											myPt.h,
-											curSelec);
+				mresult = PopUpMenuSelect(TracksNumberMenu,
+										  myPt.v,
+										  myPt.h,
+										  curSelec);
 				
 				SetItemMark(TracksNumberMenu, curSelec, 0);
 				
-				if (HiWord(mresult ) != 0 )
-				{
+				if (HiWord(mresult ) != 0 ) {
 					NewValue2 = GetTracksMenuVal(LoWord(mresult));
 				}
 				DeleteMenu(GetMenuID(TracksNumberMenu));
 				
 				NumToString(NewValue2, theStr);
 				SetDText(TheDia, 22, theStr);
-			break;
-			
+				break;
+				
 			case 20:
 				InverseRadio(20, TheDia);
-			break;
-			
+				break;
+				
 			case 18:
 				InverseRadio(18, TheDia);
-			break;
-			
+				break;
+				
 			case 19:
 				InverseRadio(19, TheDia);
-			break;
-		
+				break;
+				
 			case 16:
 				InsertMenu(TracksNumberMenu, hierMenu);
 				GetDialogItem(TheDia, itemHit, &itemType, &itemHandle, &itemRect);
@@ -2294,54 +2176,58 @@ void DoChangeMODName(void)
 				
 				SetItemMark(TracksNumberMenu, curSelec, 0xa5);
 				
-				mresult = PopUpMenuSelect(	TracksNumberMenu,
-											myPt.v,
-											myPt.h,
-											curSelec);
+				mresult = PopUpMenuSelect(TracksNumberMenu,
+										  myPt.v,
+										  myPt.h,
+										  curSelec);
 				
 				SetItemMark(TracksNumberMenu, curSelec, 0);
 				
-				if (HiWord(mresult ) != 0 )
-				{
+				if (HiWord(mresult) != 0) {
 					NewValue = GetTracksMenuVal(LoWord(mresult));
 				}
 				DeleteMenu(GetMenuID(TracksNumberMenu));
 				
 				NumToString(NewValue, theStr);
 				SetDText(TheDia, 14, theStr);
-			break;
-			
+				break;
+				
 			case 15:
 				InverseRadio(15, TheDia);
-			break;
+				break;
 		}
-	
+		
 	}while (itemHit != 1 && itemHit != 2);
-
-
+	
 	if (itemHit == 1)
 	{
-		for(i=0; i<32; i++) theStr[i] = '\0';
+		memset(theStr, 0, 32);
 		GetDText(TheDia, 3, theStr);
-		theStr[0] = 31;		MyP2CStr(theStr);
+		theStr[0] = 31;
+		MyP2CStr(theStr);
 		strcpy((Ptr) (curMusic->header)->name, (Ptr) theStr);
 		
-		for(i=0; i<256; i++) theStr[ i] = '\0';
+		memset(theStr, 0, 256);
 		GetDText(TheDia, 10, theStr);
-		theStr[0] = INFOSSIZE;	MyP2CStr(theStr);
-		strcpy((Ptr) (curMusic->header)->infos, (Ptr) theStr);
+		theStr[0] = INFOSSIZE;
+		MyP2CStr(theStr);
+		strcpy((Ptr)(curMusic->header)->infos, (Ptr)theStr);
 		
 		GetDText(TheDia, 7, theStr);
 		StringToNum(theStr, &Result);
-		if (Result > 0 && Result < 500) curMusic->header->tempo = Result;
+		if (Result > 0 && Result < 500)
+			curMusic->header->tempo = Result;
 		
 		GetDText(TheDia, 8, theStr);
 		StringToNum(theStr, &Result);
-		if (Result > 0 && Result < 15) curMusic->header->speed = Result;
+		if (Result > 0 && Result < 15)
+			curMusic->header->speed = Result;
 		
 		GetDialogItem(TheDia, 15, &itemType, &itemHandle, &itemRect);
-		if (GetControlValue((ControlHandle) itemHandle)) curMusic->header->showCopyright = true;
-		else curMusic->header->showCopyright = false;
+		if (GetControlValue((ControlHandle) itemHandle))
+			curMusic->header->showCopyright = true;
+		else
+			curMusic->header->showCopyright = false;
 		
 		GetDialogItem(TheDia, 18, &itemType, &itemHandle, &itemRect);
 		if (GetControlValue((ControlHandle) itemHandle)) curMusic->header->MODMode = true;

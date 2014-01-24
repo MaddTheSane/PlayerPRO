@@ -459,7 +459,7 @@ static	short		OldPartitionReader;
 extern	RGBColor	theColor;
 extern	short		theDepth;
 
-void MyTETextBox2(Str255 aStr, Rect *Zone)
+static void MyTETextBox2(Str255 aStr, Rect *Zone)
 {
 	PaintRect(Zone);
 	

@@ -14,8 +14,9 @@ static		short			*logoScale;
 
 void InitFourier(void)
 {
+	int		i;
 	Handle	rsrc;
-
+	
 	x = (float*)			NewPtrClear(512 * sizeof(float));
 	xInt = (Byte*)			NewPtrClear(512 * sizeof(char));
 	logoScale = (short*)	NewPtrClear(256 * sizeof(short));
@@ -25,27 +26,40 @@ void InitFourier(void)
 	
 	HLock(rsrc);
 	BlockMoveData(*rsrc, logoScale, 256 * sizeof(short));
+	for (i = 0; i < 256; i++) {
+		MOT32(&logoScale[i]);
+	}
 	HUnlock(rsrc);
 	DisposeHandle(rsrc);
 	
-/*	for (i = 0; i < 256; i++)
-	{
+#if 0
+	for (i = 0; i < 256; i++) {
 		double t = i;
 		
-		logoScale[ 255 - i] = 255 - (255. * (log10(1. + (t * 22254.) / 255.)))/4.34740808371;
-	}*/
+		logoScale[255 - i] = 255 - (255. * (log10(1. + (t * 22254.) / 255.)))/4.34740808371;
+	}
+#endif
 }
 
 long LogChangePos(long x)
 {
-	return logoScale[ x];
+	return logoScale[x];
 }
 
 void CloseFourier(void)
 {
-	if (x != NULL) DisposePtr((Ptr) x);					x = NULL;
-	if (xInt != NULL) DisposePtr((Ptr) xInt);				xInt = NULL;
-	if (logoScale != NULL) DisposePtr((Ptr) logoScale);	logoScale = NULL;
+	if (x != NULL) {
+		DisposePtr((Ptr)x);
+		x = NULL;
+	}
+	if (xInt != NULL) {
+		DisposePtr((Ptr)xInt);
+		xInt = NULL;
+	}
+	if (logoScale != NULL) {
+		DisposePtr((Ptr)logoScale);
+		logoScale = NULL;
+	}
 }
 
 #define SWAP(a, b) tempr = (a); (a) = (b);  (b) = tempr
@@ -57,17 +71,14 @@ void four1(float *data, unsigned long nn, int isign)
 	
 	n = nn << 1;
 	j = 1;
-	for (i = 1; i < n; i+= 2)
-	{
-		if (j > i)
-		{
-			SWAP(data[ j], data[ i]);
-			SWAP(data[ j+1], data[ i+1]);	
+	for (i = 1; i < n; i += 2) {
+		if (j > i) {
+			SWAP(data[j], data[i]);
+			SWAP(data[j+1], data[i+1]);
 		}
 		
 		m = n >> 1;
-		while (m >= 2 && j > m)
-		{
+		while (m >= 2 && j > m) {
 			j -= m;
 			m >>= 1;
 		}
@@ -75,8 +86,7 @@ void four1(float *data, unsigned long nn, int isign)
 	}
 	
 	mmax = 2;
-	while (n > mmax)
-	{
+	while (n > mmax) {
 		istep = mmax << 1;
 		theta = isign * (PI2 / mmax);
 		wtemp = sin(0.5 * theta);
@@ -86,10 +96,8 @@ void four1(float *data, unsigned long nn, int isign)
 		wr = 1.0;
 		wi = 0.0;
 		
-		for (m = 1; m < mmax; m+= 2)
-		{
-			for (i=m; i <= n; i+= istep)
-			{
+		for (m = 1; m < mmax; m += 2) {
+			for (i=m; i <= n; i += istep) {
 				j = i + mmax;
 				tempr = wr*data[ j] - wi*data[ j + 1];
 				tempi = wr*data[ j + 1] + wi*data[ j];
@@ -112,15 +120,12 @@ void realft(float *data, unsigned long n, int isign)
 	float			c1 = 0.5, c2, h1r, h1i, h2r, h2i;
 	float			wr, wi, wpr, wpi, wtemp, theta;
 	
-	theta = PI / (double) (n>> 1);
+	theta = PI / (double) (n >> 1);
 	
-	if (isign == 1)
-	{
+	if (isign == 1) {
 		c2 = -0.5;
 		four1(data, n>>1, 1);
-	}
-	else
-	{
+	} else {
 		c2 = 0.5;
 		theta = -theta;
 	}
@@ -131,8 +136,7 @@ void realft(float *data, unsigned long n, int isign)
 	wr		= 1.0 + wpr;
 	wi 		= wpi;
 	np3		= n + 3;
-	for (i = 2; i <= (n>>2); i++)
-	{
+	for (i = 2; i <= (n >> 2); i++) {
 		i4	= 1 + (i3=np3 - (i2=1 +(i1=i+i-1)));
 		
 		h1r	= c1*(data[ i1] + data[i3]);
@@ -150,13 +154,10 @@ void realft(float *data, unsigned long n, int isign)
 		wi	= wi*wpr + wtemp*wpi + wi;
 	}
 	
-	if (isign == 1)
-	{
+	if (isign == 1) {
 		data[ 1]	= (h1r=data[1]) + data[ 2];
 		data[ 2]	= h1r - data[ 2];
-	}
-	else
-	{
+	} else {
 		data[ 1]	= c1*((h1r = data[1]) + data[2]);
 		data[ 2]	= c1*(h1r - data[ 2]);
 		four1(data, n>>1, -1);
@@ -165,14 +166,13 @@ void realft(float *data, unsigned long n, int isign)
 
 Ptr MakeCalculusSpectrum(Ptr srcPtr, Boolean logScale)
 {
-	short				i, xx, lastLog, temp;
+	short i, xx, lastLog, temp;
 	
-	for(i=0; i<256; i++) x[ i + 1] = *((Byte*)srcPtr++);
+	for (i = 0; i < 256; i++) x[i + 1] = *((Byte*)srcPtr++);
 	
 	realft(x, 256, 1);
 	
-	for(i= 1; i<=256; i++)
-	{
+	for (i= 1; i<=256; i++) {
 		temp = x[ i];
 		temp >>= 3;
 		
@@ -188,38 +188,19 @@ Ptr MakeCalculusSpectrum(Ptr srcPtr, Boolean logScale)
 	if (logScale) {
 		lastLog = logoScale[255];
 		
-		for(i= 255; i >= 0; i--)
-		{
+		for(i= 255; i >= 0; i--) {
 			
-			if (logoScale[ i] == lastLog) temp = xInt[ logoScale[ i]];
-			else for (xx = logoScale[ i], temp = 0; xx < lastLog; xx++) temp += xInt[ xx];
+			if (logoScale[i] == lastLog)
+				temp = xInt[logoScale[i]];
+			else for (xx = logoScale[i], temp = 0; xx < lastLog; xx++) temp += xInt[xx];
 			
 			//	FINIR ICI
 			
-			xInt[ i]  = temp;
+			xInt[i]  = temp;
 			
-			lastLog = logoScale[ i];
+			lastLog = logoScale[i];
 		}
-		
-		/*	for (xx = 0, sumL = 0, i = 0; i < 256; i++)
-		 {
-		 if (xx == 16)
-		 {
-		 sumL /= 16;
-		 
-		 for (xx = i - 16; xx < i; xx++)
-		 {
-		 xInt[ xx] = sumL;
-		 }
-		 
-		 xx = 0;
-		 sumL = 0;
-		 }
-		 
-		 xx++;
-		 sumL += xInt[ i];
-		 }*/
 	}
 	
-	return (Ptr) xInt;
+	return (Ptr)xInt;
 }

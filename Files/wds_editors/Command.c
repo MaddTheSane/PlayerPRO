@@ -1093,19 +1093,19 @@ void CreateCmdDlog(void)
 
 	thePatternMenu = GetMenu(146);
 
-/*	ToolsDlog = GetNewDialog(153, NULL, (WindowPtr) ToolsDlog);
-	SetWindEtat(ToolsDlog);
+	ToolsDlog = GetNewDialog(153, NULL, GetDialogWindow(ToolsDlog));
+	SetWindEtat(GetDialogWindow(ToolsDlog));
 	MySizeWindow(ToolsDlog, WLarg, WHaut, false);
-	ShowWindow(ToolsDlog);
-	SelectWindow2(ToolsDlog);
-*/	
+	ShowWindow(GetDialogWindow(ToolsDlog));
+	SelectWindow2(GetDialogWindow(ToolsDlog));
+	
 	SetPortDialogPort(ToolsDlog);
 	UpdateNow = true;
 	AllCellApply = false;
 	keyMapNote = thePrefs.keyMapNote;
 	
-	TextFont(4);	TextSize(9);
-	
+	TextFont(4);
+	TextSize(9);
 	BackColor(whiteColor);
 	
 	GetDialogItem(ToolsDlog, 37, &itemType, &itemHandle, &itemRect);
@@ -1121,10 +1121,10 @@ void CreateCmdDlog(void)
 	}
 	
 	GetDialogItem(ToolsDlog, 42, &itemType, &itemHandle, &itemRect);
-	TEH[ VolumeTE] = TENew(&itemRect, &itemRect);
-	TESetAlignment(teCenter, TEH[ VolumeTE]);
+	TEH[VolumeTE] = TENew(&itemRect, &itemRect);
+	TESetAlignment(teCenter, TEH[VolumeTE]);
 	
-//	TEActivate(TEH[ InstruTE]);
+	TEActivate(TEH[InstruTE]);
 
 	RGBBackColor(&theColor);
 	

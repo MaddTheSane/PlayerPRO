@@ -473,7 +473,7 @@ pascal void myCustomEventProc(	NavEventCallbackMessage 	callBackSelector,
 				break;
 				
 			case updateEvt:
-				if ((WindowPtr) callBackParms->eventData.eventDataParms.event->message == callBackParms->window)
+				if ((WindowPtr)callBackParms->eventData.eventDataParms.event->message == callBackParms->window)
 				{
 					
 				}
@@ -484,11 +484,11 @@ pascal void myCustomEventProc(	NavEventCallbackMessage 	callBackSelector,
 					Rect		caRect;
 					
 					GetPort(&savedPort);
-					SetPortWindowPort((WindowPtr) event->message);
+					SetPortWindowPort((WindowPtr)event->message);
 					
-					GetPortBounds(GetWindowPort((WindowPtr) event->message), &caRect);
+					GetPortBounds(GetWindowPort((WindowPtr)event->message), &caRect);
 					
-					InvalWindowRect(((WindowPtr) event->message), &caRect);
+					InvalWindowRect(((WindowPtr)event->message), &caRect);
 					SetPort(savedPort);
 					
 					DoUpdateEvent(callBackParms->eventData.eventDataParms.event);

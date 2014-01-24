@@ -479,8 +479,7 @@ void NTStr(short NoDigi, short val, char *theText)
 {
 	short	temp;
 	
-	switch(NoDigi)
-	{
+	switch (NoDigi) {
 		case 1:
 			theText[0] = 0x30 + val;
 			theText[1] = 0;

@@ -66,7 +66,7 @@
 	DragReceiveHandlerUPP	MyReceiveAdapUPP;
 
 
-void MyTETextBox2(Str255 aStr, Rect *Zone);
+//void MyTETextBox2(Str255 aStr, Rect *Zone);
 void CheckVSTEditor(VSTEffect *ce);
 pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag);
 pascal OSErr MyReceiveAdap(WindowPtr theWindow, void* handlerRefCon, DragReference theDrag);
@@ -641,8 +641,8 @@ void FillFxControl(short id)
 				TextFace(bold);
 				SetRect(&itemRect, contrlRect.left + 2, contrlRect.top, contrlRect.left + 20 + 40, contrlRect.bottom-1);
 				SwitchColor(curMusic->header->chanBus[ id].copyId);
-			//	TETextBox((Ptr) str1 + 1, str1[ 0], &itemRect, teJustCenter);
-				MyTETextBox2(str1, &itemRect);
+				TETextBox((Ptr) str1 + 1, str1[ 0], &itemRect, teJustCenter);
+				//MyTETextBox2(str1, &itemRect);
 				RGBBackColor(&theColor);
 				itemRect.left--;
 				FrameRectRelief(&itemRect);
@@ -848,10 +848,10 @@ void UpdateAdapWindow(DialogPtr	GetSelection)
 			TextFace(bold);
 			SetRect(&itemRect, itemRect.left - 42, itemRect.top, itemRect.left - 19, itemRect.top + 12);
 			
-		//	itemRect.left++;
+			//itemRect.left++;
 			SwitchColor(i);
-		//	TETextBox((Ptr) str1 + 1, str1[ 0], &itemRect, teJustLeft);
-			MyTETextBox2(str1, &itemRect);
+			TETextBox((Ptr) str1 + 1, str1[ 0], &itemRect, teJustLeft);
+			//MyTETextBox2(str1, &itemRect);
 			RGBBackColor(&theColor);
 			itemRect.left--;
 			FrameRectRelief(&itemRect);
