@@ -19,7 +19,7 @@ static	MenuHandle		FKeyMenu;
 
 void InitFKeyMenu(void)
 {
-	short 	i, no;
+	short 	i;
 	Ptr		tempPtr;
 	
 	PKEYRes = GetResource('PKEY', 128);
@@ -35,19 +35,18 @@ void InitFKeyMenu(void)
 	
 	FKeymaxItems++;
 	
-	for (i = 0 ; i < FKeymaxItems; i++)
-	{
+	for (i = 0 ; i < FKeymaxItems; i++) {
 		PKEYDesc[ i] = (unsigned char*) tempPtr;
-		tempPtr += tempPtr[ 0] + 1;
+		tempPtr += tempPtr[0] + 1;
 		
-		FKeyWind[ i] = *((long*)tempPtr);
+		FKeyWind[i] = *((long*)tempPtr);
 		tempPtr +=4;
 		
-		FKeyItem[ i] = *((long*)tempPtr);
+		FKeyItem[i] = *((long*)tempPtr);
 		tempPtr +=4;
 	}
 	
-//	HUnlock(PKEYRes);
+	HUnlock(PKEYRes);
 	
 	//////// Menu Creation
 	
@@ -145,13 +144,12 @@ Boolean PressFKeyMenu(short itemID, DialogPtr dia, short whichFKey, Str255	str)
 WindowPtr FindRefWindow(long ref)
 {
 	WindowPtr	aWind;
-	EventRecord	aEvt;
 	
 	aWind = FrontWindow();
 	
-	while (aWind != NULL)
-	{
-		if (ref == GetWRefCon(aWind)) return (WindowPtr) aWind;
+	while (aWind != NULL) {
+		if (ref == GetWRefCon(aWind))
+			return (WindowPtr)aWind;
 		
 		aWind = GetNextWindow(aWind);
 	}

@@ -214,26 +214,16 @@ long DoVolPanning256(short whichChannel, Channel *ch, MADDriverRec *intDriver, B
 
 void MADCleanDriver(MADDriverRec *intDriver)
 {
-	long		i, x, size;
+	long		i, x;
 	
 	if (!intDriver) {
 		return;
 	}
 	
-	/*	switch(intDriver->DriverSettings.outPutBits)
-	 {
-	 case 8:
-	 for (i = 0; i < intDriver->ASCBUFFER*Tracks; i++) intDriver->IntDataPtr[ i] = 0x80;
-	 break;
-	 
-	 case 16:
-	 break;
-	 }*/
-	
 	for (i = 0; i < MAXTRACK; i++)
 	{
 		intDriver->chan[i].ID		= i;
-	//	intDriver->chan[i].TrackID	= i;
+		//intDriver->chan[i].TrackID	= i;
 		
 		intDriver->chan[i].begPtr 	= NULL;
 		intDriver->chan[i].maxPtr 	= NULL;
@@ -796,8 +786,7 @@ LOGFAC*453,LOGFAC*450,LOGFAC*447,LOGFAC*443,LOGFAC*440,LOGFAC*437,LOGFAC*434,LOG
 
 long getlogperiod(short note,long fine, MADDriverRec *intDriver)
 {
-	Byte n,o;
-	short p1,p2;
+	Byte n, o;
 	long i;
 	
 	n = note%12;
@@ -805,37 +794,28 @@ long getlogperiod(short note,long fine, MADDriverRec *intDriver)
 	i = (n<<3)+(fine>>4);  /* n*8 + fine/16 */
 
 	return logtab[ i];
-//	p1 = logtab[i];
-//	p2 = logtab[i+1];
-
-//	return(Interpolate(fine>>4,0,15,p1,p2)>>o);
 }
 
 long GetOldPeriod(short note, long c2spd, MADDriverRec *intDriver)
 {
-	if (intDriver->XMLinear)
-	{
+	if (intDriver->XMLinear) {
 		long tempLong;
 		
 		tempLong = getlinearperiod(note, c2spd, intDriver);
-		
-//		tempLong = getfrequency(tempLong);
-//		tempLong = (8363L*1712L)/(tempLong?tempLong:1);
-		
 		return tempLong;
 	}
 	
-	return(GetOld2Period(note, c2spd, intDriver));
+	return GetOld2Period(note, c2spd, intDriver);
 }
 
 Boolean NewMADCommand(Cmd *theNoteCmd)
 {
-	Boolean 	result = false;
-	Cmd				intCmd = *theNoteCmd;
+	Boolean result = false;
+	Cmd		intCmd = *theNoteCmd;
 	
-	if (intCmd.ins != 0 && (intCmd.note != 0xFF && intCmd.note != 0xFE))
-	{
-		if (intCmd.cmd != portamentoE && intCmd.cmd != portaslideE) result = true;
+	if (intCmd.ins != 0 && (intCmd.note != 0xFF && intCmd.note != 0xFE)) {
+		if (intCmd.cmd != portamentoE && intCmd.cmd != portaslideE)
+			result = true;
 	}
 	return result;
 }
@@ -1252,7 +1232,7 @@ void ApplyVSTEffects(MADDriverRec *intDriver, Boolean ByPass)
 		{
 			if (intDriver->curMusic->header->chanBus[ intDriver->EffectBufferID[ i]].ByPass == ByPass)
 			{
-				long		*eee, *ASCBuffer, ii, x;
+				long		*eee, *ASCBuffer, ii;
 				
 				if (intDriver->DriverSettings.oversampling > 1)
 				{
