@@ -579,7 +579,6 @@ void DrawSpectrum(OsciRec	*osciPtr, short no)
 {
 	Rect	caRect, tempRect;
 	Ptr		spectrumPtr = NULL;
-	Rect	caRect, tempRect;
 
 	switch(OsciScale)
 	{
