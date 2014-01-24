@@ -26,6 +26,9 @@ void InitFourier(void)
 	
 	HLock(rsrc);
 	BlockMoveData(*rsrc, logoScale, 256 * sizeof(short));
+	for (i = 0; i < 256; i++) {
+		MOT32(&logoScale[i]);
+	}
 	HUnlock(rsrc);
 	DisposeHandle(rsrc);
 	
