@@ -43,16 +43,16 @@
 	static	Rect					VolumeRect, LeftRightRect;
 	static	ControlHandle			MainFx[ 10];
 	static	ControlHandle			MainFXOnOff;
-	static	ControlHandle			FineBut, ScrollAdap, SaveBut, FlipBut, LoadBut, ResetPitchBut, ResetPanBut, ResetSpeedBut, volCntl[ MAXTRACK], pannCntl[ MAXTRACK];
-	static	ControlHandle			OnOff[ MAXTRACK], Mono[ MAXTRACK], hardvolCntl, softvolCntl, speedCntl, pitchCntl, panCntl, MaxBut;
-	static	ControlHandle			VSTFx[ MAXTRACK][ 4];
-	static	ControlHandle			VSTOnOff[ MAXTRACK];
-	static	ControlHandle			VSTDest[ MAXTRACK];
-	static	Rect					pulseRect[ MAXTRACK];
+	static	ControlHandle			FineBut, ScrollAdap, SaveBut, FlipBut, LoadBut, ResetPitchBut, ResetPanBut, ResetSpeedBut, volCntl[MAXTRACK], pannCntl[MAXTRACK];
+	static	ControlHandle			OnOff[MAXTRACK], Mono[MAXTRACK], hardvolCntl, softvolCntl, speedCntl, pitchCntl, panCntl;
+	static	ControlHandle			VSTFx[MAXTRACK][4];
+	static	ControlHandle			VSTOnOff[MAXTRACK];
+	static	ControlHandle			VSTDest[MAXTRACK];
+	static	Rect					pulseRect[MAXTRACK];
 	static	Boolean					canAcceptDrag;
 	static	short 					gThumbPrev, gCurrentTrack;
 	static	long					oldNullTicks, oldNullTicks2;
-	static	short 					oldTube[ MAXTRACK];
+	static	short 					oldTube[MAXTRACK];
 	static	PicHandle				pulsePic;
 	static	short					oldSpeed = 0, oldTempo = 0;
 	
@@ -75,13 +75,6 @@ void DisposeVSTEffect(VSTEffect	*myEffect);
 void HandleVSTChoice(short item, VSTEffect** vst, short channelID);
 void CreateControlAdap(void);
 void FillVSTEffects(void);
-#if defined(powerc) || defined(__powerc)
-#else
-//pascal void SetControlViewSize(ControlHandle, SInt32)
-//{
-//
-//}
-#endif
 
 void DrawValueIndicator(double val, Boolean percent, Str255 text)
 {
@@ -104,20 +97,17 @@ void DrawValueIndicator(double val, Boolean percent, Str255 text)
 	{
 		Str255	str;
 		
-		if (text) pStrcpy(str, text);
-		else
-		{
+		if (text) 
+			pStrcpy(str, text);
+		else {
 			long intval = val;
 			
-			if ((double) intval == val)
-			{
+			if ((double) intval == val) {
 				sprintf((Ptr) str, "%.0f", val);
 				MyC2PStr((Ptr) str);
-			}
-			else
-			{
-				sprintf((Ptr) str, "%.2f", val);
-				MyC2PStr((Ptr) str);
+			} else {
+				sprintf((Ptr)str, "%.2f", val);
+				MyC2PStr((Ptr)str);
 			}
 		}
 		
@@ -135,12 +125,9 @@ void DrawValueIndicator(double val, Boolean percent, Str255 text)
 void FineSpeedPitchSettings()
 {
 	short					itemHit;
-	Str255					theString, theString2;
+	Str255					theString;
 	GrafPtr					savedPort;
 	DialogPtr				aDia;
-	EventRecord				tRecord;
-	OSErr					err;
-	ProcessSerialNumber		PSN;
 	long					previousPitch = MADDriver->FreqExt, previousSpeed = MADDriver->VExt, temp;
 	double					val;
 
@@ -241,17 +228,20 @@ void FineSpeedPitchSettings()
 		curMusic->hasChanged = true;
 	}
 	
-	if (itemHit == 2)	// CANCEL
-	{
+	if (itemHit == 2) {	// CANCEL
 		MADDriver->FreqExt = previousPitch;
 		MADDriver->VExt = previousSpeed;
 	}
 	
-	if (MADDriver->FreqExt != 8000) HiliteControl(ResetPitchBut, 0);
-	else HiliteControl(ResetPitchBut, 255);
+	if (MADDriver->FreqExt != 8000)
+		HiliteControl(ResetPitchBut, 0);
+	else
+		HiliteControl(ResetPitchBut, 255);
 	
-	if (MADDriver->VExt != 8000) HiliteControl(ResetSpeedBut, 0);
-	else HiliteControl(ResetSpeedBut, 255);
+	if (MADDriver->VExt != 8000)
+		HiliteControl(ResetSpeedBut, 0);
+	else
+		HiliteControl(ResetSpeedBut, 255);
 	
 	
 	DisposeDialog(aDia);
@@ -261,9 +251,8 @@ void FineSpeedPitchSettings()
 void DoNullAdap(void)
 {
 	GrafPtr		SavePort;
-	long		maxVal, curVal;
-	short		i, InstruNo;
-	Rect		tempRect, itemRect;
+	short		i;
+	Rect		itemRect;
 	Point		pt;
 	Boolean		found;
 	RgnHandle	saveClip;
