@@ -53,16 +53,15 @@ static inline void ByteSwapInstrData(InstrData *toSwap)
 	MOT16(&toSwap->MIDI);
 	MOT16(&toSwap->MIDIType);
 	
-	for (x = 0; x < 12; x++)
-	{
-		MOT16(&toSwap->volEnv[ x].pos);
-		MOT16(&toSwap->volEnv[ x].val);
+	for (x = 0; x < 12; x++) {
+		MOT16(&toSwap->volEnv[x].pos);
+		MOT16(&toSwap->volEnv[x].val);
 		
-		MOT16(&toSwap->pannEnv[ x].pos);
-		MOT16(&toSwap->pannEnv[ x].val);
+		MOT16(&toSwap->pannEnv[x].pos);
+		MOT16(&toSwap->pannEnv[x].val);
 		
-		MOT16(&toSwap->pitchEnv[ x].pos);
-		MOT16(&toSwap->pitchEnv[ x].val);
+		MOT16(&toSwap->pitchEnv[x].pos);
+		MOT16(&toSwap->pitchEnv[x].val);
 	}
 }
 

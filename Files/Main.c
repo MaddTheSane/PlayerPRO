@@ -3532,24 +3532,21 @@ void UpdateALLWindow(void)
 	
 	aWind = FrontWindow();
 	
-	while (aWind != NULL)
-	{
-		if (IsWindowVisible(aWind))
-		{
+	while (aWind != NULL) {
+		if (IsWindowVisible(aWind)) {
 			RgnHandle	updateRgn = NewRgn();
 			
 			GetWindowRegion(aWind, kWindowUpdateRgn, updateRgn);
 			
-			if (!EmptyRgn(updateRgn))
-			{
-				aEvt.message = (long) aWind;
+			if (!EmptyRgn(updateRgn)) {
+				aEvt.message = (long)aWind;
 				DoUpdateEvent(&aEvt);
 			}
+			if (QDIsPortBuffered(GetWindowPort(aWind)))
+				QDFlushPortBuffer(GetWindowPort(aWind), updateRgn);
 			
 			DisposeRgn(updateRgn);
-		}	
-		//if (QDIsPortBuffered(GetWindowPort(aWind)))
-		//QDFlushPortBuffer(GetWindowPort(aWind), NULL);
+		}
 		
 		aWind = GetNextWindow(aWind);
 	}
@@ -3638,9 +3635,6 @@ static DialogPtr	myStartUpDlog;
 
 void StartDialog(void)
 {
-	DialogPtr	whichDialog;
-	short		itemHit;
-	
 	SetCursor(&watchCrsr);
 	
 	myStartUpDlog = GetNewDialog(171, NULL, (WindowPtr) -1L);
@@ -3649,10 +3643,9 @@ void StartDialog(void)
 	SetPortDialogPort(myStartUpDlog);
 	
 	{
-		short				itemType,i;
+		short				itemType;
 		Handle				itemHandle;
 		Rect				itemRect;
-		Str255				text;
 		
 		GetDialogItem(myStartUpDlog, 2, &itemType, &itemHandle, &itemRect);
 		OffsetRect(&itemRect, 0, -50);
@@ -3662,11 +3655,10 @@ void StartDialog(void)
 	DrawDialog(myStartUpDlog);
 	WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 	
-	//	if (QDIsPortBuffered(GetDialogPort(myStartUpDlog)))
-	//		QDFlushPortBuffer(GetDialogPort(myStartUpDlog), NULL);
+	if (QDIsPortBuffered(GetDialogPort(myStartUpDlog)))
+		QDFlushPortBuffer(GetDialogPort(myStartUpDlog), NULL);
 	
-	if (DebuggingMode)
-	{
+	if (DebuggingMode) {
 		Rect	caRect;
 		
 		ForeColor(redColor);
@@ -3688,25 +3680,26 @@ void StartDialog(void)
 void EndDialog(void)
 {
 	long		oldTicks;
-	short		itemHit;
 	
 	SetPortDialogPort(myStartUpDlog);
 	thePrefs.NoStart++;
 	WritePreferences();
 	
 	ForeColor(whiteColor);
-	TextFont(21);		TextSize(12);
+	TextFont(21);
+	TextSize(12);
 	
 	oldTicks = 0;
 	
 	SetCursor(GetQDGlobalsArrow(&qdarrow));
 	
 	ForeColor(blackColor);
-	TextFont(0);	TextSize(0);
+	TextFont(0);
+	TextSize(0);
 	
 	FlushEvents(everyEvent, 0);
 	
-	//	Delay(180, &oldTicks);
+	//Delay(180, &oldTicks);
 	
 	DisposeDialog(myStartUpDlog);
 }

@@ -95,10 +95,8 @@ static inline void ByteswapInstrument(InstrData *toswap)
 	for (i = 0; i < 12; i++) {
 		MOT16(&toswap->pannEnv[i].pos);
 		MOT16(&toswap->pannEnv[i].val);
-		
 		MOT16(&toswap->pitchEnv[i].pos);
 		MOT16(&toswap->pitchEnv[i].val);
-		
 		MOT16(&toswap->volEnv[i].pos);
 		MOT16(&toswap->volEnv[i].val);
 	}

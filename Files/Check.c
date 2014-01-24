@@ -1,9 +1,10 @@
+#include <Carbon/Carbon.h>
+#include <QuickTime/QuickTime.h>
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Carbon/Carbon.h>
-#include <QuickTime/QuickTime.h>
+#include "Utils.h"
 
 extern	DialogPtr		MODListDlog;
 extern	KeyMap		km;
@@ -54,35 +55,34 @@ long					fileSize;
 
 Boolean OpenableFile(OSType theType, FSSpec *file)
 {
-	FSSpec	saved;
-	Boolean	bol = false;
-	char		tempC[ 5];
+	FSSpec		saved;
+	Boolean		bol = false;
+	char		tempC[5];
 	
 	HGetVol(NULL, &saved.vRefNum, &saved.parID);
 	HSetVol(NULL, file->vRefNum, file->parID);
 	
-	switch(theType)
-	{
+	switch (theType) {
 		case 'sTAT':
 		case 'STCf':
-		case 'MADK':		
+		case 'MADK':
 			return true;
-		break;
-		
+			break;
+			
 		case 'APPL':
 			OSType2Ptr(theType, tempC);
-			if (MADPlugAvailable(gMADLib, tempC))
-			{
+			if (MADPlugAvailable(gMADLib, tempC)) {
 				OSErr	err;
 				
 				MyP2CStr(file->name);
-				err = PPTestFile(gMADLib, tempC, (Ptr) file->name);
-				MyC2PStr((Ptr) file->name);
+				err = PPTestFile(gMADLib, tempC, (Ptr)file->name);
+				MyC2PStr((Ptr)file->name);
 				
-				if (!err) bol = true;
+				if (!err)
+					bol = true;
 			}
-		break;
-		
+			break;
+			
 		default:
 			OSType2Ptr(theType, tempC);
 			bol = MADPlugAvailable(gMADLib, tempC);
@@ -91,7 +91,7 @@ Boolean OpenableFile(OSType theType, FSSpec *file)
 			{
 				bol = QTTypeConversion(theType);
 			}
-		break;
+			break;
 	}
 	
 	HSetVol(NULL, saved.vRefNum, saved.parID);
@@ -103,42 +103,43 @@ void PathNameFromDirID(long dirID, short vRefNum, StringPtr fullPathName);
 
 Boolean CheckFileType(FSSpec theSpec, OSType theType)
 {
-	Ptr				theFile;
 	Boolean			Response = false;
 	OSErr			err;
 	FSSpec			saved;
-	char			tempC[ 5];
+	char			tempC[5];
 	
 	HGetVol(NULL, &saved.vRefNum, &saved.parID);
 	HSetVol(NULL, theSpec.vRefNum, theSpec.parID);
 	
-	switch(theType)
-	{
+	switch(theType) {
 		case 'MADK':
 			MyP2CStr(theSpec.name);
-			if (CheckMADFile((Ptr) theSpec.name) == noErr) Response = true;
-			else Response = false;
+			if (CheckMADFile((Ptr) theSpec.name) == noErr)
+				Response = true;
+			else
+				Response = false;
 			MyC2PStr((Ptr) theSpec.name);
 			break;
-		
+			
 		default:
 			MyP2CStr(theSpec.name);
 			OSType2Ptr(theType, tempC);
-			err = PPTestFile(gMADLib, tempC, (Ptr) theSpec.name);
-			MyC2PStr((Ptr) theSpec.name);
+			err = PPTestFile(gMADLib, tempC, (Ptr)theSpec.name);
+			MyC2PStr((Ptr)theSpec.name);
 			
-			if (err) Response = false;
-			else Response = true;
+			if (err)
+				Response = false;
+			else
+				Response = true;
 			
-			if (Response == false)	// Try to import it with Quicktime
-			{
+			if (Response == false) {	// Try to import it with Quicktime
 				Response = QTTestConversion(&theSpec, theType);
 			}
-		break;
+			break;
 	}
-
+	
 	HSetVol(NULL, saved.vRefNum, saved.parID);
-
+	
 	return Response;
 }
 
@@ -151,48 +152,40 @@ Ptr ConvertCurrentMusicToPtr(void)
 
 	fileSize = sizeof(MADSpec);
 	for (i = 0; i < curMusic->header->numPat; i++) fileSize += sizeof(PatternHeader) + curMusic->header->numChn * curMusic->partition[ i]->header.size * sizeof(Cmd);
-	for (i = 0; i < MAXINSTRU ; i++)
-	{
-		for (x = 0; x < curMusic->fid[i].numSamples; x++)
-		{
-			fileSize += curMusic->sample[ curMusic->fid[ i].firstSample + x]->size;
+	for (i = 0; i < MAXINSTRU ; i++) {
+		for (x = 0; x < curMusic->fid[i].numSamples; x++) {
+			fileSize += curMusic->sample[curMusic->fid[i].firstSample + x]->size;
 		}
 	}
 	tempPtr = MyNewPtr(fileSize);
 	if (tempPtr == NULL) MyDebugStr(__LINE__, __FILE__, "Memory !!!");
 	
 	tt = 0;
-	inOutCount = GetPtrSize((Ptr) curMusic->header);
+	inOutCount = GetPtrSize((Ptr)curMusic->header);
 	BlockMoveData(curMusic->header, tempPtr, inOutCount);
 	tt += inOutCount;
 	
-	for (i = 0; i < curMusic->header->numPat ; i++)
-	{
-		if (curMusic->partition[ i]->header.compMode == 'MAD1')
-		{
+	for (i = 0; i < curMusic->header->numPat ; i++) {
+		if (curMusic->partition[ i]->header.compMode == 'MAD1') {
 			PatMAD = CompressPartitionMAD1(curMusic, curMusic->partition[ i]);
 			inOutCount = PatMAD->header.patBytes + sizeof(PatternHeader);
 	
-			BlockMoveData((Ptr) PatMAD, tempPtr + tt, inOutCount);
+			BlockMoveData((Ptr)PatMAD, tempPtr + tt, inOutCount);
 			tt += inOutCount;
 			
 			MyDisposePtr((Ptr*) &PatMAD);
-		}
-		else
-		{
-			inOutCount = sizeof(PatternHeader) + curMusic->header->numChn * curMusic->partition[ i]->header.size * sizeof(Cmd);
-			BlockMoveData((Ptr) curMusic->partition[ i], tempPtr + tt, inOutCount);
+		} else {
+			inOutCount = sizeof(PatternHeader) + curMusic->header->numChn * curMusic->partition[i]->header.size * sizeof(Cmd);
+			BlockMoveData((Ptr)curMusic->partition[i], tempPtr + tt, inOutCount);
 			tt += inOutCount;
 		}
 	}
 
-	for (i = 0; i < MAXINSTRU ; i++)
-	{
-		for (x = 0; x < curMusic->fid[i].numSamples; x++)
-		{
+	for (i = 0; i < MAXINSTRU ; i++) {
+		for (x = 0; x < curMusic->fid[i].numSamples; x++) {
 			sData	*curData;
 		
-			curData = curMusic->sample[ curMusic->fid[ i].firstSample + x];
+			curData = curMusic->sample[curMusic->fid[i].firstSample + x];
 			
 			BlockMoveData(curData->data, tempPtr + tt, curData->size);
 			tt += curData->size;
@@ -202,32 +195,30 @@ Ptr ConvertCurrentMusicToPtr(void)
 	return tempPtr;
 }
 
-void InitSoundQualityExport(	DialogPtr				aDialog,
-						short 				*ChannelNo,
-						OSType 				*CompressionType,
-						Fixed 				*FrequenceSpeed,
-						short 				*amplitude,
-						short				*PatternID,
-						MADDriverSettings 		*drive,
-						Boolean				OnlyCurrent)
+void InitSoundQualityExport(DialogPtr			aDialog,
+							short 				*ChannelNo,
+							OSType 				*CompressionType,
+							Fixed 				*FrequenceSpeed,
+							short 				*amplitude,
+							short				*PatternID,
+							MADDriverSettings 	*drive,
+							Boolean				OnlyCurrent)
 {
 	short	i;
 	Str255	str;
 	long 	tempLong;
 	Str255	str1, str2;
 	
-	if (*CompressionType == 'MPG4')
-	{
+	if (*CompressionType == 'MPG4') {
 		SetDText(aDialog, 34, "\pMPEG 4 - Quicktime");
-	}
-	else if (*CompressionType != 'NONE')
-	{
+	} else if (*CompressionType != 'NONE') {
 		CompressionInfo		cp;
 		
 		GetCompressionName(*CompressionType, str1);
 		
 		str2[ 0] = 4;
 		*((OSType*)(str2+1)) = *CompressionType;
+		MOT32(((OSType*)(str2+1)));
 		
 		pStrcat(str2, "\p -");
 		pStrcat(str2, str1);
@@ -237,14 +228,13 @@ void InitSoundQualityExport(	DialogPtr				aDialog,
 		GetCompressionInfo(-1, *((OSType*)(str2+1)), 2, *amplitude, &cp);
 		
 		*amplitude = cp.bytesPerSample * 8;
-	}
-	else SetDText(aDialog, 34, "\pNo compression");
+	} else
+		SetDText(aDialog, 34, "\pNo compression");
 	
 	if (EditorDlog) ActiveControl(39, aDialog);
 	else InactiveControl(39, aDialog);
 	
-	if (OnlyCurrent)
-	{
+	if (OnlyCurrent) {
 		*PatternID = -2;
 		//drive->MicroDelaySize = 0;
 		InactiveControl(37, aDialog);
@@ -252,24 +242,19 @@ void InitSoundQualityExport(	DialogPtr				aDialog,
 	}
 	
 	// Music
-	if (*PatternID == -1)
-	{
+	if (*PatternID == -1) {
 		TurnRadio(37, aDialog, true);
 		TurnRadio(38, aDialog, false);
 		TurnRadio(39, aDialog, false);
 		
 		SetDText(aDialog, 6, "\p");
-	}
-	else if (*PatternID == -2)
-	{
+	} else if (*PatternID == -2) {
 		TurnRadio(37, aDialog, false);
 		TurnRadio(38, aDialog, false);
 		TurnRadio(39, aDialog, true);
 		
 		SetDText(aDialog, 6, "\p");
-	}
-	else
-	{
+	} else {
 		TurnRadio(38, aDialog, true);
 		TurnRadio(37, aDialog, false);
 		TurnRadio(39, aDialog, false);
@@ -279,10 +264,10 @@ void InitSoundQualityExport(	DialogPtr				aDialog,
 		NumToString(*PatternID, str2);	pStrcat(str, str2);
 		
 		
-		strcpy((Ptr) str2, curMusic->partition[ *PatternID]->header.name);
-		MyC2PStr((Ptr) str2);
+		strcpy((Ptr)str2, curMusic->partition[ *PatternID]->header.name);
+		MyC2PStr((Ptr)str2);
 		
-		if (str2[ 0] > 0) pStrcat(str, "\p - ");
+		if (str2[0] > 0) pStrcat(str, "\p - ");
 		
 		pStrcat(str, str2);
 		
@@ -291,13 +276,10 @@ void InitSoundQualityExport(	DialogPtr				aDialog,
 	
 	// Mode
 	
-	if (*ChannelNo == 2)
-	{
+	if (*ChannelNo == 2) {
 		TurnRadio(16, aDialog, true);
 		TurnRadio(17, aDialog, false);
-	}
-	else
-	{
+	} else {
 		TurnRadio(16, aDialog, false);
 		TurnRadio(17, aDialog, true);
 	}
@@ -306,33 +288,58 @@ void InitSoundQualityExport(	DialogPtr				aDialog,
 	
 	for (i = 12; i <= 14; i++) TurnRadio(i, aDialog, false);
 	
-	switch(*amplitude)
-	{
-		case 8:			TurnRadio(12, aDialog, true);		break;
-		case 16:		TurnRadio(13, aDialog, true);		break;
+	switch (*amplitude) {
+		case 8:
+			TurnRadio(12, aDialog, true);
+			break;
+			
+		case 16:
+			TurnRadio(13, aDialog, true);
+			break;
 	}
 	
 	// Frequence
 	
-	TurnRadio(9, aDialog, false);		TurnRadio(10, aDialog, false);
-	TurnRadio(11, aDialog, false);		TurnRadio(3, aDialog, false);
+	TurnRadio(9, aDialog, false);
+	TurnRadio(10, aDialog, false);
+	TurnRadio(11, aDialog, false);
+	TurnRadio(3, aDialog, false);
 	
-	switch(*FrequenceSpeed)
-	{
-		case rate48khz:	TurnRadio(3, aDialog, true);		break;
-		case rate44khz:	TurnRadio(11, aDialog, true);		break;
-		case rate22050hz:	TurnRadio(10, aDialog, true);		break;
-		case rate11025hz:	TurnRadio(9, aDialog, true);		break;
+	switch (*FrequenceSpeed) {
+		case rate48khz:
+			TurnRadio(3, aDialog, true);
+			break;
+			
+		case rate44khz:
+		default:
+			TurnRadio(11, aDialog, true);
+			break;
+			
+		case rate22050hz:
+			TurnRadio(10, aDialog, true);
+			break;
+			
+		case rate11025hz:
+			TurnRadio(9, aDialog, true);
+			break;
 	}
 	
 	// OutPut Type
 	
-	if (drive->surround)		TurnRadio(27, aDialog, true);
-	else						TurnRadio(27, aDialog, false);
-	if (drive->MicroDelaySize)	TurnRadio(19, aDialog, true);
-	else						TurnRadio(19, aDialog, false);
-	if (drive->Reverb)			TurnRadio(29, aDialog, true);
-	else						TurnRadio(29, aDialog, false);
+	if (drive->surround)
+		TurnRadio(27, aDialog, true);
+	else
+		TurnRadio(27, aDialog, false);
+	
+	if (drive->MicroDelaySize)
+		TurnRadio(19, aDialog, true);
+	else
+		TurnRadio(19, aDialog, false);
+	
+	if (drive->Reverb)
+		TurnRadio(29, aDialog, true);
+	else
+		TurnRadio(29, aDialog, false);
 	
 	ActiveControl(19, aDialog);
 	ActiveControl(29, aDialog);
@@ -344,8 +351,7 @@ void InitSoundQualityExport(	DialogPtr				aDialog,
 	
 #if defined(HAS_LONG_LONG) && defined (HAS_LONG_DOUBLE)
 	// OverSampling
-	if (drive->oversampling > 1)
-	{
+	if (drive->oversampling > 1) {
 		tempLong = (unsigned long) ((unsigned long) *FrequenceSpeed >> 16UL);
 		//	tempLong = tempLong >> 16;
 		tempLong *= (long) drive->oversampling;
@@ -359,9 +365,7 @@ void InitSoundQualityExport(	DialogPtr				aDialog,
 		pStrcat(str1, "\p x");
 		
 		TurnRadio(23, aDialog, true);
-	}
-	else
-	{
+	} else {
 		pStrcpy(str1, "\pOff");
 		TurnRadio(23, aDialog, false);
 	}
@@ -386,7 +390,7 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 						   Boolean	MPG4)
 {
 	DialogPtr	aDialog;
-	short		itemType, itemHit, i, currentPattern;
+	short		itemType, itemHit, currentPattern;
 	Str255		aStr;
 	long		mresult;
 	Point		myPt;
@@ -404,7 +408,7 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 	
 	InactiveControl(14, aDialog);
 	
-	//	*ChannelNo = lastChannelChoice;
+	//*ChannelNo = lastChannelChoice;
 	*CompressionType = 'NONE';
 	*PatternID = -1;
 	
@@ -415,7 +419,6 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 	InitSoundQualityExport(aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver, OnlyCurrent);
 	
 	do {
-		//ModalDialog(MyDlgFilterDesc, &itemHit);
 		MyModalDialog(aDialog, &itemHit);
 		
 		switch(itemHit) {
@@ -469,13 +472,10 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 					Point			Zone;
 					short			temp;
 					MenuHandle		tMenu;
-					Boolean			returnVal = false;
 					
 					short			itemType;
 					Handle			itemHandle;
 					Rect			itemRect;
-					
-					CompressionInfo	cp;
 					
 					GetDialogItem(aDialog, itemHit, &itemType, &itemHandle, &itemRect);
 					
@@ -491,7 +491,7 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 						
 						GetMenuItemText(tMenu, i+1, str);
 						
-						GetCompressionName(*((OSType*) (str+1)), aStr);
+						GetCompressionName(String2OSType(str), aStr);
 						
 						{
 							OSErr					iErr;
@@ -499,8 +499,8 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 							SoundComponentData		inputFormat, outputFormat;
 							
 							outputFormat.flags = 0;
-							outputFormat.format = *((OSType*) (str+1));
-							outputFormat.numChannels = 1;	
+							outputFormat.format = String2OSType(str);
+							outputFormat.numChannels = 1;
 							outputFormat.sampleSize = 16;
 							outputFormat.sampleRate = rate44khz;
 							outputFormat.sampleCount = 0;
@@ -511,9 +511,9 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 							inputFormat.format = 'NONE';
 							
 							iErr = SoundConverterOpen(&inputFormat, &outputFormat, &sc);
-							if (iErr) DisableMenuItem(tMenu, i+1);
-							else
-							{
+							if (iErr)
+								DisableMenuItem(tMenu, i+1);
+							else {
 								iErr = SoundConverterClose(sc);
 								EnableMenuItem(tMenu, i+1);
 							}
@@ -528,43 +528,34 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 					
 					curSelec = 1;
 					
-					for (i = 0 ; i < CountMenuItems(tMenu); i++)
-					{
+					for (i = 0 ; i < CountMenuItems(tMenu); i++) {
 						Str255	str;
-						long	r;
+						OSType	r;
 						
-						GetMenuItemText(tMenu, i+1, str);
+						GetMenuItemText(tMenu, i + 1, str);
+						r = String2OSType(str);
 						
-						str[ 0] = 4;
-						
-						if (*((OSType*) (str+1)) == *CompressionType) curSelec = i+1;
+						if (r == *CompressionType)
+							curSelec = i + 1;
 					}
 					
 					SetItemMark(tMenu, curSelec, 0xa5);
 					
-					mresult = PopUpMenuSelect(	tMenu,
+					mresult = PopUpMenuSelect(tMenu,
 											  Zone.v,
 											  Zone.h,
 											  curSelec);
 					
 					SetItemMark(tMenu, curSelec, 0);
 					
-					if (HiWord(mresult ) != 0 )
-					{
-						long	r;
+					if (HiWord(mresult) != 0) {
+						temp = LoWord(mresult);
 						
-						temp = LoWord(mresult );
-						
-						if (temp == 1)
-						{
+						if (temp == 1) {
 							*CompressionType = 'NONE';
-						}
-						else
-						{
+						} else {
 							GetMenuItemText(tMenu, temp, aStr);
-							aStr[ 0] = 4;
-							
-							*CompressionType = *((OSType*) (aStr+1));
+							*CompressionType = String2OSType(aStr);
 						}
 						
 						InitSoundQualityExport(aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver, OnlyCurrent);
@@ -622,25 +613,26 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 				break;
 				
 			case 19:
-				if (driver->MicroDelaySize) driver->MicroDelaySize = 0;
-				else driver->MicroDelaySize = 25;
+				if (driver->MicroDelaySize)
+					driver->MicroDelaySize = 0;
+				else
+					driver->MicroDelaySize = 25;
 				
 				InitSoundQualityExport(aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver, OnlyCurrent);
 				break;
 				
-				/*	case 20:
-				 driver->Interpolation = !driver->Interpolation;
-				 InitSoundQualityExport(aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver);
-				 break;*/
-				
 			case 12:		// Amplitude
 			case 13:
 			case 14:
-				switch(itemHit)
-			{
-				case 12:	*amplitude = 8;		break;
-				case 13:	*amplitude = 16;		break;
-			}
+				switch(itemHit) {
+					case 12:
+						*amplitude = 8;
+						break;
+						
+					case 13:
+						*amplitude = 16;
+						break;
+				}
 				InitSoundQualityExport(aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver, OnlyCurrent);
 				break;
 				
@@ -649,13 +641,23 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 			case 8:
 			case 11:
 			case 3:
-				switch(itemHit)
-			{
-				case 3:		*FrequenceSpeed = rate48khz;		break;
-				case 11:	*FrequenceSpeed = rate44khz;		break;
-				case 10:	*FrequenceSpeed = rate22050hz;		break;
-				case 9:		*FrequenceSpeed = rate11025hz;		break;
-			}
+				switch (itemHit) {
+					case 3:
+						*FrequenceSpeed = rate48khz;
+						break;
+						
+					case 11:
+						*FrequenceSpeed = rate44khz;
+						break;
+						
+					case 10:
+						*FrequenceSpeed = rate22050hz;
+						break;
+						
+					case 9:
+						*FrequenceSpeed = rate11025hz;
+						break;
+				}
 				InitSoundQualityExport(aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver, OnlyCurrent);
 				break;
 				
@@ -669,33 +671,37 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 				InitSoundQualityExport(aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver, OnlyCurrent);
 				break;
 				
-				/*	case 15:
-				 case 16:
-				 case 17:
-				 case 4:
-				 //	case 34:
-				 switch(itemHit)
-				 {
-				 //	case 15:	*ChannelNo = MonoOutPut;			break;
-				 //	case 16:	*ChannelNo = StereoOutPut;			break;
-				 case 17:	*ChannelNo = DeluxeStereoOutPut;	break;
-				 //	case 4:		*ChannelNo = PolyPhonic;			break;
-				 //	case 34:	*ChannelNo = MultiFiles;			break;
-				 }
-				 InitSoundQualityExport(aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver);
-				 break;*/
+#if 0
+			case 15:
+			case 16:
+			case 17:
+			case 4:
+				//	case 34:
+				switch(itemHit)
+			{
+					//	case 15:	*ChannelNo = MonoOutPut;			break;
+					//	case 16:	*ChannelNo = StereoOutPut;			break;
+				case 17:	*ChannelNo = DeluxeStereoOutPut;	break;
+					//	case 4:		*ChannelNo = PolyPhonic;			break;
+					//	case 34:	*ChannelNo = MultiFiles;			break;
+			}
+				InitSoundQualityExport(aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver);
+				break;
+#endif
 				
-				/*	case 7:
-				 case 5:
-				 case 6:
-				 switch(itemHit)
-				 {
-				 case 7:	*CompressionType = 'NONE';	break;
-				 case 5:	*CompressionType = 'MAC3';	break;
-				 case 6:	*CompressionType = 'MAC6';	break;
-				 }
-				 InitSoundQualityExport(aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver);
-				 break;*/
+#if 0
+			case 7:
+			case 5:
+			case 6:
+				switch(itemHit)
+			{
+				case 7:	*CompressionType = 'NONE';	break;
+				case 5:	*CompressionType = 'MAC3';	break;
+				case 6:	*CompressionType = 'MAC6';	break;
+			}
+				InitSoundQualityExport(aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver);
+				break;
+#endif
 		}
 		
 	} while (itemHit != 1 && itemHit != 2);
@@ -821,7 +827,7 @@ void ExportFile(OSType theType, FSSpec *newFile)
 			inOutCount = sizeof(MADSpec);
 			ByteSwapMADSpec(curMusic->header);
 			iErr =FSWriteFork(fRefNum, fsAtMark, 0, inOutCount, curMusic->header, NULL);
-			//Just in case...
+			////Because of how we're doing it...
 			ByteSwapMADSpec(curMusic->header);
 			if (iErr) Erreur(75, iErr);
 			
@@ -858,7 +864,7 @@ void ExportFile(OSType theType, FSSpec *newFile)
 					ByteSwapInstrData(&(curMusic->fid[ i]));
 					inOutCount = sizeof(InstrData);
 					iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutCount, &curMusic->fid[i], NULL);
-					//Just in case...
+					//Because of how we're doing it...
 					ByteSwapInstrData(&(curMusic->fid[ i]));
 					
 				}
@@ -875,7 +881,7 @@ void ExportFile(OSType theType, FSSpec *newFile)
 					inOutCount = sizeof(sData);
 					ByteSwapsData(curData);
 					iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutCount, curData, NULL);
-					//Just in case...
+					//Because of how we're doing it...
 					ByteSwapsData(curData);
 					inOutCount = curData->size;
 					iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutCount, curData->data, NULL);

@@ -739,8 +739,7 @@ void FillPulseRect(short id)
 	PaintRect(&itemRect);
 	ForeColor(blackColor);
 	
-	if (MADDriver->Tube[ id] != 64)
-	{
+	if (MADDriver->Tube[id] != 64) {
 		itemRect.left = itemRect.right;
 		itemRect.right = pulseRect[ id].right-2;
 		PaintRect(&itemRect);
@@ -1037,9 +1036,9 @@ void CreateControlAdap()
 	}
 	
 	GetDialogItem(AdapDlog, 2, &itemType, &itemHandle, &itemRect);
-#if MACOS9VERSION
-	for (i = 0; i < gCurrentTrack; i++)
-	{
+	
+//#if MACOS9VERSION
+	for (i = 0; i < gCurrentTrack; i++) {
 		volCntl[i] = NewControl(GetDialogWindow(AdapDlog),
 								&itemRect,
 								"\pV",
@@ -1136,7 +1135,7 @@ void CreateControlAdap()
 		itemRect.bottom += DISVOL;
 		
 	}
-#endif
+//#endif
 	
 	GetDialogItem(AdapDlog, 2, &itemType, &itemHandle, &itemRect);
 	
@@ -1144,7 +1143,7 @@ void CreateControlAdap()
 	itemRect.right = itemRect.left + 18;
 	itemRect.bottom = itemRect.top + 14;
 	
-#if MACOS9VERSION
+//#if MACOS9VERSION
 	for (i = 0; i < gCurrentTrack; i++) {
 		OnOff[i] = NewControl(GetDialogWindow(AdapDlog),
 							  &itemRect,
@@ -1160,7 +1159,7 @@ void CreateControlAdap()
 		itemRect.bottom += DISVOL;
 		
 	}
-#endif
+//#endif
 }
 
 void InitAdapWindow(void)
@@ -1186,7 +1185,6 @@ void InitAdapWindow(void)
 	AdapDlog = GetNewDialog(141, NULL, GetDialogWindow(ToolsDlog));
 	
 	SetWindEtat(GetDialogWindow(AdapDlog));
-	
 	
 	SetPortDialogPort(AdapDlog);
 	

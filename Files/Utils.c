@@ -84,11 +84,6 @@ void oldFrameButton(DialogPtr theDlg)
 	
 	if (iHndl == NULL) MyDebugStr(__LINE__, __FILE__, "oldFrameButton itemHandle = NULL");
 	
-	PenSize(3, 3);
-	InsetRect(&iRect, -4, -4);
-	FrameRoundRect(&iRect, 16, 16);
-	PenSize(1, 1);
-	
 	SetDialogDefaultItem(theDlg, 1);
 }
 
@@ -676,12 +671,8 @@ short					pic_SIZE;
 	SetPort(currentPort);
 }*/
 
-void SetDText (DialogPtr dlog, short item, Str255 str)
+void SetDText(DialogPtr dlog, short item, Str255 str)
 {
-	Handle			itemHandle;
-	short			itemType;
-	Rect			itemRect;
-	Str255			myStr;
 	ControlHandle	control;
 	OSStatus		err;
 
@@ -691,13 +682,13 @@ void SetDText (DialogPtr dlog, short item, Str255 str)
 	DrawOneControl(control);
 }
 
-void WriteCText (DialogPtr dlog, short item, char *str)
+void WriteCText(DialogPtr dlog, short item, char *str)
 {
 	Handle	itemHandle;
 	short	itemType, iWidth;
 	Rect	itemRect;
 	
-	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(dlog, item, &itemType, &itemHandle, &itemRect);
 	
 	if (itemHandle == NULL) MyDebugStr(__LINE__, __FILE__, "WriteCText itemHandle = NULL");
 	
@@ -722,7 +713,7 @@ void GetDText (DialogPtr dlog, short item, StringPtr str)
 	if (itemType >= 128) itemType -= 128;
 	if (itemType != 8 && itemType != 16) MyDebugStr(__LINE__, __FILE__, "Error in itemType");
 	
-	GetDialogItemText (itemHandle, str);
+	GetDialogItemText(itemHandle, str);
 }
 
 void OSType2Str(OSType type, Str255 str)

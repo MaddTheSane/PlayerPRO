@@ -1597,14 +1597,14 @@ OSErr MADLoadMADFileCString(MADMusic **music, Ptr fName)
 	if(fName == NULL || music == NULL)
 		return MADParametersErr;
 
-//	MADDisposeMusic(music);
+	//MADDisposeMusic(music);
 	
 	srcFile = iFileOpen(fName);
-	if (srcFile == 0) return MADReadingErr;
+	if (srcFile == 0)
+		return MADReadingErr;
 	
 	theErr = MADReadMAD(music, srcFile, MADFileType, NULL, NULL);
-	if (theErr != noErr)
-	{
+	if (theErr != noErr) {
 		iClose(srcFile);
 		//MADDisposeMusic(music, MADDriver);
 		return theErr;
