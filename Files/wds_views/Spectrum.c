@@ -3,31 +3,28 @@
 #include "RDriver.h"
 #include <stdio.h>
 #include "VA.h"
-//#include <Start.h>
 
-	/******** HELP MODULE ********/
-	enum
-	{
-		HDisplay	= 5,
-		HSize		= 8,
-		HSpectr		=10,
-		HLog		=11
-	};
-#define	AHELPSIZE	4
-
-	static	short					AHelp[ AHELPSIZE] = { HDisplay, HSize, HSpectr, HLog};
-
-	void DoHelpSpectrum(short **items, short *lsize)
-	{
-		*lsize = AHELPSIZE;
-		*items = AHelp;
-	}
-
-	/*****************************/
-
-
-typedef struct
+/******** HELP MODULE ********/
+enum
 {
+	HDisplay	= 5,
+	HSize		= 8,
+	HSpectr		=10,
+	HLog		=11
+};
+
+static	short AHelp[] = {HDisplay, HSize, HSpectr, HLog};
+
+void DoHelpSpectrum(short **items, short *lsize)
+{
+	*lsize = sizeof(AHelp) / sizeof(AHelp[0]);
+	*items = AHelp;
+}
+
+/*****************************/
+
+
+typedef struct {
 	short		VPos;
 	Str63		Name;
 	Ptr			SavePtr;
@@ -36,7 +33,7 @@ typedef struct
 	Rect		rect;
 	Ptr			Spot;
 	Ptr			SpotTime;
-}	OsciRec;
+} OsciRec;
 
 enum
 {
@@ -167,16 +164,17 @@ void FillInterTextSpectrum(Rect *tempRect, short i)
 	tempRect->left -= 2;
 }
 
-/*void AdjustZoomSpectrum2(Rect	*vRect)
+#if 0
+void AdjustZoomSpectrum2(Rect *vRect)
 {
-//	WindowPeek	wPeek;
-//	WStateData	*wspd;
+	//WindowPeek	wPeek;
+	//WStateData	*wspd;
 	short		tempA, tempB;
 	Rect		stdRect;
 	
-//	wPeek = (WindowPeek) SpectrumDlog;
+	//wPeek = (WindowPeek) SpectrumDlog;
 	
-//	wspd = (WStateData*) *(wPeek->dataHandle);
+	//wspd = (WStateData*) *(wPeek->dataHandle);
 	
 	GetWindowStandardState(GetDialogWindow(SpectrumDlog), &stdRect);
 	
@@ -197,7 +195,8 @@ void FillInterTextSpectrum(Rect *tempRect, short i)
 	stdRect.bottom	= stdRect.top + tempB;
 	
 	SetWindowStandardState(GetDialogWindow(SpectrumDlog), &stdRect);
-}*/
+}
+#endif
 
 void ComputeCurrentQuickPixMapSpec()
 {
@@ -349,7 +348,8 @@ void UpdateSpectrumData(short LocalV, Byte *tempPtr2)
 	}
 }
 
-/*void C8BitSpectrum(short offsetV, short offsetH, short LocalV, Byte *tempPtr, Byte *tempPtr2)
+#if 0
+void C8BitSpectrum(short offsetV, short offsetH, short LocalV, Byte *tempPtr, Byte *tempPtr2)
 {
 short		i, high, ioffsetH, VFast, SIterCopy = SIter;
 Point		thePt;
@@ -395,7 +395,8 @@ for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 	
 	tempPtr2++;		tempPtr++;
 }
-}*/
+}
+#endif
 
 void C8BitSpectrumPixMap(Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr, Byte *spot, Byte *spotTime)
 {
@@ -453,153 +454,157 @@ void C8BitSpectrumPixMap(Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr, Byte *spo
 	}
 }
 
-/*void C8BitSpectrumDirect(short offsetV, short offsetH, short LocalV, Byte *tempPtr, Byte *tempPtr2)
+#if 0
+void C8BitSpectrumDirect(short offsetV, short offsetH, short LocalV, Byte *tempPtr, Byte *tempPtr2)
 {
-short		i, high, ioffsetH, VFast, SIterCopy = SIter;
-Ptr			*CurrentQuickInt = CurrentQuick;
-
-i = SIterCopy;
-if (i + offsetH >= VA[ 0].frame.right)
-{
-	SIterCopy = VA[ 0].frame.right - offsetH;
-	if (SIterCopy < 0) return;
-}
-
-offsetV 		+= OsciH - 1;
-LocalV 			+= OsciH - 1;
-CurrentQuickInt	+= offsetV;
-VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
-
-for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
-{
-	high		= VFast;
-	while (high-- > 0 && *tempPtr2 > 0)
+	short		i, high, ioffsetH, VFast, SIterCopy = SIter;
+	Ptr			*CurrentQuickInt = CurrentQuick;
+	
+	i = SIterCopy;
+	if (i + offsetH >= VA[ 0].frame.right)
 	{
-		*(CurrentQuickInt[ -*tempPtr2] + ioffsetH) = 0xFF;
-		(*tempPtr2)--;			// Descente de la fr子uence
+		SIterCopy = VA[ 0].frame.right - offsetH;
+		if (SIterCopy < 0) return;
 	}
 	
-	(*tempPtr) >>= OsciDD;
+	offsetV 		+= OsciH - 1;
+	LocalV 			+= OsciH - 1;
+	CurrentQuickInt	+= offsetV;
+	VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
 	
-	if (*tempPtr > *tempPtr2)
+	for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 	{
-		high = *tempPtr - *tempPtr2;
-		while (high-- > 0)
+		high		= VFast;
+		while (high-- > 0 && *tempPtr2 > 0)
 		{
-			*(CurrentQuickInt[ -*tempPtr2 - high] + ioffsetH) = 0x90;
+			*(CurrentQuickInt[ -*tempPtr2] + ioffsetH) = 0xFF;
+			(*tempPtr2)--;			// Descente de la fr子uence
 		}
-		*tempPtr2 = *tempPtr;
+		
+		(*tempPtr) >>= OsciDD;
+		
+		if (*tempPtr > *tempPtr2)
+		{
+			high = *tempPtr - *tempPtr2;
+			while (high-- > 0)
+			{
+				*(CurrentQuickInt[ -*tempPtr2 - high] + ioffsetH) = 0x90;
+			}
+			*tempPtr2 = *tempPtr;
+		}
+		
+		tempPtr2++;		tempPtr++;
 	}
-	
-	tempPtr2++;		tempPtr++;
-}
 }
 
 void C16BitSpectrum(short offsetV, short offsetH, short LocalV, Byte *tempPtr, Byte *tempPtr2)
 {
-short		i, high, *curQuickShort, ioffsetH, VFast, SIterCopy = SIter;
-Point		thePt;
-Ptr			*CurrentQuickInt = CurrentQuick;
-
-i = SIterCopy;
-if (i + offsetH >= VA[ 0].frame.right)
-{
-	SIterCopy = VA[ 0].frame.right - offsetH;
-	if (SIterCopy < 0) return;
-}
-
-offsetV 		+= OsciH - 1;
-LocalV 			+= OsciH - 1;
-CurrentQuickInt	+= offsetV;
-VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
-
-for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
-{
-	thePt.h = i;
-
-	high		= VFast;
-	thePt.v		= LocalV - *tempPtr2;
-	while (high-- > 0 && *tempPtr2 > 0)
+	short		i, high, *curQuickShort, ioffsetH, VFast, SIterCopy = SIter;
+	Point		thePt;
+	Ptr			*CurrentQuickInt = CurrentQuick;
+	
+	i = SIterCopy;
+	if (i + offsetH >= VA[ 0].frame.right)
 	{
-		if (PtInRgn(thePt, dlogptrRgn))
-		{
-			curQuickShort = (short*) CurrentQuickInt[ -*tempPtr2];
-			*(curQuickShort + ioffsetH) = 0x0000;
-		}
-		thePt.v++;
-		(*tempPtr2)--;			// Descente de la fr子uence
+		SIterCopy = VA[ 0].frame.right - offsetH;
+		if (SIterCopy < 0) return;
 	}
 	
-	(*tempPtr) >>= OsciDD;
+	offsetV 		+= OsciH - 1;
+	LocalV 			+= OsciH - 1;
+	CurrentQuickInt	+= offsetV;
+	VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
 	
-	if (*tempPtr > *tempPtr2)
+	for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 	{
-		high = *tempPtr - *tempPtr2;
-		while (high-- > 0)
+		thePt.h = i;
+		
+		high		= VFast;
+		thePt.v		= LocalV - *tempPtr2;
+		while (high-- > 0 && *tempPtr2 > 0)
 		{
-			thePt.v = LocalV - *tempPtr2 - high;
 			if (PtInRgn(thePt, dlogptrRgn))
 			{
-				curQuickShort = (short*) CurrentQuickInt[ -*tempPtr2 - high];
-				*(curQuickShort + ioffsetH) = 0x1BFF;
+				curQuickShort = (short*) CurrentQuickInt[ -*tempPtr2];
+				*(curQuickShort + ioffsetH) = 0x0000;
 			}
+			thePt.v++;
+			(*tempPtr2)--;			// Descente de la fr子uence
 		}
-		*tempPtr2 = *tempPtr;
+		
+		(*tempPtr) >>= OsciDD;
+		
+		if (*tempPtr > *tempPtr2)
+		{
+			high = *tempPtr - *tempPtr2;
+			while (high-- > 0)
+			{
+				thePt.v = LocalV - *tempPtr2 - high;
+				if (PtInRgn(thePt, dlogptrRgn))
+				{
+					curQuickShort = (short*) CurrentQuickInt[ -*tempPtr2 - high];
+					*(curQuickShort + ioffsetH) = 0x1BFF;
+				}
+			}
+			*tempPtr2 = *tempPtr;
+		}
+		
+		tempPtr2++;		tempPtr++;
 	}
-	
-	tempPtr2++;		tempPtr++;
-}
 }
 
 void C16BitSpectrumDirect(short offsetV, short offsetH, short LocalV, Byte *tempPtr, Byte *tempPtr2)
 {
-short		i, high, *curQuickShort, ioffsetH, VFast, SIterCopy = SIter;
-Ptr			*CurrentQuickInt = CurrentQuick;
-
-i = SIterCopy;
-if (i + offsetH >= VA[ 0].frame.right)
-{
-	SIterCopy = VA[ 0].frame.right - offsetH;
-	if (SIterCopy < 0) return;
-}
-
-offsetV 		+= OsciH - 1;
-LocalV 			+= OsciH - 1;
-CurrentQuickInt	+= offsetV;
-VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
-
-for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
-{
-	high		= VFast;
-	while (high-- > 0 && *tempPtr2 > 0)
+	short		i, high, *curQuickShort, ioffsetH, VFast, SIterCopy = SIter;
+	Ptr			*CurrentQuickInt = CurrentQuick;
+	
+	i = SIterCopy;
+	if (i + offsetH >= VA[ 0].frame.right)
 	{
-		curQuickShort = (short*) CurrentQuickInt[ -*tempPtr2];
-		*(curQuickShort + ioffsetH) = 0x0000;
-		(*tempPtr2)--;			// Descente de la fr子uence
+		SIterCopy = VA[ 0].frame.right - offsetH;
+		if (SIterCopy < 0) return;
 	}
 	
-	(*tempPtr) >>= OsciDD;
+	offsetV 		+= OsciH - 1;
+	LocalV 			+= OsciH - 1;
+	CurrentQuickInt	+= offsetV;
+	VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
 	
-	if (*tempPtr > *tempPtr2)
+	for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
 	{
-		high = *tempPtr - *tempPtr2;
-		while (high-- > 0)
+		high		= VFast;
+		while (high-- > 0 && *tempPtr2 > 0)
 		{
-			curQuickShort = (short*) CurrentQuickInt[ -*tempPtr2 - high];
-			*(curQuickShort + ioffsetH) = 0x1BFF;
+			curQuickShort = (short*) CurrentQuickInt[ -*tempPtr2];
+			*(curQuickShort + ioffsetH) = 0x0000;
+			(*tempPtr2)--;			// Descente de la fr子uence
 		}
-		*tempPtr2 = *tempPtr;
+		
+		(*tempPtr) >>= OsciDD;
+		
+		if (*tempPtr > *tempPtr2)
+		{
+			high = *tempPtr - *tempPtr2;
+			while (high-- > 0)
+			{
+				curQuickShort = (short*) CurrentQuickInt[ -*tempPtr2 - high];
+				*(curQuickShort + ioffsetH) = 0x1BFF;
+			}
+			*tempPtr2 = *tempPtr;
+		}
+		
+		tempPtr2++;		tempPtr++;
 	}
-	
-	tempPtr2++;		tempPtr++;
 }
-}*/
+#endif
 
 void DrawSpectrum(OsciRec	*osciPtr, short no)
 {
+#if 0
 	short		i;
 	Rect		tempRect, resultRect;
 	Boolean		doubleView;
+#endif
 	Ptr			spectrumPtr = NULL;
 
 	switch(OsciScale)
@@ -659,15 +664,16 @@ void DrawSpectrum(OsciRec	*osciPtr, short no)
 
 void DoNullSpectrum(void)
 {
-	short			temp,i,x, OsciSee;
+	short			i, OsciSee;
 	GrafPtr			myPort;
-	Rect			caRect, tempRect,CursRect;
+	Rect			caRect;
 	Boolean			Test;
-	Handle			itemHandle;
 
-	if (SpectrumDlog == NULL) return;
+	if (SpectrumDlog == NULL)
+		return;
 
-	if (TickCount() <= oldNullTicks) return;
+	if (TickCount() <= oldNullTicks)
+		return;
 	oldNullTicks = TickCount();
 	
 	GetPort(&myPort);
@@ -687,12 +693,10 @@ void DoNullSpectrum(void)
 
 void  UpdateSpectrumWindow(DialogPtr GetSelection)
 { 
-	Rect   		caRect, tempRect, itemRect, bRect;
+	Rect   		caRect, tempRect, bRect;
 	GrafPtr		SavePort;
-	Str255		tempStr, aStr;
-	short		itemType, Larg, i ,x, start, end, OsciSee;
-	Handle		itemHandle;
-	RgnHandle	visibleRegion, saveClip;
+	short		i, OsciSee;
+	RgnHandle	visibleRegion;
 	
 	GetPort(&SavePort);
 	SetPortDialogPort(SpectrumDlog);
@@ -800,9 +804,9 @@ static	DialogPtr	theDialogControl;
 
 pascal void actionProcSpectrum(ControlHandle theControl, short ctlPart)
 {
-	long			lRefCon;
-	short			CurWin, maxValue, minValue, curVal, sVal, OsciSee;
-	Rect			caRect, aRect;
+	long	lRefCon;
+	short	maxValue, minValue, curVal, sVal, OsciSee;
+	Rect	caRect, aRect;
 
 	if (ctlPart <= 0) return;
 
@@ -888,9 +892,8 @@ pascal void actionProcSpectrum(ControlHandle theControl, short ctlPart)
 
 void DoItemPressSpectrum(short whichItem, DialogPtr whichDialog)
 {
-	Cell				theCell;
 	long				mresult;
-	short				temp, bogus, itemType, ctlPart, curSelec = 0, i, tempB, OsciSee;
+	short				itemType, curSelec = 0, i, OsciSee;
 	Rect				caRect, tempRect;
 	Handle				itemHandle;
 	GrafPtr				SavePort;
@@ -1108,11 +1111,10 @@ void DoItemPressSpectrum(short whichItem, DialogPtr whichDialog)
 
 void SetWindowSpectrum(void)
 {
-	short		itemType, i, tempB, tempA;
-	Handle		itemHandle;
+	short		i, tempB;
 	Rect		caRect, itemRect;
 	GrafPtr		savePort;
-	Str255		tempStr, aStr;
+	Str255		aStr;
 	short		prevRight, prevBot;
 
 	if (SpectrumDlog == NULL) return;
@@ -1199,8 +1201,7 @@ void SetWindowSpectrum(void)
 	OsciOffSet	= GetControlValue(HControl);
 	
 	/********/
-	switch(OsciType)
-	{
+	switch (OsciType) {
 		case OutPutAudio:
 			SetDText(SpectrumDlog, 6, "\pAudio OutPut");
 		break;
@@ -1214,8 +1215,7 @@ void SetWindowSpectrum(void)
 	SetDText(SpectrumDlog, 9, aStr);
 
 	/*********/
-	switch(OsciScale)
-	{
+	switch (OsciScale) {
 		case linear:
 			SetDText(SpectrumDlog, 3, "\pLinear");
 			break;
@@ -1238,8 +1238,7 @@ void SetWindowSpectrum(void)
 
 long GetAudioSizeSpectrum(void)
 {
-	switch(OsciType)
-	{
+	switch (OsciType) {
 		case OutPutAudio:
 			return 512;
 			break;
@@ -1255,13 +1254,12 @@ long GetAudioSizeSpectrum(void)
 
 Ptr GetAudioSourceSpectrum(short item)
 {
-	Ptr	sourcePtr;
-
-	switch(OsciType)
-	{
+	switch (OsciType) {
 		case OutPutAudio:
-			if (item == 0) return GetAudioChannel(false, MADDriver->ASCBUFFERReal);
-			else return GetAudioChannel(true, MADDriver->ASCBUFFERReal);
+			if (item == 0)
+				return GetAudioChannel(false, MADDriver->ASCBUFFERReal);
+			else
+				return GetAudioChannel(true, MADDriver->ASCBUFFERReal);
 		break;
 		
 		case InPutAudio:
@@ -1274,12 +1272,9 @@ Ptr GetAudioSourceSpectrum(short item)
 
 void CreateSpectrumWindow(void)
 {
-	Rect		itemRect, tempRect, dataBounds;
+	Rect		itemRect;
 	Handle		itemHandle;
-	short		itemType, itemHit, temp, i;
-	Point		cSize;
-	FontInfo	ThisFontInfo;
-	Str255		String;
+	short		itemType, i;
 	GrafPtr		savePort;
 	
 	if (SpectrumDlog != NULL)
