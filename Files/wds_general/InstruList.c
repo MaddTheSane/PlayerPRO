@@ -1,34 +1,33 @@
+#include <Carbon/Carbon.h>
+#include <string.h>
+#include <QuickTime/QuickTime.h>
 #include "Shuddup.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Carbon/Carbon.h>
-#include <string.h>
 #include "Undo.h"
 #include "PrivateList.h"
-#include <QuickTime/QuickTime.h>
 #include "PPPlug.h"
 
-	/******** HELP MODULE ********/
-	enum
-	{
-		HRec	= 22,
-		HSave	= 21,
-		HLoad	= 20,
-		HDel	= 19,
-		HWind	= 24,
-		HIndi	= 26,
-		HList	= 1,
-		HInfo	= 18,
-		HOpenA	= 23
-	};
-#define AHELPSIZE	9
+/******** HELP MODULE ********/
+enum
+{
+	HRec	= 22,
+	HSave	= 21,
+	HLoad	= 20,
+	HDel	= 19,
+	HWind	= 24,
+	HIndi	= 26,
+	HList	= 1,
+	HInfo	= 18,
+	HOpenA	= 23
+};
 
 //static pascal Boolean myDragClickLoop(void);
-	static	short					AHelp[ AHELPSIZE] = { HRec, HSave, HLoad, HDel, HWind, HIndi, HList, HInfo, HOpenA};
+static short AHelp[] = {HRec, HSave, HLoad, HDel, HWind, HIndi, HList, HInfo, HOpenA};
 
 void DoHelpInstruList(short **items, short *lsize)
 {
-	*lsize = AHELPSIZE;
+	*lsize = sizeof(AHelp) / sizeof(AHelp[0]);
 	*items = AHelp;
 }
 
@@ -495,10 +494,6 @@ void DoGrowInstruList(DialogPtr	theDialog)
 
 	if (theEvent.what == mouseDown)
 	{
-#if MACOS9VERSION
-		temp.left++;
-		temp.right++;
-#endif
 		lSizeVH = GrowWindow(GetDialogWindow(theDialog), theEvent.where, &temp);
 	}
 	

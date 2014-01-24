@@ -936,8 +936,7 @@ Boolean LoadVSTPLUG(short No, StringPtr theName)
 	fileID = FSpOpenResFile(&VSTPlug[ No].file, fsCurPerm);
 	
 	theRes = Get1Resource('aEff', 0);
-	if (theRes == NULL)
-	{
+	if (theRes == NULL) {
 		theRes = GetIndResource('aEff', 1);
 		if (theRes == NULL) return false;
 	}
@@ -962,7 +961,7 @@ void ScanDirVSTPlug(long dirID, short VRefNum)
 {
 	CInfoPBRec		info;
 	Str255			tempStr, volName;
-	long				dirIDCopy;
+	long			dirIDCopy;
 	short			i, vRefNum;
 	OSErr			iErr;
 
@@ -974,7 +973,7 @@ void ScanDirVSTPlug(long dirID, short VRefNum)
 		info.hFileInfo.ioDirID = dirID;
 		info.hFileInfo.ioFDirIndex = i;
 		
-		if (PBGetCatInfo(&info, false) != noErr) break;
+		if (PBGetCatInfoSync(&info) != noErr) break;
 		
 		if (info.hFileInfo.ioFlFndrInfo.fdType == 'aPcs')
 		{	
@@ -991,20 +990,12 @@ void ScanDirVSTPlug(long dirID, short VRefNum)
 			iErr = HSetVol(NULL, vRefNum, dirIDCopy);
 			if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "HSetVol error...");
 		}
-		else if((info.hFileInfo.ioFlAttrib & 16))
-		{
-			if (EqualString(info.hFileInfo.ioNamePtr, "\pPlugs", false, false) || PlugsFolderOK > 0)
-			{
-				if ((EqualString(info.hFileInfo.ioNamePtr, "\pMacOS 9", false, false) != true) || MacOSXSystem == false)
-				{
-#if MACOS9VERSION
-					if (EqualString(info.hFileInfo.ioNamePtr, "\pMacOS X", false, false) != true)
-#endif
-					{
+		else if((info.hFileInfo.ioFlAttrib & 16)) {
+			if (EqualString(info.hFileInfo.ioNamePtr, "\pPlugs", false, false) || PlugsFolderOK > 0) {
+				if ((EqualString(info.hFileInfo.ioNamePtr, "\pMacOS X", false, false) != true)) {
 					PlugsFolderOK++;
 					ScanDirVSTPlug(info.dirInfo.ioDrDirID, VRefNum);
 					PlugsFolderOK--;
-					}
 				}
 			}
 		}

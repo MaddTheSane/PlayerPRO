@@ -520,11 +520,6 @@ void DoGrowAdap(DialogPtr theDialog)
 	temp.left = caRect.right;
 	temp.right = caRect.right;
 	
-#if MACOS9VERSION
-	temp.left++;
-	temp.right++;
-#endif
-	
 	lSizeVH = 0;
 	if (theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(theDialog), theEvent.where, &temp);
 	
@@ -1042,9 +1037,9 @@ void CreateControlAdap()
 	}
 	
 	GetDialogItem(AdapDlog, 2, &itemType, &itemHandle, &itemRect);
+#if MACOS9VERSION
 	for (i = 0; i < gCurrentTrack; i++)
 	{
-		//#if MACOS9VERSION
 		volCntl[i] = NewControl(GetDialogWindow(AdapDlog),
 								&itemRect,
 								"\pV",
@@ -1140,8 +1135,8 @@ void CreateControlAdap()
 		itemRect.top 	+= DISVOL;
 		itemRect.bottom += DISVOL;
 		
-		//#endif
 	}
+#endif
 	
 	GetDialogItem(AdapDlog, 2, &itemType, &itemHandle, &itemRect);
 	

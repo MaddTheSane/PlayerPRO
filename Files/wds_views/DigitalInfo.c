@@ -55,11 +55,6 @@ void DoGrowDigi(DialogPtr theDialog)
 	
 	temp.top = temp.bottom = caRect.bottom;
 	
-#if MACOS9VERSION
-	temp.top++;
-	temp.bottom++;
-#endif
-	
 	lSizeVH = 0;
 	if (theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(theDialog), theEvent.where, &temp);
 	

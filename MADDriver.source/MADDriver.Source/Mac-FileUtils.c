@@ -21,9 +21,9 @@
 //
 /********************						***********************/
 
-#include "FileUtils.h"
 #include <Carbon/Carbon.h>
 #include <CoreFoundation/CoreFoundation.h>
+#include "FileUtils.h"
  
 unsigned char* MYC2PStr(Ptr cStr)
 {
@@ -125,15 +125,11 @@ void iFileCreate(Ptr name, OSType type)
 	
 	fInfo->fileType		 = type;
 	fInfo->fileCreator	 = 'SNPL';
-	fInfo->finderFlags	 = 0;
-	fInfo->location.h	 = 0;
-	fInfo->location.v	 = 0;
-	fInfo->reservedField = 0;
 	
 	FSCreateFileUnicode(&ref, uniLen, UNICHARThing, kFSCatInfoFinderInfo, &fileCat, NULL, NULL);
 	free(UNICHARThing);
 	
-	MYP2CStr((unsigned char*) name);
+	MYP2CStr((unsigned char*)name);
 }
 
 OSErr iWrite(long size, Ptr dest, UNFILE iFileRefI)
@@ -148,7 +144,7 @@ void iClose(UNFILE iFileRefI)
 
 /////////////////////////////////
 
-EXP void OSType2Ptr(OSType type, Ptr str)
+EXP void OSType2Ptr(OSType type, char* str)
 {
 	MOT32(&type);
 	memcpy(str, &type, 4);
@@ -157,11 +153,11 @@ EXP void OSType2Ptr(OSType type, Ptr str)
 
 EXP OSType Ptr2OSType(char* str)
 {
-	short 	i;
+	int		i;
 	OSType	type = '    ';
 	
 	i = strlen(str);
-	if (i > 4) 
+	if (i > 4)
 		i = 4;
 	memcpy(&type, str, i);
 	MOT32(&type);

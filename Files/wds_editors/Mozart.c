@@ -6,35 +6,34 @@
 
 void UpdateMozartInfoInternal(void);
 
-	/******** HELP MODULE ********/
-	enum
-	{
-		HTrack	= 15,
-		HInstru	= 17,
-		HEffect	= 20,
-		HInfo	= 8,
-		HPref	= 7,
-		HSee	= 6,
-		HNote	= 1,
-		HSele	= 2,
-		HPlay	= 4,
-		HDele	= 3,
-		HParti	= 9,
-		HZoom	= 5
-	};
-#define	AHELPSIZE	13
+/******** HELP MODULE ********/
+enum
+{
+	HTrack	= 15,
+	HInstru	= 17,
+	HEffect	= 20,
+	HInfo	= 8,
+	HPref	= 7,
+	HSee	= 6,
+	HNote	= 1,
+	HSele	= 2,
+	HPlay	= 4,
+	HDele	= 3,
+	HParti	= 9,
+	HZoom	= 5
+};
 
-	static	short		AHelp[ AHELPSIZE] =
-	{ HTrack, HInstru, HEffect, HInfo, HPref, HSee, HNote, HSele, HPlay, HDele, HParti, HZoom};
-	
-	void DoHelpMozart(short **items, short *lsize)
-	{
-		*lsize = AHELPSIZE;
-		*items = AHelp;
-	}
-	
-	/*****************************/
-	
+static short AHelp[] =
+{ HTrack, HInstru, HEffect, HInfo, HPref, HSee, HNote, HSele, HPlay, HDele, HParti, HZoom};
+
+void DoHelpMozart(short **items, short *lsize)
+{
+	*lsize = sizeof(AHelp) / sizeof(AHelp[0]);
+	*items = AHelp;
+}
+
+/*****************************/
+
 #define LegendeHi	12
 #define LegendeLa	51
 #define LegendeLaS	20
@@ -52,42 +51,42 @@ enum
 };
 #define MODESIZE 5
 
-	static	short					DiffStartH, DiffStartV, YSize, PatCopy, ReaderCopy, Mode, copyMode, ZoomInter, PianoMozartTrack, PianoMozart, PatternSizeCopy;
-	static	short					CurrentNumChn;
-	static	Rect					MozartRect, TrashRect;
-	static	ControlHandle			c1h, c2h, c3h, NoteBut, ZoomBut, SelBut, PoubBut, HelpBut, prefBut, PlayBut;
-	static	Cursor					CrossCrsr;
-	static	Boolean					showAllNotes;
-	static	Str255					curDisplayedNote;
-	static	short					MOLargList[ 10] = { 5, 8, 12, 14, 16, 20, 25, 30};
-	static	short					MOHautList[ 10] = { 5, 8, 10, 10, 12, 20, 25, 30};
-	static	short 					gThumbPrev;
+static	short					DiffStartH, DiffStartV, YSize, PatCopy, ReaderCopy, Mode, copyMode, ZoomInter, PianoMozartTrack, PianoMozart, PatternSizeCopy;
+static	short					CurrentNumChn;
+static	Rect					MozartRect, TrashRect;
+static	ControlHandle			c1h, c2h, c3h, NoteBut, ZoomBut, SelBut, PoubBut, HelpBut, prefBut, PlayBut;
+static	Cursor					CrossCrsr;
+static	Boolean					showAllNotes;
+static	Str255					curDisplayedNote;
+static	short					MOLargList[ 10] = { 5, 8, 12, 14, 16, 20, 25, 30};
+static	short					MOHautList[ 10] = { 5, 8, 10, 10, 12, 20, 25, 30};
+static	short 					gThumbPrev;
 
-	static	ControlActionUPP		MyControlUPP;
-	
-			MenuHandle				TrackView;
-	
-	static	short					selecTrack, curInstru, curEffect, curArgu, curVol, MOLarg, MOHaut;
-	static	Point					selecStart, selecEnd;
-	static	BitMap					xLabel, yLabel;
-	static	GWorldPtr 				globalGWorld, grilleGWorld;
-	static	RGBColor				Gray[ 5];
-	static	RGBColor				yellC, greenC, blueC, redC, redC2;
-	
-	static	DragSendDataUPP			mySendDataUPP;
-	static	DragTrackingHandlerUPP	MyTrackingHandlerUPP;
-	static	DragReceiveHandlerUPP	MyReceiveDropHandlerUPP;
-	
-	static	short					MidMOLarg, MidMOHaut;	
-	
-	extern	Boolean					DragManagerUse;
-	extern	RGBColor				theColor;
-	extern	KeyMap					km;
-	extern	WindowPtr				oldWindow;
-	extern	Cursor					PlayCrsr, NoteCrsr, DelCrsr, HandCrsr, CHandCrsr, ZoomInCrsr, ZoomOutCrsr;
-	extern	short					BlackWhite[ 12];
-	
-			DialogPtr				MozartDlog;
+static	ControlActionUPP		MyControlUPP;
+
+		MenuHandle				TrackView;
+
+static	short					selecTrack, curInstru, curEffect, curArgu, curVol, MOLarg, MOHaut;
+static	Point					selecStart, selecEnd;
+static	BitMap					xLabel, yLabel;
+static	GWorldPtr 				globalGWorld, grilleGWorld;
+static	RGBColor				Gray[ 5];
+static	RGBColor				yellC, greenC, blueC, redC, redC2;
+
+static	DragSendDataUPP			mySendDataUPP;
+static	DragTrackingHandlerUPP	MyTrackingHandlerUPP;
+static	DragReceiveHandlerUPP	MyReceiveDropHandlerUPP;
+
+static	short					MidMOLarg, MidMOHaut;	
+
+extern	Boolean					DragManagerUse;
+extern	RGBColor				theColor;
+extern	KeyMap					km;
+extern	WindowPtr				oldWindow;
+extern	Cursor					PlayCrsr, NoteCrsr, DelCrsr, HandCrsr, CHandCrsr, ZoomInCrsr, ZoomOutCrsr;
+extern	short					BlackWhite[ 12];
+
+		DialogPtr				MozartDlog;
 
 void		SetUpLabels();
 void		ErasePartitionReader();

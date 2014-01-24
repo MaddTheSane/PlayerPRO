@@ -4098,7 +4098,7 @@ void NOpenMusic()
 				block.dirInfo.ioVRefNum = reply.vRefNum;
 				block.dirInfo.ioFDirIndex = -1;
 				block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
-				if (PBGetCatInfo(&block, false) == noErr)
+				if (PBGetCatInfoSync(&block) == noErr)
 				{
 					pStrcpy(reply.name, directoryName);
 					reply.parID = block.dirInfo.ioDrParID;
@@ -6366,7 +6366,7 @@ void HandleFileChoice(short theItem)
 				{
 					info.hFileInfo.ioDirID = specFolder.parID;
 					info.hFileInfo.ioFDirIndex = i;
-					if (PBGetCatInfo(&info, false) != noErr)
+					if (PBGetCatInfoSync(&info) != noErr)
 						break;
 					
 					if (info.hFileInfo.ioFlFndrInfo.fdType == 'cdev' &&
@@ -6419,7 +6419,7 @@ void HandleFileChoice(short theItem)
 						{
 							info.hFileInfo.ioDirID = specFolder.parID;
 							info.hFileInfo.ioFDirIndex = i;
-							if (PBGetCatInfo(&info, false) != noErr)
+							if (PBGetCatInfoSync(&info) != noErr)
 								break;
 							
 							if (info.hFileInfo.ioFlFndrInfo.fdCreator == 'alav')		//info.hFileInfo.ioFlFndrInfo.fdType == 'APPL' &&

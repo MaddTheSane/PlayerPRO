@@ -2,68 +2,63 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#if MACOS9VERSION
-#include "OMS.h"
-#elif __MACH__
 #include <CoreMIDI/CoreMIDI.h>
-#endif
 
-	/******** HELP MODULE FOR TOOLS ********/
-	enum
-	{
-		HBackP	= 2,
-		HBack	= 3,
-		HStop	= 4,
-		HPlay	= 5,
-		HFor	= 6,
-		HForP	= 7,
-		HIndi	= 10,
-		HName	= 1,
-		HIns	= 31,
-		HNote	= 32,
-		HEff	= 33,
-		HArg	= 34,
-		HCellP	= 22,
-		HDel	= 21,
-		HSel	= 40,
-		HLoop	= 46
-	};
-#define	AHELPSIZE	17
+/******** HELP MODULE FOR TOOLS ********/
+enum
+{
+	HBackP	= 2,
+	HBack	= 3,
+	HStop	= 4,
+	HPlay	= 5,
+	HFor	= 6,
+	HForP	= 7,
+	HIndi	= 10,
+	HName	= 1,
+	HIns	= 31,
+	HNote	= 32,
+	HEff	= 33,
+	HArg	= 34,
+	HCellP	= 22,
+	HDel	= 21,
+	HSel	= 40,
+	HLoop	= 46
+};
+extern Boolean MIDIHardwareAlreadyOpen;
 
-	extern	Boolean					MIDIHardwareAlreadyOpen;
+static long *TimeScanPtr[256];
+static short AHelp[] = {HBackP, HBack, HStop, HPlay, HFor, HForP, HIndi, HName, HIns,
+	HNote, HEff, HArg, HCellP, HDel, HSel, HLoop, 44};
 
-	static	long					*TimeScanPtr[ 256];
-	static	short					AHelp[ AHELPSIZE] = {	HBackP, HBack, HStop, HPlay, HFor, HForP, HIndi, HName, HIns,
-															HNote, HEff, HArg, HCellP, HDel, HSel, HLoop, 44};
-	void DoHelpTools(short **items, short *lsize)
-	{
-		*lsize = AHELPSIZE;
-		*items = AHelp;
-	}
+void DoHelpTools(short **items, short *lsize)
+{
+	*lsize = sizeof(AHelp) / sizeof(AHelp[0]);
+	*items = AHelp;
+}
 
-	/*****************************/
+/*****************************/
 
-	extern	long					TickInterne;
-	extern	RGBColor				theColor;
-	extern	Boolean					DragManagerUse;
-			
-			Boolean					PianoRecording;
-			
-	static	short					oldPartition, oldPartition2, oldPL;
-	static	long					oldStart, oldEnd, maxTime, oldTime;
-	static	ControlHandle			playCntl, progCntl, stopCntl, RecordCntl, BackCntl, ForCntl, JumpNextCntl, JumpBeforeCntl, LoopCntl;
-	static	Boolean					canAcceptDrag;
-	static	short					RememberPat, RememberReader, RememberPL;
-	static	PixPatHandle			workPixPat;
-	static	short					LoopCntlState, PreviousLoop;
-	static	ControlActionUPP		ForeUPP, BackUPP;
-	
-	void FlushPlugin(void);
-	void ScanTime();
-	Boolean IsMyTypeMODList(DragReference theDrag);
-	void PurgeVSTEffects(void);
-	DragTrackingHandlerUPP	MyTrackingToolsUPP;
-	DragReceiveHandlerUPP	MyReceiveToolsUPP;
+extern	long					TickInterne;
+extern	RGBColor				theColor;
+extern	Boolean					DragManagerUse;
+		
+		Boolean					PianoRecording;
+		
+static	short					oldPartition, oldPartition2, oldPL;
+static	long					oldStart, oldEnd, maxTime, oldTime;
+static	ControlHandle			playCntl, progCntl, stopCntl, RecordCntl, BackCntl, ForCntl, JumpNextCntl, JumpBeforeCntl, LoopCntl;
+static	Boolean					canAcceptDrag;
+static	short					RememberPat, RememberReader, RememberPL;
+static	PixPatHandle			workPixPat;
+static	short					LoopCntlState, PreviousLoop;
+static	ControlActionUPP		ForeUPP, BackUPP;
+
+void FlushPlugin(void);
+void ScanTime();
+Boolean IsMyTypeMODList(DragReference theDrag);
+void PurgeVSTEffects(void);
+DragTrackingHandlerUPP	MyTrackingToolsUPP;
+DragReceiveHandlerUPP	MyReceiveToolsUPP;
 pascal void myForeAction(ControlHandle theCntl, short ctlPart);
 pascal void myBackAction(ControlHandle theCntl, short ctlPart);
 void SetCurrentMOD(Str255 theMODName);

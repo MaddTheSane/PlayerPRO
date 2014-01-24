@@ -358,21 +358,13 @@ void DoGrowPiano(void)
 	
 	LocalToGlobal(&aPt);
 	
-#if MACOS9VERSION
-	temp.top++;
-	temp.bottom++;
-#endif
-	
 	lSizeVH = 0;
 	if (theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(PianoDlog), theEvent.where, &temp);
 	
-	if (lSizeVH != 0)
-	{
+	if (lSizeVH != 0) {
 		tempA = LoWord(lSizeVH);
 		tempB = HiWord(lSizeVH);
-	}
-	else
-	{
+	} else {
 		GetPortBounds(GetDialogPort(PianoDlog), &caRect);
 		
 		tempA = caRect.right;

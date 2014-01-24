@@ -7,23 +7,21 @@
 #include "PrivateList.h"
 //#include "WaveEditor.proto.h"
 
-	/******** HELP MODULE ********/
+/******** HELP MODULE ********/
 enum
 {
 	HView = 0
 };
-#define	AHELPSIZE	1
 
-static	short		AHelp[ AHELPSIZE] =
-{ HView};
+static short AHelp[] = {HView};
 
 void DoHelpWave(short **items, short *lsize)
 {
-	*lsize = AHELPSIZE;
+	*lsize = sizeof(AHelp) / sizeof(AHelp[0]);
 	*items = AHelp;
 }
 
-	/*****************************/
+/*****************************/
 
 //#define rate2khz	0x08000000UL
 
@@ -68,10 +66,11 @@ void UpdateWaveInfo();
 
 short GetMaxXWave()
 {
-	short	ret;
+	short ret;
 
 	ret = 1 + GetControlValue(xScroll) + (WaveRect.right - WaveRect.left) / XSize;
-	if (ret > curMusic->partition[ CurrentPat]->header.size) ret = curMusic->partition[ CurrentPat]->header.size;
+	if (ret > curMusic->partition[ CurrentPat]->header.size)
+		ret = curMusic->partition[ CurrentPat]->header.size;
 	
 	return ret;
 }

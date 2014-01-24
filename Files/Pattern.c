@@ -370,7 +370,7 @@ pascal OSErr MyPATSendDataProc(FlavorType theFlavor,  void *refCon, ItemReferenc
 		pStrcat(aStr, "\p:");
 		
 		wdpb.ioNamePtr = aStr;
-		PBHSetVol(&wdpb, false);
+		PBHSetVolSync(&wdpb);
 		HGetVol(NULL, &target.vRefNum, &target.parID);
 		
 		bStr[ 0] = 20;
@@ -1240,13 +1240,10 @@ void DoGrowPatList(DialogPtr theDialog)
 	
 	LocalToGlobal(&aPt);
 	
-	if (temp.bottom < temp.top) temp.bottom = temp.top;
-	else if (temp.bottom > screenBits.bounds.bottom - aPt.v) temp.bottom = screenBits.bounds.bottom - aPt.v -2;
-	
-#if MACOS9VERSION
-	temp.left++;
-	temp.right++;
-#endif
+	if (temp.bottom < temp.top)
+		temp.bottom = temp.top;
+	else if (temp.bottom > screenBits.bounds.bottom - aPt.v)
+		temp.bottom = screenBits.bounds.bottom - aPt.v -2;
 	
 	lSizeVH = 0;
 	if (theEvent.what == mouseDown)
