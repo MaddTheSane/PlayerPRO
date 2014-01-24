@@ -4,30 +4,30 @@
 #include "RDriverInt.h"
 #include "Undo.h"
 
-	/******** HELP MODULE ********/
-	enum
-	{
-		HInfo	= 25,
-		HSel	= 27,
-		HPenc	= 26,
-		Hzoom	= 18,
-		HPlug	= 14,
-		HWave	= 1,
-		HEnv	= 13,
-		HSus	= 36,
-		HLoop	= 37
-	};
-#define	AHELPSIZE	9
+/******** HELP MODULE ********/
+enum
+{
+	HInfo	= 25,
+	HSel	= 27,
+	HPenc	= 26,
+	Hzoom	= 18,
+	HPlug	= 14,
+	HWave	= 1,
+	HEnv	= 13,
+	HSus	= 36,
+	HLoop	= 37
+};
 
-	static	short					AHelp[ AHELPSIZE] = { HInfo, HSel, HPenc, Hzoom, HPlug, HWave, HEnv, HSus, HLoop};
+static short AHelp[] = {HInfo, HSel, HPenc, Hzoom, HPlug, HWave, HEnv, HSus, HLoop};
 
-	void DoHelpSamples(short **items, short *lsize)
-	{
-		*lsize = AHELPSIZE;
-		*items = AHelp;
-	}
+void DoHelpSamples(short **items, short *lsize)
+{
+	*lsize = sizeof(AHelp) / sizeof(AHelp[0]);
+	*items = AHelp;
+}
 
-	/*****************************/
+/*****************************/
+
 void			VSTSampleEditor(short item, sData	*curData, long Start, long End, Boolean StereoMode);
 void			NAppelVSTPlug(short InstruNo, short samp, short whichPlug);
 short			GetMaxSoundFilterPlugs(void);

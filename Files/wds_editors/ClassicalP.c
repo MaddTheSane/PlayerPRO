@@ -2,29 +2,26 @@
 #include "MAD.h"
 #include "RDriver.h"
 
-	/******** HELP MODULE ********/
-	enum
-	{
-		HInfo	= 12,
-		HPlay	= 14,
-		HZoom	= 15,
-		HTrack	= 7,
-		HIns	= 8,
-		HPat	= 1
-	};
-#define	AHELPSIZE 6
+/******** HELP MODULE ********/
+enum
+{
+	HInfo	= 12,
+	HPlay	= 14,
+	HZoom	= 15,
+	HTrack	= 7,
+	HIns	= 8,
+	HPat	= 1
+};
 
+static short AHelp[] = {HInfo, HPlay, HZoom, HTrack, HIns, HPat};
 
-	static	short					AHelp[ AHELPSIZE] = { HInfo, HPlay, HZoom, HTrack, HIns, HPat};
+void DoHelpClassic(short **items, short *lsize)
+{
+	*lsize = sizeof(AHelp) / sizeof(AHelp[0]);
+	*items = AHelp;
+}
 
-	void DoHelpClassic(short **items, short *lsize)
-	{
-		*lsize = AHELPSIZE;
-		*items = AHelp;
-	}
-
-	/*****************************/
-
+/*****************************/
 
 enum
 {
@@ -33,21 +30,21 @@ enum
 };
 
 
-	extern	EventRecord				theEvent;
-	extern	MenuHandle				TrackView;
-	extern	KeyMap					km;
-	extern	Cursor					ZoomInCrsr, ZoomOutCrsr, PlayCrsr;
-	extern	RGBColor				theColor;
-	extern	WindowPtr				oldWindow;
+extern	EventRecord				theEvent;
+extern	MenuHandle				TrackView;
+extern	KeyMap					km;
+extern	Cursor					ZoomInCrsr, ZoomOutCrsr, PlayCrsr;
+extern	RGBColor				theColor;
+extern	WindowPtr				oldWindow;
 
-			DialogPtr				ClassicDlog;
-			
-	static	Rect					NoteZone;
-	static	short					PatCopyXIM, PLCopyXIM, ReaderCopy, curSelecTrack, curSelecInstru;
-	static	short					CurrentPat, CurHaut, CurLarg;
-	static	short					PatternLength, ZoomLevelPat;
-	static	ControlHandle			theCtl, InfoBut, PlayBut, ZoomBut;
-	static	short 					InvertN, SelectMode;
+		DialogPtr				ClassicDlog;
+		
+static	Rect					NoteZone;
+static	short					PatCopyXIM, PLCopyXIM, ReaderCopy, curSelecTrack, curSelecInstru;
+static	short					CurrentPat, CurHaut, CurLarg;
+static	short					PatternLength, ZoomLevelPat;
+static	ControlHandle			theCtl, InfoBut, PlayBut, ZoomBut;
+static	short 					InvertN, SelectMode;
 
 Boolean DialogPatternInfo(short thePos);
 

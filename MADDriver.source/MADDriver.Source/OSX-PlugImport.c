@@ -181,8 +181,7 @@ OSErr PPMADInfoFile(char *AlienFile, PPInfoRec	*InfoRec)
 	theMAD = (MADSpec*) NewPtr(sizeof(MADSpec) + 200);
 	
 	fileID = iFileOpen(AlienFile);
-	if (!fileID)
-	{
+	if (!fileID) {
 		DisposePtr((Ptr) theMAD);
 		return -1;
 	}

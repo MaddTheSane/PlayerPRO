@@ -33,7 +33,7 @@ enum
 
 //static pascal Boolean myDragClickLoop(void);
 static short AHelp[] =
-{ HPref, HLoad, HSave, HUp, HInfo, HPlay, HRec, HOpenA, HTrack, HPos, HPatt, HFX, HLoop, HFind, HDown, HFill, HD1, HD2, HD3, HD4, HStep};
+{HPref, HLoad, HSave, HUp, HInfo, HPlay, HRec, HOpenA, HTrack, HPos, HPatt, HFX, HLoop, HFind, HDown, HFill, HD1, HD2, HD3, HD4, HStep};
 
 void DoHelpEditor(short **items, short *lsize)
 {
@@ -64,7 +64,7 @@ static	Point						CurStr, CellSelec;
 static	ControlHandle				FillBut, CheckBut[ 4], OpenBut, SaveBut, InfoBut, PrefBut, ShowBut, PlayBut, DownBut, UpBut, RecBut, FXBut, TraceBut, FindBut;
 static	Boolean						DidTryToDrag;
 static	RGBColor					Gray[ 5];
-static	RGBColor					yellC, greenC, blueC, redC, redC2;
+static	RGBColor					yellC, greenC, blueC, redC;
 		Boolean					EditorKeyRecording;
 
 static	PrivateList				myList;
@@ -169,16 +169,15 @@ void ConvertPointAndType(Point *cPt, short *Type)
 	if (cPt->v < 0)
 		cPt->v = 0;
 	
-	if (cPt->h >= curMusic->header->numChn )
+	if (cPt->h >= curMusic->header->numChn)
 		cPt->h = curMusic->header->numChn - 1;
-	if (cPt->v >= curMusic->partition[CurrentPat]->header.size )
+	if (cPt->v >= curMusic->partition[CurrentPat]->header.size)
 		cPt->v = curMusic->partition[CurrentPat]->header.size - 1;
 }
 
 Cmd * GetEditorSelectCmd(short *track, short *position)
 {
-	GrafPtr	savePort;
-	Cell	theCell = { 0, 0};
+	Cell	theCell = {0, 0};
 
 	if (EditorDlog != NULL) {
 		if (PLGetSelect(&theCell, &myList)) {
@@ -205,9 +204,7 @@ void SetSelectionEditor(short FPat, short FPos, short FTrack)
 	GetPort(&savePort);
 	SetPortDialogPort(EditorDlog);
 	
-	//TextFont(4);	TextSize(9);
-	
-	//PLSetSelect(-1, -1, -1, -1, &myList);
+	PLSetSelect(-1, -1, -1, -1, &myList);
 	
 	theCell.h = FTrack;	theCell.v = FPos;
 	
@@ -4255,7 +4252,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 		pStrcat(sName, "\p:");
 		
 		wdpb.ioNamePtr = sName;
-		PBHSetVol(&wdpb, false);
+		PBHSetVolSync(&wdpb);
 		HGetVol(NULL, &target.vRefNum, &target.parID);
 		/**/
 		
@@ -4307,7 +4304,6 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 	ReGiveName:
 		
 		FSMakeFSSpec(target.vRefNum, target.parID, sName, &target);
-		//	HSetVol(NULL, target.vRefNum, target.parID);
 		err = FSpOpenDF(&target, fsCurPerm, &fRefNum);
 		if (err != fnfErr)
 		{
@@ -4339,25 +4335,23 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 				FSCloseFork(fRefNum);
 			}
 			
-			MyDisposePtr((Ptr*) &myPcmd);
+			MyDisposePtr((Ptr*)&myPcmd);
 			
 			err = SetDragItemFlavorData(theDrag, theItem, theFlavor, &target, sizeof(target), 0);
-			if (err) return (err);
+			if (err)
+				return err;
 		}
 	}
 	
-	return (noErr);
+	return noErr;
 }
 
-Boolean DragEditor(RgnHandle myRgn, Pcmd	*myPcmd, EventRecord *theEvent)
+Boolean DragEditor(RgnHandle myRgn, Pcmd *myPcmd, EventRecord *theEvent)
 {
 	short				result;
 	RgnHandle			dragRegion, tempRgn;
 	Point				theLoc;
 	DragReference		theDrag;
-	short				mouseDownModifiers, mouseUpModifiers;
-	short				temp;
-	Str255				theStr;
 	Ptr					myText;
 	PromiseHFSFlavor	myNewFile;
 	Rect				dragRegionRect;
@@ -4423,13 +4417,10 @@ Boolean DragEditor(RgnHandle myRgn, Pcmd	*myPcmd, EventRecord *theEvent)
 pascal OSErr MyReceiveDropEditor(WindowPtr theWindow, void* handlerRefCon, DragReference theDrag)
 {
 	OSErr				result;
-	Rect				theRect, srcRect;
-	unsigned short		items;
 	ItemReference		theItem;
 	DragAttributes		attributes;
 	Size				textSize;
-	short				offset, selStart, selEnd, mouseDownModifiers, mouseUpModifiers, movePcmd;
-	Point				theCell;
+	short				mouseDownModifiers, mouseUpModifiers, movePcmd;
 	Pcmd				*myPcmd;
 	HFSFlavor			myFlavor;
 	

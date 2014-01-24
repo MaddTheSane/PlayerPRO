@@ -7,25 +7,23 @@
 void SetWindowEnviron(void);
 void ResetOscilloscope(void);
 
-	/******** HELP MODULE ********/
-	enum
-	{
-		HDisplay	= 5,
-		HSize		= 8,
-		HSpectr		=10
-	};
-#define	AHELPSIZE	3
+/******** HELP MODULE ********/
+enum
+{
+	HDisplay	= 5,
+	HSize		= 8,
+	HSpectr		= 10
+};
 
-	static	short					AHelp[ AHELPSIZE] = { HDisplay, HSize, HSpectr};
+static short AHelp[] = {HDisplay, HSize, HSpectr};
 
-	void DoHelpOscillo(short **items, short *lsize)
-	{
-		*lsize = AHELPSIZE;
-		*items = AHelp;
-	}
+void DoHelpOscillo(short **items, short *lsize)
+{
+	*lsize = sizeof(AHelp) / sizeof(AHelp[0]);
+	*items = AHelp;
+}
 
-	/*****************************/
-
+/*****************************/
 
 typedef struct
 {
@@ -35,7 +33,7 @@ typedef struct
 	long		Size;
 	long		min;
 	long		max;
-}	OsciRec;
+} OsciRec;
 
 enum
 {
@@ -234,23 +232,13 @@ void DoGrowOscillo(void)
 	if (thePrefs.osciTile) temp.bottom = OsciVStart + 15 + 1 * (InterText + OsciH);
 	else temp.bottom = OsciVStart + 15 + OsciNo * (InterText + OsciH);
 	
-#if MACOS9VERSION
-	temp.left++;
-	temp.right++;
-	temp.top++;
-	temp.bottom++;
-#endif
-	
 	lSizeVH = 0;
 	if (theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(OscilloDlog), theEvent.where, &temp);
 	
-	if (lSizeVH != 0)
-	{
+	if (lSizeVH != 0) {
 		tempA = LoWord(lSizeVH);
 		tempB = HiWord(lSizeVH);
-	}
-	else
-	{
+	} else {
 		GetPortBounds(GetDialogPort(OscilloDlog), &caRect);
 		
 		tempA = caRect.right;

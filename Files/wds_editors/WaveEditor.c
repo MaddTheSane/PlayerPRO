@@ -7,23 +7,21 @@
 #include "PrivateList.h"
 //#include "WaveEditor.proto.h"
 
-	/******** HELP MODULE ********/
+/******** HELP MODULE ********/
 enum
 {
 	HView = 0
 };
-#define	AHELPSIZE	1
 
-static	short		AHelp[ AHELPSIZE] =
-{ HView};
+static short AHelp[] = {HView};
 
 void DoHelpWave(short **items, short *lsize)
 {
-	*lsize = AHELPSIZE;
+	*lsize = sizeof(AHelp) / sizeof(AHelp[0]);
 	*items = AHelp;
 }
 
-	/*****************************/
+/*****************************/
 
 //#define rate2khz	0x08000000UL
 
@@ -68,10 +66,14 @@ void UpdateWaveInfo();
 
 short GetMaxXWave()
 {
-	short	ret;
+	short ret;
 
-	ret = 1 + GetControlValue(xScroll) + (WaveRect.right - WaveRect.left) / XSize;
-	if (ret > curMusic->partition[ CurrentPat]->header.size) ret = curMusic->partition[ CurrentPat]->header.size;
+	if (XSize == 0) {
+		ret = 0;
+	} else
+		ret = 1 + GetControlValue(xScroll) + (WaveRect.right - WaveRect.left) / XSize;
+	if (ret > curMusic->partition[ CurrentPat]->header.size)
+		ret = curMusic->partition[ CurrentPat]->header.size;
 	
 	return ret;
 }
@@ -80,7 +82,10 @@ short GetMaxYWave()
 {
 	short	ret;
 
-	ret = 1 + GetControlValue(yScroll) + (WaveRect.bottom - WaveRect.top) / YSize;
+	if (YSize == 0) {
+		ret = 0;
+	} else
+		ret = 1 + GetControlValue(yScroll) + (WaveRect.bottom - WaveRect.top) / YSize;
 	if (ret > WaveDriverType.numChn) ret = WaveDriverType.numChn;
 	
 	return ret;
@@ -456,7 +461,12 @@ OSErr ComputeWave(short fromX, short toX, short chan)
 	RgnHandle			saveClipRgn;
 	Rect 				cRect;
 	
-	if (WaveCopyDriver->curMusic->musicUnderModification) return noErr;
+	if (!WaveCopyDriver) {
+		return noErr;
+	}
+	
+	if (WaveCopyDriver->curMusic->musicUnderModification)
+		return noErr;
 	
 	BackColor(whiteColor);
 		

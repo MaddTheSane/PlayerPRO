@@ -372,31 +372,28 @@ void GetFinderFilename(
 	_myHPB.ioParam.ioVRefNum  = vRefNum;
 	_myHPB.ioParam.ioBuffer   = (Ptr)&_infoBuffer;
 	_myHPB.ioParam.ioReqCount = sizeof(_infoBuffer);
-	if (((err=PBHGetVolParms(&_myHPB,false/*async*/))!=noErr) ||
-	((_infoBuffer.vMAttrib&(1L<<bHasDesktopMgr))==0) )
-		return(retVal );
+	if (((err = PBHGetVolParmsSync(&_myHPB)) != noErr) ||
+	((_infoBuffer.vMAttrib&(1L << bHasDesktopMgr)) == 0) )
+		return retVal;
 
-	err = PBDTGetPath(&deskRec );
-	if (!err )
-	{
+	err = PBDTGetPath(&deskRec);
+	if (!err) {
 		/*	We want to ignore any non-icon data, such as the 'paul'
-			item that is used for drag-and-drop. */
+		 *	item that is used for drag-and-drop. */
 		deskRec.ioFileCreator = fileCreator;
 		deskRec.ioIndex = 1;
-		do
-		{
+		do {
 			deskRec.ioTagInfo = 0;
 			err = PBDTGetIconInfoSync(&deskRec );
 			deskRec.ioIndex += 1;
-		}while ((err == noErr) && (deskRec.ioIconType <= 0) );
+		} while ((err == noErr) && (deskRec.ioIconType <= 0));
 	
-		if(err == noErr)
-		{
+		if(err == noErr) {
 			retVal = true;
 			*dtRefNum = deskRec.ioDTRefNum;
 		}
 	}
-	return(retVal );
+	return retVal;
 }
 
 

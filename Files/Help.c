@@ -689,19 +689,11 @@ void InitDRIVER(void)
 	TurnRadio(base + 10, prefDlog, false);
 	switch(thePrefs.outPutBits)
 	{
-		case 8:		TurnRadio(base + 9, prefDlog, true);	break;
+		case 8:
+			TurnRadio(base + 9, prefDlog, true);
+			break;
 		case 16:	TurnRadio(base + 10, prefDlog, true);	break;
 	}
-	
-	//	TurnRadio(base + 12, prefDlog, false);
-	//	TurnRadio(base + 13, prefDlog, false);
-	//	TurnRadio(base + 14, prefDlog, false);
-	/*	switch(thePrefs.outPutMode)
-	 {
-	 case MonoOutPut:			TurnRadio(base + 12, prefDlog, true);	break;
-	 case StereoOutPut:			TurnRadio(base + 13, prefDlog, true);	break;
-	 case DeluxeStereoOutPut:	TurnRadio(base + 14, prefDlog, true);	break;
-	 }*/
 	
 	TurnRadio(base + 6, prefDlog, false);
 	TurnRadio(base + 7, prefDlog, false);
@@ -767,19 +759,8 @@ void InitDRIVER(void)
 	pStrcat(aStr, "\p %");
 	SetDText(prefDlog, base + 15, aStr);
 	
-	/*	if (thePrefs.outPutMode == MonoOutPut)
-	 {
-	 TurnRadio(base + 30, prefDlog, false);
-	 ControlSwitch(base + 30, prefDlog, 255);
-	 
-	 TurnRadio(base + 32, prefDlog, false);
-	 ControlSwitch(base + 32, prefDlog, 255);
-	 }
-	 else*/
-	{
-		ControlSwitch(base + 32, prefDlog, 0);
-		ControlSwitch(base + 30, prefDlog, 0);
-	}
+	ControlSwitch(base + 32, prefDlog, 0);
+	ControlSwitch(base + 30, prefDlog, 0);
 	
 	if (thePrefs.outPutMode != DeluxeStereoOutPut)
 	{
@@ -930,7 +911,7 @@ void InitCOLOR(short colorID)
 	SetPort(savePort);
 }
 
-void DoMUSICLIST(	short	itemHit)
+void DoMUSICLIST(short itemHit)
 {
 	short		itemType,i;
 	Handle		itemHandle;
@@ -1027,12 +1008,10 @@ void DrawChooseColorWindow(void)
 	hCTab = GetCTable(72);
 	
 	ForeColor(blackColor);
-	//	BackColor(whiteColor);
+	//BackColor(whiteColor);
 	
-	for (i = 0; i < 8; i++)
-	{
-		for (x = 0; x < 32; x++)
-		{
+	for (i = 0; i < 8; i++) {
+		for (x = 0; x < 32; x++) {
 			aRect.top = i*COLARG;
 			aRect.top += 3;
 			
@@ -1326,14 +1305,15 @@ void InitEDITOR(void)
 	}
 	////////////////////////////////////////////////////
 	
-	switch(thePrefs.KeyUpMode)
-	{
+	switch (thePrefs.KeyUpMode) {
 		case eNothing:
 			TurnRadio(base + 13, prefDlog, true);
 			break;
+			
 		case eNoteOFF:
 			TurnRadio(base + 7, prefDlog, true);
 			break;
+			
 		case eStop:
 			TurnRadio(base + 4, prefDlog, true);
 			break;
@@ -1365,17 +1345,19 @@ void InitEDITOR(void)
 	pStrcat(aStr, bStr);
 	SetDText(prefDlog, base + 10, aStr);
 	
-	switch(thePrefs.RecordAllTrack)
-	{
+	switch (thePrefs.RecordAllTrack) {
 		case 1:
 			TurnRadio(base + 25, prefDlog, true);
 			break;
+			
 		case 0:
 			TurnRadio(base + 22, prefDlog, true);
 			break;
+			
 		case 2:
 			TurnRadio(base + 14, prefDlog, true);
 			break;
+			
 		case 3:
 			TurnRadio(base + 28, prefDlog, true);
 			break;
@@ -2236,7 +2218,7 @@ void UpdatePrefWindow(DialogPtr	theDia)
 	DrawDialog(theDia);
 	oldFrameButton(theDia);
 	
-	switch(PrefsType) {
+	switch (PrefsType) {
 		case COLOR:
 			InitCOLOR(-1);
 			break;

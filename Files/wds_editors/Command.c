@@ -497,15 +497,14 @@ void DoNullCmdWindow(void)
 	GetPort(&savePort);
 	SetPortDialogPort(ToolsDlog);
 	
-	for (i = InstruTE; i<= VolumeTE; i++) TEIdle(TEH[ i]);
+	for (i = InstruTE; i<= VolumeTE; i++) TEIdle(TEH[i]);
 	
 	if (oldPat != MADDriver->Pat || UpdateNow == true)
 	{
 		oldPat = MADDriver->Pat;
 		UpdateNow = true;
 		
-		if (curTrack >= curMusic->header->numChn)
-		{
+		if (curTrack >= curMusic->header->numChn) {
 			curTrack = 1;
 		}
 
@@ -1093,11 +1092,13 @@ void CreateCmdDlog(void)
 
 	thePatternMenu = GetMenu(146);
 
+#if 0
 	ToolsDlog = GetNewDialog(153, NULL, GetDialogWindow(ToolsDlog));
 	SetWindEtat(GetDialogWindow(ToolsDlog));
 	MySizeWindow(ToolsDlog, WLarg, WHaut, false);
 	ShowWindow(GetDialogWindow(ToolsDlog));
 	SelectWindow2(GetDialogWindow(ToolsDlog));
+#endif
 	
 	SetPortDialogPort(ToolsDlog);
 	UpdateNow = true;

@@ -1013,22 +1013,12 @@ void InitQTWindow(void)
 	gProgressUPP = NewMovieProgressUPP(QTProgressUPP);
 }
 
-Boolean CreateQTWindow(FSSpec	*file)
+Boolean CreateQTWindow(FSSpec *file)
 {
-	Rect					itemRect, tempRect, dataBounds;
+	Rect					itemRect;
 	Handle					itemHandle;
-	short					itemType, itemHit, temp, i;
-	Point					cSize;
-	FontInfo				ThisFontInfo;
-	Str255					String;
-	GrafPtr					savePort;
-	MovieImportComponent	ci;
-	OSErr					iErr;
-	Boolean					canceled;
-	Track					usedTrack;
-	long					outFlags;
+	short					itemType;
 	FInfo					fndrInfo;
-	MovieProgressUPP		progressUPP;
 	GrafPtr					SavePort;
 	
 	FSpGetFInfo(file, &fndrInfo);

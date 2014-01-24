@@ -5,57 +5,56 @@
 #include "PrivateList.h"
 #include "Undo.h"
 
-	/******** HELP MODULE ********/
-	enum
-	{
-		HLoad	= 25,
-		HSave	= 17,
-		HReset	= 22,
-		HPan	= 26,
-		HPitch	= 12,
-		HSpeed	= 14,
-		HVol	= 10,
-		HTVol	= 16,
-		HSVol	= 8,
-		HPref	= 23
-	};
-#define	AHELPSIZE 10
+/******** HELP MODULE ********/
+enum
+{
+	HLoad	= 25,
+	HSave	= 17,
+	HReset	= 22,
+	HPan	= 26,
+	HPitch	= 12,
+	HSpeed	= 14,
+	HVol	= 10,
+	HTVol	= 16,
+	HSVol	= 8,
+	HPref	= 23
+};
 
-	static	short					AHelp[ AHELPSIZE] = { HLoad, HSave, HReset, HPan, HPitch, HSpeed, HVol, HTVol, HSVol, HPref};
+static short AHelp[] = {HLoad, HSave, HReset, HPan, HPitch, HSpeed, HVol, HTVol, HSVol, HPref};
 
-	void DoHelpAdap(short **items, short *lsize)
-	{
-		*lsize = AHELPSIZE;
-		*items = AHelp;
-	}
-	
-	/*****************************/
-	
-	extern	long					TickInterne;
-	extern	Boolean					DragManagerUse;
-	extern	RGBColor				theColor;
-	extern	WindowPtr				oldWindow;
-	extern	DialogPtr				EditorDlog;
-	
-			DialogPtr				AdapDlog;
-	
-	static	Rect					viewRect;
-	static	Rect					VolumeRect, LeftRightRect;
-	static	ControlHandle			MainFx[ 10];
-	static	ControlHandle			MainFXOnOff;
-	static	ControlHandle			FineBut, ScrollAdap, SaveBut, FlipBut, LoadBut, ResetPitchBut, ResetPanBut, ResetSpeedBut, volCntl[MAXTRACK], pannCntl[MAXTRACK];
-	static	ControlHandle			OnOff[MAXTRACK], Mono[MAXTRACK], hardvolCntl, softvolCntl, speedCntl, pitchCntl, panCntl;
-	static	ControlHandle			VSTFx[MAXTRACK][4];
-	static	ControlHandle			VSTOnOff[MAXTRACK];
-	static	ControlHandle			VSTDest[MAXTRACK];
-	static	Rect					pulseRect[MAXTRACK];
-	static	Boolean					canAcceptDrag;
-	static	short 					gThumbPrev, gCurrentTrack;
-	static	long					oldNullTicks, oldNullTicks2;
-	static	short 					oldTube[MAXTRACK];
-	static	PicHandle				pulsePic;
-	static	short					oldSpeed = 0, oldTempo = 0;
-	
+void DoHelpAdap(short **items, short *lsize)
+{
+	*lsize = sizeof(AHelp) / sizeof(AHelp[0]);
+	*items = AHelp;
+}
+
+/*****************************/
+
+extern	long					TickInterne;
+extern	Boolean					DragManagerUse;
+extern	RGBColor				theColor;
+extern	WindowPtr				oldWindow;
+extern	DialogPtr				EditorDlog;
+
+		DialogPtr				AdapDlog;
+
+static	Rect					viewRect;
+static	Rect					VolumeRect, LeftRightRect;
+static	ControlHandle			MainFx[ 10];
+static	ControlHandle			MainFXOnOff;
+static	ControlHandle			FineBut, ScrollAdap, SaveBut, FlipBut, LoadBut, ResetPitchBut, ResetPanBut, ResetSpeedBut, volCntl[MAXTRACK], pannCntl[MAXTRACK];
+static	ControlHandle			OnOff[MAXTRACK], Mono[MAXTRACK], hardvolCntl, softvolCntl, speedCntl, pitchCntl, panCntl;
+static	ControlHandle			VSTFx[MAXTRACK][4];
+static	ControlHandle			VSTOnOff[MAXTRACK];
+static	ControlHandle			VSTDest[MAXTRACK];
+static	Rect					pulseRect[MAXTRACK];
+static	Boolean					canAcceptDrag;
+static	short 					gThumbPrev, gCurrentTrack;
+static	long					oldNullTicks, oldNullTicks2;
+static	short 					oldTube[MAXTRACK];
+static	PicHandle				pulsePic;
+static	short					oldSpeed = 0, oldTempo = 0;
+
 #define DISVOL		20
 #define SPACE		94
 #define PICSIZE		59
@@ -66,7 +65,6 @@
 	DragReceiveHandlerUPP	MyReceiveAdapUPP;
 
 
-//void MyTETextBox2(Str255 aStr, Rect *Zone);
 void CheckVSTEditor(VSTEffect *ce);
 pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag);
 pascal OSErr MyReceiveAdap(WindowPtr theWindow, void* handlerRefCon, DragReference theDrag);
@@ -87,14 +85,9 @@ void DrawValueIndicator(double val, Boolean percent, Str255 text)
 	
 	ClipRect(&caRect);
 	
-	if (val == -1)
-	{
-	//	TextFont(0);	TextSize(0);
+	if (val == -1) {
 		SetDText(AdapDlog, 40, "\p");
-	//	TextFont(kFontIDGeneva);	TextSize(9);
-	}
-	else
-	{
+	} else {
 		Str255	str;
 		
 		if (text) 
@@ -102,20 +95,19 @@ void DrawValueIndicator(double val, Boolean percent, Str255 text)
 		else {
 			long intval = val;
 			
-			if ((double) intval == val) {
-				sprintf((Ptr) str, "%.0f", val);
-				MyC2PStr((Ptr) str);
+			if ((double)intval == val) {
+				sprintf((Ptr)str, "%.0f", val);
+				MyC2PStr((Ptr)str);
 			} else {
 				sprintf((Ptr)str, "%.2f", val);
 				MyC2PStr((Ptr)str);
 			}
 		}
 		
-		if (percent) pStrcat(str, "\p %");
+		if (percent)
+			pStrcat(str, "\p %");
 		
-	//	TextFont(0);	TextSize(0);
 		SetDText(AdapDlog, 40, str);
-	//	TextFont(kFontIDGeneva);	TextSize(9);
 	}
 	
 	SetClip(saveClip);
@@ -124,15 +116,15 @@ void DrawValueIndicator(double val, Boolean percent, Str255 text)
 
 void FineSpeedPitchSettings()
 {
-	short					itemHit;
-	Str255					theString;
-	GrafPtr					savedPort;
-	DialogPtr				aDia;
-	long					previousPitch = MADDriver->FreqExt, previousSpeed = MADDriver->VExt, temp;
-	double					val;
-
+	short		itemHit;
+	Str255		theString;
+	GrafPtr		savedPort;
+	DialogPtr	aDia;
+	long		previousPitch = MADDriver->FreqExt, previousSpeed = MADDriver->VExt, temp;
+	double		val;
+	
 	GetPort(&savedPort);
-
+	
 	aDia = GetNewDialog(182, NULL, (WindowPtr) -1L);
 	SetPortDialogPort(aDia);
 	
@@ -156,25 +148,23 @@ void FineSpeedPitchSettings()
 	
 	SelectDialogItemText(aDia, 5, 0, 32767);
 	
-	BACK:
+BACK:
 	
-	do
-	{
-		//	ModalDialog(MyDlgFilterDesc, &itemHit);
+	do {
+		//ModalDialog(MyDlgFilterDesc, &itemHit);
 		
 		MyModalDialog(aDia, &itemHit);
 		
-		if (itemHit == -5 || itemHit == 0)
-		{
+		if (itemHit == -5 || itemHit == 0) {
 			GetDText(aDia, 5, theString);
 			MyP2CStr(theString);
 			val = atof((Ptr) theString);
-			temp = (8000. * 100.) / val;
-			if (temp >= 160 && temp <= 16000)
-			{
+			temp = (8000.0 * 100.0) / val;
+			if (temp >= 160 && temp <= 16000) {
 				SetControlVisibility(pitchCntl, true, false);
 				
-				if (temp != MADDriver->FreqExt) SetControlValue(pitchCntl, 16000- temp);
+				if (temp != MADDriver->FreqExt)
+					SetControlValue(pitchCntl, 16000 - temp);
 				MADDriver->FreqExt = temp;
 				
 				SetControlVisibility(pitchCntl, false, false);
@@ -184,30 +174,29 @@ void FineSpeedPitchSettings()
 			MyP2CStr(theString);
 			val = atof((Ptr) theString);
 			temp = (val * 8000.) / 100.;
-			if (temp >= 160 && temp <= 16000)
-			{
+			if (temp >= 160 && temp <= 16000) {
 				SetControlVisibility(speedCntl, true, false);
 				
-				if (temp != MADDriver->VExt) SetControlValue(speedCntl, temp);
+				if (temp != MADDriver->VExt)
+					SetControlValue(speedCntl, temp);
 				MADDriver->VExt = temp;
 				
 				SetControlVisibility(speedCntl, false, false);
 			}
 		}
 		
-	}while (itemHit != 1 && itemHit != 2);
+	} while (itemHit != 1 && itemHit != 2);
 	
 	UpdateALLWindow();
 	
-	if (itemHit == 1)
-	{
+	if (itemHit == 1) {
 		GetDText(aDia, 5, theString);
 		MyP2CStr(theString);
 		val = atof((Ptr) theString);
 		temp = (8000. * 100.) / val;
-		if (temp >= 160 && temp <= 16000) MADDriver->FreqExt = temp;
-		else
-		{
+		if
+			(temp >= 160 && temp <= 16000) MADDriver->FreqExt = temp;
+		else {
 			SelectDialogItemText(aDia, 5, 0, 32767);
 			SysBeep(1);
 			goto BACK;
@@ -217,9 +206,9 @@ void FineSpeedPitchSettings()
 		MyP2CStr(theString);
 		val = atof((Ptr) theString);
 		temp = (val * 8000.) / 100.;
-		if (temp >= 160 && temp <= 16000) MADDriver->VExt = temp;
-		else
-		{
+		if (temp >= 160 && temp <= 16000)
+			MADDriver->VExt = temp;
+		else {
 			SelectDialogItemText(aDia, 6, 0, 32767);
 			SysBeep(1);
 			goto BACK;
@@ -259,75 +248,64 @@ void DoNullAdap(void)
 	Str255		str2, str1;
 	RgnHandle	visibleRegion;
 	Str255		TextVal;
-
-	if (!AdapDlog) return;
-
+	
+	if (!AdapDlog)
+		return;
+	
 	GetPort(&SavePort);
 	
 	SetPortDialogPort(AdapDlog);
 	
-	if (TickCount() <= oldNullTicks) return;
+	if (TickCount() <= oldNullTicks)
+		return;
 	oldNullTicks = TickCount();
 	
-	if (MADGetHardwareVolume() != thePrefs.volumeLevel)
-	{
+	if (MADGetHardwareVolume() != thePrefs.volumeLevel) {
 		thePrefs.volumeLevel = MADGetHardwareVolume();
 		SetControlVisibility(hardvolCntl, true, false);
 		SetControlValue(hardvolCntl, thePrefs.volumeLevel);
 		SetControlVisibility(hardvolCntl, false, false);
 	}
 	
-	if (oldTempo != MADDriver->finespeed || oldSpeed != MADDriver->speed)
-	{
+	if (oldTempo != MADDriver->finespeed || oldSpeed != MADDriver->speed) {
 		oldTempo = MADDriver->finespeed;
 		oldSpeed = MADDriver->speed;
 		
-		NTStr(3, MADDriver->finespeed, (Ptr) str2);
+		NTStr(3, MADDriver->finespeed, (Ptr)str2);
 		MyC2PStr((Ptr) str2);
 		
 		pStrcat(str2, "\p / ");
 		
-		NTStr(3, MADDriver->speed, (Ptr) str1);
+		NTStr(3, MADDriver->speed, (Ptr)str1);
 		MyC2PStr((Ptr) str1);
 		
 		pStrcat(str2, str1);
 		
-	//	TextFace(bold);
-		
 		SetDText(AdapDlog, 9, str2);
-		
-	//	TextFace(0);
 	}
 	
 	// Pulse Rects
 	
 	saveClip = NewRgn();
- 	GetClip(saveClip);
- 	ClipRect(&viewRect);
+	GetClip(saveClip);
+	ClipRect(&viewRect);
 	
-	for (i = 0; i < curMusic->header->numChn; i++)
-	{
-		if (MADDriver->Tube[i] >= -MINPULSE*2-1)
-		{
+	for (i = 0; i < curMusic->header->numChn; i++) {
+		if (MADDriver->Tube[i] >= -MINPULSE*2-1) {
 			itemRect = pulseRect[i];
 			
 			InsetRect(&itemRect, 2, 2);
 			
-			if (MADDriver->Tube[ i] == oldTube[ i])
-			{
-				if (MADDriver->chan[ i].maxPtr > MADDriver->chan[ i].curPtr && MADDriver->chan[ i].curPtr != NULL && MADDriver->Tube[i] <= 0)
-			 	{
-			 		
-			 	}
-				else
-				{
+			if (MADDriver->Tube[ i] == oldTube[ i]) {
+				if (MADDriver->chan[ i].maxPtr > MADDriver->chan[ i].curPtr && MADDriver->chan[ i].curPtr != NULL && MADDriver->Tube[i] <= 0) {
+					
+				} else {
 					short val = itemRect.left + MINPULSE + MADDriver->Tube[i]/2;
 					MADDriver->Tube[i]--;
-				
+					
 					oldTube[ i] = MADDriver->Tube[i];
 					
-				 	if (oldTube[i] >= -MINPULSE*2-1)
-					{
+					if (oldTube[i] >= - MINPULSE * 2 - 1) {
 						MoveTo(val, itemRect.top);
 						LineTo(val, itemRect.bottom);
 					}
@@ -362,13 +340,14 @@ void DoNullAdap(void)
 	}
 	SetClip(saveClip);
 	DisposeRgn(saveClip);
-		
+	
 	if (Button()) return;
 	
-	if (TickCount() <= oldNullTicks2) return;
+	if (TickCount() <= oldNullTicks2)
+		return;
 	oldNullTicks2 = TickCount() + 10;
 	
-//	if (oldWindow == AdapDlog)
+	//if (oldWindow == AdapDlog)
 	{
 		double val;
 		
@@ -408,49 +387,78 @@ void DoNullAdap(void)
 						if (curMusic->header->chanBus[ i].copyId == i)
 						{
 							found = true;
-							if (MADDriver->chanVST[ i][ x]) pStrcpy(TextVal, MADDriver->chanVST[ i][ x]->name);
-							else pStrcpy(TextVal, "\pNo Effect");
+							if (MADDriver->chanVST[ i][ x])
+								pStrcpy(TextVal, MADDriver->chanVST[ i][ x]->name);
+							else
+								pStrcpy(TextVal, "\pNo Effect");
 						}
 					}
 				}
 				
-				if (found) break;
+				if (found)
+					break;
 			}
 			
 			for (x = 0; x < 10; x++)
 			{
 				GetControlBounds(MainFx[ x], &contrlRect);
-			
-				if (PtInRect(pt, &contrlRect)) { found = true;	 if (MADDriver->masterVST[ x]) pStrcpy(TextVal, MADDriver->masterVST[ x]->name); else pStrcpy(TextVal, "\pNo Effect");}
+				
+				if (PtInRect(pt, &contrlRect)) {
+					found = true;
+					if (MADDriver->masterVST[ x])
+						pStrcpy(TextVal, MADDriver->masterVST[ x]->name);
+					else
+					pStrcpy(TextVal, "\pNo Effect");}
 			}
 			GetControlBounds(hardvolCntl, &contrlRect);
 			
-			if (PtInRect(pt, &contrlRect)) { found = true;	val = (100 * thePrefs.volumeLevel)/256L; percent = true;}
+			if (PtInRect(pt, &contrlRect)) {
+				found = true;
+				val = (100 * thePrefs.volumeLevel)/256L;
+				percent = true;
+			}
 			
 			GetControlBounds(softvolCntl, &contrlRect);
 			
-			if (PtInRect(pt, &contrlRect)) { found = true;	val = (100 * MADDriver->VolGlobal)/64L; percent = true;}
+			if (PtInRect(pt, &contrlRect)) {
+				found = true;
+				val = (100 * MADDriver->VolGlobal)/64L;
+				percent = true;
+			}
 			
 			GetControlBounds(speedCntl, &contrlRect);
 			
-			if (PtInRect(pt, &contrlRect)) { found = true;	val = 100. * (MADDriver->VExt / 8000.); percent = true;}
+			if (PtInRect(pt, &contrlRect)) {
+				found = true;
+				val = 100. * (MADDriver->VExt / 8000.);
+				percent = true;
+			}
 			
 			GetControlBounds(pitchCntl, &contrlRect);
 			
-			if (PtInRect(pt, &contrlRect)) { found = true;	 val = 100.*(8000./ (MADDriver->FreqExt)); percent = true;}
+			if (PtInRect(pt, &contrlRect)) {
+				found = true;
+				val = 100.*(8000./ (MADDriver->FreqExt));
+				percent = true;
+			}
 			
 			GetControlBounds(panCntl, &contrlRect);
 			
-			if (PtInRect(pt, &contrlRect)) { found = true;	val = 100. *((MADDriver->globPan - 64)/64.); percent = true;}
-			
-			if (found)
-			{
-				if (TextVal[ 0]) DrawValueIndicator(val, false, TextVal);
-				else DrawValueIndicator(val, percent, NULL);
+			if (PtInRect(pt, &contrlRect)) {
+				found = true;
+				val = 100. *((MADDriver->globPan - 64)/64.);
+				percent = true;
 			}
-			else DrawValueIndicator(-1, false, NULL);
-		}
-		else DrawValueIndicator(-1, false, NULL);
+			
+			if (found) {
+				if (TextVal[ 0])
+					DrawValueIndicator(val, false, TextVal);
+				else
+					DrawValueIndicator(val, percent, NULL);
+			} else
+				DrawValueIndicator(-1, false, NULL);
+		} else
+			DrawValueIndicator(-1, false, NULL);
 		
 		DisposeRgn(visibleRegion);
 	}
@@ -471,11 +479,10 @@ void SetUpScroll(void)
 	
 	SetControlMinimum(ScrollAdap, 0);
 	
-	if (MADDriver->DriverSettings.outPutMode == DeluxeStereoOutPut)
-	{
+	if (MADDriver->DriverSettings.outPutMode == DeluxeStereoOutPut) {
 		SetControlMaximum(ScrollAdap, gCurrentTrack - (viewRect.bottom - viewRect.top) / DISVOL);
-	}
-	else SetControlMaximum(ScrollAdap, gCurrentTrack - (viewRect.bottom - viewRect.top) / DISVOL);
+	} else
+		SetControlMaximum(ScrollAdap, gCurrentTrack - (viewRect.bottom - viewRect.top) / DISVOL);
 	
 	if (GetControlMaximum(ScrollAdap) < 0) SetControlMaximum(ScrollAdap, 0);
 	
@@ -484,13 +491,13 @@ void SetUpScroll(void)
 
 void DoGrowAdap(DialogPtr theDialog)
 {
-	long		lSizeVH;
-	GrafPtr		SavePort;
-	Rect		temp;
-	short		tempB, tempA, avant;
-	Point		theCell = { 0, 0}, aPt = { 0, 0};
-	Rect		caRect;
-	BitMap		screenBits;
+	long	lSizeVH;
+	GrafPtr	SavePort;
+	Rect	temp;
+	short	tempB, tempA, avant;
+	Point	aPt = { 0, 0};
+	Rect	caRect;
+	BitMap	screenBits;
 	
 
 	GetPort(&SavePort);
@@ -513,21 +520,13 @@ void DoGrowAdap(DialogPtr theDialog)
 	temp.left = caRect.right;
 	temp.right = caRect.right;
 	
-#if MACOS9VERSION
-	temp.left++;
-	temp.right++;
-#endif
-	
 	lSizeVH = 0;
 	if (theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(theDialog), theEvent.where, &temp);
 	
-	if (lSizeVH != 0)
-	{
+	if (lSizeVH != 0) {
 		tempA = LoWord(lSizeVH);
 		tempB = HiWord(lSizeVH);
-	}
-	else
-	{
+	} else {
 		GetPortBounds(GetDialogPort(theDialog), &caRect);
 		
 		tempA = caRect.right;
@@ -556,14 +555,11 @@ void FillOnOffControl(short id, short curval)
 {
 	Rect	contrlRect;
 	
-	if (curval)
-	{
+	if (curval) {
 		HiliteControl(volCntl[ id], 0);
 		HiliteControl(pannCntl[ id], 0);
 		SetControlValue(OnOff[ id], 1);
-	}
-	else
-	{
+	} else {
 		HiliteControl(volCntl[ id], 255);
 		HiliteControl(pannCntl[ id], 255);
 		SetControlValue(OnOff[ id], 0);
@@ -582,12 +578,9 @@ void FillVSTOnOffControl(short id, short curval)
 {
 	Rect	contrlRect;
 	
-	if (curval)
-	{
+	if (curval) {
 		SetControlValue(VSTOnOff[ id], 1);
-	}
-	else
-	{
+	} else {
 		SetControlValue(VSTOnOff[ id], 0);
 	}
 	
@@ -606,8 +599,7 @@ void FillFxControl(short id)
 	short	x;
 	Str32	str1, str2;
 	
-	for (x = 0; x < 4; x++)
-	{
+	for (x = 0; x < 4; x++) {
 		GetControlBounds(VSTFx[ id][ x], &contrlRect);
 		
 		MyMoveControl(VSTFx[ id][ x], contrlRect.left, VolumeRect.top - (GetControlValue(ScrollAdap) - id)*DISVOL);
@@ -615,16 +607,15 @@ void FillFxControl(short id)
 		
 		GetControlBounds(VSTFx[ id][ x], &contrlRect);
 		
-		if (curMusic->header->chanBus[ id].copyId == id || curMusic->header->chanBus[ id].Active == false)
-		{
-			if (curMusic->header->chanBus[ id].Active == false)
-			{
+		if (curMusic->header->chanBus[ id].copyId == id ||
+			curMusic->header->chanBus[ id].Active == false) {
+			if (curMusic->header->chanBus[ id].Active == false) {
 				HiliteControl(VSTFx[ id][ x], 255);
-			}
-			else
-			{
-				if (MADDriver->chanVST[ id][ x] != NULL) HiliteControl(VSTFx[ id][ x], kControlButtonPart);
-				else HiliteControl(VSTFx[ id][ x], 0);
+			} else {
+				if (MADDriver->chanVST[ id][ x] != NULL)
+					HiliteControl(VSTFx[ id][ x], kControlButtonPart);
+				else
+					HiliteControl(VSTFx[ id][ x], 0);
 			}
 			Draw1Control(VSTFx[ id][ x]);
 		}
@@ -697,21 +688,18 @@ void FillMonoControl(short id)
 
 void FillBarControl(short id, short curval, short maxval)
 {
-	Rect		cRect, tRect, contrlRect;
-	short		tempH;
-	Str255		str;
-	RGBColor	color;
+	Rect		contrlRect;
 	
 	if (id == -1) MyDebugStr(__LINE__, __FILE__, "");
 	
-	SetControlValue(volCntl[ id], (curval * 100) / maxval);
+	SetControlValue(volCntl[id], (curval * 100) / maxval);
 	
-	GetControlBounds(volCntl[ id], &contrlRect);
+	GetControlBounds(volCntl[id], &contrlRect);
 	
-	MyMoveControl(volCntl[ id], contrlRect.left, VolumeRect.top - (GetControlValue(ScrollAdap) - id)*DISVOL);
-	SetControlVisibility(volCntl[ id], true, false);
-	Draw1Control(volCntl[ id]);
-	SetControlVisibility(volCntl[ id], false, false);
+	MyMoveControl(volCntl[id], contrlRect.left, VolumeRect.top - (GetControlValue(ScrollAdap) - id)*DISVOL);
+	SetControlVisibility(volCntl[id], true, false);
+	Draw1Control(volCntl[id]);
+	SetControlVisibility(volCntl[id], false, false);
 }
 
 void FillBarStereo(short id, short curval, short maxval)
@@ -751,8 +739,7 @@ void FillPulseRect(short id)
 	PaintRect(&itemRect);
 	ForeColor(blackColor);
 	
-	if (MADDriver->Tube[ id] != 64)
-	{
+	if (MADDriver->Tube[id] != 64) {
 		itemRect.left = itemRect.right;
 		itemRect.right = pulseRect[ id].right-2;
 		PaintRect(&itemRect);
@@ -771,8 +758,7 @@ void UpdateAdapWindow(DialogPtr	GetSelection)
 {
 	Rect   		itemRect;   			/* Temporary rectangle */
  	GrafPtr		SavePort;
- 	short		itemType,i, max;
- 	Handle		itemHandle;
+ 	short		i, max;
  	Str255		str1, str2;
  	RgnHandle	saveClip;
  	Rect		contrlRect, caRect;
@@ -1029,124 +1015,113 @@ void CreateControlAdap()
 	long	cntlID, cntlID2;
 	Rect	itemRect, cRect;
 	Handle	itemHandle;
-
-	if (AppearanceManager)
-	{
-		cntlID = 57;
-		cntlID2 = 57;
-	}
-	else
-	{
-		cntlID = 16;
-		cntlID2 = 16;
-	}
-
+	
+	cntlID = 57;
+	cntlID2 = 57;
+	
 	// Purge OLD controls
 	
-	for (i = 0; i < MAXTRACK; i++)
-	{
-		if (volCntl[ i]) { DisposeControl(volCntl[ i]);	volCntl[ i] = NULL;}
-		if (Mono[ i]) { DisposeControl(Mono[ i]);	Mono[ i] = NULL;}
-		if (pannCntl[ i]) { DisposeControl(pannCntl[ i]);	pannCntl[ i] = NULL;}
+	for (i = 0; i < MAXTRACK; i++) {
+		if (volCntl[i]) { DisposeControl(volCntl[i]);	volCntl[i] = NULL;}
+		if (Mono[i]) { DisposeControl(Mono[i]);	Mono[i] = NULL;}
+		if (pannCntl[i]) { DisposeControl(pannCntl[i]);	pannCntl[i] = NULL;}
 		
-		if (VSTOnOff[ i]) { DisposeControl(VSTOnOff[ i]);	VSTOnOff[ i] = NULL;}
-		if (VSTDest[ i]) { DisposeControl(VSTDest[ i]);	VSTDest[ i] = NULL;}
-		if (OnOff[ i]) { DisposeControl(OnOff[ i]);	OnOff[ i] = NULL;}
+		if (VSTOnOff[i]) { DisposeControl(VSTOnOff[i]);	VSTOnOff[i] = NULL;}
+		if (VSTDest[i]) { DisposeControl(VSTDest[i]);	VSTDest[i] = NULL;}
+		if (OnOff[i]) { DisposeControl(OnOff[i]);	OnOff[i] = NULL;}
 		
-		for (x = 0; x < 4; x++)
-		{
-			if (VSTFx[ i][ x]) { DisposeControl(VSTFx[ i][ x]);	VSTFx[ i][ x] = NULL;}
+		for (x = 0; x < 4; x++) {
+			if (VSTFx[i][x]) { DisposeControl(VSTFx[i][ x]);	VSTFx[i][x] = NULL;}
 		}
 	}
 	
 	GetDialogItem(AdapDlog, 2, &itemType, &itemHandle, &itemRect);
-	for (i = 0; i < gCurrentTrack; i++)
-	{
-		//#if MACOS9VERSION
-		volCntl[ i] = NewControl(	GetDialogWindow(AdapDlog),
-									&itemRect,
-									"\pV",
-									false,
-									0,		//icl8 id
-									0,
-									100,
-									cntlID,		// 16
-									i);
+	
+//#if MACOS9VERSION
+	for (i = 0; i < gCurrentTrack; i++) {
+		volCntl[i] = NewControl(GetDialogWindow(AdapDlog),
+								&itemRect,
+								"\pV",
+								false,
+								0,		//icl8 id
+								0,
+								100,
+								cntlID,		// 16
+								i);
 		
 		cRect = itemRect;
 		
 		OffsetRect(&cRect, 4 + itemRect.right - itemRect.left, 0);
 		cRect.right = cRect.left + 13;
 		cRect.bottom = cRect.top + 13;
-		Mono[ i] = NewControl(	GetDialogWindow(AdapDlog),
-									&cRect,
-									"\p",
-									false,
-									0,
-									kControlContentPictRes,
-									152,
-									kControlBevelButtonNormalBevelProc,
-									i);
+		Mono[i] = NewControl(GetDialogWindow(AdapDlog),
+							 &cRect,
+							 "\p",
+							 false,
+							 0,
+							 kControlContentPictRes,
+							 152,
+							 kControlBevelButtonNormalBevelProc,
+							 i);
 		
 		cRect = itemRect;
 		
 		OffsetRect(&cRect, 20 + itemRect.right - itemRect.left, 0);
-					
-		pannCntl[ i] = NewControl(	GetDialogWindow(AdapDlog),
-									&cRect,
-									"\pP",
-									false,
-									0,		//icl8 id
-									0,
-									100,
-									cntlID2,		//16
-									i);
+		
+		pannCntl[i] = NewControl(GetDialogWindow(AdapDlog),
+								 &cRect,
+								 "\pP",
+								 false,
+								 0,		//icl8 id
+								 0,
+								 100,
+								 cntlID2,		//16
+								 i);
 		
 		OffsetRect(&cRect, 3 + itemRect.right - itemRect.left, 0);
 		
 		cRect.right = cRect.left + 18;
 		cRect.bottom = cRect.top + 14;
 		
-		VSTOnOff[ i]	= 	NewControl(	GetDialogWindow(AdapDlog),
-											&cRect,
-											"\pX",
-											false,
-											1,
-											0,
-											100,
-											checkBoxProc,
-											i);
-
+		VSTOnOff[i] = NewControl(GetDialogWindow(AdapDlog),
+								 &cRect,
+								 "\pX",
+								 false,
+								 1,
+								 0,
+								 100,
+								 checkBoxProc,
+								 i);
+		
 		OffsetRect(&cRect, 3 + 15, 0);
 		
-		for (x = 0; x < 4; x++)
-		{
+		for (x = 0; x < 4; x++) {
 			
 			cRect.right = cRect.left + 13;
 			cRect.bottom = cRect.top + 13;
-		
-			VSTFx[ i][ x] = 	NewControl(	GetDialogWindow(AdapDlog),
-												&cRect,
-												"\p",
-												false,
-												0,
-												kControlContentPictRes,
-												159,
-												kControlBevelButtonNormalBevelProc,
-												i);
-												
+			
+			VSTFx[i][x] = NewControl(GetDialogWindow(AdapDlog),
+									 &cRect,
+									 "\p",
+									 false,
+									 0,
+									 kControlContentPictRes,
+									 159,
+									 kControlBevelButtonNormalBevelProc,
+									 i);
+			
 			OffsetRect(&cRect, 3 + 13, 0);
 		}
 		
-		VSTDest[ i]	= 	NewControl(	GetDialogWindow(AdapDlog),
-										&cRect,
-										"\p",
-										false,
-										0,
-										kControlContentPictRes,
-										161,
-										kControlBevelButtonNormalBevelProc,
-										i);
+		VSTDest[i] = NewControl(GetDialogWindow(AdapDlog),
+								&cRect,
+								"\p",
+								false,
+								0,
+								kControlContentPictRes,
+								161,
+								kControlBevelButtonNormalBevelProc,
+								i);
 		
 		OffsetRect(&cRect, 3 + 13, 0);
 		
@@ -1159,8 +1134,8 @@ void CreateControlAdap()
 		itemRect.top 	+= DISVOL;
 		itemRect.bottom += DISVOL;
 		
-		//#endif
 	}
+//#endif
 	
 	GetDialogItem(AdapDlog, 2, &itemType, &itemHandle, &itemRect);
 	
@@ -1168,48 +1143,42 @@ void CreateControlAdap()
 	itemRect.right = itemRect.left + 18;
 	itemRect.bottom = itemRect.top + 14;
 	
-	for (i = 0; i < gCurrentTrack; i++)
-	{
-		//#if MACOS9VERSION
-		OnOff[ i] = NewControl(	GetDialogWindow(AdapDlog),
-									&itemRect,
-									"\pO",
-									false,
-									1,		//icl8 id
-									0,
-									100,
-									checkBoxProc,
-									i);
+//#if MACOS9VERSION
+	for (i = 0; i < gCurrentTrack; i++) {
+		OnOff[i] = NewControl(GetDialogWindow(AdapDlog),
+							  &itemRect,
+							  "\pO",
+							  false,
+							  1,		//icl8 id
+							  0,
+							  100,
+							  checkBoxProc,
+							  i);
 		
 		itemRect.top 	+= DISVOL;
 		itemRect.bottom += DISVOL;
 		
-		//#endif
 	}
+//#endif
 }
 
 void InitAdapWindow(void)
 {
-	Rect						itemRect, cRect, caRect;
-	Handle						itemHandle;
-	short						itemType, i, x, cntlID, cntlID2;
-	Str255						StrTemp, str2;
-	ControlHandle				ctl;
-	ControlFontStyleRec			inStyle;
+	Rect	itemRect, cRect;
+	Handle	itemHandle;
+	short	itemType, i, x, cntlID, cntlID2;
 	
-	for (i = 0; i < MAXTRACK; i++)
-	{
-		volCntl[ i] = 0;
-		Mono[ i] = 0;
-		pannCntl[ i] = 0;
+	for (i = 0; i < MAXTRACK; i++) {
+		volCntl[i] = 0;
+		Mono[i] = 0;
+		pannCntl[i] = 0;
 		
-		VSTOnOff[ i] = 0;
-		VSTDest[ i] = 0;
-		OnOff[ i] = 0;
+		VSTOnOff[i] = 0;
+		VSTDest[i] = 0;
+		OnOff[i] = 0;
 		
-		for (x = 0; x < 4; x++)
-		{
-			VSTFx[ i][ x] = 0;
+		for (x = 0; x < 4; x++) {
+			VSTFx[i][x] = 0;
 		}
 	}
 	
@@ -1217,192 +1186,169 @@ void InitAdapWindow(void)
 	
 	SetWindEtat(GetDialogWindow(AdapDlog));
 	
-	
 	SetPortDialogPort(AdapDlog);
-		
+	
 	oldNullTicks = oldNullTicks2 = 0;
 	
-	if (AppearanceManager)
-	{
-		cntlID = 57;
-		cntlID2 = 57;
-	}
-	else
-	{
-		cntlID = 16;
-		cntlID2 = 16;
-	}
+	cntlID = 57;
+	cntlID2 = 57;
 	
 	pulsePic = GetPicture(154);
 	
 	SetRect(&itemRect, 0, 0, 30, 16);
-	ScrollAdap = NewControl(		GetDialogWindow(AdapDlog),
-									&itemRect,
-									"\p.",
-									true,
-									0,
-									0,
-									0,
-									gScrollBarID,
-									xScrollNum);
-
-		GetDialogItem(AdapDlog, 10, &itemType, &itemHandle, &itemRect);
-		hardvolCntl = NewControl(GetDialogWindow(AdapDlog), &itemRect, "\p", false, thePrefs.volumeLevel, 0, 430, cntlID, 0);
-		
-		GetDialogItem(AdapDlog, 8, &itemType, &itemHandle, &itemRect);
-		softvolCntl = NewControl(GetDialogWindow(AdapDlog), &itemRect, "\p", false, MADDriver->VolGlobal, 0, 128, cntlID, 0);
-		
-		GetDialogItem(AdapDlog, 12, &itemType, &itemHandle, &itemRect);
-		pitchCntl = NewControl(GetDialogWindow(AdapDlog), &itemRect, "\p", false, 16000 - MADDriver->FreqExt, 0, 16000, cntlID, 0);
-		
-		GetDialogItem(AdapDlog, 14, &itemType, &itemHandle, &itemRect);
-		speedCntl = NewControl(GetDialogWindow(AdapDlog), &itemRect, "\p", false, MADDriver->VExt, 0, 8000 * 2, cntlID, 0);
-		
-		GetDialogItem(AdapDlog, 43, &itemType, &itemHandle, &itemRect);
-		panCntl = NewControl(GetDialogWindow(AdapDlog), &itemRect, "\p", true, MADDriver->globPan, 0, 128, cntlID2, 0);
-		
-		GetDialogItem(AdapDlog, 32, &itemType, &itemHandle, &cRect);
-		cRect.right = cRect.left + 18;
-		cRect.bottom = cRect.top + 13;
-		MainFXOnOff = NewControl(	GetDialogWindow(AdapDlog), &cRect, "\p", true, 1, 0, 100, checkBoxProc, 0);
-		OffsetRect(&cRect, 3 + 18, 1);
-		
-		for (x = 0; x < 10; x++)
-		{
-			cRect.right = cRect.left + 13;
-			cRect.bottom = cRect.top + 13;
-		
-			MainFx[ x] = 	NewControl(	GetDialogWindow(AdapDlog),
-											&cRect,
-											"\p",
-											true,
-											0,
-											kControlContentPictRes,
-											160,
-											kControlBevelButtonNormalBevelProc,
-											0);
-												
-			OffsetRect(&cRect, 3 + 13, 0);
-		}
-		
-/*	GetDialogItem(AdapDlog , 18, &itemType, &itemHandle, &itemRect);
-	MaxBut = NewControl(	AdapDlog,
+	ScrollAdap = NewControl(GetDialogWindow(AdapDlog),
 							&itemRect,
 							"\p.",
 							true,
-							203,		//icl8 id - Flip
-							-32768,
-							32767,
-							512,
-							0);*/
+							0,
+							0,
+							0,
+							gScrollBarID,
+							xScrollNum);
+	
+	GetDialogItem(AdapDlog, 10, &itemType, &itemHandle, &itemRect);
+	hardvolCntl = NewControl(GetDialogWindow(AdapDlog), &itemRect, "\p", false, thePrefs.volumeLevel, 0, 430, cntlID, 0);
+	
+	GetDialogItem(AdapDlog, 8, &itemType, &itemHandle, &itemRect);
+	softvolCntl = NewControl(GetDialogWindow(AdapDlog), &itemRect, "\p", false, MADDriver->VolGlobal, 0, 128, cntlID, 0);
+	
+	GetDialogItem(AdapDlog, 12, &itemType, &itemHandle, &itemRect);
+	pitchCntl = NewControl(GetDialogWindow(AdapDlog), &itemRect, "\p", false, 16000 - MADDriver->FreqExt, 0, 16000, cntlID, 0);
+	
+	GetDialogItem(AdapDlog, 14, &itemType, &itemHandle, &itemRect);
+	speedCntl = NewControl(GetDialogWindow(AdapDlog), &itemRect, "\p", false, MADDriver->VExt, 0, 8000 * 2, cntlID, 0);
+	
+	GetDialogItem(AdapDlog, 43, &itemType, &itemHandle, &itemRect);
+	panCntl = NewControl(GetDialogWindow(AdapDlog), &itemRect, "\p", true, MADDriver->globPan, 0, 128, cntlID2, 0);
+	
+	GetDialogItem(AdapDlog, 32, &itemType, &itemHandle, &cRect);
+	cRect.right = cRect.left + 18;
+	cRect.bottom = cRect.top + 13;
+	MainFXOnOff = NewControl(	GetDialogWindow(AdapDlog), &cRect, "\p", true, 1, 0, 100, checkBoxProc, 0);
+	OffsetRect(&cRect, 3 + 18, 1);
+	
+	for (x = 0; x < 10; x++)
+	{
+		cRect.right = cRect.left + 13;
+		cRect.bottom = cRect.top + 13;
+		
+		MainFx[ x] = 	NewControl(	GetDialogWindow(AdapDlog),
+								   &cRect,
+								   "\p",
+								   true,
+								   0,
+								   kControlContentPictRes,
+								   160,
+								   kControlBevelButtonNormalBevelProc,
+								   0);
+		
+		OffsetRect(&cRect, 3 + 13, 0);
+	}
+	
+	/*	GetDialogItem(AdapDlog , 18, &itemType, &itemHandle, &itemRect);
+	 MaxBut = NewControl(	AdapDlog,
+	 &itemRect,
+	 "\p.",
+	 true,
+	 203,		//icl8 id - Flip
+	 -32768,
+	 32767,
+	 512,
+	 0);*/
 	
 	GetDialogItem(AdapDlog , 26, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	FlipBut = NewControl(	GetDialogWindow(AdapDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							172,
-							kControlBevelButtonNormalBevelProc,
-							0);
-
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 172,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
+	
 	GetDialogItem(AdapDlog , 41, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	FineBut = NewControl(	GetDialogWindow(AdapDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							212,
-							kControlBevelButtonNormalBevelProc,
-							0);
-
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 212,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
+	
 	GetDialogItem(AdapDlog , 25, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	LoadBut = NewControl(	GetDialogWindow(AdapDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							152,
-							kControlBevelButtonNormalBevelProc,
-							0);
-
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 152,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
+	
 	GetDialogItem(AdapDlog , 17, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	SaveBut = NewControl(	GetDialogWindow(AdapDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							151,
-							kControlBevelButtonNormalBevelProc,
-							0);
-
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 151,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
+	
 	GetDialogItem(AdapDlog , 22, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	ResetSpeedBut = NewControl(	GetDialogWindow(AdapDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							168,
-							kControlBevelButtonNormalBevelProc,
-							0);
-
+							   &itemRect,
+							   "\p",
+							   true,
+							   0,
+							   kControlContentIconSuiteRes,
+							   168,
+							   kControlBevelButtonNormalBevelProc,
+							   0);
+	
 	GetDialogItem(AdapDlog , 23, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	ResetPitchBut = NewControl(	GetDialogWindow(AdapDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							168,
-							kControlBevelButtonNormalBevelProc,
-							0);
+							   &itemRect,
+							   "\p",
+							   true,
+							   0,
+							   kControlContentIconSuiteRes,
+							   168,
+							   kControlBevelButtonNormalBevelProc,
+							   0);
 	
 	GetDialogItem(AdapDlog , 44, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	ResetPanBut = NewControl(	GetDialogWindow(AdapDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							168,
-							kControlBevelButtonNormalBevelProc,
-							0);
+	ResetPanBut = NewControl(GetDialogWindow(AdapDlog),
+							 &itemRect,
+							 "\p",
+							 true,
+							 0,
+							 kControlContentIconSuiteRes,
+							 168,
+							 kControlBevelButtonNormalBevelProc,
+							 0);
 	
+	//CreateControlAdap();
 	
-//	CreateControlAdap();
-	
-	
-	
-	TextFont(kFontIDGeneva);	TextSize(9);
-	
+	TextFont(kFontIDGeneva);
+	TextSize(9);
 	ResetAdaptators();
-	
-/*	if (thePrefs.ADAPremember)
-	{
-		FSSpec spec;
-	
-		FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &spec.vRefNum, &spec.parID);
-		pStrcpy(spec.name, "\pPlayerPRO Prefs");
-		
-		LoadAdaptatorsRsrc(&spec);
-	}	*/
 	
 	SetUpScroll();
 	
-	if (DragManagerUse)
-	{
+	if (DragManagerUse) {
 		MyTrackingAdapUPP = NewDragTrackingHandlerUPP(MyTrackingAdap);
 		MyReceiveAdapUPP = NewDragReceiveHandlerUPP(MyReceiveAdap);
 		
@@ -1413,22 +1359,18 @@ void InitAdapWindow(void)
 
 void CreateAdapWindow(void)
 {
-	Rect caRect;
-	
 	ShowWindow(GetDialogWindow(AdapDlog));
 	SelectWindow2(GetDialogWindow(AdapDlog));
-	
 	SetItemMark(ViewsMenu, mAdap, checkMark);
 }
 
 void CloseAdapWindow(void)
 {
 	HideWindow(GetDialogWindow(AdapDlog));
-	
 	SetItemMark(ViewsMenu, mAdap, noMark);
 }
 
-extern EventRecord				theEvent;
+extern EventRecord theEvent;
 
 pascal void actionProcAdap(ControlHandle theControl, short ctlPart)
 {
@@ -1580,28 +1522,38 @@ void LoadAdaptatorsInt(FSSpec *file)
 	
 	InvalWindowRect(GetDialogWindow(AdapDlog), &caRect);
 	
-	SetControlVisibility(pitchCntl, true, false);		SetControlValue(pitchCntl, 16000 - MADDriver->FreqExt);SetControlVisibility(pitchCntl, false, false);
-	SetControlVisibility(speedCntl, true, false);		SetControlValue(speedCntl, MADDriver->VExt);			SetControlVisibility(speedCntl, false, false);
-	SetControlVisibility(hardvolCntl, true, false);	SetControlValue(hardvolCntl, thePrefs.volumeLevel);	SetControlVisibility(hardvolCntl, false, false);
-	SetControlVisibility(softvolCntl, true, false);	SetControlValue(softvolCntl, MADDriver->VolGlobal);	SetControlVisibility(softvolCntl, false, false);
+	SetControlVisibility(pitchCntl, true, false);
+	SetControlValue(pitchCntl, 16000 - MADDriver->FreqExt);
+	SetControlVisibility(pitchCntl, false, false);
+	SetControlVisibility(speedCntl, true, false);
+	SetControlValue(speedCntl, MADDriver->VExt);
+	SetControlVisibility(speedCntl, false, false);
+	SetControlVisibility(hardvolCntl, true, false);
+	SetControlValue(hardvolCntl, thePrefs.volumeLevel);
+	SetControlVisibility(hardvolCntl, false, false);
+	SetControlVisibility(softvolCntl, true, false);
+	SetControlValue(softvolCntl, MADDriver->VolGlobal);
+	SetControlVisibility(softvolCntl, false, false);
 	SetControlValue(panCntl, MADDriver->globPan);
 	
-	if (MADDriver->FreqExt != 8000) HiliteControl(ResetPitchBut, 0);
-	else HiliteControl(ResetPitchBut, 255);
+	if (MADDriver->FreqExt != 8000)
+		HiliteControl(ResetPitchBut, 0);
+	else
+		HiliteControl(ResetPitchBut, 255);
 	
-	if (MADDriver->VExt != 8000) HiliteControl(ResetSpeedBut, 0);
-	else HiliteControl(ResetSpeedBut, 255);
+	if (MADDriver->VExt != 8000)
+		HiliteControl(ResetSpeedBut, 0);
+	else
+		HiliteControl(ResetSpeedBut, 255);
 	
-	for (i = 0; i < 10; i++)
-	{
-		if (curMusic->header->globalFXActive == true)
-		{
- 			if (MADDriver->masterVST[ i] != NULL) HiliteControl(MainFx[ i], kControlButtonPart);
-			else HiliteControl(MainFx[ i], 0);
-		}
-		else
-		{
-			HiliteControl(MainFx[ i], 255);
+	for (i = 0; i < 10; i++) {
+		if (curMusic->header->globalFXActive == true) {
+ 			if (MADDriver->masterVST[i] != NULL)
+				HiliteControl(MainFx[i], kControlButtonPart);
+			else
+				HiliteControl(MainFx[i], 0);
+		} else {
+			HiliteControl(MainFx[i], 255);
 		}
 	}
 	
@@ -1817,12 +1769,10 @@ static short TuningId = 1;
 
 void SaveAdaptorsFile(FSSpec *file)
 {
-	short			itemType,i;
-	ByteCount		inOutBytes;
-	OSErr			iErr;
-	Ptr				tempPtr;
-	short			fRefNum;
-	Str255			theStr, str2;
+	short		i;
+	ByteCount	inOutBytes;
+	OSErr		iErr;
+	short		fRefNum;
 
 	FSpDelete(file);
 	iErr = FSpCreate(file, 'SNPL', TUNINGTYPE, smSystemScript);
@@ -1895,15 +1845,7 @@ void SaveAdaptorsFile(FSSpec *file)
 
 void SaveAdaptators(void)
 {
-	short				itemType,i;
-	long				inOutBytes;
-	Point				where = { -1, -1};
-	OSErr				iErr;
-	GrafPtr				myPort;
-	SFTypeList 			typeList;
 	FSSpec				spec;
-	Ptr					tempPtr;
-	short				fRefNum;
 	Str255				theStr, str2;
 
 	NumToString(TuningId, str2);
@@ -1928,11 +1870,10 @@ pascal void myTrackVolumeAction(ControlHandle theCntl, short ctlPart)
 
 void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 {
-	short				x, whichFxTrack, bogus,itemType, ctlPart, i, oldH = -10;
+	short				x, whichFxTrack, itemType, i, oldH = -10;
 	Point				Location, myPt;
 	Handle				itemHandle;
 	Rect				itemRect;
-	Boolean				StereoRect, OnOffButton;
 	ControlHandle		theControl;
 	RgnHandle			saveClip;
 	GrafPtr				savePort;
@@ -2932,25 +2873,19 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 
 pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
 {
-	short				result, offset, i;
-	long				theTime = TickCount();
-	unsigned short		count, index;
-	unsigned long		flavorFlags, attributes;
+	short				result;
+	unsigned long		attributes;
 	ItemReference		theItem;
 	RgnHandle			theRgn;
-	Point				theMouse, localMouse, theCell;
-	Rect				tempRect;
-
-	if (!mainSystemDrag) return noErr;
-
-	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return(noErr);
-
+	Point				theMouse, localMouse;
+	
+	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return noErr;
+	
 	SetPortWindowPort(theWindow);
 	
 	GetDragAttributes(theDrag, &attributes);
 	
 	switch (message) {
-
 		case kDragTrackingEnterHandler:
 		{
 			FlavorFlags     	theFlags;
@@ -2959,9 +2894,9 @@ pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRef
 			FInfo				fndrInfo;
 			
 			canAcceptDrag = false;
-		
+			
 			GetDragItemReferenceNumber(theDrag, 1, &theItem);
-    
+			
 			result = GetFlavorFlags(theDrag, theItem, flavorTypeHFS, &theFlags);
 			if (result == noErr)
 			{
@@ -2980,31 +2915,31 @@ pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRef
 				if (fndrInfo.fdType == TUNINGTYPE) canAcceptDrag = true;
 			}
 		}
-		break;
-
+			break;
+			
 		case kDragTrackingEnterWindow:
 			
-		break;
-
+			break;
+			
 		case kDragTrackingInWindow:
 			//
 			//	We receive InWindow messages as long as the mouse is in one of our windows
 			//	during a drag. We draw the window highlighting and blink the insertion caret
 			//	when we get these messages.
 			//
-
+			
 			GetDragMouse(theDrag, &theMouse, NULL);
 			localMouse = theMouse;
 			GlobalToLocal(&localMouse);
-
+			
 			//
 			//	Show or hide the window highlighting when the mouse enters or leaves the
 			//	TextEdit field in our window (we don't want to show the highlighting when
 			//	the mouse is over the window title bar or over the scroll bars).
 			//
-			{
+		{
 			Rect	caRect;
-	
+			
 			GetPortBounds(GetDialogPort(AdapDlog), &caRect);
 			
 			if (PtInRect(localMouse, &caRect))
@@ -3014,53 +2949,45 @@ pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRef
 				ShowDragHilite(theDrag, theRgn, true);
 				DisposeRgn(theRgn);
 			}
-			}
+		}
 			//
 			//	If this application is the sender, do not allow tracking through
 			//	the selection in the window that sourced the drag.
 			//
-
+			
 			if (attributes & kDragInsideSenderWindow)
 			{
-			
+				
 			}
-		break;
-
+			break;
+			
 		case kDragTrackingLeaveWindow:
 			HideDragHilite(theDrag);
-		break;
-
+			break;
+			
 		case kDragTrackingLeaveHandler:
-		
-		break;
+			
+			break;
 	}
 	RGBBackColor(&theColor);
-
+	
 	return(noErr);
 }
 
 pascal OSErr MyReceiveAdap(WindowPtr theWindow, void* handlerRefCon, DragReference theDrag)
 {
-	FSSpec				pseudoFF;
 	HFSFlavor			myFlavor;
 	OSErr				result;
-	Handle				mySnd;
-	Rect				theRect, srcRect;
 	unsigned short		items;
 	ItemReference		theItem;
 	DragAttributes		attributes;
-	Ptr					textData;
-	StScrpHandle		stylHandle;
 	Size				textSize;
-	short				offset, selStart, index, mouseDownModifiers, mouseUpModifiers, moveInstru;
-	Point				theCell;
-	Str255				myStr;
+	short				index, mouseDownModifiers, mouseUpModifiers;
 	FInfo				fndrInfo;
-	CInfoPBRec			info;
 	OSErr				err;
 
-	if (!mainSystemDrag) return dragNotAcceptedErr;
-	if (!canAcceptDrag) return dragNotAcceptedErr;
+	if (!canAcceptDrag)
+		return dragNotAcceptedErr;
 
 	SetPortWindowPort(theWindow);
 	
@@ -3077,14 +3004,12 @@ pascal OSErr MyReceiveAdap(WindowPtr theWindow, void* handlerRefCon, DragReferen
 
 	SetCursor(&watchCrsr);
 
-	for (index = 1; index <= items; index++)
-	{
+	for (index = 1; index <= items; index++) {
 		GetDragItemReferenceNumber(theDrag, index, &theItem);
 		
 		result = GetFlavorDataSize(theDrag, theItem, flavorTypeHFS, &textSize);
 	
-		if (result == noErr)
-		{
+		if (result == noErr) {
 			Boolean		targetIsFolder, wasAliased;
 		
 			GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
@@ -3093,12 +3018,9 @@ pascal OSErr MyReceiveAdap(WindowPtr theWindow, void* handlerRefCon, DragReferen
 			
 			err = HGetFInfo(myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID, myFlavor.fileSpec.name, &fndrInfo);
 		
-			if (err == noErr)
-			{
+			if (err == noErr) {
 				LoadAdaptatorsInt(&myFlavor.fileSpec);
-			}
-			else
-			{
+			} else {
 				SetCursor(GetQDGlobalsArrow(&qdarrow));
 				return(dragNotAcceptedErr);
 			} 

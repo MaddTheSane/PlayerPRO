@@ -12,70 +12,42 @@
 /*									      									*/
 /****************************************************************************/
 
+#include <Carbon/Carbon.h>
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
 #include "FileUtils.h"
-#include <Carbon/Carbon.h>
+#include "Utils.h"
+
 void SetFontStyle(DialogPtr dialog, SInt16 item, ControlFontStyleRec *style );
 
-void				PrefFilterPiano(DialogPtr theDialog, EventRecord *theEventI, short *itemHit);
-void				ZapBitMap();
-void				ZapPixMap();
-void				LigneGO();
-void 				FrameRectRelief(Rect *theRect);
-short				NewOffscreenPixMap();
-short				NewOffscreenBitMap();
-//void				pStrcpy();
-short				IclToPix (Handle , PixMapHandle *);
-void				CopyBitsFast(PixMapHandle, Rect);
-void				ScrollFast();
-void				DessineRgn(Rect *, Rect *);
-void				TolBoxInit(void);
-void				ControlSwitch(short	item, DialogPtr	dlog, short	Switch);
+void	PrefFilterPiano(DialogPtr theDialog, EventRecord *theEventI, short *itemHit);
+void	ZapBitMap();
+void	ZapPixMap();
+void	LigneGO();
+void 	FrameRectRelief(Rect *theRect);
+short	NewOffscreenPixMap();
+short	NewOffscreenBitMap();
+//void	pStrcpy();
+short	IclToPix (Handle , PixMapHandle *);
+void	CopyBitsFast(PixMapHandle, Rect);
+void	ScrollFast();
+void	DessineRgn(Rect *, Rect *);
+void	TolBoxInit(void);
+void	ControlSwitch(short	item, DialogPtr	dlog, short	Switch);
 void UpdatePlugsAbout(DialogPtr aDialog);
-void				FrameButton(DialogPtr theDia, short whichButton, Boolean drawIt);
-short				SetScroll(ControlHandle vScroll, TEHandle TEH);
+void	FrameButton(DialogPtr theDia, short whichButton, Boolean drawIt);
+short	SetScroll(ControlHandle vScroll, TEHandle TEH);
 void AddRemoveBookmarksFilter(DialogPtr theDialog, EventRecord *theEventI, short *itemHit);
 void	UpdateBookmarks(DialogPtr);
 void VSTFilter(DialogPtr theDialog, EventRecord *theEventI, short *itemHit);
 
-extern	short					theDepth;
-extern	WindowPtr				oldWindow;
-extern	ProcessSerialNumber		playerPROPSN;
-extern	DialogPtr				AHelpDlog;
-extern	SndListHandle			InSound, OutSound;
+extern	short				theDepth;
+extern	WindowPtr			oldWindow;
+extern	ProcessSerialNumber	playerPROPSN;
+extern	DialogPtr			AHelpDlog;
+extern	SndListHandle		InSound, OutSound;
 
-/************************************************************/
-/*static	long	oldMyDisposePtr;
-
-pascal void NewMyDisposePtr(& Ptr);
-pascal void NewMyDisposePtr(& Ptr myPtr)
-{
-	long aSize;
-
-	aSize = GetPtrSize(myPtr);
-	if (aSize <= 0 || aSize >= 400000) MyDebugStr(__LINE__, __FILE__, "MyDisposePtrError");
-
-//	CallPascal(myPtr, oldMyDisposePtr);
-	
-	if (MemError() != noErr) MyDebugStr(__LINE__, __FILE__, "MyDisposePtrError");
-}
-
-
-void PatchMyDisposePtr(&)
-{
-	MyDebugStr(__LINE__, __FILE__, "");
-
-	oldMyDisposePtr = NGetTrapAddress(0xA01F, 0);
-	NSetTrapAddress((long) NewMyDisposePtr, 0xA01F, 0);
-}
-
-void DePatchMyDisposePtr(&)
-{
-	NSetTrapAddress(oldMyDisposePtr, 0xA01F, 0);
-}
-*/
 /************************************************************/
 
 unsigned char* MyC2PStr(Ptr cStr)
@@ -95,8 +67,10 @@ void NNumToString(short no, Str255 aStr)
 	NumToString(no, tStr);
 	
 	pStrcpy(aStr, "\p");
-	if (no < 100) pStrcat(aStr, "\p0");
-	if (no < 10) pStrcat(aStr, "\p0");
+	if (no < 100)
+		pStrcat(aStr, "\p0");
+	if (no < 10)
+		pStrcat(aStr, "\p0");
 	pStrcat(aStr, tStr);
 }
 
@@ -109,11 +83,6 @@ void oldFrameButton(DialogPtr theDlg)
 	GetDialogItem (theDlg, 1, &iType, &iHndl, &iRect );
 	
 	if (iHndl == NULL) MyDebugStr(__LINE__, __FILE__, "oldFrameButton itemHandle = NULL");
-	
-	/*	PenSize(3,3 );
-	 InsetRect(&iRect, -4,-4);
-	 FrameRoundRect(&iRect, 16,16 );
-	 PenSize(1,1 );*/
 	
 	SetDialogDefaultItem(theDlg, 1);
 }
@@ -140,10 +109,10 @@ pascal Boolean mylClickLoop(void)
 {
 //	DoGlobalNull();
 	
-	return(true);
+	return true;
 }
 
-short 	dialogModifiers;
+short dialogModifiers;
 
 pascal Boolean MyDlgFilter(DialogPtr theDlg, EventRecord *theEvt, short *itemHit)
 {
@@ -702,12 +671,8 @@ short					pic_SIZE;
 	SetPort(currentPort);
 }*/
 
-void SetDText (DialogPtr dlog, short item, Str255 str)
+void SetDText(DialogPtr dlog, short item, Str255 str)
 {
-	Handle			itemHandle;
-	short			itemType;
-	Rect			itemRect;
-	Str255			myStr;
 	ControlHandle	control;
 	OSStatus		err;
 
@@ -717,13 +682,13 @@ void SetDText (DialogPtr dlog, short item, Str255 str)
 	DrawOneControl(control);
 }
 
-void WriteCText (DialogPtr dlog, short item, char *str)
+void WriteCText(DialogPtr dlog, short item, char *str)
 {
 	Handle	itemHandle;
 	short	itemType, iWidth;
 	Rect	itemRect;
 	
-	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(dlog, item, &itemType, &itemHandle, &itemRect);
 	
 	if (itemHandle == NULL) MyDebugStr(__LINE__, __FILE__, "WriteCText itemHandle = NULL");
 	
@@ -748,7 +713,7 @@ void GetDText (DialogPtr dlog, short item, StringPtr str)
 	if (itemType >= 128) itemType -= 128;
 	if (itemType != 8 && itemType != 16) MyDebugStr(__LINE__, __FILE__, "Error in itemType");
 	
-	GetDialogItemText (itemHandle, str);
+	GetDialogItemText(itemHandle, str);
 }
 
 void OSType2Str(OSType type, Str255 str)
@@ -1103,10 +1068,10 @@ void SetFontStyle(DialogPtr dialog, SInt16 item, ControlFontStyleRec *style )
 	ControlRef 	control;
 	OSErr			err;
 	
-	err = /*::*/GetDialogItemAsControl(dialog, item, &control );
+	err = GetDialogItemAsControl(dialog, item, &control );
 	
 	if (err == noErr )
-		/*::*/SetControlFontStyle(control, style );
+		SetControlFontStyle(control, style );
 }
 
 void ChangeEditFont(DialogPtr TheDia)
@@ -1116,4 +1081,14 @@ void ChangeEditFont(DialogPtr TheDia)
 	style.flags = kControlUseFontMask;
 	style.font = kControlFontSmallBoldSystemFont;	
 	SetFontStyle(TheDia, 4, &style);
+}
+
+OSType String2OSType(StringPtr theStr)
+{
+	char tmpBuf[5];
+	
+	memcpy(tmpBuf, &theStr[1], theStr[0] >= 4 ? 4 : theStr[0]);
+	tmpBuf[4] = '\0';
+	
+	return Ptr2OSType(tmpBuf);
 }

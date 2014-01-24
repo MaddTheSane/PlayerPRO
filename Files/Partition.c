@@ -176,13 +176,9 @@ void DoGrowParti(DialogPtr theDialog)
 	else if (temp.bottom > screenBits.bounds.bottom - aPt.v)
 		temp.bottom = screenBits.bounds.bottom - aPt.v -2;
 	
-#if MACOS9VERSION
-	temp.left++;
-	temp.right++;
-#endif
-	
 	lSizeVH = 0;
-	if (theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(theDialog), theEvent.where, &temp);
+	if (theEvent.what == mouseDown)
+		lSizeVH = GrowWindow(GetDialogWindow(theDialog), theEvent.where, &temp);
 	
 	if (lSizeVH != 0) {
 		tempA = LoWord(lSizeVH);

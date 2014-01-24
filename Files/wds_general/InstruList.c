@@ -1,34 +1,33 @@
+#include <Carbon/Carbon.h>
+#include <string.h>
+#include <QuickTime/QuickTime.h>
 #include "Shuddup.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Carbon/Carbon.h>
-#include <string.h>
 #include "Undo.h"
 #include "PrivateList.h"
-#include <QuickTime/QuickTime.h>
 #include "PPPlug.h"
 
-	/******** HELP MODULE ********/
-	enum
-	{
-		HRec	= 22,
-		HSave	= 21,
-		HLoad	= 20,
-		HDel	= 19,
-		HWind	= 24,
-		HIndi	= 26,
-		HList	= 1,
-		HInfo	= 18,
-		HOpenA	= 23
-	};
-#define AHELPSIZE	9
+/******** HELP MODULE ********/
+enum
+{
+	HRec	= 22,
+	HSave	= 21,
+	HLoad	= 20,
+	HDel	= 19,
+	HWind	= 24,
+	HIndi	= 26,
+	HList	= 1,
+	HInfo	= 18,
+	HOpenA	= 23
+};
 
 //static pascal Boolean myDragClickLoop(void);
-	static	short					AHelp[ AHELPSIZE] = { HRec, HSave, HLoad, HDel, HWind, HIndi, HList, HInfo, HOpenA};
+static short AHelp[] = {HRec, HSave, HLoad, HDel, HWind, HIndi, HList, HInfo, HOpenA};
 
 void DoHelpInstruList(short **items, short *lsize)
 {
-	*lsize = AHELPSIZE;
+	*lsize = sizeof(AHelp) / sizeof(AHelp[0]);
 	*items = AHelp;
 }
 
@@ -495,10 +494,6 @@ void DoGrowInstruList(DialogPtr	theDialog)
 
 	if (theEvent.what == mouseDown)
 	{
-#if MACOS9VERSION
-		temp.left++;
-		temp.right++;
-#endif
 		lSizeVH = GrowWindow(GetDialogWindow(theDialog), theEvent.where, &temp);
 	}
 	
@@ -2089,7 +2084,7 @@ void DrawInstruListItem(short iD)
 	short		pos;
 	Str255		aStr, tempStr;
 	Rect		destRect;
-
+	
 	short		ins, samp;
 	RgnHandle	UpdateRgn = NULL;
 	
@@ -2097,8 +2092,7 @@ void DrawInstruListItem(short iD)
 	
 	ConvertIDtoInsSamp(iD, &ins, &samp);
 	
-	if (samp < 0)	// Instrument
-	{	
+	if (samp < 0) {	// Instrument
 		/**/
 		
 		destRect = (*mySABut)->bounds;
@@ -2117,23 +2111,23 @@ void DrawInstruListItem(short iD)
 			destRect.top = myList.rect.top + myList.HCell*pos;
 			destRect.bottom = destRect.top + (*OP)->bounds.bottom;
 			
-			if (thePrefs.OCArrow[ ins])
+			if (thePrefs.OCArrow[ins])
 			{
-				CopyBits(	(BitMap*) *(OP),
-							(BitMap*) *GetPortPixMap(GetDialogPort(InstruListDlog)),
-							&(*OP)->bounds,
-							&destRect,
-							srcCopy,
-							NULL);
+				CopyBits((BitMap*)*(OP),
+						 (BitMap*)*GetPortPixMap(GetDialogPort(InstruListDlog)),
+						 &(*OP)->bounds,
+						 &destRect,
+						 srcCopy,
+						 NULL);
 			}
 			else
 			{
-				CopyBits(	(BitMap*) *(CP),
-							(BitMap*) *GetPortPixMap(GetDialogPort(InstruListDlog)),
-							&(*CP)->bounds,
-							&destRect,
-							srcCopy,
-							NULL);
+				CopyBits((BitMap*) *(CP),
+						 (BitMap*) *GetPortPixMap(GetDialogPort(InstruListDlog)),
+						 &(*CP)->bounds,
+						 &destRect,
+						 srcCopy,
+						 NULL);
 			}
 		}
 		
@@ -2142,11 +2136,11 @@ void DrawInstruListItem(short iD)
 		LineTo(destRect.right, destRect.bottom-1);
 		
 		/**/
-	
+		
 		NNumToString(ins + 1, aStr);	pStrcat(aStr, "\p ");
 		
 		strcpy((Ptr) tempStr, curMusic->fid[ ins].name);
-		MyC2PStr((Ptr) tempStr);
+		MyC2PStr((Ptr)tempStr);
 		pStrcat(aStr, "\p ");
 		pStrcat(aStr, tempStr);
 		
@@ -2154,10 +2148,8 @@ void DrawInstruListItem(short iD)
 		TextFace(bold);
 		DrawString(aStr);
 		TextFace(0);
-	}
-	else
-	{
-		sData	*curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
+	} else {
+		sData *curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
 		
 		/**/
 		
@@ -2165,12 +2157,12 @@ void DrawInstruListItem(short iD)
 		destRect.top = myList.rect.top + myList.HCell*pos-1;
 		destRect.bottom = destRect.top + (*mySABut)->bounds.bottom;
 		
-		CopyBits(	(BitMap*) *(mySABut),
-					(BitMap*) *GetPortPixMap(GetDialogPort(InstruListDlog)),
-					&(*mySABut)->bounds,
-					&destRect,
-					srcCopy,
-					NULL);
+		CopyBits((BitMap*) *(mySABut),
+				 (BitMap*) *GetPortPixMap(GetDialogPort(InstruListDlog)),
+				 &(*mySABut)->bounds,
+				 &destRect,
+				 srcCopy,
+				 NULL);
 		
 		MoveTo(destRect.right, destRect.top);
 		LineTo(destRect.right, destRect.bottom);
@@ -2179,20 +2171,19 @@ void DrawInstruListItem(short iD)
 		
 		/**/
 		
-		if (curData->loopSize > 0)
-		{
+		if (curData->loopSize > 0) {
 			destRect = (*ArrowPix)->bounds;
 			destRect.left = myList.rect.left + POSINS + 3;
 			destRect.right = destRect.left + (*ArrowPix)->bounds.right;
 			destRect.top = myList.rect.top + 2 + myList.HCell*pos;
 			destRect.bottom = destRect.top + (*ArrowPix)->bounds.bottom;
 			
-			CopyBits(	(BitMap*) *(ArrowPix),
-						(BitMap*) *GetPortPixMap(GetDialogPort(InstruListDlog)),
-						&(*ArrowPix)->bounds,
-						&destRect,
-						srcCopy,
-						NULL);
+			CopyBits((BitMap*) *(ArrowPix),
+					 (BitMap*) *GetPortPixMap(GetDialogPort(InstruListDlog)),
+					 &(*ArrowPix)->bounds,
+					 &destRect,
+					 srcCopy,
+					 NULL);
 		}
 		/**/
 		strcpy((Ptr) tempStr, curData->name);
@@ -2216,10 +2207,8 @@ void DrawInstruListItem(short iD)
 		LineTo(myList.rect.left + (*mySABut)->bounds.right-1, myList.rect.top -1+ myList.HCell*(pos+1));
 		ForeColor(blackColor);
 	}
-
 	
-	if (iD >= myList.select.top && iD <= myList.select.bottom)
-	{
+	if (iD >= myList.select.top && iD <= myList.select.bottom) {
 		Rect 			t;
 		
 		LMSetHiliteMode((UInt8) (LMGetHiliteMode() & 0x7F));
@@ -2229,13 +2218,14 @@ void DrawInstruListItem(short iD)
 		
 		InvertRect(&t);
 	}
+	
 #pragma mark Try updating it like this!
-/*	RgnHandle UpdateRgn = NewRgn();
-	RectRgn(UpdateRgn, destRect);
-
+	UpdateRgn = NewRgn();
+	RectRgn(UpdateRgn, &destRect);
+	
 	if (QDIsPortBuffered(GetDialogPort(InstruListDlog)))
 		QDFlushPortBuffer(GetDialogPort(InstruListDlog), UpdateRgn);
-	DisposeRgn(UpdateRgn);*/
+	DisposeRgn(UpdateRgn);
 }
 					
 void DrawSmallSamplePreview()
