@@ -47,9 +47,7 @@ extern	Cursor					pencilCrsr;
 		DialogPtr				PartiDlog;
 		
 static	PixMapHandle			myPopUp;
-static	Rect					CurRect, CurChar;
 static	short					LChar;
-static	short					CurrentPat, CharNo;
 static	short					PatCopy2;
 static	ControlHandle			InfoBut, OpenBut, FlipBut, AddBut, RemoveBut;
 static	PrivateList				myList;
@@ -66,9 +64,7 @@ void OpenSelectedPattern(short no);
 void UpdatePartiInfo(void)
 {
 	GrafPtr		SavePort;
-	short		itemType;
 	Rect		caRect, itemRect;
-	Handle		itemHandle;
 	
 	if (PartiDlog == NULL) return;
 	
@@ -153,10 +149,9 @@ void DoGrowParti(DialogPtr theDialog)
 {
 	long		lSizeVH;
 	GrafPtr		SavePort;
-	Rect		caRect, temp, cellRect, tempRect;
-	short		cur, tempB, tempA, itemType;
-	Handle		itemHandle;
-	Point		theCell = { 0, 0}, aPt = { 0, 0};
+	Rect		caRect, temp;
+	short		tempB, tempA;
+	Point		aPt = { 0, 0};
 	BitMap		screenBits;
 	
 	
@@ -217,15 +212,9 @@ void DoGrowParti(DialogPtr theDialog)
 
 void DrawPartiListItem(short iD)
 {
-	Rect   		tempRect, cellRect;
-	GrafPtr		SavePort;
-	Point		theCell;
-	Ptr			theStr;
+	Rect   		tempRect;
 	Str255		tempStr, aStr;
 	short		pos;
-	PicHandle	aPict;
-	RgnHandle	saveClipRgn;
-	short		curVal, maxI;
 	
 	if (iD >= myList.maxY)
 		return;
@@ -238,8 +227,8 @@ void DrawPartiListItem(short iD)
 	tempRect.top = myList.rect.top + 2 + myList.HCell*pos;
 	tempRect.bottom = tempRect.top + (*myPopUp)->bounds.bottom;
 	
-	CopyBits((BitMap*) *myPopUp,
-			 (BitMap*) *GetPortPixMap(GetDialogPort(PartiDlog)),
+	CopyBits((BitMap*)*myPopUp,
+			 (BitMap*)*GetPortPixMap(GetDialogPort(PartiDlog)),
 			 &(*myPopUp)->bounds,
 			 &tempRect,
 			 srcCopy,
@@ -254,7 +243,7 @@ void DrawPartiListItem(short iD)
 	if (iD + 1 < 100) pStrcat(aStr, "\p ");
 	pStrcat(aStr, tempStr);
 	pStrcat(aStr, "\p:");
-#if 0
+	
 	tempRect.left = myList.rect.left + POSPOS -3;
 	tempRect.top = myList.rect.top + myList.HCell*pos;
 	tempRect.right = tempRect.left + 30;
@@ -268,15 +257,15 @@ void DrawPartiListItem(short iD)
 	LineTo(tempRect.right, tempRect.bottom);
 	
 	ForeColor(blackColor);
-#endif
+	
 	MoveTo(myList.rect.left + POSPOS, myList.rect.top + 10 + myList.HCell*pos);
 	DrawString(aStr);
 	
 	if (curMusic != NULL) {
 		/** LENGTH **/
 		if (iD < curMusic->header->numPointers) {
-			/*	PixPatHandle			workPixPat;
-			 PenState				penState;*/
+			PixPatHandle	workPixPat;
+			PenState		penState;
 			
 			tempRect.left	= myList.rect.left + 1;
 			tempRect.right	= tempRect.left + 5;
@@ -285,15 +274,15 @@ void DrawPartiListItem(short iD)
 			tempRect.bottom	= tempRect.top + myList.HCell;
 			
 			
-			/*	GetPenState(&penState);
-			 workPixPat = GetPixPat(130);
-			 PenPixPat(workPixPat);*/
+			GetPenState(&penState);
+			workPixPat = GetPixPat(130);
+			PenPixPat(workPixPat);
 			
 			ForeColor(redColor);
 			PaintRect(&tempRect);
 			ForeColor(blackColor);
 			
-			//	SetPenState(&penState);
+			SetPenState(&penState);
 		}
 		
 		/** ID 	**/
@@ -317,18 +306,13 @@ void DrawPartiListItem(short iD)
 		DrawString(aStr);
 		
 		if (iD >= myList.select.top && iD <= myList.select.bottom) {
-			RGBColor	hilite;
-			
 			tempRect.left = myList.rect.left + 6;
 			tempRect.right = myList.rect.right;
 			
 			tempRect.top = myList.rect.top + myList.HCell*pos;
 			tempRect.bottom = tempRect.top + myList.HCell;
 			
-			//LMGetHiliteRGB(&hilite);
-			
-			LMSetHiliteMode((UInt8) (LMGetHiliteMode() & 0x7F));
-			//LMSetHiliteMode(LMGetHiliteMode() & hiliteBit);
+			LMSetHiliteMode((UInt8)(LMGetHiliteMode() & 0x7F));
 			InvertRect(&tempRect);
 		}
 	}
@@ -336,15 +320,11 @@ void DrawPartiListItem(short iD)
 
 void  UpdatePartiWindow(DialogPtr GetSelection)  	/* Pointer to this dialog */
 { 
-	Rect   		caRect, tempRect, cellRect;
+	Rect   		caRect, tempRect;
 	GrafPtr		SavePort;
-	Point		theCell;
-	Ptr			theStr;
 	Str255		tempStr, aStr;
-	short		i, iD;
-	PicHandle	aPict;
+	short		i;
 	RgnHandle	saveClipRgn;
-	short		curVal, maxI;
 	RgnHandle	visibleRegion;
 	
 	GetPort(&SavePort);
@@ -422,9 +402,6 @@ void SelectCurrentParti(void)
 {
 	Cell		theCell;
 	GrafPtr		SavePort;
-	Rect		itemRect;
-	short		temp, itemType;
-	Handle		itemHandle;
 	
 	if (PartiDlog == NULL)
 		return;
@@ -438,8 +415,7 @@ void SelectCurrentParti(void)
 		theCell.v = theCell.h = 0;
 		theCell.v = PatCopy2;
 		
-		//if (!PLGetSelect(&theCell, &myList))
-		{
+		if (!PLGetSelect(&theCell, &myList)) {
 			PLSetSelect(theCell.h, theCell.v, theCell.h, theCell.v, &myList);
 			
 			PLAutoScroll(&myList);
@@ -449,14 +425,11 @@ void SelectCurrentParti(void)
 	}
 }
 
-static long lastWhen = 0;
-
 Boolean CheckValidParti(Byte theValue, short thePos)
 {
 	short		i, numPat, temp;
 	
-	for (i = 0, numPat = 0; i<256; i++)
-	{
+	for (i = 0, numPat = 0; i<256; i++) {
 		if (curMusic->header->oPointers[i] >= numPat) {
 			numPat = curMusic->header->oPointers[i];
 		}
@@ -486,11 +459,10 @@ Boolean CheckValidParti(Byte theValue, short thePos)
 
 void DoNullParti(void)
 {
-	Str255		String;
 	GrafPtr		SavePort;
-	short		temp, itemType, track;
-	Rect		tempRect, clipRect, itemRect;
-	Point		pt, pt2, pt3;
+	short		itemType;
+	Rect		itemRect;
+	Point		pt;
 	Handle		itemHandle;
 	
 	if (PartiDlog == NULL)
@@ -516,17 +488,13 @@ void DoNullParti(void)
 	SetPort(SavePort);
 }
 
-static Boolean firstList;
-
 void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit ID to pass to Dialog function */
 {
-	Cell				theCell, destCell;
-	long				tempLong, lDistVH, mresult;
-	short				i, temp, temp2, itemType, newPL, newPartitionReader, newPat;
-	RgnHandle			theRgn;
-	Rect				caRect, cellRect, itemRect;
+	Cell				theCell;
+	long				mresult;
+	short				i, itemType, newPL, newPartitionReader, newPat;
+	Rect				caRect, itemRect;
 	GrafPtr				SavePort;
-	Cmd					theCommand;
 	Point				myPt = {0};
 	Handle				itemHandle;
 	Boolean				DoubleClick;
@@ -624,8 +592,7 @@ void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 		}
 	}   						/* End of mouseDown */
 	
-	switch(whichItem)
-	{
+	switch (whichItem) {
 		case 10:
 			if (GetControlHilite(FlipBut) == 0 && MyTrackControl(FlipBut, theEvent.where, NULL)) {
 				EraseGrowIcon(whichDialog);
@@ -684,10 +651,8 @@ void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 						  itemRect.right,
 						  itemRect.top + (curMusic->header->numPointers - GetControlValue(myList.yScroll)) * myList.HCell);
 			InvalWindowRect(GetDialogWindow(whichDialog), &itemRect);
-			/*
-			 GetDialogItem(whichDialog, 6, &itemType, &itemHandle, &itemRect);
-			 InvalWindowRect(GetDialogWindow(whichDialog, &itemRect);
-			 */
+			GetDialogItem(whichDialog, 6, &itemType, &itemHandle, &itemRect);
+			InvalWindowRect(GetDialogWindow(whichDialog), &itemRect);
 			
 			GetPortBounds(GetDialogPort(whichDialog), &caRect);
 			
@@ -712,13 +677,11 @@ void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 			break;
 			
 		case 12:
-			if (GetControlHilite(AddBut) == 0 && MyTrackControl(AddBut, theEvent.where, NULL))
-			{
+			if (GetControlHilite(AddBut) == 0 && MyTrackControl(AddBut, theEvent.where, NULL)) {
 				theCell.v = theCell.h = 0;
-				if (PLGetSelect(&theCell, &myList))
-				{
-					for (i = MAXPOINTER-1; i >= theCell.v+1; i--) {
-						curMusic->header->oPointers[ i] = curMusic->header->oPointers[ i-1];
+				if (PLGetSelect(&theCell, &myList)) {
+					for (i = MAXPOINTER - 1; i >= theCell.v + 1; i--) {
+						curMusic->header->oPointers[i] = curMusic->header->oPointers[i - 1];
 					}
 					//	curMusic->header->oPointers[ theCell.v] = curMusic->header->oPointers[ theCell.v-1];
 					
@@ -758,16 +721,14 @@ void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 
 void CreatePartiWindow(void)
 {
-	Rect		caRect, itemRect, tempRect, dataBounds;
+	Rect		caRect, itemRect;
 	Handle		itemHandle;
-	short		itemType, itemHit, temp, i;
+	short		itemType;
 	Point		cSize;
 	FontInfo	ThisFontInfo;
-	Str255		String;
 	PicHandle	aPict;
 	
-	if (PartiDlog != NULL)
-	{
+	if (PartiDlog != NULL) {
 		SetWindEtat(GetDialogWindow(PartiDlog));
 		return;
 	}
@@ -815,7 +776,7 @@ void CreatePartiWindow(void)
 	
 	myList.rect.right = caRect.right;
 	
-	//	MySizeWindow(PartiDlog, myList.rect.right, PartiDlog->portRect.bottom, false);
+	//MySizeWindow(PartiDlog, myList.rect.right, PartiDlog->portRect.bottom, false);
 	myList.rect.right -= 15;
 	myList.rect.left = 0;
 	myList.LCell = myList.rect.right - myList.rect.left;
@@ -913,9 +874,6 @@ void DoKeyPressParti(short theChar)
 {
 	GrafPtr		SavePort;
 	Point		theCell;
-	short		temp, itemType;
-	Handle		itemHandle;
-	Rect		itemRect;
 	
 	if (PartiDlog == NULL) return;
 	
@@ -964,7 +922,6 @@ void DoKeyPressParti(short theChar)
 void COPYParti(void)
 {
 	Cell				theCell;
-	Cmd					*theCommand, *handleCo;
 	short				count;
 	Handle				theHandle;
 	OSErr				anErr;
@@ -999,8 +956,8 @@ void COPYParti(void)
 
 void PASTEParti(void)
 {
-	short				itemType,i,fRefNum, count, temp;
-	long				inOutBytes, iL, scrapOffset, lCntOrErr;
+	short				count;
+	long				lCntOrErr;
 	Handle				theHandle;
 	Point				theCell;
 	ScrapRef			scrap;
@@ -1012,8 +969,7 @@ void PASTEParti(void)
 	anErr = GetScrapFlavorFlags(scrap, 'PATL', &flags);
 	if (anErr == noErr) GetScrapFlavorSize(scrap, 'PATL', &lCntOrErr);
 	
-	if (lCntOrErr > 0)
-	{
+	if (lCntOrErr > 0) {
 		SetCursor(&watchCrsr);
 	
 		theHandle = MyNewHandle(lCntOrErr);
@@ -1026,11 +982,9 @@ void PASTEParti(void)
 		{
 			SaveUndo(UHeader, 0, "\pUndo 'Paste Partition'");
 			
-			for (count = 0; count < lCntOrErr ; count++)
-			{
-				if (CheckValidParti((*theHandle)[ count], theCell.v + count))
-				{
-					curMusic->header->oPointers[ theCell.v + count] = (*theHandle)[ count];
+			for (count = 0; count < lCntOrErr ; count++) {
+				if (CheckValidParti((*theHandle)[ count], theCell.v + count)) {
+					curMusic->header->oPointers[theCell.v + count] = (*theHandle)[count];
 				}
 			}
 			
