@@ -26,8 +26,6 @@ void ReceiveNewFSSpec(AEDesc *dropLocation, FSSpec	*newFSSpec)
 	AEDesc			dropSpec;
 	FSSpec			theSpec;
 	CInfoPBRec		thePB;
-	short			trashVRefNum;
-	long			trashDirID;
 	
 	//
 	//	Coerce the dropLocation descriptor to an FSSpec. If there's no dropLocation or
@@ -35,8 +33,7 @@ void ReceiveNewFSSpec(AEDesc *dropLocation, FSSpec	*newFSSpec)
 	//
 	
 	if ((dropLocation->descriptorType != typeNull) &&
-		(AECoerceDesc(dropLocation, typeFSS, &dropSpec) == noErr))
-	{
+		(AECoerceDesc(dropLocation, typeFSS, &dropSpec) == noErr)) {
 		
 		result = MyAEGetDescData(&dropSpec, NULL, &theSpec, sizeof(theSpec), NULL);
 		if (result != noErr) return;
