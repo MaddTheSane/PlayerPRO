@@ -618,28 +618,28 @@ void DoContent(WindowPtr theWindow, EventRecord *theEventI)
 	
 	GetPort(&savePort);
 	SetPortWindowPort(theWindow);
-
+	
 	GlobalToLocal(&theEventI->where);
 	cntlCode = FindControl(theEventI->where, theWindow, &theControl);
-	switch(cntlCode)
-	{
-	case kControlIndicatorPart:
-		if (gUseControlSize) goto LiveScroll;
-		else TrackControl(theControl, theEventI->where, NULL);
-		MyAdjustText(theControl);
-	break;
-	
-	case kControlUpButtonPart:
-    case kControlDownButtonPart:
-    case kControlPageUpPart:
-    case kControlPageDownPart:
-
-		LiveScroll:		
-
-    	MyControlUPP = NewControlActionUPP(ScrollProc);
-		TrackControl(theControl, theEventI->where, MyControlUPP);
-		DisposeControlActionUPP(MyControlUPP);
-	break;
+	switch(cntlCode) {
+		case kControlIndicatorPart:
+			if (gUseControlSize)
+				goto LiveScroll;
+			else
+				TrackControl(theControl, theEventI->where, NULL);
+			MyAdjustText(theControl);
+			break;
+			
+		case kControlUpButtonPart:
+		case kControlDownButtonPart:
+		case kControlPageUpPart:
+		case kControlPageDownPart:
+			
+		LiveScroll:
+			MyControlUPP = NewControlActionUPP(ScrollProc);
+			TrackControl(theControl, theEventI->where, MyControlUPP);
+			DisposeControlActionUPP(MyControlUPP);
+			break;
 	}
 	
 	LocalToGlobal(&theEventI->where);

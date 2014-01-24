@@ -268,7 +268,7 @@ void MyFindControl(Point localPt, WindowPtr wind, ControlHandle *myCtl)
 }
 #endif
 
-void AdjustZoomIn(WindowPtr	wind)
+void AdjustZoomIn(WindowPtr wind)
 {
 	GDHandle		aH;
 	Point			mouse;

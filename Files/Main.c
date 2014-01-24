@@ -697,10 +697,8 @@ void ShowWindowPref(short whichState)
 	}
 }
 
-WindowPtr NextWindowVisible(WindowPtr	whichWindow)
+WindowPtr NextWindowVisible(WindowPtr whichWindow)
 {
-	//WindowPeek 	myWin;
-	//WindowPeek	temp;
 	WindowPtr	temp, myWin;
 	Boolean		Sortie = false;
 	
@@ -708,22 +706,24 @@ WindowPtr NextWindowVisible(WindowPtr	whichWindow)
 		myWin = whichWindow;
 		temp = MacGetNextWindow(myWin);
 		
-		if (temp == NULL) return(NULL);
-		else if (MacIsWindowVisible(temp) != true) whichWindow = (WindowPtr) MacGetNextWindow(myWin);
-		else Sortie = true;
+		if (temp == NULL)
+			return NULL;
+		else if (MacIsWindowVisible(temp) != true)
+			whichWindow = MacGetNextWindow(myWin);
+		else
+			Sortie = true;
 	} while (Sortie == false);
 	
-	return(temp);
+	return temp;
 }
 
-void EraseGrowIcon(DialogPtr	theDialog)
+void EraseGrowIcon(DialogPtr theDialog)
 {
 	Rect	temp;
 	GrafPtr	SavePort;
 	Rect	caRect;
 	
-	switch(GetWRefCon(GetDialogWindow(theDialog)))
-	{
+	switch(GetWRefCon(GetDialogWindow(theDialog))) {
 		case RefMODList:
 		case RefPatList:
 		case RefParti:
@@ -743,7 +743,9 @@ void EraseGrowIcon(DialogPtr	theDialog)
 			
 			break;
 			
-		default:	return;		break;
+		default:
+			return;
+			break;
 	}
 	
 	GetPort(&SavePort);
@@ -764,11 +766,11 @@ void EraseGrowIcon(DialogPtr	theDialog)
 	SetPort(SavePort);
 }
 
-void SelectWindow2(	WindowPtr	whichWindow)
+void SelectWindow2(WindowPtr whichWindow)
 {
-	if (whichWindow != NULL)
-	{
-		if (IsValidWindowPtr(whichWindow)) SelectWindow(whichWindow);
+	if (whichWindow != NULL) {
+		if (IsValidWindowPtr(whichWindow))
+			SelectWindow(whichWindow);
 		oldWindow = whichWindow;	//FrontNonFloatingWindow();
 	}
 }
@@ -3404,43 +3406,38 @@ void DoUpdateEvent(EventRecord *theEventI)
 	
 	//if (EmptyRgn(((WindowPeek) theEventI->message)->updateRgn)) return;
 	
-	switch(GetWRefCon(((WindowPtr) theEventI->message)))
-	{
+	switch(GetWRefCon(((WindowPtr)theEventI->message))) {
 		case RefVST:
 			VSTEditorUpdate(GetDialogFromWindow((WindowPtr) theEventI->message));
 			break;
 			
-			//case RefCube:
-			//UpdateCubeWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
-			//break;
-			
 		case RefPref:
-			UpdatePrefWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdatePrefWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 		case RefMozart:
-			UpdateMozartWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdateMozartWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 		case RefPlayer:
-			UpdateOscilloWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdateOscilloWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 		case RefSpectrum:
-			UpdateSpectrumWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdateSpectrumWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 		case RefInstruList:
-			UpdateInstruListWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdateInstruListWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 		case RefInstruView:
-			UpdateInstruView(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdateInstruView(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
-			/*	case RefTrackView:
-			 UpdateTrackView(GetDialogFromWindow((WindowPtr) theEventI->message));
-			 break;*/
+		case RefTrackView:
+			UpdateTrackView(GetDialogFromWindow((WindowPtr)theEventI->message));
+			break;
 			
 		case RefPartition:
 			UpdatePartitionWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
@@ -3475,11 +3472,11 @@ void DoUpdateEvent(EventRecord *theEventI)
 			break;
 			
 		case RefEqualizer:
-			UpdateEQWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdateEQWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 		case RefVisual:
-			UpdateVisualWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdateVisualWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 		case RefHelp:
@@ -3487,35 +3484,36 @@ void DoUpdateEvent(EventRecord *theEventI)
 			break;
 			
 		case RefActiveHelp:
-			UpdateAHelpWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdateAHelpWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 		case RefParti:
-			UpdatePartiWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdatePartiWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 		case RefPatList:
-			UpdatePatListWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdatePatListWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 		case RefPiano:
-			UpdatePianoWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdatePianoWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 			/*	case RefFindReplace:
 			 UpdateFind(GetDialogFromWindow((WindowPtr) theEventI->message));
 			 break;
-			 */	
+			 */
+			
 		case RefClassic:
-			UpdateClassicWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdateClassicWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 		case RefDigiView:
-			UpdateDigiListWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdateDigiListWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 		case RefMemory:
-			UpdateMemWindow(GetDialogFromWindow((WindowPtr) theEventI->message));
+			UpdateMemWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 		case RefSndExport:

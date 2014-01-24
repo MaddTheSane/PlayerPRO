@@ -1046,7 +1046,7 @@ Boolean CreateQTWindow(FSSpec	*file)
 	
 	UpdateALLWindow();
 	
-	QuicktimeDlog = GetNewDialog(180, NULL, (WindowPtr) ToolsDlog);
+	QuicktimeDlog = GetNewDialog(180, NULL, GetDialogWindow(ToolsDlog));
 	
 	GetPort(&SavePort);
 	SetWindEtat(GetDialogWindow(QuicktimeDlog));

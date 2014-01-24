@@ -2208,45 +2208,27 @@ void CreateStaffWindow(void)
 	MainNote = GetPicture(500);
 	
 	for (i = 0; i < 5; i++) {
-		GetDialogItem(StaffDlog , 13+i, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(StaffDlog, 13 + i, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		notesIcl[i] = NewControl(GetDialogWindow(StaffDlog),
-								 &itemRect,
-								 "\p",
-								 true,
-								 0,
-								 kControlContentIconSuiteRes,
-								 800+i,
-								 kControlBevelButtonNormalBevelProc,
-								 0);
+		notesIcl[i] = NewControl(GetDialogWindow(StaffDlog), &itemRect, "\p", true,
+								 0, kControlContentIconSuiteRes, 800 + i,
+								 kControlBevelButtonNormalBevelProc, 0);
 	}
 	curNoteLength = 16;
 	HiliteControl(notesIcl[0], kControlButtonPart);
 	
 	GetDialogItem(StaffDlog , 25, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	notesIcl[ 5] = NewControl(GetDialogWindow(StaffDlog),
-							  &itemRect,
-							  "\p",
-							  true,
-							  0,
-							  kControlContentIconSuiteRes,
-							  805,
-							  kControlBevelButtonNormalBevelProc,
-							  0);
+	notesIcl[5] = NewControl(GetDialogWindow(StaffDlog), &itemRect, "\p", true,
+							 0, kControlContentIconSuiteRes, 805,
+							 kControlBevelButtonNormalBevelProc, 0);
 	
 	for (i = 0; i < 3; i++) {
-		GetDialogItem(StaffDlog , 18+i, &itemType, &itemHandle, &itemRect);
+		GetDialogItem(StaffDlog , 18 + i, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		modifIcl[i] = NewControl(GetDialogWindow(StaffDlog),
-								  &itemRect,
-								  "\p",
-								  true,
-								  0,
-								  kControlContentIconSuiteRes,
-								  900+i,
-								  kControlBevelButtonNormalBevelProc,
-								  0);
+		modifIcl[i] = NewControl(GetDialogWindow(StaffDlog), &itemRect, "\p", true,
+								  0, kControlContentIconSuiteRes, 900 + i,
+								  kControlBevelButtonNormalBevelProc, 0);
 	}
 	curModif = cNul;
 	HiliteControl(modifIcl[0], kControlButtonPart);
@@ -2270,99 +2252,44 @@ void CreateStaffWindow(void)
 	
 	GetDialogItem(StaffDlog, 3, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	selecBut = NewControl(GetDialogWindow(StaffDlog),
-						  &itemRect,
-						  "\p",
-						  true,
-						  0,
-						  kControlContentIconSuiteRes,
-						  176,
-						  kControlBevelButtonNormalBevelProc,
-						  0);
+	selecBut = NewControl(GetDialogWindow(StaffDlog), &itemRect, "\p", true,
+						  0, kControlContentIconSuiteRes, 176,
+						  kControlBevelButtonNormalBevelProc, 0);
 	
 	GetDialogItem(StaffDlog, 6, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	prefBut = NewControl(GetDialogWindow(StaffDlog),
-						 &itemRect,
-						 "\p",
-						 true,
-						 0,
-						 kControlContentIconSuiteRes,
-						 174,
-						 kControlBevelButtonNormalBevelProc,
-						 0);
+	prefBut = NewControl(GetDialogWindow(StaffDlog), &itemRect, "\p", true,
+						 0, kControlContentIconSuiteRes, 174, kControlBevelButtonNormalBevelProc, 0);
 	
 	GetDialogItem(StaffDlog, 8, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	loadBut = NewControl(GetDialogWindow(StaffDlog),
-						 &itemRect,
-						 "\p",
-						 true,
-						 0,
-						 kControlContentIconSuiteRes,
-						 152,
-						 kControlBevelButtonNormalBevelProc,
-						 0);
+	loadBut = NewControl(GetDialogWindow(StaffDlog), &itemRect, "\p", true,
+						 0, kControlContentIconSuiteRes, 152, kControlBevelButtonNormalBevelProc, 0);
 	
 	GetDialogItem(StaffDlog, 21, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	saveBut = NewControl(GetDialogWindow(StaffDlog),
-						 &itemRect,
-						 "\p",
-						 true,
-						 0,
-						 kControlContentIconSuiteRes,
-						 151,
-						 kControlBevelButtonNormalBevelProc,
-						 0);
+	saveBut = NewControl(GetDialogWindow(StaffDlog), &itemRect, "\p", true,
+						 0, kControlContentIconSuiteRes, 151, kControlBevelButtonNormalBevelProc, 0);
 	
 	GetDialogItem(StaffDlog, 22, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	infoBut = NewControl(GetDialogWindow(StaffDlog),
-						 &itemRect,
-						 "\p",
-						 true,
-						 0,
-						 kControlContentIconSuiteRes,
-						 149,
-						 kControlBevelButtonNormalBevelProc,
-						 0);
+	infoBut = NewControl(GetDialogWindow(StaffDlog), &itemRect, "\p", true,
+						 0, kControlContentIconSuiteRes, 149, kControlBevelButtonNormalBevelProc, 0);
 	
 	GetDialogItem(StaffDlog, 23, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	FXBut = NewControl(GetDialogWindow(StaffDlog),
-					   &itemRect,
-					   "\p",
-					   true,
-					   0,
-					   kControlContentIconSuiteRes,
-					   185,
-					   kControlBevelButtonNormalBevelProc,
-					   0);
+	FXBut = NewControl(GetDialogWindow(StaffDlog), &itemRect, "\p", true,
+					   0, kControlContentIconSuiteRes, 185, kControlBevelButtonNormalBevelProc, 0);
 	
 	GetDialogItem(StaffDlog, 7, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	playBut = NewControl(GetDialogWindow(StaffDlog),
-						 &itemRect,
-						 "\p",
-						 true,
-						 0,
-						 kControlContentIconSuiteRes,
-						 160,
-						 kControlBevelButtonNormalBevelProc,
-						 0);
+	playBut = NewControl(GetDialogWindow(StaffDlog), &itemRect, "\p", true,
+						 0, kControlContentIconSuiteRes, 160, kControlBevelButtonNormalBevelProc, 0);
 	
 	GetDialogItem(StaffDlog, 5, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	noteBut = NewControl(GetDialogWindow(StaffDlog),
-						 &itemRect,
-						 "\p",
-						 true,
-						 0,
-						 kControlContentIconSuiteRes,
-						 140,
-						 kControlBevelButtonNormalBevelProc,
-						 0);
+	noteBut = NewControl(GetDialogWindow(StaffDlog), &itemRect, "\p", true,
+						 0, kControlContentIconSuiteRes, 140, kControlBevelButtonNormalBevelProc, 0);
 	
 #if 0
 	GetDialogItem(StaffDlog, 6, &itemType, &itemHandle, &itemRect);
@@ -2385,27 +2312,10 @@ void CreateStaffWindow(void)
 	HiliteControl(noteBut, kControlButtonPart);
 	
 	SetRect(&itemRect, 0, 0, 30, 16);
-	xScroll = NewControl(GetDialogWindow(StaffDlog),
-						 &itemRect,
-						 "\p.",
-						 true,
-						 0,
-						 0,
-						 0,
-						 gScrollBarID,
-						 xScrollNum);
+	xScroll = NewControl(GetDialogWindow(StaffDlog), &itemRect, "\p.", true, 0, 0, 0, gScrollBarID, xScrollNum);
 	
 	SetRect(&itemRect, 0, 0, 30, 16);
-	yScroll = NewControl(GetDialogWindow(StaffDlog),
-						 &itemRect,
-						 "\p.",
-						 true,
-						 0,
-						 0,
-						 0,
-						 gScrollBarID,
-						 yScrollNum);
-	
+	yScroll = NewControl(GetDialogWindow(StaffDlog), &itemRect, "\p.", true, 0, 0, 0, gScrollBarID, yScrollNum);
 	
 	TextFont(kFontIDGeneva);
 	TextSize(9);
@@ -2416,8 +2326,6 @@ void CreateStaffWindow(void)
 	YSize = thePrefs.TrackHeight;
 	XSize = BEMOLSIZE + 12;
 	GetDialogItem(StaffDlog, 1, &itemType, &itemHandle, &StaffRect);
-	
-	//	TextFont(0);	TextSize(0);
 	
 	NumToString(curInstru, aStr);
 	SetDText(StaffDlog, 11, aStr);
@@ -2445,12 +2353,12 @@ void CreateStaffWindow(void)
 	for (i = 0; i < 5; i++) noteinv[i] 		= GetCIcon(600+i);
 	for (i = 0; i < 3; i++) demitonIcon[i] 	= GetCIcon(700+i);
 	
-	MyTrackingHandlerUPP 		= NewDragTrackingHandlerUPP(MyTrackingStaff);
-	MyReceiveDropHandlerUPP 	= NewDragReceiveHandlerUPP(MyReceiveDropStaff);
-	mySendDataUPP 				= NewDragSendDataUPP(MySendDataProcEditor);
+	MyTrackingHandlerUPP 	= NewDragTrackingHandlerUPP(MyTrackingStaff);
+	MyReceiveDropHandlerUPP = NewDragReceiveHandlerUPP(MyReceiveDropStaff);
+	mySendDataUPP 			= NewDragSendDataUPP(MySendDataProcEditor);
 	
-	InstallTrackingHandler((DragTrackingHandlerUPP) MyTrackingHandlerUPP, GetDialogWindow(StaffDlog), (void *) NULL);
-	InstallReceiveHandler((DragReceiveHandlerUPP) MyReceiveDropHandlerUPP, GetDialogWindow(StaffDlog), (void *) NULL);
+	InstallTrackingHandler(MyTrackingHandlerUPP, GetDialogWindow(StaffDlog), NULL);
+	InstallReceiveHandler(MyReceiveDropHandlerUPP, GetDialogWindow(StaffDlog), NULL);
 }
 
 void CloseStaff(void)
@@ -2480,8 +2388,8 @@ void CloseStaff(void)
 		thePrefs.WinPos[GetWRefCon(GetDialogWindow(StaffDlog))].v = Start.v;
 		thePrefs.WinPos[GetWRefCon(GetDialogWindow(StaffDlog))].h = Start.h;
 		
-		ReleaseResource((Handle) MainNote);
-		DisposeHandle((Handle) ptIcon);
+		ReleaseResource((Handle)MainNote);
+		DisposeHandle((Handle)ptIcon);
 		for (i = 0; i < 5; i++) DisposeHandle((Handle)silence[i]);
 		for (i = 0; i < 5; i++) DisposeHandle((Handle)noteIcn[i]);
 		for (i = 0; i < 5; i++) DisposeHandle((Handle)noteinv[i]);
@@ -2558,19 +2466,19 @@ static	ControlHandle	selectedControl;
 
 pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
 
-{	short				result, fRefNum;
-	long				textSize, inOutBytes;
-	unsigned long		attributes;
-	ItemReference		theItem;
-	RgnHandle			theRgn;
-	Point				theMouse, localMouse;
-	Rect				tempRect;
-	FlavorFlags     	theFlags;
-	Pcmd				*myPcmd;
-	RgnHandle			saveClip;
-	HFSFlavor			myFlavor;
-	FInfo				fndrInfo;
-	OSErr				iErr;
+{	short			result, fRefNum;
+	long			textSize, inOutBytes;
+	unsigned long	attributes;
+	ItemReference	theItem;
+	RgnHandle		theRgn;
+	Point			theMouse, localMouse;
+	Rect			tempRect;
+	FlavorFlags     theFlags;
+	Pcmd			*myPcmd;
+	RgnHandle		saveClip;
+	HFSFlavor		myFlavor;
+	FInfo			fndrInfo;
+	OSErr			iErr;
 	
 	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag))
 		return noErr;
