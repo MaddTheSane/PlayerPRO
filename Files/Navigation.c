@@ -835,7 +835,7 @@ OSErr DoCustomOpen(FSSpec	*spec)
 
 OSErr DoCustomSave(Str255 bStr, Str255 fileName, OSType theType, FSSpec *spec)
 {
-	
+	//TODO: Open based on UTI
 	NavReplyRecord		reply;
 	NavDialogOptions	dialogOptions;
 	OSErr				theErr;
