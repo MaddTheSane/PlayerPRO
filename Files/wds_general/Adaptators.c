@@ -1386,7 +1386,7 @@ pascal void actionProcAdap(ControlHandle theControl, short ctlPart)
 	minValue = GetControlMinimum(theControl);
 	curVal = sVal = GetControlValue(theControl);
 
-	switch(ctlPart)
+	switch (ctlPart)
 		{
 			case kControlUpButtonPart:
 				curVal -= 1;
@@ -1912,7 +1912,7 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 		}
 	}
 	
-	switch(whichItem)
+	switch (whichItem)
 	{
 			/*	case 18:
 			 if (GetControlHilite(MaxBut) == 0 && MyTrackControl(MaxBut, theEvent.where, NULL))
@@ -2345,7 +2345,7 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 					{
 						temp = LoWord(mresult );
 						
-						switch(temp)
+						switch (temp)
 						{
 							case 1:	// No Effect 
 								if (MADDriver->masterVST[ i])
@@ -2459,7 +2459,7 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 				
 				curMusic->hasChanged = true;
 				
-				switch(kindCntl)
+				switch (kindCntl)
 				{
 						
 					case 'D':
@@ -2525,7 +2525,7 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 							{
 								temp = LoWord(mresult );
 								
-								switch(temp)
+								switch (temp)
 								{
 									case 1:
 										curMusic->header->chanBus[ i].copyId = i;
@@ -2593,7 +2593,7 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 							{
 								temp = LoWord(mresult );
 								
-								switch(temp)
+								switch (temp)
 								{
 									case 1:	// No Effect 
 										if (MADDriver->chanVST[ i][ whichFxTrack])

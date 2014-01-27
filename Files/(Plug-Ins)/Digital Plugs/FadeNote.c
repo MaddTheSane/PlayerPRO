@@ -295,14 +295,17 @@ static MenuHandle CreateMenu()
 static short Text2Note(Str255 myTT)
 {
 	short		Oct;
-
-	Oct = myTT[3] - 48;
+	
+	if (myTT[0] > 2)
+		Oct = myTT[3] - 48;
+	else
+		Oct = myTT[2] - 48;
+	
 	Oct *= 12;
 	
 	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
 	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
-	switch(myTT[1])
-	{
+	switch (myTT[1]) {
 		case 'C':
 		case 'c':
 			Oct += 0;
@@ -337,7 +340,7 @@ static short Text2Note(Str255 myTT)
 		case 'b':
 			Oct += 11;
 			break;
-		
+			
 		default:
 			Oct = 0xFF;
 			break;
@@ -346,7 +349,7 @@ static short Text2Note(Str255 myTT)
 	if (Oct != 0xFF) {
 		if (myTT[2] == '#')
 			Oct++;
-		if (Oct >= 96)
+		if (Oct > 95)
 			Oct = 0xFF;
 		if (Oct < 0)
 			Oct = 0xFF;
@@ -386,7 +389,7 @@ static OSErr mainFadeNote(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	
 		ModalDialog(thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 7:
 			case 8:

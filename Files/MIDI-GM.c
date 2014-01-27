@@ -417,7 +417,7 @@ long CountAtomById(MyAtom at, long type)
 		if (sck.ckid == type)
 			index++;
 		
-		switch(sck.ckid) {
+		switch (sck.ckid) {
 			case 'LIST':
 				
 				fSize = 4;
@@ -483,7 +483,7 @@ OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 			index++;
 		}
 		
-		switch(sck.ckid)
+		switch (sck.ckid)
 		{
 			case 'LIST':
 				//	case 'INFO':
@@ -833,7 +833,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 							BlockMoveData(data, curData->data, dataAt.size);
 						DisposePtr(data);
 						
-						switch(fmt.wBitsPerSample) {
+						switch (fmt.wBitsPerSample) {
 							case 8:
 								ConvertInstrumentIn((Byte*)curData->data, dataAt.size);
 								break;
@@ -997,7 +997,7 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 						}
 						
 						if (GetNEOSType(sdesc->dataFormat) == 'raw ') {
-							switch(GetNEShort(sdesc->sampleSize)) {
+							switch (GetNEShort(sdesc->sampleSize)) {
 								case 8:
 									ConvertInstrumentIn((Byte*) curData->data, inOutBytes);
 									break;

@@ -85,13 +85,6 @@ void			ConvertInstrumentMode(sData	*curData, short);
 void			SetInstruEditor(short instru);
 OSErr CloseInstruData(DialogPtr TheDia);
 
-/*
-#if defined(powerc) || defined (__powerc)
-#else
-pascal OSErr IconIDToRgn (RgnHandle theRgn, const Rect *iconRect, short alignment, short iconID) = {0x303C, 0x0613, 0xABC9};
-#endif
-*/
-
 /*void ForceFinderToUpdateFileIcon(FSSpecPtr theFile)
 {
 	CInfoPBRec tempPB;
@@ -114,7 +107,6 @@ pascal OSErr IconIDToRgn (RgnHandle theRgn, const Rect *iconRect, short alignmen
 
 Ptr MyExp1to3(Ptr sound, unsigned long numSampleFrames)
 {
-	long	i;
 	Ptr		inState, outState;
 	Ptr		outBuffer;
 
@@ -136,7 +128,6 @@ Ptr MyExp1to3(Ptr sound, unsigned long numSampleFrames)
 
 Ptr MyExp1to6(Ptr sound, unsigned long numSampleFrames)
 {
-	long	i;
 	Ptr		inState, outState;
 	Ptr		outBuffer;
 
@@ -164,11 +155,7 @@ Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, u
 	SoundHeaderPtr 	header;
 	CmpSoundHeader	*CmpHeader;
 	ExtSoundHeader	*ExtHeader;
-	SndCommand 		cmd;
-	OSErr 			result;
-	long			i,x, numFrames;
-	Boolean			change = false;
-	Str255			aStr;
+	long			i;
 	
 	*loopStart = 0;
 	*loopEnd = 0;
@@ -178,79 +165,77 @@ Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, u
 	// determine what format sound we have.
 	soundFormat = *(short*) soundPtr;
 	
-	switch(soundFormat)
-	{
+	switch (soundFormat) {
 		case 1:						// format 1 sound.
 			// look inside the format 1 resource and deduce offsets.
-			numSynths = ((short*)soundPtr)[1];					// get # synths. 
+			numSynths = ((short*)soundPtr)[1];					// get # synths.
 			numCmds = *(short*)(soundPtr+4+numSynths*6);		// get # commands.
-		break;
-		
-		case 2:						// format 2 sound. 
-			numSynths = 0;			// format 2 sounds have no synth's. 
+			break;
+			
+		case 2:						// format 2 sound.
+			numSynths = 0;			// format 2 sounds have no synth's.
 			numCmds = ((short*)soundPtr)[2];
-		break;
-		
+			break;
+			
 		default:					// jack says, what about 12? or 6?
 			MyDebugStr(__LINE__, __FILE__, " NSndToHandle... Burkk");
-		break;
-	} 
+			break;
+	}
 	
 	// compute address of sound header.
 	offset = 6 + 6*numSynths + 8*numCmds;
 	header = (SoundHeaderPtr) (((Ptr) soundPtr) + offset);
 	
-	switch(header->encode)
-	{
+	switch (header->encode) {
 		case cmpSH:
 			CmpHeader = (CmpSoundHeader*) header;
 			CompressID = CmpHeader->compressionID;
-			numChannels = CmpHeader->numChannels;			
-
+			numChannels = CmpHeader->numChannels;
+			
 			*loopStart = CmpHeader->loopStart;
 			*loopEnd = CmpHeader->loopEnd;
 			*sampleSize = CmpHeader->sampleSize;
 			if (numChannels == 2) *stereo = true;
 			else *stereo = false;
 			
-			if (sampleRate != NULL) 	*sampleRate	= CmpHeader->sampleRate;
-			if (baseFreq != NULL) 	*baseFreq 	= CmpHeader->baseFrequency;
-
+			if (sampleRate != NULL)
+				*sampleRate	= CmpHeader->sampleRate;
+			if (baseFreq != NULL)
+				*baseFreq 	= CmpHeader->baseFrequency;
+			
 			MusSize = (*CmpHeader).numFrames;
-			if (*stereo)
-			{
+			if (*stereo) {
 				MusSize *= 2;
 				*loopStart *=2;
 				*loopEnd *=2;
 			}
 			BlockMoveData((*CmpHeader).sampleArea, soundPtr, MusSize);
-					
-			switch(CompressID )
-			{
+			
+			switch (CompressID) {
 				case threeToOne:
 					MusSize *= 2;
 					soundPtr = MyExp1to3(soundPtr, MusSize);
 					MusSize *= 3;
-				break;
-				
+					break;
+					
 				case sixToOne:
 					soundPtr = MyExp1to6(soundPtr, MusSize);
 					MusSize *= 6;
-				break;
-				
+					break;
+					
 				default:
 					return NULL;
-				break;
+					break;
 			}
 			
-		break;
-
+			break;
+			
 		case extSH:
 			ExtHeader = (ExtSoundHeader*) header;
 			
 			MusSize = ExtHeader->numFrames;
 			numChannels = ExtHeader->numChannels;
-
+			
 			*loopStart = ExtHeader->loopStart;
 			*loopEnd = ExtHeader->loopEnd;
 			*sampleSize = ExtHeader->sampleSize;
@@ -261,81 +246,78 @@ Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, u
 			if (numChannels == 2) *stereo = true;
 			else *stereo = false;
 			
-			if (*stereo)
-			{
+			if (*stereo) {
 				MusSize *= 2;
 				*loopStart *=2;
 				*loopEnd *=2;
 			}
 			
-			if (*sampleSize == 16)
-			{
+			if (*sampleSize == 16) {
 				MusSize *= 2;
 				*loopStart *= 2;
 				*loopEnd *= 2;
 			}
 			
-			if (numChannels == 1) BlockMoveData(ExtHeader->sampleArea, soundPtr, MusSize);
-			else if (numChannels == 2)
-			{
+			if (numChannels == 1)
 				BlockMoveData(ExtHeader->sampleArea, soundPtr, MusSize);
-			}
-			else
-			{
-				if (*sampleSize == 8)
-				{
-					for (i = 0; i < MusSize; i ++)
-					{
-						soundPtr[ i] = ExtHeader->sampleArea[ i * numChannels];
+			else if (numChannels == 2) {
+				BlockMoveData(ExtHeader->sampleArea, soundPtr, MusSize);
+			} else {
+				if (*sampleSize == 8) {
+					for (i = 0; i < MusSize; i ++) {
+						soundPtr[i] = ExtHeader->sampleArea[i * numChannels];
 					}
-				}
-				else
-				{
+				} else {
 					MusSize /= 2;
-					for (i = 0; i < MusSize; i ++)
-					{
-						((short*) soundPtr)[ i] = ((short*) ExtHeader->sampleArea)[ i * numChannels];
+					for (i = 0; i < MusSize; i ++) {
+						((short*)soundPtr)[i] = ((short*)ExtHeader->sampleArea)[i * numChannels];
 					}
 					MusSize *= 2;
 				}
 			}
-		break;
-		
+			break;
+			
 		default:
 		case stdSH:
 			*loopStart = header->loopStart;
 			*loopEnd = header->loopEnd;
 			
-			if (sampleRate != NULL) 	*sampleRate	= header->sampleRate;
-			if (baseFreq != NULL) 	*baseFreq 	= header->baseFrequency;
+			if (sampleRate != NULL)
+				*sampleRate	= header->sampleRate;
+			if (baseFreq != NULL)
+				*baseFreq 	= header->baseFrequency;
 			
 			MusSize = header->length;
 			BlockMoveData((*header).sampleArea, soundPtr, MusSize);
-		break;
+			break;
 	}
 	SetPtrSize(soundPtr, MusSize);
 	
-	switch(*sampleSize)
-	{
-		case 8:	ConvertInstrumentIn((Byte*) soundPtr, MusSize);	break;
+	switch (*sampleSize) {
+		case 8:
+			ConvertInstrumentIn((Byte*) soundPtr, MusSize);
+			break;
 	}
 	
-	if (*loopEnd - *loopStart < 4) { *loopEnd = 0;	*loopStart = 0;}
+	if (*loopEnd - *loopStart < 4) {
+		*loopEnd = 0;
+		*loopStart = 0;
+	}
 	
 	return soundPtr;
 }
 
 
-OSErr AddSoundToMAD(	Ptr				theSound,
-						long			lS,
-						long			lE,
-						short			sS,
-						short			bFreq,
-						unsigned long	rate,
-						Boolean			stereo,
-						Str255			name,
-						short			ins,
-						short			*sampleID)
+OSErr AddSoundToMAD(Ptr				theSound,
+					long			lS,
+					long			lE,
+					short			sS,
+					short			bFreq,
+					unsigned long	rate,
+					Boolean			stereo,
+					Str255			name,
+					short			ins,
+					short			*sampleID)
 {
 	long 	inOutBytes, i;
 	sData	*curData;
@@ -533,7 +515,7 @@ void DoGrowInstruList(DialogPtr	theDialog)
 
 void GetQualityString(short ID, Str255 str)
 {
-	switch(ID)
+	switch (ID)
 	{
 		case 1:
 			pStrcpy(str, "\pF#5");
@@ -636,7 +618,7 @@ void DrawSmallPianoKey(short i, short color, Rect aRect)
 		
 		InsetRect(&aRect, 1, 2);
 		
-		switch(color)
+		switch (color)
 		{
 			case normalKey:		ForeColor(blackColor);		break;
 			case redKey:		RGBForeColor(&myRed);		break;
@@ -650,7 +632,7 @@ void DrawSmallPianoKey(short i, short color, Rect aRect)
 	{
 		InsetRect(&aRect, 3, 1);
 		
-		switch(color)
+		switch (color)
 		{
 			case normalKey:		ForeColor(whiteColor);		break;
 			case redKey:		ForeColor(redColor);		break;
@@ -942,7 +924,7 @@ pascal void actionProcInstru(ControlHandle theControl, short ctlPart)
 	minValue = GetControlMinimum(theControl);
 	curVal = sVal = GetControlValue(theControl);
 
-	switch(ctlPart)
+	switch (ctlPart)
 	{
 		case kControlUpButtonPart:
 		case kControlPageUpPart:
@@ -1039,7 +1021,7 @@ void ShowSampleData(DialogPtr	TheDia)
 		NumToString(sampleEID+1, aStr);
 		SetDText(TheDia, 38, aStr);
 		
-		switch(curEData->loopType)
+		switch (curEData->loopType)
 		{
 			case eClassicLoop:
 				SetDText(TheDia, 55, "\pClassic");
@@ -1265,7 +1247,7 @@ OnRepart:
 		//	ModalDialog(MyDlgFilterDesc, &itemHit);
 		MyModalDialog(TheDia, &itemHit);
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 58:		// Previous
 				if (ins > 0)
@@ -3918,7 +3900,7 @@ void DoItemPressInstruList(short whichItem, DialogPtr whichDialog)
 		}
 	}
 
-	switch(whichItem)
+	switch (whichItem)
 	{
 		case 18:
 			if (GetControlHilite(PlayBut) == 0)// && MyTrackControl(PlayBut, theEvent.where, NULL))

@@ -807,7 +807,7 @@ void HandleCustomMouseNAVDown(NavCBRecPtr callBackParms)
 		realItem = theItem - firstItem + 1;		// map it to our DITL constants:	
 	}
 	
-	switch(realItem)
+	switch (realItem)
 	{
 		case 1:
 			InverseRadio(firstItem + 1, GetDialogFromWindow(callBackParms->window));

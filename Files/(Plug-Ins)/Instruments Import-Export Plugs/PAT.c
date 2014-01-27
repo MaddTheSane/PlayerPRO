@@ -298,7 +298,7 @@ static OSErr mainPAT(		OSType					order,						// Order to execute
 //	short	x;
 	long	inOutCount;
 		
-	switch(order)
+	switch (order)
 	{
 		case 'IMPL':
 		{

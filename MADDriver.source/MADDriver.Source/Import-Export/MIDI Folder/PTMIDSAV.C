@@ -119,30 +119,28 @@ static Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *
 	// determine what format sound we have.
 	soundFormat = *(short*)soundPtr;
 	
-	switch(soundFormat)
-	{
+	switch (soundFormat) {
 		case 1:						// format 1 sound.
 			// look inside the format 1 resource and deduce offsets.
 			numSynths = ((short*)soundPtr)[1];					// get # synths. 
 			numCmds = *(short*)(soundPtr+4+numSynths*6);		// get # commands.
-		break;
+			break;
 		
 		case 2:						// format 2 sound. 
 			numSynths = 0;			// format 2 sounds have no synth's. 
 			numCmds = ((short*)soundPtr)[2];
-		break;
+			break;
 		
 		default:					// jack says, what about 12? or 6?
 			DebugStr("\p NSndToHandle... Burkk");
-		break;
+			break;
 	} 
 
 	// compute address of sound header.
 	offset = 6 + 6*numSynths + 8*numCmds;
 	header = (SoundHeaderPtr) ((*sound) + offset);
 	
-	switch(header->encode)
-	{
+	switch (header->encode) {
 		case cmpSH:
 			CmpHeader = (CmpSoundHeader*) header;
 			CompressID = CmpHeader->compressionID;
@@ -168,7 +166,7 @@ static Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *
 			BlockMoveData((*CmpHeader).sampleArea, *sound, MusSize);
 			HUnlock(sound);
 					
-			switch(CompressID )
+			switch (CompressID )
 			{
 			/*	case threeToOne:
 					MusSize *= 2;

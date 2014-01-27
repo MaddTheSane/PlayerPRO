@@ -129,7 +129,7 @@ static OSErr ConvertOKTA2Mad(Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDri
 		theOktaPos += 8L;
 		
 		MOT32(&aSect->name);
-		switch(aSect->name)
+		switch (aSect->name)
 		{
 			case 'CMOD':
 				Okta->splitted[0] = theOktaPos[1];
@@ -343,7 +343,7 @@ static OSErr ConvertOKTA2Mad(Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDri
 						aCmd->ins  = OktaCmd->b2 + 1;
 					}
 					
-					switch(OktaCmd->b3)
+					switch (OktaCmd->b3)
 					{
 						case 31:
 							if (OktaCmd->b4 <= 0x40)
@@ -430,7 +430,7 @@ static OSErr ExtractOKTAInfo(PPInfoRec *info, Ptr theOkta, long MODSize)
 			theOktaPos += 8L;
 			MOT32(&aSect->name);
 			
-			switch(aSect->name)
+			switch (aSect->name)
 			{
 				case 'PBOD':
 					pbod_count++;
@@ -467,7 +467,7 @@ static OSErr mainOKTA(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 	long	sndSize;
 	UNFILE	iFileRefI;
 	
-	switch(order)
+	switch (order)
 	{
 		case 'IMPL':
 			iFileRefI = iFileOpen(AlienFileName);

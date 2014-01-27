@@ -136,7 +136,7 @@ static OSErr mainFade(	sData					*theData,
 	
 	if (getParams(&to, &from, thePPInfoPlug))
 	{
-		switch(theData->amp)
+		switch (theData->amp)
 		{
 			case 8:
 				Sample8Ptr += SelectionStart;

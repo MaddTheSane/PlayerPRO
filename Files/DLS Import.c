@@ -434,7 +434,7 @@ void DLSImport(void)
 		//ModalDialog(MyDlgFilterDesc, &itemHit);
 		MyModalDialog(aDialog, &itemHit);
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 13:
 				PressSmallPianoQ(aDialog, inst, ins);

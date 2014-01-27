@@ -111,7 +111,7 @@ Boolean CheckFileType(FSSpec theSpec, OSType theType)
 	HGetVol(NULL, &saved.vRefNum, &saved.parID);
 	HSetVol(NULL, theSpec.vRefNum, theSpec.parID);
 	
-	switch(theType) {
+	switch (theType) {
 		case 'MADK':
 			MyP2CStr(theSpec.name);
 			if (CheckMADFile((Ptr) theSpec.name) == noErr)
@@ -421,7 +421,7 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 	do {
 		MyModalDialog(aDialog, &itemHit);
 		
-		switch(itemHit) {
+		switch (itemHit) {
 			case 37:
 				*PatternID = -1;
 				InitSoundQualityExport(aDialog, ChannelNo,  CompressionType,  FrequenceSpeed,  amplitude, PatternID, driver, OnlyCurrent);
@@ -624,7 +624,7 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 			case 12:		// Amplitude
 			case 13:
 			case 14:
-				switch(itemHit) {
+				switch (itemHit) {
 					case 12:
 						*amplitude = 8;
 						break;
@@ -677,7 +677,7 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 			case 17:
 			case 4:
 				//	case 34:
-				switch(itemHit)
+				switch (itemHit)
 			{
 					//	case 15:	*ChannelNo = MonoOutPut;			break;
 					//	case 16:	*ChannelNo = StereoOutPut;			break;
@@ -693,7 +693,7 @@ Boolean SoundQualityExport(Boolean OnlyCurrent,
 			case 7:
 			case 5:
 			case 6:
-				switch(itemHit)
+				switch (itemHit)
 			{
 				case 7:	*CompressionType = 'NONE';	break;
 				case 5:	*CompressionType = 'MAC3';	break;
@@ -791,7 +791,7 @@ void ExportFile(OSType theType, FSSpec *newFile)
 	
 	FillVSTEffects();
 	
-	switch(theType) {
+	switch (theType) {
 		case 'MADS':
 			// Export to the MADS format
 			

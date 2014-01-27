@@ -364,7 +364,7 @@ static OSErr mainAMF(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoR
 		
 	myErr = noErr;
 
-	switch(order)
+	switch (order)
 	{
 		case 'IMPL':
 			iFileRefI = iFileOpen(AlienFileName);

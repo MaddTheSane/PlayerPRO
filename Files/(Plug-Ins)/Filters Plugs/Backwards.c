@@ -20,7 +20,7 @@ static OSErr mainBackwards(sData		*theData,
 	long	i;
 	unsigned short	temp1, temp2;
 	
-	switch(theData->amp)
+	switch (theData->amp)
 	{
 		case 8:
 		{

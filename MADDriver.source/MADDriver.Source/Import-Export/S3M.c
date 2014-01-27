@@ -46,7 +46,7 @@ static void ConvertS3MEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 	Byte		LoB1 = LOW(B1);
 	Byte		HiB1 = HI(B1);
 	
-	switch(B0 + 0x40)
+	switch (B0 + 0x40)
 	{
 			// Speed
 		case 'A':	*Cmd = speedE;		*Arg = B1;	break;
@@ -135,7 +135,7 @@ static void ConvertS3MEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 		case 'O':	*Cmd = offsetE;		*Arg = B1;	break;
 			
 		case 'S':		// Special Effects
-			switch(HiB1)
+			switch (HiB1)
 		{
 			case 2:	*Cmd = extendedE;	*Arg = 5 << 4;		*Arg += LoB1;		break;	// FineTune
 			case 3:	*Cmd = extendedE;	*Arg = 4 << 4;		*Arg += LoB1;		break;	// Set Vibrato WaveForm
@@ -169,7 +169,7 @@ static void ConvertMADEffect(Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 	*B0 = 0;
 	*B1 = 0;
 	
-	switch(Cmd)
+	switch (Cmd)
 	{
 		case speedE:
 			if (Arg < 32)
@@ -195,7 +195,7 @@ static void ConvertMADEffect(Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 		case offsetE:		*B0 = 'O' - 0x40;	*B1 = Arg;	break;
 			
 		case extendedE:
-			switch((Arg & 0xF0) >> 4)
+			switch ((Arg & 0xF0) >> 4)
 		{
 			case 1:	*B0 = 'F' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
 			case 2:	*B0 = 'E' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
@@ -977,7 +977,7 @@ static OSErr ConvertS3M2Mad(Ptr	theS3M, long size, MADMusic *theMAD, MADDriverSe
 			{
 				BlockMoveData(theInstrument [i], curData->data, curData->size);
 				
-				switch(curData->amp)
+				switch (curData->amp)
 				{
 					case 16:
 					{
@@ -1300,7 +1300,7 @@ static OSErr mainS3M(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoR
 		
 	myErr = noErr;
 
-	switch(order)
+	switch (order)
 	{
 		case 'EXPL':
 			AlienFile = ConvertMad2S3M(MadFile, init, &sndSize);

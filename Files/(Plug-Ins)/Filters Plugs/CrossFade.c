@@ -20,7 +20,7 @@ static OSErr mainCrossFade(	sData					*theData,
 				PPInfoPlug				*thePPInfoPlug,
 				short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	switch(theData->amp)
+	switch (theData->amp)
 	{
 		case 8:
 		{

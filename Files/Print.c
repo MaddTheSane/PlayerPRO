@@ -129,7 +129,7 @@ void Print(void)
 	
 	WindType = GetWRefCon(oldWindow);
 	
-	switch(WindType)
+	switch (WindType)
 	{
 		case RefPartition:
 		case RefSample:
@@ -153,7 +153,7 @@ void Print(void)
 		printPort = PrOpenDoc(hPrint, nil, nil);
 		if (PrError() == noErr)
 		{			
-			switch(WindType)
+			switch (WindType)
 			{
 				case 0:
 					PrOpenPage(printPort, nil);

@@ -22,7 +22,7 @@ static OSStatus CAAudioCallback(void                            *inRefCon,
 {
 	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
 	if(theRec->Reading == false) {
-		switch(theRec->DriverSettings.outPutBits)
+		switch (theRec->DriverSettings.outPutBits)
 		{
 			case 8:
 				memset(theRec->CABuffer, 0x80, theRec->BufSize);
@@ -45,7 +45,7 @@ static OSStatus CAAudioCallback(void                            *inRefCon,
         while (remaining > 0) {
             if (theRec->CABufOff >= theRec->BufSize) {
                 if(!DirectSave(theRec->CABuffer, NULL, theRec)) {
-					switch(theRec->DriverSettings.outPutBits)
+					switch (theRec->DriverSettings.outPutBits)
 					{
 						case 8:
 							memset(theRec->CABuffer, 0x80, theRec->BufSize);

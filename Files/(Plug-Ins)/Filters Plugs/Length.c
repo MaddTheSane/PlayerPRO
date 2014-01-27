@@ -111,7 +111,7 @@ static Ptr ConvertSampleSize(Ptr src, long srcSize, short amp, long dstSize, Boo
 	dst16 = (short*) dst;
 	dst8 = (char*) dst;
 		
-	switch(amp)
+	switch (amp)
 	{
 	case 8:
 		for (x = 0; x < newSize; x++)
@@ -243,7 +243,7 @@ static OSErr mainLength(			sData					*theData,
 //		ModalDialog((ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 //		#endif
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 		case -5:
 		case 0:

@@ -115,7 +115,7 @@ void FillInterTextSpectrum(Rect *tempRect, short i)
 	Str255		aStr, bStr;
 	long		defV = 1;
 	
-	switch(OsciType) {
+	switch (OsciType) {
 		case OutPutAudio:
 			pStrcpy(aStr, "\pAudio OutPut: ");
 		break;
@@ -133,7 +133,7 @@ void FillInterTextSpectrum(Rect *tempRect, short i)
 	
 	pStrcat(aStr, "\p    Frequency: ");
 	
-	switch(OsciScale)
+	switch (OsciScale)
 	{
 		case linear:
 			defV = osci[ i].Freq;
@@ -145,7 +145,7 @@ void FillInterTextSpectrum(Rect *tempRect, short i)
 		break;
 	}
 	
-	switch(OsciType)
+	switch (OsciType)
 	{
 		case OutPutAudio:
 			NumToString((defV * FixedToInt(MADDriver->DriverSettings.outPutRate) / 1000), bStr);
@@ -394,7 +394,7 @@ void DrawSpectrum(OsciRec	*osciPtr, short no)
 	Ptr		spectrumPtr = NULL;
 	Rect	caRect, tempRect;
 
-	switch(OsciScale)
+	switch (OsciScale)
 	{
 		case linear:
 			spectrumPtr = MakeCalculusSpectrum(GetAudioSourceSpectrum(no), false);
@@ -553,7 +553,7 @@ pascal void actionProcSpectrum(ControlHandle theControl, short ctlPart)
 	
 	OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
 	
-	switch(ctlPart)
+	switch (ctlPart)
 	{
 		case kControlUpButtonPart:
 			if (lRefCon == hID)
@@ -663,7 +663,7 @@ void DoItemPressSpectrum(short whichItem, DialogPtr whichDialog)
 		}
 	}
 	
-	switch(whichItem) {
+	switch (whichItem) {
 		case 11:
 		{
 			MenuHandle	tempMenu = GetMenu(160);
@@ -687,7 +687,7 @@ void DoItemPressSpectrum(short whichItem, DialogPtr whichDialog)
 			
 			if (HiWord(mresult) != 0) {
 				OsciScale = LoWord(mresult);
-				switch(OsciScale) {
+				switch (OsciScale) {
 					case linear:
 						SetDText(SpectrumDlog, 3, "\pLinear");
 						break;

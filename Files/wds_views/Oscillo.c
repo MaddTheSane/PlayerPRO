@@ -331,10 +331,10 @@ static	short	MiniSwitch = 0;
 
 Ptr GetAudioChannel(Boolean LeftChannel, long Size)
 {
-	switch(MADDriver->DriverSettings.outPutBits)
+	switch (MADDriver->DriverSettings.outPutBits)
 	{
 		case 16:
-			switch(MADDriver->DriverSettings.outPutMode)
+			switch (MADDriver->DriverSettings.outPutMode)
 			{
 			/*	case MonoOutPut:
 					return Inverse16(MADDriver->OscilloWavePtr, Size);
@@ -405,7 +405,7 @@ Ptr GetAudioChannel(Boolean LeftChannel, long Size)
 		break;
 		
 		case 8:
-			switch(MADDriver->DriverSettings.outPutMode)
+			switch (MADDriver->DriverSettings.outPutMode)
 			{
 			/*	case MonoOutPut:
 					return MADDriver->OscilloWavePtr;
@@ -429,7 +429,7 @@ Ptr GetQuicktimeChannel(Boolean LeftChannel, long Size)
 {
 Ptr	 tempPtr = (Ptr) -1L;
 
-	switch(GetQuicktimeBits())
+	switch (GetQuicktimeBits())
 	{
 		case 16:
 			tempPtr = Inverse16(GetQuicktimeSource(), 4096);
@@ -453,7 +453,7 @@ Ptr GetAudioInPut(Boolean LeftChannel, long Size)
 		return GetAudioChannel(false, Size);
 	}
 	
-	switch(SoundInputBits)
+	switch (SoundInputBits)
 	{
 		case 16:
 			return Inverse16(outPutPtr, Size/2);
@@ -1056,7 +1056,7 @@ void FillInterText(Rect *tempRect, short i)
 {
 	Str255		aStr, bStr, cStr;
 	
-	switch(OsciType)
+	switch (OsciType)
 	{
 		case OutPutAudio:
 			pStrcpy(aStr, "\pAudio OutPut: ");
@@ -1231,7 +1231,7 @@ GetPortBounds(GetDialogPort(OscilloDlog), &caRect);
 
 OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
 
-	switch(ctlPart)
+	switch (ctlPart)
 	{
 		case kControlUpButtonPart:
 			if (lRefCon == hID) curVal -= OSCILLODEF;
@@ -1336,7 +1336,7 @@ void DoItemPressOscillo(short whichItem, DialogPtr whichDialog)	/* Item hit ID t
 	}
 	
 	
-	switch(whichItem)
+	switch (whichItem)
 	{
 		case 5:
 			InsertMenu(OsciTypeMenu, hierMenu);
@@ -1357,7 +1357,7 @@ void DoItemPressOscillo(short whichItem, DialogPtr whichDialog)	/* Item hit ID t
 			
 			if (HiWord(mresult) != 0)
 			{
-				switch(LoWord(mresult) - 1)
+				switch (LoWord(mresult) - 1)
 				{
 					case OutPutAudio:
 						OsciType = OutPutAudio;
@@ -1417,7 +1417,7 @@ void DoItemPressOscillo(short whichItem, DialogPtr whichDialog)	/* Item hit ID t
 			
 			if (HiWord(mresult) != 0)
 			{
-				switch(LoWord(mresult))
+				switch (LoWord(mresult))
 				{
 					case 1:	thePrefs.osciTile = true;	pStrcpy(aStr, "\pStack");	break;
 					case 2:	thePrefs.osciTile = false;	pStrcpy(aStr, "\pTile");	break;
@@ -1434,7 +1434,7 @@ void DoItemPressOscillo(short whichItem, DialogPtr whichDialog)	/* Item hit ID t
 			InsertMenu(OsciHMenu, hierMenu);
 			GetDialogItem(whichDialog, whichItem, &itemType, &itemHandle, &tempRect);
 			
-			switch(OsciH)
+			switch (OsciH)
 		{
 			default:
 			case 16:	curSelec = 0;		break;
@@ -1458,7 +1458,7 @@ void DoItemPressOscillo(short whichItem, DialogPtr whichDialog)	/* Item hit ID t
 			
 			if (HiWord(mresult) != 0)
 			{
-				switch(LoWord(mresult))
+				switch (LoWord(mresult))
 				{
 					case 1:	OsciH = 16;		OsciDD = 4; 	break;
 					case 2:	OsciH = 32;		OsciDD = 3;		break;
@@ -1714,7 +1714,7 @@ void InitOscillo(void)
 
 long GetAudioSize(void)
 {
-	switch(OsciType)
+	switch (OsciType)
 	{
 		case OutPutAudio:
 			return MADDriver->ASCBUFFERReal;
@@ -1740,7 +1740,7 @@ Ptr GetAudioSource(short item)
 {
 	Ptr	sourcePtr;
 
-	switch(OsciType)
+	switch (OsciType)
 	{
 		case OutPutAudio:
 			OsciColor = 0x90;

@@ -197,7 +197,7 @@ void DoGrowVisual(void)
 
 OSStatus PlayerPROProc(void *appCookie, OSType message, struct PlayerMessageInfo *messageInfo)
 {
-	switch(message)
+	switch (message)
 	{
 		case kPlayerRegisterVisualPluginMessage:
 			VisualPlug[currentID].msgPlayer = *messageInfo;
@@ -274,7 +274,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 		UseResFile(fileID);
 	}
 	
-	switch(msg)
+	switch (msg)
 	{
 		case kVisualPluginInitializeMessage:
 			//msgVisual.u.initMessage.appCookie = VisualDlog;
@@ -371,7 +371,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 	if (Err ) {
 		//Debugger();//Erreur(Err, Err);
 	} else {
-		switch(msg)		// OutPut
+		switch (msg)		// OutPut
 		{
 			case kVisualPluginProcessSamplesMessage:
 			{

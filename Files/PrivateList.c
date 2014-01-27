@@ -723,7 +723,7 @@ void PLDoArrows(short theChar, PrivateList	*aL)
 	GetPort(&savePort);
 	SetPortDialogPort(aL->aDia);
 	
-	switch(theChar) {
+	switch (theChar) {
 		case 0x0B:	// page up
 			PLSetMyIntList(aL);
 			PLactionProcPartition(aL->yScroll, kControlPageUpPart);

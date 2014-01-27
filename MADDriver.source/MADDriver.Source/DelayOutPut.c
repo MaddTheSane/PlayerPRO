@@ -51,7 +51,7 @@ void MADCreateOverShoot(MADDriverRec *intDriver)
 {
 	long	i, x;
 	
-	switch(intDriver->DriverSettings.outPutBits)
+	switch (intDriver->DriverSettings.outPutBits)
 	{
 		case 16:
 			intDriver->DASCBuffer 			= (long*) MADNewPtrClear(((long) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, intDriver->lib);
@@ -84,7 +84,7 @@ void MADKillOverShoot(MADDriverRec *intDriver)
 {
 	short	i;
 
-	switch(intDriver->DriverSettings.outPutBits)
+	switch (intDriver->DriverSettings.outPutBits)
 	{
 		case 16:
 			if (intDriver->DASCBuffer != NULL) DisposePtr((Ptr) intDriver->DASCBuffer);

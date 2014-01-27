@@ -69,36 +69,37 @@ static short MADread(short id, Ptr dst, long size)
 
 static short MADseek(short id, long size, short mode)
 {
-	switch(mode)
-	{
-		case SEEK_CUR:	MADpos[ id] += size;	break;
-		case SEEK_SET:	MADpos[ id]  = size;	break;
+	switch (mode) {
+		case SEEK_CUR:
+			MADpos[id] += size;
+			break;
+			
+		case SEEK_SET:
+			MADpos[id]  = size;
+			break;
 		
 		default:
 			DebugStr("\pMADseek");
-		break;
+			break;
 	}
 	
-	if (MADpos[ id] < 0) return -1;
-	if (MADpos[ id] >= GetPtrSize(MIDIGenPtr)) return -1;
+	if (MADpos[id] < 0)
+		return -1;
+	if (MADpos[id] >= GetPtrSize(MIDIGenPtr))
+		return -1;
 	
 	return 0;
 }
 
 static long MADtell(short id)
 {
-	return MADpos[ id];
+	return MADpos[id];
 }
 
 static short MADclose(int b)
 {
-	
 	return 0;
 }
-
-
-
-
 
 /*
  * Init: Yes.. you guessed it. Initializes variables and stuff.

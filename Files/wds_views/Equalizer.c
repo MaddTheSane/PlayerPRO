@@ -378,7 +378,7 @@ void DoItemPressEQ(short whichItem, DialogPtr whichDialog)
 		GetPort(&savePort);
 		SetPortDialogPort(whichDialog);
 		
-			switch(whichItem)
+			switch (whichItem)
 			{
 				case 17:
 				//	InverseRadio(1, EQDlog);

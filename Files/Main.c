@@ -265,7 +265,7 @@ EXP void MyDebugStr(short line, Ptr file, Ptr text)
 	MyC2PStr((Ptr) dateS);
 	
 	ParamText(textS, fileS, lineS, dateS);
-	switch(Alert(130, NULL))
+	switch (Alert(130, NULL))
 	{
 		case 1:	return;				break;
 		case 5: Debugger();			break;
@@ -314,7 +314,7 @@ void SKVolume(short vol)
 
 void ClosePlayerWindow(DialogPtr	theDia)
 {
-	switch(GetWRefCon(GetDialogWindow(theDia)))
+	switch (GetWRefCon(GetDialogWindow(theDia)))
 	{
 		case RefVST:
 			VSTEditorClose(theDia, 11);
@@ -665,7 +665,7 @@ void ShowWindowPref(short whichState)
 		
 		if (ID != -1)
 		{
-			switch(ID)
+			switch (ID)
 			{
 				case RefStaff:			CreateStaffWindow();			if (StaffDlog != NULL) SelectWindow(GetDialogWindow(StaffDlog));		break;
 				case RefWave:			CreateWaveWindow();				if (WaveDlog != NULL) SelectWindow(GetDialogWindow(WaveDlog));		break;
@@ -723,7 +723,7 @@ void EraseGrowIcon(DialogPtr theDialog)
 	GrafPtr	SavePort;
 	Rect	caRect;
 	
-	switch(GetWRefCon(GetDialogWindow(theDialog))) {
+	switch (GetWRefCon(GetDialogWindow(theDialog))) {
 		case RefMODList:
 		case RefPatList:
 		case RefParti:
@@ -2014,7 +2014,7 @@ short NEWdoDlgEvt(EventRecord *evp, WindowPtr whichWindow)
 
 void ProcessDoItemPress(long ref, short whichItem, DialogPtr whichDialog)
 {
-	switch(ref)
+	switch (ref)
 	{
 		case RefVST:
 			VSTEditorDoItemPress(whichItem, whichDialog);
@@ -2229,7 +2229,7 @@ void GlobalDoKey(WindowPtr	theWind, char theChar)
 {
 	//if (theChar == 8) return;
 	
-	switch(GetWRefCon(theWind))
+	switch (GetWRefCon(theWind))
 	{
 		case RefInstruList:
 			DoKeyPressInstruList((short) theChar, -1);
@@ -2373,7 +2373,7 @@ void EventLoop3(void)
 	//	if (theOldDepth != theDepth) ReComputeVA();
 	//	theDepth = theOldDepth;
 	
-	switch(theEvent.what)
+	switch (theEvent.what)
 	{
 		case updateEvt:
 			DoUpdateEvent(&theEvent);
@@ -2469,7 +2469,7 @@ void EventLoop2(void)
 	gotEvent = WaitNextEvent(everyEvent, &theEvent, 1, gCursorRgn);
 	
 	//	PressInDialog = false;
-	switch(theEvent.what)
+	switch (theEvent.what)
 	{
 			
 		case activateEvt:
@@ -2553,7 +2553,7 @@ void EventLoop2(void)
 									SetPort(savePort);
 								}
 								
-								switch(thePrefs.KeyUpMode)
+								switch (thePrefs.KeyUpMode)
 								{
 									case eStop:
 										MADDriver->chan[ TrackMem[ x]].loopBeg = 0;
@@ -2782,7 +2782,7 @@ pascal short MyGetDirHook(short item, DialogPtr dPtr)
 	Rect				itemRect;
 	Boolean				MiseAjour = false;
 	
-	switch(item)
+	switch (item)
 	{
 		case 10:
 		case 11:
@@ -2957,7 +2957,7 @@ void DoMouseDown(EventRecord theEventI)
 	DesactivateCmdWindow();
 	UpdateALLWindow();
 	
-	switch(thePart)
+	switch (thePart)
 	{
 		case inContent:
 			PressInDialog = true;
@@ -3042,7 +3042,7 @@ void DoMouseDown(EventRecord theEventI)
 				
 				SetPortWindowPort(whichWindow);
 				
-				switch(GetWRefCon(whichWindow))
+				switch (GetWRefCon(whichWindow))
 				{
 					case RefVisual:
 						VisualFullScreen();
@@ -3248,7 +3248,7 @@ void DoMouseDown(EventRecord theEventI)
 				
 				while (Button());
 				
-				switch(GetWRefCon(whichWindow))
+				switch (GetWRefCon(whichWindow))
 				{
 					case 	RefInstruList:		ShowSection(0);	break;
 					case 	RefPartition:		ShowSection(0);	break;
@@ -3324,7 +3324,7 @@ void DoMouseDown(EventRecord theEventI)
 			break;
 			
 		case inGrow:
-			switch(GetWRefCon(whichWindow))
+			switch (GetWRefCon(whichWindow))
 		{
 			case RefPiano:
 				DoGrowPiano();
@@ -3406,7 +3406,7 @@ void DoUpdateEvent(EventRecord *theEventI)
 	
 	//if (EmptyRgn(((WindowPeek) theEventI->message)->updateRgn)) return;
 	
-	switch(GetWRefCon(((WindowPtr)theEventI->message))) {
+	switch (GetWRefCon(((WindowPtr)theEventI->message))) {
 		case RefVST:
 			VSTEditorUpdate(GetDialogFromWindow((WindowPtr) theEventI->message));
 			break;
@@ -3724,7 +3724,7 @@ pascal Boolean MyCustomFileFilter2(CInfoPBRec	*pb, void *myDataPtr)
 	
 	if (pb->hFileInfo.ioFlAttrib & 16) return false;
 	
-	switch(showWhat)
+	switch (showWhat)
 	{
 		case allMusics:
 			if (pb->hFileInfo.ioFlFndrInfo.fdType == 'sTAT') return false;
@@ -3807,14 +3807,14 @@ pascal short MyDlgHook2(short item, DialogPtr theDialog, void *myDataPtr)
 	
 	IntReply = (StandardFileReply*) myDataPtr;
 	
-	switch(item)
+	switch (item)
 	{	
 		case getOpen:
 			if (IntReply->sfType != 'sTAT' && IntReply->sfType != 'STCf')
 			{
 				OSType type;
 				
-				switch(showWhat)
+				switch (showWhat)
 				{
 					case allReadable:
 					case allFiles:
@@ -3903,7 +3903,7 @@ pascal short MyDlgHook2(short item, DialogPtr theDialog, void *myDataPtr)
 			{
 				OSType type;
 				
-				switch(showWhat)
+				switch (showWhat)
 				{
 					case allReadable:
 					case allFiles:
@@ -3981,7 +3981,7 @@ pascal short MyDlgHook2(short item, DialogPtr theDialog, void *myDataPtr)
 			{
 				OSType type;
 				
-				switch(showWhat)
+				switch (showWhat)
 				{
 					case allReadable:
 					case allFiles:
@@ -4152,7 +4152,7 @@ void InitImportMenu(void)
 		Str255 pMenuName;
 		GetPStrFromCFString(gMADLib->ThePlug[ i].MenuName, pMenuName);
 		
-		switch(gMADLib->ThePlug[ i].mode)
+		switch (gMADLib->ThePlug[ i].mode)
 		{
 			case 'EXIM':
 			case 'EXPL':
@@ -4329,7 +4329,7 @@ short InfoL(short ID)
 
 void MADErreur(OSErr err)
 {
-	switch(err)
+	switch (err)
 	{
 		case noErr:	break;
 		case MADOrderNotImplemented:		Erreur(67, err);		break;
@@ -4509,7 +4509,7 @@ OSErr GereChanged(void)
 	SetPort(savedPort);
 	UpdateALLWindow();
 	
-	switch(itemHit)
+	switch (itemHit)
 	{
 		case 1:
 			if (curMusic->originalFormat != 'MADK') SaveMOD(true, 'MADK');
@@ -4587,7 +4587,7 @@ void WindowsSettingsOption()
 		
 		MyModalDialog(aDia, &itemHit);
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 8:
 				InsertMenu(tMenu, hierMenu );
@@ -4642,7 +4642,7 @@ void WindowsSettingsOption()
 
 void WindowsSettingsMenu(short item)
 {
-	switch(item)
+	switch (item)
 	{	
 		case 1:
 		case 2:
@@ -4681,7 +4681,7 @@ void HandleMenuChoice(long menuChoice)
 		theMenu = HiWord(menuChoice);
 		theItem = LoWord(menuChoice);
 		
-		switch(theMenu)
+		switch (theMenu)
 		{
 			case mAppleMenu:
 				HandleAppleChoice(theItem);
@@ -4756,7 +4756,7 @@ void HandleAppleChoice(short theItem)
 {
 	Str255 		accName;
 	
-	switch(theItem)
+	switch (theItem)
 	{
 		case mAboutPlayerPRO:
 			DoAbout();					
@@ -4780,7 +4780,7 @@ void HandleInstruChoice(short theItem)
 {
 	short		temp;
 	
-	switch(theItem)
+	switch (theItem)
 	{
 		case 1:
 			if (InstruListDlog != NULL)
@@ -4824,7 +4824,7 @@ void HandleInstruChoice(short theItem)
 
 void HandleViewsChoice(short theItem)
 {
-	switch(theItem)
+	switch (theItem)
 	{
 #if 0
 		case mMemory:
@@ -5116,7 +5116,7 @@ void HandleViewsChoice(short theItem)
 
 void HandlePatternChoice(short theItem)
 {
-	switch(theItem)
+	switch (theItem)
 	{
 		case 1:
 			if (PartiDlog != NULL)
@@ -5182,7 +5182,7 @@ void HandlePatternChoice(short theItem)
 
 void HandleOtherChoice(short theItem)
 {
-	switch(theItem)
+	switch (theItem)
 	{		
 		case 1:
 			if (EditorDlog != NULL)
@@ -5850,7 +5850,7 @@ void HandleEdit(short item)
 			if (oldWindow == NULL)
 				break;
 			
-			switch(GetWRefCon(oldWindow)) {
+			switch (GetWRefCon(oldWindow)) {
 				case RefMODList:
 					PASTEMODList();
 					break;
@@ -6112,14 +6112,14 @@ void DoReset()
 		//ModalDialog(MyDlgFilterDesc, &itemHit);
 		MyModalDialog(aDia, &itemHit);
 		
-		switch(itemHit) {
+		switch (itemHit) {
 			case 3:
 			case 5:
 			case 6:
 				GetDialogItem(aDia, itemHit, &itemType, &itemHandle, &tempRect);
 				SetControlValue((ControlHandle) itemHandle, !GetControlValue((ControlHandle) itemHandle));
 				
-				switch(itemHit) {
+				switch (itemHit) {
 					case 3:
 						ResetPatterns = !ResetPatterns;
 						break;
@@ -6232,7 +6232,7 @@ void HandleFileChoice(short theItem)
 {
 	WindowPtr			savedWindow;
 	
-	switch(theItem)
+	switch (theItem)
 	{
 		case 1:
 			if (curMusic->hasChanged)
@@ -6448,7 +6448,7 @@ void HandleFileChoice(short theItem)
 
 void HandleExportFile(short theItem)
 {
-	switch(theItem)
+	switch (theItem)
 	{
 		case 1:
 			SaveMOD(true, 'AIFF');
@@ -6580,7 +6580,7 @@ void AddRemoveBookmarksFilter(DialogPtr theDialog, EventRecord *theEventI, short
 	GetPort(&oldPort);
 	SetPortDialogPort(theDialog);
 	
-	switch(theEventI->what)
+	switch (theEventI->what)
 	{
 		case updateEvt:
 		{
@@ -6761,7 +6761,7 @@ void AddRemoveBookmarks()
 		
 		ChangeDialogFont(TheDia);
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 12:
 				if (InfoL(100) == true)
@@ -7130,7 +7130,7 @@ void DoInternetMenu(short theItem)
 	Str255	str;
 	OSStatus err;
 	
-	switch(theItem)
+	switch (theItem)
 	{
 		case 1:
 		case 2:
@@ -7167,7 +7167,7 @@ void HandleNewSound(short theItem)
 	FSSpec	spec;
 	OSErr	iErr;
 	
-	switch(theItem)
+	switch (theItem)
 	{
 		case 1:
 			PPINGetFileName();

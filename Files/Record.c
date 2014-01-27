@@ -155,7 +155,7 @@ REGODIA:
 		//ModalDialog(MyDlgFilterDesc, &itemHit);
 		MyModalDialog(aDialog, &itemHit);
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 7:
 			{
@@ -291,7 +291,7 @@ void ConvertInstrumentMode(sData	*curData, short menuItem)
 		curData->loopBeg /=2;
 		curData->loopSize /=2;
 		
-		switch(menuItem)
+		switch (menuItem)
 		{
 			case 5:	// Delete Left
 				if (curData->amp == 8) {
@@ -409,7 +409,7 @@ void ConvertInstrumentAmpli(sData *curData, short newAmpli)
 	Ptr		aNewPtr;
 	
 	if (curData->amp == 8) {
-		switch(newAmpli)
+		switch (newAmpli)
 		{
 			case 16:			
 				aNewPtr = MyNewPtr(curData->size*2L);
@@ -436,7 +436,7 @@ void ConvertInstrumentAmpli(sData *curData, short newAmpli)
 				break;
 		}
 	} else if (curData->amp == 16) {
-		switch(newAmpli)
+		switch (newAmpli)
 		{
 			case 8:
 				Convert16to8(curData->data, curData->data, curData->size);
@@ -759,7 +759,7 @@ ID					compType;
 	}
 	if (Compression)
 	{
-		switch(compType)
+		switch (compType)
 		{
 			case MACE3Type:
 				numSampleFrames *= 2;
@@ -824,7 +824,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 	soundFormat = *(short*)soundPtr;
 	
 	MOT16(&soundFormat);
-	switch(soundFormat)
+	switch (soundFormat)
 	{
 		case 1:						// format 1 sound.
 			// look inside the format 1 resource and deduce offsets.
@@ -846,7 +846,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 	offset = 6 + 6*numSynths + 8*numCmds;
 	header = (SoundHeaderPtr) (*sound + offset);
 	
-	switch(header->encode)
+	switch (header->encode)
 	{
 		case cmpSH:
 			CmpHeader = (CmpSoundHeader*) header;
@@ -876,7 +876,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 			memmove(*sound, CmpHeader->sampleArea, MusSize);
 			HUnlock(sound);
 			
-			switch(CompressID )
+			switch (CompressID )
 		{
 			case threeToOne:
 				MusSize *= 2;
@@ -1215,7 +1215,7 @@ OSErr NOpenSampleInt(short ins, short samp, FSSpec sfFile)
 	
 	iErr = FSpGetFInfo(&sfFile, &fndrInfo);
 	
-	switch(fndrInfo.fdType)
+	switch (fndrInfo.fdType)
 	{
 		case 'INso':	// Instrument List
 			OpenInstrumentsList(&sfFile);
@@ -1418,7 +1418,7 @@ void NPASTESample(long Pos, short ins, short samp)
 					
 					if (!newSampleData) {		// We NEED to convert the pasted sound in current data
 						if (curData->amp != sS) {		// Amplitude conversion
-							switch(sS)
+							switch (sS)
 							{
 								case 8:		// Convert in 16 bits
 									HUnlock(newSound);
@@ -1451,7 +1451,7 @@ void NPASTESample(long Pos, short ins, short samp)
 						}
 						
 						if (curData->stereo != stereo) {		// Stereo conversion
-							switch(stereo)
+							switch (stereo)
 							{
 								case true:		// Convert in mono
 									if (sS == 8) {
@@ -1750,7 +1750,7 @@ void AddLoopToSndHandle(Handle sound, long Start, long End)
 	/* determine what format sound we have. */
 	soundFormat = *(short*)soundPtr;
 	
-	switch(soundFormat)
+	switch (soundFormat)
 	{
 		case 1:						/* format 1 sound. */
 			/* look inside the format 1 resource and deduce offsets. */
@@ -1773,7 +1773,7 @@ void AddLoopToSndHandle(Handle sound, long Start, long End)
 	offset = 6 + 6*numSynths + 8*numCmds;
 	header = (SoundHeaderPtr) (*sound + offset);
 	
-	switch(header->encode)
+	switch (header->encode)
 	{
 		case cmpSH:
 			CmpHeader = (CmpSoundHeader*) header;
@@ -1905,7 +1905,7 @@ sData* ComputeRAWSound(Ptr srcSound, long length)
 	if (destSound == NULL)
 		return NULL;
 	
-	switch(thePrefs.RAWBits)
+	switch (thePrefs.RAWBits)
 	{
 		case 8:
 			BlockMoveData(srcSound + thePrefs.RAWHeader, destSound, size);
@@ -2090,7 +2090,7 @@ REGODIA:
 	do {
 		MyModalDialog(aDialog, &itemHit);
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 33:
 			case -updateEvt:

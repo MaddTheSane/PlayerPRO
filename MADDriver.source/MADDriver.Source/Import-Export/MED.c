@@ -77,7 +77,7 @@ static void MED_Cleanup(void)
 
 static void EffectCvt(UBYTE eff, UBYTE dat, Cmd *aCmd)
 {
-	switch(eff){
+	switch (eff){
 			
 			// 0x0 0x1 0x2 0x3 0x4      // PT effects
 			
@@ -508,7 +508,7 @@ static OSErr MED_Load(Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSetti
 	/**       PATTERNS        **/
 	/***************************/
 	
-	switch(mh->id)
+	switch (mh->id)
 	{
 		case 'MMD0':
 			if (LoadMMD0Patterns(theMAD, theMED, init) != noErr) return MADUnknowErr;
@@ -579,7 +579,7 @@ static OSErr mainMED(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoR
 		
 	MED_Init(init);
 
-	switch(order)
+	switch (order)
 	{
 		case 'IMPL':
 			iFileRefI = iFileOpen(AlienFileName);

@@ -101,8 +101,7 @@ void ReplaceCommand(void)
 	Cmd		*myCmd;
 	short	track, position;
 
-	switch(GetWRefCon(oldWindow))
-	{
+	switch (GetWRefCon(oldWindow)) {
 		default:
 		case RefPartition:
 			if (EditorDlog == NULL) break;
@@ -125,7 +124,7 @@ Boolean FindInternal(short FindType)
 
 	if (!SetUpFind()) return false;
 
-	switch(FindType)
+	switch (FindType)
 	{
 		case Next:
 			FPat = MADDriver->Pat;
@@ -280,7 +279,7 @@ void SetUpButtons(void)
 	}
 
 	for (i = 10; i <= 13; i++) TurnRadio(i, FindDlog, false);
-	switch(FindWhere)
+	switch (FindWhere)
 	{
 		case CurrentPat:			TurnRadio(10, FindDlog, true);		break;
 		case DigitalSelection:		TurnRadio(11, FindDlog, true);		break;
@@ -594,7 +593,7 @@ void DoItemPressFind(short whichItem, DialogPtr whichDialog)
 	
 	FindModifyBefore = FindModify;
 	
-	switch(whichItem)
+	switch (whichItem)
 	{
 			/** FIND **/
 		case 3:
@@ -606,7 +605,7 @@ void DoItemPressFind(short whichItem, DialogPtr whichDialog)
 			
 			InverseRadio(whichItem, FindDlog);
 			
-			switch(whichItem)
+			switch (whichItem)
 		{
 			case 3:		FInstruActi	= !FInstruActi;		break;
 			case 4:		FNoteActi	= !FNoteActi;		break;
@@ -627,7 +626,7 @@ void DoItemPressFind(short whichItem, DialogPtr whichDialog)
 			
 			InverseRadio(whichItem, FindDlog);
 			
-			switch(whichItem)
+			switch (whichItem)
 		{
 			case 21:		RInstruActi	= !RInstruActi;		break;
 			case 22:		RNoteActi	= !RNoteActi;		break;
@@ -648,7 +647,7 @@ void DoItemPressFind(short whichItem, DialogPtr whichDialog)
 			for (i = 10; i <= 13; i++) TurnRadio(i, FindDlog, false);
 			TurnRadio(whichItem, FindDlog, true);
 			
-			switch(whichItem)
+			switch (whichItem)
 		{
 			case 10:	FindWhere	= CurrentPat;			break;
 			case 11:	FindWhere	= DigitalSelection;		break;
@@ -666,7 +665,7 @@ void DoItemPressFind(short whichItem, DialogPtr whichDialog)
 			TurnRadio(43, FindDlog, false);
 			TurnRadio(whichItem, FindDlog, true);
 			
-			switch(whichItem)
+			switch (whichItem)
 		{
 			case 46:	FindTrack	= -1;		break;
 			case 43:	GetDText(FindDlog, 45, theStr);	StringToNum(theStr, &FindTrack);	FindTrack--;	break;

@@ -285,7 +285,7 @@ void DoNullWave(void)
 		{
 			if (PtInRect(myPt, &WaveRect))
 			{
-				switch(mode)
+				switch (mode)
 				{
 					case zoomM:
 					if (theEvent.modifiers & optionKey) SetCursor(&ZoomOutCrsr);
@@ -1047,7 +1047,7 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 		
 		if (PtInRect(myPt, &WaveRect))
 		{
-			switch(mode)
+			switch (mode)
 			{
 				case playM:
 				{
@@ -1177,7 +1177,7 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 		}
 	}   						/* End of mouseDown */
 	
-	switch(whichItem)
+	switch (whichItem)
 	{
 		case 7:
 		case 5:
@@ -1186,7 +1186,7 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 			HiliteControl(zoomBut, 0);
 			HiliteControl(noteBut, 0);
 			
-			switch(whichItem)
+			switch (whichItem)
 		{
 			case 7:		mode = playM;	HiliteControl(playBut, kControlButtonPart);	break;
 			case 5:		mode = noteM;	HiliteControl(noteBut, kControlButtonPart);	break;
@@ -1218,7 +1218,7 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 			InsertMenu(OsciHMenu, hierMenu);
 			GetDialogItem(WaveDlog, whichItem, &itemType, &itemHandle, &tempRect);
 			
-			switch(YSize)
+			switch (YSize)
 			{
 				default:
 				case 16:	curSelec = 0;		break;
@@ -1242,7 +1242,7 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 			
 			if (HiWord(mresult) != 0)
 			{
-				switch(LoWord(mresult))
+				switch (LoWord(mresult))
 				{
 					case 1:	YSize = 16;		break;
 					case 2:	YSize = 32;		break;
@@ -1279,7 +1279,7 @@ pascal void actionProcWave(ControlHandle theControl, short ctlPart)
 	minValue = GetControlMinimum(theControl);
 	curVal = sVal = GetControlValue(theControl);
 
-	switch(ctlPart)
+	switch (ctlPart)
 	{
 		case kControlUpButtonPart:
 			curVal -= 1;
@@ -1292,7 +1292,7 @@ pascal void actionProcWave(ControlHandle theControl, short ctlPart)
 		break;
 		
 		case kControlPageUpPart:
-			switch(GetControlReference(theControl))
+			switch (GetControlReference(theControl))
 			{
 				case yScrollNum:	curVal -= GetMaxYWave() - GetControlValue(yScroll) + 1;	break;
 				case xScrollNum:	curVal -= GetMaxXWave() - GetControlValue(xScroll) + 1;	break;
@@ -1302,7 +1302,7 @@ pascal void actionProcWave(ControlHandle theControl, short ctlPart)
 		break;
 		
 		case kControlPageDownPart:
-			switch(GetControlReference(theControl))
+			switch (GetControlReference(theControl))
 			{
 				case yScrollNum:	curVal += GetMaxYWave() - GetControlValue(yScroll) - 1;	break;
 				case xScrollNum:	curVal += GetMaxXWave() - GetControlValue(xScroll) - 1;	break;
@@ -1324,7 +1324,7 @@ pascal void actionProcWave(ControlHandle theControl, short ctlPart)
 		
 		aRgn = NewRgn();
 		
-		switch(lRefCon)
+		switch (lRefCon)
 		{
 			case yScrollNum:
 				WaveRect.left -= 14;
@@ -1565,7 +1565,7 @@ void DoKeyPressWave(short theChar)
 		
 		mode++;
 		if (mode > MODESIZE) mode = 0;
-		switch(mode)
+		switch (mode)
 		{
 			case playM:		HiliteControl(playBut, kControlButtonPart);	break;
 			case zoomM:		HiliteControl(zoomBut, kControlButtonPart);	break;

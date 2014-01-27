@@ -18,7 +18,7 @@ OSErr main(		OSType					order,						// Order to execute
 	short	iFileRefI;
 	long	inOutBytes;
 		
-	switch(order)
+	switch (order)
 	{
 		case 'PLAY':
 		break;

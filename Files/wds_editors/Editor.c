@@ -380,7 +380,7 @@ short ConvertNote2No(Str32 myTT)
 	
 	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
 	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
-	switch(myTT[1])
+	switch (myTT[1])
 	{
 		case 'C':
 		case 'c':
@@ -1844,7 +1844,7 @@ Boolean MLClick(Point pt, short modifiers)
 		
 		SetCursor(GetQDGlobalsArrow(&qdarrow));
 		
-		switch(type)
+		switch (type)
 		{
 			case VolumeTE:
  				tMenu = GetMenu(161);
@@ -2314,7 +2314,7 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 		}
 	}
 	
-	switch(whichItem)
+	switch (whichItem)
 	{
 		case 18:
 			if (GetControlHilite(FillBut) == 0)	// && )
@@ -2361,7 +2361,7 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 			{
 				SetControlValue((ControlHandle) CheckBut[ whichItem - 37], !GetControlValue((ControlHandle) CheckBut[ whichItem - 37]));
 				
-				switch(whichItem)
+				switch (whichItem)
 				{
 					case 40:	OnOffInstru = !OnOffInstru;	break;	//Instru
 					case 37:	OnOffFX = !OnOffFX;			break;	// FX
@@ -2928,7 +2928,7 @@ void PLScrollIntPartition(short curVal, short sVal, long lRefCon)
 	{
 		Rect	aRect = myList.rect, bRect;
 		
-		switch(lRefCon)
+		switch (lRefCon)
 		{
 			case yScrollNum:
 				aRgn = NewRgn();
@@ -3503,7 +3503,7 @@ void DoKeyPressEditor(short theChar)
 				DesactivateCmdWindow();
 				UpdatePartitionWindow(EditorDlog);
 				
-		 		switch(theChar)
+		 		switch (theChar)
 		 		{
 		 			case 0x1E:	rect.top--;		break;
 		 			case 0x0D:
@@ -3516,7 +3516,7 @@ void DoKeyPressEditor(short theChar)
 			}
 			else
 			{
-		 		switch(theChar)
+		 		switch (theChar)
 		 		{
 			 		case 0x1E:	theCell.v -= curStep;		break;
 			 		case 0x1F:	theCell.v += curStep;		break;
@@ -4087,7 +4087,7 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 				//	HSetVol(NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
 				FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
 				
-				switch(fndrInfo.fdType)
+				switch (fndrInfo.fdType)
 				{
 					case 'Pcmd':
 						/****************/

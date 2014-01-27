@@ -142,7 +142,7 @@ static OSErr mainDepth(	sData					*theData,
 	if (getParams(&Inc, thePPInfoPlug))
 	{
 		if (Inc == 0) Inc = 1;
-		switch(theData->amp)
+		switch (theData->amp)
 		{
 			case 8:
 				Sample8Ptr += SelectionStart;

@@ -208,7 +208,7 @@ void SaveUndo(short UndoType, short ID, Str255 textMenu)
 		CopyPartition[ i] = NULL;
 	}
 	
-	switch(UndoType)
+	switch (UndoType)
 	{
 		case UPattern:
 			myUndo.dataSize = sizeof(PatHeader) + curMusic->header->numChn * curMusic->partition[ ID]->header.size * sizeof(Cmd);
@@ -377,7 +377,7 @@ void DoUndo(void)
 	MADDriver->Reading = false;
 	MADPurgeTrack(MADDriver);
 	
-	switch(myUndo.UndoType)
+	switch (myUndo.UndoType)
 	{
 		case UPattern:
 			/** REDO **/

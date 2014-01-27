@@ -53,7 +53,7 @@ short GetWhichTrackPlay()
 		}
 	}
 	
-	switch(thePrefs.RecordAllTrack)	// all tracks
+	switch (thePrefs.RecordAllTrack)	// all tracks
 	{
 		case 1:
 		{
@@ -241,7 +241,7 @@ void PrefFilterPiano(DialogPtr theDialog, EventRecord *theEventI, short *itemHit
 	GetPort(&oldPort);
 	SetPortDialogPort(prefDlog);
 	
-	switch(theEventI->what)
+	switch (theEventI->what)
 	{
 		case mouseDown:
 			thePart = FindWindow(theEventI->where, &whichWindow);
@@ -629,7 +629,7 @@ void InitDRIVER(void)
 	ControlSwitch(base + 3, prefDlog, 255);
 	SetDText(prefDlog, base + 25, "\p");
 	
-	switch(thePrefs.driverMode)
+	switch (thePrefs.driverMode)
 	{
 			/*	case ASCSoundDriver:
 			 TurnRadio(base + 3, prefDlog, true);
@@ -694,7 +694,7 @@ void InitDRIVER(void)
 	
 	TurnRadio(base + 9, prefDlog, false);
 	TurnRadio(base + 10, prefDlog, false);
-	switch(thePrefs.outPutBits)
+	switch (thePrefs.outPutBits)
 	{
 		case 8:
 			TurnRadio(base + 9, prefDlog, true);
@@ -705,7 +705,7 @@ void InitDRIVER(void)
 	TurnRadio(base + 6, prefDlog, false);
 	TurnRadio(base + 7, prefDlog, false);
 	TurnRadio(base + 8, prefDlog, false);	
-	switch(thePrefs.outPutRate)
+	switch (thePrefs.outPutRate)
 	{
 		case rate11025hz:
 		case rate11khz:				TurnRadio(base + 6, prefDlog, true);	break;
@@ -820,7 +820,7 @@ void InitCOMPRESSION(void)
 	TurnRadio(base + 19, prefDlog, thePrefs.DontUseFilesMix);
 	TurnRadio(base + 6, prefDlog, thePrefs.OscilloLine);
 	
-	switch(thePrefs.whichEditorPatterns)
+	switch (thePrefs.whichEditorPatterns)
 	{
 		case -1:				i = 1;	break;
 		case RefPartition:		i = 2;	break;
@@ -922,7 +922,7 @@ void DoMUSICLIST(short itemHit)
 	
 	itemHit -= base;
 	
-	switch(itemHit)
+	switch (itemHit)
 	{
 		case 1:
 		case 2:
@@ -1123,7 +1123,7 @@ void DoCOLOR(short	itemHit)
 	
 	itemHit -= base;
 	
-	switch(itemHit)
+	switch (itemHit)
 	{
 		case 1:
 			GetDialogItem (prefDlog, itemHit+base, &itemType, &itemHandle, &itemRect);
@@ -1451,7 +1451,7 @@ void DoMIDI(short itemHit)
 	long		mresult;
 	Str255		theStr;
 	
-	switch(itemHit - base)
+	switch (itemHit - base)
 	{
 		case 10:
 			InverseRadio(itemHit, prefDlog);	thePrefs.SendMIDIClockData = !thePrefs.SendMIDIClockData;
@@ -1512,7 +1512,7 @@ void DoEDITOR(short itemHit)
 	long		mresult;
 	Str255		theStr;
 	
-	switch(itemHit - base)
+	switch (itemHit - base)
 	{
 		case 14:
 		case 22:
@@ -1527,7 +1527,7 @@ void DoEDITOR(short itemHit)
 			
 			TurnRadio(itemHit, prefDlog, true);
 			
-			switch(itemHit - base)
+			switch (itemHit - base)
 		{
 			case 14:
 				thePrefs.RecordAllTrack = 2;
@@ -1708,7 +1708,7 @@ void DoCOMPRESSION(short itemHit)
 	Rect		itemRect;
 	Str255		str;
 	
-	switch(itemHit - base)
+	switch (itemHit - base)
 	{
 		case 1:
 			InverseRadio(itemHit, prefDlog);
@@ -1764,7 +1764,7 @@ void DoCOMPRESSION(short itemHit)
 			
 			LocalToGlobal(&Zone);
 			
-			switch(thePrefs.whichEditorPatterns)
+			switch (thePrefs.whichEditorPatterns)
 			{
 				case -1:
 					temp = 1;
@@ -1800,7 +1800,7 @@ void DoCOMPRESSION(short itemHit)
 			{
 				temp = LoWord(mresult );
 				
-				switch(temp)
+				switch (temp)
 				{
 					case 1:
 						thePrefs.whichEditorPatterns = -1;
@@ -1845,7 +1845,7 @@ void DoSCREENSAVER(short itemHit)
 	Handle		itemHandle;
 	Rect		itemRect;
 	
-	switch(itemHit - base)
+	switch (itemHit - base)
 	{
 		case 1:
 		case 2:
@@ -1856,7 +1856,7 @@ void DoSCREENSAVER(short itemHit)
 		case 10:
 			InverseRadio(itemHit, prefDlog);
 			
-			switch(itemHit - base)
+			switch (itemHit - base)
 		{
 			case 1:
 				thePrefs.SSText =!thePrefs.SSText;
@@ -1895,7 +1895,7 @@ void DoCLASSICAL(short itemHit)
 	Handle		itemHandle;
 	Rect		itemRect;
 	
-	switch(itemHit - base)
+	switch (itemHit - base)
 	{
 		case 5:
 			thePrefs.UseMarkers = !thePrefs.UseMarkers;
@@ -1921,7 +1921,7 @@ void DoKEY(short itemHit)
 	Rect		itemRect;
 	Str255		str;
 	
-	switch(itemHit - base)
+	switch (itemHit - base)
 	{
 		case 42:
 			TurnRadio(base + 42, prefDlog, true);
@@ -2023,7 +2023,7 @@ void DoSTAFF(short itemHit)
 	Str255	aStr;
 	long	temp;
 	
-	switch(itemHit - base)
+	switch (itemHit - base)
 	{
 		case 8:
 			thePrefs.StaffShowLength = !thePrefs.StaffShowLength;
@@ -2121,7 +2121,7 @@ void DoDIGITAL(short itemHit)
 		case 6:
 			InverseRadio(itemHit, prefDlog);
 			
-			switch(itemHit - base) {
+			switch (itemHit - base) {
 			case 1:
 				thePrefs.DigitalInstru = !thePrefs.DigitalInstru;
 				break;
@@ -2227,7 +2227,7 @@ void DoDIGITAL(short itemHit)
 			
 			TurnRadio(itemHit, prefDlog, true);
 			
-			switch(itemHit - base)
+			switch (itemHit - base)
 		{
 			case 22:
 				thePrefs.LinesHeight = 0;
@@ -2347,7 +2347,7 @@ short GetTracksMenuVal(short Noni)
 
 short GetRateMenuPos(UnsignedFixed Noni)
 {
-	switch(Noni) {
+	switch (Noni) {
 		case rate5khz:
 			return 1;
 			break;
@@ -2551,7 +2551,7 @@ void DoDRIVER(short	itemHit)
 			
 			TurnRadio(itemHit, prefDlog, true);
 			
-			switch(itemHit - base)
+			switch (itemHit - base)
 		{
 			case 6:
 				thePrefs.outPutRate = rate11khz;
@@ -2623,7 +2623,7 @@ void DoDRIVER(short	itemHit)
 			
 			TurnRadio(itemHit, prefDlog, true);
 			
-			switch(itemHit - base) {
+			switch (itemHit - base) {
 			case 2:
 				thePrefs.driverMode = SoundManagerDriver;
 				break;
@@ -2653,7 +2653,7 @@ void DoDRIVER(short	itemHit)
 			
 			TurnRadio(itemHit, prefDlog, true);
 			
-			switch(itemHit - base)
+			switch (itemHit - base)
 		{
 			case 9:		thePrefs.outPutBits = 8;	break;
 			case 10:	thePrefs.outPutBits = 16;	break;
@@ -2818,7 +2818,7 @@ void ShowPrefs(short PrefStartup)
 	
 	if (PrefStartup != -1) PrefsType = PrefStartup;
 	AppendPref(PrefsType, prefDlog);
-	switch(PrefsType)
+	switch (PrefsType)
 	{
 		case COLOR:		/*	InitCOLOR();*/		break;
 		case DRIVER:		InitDRIVER();		break;
@@ -2851,7 +2851,7 @@ void ShowPrefs(short PrefStartup)
 			
 			if (temp != PrefsType)
 			{
-				switch(PrefsType)
+				switch (PrefsType)
 				{
 					case FKEYPREF:
 						break;
@@ -2875,7 +2875,7 @@ void ShowPrefs(short PrefStartup)
 				PrefsType = temp;
 				
 				AppendPref(PrefsType, prefDlog);
-				switch(PrefsType)
+				switch (PrefsType)
 				{
 					case COLOR:	/*	InitCOLOR();*/	break;
 						
@@ -2902,7 +2902,7 @@ void ShowPrefs(short PrefStartup)
 			}
 		}
 		
-		switch(PrefsType)
+		switch (PrefsType)
 		{
 			case COLOR:
 				DoCOLOR(itemHit);
@@ -2950,7 +2950,7 @@ void ShowPrefs(short PrefStartup)
 		}
 	} while (itemHit != 1 && itemHit != 2);
 	
-	switch(PrefsType)
+	switch (PrefsType)
 	{
 		case FKEYPREF:
 			

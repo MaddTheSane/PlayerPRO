@@ -525,7 +525,7 @@ long asioMessages(long selector, long value, void* message, double* opt)
 {
 	// currently the parameters "value", "message" and "opt" are not used.
 	long ret = 0;
-	switch(selector)
+	switch (selector)
 	{
 		case kAsioSelectorSupported:
 			if(value == kAsioResetRequest

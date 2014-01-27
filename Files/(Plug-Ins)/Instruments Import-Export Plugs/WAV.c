@@ -42,7 +42,7 @@ static OSErr mainWave(OSType					order,						// Order to execute
 	short	iFileRefI;
 	long	inOutBytes;
 	
-	switch(order)
+	switch (order)
 	{
 #if 0
 		case 'PLAY':

@@ -446,7 +446,7 @@ Boolean DoHelp(void)
 	do {
 		ModalDialog(AboutFilterDesc, &itemHit);
 		
-		switch(itemHit) {
+		switch (itemHit) {
 			case 1:
 				if (StartupWait != 0)
 					itemHit = 0;
@@ -486,7 +486,7 @@ Boolean DoHelp(void)
 	
 	DisposeModalFilterUPP(AboutFilterDesc);
 	
-	switch(itemHit) {
+	switch (itemHit) {
 		case 6:
 			DoInternetMenu(1);
 			break;
@@ -530,7 +530,7 @@ void DoContent(WindowPtr theWindow, EventRecord *theEventI)
 	
 	GlobalToLocal(&theEventI->where);
 	cntlCode = FindControl(theEventI->where, theWindow, &theControl);
-	switch(cntlCode) {
+	switch (cntlCode) {
 		case kControlIndicatorPart:
 			if (gUseControlSize)
 				goto LiveScroll;

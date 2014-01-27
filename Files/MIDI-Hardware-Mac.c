@@ -172,7 +172,7 @@ void MyNullHook()
 						GetToucheRect(&tempRect, myNote);
 						EffaceTouche(myNote, &tempRect);
 						
-						switch(thePrefs.KeyUpMode)
+						switch (thePrefs.KeyUpMode)
 						{
 							case eStop:
 								if (PianoRecording)
