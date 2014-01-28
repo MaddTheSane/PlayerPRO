@@ -437,7 +437,7 @@ void DoNullQT(void)
 	if (IsMovieDone(QTMovie) && QTCheckLoop)
 	{
 		QTCheckLoop = false;
-		switch(thePrefs.LoopType)
+		switch (thePrefs.LoopType)
 		{
 			case 0:
 			{
@@ -1193,7 +1193,7 @@ Boolean QTTestConversion(FSSpec	*file, OSType fileType)
 
 Boolean QTTypeConversion(OSType fileType)
 {
-	switch(fileType)
+	switch (fileType)
 	{
 		case kQTFileTypeAIFF:
 		case kQTFileTypeAIFC:
@@ -1238,7 +1238,7 @@ void DoItemPressQT(short whichItem, DialogPtr whichDialog)
 	
 	if (!MCIsPlayerEvent(gMovieController, &theEvent))
 	{
-		switch(whichItem)
+		switch (whichItem)
 		{
 			case 20:
 				if (GetControlHilite(LoadBut) == 0 && MyTrackControl(LoadBut, theEvent.where, NULL))

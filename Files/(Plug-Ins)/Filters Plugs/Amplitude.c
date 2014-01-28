@@ -118,8 +118,7 @@ static OSErr mainAmplitude(	sData					*theData,
 	Inc = 120;
 	if (getParams(&Inc, thePPInfoPlug))
 	{
-		switch(theData->amp)
-		{
+		switch (theData->amp) {
 			case 8:
 				Sample8Ptr += SelectionStart;
 				
@@ -143,7 +142,7 @@ static OSErr mainAmplitude(	sData					*theData,
 					
 					Sample8Ptr++;
 				}
-			break;
+				break;
 			
 			case 16:
 				Sample16Ptr += SelectionStart/2;						// Div 2, because it's in bytes !!!
@@ -168,7 +167,7 @@ static OSErr mainAmplitude(	sData					*theData,
 					
 					Sample16Ptr++;
 				}
-			break;
+				break;
 		}
 	}
 	return noErr;

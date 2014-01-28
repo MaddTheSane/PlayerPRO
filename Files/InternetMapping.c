@@ -73,7 +73,7 @@ void SetInternetMapping(void)
                 	 err = ICGetIndMapEntry(inst, prefh, i, &pos, &entry);
                 	 if (err) Debugger();
                 	 
-                	 switch(entry.fileType)
+                	 switch (entry.fileType)
                 	 {
                 	 	case 'MADK':
                 	 		madk = true;

@@ -35,7 +35,7 @@ void parse_slidevol(Channel *ch, Byte Arg)
 
 void CloseEffect(Channel *ch, short notUsed, MADDriverRec *intDriver)
 {
-	switch(ch->cmd)
+	switch (ch->cmd)
 	{
 		case arpeggioE:
 			if (ch->arpUse)
@@ -89,7 +89,7 @@ void CloseEffect(Channel *ch, short notUsed, MADDriverRec *intDriver)
 			break;
 			
 		case extendedE:
-			switch(HI(ch->arg))
+			switch (HI(ch->arg))
 		{
 			case 6:
 				
@@ -110,7 +110,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 {
 	long offset = 0;
 	
-	switch(ch->cmd)
+	switch (ch->cmd)
 	{
 		case arpeggioE:						// OK
 			if (ch->arg != 0 && ch->arpUse == true)
@@ -225,7 +225,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 		{
 			Byte q = (ch->viboffset>>2)&0x1f;
 			
-			switch(ch->vibtype)
+			switch (ch->vibtype)
 			{
 				case 0:
 					offset = intDriver->vibrato_table[ q];
@@ -308,7 +308,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 			break;
 			
 		case extendedE:
-			switch(HI(ch->arg))
+			switch (HI(ch->arg))
 		{
 			case 12:
 				if (call >= LOW(ch->arg)) ch->vol = 0;
@@ -375,7 +375,7 @@ void SetUpCmdEffect(Channel *ch, MADDriverRec *intDriver)
 	short	cmdCopy = ch->cmd;
 	short	argCopy = ch->arg;
 	
-	switch(vol >> 4)
+	switch (vol >> 4)
 	{
 		case 0x8:
 			ch->cmd		= extendedE;
@@ -431,7 +431,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 	
 	if (ch->arg == 0)
 	{
-		switch(ch->cmd)
+		switch (ch->cmd)
 		{
 			case arpeggioE:
 			case nothingE:
@@ -451,7 +451,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 	}
 	else ch->oldArg[ ch->cmd] = ch->arg;
 	
-	switch(ch->cmd)
+	switch (ch->cmd)
 	{
 		case upslideE:							// OK
 			if (ch->arg) ch->slide = ch->arg;
@@ -505,7 +505,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 			break;
 			
 		case extendedE:
-			switch(HI(ch->arg))
+			switch (HI(ch->arg))
         {
 			case 0:		// Turn On/Off filter
 				break;
@@ -527,7 +527,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 				break;
 				
 			case 4:		// Set vibrato waveform
-				switch(LOW(ch->arg))
+				switch (LOW(ch->arg))
 			{
 				case 0:
 				case 4:
@@ -752,7 +752,7 @@ void DoVolCmd(Channel *ch, short call, MADDriverRec *intDriver)
 	short	vol = ch->volcmd;
 	short	volLO = vol & 0xf;
 	
-	switch(vol >> 4)
+	switch (vol >> 4)
 	{
 		case 0x6:					// volslide down
 			ch->vol -= volLO;

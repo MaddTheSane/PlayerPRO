@@ -122,7 +122,7 @@ static OSErr mainXI(	OSType		order,						// Order to execute
 	short	x;
 	long	inOutCount;
 		
-	switch(order)
+	switch (order)
 	{
 		case 'IMPL':
 		{

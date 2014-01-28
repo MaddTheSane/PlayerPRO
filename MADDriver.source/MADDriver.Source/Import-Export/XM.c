@@ -163,7 +163,7 @@ static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd		*aCmd, short channel)
 		
 		if (aCmd->arg == 0xFF)
 		{
-			switch(aCmd->cmd)
+			switch (aCmd->cmd)
 			{
 				case portamentoE:	break;
 					
@@ -182,7 +182,7 @@ static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd		*aCmd, short channel)
 		aCmd->cmd		= 0;
 		aCmd->arg		= dat;	if (aCmd->arg == 0xFF) aCmd->arg = 0;
 		
-		switch(eff)
+		switch (eff)
 		{
 			case 255:
 				aCmd->cmd		= 0;
@@ -670,7 +670,7 @@ static OSErr XM_Load(Ptr	theXM, long XMSize, MADMusic *theMAD, MADDriverSettings
 	theMAD->sets = (FXSets*) NewPtrClear(MAXTRACK * sizeof(FXSets));
 	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
 
-	switch(mh->version)
+	switch (mh->version)
 	{
 		case 0x104:
 			XMReadPattern(theMAD, init);
@@ -1150,7 +1150,7 @@ static OSErr TestXMFile(Ptr AlienFile)
 		INT16(&mh->numpat);
 		INT16(&mh->numins);
 	
-		switch(mh->version)
+		switch (mh->version)
 		{
 			case 0x104:
 				break;
@@ -1185,7 +1185,7 @@ static OSErr ExtractXMInfo(PPInfoRec *info, Ptr AlienFile)
 	INT16(&mh->numins);
 	INT16(&mh->flags);
 
-	switch(mh->version)
+	switch (mh->version)
 	{
 		case 0x104:
 			break;
@@ -1259,7 +1259,7 @@ static OSErr mainXM(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRe
 	
 	if (!XM_Init(init)) return MADNeedMemory;
 	
-	switch(order)
+	switch (order)
 	{
 		case 'EXPL':
 			AlienFile = ConvertMad2XM(MadFile, init, &sndSize);

@@ -659,7 +659,7 @@ Boolean PLSearch(Ptr text, short size, short mode, Point *cell, PrivateList	*aL)
 	short i;
 	
 	for (i = 0; i < aL->maxY; i++) {
-		switch(mode) {
+		switch (mode) {
 			case 1:
 				if (!MyOMatchNextList((Ptr)(specList[i]->name + 1), text, (short)specList[i]->name[0], size)) {
 					cell->h = 0;
@@ -2226,7 +2226,7 @@ void FileInformations(short whichItem)
 	//ModalDialog(NULL, &itemHit);
 		MyModalDialog(TheDia, &itemHit);
 		
-		switch(itemHit) {
+		switch (itemHit) {
 			case -5:		// null Event
 				GetDText(TheDia, 7, aStr);
 				theType = String2OSType(aStr);
@@ -2857,7 +2857,7 @@ void DoLoadOtherMusic(Boolean Affiche)
 	
 	LastCopy = theCell.v;
 	ReRandom:
-	switch(thePrefs.LoopType) {
+	switch (thePrefs.LoopType) {
 		case 0:			// repeat
 			MyDebugStr(__LINE__, __FILE__, "What are you doing here??");
 			return;
@@ -2953,7 +2953,7 @@ OSErr GereMusicListChanged()
 	SetPort(savedPort);
 	UpdateALLWindow();
 	
-	switch(itemHit) {
+	switch (itemHit) {
 		case 1:
 		{
 			short	ss;

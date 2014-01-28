@@ -221,7 +221,7 @@ EXP OSErr main(		OSType					order,						// Order to execute
 	short	iFileRefI;
 	long	inOutBytes = 0;
 		
-	switch(order)
+	switch (order)
 	{
 		case 'IMPL':
 		{

@@ -117,7 +117,7 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 	long	inOutCount;
 	Ptr		theSound;
 
-	switch(order)
+	switch (order)
 	{
 		case 'IMPL':
 			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);

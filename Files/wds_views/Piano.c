@@ -162,7 +162,7 @@ void CreatePianoPixMap(void)
 	LockPixels(GetPortPixMap(theGWorld));
 	SetGWorld(theGWorld, NULL);
 	
-	switch(pianoType) {
+	switch (pianoType) {
 		case eLargePiano:
 			ForeColor(blackColor);	
 			BackColor(whiteColor);
@@ -292,7 +292,7 @@ void CreatePianoPixMap(void)
 
 void GetToucheRect(Rect *theRect, short Id)
 {
-	switch(pianoType) {
+	switch (pianoType) {
 		case eSmallPiano:
 			*theRect = SPianoRect[Id];
 			theRect->right -= GetControlValue(PianoCtl);
@@ -478,7 +478,7 @@ void AfficheTouche(short myTT, Rect *Zone, short Instru, short note)
 	ClipRect(&PianoRect);
 	PianoRect.left--;
 	
-	switch(pianoType)
+	switch (pianoType)
 	{
 		case eLargePiano:
 			SwitchColor(myTT);
@@ -826,7 +826,7 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 						DoNullInstrument();
 						GetMouse(&myPt);
 						
-						switch(pianoType)
+						switch (pianoType)
 						{
 							case eLargePiano:
 								temp = (myPt.h + GetControlValue(PianoCtl) - PianoRect.left) / ToucheLarg;
@@ -852,7 +852,7 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 								GetToucheRect(&tempRect, oldtemp);
 								EffaceTouche(oldtemp, &tempRect);
 								
-								switch(thePrefs.KeyUpMode) {
+								switch (thePrefs.KeyUpMode) {
 									case eStop:
 										MADDriver->chan[ LastCanal].loopBeg = 0;
 										MADDriver->chan[ LastCanal].loopSize = 0;
@@ -977,7 +977,7 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 						EraseRect(&itemRect);
 					}
 					
-					switch(thePrefs.KeyUpMode) {
+					switch (thePrefs.KeyUpMode) {
 						case eStop:
 							MADDriver->chan[LastCanal].loopBeg = 0;
 							MADDriver->chan[LastCanal].loopSize = 0;
@@ -999,7 +999,7 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 			}
 		}   		
 		
-		switch(whichItem)
+		switch (whichItem)
 		{
 			case 5:
 				if (GetControlHilite(prefBut) == 0 && MyTrackControl(prefBut, theEvent.where, NULL)) {
@@ -1109,7 +1109,7 @@ void CreatePianoWindow(void)
 	if (thePrefs.SmallPiano) pianoType = eSmallPiano;
 	else pianoType = eLargePiano;
 	
-	switch(pianoType)
+	switch (pianoType)
 	{
 		case eLargePiano:
 			PianoL = ToucheLarg * NUMBER_NOTES;

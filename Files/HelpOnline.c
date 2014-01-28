@@ -400,7 +400,7 @@ void DoItemPressHelpOnline(short whichItem, DialogPtr whichDialog)
 		}
 	}
 	
-	switch(whichItem)
+	switch (whichItem)
 	{
 	}
 	
@@ -438,7 +438,7 @@ void DoContentHelp(WindowPtr theWindow, EventRecord *theEventI)
 
 	GlobalToLocal(&theEventI->where);
 	cntlCode = FindControl(theEventI->where, theWindow, &theControl);
-	switch(cntlCode)
+	switch (cntlCode)
 	{
 		case kControlIndicatorPart:
 			TrackControl(theControl, theEventI->where, NULL);

@@ -198,19 +198,19 @@ void MADrealft(double *data,int n,int isign)
 
 void MADCallFFT(sData *SData, double *filter, MADDriverRec *intDriver, Boolean shift)
 {
-	if (filter == NULL) filter = intDriver->Filter;
+	if (filter == NULL)
+		filter = intDriver->Filter;
 
-	switch(SData->amp)
-	{
+	switch (SData->amp) {
 		case 8:
 			if (SData->stereo) FFT8S(SData->data, SData->size, filter, intDriver, 2, shift);
 			else FFT8S(SData->data, SData->size, filter, intDriver, 1, shift);
-			break;
+				break;
 			
 		case 16:
 			if (SData->stereo) FFT16S((short*) SData->data, SData->size, filter, intDriver, 2, shift);
 			else FFT16S((short*) SData->data, SData->size, filter, intDriver, 1, shift);
-			break;
+				break;
 	}
 }
 

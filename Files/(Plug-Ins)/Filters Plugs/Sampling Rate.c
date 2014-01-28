@@ -101,7 +101,7 @@ static Ptr ConvertSampleC4SPD(Ptr src, long srcSize, short amp, long srcC4SPD, l
 	dst16 = (short*) dst;
 	dst8 = (char*) dst;
 		
-	switch(amp)
+	switch (amp)
 	{
 	case 8:
 		for (x = 0; x < newSize; x++)

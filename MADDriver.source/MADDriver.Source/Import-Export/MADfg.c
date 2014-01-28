@@ -57,7 +57,7 @@ static struct MusicPattern* oldDecompressPartitionMAD1(struct MusicPattern* myPa
 	{
 		maxCmd--;
 		
-		switch(*srcPtr)
+		switch (*srcPtr)
 		{
 			case 0x03:
 				srcPtr++;
@@ -449,7 +449,7 @@ static OSErr mainMADfg(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 	UNFILE	iFileRefI;
 	long	sndSize;
 		
-	switch(order)
+	switch (order)
 	{
 		case 'IMPL':
 			iFileRefI = iFileOpen(AlienFileName);

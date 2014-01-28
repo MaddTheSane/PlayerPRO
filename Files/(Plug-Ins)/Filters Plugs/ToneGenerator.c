@@ -104,7 +104,7 @@ static Ptr CreateAudio8Ptr(long AudioLength, long AudioFreq, long AudioAmp, long
 	Audio8Ptr = NewPtr(AudioLength);
 	if (Audio8Ptr == NULL) return NULL;
 	
-	switch(AudioType)
+	switch (AudioType)
 	{
 		case wave:
 			for (i = 0, x = 0; i < AudioLength; i++, x++)
@@ -214,7 +214,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 	Audio16Ptr = (short*) NewPtr(AudioLength*2);
 	if (Audio16Ptr == NULL) return NULL;
 	
-	switch(AudioType)
+	switch (AudioType)
 	{
 		case wave:
 			for (i = 0, x = 0; i < AudioLength; i++, x++)
@@ -333,7 +333,7 @@ static OSErr mainToneGenerator(sData			*theData,
 	AutoPosition(myDia);
 	
 	// Mono
-	switch(theData->stereo)
+	switch (theData->stereo)
 	{
 		case false:
 			GetDialogItem(myDia, 22, &itemType, &itemHandle, &itemRect);
@@ -374,7 +374,7 @@ static OSErr mainToneGenerator(sData			*theData,
 	{
 		ModalDialog(thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 22:	// Mono
 				GetDialogItem(myDia, itemHit, &itemType, &itemHandle, &itemRect);
@@ -402,7 +402,7 @@ static OSErr mainToneGenerator(sData			*theData,
 				GetDText(myDia, 9, tStr);		StringToNum(tStr, &AudioFreq);
 				GetDText(myDia, 10, tStr);		StringToNum(tStr, &AudioAmp);
 				
-				switch(theData->amp)
+				switch (theData->amp)
 				{
 					case 8:
 						if (Audio8Ptr != NULL) { DisposePtr(Audio8Ptr);			Audio8Ptr = NULL;}
@@ -435,7 +435,7 @@ static OSErr mainToneGenerator(sData			*theData,
 			case 5:
 			case 6:
 			
-				switch(itemHit)
+				switch (itemHit)
 				{
 					case 19:
 					case 20:	itemHit = 3;	break;
@@ -469,7 +469,7 @@ static OSErr mainToneGenerator(sData			*theData,
 		if (Audio16Ptr != NULL)	{	DisposePtr((Ptr) Audio16Ptr);			Audio16Ptr = NULL;}
 		if (Audio8Ptr != NULL)	{	DisposePtr((Ptr) Audio8Ptr);			Audio8Ptr = NULL;}
 		
-		switch(theData->amp)
+		switch (theData->amp)
 		{
 			case 8:		Audio8Ptr	= CreateAudio8Ptr(AudioLength, AudioFreq, AudioAmp, AudioType, theData->stereo);	break;
 			case 16:

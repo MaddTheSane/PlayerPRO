@@ -211,7 +211,7 @@ void HandleCustomMouseDown(NavCBRecPtr callBackParms)
 		realItem = theItem - firstItem + 1;		// map it to our DITL constants:	
 	}
 	
-	switch(realItem)
+	switch (realItem)
 	{
 		case 10:
 			if (previewPartition)	// STOP Preview
@@ -238,7 +238,7 @@ void HandleCustomMouseDown(NavCBRecPtr callBackParms)
 					{
 						OSType type;
 						
-						switch(showWhat)
+						switch (showWhat)
 						{
 							case allReadable:
 							case allFiles:
@@ -321,7 +321,7 @@ void HandleCustomMouseDown(NavCBRecPtr callBackParms)
 					{
 						OSType type;
 						
-						switch(showWhat)
+						switch (showWhat)
 						{
 							case allReadable:
 							case allFiles:
@@ -602,7 +602,7 @@ pascal void myCustomEventProc(	NavEventCallbackMessage 	callBackSelector,
 						{
 							OSType type;
 							
-							switch(showWhat)
+							switch (showWhat)
 							{
 								case allReadable:
 								case allFiles:
@@ -652,7 +652,7 @@ pascal Boolean MyCustomFilter(AEDesc *theItem, void *info, NavCallBackUserData c
 	{
 		if (FSpGetFInfo(&spec, &fndrInfo) == noErr)
 		{
-			switch(showWhat)
+			switch (showWhat)
 			{
 				case allMusics:
 					if (fndrInfo.fdType == 'sTAT') return true;
@@ -698,7 +698,7 @@ pascal Boolean MyCustomFilter2(AEDesc *theItem, void *info, NavCallBackUserData 
 	{
 		if (FSpGetFInfo(&spec, &fndrInfo) == noErr)
 		{
-			switch(showWhat)
+			switch (showWhat)
 			{
 				default:	if (fndrInfo.fdType == specificType) return true;	break;
 			}
@@ -735,7 +735,7 @@ OSErr DoCustomOpen(FSSpec	*spec)
 		Str255 pMenuName;
 		GetPStrFromCFString(gMADLib->ThePlug[ i].MenuName, pMenuName);
 		
-		switch(gMADLib->ThePlug[ i].mode)
+		switch (gMADLib->ThePlug[ i].mode)
 		{
 			case 'EXIM':
 			case 'IMPL':
@@ -818,7 +818,7 @@ OSErr DoCustomOpen(FSSpec	*spec)
 
 OSErr DoCustomSave(Str255 bStr, Str255 fileName, OSType theType, FSSpec *spec)
 {
-	
+	//TODO: Open based on UTI
 	NavReplyRecord		reply;
 	NavDialogOptions	dialogOptions;
 	OSErr				theErr;

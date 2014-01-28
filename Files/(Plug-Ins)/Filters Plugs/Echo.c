@@ -177,7 +177,7 @@ static OSErr mainEcho(	sData			*theData,
 
 		pDelay = (pDelay * timeConvert) / 1000;	//convert ms to samples
 
-		switch(theData->amp)
+		switch (theData->amp)
 		{
 			case 8:
 			{

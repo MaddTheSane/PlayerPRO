@@ -296,20 +296,20 @@ void InitDriverString()
 	if (MADDriver->DriverSettings.surround) SetDText(myDialog, 24, "\pSurround ON");
 	else SetDText(myDialog, 24, "\pSurround OFF");
 	
-	switch(MADDriver->DriverSettings.outPutRate)
+	switch (MADDriver->DriverSettings.outPutRate)
 	{
 		case rate11khz:	SetDText(myDialog, 10, "\p11 Khz");					break;
 		case rate22khz:	SetDText(myDialog, 10, "\p22 Khz");					break;
 		case rate44khz:	SetDText(myDialog, 10, "\p44 Khz");					break;
 	}
 	
-	switch(MADDriver->DriverSettings.outPutMode)
+	switch (MADDriver->DriverSettings.outPutMode)
 	{
 			//	case MonoOutPut:			SetDText(myDialog, 13, "\pMono");			break;
 			//	case StereoOutPut:			SetDText(myDialog, 13, "\pStereo");		break;
 		case DeluxeStereoOutPut:	SetDText(myDialog, 13, "\pTrue Stereo");	break;
 	}
-	switch(MADDriver->DriverSettings.outPutBits)
+	switch (MADDriver->DriverSettings.outPutBits)
 	{
 		case 8:		SetDText(myDialog, 16, "\p8 bits");						break;
 		case 16:	SetDText(myDialog, 16, "\p16 bits");						break;
@@ -574,7 +574,7 @@ short PressTypeMenu(short whichMenu, short item)
 	
 	i = ApFontID;	ApFontID = 4;
 	
-	switch(whichMenu)
+	switch (whichMenu)
 	{
 		case 128:
 			if (!Stereo) DisableMenuItem(MenuDriver, 2);
@@ -650,7 +650,7 @@ short PressTypeMenu(short whichMenu, short item)
 		case 131:
 			if (!has16Bit) { DisableMenuItem(MenuDriver, 3);}
 			
-			switch(MADDriver->DriverSettings.outPutRate)
+			switch (MADDriver->DriverSettings.outPutRate)
 		{
 			default:
 			case rate11khz:		startitem = 1;	break;
@@ -662,7 +662,7 @@ short PressTypeMenu(short whichMenu, short item)
 		case 132:
 			if (!Stereo) { DisableMenuItem(MenuDriver, 2);		DisableMenuItem(MenuDriver, 3);}
 			
-			switch(MADDriver->DriverSettings.outPutMode)
+			switch (MADDriver->DriverSettings.outPutMode)
 		{
 			default:
 				//	case MonoOutPut:			startitem = 1;	break;
@@ -674,7 +674,7 @@ short PressTypeMenu(short whichMenu, short item)
 		case 133:
 			if (!has16Bit) { DisableMenuItem(MenuDriver, 2); }
 			
-			switch(MADDriver->DriverSettings.outPutBits)
+			switch (MADDriver->DriverSettings.outPutBits)
 		{
 			default:
 			case 8:			startitem = 1;			break;
@@ -706,10 +706,10 @@ short PressTypeMenu(short whichMenu, short item)
 		
 		MADDriver = NULL;
 		
-		switch(whichMenu)
+		switch (whichMenu)
 		{
 			case 131:
-				switch(LoWord(mresult))
+				switch (LoWord(mresult))
 			{
 				default:
 				case 1:	Init.outPutRate = rate11khz;	break;
@@ -719,7 +719,7 @@ short PressTypeMenu(short whichMenu, short item)
 				break;
 				
 			case 132:
-				switch(LoWord(mresult))
+				switch (LoWord(mresult))
 			{
 				default:
 					//	case 1:	Init.outPutMode = MonoOutPut;			break;
@@ -729,7 +729,7 @@ short PressTypeMenu(short whichMenu, short item)
 				break;
 				
 			case 133:
-				switch(LoWord(mresult))
+				switch (LoWord(mresult))
 			{
 				default:
 				case 1:		Init.outPutBits = 8;	break;
@@ -738,7 +738,7 @@ short PressTypeMenu(short whichMenu, short item)
 				break;
 				
 			case 128:
-				switch(LoWord(mresult))
+				switch (LoWord(mresult))
 			{
 				default:
 				case 1:		Init.surround = false;	break;
@@ -895,7 +895,7 @@ void MegaLoop()
 		}
 		else if (theEvent.what == mouseDown)
 		{
-			switch(thePart = FindWindow(theEvent.where, &whichWindow))
+			switch (thePart = FindWindow(theEvent.where, &whichWindow))
 			{
 				case inContent:
 					if (DialogSelect(&theEvent, &whichDialog, &whichItem ))
@@ -903,7 +903,7 @@ void MegaLoop()
 						GetPort(&savePort);
 						SetPort(GetDialogPort(whichDialog));
 						
-						switch(whichItem)
+						switch (whichItem)
 						{
 							case 2:
 								do

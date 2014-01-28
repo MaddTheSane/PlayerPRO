@@ -1894,7 +1894,7 @@ void DoItemPressStaff(short whichItem, DialogPtr whichDialog)
 		}
 	}   						/* End of mouseDown */
 	
-	switch(whichItem) {
+	switch (whichItem) {
 		case 21:
 			if (MyTrackControl(saveBut, theEvent.where, NULL))
 				SavePcmdFile(CreatePcmdFromSelectionStaff());
@@ -1964,7 +1964,7 @@ void DoItemPressStaff(short whichItem, DialogPtr whichDialog)
 			for (i = 0; i < 6; i++) HiliteControl(notesIcl[ i], 0);
 			HiliteControl(notesIcl[ whichItem-13], kControlButtonPart);
 			
-			switch(whichItem)
+			switch (whichItem)
 		{
 			case 13:	curNoteLength = 16;	break;
 			case 14:	curNoteLength = 8;	break;
@@ -1986,7 +1986,7 @@ void DoItemPressStaff(short whichItem, DialogPtr whichDialog)
 			if (GetControlHilite(durIcl[ whichItem-21]) == kControlButtonPart) HiliteControl(durIcl[ whichItem-21], 0);
 			else HiliteControl(durIcl[ whichItem-21], kControlButtonPart);
 			
-			switch(whichItem)
+			switch (whichItem)
 		{
 			case 21:	if (curDur & cPoint) 	curDur -= cPoint; 	else curDur += cPoint;		break;
 			case 22:	if (curDur & cLiaison)	curDur -= cLiaison; else curDur += cLiaison;	break;
@@ -2000,7 +2000,7 @@ void DoItemPressStaff(short whichItem, DialogPtr whichDialog)
 			for (i = 0; i < 3; i++) HiliteControl(modifIcl[ i], 0);
 			HiliteControl(modifIcl[ whichItem-18], kControlButtonPart);
 			
-			switch(whichItem)
+			switch (whichItem)
 		{
 			case 18:	curModif = cNul;	break;
 			case 19:	curModif = cDown;	break;
@@ -2021,7 +2021,7 @@ void DoItemPressStaff(short whichItem, DialogPtr whichDialog)
 			HiliteControl(noteBut, 0);
 			HiliteControl(selecBut, 0);
 			
-			switch(whichItem)
+			switch (whichItem)
 		{
 			case 3:		mode = selecM;	HiliteControl(selecBut, kControlButtonPart);	break;
 			case 5:		mode = noteM;	HiliteControl(noteBut, kControlButtonPart);	break;
@@ -2095,7 +2095,7 @@ pascal void actionProcStaff(ControlHandle theControl, short ctlPart)
 	minValue = GetControlMinimum(theControl);
 	curVal = sVal = GetControlValue(theControl);
 
-	switch(ctlPart) {
+	switch (ctlPart) {
 		case kControlUpButtonPart:
 			curVal -= 1;
 			if (curVal < minValue)
@@ -2150,7 +2150,7 @@ pascal void actionProcStaff(ControlHandle theControl, short ctlPart)
 		
 		aRgn = NewRgn();
 		
-		switch(lRefCon) {
+		switch (lRefCon) {
 			case yScrollNum:
 				tRect = StaffRect;
 				tRect.left = 0;
@@ -2523,7 +2523,7 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 				
 				FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
 				
-				switch(fndrInfo.fdType) {
+				switch (fndrInfo.fdType) {
 					case 'Pcmd':
 						/****************/
 						PcmdTracks = 1;

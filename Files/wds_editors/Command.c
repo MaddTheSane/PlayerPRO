@@ -168,7 +168,7 @@ short	Analyse(short	menuType)
 	short			Oct = 0;
 	long		ltemp = 0;
 	
-	switch(menuType)
+	switch (menuType)
 	{
 		case VolumeTE:
 			aStr[ 0] = (*TEH[ VolumeTE])->teLength;
@@ -270,7 +270,7 @@ void SetCmdValue(short	menuType)
 	
 	curMusic->hasChanged = true;
 	
-	switch(menuType)
+	switch (menuType)
 	{
 		case VolumeTE:
 			aStr[ 0] = (*TEH[ VolumeTE])->teLength;
@@ -670,7 +670,7 @@ void DoItemPressCmdDlog(short whichItem, DialogPtr whichDialog)
 		
 		GetPortBounds(GetDialogPort(whichDialog), &caRect);
 		
- 		switch(whichItem)
+ 		switch (whichItem)
  		{
 			case 35:
 				//if ((*keyMapCntl) != 255 && MyTrackControl(keyMapCntl, theEvent.where, NULL))
@@ -1305,7 +1305,7 @@ Point		myPt;
 
 	BackColor(whiteColor);
 	
-	switch(curActif)
+	switch (curActif)
 	{
 		case VolumeTE:
 			if (HexaDecimal(&theChar))

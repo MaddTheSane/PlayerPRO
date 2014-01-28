@@ -36,7 +36,7 @@ void DrawPlugInfo(short iD)
 	NNumToString(iD + 1, aStr);
 	pStrcat(aStr, "\p  ");
 	
-	switch(plugType[iD])
+	switch (plugType[iD])
 	{
 		case eMusicFilePlug:
 		{
@@ -164,7 +164,7 @@ void AboutPlugs()
 	{
 		ModalDialog(MyDlgFilterDesc, &itemHit);
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 2:
 			{

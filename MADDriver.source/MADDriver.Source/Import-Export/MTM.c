@@ -341,7 +341,7 @@ static OSErr mainMTM(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoR
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
-	switch(order)
+	switch (order)
 	{
 		case 'IMPL':
 			iFileRefI = iFileOpen(AlienFileName);

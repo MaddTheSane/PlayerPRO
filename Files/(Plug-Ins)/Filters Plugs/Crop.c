@@ -14,7 +14,7 @@ static OSErr mainCrop(sData					*theData,
 {
 	long	i;
 
-	switch(theData->amp)
+	switch (theData->amp)
 	{
 		case 8:
 		{

@@ -86,7 +86,7 @@ static void AnalyseSignatureMOD(long EOFo, long temp, short *maxInstru, long *Pa
 	
 	MOT32(&temp);
 	
-	switch(temp)
+	switch (temp)
 	{
 		case 'FLT4':	*PatternSize = sizeof(struct MODCom) * 64L * 4L;	*tracksNo = 4;	break;
 		case 'FLT8':	*PatternSize = sizeof(struct MODCom) * 64L * 4L;	*tracksNo = 4;	break;
@@ -921,7 +921,7 @@ static OSErr mainUMX(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoR
 	long		sndSize;
 	UNFILE		iFileRefI;
 	
-	switch(order)
+	switch (order)
 	{
 		case 'IMPL':
 			iFileRefI = iFileOpen(AlienFileName);

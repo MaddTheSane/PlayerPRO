@@ -80,21 +80,19 @@ static void Settings()
 	
 	SelectDialogItemText(aDialog,4,0,100);
 	
-	do
-	{
+	do {
 		reZo:
 		
 		ModalDialog(NULL, &itemHit);
 		
-		switch(itemHit)
-		{
+		switch (itemHit) {
 			case 5:
 				GetDialogItem(aDialog, 5, &itemType, &itemHandle, &itemRect);
 				SetControlValue((ControlHandle) itemHandle,!GetControlValue((ControlHandle) itemHandle));
 			break;
 		}
 	
-	}while (itemHit != 1);
+	} while (itemHit != 1);
 	
 	GetDialogItem(aDialog, 4, &itemType, &itemHandle, &itemRect);
 	GetDialogItemText(itemHandle, str);
@@ -102,8 +100,7 @@ static void Settings()
 	r /= 2;
 	r *= 2;
 	
-	if (r < 0 || r > 32)
-	{
+	if (r < 0 || r > 32) {
 		SysBeep(1);
 		SelectDialogItemText(aDialog,4,0,100);
 		goto reZo;
@@ -112,8 +109,10 @@ static void Settings()
 	wMaxchan = r;
 	
 	GetDialogItem(aDialog, 5, &itemType, &itemHandle, &itemRect);
-	if (GetControlValue((ControlHandle) itemHandle)) UseQKIns = true;
-	else UseQKIns = false;
+	if (GetControlValue((ControlHandle)itemHandle))
+		UseQKIns = true;
+	else
+		UseQKIns = false;
 	
 	DisposeDialog(aDialog);
 }
@@ -121,18 +120,14 @@ static void Settings()
 /*
  * main: Parses arguments to program and opens appropriate MOD and MID files.
  */
-void  ConvertMidiFile(char	*src, MADMusic *theMAD, MADDriverSettings *init)
+void ConvertMidiFile(char *src, MADMusic *theMAD, MADDriverSettings *init)
 {
-	//int 		cNames = 0;
 	short		channels;
-	//Sz 			fnDef;
 	Tune 		*ptuneMusic;
-	//FInfo		fndrInfo;
 
 	Init();
 	
-	if ((ptuneMusic = PtuneLoadFn(src, &channels)) == NULL)
-	{
+	if ((ptuneMusic = PtuneLoadFn(src, &channels)) == NULL) {
 		DebugStr("\pNot a legal MIDI file");
 		return;
 	}

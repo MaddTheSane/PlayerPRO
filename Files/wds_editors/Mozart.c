@@ -224,7 +224,7 @@ void SelectGoodMode(void)
 	HiliteControl(PlayBut, 0);	HiliteControl(PoubBut, 0);
 	HiliteControl(ZoomBut, 0);
 
-	switch(Mode)
+	switch (Mode)
 	{
 		case NoteM:		HiliteControl(NoteBut, kControlButtonPart);	break;			//kControlIndicatorPart
 		case CrossM:	HiliteControl(SelBut, kControlButtonPart);	break;
@@ -1634,7 +1634,7 @@ void DoNullMozart(void)
 						TETextBox(curDisplayedNote+1, curDisplayedNote[ 0], &iRect, teCenter);
 					}
 					
-					switch(Mode)
+					switch (Mode)
 					{
 						case NoteM:
 							pt2.h = PosToNote3(pt, &pt2.v, &track);
@@ -1904,7 +1904,7 @@ copyval = curVal = GetControlValue(theControl);
 
 	GetPortBounds(GetDialogPort(MozartDlog), &caRect);
 	
-	switch(ctlPart)
+	switch (ctlPart)
 	{
 		case kControlUpButtonPart:
 			if (lRefCon == 3) curVal--;
@@ -2113,7 +2113,7 @@ void PressPartition(Point myPt)
 
 	theCell.h = PosToNote3(myPt, &theCell.v, &track);
 	
-	switch(Mode)
+	switch (Mode)
 	{
 		case ZoomM:
 			if (IsPressed(0x003A)) ZoomInter--;
@@ -2447,7 +2447,7 @@ void DoItemPressMozart(short whichItem, DialogPtr whichDialog)
 			}
 		}
 		
-		switch(whichItem)
+		switch (whichItem)
 		{
 		MenuHandle	tMenu;
 		Rect	caRect;
@@ -3496,7 +3496,7 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 			//	HSetVol(NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
 				FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
 				
-				switch(fndrInfo.fdType)
+				switch (fndrInfo.fdType)
 				{
 					case 'Pcmd':
 						/////////////

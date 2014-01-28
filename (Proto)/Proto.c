@@ -9,7 +9,7 @@
 #include "PPPrivate.h"
 
 #ifdef __OBJC__
-#include <Cocoa/Cocoa.h>
+#import <Cocoa/Cocoa.h>
 #endif
 
 typedef OSType SFTypeList[4];

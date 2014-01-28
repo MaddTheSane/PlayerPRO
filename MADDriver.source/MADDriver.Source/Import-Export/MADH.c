@@ -430,7 +430,7 @@ static OSErr mainMADH(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
-	switch(order)
+	switch (order)
 	{
 		case 'IMPL':
 			iFileRefI = iFileOpen(AlienFileName);

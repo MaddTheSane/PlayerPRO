@@ -65,7 +65,7 @@ void CloseCube(void)
 
 void DoItemPressCube(short whichItem, DialogPtr whichDialog)
 {
-	switch(whichItem)
+	switch (whichItem)
 	{
 		case 1:
 			DoInternetMenu(1);

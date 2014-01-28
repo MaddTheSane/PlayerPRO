@@ -1295,7 +1295,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 		{	// SILENCE
 			long Tracks;
 			
-			switch(intDriver->DriverSettings.outPutMode)
+			switch (intDriver->DriverSettings.outPutMode)
 			{
 				case PolyPhonic:					Tracks	= intDriver->DriverSettings.numChn;	break;
 				default:							Tracks  = 2;	break;
@@ -1303,7 +1303,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 			
 			Tracks = 1;
 			
-			switch(intDriver->DriverSettings.outPutBits)
+			switch (intDriver->DriverSettings.outPutBits)
 			{
 				case 8:
 					for (i = 0; i < intDriver->ASCBUFFER*Tracks; i++) intDriver->IntDataPtr[ i] = 0x80;
@@ -1438,7 +1438,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 									
 									if (tempcmd->cmd == noteoffE)	// G-Effet, Note-Off previous channel note
 									{
-										switch(tempcmd->arg)
+										switch (tempcmd->arg)
 										{
 											case 0:
 												KillChannel(&intDriver->chan[ intDriver->lastChannelUsed[ i]], intDriver);
@@ -1667,7 +1667,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	
 	if (intDriver->DriverSettings.oversampling > 1)
 	{
-		switch(intDriver->DriverSettings.outPutBits)
+		switch (intDriver->DriverSettings.outPutBits)
 		{
 			case 8:
 			{
@@ -1747,7 +1747,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 		long		maxL, maxR, minL, minR, tempL;
 		long		*tempLong = intDriver->DASCBuffer, centerL, centerR;
 		
-		switch(intDriver->DriverSettings.outPutBits)
+		switch (intDriver->DriverSettings.outPutBits)
 		{
 			case 16:
 				maxL = maxR = -300000;
@@ -1920,7 +1920,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	{
 		long realMDelay = intDriver->MDelay;
 		
-		switch(intDriver->DriverSettings.outPutBits)
+		switch (intDriver->DriverSettings.outPutBits)
 		{
 			case 16:
 				BlockMoveData(intDriver->DASCBuffer + intDriver->ASCBUFFER*2, intDriver->DASCBuffer, realMDelay*8L);
@@ -1956,7 +1956,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	{
 		if (intDriver->DriverSettings.outPutMode != PolyPhonic)
 		{
-			switch(intDriver->DriverSettings.outPutBits)
+			switch (intDriver->DriverSettings.outPutBits)
 			{
 				case 16:
 					BlockZero((intDriver->DASCBuffer), intDriver->ASCBUFFER*8L);
@@ -1988,7 +1988,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	{
 		if (intDriver->DriverSettings.outPutMode == DeluxeStereoOutPut)
 		{
-			switch(intDriver->DriverSettings.outPutBits)
+			switch (intDriver->DriverSettings.outPutBits)
 			{
 				case 8:
 					ComputeReverb8((Byte*) intDriver->ReverbPtr, (Byte*) intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->DriverSettings.ReverbStrength);
@@ -2007,7 +2007,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	
 	if (intDriver->Equalizer)	// Apply Fourier Transform
 	{
-		switch(intDriver->DriverSettings.outPutBits)
+		switch (intDriver->DriverSettings.outPutBits)
 		{
 			case 8:
 				ConvertInstrument((Byte*) intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*2));
@@ -2036,10 +2036,10 @@ void NoteAnalyse(MADDriverRec *intDriver)
 
 void ApplySurround(MADDriverRec *intDriver)
 {
-	switch(intDriver->DriverSettings.outPutBits)
+	switch (intDriver->DriverSettings.outPutBits)
 	{
 		case 8:
-			switch(intDriver->DriverSettings.outPutMode)
+			switch (intDriver->DriverSettings.outPutMode)
 		{
 			case DeluxeStereoOutPut:
 			{
@@ -2057,7 +2057,7 @@ void ApplySurround(MADDriverRec *intDriver)
 			break;
 			
 		case 16:
-			switch(intDriver->DriverSettings.outPutMode)
+			switch (intDriver->DriverSettings.outPutMode)
 		{
 			case DeluxeStereoOutPut:
 			{
@@ -2082,10 +2082,10 @@ void GenerateSound(MADDriverRec *intDriver)
 	
 	if (intDriver->DriverSettings.driverMode == MIDISoundDriver) return;
 
-	switch(intDriver->DriverSettings.outPutBits)
+	switch (intDriver->DriverSettings.outPutBits)
 	{
 		case 8:
-			switch(intDriver->DriverSettings.outPutMode)
+			switch (intDriver->DriverSettings.outPutMode)
 		{
 				/*	case MonoOutPut:
 				 Play8Mono(intDriver);
@@ -2112,7 +2112,7 @@ void GenerateSound(MADDriverRec *intDriver)
 			break;
 			
 		case 16:
-			switch(intDriver->DriverSettings.outPutMode)
+			switch (intDriver->DriverSettings.outPutMode)
 		{
 				/*	case MonoOutPut:
 				 Play16Mono(intDriver);

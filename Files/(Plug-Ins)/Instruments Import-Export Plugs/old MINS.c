@@ -135,7 +135,7 @@ OSErr main(		OSType					order,						// Order to execute
 	short	iFileRefI, x;
 	long	inOutCount;
 	
-	switch(order)
+	switch (order)
 	{
 		case 'IMPL':
 		{

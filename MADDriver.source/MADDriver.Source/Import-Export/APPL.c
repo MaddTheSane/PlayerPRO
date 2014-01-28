@@ -408,7 +408,7 @@ static OSErr mainAPPL(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfo
 	
 	myErr = noErr;
 	
-	switch(order)
+	switch (order)
 	{
 		case 'IMPL':
 			iFileRefI = FSOpenResFile(&AlienFileFSRef, fsRdPerm);

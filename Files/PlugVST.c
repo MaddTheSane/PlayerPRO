@@ -142,7 +142,7 @@ void GetVSTPrefName(Str255 str, long *flag)
 	{
 		ModalDialog(MyDlgFilterDesc, &itemHit);
 	
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 6:
 				InverseRadio(6, TheDia);
@@ -278,7 +278,7 @@ long audioMasterFct(AEffect *effect, long opcode, long index, long value, void *
 {
 	long	returnVal = 0;
 
-	switch(opcode)
+	switch (opcode)
 	{
 		case audioMasterAutomate:
 			value = 0;	index = 0;	returnVal = 0;
@@ -1488,7 +1488,7 @@ void VSTEditorDoItemPress(short itemHit, DialogPtr aDia)
 		ctlPart = FindControl(myPt, GetDialogWindow(aDia), &theControl);
 	}
 
-	switch(itemHit)
+	switch (itemHit)
 	{
 		/*	case 3:
 				CurrentDialogCE->Active = !CurrentDialogCE->Active;
@@ -1635,7 +1635,7 @@ void VSTEditorDoItemPress(short itemHit, DialogPtr aDia)
 	
 	if (CurrentVSTRect == NULL)		// NO EDITOR !!!!
 	{
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 4:
 			{
@@ -1709,7 +1709,7 @@ void VSTEditorDoItemPress(short itemHit, DialogPtr aDia)
 	}
 	else					// OWN EDITOR
 	{			
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case -5:
 				dispatcher(CurrentDialogCE, false, effEditIdle, 0, 0, CurrentVSTRect, 0);

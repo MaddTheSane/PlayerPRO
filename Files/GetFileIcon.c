@@ -268,8 +268,7 @@ void GetFinderFilename(
 		deskRec.ioFileCreator	= data->fileCreator;
 		deskRec.ioFileType		= data->fileType;
 	
-		switch(theType )
-		{
+		switch (theType) {
 			case kLarge1BitMask:
 				deskRec.ioIconType = kLargeIcon;
 				break;
@@ -300,20 +299,17 @@ void GetFinderFilename(
 				break;
 		}
 
-		err = PBDTGetIconSync(&deskRec );
-		if(err == noErr)
-		{
+		err = PBDTGetIconSync(&deskRec);
+		if(err == noErr) {
 			HUnlock(*theIcon );
 			SetHandleSize(*theIcon, deskRec.ioDTActCount);
-		}
-		else
-		{
-			DisposeHandle(*theIcon );
+		} else {
+			DisposeHandle(*theIcon);
 			*theIcon = NULL;
 			err = noErr;
 		}
 	}
-	return(err );
+	return err;
 }
 
 
@@ -443,7 +439,11 @@ OSErr CopyEachIcon(
 }
 
 
-typedef struct genericIconInfo { OSType type; short id; } GenericIconInfo;
+typedef struct genericIconInfo {
+	OSType type;
+	short id;
+} GenericIconInfo;
+
 GenericIconInfo gGenericFinderIcons[]={ {'ifil',12500},
                                                {'ifil',12500},
                                                {'sfil',14000},

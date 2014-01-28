@@ -461,7 +461,7 @@ Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, O
 	
 	MADCheckSpeedPattern(copyMusic, copyDriver);
 	
-	switch(patternID)
+	switch (patternID)
 	{
 		case -2:
 		{
@@ -714,7 +714,7 @@ Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, O
 	}
 	if (patternID != -1 || patternID == -2) finalSize = 1;
 	
-	switch(thePrefs.Compressor)
+	switch (thePrefs.Compressor)
 	{
 		case 'MAC3':		finalSize /= 3L;		break;
 		case 'MAC6':		finalSize /= 6L;		break;
@@ -1031,7 +1031,7 @@ void StopAIFFExporting(void)
 	
 	/***********/
 	
-	switch(patternID) {
+	switch (patternID) {
 		case -2:
 		{
 			copyMusic->header->numPat--;

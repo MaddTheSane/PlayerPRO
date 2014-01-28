@@ -151,7 +151,7 @@ void DoNullDigiWindow(void)
 		/****** Instrument *********/
 		for (i = start; i < end; i ++)
 		{
-			switch(x)
+			switch (x)
 			{
 				case 0:
 					val = MADDriver->chan[ i].ins + 1;
@@ -573,7 +573,7 @@ maxValue = GetControlMaximum(theControl);
 minValue = GetControlMinimum(theControl);
 curVal = sVal = GetControlValue(theControl);
 
-	switch(ctlPart)
+	switch (ctlPart)
 		{
 			case kControlUpButtonPart:
 				curVal -= 1;

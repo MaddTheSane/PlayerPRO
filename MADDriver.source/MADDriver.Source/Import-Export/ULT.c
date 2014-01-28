@@ -196,7 +196,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, long MODSize, MADMusic *theMAD, MADDrive
 			curData->c2spd		= ULTSuite.ins[i].finetune;
 			curData->loopType	= 0;
 			
-			switch(ULTSuite.ins[i].Bidi)
+			switch (ULTSuite.ins[i].Bidi)
 			{
 				case 4:
 				case 12:
@@ -318,7 +318,7 @@ static OSErr mainULT(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoR
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
-	switch(order)
+	switch (order)
 	{
 		case 'IMPL':
 			iFileRefI = iFileOpen(AlienFileName);

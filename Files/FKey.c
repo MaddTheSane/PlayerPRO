@@ -195,39 +195,98 @@ void PressFKey(short whichFKey)
 	}
 	else
 	{
-		if (!thePrefs.FKeyActive[ whichFKey]) return;
-		if (!thePrefs.FKeyItem[ whichFKey]) return;
+		if (!thePrefs.FKeyActive[ whichFKey])
+			return;
+		if (!thePrefs.FKeyItem[ whichFKey])
+			return;
 		
 		if (!FindRefWindow(thePrefs.FKeyWind[ whichFKey]))
 		{
-			switch(thePrefs.FKeyWind[ whichFKey])
-			{
-				case RefStaff:			CreateStaffWindow();				break;
-				case RefWave:			CreateWaveWindow();					break;
-				case RefCube:			CreateCubeWindow();					break;
-				case RefInstruList:		CreateInstruListWindow();			break;
-				case RefPartition:		CreatePartitionWindow();			break;
-				case RefPatList:		CreatePatListWindow();				break;
-				case RefParti:			CreatePartiWindow();				break;
-				case RefClassic:		CreateClassicWindow();				break;
-				case RefMozart:			CreateMozartWindow();				break;
-				case RefInstruView:		CreateInstruView();					break;
-				case RefTrackView:		CreateTrackView();					break;
-				case RefDigiView:		CreateDigiListWindow();				break;
-				case RefHelp:			CreateHelpOnline(0);				break;
-				case RefAdaptators:		ShowWindow(GetDialogWindow(AdapDlog));				SetItemMark(ViewsMenu, mAdap, checkMark);	break;
-				case RefMODList:		DoGrowMODList(MODListDlog);		SelectWindow(GetDialogWindow(MODListDlog));		break;
-				case RefPlayer:			CreateOscilloWindow();				SetItemMark(ViewsMenu, mOscilloV, checkMark);	break;
-				case RefPiano:			CreatePianoWindow();				break;
-				case RefMemory:			CreateMemWindow();					break;
-				case RefSpectrum:		CreateSpectrumWindow();				break;
+			switch (thePrefs.FKeyWind[ whichFKey]) {
+				case RefStaff:
+					CreateStaffWindow();
+					break;
+					
+				case RefWave:
+					CreateWaveWindow();
+					break;
+					
+				case RefCube:
+					CreateCubeWindow();
+					break;
+					
+				case RefInstruList:
+					CreateInstruListWindow();
+					break;
+					
+				case RefPartition:
+					CreatePartitionWindow();
+					break;
+					
+				case RefPatList:
+					CreatePatListWindow();
+					break;
+					
+				case RefParti:
+					CreatePartiWindow();
+					break;
+					
+				case RefClassic:
+					CreateClassicWindow();
+					break;
+					
+				case RefMozart:
+					CreateMozartWindow();
+					break;
+					
+				case RefInstruView:
+					CreateInstruView();
+					break;
+					
+				case RefTrackView:
+					CreateTrackView();
+					break;
+					
+				case RefDigiView:
+					CreateDigiListWindow();
+					break;
+					
+				case RefHelp:
+					CreateHelpOnline(0);
+					break;
+					
+				case RefAdaptators:
+					ShowWindow(GetDialogWindow(AdapDlog));
+					SetItemMark(ViewsMenu, mAdap, checkMark);
+					break;
+					
+				case RefMODList:
+					DoGrowMODList(MODListDlog);
+					SelectWindow(GetDialogWindow(MODListDlog));
+					break;
+					
+				case RefPlayer:
+					CreateOscilloWindow();
+					SetItemMark(ViewsMenu, mOscilloV, checkMark);
+					break;
+					
+				case RefPiano:
+					CreatePianoWindow();
+					break;
+					
+				case RefMemory:
+					CreateMemWindow();
+					break;
+					
+				case RefSpectrum:
+					CreateSpectrumWindow();
+					break;
 			}
 		}
 		
 		curDia = GetDialogFromWindow(FindRefWindow(thePrefs.FKeyWind[ whichFKey]));
 		
-		if (curDia)
-		{
+		if (curDia) {
 			GrafPtr		curPort;
 			short		itemType;
 			Handle		itemHandle;

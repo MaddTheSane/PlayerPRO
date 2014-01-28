@@ -29,7 +29,7 @@ void AddLoopToSndHandle(Handle sound, long Start, long End)
 	// determine what format sound we have. 
 	soundFormat = *(short*)soundPtr;
 	
-	switch(soundFormat)
+	switch (soundFormat)
 	{
 		case 1:						// format 1 sound. 
 			// look inside the format 1 resource and deduce offsets. 
@@ -50,7 +50,7 @@ void AddLoopToSndHandle(Handle sound, long Start, long End)
 	offset = 6 + 6*numSynths + 8*numCmds;
 	header = (SoundHeaderPtr) ((*sound) + offset);
 		
-	switch(header->encode)
+	switch (header->encode)
 	{
 		case cmpSH:
 			CmpHeader = (CmpSoundHeader*) header;
@@ -100,7 +100,7 @@ Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize,
 	// determine what format sound we have.
 	soundFormat = *(short*) soundPtr;
 	
-	switch(soundFormat)
+	switch (soundFormat)
 	{
 		case 1:						// format 1 sound.
 			// look inside the format 1 resource and deduce offsets.
@@ -122,7 +122,7 @@ Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize,
 	offset = 6 + 6*numSynths + 8*numCmds;
 	header = (SoundHeaderPtr) (((Ptr) soundPtr) + offset);
 	
-	switch(header->encode)
+	switch (header->encode)
 	{
 		case cmpSH:
 		{
@@ -384,7 +384,7 @@ OSErr main(		OSType					order,						// Order to execute
 	short	iFileRefI;
 	long	inOutBytes;
 	
-	switch(order)
+	switch (order)
 	{
 	/*	case 'PLAY':
 		{

@@ -717,22 +717,20 @@ void MADDisposeReverb(MADDriverRec *intDriver)
 
 OSErr MADCreateReverb(MADDriverRec *intDriver)
 {
-	if (intDriver->DriverSettings.Reverb)
-	{
+	if (intDriver->DriverSettings.Reverb) {
 		intDriver->RDelay = (intDriver->DriverSettings.ReverbSize * (intDriver->DriverSettings.outPutRate >> 16L)) / 1000;
 		
-		switch(intDriver->DriverSettings.outPutBits)
-		{
+		switch (intDriver->DriverSettings.outPutBits) {
 			case 8:
 				intDriver->ReverbPtr = NewPtr(intDriver->RDelay * 2L);
 				if (intDriver->ReverbPtr == NULL) return MADNeedMemory;
 				memset(intDriver->ReverbPtr, 0x80, intDriver->RDelay * 2);
-				break;
+					break;
 				
 			case 16:
 				intDriver->ReverbPtr = NewPtrClear(intDriver->RDelay * 4L);
 				if (intDriver->ReverbPtr == NULL) return MADNeedMemory;
-				break;
+					break;
 		}
 	}
 	
@@ -743,13 +741,14 @@ void MADDisposeDriverBuffer(MADDriverRec *intDriver)
 {
 	short i;
 	
-	for (i = 0; i < MAXDRAW; i++)
-	{
-		if (intDriver->OsciDrawPtr[ i] != NULL)	DisposePtr(intDriver->OsciDrawPtr[ i]);
-		intDriver->OsciDrawPtr[ i] = NULL;
+	for (i = 0; i < MAXDRAW; i++) {
+		if (intDriver->OsciDrawPtr[i] != NULL)
+			DisposePtr(intDriver->OsciDrawPtr[i]);
+		intDriver->OsciDrawPtr[i] = NULL;
 	}
 	
-	if (intDriver->IntDataPtr != NULL)	DisposePtr(intDriver->IntDataPtr);
+	if (intDriver->IntDataPtr != NULL)
+		DisposePtr(intDriver->IntDataPtr);
 	intDriver->IntDataPtr = NULL;
 }
 
@@ -764,30 +763,27 @@ OSErr MADCreateDriverBuffer(MADDriverRec *intDriver)
 	
 	BufSize = intDriver->ASCBUFFER;
 	
-	switch(intDriver->DriverSettings.outPutMode)
-	{
+	switch (intDriver->DriverSettings.outPutMode) {
 		case MonoOutPut:
 			break;
+			
 		case StereoOutPut:
 		case DeluxeStereoOutPut:
 			BufSize *= 2;
 			break;
 	}
 	
-	switch(intDriver->DriverSettings.outPutBits)
-	{
+	switch (intDriver->DriverSettings.outPutBits) {
 		case 16:
 			BufSize *= 2;
 			break;
 	}
 	
 	intDriver->curDrawPtr = 0;
-	for (i = 0; i < MAXDRAW; i++)
-	{
+	for (i = 0; i < MAXDRAW; i++) {
 		intDriver->newData[ i] = false;
 		intDriver->OsciDrawPtr[ i] = (Ptr)MADNewPtrClear(BufSize / intDriver->DriverSettings.oversampling, intDriver->lib);
-		if (intDriver->OsciDrawPtr[ i] == NULL)
-		{
+		if (intDriver->OsciDrawPtr[ i] == NULL) {
 			for (x = 0; x < MAXDRAW; x++) {
 				if (intDriver->OsciDrawPtr[ i] != NULL) {
 					DisposePtr(intDriver->OsciDrawPtr[ i]);
@@ -798,11 +794,10 @@ OSErr MADCreateDriverBuffer(MADDriverRec *intDriver)
 	}
 	
 	intDriver->IntDataPtr = (Ptr)MADNewPtr(BufSize, intDriver->lib);
-	if (intDriver->IntDataPtr == NULL)
-	{
+	if (intDriver->IntDataPtr == NULL) {
 		for (x = 0; x < MAXDRAW; x++) {
-			if (intDriver->OsciDrawPtr[ i] != NULL) {
-				DisposePtr(intDriver->OsciDrawPtr[ i]);
+			if (intDriver->OsciDrawPtr[i] != NULL) {
+				DisposePtr(intDriver->OsciDrawPtr[i]);
 			}
 		}
 		return MADNeedMemory;
@@ -1009,7 +1004,7 @@ OSErr MADCreateDriver(MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADDr
 	/** 	Driver MODE	    **/
 	/*************************/
 	
-	switch(MDriver->DriverSettings.driverMode)
+	switch (MDriver->DriverSettings.driverMode)
 	{
 		case ASIOSoundManager:
 			MDriver->ASCBUFFER = 1024L * MDriver->DriverSettings.oversampling;
@@ -1104,7 +1099,7 @@ OSErr MADCreateDriver(MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADDr
 	/**    Interruption - Hardware Support       **/
 	/**********************************************/
 	
-	switch(MDriver->DriverSettings.driverMode)
+	switch (MDriver->DriverSettings.driverMode)
 	{
 		case ASIOSoundManager:
 			break;
@@ -1245,7 +1240,7 @@ OSErr MADDisposeDriver(MADDriverRec* MDriver)
 	
 	MADCleanDriver(MDriver);
 	
-	switch(MDriver->DriverSettings.driverMode)
+	switch (MDriver->DriverSettings.driverMode)
 	{
 #ifdef _MAC_H
 		case MIDISoundDriver:
@@ -2094,7 +2089,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 		return MADNeedMemory;
 	}
 	
-	switch(InPutType)
+	switch (InPutType)
 	{
 #ifdef _MAC_H
 		case MADRsrcType:
@@ -2145,7 +2140,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 		/** Lecture du header de la partition **/
 		inOutCount = sizeof(PatHeader);
 		
-		switch(InPutType)
+		switch (InPutType)
 		{
 #ifdef _MAC_H
 			case MADRsrcType:
@@ -2173,7 +2168,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 		/** Lecture du header + contenu de la partition **/
 		/*************************************************/
 		
-		switch(tempPatHeader.compMode)
+		switch (tempPatHeader.compMode)
 		{
 			case 'MAD1':
 				inOutCount = sizeof(PatHeader) + tempPatHeader.patBytes;
@@ -2197,7 +2192,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 			
 			return MADNeedMemory;
 		}
-		switch(InPutType)
+		switch (InPutType)
 		{
 #ifdef _MAC_H
 			case MADRsrcType:
@@ -2257,7 +2252,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 	}
 	
 	inOutCount = sizeof(InstrData) * (long) MDriver->header->numInstru;
-	switch(InPutType)
+	switch (InPutType)
 	{
 #ifdef _MAC_H
 		case MADRsrcType:
@@ -2353,7 +2348,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 			
 			inOutCount = sizeof(sData);
 			
-			switch(InPutType)
+			switch (InPutType)
 			{
 #ifdef _MAC_H
 				case MADRsrcType:
@@ -2395,7 +2390,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 			}
 			
 			inOutCount = curData->size;
-			switch(InPutType)
+			switch (InPutType)
 			{
 #ifdef _MAC_H
 				case MADRsrcType:
@@ -2441,7 +2436,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 			{
 				int y = 0;
 				inOutCount = sizeof(FXSets);
-				switch(InPutType)
+				switch (InPutType)
 				{
 #ifdef _MAC_H
 					case MADRsrcType:
@@ -2478,7 +2473,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 				{
 					int y = 0;
 					inOutCount = sizeof(FXSets);
-					switch(InPutType)
+					switch (InPutType)
 					{
 #ifdef _MAC_H
 						case MADRsrcType:
@@ -3004,7 +2999,7 @@ OSErr MADStartDriver(MADDriverRec *MDriver)
 	
 	MADCheckSpeed(MDriver->curMusic, MDriver);
 	
-	switch(MDriver->DriverSettings.driverMode)
+	switch (MDriver->DriverSettings.driverMode)
 	{
 #ifdef _MAC_H
 			/*	case AWACSoundDriver:
@@ -3070,7 +3065,7 @@ OSErr MADStopDriver(MADDriverRec *MDriver)
 	MDriver->levelL = 0;
 	MDriver->levelR = 0;
 
-	switch(MDriver->DriverSettings.driverMode)
+	switch (MDriver->DriverSettings.driverMode)
 	{
 #ifdef _MAC_H
 			/*	case AWACSoundDriver:
@@ -3383,7 +3378,7 @@ OSErr MADPlaySndHandle(MADDriverRec *MDriver, Handle sound, long channel, long n
 	/* determine what format sound we have. */
 	soundFormat = *(short*)soundPtr;
 	
-	switch(soundFormat)
+	switch (soundFormat)
 	{
 		case 1:						/* format 1 sound. */
 			/* look inside the format 1 resource and deduce offsets. */
@@ -3406,7 +3401,7 @@ OSErr MADPlaySndHandle(MADDriverRec *MDriver, Handle sound, long channel, long n
 	offset = 6 + 6*numSynths + 8*numCmds;
 	header = (SoundHeaderPtr) ((*sound) + offset);
 	
-	switch(header->encode)
+	switch (header->encode)
 	{
 		case cmpSH:
 			CmpHeader = (CmpSoundHeader*) header;
@@ -3490,7 +3485,7 @@ OSErr MADPlaySndHandle(MADDriverRec *MDriver, Handle sound, long channel, long n
 			
 			for (i = 0; i < Ssize; i++) rPtr[ i] = rPtr[ i] - 0x80;
 			
-			switch(header->encode)
+			switch (header->encode)
 			{
 				case extSH:
 					ExtHeader->sampleSize = 0;
@@ -3558,7 +3553,7 @@ OSErr MADCreateVolumeTable(MADDriverRec *intDriver)
 
 	theErr = MADCreateMicroDelay(intDriver);			if (theErr != noErr) return theErr;
 
-	switch(intDriver->DriverSettings.outPutMode)
+	switch (intDriver->DriverSettings.outPutMode)
 	{
 		case DeluxeStereoOutPut:			Tracks	= 1;		MADCreateOverShoot(intDriver);	break;
 		case PolyPhonic:					Tracks 	= 1;		break;

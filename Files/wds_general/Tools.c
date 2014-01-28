@@ -972,7 +972,7 @@ void DoItemPressTools(short whichItem, DialogPtr whichDialog)
 	GetPort(&savePort);
 	SetPortDialogPort(ToolsDlog);
 	
-	switch(whichItem)
+	switch (whichItem)
 	{
 		case 2:
 			if (MyTrackControl(JumpBeforeCntl, theEvent.where, NULL))

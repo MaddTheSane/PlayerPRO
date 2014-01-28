@@ -381,7 +381,7 @@ void UpdateDisplaySize(short InstruNo)
 
 	if (!SampleDlog[ InstruNo]) return;
 
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 			NumToString((long) curMusic->fid[ InstruNo].pannSize, StrTemp);
@@ -414,7 +414,7 @@ void UpdateDisplay(short InstruNo)
 	
 	val = GetControlValue(xScroll[ InstruNo]);
 	
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 		case volumeEnv:	
@@ -474,7 +474,7 @@ void UpdateDisplayQuality(short InstruNo)
 
 	if (!SampleDlog[ InstruNo]) return;
 
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 		case volumeEnv:
@@ -501,7 +501,7 @@ void UpdateDisplayPosition(short InstruNo)
 	
 	GetMouse(&myPt);
 	
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 		case volumeEnv:
@@ -542,7 +542,7 @@ void UpdateDisplayLoop(short InstruNo)
 
 	if (!SampleDlog[ InstruNo]) return;
 
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 			if (curMusic->fid[ InstruNo].pannType & EFLOOP)
@@ -600,7 +600,7 @@ long	FindByteStart(short InstruNo)
 	
 	tempL = SelecRect[ InstruNo].start;
 	
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 		
@@ -641,7 +641,7 @@ short		ByteToPos(long bytePosi, short InstruNo)
 
 	val = GetControlValue(xScroll[ InstruNo]);
 	
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 			start = (val * (ENVSIZE / SAMPLEDEF)) / ZoomLevel[ InstruNo];
@@ -681,7 +681,7 @@ long AmpToByte(short Pos, short InstruNo)
 	Handle	itemHandle;
 	Rect	itemRect;
 	
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 			sampleSize = 256;
@@ -704,7 +704,7 @@ long AmpToByte(short Pos, short InstruNo)
 	if (tempL < 0) tempL = 0;
 	if (tempL > 256) tempL = 256;
 	
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 			tempL = 128 - tempL;
@@ -736,7 +736,7 @@ long PosToByte(short Pos, short InstruNo)
 	
 	val = GetControlValue(xScroll[ InstruNo]);
 	
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 			start = (val * (ENVSIZE / SAMPLEDEF)) / ZoomLevel[ InstruNo];
@@ -766,7 +766,7 @@ long PosToByte(short Pos, short InstruNo)
 	
 	tempL += start;
 	
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 		break;
@@ -824,7 +824,7 @@ long	FindByteEnd(short InstruNo)
 	
 	tempL = SelecRect[ InstruNo].end;
 	
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 		
@@ -858,7 +858,7 @@ void Selection2Loop(short InstruNo)
 {
 InstrData	*curIns = &curMusic->fid[ InstruNo];
 
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 			if (Clignote[ InstruNo])
@@ -957,7 +957,7 @@ void SetSustainPoint(short InstruNo)
 {
 InstrData	*curIns = &curMusic->fid[ InstruNo];
 
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 			if (Clignote[ InstruNo])
@@ -1012,7 +1012,7 @@ InstrData	*curIns = &curMusic->fid[ InstruNo];
 
 void Loop2Selection(short InstruNo)
 {
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 			if (!(curMusic->fid[ InstruNo].pannType & EFLOOP))
@@ -1101,7 +1101,7 @@ ScrapRef	scrap;
 	Start = FindByteStart(CurWin);
 	End = FindByteEnd(CurWin);
 
-	switch(curSample[ CurWin])
+	switch (curSample[ CurWin])
 	{
 		case panningEnv:
 			if (Start != End)
@@ -1177,7 +1177,7 @@ OSErr				anErr;
 	
 	DoKeyPressSample(theDia, (short) 0x0008);
 
-	switch(curSample[ CurWin])
+	switch (curSample[ CurWin])
 	{
 		case panningEnv:
 			{
@@ -1472,7 +1472,7 @@ RgnHandle	visibleRegion;
 				}
 				else
 				{
-					switch(curSample[ InstruNo])
+					switch (curSample[ InstruNo])
 					{
 						case panningEnv:
 							if (SelectMode[ InstruNo] == ePencil)
@@ -1600,7 +1600,7 @@ RgnHandle	visibleRegion;
 		{
 			if (SampleDlog[ InstruNo] != NULL)
 			{
-				switch(curSample[ InstruNo])
+				switch (curSample[ InstruNo])
 				{
 					case panningEnv:
 						if (curMusic->fid[ MADDriver->chan[i].ins].pannType  & EFON)
@@ -1832,7 +1832,7 @@ void UpdateSampleWindow(DialogPtr	GetSelection)
 		
 		GetDialogItem(SampleDlog[ theInstru] , 30, &itemType, &itemHandle, &itemRect);
 		itemRect.right = caRect.right;
-		switch(curSample[ theInstru])
+		switch (curSample[ theInstru])
 		{
 			case panningEnv:
 				pStrcpy(str, "\pPanning Envelope");
@@ -1934,7 +1934,7 @@ void DrawPencil(DialogPtr	theDia, short InstruNo)
 		DoNullInstrument();
 	}
 	
-	switch(curSample[ InstruNo])
+	switch (curSample[ InstruNo])
 	{
 		case panningEnv:
 		case volumeEnv:
@@ -1999,7 +1999,7 @@ void DrawPencil(DialogPtr	theDia, short InstruNo)
 			
 			UpdateDisplayPosition(InstruNo);
 			
-			switch(curSample[ InstruNo])
+			switch (curSample[ InstruNo])
 			{
 				case panningEnv:
 				{
@@ -2971,7 +2971,7 @@ void InternalUpdate(short InstruNo)
 		TextFont(4);	TextSize(9);
 		
 		recheck:
-		switch(curSample[ InstruNo])
+		switch (curSample[ InstruNo])
 		{
 			case panningEnv:
 				if (SelecRect[ InstruNo].start > ENVSIZE || SelecRect[ InstruNo].end > ENVSIZE)
@@ -3468,7 +3468,7 @@ minValue = GetControlMinimum(theControl);
 curVal = sVal = GetControlValue(theControl);
 CurWin = FindSample(theDialogControl);
 
-	switch(ctlPart)
+	switch (ctlPart)
 	{
 		case kControlUpButtonPart:
 			curVal -= 1;
@@ -3708,7 +3708,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 		
 		if (PtInRect(myPt, &SampleRect))
 		{
-			switch(curSample[ InstruNo])
+			switch (curSample[ InstruNo])
 			{
 				case panningEnv:
 				
@@ -3839,7 +3839,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 				
 				if (TickCount() - doubleClick <= GetDblTime() && lastPosition.h == myPt.h && lastPosition.v == myPt.v)
 				{
-					switch(curSample[ InstruNo])
+					switch (curSample[ InstruNo])
 					{
 						case volumeEnv:
 						case panningEnv:
@@ -3884,7 +3884,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 				
 					theDialogControl = SampleDlog[ InstruNo];
 					
-					switch(curSample[ InstruNo])
+					switch (curSample[ InstruNo])
 					{
 						case panningEnv:
 						case volumeEnv:
@@ -3969,7 +3969,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 							
 							InvertRect(&tempRect);
 							
-							switch(curSample[ InstruNo])
+							switch (curSample[ InstruNo])
 							{
 								case volumeEnv:
 								case panningEnv:
@@ -4041,12 +4041,12 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 		}
 	}
 
-	switch(whichItem)
+	switch (whichItem)
 	{
 		case 40:
 			if (curSample[ InstruNo] < 0 && MyTrackControl(FixedBut[ InstruNo], theEvent.where, NULL))
 			{
-				switch(curSample[ InstruNo])
+				switch (curSample[ InstruNo])
 				{
 					case panningEnv:
 						if (curMusic->fid[ InstruNo].pannType & EFNOTE) curMusic->fid[ InstruNo].pannType -= EFNOTE;
@@ -4071,7 +4071,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 		case 13:
 			if(curSample[ InstruNo] < 0 && MyTrackControl(EnvBut[ InstruNo], theEvent.where, NULL))
 			{
-				switch(curSample[ InstruNo])
+				switch (curSample[ InstruNo])
 				{
 					case panningEnv:
 						if (curMusic->fid[ InstruNo].pannType & EFON) curMusic->fid[ InstruNo].pannType -= EFON;
@@ -4096,7 +4096,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 		case 36:
 			if(curSample[ InstruNo] < 0 && MyTrackControl(SustainBut[ InstruNo], theEvent.where, NULL))
 			{
-				switch(curSample[ InstruNo])
+				switch (curSample[ InstruNo])
 				{
 					case panningEnv:
 						if (curMusic->fid[ InstruNo].pannType & EFSUSTAIN) curMusic->fid[ InstruNo].pannType -= EFSUSTAIN;
@@ -4121,7 +4121,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 		case 37:
 			if(curSample[ InstruNo] < 0 && MyTrackControl(LoopBut[ InstruNo], theEvent.where, NULL))
 			{
-				switch(curSample[ InstruNo])
+				switch (curSample[ InstruNo])
 				{
 					case panningEnv:
 						if (curMusic->fid[ InstruNo].pannType & EFLOOP) curMusic->fid[ InstruNo].pannType -= EFLOOP;
@@ -4249,7 +4249,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 			
 			LocalToGlobal(&Zone);
 			
-			switch(curSample[ InstruNo])
+			switch (curSample[ InstruNo])
 			{
 				case volumeEnv:
 					i = 1;
@@ -4281,7 +4281,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 			{
 				short prevSample = curSample[ InstruNo];
 				
-				switch(LoWord(mresult))
+				switch (LoWord(mresult))
 				{
 					case 1:		// Volume Envelope
 						curSample[ InstruNo] = volumeEnv;
@@ -4320,7 +4320,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 		break;
 		
 		case 14:
-			switch(curSample[ InstruNo])
+			switch (curSample[ InstruNo])
 			{
 				case volumeEnv:
 				case panningEnv:
@@ -4354,7 +4354,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 					
 						SaveUndo(USample, InstruNo, "\pUndo 'Plug editing'");
 					
-						switch(temp)
+						switch (temp)
 						{
 							case 1:	// Selection to loop
 								Selection2Loop(InstruNo);
@@ -4383,7 +4383,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 					{
 						SaveUndo(USample, InstruNo, "\pUndo 'Plug editing'");
 					
-						switch(temp)
+						switch (temp)
 						{
 						case 1:
 							Selection2Loop(InstruNo);
@@ -4449,7 +4449,7 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 	{
 		Clignote[ CurWin] = false;
 		
-		switch(curSample[ CurWin])
+		switch (curSample[ CurWin])
 		{
 			case volumeEnv:
 			case panningEnv:
@@ -4552,7 +4552,7 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 			
 			curMusic->hasChanged = true;
 			
-			switch(curSample[ CurWin])
+			switch (curSample[ CurWin])
 			{
 				case panningEnv:
 				{
@@ -4729,7 +4729,7 @@ Point		theCell = { 0, 0}, ppt = { 0,0};
 		
 		SelectMode[ CurWin]++;
 		if (SelectMode[ CurWin] > MODESIZE) SelectMode[ CurWin] = 0;
-		switch(SelectMode[ CurWin])
+		switch (SelectMode[ CurWin])
 		{
 			case eSelect:	HiliteControl(SelectBut[ CurWin], kControlButtonPart);	break;
 			case ePencil:	HiliteControl(PencilBut[ CurWin], kControlButtonPart);	break;

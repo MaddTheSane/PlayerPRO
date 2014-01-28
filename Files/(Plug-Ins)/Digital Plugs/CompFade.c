@@ -64,21 +64,17 @@ static void AutoPosition(DialogPtr aDia)
 						screenBits.bounds.right - 8, screenBits.bounds.bottom - 8);
 	
 	aH = GetDeviceList();
-	do
-	{
+	do {
 		aH = GetNextDevice(aH);
-		if (aH != NULL)
-		{
-			if (PtInRect(mouse, &(*(*aH)->gdPMap)->bounds))
-			{
+		if (aH != NULL) {
+			if (PtInRect(mouse, &(*(*aH)->gdPMap)->bounds)) {
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
 				SetRect(&ViewRect, ar.left + 8, ar.top + 43,
 									ar.right - 8, ar.bottom - 8);
 			}
 		}
-	}
-	while (aH != NULL);
+	} while (aH != NULL);
 	
 	Position.h = mouse.h - XSize/2;
 	if (Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
@@ -96,49 +92,85 @@ static void AutoPosition(DialogPtr aDia)
 	ShowWindow(GetDialogWindow(aDia));
 }
 
-static Cmd* GetCmd(short row, short	track, Pcmd*	myPcmd)
+static Cmd* GetCmd(short row, short	track, Pcmd* myPcmd)
 {
-	if (row < 0) row = 0;
-	else if (row >= myPcmd->length) row = myPcmd->length -1;
+	if (row < 0)
+		row = 0;
+	else if (row >= myPcmd->length)
+		row = myPcmd->length - 1;
 
-	if (track < 0) track = 0;
-	else if (track >= myPcmd->tracks) track = myPcmd->tracks -1;
+	if (track < 0)
+		track = 0;
+	else if (track >= myPcmd->tracks)
+		track = myPcmd->tracks - 1;
 	
-	return(&(myPcmd->myCmd[ (myPcmd->length * track) + row]));
+	return &(myPcmd->myCmd[ (myPcmd->length * track) + row]);
 }
 
 static short Text2Note(Str255 myTT)
 {
 	short		Oct;
 	
-	if (myTT[ 0] > 2) Oct = myTT[ 3] - 48;
-	else Oct = myTT[ 2] - 48;
+	if (myTT[0] > 2)
+		Oct = myTT[3] - 48;
+	else
+		Oct = myTT[2] - 48;
 	
 	Oct *= 12;
 	
 	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
 	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
-	switch(myTT[1])
-	{
-		case 'C':	case'c':	Oct += 0;	break;
-		case 'D':	case'd':	Oct += 2;	break;
-		case 'E':	case'e':	Oct += 4;	break;
-		case 'F':	case'f':	Oct += 5;	break;
-		case 'G':	case'g':	Oct += 7;	break;
-		case 'A':	case'a':	Oct += 9;	break;
-		case 'B':	case'b':	Oct += 11;	break;
+	switch (myTT[1]) {
+		case 'C':
+		case 'c':
+			Oct += 0;
+			break;
+			
+		case 'D':
+		case 'd':
+			Oct += 2;
+			break;
+			
+		case 'E':
+		case 'e':
+			Oct += 4;
+			break;
+			
+		case 'F':
+		case 'f':
+			Oct += 5;
+			break;
+			
+		case 'G':
+		case 'g':
+			Oct += 7;
+			break;
+			
+		case 'A':
+		case 'a':
+			Oct += 9;
+			break;
+			
+		case 'B':
+		case 'b':
+			Oct += 11;
+			break;
 		
-		default:	Oct = 0xFF;		break;
+		default:
+			Oct = 0xFF;
+			break;
 	}
 	
-	if (Oct != 0xFF)
-	{
-		if (myTT[ 2] == '#') Oct++;
-		if (Oct >= 96) Oct = 0xFF;
-		if (Oct < 0) Oct = 0xFF;
+	if (Oct != 0xFF) {
+		if (myTT[2] == '#')
+			Oct++;
+		if (Oct > 95)
+			Oct = 0xFF;
+		if (Oct < 0)
+			Oct = 0xFF;
 	}
 	
-	return(Oct);
+	return Oct;
 }
 
 static void StringToHex(Str255 str, long *oct)
@@ -172,7 +204,7 @@ static OSErr mainCompFade(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	
 		ModalDialog(thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 7:
 			case 8:
@@ -187,7 +219,7 @@ static OSErr mainCompFade(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 				TurnRadio(itemHit, myDia, true);
 				mode = itemHit;
 				
-				switch(itemHit)
+				switch (itemHit)
 				{
 					case 7:		SetDText(myDia, 15, "\pFrom 1 to 64");		SetDText(myDia, 3, "\p1");		SetDText(myDia, 4, "\p64");	break;
 					case 8:		SetDText(myDia, 15, "\pFrom C0 to B7");	SetDText(myDia, 3, "\pC0");	SetDText(myDia, 4, "\pB7");	break;
@@ -207,7 +239,7 @@ static OSErr mainCompFade(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		
 		// Check values
 		
-		switch(mode)
+		switch (mode)
 		{
 			case 7:
 				GetDText(myDia, 3, tStr);		StringToNum(tStr, &from);
@@ -253,7 +285,7 @@ static OSErr mainCompFade(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 				
 				if (myPcmd->length > 1)			// no zero div !!
 				{
-					switch(mode)
+					switch (mode)
 					{
 						case 7:		myCmd->ins	= from + ((to-from) * row) / (myPcmd->length-1);	break;
 						case 8:		myCmd->note = from + ((to-from) * row) / (myPcmd->length-1);	break;

@@ -86,7 +86,7 @@ static void AnalyseSignatureMOD(long EOFo, OSType temp, short *maxInstru, long *
 	
 	MOT32(&temp);
 	
-	switch(temp)
+	switch (temp)
 	{
 		case 'FLT4':	*PatternSize = sizeof(struct MODCom) * 64L * 4L;	*tracksNo = 4;	break;
 		case 'FLT8':	*PatternSize = sizeof(struct MODCom) * 64L * 4L;	*tracksNo = 4;	break;

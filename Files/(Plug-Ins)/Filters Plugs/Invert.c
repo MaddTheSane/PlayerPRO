@@ -14,7 +14,7 @@ static OSErr mainInvert(sData					*theData,
 {
 	long	i, /*peak = 0,*/ temp;
 	
-	switch(theData->amp)
+	switch (theData->amp)
 	{
 		case 8:
 		{

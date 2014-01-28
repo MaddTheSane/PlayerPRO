@@ -571,7 +571,7 @@ maxValue = GetControlMaximum(theControl);
 minValue = GetControlMinimum(theControl);
 curVal = sVal = GetControlValue(theControl);
 
-	switch(ctlPart)
+	switch (ctlPart)
 	{
 		case kControlUpButtonPart:
 			curVal -= 1;
@@ -717,7 +717,7 @@ void DoItemPressClassic(short whichItem, DialogPtr whichDialog)    			/* Item hi
 			}
 		}   						/* End of mouseDown */
 		
-		switch(whichItem)
+		switch (whichItem)
 		{
 			case 12:
 				if (GetControlHilite(InfoBut) == 0  && MyTrackControl(InfoBut, theEvent.where, NULL))

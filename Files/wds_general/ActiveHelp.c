@@ -324,7 +324,7 @@ void AdjustZoomIn(WindowPtr wind)
 	
 	SetWindowStandardState(wind, &stdRect);
 	
-	switch(GetWRefCon(wind))
+	switch (GetWRefCon(wind))
 	{
 		case RefClassic:
 			AdjustZoomClassic2(&ViewRect);

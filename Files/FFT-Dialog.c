@@ -251,12 +251,10 @@ void FFTSampleFilter(sData *SDataSrc, short instru, Boolean filter)
 	
 	TurnRadio(6, TheDia, EQPreview);
 	
-	do
-	{
+	do {
 		MyModalDialog(TheDia, &itemHit);
 		
-		switch(itemHit)
-		{
+		switch (itemHit) {
 			case 7:
 			case 8:
 				if (itemHit == 7)

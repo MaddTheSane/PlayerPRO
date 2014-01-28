@@ -1057,7 +1057,7 @@ OnRepart:
 		//ModalDialog(MyDlgFilterDesc, &itemHit);
 		MyModalDialog(TheDia, &itemHit);
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case  15:
 				InsertMenu(thePatternMenuIN, hierMenu );
@@ -1438,7 +1438,7 @@ void DoReplace(void)
 		//ModalDialog(MyDlgFilterDesc, &itemHit);
 		MyModalDialog(TheDia, &itemHit);
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 4: TurnRadio(4, TheDia, ON);	TurnRadio(5, TheDia, OFF);
 					TurnRadio(6, TheDia, OFF);	TurnRadio(7, TheDia, OFF);
@@ -1521,7 +1521,7 @@ void DialogTracks(void)
 		//ModalDialog(MyDlgFilterDesc, &itemHit);
 		MyModalDialog(TheDia, &itemHit);
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 8:
 				InsertMenu(TracksNumberMenu, hierMenu);
@@ -1584,7 +1584,7 @@ void OpenSelectedPattern(short no)
 	MADDriver->PartitionReader = 0;
 	MADPurgeTrack(MADDriver);
 	
-	switch(thePrefs.whichEditorPatterns)
+	switch (thePrefs.whichEditorPatterns)
 	{
 		case -1:			break;	// No Editor
 		case RefPartition:	HandleOtherChoice(1);	break;
@@ -1652,7 +1652,7 @@ void DoItemPressPatList(short whichItem, DialogPtr whichDialog)    			/* Item hi
 		}
 	}
 	
-	switch(whichItem)
+	switch (whichItem)
 	{
 			/*	case 1:
 			 itemRect = PatRectList2;

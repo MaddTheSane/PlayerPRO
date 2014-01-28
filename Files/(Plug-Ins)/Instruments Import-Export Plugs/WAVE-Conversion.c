@@ -131,7 +131,7 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 		
 		SetPtrSize((Ptr) WAVERsrc, sndSize);
 		
-		switch(*sampleSize)
+		switch (*sampleSize)
 		{
 			case 8:
 				ConvertInstrumentIn((Byte*) WAVERsrc, sndSize);

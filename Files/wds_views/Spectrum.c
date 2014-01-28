@@ -580,7 +580,7 @@ void DrawSpectrum(OsciRec	*osciPtr, short no)
 	Rect	caRect, tempRect;
 	Ptr		spectrumPtr = NULL;
 
-	switch(OsciScale)
+	switch (OsciScale)
 	{
 		case linear:
 			spectrumPtr = MakeCalculusSpectrum(GetAudioSourceSpectrum(no), false);

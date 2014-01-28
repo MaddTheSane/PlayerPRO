@@ -90,7 +90,7 @@ int main(int argc, char* argv[])
 	do{
 		ModalDialog(NULL, &itemHit);
 		
-		switch(itemHit)
+		switch (itemHit)
 		{
 			case 2:
 				GetDialogItem(TheDia, 2, &itemType, &itemHandle, &itemRect);

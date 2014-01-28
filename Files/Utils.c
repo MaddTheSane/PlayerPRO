@@ -128,7 +128,7 @@ pascal Boolean MyDlgFilter(DialogPtr theDlg, EventRecord *theEvt, short *itemHit
 	{
 		if ((WindowPtr) theEvt->message == GetDialogWindow(theDlg))
 		{
-			switch(GetWRefCon(GetDialogWindow(theDlg)))
+			switch (GetWRefCon(GetDialogWindow(theDlg)))
 			{
 				case 0:		oldFrameButton(theDlg);					break;
 				case 96:	oldFrameButton(theDlg);					break;
@@ -248,7 +248,7 @@ Boolean MyIntModalDialog(DialogPtr theDlg, short *itemHit, EventRecord *myIntEve
 	{
 		if ((WindowPtr) myIntEvent->message == GetDialogWindow(theDlg))
 		{
-			switch(GetWRefCon(GetDialogWindow(theDlg)))
+			switch (GetWRefCon(GetDialogWindow(theDlg)))
 			{
 				case RefPref:	UpdatePrefWindow(theDlg);				break;
 					
@@ -279,7 +279,7 @@ Boolean MyIntModalDialog(DialogPtr theDlg, short *itemHit, EventRecord *myIntEve
 	{
 		thePart = FindWindow(myIntEvent->where, &whichWindow);
 		
-		switch(GetWRefCon(GetDialogWindow(theDlg)))
+		switch (GetWRefCon(GetDialogWindow(theDlg)))
 		{
 			case 6648:	DeviceFilterMouseDown(myIntEvent);					break;
 			case RefPref: PrefFilterPiano(theDlg, myIntEvent, itemHit);	break;
@@ -307,7 +307,7 @@ Boolean MyIntModalDialog(DialogPtr theDlg, short *itemHit, EventRecord *myIntEve
 	}
 	else if (myIntEvent->what == keyDown)
 	{
-		switch(GetWRefCon(GetDialogWindow(theDlg)))
+		switch (GetWRefCon(GetDialogWindow(theDlg)))
 		{
 			case RefPref:	PrefFilterPiano(theDlg, myIntEvent, itemHit);	break;
 			case 6969: 		VSTFilter(theDlg, myIntEvent, itemHit);	break;			//VST
