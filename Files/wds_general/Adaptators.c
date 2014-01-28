@@ -2766,7 +2766,7 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 								if (QDIsPortBuffered(GetDialogPort(whichDialog)))
 									QDFlushPortBuffer(GetDialogPort(whichDialog), NULL);
 								
-							}while (Button());
+							} while (Button());
 							
 							DrawValueIndicator(-1, false, NULL);
 						}
