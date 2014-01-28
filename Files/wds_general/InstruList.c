@@ -2580,8 +2580,7 @@ void DrawInfoInstrument(void)
 	
 	RgnHandle UpdateRgn = NewRgn();
 	GetWindowRegion(GetDialogWindow(InstruListDlog), kWindowUpdateRgn, UpdateRgn);
-	if (QDIsPortBuffered(GetDialogPort(InstruListDlog)))
-		QDFlushPortBuffer(GetDialogPort(InstruListDlog), UpdateRgn);
+	QDFlushPortBuffer(GetDialogPort(InstruListDlog), UpdateRgn);
 	
 	SetPort(SavePort);
 	DisposeRgn(UpdateRgn);

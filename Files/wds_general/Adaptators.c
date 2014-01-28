@@ -1427,8 +1427,9 @@ pascal void actionProcAdap(ControlHandle theControl, short ctlPart)
 			if (MADDriver->DriverSettings.outPutMode == DeluxeStereoOutPut) ScrollRect(&tempRect, 0, (sVal - curVal)*DISVOL, aRgn);
 			else ScrollRect(&tempRect, 0, (sVal - curVal)*DISVOL, aRgn);
 			EraseRgn(aRgn);
-			InvalWindowRgn(GetDialogWindow(AdapDlog), aRgn);
 			UpdateAdapWindow(AdapDlog);
+			QDFlushPortBuffer(GetDialogPort(AdapDlog), aRgn);
+
 			DisposeRgn(aRgn);
 		}
 }
@@ -1946,12 +1947,8 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 				SetControlVisibility(pitchCntl, true, false);
 				SetControlVisibility(speedCntl, true, false);
 				
-				while (Button())
-				{
-					
-					
-							if (QDIsPortBuffered(GetDialogPort(whichDialog)))
-								QDFlushPortBuffer(GetDialogPort(whichDialog), NULL);
+				while (Button()) {
+					QDFlushPortBuffer(GetDialogPort(whichDialog), NULL);
 					WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 					DoGlobalNull();
 					SetPortDialogPort(whichDialog);

@@ -600,8 +600,8 @@ curVal = sVal = GetControlValue(theControl);
 	{
 		aRgn = NewRgn();
 		ScrollRect(&NoteZone, (sVal - curVal)*CurLarg, 0, aRgn);
-		InvalWindowRgn(GetDialogWindow(ClassicDlog), aRgn);
 		UpdateClassicWindow(ClassicDlog);
+		QDFlushPortBuffer(GetDialogPort(ClassicDlog), aRgn);
 		DisposeRgn(aRgn);
 		
 		WriteLevel();

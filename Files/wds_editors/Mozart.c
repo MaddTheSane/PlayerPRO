@@ -509,26 +509,25 @@ Boolean		DrawStringB;
 
 void UpdateSelectedRect(Rect *before, Rect *then)
 {
-	RgnHandle	aRgn, bRgn, dRgn;
+	RgnHandle aRgn, bRgn, dRgn;
 	
 	aRgn = NewRgn();
 	bRgn = NewRgn();
 	dRgn = NewRgn();
-
+	
 	RectRgn(aRgn, before);
 	RectRgn(bRgn, then);
-
+	UpdateMozartWindow(MozartDlog);
+	
 	DiffRgn(aRgn, bRgn, dRgn);
-	InvalWindowRgn(GetDialogWindow(MozartDlog), dRgn);
+	QDFlushPortBuffer(GetDialogPort(MozartDlog), dRgn);
 	
 	DiffRgn(bRgn, aRgn, dRgn);
-	InvalWindowRgn(GetDialogWindow(MozartDlog), dRgn);
+	QDFlushPortBuffer(GetDialogPort(MozartDlog), dRgn);
 	
 	DisposeRgn(aRgn);
 	DisposeRgn(bRgn);
 	DisposeRgn(dRgn);
-	
-	UpdateMozartWindow(MozartDlog);
 }
 
 void DeleteSelecNote(short start, short end)
@@ -1966,8 +1965,6 @@ copyval = curVal = GetControlValue(theControl);
 			tempRect.left = 0;		tempRect.right = MozartRect.left - LegendeLaS;
 			tempRect.bottom = caRect.bottom-15;
 			InvalWindowRect(GetDialogWindow(MozartDlog), &tempRect);
-			
-			InvalWindowRgn(GetDialogWindow(MozartDlog), aRgn);
 		}
 		else if (lRefCon == 2)
 		{
@@ -1982,8 +1979,6 @@ copyval = curVal = GetControlValue(theControl);
 			ScrollRect(&itemRect, (copyval - curVal), 0, aRgn);
 			
 			ComputeGrilleGWorld();
-			
-			InvalWindowRgn(GetDialogWindow(MozartDlog), aRgn);
 		}
 		else	// Control c1h
 		{
@@ -2013,8 +2008,6 @@ copyval = curVal = GetControlValue(theControl);
 				if (itemRect.bottom > caRect.bottom - 15) itemRect.bottom = caRect.bottom - 15;
 				
 				ScrollRect(&itemRect, 0 , (copyval - curVal), aRgn);
-				
-				InvalWindowRgn(GetDialogWindow(MozartDlog), aRgn);
 			}
 			
 			ComputeGrilleGWorld();
@@ -2022,7 +2015,8 @@ copyval = curVal = GetControlValue(theControl);
 		
 		UpdateMozartInfoInternal();
 		UpdateMozartWindow(MozartDlog);
-		
+		QDFlushPortBuffer(GetDialogPort(MozartDlog), aRgn);
+
 		DisposeRgn(aRgn);
 	}
 }

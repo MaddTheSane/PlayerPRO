@@ -1145,8 +1145,7 @@ void DoNullEditor(void)
 		} else
 			SetCursor(GetQDGlobalsArrow(&qdarrow));
 		
-		if (QDIsPortBuffered(GetDialogPort(EditorDlog)))
-			QDFlushPortBuffer(GetDialogPort(EditorDlog), visibleRegion);
+		QDFlushPortBuffer(GetDialogPort(EditorDlog), visibleRegion);
 		
 		
 		DisposeRgn(visibleRegion);
@@ -1631,8 +1630,7 @@ void UpdatePartitionWindow(DialogPtr GetSelection)
 	
 	GetPortVisibleRegion(GetDialogPort(EditorDlog), visibleRegion);
 	UpdateDialog(EditorDlog, visibleRegion);
-	if (QDIsPortBuffered(GetDialogPort(EditorDlog)))
-		QDFlushPortBuffer(GetDialogPort(EditorDlog), visibleRegion);
+	QDFlushPortBuffer(GetDialogPort(EditorDlog), visibleRegion);
 
 	DisposeRgn(visibleRegion);
 	//BackColor(whiteColor);
@@ -2881,7 +2879,7 @@ void PLScrollIntPartition(short curVal, short sVal, long lRefCon)
 				ScrollRect(&aRect, 0, (sVal - curVal) * myList.HCell, aRgn);
 				
 				if (IsRegionRectangular(aRgn) == false) {
-					InvalWindowRgn(GetDialogWindow(EditorDlog), aRgn);
+					//InvalWindowRgn(GetDialogWindow(EditorDlog), aRgn);
 					UpdatePartitionWindow(EditorDlog);
 				} else {
 					if (sVal > curVal)
@@ -2893,7 +2891,7 @@ void PLScrollIntPartition(short curVal, short sVal, long lRefCon)
 				}
 				
 				//DoNullEditor();
-				
+				QDFlushPortBuffer(GetDialogPort(EditorDlog), aRgn);
 				DisposeRgn(aRgn);
 				break;
 				
@@ -2903,13 +2901,10 @@ void PLScrollIntPartition(short curVal, short sVal, long lRefCon)
 				CreateCurRect();
 				
 				ScrollRect(&aRect, (sVal - curVal) * myList.LCell, 0, aRgn);
-				
-				InvalWindowRgn(GetDialogWindow(EditorDlog), aRgn);
 				UpdatePartitionWindow(EditorDlog);
 				DrawEditorUp();
 				
-				if (QDIsPortBuffered(GetDialogPort(EditorDlog)))
-					QDFlushPortBuffer(GetDialogPort(EditorDlog), aRgn);
+				QDFlushPortBuffer(GetDialogPort(EditorDlog), aRgn);
 				
 				DisposeRgn(aRgn);
 				break;

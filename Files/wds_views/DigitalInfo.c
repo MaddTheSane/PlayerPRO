@@ -608,9 +608,8 @@ curVal = sVal = GetControlValue(theControl);
 		
 			ScrollRect(&tempRect, (sVal - curVal)*TEXTLARG, 0, aRgn);
 			EraseRgn(aRgn);
-			InvalWindowRgn(GetDialogWindow(DigitalDlog), aRgn);
-			
 			UpdateDigiListWindow(DigitalDlog);
+			QDFlushPortBuffer(GetDialogPort(DigitalDlog), aRgn);
 			DoNullDigiWindow();
 			
 			DisposeRgn(aRgn);

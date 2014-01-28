@@ -178,8 +178,8 @@ void PLScrollInt(short curVal, short sVal, long lRefCon, PrivateList *aL)
 					if (cPt.v >= 0)
 						PLUpdateItem(cPt, aL);
 				} else {
-					InvalWindowRgn(GetDialogWindow(aL->aDia), aRgn);
 					PLUpdate(aL);
+					QDFlushPortBuffer(GetDialogPort(aL->aDia), aRgn);
 				}
 				DisposeRgn(aRgn);
 				break;
@@ -189,10 +189,8 @@ void PLScrollInt(short curVal, short sVal, long lRefCon, PrivateList *aL)
 				
 				ScrollRect(&aRect, (sVal - curVal) * aL->LCell, 0, aRgn);
 				
-				InvalWindowRgn(GetDialogWindow(aL->aDia), aRgn);
-				
 				PLUpdate(aL);
-				
+				QDFlushPortBuffer(GetDialogPort(aL->aDia), aRgn);
 				DisposeRgn(aRgn);
 				break;
 		}
