@@ -957,8 +957,10 @@ void MyTETextBox(RGBColor *backColor, Rect *rect, Str255 str, Boolean black)
 	
 	MoveTo(rect->left + length, rect->bottom-2);
 	
-	if (black) ForeColor(blackColor);
-	else RGBForeColor(&Gray[ 0]);
+	if (black)
+		ForeColor(blackColor);
+	else
+		RGBForeColor(&Gray[0]);
 		
 	DrawString(str);
 	

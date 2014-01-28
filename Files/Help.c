@@ -45,29 +45,28 @@ short GetWhichTrackPlay()
 {
 	short returnTrack = 0;
 	
-	if (EditorDlog != NULL)
-	{
-		if (oldWindow == GetDialogWindow(EditorDlog) && EditorKeyRecording == true)
-		{
+	if (EditorDlog != NULL) {
+		if (oldWindow == GetDialogWindow(EditorDlog) && EditorKeyRecording == true) {
 			return curTrack;
 		}
 	}
 	
-	switch (thePrefs.RecordAllTrack)	// all tracks
-	{
+	switch (thePrefs.RecordAllTrack) {	// all tracks
 		case 1:
 		{
 			short xxx = 0;
 			
 			LastCanal++;
 			
-			while ((curMusic->header->chanVol[ LastCanal] == 0 || MADDriver->Active[ LastCanal] == false) && xxx <= curMusic->header->numChn)
-			{
+			while ((curMusic->header->chanVol[LastCanal] == 0
+					|| MADDriver->Active[LastCanal] == false) && xxx <= curMusic->header->numChn) {
 				xxx++;
 				LastCanal++;
-				if (LastCanal >= MADDriver->DriverSettings.numChn) LastCanal = 0;
+				if (LastCanal >= MADDriver->DriverSettings.numChn)
+					LastCanal = 0;
 			}
-			if (LastCanal >= MADDriver->DriverSettings.numChn) LastCanal = 0;
+			if (LastCanal >= MADDriver->DriverSettings.numChn)
+				LastCanal = 0;
 			
 			returnTrack = LastCanal;
 		}
@@ -87,13 +86,15 @@ short GetWhichTrackPlay()
 			
 			LastCanal++;
 			
-			while ((curMusic->header->chanVol[ LastCanal] == 0 || thePrefs.SelectedTracks[ LastCanal] == false || MADDriver->Active[ LastCanal] == false) && xxx <= curMusic->header->numChn)
-			{
+			while ((curMusic->header->chanVol[LastCanal] == 0 || thePrefs.SelectedTracks[LastCanal] == false
+					|| MADDriver->Active[LastCanal] == false) && xxx <= curMusic->header->numChn) {
 				xxx++;
 				LastCanal++;
-				if (LastCanal >= MADDriver->DriverSettings.numChn) LastCanal = 0;
+				if (LastCanal >= MADDriver->DriverSettings.numChn)
+					LastCanal = 0;
 			}
-			if (LastCanal >= MADDriver->DriverSettings.numChn) LastCanal = 0;
+			if (LastCanal >= MADDriver->DriverSettings.numChn)
+				LastCanal = 0;
 			
 			returnTrack = LastCanal;
 		}
@@ -122,7 +123,7 @@ void SwitchDriverTo(short aaa)
 	
 	//// Save AdapValue ////
 	
-#define ADAPNAME	"\pAdap.Temp"
+#define ADAPNAME "\pAdap.Temp"
 	
 	iErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &spec.vRefNum, &spec.parID);
 	
@@ -145,10 +146,7 @@ void SwitchDriverTo(short aaa)
 	init.outPutRate		= thePrefs.outPutRate;
 	init.outPutMode		= thePrefs.outPutMode;
 	init.driverMode		= thePrefs.driverMode;
-	//init.antiAliasing	= thePrefs.antiAliasing;
 	init.surround		= thePrefs.surround;
-	//init.Interpolation	= thePrefs.Interpolation;
-	//init.MicroDelay		= thePrefs.MicroDelay;
 	init.MicroDelaySize	= thePrefs.MicroDelaySize;
 	init.Reverb			= thePrefs.Reverb;
 	init.ReverbSize		= thePrefs.ReverbSize;
@@ -157,8 +155,10 @@ void SwitchDriverTo(short aaa)
 	init.TickRemover	= thePrefs.TickRemover;
 	init.oversampling	= thePrefs.oversampling;
 	
-	if (thePrefs.LoopType != 0) init.repeatMusic = false;
-	else init.repeatMusic = true;
+	if (thePrefs.LoopType != 0)
+		init.repeatMusic = false;
+	else
+		init.repeatMusic = true;
 	
 	iErr = MADCreateDriver(&init, gMADLib, &MADDriver);
 	if (iErr) MyDebugStr(__LINE__, __FILE__, "MusicDriver ERROR !");
@@ -175,15 +175,15 @@ void SwitchDriverTo(short aaa)
 	
 	///////////////////////
 	
+	if (IsPlaying)
+		MADDriver->Reading = true;
 	
-	if (IsPlaying) MADDriver->Reading = true;
-	
-	if (IsEQ) MADDriver->Equalizer = true; 
+	if (IsEQ)
+		MADDriver->Equalizer = true;
 	
 	MADDriver->JumpToNextPattern = IsJumpToNextPattern;
 	
-	for (i = 0; i <= EQPACKET*2; i++)
-	{
+	for (i = 0; i <= EQPACKET * 2; i++) {
 		MADDriver->Filter[ i] = filter[ i];
 	}
 	
@@ -202,26 +202,23 @@ void DrawAllNote(void)
 	cSize.h = cSize.v = 0;
 	LSetDrawingMode(true, PianoList);
 	
-	for (i = 0; i < NUMBER_NOTES+1; i++)
-	{
-		if (i == NUMBER_NOTES)
-		{
+	for (i = 0; i < NUMBER_NOTES + 1; i++) {
+		if (i == NUMBER_NOTES) {
 			pStrcpy(String, "\p000");
 			
 			for(x=0; x<290; x++) if (thePrefs.PianoKey[ x] == 0xFF) break;
-		}
-		else
-		{
+		} else {
 			GetNoteString(i, String);
 			
-			for(x = 0; x < 290; x++) if (thePrefs.PianoKey[ x] == i) break;
+			for(x = 0; x < 290; x++) if (thePrefs.PianoKey[x] == i)
+				break;
 		}
 		
-		if (x <= 260)
-		{
+		if (x <= 260) {
 			tempString[0] = 1;
 			tempString[1] = x;
-			pStrcat(String, "\p <- ");	pStrcat(String, tempString);
+			pStrcat(String, "\p <- ");
+			pStrcat(String, tempString);
 		}
 		
 		LSetCell(String + 1, String[ 0], cSize, PianoList);
@@ -235,36 +232,34 @@ void PrefFilterPiano(DialogPtr theDialog, EventRecord *theEventI, short *itemHit
 	short		thePart,i, theChar;
 	GrafPtr		oldPort;
 	Point		aPoint, theCell;
-	Str255		str1, str2;
-	Boolean		DrawAll;
+	Str255		str2;
 	
 	GetPort(&oldPort);
 	SetPortDialogPort(prefDlog);
 	
-	switch (theEventI->what)
-	{
+	switch (theEventI->what) {
 		case mouseDown:
 			thePart = FindWindow(theEventI->where, &whichWindow);
 			
-			if (whichWindow == GetDialogWindow(prefDlog))
-			{
+			if (whichWindow == GetDialogWindow(prefDlog)) {
 				aPoint.v = theEventI->where.v;
 				aPoint.h = theEventI->where.h;
 				GlobalToLocal(&aPoint);
-				if (PrefsType == EDITOR && PtInRect(aPoint, &PianoRectList) == true)
-				{
-					TextFont(4);	TextSize(9);
+				if (PrefsType == EDITOR && PtInRect(aPoint, &PianoRectList) == true) {
+					TextFont(4);
+					TextSize(9);
 					LClick(aPoint, theEventI->modifiers, PianoList);
-					TextFont(0);	TextSize(0);
+					TextFont(0);
+					TextSize(0);
 				}
 				
-				if (PrefsType == EDITOR && PtInRect(aPoint, &TrackRectList) == true)
-				{
-					if (TrackList)
-					{
-						TextFont(4);	TextSize(9);
+				if (PrefsType == EDITOR && PtInRect(aPoint, &TrackRectList) == true) {
+					if (TrackList) {
+						TextFont(4);
+						TextSize(9);
 						LClick(aPoint, theEventI->modifiers, TrackList);
-						TextFont(0);	TextSize(0);
+						TextFont(0);
+						TextSize(0);
 					}
 				}
 			}
@@ -272,62 +267,54 @@ void PrefFilterPiano(DialogPtr theDialog, EventRecord *theEventI, short *itemHit
 			
 		case keyDown:
 		case autoKey:
-			if (PrefsType == EDITOR)
-			{
-				TextFont(4);	TextSize(9);
+			if (PrefsType == EDITOR) {
+				TextFont(4);
+				TextSize(9);
 				theChar = theEventI->message & charCodeMask;
 				theCell.v = 0;
 				theCell.h = 0;
-				if (LGetSelect(true, &theCell, PianoList))
-				{
-					if (theChar == 0x1E)
-					{
-						if (theCell.v > 0)
-						{
+				if (LGetSelect(true, &theCell, PianoList)) {
+					if (theChar == 0x1E) {
+						if (theCell.v > 0) {
 							LSetSelect(false, theCell, PianoList);
 							theCell.v--;
 							LSetSelect(true, theCell, PianoList);
 							LAutoScroll(PianoList);
 						}
-					}
-					else if (theChar == 0x1F) 
-					{
-						if (theCell.v < NUMBER_NOTES)
-						{
+					} else if (theChar == 0x1F)  {
+						if (theCell.v < NUMBER_NOTES) {
 							LSetSelect(false, theCell, PianoList);
 							theCell.v++;
 							LSetSelect(true, theCell, PianoList);
 							LAutoScroll(PianoList);
 						}
-					}
-					else if (theChar == 0x08) 
-					{
-						if (theCell.v == NUMBER_NOTES) theCell.v = 0xFF;	// NO NOTE
+					} else if (theChar == 0x08)  {
+						if (theCell.v == NUMBER_NOTES)
+							theCell.v = 0xFF;	// NO NOTE
 						
-						for (i = 0; i < 299; i++)
-						{
-							if (thePrefs.PianoKey[ i] == theCell.v) thePrefs.PianoKey[ i] = -1;
+						for (i = 0; i < 299; i++) {
+							if (thePrefs.PianoKey[i] == theCell.v)
+								thePrefs.PianoKey[i] = -1;
 						}
 						DrawAllNote();
-					}
-					else
-					{
-						if (theCell.v == NUMBER_NOTES) theCell.v = 0xFF;	// NO NOTE
+					} else {
+						if (theCell.v == NUMBER_NOTES)
+							theCell.v = 0xFF;	// NO NOTE
 						
-						str2[ 0] = 1;	str2[ 1] = theChar;
+						str2[0] = 1;
+						str2[1] = theChar;
 						MyP2CStr(str2);
-						theChar = str2[ 0];
+						theChar = str2[0];
 						
 						/**** Set pour le prefs*/
 						
-						for(i=0; i<299; i++)
-						{
-							if (thePrefs.PianoKey[ i] == theCell.v) thePrefs.PianoKey[ i] = -1;
+						for(i=0; i<299; i++) {
+							if (thePrefs.PianoKey[i] == theCell.v)
+								thePrefs.PianoKey[i] = -1;
 						}
 						
-						if (theChar > 0)
-						{
-							thePrefs.PianoKey[ theChar] = theCell.v;
+						if (theChar > 0) {
+							thePrefs.PianoKey[theChar] = theCell.v;
 							
 							DrawAllNote();
 							
@@ -338,7 +325,8 @@ void PrefFilterPiano(DialogPtr theDialog, EventRecord *theEventI, short *itemHit
 						}
 					}
 				}
-				TextFont(0);	TextSize(0);
+				TextFont(0);
+				TextSize(0);
 			}
 			break;
 	}
@@ -366,16 +354,8 @@ void AppendPref(short theID, DialogPtr theDia)
 	ReleaseResource(theDITL);
 }
 
-void InitGENERAL(void)
-{
-	
-}
-
 void InitCLASSICAL(void)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
 	Str255		aStr;
 	
 	TurnRadio(5 + base, prefDlog, thePrefs.UseMarkers);
@@ -408,9 +388,6 @@ void CloseCLASSICAL()
 
 void InitDIGITAL(void)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
 	Str255		aStr;
 	
 	if (thePrefs.DigitalInstru)
@@ -474,9 +451,6 @@ void InitDIGITAL(void)
 
 void CloseDIGITAL()
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
 	Str255		aStr;
 	long		temp;
 	
@@ -493,31 +467,15 @@ void CloseDIGITAL()
 	UpdateStaffInfo();
 }
 
-void InitSCREENSAVER(void)
-{
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
-	Str255		aStr;
-	
-	if (thePrefs.SSText) TurnRadio(base + 1, prefDlog, true);
-	if (thePrefs.SSStars) TurnRadio(base + 2, prefDlog, true);
-	if (thePrefs.SSJumping) TurnRadio(base + 5, prefDlog, true);
-	
-	if (thePrefs.FText) TurnRadio(base + 6, prefDlog, true);
-	if (thePrefs.FStars) TurnRadio(base + 7, prefDlog, true);
-	if (thePrefs.FBalls) TurnRadio(base + 8, prefDlog, true);
-	if (thePrefs.FSinScroll) TurnRadio(base + 10, prefDlog, true);
-}
-
 void InitDRIVER(void)
 {
-	short			itemType,i;
+	short			itemType;
 	Handle			itemHandle;
 	Rect			itemRect;
-	Str255			aStr, bStr, str;
+	Str255			aStr, bStr;
 	NumVersion		nVers;
 	long			nVersLong;
+	UnsignedFixed	tRate;
 	/////
 	
 	/**/
@@ -530,8 +488,7 @@ void InitDRIVER(void)
 	pStrcat(aStr, "\p.");
 	NumToString(nVers.minorAndBugRev >> 4, bStr);
 	pStrcat(aStr, bStr);
-	if ((nVers.minorAndBugRev & 0x0F) > 0)
-	{
+	if ((nVers.minorAndBugRev & 0x0F) > 0) {
 		pStrcat(aStr, "\p.");
 		NumToString(nVers.minorAndBugRev & 0x0F, bStr);
 		pStrcat(aStr, bStr);
@@ -545,8 +502,7 @@ void InitDRIVER(void)
 #else
 	nVersLong = 0;
 #endif
-	if (nVersLong > 0)
-	{
+	if (nVersLong > 0) {
 		BlockMoveData(&nVersLong, &nVers, 4);
 		
 		pStrcpy(aStr, "\pMIDI Output - (OMS ");
@@ -555,8 +511,7 @@ void InitDRIVER(void)
 		pStrcat(aStr, "\p.");
 		NumToString(nVers.minorAndBugRev >> 4, bStr);
 		pStrcat(aStr, bStr);
-		if ((nVers.minorAndBugRev & 0x0F) > 0)
-		{
+		if ((nVers.minorAndBugRev & 0x0F) > 0) {
 			pStrcat(aStr, "\p.");
 			NumToString(nVers.minorAndBugRev & 0x0F, bStr);
 			pStrcat(aStr, bStr);
@@ -573,154 +528,103 @@ void InitDRIVER(void)
 	
 	TurnRadio(base + 30, prefDlog, thePrefs.surround);
 	
-	//	TurnRadio(base + 35, prefDlog, thePrefs.TickRemover);
-	/*	if (thePrefs.outPutMode != DeluxeStereoOutPut || thePrefs.outPutBits != 16)
-	 {
-	 TurnRadio(base + 35, prefDlog, false);
-	 ControlSwitch(base + 35, prefDlog, 255);
-	 }
-	 else ControlSwitch(base + 35, prefDlog, 0);*/
-	
-	/*	if (Stereo == false)
-	 {
-	 ControlSwitch(base + 13, prefDlog, 255);
-	 ControlSwitch(base + 14, prefDlog, 255);
-	 }*/
-	
-	if (NewSoundManager == false)
-	{
-		ControlSwitch(base + 2, prefDlog, 255);
-	}
-	
 	ControlSwitch(base + 11, prefDlog, 255);
 	
 	GetKeys(km);
 	
-	if (IsPressed(0x31) == false)
-	{
-		/*	if (hasASC == false)
-		 {
-		 ControlSwitch(base + 3, prefDlog, 255);
-		 }*/
-		
-		if (Audio16 == false)
-		{
+	if (IsPressed(0x31) == false) {
+		if (Audio16 == false) {
 			ControlSwitch(base + 8, prefDlog, 255);
 			ControlSwitch(base + 10, prefDlog, 255);
 		}
 		
-		if (MIDIHardware == false)
-		{
+		if (MIDIHardware == false) {
 			ControlSwitch(base + 5, prefDlog, 255);
 			ControlSwitch(base + 28, prefDlog, 255);
 		}
-		
-		if (NewSoundManager31)
-		{
-			unsigned long tRate;
 			
 			GetSoundOutputInfo(NULL, siSampleRate, &tRate);
 			
-			if (tRate < rate44khz)	ControlSwitch(base + 8, prefDlog, 255);
-			if (tRate < rate22050hz) ControlSwitch(base + 7, prefDlog, 255);
-			if (tRate < rate11025hz) ControlSwitch(base + 6, prefDlog, 255);
-		}
+			if (tRate < rate44khz)
+				ControlSwitch(base + 8, prefDlog, 255);
+			if (tRate < rate22050hz)
+				ControlSwitch(base + 7, prefDlog, 255);
+			if (tRate < rate11025hz)
+				ControlSwitch(base + 6, prefDlog, 255);
+		
 	}
 	ControlSwitch(base + 3, prefDlog, 255);
 	SetDText(prefDlog, base + 25, "\p");
 	
-	switch (thePrefs.driverMode)
-	{
-			/*	case ASCSoundDriver:
-			 TurnRadio(base + 3, prefDlog, true);
-			 
-			 ControlSwitch(base + 10, prefDlog, 255);	thePrefs.outPutBits = 8;// 16 Bits
-			 
-			 ControlSwitch(base + 6, prefDlog, 255);	thePrefs.outPutRate = rate22khz;// 11 Khz
-			 ControlSwitch(base + 8, prefDlog, 255);	// 44 Khz
-			 break;
-			 */
-			/*	case AWACSoundDriver:
-			 TurnRadio(base + 4, prefDlog, true);
-			 
-			 ControlSwitch(base + 9, prefDlog, 255);	thePrefs.outPutBits = 16;	// 8 Bits
-			 
-			 ControlSwitch(base + 6, prefDlog, 255);	thePrefs.outPutRate = rate44khz;// 11 Khz
-			 ControlSwitch(base + 7, prefDlog, 255);	// 22 Khz
-			 
-			 ControlSwitch(base + 12, prefDlog, 255);	// Mono OutPut
-			 if (thePrefs.outPutMode == MonoOutPut) thePrefs.outPutMode = StereoOutPut;
-			 break;	*/
-			
-		case MIDISoundDriver:		TurnRadio(base + 5, prefDlog, true);	break;
+	switch (thePrefs.driverMode) {
+		case MIDISoundDriver:
+			TurnRadio(base + 5, prefDlog, true);
+			break;
 			
 		case ASIOSoundManager:
 			TurnRadio(base + 3, prefDlog, true);
 			
-			ControlSwitch(base + 9, prefDlog, 255);	thePrefs.outPutBits = 16;	// 8 Bits
-			ControlSwitch(base + 6, prefDlog, 255);	thePrefs.outPutRate = rate44khz;
+			ControlSwitch(base + 9, prefDlog, 255);
+			thePrefs.outPutBits = 16;	// 8 Bits
+			ControlSwitch(base + 6, prefDlog, 255);
+			thePrefs.outPutRate = rate44khz;
 			ControlSwitch(base + 7, prefDlog, 255);
 			break;
 			
 		case SoundManagerDriver:
 			TurnRadio(base + 2, prefDlog, true);
 			
-			if (Audio16 == true)
-			{
 				ControlSwitch(base + 10, prefDlog, 0);
 				ControlSwitch(base + 8, prefDlog, 0);
-				
-				/*	#if defined(powerc) || defined (__powerc)
-				 ControlSwitch(base + 9, prefDlog, 255);
-				 #endif*/
-			}
 			
 			ControlSwitch(base + 6, prefDlog, 0);
 			ControlSwitch(base + 7, prefDlog, 0);
 			ControlSwitch(base + 12, prefDlog, 0);
 			
-			if (NewSoundManager31)
-			{
-				unsigned long tRate;
-				
 				GetSoundOutputInfo(NULL, siSampleRate, &tRate);
 				
-				if (tRate < rate44khz)	ControlSwitch(base + 8, prefDlog, 255);
-				if (tRate < rate22050hz) ControlSwitch(base + 7, prefDlog, 255);
-				if (tRate < rate11025hz) ControlSwitch(base + 6, prefDlog, 255);
-			}
+				if (tRate < rate44khz)
+					ControlSwitch(base + 8, prefDlog, 255);
+				if (tRate < rate22050hz)
+					ControlSwitch(base + 7, prefDlog, 255);
+				if (tRate < rate11025hz)
+					ControlSwitch(base + 6, prefDlog, 255);
 			break;
 	}
 	
 	TurnRadio(base + 9, prefDlog, false);
 	TurnRadio(base + 10, prefDlog, false);
-	switch (thePrefs.outPutBits)
-	{
+	switch (thePrefs.outPutBits) {
 		case 8:
 			TurnRadio(base + 9, prefDlog, true);
 			break;
-		case 16:	TurnRadio(base + 10, prefDlog, true);	break;
+			
+		case 16:
+			TurnRadio(base + 10, prefDlog, true);
+			break;
 	}
 	
 	TurnRadio(base + 6, prefDlog, false);
 	TurnRadio(base + 7, prefDlog, false);
 	TurnRadio(base + 8, prefDlog, false);	
-	switch (thePrefs.outPutRate)
-	{
+	switch (thePrefs.outPutRate) {
 		case rate11025hz:
-		case rate11khz:				TurnRadio(base + 6, prefDlog, true);	break;
+		case rate11khz:
+			TurnRadio(base + 6, prefDlog, true);
+			break;
 			
 		default:
 		case rate22khz:
 		case rate22050hz:
-			TurnRadio(base + 7, prefDlog, true);	break;
+			TurnRadio(base + 7, prefDlog, true);
+			break;
 			
-		case rate44khz:				TurnRadio(base + 8, prefDlog, true);	break;
+		case rate44khz:
+			TurnRadio(base + 8, prefDlog, true);
+			break;
 	}
 	
-#if defined(HAS_LONG_LONG) && defined (HAS_LONG_DOUBLE)
-	if (thePrefs.oversampling > 1)
-	{
+	if (thePrefs.oversampling > 1) {
 		long	tempLong;
 		Str255	str1, str2;
 		
@@ -738,20 +642,15 @@ void InitDRIVER(void)
 		pStrcat(str1, "\p x");
 		
 		SetDText(prefDlog, base + 13, str1);
-	}
-	else
-	{
+	} else {
 		TurnRadio(base + 12, prefDlog, false);
 		SetDText(prefDlog, base + 13, "\pOff");
 	}
-#else
-	TurnRadio(base + 12, prefDlog, false);
-	InactiveControl(base + 12, prefDlog);
-	SetDText(prefDlog, base + 13, "\pOff");
-#endif
 	
-	if (thePrefs.MicroDelaySize) TurnRadio(base + 20, prefDlog, true);
-	else TurnRadio(base + 20, prefDlog, false);
+	if (thePrefs.MicroDelaySize)
+		TurnRadio(base + 20, prefDlog, true);
+	else
+		TurnRadio(base + 20, prefDlog, false);
 	TurnRadio(base + 32, prefDlog, thePrefs.Reverb);
 	
 	NumToString(thePrefs.MicroDelaySize, aStr);
@@ -769,41 +668,52 @@ void InitDRIVER(void)
 	ControlSwitch(base + 32, prefDlog, 0);
 	ControlSwitch(base + 30, prefDlog, 0);
 	
-	if (thePrefs.outPutMode != DeluxeStereoOutPut)
-	{
+	if (thePrefs.outPutMode != DeluxeStereoOutPut) {
 		TurnRadio(base + 20, prefDlog, false);
 		ControlSwitch(base + 20, prefDlog, 255);
-	}
-	else
-	{
+	} else {
 		ControlSwitch(base + 20, prefDlog, 0);
 	}
 }
 
 void InitMUSICLIST(void)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
+	switch (thePrefs.LoopType) {
+		case 0:
+		default:
+			InverseRadio(base + 1, prefDlog);
+			break;
+			
+		case 1:
+			InverseRadio(base + 2, prefDlog);
+			break;
+			
+		case 2:
+			InverseRadio(base + 3, prefDlog);
+			break;
+			
+		case 3:
+			InverseRadio(base + 7, prefDlog);
+			break;
+	}
 	
-	if (thePrefs.LoopType == 0) 		InverseRadio(base + 1, prefDlog);
-	else if (thePrefs.LoopType == 1) 	InverseRadio(base + 2, prefDlog);
-	else if (thePrefs.LoopType == 2) 	InverseRadio(base + 3, prefDlog);
-	else if (thePrefs.LoopType == 3)	InverseRadio(base + 7, prefDlog);
-	
-	if (thePrefs.AutomaticOpen) InverseRadio(base + 8, prefDlog);
-	if (thePrefs.RememberMusicList) InverseRadio(base + 15, prefDlog);
-	if (thePrefs.GoToStop) InverseRadio(base + 11, prefDlog);
-	if (thePrefs.FastMusicList) InverseRadio(base + 6, prefDlog);
-	if (thePrefs.SaveMusicList) InverseRadio(base + 12, prefDlog);
-	if (thePrefs.AutoPlayWhenOpen) InverseRadio(base + 13, prefDlog);
+	if (thePrefs.AutomaticOpen)
+		InverseRadio(base + 8, prefDlog);
+	if (thePrefs.RememberMusicList)
+		InverseRadio(base + 15, prefDlog);
+	if (thePrefs.GoToStop)
+		InverseRadio(base + 11, prefDlog);
+	if (thePrefs.FastMusicList)
+		InverseRadio(base + 6, prefDlog);
+	if (thePrefs.SaveMusicList)
+		InverseRadio(base + 12, prefDlog);
+	if (thePrefs.AutoPlayWhenOpen)
+		InverseRadio(base + 13, prefDlog);
 }
 
 void InitCOMPRESSION(void)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
+	short		i;
 	MenuHandle	tMenu;
 	Str255		str;
 	
@@ -820,15 +730,31 @@ void InitCOMPRESSION(void)
 	TurnRadio(base + 19, prefDlog, thePrefs.DontUseFilesMix);
 	TurnRadio(base + 6, prefDlog, thePrefs.OscilloLine);
 	
-	switch (thePrefs.whichEditorPatterns)
-	{
-		case -1:				i = 1;	break;
-		case RefPartition:		i = 2;	break;
-		case RefMozart:			i = 3;	break;
-		case RefStaff:			i = 4;	break;
-		case RefWave:			i = 5;	break;
-		case RefClassic:		i = 6;	break;
-		default:				i = 1;	break;
+	switch (thePrefs.whichEditorPatterns) {
+		case -1:
+		default:
+			i = 1;
+			break;
+			
+		case RefPartition:
+			i = 2;
+			break;
+			
+		case RefMozart:
+			i = 3;
+			break;
+			
+		case RefStaff:
+			i = 4;
+			break;
+			
+		case RefWave:
+			i = 5;
+			break;
+			
+		case RefClassic:
+			i = 6;
+			break;
 	}
 	
 	tMenu = GetMenu(174);
@@ -846,12 +772,12 @@ void InitCOLOR(short colorID)
 	Rect		itemRect, aRc;
 	Str255		aStr;
 	GrafPtr		savePort;
-
+	
 	GetPort(&savePort);
 	SetPortDialogPort(prefDlog);
-
+	
 	GetDialogItem (prefDlog, base + 1, &itemType, &itemHandle, &itemRect);
-
+	
 	larg = itemRect.right - itemRect.left;
 	larg /= 8;
 	
@@ -860,15 +786,12 @@ void InitCOLOR(short colorID)
 	
 	itemRect.right = itemRect.left + larg*8 + 2;
 	itemRect.bottom = itemRect.top + haut*12 + 2;
-		
-	if (colorID == -1)
-	{
+	
+	if (colorID == -1) {
 		PaintRect(&itemRect);
-
-		for (i = 0; i< 8; i++)
-		{
-			for (x = 0; x < 12; x++)
-			{
+		
+		for (i = 0; i< 8; i++) {
+			for (x = 0; x < 12; x++) {
 				aRc.left = itemRect.left + i*larg + 2;
 				aRc.right = aRc.left + larg - 2;
 				
@@ -880,17 +803,14 @@ void InitCOLOR(short colorID)
 				ForeColor(blackColor);
 				NTStr(2, i + 8*x + 1, (Ptr) aStr);
 				
-			//	TETextBox((Ptr) aStr, 2, &aRc, teCenter);
 				MyC2PStr((Ptr) aStr);
 				MyTETextBox(&thePrefs.tracksColor[ i + 8*x], &aRc, aStr, true);
 			}
 		}
-	}
-	else
-	{
+	} else {
 		x = colorID / 8;
 		i = colorID - x * 8;
-	
+		
 		aRc.left = itemRect.left + i*larg + 2;
 		aRc.right = aRc.left + larg - 2;
 		
@@ -905,9 +825,9 @@ void InitCOLOR(short colorID)
 		MyC2PStr((Ptr) aStr);
 		MyTETextBox(&thePrefs.tracksColor[ i + 8*x], &aRc, aStr, true);
 		
-	//	TETextBox((Ptr) aStr, 2, &aRc, teCenter);
+		//TETextBox((Ptr) aStr, 2, &aRc, teCenter);
 	}
-
+	
 	ForeColor(blackColor);
 	RGBBackColor(&theColor);
 	
@@ -922,16 +842,15 @@ void DoMUSICLIST(short itemHit)
 	
 	itemHit -= base;
 	
-	switch (itemHit)
-	{
+	switch (itemHit) {
 		case 1:
 		case 2:
 		case 3:
 		case 7:
-			for(i=1; i<=3; i++)
-			{
-				GetDialogItem (prefDlog, i+base, &itemType, &itemHandle, &itemRect);
-				if (i != itemHit) SetControlValue((ControlHandle) itemHandle, 0);
+			for(i = 1; i <= 3; i++) {
+				GetDialogItem (prefDlog, i + base, &itemType, &itemHandle, &itemRect);
+				if (i != itemHit)
+					SetControlValue((ControlHandle)itemHandle, 0);
 			}
 			GetDialogItem (prefDlog, 7 + base, &itemType, &itemHandle, &itemRect);
 			SetControlValue((ControlHandle) itemHandle, 0);
@@ -939,11 +858,15 @@ void DoMUSICLIST(short itemHit)
 			GetDialogItem (prefDlog, itemHit+base, &itemType, &itemHandle, &itemRect);
 			SetControlValue((ControlHandle) itemHandle, 1);
 			
-			if (itemHit != 7) thePrefs.LoopType = itemHit-1;
-			else thePrefs.LoopType = 3;
+			if (itemHit != 7)
+				thePrefs.LoopType = itemHit - 1;
+			else
+				thePrefs.LoopType = 3;
 			
-			if (thePrefs.LoopType != 0) MADDriver->DriverSettings.repeatMusic = false;
-			else MADDriver->DriverSettings.repeatMusic = true;
+			if (thePrefs.LoopType != 0)
+				MADDriver->DriverSettings.repeatMusic = false;
+			else
+				MADDriver->DriverSettings.repeatMusic = true;
 			break;
 			
 		case 8:
@@ -987,10 +910,10 @@ void PaintMyRect(void)
 {
 	Rect	aRect;
 	
-	aRect.left = (CurrentCase - (CurrentCase/32) * 32) *COLARG;
+	aRect.left = (CurrentCase - (CurrentCase/32) * 32) * COLARG;
 	aRect.left += 2;
 	
-	aRect.top = (CurrentCase/32) *COLARG;
+	aRect.top = (CurrentCase/32) * COLARG;
 	aRect.top += 2;
 	
 	aRect.bottom = aRect.top + COLARG;
@@ -1005,13 +928,12 @@ void DrawChooseColorWindow(void)
 {
 	Rect			aRect;
 	CTabHandle		hCTab;
-	RGBColor		aCol = { 0, 0, 0};
+	RGBColor		aCol = {0, 0, 0};
 	short			i, x;
 	
 	hCTab = GetCTable(72);
 	
 	ForeColor(blackColor);
-	//BackColor(whiteColor);
 	
 	for (i = 0; i < 8; i++) {
 		for (x = 0; x < 32; x++) {
@@ -1034,97 +956,20 @@ void DrawChooseColorWindow(void)
 	ForeColor(blackColor);
 	RGBForeColor(&aCol);
 	
-	//RGBBackColor(&theColor);
-	//DisposCTable(hCTab);
+	//DisposeCTable(hCTab);
 }
 
-/*void OpenChooseColorWindow(RGBColor	*theColor, short	*tracksColorID)
+void DoCOLOR(short itemHit)
 {
-	DialogPtr		TheDia;
-	Str255			theStr;
-	GrafPtr			myPort;
-	Rect			itemRect, aRect;
-	Handle			itemHandle;
-	short			itemHit, itemType,i,x;
-	Point			myPt, sPt;
-	CTabHandle		hCTab;
-	
-	GetPort(&myPort);
-
-	CurrentCase = *tracksColorID;
-
-	TheDia = GetNewDialog(155,0L, (WindowPtr) -1L);
-	SetPortDialogPort(TheDia);
-	AutoPosition(TheDia);
-	ShowWindow(TheDia);	
-
-	do
-	{
-		//ModalDialog(MyDlgFilterDesc, &itemHit);
-		MyModalDialog(TheDia, &itemHit);
-		
-	}while (itemHit != 1);
-	
-	GetDialogItem(TheDia, 1, &itemType, &itemHandle, &itemRect);
-	ForeColor(blackColor);
-	PaintMyRect();
-	
-	SetRect(&aRect, -50, -50, -50, -50);
-	do
-	{
-		do
-		{
-			GetMouse(&myPt);
-			
-			myPt.v -= itemRect.top + 4;
-			myPt.v /= COLARG;
-			
-			if (myPt.v <= 0) myPt.v = 0;
-			if (myPt.v >= 7) myPt.v = 7;
-		
-			myPt.h -= itemRect.left + 4;
-			myPt.h /= COLARG;
-			
-			if (myPt.h < 0) myPt.h = 0;
-			if (myPt.h >= 32) myPt.h = 31;
-		}
-		while (sPt.v == myPt.v && sPt.h == myPt.h && Button());
-		
-		sPt = myPt;
-		ForeColor(blackColor);
-		PaintMyRect();
-
-		
-		hCTab = GetCTable(72);
-		
-		theColor->red	=	(*hCTab)->ctTable[ myPt.v*32 + myPt.h].rgb.red;
-		theColor->blue	=	(*hCTab)->ctTable[ myPt.v*32 + myPt.h].rgb.blue;
-		theColor->green =	(*hCTab)->ctTable[ myPt.v*32 + myPt.h].rgb.green;
-		
-		DisposCTable(hCTab);
-		
-		CurrentCase = *tracksColorID = myPt.v*32 + myPt.h;
-		
-		ForeColor(redColor);
-		PaintMyRect();
-	}
-	while (Button());
-		
-	DisposeDialog(TheDia);
-}*/
-
-void DoCOLOR(short	itemHit)
-{
-	short		itemType,i, x, larg, haut;
+	short		itemType, larg, haut;
 	Handle		itemHandle;
 	Rect		itemRect, aRc;
-	Point		myPt, where = { -1, -1};
+	Point		myPt, where = {-1, -1};
 	Rect		caRect;
 	
 	itemHit -= base;
 	
-	switch (itemHit)
-	{
+	switch (itemHit) {
 		case 1:
 			GetDialogItem (prefDlog, itemHit+base, &itemType, &itemHandle, &itemRect);
 			
@@ -1159,7 +1004,7 @@ void DoCOLOR(short	itemHit)
 			InsetRect(&aRc, 1, 1);
 			FrameRect(&aRc);
 			
-			GetColor(where, "\pSelect a new color", &thePrefs.tracksColor[ myPt.h + 8*myPt.v], &thePrefs.tracksColor[ myPt.h + 8*myPt.v]);
+			GetColor(where, "\pSelect a new color", &thePrefs.tracksColor[myPt.h + 8 * myPt.v], &thePrefs.tracksColor[ myPt.h + 8*myPt.v]);
 			
 			InitCOLOR(myPt.h + 8*myPt.v);
 			
@@ -1175,8 +1020,7 @@ void DoCOLOR(short	itemHit)
 				InvalWindowRect(GetDialogWindow(EditorDlog), &caRect);
 			}
 			
-			if (AdapDlog != NULL)
-			{
+			if (AdapDlog != NULL) {
 				SetPortDialogPort(AdapDlog);
 				GetPortBounds(GetDialogPort(AdapDlog), &caRect);
 				InvalWindowRect(GetDialogWindow(AdapDlog), &caRect);
@@ -1189,16 +1033,16 @@ void DoCOLOR(short	itemHit)
 
 void CreateTrackList()
 {
-	short		itemType,i,x;
+	short		itemType;
+	int			i;
 	Handle		itemHandle;
-	Rect		itemRect, tempRect, dataBounds;
-	Ptr			String;
+	Rect		tempRect, dataBounds;
 	Point		cSize;
 	FontInfo	ThisFontInfo;
-	Str255		aStr, bStr;
-	NumVersion	nVers;
+	Str255		aStr;
 	
-	TextFont(4);	TextSize(9);
+	TextFont(4);
+	TextSize(9);
 	
 	GetDialogItem(prefDlog, base+19, &itemType, &itemHandle, &TrackRectList);
 	
@@ -1219,9 +1063,9 @@ void CreateTrackList()
 	InsetRect(&tempRect, 1, 1);
 	SetRect(&dataBounds, 0, 0, 3, 33);
 	cSize.h = (tempRect.right - tempRect.left)/3;
-	/****************/	
+	/****************/
 	
-	TrackList =  LNew(&tempRect, 
+	TrackList =  LNew(&tempRect,
 					  &dataBounds,
 					  cSize,
 					  0,
@@ -1235,19 +1079,19 @@ void CreateTrackList()
 	cSize.h = cSize.v = 0;
 	LSetDrawingMode(true, TrackList);
 	
-	for (i = 0; i < 99; i++)	//
-	{
+	for (i = 0; i < 99; i++) {	//
 		NumToString(i + 1, aStr);
 		
-		LSetCell(aStr + 1, aStr[ 0], cSize, TrackList);
+		LSetCell(aStr + 1, aStr[0], cSize, TrackList);
 		
-		if (thePrefs.SelectedTracks[ i]) LSetSelect(true, cSize, TrackList);
-		else LSetSelect(false, cSize, TrackList);
+		if (thePrefs.SelectedTracks[i])
+			LSetSelect(true, cSize, TrackList);
+		else
+			LSetSelect(false, cSize, TrackList);
 		
 		cSize.h++;
 		
-		if (cSize.h % 3 == 0)
-		{
+		if (cSize.h % 3 == 0) {
 			cSize.v++;
 			cSize.h = 0;
 		}
@@ -1259,14 +1103,12 @@ void CreateTrackList()
 
 void InitEDITOR(void)
 {
-	short		itemType,i,x;
+	short		itemType;
 	Handle		itemHandle;
-	Rect		itemRect, tempRect, dataBounds;
-	Ptr			String;
+	Rect		tempRect, dataBounds;
 	Point		cSize;
 	FontInfo	ThisFontInfo;
 	Str255		aStr, bStr;
-	NumVersion	nVers;
 	
 	TextFont(4);
 	TextSize(9);
@@ -1306,8 +1148,7 @@ void InitEDITOR(void)
 	
 	TrackList = NULL;
 	
-	if (thePrefs.RecordAllTrack == 3)
-	{
+	if (thePrefs.RecordAllTrack == 3) {
 		CreateTrackList();
 	}
 	////////////////////////////////////////////////////
@@ -1339,13 +1180,10 @@ void InitEDITOR(void)
 	NumToString(LastCanal + 1, aStr);
 	SetDText(prefDlog, base + 24, aStr);
 	
-	if (thePrefs.pianoOffset >= 0)
-	{
+	if (thePrefs.pianoOffset >= 0) {
 		pStrcpy(aStr, "\p+ ");
 		NumToString(thePrefs.pianoOffset, bStr);
-	}
-	else
-	{
+	} else {
 		pStrcpy(aStr, "\p- ");
 		NumToString(-thePrefs.pianoOffset, bStr);
 	}
@@ -1375,23 +1213,14 @@ void InitEDITOR(void)
 
 void InitMIDI()
 {
-	short		itemType,i,x;
-	Handle		itemHandle;
-	Rect		itemRect, tempRect, dataBounds;
-	Ptr			String;
-	Point		cSize;
-	FontInfo	ThisFontInfo;
 	Str255		aStr, bStr;
 	NumVersion	nVers;
 	long		nVersLong;
 	
-	if (MIDIHardware)
-	{
+	if (MIDIHardware) {
 		TurnRadio(base + 6, prefDlog, thePrefs.MidiKeyBoard);
 		TurnRadio(base + 10, prefDlog, thePrefs.SendMIDIClockData);
-	}
-	else
-	{
+	} else {
 		ControlSwitch(base + 6, prefDlog, 255);		// MIDI Input
 		ControlSwitch(base + 10, prefDlog, 255);		// MIDI Clock
 		
@@ -1418,8 +1247,7 @@ void InitMIDI()
 #else 
 	nVersLong = 0;
 #endif
-	if (nVersLong > 0)
-	{
+	if (nVersLong > 0) {
 		BlockMoveData(&nVersLong, &nVers, 4);
 		
 		pStrcpy(aStr, "\pMIDI (OMS ");
@@ -1444,22 +1272,14 @@ void InitMIDI()
 
 void DoMIDI(short itemHit)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
-	Point		myPt;
-	long		mresult;
-	Str255		theStr;
-	
-	switch (itemHit - base)
-	{
+	switch (itemHit - base) {
 		case 10:
-			InverseRadio(itemHit, prefDlog);	thePrefs.SendMIDIClockData = !thePrefs.SendMIDIClockData;
+			InverseRadio(itemHit, prefDlog);
+			thePrefs.SendMIDIClockData = !thePrefs.SendMIDIClockData;
 			
 			MADDriver->SendMIDIClockData = thePrefs.SendMIDIClockData;
 			
-			if (MADDriver->SendMIDIClockData)
-			{
+			if (MADDriver->SendMIDIClockData) {
 				OpenMIDIHardware();
 			}
 			break;
@@ -1512,8 +1332,7 @@ void DoEDITOR(short itemHit)
 	long		mresult;
 	Str255		theStr;
 	
-	switch (itemHit - base)
-	{
+	switch (itemHit - base) {
 		case 14:
 		case 22:
 		case 25:
@@ -1521,48 +1340,42 @@ void DoEDITOR(short itemHit)
 			TurnRadio(base + 22, prefDlog, false);
 			TurnRadio(base + 25, prefDlog, false);
 			
-			TurnRadio(base + 14, prefDlog, false);	
+			TurnRadio(base + 14, prefDlog, false);
 			TurnRadio(base + 28, prefDlog, false);
 			
 			
 			TurnRadio(itemHit, prefDlog, true);
 			
-			switch (itemHit - base)
-		{
-			case 14:
-				thePrefs.RecordAllTrack = 2;
-				break;
-				
-			case 22:
-				thePrefs.RecordAllTrack = 0;
-				break;
-				
-			case 25:
-				thePrefs.RecordAllTrack = 1;
-				break;
-				
-			case 28:
-				thePrefs.RecordAllTrack = 3;
-				break;
-		}
-			
-			if (thePrefs.RecordAllTrack == 3)
-			{
-				if (TrackList == NULL) CreateTrackList();
-			}
-			else
-			{
-				if (TrackList)
-				{
-					Point	cSize = { 0, 0};
+			switch (itemHit - base) {
+				case 14:
+					thePrefs.RecordAllTrack = 2;
+					break;
 					
-					for (i = 0; i < 99; i++)
-					{
-						thePrefs.SelectedTracks[ i] = LGetSelect(false, &cSize, TrackList);
+				case 22:
+					thePrefs.RecordAllTrack = 0;
+					break;
+					
+				case 25:
+					thePrefs.RecordAllTrack = 1;
+					break;
+					
+				case 28:
+					thePrefs.RecordAllTrack = 3;
+					break;
+			}
+			
+			if (thePrefs.RecordAllTrack == 3) {
+				if (TrackList == NULL)
+					CreateTrackList();
+			} else {
+				if (TrackList) {
+					Point cSize = {0, 0};
+					
+					for (i = 0; i < 99; i++) {
+						thePrefs.SelectedTracks[i] = LGetSelect(false, &cSize, TrackList);
 						
 						cSize.h++;
-						if (cSize.h % 3 == 0)
-						{
+						if (cSize.h % 3 == 0) {
 							cSize.v++;
 							cSize.h = 0;
 						}
@@ -1590,16 +1403,12 @@ void DoEDITOR(short itemHit)
 			
 			SetItemMark(TrackView, LastCanal + 1, 0xa5);
 			
-			mresult = PopUpMenuSelect(TrackView,
-									  myPt.v,
-									  myPt.h,
-									  LastCanal + 1);
+			mresult = PopUpMenuSelect(TrackView, myPt.v, myPt.h, LastCanal + 1);
 			
 			SetItemMark(TrackView, LastCanal + 1, 0);
 			
-			if (HiWord(mresult ) != 0 )
-			{
-				LastCanal = (Byte) LoWord(mresult) - 1;
+			if (HiWord(mresult) != 0) {
+				LastCanal = (Byte)LoWord(mresult) - 1;
 				
 				NumToString(LastCanal + 1, theStr);
 				SetDText(prefDlog, base + 24, theStr);
@@ -1668,18 +1477,15 @@ void CloseEDITORF()
 	EraseRect(&itemRect);
 	//ForeColor(blackColor);
 
-	if (TrackList)
-	{
-		Point	cSize = { 0, 0};
-		short	i;
+	if (TrackList) {
+		Point	cSize = {0, 0};
+		int		i;
 		
-		for (i = 0; i < 99; i++)
-		{
-			thePrefs.SelectedTracks[ i] = LGetSelect(false, &cSize, TrackList);
+		for (i = 0; i < 99; i++) {
+			thePrefs.SelectedTracks[i] = LGetSelect(false, &cSize, TrackList);
 			
 			cSize.h++;
-			if (cSize.h % 3 == 0)
-			{
+			if (cSize.h % 3 == 0) {
 				cSize.v++;
 				cSize.h = 0;
 			}
@@ -1703,13 +1509,12 @@ void CloseEDITORF()
 
 void DoCOMPRESSION(short itemHit)
 {
-	short		itemType,i;
+	short		itemType;
 	Handle		itemHandle;
 	Rect		itemRect;
 	Str255		str;
 	
-	switch (itemHit - base)
-	{
+	switch (itemHit - base) {
 		case 1:
 			InverseRadio(itemHit, prefDlog);
 			
@@ -1730,20 +1535,24 @@ void DoCOMPRESSION(short itemHit)
 			break;
 #endif
 		case 19:
-			InverseRadio(itemHit, prefDlog);		thePrefs.DontUseFilesMix = !thePrefs.DontUseFilesMix;
+			InverseRadio(itemHit, prefDlog);
+			thePrefs.DontUseFilesMix = !thePrefs.DontUseFilesMix;
 			break;
 			
 		case 16:
-			InverseRadio(itemHit, prefDlog);		thePrefs.clickSound = !thePrefs.clickSound;
+			InverseRadio(itemHit, prefDlog);
+			thePrefs.clickSound = !thePrefs.clickSound;
 			break;
 			
 		case 6:
-			InverseRadio(itemHit, prefDlog);		thePrefs.OscilloLine = !thePrefs.OscilloLine;
+			InverseRadio(itemHit, prefDlog);
+			thePrefs.OscilloLine = !thePrefs.OscilloLine;
 			ResetOscilloscope();
 			break;
 			
 		case 10:
-			InverseRadio(itemHit, prefDlog);		thePrefs.addExtension = !thePrefs.addExtension;
+			InverseRadio(itemHit, prefDlog);
+			thePrefs.addExtension = !thePrefs.addExtension;
 			break;
 			
 		case 2: // POPUP
@@ -1751,7 +1560,7 @@ void DoCOMPRESSION(short itemHit)
 		{
 			long		mresult;
 			Point		Zone;
-			short		i, temp = 0;
+			short		temp = 0;
 			MenuHandle	tMenu;
 			
 			GetDialogItem(prefDlog, base + 2, &itemType, &itemHandle, &itemRect);
@@ -1764,8 +1573,7 @@ void DoCOMPRESSION(short itemHit)
 			
 			LocalToGlobal(&Zone);
 			
-			switch (thePrefs.whichEditorPatterns)
-			{
+			switch (thePrefs.whichEditorPatterns) {
 				case -1:
 					temp = 1;
 					break;
@@ -1791,17 +1599,12 @@ void DoCOMPRESSION(short itemHit)
 					break;
 			}
 			
-			mresult = PopUpMenuSelect(tMenu,
-									  Zone.v,
-									  Zone.h,
-									  temp);
+			mresult = PopUpMenuSelect(tMenu, Zone.v, Zone.h, temp);
 			
-			if (HiWord(mresult ) != 0 )
-			{
-				temp = LoWord(mresult );
+			if (HiWord(mresult) != 0) {
+				temp = LoWord(mresult);
 				
-				switch (temp)
-				{
+				switch (temp) {
 					case 1:
 						thePrefs.whichEditorPatterns = -1;
 						break;
@@ -1839,64 +1642,9 @@ void DoCOMPRESSION(short itemHit)
 	}
 }
 
-void DoSCREENSAVER(short itemHit)
-{
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
-	
-	switch (itemHit - base)
-	{
-		case 1:
-		case 2:
-		case 5:
-		case 6:
-		case 7:
-		case 8:
-		case 10:
-			InverseRadio(itemHit, prefDlog);
-			
-			switch (itemHit - base)
-		{
-			case 1:
-				thePrefs.SSText =!thePrefs.SSText;
-				break;
-				
-			case 2:
-				thePrefs.SSStars =!thePrefs.SSStars;
-				break;
-				
-			case 5:
-				thePrefs.SSJumping =!thePrefs.SSJumping;
-				break;
-				
-			case 6:
-				thePrefs.FText =!thePrefs.FText;
-				break;
-				
-			case 7:
-				thePrefs.FStars =!thePrefs.FStars;
-				break;
-				
-			case 8:
-				thePrefs.FBalls =!thePrefs.FBalls;
-				break;
-			case 10:
-				thePrefs.FSinScroll =!thePrefs.FSinScroll;
-				break;
-		}
-			break;
-	}
-}
-
 void DoCLASSICAL(short itemHit)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
-	
-	switch (itemHit - base)
-	{
+	switch (itemHit - base) {
 		case 5:
 			thePrefs.UseMarkers = !thePrefs.UseMarkers;
 			TurnRadio(5 + base, prefDlog, thePrefs.UseMarkers);
@@ -1916,22 +1664,18 @@ void DoCLASSICAL(short itemHit)
 
 void DoKEY(short itemHit)
 {
-	short		itemType,i;
-	Handle		itemHandle;
-	Rect		itemRect;
-	Str255		str;
+	short	i;
+	Str255	str;
 	
-	switch (itemHit - base)
-	{
+	switch (itemHit - base) {
 		case 42:
 			TurnRadio(base + 42, prefDlog, true);
 			TurnRadio(base + 1, prefDlog, false);
 			
 			thePrefs.FKeyTracks = true;
 			
-			for (i = 0; i < 13; i++)
-			{
-				//	TurnRadio(base + 2 + i, prefDlog, thePrefs.FKeyActive[ i]);
+			for (i = 0; i < 13; i++) {
+				//TurnRadio(base + 2 + i, prefDlog, thePrefs.FKeyActive[ i]);
 				InactiveControl(base + 2 + i, prefDlog);
 			}
 			break;
@@ -1942,21 +1686,18 @@ void DoKEY(short itemHit)
 			
 			thePrefs.FKeyTracks = false;
 			
-			for (i = 0; i < 13; i++)
-			{
+			for (i = 0; i < 13; i++) {
 				//TurnRadio(base + 2 + i, prefDlog, thePrefs.FKeyActive[ i]);
 				ActiveControl(base + 2 + i, prefDlog);
 			}
 			break;
 			
 		default:
-			if (itemHit - base >= 2 && itemHit - base <= 14)
-			{
-				thePrefs.FKeyActive[ itemHit - base - 2] = !thePrefs.FKeyActive[ itemHit - base - 2];
-				TurnRadio(itemHit, prefDlog, thePrefs.FKeyActive[ itemHit - base - 2]);
+			if (itemHit - base >= 2 && itemHit - base <= 14) {
+				thePrefs.FKeyActive[itemHit - base - 2] = !thePrefs.FKeyActive[itemHit - base - 2];
+				TurnRadio(itemHit, prefDlog, thePrefs.FKeyActive[itemHit - base - 2]);
 			}
-			else 	if (itemHit - base >= 15 && itemHit - base <= 27)
-			{
+			else if (itemHit - base >= 15 && itemHit - base <= 27) {
 				if (PressFKeyMenu(itemHit, prefDlog, itemHit - base - 15, str))
 					SetDText(prefDlog, itemHit - 15 + 28, str);
 			}
@@ -1971,31 +1712,24 @@ void InitKEY()
 	short 	i;
 	Str255	str;
 	
-	if (thePrefs.FKeyTracks)
-	{
+	if (thePrefs.FKeyTracks) {
 		//TurnRadio(base + 42, prefDlog, true);
 		TurnRadio(base + 1, prefDlog, false);
 		
-		for (i = 0; i < 13; i++)
-		{
+		for (i = 0; i < 13; i++) {
 			//TurnRadio(base + 2 + i, prefDlog, thePrefs.FKeyActive[ i]);
 			InactiveControl(base + 2 + i, prefDlog);
 		}
-	}
-	else
-	{
+	} else {
 		TurnRadio(base + 42, prefDlog, false);
 		TurnRadio(base + 1, prefDlog, true);
 	}
 	
-	for (i = 0; i < 13; i++)
-	{
-		if (thePrefs.FKeyActive[ i])
-		{
+	for (i = 0; i < 13; i++) {
+		if (thePrefs.FKeyActive[i]) {
 			GetFKeyDesc(i, str);
 			SetDText(prefDlog, base + 28 + i, str);
-		}
-		else 
+		} else
 			SetDText(prefDlog, base + 28 + i, "\p-");
 		
 		TurnRadio(base + 2 + i, prefDlog, thePrefs.FKeyActive[ i]);
@@ -2009,13 +1743,18 @@ void InitSTAFF()
 	TurnRadio(8 + base, prefDlog, thePrefs.StaffShowLength);
 	TurnRadio(3 + base, prefDlog, thePrefs.UseMarkers);
 	
-	NumToString(thePrefs.MarkersSize,	aStr);		SetDText(prefDlog, base + 5, aStr);
-	NumToString(thePrefs.MarkersOffSet,aStr);		SetDText(prefDlog, base + 7, aStr);
+	NumToString(thePrefs.MarkersSize, aStr);
+	SetDText(prefDlog, base + 5, aStr);
+	NumToString(thePrefs.MarkersOffSet, aStr);
+	SetDText(prefDlog, base + 7, aStr);
 	
-	NumToString(thePrefs.TempsNum,	aStr);			SetDText(prefDlog, base + 13, aStr);
-	NumToString(thePrefs.TempsUnit,aStr);			SetDText(prefDlog, base + 11, aStr);
+	NumToString(thePrefs.TempsNum, aStr);
+	SetDText(prefDlog, base + 13, aStr);
+	NumToString(thePrefs.TempsUnit, aStr);
+	SetDText(prefDlog, base + 11, aStr);
 	
-	NumToString(thePrefs.TrackHeight,aStr);		SetDText(prefDlog, base + 15, aStr);
+	NumToString(thePrefs.TrackHeight, aStr);
+	SetDText(prefDlog, base + 15, aStr);
 }
 
 void DoSTAFF(short itemHit)
@@ -2023,8 +1762,7 @@ void DoSTAFF(short itemHit)
 	Str255	aStr;
 	long	temp;
 	
-	switch (itemHit - base)
-	{
+	switch (itemHit - base) {
 		case 8:
 			thePrefs.StaffShowLength = !thePrefs.StaffShowLength;
 			TurnRadio(8 + base, prefDlog, thePrefs.StaffShowLength);
@@ -2032,8 +1770,7 @@ void DoSTAFF(short itemHit)
 			
 		case 16:
 			temp = thePrefs.TrackHeight;
-			if (PressMenuItem(171, base + 16, prefDlog, &temp, 0, aStr))
-			{
+			if (PressMenuItem(171, base + 16, prefDlog, &temp, 0, aStr)) {
 				thePrefs.TrackHeight = temp;
 				SetDText(prefDlog, base + 15, aStr);
 			}
@@ -2050,23 +1787,24 @@ Boolean CloseSTAFF()
 {
 	Str255		aStr;
 	long		temp;
-
-	GetDText(prefDlog, base + 11, aStr);	StringToNum(aStr, &temp);	
-	if (temp < 2 || temp > 16)
-	{
+	
+	GetDText(prefDlog, base + 11, aStr);
+	StringToNum(aStr, &temp);
+	if (temp < 2 || temp > 16) {
 		SysBeep(1);
 		SelectDialogItemText(prefDlog, base + 11, 0, 32767);
 		return false;
-	}
-	else thePrefs.TempsUnit = temp;
+	} else
+		thePrefs.TempsUnit = temp;
 	
-	GetDText(prefDlog, base + 13, aStr);	StringToNum(aStr, &temp);
-	if (temp < 2 || temp > 16)
-	{
-		SysBeep(1);	SelectDialogItemText(prefDlog, base + 13, 0, 32767);
+	GetDText(prefDlog, base + 13, aStr);
+	StringToNum(aStr, &temp);
+	if (temp < 2 || temp > 16) {
+		SysBeep(1);
+		SelectDialogItemText(prefDlog, base + 13, 0, 32767);
 		return false;
-	}
-	else thePrefs.TempsNum = temp;
+	} else
+		thePrefs.TempsNum = temp;
 	
 	GetDText(prefDlog, base + 5, aStr);
 	StringToNum(aStr, &temp);
@@ -2085,11 +1823,10 @@ Boolean CloseSTAFF()
 
 void DoDIGITAL(short itemHit)
 {
-	short		itemType,i;
+	short		itemType;
 	Handle		itemHandle;
 	Rect		caRect, itemRect;
-	GrafPtr		curPort;
-	Point		where = { -1, -1};
+	Point		where = {-1, -1};
 	
 	switch (itemHit - base) {
 		case 35:
@@ -2099,8 +1836,10 @@ void DoDIGITAL(short itemHit)
 			TurnRadio(35 + base, prefDlog, false);
 			TurnRadio(34 + base, prefDlog, false);
 			
-			if (thePrefs.editorSoundDrag) TurnRadio(34 + base, prefDlog, true);
-			else TurnRadio(35 + base, prefDlog, true);
+			if (thePrefs.editorSoundDrag)
+				TurnRadio(34 + base, prefDlog, true);
+			else
+				TurnRadio(35 + base, prefDlog, true);
 			break;
 			
 		case 30:
@@ -2110,8 +1849,10 @@ void DoDIGITAL(short itemHit)
 			TurnRadio(30 + base, prefDlog, false);
 			TurnRadio(31 + base, prefDlog, false);
 			
-			if (thePrefs.patternWrapping) TurnRadio(30 + base, prefDlog, true);
-			else TurnRadio(31 + base, prefDlog, true);
+			if (thePrefs.patternWrapping)
+				TurnRadio(30 + base, prefDlog, true);
+			else
+				TurnRadio(31 + base, prefDlog, true);
 			break;
 			
 		case 1:
@@ -2122,26 +1863,26 @@ void DoDIGITAL(short itemHit)
 			InverseRadio(itemHit, prefDlog);
 			
 			switch (itemHit - base) {
-			case 1:
-				thePrefs.DigitalInstru = !thePrefs.DigitalInstru;
-				break;
-				
-			case 2:
-				thePrefs.DigitalNote = !thePrefs.DigitalNote;
-				break;
-				
-			case 3:
-				thePrefs.DigitalEffect = !thePrefs.DigitalEffect;
-				break;
-				
-			case 4:
-				thePrefs.DigitalArgu = !thePrefs.DigitalArgu;
-				break;
-				
-			case 6:
-				thePrefs.DigitalVol = !thePrefs.DigitalVol;
-				break;
-		}
+				case 1:
+					thePrefs.DigitalInstru = !thePrefs.DigitalInstru;
+					break;
+					
+				case 2:
+					thePrefs.DigitalNote = !thePrefs.DigitalNote;
+					break;
+					
+				case 3:
+					thePrefs.DigitalEffect = !thePrefs.DigitalEffect;
+					break;
+					
+				case 4:
+					thePrefs.DigitalArgu = !thePrefs.DigitalArgu;
+					break;
+					
+				case 6:
+					thePrefs.DigitalVol = !thePrefs.DigitalVol;
+					break;
+			}
 			
 			InternalEditorInit();
 			break;
@@ -2164,8 +1905,10 @@ void DoDIGITAL(short itemHit)
 			
 			TurnRadio(27 + base, prefDlog, false);
 			TurnRadio(28 + base, prefDlog, false);
-			if (thePrefs.MusicTrace) TurnRadio(28 + base, prefDlog, true);
-			else TurnRadio(27 + base, prefDlog, true);
+			if (thePrefs.MusicTrace)
+				TurnRadio(28 + base, prefDlog, true);
+			else
+				TurnRadio(27 + base, prefDlog, true);
 			break;
 			
 		case 28:
@@ -2173,34 +1916,44 @@ void DoDIGITAL(short itemHit)
 			
 			TurnRadio(27 + base, prefDlog, false);
 			TurnRadio(28 + base, prefDlog, false);
-			if (thePrefs.MusicTrace) TurnRadio(28 + base, prefDlog, true);
-			else TurnRadio(27 + base, prefDlog, true);
+			if (thePrefs.MusicTrace)
+				TurnRadio(28 + base, prefDlog, true);
+			else
+				TurnRadio(27 + base, prefDlog, true);
 			break;
 			
 		case 16:
-			if (thePrefs.FastDigitalEdition & controlKey) thePrefs.FastDigitalEdition -= controlKey;
-			else thePrefs.FastDigitalEdition += controlKey;
+			if (thePrefs.FastDigitalEdition & controlKey)
+				thePrefs.FastDigitalEdition &= ~controlKey;
+			else
+				thePrefs.FastDigitalEdition |= controlKey;
 			
 			InverseRadio(itemHit, prefDlog);
 			break;
 			
 		case 17:
-			if (thePrefs.FastDigitalEdition & shiftKey) thePrefs.FastDigitalEdition -= shiftKey;
-			else thePrefs.FastDigitalEdition += shiftKey;
+			if (thePrefs.FastDigitalEdition & shiftKey)
+				thePrefs.FastDigitalEdition &= ~shiftKey;
+			else
+				thePrefs.FastDigitalEdition |= shiftKey;
 			
 			InverseRadio(itemHit, prefDlog);
 			break;
 			
 		case 18:
-			if (thePrefs.FastDigitalEdition & cmdKey) thePrefs.FastDigitalEdition -= cmdKey;
-			else thePrefs.FastDigitalEdition += cmdKey;
+			if (thePrefs.FastDigitalEdition & cmdKey)
+				thePrefs.FastDigitalEdition &= ~cmdKey;
+			else
+				thePrefs.FastDigitalEdition |= cmdKey;
 			
 			InverseRadio(itemHit, prefDlog);
 			break;
 			
 		case 19:
-			if (thePrefs.FastDigitalEdition & optionKey) thePrefs.FastDigitalEdition -= optionKey;
-			else thePrefs.FastDigitalEdition += optionKey;
+			if (thePrefs.FastDigitalEdition & optionKey)
+				thePrefs.FastDigitalEdition &= ~optionKey;
+			else
+				thePrefs.FastDigitalEdition |= optionKey;
 			
 			InverseRadio(itemHit, prefDlog);
 			break;
@@ -2209,8 +1962,7 @@ void DoDIGITAL(short itemHit)
 			thePrefs.UseMarkers = !thePrefs.UseMarkers;
 			TurnRadio(8 + base, prefDlog, thePrefs.UseMarkers);
 			
-			if (EditorDlog != NULL)
-			{
+			if (EditorDlog != NULL) {
 				SetPortDialogPort(EditorDlog);
 				GetPortBounds(GetDialogPort(EditorDlog), &caRect);
 				InvalWindowRect(GetDialogWindow(EditorDlog), &caRect);
@@ -2219,25 +1971,20 @@ void DoDIGITAL(short itemHit)
 			
 		case 22:
 		case 23:
-			//	case 24:
-			
 			TurnRadio(22 + base, prefDlog, false);
 			TurnRadio(23 + base, prefDlog, false);
-			//TurnRadio(24 + base, prefDlog, false);
 			
 			TurnRadio(itemHit, prefDlog, true);
 			
-			switch (itemHit - base)
-		{
-			case 22:
-				thePrefs.LinesHeight = 0;
-				break;
-				
-			case 23:
-				thePrefs.LinesHeight = 2;
-				break;
-				//case 24:		thePrefs.LinesHeight = 2;		break;
-		}
+			switch (itemHit - base) {
+				case 22:
+					thePrefs.LinesHeight = 0;
+					break;
+					
+				case 23:
+					thePrefs.LinesHeight = 2;
+					break;
+			}
 			break;
 	}
 }
@@ -2267,12 +2014,12 @@ void UpdatePrefWindow(DialogPtr	theDia)
 		case DRIVER:
 			break;
 			
-			//	case SCREENSAVER:			break;
 		case CLASSICAL:
 			break;
 			
 		case EDITOR:
-			TextFont(4);	TextSize(9);
+			TextFont(4);
+			TextSize(9);
 			
 			itemRect = PianoRectList;
 			InsetRect(&itemRect, -1, -1);
@@ -2284,8 +2031,7 @@ void UpdatePrefWindow(DialogPtr	theDia)
 			
 			LUpdate(visibleRegion, PianoList);
 			
-			if (TrackList)
-			{
+			if (TrackList) {
 				itemRect = TrackRectList;
 				InsetRect(&itemRect, -1, -1);
 				FrameRect(&itemRect);
@@ -2295,7 +2041,8 @@ void UpdatePrefWindow(DialogPtr	theDia)
 			
 			DisposeRgn(visibleRegion);
 			
-			TextFont(0);	TextSize(0);
+			TextFont(0);
+			TextSize(0);
 			break;
 			
 		case DIGITAL:
@@ -2320,28 +2067,24 @@ void UpdatePrefWindow(DialogPtr	theDia)
 
 Boolean	IsPressed(unsigned short k)
 {
-	unsigned char (*km2);
-	
-	km2 = (unsigned char*) &km;
-	
-	return((Boolean) ((km2[k>>3] >> (k & 7)) & 1) );
+	unsigned char *km2;
+	km2 = (unsigned char*)&km;
+	return (Boolean)((km2[k >> 3] >> (k & 7)) & 1);
 }
 
 short GetTracksMenuPos(short Noni)
 {
 	short curSelec = Noni / 2;
-	
-	if (curSelec <= 0 || curSelec > MAXTRACK/2) curSelec = 2;
-	
+	if (curSelec <= 0 || curSelec > MAXTRACK / 2)
+		curSelec = 2;
 	return curSelec;
 }
 
 short GetTracksMenuVal(short Noni)
 {
 	short curSelec = Noni * 2;
-	
-	if (curSelec <= 0 || curSelec > MAXTRACK) curSelec = 4;
-	
+	if (curSelec <= 0 || curSelec > MAXTRACK)
+		curSelec = 4;
 	return curSelec;
 }
 
@@ -2406,15 +2149,15 @@ UnsignedFixed GetRateMenuVal(short Noni)
 	}
 }	
 
-
 #define CSTTEST	4000L
 
 void TestProcessor(void)
 {
 	short		proto = 1;
-	long		oldTicks, i, normal;
+	long		oldTicks, normal;
+	int			i;
 	short		dItem;
-	Str255		theString, theString2;
+	Str255		theString;
 	GrafPtr		savedPort;
 	Boolean		MyRead;
 
@@ -2422,8 +2165,7 @@ void TestProcessor(void)
 	MADStopDriver(MADDriver);
 	
 	oldTicks = TickCount();
-	for (i = 0 ; i < CSTTEST; i++)
-	{
+	for (i = 0 ; i < CSTTEST; i++) {
 		proto *= 123;
 		proto -= 255;
 		proto /= 791;
@@ -2433,8 +2175,7 @@ void TestProcessor(void)
 	MADStartDriver(MADDriver);
 	MADDriver->Reading = true;
 	oldTicks = TickCount();
-	for (i = 0 ; i < CSTTEST; i++)
-	{
+	for (i = 0 ; i < CSTTEST; i++) {
 		proto *= 123;
 		proto -= 255;
 		proto /= 791;
@@ -2448,7 +2189,7 @@ void TestProcessor(void)
 
 	SetCursor(GetQDGlobalsArrow(&qdarrow));
 	
-	NumToString((long) ((i * 100L) / normal), theString);
+	NumToString((long)((i * 100L) / normal), theString);
 
 	ParamText(theString, 0, 0, 0);
 
@@ -2461,7 +2202,7 @@ void TestProcessor(void)
 
 Boolean PressMenuItem(short menuID, short itemID, DialogPtr dia, long *curVal, short remove, Str255	str)
 {
-	long		mresult, i, curSelec;
+	long		mresult, i, curSelec = 1;
 	Point		Zone;
 	short		temp;
 	MenuHandle	tMenu;
@@ -2476,43 +2217,40 @@ Boolean PressMenuItem(short menuID, short itemID, DialogPtr dia, long *curVal, s
 	tMenu = GetMenu(menuID);
 	InsertMenu(tMenu, hierMenu);
 	
-	Zone.h = itemRect.left;	Zone.v = itemRect.top;
+	Zone.h = itemRect.left;
+	Zone.v = itemRect.top;
 	
 	LocalToGlobal(&Zone);
 	
-	curSelec = 1;
-	
-	for (i = 0 ; i < CountMenuItems(tMenu); i++)
-	{
+	for (i = 0 ; i < CountMenuItems(tMenu); i++) {
 		Str255	str;
 		long	r;
 		
 		GetMenuItemText(tMenu, i+1, str);
 		
-		str[ 0] -= remove;	StringToNum(str, &r);	str[ 0] += remove;
+		str[0] -= remove;
+		StringToNum(str, &r);
+		str[0] += remove;
 		
-		if (r == *curVal) curSelec = i+1;
+		if (r == *curVal)
+			curSelec = i + 1;
 	}
 	
 	SetItemMark(tMenu, curSelec, 0xa5);
 	
-	mresult = PopUpMenuSelect(	tMenu,
-								Zone.v,
-								Zone.h,
-								curSelec);
+	mresult = PopUpMenuSelect(tMenu, Zone.v, Zone.h, curSelec);
 	
 	SetItemMark(tMenu, curSelec, 0);
 	
-	if (HiWord(mresult ) != 0 )
-	{
+	if (HiWord(mresult) != 0) {
 		long	r;
 		
-		temp = LoWord(mresult );
+		temp = LoWord(mresult);
 		
 		GetMenuItemText(tMenu, temp, str);
-		str[ 0] -= remove;
+		str[0] -= remove;
 		StringToNum(str, &r);
-		str[ 0] += remove;
+		str[0] += remove;
 		
 		*curVal = r;
 		
@@ -2527,15 +2265,8 @@ Boolean PressMenuItem(short menuID, short itemID, DialogPtr dia, long *curVal, s
 
 void DoDRIVER(short	itemHit)
 {
-	short		itemType,i,curSelec;
-	Handle		itemHandle;
-	Rect		itemRect;
-	Point		myPt;
-	Boolean	 	IsPlaying;
-	long		mresult;
-	Str255		aStr;
-	Ptr			tempPtr;
-	MenuHandle	RateMenu;
+	Str255			aStr;
+	UnsignedFixed	tRate;
 	
 	switch (itemHit - base) {
 		case 28:
@@ -2551,64 +2282,49 @@ void DoDRIVER(short	itemHit)
 			
 			TurnRadio(itemHit, prefDlog, true);
 			
-			switch (itemHit - base)
-		{
-			case 6:
-				thePrefs.outPutRate = rate11khz;
-				
-				if (NewSoundManager31)
-				{
-					unsigned long tRate;
+			switch (itemHit - base) {
+				case 6:
+					thePrefs.outPutRate = rate11khz;
+					
 					
 					GetSoundOutputInfo(NULL, siSampleRate, &tRate);
 					
 					if (tRate == rate11025hz ||
-					   tRate == rate22050hz)
-					{
+						tRate == rate22050hz) {
 						thePrefs.outPutRate = rate11025hz;
 					}
-				}
-				break;
-				
-			case 7:
-				thePrefs.outPutRate = rate22khz;
-				
-				if (NewSoundManager31)
-				{
-					unsigned long tRate;
+					
+					break;
+					
+				case 7:
+					thePrefs.outPutRate = rate22khz;
 					
 					GetSoundOutputInfo(NULL, siSampleRate, &tRate);
 					
 					if (tRate == rate11025hz ||
-					   tRate == rate22050hz)
-					{
+						tRate == rate22050hz) {
 						thePrefs.outPutRate = rate22050hz;
 					}
-				}
-				break;
-				
-			case 8:
-				thePrefs.outPutRate = rate44khz;
-				
-				if (NewSoundManager31)
-				{
-					unsigned long tRate;
+					
+					break;
+					
+				case 8:
+					thePrefs.outPutRate = rate44khz;
 					
 					GetSoundOutputInfo(NULL, siSampleRate, &tRate);
 					
 					if (tRate == rate11025hz ||
-					   tRate == rate22050hz)
-					{
+						tRate == rate22050hz) {
 						thePrefs.outPutRate = rate22050hz;
 					}
-				}
-				break;
-		}
+					
+					break;
+			}
 			
 			InitDRIVER();
 			SwitchDriverTo(0);
 			
-			//	ResetAdaptators();
+			//ResetAdaptators();
 			SetWindowEnviron();
 			SetWindowSpectrum();
 			RecomputeEQ();
@@ -2624,18 +2340,18 @@ void DoDRIVER(short	itemHit)
 			TurnRadio(itemHit, prefDlog, true);
 			
 			switch (itemHit - base) {
-			case 2:
-				thePrefs.driverMode = SoundManagerDriver;
-				break;
-				
-			case 3:
-				thePrefs.driverMode = ASIOSoundManager;
-				break;
-				
-			case 5:
-				thePrefs.driverMode = MIDISoundDriver;
-				break;
-		}
+				case 2:
+					thePrefs.driverMode = SoundManagerDriver;
+					break;
+					
+				case 3:
+					thePrefs.driverMode = ASIOSoundManager;
+					break;
+					
+				case 5:
+					thePrefs.driverMode = MIDISoundDriver;
+					break;
+			}
 			InitDRIVER();
 			SwitchDriverTo(0);
 			InitDRIVER();
@@ -2653,10 +2369,14 @@ void DoDRIVER(short	itemHit)
 			
 			TurnRadio(itemHit, prefDlog, true);
 			
-			switch (itemHit - base)
-		{
-			case 9:		thePrefs.outPutBits = 8;	break;
-			case 10:	thePrefs.outPutBits = 16;	break;
+			switch (itemHit - base) {
+			case 9:
+					thePrefs.outPutBits = 8;
+					break;
+					
+			case 10:
+					thePrefs.outPutBits = 16;
+					break;
 		}
 			InitDRIVER();
 			SwitchDriverTo(0);
@@ -2675,17 +2395,13 @@ void DoDRIVER(short	itemHit)
 			SwitchDriverTo(0);
 			break;
 			
-#if defined(HAS_LONG_LONG) && defined (HAS_LONG_DOUBLE)
 		case 12:
 			InverseRadio(base + 12, prefDlog);
-			if (thePrefs.oversampling > 1)
-			{
+			if (thePrefs.oversampling > 1) {
 				thePrefs.oversampling = 1;
 				
 				SetDText(prefDlog, base + 13, "\pOff");
-			}
-			else
-			{
+			} else {
 				long 	tempLong;
 				Str255	str1, str2;
 				
@@ -2714,14 +2430,13 @@ void DoDRIVER(short	itemHit)
 			
 		case 17:
 		case 25:
-			if (/*asioDrivers != NULL*/ 1)
-			{
+			if (/*asioDrivers != NULL*/ 1) {
+				
 			}
 			break;
 			
 		case 35:
-			if (PressMenuItem(175, base + 35, prefDlog, &thePrefs.oversampling, 2, aStr))
-			{
+			if (PressMenuItem(175, base + 35, prefDlog, &thePrefs.oversampling, 2, aStr)) {
 				long 	tempLong;
 				Str255	str1, str2;
 				
@@ -2738,18 +2453,21 @@ void DoDRIVER(short	itemHit)
 				
 				SetDText(prefDlog, base + 13, str1);
 				
-				if (thePrefs.oversampling > 1) TurnRadio(base + 12, prefDlog, true);
-				else TurnRadio(base + 12, prefDlog, false);
+				if (thePrefs.oversampling > 1)
+					TurnRadio(base + 12, prefDlog, true);
+				else
+					TurnRadio(base + 12, prefDlog, false);
 				
 				SwitchDriverTo(0);
 			}
 			break;
-#endif
 			
 		case 20:
 			InverseRadio(base + 20, prefDlog);
-			if (thePrefs.MicroDelaySize) thePrefs.MicroDelaySize = 0;
-			else thePrefs.MicroDelaySize = 25;
+			if (thePrefs.MicroDelaySize)
+				thePrefs.MicroDelaySize = 0;
+			else
+				thePrefs.MicroDelaySize = 25;
 			
 			NumToString(thePrefs.MicroDelaySize, aStr);
 			pStrcat(aStr, "\p ms");
@@ -2759,28 +2477,27 @@ void DoDRIVER(short	itemHit)
 			break;
 			
 		case 26:
-			if (PressMenuItem(165, base + 26, prefDlog, &thePrefs.MicroDelaySize, 3, aStr))
-			{
+			if (PressMenuItem(165, base + 26, prefDlog, &thePrefs.MicroDelaySize, 3, aStr)) {
 				SetDText(prefDlog, base + 4, aStr);
 				
-				if (thePrefs.MicroDelaySize) TurnRadio(base + 20, prefDlog, true);
-				else TurnRadio(base + 20, prefDlog, false);
+				if (thePrefs.MicroDelaySize)
+					TurnRadio(base + 20, prefDlog, true);
+				else
+					TurnRadio(base + 20, prefDlog, false);
 				
 				SwitchDriverTo(0);
 			}
 			break;
 			
 		case 33:
-			if (PressMenuItem(170, base + 33, prefDlog, &thePrefs.ReverbSize, 3, aStr))
-			{
+			if (PressMenuItem(170, base + 33, prefDlog, &thePrefs.ReverbSize, 3, aStr)) {
 				SetDText(prefDlog, base + 31, aStr);
 				SwitchDriverTo(0);
 			}
 			break;
 			
 		case 34:
-			if (PressMenuItem(169, base + 34, prefDlog, &thePrefs.ReverbStrength, 2, aStr))
-			{
+			if (PressMenuItem(169, base + 34, prefDlog, &thePrefs.ReverbStrength, 2, aStr)) {
 				SetDText(prefDlog, base + 15, aStr);
 				SwitchDriverTo(0);
 			}
@@ -2798,11 +2515,11 @@ void ShowPrefs(short PrefStartup)
 	short			itemType,i;
 	Handle			itemHandle;
 	Rect			itemRect;
-	short			itemHit, myBit, temp;
+	short			itemHit, temp;
 	GrafPtr			OldPort;
 	Prefs			*copyPrefs;
 	
-	copyPrefs = (Prefs*) NewPtrClear(sizeof(Prefs));
+	copyPrefs = (Prefs*)NewPtrClear(sizeof(Prefs));
 	*copyPrefs = thePrefs;
 	
 	//ModalFilterUPP	MyPrefFilterDesc = NewModalFilterUPP(PrefFilter);
@@ -2816,48 +2533,73 @@ void ShowPrefs(short PrefStartup)
 	
 	base = CountDITL(prefDlog);
 	
-	if (PrefStartup != -1) PrefsType = PrefStartup;
+	if (PrefStartup != -1)
+		PrefsType = PrefStartup;
 	AppendPref(PrefsType, prefDlog);
-	switch (PrefsType)
-	{
-		case COLOR:		/*	InitCOLOR();*/		break;
-		case DRIVER:		InitDRIVER();		break;
-		case MUSICLIST:		InitMUSICLIST();	break;
-		case EDITOR:		InitEDITOR();		break;
-		case COMPRESSION:	InitCOMPRESSION();	break;
-			//	case SCREENSAVER:	InitSCREENSAVER();	break;
-		case CLASSICAL:		InitCLASSICAL();	break;
-		case DIGITAL:		InitDIGITAL();		break;
-		case TRUECLASSIC:	InitSTAFF();		break;
-		case FKEYPREF:		InitKEY();			break;
-		case MIDIINPUT:		InitMIDI();			break;
+	switch (PrefsType) {
+		case COLOR:
+			/*InitCOLOR();*/
+			break;
+			
+		case DRIVER:
+			InitDRIVER();
+			break;
+			
+		case MUSICLIST:
+			InitMUSICLIST();
+			break;
+			
+		case EDITOR:
+			InitEDITOR();
+			break;
+			
+		case COMPRESSION:
+			InitCOMPRESSION();
+			break;
+			
+		case CLASSICAL:
+			InitCLASSICAL();
+			break;
+			
+		case DIGITAL:
+			InitDIGITAL();
+			break;
+			
+		case TRUECLASSIC:
+			InitSTAFF();
+			break;
+			
+		case FKEYPREF:
+			InitKEY();
+			break;
+			
+		case MIDIINPUT:
+			InitMIDI();
+			break;
 	}
 	
-	GetDialogItem (prefDlog, 3, &itemType, &itemHandle, &itemRect);
-	SetControlValue((ControlHandle) itemHandle, PrefsType + 1 - 2000);
+	GetDialogItem(prefDlog, 3, &itemType, &itemHandle, &itemRect);
+	SetControlValue((ControlHandle)itemHandle, PrefsType + 1 - 2000);
 	
-	do
-	{
-		ErreurClose :
+	do {
+		ErreurClose:
 		
 		//ModalDialog(MyPrefFilterDesc, &itemHit);
 		MyModalDialog(prefDlog, &itemHit);
 		
-		if (itemHit == 3)
-		{
+		if (itemHit == 3) {
 			GetDialogItem (prefDlog, itemHit, &itemType, &itemHandle, &itemRect);
-			temp = GetControlValue((ControlHandle) itemHandle) - 1;
+			temp = GetControlValue((ControlHandle)itemHandle) - 1;
 			temp += 2000;
 			
-			if (temp != PrefsType)
-			{
-				switch (PrefsType)
-				{
+			if (temp != PrefsType) {
+				switch (PrefsType) {
 					case FKEYPREF:
 						break;
 						
 					case TRUECLASSIC:
-						if (!CloseSTAFF()) goto ErreurClose;
+						if (!CloseSTAFF())
+							goto ErreurClose;
 						break;
 						
 					case CLASSICAL:
@@ -2875,35 +2617,51 @@ void ShowPrefs(short PrefStartup)
 				PrefsType = temp;
 				
 				AppendPref(PrefsType, prefDlog);
-				switch (PrefsType)
-				{
-					case COLOR:	/*	InitCOLOR();*/	break;
+				switch (PrefsType) {
+					case COLOR:
+						/*InitCOLOR();*/
+						break;
 						
-					case DRIVER:	InitDRIVER();	break;
+					case DRIVER:
+						InitDRIVER();
+						break;
 						
-					case MUSICLIST:	InitMUSICLIST();break;
+					case MUSICLIST:
+						InitMUSICLIST();
+						break;
 						
-					case EDITOR:	InitEDITOR();	break;
+					case EDITOR:
+						InitEDITOR();
+						break;
 						
-					case COMPRESSION:	InitCOMPRESSION();	break;
+					case COMPRESSION:
+						InitCOMPRESSION();
+						break;
 						
-						//		case SCREENSAVER:	InitSCREENSAVER();	break;
+					case CLASSICAL:
+						InitCLASSICAL();
+						break;
 						
-					case CLASSICAL:		InitCLASSICAL();	break;
+					case DIGITAL:
+						InitDIGITAL();
+						break;
 						
-					case DIGITAL:		InitDIGITAL();		break;
+					case TRUECLASSIC:
+						InitSTAFF();
+						break;
 						
-					case TRUECLASSIC:	InitSTAFF();		break;
+					case FKEYPREF:
+						InitKEY();
+						break;
 						
-					case FKEYPREF:		InitKEY();			break;
-						
-					case MIDIINPUT:		InitMIDI();			break;
+					case MIDIINPUT:
+						InitMIDI();
+						break;
 				}
 			}
 		}
 		
-		switch (PrefsType)
-		{
+		switch (PrefsType) {
 			case COLOR:
 				DoCOLOR(itemHit);
 				break;
@@ -2928,10 +2686,6 @@ void ShowPrefs(short PrefStartup)
 				DoMIDI(itemHit);
 				break;
 				
-				/*	case SCREENSAVER:
-				 DoSCREENSAVER(itemHit);
-				 break;*/
-				
 			case CLASSICAL:
 				DoCLASSICAL(itemHit);
 				break;
@@ -2950,8 +2704,7 @@ void ShowPrefs(short PrefStartup)
 		}
 	} while (itemHit != 1 && itemHit != 2);
 	
-	switch (PrefsType)
-	{
+	switch (PrefsType) {
 		case FKEYPREF:
 			
 			break;
@@ -2973,12 +2726,9 @@ void ShowPrefs(short PrefStartup)
 			break;
 	}
 	
-	if (itemHit == 1)
-	{
+	if (itemHit == 1) {
 		WritePreferences();
-	}
-	else
-	{
+	} else {
 		long	tSize;
 		Ptr		aPtr, bPtr;
 		
@@ -2987,10 +2737,8 @@ void ShowPrefs(short PrefStartup)
 		aPtr = (Ptr) &thePrefs;
 		bPtr = (Ptr) copyPrefs;
 		
-		for (i = 0; i < tSize ; i++)
-		{
-			if (aPtr[ i] != bPtr[ i])
-			{
+		for (i = 0; i < tSize ; i++) {
+			if (aPtr[i] != bPtr[i]) {
 				thePrefs = *copyPrefs;
 				
 				SwitchDriverTo(0);
@@ -3011,10 +2759,7 @@ void ShowPrefs(short PrefStartup)
 	}
 	
 	DisposeDialog(prefDlog);
-	
 	//DisposeRoutineDescriptor(MyPrefFilterDesc);
-	
 	DisposePtr((Ptr) copyPrefs);
-	
 	SetPort(OldPort);
 }

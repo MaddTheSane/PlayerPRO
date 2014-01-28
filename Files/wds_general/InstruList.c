@@ -2490,16 +2490,14 @@ void NSelectInstruList(short instru, short sample)
 void DrawInfoInstrument(void)
 {
 	Str255		String;
-	short		NoDigi;
 	Point		cSize;
-	short		Result;
 	GrafPtr		SavePort;
- 
- 	if (InstruListDlog == NULL)
+	
+	if (InstruListDlog == NULL)
 		return;
- 
- 	GetPort(&SavePort);
- 	SetPortDialogPort(InstruListDlog);
+	
+	GetPort(&SavePort);
+	SetPortDialogPort(InstruListDlog);
 	
 	DrawSmallSamplePreview();
 	
@@ -2507,7 +2505,7 @@ void DrawInfoInstrument(void)
 	if (PLGetSelect(&cSize, &myList)) {
 		short ins, samp;
 		
-	//DrawBottomInfo();
+		//DrawBottomInfo();
 		HiliteControl(PlayBut, 0);
 		HiliteControl(LoadBut, 0);
 		HiliteControl(DelBut, 0);
@@ -2590,7 +2588,6 @@ void DrawInfoInstrument(void)
 }
 
 static Boolean firstCall;
-
 
 Boolean DragInstruSelect(void)
 {

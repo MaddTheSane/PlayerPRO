@@ -381,8 +381,6 @@ void DoAbout(void)
 	DisposeDialog(aDialog);
 }
 
-static	RgnHandle	mBarRgn;
-
 Boolean DoHelp(void)
 {
 	short			itemType,itemHit;
