@@ -8,7 +8,7 @@ void ProcessDoItemPress(long ref, short whichItem, DialogPtr whichDialog);
 void UPDATE_TrackActive(void);
 
 	extern		DialogPtr 		EditorDlog, theProgressDia, CubeDlog, AdapDlog, MODListDlog, FindDlog, ToolsDlog, PatListDlog, PianoDlog, MozartDlog, InstruViewDlog, PartiDlog;
-	extern		DialogPtr		DigitalDlog, ClassicDlog, InstruListDlog, TrackViewDlog, MemoryDlog, OscilloDlog, SpectrumDlog, HelpDlog, AHelpDlog, StaffDlog, WaveDlog;
+	extern		DialogPtr		DigitalDlog, ClassicDlog, InstruListDlog, TrackViewDlog, OscilloDlog, SpectrumDlog, HelpDlog, AHelpDlog, StaffDlog, WaveDlog;
 
 
 static	Handle 			PKEYRes;
@@ -272,10 +272,6 @@ void PressFKey(short whichFKey)
 					
 				case RefPiano:
 					CreatePianoWindow();
-					break;
-					
-				case RefMemory:
-					CreateMemWindow();
 					break;
 					
 				case RefSpectrum:

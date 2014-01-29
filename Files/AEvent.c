@@ -123,7 +123,7 @@ pascal OSErr AEODoc(const AppleEvent *theAppleEvent, AppleEvent* reply, long han
 				}
 			}
 		} else {
-			OSType 	tempType;
+			//OSType 	tempType;
 			char	tempC[5];
 			
 			if (OpenableFile(fndrInfo.fdType, &myFSS) == true ||
@@ -415,21 +415,21 @@ void AESendOpenFile(FSSpec *spec)
 	AppleEvent			aeEvent, replyAE;
 	AEDesc				target, listElem, fileList;
 	OSErr				iErr;
-
+	
 	iErr = AECreateDesc(typeProcessSerialNumber,
-							(Ptr) &playerPROPSN,
-							sizeof(playerPROPSN),
-							&target);
+						(Ptr)&playerPROPSN,
+						sizeof(playerPROPSN),
+						&target);
 	
 	iErr = AECreateAppleEvent(kCoreEventClass,
-								kAEOpenDocuments,
-								&target,
-								kAutoGenerateReturnID,
-								kAnyTransactionID,
-								&aeEvent);
+							  kAEOpenDocuments,
+							  &target,
+							  kAutoGenerateReturnID,
+							  kAnyTransactionID,
+							  &aeEvent);
 	
 	iErr = AECreateList(NULL, 0, false, &fileList);
-
+	
 	AECreateDesc(typeFSS, (Ptr)spec, sizeof(*spec), &listElem);
 	
 	iErr = AEPutDesc(&fileList, 0, &listElem);
@@ -441,18 +441,19 @@ void AESendOpenFile(FSSpec *spec)
 	iErr = AEPutParamDesc(&aeEvent, keyDirectObject, &fileList);
 	if(iErr)
 		return;
+	
 	iErr = AEDisposeDesc(&fileList);
 	
 	iErr = AESend(&aeEvent,
-					&replyAE,
-					kAENoReply,
-					kAEHighPriority,
-					kAEDefaultTimeout,
-					NULL,
-					NULL);
+				  &replyAE,
+				  kAENoReply,
+				  kAEHighPriority,
+				  kAEDefaultTimeout,
+				  NULL,
+				  NULL);
 	
 	iErr = AEDisposeDesc(&target);
-
+	
 	if (iErr)
 		return;
 }

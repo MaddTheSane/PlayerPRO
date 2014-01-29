@@ -3,27 +3,27 @@
 #include "RDriver.h"
 #include <stdio.h>
 
-extern	short			mainVRefNum;
-extern	long				mainParID;
-extern	KeyMap			km;
-extern	Boolean			HelpAvalaible;
+extern	short	mainVRefNum;
+extern	long	mainParID;
+extern	KeyMap	km;
+extern	Boolean	HelpAvalaible;
 
-static	TEHandle 			hTE;
-		DialogPtr			HelpDlog;
-static	StScrpHandle		theStyle;
+static	TEHandle 		hTE;
+		DialogPtr		HelpDlog;
+static	StScrpHandle	theStyle;
 static	Ptr				Text;
-static 	ControlHandle		vScroll;
+static 	ControlHandle	vScroll;
 static	MenuHandle		sectMenu;
-static	long				*lineList, curSect;
+static	long			*lineList, curSect;
 
-static	ControlActionUPP		MyControlUPP;
+static ControlActionUPP MyControlUPP;
 
-void 					DoContentHelp(WindowPtr theWindow, EventRecord *theEventI);
-pascal void 		ScrollProcHelp (ControlHandle theControl, short theCode);
-void 					AdjustTextHelp (ControlHandle vScroll);
-Boolean				IsPressed(unsigned short );
-void 					CreateHelpOnline(short whichSection);
-void					PrintTEHandle(TEHandle hTE);
+void		DoContentHelp(WindowPtr theWindow, EventRecord *theEventI);
+pascal void	ScrollProcHelp(ControlHandle theControl, short theCode);
+void		AdjustTextHelp (ControlHandle vScroll);
+Boolean		IsPressed(unsigned short );
+void		CreateHelpOnline(short whichSection);
+void		PrintTEHandle(TEHandle hTE);
 
 
 void ShowSection(short selectionID)
@@ -31,23 +31,21 @@ void ShowSection(short selectionID)
 	short		i;
 	double		height;
 
-	if (HelpDlog == NULL)
-	{
-		if (HelpAvalaible) CreateHelpOnline(selectionID);
-	}
-	else
-	{
+	if (HelpDlog == NULL) {
+		if (HelpAvalaible)
+			CreateHelpOnline(selectionID);
+	} else {
 		curSect = selectionID;
 
-		for (i=0; i < (*hTE)->nLines; i++)
-		{
-			if (lineList[ curSect] <= (*hTE)->lineStarts[ i]) break;
+		for (i=0; i < (*hTE)->nLines; i++) {
+			if (lineList[curSect] <= (*hTE)->lineStarts[i])
+				break;
 		}
 		
-		height = TEGetHeight(0, (*hTE)->nLines, hTE);
-		height /= (double) (*hTE)->nLines;
+		height = TEGetHeight(0,(*hTE)->nLines, hTE);
+		height /= (double)(*hTE)->nLines;
 		
-		SetControlValue(vScroll, i );
+		SetControlValue(vScroll, i);
 		AdjustTextHelp(vScroll);
 	}
 }
@@ -60,7 +58,7 @@ void ChangeMenuName(Str255 curN)
 	
 	GetPort(&myPort);
 
-	TheDia = GetNewDialog(168,NULL, (WindowPtr) -1L);
+	TheDia = GetNewDialog(168,NULL, (WindowPtr)-1L);
 	SetPortDialogPort(TheDia);
 	AutoPosition(TheDia);
 	
@@ -69,7 +67,6 @@ void ChangeMenuName(Str255 curN)
 	
 	do {
 		ModalDialog(MyDlgFilterDesc, &itemHit);
-	
 	} while (itemHit != 1 && itemHit != 2);
 
 	if (itemHit == 1)
@@ -80,15 +77,16 @@ void ChangeMenuName(Str255 curN)
 
 void WriteLineList(void)
 {
-/*	Handle	myRes;
+#if 0
+	Handle	myRes;
 	long		cParID;
 	short	i = 128, rID, iFileRef, cVRef;
 	OSType	rType;
 	Str255	rName;
-
+	
 	HGetVol(NULL, &cVRef, &cParID);
 	HSetVol(NULL, mainVRefNum, mainParID);
-
+	
 	if (iHelpPP != -1)
 	{
 		UseResFile(iHelpPP);
@@ -111,7 +109,8 @@ void WriteLineList(void)
 		}
 	}
 	
-	HSetVol(NULL, cVRef, cParID);*/
+	HSetVol(NULL, cVRef, cParID);
+#endif
 }
 
 void CreateMenuHelp(void)
@@ -122,20 +121,16 @@ void CreateMenuHelp(void)
 	Str255	rName;
 	
 	sectMenu = NewMenu(945, "\pSections:");
-	
-	do
-	{
+	do {
 		myRes = GetResource('SECT', i);
-		if (myRes != NULL)
-		{
+		if (myRes != NULL) {
 			GetResInfo(myRes, &rID, &rType, rName);
 			AppendMenu(sectMenu, rName);
 
-			lineList[ i - 128] = *((long*) (*myRes));
+			lineList[i - 128] = *((long*)(*myRes));
 		}
 		i++;
-	}
-	while (myRes != NULL);
+	} while (myRes != NULL);
 }
 
 void UpdateSection(void)
@@ -145,19 +140,17 @@ void UpdateSection(void)
 
 void CreateHelpOnline(short whichSection)
 {
-	short			iFileRefI;
-	GrafPtr			myPort;
-	Rect			itemRect;
-	long			inOutBytes;
-	OSErr			iErr;
-	FSSpec			spec;
+	short	iFileRefI;
+	GrafPtr	myPort;
+	Rect	itemRect;
+	long	inOutBytes;
+	OSErr	iErr;
+	FSSpec	spec;
 	
-	if (HelpDlog != NULL)
-	{
+	if (HelpDlog != NULL) {
 		SelectWindow2(GetDialogWindow(HelpDlog));
 		SetPortDialogPort(HelpDlog);
-		if (curSect != whichSection)
-		{
+		if (curSect != whichSection) {
 			curSect = whichSection;
 			UpdateSection();
 		}
@@ -168,20 +161,16 @@ void CreateHelpOnline(short whichSection)
 	
 	curSect = whichSection;
 	
-	lineList = (long*) MyNewPtr(8000);
+	lineList = (long*)MyNewPtr(8000);
 	
 	/** Lecture du fichier Help **/
-	
-	//HGetVol(NULL, &cVRef, &cParID);
-	//HSetVol(NULL, mainVRefNum, mainParID);
 	
 	pStrcpy(spec.name, "\pHelp PP");
 	spec.vRefNum = mainVRefNum;
 	spec.parID = mainParID;
 	
 	iErr = FSpOpenDF(&spec, fsCurPerm, &iFileRefI);
-	if (iErr)
-	{
+	if (iErr) {
 		Erreur(56 , iErr);
 		return;
 	}
@@ -192,22 +181,12 @@ void CreateHelpOnline(short whichSection)
 	
 	/*******************/
 	
-	/*
-	 if (iHelpPP != -1)
-	 {
-	 theStyle = (StScrpHandle) Get1Resource('styl', 128);
-	 if (theStyle != NULL) DetachResource((Handle) theStyle);
-	 
-	 CreateMenuHelp();
-	 }*/
-	
-	//HSetVol(NULL, cVRef, cParID);
-	
 	GetPort(&myPort);
 	
 	HelpDlog = GetNewDialog(169,NULL, (WindowPtr) -1L);
 	SetPortDialogPort(HelpDlog);
-	TextFont(4);		TextSize(9);
+	TextFont(4);
+	TextSize(9);
 	
 	SetWindEtat(GetDialogWindow(HelpDlog));
 	
@@ -234,7 +213,8 @@ void CreateHelpOnline(short whichSection)
 	SetControlReference(vScroll, 1);
 	
 	TESetAlignment(teCenter, hTE);
-	if (theStyle != NULL) TEStyleInsert(Text, GetPtrSize(Text), theStyle, hTE);
+	if (theStyle != NULL)
+		TEStyleInsert(Text, GetPtrSize(Text), theStyle, hTE);
 	TEAutoView(true, hTE);
 	TECalText(hTE);
 	SetScroll(vScroll, hTE);
@@ -245,16 +225,17 @@ void CreateHelpOnline(short whichSection)
 
 void CloseHelpOnline(void)
 {
-	if (HelpDlog != NULL)
-	{
-		DisposeDialog(HelpDlog);		HelpDlog = NULL;
+	if (HelpDlog != NULL) {
+		DisposeDialog(HelpDlog);
+		HelpDlog = NULL;
 		TEDispose(hTE);
-		MyDisposePtr(& Text);
-		if (theStyle != NULL) MyDisposHandle( (Handle*) & theStyle);
+		MyDisposePtr(&Text);
+		if (theStyle != NULL)
+			MyDisposHandle((Handle*)&theStyle);
 		theStyle = NULL;
-		MyDisposePtr((Ptr*) &lineList);
+		MyDisposePtr((Ptr*)&lineList);
 		DisposeMenu(sectMenu);
-	
+		
 		SetItemMark(HelpMenu, 1, noMark);
 	}
 }
@@ -265,32 +246,29 @@ void DoGrowHelpOnline(void)
 	GrafPtr	SavePort;
 	Rect	caRect, temp;
 	short	tempB, tempA;
-
+	
 	GetPort(&SavePort);
- 	SetPortDialogPort(HelpDlog);
-
+	SetPortDialogPort(HelpDlog);
+	
 	temp.left = 300;
 	temp.right = 5000;
 	temp.top = 100;
 	temp.bottom = 5000;
 	
 	lSizeVH = 0;
-	if (theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(HelpDlog), theEvent.where, &temp);
-
-	if (lSizeVH != 0)
-	{
+	if (theEvent.what == mouseDown)
+		lSizeVH = GrowWindow(GetDialogWindow(HelpDlog), theEvent.where, &temp);
+	
+	if (lSizeVH != 0) {
 		tempA = LoWord(lSizeVH);
 		tempB = HiWord(lSizeVH);
-	}
-	else
-	{
+	} else {
 		GetPortBounds(GetDialogPort(HelpDlog), &caRect);
-
+		
 		tempA = caRect.right;
 		tempB = caRect.bottom;
 	}
-
-
+	
 	MySizeControl(vScroll, 16, tempB - 13);
 	MyMoveControl(vScroll, tempA - 15, -1);
 	
@@ -313,7 +291,7 @@ void DoGrowHelpOnline(void)
 	TECalText(hTE);
 	SetScroll(vScroll, hTE);
 	AdjustTextHelp(vScroll);
-
+	
 	SetPort(SavePort);
 }
 
@@ -328,7 +306,8 @@ void DoItemPressHelpOnline(short whichItem, DialogPtr whichDialog)
 	GetPort(&savePort);
 	SetPortDialogPort(whichDialog);
 	
-	TextFont(4);	TextSize(9);
+	TextFont(4);
+	TextSize(9);
 	
 	if (theEvent.what == mouseDown) { /* See if a mouse click */
 		DoContentHelp(GetDialogWindow(HelpDlog), &theEvent);
@@ -339,14 +318,15 @@ void DoItemPressHelpOnline(short whichItem, DialogPtr whichDialog)
 		itemRect.bottom = caRect.bottom;
 		itemRect.left = 170;
 		itemRect.right = 190;
-
+		
 		myPt = theEvent.where;
 		GlobalToLocal(&myPt);
 		
 		if (PtInRect(myPt, &itemRect)) {
-			InsertMenu(sectMenu, hierMenu );
-
-			myPt.v = itemRect.top + 4;	myPt.h = itemRect.left;
+			InsertMenu(sectMenu, hierMenu);
+			
+			myPt.v = itemRect.top + 4;
+			myPt.h = itemRect.left;
 			LocalToGlobal(&myPt);
 			
 			SetItemMark(sectMenu, curSect + 1, 0xa5);
@@ -355,10 +335,10 @@ void DoItemPressHelpOnline(short whichItem, DialogPtr whichDialog)
 									  myPt.v,
 									  myPt.h,
 									  curSect + 1);
-										
+			
 			SetItemMark(sectMenu, curSect + 1, 0);
-		
-			if (HiWord(mresult ) != 0) {
+			
+			if (HiWord(mresult) != 0) {
 				curSect = (Byte)LoWord(mresult) - 1;
 				
 				itemRect.left = 0;
@@ -368,40 +348,31 @@ void DoItemPressHelpOnline(short whichItem, DialogPtr whichDialog)
 				InvalWindowRect(GetDialogWindow(HelpDlog), &itemRect);
 				
 				GetKeys(km);
-				if (IsPressed(0x37) == true)		// Change the current item
-				{
+				if (IsPressed(0x37) == true) {		// Change the current item
 					myPt.v = 2;	myPt.h = 2;
-					lineList[ curSect] = TEGetOffset(myPt, hTE);
+					lineList[curSect] = TEGetOffset(myPt, hTE);
 					
-					GetMenuItemText(sectMenu,  curSect + 1, rName);
+					GetMenuItemText(sectMenu, curSect + 1, rName);
 					ChangeMenuName(rName);
 					SetMenuItemText(sectMenu, curSect + 1, rName);
 					
 					WriteLineList();
-				}
-				else if (IsPressed(0x31) == true)	// Add a new item
-				{
+				} else if (IsPressed(0x31) == true) {	// Add a new item
 					myPt.v = 2;	myPt.h = 2;
-					lineList[ CountMenuItems(sectMenu)] = TEGetOffset(myPt, hTE);
+					lineList[CountMenuItems(sectMenu)] = TEGetOffset(myPt, hTE);
 					
 					pStrcpy(rName, "\pUntitled");
 					ChangeMenuName(rName);
 					AppendMenu(sectMenu, rName);
 					
 					WriteLineList();
-				}
-				else
-				{
+				} else {
 					ShowSection(curSect);
 				}
 			}
 			
 			DeleteMenu(GetMenuID(sectMenu));
 		}
-	}
-	
-	switch (whichItem)
-	{
 	}
 	
 	SetPort(savePort);
@@ -411,8 +382,8 @@ void AdjustTextHelp (ControlHandle vScroll)
 {
 	short			oldScroll, newScroll, delta;
 	double			height;
-	TEHandle			CurrentTE;
-	TEStyleHandle		hStyle;
+	TEHandle		CurrentTE;
+	TEStyleHandle	hStyle;
 	
 	CurrentTE = hTE;
 	
@@ -421,35 +392,34 @@ void AdjustTextHelp (ControlHandle vScroll)
 	
 	height = TEGetHeight(0, (*CurrentTE)->nLines, CurrentTE);
 	height /= (*CurrentTE)->nLines;
-
+	
 	newScroll = GetControlValue(vScroll) * height;
 	delta = oldScroll - newScroll;
-	if (delta != 0) TEPinScroll(0, delta, CurrentTE);
+	if (delta != 0)
+		TEPinScroll(0, delta, CurrentTE);
 }
 
 void DoContentHelp(WindowPtr theWindow, EventRecord *theEventI)
 {
 	short			cntlCode;
-	ControlHandle 		theControl;
+	ControlHandle 	theControl;
 	GrafPtr			savePort;
-		
+	
 	GetPort(&savePort);
 	SetPortWindowPort(theWindow);
-
+	
 	GlobalToLocal(&theEventI->where);
 	cntlCode = FindControl(theEventI->where, theWindow, &theControl);
-	switch (cntlCode)
-	{
+	switch (cntlCode) {
 		case kControlIndicatorPart:
 			TrackControl(theControl, theEventI->where, NULL);
 			AdjustTextHelp(theControl);
 			break;
-	
+			
 		case kControlUpButtonPart:
 		case kControlDownButtonPart:
 		case kControlPageUpPart:
 		case kControlPageDownPart:
-   
 			MyControlUPP = NewControlActionUPP(ScrollProcHelp);
 			TrackControl(theControl, theEventI->where, MyControlUPP);
 			DisposeControlActionUPP(MyControlUPP);
@@ -476,18 +446,21 @@ pascal void ScrollProcHelp (ControlHandle theControl, short theCode)
 	height = TEGetHeight(0, (*CurrentTE)->nLines, CurrentTE);
 	height /= (*CurrentTE)->nLines;
 	
-	pageSize = ((**CurrentTE).viewRect.bottom-(**CurrentTE).viewRect.top) /  height - 1;
+	pageSize = ((**CurrentTE).viewRect.bottom - (**CurrentTE).viewRect.top) /  height - 1;
 	
 	switch (theCode) {
 		case kControlUpButtonPart: 
 			scrollAmt = -1;
 			break;
+			
 		case kControlDownButtonPart: 
 			scrollAmt = 1;
 			break;
+			
 		case kControlPageUpPart: 
 			scrollAmt = -pageSize;
 			break;
+			
 		case kControlPageDownPart: 
 			scrollAmt = pageSize;
 			break;

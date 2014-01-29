@@ -424,7 +424,6 @@
 		88E0C42D0C2F21DE00D6C081 /* Adaptators.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DF0C2F21DD00D6C081 /* Adaptators.c */; };
 		88E0C42E0C2F21DE00D6C081 /* AEvent.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E00C2F21DD00D6C081 /* AEvent.c */; };
 		88E0C42F0C2F21DE00D6C081 /* Editor.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4160C2F21DD00D6C081 /* Editor.c */; };
-		88E0C4300C2F21DE00D6C081 /* Memory.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F50C2F21DD00D6C081 /* Memory.c */; };
 		88E0C4310C2F21DE00D6C081 /* Check.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E20C2F21DD00D6C081 /* Check.c */; };
 		88E0C4320C2F21DE00D6C081 /* HelpOnline.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F00C2F21DD00D6C081 /* HelpOnline.c */; };
 		88E0C4330C2F21DE00D6C081 /* ClassicalP.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E30C2F21DD00D6C081 /* ClassicalP.c */; };
@@ -514,7 +513,6 @@
 		88E0C4D50C2F21E500D6C081 /* Main.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4D40C2F21E500D6C081 /* Main.proto.h */; };
 		88E0C4D70C2F21E500D6C081 /* Main3D.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4D60C2F21E500D6C081 /* Main3D.proto.h */; };
 		88E0C4D90C2F21E500D6C081 /* MapPoly.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4D80C2F21E500D6C081 /* MapPoly.proto.h */; };
-		88E0C4DB0C2F21E500D6C081 /* Memory.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4DA0C2F21E500D6C081 /* Memory.proto.h */; };
 		88E0C4DD0C2F21E500D6C081 /* MIDI-GM.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4DC0C2F21E500D6C081 /* MIDI-GM.proto.h */; };
 		88E0C4DF0C2F21E500D6C081 /* MIDI-Hardware.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4DE0C2F21E500D6C081 /* MIDI-Hardware.proto.h */; };
 		88E0C4E10C2F21E500D6C081 /* MIDI.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4E00C2F21E500D6C081 /* MIDI.proto.h */; };
@@ -1625,7 +1623,6 @@
 		88E0C3F20C2F21DD00D6C081 /* InstruView.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = InstruView.c; sourceTree = "<group>"; };
 		88E0C3F30C2F21DD00D6C081 /* LDEF.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = LDEF.c; sourceTree = "<group>"; };
 		88E0C3F40C2F21DD00D6C081 /* Main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Main.c; sourceTree = "<group>"; };
-		88E0C3F50C2F21DD00D6C081 /* Memory.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Memory.c; sourceTree = "<group>"; };
 		88E0C3F60C2F21DD00D6C081 /* MIDI-GM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "MIDI-GM.c"; sourceTree = "<group>"; };
 		88E0C3F70C2F21DD00D6C081 /* MODList.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MODList.c; sourceTree = "<group>"; };
 		88E0C3F80C2F21DD00D6C081 /* Oscillo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Oscillo.c; sourceTree = "<group>"; };
@@ -1708,7 +1705,6 @@
 		88E0C4D40C2F21E500D6C081 /* Main.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Main.proto.h; path = "(Proto)/Main.proto.h"; sourceTree = "<group>"; };
 		88E0C4D60C2F21E500D6C081 /* Main3D.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Main3D.proto.h; path = "(Proto)/Main3D.proto.h"; sourceTree = "<group>"; };
 		88E0C4D80C2F21E500D6C081 /* MapPoly.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MapPoly.proto.h; path = "(Proto)/MapPoly.proto.h"; sourceTree = "<group>"; };
-		88E0C4DA0C2F21E500D6C081 /* Memory.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Memory.proto.h; path = "(Proto)/Memory.proto.h"; sourceTree = "<group>"; };
 		88E0C4DC0C2F21E500D6C081 /* MIDI-GM.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "MIDI-GM.proto.h"; path = "(Proto)/MIDI-GM.proto.h"; sourceTree = "<group>"; };
 		88E0C4DE0C2F21E500D6C081 /* MIDI-Hardware.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "MIDI-Hardware.proto.h"; path = "(Proto)/MIDI-Hardware.proto.h"; sourceTree = "<group>"; };
 		88E0C4E00C2F21E500D6C081 /* MIDI.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MIDI.proto.h; path = "(Proto)/MIDI.proto.h"; sourceTree = "<group>"; };
@@ -2746,7 +2742,6 @@
 				88E0C4D40C2F21E500D6C081 /* Main.proto.h */,
 				88E0C4D60C2F21E500D6C081 /* Main3D.proto.h */,
 				88E0C4D80C2F21E500D6C081 /* MapPoly.proto.h */,
-				88E0C4DA0C2F21E500D6C081 /* Memory.proto.h */,
 				88E0C4DC0C2F21E500D6C081 /* MIDI-GM.proto.h */,
 				88E0C4DE0C2F21E500D6C081 /* MIDI-Hardware.proto.h */,
 				88E0C4E00C2F21E500D6C081 /* MIDI.proto.h */,
@@ -3040,7 +3035,6 @@
 				88E0C3E40C2F21DD00D6C081 /* DigitalInfo.c */,
 				88E0C3F80C2F21DD00D6C081 /* Oscillo.c */,
 				88E0C3FB0C2F21DD00D6C081 /* Piano.c */,
-				88E0C3F50C2F21DD00D6C081 /* Memory.c */,
 				88E0C3F20C2F21DD00D6C081 /* InstruView.c */,
 				88E0C3E70C2F21DD00D6C081 /* Equalizer.c */,
 			);
@@ -3360,7 +3354,6 @@
 				88E0C4D50C2F21E500D6C081 /* Main.proto.h in Headers */,
 				88E0C4D70C2F21E500D6C081 /* Main3D.proto.h in Headers */,
 				88E0C4D90C2F21E500D6C081 /* MapPoly.proto.h in Headers */,
-				88E0C4DB0C2F21E500D6C081 /* Memory.proto.h in Headers */,
 				88E0C4DD0C2F21E500D6C081 /* MIDI-GM.proto.h in Headers */,
 				88E0C4DF0C2F21E500D6C081 /* MIDI-Hardware.proto.h in Headers */,
 				88E0C4E10C2F21E500D6C081 /* MIDI.proto.h in Headers */,
@@ -5323,7 +5316,6 @@
 				88E0C42D0C2F21DE00D6C081 /* Adaptators.c in Sources */,
 				88E0C42E0C2F21DE00D6C081 /* AEvent.c in Sources */,
 				88E0C42F0C2F21DE00D6C081 /* Editor.c in Sources */,
-				88E0C4300C2F21DE00D6C081 /* Memory.c in Sources */,
 				88E0C4310C2F21DE00D6C081 /* Check.c in Sources */,
 				88E0C4320C2F21DE00D6C081 /* HelpOnline.c in Sources */,
 				88E0C4330C2F21DE00D6C081 /* ClassicalP.c in Sources */,

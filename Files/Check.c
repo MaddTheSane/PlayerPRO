@@ -6,10 +6,10 @@
 #include "RDriverInt.h"
 #include "Utils.h"
 
-extern	DialogPtr		MODListDlog;
+extern	DialogPtr	MODListDlog;
 extern	KeyMap		km;
 extern	Boolean		PatchSave;
-extern	WindowPtr		oldWindow;
+extern	WindowPtr	oldWindow;
 
 Boolean OpenFirst2(short pos);
 void MODListSelectThisMusic(Str255);
@@ -30,27 +30,9 @@ void OtherIntErreur(short ID, OSErr theErr, Str255 otherstr);
 OSErr ConvertMovieToMPEG4(FSSpec *inputFile, FSSpec *outputFile);
 Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, OSType type, FSSpec *dstFile);
 
-extern MenuHandle		thePatternMenu;
-extern DialogPtr		EditorDlog;
-
-/*long OpenHeaderMOD(Ptr outPtr, Str255 name, long bytesToRead)
-{
-OSErr				theErr;
-short				srcFile;
-long					fileSize;
-
-	theErr = FSpOpenDF(name, 0, &srcFile);
-	if (theErr) return -1L;
-	
-	GetEOF(srcFile, &fileSize);
-
-	theErr = FSRead(srcFile, &bytesToRead, outPtr);
-	if (theErr) return -1L;
-	
-	FSClose(srcFile);
-	
-	return(fileSize);
-}*/
+//static long				gCompressionID = 0;
+extern MenuHandle	thePatternMenu;
+extern DialogPtr	EditorDlog;
 
 Boolean OpenableFile(OSType theType, FSSpec *file)
 {
@@ -86,8 +68,7 @@ Boolean OpenableFile(OSType theType, FSSpec *file)
 			OSType2Ptr(theType, tempC);
 			bol = MADPlugAvailable(gMADLib, tempC);
 			
-			if (bol == false)	// Try a Quicktime Conversion
-			{
+			if (bol == false) {	// Try a Quicktime Conversion
 				bol = QTTypeConversion(theType);
 			}
 			break;
@@ -117,7 +98,7 @@ Boolean CheckFileType(FSSpec theSpec, OSType theType)
 				Response = true;
 			else
 				Response = false;
-			MyC2PStr((Ptr) theSpec.name);
+			MyC2PStr((Ptr)theSpec.name);
 			break;
 			
 		default:
@@ -1031,7 +1012,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	FSSpec					aSpec;
 	Boolean					IsReading, folderFailed = false;
 	Handle					TempHandle = NULL;
-	char					theTypePtr[ 5];
+	char					theTypePtr[5];
 	Str255					MissingPlugs;
 	
 	if (curMusic != NULL) {
@@ -1047,7 +1028,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 		
 		
 		thePrefs.Previous_globalFXActive 	= curMusic->header->globalFXActive;
-		for (i = 0 ; i < 10; i++) 			thePrefs.Previous_globalEffect[i] 		= curMusic->header->globalEffect[i];
+		for (i = 0 ; i < 10; i++) thePrefs.Previous_globalEffect[i] = curMusic->header->globalEffect[i];
 		for (i = 0 ; i < MAXTRACK; i++) {
 			for (x = 0 ; x < 4; x++) {
 				thePrefs.Previous_chanEffect[i][ x] 		= curMusic->header->chanEffect[i][x];
@@ -1074,8 +1055,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	aSpec.vRefNum = vRefNum;
 	aSpec.parID = parID;
 	
-	if (theType != 'Rsrc')
-	{
+	if (theType != 'Rsrc') {
 		HSetVol(NULL, vRefNum, parID);
 		iErr = FSpGetFInfo(&aSpec, &fndrInfo);
 		if (iErr != noErr)
@@ -1088,26 +1068,24 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	
 	if (theType == 0)  theType = fndrInfo.fdType;
 	
-	/*if (IsCodeOK())
-	 {
-	 if (	theType != 'STCf' &&
-	 theType != 'sTAT' &&
-	 theType != 'Rsrc' &&
-	 theType != 'STrk' &&
-	 theType != 'MADF' &&
-	 theType != 'MADH' &&
-	 theType != 'MADI' &&
-	 theType != 'XM  ' &&
-	 theType != 'S3M ')
-	 {
-	 Erreur(81, -2);
-	 return false;
-	 }
-	 }
-	 else
-	 {
-	 CallPlug(0);
-	 }*/
+#if 0
+	if (IsCodeOK()) {
+		if (theType != 'STCf' &&
+			theType != 'sTAT' &&
+			theType != 'Rsrc' &&
+			theType != 'STrk' &&
+			theType != 'MADF' &&
+			theType != 'MADH' &&
+			theType != 'MADI' &&
+			theType != 'XM  ' &&
+			theType != 'S3M ') {
+			Erreur(81, -2);
+			return false;
+		}
+	} else {
+		CallPlug(0);
+	}
+#endif
 	
 	iErr = noErr;
 	
