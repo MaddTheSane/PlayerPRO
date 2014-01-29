@@ -346,7 +346,6 @@ enum {
 	RefCmd			= 16,
 	RefPref			= 17,
 	RefTrackView	= 18,
-	RefMemory		= 19,
 	RefSpectrum		= 20,
 	RefParti		= 21,
 	RefHelp			= 22,

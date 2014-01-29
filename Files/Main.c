@@ -55,7 +55,6 @@ Boolean		CheckTimePL();
 void 		HandleExportFile(short);
 void 		HandleImportFile(short);
 void 		ClosePlayerWindow(DialogPtr);
-void		DoNullMemWindow();
 short		GetPatternSelect();
 void 		ScrollTextClose(Boolean);
 void 		ScrollTextInit(Boolean, Boolean);
@@ -149,7 +148,7 @@ extern		KeyMap			km;
 extern		PixMapHandle	PianoPix;	//, EditorPix;
 extern		SndChannelPtr	SKChannel;
 extern		DialogPtr 		EQDlog, VisualDlog, EditorDlog, theProgressDia, AdapDlog, MODListDlog, FindDlog, ToolsDlog, PatListDlog, PianoDlog, MozartDlog, InstruViewDlog, PartiDlog;
-extern		DialogPtr		QuicktimeDlog, DigitalDlog, CubeDlog, ClassicDlog, InstruListDlog, TrackViewDlog, MemoryDlog, OscilloDlog, SpectrumDlog, HelpDlog, AHelpDlog, StaffDlog, WaveDlog;
+extern		DialogPtr		QuicktimeDlog, DigitalDlog, CubeDlog, ClassicDlog, InstruListDlog, TrackViewDlog, OscilloDlog, SpectrumDlog, HelpDlog, AHelpDlog, StaffDlog, WaveDlog;
 extern		MenuHandle		TrackView;
 extern		short			LastCanal, ToneGenerator;
 extern		Boolean			QuicktimeInstruAvailable, MicroPhone, CubeReady, SpectrumMicrophone, OscilloMicrophone, PianoRecording;
@@ -334,10 +333,6 @@ void ClosePlayerWindow(DialogPtr	theDia)
 			
 		case RefPlayer:
 			CloseOscillo();
-			break;
-			
-		case RefMemory:
-			CloseMem();
 			break;
 			
 		case RefInstruList:
@@ -734,12 +729,6 @@ void ShowWindowPref(short whichState)
 					CreatePianoWindow();
 					if (PianoDlog != NULL)
 						SelectWindow(GetDialogWindow(PianoDlog));
-					break;
-					
-				case RefMemory:
-					CreateMemWindow();
-					if (MemoryDlog != NULL)
-						SelectWindow(GetDialogWindow(MemoryDlog));
 					break;
 					
 				case RefSpectrum:
@@ -1600,7 +1589,7 @@ int main(int argc, char* argv[])
 	theColor.blue = 56797;
 	
 	PianoPix = NULL;	//EditorPix =
-	QuicktimeDlog = EditorDlog = theProgressDia = InstruViewDlog = MODListDlog = ToolsDlog = PatListDlog = PianoDlog = MemoryDlog = OscilloDlog = PartiDlog = (DialogPtr) NULL;
+	QuicktimeDlog = EditorDlog = theProgressDia = InstruViewDlog = MODListDlog = ToolsDlog = PatListDlog = PianoDlog = OscilloDlog = PartiDlog = (DialogPtr) NULL;
 	TrackViewDlog = CubeDlog = HelpDlog = DigitalDlog = AHelpDlog = ClassicDlog = EQDlog = VisualDlog = InstruListDlog = AdapDlog = MozartDlog = SpectrumDlog = FindDlog = WaveDlog = StaffDlog = (DialogPtr) NULL;
 	MicroPhone = false;
 	SpectrumMicrophone = false;
@@ -2185,7 +2174,6 @@ void DoGlobalNull(void)
 	
 	if (checkMemory < TickCount()) {
 		checkMemory = TickCount() + 60;
-		DoNullMemWindow();
 		//if (FreeMem() < 50000) Erreur(9, 0);
 	}
 	
@@ -3015,15 +3003,6 @@ void DoMouseDown(EventRecord theEventI)
 						DoGrowSpectrum();
 						break;
 						
-					case RefMemory:
-						GetPortBounds(GetWindowPort(whichWindow), &caRect);
-						
-						if (caRect.bottom == 33)
-							MySizeWindow(GetDialogFromWindow(whichWindow), caRect.right, 90, true);
-						else
-							MySizeWindow(GetDialogFromWindow(whichWindow), caRect.right, 33, true);
-						break;
-						
 					case RefMODList:
 						UseSameLeft(whichWindow);
 						
@@ -3399,10 +3378,6 @@ void DoUpdateEvent(EventRecord *theEventI)
 			
 		case RefDigiView:
 			UpdateDigiListWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
-			break;
-			
-		case RefMemory:
-			UpdateMemWindow(GetDialogFromWindow((WindowPtr)theEventI->message));
 			break;
 			
 		case RefSndExport:
@@ -4700,24 +4675,6 @@ void HandleViewsChoice(short theItem)
 {
 	switch (theItem) {
 #if 0
-		case mMemory:
-			if (MemoryDlog != NULL)
-			{
-				if (GetDialogWindow(MemoryDlog) == oldWindow)
-				{
-					SelectWindow2(NextWindowVisible(GetDialogWindow(MemoryDlog)));
-					CheckOneWindow(GetDialogWindow(MemoryDlog));
-					ClosePlayerWindow(MemoryDlog);
-				}
-				else
-				{
-					ShowWindow(GetDialogWindow(MemoryDlog));
-					SelectWindow2(GetDialogWindow(MemoryDlog));
-				}
-			}
-			else CreateMemWindow();
-			break;
-			
 		case mMusic:
 			if (MODListDlog != NULL)
 			{

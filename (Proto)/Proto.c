@@ -67,7 +67,6 @@ typedef OSType SFTypeList[4];
 #include "ActiveHelp.proto.h"
 #include "Spectrum.proto.h"
 #include "Print.proto.h"
-#include "Memory.proto.h"
 #include "InstruView.proto.h"
 #include "TrackView.proto.h"
 #include "DigitalInfo.proto.h"
