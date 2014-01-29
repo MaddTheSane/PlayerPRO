@@ -487,6 +487,7 @@ void DoNullClassic(void)
 			else SetCursor(GetQDGlobalsArrow(&qdarrow));
 		}
 		else SetCursor(GetQDGlobalsArrow(&qdarrow));
+		QDFlushPortBuffer(GetWindowPort(oldWindow), visibleRegion);
 
 		DisposeRgn(visibleRegion);
 	}
@@ -510,53 +511,52 @@ void UpdateClassicInfo(void)
 	SetPort(SavePort);
 }
 
-void  UpdateClassicWindow(DialogPtr GetSelection)  	/* Pointer to this dialog */
-{ 
-		Rect   		tempRect, itemRect;   			/* Temporary rectangle */
- 		GrafPtr		SavePort;
- 		short		itemType;
- 		Handle		itemHandle;
- 		RgnHandle	visibleRegion;
-
-
- 		GetPort(&SavePort);
- 		SetPortDialogPort(ClassicDlog);
-
- 		TextFont(4);	TextSize(9);
-
-		BeginUpdate(GetDialogWindow(ClassicDlog));
-		
-		DrawCurrentClassic();
-		
-		GetInvertRect(InvertN, &tempRect);
-		InvertRect(&tempRect);
-
-		DrawGrowIconP(ClassicDlog);
-
-		GetDialogItem(ClassicDlog, 13, &itemType, &itemHandle, &itemRect);
-		
-		if (curSelecTrack >= 0)
-		{
-			SwitchColor(curSelecTrack);
-			PaintRect(&itemRect);
-			itemRect.right--;
-			itemRect.bottom--;
-			FrameRectRelief(&itemRect);
-		}
-		else EraseRect(&itemRect);
-		
-		visibleRegion = NewRgn();
-		
-		GetPortVisibleRegion(GetDialogPort(ClassicDlog), visibleRegion);
-
-		UpdateDialog(ClassicDlog, visibleRegion);
-		
-		DisposeRgn(visibleRegion);		
-
-		EndUpdate(GetDialogWindow(ClassicDlog));
-
-		SetPort(SavePort);
-} 
+void UpdateClassicWindow(DialogPtr GetSelection)  	/* Pointer to this dialog */
+{
+	Rect   		tempRect, itemRect;   			/* Temporary rectangle */
+	GrafPtr		SavePort;
+	short		itemType;
+	Handle		itemHandle;
+	RgnHandle	visibleRegion;
+	
+	
+	GetPort(&SavePort);
+	SetPortDialogPort(ClassicDlog);
+	
+	TextFont(4);
+	TextSize(9);
+	
+	BeginUpdate(GetDialogWindow(ClassicDlog));
+	
+	DrawCurrentClassic();
+	
+	GetInvertRect(InvertN, &tempRect);
+	InvertRect(&tempRect);
+	
+	DrawGrowIconP(ClassicDlog);
+	
+	GetDialogItem(ClassicDlog, 13, &itemType, &itemHandle, &itemRect);
+	
+	if (curSelecTrack >= 0) {
+		SwitchColor(curSelecTrack);
+		PaintRect(&itemRect);
+		itemRect.right--;
+		itemRect.bottom--;
+		FrameRectRelief(&itemRect);
+	}
+	else EraseRect(&itemRect);
+	
+	visibleRegion = NewRgn();
+	
+	GetPortVisibleRegion(GetDialogPort(ClassicDlog), visibleRegion);
+	
+	UpdateDialog(ClassicDlog, visibleRegion);
+	
+	EndUpdate(GetDialogWindow(ClassicDlog));
+	QDFlushPortBuffer(GetDialogPort(ClassicDlog), visibleRegion);
+	DisposeRgn(visibleRegion);
+	SetPort(SavePort);
+}
 
 pascal void actionProcClassic(ControlHandle theControl, short ctlPart)
 {

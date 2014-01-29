@@ -2038,6 +2038,7 @@ void UpdatePrefWindow(DialogPtr	theDia)
 				
 				LUpdate(visibleRegion, TrackList);
 			}
+			QDFlushPortBuffer(GetDialogPort(theDia), visibleRegion);
 			
 			DisposeRgn(visibleRegion);
 			

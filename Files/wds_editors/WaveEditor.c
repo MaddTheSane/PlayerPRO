@@ -302,6 +302,7 @@ void DoNullWave(void)
 		} else
 			SetCursor(GetQDGlobalsArrow(&qdarrow));
 		
+		QDFlushPortBuffer(GetWindowPort(oldWindow), visibleRegion);
 		DisposeRgn(visibleRegion);
 	}
 	

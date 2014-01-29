@@ -460,6 +460,7 @@ void DoNullAdap(void)
 		} else
 			DrawValueIndicator(-1, false, NULL);
 		
+		QDFlushPortBuffer(GetDialogPort(AdapDlog), visibleRegion);
 		DisposeRgn(visibleRegion);
 	}
 	

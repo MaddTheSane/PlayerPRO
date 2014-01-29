@@ -1109,3 +1109,24 @@ OSType String2OSType(StringPtr theStr)
 	
 	return Ptr2OSType(tmpBuf);
 }
+
+OSStatus MyInvalWindowRect(WindowRef window, const Rect *bounds)
+{
+	RgnHandle myRgn = NewRgn();
+	OSStatus theStat = noErr;
+	if (!myRgn) {
+		return memFullErr;
+	}
+	
+	theStat = GetWindowRegion(window, kWindowContentRgn, myRgn);
+	if (theStat) {
+		DisposeRgn(myRgn);
+		return theStat;
+	}
+	RectRgn(myRgn, bounds);
+	
+	QDFlushPortBuffer(GetWindowPort(window), myRgn);
+
+	DisposeRgn(myRgn);
+	return noErr;
+}

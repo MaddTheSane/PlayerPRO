@@ -355,52 +355,43 @@ SetPort(savePort);
 
 void UpdateToolsWindow(DialogPtr GetSelection)
 {
-		Rect   		itemRect;
- 		GrafPtr		SavePort;
- 		short		itemType;
- 		Handle		itemHandle;
- 		RgnHandle	visibleRegion;
+	GrafPtr		SavePort;
+	RgnHandle	visibleRegion;
+	
+	GetPort(&SavePort);
+	SetPortDialogPort(GetSelection);
+	
+	BeginUpdate(GetDialogWindow(GetSelection));
+	
+	UpdateCmdDlogWindow(GetSelection);
+	
+	Draw1Control(playCntl);
+	Draw1Control(stopCntl);
+	Draw1Control(RecordCntl);
+	Draw1Control(BackCntl);
+	Draw1Control(ForCntl);
+	Draw1Control(JumpNextCntl);
+	Draw1Control(JumpBeforeCntl);
+	Draw1Control(LoopCntl);
+	
+	visibleRegion = NewRgn();
+	
+	GetPortVisibleRegion(GetDialogPort(GetSelection), visibleRegion);
+	
+	UpdateDialog(GetSelection, visibleRegion);
+	
+	DrawTimeBar();
+	
+	Draw1Control(progCntl);
+	
+	SetCurrentMOD(curMusic->musicFileName);
+	/*******/
+	EndUpdate(GetDialogWindow(GetSelection));
+	
+	QDFlushPortBuffer(GetDialogPort(GetSelection), visibleRegion);
+	DisposeRgn(visibleRegion);
 
-
- 		GetPort(&SavePort);
- 		SetPortDialogPort(GetSelection);
- 		
- 		BeginUpdate(GetDialogWindow(GetSelection));
- 		
-		UpdateCmdDlogWindow(GetSelection);
-		
-		Draw1Control(playCntl);
-		Draw1Control(stopCntl);
-		Draw1Control(RecordCntl);
-		Draw1Control(BackCntl);
-		Draw1Control(ForCntl);
-		Draw1Control(JumpNextCntl);
-		Draw1Control(JumpBeforeCntl);
-		Draw1Control(LoopCntl);
-		
-		visibleRegion = NewRgn();
-		
-		GetPortVisibleRegion(GetDialogPort(GetSelection), visibleRegion);
-		
-		UpdateDialog(GetSelection, visibleRegion);
-		
-		DisposeRgn(visibleRegion);
-		
- 		DrawTimeBar();
- 		
-		if (!AppearanceManager)
-		{
-	 		GetDialogItem(ToolsDlog, 10, &itemType, &itemHandle, &itemRect);
-	 		
-			FrameRect(&itemRect);
- 		}
-		else Draw1Control(progCntl);
-		
- 		SetCurrentMOD(curMusic->musicFileName);
-		/*******/		
-		EndUpdate(GetDialogWindow(GetSelection));
-		
-		SetPort(SavePort);
+	SetPort(SavePort);
 }
 
 void CreateToolsDlog(void)
