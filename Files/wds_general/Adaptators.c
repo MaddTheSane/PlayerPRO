@@ -795,7 +795,8 @@ void UpdateAdapWindow(DialogPtr	GetSelection)
 	
 	GetPortBounds(GetDialogPort(GetSelection), &caRect);
 	
-	MoveTo(0, viewRect.top);		LineTo(caRect.right, viewRect.top);
+	MoveTo(0, viewRect.top);
+	LineTo(caRect.right, viewRect.top);
 	
 	saveClip = NewRgn();
 	GetClip(saveClip);
@@ -1424,8 +1425,10 @@ pascal void actionProcAdap(ControlHandle theControl, short ctlPart)
 			
 			aRgn = NewRgn();
 			
-			if (MADDriver->DriverSettings.outPutMode == DeluxeStereoOutPut) ScrollRect(&tempRect, 0, (sVal - curVal)*DISVOL, aRgn);
-			else ScrollRect(&tempRect, 0, (sVal - curVal)*DISVOL, aRgn);
+			if (MADDriver->DriverSettings.outPutMode == DeluxeStereoOutPut)
+				ScrollRect(&tempRect, 0, (sVal - curVal)*DISVOL, aRgn);
+			else
+				ScrollRect(&tempRect, 0, (sVal - curVal)*DISVOL, aRgn);
 			EraseRgn(aRgn);
 			UpdateAdapWindow(AdapDlog);
 			QDFlushPortBuffer(GetDialogPort(AdapDlog), aRgn);
@@ -2944,6 +2947,7 @@ pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRef
 				RectRgn(theRgn = NewRgn(), &caRect);
 				
 				ShowDragHilite(theDrag, theRgn, true);
+				QDFlushPortBuffer(GetDialogPort(AdapDlog), theRgn);
 				DisposeRgn(theRgn);
 			}
 		}

@@ -1146,8 +1146,6 @@ void DoNullEditor(void)
 			SetCursor(GetQDGlobalsArrow(&qdarrow));
 		
 		QDFlushPortBuffer(GetDialogPort(EditorDlog), visibleRegion);
-		
-		
 		DisposeRgn(visibleRegion);
 	}
 	

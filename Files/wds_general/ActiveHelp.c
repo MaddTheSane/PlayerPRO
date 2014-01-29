@@ -225,7 +225,9 @@ void  UpdateAHelpWindow(DialogPtr GetSelection)
 	
 	BeginUpdate(GetDialogWindow(AHelpDlog));
 	
-	TextFont(kFontIDGeneva);	TextSize(9);	TextFace(bold);
+	TextFont(kFontIDGeneva);
+	TextSize(9);
+	TextFace(bold);
 	
 	visibleRegion = NewRgn();
 	

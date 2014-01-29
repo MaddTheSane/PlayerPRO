@@ -112,8 +112,7 @@ pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRe
 			
 			GetPortBounds(GetDialogPort(ToolsDlog), &caRect);
 
-			if (PtInRect(localMouse, &caRect))
-			{
+			if (PtInRect(localMouse, &caRect)) {
 				RectRgn(theRgn = NewRgn(), &caRect);
 				
 				ShowDragHilite(theDrag, theRgn, true);
@@ -354,7 +353,7 @@ if (LoopCntlState != tro)
 SetPort(savePort);
 }
 
-void UpdateToolsWindow(DialogPtr	GetSelection)
+void UpdateToolsWindow(DialogPtr GetSelection)
 {
 		Rect   		itemRect;
  		GrafPtr		SavePort;
