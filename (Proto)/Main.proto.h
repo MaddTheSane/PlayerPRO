@@ -44,7 +44,7 @@ pascal Boolean MyCustomFileFilter2(CInfoPBRec*, void *);
 void WriteSupportedFormat(DialogPtr);
 pascal short MyDlgHook2(short, DialogPtr, void *);
 OSErr NGetFileName(FSSpec *);
-OSErr DoCustomOpen(FSSpec	*spec);
+OSErr DoCustomOpen(FSSpec *spec);
 void NOpenMusic(void);
 void InitImportMenu(void);
 void MenuBarInit(void);
