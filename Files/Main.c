@@ -2092,7 +2092,6 @@ void DoGlobalNull(void)
 	GrafPtr		savePort;
 	Str255		str1, str2;
 	short		i, x;
-	Point		pt;
 	
 	theDepth = (*(*GetGDevice())->gdPMap)->pixelSize;
 	
@@ -2100,49 +2099,37 @@ void DoGlobalNull(void)
 	
 	GetKeys(km);
 	
-	//if (thePrefs.MidiKeyBoard) DoMIDIHarwareRecord();
+	//if (thePrefs.MidiKeyBoard)
+	//	DoMIDIHarwareRecord();
 	
 	if (DebuggingMode) {
-		unsigned long			secs;
-		NumVersion				nVers;
-		DateTimeRec				dtrp;
-#if 0
-		if (MemError() != noErr)
-		{
+		if (MemError() != noErr) {
 			pStrcpy(str1, "\pMemError ID:");
 			NumToString(MemError(), str2);
 			pStrcat(str1, str2);
 			
-			MyDebugStr(str1);
+			DebugStr(str1);
 		}
 		
-		if (ResError() != noErr)
-		{
+		if (ResError() != noErr) {
 			pStrcpy(str1, "\pResError ID:");
 			NumToString(ResError(), str2);
 			pStrcat(str1, str2);
 			
-			MyDebugStr(str1);
+			DebugStr(str1);
 		}	
 		
-		for (i = 0; i < MAXINSTRU; i++)
-		{
-			for (x = 0; x < curMusic->fid[ i].numSamples; x++)
-			{
+		for (i = 0; i < MAXINSTRU; i++) {
+			for (x = 0; x < curMusic->fid[ i].numSamples; x++) {
 				if (curMusic->sample[ curMusic->fid[ i].firstSample + x] == NULL) MyDebugStr(__LINE__, __FILE__, "Sound Size not CORRECT !");
 				
-				
-				if (curMusic->sample[ curMusic->fid[ i].firstSample + x]->data != NULL)
-				{
-					if (curMusic->sample[ curMusic->fid[ i].firstSample + x]->size != GetPtrSize(curMusic->sample[ curMusic->fid[ i].firstSample + x]->data))
-					{
+				if (curMusic->sample[ curMusic->fid[ i].firstSample + x]->data != NULL) {
+					if (curMusic->sample[ curMusic->fid[ i].firstSample + x]->size != GetPtrSize(curMusic->sample[ curMusic->fid[ i].firstSample + x]->data)) {
 						MyDebugStr(__LINE__, __FILE__, "Sound Size not CORRECT !");
 					}
 				}
 			}
 		}
-#endif
-		
 	}
 	
 	if (MADDriver->musicEnd == true) {
@@ -2174,22 +2161,10 @@ void DoGlobalNull(void)
 	
 	if (checkMemory < TickCount()) {
 		checkMemory = TickCount() + 60;
-		//if (FreeMem() < 50000) Erreur(9, 0);
 	}
 	
-	if (PianoDlog != NULL && MusicPlayActive == true) DoNullPiano();
-	
-	if (IsCodeOK()) //??ATTENTION, CA TUE LE QUITEVENT SOUS MACOS X
-	{
-		if (TickCount() - StartTime > 72000)		// 20 Minutes
-		{
-			if (ShowIt) {
-				Erreur(32, -4);
-				ShowIt = false;
-			}
-			End = true;
-		}
-	}
+	if (PianoDlog != NULL && MusicPlayActive == true)
+		DoNullPiano();
 	
 	/*** Active Help ***/
 	
@@ -2250,7 +2225,6 @@ void GlobalDoKey(WindowPtr theWind, char theChar)
 			break;
 			
 		case RefQuicktime:
-			
 			break;
 			
 		case RefMozart:
@@ -2264,8 +2238,6 @@ void ActivateProcedure(Boolean ModalCall)
 	if (AHelpDlog != NULL) {
 		ShowWindow(GetDialogWindow(AHelpDlog));
 	}
-	//ShowWindow(GetDialogWindow(ToolsDlog));
-	//if (!ModalCall) SelectWindow(GetDialogWindow(ToolsDlog));
 	
 	if (!ModalCall) {
 		if (oldWindow != NULL) {
@@ -2285,7 +2257,9 @@ void ActivateProcedure(Boolean ModalCall)
 void DoOSEvent(EventRecord *event, Boolean ModalCall)
 {
 	switch ((event->message >> 24) & 0xFF) {
-		case mouseMovedMessage:				break;
+		case mouseMovedMessage:
+			break;
+			
 		case suspendResumeMessage:
 			if (event->message & resumeFlag) {
 				ActivateProcedure(ModalCall);
@@ -3647,10 +3621,7 @@ void WriteSupportedFormat(DialogPtr	aDia)
 	SetDText(aDia, 14, text);
 }
 
-static Boolean 		needUp;
 static Boolean		AddAll;
-static MenuHandle	showWhatMenu;
-static OSType		plugListO[ 25];
 
 #if 0
 pascal short MyDlgHook2(short item, DialogPtr theDialog, void *myDataPtr)
