@@ -2231,8 +2231,7 @@ void DrawInstruListItem(short iD)
 	UpdateRgn = NewRgn();
 	RectRgn(UpdateRgn, &destRect);
 	
-	if (QDIsPortBuffered(GetDialogPort(InstruListDlog)))
-		QDFlushPortBuffer(GetDialogPort(InstruListDlog), UpdateRgn);
+	QDFlushPortBuffer(GetDialogPort(InstruListDlog), UpdateRgn);
 	DisposeRgn(UpdateRgn);
 }
 					
@@ -2371,8 +2370,6 @@ void UpdateInstruListWindow(DialogPtr GetSelection)
 	
 	UpdateDialog(GetSelection, visibleRegion);
 	
-	DisposeRgn(visibleRegion);
-	
 	saveClipRgn = NewRgn();
 	GetClip(saveClipRgn);
 	
@@ -2412,9 +2409,8 @@ void UpdateInstruListWindow(DialogPtr GetSelection)
 	
 	DrawSmallSamplePreview();
 	
-	//if (QDIsPortBuffered(GetDialogPort(GetSelection)))
-	//	QDFlushPortBuffer(GetDialogPort(GetSelection), NULL);
-
+	QDFlushPortBuffer(GetDialogPort(GetSelection), visibleRegion);
+	DisposeRgn(visibleRegion);
 	EndUpdate(GetDialogWindow(GetSelection));
 
 	
@@ -2580,8 +2576,7 @@ void DrawInfoInstrument(void)
 	
 	RgnHandle UpdateRgn = NewRgn();
 	GetWindowRegion(GetDialogWindow(InstruListDlog), kWindowUpdateRgn, UpdateRgn);
-	if (QDIsPortBuffered(GetDialogPort(InstruListDlog)))
-		QDFlushPortBuffer(GetDialogPort(InstruListDlog), UpdateRgn);
+	QDFlushPortBuffer(GetDialogPort(InstruListDlog), UpdateRgn);
 	
 	SetPort(SavePort);
 	DisposeRgn(UpdateRgn);

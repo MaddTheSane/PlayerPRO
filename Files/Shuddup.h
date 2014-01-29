@@ -264,13 +264,13 @@ enum
 	mSpectrumV = 4,
 	mAdap = 6,
 	mEqualizer = 7,
-	mPatternV = 9,
-	mPiano = 10,
+	mPatternV = 8,
+	mPiano = 9,
 	mVisual = 12,
 	mMemory = 18,
 	mDigitalV = 20,
 	mInsV = 22
-//	mMusic = 24 - FileMenu ID 9
+	//mMusic = 24 - FileMenu ID 9
 };
 
 enum {
@@ -313,8 +313,11 @@ enum {
 #define duplicate	0x17
 #define getinfo		0x18
 
-unsigned char* MyC2PStr(Ptr cStr);
-void MyP2CStr(unsigned char *cStr);
+
+#define MyC2PStr MYC2PStr
+#define MyP2CStr MYP2CStr
+//unsigned char* MyC2PStr(Ptr cStr);
+//void MyP2CStr(unsigned char *cStr);
 void MyDebugStr(short line, Ptr file, Ptr text);
 void			NNumToString(short no, Str255 aStr);
 void			GetNoteString(short note, Str255	string);

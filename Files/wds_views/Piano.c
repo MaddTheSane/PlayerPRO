@@ -767,9 +767,8 @@ pascal void actionPiano(ControlHandle theControl, short ctlPart)
 		aRgn = NewRgn();
 		
 		ScrollRect(&itemRect, copyval - curVal, 0, aRgn);
-		
-		InvalWindowRgn(GetDialogWindow(PianoDlog), aRgn);
 		UpdatePianoWindow(PianoDlog);
+		QDFlushPortBuffer(GetDialogPort(PianoDlog), aRgn);
 		DisposeRgn(aRgn);
 	}
 }

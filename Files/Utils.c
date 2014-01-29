@@ -50,6 +50,7 @@ extern	SndListHandle		InSound, OutSound;
 
 /************************************************************/
 
+#if 0
 unsigned char* MyC2PStr(Ptr cStr)
 {
 	return MYC2PStr(cStr);
@@ -59,6 +60,7 @@ void MyP2CStr(unsigned char *cStr)
 {
 	MYP2CStr(cStr);
 }
+#endif
 
 void NNumToString(short no, Str255 aStr)
 {
@@ -92,8 +94,10 @@ void CenterRect(Rect *main, Rect *dst, Rect *result)
 	Rect		tempRect;
 	short		Larg, Haut;
 	
-	tempRect.left = main->left;		tempRect.right = main->right;
-	tempRect.top = main->top;		tempRect.bottom = main->bottom;
+	tempRect.left = main->left;
+	tempRect.right = main->right;
+	tempRect.top = main->top;
+	tempRect.bottom = main->bottom;
 	
 	Larg = dst->right - dst->left;
 	Haut = dst->bottom - dst->top;
@@ -124,20 +128,34 @@ pascal Boolean MyDlgFilter(DialogPtr theDlg, EventRecord *theEvt, short *itemHit
 	dialogModifiers = theEvt->modifiers;
 	*itemHit = 0;
 
-	if (theEvt->what == updateEvt)
-	{
-		if ((WindowPtr) theEvt->message == GetDialogWindow(theDlg))
-		{
-			switch (GetWRefCon(GetDialogWindow(theDlg)))
-			{
-				case 0:		oldFrameButton(theDlg);					break;
-				case 96:	oldFrameButton(theDlg);					break;
-				case 9996:	oldFrameButton(theDlg);					break;
-				case 9987:	DrawChooseColorWindow();					break;
-				case 9467:	UpdateEditInstruWindow(theDlg);			break;
-				case 7311:	UpdateSoundQualityExportSndWindow(theDlg);	break;
-				case 966:	UpdateFileInformations(theDlg);			break;
-				case 99802:	UpdatePlugsAbout(theDlg);					break;
+	if (theEvt->what == updateEvt) {
+		if ((WindowPtr) theEvt->message == GetDialogWindow(theDlg)) {
+			switch (GetWRefCon(GetDialogWindow(theDlg))) {
+				case 0:
+				case 96:
+				case 9996:
+					oldFrameButton(theDlg);
+					break;
+					
+				case 9987:
+					DrawChooseColorWindow();
+					break;
+					
+				case 9467:
+					UpdateEditInstruWindow(theDlg);
+					break;
+					
+				case 7311:
+					UpdateSoundQualityExportSndWindow(theDlg);
+					break;
+					
+				case 966:
+					UpdateFileInformations(theDlg);
+					break;
+					
+				case 99802:
+					UpdatePlugsAbout(theDlg);
+					break;
 			}
 			
 			return false;
@@ -244,26 +262,51 @@ Boolean MyIntModalDialog(DialogPtr theDlg, short *itemHit, EventRecord *myIntEve
 	dialogModifiers = myIntEvent->modifiers;
 	*itemHit = 0;
 	
-	if (myIntEvent->what == updateEvt)
-	{
-		if ((WindowPtr) myIntEvent->message == GetDialogWindow(theDlg))
-		{
-			switch (GetWRefCon(GetDialogWindow(theDlg)))
-			{
-				case RefPref:	UpdatePrefWindow(theDlg);				break;
+	if (myIntEvent->what == updateEvt) {
+		if ((WindowPtr)myIntEvent->message == GetDialogWindow(theDlg)) {
+			switch (GetWRefCon(GetDialogWindow(theDlg))) {
+				case RefPref:
+					UpdatePrefWindow(theDlg);
+					break;
 					
 				default:
-				case 0:		MyUpdateDialog(theDlg);					break;
-				case 96:	MyUpdateDialog(theDlg);					break;
-				case 9996:	MyUpdateDialog(theDlg);					break;
-				case 9987:	DrawChooseColorWindow();					break;
-				case 9467:	UpdateEditInstruWindow(theDlg);			break;
-				case 7311:	UpdateSoundQualityExportSndWindow(theDlg);	break;
-				case 966:	UpdateFileInformations(theDlg);			break;
-				case 99802:	UpdatePlugsAbout(theDlg);					break;
-				case 376:	UpdateWorkingWindow();						break;
-				case 6648:	DeviceFilterUpdate();						break;
-				case 3885:	UpdateBookmarks(theDlg);	break;
+				case 0:
+				case 96:
+				case 9996:
+					MyUpdateDialog(theDlg);
+					break;
+					
+				case 9987:
+					DrawChooseColorWindow();
+					break;
+					
+				case 9467:
+					UpdateEditInstruWindow(theDlg);
+					break;
+					
+				case 7311:
+					UpdateSoundQualityExportSndWindow(theDlg);
+					break;
+					
+				case 966:
+					UpdateFileInformations(theDlg);
+					break;
+					
+				case 99802:
+					UpdatePlugsAbout(theDlg);
+					break;
+					
+				case 376:
+					UpdateWorkingWindow();
+					break;
+					
+				case 6648:
+					DeviceFilterUpdate();
+					break;
+					
+				case 3885:
+					UpdateBookmarks(theDlg);
+					break;
 			}
 			
 			return false;
@@ -369,22 +412,19 @@ Boolean MyIntModalDialog(DialogPtr theDlg, short *itemHit, EventRecord *myIntEve
 		 PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN) SetFrontProcess(&playerPROPSN);*/
 		
 		*itemHit = -5;
-		return(true );
-	}
-	else if (myIntEvent->what == osEvt)
-	{
+		return true;
+	} else if (myIntEvent->what == osEvt) {
 		DoOSEvent(myIntEvent, true);
 	}
 	
-	return(false);
+	return false;
 }
 
 Boolean MyModalDialog(DialogPtr theDlg, short *itemHit)
 {
 	EventRecord		gModalDialogEvent;
 	
-	if (MyIntModalDialog(theDlg, itemHit, &gModalDialogEvent) == false)
-	{
+	if (MyIntModalDialog(theDlg, itemHit, &gModalDialogEvent) == false) {
 #if 0
 		if (IsDialogEvent(&gModalDialogEvent))
 		{
@@ -403,28 +443,21 @@ Boolean MyModalDialog(DialogPtr theDlg, short *itemHit)
 
 pascal Boolean MyDlgFilterSF(DialogPtr theDlg, EventRecord *theEvt, short *itemHit, void *data)
 {
-	return(MyDlgFilter(theDlg, theEvt, itemHit));
+	return MyDlgFilter(theDlg, theEvt, itemHit);
 }
 
-pascal void MyDlgFilterNav(		NavEventCallbackMessage 	callBackSelector, 
-								NavCBRecPtr 				callBackParms, 
-								NavCallBackUserData 		callBackUD)
+pascal void MyDlgFilterNav(NavEventCallbackMessage callBackSelector, NavCBRecPtr callBackParms, NavCallBackUserData callBackUD)
 {
 	short	itemHit;
 	Rect	caRect;
 	
-	switch (callBackSelector)
-	{
+	switch (callBackSelector) {
 		case kNavCBEvent:
-			switch (callBackParms->eventData.eventDataParms.event->what)
-			{
+			switch (callBackParms->eventData.eventDataParms.event->what) {
 				case updateEvt:
-					if ((WindowPtr) callBackParms->eventData.eventDataParms.event->message == callBackParms->window)
-					{
+					if ((WindowPtr)callBackParms->eventData.eventDataParms.event->message == callBackParms->window) {
 						
-					}
-					else
-					{
+					} else {
 						EventRecord *event = callBackParms->eventData.eventDataParms.event;
 						GrafPtr		savedPort;
 						
@@ -448,9 +481,9 @@ void ToolBoxInit(void)
 
 void InverseRadio(short item, DialogPtr dlog)
 {
-	Handle		itemHandle;
-	short		itemType;
-	Rect		itemRect;
+	Handle	itemHandle;
+	short	itemType;
+	Rect	itemRect;
 
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 
@@ -459,7 +492,7 @@ void InverseRadio(short item, DialogPtr dlog)
 	if (itemType >= 128) itemType -= 128;
 	if (itemType != 6 && itemType != 5) MyDebugStr(__LINE__, __FILE__, "Error in InverseRadio");
 
-	SetControlValue((ControlHandle) itemHandle,!GetControlValue((ControlHandle) itemHandle));
+	SetControlValue((ControlHandle)itemHandle, !GetControlValue((ControlHandle)itemHandle));
 }
 
 
@@ -467,37 +500,28 @@ void TurnRadio(short item, DialogPtr dlog, Boolean alors)
 {
 	Handle		itemHandle = NULL;
 	short		itemType = 0;
-	Rect		itemRect = {0,0,0,0};
+	Rect		itemRect = {0, 0, 0, 0};
 	
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 	
 	if (itemHandle == NULL) MyDebugStr(__LINE__, __FILE__, "TurnRadio itemHandle = NULL");
 	
-	if (itemType >= 128) itemType -= 128;
+	if (itemType >= 128)
+		itemType -= 128;
 	if (itemType != 6 && itemType != 5) MyDebugStr(__LINE__, __FILE__, "Error in TurnRadio");
 	
-	if (alors)
-	{
-		SetControlValue((ControlHandle) itemHandle, 1);
-	}
-	else
-	{
-		SetControlValue((ControlHandle) itemHandle, 0);
+	if (alors) {
+		SetControlValue((ControlHandle)itemHandle, 1);
+	} else {
+		SetControlValue((ControlHandle)itemHandle, 0);
 	}
 }
 
 void ControlSwitch(short item, DialogPtr dlog, short Switch)
 {
-	Handle			itemHandle;
-	ControlHandle	control;
-	short			itemType;
-	Rect			itemRect;
+	ControlHandle control;
 	
-	//GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
-	
-	//if (itemHandle == NULL) MyDebugStr(__LINE__, __FILE__, "ControlSwitch itemHandle = NULL");
-	
-	GetDialogItemAsControl(dlog, item, &control );
+	GetDialogItemAsControl(dlog, item, &control);
 	
 	HiliteControl(control, Switch);
 	
@@ -519,7 +543,7 @@ void MyMoveControl(ControlHandle ah, short x, short y)
 
 void MySizeControl(ControlHandle ah, short x, short y)
 {
-	Rect	rect;
+	Rect rect;
 	
 	if (ah == 0) MyDebugStr(__LINE__, __FILE__, "MySizeControl ah == 0");
 	
@@ -536,10 +560,11 @@ void MySizeWindow(DialogPtr dlg, short right, short bottom, Boolean v)
 	
 	GetPortBounds(GetDialogPort(dlg), &caRect);
 	
-	if (bottom != caRect.bottom || right != caRect.right)
-	{
-		if (right <= 0) return;
-		if (bottom <= 0) return;
+	if (bottom != caRect.bottom || right != caRect.right) {
+		if (right <= 0)
+			return;
+		if (bottom <= 0)
+			return;
 		
 		SizeWindow(GetDialogWindow(dlg), right, bottom, v);
 	}
@@ -559,14 +584,11 @@ pascal void myTrackAction(ControlHandle theCntl, short ctlPart)
 	DoGlobalNull();
 }
 
-
-Boolean MyTrackControl(ControlHandle	myCtl, Point where, ControlActionUPP function)
+Boolean MyTrackControl(ControlHandle myCtl, Point where, ControlActionUPP function)
 {
 	Point		myPt = where;
-	Boolean		JobOK = true;
-	short		hiliteCpy, val;
+	short		val;
 	Byte		visible;
-	Rect		contrlRect;
 	
 	GlobalToLocal(&myPt);
 	
@@ -574,14 +596,13 @@ Boolean MyTrackControl(ControlHandle	myCtl, Point where, ControlActionUPP functi
 	SetControlVisibility(myCtl, true, false);
 	HiliteControl(myCtl, kControlButtonPart);
 	
-	if (function == NULL)
-	{
-		ControlActionUPP	MyControlUPP = NewControlActionUPP(myTrackAction);
+	if (function == NULL) {
+		ControlActionUPP MyControlUPP = NewControlActionUPP(myTrackAction);
 		
-		val = TrackControl(myCtl, myPt, (ControlActionUPP) MyControlUPP);
+		val = TrackControl(myCtl, myPt, MyControlUPP);
 		DisposeControlActionUPP(MyControlUPP);
-	}
-	else val = TrackControl(myCtl, myPt, (ControlActionUPP) function);
+	} else
+		val = TrackControl(myCtl, myPt, function);
 	
 	SetControlVisibility(myCtl, visible, false);
 	
@@ -610,12 +631,12 @@ short NewOffscreenBitMap(BitMap *thePixMap, Rect *picRect)
 	offscreenPixMap.baseAddr = offscreenData ;
 	*thePixMap = offscreenPixMap;
 	
-	return (0);
+	return 0;
 }
 
 void ZapBitMap(BitMap *offscreenPixMap)
 {
-	char			*offscreenData ;
+	Ptr offscreenData;
 	
 	/* Since DisposPixMap doesn't free the data memory we have to
 	 dispose the pointer to the data first !! */
@@ -694,15 +715,15 @@ void WriteCText(DialogPtr dlog, short item, char *str)
 	
 	MyC2PStr(str);
 	
-	iWidth = StringWidth((unsigned char*) str);
+	iWidth = StringWidth((unsigned char*)str);
 	
 	MoveTo(itemRect.left + (itemRect.right - itemRect.left)/2 - iWidth/2, itemRect.bottom);
 	
-	DrawString((unsigned char*) str);
-	MyP2CStr((unsigned char*) str);
+	DrawString((unsigned char*)str);
+	MyP2CStr((unsigned char*)str);
 }
 
-void GetDText (DialogPtr dlog, short item, StringPtr str)
+void GetDText(DialogPtr dlog, short item, StringPtr str)
 {
 	Handle	itemHandle;
 	short	itemType;
@@ -710,7 +731,8 @@ void GetDText (DialogPtr dlog, short item, StringPtr str)
 	
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 	if (itemHandle == NULL) MyDebugStr(__LINE__, __FILE__, "Error in SetDText");
-	if (itemType >= 128) itemType -= 128;
+	if (itemType >= 128)
+		itemType -= 128;
 	if (itemType != 8 && itemType != 16) MyDebugStr(__LINE__, __FILE__, "Error in itemType");
 	
 	GetDialogItemText(itemHandle, str);
@@ -720,14 +742,15 @@ void OSType2Str(OSType type, Str255 str)
 {
 	short i;
 	
-	str[ 0] = 4;
+	str[0] = 4;
 	MOT32(&type);
-	memcpy(str+1, &type, 4);
+	memcpy(str + 1, &type, 4);
 	
-	for (i = 4; i > 0; i--)
-	{
-		if (str[ i] == ' ') str[ 0]--;
-		else return;
+	for (i = 4; i > 0; i--) {
+		if (str[ i] == ' ')
+			str[ 0]--;
+		else
+			return;
 	}
 }
 
@@ -750,20 +773,18 @@ void pStrcpy(register unsigned char *s1, register const unsigned char *s2)
 
 void pStrcat(register unsigned char *s1, register unsigned char *s2)
 {
-	register unsigned char *p;
-	register short len, i;
+	unsigned char *p;
+	short len, i;
 	
-	if (*s1+*s2<=255) 
-	{
+	if (*s1 + *s2 <= 255)  {
 		p = *s1 + s1 + 1;
 		*s1 += (len = *s2++);
-	}
-	else 
-	{
+	} else  {
 		*s1 = 255;
 		p = s1 + 256 - (len = *s2++);
 	}
-	for (i=len; i; --i) *p++ = *s2++;
+	for (i = len; i; --i)
+		*p++ = *s2++;
 }
 
 void ErasePixMap(PixMapHandle pix)
@@ -771,8 +792,7 @@ void ErasePixMap(PixMapHandle pix)
 	long	rowbytes, bb;
 
 	rowbytes = (*pix)->rowBytes + 0x8000;
-	for (bb = 0; bb < (*pix)->bounds.bottom * rowbytes; bb++)
-	{
+	for (bb = 0; bb < (*pix)->bounds.bottom * rowbytes; bb++) {
 		*((*pix)->baseAddr + bb) = 0xFF;
 	}
 }
@@ -794,8 +814,7 @@ short NewOffscreenPixMap(PixMapHandle *thePixMap, Rect *picRect)
 	memoryRequest = (long)((picRect->bottom-picRect->top+1)*offrowbytes) + 4;
 
 	offscreenData = MyNewPtr(memoryRequest);
-	if (offscreenData == nil)
-	{
+	if (offscreenData == nil) {
 		*thePixMap = (PixMapHandle) -1L;
 		return(-1);
 	}
@@ -817,15 +836,12 @@ short NewOffscreenPixMap(PixMapHandle *thePixMap, Rect *picRect)
 //	DisposeHandle((*offscreenPixMap)->pmTable);
 
 	*thePixMap = offscreenPixMap;
-	return (noErr);
+	return noErr;
 }
 
 Ptr NewADDRPtrI(short SizeBuffer)
 {
-	Ptr		tempPtr;
-	
-	tempPtr = MyNewPtr((long) (SizeBuffer));
-	return((Ptr) tempPtr);
+	return MyNewPtr(SizeBuffer);
 }
 
 void ZapPixMap(PixMapHandle *offscreenPixMap)
@@ -897,18 +913,19 @@ short PicToPix (PicHandle thePic, PixMapHandle *offscreenPixMap)
 	CGrafPtr			oldPort;
 	GWorldPtr			theGWorld = NULL;
 	
-	picRect.bottom 	= (*thePic)->picFrame.bottom	- (*thePic)->picFrame.top;
-	picRect.right 	= (*thePic)->picFrame.right		- (*thePic)->picFrame.left;
-	picRect.top 	= 0;	picRect.left 	= 0;
+	picRect.bottom 	= (*thePic)->picFrame.bottom - (*thePic)->picFrame.top;
+	picRect.right 	= (*thePic)->picFrame.right - (*thePic)->picFrame.left;
+	picRect.top 	= 0;
+	picRect.left 	= 0;
 	
 	GetGWorld(&oldPort, &oldGDeviceH);
 	
-	NewGWorld(	&theGWorld,
-				8,
-				&picRect,
-				NULL,				// CTabHandle
-				nil,
-				(GWorldFlags) 0);
+	NewGWorld(&theGWorld,
+			  8,
+			  &picRect,
+			  NULL,				// CTabHandle
+			  nil,
+			  (GWorldFlags) 0);
 	
 	errCode = NewOffscreenPixMap(&*offscreenPixMap, &picRect);
 	if (errCode != noErr) MyDebugStr(__LINE__, __FILE__, "Error in PicToPix");
@@ -918,46 +935,42 @@ short PicToPix (PicHandle thePic, PixMapHandle *offscreenPixMap)
 	
 	DrawPicture(thePic, &picRect);
 	
-	CopyBits(	(BitMap*) *GetPortPixMap(theGWorld),
- 				(BitMap*) **offscreenPixMap,
- 				&picRect,
- 				&picRect,
- 				srcCopy,				//ditherCopy
- 				NULL);
- 	
- 	SetGWorld(oldPort, oldGDeviceH);				
+	CopyBits((BitMap*)*GetPortPixMap(theGWorld),
+			 (BitMap*)**offscreenPixMap,
+			 &picRect,
+			 &picRect,
+			 srcCopy,				//ditherCopy
+			 NULL);
+	
+	SetGWorld(oldPort, oldGDeviceH);
 	DisposeGWorld(theGWorld);
 	
 	return 0;
 }
 
-short IclToPix (Handle theIcon, PixMapHandle *offscreenPixMap)
+short IclToPix(Handle theIcon, PixMapHandle *offscreenPixMap)
 {
 	Rect			picRect;
 	OSErr			errCode;
 	short			i,x;
 	char			temp1,temp2;
-
+	
 	picRect.bottom 	= 32;
 	picRect.right 	= 32;
 	picRect.top 	= 0;
 	picRect.left 	= 0;
-
+	
 	errCode = NewOffscreenPixMap(&*offscreenPixMap, &picRect);
 	if(errCode != noErr) {
-			abort();
-			return(errCode);
-			}
-	
-	if (theDepth == 8)
-	{
-		for (i = 0; i < picRect.bottom * picRect.right; i++)
-		(***offscreenPixMap).baseAddr[i] = (char) (*theIcon)[i];
+		abort();
+		return(errCode);
 	}
-	else
-	{
-		for (i=0, x=0; i< picRect.bottom * picRect.right/2; i++,x++)
-		{
+	
+	if (theDepth == 8) {
+		for (i = 0; i < picRect.bottom * picRect.right; i++)
+			(***offscreenPixMap).baseAddr[i] = (char) (*theIcon)[i];
+	} else {
+		for (i=0, x=0; i< picRect.bottom * picRect.right/2; i++,x++) {
 			temp1 = (*theIcon)[x++] / 16;
 			temp2 = (*theIcon)[x] / 16;
 			temp1 = (char) (temp1 << 4);
@@ -976,7 +989,7 @@ unsigned short RangedRdm(unsigned short min, unsigned short max)
 	qdRdm = Random();
 	range = max - min;
 	t = (qdRdm * range) / 65536;
-	return(t+min);
+	return t + min;
 }
 
 void DessineRgn(Rect *PixMapRect, Rect *RectPict)
@@ -988,8 +1001,7 @@ void DessineRgn(Rect *PixMapRect, Rect *RectPict)
 	Var2 = (long) (Var1 * (PixMapRect->right) / (PixMapRect->bottom));
 	RectPict->right = (short) (RectPict->left + Var2);
 
-	if(CarreVerif.right < RectPict->right)
-	{
+	if (CarreVerif.right < RectPict->right) {
 		RectPict->right = CarreVerif.right;
 		Var1 = (long) (RectPict->right - RectPict->left);
 		Var2 = (long) (Var1 * (PixMapRect->bottom) / (PixMapRect->right));
@@ -1004,8 +1016,8 @@ void FrameButton(DialogPtr theDia, short whichButton, Boolean drawIt)
 
 short SetScroll(ControlHandle vScroll, TEHandle TEH)
 {
-	register short	n;
-	double			height;
+	short	n;
+	double	height;
 	
 	height = TEGetHeight(0, (*TEH)->nLines, TEH);
 	height /= (double) (*TEH)->nLines;
@@ -1016,7 +1028,8 @@ short SetScroll(ControlHandle vScroll, TEHandle TEH)
 
 	SetControlMaximum(vScroll, n > 0 ? n : 0);
 	
-	if (gUseControlSize) SetControlViewSize(vScroll, ((**TEH).viewRect.bottom-(**TEH).viewRect.top) / height);
+	if (gUseControlSize)
+		SetControlViewSize(vScroll, ((**TEH).viewRect.bottom-(**TEH).viewRect.top) / height);
 
 	return 0;
 }
@@ -1025,12 +1038,11 @@ void FrameRectRelief(Rect *theRect)
 {
 	RGBColor	theColor;
 	Rect		aCopy;
-
+	
 #define GrisClair	0xFFFF
 #define GrisFonce	0x4000
 	
-	if ((**(**GetMainDevice()).gdPMap).pixelSize < 8)
-	{
+	if ((**(**GetMainDevice()).gdPMap).pixelSize < 8) {
 		aCopy.left = theRect->left ;
 		aCopy.right = theRect->right +1;
 		aCopy.top = theRect->top ;
@@ -1040,38 +1052,43 @@ void FrameRectRelief(Rect *theRect)
 		return;
 	}
 	MoveTo(theRect->left, theRect->top);
-
-	theColor.red = GrisFonce;	theColor.blue = GrisFonce;	theColor.green = GrisFonce;
+	
+	theColor.red = GrisFonce;
+	theColor.blue = GrisFonce;
+	theColor.green = GrisFonce;
 	RGBForeColor(&theColor);
 	LineTo(theRect->right, theRect->top);
-
-	theColor.red = GrisClair;	theColor.blue = GrisClair;	theColor.green = GrisClair;
+	
+	theColor.red = GrisClair;
+	theColor.blue = GrisClair;
+	theColor.green = GrisClair;
 	RGBForeColor(&theColor);
 	LineTo(theRect->right, theRect->bottom);
-
-	theColor.red = GrisClair;	theColor.blue = GrisClair;	theColor.green = GrisClair;
+	
+	theColor.red = GrisClair;
+	theColor.blue = GrisClair;
+	theColor.green = GrisClair;
 	RGBForeColor(&theColor);
 	LineTo(theRect->left, theRect->bottom);
-
-	theColor.red = GrisFonce;	theColor.blue = GrisFonce;	theColor.green = GrisFonce;
+	
+	theColor.red = GrisFonce;
+	theColor.blue = GrisFonce;
+	theColor.green = GrisFonce;
 	RGBForeColor(&theColor);
 	LineTo(theRect->left, theRect->top);
-
-
+	
 	ForeColor(blackColor);
 	return;
 }
 
 
-void SetFontStyle(DialogPtr dialog, SInt16 item, ControlFontStyleRec *style )
+void SetFontStyle(DialogPtr dialog, SInt16 item, ControlFontStyleRec *style)
 {
 	ControlRef 	control;
-	OSErr			err;
+	OSErr		err = GetDialogItemAsControl(dialog, item, &control);
 	
-	err = GetDialogItemAsControl(dialog, item, &control );
-	
-	if (err == noErr )
-		SetControlFontStyle(control, style );
+	if (err == noErr)
+		SetControlFontStyle(control, style);
 }
 
 void ChangeEditFont(DialogPtr TheDia)
@@ -1088,7 +1105,28 @@ OSType String2OSType(StringPtr theStr)
 	char tmpBuf[5];
 	
 	memcpy(tmpBuf, &theStr[1], theStr[0] >= 4 ? 4 : theStr[0]);
-	tmpBuf[4] = '\0';
+	tmpBuf[theStr[0] >= 4 ? 4 : theStr[0]] = '\0';
 	
 	return Ptr2OSType(tmpBuf);
+}
+
+OSStatus MyInvalWindowRect(WindowRef window, const Rect *bounds)
+{
+	RgnHandle myRgn = NewRgn();
+	OSStatus theStat = noErr;
+	if (!myRgn) {
+		return memFullErr;
+	}
+	
+	theStat = GetWindowRegion(window, kWindowContentRgn, myRgn);
+	if (theStat) {
+		DisposeRgn(myRgn);
+		return theStat;
+	}
+	RectRgn(myRgn, bounds);
+	
+	QDFlushPortBuffer(GetWindowPort(window), myRgn);
+
+	DisposeRgn(myRgn);
+	return noErr;
 }

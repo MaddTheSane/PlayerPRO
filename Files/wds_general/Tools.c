@@ -112,8 +112,7 @@ pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRe
 			
 			GetPortBounds(GetDialogPort(ToolsDlog), &caRect);
 
-			if (PtInRect(localMouse, &caRect))
-			{
+			if (PtInRect(localMouse, &caRect)) {
 				RectRgn(theRgn = NewRgn(), &caRect);
 				
 				ShowDragHilite(theDrag, theRgn, true);
@@ -354,54 +353,45 @@ if (LoopCntlState != tro)
 SetPort(savePort);
 }
 
-void UpdateToolsWindow(DialogPtr	GetSelection)
+void UpdateToolsWindow(DialogPtr GetSelection)
 {
-		Rect   		itemRect;
- 		GrafPtr		SavePort;
- 		short		itemType;
- 		Handle		itemHandle;
- 		RgnHandle	visibleRegion;
+	GrafPtr		SavePort;
+	RgnHandle	visibleRegion;
+	
+	GetPort(&SavePort);
+	SetPortDialogPort(GetSelection);
+	
+	BeginUpdate(GetDialogWindow(GetSelection));
+	
+	UpdateCmdDlogWindow(GetSelection);
+	
+	Draw1Control(playCntl);
+	Draw1Control(stopCntl);
+	Draw1Control(RecordCntl);
+	Draw1Control(BackCntl);
+	Draw1Control(ForCntl);
+	Draw1Control(JumpNextCntl);
+	Draw1Control(JumpBeforeCntl);
+	Draw1Control(LoopCntl);
+	
+	visibleRegion = NewRgn();
+	
+	GetPortVisibleRegion(GetDialogPort(GetSelection), visibleRegion);
+	
+	UpdateDialog(GetSelection, visibleRegion);
+	
+	DrawTimeBar();
+	
+	Draw1Control(progCntl);
+	
+	SetCurrentMOD(curMusic->musicFileName);
+	/*******/
+	EndUpdate(GetDialogWindow(GetSelection));
+	
+	QDFlushPortBuffer(GetDialogPort(GetSelection), visibleRegion);
+	DisposeRgn(visibleRegion);
 
-
- 		GetPort(&SavePort);
- 		SetPortDialogPort(GetSelection);
- 		
- 		BeginUpdate(GetDialogWindow(GetSelection));
- 		
-		UpdateCmdDlogWindow(GetSelection);
-		
-		Draw1Control(playCntl);
-		Draw1Control(stopCntl);
-		Draw1Control(RecordCntl);
-		Draw1Control(BackCntl);
-		Draw1Control(ForCntl);
-		Draw1Control(JumpNextCntl);
-		Draw1Control(JumpBeforeCntl);
-		Draw1Control(LoopCntl);
-		
-		visibleRegion = NewRgn();
-		
-		GetPortVisibleRegion(GetDialogPort(GetSelection), visibleRegion);
-		
-		UpdateDialog(GetSelection, visibleRegion);
-		
-		DisposeRgn(visibleRegion);
-		
- 		DrawTimeBar();
- 		
-		if (!AppearanceManager)
-		{
-	 		GetDialogItem(ToolsDlog, 10, &itemType, &itemHandle, &itemRect);
-	 		
-			FrameRect(&itemRect);
- 		}
-		else Draw1Control(progCntl);
-		
- 		SetCurrentMOD(curMusic->musicFileName);
-		/*******/		
-		EndUpdate(GetDialogWindow(GetSelection));
-		
-		SetPort(SavePort);
+	SetPort(SavePort);
 }
 
 void CreateToolsDlog(void)
@@ -591,7 +581,8 @@ void DoRecule(void)
 
 void DoPause(void)
 {
-	if (PianoDlog != NULL) ResetPiano();
+	if (PianoDlog != NULL)
+		ResetPiano();
 	
 	FlushPlugin();
 
@@ -600,7 +591,7 @@ void DoPause(void)
 	MADDriver->Reading = false;
 	MADPurgeTrack(MADDriver);
 	MADCleanDriver(MADDriver);	
-//	PurgeVSTEffects();
+	//PurgeVSTEffects();
 	
 	if (thePrefs.GoToStop)
 	{
@@ -638,67 +629,69 @@ void DoStop(void)
 
 void DoSearchUp(void)
 {
-short	newPL, newPartitionReader = 0;
-
+	short newPL, newPartitionReader = 0;
+	
 	newPL = MADDriver->PL;
 	newPL++;
-	if (newPL >= curMusic->header->numPointers) newPL--;
+	if (newPL >= curMusic->header->numPointers)
+		newPL--;
 	
 	MADPurgeTrack(MADDriver);
-
+	
 	MADDriver->PL = newPL;
 	MADDriver->Pat = curMusic->header->oPointers[ MADDriver->PL];
 	MADDriver->PartitionReader = newPartitionReader;
-
+	
 	MADCheckSpeed(curMusic, MADDriver);
 }
 
 void DoSearchDown(void)
 {
-short	newPL, newPartitionReader = 0;
-
+	short newPL, newPartitionReader = 0;
+	
 	newPL = MADDriver->PL;
 	newPL--;
-	if (newPL <= 0) newPL = 0;
+	if (newPL <= 0)
+		newPL = 0;
 	
 	MADPurgeTrack(MADDriver);
-
+	
 	MADDriver->PL = newPL;
 	MADDriver->Pat = curMusic->header->oPointers[ MADDriver->PL];
 	MADDriver->PartitionReader = newPartitionReader;
-
+	
 	MADCheckSpeed(curMusic, MADDriver);
 }
 
-extern	RGBColor	theColor;
-extern	short			theDepth;
+extern RGBColor theColor;
+extern short theDepth;
 
 void SetCurrentMOD(Str255 theMODName)
 {
 	Rect   		itemRect;   			/* Temporary rectangle */
- 	GrafPtr		SavePort;
- 	short		itemType;
- 	Handle		itemHandle;
- 	Str255		aStr, aStr2;
- 
- 	GetPort(&SavePort);
- 	SetPortDialogPort(ToolsDlog);
- 	
- 	TextFont(4);	TextSize(9);
- 	
- //	ForeColor(blackColor);
-//	RGBBackColor(&theColor);
- 	
- 	pStrcpy(aStr, theMODName);
- 	pStrcat(aStr, "\p - ");
- 	NumToString(curMusic->header->numChn, aStr2);
- 	pStrcat(aStr, aStr2);
- 	
- 	GetDialogItem(ToolsDlog , 1, &itemType, &itemHandle, &itemRect);
- 	TETextBox(aStr + 1, aStr[ 0], &itemRect, teJustCenter);
+	GrafPtr		SavePort;
+	short		itemType;
+	Handle		itemHandle;
+	Str255		aStr, aStr2;
 	
- //	RGBBackColor(&theColor);
-//	ForeColor(blackColor);
+	GetPort(&SavePort);
+	SetPortDialogPort(ToolsDlog);
+	
+	TextFont(4);	TextSize(9);
+	
+	//ForeColor(blackColor);
+	//RGBBackColor(&theColor);
+	
+	pStrcpy(aStr, theMODName);
+	pStrcat(aStr, "\p - ");
+	NumToString(curMusic->header->numChn, aStr2);
+	pStrcat(aStr, aStr2);
+	
+	GetDialogItem(ToolsDlog , 1, &itemType, &itemHandle, &itemRect);
+	TETextBox(aStr + 1, aStr[ 0], &itemRect, teJustCenter);
+	
+	//RGBBackColor(&theColor);
+	//ForeColor(blackColor);
 	
 	SetPort(SavePort);
 }
@@ -712,7 +705,7 @@ void DoRemember(void)
 
 void DoPlay(void)
 {
-	GrafPtr		savePort;
+	GrafPtr savePort;
 	
 	GetPort(&savePort);
 	SetPortDialogPort(ToolsDlog);
@@ -723,13 +716,14 @@ void DoPlay(void)
 	ScanTime();
 	MADCheckSpeed(curMusic, MADDriver);
 	
-	if (MusicPlayActive == true) return;
+	if (MusicPlayActive == true)
+		return;
 	MusicPlayActive = true;
-
+	
 	RememberPat 		= MADDriver->Pat;
 	RememberReader 		= MADDriver->PartitionReader;
 	RememberPL 			= MADDriver->PL;
-
+	
 	MADDriver->Reading = true;
 	MADPurgeTrack(MADDriver);
 	
@@ -740,13 +734,13 @@ static Boolean IsPlay;
 
 pascal void myBackAction(ControlHandle theCntl, short ctlPart)
 {
-	if (ctlPart == kControlButtonPart)
-	{
-		if (!IsPlay) DoPlay();
+	if (ctlPart == kControlButtonPart) {
+		if (!IsPlay)
+			DoPlay();
 		DoRecule();
-	}
-	else if (!IsPlay) DoPause();
-
+	} else if (!IsPlay)
+		DoPause();
+	
 	DoGlobalNull();
 	
 	WaitNextEvent(everyEvent, &theEvent, 1, NULL);
@@ -757,33 +751,26 @@ static	Boolean		alreadyReady;
 
 pascal void myForeAction(ControlHandle theCntl, short ctlPart)
 {
-	if (ctlPart == kControlButtonPart)
-	{
-		if (!alreadyReady)
-		{
+	if (ctlPart == kControlButtonPart) {
+		if (!alreadyReady) {
 			alreadyReady = true;
-			if (IsPlay)
-			{
+			if (IsPlay) {
 				MADDriver->VExt = doubleSpeed;
-			//	ChangeSpeed();
-			}
-			else DoPlay();
+				//ChangeSpeed();
+			} else
+				DoPlay();
 		}
-	}
-	else
-	{
-		if (alreadyReady)
-		{
+	} else {
+		if (alreadyReady) {
 			alreadyReady = false;
-			if (IsPlay)
-			{
+			if (IsPlay) {
 				MADDriver->VExt = doubleSpeed / 2;
-			//	ChangeSpeed();
-			}
-			else DoPause();
+				//ChangeSpeed();
+			} else
+				DoPause();
 		}
 	}
-
+	
 	DoGlobalNull();
 	
 	WaitNextEvent(everyEvent, &theEvent, 1, NULL);
@@ -794,11 +781,11 @@ void ScanTime()
 	short			i, x, y;
 	short			dstPL;
 	Cmd				*aCmd;
-
+	
 	float			timeResult;
 	long			time;
 	long			speed, finespeed;
-
+	
 	timeResult		= 0;
 	time			= 0;
 	speed			= curMusic->header->speed;
@@ -808,9 +795,9 @@ void ScanTime()
 	
 	for (i = 0; i < curMusic->header->numPointers; i++)
 	{
-		if (TimeScanPtr[ i] != NULL) DisposePtr((Ptr) TimeScanPtr[ i]);
+		if (TimeScanPtr[i] != NULL) DisposePtr((Ptr)TimeScanPtr[i]);
 		
-		TimeScanPtr[ i] = (long*) NewPtr(curMusic->partition[ curMusic->header->oPointers[ i]]->header.size * sizeof(long) );
+		TimeScanPtr[i] = (long*) NewPtr(curMusic->partition[ curMusic->header->oPointers[i]]->header.size * sizeof(long));
 		
 		for (x = 0; x < curMusic->partition[ curMusic->header->oPointers[ i]]->header.size; x++)
 		{
@@ -818,45 +805,38 @@ void ScanTime()
 			
 			(TimeScanPtr[ i])[ x] = timeResult + (time * 125L * speed * 60) / (50 * finespeed);
 			
-			for (y = 0; y <  curMusic->header->numChn; y++)
-			{
-				aCmd = GetMADCommand(x, y, curMusic->partition[ curMusic->header->oPointers[ i]]);
-				if (aCmd == NULL) 
-				{
+			for (y = 0; y <  curMusic->header->numChn; y++) {
+				aCmd = GetMADCommand(x, y, curMusic->partition[ curMusic->header->oPointers[i]]);
+				if (aCmd == NULL) {
 					MyDebugStr(__LINE__, __FILE__, "Could not find the selected command!");
 					return;
 				}
 				/** SpeedE **/
 				
-				if (aCmd->cmd == speedE)
-				{
+				if (aCmd->cmd == speedE) {
 					/** Compute time for this interval **/
-
+					
 					timeResult += ((float) (time * 125L * speed * 60)) / ((float) (50 * finespeed));
 					time = 0;
 					
 					/************************************/
 					
-					if (aCmd->arg < 32)
-					{
-						if (aCmd->arg != 0) speed = aCmd->arg;
-					}
-					else
-					{
-						if (aCmd->arg != 0) finespeed = aCmd->arg;
+					if (aCmd->arg < 32) {
+						if (aCmd->arg != 0)
+							speed = aCmd->arg;
+					} else {
+						if (aCmd->arg != 0)
+							finespeed = aCmd->arg;
 					}
 				}
 				
 				/** SkipE **/
 				
-				if (aCmd->cmd == skipE)
-				{
-					for (; x < curMusic->partition[ curMusic->header->oPointers[ i]]->header.size; x++)
-					{
-						(TimeScanPtr[ i])[ x] = timeResult + (time * 125L * speed * 60) / (50 * finespeed);
+				if (aCmd->cmd == skipE) {
+					for (; x < curMusic->partition[ curMusic->header->oPointers[ i]]->header.size; x++) {
+						(TimeScanPtr[i])[x] = timeResult + (time * 125L * speed * 60) / (50 * finespeed);
 					}
 				}
-
 			}
 		}
 	}
@@ -867,7 +847,6 @@ void ScanTime()
 		Str255		aStr, bStr;
 		long		temp;
 		
-
 		maxTime = timeResult;
 		
 		SecondsToDate(timeResult / 60, &dtrp);

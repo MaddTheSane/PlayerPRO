@@ -3394,8 +3394,7 @@ void UpdateALLWindow(void)
 				aEvt.message = (long)aWind;
 				DoUpdateEvent(&aEvt);
 			}
-			if (QDIsPortBuffered(GetWindowPort(aWind)))
-				QDFlushPortBuffer(GetWindowPort(aWind), updateRgn);
+			QDFlushPortBuffer(GetWindowPort(aWind), updateRgn);
 			
 			DisposeRgn(updateRgn);
 		}
@@ -3514,8 +3513,7 @@ void StartDialog(void)
 		
 		DrawString("\pDebugging Mode");
 		//Unless we do this, the "Debugging Mode" text won't display unless a window moves over it
-		if (QDIsPortBuffered(GetDialogPort(myStartUpDlog)))
-			QDFlushPortBuffer(GetDialogPort(myStartUpDlog), NULL);
+		QDFlushPortBuffer(GetDialogPort(myStartUpDlog), NULL);
 		
 	}
 }

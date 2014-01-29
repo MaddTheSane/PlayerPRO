@@ -272,43 +272,42 @@ void DoNullWave(void)
 	
 	if (oldWindow == GetDialogWindow(WaveDlog))
 	{
-		RgnHandle	visibleRegion;
+		RgnHandle visibleRegion = NewRgn();
 		
 		myPt = theEvent.where;
 		GlobalToLocal(&myPt);
 		
-		visibleRegion = NewRgn();
-		
 		GetPortVisibleRegion(GetWindowPort(oldWindow), visibleRegion);
 		
-		if (PtInRgn(myPt, visibleRegion))
-		{
-			if (PtInRect(myPt, &WaveRect))
-			{
-				switch (mode)
-				{
+		if (PtInRgn(myPt, visibleRegion)) {
+			if (PtInRect(myPt, &WaveRect)) {
+				switch (mode) {
 					case zoomM:
-					if (theEvent.modifiers & optionKey) SetCursor(&ZoomOutCrsr);
-					else SetCursor(&ZoomInCrsr);
-					break;
-					
+						if (theEvent.modifiers & optionKey)
+							SetCursor(&ZoomOutCrsr);
+						else
+							SetCursor(&ZoomInCrsr);
+						break;
+						
 					case playM:
-					SetCursor(&PlayCrsr);
-					break;
-					
+						SetCursor(&PlayCrsr);
+						break;
+						
 					case noteM:
-					SetCursor(GetQDGlobalsArrow(&qdarrow));
-					break;
+						SetCursor(GetQDGlobalsArrow(&qdarrow));
+						break;
 				}
-			}
-			else SetCursor(GetQDGlobalsArrow(&qdarrow));
-		}
-		else SetCursor(GetQDGlobalsArrow(&qdarrow));
+			} else
+				SetCursor(GetQDGlobalsArrow(&qdarrow));
+		} else
+			SetCursor(GetQDGlobalsArrow(&qdarrow));
 		
+		QDFlushPortBuffer(GetWindowPort(oldWindow), visibleRegion);
 		DisposeRgn(visibleRegion);
 	}
 	
-	if (MakeUpdate) UpdateWaveInfo();
+	if (MakeUpdate)
+		UpdateWaveInfo();
 	
 	SetPort(SavePort);
 }

@@ -2158,7 +2158,6 @@ pascal void actionProcStaff(ControlHandle theControl, short ctlPart)
 				ScrollRect(&tRect, 0, (sVal - curVal) *YSize, aRgn);
 				
 				CreateCurStaffRect();
-				InvalWindowRgn(GetDialogWindow(StaffDlog), aRgn);
 				UpdateStaffWindow(StaffDlog);
 				break;
 			
@@ -2168,10 +2167,10 @@ pascal void actionProcStaff(ControlHandle theControl, short ctlPart)
 				StaffRect.top += 14;
 				
 				CreateCurStaffRect();
-				InvalWindowRgn(GetDialogWindow(StaffDlog), aRgn);
 				UpdateStaffWindow(StaffDlog);
 				break;
 		}
+		QDFlushPortBuffer(GetDialogPort(StaffDlog), aRgn);
 		DisposeRgn(aRgn);
 	}
 }

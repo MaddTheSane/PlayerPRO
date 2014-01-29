@@ -12,5 +12,6 @@
 #include <CoreServices/CoreServices.h>
 
 OSType String2OSType(StringPtr theStr);
+OSStatus MyInvalWindowRect(WindowRef window, const Rect *bounds);
 
 #endif
