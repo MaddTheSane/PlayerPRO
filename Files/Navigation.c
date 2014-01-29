@@ -31,7 +31,15 @@
 #define kCustomHeight 20
 #define kControlListID 149
 
-extern Cursor	PlayCrsr;
+enum {
+	allMusics = 1,
+	allReadable,
+	allFiles,
+	MADK = allFiles + 2,
+	others = MADK + 2
+};
+
+extern Cursor PlayCrsr;
 
 // customization globals:
 static	Handle 		gDitlList = NULL;
@@ -41,7 +49,7 @@ static	UInt16 		gfirstItem = 0;
 
 static Boolean 		needUp, AddAll;
 static MenuHandle	showWhatMenu;
-static OSType		plugListO[40];
+static OSType		plugListO[MAXPLUG + others];
 static OSType		specificType;
 extern short		showWhat;
 static MADMusic		*previewPartition = NULL;
@@ -50,15 +58,8 @@ static Boolean		gEraseAdd, gEraseAddCurrent, gUpdateCurrentFile;
 Boolean QTTestConversion(FSSpec *file, OSType fileType);
 
 CFArrayRef CopySupportedMusicUTIs();
-static OSType OSTypeFromSpecUsingUTI(FSSpec theSpec);
-
-enum {
-	allMusics = 1,
-	allReadable = 2,
-	allFiles = 3,
-	MADK = 5,
-	others = 7
-};
+OSType GetOSTypeFromSpecUsingUTI(FSSpec theSpec);
+OSType GetOSTypeFromRefUsingUTI(FSRef theSpec);
 
 OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, ByteCount maximumSize, ByteCount *actualSize)
 {
@@ -66,7 +67,8 @@ OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, 
 	ByteCount	dataSize;
 	ByteCount	acSize;
 	
-	if (typeCode) *typeCode = desc->descriptorType;
+	if (typeCode)
+		*typeCode = desc->descriptorType;
 	
 	h = (Handle)desc->dataHandle;
 	dataSize = GetHandleSize(h);
@@ -76,10 +78,49 @@ OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, 
 		acSize = dataSize;
 	BlockMoveData(*h, dataBuffer, acSize);
 	
-	if (actualSize) *actualSize = acSize;
+	if (actualSize)
+		*actualSize = acSize;
 	
 	return noErr;
 }
+
+static OSErr ExtractFiles(NavCBRecPtr callBackParms, FSSpecArrayPtr *finalSpec, long *totCount)
+{
+	OSErr			theErr = -1;
+	AEDescList 		selectionList;
+	
+	if (!finalSpec) {
+		return MADParametersErr;
+	}
+	
+	if (NavCustomControl(callBackParms->context, kNavCtlGetSelection, &selectionList) == noErr) {
+		long		count = 0;
+		long		index;
+		
+		if (AECountItems(&selectionList, &count) == noErr) {
+			*finalSpec = (FSSpecArrayPtr)NewPtr(count * sizeof(FSSpec));
+			if (totCount) {
+				*totCount = count;
+			}
+			for (index = 1; index <= count; index++) {
+				AEDesc theItemDesc;
+				AEKeyword keyword;
+				
+				if (AEGetNthDesc(&selectionList, index, typeFSS, &keyword, &theItemDesc) == noErr) {
+					// put something in there:
+					if (MyAEGetDescData(&theItemDesc, NULL, &(*finalSpec)[index], sizeof(FSSpec), NULL) == noErr) {
+						theErr = noErr;
+					}
+					AEDisposeDesc(&theItemDesc);
+				}
+			}
+		}
+		AEDisposeDesc(&selectionList);
+	}
+	
+	return theErr;
+}
+
 
 OSErr ExtractFile(NavCBRecPtr callBackParms, FSSpec	*finalSpec)
 {
@@ -99,7 +140,7 @@ OSErr ExtractFile(NavCBRecPtr callBackParms, FSSpec	*finalSpec)
 				
 				if (AEGetNthDesc(&selectionList, index, typeFSS, &keyword, &theItemDesc) == noErr) {
 					// put something in there:
-					if (MyAEGetDescData (&theItemDesc, NULL, finalSpec, sizeof(FSSpec), NULL) == noErr) {
+					if (MyAEGetDescData(&theItemDesc, NULL, finalSpec, sizeof(FSSpec), NULL) == noErr) {
 						theErr = noErr;
 					}
 					AEDisposeDesc(&theItemDesc);
@@ -111,24 +152,6 @@ OSErr ExtractFile(NavCBRecPtr callBackParms, FSSpec	*finalSpec)
 	
 	return theErr;
 }
-
-#if 0
-void NWriteSupportedFormat(DialogPtr	aDia)
-{
-	short	i;
-	Str255	text;
-	
-	pStrcpy(text, "\pMADI");
-	
-	for (i = 0; i < MADGetMADLibraryPtr()->TotalPlug; i++)
-	{
-		pStrcat(text, "\p - ");
-		pStrcat(text, MADGetMADLibraryPtr()->ThePlug[ i].MenuName);
-	}
-	
-	SetDText(aDia, gfirstItem + 4, text);
-}
-#endif
 
 // *****************************************************************************
 // *
@@ -200,8 +223,7 @@ void HandleCustomMouseDown(NavCBRecPtr callBackParms)
 	partCode = FindControl(where,callBackParms->window,&whichControl);	// get the control itself
 	
 	// ask NavServices for the first custom control's ID:
-	if (callBackParms->context != 0)	// always check to see if the context is correct
-	{
+	if (callBackParms->context != 0) {	// always check to see if the context is correct
 		theErr = NavCustomControl(callBackParms->context,kNavCtlGetFirstControlID,&firstItem);	
 		realItem = theItem - firstItem + 1;		// map it to our DITL constants:	
 	}
@@ -220,9 +242,7 @@ void HandleCustomMouseDown(NavCBRecPtr callBackParms)
 				SetControlTitle((ControlHandle) itemHandle, "\pPreview");
 				
 				if (gEraseAddCurrent) ControlSwitch(firstItem + 10, GetDialogFromWindow(callBackParms->window), 255);
-			}
-			else if (ExtractFile(callBackParms, &spec) == noErr)
-			{
+			} else if (ExtractFile(callBackParms, &spec) == noErr) {
 				FInfo	fndrInfo;
 				char	tempC[ 5];
 				
@@ -245,12 +265,9 @@ void HandleCustomMouseDown(NavCBRecPtr callBackParms)
 								break;
 						}
 						
-						if (type == '!!!!' || CheckFileType(spec, type) == false)
-						{
+						if (type == '!!!!' || CheckFileType(spec, type) == false) {
 							Erreur(4, -86);
-						}
-						else
-						{
+						} else {
 							MADDriver->Reading = false;
 							MADPurgeTrack(MADDriver);
 							MADCleanDriver(MADDriver);
@@ -279,10 +296,9 @@ void HandleCustomMouseDown(NavCBRecPtr callBackParms)
 				}
 			}
 			break;
-#if 0
+			
 		case 9:	// AddALL
-			if (ExtractFile(callBackParms, &spec) == noErr)
-			{
+			if (ExtractFile(callBackParms, &spec) == noErr) {
 				CInfoPBRec	block;
 				Str255		directoryName;
 				
@@ -292,22 +308,20 @@ void HandleCustomMouseDown(NavCBRecPtr callBackParms)
 				block.dirInfo.ioVRefNum = spec.vRefNum;
 				block.dirInfo.ioFDirIndex = -1;
 				block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
-				if (PBGetCatInfo(&block, false) == noErr)
-				{
+				if (PBGetCatInfo(&block, false) == noErr) {
 					pStrcpy(spec.name, directoryName);
 					spec.parID = block.dirInfo.ioDrParID;
 					AESendOpenFile(&spec);
 				}
 			}
 			break;
-#endif
 			
 		case 8:
 			if (ExtractFile(callBackParms, &spec) == noErr) {
 				OSType	type;
 				char	tempC[5];
 				
-				if ((type = OSTypeFromSpecUsingUTI(spec))) {
+				if ((type = GetOSTypeFromSpecUsingUTI(spec))) {
 					if (type != 'STCf') {
 						
 						switch (showWhat) {
@@ -408,63 +422,62 @@ pascal void myCustomEventProc(NavEventCallbackMessage callBackSelector, NavCBRec
 	switch (callBackSelector) {
 		case kNavCBEvent:
 			switch (callBackParms->eventData.eventDataParms.event->what) {
-			case kHighLevelEvent:
-				AEProcessAppleEvent(callBackParms->eventData.eventDataParms.event);
-				break;
-				
-			case nullEvent:
-				if (gEraseAdd != gEraseAddCurrent)
-				{
-					short firstItem;
+				case kHighLevelEvent:
+					AEProcessAppleEvent(callBackParms->eventData.eventDataParms.event);
+					break;
 					
-					gEraseAddCurrent = gEraseAdd;
-					
-					if (gEraseAddCurrent) {
-						theErr = NavCustomControl(callBackParms->context,kNavCtlGetFirstControlID,&firstItem);
-						if (previewPartition == NULL) ControlSwitch(firstItem + 10, GetDialogFromWindow(callBackParms->window), 255);
-						//ControlSwitch(firstItem + 9, callBackParms->window, 255);
-						//ControlSwitch(firstItem + 8, callBackParms->window, 255);
-					} else {
-						theErr = NavCustomControl(callBackParms->context,kNavCtlGetFirstControlID,&firstItem);
-						ControlSwitch(firstItem + 10, GetDialogFromWindow(callBackParms->window), 0);
-						//ControlSwitch(firstItem + 9, callBackParms->window, 0);
-						//ControlSwitch(firstItem + 8, callBackParms->window, 0);
+				case nullEvent:
+					if (gEraseAdd != gEraseAddCurrent) {
+						short firstItem;
+						
+						gEraseAddCurrent = gEraseAdd;
+						
+						if (gEraseAddCurrent) {
+							theErr = NavCustomControl(callBackParms->context,kNavCtlGetFirstControlID,&firstItem);
+							if (previewPartition == NULL) ControlSwitch(firstItem + 10, GetDialogFromWindow(callBackParms->window), 255);
+							ControlSwitch(firstItem + 9, GetDialogFromWindow(callBackParms->window), 255);
+							ControlSwitch(firstItem + 8, GetDialogFromWindow(callBackParms->window), 255);
+						} else {
+							theErr = NavCustomControl(callBackParms->context,kNavCtlGetFirstControlID,&firstItem);
+							ControlSwitch(firstItem + 10, GetDialogFromWindow(callBackParms->window), 0);
+							ControlSwitch(firstItem + 9, GetDialogFromWindow(callBackParms->window), 0);
+							ControlSwitch(firstItem + 8, GetDialogFromWindow(callBackParms->window), 0);
+						}
 					}
-				}
-				
-				if (gUpdateCurrentFile)
-					gUpdateCurrentFile = false;
-				
-				DoGlobalNull();
-				break;
-				
-			case updateEvt:
-				if ((WindowPtr)callBackParms->eventData.eventDataParms.event->message == callBackParms->window) {
 					
-				} else {
-					EventRecord *event = callBackParms->eventData.eventDataParms.event;
-					GrafPtr		savedPort;
-					Rect		caRect;
+					if (gUpdateCurrentFile)
+						gUpdateCurrentFile = false;
 					
-					GetPort(&savedPort);
-					SetPortWindowPort((WindowPtr)event->message);
+					DoGlobalNull();
+					break;
 					
-					GetPortBounds(GetWindowPort((WindowPtr)event->message), &caRect);
+				case updateEvt:
+					if ((WindowPtr)callBackParms->eventData.eventDataParms.event->message == callBackParms->window) {
+						
+					} else {
+						EventRecord *event = callBackParms->eventData.eventDataParms.event;
+						GrafPtr		savedPort;
+						Rect		caRect;
+						
+						GetPort(&savedPort);
+						SetPortWindowPort((WindowPtr)event->message);
+						
+						GetPortBounds(GetWindowPort((WindowPtr)event->message), &caRect);
+						
+						InvalWindowRect(((WindowPtr)event->message), &caRect);
+						SetPort(savedPort);
+						
+						DoUpdateEvent(callBackParms->eventData.eventDataParms.event);
+					}
+					break;
 					
-					InvalWindowRect(((WindowPtr)event->message), &caRect);
-					SetPort(savedPort);
+				case mouseDown:
+					HandleCustomMouseDown(callBackParms);
+					break;
 					
-					DoUpdateEvent(callBackParms->eventData.eventDataParms.event);
-				}
-				break;
-				
-			case mouseDown:
-				HandleCustomMouseDown(callBackParms);
-				break;
-				
-			default:
-				break;
-		}
+				default:
+					break;
+			}
 			break;
 			
 		case kNavCBSelectEntry:
@@ -526,7 +539,7 @@ pascal void myCustomEventProc(NavEventCallbackMessage callBackSelector, NavCBRec
 			
 		case kNavCBStart:
 			// add the rest of the custom controls via the DITL resource list:
-			gDitlList = GetResource('DITL',kControlListID);
+			gDitlList = GetResource('DITL', kControlListID);
 			
 			if ((gDitlList != NULL)&&(ResError() == noErr)) {
 				if ((theErr = NavCustomControl(callBackParms->context,kNavCtlAddControlList,gDitlList)) == noErr) {
@@ -548,8 +561,12 @@ pascal void myCustomEventProc(NavEventCallbackMessage callBackSelector, NavCBRec
 				if (ExtractFile(callBackParms, &spec) == noErr) {
 					char	tempC[5];
 					OSType	type;
-					
-					if ((type = OSTypeFromSpecUsingUTI(spec))) {
+					FSSpec	spec;
+					FSSpecArrayPtr specs;
+					long	index, count;
+					//EventRecord *event = callBackParms->eventData.eventDataParms;
+
+					if ((type = GetOSTypeFromSpecUsingUTI(spec))) {
 						if (type != 'STCf') {
 							switch (showWhat) {
 								case allReadable:
@@ -559,17 +576,36 @@ pascal void myCustomEventProc(NavEventCallbackMessage callBackSelector, NavCBRec
 									break;
 									
 								default:
-									type = type;
 									break;
 							}
 							
 							if (type == '!!!!' || CheckFileType(spec, type) == false) {
 								Erreur(4, -86);
 							} else {
-								HSetVol(NULL, spec.vRefNum, spec.parID);
-								//HGetFInfo(fndrInfo.fdFile.vRefNum, fndrInfo.fdFile.parID, fndrInfo.fdFile.name, &fndrInfo);
-								//fndrInfo.fdCreator = 'SNPL';
-								//SetFInfo(fndrInfo.fdFile.name, 0, &fndrInfo);
+								ExtractFiles(callBackParms, &specs, &count);
+								for (index = 0; index < count; index++) {
+									
+								}
+#if 0
+								if (theErr == noErr) {
+									AEDesc 	resultDesc;
+									FInfo	fileInfo;
+									long	index;
+									
+									// we are ready to open the document(s), grab information about each file for opening:
+									theErr = AECountItems(&(theReply.selection), &count);
+									for (index = 1; index <= count; index++) {
+										AEKeyword keyword;
+										
+										if ((theErr = AEGetNthDesc(&(theReply.selection),index,typeFSS, &keyword,&resultDesc)) == noErr) {
+											if ((theErr = MyAEGetDescData(&resultDesc, NULL, &spec, sizeof(FSSpec), NULL )) == noErr)
+												theErr = AEDisposeDesc(&resultDesc);
+										}
+									}
+									
+								} else
+									theErr = -1;
+#endif
 							}
 						}
 					}
@@ -588,12 +624,12 @@ pascal void myCustomEventProc(NavEventCallbackMessage callBackSelector, NavCBRec
 pascal Boolean MyCustomFilter(AEDesc *theItem, void *info, NavCallBackUserData callBackUD, NavFilterModes filterMode)
 {
 	short		i;
-	FSSpec		spec;
+	FSRef		spec;
 	OSType		type;
 	char		tempC[5];
 
-	if (MyAEGetDescData(theItem, NULL, &spec, sizeof(FSSpec), NULL) == noErr) {
-		if ((type = OSTypeFromSpecUsingUTI(spec))) {
+	if (MyAEGetDescData(theItem, NULL, &spec, sizeof(FSRef), NULL) == noErr) {
+		if ((type = GetOSTypeFromRefUsingUTI(spec))) {
 			switch (showWhat) {
 				case allMusics:
 					if (type == 'STCf' || type == 'MADK')
@@ -609,11 +645,10 @@ pascal Boolean MyCustomFilter(AEDesc *theItem, void *info, NavCallBackUserData c
 				break;
 				
 				case allReadable:
-					
 					if (type == 'STCf')
 						return true;
 					
-					if (MADMusicIdentifyFSp(gMADLib, tempC, &spec) == noErr)
+					if (MADMusicIdentifyFSRef(gMADLib, tempC, &spec) == noErr)
 						return true;
 				break;
 						
@@ -644,7 +679,7 @@ pascal Boolean MyCustomFilter2(AEDesc *theItem, void *info, NavCallBackUserData 
 	OSType		type;
 	
 	if (MyAEGetDescData(theItem, NULL, &spec, sizeof(FSSpec), NULL) == noErr) {
-		if ((type = OSTypeFromSpecUsingUTI(spec))) {
+		if ((type = GetOSTypeFromSpecUsingUTI(spec))) {
 			if (type == specificType) {
 				return true;
 			}
@@ -658,10 +693,9 @@ pascal Boolean MyCustomFilter2(AEDesc *theItem, void *info, NavCallBackUserData 
 
 OSErr DoCustomOpen(FSSpec *spec)
 {
-	NavReplyRecord				theReply;
 	NavDialogCreationOptions	dialogOptions;
 	OSErr						theErr = noErr;
-	long						count = 0, i;
+	long						i;
 	NavEventUPP					eventUPP = NewNavEventUPP(myCustomEventProc);
 	NavObjectFilterUPP			filterProcUPP = NewNavObjectFilterUPP(MyCustomFilter);
 	NavDialogRef				diagRef = NULL;
@@ -678,35 +712,37 @@ OSErr DoCustomOpen(FSSpec *spec)
 	
 	showWhatMenu = GetMenu(500);
 	
+	listPtr = (NavTypeListPtr)NewPtrClear(sizeof(NavTypeList) + sizeof(OSType) * gMADLib->TotalPlug);
+	listPtr->componentSignature = 'SNPL';
+
 	for (i = 0; i < gMADLib->TotalPlug; i++) {
 		Str255 pMenuName;
+		OSType theType = Ptr2OSType(gMADLib->ThePlug[i].type);
 		GetPStrFromCFString(gMADLib->ThePlug[i].MenuName, pMenuName);
-		
 		switch (gMADLib->ThePlug[i].mode) {
 			case 'EXIM':
 			case 'IMPL':
 				AppendMenu(showWhatMenu, pMenuName);
-				count++;
-				plugListO[CountMenuItems(showWhatMenu)] = Ptr2OSType(gMADLib->ThePlug[i].type);
+				plugListO[CountMenuItems(showWhatMenu)] = theType;
+				listPtr->osType[listPtr->osTypeCount++] = theType;
+				break;
+				
+			default:
+				
 				break;
 		}
 	}
 	
-	specificType = plugListO[ showWhat];
+	specificType = plugListO[showWhat];
 	
 	// default behavior for browser and dialog:
 	theErr = NavGetDefaultDialogCreationOptions(&dialogOptions);
 	
 	dialogOptions.optionFlags &= ~(kNavAllowPreviews | kNavAllowMultipleFiles);
+	dialogOptions.optionFlags |= kNavDontAutoTranslate | kNavNoTypePopup;
 	
 	dialogOptions.clientName = CFSTR("PlayerPRO 5");
 	
-	listPtr = (NavTypeListPtr)NewPtrClear(sizeof(NavTypeList) + sizeof(OSType) * count);
-	listPtr->componentSignature = 'SNPL';
-	listPtr->osTypeCount = count;
-	for (i = 0; i < count; i++) {
-		listPtr->osType[i] = plugListO[i];
-	}
 	
 	//TODO: Open based on UTI, not Mac OS filetype.
 	//Mac OS X does NOT set filetype or creator based on file extention on any version I know of.
@@ -714,13 +750,7 @@ OSErr DoCustomOpen(FSSpec *spec)
 	theErr = NavCreateGetFileDialog(&dialogOptions, &listPtr, eventUPP, NULL, filterProcUPP, NULL, &diagRef);
 	NavDialogRun(diagRef);
 	
-	DisposeNavEventUPP(eventUPP);
-	DisposeNavObjectFilterUPP(filterProcUPP);
-	
-	
 	UpdateALLWindow();
-	
-	count = 0;
 	
 	if (previewPartition) {
 		MADDriver->Reading = false;							// Stop reading current partition
@@ -730,74 +760,40 @@ OSErr DoCustomOpen(FSSpec *spec)
 		previewPartition = NULL;
 	}
 	
-	if (theReply.validRecord && theErr == noErr) {
-		AEDesc 	resultDesc;
-		long	index;
-		
-		// we are ready to open the document(s), grab information about each file for opening:
-		theErr = AECountItems(&(theReply.selection),&count);
-		for (index = 1; index <= count; index++) {
-			AEKeyword keyword;
-			
-			if ((theErr = AEGetNthDesc(&(theReply.selection),index,typeFSS, &keyword,&resultDesc)) == noErr) {
-				if ((theErr = MyAEGetDescData (&resultDesc, NULL, spec, sizeof(FSSpec), NULL )) == noErr)
-					theErr = AEDisposeDesc(&resultDesc);
-			}
-		}
-		
-		theErr = NavDisposeReply(&theReply);	// clean up after ourselves
-	} else
-		theErr = -1;
-	
 	NavDialogDispose(diagRef);
 	DisposeMenu(showWhatMenu);
 	DisposePtr((Ptr)listPtr);
 	
+	DisposeNavEventUPP(eventUPP);
+	DisposeNavObjectFilterUPP(filterProcUPP);
+
 	return theErr;
 }
 
 OSErr DoCustomSave(Str255 bStr, Str255 fileName, OSType theType, FSSpec *spec)
 {
 	//TODO: Open based on UTI
-	NavReplyRecord		reply;
-	NavDialogOptions	dialogOptions;
-	OSErr				theErr;
+	NavDialogCreationOptions	dialogOptions;
+	OSErr						theErr;
+	NavDialogRef				diaRef = NULL;
+	CFStringRef					fileNameCF, bStrCF;
 	
-	theErr = NavGetDefaultDialogOptions(&dialogOptions);
+	theErr = NavGetDefaultDialogCreationOptions(&dialogOptions);
 	
-	pStrcpy(dialogOptions.clientName, "\pPlayerPRO");
-	pStrcpy(dialogOptions.savedFileName, fileName);
-	pStrcpy(dialogOptions.windowTitle, bStr);
+	dialogOptions.clientName = CFSTR("PlayerPRO 5");
+	fileNameCF = CFStringCreateWithPascalString(kCFAllocatorDefault, fileName, kCFStringEncodingMacRoman);
+	bStrCF = CFStringCreateWithPascalString(kCFAllocatorDefault, bStr, kCFStringEncodingMacRoman);
+	dialogOptions.saveFileName = fileNameCF;
+	dialogOptions.windowTitle = bStrCF;
 	
-	dialogOptions.dialogOptionFlags &= ~kNavAllowStationery;
-	
-	NavPutFile(NULL,
-			   &reply,
-			   &dialogOptions,
-			   MyDlgFilterNavDesc,
-			   theType,
-			   'SNPL',
-			   NULL);
+	NavCreatePutFileDialog(&dialogOptions, theType, 'SNPL', MyDlgFilterNavDesc, NULL, &diaRef);
+	NavDialogRun(diaRef);
 	
 	UpdateALLWindow();
 	
-	if (reply.validRecord) {
-		AEDesc 	resultDesc;	
-		AEKeyword keyword;
-		
-		resultDesc.dataHandle = NULL;
-		
-		// retrieve the returned selection:
-		// since only 1 selection is possible, we get the first AEDesc:
-		if ((theErr = AEGetNthDesc(&(reply.selection), 1, typeFSS, &keyword, &resultDesc)) == noErr) {
-			MyAEGetDescData(&resultDesc, NULL, spec, sizeof(FSSpec), NULL);
-			
-			//BlockMoveData(*resultDesc.dataHandle, spec, sizeof(FSSpec));
-			
-			theErr = NavCompleteSave(&reply, kNavTranslateInPlace);
-		}
-	} else
-		return -1;
+	NavDialogDispose(diaRef);
+	CFRelease(bStrCF);
+	CFRelease(fileNameCF);
 	
 	return noErr;
 }
@@ -890,22 +886,40 @@ CFArrayRef CopySupportedMusicUTIs()
 	return outPutUTIs;
 }
 
-static OSType OSTypeFromSpecUsingUTI(FSSpec theSpec)
+OSType GetOSTypeFromRefUsingUTI(FSRef tmpRef)
 {
-	FSRef		tmpRef;
-	CFStringRef	utiStr, extStr;
-	CFURLRef	theURL;
-	FInfo		fndrInfo;
-	OSStatus iErr = FSpGetFInfo(&theSpec, &fndrInfo);
-	if (iErr == noErr && (fndrInfo.fdType != 0 || fndrInfo.fdType != 0x3F3F3F3F || fndrInfo.fdType != '    ')) {
-		return fndrInfo.fdType;
+	CFStringRef		utiStr, extStr;
+	CFURLRef		theURL;
+	FSCatalogInfo	fileCat = {0};
+	FileInfo		*fndrInfo = (FileInfo*)&fileCat.finderInfo;
+	OSStatus		iErr;
+	OSType			retType;
+	
+	iErr = FSGetCatalogInfo(&tmpRef, kFSCatInfoFinderInfo, &fileCat, NULL, NULL, NULL);
+	if (iErr == noErr && (fndrInfo->fileType != 0 && fndrInfo->fileType != 0x3F3F3F3F && fndrInfo->fileType != '    ')) {
+		retType = fndrInfo->fileType;
+		extStr = UTCreateStringForOSType(retType);
+		if (!extStr) {
+			return retType;
+		}
+		utiStr = UTTypeCreatePreferredIdentifierForTag(kUTTagClassOSType, extStr, NULL);
+		CFRelease(extStr);
+		if (!utiStr) {
+			return retType;
+		}
+		extStr = UTTypeCopyPreferredTagWithClass(utiStr, kUTTagClassOSType);
+		CFRelease(utiStr);
+		if (!extStr) {
+			return retType;
+		}
+		
+		retType = UTGetOSTypeFromString(extStr);
+		CFRelease(extStr);
+		return retType;
 	}
-	iErr = FSpMakeFSRef(&theSpec, &tmpRef);
-	if (iErr) {
-		return 0x3F3F3F3F;
-	}
+	
 	if (!(theURL = CFURLCreateFromFSRef(kCFAllocatorDefault, &tmpRef))) {
-		return 0x3F3F3F3F;
+		return 0;
 	}
 	extStr = CFURLCopyPathExtension(theURL);
 	CFRelease(theURL);
@@ -914,7 +928,7 @@ static OSType OSTypeFromSpecUsingUTI(FSSpec theSpec)
 	}
 	utiStr = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, extStr, NULL);
 	CFRelease(extStr);
-	if (utiStr) {
+	if (!utiStr) {
 		return 0x3F3F3F3F;
 	}
 	
@@ -924,7 +938,18 @@ static OSType OSTypeFromSpecUsingUTI(FSSpec theSpec)
 		return 0x3F3F3F3F;
 	}
 	
-	OSType retType = UTGetOSTypeFromString(extStr);
+	retType = UTGetOSTypeFromString(extStr);
 	CFRelease(extStr);
 	return retType;
+}
+
+OSType GetOSTypeFromSpecUsingUTI(FSSpec theSpec)
+{
+	FSRef		tmpRef;
+	OSStatus	iErr;
+	iErr = FSpMakeFSRef(&theSpec, &tmpRef);
+	if (iErr) {
+		return 0;
+	}
+	return GetOSTypeFromRefUsingUTI(tmpRef);
 }

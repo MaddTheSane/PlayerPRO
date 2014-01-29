@@ -111,7 +111,7 @@ void CenterRect(Rect *main, Rect *dst, Rect *result)
 
 pascal Boolean mylClickLoop(void)
 {
-//	DoGlobalNull();
+	//DoGlobalNull();
 	
 	return true;
 }
@@ -123,11 +123,10 @@ pascal Boolean MyDlgFilter(DialogPtr theDlg, EventRecord *theEvt, short *itemHit
 	short			thePart;
 	WindowPtr		whichWindow;
 	short			LoopSet;
-	GrafPtr			savePort;
-
+	
 	dialogModifiers = theEvt->modifiers;
 	*itemHit = 0;
-
+	
 	if (theEvt->what == updateEvt) {
 		if ((WindowPtr) theEvt->message == GetDialogWindow(theDlg)) {
 			switch (GetWRefCon(GetDialogWindow(theDlg))) {
@@ -165,9 +164,7 @@ pascal Boolean MyDlgFilter(DialogPtr theDlg, EventRecord *theEvt, short *itemHit
 		*itemHit = -updateEvt;
 		
 		return(true);
-	}
-	else if(theEvt->what == mouseDown) 
-	{
+	} else if(theEvt->what == mouseDown) {
 		thePart = FindWindow(theEvt->where, &whichWindow);
 		
 		if (thePart == inDrag)
@@ -182,52 +179,50 @@ pascal Boolean MyDlgFilter(DialogPtr theDlg, EventRecord *theEvt, short *itemHit
 			return(true);
 		}
 		else return(false);
-	}
-	else if (theEvt->what == keyDown)
-	{
-		switch ((theEvt->message) & charCodeMask )
-		{
-		case 0x0d:
-		case 0x03:
-			*itemHit = 1;
-			return(true );
-		case 0x1b:
-			*itemHit = 2;
-			return(true );
-		default:
-			return(false );
+	} else if (theEvt->what == keyDown) {
+		switch ((theEvt->message) & charCodeMask) {
+			case 0x0d:
+			case 0x03:
+				*itemHit = 1;
+				return true;
+				break;
+			case 0x1b:
+				*itemHit = 2;
+				return true;
+				break;
+			default:
+				return false;
+				break;
 		}
-	}
-	else if (theEvt->what == nullEvent)
-	{
+	} else if (theEvt->what == nullEvent) {
 		//ProcessSerialNumber	PSN;
-
+		
 		LoopSet = thePrefs.LoopType;
 		thePrefs.LoopType = 4;
 		
 		if (GetWRefCon(GetDialogWindow(theDlg)) != 9996) DoGlobalNull();
 		
 		thePrefs.LoopType = LoopSet;
-
+		
 		/*GetCurrentProcess(&PSN);
-		if(	PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
-			PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN)
-		{
-			SetFrontProcess(&playerPROPSN);		
-		}*/
-
+		 if(	PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
+		 PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN)
+		 {
+		 SetFrontProcess(&playerPROPSN);
+		 }*/
+		
 		*itemHit = -5;
 		return(true );
 	}
-/*	else if (theEvt->what == activateEvt)
-	{
-		if (AHelpDlog != NULL)
-		{
-			if (MacIsWindowVisible(GetDialogWindow(AHelpDlog))) ActivateProcedure(true);
-		}
-	}	*/
+	/*	else if (theEvt->what == activateEvt)
+	 {
+	 if (AHelpDlog != NULL)
+	 {
+	 if (MacIsWindowVisible(GetDialogWindow(AHelpDlog))) ActivateProcedure(true);
+	 }
+	 }	*/
 	
-	return(false);
+	return false;
 }
 
 void MyUpdateDialog(DialogPtr theDia)
