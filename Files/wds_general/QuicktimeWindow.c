@@ -1212,7 +1212,7 @@ Boolean QTTypeConversion(OSType fileType)
 		case 'MP3 ':
 		case 'mpg4':
 		case 'PLAY':
-			//case '????':
+		case 0x3F3F3F3F:
 			return true;
 			break;
 	}
