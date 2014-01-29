@@ -1302,8 +1302,7 @@ OSErr MADDisposeDriver(MADDriverRec* MDriver)
 #ifdef _MAC_H
 OSErr MADInitLibraryNew(FSRefPtr PlugsFolder, MADLibrary **lib)
 {
-	long 	i, mytab[ 12] =
-	{
+	long 	i, mytab[12] = {
 		1712L*16L,1616L*16L,1524L*16L,1440L*16L,1356L*16L,1280L*16L,
 		1208L*16L,1140L*16L,1076L*16L,1016L*16L,960L*16L,907L*16L
 	};
@@ -1319,14 +1318,14 @@ OSErr MADInitLibraryNew(FSRefPtr PlugsFolder, MADLibrary **lib)
 	
 	*lib = (MADLibrary*) NewPtrClear(sizeof(MADLibrary));
 	
-	if (*lib == NULL) return MADNeedMemory;
+	if (*lib == NULL)
+		return MADNeedMemory;
 	
 	(*lib)->IDType = 'MADD';
 	(*lib)->sysMemory = FALSE;
 	
-	for (i = 0; i < 12; i++)
-	{
-		(*lib)->mytab[ i] = mytab[ i];
+	for (i = 0; i < 12; i++) {
+		(*lib)->mytab[i] = mytab[i];
 	}
 	
 	MADInitImportPlug(*lib, PlugsFolder);
@@ -1335,18 +1334,19 @@ OSErr MADInitLibraryNew(FSRefPtr PlugsFolder, MADLibrary **lib)
 
 OSErr MADInitLibrary(FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
 {
-	FSRef TempRef;
-	if(sysMemory == TRUE) fprintf(stderr, "PlayerPROCore: sysMemory Definition in MADInitLibrary is ignored\n");
+	if(sysMemory == TRUE)
+		fprintf(stderr, "PlayerPROCore: sysMemory Definition in MADInitLibrary is ignored\n");
 	
-	if(PlugsFolderName != NULL)
-	{
+	if(PlugsFolderName != NULL) {
+		FSRef TempRef;
 		OSErr iErr = noErr;
 		iErr = FSpMakeFSRef(PlugsFolderName, &TempRef);
 		if (iErr != noErr) {
 			return MADInitLibraryNew(NULL, lib);
-		}
+		} else
+			return MADInitLibraryNew(&TempRef, lib);
 	}
-	return MADInitLibraryNew(&TempRef, lib);
+	return MADInitLibraryNew(NULL, lib);
 }
 #else
 
@@ -1613,30 +1613,16 @@ OSErr MADLoadMADFileCString(MADMusic **music, Ptr fName)
 #ifdef _MAC_H
 OSErr MADSetHardwareVolume(long vol)
 {
-	Point			tempL;
-	long			*tL;
-	NumVersion		nVers;
-	Boolean			NewSoundManager;
+	Point	tempL;
+	long	*tL;
 	
-	//	if(vol > 255) vol = 255;
-	//	if(vol < 1) vol = 1;
-	
-	nVers = SndSoundManagerVersion();
-	//	BlockMoveData(&tt, &nVers, 4);
-	if (nVers.majorRev >= 3) NewSoundManager = true;
-	else NewSoundManager = false;
-	
-	if (vol >= 0)
-	{
-		if (NewSoundManager)
-		{
-			tempL.v = vol;
-			tempL.h = vol;
-			
-			tL = (long*) &tempL;
-			
-			SetDefaultOutputVolume(*tL);
-		}
+	if (vol >= 0) {
+		tempL.v = vol;
+		tempL.h = vol;
+		
+		tL = (long*) &tempL;
+		
+		SetDefaultOutputVolume(*tL);
 	}
 	
 	return noErr;
@@ -1644,52 +1630,35 @@ OSErr MADSetHardwareVolume(long vol)
 
 long MADGetHardwareVolume()
 {
-	Point			tempL;
-	NumVersion		nVers;
-	Boolean			NewSoundManager;
-	long			vol = 0;
+	Point	tempL;
+	long	vol = 0;
 	
-	nVers = SndSoundManagerVersion();
-	//	BlockMoveData(&tt, &nVers, 4);
-	if (nVers.majorRev >= 3) NewSoundManager = true;
-	else NewSoundManager = false;
+	GetDefaultOutputVolume((long*) &tempL);
 	
-	if (NewSoundManager)
-	{
-		GetDefaultOutputVolume((long*) &tempL);
-		
-		vol = tempL.h;
-	}
+	vol = tempL.h;
 	
 	return vol;
 }
 
-OSErr MADLoadMusicFSRefFile(MADLibrary *lib, MADMusic **music, OSType type, FSRefPtr theRef)
+OSErr MADLoadMusicFSRefFile(MADLibrary *lib, MADMusic **music, char *type, FSRefPtr theRef)
 {
-	//unfortunately, this function won't work if I just put a full path into it.
-	char	chartype[5];
-	OSErr	iErr = noErr;
-	FSSpec	oldspec, oldspecInfo;
-	Str63	AlienFileName;
+	OSErr	iErr;
+	FSSpec	oldspec;
 	Boolean UnusedBool1, UnusedBool2;
 	iErr = FSResolveAliasFile(theRef, TRUE, &UnusedBool1, &UnusedBool2);
-	if(iErr == fnfErr) return MADReadingErr;
-	else iErr = noErr;
-	FSGetCatalogInfo(theRef, kFSCatInfoNone, NULL, NULL, &oldspec, NULL);
-	HGetVol(NULL, &oldspecInfo.vRefNum , &oldspecInfo.parID);
-	HSetVol(NULL, oldspec.vRefNum, oldspec.parID);
-	pStrcpy(AlienFileName, oldspec.name);
-	MYP2CStr(AlienFileName);
+	if(iErr == fnfErr)
+		return MADReadingErr;
+	else
+		iErr = noErr;
 	
-	OSType2Ptr(type, chartype);
-	if (type == 'MADK')					iErr = MADLoadMADFileCString(music, (char *)AlienFileName);
-	else								iErr = MADLoadMusicFileCString(lib, music, chartype, (char *)AlienFileName);
-	HSetVol(NULL, oldspecInfo.vRefNum, oldspecInfo.parID);
+	iErr = FSGetCatalogInfo(theRef, kFSCatInfoNone, NULL, NULL, &oldspec, NULL);
+	if (iErr)
+		return iErr;
 	
-	return iErr;
+	return MADLoadMusicFSpFile(lib, music, type, &oldspec);
 }
 
-OSErr MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef)
+OSErr MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef)
 {
 	FSRef tempRef;
 	CFURLGetFSRef(theRef, &tempRef);
@@ -1705,8 +1674,10 @@ OSErr MADLoadMusicFSpFile(MADLibrary *lib, MADMusic **music, char *plugType, FSS
 	HSetVol(NULL, theSpec->vRefNum , theSpec->parID);
 	MYP2CStr(theSpec->name);
 	
-	if (!strcmp("MADK", plugType)) 	iErr = MADLoadMADFileCString(music, (Ptr) theSpec->name);
-	else								iErr = MADLoadMusicFileCString(lib, music, plugType, (Ptr) theSpec->name);
+	if (!strcmp("MADK", plugType))
+		iErr = MADLoadMADFileCString(music, (Ptr) theSpec->name);
+	else
+		iErr = MADLoadMusicFileCString(lib, music, plugType, (Ptr) theSpec->name);
 	
 	MYC2PStr((Ptr) theSpec->name);
 	HSetVol(NULL, saved.vRefNum , saved.parID);
@@ -1771,39 +1742,34 @@ OSErr MADLoadMusicFilePString(MADLibrary *lib, MADMusic **music, char *plugType,
  return noErr;
  }*/
 
-OSErr	MADMusicIdentifyFSRef(MADLibrary *lib, OSType *type, FSRefPtr theRef)
+OSErr MADMusicIdentifyFSRef(MADLibrary *lib, char *type, FSRefPtr theRef)
 {
-	//unfortunately, this function won't work if I just put a full path into it.
-	char	chartype[5];
-	FSSpec	oldspec, oldspecInfo;
-	Str63	AlienFileName;
+	FSSpec	oldspec;
 	OSErr	iErr = noErr;
 	Boolean UnusedBool1, UnusedBool2;
 	iErr = FSResolveAliasFile(theRef, TRUE, &UnusedBool1, &UnusedBool2);
-	if(iErr == fnfErr) return MADReadingErr;
-	else iErr = noErr;
-	FSGetCatalogInfo(theRef, kFSCatInfoNone, NULL, NULL, &oldspec, NULL);
-	HGetVol(NULL, &oldspecInfo.vRefNum , &oldspecInfo.parID);
-	HSetVol(NULL, oldspec.vRefNum, oldspec.parID);
-	pStrcpy(AlienFileName, oldspec.name);
-	MYP2CStr(AlienFileName);
+	if(iErr == fnfErr)
+		return MADReadingErr;
+	else
+		iErr = noErr;
 	
-	OSType2Ptr(*type, chartype);
-	iErr = PPIdentifyFile(lib, chartype, (char *)AlienFileName);
-	*type = Ptr2OSType(chartype);
-	HSetVol(NULL, oldspecInfo.vRefNum, oldspecInfo.parID);
+	iErr = FSGetCatalogInfo(theRef, kFSCatInfoNone, NULL, NULL, &oldspec, NULL);
+	if (iErr)
+		return iErr;
+
+	iErr = MADMusicIdentifyFSp(lib, type, &oldspec);
 	
 	return iErr;
 }
 
-OSErr	MADMusicIdentifyCFURL(MADLibrary *lib, OSType *type, CFURLRef URLRef)
+OSErr MADMusicIdentifyCFURL(MADLibrary *lib, char *type, CFURLRef URLRef)
 {
 	FSRef tempRef;
 	CFURLGetFSRef(URLRef, &tempRef);
 	return MADMusicIdentifyFSRef(lib, type, &tempRef);
 }
 
-OSErr	MADMusicIdentifyFSp(MADLibrary *lib, char *type, FSSpec *theSpec)
+OSErr MADMusicIdentifyFSp(MADLibrary *lib, char *type, FSSpec *theSpec)
 {
 	FSSpec	saved;
 	OSErr	err;
@@ -1832,7 +1798,7 @@ OSErr	MADMusicIdentifyPString(MADLibrary *lib, char *type, Str255 fName)
 }
 #endif
 
-OSErr	MADMusicIdentifyCString(MADLibrary *lib, char *type, Ptr fName)
+OSErr MADMusicIdentifyCString(MADLibrary *lib, char *type, Ptr fName)
 {
 	if (lib == NULL || type == NULL || fName == NULL) {
 		return MADParametersErr;
@@ -1844,15 +1810,13 @@ OSErr MADLoadMusicFileCString(MADLibrary *lib, MADMusic **music, char *plugType,
 {
 	OSErr iErr = noErr;
 	
-	if (lib == NULL || music == NULL || plugType == NULL || fName == NULL) {
+	if (lib == NULL || music == NULL || plugType == NULL || fName == NULL)
 		return MADParametersErr;
-	}
 
-	if (!strcmp("MADK", plugType)) iErr = MADLoadMADFileCString(music, fName);
+	if (!strcmp("MADK", plugType))
+		iErr = MADLoadMADFileCString(music, fName);
 	else
-	{
 		iErr = PPImportFile(lib, plugType, fName, music);
-	}
 	
 	return iErr;
 }
