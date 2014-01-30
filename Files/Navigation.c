@@ -172,31 +172,31 @@ void HandleCommandPopup(ControlHandle thePopup, NavCBRecPtr callBackParms)
 		case kNavCtlPageDown:
 			theErr = NavCustomControl(callBackParms->context,selection,NULL);
 			break;
-		
+			
 		case kNavCtlShowSelection:
 			theErr = NavCustomControl(callBackParms->context,kNavCtlShowSelection,NULL);
 			break;
-		
+			
 		case kNavCtlOpenSelection:
-			{
+		{
 			AEDesc itemToOpen;
 			theErr = NavCustomControl(callBackParms->context,kNavCtlOpenSelection,&itemToOpen);
 			if (itemToOpen.descriptorType == typeFSS)
-				{	
+			{
 				// you may open the file as described by 'itemToOpen', or do whatever you want with it:
 				AEDisposeDesc(&itemToOpen);
-				}
-			break;
 			}
+			break;
+		}
 			
 		case kNavCtlCancel:
 			theErr = NavCustomControl(callBackParms->context,kNavCtlCancel,NULL);
 			break;
-	
+			
 		case kNavCtlAccept:
 			theErr = NavCustomControl(callBackParms->context,kNavCtlAccept,NULL);
 			break;
-		}
+	}
 }
 
 // *****************************************************************************
@@ -207,9 +207,9 @@ void HandleCommandPopup(ControlHandle thePopup, NavCBRecPtr callBackParms)
 void HandleCustomMouseDown(NavCBRecPtr callBackParms)
 {
 	OSErr			theErr = noErr;
-	ControlHandle	whichControl;				
-	Point 			where = callBackParms->eventData.eventDataParms.event->where;	
-	short			theItem = 0;	
+	ControlHandle	whichControl;
+	Point 			where = callBackParms->eventData.eventDataParms.event->where;
+	short			theItem = 0;
 	UInt16 			firstItem = 0;
 	short			realItem = 0;
 	short			partCode = 0;
@@ -224,8 +224,8 @@ void HandleCustomMouseDown(NavCBRecPtr callBackParms)
 	
 	// ask NavServices for the first custom control's ID:
 	if (callBackParms->context != 0) {	// always check to see if the context is correct
-		theErr = NavCustomControl(callBackParms->context,kNavCtlGetFirstControlID,&firstItem);	
-		realItem = theItem - firstItem + 1;		// map it to our DITL constants:	
+		theErr = NavCustomControl(callBackParms->context,kNavCtlGetFirstControlID,&firstItem);
+		realItem = theItem - firstItem + 1;		// map it to our DITL constants:
 	}
 	
 	switch (realItem) {
@@ -562,10 +562,7 @@ pascal void myCustomEventProc(NavEventCallbackMessage callBackSelector, NavCBRec
 					char	tempC[5];
 					OSType	type;
 					FSSpec	spec;
-					FSSpecArrayPtr specs;
-					long	index, count;
-					//EventRecord *event = callBackParms->eventData.eventDataParms;
-
+					
 					if ((type = GetOSTypeFromSpecUsingUTI(spec))) {
 						if (type != 'STCf') {
 							switch (showWhat) {
@@ -581,31 +578,6 @@ pascal void myCustomEventProc(NavEventCallbackMessage callBackSelector, NavCBRec
 							
 							if (type == '!!!!' || CheckFileType(spec, type) == false) {
 								Erreur(4, -86);
-							} else {
-								ExtractFiles(callBackParms, &specs, &count);
-								for (index = 0; index < count; index++) {
-									
-								}
-#if 0
-								if (theErr == noErr) {
-									AEDesc 	resultDesc;
-									FInfo	fileInfo;
-									long	index;
-									
-									// we are ready to open the document(s), grab information about each file for opening:
-									theErr = AECountItems(&(theReply.selection), &count);
-									for (index = 1; index <= count; index++) {
-										AEKeyword keyword;
-										
-										if ((theErr = AEGetNthDesc(&(theReply.selection),index,typeFSS, &keyword,&resultDesc)) == noErr) {
-											if ((theErr = MyAEGetDescData(&resultDesc, NULL, &spec, sizeof(FSSpec), NULL )) == noErr)
-												theErr = AEDisposeDesc(&resultDesc);
-										}
-									}
-									
-								} else
-									theErr = -1;
-#endif
 							}
 						}
 					}
@@ -616,7 +588,7 @@ pascal void myCustomEventProc(NavEventCallbackMessage callBackSelector, NavCBRec
 		case kNavCBTerminate:
 			// release our appended popup menu:
 			if (gDitlList)
-				ReleaseResource(gDitlList);	
+				ReleaseResource(gDitlList);
 			break;
 	}
 }
@@ -627,7 +599,7 @@ pascal Boolean MyCustomFilter(AEDesc *theItem, void *info, NavCallBackUserData c
 	FSRef		spec;
 	OSType		type;
 	char		tempC[5];
-
+	
 	if (MyAEGetDescData(theItem, NULL, &spec, sizeof(FSRef), NULL) == noErr) {
 		if ((type = GetOSTypeFromRefUsingUTI(spec))) {
 			switch (showWhat) {
@@ -642,25 +614,25 @@ pascal Boolean MyCustomFilter(AEDesc *theItem, void *info, NavCallBackUserData c
 					
 					if (QTTypeConversion(type))
 						return true;
-				break;
-				
+					break;
+					
 				case allReadable:
 					if (type == 'STCf')
 						return true;
 					
 					if (MADMusicIdentifyFSRef(gMADLib, tempC, &spec) == noErr)
 						return true;
-				break;
-						
+					break;
+					
 				case allFiles:
 					return true;
 					break;
-				
+					
 				case MADK:
 					if (type == 'MADK')
 						return true;
 					break;
-				
+					
 				default:
 					if (type == specificType)
 						return true;
@@ -680,10 +652,18 @@ pascal Boolean MyCustomFilter2(AEDesc *theItem, void *info, NavCallBackUserData 
 	
 	if (MyAEGetDescData(theItem, NULL, &spec, sizeof(FSSpec), NULL) == noErr) {
 		if ((type = GetOSTypeFromSpecUsingUTI(spec))) {
-			if (type == specificType) {
-				return true;
+			switch (specificType) {
+				case 'ANYK':
+					return true;
+					break;
+					
+				default:
+					if (type == specificType)
+						return true;
+					else
+						return false;
+					break;
 			}
-			return false;
 		}
 	}
 	
@@ -693,6 +673,7 @@ pascal Boolean MyCustomFilter2(AEDesc *theItem, void *info, NavCallBackUserData 
 
 OSErr DoCustomOpen(FSSpec *spec)
 {
+	NavReplyRecord				theReply;
 	NavDialogCreationOptions	dialogOptions;
 	OSErr						theErr = noErr;
 	long						i;
@@ -700,6 +681,7 @@ OSErr DoCustomOpen(FSSpec *spec)
 	NavObjectFilterUPP			filterProcUPP = NewNavObjectFilterUPP(MyCustomFilter);
 	NavDialogRef				diagRef = NULL;
 	NavTypeListPtr				listPtr = NULL;
+	
 	
 	gEraseAdd = false;
 	gEraseAddCurrent = false;
@@ -712,9 +694,9 @@ OSErr DoCustomOpen(FSSpec *spec)
 	
 	showWhatMenu = GetMenu(500);
 	
-	listPtr = (NavTypeListPtr)NewPtrClear(sizeof(NavTypeList) + sizeof(OSType) * gMADLib->TotalPlug);
+	listPtr = (NavTypeListPtr)NewPtrClear(sizeof(NavTypeList) + sizeof(OSType) * gMADLib->TotalPlug + 1);
 	listPtr->componentSignature = 'SNPL';
-
+	
 	for (i = 0; i < gMADLib->TotalPlug; i++) {
 		Str255 pMenuName;
 		OSType theType = Ptr2OSType(gMADLib->ThePlug[i].type);
@@ -732,6 +714,7 @@ OSErr DoCustomOpen(FSSpec *spec)
 				break;
 		}
 	}
+	listPtr->osType[listPtr->osTypeCount++] = 'STCf';
 	
 	specificType = plugListO[showWhat];
 	
@@ -760,19 +743,42 @@ OSErr DoCustomOpen(FSSpec *spec)
 		previewPartition = NULL;
 	}
 	
+	theErr = NavDialogGetReply(diagRef, &theReply);
+	
+	if (theReply.validRecord && theErr == noErr) {
+		AEDesc 	resultDesc;
+		long	index, count;
+		
+		// we are ready to open the document(s), grab information about each file for opening:
+		theErr = AECountItems(&(theReply.selection), &count);
+		for (index=1;index<=count;index++) {
+			AEKeyword keyword;
+			
+			if ((theErr = AEGetNthDesc(&(theReply.selection),index,typeFSS, &keyword,&resultDesc)) == noErr) {
+				if ((theErr = MyAEGetDescData (&resultDesc, NULL, spec, sizeof(FSSpec), NULL )) == noErr)
+					
+					theErr = AEDisposeDesc(&resultDesc);
+			}
+		}
+		
+		theErr = NavDisposeReply(&theReply);	// clean up after ourselves
+	} else
+		theErr = -1;
+	
 	NavDialogDispose(diagRef);
+	NavDisposeReply(&theReply);
 	DisposeMenu(showWhatMenu);
 	DisposePtr((Ptr)listPtr);
 	
 	DisposeNavEventUPP(eventUPP);
 	DisposeNavObjectFilterUPP(filterProcUPP);
-
+	
 	return theErr;
 }
 
 OSErr DoCustomSave(Str255 bStr, Str255 fileName, OSType theType, FSSpec *spec)
 {
-	//TODO: Open based on UTI
+	NavReplyRecord				reply;
 	NavDialogCreationOptions	dialogOptions;
 	OSErr						theErr;
 	NavDialogRef				diaRef = NULL;
@@ -788,14 +794,34 @@ OSErr DoCustomSave(Str255 bStr, Str255 fileName, OSType theType, FSSpec *spec)
 	
 	NavCreatePutFileDialog(&dialogOptions, theType, 'SNPL', MyDlgFilterNavDesc, NULL, &diaRef);
 	NavDialogRun(diaRef);
+		
+	theErr = NavDialogGetReply(diaRef, &reply);
 	
 	UpdateALLWindow();
 	
+	if (reply.validRecord) {
+		AEDesc 	resultDesc;
+		AEKeyword keyword;
+		
+		resultDesc.dataHandle = NULL;
+		
+		// retrieve the returned selection:
+		// since only 1 selection is possible, we get the first AEDesc:
+		if ((theErr = AEGetNthDesc(&(reply.selection),1,typeFSS, &keyword ,&resultDesc)) == noErr) {
+			MyAEGetDescData(&resultDesc, NULL, spec, sizeof(FSSpec), NULL);
+			
+			theErr = NavCompleteSave(&reply, kNavTranslateInPlace);
+		}
+		
+	} else
+		theErr = -1;
+	
 	NavDialogDispose(diaRef);
+	NavDisposeReply(&reply);
 	CFRelease(bStrCF);
 	CFRelease(fileNameCF);
 	
-	return noErr;
+	return theErr;
 }
 
 OSErr DoStandardOpen(FSSpec	*spec, Str255 string, OSType inType)
@@ -804,21 +830,21 @@ OSErr DoStandardOpen(FSSpec	*spec, Str255 string, OSType inType)
 	NavDialogOptions		dialogOptions;
 	NavTypeListHandle		openList = NULL;
 	OSErr					iErr;
+	NavObjectFilterUPP		filterProcUPP = NULL;
 	
 	// default behavior for browser and dialog:
 	iErr = NavGetDefaultDialogOptions(&dialogOptions);
 	
-	dialogOptions.dialogOptionFlags	&=	~kNavAllowPreviews;
-	dialogOptions.dialogOptionFlags	|=	kNavNoTypePopup;
-	dialogOptions.dialogOptionFlags	|=	kNavSupportPackages;
-	dialogOptions.dialogOptionFlags	&=	~kNavDontAutoTranslate;
-	dialogOptions.dialogOptionFlags	&=	~kNavAllowMultipleFiles;
+	dialogOptions.dialogOptionFlags	&=	~(kNavAllowPreviews | kNavDontAutoTranslate | kNavAllowMultipleFiles);
+	dialogOptions.dialogOptionFlags	|=	kNavNoTypePopup | kNavSupportPackages;
 	
 	pStrcpy(dialogOptions.clientName, string);
 	
-	if (inType != 'ANYK') {
+	if (inType == 'ANYK') {
+		specificType = 'ANYK';
+	} else {
 		specificType = inType;
-		//filterProcUPP = NewNavObjectFilterUPP(MyCustomFilter2);
+		filterProcUPP = NewNavObjectFilterUPP(MyCustomFilter2);
 		
 		openList = (NavTypeListHandle)NewHandle(sizeof(NavTypeList) + 1 * sizeof(OSType));
 		if (openList) {
@@ -837,7 +863,7 @@ OSErr DoStandardOpen(FSSpec	*spec, Str255 string, OSType inType)
 					  &dialogOptions,
 					  MyDlgFilterNavDesc,
 					  NULL,	// no custom previews
-					  NULL,
+					  filterProcUPP,
 					  openList,
 					  (NavCallBackUserData) 2L);
 		
