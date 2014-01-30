@@ -3446,9 +3446,6 @@ void StartDialog(void)
 	DrawDialog(myStartUpDlog);
 	WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 	
-	if (QDIsPortBuffered(GetDialogPort(myStartUpDlog)))
-		QDFlushPortBuffer(GetDialogPort(myStartUpDlog), NULL);
-	
 	if (DebuggingMode) {
 		Rect	caRect;
 		

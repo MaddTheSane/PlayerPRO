@@ -772,14 +772,16 @@ OSErr	MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 OSErr	MADLoadMusicRsrc(MADMusic **music, OSType IDName, short IDNo);				// MAD ONLY - Load a MAD Rsrc into memory
 OSErr	MADLoadMusicPtr(MADMusic **music, Ptr myPtr);								// MAD ONLY - Load a MAD Ptr into memory, you can DisposPtr your Ptr after this call
 
-OSErr	MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, OSType type, CFURLRef theRef);	// Load a music file with plugs
+OSErr	MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef);	// Load a music file with plugs
 OSErr	MADLoadMusicFilePString(MADLibrary *, MADMusic **music, char *type, Str255 fName);			// Load a music file with plugs
 OSErr	MADLoadMusicFileCString(MADLibrary *, MADMusic **music, char *type, Ptr fName);			// Load a music file with plugs
 OSErr	MADLoadMusicFSpFile(MADLibrary *, MADMusic **music, char *type, FSSpec *theSpec);			// Load a music file with plugs
 
 OSErr	MADMusicIdentifyPString(MADLibrary *, char *type, Str255 pName);			// Identify what kind of music format is pName file.
-OSErr	MADMusicIdentifyCString(MADLibrary *, char *type, Ptr cName);			// Identify what kind of music format is cName file.
+OSErr	MADMusicIdentifyCString(MADLibrary *, char *type, char *cName);			// Identify what kind of music format is cName file.
 OSErr	MADMusicIdentifyFSp(MADLibrary *, char *type, FSSpec *theSpec);			// Identify what kind of music format is theSpec file.
+OSErr MADMusicIdentifyFSRef(MADLibrary *lib, char *type, FSRefPtr theRef);
+OSErr MADMusicIdentifyCFURL(MADLibrary *lib, char *type, CFURLRef URLRef);
 
 Boolean	MADPlugAvailable(MADLibrary *, char *type);								// Is plug 'type' available?
 
