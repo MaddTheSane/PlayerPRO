@@ -22,42 +22,41 @@ typedef struct _CFInstrPlugType {
 	UInt32				_refCount;
 } CFInstrPlugType;
 
-static void _deallocCFInstrPlugType(CFInstrPlugType *myInstance );
+static void _deallocCFInstrPlugType(CFInstrPlugType *myInstance);
 
-static HRESULT CFInstrPlugQueryInterface(void *myInstance, REFIID iid, LPVOID *ppv )
+static HRESULT CFInstrPlugQueryInterface(void *myInstance, REFIID iid, LPVOID *ppv)
 {
 	//  Create a CoreFoundation UUIDRef for the requested interface.
-	CFUUIDRef interfaceID = CFUUIDCreateFromUUIDBytes(kCFAllocatorDefault, iid );
+	CFUUIDRef interfaceID = CFUUIDCreateFromUUIDBytes(kCFAllocatorDefault, iid);
 	
 	// Test the requested ID against the valid interfaces.
-	if (CFEqual(interfaceID, kPlayerPROInstrumentPlugInterfaceID ) ) {
-		
+	if (CFEqual(interfaceID, kPlayerPROInstrumentPlugInterfaceID)) {
 		//  If the TestInterface was requested, bump the ref count, set the ppv parameter
 		//  equal to the instance, and return good status.
-		((CFInstrPlugType *) myInstance )->_PPROCFPlugFormat->AddRef(myInstance );
-		*ppv = myInstance;
-		CFRelease(interfaceID );
-		return S_OK;
-	} else if (CFEqual(interfaceID, IUnknownUUID ) ) {
 		
-		//  If the IUnknown interface was requested, same as above.
-		((CFInstrPlugType *) myInstance )->_PPROCFPlugFormat->AddRef(myInstance );
+		((CFInstrPlugType*)myInstance)->_PPROCFPlugFormat->AddRef(myInstance);
 		*ppv = myInstance;
-		CFRelease(interfaceID );
+		CFRelease(interfaceID);
+		return S_OK;
+	} else if (CFEqual(interfaceID, IUnknownUUID)) {
+		//  If the IUnknown interface was requested, same as above.
+		
+		((CFInstrPlugType *) myInstance)->_PPROCFPlugFormat->AddRef(myInstance);
+		*ppv = myInstance;
+		CFRelease(interfaceID);
 		return S_OK;
 	} else {
-		
 		//  Requested interface unknown, bail with error.
+		
 		*ppv = NULL;
-		CFRelease(interfaceID );
+		CFRelease(interfaceID);
 		return E_NOINTERFACE;
 	}
 }
 
-static ULONG CFInstrPlugAddRef(void *myInstance )
+static ULONG CFInstrPlugAddRef(void *myInstance)
 {
-	((CFInstrPlugType *) myInstance )->_refCount += 1;
-	return ((CFInstrPlugType *) myInstance )->_refCount;
+	return ++((CFInstrPlugType*)myInstance)->_refCount;
 }
 
 // -------------------------------------------------------------------------------------------
@@ -66,15 +65,15 @@ static ULONG CFInstrPlugAddRef(void *myInstance )
 //  If the refCount goes to zero, deallocate the instance.
 //
 
-static ULONG CFInstrPlugRelease(void *myInstance )
+static ULONG CFInstrPlugRelease(void *myInstance)
 {
-	((CFInstrPlugType *) myInstance )->_refCount -= 1;
-	if (((CFInstrPlugType *) myInstance )->_refCount == 0 ) {
-		_deallocCFInstrPlugType((CFInstrPlugType *) myInstance );
+	((CFInstrPlugType*)myInstance)->_refCount -= 1;
+	if (((CFInstrPlugType*)myInstance)->_refCount == 0) {
+		_deallocCFInstrPlugType((CFInstrPlugType*)myInstance);
 		return 0;
 	}
 	else
-		return ((CFInstrPlugType *) myInstance )->_refCount;
+		return ((CFInstrPlugType*)myInstance)->_refCount;
 }
 
 static PPInstrumentPlugin CFInstrPlugFormat =
@@ -86,18 +85,18 @@ static PPInstrumentPlugin CFInstrPlugFormat =
 	PLUGMAIN
 };
 
-static CFInstrPlugType *_allocCFInstrPlugType(CFUUIDRef factoryID )
+static CFInstrPlugType *_allocCFInstrPlugType(CFUUIDRef factoryID)
 {
 	//  Allocate memory for the new instance.
-	CFInstrPlugType *newOne = (CFInstrPlugType *)malloc(sizeof(CFInstrPlugType) );
+	CFInstrPlugType *newOne = (CFInstrPlugType*)malloc(sizeof(CFInstrPlugType));
 	
 	//  Point to the function table
 	newOne->_PPROCFPlugFormat = &CFInstrPlugFormat;
 	
 	//  Retain and keep an open instance refcount for each factory.
 	if (factoryID) {
-		newOne->_factoryID = (CFUUIDRef)CFRetain(factoryID );
-		CFPlugInAddInstanceForFactory(factoryID );
+		newOne->_factoryID = (CFUUIDRef)CFRetain(factoryID);
+		CFPlugInAddInstanceForFactory(factoryID);
 	}
 	
 	//  This function returns the IUnknown interface so set the refCount to one.
@@ -111,26 +110,25 @@ static CFInstrPlugType *_allocCFInstrPlugType(CFUUIDRef factoryID )
 //  Utility function that deallocates the instance when the refCount goes to zero.
 //
 
-static void _deallocCFInstrPlugType(CFInstrPlugType *myInstance )
+static void _deallocCFInstrPlugType(CFInstrPlugType *myInstance)
 {
 	CFUUIDRef factoryID = myInstance->_factoryID;
-	free(myInstance );
-	if (factoryID ) {
-		CFPlugInRemoveInstanceForFactory(factoryID );
-		CFRelease(factoryID );
+	free(myInstance);
+	if (factoryID) {
+		CFPlugInRemoveInstanceForFactory(factoryID);
+		CFRelease(factoryID);
 	}
 }
 
-EXP void * PLUGINFACTORY(CFAllocatorRef allocator, CFUUIDRef typeID )
+EXP void * PLUGINFACTORY(CFAllocatorRef allocator, CFUUIDRef typeID)
 {
-	
 	//  If correct type is being requested, allocate an instance of TestType and return
 	//  the IUnknown interface.
-	if (CFEqual(typeID, kPlayerPROInstrumentPlugTypeID ) ) {
-		CFInstrPlugType *result = _allocCFInstrPlugType(PLUGUUID );
+	
+	if (CFEqual(typeID, kPlayerPROInstrumentPlugTypeID)) {
+		CFInstrPlugType *result = _allocCFInstrPlugType(PLUGUUID);
 		return result;
 	} else {
-		
 		// If the requested type is incorrect, return NULL.
 		return NULL;
 	}
