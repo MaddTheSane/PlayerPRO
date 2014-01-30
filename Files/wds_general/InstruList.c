@@ -395,8 +395,8 @@ void DrawBottomInfo()
 	
 	DrawString(tempStr);
 	
-	if (QDIsPortBuffered(GetDialogPort(InstruListDlog)))
-		QDFlushPortBuffer(GetDialogPort(InstruListDlog), NULL);
+	//if (QDIsPortBuffered(GetDialogPort(InstruListDlog)))
+	//	QDFlushPortBuffer(GetDialogPort(InstruListDlog), NULL);
 	
 }
 
@@ -717,7 +717,7 @@ void NPressSmallPiano(short itemHit, DialogPtr TheDia, short theInstru)
 	do {
 		WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 		
-		if (QDIsPortBuffered(GetDialogPort(TheDia)))
+		//if (QDIsPortBuffered(GetDialogPort(TheDia)))
     		QDFlushPortBuffer(GetDialogPort(TheDia), NULL);
     				
 		DoGlobalNull();
@@ -2226,13 +2226,6 @@ void DrawInstruListItem(short iD)
 		
 		InvertRect(&t);
 	}
-	
-#pragma mark Try updating it like this!
-	UpdateRgn = NewRgn();
-	RectRgn(UpdateRgn, &destRect);
-	
-	QDFlushPortBuffer(GetDialogPort(InstruListDlog), UpdateRgn);
-	DisposeRgn(UpdateRgn);
 }
 					
 void DrawSmallSamplePreview()
@@ -2577,9 +2570,9 @@ void DrawInfoInstrument(void)
 	RgnHandle UpdateRgn = NewRgn();
 	GetWindowRegion(GetDialogWindow(InstruListDlog), kWindowUpdateRgn, UpdateRgn);
 	QDFlushPortBuffer(GetDialogPort(InstruListDlog), UpdateRgn);
+	DisposeRgn(UpdateRgn);
 	
 	SetPort(SavePort);
-	DisposeRgn(UpdateRgn);
 }
 
 static Boolean firstCall;
