@@ -36,11 +36,7 @@ OSErr TESTmain(	Ptr,
 typedef OSErr (*MyProcPtr) (sData*, long , long , PPInfoPlug*, long);
 OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
 
-OSErr NCallPlugIns(		short						PlugNo,					// CODE du plug
-												sData						*theInsData,
-												long 						start,
-												long 						end,
-												long						stereoMode)
+OSErr NCallPlugIns(short PlugNo, sData *theInsData, long start, long end, long stereoMode)
 {
 	OSErr			myErr;
 	short			fileID;
@@ -48,23 +44,18 @@ OSErr NCallPlugIns(		short						PlugNo,					// CODE du plug
 	PPFiltersPlugin	**InstrPlugA = ThePlug[PlugNo].PlugData;
 	
 	GetPort(&savedPort);
-	
 	fileID = CFBundleOpenBundleResourceMap(ThePlug[ PlugNo].file);
 	
-	
 	myErr = (*InstrPlugA)->FiltersMain(theInsData, start, end, &thePPInfoPlug, stereoMode);
-	
 		
-	CFBundleCloseBundleResourceMap(ThePlug[ PlugNo].file, fileID);	
-	
+	CFBundleCloseBundleResourceMap(ThePlug[ PlugNo].file, fileID);
 	SetPort(savedPort);
 
-	if (myErr != noErr)
-	{
+	if (myErr != noErr) {
 		Erreur(40, myErr);
-		return(myErr);
-	}
-	else return noErr;
+		return myErr;
+	} else
+		return noErr;
 }
 
 void LoadPLUGSE(short No, StringPtr theName)

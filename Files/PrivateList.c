@@ -179,7 +179,7 @@ void PLScrollInt(short curVal, short sVal, long lRefCon, PrivateList *aL)
 						PLUpdateItem(cPt, aL);
 				} else {
 					PLUpdate(aL);
-					QDFlushPortBuffer(GetDialogPort(aL->aDia), aRgn);
+					//QDFlushPortBuffer(GetDialogPort(aL->aDia), aRgn);
 				}
 				DisposeRgn(aRgn);
 				break;
@@ -190,7 +190,7 @@ void PLScrollInt(short curVal, short sVal, long lRefCon, PrivateList *aL)
 				ScrollRect(&aRect, (sVal - curVal) * aL->LCell, 0, aRgn);
 				
 				PLUpdate(aL);
-				QDFlushPortBuffer(GetDialogPort(aL->aDia), aRgn);
+				//QDFlushPortBuffer(GetDialogPort(aL->aDia), aRgn);
 				DisposeRgn(aRgn);
 				break;
 		}

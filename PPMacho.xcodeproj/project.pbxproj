@@ -1637,7 +1637,7 @@
 		88E0C4010C2F21DD00D6C081 /* PubWindow.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = PubWindow.c; sourceTree = "<group>"; };
 		88E0C4020C2F21DD00D6C081 /* QuicktimeWindow.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = QuicktimeWindow.c; sourceTree = "<group>"; };
 		88E0C4030C2F21DD00D6C081 /* Record.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Record.c; sourceTree = "<group>"; };
-		88E0C4050C2F21DD00D6C081 /* Samples.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Samples.c; sourceTree = "<group>"; };
+		88E0C4050C2F21DD00D6C081 /* Samples.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Samples.c; sourceTree = "<group>"; };
 		88E0C4060C2F21DD00D6C081 /* SoundInput.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = SoundInput.c; sourceTree = "<group>"; };
 		88E0C4070C2F21DD00D6C081 /* Spectrum.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Spectrum.c; sourceTree = "<group>"; };
 		88E0C4080C2F21DD00D6C081 /* ThreadSystem.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ThreadSystem.c; sourceTree = "<group>"; };
