@@ -82,11 +82,9 @@ void		WindowsSettingsMenu(short item);
 void		COPYQuicktime();
 void		InitFFTSampleFilter(void);
 
-extern pascal void MyDlgFilterNav(		NavEventCallbackMessage 	callBackSelector, 
-								NavCBRecPtr 				callBackParms, 
-								NavCallBackUserData 		callBackUD);
+extern pascal void MyDlgFilterNav(NavEventCallbackMessage callBackSelector, NavCBRecPtr callBackParms, NavCallBackUserData callBackUD);
 
-WindowPtr NextWindowVisible(WindowPtr	whichWindow);
+WindowPtr NextWindowVisible(WindowPtr whichWindow);
 
 //#define VERSION 0x05A0 //since we don't have different preferences, keeping old value
 #define	VERSION			0x0592
@@ -1363,10 +1361,7 @@ int MIDImain(int argc, char *argv[]);
 
 Boolean RunningOnClassic(void)
 {
-    UInt32 response;
-    
-    return (Gestalt(gestaltMacOSCompatibilityBoxAttr,  (SInt32 *) &response) == noErr) \
-	&& ((response &&  (1 << gestaltMacOSCompatibilityBoxPresent)) != 0);
+	return false;
 }
 
 OSErr GetApplicationPackageFSSpec(FSSpecPtr theFSSpecPtr)
@@ -1443,15 +1438,17 @@ OSErr GetExecutableParentFSSpecFromBundle(FSSpecPtr theFSSpecPtr)
 {
 	OSErr err = fnfErr;
 	CFBundleRef myAppsBundle = CFBundleGetMainBundle();
-	if (myAppsBundle == NULL) return err;
+	if (myAppsBundle == NULL)
+		return err;
 	CFURLRef myBundleURL = CFBundleCopyExecutableURL(myAppsBundle);
-	if (myBundleURL == NULL) return err;
+	if (myBundleURL == NULL)
+		return err;
 	FSRef myBundleRef;
 	Boolean ok = CFURLGetFSRef(myBundleURL, &myBundleRef);
 	CFRelease(myBundleURL);
-	if (!ok) return err;
-	return FSGetCatalogInfo(&myBundleRef, kFSCatInfoNone,
-							NULL, NULL, theFSSpecPtr, NULL);
+	if (!ok)
+		return err;
+	return FSGetCatalogInfo(&myBundleRef, kFSCatInfoNone, NULL, NULL, theFSSpecPtr, NULL);
 }
 
 int main(int argc, char* argv[])
@@ -1501,8 +1498,7 @@ int main(int argc, char* argv[])
 	
 	
 	Handle	TempHandle = GetResource('MADK', 128);
-	if (TempHandle)
-	{
+	if (TempHandle) {
 		DetachResource(TempHandle);
 		HLock(TempHandle);
 		iErr = MADLoadMusicPtr(&curMusic, *TempHandle);
@@ -1525,11 +1521,10 @@ int main(int argc, char* argv[])
 	defSpec2.u.defProc = NewMenuDefUPP(MyMenuNoteDefProc );
 	RegisterMenuDefinition(1972, &defSpec2);
 	
-	//	thePrefs.ThreadUse = true;
+	//thePrefs.ThreadUse = true;
 	thePrefs.ThreadUse = false;
 	
-	//	EventLoop();
-	
+	//EventLoop();
 	
 	GetCurrentProcess(&playerPROPSN);
 	
@@ -1566,11 +1561,9 @@ int main(int argc, char* argv[])
 	NewSoundManager31 = true;
 	NewSoundManager = true;
 	
-	if (DebuggingMode)
-	{
+	if (DebuggingMode) {
 		GetDateTime(&secs);
 		SecondsToDate(secs, &dtrp);
-		
 	}
 	
 	MainResFile = CurResFile();
@@ -1588,8 +1581,8 @@ int main(int argc, char* argv[])
 	theColor.blue = 56797;
 	
 	PianoPix = NULL;	//EditorPix =
-	QuicktimeDlog = EditorDlog = theProgressDia = InstruViewDlog = MODListDlog = ToolsDlog = PatListDlog = PianoDlog = OscilloDlog = PartiDlog = (DialogPtr) NULL;
-	TrackViewDlog = CubeDlog = HelpDlog = DigitalDlog = AHelpDlog = ClassicDlog = EQDlog = VisualDlog = InstruListDlog = AdapDlog = MozartDlog = SpectrumDlog = FindDlog = WaveDlog = StaffDlog = (DialogPtr) NULL;
+	QuicktimeDlog = EditorDlog = theProgressDia = InstruViewDlog = MODListDlog = ToolsDlog = PatListDlog = PianoDlog = OscilloDlog = PartiDlog = (DialogPtr)NULL;
+	TrackViewDlog = CubeDlog = HelpDlog = DigitalDlog = AHelpDlog = ClassicDlog = EQDlog = VisualDlog = InstruListDlog = AdapDlog = MozartDlog = SpectrumDlog = FindDlog = WaveDlog = StaffDlog = (DialogPtr)NULL;
 	MicroPhone = false;
 	SpectrumMicrophone = false;
 	OscilloMicrophone = false;
@@ -1757,16 +1750,16 @@ int main(int argc, char* argv[])
 	
 	/************/
 	/************/
-	
+#if 0
 	{
 		FSSpec	appSpec;
-		
 		GetApplicationPackageFSSpecFromBundle(&appSpec);
-		
 		pStrcpy(appSpec.name, "\pPlugs");
-		
 		MADInitLibrary(&appSpec, false, &gMADLib);
 	}
+#else
+	MADInitLibrary(NULL, false, &gMADLib);
+#endif
 	
 	/************/
 	/************/
@@ -1789,7 +1782,6 @@ int main(int argc, char* argv[])
 	/**********************************/
 	/* Check if HelpFile is avalaible */
 	/**********************************/
-	
 	
 	HelpAvalaible = true;
 	
@@ -1823,7 +1815,8 @@ int main(int argc, char* argv[])
 	InitVSTPlug();
 	
 	MusicPlayActive = false;
-	if (curMusic) curMusic->hasChanged = false;
+	if (curMusic)
+		curMusic->hasChanged = false;
 	
 	InitUndo();
 	
@@ -1835,7 +1828,6 @@ int main(int argc, char* argv[])
 	StartTime = TickCount();
 	
 	InitOscillo();
-	
 	
 	CreateToolsDlog();
 	InitSampleWindow();
@@ -1859,10 +1851,6 @@ int main(int argc, char* argv[])
 	}
 	
 	EndDialog();
-	
-	thePrefs.Registred = true;
-	
-	if (thePrefs.Registred == false) DoHelp();
 	
 	ShowWindowPref(-1);
 	
@@ -1890,13 +1878,6 @@ OnRefaitEvent:
 	
 	if (thePrefs.ActiveHelp) {
 		CreateAHelpWindow();
-	}
-	
-	if (thePrefs.Registred == false)
-	{
-		//		CreateCubeWindow();
-		//	SelectWindow(GetDialogWindow (CubeDlog));
-		thePrefs.Registred = true;
 	}
 	
 	UpdateALLWindow();
@@ -2405,7 +2386,6 @@ void EventLoop2(void)
 	
 	//PressInDialog = false;
 	switch (theEvent.what) {
-			
 		case activateEvt:
 			//DoActivateEvent(&theEvent, (theEvent.modifiers & activeFlag) != 0, false);
 		{
@@ -2532,8 +2512,10 @@ void EventLoop2(void)
 			
 		case nullEvent:
 			mainSystemDrag = true;
-			if (!thePrefs.ThreadUse) DoGlobalNull();
-			else YieldToAnyThread();
+			if (!thePrefs.ThreadUse)
+				DoGlobalNull();
+			else
+				YieldToAnyThread();
 			break;
 			
 		case keyDown:
@@ -2657,10 +2639,8 @@ void EventLoop(void)
 	gCursorRgn = NULL;
 	
 	//#if MACOS9VERSION
-	do
-	{
+	do {
 		EventLoop2();
-		
 	} while (End == false);
 	//#else
 	//	CarbonEventLoop();
@@ -2828,13 +2808,7 @@ void DragReferencedWindow(WindowPtr windowToDrag, Point startPoint, const Rect *
 
 void UseSameLeft(WindowPtr whichWindow)
 {
-	//WindowPeek	wPeek;
-	//WStateData	*wspd;
 	Rect caRect, stdRect;
-	
-	//	wPeek = (WindowPeek) whichWindow;
-	
-	//	wspd = (WStateData*) *(wPeek->dataHandle);
 	
 	GetWindowStandardState(whichWindow, &stdRect);
 	
@@ -2868,13 +2842,6 @@ void DoMouseDown(EventRecord theEventI)
 	switch (thePart) {
 		case inContent:
 			PressInDialog = true;
-			if (whichWindow != FrontNonFloatingWindow()) {
-				SelectWindow(whichWindow);
-			} else //if (IsDialogEvent(&theEvent))
-			{
-				NEWdoDlgEvt(&theEvent, whichWindow);
-			}
-			
 			// A REMETTRE
 			
 			if (whichWindow == GetDialogWindow(ToolsDlog)) {
@@ -2893,11 +2860,7 @@ void DoMouseDown(EventRecord theEventI)
 					whichItem = FindDialogItem(ToolsDlog, pt);
 					whichItem++;
 					
-					if (DialogSelect(&theEventI, &ToolsDlog, &whichItem)) {
-						ProcessDoItemPress(GetWRefCon(whichWindow), whichItem, ToolsDlog);
-					}
-					//NEWdoDlgEvt(&theEvent, whichWindow);
-					
+					ProcessDoItemPress(GetWRefCon(whichWindow), whichItem, ToolsDlog);
 					SetPort(savedPort);
 				}
 			} else {
@@ -2908,12 +2871,8 @@ void DoMouseDown(EventRecord theEventI)
 						
 						PostEvent(mouseDown, 0);
 					} else {
-						if (mouseInDown)
-						{
-							if (IsDialogEvent(&theEvent))
-							{
-								NEWdoDlgEvt(&theEvent, whichWindow);
-							}
+						if (mouseInDown) {
+							NEWdoDlgEvt(&theEvent, whichWindow);
 						}
 					}
 				}
@@ -2924,8 +2883,7 @@ void DoMouseDown(EventRecord theEventI)
 			
 		case inZoomIn:
 		case inZoomOut:
-			if (TrackBox(whichWindow, theEventI.where, thePart))
-			{
+			if (TrackBox(whichWindow, theEventI.where, thePart)) {
 				theEvent.what = 0;
 				
 				AdjustZoomIn(whichWindow);
@@ -3104,7 +3062,7 @@ void DoMouseDown(EventRecord theEventI)
 						 break;*/
 				}
 				
-				//	wspd->stdState = savedStdState;
+				//wspd->stdState = savedStdState;
 				
 				EraseGrowIcon(GetDialogFromWindow(whichWindow));
 			}
@@ -3116,8 +3074,7 @@ void DoMouseDown(EventRecord theEventI)
 			break;
 			
 		case inDrag:
-			if (oldWindow != whichWindow)
-			{
+			if (oldWindow != whichWindow) {
 				SelectWindow2(whichWindow);
 				theEventI.message = (long) whichWindow;
 				DoUpdateEvent(&theEventI);
@@ -3125,7 +3082,6 @@ void DoMouseDown(EventRecord theEventI)
 			else SelectWindow2(whichWindow);
 			SetPortWindowPort(whichWindow);
 			
-		{
 			BitMap	screenBits;
 			
 			GetQDGlobalsScreenBits(&screenBits);
@@ -3135,9 +3091,8 @@ void DoMouseDown(EventRecord theEventI)
 			Start.h = Start.v = 0;
 			LocalToGlobal(&Start);
 			
-			thePrefs.WinPos[ GetWRefCon(whichWindow)].v = Start.v;
-			thePrefs.WinPos[ GetWRefCon(whichWindow)].h = Start.h;
-		}
+			thePrefs.WinPos[GetWRefCon(whichWindow)].v = Start.v;
+			thePrefs.WinPos[GetWRefCon(whichWindow)].h = Start.h;
 			break;
 			
 		case inGoAway:
@@ -3236,7 +3191,7 @@ void DoMouseDown(EventRecord theEventI)
 			}
 			GetPortBounds(GetWindowPort(whichWindow), &caRect);
 			
-			thePrefs.WinHi[ GetWRefCon(whichWindow)] = caRect.bottom;
+			thePrefs.WinHi[GetWRefCon(whichWindow)] = caRect.bottom;
 			break;
 	}
 }
@@ -6199,7 +6154,6 @@ void HandleHelpChoice(short theItem)
 			break;
 	}
 }
-
 
 static	Rect		BookmarkRectList;
 static	ListHandle	BookmarkList;

@@ -366,7 +366,6 @@ enum {
 #define duplicate	0x17
 #define getinfo		0x18
 
-
 #define MyC2PStr MYC2PStr
 #define MyP2CStr MYP2CStr
 //unsigned char* MyC2PStr(Ptr cStr);
@@ -515,6 +514,7 @@ extern	char		EEffect[30];
 void RollCursor(void);
 Boolean QTTypeConversion(OSType fileType);
 Boolean CheckFileType(FSSpec theSpec, OSType theType);
+#endif
 
 static inline void SwapPcmd(Pcmd *toswap)
 {
@@ -527,6 +527,3 @@ static inline void SwapPcmd(Pcmd *toswap)
 	MOT16(&toswap->tracks);
 	MOT16(&toswap->trackStart);
 }
-
-#endif
-

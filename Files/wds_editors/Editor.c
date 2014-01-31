@@ -2130,7 +2130,7 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 	GrafPtr	SavePort;
 	Cmd		*theCommand;
 	Boolean	DoubleClick;
-	Point	myPt = {0}, lastCell = { -1, -1};
+	Point	myPt = {0}, lastCell = {-1, -1};
 	Str255	aStr;
 	
 	GetPort(&SavePort);
