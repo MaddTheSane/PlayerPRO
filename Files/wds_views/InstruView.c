@@ -5,7 +5,7 @@
 		DialogPtr				InstruViewDlog;
 
 static	long					oldInstruTicks;
-static	Rect					InstruBox[ MAXINSTRU];
+static	Rect					InstruBox[MAXINSTRU];
 
 #define WSMALL		69
 #define WMEDIUM		136
@@ -46,12 +46,9 @@ void DoGrowInstruView(void)
 
 void DoNullInstruView(void)
 {
-	Str255		String;
 	GrafPtr		SavePort;
 	short		i, max;
- 	Rect		caRect,tempRect;
-	Handle		itemHandle;
-	short		itemType;
+ 	Rect		caRect;
 	Rect		itemRect;
 
  	if (InstruViewDlog == NULL) return;
@@ -63,28 +60,27 @@ void DoNullInstruView(void)
 	
 	GetPortBounds(GetDialogPort(InstruViewDlog), &caRect);
 	
-	if (caRect.bottom >= WLARG2) max = 128;
-	else if (caRect.bottom >= WLARG) max = 64;
-	else if (caRect.bottom >= WMEDIUM) max = 32;
-	else max = 16;
+	if (caRect.bottom >= WLARG2)
+		max = 128;
+	else if (caRect.bottom >= WLARG)
+		max = 64;
+	else if (caRect.bottom >= WMEDIUM)
+		max = 32;
+	else
+		max = 16;
 	
-	for (i = 0; i < max; i++)
-	{
-		if (MADDriver->InstruTube[i] > 0)
-		{
+	for (i = 0; i < max; i++) {
+		if (MADDriver->InstruTube[i] > 0) {
 			itemRect = InstruBox[i];
 			
-			if (MADDriver->InstruTube[i] == 64)
-			{
+			if (MADDriver->InstruTube[i] == 64) {
 				MADDriver->InstruTube[i]--;
-				SwitchColor(MADDriver->InstruActif[ i]);
+				SwitchColor(MADDriver->InstruActif[i]);
 				
 				itemRect.top = itemRect.bottom - MADDriver->InstruTube[i];
 				PaintRect(&itemRect);
 				ForeColor(blackColor);
-			}
-			else
-			{
+			} else {
 				itemRect.bottom -= MADDriver->InstruTube[i];
 				MADDriver->InstruTube[i]--;
 				
@@ -103,7 +99,6 @@ void UpdateInstruView(DialogPtr GetSelection)  	/* Pointer to this dialog */
  	Handle		itemHandle;
 	short		itemType, i, max;
 	Rect		caRect, itemRect;
-	Str255		stemp;
 	
  	GetPort(&SavePort);
  	SetPortDialogPort(InstruViewDlog);
@@ -115,43 +110,53 @@ void UpdateInstruView(DialogPtr GetSelection)  	/* Pointer to this dialog */
 	
 	GetDialogItem (InstruViewDlog, 1, &itemType, &itemHandle, &itemRect);
 	InsetRect(&itemRect, -1, -1);
-	itemRect.bottom--;		FrameRectRelief(&itemRect);
+	itemRect.bottom--;
+	FrameRectRelief(&itemRect);
 	GetDialogItem (InstruViewDlog, 7, &itemType, &itemHandle, &itemRect);
 	InsetRect(&itemRect, -1, -1);
-	itemRect.bottom--;		FrameRectRelief(&itemRect);
+	itemRect.bottom--;
+	FrameRectRelief(&itemRect);
 	GetDialogItem (InstruViewDlog, 8, &itemType, &itemHandle, &itemRect);
 	InsetRect(&itemRect, -1, -1);
-	itemRect.bottom--;		FrameRectRelief(&itemRect);
+	itemRect.bottom--;
+	FrameRectRelief(&itemRect);
 	GetDialogItem (InstruViewDlog, 6, &itemType, &itemHandle, &itemRect);
 	InsetRect(&itemRect, -1, -1);
-	itemRect.bottom--;		FrameRectRelief(&itemRect);
+	itemRect.bottom--;
+	FrameRectRelief(&itemRect);
 	GetDialogItem (InstruViewDlog, 14, &itemType, &itemHandle, &itemRect);
 	InsetRect(&itemRect, -1, -1);
-	itemRect.bottom--;		FrameRectRelief(&itemRect);
+	itemRect.bottom--;
+	FrameRectRelief(&itemRect);
 	GetDialogItem (InstruViewDlog, 15, &itemType, &itemHandle, &itemRect);
 	InsetRect(&itemRect, -1, -1);
-	itemRect.bottom--;		FrameRectRelief(&itemRect);
+	itemRect.bottom--;
+	FrameRectRelief(&itemRect);
 	GetDialogItem (InstruViewDlog, 16, &itemType, &itemHandle, &itemRect);
 	InsetRect(&itemRect, -1, -1);
-	itemRect.bottom--;		FrameRectRelief(&itemRect);
+	itemRect.bottom--;
+	FrameRectRelief(&itemRect);
 	
 	GetPortBounds(GetDialogPort(InstruViewDlog), &caRect);
 	
-	if (caRect.bottom >= WLARG2) max = 128;
-	else if (caRect.bottom >= WLARG) max = 64;
-	else if (caRect.bottom >= WMEDIUM) max = 32;
-	else max = 16;
+	if (caRect.bottom >= WLARG2)
+		max = 128;
+	else if (caRect.bottom >= WLARG)
+		max = 64;
+	else if (caRect.bottom >= WMEDIUM)
+		max = 32;
+	else
+		max = 16;
 	
-	for (i = 0; i < max; i++)
-	{
-		itemRect = InstruBox[ i];
+	for (i = 0; i < max; i++) {
+		itemRect = InstruBox[i];
 		itemRect.top--;	itemRect.left--;	
 		PaintRect(&itemRect);
 		itemRect.top++;	itemRect.left++;
 		
-		SwitchColor(MADDriver->InstruActif[ i]);
+		SwitchColor(MADDriver->InstruActif[i]);
 		
-		itemRect.top = itemRect.bottom - MADDriver->InstruTube[i]+1;
+		itemRect.top = itemRect.bottom - MADDriver->InstruTube[i] + 1;
 		PaintRect(&itemRect);
 		ForeColor(blackColor);
 		
@@ -166,15 +171,11 @@ void UpdateInstruView(DialogPtr GetSelection)  	/* Pointer to this dialog */
 
 void CreateInstruView(void)
 {
-	Rect		itemRect, tempRect, dataBounds;
+	Rect		itemRect;
 	Handle		itemHandle;
-	short		itemType, itemHit, temp, i;
-	Point		cSize;
-	FontInfo	ThisFontInfo;
-	Str255		String;
+	short		itemType, i;
 
-	if (InstruViewDlog != NULL)
-	{
+	if (InstruViewDlog != NULL) {
 		SetWindEtat(GetDialogWindow(InstruViewDlog));
 		return;
 	}
@@ -188,23 +189,22 @@ void CreateInstruView(void)
 	SelectWindow2(GetDialogWindow(InstruViewDlog));
 	
 	GetDialogItem (InstruViewDlog, 2, &itemType, &itemHandle, &itemRect);
-	itemRect.top++;	itemRect.right--;	itemRect.left++;
-	for (i = 0; i < 128; i++)
-	{
+	itemRect.top++;
+	itemRect.right--;
+	itemRect.left++;
+	for (i = 0; i < 128; i++) {
 		InstruBox[ i] = itemRect;
 		
 		itemRect.left += ILARG;
 		itemRect.right += ILARG;
 		
-		if ((i+1) % 16 == 0)
-		{
+		if ((i + 1) % 16 == 0) {
 			short high;
 			
 			high = itemRect.bottom - itemRect.top;
 			
 			itemRect.bottom += high + 4;
 			itemRect.top += high + 4;
-			
 			itemRect.left -= ILARG * 16;
 			itemRect.right -= ILARG * 16;
 		}
@@ -214,7 +214,8 @@ void CreateInstruView(void)
 
 void CloseInstruViewDlog(void)
 {
-	if (InstruViewDlog != NULL) DisposeDialog(InstruViewDlog);
+	if (InstruViewDlog != NULL)
+		DisposeDialog(InstruViewDlog);
 	InstruViewDlog = NULL;
 	
 	SetItemMark(ViewsMenu, mInsV, noMark);
