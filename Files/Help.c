@@ -1,10 +1,11 @@
+#include <CoreMIDI/CoreMIDI.h>
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "Help.h"
 #include <stdio.h>
-#include <CoreMIDI/CoreMIDI.h>
+#include "Utils.h"
 
 //#include "asiodrivers.h"
 
@@ -1791,7 +1792,7 @@ Boolean CloseSTAFF()
 	GetDText(prefDlog, base + 11, aStr);
 	StringToNum(aStr, &temp);
 	if (temp < 2 || temp > 16) {
-		SysBeep(1);
+		MyPPBeep();
 		SelectDialogItemText(prefDlog, base + 11, 0, 32767);
 		return false;
 	} else
@@ -1800,7 +1801,7 @@ Boolean CloseSTAFF()
 	GetDText(prefDlog, base + 13, aStr);
 	StringToNum(aStr, &temp);
 	if (temp < 2 || temp > 16) {
-		SysBeep(1);
+		MyPPBeep();
 		SelectDialogItemText(prefDlog, base + 13, 0, 32767);
 		return false;
 	} else

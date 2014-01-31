@@ -1,8 +1,9 @@
+#include <Carbon/Carbon.h>
 #include "Shuddup.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Carbon/Carbon.h>
 #include "Undo.h"
+#include "Utils.h"
 
 #define ON	true
 #define OFF	false
@@ -1110,7 +1111,7 @@ OnRepart:
 			StringToNum(theStr, &mresult);
 			if (mresult < 1 || mresult > 31) {
 				SelectDialogItemText(TheDia, 19, 0 , 32767);
-				SysBeep(1);
+				MyPPBeep();
 				goto OnRepart;
 			}
 			SetSpeed(curMusic->partition[ thePos], mresult);
@@ -1126,7 +1127,7 @@ OnRepart:
 			StringToNum(theStr, &mresult);
 			if (mresult < 32 || mresult > 255) {
 				SelectDialogItemText(TheDia, 20, 0 , 32767);
-				SysBeep(1);
+				MyPPBeep();
 				goto OnRepart;
 			}
 			

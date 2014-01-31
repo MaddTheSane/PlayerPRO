@@ -24,7 +24,7 @@ enum
 };
 
 static short AHelp[] =
-{ HTrack, HInstru, HEffect, HInfo, HPref, HSee, HNote, HSele, HPlay, HDele, HParti, HZoom};
+{HTrack, HInstru, HEffect, HInfo, HPref, HSee, HNote, HSele, HPlay, HDele, HParti, HZoom};
 
 void DoHelpMozart(short **items, short *lsize)
 {
@@ -71,7 +71,7 @@ static	Point					selecStart, selecEnd;
 static	BitMap					xLabel, yLabel;
 static	GWorldPtr 				globalGWorld, grilleGWorld;
 static	RGBColor				Gray[ 5];
-static	RGBColor				yellC, greenC, blueC, redC, redC2;
+static	RGBColor				yellC, greenC, blueC, redC;
 
 static	DragSendDataUPP			mySendDataUPP;
 static	DragTrackingHandlerUPP	MyTrackingHandlerUPP;
@@ -111,22 +111,23 @@ Pcmd* CreatePcmdFromSelectionMozart(void);
 
 short GetMaxYBox()
 {
-short	ret;
-Rect	caRect;
+	short	ret;
+	Rect	caRect;
 	
 	GetPortBounds(GetDialogPort(MozartDlog), &caRect);
 	
 	ret = 1 + GetControlValue(c3h) + (caRect.bottom - MozartRect.top) / YSize;
-	if (ret > curMusic->header->numChn) ret = curMusic->header->numChn;
+	if (ret > curMusic->header->numChn)
+		ret = curMusic->header->numChn;
 	
 	return ret;
 }
 
 void TraceGrille2(short xTr, short yTr, Rect *dstRect)
 {
-short	i, mini, maxi, temp;
-Rect	tRect, cRect = *dstRect;
-Boolean	OnOff;
+	short	i, mini, maxi, temp;
+	Rect	tRect, cRect = *dstRect;
+	Boolean	OnOff;
 	
 	/** Markers **/
 	if (thePrefs.UseMarkers)
@@ -134,7 +135,7 @@ Boolean	OnOff;
 		tRect = *dstRect;
 		mini = (dstRect->left	- xTr) / MOLarg;				if (mini < 0)	mini = 0;
 		maxi = (dstRect->right - xTr) / MOLarg;		maxi+=2;	if (maxi > curMusic->partition[ PatCopy]->header.size + 1)	maxi = curMusic->partition[ PatCopy]->header.size + 1;
-	
+		
 		for (i = mini; i< maxi; i ++)
 		{
 			if (i >= thePrefs.MarkersOffSet)
@@ -190,9 +191,9 @@ Boolean	OnOff;
 		}
 	}
 	BackColor(whiteColor);
-
+	
 	/** Grille **/
-
+	
 	RGBForeColor(&Gray[ 3]);
 	
 	mini = (dstRect->top	- yTr) / MOHaut;				if (mini < 0)	mini = 0;
@@ -203,10 +204,10 @@ Boolean	OnOff;
 		MoveTo(dstRect->left, yTr + i * MOHaut);
 		LineTo(dstRect->right,  yTr + i * MOHaut);
 	}
-
+	
 	mini = (dstRect->left	- xTr) / MOLarg;				if (mini < 0)	mini = 0;
 	maxi = (dstRect->right - xTr) / MOLarg;		maxi+=2;	if (maxi > curMusic->partition[ PatCopy]->header.size + 1)	maxi = curMusic->partition[ PatCopy]->header.size + 1;
-
+	
 	for (i = mini; i < maxi; i ++)
 	{	
 		MoveTo(xTr + i * MOLarg, dstRect->top);
@@ -260,7 +261,6 @@ Rect	caRect;
 
 void GetShowVal(short *StartX, short *EndX, short *StartY, short *EndY)
 {
-	short	xTr, yTr;
 	Rect	caRect;
 
 	*StartX = GetControlValue(c2h) / MOLarg;
@@ -294,7 +294,6 @@ void ResetSelection(void)
 short PosToNote3(Point aPt, short	*yAxe, short *track)
 {
 	short	xTr, yTr, xPos;
-	Point	theCell;
 	
 	// Identifie le track
 	
@@ -330,7 +329,6 @@ short PosToNote3(Point aPt, short	*yAxe, short *track)
 short PosToNote4(Point aPt, short	*yAxe, short track)
 {
 	short	xTr, yTr, xPos;
-	Point	theCell;
 	
 	// Identifie la pos
 	
@@ -377,8 +375,7 @@ Point NoteToPos2(Point aNote, short track)
 {
 	Point	pos;
 	
-	short	xTr, yTr, xPos;
-	Point	theCell;
+	short	xTr, yTr;
 
 	xTr = GetControlValue(c2h);	yTr = GetControlValue(c1h);
 	
@@ -438,11 +435,9 @@ Boolean PointSelection(Point aPt)
 
 void MozartHelp(void)
 {
-	short					whichItem, itemHit, itemType, i;
+	short					itemHit;
 	DialogPtr				TheDia;
 	GrafPtr					myPort;
-	Handle					itemHandle;
-	Rect					itemRect;
 
 	GetPort(&myPort);
 
@@ -450,11 +445,9 @@ void MozartHelp(void)
 	SetPortDialogPort(TheDia);		
 	AutoPosition(TheDia);
 
-	do
-	{
+	do {
 		ModalDialog(MyDlgFilterDesc, &itemHit);
-			
-	}while (itemHit != 1);
+	} while (itemHit != 1);
 
 	DisposeDialog(TheDia);
 	SetPort(myPort);
@@ -462,26 +455,25 @@ void MozartHelp(void)
 
 void DrawCubeNote2(Rect *destRect, short val, short track, Boolean GrayDraw)
 {
-Str255		NoteStr;
-Boolean		DrawStringB;
+	Str255		NoteStr;
 	
 	destRect->left++;	destRect->top++;
 	
 	if (GrayDraw)
 	{
 		RGBForeColor(&theColor);
-	 	PaintRect(destRect);
-	 	
-	 	SwitchColor(track);
-	 	MoveTo(destRect->left, destRect->bottom-1);
-	 	LineTo(destRect->right, destRect->bottom-1);
-	 	ForeColor(blackColor);
+		PaintRect(destRect);
+		
+		SwitchColor(track);
+		MoveTo(destRect->left, destRect->bottom-1);
+		LineTo(destRect->right, destRect->bottom-1);
+		ForeColor(blackColor);
 	}
 	else
 	{
 		SwitchColor(track);
-	 	PaintRect(destRect);
-	 	ForeColor(blackColor);
+		PaintRect(destRect);
+		ForeColor(blackColor);
 	}
 	
 	if (MOLarg > 20)
@@ -532,8 +524,7 @@ void UpdateSelectedRect(Rect *before, Rect *then)
 
 void DeleteSelecNote(short start, short end)
 {
-	short				tt, val, Pos, xTr, yTr;
-	Boolean				Note;
+	short				tt, Pos, xTr, yTr;
 	Cmd					*theCommand;
 		
 
@@ -553,7 +544,7 @@ void DeleteSelecNote(short start, short end)
 		}
 	}
 	UPDATE_NoteFINISH();
-//	UpdateMozartInfoInternal();
+	//UpdateMozartInfoInternal();
 }
 
 void SetMobiusRect(Rect *rect, short left, short top, short right, short bottom)
@@ -605,7 +596,7 @@ short TrackMarquee(Point start, Rect *resultRect, Rect *maxRect)
 	{
 		GetMouse(&mouse);
 		
-		//****** Déplacement de la zone
+		//****** D√©placement de la zone
 		GetMozartTrackRect(&itemRect, track);
 		
 		if (!PtInRect(mouse, &itemRect))
@@ -697,25 +688,24 @@ Boolean CreateNoteString(Cmd *theCommand, Str255 mainStr, Boolean AllStr);
 
 void DrawNewNote(void)
 {
-Str255		aStr, theString;
-short		itemType;
-Handle		itemHandle;
-Rect		itemRect;
-RgnHandle	saveClipRgn;
-GrafPtr		savePort;
-Cmd			newNote;
-Boolean		copy[ 5];
-FontInfo	ThisFontInfo;
-
+	Str255		aStr;
+	short		itemType;
+	Handle		itemHandle;
+	Rect		itemRect;
+	GrafPtr		savePort;
+	Cmd			newNote;
+	Boolean		copy[ 5];
+	FontInfo	ThisFontInfo;
+	
 	copy[ 0] = thePrefs.DigitalInstru;
 	copy[ 1] = thePrefs.DigitalNote;
 	copy[ 2] = thePrefs.DigitalEffect;
 	copy[ 3] = thePrefs.DigitalArgu;
 	copy[ 4] = thePrefs.DigitalVol;
-
+	
 	GetPort(&savePort);
 	SetPortDialogPort(MozartDlog);
-
+	
 	newNote.ins 	= curInstru;
 	newNote.note 	= 0xFF;
 	newNote.cmd 	= curEffect;
@@ -727,10 +717,10 @@ FontInfo	ThisFontInfo;
 	thePrefs.DigitalEffect	= true;
 	thePrefs.DigitalArgu	= true;
 	thePrefs.DigitalVol		= true;
-
+	
 	
 	CreateNoteString(&newNote, aStr, false);
-
+	
 	GetDialogItem(MozartDlog, 21, &itemType, &itemHandle, &itemRect);
 	ForeColor(whiteColor);
 	PaintRect(&itemRect);
@@ -745,18 +735,18 @@ FontInfo	ThisFontInfo;
 	RGBForeColor(&theColor);
 	MoveTo(itemRect.left + ThisFontInfo.widMax*3 + ThisFontInfo.widMax-1, itemRect.top);
 	LineTo(itemRect.left + ThisFontInfo.widMax*3 + ThisFontInfo.widMax-1, itemRect.bottom);
-
+	
 	MoveTo(itemRect.left + ThisFontInfo.widMax*5 + ThisFontInfo.widMax-1, itemRect.top);
 	LineTo(itemRect.left + ThisFontInfo.widMax*5 + ThisFontInfo.widMax-1, itemRect.bottom);
-
+	
 	MoveTo(itemRect.left + ThisFontInfo.widMax*8 + ThisFontInfo.widMax-1, itemRect.top);
 	LineTo(itemRect.left + ThisFontInfo.widMax*8 + ThisFontInfo.widMax-1, itemRect.bottom);
-
+	
 	MoveTo(itemRect.left + ThisFontInfo.widMax*11 + ThisFontInfo.widMax-1, itemRect.top);
 	LineTo(itemRect.left + ThisFontInfo.widMax*11 + ThisFontInfo.widMax-1, itemRect.bottom);
-
+	
 	ForeColor(blackColor);
-
+	
 	SetPort(savePort);
 	
 	thePrefs.DigitalInstru	= copy[ 0];
@@ -764,7 +754,7 @@ FontInfo	ThisFontInfo;
 	thePrefs.DigitalEffect	= copy[ 2];
 	thePrefs.DigitalArgu	= copy[ 3];
 	thePrefs.DigitalVol		= copy[ 4];
-
+	
 }
 
 void SwitchColorBack(short TrackNo)
@@ -776,12 +766,10 @@ extern	DialogPtr	CmdDlog;
 
 void UpdateInstruMenu(void)
 {
-short		x, i, z;
-Handle		itemHandle;
-Rect		itemRect;
-short		itemType, dataLen, menuNum;
-Str255		mainStr, stemp;
-
+	int		x, i, z;
+	short	menuNum;
+	Str255	mainStr, stemp;
+	
 	x = CountMenuItems(InstruMenu);
 	for (i = 0; i < x; i++) DeleteMenuItem(InstruMenu, 1);
 	
@@ -825,34 +813,33 @@ Str255		mainStr, stemp;
 	}
 }
 
-Boolean aNote2(Point	theCell, Point *PointNote, short track)
+Boolean aNote2(Point theCell, Point *PointNote, short track)
 {
-Cmd					*theCommand;
-short				val, Pos, i;
-Boolean				Note;
-
-		theCommand = GetMADCommand(theCell.h, track, curMusic->partition[ PatCopy]);
-		
-		val = theCommand->note;
-		if (val > 0)
+	Cmd					*theCommand;
+	short				val, Pos;
+	
+	theCommand = GetMADCommand(theCell.h, track, curMusic->partition[ PatCopy]);
+	
+	val = theCommand->note;
+	if (val > 0)
+	{
+		Pos = NUMBER_NOTES - val-1;
+		if (Pos == theCell.v)
 		{
-			Pos = NUMBER_NOTES - val-1;
-			if (Pos == theCell.v)
-			{
-				PointNote->h = theCell.h;
-				PointNote->v = track;
-				return true;
-			}
+			PointNote->h = theCell.h;
+			PointNote->v = track;
+			return true;
 		}
+	}
 	return false;
 }
 
-void SetWinControl(short	tempA, short tempB, DialogPtr	theDia)
+void SetWinControl(short tempA, short tempB, DialogPtr theDia)
 {
-short	itemType, max;
-Handle	itemHandle;
-Rect	itemRect;
-Rect	caRect;
+	short	itemType, max;
+	Handle	itemHandle;
+	Rect	itemRect;
+	Rect	caRect;
 	
 	GetPortBounds(GetDialogPort(theDia), &caRect);
 	
@@ -875,9 +862,9 @@ Rect	caRect;
 	SetControlMaximum(c1h, max);
 	if (gUseControlSize) SetControlViewSize(c1h, MozartRect.top + YSize);
 	
-	SetMaxWindow(	MozartRect.left + 16 + MOLarg*curMusic->partition[ PatCopy]->header.size,
-					MozartRect.top + 17 + curMusic->header->numChn*YSize,
-					theDia);
+	SetMaxWindow(MozartRect.left + 16 + MOLarg*curMusic->partition[ PatCopy]->header.size,
+				 MozartRect.top + 17 + curMusic->header->numChn*YSize,
+				 theDia);
 }
 
 void SetWMozart(short No)
@@ -893,16 +880,15 @@ void SetWMozart(short No)
 
 void DoGrowMozart(DialogPtr theDialog)
 {
-long		lSizeVH;
-GrafPtr		SavePort;
-Rect		temp, cellRect;
-short			cur, tempB, tempA, itemType;
-Handle		itemHandle;
-Point		theCell = { 0, 0}, aPt = { 0, 0};
-
+	long		lSizeVH;
+	GrafPtr		SavePort;
+	Rect		temp;
+	short		tempB, tempA;
+	Point		aPt = {0, 0};
+	
 	GetPort(&SavePort);
- 	SetPortDialogPort(theDialog);
-
+	SetPortDialogPort(theDialog);
+	
 	temp.left = 223;
 	temp.top = MozartRect.top + YSize + 15;
 	temp.right = MozartRect.left + 17 + MOLarg*(curMusic->partition[ PatCopy]->header.size);
@@ -911,10 +897,10 @@ Point		theCell = { 0, 0}, aPt = { 0, 0};
 	LocalToGlobal(&aPt);
 	
 	if (temp.bottom < temp.top) temp.bottom = temp.top;
-//	else if (temp.bottom >= qd.screenBits.bounds.bottom - aPt.v) temp.bottom = qd.screenBits.bounds.bottom - aPt.v -1;
+	//else if (temp.bottom >= qd.screenBits.bounds.bottom - aPt.v) temp.bottom = qd.screenBits.bounds.bottom - aPt.v -1;
 	
 	if (temp.right < temp.left) temp.right = temp.left;
-//	else if (temp.right >= qd.screenBits.bounds.right - aPt.h) temp.right = qd.screenBits.bounds.right - aPt.h -1;
+	//else if (temp.right >= qd.screenBits.bounds.right - aPt.h) temp.right = qd.screenBits.bounds.right - aPt.h -1;
 	
 	
 	
@@ -942,22 +928,20 @@ Point		theCell = { 0, 0}, aPt = { 0, 0};
 	MySizeWindow(theDialog, tempA, tempB, true);
 	SetWinControl(tempA, tempB, theDialog);
 	
-	{
 	Rect	caRect;
-		
+	
 	GetPortBounds(GetDialogPort(theDialog), &caRect);
 	
 	EraseRect(&caRect);
 	UpdateMozartInfoInternal();
 	InvalWindowRect(GetDialogWindow(theDialog), &caRect);
-	}
 	
 	SetPort(SavePort);
 }
 
 void Update1Note(short tt, short track)
 {
- 	short				xTr, yTr, temp;
+	short				xTr, yTr;
 	Cmd					*cmd;
 	Rect				itemRect;
 	GrafPtr				SavePort;
@@ -987,9 +971,9 @@ void Update1Note(short tt, short track)
 	SetPort(SavePort);
 }
 
-void GetPianoMozartRect(Rect	*aRect)
+void GetPianoMozartRect(Rect *aRect)
 {
-	Point	Pt1, Pt2;
+	Point	Pt1;
 	Rect	r;
 	Rect	caRect;
 	
@@ -1000,10 +984,10 @@ void GetPianoMozartRect(Rect	*aRect)
 		SetRect(aRect, -1, -1, -1, -1);
 		return;
 	}
-
+	
 	Pt1.v = PianoMozart;
 	Pt1.h = 0;
-
+	
 	Pt1 = NoteToPos2(Pt1, PianoMozartTrack);
 	
 	aRect->top = Pt1.v;
@@ -1018,16 +1002,16 @@ void GetPianoMozartRect(Rect	*aRect)
 
 void SelectToucheMozart(short touche, short track)
 {
-Rect	aRect;
-GrafPtr	savePort;
-
+	Rect	aRect;
+	GrafPtr	savePort;
+	
 	if (MozartDlog == NULL) return;
-
+	
 	GetPort(&savePort);
 	SetPortDialogPort(MozartDlog);
-
+	
 	if (touche != -1) touche = NUMBER_NOTES - touche;
-
+	
 	/** Efface l'ancieene **/
 	
 	if (PianoMozart != -1)
@@ -1040,7 +1024,7 @@ GrafPtr	savePort;
 	PianoMozartTrack = track;
 	
 	/** Affiche la nouvelle **/
-
+	
 	if (PianoMozart != -1)
 	{
 		GetPianoMozartRect(&aRect);
@@ -1048,13 +1032,12 @@ GrafPtr	savePort;
 	}
 	
 	UpdateMozartWindow(MozartDlog);
-
+	
 	SetPort(savePort);
 }
 
 long ComputeRight(short note, short ins)
 {
-	Str255	aStr;
 	long	cellBytes;
 	long	insBytes;
 	long long	aDD;
@@ -1110,7 +1093,7 @@ void ComputeGrilleGWorld()
 	
 	GetMozartTrackRect(&r, GetControlValue(c3h));
 	r.right = caRect.right-15;
-//	r.bottom = MozartDlog->portRect.bottom-15;
+	//r.bottom = MozartDlog->portRect.bottom-15;
 	
 	GetGWorld(&currPort, &currDev);
 	
@@ -1138,9 +1121,8 @@ void ComputeGrilleGWorld()
 	
 	SetGWorld(grilleGWorld, nil);
 	
-	{
 	Rect pixBounds;
-
+	
 	GetPixBounds(GetGWorldPixMap(grilleGWorld), &pixBounds);
 	
 	EraseRect(&pixBounds);
@@ -1153,29 +1135,26 @@ void ComputeGrilleGWorld()
 		r.right = pixBounds.right;
 		EraseRect(&r);
 	}
-	}
 	
-	SetGWorld (currPort, currDev);
+	SetGWorld(currPort, currDev);
 }
 
 void UpdateMozartInfoInternal(void)
 {
 	short   			itemType, i;
-	Point   			cSize;
- 	Handle				itemHandle;
- 	short				tt, val, Pos, xTr, yTr, tI, StartX, EndX, StartY, EndY;
- 	Boolean				Note;
+	Handle				itemHandle;
+	short				tt, val, Pos, xTr, yTr, tI, StartX, EndX, StartY, EndY;
+	Boolean				Note;
 	Cmd					*theCommand;
-	Rect				destRect, itemRect, theClipRect, LoRect, pixMapRect;
+	Rect				destRect, itemRect, theClipRect, pixMapRect;
 	GrafPtr				SavePort;
-	RgnHandle			saveRgn;
 	GWorldPtr 			currPort;
 	GDHandle 			currDev;
 	Rect				caRect;
 	
 	
 	if (MozartDlog == NULL) return;
-
+	
 	// IMPORTANT: permet l'update des PatCopy et autres !!!!
 	if (PatCopy != MADDriver->Pat || PatternSizeCopy != curMusic->partition[ PatCopy]->header.size)	DoNullMozart();
 	
@@ -1183,12 +1162,12 @@ void UpdateMozartInfoInternal(void)
 	
 	GetPort(&SavePort);
 	SetPortDialogPort(MozartDlog);
-
+	
 	GetShowVal(&StartX, &EndX, &StartY, &EndY);
 	
 	GetPortBounds(GetDialogPort(MozartDlog), &caRect);
 	
-	/* Rect à afficher */
+	/* Rect √† afficher */
 	pixMapRect.top = MozartRect.top - LegendeHi;
 	pixMapRect.left = 0;
 	pixMapRect.right = caRect.right-15;
@@ -1250,7 +1229,7 @@ void UpdateMozartInfoInternal(void)
 	
 	xTr = GetControlValue(c2h);	yTr = GetControlValue(c1h);
 	
-	/********* Légendes *************/
+	/********* L√©gendes *************/
 	
 	// X Label
 	
@@ -1259,19 +1238,19 @@ void UpdateMozartInfoInternal(void)
 	destRect.right = destRect.left + xLabel.bounds.right;
 	destRect.bottom = destRect.top + xLabel.bounds.bottom;
 	
-	CopyBits(		&xLabel,
- 					(BitMap *) (*(GetGWorldPixMap(globalGWorld))),		//GetPortBitMapForCopyBits
- 					&xLabel.bounds,
- 					&destRect,
- 					srcCopy,
- 					NULL);
+	CopyBits(&xLabel,
+			 (BitMap *) (*(GetGWorldPixMap(globalGWorld))),		//GetPortBitMapForCopyBits
+			 &xLabel.bounds,
+			 &destRect,
+			 srcCopy,
+			 NULL);
 	
-	SetRect(	&destRect,
+	SetRect(&destRect,
 			pixMapRect.left,
 			pixMapRect.top,
 			pixMapRect.left + LegendeLa,
 			pixMapRect.top + LegendeHi);
-			
+	
 	RGBForeColor(&theColor);
 	PaintRect(&destRect);
 	ForeColor(blackColor);
@@ -1283,19 +1262,21 @@ void UpdateMozartInfoInternal(void)
 	
 	// Tracks
 	
-/*	for (tI = GetControlValue(c3h); tI < curMusic->header->numChn; tI++)
+#if 0
+	for (tI = GetControlValue(c3h); tI < curMusic->header->numChn; tI++)
 	{
 		// Position des controls gauches
 		
 		(*c1h[ tI])->contrlRect.top		= MozartRect.top + (tI - GetControlValue(c3h))*YSize;
 		(*c1h[ tI])->contrlRect.bottom	= (*c1h[ tI])->contrlRect.top + YSize + 1;
-	}	*/
+	}
+#endif
 	
 	GetDialogItem(MozartDlog, 16, &itemType, &itemHandle, &itemRect);
 	for (tI = GetControlValue(c3h); tI < GetMaxYBox(); tI++)	//
 	{
 		Str255		String;
-				
+		
 		/* Le ClipRect */
 		theClipRect.left = pixMapRect.left;
 		theClipRect.top = MozartRect.top + (tI - GetControlValue(c3h))*YSize;
@@ -1336,12 +1317,12 @@ void UpdateMozartInfoInternal(void)
 		destRect.top -= yTr - (tI - GetControlValue(c3h))*YSize;
 		destRect.bottom -= yTr - (tI - GetControlValue(c3h))*YSize;
 		
-		CopyBits(		&yLabel,
-	 					(BitMap *) (*(GetGWorldPixMap(globalGWorld))),
-	 					&yLabel.bounds,
-	 					&destRect,
-	 					srcCopy,
-	 					NULL);
+		CopyBits(&yLabel,
+				 (BitMap *) (*(GetGWorldPixMap(globalGWorld))),
+				 &yLabel.bounds,
+				 &destRect,
+				 srcCopy,
+				 NULL);
 		
 		MoveTo(yLabel.bounds.left-1, theClipRect.top);	LineTo(yLabel.bounds.left-1, theClipRect.bottom);
 		
@@ -1350,8 +1331,8 @@ void UpdateMozartInfoInternal(void)
 		
 		/**********************************/
 		
-		/*** La partition en elle-même ****/
-
+		/*** La partition en elle-m√™me ****/
+		
 		/* Le ClipRect */
 		theClipRect.left = MozartRect.left;
 		theClipRect.top = MozartRect.top + (tI - GetControlValue(c3h))*YSize;
@@ -1361,8 +1342,6 @@ void UpdateMozartInfoInternal(void)
 		
 		ClipRect(&theClipRect);
 		
-		{
-		
 		Rect pixBounds;
 		
 		GetPixBounds(GetGWorldPixMap(grilleGWorld), &pixBounds);
@@ -1370,18 +1349,17 @@ void UpdateMozartInfoInternal(void)
 		if (MADDriver->Active[ tI]) ForeColor(blackColor);
 		else RGBForeColor(&Gray[ 0]);
 		
-		CopyBits(	(BitMap *) (*(GetGWorldPixMap(grilleGWorld))),
- 					(BitMap *) (*(GetGWorldPixMap(globalGWorld))),
- 					&pixBounds,
- 					&theClipRect,
- 					srcCopy,
- 					NULL);
- 					
- 		ForeColor(blackColor);
- 		}
-	//	TraceGrille2(-xTr + LegendeLa, -yTr + MozartRect.top + (tI - GetControlValue(c3h))*YSize, &theClipRect);
+		CopyBits((BitMap *) (*(GetGWorldPixMap(grilleGWorld))),
+				 (BitMap *) (*(GetGWorldPixMap(globalGWorld))),
+				 &pixBounds,
+				 &theClipRect,
+				 srcCopy,
+				 NULL);
 		
-	//	calculer une grille pixmap et la modifier que si zoom ou change size
+		ForeColor(blackColor);
+		//TraceGrille2(-xTr + LegendeLa, -yTr + MozartRect.top + (tI - GetControlValue(c3h))*YSize, &theClipRect);
+		
+		//calculer une grille pixmap et la modifier que si zoom ou change size
 		
 		MoveTo(0, theClipRect.top);	LineTo(theClipRect.right, theClipRect.top);
 		
@@ -1486,9 +1464,9 @@ void UpdateMozartInfoInternal(void)
 					
 					SwitchColor(tI);
 					destRect.top++;
-		 			PaintRect(&destRect);
-		 			destRect.top--;
-		 			ForeColor(blackColor);
+					PaintRect(&destRect);
+					destRect.top--;
+					ForeColor(blackColor);
 				}
 			}
 		}
@@ -1511,14 +1489,13 @@ void UpdateMozartInfoInternal(void)
 
 void DoNullMozart(void)
 {
-	Str255		String;
 	GrafPtr		SavePort;
-	short		temp, itemType, track;
-	Rect		tempRect, clipRect, itemRect;
+	short		track;
+	Rect		tempRect, clipRect;
 	Point		pt, pt2, pt3;
-	Handle		itemHandle;
 
- 	if (MozartDlog == NULL) return;
+ 	if (MozartDlog == NULL)
+		return;
   
  	GetPort(&SavePort);
  	SetPortDialogPort(MozartDlog);
@@ -1735,172 +1712,167 @@ void DrawPartitionReader()
 void ErasePartitionReader()
 {
 	GrafPtr		SavePort;
-	Rect		tRect, sRect;
+	Rect		tRect;
 	Rect	caRect;
 	
-	
-
 	GetPort(&SavePort);
- 	SetPortDialogPort(MozartDlog);
-
+	SetPortDialogPort(MozartDlog);
+	
 	tRect.top = MozartRect.top - LegendeHi;
 	tRect.bottom = MozartRect.top;
-
+	
 	tRect.left = MozartRect.left + ReaderCopy * MOLarg - GetControlValue(c2h);
 	tRect.right = tRect.left + MOLarg + 1;
-
+	
 	GetPortBounds(GetDialogPort(MozartDlog), &caRect);
-
-	if (tRect.left < caRect.right-15) 
+	
+	if (tRect.left < caRect.right-15)
 	{
 		if (tRect.right > caRect.right-15) tRect.right = caRect.right-15;
 		if (tRect.left <= MozartRect.left) tRect.left = MozartRect.left+1;
 		
-		ForeColor(blackColor);	BackColor (whiteColor);
+		ForeColor(blackColor);
+		BackColor (whiteColor);
 		
-		CopyBits ( (BitMap *) (*(GetGWorldPixMap(globalGWorld))),
-					(BitMap*) *GetPortPixMap(GetDialogPort(MozartDlog)),
-					&tRect,
-					&tRect,
-					srcCopy,
-					nil);
-	
+		CopyBits((BitMap *) (*(GetGWorldPixMap(globalGWorld))),
+				 (BitMap*) *GetPortPixMap(GetDialogPort(MozartDlog)),
+				 &tRect,
+				 &tRect,
+				 srcCopy,
+				 nil);
+		
 		RGBBackColor(&theColor);
 	}
 	SetPort(SavePort);
 }
 
 void UpdateMozartWindow(DialogPtr GetSelection)
-{ 
-	Rect   		itemRect, tempRect, LoRect;
+{
+	Rect   		tempRect, LoRect;
 	GrafPtr		SavePort;
-	Handle		itemHandle;
-	short		itemType, i;
-	Str255		tempStr;
-	RgnHandle	saveClipRgn, myRgn;
+	RgnHandle	saveClipRgn;
 	Rect		caRect;
 	
-	
-
 	GetPort(&SavePort);
 	SetPortDialogPort(GetSelection);
 	
 	GetPortBounds(GetDialogPort(GetSelection), &caRect);
 	
 	//DoNullMozart();
-
+	
 	BeginUpdate(GetDialogWindow(GetSelection));
-		
- 		/**/
-		
-		ForeColor(blackColor);	BackColor (whiteColor);
-		
-		CopyBits (	(BitMap *) (*(GetGWorldPixMap(globalGWorld))),
-					(BitMap*) *GetPortPixMap(GetDialogPort(MozartDlog)),
-					&(*GetGWorldPixMap(globalGWorld))->bounds,
-					&(*GetGWorldPixMap(globalGWorld))->bounds,
-					srcCopy,
-					nil);
-		
-		/* Rect du PartitionReader */
-		
-		DrawPartitionReader();
-		
- 		/* Rect de sélection */
- 		
- 		RGBBackColor(&Gray[0]);
-		GetSelectionRect2(&LoRect, true);
-		
-		CopyBits (	(BitMap*) *GetPortPixMap(GetDialogPort(MozartDlog)),
-					(BitMap*) *GetPortPixMap(GetDialogPort(MozartDlog)),
-					&LoRect,
-					&LoRect,
-					srcCopy,
-					nil);
-		
- 		RGBBackColor(&redC);
-		GetPianoMozartRect(&LoRect);
-		CopyBits (	(BitMap*) *GetPortPixMap(GetDialogPort(MozartDlog)),
-					(BitMap*) *GetPortPixMap(GetDialogPort(MozartDlog)),
-					&LoRect,
-					&LoRect,
-					srcCopy,
-					nil);
-		RGBBackColor(&theColor);
-		
-		/**********************/
-		
-		MoveTo(0, MozartRect.top);
-		LineTo(caRect.right - 15, MozartRect.top);
-		
-		MoveTo(MozartRect.left, MozartRect.top - LegendeHi);
-		LineTo(MozartRect.left, caRect.bottom - 15);
-		
- 		DrawGrowIcon(GetDialogWindow(GetSelection));
-		
-		DrawNewNote();
-		
-		// Control c1h
-		
-		saveClipRgn = NewRgn();
-		GetClip(saveClipRgn );
-		
-		GetMozartTrackRect(&tempRect, GetControlValue(c3h));
-		tempRect.left = 0;		tempRect.right = MozartRect.left;
-		
-		ClipRect(&tempRect);
-		Draw1Control(c1h);
-		SetClip(saveClipRgn );
-		DisposeRgn(saveClipRgn );
-		
-		////////////////
-		
-		{
+	
+	/**/
+	
+	ForeColor(blackColor);	BackColor (whiteColor);
+	
+	CopyBits((BitMap *) (*(GetGWorldPixMap(globalGWorld))),
+			 (BitMap*) *GetPortPixMap(GetDialogPort(MozartDlog)),
+			 &(*GetGWorldPixMap(globalGWorld))->bounds,
+			 &(*GetGWorldPixMap(globalGWorld))->bounds,
+			 srcCopy,
+			 nil);
+	
+	/* Rect du PartitionReader */
+	
+	DrawPartitionReader();
+	
+	/* Rect de s√©lection */
+	
+	RGBBackColor(&Gray[0]);
+	GetSelectionRect2(&LoRect, true);
+	
+	CopyBits((BitMap*) *GetPortPixMap(GetDialogPort(MozartDlog)),
+			 (BitMap*) *GetPortPixMap(GetDialogPort(MozartDlog)),
+			 &LoRect,
+			 &LoRect,
+			 srcCopy,
+			 nil);
+	
+	RGBBackColor(&redC);
+	GetPianoMozartRect(&LoRect);
+	CopyBits((BitMap*) *GetPortPixMap(GetDialogPort(MozartDlog)),
+			 (BitMap*) *GetPortPixMap(GetDialogPort(MozartDlog)),
+			 &LoRect,
+			 &LoRect,
+			 srcCopy,
+			 nil);
+	RGBBackColor(&theColor);
+	
+	/**********************/
+	
+	MoveTo(0, MozartRect.top);
+	LineTo(caRect.right - 15, MozartRect.top);
+	
+	MoveTo(MozartRect.left, MozartRect.top - LegendeHi);
+	LineTo(MozartRect.left, caRect.bottom - 15);
+	
+	DrawGrowIcon(GetDialogWindow(GetSelection));
+	
+	DrawNewNote();
+	
+	// Control c1h
+	
+	saveClipRgn = NewRgn();
+	GetClip(saveClipRgn);
+	
+	GetMozartTrackRect(&tempRect, GetControlValue(c3h));
+	tempRect.left = 0;
+	tempRect.right = MozartRect.left;
+	
+	ClipRect(&tempRect);
+	Draw1Control(c1h);
+	SetClip(saveClipRgn );
+	DisposeRgn(saveClipRgn );
+	
+	////////////////
+	
+	{
 		RgnHandle visibleRegion = NewRgn();
 		
 		GetPortVisibleRegion(GetDialogPort(GetSelection), visibleRegion);
 		
- 	//	(*c1h)->contrlVis = 0;	CARBON
- 		UpdateDialog(GetSelection, visibleRegion);
- 	//	(*c1h)->contrlVis = 255; CARBON
- 		
- 		DisposeRgn(visibleRegion);
- 		}
- 		
- 		{
+		//(*c1h)->contrlVis = 0;	CARBON
+		UpdateDialog(GetSelection, visibleRegion);
+		//(*c1h)->contrlVis = 255; CARBON
+		
+		DisposeRgn(visibleRegion);
+	}
+	
+	{
 		Rect	iRect;
 		short	iType;
 		Handle	iHandle;
 		
 		GetDialogItem(MozartDlog, 22, &iType, &iHandle, &iRect);
-		iRect.right--;	iRect.top++;
+		iRect.right--;
+		iRect.top++;
 		TETextBox(curDisplayedNote+1, curDisplayedNote[ 0], &iRect, teCenter);
-		}
+	}
 	
 	EndUpdate(GetDialogWindow(GetSelection));
-
+	
 	SetPort(SavePort);
 } 
 
 static	long 			lastWhen = 0;
 
-pascal void actionProc( ControlHandle	theControl,  short			ctlPart)
+pascal void actionProc(ControlHandle theControl, short ctlPart)
 {
-long			lRefCon;
-short			CurWin, maxValue, minValue, curVal, copyval, itemType;
-RgnHandle		saveRgn, aRgn;
-Rect			itemRect;
-Handle			itemHandle;
-Rect			caRect;
+	long		lRefCon;
+	short		maxValue, minValue, curVal, copyval;
+	RgnHandle	aRgn;
+	Rect		itemRect;
+	Rect		caRect;
 	
-
-if (ctlPart <= 0) return;
-
-lRefCon = GetControlReference(theControl);
-maxValue = GetControlMaximum(theControl);
-minValue = GetControlMinimum(theControl);
-copyval = curVal = GetControlValue(theControl);
-
+	if (ctlPart <= 0)
+		return;
+	
+	lRefCon = GetControlReference(theControl);
+	maxValue = GetControlMaximum(theControl);
+	minValue = GetControlMinimum(theControl);
+	copyval = curVal = GetControlValue(theControl);
+	
 	GetPortBounds(GetDialogPort(MozartDlog), &caRect);
 	
 	switch (ctlPart)
@@ -1911,36 +1883,36 @@ copyval = curVal = GetControlValue(theControl);
 			else curVal -= MOHaut;
 			
 			if (curVal < minValue) curVal = minValue;
-		break;
-		
+			break;
+			
 		case kControlDownButtonPart:
 			if (lRefCon == 3) curVal++;
 			else if (lRefCon == 2) curVal += MOLarg;
 			else curVal += MOHaut;
 			
 			if (curVal > maxValue) curVal = maxValue;
-		break;
-		
+			break;
+			
 		case kControlPageUpPart:
 			if (lRefCon == 3) curVal -= ((caRect.bottom - 14) - MozartRect.top) / YSize;
 			else if (lRefCon == 2) curVal -= caRect.right - 15 - LegendeLa - 1;
 			else curVal -= -1 + YSize;
 			
 			if (curVal < minValue) curVal = minValue;
-		break;
-		
+			break;
+			
 		case kControlPageDownPart:
 			if (lRefCon == 3) curVal+= ((caRect.bottom - 14) - MozartRect.top) / YSize;
 			else if (lRefCon == 2) curVal += caRect.right - 15 - LegendeLa - 1;
 			else curVal += -1 + YSize;
 			
 			if (curVal > maxValue) curVal = maxValue;
-		break;
-		
+			break;
+			
 		case kControlIndicatorPart:
 			copyval = gThumbPrev;
 			gThumbPrev = curVal;
-		break;
+			break;
 	}
 	
 	if (copyval != curVal)
@@ -2016,14 +1988,14 @@ copyval = curVal = GetControlValue(theControl);
 		UpdateMozartInfoInternal();
 		UpdateMozartWindow(MozartDlog);
 		QDFlushPortBuffer(GetDialogPort(MozartDlog), aRgn);
-
+		
 		DisposeRgn(aRgn);
 	}
 }
 
 void GetNoteRect2(Rect *destRect, Point theCell, short track)
 {
-	short		xTr, yTr;
+	short xTr, yTr;
 	
 	xTr = GetControlValue(c2h);	yTr = GetControlValue(c1h);
 	
@@ -2042,7 +2014,7 @@ void SelectNotes(void)
 	aPoint = theEvent.where;
 	GlobalToLocal(&aPoint);
 	
-	PosToNote3(aPoint, NULL, &track);	
+	PosToNote3(aPoint, NULL, &track);
 	
 	GetMozartTrackRect(&maxRect, track);
 	
@@ -2051,17 +2023,15 @@ void SelectNotes(void)
 
 void SetInstruMozart(short myInstru)
 {
-	if (MozartDlog == NULL) return;
-
+	if (MozartDlog == NULL)
+		return;
 	curInstru = myInstru + 1;
-					
 	DrawNewNote();
 }
 
 void DeleteOneMozartNote(short Position, short track, short Pattern)
 {
-Cmd					*curCom;
-Point				XxX;
+	Cmd					*curCom;
 	
 	curCom = GetMADCommand(Position, track, curMusic->partition[ Pattern]);
 	MADKillCmd(curCom);
@@ -2073,7 +2043,7 @@ Point				XxX;
 
 void CalculDiffStartBox(void)
 {
-	Point	aCell, myPt;
+	Point	myPt;
 	short	pos, track, note;
 	
 	myPt = theEvent.where;
@@ -2087,39 +2057,35 @@ void CalculDiffStartBox(void)
 
 void PressPartition(Point myPt)
 {
-		Point				theCell, PointNote, PointNote2, XxX, Note, dest;
- 		short				ctlPart, track, bogus, xTr, yTr, i, itemType, oldPosM, xVal, yVal, Pos, val;
- 		ControlHandle		theControl;
- 		GrafPtr				SavePort;
- 		Rect				destRect, itemRect;
- 		Handle				itemHandle;
- 		RgnHandle			theRgn, theRgn2;
- 		Cmd					*theOldNote, *theNewNote;
- 		Str255				theString, aStr;
- 		ControlHandle		aCtl;
- 		long				lDistVH, mresult;
- 		Boolean				IsPlay;
- 		short				XE, XS, YE, YS;
- 		short				LargR, HautR;
-		Rect				caRect;
+	Point	theCell, PointNote, Note, dest;
+	short	track, bogus, itemType, xVal, yVal;
+	Rect	destRect, itemRect;
+	Handle	itemHandle;
+	short	XE, XS, YE, YS;
+	Rect	caRect;
 	
 	GetPortBounds(GetDialogPort(MozartDlog), &caRect);
-
+	
 	theCell.h = PosToNote3(myPt, &theCell.v, &track);
 	
-	switch (Mode)
-	{
+	switch (Mode) {
 		case ZoomM:
 			if (IsPressed(0x003A)) ZoomInter--;
 			else ZoomInter++;
 			
-			if (ZoomInter < 0) { ZoomInter = 0;		break;}
-			if (ZoomInter > 7) { ZoomInter = 7;		break;}
+			if (ZoomInter < 0) {
+				ZoomInter = 0;
+				break;
+			}
+			if (ZoomInter > 7) {
+				ZoomInter = 7;
+				break;
+			}
 			
 			thePrefs.MozartX = ZoomInter;
 			
-			MOLarg = MOLargList[ ZoomInter];
-			MOHaut = MOHautList[ ZoomInter];
+			MOLarg = MOLargList[ZoomInter];
+			MOHaut = MOHautList[ZoomInter];
 			
 			GetDialogItem (MozartDlog, 9, &itemType, &itemHandle, &itemRect);
 			SetRect(&MozartRect, itemRect.left, itemRect.top, 0, 0);
@@ -2136,8 +2102,8 @@ void PressPartition(Point myPt)
 			ComputeGrilleGWorld();
 			
 			UpdateMozartInfo();
-		break;
-		
+			break;
+			
 		case TrashM:
 			bogus = -1;
 			do
@@ -2150,7 +2116,7 @@ void PressPartition(Point myPt)
 				dest = NoteToPos2(Note, track);
 				
 				theCell.h = PosToNote3(myPt, &theCell.v, &track);
-			
+				
 				if (theCell.h != bogus)
 				{
 					bogus = theCell.h;
@@ -2158,13 +2124,13 @@ void PressPartition(Point myPt)
 				}
 				
 				WaitNextEvent(everyEvent, &theEvent, 1, NULL);
-			
+				
 				if (QDIsPortBuffered(GetDialogPort(MozartDlog)))
-    					QDFlushPortBuffer(GetDialogPort(MozartDlog), NULL);
+					QDFlushPortBuffer(GetDialogPort(MozartDlog), NULL);
 			}
 			while (Button());
-		break;
-	
+			break;
+			
 		case PlayM:
 			bogus = -1;
 			do
@@ -2173,7 +2139,7 @@ void PressPartition(Point myPt)
 				
 				theCell.h = PosToNote3(myPt, &theCell.v, &track);
 				theCell.v = NUMBER_NOTES - theCell.v-1;
-			
+				
 				if (theCell.v > 0 && theCell.v != bogus)
 				{
 					bogus = theCell.v;
@@ -2183,21 +2149,21 @@ void PressPartition(Point myPt)
 				DoGlobalNull();
 				
 				WaitNextEvent(everyEvent, &theEvent, 1, NULL);
-			
+				
 				if (QDIsPortBuffered(GetDialogPort(MozartDlog)))
-    					QDFlushPortBuffer(GetDialogPort(MozartDlog), NULL);
+					QDFlushPortBuffer(GetDialogPort(MozartDlog), NULL);
 			}
 			while (Button());
 			
 			SelectToucheMozart(-1, track);
 			MADKeyOFF(MADDriver, -1);
-		break;
-		
-		case NoteM:
-			 if (aNote2(theCell, &PointNote, track))
-			 {
-				/*** Ouvre le COMMAND Dialog ***/
+			break;
 			
+		case NoteM:
+			if (aNote2(theCell, &PointNote, track))
+			{
+				/*** Ouvre le COMMAND Dialog ***/
+				
 				if (theEvent.when - lastWhen <= GetDblTime())
 				{
 					GetNoteRect2(&destRect, theCell, track);
@@ -2232,7 +2198,7 @@ void PressPartition(Point myPt)
 				Rect		markee;
 				
 				myPcmd = (Pcmd*) NewPtrClear(sizeof(Pcmd) + 1 * sizeof(Cmd));
-				if (myPcmd == NULL) 
+				if (myPcmd == NULL)
 				{
 					MyDebugStr(__LINE__, __FILE__, "Memory WARNING");
 					return;
@@ -2278,8 +2244,8 @@ void PressPartition(Point myPt)
 				
 				DisposeRgn(tempRgn);
 			}
-		break;
-		
+			break;
+			
 		case CrossM:
 			if (PointSelection(myPt))	NewSelec:
 			{
@@ -2323,370 +2289,353 @@ void PressPartition(Point myPt)
 				
 				SelectNotes();
 			}
-		break;
+			break;
 	}
 }
 
 void DoItemPressMozart(short whichItem, DialogPtr whichDialog)
 {
-		Point				myPt, theCell, PointNote, PointNote2, XxX, Note, dest;
- 		short				ctlPart, bogus, track = 0, xTr, yTr, i, itemType, oldPosM, xVal, yVal, Pos, val;
- 		ControlHandle		theControl;
- 		GrafPtr				SavePort;
- 		Rect				tempRect, destRect, itemRect;
- 		Handle				itemHandle;
- 		RgnHandle			theRgn, theRgn2;
- 		Cmd					*theOldNote, *theNewNote;
- 		Str255				theString, aStr;
- 		ControlHandle		aCtl;
- 		long				lDistVH, mresult;
- 		Boolean				IsPlay;
- 		short				StartX, EndX, StartY, EndY;
- 		short				LargR, HautR;
- 		
- 		GetPort(&SavePort);
- 		SetPortDialogPort(whichDialog);
- 		
-		if (theEvent.what == mouseDown)
-		{
-			myPt = theEvent.where;
-			GlobalToLocal(&myPt);
-			
-		//	ctlPart = FindControl(myPt, GetDialogWindow(whichDialog), &theControl);
-			
-			theControl = NULL;
-			if (TestControl( c2h, myPt)) theControl = c2h;
-			if (TestControl( c3h, myPt)) theControl = c3h;
-			if (TestControl( c1h, myPt)) theControl = c1h;
-				
-			if (GetControlReference(theControl) == 1 || theControl == c2h || theControl == c3h)
-			{
-			/*	if (ctlPart == kControlIndicatorPart && gUseControlSize == false)
-				{
-					RgnHandle	saveClipRgn = NewRgn();
-					
-					GetClip(saveClipRgn);
-					
-					if (GetControlReference(theControl) == 1)
-					{
-						Rect tempRect;
-						
-						GetMozartTrackRect(&tempRect, 0);
-						tempRect.left = 0;		tempRect.right = MozartRect.left;
-						
-						ClipRect(&tempRect);
-					}
-					
-					bogus = TrackControl(theControl, myPt, NULL);
-					
-					SetClip(saveClipRgn);
-					DisposeRgn(saveClipRgn);
-					
-					if (bogus != 0)
-					{
-						ComputeGrilleGWorld();
-						UpdateMozartInfo();
-					}
-				}
-				else if (ctlPart > 0)*/
-				{
-					gThumbPrev = GetControlValue(theControl);
-					TrackControl(theControl, myPt, MyControlUPP);
-				}
-			}
-			else if (PtInRect(myPt, &MozartRect)) PressPartition(myPt);
-			else
-			{
-				tempRect.left = 0;
-				tempRect.right = MozartRect.left;
-				tempRect.top = MozartRect.top;
-				tempRect.bottom = MozartRect.bottom;
-				
-				if (PtInRect(myPt, &tempRect))
-				{
-					theCell.h = PosToNote3(myPt, &theCell.v, &track);
-				
-					if ((theEvent.modifiers & cmdKey) != 0)			// Mute
-					{
-						MADDriver->Active[ track] = !MADDriver->Active[ track];
-						
-						UPDATE_TrackActive();
-					}
-					else if ((theEvent.modifiers & optionKey) != 0)	// Solo
-					{
-						short	noActive;
-						
-						for (i = 0, noActive = 0; i < curMusic->header->numChn; i++)
-						{
-							if (MADDriver->Active[ i] == true)
-							{
-								noActive++;
-							}
-						}
-						
-						if (noActive <= 1 && MADDriver->Active[ track] == true)
-						{
-							for (i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
-						}
-						else
-						{
-							for (i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
-							MADDriver->Active[ track] = true;
-						}
-						
-						UPDATE_TrackActive();
-					}
-				}
-				
-			}
-		}
-		
-		switch (whichItem)
-		{
-		MenuHandle	tMenu;
-		Rect	caRect;
-		
-			case 18:
-				tMenu = GetMenu(161);
-
-				InsertMenu(tMenu, hierMenu );
-				GetDialogItem(MozartDlog, whichItem, &itemType, &itemHandle, &itemRect);
-				
-				myPt.v = itemRect.top;	myPt.h = itemRect.left;
-				LocalToGlobal(&myPt);
-				
-				mresult = PopUpMenuSelect(	tMenu,
-											myPt.v,
-											myPt.h,
-											curArgu + 1);
-				
-				if (HiWord(mresult ) != 0 )
-				{
-					curArgu = (Byte) LoWord(mresult) - 1;
-					
-					DrawNewNote();
-				}
-				DeleteMenu(GetMenuID(tMenu));
-				DisposeMenu(tMenu);
-			break;
-			
-			case 19:
-				tMenu = GetMenu(161);
-
-				InsertMenu(tMenu, hierMenu );
-				GetDialogItem(MozartDlog, whichItem, &itemType, &itemHandle, &itemRect);
-				
-				myPt.v = itemRect.top;	myPt.h = itemRect.left;
-				LocalToGlobal(&myPt);
-				
-				if (curVol == 0xFF) curVol = 0;
-				
-				mresult = PopUpMenuSelect(	tMenu,
-											myPt.v,
-											myPt.h,
-											curVol + 1);
-				
-				if (HiWord(mresult ) != 0 )
-				{
-					curVol = (Byte) LoWord(mresult) - 1;
-					if (curVol < 0x10) curVol = 0xFF;
-					
-					DrawNewNote();
-				}
-				DeleteMenu(GetMenuID(tMenu));
-				DisposeMenu(tMenu);
-			break;
-		
-			case 17:
-				InsertMenuItem(InstruMenu, "\pNo Ins", 0);
-
-				InsertMenu(InstruMenu, hierMenu );
-				GetDialogItem(MozartDlog, whichItem, &itemType, &itemHandle, &itemRect);
-				
-				myPt.v = itemRect.top;	myPt.h = itemRect.left;
-				LocalToGlobal(&myPt);
-				
-				SetItemMark(InstruMenu, curInstru + 1, 0xa5);
-				
-				mresult = PopUpMenuSelect(	InstruMenu,
-											myPt.v,
-											myPt.h,
-											curInstru + 1);
-				
-				SetItemMark(InstruMenu, curInstru + 1, 0);
-				
-				if (HiWord(mresult ) != 0 )
-				{
-					curInstru = (Byte) LoWord(mresult) - 1;
-					
-					DrawNewNote();
-					
-					NSelectInstruList(curInstru - 1, -1);
-				}
-				DeleteMenu(GetMenuID(InstruMenu));
-				DeleteMenuItem(InstruMenu, 1);
-			break;
-			
-			case 14:
-				GetMouse(&myPt);
-				
-				GetPortBounds(GetDialogPort(MozartDlog), &caRect);
-				
-				if (myPt.h < caRect.right - 15 && myPt.h > MozartRect.left)
-				{
-					Boolean	Jump2 = MADDriver->JumpToNextPattern;
-				
-					IsPlay = MusicPlayActive;
-					if (IsPlay == false) DoPlay();
-					MADDriver->JumpToNextPattern = false;
-					oldPosM = -1;
-					
-					do
-					{
-						GetMouse(&myPt);
-						if (myPt.h < caRect.right - 15 && myPt.h > MozartRect.left)
-						{
-							xVal = PosToNote3(myPt, &yVal, &track);
-							
-							if (xVal != oldPosM)
-							{
-								MADDriver->PartitionReader = oldPosM = xVal;
-							}
-		
-							
-						}
-						DoGlobalNull();
-						
-						WaitNextEvent(everyEvent, &theEvent, 1, NULL);
-					
-						if (QDIsPortBuffered(GetDialogPort(MozartDlog)))
-    					QDFlushPortBuffer(GetDialogPort(MozartDlog), NULL);
-						
-					}while (Button());
+	Point				myPt, theCell;
+	short				bogus, track = 0, i, itemType, oldPosM, xVal, yVal;
+	ControlHandle		theControl;
+	GrafPtr				SavePort;
+	Rect				tempRect, itemRect;
+	Handle				itemHandle;
+	long				mresult;
+	Boolean				IsPlay;
 	
-					if (IsPlay == false) DoPause();
-					MADDriver->JumpToNextPattern = Jump2;
-				}
-			break;
-
-			case 11:
-				bogus = -1;
+	GetPort(&SavePort);
+	SetPortDialogPort(whichDialog);
+	
+	if (theEvent.what == mouseDown) {
+		myPt = theEvent.where;
+		GlobalToLocal(&myPt);
+		
+		//ctlPart = FindControl(myPt, GetDialogWindow(whichDialog), &theControl);
+		
+		theControl = NULL;
+		if (TestControl(c2h, myPt))
+			theControl = c2h;
+		if (TestControl(c3h, myPt))
+			theControl = c3h;
+		if (TestControl(c1h, myPt))
+			theControl = c1h;
+		
+		if (GetControlReference(theControl) == 1 || theControl == c2h || theControl == c3h)
+		{
+#if 0
+			if (ctlPart == kControlIndicatorPart && gUseControlSize == false)
+			{
+				RgnHandle	saveClipRgn = NewRgn();
 				
-				GetPortBounds(GetDialogPort(MozartDlog), &caRect);
+				GetClip(saveClipRgn);
 				
-				do
+				if (GetControlReference(theControl) == 1)
 				{
-					GetMouse(&myPt);
-					if (myPt.v < caRect.bottom - 15 && myPt.v > MozartRect.top)
-					{
-						theCell.h = PosToNote3(myPt, &theCell.v, &track);
-						theCell.v = NUMBER_NOTES - theCell.v-1;
+					Rect tempRect;
 					
-						if (theCell.v > 0 && theCell.v != bogus)
-						{
-							bogus = theCell.v;
-							SelectToucheMozart(bogus+1, track);
-							DoPlayInstruInt(theCell.v, curInstru - 1, 0, 0, 0xFF, &MADDriver->chan[ track], 0, 0);
+					GetMozartTrackRect(&tempRect, 0);
+					tempRect.left = 0;		tempRect.right = MozartRect.left;
+					
+					ClipRect(&tempRect);
+				}
+				
+				bogus = TrackControl(theControl, myPt, NULL);
+				
+				SetClip(saveClipRgn);
+				DisposeRgn(saveClipRgn);
+				
+				if (bogus != 0)
+				{
+					ComputeGrilleGWorld();
+					UpdateMozartInfo();
+				}
+			}
+			else if (ctlPart > 0)
+#endif
+			{
+				gThumbPrev = GetControlValue(theControl);
+				TrackControl(theControl, myPt, MyControlUPP);
+			}
+		} else if (PtInRect(myPt, &MozartRect))
+			PressPartition(myPt);
+		else {
+			tempRect.left = 0;
+			tempRect.right = MozartRect.left;
+			tempRect.top = MozartRect.top;
+			tempRect.bottom = MozartRect.bottom;
+			
+			if (PtInRect(myPt, &tempRect)) {
+				theCell.h = PosToNote3(myPt, &theCell.v, &track);
+				
+				if ((theEvent.modifiers & cmdKey) != 0) {			// Mute
+					MADDriver->Active[ track] = !MADDriver->Active[ track];
+					
+					UPDATE_TrackActive();
+				} else if ((theEvent.modifiers & optionKey) != 0) {	// Solo
+					short	noActive;
+					
+					for (i = 0, noActive = 0; i < curMusic->header->numChn; i++) {
+						if (MADDriver->Active[i] == true) {
+							noActive++;
 						}
+					}
+					
+					if (noActive <= 1 && MADDriver->Active[track] == true) {
+						for (i = 0, noActive = 0; i < curMusic->header->numChn; i++)
+							MADDriver->Active[ i] = true;
+					} else {
+						for (i = 0; i < curMusic->header->numChn; i++)
+							MADDriver->Active[i] = false;
+						MADDriver->Active[track] = true;
+					}
+					
+					UPDATE_TrackActive();
+				}
+			}
+			
+		}
+	}
+	
+	switch (whichItem) {
+			MenuHandle	tMenu;
+			Rect	caRect;
+			
+		case 18:
+			tMenu = GetMenu(161);
+			
+			InsertMenu(tMenu, hierMenu);
+			GetDialogItem(MozartDlog, whichItem, &itemType, &itemHandle, &itemRect);
+			
+			myPt.v = itemRect.top;
+			myPt.h = itemRect.left;
+			LocalToGlobal(&myPt);
+			
+			mresult = PopUpMenuSelect(	tMenu,
+									  myPt.v,
+									  myPt.h,
+									  curArgu + 1);
+			
+			if (HiWord(mresult) != 0) {
+				curArgu = (Byte)LoWord(mresult) - 1;
+				
+				DrawNewNote();
+			}
+			DeleteMenu(GetMenuID(tMenu));
+			DisposeMenu(tMenu);
+			break;
+			
+		case 19:
+			tMenu = GetMenu(161);
+			
+			InsertMenu(tMenu, hierMenu);
+			GetDialogItem(MozartDlog, whichItem, &itemType, &itemHandle, &itemRect);
+			
+			myPt.v = itemRect.top;
+			myPt.h = itemRect.left;
+			LocalToGlobal(&myPt);
+			
+			if (curVol == 0xFF)
+				curVol = 0;
+			
+			mresult = PopUpMenuSelect(tMenu,
+									  myPt.v,
+									  myPt.h,
+									  curVol + 1);
+			
+			if (HiWord(mresult) != 0) {
+				curVol = (Byte)LoWord(mresult) - 1;
+				if (curVol < 0x10)
+					curVol = 0xFF;
+				
+				DrawNewNote();
+			}
+			DeleteMenu(GetMenuID(tMenu));
+			DisposeMenu(tMenu);
+			break;
+			
+		case 17:
+			InsertMenuItem(InstruMenu, "\pNo Ins", 0);
+			
+			InsertMenu(InstruMenu, hierMenu );
+			GetDialogItem(MozartDlog, whichItem, &itemType, &itemHandle, &itemRect);
+			
+			myPt.v = itemRect.top;
+			myPt.h = itemRect.left;
+			LocalToGlobal(&myPt);
+			
+			SetItemMark(InstruMenu, curInstru + 1, 0xa5);
+			
+			mresult = PopUpMenuSelect(InstruMenu,
+									  myPt.v,
+									  myPt.h,
+									  curInstru + 1);
+			
+			SetItemMark(InstruMenu, curInstru + 1, 0);
+			
+			if (HiWord(mresult) != 0) {
+				curInstru = (Byte)LoWord(mresult) - 1;
+				
+				DrawNewNote();
+				
+				NSelectInstruList(curInstru - 1, -1);
+			}
+			DeleteMenu(GetMenuID(InstruMenu));
+			DeleteMenuItem(InstruMenu, 1);
+			break;
+			
+		case 14:
+			GetMouse(&myPt);
+			
+			GetPortBounds(GetDialogPort(MozartDlog), &caRect);
+			
+			if (myPt.h < caRect.right - 15 && myPt.h > MozartRect.left) {
+				Boolean	Jump2 = MADDriver->JumpToNextPattern;
+				
+				IsPlay = MusicPlayActive;
+				if (IsPlay == false) DoPlay();
+				MADDriver->JumpToNextPattern = false;
+				oldPosM = -1;
+				
+				do {
+					GetMouse(&myPt);
+					if (myPt.h < caRect.right - 15 && myPt.h > MozartRect.left)
+					{
+						xVal = PosToNote3(myPt, &yVal, &track);
+						
+						if (xVal != oldPosM) {
+							MADDriver->PartitionReader = oldPosM = xVal;
+						}
+						
+						
 					}
 					DoGlobalNull();
 					
 					WaitNextEvent(everyEvent, &theEvent, 1, NULL);
-				
+					
 					if (QDIsPortBuffered(GetDialogPort(MozartDlog)))
     					QDFlushPortBuffer(GetDialogPort(MozartDlog), NULL);
-				}
-				while (Button());
+					
+				}while (Button());
 				
-				SelectToucheMozart(-1, track);
-				MADKeyOFF(MADDriver, -1);
-			break;
-
-			case HelpM:
-				if (MyTrackControl(HelpBut, theEvent.where, NULL))
-				{
-					DialogPatternInfo(PatCopy);
-				}
+				if (IsPlay == false)
+					DoPause();
+				MADDriver->JumpToNextPattern = Jump2;
+			}
 			break;
 			
-			case PrefM:
-				if (MyTrackControl(prefBut, theEvent.where, NULL))
-				{
+		case 11:
+			bogus = -1;
+			
+			GetPortBounds(GetDialogPort(MozartDlog), &caRect);
+			
+			do {
+				GetMouse(&myPt);
+				if (myPt.v < caRect.bottom - 15 && myPt.v > MozartRect.top) {
+					theCell.h = PosToNote3(myPt, &theCell.v, &track);
+					theCell.v = NUMBER_NOTES - theCell.v-1;
+					
+					if (theCell.v > 0 && theCell.v != bogus) {
+						bogus = theCell.v;
+						SelectToucheMozart(bogus+1, track);
+						DoPlayInstruInt(theCell.v, curInstru - 1, 0, 0, 0xFF, &MADDriver->chan[ track], 0, 0);
+					}
+				}
+				DoGlobalNull();
+				
+				WaitNextEvent(everyEvent, &theEvent, 1, NULL);
+				
+				if (QDIsPortBuffered(GetDialogPort(MozartDlog)))
+					QDFlushPortBuffer(GetDialogPort(MozartDlog), NULL);
+			} while (Button());
+			
+			SelectToucheMozart(-1, track);
+			MADKeyOFF(MADDriver, -1);
+			break;
+			
+		case HelpM:
+			if (MyTrackControl(HelpBut, theEvent.where, NULL)) {
+				DialogPatternInfo(PatCopy);
+			}
+			break;
+			
+		case PrefM:
+			if (MyTrackControl(prefBut, theEvent.where, NULL))
+			{
 #include "Help.h"
-					
-					ShowPrefs(CLASSICAL);
-				}
+				
+				ShowPrefs(CLASSICAL);
+			}
 			break;
 			
-			case 20:	// Effect
-				InsertMenu(EffectMenu, hierMenu );
-				GetDialogItem(MozartDlog, whichItem, &itemType, &itemHandle, &itemRect);
+		case 20:	// Effect
+			InsertMenu(EffectMenu, hierMenu );
+			GetDialogItem(MozartDlog, whichItem, &itemType, &itemHandle, &itemRect);
+			
+			myPt.v = itemRect.top;
+			myPt.h = itemRect.left;
+			LocalToGlobal(&myPt);
+			
+			SetItemMark(EffectMenu, curEffect + 1, 0xa5);
+			
+			mresult = PopUpMenuSelect(EffectMenu,
+									  myPt.v,
+									  myPt.h,
+									  curEffect + 1);
+			
+			SetItemMark(EffectMenu, curEffect + 1, 0);
+			
+			if (HiWord(mresult) != 0) {
+				curEffect = (Byte)LoWord(mresult) - 1;
 				
-				myPt.v = itemRect.top;	myPt.h = itemRect.left;
-				LocalToGlobal(&myPt);
-				
-				SetItemMark(EffectMenu, curEffect + 1, 0xa5);
-				
-				mresult = PopUpMenuSelect(	EffectMenu,
-											myPt.v,
-											myPt.h,
-											curEffect + 1);
-				
-				SetItemMark(EffectMenu, curEffect + 1, 0);
-				
-				if (HiWord(mresult ) != 0 )
-				{
-					curEffect = (Byte) LoWord(mresult) - 1;
-					
-					DrawNewNote();
-				}
-				DeleteMenu(GetMenuID(EffectMenu));
+				DrawNewNote();
+			}
+			DeleteMenu(GetMenuID(EffectMenu));
 			break;
 			
-			case NoteM:
-			case CrossM:
-			case TrashM:
-			case PlayM:
-			case ZoomM:
-				copyMode = Mode = whichItem;
-				
-				SelectGoodMode();
+		case NoteM:
+		case CrossM:
+		case TrashM:
+		case PlayM:
+		case ZoomM:
+			copyMode = Mode = whichItem;
+			
+			SelectGoodMode();
 			break;
-						
-		/*	case SeeAllM:
-				if (MyTrackControl(SeeAll, theEvent.where, NULL))
+			
+#if 0
+		case SeeAllM:
+			if (MyTrackControl(SeeAll, theEvent.where, NULL))
+			{
+				if (showAllNotes == false)
 				{
-					if (showAllNotes == false)
-					{
-						HiliteControl(SeeAll, kControlButtonPart);
-						showAllNotes = true;
-					}
-					else
-					{
-						HiliteControl(SeeAll, 0);
-						showAllNotes = false;
-					}
-					UpdateMozartInfo();
+					HiliteControl(SeeAll, kControlButtonPart);
+					showAllNotes = true;
 				}
-			break;	*/
-		}
-		
-		SetPort(SavePort);
+				else
+				{
+					HiliteControl(SeeAll, 0);
+					showAllNotes = false;
+				}
+				UpdateMozartInfo();
+			}
+			break;
+#endif
+	}
+	
+	SetPort(SavePort);
 }
 
 void SetUpLabels()
 {
-	Rect			itemRect, tempRect, dataBounds;
+	Rect			itemRect;
 	Handle			itemHandle;
-	short			itemType, itemHit, temp, dataLen, i, tt, add;
-	Point			cSize;
+	short			itemType, temp, tt, add;
 	FontInfo		fInfo;
 	Str255			String;
-	MenuHandle		gPopMenu;
 	GWorldPtr 		gMyOffG = NULL;
 	GWorldPtr 		currPort;
 	GDHandle 		currDev;
-	CursHandle		tempCur;
 	
 	/** YLabel **/
 	
@@ -2695,16 +2644,17 @@ void SetUpLabels()
 	GetDialogItem (MozartDlog, 11, &itemType, &itemHandle, &itemRect);
 	
 	itemRect.bottom = itemRect.top + 1 + MOHaut*NUMBER_NOTES;
-//	SetRect(&itemRect, 0, 0, LegendeLa, 1 + MOHaut*NUMBER_NOTES);
+	//SetRect(&itemRect, 0, 0, LegendeLa, 1 + MOHaut*NUMBER_NOTES);
 	NewOffscreenBitMap(&yLabel, &itemRect);
 	
 	NewGWorld(&gMyOffG, 1, &itemRect, nil, nil, 0);
-	LockPixels (GetGWorldPixMap(gMyOffG));
-	SetGWorld (gMyOffG, nil);
+	LockPixels(GetGWorldPixMap(gMyOffG));
+	SetGWorld(gMyOffG, NULL);
 	
 	EraseRect(&itemRect);
 	
-	TextFont(4);	TextSize(9);
+	TextFont(4);
+	TextSize(9);
 	
 	GetFontInfo(&fInfo);
 	MidMOHaut = (MOHaut - fInfo.ascent)/2;
@@ -2732,23 +2682,23 @@ void SetUpLabels()
 			NTStr(2, 7 - tt , (Ptr) String);
 			DrawString(MyC2PStr((Ptr) String));
 		}
-
+		
 	}
 	
-	CopyBits (	(BitMap *) (*(GetGWorldPixMap(gMyOffG))),
-				&yLabel,
-				&itemRect,
-				&itemRect,
-				srcCopy,
-				nil);
+	CopyBits((BitMap *) (*(GetGWorldPixMap(gMyOffG))),
+			 &yLabel,
+			 &itemRect,
+			 &itemRect,
+			 srcCopy,
+			 nil);
 	
 	SetGWorld (currPort, currDev);
-
+	
 	UnlockPixels (GetGWorldPixMap(gMyOffG));
 	DisposeGWorld(gMyOffG);
-
+	
 	/** XLabel **/
-
+	
 	SetRect(&itemRect, 0, 0, MOLarg * curMusic->partition[ PatCopy]->header.size, LegendeHi);
 	NewOffscreenBitMap(&xLabel, &itemRect);
 	
@@ -2756,12 +2706,13 @@ void SetUpLabels()
 	LockPixels (GetGWorldPixMap(gMyOffG));
 	SetGWorld (gMyOffG, nil);
 	
-	TextFont(4);	TextSize(9);
-
+	TextFont(4);
+	TextSize(9);
+	
 	EraseRect(&itemRect);
-		
+	
 	GetFontInfo(&fInfo);
-
+	
 	if (curMusic->partition[ PatCopy]->header.size > 100) { MidMOLarg = (MOLarg - fInfo.widMax * 3)/2;	temp = 3; }
 	else { MidMOLarg = (MOLarg - fInfo.widMax * 2)/2;	temp = 2; }
 	
@@ -2786,48 +2737,41 @@ void SetUpLabels()
 			MoveTo(tt*MOLarg + MOLarg/2, 11);
 			LineTo(tt*MOLarg + MOLarg/2, 11);
 		}
-
+		
 		MoveTo(tt*MOLarg + MidMOLarg + 1, 10);
 		
-		NTStr(temp, tt , (Ptr) String);
-		DrawString(MyC2PStr((Ptr) String));
+		NTStr(temp, tt , (Ptr)String);
+		DrawString(MyC2PStr((Ptr)String));
 	}
 	
 	MidMOLarg = (MOLarg - fInfo.widMax * 2)/2;
-
-	CopyBits (	(BitMap *) (*(GetGWorldPixMap(gMyOffG))),
-				&xLabel,
-				&itemRect,
-				&itemRect,
-				srcCopy,
-				nil);
-
+	
+	CopyBits((BitMap *) (*(GetGWorldPixMap(gMyOffG))),
+			 &xLabel,
+			 &itemRect,
+			 &itemRect,
+			 srcCopy,
+			 nil);
+	
 	SetGWorld (currPort, currDev);
-
+	
 	UnlockPixels (GetGWorldPixMap(gMyOffG));
 	DisposeGWorld(gMyOffG);
 }
 
 void CreateMozartWindow(void)
 {
-	Rect			itemRect, tempRect, dataBounds;
+	Rect			itemRect, tempRect;
 	Handle			itemHandle;
-	short			itemType, itemHit, temp, dataLen, i, tt;
-	Point			cSize;
-	FontInfo		fInfo;
-	Str255			String;
-	MenuHandle		gPopMenu;
-	GWorldPtr 		gMyOffG = NULL;
-	GWorldPtr 		currPort;
-	GDHandle 		currDev;
+	short			itemType;
 	CursHandle		tempCur;
-
+	
 	if (MozartDlog != NULL)
 	{
 		SetWindEtat(GetDialogWindow(MozartDlog));
 		return;
 	}
-
+	
 	YSize = 128;
 	
 	SetItemMark(EditorMenu, 2, checkMark);
@@ -2839,13 +2783,13 @@ void CreateMozartWindow(void)
 	SetRect(&tempRect, 0, 0, 1, 1);
 	NewGWorld(&globalGWorld, 0, &tempRect, nil, nil, 0);
 	LockPixels (GetGWorldPixMap(globalGWorld));
-
+	
 	ZoomInter = thePrefs.MozartX;
 	MOLarg = MOLargList[ ZoomInter];
 	MOHaut = MOHautList[ ZoomInter];
-
+	
 	PianoMozart = -1;
-
+	
 	Gray[ 0].red = Gray[ 0].green = Gray[ 0].blue = 48059;
 	Gray[ 1].red = Gray[ 1].green = Gray[ 1].blue = 43690;
 	Gray[ 2].red = Gray[ 2].green = Gray[ 2].blue = 34952;
@@ -2858,60 +2802,61 @@ void CreateMozartWindow(void)
 	greenC.red 		= 39321;
 	greenC.green 	= 65535;
 	greenC.blue		= 39321;
-
+	
 	blueC.red 		= 26214;
 	blueC.green 	= 65535;
 	blueC.blue		= 65535;
-
+	
 	redC.red		= 65535;
 	redC.green		= 13107;
 	redC.blue		= 39321;
 	
 	showAllNotes = false;
-		
+	
 	MozartDlog = GetNewDialog(135, NULL, GetDialogWindow(ToolsDlog));
 	SetWindEtat(GetDialogWindow(MozartDlog));
 	ShowWindow(GetDialogWindow(MozartDlog));
 	SetPortDialogPort(MozartDlog);
 	SelectWindow2(GetDialogWindow(MozartDlog));
-
-	TextFont(kFontIDGeneva);	TextSize(9);
-
+	
+	TextFont(kFontIDGeneva);
+	TextSize(9);
+	
 	SetRect(&itemRect, 0, 0, -30, -16);
-	c1h = NewControl(	GetDialogWindow(MozartDlog),
-							&itemRect,
-							"\p.",
-							true,
-							0,
-							0,
-							0,
-							gScrollBarID,
-							1);
-							
+	c1h = NewControl(GetDialogWindow(MozartDlog),
+					 &itemRect,
+					 "\p.",
+					 true,
+					 0,
+					 0,
+					 0,
+					 gScrollBarID,
+					 1);
+	
 	SetRect(&itemRect, 0, 0, -16, -30);
-	c2h = NewControl(	GetDialogWindow(MozartDlog),
-						&itemRect,
-						"\p.",
-						true,
-						0,
-						0,
-						0,
-						gScrollBarID,
-						2);
-
+	c2h = NewControl(GetDialogWindow(MozartDlog),
+					 &itemRect,
+					 "\p.",
+					 true,
+					 0,
+					 0,
+					 0,
+					 gScrollBarID,
+					 2);
+	
 	SetRect(&itemRect, 0, 0, -16, -30);
-	c3h = NewControl(	GetDialogWindow(MozartDlog),
-						&itemRect,
-						"\p.",
-						true,
-						0,
-						0,
-						0,
-						gScrollBarID,
-						3);
-						
+	c3h = NewControl(GetDialogWindow(MozartDlog),
+					 &itemRect,
+					 "\p.",
+					 true,
+					 0,
+					 0,
+					 0,
+					 gScrollBarID,
+					 3);
+	
 	MyControlUPP = NewControlActionUPP(actionProc);
-		
+	
 	GetDialogItem (MozartDlog, 9, &itemType, &itemHandle, &itemRect);
 	SetRect(&MozartRect, itemRect.left, itemRect.top, 0, 0);
 	MozartRect.right = MozartRect.left + MOLarg * curMusic->partition[ MADDriver->Pat]->header.size;
@@ -2922,101 +2867,101 @@ void CreateMozartWindow(void)
 	
 	GetDialogItem(MozartDlog , TrashM, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	PoubBut = NewControl(	GetDialogWindow(MozartDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							150,
-							kControlBevelButtonNormalBevelProc,
-							0);
+	PoubBut = NewControl(GetDialogWindow(MozartDlog),
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 150,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
 	
 	GetDialogItem(MozartDlog , NoteM, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	NoteBut = NewControl(	GetDialogWindow(MozartDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							140,
-							kControlBevelButtonNormalBevelProc,
-							0);
-							
+	NoteBut = NewControl(GetDialogWindow(MozartDlog),
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 140,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
+	
 	GetDialogItem(MozartDlog , ZoomM, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	ZoomBut = NewControl(	GetDialogWindow(MozartDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							177,
-							kControlBevelButtonNormalBevelProc,
-							0);
-
-
+	ZoomBut = NewControl(GetDialogWindow(MozartDlog),
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 177,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
+	
+	
 	GetDialogItem(MozartDlog , HelpM, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	HelpBut = NewControl(	GetDialogWindow(MozartDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							149,
-							kControlBevelButtonNormalBevelProc,
-							0);
-
+	HelpBut = NewControl(GetDialogWindow(MozartDlog),
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 149,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
+	
 	GetDialogItem(MozartDlog , PrefM, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	prefBut = NewControl(	GetDialogWindow(MozartDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							174,
-							kControlBevelButtonNormalBevelProc,
-							0);
-
-
-/*	GetDialogItem(MozartDlog , SeeAllM, &itemType, &itemHandle, &itemRect);
-	//itemRect.right = itemRect.left;
-	SeeAll = NewControl(	GetDialogWindow(MozartDlog),
-							&itemRect,
-							"\p.",
-							true,
-							169,		//icl8 id
-							-32768,
-							32767,
-							512,
-							0);	*/
-
+	prefBut = NewControl(GetDialogWindow(MozartDlog),
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 174,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
+	
+	
+	/*	GetDialogItem(MozartDlog , SeeAllM, &itemType, &itemHandle, &itemRect);
+	 //itemRect.right = itemRect.left;
+	 SeeAll = NewControl(	GetDialogWindow(MozartDlog),
+	 &itemRect,
+	 "\p.",
+	 true,
+	 169,		//icl8 id
+	 -32768,
+	 32767,
+	 512,
+	 0);	*/
+	
 	GetDialogItem(MozartDlog , CrossM, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	SelBut = NewControl(	GetDialogWindow(MozartDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							156,
-							kControlBevelButtonNormalBevelProc,
-							0);
-
+	SelBut = NewControl(GetDialogWindow(MozartDlog),
+						&itemRect,
+						"\p",
+						true,
+						0,
+						kControlContentIconSuiteRes,
+						156,
+						kControlBevelButtonNormalBevelProc,
+						0);
+	
 	GetDialogItem(MozartDlog , PlayM, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	PlayBut = NewControl(	GetDialogWindow(MozartDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							160,
-							kControlBevelButtonNormalBevelProc,
-							0);
+	PlayBut = NewControl(GetDialogWindow(MozartDlog),
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 160,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
 	
 	copyMode = Mode = NoteM;
 	HiliteControl(NoteBut, kControlButtonPart);
@@ -3039,13 +2984,11 @@ void CreateMozartWindow(void)
 	
 	ResetSelection();
 	
-	{
 	Rect	caRect;
 	
 	GetPortBounds(GetDialogPort(MozartDlog), &caRect);
 	
 	SetWinControl(caRect.right, caRect.bottom, MozartDlog);
-	}
 	
 	SetControlValue(c1h, thePrefs.MozartC1h);
 	SetControlValue(c2h, thePrefs.MozartC2h);
@@ -3107,20 +3050,19 @@ void CloseMozartWindow(void)
 
 void DoKeyPressMozart(short theChar)
 {
-GrafPtr		savePort;
-Rect		itemRect;
-
+	GrafPtr		savePort;
+	
 	GetPort(&savePort);
 	SetPortDialogPort(MozartDlog);
 	
 	if (theChar ==  9)
- 	{
+	{
 		Mode++;
 		if (Mode > MODESIZE) Mode = 1;
 		
 		copyMode = Mode;
 		SelectGoodMode();
- 	}
+	}
 	else if (theChar == 0x08)
 	{
 		SaveUndo(UPattern, PatCopy, "\pUndo 'Delete selection'");
@@ -3136,10 +3078,8 @@ Pcmd* CreatePcmdFromSelectionMozart(void)
 	Cmd					*theCommand;
 	Pcmd				*myPcmd;
 	short				count, i, Pos;
-	Ptr					myText;
-	GrafPtr				SavePort;
-
-	count = selecEnd.h - selecStart.h + 1;	
+	
+	count = selecEnd.h - selecStart.h + 1;
 	if (count <= 0) return NULL;
 	
 	myPcmd = (Pcmd*) NewPtrClear(sizeof(Pcmd) + count * sizeof(Cmd));
@@ -3214,12 +3154,8 @@ void GetMinMaxPcmd(Pcmd *myPcmd, short *minNote, short *maxNote)
 
 void PasteCmdBox(Pcmd *myPcmd)
 {
-short				itemType,i, minNote, temp, maxNote, note;
-long				inOutBytes, iL, scrapOffset, lCntOrErr;
-Handle				theHandle;
-Cmd					*cmd;
-Point				theCell;
-Rect				itemRect;
+	short				minNote, temp, maxNote;
+	Cmd					*cmd;
 	
 	GetMinMaxPcmd(myPcmd, &minNote, &maxNote);
 	
@@ -3253,20 +3189,17 @@ Rect				itemRect;
 
 void PASTEMozart(void)
 {
-short				itemType,i;
-long				inOutBytes, iL, scrapOffset, lCntOrErr;
-Handle				theHandle;
-Point				theCell;
-Rect				itemRect;
-GrafPtr				savePort;
-Pcmd				*myPcmd;
-ScrapRef			scrap;
-ScrapFlavorFlags	flags;
-OSErr				anErr;
-
+	long				lCntOrErr;
+	Handle				theHandle;
+	GrafPtr				savePort;
+	Pcmd				*myPcmd;
+	ScrapRef			scrap;
+	ScrapFlavorFlags	flags;
+	OSErr				anErr;
+	
 	GetPort(&savePort);
 	SetPortDialogPort(MozartDlog);
-
+	
 	lCntOrErr = 0;
 	anErr = GetCurrentScrap(&scrap);
 	anErr = GetScrapFlavorFlags(scrap, 'Pcmd', &flags);
@@ -3290,15 +3223,13 @@ OSErr				anErr;
 	SetPort(savePort);
 }
 
-void OpenPcmdMozart(FSSpec	*mySpec)
+void OpenPcmdMozart(FSSpec *mySpec)
 {
-//	StandardFileReply	reply;
-	Str255				defaultname;
+	//StandardFileReply	reply;
 	OSErr				iErr;
 	long				inOutBytes;
-	short				fRefNum;	
+	short				fRefNum;
 	Pcmd				*myPcmd;
-	SFTypeList			typeList;
 	
 	if (mySpec == NULL)
 	{
@@ -3308,8 +3239,6 @@ void OpenPcmdMozart(FSSpec	*mySpec)
 		
 		if (iErr) return;
 	}
-	
-//	HSetVol(NULL, mySpec->vRefNum, mySpec->parID);
 	
 	if (FSpOpenDF(mySpec, fsCurPerm, &fRefNum) == noErr)
 	{
@@ -3338,7 +3267,7 @@ void CleanInvert(Rect *a, Rect *b)
 {
 	RgnHandle	tempRgn = NewRgn();
 	Rect		c;
-					
+	
 	OpenRgn();
 	FrameRect(a);	FrameRect(b);
 	CloseRgn(tempRgn);
@@ -3361,7 +3290,7 @@ void CleanInvert(Rect *a, Rect *b)
 
 void EraseMark()
 {
-	Rect v = { 0, 0, 0, 0};
+	Rect v = {0, 0, 0, 0};
 	
 	CleanInvert(&pSelecRectX, &v);
 	CleanInvert(&pSelecRectY, &v);
@@ -3372,25 +3301,25 @@ void EraseMark()
 
 void DragMark2(short track)
 {
-Rect	xRect, yRect;
-Rect	maxRectX, maxRectY;
-Rect	caRect;
+	Rect	xRect, yRect;
+	Rect	maxRectX, maxRectY;
+	Rect	caRect;
 	
 	GetPortBounds(GetDialogPort(MozartDlog), &caRect);
-
-	SetRect(	&yRect,
-				MozartRect.left - LegendeLaS,
-				MozartRect.top + (DropY*MOHaut - GetControlValue(c1h)) + (track - GetControlValue(c3h))*YSize,
-				MozartRect.left,
-				MozartRect.top + (DropY*MOHaut - GetControlValue(c1h)) + (track - GetControlValue(c3h))*YSize + MOHaut*(selecEnd.v - selecStart.v + 1) + 1);
+	
+	SetRect(&yRect,
+			MozartRect.left - LegendeLaS,
+			MozartRect.top + (DropY*MOHaut - GetControlValue(c1h)) + (track - GetControlValue(c3h))*YSize,
+			MozartRect.left,
+			MozartRect.top + (DropY*MOHaut - GetControlValue(c1h)) + (track - GetControlValue(c3h))*YSize + MOHaut*(selecEnd.v - selecStart.v + 1) + 1);
 	if (yRect.bottom > caRect.bottom -15)
 		yRect.bottom = caRect.bottom -15;
 	
-	SetRect(	&xRect,
-				MozartRect.left + (DropX*MOLarg - GetControlValue(c2h)),
-				MozartRect.top - LegendeHi + 1,
-				MozartRect.left + (DropX*MOLarg - GetControlValue(c2h)) + MOLarg*(selecEnd.h - selecStart.h + 1) + 1,
-				MozartRect.top );
+	SetRect(&xRect,
+			MozartRect.left + (DropX*MOLarg - GetControlValue(c2h)),
+			MozartRect.top - LegendeHi + 1,
+			MozartRect.left + (DropX*MOLarg - GetControlValue(c2h)) + MOLarg*(selecEnd.h - selecStart.h + 1) + 1,
+			MozartRect.top );
 	if (xRect.right > caRect.right -15)
 		xRect.right = caRect.right -15;
 	
@@ -3408,14 +3337,13 @@ Rect	caRect;
 }
 
 pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
-
-{	short				result, offset, i, fRefNum;
+{
+	short				result, fRefNum;
 	long				textSize, inOutBytes;
-	unsigned short		index;
-	unsigned long		flavorFlags, attributes;
+	unsigned long		attributes;
 	ItemReference		theItem;
 	RgnHandle			theRgn;
-	Point				theMouse, localMouse, theCell;
+	Point				theMouse, localMouse;
 	Rect				tempRect;
 	FlavorFlags     	theFlags;
 	Pcmd				*myPcmd;
@@ -3423,7 +3351,6 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 	HFSFlavor			myFlavor;
 	FInfo				fndrInfo;
 	OSErr				iErr;
-	Str255				pStr;
 
 	if (!mainSystemDrag) return noErr;
 	
@@ -3487,7 +3414,6 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 				
 				ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 				
-			//	HSetVol(NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
 				FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
 				
 				switch (fndrInfo.fdType)
@@ -3584,8 +3510,6 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 					
 					if (!EqualRect(&trackRect, &prevClipRect))
 					{
-						Rect alphaRect;
-						
 						ClipRect(&prevClipRect);
 						HideDragHilite(theDrag);
 					}
@@ -3632,9 +3556,6 @@ Boolean DragBox(RgnHandle myRgn, Pcmd	*myPcmd, EventRecord *theEvent)
 	RgnHandle			dragRegion, tempRgn;
 	Point				theLoc;
 	DragReference		theDrag;
-	short				mouseDownModifiers, mouseUpModifiers;
-	short				temp;
-	Str255				theStr;
 	Ptr					myText;
 	PromiseHFSFlavor	myNewFile;
 	Rect				dragRegionRect;
@@ -3685,23 +3606,21 @@ Boolean DragBox(RgnHandle myRgn, Pcmd	*myPcmd, EventRecord *theEvent)
 pascal OSErr MyReceiveDropBox(WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
 {
 	OSErr				result;
-	Rect				theRect, srcRect;
-	unsigned short		items;
 	ItemReference		theItem;
 	DragAttributes		attributes;
 	Size				textSize;
-	short				offset, selStart, selEnd, mouseDownModifiers, mouseUpModifiers, movePcmd;
-	Point				theCell;
+	short				mouseDownModifiers, mouseUpModifiers, movePcmd;
 	Pcmd				*myPcmd;
 	HFSFlavor			myFlavor;
-
+	
 	if (!mainSystemDrag) return dragNotAcceptedErr;
-	if (!canAcceptDrag) return(dragNotAcceptedErr);
-	if (DropX == -1 && DropY == -1 && DropTrack == -1 && selectedControl == NULL) return(dragNotAcceptedErr);
+	if (!canAcceptDrag) return dragNotAcceptedErr;
+	if (DropX == -1 && DropY == -1 && DropTrack == -1 && selectedControl == NULL) return dragNotAcceptedErr;
 	
 	SetPortWindowPort(theWindow);
 	
-	DiffStartV = 0;		DiffStartH = 0;
+	DiffStartV = 0;
+	DiffStartH = 0;
 	
 	GetDragAttributes(theDrag, &attributes);
 	GetDragModifiers(theDrag, NULL, &mouseDownModifiers, &mouseUpModifiers);
@@ -3712,7 +3631,7 @@ pascal OSErr MyReceiveDropBox(WindowPtr theWindow, void *handlerRefCon, DragRefe
 		{
 			HiliteControl(selectedControl, 0);
 			
-		//	if (selectedControl == saveBut)		SavePcmdFile(CreatePcmdFromSelectionMozart());
+			//if (selectedControl == saveBut)		SavePcmdFile(CreatePcmdFromSelectionMozart());
 			if (selectedControl == PoubBut) 	DoKeyPressMozart(8);
 			selectedControl = NULL;
 			
@@ -3731,17 +3650,17 @@ pascal OSErr MyReceiveDropBox(WindowPtr theWindow, void *handlerRefCon, DragRefe
 	
 	GetDragItemReferenceNumber(theDrag, 1, &theItem);
 	result = GetFlavorDataSize(theDrag, theItem, 'Pcmd', &textSize);
-
+	
 	if (result == noErr)
-	{	
+	{
 		myPcmd = (Pcmd*) MyNewPtr(textSize);
 		if (myPcmd != NULL)
 		{
 			GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
-	
+			
 			if (movePcmd)		// Delete source
 			{
-				// La source est déjà selectionnée...
+				// La source est d√©j√† selectionn√©e...
 				
 				DoKeyPressMozart(8);
 			}
@@ -3765,20 +3684,20 @@ pascal OSErr MyReceiveDropBox(WindowPtr theWindow, void *handlerRefCon, DragRefe
 				InvalSelectionRect();
 			}
 			
-			return(noErr);
+			return noErr;
 		}
-		else return(dragNotAcceptedErr);
+		else return dragNotAcceptedErr;
 	}
-
+	
 	//	Un fichier en provenance du Finder
 	
 	GetDragItemReferenceNumber(theDrag, 1, &theItem);
 	result = GetFlavorDataSize(theDrag, theItem, flavorTypeHFS, &textSize);
-
+	
 	if (result == noErr)
 	{
 		Boolean		targetIsFolder, wasAliased;
-	
+		
 		SaveUndo(UPattern, PatCopy, "\pUndo 'Drop Pcmd File'");
 		
 		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
@@ -3793,8 +3712,8 @@ pascal OSErr MyReceiveDropBox(WindowPtr theWindow, void *handlerRefCon, DragRefe
 		
 		OpenPcmdMozart(&myFlavor.fileSpec);
 		
-		return(noErr);
+		return noErr;
 	}
-
-	return(dragNotAcceptedErr);
+	
+	return dragNotAcceptedErr;
 }

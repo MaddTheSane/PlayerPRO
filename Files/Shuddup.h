@@ -455,7 +455,7 @@ pascal OSStatus CarbonWindowEventHandler(EventHandlerCallRef myHandler, EventRef
 		ListClickLoopUPP	mylClickLoopDesc;
 		NavEventUPP			MyDlgFilterNavDesc;
 
-		Boolean		gUseControlSize, MusicPlayActive, UseAEErreur, AppearanceManager;
+		Boolean		gUseControlSize, MusicPlayActive, UseAEErreur;
 		short		gScrollBarID, curvRefNum;
 		long		MacOSXSystem, curparID, StartTime;
 		Boolean		gUseNavigation, Micro, hasASC, End, Record;
@@ -493,7 +493,7 @@ extern	MADDriverRec	*MADDriver;
 extern	MADMusic		*curMusic;
 extern	MADLibrary		*gMADLib;
 
-extern	Boolean		gUseControlSize, MusicPlayActive, UseAEErreur, AppearanceManager;
+extern	Boolean		gUseControlSize, MusicPlayActive, UseAEErreur;
 extern	short		gScrollBarID, VolumeH, SpeedH, PitchH, curvRefNum;
 extern	long		MacOSXSystem, curparID, StartTime;
 extern	Boolean		gUseNavigation, Micro, hasASC, End, Record;

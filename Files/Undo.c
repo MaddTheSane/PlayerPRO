@@ -2,6 +2,7 @@
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "Undo.h"
+#include "Utils.h"
 
 void UpdateStaffNote(short track);
 void Update1Note(short tt, short track);
@@ -367,7 +368,7 @@ void DoUndo(void)
 
 	if (myUndo.UndoType == 0)
 	{
-		SysBeep(1);
+		MyPPBeep();
 		return;
 	}
 	

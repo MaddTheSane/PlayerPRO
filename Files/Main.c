@@ -1557,7 +1557,6 @@ int main(int argc, char* argv[])
 	
 	MacOSXSystem = true;
 	
-	AppearanceManager = true;
 	gUseControlSize = true;
 	gScrollBarID = kControlScrollBarLiveProc;
 	newQuicktime = true;

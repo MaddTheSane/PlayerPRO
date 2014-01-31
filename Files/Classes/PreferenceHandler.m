@@ -10,6 +10,14 @@
 #import "NSColor+PPPreferences.h"
 #include "UserDefaultKeys.h"
 #include "PreferenceHandler.h"
+#include "Utils.h"
+
+void MyPPBeep()
+{
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	NSBeep();
+	[pool drain];
+}
 
 Boolean CFPreferencesHaveBeenSet()
 {
