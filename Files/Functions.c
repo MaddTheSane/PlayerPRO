@@ -1,6 +1,7 @@
 #include "Shuddup.h"
 #include "RDriver.h"
 #include "Undo.h"
+#include "Utils.h"
 	
 		DialogPtr		FindDlog;
 extern	DialogPtr		MozartDlog, EditorDlog;
@@ -231,7 +232,7 @@ Boolean FindInternal(short FindType)
 	UPDATE_Pattern();
 	
 	FlashMenuBar(0);
-	SysBeep(1);
+	MyPPBeep();
 	FlashMenuBar(0);
 
 	return false;

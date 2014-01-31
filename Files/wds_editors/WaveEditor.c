@@ -50,8 +50,7 @@ static	long					doubleClick;
 #define WAVESIZE 	1024L
 #define BASETOP		24L
 
-enum
-{
+enum {
 	playM = 0,
 	noteM,
 	zoomM
@@ -67,26 +66,29 @@ void UpdateWaveInfo();
 short GetMaxXWave()
 {
 	short ret;
-
+	
 	if (XSize == 0) {
 		ret = 0;
 	} else
 		ret = 1 + GetControlValue(xScroll) + (WaveRect.right - WaveRect.left) / XSize;
-	if (ret > curMusic->partition[ CurrentPat]->header.size)
-		ret = curMusic->partition[ CurrentPat]->header.size;
+	
+	if (ret > curMusic->partition[CurrentPat]->header.size)
+		ret = curMusic->partition[CurrentPat]->header.size;
 	
 	return ret;
 }
 
 short GetMaxYWave()
 {
-	short	ret;
-
+	short ret;
+	
 	if (YSize == 0) {
 		ret = 0;
 	} else
 		ret = 1 + GetControlValue(yScroll) + (WaveRect.bottom - WaveRect.top) / YSize;
-	if (ret > WaveDriverType.numChn) ret = WaveDriverType.numChn;
+	
+	if (ret > WaveDriverType.numChn)
+		ret = WaveDriverType.numChn;
 	
 	return ret;
 }
@@ -130,9 +132,7 @@ void SetWaveControl()
 	Rect	caRect;
 	
 	// XScroll
-	
-	if (xScroll != NULL)
-	{
+	if (xScroll != NULL) {
 		GetPortBounds(GetDialogPort(WaveDlog), &caRect);
 		
 		MyMoveControl(xScroll, WaveRect.left-1, caRect.bottom-15);
@@ -140,7 +140,9 @@ void SetWaveControl()
 		
 		SetControlMinimum(xScroll, 0);
 		
-		tt = curMusic->partition[ CurrentPat]->header.size - ((caRect.right - 14) - WaveRect.left) / XSize;		if (tt < 0) tt = 0;
+		tt = curMusic->partition[ CurrentPat]->header.size - ((caRect.right - 14) - WaveRect.left) / XSize;
+		if (tt < 0)
+			tt = 0;
 		SetControlMaximum(xScroll, tt);
 		
 		if (gUseControlSize) SetControlViewSize(xScroll, ((caRect.right - 14) - WaveRect.left) / XSize);
@@ -150,9 +152,7 @@ void SetWaveControl()
 	}
 	
 	// YScroll
-	
-	if (yScroll != NULL)
-	{
+	if (yScroll != NULL) {
 		GetPortBounds(GetDialogPort(WaveDlog), &caRect);
 		
 		MyMoveControl(yScroll, caRect.right-15, BASETOP + 14);
@@ -160,7 +160,9 @@ void SetWaveControl()
 		
 		SetControlMinimum(yScroll, 0);
 		
-		tt = WaveDriverType.numChn  - ((caRect.bottom - 14) - WaveRect.top) / YSize;	if (tt < 0) tt = 0;
+		tt = WaveDriverType.numChn  - ((caRect.bottom - 14) - WaveRect.top) / YSize;
+		if (tt < 0)
+			tt = 0;
 		SetControlMaximum(yScroll, tt);
 		
 		if (gUseControlSize) SetControlViewSize(yScroll, ((caRect.bottom - 14) - WaveRect.top) / YSize);
@@ -193,18 +195,16 @@ void DoNullWave(void)
 {
 	Str255		String, aStr;
 	GrafPtr		SavePort;
-	short		temp;
 	Point		myPt;
- 	Rect		tempRect;
  	Boolean		MakeUpdate = false;
 	
- 	if (WaveDlog == NULL) return;
+ 	if (WaveDlog == NULL)
+		return;
 	
  	GetPort(&SavePort);
  	SetPortDialogPort(WaveDlog);
 	
-	if (CurrentPat != MADDriver->Pat)
-	{
+	if (CurrentPat != MADDriver->Pat) {
 		Str255			theStr;
 		short			x;
 		
@@ -214,16 +214,18 @@ void DoNullWave(void)
 		
 		NumToString((long) CurrentPat, String);
 		pStrcpy(aStr, "\p");
-		if (CurrentPat < 10) pStrcat(aStr, "\p0");
-		if (CurrentPat < 100) pStrcat(aStr, "\p0");
+		if (CurrentPat < 10)
+			pStrcat(aStr, "\p0");
+		if (CurrentPat < 100)
+			pStrcat(aStr, "\p0");
 		pStrcat(aStr, String);
 		
 		pStrcpy(String, "\pPattern: ");
 		pStrcat(String, aStr);
 		
 		theStr[ 0] = 20;
-		for (x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ CurrentPat]->header.name[ x];
-		for (x = 1; x < 20; x++) if (theStr[ x] == 0) { theStr[ 0] = x - 1; break;}
+		for (x = 0; x < 20; x++) theStr[x + 1] = curMusic->partition[CurrentPat]->header.name[x];
+		for (x = 1; x < 20; x++) if (theStr[x] == 0) { theStr[0] = x - 1; break;}
 		pStrcat(String, "\p ");
 		pStrcat(String, theStr);
 		
@@ -234,24 +236,22 @@ void DoNullWave(void)
 		MakeUpdate = true;
 	}
 	
-	if (WaveDriverType.numChn != MADDriver->DriverSettings.numChn) MakeUpdate = true;
+	if (WaveDriverType.numChn != MADDriver->DriverSettings.numChn)
+		MakeUpdate = true;
 	
-	if (ReaderCopy != MADDriver->PartitionReader)
-	{
+	if (ReaderCopy != MADDriver->PartitionReader) {
 		ReaderCopy = MADDriver->PartitionReader;
 		
-		if (ReaderCopy < curMusic->partition[ CurrentPat]->header.size)
-		{
-			short		temp;
+		if (ReaderCopy < curMusic->partition[CurrentPat]->header.size) {
 			RgnHandle	saveClipRgn;
 			
 			saveClipRgn = NewRgn();
 		 	GetClip(saveClipRgn);
 			
-			//	WaveRect.left++;
+			//WaveRect.left++;
 			WaveRect.top++;
 			ClipRect(&WaveRect);
-			//	WaveRect.left--;
+			//WaveRect.left--;
 			WaveRect.top--;
 			
 			BackColor(whiteColor);
@@ -270,8 +270,7 @@ void DoNullWave(void)
 		}
 	}
 	
-	if (oldWindow == GetDialogWindow(WaveDlog))
-	{
+	if (oldWindow == GetDialogWindow(WaveDlog)) {
 		RgnHandle visibleRegion = NewRgn();
 		
 		myPt = theEvent.where;
@@ -316,46 +315,46 @@ void DoGrowWave(void)
 {
 	long		lSizeVH;
 	GrafPtr		SavePort;
-	Rect		caRect, temp, cellRect;
-	Point		theCell = { 0, 0}, aPt = { 0, 0};
+	Rect		caRect, temp;
+	Point		aPt = {0, 0};
 	short		tempA, tempB;
-	Handle		itemHandle;
-	short		itemType;
 	BitMap		screenBits;
 	
 	GetPort(&SavePort);
  	SetPortDialogPort(WaveDlog);
 	
 	temp.left = 100;
-	temp.right = WaveRect.left + curMusic->partition[ CurrentPat]->header.size*XSize + 15;
+	temp.right = WaveRect.left + curMusic->partition[CurrentPat]->header.size*XSize + 15;
 	temp.top = 110;
-	
 	temp.bottom = WaveRect.top + WaveDriverType.numChn*YSize + 16;
 	
 	LocalToGlobal(&aPt);
 	
 	GetQDGlobalsScreenBits(&screenBits);
 	
-	if (temp.bottom < temp.top) temp.bottom = temp.top;
-	else if (temp.bottom > screenBits.bounds.bottom - aPt.v) temp.bottom = screenBits.bounds.bottom - aPt.v -2;
+	if (temp.bottom < temp.top)
+		temp.bottom = temp.top;
+	else if (temp.bottom > screenBits.bounds.bottom - aPt.v)
+		temp.bottom = screenBits.bounds.bottom - aPt.v - 2;
 	
 	lSizeVH = 0;
-	if (theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(WaveDlog), theEvent.where, &temp);
+	if (theEvent.what == mouseDown)
+		lSizeVH = GrowWindow(GetDialogWindow(WaveDlog), theEvent.where, &temp);
 	
-	if (lSizeVH != 0)
-	{
+	if (lSizeVH != 0) {
 		tempA = LoWord(lSizeVH);
 		tempB = HiWord(lSizeVH);
-	}
-	else
-	{
+	} else {
 		GetPortBounds(GetDialogPort(WaveDlog), &caRect);
 		
-		if (caRect.right >= temp.right) tempA = temp.right-1;
+		if (caRect.right >= temp.right)
+			tempA = temp.right - 1;
 		else tempA = caRect.right;
 		
-		if (caRect.bottom >= temp.bottom) tempB = temp.bottom-1;
-		else tempB = caRect.bottom;
+		if (caRect.bottom >= temp.bottom)
+			tempB = temp.bottom - 1;
+		else
+			tempB = caRect.bottom;
 	}
 	
 	MySizeWindow(WaveDlog, tempA, tempB , true);
@@ -374,28 +373,34 @@ void DoGrowWave(void)
 
 void GetMinMax(long BS, long BE, Ptr ptr, long *mi, long *mx)
 {
-	long	temp, minY, maxY;
+	long temp, minY, maxY;
 	
-	BS /= WaveDriverType.numChn;	BS *= WaveDriverType.numChn;
-	BE /= WaveDriverType.numChn;	BE *= WaveDriverType.numChn;
+	BS /= WaveDriverType.numChn;
+	BS *= WaveDriverType.numChn;
+	BE /= WaveDriverType.numChn;
+	BE *= WaveDriverType.numChn;
 	
-	temp =   ptr[ BS*WaveDriverType.numChn];
-	if (temp < 0) temp += 128;
-	else temp -= 128;
+	temp = ptr[BS * WaveDriverType.numChn];
+	if (temp < 0)
+		temp += 128;
+	else
+		temp -= 128;
 	minY = maxY = temp;
 	
-	if (BS != BE)
-	{
-		long	x;
+	if (BS != BE) {
+		long x;
 		
-		for (x = BS; x < BE; x++)
-		{
+		for (x = BS; x < BE; x++) {
 			temp =   ptr[ x*WaveDriverType.numChn];
-			if (temp < 0) temp += 128;
-			else temp -= 128;
+			if (temp < 0)
+				temp += 128;
+			else
+				temp -= 128;
 			
-			if (temp > maxY) maxY = temp;
-			if (temp < minY) minY = temp;
+			if (temp > maxY)
+				maxY = temp;
+			if (temp < minY)
+				minY = temp;
 		}
 	}
 	
@@ -409,73 +414,66 @@ void UpdateCmdWave(short Pos, short track)
 	short		maxX, tt;
 	Cmd 		*theCommand;
 	
-	if (WaveDlog == NULL) return;
+	if (WaveDlog == NULL)
+		return;
 	
 	GetPort(&SavePort);
 	SetPortDialogPort(WaveDlog);
 	
 	/**/ // SCAN FOR SPEED CHANGE
-	for (maxX = GetControlValue(xScroll); maxX < GetMaxXWave(); maxX++)
-	{
-		for (tt = 0; tt < curMusic->header->numChn; tt++)
-		{
+	for (maxX = GetControlValue(xScroll); maxX < GetMaxXWave(); maxX++) {
+		for (tt = 0; tt < curMusic->header->numChn; tt++) {
 			theCommand = GetMADCommand(maxX, tt, curMusic->partition[ CurrentPat]);
 			
-			if (theCommand->cmd == 0x0F)
-			{
+			if (theCommand->cmd == 0x0F) {
 				ComputeWave(GetControlValue(xScroll), GetMaxXWave(), track);
-				
 				SetPort(SavePort);
-				
 				return;
 			}
 		}
 	}
 	
-	for (maxX = Pos+1; maxX < GetMaxXWave(); maxX++)
-	{
-		theCommand = GetMADCommand(maxX, track, curMusic->partition[ CurrentPat]);
+	for (maxX = Pos+1; maxX < GetMaxXWave(); maxX++) {
+		theCommand = GetMADCommand(maxX, track, curMusic->partition[CurrentPat]);
 		
-		if (theCommand->ins != 0)
-		{
+		if (theCommand->ins != 0) {
 			if (theCommand->note != 0xFF || theCommand->note != 0xFE)
-			{
 				break;
-			}
 		}
 	}
 	
-	ComputeWave(Pos-1, maxX, track);
-	
+	ComputeWave(Pos - 1, maxX, track);
 	SetPort(SavePort);
 }
 
 OSErr ComputeWave(short fromX, short toX, short chan)
 {
-	long				destReader =0, i;
-	OSErr				iErr;
-	Boolean				OnContinue, ReadyToGoOut;
-	long				count, CellXBytes, dataX;
-	long				XOffSet, YOffSet;
-	RgnHandle			saveClipRgn;
-	Rect 				cRect;
+	long		destReader = 0, i;
+	Boolean		OnContinue, ReadyToGoOut;
+	long		CellXBytes, dataX;
+	long		XOffSet, YOffSet;
+	RgnHandle	saveClipRgn;
+	Rect 		cRect;
 	
-	if (!WaveCopyDriver) {
+	if (!WaveCopyDriver)
 		return noErr;
-	}
 	
 	if (WaveCopyDriver->curMusic->musicUnderModification)
 		return noErr;
 	
 	BackColor(whiteColor);
-		
+	
 	/***********/
 	
-	if (fromX < 0) fromX = 0;
-	if (toX > curMusic->partition[ CurrentPat]->header.size) toX = curMusic->partition[ CurrentPat]->header.size;
+	if (fromX < 0)
+		fromX = 0;
+	if (toX > curMusic->partition[CurrentPat]->header.size)
+		toX = curMusic->partition[CurrentPat]->header.size;
 	
-	if (fromX == -1)		fromX 	= GetControlValue(xScroll);
-	if (toX == -1)			toX 	= GetMaxXWave();
+	if (fromX == -1)
+		fromX 	= GetControlValue(xScroll);
+	if (toX == -1)
+		toX 	= GetMaxXWave();
 	
 	XOffSet = WaveRect.left	- GetControlValue(xScroll)*XSize;
 	YOffSet = WaveRect.top	- GetControlValue(yScroll)*YSize;
@@ -483,61 +481,63 @@ OSErr ComputeWave(short fromX, short toX, short chan)
 	/***********/
 	
 	saveClipRgn = NewRgn();
- 	GetClip(saveClipRgn);
+	GetClip(saveClipRgn);
 	
-	{
+	cRect.left = fromX*XSize + XOffSet;
+	if (cRect.left < WaveRect.left)
+		cRect.left = WaveRect.left;
+	if (cRect.left > WaveRect.right)
+		cRect.left = WaveRect.right;
 	
-	cRect.left = fromX*XSize + XOffSet;		if (cRect.left < WaveRect.left) 	cRect.left = WaveRect.left;
-											if (cRect.left > WaveRect.right) 	cRect.left = WaveRect.right;
+	cRect.right = toX*XSize + XOffSet;
+	if (cRect.right < WaveRect.left)
+		cRect.right = WaveRect.left;
+	if (cRect.right > WaveRect.right)
+		cRect.right = WaveRect.right;
 	
-	cRect.right = toX*XSize + XOffSet;		if (cRect.right < WaveRect.left) 	cRect.right = WaveRect.left;
-											if (cRect.right > WaveRect.right) 	cRect.right = WaveRect.right;
-	
-	if (chan != -1)
-	{
-		cRect.top = chan*YSize + YOffSet + 1;	if (cRect.top <= WaveRect.top) 		cRect.top = WaveRect.top+1;
-												if (cRect.top > WaveRect.bottom) 	cRect.top = WaveRect.bottom;
-		
-		cRect.bottom = (chan+1)*YSize  + YOffSet+1;	if (cRect.bottom <= WaveRect.top) 	cRect.bottom = WaveRect.top+1;
-													if (cRect.bottom > WaveRect.bottom) cRect.bottom = WaveRect.bottom;
-	}
-	else
-	{
-		cRect.top = YOffSet+1;
+	if (chan != -1) {
+		cRect.top = chan*YSize + YOffSet + 1;
 		if (cRect.top <= WaveRect.top)
 			cRect.top = WaveRect.top+1;
-								
 		if (cRect.top > WaveRect.bottom)
 			cRect.top = WaveRect.bottom;
-												
-		cRect.bottom = (WaveDriverType.numChn)*YSize + YOffSet+1;
+		
+		cRect.bottom = (chan + 1) * YSize + YOffSet+1;
 		if (cRect.bottom <= WaveRect.top)
 			cRect.bottom = WaveRect.top+1;
-								
+		if (cRect.bottom > WaveRect.bottom)
+			cRect.bottom = WaveRect.bottom;
+	} else {
+		cRect.top = YOffSet+1;
+		if (cRect.top <= WaveRect.top)
+			cRect.top = WaveRect.top + 1;
+		
+		if (cRect.top > WaveRect.bottom)
+			cRect.top = WaveRect.bottom;
+		
+		cRect.bottom = (WaveDriverType.numChn) * YSize + YOffSet + 1;
+		if (cRect.bottom <= WaveRect.top)
+			cRect.bottom = WaveRect.top + 1;
+		
 		if (cRect.bottom > WaveRect.bottom)
 			cRect.bottom = WaveRect.bottom;
 	}
 	
 	ClipRect(&cRect);
 	
-	}
-	
-	
 	EraseRect(&WaveRect);
 	
 	/***********/
 	
 	RGBForeColor(&theColor);
-	for (i = fromX; i < toX; i++)
-	{
-		MoveTo(i*XSize + XOffSet - 1, cRect.top);
-		LineTo(i*XSize + XOffSet - 1, cRect.bottom);
+	for (i = fromX; i < toX; i++) {
+		MoveTo(i * XSize + XOffSet - 1, cRect.top);
+		LineTo(i * XSize + XOffSet - 1, cRect.bottom);
 	}
 	
-	for (i = GetControlValue(yScroll); i < GetMaxYWave(); i++)
-	{
-		MoveTo(cRect.left, i*YSize + YSize/2 + YOffSet);
-		LineTo(cRect.right, i*YSize + YSize/2 + YOffSet);
+	for (i = GetControlValue(yScroll); i < GetMaxYWave(); i++) {
+		MoveTo(cRect.left, i * YSize + YSize / 2 + YOffSet);
+		LineTo(cRect.right, i * YSize + YSize / 2 + YOffSet);
 	}
 	
 	ForeColor(blackColor);
@@ -550,17 +550,20 @@ OSErr ComputeWave(short fromX, short toX, short chan)
 	
 	/***********/
 	
-	if (XSize < 8) 			WaveDriverType.outPutRate =	rate2khz;
-	else if (XSize < 32) 	WaveDriverType.outPutRate =	rate5khz;
-	else 					WaveDriverType.outPutRate =	rate11khz;
+	if (XSize < 8)
+		WaveDriverType.outPutRate =	rate2khz;
+	else if (XSize < 32)
+		WaveDriverType.outPutRate =	rate5khz;
+	else
+		WaveDriverType.outPutRate =	rate11khz;
 	
-	WaveCopyDriver->DriverSettings		=	WaveDriverType;
-	WaveCopyDriver->Reading				=	true;
-	WaveCopyDriver->ASCBUFFER			=	WAVESIZE;
-	WaveCopyDriver->ASCBUFFERReal		=	WAVESIZE;
-	WaveCopyDriver->VSYNC				= 	((WaveDriverType.outPutRate>>16) * 125L) / (50);
+	WaveCopyDriver->DriverSettings		= WaveDriverType;
+	WaveCopyDriver->Reading				= true;
+	WaveCopyDriver->ASCBUFFER			= WAVESIZE;
+	WaveCopyDriver->ASCBUFFERReal		= WAVESIZE;
+	WaveCopyDriver->VSYNC				= ((WaveDriverType.outPutRate>>16) * 125L) / (50);
 	
-	WaveCopyDriver->FREQBASE = AMIGA_CLOCKFREQ2 / ((WaveDriverType.outPutRate>>16));
+	WaveCopyDriver->FREQBASE = AMIGA_CLOCKFREQ2 / ((WaveDriverType.outPutRate >> 16));
 	WaveCopyDriver->FREQBASE ++;
 	
 	WaveCopyDriver->BytesToGenerate		= 	0;
@@ -576,9 +579,9 @@ OSErr ComputeWave(short fromX, short toX, short chan)
 		short 		pos, tt;
 		Cmd 		*theCmd;
 		Boolean		okT[ MAXTRACK];
-	
+		
 		for (tt = 0; tt < curMusic->header->numChn; tt++) okT[ tt] = false;
-	
+		
 		for (pos = 0; pos < fromX; pos++)
 		{
 			for (tt = 0; tt < curMusic->header->numChn; tt++)
@@ -588,12 +591,11 @@ OSErr ComputeWave(short fromX, short toX, short chan)
 				if (theCommand->note != 0xFF || theCommand->note != 0xFE)
 				{
 					short xt;
-				
+					
 					okT[ tt] = true;
 					
 					for (xt = 0; xt < curMusic->header->numChn; xt++)
 					{
-						if (
 					}
 				}
 			}
@@ -601,28 +603,26 @@ OSErr ComputeWave(short fromX, short toX, short chan)
 	}
 #endif
 	
-	destReader 					= toX;
-	dataX 						= 0;
+	destReader	= toX;
+	dataX		= 0;
 	
-	CellXBytes 		= WaveCopyDriver->VSYNC;
-	CellXBytes 		/= WaveCopyDriver->finespeed;
-	CellXBytes		*= WaveCopyDriver->speed;
+	CellXBytes = WaveCopyDriver->VSYNC;
+	CellXBytes /= WaveCopyDriver->finespeed;
+	CellXBytes *= WaveCopyDriver->speed;
 	
 	OnContinue = true;
 	WaveCopyDriver->endPattern = false;
 	ReadyToGoOut = false;
-		
-	do
-	{
-		long			i = 0, whichTrack = 0, ptrsize = 0, ttt = 0, prevReader = 0;
-		Byte			*alpha = (Byte*) WavePtr;
-		
-		ttt		= WaveCopyDriver->VSYNC;
-		ttt		/= WaveCopyDriver->finespeed;
-		ttt		*= WaveCopyDriver->speed;
 	
-		if (ttt != CellXBytes)
-		{
+	do {
+		long i = 0, whichTrack = 0, ptrsize = 0, ttt = 0, prevReader = 0;
+		Byte *alpha = (Byte*) WavePtr;
+		
+		ttt = WaveCopyDriver->VSYNC;
+		ttt /= WaveCopyDriver->finespeed;
+		ttt *= WaveCopyDriver->speed;
+		
+		if (ttt != CellXBytes) {
 			CellXBytes					= ttt;
 			
 			WaveCopyDriver->smallcounter		= 128;
@@ -634,72 +634,73 @@ OSErr ComputeWave(short fromX, short toX, short chan)
 			XOffSet = WaveRect.left	- GetControlValue(xScroll)*XSize + prevReader * XSize;
 		}
 		
-		if (WaveCopyDriver->endPattern) ReadyToGoOut = true;
+		if (WaveCopyDriver->endPattern)
+			ReadyToGoOut = true;
 		
 		WaveCopyDriver->Equalizer = false;
 		WaveCopyDriver->DriverSettings.TickRemover = false;
 		prevReader = WaveCopyDriver->PartitionReader;
 		
 		ptrsize = GetPtrSize(WavePtr);
-		while (ptrsize-- > 0) *alpha++ = 0x80;
+		while (ptrsize-- > 0)
+			*alpha++ = 0x80;
 		
-		OnContinue = DirectSave((Ptr) WavePtr, &WaveDriverType, WaveCopyDriver);
-	//	if (WaveCopyDriver->curMusic->musicUnderModification) MyDebugStr(__LINE__, __FILE__, "");
+		OnContinue = DirectSave((Ptr)WavePtr, &WaveDriverType, WaveCopyDriver);
+		//if (WaveCopyDriver->curMusic->musicUnderModification) MyDebugStr(__LINE__, __FILE__, "");
 		
-		if (OnContinue == false) ReadyToGoOut = true;
+		if (OnContinue == false)
+			ReadyToGoOut = true;
 		
 		// ** DRAW PARTICLE
 		
-		if ((dataX + WaveCopyDriver->ASCBUFFER)/CellXBytes >= fromX)
-		{
+		if ((dataX + WaveCopyDriver->ASCBUFFER) / CellXBytes >= fromX) {
 			short sy, ey;
 			
-			if (chan == -1)
-			{
+			if (chan == -1) {
 				sy = GetControlValue(yScroll);
 				ey = GetMaxYWave();
-			}
-			else
-			{
+			} else {
 				sy = ey = chan;
 				ey++;
 			}
 			
-			for (whichTrack = sy; whichTrack < ey; whichTrack++)
-			{
-				long	temp, minY, maxY, BS, BE;
+			for (whichTrack = sy; whichTrack < ey; whichTrack++) {
+				long temp, minY, maxY, BS, BE;
 				
-				if (MADDriver->Active[ whichTrack]) ForeColor(blackColor);
-				else RGBForeColor(&Gray);
-
+				if (MADDriver->Active[whichTrack])
+					ForeColor(blackColor);
+				else
+					RGBForeColor(&Gray);
 				
-				temp = (dataX*XSize)/CellXBytes + XOffSet;
-			//	temp = position;
+				
+				temp = (dataX * XSize) / CellXBytes + XOffSet;
+				//temp = position;
 				
 				MoveTo(temp, whichTrack*YSize + YSize/2 + YOffSet);
 				
-				for (i = 0, BE = 0; BE < WaveCopyDriver->ASCBUFFER; i ++, temp++)			//i < XSize
-				{
+				for (i = 0, BE = 0; BE < WaveCopyDriver->ASCBUFFER; i ++, temp++) {			//i < XSize
 					BS = (i * CellXBytes) / XSize;
-					BE = ((i+1) * CellXBytes) / XSize;
+					BE = ((i + 1) * CellXBytes) / XSize;
 					
-					if (BS < WaveCopyDriver->ASCBUFFER)
-					{
-						if (BE >= WaveCopyDriver->ASCBUFFER) BE = WaveCopyDriver->ASCBUFFER;
+					if (BS < WaveCopyDriver->ASCBUFFER) {
+						if (BE >= WaveCopyDriver->ASCBUFFER)
+							BE = WaveCopyDriver->ASCBUFFER;
 						
 						GetMinMax(BS, BE, WavePtr + whichTrack, &minY, &maxY);
 						
-						minY += 128;		maxY += 128;
+						minY += 128;
+						maxY += 128;
 						
-						maxY *= YSize;		maxY >>= 8L;
-						minY *= YSize;		minY >>= 8L;
+						maxY *= YSize;
+						maxY >>= 8L;
+						minY *= YSize;
+						minY >>= 8L;
 						
 						minY += whichTrack*YSize + YOffSet;
 						maxY += whichTrack*YSize + YOffSet;
 						
 						LineTo(temp, minY);
-						if (minY != maxY)
-						{
+						if (minY != maxY) {
 							MoveTo(temp, minY);	LineTo(temp, maxY);
 						}
 					}
@@ -711,11 +712,10 @@ OSErr ComputeWave(short fromX, short toX, short chan)
 		}
 		
 		dataX += WaveCopyDriver->ASCBUFFER;
-	}
-	while (ReadyToGoOut == false && WaveCopyDriver->PartitionReader <= destReader);
+	} while (ReadyToGoOut == false && WaveCopyDriver->PartitionReader <= destReader);
 	
 	/**********/
-		
+	
 	
 	/**********/
 	
@@ -727,21 +727,19 @@ OSErr ComputeWave(short fromX, short toX, short chan)
 	RGBBackColor(&theColor);
 	
 	SetClip(saveClipRgn);
- 	DisposeRgn(saveClipRgn);
+	DisposeRgn(saveClipRgn);
 	
 	return noErr;
 }
 
-
 void DrawFrame()
 {
-	short			i, itemType, temp, add = 0;
-	Rect			caRect, fRect;
-	Handle			itemHandle;
-	char			String[ 200];
-	Rect			tRect;
-	FontInfo		fInfo;
-	RgnHandle		savedClip;
+	short		i, itemType, temp, add = 0;
+	Rect		caRect, fRect;
+	Handle		itemHandle;
+	char		String[200];
+	Rect		tRect;
+	RgnHandle	savedClip;
 	
 	savedClip = NewRgn();
  	GetClip(savedClip);
@@ -765,35 +763,40 @@ void DrawFrame()
 	MoveTo(0, WaveRect.top);
 	LineTo(caRect.right, WaveRect.top);
 	
-	if (curMusic->partition[ CurrentPat]->header.size > 100) temp = 3;
-	else temp = 2;
+	if (curMusic->partition[ CurrentPat]->header.size > 100)
+		temp = 3;
+	else
+		temp = 2;
 	
-	if (temp <= 2)
-	{
-		if (XSize > 8) 			add = 1;
-		else if (XSize > 4)		add = 2;
-		else 					add = 4;
-	}
-	else if (temp == 3)
-	{
-		if (XSize > 16) 		add = 1;
-		else if (XSize > 8) 	add = 2;
-		else if (XSize > 4)		add = 4;
-		else 					add = 8;
+	if (temp <= 2) {
+		if (XSize > 8)
+			add = 1;
+		else if (XSize > 4)
+			add = 2;
+		else
+			add = 4;
+	} else if (temp == 3) {
+		if (XSize > 16)
+			add = 1;
+		else if (XSize > 8)
+			add = 2;
+		else if (XSize > 4)
+			add = 4;
+		else
+			add = 8;
 	}
 	
-	tRect.top	= fRect.top + 1;
-	tRect.bottom= fRect.bottom;
+	tRect.top	 = fRect.top + 1;
+	tRect.bottom = fRect.bottom;
 	
 	tRect.left = 0;
-	tRect.right = WaveRect.left + XSize/2 - (add*XSize)/2;
+	tRect.right = WaveRect.left + XSize / 2 - (add*XSize) / 2;
 	
 	EraseRect(&tRect);
 	MoveTo(tRect.right-1, tRect.top);
 	LineTo(tRect.right-1, tRect.bottom);
 	
-	for (i = GetControlValue(xScroll); i < GetMaxXWave(); i+= add)
-	{
+	for (i = GetControlValue(xScroll); i < GetMaxXWave(); i+= add) {
 		tRect.left	= WaveRect.left + (i - GetControlValue(xScroll)) * XSize + XSize/2 - (add*XSize)/2;
 		tRect.right	= tRect.left + (add*XSize);
 		
@@ -803,8 +806,7 @@ void DrawFrame()
 		MoveTo(tRect.right-1, tRect.top);
 		LineTo(tRect.right-1, tRect.bottom);
 		
-		if (add != 1)
-		{
+		if (add != 1) {
 			MoveTo(tRect.left + (tRect.right-tRect.left)/2, tRect.bottom-1);
 			LineTo(tRect.left + (tRect.right-tRect.left)/2, tRect.bottom);
 		}
@@ -812,8 +814,7 @@ void DrawFrame()
 	
 	GetPortBounds(GetDialogPort(WaveDlog), &caRect);
 	
-	if (tRect.right < caRect.right)
-	{
+	if (tRect.right < caRect.right) {
 		tRect.left = tRect.right;
 		tRect.right = caRect.right;
 		
@@ -830,24 +831,24 @@ void DrawFrame()
 	tRect.top	= WaveRect.top;
 	ClipRect(&tRect);
 	
-	for (i = GetControlValue(yScroll); i < GetMaxYWave(); i++)
-	{
+	for (i = GetControlValue(yScroll); i < GetMaxYWave(); i++) {
 		tRect.left	= 0;
 		tRect.right	= WaveRect.left;
-		
-		tRect.top	= WaveRect.top + 1 + (i - GetControlValue(yScroll)) * YSize;
-		tRect.bottom= tRect.top + YSize - 1;
+		tRect.top	 = WaveRect.top + 1 + (i - GetControlValue(yScroll)) * YSize;
+		tRect.bottom = tRect.top + YSize - 1;
 		
 		SwitchColor(i);
 		PaintRect(&tRect);
 		
 		ForeColor(blackColor);
-		NTStr(2, i +1, (Ptr) String);
+		NTStr(2, i + 1, String);
 		
-		if (MADDriver->Active[ i]) ForeColor(blackColor);
-		else RGBForeColor(&Gray);
+		if (MADDriver->Active[i])
+			ForeColor(blackColor);
+		else
+			RGBForeColor(&Gray);
 		
-		MoveTo(1, tRect.top + 3 +(tRect.bottom - tRect.top)/2);
+		MoveTo(1, tRect.top + 3 + (tRect.bottom - tRect.top) / 2);
 		DrawString(MyC2PStr(String));
 		
 		ForeColor(blackColor);
@@ -858,12 +859,11 @@ void DrawFrame()
 	
 	GetPortBounds(GetDialogPort(WaveDlog), &caRect);
 	
-	MoveTo(WaveRect.left-1, WaveRect.top);
-	LineTo(WaveRect.left-1, caRect.bottom);
+	MoveTo(WaveRect.left - 1, WaveRect.top);
+	LineTo(WaveRect.left - 1, caRect.bottom);
 	
-	if (tRect.bottom < caRect.bottom)
-	{
-		tRect.top = tRect.bottom+1;
+	if (tRect.bottom < caRect.bottom) {
+		tRect.top = tRect.bottom + 1;
 		tRect.bottom = caRect.bottom;
 		
 		EraseRect(&tRect);
@@ -880,9 +880,9 @@ void UpdateWaveInfo()
 	GrafPtr		SavePort;
 	Rect		caRect, cellRect;
 	Boolean		ctlUpdate = false;
-	short		x;
 
-	if (WaveDlog == NULL) return;
+	if (WaveDlog == NULL)
+		return;
 	
 	/**/
 	
@@ -891,25 +891,27 @@ void UpdateWaveInfo()
  	GetPort(&SavePort);
  	SetPortDialogPort(WaveDlog);
 	
-	ReaderCopy = MADDriver->PartitionReader;		CurrentPat = MADDriver->Pat;
+	ReaderCopy = MADDriver->PartitionReader;
+	CurrentPat = MADDriver->Pat;
 	
-	if (XSize != prevXSize) ctlUpdate = true;
-	if (YSize != prevYSize) ctlUpdate = true;
+	if (XSize != prevXSize)
+		ctlUpdate = true;
+	if (YSize != prevYSize)
+		ctlUpdate = true;
 	
-	if (CurrentPatSize != curMusic->partition[ CurrentPat]->header.size)
-	{
+	if (CurrentPatSize != curMusic->partition[CurrentPat]->header.size) {
 		EraseRect(&WaveRect);
 		ctlUpdate = true;
 	}
 	
-	if (WaveDriverType.numChn != 	MADDriver->DriverSettings.numChn)
-	{
+	if (WaveDriverType.numChn != MADDriver->DriverSettings.numChn) {
 		EraseRect(&WaveRect);
-		WaveDriverType.numChn = 	MADDriver->DriverSettings.numChn;
+		WaveDriverType.numChn = MADDriver->DriverSettings.numChn;
 		ctlUpdate = true;
 	}
 	
-	if (ctlUpdate) SetWaveControl();
+	if (ctlUpdate)
+		SetWaveControl();
 	
 	CreateCurWaveRect();
 	
@@ -935,13 +937,8 @@ void UpdateWaveInfo()
 
 void  UpdateWaveWindow(DialogPtr GetSelection)
 { 
-	Rect   		caRect, tempRect, itemRect;
+	Rect   		caRect;
 	GrafPtr		SavePort;
-	Point		theCell;
-	Ptr			theStr;
-	Str255		tempStr, aStr;
-	short		i, itemType;
-	Handle		itemHandle;
 	
 	GetPort(&SavePort);
 	SetPortDialogPort(WaveDlog);
@@ -956,17 +953,11 @@ void  UpdateWaveWindow(DialogPtr GetSelection)
 	WaveRect.bottom = caRect.bottom - 15;
 	
 	EraseRect(&WaveRect);
-	
 	DrawFrame();
-	
 	SetCursor(&watchCrsr);
-	
 	ComputeWave(-1, -1, -1);
-	
 	SetCursor(GetQDGlobalsArrow(&qdarrow));
-	
 	DrawGrowIcon(GetDialogWindow(WaveDlog));
-	
 	EndUpdate(GetDialogWindow(WaveDlog));
 
 	SetPort(SavePort);
@@ -974,22 +965,18 @@ void  UpdateWaveWindow(DialogPtr GetSelection)
 
 void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 {
-	Cell				theCell = {0,0};
-	long				tempLong;
- 	short				temp, temp2, i, bogus, ctlPart;
- 	Rect				caRect, cellRect, tempRect;
- 	GrafPtr				SavePort;
- 	Cmd					*theCommand;
- 	Boolean				DoubleClick;
- 	Point				myPt, lastCell;
- 	ControlHandle		theControl;
- 	ControlActionUPP	MyControlUPP;
+	int					i;
+	Rect				caRect, tempRect;
+	GrafPtr				SavePort;
+	Boolean				DoubleClick;
+	Point				myPt;
+	ControlHandle		theControl;
+	ControlActionUPP	MyControlUPP;
 	
- 	GetPort(&SavePort);
- 	SetPortDialogPort(WaveDlog);
+	GetPort(&SavePort);
+	SetPortDialogPort(WaveDlog);
 	
-	if (theEvent.what == mouseDown)
-	{
+	if (theEvent.what == mouseDown) {
 		myPt = theEvent.where;
 		GlobalToLocal(&myPt);
 		
@@ -999,55 +986,45 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 		tempRect.left = 0;
 		tempRect.right = WaveRect.left;
 		
-		if (PtInRect(myPt, &tempRect))
-		{
+		if (PtInRect(myPt, &tempRect)) {
 			GetMouse(&myPt);
 			
 			myPt.v -= WaveRect.top;
 			myPt.v /= YSize;
 			myPt.v += GetControlValue(yScroll);
 			
-			if (myPt.v < 0) myPt.v = 0;
+			if (myPt.v < 0)
+				myPt.v = 0;
 			if (myPt.v > curMusic->header->numChn)
 				myPt.v = curMusic->header->numChn;
 			
 			
-			if ((theEvent.modifiers & cmdKey) != 0)			// Mute
-			{
-				MADDriver->Active[ myPt.v] = !MADDriver->Active[ myPt.v];
+			if ((theEvent.modifiers & cmdKey) != 0) {			// Mute
+				MADDriver->Active[myPt.v] = !MADDriver->Active[myPt.v];
 				
 				UPDATE_TrackActive();
-			}
-			else if ((theEvent.modifiers & optionKey) != 0)	// Solo
-			{
+			} else if ((theEvent.modifiers & optionKey) != 0) {	// Solo
 				short	noActive;
 				
-				for (i = 0, noActive = 0; i < curMusic->header->numChn; i++)
-				{
-					if (MADDriver->Active[ i] == true)
-					{
+				for (i = 0, noActive = 0; i < curMusic->header->numChn; i++) {
+					if (MADDriver->Active[i] == true) {
 						noActive++;
 					}
 				}
 				
-				if (noActive <= 1 && MADDriver->Active[ myPt.v] == true)
-				{
-					for (i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
-				}
-				else
-				{
-					for (i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
-					MADDriver->Active[ myPt.v] = true;
+				if (noActive <= 1 && MADDriver->Active[myPt.v] == true) {
+					for (i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[i] = true;
+				} else {
+					for (i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[i] = false;
+					MADDriver->Active[myPt.v] = true;
 				}
 				
 				UPDATE_TrackActive();
 			}
 		}
 		
-		if (PtInRect(myPt, &WaveRect))
-		{
-			switch (mode)
-			{
+		if (PtInRect(myPt, &WaveRect)) {
+			switch (mode) {
 				case playM:
 				{
 					Boolean		IsPlay = MusicPlayActive;
@@ -1060,39 +1037,37 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 					myPt.h /= XSize;
 					myPt.h += GetControlValue(xScroll);
 					
-					if (myPt.h < 0) myPt.h = 0;
-					else if (myPt.h >= curMusic->partition[ CurrentPat]->header.size) myPt.h = curMusic->partition[ CurrentPat]->header.size - 1;
+					if (myPt.h < 0)
+						myPt.h = 0;
+					else if (myPt.h >= curMusic->partition[CurrentPat]->header.size)
+						myPt.h = curMusic->partition[CurrentPat]->header.size - 1;
 					MADDriver->PartitionReader = myPt.h;
 					
-					if (IsPlay == false) DoPlay();
+					if (IsPlay == false)
+						DoPlay();
 					
-					while (Button())
-					{
+					while (Button()) {
 						DoGlobalNull();
 						WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 					}
 					
 					MADDriver->JumpToNextPattern = IsJump;
 					
-					if (IsPlay == false) DoPause();
+					if (IsPlay == false)
+						DoPause();
 				}
 					break;
 					
 				case zoomM:
-					if (theEvent.modifiers & optionKey)
-					{
-						if (XSize > 4)
-						{
+					if (theEvent.modifiers & optionKey) {
+						if (XSize > 4) {
 							EraseRect(&WaveRect);
 							XSize /= 2;
 							
 							UpdateWaveInfo();
 						}
-					}
-					else
-					{
-						if (XSize < 128)
-						{
+					} else {
+						if (XSize < 128) {
 							GetMouse(&myPt);
 							
 							myPt.h -= WaveRect.left;
@@ -1107,7 +1082,8 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 							GetPortBounds(GetDialogPort(WaveDlog), &caRect);
 							
 							myPt.h -= (caRect.right + 1 - WaveRect.left - 15)/(XSize*2);
-							if (myPt.h < 0) myPt.h = 0;
+							if (myPt.h < 0)
+								myPt.h = 0;
 							SetControlValue(xScroll, myPt.h);
 							
 							UpdateWaveInfo();
@@ -1122,9 +1098,10 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 					myPt.h /= XSize;
 					myPt.h += GetControlValue(xScroll);
 					
-					if (myPt.h < 0) myPt.h = 0;
-					if (myPt.h > curMusic->partition[ CurrentPat]->header.size)
-						myPt.h = curMusic->partition[ CurrentPat]->header.size;
+					if (myPt.h < 0)
+						myPt.h = 0;
+					if (myPt.h > curMusic->partition[CurrentPat]->header.size)
+						myPt.h = curMusic->partition[CurrentPat]->header.size;
 					
 					
 					
@@ -1132,7 +1109,8 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 					myPt.v /= YSize;
 					myPt.v += GetControlValue(yScroll);
 					
-					if (myPt.v < 0) myPt.v = 0;
+					if (myPt.v < 0)
+						myPt.v = 0;
 					if (myPt.v > curMusic->header->numChn)
 						myPt.v = curMusic->header->numChn;
 					
@@ -1142,42 +1120,23 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 					SetCommandTrack(myPt.v, -1);
 					break;
 			}
-		}
-		else
-		{
-			//	ctlPart = FindControl(myPt, GetDialogWindow(whichDialog), &theControl);
+		} else {
+			//ctlPart = FindControl(myPt, GetDialogWindow(whichDialog), &theControl);
 			
 			theControl = NULL;
 			if (TestControl( xScroll, myPt)) theControl = xScroll;
 			if (TestControl( yScroll, myPt)) theControl = yScroll;
 			
-			if (theControl == xScroll || theControl == yScroll)
-			{
-				/*	if (ctlPart == kControlIndicatorPart)
-				 {
-				 bogus = TrackControl(theControl, myPt, NULL);
-				 if (bogus != 0)
-				 {
-				 GetPortBounds(GetDialogPort(WaveDlog), &caRect);
-				 InvalWindowRect(GetDialogWindow(WaveDlog), &caRect);
-				 CreateCurWaveRect();
-				 
-				 UpdateWaveWindow(WaveDlog);
-				 }
-				 }
-				 else if (ctlPart > 0)*/
-				{
-					MyControlUPP = NewControlActionUPP(actionProcWave);
-					gThumbPrev = GetControlValue(theControl);
-					TrackControl(theControl, myPt, MyControlUPP);
-					DisposeControlActionUPP(MyControlUPP);
-				}
+			if (theControl == xScroll || theControl == yScroll) {
+				MyControlUPP = NewControlActionUPP(actionProcWave);
+				gThumbPrev = GetControlValue(theControl);
+				TrackControl(theControl, myPt, MyControlUPP);
+				DisposeControlActionUPP(MyControlUPP);
 			}
 		}
-	}   						/* End of mouseDown */
+	} /* End of mouseDown */
 	
-	switch (whichItem)
-	{
+	switch (whichItem) {
 		case 7:
 		case 5:
 		case 6:
@@ -1185,17 +1144,25 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 			HiliteControl(zoomBut, 0);
 			HiliteControl(noteBut, 0);
 			
-			switch (whichItem)
-		{
-			case 7:		mode = playM;	HiliteControl(playBut, kControlButtonPart);	break;
-			case 5:		mode = noteM;	HiliteControl(noteBut, kControlButtonPart);	break;
-			case 6:		mode = zoomM;	HiliteControl(zoomBut, kControlButtonPart);	break;
-		}
+			switch (whichItem) {
+				case 7:
+					mode = playM;
+					HiliteControl(playBut, kControlButtonPart);
+					break;
+					
+				case 5:
+					mode = noteM;
+					HiliteControl(noteBut, kControlButtonPart);
+					break;
+					
+				case 6:
+					mode = zoomM;
+					HiliteControl(zoomBut, kControlButtonPart);
+					break;
+			}
 			
-			if (whichItem == 6)
-			{
-				if (TickCount() - doubleClick <= GetDblTime())
-				{
+			if (whichItem == 6) {
+				if (TickCount() - doubleClick <= GetDblTime()) {
 					XSize = 8;
 					EraseRect(&WaveRect);
 					UpdateWaveInfo();
@@ -1212,42 +1179,66 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 			Handle	itemHandle;
 			Rect	tempRect;
 			
-			
-			
 			InsertMenu(OsciHMenu, hierMenu);
 			GetDialogItem(WaveDlog, whichItem, &itemType, &itemHandle, &tempRect);
 			
-			switch (YSize)
-			{
+			switch (YSize) {
 				default:
-				case 16:	curSelec = 0;		break;
-				case 32:	curSelec = 1;		break;
-				case 64:	curSelec = 2;		break;
-				case 128:	curSelec = 3;		break;
-				case 256:	curSelec = 4;		break;
+				case 16:
+					curSelec = 0;
+					break;
+					
+				case 32:
+					curSelec = 1;
+					break;
+					
+				case 64:
+					curSelec = 2;
+					break;
+					
+				case 128:
+					curSelec = 3;
+					break;
+					
+				case 256:
+					curSelec = 4;
+					break;
 			}
 			
-			myPt.v = tempRect.top;	myPt.h = tempRect.left;
+			myPt.v = tempRect.top;
+			myPt.h = tempRect.left;
 			LocalToGlobal(&myPt);
 			
 			SetItemMark(OsciHMenu, curSelec + 1, 0xa5);
 			
-			mresult = PopUpMenuSelect(	OsciHMenu,
+			mresult = PopUpMenuSelect(OsciHMenu,
 									  myPt.v,
 									  myPt.h,
 									  curSelec + 1);
 			
 			SetItemMark(OsciHMenu, curSelec + 1, 0);
 			
-			if (HiWord(mresult) != 0)
-			{
-				switch (LoWord(mresult))
-				{
-					case 1:	YSize = 16;		break;
-					case 2:	YSize = 32;		break;
-					case 3:	YSize = 64;		break;
-					case 4:	YSize = 128;	break;
-					case 5:	YSize = 256;	break;
+			if (HiWord(mresult) != 0) {
+				switch (LoWord(mresult)) {
+					case 1:
+						YSize = 16;
+						break;
+						
+					case 2:
+						YSize = 32;
+						break;
+						
+					case 3:
+						YSize = 64;
+						break;
+						
+					case 4:
+						YSize = 128;
+						break;
+						
+					case 5:
+						YSize = 256;
+						break;
 				}
 				
 				NumToString(YSize, aStr);
@@ -1266,65 +1257,72 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 
 pascal void actionProcWave(ControlHandle theControl, short ctlPart)
 {
-	long			lRefCon;
-	short			maxValue, minValue, curVal, XX, sVal, itemType;
-	RgnHandle		aRgn;
-	Handle			itemHandle;
-
+	long	lRefCon;
+	short	maxValue, minValue, curVal, sVal;
+	
 	if (ctlPart <= 0) return;
-
+	
 	lRefCon = GetControlReference(theControl);
 	maxValue = GetControlMaximum(theControl);
 	minValue = GetControlMinimum(theControl);
 	curVal = sVal = GetControlValue(theControl);
-
-	switch (ctlPart)
-	{
+	
+	switch (ctlPart) {
 		case kControlUpButtonPart:
 			curVal -= 1;
-			if (curVal < minValue) curVal = minValue;
-		break;
-		
+			if (curVal < minValue)
+				curVal = minValue;
+			break;
+			
 		case kControlDownButtonPart:
 			curVal += 1;
-			if (curVal > maxValue) curVal = maxValue;
-		break;
-		
+			if (curVal > maxValue)
+				curVal = maxValue;
+			break;
+			
 		case kControlPageUpPart:
-			switch (GetControlReference(theControl))
-			{
-				case yScrollNum:	curVal -= GetMaxYWave() - GetControlValue(yScroll) + 1;	break;
-				case xScrollNum:	curVal -= GetMaxXWave() - GetControlValue(xScroll) + 1;	break;
+			switch (GetControlReference(theControl)) {
+				case yScrollNum:
+					curVal -= GetMaxYWave() - GetControlValue(yScroll) + 1;
+					break;
+					
+				case xScrollNum:
+					curVal -= GetMaxXWave() - GetControlValue(xScroll) + 1;
+					break;
 			}
 			
-			if (curVal < minValue) curVal = minValue;
-		break;
-		
+			if (curVal < minValue)
+				curVal = minValue;
+			break;
+			
 		case kControlPageDownPart:
-			switch (GetControlReference(theControl))
-			{
-				case yScrollNum:	curVal += GetMaxYWave() - GetControlValue(yScroll) - 1;	break;
-				case xScrollNum:	curVal += GetMaxXWave() - GetControlValue(xScroll) - 1;	break;
+			switch (GetControlReference(theControl)) {
+				case yScrollNum:
+					curVal += GetMaxYWave() - GetControlValue(yScroll) - 1;
+					break;
+					
+				case xScrollNum:
+					curVal += GetMaxXWave() - GetControlValue(xScroll) - 1;
+					break;
 			}
-			if (curVal > maxValue) curVal = maxValue;
-		break;
-		
+			if (curVal > maxValue)
+				curVal = maxValue;
+			break;
+			
 		case kControlIndicatorPart:
 			sVal = gThumbPrev;
 			gThumbPrev = curVal;
-		break;
+			break;
 	}
 	
-	if (sVal != curVal)
-	{
+	if (sVal != curVal) {
 		RgnHandle		aRgn;
 		
 		SetControlValue(theControl, curVal);
 		
 		aRgn = NewRgn();
 		
-		switch (lRefCon)
-		{
+		switch (lRefCon) {
 			case yScrollNum:
 				WaveRect.left -= 14;
 				WaveRect.top++;
@@ -1335,8 +1333,8 @@ pascal void actionProcWave(ControlHandle theControl, short ctlPart)
 				CreateCurWaveRect();
 				InvalWindowRgn(GetDialogWindow(WaveDlog), aRgn);
 				UpdateWaveWindow(WaveDlog);
-			break;
-			
+				break;
+				
 			case xScrollNum:
 				WaveRect.top -= 14;
 				ScrollRect(&WaveRect, (sVal - curVal) *XSize, 0, aRgn);
@@ -1344,7 +1342,8 @@ pascal void actionProcWave(ControlHandle theControl, short ctlPart)
 				
 				CreateCurWaveRect();
 				
-			/*	if (sVal - curVal == 1 && (*aRgn)->rgnSize == 10)
+#if 0
+				if (sVal - curVal == 1 && (*aRgn)->rgnSize == 10)
 				{
 					ComputeWave(curVal, curVal+2, -1);
 					FinishFrame();
@@ -1353,12 +1352,13 @@ pascal void actionProcWave(ControlHandle theControl, short ctlPart)
 				{
 					ComputeWave(GetMaxXWave()-2, GetMaxXWave(), -1);
 				}
-				else*/
+				else
+#endif
 				{
 					InvalWindowRgn(GetDialogWindow(WaveDlog), aRgn);
 					UpdateWaveWindow(WaveDlog);
 				}
-			break;
+				break;
 		}
 		DrawFrame();
 		
@@ -1368,19 +1368,14 @@ pascal void actionProcWave(ControlHandle theControl, short ctlPart)
 
 void CreateWaveWindow(void)
 {
-	Rect			itemRect, tempRect, dataBounds;
-	Handle			itemHandle;
-	short			itemType, itemHit, temp, iWidth;
-	Point			cSize;
-	FontInfo		ThisFontInfo;
-	Str255			String, aStr;
-	Cmd				aCmd;
-	OSErr			iErr;
-
+	Rect	itemRect;
+	Handle	itemHandle;
+	short	itemType;
+	Str255	aStr;
+	
 	SetItemMark(EditorMenu, 4, checkMark);
 	
-	if (WaveDlog != NULL)
-	{
+	if (WaveDlog != NULL) {
 		SetWindEtat(GetDialogWindow(WaveDlog));
 		return;
 	}
@@ -1389,85 +1384,88 @@ void CreateWaveWindow(void)
 	SetWindEtat(GetDialogWindow(WaveDlog));
 	
 	SetPortDialogPort(WaveDlog);
-
+	
 	/**/
 	doubleClick = 0;
 	
 	GetDialogItem(WaveDlog , 7, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	playBut = NewControl(	GetDialogWindow(WaveDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							160,
-							kControlBevelButtonNormalBevelProc,
-							0);
-							
+	playBut = NewControl(GetDialogWindow(WaveDlog),
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 160,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
+	
 	GetDialogItem(WaveDlog , 5, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	noteBut = NewControl(	GetDialogWindow(WaveDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							140,
-							kControlBevelButtonNormalBevelProc,
-							0);
-							
+	noteBut = NewControl(GetDialogWindow(WaveDlog),
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 140,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
+	
 	GetDialogItem(WaveDlog , 6, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	zoomBut = NewControl(	GetDialogWindow(WaveDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							177,
-							kControlBevelButtonNormalBevelProc,
-							0);
+	zoomBut = NewControl(GetDialogWindow(WaveDlog),
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 177,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
 	
 	/**/
-
-
+	
+	
 	mode = playM;
-
+	
 	HiliteControl(playBut, kControlButtonPart);
 	
 	SetRect(&itemRect, 0, 0, 30, 16);
-	xScroll = NewControl(		 	GetDialogWindow(WaveDlog),
-									&itemRect,
-									"\p.",
-									true,
-									0,
-									0,
-									0,
-									gScrollBarID,
-									xScrollNum);
-
-	SetRect(&itemRect, 0, 0, 30, 16);
-	yScroll = NewControl(			GetDialogWindow(WaveDlog),
-									&itemRect,
-									"\p.",
-									true,
-									0,
-									0,
-									0,
-									gScrollBarID,
-									yScrollNum);
-
+	xScroll = NewControl(GetDialogWindow(WaveDlog),
+						 &itemRect,
+						 "\p.",
+						 true,
+						 0,
+						 0,
+						 0,
+						 gScrollBarID,
+						 xScrollNum);
 	
-	TextFont(4);		TextSize(9);
+	SetRect(&itemRect, 0, 0, 30, 16);
+	yScroll = NewControl(GetDialogWindow(WaveDlog),
+						 &itemRect,
+						 "\p.",
+						 true,
+						 0,
+						 0,
+						 0,
+						 gScrollBarID,
+						 yScrollNum);
+	
+	
+	TextFont(4);
+	TextSize(9);
 	
 	YSize = 32;
 	XSize = 8;
 	GetDialogItem(WaveDlog, 1, &itemType, &itemHandle, &WaveRect);
-	NumToString(YSize, aStr);		SetDText(WaveDlog, 11, aStr);
+	NumToString(YSize, aStr);
+	SetDText(WaveDlog, 11, aStr);
 	
-	ReaderCopy = MADDriver->PartitionReader;		CurrentPat = MADDriver->Pat;
-	WaveDriverType.numChn = 	MADDriver->DriverSettings.numChn;
+	ReaderCopy = MADDriver->PartitionReader;
+	CurrentPat = MADDriver->Pat;
+	WaveDriverType.numChn = MADDriver->DriverSettings.numChn;
 	
 	SetWaveControl();
 	
@@ -1492,29 +1490,28 @@ void CreateWaveWindow(void)
 	WaveDriverType.ReverbStrength	=	0;
 	WaveDriverType.oversampling		=	1;
 	
-	WavePtr = (char*) NewPtr(100 + WAVESIZE * MAXTRACK * 2L);
+	WavePtr = (char*) NewPtr(100 + WAVESIZE * MAXTRACK * 2);
 	if (WavePtr == NULL) MyDebugStr(__LINE__, __FILE__, "Not enough memory");
 	
 	WaveCopyDriver = (MADDriverRec*) NewPtrClear(sizeof(MADDriverRec));
 	
 	BlockMoveData(MADDriver, WaveCopyDriver, sizeof(MADDriverRec));
 	
-//	iErr = MADCreateDriver(&WaveDriverType, gMADLib, &WaveCopyDriver);
-//	if (iErr) MyDebugStr(__LINE__, __FILE__, "MADCreateDriver in WavePreview");
+	//iErr = MADCreateDriver(&WaveDriverType, gMADLib, &WaveCopyDriver);
+	//if (iErr) MyDebugStr(__LINE__, __FILE__, "MADCreateDriver in WavePreview");
 	
 	WaveCopyDriver->DriverSettings	=	WaveDriverType;
-	MADCreateVolumeTable(WaveCopyDriver);	
+	MADCreateVolumeTable(WaveCopyDriver);
 }
 
 void CloseWave(void)
 {
 	Point	Start;
 	Rect	caRect;
-
-	if (WaveDlog != NULL)
-	{
-		SetPortDialogPort(WaveDlog);
 	
+	if (WaveDlog != NULL) {
+		SetPortDialogPort(WaveDlog);
+		
 		DisposePtr((Ptr) WavePtr);
 		WavePtr = NULL;
 		
@@ -1522,18 +1519,18 @@ void CloseWave(void)
 		
 		DisposePtr((Ptr) WaveCopyDriver);
 		
-	//	MADDisposeDriver(WaveCopyDriver);
+		//MADDisposeDriver(WaveCopyDriver);
 		
 		GetPortBounds(GetDialogPort(WaveDlog), &caRect);
 		
-		thePrefs.WinHi[ GetWRefCon(GetDialogWindow(WaveDlog))] = caRect.bottom;
-		thePrefs.WinLarg[ GetWRefCon(GetDialogWindow(WaveDlog))] = caRect.right;
-		thePrefs.WinEtat[ GetWRefCon(GetDialogWindow(WaveDlog))] = 1;
+		thePrefs.WinHi[GetWRefCon(GetDialogWindow(WaveDlog))] = caRect.bottom;
+		thePrefs.WinLarg[GetWRefCon(GetDialogWindow(WaveDlog))] = caRect.right;
+		thePrefs.WinEtat[GetWRefCon(GetDialogWindow(WaveDlog))] = 1;
 		
 		Start.h = Start.v = 0;
 		LocalToGlobal(&Start);
-		thePrefs.WinPos[ GetWRefCon(GetDialogWindow(WaveDlog))].v = Start.v;
-		thePrefs.WinPos[ GetWRefCon(GetDialogWindow(WaveDlog))].h = Start.h;
+		thePrefs.WinPos[GetWRefCon(GetDialogWindow(WaveDlog))].v = Start.v;
+		thePrefs.WinPos[GetWRefCon(GetDialogWindow(WaveDlog))].h = Start.h;
 		
 		DisposeDialog(WaveDlog);
 	}
@@ -1544,11 +1541,6 @@ void CloseWave(void)
 
 void DoKeyPressWave(short theChar)
 {
-	Point 				theCell, aCell;
-	Rect				cellRect, eRect, sRect;
-	Str255				theStr;
-	short				theNo, temp;
-	Cmd					*theCommand;
 	GrafPtr				SavePort;
 	
  	if (curMusic == NULL) return;
@@ -1556,19 +1548,26 @@ void DoKeyPressWave(short theChar)
  	GetPort(&SavePort);
  	SetPortDialogPort(WaveDlog);
  	
-	if (theChar ==  9)
- 	{
+	if (theChar ==  9) {
  		HiliteControl(playBut, 0);
 		HiliteControl(zoomBut, 0);
 		HiliteControl(noteBut, 0);
 		
 		mode++;
-		if (mode > MODESIZE) mode = 0;
-		switch (mode)
-		{
-			case playM:		HiliteControl(playBut, kControlButtonPart);	break;
-			case zoomM:		HiliteControl(zoomBut, kControlButtonPart);	break;
-			case noteM:		HiliteControl(noteBut, kControlButtonPart);	break;
+		if (mode > MODESIZE)
+			mode = playM;
+		switch (mode) {
+			case playM:
+				HiliteControl(playBut, kControlButtonPart);
+				break;
+				
+			case zoomM:
+				HiliteControl(zoomBut, kControlButtonPart);
+				break;
+				
+			case noteM:
+				HiliteControl(noteBut, kControlButtonPart);
+				break;
 		}
  	}
  	
