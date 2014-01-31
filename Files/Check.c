@@ -1051,9 +1051,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	
 	iErr = noErr;
 	
-	pStrcpy(aSpec.name, fName);
-	aSpec.vRefNum = vRefNum;
-	aSpec.parID = parID;
+	FSMakeFSSpec(vRefNum, parID, fName, &aSpec);
 	
 	if (theType != 'Rsrc') {
 		HSetVol(NULL, vRefNum, parID);
@@ -1089,8 +1087,10 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	
 	iErr = noErr;
 	
-	if (curMusic != NULL) oldTracks = curMusic->header->numChn;
-	else oldTracks = 0;
+	if (curMusic != NULL)
+		oldTracks = curMusic->header->numChn;
+	else
+		oldTracks = 0;
 	
 	IsReading = MADDriver->Reading;
 	MADDriver->Reading = false;

@@ -81,8 +81,7 @@ void ScanDir(long dirID, short VRefNum, Boolean recurse)
 		
 		RollCursor();
 		
-		if(	OpenableFile(info.hFileInfo.ioFlFndrInfo.fdType, &spec))
-		{
+		if (OpenableFile(info.hFileInfo.ioFlFndrInfo.fdType, &spec)) {
 			if (info.hFileInfo.ioFlFndrInfo.fdType != 'sTAT' && info.hFileInfo.ioFlFndrInfo.fdType != 'STCf')
 				AddMODList(	false,
 						   info.hFileInfo.ioNamePtr,
@@ -123,44 +122,3 @@ void PathNameFromDirID(long dirID, short vRefNum, StringPtr fullPathName)
 		}
 	} while (block.dirInfo.ioDrDirID != 2 && err == noErr);
 }
-
-/*
- PathNameFromWD:
- Given an HFS working directory, this routine returns the full pathname that
- corresponds to it. It does this by calling PBGetWDInfo to get the VRefNum and
- DirID of the real directory. It then calls PathNameFromDirID, and returns its
- result.
- */
-#if 0
-void PathNameFromWD(long vRefNum, StringPtr pathName)
-{
-	WDPBRec	myBlock;
-	OSErr	err;
-	/*
-	 PBGetWDInfo has a bug under A/UX 1.1.  If vRefNum is a real
-	 vRefNum and not a wdRefNum, then it returns garbage.
-	 Since A/UX has only 1 volume (in the Macintosh sense) and
-	 only 1 root directory, this can occur only when a file has been
-	 selected in the root directory (/).
-	 So we look for this and hardcode the DirID and vRefNum. */
- 	
-	if ((haveAUX()) && (vRefNum == -1))
-		PathNameFromDirID(2, -1, pathName);
-	else {
-		myBlock.ioNamePtr = nil;
-		myBlock.ioVRefNum = vRefNum;
-		myBlock.ioWDIndex = 0;
-		myBlock.ioWDProcID = 0;
-		/*
-		 Change the Working Directory number in vRefnum into a real
-		 vRefnum and DirID. The real vRefnum is returned in ioVRefnum,
-		 and the real DirID is returned in ioWDDirID. */
-		err = PBGetWDInfo(&myBlock, false);
-		if (err != noErr)
-			return;
-		PathNameFromDirID(myBlock.ioWDDirID, myBlock.ioWDVRefNum,
-						  pathName);
-	}
-}
-#endif
-

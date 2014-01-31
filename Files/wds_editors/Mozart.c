@@ -3,6 +3,7 @@
 #include "RDriverInt.h"
 #include "PPPlug.h"
 #include "Undo.h"
+#include "Navigation.h"
 
 void UpdateMozartInfoInternal(void);
 
@@ -107,7 +108,7 @@ Boolean DragBox(RgnHandle myRgn, Pcmd	*myPcmd, EventRecord *theEvent);
 void		UPDATE_TrackActive(void);
 
 Pcmd* CreatePcmdFromSelectionMozart(void);
-#define	TICKDELAY	2
+#define	TICKDELAY 2
 
 short GetMaxYBox()
 {
@@ -3351,17 +3352,18 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 	HFSFlavor			myFlavor;
 	FInfo				fndrInfo;
 	OSErr				iErr;
-
-	if (!mainSystemDrag) return noErr;
 	
-	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return(noErr);
+	if (!mainSystemDrag)
+		return noErr;
+	
+	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag))
+		return noErr;
 	
 	SetPortWindowPort(theWindow);
 	
 	GetDragAttributes(theDrag, &attributes);
 	
-	switch (message)
-	{
+	switch (message) {
 		case kDragTrackingEnterHandler:
 			SetRect(&prevClipRect, 0, 0, 0, 0);
 			SetRect(&pSelecRectX, 0, 0, 0, 0);
@@ -3370,45 +3372,38 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 			GetDragItemReferenceNumber(theDrag, 1, &theItem);
 			
 			result = GetFlavorFlags(theDrag, theItem, 'Pcmd', &theFlags);
-			if (result == noErr)
-			{
+			if (result == noErr) {
 				canAcceptDrag = true;
 				
 				result = GetFlavorDataSize(theDrag, theItem, 'Pcmd', &textSize);
-				if (result == noErr)
-				{
+				if (result == noErr) {
 					short minNote, maxNote;
 					
 					////////////
 					myPcmd = (Pcmd*) MyNewPtr(textSize);
 					GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
 					PcmdTracks = myPcmd->tracks;
-					if (PcmdTracks <= 0) PcmdTracks = 1;
+					if (PcmdTracks <= 0)
+						PcmdTracks = 1;
 					PcmdLength = myPcmd->length;
-					if (PcmdLength <= 0) PcmdLength = 1;
+					if (PcmdLength <= 0)
+						PcmdLength = 1;
 					GetMinMaxPcmd(myPcmd, &minNote, &maxNote);
-					if (attributes & kDragInsideSenderWindow)
-					{
+					if (attributes & kDragInsideSenderWindow) {
 						PcmdHigh = selecEnd.v - selecStart.v + 1;
 						YMove = NUMBER_NOTES - selecStart.v - maxNote -1;
-					}
-					else
-					{
+					} else {
 						PcmdHigh = maxNote - minNote + 1;
 					}
-					MyDisposePtr((Ptr*) &myPcmd);
+					MyDisposePtr((Ptr*)&myPcmd);
 					/////////////
-				}
-				else
-				{
+				} else {
 					PcmdTracks = 1;
 					PcmdLength = 1;
 				}
-			}
-			else if (GetFlavorFlags(theDrag, theItem, flavorTypeHFS, &theFlags) == noErr)
-			{
+			} else if (GetFlavorFlags(theDrag, theItem, flavorTypeHFS, &theFlags) == noErr) {
 				Boolean	targetIsFolder, wasAliased;
-			
+				
 				GetFlavorDataSize(theDrag, theItem, flavorTypeHFS, &textSize);
 				GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
 				
@@ -3416,8 +3411,7 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 				
 				FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
 				
-				switch (fndrInfo.fdType)
-				{
+				switch (fndrInfo.fdType) {
 					case 'Pcmd':
 						/////////////
 						PcmdTracks = 1;	PcmdLength = 1;
@@ -3447,20 +3441,20 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 						///////////////
 						
 						canAcceptDrag = true;
-					break;
-					
+						break;
+						
 					default:
 						canAcceptDrag = false;
-					break;
+						break;
 				}
-		    }
+			}
 			else canAcceptDrag = false;
-		break;
-
+			break;
+			
 		case kDragTrackingEnterWindow:
-		
-		break;
-
+			
+			break;
+			
 		case kDragTrackingInWindow:
 			GetDragMouse(theDrag, &theMouse, NULL);
 			localMouse = theMouse;
@@ -3478,8 +3472,8 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 				else HiliteControl(PoubBut, 0);
 			}
 			
-	 		saveClip = NewRgn();
-	 		GetClip(saveClip);
+			saveClip = NewRgn();
+			GetClip(saveClip);
 			
 			if (PtInRect(localMouse, &MozartRect))
 			{
@@ -3534,17 +3528,17 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 			
 			SetClip(saveClip);
 			DisposeRgn(saveClip);
-		break;
-
+			break;
+			
 		case kDragTrackingLeaveWindow:
 			BackColor(whiteColor);
 			HideDragHilite(theDrag);
 			EraseMark();
 			RGBBackColor(&theColor);
-		break;
-
+			break;
+			
 		case kDragTrackingLeaveHandler:
-		break;
+			break;
 	}
 	
 	return(noErr);
@@ -3560,7 +3554,8 @@ Boolean DragBox(RgnHandle myRgn, Pcmd	*myPcmd, EventRecord *theEvent)
 	PromiseHFSFlavor	myNewFile;
 	Rect				dragRegionRect;
 	
-	if (!DragManagerUse) return false;
+	if (!DragManagerUse)
+		return false;
 	
 	dragRegion = NewRgn();
 	
@@ -3571,10 +3566,10 @@ Boolean DragBox(RgnHandle myRgn, Pcmd	*myPcmd, EventRecord *theEvent)
 	
 	NewDrag(&theDrag);
 	
-	myNewFile.fileType			=	'Pcmd';
-	myNewFile.fileCreator		=	'SNPL';
-	myNewFile.fdFlags			=	0;
-	myNewFile.promisedFlavor	=	'VCT1';
+	myNewFile.fileType			= 'Pcmd';
+	myNewFile.fileCreator		= 'SNPL';
+	myNewFile.fdFlags			= 0;
+	myNewFile.promisedFlavor	= 'VCT1';
 	AddDragItemFlavor(theDrag, 1, flavorTypePromiseHFS, &myNewFile, sizeof(myNewFile), flavorNotSaved);
 	AddDragItemFlavor(theDrag, 1, 'VCT1', NULL, 0, 0);
 	AddDragItemFlavor(theDrag, 1, 'Pcmd', myPcmd, myPcmd->structSize, 0);
@@ -3595,12 +3590,13 @@ Boolean DragBox(RgnHandle myRgn, Pcmd	*myPcmd, EventRecord *theEvent)
 	
 	result = TrackDrag(theDrag, theEvent, dragRegion);
 	
-	if (result != noErr && result != userCanceledErr) return(true);
+	if (result != noErr && result != userCanceledErr)
+		return true;
 	
 	DisposeDrag(theDrag);
 	DisposeRgn(dragRegion);
 	
-	return(true);
+	return true;
 }
 
 pascal OSErr MyReceiveDropBox(WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
@@ -3613,9 +3609,12 @@ pascal OSErr MyReceiveDropBox(WindowPtr theWindow, void *handlerRefCon, DragRefe
 	Pcmd				*myPcmd;
 	HFSFlavor			myFlavor;
 	
-	if (!mainSystemDrag) return dragNotAcceptedErr;
-	if (!canAcceptDrag) return dragNotAcceptedErr;
-	if (DropX == -1 && DropY == -1 && DropTrack == -1 && selectedControl == NULL) return dragNotAcceptedErr;
+	if (!mainSystemDrag)
+		return dragNotAcceptedErr;
+	if (!canAcceptDrag)
+		return dragNotAcceptedErr;
+	if (DropX == -1 && DropY == -1 && DropTrack == -1 && selectedControl == NULL)
+		return dragNotAcceptedErr;
 	
 	SetPortWindowPort(theWindow);
 	
@@ -3625,10 +3624,8 @@ pascal OSErr MyReceiveDropBox(WindowPtr theWindow, void *handlerRefCon, DragRefe
 	GetDragAttributes(theDrag, &attributes);
 	GetDragModifiers(theDrag, NULL, &mouseDownModifiers, &mouseUpModifiers);
 	
-	if (attributes & kDragInsideSenderWindow)
-	{
-		if (selectedControl != NULL)
-		{
+	if (attributes & kDragInsideSenderWindow) {
+		if (selectedControl != NULL) {
 			HiliteControl(selectedControl, 0);
 			
 			//if (selectedControl == saveBut)		SavePcmdFile(CreatePcmdFromSelectionMozart());
@@ -3651,34 +3648,32 @@ pascal OSErr MyReceiveDropBox(WindowPtr theWindow, void *handlerRefCon, DragRefe
 	GetDragItemReferenceNumber(theDrag, 1, &theItem);
 	result = GetFlavorDataSize(theDrag, theItem, 'Pcmd', &textSize);
 	
-	if (result == noErr)
-	{
+	if (result == noErr) {
 		myPcmd = (Pcmd*) MyNewPtr(textSize);
-		if (myPcmd != NULL)
-		{
+		if (myPcmd != NULL) {
 			GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
 			
-			if (movePcmd)		// Delete source
-			{
+			if (movePcmd) {		// Delete source
 				// La source est déjà selectionnée...
 				
 				DoKeyPressMozart(8);
-			}
-			else SaveUndo(UPattern, PatCopy, "\pUndo 'Move Selection'");
+			} else
+				SaveUndo(UPattern, PatCopy, "\pUndo 'Move Selection'");
 			
 			InvalSelectionRect();
 			
-			selecStart.h = DropX;		selecEnd.h = selecStart.h + PcmdLength-1;
+			selecStart.h = DropX;
+			selecEnd.h = selecStart.h + PcmdLength-1;
 			selecStart.v = DropY;
-			if (attributes & kDragInsideSenderWindow) selecStart.v += YMove;
+			if (attributes & kDragInsideSenderWindow)
+				selecStart.v += YMove;
 			selecEnd.v = selecStart.v + PcmdHigh-1;
 			selecTrack = DropTrack;
 			
 			PasteCmdBox(myPcmd);
-			MyDisposePtr((Ptr*) &myPcmd);
+			MyDisposePtr((Ptr*)&myPcmd);
 			
-			if (attributes & kDragInsideSenderWindow)
-			{
+			if (attributes & kDragInsideSenderWindow) {
 				selecStart.v = DropY;
 				selecEnd.v = selecStart.v + PcmdHigh-1;
 				InvalSelectionRect();
@@ -3694,9 +3689,8 @@ pascal OSErr MyReceiveDropBox(WindowPtr theWindow, void *handlerRefCon, DragRefe
 	GetDragItemReferenceNumber(theDrag, 1, &theItem);
 	result = GetFlavorDataSize(theDrag, theItem, flavorTypeHFS, &textSize);
 	
-	if (result == noErr)
-	{
-		Boolean		targetIsFolder, wasAliased;
+	if (result == noErr) {
+		Boolean targetIsFolder, wasAliased;
 		
 		SaveUndo(UPattern, PatCopy, "\pUndo 'Drop Pcmd File'");
 		

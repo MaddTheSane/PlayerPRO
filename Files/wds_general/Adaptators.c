@@ -5,6 +5,7 @@
 #include "PrivateList.h"
 #include "Undo.h"
 #include "Utils.h"
+#include "Navigation.h"
 
 /******** HELP MODULE ********/
 enum
@@ -2845,7 +2846,6 @@ pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRef
 			FlavorFlags     	theFlags;
 			long				textSize;
 			HFSFlavor			myFlavor;
-			FInfo				fndrInfo;
 			
 			canAcceptDrag = false;
 			
@@ -2853,6 +2853,7 @@ pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRef
 			
 			result = GetFlavorFlags(theDrag, theItem, flavorTypeHFS, &theFlags);
 			if (result == noErr) {
+				OSType theType;
 				Boolean		targetIsFolder, wasAliased;
 				
 				GetFlavorDataSize(theDrag, theItem, flavorTypeHFS, &textSize);
@@ -2861,19 +2862,16 @@ pascal OSErr MyTrackingAdap(short message, WindowPtr theWindow, void *handlerRef
 				
 				ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 				
-				HSetVol(NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
-				result = FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
-				if (result != noErr)
-					return false;		// <- Folder
-				
-				if (fndrInfo.fdType == TUNINGTYPE)
+				theType = GetOSTypeFromSpecUsingUTI(myFlavor.fileSpec);
+				if (theType == 0)
+					return false; // <- Folder
+				else if (theType == TUNINGTYPE)
 					canAcceptDrag = true;
 			}
 		}
 			break;
 			
 		case kDragTrackingEnterWindow:
-			
 			break;
 			
 		case kDragTrackingInWindow:

@@ -1,5 +1,6 @@
 #include "Shuddup.h"
 #include <Carbon/Carbon.h>
+#include "Navigation.h"
 
 extern Boolean		End;
 extern DialogPtr	MODListDlog;
@@ -65,12 +66,11 @@ pascal OSErr AEODoc(const AppleEvent *theAppleEvent, AppleEvent* reply, long han
 	Size		actualSize;
 	AEKeyword	keywd;
 	DescType	returnedType;
-	FInfo		fndrInfo;
 	CInfoPBRec	info;
 	
 	// get the direct parameter--a descriptor list--and put it into a docList
 	
-	err = AEGetParamDesc (theAppleEvent, keyDirectObject, typeAEList, &docList);
+	err = AEGetParamDesc(theAppleEvent, keyDirectObject, typeAEList, &docList);
 	if (err)
 		return err;
 
@@ -90,11 +90,11 @@ pascal OSErr AEODoc(const AppleEvent *theAppleEvent, AppleEvent* reply, long han
 	UpdateALLWindow();
 	
 	for (index = 1; index <= itemsInList; index++) {
-		err = AEGetNthPtr(&docList, index, typeFSS, &keywd, &returnedType, (Ptr) &myFSS, sizeof(myFSS), &actualSize);
+		err = AEGetNthPtr(&docList, index, typeFSS, &keywd, &returnedType, (Ptr)&myFSS, sizeof(myFSS), &actualSize);
 		
-		err = HGetFInfo(myFSS.vRefNum, myFSS.parID, myFSS.name, &fndrInfo);
+		OSType theType = GetOSTypeFromSpecUsingUTI(myFSS);
 		
-		if (err != noErr) {
+		if (theType == 0 || theType == 0x3f3f3f3f) {
 			info.dirInfo.ioVRefNum = myFSS.vRefNum;
 			info.dirInfo.ioDrDirID = myFSS.parID;
 			info.dirInfo.ioFDirIndex = -1;
@@ -105,7 +105,6 @@ pascal OSErr AEODoc(const AppleEvent *theAppleEvent, AppleEvent* reply, long han
 			
 			if (PBGetCatInfoSync(&info) == noErr) {
 				DoScanDir(info.dirInfo.ioDrDirID, myFSS.vRefNum);
-				
 				if (index == 1) {
 					Boolean 	rrr;
 					
@@ -126,16 +125,15 @@ pascal OSErr AEODoc(const AppleEvent *theAppleEvent, AppleEvent* reply, long han
 			//OSType 	tempType;
 			char	tempC[5];
 			
-			if (OpenableFile(fndrInfo.fdType, &myFSS) == true ||
-				fndrInfo.fdType == 'sTAT' ||
-				fndrInfo.fdType == 'STCf' ||
+			if (OpenableFile(theType, &myFSS) == true ||
+				theType == 'STCf' ||
 				MADMusicIdentifyFSp(gMADLib, tempC, &myFSS) == noErr) {
-				if (fndrInfo.fdType != 'sTAT' && fndrInfo.fdType != 'STCf') {
+				if (theType != 'STCf') {
 					AddMODList(false, myFSS.name, myFSS.vRefNum, myFSS.parID);
 					
 					if (!ReceivedAMusicInMusicList) {
 						if (index == 1) {
-							if (ImportFile(myFSS.name, myFSS.vRefNum, myFSS.parID, fndrInfo.fdType)) {
+							if (ImportFile(myFSS.name, myFSS.vRefNum, myFSS.parID, theType)) {
 								if (thePrefs.AutoPlayWhenOpen)
 									DoPlay();		// WANT TO PLAY ?
 							}
@@ -149,7 +147,7 @@ pascal OSErr AEODoc(const AppleEvent *theAppleEvent, AppleEvent* reply, long han
 						ClearMODList();
 						
 						if (index == 1) {
-							if (ImportFile(myFSS.name, myFSS.vRefNum, myFSS.parID, fndrInfo.fdType)) {
+							if (ImportFile(myFSS.name, myFSS.vRefNum, myFSS.parID, theType)) {
 								if (thePrefs.AutoPlayWhenOpen)
 									DoPlay();		// WANT TO PLAY ?
 							}
@@ -183,7 +181,7 @@ static pascal OSErr ANEQApp(const AppleEvent *theAppleEvent, AppleEvent *reply, 
 		return err;
 
 	// check for missing parameters
-	err = MyGotRequiredParams (theAppleEvent);
+	err = MyGotRequiredParams(theAppleEvent);
 	if (err)
 		return err;
 

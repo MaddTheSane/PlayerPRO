@@ -25,6 +25,7 @@
 #include <QuickTime/QuickTime.h>
 #include <CoreFoundation/CoreFoundation.h>
 #include "PPPrivate.h"
+#include "Navigation.h"
 
 // the requested dimensions for our sample open customization area:
 #define kCustomWidth 410

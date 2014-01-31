@@ -49,8 +49,7 @@ void UPDATE_TrackActive(void)
 	UpdateStaffInfo();
 	UpdateMozartInfo();
 	
-	if (AdapDlog)
-	{
+	if (AdapDlog) {
 		GetPortBounds(GetDialogPort(AdapDlog), &caRect);
 		InvalWindowRect(GetDialogWindow(AdapDlog), &caRect);
 		UpdateAdapWindow(AdapDlog);
