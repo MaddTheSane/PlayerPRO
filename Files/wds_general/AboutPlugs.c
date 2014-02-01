@@ -25,7 +25,7 @@ enum
 void DrawPlugInfo(short iD)
 {
 	short		pos;
-	Str255		aStr, tempStr;
+	Str255		aStr;
 	Rect		destRect;
 	
 	pos = iD - GetControlValue(myList.yScroll);

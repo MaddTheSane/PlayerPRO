@@ -1,12 +1,12 @@
+#include <Carbon/Carbon.h>
 #include "MAD.h"
 #include "RDriver.h"
 #include "Shuddup.h"
 #include "Undo.h"
 #include "RDriverInt.h"
-#include <Carbon/Carbon.h>
-
 #include "PPPlug.h"
 #include "PPPrivate.h"
+#include "Navigation.h"
 
 #define MAXINSTRPLUG 100
 
@@ -51,12 +51,10 @@ static	PPINFilterInfo 	*ThePPINPlug;
 static	short			tPlug, sampPlug, instPlug, instMenuID[ MAXINSTRPLUG], sampMenuID[ MAXINSTRPLUG];
 static	MenuHandle		PPINMenuSample, PPINMenuInstrument;
 
-static 	Boolean		showAllFiles;
 static 	Boolean 	needUp;
 static 	Boolean		AddAll;
 static	Boolean 	PlayWhenClicked, DoPlayASoundFile;
 static	Boolean		ShowAllFiles;
-static	FSSpec		lastItem;
 
 
 void InitPlayWhenClicked(void)
@@ -67,17 +65,14 @@ void InitPlayWhenClicked(void)
 
 OSErr PPINGetPlugByID(OSType *type, short id, short samp)
 {
-	if (samp >= 0)
-	{
-		if (id >= sampPlug) return -1;
-		else
-		{
+	if (samp >= 0) {
+		if (id >= sampPlug)
+			return -1;
+		else {
 			*type = ThePPINPlug[ sampMenuID[id]].type;
 			return noErr;
 		}
-	}
-	else
-	{
+	} else {
 		if (id >= instPlug) return -1;
 		else
 		{
@@ -89,13 +84,11 @@ OSErr PPINGetPlugByID(OSType *type, short id, short samp)
 
 void PPINGetFileName(void)
 {
-	Point	where = { -1, -1};
-	short	ins, samp, i;
+	short	ins, samp;
 	OSErr	iErr;
 	FSSpec	replyspec;
 	
-	if (!GetIns(&ins, &samp))
-	{
+	if (!GetIns(&ins, &samp)) {
 		Erreur(13, ins);
 		return;
 	}
@@ -106,7 +99,6 @@ void PPINGetFileName(void)
 	
 	NavReplyRecord		theReply;
 	NavDialogOptions	dialogOptions;
-	NavTypeListHandle	openList;
 	NavEventUPP			eventUPP = NewNavEventUPP(myCustomEventNAVProc);
 	NavObjectFilterUPP 	filterProcUPP = NewNavObjectFilterUPP(MyInsCustomFilter);
 	
@@ -130,48 +122,39 @@ void PPINGetFileName(void)
 	 for (i = 1; i <= tPlug; i++) (*openList)->osType[ i] = ThePPINPlug[ i].type;*/
 	
 	
-	iErr = NavGetFile(			NULL,	// use system's default location
+	iErr = NavGetFile(NULL,	// use system's default location
 					  &theReply,
 					  &dialogOptions,
 					  eventUPP,		//MyDlgFilterNavDesc,
 					  NULL,	// no custom previews
 					  filterProcUPP,
-					  NULL, 		//,
+					  NULL,
 					  (NavCallBackUserData) 2L);
 	
 	DisposeNavEventUPP(eventUPP);
 	DisposeNavObjectFilterUPP(filterProcUPP);
 	
-	/*	if (openList != NULL)
-	 {
-	 HUnlock((Handle)openList);
-	 DisposeHandle((Handle)openList);
-	 }*/
-	
-	if (theReply.validRecord && iErr == noErr)
-	{
+	if (theReply.validRecord && iErr == noErr) {
 		AEDesc 	resultDesc;
 		long	index, count;
 		
 		// we are ready to open the document(s), grab information about each file for opening:
 		iErr = AECountItems(&(theReply.selection),&count);
-		for (index=1;index<=count;index++)
-		{
+		for (index = 1; index <= count; index++) {
 			AEKeyword keyword;
 			
-			if ((iErr = AEGetNthDesc(&(theReply.selection), index, typeFSS, &keyword, &resultDesc)) == noErr)
-			{
-				if ((iErr = MyAEGetDescData (&resultDesc, NULL, &replyspec, sizeof (FSSpec ), NULL )) == noErr)
-					
+			if ((iErr = AEGetNthDesc(&(theReply.selection), index, typeFSS, &keyword, &resultDesc)) == noErr) {
+				if ((iErr = MyAEGetDescData (&resultDesc, NULL, &replyspec, sizeof(FSSpec), NULL)) == noErr)
 					iErr = AEDisposeDesc(&resultDesc);
 			}
 		}
 		
 		iErr = NavDisposeReply(&theReply);	// clean up after ourselves	
-	}
-	else iErr = -1;
+	} else
+		iErr = -1;
 	
-	if (iErr) return;
+	if (iErr)
+		return;
 	
 	
 	curMusic->hasChanged = true;
@@ -182,12 +165,11 @@ void PPINGetFileName(void)
 	
 	iErr = NOpenSampleInt(ins, samp, replyspec);
 	
-	if (iErr == -10)
-	{
+	if (iErr == -10) {
 		RAWImportFile(&replyspec);
 		return;
-	}
-	else MADErreur(iErr);
+	} else
+		MADErreur(iErr);
 	
 	CreateInstruList();
 	DrawInfoInstrument();
@@ -203,8 +185,6 @@ OSErr CallPPINPlugIns(short PlugNo, OSType order, short ins, short *samp, FSSpec
 	OSErr				myErr = noErr;
 	short				fileID;
 	GrafPtr				savedPort;
-	Ptr					mainAddr;
-	Str255				errName;
 	PPInstrumentPlugin	**InstrPlugA = ThePPINPlug[PlugNo].xxxx;
 	
 	GetPort(&savedPort);
@@ -212,49 +192,37 @@ OSErr CallPPINPlugIns(short PlugNo, OSType order, short ins, short *samp, FSSpec
 	thePPInfoPlug.fileType = ThePPINPlug[ PlugNo].type;
 	
 	myErr = (*InstrPlugA)->InstrMain(order,
-									 &curMusic->fid[ ins],
-									 &curMusic->sample[ curMusic->fid[ ins].firstSample],
+									 &curMusic->fid[ins],
+									 &curMusic->sample[curMusic->fid[ins].firstSample],
 									 samp,
 									 spec,
 									 &thePPInfoPlug);
 	
 	curMusic->fid[ ins].firstSample =  ins * MAXSAMPLE;
 	
-	CFBundleCloseBundleResourceMap(ThePPINPlug[ PlugNo].file, fileID);
+	CFBundleCloseBundleResourceMap(ThePPINPlug[PlugNo].file, fileID);
 	SetPort(savedPort);
 	
 	return myErr;
 }
 
-OSErr CallPPINPlugInsOther(		short					PlugNo,					// CODE du plug
+OSErr CallPPINPlugInsOther(short					PlugNo,					// CODE du plug
 						   OSType					order,
 						   short					*samp,
 						   FSSpec					*spec,
-						   InstrData					*insData,
+						   InstrData				*insData,
 						   sData					**sampData)
 {
 	OSErr				myErr;
 	short				fileID;
 	GrafPtr				savedPort;
-	Ptr					mainAddr;
-	Str255				errName;
 	PPInstrumentPlugin	**InstrPlugA = ThePPINPlug[PlugNo].xxxx;
 	
 	GetPort(&savedPort);
-	fileID = CFBundleOpenBundleResourceMap(ThePPINPlug[ PlugNo].file);
-	
-	
-	myErr = (*InstrPlugA)->InstrMain(order,
-									 insData,
-									 sampData,
-									 samp,
-									 spec,
-									 &thePPInfoPlug);
-	
-	
+	fileID = CFBundleOpenBundleResourceMap(ThePPINPlug[PlugNo].file);
+	myErr = (*InstrPlugA)->InstrMain(order, insData, sampData, samp, spec, &thePPInfoPlug);
 	insData->firstSample =  0;
-	
-	CFBundleCloseBundleResourceMap(ThePPINPlug[ PlugNo].file, fileID);	
+	CFBundleCloseBundleResourceMap(ThePPINPlug[PlugNo].file, fileID);
 	SetPort(savedPort);
 	
 	return myErr;
@@ -266,9 +234,6 @@ static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *TheP
 
 void InitPPINPlug(void)
 {
-	short		vRefNum;
-	long		dirID;
-	FSSpec		spec;
 	CFArrayRef  PlugLocsDigital = GetDefaultPluginFolderLocations();
 	CFIndex		i, x, PlugLocNums;
 	
@@ -276,7 +241,7 @@ void InitPPINPlug(void)
 	thePPInfoPlug.UpdateALLWindowUPP 		= UpdateALLWindow;
 	thePPInfoPlug.MyDlgFilterUPP			= MyDlgFilterDesc;	
 	
-	ThePPINPlug = (PPINFilterInfo*) MyNewPtr(MAXINSTRPLUG * sizeof(PPINFilterInfo));
+	ThePPINPlug = (PPINFilterInfo*)MyNewPtr(MAXINSTRPLUG * sizeof(PPINFilterInfo));
 	
 	//	GetApplicationPackageFSSpecFromBundle(&spec);
 	
@@ -320,8 +285,10 @@ OSType PressPPINMenu(Rect *PopUpRect, OSType curType, short samp, Str255 name)
 	short		i, sel;
 	MenuHandle	PPINMenu;
 	
-	if (samp < 0) PPINMenu = PPINMenuInstrument;
-	else PPINMenu = PPINMenuSample;
+	if (samp < 0)
+		PPINMenu = PPINMenuInstrument;
+	else
+		PPINMenu = PPINMenuSample;
 	
 	InsertMenu(PPINMenu, hierMenu);
 	
@@ -331,41 +298,36 @@ OSType PressPPINMenu(Rect *PopUpRect, OSType curType, short samp, Str255 name)
 	LocalToGlobal(&Zone);
 	
 	sel = 1;
-	for(i=0; i< CountMenuItems(PPINMenu); i++)
-	{
-		if (samp < 0)
-		{
-			if (ThePPINPlug[ instMenuID[i]].type == curType) sel = i+1;
-		}
-		else if (ThePPINPlug[ sampMenuID[i]].type == curType) sel = i+1;
+	for(i = 0; i < CountMenuItems(PPINMenu); i++) {
+		if (samp < 0) {
+			if (ThePPINPlug[ instMenuID[i]].type == curType)
+				sel = i + 1;
+		} else if (ThePPINPlug[ sampMenuID[i]].type == curType)
+			sel = i + 1;
 	}
 	
 	SetItemMark(PPINMenu, sel, 0xa5);
-	mresult = PopUpMenuSelect(	PPINMenu,
+	mresult = PopUpMenuSelect(PPINMenu,
 							  Zone.v,
 							  Zone.h,
-							  sel );
+							  sel);
 	SetItemMark(PPINMenu, sel, 0);
 	
 	DeleteMenu(GetMenuID(PPINMenu));
 	
-	if (HiWord(mresult ) != 0)
-	{
-		if (samp < 0)
-		{
+	if (HiWord(mresult) != 0) {
+		if (samp < 0) {
 			Str255 pMenuName;
-			GetPStrFromCFString(ThePPINPlug[ instMenuID[ LoWord(mresult)-1]].MenuName, pMenuName);
+			GetPStrFromCFString(ThePPINPlug[instMenuID[LoWord(mresult) - 1]].MenuName, pMenuName);
 			
 			pStrcpy(name, pMenuName);
-			return ThePPINPlug[ instMenuID[ LoWord(mresult)-1]].type;
-		}
-		else
-		{
+			return ThePPINPlug[instMenuID[LoWord(mresult) - 1]].type;
+		} else {
 			Str255 pMenuName;
-			GetPStrFromCFString(ThePPINPlug[ sampMenuID[ LoWord(mresult)-1]].MenuName, pMenuName);
+			GetPStrFromCFString(ThePPINPlug[sampMenuID[LoWord(mresult) - 1]].MenuName, pMenuName);
 			
 			pStrcpy(name, pMenuName);
-			return ThePPINPlug[ sampMenuID[ LoWord(mresult)-1]].type;
+			return ThePPINPlug[sampMenuID[LoWord(mresult) - 1]].type;
 		}
 	}
 	else return '\?\?\?\?';
@@ -373,18 +335,14 @@ OSType PressPPINMenu(Rect *PopUpRect, OSType curType, short samp, Str255 name)
 
 OSErr PPINAvailablePlug(OSType kindFile, OSType *plugType)
 {
-	short		i;
+	short i;
 	
-	for (i = 0; i < tPlug; i++)
-	{
-		if (kindFile == ThePPINPlug[ i].type)
-		{
-			if (plugType != NULL)
-			{
-				if (ThePPINPlug[ i].isSamp == TRUE) {
+	for (i = 0; i < tPlug; i++) {
+		if (kindFile == ThePPINPlug[i].type) {
+			if (plugType != NULL) {
+				if (ThePPINPlug[i].isSamp == TRUE) {
 					*plugType = 'SAMP';
-				}
-				else {
+				} else {
 					*plugType = 'INST';
 				}
 			}
@@ -392,7 +350,8 @@ OSErr PPINAvailablePlug(OSType kindFile, OSType *plugType)
 		}
 	}
 	
-	if (plugType != NULL) *plugType = 'NONE';
+	if (plugType != NULL)
+		*plugType = 'NONE';
 	return MADCannotFindPlug;
 }
 
@@ -422,13 +381,11 @@ OSErr PPINExportFile(OSType kindFile, short ins, short samp, FSSpec *AlienFile)
 
 OSErr PPINTestFile(OSType kindFile, FSSpec *AlienFile)
 {
-	short		i, temp;
+	short i, temp;
 	
-	for (i = 0; i < tPlug; i++)
-	{
-		if (kindFile == ThePPINPlug[ i].type)
-		{
-			return(CallPPINPlugIns(i, 'TEST', 0, &temp, AlienFile));
+	for (i = 0; i < tPlug; i++) {
+		if (kindFile == ThePPINPlug[i].type) {
+			return CallPPINPlugIns(i, 'TEST', 0, &temp, AlienFile);
 		}
 	}
 	return MADCannotFindPlug;
@@ -436,16 +393,16 @@ OSErr PPINTestFile(OSType kindFile, FSSpec *AlienFile)
 
 OSErr PPINIdentifyFile(OSType *type, FSSpecPtr AlienFile)
 {
-	short		i, refNum, temp;
-	OSErr		iErr;
+	short i, temp;
+	if (!type) {
+		return MADParametersErr;
+	}
 	
 	*type = '!!!!';
 	
-	for (i = 0; i < tPlug; i++)
-	{
-		if (CallPPINPlugIns(i, 'TEST', 0, &temp, AlienFile) == noErr)
-		{
-			*type = ThePPINPlug[ i].type;
+	for (i = 0; i < tPlug; i++) {
+		if (CallPPINPlugIns(i, 'TEST', 0, &temp, AlienFile) == noErr) {
+			*type = ThePPINPlug[i].type;
 			return noErr;
 		}
 	}
@@ -463,23 +420,18 @@ void InitPPINMenu(void)
 	
 	sampPlug = instPlug = 0;
 	
-	for(i=0; i< tPlug; i++)
-	{
-		if (ThePPINPlug[ i].mode == 'EXIM' || ThePPINPlug[ i].mode == 'EXPL')
-		{
+	for(i = 0; i< tPlug; i++) {
+		if (ThePPINPlug[i].mode == 'EXIM' || ThePPINPlug[i].mode == 'EXPL') {
 			Str255 pMenuName;
-			GetPStrFromCFString(ThePPINPlug[ i].MenuName, pMenuName);
+			GetPStrFromCFString(ThePPINPlug[i].MenuName, pMenuName);
 			
-			if (ThePPINPlug[ i].isSamp)
-			{
+			if (ThePPINPlug[i].isSamp) {
 				AppendMenu(PPINMenuSample, pMenuName);
-				sampMenuID[ sampPlug] = i;
+				sampMenuID[sampPlug] = i;
 				sampPlug++;
-			}
-			else
-			{
+			} else {
 				AppendMenu(PPINMenuInstrument, pMenuName);
-				instMenuID[ instPlug] = i;
+				instMenuID[instPlug] = i;
 				instPlug++;
 			}
 		}
@@ -501,10 +453,8 @@ OSErr PPINGetPlugName(OSType kindFile, Str255 name)
 {
 	short		i;
 	
-	for (i = 0; i < tPlug; i++)
-	{
-		if (kindFile == ThePPINPlug[i].type)
-		{
+	for (i = 0; i < tPlug; i++) {
+		if (kindFile == ThePPINPlug[i].type) {
 			Str255 pMenuName;
 			GetPStrFromCFString(ThePPINPlug[i].MenuName, pMenuName);
 			
@@ -515,7 +465,7 @@ OSErr PPINGetPlugName(OSType kindFile, Str255 name)
 	return MADCannotFindPlug;
 }
 
-OSErr PPINPlayFile(OSType kindFile, FSSpec *AlienFile)
+static OSErr PPINPlayFile(OSType kindFile, FSSpec *AlienFile)
 {
 	short		i, temp;
 	InstrData		*insData;
@@ -523,17 +473,16 @@ OSErr PPINPlayFile(OSType kindFile, FSSpec *AlienFile)
 	OSErr		err = -1;
 	
 	sampData = (sData**) NewPtrClear(sizeof(sData*) * (long) MAXSAMPLE);
-	if (sampData == NULL) return -1;
+	if (sampData == NULL)
+		return -1;
 	
 	insData = (InstrData*) NewPtrClear(sizeof(sData*) * (long) MAXSAMPLE);
-	if (insData == NULL) return -1;
+	if (insData == NULL)
+		return -1;
 	
-	for (i = 0; i < tPlug; i++)
-	{
-		if (kindFile == ThePPINPlug[ i].type)
-		{
-			if (PPINTestFile(kindFile, AlienFile) == noErr)
-			{
+	for (i = 0; i < tPlug; i++) {
+		if (kindFile == ThePPINPlug[i].type) {
+			if (PPINTestFile(kindFile, AlienFile) == noErr) {
 				temp = -1;
 				err = CallPPINPlugInsOther(i, 'IMPL', &temp, AlienFile, insData, sampData);
 				goto ENDPLAY;
@@ -542,9 +491,8 @@ OSErr PPINPlayFile(OSType kindFile, FSSpec *AlienFile)
 	}
 ENDPLAY:
 	
-	if (err == noErr)
-	{
-#define	NOTE			48
+	if (err == noErr) {
+#define	NOTE 48
 		short		track, samp = insData->what[ NOTE];
 		Channel		*curVoice;
 		Boolean		continueLoop;
@@ -553,20 +501,24 @@ ENDPLAY:
 		track = GetWhichTrackPlay();
 		curVoice = &MADDriver->chan[ track];
 		
-		DoPlayInstruInt2(sampData[ samp], insData, NOTE, -1, 0x00, 0x00, 64, curVoice, 0, 0, 0xFF);
+		DoPlayInstruInt2(sampData[samp], insData, NOTE, -1, 0x00, 0x00, 64, curVoice, 0, 0, 0xFF);
 		
 		SetCursor(&PlayCrsr);
 		
-		while (Button()) {};
+		while (Button()) {
+			
+		};
 		
 		continueLoop = true;
-		while (continueLoop)
-		{
+		while (continueLoop) {
 			GetKeys(km);
 			
-			if (MADDriver->chan[ track].maxPtr <= MADDriver->chan[ track].curPtr || MADDriver->chan[ track].curPtr == NULL) continueLoop = false;
-			if (MADIsPressed((unsigned char*) km, 0x37) && MADIsPressed((unsigned char*) km, 0x2F)) continueLoop = false;
-			if (Button()) continueLoop = false;
+			if (MADDriver->chan[ track].maxPtr <= MADDriver->chan[ track].curPtr || MADDriver->chan[ track].curPtr == NULL)
+				continueLoop = false;
+			if (MADIsPressed((unsigned char*) km, 0x37) && MADIsPressed((unsigned char*) km, 0x2F))
+				continueLoop = false;
+			if (Button())
+				continueLoop = false;
 			
 			DoGlobalNull();
 		}
@@ -575,114 +527,100 @@ ENDPLAY:
 		
 		MADPurgeTrack(MADDriver);
 		
-		for (i = 0; i < insData->numSamples; i++)
-		{
-			if (sampData[ i] != NULL)
-			{
-				if (sampData[ i]->data != NULL) DisposePtr((Ptr) sampData[ i]->data);
-				DisposePtr((Ptr) sampData[ i]);
-				sampData[ i] = NULL;
+		for (i = 0; i < insData->numSamples; i++) {
+			if (sampData[i] != NULL) {
+				if (sampData[ i]->data != NULL)
+					DisposePtr((Ptr)sampData[i]->data);
+				DisposePtr((Ptr)sampData[i]);
+				sampData[i] = NULL;
 			}
 		}
 	}
 	
-	DisposePtr((Ptr) sampData);
-	DisposePtr((Ptr) insData);
+	DisposePtr((Ptr)sampData);
+	DisposePtr((Ptr)insData);
 	
 	return err;
 }
 
-pascal void myCustomEventNAVProc(	NavEventCallbackMessage 	callBackSelector, 
+pascal void myCustomEventNAVProc(NavEventCallbackMessage 	callBackSelector,
 								 NavCBRecPtr 				callBackParms, 
 								 NavCallBackUserData 		callBackUD)
 {
 	OSErr		theErr = noErr;
-	short 		index = 0;
 	FSSpec		spec;
 	
 	//	if (callBackUD != 2) return;
 	
-	switch (callBackSelector)
-	{
+	switch (callBackSelector) {
 		case kNavCBEvent:
-			switch (callBackParms->eventData.eventDataParms.event->what)
-		{
-			case kHighLevelEvent:
-				AEProcessAppleEvent(callBackParms->eventData.eventDataParms.event);
-				break;
-				
-			case nullEvent:
-				DoGlobalNull();
-				
-				if (DoPlayASoundFile == false)
-				{
-					if (ExtractFile(callBackParms, &spec) == noErr)
-					{
-						FInfo		fndrInfo;
-						
-						if (FSpGetFInfo(&spec, &fndrInfo) == noErr)
-						{
-							PPINPlayFile(fndrInfo.fdType, &spec);
+			switch (callBackParms->eventData.eventDataParms.event->what) {
+				case kHighLevelEvent:
+					AEProcessAppleEvent(callBackParms->eventData.eventDataParms.event);
+					break;
+					
+				case nullEvent:
+					DoGlobalNull();
+					
+					if (DoPlayASoundFile == false) {
+						if (ExtractFile(callBackParms, &spec) == noErr) {
+							OSType type = GetOSTypeFromSpecUsingUTI(spec);
+							
+							if (type) {
+								PPINPlayFile(type, &spec);
+							}
 						}
+						
+						DoPlayASoundFile = true;
 					}
+					break;
 					
-					DoPlayASoundFile = true;
-				}
-				break;
-				
-			case updateEvt:
-				if ((WindowPtr)callBackParms->eventData.eventDataParms.event->message == callBackParms->window)
-				{
+				case updateEvt:
+					if ((WindowPtr)callBackParms->eventData.eventDataParms.event->message == callBackParms->window) {
+						
+					} else {
+						EventRecord	*event = callBackParms->eventData.eventDataParms.event;
+						GrafPtr		savedPort;
+						Rect		caRect;
+						
+						GetPort(&savedPort);
+						SetPortWindowPort((WindowPtr)event->message);
+						GetPortBounds(GetWindowPort((WindowPtr)event->message), &caRect);
+						
+						InvalWindowRect((WindowPtr)event->message, &caRect);
+						SetPort(savedPort);
+						
+						DoUpdateEvent(callBackParms->eventData.eventDataParms.event);
+					}
+					break;
 					
-				}
-				else
-				{
-					EventRecord *event = callBackParms->eventData.eventDataParms.event;
-					GrafPtr		savedPort;
-					Rect			caRect;
+				case mouseDown:
+					HandleCustomMouseNAVDown(callBackParms);
+					break;
 					
-					GetPort(&savedPort);
-					SetPortWindowPort((WindowPtr)event->message);
-					GetPortBounds(GetWindowPort((WindowPtr)event->message), &caRect);
-					
-					InvalWindowRect((WindowPtr)event->message, &caRect);
-					SetPort(savedPort);
-					
-					DoUpdateEvent(callBackParms->eventData.eventDataParms.event);
-				}
-				break;
-				
-			case mouseDown:
-				HandleCustomMouseNAVDown(callBackParms);
-				break;
-				
-			default:
-				break;
-		}
+				default:
+					break;
+			}
 			break;
 			
 		case kNavCBSelectEntry:
-			if (PlayWhenClicked == true)
-			{
+			if (PlayWhenClicked == true) {
 				DoPlayASoundFile = false;
 			}
 			break;
 			
 		case kNavCBCustomize:
-		{								
+		{
 			// here are the desired dimensions for our custom area:
 			short neededWidth = callBackParms->customRect.left + kCustomWidth;
 			short neededHeight = callBackParms->customRect.top + kCustomHeight;
 			
 			// check to see if this is the first round of negotiations:
-			if ((callBackParms->customRect.right == 0) && (callBackParms->customRect.bottom == 0))
-			{
+			if ((callBackParms->customRect.right == 0) && (callBackParms->customRect.bottom == 0)) {
 				// it is, so tell NavServices what dimensions we want:
 				callBackParms->customRect.right = neededWidth;
 				callBackParms->customRect.bottom = neededHeight;
-			}
-			else
-			{
+			} else {
 				// we are in the middle of negotiating:
 				if (gLastTryWidth != callBackParms->customRect.right)
 					if (callBackParms->customRect.right < neededWidth)	// is NavServices width too small for us?
@@ -700,16 +638,11 @@ pascal void myCustomEventNAVProc(	NavEventCallbackMessage 	callBackSelector,
 		}
 			
 		case kNavCBAdjustRect:
-			
-			if (callBackParms->context != 0)	// always check to see if the context is correct
-			{
-				short firstItem, itemType;
-				Handle	itemHandle;
-				Rect	itemRect;
+			if (callBackParms->context != 0) {	// always check to see if the context is correct
+				short firstItem;
 				
 				theErr = NavCustomControl(callBackParms->context,kNavCtlGetFirstControlID,&firstItem);
-				if (theErr == noErr)
-				{
+				if (theErr == noErr) {
 					TurnRadio(1 + firstItem, GetDialogFromWindow(callBackParms->window), PlayWhenClicked);
 					TurnRadio(2 + firstItem, GetDialogFromWindow(callBackParms->window), ShowAllFiles);
 				}
@@ -719,12 +652,10 @@ pascal void myCustomEventNAVProc(	NavEventCallbackMessage 	callBackSelector,
 		case kNavCBStart:
 		{
 			// add the rest of the custom controls via the DITL resource list:
-			gDitlList = GetResource('DITL',kControlListID);
+			gDitlList = GetResource('DITL', kControlListID);
 			
 			if ((gDitlList != NULL)&&(ResError() == noErr))
-				if ((theErr = NavCustomControl(callBackParms->context,kNavCtlAddControlList,gDitlList)) == noErr)
-				{
-					Str255	str;
+				if ((theErr = NavCustomControl(callBackParms->context,kNavCtlAddControlList,gDitlList)) == noErr) {
 					
 					theErr = NavCustomControl(callBackParms->context,kNavCtlGetFirstControlID,&gfirstItem);	// ask NavServices for our first control ID
 					
@@ -741,28 +672,25 @@ pascal void myCustomEventNAVProc(	NavEventCallbackMessage 	callBackSelector,
 		case kNavCBTerminate:
 			// release our appended popup menu:
 			if (gDitlList)
-				ReleaseResource(gDitlList);	
+				ReleaseResource(gDitlList);
 			break;
 	}
 }
 
 pascal Boolean MyInsCustomFilter(AEDesc *theItem, void *info, NavCallBackUserData callBackUD, NavFilterModes filterMode)
 {
-	Boolean		ready = false;
-	short		i;
-	FSSpec		spec;
-	OSType		type;
-	char		tempC[ 5];
-	FInfo		fndrInfo;
+	short	i;
+	FSRef	spec;
+	OSType	type;
 	
-	if (MyAEGetDescData (theItem, NULL, &spec, sizeof (FSSpec ), NULL ) == noErr)
-	{
-		if (FSpGetFInfo(&spec, &fndrInfo) == noErr)
-		{
-			if (ShowAllFiles) return true;
-			else
-			{
-				for (i = 1; i <= tPlug; i++) if (fndrInfo.fdType == ThePPINPlug[ i].type) return true;
+	if (MyAEGetDescData(theItem, NULL, &spec, sizeof(FSRef), NULL ) == noErr) {
+		if ((type = GetOSTypeFromRefUsingUTI(spec))) {
+			if (ShowAllFiles) {
+				return true;
+			} else {
+				for (i = 1; i <= tPlug; i++)
+					if (type == ThePPINPlug[i].type)
+						return true;
 				
 				return false;
 			}
@@ -780,16 +708,12 @@ pascal Boolean MyInsCustomFilter(AEDesc *theItem, void *info, NavCallBackUserDat
 void HandleCustomMouseNAVDown(NavCBRecPtr callBackParms)
 {
 	OSErr			theErr = noErr;
-	ControlHandle	whichControl;				
-	Point 			where = callBackParms->eventData.eventDataParms.event->where;	
-	short			theItem = 0;	
+	ControlHandle	whichControl;
+	Point 			where = callBackParms->eventData.eventDataParms.event->where;
+	short			theItem = 0;
 	UInt16 			firstItem = 0;
 	short			realItem = 0;
 	short			partCode = 0;
-	short			itemType;
-	Handle			itemHandle;
-	Rect			itemRect;
-	FSSpec			spec;
 	AEDesc 			selectionList;
 	
 	GlobalToLocal(&where);
@@ -797,14 +721,12 @@ void HandleCustomMouseNAVDown(NavCBRecPtr callBackParms)
 	partCode = FindControl(where,callBackParms->window,&whichControl);	// get the control itself
 	
 	// ask NavServices for the first custom control's ID:
-	if (callBackParms->context != 0)	// always check to see if the context is correct
-	{
-		theErr = NavCustomControl(callBackParms->context,kNavCtlGetFirstControlID,&firstItem);	
-		realItem = theItem - firstItem + 1;		// map it to our DITL constants:	
+	if (callBackParms->context != 0) {	// always check to see if the context is correct
+		theErr = NavCustomControl(callBackParms->context,kNavCtlGetFirstControlID,&firstItem);
+		realItem = theItem - firstItem + 1;		// map it to our DITL constants:
 	}
 	
-	switch (realItem)
-	{
+	switch (realItem) {
 		case 1:
 			InverseRadio(firstItem + 1, GetDialogFromWindow(callBackParms->window));
 			PlayWhenClicked = !PlayWhenClicked;
@@ -823,7 +745,6 @@ void HandleCustomMouseNAVDown(NavCBRecPtr callBackParms)
 static void CFStringToOSType(CFStringRef CFstri, OSType *theOSType)
 {
 	char * thecOSType = (char*)CFStringGetCStringPtr(CFstri, kCFStringEncodingMacRoman);
-	
 	*theOSType = Ptr2OSType(thecOSType);
 }
 
@@ -831,8 +752,7 @@ static const CFStringRef kMadPlugIsSampleKey = CFSTR("MADPlugIsSample");
 
 static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *ThePPINPlugA, CFBundleRef tempBundle)
 {
-	if (tPlug > MAXINSTRPLUG) 
-	{
+	if (tPlug > MAXINSTRPLUG) {
 		MyDebugStr(__LINE__, __FILE__, "Too many plugs");
 		return;
 	}
@@ -848,25 +768,22 @@ static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *TheP
 	InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 	if (InfoDictionaryType == stringtype) {
 		ThePPINPlugA->AuthorString = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
-	}
-	else goto badplug;
+	} else
+		goto badplug;
 	
 	
 	OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugMenuNameKey);
 	InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 	if (InfoDictionaryType == stringtype) {
 		ThePPINPlugA->MenuName = CFStringCreateCopy(kCFAllocatorDefault, (CFStringRef)OpaqueDictionaryType);
-	}
-	else goto badplug2;
-	
+	} else
+		goto badplug2;
 	
 	OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugUTITypesKey);
 	InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 	if (InfoDictionaryType == arraytype) {
 		ThePPINPlugA->UTITypes = CFArrayCreateCopy(kCFAllocatorDefault, (CFArrayRef)OpaqueDictionaryType);
-	}		
-	else if(InfoDictionaryType == stringtype)
-	{
+	} else if (InfoDictionaryType == stringtype) {
 		CFMutableArrayRef UTIMutableArray = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
 		CFArrayAppendValue(UTIMutableArray, (CFStringRef)InfoDictionaryType);
 		ThePPINPlugA->UTITypes = CFArrayCreateCopy(kCFAllocatorDefault, UTIMutableArray);
@@ -878,51 +795,43 @@ static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *TheP
 	InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 	if (InfoDictionaryType == CFBooleanGetTypeID()) {
 		ThePPINPlugA->isSamp = CFBooleanGetValue((CFBooleanRef)OpaqueDictionaryType);
-	}
-	else if(InfoDictionaryType == numbertype)
-	{
+	} else if (InfoDictionaryType == numbertype) {
 		char theplugType;
 		CFNumberGetValue((CFNumberRef)OpaqueDictionaryType, kCFNumberCharType, &theplugType);
-		if (theplugType == 1) {
+		if (theplugType != 0) {
 			ThePPINPlugA->isSamp = TRUE;
-		}
-		else {
+		} else {
 			ThePPINPlugA->isSamp = FALSE;
 		}
 		
-	}
-	else if(InfoDictionaryType == stringtype)
-	{
+	} else if (InfoDictionaryType == stringtype) {
 		CFMutableStringRef tempCFStr = CFStringCreateMutableCopy(kCFAllocatorDefault, 25, (CFStringRef)InfoDictionaryType);
 		CFLocaleRef theLoc = CFLocaleCopyCurrent();
 		CFStringLowercase(tempCFStr, theLoc);
 		if (CFEqual(tempCFStr, CFSTR("yes")) || CFEqual(tempCFStr, CFSTR("1"))) {
 			ThePPINPlugA->isSamp = TRUE;
-		}
-		else {
+		} else {
 			ThePPINPlugA->isSamp = FALSE;
 		}
 		CFRelease(tempCFStr);
 		CFRelease(theLoc);
-	}
-	else goto badplug4;
+	} else
+		goto badplug4;
 	
 	
 	OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugTypeKey);
 	InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 	if (InfoDictionaryType == stringtype) {
 		CFStringToOSType((CFStringRef)OpaqueDictionaryType, &ThePPINPlugA->type);
-	}
-	else goto badplug4;
-	
-	
+	} else
+		goto badplug4;
 	
 	OpaqueDictionaryType = CFBundleGetValueForInfoDictionaryKey(tempBundle, kMadPlugModeKey);
 	InfoDictionaryType = CFGetTypeID(OpaqueDictionaryType);
 	if (InfoDictionaryType == stringtype) {
 		CFStringToOSType((CFStringRef)OpaqueDictionaryType, &ThePPINPlugA->mode);
-	}
-	else goto badplug4;
+	} else
+		goto badplug4;
 	
 	ThePPINPlugA->xxxx = tempPPINPlug;
 	ThePPINPlugA->file = tempBundle;

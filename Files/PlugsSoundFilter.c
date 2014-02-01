@@ -84,7 +84,6 @@ short PressSampleMenu(Rect	*PopUpRect)
 {
 	long	mresult;
 	Point	Zone;
-	short	i;
 
 	InsertMenu(SampleMenu, hierMenu);
 	

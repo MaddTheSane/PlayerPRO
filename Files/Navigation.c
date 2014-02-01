@@ -59,8 +59,6 @@ static Boolean		gEraseAdd, gEraseAddCurrent, gUpdateCurrentFile;
 Boolean QTTestConversion(FSSpec *file, OSType fileType);
 
 CFArrayRef CopySupportedMusicUTIs();
-OSType GetOSTypeFromSpecUsingUTI(FSSpec theSpec);
-OSType GetOSTypeFromRefUsingUTI(FSRef theSpec);
 
 OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, ByteCount maximumSize, ByteCount *actualSize)
 {
@@ -85,6 +83,7 @@ OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, 
 	return noErr;
 }
 
+#if 0
 static OSErr ExtractFiles(NavCBRecPtr callBackParms, FSSpecArrayPtr *finalSpec, long *totCount)
 {
 	OSErr			theErr = -1;
@@ -121,6 +120,7 @@ static OSErr ExtractFiles(NavCBRecPtr callBackParms, FSSpecArrayPtr *finalSpec, 
 	
 	return theErr;
 }
+#endif
 
 
 OSErr ExtractFile(NavCBRecPtr callBackParms, FSSpec	*finalSpec)
