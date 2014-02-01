@@ -798,6 +798,48 @@
 				</array>
 			</dict>
 		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PlayerPRO Equalizer</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.quadmation.playerpro.equalizer</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>EQ  </string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ppeq</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.data</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PlayerPRO Tune file</string>
+			<key>UTTypeIdentifier</key>
+			<string>com.quadmation.playerpro.tuning</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>tuni</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>pptune</string>
+				</array>
+			</dict>
+		</dict>
 	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
