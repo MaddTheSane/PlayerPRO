@@ -2,18 +2,18 @@ Please note that this code is still in Beta, in that many parts of the code
 doesn't work as expected or desired.
 
 * There isn't a Window menu.
-* The localization Rez files and the app-wide Rez files have multiply defined
-    resources.
 * The localization Rez files are outdated and thus disabled.
-* The VST and Visual Plug-in architectures for Mac OS X needs to be re-written.
 * Hardware MIDI support needs to use CoreMIDI on OS X.
 * Printing needs to be re-written.
 * The windows don't support a scroll wheel.  Need to look into why.
-* Determine if a file is openable by determining its UTI, not its old Mac OS 9
-    filetype. Mac OS X doesn't write a file's filetype based on extension on OS 
-    X.
 * The banner on the source files needs to be updated.
-* Linux support is currently a stub.
-* Make a Linux Makefile, maybe by using a configure script?
+* the code can probably be done in a cleaner way via C++ instead of 
+    plain C.
 
 Also note that there are TODOs scattered across the source files.
+
+The following todos will be done in the main branch:
+
+* The VST and Visual Plug-in architectures for Mac OS X needs to be re-written.
+* Linux support is currently a stub.
+* Make a Linux Makefile, maybe by using a configure script?
