@@ -133,7 +133,6 @@ short PressPPDGMenu(Rect *PopUpRect)
 {
 	long	mresult;
 	Point	Zone;
-	short	i;
 	
 	InsertMenu(PPDGMenu, hierMenu);
 	
