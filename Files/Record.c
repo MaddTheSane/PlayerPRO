@@ -1,11 +1,12 @@
+#include <math.h>
+#include <Carbon/Carbon.h>
+#include <QuickTime/QuickTime.h>
 #include "Shuddup.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include <Carbon/Carbon.h>
 #include "Undo.h"
-#include <math.h>
 #include "PPPlug.h"
-#include <QuickTime/QuickTime.h>
+#include "Navigation.h"
 
 /*void 	SaveMODAPPL(short APPLType, short fRefNum);
 //pascal Boolean MyFilterPro();
@@ -20,11 +21,11 @@ OSErr	OpenInstrumentsList(FSSpec *file);
 void	ConvertInstrumentMode(sData	*curData, short menuItem);
 void ConvertInstrument(register	Byte	*tempPtr,	register long sSize);*/
 
-void ConvertInstrumentOut16(register	short	*tempPtr,	register long sSize);
+void ConvertInstrumentOut16(register short *tempPtr, register long sSize);
 
-extern	Boolean			PatchSave;
-extern	Boolean			PianoRecording, PianoRecordingShift, OscilloMicrophone, SpectrumMicrophone;
-extern	Cursor			PlayCrsr;
+extern Boolean	PatchSave;
+extern Boolean	PianoRecording, PianoRecordingShift, OscilloMicrophone, SpectrumMicrophone;
+extern Cursor	PlayCrsr;
 
 void ActiveControl(short id, DialogPtr aDia)
 {
@@ -33,7 +34,7 @@ void ActiveControl(short id, DialogPtr aDia)
 	Handle	itemHandle;
 	
 	GetDialogItem (aDia, id, &itemType, &itemHandle, &itemRect);
-	HiliteControl((ControlHandle) itemHandle, 0);
+	HiliteControl((ControlHandle)itemHandle, 0);
 }
 
 void InactiveControl(short id, DialogPtr aDia)
@@ -66,18 +67,15 @@ void GetSampInstPPIN(short *samp, short *ins);
 
 OSErr NSoundQualityExportSnd(short ins, short samp, OSType *fileType, Str255 sName)
 {
-	DialogPtr		aDialog;
-	short			itemHit, itemType, i;
-	char			cstr[ 200];
-	Str255			aStr, theStr;
-	Rect			tempRect, itemRect;
-	Point			myPt;
-	Handle			itemHandle;
-	long			mresult, temp, xL, x;
-	Ptr				bufferSin, bufferSout;
-	sData			*curData;
-	short			sampNo, instNo;
-	GrafPtr			thePort;
+	DialogPtr	aDialog;
+	short		itemHit, itemType, i;
+	char		cstr[200];
+	Str255		aStr;
+	Rect		itemRect;
+	Handle		itemHandle;
+	sData		*curData;
+	short		sampNo, instNo;
+	GrafPtr		thePort;
 	
 	GetPort(&thePort);
 	
@@ -113,8 +111,8 @@ OSErr NSoundQualityExportSnd(short ins, short samp, OSType *fileType, Str255 sNa
 		SetDText(aDialog, 4, "\pSample");
 	}
 	for (i = 0; i < strlen(cstr); i++) 
-		if (cstr[ i] == ':') 
-			cstr[ i] = '-';
+		if (cstr[i] == ':')
+			cstr[i] = '-';
 	
 	MyC2PStr(cstr);
 	SetDText(aDialog, 9, (unsigned char*) cstr);
@@ -136,7 +134,8 @@ OSErr NSoundQualityExportSnd(short ins, short samp, OSType *fileType, Str255 sNa
 		*fileType = thePrefs.SoundTypeIns;
 	else
 		*fileType = thePrefs.SoundTypeSamp;
-	//	OSType2Str(*fileType, aStr);
+	
+	//OSType2Str(*fileType, aStr);
 	
 	if (PPINGetPlugName(*fileType, aStr) == noErr)
 		SetDText(aDialog, 6, aStr);
@@ -152,21 +151,18 @@ OSErr NSoundQualityExportSnd(short ins, short samp, OSType *fileType, Str255 sNa
 REGODIA:
 	
 	do {
-		//ModalDialog(MyDlgFilterDesc, &itemHit);
 		MyModalDialog(aDialog, &itemHit);
 		
-		switch (itemHit)
-		{
+		switch (itemHit) {
 			case 7:
 			{
 				OSType	tempOS;
 				
 				GetDialogItem(aDialog, 7, &itemType, &itemHandle, &itemRect);
 				tempOS = PressPPINMenu(&itemRect, *fileType, samp, aStr);
-				if (tempOS != '\?\?\?\?')
-				{
+				if (tempOS != '\?\?\?\?') {
 					*fileType = tempOS;
-					//	OSType2Str(*fileType, aStr);
+					//OSType2Str(*fileType, aStr);
 					SetDText(aDialog, 6, aStr);
 				}
 			}
@@ -183,15 +179,12 @@ REGODIA:
 			goto REGODIA;
 		}
 		
-		if(thePrefs.addExtension)
-		{
+		if(thePrefs.addExtension) {
 			Str255	cStr;
 			
-			for (i = sName[ 0]; i > 0 ; i--)
-			{
-				if (sName[ i] == '.')
-				{
-					sName[ 0] = i-1;
+			for (i = sName[0]; i > 0 ; i--) {
+				if (sName[i] == '.') {
+					sName[0] = i - 1;
 					i = 0;
 				}
 			}
@@ -201,8 +194,7 @@ REGODIA:
 			pStrcat(sName, cStr);
 		}
 		
-		if (PPINAvailablePlug(*fileType, NULL) != noErr)
-		{
+		if (PPINAvailablePlug(*fileType, NULL) != noErr) {
 			Erreur(86, 86);
 			goto REGODIA;
 		}
@@ -260,10 +252,9 @@ void Convert8to16(Ptr srcPtr, Ptr destPtr, long size)
 {
 	long 	i;
 	
-	for (i = size -1; i >= 0; i --)
-	{
-		destPtr[ i*2] = srcPtr[ i];
-		destPtr[ i*2 + 1] = 0;
+	for (i = size - 1; i >= 0; i --) {
+		destPtr[i * 2] = srcPtr[i];
+		destPtr[i * 2 + 1] = 0;
 	}
 }
 
@@ -272,13 +263,12 @@ void Convert16to8(Ptr srcPtr, Ptr destPtr, long size)
 	long 	i;
 	size /= 2;
 	
-	for (i = 0; i < size; i ++)
-	{
-		destPtr[ i] = srcPtr[i*2];
+	for (i = 0; i < size; i ++) {
+		destPtr[i] = srcPtr[i * 2];
 	}
 }
 
-void ConvertInstrumentMode(sData	*curData, short menuItem)
+void ConvertInstrumentMode(sData *curData, short menuItem)
 {
 	long	i;
 	Ptr		aNewPtr;
@@ -291,8 +281,7 @@ void ConvertInstrumentMode(sData	*curData, short menuItem)
 		curData->loopBeg /=2;
 		curData->loopSize /=2;
 		
-		switch (menuItem)
-		{
+		switch (menuItem) {
 			case 5:	// Delete Left
 				if (curData->amp == 8) {
 					for (i = 0 ; i < curData->size; i+=2) {
@@ -302,7 +291,7 @@ void ConvertInstrumentMode(sData	*curData, short menuItem)
 					short *short16out = (short*) aNewPtr, *short16in = (short*) curData->data;
 					
 					for (i = 0 ; i < curData->size/2; i+=2) {
-						short16out[i / 2] = (long) short16in[i];
+						short16out[i / 2] = (long)short16in[i];
 					}
 				}
 				break;
@@ -310,7 +299,7 @@ void ConvertInstrumentMode(sData	*curData, short menuItem)
 			case 4: // Delete Right
 				if (curData->amp == 8) {
 					for (i = 0 ; i < curData->size; i+=2) {
-						aNewPtr[ i / 2] = (long) curData->data[ i + 1];
+						aNewPtr[i / 2] = (long) curData->data[i + 1];
 					}
 				} else {
 					short *short16out = (short*) aNewPtr, *short16in = (short*) curData->data;
@@ -324,7 +313,6 @@ void ConvertInstrumentMode(sData	*curData, short menuItem)
 			case 6:	// Add
 				if (curData->amp == 8) {
 					long 	templ;
-					
 					
 					for (i = 0 ; i < curData->size; i+=2) {
 						templ = ((long) curData->data[ i] + (long) curData->data[ i + 1]);
@@ -342,11 +330,14 @@ void ConvertInstrumentMode(sData	*curData, short menuItem)
 					long	templ;
 					
 					for (i = 0 ; i < curData->size/2; i+=2) {
-						templ = ((long) short16in[ i] + (long) short16in[ i + 1]);
+						templ = ((long) short16in[i] + (long) short16in[i + 1]);
 						
-						if (templ > valP) short16out[ i / 2] = valP;
-						else if (templ < valN) short16out[ i / 2] = valN;
-						else short16out[ i / 2] = templ;
+						if (templ > valP)
+							short16out[i / 2] = valP;
+						else if (templ < valN)
+							short16out[i / 2] = valN;
+						else
+							short16out[i / 2] = templ;
 					}
 				}
 				break;
@@ -354,14 +345,13 @@ void ConvertInstrumentMode(sData	*curData, short menuItem)
 			default:
 				if (curData->amp == 8) {
 					for (i = 0 ; i < curData->size; i+=2) {
-						aNewPtr[i / 2] = ((long) curData->data[ i] + (long) curData->data[ i + 1]) / 2L;
+						aNewPtr[i / 2] = ((long) curData->data[i] + (long) curData->data[i + 1]) / 2L;
 					}
 				} else {
 					short *short16out = (short*) aNewPtr, *short16in = (short*) curData->data;
 					
-					for (i = 0 ; i < curData->size/2; i+=2)
-					{
-						short16out[i / 2] = ((long) short16in[ i] + (long) short16in[ i + 1]) / 2L;
+					for (i = 0 ; i < curData->size/2; i+=2) {
+						short16out[i / 2] = ((long) short16in[i] + (long)short16in[i + 1]) / 2L;
 					}
 				}
 				break;
@@ -405,13 +395,11 @@ void ConvertInstrumentMode(sData	*curData, short menuItem)
 
 void ConvertInstrumentAmpli(sData *curData, short newAmpli)
 {
-	long	i;
 	Ptr		aNewPtr;
 	
 	if (curData->amp == 8) {
-		switch (newAmpli)
-		{
-			case 16:			
+		switch (newAmpli) {
+			case 16:
 				aNewPtr = MyNewPtr(curData->size*2L);
 				if (aNewPtr) {
 					Convert8to16(curData->data, aNewPtr, curData->size);
@@ -423,8 +411,7 @@ void ConvertInstrumentAmpli(sData *curData, short newAmpli)
 					if(curData->data != NULL)
 						MyDisposePtr(&curData->data);
 					curData->data = aNewPtr;
-				}
-				else
+				} else
 					Erreur(63, MemError());
 				break;
 				
@@ -436,8 +423,7 @@ void ConvertInstrumentAmpli(sData *curData, short newAmpli)
 				break;
 		}
 	} else if (curData->amp == 16) {
-		switch (newAmpli)
-		{
+		switch (newAmpli) {
 			case 8:
 				Convert16to8(curData->data, curData->data, curData->size);
 				
@@ -462,19 +448,12 @@ void ConvertInstrumentAmpli(sData *curData, short newAmpli)
 	//ResetSelectionSample(whichInstru);
 }
 
-/*static inline void CopyInstruInFile(Ptr theSource, Ptr theDest, long	theSize)
-{
-	BlockMoveData(theSource, theDest, theSize);
-}*/
-
 void SetUpPartition(short newVal)
 {
-	short					i, x, z;
-	long					OffSetToSample,sndSize, fileSize, lByteCnt, numPat;
-	Ptr						tempPtr;
-	Boolean					MusiqueOn = false;
-	Cmd			 			*aCmd, *aCmdSource;
-	PatData					*theNewPartition;
+	short	i, x, z;
+	Boolean	MusiqueOn = false;
+	Cmd		*aCmd, *aCmdSource;
+	PatData	*theNewPartition;
 	
 	curMusic->hasChanged = true;
 	if (MADDriver->Reading == true)
@@ -493,23 +472,24 @@ void SetUpPartition(short newVal)
 		for (x = 0; x < curMusic->partition[ i]->header.size; x++) {
 			for (z = 0; z < curMusic->header->numChn; z++) {
 				if (z < newVal) {
-					aCmd =  &(theNewPartition->Cmds[ (curMusic->partition[ i]->header.size * z) + x]);
-					aCmdSource = GetMADCommand(x, z, curMusic->partition[ i]);
+					aCmd =  &(theNewPartition->Cmds[(curMusic->partition[i]->header.size * z) + x]);
+					aCmdSource = GetMADCommand(x, z, curMusic->partition[i]);
 					
 					*aCmd = *aCmdSource;
 				}
 			}
 			
 			for (z = curMusic->header->numChn; z < newVal; z++) {
-				aCmd =  &(theNewPartition->Cmds[ (curMusic->partition[ i]->header.size * z) + x]);
+				aCmd =  &(theNewPartition->Cmds[(curMusic->partition[i]->header.size * z) + x]);
 				MADKillCmd(aCmd);
 			}
 		}
-		MyDisposePtr((Ptr*) &curMusic->partition[ i]);
-		curMusic->partition[ i] = theNewPartition;
+		MyDisposePtr((Ptr*)&curMusic->partition[i]);
+		curMusic->partition[i] = theNewPartition;
 	}
 	
-	if (MemError()) MyDebugStr(__LINE__, __FILE__, "Error in SetUp Partition...");
+	if (MemError())
+		MyDebugStr(__LINE__, __FILE__, "Error in SetUp Partition...");
 	
 	curMusic->header->numChn = newVal;
 	
@@ -519,27 +499,25 @@ void SetUpPartition(short newVal)
 
 //#include "CTBUtilities.h"
 
-static		Boolean 		Append;
-static		short			base;
-static		short			Quality;
-static		short			Mode;
-static		Str255			instruNom;
+static Boolean	Append;
+static short	base;
+static Str255	instruNom;
 
 void GetInstruName(short theNo, Ptr theName)
 {
 	short	i;
 	
 	theName[32] = 0;
-	for (i=0; i<32; i++) {
+	for (i = 0; i < 32; i++) {
 		theName[i] = curMusic->fid[theNo].name[i];
 	}
 }
 
 void SetInstruName(short theNo, Str255 theNewName)
 {
-	short	i;
+	short i;
 	
-	for (i=0; i<32; i++) {
+	for (i = 0; i < 32; i++) {
 		if (i < theNewName[0])
 			curMusic->fid[theNo].name[i] = theNewName[i+1];
 		else
@@ -549,15 +527,15 @@ void SetInstruName(short theNo, Str255 theNewName)
 
 void SetSampName(short	ins, short samp, Str255 theNewName)
 {
-	short	i;
-	sData	*curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
+	short i;
+	sData *curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
 	
 	if (samp >= curMusic->fid[ ins].numSamples)
 		return;
 	
-	for(i=0; i<32; i++) {
+	for (i = 0; i < 32; i++) {
 		if (i < theNewName[ 0])
-			curData->name[i] = theNewName[i+1];
+			curData->name[i] = theNewName[i + 1];
 		else
 			curData->name[i] = '\0';
 	}
@@ -567,9 +545,6 @@ void SetSampName(short	ins, short samp, Str255 theNewName)
 pascal Boolean MyFilterPro(DialogPtr theDialog, EventRecord *theEventI, short *itemHit) 
 { 
 	Handle	theDITL;
-	Handle	itemHandle;
-	short	itemType, temp, tFont, tSize;
-	Rect	itemRect;
 	Str255	theString;
 	
 	if (theEventI->what == 8) {
@@ -592,7 +567,7 @@ pascal Boolean MyFilterPro(DialogPtr theDialog, EventRecord *theEventI, short *i
 		}
 	} else if (theEventI->what == keyDown) {
 		theDialog = GetDialogFromWindow(FrontWindow());
-		GetDText(theDialog, base + 1, (StringPtr) &instruNom);
+		GetDText(theDialog, base + 1, (StringPtr)&instruNom);
 	}
 	
 	return false;
@@ -600,7 +575,6 @@ pascal Boolean MyFilterPro(DialogPtr theDialog, EventRecord *theEventI, short *i
 
 Handle DoExp1to3(Handle sound, unsigned long numSampleFrames)
 {
-	long	i;
 	Ptr		inState, outState;
 	Handle	outBuffer;
 	
@@ -630,7 +604,6 @@ Handle DoExp1to3(Handle sound, unsigned long numSampleFrames)
 
 Handle DoExp1to6(Handle sound, unsigned long numSampleFrames)
 {
-	long	i;
 	Ptr		inState, outState;
 	Handle	outBuffer;
 	
@@ -658,35 +631,36 @@ Handle DoExp1to6(Handle sound, unsigned long numSampleFrames)
 	return sound;
 }
 
-/*Handle NAIFFtoSnd(Handle sound, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate)
+#if 0
+Handle NAIFFtoSnd(Handle sound, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate)
 {
-long				i, SizeH, numSampleFrames, StartId, numChannels;
-ContainerChunk		*CC;
-ChunkHeader			*CH;
-ExtCommonChunk		*CommC;
-SoundDataChunk		*SData;
-MarkerChunk			*marker;
-Marker				*mm;
-unsigned long		theFixed;
-Boolean				Compression = false;
-ID					compType;
-
+	long				i, SizeH, numSampleFrames, StartId, numChannels;
+	ContainerChunk		*CC;
+	ChunkHeader			*CH;
+	ExtCommonChunk		*CommC;
+	SoundDataChunk		*SData;
+	MarkerChunk			*marker;
+	Marker				*mm;
+	unsigned long		theFixed;
+	Boolean				Compression = false;
+	ID					compType;
+	
 	CC = (ContainerChunk*) *sound;
-
+	
 	*loopStart = *loopEnd = 0;
 	*sampleSize = 8;
 	*rate = rate22khz;
 	numChannels = 1;
-
+	
 	if (CC->formType == AIFCID) Compression = true;
 	else if (CC->formType == AIFFID) Compression = false;
-
+	
 	for (i = sizeof(ContainerChunk); i < CC->ckSize;)
 	{
 		CH = (ChunkHeader*) (*sound + i);
 		if (CH->ckID == CommonID)
 		{
-			CommC = (ExtCommonChunk*) CH;			
+			CommC = (ExtCommonChunk*) CH;
 			numChannels = CommC->numChannels;
 			numSampleFrames = CommC->numSampleFrames;
 			compType = CommC->compressionType;
@@ -694,7 +668,7 @@ ID					compType;
 			{
 				struct _extended80		*too;
 				
-				too = (struct _extended80* ) &CommC->sampleRate;
+				too = (struct _extended80*) &CommC->sampleRate;
 				
 				*rate = (unsigned short) too->man[ 0];
 				*rate >>= (15 - (too->exp - 0x3FFF));
@@ -703,7 +677,7 @@ ID					compType;
 			
 			*sampleSize = CommC->sampleSize;
 			if (*sampleSize == 16) numSampleFrames *= 2;
-
+			
 		}
 		else if (CH->ckID == SoundDataID)
 		{
@@ -732,7 +706,7 @@ ID					compType;
 		i += CH->ckSize;
 		i += 8;
 	}
-
+	
 	StartId += 16;  		// Size of the SoundDataChunk beginning
 	
 	SizeH = GetHandleSize(sound);
@@ -765,16 +739,16 @@ ID					compType;
 				numSampleFrames *= 2;
 				sound = DoExp1to3(sound, numSampleFrames);
 				numSampleFrames *= 3;
-			break;
-			
+				break;
+				
 			case MACE6Type:
 				sound = DoExp1to6(sound, numSampleFrames);
 				numSampleFrames *= 6;
-			break;
-			
+				break;
+				
 			default:
 				Erreur(7, (OSErr) compType);
-			break;
+				break;
 		}
 	}
 	else
@@ -792,7 +766,7 @@ ID					compType;
 	
 	return(sound);
 }
- */
+#endif
 
 Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, Boolean *stereo)
 {
@@ -803,11 +777,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 	SoundHeaderPtr 	header;
 	CmpSoundHeader	*CmpHeader;
 	ExtSoundHeader	*ExtHeader;
-	SndCommand 		cmd;
-	OSErr 			result;
-	long			i,x, numFrames;
-	Boolean			change = false;
-	Str255			aStr;
+	int				i;
 	
 	if (!sound) MyDebugStr(__LINE__, __FILE__, "NSndToHandle");
 	
@@ -824,34 +794,32 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 	soundFormat = *(short*)soundPtr;
 	
 	MOT16(&soundFormat);
-	switch (soundFormat)
-	{
+	switch (soundFormat) {
 		case 1:						// format 1 sound.
 			// look inside the format 1 resource and deduce offsets.
-			numSynths = ((short*)soundPtr)[1];					// get # synths. 
+			numSynths = ((short*)soundPtr)[1];					// get # synths.
 			numCmds = *(short*)(soundPtr+4+numSynths*6);		// get # commands.
 			break;
 			
-		case 2:						// format 2 sound. 
-			numSynths = 0;			// format 2 sounds have no synth's. 
+		case 2:						// format 2 sound.
+			numSynths = 0;			// format 2 sounds have no synth's.
 			numCmds = ((short*)soundPtr)[2];
 			break;
 			
 		default:					// jack says, what about 12? or 6?
 			MyDebugStr(__LINE__, __FILE__, " NSndToHandle... Burkk");
 			break;
-	} 
+	}
 	
 	// compute address of sound header.
 	offset = 6 + 6*numSynths + 8*numCmds;
-	header = (SoundHeaderPtr) (*sound + offset);
+	header = (SoundHeaderPtr)(*sound + offset);
 	
-	switch (header->encode)
-	{
+	switch (header->encode) {
 		case cmpSH:
 			CmpHeader = (CmpSoundHeader*) header;
 			CompressID = CmpHeader->compressionID;
-			numChannels = CmpHeader->numChannels;			
+			numChannels = CmpHeader->numChannels;
 			
 			*loopStart = CmpHeader->loopStart;
 			*loopEnd = CmpHeader->loopEnd;
@@ -876,8 +844,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 			memmove(*sound, CmpHeader->sampleArea, MusSize);
 			HUnlock(sound);
 			
-			switch (CompressID )
-		{
+			switch (CompressID) {
 			case threeToOne:
 				MusSize *= 2;
 				sound = DoExp1to3(sound, MusSize);
@@ -890,7 +857,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 				break;
 				
 			default:
-				Erreur(7, (OSErr) CompressID);
+				Erreur(7, (OSErr)CompressID);
 				break;
 		}
 			
@@ -929,19 +896,19 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 			}
 			
 			HLock(sound);
-			if (numChannels == 1) 
+			if (numChannels == 1)
 				memmove(*sound, ExtHeader->sampleArea, MusSize);
 			else if (numChannels == 2) {
 				memmove(*sound, ExtHeader->sampleArea, MusSize);
 			} else {
 				if (*sampleSize == 8) {
 					for (i = 0; i < MusSize; i ++) {
-						(*sound)[ i] = ExtHeader->sampleArea[ i * numChannels];
+						(*sound)[i] = ExtHeader->sampleArea[i * numChannels];
 					}
 				} else {
 					MusSize /= 2;
 					for (i = 0; i < MusSize; i ++) {
-						((short*) (*sound))[ i] = ((short*) ExtHeader->sampleArea)[ i * numChannels];
+						((short*)(*sound))[i] = ((short*) ExtHeader->sampleArea)[i * numChannels];
 					}
 					MusSize *= 2;
 				}
@@ -983,18 +950,13 @@ static long RecordCounter = 0;
 
 void RecordSample()
 {
-	short			itemType,i,fRefNum, ins, samp, temp, sS, qual, lastNo;
-	long			inOutBytes, iL, OffSetToSample, lS, lE;
-	Handle			newSound;
-	Rect			itemRect;
-	Str255			theString;
-	OSErr			iErr;
-	Point			where = { 50, 50};
-	Boolean			Info;
-	GrafPtr			myPort;
-	ModalFilterUPP	MyFilterProDesc;
-	Ptr				tempPtr;
-	sData			*curData;
+	short	ins, samp, sS;
+	long	inOutBytes, lS, lE;
+	Handle	newSound;
+	Str255	theString;
+	OSErr	iErr;
+	GrafPtr	myPort;
+	Ptr		tempPtr;
 	
 	UpdateALLWindow();
 	
@@ -1010,8 +972,8 @@ void RecordSample()
 RESTART:
 	
 	RecordCounter++;
-	NTStr(2, (short)RecordCounter, (Ptr)&theString);
-	MyC2PStr((Ptr) theString);
+	NTStr(2, RecordCounter, (Ptr)&theString);
+	MyC2PStr((Ptr)theString);
 	
 	pStrcpy(instruNom, "\pRecording ");
 	pStrcat(instruNom, theString);
@@ -1024,7 +986,8 @@ RESTART:
 	MADPurgeTrack(MADDriver);
 	iErr = ActiveSoundInput(true, &newSound, instruNom);
 	
-	if (SpectrumMicrophone == false && OscilloMicrophone == false) MicroOff();
+	if (SpectrumMicrophone == false && OscilloMicrophone == false)
+		MicroOff();
 	
 	if (iErr == noErr || iErr == -999) {
 		unsigned long	rate;
@@ -1040,19 +1003,19 @@ RESTART:
 		inOutBytes = GetHandleSize(newSound);
 		
 		if (sS == 8)
-			ConvertInstrument((Byte*) *newSound, inOutBytes);
+			ConvertInstrument((Byte*)*newSound, inOutBytes);
 		else
-			ConvertInstrument16((short*) *newSound, inOutBytes);
+			ConvertInstrument16((short*)*newSound, inOutBytes);
 		
 		if (iErr == -999)
 			samp = -1;	// ADD IT !
 		
 		if (samp < 0) {
 			samp = curMusic->fid[ ins].numSamples;
-			//	if (samp >= MAXSAMPLE) return;
+			//if (samp >= MAXSAMPLE) return;
 			
-			//	curMusic->fid[ ins].numSamples++;
-			//	curMusic->header->numSamples++;
+			//curMusic->fid[ ins].numSamples++;
+			//curMusic->header->numSamples++;
 			
 			MADCreateSample(curMusic, ins, samp);
 		}
@@ -1083,7 +1046,7 @@ RESTART:
 			curData->loopSize	 	= lE - lS;
 			curData->vol	 		= 64;
 			curData->amp	 		= sS;
-			curData->c2spd			= rate>>16L;
+			curData->c2spd			= rate >> 16L;
 			curData->relNote		= 60 - bFreq;
 			curData->stereo			= stereo;
 		}
@@ -1100,8 +1063,7 @@ RESTART:
 	
 	NSelectInstruList(ins, samp);
 	
-	if (iErr == -999)
-	{
+	if (iErr == -999) {
 		samp = -1;
 		goto RESTART;
 	}
@@ -1115,33 +1077,31 @@ void CopyResource(OSType type, short ID, short newID)
 {
 	Handle	hRsrc;
 	
-	hRsrc = GetResource(type, ID);			DetachResource(hRsrc);
-	AddResource(hRsrc, type, newID, "\p");	WriteResource(hRsrc);
-	DetachResource(hRsrc);					MyDisposHandle(& hRsrc);
+	hRsrc = GetResource(type, ID);
+	DetachResource(hRsrc);
+	AddResource(hRsrc, type, newID, "\p");
+	WriteResource(hRsrc);
+	DetachResource(hRsrc);
+	MyDisposHandle(& hRsrc);
 }
 
-void SaveMOD(Boolean	SaveAS, OSType theType)
+void SaveMOD(Boolean SaveAS, OSType theType)
 {
-	OSErr			iErr;
-	short			fRefNum,i;
-	long			inOutCount, sndSize, fileSize, OffSetToSample, numPat;
-	FInfo			fndrInfo;
-	Ptr				outFile;
-	Str255			fileName, bStr, cStr;
-	FSSpec			spec;
+	short	i;
+	FInfo	fndrInfo;
+	Str255	fileName, bStr, cStr;
+	FSSpec	spec;
 	
-	if (theType != 'MADK' && theType != 'MADC') if (CallPlug(0)) return;
+	if (theType != 'MADK' && theType != 'MADC')
+		if (CallPlug(0))
+			return;
 	
-	if (SaveAS == true || PatchSave == true)
-	{
+	if (SaveAS == true || PatchSave == true) {
 		pStrcpy(fileName, curMusic->musicFileName);
 		
-		if (thePrefs.addExtension)
-		{
-			for (i = fileName[ 0]; i > 0 ; i--)
-			{
-				if (fileName[ i] == '.')
-				{
+		if (thePrefs.addExtension) {
+			for (i = fileName[ 0]; i > 0 ; i--) {
+				if (fileName[ i] == '.') {
 					fileName[ 0] = i-1;
 					i = 0;
 				}
@@ -1161,12 +1121,10 @@ void SaveMOD(Boolean	SaveAS, OSType theType)
 		pStrcat(bStr, cStr);
 		pStrcat(bStr, "\p') :");
 		
-		if (theType != 'MPG4')
-		{
-			if (DoCustomSave(bStr, fileName, theType, &spec)) return;
-		}
-		else
-		{
+		if (theType != 'MPG4') {
+			if (DoCustomSave(bStr, fileName, theType, &spec))
+				return;
+		} else {
 			pStrcpy(spec.name, fileName);
 		}
 		
@@ -1175,18 +1133,14 @@ void SaveMOD(Boolean	SaveAS, OSType theType)
 		
 		ExportFile(theType, &spec);
 		
-		if (OpenableFile(theType, &spec))
-		{
-			if (theType != 'sTAT' && theType != 'STCf')
-			{
+		if (OpenableFile(theType, &spec)) {
+			if (theType != 'sTAT' && theType != 'STCf') {
 				AddMODList(true, spec.name, spec.vRefNum, spec.parID);
 				
 			}
 			if (theType == 'MADK') ImportFile(spec.name, spec.vRefNum, spec.parID, 'MADK');
 		}
-	}
-	else
-	{
+	} else {
 		FSSpec	fss;
 		
 		fss.vRefNum = curvRefNum;
@@ -1196,7 +1150,8 @@ void SaveMOD(Boolean	SaveAS, OSType theType)
 		ExportFile(theType, &fss);
 		
 		FSpGetFInfo(&fss, &fndrInfo);
-		fndrInfo.fdCreator = 'SNPL';	fndrInfo.fdType = theType;
+		fndrInfo.fdCreator = 'SNPL';
+		fndrInfo.fdType = theType;
 		FSpSetFInfo(&fss, &fndrInfo);
 		
 		curMusic->hasChanged = false;
@@ -1207,41 +1162,32 @@ void SaveMOD(Boolean	SaveAS, OSType theType)
 
 OSErr NOpenSampleInt(short ins, short samp, FSSpec sfFile)
 {
-	short				i, iFileRefI;
-	OSErr				iErr;
-	FInfo				fndrInfo;
+	OSErr	iErr;
+	OSType	type;
 	
 	SetCursor(&watchCrsr);
 	
-	iErr = FSpGetFInfo(&sfFile, &fndrInfo);
+	type = GetOSTypeFromSpecUsingUTI(sfFile);
 	
-	switch (fndrInfo.fdType)
-	{
+	switch (type) {
 		case 'INso':	// Instrument List
 			OpenInstrumentsList(&sfFile);
 			break;
 			
 		default:
-			iErr = PPINTestFile(fndrInfo.fdType, &sfFile);
-			if (iErr == noErr)
-			{
-				iErr = PPINImportFile(fndrInfo.fdType, ins, &samp, &sfFile);
-			}
-			else	// Try to identify file type
-			{
-				OSType type;
+			iErr = PPINTestFile(type, &sfFile);
+			if (iErr == noErr) {
+				iErr = PPINImportFile(type, ins, &samp, &sfFile);
+			} else {	// Try to identify file type
 				
 				iErr = PPINIdentifyFile(&type, &sfFile);
-				if (iErr == noErr)
-				{
+				if (iErr == noErr) {
+					FInfo fndrInfo;
 					iErr = PPINImportFile(type, ins, &samp, &sfFile);
 					
-					if (iErr == noErr)
-					{
-						if (FSpSetFInfo(&sfFile, &fndrInfo) == noErr)		// write permission?
-						{
-							if (InfoL(60))
-							{
+					if (iErr == noErr) {
+						if (FSpSetFInfo(&sfFile, &fndrInfo) == noErr) {		// write permission?
+ 							if (InfoL(60)) {
 								fndrInfo.fdType		= type;
 								fndrInfo.fdCreator	= 'SNPL';
 								
@@ -1260,14 +1206,11 @@ OSErr NOpenSampleInt(short ins, short samp, FSSpec sfFile)
 
 void NPASTESample(long Pos, short ins, short samp)
 {
-	short				itemType,fRefNum, sS, qual;
-	long				inOutBytes = 0, iL, scrapOffset, lCntOrErr, totalSize, lS, lE, i;
-	Handle				newSound, tempHandle;
-	Rect				itemRect;
-	Str255				theString;
+	short				sS;
+	long				inOutBytes = 0, lCntOrErr, totalSize, lS, lE, i;
+	Handle				newSound;
 	OSErr				iErr, anErr;
 	Ptr					finalPtr;
-	Boolean				Info;
 	Movie				aMovie;
 	ScrapRef			scrap;
 	ScrapFlavorFlags	flags;
@@ -1315,16 +1258,13 @@ void NPASTESample(long Pos, short ins, short samp)
 				
 				HLock(newSound);
 				GetScrapFlavorData(scrap, 'MINo', &lCntOrErr, *newSound);
-				HUnlock(newSound);
+				//TODO: byteswap?
+				i = curMusic->fid[ins].firstSample;
+				BlockMoveData(*newSound, &curMusic->fid[ins], sizeof(InstrData));
+				curMusic->fid[ins].firstSample = i;
 				
-				HLock(newSound);
-				
-				i = curMusic->fid[ ins].firstSample;
-				BlockMoveData(*newSound, &curMusic->fid[ ins], sizeof(InstrData));
-				curMusic->fid[ ins].firstSample = i;
-				
-				numSamples = curMusic->fid[ ins].numSamples;
-				curMusic->fid[ ins].numSamples = 0;
+				numSamples = curMusic->fid[ins].numSamples;
+				curMusic->fid[ins].numSamples = 0;
 				
 				inOutCount = sizeof(InstrData);
 				
@@ -1361,7 +1301,7 @@ void NPASTESample(long Pos, short ins, short samp)
 				if (lCntOrErr > 0) {
 					HLock(newSound);
 					
-					SetInstruName(ins, (unsigned char *) *newSound);
+					SetInstruName(ins, (unsigned char *)*newSound);
 					
 					HUnlock(newSound);
 				}
@@ -1369,7 +1309,7 @@ void NPASTESample(long Pos, short ins, short samp)
 			}
 			
 			curMusic->hasChanged = true;
-		} else {	
+		} else {
 			// ************  SON 'snd '
 			
 			lCntOrErr = 0;
@@ -1418,15 +1358,14 @@ void NPASTESample(long Pos, short ins, short samp)
 					
 					if (!newSampleData) {		// We NEED to convert the pasted sound in current data
 						if (curData->amp != sS) {		// Amplitude conversion
-							switch (sS)
-							{
+							switch (sS) {
 								case 8:		// Convert in 16 bits
 									HUnlock(newSound);
 									SetHandleSize(newSound, inOutBytes * 2L);
 									HLock(newSound);
 									
 									if (MemError() == noErr) {
-										Convert8to16(	*newSound,	*newSound, 	inOutBytes);
+										Convert8to16(*newSound, *newSound, inOutBytes);
 										
 										sS = 16;
 										inOutBytes *= 2L;
@@ -1436,7 +1375,7 @@ void NPASTESample(long Pos, short ins, short samp)
 									break;
 									
 								case 16:	// Convert in 8 bits
-									Convert16to8(	*newSound, *newSound, inOutBytes);
+									Convert16to8(*newSound, *newSound, inOutBytes);
 									
 									HUnlock(newSound);
 									SetHandleSize(newSound, inOutBytes / 2L);
@@ -1451,19 +1390,16 @@ void NPASTESample(long Pos, short ins, short samp)
 						}
 						
 						if (curData->stereo != stereo) {		// Stereo conversion
-							switch (stereo)
-							{
+							switch (stereo) {
 								case true:		// Convert in mono
 									if (sS == 8) {
-										for (i = 0 ; i < inOutBytes; i+=2) (*newSound)[ i / 2] = ((long) (*newSound)[ i] + (long) (*newSound)[ i + 1]) / 2L;
+										for (i = 0 ; i < inOutBytes; i += 2) (*newSound)[i / 2] = ((long)(*newSound)[i] + (long)(*newSound)[i + 1]) / 2;
 									} else {
-										short *short16out = (short*) *newSound, *short16in = (short*) *newSound;
-										
-										for (i = 0 ; i < inOutBytes/2; i+=2) (*newSound)[ i / 2] = ((long) (*newSound)[ i] + (long) (*newSound)[ i + 1]) / 2L;
+										for (i = 0 ; i < inOutBytes / 2; i += 2) (*newSound)[i / 2] = ((long) (*newSound)[i] + (long)(*newSound)[i + 1]) / 2;
 									}
 									
 									HUnlock(newSound);
-									SetHandleSize(newSound, inOutBytes / 2L);
+									SetHandleSize(newSound, inOutBytes / 2);
 									HLock(newSound);
 									
 									inOutBytes /= 2L;
@@ -1579,10 +1515,7 @@ void NPASTESample(long Pos, short ins, short samp)
 
 void NCOPYSample(long start, long length, short ins, short samp)
 {
-	short		itemType,i,fRefNum, numPat;
-	long		inOutBytes, iL, OffSetToSample;
-	OSErr		iErr;
-	Boolean		Info;
+	long		inOutBytes;
 	Handle 		theSound;
 	short		temp;
 	sData		*curData;
@@ -1605,14 +1538,14 @@ void NCOPYSample(long start, long length, short ins, short samp)
 		
 		theSound = MyNewHandle(200);
 		if (theSound) {
-			strcpy((Ptr) *theSound, curMusic->fid[ ins].name);
-			MyC2PStr((Ptr) *theSound);
+			strcpy((Ptr)*theSound, curMusic->fid[ins].name);
+			MyC2PStr((Ptr)*theSound);
 			
-			HLock((Handle) theSound );
+			HLock((Handle) theSound);
 			
-			anErr = PutScrapFlavor(scrap, 'STR ', 0, (long) 30, (Ptr) *theSound);
+			anErr = PutScrapFlavor(scrap, 'STR ', 0, 30, (Ptr)*theSound);
 			
-			HUnlock((Handle) theSound );
+			HUnlock((Handle)theSound);
 			
 			MyDisposHandle(& theSound);
 		}
@@ -1673,14 +1606,14 @@ void NCOPYSample(long start, long length, short ins, short samp)
 		
 		theSound = MyNewHandle(200);
 		if (theSound) {
-			strcpy((Ptr) *theSound, curData->name);
-			MyC2PStr((Ptr) *theSound);
+			strcpy((Ptr)*theSound, curData->name);
+			MyC2PStr((Ptr)*theSound);
 			
-			HLock(theSound );
+			HLock(theSound);
 			
-			anErr = PutScrapFlavor(scrap, 'STR ', 0, 30, (Ptr) *theSound);
+			anErr = PutScrapFlavor(scrap, 'STR ', 0, 30, (Ptr)*theSound);
 			
-			HUnlock(theSound );
+			HUnlock(theSound);
 			
 			MyDisposHandle(& theSound);
 		}
@@ -1719,7 +1652,7 @@ void NCOPYSample(long start, long length, short ins, short samp)
 			
 			anErr = PutScrapFlavor(scrap, 'snd ', 0, GetHandleSize((Handle) theSound), (Ptr) *theSound);
 			
-			HUnlock((Handle) theSound );
+			HUnlock((Handle) theSound);
 			
 			MyDisposHandle(& theSound);
 		} else {
@@ -1739,7 +1672,6 @@ void AddLoopToSndHandle(Handle sound, long Start, long End)
 	SoundHeaderPtr 	header;
 	CmpSoundHeader	*CmpHeader;
 	ExtSoundHeader	*ExtHeader;
-	OSErr 			result;
 	
 	if (!sound) return;
 	
@@ -1771,23 +1703,34 @@ void AddLoopToSndHandle(Handle sound, long Start, long End)
 	
 	/* compute address of sound header. */
 	offset = 6 + 6*numSynths + 8*numCmds;
-	header = (SoundHeaderPtr) (*sound + offset);
+	header = (SoundHeaderPtr)(*sound + offset);
 	
-	switch (header->encode)
-	{
+	switch (header->encode) {
 		case cmpSH:
-			CmpHeader = (CmpSoundHeader*) header;
-			if (CmpHeader->sampleSize == 16) { Start /= 2; End /= 2; }
-			if (CmpHeader->numChannels > 1) { Start /= CmpHeader->numChannels; End /= CmpHeader->numChannels; }
+			CmpHeader = (CmpSoundHeader*)header;
+			if (CmpHeader->sampleSize == 16) {
+				Start /= 2;
+				End /= 2;
+			}
+			if (CmpHeader->numChannels > 1) {
+				Start /= CmpHeader->numChannels;
+				End /= CmpHeader->numChannels;
+			}
 			
 			CmpHeader->loopStart	= Start;
 			CmpHeader->loopEnd		= End;
 			break;
 			
 		case extSH:
-			ExtHeader = (ExtSoundHeader*) header;
-			if (ExtHeader->sampleSize == 16) { Start /= 2; End /= 2; }
-			if (ExtHeader->numChannels > 1) { Start /= ExtHeader->numChannels; End /= ExtHeader->numChannels; }
+			ExtHeader = (ExtSoundHeader*)header;
+			if (ExtHeader->sampleSize == 16) {
+				Start /= 2;
+				End /= 2;
+			}
+			if (ExtHeader->numChannels > 1) {
+				Start /= ExtHeader->numChannels;
+				End /= ExtHeader->numChannels;
+			}
 			
 			ExtHeader->loopStart	= Start;
 			ExtHeader->loopEnd		= End;
@@ -1809,19 +1752,12 @@ void NSaveSampleInt(short whichIns, short whichSamp, OSType SoundType, FSSpec *s
 
 void SaveSample(void)
 {
-	short					itemType,i;
-	long					inOutBytes, iL;
-	Handle					itemHandle, newSound;
-	Rect					itemRect;
-	Str255					theString, mainStr, bStr, cStr;
-	Point					where ={ -1, -1};
-	FSSpec					spec;
-	OSErr					iErr;
-	GrafPtr					myPort;
-	short					temp,fRefNum;
+	Str255	theString, mainStr;
+	FSSpec	spec;
+	GrafPtr	myPort;
 	
-	OSType					SoundFormat;
-	short					ins, samp;
+	OSType	SoundFormat;
+	short	ins, samp;
 	
 	GetPort(&myPort);
 	
@@ -1832,9 +1768,8 @@ void SaveSample(void)
 			pStrcpy(theString, "\pSave this instrument as:");
 		
 		if (NSoundQualityExportSnd(ins, samp, &SoundFormat, mainStr) == noErr) {
-			if (DoCustomSave(theString, (unsigned char*) mainStr, SoundFormat, &spec)) return;
-			
-			iErr = HSetVol(NULL, spec.vRefNum, spec.parID);
+			if (DoCustomSave(theString, (unsigned char*)mainStr, SoundFormat, &spec)) return;
+			//iErr = HSetVol(NULL, spec.vRefNum, spec.parID);
 			
 			NSaveSampleInt(ins, samp, SoundFormat, &spec);
 		}
@@ -1846,7 +1781,6 @@ static	short UMindex = 1;
 void CreateNewMOD(void)
 {
 	FSSpec				spec;
-	Point				where = { -1, -1};
 	Str255				str, str2;
 	
 	NumToString(UMindex, str2);
@@ -1966,15 +1900,13 @@ OSErr RAWImportFile(FSSpec	*file)
 {
 	DialogPtr		aDialog;
 	short			itemHit, itemType, ins, samp;
-	char			cstr[ 200];
 	Str255			aStr, theStr, bStr;
 	Rect			iRect, itemRect;
 	Point			myPt;
 	Handle			itemHandle;
-	long			mresult, temp, xL, x, i;
+	long			mresult, x, i;
 	Ptr				fileBuf;
 	sData			*curData;
-	short			sampNo, instNo;
 	GrafPtr			thePort;
 	MenuHandle		tempMenu;
 	short			fRefNum;
@@ -2341,7 +2273,7 @@ REGODIA:
 			case 29:
 				tempMenu = GetMenu(163);
 				
-				InsertMenu(tempMenu, hierMenu );
+				InsertMenu(tempMenu, hierMenu);
 				GetDialogItem(aDialog, itemHit, &itemType, &itemHandle, &itemRect);
 				
 				myPt.v = itemRect.top;	myPt.h = itemRect.left;
@@ -2368,7 +2300,7 @@ REGODIA:
 				if(i <= CountMenuItems(tempMenu))
 					SetItemMark(tempMenu, i, 0);
 				
-				if (HiWord(mresult ) != 0 ) {
+				if (HiWord(mresult) != 0) {
 					long	tempL;
 					
 					GetMenuItemText(tempMenu, LoWord(mresult), theStr);

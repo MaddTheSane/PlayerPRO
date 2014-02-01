@@ -60,28 +60,20 @@ pascal OSErr GetFileIcon(
 
 	*theSuite = NULL;
 
-	if (IsVolEjected(thing->vRefNum) )
-	{
+	if (IsVolEjected(thing->vRefNum)) {
 		err = volOffLinErr;
-	}
-	else
-	{
+	} else {
 		cpb.hFileInfo.ioVRefNum		= thing->vRefNum;
 		cpb.hFileInfo.ioDirID		= thing->parID;
 		cpb.hFileInfo.ioNamePtr		= thing->name;
 		cpb.hFileInfo.ioFDirIndex	= 0;
-		err = PBGetCatInfoSync(&cpb );
+		err = PBGetCatInfoSync(&cpb);
 
-		if (!err )
-		{
-			if ((cpb.hFileInfo.ioFlAttrib & ioDirMask) == 0)	// file
-			{
-				if(cpb.hFileInfo.ioFlFndrInfo.fdFlags & kHasCustomIcon)
-				{
-					err = GetCustomFileIcon(thing, iconSelector, theSuite );
-				}
-				else	// no custom icon
-				{
+		if (!err) {
+			if ((cpb.hFileInfo.ioFlAttrib & ioDirMask) == 0) {	// file
+				if(cpb.hFileInfo.ioFlFndrInfo.fdFlags & kHasCustomIcon) {
+					err = GetCustomFileIcon(thing, iconSelector, theSuite);
+				} else {	// no custom icon
 					err = GetNormalFileIcon(&cpb, iconSelector, theSuite);
 				}
 			}
@@ -89,21 +81,11 @@ pascal OSErr GetFileIcon(
 		}	
 	}
 
-	// ------- error handler ---------
-	/*if(thing->parID == fsRtParID)	// a volume
-	{
-		if(err == volOffLinErr)
-		{
-			*labelColor = ttOffline;
-		}
-		err = GetVolumeIcon(thing->vRefNum, iconSelector, theSuite);
-	}*/
-
-	return(err );
+	return err;
 }
 
 
-Boolean	IsVolEjected(short vRefNum )
+Boolean	IsVolEjected(short vRefNum)
 {
 	OSErr			err;
 	HVolumeParam	vol_pb;
@@ -111,9 +93,9 @@ Boolean	IsVolEjected(short vRefNum )
 	vol_pb.ioNamePtr	= NULL;
 	vol_pb.ioVRefNum	= vRefNum;
 	vol_pb.ioVolIndex	= 0;
-	err = PBHGetVInfoSync((HParmBlkPtr )&vol_pb );
+	err = PBHGetVInfoSync((HParmBlkPtr)&vol_pb);
 	
-	return((err == noErr) && (vol_pb.ioVDRefNum > 0) );
+	return (err == noErr) && (vol_pb.ioVDRefNum > 0);
 }
 
 
@@ -127,22 +109,17 @@ OSErr	GetCustomFileIcon(
 	OSErr	err;
 	
 	saveResFile = CurResFile();
-	SetResLoad(false );
+	SetResLoad(false);
 	customResFile = FSpOpenResFile(filespec, fsRdPerm);
 
-	SetResLoad(true );
+	SetResLoad(true);
 
-	if(customResFile == -1)
-	{
+	if(customResFile == -1) {
 		err = ResError();
-	}
-	else
-	{
+	} else {
 		err = GetResourceIcons(theSuite, kCustomIconResource, iconSelector);
-		if (!err )
-		{
-			if (IsSuiteEmpty(*theSuite ) )
-			{
+		if (!err) {
+			if (IsSuiteEmpty(*theSuite)) {
 				err = GetResourceIcons(theSuite, kVolumeAliasIconResource, iconSelector);
 			}
 		}
@@ -150,7 +127,7 @@ OSErr	GetCustomFileIcon(
 		CloseResFile(customResFile );
 		UseResFile(saveResFile );
 	}
-	return(err );
+	return err;
 }
 
 
@@ -160,9 +137,6 @@ OSErr	GetNormalFileIcon(
 /* <-- */	Handle				*theSuite)
 {
 	OSErr			err = noErr;
-	long			dataSize;
-	Handle			iconData;
-	Byte			iconType;
 	GetIconData		getData;
 	short			iconID;
 	Boolean			inFinder;
@@ -175,39 +149,30 @@ OSErr	GetNormalFileIcon(
 	iconID = FindGenericIconID(cpb->hFileInfo.ioFlFndrInfo.fdType, &inFinder );
 	saveResFile = CurResFile();
 
-	if (inFinder )
-	{
+	if (inFinder) {
 		FindFolder(kOnSystemDisk, kSystemFolderType, kDontCreateFolder, &sysVRefNum, &sysDirID);
 
 		SetResLoad(false );
-		GetFinderFilename(finderName );
+		GetFinderFilename(finderName);
 		FinderResFile = HOpenResFile(sysVRefNum, sysDirID, finderName, fsRdPerm);
-		SetResLoad(true );
+		SetResLoad(true);
 
-		if(FinderResFile == -1)
-		{
+		if(FinderResFile == -1) {
 			err = ResError();
-		}
-		else
-		{
+		} else {
 			err = GetResourceIcons(theSuite, iconID, iconSelector);
 			CloseResFile(FinderResFile );
 		}
-	}
-	else	// icons in desktop DB or in System
-	{
+	} else {// icons in desktop DB or in System
 		getData.DTRefNum = FindDesktopDatabase(cpb->dirInfo.ioVRefNum,
 			cpb->hFileInfo.ioFlFndrInfo.fdCreator );
 
-		if(getData.DTRefNum != 0)	// the right icons are in some desktop
-		{
-			err = NewIconSuite(theSuite );
-			if (!err )
-			{
+		if(getData.DTRefNum != 0) {	// the right icons are in some desktop
+			err = NewIconSuite(theSuite);
+			if (!err) {
 				getData.fileCreator	= cpb->hFileInfo.ioFlFndrInfo.fdCreator;
 				getData.fileType	= cpb->hFileInfo.ioFlFndrInfo.fdType;
-				if(getData.fileType == kApplicationAliasType)
-				{
+				if(getData.fileType == kApplicationAliasType) {
 					getData.fileType = 'APPL';
 				}
 				getIconProcPtr = NewIconActionUPP(GetIconProc );
@@ -215,16 +180,15 @@ OSErr	GetNormalFileIcon(
 				DisposeIconActionUPP(getIconProcPtr );
 			}
 		}
-		if ((getData.DTRefNum == 0) || IsSuiteEmpty(*theSuite ) )
-		{
-			UseResFile(0 );
+		if ((getData.DTRefNum == 0) || IsSuiteEmpty(*theSuite)) {
+			UseResFile(0);
 			err = GetResourceIcons(theSuite, iconID, iconSelector);
 		}
 	}
 
-	UseResFile(saveResFile );
+	UseResFile(saveResFile);
 
-	return(err );
+	return err;
 }
 
 
@@ -236,9 +200,9 @@ void GetFinderFilename(
 
 	_lowMemFinderName = LMGetFinderName();
 	if ((_lowMemFinderName != (StringPtr )nil) && (_lowMemFinderName[0] > 0))
-		BlockMoveData(_lowMemFinderName, _finderFilename, _lowMemFinderName[0]+1);
+		BlockMoveData(_lowMemFinderName, _finderFilename, _lowMemFinderName[0] + 1);
 	else
-		BlockMoveData(_defaultFinderFilename, _finderFilename, _defaultFinderFilename[0]+1);
+		BlockMoveData(_defaultFinderFilename, _finderFilename, _defaultFinderFilename[0] + 1);
 }
 
 
@@ -255,15 +219,12 @@ void GetFinderFilename(
 
 	err = noErr;
 	data = (GetIconData *)yourDataPtr;
-	*theIcon = NewHandle(kLarge8BitIconSize );
+	*theIcon = NewHandle(kLarge8BitIconSize);
 
-	if (!(*theIcon) )
-	{
+	if (!(*theIcon)) {
 		err = memFullErr;
-	}
-	else
-	{
-		HLock(*theIcon );
+	} else {
+		HLock(*theIcon);
 	
 		deskRec.ioDTRefNum		= data->DTRefNum;
 		deskRec.ioDTBuffer		= **theIcon;
@@ -447,52 +408,52 @@ typedef struct genericIconInfo {
 	short id;
 } GenericIconInfo;
 
-GenericIconInfo gGenericFinderIcons[]={ {'ifil',12500},
-                                               {'ifil',12500},
-                                               {'sfil',14000},
-                                               {'ffil',14500},
-                                               {'tfil',14501},
-                                               {'kfil',14750},
-                                               {'FFIL',15500},
-                                               {'DFIL',15750}
-                                              };
-GenericIconInfo gGenericSysIcons[]={ {kContainerFolderAliasType,genericFolderIconResource},
-                                            {kContainerTrashAliasType,trashIconResource},
-                                            {kSystemFolderAliasType,systemFolderIconResource},
-                                            {'INIT',genericExtensionIconResource},
-                                            {'APPL',genericApplicationIconResource},
-                                            {'dfil',genericDeskAccessoryIconResource},
-                                            {'pref',genericPreferencesIconResource},
-                                            {kAppleMenuFolderAliasType,appleMenuFolderIconResource},
-                                            {kControlPanelFolderAliasType,controlPanelFolderIconResource},
-                                            {kExtensionFolderAliasType,extensionsFolderIconResource},
-                                            {kPreferencesFolderAliasType,preferencesFolderIconResource},
-                                            {kStartupFolderAliasType,startupFolderIconResource},
-                                            {kApplicationAliasType,genericApplicationIconResource},
-                                            {kExportedFolderAliasType,ownedFolderIconResource},
-                                            {kDropFolderAliasType,dropFolderIconResource},
-                                            {kSharedFolderAliasType,sharedFolderIconResource},
-                                            {kMountedFolderAliasType,mountedFolderIconResource}
-                                           };
+GenericIconInfo gGenericFinderIcons[] = {{'ifil',12500},
+	{'ifil',12500},
+	{'sfil',14000},
+	{'ffil',14500},
+	{'tfil',14501},
+	{'kfil',14750},
+	{'FFIL',15500},
+	{'DFIL',15750}
+};
+
+GenericIconInfo gGenericSysIcons[] = {{kContainerFolderAliasType,genericFolderIconResource},
+	{kContainerTrashAliasType,trashIconResource},
+	{kSystemFolderAliasType,systemFolderIconResource},
+	{'INIT',genericExtensionIconResource},
+	{'APPL',genericApplicationIconResource},
+	{'dfil',genericDeskAccessoryIconResource},
+	{'pref',genericPreferencesIconResource},
+	{kAppleMenuFolderAliasType,appleMenuFolderIconResource},
+	{kControlPanelFolderAliasType,controlPanelFolderIconResource},
+	{kExtensionFolderAliasType,extensionsFolderIconResource},
+	{kPreferencesFolderAliasType,preferencesFolderIconResource},
+	{kStartupFolderAliasType,startupFolderIconResource},
+	{kApplicationAliasType,genericApplicationIconResource},
+	{kExportedFolderAliasType,ownedFolderIconResource},
+	{kDropFolderAliasType,dropFolderIconResource},
+	{kSharedFolderAliasType,sharedFolderIconResource},
+	{kMountedFolderAliasType,mountedFolderIconResource}
+};
 
 
 short	FindGenericIconID(
 /* --> */	OSType theType,
 /* <-- */	Boolean	*inFinder)
 {
+	short id=genericDocumentIconResource; // default
+	GenericIconInfo *_icon, *_endIcon;
 	
-   short id=genericDocumentIconResource; // default
-   GenericIconInfo *_icon, *_endIcon;
-   
-    for (_icon=gGenericFinderIcons,_endIcon=_icon+sizeof(gGenericFinderIcons)/sizeof(GenericIconInfo);
-         (_icon<_endIcon)&&(_icon->type!=theType); _icon++) ;
-    if (!(*inFinder=(_icon<_endIcon)))
-        for (_icon=gGenericSysIcons,_endIcon=_icon+sizeof(gGenericSysIcons)/sizeof(GenericIconInfo);
-             (_icon<_endIcon)&&(_icon->type!=theType); _icon++) ;
-    if (_icon<_endIcon)
+    for (_icon = gGenericFinderIcons, _endIcon = _icon + sizeof(gGenericFinderIcons) / sizeof(GenericIconInfo);
+         (_icon<_endIcon)&&(_icon->type != theType); _icon++);
+    if (!(*inFinder = (_icon < _endIcon)))
+        for (_icon = gGenericSysIcons, _endIcon=_icon + sizeof(gGenericSysIcons) / sizeof(GenericIconInfo);
+             (_icon < _endIcon) && (_icon->type != theType); _icon++) ;
+    if (_icon < _endIcon)
         id = _icon->id;
-
-	return(id );
+	
+	return id;
 }
 
 
@@ -518,13 +479,12 @@ pascal OSErr Get1IconSuite(
 	IconActionUPP	get1IconProc;
 
 	err = NewIconSuite(theSuite );
-	if (!err )
-	{
+	if (!err) {
 		get1IconProc = NewIconActionUPP(Get1Icon );
 		err = ForEachIconDo(*theSuite, theSelector, get1IconProc, &theID);
 		DisposeIconActionUPP(get1IconProc );
 	}
-	return(err );
+	return err;
 }
 
 
@@ -548,16 +508,16 @@ pascal OSErr TestHandle(ResType theType, Handle *theIcon, void *yourDataPtr)
 }
 
 
-Boolean IsSuiteEmpty(Handle theSuite )
+Boolean IsSuiteEmpty(Handle theSuite)
 {
 	Boolean			retVal;
 	IconActionUPP	testHandleProc;
 	
-	testHandleProc = NewIconActionUPP(TestHandle );
+	testHandleProc = NewIconActionUPP(TestHandle);
 	
 	retVal = true;
 	ForEachIconDo(theSuite, svAllAvailableData, testHandleProc, &retVal);
-	DisposeIconActionUPP(testHandleProc );
+	DisposeIconActionUPP(testHandleProc);
 	
 	return retVal ;
 }

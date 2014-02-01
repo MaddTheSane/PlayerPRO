@@ -797,9 +797,8 @@ short NewOffscreenPixMap(PixMapHandle *thePixMap, Rect *picRect)
 	PixMapHandle		offscreenPixMap ;
 	char				*offscreenData ;
 	short 				thedepth;
-	long 				offrowbytes, i;
+	long 				offrowbytes;
 	unsigned long 		memoryRequest ;
-	ColorTable			*myCTable, **srcCTable;
 	
 
 	/* get some memory for our offscreenPixMap^^.baseAddr */

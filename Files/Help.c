@@ -2191,7 +2191,7 @@ void TestProcessor(void)
 
 	SetCursor(GetQDGlobalsArrow(&qdarrow));
 	
-	NumToString((long)((i * 100L) / normal), theString);
+	NumToString(((i * 100L) / normal), theString);
 
 	ParamText(theString, 0, 0, 0);
 

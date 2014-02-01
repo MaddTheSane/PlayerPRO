@@ -129,9 +129,8 @@ void UPDATE_Pattern()
 	UpdateClassicInfo();
 	UpdatePatListInfo();
 	
-	if (MADDriver->PartitionReader >= curMusic->partition[ MADDriver->Pat]->header.size)
-	{
-		MADDriver->PartitionReader = curMusic->partition[ MADDriver->Pat]->header.size-1;
+	if (MADDriver->PartitionReader >= curMusic->partition[ MADDriver->Pat]->header.size) {
+		MADDriver->PartitionReader = curMusic->partition[ MADDriver->Pat]->header.size - 1;
 	}
 }
 
@@ -139,8 +138,8 @@ void InitUndo(void)
 {
 	short	i;
 	
-	for (i = 0; i < MAXINSTRU; i++) CopyAllInstruments[ i] = NULL;
-	for (i = 0; i < MAXPATTERN; i++) CopyPartition[ i] = NULL;
+	for (i = 0; i < MAXINSTRU; i++) CopyAllInstruments[i] = NULL;
+	for (i = 0; i < MAXPATTERN; i++) CopyPartition[i] = NULL;
 	
 	myUndo.UndoType = 0;
 	myUndo.ID = 0;
@@ -149,7 +148,7 @@ void InitUndo(void)
 	
 	DisableMenuItem(EditMenu, 1);
 	
-	CopySets = (FXSets*) NewPtrClear(MAXTRACK * sizeof(FXSets));
+	CopySets = (FXSets*)NewPtrClear(MAXTRACK * sizeof(FXSets));
 }
 
 void ResetUndo(void)
@@ -159,22 +158,23 @@ void ResetUndo(void)
 	myUndo.UndoType = 0;
 	myUndo.ID = 0;
 	
-	if (myUndo.data != NULL) MyDisposePtr(& myUndo.data);
+	if (myUndo.data != NULL)
+		MyDisposePtr(& myUndo.data);
 	myUndo.data = NULL;
 	myUndo.dataSize = 0;
 	
 	BlockZero(CopySets, MAXTRACK * sizeof(FXSets));
 	
-	for (i = 0; i < MAXINSTRU; i++)
-	{
-		if (CopyAllInstruments[ i] != NULL) MyDisposePtr(& CopyAllInstruments[ i]);
-		CopyAllInstruments[ i] = NULL;
+	for (i = 0; i < MAXINSTRU; i++) {
+		if (CopyAllInstruments[i] != NULL)
+			MyDisposePtr(&CopyAllInstruments[i]);
+		CopyAllInstruments[i] = NULL;
 	}
 	
-	for (i = 0; i < MAXPATTERN; i++)
-	{
-		if (CopyPartition[ i] != NULL) MyDisposePtr((Ptr*) &CopyPartition[ i]);
-		CopyPartition[ i] = NULL;
+	for (i = 0; i < MAXPATTERN; i++) {
+		if (CopyPartition[i] != NULL)
+			MyDisposePtr((Ptr*)&CopyPartition[i]);
+		CopyPartition[i] = NULL;
 	}
 	
 	RedoMode = false;
@@ -190,132 +190,129 @@ void SaveUndo(short UndoType, short ID, Str255 textMenu)
 	MADCleanCurrentMusic(curMusic, MADDriver);
 	
 	RedoMode = false;
-
+	
 	myUndo.UndoType = UndoType;
 	myUndo.ID = ID;
-
+	
 	if (myUndo.data != NULL) MyDisposePtr(& myUndo.data);
 	myUndo.data = NULL;
 	
-	for (i = 0; i < MAXINSTRU; i++)
-	{
-		if (CopyAllInstruments[ i] != NULL) MyDisposePtr(& CopyAllInstruments[ i]);
-		CopyAllInstruments[ i] = NULL;
+	for (i = 0; i < MAXINSTRU; i++) {
+		if (CopyAllInstruments[i] != NULL)
+			MyDisposePtr(&CopyAllInstruments[i]);
+		CopyAllInstruments[i] = NULL;
 	}
-	for (i = 0; i < MAXPATTERN; i++)
-	{
-		if (CopyPartition[ i] != NULL) MyDisposePtr((Ptr*) &CopyPartition[ i]);
-		CopyPartition[ i] = NULL;
+	for (i = 0; i < MAXPATTERN; i++) {
+		if (CopyPartition[i] != NULL)
+			MyDisposePtr((Ptr*)&CopyPartition[i]);
+		CopyPartition[i] = NULL;
 	}
 	
-	switch (UndoType)
-	{
+	switch (UndoType) {
 		case UPattern:
 			myUndo.dataSize = sizeof(PatHeader) + curMusic->header->numChn * curMusic->partition[ ID]->header.size * sizeof(Cmd);
-		
-			if (ID < 0 || ID >= curMusic->header->numPat) MyDebugStr(__LINE__, __FILE__, "Undo Pattern error.");
-			else
-			{
+			
+			if (ID < 0 || ID >= curMusic->header->numPat)
+				MyDebugStr(__LINE__, __FILE__, "Undo Pattern error.");
+			else {
 				myUndo.data = MyNewPtr(myUndo.dataSize);
-				if (myUndo.data == NULL) ResetUndo();
-				else BlockMoveData(curMusic->partition[ ID], myUndo.data, myUndo.dataSize);
+				if (myUndo.data == NULL)
+					ResetUndo();
+				else
+					BlockMoveData(curMusic->partition[ID], myUndo.data, myUndo.dataSize);
 			}
-		break;
-		
+			break;
+			
 		case USample:
-			CopyFid			= curMusic->fid[ ID];
+			CopyFid = curMusic->fid[ ID];
 			
 			myUndo.dataSize = 0;
-			for (i = 0; i < CopyFid.numSamples; i++)
-			{
-				sData	*curData = curMusic->sample[ curMusic->fid[ ID].firstSample + i];
+			for (i = 0; i < CopyFid.numSamples; i++) {
+				sData	*curData = curMusic->sample[ curMusic->fid[ID].firstSample + i];
 				myUndo.dataSize	+= sizeof(sData) + curData->size;
 			}
 			
 			myUndo.data 		= MyNewPtr(myUndo.dataSize);
-			if (myUndo.data == NULL) ResetUndo();
-			else
-			{
+			if (myUndo.data == NULL)
+				ResetUndo();
+			else {
 				myUndo.dataSize = 0;
-				for (i = 0; i < CopyFid.numSamples; i++)
-				{
+				for (i = 0; i < CopyFid.numSamples; i++) {
 					sData	*curData = curMusic->sample[ curMusic->fid[ ID].firstSample +  i];
 					
-					if (curData == NULL) MyDebugStr(__LINE__, __FILE__, "BIG UNDO Error 1");
-					if (curData->size > 0)
-					{
-						if (curData->data == NULL) MyDebugStr(__LINE__, __FILE__, "BIG UNDO Error 2A");
-						if (GetPtrSize(curData->data) != curData->size) MyDebugStr(__LINE__, __FILE__, "BIG UNDO Error 3A");
+					if (curData == NULL)
+						MyDebugStr(__LINE__, __FILE__, "BIG UNDO Error 1");
+					else if (curData->size > 0) {
+						if (curData->data == NULL)
+							MyDebugStr(__LINE__, __FILE__, "BIG UNDO Error 2A");
+						if (GetPtrSize(curData->data) != curData->size)
+							MyDebugStr(__LINE__, __FILE__, "BIG UNDO Error 3A");
 					}
 					
 					BlockMoveData(curData, myUndo.data + myUndo.dataSize, sizeof(sData));
 					myUndo.dataSize	+= sizeof(sData);
 					
-					if (curData->size > 0)
-					{
+					if (curData->size > 0) {
 						BlockMoveData(curData->data, myUndo.data + myUndo.dataSize, curData->size);
 						myUndo.dataSize	+= curData->size;
 					}
 				}
 			}
-		break;
-		
+			break;
+			
 		case UHeader:
 		case UAllSamples:
 		case UAllPatterns:
 			myUndo.dataSize = sizeof(struct MADSpec);
 			
 			myUndo.data = MyNewPtr(myUndo.dataSize);
-			if (myUndo.data == NULL) { ResetUndo();	break;}
-			else BlockMoveData(curMusic->header, myUndo.data, myUndo.dataSize);
+			if (myUndo.data == NULL) {
+				ResetUndo();
+				break;
+			} else
+				BlockMoveData(curMusic->header, myUndo.data, myUndo.dataSize);
 			
 			BlockMoveData(curMusic->sets, CopySets, MAXTRACK * sizeof(FXSets));
 			
 			/*** UAllSamples ***/
-			if (UndoType == UAllSamples)
-			{
-				for (i = 0; i < MAXINSTRU; i++)
-				{
+			if (UndoType == UAllSamples) {
+				for (i = 0; i < MAXINSTRU; i++) {
 					long size;
 					
 					size = sizeof(InstrData);
-					for (x = 0; x < curMusic->fid[ i].numSamples; x++)
-					{
+					for (x = 0; x < curMusic->fid[ i].numSamples; x++) {
 						sData	*curData = curMusic->sample[ curMusic->fid[ i].firstSample +  x];
 						
 						size	+= sizeof(sData) + curData->size;
 					}
 					
-					CopyAllInstruments[ i] = MyNewPtr(size);
-					if (CopyAllInstruments[ i] != NULL)
-					{
+					CopyAllInstruments[i] = MyNewPtr(size);
+					if (CopyAllInstruments[i] != NULL) {
 						size = 0;
-						BlockMoveData(&curMusic->fid[ i], CopyAllInstruments[ i] + size, sizeof(InstrData));
+						BlockMoveData(&curMusic->fid[i], CopyAllInstruments[i] + size, sizeof(InstrData));
 						size += sizeof(InstrData);
 						
-						for (x = 0; x < curMusic->fid[ i].numSamples; x++)
-						{
+						for (x = 0; x < curMusic->fid[ i].numSamples; x++) {
 							sData	*curData = curMusic->sample[ curMusic->fid[ i].firstSample +  x];
 							
-							if (curData == NULL) MyDebugStr(__LINE__, __FILE__, "BIG UNDO Error 1");
-							if (curData->size > 0)
-							{
-								if (curData->data == NULL) MyDebugStr(__LINE__, __FILE__, "BIG UNDO Error 2");
-								if (GetPtrSize(curData->data) != curData->size) MyDebugStr(__LINE__, __FILE__, "BIG UNDO Error 3");
+							if (curData == NULL)
+								MyDebugStr(__LINE__, __FILE__, "BIG UNDO Error 1");
+							if (curData->size > 0) {
+								if (curData->data == NULL)
+									MyDebugStr(__LINE__, __FILE__, "BIG UNDO Error 2");
+								if (GetPtrSize(curData->data) != curData->size)
+									MyDebugStr(__LINE__, __FILE__, "BIG UNDO Error 3");
 							}
 							
 							BlockMoveData(curData, CopyAllInstruments[ i] + size, sizeof(sData));
 							size	+= sizeof(sData);
 							
-							if (curData->size > 0)
-							{
+							if (curData->size > 0) {
 								BlockMoveData(curData->data, CopyAllInstruments[ i] + size, curData->size);
 								size	+= curData->size;
 							}
 						}
-					}
-					else
-					{
+					} else {
 						ResetUndo();
 						i = MAXINSTRU;
 					}
@@ -323,33 +320,30 @@ void SaveUndo(short UndoType, short ID, Str255 textMenu)
 			}
 			
 			/*** UAllPatterns ***/
-			if (UndoType == UAllPatterns)
-			{
-				for (i = 0; i < MAXPATTERN; i++)
-				{
+			if (UndoType == UAllPatterns) {
+				for (i = 0; i < MAXPATTERN; i++) {
 					CopyPartition[ i]  = NULL;
 					
 					if (i >= curMusic->header->numPat) if (curMusic->partition[ i] != NULL) MyDebugStr(__LINE__, __FILE__, "Check Partition-Partition UNDO.");
-				
-					if (curMusic->partition[ i] != NULL)
-					{
-						tempL = sizeof(PatHeader) + curMusic->header->numChn * curMusic->partition[ i]->header.size * sizeof(Cmd);
+					
+					if (curMusic->partition[i] != NULL) {
+						tempL = sizeof(PatHeader) + curMusic->header->numChn * curMusic->partition[i]->header.size * sizeof(Cmd);
 						
-						if (GetPtrSize((Ptr) curMusic->partition[ i]) != tempL) MyDebugStr(__LINE__, __FILE__, "Check Create Partition SIZE");
+						if (GetPtrSize((Ptr)curMusic->partition[i]) != tempL)
+							MyDebugStr(__LINE__, __FILE__, "Check Create Partition SIZE");
 						
-						CopyPartition[ i] = (PatData*) MyNewPtr(tempL);
-						if (CopyPartition[ i] != NULL)
-						{
-							BlockMoveData(curMusic->partition[ i], CopyPartition[ i], tempL);
+						CopyPartition[i] = (PatData*)MyNewPtr(tempL);
+						if (CopyPartition[i] != NULL) {
+							BlockMoveData(curMusic->partition[i], CopyPartition[i], tempL);
 						}
 					}
 				}
 			}
-		break;
-		
+			break;
+			
 		default:
 			MyDebugStr(__LINE__, __FILE__, "Unknown UNDO");
-		break;
+			break;
 	}
 	
 	EnableMenuItem(EditMenu, 1);
@@ -359,14 +353,13 @@ void SaveUndo(short UndoType, short ID, Str255 textMenu)
 void DoUndo(void)
 {
 	Ptr				myTempUndo, myTempInstru, myTempSets;
-	long			myTempSize, tempL, size;
+	long			myTempSize, size;
 	InstrData		myTempFid;
 	Str255			myStr;
 	short			i, x;
 	Boolean			IsReading;
 
-	if (myUndo.UndoType == 0)
-	{
+	if (myUndo.UndoType == 0) {
 		MyPPBeep();
 		return;
 	}
@@ -377,8 +370,7 @@ void DoUndo(void)
 	MADDriver->Reading = false;
 	MADPurgeTrack(MADDriver);
 	
-	switch (myUndo.UndoType)
-	{
+	switch (myUndo.UndoType) {
 		case UPattern:
 			/** REDO **/
 			myTempUndo = MyNewPtr(myUndo.dataSize);
@@ -404,30 +396,24 @@ void DoUndo(void)
 			// ** REDO **
 			myTempFid 	= curMusic->fid[ myUndo.ID];
 			myTempSize 	= 0;
-			for (i = 0; i < myTempFid.numSamples; i++)
-			{
-				sData	*curData = curMusic->sample[ curMusic->fid[ myUndo.ID].firstSample +  i];
+			for (i = 0; i < myTempFid.numSamples; i++) {
+				sData	*curData = curMusic->sample[curMusic->fid[myUndo.ID].firstSample +  i];
 				myTempSize	+= sizeof(sData) + curData->size;
 			}
 			
 			myTempUndo 		= MyNewPtr(myTempSize);
-			if (myTempUndo == NULL)
-			{
+			if (myTempUndo == NULL) {
 				ResetUndo();
 				break;
-			}
-			else
-			{
+			} else {
 				myTempSize = 0;
-				for (i = 0; i < myTempFid.numSamples; i++)
-				{
+				for (i = 0; i < myTempFid.numSamples; i++) {
 					sData	*curData = curMusic->sample[ curMusic->fid[ myUndo.ID].firstSample +  i];
 					
 					BlockMoveData(curData, myTempUndo + myTempSize, sizeof(sData));
 					myTempSize	+= sizeof(sData);
 					
-					if (curData->size > 0)
-					{
+					if (curData->size > 0) {
 						BlockMoveData(curData->data, myTempUndo + myTempSize, curData->size);
 						myTempSize	+= curData->size;
 					}
@@ -441,33 +427,31 @@ void DoUndo(void)
 			// After save for Redo, delete it !!
 			MADKillInstrument(curMusic, myUndo.ID);
 			
-			x = curMusic->fid[ myUndo.ID].firstSample;
-			curMusic->fid[ myUndo.ID]	= CopyFid;
-			curMusic->fid[ myUndo.ID].firstSample = x;
-			curMusic->fid[ myUndo.ID].numSamples = 0;
+			x = curMusic->fid[myUndo.ID].firstSample;
+			curMusic->fid[myUndo.ID]	= CopyFid;
+			curMusic->fid[myUndo.ID].firstSample = x;
+			curMusic->fid[myUndo.ID].numSamples = 0;
 			
 			size = 0;
-			for (i = 0; i < CopyFid.numSamples; i++)
-			{
+			for (i = 0; i < CopyFid.numSamples; i++) {
 				sData	*curData;
 				
 				/* Sample header */
 				curData = MADCreateSample(curMusic, myUndo.ID, i);
-				if (curData)
-				{
+				if (curData) {
 					BlockMoveData(myUndo.data + size, curData, sizeof(sData));
 					size += sizeof(sData);
 					
 					/* Sample data */
 					curData->data = MyNewPtr(curData->size);
-					if (curData->data)
-					{
+					if (curData->data) {
 						BlockMoveData(myUndo.data + size, curData->data, curData->size);
 						size += curData->size;
 					}
 				}
 			}
-			if (size != myUndo.dataSize) MyDebugStr(__LINE__, __FILE__, "USample DoUndo() Prob");
+			if (size != myUndo.dataSize)
+				MyDebugStr(__LINE__, __FILE__, "USample DoUndo() Prob");
 			
 			// ********
 			
@@ -495,11 +479,13 @@ void DoUndo(void)
 			
 			/** REDO **/
 			myTempUndo = MyNewPtr(myUndo.dataSize);
-			if (myTempUndo == NULL) MyDebugStr(__LINE__, __FILE__, "UndoError - MEMORY");
+			if (myTempUndo == NULL)
+				MyDebugStr(__LINE__, __FILE__, "UndoError - MEMORY");
 			BlockMoveData(curMusic->header, myTempUndo, myUndo.dataSize);
 			
 			myTempSets = NewPtrClear(MAXTRACK * sizeof(FXSets));
-			if (myTempUndo == NULL) MyDebugStr(__LINE__, __FILE__, "UndoError - MEMORY");
+			if (myTempUndo == NULL)
+				MyDebugStr(__LINE__, __FILE__, "UndoError - MEMORY");
 			BlockMoveData(curMusic->sets, myTempSets, MAXTRACK * sizeof(FXSets));
 			/********/
 			
@@ -519,43 +505,36 @@ void DoUndo(void)
 			// *** UAllSamples
 			// *********************
 			
-			if (myUndo.UndoType == UAllSamples)
-			{
-				for (i = 0; i < MAXINSTRU; i++)
-				{
+			if (myUndo.UndoType == UAllSamples) {
+				for (i = 0; i < MAXINSTRU; i++) {
 					long size;
 					
 					// ** REDO **
 					myTempSize 	= sizeof(InstrData);
-					for (x = 0; x < curMusic->fid[ i].numSamples; x++)
-					{
-						sData	*curData = curMusic->sample[ curMusic->fid[ i].firstSample +  x];
+					for (x = 0; x < curMusic->fid[i].numSamples; x++) {
+						sData	*curData = curMusic->sample[curMusic->fid[i].firstSample +  x];
 						myTempSize	+= sizeof(sData) + curData->size;
 					}
 					
 					myTempInstru 	= MyNewPtr(myTempSize);
-					if (myTempInstru != NULL)
-					{
+					if (myTempInstru != NULL) {
 						myTempSize = 0;
-						BlockMoveData(&curMusic->fid[ i], myTempInstru + myTempSize, sizeof(InstrData));
+						BlockMoveData(&curMusic->fid[i], myTempInstru + myTempSize, sizeof(InstrData));
 						myTempSize	+= sizeof(InstrData);
 						
-						for (x = 0; x < curMusic->fid[ i].numSamples; x++)
-						{
-							sData	*curData = curMusic->sample[ curMusic->fid[ i].firstSample +  x];
+						for (x = 0; x < curMusic->fid[i].numSamples; x++) {
+							sData	*curData = curMusic->sample[curMusic->fid[i].firstSample + x];
 							
 							BlockMoveData(curData, myTempInstru + myTempSize, sizeof(sData));
 							myTempSize	+= sizeof(sData);
 							
-							if (curData->size > 0)
-							{
+							if (curData->size > 0) {
 								BlockMoveData(curData->data, myTempInstru + myTempSize, curData->size);
 								myTempSize	+= curData->size;
 							}
 						}
 						
 						// After save for Redo, delete it !!
-						
 						MADKillInstrument(curMusic, i);
 					}
 					
@@ -563,8 +542,7 @@ void DoUndo(void)
 					// *** UNDO *****
 					
 					size = 0;
-					if (CopyAllInstruments[ i] != NULL)
-					{
+					if (CopyAllInstruments[i] != NULL) {
 						short numSamples, firstSample;
 						
 						firstSample = curMusic->fid[ i].firstSample;
@@ -578,73 +556,67 @@ void DoUndo(void)
 						numSamples = curMusic->fid[ i].numSamples;
 						curMusic->fid[ i].numSamples = 0;
 						
-						for (x = 0; x < numSamples; x++)
-						{
+						for (x = 0; x < numSamples; x++) {
 							sData	*curData;
 							
 							// Sample header
 							curData = MADCreateSample(curMusic, i, x);
-							if (curData)
-							{
-								BlockMoveData(CopyAllInstruments[ i] + size, curData, sizeof(sData));
+							if (curData) {
+								BlockMoveData(CopyAllInstruments[i] + size, curData, sizeof(sData));
 								size += sizeof(sData);
 								
 								// Sample data
 								curData->data = MyNewPtr(curData->size);
-								if (curData->data)
-								{
+								if (curData->data) {
 									BlockMoveData(CopyAllInstruments[ i] + size, curData->data, curData->size);
 									size += curData->size;
 								}
 							}
 						}
 						
-						MyDisposePtr(& CopyAllInstruments[ i]);	CopyAllInstruments[ i] = NULL;
+						MyDisposePtr(& CopyAllInstruments[i]);
+						CopyAllInstruments[i] = NULL;
 					}
 					
 					// ** REDO **
-					CopyAllInstruments[ i] = myTempInstru;
+					CopyAllInstruments[i] = myTempInstru;
 					// ********
 				}
 			}
 			
 			/*** UAllPatterns ***/
 
-			if (myUndo.UndoType == UAllPatterns)
-			{
-				for (i = 0; i < MAXPATTERN; i++)
-				{
+			if (myUndo.UndoType == UAllPatterns) {
+				for (i = 0; i < MAXPATTERN; i++) {
 					/** REDO **/
-					if (curMusic->partition[ i] != NULL)
-					{
-						myTempInstru = MyNewPtr(GetPtrSize((Ptr) curMusic->partition[ i]));
-						if (myTempInstru != NULL)
-						{
-							BlockMoveData(curMusic->partition[ i], myTempInstru, GetPtrSize((Ptr) curMusic->partition[ i]));
+					if (curMusic->partition[i] != NULL) {
+						myTempInstru = MyNewPtr(GetPtrSize((Ptr)curMusic->partition[i]));
+						if (myTempInstru != NULL) {
+							BlockMoveData(curMusic->partition[i], myTempInstru, GetPtrSize((Ptr)curMusic->partition[i]));
 						}
 						// After save for Redo, delete it !!
 						
-						MyDisposePtr((Ptr*) &curMusic->partition[ i]);	curMusic->partition[ i] = NULL;
-					}
-					else myTempInstru = NULL;
+						MyDisposePtr((Ptr*)&curMusic->partition[i]);
+						curMusic->partition[ i] = NULL;
+					} else
+						myTempInstru = NULL;
 					/********/
 
-					if (CopyPartition[ i] != NULL)
-					{
-						if (i >= curMusic->header->numPat) MyDebugStr(__LINE__, __FILE__, "UNDO Partition ERROR");
+					if (CopyPartition[i] != NULL) {
+						if (i >= curMusic->header->numPat)
+							MyDebugStr(__LINE__, __FILE__, "UNDO Partition ERROR");
 					
-						curMusic->partition[ i] = (PatData*) MyNewPtr(GetPtrSize((Ptr) CopyPartition[ i]));
-						if (curMusic->partition[ i] != NULL)
-						{
-							BlockMoveData(CopyPartition[ i], curMusic->partition[ i], GetPtrSize((Ptr) CopyPartition[ i]));
+						curMusic->partition[i] = (PatData*)MyNewPtr(GetPtrSize((Ptr)CopyPartition[i]));
+						if (curMusic->partition[i] != NULL) {
+							BlockMoveData(CopyPartition[i], curMusic->partition[i], GetPtrSize((Ptr) CopyPartition[i]));
 						}
 						
-						MyDisposePtr((Ptr*) &CopyPartition[ i]);
-						CopyPartition[ i] = NULL;
+						MyDisposePtr((Ptr*) &CopyPartition[i]);
+						CopyPartition[i] = NULL;
 					}
 					
 					/** REDO **/
-					CopyPartition[ i] = (PatData*) myTempInstru;
+					CopyPartition[i] = (PatData*)myTempInstru;
 					/********/
 				}
 			}
@@ -662,7 +634,16 @@ void DoUndo(void)
 	RedoMode = !RedoMode;
 	
 	GetMenuItemText(EditMenu, 1, myStr);
-	if (RedoMode)		{ myStr[ 1] = 'R';	myStr[ 2] = 'e';	myStr[ 3] = 'd';	myStr[ 4] = 'o'; }
-	else 				{ myStr[ 1] = 'U';	myStr[ 2] = 'n';	myStr[ 3] = 'd';	myStr[ 4] = 'o'; }
+	if (RedoMode) {
+		myStr[1] = 'R';
+		myStr[2] = 'e';
+		myStr[3] = 'd';
+		myStr[4] = 'o';
+	} else {
+		myStr[1] = 'U';
+		myStr[2] = 'n';
+		myStr[3] = 'd';
+		myStr[4] = 'o';
+	}
 	SetMenuItemText(EditMenu, 1, myStr);
 }

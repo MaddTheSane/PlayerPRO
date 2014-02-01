@@ -5,7 +5,7 @@
 static	long		WorkStatus, WorkTotal;
 		DialogPtr	theProgressDia;
 static	long		FirstCall;
-static	long		oldTime, oldPos;
+static	long		oldTime;
 static	short		currentPat;
 static	unsigned long	totalSize, finalSize;
 extern	KeyMap		km;
