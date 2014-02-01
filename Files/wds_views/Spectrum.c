@@ -129,11 +129,7 @@ void FillInterTextSpectrum(Rect *tempRect, short i)
 	
 	switch (OsciScale) {
 		case linear:
-<<<<<<< HEAD
-			defV = osci[ i].Freq;
-=======
 			defV = osci[i].Freq;
->>>>>>> PlayerPRO5
 			break;
 			
 		case logarithmic:
@@ -308,23 +304,12 @@ void DrawOsciFreq2(short OsciFreq, short LocalV, short OffSet, short no, Byte co
 	if (OsciFreq - OffSet >= (*specPixMap[no])->bounds.right - 2)
 		return;
 	
-<<<<<<< HEAD
-	{
-		Ptr		pixmap = (*specPixMap[no])->baseAddr;
-		short	i;
-		
-		for (i = 0; i < (*specPixMap[no])->bounds.bottom; i++) {
-			*(pixmap + CurrentQuickPixMap[i] + OsciFreq + 1 - OffSet) = col;
-			*(pixmap + CurrentQuickPixMap[i] + OsciFreq - 1 - OffSet) = col;
-		}
-=======
 	Ptr		pixmap = (*specPixMap[no])->baseAddr;
 	short	i;
 	
 	for (i = 0; i < (*specPixMap[no])->bounds.bottom; i++) {
 		*(pixmap + CurrentQuickPixMap[i] + OsciFreq + 1 - OffSet) = col;
 		*(pixmap + CurrentQuickPixMap[i] + OsciFreq - 1 - OffSet) = col;
->>>>>>> PlayerPRO5
 	}
 }
 
@@ -344,99 +329,6 @@ void UpdateSpectrumData(short LocalV, Byte *tempPtr2)
 #if 0
 void C8BitSpectrum(short offsetV, short offsetH, short LocalV, Byte *tempPtr, Byte *tempPtr2)
 {
-<<<<<<< HEAD
-	short	i, high, ioffsetH, VFast, SIterCopy = SIter;
-	Point	thePt;
-	Ptr		*CurrentQuickInt = CurrentQuick;
-	
-	i = SIterCopy;
-	if (i + offsetH >= VA[ 0].frame.right) {
-		SIterCopy = VA[ 0].frame.right - offsetH;
-		if (SIterCopy < 0) return;
-	}
-	
-	offsetV			+= OsciH - 1;
-	LocalV			+= OsciH - 1;
-	CurrentQuickInt	+= offsetV;
-	VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
-	
-	for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2) {
-		thePt.h		= i;
-		
-		high		= VFast;
-		thePt.v		= LocalV - *tempPtr2;
-		while (high-- > 0 && *tempPtr2 > 0) {
-			if (PtInRgn(thePt, dlogptrRgn)) *(CurrentQuickInt[ -*tempPtr2] + ioffsetH) = 0xFF;
-			thePt.v++;
-			(*tempPtr2)--;			// Descente de la fr子uence
-		}
-		
-		(*tempPtr) >>= OsciDD;
-		if (*tempPtr > *tempPtr2) {
-			high = *tempPtr - *tempPtr2;
-			thePt.v = LocalV - *tempPtr2 - high;
-			while (high-- > 0)
-			{
-				thePt.v++;
-				if (PtInRgn(thePt, dlogptrRgn)) *(CurrentQuickInt[ -*tempPtr2 - high] + ioffsetH) = 0x90;
-			}
-			*tempPtr2 = *tempPtr;
-		}
-		
-		tempPtr2++;		tempPtr++;
-	}
-}
-#endif
-
-void C8BitSpectrumPixMap(Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr, Byte *spot, Byte *spotTime)
-{
-	short	i, high, VFast;
-	long	*CurrentQuickInt = CurrentQuickPixMap + OsciH - 1;
-	VFast			= OsciH >> 5;
-	if (VFast == 0)
-		VFast = 1;
-	
-	for (i = 0; i < SIter; i+= 2) {
-		high		= VFast;
-		while (high-- > 0 && *tempPtr2 > 0) {
-			*(pixMapPtr + CurrentQuickInt[-*tempPtr2] + i) = 0xFF;
-			(*tempPtr2)--;			// Descente de la fr子uence
-		}
-		
-#if 0
-		if (*spotTime > 0)
-			(*spotTime)--;
-		else {
-			if (*spot != 0) *(pixMapPtr + CurrentQuickInt[ -*spot -1] + i) = 0xFF;	// Erase previous spot
-			*spot = 0;
-		}
-#endif
-		
-		(*tempPtr) >>= OsciDD;
-		
-		if (*tempPtr > *tempPtr2) {
-#if 0
-			if (*spot < *tempPtr2) {
-				if (*spot != 0)
-					*(pixMapPtr + CurrentQuickInt[ -*spot -1] + i) = 0xFF;	// Erase previous spot
-			}
-#endif
-			
-			high = *tempPtr - *tempPtr2;
-			while (high-- > 0) {
-				*(pixMapPtr + CurrentQuickInt[ -*tempPtr2 - high] + i) = 0x90;
-			}
-			*tempPtr2 = *tempPtr;
-			
-#if 0
-			if (*spot < *tempPtr2) {
-				*spotTime = 40;
-				*spot = *tempPtr2;
-				
-				*(pixMapPtr + CurrentQuickInt[ -*spot -1] + i) = 215;	// Draw spot
-			}
-#endif
-=======
 	short i, high, VFast;
 	long *CurrentQuickInt = CurrentQuickPixMap + OsciH - 1;
 	VFast = OsciH >> 5;
@@ -460,7 +352,6 @@ void C8BitSpectrumPixMap(Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr, Byte *spo
 			}
 			*tempPtr2 = *tempPtr;
 			
->>>>>>> PlayerPRO5
 		}
 		
 		tempPtr2++;
@@ -471,164 +362,11 @@ void C8BitSpectrumPixMap(Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr, Byte *spo
 	}
 }
 
-<<<<<<< HEAD
-#if 0
-void C8BitSpectrumDirect(short offsetV, short offsetH, short LocalV, Byte *tempPtr, Byte *tempPtr2)
-{
-	short		i, high, ioffsetH, VFast, SIterCopy = SIter;
-	Ptr			*CurrentQuickInt = CurrentQuick;
-	
-	i = SIterCopy;
-	if (i + offsetH >= VA[ 0].frame.right)
-	{
-		SIterCopy = VA[ 0].frame.right - offsetH;
-		if (SIterCopy < 0) return;
-	}
-	
-	offsetV 		+= OsciH - 1;
-	LocalV 			+= OsciH - 1;
-	CurrentQuickInt	+= offsetV;
-	VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
-	
-	for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
-	{
-		high		= VFast;
-		while (high-- > 0 && *tempPtr2 > 0)
-		{
-			*(CurrentQuickInt[ -*tempPtr2] + ioffsetH) = 0xFF;
-			(*tempPtr2)--;			// Descente de la fr子uence
-		}
-		
-		(*tempPtr) >>= OsciDD;
-		
-		if (*tempPtr > *tempPtr2)
-		{
-			high = *tempPtr - *tempPtr2;
-			while (high-- > 0)
-			{
-				*(CurrentQuickInt[ -*tempPtr2 - high] + ioffsetH) = 0x90;
-			}
-			*tempPtr2 = *tempPtr;
-		}
-		
-		tempPtr2++;		tempPtr++;
-	}
-}
-
-void C16BitSpectrum(short offsetV, short offsetH, short LocalV, Byte *tempPtr, Byte *tempPtr2)
-{
-	short		i, high, *curQuickShort, ioffsetH, VFast, SIterCopy = SIter;
-	Point		thePt;
-	Ptr			*CurrentQuickInt = CurrentQuick;
-	
-	i = SIterCopy;
-	if (i + offsetH >= VA[ 0].frame.right)
-	{
-		SIterCopy = VA[ 0].frame.right - offsetH;
-		if (SIterCopy < 0) return;
-	}
-	
-	offsetV 		+= OsciH - 1;
-	LocalV 			+= OsciH - 1;
-	CurrentQuickInt	+= offsetV;
-	VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
-	
-	for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2)
-	{
-		thePt.h = i;
-		
-		high		= VFast;
-		thePt.v		= LocalV - *tempPtr2;
-		while (high-- > 0 && *tempPtr2 > 0)
-		{
-			if (PtInRgn(thePt, dlogptrRgn))
-			{
-				curQuickShort = (short*) CurrentQuickInt[ -*tempPtr2];
-				*(curQuickShort + ioffsetH) = 0x0000;
-			}
-			thePt.v++;
-			(*tempPtr2)--;			// Descente de la fr子uence
-		}
-		
-		(*tempPtr) >>= OsciDD;
-		
-		if (*tempPtr > *tempPtr2)
-		{
-			high = *tempPtr - *tempPtr2;
-			while (high-- > 0)
-			{
-				thePt.v = LocalV - *tempPtr2 - high;
-				if (PtInRgn(thePt, dlogptrRgn))
-				{
-					curQuickShort = (short*) CurrentQuickInt[ -*tempPtr2 - high];
-					*(curQuickShort + ioffsetH) = 0x1BFF;
-				}
-			}
-			*tempPtr2 = *tempPtr;
-		}
-		
-		tempPtr2++;		tempPtr++;
-	}
-}
-
-void C16BitSpectrumDirect(short offsetV, short offsetH, short LocalV, Byte *tempPtr, Byte *tempPtr2)
-{
-	short		i, high, *curQuickShort, ioffsetH, VFast, SIterCopy = SIter;
-	Ptr			*CurrentQuickInt = CurrentQuick;
-	
-	i = SIterCopy;
-	if (i + offsetH >= VA[ 0].frame.right)
-	{
-		SIterCopy = VA[0].frame.right - offsetH;
-		if (SIterCopy < 0)
-			return;
-	}
-	
-	offsetV 		+= OsciH - 1;
-	LocalV 			+= OsciH - 1;
-	CurrentQuickInt	+= offsetV;
-	VFast			= OsciH >> 5;	if (VFast == 0) VFast = 1;
-	
-	for (i = 0, ioffsetH = offsetH; i < SIterCopy; i+= 2, ioffsetH += 2) {
-		high		= VFast;
-		while (high-- > 0 && *tempPtr2 > 0) {
-			curQuickShort = (short*) CurrentQuickInt[ -*tempPtr2];
-			*(curQuickShort + ioffsetH) = 0x0000;
-			(*tempPtr2)--;			// Descente de la fr子uence
-		}
-		
-		(*tempPtr) >>= OsciDD;
-		
-		if (*tempPtr > *tempPtr2) {
-			high = *tempPtr - *tempPtr2;
-			while (high-- > 0) {
-				curQuickShort = (short*) CurrentQuickInt[ -*tempPtr2 - high];
-				*(curQuickShort + ioffsetH) = 0x1BFF;
-			}
-			*tempPtr2 = *tempPtr;
-		}
-		
-		tempPtr2++;
-		tempPtr++;
-	}
-}
-#endif
-
-void DrawSpectrum(OsciRec	*osciPtr, short no)
-=======
 void DrawSpectrum(OsciRec *osciPtr, short no)
->>>>>>> PlayerPRO5
 {
 	Rect	caRect, tempRect;
-<<<<<<< HEAD
-	Ptr		spectrumPtr = NULL;
-
-	switch (OsciScale)
-	{
-=======
 	
 	switch (OsciScale) {
->>>>>>> PlayerPRO5
 		case linear:
 			spectrumPtr = MakeCalculusSpectrum(GetAudioSourceSpectrum(no), false);
 			break;
