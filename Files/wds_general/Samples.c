@@ -532,11 +532,11 @@ void UpdateDisplayLoop(short InstruNo)
 	switch (curSample[InstruNo]) {
 		case panningEnv:
 			if (curMusic->fid[InstruNo].pannType & EFLOOP) {
-				NumToString((long)curMusic->fid[InstruNo].pannBeg+1, StrTemp);
+				NumToString(curMusic->fid[InstruNo].pannBeg+1, StrTemp);
 				pStrcat(StrTemp, "\p Pt");
 				SetDText(SampleDlog[InstruNo], 9, StrTemp);
 				
-				NumToString((long)curMusic->fid[InstruNo].pannEnd+1, StrTemp);
+				NumToString(curMusic->fid[InstruNo].pannEnd+1, StrTemp);
 				pStrcat(StrTemp, "\p Pt");
 				SetDText(SampleDlog[InstruNo], 11, StrTemp);
 			} else {
@@ -547,11 +547,11 @@ void UpdateDisplayLoop(short InstruNo)
 			
 		case volumeEnv:
 			if (curMusic->fid[InstruNo].volType & EFLOOP) {
-				NumToString((long) curMusic->fid[InstruNo].volBeg+1, StrTemp);
+				NumToString(curMusic->fid[InstruNo].volBeg+1, StrTemp);
 				pStrcat(StrTemp, "\p Pt");
 				SetDText(SampleDlog[InstruNo], 9, StrTemp);
 				
-				NumToString((long) curMusic->fid[InstruNo].volEnd+1, StrTemp);
+				NumToString( curMusic->fid[InstruNo].volEnd+1, StrTemp);
 				pStrcat(StrTemp, "\p Pt");
 				SetDText(SampleDlog[InstruNo], 11, StrTemp);
 			} else {

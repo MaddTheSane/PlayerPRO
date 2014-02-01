@@ -6,23 +6,21 @@
 
 #define MAXBAR 8
 
-	extern	EventRecord				theEvent;
-	extern	Cursor					HandCrsr;
-	extern	MenuHandle				ViewsMenu;
-	extern	Boolean 				DragManagerUse, newQuicktime;
-	
-			DialogPtr				EQDlog;
-	
-	static	ControlHandle			EQCntl[ MAXBAR];
-	static	ControlHandle			SaveBut, LoadBut, OnOff;
-	static	short					*logoScale;
+extern	EventRecord				theEvent;
+extern	Cursor					HandCrsr;
+extern	MenuHandle				ViewsMenu;
+extern	Boolean 				DragManagerUse, newQuicktime;
+
+		DialogPtr				EQDlog;
+
+static	ControlHandle			EQCntl[ MAXBAR];
+static	ControlHandle			SaveBut, LoadBut, OnOff;
+static	short					*logoScale;
 
 double EQInterpolate(double p,double p1,double p2,double v1,double v2);
 
-
 void DrawCourbe(DialogPtr dia)
 {
-	GrafPtr		SavePort;
 	short		itemType, i;
 	Rect		itemRect;
 	Handle		itemHandle;
@@ -47,8 +45,6 @@ void  UpdateEQWindow(DialogPtr GetSelection)
 	Handle		itemHandle;
 	Rect		caRect;
 	
-	
-
 	GetPort(&SavePort);
 	SetPortDialogPort(EQDlog);
 
@@ -93,8 +89,8 @@ void DoNullEQ(void)
 
 void RecomputeEQ(void)
 {
-long	prev, next, prevC, nextC, i, x, khz, temp;
-Str255	str;
+	long	prev, next, prevC, nextC, i, x, khz, temp;
+	Str255	str;
 	
 	if (EQDlog == NULL) return;
 	
@@ -177,11 +173,10 @@ Str255	str;
 
 void InitEQWindow(void)
 {
-	long	i;
+	int i;
 	
-	for (i = 0 ; i < EQPACKET*2; i++)
-	{
-		MADDriver->Filter[ i] = thePrefs.Filter[ i];
+	for (i = 0 ; i < EQPACKET * 2; i++) {
+		MADDriver->Filter[i] = thePrefs.Filter[i];
 	}
 	
 	MADDriver->Equalizer = thePrefs.useEQ;
@@ -196,29 +191,39 @@ void LoadEQ(void)
 	
 	iErr = DoStandardOpen(&spec, "\pEQ file", 'EQ  ');
 	
-	if (iErr == noErr)
-	{
+	if (iErr == noErr) {
 		iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
 	
-		inOutBytes = sizeof(double) * EQPACKET*2;
+		inOutBytes = sizeof(double) * EQPACKET * 2;
 		iErr = FSRead(fRefNum, &inOutBytes, MADDriver->Filter);
+		
+		for (i = 0; i < EQPACKET * 2; i++) {
+			union un {
+				uint64_t i;
+				double d;
+			} un;
+			un.d = MADDriver->Filter[i];
+			un.i = CFSwapInt64(un.i);
+			MADDriver->Filter[i] = un.d;
+		}
 		
 		iErr = FSCloseFork(fRefNum);
 		
-		for (i = 0; i < MAXBAR; i++)
-		{
+		for (i = 0; i < MAXBAR; i++) {
 			 x = (i * EQPACKET*2) / (MAXBAR-1);
 			 
-			 if (x / 4 >= 255) x = 4 * 255;
-			 x = logoScale[ x / 4] * 4;
+			 if (x / 4 >= 255)
+				 x = 4 * 255;
+			 x = logoScale[x / 4] * 4;
 			
-			if (x >= EQPACKET*2) x = (EQPACKET*2) -1;
+			if (x >= EQPACKET*2)
+				x = (EQPACKET*2) -1;
 			
-			SetControlVisibility(EQCntl[ i], true, false);
+			SetControlVisibility(EQCntl[i], true, false);
 			
-			SetControlValue(EQCntl[ i], MADDriver->Filter[ x] * 100.0);
+			SetControlValue(EQCntl[i], MADDriver->Filter[x] * 100.0);
 			
-			SetControlVisibility(EQCntl[ i], false, false);
+			SetControlVisibility(EQCntl[i], false, false);
 		}
 		
 		RecomputeEQ();
@@ -227,11 +232,12 @@ void LoadEQ(void)
 
 void SaveEQ(void)
 {
-	FSSpec				spec;
-	Str255				theStr;
-	ByteCount			inOutBytes;
-	OSErr				iErr;
-	short				fRefNum;
+	FSSpec		spec;
+	Str255		theStr;
+	ByteCount	inOutBytes;
+	OSErr		iErr;
+	short		fRefNum;
+	int			i;
 	
 	pStrcpy(theStr, "\pEQ file");
 	
@@ -240,44 +246,56 @@ void SaveEQ(void)
 	
 	FSpDelete(&spec);
 	iErr = FSpCreate(&spec, 'SNPL', 'EQ  ',smSystemScript);
-	if (iErr == noErr)
-	{
+	if (iErr == noErr) {
+		double tmpEQ[EQPACKET * 2] = {0};
 		iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
 		
-		inOutBytes = sizeof(double) * EQPACKET * 2;
-		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, MADDriver->Filter, &inOutBytes);
+		memcpy(tmpEQ, MADDriver->Filter, sizeof(tmpEQ));
 		
+		for (i = 0; i < EQPACKET * 2; i++) {
+			union un {
+				uint64_t i;
+				double d;
+			} un;
+			un.d = tmpEQ[i];
+			un.i = CFSwapInt64(un.i);
+			tmpEQ[i] = un.d;
+		}
+		
+		inOutBytes = sizeof(tmpEQ);
+		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, tmpEQ, &inOutBytes);
 		iErr = FSCloseFork(fRefNum);
 	}
 }
 
 void CreateEQWindow(void)
 {
-	Rect					itemRect, tempRect, dataBounds;
-	Handle					itemHandle, rsrc;
-	short					x, itemType, itemHit, temp, i;
-	Point					cSize;
-	FontInfo				ThisFontInfo;
-	Str255					String;
-	GrafPtr					savePort;
+	Rect	itemRect;
+	Handle	itemHandle, rsrc;
+	short	x, itemType;
+	int		i;
 	
-	if (EQDlog != NULL) return;
+	if (EQDlog != NULL)
+		return;
 	
 	rsrc = GetResource('LogC', 128);
 	DetachResource(rsrc);
 	
-	logoScale = (short*)	NewPtrClear(256 * sizeof(short));
+	logoScale = (short*)NewPtrClear(256 * sizeof(short));
 	
 	HLock(rsrc);
 	BlockMoveData(*rsrc, logoScale, 256 * sizeof(short));
 	HUnlock(rsrc);
 	DisposeHandle(rsrc);
 	
+	for (i = 0; i < 256; i++) {
+		MOT16(&logoScale[i]);
+	}
 	
 	SetItemMark(ViewsMenu, mEqualizer, checkMark);
 	
 	EQDlog = GetNewDialog(183, NULL, GetDialogWindow(ToolsDlog));
-
+	
 	SetWindEtat(GetDialogWindow(EQDlog));
 	SetPortDialogPort(EQDlog);
 	
@@ -285,77 +303,79 @@ void CreateEQWindow(void)
 	TextSize(9);
 	
 	
-	for (i = 0; i < MAXBAR; i++)
-	{
+	for (i = 0; i < MAXBAR; i++) {
 		GetDialogItem(EQDlog, i + 2, &itemType, &itemHandle, &itemRect);
 		EQCntl[ i] = NewControl(GetDialogWindow(EQDlog), &itemRect, "\p", true, MADDriver->Filter[ (i * EQPACKET*2) / MAXBAR] * 100.0, 0, 200, 57, 0);
 		
-		if (MADDriver->Equalizer) HiliteControl(EQCntl[ i], 0);
-		else HiliteControl(EQCntl[ i], 255);
+		if (MADDriver->Equalizer)
+			HiliteControl(EQCntl[i], 0);
+		else
+			HiliteControl(EQCntl[i], 255);
 	}
 	
-	for (i = 0; i < MAXBAR; i++)
-		{
-			 x = (i * EQPACKET*2) / (MAXBAR-1);
-			 
-			 if (x / 4 >= 255) x = 4 * 255;
-			 x = logoScale[ x / 4] * 4;
-			
-			if (x >= EQPACKET*2) x = (EQPACKET*2) -1;
-			SetControlValue(EQCntl[ i], MADDriver->Filter[ x] * 100.0);
-		}
+	for (i = 0; i < MAXBAR; i++) {
+		x = (i * EQPACKET * 2) / (MAXBAR - 1);
 		
-		SetControlVisibility(EQCntl[ i], false, false);
+		if (x / 4 >= 255)
+			x = 4 * 255;
+		x = logoScale[ x / 4] * 4;
 		
+		if (x >= EQPACKET * 2)
+			x = (EQPACKET * 2) -1;
+		SetControlValue(EQCntl[i], MADDriver->Filter[x] * 100.0);
+	}
+	
+	SetControlVisibility(EQCntl[ i], false, false);
+	
 	SelectWindow2(GetDialogWindow(EQDlog));
 	SizeWindow(GetDialogWindow(EQDlog), 216, 190, true);
-
+	
 	ShowWindow(GetDialogWindow(EQDlog));
-
-//	TurnRadio(1, EQDlog, MADDriver->Equalizer);
 	
+	//TurnRadio(1, EQDlog, MADDriver->Equalizer);
 	
-	GetDialogItem(EQDlog , 14, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(EQDlog, 14, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	LoadBut = NewControl(	GetDialogWindow(EQDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							152,
-							kControlBevelButtonNormalBevelProc,
-							0);
-
+	LoadBut = NewControl(GetDialogWindow(EQDlog),
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 152,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
+	
 	GetDialogItem(EQDlog , 15, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	SaveBut = NewControl(	GetDialogWindow(EQDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							151,
-							kControlBevelButtonNormalBevelProc,
-							0);
-
+	SaveBut = NewControl(GetDialogWindow(EQDlog),
+						 &itemRect,
+						 "\p",
+						 true,
+						 0,
+						 kControlContentIconSuiteRes,
+						 151,
+						 kControlBevelButtonNormalBevelProc,
+						 0);
+	
 	GetDialogItem(EQDlog , 17, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
-	OnOff = NewControl(	GetDialogWindow(EQDlog),
-							&itemRect,
-							"\p",
-							true,
-							0,
-							kControlContentIconSuiteRes,
-							214,
-							kControlBevelButtonNormalBevelProc,
-							0);
+	OnOff = NewControl(GetDialogWindow(EQDlog),
+					   &itemRect,
+					   "\p",
+					   true,
+					   0,
+					   kControlContentIconSuiteRes,
+					   214,
+					   kControlBevelButtonNormalBevelProc,
+					   0);
 	
-	if (MADDriver->Equalizer) HiliteControl(OnOff, kControlButtonPart);
-	else HiliteControl(OnOff, 0);
+	if (MADDriver->Equalizer)
+		HiliteControl(OnOff, kControlButtonPart);
+	else
+		HiliteControl(OnOff, 0);
 	
-	
-//	SizeWindow(EQDlog, 350, 460, true);
+	//SizeWindow(EQDlog, 350, 460, true);
 	
 	RecomputeEQ();
 	
@@ -364,134 +384,126 @@ void CreateEQWindow(void)
 
 void DoItemPressEQ(short whichItem, DialogPtr whichDialog)
 {
- 		short				temp,itemType, newPL, newPat, newPartitionReader;
-		Point				myPt;
-		Handle				itemHandle;
-		Rect				itemRect;
-		long				i, x, oldH = 0, tempLong, max, val;
-		GrafPtr				savePort;
-		Boolean				ReadingCopy;
-		ControlActionUPP	MyControlUPP;
-		FSSpec				newFile;
-		Str255				str;
-		
-		GetPort(&savePort);
-		SetPortDialogPort(whichDialog);
-		
-			switch (whichItem)
-			{
-				case 17:
-				//	InverseRadio(1, EQDlog);
-					
-					MADDriver->Equalizer = !MADDriver->Equalizer;
-					
-					if (MADDriver->Equalizer) HiliteControl(OnOff, kControlButtonPart);
-					else HiliteControl(OnOff, 0);
-					
-					for (i = 0; i < MAXBAR; i++)
-					{
-						SetControlVisibility(EQCntl[ i], true, false);
-						
-						if (MADDriver->Equalizer) HiliteControl(EQCntl[ i], 0);
-						else HiliteControl(EQCntl[ i], 255);
-						
-						SetControlVisibility(EQCntl[ i], false, false);
-					}
-					
-					
-				break;
+	short	itemType;
+	Point	myPt;
+	Handle	itemHandle;
+	Rect	itemRect;
+	long	i, x, oldH = 0, val;
+	GrafPtr	savePort;
+	
+	GetPort(&savePort);
+	SetPortDialogPort(whichDialog);
+	
+	switch (whichItem) {
+		case 17:
+			//InverseRadio(1, EQDlog);
+			
+			MADDriver->Equalizer = !MADDriver->Equalizer;
+			
+			if (MADDriver->Equalizer)
+				HiliteControl(OnOff, kControlButtonPart);
+			else
+				HiliteControl(OnOff, 0);
+			
+			for (i = 0; i < MAXBAR; i++) {
+				SetControlVisibility(EQCntl[ i], true, false);
 				
-				case 14:
-					if (GetControlHilite(LoadBut) == 0  && MyTrackControl(LoadBut, theEvent.where, NULL))
-					{
-						LoadEQ();
-					}
-				break;
+				if (MADDriver->Equalizer)
+					HiliteControl(EQCntl[ i], 0);
+				else
+					HiliteControl(EQCntl[ i], 255);
 				
-				case 15:
-					if (GetControlHilite(SaveBut) == 0  && MyTrackControl(SaveBut, theEvent.where, NULL))
-					{
-						SaveEQ();
-					}
-				break;
+				SetControlVisibility(EQCntl[ i], false, false);
 			}
 			
-			if (whichItem >= 2 && whichItem < 2 + MAXBAR)
-			{
-				GetMouse(&myPt);
-				GetDialogItem (whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
-				
-				if(PtInRect(myPt, &itemRect))
-				{
-					
-					while (Button())
-					{
-						DoGlobalNull();
-						SetPortDialogPort(whichDialog);
-						GetMouse(&myPt);
-						
-						x = FindDialogItem(whichDialog, myPt)+1;
-						
-						if (x != 0)
-						{
-							if (x-2 < 0) x = 0;
-							if (x-2 >= MAXBAR) x = 0;
-						}
-						
-						if (x != 0 && x != whichItem)
-						{
-							whichItem = x;
-							GetDialogItem (whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
-							oldH = -1;
-						}
-						
-						if (oldH != myPt.h)
-						{
-							oldH = myPt.h;
-							
-							if (myPt.h < itemRect.left) 		myPt.h = itemRect.left;
-							else if (myPt.h > itemRect.right)	myPt.h = itemRect.right;
-					
-							val = (200* (myPt.h - itemRect.left)) / (itemRect.right-itemRect.left);
-							
-							SetControlVisibility(EQCntl[ whichItem-2], true, false);
-							
-							SetControlValue(EQCntl[ whichItem-2], val);
-							
-							SetControlVisibility(EQCntl[ whichItem-2], false, false);
-							
-						/*	NumToString(val, str);
-							pStrcat(str, "\p %");
-							
-							SetDText(whichDialog, 30 + whichItem-2, str);*/
-						}
-						
-						RecomputeEQ();
-						
-						WaitNextEvent(everyEvent, &theEvent, 1, NULL);
-					}
-				}
+			
+			break;
+			
+		case 14:
+			if (GetControlHilite(LoadBut) == 0  && MyTrackControl(LoadBut, theEvent.where, NULL)) {
+				LoadEQ();
 			}
+			break;
+			
+		case 15:
+			if (GetControlHilite(SaveBut) == 0  && MyTrackControl(SaveBut, theEvent.where, NULL)) {
+				SaveEQ();
+			}
+			break;
+	}
+	
+	if (whichItem >= 2 && whichItem < 2 + MAXBAR) {
+		GetMouse(&myPt);
+		GetDialogItem (whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
 		
-		SetPort(savePort);
+		if(PtInRect(myPt, &itemRect)) {
+			while (Button()) {
+				DoGlobalNull();
+				SetPortDialogPort(whichDialog);
+				GetMouse(&myPt);
+				
+				x = FindDialogItem(whichDialog, myPt) + 1;
+				
+				if (x != 0) {
+					if (x - 2 < 0)
+						x = 0;
+					if (x - 2 >= MAXBAR)
+						x = 0;
+				}
+				
+				if (x != 0 && x != whichItem)
+				{
+					whichItem = x;
+					GetDialogItem(whichDialog, whichItem, &itemType, &itemHandle, &itemRect);
+					oldH = -1;
+				}
+				
+				if (oldH != myPt.h)
+				{
+					oldH = myPt.h;
+					
+					if (myPt.h < itemRect.left) 		myPt.h = itemRect.left;
+					else if (myPt.h > itemRect.right)	myPt.h = itemRect.right;
+					
+					val = (200* (myPt.h - itemRect.left)) / (itemRect.right-itemRect.left);
+					
+					SetControlVisibility(EQCntl[ whichItem-2], true, false);
+					
+					SetControlValue(EQCntl[ whichItem-2], val);
+					
+					SetControlVisibility(EQCntl[ whichItem-2], false, false);
+					
+					/*	NumToString(val, str);
+					 pStrcat(str, "\p %");
+					 
+					 SetDText(whichDialog, 30 + whichItem-2, str);*/
+				}
+				
+				RecomputeEQ();
+				
+				WaitNextEvent(everyEvent, &theEvent, 1, NULL);
+			}
+		}
+	}
+	
+	SetPort(savePort);
 }
 
 void CloseEQ(void)
 {
-	OSErr	iErr;
-
-	if (EQDlog != NULL)
-	{
+	if (EQDlog != NULL) {
 		DisposeDialog(EQDlog);
 		EQDlog = NULL;
 		
 		SetItemMark(ViewsMenu, mEqualizer, noMark);
 		
-		if (logoScale != NULL) DisposePtr((Ptr) logoScale);	logoScale = NULL;
+		if (logoScale != NULL)
+			DisposePtr((Ptr) logoScale);
+		logoScale = NULL;
 	}
 	EQDlog = NULL;
 	
 	thePrefs.useEQ = MADDriver->Equalizer;
 	
-//	SetItemMark(ViewsMenu, m3D, noMark);
+	//SetItemMark(ViewsMenu, m3D, noMark);
 }

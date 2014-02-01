@@ -34,48 +34,45 @@ typedef struct {
 	Ptr			SpotTime;
 } OsciRec;
 
-enum
-{
+enum {
 	OutPutAudio = 0,
 	InPutAudio
 };
 
-enum
-{
+enum {
 	vID,
 	hID
 };
 
-enum
-{
+enum {
 	linear = 1,
 	logarithmic = 2
 };
 
-extern	unsigned long			SoundInputRate;
-extern	EventRecord				theEvent;
-extern	RGBColor				theColor;
-extern	Boolean					MicroPhone;
-extern	Ptr						outPutPtr;
-extern	Str255					InPutName;
-extern	MenuHandle				OsciHMenu, SpectrumTypeMenu;
-extern	long					deviceBufferSize;
+extern	unsigned long	SoundInputRate;
+extern	EventRecord		theEvent;
+extern	RGBColor		theColor;
+extern	Boolean			MicroPhone;
+extern	Ptr				outPutPtr;
+extern	Str255			InPutName;
+extern	MenuHandle		OsciHMenu, SpectrumTypeMenu;
+extern	long			deviceBufferSize;
 
-static	Ptr						ValSaveData, SpotData, SpotTimeData;
-static	long					oldNullTicks;
-static	ControlHandle			HControl, VControl;
-static	Boolean					KOKO;
-static	PixMapHandle			specPixMap[ 2];
-static	long					*CurrentQuickPixMap;
+static	Ptr				ValSaveData, SpotData, SpotTimeData;
+static	long			oldNullTicks;
+static	ControlHandle	HControl, VControl;
+static	Boolean			KOKO;
+static	PixMapHandle	specPixMap[2];
+static	long			*CurrentQuickPixMap;
 
-static	OsciRec					osci[ MAXTRACK];
-static	short					OsciH, OsciDD, OsciL, OsciType, OsciVStart, OsciNo, SIter, OsciScale;
-static	long					OsciOffSet;
-static	short 					gThumbPrev;
+static	OsciRec			osci[MAXTRACK];
+static	short			OsciH, OsciDD, OsciL, OsciType, OsciVStart, OsciNo, SIter, OsciScale;
+static	long			OsciOffSet;
+static	short 			gThumbPrev;
 
-extern	Boolean					OscilloMicrophone;
-		Boolean					SpectrumMicrophone;
-		DialogPtr				SpectrumDlog;
+extern	Boolean			OscilloMicrophone;
+		Boolean			SpectrumMicrophone;
+		DialogPtr		SpectrumDlog;
 
 #define CourbeColor		0x90
 #define RawMouse 		0x82C
@@ -132,11 +129,15 @@ void FillInterTextSpectrum(Rect *tempRect, short i)
 	
 	switch (OsciScale) {
 		case linear:
+<<<<<<< HEAD
 			defV = osci[ i].Freq;
+=======
+			defV = osci[i].Freq;
+>>>>>>> PlayerPRO5
 			break;
 			
 		case logarithmic:
-			defV = LogChangePos(osci[ i].Freq/2);
+			defV = LogChangePos(osci[i].Freq/2);
 			defV *= 2;
 			break;
 	}
@@ -213,13 +214,14 @@ void SetControlSpectrum(void)
 	
 	GetPortBounds(GetDialogPort(SpectrumDlog), &caRect);
 	
-	MyMoveControl(HControl, -1, caRect.bottom-15);
+	MyMoveControl(HControl, -1, caRect.bottom - 15);
 	MySizeControl(HControl, caRect.right -13, 16);
 	
 	SetControlMinimum(HControl, 0);
 	SetControlMaximum(HControl, OsciL - (caRect.right - 15));
 	
-	if (gUseControlSize) SetControlViewSize(HControl, (caRect.right - 15));
+	if (gUseControlSize)
+		SetControlViewSize(HControl, (caRect.right - 15));
 	
 	MyMoveControl(VControl, caRect.right -15, OsciVStart);
 	MySizeControl(VControl, 16, caRect.bottom - 14 - OsciVStart);
@@ -255,14 +257,14 @@ void SetControlSpectrum(void)
 
 void DoGrowSpectrum(void)
 {
-	long		lSizeVH;
-	GrafPtr		SavePort;
-	Rect		caRect, temp;
-	short		tempA, tempB;
-
+	long	lSizeVH;
+	GrafPtr	SavePort;
+	Rect	caRect, temp;
+	short	tempA, tempB;
+	
 	GetPort(&SavePort);
- 	SetPortDialogPort(SpectrumDlog);
-
+	SetPortDialogPort(SpectrumDlog);
+	
 	temp.left = 150;
 	temp.right = OsciL + 15;
 	
@@ -284,12 +286,12 @@ void DoGrowSpectrum(void)
 			tempA = temp.right;
 		tempB = caRect.bottom;
 	}
-
+	
 	tempB -= OsciVStart + 15;
 	tempB /= OsciH + InterText;
 	tempB *= OsciH + InterText;
 	tempB += OsciVStart + 15;
-
+	
 	MySizeWindow(SpectrumDlog, tempA, tempB, true);
 	SetWindowSpectrum();
 	
@@ -306,6 +308,7 @@ void DrawOsciFreq2(short OsciFreq, short LocalV, short OffSet, short no, Byte co
 	if (OsciFreq - OffSet >= (*specPixMap[no])->bounds.right - 2)
 		return;
 	
+<<<<<<< HEAD
 	{
 		Ptr		pixmap = (*specPixMap[no])->baseAddr;
 		short	i;
@@ -314,13 +317,21 @@ void DrawOsciFreq2(short OsciFreq, short LocalV, short OffSet, short no, Byte co
 			*(pixmap + CurrentQuickPixMap[i] + OsciFreq + 1 - OffSet) = col;
 			*(pixmap + CurrentQuickPixMap[i] + OsciFreq - 1 - OffSet) = col;
 		}
+=======
+	Ptr		pixmap = (*specPixMap[no])->baseAddr;
+	short	i;
+	
+	for (i = 0; i < (*specPixMap[no])->bounds.bottom; i++) {
+		*(pixmap + CurrentQuickPixMap[i] + OsciFreq + 1 - OffSet) = col;
+		*(pixmap + CurrentQuickPixMap[i] + OsciFreq - 1 - OffSet) = col;
+>>>>>>> PlayerPRO5
 	}
 }
 
 void UpdateSpectrumData(short LocalV, Byte *tempPtr2)
 {
 	short		i;
-	RGBColor	r = { 13107, 65535, 65535};
+	RGBColor	r = {13107, 65535, 65535};
 	
 	RGBForeColor(&r);
 	
@@ -333,6 +344,7 @@ void UpdateSpectrumData(short LocalV, Byte *tempPtr2)
 #if 0
 void C8BitSpectrum(short offsetV, short offsetH, short LocalV, Byte *tempPtr, Byte *tempPtr2)
 {
+<<<<<<< HEAD
 	short	i, high, ioffsetH, VFast, SIterCopy = SIter;
 	Point	thePt;
 	Ptr		*CurrentQuickInt = CurrentQuick;
@@ -424,15 +436,42 @@ void C8BitSpectrumPixMap(Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr, Byte *spo
 				*(pixMapPtr + CurrentQuickInt[ -*spot -1] + i) = 215;	// Draw spot
 			}
 #endif
+=======
+	short i, high, VFast;
+	long *CurrentQuickInt = CurrentQuickPixMap + OsciH - 1;
+	VFast = OsciH >> 5;
+	if (VFast == 0)
+		VFast = 1;
+	
+	for (i = 0; i < SIter; i += 2) {
+		high		= VFast;
+		while (high-- > 0 && *tempPtr2 > 0) {
+			*(pixMapPtr + CurrentQuickInt[ -*tempPtr2] + i) = 0xFF;
+			(*tempPtr2)--;			// Descente de la frŽquence
 		}
 		
-		tempPtr2++;		tempPtr++;
+		(*tempPtr) >>= OsciDD;
+		
+		if (*tempPtr > *tempPtr2) {
+			
+			high = *tempPtr - *tempPtr2;
+			while (high-- > 0) {
+				*(pixMapPtr + CurrentQuickInt[-*tempPtr2 - high] + i) = 0x90;
+			}
+			*tempPtr2 = *tempPtr;
+			
+>>>>>>> PlayerPRO5
+		}
+		
+		tempPtr2++;
+		tempPtr++;
 		
 		spot++;
 		spotTime++;
 	}
 }
 
+<<<<<<< HEAD
 #if 0
 void C8BitSpectrumDirect(short offsetV, short offsetH, short LocalV, Byte *tempPtr, Byte *tempPtr2)
 {
@@ -576,12 +615,20 @@ void C16BitSpectrumDirect(short offsetV, short offsetH, short LocalV, Byte *temp
 #endif
 
 void DrawSpectrum(OsciRec	*osciPtr, short no)
+=======
+void DrawSpectrum(OsciRec *osciPtr, short no)
+>>>>>>> PlayerPRO5
 {
 	Rect	caRect, tempRect;
+<<<<<<< HEAD
 	Ptr		spectrumPtr = NULL;
 
 	switch (OsciScale)
 	{
+=======
+	
+	switch (OsciScale) {
+>>>>>>> PlayerPRO5
 		case linear:
 			spectrumPtr = MakeCalculusSpectrum(GetAudioSourceSpectrum(no), false);
 			break;
@@ -607,12 +654,12 @@ void DrawSpectrum(OsciRec	*osciPtr, short no)
 						(Byte*)osciPtr->SpotTime + OsciOffSet/2);
 	
 	BackColor(whiteColor);
-	CopyBits ((BitMap*)(*specPixMap[no]),
-			  (BitMap*)*GetPortPixMap(GetDialogPort(SpectrumDlog)),
-			  &(*specPixMap[no])->bounds,
-			  &tempRect,
-			  srcCopy,
-			  nil);
+	CopyBits((BitMap*)(*specPixMap[no]),
+			 (BitMap*)*GetPortPixMap(GetDialogPort(SpectrumDlog)),
+			 &(*specPixMap[no])->bounds,
+			 &tempRect,
+			 srcCopy,
+			 nil);
 	RGBBackColor(&theColor);
 }
 
@@ -622,23 +669,25 @@ void DoNullSpectrum(void)
 	GrafPtr			myPort;
 	Rect			caRect;
 	Boolean			Test;
-
+	
 	if (SpectrumDlog == NULL)
 		return;
-
+	
 	if (TickCount() <= oldNullTicks)
 		return;
+	
 	oldNullTicks = TickCount();
 	
 	GetPort(&myPort);
-	SetPortDialogPort(SpectrumDlog);	
+	SetPortDialogPort(SpectrumDlog);
 	
 	Test = false;
 	
 	GetPortBounds(GetDialogPort(SpectrumDlog), &caRect);
 	
 	OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
-	for (i = GetControlValue(VControl); i < GetControlValue(VControl) + OsciSee; i++) DrawSpectrum(&osci[ i], i);
+	for (i = GetControlValue(VControl); i < GetControlValue(VControl) + OsciSee; i++)
+		DrawSpectrum(&osci[ i], i);
 	
 	if (Test)
 		ShowCursor();
@@ -646,7 +695,7 @@ void DoNullSpectrum(void)
 	SetPort(myPort);
 }
 
-void  UpdateSpectrumWindow(DialogPtr GetSelection)
+void UpdateSpectrumWindow(DialogPtr GetSelection)
 {
 	Rect   		caRect, tempRect, bRect;
 	GrafPtr		SavePort;
@@ -681,14 +730,14 @@ void  UpdateSpectrumWindow(DialogPtr GetSelection)
 		
 		BackColor(whiteColor);
 		CopyBits((BitMap*)(*specPixMap[i]),
-				  (BitMap*)*GetPortPixMap(GetDialogPort(SpectrumDlog)),
-				  &(*specPixMap[i])->bounds,
-				  &tempRect,
-				  srcCopy,
-				  nil);
+				 (BitMap*)*GetPortPixMap(GetDialogPort(SpectrumDlog)),
+				 &(*specPixMap[i])->bounds,
+				 &tempRect,
+				 srcCopy,
+				 nil);
 		RGBBackColor(&theColor);
 	}
-	osci[ i].rect = tempRect;
+	osci[i].rect = tempRect;
 	
 	// InterText //
 	bRect = tempRect;
@@ -708,27 +757,22 @@ void  UpdateSpectrumWindow(DialogPtr GetSelection)
 	LineTo(caRect.right, OsciVStart);
 	
 	visibleRegion = NewRgn();
-	
 	GetPortVisibleRegion(GetDialogPort(GetSelection), visibleRegion);
-	
 	UpdateDialog(GetSelection, visibleRegion);
-	
 	DisposeRgn(visibleRegion);
-	
 	EndUpdate(GetDialogWindow(SpectrumDlog));
-	
 	DrawGrowIconP(GetSelection);
-	
 	SetPort(SavePort);
 }
 
-static	DialogPtr	theDialogControl;
+static DialogPtr theDialogControl;
 
 pascal void actionProcSpectrum(ControlHandle theControl, short ctlPart)
 {
 	long	lRefCon;
 	short	maxValue, minValue, curVal, sVal, OsciSee;
 	Rect	caRect, aRect;
+	int		i;
 	
 	if (ctlPart <= 0) return;
 	
@@ -741,12 +785,13 @@ pascal void actionProcSpectrum(ControlHandle theControl, short ctlPart)
 	
 	OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
 	
-	switch(ctlPart) {
+	switch (ctlPart) {
 		case kControlUpButtonPart:
 			if (lRefCon == hID)
 				curVal -= OSCILLODEF;
 			else
 				curVal -= 1;
+			
 			if (curVal < minValue)
 				curVal = minValue;
 			break;
@@ -756,6 +801,7 @@ pascal void actionProcSpectrum(ControlHandle theControl, short ctlPart)
 				curVal += OSCILLODEF;
 			else
 				curVal += 1;
+			
 			if (curVal > maxValue)
 				curVal = maxValue;
 			break;
@@ -765,6 +811,7 @@ pascal void actionProcSpectrum(ControlHandle theControl, short ctlPart)
 				curVal -= SIter;
 			else
 				curVal -= OsciSee;
+			
 			if (curVal < minValue)
 				curVal = minValue;
 			break;
@@ -774,6 +821,7 @@ pascal void actionProcSpectrum(ControlHandle theControl, short ctlPart)
 				curVal += SIter;
 			else
 				curVal += OsciSee;
+			
 			if (curVal > maxValue)
 				curVal = maxValue;
 			break;
@@ -794,8 +842,6 @@ pascal void actionProcSpectrum(ControlHandle theControl, short ctlPart)
 			
 			UpdateSpectrumWindow(theDialogControl);			/* Important pour la mise ˆ jour des VPos !!! */
 		} else {
-			short i;
-			
 			GetWorkingZoneSpectrum(&aRect);
 			InvalWindowRect(GetDialogWindow(theDialogControl), &aRect);
 			UpdateSpectrumWindow(theDialogControl);
@@ -807,7 +853,7 @@ pascal void actionProcSpectrum(ControlHandle theControl, short ctlPart)
 			
 			OsciOffSet	= GetControlValue(HControl);
 			
-			for (i =0 ; i < 2;i++) {
+			for (i = 0 ; i < 2; i++) {
 				ForeColor(redColor);
 				DrawOsciFreq2(osci[i].Freq, osci[i].VPos, (OsciOffSet / 2) * 2, i, 215);
 				ForeColor(blackColor);
@@ -867,10 +913,7 @@ void DoItemPressSpectrum(short whichItem, DialogPtr whichDialog)
 			
 			SetItemMark(tempMenu, curSelec, 0xa5);
 			
-			mresult = PopUpMenuSelect(tempMenu,
-									  myPt.v,
-									  myPt.h,
-									  curSelec);
+			mresult = PopUpMenuSelect(tempMenu, myPt.v, myPt.h, curSelec);
 			
 			SetItemMark(tempMenu, curSelec, 0);
 			
@@ -897,7 +940,8 @@ void DoItemPressSpectrum(short whichItem, DialogPtr whichDialog)
 			GetDialogItem(whichDialog, whichItem, &itemType, &itemHandle, &tempRect);
 			curSelec = OsciType;
 			
-			myPt.v = tempRect.top;	myPt.h = tempRect.left;
+			myPt.v = tempRect.top;
+			myPt.h = tempRect.left;
 			LocalToGlobal(&myPt);
 			
 			SetItemMark(SpectrumTypeMenu, curSelec + 1, 0xa5);
@@ -939,6 +983,7 @@ void DoItemPressSpectrum(short whichItem, DialogPtr whichDialog)
 			GetDialogItem(whichDialog, whichItem, &itemType, &itemHandle, &tempRect);
 			
 			switch (OsciH) {
+				default:
 				case 16:
 					curSelec = 0;
 					break;
@@ -1022,14 +1067,14 @@ void DoItemPressSpectrum(short whichItem, DialogPtr whichDialog)
 						DoGlobalNull();
 						
 						GetMouse(&myPt);
-						if (PtInRect(myPt, &osci[i].rect) && OsciOffSet + (myPt.h/2)*2 != osci[ i].Freq) {
+						if (PtInRect(myPt, &osci[i].rect) && OsciOffSet + (myPt.h / 2) * 2 != osci[i].Freq) {
 							ForeColor(blackColor);
-							DrawOsciFreq2(osci[i].Freq, osci[ i].VPos, (OsciOffSet/2)*2, i, 0xFF);
+							DrawOsciFreq2(osci[i].Freq, osci[i].VPos, (OsciOffSet / 2) * 2, i, 0xFF);
 							
-							osci[i].Freq = (OsciOffSet/2)*2 + (myPt.h/2)*2;
+							osci[i].Freq = (OsciOffSet / 2) * 2 + (myPt.h / 2) * 2;
 							
 							ForeColor(redColor);
-							DrawOsciFreq2(osci[ i].Freq, osci[ i].VPos, (OsciOffSet/2)*2, i, 215);
+							DrawOsciFreq2(osci[ i].Freq, osci[i].VPos, (OsciOffSet/2)*2, i, 215);
 							ForeColor(blackColor);
 							
 							GetPortBounds(GetDialogPort(SpectrumDlog), &caRect);
@@ -1071,30 +1116,29 @@ void SetWindowSpectrum(void)
 	
 	switch (OsciType) {
 		case OutPutAudio:
-			osci[0].VPos		=	OsciVStart ;
-			osci[0].SavePtr		=	ValSaveData;
-			osci[0].Spot		=	SpotData;
-			osci[0].SpotTime	=	SpotTimeData;
-			osci[0].Size		=	GetAudioSizeSpectrum();
-			
+			osci[0].VPos		= OsciVStart ;
+			osci[0].SavePtr		= ValSaveData;
+			osci[0].Spot		= SpotData;
+			osci[0].SpotTime	= SpotTimeData;
+			osci[0].Size		= GetAudioSizeSpectrum();
 			pStrcpy(osci[0].Name, "\pLeft Channel");
 			
-			osci[1].VPos		=	OsciVStart + OsciH + InterText;
-			osci[1].SavePtr		=	osci[0].SavePtr + osci[0].Size;
-			osci[1].Spot		=	SpotData + osci[0].Size;
-			osci[1].SpotTime	=	SpotTimeData + osci[0].Size;
-			osci[1].Size		=	GetAudioSizeSpectrum();
+			osci[1].VPos		= OsciVStart + OsciH + InterText;
+			osci[1].SavePtr		= osci[0].SavePtr + osci[0].Size;
+			osci[1].Spot		= SpotData + osci[0].Size;
+			osci[1].SpotTime	= SpotTimeData + osci[0].Size;
+			osci[1].Size		= GetAudioSizeSpectrum();
 			pStrcpy(osci[1].Name, "\pRight Channel");
 			
 			OsciNo = 2;
 			break;
 			
 		case InPutAudio:
-			osci[0].VPos		=	OsciVStart;
-			osci[0].SavePtr		=	ValSaveData;
-			osci[0].Spot		=	SpotData;
-			osci[0].SpotTime	=	SpotTimeData;
-			osci[0].Size		=	GetAudioSizeSpectrum();
+			osci[0].VPos		= OsciVStart;
+			osci[0].SavePtr		= ValSaveData;
+			osci[0].Spot		= SpotData;
+			osci[0].SpotTime	= SpotTimeData;
+			osci[0].Size		= GetAudioSizeSpectrum();
 			pStrcpy(osci[0].Name, InPutName);
 			
 			OsciNo = 1;
@@ -1112,10 +1156,13 @@ void SetWindowSpectrum(void)
 	prevRight	= caRect.right;
 	prevBot		= caRect.bottom;
 	
-	if (caRect.bottom > OsciVStart + 15 + OsciNo * (InterText + OsciH)) prevBot = OsciVStart + 15 + OsciNo * (InterText + OsciH);
-	if (caRect.bottom < OsciVStart + InterText + OsciH + 15) prevBot = OsciVStart + InterText + OsciH + 15;
+	if (caRect.bottom > OsciVStart + 15 + OsciNo * (InterText + OsciH))
+		prevBot = OsciVStart + 15 + OsciNo * (InterText + OsciH);
+	if (caRect.bottom < OsciVStart + InterText + OsciH + 15)
+		prevBot = OsciVStart + InterText + OsciH + 15;
 	
-	if (caRect.right > OsciL + 15) prevRight = OsciL + 15;
+	if (caRect.right > OsciL + 15)
+		prevRight = OsciL + 15;
 	
 	
 	prevBot -= OsciVStart + 15;
@@ -1271,10 +1318,10 @@ void CreateSpectrumWindow(void)
 	else
 		OsciScale = logarithmic;
 	
-	OsciType			= thePrefs.SpectrumType;
+	OsciType = thePrefs.SpectrumType;
 	if (OsciType == InPutAudio)
 		OsciType = OutPutAudio;
-	OsciH				= thePrefs.SpectrumSize;
+	OsciH = thePrefs.SpectrumSize;
 	
 	switch (OsciH) {
 		case 16:
@@ -1319,18 +1366,23 @@ void CloseSpectrum(void)
 		else thePrefs.SpectrumScale = false;
 		
 		//CloseFourier();
-		DisposePtr(ValSaveData);	ValSaveData = NULL;
-		DisposePtr(SpotData);		SpotData = NULL;
-		DisposePtr(SpotTimeData);	SpotTimeData = NULL;
+		DisposePtr(ValSaveData);
+		ValSaveData = NULL;
+		DisposePtr(SpotData);
+		SpotData = NULL;
+		DisposePtr(SpotTimeData);
+		SpotTimeData = NULL;
 		DisposeDialog(SpectrumDlog);
 		
 		SetItemMark(ViewsMenu, mSpectrumV, noMark);
 		
-		for (i = 0 ; i < 2; i++) if (specPixMap[ i] != NULL) ZapPixMap(&specPixMap[ i]);
-		if (CurrentQuickPixMap != NULL) DisposePtr((Ptr) CurrentQuickPixMap);
+		for (i = 0 ; i < 2; i++) if (specPixMap[ i] != NULL) ZapPixMap(&specPixMap[i]);
+		if (CurrentQuickPixMap != NULL)
+			DisposePtr((Ptr)CurrentQuickPixMap);
 		
 		MADDriver->useOsciBuffers = false;
-		for (i = 0; i < MAXDRAW; i++) MADDriver->newData[i] = false;
+		for (i = 0; i < MAXDRAW; i++)
+			MADDriver->newData[i] = false;
 	}
 	SpectrumDlog = NULL;
 }

@@ -7,14 +7,14 @@
 void ProcessDoItemPress(long ref, short whichItem, DialogPtr whichDialog);
 void UPDATE_TrackActive(void);
 
-	extern		DialogPtr 		EditorDlog, theProgressDia, CubeDlog, AdapDlog, MODListDlog, FindDlog, ToolsDlog, PatListDlog, PianoDlog, MozartDlog, InstruViewDlog, PartiDlog;
-	extern		DialogPtr		DigitalDlog, ClassicDlog, InstruListDlog, TrackViewDlog, OscilloDlog, SpectrumDlog, HelpDlog, AHelpDlog, StaffDlog, WaveDlog;
+extern		DialogPtr 		EditorDlog, theProgressDia, CubeDlog, AdapDlog, MODListDlog, FindDlog, ToolsDlog, PatListDlog, PianoDlog, MozartDlog, InstruViewDlog, PartiDlog;
+extern		DialogPtr		DigitalDlog, ClassicDlog, InstruListDlog, TrackViewDlog, OscilloDlog, SpectrumDlog, HelpDlog, AHelpDlog, StaffDlog, WaveDlog;
 
 
 static	Handle 			PKEYRes;
-static	unsigned char	*PKEYDesc[ MAXPKEY];
-static	short			FKeyWind[ MAXPKEY];
-static	short			FKeyItem[ MAXPKEY], FKeymaxItems;
+static	unsigned char	*PKEYDesc[MAXPKEY];
+static	short			FKeyWind[MAXPKEY];
+static	short			FKeyItem[MAXPKEY], FKeymaxItems;
 static	MenuHandle		FKeyMenu;
 
 void InitFKeyMenu(void)
@@ -52,8 +52,7 @@ void InitFKeyMenu(void)
 	
 	FKeyMenu = NewMenu(366, "\pFKey Menu");
 	
-	for (i = 0 ; i < FKeymaxItems; i++)
-	{
+	for (i = 0 ; i < FKeymaxItems; i++) {
 		AppendMenu(FKeyMenu, PKEYDesc[ i]);
 	}
 }
@@ -68,12 +67,10 @@ void GetFKeyDesc(short whichFKey, Str255 str)
 {
 	short	i;
 	
-	for (i = 0 ; i < FKeymaxItems; i++)
-	{
-		if (thePrefs.FKeyItem[ whichFKey] == FKeyItem[ i] &&
-			thePrefs.FKeyWind[ whichFKey] == FKeyWind[ i])
-			{
-				pStrcpy(str, PKEYDesc[ i]);
+	for (i = 0 ; i < FKeymaxItems; i++) {
+		if (thePrefs.FKeyItem[whichFKey] == FKeyItem[i] &&
+			thePrefs.FKeyWind[whichFKey] == FKeyWind[i]) {
+				pStrcpy(str, PKEYDesc[i]);
 				
 				return;
 			}

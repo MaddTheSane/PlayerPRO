@@ -106,11 +106,10 @@ void InitQuicktimeInstruments(void)
 	iErr = FindFolder(kOnSystemDisk, kExtensionFolderType, kDontCreateFolder, &foundVRefNum, &foundDirID);
 	if (iErr == noErr)
 	{
-		HSetVol(NULL, foundVRefNum, foundDirID);	
+		HSetVol(NULL, foundVRefNum, foundDirID);
 		
 		iFileRef = OpenDataFileQK(foundDirID, foundVRefNum);
-		if (iFileRef != -1)
-		{
+		if (iFileRef != -1) {
 			QuicktimeInstruAvailable = true;
 			
 			iClose(iFileRef);
@@ -122,25 +121,21 @@ void InitQuicktimeInstruments(void)
 	QK50 = false;
 	
 	iErr = Gestalt(gestaltQuickTimeVersion, &result);
-	if (iErr == noErr)
-	{
+	if (iErr == noErr) {
 		result >>= 16;
-		if (result >= 0x0500)
-		{
+		if (result >= 0x0500) {
 			QK50 = true;
 		}
 	}
 	
-	{
-		NoteAllocator 				na;
-		
-		na = OpenDefaultComponent(kNoteAllocatorComponentType,0);
-		
-		iErr = NAStuffToneDescription(na, 1, &myNoteRequest.tone);
-		if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "NAStuff");
-		
-		CloseComponent(na);
-	}
+	NoteAllocator 				na;
+	
+	na = OpenDefaultComponent(kNoteAllocatorComponentType,0);
+	
+	iErr = NAStuffToneDescription(na, 1, &myNoteRequest.tone);
+	if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "NAStuff");
+	
+	CloseComponent(na);
 	
 	HSetVol(NULL, vRefNum, dirID);
 }
@@ -163,7 +158,7 @@ void OctavesMIDIName(short id, Str255 String)
 	pStrcat(String, WorkStr);
 }
 
-void SetInstruNameM(short	theNo, Str255 theNewName, short MIDIgm, Ptr destName)
+void SetInstruNameM(short theNo, Str255 theNewName, short MIDIgm, Ptr destName)
 {
 	short	i;
 	Str255	aStr, bStr;
@@ -174,16 +169,18 @@ void SetInstruNameM(short	theNo, Str255 theNewName, short MIDIgm, Ptr destName)
 	pStrcat(aStr, "\p) ");
 	pStrcat(aStr, theNewName);
 	
-	for(i=0; i<32; i++)
-	{
-		if (i < aStr[ 0]) destName[ i] = aStr[ i+1];
-		else destName[ i] = '\0';
+	for(i = 0; i<32; i++) {
+		if (i < aStr[0])
+			destName[i] = aStr[i + 1];
+		else
+			destName[i] = '\0';
 	}
 	
-	for (i=31; i >= 0; i--)
-	{
-		if (destName[ i] == 0x20 || destName[ i] == '\0') destName[ i] = '\0';
-		else break;
+	for (i=31; i >= 0; i--) {
+		if (destName[i] == 0x20 || destName[i] == '\0')
+			destName[i] = '\0';
+		else
+			break;
 	}
 }
 
@@ -191,10 +188,11 @@ void SetSampNameM(Str255 theNewName, Ptr destName)
 {
 	short	i;
 	
-	for(i=0; i<32; i++)
-	{
-		if (i < theNewName[ 0]) destName[i] = theNewName[i+1];
-		else destName[i] = '\0';
+	for(i = 0; i < 32; i++) {
+		if (i < theNewName[ 0])
+			destName[i] = theNewName[i + 1];
+		else
+			destName[i] = '\0';
 	}
 }
 
@@ -303,7 +301,6 @@ short OpenDataFileQK(long dirID, short VRefNum)
 {
 	CInfoPBRec		info;
 	Str255			tempStr;
-	//	long			dirIDCopy;
 	short			i;
 	OSErr			iErr;
 	FSSpec			spec;
@@ -312,8 +309,7 @@ short OpenDataFileQK(long dirID, short VRefNum)
 	info.hFileInfo.ioNamePtr = tempStr;
 	info.hFileInfo.ioVRefNum = VRefNum;
 	
-	for (i = 1; true; i ++)
-	{
+	for (i = 1; true; i ++) {
 		info.hFileInfo.ioDirID = dirID;
 		info.hFileInfo.ioFDirIndex = i;
 		
@@ -321,19 +317,11 @@ short OpenDataFileQK(long dirID, short VRefNum)
 		
 		if (info.hFileInfo.ioFlFndrInfo.fdType == 'INIT' && info.hFileInfo.ioFlFndrInfo.fdCreator == 'dvb ')
 		{	
-			//	HGetVol(NULL, &vRefNum, &dirIDCopy);
-			
-			//	iErr = HSetVol(NULL, info.hFileInfo.ioVRefNum, dirID);
-			
-			pStrcpy(spec.name, info.hFileInfo.ioNamePtr);
-			spec.vRefNum = info.hFileInfo.ioVRefNum;
-			spec.parID = dirID;
+			FSMakeFSSpec(info.hFileInfo.ioVRefNum, dirID, info.hFileInfo.ioNamePtr, &spec);
 			
 			iErr = FSpOpenDF(&spec, fsCurPerm, &iRefNum);
-			if (iErr != noErr) iRefNum = -1;
-			
-			//	iErr = HSetVol(NULL, vRefNum, dirIDCopy);
-			//	if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "HSetVol error...");
+			if (iErr != noErr)
+				iRefNum = -1;
 		}
 	}
 	
@@ -350,7 +338,8 @@ OSErr GetAtomData(MyAtom at, void* data, long size)
 	
 	fSize = sizeof(sck);
 	iErr = FSRead(at.ref, &fSize, &sck);
-	if (iErr) Debugger();
+	if (iErr)
+		Debugger();
 	sck.cksize = EndianU32_NtoL(sck.cksize);
 	
 	//if (sck.cksize > size) Debugger();
@@ -365,9 +354,9 @@ OSErr GetAtomData(MyAtom at, void* data, long size)
 void DebugLong(long type)
 {
 	Str31	str;
-	
-	str[ 0] = 4;
-	BlockMoveData(&type, &str[ 1], 4);
+	OSType2Ptr(type, (char*)str);
+	MYC2PStr((char*)str);
+	BlockMoveData(&type, &str[1], 4);
 	
 	DebugStr(str);
 }
@@ -458,7 +447,6 @@ OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 		iErr = FSRead(at.ref, &fSize, &sck);
 		if (iErr) DebugLong(iErr);
 		sck.cksize = EndianU32_NtoL(sck.cksize);
-		
 		{
 			SInt64 tempPos;
 			FSGetForkPosition(at.ref, &tempPos);
@@ -470,7 +458,7 @@ OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 		if (sck.ckid == type) {
 			if (index == id) {
 				// We found it !!!!!
-				retat->pos = prePos -4;
+				retat->pos = prePos - 4;
 				retat->id = sck.ckid;
 				retat->size = sck.cksize;
 				retat->ref = at.ref;
@@ -480,11 +468,10 @@ OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 			index++;
 		}
 		
-		switch (sck.ckid)
-		{
+		switch (sck.ckid) {
 			case 'LIST':
-				//	case 'INFO':
-				fSize = 4;
+				//case 'INFO':
+				fSize = sizeof(OSType);
 				iErr = FSRead(at.ref, &fSize, &ilistType);
 				
 				if (ilistType == type) {
@@ -509,7 +496,8 @@ OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 		}
 		
 		iErr = FSSetForkPosition(at.ref, fsFromStart, prePos + sck.cksize);
-		if (iErr) DebugLong(iErr);
+		if (iErr)
+			DebugLong(iErr);
 		
 		listSize -= sck.cksize;
 		
@@ -518,7 +506,8 @@ OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, long type, short id)
 		
 	} while (iErr == noErr && listSize > 0);
 	
-	if (listSize < 0 ) Debugger();
+	if (listSize < 0 )
+		Debugger();
 	
 	return -1;
 }
@@ -529,11 +518,13 @@ OSErr GetAtomDataById(MyAtom at, long type, void *data, long size)
 	OSErr	iErr;
 	
 	iErr = FindAtomById(at, &tempAt, true, type, 0);
-	if (iErr) return iErr;
+	if (iErr)
+		return iErr;
 	
 	
 	iErr = GetAtomData(tempAt, data, size);
-	if (iErr) return iErr;
+	if (iErr)
+		return iErr;
 	
 	return noErr;
 }
@@ -549,8 +540,8 @@ static Boolean TestRunningOnCarbonX(void)
 
 void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 {
-	short 		foundVRefNum, iFileRef, ii, i, x;
-	OSErr 		iErr;
+	short		foundVRefNum, iFileRef, ii, i, x;
+	OSErr		iErr;
 	Str255		aStr, bStr;
 	sData		*curData;
 	long		foundDirID;
@@ -579,7 +570,8 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 			iErr = FSRead(iFileRef, &fSize, &ck);
 			ck.cksize = EndianU32_LtoN(ck.cksize);
 			
-			if (ck.ckid != 'RIFF') Debugger();
+			if (ck.ckid != 'RIFF')
+				Debugger();
 			
 			fSize = 4;
 			iErr = FSRead(iFileRef, &fSize, &listType);
@@ -594,26 +586,32 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 			at.size = ck.cksize;
 			
 			iErr = FindAtomById(at, &sat, true, 'colh', 0);
-			if (iErr) DebugLong(iErr);
+			if (iErr)
+				DebugLong(iErr);
 			
 			iErr = GetAtomData(sat, &noIns, sizeof(long));
-			if (iErr) DebugLong(iErr);
+			if (iErr)
+				DebugLong(iErr);
 			noIns = EndianU32_LtoN(noIns);
 			
 			
 			iErr = FindAtomById(at, &sat, true, 'lins', 0);
-			if (iErr) DebugLong(iErr);
+			if (iErr)
+				DebugLong(iErr);
 			
 			tot = CountAtomById(sat, 'ins ');
 			for (i = 0 ; i < tot; i++) {
 				iErr = FindAtomById(sat, &insAt, true, 'ins ', i);
-				if (iErr) DebugLong(iErr);
+				if (iErr)
+					DebugLong(iErr);
 				
 				iErr = FindAtomById(insAt, &insHe, true, 'insh', 0);
-				if (iErr) DebugLong(iErr);
+				if (iErr)
+					DebugLong(iErr);
 				
 				iErr = GetAtomData(insHe, &curIns, sizeof(curIns));
-				if (iErr) DebugLong(iErr);
+				if (iErr)
+					DebugLong(iErr);
 				
 				curIns.cRegions = EndianU32_LtoN(curIns.cRegions);
 				curIns.Locale.ulBank = EndianU32_LtoN(curIns.Locale.ulBank);
@@ -631,13 +629,12 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 				//Apple protects many of the following info in a Big-endian wrapper. We need to work around this
 				if (GetNELong(NoteRequest->tone.instrumentNumber) >= 16384) { // DRUM KIT
 					if (BitTst(&curIns.Locale.ulBank, 31-31)) {
-						long	gmID;
+						long gmID;
 						
 						gmID = GetNELong(NoteRequest->tone.instrumentNumber);
 						gmID = gmID & 0x000000FF;
 						
-						if (gmID == curIns.Locale.ulInstrument+1)
-						{
+						if (gmID == curIns.Locale.ulInstrument + 1) {
 							break;
 						}
 					}
@@ -667,32 +664,38 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 			
 			if (i < tot) {	// did we find it?
 				iErr = FindAtomById(sat, &insAt, true, 'ins ', i);
-				if (iErr) DebugLong(iErr);
+				if (iErr)
+					DebugLong(iErr);
 				
 				iErr = FindAtomById(insAt, &insHe, true, 'insh', 0);
-				if (iErr) DebugLong(iErr);
+				if (iErr)
+					DebugLong(iErr);
 				
 				iErr = GetAtomData(insHe, &curIns, sizeof(curIns));
-				if (iErr) DebugLong(iErr);
+				if (iErr)
+					DebugLong(iErr);
 				
 				curIns.cRegions = EndianU32_LtoN(curIns.cRegions);
 				curIns.Locale.ulBank = EndianU32_LtoN(curIns.Locale.ulBank);
 				curIns.Locale.ulInstrument = EndianU32_LtoN(curIns.Locale.ulInstrument);
 				
-				/*	iErr = FindAtomById(insAt, &InfoAt, true, 'INFO', 0);
-				 if (iErr) DebugLong(iErr);
-				 
-				 iErr = FindAtomById(InfoAt, &InfoData, true, 'INAM', 0);
-				 if (iErr) DebugLong(iErr);
-				 
-				 iErr = GetAtomData(InfoData, insName, sizeof(insName));
-				 if (iErr) DebugLong(iErr);*/
+#if 0
+				iErr = FindAtomById(insAt, &InfoAt, true, 'INFO', 0);
+				if (iErr) DebugLong(iErr);
+				
+				iErr = FindAtomById(InfoAt, &InfoData, true, 'INAM', 0);
+				if (iErr) DebugLong(iErr);
+				
+				iErr = GetAtomData(InfoData, insName, sizeof(insName));
+				if (iErr) DebugLong(iErr);
+#endif
 				
 				for (x = 0; x < 32 && x < NoteRequest->tone.instrumentName[0]; x++)
 					inst->name[x] = NoteRequest->tone.instrumentName[x + 1]; //insName[ x];
 				
 				iErr = FindAtomById(insAt, &sat, true, 'lrgn', 0);
-				if (iErr) DebugLong(iErr);
+				if (iErr)
+					DebugLong(iErr);
 				
 				for (x = 0; x < curIns.cRegions; x++) {
 					RGNHEADER 	rgnh;
@@ -704,12 +707,14 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					MyAtom 		dataAt;
 					
 					iErr = FindAtomById(sat, &rgnAt, true, 'rgn ', x);
-					if (iErr) DebugLong(iErr);
+					if (iErr)
+						DebugLong(iErr);
 					
 					// Key range
 					
 					iErr = GetAtomDataById(rgnAt, 'rgnh', &rgnh, sizeof(rgnh));
-					if (iErr) DebugLong(iErr);
+					if (iErr)
+						DebugLong(iErr);
 					
 					rgnh.RangeKey.usLow = EndianU16_LtoN(rgnh.RangeKey.usLow);
 					rgnh.RangeKey.usHigh = EndianU16_LtoN(rgnh.RangeKey.usHigh);
@@ -731,7 +736,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					wsmp.cSampleLoops = EndianU32_LtoN(wsmp.cSampleLoops);
 					if (wsmp.cSampleLoops > 0) {
 						long loopSize = sizeof(loop);
-						iErr = FSRead(rgnAt.ref, &loopSize, &loop);
+						iErr = FSReadFork(rgnAt.ref, fsAtMark, 0, loopSize, &loop, NULL);
 						
 						loop.cbSize = EndianU32_LtoN(loop.cbSize);
 						loop.ulType = EndianU32_LtoN(loop.ulType);
@@ -747,7 +752,8 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					// Wave Data ID
 					
 					iErr = GetAtomDataById(rgnAt, 'wlnk', &wlnk, sizeof(wlnk));
-					if (iErr) DebugLong(iErr);
+					if (iErr)
+						DebugLong(iErr);
 					
 					wlnk.fusOptions = EndianU16_LtoN(wlnk.fusOptions);
 					wlnk.usPhaseGroup = EndianU16_LtoN(wlnk.usPhaseGroup);
@@ -758,15 +764,18 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					
 					
 					iErr = FindAtomById(at, &wvpl, true, 'wvpl', 0);
-					if (iErr) DebugLong(iErr);
+					if (iErr)
+						DebugLong(iErr);
 					
 					iErr = FindAtomById(wvpl, &wave, true, 'wave', wlnk.ulTableIndex);
-					if (iErr) DebugLong(iErr);
+					if (iErr)
+						DebugLong(iErr);
 					
 					// FMT
 					
 					iErr = GetAtomDataById(wave, 'fmt ', &fmt, sizeof(fmt));
-					if (iErr) DebugLong(iErr);
+					if (iErr)
+						DebugLong(iErr);
 					
 					fmt.wFormatTag = EndianU16_LtoN(fmt.wFormatTag);
 					fmt.nCannels = EndianU16_LtoN(fmt.nCannels);
@@ -778,12 +787,15 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					// Wave Data
 					
 					iErr = FindAtomById(wave, &dataAt, true, 'data', 0);
-					if (iErr) DebugLong(iErr);
+					if (iErr)
+						DebugLong(iErr);
 					
 					data = NewPtr(dataAt.size);
-					if (data == NULL) DebugLong(-1);
+					if (data == NULL)
+						DebugLong(-1);
 					iErr = GetAtomDataById(wave, 'data', data, dataAt.size);
-					if (iErr) DebugLong(iErr);
+					if (iErr)
+						DebugLong(iErr);
 					
 					
 					// ************************
@@ -887,22 +899,22 @@ BAIL:
 
 void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 {
-	short 						no, ii, i;
-	OSErr 						iErr;
+	short				no, ii, i;
+	OSErr				iErr;
 	
-	Str255						aStr, bStr;
+	Str255				aStr, bStr;
 	
-	sData						*curData;
-	long						size, inOutBytes;
-	InstSampleDescRec			*sdesc;
-	Ptr							data;
-	QTAtom						myKeyRangeInfoAtom = 0;
-	QTAtom						mySampleInfoAtom = 0;
-	QTAtom						mySampleDescAtom = 0;
-	QTAtom						mySampleDataAtom = 0;
-	QTAtomID					atomID;
+	sData				*curData;
+	long				size, inOutBytes;
+	InstSampleDescRec	*sdesc;
+	Ptr					data;
+	QTAtom				myKeyRangeInfoAtom = 0;
+	QTAtom				mySampleInfoAtom = 0;
+	QTAtom				mySampleDescAtom = 0;
+	QTAtom				mySampleDataAtom = 0;
+	QTAtomID			atomID;
 	
-	short						sampleIDMap[500];
+	short				sampleIDMap[500];
 	
 	for (i = 0; i < 500; i++) sampleIDMap[i] = -1;
 	
@@ -917,7 +929,8 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 		
 		size = 0;
 		iErr = QTGetAtomDataPtr(ai,mySampleDescAtom, &size, (Ptr*)&sdesc);
-		if (iErr) goto BAIL;
+		if (iErr)
+			goto BAIL;
 		
 		if (sampleIDMap[GetNEShort(sdesc->sampleDataID)] != -1) {
 			for (ii = GetNELong(sdesc->pitchLow) - 12; ii <= GetNELong(sdesc->pitchHigh) - 12; ii++) {
@@ -1075,15 +1088,12 @@ void Quicktime2Converter(void)
 	/**/
 	
 	for (i = 0; i < 96; i++) inst->what[ i]		= 0;
-	for (i = 0; i < 12; i++)
-	{
-		inst->volEnv[ i].pos		= 0;
-		inst->volEnv[ i].val		= 0;
-	}
-	for (i = 0; i < 12; i++)
-	{
-		inst->pannEnv[ i].pos	= 0;
-		inst->pannEnv[ i].val	= 0;
+	for (i = 0; i < 12; i++) {
+		inst->volEnv[i].pos		= 0;
+		inst->volEnv[i].val		= 0;
+		
+		inst->pannEnv[i].pos	= 0;
+		inst->pannEnv[i].val	= 0;
 	}
 	inst->volSize		= 0;
 	inst->pannSize		= 0;
@@ -1105,69 +1115,71 @@ void Quicktime2Converter(void)
 	
 	/*********/
 	
-	{
-		short 						synthCount;
-		OSErr 						iErr;
-		NoteAllocator 				na;
-		OSType						synthType;
-		Str31						synthName;
-		AtomicInstrument			ai;
-		MusicComponent 				mc;
+	short 						synthCount;
+	OSErr 						iErr;
+	NoteAllocator 				na;
+	OSType						synthType;
+	Str31						synthName;
+	AtomicInstrument			ai;
+	MusicComponent 				mc;
+	
+	na = OpenDefaultComponent(kNoteAllocatorComponentType,0);
+	
+	synthCount = NAGetRegisteredMusicDevice(na, 0, nil, nil, nil, nil);
+	
+	while (synthCount) {
+		iErr = NAGetRegisteredMusicDevice(na,synthCount, &synthType, synthName, nil, &mc);
 		
-		na = OpenDefaultComponent(kNoteAllocatorComponentType,0);
-		
-		synthCount = NAGetRegisteredMusicDevice(na, 0, nil, nil, nil, nil);
-		
-		while (synthCount) {
-			iErr = NAGetRegisteredMusicDevice(na,synthCount, &synthType, synthName, nil, &mc);
+		if(!synthName[0]) {
+			SynthesizerDescription sd;
 			
-			if(!synthName[0]) {
-				SynthesizerDescription sd;
-				
-				MusicGetDescription(mc, &sd);
-				BlockMove(sd.name, synthName, sd.name[0]+1);
-			}
-			
-			if (synthType == kSoftSynthComponentSubType)
-				goto PROCESS;
-			
-			synthCount--;
+			MusicGetDescription(mc, &sd);
+			BlockMove(sd.name, synthName, sd.name[0]+1);
 		}
 		
-		goto BAIL;
+		if (synthType == kSoftSynthComponentSubType)
+			goto PROCESS;
 		
-	PROCESS:
-		
-		
-		// fill out a note request, using NAStuffToneDescription
-		
-		myNoteRequest.info.flags = 0;
-		myNoteRequest.info.midiChannelAssignment = 0;
-		SetNEShort(&myNoteRequest.info.polyphony, 2); // simultaneous tones
-		SetNEFixed(&myNoteRequest.info.typicalPolyphony, 0x00010000);
-		
-		iErr = NAStuffToneDescription(na, GetNELong(myNoteRequest.tone.instrumentNumber), &myNoteRequest.tone);
-		if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "NAStuff Converter");
-		
-		SetNEOSType(&myNoteRequest.tone.synthesizerType, synthType);//(myNoteRequest.tone.synthesizerType = synthType;
-		pStrcpy(myNoteRequest.tone.synthesizerName, synthName);
-		
-		// display the instrument picker dialog box to elicit an instrument from the user
-		iErr = NAPickInstrument(na, NULL, "\pPick an instrument:", &myNoteRequest.tone, kPickSameSynth + kPickUserInsts, 0, 0, 0);
-		//if (iErr != noErr) goto BAIL;
-		
-		iErr = MusicSetPartInstrumentNumber(mc, 1, GetNELong(myNoteRequest.tone.instrumentNumber));
-		if (iErr) goto BAIL;
-		
-		iErr = MusicGetPartAtomicInstrument(mc, 1, &ai, 0);
-		if (iErr) goto BAIL;
-		
-		if (QK50) Quicktime5(&myNoteRequest, sample, inst);
-		else TESTNEWSYSTEM(sample, inst, ai);
-		
-		CloseComponent(na);
-		
+		synthCount--;
 	}
+	
+	goto BAIL;
+	
+PROCESS:
+	
+	
+	// fill out a note request, using NAStuffToneDescription
+	
+	myNoteRequest.info.flags = 0;
+	myNoteRequest.info.midiChannelAssignment = 0;
+	SetNEShort(&myNoteRequest.info.polyphony, 2); // simultaneous tones
+	SetNEFixed(&myNoteRequest.info.typicalPolyphony, 0x00010000);
+	
+	iErr = NAStuffToneDescription(na, GetNELong(myNoteRequest.tone.instrumentNumber), &myNoteRequest.tone);
+	if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "NAStuff Converter");
+	
+	SetNEOSType(&myNoteRequest.tone.synthesizerType, synthType);//(myNoteRequest.tone.synthesizerType = synthType;
+	pStrcpy(myNoteRequest.tone.synthesizerName, synthName);
+	
+	// display the instrument picker dialog box to elicit an instrument from the user
+	iErr = NAPickInstrument(na, NULL, "\pPick an instrument:", &myNoteRequest.tone, kPickSameSynth + kPickUserInsts, 0, 0, 0);
+	//if (iErr != noErr) goto BAIL;
+	
+	iErr = MusicSetPartInstrumentNumber(mc, 1, GetNELong(myNoteRequest.tone.instrumentNumber));
+	if (iErr)
+		goto BAIL;
+	
+	iErr = MusicGetPartAtomicInstrument(mc, 1, &ai, 0);
+	if (iErr)
+		goto BAIL;
+	
+	if (QK50)
+		Quicktime5(&myNoteRequest, sample, inst);
+	else
+		TESTNEWSYSTEM(sample, inst, ai);
+	
+	CloseComponent(na);
+	
 	
 BAIL:
 	
@@ -1181,35 +1193,35 @@ BAIL:
 // FOR MIDI IMPORT FUNCTION
 void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, short ins)
 {
-	short i;
+	short	i;
 	
 	for (i = 0; i < inst->numSamples; i++) {
-		if (sample[ inst->firstSample + i] != NULL) {
+		if (sample[inst->firstSample + i] != NULL) {
 			if (sample[ inst->firstSample + i]->data != NULL) {
-				DisposePtr((Ptr) sample[ inst->firstSample + i]->data);
-				sample[ inst->firstSample + i]->data = NULL;
+				DisposePtr((Ptr)sample[inst->firstSample + i]->data);
+				sample[inst->firstSample + i]->data = NULL;
 			}
-			DisposePtr((Ptr) sample[ inst->firstSample + i]);
-			sample[ inst->firstSample + i] = NULL;
+			DisposePtr((Ptr)sample[inst->firstSample + i]);
+			sample[inst->firstSample + i] = NULL;
 		}
 	}
 	
-	for (i = 0; i < 32; i++) inst->name[ i]	= 0;
+	for (i = 0; i < 32; i++) inst->name[i] = 0;
 	inst->type			= 0;
 	inst->numSamples	= 0;
 	inst->no			= ins;
 	/**/
 	
-	for (i = 0; i < 96; i++) inst->what[ i]		= 0;
-	for (i = 0; i < 12; i++)
-	{
-		inst->volEnv[ i].pos		= 0;
-		inst->volEnv[ i].val		= 0;
-	}
-	for (i = 0; i < 12; i++)
-	{
-		inst->pannEnv[ i].pos	= 0;
-		inst->pannEnv[ i].val	= 0;
+	for (i = 0; i < 96; i++) inst->what[i] = 0;
+	for (i = 0; i < 12; i++) {
+		inst->volEnv[i].pos		= 0;
+		inst->volEnv[i].val		= 0;
+		
+		inst->pannEnv[i].pos	= 0;
+		inst->pannEnv[i].val	= 0;
+		
+		inst->pitchEnv[i].pos	= 0;
+		inst->pitchEnv[i].val	= 0;
 	}
 	inst->volSize		= 0;
 	inst->pannSize		= 0;
@@ -1231,76 +1243,75 @@ void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, sh
 	
 	/*********/
 	
-	{
-		short 						synthCount;
-		OSErr 						iErr;
-		NoteAllocator 				na;
-		OSType						synthType;
-		Str31						synthName;
-		AtomicInstrument			ai;
-		MusicComponent 				mc;
+	
+	short 						synthCount;
+	OSErr 						iErr;
+	NoteAllocator 				na;
+	OSType						synthType;
+	Str31						synthName;
+	AtomicInstrument			ai;
+	MusicComponent 				mc;
+	
+	na = OpenDefaultComponent(kNoteAllocatorComponentType,0);
+	
+	synthCount = NAGetRegisteredMusicDevice(na, 0, nil, nil, nil, nil);
+	
+	while (synthCount) {
+		iErr = NAGetRegisteredMusicDevice(na,synthCount, &synthType, synthName, nil, &mc);
 		
-		na = OpenDefaultComponent(kNoteAllocatorComponentType,0);
-		
-		synthCount = NAGetRegisteredMusicDevice(na, 0, nil, nil, nil, nil);
-		
-		while (synthCount)
-		{
-			iErr = NAGetRegisteredMusicDevice(na,synthCount, &synthType, synthName, nil, &mc);
+		if(!synthName[0]) {
+			SynthesizerDescription sd;
 			
-			if(!synthName[0])
-			{
-				SynthesizerDescription sd;
-				
-				MusicGetDescription(mc, &sd);
-				BlockMove(sd.name, synthName, sd.name[0]+1);
-			}
-			
-			if (synthType == kSoftSynthComponentSubType) goto PROCESS;
-			
-			synthCount--;
+			MusicGetDescription(mc, &sd);
+			BlockMove(sd.name, synthName, sd.name[0]+1);
 		}
 		
-		goto BAIL;
+		if (synthType == kSoftSynthComponentSubType)
+			goto PROCESS;
 		
-	PROCESS:
-		
-		// fill out a note request, using NAStuffToneDescription
-		
-		myNoteRequest.info.flags = 0;
-		myNoteRequest.info.midiChannelAssignment = 0;
-		*(short *)(&myNoteRequest.info.polyphony) = EndianS16_NtoB(2);				// simultaneous tones
-		*(Fixed *)(&myNoteRequest.info.typicalPolyphony) = EndianU32_NtoB(0x00010000);
-		
-		if (GMInstruID < 1) GMInstruID = 1;
-		
-		iErr = NAStuffToneDescription(na, GMInstruID, &myNoteRequest.tone);
-		if (iErr != noErr)
-		{
-			iErr = NAStuffToneDescription(na, 1, &myNoteRequest.tone);
-			if(iErr != noErr) MyDebugStr(__LINE__, __FILE__, "NAStuff ComputeQTSound");
-		}
-		
-		SetNEOSType(&myNoteRequest.tone.synthesizerType, synthType);
-		pStrcpy(myNoteRequest.tone.synthesizerName, synthName);
-		
-		// display the instrument picker dialog box to elicit an instrument from the user
-		//iErr = NAPickInstrument(na, NULL, "\pPick an instrument:", &myNoteRequest.tone, kPickSameSynth + kPickUserInsts, 0, 0, 0);
-		//if (iErr != noErr) goto BAIL;
-		
-		iErr = MusicSetPartInstrumentNumber(mc, 1, GetNELong(myNoteRequest.tone.instrumentNumber));
-		if (iErr) goto BAIL;
-		
-		iErr = MusicGetPartAtomicInstrument(mc, 1, &ai, 0);
-		if (iErr) goto BAIL;
-		
-		if (QK50)
-			Quicktime5(&myNoteRequest, sample, inst);
-		else
-			TESTNEWSYSTEM(sample, inst, ai);
-		
-		CloseComponent(na);
+		synthCount--;
 	}
+	
+	goto BAIL;
+	
+PROCESS:
+	
+	// fill out a note request, using NAStuffToneDescription
+	
+	myNoteRequest.info.flags = 0;
+	myNoteRequest.info.midiChannelAssignment = 0;
+	*(short *)(&myNoteRequest.info.polyphony) = EndianS16_NtoB(2);				// simultaneous tones
+	*(Fixed *)(&myNoteRequest.info.typicalPolyphony) = EndianU32_NtoB(0x00010000);
+	
+	if (GMInstruID < 1) GMInstruID = 1;
+	
+	iErr = NAStuffToneDescription(na, GMInstruID, &myNoteRequest.tone);
+	if (iErr != noErr) {
+		iErr = NAStuffToneDescription(na, 1, &myNoteRequest.tone);
+		if(iErr != noErr) MyDebugStr(__LINE__, __FILE__, "NAStuff ComputeQTSound");
+	}
+	
+	SetNEOSType(&myNoteRequest.tone.synthesizerType, synthType);
+	pStrcpy(myNoteRequest.tone.synthesizerName, synthName);
+	
+	// display the instrument picker dialog box to elicit an instrument from the user
+	//iErr = NAPickInstrument(na, NULL, "\pPick an instrument:", &myNoteRequest.tone, kPickSameSynth + kPickUserInsts, 0, 0, 0);
+	//if (iErr != noErr) goto BAIL;
+	
+	iErr = MusicSetPartInstrumentNumber(mc, 1, GetNELong(myNoteRequest.tone.instrumentNumber));
+	if (iErr)
+		goto BAIL;
+	
+	iErr = MusicGetPartAtomicInstrument(mc, 1, &ai, 0);
+	if (iErr)
+		goto BAIL;
+	
+	if (QK50)
+		Quicktime5(&myNoteRequest, sample, inst);
+	else
+		TESTNEWSYSTEM(sample, inst, ai);
+	
+	CloseComponent(na);
 	
 BAIL:
 	
@@ -1313,7 +1324,7 @@ void ComputeInstSize(Str255	aStr, InstrData *inst, short ins)
 	long	i;
 	
 	for (i = 0; i < inst->numSamples; i++) {
-		if (curMusic->sample[ inst->firstSample + i] == NULL) MyDebugStr(__LINE__, __FILE__, "Inst Error");
+		if (curMusic->sample[inst->firstSample + i] == NULL) MyDebugStr(__LINE__, __FILE__, "Inst Error");
 		
 		tot += curMusic->sample[inst->firstSample +  i]->size;
 	}

@@ -66,7 +66,8 @@ void UpdatePartiInfo(void)
 	GrafPtr		SavePort;
 	Rect		caRect, itemRect;
 	
-	if (PartiDlog == NULL) return;
+	if (PartiDlog == NULL)
+		return;
 	
  	GetPort(&SavePort);
  	SetPortDialogPort(PartiDlog);
@@ -151,7 +152,7 @@ void DoGrowParti(DialogPtr theDialog)
 	GrafPtr		SavePort;
 	Rect		caRect, temp;
 	short		tempB, tempA;
-	Point		aPt = { 0, 0};
+	Point		aPt = {0, 0};
 	BitMap		screenBits;
 	
 	
@@ -361,7 +362,7 @@ void  UpdatePartiWindow(DialogPtr GetSelection)  	/* Pointer to this dialog */
 	
 	GetPortBounds(GetDialogPort(GetSelection), &caRect);
 	
-	MoveTo(0,  25);
+	MoveTo(0, 25);
 	LineTo(caRect.right, 25);
 	
 	MoveTo(myList.rect.left-1, myList.rect.top - 1);
@@ -445,8 +446,7 @@ Boolean CheckValidParti(Byte theValue, short thePos)
 		return false;
 	}
 #if 0
-	else if (temp == 1 && curMusic->header->oPointers[ thePos] == numPat) // la plus haute pattern ne peut pas etre detruite
-	{
+	else if (temp == 1 && curMusic->header->oPointers[ thePos] == numPat) { // la plus haute pattern ne peut pas etre detruite
 		Erreur(36, -1);
 		return false;
 	}
@@ -490,14 +490,14 @@ void DoNullParti(void)
 
 void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit ID to pass to Dialog function */
 {
-	Cell				theCell;
-	long				mresult;
-	short				i, itemType, newPL, newPartitionReader, newPat;
-	Rect				caRect, itemRect;
-	GrafPtr				SavePort;
-	Point				myPt = {0};
-	Handle				itemHandle;
-	Boolean				DoubleClick;
+	Cell	theCell;
+	long	mresult;
+	short	i, itemType, newPL, newPartitionReader, newPat;
+	Rect	caRect, itemRect;
+	GrafPtr	SavePort;
+	Point	myPt = {0};
+	Handle	itemHandle;
+	Boolean	DoubleClick;
 	
 	GetPort(&SavePort);
 	SetPortDialogPort(PartiDlog);
@@ -527,7 +527,7 @@ void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 					
 					SetItemMark(thePatternMenu, curMusic->header->oPointers[ theCell.v] + 1, 0xa5);
 					
-					mresult = PopUpMenuSelect(	thePatternMenu,
+					mresult = PopUpMenuSelect(thePatternMenu,
 											  myPt.v,
 											  myPt.h + 10,
 											  curMusic->header->oPointers[ theCell.v] + 1);
@@ -563,8 +563,7 @@ void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 					HiliteControl(InfoBut, 0);
 					HiliteControl(OpenBut, 0);
 					
-					if (theCell.v != PatCopy2)
-					{
+					if (theCell.v != PatCopy2) {
 						PatCopy2 = theCell.v;
 						
 						newPL = PatCopy2;
@@ -683,7 +682,7 @@ void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 					for (i = MAXPOINTER - 1; i >= theCell.v + 1; i--) {
 						curMusic->header->oPointers[i] = curMusic->header->oPointers[i - 1];
 					}
-					//	curMusic->header->oPointers[ theCell.v] = curMusic->header->oPointers[ theCell.v-1];
+					//curMusic->header->oPointers[theCell.v] = curMusic->header->oPointers[theCell.v-1];
 					
 					curMusic->header->numPointers++;
 					//if (curMusic->header->numPointers > 256) curMusic->header->numPointers = 256;
@@ -699,10 +698,10 @@ void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 			if (GetControlHilite(RemoveBut) == 0 && MyTrackControl(RemoveBut, theEvent.where, NULL)) {
 				theCell.v = theCell.h = 0;
 				if (PLGetSelect(&theCell, &myList)) {
-					for (i = theCell.v; i < MAXPOINTER-1; i++) {
-						curMusic->header->oPointers[ i] = curMusic->header->oPointers[ i+1];
+					for (i = theCell.v; i < MAXPOINTER - 1; i++) {
+						curMusic->header->oPointers[i] = curMusic->header->oPointers[i + 1];
 					}
-					curMusic->header->oPointers[ MAXPOINTER-1] = 0;
+					curMusic->header->oPointers[MAXPOINTER - 1] = 0;
 					
 					curMusic->header->numPointers--;
 					if (curMusic->header->numPointers < 1)
@@ -781,7 +780,7 @@ void CreatePartiWindow(void)
 	myList.rect.left = 0;
 	myList.LCell = myList.rect.right - myList.rect.left;
 	
-	GetDialogItem(PartiDlog , 7, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(PartiDlog, 7, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	InfoBut = NewControl(GetDialogWindow(PartiDlog),
 						 &itemRect,
@@ -792,7 +791,7 @@ void CreatePartiWindow(void)
 						 149,
 						 kControlBevelButtonNormalBevelProc,
 						 0);
-	GetDialogItem(PartiDlog , 4, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(PartiDlog, 4, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	OpenBut = NewControl(GetDialogWindow(PartiDlog),
 						 &itemRect,
@@ -803,7 +802,7 @@ void CreatePartiWindow(void)
 						 159,
 						 kControlBevelButtonNormalBevelProc,
 						 0);
-	GetDialogItem(PartiDlog , 12, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(PartiDlog, 12, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	AddBut = NewControl(GetDialogWindow(PartiDlog),
 						&itemRect,
@@ -814,7 +813,7 @@ void CreatePartiWindow(void)
 						210,
 						kControlBevelButtonNormalBevelProc,
 						0);
-	GetDialogItem(PartiDlog , 11, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(PartiDlog, 11, &itemType, &itemHandle, &itemRect);
 	//itemRect.right = itemRect.left;
 	RemoveBut = NewControl(GetDialogWindow(PartiDlog),
 						   &itemRect,
@@ -825,7 +824,7 @@ void CreatePartiWindow(void)
 						   209,
 						   kControlBevelButtonNormalBevelProc,
 						   0);
-	GetDialogItem(PartiDlog , 10, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(PartiDlog, 10, &itemType, &itemHandle, &itemRect);
 	FlipBut = NewControl(GetDialogWindow(PartiDlog),
 						 &itemRect,
 						 "\p",
@@ -864,8 +863,8 @@ void CloseParti(void)
 		ZapPixMap(&myPopUp);
 		
 		DisposeDialog(PartiDlog);
+		PartiDlog = NULL;
 	}
-	PartiDlog = NULL;
 	
 	SetItemMark(PatternEditMenu, 1, noMark);
 }
@@ -875,7 +874,8 @@ void DoKeyPressParti(short theChar)
 	GrafPtr		SavePort;
 	Point		theCell;
 	
-	if (PartiDlog == NULL) return;
+	if (PartiDlog == NULL)
+		return;
 	
 	GetPort(&SavePort);
 	SetPortDialogPort(PartiDlog);
@@ -884,12 +884,11 @@ void DoKeyPressParti(short theChar)
 	
 	PLDoArrows(theChar, &myList);
 	
-	if (theChar == deletekey)
-	{
+	if (theChar == deletekey) {
 		theCell.v = theCell.h = 0;
-		while (PLGetSelect(&theCell, &myList))
-		{
-			if (CheckValidParti(0, theCell.v)) curMusic->header->oPointers[ theCell.v] = 0;
+		while (PLGetSelect(&theCell, &myList)) {
+			if (CheckValidParti(0, theCell.v))
+				curMusic->header->oPointers[theCell.v] = 0;
 			theCell.v++;
 		}
 	}
@@ -967,7 +966,8 @@ void PASTEParti(void)
 	lCntOrErr = 0;
 	anErr = GetCurrentScrap(&scrap);
 	anErr = GetScrapFlavorFlags(scrap, 'PATL', &flags);
-	if (anErr == noErr) GetScrapFlavorSize(scrap, 'PATL', &lCntOrErr);
+	if (anErr == noErr)
+		GetScrapFlavorSize(scrap, 'PATL', &lCntOrErr);
 	
 	if (lCntOrErr > 0) {
 		SetCursor(&watchCrsr);

@@ -11,8 +11,16 @@
 #include "UserDefaultKeys.h"
 #include "PreferenceHandler.h"
 #include "Shuddup.h"
+#include "Utils.h"
 
 #define makeNSRGB(red1, green1, blue1) [NSColor colorWithCalibratedRed:red1 / (CGFloat)USHRT_MAX green:green1 / (CGFloat)USHRT_MAX blue:blue1 / (CGFloat)USHRT_MAX alpha:1]
+
+void MyPPBeep()
+{
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	NSBeep();
+	[pool drain];
+}
 
 Boolean CFPreferencesHaveBeenSet()
 {
