@@ -14,8 +14,7 @@ extern	DialogPtr	MODListDlog;
 
 void MDrawTheText(Rect *bounds, Str255 data, Boolean selected, Str63 Str)
 {	
-	if (selected)
-	{
+	if (selected) {
 		Rect	aRect;
 	
 		aRect.left = bounds->left + 23;		// 38
@@ -32,8 +31,7 @@ void MDrawTheText(Rect *bounds, Str255 data, Boolean selected, Str63 Str)
 	MoveTo(bounds->left + 24, bounds->top + 14);
 	DrawString(data);
 	
-	if (selected)
-	{
+	if (selected) {
 		ForeColor(blackColor);
 		BackColor(whiteColor);
 	}
@@ -41,52 +39,42 @@ void MDrawTheText(Rect *bounds, Str255 data, Boolean selected, Str63 Str)
 
 void MDrawItem(Boolean selected, Rect* bounds, Str255 data, Str63 Str, FSSpec	*spec)
 {
-	PenState			ps;
-	short			iconID;
-	Boolean			doNewWay;
-	IconTransformType	iconTransform;
-	Rect				iconRect;
-	Boolean			itemEnabled = true;
-	Handle			gTheSuite;
-	OSErr			iErr;
-	FInfo				fndrInfo;
+	Rect	iconRect;
+	OSErr	iErr;
 	
 	iconRect.left		= bounds->left + 6;			// 21
 	iconRect.top		= bounds->top + 2;
-	iconRect.bottom	= iconRect.top + 16;
+	iconRect.bottom		= iconRect.top + 16;
 	iconRect.right		= iconRect.left + 16;
 	
-	if (!thePrefs.FastMusicList)
-	{
-		if (!selected) PlotIconID(&iconRect, atNone, ttNone, 133);
-		else PlotIconID(&iconRect, atNone, ttSelected, 133);
-	}
-	else
-	{
+	if (!thePrefs.FastMusicList) {
+		if (!selected)
+			PlotIconID(&iconRect, atNone, ttNone, 133);
+		else
+			PlotIconID(&iconRect, atNone, ttSelected, 133);
+	} else {
 		IconRef	iconref;
 		SInt16	label;
 		
 		iErr = GetIconRefFromFile(spec, &iconref, &label);
 		
-		if (iErr == noErr)
-		{
+		if (iErr == noErr) {
 			if (!selected) PlotIconRef(&iconRect, kAlignNone, kTransformNone, kIconServicesNormalUsageFlag, iconref);
 			else PlotIconRef(&iconRect, kAlignNone, kTransformSelected, kIconServicesNormalUsageFlag, iconref);
 			ReleaseIconRef(iconref);
-		}
-		else
-		{
-			iErr=GetIconRef(kOnSystemDisk, 'SNPL', 'MADK', &iconref);
-			if (iErr == noErr)
-			{
-				if (!selected) PlotIconRef(&iconRect, kAlignNone, kTransformOffline, kIconServicesNormalUsageFlag, iconref);
-				else PlotIconRef(&iconRect, kAlignNone, kTransformSelectedOffline, kIconServicesNormalUsageFlag, iconref);
+		} else {
+			iErr = GetIconRef(kOnSystemDisk, 'SNPL', 'MADK', &iconref);
+			if (iErr == noErr) {
+				if (!selected)
+					PlotIconRef(&iconRect, kAlignNone, kTransformOffline, kIconServicesNormalUsageFlag, iconref);
+				else
+					PlotIconRef(&iconRect, kAlignNone, kTransformSelectedOffline, kIconServicesNormalUsageFlag, iconref);
 				ReleaseIconRef(iconref);
-			}
-			else
-			{
-				if (!selected) PlotIconID(&iconRect, atNone, kTransformOffline, 188);
-				else PlotIconID(&iconRect, atNone, kTransformSelectedOffline, 188);
+			} else {
+				if (!selected)
+					PlotIconID(&iconRect, atNone, kTransformOffline, 188);
+				else
+					PlotIconID(&iconRect, atNone, kTransformSelectedOffline, 188);
 			}
 		}
 	}

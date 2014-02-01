@@ -941,19 +941,21 @@ onrecommence:
 				break;
 				
 			case 7:
-				/*	myErr = SPBGetDeviceInfo(myInRefNum, siOptionsDialog, (Ptr) &infoData);
-				 if (infoData == 1)
-				 {
-				 myErr = SPBSetDeviceInfo(myInRefNum, siOptionsDialog, NULL);
-				 
-				 SPBGetDeviceInfo(myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
-				 if (infoData != 0) NumToString((long) infoData, aStr);
-				 else pStrcpy(aStr, "\pOff");
-				 SetDText(deviceDialog, 3, aStr);
-				 
-				 UpdateALLWindow();
-				 }
-				 else Erreur(61, -56);	*/
+#if 0
+				myErr = SPBGetDeviceInfo(myInRefNum, siOptionsDialog, (Ptr) &infoData);
+				if (infoData == 1)
+				{
+					myErr = SPBSetDeviceInfo(myInRefNum, siOptionsDialog, NULL);
+					
+					SPBGetDeviceInfo(myInRefNum, siPlayThruOnOff, (Ptr) &infoData);
+					if (infoData != 0) NumToString(infoData, aStr);
+					else pStrcpy(aStr, "\pOff");
+					SetDText(deviceDialog, 3, aStr);
+					
+					UpdateALLWindow();
+				}
+				else Erreur(61, -56);
+#endif
 				break;
 				
 			case 14:

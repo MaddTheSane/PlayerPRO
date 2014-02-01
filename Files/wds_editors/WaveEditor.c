@@ -212,7 +212,7 @@ void DoNullWave(void)
 		
 		/**/
 		
-		NumToString((long) CurrentPat, String);
+		NumToString(CurrentPat, String);
 		pStrcpy(aStr, "\p");
 		if (CurrentPat < 10)
 			pStrcat(aStr, "\p0");

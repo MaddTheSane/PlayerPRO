@@ -857,8 +857,6 @@ OSErr DoStandardOpen(FSSpec	*spec, Str255 string, OSType inType)
 		}
 	}
 	
-	//TODO: Open based on UTI, not Mac OS filetype.
-	//Mac OS X does NOT set filetype or creator based on file extention on any version I know of.
 	iErr = NavGetFile(NULL,	// use system's default location
 					  &theReply,
 					  &dialogOptions,

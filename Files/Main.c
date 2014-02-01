@@ -936,8 +936,7 @@ void MyDisposePtr(Ptr	*aPtr)
 	
 	*aPtr = NULL;
 	
-	if (MemError())
-	{
+	if (MemError()) {
 		MyDebugStr(__LINE__, __FILE__, "DisposePtr");
 	}
 }

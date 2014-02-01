@@ -873,7 +873,7 @@ void SetWMozart(short No)
 	Str255		theTitle, AStr;
 	
 	pStrcpy(theTitle, "\pPattern: ");
-	NumToString((long) No, AStr);
+	NumToString(No, AStr);
 	pStrcat(theTitle, AStr);
 	
 	SetWTitle(GetDialogWindow(MozartDlog), theTitle);

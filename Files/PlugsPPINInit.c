@@ -398,12 +398,10 @@ OSErr PPINAvailablePlug(OSType kindFile, OSType *plugType)
 
 OSErr PPINImportFile(OSType kindFile, short ins, short *samp, FSSpec *AlienFile)
 {
-	short		i;
+	short i;
 	
-	for (i = 0; i < tPlug; i++)
-	{
-		if (kindFile == ThePPINPlug[ i].type)
-		{
+	for (i = 0; i < tPlug; i++) {
+		if (kindFile == ThePPINPlug[i].type) {
 			return(CallPPINPlugIns(i, 'IMPL', ins, samp, AlienFile));
 		}
 	}
@@ -412,12 +410,10 @@ OSErr PPINImportFile(OSType kindFile, short ins, short *samp, FSSpec *AlienFile)
 
 OSErr PPINExportFile(OSType kindFile, short ins, short samp, FSSpec *AlienFile)
 {
-	short		i;
+	short i;
 	
-	for (i = 0; i < tPlug; i++)
-	{
-		if (kindFile == ThePPINPlug[ i].type)
-		{
+	for (i = 0; i < tPlug; i++) {
+		if (kindFile == ThePPINPlug[i].type) {
 			return(CallPPINPlugIns(i, 'EXPL', ins, &samp, AlienFile));
 		}
 	}

@@ -506,30 +506,30 @@ void PLSetControl(PrivateList *aL)
 	short	tt;
 	
 	// XScroll
-	
-	if (aL->xScroll != NULL)
-	{
+	if (aL->xScroll != NULL) {
 		MyMoveControl(aL->xScroll, aL->rect.left, aL->rect.bottom);
 		MySizeControl(aL->xScroll, aL->rect.right + 1 - aL->rect.left, 16);
 		
 		SetControlMinimum(aL->xScroll, 0);
 		
-		tt = aL->maxX - (aL->rect.right - aL->rect.left) / aL->LCell;		if (tt < 0) tt = 0;
+		tt = aL->maxX - (aL->rect.right - aL->rect.left) / aL->LCell;
+		if (tt < 0)
+			tt = 0;
 		SetControlMaximum(aL->xScroll, tt);
 		
 		if (gUseControlSize) SetControlViewSize(aL->xScroll, (aL->rect.right - aL->rect.left) / aL->LCell);
 	}
 	
 	// YScroll
-	
-	if (aL->yScroll != NULL)
-	{
+	if (aL->yScroll != NULL) {
 		MyMoveControl(aL->yScroll, aL->rect.right, aL->rect.top - 1);
 		MySizeControl(aL->yScroll, 16, aL->rect.bottom - aL->rect.top + 2);
 		
 		SetControlMinimum(aL->yScroll, 0);
 		
-		tt = aL->maxY  - (aL->rect.bottom - aL->rect.top) / aL->HCell;		if (tt < 0) tt = 0;
+		tt = aL->maxY  - (aL->rect.bottom - aL->rect.top) / aL->HCell;
+		if (tt < 0)
+			tt = 0;
 		SetControlMaximum(aL->yScroll, tt);
 		
 		if (gUseControlSize)
@@ -542,9 +542,9 @@ static Point	lastCell;
 
 Boolean PLClick(Point pt, short modifiers, PrivateList *aL)
 {
-	Rect			tRect, oldRect, uRect;
-	Point			cPt, theCell;
-	Point			curPt, oldPt;
+	Rect	tRect, oldRect, uRect;
+	Point	cPt, theCell;
+	Point	curPt, oldPt;
 	
 	oldPt.h = aL->select.left;
 	oldPt.v = aL->select.top;
@@ -610,8 +610,7 @@ Boolean PLClick(Point pt, short modifiers, PrivateList *aL)
 			PLGetSelectRect(&oldRect, aL);
 			
 			/* Set New Selection Rect */
-			if ((aL->type & onlyOne) != 0 && aL->select.left != -1)	//dragItem
-			{
+			if ((aL->type & onlyOne) != 0 && aL->select.left != -1) {	//dragItem
 				Point aa;
 				
 				aa.h = aL->select.left;
@@ -656,7 +655,8 @@ Boolean PLClick(Point pt, short modifiers, PrivateList *aL)
 End:
 	
 	if (TickCount() - lastTickCount < GetDblTime()) {
-		if (curPt.h == lastCell.h && curPt.v == lastCell.v) return true;
+		if (curPt.h == lastCell.h && curPt.v == lastCell.v)
+			return true;
 	}
 	lastTickCount = TickCount();
 	lastCell = curPt;
@@ -665,11 +665,8 @@ End:
 
 void PLScroll(Point myPt, PrivateList *aL)
 {
-	ControlHandle	theCtl;
+	ControlHandle	theCtl = NULL;
 	short			ctlPart, bogus;
-	
-
-	theCtl = NULL;
 	
 	if (TestControl(aL->yScroll, myPt))
 		theCtl = aL->yScroll;
@@ -700,7 +697,7 @@ void PLScroll(Point myPt, PrivateList *aL)
 					PLUpdate(aL);
 				}
 			} else if (ctlPart > 0) {
-				ControlActionUPP	MyControlUPP;
+				ControlActionUPP MyControlUPP;
 				
 				MyControlUPP = NewControlActionUPP(PLactionProcPartition);
 				TrackControl(theCtl, myPt, MyControlUPP);

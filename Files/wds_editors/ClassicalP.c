@@ -121,7 +121,7 @@ void SetWClassic(short No)
 
 	No = PatCopyXIM;
 
-	NumToString((long) No, String);
+	NumToString(No, String);
 	pStrcpy(aStr, "\p");
 	if (No< 10) pStrcat(aStr, "\p0");
 	if (No< 100) pStrcat(aStr, "\p0");
