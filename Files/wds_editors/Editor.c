@@ -3830,7 +3830,7 @@ void COPYEditor(void)
 	Pcmd		*myPcmd;
 	Ptr			myText;
 	GrafPtr		SavePort;
-	ScrapRef	scrap;
+	ScrapRef	scrap = NULL;
 	OSErr		anErr;
 	
  	GetPort(&SavePort);

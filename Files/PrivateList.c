@@ -666,7 +666,7 @@ End:
 void PLScroll(Point myPt, PrivateList *aL)
 {
 	ControlHandle	theCtl = NULL;
-	short			ctlPart, bogus;
+	short			ctlPart = 0, bogus;
 	
 	if (TestControl(aL->yScroll, myPt))
 		theCtl = aL->yScroll;

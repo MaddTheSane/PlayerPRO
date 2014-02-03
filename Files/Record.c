@@ -1162,7 +1162,7 @@ void SaveMOD(Boolean SaveAS, OSType theType)
 
 OSErr NOpenSampleInt(short ins, short samp, FSSpec sfFile)
 {
-	OSErr	iErr;
+	OSErr	iErr = noErr;
 	OSType	type;
 	
 	SetCursor(&watchCrsr);
