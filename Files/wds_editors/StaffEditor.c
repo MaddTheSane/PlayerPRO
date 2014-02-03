@@ -2549,8 +2549,8 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 						canAcceptDrag = false;
 						break;
 				}
-			}
-			else canAcceptDrag = false;
+			} else
+				canAcceptDrag = false;
 			break;
 			
 		case kDragTrackingEnterWindow:

@@ -2651,13 +2651,13 @@ Boolean IsMyTypeAvailable(DragReference theDrag)
 	result = GetFlavorFlags(theDrag, theItem, kDragFlavorTypeHFS, &theFlags);
 	if (result == noErr) {
 		Boolean		targetIsFolder, wasAliased;
-	
+		
 		GetFlavorDataSize(theDrag, theItem, kDragFlavorTypeHFS, &textSize);
 		
 		GetFlavorData(theDrag, theItem, kDragFlavorTypeHFS, &myFlavor, &textSize, 0);
-
+		
 		ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
-
+		
 		FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
 		
 		if (fndrInfo.fdType == 'INso') {
@@ -2672,7 +2672,7 @@ Boolean IsMyTypeAvailable(DragReference theDrag)
 		else
 			return false;
     }
-
+	
     return false;
 }
 

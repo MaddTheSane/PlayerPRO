@@ -9,7 +9,6 @@
 //pascal Boolean SoundConverterFillBufferDataProc(SoundComponentDataPtr *outData, void *inRefCon);
 //static pascal void MySoundCallBackFunction(SndChannelPtr theChannel, SndCommand *theCmd);
 
-
 extern	EventRecord				theEvent;
 extern	Cursor					HandCrsr;
 extern	MenuHandle				ViewsMenu;

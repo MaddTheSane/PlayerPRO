@@ -982,11 +982,11 @@ Boolean IsMyTypeMODList(DragReference theDrag)
 	dragMusicListFile = false;
 	
 	GetDragItemReferenceNumber(theDrag, 1, &theItem);
-    
+	
 	result = GetFlavorFlags(theDrag, theItem, flavorTypeHFS, &theFlags);
 	if (result == noErr) {
 		Boolean		targetIsFolder, wasAliased;
-	
+		
 		GetFlavorDataSize(theDrag, theItem, flavorTypeHFS, &textSize);
 		
 		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
@@ -1007,9 +1007,9 @@ Boolean IsMyTypeMODList(DragReference theDrag)
 			return true;
 		else
 			return false;
-    }
+	}
 	
-    return false;
+	return false;
 }
 
 pascal OSErr MyTrackingMODList(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
@@ -2178,7 +2178,7 @@ void FileInformations(short whichItem)
 	
 	FileInfoID = whichItem;
 	
-	myFSS = *specList[ theCell.v];
+	myFSS = *specList[theCell.v];
 	
 	pStrcpy(FileInfoName, myFSS.name);
 	

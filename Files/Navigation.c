@@ -225,16 +225,15 @@ void HandleCustomMouseDown(NavCBRecPtr callBackParms)
 	
 	// ask NavServices for the first custom control's ID:
 	if (callBackParms->context != 0) {	// always check to see if the context is correct
-		theErr = NavCustomControl(callBackParms->context,kNavCtlGetFirstControlID,&firstItem);
+		theErr = NavCustomControl(callBackParms->context, kNavCtlGetFirstControlID, &firstItem);
 		realItem = theItem - firstItem + 1;		// map it to our DITL constants:
 	}
 	
 	switch (realItem) {
 		case 10:
-			if (previewPartition)	// STOP Preview
-			{
+			if (previewPartition) {	// STOP Preview
 				MADDriver->Reading = false;							// Stop reading current partition
-				//	MADStopDriver(MADDriver);							// Stop driver interrupt function
+				//MADStopDriver(MADDriver);							// Stop driver interrupt function
 				MADAttachDriverToMusic(MADDriver, curMusic, NULL);
 				MADDisposeMusic(&previewPartition, MADDriver);				// Dispose the current music
 				previewPartition = NULL;

@@ -1038,11 +1038,11 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 		for (i = 0 ; i < MAXTRACK; i++) thePrefs.Previous_chanBus[i] = curMusic->header->chanBus[i];
 		
 		BlockMoveData(curMusic->sets, &thePrefs.Previous_Sets, MAXTRACK * sizeof(FXSets));
-		//	}
+		//}
 		//thePrefs.previousSpec = *curMusic->header;
 		
-		//	if (curMusic)
-		//	{
+		//if (curMusic)
+		//{
 		if (GereChanged() != noErr) return false;
 	}
 	
@@ -1086,8 +1086,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	
 	switch (theType) {
 		case 'Rsrc':
-			if (vRefNum == -55)
-			{
+			if (vRefNum == -55) {
 				TempHandle = GetResource('MADK', 128);
 				if (TempHandle) {
 					DetachResource(TempHandle);
@@ -1101,15 +1100,14 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 				MADDisposeMusic(&curMusic, MADDriver);
 				
 				TempHandle = GetResource('MADK', vRefNum);
-				if (TempHandle)
-				{
+				if (TempHandle) {
 					DetachResource(TempHandle);
 					HLock(TempHandle);
 					iErr = MADLoadMusicPtr(&curMusic, *TempHandle);
 					HUnlock(TempHandle);
 					MyDisposHandle(& TempHandle);
-				}
-				else MyDebugStr(__LINE__, __FILE__, "Fatal MEMORY ERROR 2: NEED MORE MEMORY !");
+				} else
+					MyDebugStr(__LINE__, __FILE__, "Fatal MEMORY ERROR 2: NEED MORE MEMORY !");
 			}
 			/***
 			 
@@ -1122,52 +1120,42 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 			break;
 			
 		default:
-			if (!MADPlugAvailable(gMADLib, theTypePtr))
-			{
-				if (MADMusicIdentifyFSp(gMADLib, theTypePtr, &aSpec) != noErr)
-				{
+			if (!MADPlugAvailable(gMADLib, theTypePtr)) {
+				if (MADMusicIdentifyFSp(gMADLib, theTypePtr, &aSpec) != noErr) {
 					// Try to read this file with QUICKTIME !
 					
-					if (!CreateQTWindow(&aSpec))
-					{
+					if (!CreateQTWindow(&aSpec)) {
 						// TEST SI PKZIP !
 						
 						/** TEST MEMOIRE :  Environ 1 fois la taille du fichier**/
 						iErr = FSpOpenDF(&aSpec, fsCurPerm, &iFileRefI);
 						GetEOF(iFileRefI, &sndSize);
 						
-						if (sndSize > 4)
-						{
+						if (sndSize > 4) {
 							OSType	type;
 							
 							sndSize = 4;
 							iErr = FSRead(iFileRefI, &sndSize, &type);
-							if (iErr == noErr)
-							{
-								if (type == 'PK\3\4')
-								{
+							if (iErr == noErr) {
+								if (type == 'PK\3\4') {
 									Erreur(106, 106);
 								}
 							}
 						}
 						
 						FSCloseFork(iFileRefI);
-					}
-					else pStrcpy(lastLoadMODListName, fName);
+					} else
+						pStrcpy(lastLoadMODListName, fName);
 					return false;
 				} else {
 					FInfo		fndrInfo;
 					
 					theType = Ptr2OSType(theTypePtr);
 					
-					if (FSpGetFInfo(&aSpec, &fndrInfo) == noErr)
-					{
-						if (FSpSetFInfo(&aSpec, &fndrInfo) == noErr)		// write permission?
-						{
-							if (fndrInfo.fdType != theType)
-							{
-								if (InfoL(60))
-								{
+					if (FSpGetFInfo(&aSpec, &fndrInfo) == noErr) {
+						if (FSpSetFInfo(&aSpec, &fndrInfo) == noErr) {		// write permission?
+							if (fndrInfo.fdType != theType) {
+								if (InfoL(60)) {
 									fndrInfo.fdType		= theType;
 									fndrInfo.fdCreator	= 'SNPL';
 									
@@ -1202,8 +1190,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 		case 'MADK':
 			EnableMenuItem(FileMenu, 3);
 			
-			if (CheckFileType(aSpec, 'MADK'))
-			{
+			if (CheckFileType(aSpec, 'MADK')) {
 				MADDriver->curMusic = NULL;
 				MADDisposeMusic(&curMusic, MADDriver);
 				
@@ -1219,8 +1206,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 				
 				iErr = MADLoadMusicFilePString(gMADLib, &curMusic, "MADK", fName);
 				
-				if (thePrefs.AutoCreator == true)
-				{
+				if (thePrefs.AutoCreator == true) {
 					fndrInfo.fdCreator = 'SNPL';
 					fndrInfo.fdType = 'MADK';
 					FSpSetFInfo(&aSpec, &fndrInfo);
@@ -1235,7 +1221,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	/**** Updates obligatoires *******/
 	
 	for (i = 0; i < curMusic->header->numChn; i++) {
-		MADDriver->Active[ i] = true;
+		MADDriver->Active[i] = true;
 	}
 	
 	curMusic->header->numInstru = MAXINSTRU;
@@ -1320,8 +1306,8 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 			curvRefNum	= vRefNum;
 			curparID		= parID;
 			PatchSave		= false;
-		}
-		else HGetVol(NULL, &curvRefNum, &curparID);
+		} else
+			HGetVol(NULL, &curvRefNum, &curparID);
 	}
 	
 	UPDATE_Total();
