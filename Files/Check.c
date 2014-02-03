@@ -1230,8 +1230,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 		MADDriver->curMusic = NULL;
 		MADDisposeMusic(&curMusic, MADDriver);
 		
-		MaxMem(&sndSize);
-		//CompactMem(maxSize);
+		sndSize = 2 * 1024 * 1024;
 		
 		IsReading = false;
 		ImportFile("\pUntitled", -55, 0, 'Rsrc');
