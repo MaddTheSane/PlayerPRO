@@ -20,7 +20,6 @@
 @synthesize PPDEMarkerColor;
 @synthesize PPDEMarkerLoop;
 @synthesize PPDEMarkerOffset;
-@synthesize PPDEMarkerSelect;
 @synthesize PPDEMouseClickCommand;
 @synthesize PPDEMouseClickControl;
 @synthesize PPDEMouseClickOption;
@@ -30,7 +29,7 @@
 @synthesize PPDEPatternWrappingMatrix;
 @synthesize PPDEVolume;
 
--(id)init
+- (id)init
 {
 	if (self = [super initWithNibName:@"DigitalPrefs" bundle:nil]) {
 		[self setTitle:@"Digital Editor"];
@@ -38,7 +37,7 @@
 	return self;
 }
 
--(BOOL)lineHeight
+- (BOOL)lineHeight
 {
 	id curSelected = [PPDELineHeightMatrix selectedCell];
 	if ([PPDELineHeightMatrix cellAtRow:0 column:0] == curSelected) {
@@ -50,7 +49,7 @@
 	}
 }
 
--(BOOL)musicTrace
+- (BOOL)musicTrace
 {
 	id curSelected = [PPDEMusicTraceMatrix selectedCell];
 	if ([PPDEMusicTraceMatrix cellAtRow:0 column:0] == curSelected) {
@@ -62,7 +61,7 @@
 	}
 }
 
--(BOOL)patternWrapping
+- (BOOL)patternWrapping
 {
 	id curSelected = [PPDEPatternWrappingMatrix selectedCell];
 	if ([PPDEPatternWrappingMatrix cellAtRow:0 column:0] == curSelected) {
@@ -74,7 +73,7 @@
 	}
 }
 
--(BOOL)PPDEDragAs
+- (BOOL)PPDEDragAs
 {
 	id curSelected = [PPDEDragAsMatrix selectedCell];
 	if ([PPDEDragAsMatrix cellAtRow:0 column:0] == curSelected) {
@@ -85,7 +84,6 @@
 		return NO;
 	}
 }
-
 
 - (IBAction)cellInformationCheckClicked:(id)sender
 {
@@ -155,7 +153,7 @@
 	[PPDEArgument setState:[defaults boolForKey:PPDEShowArgument]];
 	[PPDEVolume setState:[defaults boolForKey:PPDEShowVolume]];
 	
-	[PPDEMarkerSelect setState:[defaults boolForKey:PPDEShowMarkers]];
+	//[PPDEMarkerSelect setState:[defaults boolForKey:PPDEShowMarkers]];
 	[PPDEMarkerOffset setStringValue:[defaults stringForKey:PPDEMarkerOffsetPref]];
 	[PPDEMarkerLoop setStringValue:[defaults stringForKey:PPDEMarkerLoopPref]];
 	[PPDEMarkerColor setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPDEMarkerColorPref]]];

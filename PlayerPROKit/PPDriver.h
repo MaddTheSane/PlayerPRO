@@ -17,6 +17,7 @@
 @property (readonly) PPLibrary *theLibrary;
 @property (readonly) MADDriverSettings driverSettings;
 @property NSTimeInterval musicPosition;
+@property BOOL isExporting;
 
 - (id)initWithLibrary:(PPLibrary *)theLib;
 - (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings;
@@ -26,7 +27,6 @@
 
 - (void)beginExport;
 - (void)endExport;
-@property BOOL isExporting;
 
 - (void)cleanDriver;
 

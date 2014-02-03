@@ -42,7 +42,7 @@
 "23.title" = "Offset:";
 
 /* Class = "NSTextFieldCell"; title = "No:"; ObjectID = "25"; */
-"25.title" = "No:";
+"25.title" = "№:";
 
 /* Class = "NSTextFieldCell"; title = "Loop:"; ObjectID = "31"; */
 "31.title" = "Loop:";
