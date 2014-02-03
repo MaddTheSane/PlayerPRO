@@ -185,7 +185,6 @@
 		554CBD50188CD468002E137B /* NSColor+PPPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 554CBD4E188CD468002E137B /* NSColor+PPPreferences.h */; };
 		554CBD51188CD468002E137B /* NSColor+PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CBD4F188CD468002E137B /* NSColor+PPPreferences.m */; };
 		554CBD53188CD4AA002E137B /* PreferenceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CBD52188CD4AA002E137B /* PreferenceHandler.m */; };
-		554CBD56188CD7A3002E137B /* UserDefaultKeys.h in Headers */ = {isa = PBXBuildFile; fileRef = 554CBD54188CD7A3002E137B /* UserDefaultKeys.h */; };
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		554E10E010D6EF8200BB619C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -1406,7 +1405,6 @@
 		554CBD4E188CD468002E137B /* NSColor+PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+PPPreferences.h"; sourceTree = "<group>"; };
 		554CBD4F188CD468002E137B /* NSColor+PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+PPPreferences.m"; sourceTree = "<group>"; };
 		554CBD52188CD4AA002E137B /* PreferenceHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceHandler.m; sourceTree = "<group>"; };
-		554CBD54188CD7A3002E137B /* UserDefaultKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultKeys.h; sourceTree = "<group>"; };
 		554CBD55188CD7A3002E137B /* UserDefaultKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultKeys.m; sourceTree = "<group>"; };
 		554CBD58188CE960002E137B /* PreferenceHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferenceHandler.h; sourceTree = "<group>"; };
 		554E0FE110D6C79D00BB619C /* CompFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = CompFade.c; sourceTree = "<group>"; };
@@ -2825,7 +2823,6 @@
 			children = (
 				554CBD4E188CD468002E137B /* NSColor+PPPreferences.h */,
 				554CBD4F188CD468002E137B /* NSColor+PPPreferences.m */,
-				554CBD54188CD7A3002E137B /* UserDefaultKeys.h */,
 				554CBD55188CD7A3002E137B /* UserDefaultKeys.m */,
 				554CBD52188CD4AA002E137B /* PreferenceHandler.m */,
 			);
@@ -3371,7 +3368,6 @@
 				88E0C4F90C2F21E500D6C081 /* PrivateList.proto.h in Headers */,
 				88E0C4FB0C2F21E500D6C081 /* Progress.proto.h in Headers */,
 				88E0C4FD0C2F21E500D6C081 /* ProgressBar.proto.h in Headers */,
-				554CBD56188CD7A3002E137B /* UserDefaultKeys.h in Headers */,
 				88E0C4FF0C2F21E600D6C081 /* PubWindow.proto.h in Headers */,
 				88E0C5010C2F21E600D6C081 /* Quicktime.proto.h in Headers */,
 				88E0C5030C2F21E600D6C081 /* Record.proto.h in Headers */,

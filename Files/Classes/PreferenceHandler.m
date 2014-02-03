@@ -365,12 +365,19 @@ void RegisterCFDefaults()
 	  [NSNumber numberWithBool:NO], PPStereoDelayToggle,
 	  [NSNumber numberWithBool:NO], PPOversamplingToggle,
 	  [NSNumber numberWithInt:1], PPOversamplingAmount,
-	  [makeNSRGB(65535, 65535, 39321) PPencodeColor], PPDEMarkerColorPref,
 	  [NSNumber numberWithBool:NO], PPCEShowNotesLen,
 	  [NSNumber numberWithBool:NO], PPCEShowMarkers,
 	  [NSNumber numberWithShort:130], PPCETrackHeight,
 	  [NSNumber numberWithShort:4], PPCETempoNum,
 	  [NSNumber numberWithShort:4], PPCETempoUnit,
+	  
+	  [makeNSRGB(65535, 65535, 39321) PPencodeColor], PPDEMarkerColorPref,
+	  [NSNumber numberWithBool:YES], PPDEShowArgument,
+	  [NSNumber numberWithBool:YES], PPDEShowEffect,
+	  [NSNumber numberWithBool:YES], PPDEShowInstrument,
+	  [NSNumber numberWithBool:YES], PPDEShowMarkers,
+	  [NSNumber numberWithBool:YES], PPDEShowNote,
+	  [NSNumber numberWithBool:YES], PPDEShowVolume,
 	  
 	  [makeNSRGB(61166, 0, 0) PPencodeColor],PPCColor1,
 	  [makeNSRGB(35980, 48316, 7196) PPencodeColor], PPCColor2,
@@ -547,6 +554,12 @@ void ReadCFPreferences()
 	thePrefs.TempsUnit = [defaults integerForKey:PPCETempoUnit];
 	thePrefs.TrackHeight = [defaults integerForKey:PPCETrackHeight];
 	
+	thePrefs.DigitalArgu = [defaults boolForKey:PPDEShowArgument];
+	thePrefs.DigitalEffect = [defaults boolForKey:PPDEShowEffect];
+	thePrefs.DigitalInstru = [defaults boolForKey:PPDEShowInstrument];
+	thePrefs.DigitalNote = [defaults boolForKey:PPDEShowNote];
+	thePrefs.DigitalVol = [defaults boolForKey:PPDEShowVolume];
+	
 	[pool drain];
 }
 
@@ -602,6 +615,11 @@ void WriteCFPreferences()
 	[defaults setInteger:thePrefs.TempsUnit forKey:PPCETempoUnit];
 	[defaults setInteger:thePrefs.TrackHeight forKey:PPCETrackHeight];
 	
+	[defaults setBool:thePrefs.DigitalArgu forKey:PPDEShowArgument];
+	[defaults setBool:thePrefs.DigitalEffect forKey:PPDEShowEffect];
+	[defaults setBool:thePrefs.DigitalInstru forKey:PPDEShowInstrument];
+	[defaults setBool:thePrefs.DigitalNote forKey:PPDEShowNote];
+	[defaults setBool:thePrefs.DigitalVol forKey:PPDEShowVolume];
 	
 	[defaults synchronize];
 	

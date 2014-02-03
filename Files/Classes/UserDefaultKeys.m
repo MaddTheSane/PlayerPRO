@@ -6,7 +6,6 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#include "UserDefaultKeys.h"
 #import "NSColor+PPPreferences.h"
 
 #define PPPreferencesSet @"PlayerPRO 5 CoreFoundation Preferences set?"
