@@ -6,8 +6,6 @@
 #include <QuickTime/QuickTime.h>
 #include "Undo.h"
 
-//OSErr DoStandardOpen(FSSpec	*spec, Str255 string, OSType inType);
-
 pascal OSErr MyProgressUPP(Movie theMovie, short message, short whatOperation, Fixed percentDone, long refcon)
 {
 	UpdateALLWindow();
@@ -18,6 +16,7 @@ pascal OSErr MyProgressUPP(Movie theMovie, short message, short whatOperation, F
 void ImportAudioCD()
 {
 	MovieImportComponent	ci;
+	//OSType			fileType;
 	FSSpec			newfile;
 	OSErr			iErr;
 	Boolean			canceled;
@@ -37,30 +36,26 @@ void ImportAudioCD()
 	
 	progressUPP = NewMovieProgressUPP(MyProgressUPP);
 	
-	if (DoStandardOpen(&file, "\pAudio CD", kQTFileTypeAudioCDTrack) == noErr)
-	{
+	if (DoStandardOpen(&file, "\pAudio CD", kQTFileTypeAudioCDTrack) == noErr) {
 		iErr = FSpGetFInfo(&file, &fndrInfo);
 		
-		ci = OpenDefaultComponent (MovieImportType, kQTFileTypeAudioCDTrack);
+		ci = OpenDefaultComponent(MovieImportType, kQTFileTypeAudioCDTrack);
 		
-		if (ci)
-		{
-			iErr = MovieImportDoUserDialog(		ci, 
+		if (ci) {
+			iErr = MovieImportDoUserDialog(ci,
 								&file, 
 								NULL,
 								&canceled);
 			
-			iErr = MovieImportSetProgressProc(	ci, progressUPP, 0);
+			iErr = MovieImportSetProgressProc(ci, progressUPP, 0);
 			
 			UpdateALLWindow();
 			
-			if (!canceled && iErr == noErr)
-			{
+			if (!canceled && iErr == noErr) {
 				pStrcpy(newfile.name, file.name);
 				
 				iErr = FindFolder(kOnSystemDisk, kTrashFolderType, kCreateFolder, &newfile.vRefNum, &newfile.parID);	// kDesktopFolderType, kTemporaryFolderType 
-				if (iErr == noErr)
-				{
+				if (iErr == noErr) {
 					/////////////////////////////////////////////////
 					//		AIFF CONVERSION
 					/////////////////////////////////////////////////
@@ -71,14 +66,13 @@ void ImportAudioCD()
 					
 					FSpDelete(&newfile);
 					
-					iErr = CreateMovieFile(	&newfile,
+					iErr = CreateMovieFile(&newfile,
 					      		       'SNPL',
 					      		       smSystemScript,
 					      		       createMovieFileDeleteCurFile,
 					      		       &resRefNum,
 					      		       &theMovie);
-					if (!iErr)
-					{
+					if (!iErr) {
 						usedTrack = 0;
 						addedDuration = 0;
 						outFlags = 0;
@@ -89,8 +83,7 @@ void ImportAudioCD()
 						
 						DisposeMovie(theMovie);
 						
-						if (!iErr)
-						{
+						if (!iErr) {
 							/////////////////////////////////////////////////
 							
 							iErr = FSpGetFInfo(&newfile, &fndrInfo);
@@ -123,7 +116,8 @@ void ImportAudioCD()
 	
 	DisposeMovieProgressUPP(progressUPP);
 }
-/*
+
+#if 0
 void ImportAudioCD()
 {
 	MovieImportComponent	ci;
@@ -220,9 +214,9 @@ void ImportAudioCD()
 			CloseComponent(ci);
 		}
 	}
-}*/
+}
 
-/*OSErr ConvertDataToAIFF(FSSpec file, FSSpec *newfile)
+OSErr ConvertDataToAIFF(FSSpec file, FSSpec *newfile)
 {
 	MovieImportComponent	ci;
 	OSType					fileType;
@@ -319,4 +313,5 @@ void ImportAudioCD()
 	else DebugStr("\p66");
 	
 	return iErr;
-}*/
+}
+#endif

@@ -4,6 +4,7 @@
 #include "Undo.h"
 #include "PPPlug.h"
 #include "PrivateList.h"
+#include "Navigation.h"
 
 /******** HELP MODULE ********/
 enum
@@ -3980,7 +3981,6 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 	Pcmd				*myPcmd;
 	RgnHandle			saveClip;
 	HFSFlavor			myFlavor;
-	FInfo				fndrInfo;
 	OSErr				iErr;
 	
 	if (!mainSystemDrag)
@@ -4028,8 +4028,7 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 				
 				ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 				//TODO: UTI
-				FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
-				fileTyp = fndrInfo.fdType;
+				fileTyp = GetOSTypeFromSpecUsingUTI(myFlavor.fileSpec);
 				
 				switch (fileTyp) {
 					case 'Pcmd':

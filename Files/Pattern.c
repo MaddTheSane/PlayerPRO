@@ -4,6 +4,7 @@
 #include "RDriverInt.h"
 #include "Undo.h"
 #include "Utils.h"
+#include "Navigation.h"
 
 #define ON	true
 #define OFF	false
@@ -113,7 +114,7 @@ static pascal Boolean myDragClickLoop(void)
 static	ControlHandle	selectedControl;
 
 pascal OSErr MyPATTrackingHandler(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
-{	
+{
 	unsigned long	attributes;
 	ItemReference	theItem;
 	RgnHandle		theRgn;
@@ -122,56 +123,56 @@ pascal OSErr MyPATTrackingHandler(short message, WindowPtr theWindow, void *hand
 	OSErr           result;
 	long			textSize;
 	HFSFlavor		myFlavor;
-	FInfo			fndrInfo;
-
+	OSType			type;
+	
 	if (!mainSystemDrag)
 		return noErr;
-
+	
 	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag))
 		return noErr;
-
+	
 	SetPortWindowPort(theWindow);
 	BackColor(whiteColor);
 	
 	GetDragAttributes(theDrag, &attributes);
-
+	
 	switch (message) {
 		case kDragTrackingEnterHandler:
 			canAcceptDrag = false;
-		
+			
 			GetDragItemReferenceNumber(theDrag, 1, &theItem);
 			result = GetFlavorFlags(theDrag, theItem, flavorTypeHFS, &theFlags);
 			if (result == noErr) {
 				Boolean		targetIsFolder, wasAliased;
-			
+				
 				GetFlavorDataSize(theDrag, theItem, flavorTypeHFS, &textSize);
 				
 				GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
-		
-				ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
-		
-				HSetVol(NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
-				FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
 				
-				if (fndrInfo.fdType == 'PATN')
+				ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
+				
+				HSetVol(NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
+				type = GetOSTypeFromSpecUsingUTI(myFlavor.fileSpec);
+				
+				if (type == 'PATN')
 					canAcceptDrag = true;
 		    }
 		    
 		    if (attributes & kDragInsideSenderWindow)
 				canAcceptDrag = true;
 			break;
-
+			
 		case kDragTrackingEnterWindow:
-		
+			
 			break;
-
+			
 		case kDragTrackingInWindow:
 			GetDragMouse(theDrag, &theMouse, NULL);
 			localMouse = theMouse;
 			GlobalToLocal(&localMouse);
-
+			
 			selectedControl = NULL;
-
+			
 			if (attributes & kDragInsideSenderWindow) {
 				Rect contrlRect;
 				
@@ -226,17 +227,17 @@ pascal OSErr MyPATTrackingHandler(short message, WindowPtr theWindow, void *hand
 				PatRectList2.right += 15;
 			}
 			break;
-
+			
 		case kDragTrackingLeaveWindow:
 			HideDragHilite(theDrag);
 			break;
-
+			
 		case kDragTrackingLeaveHandler:
-		
+			
 			break;
 	}
 	RGBBackColor(&theColor);
-
+	
 	return(noErr);
 }
 

@@ -561,16 +561,13 @@ OSErr ActiveSoundInput(Boolean RecordingMode, Handle *RecordedSound, Str255 name
 		MySizeWindow(deviceDialog, caRect.right, 122, true);
 		maxSndSize = 1;
 	} else {
-		long totalSizeApp, contigSize;
-		
 		*RecordedSound = NULL;
 		
-		totalSizeApp = MaxMem(&contigSize);
-		
-		maxSndSize = totalSizeApp/2L;
+		maxSndSize = 2 * 1024 * 1024;
 		*RecordedSound = NewHandle(maxSndSize);
 		
-		if (*RecordedSound == NULL) return -1;
+		if (*RecordedSound == NULL)
+			return -1;
 		HLock(*RecordedSound);
 		RecordingPtr = StartRecordingPtr = **RecordedSound;
 	}

@@ -3350,8 +3350,8 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 	Pcmd				*myPcmd;
 	RgnHandle			saveClip;
 	HFSFlavor			myFlavor;
-	FInfo				fndrInfo;
 	OSErr				iErr;
+	OSType				type;
 	
 	if (!mainSystemDrag)
 		return noErr;
@@ -3409,34 +3409,31 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 				
 				ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 				
-				FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
+				type = GetOSTypeFromSpecUsingUTI(myFlavor.fileSpec);
 				
-				switch (fndrInfo.fdType) {
+				switch (type) {
 					case 'Pcmd':
 						/////////////
 						PcmdTracks = 1;	PcmdLength = 1;
 						iErr = FSpOpenDF(&myFlavor.fileSpec, fsCurPerm, &fRefNum);
-						if (iErr == noErr)
-						{
+						if (iErr == noErr) {
 							short minNote, maxNote;
 							
 							GetEOF(fRefNum, &inOutBytes);
 							myPcmd = (Pcmd*) MyNewPtr(inOutBytes);
-							FSRead(fRefNum, &inOutBytes, (Ptr) myPcmd);
+							FSRead(fRefNum, &inOutBytes, (Ptr)myPcmd);
+							SwapPcmd(myPcmd);
 							PcmdTracks = myPcmd->tracks;
 							PcmdLength = myPcmd->length;
 							GetMinMaxPcmd(myPcmd, &minNote, &maxNote);
-							if (attributes & kDragInsideSenderWindow)
-							{
+							if (attributes & kDragInsideSenderWindow) {
 								PcmdHigh = selecEnd.v - selecStart.v + 1;
 								YMove = minNote - selecStart.v;
-							}
-							else
-							{
+							} else {
 								PcmdHigh = maxNote - minNote + 1;
 							}
 							FSCloseFork(fRefNum);
-							MyDisposePtr((Ptr*) &myPcmd);
+							MyDisposePtr((Ptr*)&myPcmd);
 						}
 						///////////////
 						
@@ -3468,15 +3465,17 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 			{
 				Rect bounds;
 				
-				if (PtInRect(localMouse, GetControlBounds(PoubBut, &bounds)) && selectedControl == NULL)	{ HiliteControl(PoubBut, kControlButtonPart);		selectedControl = PoubBut;}
-				else HiliteControl(PoubBut, 0);
+				if (PtInRect(localMouse, GetControlBounds(PoubBut, &bounds)) && selectedControl == NULL) {
+					HiliteControl(PoubBut, kControlButtonPart);
+					selectedControl = PoubBut;
+				} else
+					HiliteControl(PoubBut, 0);
 			}
 			
 			saveClip = NewRgn();
 			GetClip(saveClip);
 			
-			if (PtInRect(localMouse, &MozartRect))
-			{
+			if (PtInRect(localMouse, &MozartRect)) {
 				short 	pos, track, note;
 				Rect	trackRect;
 				
@@ -3492,18 +3491,18 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 				tempRect.right = tempRect.left + PcmdLength*MOLarg + 1;
 				tempRect.bottom = tempRect.top + PcmdHigh*MOHaut + 1;
 				
-				DropX = pos;	DropY = note;	DropTrack = track;
+				DropX = pos;
+				DropY = note;
+				DropTrack = track;
 				
-				if (tempRect.left != dragRect.left || tempRect.top != dragRect.top)
-				{
+				if (tempRect.left != dragRect.left || tempRect.top != dragRect.top) {
 					theRgn = NewRgn();
 					
 					RectRgn(theRgn, &tempRect);
 					
 					DragMark2(track);
 					
-					if (!EqualRect(&trackRect, &prevClipRect))
-					{
+					if (!EqualRect(&trackRect, &prevClipRect)) {
 						ClipRect(&prevClipRect);
 						HideDragHilite(theDrag);
 					}
@@ -3516,9 +3515,7 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 					dragRect = tempRect;
 					prevClipRect = trackRect;
 				}
-			}
-			else
-			{
+			} else {
 				DropX = DropY = DropTrack = -1;
 				HideDragHilite(theDrag);
 				EraseMark();

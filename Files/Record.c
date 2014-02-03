@@ -1100,9 +1100,9 @@ void SaveMOD(Boolean SaveAS, OSType theType)
 		pStrcpy(fileName, curMusic->musicFileName);
 		
 		if (thePrefs.addExtension) {
-			for (i = fileName[ 0]; i > 0 ; i--) {
-				if (fileName[ i] == '.') {
-					fileName[ 0] = i-1;
+			for (i = fileName[0]; i > 0 ; i--) {
+				if (fileName[i] == '.') {
+					fileName[0] = i-1;
 					i = 0;
 				}
 			}

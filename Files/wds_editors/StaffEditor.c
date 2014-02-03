@@ -4,6 +4,8 @@
 #include "RDriverInt.h"
 #include "PrivateList.h"
 #include "Shuddup.h"
+#include "Navigation.h"
+
 void UpdateStaffInfo();
 void UpdateStaffWindow(DialogPtr GetSelection);
 
@@ -2477,8 +2479,8 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 	Pcmd			*myPcmd;
 	RgnHandle		saveClip;
 	HFSFlavor		myFlavor;
-	FInfo			fndrInfo;
 	OSErr			iErr;
+	OSType			type;
 	
 	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag))
 		return noErr;
@@ -2520,9 +2522,9 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 				
 				ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 				
-				FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
+				type = GetOSTypeFromSpecUsingUTI(myFlavor.fileSpec);
 				
-				switch (fndrInfo.fdType) {
+				switch (type) {
 					case 'Pcmd':
 						/****************/
 						PcmdTracks = 1;
@@ -2548,8 +2550,8 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 						canAcceptDrag = false;
 						break;
 				}
-			}
-			else canAcceptDrag = false;
+			} else
+				canAcceptDrag = false;
 			break;
 			
 		case kDragTrackingEnterWindow:

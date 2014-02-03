@@ -9,6 +9,7 @@
 #include "PrivateList.h"
 #include "GetFileIcon.h"
 #include "Utils.h"
+#include "Navigation.h"
 
 #define BIGMUSICLIST	404
 #define MAXITEM			12000
@@ -544,13 +545,13 @@ void OpenMODListSTCf(FSSpec spec)
 	Str255		aStr;
 	FSSpec		myFSS;
 	WDPBRec		wdpb;
-	FInfo		fndrInfo;
+	OSType		type;
 	
 	if (GereMusicListChanged())
 		return;
 	
-	iErr = FSpGetFInfo(&spec, &fndrInfo);
-	if (fndrInfo.fdType != 'STCf')
+	type = GetOSTypeFromSpecUsingUTI(spec);
+	if (type != 'STCf')
 		return;
 	
 	GetPort(&myPort);
@@ -975,40 +976,40 @@ Boolean IsMyTypeMODList(DragReference theDrag)
 	OSErr           	result;
 	long				textSize;
 	HFSFlavor			myFlavor;
-	FInfo				fndrInfo;
+	OSType				type;
 	char				tempC[5];
 	
 	dragMusicListFile = false;
 	
 	GetDragItemReferenceNumber(theDrag, 1, &theItem);
-    
+	
 	result = GetFlavorFlags(theDrag, theItem, flavorTypeHFS, &theFlags);
 	if (result == noErr) {
 		Boolean		targetIsFolder, wasAliased;
-	
+		
 		GetFlavorDataSize(theDrag, theItem, flavorTypeHFS, &textSize);
 		
 		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
-
+		
 		ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		
 		HSetVol(NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
-		result = FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
-		if (result != noErr)
+		type = GetOSTypeFromSpecUsingUTI(myFlavor.fileSpec);
+		if (type == 0)
 			return true;		// <- Il s'agit d'un FOLDER, pas d'un FICHIER !!!
 		
-		if (fndrInfo.fdType == 'sTAT' || fndrInfo.fdType == 'STCf')
+		if (type == 'STCf')
 			dragMusicListFile = true;
 		
-		if (OpenableFile(fndrInfo.fdType, &myFlavor.fileSpec))
+		if (OpenableFile(type, &myFlavor.fileSpec))
 			return true;
 		else if (MADMusicIdentifyFSp(gMADLib, tempC, &myFlavor.fileSpec) == noErr)
 			return true;
 		else
 			return false;
-    }
+	}
 	
-    return false;
+	return false;
 }
 
 pascal OSErr MyTrackingMODList(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
@@ -1280,6 +1281,7 @@ Boolean NDragMusicFile(RgnHandle myRgn, EventRecord *theEvent, Point theCell, sh
 	DragAttributes		attributes;
 	short				mouseDownModifiers, mouseUpModifiers, copyText;
 	HFSFlavor			myNewFile;
+	OSType				type;
 	FInfo				fndrInfo;
 	
 	if (!DragManagerUse)
@@ -1298,9 +1300,9 @@ Boolean NDragMusicFile(RgnHandle myRgn, EventRecord *theEvent, Point theCell, sh
 	for (i = 0; i < noCell; i++) {
 		Rect dragRegionRect;
 		
-		FSpGetFInfo(specList[ theCell.v + i], &fndrInfo);
-		
-		myNewFile.fileType		= fndrInfo.fdType;
+		FSpGetFInfo(specList[theCell.v + i], &fndrInfo);
+		type = GetOSTypeFromSpecUsingUTI(*specList[theCell.v + 1]);
+		myNewFile.fileType		= type;
 		myNewFile.fileCreator	= fndrInfo.fdCreator;
 		myNewFile.fdFlags		= fndrInfo.fdFlags;
 		myNewFile.fileSpec		= *specList[theCell.v + i];
@@ -2176,7 +2178,7 @@ void FileInformations(short whichItem)
 	
 	FileInfoID = whichItem;
 	
-	myFSS = *specList[ theCell.v];
+	myFSS = *specList[theCell.v];
 	
 	pStrcpy(FileInfoName, myFSS.name);
 	
@@ -3052,11 +3054,10 @@ void COPYMODList()		// Create a rsrc from a file
 			if (CheckFileAvailable(theCell.v) == noErr) {
 				FSSpec	myFSS = *specList[theCell.v];
 				Ptr		file;
-				FInfo	fndrInfo;
 				short	refNum;
 				long	inOutCount;
 				
-				FSpGetFInfo(&myFSS, &fndrInfo);
+				OSType	type = GetOSTypeFromSpecUsingUTI(myFSS);
 				
 				FSpOpenDF(&myFSS, fsCurPerm, &refNum);
 				GetEOF(refNum, &inOutCount);
@@ -3067,7 +3068,7 @@ void COPYMODList()		// Create a rsrc from a file
 					
 					anErr = ClearCurrentScrap();
 					anErr = GetCurrentScrap(&scrap);
-					anErr = PutScrapFlavor(scrap, fndrInfo.fdType, 0, inOutCount, file);
+					anErr = PutScrapFlavor(scrap, type, 0, inOutCount, file);
 					
 					DisposePtr(file);
 				}

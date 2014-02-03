@@ -6566,7 +6566,6 @@
 				);
 				GCC_VERSION = 4.2;
 				"GCC_VERSION[sdk=macosx*][arch=ppc]" = 4.0;
-				"GCC_VERSION[sdk=macosx10.3.9][arch=ppc]" = 3.3;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = YES;
@@ -6578,7 +6577,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				"MACOSX_DEPLOYMENT_TARGET[arch=ppc]" = 10.3;
-				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.3.9][arch=ppc]" = 10.2;
+				PREBINDING = NO;
 				SDKROOT = macosx10.5;
 				STRIP_STYLE = "non-global";
 			};
@@ -6602,6 +6601,7 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				INFOPLIST_FILE = Info.plist;
+				"MACOSX_DEPLOYMENT_TARGET[arch=ppc]" = 10.4;
 				OTHER_LDFLAGS = (
 					"-multiply_defined",
 					warning,
@@ -7723,7 +7723,6 @@
 				);
 				GCC_VERSION = 4.2;
 				"GCC_VERSION[sdk=macosx*][arch=ppc]" = 4.0;
-				"GCC_VERSION[sdk=macosx10.3.9][arch=ppc]" = 3.3;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -7736,11 +7735,9 @@
 				GENERATE_PKGINFO_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				"MACOSX_DEPLOYMENT_TARGET[arch=ppc]" = 10.3;
-				"MACOSX_DEPLOYMENT_TARGET[sdk=macosx10.3.9][arch=ppc]" = 10.2;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx10.5;
 				STRIP_INSTALLED_PRODUCT = NO;
-				STRIP_STYLE = "non-global";
 			};
 			name = Debug;
 		};
@@ -7760,6 +7757,7 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				INFOPLIST_FILE = Info.plist;
+				"MACOSX_DEPLOYMENT_TARGET[arch=ppc]" = 10.4;
 				OTHER_LDFLAGS = (
 					"-multiply_defined",
 					warning,

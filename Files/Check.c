@@ -5,6 +5,7 @@
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "Utils.h"
+#include "Navigation.h"
 
 extern	DialogPtr	MODListDlog;
 extern	KeyMap		km;
@@ -1037,11 +1038,11 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 		for (i = 0 ; i < MAXTRACK; i++) thePrefs.Previous_chanBus[i] = curMusic->header->chanBus[i];
 		
 		BlockMoveData(curMusic->sets, &thePrefs.Previous_Sets, MAXTRACK * sizeof(FXSets));
-		//	}
+		//}
 		//thePrefs.previousSpec = *curMusic->header;
 		
-		//	if (curMusic)
-		//	{
+		//if (curMusic)
+		//{
 		if (GereChanged() != noErr) return false;
 	}
 	
@@ -1056,34 +1057,17 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	if (theType != 'Rsrc') {
 		HSetVol(NULL, vRefNum, parID);
 		iErr = FSpGetFInfo(&aSpec, &fndrInfo);
-		if (iErr != noErr)
-		{
-			if (iErr == fnfErr) Erreur(62, iErr);
-			else Erreur(44, iErr);
+		if (iErr != noErr) {
+			if (iErr == fnfErr)
+				Erreur(62, iErr);
+			else
+				Erreur(44, iErr);
 			return false;
 		}
 	}
 	
-	if (theType == 0)  theType = fndrInfo.fdType;
-	
-#if 0
-	if (IsCodeOK()) {
-		if (theType != 'STCf' &&
-			theType != 'sTAT' &&
-			theType != 'Rsrc' &&
-			theType != 'STrk' &&
-			theType != 'MADF' &&
-			theType != 'MADH' &&
-			theType != 'MADI' &&
-			theType != 'XM  ' &&
-			theType != 'S3M ') {
-			Erreur(81, -2);
-			return false;
-		}
-	} else {
-		CallPlug(0);
-	}
-#endif
+	if (theType == 0)
+		theType = GetOSTypeFromSpecUsingUTI(aSpec);
 	
 	iErr = noErr;
 	
@@ -1094,9 +1078,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	
 	IsReading = MADDriver->Reading;
 	MADDriver->Reading = false;
-	
 	//MADStopDriver(MADDriver);
-	
 	MADPurgeTrack(MADDriver);
 	MADCleanDriver(MADDriver);
 	
@@ -1104,8 +1086,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	
 	switch (theType) {
 		case 'Rsrc':
-			if (vRefNum == -55)
-			{
+			if (vRefNum == -55) {
 				TempHandle = GetResource('MADK', 128);
 				if (TempHandle) {
 					DetachResource(TempHandle);
@@ -1119,15 +1100,14 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 				MADDisposeMusic(&curMusic, MADDriver);
 				
 				TempHandle = GetResource('MADK', vRefNum);
-				if (TempHandle)
-				{
+				if (TempHandle) {
 					DetachResource(TempHandle);
 					HLock(TempHandle);
 					iErr = MADLoadMusicPtr(&curMusic, *TempHandle);
 					HUnlock(TempHandle);
 					MyDisposHandle(& TempHandle);
-				}
-				else MyDebugStr(__LINE__, __FILE__, "Fatal MEMORY ERROR 2: NEED MORE MEMORY !");
+				} else
+					MyDebugStr(__LINE__, __FILE__, "Fatal MEMORY ERROR 2: NEED MORE MEMORY !");
 			}
 			/***
 			 
@@ -1140,52 +1120,42 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 			break;
 			
 		default:
-			if (!MADPlugAvailable(gMADLib, theTypePtr))
-			{
-				if (MADMusicIdentifyFSp(gMADLib, theTypePtr, &aSpec) != noErr)
-				{
+			if (!MADPlugAvailable(gMADLib, theTypePtr)) {
+				if (MADMusicIdentifyFSp(gMADLib, theTypePtr, &aSpec) != noErr) {
 					// Try to read this file with QUICKTIME !
 					
-					if (!CreateQTWindow(&aSpec))
-					{
+					if (!CreateQTWindow(&aSpec)) {
 						// TEST SI PKZIP !
 						
 						/** TEST MEMOIRE :  Environ 1 fois la taille du fichier**/
 						iErr = FSpOpenDF(&aSpec, fsCurPerm, &iFileRefI);
 						GetEOF(iFileRefI, &sndSize);
 						
-						if (sndSize > 4)
-						{
+						if (sndSize > 4) {
 							OSType	type;
 							
 							sndSize = 4;
 							iErr = FSRead(iFileRefI, &sndSize, &type);
-							if (iErr == noErr)
-							{
-								if (type == 'PK\3\4')
-								{
+							if (iErr == noErr) {
+								if (type == 'PK\3\4') {
 									Erreur(106, 106);
 								}
 							}
 						}
 						
 						FSCloseFork(iFileRefI);
-					}
-					else pStrcpy(lastLoadMODListName, fName);
+					} else
+						pStrcpy(lastLoadMODListName, fName);
 					return false;
 				} else {
 					FInfo	fndrInfo;
 					
 					theType = Ptr2OSType(theTypePtr);
 					
-					if (FSpGetFInfo(&aSpec, &fndrInfo) == noErr)
-					{
-						if (FSpSetFInfo(&aSpec, &fndrInfo) == noErr)		// write permission?
-						{
-							if (fndrInfo.fdType != theType)
-							{
-								if (InfoL(60))
-								{
+					if (FSpGetFInfo(&aSpec, &fndrInfo) == noErr) {
+						if (FSpSetFInfo(&aSpec, &fndrInfo) == noErr) {		// write permission?
+							if (fndrInfo.fdType != theType) {
+								if (InfoL(60)) {
 									fndrInfo.fdType		= theType;
 									fndrInfo.fdCreator	= 'SNPL';
 									
@@ -1198,27 +1168,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 			}
 			SetCursor(&watchCrsr);
 			
-			if (IsCodeOK())
-			{
-				if(theType != 'STCf' &&
-				   theType != 'sTAT' &&
-				   theType != 'Rsrc' &&
-				   theType != 'STrk' &&
-				   theType != 'MADF' &&
-				   theType != 'MADH' &&
-				   theType != 'MADI' &&
-				   theType != 'MADK' &&
-				   theType != 'XM  ' &&
-				   theType != 'S3M ')
-				{
-					Erreur(81, -2);
-					return false;
-				}
-			}
-			else
-			{
-				CallPlug(0);
-			}
+			CallPlug(0);
 			
 			MADDriver->curMusic = NULL;
 			MADDisposeMusic(&curMusic, MADDriver);
@@ -1237,23 +1187,10 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 				folderFailed = true;
 			break;
 			
-#if 0
-		case 'sTAT':
-			OpenMODList2(fName, 0);
-			if (thePrefs.AutomaticOpen) {
-				if (!OpenFirst2(0))
-					folderFailed = true;
-			} else
-				folderFailed = true;
-			break;
-#endif
-			
 		case 'MADK':
-			
 			EnableMenuItem(FileMenu, 3);
 			
-			if (CheckFileType(aSpec, 'MADK'))
-			{
+			if (CheckFileType(aSpec, 'MADK')) {
 				MADDriver->curMusic = NULL;
 				MADDisposeMusic(&curMusic, MADDriver);
 				
@@ -1269,19 +1206,13 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 				
 				iErr = MADLoadMusicFilePString(gMADLib, &curMusic, "MADK", fName);
 				
-				if (thePrefs.AutoCreator == true)
-				{
+				if (thePrefs.AutoCreator == true) {
 					fndrInfo.fdCreator = 'SNPL';
 					fndrInfo.fdType = 'MADK';
 					FSpSetFInfo(&aSpec, &fndrInfo);
 				}
-				
-				/*	if (thePrefs.ADAPuse)
-				 {
-				 LoadAdaptatorsRsrc(&aSpec);
-				 }*/
-			}
-			else iErr = MADFileNotSupportedByThisPlug;
+			} else
+				iErr = MADFileNotSupportedByThisPlug;
 			break;
 	}
 	
@@ -1290,7 +1221,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	/**** Updates obligatoires *******/
 	
 	for (i = 0; i < curMusic->header->numChn; i++) {
-		MADDriver->Active[ i] = true;
+		MADDriver->Active[i] = true;
 	}
 	
 	curMusic->header->numInstru = MAXINSTRU;
@@ -1299,8 +1230,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 		MADDriver->curMusic = NULL;
 		MADDisposeMusic(&curMusic, MADDriver);
 		
-		MaxMem(&sndSize);
-		//CompactMem(maxSize);
+		sndSize = 2 * 1024 * 1024;
 		
 		IsReading = false;
 		ImportFile("\pUntitled", -55, 0, 'Rsrc');
@@ -1370,15 +1300,13 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	MADReset(MADDriver);
 	MADDriver->Reading = IsReading;
 	
-	if (theType != 'STCf' && theType != 'sTAT')
-	{
-		if (theType != 'Rsrc')
-		{
+	if (theType != 'STCf') {
+		if (theType != 'Rsrc') {
 			curvRefNum	= vRefNum;
 			curparID		= parID;
 			PatchSave		= false;
-		}
-		else HGetVol(NULL, &curvRefNum, &curparID);
+		} else
+			HGetVol(NULL, &curvRefNum, &curparID);
 	}
 	
 	UPDATE_Total();
