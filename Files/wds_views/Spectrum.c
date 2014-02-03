@@ -326,8 +326,7 @@ void UpdateSpectrumData(short LocalV, Byte *tempPtr2)
 	}
 }
 
-#if 0
-void C8BitSpectrum(short offsetV, short offsetH, short LocalV, Byte *tempPtr, Byte *tempPtr2)
+void C8BitSpectrumPixMap(Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr, Byte *spot, Byte *spotTime)
 {
 	short i, high, VFast;
 	long *CurrentQuickInt = CurrentQuickPixMap + OsciH - 1;
@@ -364,6 +363,7 @@ void C8BitSpectrum(short offsetV, short offsetH, short LocalV, Byte *tempPtr, By
 
 void DrawSpectrum(OsciRec *osciPtr, short no)
 {
+	Ptr		spectrumPtr = NULL;
 	Rect	caRect, tempRect;
 	
 	switch (OsciScale) {
