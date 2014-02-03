@@ -15,18 +15,19 @@
 
 #define makeNSRGB(red1, green1, blue1) [NSColor colorWithCalibratedRed:red1 / (CGFloat)USHRT_MAX green:green1 / (CGFloat)USHRT_MAX blue:blue1 / (CGFloat)USHRT_MAX alpha:1]
 
+static void WriteCFPreferencesWithQDColor(NSString *valName, RGBColor valVal);
+static BOOL ReadCFPreferencesWithQDColor(NSString *valName, RGBColor *valVal);
+
 void MyPPBeep()
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
 	NSBeep();
-	[pool drain];
 }
 
 Boolean CFPreferencesHaveBeenSet()
 {
 	BOOL isSet = NO;
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	isSet = [[NSUserDefaults standardUserDefaults] boolForKey:(NSString*)PPPreferencesSet];
+	isSet = [[NSUserDefaults standardUserDefaults] boolForKey:PPPreferencesSet];
 	[pool drain];
 	
 	return isSet;
@@ -489,9 +490,9 @@ void ReadCFPreferences()
 	NSArray *tempArray = nil;
 	int i;
 	memset(&thePrefs, 0, sizeof(Prefs));
-	thePrefs.addExtension = [defaults boolForKey:(NSString*)PPMAddExtension];
-	thePrefs.MADCompression = [defaults boolForKey:(NSString*)PPMMadCompression];
-	thePrefs.OscilloLine = [defaults boolForKey:(NSString*)PPMOscilloscopeDrawLines];
+	thePrefs.addExtension = [defaults boolForKey:PPMAddExtension];
+	thePrefs.MADCompression = [defaults boolForKey:PPMMadCompression];
+	thePrefs.OscilloLine = [defaults boolForKey:PPMOscilloscopeDrawLines];
 #define PPCOLOR(val) ReadCFPreferencesWithQDColor(PPCColor ## val, &thePrefs.tracksColor[val - 1])
 	PPCOLORPOPULATE();
 #undef PPCOLOR
@@ -500,51 +501,51 @@ void ReadCFPreferences()
 #else
 	thePrefs.PPCMachine = false;
 #endif
-	tempStr = [defaults stringForKey:(NSString*)PPWindowName1];
+	tempStr = [defaults stringForKey:PPWindowName1];
 	CFStringGetPascalString((CFStringRef)tempStr, thePrefs.WinNames[0], sizeof(thePrefs.WinNames[0]), kCFStringEncodingMacRoman);
-	tempStr = [defaults stringForKey:(NSString*)PPWindowName2];
+	tempStr = [defaults stringForKey:PPWindowName2];
 	CFStringGetPascalString((CFStringRef)tempStr, thePrefs.WinNames[1], sizeof(thePrefs.WinNames[0]), kCFStringEncodingMacRoman);
-	tempStr = [defaults stringForKey:(NSString*)PPWindowName3];
+	tempStr = [defaults stringForKey:PPWindowName3];
 	CFStringGetPascalString((CFStringRef)tempStr, thePrefs.WinNames[2], sizeof(thePrefs.WinNames[0]), kCFStringEncodingMacRoman);
 	tempStr = nil;
-	thePrefs.NoStart = [defaults integerForKey:(NSString*)PPStartNumber];
-	tempArray = [defaults arrayForKey:(NSString*)PPPianoKeys];
+	thePrefs.NoStart = [defaults integerForKey:PPStartNumber];
+	tempArray = [defaults arrayForKey:PPPianoKeys];
 	for (i = 0; i < 300; i++) {
 		thePrefs.PianoKey[i] = [[tempArray objectAtIndex:i] shortValue];
 	}
-	thePrefs.LoopType = [defaults integerForKey:(NSString*)PPLoopType];
-	thePrefs.volumeLevel = [defaults integerForKey:(NSString*)PPVolumeLevel];
+	thePrefs.LoopType = [defaults integerForKey:PPLoopType];
+	thePrefs.volumeLevel = [defaults integerForKey:PPVolumeLevel];
 	thePrefs.Compressor = 'NONE';
 	thePrefs.outPutMode = thePrefs.DirectDriverType.outPutMode = DeluxeStereoOutPut;	// force DeluxeStereoOutPut
 	thePrefs.channelNumber = 2;
 	thePrefs.DirectDriverType.numChn = 4;
 	thePrefs.DirectDriverType.TickRemover = thePrefs.TickRemover = true;
 	
-	thePrefs.Reverb = thePrefs.DirectDriverType.Reverb = [defaults boolForKey:(NSString*)PPReverbToggle];
-	thePrefs.ReverbSize = thePrefs.DirectDriverType.ReverbSize = [defaults integerForKey:(NSString*)PPReverbAmount];
-	thePrefs.ReverbStrength = thePrefs.DirectDriverType.ReverbStrength = [defaults integerForKey:(NSString*)PPReverbStrength];
-	thePrefs.outPutRate = thePrefs.FrequenceSpeed = thePrefs.DirectDriverType.outPutRate = [defaults integerForKey:(NSString*)PPSoundOutRate];
-	thePrefs.outPutBits = thePrefs.amplitude = thePrefs.DirectDriverType.outPutBits = [defaults integerForKey:(NSString*)PPSoundOutBits];
-	thePrefs.driverMode = thePrefs.DirectDriverType.driverMode = [defaults integerForKey:(NSString*)PPSoundDriver];
-	thePrefs.surround = thePrefs.DirectDriverType.surround = [defaults boolForKey:(NSString*)PPSurroundToggle];
-	if ([defaults boolForKey:(NSString*)PPStereoDelayToggle]) {
-		thePrefs.MicroDelaySize = thePrefs.DirectDriverType.MicroDelaySize = [defaults integerForKey:(NSString*)PPStereoDelayAmount];
+	thePrefs.Reverb = thePrefs.DirectDriverType.Reverb = [defaults boolForKey:PPReverbToggle];
+	thePrefs.ReverbSize = thePrefs.DirectDriverType.ReverbSize = [defaults integerForKey:PPReverbAmount];
+	thePrefs.ReverbStrength = thePrefs.DirectDriverType.ReverbStrength = [defaults integerForKey:PPReverbStrength];
+	thePrefs.outPutRate = thePrefs.FrequenceSpeed = thePrefs.DirectDriverType.outPutRate = [defaults integerForKey:PPSoundOutRate];
+	thePrefs.outPutBits = thePrefs.amplitude = thePrefs.DirectDriverType.outPutBits = [defaults integerForKey:PPSoundOutBits];
+	thePrefs.driverMode = thePrefs.DirectDriverType.driverMode = [defaults integerForKey:PPSoundDriver];
+	thePrefs.surround = thePrefs.DirectDriverType.surround = [defaults boolForKey:PPSurroundToggle];
+	if ([defaults boolForKey:PPStereoDelayToggle]) {
+		thePrefs.MicroDelaySize = thePrefs.DirectDriverType.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
 	} else {
 		thePrefs.MicroDelaySize = thePrefs.DirectDriverType.MicroDelaySize = 0;
 	}
 	
-	if ([defaults boolForKey:(NSString *)PPOversamplingToggle]) {
-		thePrefs.oversampling = thePrefs.DirectDriverType.oversampling = [defaults integerForKey:(NSString *)PPOversamplingAmount];
+	if ([defaults boolForKey:PPOversamplingToggle]) {
+		thePrefs.oversampling = thePrefs.DirectDriverType.oversampling = [defaults integerForKey:PPOversamplingAmount];
 	} else {
 		thePrefs.oversampling = thePrefs.DirectDriverType.oversampling = 1;
 	}
 	
 	ReadCFPreferencesWithQDColor(PPDEMarkerColorPref, &thePrefs.yellC);
-	thePrefs.StaffShowAllNotes = [defaults boolForKey:(NSString*)PPCEShowMarkers];
-	thePrefs.StaffShowLength = [defaults boolForKey:(NSString*)PPCEShowNotesLen];
-	thePrefs.TempsNum = [defaults integerForKey:(NSString*)PPCETempoNum];
-	thePrefs.TempsUnit = [defaults integerForKey:(NSString*)PPCETempoUnit];
-	thePrefs.TrackHeight = [defaults integerForKey:(NSString*)PPCETrackHeight];
+	thePrefs.StaffShowAllNotes = [defaults boolForKey:PPCEShowMarkers];
+	thePrefs.StaffShowLength = [defaults boolForKey:PPCEShowNotesLen];
+	thePrefs.TempsNum = [defaults integerForKey:PPCETempoNum];
+	thePrefs.TempsUnit = [defaults integerForKey:PPCETempoUnit];
+	thePrefs.TrackHeight = [defaults integerForKey:PPCETrackHeight];
 	
 	[pool drain];
 }
@@ -555,51 +556,51 @@ void WriteCFPreferences()
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSMutableArray *tmpMutable = nil;
 	int i;
-	[defaults setBool:thePrefs.addExtension forKey:(NSString*)PPMAddExtension];
-	[defaults setBool:thePrefs.MADCompression forKey:(NSString*)PPMMadCompression];
+	[defaults setBool:thePrefs.addExtension forKey:PPMAddExtension];
+	[defaults setBool:thePrefs.MADCompression forKey:PPMMadCompression];
 #define PPCOLOR(val) WriteCFPreferencesWithQDColor(PPCColor ## val, thePrefs.tracksColor[val - 1])
 	PPCOLORPOPULATE();
 #undef PPCOLOR
-	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs.WinNames[0], kCFStringEncodingMacRoman) autorelease] forKey:(NSString*)PPWindowName1];
-	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs.WinNames[1], kCFStringEncodingMacRoman) autorelease] forKey:(NSString*)PPWindowName2];
-	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs.WinNames[2], kCFStringEncodingMacRoman) autorelease] forKey:(NSString*)PPWindowName3];
-	[defaults setInteger:thePrefs.NoStart forKey:(NSString*)PPStartNumber];
+	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs.WinNames[0], kCFStringEncodingMacRoman) autorelease] forKey:PPWindowName1];
+	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs.WinNames[1], kCFStringEncodingMacRoman) autorelease] forKey:PPWindowName2];
+	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs.WinNames[2], kCFStringEncodingMacRoman) autorelease] forKey:PPWindowName3];
+	[defaults setInteger:thePrefs.NoStart forKey:PPStartNumber];
 	tmpMutable = [[NSMutableArray alloc] initWithCapacity:300];
 	for (i = 0; i < 300; i++) {
 		[tmpMutable addObject:[NSNumber numberWithShort:thePrefs.PianoKey[i]]];
 	}
-	[defaults setObject:tmpMutable forKey:(NSString*)PPPianoKeys];
+	[defaults setObject:tmpMutable forKey:PPPianoKeys];
 	[tmpMutable release];
 	tmpMutable = nil;
-	[defaults setInteger:thePrefs.LoopType forKey:(NSString*)PPLoopType];
-	[defaults setInteger:thePrefs.volumeLevel forKey:(NSString*)PPVolumeLevel];
-	[defaults setInteger:thePrefs.ReverbStrength forKey:(NSString*)PPReverbStrength];
-	[defaults setInteger:thePrefs.ReverbSize forKey:(NSString*)PPReverbAmount];
-	[defaults setBool:thePrefs.Reverb forKey:(NSString*)PPReverbToggle];
-	[defaults setInteger:thePrefs.outPutRate forKey:(NSString*)PPSoundOutRate];
-	[defaults setInteger:thePrefs.outPutBits forKey:(NSString*)PPSoundOutBits];
-	[defaults setInteger:thePrefs.driverMode forKey:(NSString*)PPSoundDriver];
-	[defaults setBool:thePrefs.surround forKey:(NSString*)PPSurroundToggle];
+	[defaults setInteger:thePrefs.LoopType forKey:PPLoopType];
+	[defaults setInteger:thePrefs.volumeLevel forKey:PPVolumeLevel];
+	[defaults setInteger:thePrefs.ReverbStrength forKey:PPReverbStrength];
+	[defaults setInteger:thePrefs.ReverbSize forKey:PPReverbAmount];
+	[defaults setBool:thePrefs.Reverb forKey:PPReverbToggle];
+	[defaults setInteger:thePrefs.outPutRate forKey:PPSoundOutRate];
+	[defaults setInteger:thePrefs.outPutBits forKey:PPSoundOutBits];
+	[defaults setInteger:thePrefs.driverMode forKey:PPSoundDriver];
+	[defaults setBool:thePrefs.surround forKey:PPSurroundToggle];
 	if (thePrefs.MicroDelaySize > 0) {
-		[defaults setBool:YES forKey:(NSString*)PPStereoDelayToggle];
+		[defaults setBool:YES forKey:PPStereoDelayToggle];
 	} else {
-		[defaults setBool:NO forKey:(NSString*)PPStereoDelayToggle];
+		[defaults setBool:NO forKey:PPStereoDelayToggle];
 	}
-	[defaults setInteger:thePrefs.MicroDelaySize forKey:(NSString*)PPStereoDelayAmount];
+	[defaults setInteger:thePrefs.MicroDelaySize forKey:PPStereoDelayAmount];
 
 	if (thePrefs.oversampling > 1) {
-		[defaults setBool:YES forKey:(NSString *)PPOversamplingToggle];
+		[defaults setBool:YES forKey:PPOversamplingToggle];
 	} else {
-		[defaults setBool:NO forKey:(NSString *)PPOversamplingToggle];
+		[defaults setBool:NO forKey:PPOversamplingToggle];
 	}
-	[defaults setInteger:thePrefs.oversampling forKey:(NSString *)PPOversamplingAmount];
+	[defaults setInteger:thePrefs.oversampling forKey:PPOversamplingAmount];
 	
 	WriteCFPreferencesWithQDColor(PPDEMarkerColorPref, thePrefs.yellC);
-	[defaults setBool:thePrefs.StaffShowAllNotes forKey:(NSString*)PPCEShowMarkers];
-	[defaults setBool:thePrefs.StaffShowLength forKey:(NSString*)PPCEShowNotesLen];
-	[defaults setInteger:thePrefs.TempsNum forKey:(NSString*)PPCETempoNum];
-	[defaults setInteger:thePrefs.TempsUnit forKey:(NSString*)PPCETempoUnit];
-	[defaults setInteger:thePrefs.TrackHeight forKey:(NSString*)PPCETrackHeight];
+	[defaults setBool:thePrefs.StaffShowAllNotes forKey:PPCEShowMarkers];
+	[defaults setBool:thePrefs.StaffShowLength forKey:PPCEShowNotesLen];
+	[defaults setInteger:thePrefs.TempsNum forKey:PPCETempoNum];
+	[defaults setInteger:thePrefs.TempsUnit forKey:PPCETempoUnit];
+	[defaults setInteger:thePrefs.TrackHeight forKey:PPCETrackHeight];
 	
 	
 	[defaults synchronize];
@@ -607,25 +608,25 @@ void WriteCFPreferences()
 	[pool drain];
 }
 
-void WriteCFPreferencesWithQDColor(CFStringRef valName, RGBColor valVal)
+void WriteCFPreferencesWithQDColor(NSString *valName, RGBColor valVal)
 {
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	[[NSUserDefaults standardUserDefaults] setObject:[[NSColor PPColorFromQDColor:valVal] PPencodeColor] forKey:(NSString*)valName];
+	[[NSUserDefaults standardUserDefaults] setObject:[[NSColor PPColorFromQDColor:valVal] PPencodeColor] forKey:valName];
 	[pool drain];
 }
 
-Boolean ReadCFPreferencesWithQDColor(CFStringRef valName, RGBColor *valVal)
+BOOL ReadCFPreferencesWithQDColor(NSString *valName, RGBColor *valVal)
 {
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	NSData *colorDat = [[NSUserDefaults standardUserDefaults] valueForKey:(NSString*)valName];
+	NSData *colorDat = [[NSUserDefaults standardUserDefaults] valueForKey:valName];
 	if (colorDat) {
 		NSColor *colorClass = [NSColor PPDecodeColorWithData:colorDat];
 		if (colorClass) {
 			*valVal = [colorClass PPQDColor];
 			[pool drain];
-			return true;
+			return YES;
 		}
 	}
 	[pool drain];
-	return false;
+	return NO;
 }

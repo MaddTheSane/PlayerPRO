@@ -2735,7 +2735,7 @@ void DragReferencedWindow(WindowPtr windowToDrag, Point startPoint, const Rect *
 		GetWindowRegion(windowToDrag, kWindowStructureRgn, dragRegion);
 		
 		// Drag the window around
-		dragResult = DragGrayRgn(dragRegion, startPoint, &dragRect, &dragRect, 0, nil);
+		dragResult = DragGrayRgn(dragRegion, startPoint, &dragRect, &dragRect, 0, NULL);
 		
 		// Restore the port for coordinate conversion.
 		
@@ -4209,7 +4209,7 @@ void Erreur(short ID, OSErr theErr)
 								  kAnyTransactionID,
 								  &aeEvent);
 		
-		iErr = AECreateList(nil,0,false, &fileList);
+		iErr = AECreateList(NULL, 0, false, &fileList);
 		
 		//
 		
@@ -5458,16 +5458,16 @@ static void LoadOldFilePrefs(FSIORefNum fRefNum)
 		MoveBasicDatatype(editorSoundDrag);
 		MoveBasicDatatype(FastDigitalEdition);
 		MoveBasicDatatype(FastMusicList);
-		MoveBasicDatatype(FBalls);
+		//MoveBasicDatatype(FBalls);
 		MoveArray(Filter);
 		MoveBasicDatatype(FinePositioning);
 		MoveArray(FKeyActive);
 		MoveArray(FKeyItem);
 		MoveBasicDatatype(FKeyTracks);
 		MoveBasicDatatype(FrequenceSpeed);
-		MoveBasicDatatype(FSinScroll);
-		MoveBasicDatatype(FStars);
-		MoveBasicDatatype(FText);
+		//MoveBasicDatatype(FSinScroll);
+		//MoveBasicDatatype(FStars);
+		//MoveBasicDatatype(FText);
 		MoveBasicDatatype(GoToStop);
 		MoveBasicDatatype(keyMapNote);
 		MoveBasicDatatype(KeyUpMode);
@@ -5531,9 +5531,9 @@ static void LoadOldFilePrefs(FSIORefNum fRefNum)
 		MoveBasicDatatype(SpectrumScale);
 		MoveBasicDatatype(SpectrumSize);
 		MoveBasicDatatype(SpectrumType);
-		MoveBasicDatatype(SSJumping);
-		MoveBasicDatatype(SSStars);
-		MoveBasicDatatype(SSText);
+		//MoveBasicDatatype(SSJumping);
+		//MoveBasicDatatype(SSStars);
+		//MoveBasicDatatype(SSText);
 		MoveBasicDatatype(StaffShowAllNotes);
 		MoveBasicDatatype(StaffShowLength);
 		MoveBasicDatatype(surround);
@@ -6136,19 +6136,19 @@ OSErr OpenSelection(FSSpecPtr theDoc)
 		return myErr;
 	
 	// Make an FSSpec and alias for the parent folder, and an alias for the file
-	FSMakeFSSpec(theDoc->vRefNum,theDoc->parID,nil,&dirSpec);
-	NewAlias(nil,&dirSpec,&dirAlias);
-	NewAlias(nil,theDoc,&fileAlias);
+	FSMakeFSSpec(theDoc->vRefNum, theDoc->parID, NULL, &dirSpec);
+	NewAlias(NULL, &dirSpec, &dirAlias);
+	NewAlias(NULL, theDoc, &fileAlias);
 	
 	// Create the file list.
-	myErr = AECreateList(nil,0,false,&fileList);
+	myErr = AECreateList(NULL, 0, false, &fileList);
 	if (myErr)
 		return myErr;
 	
 	/* Create the folder descriptor
 	 */
 	HLock((Handle)dirAlias);
-	AECreateDesc(typeAlias, (Ptr) *dirAlias, GetHandleSize
+	AECreateDesc(typeAlias, (Ptr)*dirAlias, GetHandleSize
 				 ((Handle) dirAlias), &aeDirDesc);
 	HUnlock((Handle)dirAlias);
 	DisposeHandle((Handle)dirAlias);
@@ -6171,12 +6171,13 @@ OSErr OpenSelection(FSSpecPtr theDoc)
 	AEDisposeDesc(&listElem);
 	
 	myErr = AEPutParamDesc(&aeEvent,keySelection,&fileList);
-	if (myErr) return myErr;
+	if (myErr)
+		return myErr;
 	
 	myErr = AEDisposeDesc(&fileList);
 	
-	myErr = AESend(&aeEvent, nil,
-				   kAENoReply+kAEAlwaysInteract+kAECanSwitchLayer,
+	myErr = AESend(&aeEvent, NULL,
+				   kAENoReply | kAEAlwaysInteract | kAECanSwitchLayer,
 				   kAENormalPriority, kAEDefaultTimeout, NULL, NULL);
 	
 	AEDisposeDesc(&aeEvent);
@@ -6314,8 +6315,7 @@ void DoReset()
 	SetPort(savedPort);
 	
 #if 0
-	if (DoWindowState)
-	{
+	if (DoWindowState) {
 		CheckShowWindow();
 		
 		if (thePrefs.ActiveHelp) CreateAHelpWindow();
@@ -6339,7 +6339,7 @@ void DoReset()
 
 void HandleFileChoice(short theItem)
 {
-	WindowPtr			savedWindow;
+	WindowPtr savedWindow;
 	
 	switch (theItem) {
 		case 1:
@@ -6374,7 +6374,8 @@ void HandleFileChoice(short theItem)
 			break;
 			
 		case 5:
-			if (oldWindow == nil) break;
+			if (oldWindow == NULL)
+				break;
 			savedWindow = NextWindowVisible(oldWindow);
 			
 			CheckOneWindow(oldWindow);
