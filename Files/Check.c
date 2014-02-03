@@ -5,6 +5,7 @@
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "Utils.h"
+#include "Navigation.h"
 
 extern	DialogPtr	MODListDlog;
 extern	KeyMap		km;
@@ -1056,34 +1057,17 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	if (theType != 'Rsrc') {
 		HSetVol(NULL, vRefNum, parID);
 		iErr = FSpGetFInfo(&aSpec, &fndrInfo);
-		if (iErr != noErr)
-		{
-			if (iErr == fnfErr) Erreur(62, iErr);
-			else Erreur(44, iErr);
+		if (iErr != noErr) {
+			if (iErr == fnfErr)
+				Erreur(62, iErr);
+			else
+				Erreur(44, iErr);
 			return false;
 		}
 	}
 	
-	if (theType == 0)  theType = fndrInfo.fdType;
-	
-#if 0
-	if (IsCodeOK()) {
-		if (theType != 'STCf' &&
-			theType != 'sTAT' &&
-			theType != 'Rsrc' &&
-			theType != 'STrk' &&
-			theType != 'MADF' &&
-			theType != 'MADH' &&
-			theType != 'MADI' &&
-			theType != 'XM  ' &&
-			theType != 'S3M ') {
-			Erreur(81, -2);
-			return false;
-		}
-	} else {
-		CallPlug(0);
-	}
-#endif
+	if (theType == 0)
+		theType = GetOSTypeFromSpecUsingUTI(aSpec);
 	
 	iErr = noErr;
 	
@@ -1094,9 +1078,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	
 	IsReading = MADDriver->Reading;
 	MADDriver->Reading = false;
-	
 	//MADStopDriver(MADDriver);
-	
 	MADPurgeTrack(MADDriver);
 	MADCleanDriver(MADDriver);
 	
@@ -1198,27 +1180,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 			}
 			SetCursor(&watchCrsr);
 			
-			if (IsCodeOK())
-			{
-				if(theType != 'STCf' &&
-				   theType != 'sTAT' &&
-				   theType != 'Rsrc' &&
-				   theType != 'STrk' &&
-				   theType != 'MADF' &&
-				   theType != 'MADH' &&
-				   theType != 'MADI' &&
-				   theType != 'MADK' &&
-				   theType != 'XM  ' &&
-				   theType != 'S3M ')
-				{
-					Erreur(81, -2);
-					return false;
-				}
-			}
-			else
-			{
-				CallPlug(0);
-			}
+			CallPlug(0);
 			
 			MADDriver->curMusic = NULL;
 			MADDisposeMusic(&curMusic, MADDriver);
@@ -1237,19 +1199,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 				folderFailed = true;
 			break;
 			
-#if 0
-		case 'sTAT':
-			OpenMODList2(fName, 0);
-			if (thePrefs.AutomaticOpen) {
-				if (!OpenFirst2(0))
-					folderFailed = true;
-			} else
-				folderFailed = true;
-			break;
-#endif
-			
 		case 'MADK':
-			
 			EnableMenuItem(FileMenu, 3);
 			
 			if (CheckFileType(aSpec, 'MADK'))
@@ -1275,13 +1225,8 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 					fndrInfo.fdType = 'MADK';
 					FSpSetFInfo(&aSpec, &fndrInfo);
 				}
-				
-				/*	if (thePrefs.ADAPuse)
-				 {
-				 LoadAdaptatorsRsrc(&aSpec);
-				 }*/
-			}
-			else iErr = MADFileNotSupportedByThisPlug;
+			} else
+				iErr = MADFileNotSupportedByThisPlug;
 			break;
 	}
 	
@@ -1370,10 +1315,8 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 	MADReset(MADDriver);
 	MADDriver->Reading = IsReading;
 	
-	if (theType != 'STCf' && theType != 'sTAT')
-	{
-		if (theType != 'Rsrc')
-		{
+	if (theType != 'STCf') {
+		if (theType != 'Rsrc') {
 			curvRefNum	= vRefNum;
 			curparID		= parID;
 			PatchSave		= false;

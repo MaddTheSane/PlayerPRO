@@ -3350,8 +3350,8 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 	Pcmd				*myPcmd;
 	RgnHandle			saveClip;
 	HFSFlavor			myFlavor;
-	FInfo				fndrInfo;
 	OSErr				iErr;
+	OSType				type;
 	
 	if (!mainSystemDrag)
 		return noErr;
@@ -3409,9 +3409,9 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 				
 				ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 				
-				FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
+				type = GetOSTypeFromSpecUsingUTI(myFlavor.fileSpec);
 				
-				switch (fndrInfo.fdType) {
+				switch (type) {
 					case 'Pcmd':
 						/////////////
 						PcmdTracks = 1;	PcmdLength = 1;
@@ -3422,7 +3422,8 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 							
 							GetEOF(fRefNum, &inOutBytes);
 							myPcmd = (Pcmd*) MyNewPtr(inOutBytes);
-							FSRead(fRefNum, &inOutBytes, (Ptr) myPcmd);
+							FSRead(fRefNum, &inOutBytes, (Ptr)myPcmd);
+							SwapPcmd(myPcmd);
 							PcmdTracks = myPcmd->tracks;
 							PcmdLength = myPcmd->length;
 							GetMinMaxPcmd(myPcmd, &minNote, &maxNote);

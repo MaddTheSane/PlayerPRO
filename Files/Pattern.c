@@ -4,6 +4,7 @@
 #include "RDriverInt.h"
 #include "Undo.h"
 #include "Utils.h"
+#include "Navigation.h"
 
 #define ON	true
 #define OFF	false
@@ -113,7 +114,7 @@ static pascal Boolean myDragClickLoop(void)
 static	ControlHandle	selectedControl;
 
 pascal OSErr MyPATTrackingHandler(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
-{	
+{
 	unsigned long	attributes;
 	ItemReference	theItem;
 	RgnHandle		theRgn;
@@ -122,8 +123,8 @@ pascal OSErr MyPATTrackingHandler(short message, WindowPtr theWindow, void *hand
 	OSErr           result;
 	long			textSize;
 	HFSFlavor		myFlavor;
-	FInfo			fndrInfo;
-
+	OSType			type;
+	
 	if (!mainSystemDrag)
 		return noErr;
 
@@ -151,9 +152,9 @@ pascal OSErr MyPATTrackingHandler(short message, WindowPtr theWindow, void *hand
 				ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		
 				HSetVol(NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
-				FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
+				type = GetOSTypeFromSpecUsingUTI(myFlavor.fileSpec);
 				
-				if (fndrInfo.fdType == 'PATN')
+				if (type == 'PATN')
 					canAcceptDrag = true;
 		    }
 		    

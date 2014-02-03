@@ -1,12 +1,10 @@
+#include <stdio.h>
+#include <QuickTime/QuickTime.h>
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
 #include "FileUtils.h"
-#include <stdio.h>
-#include <QuickTime/QuickTime.h>
-//#include "MP3Player.h"
-
-//quicktimewindow.proto.h
+#include "Navigation.h"
 
 //pascal Boolean SoundConverterFillBufferDataProc(SoundComponentDataPtr *outData, void *inRefCon);
 //static pascal void MySoundCallBackFunction(SndChannelPtr theChannel, SndCommand *theCmd);
@@ -17,7 +15,7 @@ extern	Cursor					HandCrsr;
 extern	MenuHandle				ViewsMenu;
 extern	Boolean 				DragManagerUse, newQuicktime;
 
-DialogPtr				QuicktimeDlog;
+		DialogPtr				QuicktimeDlog;
 
 static	MovieController				gMovieController;
 FSSpec						QTFile;
@@ -1519,7 +1517,7 @@ Boolean IsQTDrag(DragReference theDrag)
 	OSErr           	result;
 	long				textSize;
 	HFSFlavor			myFlavor;
-	FInfo				fndrInfo;
+	OSType				type;
 	
 	GetDragItemReferenceNumber(theDrag, 1, &theItem);
     
@@ -1531,15 +1529,14 @@ Boolean IsQTDrag(DragReference theDrag)
 		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
 		ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
 		
-		HSetVol(NULL, myFlavor.fileSpec.vRefNum, myFlavor.fileSpec.parID);
-		result = FSpGetFInfo(&myFlavor.fileSpec, &fndrInfo);
-		if (result != noErr)
+		type = GetOSTypeFromSpecUsingUTI(myFlavor.fileSpec);
+		if (type == 0)
 			return false;		// <- Il s'agit d'un FOLDER, pas d'un FICHIER !!!
 		
-		return QTTypeConversion(fndrInfo.fdType);
+		return QTTypeConversion(type);
     }
 	
-    return(false);
+    return false;
 }
 
 OSErr ConvertMovieToAIFF(FSSpec *inputFile, FSSpec *outputFile)
@@ -1612,6 +1609,7 @@ Boolean DragQTFile(RgnHandle myRgn, EventRecord *theEvent)
 	FInfo				fndrInfo;
 	GWorldPtr			theGWorld = NULL;
 	Rect				dragRegionRect;
+	OSType				type;
 	
 	if (!DragManagerUse)
 		return false;
@@ -1702,8 +1700,9 @@ Boolean DragQTFile(RgnHandle myRgn, EventRecord *theEvent)
 	
 	
 	FSpGetFInfo(&QTFile, &fndrInfo);
+	type = GetOSTypeFromSpecUsingUTI(QTFile);
 	
-	myNewFile.fileType			= fndrInfo.fdType;
+	myNewFile.fileType			= type;
 	myNewFile.fileCreator		= fndrInfo.fdCreator;
 	myNewFile.fdFlags			= fndrInfo.fdFlags;
 	myNewFile.fileSpec			= QTFile;
