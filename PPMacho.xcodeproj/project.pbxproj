@@ -186,7 +186,6 @@
 		554CBD51188CD468002E137B /* NSColor+PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CBD4F188CD468002E137B /* NSColor+PPPreferences.m */; };
 		554CBD53188CD4AA002E137B /* PreferenceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CBD52188CD4AA002E137B /* PreferenceHandler.m */; };
 		554CBD56188CD7A3002E137B /* UserDefaultKeys.h in Headers */ = {isa = PBXBuildFile; fileRef = 554CBD54188CD7A3002E137B /* UserDefaultKeys.h */; };
-		554CBD57188CD7A3002E137B /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CBD55188CD7A3002E137B /* UserDefaultKeys.m */; };
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		554E10E010D6EF8200BB619C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -5370,7 +5369,6 @@
 				55FD862610B22C4600F8BDE6 /* TickRemover.c in Sources */,
 				550B011710BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
 				55672E9010CAD830008C5C3D /* OSX-PlugImport.c in Sources */,
-				554CBD57188CD7A3002E137B /* UserDefaultKeys.m in Sources */,
 				55E8981A10EEC5BA004EB52B /* AboutPlugs.c in Sources */,
 				555E9B4E110192F900986239 /* MIDI-Hardware-OSX.c in Sources */,
 				55B1953E17FD5CC200E6F160 /* ScreenDevice.cpp in Sources */,

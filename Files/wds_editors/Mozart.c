@@ -765,7 +765,6 @@ void DrawNewNote()
 	thePrefs.DigitalArgu	= true;
 	thePrefs.DigitalVol		= true;
 	
-	
 	CreateNoteString(&newNote, aStr, false);
 	
 	GetDialogItem(MozartDlog, 21, &itemType, &itemHandle, &itemRect);

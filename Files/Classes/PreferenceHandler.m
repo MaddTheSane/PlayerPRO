@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "NSColor+PPPreferences.h"
-#include "UserDefaultKeys.h"
+#import "UserDefaultKeys.m"
 #include "PreferenceHandler.h"
 #include "Shuddup.h"
 #include "Utils.h"

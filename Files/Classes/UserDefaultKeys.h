@@ -6,7 +6,8 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#ifndef __PPUSERDEFAULTKEYS__
+//#ifndef __PPUSERDEFAULTKEYS__
+#if 0
 #define __PPUSERDEFAULTKEYS__
 
 #include <CoreFoundation/CFBase.h>

@@ -9,81 +9,81 @@
 #include "UserDefaultKeys.h"
 #import "NSColor+PPPreferences.h"
 
-NSString *const PPPreferencesSet = @"PlayerPRO 5 CoreFoundation Preferences set?";
-NSString *const PPAutoCreator = @"Auto Creator";
-NSString *const PPStartNumber = @"No. Start";
-NSString *const PPPianoKeys = @"Piano Keys";
-NSString *const PPLoopType = @"Loop Type";
-NSString *const PPVolumeLevel = @"Volume Level";
+#define PPPreferencesSet @"PlayerPRO 5 CoreFoundation Preferences set?"
+#define PPAutoCreator @"Auto Creator"
+#define PPStartNumber @"No. Start"
+#define PPPianoKeys @"Piano Keys"
+#define PPLoopType @"Loop Type"
+#define PPVolumeLevel @"Volume Level"
 
-NSString *const MADNativeUTI = @"com.quadmation.playerpro.madk";
-NSString *const MADGenericUTI = @"com.quadmation.playerpro.mad";
-NSString *const MADPackageUTI = @"net.sourceforge.playerpro.mad-bundle";
-NSString *const PPMusicListUTI = @"net.sourceforge.playerpro.musiclist";
-NSString *const PPOldMusicListUTI = @"net.sourceforge.playerpro.stcfmusiclist";
-NSString *const PPPCMDUTI = @"com.quadmation.playerpro.pcmd";
-NSString *const PPGenericTrackerUTI = @"net.sourceforge.playerpro.tracker";
-NSString *const PPGenericInstrumentUTI = @"net.sourceforge.playerpro.instrumentfile";
-NSString *const PPInstrumentListUTI = @"com.quadmation.playerpro.list";
+#define MADNativeUTI @"com.quadmation.playerpro.madk"
+#define MADGenericUTI @"com.quadmation.playerpro.mad"
+#define MADPackageUTI @"net.sourceforge.playerpro.mad-bundle"
+#define PPMusicListUTI @"net.sourceforge.playerpro.musiclist"
+#define PPOldMusicListUTI @"net.sourceforge.playerpro.stcfmusiclist"
+#define PPPCMDUTI @"com.quadmation.playerpro.pcmd"
+#define PPGenericTrackerUTI @"net.sourceforge.playerpro.tracker"
+#define PPGenericInstrumentUTI @"net.sourceforge.playerpro.instrumentfile"
+#define PPInstrumentListUTI @"com.quadmation.playerpro.list"
 
-NSString *const PPRememberMusicList = @"Remember Music List";
-NSString *const PPLoadMusicAtListLoad = @"Load music when loading list";
-NSString *const PPAfterPlayingMusic = @"After playing music";
-NSString *const PPGotoStartupAfterPlaying = @"Go to startup pos. after playing";
-NSString *const PPSaveModList = @"Ask to save modified Mod list";
-NSString *const PPLoadMusicAtMusicLoad = @"Play music on Music load";
-NSString *const PPLoopMusicWhenDone = @"Loop music";
+#define PPRememberMusicList @"Remember Music List"
+#define PPLoadMusicAtListLoad @"Load music when loading list"
+#define PPAfterPlayingMusic @"After playing music"
+#define PPGotoStartupAfterPlaying @"Go to startup pos. after playing"
+#define PPSaveModList @"Ask to save modified Mod list"
+#define PPLoadMusicAtMusicLoad @"Play music on Music load"
+#define PPLoopMusicWhenDone @"Loop music"
 
-NSString *const PPSoundOutBits = @"Sound output bits";
-NSString *const PPSoundOutRate = @"Sound output rate";
-NSString *const PPSoundDriver = @"Sound Driver";
-NSString *const PPStereoDelayToggle = @"Stereo delay?";
-NSString *const PPReverbToggle = @"Reverb?";
-NSString *const PPSurroundToggle = @"Surround?";
-NSString *const PPOversamplingToggle = @"Oversampling?";
-NSString *const PPStereoDelayAmount = @"Stereo Delay amount";
-NSString *const PPReverbAmount = @"Reverb Amount";
-NSString *const PPReverbStrength = @"Reverb Strength";
-NSString *const PPOversamplingAmount = @"Oversampling Amount";
+#define PPSoundOutBits @"Sound output bits"
+#define PPSoundOutRate @"Sound output rate"
+#define PPSoundDriver @"Sound Driver"
+#define PPStereoDelayToggle @"Stereo delay?"
+#define PPReverbToggle @"Reverb?"
+#define PPSurroundToggle @"Surround?"
+#define PPOversamplingToggle @"Oversampling?"
+#define PPStereoDelayAmount @"Stereo Delay amount"
+#define PPReverbAmount @"Reverb Amount"
+#define PPReverbStrength @"Reverb Strength"
+#define PPOversamplingAmount @"Oversampling Amount"
 
-NSString *const PPDEShowInstrument = @"Digital Editor Show Instrument";
-NSString *const PPDEShowNote = @"Digital Editor Show Note";
-NSString *const PPDEShowEffect = @"Digital Editor Show Effect";
-NSString *const PPDEShowArgument = @"Digital Editor Show Argument";
-NSString *const PPDEShowVolume = @"Digital Editor Show Volume";
-NSString *const PPDEShowMarkers = @"Digital Editor Show Markers";
-NSString *const PPDEMarkerOffsetPref = @"Digital Editor Marker Offset";
-NSString *const PPDEMarkerLoopPref = @"Digital Editor Marker Loop";
-NSString *const PPDEMarkerColorPref = @"Digital Editor Marker Color";
-NSString *const PPDEMouseClickPref = @"Digital Editor Mouse Click";
-NSString *const PPDELineHeightNormal = @"Digital Editor Line Height Normal?";
-NSString *const PPDEMusicTraceOn = @"Digital Editor Trace On?";
-NSString *const PPDEPatternWrappingPartition = @"Digital Editor Pattern Wrapping Partition?";
-NSString *const PPDEDragAsPcmd = @"Digital Editor Drag as Pcmd?";
+#define PPDEShowInstrument @"Digital Editor Show Instrument"
+#define PPDEShowNote @"Digital Editor Show Note"
+#define PPDEShowEffect @"Digital Editor Show Effect"
+#define PPDEShowArgument @"Digital Editor Show Argument"
+#define PPDEShowVolume @"Digital Editor Show Volume"
+#define PPDEShowMarkers @"Digital Editor Show Markers"
+#define PPDEMarkerOffsetPref @"Digital Editor Marker Offset"
+#define PPDEMarkerLoopPref @"Digital Editor Marker Loop"
+#define PPDEMarkerColorPref @"Digital Editor Marker Color"
+#define PPDEMouseClickPref @"Digital Editor Mouse Click"
+#define PPDELineHeightNormal @"Digital Editor Line Height Normal?"
+#define PPDEMusicTraceOn @"Digital Editor Trace On?"
+#define PPDEPatternWrappingPartition @"Digital Editor Pattern Wrapping Partition?"
+#define PPDEDragAsPcmd @"Digital Editor Drag as Pcmd?"
 
-#define PPCOLOR(num) NSString *const PPCColor##num = @"PPColor " @#num
+#define PPCOLOR(num) static NSString *const PPCColor##num = @"PPColor " @#num
 PPCOLORPOPULATE();
 #undef PPCOLOR
 
-NSString *const PPBEMarkersEnabled = @"Box Editor Markers On?";
-NSString *const PPBEMarkersOffset = @"Box Editor Markers Offset";
-NSString *const PPBEMarkersLoop = @"Box Editor Markers Loop";
-NSString *const PPBEOctaveMarkers = @"Box Editor Octave Markers?";
-NSString *const PPBENotesProjection = @"Box Editor Notes Projection?";
+#define PPBEMarkersEnabled @"Box Editor Markers On?"
+#define PPBEMarkersOffset @"Box Editor Markers Offset"
+#define PPBEMarkersLoop @"Box Editor Markers Loop"
+#define PPBEOctaveMarkers @"Box Editor Octave Markers?"
+#define PPBENotesProjection @"Box Editor Notes Projection?"
 
-NSString *const PPMAddExtension = @"Add Extension";
-NSString *const PPMMadCompression = @"Compress MAD?";
-NSString *const PPMNoLoadMixerFromFiles = @"No load Mixer?";
-NSString *const PPMOscilloscopeDrawLines = @"Oscilloscope Draw Lines";
+#define PPMAddExtension @"Add Extension"
+#define PPMMadCompression @"Compress MAD?"
+#define PPMNoLoadMixerFromFiles @"No load Mixer?"
+#define PPMOscilloscopeDrawLines @"Oscilloscope Draw Lines"
 
-NSString *const PPCEShowNotesLen = @"Classical Editor Show Notes Length";
-NSString *const PPCEShowMarkers = @"Classical Editor Show Markers?";
-NSString *const PPCEMarkerOffset = @"Classical Editor Marker Offset";
-NSString *const PPCEMarkerLoop = @"Classical Editor Marker Loop";
-NSString *const PPCETempoNum = @"Classical Editor Temo Num.";
-NSString *const PPCETempoUnit = @"Classical Editor Tempo Unit";
-NSString *const PPCETrackHeight = @"Classical Editor Track Height";
+#define PPCEShowNotesLen @"Classical Editor Show Notes Length"
+#define PPCEShowMarkers @"Classical Editor Show Markers?"
+#define PPCEMarkerOffset @"Classical Editor Marker Offset"
+#define PPCEMarkerLoop @"Classical Editor Marker Loop"
+#define PPCETempoNum @"Classical Editor Temo Num."
+#define PPCETempoUnit @"Classical Editor Tempo Unit"
+#define PPCETrackHeight @"Classical Editor Track Height"
 
-NSString *const PPWindowName1 = @"PPWindowName1";
-NSString *const PPWindowName2 = @"PPWindowName2";
-NSString *const PPWindowName3 = @"PPWindowName3";
+#define PPWindowName1 @"PPWindowName1"
+#define PPWindowName2 @"PPWindowName2"
+#define PPWindowName3 @"PPWindowName3"
