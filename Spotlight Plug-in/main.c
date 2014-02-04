@@ -47,7 +47,6 @@ static Boolean GetMetadataForFile(void* thisInterface, CFMutableDictionaryRef at
 		CFRelease(theURL);
 	}
 	return isGood;
-	
 }
 
 // -----------------------------------------------------------------------------
@@ -165,8 +164,7 @@ static HRESULT MetadataImporterQueryInterface(void *thisInstance, REFIID iid, LP
 //
 static ULONG MetadataImporterPluginAddRef(void *thisInstance)
 {
-    ((MetadataImporterPluginType *)thisInstance )->refCount += 1;
-    return ((MetadataImporterPluginType*) thisInstance)->refCount;
+    return ++((MetadataImporterPluginType*)thisInstance)->refCount;
 }
 
 // -----------------------------------------------------------------------------
@@ -182,7 +180,7 @@ static ULONG MetadataImporterPluginRelease(void *thisInstance)
         DeallocMetadataImporterPluginType((MetadataImporterPluginType*)thisInstance );
         return 0;
     } else {
-        return ((MetadataImporterPluginType*) thisInstance )->refCount;
+        return ((MetadataImporterPluginType*)thisInstance)->refCount;
     }
 }
 
