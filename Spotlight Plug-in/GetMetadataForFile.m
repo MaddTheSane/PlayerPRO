@@ -10,31 +10,33 @@
 #include "GetMetadataForFile.h"
 
 @interface NSString (PPextras)
-- (NSString *)PPtrimWhiteSpace;
-+ (BOOL) PPstringIsEmpty:(NSString *)s;
+//- (NSString *)PPtrimWhiteSpace;
++ (BOOL)PPstringIsEmpty:(NSString *)s;
 @end
 
 @implementation NSString (PPextras)
+#if 0
 - (NSString *)PPtrimWhiteSpace
 {
-	NSMutableString *s = [[NSMutableString alloc] initWithString:self];
-	CFStringTrimWhitespace((CFMutableStringRef)s);
-	return [[NSString alloc] initWithString:s];
+	return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }
+#endif
 
 + (BOOL)PPstringIsEmpty:(NSString *)s
 {
 	NSString *copy;
-	
+	NSMutableCharacterSet *mutSet;
 	if (s == nil)
 		return YES;
 	
 	if ([s isEqualTo:@""])
 		return YES;
 	
-	copy = [s copy];
+	mutSet = [[NSCharacterSet whitespaceCharacterSet] mutableCopy];
+	[mutSet addCharactersInString:@"-"];
+	copy = [s stringByTrimmingCharactersInSet:mutSet];
 	
-	if ([[copy PPtrimWhiteSpace] isEqualTo:@""])
+	if ([copy isEqualTo:@""])
 		return YES;
 	
 	return NO;
@@ -102,20 +104,19 @@ Boolean GetMetadataForURL(void* thisInterface,
 		{
 			char type[5];
 			char utiType[5] = {0};
-			{
-				OSType info;
-				CFStringRef ostypes;
-				//Try to get the OSType of the UTI.
-				ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
-				
-				info = UTGetOSTypeFromString(ostypes);
-				if (ostypes)
-					CFRelease(ostypes);
-				if (info)
-					OSType2Ptr(info, utiType);
-				else
-					strcpy(utiType, "!!!!");
-			}
+			OSType info;
+			CFStringRef ostypes;
+			
+			//Try to get the OSType of the UTI.
+			ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
+			
+			info = UTGetOSTypeFromString(ostypes);
+			if (ostypes)
+				CFRelease(ostypes);
+			if (info)
+				OSType2Ptr(info, utiType);
+			else
+				strcpy(utiType, "!!!!");
 			
 			if (MADMusicIdentifyCFURL(MADLib, type, urlForFile) != noErr) {
 				//Couldn't identify via raw file, try by UTI
