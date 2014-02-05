@@ -1957,10 +1957,10 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRea
 		}
 		
 		MDriver->partition[i] = (PatData*)malloc(inOutCount);
-		if (MDriver->partition[ i] == NULL) {
+		if (MDriver->partition[i] == NULL) {
 			for (x = 0; x < i; x++) {
 				if (MDriver->partition[x] != NULL)
-					free( MDriver->partition[x]);
+					free(MDriver->partition[x]);
 			}
 			free(MDriver->header);
 			free(MDriver);
@@ -1977,7 +1977,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRea
 #ifdef _MAC_H
 			case MADCFReadStreamType:
 				inOutCount -= sizeof(PatHeader);
-				memcpy(&MDriver->partition[i]->header, &tempPatHeader, sizeof(PatHeader));
+				MDriver->partition[i]->header = tempPatHeader;
 				bytesRead = CFReadStreamRead(MADReadStream, (UInt8*)&(MDriver->partition[i]->Cmds), inOutCount);
 				if (bytesRead == -1)
 					theErr = MADReadingErr;
@@ -2300,7 +2300,8 @@ OSErr MADMusicSaveCString(MADMusic *music, const char *cName, Boolean compressMA
 	for (i = 0, x = 0; i < MAXINSTRU; i++) {
 		music->fid[i].no = i;
 		
-		if (music->fid[i].numSamples > 0 || music->fid[i].name[0] != 0) {	// Is there something in this instrument?
+		// Is there something in this instrument?
+		if (music->fid[i].numSamples > 0 || music->fid[i].name[0] != 0) {
 			x++;
 		}
 	}

@@ -794,3 +794,12 @@
 }
 
 @end
+
+@implementation PPInstrumentObjectImmutable
+
+- (instancetype)initWithMusic:(PPMusicObjectWrapper *)mus instrumentIndex:(short)insIdx
+{
+	return [self initWithMusicStruct:mus.internalMadMusicStruct atIndex:insIdx];
+}
+
+@end

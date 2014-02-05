@@ -45,7 +45,7 @@
 }
 @end
 
-static void CocoaDebugStr( short line, const char *file, const char *text)
+static void CocoaDebugStr(short line, const char *file, const char *text)
 {
 	NSLog(@"%s:%u error text:%s!", file, line, text);
 	NSInteger alert = NSRunAlertPanel(NSLocalizedString(@"MyDebugStr_Error", @"Error"),
@@ -122,7 +122,7 @@ static NSInteger selMusFromList = -1;
 {
 	if (!_trackerUTIs) {
 		NSArray *arrayOfUTIs = [self.trackerDict allValues];
-		NSMutableArray *toAddUTIArray = [[NSMutableArray alloc] init];
+		NSMutableArray *toAddUTIArray = [NSMutableArray new];
 		for (NSArray *anArray in arrayOfUTIs) {
 			[toAddUTIArray addObjectsFromArray:anArray];
 		}
@@ -218,7 +218,10 @@ static NSInteger selMusFromList = -1;
 	init.repeatMusic = FALSE;
 	
 	//OSErr returnerr = MADCreateDriver(&init, madLib, &madDriver);
-	returnerr = [madDriver changeDriverSettingsToSettings:init];
+	if (!madDriver)
+		madDriver = [[PPDriver alloc] initWithLibrary:madLib settings:&init error:&returnerr];
+	else
+		returnerr = [madDriver changeDriverSettingsToSettings:init];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDriverDidChange object:self];
 	if (returnerr != noErr) {
 		NSError *err = CreateErrorFromMADErrorType(returnerr);

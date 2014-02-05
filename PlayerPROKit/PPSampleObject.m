@@ -24,6 +24,10 @@
 #define INSTRUMENTINDEXKEY @"Instrument Index"
 
 @implementation PPSampleObject
+{
+	@protected
+	sData theSample;
+}
 @synthesize theSample;
 @synthesize name;
 @synthesize data;
@@ -141,12 +145,12 @@
 	return (SInt32)[data length];
 }
 
-- (id)init
+- (instancetype)init
 {
 	return [self initWithsData:NULL];
 }
 
-- (id)initWithsData:(sData *)theData
+- (instancetype)initWithsData:(sData *)theData
 {
 	if (self = [super init]) {
 		if (!theData) {
@@ -267,7 +271,16 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	return nil;
+	return self;
+}
+
+- (id)mutableCopyWithZone:(NSZone *)zone
+{
+	PPSampleObject *retVal = [[PPSampleObject alloc] initWithsData:&self->theSample];
+	retVal.name = self.name;
+	retVal.data = self.data;
+	
+	return retVal;
 }
 
 - (void)setData:(NSData *)data
@@ -314,6 +327,5 @@
 {
 	NSAssert(NO, @"Mutable command called on immutable object!");
 }
-
 
 @end

@@ -38,7 +38,7 @@
 {
     if (self = [super initWithWindow:window]) {
         // Initialization code here.
-		[self addObserver:self forKeyPath:@"appDel.music" options:NSKeyValueObservingOptionNew context:nil];
+		[appDel addObserver:self forKeyPath:@"music" options:NSKeyValueObservingOptionNew context:nil];
     }
     
     return self;
@@ -58,13 +58,17 @@
 {
     [super windowDidLoad];
     
+	appDel = [NSApp delegate];
+	
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	[instrumentView reloadData];
 	[instrumentView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
 }
 
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[appDel removeObserver:self forKeyPath:@"music"];
 }
 
 #pragma mark NSOutlineView delegates and data ref calls
@@ -251,13 +255,20 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 	return img;
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	if ([keyPath isEqualToString:@"self.appDel.music"]) {
+		[instrumentView reloadData];
+	}
+}
+
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
 	id object = [instrumentView itemAtRow:[instrumentView selectedRow]];
 	
 	if ([object isKindOfClass:[PPInstrumentObject class]]) {
 		if ([object countOfSamples] > 0) {
-			object = [object childAtIndex:0];
+			object = [object samplesObjectAtIndex:0];
 		} else {
 			object = nil;
 		}
@@ -302,7 +313,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 		return appDel.music.instruments[index];
 	}
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
-		return [item childAtIndex:index];
+		return [item samplesObjectAtIndex:index];
 	}
 	return nil;
 }

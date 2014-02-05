@@ -37,6 +37,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 @property (readwrite, strong, nonatomic) NSString *internalFileName;
 @property (readwrite, strong, nonatomic) NSString *madInfo;
 @property (readwrite, strong) NSURL *filePath;
+@property (strong) NSArray *__instruments;
 @end
 
 @implementation PPMusicObject
@@ -44,6 +45,20 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 @synthesize attachedDriver;
 @synthesize _currentMusic = currentMusic;
 @synthesize internalFileName;
+
+- (NSArray *)instruments
+{
+	if (!___instruments) {
+		NSMutableArray *array = [NSMutableArray new];
+		for (NSInteger i = 0; i < MAXINSTRU; i++) {
+			PPInstrumentObjectImmutable *immIns = [[PPInstrumentObjectImmutable alloc] initWithMusicStruct:currentMusic atIndex:i];
+			[array addObject:immIns];
+		}
+		self.__instruments = [[NSArray alloc] initWithArray:array];
+	}
+	
+	return ___instruments;
+}
 
 - (NSDictionary*)musicClasses
 {
@@ -116,7 +131,7 @@ end:
 
 - (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib
 {
-	if ([[url pathExtension] caseInsensitiveCompare:@"madbundle"]) {
+	if ([[url pathExtension] caseInsensitiveCompare:@"madbundle"] == NSOrderedSame) {
 		return self = [[PPMusicObjectWrapper alloc] initWithURL:url];
 	}
 	if (self = [super init]) {

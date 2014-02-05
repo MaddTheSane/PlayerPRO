@@ -7,6 +7,7 @@
 //
 
 #import "PPInstrumentObject.h"
+#import "PPMusicObject.h"
 
 @interface PPInstrumentObject ()
 {
@@ -20,4 +21,9 @@
 @property NSMutableArray *_volumeEnvelope;
 @property NSMutableArray *_panningEnvelope;
 @property NSMutableArray *_pitchEnvelope;
+@end
+
+@interface PPInstrumentObjectImmutable : PPInstrumentObject
+- (instancetype)initWithMusic:(PPMusicObject *)mus instrumentIndex:(short)insIdx;
+
 @end

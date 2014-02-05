@@ -58,6 +58,8 @@
 
 - (MADMusic *)internalMadMusicStruct NS_RETURNS_INNER_POINTER;
 
+- (NSArray *)instruments;
+
 @end
 
 @interface PPMusicObjectWrapper : PPMusicObject <NSCopying>

@@ -513,7 +513,7 @@
 "890.title" = "Save As…";
 
 /* Class = "NSMenuItem"; title = "Show Tools"; ObjectID = "893"; */
-"893.title" = "Show Tools";
+"893.title" = "Tools";
 
 /* Class = "NSMenuItem"; title = "Clear Music List…"; ObjectID = "897"; */
 "897.title" = "Clear Music List…";

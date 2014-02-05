@@ -15,8 +15,8 @@
 @property (readwrite) NSInteger instrumentIndex;
 @property (readonly) sData theSample;
 
-- (id)init;
-- (id)initWithsData:(sData *)theData;
+- (instancetype)init;
+- (instancetype)initWithsData:(sData *)theData;
 - (sData *)createSData;
 
 @property (readonly) SInt32 dataSize DEPRECATED_ATTRIBUTE;
