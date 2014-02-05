@@ -3487,15 +3487,15 @@
 			name = "Pattern Code";
 			sourceTree = "<group>";
 		};
-		554E0FDD10D6C79D00BB619C /* App Plug-ins */ = {
+		554E0FDD10D6C79D00BB619C /* Plug-ins */ = {
 			isa = PBXGroup;
 			children = (
 				554E0FDE10D6C79D00BB619C /* Digital Plugs */,
 				554E0FF710D6C79D00BB619C /* Filters Plugs */,
 				554E102910D6C79E00BB619C /* Instruments Import-Export Plugs */,
 			);
-			name = "App Plug-ins";
-			path = "Files/(Plug-Ins)";
+			name = "Plug-ins";
+			path = "../Files/(Plug-Ins)";
 			sourceTree = "<group>";
 		};
 		554E0FDE10D6C79D00BB619C /* Digital Plugs */ = {
@@ -3856,6 +3856,7 @@
 				5523EC78169276AA0067B22A /* Instrument Code */,
 				55469C2416BF341500175A1F /* Pattern Code */,
 				5526AB0F188C7D94008D0C14 /* Resources */,
+				554E0FDD10D6C79D00BB619C /* Plug-ins */,
 			);
 			path = "PlayerPRO 6";
 			sourceTree = "<group>";
@@ -3924,12 +3925,11 @@
 			children = (
 				55F41A2217EF800B00605DF8 /* version.sh */,
 				553626AE17EA6ED200D3A3C8 /* Xcconfigs */,
-				55F16D1B186F918F00E75C3E /* Shared */,
-				55CBFCD411EB7CA00028C6BB /* PlayerPRO 6 */,
 				552C70C210CDAF8C00C0E0D4 /* Documentation */,
-				554E0FDD10D6C79D00BB619C /* App Plug-ins */,
 				88E0C3CE0C2F21DD00D6C081 /* MADDriver.source */,
 				551292DE163DD68500C2C639 /* PlayerPROKit */,
+				55F16D1B186F918F00E75C3E /* Shared */,
+				55CBFCD411EB7CA00028C6BB /* PlayerPRO 6 */,
 				5578C48317D9E8560057D11B /* PlayerPRO Player */,
 				559C418F183EB4AB004A073C /* PPQuickView */,
 				55BE998517978BB100D6DECC /* Spotlight Plug-in */,
