@@ -18,52 +18,27 @@
 #include "PPByteswap.h"
 #import "PPErrors.h"
 #import "UserDefaultKeys.h"
-
-@interface PPInstrumentWindowController ()
-- (void)loadInstrumentsFromMusic;
-@end
+#import "AppDelegate.h"
 
 @implementation PPInstrumentWindowController
-
-@synthesize curMusic;
-@synthesize theDriver;
-
-- (void)setCurMusic:(MADMusic **)acurMusic
-{
-	curMusic = acurMusic;
-	[self loadInstrumentsFromMusic];
-}
-
-- (void)loadInstrumentsFromMusic
-{
-	int i;
-	[instruments removeAllObjects];
-	for (i = 0; i < MAXINSTRU; i++) {
-		PPInstrumentObject *obj = [[PPInstrumentObject alloc] initWithMusic:*curMusic instrumentIndex:i];
-		if (![[obj name] isEqualToString:@""] || [[obj children] count] > 0) {
-			[instruments addObject:obj];
-		}
-	}
-	if (instrumentView) {
-		[instrumentView reloadData];
-		[instrumentView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-		[instrumentView scrollToBeginningOfDocument:nil];
-	}
-}
-
-- (void)musicDidChange:(NSNotification *)aNot
-{
-	[self loadInstrumentsFromMusic];
-}
+@synthesize appDel;
+@synthesize infoDrawer;
+@synthesize instrumentBits;
+@synthesize instrumentLoopSize;
+@synthesize instrumentLoopStart;
+@synthesize instrumentMode;
+@synthesize instrumentNote;
+@synthesize instrumentRate;
+@synthesize instrumentSize;
+@synthesize instrumentView;
+@synthesize instrumentVolume;
+@synthesize waveFormImage;
 
 - (id)initWithWindow:(NSWindow *)window
 {
     if (self = [super initWithWindow:window]) {
         // Initialization code here.
-		NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-		//[center addObserver:self selector:@selector(colorsDidChange:) name:PPColorsDidChange object:nil];
-		[center addObserver:self selector:@selector(musicDidChange:) name:PPMusicDidChange object:nil];
-		instruments = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU];
+		[self addObserver:self forKeyPath:@"appDel.music" options:NSKeyValueObservingOptionNew context:nil];
     }
     
     return self;
@@ -99,7 +74,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 	CGContextSaveGState(ctxRef);
 	
 	long		i;
-	size_t		sampleSize = [curData dataSize];
+	size_t		sampleSize = [curData.data length];
 	CGFloat		temp;
 	const char	*theSample = [curData.data bytes];
 	const short	*theShortSample = (const short*)theSample;
@@ -260,9 +235,9 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 		NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(2, 2)];
 		NSSize padSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
 		CGContextSetLineWidth(bitmapContext, lineSize.height);
-		loopRect.origin.x =  ([theDat loopBegin] * imageSize.width / (double)[theDat dataSize]);
+		loopRect.origin.x =  ([theDat loopBegin] * imageSize.width / (double)[theDat.data length]);
 		loopRect.origin.y += padSize.width;
-		loopRect.size.width = [theDat loopSize] * imageSize.width / (double)[theDat dataSize];
+		loopRect.size.width = [theDat loopSize] * imageSize.width / (double)[theDat.data length];
 		loopRect.size.height -= padSize.width * 2;
 		CGContextStrokeRect(bitmapContext, loopRect);
 	}
@@ -281,7 +256,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 	id object = [instrumentView itemAtRow:[instrumentView selectedRow]];
 	
 	if ([object isKindOfClass:[PPInstrumentObject class]]) {
-		if ([object sampleCount] > 0) {
+		if ([object countOfSamples] > 0) {
 			object = [object childAtIndex:0];
 		} else {
 			object = nil;
@@ -313,10 +288,10 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
 	if (item == nil) {
-		return [instruments count];
+		return [appDel.music.instruments count];
 	}
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
-		return [item countOfChildren];
+		return [item countOfSamples];
 	}
 	return 0;
 }
@@ -324,7 +299,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	if (item == nil) {
-		return instruments[index];
+		return appDel.music.instruments[index];
 	}
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
 		return [item childAtIndex:index];
@@ -343,7 +318,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
 {
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
-		return [item countOfChildren] != 0;
+		return [item countOfSamples] != 0;
 	}
 	return NO;
 }

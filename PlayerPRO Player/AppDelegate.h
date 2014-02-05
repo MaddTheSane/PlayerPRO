@@ -42,9 +42,9 @@
 	IBOutlet NSTableView	*tableView;
 	IBOutlet NSArrayController *musicListController;
 	NSTimer					*timeChecker;
-	MADDriverRec			*madDriver;
-	MADMusic				*music;
-	MADLibrary				*madLib;
+	PPDriver				*madDriver;
+	PPMusicObject			*music;
+	PPLibrary				*madLib;
 	
 	MADDriverSettings		exportSettings;
 	IBOutlet NSBox			*exportSettingsBox;
@@ -56,10 +56,12 @@
 @property (weak) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSWindow *exportWindow;
 @property (weak) IBOutlet NSMenuItem *pauseDockMenuItem;
+@property (strong) PPMusicObject *music;
+@property (strong) PPLibrary *madLib;
 
 @property (weak) IBOutlet NSPanel *toolsPanel;
 @property (readonly, strong) PPInstrumentWindowController *instrumentController;
-@property (getter=isPaused) BOOL paused;
+@property (getter = isPaused) BOOL paused;
 
 - (IBAction)showMusicList:(id)sender;
 - (IBAction)sortMusicList:(id)sender;

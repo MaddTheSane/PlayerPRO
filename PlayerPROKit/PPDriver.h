@@ -29,12 +29,14 @@
 - (void)endExport;
 
 - (void)cleanDriver;
+- (OSErr)stopDriver;
 
 - (BOOL)directSaveToPointer:(void*)thePtr settings:(MADDriverSettings*)theSett;
 - (NSInteger)audioLength DEPRECATED_ATTRIBUTE;
 - (NSInteger)audioDataLength;
 
 - (OSErr)getMusicStatusWithCurrentTime:(long*)curTime totalTime:(long*)totTime;
+- (OSErr)setMusicStatusWithCurrentTime:(long)curTime maximumTime:(long)maxV minimumTime:(long)minV;
 
 //This is the main one that gets called
 - (OSErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen;

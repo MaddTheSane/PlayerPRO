@@ -1069,6 +1069,7 @@
                 <constraint firstItem="664" firstAttribute="leading" secondItem="623" secondAttribute="leading" id="6YS-g8-2Gq"/>
                 <constraint firstItem="669" firstAttribute="leading" secondItem="677" secondAttribute="trailing" constant="8" symbolic="YES" id="6fw-I3-zyK"/>
                 <constraint firstItem="664" firstAttribute="trailing" secondItem="623" secondAttribute="trailing" id="9Gb-SJ-gR3"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="670" secondAttribute="bottom" constant="20" symbolic="YES" id="AkJ-H2-75d"/>
                 <constraint firstItem="677" firstAttribute="trailing" secondItem="670" secondAttribute="trailing" id="BBs-SN-dME"/>
                 <constraint firstItem="664" firstAttribute="trailing" secondItem="665" secondAttribute="trailing" id="CMK-q1-sKs"/>
                 <constraint firstItem="664" firstAttribute="trailing" secondItem="669" secondAttribute="trailing" id="D2t-Xj-BSb"/>
@@ -1341,10 +1342,10 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box autoresizesSubviews="NO" title="Box" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="551">
-                        <rect key="frame" x="0.0" y="57" width="403" height="362"/>
+                        <rect key="frame" x="-3" y="57" width="410" height="364"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <view key="contentView">
-                            <rect key="frame" x="0.0" y="0.0" width="403" height="362"/>
+                            <rect key="frame" x="0.0" y="0.0" width="410" height="364"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         </view>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
@@ -1383,8 +1384,8 @@ Gw
                     <constraint firstItem="551" firstAttribute="centerX" secondItem="542" secondAttribute="centerX" id="819"/>
                     <constraint firstAttribute="bottom" secondItem="544" secondAttribute="bottom" constant="20" symbolic="YES" id="821"/>
                     <constraint firstAttribute="trailing" secondItem="544" secondAttribute="trailing" constant="23" id="822"/>
-                    <constraint firstItem="551" firstAttribute="leading" secondItem="542" secondAttribute="leading" constant="3" id="824"/>
-                    <constraint firstItem="551" firstAttribute="top" secondItem="542" secondAttribute="top" constant="2" id="825"/>
+                    <constraint firstItem="551" firstAttribute="leading" secondItem="542" secondAttribute="leading" id="824"/>
+                    <constraint firstItem="551" firstAttribute="top" secondItem="542" secondAttribute="top" id="825"/>
                     <constraint firstItem="544" firstAttribute="leading" secondItem="543" secondAttribute="trailing" constant="12" symbolic="YES" id="826"/>
                     <constraint firstItem="544" firstAttribute="baseline" secondItem="543" secondAttribute="baseline" id="6BV-zV-hAd"/>
                     <constraint firstItem="543" firstAttribute="top" secondItem="551" secondAttribute="bottom" constant="20" symbolic="YES" id="TH7-t0-npt"/>

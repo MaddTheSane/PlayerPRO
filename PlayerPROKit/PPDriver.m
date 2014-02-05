@@ -152,6 +152,11 @@
 		MADEndExport(theRec);
 }
 
+- (OSErr)setMusicStatusWithCurrentTime:(long)curTime maximumTime:(long)maxV minimumTime:(long)minV
+{
+	return MADSetMusicStatus(theRec, minV, maxV, curTime);
+}
+
 - (OSErr)getMusicStatusWithCurrentTime:(long*)curTime totalTime:(long*)totTime
 {
 	return MADGetMusicStatus(theRec, totTime, curTime);
@@ -242,6 +247,11 @@
 	if (iErr) {
 		return iErr;
 	}
+	return MADStopDriver(theRec);
+}
+
+- (OSErr)stopDriver
+{
 	return MADStopDriver(theRec);
 }
 

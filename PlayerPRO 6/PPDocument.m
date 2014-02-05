@@ -258,7 +258,7 @@
 	}
 	
 	[theRec cleanDriver];
-	[_theMusic attachToDriver:theRec];
+	[theRec setCurrentMusic:_theMusic];
 	
 	char *soundPtr = NULL;
 	NSUInteger full = [theRec audioDataLength];
