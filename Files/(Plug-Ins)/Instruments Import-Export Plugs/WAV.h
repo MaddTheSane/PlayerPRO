@@ -12,11 +12,7 @@
 #ifndef __PP_WAV_H_
 #define __PP_WAV_H_
 
-#if MAINPLAYERPRO
-#include "PPDefs.h"
-#else
 #include <PlayerPROCore/MAD.h>
-#endif
 #include <CoreServices/CoreServices.h>
 
 #ifndef WIN32

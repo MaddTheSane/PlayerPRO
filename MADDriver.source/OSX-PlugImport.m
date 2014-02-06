@@ -14,9 +14,6 @@
 #include "RDriverInt.h"
 #include "FileUtils.h"
 #include "PPPrivate.h"
-
-#define MAXPLUG	40
-
 #include "PPPlug.h"
 #define CharlMADcheckLength 10
 
@@ -233,7 +230,6 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 			//Check to see if there's a plug-in that matches the type.
 			for (int i = 0; i < inMADDriver->TotalPlug; i++) {
 				if (strcmp(FillPlug->type, inMADDriver->ThePlug[i].type) == 0) {
-					//NSLog(@"Plug-ins %@ and %@ are similar", inMADDriver->ThePlug[i].file, tempBundle);
 					if (inMADDriver->ThePlug[i].version < FillPlug->version) {
 						PlugInfo newInfo;
 						Boolean gotFilled = fillPlugFromBundle(tempBundle, &newInfo);
@@ -245,16 +241,12 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 							strcpy(newInfo.type, inMADDriver->ThePlug[i].type);
 							inMADDriver->ThePlug[i] = newInfo;
 							inMADDriver->ThePlug[i].version = CFBundleGetVersionNumber(tempBundle);
-							//strcpy(inMADDriver->ThePlug[i].type, FillPlug->type);
 							memset(FillPlug, 0, sizeof(PlugInfo));
-							//NSLog(@"Using %@ (Newer than previous)", tempBundle);
 							return true;
 						} else {
-							//NSLog(@"NOT using %@ (Newer than previous, could not initialize)", tempBundle);
 							goto badplug;
 						}
 					} else {
-						//NSLog(@"NOT using %@ (Not newer than previous)", tempBundle);
 						memset(FillPlug, 0, sizeof(PlugInfo));
 						return false;
 					}
@@ -271,7 +263,6 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		}
 	}
 badplug:
-	NSLog(@"PlayerPROCore: Error with plug-in %@", tempBundle);
 	memset(FillPlug, 0, sizeof(PlugInfo));
 	return false;
 }
@@ -406,12 +397,11 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 					 MADMusic				*theNewMAD,
 					 PPInfoRec				*info)
 {
-	OSErr					iErr = noErr;
-	CFBundleRefNum			resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
-	MADDriverSettings		driverSettings = {0};
+	OSErr				iErr = noErr;
+	CFBundleRefNum		resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
+	MADDriverSettings	driverSettings = {0};
 	
 	iErr = (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);
-	
 	CFBundleCloseBundleResourceMap(inMADDriver->ThePlug[PlugNo].file, resFileNum);
 	
 	return iErr;
@@ -505,7 +495,7 @@ OSErr CheckMADFile(char* name)
 	char	charl[CharlMADcheckLength];
 	OSErr	err;
 	
-	refNum = iFileOpenRead( name);
+	refNum = iFileOpenRead(name);
 	if (!refNum)
 		return MADReadingErr;
 	else {

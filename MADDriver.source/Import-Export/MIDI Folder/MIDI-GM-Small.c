@@ -799,14 +799,6 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 	
 BAIL:
 	
-#if defined( MAINPLAYERPRO)
-	CreateInstruList();
-	DrawInfoInstrument();
-	UpdateSampleWindows();
-	UpdateInstruMenu();
-	UpdateALLWindow();
-#endif
-	
 	;
 }
 

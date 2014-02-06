@@ -21,9 +21,6 @@
 //
 /********************						***********************/
 
-#ifdef MAINPLAYERPRO
-#include "Shuddup.h"
-#endif
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "FileUtils.h"
@@ -38,11 +35,7 @@
 typedef void *CFReadStreamRef;
 #endif
 
-void debugger(Ptr a) DEPRECATED_ATTRIBUTE;
-
 ///////////////////////////////
-
-//#define  NO_ASM
 
 typedef enum InputType {
 	MADFileType = 1,
@@ -60,6 +53,23 @@ void		ApplyVSTSets(VSTEffect* myEffect, FXSets* set);
 
 void		SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte);
 static OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFReadStreamRef MADRsrc, Ptr MADPtr);
+
+static inline unsigned char* MYC2PStr(Ptr cStr)
+{
+	long size = strlen(cStr);
+	memmove(cStr + 1, cStr, size);
+	cStr[0] = size;
+	
+	return (unsigned char*) cStr;
+}
+
+static inline void MYP2CStr(unsigned char *cStr)
+{
+	long size = cStr[0];
+	memmove(cStr, cStr + 1, size);
+	cStr[size] = 0;
+}
+
 
 MADMusic* CreateFreeMADK()
 {
@@ -1156,7 +1166,7 @@ OSErr MADDisposeLibrary(MADLibrary *MLibrary)
 
 OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *MissingPlugs)
 {
-#if MAINPLAYERPRO
+#ifndef NOEXPORTFUNCS
 	short		alpha, x, i, index;
 #endif
 	Boolean		needToReset;
@@ -1186,9 +1196,9 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *Missin
 			driver->curMusic->header->generalPan = driver->globPan;
 		}
 	}
-#if MAINPLAYERPRO
+#ifndef NOEXPORTFUNCS
 	//TODO: Check VST editor
-	CheckVSTEditor( NULL);
+	CheckVSTEditor(NULL);
 #endif
 	
 	/////////////////////////
@@ -1240,32 +1250,22 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *Missin
 	else
 		driver->XMLinear = false;
 	
-	
-#if MAINPLAYERPRO
-	if (MissingPlugs) strcpy( (Ptr) MissingPlugs, "");
-#endif
-	
+#ifndef NOEXPORTFUNCS
 	//INSTALL ALL VST EFFECTS !!!!!!
-#if MAINPLAYERPRO
 	//TODO: VST Effects
 	// Purge previous Effects !
-	for (i = 0; i < 10 ; i++)
-	{
-		if (driver->masterVST[ i])
-		{
-			DisposeVSTEffect( driver->masterVST[ i]);
-			driver->masterVST[ i] = NULL;
+	for (i = 0; i < 10 ; i++) {
+		if (driver->masterVST[i]) {
+			DisposeVSTEffect(driver->masterVST[i]);
+			driver->masterVST[i] = NULL;
 		}
 	}
 	
-	for (i = 0; i < MAXTRACK ; i++)	// Channel Effects
-	{
-		for (x = 0; x < 4; x++)
-		{
-			if (driver->chanVST[ i][ x])
-			{
-				DisposeVSTEffect( driver->chanVST[ i][ x]);
-				driver->chanVST[ i][ x] = NULL;
+	for (i = 0; i < MAXTRACK ; i++) { // Channel Effects
+		for (x = 0; x < 4; x++) {
+			if (driver->chanVST[i][x]) {
+				DisposeVSTEffect(driver->chanVST[i][x]);
+				driver->chanVST[i][x] = NULL;
 			}
 		}
 	}
@@ -1273,54 +1273,45 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *Missin
 	// Install new effects
 	alpha = 0;
 	
-	for (i = 0; i < 10 ; i++)	// Global Effects
-	{
-		if (music->header->globalEffect[ i])
-		{
-			index = ConvertUniqueIDToIndex( music->sets[ alpha].FXID);
+	for (i = 0; i < 10 ; i++) { // Global Effects
+		if (music->header->globalEffect[i]) {
+			index = ConvertUniqueIDToIndex(music->sets[alpha].FXID);
 			
-			if (index >= 0)
-			{
-				driver->masterVST[ i] = CreateVSTEffect( index);
-				ApplyVSTSets( driver->masterVST[ i], &music->sets[ alpha]);
+			if (index >= 0) {
+				driver->masterVST[i] = CreateVSTEffect(index);
+				ApplyVSTSets(driver->masterVST[i], &music->sets[alpha]);
 			}
 			else if (MissingPlugs)
 			{
-				if (strlen( (Ptr) MissingPlugs) > 0) strcat(  (Ptr) MissingPlugs, ", ");
-				MYP2CStr( music->sets[ alpha].name);
-				strcpy(  (Ptr) MissingPlugs,  (Ptr) &music->sets[ alpha].name);
-				MYC2PStr( (Ptr) music->sets[ alpha].name);
+				if (strlen((Ptr)MissingPlugs) > 0)
+					strcat((Ptr)MissingPlugs, ", ");
+				MYP2CStr(music->sets[ alpha].name);
+				strcpy((Ptr)MissingPlugs,(Ptr)&music->sets[alpha].name);
+				MYC2PStr((Ptr)music->sets[alpha].name);
 			}
 			alpha++;
 		}
 	}
 	
-	for (i = 0; i < MAXTRACK ; i++)	// Channel Effects
-	{
-		for (x = 0; x < 4; x++)
-		{
-			if (music->header->chanEffect[ i][ x])
-			{
-				index = ConvertUniqueIDToIndex( music->sets[ alpha].FXID);
+	for (i = 0; i < MAXTRACK ; i++) {	// Channel Effects
+		for (x = 0; x < 4; x++) {
+			if (music->header->chanEffect[i][x]) {
+				index = ConvertUniqueIDToIndex(music->sets[alpha].FXID);
 				
-				if (index >= 0)
-				{
-					driver->chanVST[ i][ x] = CreateVSTEffect( index);
-					ApplyVSTSets( driver->chanVST[ i][ x], &music->sets[ alpha]);
-				}
-				else if (MissingPlugs)
-				{
-					strcat(  (Ptr) MissingPlugs, ", ");
-					MYP2CStr( music->sets[ alpha].name);
-					strcpy(  (Ptr) MissingPlugs,  (Ptr) &music->sets[ alpha].name);
-					MYC2PStr( (Ptr) music->sets[ alpha].name);
+				if (index >= 0) {
+					driver->chanVST[i][x] = CreateVSTEffect(index);
+					ApplyVSTSets( driver->chanVST[i][x], &music->sets[alpha]);
+				} else if (MissingPlugs) {
+					strcat((Ptr)MissingPlugs, ", ");
+					MYP2CStr(music->sets[alpha].name);
+					strcpy((Ptr)MissingPlugs, (Ptr)&music->sets[alpha].name);
+					MYC2PStr((Ptr)music->sets[alpha].name);
 				}
 				alpha++;
 			}
 		}
 	}
 	
-	if (MissingPlugs) MYC2PStr( (Ptr) MissingPlugs);
 #endif
 	
 	if (needToReset)

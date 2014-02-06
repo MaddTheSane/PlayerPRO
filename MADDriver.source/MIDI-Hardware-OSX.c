@@ -1,7 +1,4 @@
 //TODO: CoreMIDI back-end
-#ifdef MAINPLAYERPRO
-#include "Shuddup.h"
-#endif
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
@@ -16,18 +13,14 @@
 #define squidInputBufSize	16384	/* 16K */
 #define recordingBufSize	10000	
 
-
-
-	Boolean					MIDIHardware = false, MIDIHardwareAlreadyOpen = false;
-
+Boolean MIDIHardware = false, MIDIHardwareAlreadyOpen = false;
 
 /***/
 
 /* Globals */
 
-
 unsigned MidiVolume[128] = {
-	 0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
+	0,  1,  2,  3,  4,  5,  6,  7,  8,  9, 10, 11, 12, 13, 14, 15,
 	16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31,
 	32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47,
 	48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63,
@@ -35,14 +28,14 @@ unsigned MidiVolume[128] = {
 	64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
 	64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64,
 	64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64, 64
-  };
+};
 
 /***/
 
-#define MySignature		'SNPL'
+#define MySignature 'SNPL'
 
-void DoPlayInstruInt( short	Note, short Instru, short effect, short arg, short vol, Channel *curVoice, SInt32 start, SInt32 end);
-void NPianoRecordProcess( short i, short, short, short);
+void DoPlayInstruInt(short Note, short Instru, short effect, short arg, short vol, Channel *curVoice, SInt32 start, SInt32 end);
+void NPianoRecordProcess(short i, short, short, short);
 
 static MIDIClientRef MADMIDICliRef;
 static MIDIPortRef MADMIDIPortInRef;
@@ -53,8 +46,7 @@ static void MADMIDIPortProc(const MIDIPacketList *pktlist, void *readProcRefCon,
 
 void CloseMIDIHarware(void)
 {
-	if (MIDIHardware)
-	{
+	if (MIDIHardware) {
 		OSStatus MIDIErr = MIDIEndpointDispose(MADMIDIKeyboardEndRef);
 		MIDIErr = MIDIClientDispose(MADMIDICliRef);
 		MADMIDICliRef = 0L;
@@ -66,11 +58,9 @@ void CloseMIDIHarware(void)
 
 void OpenMIDIHardware( MADDriverRec *rec)
 {
-	if(MIDIHardware || MIDIHardwareAlreadyOpen == FALSE)
-	{
+	if(MIDIHardware || MIDIHardwareAlreadyOpen == FALSE) {
 		OSStatus MIDIErr = MIDIClientCreate(CFSTR("PlayerPRO"), MADMIDINotifyProc, rec, &MADMIDICliRef);
-		if(MIDIErr == noErr)
-		{
+		if(MIDIErr == noErr) {
 			MIDIHardware = TRUE;
 			MIDIHardwareAlreadyOpen = TRUE;
 			MIDIErr = MIDIInputPortCreate(MADMIDICliRef, CFSTR("PlayerPRO Keyboard In"), MADMIDIPortProc, rec, &MADMIDIPortInRef);
@@ -93,7 +83,7 @@ void InitMIDIHarware(void)
 
 void NDoPlayInstru(short Note, short Instru, short effect, short arg, short vol);
 
-void DoMidiSpeaker( short note, short Instru, SInt32 arg)
+void DoMidiSpeaker(short note, short Instru, SInt32 arg)
 {
 	
 }

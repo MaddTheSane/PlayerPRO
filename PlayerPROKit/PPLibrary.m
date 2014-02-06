@@ -59,13 +59,12 @@
 
 - (OSType)plugMode
 {
-	if (self.canExport && self.canImport) {
+	if (self.canExport && self.canImport)
 		return MADPlugImportExport;
-	} else if (self.canExport) {
+	else if (self.canExport)
 		return MADPlugExport;
-	} else {
+	else
 		return MADPlugImport;
-	}
 }
 
 @end
