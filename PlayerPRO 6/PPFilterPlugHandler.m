@@ -30,17 +30,15 @@
 			CFArrayRef	somePlugs;
 			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef)aPlugLoc, CFSTR("plugin"));
 			PlugNums = CFArrayGetCount( somePlugs );
-			if (PlugNums > 0) {
-				for (x = 0; x < PlugNums; x++) {
-					@autoreleasepool {
-						CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
-						NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(tempBundleRef))];
-						PPFilterPlugObject *tempObj = [[PPFilterPlugObject alloc] initWithBundle:tempBundle];
-						//You can ignore the Clang static warning of incorrect decrement here.
-						CFRelease(tempBundleRef);
-						if (tempObj) {
-							[filterPlugs addObject:tempObj];
-						}
+			for (x = 0; x < PlugNums; x++) {
+				@autoreleasepool {
+					CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
+					NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(tempBundleRef))];
+					PPFilterPlugObject *tempObj = [[PPFilterPlugObject alloc] initWithBundle:tempBundle];
+					//You can ignore the Clang static warning of incorrect decrement here.
+					CFRelease(tempBundleRef);
+					if (tempObj) {
+						[filterPlugs addObject:tempObj];
 					}
 				}
 			}
@@ -70,9 +68,8 @@
 - (void)addPlugInFromBundle:(NSBundle *)theBund
 {
 	PPFilterPlugObject *obj = [[PPFilterPlugObject alloc] initWithBundle:theBund];
-	if (obj) {
+	if (obj)
 		[filterPlugs addObject:obj];
-	}
 }
 
 - (void)addPlugInFromURL:(NSURL *)urlpath

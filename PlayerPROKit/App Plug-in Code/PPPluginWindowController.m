@@ -36,8 +36,7 @@ NSString * const PPPlugReturnCode = @"PlayerPROKit Return Code";
 
 - (id)initWithWindow:(NSWindow *)window
 {
-	self = [super initWithWindow:window];
-	if (self) {
+	if (self = [super initWithWindow:window]) {
 		// Initialization code here.
 	}
 	

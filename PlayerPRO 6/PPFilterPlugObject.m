@@ -23,9 +23,11 @@
 	if (!object) {
 		return NO;
 	}
+	
 	if (self == object) {
 		return YES;
 	}
+	
 	if ([object isKindOfClass:[PPFilterPlugObject class]]) {
 		if (![self.menuName isEqualToString:[object menuName]]) {
 			return NO;
@@ -73,9 +75,8 @@
 
 - (void)dealloc
 {
-	if (plugData) {
+	if (plugData)
 		(*plugData)->Release(plugData);
-	}
 }
 
 @end

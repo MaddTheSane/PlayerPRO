@@ -46,31 +46,23 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 }
 
 @interface OpenPanelViewItem : NSObject
-{
-	trackerType theUtiType;
-	NSArray *utis;
-	NSString *name;
-}
-
 @property (readonly) NSString *name;
 @property (readonly) trackerType theUtiType;
 @property (readonly) NSArray *utis;
 
 - (id)initWithType:(utiType)typ utis:(NSArray*)ut name:(NSString*)nam;
-
 @end
 
 @implementation OpenPanelViewItem
+@synthesize name;
+@synthesize theUtiType;
+@synthesize utis;
 
 - (id)init
 {
 	[self doesNotRecognizeSelector:_cmd];
 	return nil;
 }
-
-@synthesize name;
-@synthesize theUtiType;
-@synthesize utis;
 
 - (id)initWithType:(utiType)typ utis:(NSArray*)ut name:(NSString*)nam;
 {
@@ -124,6 +116,10 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 
 @implementation OpenPanelViewController
 @synthesize allowsMultipleSelectionOfTrackers;
+@synthesize openPanel;
+@synthesize popUp;
+@synthesize utiObjects;
+
 - (BOOL)allowsMultipleSelectionOfTrackers
 {
 	return allowsMultipleSelectionOfTrackers;
@@ -134,10 +130,6 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 	allowsMultipleSelectionOfTrackers = theVal;
 	[openPanel setAllowsMultipleSelection:allowsMultipleSelectionOfTrackers];
 }
-
-@synthesize openPanel;
-@synthesize popUp;
-@synthesize utiObjects;
 
 - (id)init
 {
@@ -351,78 +343,64 @@ static inline BOOL isTwoTrackerTypesEqual(trackerType rhl, trackerType lhl)
 -(IBAction)selectUTI:(id)sender
 {
 	NSInteger tag = [sender tag];
+	NSMutableArray *allowedUTIs = [NSMutableArray new];
 	switch (tag) {
 		case utiAllType:
-		{
-			NSMutableArray *allUtis = [NSMutableArray array];
 			for (OpenPanelViewItem *obj in utiObjects) {
-				[allUtis addObjectsFromArray:obj.utis];
+				[allowedUTIs addObjectsFromArray:obj.utis];
 			}
-			[openPanel setAllowedFileTypes:allUtis];
+			[openPanel setAllowedFileTypes:allowedUTIs];
 			if (allowsMultipleSelectionOfTrackers) {
 				[openPanel setAllowsMultipleSelection:YES];
 			}
-		}
 			break;
 			
 		case utiTrackerType:
-		{
-			NSMutableArray *trackerUTIs = [NSMutableArray array];
 			for (OpenPanelViewItem *obj in utiObjects) {
 				if (obj.theUtiType.tracker) {
-					[trackerUTIs addObjectsFromArray:obj.utis];
+					[allowedUTIs addObjectsFromArray:obj.utis];
 				}
 			}
-			[openPanel setAllowedFileTypes:trackerUTIs];
+			[openPanel setAllowedFileTypes:allowedUTIs];
 			if (allowsMultipleSelectionOfTrackers) {
 				[openPanel setAllowsMultipleSelection:YES];
 			}
-		}
 			break;
 			
 		case utiPlaylistType:
-		{
-			NSMutableArray *trackerUTIs = [NSMutableArray array];
 			for (OpenPanelViewItem *obj in utiObjects) {
 				if (obj.theUtiType.playlist) {
-					[trackerUTIs addObjectsFromArray:obj.utis];
+					[allowedUTIs addObjectsFromArray:obj.utis];
 				}
 			}
-			[openPanel setAllowedFileTypes:trackerUTIs];
+			[openPanel setAllowedFileTypes:allowedUTIs];
 			if (allowsMultipleSelectionOfTrackers) {
 				[openPanel setAllowsMultipleSelection:NO];
 			}
-		}
 			break;
 			
 		case utiInstrumentType:
-		{
-			NSMutableArray *instrumentUTIs = [NSMutableArray array];
 			for (OpenPanelViewItem *obj in utiObjects) {
 				if (obj.theUtiType.instrument) {
-					[instrumentUTIs addObjectsFromArray:obj.utis];
+					[allowedUTIs addObjectsFromArray:obj.utis];
 				}
 			}
-			[openPanel setAllowedFileTypes:instrumentUTIs];
+			[openPanel setAllowedFileTypes:allowedUTIs];
 			if (allowsMultipleSelectionOfTrackers) {
 				[openPanel setAllowsMultipleSelection:NO];
 			}
-		}
 			break;
 			
 		case utiOtherType:
-		{
-			NSMutableArray *otherUTIs = [NSMutableArray array];
 			for (OpenPanelViewItem *obj in utiObjects) {
 				if (obj.theUtiType.other) {
-					[otherUTIs addObjectsFromArray:obj.utis];
+					[allowedUTIs addObjectsFromArray:obj.utis];
 				}
 			}
-			[openPanel setAllowedFileTypes:otherUTIs];
+			[openPanel setAllowedFileTypes:allowedUTIs];
 			if (allowsMultipleSelectionOfTrackers) {
 				[openPanel setAllowsMultipleSelection:YES];
 			}
-		}
 			break;
 			
 		default:

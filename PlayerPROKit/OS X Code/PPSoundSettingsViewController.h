@@ -11,9 +11,6 @@
 #import <AppKit/NSViewController.h>
 
 @protocol PPSoundSettingsViewControllerDelegate <NSObject>
-@optional
-- (void)soundOutDriverDidChange:(short)driv;
-@required
 - (void)soundOutBitsDidChange:(short)bits;
 - (void)soundOutRateDidChange:(unsigned int)rat;
 - (void)soundOutReverbDidChangeActive:(BOOL)isAct;
@@ -24,6 +21,8 @@
 - (void)soundOutReverbSizeDidChange:(short)rev;
 - (void)soundOutOversamplingAmountDidChange:(short)ovs;
 - (void)soundOutStereoDelayAmountDidChange:(short)std;
+@optional
+- (void)soundOutDriverDidChange:(short)driv;
 @end
 
 @class NSButton, NSMatrix, NSPopUpButton;

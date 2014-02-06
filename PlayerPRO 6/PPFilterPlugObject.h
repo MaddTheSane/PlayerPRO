@@ -12,9 +12,7 @@
 #import "PPPlugInObject.h"
 
 @interface PPFilterPlugObject : PPPlugInObject
-
 - (instancetype)initWithBundle:(NSBundle *)aBund;
 
 - (OSErr)callPluginWithData:(sData *)theData selectionStart:(long) SelectionStart selectionEnd:(long) SelectionEnd plugInInfo:(PPInfoPlug *)thePPInfoPlug stereoMode:(short)stereoMode;
-
 @end

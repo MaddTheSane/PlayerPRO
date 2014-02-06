@@ -210,7 +210,6 @@
 		5533600411EBC66400525CAF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5533600311EBC66400525CAF /* Localizable.strings */; };
 		553626B817EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */; };
 		5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
-		55469C2716BF34D200175A1F /* PatternHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55469C2616BF34D200175A1F /* PatternHandler.m */; };
 		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -253,6 +252,7 @@
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		557139E61685007B00831A5A /* OpenPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139E41685007B00831A5A /* OpenPanelViewController.m */; };
 		557139E71685007B00831A5A /* OpenPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557139E51685007B00831A5A /* OpenPanelViewController.xib */; };
+		557191D118A40D9900F6DAD4 /* MidiHardwarePreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF911FDE5F90041A4EC /* MidiHardwarePreferenceController.m */; };
 		5573A1041656FAF100A5AECA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		5573A1091656FAF100A5AECA /* iOSPlayerPROCore.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5573A1081656FAF100A5AECA /* iOSPlayerPROCore.h */; };
 		5573A10F1656FB1700A5AECA /* FileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 55113CBB133688D60008C2AF /* FileUtils.c */; };
@@ -3691,6 +3691,40 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		557191D318A4103800F6DAD4 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				557EF732168BDE95001BF077 /* PPPlugInCommon.h */,
+				55CB01A611EB82FA0028C6BB /* main.m */,
+				55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */,
+				55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */,
+				55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */,
+				55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */,
+				55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */,
+				5523EC7F16936F870067B22A /* PPDigitalPlugHandler.h */,
+				5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */,
+				5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */,
+				5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */,
+				55EA019616AF15B500D6AEA0 /* PPFilterPlugObject.h */,
+				55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */,
+				55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */,
+				55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */,
+				5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */,
+				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
+				552A662716B5EBEA007C63F7 /* PPPlugInObject.h */,
+				552A662816B5EBEB007C63F7 /* PPPlugInObject.m */,
+				55F41A3517EF96AF00605DF8 /* PPExportObject.h */,
+				55F41A3617EF96AF00605DF8 /* PPExportObject.m */,
+				5578C53D17DBABBE0057D11B /* PPDocument.h */,
+				5578C53E17DBABBF0057D11B /* PPDocument.m */,
+				5521F41317FA4365002CDBA9 /* BoxViewController.h */,
+				5521F41417FA4365002CDBA9 /* BoxViewController.m */,
+				5523EC78169276AA0067B22A /* Instrument Code */,
+				55469C2416BF341500175A1F /* Pattern Code */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
 		5573A1051656FAF100A5AECA /* iOSPlayerPROCore */ = {
 			isa = PBXGroup;
 			children = (
@@ -3828,33 +3862,7 @@
 		55CBFCD411EB7CA00028C6BB /* PlayerPRO 6 */ = {
 			isa = PBXGroup;
 			children = (
-				557EF732168BDE95001BF077 /* PPPlugInCommon.h */,
-				55CB01A611EB82FA0028C6BB /* main.m */,
-				55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */,
-				55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */,
-				55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */,
-				55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */,
-				55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */,
-				5523EC7F16936F870067B22A /* PPDigitalPlugHandler.h */,
-				5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */,
-				5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */,
-				5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */,
-				55EA019616AF15B500D6AEA0 /* PPFilterPlugObject.h */,
-				55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */,
-				55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */,
-				55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */,
-				5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */,
-				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
-				552A662716B5EBEA007C63F7 /* PPPlugInObject.h */,
-				552A662816B5EBEB007C63F7 /* PPPlugInObject.m */,
-				55F41A3517EF96AF00605DF8 /* PPExportObject.h */,
-				55F41A3617EF96AF00605DF8 /* PPExportObject.m */,
-				5578C53D17DBABBE0057D11B /* PPDocument.h */,
-				5578C53E17DBABBF0057D11B /* PPDocument.m */,
-				5521F41317FA4365002CDBA9 /* BoxViewController.h */,
-				5521F41417FA4365002CDBA9 /* BoxViewController.m */,
-				5523EC78169276AA0067B22A /* Instrument Code */,
-				55469C2416BF341500175A1F /* Pattern Code */,
+				557191D318A4103800F6DAD4 /* Classes */,
 				5526AB0F188C7D94008D0C14 /* Resources */,
 				554E0FDD10D6C79D00BB619C /* Plug-ins */,
 			);
@@ -6036,6 +6044,7 @@
 				558328E718553B0B00DFACE4 /* PPMusicListDragClass.m in Sources */,
 				5578C4B217DA4AA90057D11B /* PPMusicList.m in Sources */,
 				5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */,
+				557191D118A40D9900F6DAD4 /* MidiHardwarePreferenceController.m in Sources */,
 				5521F41017F8ED5A002CDBA9 /* PPPreferences.m in Sources */,
 				5578C4B417DA4ADD0057D11B /* PPErrors.m in Sources */,
 				5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */,
@@ -6410,7 +6419,6 @@
 				55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */,
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
 				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,
-				55469C2716BF34D200175A1F /* PatternHandler.m in Sources */,
 				552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */,
 				5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */,
 				5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */,

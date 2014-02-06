@@ -95,12 +95,7 @@
 
 @end
 
-static OSErr mainFade(void			*unused,
-					  sData			*theData,
-					  long			SelectionStart,
-					  long			SelectionEnd,
-					  PPInfoPlug	*thePPInfoPlug,
-					  short			StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainFade(void *unused, sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short StereoMode)
 {
 	FadeWindowController *controller = [[FadeWindowController alloc] initWithWindowNibName:@"FadeWindowController" infoPlug:thePPInfoPlug];
 	controller.fadeTo = 1.0;
@@ -115,7 +110,6 @@ static OSErr mainFade(void			*unused,
 
 // 47C646EE-2B4B-428B-9309-C65B75CBE7EF
 #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x47, 0xC6, 0x46, 0xEE, 0x2B, 0x4B, 0x42, 0x8B, 0x93, 0x09, 0xC6, 0x5B, 0x75, 0xCB, 0xE7, 0xEF)
-
 #define PLUGMAIN mainFade
 #define PLUGINFACTORY FadeFactory
 

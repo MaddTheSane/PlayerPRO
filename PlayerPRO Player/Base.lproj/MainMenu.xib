@@ -399,7 +399,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="900"/>
-                            <menuItem title="Tools" id="893">
+                            <menuItem title="Tools" state="on" id="893">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="showTools:" target="494" id="894"/>

@@ -160,6 +160,9 @@ static OSErr mainQTInst(void					*unused,
 			break;
 			
 		case MADPlugTest:
+#if 1
+			myErr = noErr;
+#else
 		{
 			FInfo fInfo;
 			
@@ -170,13 +173,14 @@ static OSErr mainQTInst(void					*unused,
 			else
 				myErr = MADFileNotSupportedByThisPlug;
 		}
+#endif
 			break;
 			
 		case MADPlugExport:
 			if (*sampleID >= 0) {
 				OSType			compType = 'NONE';
 				unsigned long	rate;
-				sData 			*curData = sample[ *sampleID];
+				sData 			*curData = sample[*sampleID];
 				short			numChan;
 				
 				FSpDelete(&tmpSpec);
@@ -212,7 +216,7 @@ static OSErr mainQTInst(void					*unused,
 
 // 26E9A321-0E15-48E3-8A94-062C46FDB875
 #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x26, 0xE9, 0xA3, 0x21, 0x0E, 0x15, 0x48, 0xE3, 0x8A, 0x94, 0x06, 0x2C, 0x46, 0xFD, 0xB8, 0x75)
-#define PLUGINFACTORY QTInstFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainQTInst //The old main function, renamed please
+#define PLUGINFACTORY QTInstFactory
+#define PLUGMAIN mainQTInst
 
 #include "CFPlugin-InstrBridge.c"

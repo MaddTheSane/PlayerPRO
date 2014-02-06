@@ -131,8 +131,8 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
 			
 			newPtr = ConvertSampleC4SPD(theData->data, theData->size, theData->amp, theData->c2spd, newFreq, theData->stereo, &newPtrSize);
 			
-			theData->loopBeg = (theData->loopBeg * (newFreq/100)) / (long) (theData->c2spd/100);
-			theData->loopSize = (theData->loopSize * (newFreq/100)) / (long) (theData->c2spd/100);
+			theData->loopBeg = (theData->loopBeg * (newFreq / 100)) / (long) (theData->c2spd / 100);
+			theData->loopSize = (theData->loopSize * (newFreq / 100)) / (long) (theData->c2spd / 100);
 			
 			if (newPtr != NULL) {
 				free(theData->data);
@@ -171,12 +171,7 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
 
 @end
 
-static OSErr mainSampRate(void			*unused,
-						  sData			*theData,
-						  long			SelectionStart,
-						  long			SelectionEnd,
-						  PPInfoPlug	*thePPInfoPlug,
-						  short			StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainSampRate(void *unused, sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short StereoMode)
 {
 	
 	SamplingRateWindowController *controller = [[SamplingRateWindowController alloc] initWithWindowNibName:@"SamplingRateWindowController" infoPlug:thePPInfoPlug];

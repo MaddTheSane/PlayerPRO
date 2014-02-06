@@ -91,12 +91,7 @@
 
 @end
 
-static OSErr mainAmplitude(void			*unused,
-						   sData		*theData,
-						   long			SelectionStart,
-						   long			SelectionEnd,
-						   PPInfoPlug	*thePPInfoPlug,
-						   short		StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainAmplitude(void *unused, sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short StereoMode)
 {
 	AmplitudeController *controller = [[AmplitudeController alloc] initWithWindowNibName:@"AmplitudeController" infoPlug:thePPInfoPlug];
 	controller.theData = theData;
@@ -108,9 +103,8 @@ static OSErr mainAmplitude(void			*unused,
 	return [controller runAsSheet];
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xF1, 0xE5, 0xEA, 0x0B, 0x1A, 0xBC, 0x4D, 0x5F, 0x89, 0xDF, 0x3C, 0x89, 0x75, 0x8E, 0xAC, 0x0E))
 //F1E5EA0B-1ABC-4D5F-89DF-3C89758EAC0E
-
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xF1, 0xE5, 0xEA, 0x0B, 0x1A, 0xBC, 0x4D, 0x5F, 0x89, 0xDF, 0x3C, 0x89, 0x75, 0x8E, 0xAC, 0x0E))
 #define PLUGMAIN mainAmplitude
 #define PLUGINFACTORY AmplitudeFactory
 

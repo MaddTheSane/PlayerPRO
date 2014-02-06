@@ -16,6 +16,11 @@
 #define kPPMadCommandVolume @"PlayerPROKit Cmd Volume"
 
 @implementation PPMadCommandObject
+{
+	@private
+	Cmd theCommand;
+}
+
 @synthesize theCommand;
 
 - (Byte)instrument

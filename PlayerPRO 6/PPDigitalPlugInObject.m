@@ -20,12 +20,12 @@
 
 - (BOOL)isEqual:(id)object
 {
-	if (!object) {
+	if (!object)
 		return NO;
-	}
-	if (self == object) {
+	
+	if (self == object)
 		return YES;
-	}
+	
 	if ([object isKindOfClass:[PPDigitalPlugInObject class]]) {
 		if (![self.menuName isEqualToString:[object menuName]]) {
 			return NO;
@@ -34,8 +34,8 @@
 			//Ignore version, authorstring and type
 		} else
 			return YES;
-	}
-	return NO;
+	} else
+		return NO;
 }
 
 - (NSUInteger)hash
@@ -64,9 +64,7 @@
 {
 	NSURL *tempURL = [self.file bundleURL];
 	CFBundleRef tempBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef) tempURL);
-	
 	CFBundleRefNum resFileNum = CFBundleOpenBundleResourceMap(tempBundle);
-	
 	OSErr iErr = (*plugCode)->MyProcPtr(plugCode, myPcmd, pi);
 	
 	CFBundleCloseBundleResourceMap(tempBundle, resFileNum);

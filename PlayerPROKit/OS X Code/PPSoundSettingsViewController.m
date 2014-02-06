@@ -6,8 +6,8 @@
 //
 //
 
-#import "PPSoundSettingsViewController.h"
 #import <Cocoa/Cocoa.h>
+#import "PPSoundSettingsViewController.h"
 
 typedef struct _tagCoupling {
 	int amount;
@@ -261,7 +261,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 			[oversamplingNum selectItemAtIndex:toSet - 1];
 		}
 		if (![delegate respondsToSelector:@selector(soundOutDriverDidChange:)]) {
-			[soundDriver setEnabled:NO];
+			soundDriver.enabled = NO;
 		}
 	}
 }

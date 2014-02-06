@@ -16,27 +16,15 @@
 
 //Only use this class for playback!
 @interface PPMusicObject : NSObject
-
-+ (OSErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib;
-
 @property (readonly, strong, nonatomic) NSString *internalFileName;
 @property (readonly, strong, nonatomic) NSString *madInfo;
-
 @property (readonly) int totalPatterns;
 @property (readonly) int totalPartitions;
 @property (readonly) int partitionLength;
 @property (readonly) short totalTracks;
 @property (readonly) short totalInstruments;
-
 @property (readonly, weak) PPDriver *attachedDriver;
 @property (readonly) NSURL *filePath;
-
-- (NSDictionary*)musicClasses;
-
-//Save music to a URL in MADK format in PPMusicObject, and MAD bundle in PPMusicObjectWrapper
-- (OSErr)saveMusicToURL:(NSURL *)tosave;
-- (OSErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp;
-- (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib;
 
 //Creates a music object from the supplied MADK (PPMusicObject) or MAD bundle (PPMusicObjectWrapper)
 - (instancetype)initWithURL:(NSURL *)url;
@@ -49,6 +37,16 @@
 //Creates a music object from any supported tracker type, also attaching a driver to the music.
 - (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib;
 - (instancetype)initWithPath:(NSString *)url driver:(PPDriver *)theLib;
+
+
++ (OSErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib;
+
+- (NSDictionary*)musicClasses;
+
+//Save music to a URL in MADK format in PPMusicObject, and MAD bundle in PPMusicObjectWrapper
+- (OSErr)saveMusicToURL:(NSURL *)tosave;
+- (OSErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp;
+- (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib;
 
 //This method sets the music object as the playback music
 - (void)attachToDriver:(PPDriver *)theDriv;
@@ -78,14 +76,14 @@
 //Import from another PPMusicObject
 - (instancetype)initFromMusicObject:(PPMusicObject*)oldFormat;
 
-//Creates a MADK tracker file
-- (OSErr)exportMusicToURL:(NSURL *)tosave;
-
 //Load a MAD bundle from a path
 - (instancetype)initWithPath:(NSString *)url;
 
 //Load a MAD bundle from a URL
 - (instancetype)initWithURL:(NSURL *)url;
+
+//Creates a MADK tracker file
+- (OSErr)exportMusicToURL:(NSURL *)tosave;
 
 - (OSErr)createCopyMusicToURL:(NSURL *)tosave;
 

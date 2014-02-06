@@ -7,9 +7,6 @@
 #include <PlayerPROCore/PPPlug.h>
 #include "PAT.h"
 
-#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
-#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
-
 static inline OSErr TestPAT(char *CC)
 {
 	char	IDStr[12] = "GF1PATCH110";
@@ -54,8 +51,8 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 	PatInsHeader	*PATIns;
 	//LayerHeader		*PATLayer;
 	PatSampHeader	*PATSamp;
-	long			i, x;
-	unsigned int	  scale_table[200] = {
+	int				i, x;
+	unsigned int	scale_table[200] = {
 		16351, 17323, 18354, 19445, 20601, 21826, 23124, 24499, 25956, 27500, 29135, 30867,
 		32703, 34647, 36708, 38890, 41203, 43653, 46249, 48999, 51913, 54999, 58270, 61735,
 		65406, 69295, 73416, 77781, 82406, 87306, 92498, 97998, 103826, 109999, 116540, 123470,
@@ -79,46 +76,37 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 	// INS HEADER -- Read only the first instrument
 	PATIns = (PatInsHeader*) PATData;
 	
-	PATIns->size = Tdecode32(&PATIns->size);
+	PPLE32(&PATIns->size);
 	PATData += 63;
 	
 	strlcpy(InsHeader->name, PATIns->name, sizeof(PATIns->name));
 	
-	
 	// LAYERS
-	
 	for (i = 0; i < PATIns->layer; i++)
 		PATData += 47;
 	
-	
 	// SAMPLES
-	
 	for (x = 0; x < InsHeader->numSamples; x++) {
-		sData		*curData;
-		Boolean		signedData;
-		
+		sData	*curData;
+		Boolean	signedData;
 		
 		PATSamp = (PatSampHeader*)PATData;
-		
-		
 		curData = sample[x] = inMADCreateSample();
 		
 		strlcpy(curData->name, PATSamp->name, sizeof(PATSamp->name));
 		
-		PATSamp->size		= Tdecode32(&PATSamp->size);
+		PPLE32(&PATSamp->size);
 		curData->size		= PATSamp->size;
-		
-		PATSamp->startLoop	= Tdecode32(&PATSamp->startLoop);
+		PPLE32(&PATSamp->startLoop);
 		curData->loopBeg 	= PATSamp->startLoop;
-		PATSamp->endLoop	= Tdecode32(&PATSamp->endLoop);
+		PPLE32(&PATSamp->endLoop);
 		curData->loopSize 	= PATSamp->endLoop - PATSamp->startLoop;
-		
-		PATSamp->rate		= Tdecode16( &PATSamp->rate);
+		PPLE16(&PATSamp->rate);
 		curData->c2spd		= PATSamp->rate;
 		
 		
-		curData->vol		= 64;
-		curData->loopType	= 0;
+		curData->vol = 64;
+		curData->loopType = 0;
 		
 		if (PATSamp->Flag & 0x01)
 			curData->amp = 16;
@@ -142,14 +130,13 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		///////////////
 		
-		PATSamp->minFreq	= Tdecode32(&PATSamp->minFreq);
-		PATSamp->maxFreq	= Tdecode32(&PATSamp->maxFreq);
-		
-		PATSamp->originRate	= Tdecode32(&PATSamp->originRate);
+		PPLE32(&PATSamp->minFreq);
+		PPLE32(&PATSamp->maxFreq);
+		PPLE32(&PATSamp->originRate);
 		
 		for (i = 0; i < 107; i++) {
 			if (scale_table[i] >= PATSamp->originRate) {
-				PATSamp->originRate = (SInt32)i;
+				PATSamp->originRate = i;
 				i = 108;
 			}
 		}
@@ -158,14 +145,14 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		for (i = 0; i < 107; i++) {
 			if (scale_table[i] >= PATSamp->minFreq) {
-				PATSamp->minFreq = (SInt32)i;
+				PATSamp->minFreq = i;
 				i = 108;
 			}
 		}
 		
 		for (i = 0; i < 107; i++) {
 			if (scale_table[i] >= PATSamp->maxFreq) {
-				PATSamp->maxFreq = (SInt32)i;
+				PATSamp->maxFreq = i;
 				i = 108;
 			}
 		}
@@ -180,9 +167,7 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		
 		// DATA
-		
 		curData->data = malloc(curData->size);
-		
 		if (curData->data != NULL) {
 			memcpy(curData->data, PATData, curData->size);
 			
@@ -190,7 +175,7 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 				short *tt = (short*) curData->data;
 				
 				dispatch_apply(curData->size / 2, dispatch_get_global_queue(0, 0), ^(size_t tL) {
-					*(tt + tL) = Tdecode16((Ptr)(tt + tL));
+					PPLE16((Ptr)(tt + tL));
 					
 					if (signedData)
 						*(tt + tL) += 0x8000;
@@ -220,14 +205,14 @@ static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean res
 }
 
 
-static OSErr mainPAT(void					*unused,
-			  OSType				order,						// Order to execute
-			  InstrData				*InsHeader,					// Ptr on instrument header
-			  sData					**sample,					// Ptr on samples data
-			  short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+static OSErr mainPAT(void			*unused,
+			  OSType		order,						// Order to execute
+			  InstrData		*InsHeader,					// Ptr on instrument header
+			  sData			**sample,					// Ptr on samples data
+			  short			*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
 			  // If sampleID == -1 : add sample else replace selected sample.
-			  CFURLRef				AlienFileCFURL,			// IN/OUT file
-			  PPInfoPlug			*thePPInfoPlug)
+			  CFURLRef		AlienFileCFURL,			// IN/OUT file
+			  PPInfoPlug	*thePPInfoPlug)
 {
 	OSErr	myErr = noErr;
 	UNFILE	iFileRefI;

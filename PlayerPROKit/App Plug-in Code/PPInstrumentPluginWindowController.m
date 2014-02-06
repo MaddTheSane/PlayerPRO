@@ -8,10 +8,6 @@
 
 #import "PPInstrumentPluginWindowController.h"
 
-@interface PPInstrumentPluginWindowController ()
-
-@end
-
 @implementation PPInstrumentPluginWindowController
 @synthesize alienFileURL;
 @synthesize instrumentHeader;

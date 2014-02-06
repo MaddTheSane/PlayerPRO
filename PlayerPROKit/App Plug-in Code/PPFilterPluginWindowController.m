@@ -8,10 +8,6 @@
 
 #import "PPFilterPluginWindowController.h"
 
-@interface PPFilterPluginWindowController ()
-
-@end
-
 @implementation PPFilterPluginWindowController
 @synthesize theData;
 @synthesize selectionEnd;

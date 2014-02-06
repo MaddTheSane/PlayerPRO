@@ -128,6 +128,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 	PPPatternObject *new = [[[self class] alloc] initWithMusic:_musicWrapper];
 	new.commands = [[NSMutableArray alloc] initWithArray:commands copyItems:YES];
 	new.index = -1;
+	new.patternName = self.patternName;
 	
 	return new;
 }
@@ -170,18 +171,10 @@ static inline void SwapPcmd(Pcmd *toswap)
 		pcmdLen = [curNum unsignedLongValue];
 	}
 	
-	//thePcmd = malloc(pcmdLen);
-	//if (!thePcmd) {
-	//	return MADNeedMemory;
-	//}
-	//[pcmdData getBytes:thePcmd length:pcmdLen];
 	SwapPcmd([pcmdData mutableBytes]);
-	
 	
 	thePcmd = [pcmdData bytes];
 	//TODO: put cmd data into the pattern
-	
-	//free(thePcmd);
 	
 	return noErr;
 }

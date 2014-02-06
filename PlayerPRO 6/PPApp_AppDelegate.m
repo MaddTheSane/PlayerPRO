@@ -30,16 +30,9 @@
 
 __weak PPLibrary *globalMadLib = nil;
 
-#if 0
-static inline NSColor *makeNSRGB(unsigned short red, unsigned short green, unsigned short blue)
-{
-	return [NSColor colorWithCalibratedRed:red / (CGFloat)USHRT_MAX green:green / (CGFloat)USHRT_MAX blue:blue / (CGFloat)USHRT_MAX alpha:1];
-}
-#else
 #define makeNSRGB(red1, green1, blue1) [NSColor colorWithCalibratedRed:red1 / (CGFloat)USHRT_MAX green:green1 / (CGFloat)USHRT_MAX blue:blue1 / (CGFloat)USHRT_MAX alpha:1]
-#endif
 
-static void CocoaDebugStr( short line, const char *file, const char *text)
+static void CocoaDebugStr(short line, const char *file, const char *text)
 {
 	NSLog(@"%s:%u error text:%s!", file, line, text);
 	NSInteger alert = NSRunAlertPanel(NSLocalizedString(@"MyDebugStr_Error", @"Error"),
@@ -49,9 +42,11 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	switch (alert) {
 		case NSAlertAlternateReturn:
 			break;
+			
 		case NSAlertOtherReturn:
 			NSCAssert(NO, @"Chose to go to debugger.");
 			break;
+			
 		case NSAlertDefaultReturn:
 			NSLog(@"Choosing to fail!");
 		default:
@@ -68,6 +63,7 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 @synthesize digitalHandler;
 @synthesize filterHandler;
 @synthesize instrumentPlugHandler = instrumentImporter;
+@synthesize trackerDict = _trackerDict;
 @synthesize window;
 @synthesize madLib;
 - (void)setMadLib:(PPLibrary *)madLibb
@@ -76,7 +72,6 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	globalMadLib = madLib;
 }
 
-@synthesize trackerDict = _trackerDict;
 - (NSDictionary *)trackerDict
 {
 	if (!_trackerDict) {
@@ -504,7 +499,7 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 	
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	NSDictionary *trackerDict = self.trackerDict;
-	
+	NSDictionary *otherDict = @{@"PCMD": @[PPPCMDUTI], @"Instrument List": @[PPInstrumentListUTI]};
 	NSMutableDictionary *samplesDict;
 	NSInteger plugCount = [instrumentImporter plugInCount];
 	samplesDict = [[NSMutableDictionary alloc] initWithCapacity:plugCount];
@@ -513,8 +508,6 @@ static void CocoaDebugStr( short line, const char *file, const char *text)
 			samplesDict[obj.menuName] = obj.UTITypes;
 		}
 	}
-	
-	NSDictionary *otherDict = @{@"PCMD": @[PPPCMDUTI], @"Instrument List": @[PPInstrumentListUTI]};
 	
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:trackerDict playlistDictionary:nil instrumentDictionary:samplesDict additionalDictionary:otherDict];
 	[av setupDefaults];

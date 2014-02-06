@@ -14,7 +14,6 @@
 	OSType			type;
 	UInt32			version;
 }
-
 @property (readonly, copy) NSString *menuName;
 @property (readonly, copy) NSString *authorString;
 @property (readonly, strong) NSBundle *file;
@@ -22,5 +21,4 @@
 @property (readonly) UInt32 version;
 
 - (instancetype)initWithBundle:(NSBundle *)aBund;
-
 @end

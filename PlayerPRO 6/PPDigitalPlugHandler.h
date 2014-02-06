@@ -12,7 +12,6 @@
 @class PPDigitalPlugInObject;
 
 @interface PPDigitalPlugHandler : NSObject <NSFastEnumeration>
-
 - (id)init;
 
 - (OSErr)callDigitalPlugIn:(NSUInteger)plugNum pcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug *)theInfo;
@@ -23,5 +22,4 @@
 - (void)addPlugInFromPath:(NSString*)thePath;
 - (void)addPlugInFromURL:(NSURL *)urlpath;
 - (void)addPlugInFromBundle:(NSBundle *)theBund;
-
 @end

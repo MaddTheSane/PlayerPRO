@@ -8,10 +8,6 @@
 
 #import "PPDigitalPluginWindowController.h"
 
-@interface PPDigitalPluginWindowController ()
-
-@end
-
 @implementation PPDigitalPluginWindowController
 @synthesize thePcmd;
 

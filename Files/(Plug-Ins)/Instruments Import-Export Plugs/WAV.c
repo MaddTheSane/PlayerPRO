@@ -53,7 +53,7 @@ static OSErr mainWave(void					*unused,
 					  CFURLRef				AlienFileRef,			// IN/OUT file
 					  PPInfoPlug			*thePPInfoPlug)
 {
-	OSErr	myErr = noErr;
+	OSErr myErr = noErr;
 		
 	switch (order) {
 #if 0
@@ -136,8 +136,8 @@ static OSErr mainWave(void					*unused,
 
 // E93F89D6-1126-4F7C-8319-1955A92CC6DD
 #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xE9, 0x3F, 0x89, 0xD6, 0x11, 0x26, 0x4F, 0x7C, 0x83, 0x19, 0x19, 0x55, 0xA9, 0x2C, 0xC6, 0xDD)
-#define PLUGINFACTORY WaveFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainWave //The old main function, renamed please
+#define PLUGINFACTORY WaveFactory
+#define PLUGMAIN mainWave
 
 #include "CFPlugin-InstrBridge.c"
 

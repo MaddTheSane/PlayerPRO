@@ -20,9 +20,8 @@
 		// Initialization code here.
 		isMultipleIstanceSafe = YES;
 		dispatch_block_t tmp = ^{
-			SInt32 i, length, temp1, temp2, pDelay = self.echoDelay;
+			int i, length, temp1, temp2, pDelay = self.echoDelay;
 			double pStrength = self.echoStrength;
-			
 			length = (int)(selectionEnd - selectionStart - 1);
 			
 			pDelay = (pDelay * timeConvert) / 1000;	//convert ms to samples
@@ -88,12 +87,7 @@
 
 @end
 
-static OSErr mainEcho(void			*unused,
-					  sData			*theData,
-					  long			SelectionStart,
-					  long			SelectionEnd,
-					  PPInfoPlug	*thePPInfoPlug,
-					  short			StereoMode) // StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainEcho(void *unused, sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short StereoMode)
 {
 	EchoWindowController *controller = [[EchoWindowController alloc] initWithWindowNibName:@"EchoWindowController" infoPlug:thePPInfoPlug];
 	controller.echoStrength = 0.50;
@@ -108,7 +102,6 @@ static OSErr mainEcho(void			*unused,
 
 // DA609751-C4B0-4814-BAE7-2B82CA59E64E
 #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xDA, 0x60, 0x97, 0x51, 0xC4, 0xB0, 0x48, 0x14, 0xBA, 0xE7, 0x2B, 0x82, 0xCA, 0x59, 0xE6, 0x4E)
-
 #define PLUGMAIN mainEcho
 #define PLUGINFACTORY EchoFactory
 

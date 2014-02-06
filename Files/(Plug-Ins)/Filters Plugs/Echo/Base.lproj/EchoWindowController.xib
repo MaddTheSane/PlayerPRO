@@ -101,8 +101,8 @@ Gw
                     <constraint firstAttribute="bottom" secondItem="14" secondAttribute="bottom" constant="20" symbolic="YES" id="16"/>
                     <constraint firstAttribute="trailing" secondItem="14" secondAttribute="trailing" constant="20" symbolic="YES" id="17"/>
                     <constraint firstItem="14" firstAttribute="leading" secondItem="18" secondAttribute="trailing" constant="12" symbolic="YES" id="21"/>
-                    <constraint firstAttribute="trailing" secondItem="5" secondAttribute="trailing" constant="20" symbolic="YES" id="BmX-jC-Ly2"/>
                     <constraint firstItem="18" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="20" symbolic="YES" id="RZq-TL-bJP"/>
+                    <constraint firstAttribute="centerX" secondItem="5" secondAttribute="centerX" id="a2u-FP-Mhe"/>
                     <constraint firstItem="14" firstAttribute="baseline" secondItem="18" secondAttribute="baseline" id="zhp-7J-ONv"/>
                 </constraints>
             </view>

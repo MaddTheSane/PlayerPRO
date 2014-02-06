@@ -24,6 +24,39 @@
 
 @implementation PPLibraryObject
 
+- (instancetype)initWithPlugInfo:(PlugInfo*)pi
+{
+	if (self = [super init]) {
+		self.menuName = (__bridge NSString *)pi->MenuName;
+		self.authorString = (__bridge NSString *)pi->AuthorString;
+#if !TARGET_OS_IPHONE
+		self.plugFile = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(pi->file))];
+#endif
+		self.plugType = [NSString stringWithCString:pi->type encoding:NSMacOSRomanStringEncoding];
+		self.UTItypes = (__bridge NSArray *)pi->UTItypes;
+		self.plugVersion = pi->version;
+		
+		switch (pi->mode) {
+			case MADPlugImportExport:
+				self.canExport = YES;
+				self.canImport = YES;
+				break;
+				
+			case MADPlugExport:
+				self.canExport = YES;
+				self.canImport = NO;
+				break;
+				
+			case MADPlugImport:
+			default:
+				self.canExport = NO;
+				self.canImport = YES;
+				break;
+		}
+	}
+	return self;
+}
+
 - (OSType)plugMode
 {
 	if (self.canExport && self.canImport) {
@@ -49,32 +82,7 @@
 		}
 		NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:theLibrary->TotalPlug];
 		for (int i = 0; i < theLibrary->TotalPlug; i++) {
-			PPLibraryObject *tmp = [[PPLibraryObject alloc] init];
-			tmp.menuName = (__bridge NSString *)theLibrary->ThePlug[i].MenuName;
-			tmp.authorString = (__bridge NSString *)theLibrary->ThePlug[i].AuthorString;
-#if !TARGET_OS_IPHONE
-			tmp.plugFile = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(theLibrary->ThePlug[i].file))];
-#endif
-			tmp.plugType = [NSString stringWithCString:theLibrary->ThePlug[i].type encoding:NSMacOSRomanStringEncoding];
-			tmp.UTItypes = (__bridge NSArray *)theLibrary->ThePlug[i].UTItypes;
-			tmp.plugVersion = theLibrary->ThePlug[i].version;
-			switch (theLibrary->ThePlug[i].mode) {
-				case MADPlugImportExport:
-					tmp.canExport = YES;
-					tmp.canImport = YES;
-					break;
-					
-				case MADPlugExport:
-					tmp.canExport = YES;
-					tmp.canImport = NO;
-					break;
-					
-				case MADPlugImport:
-				default:
-					tmp.canExport = NO;
-					tmp.canImport = YES;
-					break;
-			}
+			PPLibraryObject *tmp = [[PPLibraryObject alloc] initWithPlugInfo:&theLibrary->ThePlug[i]];
 			[tmpArray addObject:tmp];
 		}
 		trackerLibs = [[NSArray alloc] initWithArray:tmpArray];

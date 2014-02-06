@@ -628,21 +628,27 @@
             <constraints>
                 <constraint firstItem="136" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="4Pi-dX-3hn"/>
                 <constraint firstItem="138" firstAttribute="centerY" secondItem="140" secondAttribute="centerY" id="8KB-sj-9QC"/>
+                <constraint firstItem="138" firstAttribute="trailing" secondItem="137" secondAttribute="trailing" id="A9T-Lr-LoA"/>
                 <constraint firstItem="139" firstAttribute="leading" secondItem="137" secondAttribute="trailing" constant="8" symbolic="YES" id="Cz2-GA-hiF"/>
+                <constraint firstItem="138" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="DmK-UW-77v"/>
+                <constraint firstItem="137" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="ErV-o4-KMO"/>
                 <constraint firstItem="136" firstAttribute="leading" secondItem="137" secondAttribute="leading" id="Ggo-9c-WRd"/>
                 <constraint firstItem="139" firstAttribute="centerY" secondItem="137" secondAttribute="centerY" id="IAW-e3-xFp"/>
                 <constraint firstAttribute="centerX" secondItem="136" secondAttribute="centerX" id="J6d-US-C7F"/>
                 <constraint firstItem="136" firstAttribute="top" secondItem="1" secondAttribute="top" constant="20" symbolic="YES" id="M3Y-YT-Vdy"/>
                 <constraint firstItem="138" firstAttribute="leading" secondItem="137" secondAttribute="leading" id="Mno-ur-28L"/>
-                <constraint firstItem="138" firstAttribute="width" secondItem="137" secondAttribute="width" id="N2O-Er-jf9"/>
+                <constraint firstAttribute="trailing" secondItem="141" secondAttribute="trailing" constant="20" symbolic="YES" id="NLT-9a-SnR"/>
                 <constraint firstItem="139" firstAttribute="top" secondItem="136" secondAttribute="bottom" constant="8" symbolic="YES" id="OB6-c7-ajT"/>
                 <constraint firstItem="141" firstAttribute="trailing" secondItem="136" secondAttribute="trailing" id="QRl-Ho-lQW"/>
                 <constraint firstItem="141" firstAttribute="trailing" secondItem="140" secondAttribute="trailing" id="XdD-RL-q5b"/>
                 <constraint firstItem="141" firstAttribute="top" secondItem="140" secondAttribute="bottom" constant="8" symbolic="YES" id="eji-FN-1Ry"/>
+                <constraint firstAttribute="trailing" secondItem="136" secondAttribute="trailing" constant="20" symbolic="YES" id="kLc-Jr-gAI"/>
                 <constraint firstItem="141" firstAttribute="trailing" secondItem="139" secondAttribute="trailing" id="kOF-b1-LqT"/>
                 <constraint firstItem="140" firstAttribute="leading" secondItem="139" secondAttribute="leading" id="kQF-Bd-gs4"/>
                 <constraint firstAttribute="bottom" secondItem="141" secondAttribute="bottom" constant="20" symbolic="YES" id="m07-mE-y3h"/>
+                <constraint firstItem="140" firstAttribute="leading" secondItem="138" secondAttribute="trailing" constant="8" symbolic="YES" id="mwK-ht-6pS"/>
                 <constraint firstItem="140" firstAttribute="top" secondItem="139" secondAttribute="bottom" constant="8" symbolic="YES" id="nmI-eN-xJr"/>
+                <constraint firstItem="141" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="u2b-lF-yCd"/>
                 <constraint firstItem="138" firstAttribute="leading" secondItem="141" secondAttribute="leading" id="w8J-uI-AGl"/>
             </constraints>
         </customView>

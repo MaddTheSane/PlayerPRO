@@ -351,6 +351,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 		for (NSCell *cell in [[stereoOrMono cells] arrayByAddingObjectsFromArray:[audioBitRate cells]]) {
 			[cell setEnabled:NO];
 		}
+		
 		self.disabledData = YES;
 	}
 	self.toneRadios = @[silentRadio, triangleRadio, squareRadio, waveRadio];

@@ -20,10 +20,10 @@
 	// If sampleID == -1 : add sample else replace selected sample.
 	NSURL		*alienFileURL;			// IN/OUT file
 }
-@property OSType	order;
-@property InstrData	*instrumentHeader;
-@property sData		**sample;
-@property short		*sampleID;
-@property (strong)	NSURL *alienFileURL;
+@property			OSType		order;
+@property			InstrData	*instrumentHeader;
+@property			sData		**sample;
+@property			short		*sampleID;
+@property (strong)	NSURL		*alienFileURL;
 
 @end

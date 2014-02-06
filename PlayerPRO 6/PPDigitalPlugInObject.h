@@ -12,9 +12,7 @@
 #import "PPPlugInObject.h"
 
 @interface PPDigitalPlugInObject : PPPlugInObject
-
 - (instancetype)initWithBundle:(NSBundle*)toInit;
 
 - (OSErr)callWithPcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug*)pi;
-
 @end

@@ -18,9 +18,8 @@ void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUID
 	
 	CFPlugInRef plugToTest = CFBundleGetPlugIn(tempBundleRef);
 	
-	if (!plugToTest) {
+	if (!plugToTest)
 		return NULL;
-	}
 	
 	//  See if this plug-in implements the Test type.
 	factories = CFPlugInFindFactoriesForPlugInTypeInPlugIn(TypeUUID, plugToTest);
@@ -74,10 +73,8 @@ NSArray *DefaultPlugInLocations()
 	static NSArray *immPlugLocs;
 	if (immPlugLocs == nil) {
 		NSMutableArray *plugLocs = [[NSMutableArray alloc] initWithCapacity:3];
-		
 		NSFileManager *fm = [NSFileManager defaultManager];
 		[plugLocs addObject:[[NSBundle mainBundle] builtInPlugInsURL]];
-		
 		[plugLocs addObject:[NSURL fileURLWithPathComponents:@[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
 		
 		//User plugins
@@ -128,7 +125,6 @@ OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 c
 @end
 
 @implementation PPPlugInObject
-
 @synthesize type;
 @synthesize version;
 
@@ -141,13 +137,10 @@ OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 c
 - (instancetype)initWithBundle:(NSBundle *)aBund
 {
 	if (self = [super init]) {
-		{
-			NSURL *bundleURL = [aBund bundleURL];
-			CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef) bundleURL);
-			
-			self.version = CFBundleGetVersionNumber(cfBundle);
-			CFRelease(cfBundle);
-		}
+		CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)[aBund bundleURL]);
+		
+		self.version = CFBundleGetVersionNumber(cfBundle);
+		CFRelease(cfBundle);
 		
 		NSMutableDictionary *tempDict = [[aBund infoDictionary] mutableCopy];
 		[tempDict addEntriesFromDictionary:[aBund localizedInfoDictionary]];

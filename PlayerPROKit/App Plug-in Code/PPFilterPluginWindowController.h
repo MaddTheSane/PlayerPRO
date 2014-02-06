@@ -18,6 +18,7 @@
 }
 
 @property sData *theData;
-@property long selectionStart, selectionEnd;
+@property long selectionStart;
+@property long selectionEnd;
 @property BOOL stereoMode;
 @end

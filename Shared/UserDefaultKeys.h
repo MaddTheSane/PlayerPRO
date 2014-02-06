@@ -70,6 +70,7 @@ extern NSString * const PPDEMusicTraceOn;
 extern NSString * const PPDEPatternWrappingPartition;
 extern NSString * const PPDEDragAsPcmd;
 
+#if !TARGET_OS_IPHONE
 //Color preference keys
 extern NSString * const PPCColor1;
 extern NSString * const PPCColor2;
@@ -167,6 +168,7 @@ extern NSString * const PPCColor93;
 extern NSString * const PPCColor94;
 extern NSString * const PPCColor95;
 extern NSString * const PPCColor96;
+#endif
 
 //Box editor preference keys
 extern NSString * const PPBEMarkersEnabled;

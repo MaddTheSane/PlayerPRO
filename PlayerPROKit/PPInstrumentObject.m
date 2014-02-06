@@ -111,6 +111,10 @@
 @end
 
 @implementation PPInstrumentObject
+{
+	@protected
+	InstrData theInstrument;
+}
 @synthesize theInstrument;
 @synthesize number;
 @synthesize name;
@@ -587,7 +591,7 @@
 	if (typeOn) {
 		theInstrument.volType |= EFON;
 	} else {
-		theInstrument.volType &= ~(Byte)EFON;
+		theInstrument.volType &= ~EFON;
 	}
 	[self didChangeValueForKey:kPPVolumeType];
 }
@@ -598,7 +602,7 @@
 	if (typeSus) {
 		theInstrument.volType |= EFSUSTAIN;
 	} else {
-		theInstrument.volType &= ~(Byte)EFSUSTAIN;
+		theInstrument.volType &= ~EFSUSTAIN;
 	}
 	[self didChangeValueForKey:kPPVolumeType];
 }
@@ -609,7 +613,7 @@
 	if (typeLoop) {
 		theInstrument.volType |= EFLOOP;
 	} else {
-		theInstrument.volType &= ~(Byte)EFLOOP;
+		theInstrument.volType &= ~EFLOOP;
 	}
 	[self didChangeValueForKey:kPPVolumeType];
 }
@@ -620,7 +624,7 @@
 	if (theLoop) {
 		theInstrument.volType |= EFNOTE;
 	} else {
-		theInstrument.volType &= ~(Byte)EFNOTE;
+		theInstrument.volType &= ~EFNOTE;
 	}
 	[self didChangeValueForKey:kPPVolumeType];
 }
@@ -656,7 +660,7 @@
 	if (typeOn) {
 		theInstrument.pannType |= EFON;
 	} else {
-		theInstrument.pannType &= ~(Byte)EFON;
+		theInstrument.pannType &= ~EFON;
 	}
 	[self didChangeValueForKey:kPPPanningType];
 }
@@ -667,7 +671,7 @@
 	if (typeSus) {
 		theInstrument.pannType |= EFSUSTAIN;
 	} else {
-		theInstrument.pannType &= ~(Byte)EFSUSTAIN;
+		theInstrument.pannType &= ~EFSUSTAIN;
 	}
 	[self didChangeValueForKey:kPPPanningType];
 }
@@ -678,7 +682,7 @@
 	if (theLoop) {
 		theInstrument.pannType |= EFLOOP;
 	} else {
-		theInstrument.pannType &= ~(Byte)EFLOOP;
+		theInstrument.pannType &= ~EFLOOP;
 	}
 	[self didChangeValueForKey:kPPPanningType];
 }
@@ -689,7 +693,7 @@
 	if (theLoop) {
 		theInstrument.pannType |= EFNOTE;
 	} else {
-		theInstrument.pannType &= ~(Byte)EFNOTE;
+		theInstrument.pannType &= ~EFNOTE;
 	}
 	[self didChangeValueForKey:kPPPanningType];
 }
@@ -725,7 +729,7 @@
 {
 	[self writeBackToStruct];
 	PPInstrumentObject *newObj = [[[self class] allocWithZone:zone] initWithMusic:_theMus instrumentIndex:theInstrument.no];
-	
+	newObj.name = self.name;
 	
 	return newObj;
 }

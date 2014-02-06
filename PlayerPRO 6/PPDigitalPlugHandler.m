@@ -9,7 +9,6 @@
 #import "PPDigitalPlugHandler.h"
 #import "PPDigitalPlugInObject.h"
 #import "PPPlugInCommon.h"
-//#import <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 #import "UserDefaultKeys.h"
 
@@ -41,7 +40,7 @@
 {
 	if (self = [super init]) {
 		self.digitalPlugs = [[NSMutableArray alloc] initWithCapacity:20];
-
+		
 		NSArray *plugLocs = DefaultPlugInLocations();
 		
 		NSInteger x;
@@ -51,17 +50,15 @@
 			CFArrayRef	somePlugs;
 			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef) aPlugLoc, CFSTR("plugin"));
 			PlugNums = CFArrayGetCount( somePlugs );
-			if (PlugNums > 0) {
-				for (x = 0; x < PlugNums; x++) {
-					@autoreleasepool {
-						CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
-						NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(tempBundleRef))];
-						PPDigitalPlugInObject *tempObj = [[PPDigitalPlugInObject alloc] initWithBundle:tempBundle];
-						//You can ignore the Clang static warning of incorrect decrement here.
-						CFRelease(tempBundleRef);
-						if (tempObj) {
-							[digitalPlugs addObject:tempObj];
-						}
+			for (x = 0; x < PlugNums; x++) {
+				@autoreleasepool {
+					CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
+					NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(tempBundleRef))];
+					PPDigitalPlugInObject *tempObj = [[PPDigitalPlugInObject alloc] initWithBundle:tempBundle];
+					//You can ignore the Clang static warning of incorrect decrement here.
+					CFRelease(tempBundleRef);
+					if (tempObj) {
+						[digitalPlugs addObject:tempObj];
 					}
 				}
 			}
