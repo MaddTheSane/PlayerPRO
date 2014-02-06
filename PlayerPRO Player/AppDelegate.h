@@ -43,7 +43,6 @@
 	IBOutlet NSArrayController *musicListController;
 	NSTimer					*timeChecker;
 	PPDriver				*madDriver;
-	PPMusicObject			*music;
 	PPLibrary				*madLib;
 	
 	MADDriverSettings		exportSettings;

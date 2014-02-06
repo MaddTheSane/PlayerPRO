@@ -89,7 +89,6 @@ static NSInteger selMusFromList = -1;
 @end
 
 @implementation AppDelegate
-@synthesize music;
 @synthesize madLib;
 @synthesize toolsPanel;
 @synthesize instrumentController;
@@ -229,7 +228,7 @@ static NSInteger selMusFromList = -1;
 		return;
 	}
 	//MADStartDriver(madDriver);
-	if (music) {
+	if (self.music) {
 		//MADAttachDriverToMusic(madDriver, music, NULL);
 		if (madWasReading) {
 			//MADSetMusicStatus(madDriver, 0, fullTime, curTime);
@@ -351,7 +350,7 @@ static NSInteger selMusFromList = -1;
 
 - (void)updateMusicStats:(NSTimer*)theTimer
 {
-	if (music) {
+	if (self.music) {
 		long fT, cT;
 		[madDriver getMusicStatusWithCurrentTime:&cT totalTime:&fT];
 		if ([madDriver isDonePlayingMusic] && !self.paused && ! madDriver.isExporting) {
@@ -365,7 +364,7 @@ static NSInteger selMusFromList = -1;
 
 - (void)saveMusicToURL:(NSURL *)tosave
 {
-	[music saveMusicToURL:tosave];
+	[self.music saveMusicToURL:tosave];
 }
 
 - (NSMutableData*)rawSoundData:(MADDriverSettings*)theSet
@@ -383,7 +382,7 @@ static NSInteger selMusFromList = -1;
 	}
 	
 	[theRec cleanDriver];
-	[theRec setCurrentMusic:music];
+	[theRec setCurrentMusic:self.music];
 	
 	char *soundPtr = NULL;
 	NSUInteger full = [theRec audioDataLength];
@@ -716,7 +715,7 @@ return; \
 			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", [madLib pluginAtIndex:tag].menuName]];
 			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
 				NSURL *fileURL = [savePanel URL];
-				OSErr err = [music exportMusicToURL:fileURL format:[madLib pluginAtIndex:tag].plugType library:madLib];
+				OSErr err = [self.music exportMusicToURL:fileURL format:[madLib pluginAtIndex:tag].plugType library:madLib];
 				if (err != noErr) {
 					if (isQuitting) {
 						[NSApp replyToApplicationShouldTerminate:YES];
@@ -797,7 +796,7 @@ return; \
 {
 	char fileType[5];
 	OSErr theOSErr = noErr;
-	if (music != NULL) {
+	if (self.music) {
 		[madDriver stop];
 		[madDriver stopDriver];
 	}
@@ -814,7 +813,7 @@ return; \
 	}
 	
 	self.music = [[PPMusicObject alloc] initWithURL:musicToLoad library:madLib];
-	if (!music) {
+	if (!self.music) {
 		theOSErr = MADReadingErr;
 	}
 	
@@ -827,7 +826,7 @@ return; \
 		return NO;
 	}
 	
-	[music attachToDriver:madDriver];
+	[self.music attachToDriver:madDriver];
 	[madDriver play];
 	self.paused = NO;
 	{
@@ -968,7 +967,7 @@ return; \
 	
 	[self MADDriverWithPreferences];
 	self.music = [PPMusicObject new];
-	[music attachToDriver:madDriver];
+	[self.music attachToDriver:madDriver];
 	[self setTitleForSongLabelBasedOnMusic];
 	
 	for (NSInteger i = 0; i < [madLib pluginCount]; i++) {
@@ -1040,10 +1039,10 @@ return; \
 	[timeChecker invalidate];
 	[self removeObserver:self forKeyPath:@"paused"];
 	
-	if (music != NULL) {
+	if (self.music) {
 		[madDriver stop];
 		[madDriver cleanDriver];
-		self.music = nil;
+		_music = nil;
 	}
 	[madDriver stopDriver];
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
@@ -1118,13 +1117,13 @@ return; \
 
 - (void)setTitleForSongLabelBasedOnMusic
 {
-	self.musicName = music.internalFileName;
-	self.musicInfo = music.madInfo;
+	self.musicName = self.music.internalFileName;
+	self.musicInfo = self.music.madInfo;
 }
 
 - (void)clearMusic
 {
-	if (music) {
+	if (self.music) {
 		[madDriver stop];
 		[madDriver cleanDriver];
 	}
@@ -1136,7 +1135,7 @@ return; \
 	self.music = [PPMusicObject new];
 	[self setTitleForSongLabelBasedOnMusic];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPMusicDidChange object:self];
-	[music attachToDriver:madDriver];
+	[self.music attachToDriver:madDriver];
 }
 
 - (IBAction)removeSelectedMusic:(id)sender
@@ -1150,28 +1149,6 @@ return; \
 
 - (IBAction)newMusic:(id)sender
 {
-#if 0
-	if (music->hasChanged) {
-		NSInteger selection = 0;
-		if (currentlyPlayingIndex.index == -1) {
-			selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The new music file has unsaved changes. Do you want to save?", @"New unsaved file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"));
-		} else {
-			selection = NSRunAlertPanel(NSLocalizedString(@"Unsaved Changes", @"Unsaved Changes"), NSLocalizedString(@"The music file \"%@\" has unsaved changes. Do you want to save?", @"Open unsaved file"), NSLocalizedString(@"Save", @"Save"), NSLocalizedString(@"Don't Save", @"Don't Save"), NSLocalizedString(@"Cancel", @"Cancel"), [[musicList objectInMusicListAtIndex:currentlyPlayingIndex.index] fileName]);
-		}
-		switch (selection) {
-			case NSAlertDefaultReturn:
-				[self saveMusic:nil];
-				
-			case NSAlertAlternateReturn:
-			default:
-				break;
-				
-			case NSAlertOtherReturn:
-				return;
-				break;
-		}
-	}
-#endif
 	[self clearMusic];
 }
 
@@ -1383,7 +1360,7 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)playButtonPressed:(id)sender
 {
-	if (music) {
+	if (self.music) {
 		[madDriver play];
 		self.paused = NO;
 	}
@@ -1409,14 +1386,14 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)sliderChanged:(id)sender
 {
-	if (music) {
+	if (self.music) {
 		[madDriver setMusicStatusWithCurrentTime:[songPos doubleValue] maximumTime:[songPos maxValue] minimumTime:0];
 	}
 }
 
 - (IBAction)stopButtonPressed:(id)sender
 {
-	if (music) {
+	if (self.music) {
 		[madDriver stop];
 		[madDriver cleanDriver];
 		[madDriver setMusicStatusWithCurrentTime:0 maximumTime:100 minimumTime:0];
@@ -1425,7 +1402,7 @@ enum PPMusicToolbarTypes {
 }
 
 - (IBAction)pauseButtonPressed:(id)sender {
-	if (music) {
+	if (self.music) {
 		if (self.paused) {
 			[madDriver play];
 		} else {

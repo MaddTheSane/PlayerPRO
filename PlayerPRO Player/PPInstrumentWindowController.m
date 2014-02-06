@@ -21,7 +21,6 @@
 #import "AppDelegate.h"
 
 @implementation PPInstrumentWindowController
-@synthesize appDel;
 @synthesize infoDrawer;
 @synthesize instrumentBits;
 @synthesize instrumentLoopSize;
@@ -38,7 +37,7 @@
 {
     if (self = [super initWithWindow:window]) {
         // Initialization code here.
-		[appDel addObserver:self forKeyPath:@"music" options:NSKeyValueObservingOptionNew context:nil];
+		[[NSApp delegate] addObserver:self forKeyPath:@"music" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
     }
     
     return self;
@@ -57,18 +56,16 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-    
-	appDel = [NSApp delegate];
 	
     // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-	[instrumentView reloadData];
+	//[instrumentView reloadData];
 	[instrumentView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
 }
 
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[appDel removeObserver:self forKeyPath:@"music"];
+	[[NSApp delegate] removeObserver:self forKeyPath:@"music"];
 }
 
 #pragma mark NSOutlineView delegates and data ref calls
@@ -257,7 +254,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([keyPath isEqualToString:@"self.appDel.music"]) {
+	if ([keyPath isEqualToString:@"music"]) {
 		[instrumentView reloadData];
 	}
 }
@@ -299,7 +296,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
 	if (item == nil) {
-		return [appDel.music.instruments count];
+		return [((AppDelegate*)[NSApp delegate]).music.instruments count];
 	}
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
 		return [item countOfSamples];
@@ -310,7 +307,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	if (item == nil) {
-		return appDel.music.instruments[index];
+		return ((AppDelegate*)[NSApp delegate]).music.instruments[index];
 	}
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
 		return [item samplesObjectAtIndex:index];

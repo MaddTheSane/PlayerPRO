@@ -24,7 +24,6 @@
 @property (weak) IBOutlet NSTextField *instrumentMode;
 @property (weak) IBOutlet NSImageView *waveFormImage;
 @property (weak) IBOutlet NSOutlineView *instrumentView;
-@property (weak) AppDelegate *appDel;
 
 - (IBAction)toggleInfo:(id)sender;
 

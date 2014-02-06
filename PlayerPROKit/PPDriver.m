@@ -243,11 +243,7 @@
 
 - (OSErr)pause
 {
-	OSErr iErr = MADStopMusic(theRec);
-	if (iErr) {
-		return iErr;
-	}
-	return MADStopDriver(theRec);
+	return MADStopMusic(theRec);
 }
 
 - (OSErr)stopDriver
