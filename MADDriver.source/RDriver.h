@@ -479,10 +479,11 @@ typedef	SInt32 (*audioMasterCallback)(AEffect *effect, SInt32 opcode, SInt32 ind
 	
 typedef AEffect *(*VSTPlugInPtr)(audioMasterCallback  cb);
 
-#if defined(_MAC_H) && !TARGET_OS_IPHONE
+#if defined(_MAC_H)
+
+#if !TARGET_OS_IPHONE
 //TODO: update VST headers
-typedef struct __VSTEffect
-{
+typedef struct __VSTEffect {
 	AEffect				*ce[2];
 	short				VSTid;
 	CFStringRef			name;
@@ -491,11 +492,15 @@ typedef struct __VSTEffect
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
 } VSTEffect;
+#else
+typedef struct {
+	
+} VSTEffect;
 #endif
 
-#ifdef WIN32
-typedef struct __VSTEffect
-{
+#elif defined(WIN32)
+
+typedef struct __VSTEffect {
 	AEffect				*ce[2];
 	short				VSTid;
 	char				name[50];
@@ -504,11 +509,10 @@ typedef struct __VSTEffect
 	VSTPlugInPtr		vstMain;
 	Boolean				ProcessReplacingNotAvailable;
 } VSTEffect;
-#endif
 
-#if (defined(__UNIX__) && !(defined (_MAC_H) || defined (_BE_H)))
-typedef struct __VSTEffect
-{
+#elif (defined(__UNIX__) && !(defined (_MAC_H) || defined (_BE_H)))
+
+typedef struct __VSTEffect {
 	AEffect				*ce[2];
 	short				VSTid;
 	char				name[50];

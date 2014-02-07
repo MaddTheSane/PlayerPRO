@@ -24,10 +24,9 @@
 #include "RDriver.h"
 #include "RDriverInt.h"
 #include "PPPrivate.h"
+#include "VSTFunctions.h"
 
 UInt32 getfrequency(UInt32 period);
-
-Boolean IsVSTChanEffect(MADDriverRec *intDriver, short channel);
 
 static inline void PrepareInline(SInt32 *VolInter, SInt32* rVolInter, double p2, double v1, double v2)
 {
@@ -45,15 +44,15 @@ void MADCreateOverShoot(MADDriverRec *intDriver)
 	
 	switch(intDriver->DriverSettings.outPutBits) {
 		case 16:
-			intDriver->DASCBuffer = (SInt32*)calloc((intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, 1);
+			intDriver->DASCBuffer = (SInt32*)calloc((intDriver->ASCBUFFER * 8) + intDriver->MDelay * 2 * 8, 1);
 			
 			for (i = 0; i < MAXCHANEFFECT; i++)
-				intDriver->DASCEffectBuffer[i]	= (SInt32*)calloc((intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, 1);
+				intDriver->DASCEffectBuffer[i]	= (SInt32*)calloc((intDriver->ASCBUFFER * 8) + intDriver->MDelay * 2 * 8, 1);
 			
 			break;
 			
 		case 8:
-			intDriver->DASCBuffer8 = (short*)calloc((intDriver->ASCBUFFER * 4L) + intDriver->MDelay*2L*4L, 1);
+			intDriver->DASCBuffer8 = (short*)calloc((intDriver->ASCBUFFER * 4) + intDriver->MDelay * 2 * 4, 1);
 			intDriver->OverShoot = (Ptr)calloc(256L * 32L, 1);
 			
 			for (i = 0; i < 256L * 16L; i++) intDriver->OverShoot[i] = 0;
@@ -763,7 +762,6 @@ void Play16StereoDelay(MADDriverRec *intDriver)
 	}
 	
 	for (i = 0 ; i < intDriver->MultiChanNo; i++) {	//intDriver->DriverSettings.numChn
-#ifndef NOEXPORTFUNCS
 		//TODO: VST Channel effect
 		if (IsVSTChanEffect(intDriver, i) && chanCounter < MAXCHANEFFECT) {
 			trackID = intDriver->curMusic->header->chanBus[intDriver->chan[i].TrackID].copyId;
@@ -784,7 +782,6 @@ void Play16StereoDelay(MADDriverRec *intDriver)
 			intDriver->EffectBufferID[find] = trackID;
 			intDriver->EffectBufferRealID[find] = i;
 		} else
-#endif
 			Sample16BufferAddDelay(&intDriver->chan[i], intDriver->DASCBuffer, intDriver);
 	}
 }

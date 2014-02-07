@@ -20,11 +20,7 @@ Boolean					QuicktimeInstruAvailable;
 extern MADMusic			*curMusic;
 
 
-void ConvertInstrument( Byte *tempPtr, long sSize);
-void NInitSmallPiano(Rect mainRect, Rect *listRect);
-void DrawSmallPianoKey(short i, short color, Rect aRect);
-void NDoPlayInstru(short Note, short Instru, short effect, short arg, short vol);
-
+void ConvertInstrument(Byte *tempPtr, long sSize);
 short GenerateDLSFromBundle();
 void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai);
 void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst);

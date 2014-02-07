@@ -141,7 +141,8 @@ void ConvertTo64Rows(MADMusic *music);
 void InitMIDIHarware(void);
 void OpenMIDIHardware(MADDriverRec *rec);
 void CloseMIDIHarware(void);
-	
+void SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte);
+
 #ifdef __cplusplus
 }
 #endif	

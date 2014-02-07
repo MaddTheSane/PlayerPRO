@@ -1,5 +1,5 @@
 //
-//  OSX-VSTPlugIn.c
+//  stub-VSTPlugIn.c
 //  PPMacho
 //
 //  Created by C.W. Betts on 2/6/14.

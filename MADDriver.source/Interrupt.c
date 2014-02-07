@@ -23,6 +23,7 @@
 
 #include "RDriver.h"
 #include "RDriverInt.h"
+#include "VSTFunctions.h"
 #ifdef _MAC_H
 #include "PPPlug.h"
 #endif
@@ -38,9 +39,7 @@ void SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte);
 void SendMIDITimingClock(MADDriverRec *intDriver);
 void ConvertInstrument(Byte *tempPtr, size_t sSize);
 
-Boolean IsVSTChanEffect(MADDriverRec *, short channel);
 void ProcessVisualPlug(MADDriverRec*, short*, SInt32);
-void ProcessVSTPlug(MADDriverRec*, SInt32*, SInt32, short);
 
 void ConvertInstrument(Byte *tempPtr, size_t sSize)
 {
@@ -1131,14 +1130,12 @@ void ApplyVSTEffects(MADDriverRec *intDriver, Boolean ByPass)
 					}
 				}
 				
-#ifndef NOEXPORTFUNCS
 				// APPLY VST - EFFECTS
 				//TODO: Apply VST effects
 				if (intDriver->currentlyExporting) {
 					if (intDriver->thisExport) ProcessVSTPlug(intDriver, (SInt32*)intDriver->DASCEffectBuffer[i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[i]);
 				} else
 					ProcessVSTPlug(intDriver, (SInt32*) intDriver->DASCEffectBuffer[i], intDriver->ASCBUFFERReal, intDriver->EffectBufferRealID[i]);
-#endif
 				
 				
 				// *** *** *** *** ***
@@ -1357,20 +1354,16 @@ void NoteAnalyse(MADDriverRec *intDriver)
 					
 					if (intDriver->Reading) {
 						if (intDriver->wasReading == false) {
-#ifdef _MIDIHARDWARE_
 							//if (intDriver->SendMIDIClockData) SendMIDIClock(intDriver, 0xFB);
 							if (intDriver->PartitionReader == 0 && intDriver->PL == 0) SendMIDIClock(intDriver, 0xFA);
 							else SendMIDIClock(intDriver, 0xFB);
-#endif
 							intDriver->wasReading = true;
 						}
 						
-#ifdef _MIDIHARDWARE_
 						if (intDriver->SendMIDIClockData) {
 							SendMIDIClock(intDriver, 0xF8);
 							SendMIDITimingClock(intDriver);
 						}
-#endif
 						
 						for (i = 0; i < MAXTRACK; i++) intDriver->TrackLineReading[i] = true;
 						
@@ -1400,7 +1393,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 									
 									tVSYNC 		= intDriver->VSYNC;
 									tVSYNC 		/= intDriver->finespeed;
-									tVSYNC 		*= 800NULL;
+									tVSYNC 		*= 8000;
 									tVSYNC 		/= intDriver->VExt;
 									
 									intDriver->BytesToRemoveAtEnd = (InterruptBufferSize - tVSYNC) / intDriver->DriverSettings.oversampling;	//
@@ -1415,10 +1408,8 @@ void NoteAnalyse(MADDriverRec *intDriver)
 					} else {
 						
 						if (intDriver->wasReading == true) {
-#ifdef _MIDIHARDWARE_
 							if (intDriver->SendMIDIClockData)
 								SendMIDIClock(intDriver, 0xFC);
-#endif
 							intDriver->wasReading = false;
 						}
 					}
@@ -1434,24 +1425,18 @@ void NoteAnalyse(MADDriverRec *intDriver)
 					}
 					
 					if (intDriver->Reading) {
-#if 0
 						if (intDriver->wasReading == false) {
-#ifdef _MIDIHARDWARE_
 							if (intDriver->SendMIDIClockData) {
 								if (intDriver->PartitionReader == 0 && intDriver->PL == 0)
 									SendMIDIClock(intDriver, 0xFA);
 								else
 									SendMIDIClock(intDriver, 0xFB);
 							}
-#endif
 							intDriver->wasReading = true;
 						}
-#endif
 						
-#ifdef _MIDIHARDWARE_
 						if (intDriver->SendMIDIClockData)
 							SendMIDIClock(intDriver, 0xF8);
-#endif
 						
 						if (intDriver->smallcounter == intDriver->speed - 1) {
 							if (intDriver->PL >= intDriver->curMusic->header->numPointers) {
@@ -1461,10 +1446,8 @@ void NoteAnalyse(MADDriverRec *intDriver)
 						}
 					} else {
 						if (intDriver->wasReading == true) {
-#ifdef _MIDIHARDWARE_
 							if (intDriver->SendMIDIClockData)
 								SendMIDIClock(intDriver, 0xFC);
-#endif
 							intDriver->wasReading = false;
 						}
 					}
@@ -1474,7 +1457,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 			tVSYNC = intDriver->VSYNC;
 			tVSYNC /= intDriver->finespeed;
 			
-			tVSYNC		*= 8000;
+			tVSYNC *= 8000;
 			if (intDriver->VExt == 0) {
 				
 			} else
@@ -1557,16 +1540,14 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	// *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 	
 	//TODO: Process VST Plug-in
-#ifndef NOEXPORTFUNCS
 	if (intDriver->DriverSettings.outPutBits == 16) {
 		if (intDriver->currentlyExporting) {
 			if (intDriver->thisExport) {
-				ProcessVSTPlug(intDriver, (SInt32*) intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
+				ProcessVSTPlug(intDriver, (SInt32*)intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
 			}
 		} else
-			ProcessVSTPlug(intDriver, (SInt32*) intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
+			ProcessVSTPlug(intDriver, (SInt32*)intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
 	}
-#endif
 	
 	// *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 	

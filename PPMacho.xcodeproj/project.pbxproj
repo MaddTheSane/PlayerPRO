@@ -108,6 +108,10 @@
 		55096A3210E0A6EF000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		55096A3C10E0A74A000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
+		550A474318A455CC0052AED7 /* VSTFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 550A474218A455CC0052AED7 /* VSTFunctions.h */; };
+		550A474418A455CC0052AED7 /* VSTFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 550A474218A455CC0052AED7 /* VSTFunctions.h */; };
+		550A474718A458380052AED7 /* stub-VSTPlugIn.c in Sources */ = {isa = PBXBuildFile; fileRef = 550A474518A458380052AED7 /* stub-VSTPlugIn.c */; };
+		550A474818A45D350052AED7 /* OSX-VSTPlugIn.c in Sources */ = {isa = PBXBuildFile; fileRef = 557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.c */; };
 		550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
 		550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
@@ -1710,6 +1714,8 @@
 		55085D8B1836EF96004A152F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		5508C3EC16CEB33B007CA458 /* SampleCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleCellView.h; sourceTree = "<group>"; };
 		5508C3ED16CEB33B007CA458 /* SampleCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleCellView.m; sourceTree = "<group>"; };
+		550A474218A455CC0052AED7 /* VSTFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSTFunctions.h; sourceTree = "<group>"; };
+		550A474518A458380052AED7 /* stub-VSTPlugIn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "stub-VSTPlugIn.c"; sourceTree = "<group>"; };
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
 		550B011310BA1E1C004FC5D7 /* PPPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPrivate.h; sourceTree = "<group>"; };
 		550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "OSX-CoreAudio.c"; sourceTree = "<group>"; };
@@ -2778,6 +2784,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		550A474118A455430052AED7 /* Stub-null implementations */ = {
+			isa = PBXGroup;
+			children = (
+				5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */,
+				550A474518A458380052AED7 /* stub-VSTPlugIn.c */,
+			);
+			name = "Stub-null implementations";
+			sourceTree = "<group>";
+		};
 		551292DE163DD68500C2C639 /* PlayerPROKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -3781,6 +3796,7 @@
 		55868B1810BFC0BB00FCC24D /* PlayerPROCore */ = {
 			isa = PBXGroup;
 			children = (
+				550A474118A455430052AED7 /* Stub-null implementations */,
 				552097B6187B0DD7004FD220 /* BeOS-specific */,
 				552097B7187B0DF0004FD220 /* OS X/iOS-specific */,
 				552097B8187B0E0A004FD220 /* Windows-specific */,
@@ -3792,11 +3808,11 @@
 				5573A41010B5160000FF8B50 /* PPDefs.h */,
 				88E0C3C40C2F21DD00D6C081 /* FileUtils.h */,
 				88E0C4750C2F21E400D6C081 /* MAD.h */,
+				550B011310BA1E1C004FC5D7 /* PPPrivate.h */,
 				88E0C47B0C2F21E400D6C081 /* RDriver.h */,
 				88E0C47D0C2F21E400D6C081 /* RDriverInt.h */,
-				550B011310BA1E1C004FC5D7 /* PPPrivate.h */,
+				550A474218A455CC0052AED7 /* VSTFunctions.h */,
 				554E105010D6C79E00BB619C /* SndUtils.c */,
-				5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */,
 				55113CBB133688D60008C2AF /* FileUtils.c */,
 				55F013EA1880A2EA002488D5 /* MADDriver.c */,
 				88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */,
@@ -4092,6 +4108,7 @@
 			files = (
 				5599F13316C82100008DDAFB /* RDriverCarbon.h in Headers */,
 				55C358B816C42D1800FB9FA6 /* PlayerPROCore.h in Headers */,
+				550A474418A455CC0052AED7 /* VSTFunctions.h in Headers */,
 				55C358B916C42D1800FB9FA6 /* MAD.h in Headers */,
 				55ADC3E917D7E4E5001F27D4 /* MADDriver.h in Headers */,
 				55C358BA16C42D1800FB9FA6 /* RDriver.h in Headers */,
@@ -4114,6 +4131,7 @@
 				5573A3D110B5129100FF8B50 /* PPPlug.h in Headers */,
 				5573A3E410B513BD00FF8B50 /* FileUtils.h in Headers */,
 				5573A41210B5160000FF8B50 /* PPDefs.h in Headers */,
+				550A474318A455CC0052AED7 /* VSTFunctions.h in Headers */,
 				550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */,
 				550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */,
 				55B23D0F1687D1D700DCE923 /* RDriverCarbon.h in Headers */,
@@ -5992,6 +6010,7 @@
 				5573A11E1656FB4D00A5AECA /* OutPut8.c in Sources */,
 				5573A11F1656FB4D00A5AECA /* realft.c in Sources */,
 				5573A1201656FB4D00A5AECA /* TickRemover.c in Sources */,
+				550A474718A458380052AED7 /* stub-VSTPlugIn.c in Sources */,
 				5573A10F1656FB1700A5AECA /* FileUtils.c in Sources */,
 				5573A1171656FB3C00A5AECA /* MyDebugStr.c in Sources */,
 				5573A1211656FBF200A5AECA /* DMF.c in Sources */,
@@ -6376,6 +6395,7 @@
 				55C358A716C42D1800FB9FA6 /* MED.c in Sources */,
 				55C358A816C42D1800FB9FA6 /* Mod.c in Sources */,
 				55C358A916C42D1800FB9FA6 /* MTM.c in Sources */,
+				550A474818A45D350052AED7 /* OSX-VSTPlugIn.c in Sources */,
 				55C358AA16C42D1800FB9FA6 /* Okta.c in Sources */,
 				55C358AB16C42D1800FB9FA6 /* S3M.c in Sources */,
 				55C358AC16C42D1800FB9FA6 /* ULT.c in Sources */,

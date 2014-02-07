@@ -109,13 +109,9 @@ struct __MADDriverRec {
 	SInt32			curCenterL, curCenterR;
 	
 	
-	//#ifdef _MAC_H
-#if !TARGET_OS_IPHONE
 	VSTEffect		*masterVST[ 10];
 	VSTEffect		*chanVST[ MAXTRACK][ 4];
-	//PPSndDoubleBufferHeader 	TheHeader;
-	//#endif
-#endif
+	
 #ifdef _MAC_H
 	AudioUnit		CAAudioUnit;
 	size_t			CABufOff;
@@ -123,8 +119,8 @@ struct __MADDriverRec {
 #endif
 	
 #ifdef WIN32
-	LPDIRECTSOUND		lpDirectSound;									// The LPDIRECTSOUND to apply & get informations, etc.
-	LPDIRECTSOUNDBUFFER	lpDirectSoundBuffer, lpSwSamp;					// ONLY available if you are using Win95 DirectSound driver
+	LPDIRECTSOUND		lpDirectSound; // The LPDIRECTSOUND to apply & get informations, etc.
+	LPDIRECTSOUNDBUFFER	lpDirectSoundBuffer, lpSwSamp; // ONLY available if you are using Win95 DirectSound driver
 	Ptr 				currentBuf;
 	Boolean				OnOff;
 	long				WIN95BUFFERSIZE;

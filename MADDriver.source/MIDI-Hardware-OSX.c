@@ -34,7 +34,7 @@ unsigned MidiVolume[128] = {
 
 #define MySignature 'SNPL'
 
-void DoPlayInstruInt(short Note, short Instru, short effect, short arg, short vol, Channel *curVoice, SInt32 start, SInt32 end);
+void DoPlayInstruInt(short Note, short Instru, short effect, short arg, short vol, Channel *curVoice, int start, int end);
 void NPianoRecordProcess(short i, short, short, short);
 
 static MIDIClientRef MADMIDICliRef;
@@ -43,8 +43,9 @@ static MIDIPortRef MADMIDIPortOutRef;
 static MIDIEndpointRef MADMIDIKeyboardEndRef;
 static void MADMIDINotifyProc(const MIDINotification *message, void *refCon);
 static void MADMIDIPortProc(const MIDIPacketList *pktlist, void *readProcRefCon, void *srcConnRefCon);
+void OpenOrCloseConnection(Boolean opening);
 
-void CloseMIDIHarware(void)
+void CloseMIDIHarware()
 {
 	if (MIDIHardware) {
 		OSStatus MIDIErr = MIDIEndpointDispose(MADMIDIKeyboardEndRef);
@@ -56,7 +57,7 @@ void CloseMIDIHarware(void)
 	MIDIHardware = false;
 }
 
-void OpenMIDIHardware( MADDriverRec *rec)
+void OpenMIDIHardware(MADDriverRec *rec)
 {
 	if(MIDIHardware || MIDIHardwareAlreadyOpen == FALSE) {
 		OSStatus MIDIErr = MIDIClientCreate(CFSTR("PlayerPRO"), MADMIDINotifyProc, rec, &MADMIDICliRef);
@@ -70,8 +71,8 @@ void OpenMIDIHardware( MADDriverRec *rec)
 			if (MIDIErr == noErr) {
 				MIDIErr = MIDIPortConnectSource(MADMIDIPortInRef, MADMIDIKeyboardEndRef, rec);
 			}
-		}
-		else MIDIHardware = FALSE;
+		} else
+			MIDIHardware = FALSE;
 	}
 }
 
@@ -88,30 +89,30 @@ void DoMidiSpeaker(short note, short Instru, SInt32 arg)
 	
 }
 
-/*void SquidAllNotesOff(short PortRefNum)
+#if 0
+void SquidAllNotesOff(short PortRefNum)
 {
 	int KeyNum;
 	
 	// AddLine("Turning off all notes...");
 	
-	for (KeyNum=0; KeyNum<128; KeyNum++)
-	{
-		SendKeyOn(PortRefNum, 0x80000000, (Byte) KeyNum, (Byte) 0);
+	for (KeyNum = 0; KeyNum < 128; KeyNum++) {
+		SendKeyOn(PortRefNum, 0x80000000, KeyNum, 0);
 	}
-	
-}*/
+}
+#endif
 
 void OpenOrCloseConnection(Boolean opening)
 {
 	
 }
 
-void SendMIDIClock( MADDriverRec *intDriver, Byte MIDIByte)
+void SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte)
 {
 	
 }
 
-void SendMIDITimingClock( MADDriverRec *MDriver)
+void SendMIDITimingClock(MADDriverRec *MDriver)
 {
 	
 }

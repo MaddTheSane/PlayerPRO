@@ -26,6 +26,7 @@
 #include "FileUtils.h"
 #include <string.h>
 #include "PPPrivate.h"
+#include "VSTFunctions.h"
 #ifdef _MAC_H
 #include <CoreFoundation/CoreFoundation.h>
 #else
@@ -43,15 +44,6 @@ typedef enum InputType {
 	MADPtrType
 } MADInputType;
 
-#if !TARGET_OS_IPHONE
-void		CheckVSTEditor(VSTEffect *ce);
-void		DisposeVSTEffect(VSTEffect *myEffect);
-VSTEffect*	CreateVSTEffect(short effectID);
-short		ConvertUniqueIDToIndex(UInt32);
-void		ApplyVSTSets(VSTEffect* myEffect, FXSets* set);
-#endif
-
-void		SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte);
 static OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFReadStreamRef MADRsrc, Ptr MADPtr);
 
 static inline unsigned char* MYC2PStr(Ptr cStr)
@@ -1166,9 +1158,7 @@ OSErr MADDisposeLibrary(MADLibrary *MLibrary)
 
 OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *MissingPlugs)
 {
-#ifndef NOEXPORTFUNCS
 	short		alpha, x, i, index;
-#endif
 	Boolean		needToReset;
 	
 	if (!driver)
@@ -1196,10 +1186,6 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *Missin
 			driver->curMusic->header->generalPan = driver->globPan;
 		}
 	}
-#ifndef NOEXPORTFUNCS
-	//TODO: Check VST editor
-	CheckVSTEditor(NULL);
-#endif
 	
 	/////////////////////////
 	
@@ -1250,7 +1236,6 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *Missin
 	else
 		driver->XMLinear = false;
 	
-#ifndef NOEXPORTFUNCS
 	//INSTALL ALL VST EFFECTS !!!!!!
 	//TODO: VST Effects
 	// Purge previous Effects !
@@ -1300,7 +1285,7 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *Missin
 				
 				if (index >= 0) {
 					driver->chanVST[i][x] = CreateVSTEffect(index);
-					ApplyVSTSets( driver->chanVST[i][x], &music->sets[alpha]);
+					ApplyVSTSets(driver->chanVST[i][x], &music->sets[alpha]);
 				} else if (MissingPlugs) {
 					strcat((Ptr)MissingPlugs, ", ");
 					MYP2CStr(music->sets[alpha].name);
@@ -1311,8 +1296,6 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *Missin
 			}
 		}
 	}
-	
-#endif
 	
 	if (needToReset)
 		MADReset(driver);
@@ -2818,10 +2801,9 @@ OSErr MADStopMusic(MADDriverRec *MDriver)
 		return MADDriverHasNoMusic;
 	
 	MDriver->Reading = false;
-	//#ifdef _MIDIHARDWARE_
+	
 	if (MDriver->SendMIDIClockData)
-		SendMIDIClock( MDriver, 0xFC);
-	//#endif
+		SendMIDIClock(MDriver, 0xFC);
 	
 	return noErr;
 }
@@ -2921,10 +2903,8 @@ OSErr MADStopDriver(MADDriverRec *MDriver)
 	
 	MADCleanDriver(MDriver);
 	
-	//#ifdef _MIDIHARDWARE_
 	if (MDriver->SendMIDIClockData)
 		SendMIDIClock(MDriver, 0xFC);
-	//#endif
 	
 	return noErr;
 }
