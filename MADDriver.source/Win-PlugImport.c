@@ -38,7 +38,7 @@ OSErr CheckMADFile(char *name)
 	if (!refNum)
 		return MADReadingErr;
 	else {
-		iRead( 10, charl, refNum);
+		iRead(10, charl, refNum);
 		
 		if (charl[0] == 'M' &&
 			charl[1] == 'A' &&
@@ -132,6 +132,7 @@ OSErr PPInfoFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile, PPInf
 			return CallImportPlug(inMADDriver, i, MADPlugInfo, AlienFile, &aMAD, InfoRec);
 		}
 	}
+	
 	return MADCannotFindPlug;
 }
 
@@ -145,6 +146,7 @@ OSErr PPExportFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile, MAD
 			return CallImportPlug(inMADDriver, i, MADPlugExport, AlienFile, theNewMAD, &InfoRec);
 		}
 	}
+	
 	return MADCannotFindPlug;
 }
 
@@ -202,7 +204,6 @@ OSErr PPIdentifyFile(MADLibrary* inMADDriver, char *type, char *AlienFile)
 	}
 	
 	strcpy_s(type, 5, "!!!!");
-	
 	return MADCannotFindPlug;
 }
 
@@ -256,12 +257,7 @@ Boolean LoadPlugLib(char *name, PlugInfo* plug)
 	return true;
 }
 
-//FIXME: 200 seems rather small to me...
-//#define MAXFOLDLEN 200
-//PATH_MAX on Windows is also small...
-//#define MAXFOLDLEN MAX_PATH
 #define MAXFOLDLEN (MAX_PATH * 2)
-//#define MAXFOLDLEN 255
 
 void MInitImportPlug(MADLibrary* inMADDriver, char *PlugsFolderName)
 {
@@ -269,9 +265,8 @@ void MInitImportPlug(MADLibrary* inMADDriver, char *PlugsFolderName)
 	WIN32_FIND_DATAA	fd;
 	BOOL				bRet = TRUE;
 	char				FindFolder[MAXFOLDLEN], inPlugsFolderName[MAXFOLDLEN];
-	///////////
+	
 	inMADDriver->TotalPlug = 0;
-	///////////
 	
 	if (PlugsFolderName) {
 		strcpy_s(inPlugsFolderName, MAXFOLDLEN, PlugsFolderName);
