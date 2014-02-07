@@ -477,7 +477,7 @@ struct AEffect
 
 typedef	SInt32 (*audioMasterCallback)(AEffect *effect, SInt32 opcode, SInt32 index, SInt32 value, void *ptr, float opt);
 	
-typedef AEffect *(*VSTPlugInPtr)(audioMasterCallback  cb);
+typedef AEffect *(*VSTPlugInPtr)(audioMasterCallback cb);
 
 #if defined(_MAC_H)
 
@@ -493,7 +493,7 @@ typedef struct __VSTEffect {
 	Boolean				ProcessReplacingNotAvailable;
 } VSTEffect;
 #else
-typedef struct {
+typedef struct __VSTEffect {
 	
 } VSTEffect;
 #endif

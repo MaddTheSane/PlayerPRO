@@ -108,9 +108,9 @@ struct __MADDriverRec {
 	SInt32			levelL, levelR;
 	SInt32			curCenterL, curCenterR;
 	
-	
-	VSTEffect		*masterVST[ 10];
-	VSTEffect		*chanVST[ MAXTRACK][ 4];
+	VSTPlugInPtr	*vstEffects;
+	VSTEffect		*masterVST[10];
+	VSTEffect		*chanVST[MAXTRACK][4];
 	
 #ifdef _MAC_H
 	AudioUnit		CAAudioUnit;
@@ -123,7 +123,7 @@ struct __MADDriverRec {
 	LPDIRECTSOUNDBUFFER	lpDirectSoundBuffer, lpSwSamp; // ONLY available if you are using Win95 DirectSound driver
 	Ptr 				currentBuf;
 	Boolean				OnOff;
-	long				WIN95BUFFERSIZE;
+	size_t				WIN95BUFFERSIZE;
 	UINT				gwID;
 	HWND				hwnd;
 	WAVEOUTCAPS			woc;
