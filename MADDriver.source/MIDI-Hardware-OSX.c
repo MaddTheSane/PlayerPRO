@@ -8,8 +8,8 @@
 
 #include <CoreMIDI/CoreMIDI.h>
 
-#define refConTime			1L
-#define refConOutput		3L
+#define refConTime			1
+#define refConOutput		3
 #define squidInputBufSize	16384	/* 16K */
 #define recordingBufSize	10000	
 

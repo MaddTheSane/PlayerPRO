@@ -12,12 +12,12 @@
 #include "PPPrivate.h"
 
 //TODO: we should probably do something to prevent thread contention
-static OSStatus CAAudioCallback(void                            *inRefCon,
-								AudioUnitRenderActionFlags      *ioActionFlags,
-								const AudioTimeStamp            *inTimeStamp,
-								UInt32                          inBusNumber,
-								UInt32                          inNumberFrames,
-								AudioBufferList                 *ioData)
+static OSStatus CAAudioCallback(void						*inRefCon,
+								AudioUnitRenderActionFlags	*ioActionFlags,
+								const AudioTimeStamp		*inTimeStamp,
+								UInt32						inBusNumber,
+								UInt32						inNumberFrames,
+								AudioBufferList				*ioData)
 {
 	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
 	if (theRec->Reading == false) {
@@ -44,8 +44,7 @@ static OSStatus CAAudioCallback(void                            *inRefCon,
         while (remaining > 0) {
             if (theRec->CABufOff >= theRec->BufSize) {
                 if (!DirectSave(theRec->CABuffer, NULL, theRec)) {
-					switch(theRec->DriverSettings.outPutBits)
-					{
+					switch(theRec->DriverSettings.outPutBits) {
 						case 8:
 							memset(theRec->CABuffer, 0x80, theRec->BufSize);
 							break;
@@ -79,10 +78,11 @@ OSErr initCoreAudio(MADDriverRec *inMADDriver)
 {
 	OSStatus result = noErr;
 	struct AURenderCallbackStruct callback, blankCallback = {0};
+	AudioComponentDescription theDes = {0};
+	AudioStreamBasicDescription audDes = {0};
 	callback.inputProc = CAAudioCallback;
 	callback.inputProcRefCon = inMADDriver;
-
-	AudioComponentDescription theDes = {0};
+	
 	theDes.componentType = kAudioUnitType_Output;
 #if TARGET_OS_IPHONE
 	theDes.componentSubType = kAudioUnitSubType_GenericOutput;
@@ -90,10 +90,9 @@ OSErr initCoreAudio(MADDriverRec *inMADDriver)
 	theDes.componentSubType = kAudioUnitSubType_DefaultOutput;
 #endif
 	theDes.componentManufacturer = kAudioUnitManufacturer_Apple;
-	AudioStreamBasicDescription audDes = {0};
 	audDes.mFormatID = kAudioFormatLinearPCM;
 	audDes.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
-
+	
 	int outChn;
 	switch (inMADDriver->DriverSettings.outPutMode) {
 		case MonoOutPut:
@@ -116,7 +115,6 @@ OSErr initCoreAudio(MADDriverRec *inMADDriver)
 	audDes.mFramesPerPacket = 1;
     audDes.mBytesPerFrame = audDes.mBitsPerChannel * audDes.mChannelsPerFrame / 8;
     audDes.mBytesPerPacket = audDes.mBytesPerFrame * audDes.mFramesPerPacket;
-
 	
 	AudioComponent theComp = AudioComponentFindNext(NULL, &theDes);
 	if (theComp == NULL) {
@@ -168,17 +166,19 @@ OSErr closeCoreAudio(MADDriverRec *inMADDriver)
 		
 	}
 	result = AudioUnitSetProperty(inMADDriver->CAAudioUnit, kAudioUnitProperty_SetRenderCallback, kAudioUnitScope_Input, 0, &callback, sizeof(callback));
-	if (result != noErr)
-	{
+	if (result != noErr) {
 		
 	}
+	
 	result = AudioComponentInstanceDispose(inMADDriver->CAAudioUnit);
 	if (result != noErr) {
 		
 	}
+	
 	inMADDriver->OscilloWavePtr = NULL;
 	if (inMADDriver->CABuffer) {
 		free(inMADDriver->CABuffer);
 	}
+	
 	return noErr;
 }

@@ -20,15 +20,14 @@
 
 #include "embeddedPlugs.h"
 
-typedef struct iPlugInfo
-{
-	OSType		mode;			// Mode support : Import +/ Export
-	UInt32		version;		// Plug-in version
-	CFStringRef	MenuName;		// Plug name
-	CFStringRef	AuthorString;	// Plug author
+typedef struct iPlugInfo {
+	OSType		mode;
+	UInt32		version;
+	CFStringRef	MenuName;
+	CFStringRef	AuthorString;
 	CFStringRef UTIType;
-	MADPLUGFUNC	IOPlug;			// Plug CODE
-	char		type[5];		// OSType of file support.
+	MADPLUGFUNC	IOPlug;
+	char		type[5];
 } iPlugInfo;
 
 #define PLUGVERS 2 << 24 | 0 << 16 | 0 << 8 | 0
@@ -288,10 +287,11 @@ OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInf
 			return CallImportPlug(inMADDriver, i, MADPlugInfo, AlienFile, &aMAD, InfoRec);
 		}
 	}
+	
 	return MADCannotFindPlug;
 }
 
-OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD)
+OSErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD)
 {
 	short		i;
 	PPInfoRec	InfoRec;
@@ -310,6 +310,7 @@ OSErr PPImportFile( MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 			return err;
 		}
 	}
+	
 	return MADCannotFindPlug;
 }
 
@@ -335,15 +336,16 @@ OSErr CheckMADFile(char* name)
 		
 		iClose(refNum);
 	}
+	
 	return err;
 }
 
 OSErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 {
-	UNFILE				refNum;
-	short				i;
-	PPInfoRec			InfoRec;
-	OSErr				iErr = noErr;
+	UNFILE		refNum;
+	short		i;
+	PPInfoRec	InfoRec;
+	OSErr		iErr = noErr;
 	
 	strcpy( type, "!!!!");
 	
@@ -386,6 +388,7 @@ Boolean	MADPlugAvailable(MADLibrary *inMADDriver, char* kindFile)
 		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type))
 			return TRUE;
 	}
+	
 	return FALSE;
 }
 
