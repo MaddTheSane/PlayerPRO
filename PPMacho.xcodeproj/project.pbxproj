@@ -111,7 +111,7 @@
 		550A474318A455CC0052AED7 /* VSTFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 550A474218A455CC0052AED7 /* VSTFunctions.h */; };
 		550A474418A455CC0052AED7 /* VSTFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 550A474218A455CC0052AED7 /* VSTFunctions.h */; };
 		550A474718A458380052AED7 /* stub-VSTPlugIn.c in Sources */ = {isa = PBXBuildFile; fileRef = 550A474518A458380052AED7 /* stub-VSTPlugIn.c */; };
-		550A474818A45D350052AED7 /* OSX-VSTPlugIn.c in Sources */ = {isa = PBXBuildFile; fileRef = 557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.c */; };
+		550A474818A45D350052AED7 /* OSX-VSTPlugIn.cc in Sources */ = {isa = PBXBuildFile; fileRef = 557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.cc */; };
 		550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
 		550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
@@ -257,7 +257,7 @@
 		557139E61685007B00831A5A /* OpenPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139E41685007B00831A5A /* OpenPanelViewController.m */; };
 		557139E71685007B00831A5A /* OpenPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557139E51685007B00831A5A /* OpenPanelViewController.xib */; };
 		557191D118A40D9900F6DAD4 /* MidiHardwarePreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF911FDE5F90041A4EC /* MidiHardwarePreferenceController.m */; };
-		557191D518A434A300F6DAD4 /* OSX-VSTPlugIn.c in Sources */ = {isa = PBXBuildFile; fileRef = 557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.c */; };
+		557191D518A434A300F6DAD4 /* OSX-VSTPlugIn.cc in Sources */ = {isa = PBXBuildFile; fileRef = 557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.cc */; };
 		5573A1041656FAF100A5AECA /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		5573A1091656FAF100A5AECA /* iOSPlayerPROCore.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5573A1081656FAF100A5AECA /* iOSPlayerPROCore.h */; };
 		5573A10F1656FB1700A5AECA /* FileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 55113CBB133688D60008C2AF /* FileUtils.c */; };
@@ -2015,7 +2015,7 @@
 		557139E31685007B00831A5A /* OpenPanelViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenPanelViewController.h; sourceTree = "<group>"; };
 		557139E41685007B00831A5A /* OpenPanelViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenPanelViewController.m; sourceTree = "<group>"; };
 		557139E51685007B00831A5A /* OpenPanelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpenPanelViewController.xib; sourceTree = "<group>"; };
-		557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "OSX-VSTPlugIn.c"; sourceTree = "<group>"; };
+		557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "OSX-VSTPlugIn.cc"; sourceTree = "<group>"; };
 		5573A1031656FAF100A5AECA /* libiOSPlayerPROCore.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libiOSPlayerPROCore.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5573A1081656FAF100A5AECA /* iOSPlayerPROCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iOSPlayerPROCore.h; sourceTree = "<group>"; };
 		5573A1301656FCC100A5AECA /* iOS-PlugImport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "iOS-PlugImport.c"; sourceTree = "<group>"; };
@@ -3286,7 +3286,7 @@
 				55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */,
 				55B23D111687D22700DCE923 /* MainDriverCarbon.c */,
 				55C930381819E68700D9E072 /* CocoaFuncs.m */,
-				557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.c */,
+				557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.cc */,
 			);
 			name = "OS X/iOS-specific";
 			sourceTree = "<group>";
@@ -6049,7 +6049,7 @@
 				55C930391819E68700D9E072 /* CocoaFuncs.m in Sources */,
 				550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
 				55F013EB1880A2EA002488D5 /* MADDriver.c in Sources */,
-				557191D518A434A300F6DAD4 /* OSX-VSTPlugIn.c in Sources */,
+				557191D518A434A300F6DAD4 /* OSX-VSTPlugIn.cc in Sources */,
 				55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */,
 				55007E9D161A552C00297A3F /* FileUtils.c in Sources */,
 				55B23D131687D22700DCE923 /* MainDriverCarbon.c in Sources */,
@@ -6395,7 +6395,7 @@
 				55C358A716C42D1800FB9FA6 /* MED.c in Sources */,
 				55C358A816C42D1800FB9FA6 /* Mod.c in Sources */,
 				55C358A916C42D1800FB9FA6 /* MTM.c in Sources */,
-				550A474818A45D350052AED7 /* OSX-VSTPlugIn.c in Sources */,
+				550A474818A45D350052AED7 /* OSX-VSTPlugIn.cc in Sources */,
 				55C358AA16C42D1800FB9FA6 /* Okta.c in Sources */,
 				55C358AB16C42D1800FB9FA6 /* S3M.c in Sources */,
 				55C358AC16C42D1800FB9FA6 /* ULT.c in Sources */,

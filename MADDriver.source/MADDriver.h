@@ -108,7 +108,7 @@ struct __MADDriverRec {
 	SInt32			levelL, levelR;
 	SInt32			curCenterL, curCenterR;
 	
-	VSTPlugInPtr	*vstEffects;
+	void			*vstEffects;
 	VSTEffect		*masterVST[10];
 	VSTEffect		*chanVST[MAXTRACK][4];
 	
