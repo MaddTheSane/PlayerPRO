@@ -10,18 +10,10 @@
 #include "GetMetadataForFile.h"
 
 @interface NSString (PPextras)
-//- (NSString *)PPtrimWhiteSpace;
 + (BOOL)PPstringIsEmpty:(NSString *)s;
 @end
 
 @implementation NSString (PPextras)
-#if 0
-- (NSString *)PPtrimWhiteSpace
-{
-	return [self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-}
-#endif
-
 + (BOOL)PPstringIsEmpty:(NSString *)s
 {
 	NSString *copy;
@@ -43,14 +35,14 @@
 }
 @end
 
-static NSString * const kPPMDInstumentsList = @"net_sourceforge_playerpro_tracker_instumentlist";
-static NSString * const kPPMDPatternList = @"net_sourceforge_playerpro_tracker_patternlist";
-static NSString * const kPPMDTotalPatterns = @"net_sourceforge_playerpro_tracker_totalpatterns";
-static NSString * const kPPMDPartitionLength = @"net_sourceforge_playerpro_tracker_partitionlength";
-static NSString * const kPPMDTotalInstruments = @"net_sourceforge_playerpro_tracker_totalinstruments";
-static NSString * const kPPMDTotalTracks = @"net_sourceforge_playerpro_tracker_totaltracks";
-static NSString * const kPPMDFormatDescription = @"net_sourceforge_playerpro_tracker_formatdescription";
-static NSString * const kPPMDMADKInfo = @"net_sourceforge_playerpro_tracker_madkinfo";
+#define kPPMDInstumentsList @"net_sourceforge_playerpro_tracker_instumentlist"
+#define kPPMDPatternList @"net_sourceforge_playerpro_tracker_patternlist"
+#define kPPMDTotalPatterns @"net_sourceforge_playerpro_tracker_totalpatterns"
+#define kPPMDPartitionLength @"net_sourceforge_playerpro_tracker_partitionlength"
+#define kPPMDTotalInstruments @"net_sourceforge_playerpro_tracker_totalinstruments"
+#define kPPMDTotalTracks @"net_sourceforge_playerpro_tracker_totaltracks"
+#define kPPMDFormatDescription @"net_sourceforge_playerpro_tracker_formatdescription"
+#define kPPMDMADKInfo @"net_sourceforge_playerpro_tracker_madkinfo"
 
 static Boolean GetMetadataForPackage(NSMutableDictionary *attributes, NSURL *pathToFile);
 
@@ -61,10 +53,8 @@ static Boolean GetMetadataForPackage(NSMutableDictionary *attributes, NSURL *pat
    and return it as a dictionary
    ----------------------------------------------------------------------------- */
 
-Boolean GetMetadataForURL(void* thisInterface,
-						  CFMutableDictionaryRef attributes,
-						  CFStringRef contentTypeUTI,
-						  CFURLRef urlForFile)
+Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes,
+						  CFStringRef contentTypeUTI, CFURLRef urlForFile)
 {
 	@autoreleasepool {
 		MADDriverRec		*MADDriver;
@@ -94,9 +84,9 @@ Boolean GetMetadataForURL(void* thisInterface,
 		MADGetBestDriver(&init);
 		init.driverMode = NoHardwareDriver;
 		
-		if (MADInitLibrary(NULL, &MADLib) != noErr)
+		if (MADInitLibrary(NULL, &MADLib) != noErr) {
 			return FALSE;
-		if (MADCreateDriver(&init, MADLib, &MADDriver) != noErr) {
+		} else if (MADCreateDriver(&init, MADLib, &MADDriver) != noErr) {
 			MADDisposeLibrary(MADLib);
 			return FALSE;
 		}
@@ -163,7 +153,7 @@ Boolean GetMetadataForURL(void* thisInterface,
 					OSType2Ptr(rec.signature, sig);
 					NSString *NSSig = [[NSString alloc] initWithCString:sig encoding:NSMacOSRomanStringEncoding];
 					if (!NSSig) {
-						NSSig = [[NSString alloc] initWithFormat:@"0x%08x", (unsigned int)rec.signature];
+						NSSig = [[NSString alloc] initWithFormat:@"0x%08X", (unsigned int)rec.signature];
 					}
 					NSattribs[(NSString*)kMDItemCodecs] = @[NSSig];
 				}
@@ -261,7 +251,7 @@ static Boolean GetMetadataForPackage(NSMutableDictionary *attributes, NSURL *pat
 		OSType2Ptr(codecType, cType);
 		NSString *theString = [[NSString alloc] initWithCString:cType encoding:NSMacOSRomanStringEncoding];
 		if (!theString) {
-			theString = [[NSString alloc] initWithFormat:@"0x%08x", (unsigned int)codecType];
+			theString = [[NSString alloc] initWithFormat:@"0x%08X", (unsigned int)codecType];
 		}
 		attributes[(NSString*)kMDItemCodecs] = @[theString];
 	}
