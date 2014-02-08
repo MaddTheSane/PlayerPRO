@@ -36,8 +36,9 @@
 					  [[BoxEditorPreferenceController alloc] init],
 					  [[DigitalEditorPreferenceControler alloc] init],
 					  [[ClassicEditorPreferenceController alloc] init],
+#endif
 					  [[MidiHardwarePreferenceController alloc] init],
-#else
+#if !defined(PLAYERPRO6) || !PLAYERPRO6
 					  [[MusicListPreferenceController alloc] init],
 #endif
 					  [[MiscPreferenceController alloc] init]];

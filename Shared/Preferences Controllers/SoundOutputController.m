@@ -19,7 +19,7 @@
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (self) {
 		self.delegate = self;
-		self.title = @"Sound Output";
+		self.title = NSLocalizedStringFromTable(@"Sound Output", @"PreferenceNames", @"Sound Output");
 	}
 	
 	return self;

@@ -32,7 +32,7 @@
 - (id)init
 {
 	if (self = [super initWithNibName:@"DigitalPrefs" bundle:nil]) {
-		[self setTitle:@"Digital Editor"];
+		[self setTitle:NSLocalizedStringFromTable(@"Digital Editor", @"PreferenceNames", @"Digital Editor")];
 	}
 	return self;
 }

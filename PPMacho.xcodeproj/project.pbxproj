@@ -491,6 +491,8 @@
 		559C4198183EB4AB004A073C /* GeneratePreviewForURL.c in Sources */ = {isa = PBXBuildFile; fileRef = 559C4197183EB4AB004A073C /* GeneratePreviewForURL.c */; };
 		559C419A183EB4AB004A073C /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 559C4199183EB4AB004A073C /* main.c */; };
 		559C871917ECD8B400E4E13C /* PPiSettingsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559C871817ECD8B400E4E13C /* PPiSettingsDetailController.m */; };
+		55A6201818A6EFEA003B29B5 /* PreferenceNames.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55A6201B18A6EFEA003B29B5 /* PreferenceNames.strings */; };
+		55A6201918A6EFEA003B29B5 /* PreferenceNames.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55A6201B18A6EFEA003B29B5 /* PreferenceNames.strings */; };
 		55A934F817F2121D00493DC5 /* PPFilterPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A934F617F2121D00493DC5 /* PPFilterPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55A934F917F2121D00493DC5 /* PPFilterPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A934F717F2121D00493DC5 /* PPFilterPluginWindowController.m */; };
 		55A934FE17F2141200493DC5 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
@@ -2140,6 +2142,7 @@
 		559C419B183EB4AB004A073C /* PPQuickView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PPQuickView-Prefix.pch"; sourceTree = "<group>"; };
 		559C871717ECD8B400E4E13C /* PPiSettingsDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPiSettingsDetailController.h; sourceTree = "<group>"; };
 		559C871817ECD8B400E4E13C /* PPiSettingsDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPiSettingsDetailController.m; sourceTree = "<group>"; };
+		55A6201C18A6EFEC003B29B5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/PreferenceNames.strings; sourceTree = "<group>"; };
 		55A934F617F2121D00493DC5 /* PPFilterPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPluginWindowController.h; sourceTree = "<group>"; };
 		55A934F717F2121D00493DC5 /* PPFilterPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPluginWindowController.m; sourceTree = "<group>"; };
 		55A9351817F28F9700493DC5 /* Shared.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Shared.xcassets; sourceTree = "<group>"; };
@@ -3409,6 +3412,7 @@
 				55981C5411EE375400656EE3 /* preferences.xib */,
 				55232AFD11FDF10C0041A4EC /* Preferences */,
 				5533600311EBC66400525CAF /* Localizable.strings */,
+				55A6201B18A6EFEA003B29B5 /* PreferenceNames.strings */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -5470,6 +5474,7 @@
 			files = (
 				5578C48817D9E8560057D11B /* InfoPlist.strings in Resources */,
 				5578C48E17D9E8560057D11B /* Credits.rtf in Resources */,
+				55A6201918A6EFEA003B29B5 /* PreferenceNames.strings in Resources */,
 				5578C49417D9E8570057D11B /* MainMenu.xib in Resources */,
 				5521F41E17FA573B002CDBA9 /* PPPlugInInfoController.xib in Resources */,
 				5578C4C117DA4C210057D11B /* preferences.xib in Resources */,
@@ -5736,6 +5741,7 @@
 				55E52E2512455E5100315307 /* preferences.xib in Resources */,
 				55085D781836BAAA004A152F /* MidiPrefs.xib in Resources */,
 				5504A6E216619E10005BDE4B /* ClassicPrefs.xib in Resources */,
+				55A6201818A6EFEA003B29B5 /* PreferenceNames.strings in Resources */,
 				5557769717EBDFAC0019D008 /* PPFastForward.pdf in Resources */,
 				5504A6E516619E1C005BDE4B /* DigitalPrefs.xib in Resources */,
 				5504A6E816619E25005BDE4B /* BoxPrefs.xib in Resources */,
@@ -7317,6 +7323,14 @@
 				559C4193183EB4AB004A073C /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		55A6201B18A6EFEA003B29B5 /* PreferenceNames.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55A6201C18A6EFEC003B29B5 /* en */,
+			);
+			name = PreferenceNames.strings;
 			sourceTree = "<group>";
 		};
 		55BE998617978BB100D6DECC /* InfoPlist.strings */ = {

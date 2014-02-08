@@ -15,7 +15,7 @@
 -(id)init
 {
 	if (self = [super initWithNibName:@"PianoPrefs" bundle:nil]) {
-		[self setTitle:@"Piano"];
+		[self setTitle:NSLocalizedStringFromTable(@"Piano", @"PreferenceNames", @"Piano")];
 	}
 	return self;
 }

@@ -19,7 +19,7 @@
 -(id)init
 {
 	if (self = [super initWithNibName:@"BoxPrefs" bundle:nil]) {
-		[self setTitle:@"Box Editor"];
+		[self setTitle:NSLocalizedStringFromTable(@"Box Editor", @"PreferenceNames", @"Box Editor")];
 	}
 	return self;
 }

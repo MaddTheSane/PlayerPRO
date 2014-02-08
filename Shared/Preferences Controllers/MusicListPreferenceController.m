@@ -59,7 +59,7 @@
 -(id)init
 {
 	if (self = [super initWithNibName:@"MusicListPrefs" bundle:nil]) {
-		[self setTitle:@"Music List"];
+		[self setTitle:NSLocalizedStringFromTable(@"Music List", @"PreferenceNames", @"Music List")];
 	}
 	return self;
 }

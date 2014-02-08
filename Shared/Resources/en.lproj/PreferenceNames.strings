@@ -1,0 +1,17 @@
+/* 
+  PreferenceNames.strings
+  PPMacho
+
+  Created by C.W. Betts on 2/8/14.
+
+*/
+
+"Sound Output" = "Sound Output";
+"Piano" = "Piano";
+"Music List" = "Music List";
+"Colors" = "Colors";
+"Misc." = "Miscellaneous";
+"Box Editor" = "Box Editor";
+"Digital Editor" = "Digital Editor";
+"Classic Editor" = "Classical Editor";
+"MIDI Hardware" = "MIDI Hardware";

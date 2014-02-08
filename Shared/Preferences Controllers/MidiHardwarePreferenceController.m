@@ -15,7 +15,7 @@
 -(id)init
 {
 	if (self = [super initWithNibName:@"MidiPrefs" bundle:nil]) {
-		[self setTitle:@"MIDI Hardware"];
+		[self setTitle:NSLocalizedStringFromTable(@"MIDI Hardware", @"PreferenceNames", @"MIDI Hardware")];
 	}
 	return self;
 }

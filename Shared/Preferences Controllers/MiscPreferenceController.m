@@ -31,7 +31,7 @@
 -(id)init
 {
 	if (self = [super initWithNibName:@"MiscPrefs" bundle:nil]) {
-		[self setTitle:@"Misc."];
+		[self setTitle:NSLocalizedStringFromTable(@"Misc.", @"PreferenceNames", @"Misc.")];
 	}
 	return self;
 }

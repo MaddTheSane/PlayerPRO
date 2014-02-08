@@ -19,7 +19,7 @@ PPCOLORPOPULATE();
 -(id)init
 {
 	if (self = [super initWithNibName:@"ColorPrefs" bundle:nil]) {
-		[self setTitle:@"Colors"];
+		[self setTitle:NSLocalizedStringFromTable(@"Colors", @"PreferenceNames", @"Colors")];
 	}
 	return self;
 }
