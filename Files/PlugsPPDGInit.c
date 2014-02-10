@@ -60,7 +60,7 @@ void InitPPDGPlug(void)
 	CFArrayRef  PlugLocsDigital = GetDefaultPluginFolderLocations();
 	CFIndex		i, x, PlugLocNums;
 	
-	ThePlug = (FilterInfo*) MyNewPtr(FilterPlugMax * sizeof(FilterInfo));
+	ThePlug = (FilterInfo*) NewPtr(FilterPlugMax * sizeof(FilterInfo));
 	
 	tPlug	= 0;
 	

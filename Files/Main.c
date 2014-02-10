@@ -278,7 +278,7 @@ void TESTBugs(void)
 		if (ttHdl == NULL) MyDebugStr(__LINE__, __FILE__, "");
 		SetHandleSize(ttHdl, FreeMem() - 5000);
 		if (ttHdl != NULL)
-			MyDisposHandle(&ttHdl);
+			DisposeHandle(ttHdl);
 		
 	} while (Button() == false);
 	if (MemError() != noErr) MyDebugStr(__LINE__, __FILE__, "");
@@ -854,76 +854,6 @@ void MusiqueDriverInit(void)
 	
 	MADDriver->VolGlobal = thePrefs.softVolumeLevel;
 	MADDriver->SendMIDIClockData = thePrefs.SendMIDIClockData;
-}
-
-Handle MyNewHandle(long	size)
-{
-	Handle aPtr;
-	
-	if (size < 0) MyDebugStr(__LINE__, __FILE__, "MyNewHandle 1");
-	
-	aPtr = NewHandle(size);
-	if (aPtr == NULL)
-		return NULL;
-	
-	if (MemError()) MyDebugStr(__LINE__, __FILE__, "MyNewHandle 4");
-	
-	return aPtr;
-}
-
-
-void MyDisposeHandle(Handle *aHandle)
-{
-	MyDisposHandle(aHandle);
-}
-
-void MyDisposHandle(Handle *aHandle)
-{
-	long size;
-	
-	if (*aHandle == NULL) MyDebugStr(__LINE__, __FILE__, "*aHandle2");
-		
-	size = GetHandleSize(*aHandle);
-	if (size < 0) MyDebugStr(__LINE__, __FILE__, "aHandle33");
-	
-	DisposeHandle(*aHandle);
-	
-	*aHandle = (Handle) NULL;
-	
-	if (MemError()) MyDebugStr(__LINE__, __FILE__, "aHandle55");
-}
-
-Ptr MyNewPtr(long size)
-{
-	Ptr		aPtr;
-	
-	if (size < 0) MyDebugStr(__LINE__, __FILE__, "MyNewPtr 1");
-	
-	aPtr = NewPtr(size);
-	if (aPtr == NULL)
-		return NULL;
-	
-	if (MemError()) MyDebugStr(__LINE__, __FILE__, "MyNewPtr 1");
-	
-	return aPtr;
-}
-
-void MyDisposePtr(Ptr *aPtr)
-{
-	long size;
-	
-	if (*aPtr == NULL) MyDebugStr(__LINE__, __FILE__, "pCodeMyDisposePtr == NULL");
-	
-	size = GetPtrSize(*aPtr);
-	if (size < 0) MyDebugStr(__LINE__, __FILE__, "pCodeMyDisposePtr : size < 0");
-	
-	DisposePtr(*aPtr);
-	
-	*aPtr = NULL;
-	
-	if (MemError()) {
-		MyDebugStr(__LINE__, __FILE__, "DisposePtr");
-	}
 }
 
 /*************************************************/
@@ -6582,8 +6512,8 @@ void UpdateBookmarks(DialogPtr theDia)
 	FrameRectRelief(&itemRect);
 	TEDispose(hTE);
 	HUnlock(Text);
-	MyDisposHandle(& Text);
-	MyDisposHandle((Handle*) &theStyle);
+	DisposeHandle(Text);
+	DisposeHandle((Handle)theStyle);
 	
 	EndUpdate(GetDialogWindow(theDia));
 	SetPort(savePort);
@@ -7051,7 +6981,7 @@ void InitBookMarks()
 	}
 	
 	HUnlock(Text);
-	MyDisposHandle(&Text);
+	DisposeHandle(Text);
 	
 	//////////////////////////////////////////////////
 	
@@ -7074,7 +7004,7 @@ void InitBookMarks()
 			iErr = FSWrite(fRefNum, &inOutBytes, *Text);
 			
 			HUnlock(Text);
-			MyDisposHandle(&Text);
+			DisposeHandle(Text);
 			
 			iErr = FSCloseFork(fRefNum);
 		}

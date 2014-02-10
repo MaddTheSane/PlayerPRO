@@ -569,7 +569,7 @@ REGODIA:
 			BlockMoveData((*instCopy) + inOutCount, curData, sizeof(sData));
 			inOutCount += sizeof(sData);
 			
-			curData->data = MyNewPtr(curData->size);
+			curData->data = NewPtr(curData->size);
 			BlockMoveData((*instCopy) + inOutCount, curData->data, curData->size);
 			inOutCount += curData->size;
 		}

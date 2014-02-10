@@ -158,7 +158,7 @@ void ShowPerformance(void)
 			
 			MADDriver->Reading = true;
 
-			tempPtr = MyNewPtr(8L*MADDriver->ASCBUFFERReal);
+			tempPtr = NewPtr(8L*MADDriver->ASCBUFFERReal);
 			
 			oldTicks = TickCount();
 			for (i = 0 ; i < CSTTEST; i++)
@@ -196,7 +196,7 @@ void ShowPerformance(void)
 			pStrcat(aStr, "\p %");
 			SetDText(aDialog, 6, aStr);
 
-			MyDisposePtr(& tempPtr);
+			DisposePtr(tempPtr);
 			
 			MADReset(MADDriver);
 			MADStartDriver(MADDriver);
@@ -477,8 +477,8 @@ Boolean DoHelp(void)
 	DisposeDialog(theDialog);
 	TEDispose(hTE);
 	HUnlock(Text);
-	MyDisposHandle(& Text);
-	MyDisposHandle((Handle*) &theStyle);
+	DisposeHandle(Text);
+	DisposeHandle((Handle)theStyle);
 	
 	UpdateALLWindow();
 	

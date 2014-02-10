@@ -129,12 +129,12 @@ short MLAddRow(short no, short pos)
 
 void MLDelRow(short no, short pos)
 {
-	short i;
+	int i;
 	
 	for (i = pos; i < pos + no; i++) {
 		if (i < myList.maxY) {
-			MyDisposePtr((Ptr*)&specList[i]);
-			MyDisposePtr((Ptr*)&pathStrList[i]);
+			DisposePtr((Ptr)specList[i]);
+			DisposePtr((Ptr)pathStrList[i]);
 			
 			pathStrList[i] = (unsigned char*) -1L;
 			specList[i] = (FSSpec*) -1L;
@@ -415,7 +415,7 @@ void SaveMyMODListSTCf(FSSpec spec)
 	///////////////////////////////////////////////////////
 	
 	inOutBytes = 10;
-	aHandle = MyNewHandle(inOutBytes);
+	aHandle = NewHandle(inOutBytes);
 	if (aHandle == NULL) {
 		CloseResFile(myRes);
 		Erreur(5, -678);
@@ -437,11 +437,11 @@ void SaveMyMODListSTCf(FSSpec spec)
 	AddResource(aHandle, 'selc', 128, "\pMusic Select");
 	WriteResource(aHandle);
 	DetachResource(aHandle);
-	MyDisposHandle(&aHandle);
+	DisposeHandle(aHandle);
 	
 	///////////////////////////////////////////////////////
 	
-	aHandle = MyNewHandle(MAXSTCSIZE);
+	aHandle = NewHandle(MAXSTCSIZE);
 	if (aHandle == NULL) {
 		CloseResFile(myRes);
 		Erreur(5, -678);
@@ -488,7 +488,7 @@ void SaveMyMODListSTCf(FSSpec spec)
 	AddResource(aHandle, 'STR#', 128, "\pPP Music List");
 	WriteResource(aHandle);
 	DetachResource(aHandle);
-	MyDisposHandle(& aHandle);
+	DisposeHandle(aHandle);
 	CloseResFile(myRes);
 	
 	SetCursor(GetQDGlobalsArrow(&qdarrow));
@@ -2427,7 +2427,7 @@ void SortMusicList(void)
 	short			i;
 	Point			theCell, selecCell;
 	
-	myFSS = (QSort*) MyNewPtr(myList.maxY * sizeof(QSort));
+	myFSS = (QSort*) NewPtr(myList.maxY * sizeof(QSort));
 	if (myFSS != NULL) {
 		selecCell.h = 0;
 		selecCell.v = 0;
@@ -2471,7 +2471,7 @@ void SortMusicList(void)
 		InvalWindowRect(GetDialogWindow(MODListDlog), &myList.rect);
 		myList.rect.right += 15;
 		
-		MyDisposePtr((Ptr*)&myFSS);
+		DisposePtr((Ptr)myFSS);
 	}
 }
 
@@ -3100,7 +3100,7 @@ void PASTEMODList()		// Create a file from a handle -
 				long				inOutCount;
 				OSErr				iErr;
 				
-				theHandle = MyNewHandle(lCntOrErr);
+				theHandle = NewHandle(lCntOrErr);
 				if (theHandle != NULL) {
 					GetScrap(theHandle, *((OSType*)*pScrpInf->scrapHandle), &scrapOffset);
 					HLock(theHandle);

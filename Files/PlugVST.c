@@ -871,7 +871,7 @@ void InitVSTPlug(void)
 	outputs2[0]	= (float*)NewPtrClear(sizeof(float) * currentdatasize);
 	outputs2[1]	= (float*)NewPtrClear(sizeof(float) * currentdatasize);
 	
-	VSTPlug = (VSTInfo*)MyNewPtr(MAXVST * sizeof(VSTInfo));
+	VSTPlug = (VSTInfo*)NewPtr(MAXVST * sizeof(VSTInfo));
 	
 	HGetVol(NULL, &vRefNum, &dirID);
 	

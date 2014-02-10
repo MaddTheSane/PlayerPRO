@@ -240,7 +240,7 @@ void InitPPINPlug(void)
 	thePPInfoPlug.UpdateALLWindowUPP 		= UpdateALLWindow;
 	thePPInfoPlug.MyDlgFilterUPP			= MyDlgFilterDesc;	
 	
-	ThePPINPlug = (PPINFilterInfo*)MyNewPtr(MAXINSTRPLUG * sizeof(PPINFilterInfo));
+	ThePPINPlug = (PPINFilterInfo*)NewPtr(MAXINSTRPLUG * sizeof(PPINFilterInfo));
 	
 	//	GetApplicationPackageFSSpecFromBundle(&spec);
 	

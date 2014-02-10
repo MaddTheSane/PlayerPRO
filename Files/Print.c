@@ -100,7 +100,7 @@ Boolean PageSetUp()
 void InitPrinting()
 {
 #if MACOS9VERSION
-	hPrint = (THPrint)MyNewHandle(sizeof(TPrint) + 50L);
+	hPrint = (THPrint)NewHandle(sizeof(TPrint) + 50L);
 	PrOpen();
 	PrintDefault(hPrint);
 	PrClose();

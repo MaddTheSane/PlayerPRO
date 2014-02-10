@@ -141,11 +141,9 @@ void DoGrowVisual(void)
 {
 	long		lSizeVH;
 	GrafPtr		SavePort;
-	Rect		temp, cellRect;
-	Point		theCell = { 0, 0}, aPt = { 0, 0};
+	Rect		temp;
+	Point		aPt = { 0, 0};
 	short		tempA, tempB;
-	Handle		itemHandle;
-	short		itemType;
 	Rect		caRect;
 	BitMap		screenBits;
 	
@@ -184,18 +182,13 @@ void DoGrowVisual(void)
 		EraseRect(&caRect);
 		InvalWindowRect(GetDialogWindow(VisualDlog), &caRect);
 	}
-#if 0
-	else {
-	}
-#endif
 	
 	SetPort(SavePort);
 }
 
 OSStatus PlayerPROProc(void *appCookie, OSType message, struct PlayerMessageInfo *messageInfo)
 {
-	switch (message)
-	{
+	switch (message) {
 		case kPlayerRegisterVisualPluginMessage:
 			VisualPlug[currentID].msgPlayer = *messageInfo;
 			
@@ -236,7 +229,7 @@ void CallVisualMain(long PlugNo, OSType msg)
 	if (myErr == noErr) {
 		
 		VisualPlug[ PlugNo].msgInfo.u.initMessage.playerProc = PlayerPROProc;
-		VisualPlug[ PlugNo].msgInfo.u.initMessage.appCookie = (void*) PlugNo;
+		VisualPlug[ PlugNo].msgInfo.u.initMessage.appCookie = (void*)PlugNo;
 		
 		//VisualPlug[ PlugNo].msgVisual.u.initMessage.playerProc = PlayerPROProc;
 		//VisualPlug[ PlugNo].msgVisual.u.initMessage.appCookie = (void*) PlugNo;
@@ -255,7 +248,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 {
 	short 						fileID;
 	OSStatus					Err;
-	long						options = 0, i;
+	long						options = 0;
 	VisualPluginMessageInfo		msgVisual;
 	Rect						caRect;
 	
@@ -431,21 +424,14 @@ void  UpdateVisualWindow(DialogPtr GetSelection)
 
 void LoadVisualPLUG(short No, StringPtr theName)
 {
-	Handle		theRes;
-	short		fileID, i, temp;
-	Str255		tStr;
-	char		aStr[ 256];
-	
+	Boolean targetIsFolder, wasAliased;
 	/***********************/
 	
 	HGetVol(NULL, &VisualPlug[No].file.vRefNum, &VisualPlug[ No].file.parID);
 	pStrcpy(VisualPlug[No].file.name, theName);
 	
-	{
-		Boolean		targetIsFolder, wasAliased;
-		
-		ResolveAliasFile(&VisualPlug[ No].file, true, &targetIsFolder, &wasAliased);
-	}
+	ResolveAliasFile(&VisualPlug[No].file, true, &targetIsFolder, &wasAliased);
+	
 	
 #if 0
 	fileID = FSpOpenResFile(&ThePPINPlug[ No].file, fsCurPerm);
@@ -473,7 +459,7 @@ static long PlugsFolderOK;
 void ScanDirVisualPlug(long dirID, short VRefNum)
 {
 	CInfoPBRec		info;
-	Str255			tempStr, volName;
+	Str255			tempStr;
 	long			dirIDCopy;
 	short			i, vRefNum;
 	OSErr			iErr;
@@ -518,14 +504,6 @@ short maxVisualPlug()
 
 void CreateVisualWindow(short ID)
 {
-	Rect		itemRect, tempRect, dataBounds;
-	Handle		itemHandle;
-	short		itemType, itemHit, temp, i;
-	Point		cSize;
-	FontInfo	ThisFontInfo;
-	Str255		String;
-	GrafPtr		savePort;
-	
 	if (ID >= tPlug) {
 		VisualFullScreen();
 		return;
@@ -687,7 +665,7 @@ void InitVisual(void)
 	
 	actuallyUse = false;
 	
-	VisualPlug = (VisualInfo*) MyNewPtr(100 * sizeof(VisualInfo));
+	VisualPlug = (VisualInfo*) NewPtr(100 * sizeof(VisualInfo));
 	
 	HGetVol(NULL, &vRefNum, &dirID);
 	

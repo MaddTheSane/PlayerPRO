@@ -3128,7 +3128,7 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 		
 		//////////////// System 7.c ////////////////////
 		
-		theSound = MyNewPtr(textSize);
+		theSound = NewPtr(textSize);
 		
 		if (theSound != NULL) {
 			GetFlavorData(theDrag, theItem, 'snd ', theSound, &textSize, 0);
@@ -3288,7 +3288,7 @@ Boolean DragInstrument(RgnHandle myRgn, short no, EventRecord *theEvent)
 		if (curData->size == 0)
 			return false;
 		
-		theSound = MyNewHandle(4096);
+		theSound = NewHandle(4096);
 		if (theSound == NULL)
 			return false;
 		
@@ -3312,7 +3312,7 @@ Boolean DragInstrument(RgnHandle myRgn, short no, EventRecord *theEvent)
 		
 		SetHandleSize(theSound, inOutBytes + temp);
 		if (MemError() != noErr) {
-			MyDisposHandle(&theSound);
+			DisposeHandle(theSound);
 			Erreur(63, MemError());
 			return false;
 		}
@@ -3430,7 +3430,7 @@ Boolean DragInstrument(RgnHandle myRgn, short no, EventRecord *theEvent)
 	
 	if (DragSamp >= 0) {
 		HUnlock(theSound);
-		MyDisposHandle(&theSound);
+		DisposeHandle(theSound);
 		
 		DisposePtr((Ptr)myPcmd);
 	}

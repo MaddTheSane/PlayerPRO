@@ -618,7 +618,7 @@ short NewOffscreenBitMap(BitMap *thePixMap, Rect *picRect)
 	offrowbytes = 1 + (picRect->right-picRect->left)/8;
 	memoryRequest = (long)((picRect->bottom-picRect->top+1)* (long) offrowbytes) + 4;
 	
-	offscreenData = MyNewPtr(memoryRequest) ;
+	offscreenData = NewPtr(memoryRequest) ;
 	if (offscreenData == NULL) return -1;
 	
 	offscreenPixMap.bounds = *picRect ;
@@ -637,7 +637,7 @@ void ZapBitMap(BitMap *offscreenPixMap)
 	 dispose the pointer to the data first !! */
 	
 	offscreenData = offscreenPixMap->baseAddr; 
-	MyDisposePtr(&offscreenData);
+	DisposePtr(offscreenData);
 	offscreenPixMap->baseAddr = NULL;
 }
 
@@ -807,7 +807,7 @@ short NewOffscreenPixMap(PixMapHandle *thePixMap, Rect *picRect)
 	offrowbytes = ((thedepth*(picRect->right-picRect->left) + 31) / 32) * 4;
 	memoryRequest = (long)((picRect->bottom-picRect->top+1)*offrowbytes) + 4;
 
-	offscreenData = MyNewPtr(memoryRequest);
+	offscreenData = NewPtr(memoryRequest);
 	if (offscreenData == nil) {
 		*thePixMap = (PixMapHandle) -1L;
 		return(-1);
@@ -835,18 +835,18 @@ short NewOffscreenPixMap(PixMapHandle *thePixMap, Rect *picRect)
 
 Ptr NewADDRPtrI(short SizeBuffer)
 {
-	return MyNewPtr(SizeBuffer);
+	return NewPtr(SizeBuffer);
 }
 
 void ZapPixMap(PixMapHandle *offscreenPixMap)
 {
 	if ((**offscreenPixMap)->pmTable != NULL)
 	{
-		MyDisposHandle((Handle*) &(**offscreenPixMap)->pmTable);
+		DisposeHandle((Handle)(**offscreenPixMap)->pmTable);
 		(**offscreenPixMap)->pmTable = NULL;
 	}
 
-	MyDisposePtr(&(**offscreenPixMap)->baseAddr);
+	DisposePtr((**offscreenPixMap)->baseAddr);
 	DisposePixMap(*offscreenPixMap);
 	*offscreenPixMap = NULL;
 }

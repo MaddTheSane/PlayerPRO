@@ -370,7 +370,6 @@ OSErr			RAWImportFile(FSSpec	*file);
 OSStatus		LaunchURLC(ConstStr255Param urlStr);
 void			DoInternetMenu(short theItem);
 OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, ByteCount maximumSize, ByteCount *actualSize);
-void MyDisposePtr(Ptr	*aPtr);
 void SetFKeyMode(Boolean v);
 OSErr	PPINGetPlugName(OSType kindFile, Str255 name);
 void ChangeTracksNo(short NewValue);

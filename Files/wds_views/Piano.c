@@ -107,13 +107,12 @@ Boolean DragCommand(RgnHandle myRgn, Cmd myCmd, EventRecord *theEvent)
 	myPcmd->posStart = -1;
 	myPcmd->myCmd[0] = myCmd;
 	
-	SwapPcmd(myPcmd);
-	AddDragItemFlavor(theDrag, 1, 'Pcmd', myPcmd, myPcmd->structSize, 0);
-	
 	myText = ConvertPcmd2Text(myPcmd);
 	AddDragItemFlavor(theDrag, 1, 'TEXT', myText, GetPtrSize(myText), 0);
-	MyDisposePtr(& myText);
+	DisposePtr(myText);
 	
+	SwapPcmd(myPcmd);
+	AddDragItemFlavor(theDrag, 1, 'Pcmd', myPcmd, myPcmd->structSize, 0);
 	SetDragItemBounds(theDrag, 1, GetRegionBounds(dragRegion, &dragRegionRect));
 
 	tempRgn = NewRgn();
@@ -128,19 +127,19 @@ Boolean DragCommand(RgnHandle myRgn, Cmd myCmd, EventRecord *theEvent)
 
 	DisposeDrag(theDrag);
 	DisposeRgn(dragRegion);
-	MyDisposePtr((Ptr*)&myPcmd);
+	DisposePtr((Ptr)myPcmd);
 	
 	return true;
 }
 
 void CreatePianoPixMap(void)
 {
-	GDHandle			oldGDeviceH;
-	CGrafPtr			oldPort;
-	GWorldPtr			theGWorld = NULL;
-	Rect				aRect, nRect;
-	short				i;
-	Str32				str;
+	GDHandle	oldGDeviceH;
+	CGrafPtr	oldPort;
+	GWorldPtr	theGWorld = NULL;
+	Rect		aRect, nRect;
+	int			i;
+	Str32		str;
 	
 	if (PianoPix != NULL)
 		ZapPixMap(&PianoPix);
@@ -157,7 +156,7 @@ void CreatePianoPixMap(void)
 			break;
 	}
 	
-	NewGWorld(&theGWorld, 8, &aRect, nil, nil, (GWorldFlags)0);
+	NewGWorld(&theGWorld, 8, &aRect, nil, nil, 0);
 	
 	if (NewOffscreenPixMap(&PianoPix, &aRect) != noErr)
 		MyDebugStr(__LINE__, __FILE__, "Memory Error !!!");

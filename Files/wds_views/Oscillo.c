@@ -1454,10 +1454,10 @@ void InitOscillo(void)
 			  nil,
 			  (GWorldFlags) 0);
 	
-	PseudoSilence = MyNewPtr(750);
+	PseudoSilence = NewPtr(750);
 	for (i = 0; i < 740; i++) PseudoSilence[i] = 0x80;
 	
-	AudioDSPPtr = (Ptr) MyNewPtr(AUDIODSPSIZE * 4L);
+	AudioDSPPtr = (Ptr) NewPtr(AUDIODSPSIZE * 4L);
 	
 	VMMode = true; //Virtual memory is always enabled on OS X
 	

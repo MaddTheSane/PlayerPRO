@@ -99,7 +99,7 @@ void WriteLineList(void)
 				MyDisposHandle(& myRes);
 			}
 			
-			myRes = MyNewHandle(4L);
+			myRes = NewHandle(4L);
 			*((long*) (*myRes)) = lineList[ i];
 			GetMenuItemText(sectMenu,  i + 1, rName);
 			
@@ -161,7 +161,7 @@ void CreateHelpOnline(short whichSection)
 	
 	curSect = whichSection;
 	
-	lineList = (long*)MyNewPtr(8000);
+	lineList = (long*)NewPtr(8000);
 	
 	/** Lecture du fichier Help **/
 	
@@ -175,7 +175,7 @@ void CreateHelpOnline(short whichSection)
 		return;
 	}
 	GetEOF(iFileRefI, &inOutBytes);
-	Text = MyNewPtr(inOutBytes);
+	Text = NewPtr(inOutBytes);
 	FSRead(iFileRefI, &inOutBytes, Text);			
 	FSCloseFork(iFileRefI);
 	
@@ -229,11 +229,11 @@ void CloseHelpOnline(void)
 		DisposeDialog(HelpDlog);
 		HelpDlog = NULL;
 		TEDispose(hTE);
-		MyDisposePtr(&Text);
+		DisposePtr(Text);
 		if (theStyle != NULL)
-			MyDisposHandle((Handle*)&theStyle);
+			DisposeHandle((Handle)theStyle);
 		theStyle = NULL;
-		MyDisposePtr((Ptr*)&lineList);
+		DisposePtr((Ptr)lineList);
 		DisposeMenu(sectMenu);
 		
 		SetItemMark(HelpMenu, 1, noMark);

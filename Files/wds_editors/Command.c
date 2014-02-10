@@ -153,7 +153,7 @@ void AfficheGoodEffect(short effect, Byte arg)
 		TEStyleInsert(*aH, GetHandleSize(aH), theStyle, EfTE);
 		HUnlock(aH);
 		
-		MyDisposHandle(& aH);
+		DisposeHandle(aH);
 		ActualShowEffect = textID;
 		RGBBackColor(&color);
 	}

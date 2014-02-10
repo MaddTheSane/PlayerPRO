@@ -112,7 +112,7 @@ void InitPlug(void)
 
 	thePPInfoPlug.MyDlgFilterUPP				= MyDlgFilterDesc;	
 	
-	ThePlug = (FilterInfo*) MyNewPtr(MAXFILTERSPLUGS * sizeof(FilterInfo));
+	ThePlug = (FilterInfo*) NewPtr(MAXFILTERSPLUGS * sizeof(FilterInfo));
 	
 	tPlug			= 0;
 	ToneGenerator	= -1;

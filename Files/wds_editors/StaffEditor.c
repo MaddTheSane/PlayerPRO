@@ -1461,7 +1461,7 @@ void OpenPcmdStaff(FSSpec	*mySpec)
 	
 	if (FSpOpenDF(mySpec, fsCurPerm, &fRefNum) == noErr) {
 		GetEOF(fRefNum, &inOutBytes);
-		myPcmd = (Pcmd*) MyNewPtr(inOutBytes);
+		myPcmd = (Pcmd*)NewPtr(inOutBytes);
 		iErr = FSRead(fRefNum, &inOutBytes, (Ptr) myPcmd);
 		
 		PasteCmdStaff(myPcmd);
@@ -1552,7 +1552,7 @@ void DoItemPressStaff(short whichItem, DialogPtr whichDialog)
 								DiffStartV = 0;
 								DiffStartH = 0;
 								
-								MyDisposePtr((Ptr*) &myPcmd);
+								DisposePtr((Ptr)myPcmd);
 							}
 							
 							DisposeRgn(tempRgn);
@@ -1676,8 +1676,7 @@ void DoItemPressStaff(short whichItem, DialogPtr whichDialog)
 							OffsetRgn(tempRgn, myPt.h - 8, myPt.v - 16);
 							
 							myPcmd = CreatePcmdFromNoteStaff(myPt);
-							if (myPcmd != NULL)
-							{
+							if (myPcmd != NULL) {
 								//CalculDiffStartStaff();
 								
 								DiffStartH = 0;
@@ -1687,9 +1686,10 @@ void DoItemPressStaff(short whichItem, DialogPtr whichDialog)
 								
 								DragStaff(tempRgn, myPcmd, &theEvent);
 								
-								DiffStartV = 0;		DiffStartH = 0;
+								DiffStartV = 0;
+								DiffStartH = 0;
 								
-								MyDisposePtr((Ptr*) &myPcmd);
+								DisposePtr((Ptr)myPcmd);
 							}
 							
 							DisposeRgn(tempRgn);
@@ -1951,7 +1951,7 @@ void DoItemPressStaff(short whichItem, DialogPtr whichDialog)
 					
 					PasteCmdStaff(myPcmd);
 					
-					MyDisposePtr((Ptr*) &myPcmd);
+					DisposePtr((Ptr)myPcmd);
 				}
 				
 				HiliteControl(FXBut, 0);
@@ -2500,7 +2500,7 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 				result = GetFlavorDataSize(theDrag, theItem, 'Pcmd', &textSize);
 				if (result == noErr) {
 					/****************/
-					myPcmd = (Pcmd*) MyNewPtr(textSize);
+					myPcmd = (Pcmd*)NewPtr(textSize);
 					GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
 					PcmdTracks = myPcmd->tracks;
 					if (PcmdTracks <= 0)
@@ -2508,7 +2508,7 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 					PcmdLength = myPcmd->length;
 					if (PcmdLength <= 0)
 						PcmdLength = 1;
-					MyDisposePtr((Ptr*) &myPcmd);
+					DisposePtr((Ptr)myPcmd);
 					/****************/
 				} else {
 					PcmdTracks = 1;
@@ -2534,12 +2534,12 @@ pascal OSErr MyTrackingStaff(short message, WindowPtr theWindow, void *handlerRe
 							SInt64 tmp;
 							FSGetForkSize(fRefNum, &tmp);
 							inOutBytes = tmp;
-							myPcmd = (Pcmd*)MyNewPtr(inOutBytes);
+							myPcmd = (Pcmd*)NewPtr(inOutBytes);
 							FSReadFork(fRefNum, fsAtMark, 0, inOutBytes, myPcmd, NULL);
 							PcmdTracks = myPcmd->tracks;
 							PcmdLength = myPcmd->length;
 							FSCloseFork(fRefNum);
-							MyDisposePtr((Ptr*)&myPcmd);
+							DisposePtr((Ptr)myPcmd);
 						}
 						/****************/
 						
@@ -2677,7 +2677,7 @@ Boolean DragStaff(RgnHandle myRgn, Pcmd	*myPcmd, EventRecord *theEvent)
 	
 	myText = ConvertPcmd2Text(myPcmd);
 	AddDragItemFlavor(theDrag, 1, 'TEXT', myText, GetPtrSize(myText), 0);
-	MyDisposePtr(& myText);
+	DisposePtr(myText);
 	
 	result = SetDragSendProc(theDrag, mySendDataUPP, NULL);
 	
@@ -2749,7 +2749,7 @@ pascal OSErr MyReceiveDropStaff(WindowPtr theWindow, void* handlerRefCon, DragRe
 	result = GetFlavorDataSize(theDrag, theItem, 'Pcmd', &textSize);
 	
 	if (result == noErr) {
-		myPcmd = (Pcmd*) MyNewPtr(textSize);
+		myPcmd = (Pcmd*)NewPtr(textSize);
 		if (myPcmd != NULL) {
 			GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
 			
@@ -2759,7 +2759,7 @@ pascal OSErr MyReceiveDropStaff(WindowPtr theWindow, void* handlerRefCon, DragRe
 				DoKeyPressStaff(8);
 			} else {
 				SaveUndo(UPattern, CurrentPat, "\pUndo 'Move Selection'");
-				InvalWindowRect( (theWindow), &CurRect);
+				InvalWindowRect((theWindow), &CurRect);
 			}
 			
 			InvalWindowRect(theWindow, &CurRect);
@@ -2769,7 +2769,7 @@ pascal OSErr MyReceiveDropStaff(WindowPtr theWindow, void* handlerRefCon, DragRe
 			
 			PasteCmdStaff(myPcmd);
 			
-			MyDisposePtr((Ptr*)&myPcmd);
+			DisposePtr((Ptr)myPcmd);
 			
 			return noErr;
 		} else
@@ -2789,10 +2789,8 @@ pascal OSErr MyReceiveDropStaff(WindowPtr theWindow, void* handlerRefCon, DragRe
 		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
 		
 		ResolveAliasFile(&myFlavor.fileSpec, true, &targetIsFolder, &wasAliased);
-		
 		startXSelec = DropX;
 		startYSelec = DropY;
-		
 		OpenPcmdStaff(&myFlavor.fileSpec);
 		
 		return noErr;
@@ -2809,6 +2807,7 @@ void PasteCmdStaff(Pcmd *myPcmd)
 	
 	GetPort(&SavePort);
 	SetPortDialogPort(StaffDlog);
+	SwapPcmd(myPcmd);
 	
 	InvalWindowRect(GetDialogWindow(StaffDlog), &CurRect);
 	
@@ -2878,21 +2877,21 @@ void COPYStaff(void)
 	
 	anErr = ClearCurrentScrap();
 	anErr = GetCurrentScrap(&scrap);
-	anErr = PutScrapFlavor(scrap, 'Pcmd', 0, GetPtrSize((Ptr) myPcmd), (Ptr) myPcmd);
-	
-	
 	myText = ConvertPcmd2Text(myPcmd);
 	anErr = PutScrapFlavor(scrap, 'TEXT', 0, GetPtrSize(myText), myText);
 	
-	MyDisposePtr(&myText);
-	MyDisposePtr((Ptr*) &myPcmd);
+	SwapPcmd(myPcmd);
+	anErr = PutScrapFlavor(scrap, 'Pcmd', 0, GetPtrSize((Ptr)myPcmd), (Ptr)myPcmd);
+	
+	DisposePtr(myText);
+	DisposePtr((Ptr)myPcmd);
 	
 	SetCursor(GetQDGlobalsArrow(&qdarrow));
 	
 	SetPort(SavePort);
 }
 
-void PASTEStaff(void)
+void PASTEStaff()
 {
 	long			lCntOrErr;
 	Handle			theHandle;
@@ -2908,24 +2907,24 @@ void PASTEStaff(void)
 	lCntOrErr = 0;
 	anErr = GetCurrentScrap(&scrap);
 	anErr = GetScrapFlavorFlags(scrap, 'Pcmd', &flags);
-	if (anErr == noErr) GetScrapFlavorSize(scrap, 'Pcmd', &lCntOrErr);
+	if (anErr == noErr)
+		GetScrapFlavorSize(scrap, 'Pcmd', &lCntOrErr);
 
-	if (lCntOrErr > 0)
-	{
+	if (lCntOrErr > 0) {
 		SetCursor(&watchCrsr);
 	
-		theHandle = MyNewHandle(lCntOrErr);
+		theHandle = NewHandle(lCntOrErr);
 		HLock(theHandle);
 		GetScrapFlavorData(scrap, 'Pcmd', &lCntOrErr, *theHandle);
 		
-		myPcmd = (Pcmd*) (*theHandle);
+		myPcmd = (Pcmd*)(*theHandle);
 		
 		SaveUndo(UPattern, CurrentPat, "\pUndo 'Paste Classic Editor'");
 		
 		PasteCmdStaff(myPcmd);
 		
 		HUnlock(theHandle);
-		MyDisposHandle(& theHandle);
+		DisposeHandle(theHandle);
 		
 		SetCursor(GetQDGlobalsArrow(&qdarrow));
 	}

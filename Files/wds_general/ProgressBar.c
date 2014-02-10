@@ -522,11 +522,11 @@ Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, O
 	if (iErr != noErr) {
 		MyDebugStr(__LINE__, __FILE__, "Open failed, Compressor NOT available");
 		
-		MyDisposePtr(& bufferSin);
-		MyDisposePtr(& bufferSout);
-		MyDisposePtr(& sndPtr);
-		MyDisposePtr(& outSound);
-		MyDisposePtr(& compSound);
+		DisposePtr(bufferSin);
+		DisposePtr(bufferSout);
+		DisposePtr(sndPtr);
+		DisposePtr(outSound);
+		DisposePtr(compSound);
 		
 		/* Delete values */
 		
@@ -827,11 +827,11 @@ void StopAIFFExporting(void)
 		}
 		
 	}
-	MyDisposePtr(&bufferSin);
-	MyDisposePtr(&bufferSout);
-	MyDisposePtr(&sndPtr);
-	MyDisposePtr(&outSound);
-	MyDisposePtr(&compSound);
+	DisposePtr(bufferSin);
+	DisposePtr(bufferSout);
+	DisposePtr(sndPtr);
+	DisposePtr(outSound);
+	DisposePtr(compSound);
 	
 	/***********/
 	
@@ -839,7 +839,7 @@ void StopAIFFExporting(void)
 		case -2:
 			copyMusic->header->numPat--;
 			
-			MyDisposePtr((Ptr*)&copyMusic->partition[copyMusic->header->numPat]);
+			DisposePtr((Ptr)copyMusic->partition[copyMusic->header->numPat]);
 			copyMusic->partition[copyMusic->header->numPat] = NULL;
 			break;
 	}

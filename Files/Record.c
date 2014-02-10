@@ -200,7 +200,7 @@ REGODIA:
 		}
 		
 #if 0
-		sndHandle = MyNewHandle(curData->size);
+		sndHandle = NewHandle(curData->size);
 		if (sndHandle == NULL)
 		{
 			Erreur(63, -3);
@@ -276,7 +276,7 @@ void ConvertInstrumentMode(sData *curData, short menuItem)
 	if (curData->stereo) {
 		curData->stereo = false;
 		
-		aNewPtr = MyNewPtr(curData->size/2L);
+		aNewPtr = NewPtr(curData->size/2L);
 		
 		curData->loopBeg /=2;
 		curData->loopSize /=2;
@@ -359,10 +359,10 @@ void ConvertInstrumentMode(sData *curData, short menuItem)
 		
 		curData->size /= 2;
 		if(curData->data != NULL)
-			MyDisposePtr(&curData->data);
+			DisposePtr(curData->data);
 		curData->data = aNewPtr;
 	} else {
-		aNewPtr = MyNewPtr(curData->size*2L);
+		aNewPtr = NewPtr(curData->size*2L);
 		if (aNewPtr == NULL)
 			MyDebugStr(__LINE__, __FILE__, "Need more memory");
 		else {
@@ -387,7 +387,7 @@ void ConvertInstrumentMode(sData *curData, short menuItem)
 			
 			curData->size *= 2;
 			if (curData->data != NULL)
-				MyDisposePtr(&curData->data);
+				DisposePtr(curData->data);
 			curData->data = aNewPtr;
 		}
 	}
@@ -400,7 +400,7 @@ void ConvertInstrumentAmpli(sData *curData, short newAmpli)
 	if (curData->amp == 8) {
 		switch (newAmpli) {
 			case 16:
-				aNewPtr = MyNewPtr(curData->size*2L);
+				aNewPtr = NewPtr(curData->size*2L);
 				if (aNewPtr) {
 					Convert8to16(curData->data, aNewPtr, curData->size);
 					
@@ -409,7 +409,7 @@ void ConvertInstrumentAmpli(sData *curData, short newAmpli)
 					curData->size *= 2;
 					
 					if(curData->data != NULL)
-						MyDisposePtr(&curData->data);
+						DisposePtr(curData->data);
 					curData->data = aNewPtr;
 				} else
 					Erreur(63, MemError());
@@ -484,7 +484,7 @@ void SetUpPartition(short newVal)
 				MADKillCmd(aCmd);
 			}
 		}
-		MyDisposePtr((Ptr*)&curMusic->partition[i]);
+		DisposePtr((Ptr)curMusic->partition[i]);
 		curMusic->partition[i] = theNewPartition;
 	}
 	
@@ -583,7 +583,7 @@ Handle DoExp1to3(Handle sound, unsigned long numSampleFrames)
 	if (inState == nil)
 		Erreur(2, MemError());
 	
-	outBuffer = MyNewHandle(numSampleFrames*6);
+	outBuffer = NewHandle(numSampleFrames*6);
 	if (outBuffer == nil)
 		Erreur(2, MemError());
 	
@@ -593,11 +593,11 @@ Handle DoExp1to3(Handle sound, unsigned long numSampleFrames)
 	HUnlock(sound);
 	HUnlock(outBuffer);
 	
-	MyDisposHandle(&sound);
+	DisposeHandle(sound);
 	sound = outBuffer;
 	
-	MyDisposePtr(&inState);
-	MyDisposePtr(&outState);
+	DisposePtr(inState);
+	DisposePtr(outState);
 	
 	return sound;
 }
@@ -612,7 +612,7 @@ Handle DoExp1to6(Handle sound, unsigned long numSampleFrames)
 	if (inState == nil)
 		Erreur(2, MemError());
 	
-	outBuffer = MyNewHandle(numSampleFrames * 6);
+	outBuffer = NewHandle(numSampleFrames * 6);
 	if (outBuffer == nil)
 		Erreur(2, MemError());
 	
@@ -622,11 +622,11 @@ Handle DoExp1to6(Handle sound, unsigned long numSampleFrames)
 	HUnlock(sound);
 	HUnlock(outBuffer);
 	
-	MyDisposHandle(&sound);
+	DisposeHandle(sound);
 	sound = outBuffer;
 	
-	MyDisposePtr(&inState);
-	MyDisposePtr(&outState);
+	DisposePtr(inState);
+	DisposePtr(outState);
 	
 	return sound;
 }
@@ -1022,7 +1022,7 @@ RESTART:
 		
 		SetSampName(ins, samp, instruNom);
 		
-		tempPtr = MyNewPtr(inOutBytes);
+		tempPtr = NewPtr(inOutBytes);
 		if (tempPtr == NULL) {
 			Erreur(63, -2);
 			HUnlock(newSound);
@@ -1035,7 +1035,8 @@ RESTART:
 			
 			curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
 			
-			if (curData->data != NULL) MyDisposePtr(&curData->data);
+			if (curData->data != NULL)
+				DisposePtr(curData->data);
 			curData->data = tempPtr;
 			
 			HUnlock(newSound);
@@ -1082,7 +1083,7 @@ void CopyResource(OSType type, short ID, short newID)
 	AddResource(hRsrc, type, newID, "\p");
 	WriteResource(hRsrc);
 	DetachResource(hRsrc);
-	MyDisposHandle(& hRsrc);
+	DisposeHandle(hRsrc);
 }
 
 void SaveMOD(Boolean SaveAS, OSType theType)
@@ -1252,7 +1253,7 @@ void NPASTESample(long Pos, short ins, short samp)
 			
 			MADKillInstrument(curMusic, ins);
 			
-			newSound = MyNewHandle(lCntOrErr);
+			newSound = NewHandle(lCntOrErr);
 			if (newSound) {
 				short numSamples;
 				
@@ -1276,7 +1277,7 @@ void NPASTESample(long Pos, short ins, short samp)
 					BlockMoveData((*newSound) + inOutCount, curData, sizeof(sData));
 					inOutCount += sizeof(sData);
 					
-					curData->data = MyNewPtr(curData->size);
+					curData->data = NewPtr(curData->size);
 					if (curData->data) {
 						BlockMoveData((*newSound) + inOutCount, curData->data, curData->size);
 						inOutCount += curData->size;
@@ -1291,7 +1292,7 @@ void NPASTESample(long Pos, short ins, short samp)
 				Erreur(63, MemError());
 			
 			// ***********INSTRU NAME, 'STR '
-			newSound = MyNewHandle(60);
+			newSound = NewHandle(60);
 			if (newSound) {
 				lCntOrErr = 60;
 				HLock(newSound);
@@ -1324,7 +1325,7 @@ void NPASTESample(long Pos, short ins, short samp)
 				Boolean			stereo;
 				Boolean			newSampleData = false;
 				
-				newSound = MyNewHandle(lCntOrErr);
+				newSound = NewHandle(lCntOrErr);
 				if (newSound) {
 					/* Check if it is necessary to create the sData struct */
 					if (samp >= curMusic->fid[ ins].numSamples) {
@@ -1450,7 +1451,7 @@ void NPASTESample(long Pos, short ins, short samp)
 					
 					// ICI: COLLER DANS LE SAMPLE !!!
 					
-					finalPtr = MyNewPtr(totalSize);
+					finalPtr = NewPtr(totalSize);
 					if (finalPtr) {
 						BlockMoveData(curData->data,
 									  finalPtr,
@@ -1465,7 +1466,7 @@ void NPASTESample(long Pos, short ins, short samp)
 									  curData->size - Pos);
 						
 						if (curData->data != NULL)
-							MyDisposePtr(&curData->data);
+							DisposePtr(curData->data);
 						curData->data = finalPtr;
 						curData->size = totalSize;
 					} else {
@@ -1483,7 +1484,7 @@ void NPASTESample(long Pos, short ins, short samp)
 				
 				// ***********INSTRU NAME, 'STR '
 				if (Pos == 0) {
-					newSound = MyNewHandle(60);
+					newSound = NewHandle(60);
 					if (newSound) {
 						lCntOrErr = 60;
 						HLock(newSound);
@@ -1536,7 +1537,7 @@ void NCOPYSample(long start, long length, short ins, short samp)
 		
 		// COPY Instru Name
 		
-		theSound = MyNewHandle(200);
+		theSound = NewHandle(200);
 		if (theSound) {
 			strcpy((Ptr)*theSound, curMusic->fid[ins].name);
 			MyC2PStr((Ptr)*theSound);
@@ -1547,7 +1548,7 @@ void NCOPYSample(long start, long length, short ins, short samp)
 			
 			HUnlock((Handle)theSound);
 			
-			MyDisposHandle(& theSound);
+			DisposeHandle(theSound);
 		}
 		
 		// COPY 'MINo' data
@@ -1560,7 +1561,7 @@ void NCOPYSample(long start, long length, short ins, short samp)
 			inOutCount += curData->size;
 		}
 		
-		theSound = MyNewHandle(inOutCount);
+		theSound = NewHandle(inOutCount);
 		if (theSound) {
 			HLock(theSound);
 			
@@ -1581,7 +1582,7 @@ void NCOPYSample(long start, long length, short ins, short samp)
 			
 			anErr = PutScrapFlavor(scrap, 'MINo', 0, inOutCount, (Ptr) *theSound);
 			HUnlock(theSound);
-			MyDisposHandle(&theSound);
+			DisposeHandle(theSound);
 		} else {
 			Erreur(63, MemError());
 			anErr = ClearCurrentScrap();
@@ -1604,7 +1605,7 @@ void NCOPYSample(long start, long length, short ins, short samp)
 		
 		// COPY Sample Name
 		
-		theSound = MyNewHandle(200);
+		theSound = NewHandle(200);
 		if (theSound) {
 			strcpy((Ptr)*theSound, curData->name);
 			MyC2PStr((Ptr)*theSound);
@@ -1615,11 +1616,11 @@ void NCOPYSample(long start, long length, short ins, short samp)
 			
 			HUnlock(theSound);
 			
-			MyDisposHandle(& theSound);
+			DisposeHandle(theSound);
 		}
 		// COPY 'snd '
 		
-		theSound = MyNewHandle(length + 5000);
+		theSound = NewHandle(length + 5000);
 		if (theSound) {
 			short	numChan;
 			
@@ -1654,7 +1655,7 @@ void NCOPYSample(long start, long length, short ins, short samp)
 			
 			HUnlock((Handle) theSound);
 			
-			MyDisposHandle(& theSound);
+			DisposeHandle(theSound);
 		} else {
 			Erreur(63, MemError());
 			anErr = ClearCurrentScrap();

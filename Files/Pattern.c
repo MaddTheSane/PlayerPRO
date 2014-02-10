@@ -531,7 +531,7 @@ void DeleteAPattern(Boolean AskDelete)
 			if (LGetSelect(false, &theCell, PatList2)) {
 				curMusic->header->numPat--;
 				
-				MyDisposePtr((Ptr*)&curMusic->partition[theCell.v]);
+				DisposePtr((Ptr)curMusic->partition[theCell.v]);
 				curMusic->partition[theCell.v] = NULL;
 			
 				for (i = theCell.v; i < curMusic->header->numPat; i++) {
@@ -637,9 +637,10 @@ void LoadAPatternInt(FSSpec sFile, short selectedPos)
 		inOutBytes = forkSize;
 	}
 	
-	if (selectedPos < curMusic->header->numPat) MyDisposePtr((Ptr*) &curMusic->partition[ selectedPos]);
+	if (selectedPos < curMusic->header->numPat)
+		DisposePtr((Ptr)curMusic->partition[selectedPos]);
 	
-	theNewPattern = (PatData*) MyNewPtr(inOutBytes);
+	theNewPattern = (PatData*)NewPtr(inOutBytes);
 	
 	FSRead(iFileRefI, &inOutBytes, theNewPattern);
 	//TODO: byteswap pattern!
@@ -656,7 +657,7 @@ void LoadAPatternInt(FSSpec sFile, short selectedPos)
 		short			x, z;
 		Cmd				*inACmd, *outACmd;
 		
-		curMusic->partition[selectedPos] = (PatData*) MyNewPtr(sizeof(PatHeader) + curMusic->header->numChn * theNewPattern->header.size * sizeof(Cmd));
+		curMusic->partition[selectedPos] = (PatData*) NewPtr(sizeof(PatHeader) + curMusic->header->numChn * theNewPattern->header.size * sizeof(Cmd));
 		curMusic->partition[selectedPos]->header.size = theNewPattern->header.size;
 		curMusic->partition[selectedPos]->header.compMode = 'NONE';
 		BlockMoveData(theNewPattern->header.name, curMusic->partition[selectedPos]->header.name, 20);
@@ -1092,7 +1093,7 @@ OnRepart:
 			
 			newPattern->header.compMode = curMusic->partition[thePos]->header.compMode;
 			
-			MyDisposePtr((Ptr*) &curMusic->partition[thePos]);
+			DisposePtr((Ptr)curMusic->partition[thePos]);
 			curMusic->partition[thePos] = newPattern;
 			
 			UPDATE_Pattern();
@@ -1630,8 +1631,8 @@ void SetPatList2(ListHandle	theList)
 	TextFont(4);
 	TextSize(9);
 
-	stemp = MyNewPtr(300);
-	mainStr = MyNewPtr(300);
+	stemp = NewPtr(300);
+	mainStr = NewPtr(300);
 	
 	if (curMusic->header->numPat - (*theList)->dataBounds.bottom > 0) {
 		LAddRow(curMusic->header->numPat - (*theList)->dataBounds.bottom, 0, theList);
@@ -1684,9 +1685,9 @@ void SetPatList2(ListHandle	theList)
 			LSetCell(mainStr, strlen(mainStr), cSize, theList);
 	}
 	
-	MyDisposePtr(&mainStr);
+	DisposePtr(mainStr);
 	mainStr = NULL;
-	MyDisposePtr(&stemp);
+	DisposePtr(stemp);
 	stemp = NULL;
 
 	SetPort(SavePort);
@@ -2067,7 +2068,7 @@ void PASTEPatList(void)
 		
 		SaveUndo(UAllPatterns, 0, "\pUndo 'Paste Pattern'");
 		
-		theHandle = MyNewHandle(lCntOrErr);
+		theHandle = NewHandle(lCntOrErr);
 		
 		HLock(theHandle);
 		GetScrapFlavorData(scrap, 'PATT', &lCntOrErr, *theHandle);
@@ -2075,7 +2076,7 @@ void PASTEPatList(void)
 		
 		HLock(theHandle);
 		
-		curMusic->partition[ curMusic->header->numPat] = (PatData*) MyNewPtr(lCntOrErr);
+		curMusic->partition[ curMusic->header->numPat] = (PatData*) NewPtr(lCntOrErr);
 		BlockMoveData(*theHandle, curMusic->partition[ curMusic->header->numPat], lCntOrErr);
 		curMusic->header->numPat++;
 		
@@ -2085,7 +2086,7 @@ void PASTEPatList(void)
 #endif
 		
 		HUnlock(theHandle);
-		MyDisposHandle(& theHandle);
+		DisposeHandle(theHandle);
 		
 		SetCursor(GetQDGlobalsArrow(&qdarrow));
 		

@@ -138,7 +138,7 @@ Ptr ConvertCurrentMusicToPtr(void)
 			fileSize += curMusic->sample[curMusic->fid[i].firstSample + x]->size;
 		}
 	}
-	tempPtr = MyNewPtr(fileSize);
+	tempPtr = NewPtr(fileSize);
 	if (tempPtr == NULL) MyDebugStr(__LINE__, __FILE__, "Memory !!!");
 	
 	tt = 0;
@@ -154,7 +154,7 @@ Ptr ConvertCurrentMusicToPtr(void)
 			BlockMoveData((Ptr)PatMAD, tempPtr + tt, inOutCount);
 			tt += inOutCount;
 			
-			MyDisposePtr((Ptr*) &PatMAD);
+			DisposePtr((Ptr)PatMAD);
 		} else {
 			inOutCount = sizeof(PatternHeader) + curMusic->header->numChn * curMusic->partition[i]->header.size * sizeof(Cmd);
 			BlockMoveData((Ptr)curMusic->partition[i], tempPtr + tt, inOutCount);
@@ -824,7 +824,7 @@ void ExportFile(OSType theType, FSSpec *newFile)
 					inOutCount = PatMAD->header.patBytes + sizeof(PatternHeader);
 					ByteSwapPatHeader(&PatMAD->header);
 					iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutCount, PatMAD, NULL);
-					MyDisposePtr((Ptr*)&PatMAD);
+					DisposePtr((Ptr)PatMAD);
 				} else {
 					inOutCount = sizeof(PatHeader);
 					inOutCount += curMusic->header->numChn * curMusic->partition[i]->header.size * sizeof(Cmd);
@@ -1093,7 +1093,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 					HLock(TempHandle);
 					iErr = MADLoadMusicPtr(&curMusic, *TempHandle);
 					HUnlock(TempHandle);
-					MyDisposHandle(& TempHandle);
+					DisposeHandle(TempHandle);
 				} else
 					MyDebugStr(__LINE__, __FILE__, "Fatal MEMORY ERROR 1: NEED MORE MEMORY !");
 			} else {
@@ -1105,7 +1105,7 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 					HLock(TempHandle);
 					iErr = MADLoadMusicPtr(&curMusic, *TempHandle);
 					HUnlock(TempHandle);
-					MyDisposHandle(& TempHandle);
+					DisposeHandle(TempHandle);
 				} else
 					MyDebugStr(__LINE__, __FILE__, "Fatal MEMORY ERROR 2: NEED MORE MEMORY !");
 			}
@@ -1199,9 +1199,12 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 				GetEOF(iFileRefI, &sndSize);
 				FSCloseFork(iFileRefI);
 				
-				tempPtr = MyNewPtr((sndSize * 3L) / 2L);
-				if (tempPtr == NULL) { iErr = MADNeedMemory;  break; }
-				else MyDisposePtr(& tempPtr);
+				tempPtr = NewPtr((sndSize * 3) / 2L);
+				if (tempPtr == NULL) {
+					iErr = MADNeedMemory;
+					break;
+				} else
+					DisposePtr(tempPtr);
 				/****/
 				
 				iErr = MADLoadMusicFilePString(gMADLib, &curMusic, "MADK", fName);

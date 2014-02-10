@@ -1124,7 +1124,7 @@ void PASTESampleInt(DialogPtr theDia)
 				
 				// GetScrap
 				
-				tempH = MyNewHandle(lCntOrErr);
+				tempH = NewHandle(lCntOrErr);
 				
 				
 				HLock(tempH);
@@ -1194,7 +1194,7 @@ void PASTESampleInt(DialogPtr theDia)
 				
 				// GetScrap
 				
-				tempH = MyNewHandle(lCntOrErr);
+				tempH = NewHandle(lCntOrErr);
 				
 				HLock(tempH);
 				GetScrapFlavorData(scrap, 'vEnv', &lCntOrErr, *tempH);
@@ -4284,20 +4284,20 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 							SampleDataD(CurWin)->loopBeg	= 0;
 							SampleDataD(CurWin)->loopSize	= 0;
 							SampleDataD(CurWin)->size		= 0;
-							MyDisposePtr((Ptr*) &SampleDataD(CurWin)->data);
+							DisposePtr((Ptr)&SampleDataD(CurWin)->data);
 							SampleDataD(CurWin)->data		= NewPtr(0);
 							
 							InternalUpdate(CurWin);
 							if (thePrefs.ClassicalProjection) UpdateMozartInfo();
 						} else {
-							newSnd = MyNewPtr(newSize);
+							newSnd = NewPtr(newSize);
 							if (newSnd != NULL) {
 								BlockMoveData(SampleDataD(CurWin)->data, newSnd, Start);
 								
 								if (reste < 0) MyDebugStr(__LINE__, __FILE__, "Error in Sample Delete");
 								BlockMoveData(SampleDataD(CurWin)->data + End, newSnd + Start, reste);
 								
-								MyDisposePtr(&SampleDataD(CurWin)->data);
+								DisposePtr(SampleDataD(CurWin)->data);
 								SampleDataD(CurWin)->data = newSnd;
 								
 								SampleDataD(CurWin)->size = newSize;
@@ -4640,7 +4640,7 @@ pascal OSErr MyReceiveSampleHandler(WindowPtr theWindow, unsigned long handlerRe
 	{
 		SaveUndo(UAllSamples, 0, "\pUndo 'Move instrument'");
 	
-		mySnd = MyNewHandle(textSize);
+		mySnd = NewHandle(textSize);
 		
 		HLock(mySnd);
 		
@@ -4762,7 +4762,7 @@ Boolean DragSample(RgnHandle myRgn, short theNo, EventRecord *theEvent)
 	else
 		numChan = 1;
 	
-	theSound = MyNewHandle(10000);
+	theSound = NewHandle(10000);
 	SetupSndHeader((SndListHandle)theSound,
 				   numChan,
 				   ((unsigned long)SampleDataD(theNo)->c2spd) << 16,
@@ -4865,7 +4865,7 @@ Boolean DragSample(RgnHandle myRgn, short theNo, EventRecord *theEvent)
 	DisposeRgn(dragRegion);
 	
 	HUnlock(theSound);
-	MyDisposHandle(& theSound);
+	DisposeHandle(theSound);
 	
 	return true;
 }

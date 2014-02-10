@@ -2271,17 +2271,17 @@ void PressPartition(Point myPt)
 				tempRgn = NewRgn();
 				RectRgn(tempRgn, &markee);
 				
-				if (myPcmd != NULL)
-				{
+				if (myPcmd != NULL) {
 					CalculDiffStartBox();
 					
 					SetCursor(&CHandCrsr);
 					
 					DragBox(tempRgn, myPcmd, &theEvent);
 					
-					DiffStartV = 0;		DiffStartH = 0;
+					DiffStartV = 0;
+					DiffStartH = 0;
 					
-					MyDisposePtr((Ptr*) &myPcmd);
+					DisposePtr((Ptr)myPcmd);
 				}
 				
 				DisposeRgn(tempRgn);
@@ -2299,27 +2299,28 @@ void PressPartition(Point myPt)
 				SetCursor(&CHandCrsr);
 				
 				myCPt = myPt;
-				while (Button())
-				{
+				while (Button()) {
 					GetMouse(&myPt);
-					if (myCPt.h != myPt.h || myCPt.v != myPt.v) break;
+					if (myCPt.h != myPt.h || myCPt.v != myPt.v)
+						break;
 				}
-				if (!Button()) goto newSelec2;
+				if (!Button())
+					goto newSelec2;
 				
 				GetSelectionRect2(&markee, false);
 				tempRgn = NewRgn();
 				RectRgn(tempRgn, &markee);
 				
 				myPcmd = CreatePcmdFromSelectionMozart();
-				if (myPcmd != NULL)
-				{
+				if (myPcmd != NULL) {
 					CalculDiffStartBox();
 					
 					DragBox(tempRgn, myPcmd, &theEvent);
 					
-					DiffStartV = 0;		DiffStartH = 0;
+					DiffStartV = 0;
+					DiffStartH = 0;
 					
-					MyDisposePtr((Ptr*) &myPcmd);
+					DisposePtr((Ptr)myPcmd);
 				}
 				
 				DisposeRgn(tempRgn);
@@ -3157,16 +3158,13 @@ void COPYMozart(void)
 	
 	anErr = ClearCurrentScrap();
 	anErr = GetCurrentScrap(&scrap);
-	SwapPcmd(myPcmd);
-	anErr = PutScrapFlavor(scrap, 'Pcmd', 0, GetPtrSize((Ptr) myPcmd),  (Ptr) myPcmd);
-	SwapPcmd(myPcmd);
-	
 	myText = ConvertPcmd2Text(myPcmd);
+	anErr = PutScrapFlavor(scrap, 'TEXT', 0, GetPtrSize(myText), myText);
+	DisposePtr(myText);
 	
-	anErr = PutScrapFlavor(scrap, 'TEXT', 0, GetPtrSize(myText),  myText);
-	
-	MyDisposePtr(&myText);
-	MyDisposePtr((Ptr*)&myPcmd);
+	SwapPcmd(myPcmd);
+	anErr = PutScrapFlavor(scrap, 'Pcmd', 0, GetPtrSize((Ptr)myPcmd), (Ptr)myPcmd);
+	DisposePtr((Ptr)myPcmd);
 	
 	SetCursor(GetQDGlobalsArrow(&qdarrow));
 }
@@ -3243,7 +3241,7 @@ void PASTEMozart(void)
 	if (lCntOrErr > 0) {
 		SaveUndo(UPattern, PatCopy, "\pUndo 'Paste Classical Editor'");
 		
-		theHandle = MyNewHandle(lCntOrErr);
+		theHandle = NewHandle(lCntOrErr);
 		
 		HLock(theHandle);
 		GetScrapFlavorData(scrap, 'Pcmd', &lCntOrErr, *theHandle);
@@ -3253,7 +3251,7 @@ void PASTEMozart(void)
 		PasteCmdBox(myPcmd);
 		
 		HUnlock(theHandle);
-		MyDisposHandle(& theHandle);
+		DisposeHandle(theHandle);
 	}
 	SetPort(savePort);
 }
@@ -3277,7 +3275,7 @@ void OpenPcmdMozart(FSSpec *mySpec)
 	
 	if (FSpOpenDF(mySpec, fsCurPerm, &fRefNum) == noErr) {
 		GetEOF(fRefNum, &inOutBytes);
-		myPcmd = (Pcmd*) MyNewPtr(inOutBytes);
+		myPcmd = (Pcmd*) NewPtr(inOutBytes);
 		iErr = FSRead(fRefNum, &inOutBytes, (Ptr)myPcmd);
 		
 		SwapPcmd(myPcmd);
@@ -3415,7 +3413,7 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 					short minNote, maxNote;
 					
 					////////////
-					myPcmd = (Pcmd*) MyNewPtr(textSize);
+					myPcmd = (Pcmd*) NewPtr(textSize);
 					GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
 					PcmdTracks = myPcmd->tracks;
 					if (PcmdTracks <= 0)
@@ -3430,7 +3428,7 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 					} else {
 						PcmdHigh = maxNote - minNote + 1;
 					}
-					MyDisposePtr((Ptr*)&myPcmd);
+					DisposePtr((Ptr)myPcmd);
 					/////////////
 				} else {
 					PcmdTracks = 1;
@@ -3455,7 +3453,7 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 							short minNote, maxNote;
 							
 							GetEOF(fRefNum, &inOutBytes);
-							myPcmd = (Pcmd*) MyNewPtr(inOutBytes);
+							myPcmd = (Pcmd*) NewPtr(inOutBytes);
 							FSRead(fRefNum, &inOutBytes, (Ptr)myPcmd);
 							SwapPcmd(myPcmd);
 							PcmdTracks = myPcmd->tracks;
@@ -3468,7 +3466,7 @@ pascal OSErr MyTrackingBox(short message, WindowPtr theWindow, void *handlerRefC
 								PcmdHigh = maxNote - minNote + 1;
 							}
 							FSCloseFork(fRefNum);
-							MyDisposePtr((Ptr*)&myPcmd);
+							DisposePtr((Ptr)myPcmd);
 						}
 						///////////////
 						
@@ -3608,7 +3606,7 @@ Boolean DragBox(RgnHandle myRgn, Pcmd *myPcmd, EventRecord *theEvent)
 	
 	myText = ConvertPcmd2Text(myPcmd);
 	AddDragItemFlavor(theDrag, 1, 'TEXT', myText, GetPtrSize(myText), 0);
-	MyDisposePtr(& myText);
+	DisposePtr(myText);
 	
 	result = SetDragSendProc(theDrag, mySendDataUPP, NULL);
 	
@@ -3679,7 +3677,7 @@ pascal OSErr MyReceiveDropBox(WindowPtr theWindow, void *handlerRefCon, DragRefe
 	result = GetFlavorDataSize(theDrag, theItem, 'Pcmd', &textSize);
 	
 	if (result == noErr) {
-		myPcmd = (Pcmd*) MyNewPtr(textSize);
+		myPcmd = (Pcmd*) NewPtr(textSize);
 		if (myPcmd != NULL) {
 			GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
 			
@@ -3702,7 +3700,7 @@ pascal OSErr MyReceiveDropBox(WindowPtr theWindow, void *handlerRefCon, DragRefe
 			
 			SwapPcmd(myPcmd);
 			PasteCmdBox(myPcmd);
-			MyDisposePtr((Ptr*)&myPcmd);
+			DisposePtr((Ptr)myPcmd);
 			
 			if (attributes & kDragInsideSenderWindow) {
 				selecStart.v = DropY;

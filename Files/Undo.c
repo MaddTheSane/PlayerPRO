@@ -159,7 +159,7 @@ void ResetUndo(void)
 	myUndo.ID = 0;
 	
 	if (myUndo.data != NULL)
-		MyDisposePtr(& myUndo.data);
+		DisposePtr(myUndo.data);
 	myUndo.data = NULL;
 	myUndo.dataSize = 0;
 	
@@ -167,13 +167,13 @@ void ResetUndo(void)
 	
 	for (i = 0; i < MAXINSTRU; i++) {
 		if (CopyAllInstruments[i] != NULL)
-			MyDisposePtr(&CopyAllInstruments[i]);
+			DisposePtr(CopyAllInstruments[i]);
 		CopyAllInstruments[i] = NULL;
 	}
 	
 	for (i = 0; i < MAXPATTERN; i++) {
 		if (CopyPartition[i] != NULL)
-			MyDisposePtr((Ptr*)&CopyPartition[i]);
+			DisposePtr((Ptr)CopyPartition[i]);
 		CopyPartition[i] = NULL;
 	}
 	
@@ -194,17 +194,18 @@ void SaveUndo(short UndoType, short ID, Str255 textMenu)
 	myUndo.UndoType = UndoType;
 	myUndo.ID = ID;
 	
-	if (myUndo.data != NULL) MyDisposePtr(& myUndo.data);
+	if (myUndo.data != NULL)
+		DisposePtr(myUndo.data);
 	myUndo.data = NULL;
 	
 	for (i = 0; i < MAXINSTRU; i++) {
 		if (CopyAllInstruments[i] != NULL)
-			MyDisposePtr(&CopyAllInstruments[i]);
+			DisposePtr(CopyAllInstruments[i]);
 		CopyAllInstruments[i] = NULL;
 	}
 	for (i = 0; i < MAXPATTERN; i++) {
 		if (CopyPartition[i] != NULL)
-			MyDisposePtr((Ptr*)&CopyPartition[i]);
+			DisposePtr((Ptr)CopyPartition[i]);
 		CopyPartition[i] = NULL;
 	}
 	
@@ -215,7 +216,7 @@ void SaveUndo(short UndoType, short ID, Str255 textMenu)
 			if (ID < 0 || ID >= curMusic->header->numPat)
 				MyDebugStr(__LINE__, __FILE__, "Undo Pattern error.");
 			else {
-				myUndo.data = MyNewPtr(myUndo.dataSize);
+				myUndo.data = NewPtr(myUndo.dataSize);
 				if (myUndo.data == NULL)
 					ResetUndo();
 				else
@@ -232,7 +233,7 @@ void SaveUndo(short UndoType, short ID, Str255 textMenu)
 				myUndo.dataSize	+= sizeof(sData) + curData->size;
 			}
 			
-			myUndo.data 		= MyNewPtr(myUndo.dataSize);
+			myUndo.data 		= NewPtr(myUndo.dataSize);
 			if (myUndo.data == NULL)
 				ResetUndo();
 			else {
@@ -265,7 +266,7 @@ void SaveUndo(short UndoType, short ID, Str255 textMenu)
 		case UAllPatterns:
 			myUndo.dataSize = sizeof(struct MADSpec);
 			
-			myUndo.data = MyNewPtr(myUndo.dataSize);
+			myUndo.data = NewPtr(myUndo.dataSize);
 			if (myUndo.data == NULL) {
 				ResetUndo();
 				break;
@@ -286,7 +287,7 @@ void SaveUndo(short UndoType, short ID, Str255 textMenu)
 						size	+= sizeof(sData) + curData->size;
 					}
 					
-					CopyAllInstruments[i] = MyNewPtr(size);
+					CopyAllInstruments[i] = NewPtr(size);
 					if (CopyAllInstruments[i] != NULL) {
 						size = 0;
 						BlockMoveData(&curMusic->fid[i], CopyAllInstruments[i] + size, sizeof(InstrData));
@@ -332,7 +333,7 @@ void SaveUndo(short UndoType, short ID, Str255 textMenu)
 						if (GetPtrSize((Ptr)curMusic->partition[i]) != tempL)
 							MyDebugStr(__LINE__, __FILE__, "Check Create Partition SIZE");
 						
-						CopyPartition[i] = (PatData*)MyNewPtr(tempL);
+						CopyPartition[i] = (PatData*)NewPtr(tempL);
 						if (CopyPartition[i] != NULL) {
 							BlockMoveData(curMusic->partition[i], CopyPartition[i], tempL);
 						}
@@ -373,7 +374,7 @@ void DoUndo(void)
 	switch (myUndo.UndoType) {
 		case UPattern:
 			/** REDO **/
-			myTempUndo = MyNewPtr(myUndo.dataSize);
+			myTempUndo = NewPtr(myUndo.dataSize);
 			if (myTempUndo)
 			{
 				BlockMoveData(curMusic->partition[ myUndo.ID], myTempUndo, myUndo.dataSize);
@@ -384,7 +385,7 @@ void DoUndo(void)
 				/********/
 				
 				/** REDO **/
-				MyDisposePtr(& myUndo.data);
+				DisposePtr(myUndo.data);
 				myUndo.data		= myTempUndo;
 				/********/
 				
@@ -401,7 +402,7 @@ void DoUndo(void)
 				myTempSize	+= sizeof(sData) + curData->size;
 			}
 			
-			myTempUndo 		= MyNewPtr(myTempSize);
+			myTempUndo 		= NewPtr(myTempSize);
 			if (myTempUndo == NULL) {
 				ResetUndo();
 				break;
@@ -443,7 +444,7 @@ void DoUndo(void)
 					size += sizeof(sData);
 					
 					/* Sample data */
-					curData->data = MyNewPtr(curData->size);
+					curData->data = NewPtr(curData->size);
 					if (curData->data) {
 						BlockMoveData(myUndo.data + size, curData->data, curData->size);
 						size += curData->size;
@@ -456,7 +457,7 @@ void DoUndo(void)
 			// ********
 			
 			// ** REDO **
-			MyDisposePtr(& myUndo.data);
+			DisposePtr(myUndo.data);
 			myUndo.data		= myTempUndo;
 			myUndo.dataSize	= myTempSize;
 			CopyFid			= myTempFid;
@@ -478,7 +479,7 @@ void DoUndo(void)
 			// *********************
 			
 			/** REDO **/
-			myTempUndo = MyNewPtr(myUndo.dataSize);
+			myTempUndo = NewPtr(myUndo.dataSize);
 			if (myTempUndo == NULL)
 				MyDebugStr(__LINE__, __FILE__, "UndoError - MEMORY");
 			BlockMoveData(curMusic->header, myTempUndo, myUndo.dataSize);
@@ -495,10 +496,10 @@ void DoUndo(void)
 			/********/
 			
 			/** REDO **/
-			MyDisposePtr(& myUndo.data);
+			DisposePtr(myUndo.data);
 			myUndo.data = myTempUndo;
 			BlockMoveData(myTempSets, CopySets, MAXTRACK * sizeof(FXSets));
-			MyDisposePtr(& myTempSets);
+			DisposePtr(myTempSets);
 			/********/
 			
 			// *********************
@@ -516,7 +517,7 @@ void DoUndo(void)
 						myTempSize	+= sizeof(sData) + curData->size;
 					}
 					
-					myTempInstru 	= MyNewPtr(myTempSize);
+					myTempInstru 	= NewPtr(myTempSize);
 					if (myTempInstru != NULL) {
 						myTempSize = 0;
 						BlockMoveData(&curMusic->fid[i], myTempInstru + myTempSize, sizeof(InstrData));
@@ -566,7 +567,7 @@ void DoUndo(void)
 								size += sizeof(sData);
 								
 								// Sample data
-								curData->data = MyNewPtr(curData->size);
+								curData->data = NewPtr(curData->size);
 								if (curData->data) {
 									BlockMoveData(CopyAllInstruments[ i] + size, curData->data, curData->size);
 									size += curData->size;
@@ -574,7 +575,7 @@ void DoUndo(void)
 							}
 						}
 						
-						MyDisposePtr(& CopyAllInstruments[i]);
+						DisposePtr(CopyAllInstruments[i]);
 						CopyAllInstruments[i] = NULL;
 					}
 					
@@ -590,14 +591,14 @@ void DoUndo(void)
 				for (i = 0; i < MAXPATTERN; i++) {
 					/** REDO **/
 					if (curMusic->partition[i] != NULL) {
-						myTempInstru = MyNewPtr(GetPtrSize((Ptr)curMusic->partition[i]));
+						myTempInstru = NewPtr(GetPtrSize((Ptr)curMusic->partition[i]));
 						if (myTempInstru != NULL) {
 							BlockMoveData(curMusic->partition[i], myTempInstru, GetPtrSize((Ptr)curMusic->partition[i]));
 						}
 						// After save for Redo, delete it !!
 						
-						MyDisposePtr((Ptr*)&curMusic->partition[i]);
-						curMusic->partition[ i] = NULL;
+						DisposePtr((Ptr)curMusic->partition[i]);
+						curMusic->partition[i] = NULL;
 					} else
 						myTempInstru = NULL;
 					/********/
@@ -606,12 +607,12 @@ void DoUndo(void)
 						if (i >= curMusic->header->numPat)
 							MyDebugStr(__LINE__, __FILE__, "UNDO Partition ERROR");
 					
-						curMusic->partition[i] = (PatData*)MyNewPtr(GetPtrSize((Ptr)CopyPartition[i]));
+						curMusic->partition[i] = (PatData*)NewPtr(GetPtrSize((Ptr)CopyPartition[i]));
 						if (curMusic->partition[i] != NULL) {
 							BlockMoveData(CopyPartition[i], curMusic->partition[i], GetPtrSize((Ptr) CopyPartition[i]));
 						}
 						
-						MyDisposePtr((Ptr*) &CopyPartition[i]);
+						DisposePtr((Ptr)CopyPartition[i]);
 						CopyPartition[i] = NULL;
 					}
 					

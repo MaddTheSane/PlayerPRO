@@ -1719,8 +1719,7 @@ void DragSelect(void)
 	if (DragManagerUse) {
 		SetCursor(&CHandCrsr);
 	
-		if (WaitMouseMoved(theEvent.where))
-		{
+		if (WaitMouseMoved(theEvent.where)) {
 			DidTryToDrag = true;
 			
 			CalculDiffStart();
@@ -1730,13 +1729,13 @@ void DragSelect(void)
 			RectRgn(tempRgn, &bRect);
 			
 			myPcmd = CreatePcmdFromSelection();
-			if (myPcmd != NULL)
-			{
+			if (myPcmd != NULL) {
 				DragEditor(tempRgn, myPcmd, &theEvent);
 				
-				DiffStartV = 0;		DiffStartH = 0;
+				DiffStartV = 0;
+				DiffStartH = 0;
 				
-				MyDisposePtr((Ptr*) &myPcmd);
+				DisposePtr((Ptr)&myPcmd);
 			}
 			DisposeRgn(tempRgn);
 		}
@@ -1745,13 +1744,14 @@ void DragSelect(void)
 
 void SavePcmdFile(Pcmd *myPcmd)
 {
-	FSSpec				reply;
-	Str255				defaultname, tStr;
-	OSErr				iErr;
-	long					inOutBytes;
-	short				fRefNum;
+	FSSpec	reply;
+	Str255	defaultname, tStr;
+	OSErr	iErr;
+	long	inOutBytes;
+	short	fRefNum;
 
-	if (myPcmd == NULL) return;
+	if (myPcmd == NULL)
+		return;
 
 	pStrcpy(defaultname, "\pMy Pcmd (");
 	
@@ -1765,14 +1765,13 @@ void SavePcmdFile(Pcmd *myPcmd)
 	iErr = DoCustomSave("\pSave Pcmd file", defaultname, 'Pcmd', &reply);
 	if (iErr) return;
 	
-//	HSetVol(NULL, reply.vRefNum, reply.parID);
 	
-	if (FSpOpenDF(&reply, fsCurPerm, &fRefNum) != noErr)
-	{
+	if (FSpOpenDF(&reply, fsCurPerm, &fRefNum) != noErr) {
 		iErr = FSpDelete(&reply);
 		iErr = FSpCreate(&reply, 'SNPL', 'Pcmd', smSystemScript);
-		iErr = FSpOpenDF(&reply, fsCurPerm, &fRefNum);
-		if (iErr) goto EndPcmd;
+		iErr = FSpOpenDF(&reply, fsWrPerm, &fRefNum);
+		if (iErr)
+			goto EndPcmd;
 	}
 	iErr = FSSetForkPosition(fRefNum, fsFromStart, 0);
 
@@ -1783,7 +1782,7 @@ void SavePcmdFile(Pcmd *myPcmd)
 
 	EndPcmd:
 
-	MyDisposePtr((Ptr*) &myPcmd);
+	DisposePtr((Ptr)myPcmd);
 }
 
 void OpenPcmdFile(FSSpec *mySpec)
@@ -1807,7 +1806,7 @@ void OpenPcmdFile(FSSpec *mySpec)
 		CellSelec.h = 0;
 		if (PLGetSelect(&CellSelec, &myList)) {
 			GetEOF(fRefNum, &inOutBytes);
-			myPcmd = (Pcmd*) MyNewPtr(inOutBytes);
+			myPcmd = (Pcmd*)NewPtr(inOutBytes);
 			iErr = FSRead(fRefNum, &inOutBytes, (Ptr) myPcmd);
 			
 			PasteCmdEditor(CellSelec, myPcmd);
@@ -2654,14 +2653,12 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 					myPcmd = CreatePcmdFromSelection();
 					
 					CallPPDGPlugIns(temp-1, myPcmd);
-					
 					SaveUndo(UPattern, CurrentPat, "\pUndo 'Digital Editor Plug'");
-					
 					theCell.h = theCell.v = 0;
 					if (PLGetSelect(&theCell, &myList))
 						PasteCmdEditor(theCell, myPcmd);
 					
-					MyDisposePtr((Ptr*)&myPcmd);
+					DisposePtr((Ptr)myPcmd);
 				}
 				
 				//HiliteControl(FXBut, 0);
@@ -3777,7 +3774,6 @@ void PasteCmdEditor(Point theCell, Pcmd *myPcmd)
 	GrafPtr	SavePort;
 	
 	SwapPcmd(myPcmd);
-	
 	GetPort(&SavePort);
 	SetPortDialogPort(EditorDlog);
 	
@@ -3850,8 +3846,8 @@ void COPYEditor(void)
 	anErr = GetCurrentScrap(&scrap);
 	anErr = PutScrapFlavor(scrap, 'Pcmd', 0, GetPtrSize((Ptr) myPcmd), (Ptr)myPcmd);
 	
-	MyDisposePtr(&myText);
-	MyDisposePtr((Ptr*)&myPcmd);
+	DisposePtr(myText);
+	DisposePtr((Ptr)myPcmd);
 	
 	SetCursor(GetQDGlobalsArrow(&qdarrow));
 	
@@ -3882,7 +3878,7 @@ void PASTEEditor(void)
 	if (lCntOrErr > 0) {
 		SetCursor(&watchCrsr);
 	
-		theHandle = MyNewHandle(lCntOrErr);
+		theHandle = NewHandle(lCntOrErr);
 		
 		HLock(theHandle);
 		GetScrapFlavorData(scrap, 'Pcmd', &lCntOrErr, *theHandle);
@@ -3899,7 +3895,7 @@ void PASTEEditor(void)
 			PasteCmdEditor(theCell, myPcmd);
 		
 		HUnlock(theHandle);
-		MyDisposHandle(& theHandle);
+		DisposeHandle(theHandle);
 		
 		SetCursor(GetQDGlobalsArrow(&qdarrow));
 	}
@@ -4004,7 +4000,7 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 				result = GetFlavorDataSize(theDrag, theItem, 'Pcmd', &textSize);
 				if (result == noErr) {
 					/****************/
-					myPcmd = (Pcmd*)MyNewPtr(textSize);
+					myPcmd = (Pcmd*)NewPtr(textSize);
 					GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
 					SwapPcmd(myPcmd);
 					PcmdTracks = myPcmd->tracks;
@@ -4013,7 +4009,7 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 					PcmdLength = myPcmd->length;
 					if (PcmdLength <= 0)
 						PcmdLength = 1;
-					MyDisposePtr((Ptr*)&myPcmd);
+					DisposePtr((Ptr)myPcmd);
 					/****************/
 				} else {
 					PcmdTracks = 1;
@@ -4037,13 +4033,13 @@ pascal OSErr MyTrackingEditor(short message, WindowPtr theWindow, void *handlerR
 						iErr = FSpOpenDF(&myFlavor.fileSpec, fsCurPerm, &fRefNum);
 						if (iErr == noErr) {
 							GetEOF(fRefNum, &inOutBytes);
-							myPcmd = (Pcmd*)MyNewPtr(inOutBytes);
+							myPcmd = (Pcmd*)NewPtr(inOutBytes);
 							FSRead(fRefNum, &inOutBytes, (Ptr)myPcmd);
 							SwapPcmd(myPcmd);
 							PcmdTracks = myPcmd->tracks;
 							PcmdLength = myPcmd->length;
 							FSCloseFork(fRefNum);
-							MyDisposePtr((Ptr*)&myPcmd);
+							DisposePtr((Ptr)myPcmd);
 						}
 						/****************/
 						
@@ -4197,7 +4193,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 		err = GetFlavorDataSize(theDrag, theItem, 'Pcmd', &textSize);
 		
 		if (err == noErr) {
-			myPcmd = (Pcmd*)MyNewPtr(textSize);
+			myPcmd = (Pcmd*)NewPtr(textSize);
 			if (myPcmd != NULL) {
 				GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
 				SwapPcmd(myPcmd);
@@ -4264,7 +4260,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 				FSCloseFork(fRefNum);
 			}
 			
-			MyDisposePtr((Ptr*)&myPcmd);
+			DisposePtr((Ptr)myPcmd);
 			
 			err = SetDragItemFlavorData(theDrag, theItem, theFlavor, &target, sizeof(target), 0);
 			if (err)
@@ -4297,8 +4293,12 @@ Boolean DragEditor(RgnHandle myRgn, Pcmd *myPcmd, EventRecord *theEvent)
 	
 	NewDrag(&theDrag);
 	
-	AddDragItemFlavor(theDrag, 1, 'Pcmd', myPcmd, myPcmd->structSize, 0);
+	myText = ConvertPcmd2Text(myPcmd);
+	AddDragItemFlavor(theDrag, 1, 'TEXT', myText, GetPtrSize(myText), 0);
+	DisposePtr(myText);
 	
+	SwapPcmd(myPcmd);
+	AddDragItemFlavor(theDrag, 1, 'Pcmd', myPcmd, myPcmd->structSize, 0);
 	if (thePrefs.editorSoundDrag) {
 		myNewFile.fileType			=	'AIFF';
 		myNewFile.fileCreator		=	'TVOD';
@@ -4315,12 +4315,7 @@ Boolean DragEditor(RgnHandle myRgn, Pcmd *myPcmd, EventRecord *theEvent)
 		AddDragItemFlavor(theDrag, 1, 'VCT1', NULL, 0, 0);
 	}
 	
-	myText = ConvertPcmd2Text(myPcmd);
-	AddDragItemFlavor(theDrag, 1, 'TEXT', myText, GetPtrSize(myText), 0);
-	MyDisposePtr(& myText);
-	
 	result = SetDragSendProc(theDrag, mySendDataUPP, NULL);
-	
 	SetDragItemBounds(theDrag, 1, GetRegionBounds(dragRegion, &dragRegionRect));
 	
 	tempRgn = NewRgn();
@@ -4389,7 +4384,7 @@ pascal OSErr MyReceiveDropEditor(WindowPtr theWindow, void* handlerRefCon, DragR
 	result = GetFlavorDataSize(theDrag, theItem, 'Pcmd', &textSize);
 	
 	if (result == noErr) {
-		myPcmd = (Pcmd*) MyNewPtr(textSize);
+		myPcmd = (Pcmd*)NewPtr(textSize);
 		if (myPcmd != NULL) {
 			GetFlavorData(theDrag, theItem, 'Pcmd', myPcmd, &textSize, 0);
 			
@@ -4402,7 +4397,7 @@ pascal OSErr MyReceiveDropEditor(WindowPtr theWindow, void* handlerRefCon, DragR
 			
 			PasteCmdEditor(CellSelec, myPcmd);
 			
-			MyDisposePtr((Ptr*) &myPcmd);
+			DisposePtr((Ptr)myPcmd);
 			
 			return noErr;
 		} else
@@ -4455,7 +4450,7 @@ void PrintEditor(void)
 	
 	PrintTEHandle(hTE);
 	
-	MyDisposePtr((Ptr*)&myPcmd);
-	MyDisposePtr(& myText);
+	DisposePtr((Ptr)myPcmd);
+	DisposePtr(myText);
 	TEDispose(hTE);
 }

@@ -931,7 +931,7 @@ void COPYParti(void)
 	if (PLGetSelect(&theCell, &myList)) {
 		SetCursor(&watchCrsr);
 		
-		theHandle = MyNewHandle((myList.select.bottom - myList.select.top) + 1);
+		theHandle = NewHandle((myList.select.bottom - myList.select.top) + 1);
 		HLock(theHandle);
 		
 		count = 0;
@@ -947,7 +947,7 @@ void COPYParti(void)
 		
 		HUnlock((Handle)theHandle);
 	
-		MyDisposHandle(&theHandle);
+		DisposeHandle(theHandle);
 	
 		SetCursor(GetQDGlobalsArrow(&qdarrow));
 	}
@@ -972,7 +972,7 @@ void PASTEParti(void)
 	if (lCntOrErr > 0) {
 		SetCursor(&watchCrsr);
 	
-		theHandle = MyNewHandle(lCntOrErr);
+		theHandle = NewHandle(lCntOrErr);
 		
 		HLock(theHandle);
 		GetScrapFlavorData(scrap, 'PATL', &lCntOrErr, *theHandle);
@@ -992,7 +992,7 @@ void PASTEParti(void)
 		}
 		
 		HUnlock(theHandle);
-		MyDisposHandle(& theHandle);
+		DisposeHandle(theHandle);
 		SetCursor(GetQDGlobalsArrow(&qdarrow));
 		UpdatePartiInfo();
 		
