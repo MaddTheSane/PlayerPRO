@@ -15,11 +15,11 @@ extern	WindowPtr	oldWindow;
 
 void DrawMODHeader(void)
 {
-	Str255				aStr, str2;
+	Str255				aStr;
 	unsigned long		secs;
-	Handle				aHandle;
 	
-	TextFont(4);	TextSize(9);
+	TextFont(4);
+	TextSize(9);
 	MoveTo(20, 20);
 	
 	DrawString(versString);
@@ -42,155 +42,143 @@ void DrawMODHeader(void)
 void PrintPixMap(PixMapHandle aPix)
 {
 	GrafPtr		curPort;
-	OSErr		err;
 	Rect		caRect, destRect;
-
-	if (aPix == NULL) return;
+	
+	if (aPix == NULL)
+		return;
 	
 	GetPort(&curPort);
 	
 	GetPortBounds((CGrafPtr) curPort, &caRect);
 	
 	CenterRect(&caRect, &(*aPix)->bounds, &destRect);
-
+	
 	ClipRect(&destRect);
 	
-	CopyBits(	(BitMap*) *(aPix),
- 				(BitMap*) *GetPortPixMap((CGrafPtr) curPort),
- 				&(*aPix)->bounds,
- 				&destRect,
- 				ditherCopy,				//ditherCopy
- 				NULL);
+	CopyBits((BitMap*) *(aPix),
+			 (BitMap*) *GetPortPixMap((CGrafPtr) curPort),
+			 &(*aPix)->bounds,
+			 &destRect,
+			 ditherCopy,				//ditherCopy
+			 NULL);
 }
 
 void PrintBitMap(BitMap aBit)
 {
 	GrafPtr		curPort;
-	OSErr		err;
 	Rect		caRect, destRect;
-
+	
 	GetPort(&curPort);
 	
-	GetPortBounds( (CGrafPtr) curPort, &caRect);
+	GetPortBounds((CGrafPtr)curPort, &caRect);
 	
 	CenterRect(&caRect, &aBit.bounds, &destRect);
-
+	
 	ClipRect(&destRect);
 	
-	CopyBits(	(BitMap*) &aBit,
- 				(BitMap*) *GetPortPixMap( (CGrafPtr) curPort),
- 				&aBit.bounds,
- 				&destRect,
- 				ditherCopy,				//ditherCopy
- 				NULL);
+	CopyBits((BitMap*) &aBit,
+			 (BitMap*) *GetPortPixMap( (CGrafPtr) curPort),
+			 &aBit.bounds,
+			 &destRect,
+			 ditherCopy,				//ditherCopy
+			 NULL);
 }
 
-Boolean PageSetUp(void)
+Boolean PageSetUp()
 {
 	Boolean	val = false;
-
+	
 #if MACOS9VERSION
-
 	PrOpen();
-	
 	val = PrStlDialog(hPrint);
-	
 	PrClose();
-	
 #endif
 	
 	return val;
 }
 
-void InitPrinting(void)
+void InitPrinting()
 {
 #if MACOS9VERSION
-	
-	hPrint = (THPrint) MyNewHandle(sizeof(TPrint) + 50L);
-	
+	hPrint = (THPrint)MyNewHandle(sizeof(TPrint) + 50L);
 	PrOpen();
-	
 	PrintDefault(hPrint);
-	
 	PrClose();
-	
 #endif
 }
 
-void Print(void)
+void Print()
 {
+#if MACOS9VERSION
 	WindowPtr	aPort, theFrontWindow;
 	Point		theCell;
-	short		WindType;
 	GrafPtr		savePort;
-//	TPrStatus	prStatus;
+	//TPrStatus	prStatus;
 	OSErr		err;
 	Rect		destRect;
+#endif
+	short		WindType;
 	
 	WindType = GetWRefCon(oldWindow);
 	
-	switch (WindType)
-	{
+	switch (WindType) {
 		case RefPartition:
 		case RefSample:
 		case RefHelp:
 		case 0:
-				
-		break;
-	
+			
+			break;
+			
 		default:
 			Erreur(34, -4);
 			return;
-		break;
+			break;
 	}
 	
 #if MACOS9VERSION
 	
 	PrOpen();
 	
-	if (PrJobDialog(hPrint))
-	{
+	if (PrJobDialog(hPrint)) {
 		printPort = PrOpenDoc(hPrint, nil, nil);
-		if (PrError() == noErr)
-		{			
-			switch (WindType)
-			{
+		if (PrError() == noErr) {
+			switch (WindType) {
 				case 0:
 					PrOpenPage(printPort, nil);
 					DrawMODHeader();
-
+					
 					PrintRegistration();
 					
 					PrClosePage(printPort);
-				break;
-			
+					break;
+					
 				case RefSample:
 					PrOpenPage(printPort, nil);
 					DrawMODHeader();
 					PrintSample(oldWindow);
 					PrClosePage(printPort);
-				break;
-				
+					break;
+					
 				case RefPartition:
 					PrintEditor();
-				break;
-				
+					break;
+					
 				case RefHelp:
 					PrintHelpOnline();
-				break;
-				
+					break;
+					
 				default:
 					Erreur(34, -4);
 					return;
-				break;
+					break;
 			}
-			if ((*hPrint)->prJob.bJDocLoop == bSpoolLoop  && PrError() == noErr )
-				PrPicFile(hPrint, NULL, NULL, NULL, &prStatus );
-
+			if ((*hPrint)->prJob.bJDocLoop == bSpoolLoop  && PrError() == noErr)
+				PrPicFile(hPrint, NULL, NULL, NULL, &prStatus);
+			
 			PrCloseDoc(printPort);
-		}
-		else Erreur(54, PrError());
-
+		} else
+			Erreur(54, PrError());
+		
 		SetCursor(GetQDGlobalsArrow(&qdarrow));
 	}
 	PrClose();
@@ -199,38 +187,39 @@ void Print(void)
 }
 
 
-void DoneDrawingPagesOfATextFile(Ptr myText, long	TextLong)
+void DoneDrawingPagesOfATextFile(Ptr myText, long TextLong)
 {
 	short	i;
 	Str255	aStringOfText;
-
+	
 	TextSize(9);
 	TextFont(4);
 	
-	for (i = 1; i <= TextLong/250; ++i)
-	{
-			BlockMoveData(myText, (Ptr) aStringOfText, 250);
-			aStringOfText[ 250] = '\0';
-			MyC2PStr((Ptr) aStringOfText);
-			
-			/*
-			 * Carrige return characters mess up DrawString, so they are removed.
-			 * Also, tabs are not handled correctly.  They are left as an exercise
-			 * for the programmer!
-			 */
-			 
-			if (aStringOfText[ aStringOfText[0]] == '\n') aStringOfText[ aStringOfText[0]] = ' ';
-			MoveTo(10, 14 * i);
-			DrawString(aStringOfText);
-			
-			myText += 250;
+	for (i = 1; i <= TextLong / 250; ++i) {
+		BlockMoveData(myText, (Ptr) aStringOfText, 250);
+		aStringOfText[250] = '\0';
+		MyC2PStr((Ptr)aStringOfText);
+		
+		/*
+		 * Carrige return characters mess up DrawString, so they are removed.
+		 * Also, tabs are not handled correctly.  They are left as an exercise
+		 * for the programmer!
+		 */
+		
+		if (aStringOfText[aStringOfText[0]] == '\n')
+			aStringOfText[aStringOfText[0]] = ' ';
+		MoveTo(10, 14 * i);
+		DrawString(aStringOfText);
+		
+		myText += 250;
 	}
 }
 
 void PrintTEHandle(TEHandle hTE)
 {
+#if MACOS9VERSION
 #define Margins 20
-
+	
 	short 		totalLines;			//{ number of lines in text }
 	Rect		rView;				//{ viewRect for TERect }
 	GrafPtr		oldPort;			//{ hold original grafPtr }
@@ -240,13 +229,12 @@ void PrintTEHandle(TEHandle hTE)
 	short 		currentLine;		//{ what line are we on }
 	short		scrollAmount;		//{ how much we scroll by }
 	Rect		zeroRect;			//{ 0,0,0,0 rect used in clipRect }
-	short		viewHeight;			//{ temp that has the viewRect height+1 to test conditions }	
+	short		viewHeight;			//{ temp that has the viewRect height+1 to test conditions }
 	Boolean		OpenPrintManager;	//{ flag if print manager can be opened okay }
 	Boolean		abort;				//{ flag if cmd-period is hit to exit routine }
-
-#if MACOS9VERSION
-
-	oldView = (*hTE)->viewRect; 
+	
+	
+	oldView = (*hTE)->viewRect;
 	oldDest = (*hTE)->destRect;
 	oldPort	= (*hTE)->inPort;
 	
@@ -266,32 +254,31 @@ void PrintTEHandle(TEHandle hTE)
 	abort = false;
 	currentLine = 1;
 	
-	while (abort != true && currentLine <= totalLines)
-	{
+	while (abort != true && currentLine <= totalLines) {
 		PrOpenPage(printPort, NULL );
 		scrollAmount = 0;
 		ClipRect(&(*hPrint)->prInfo.rPage );
 		
 		viewHeight = (*hTE)->viewRect.bottom - (*hTE)->viewRect.top + 1;
-
+		
 		//	{ figure out how many lines there are per page }
-	
-		while (((scrollAmount + TEGetHeight(currentLine, currentLine, hTE ) ) <= viewHeight )
-			&& (currentLine <= totalLines ) )
-			{
-				scrollAmount = scrollAmount + TEGetHeight(currentLine, currentLine, hTE );
-				currentLine = currentLine + 1;
-			}
+		
+		while (((scrollAmount + TEGetHeight(currentLine, currentLine, hTE)) <= viewHeight)
+			   && (currentLine <= totalLines)) {
+			scrollAmount = scrollAmount + TEGetHeight(currentLine, currentLine, hTE );
+			currentLine = currentLine + 1;
+		}
 		
 		(*hTE)->viewRect.bottom = scrollAmount + Margins;	//{ Add margins since top has a margin }
 		TEDeactivate(hTE ); 								//{ Deactive the edit record so we don't print the cursor or selection range }
-		TEUpdate(&(*hTE)->viewRect, hTE ); 				//{ print the page }
+		TEUpdate(&(*hTE)->viewRect, hTE); 				//{ print the page }
 		ClipRect(&zeroRect); 								//{ Close clipping so that TEScroll doesn't redraw the text }
-		TEScroll(0, -scrollAmount, hTE ); 					//{ scroll the page so we can print the next one }
+		TEScroll(0, -scrollAmount, hTE); 					//{ scroll the page so we can print the next one }
 		(*hTE)->viewRect.bottom = rView.bottom; 			//{ reset bottom to full page }
-
-		if (PrError() == iPrAbort) abort = true;
-		PrClosePage(printPort ); 						//{ close everything up }
+		
+		if (PrError() == iPrAbort)
+			abort = true;
+		PrClosePage(printPort); 						//{ close everything up }
 	}
 	
 	(*hTE)->inPort = oldPort;

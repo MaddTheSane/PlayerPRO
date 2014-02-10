@@ -33,8 +33,7 @@ OSErr TESTmain(	Ptr,
 
 #define PPFilterLoadPlug(theBundle) (PPFiltersPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROFiltersPlugTypeID, kPlayerPROFiltersPlugInterfaceID)
 
-typedef OSErr (*MyProcPtr) (sData*, long , long , PPInfoPlug*, long);
-OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
+typedef OSErr (*MyProcPtr)(sData*, long , long , PPInfoPlug*, long);
 
 OSErr NCallPlugIns(short PlugNo, sData *theInsData, long start, long end, long stereoMode)
 {

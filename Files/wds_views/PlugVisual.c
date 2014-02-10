@@ -14,11 +14,11 @@ extern	DialogPtr				AHelpDlog;
 extern	WindowPtr				oldWindow;
 
 		DialogPtr				VisualDlog;
-		RenderVisualData		currentData;
+//		RenderVisualData		currentData;
 
 //static	short*					sampleBuffer;
 //static	long					numSamples;
-static	Boolean					ReadyToProcess = false;
+//static	Boolean					ReadyToProcess = false;
 
 
 long GetDisplayID(long inDeviceNum);
@@ -37,9 +37,9 @@ typedef struct
 	
 } VisualInfo;
 
-static	VisualInfo 	*VisualPlug;
-static	short		tPlug, wantedHeight, wantedWidth;
-static	short		currentID;
+//static	VisualInfo 	*VisualPlug;
+//static	short		tPlug, wantedHeight, wantedWidth;
+//static	short		currentID;
 
 void CallVisualFonction(MADDriverRec*, short PlugNo, OSType msg, CGrafPtr port, short*, long);
 short GetCurrentID();
@@ -50,11 +50,8 @@ Ptr GetAudioChannel(Boolean LeftChannel, long Size);
 Ptr MakeCalculusSpectrum(Ptr srcPtr, Boolean logScale);
 void ProcessVisualPlug(MADDriverRec *intDriver, short* in, long inNum);
 void DoFullScreenNow(WindowPtr mWind);
-OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
 
-//#if MACOS9VERSION
-#if 1
-
+#if 0
 void DoFullScreenNow(WindowPtr mWind)
 {
 	Point			mFullscreenSize;
@@ -741,7 +738,7 @@ void CallVisualMain(short PlugNo, OSType msg)
 {
 }
 
-void CallVisualFonction(MADDriverRec*, short PlugNo, OSType msg, CGrafPtr port, short* sampleBuffer, long numSamples)
+void CallVisualFonction(MADDriverRec* arec, short PlugNo, OSType msg, CGrafPtr port, short* sampleBuffer, long numSamples)
 {
 }
 
@@ -782,7 +779,7 @@ void DoKeyVisual(DialogPtr whichDialog)
 {
 }
 
-void ProcessVisualPlug(short* in, long inNum)
+void ProcessVisualPlug(MADDriverRec *intDriver, short* in, long inNum)
 {
 }
 

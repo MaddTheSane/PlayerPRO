@@ -1,15 +1,5 @@
 #include <Carbon/Carbon.r>
 
-resource 'vers' (1) {
-	0x1,
-	0x1,
-	release,
-	0x0,
-	0,
-	"1.01",
-	"1.01 - ROSSET Antoine 95"
-};
-
 resource 'DLOG' (4094, "Midi import") {
 	{154, 174, 227, 507},
 	movableDBoxProc,

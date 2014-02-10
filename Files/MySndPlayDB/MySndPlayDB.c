@@ -31,6 +31,7 @@
 
 #define TARGET_API_MAC_OS8 0
 #define TARGET_API_MAC_CARBON 1
+#undef DEBUG
 #define DEBUG 0
 #include "RDriver.h"
 #include <Carbon/Carbon.h>
@@ -86,7 +87,7 @@ OSErr	MySndDoImmediate (SndChannelPtr chan, SndCommand * cmd) {
 		}
 	}
 
-	return (SndDoImmediate (chan, cmd));
+	return SndDoImmediate(chan, cmd);
 }
 
 // This must be called at task time.

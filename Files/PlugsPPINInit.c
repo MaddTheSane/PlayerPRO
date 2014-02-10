@@ -37,7 +37,6 @@ static	UInt16 		gfirstItem = 0;
 
 OSErr ExtractFile(NavCBRecPtr callBackParms, FSSpec	*finalSpec);
 OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, ByteCount maximumSize, ByteCount *actualSize);
-OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
 pascal Boolean MyInsCustomFilter(AEDesc *theItem, void *info, NavCallBackUserData callBackUD, NavFilterModes filterMode);
 pascal void myCustomEventNAVProc(	NavEventCallbackMessage 	callBackSelector, 
 								 NavCBRecPtr 				callBackParms, 

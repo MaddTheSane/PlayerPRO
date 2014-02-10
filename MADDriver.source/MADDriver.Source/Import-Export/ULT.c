@@ -68,13 +68,10 @@ static inline void mystrcpy(Ptr a, BytePtr b)
 
 static OSErr ConvertULT2Mad(Ptr theULT, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
-	long 				i, PatMax, x, z, channel, Row;
-	long 				sndSize, starting, RES;
-	Ptr					MaxPtr;
-	OSErr				theErr;
-	Ptr					theInstrument[ 64], destPtr;
-	Byte				tempChar, *theULTCopy;
-	short				Note, Octave, maxTrack;
+	long	i, x, z, Row;
+	Ptr		MaxPtr;
+	Ptr		theInstrument[64];
+	Byte	*theULTCopy;
 	
 	/**** Variables pour le MAD ****/
 	Cmd				*aCmd;
@@ -263,7 +260,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, long MODSize, MADMusic *theMAD, MADDrive
 
 static OSErr ExtractULTInfo(PPInfoRec *info, Ptr AlienFile)
 {
-	short		i, maxInstru, tracksNo;
+	//short		i, maxInstru, tracksNo;
 	ULTForm		ULTinfo;
 	/********************************/
 	
@@ -276,17 +273,17 @@ static OSErr ExtractULTInfo(PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	//ULTinfo.name[ 31] = '\0';
-	//pStrcpy((unsigned char*) info->internalFileName, MYC2PStr(ULTinfo.name));
 	strlcpy(info->internalFileName, ULTinfo.name, sizeof(ULTinfo.name));
 	
 	/*** Total Patterns ***/
 	
-	info->totalPatterns = 0;	//Tdecode16( &ITinfo.patNum);
+	info->totalPatterns = 0;
+	//Tdecode16(&ITinfo.patNum);
 	
 	/*** Partition Length ***/
 	
-	info->partitionLength = 0;	//Tdecode16(&ITinfo.orderNum);
+	info->partitionLength = 0;
+	//Tdecode16(&ITinfo.orderNum);
 	
 	/*** Total Instruments ***/
 	

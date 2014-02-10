@@ -95,6 +95,14 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		550004DA18A948BD00408208 /* AEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = 550004D118A948BD00408208 /* AEffect.h */; };
+		550004DB18A948BD00408208 /* aeffectx.h in Headers */ = {isa = PBXBuildFile; fileRef = 550004D218A948BD00408208 /* aeffectx.h */; };
+		550004DC18A948BD00408208 /* AEffEditor.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 550004D318A948BD00408208 /* AEffEditor.hpp */; };
+		550004DE18A948BD00408208 /* AudioEffect.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 550004D518A948BD00408208 /* AudioEffect.hpp */; };
+		550004E018A948BD00408208 /* audioeffectx.h in Headers */ = {isa = PBXBuildFile; fileRef = 550004D718A948BD00408208 /* audioeffectx.h */; };
+		550004E118A948BD00408208 /* vstcontrols.h in Headers */ = {isa = PBXBuildFile; fileRef = 550004D818A948BD00408208 /* vstcontrols.h */; };
+		550004E218A948BD00408208 /* vstgui.h in Headers */ = {isa = PBXBuildFile; fileRef = 550004D918A948BD00408208 /* vstgui.h */; };
+		550004E318A959C600408208 /* PlugVisual.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C80C2F21DD00D6C081 /* PlugVisual.c */; };
 		55096A3110E0A6E8000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55096A3210E0A6EF000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55096A3310E0A6F3000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -458,7 +466,6 @@
 		88E0C4640C2F21DE00D6C081 /* Equalizer.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E70C2F21DD00D6C081 /* Equalizer.c */; };
 		88E0C4650C2F21DE00D6C081 /* FFT-Dialog.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E80C2F21DD00D6C081 /* FFT-Dialog.c */; };
 		88E0C4690C2F21DE00D6C081 /* Carbon.r in Rez */ = {isa = PBXBuildFile; fileRef = 88E0C3BE0C2F21DD00D6C081 /* Carbon.r */; };
-		88E0C46A0C2F21DE00D6C081 /* PlugVisual.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C80C2F21DD00D6C081 /* PlugVisual.c */; };
 		88E0C46B0C2F21DE00D6C081 /* PlugVST.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C90C2F21DD00D6C081 /* PlugVST.c */; };
 		88E0C46D0C2F21DE00D6C081 /* ScreenDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4120C2F21DD00D6C081 /* ScreenDevice.h */; };
 		88E0C4760C2F21E400D6C081 /* MAD.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4750C2F21E400D6C081 /* MAD.h */; };
@@ -1289,6 +1296,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		550004D118A948BD00408208 /* AEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AEffect.h; sourceTree = "<group>"; };
+		550004D218A948BD00408208 /* aeffectx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aeffectx.h; sourceTree = "<group>"; };
+		550004D318A948BD00408208 /* AEffEditor.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AEffEditor.hpp; sourceTree = "<group>"; };
+		550004D418A948BD00408208 /* AudioEffect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioEffect.cpp; sourceTree = "<group>"; };
+		550004D518A948BD00408208 /* AudioEffect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AudioEffect.hpp; sourceTree = "<group>"; };
+		550004D618A948BD00408208 /* audioeffectx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = audioeffectx.cpp; sourceTree = "<group>"; };
+		550004D718A948BD00408208 /* audioeffectx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = audioeffectx.h; sourceTree = "<group>"; };
+		550004D818A948BD00408208 /* vstcontrols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vstcontrols.h; sourceTree = "<group>"; };
+		550004D918A948BD00408208 /* vstgui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vstgui.h; sourceTree = "<group>"; };
 		550B001A10BA021A004FC5D7 /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Game.h; sourceTree = "<group>"; };
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PlayerPROCore.h; sourceTree = "<group>"; };
 		550B006810BA0676004FC5D7 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2201,6 +2217,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		550004D018A948BD00408208 /* VSTHeaders */ = {
+			isa = PBXGroup;
+			children = (
+				550004D118A948BD00408208 /* AEffect.h */,
+				550004D218A948BD00408208 /* aeffectx.h */,
+				550004D318A948BD00408208 /* AEffEditor.hpp */,
+				550004D418A948BD00408208 /* AudioEffect.cpp */,
+				550004D518A948BD00408208 /* AudioEffect.hpp */,
+				550004D618A948BD00408208 /* audioeffectx.cpp */,
+				550004D718A948BD00408208 /* audioeffectx.h */,
+				550004D818A948BD00408208 /* vstcontrols.h */,
+				550004D918A948BD00408208 /* vstgui.h */,
+			);
+			path = VSTHeaders;
+			sourceTree = "<group>";
+		};
 		550B00CF10BA17BC004FC5D7 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
@@ -3178,6 +3210,7 @@
 		88E0C3DC0C2F21DD00D6C081 /* Files */ = {
 			isa = PBXGroup;
 			children = (
+				550004D018A948BD00408208 /* VSTHeaders */,
 				55F0DA6610CC808500835D4E /* wds_general */,
 				55F0DA6710CC80E600835D4E /* wds_editors */,
 				55F0DA6810CC813500835D4E /* wds_views */,
@@ -3307,6 +3340,7 @@
 				88E0C47A0C2F21E400D6C081 /* Shuddup.h in Headers */,
 				88E0C47C0C2F21E400D6C081 /* RDriver.h in Headers */,
 				88E0C47E0C2F21E400D6C081 /* RDriverInt.h in Headers */,
+				550004E118A948BD00408208 /* vstcontrols.h in Headers */,
 				88E0C4800C2F21E400D6C081 /* PPPlug.h in Headers */,
 				88E0C4820C2F21E400D6C081 /* VA.h in Headers */,
 				88E0C4860C2F21E400D6C081 /* VideoToolbox.h in Headers */,
@@ -3319,6 +3353,7 @@
 				88E0C4940C2F21E500D6C081 /* aeffectx.h in Headers */,
 				88E0C4990C2F21E500D6C081 /* MIDI.h in Headers */,
 				88E0C49B0C2F21E500D6C081 /* 3D.proto.h in Headers */,
+				550004DA18A948BD00408208 /* AEffect.h in Headers */,
 				88E0C49D0C2F21E500D6C081 /* About.proto.h in Headers */,
 				88E0C49F0C2F21E500D6C081 /* ActiveHelp.proto.h in Headers */,
 				88E0C4A10C2F21E500D6C081 /* Adaptators.proto.h in Headers */,
@@ -3368,6 +3403,7 @@
 				88E0C4F90C2F21E500D6C081 /* PrivateList.proto.h in Headers */,
 				88E0C4FB0C2F21E500D6C081 /* Progress.proto.h in Headers */,
 				88E0C4FD0C2F21E500D6C081 /* ProgressBar.proto.h in Headers */,
+				550004E218A948BD00408208 /* vstgui.h in Headers */,
 				88E0C4FF0C2F21E600D6C081 /* PubWindow.proto.h in Headers */,
 				88E0C5010C2F21E600D6C081 /* Quicktime.proto.h in Headers */,
 				88E0C5030C2F21E600D6C081 /* Record.proto.h in Headers */,
@@ -3376,6 +3412,8 @@
 				88E0C50B0C2F21E600D6C081 /* Spectrum.proto.h in Headers */,
 				88E0C50D0C2F21E600D6C081 /* StaffEditor.proto.h in Headers */,
 				88E0C50F0C2F21E600D6C081 /* TextScroll.proto.h in Headers */,
+				550004DE18A948BD00408208 /* AudioEffect.hpp in Headers */,
+				550004DB18A948BD00408208 /* aeffectx.h in Headers */,
 				88E0C5110C2F21E600D6C081 /* ThreadSystem.proto.h in Headers */,
 				88E0C5130C2F21E600D6C081 /* Tools.proto.h in Headers */,
 				88E0C5150C2F21E600D6C081 /* TrackView.proto.h in Headers */,
@@ -3389,6 +3427,8 @@
 				88E0C52B0C2F21E600D6C081 /* AtomInfo.h in Headers */,
 				88E0C52D0C2F21E600D6C081 /* AEffect.h in Headers */,
 				550B011410BA1E1C004FC5D7 /* PPPrivate.h in Headers */,
+				550004DC18A948BD00408208 /* AEffEditor.hpp in Headers */,
+				550004E018A948BD00408208 /* audioeffectx.h in Headers */,
 				552C6FE410CD9DB700C0E0D4 /* PPDefs.h in Headers */,
 				557DE27710E04C1500177B4C /* PPResDefs.h in Headers */,
 			);
@@ -5345,7 +5385,7 @@
 				88E0C4620C2F21DE00D6C081 /* G3.c in Sources */,
 				88E0C4640C2F21DE00D6C081 /* Equalizer.c in Sources */,
 				88E0C4650C2F21DE00D6C081 /* FFT-Dialog.c in Sources */,
-				88E0C46A0C2F21DE00D6C081 /* PlugVisual.c in Sources */,
+				550004E318A959C600408208 /* PlugVisual.c in Sources */,
 				88E0C46B0C2F21DE00D6C081 /* PlugVST.c in Sources */,
 				551E56F2102A9E8B0086C86E /* Main.c in Sources */,
 				551E57A1102AB9A30086C86E /* Mozart.c in Sources */,
@@ -6573,7 +6613,6 @@
 				"MACOSX_DEPLOYMENT_TARGET[arch=ppc]" = 10.3;
 				PREBINDING = NO;
 				SDKROOT = macosx10.5;
-				STRIP_STYLE = "non-global";
 			};
 			name = Release;
 		};
@@ -7893,11 +7932,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_PKGINFO_FILE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
 				STRIP_INSTALLED_PRODUCT = NO;
-				STRIP_STYLE = "non-global";
 			};
 			name = "Recent OS-debug";
 		};
@@ -8936,9 +8974,8 @@
 				"LLVM_LTO[sdk=macosx10.7]" = YES;
 				"LLVM_LTO[sdk=macosx10.8]" = YES;
 				"LLVM_LTO[sdk=macosx10.9]" = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				SDKROOT = macosx;
-				STRIP_STYLE = "non-global";
 			};
 			name = "Recent OS";
 		};

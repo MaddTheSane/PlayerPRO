@@ -1,95 +1,84 @@
 #include "Shuddup.h"
 #include "MAD.h"
 #include <stdio.h>
-
 #include "aeffectx.h"
 #include "RDriver.h"
 
 #include <Carbon/Carbon.h>
 
-	extern	EventRecord				theEvent, gModalDialogEvent;
-	extern	Cursor					HandCrsr;
-	extern	DialogPtr				AHelpDlog;
-	extern	WindowPtr				oldWindow;
-	extern	MenuHandle				SampleMenu;
-	extern	KeyMap					km;
-	extern	RGBColor				theColor;
-	static	DialogPtr				VSTDlog;
-	static	short					CurrentcurSelec;
-	
-			short					tPlug;
-			short					PlugsFolderOK;
-	
-	void SampleUpdateNow(void);
-	VSTEffect* CreateVSTEffect(short effectID);
-	void DisposeVSTEffect(VSTEffect *myEffect);
-	long dispatcher(VSTEffect *effect, Boolean applyOnBoth, long opCode, long index, long value, void *ptr, float opt);
-	Boolean VSTEditorClose(DialogPtr aDia, short itemHit);
-	Boolean VSTEditorOpen(VSTEffect *ce, sData	*curData, long Start, long End, Boolean StereoMode, short channelID);
-	void VSTEditorDoItemPress(short itemHit, DialogPtr aDia);
-	void FillVSTEffects(void);
-	OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
-	
+extern	EventRecord				theEvent, gModalDialogEvent;
+extern	Cursor					HandCrsr;
+extern	DialogPtr				AHelpDlog;
+extern	WindowPtr				oldWindow;
+extern	MenuHandle				SampleMenu;
+extern	KeyMap					km;
+extern	RGBColor				theColor;
+static	DialogPtr				VSTDlog;
+static	short					CurrentcurSelec;
+
+		short					tPlug;
+		short					PlugsFolderOK;
+
+void SampleUpdateNow(void);
+VSTEffect* CreateVSTEffect(short effectID);
+void DisposeVSTEffect(VSTEffect *myEffect);
+long dispatcher(VSTEffect *effect, Boolean applyOnBoth, long opCode, long index, long value, void *ptr, float opt);
+Boolean VSTEditorClose(DialogPtr aDia, short itemHit);
+Boolean VSTEditorOpen(VSTEffect *ce, sData	*curData, long Start, long End, Boolean StereoMode, short channelID);
+void VSTEditorDoItemPress(short itemHit, DialogPtr aDia);
+void FillVSTEffects(void);
+
 static	float 		*inputs[ 2], *outputs[ 2], *outputs2[ 2];
 static	long		currentdatasize;
 
-	audioMasterCallback audioMaster;
+		audioMasterCallback audioMaster;
 
 #define VSTBUFFERSIZE 4096
 	
-static	Boolean					ReadyToProcess = false;
+static Boolean ReadyToProcess = false;
 
-typedef struct
-{
-	long						ID;
-	FSSpec						file;
-	
-	Ptr							call;
-	
-}	VSTInfo;
+typedef struct {
+	long	ID;
+	FSSpec	file;
+	Ptr		call;
+} VSTInfo;
 
-static	VSTInfo 		*VSTPlug;
+static VSTInfo *VSTPlug;
 
 #define MAXVSTITEM 80
 #define MAXVSTPREF 500
 #define VSTPREFNAME "\pPlayerPRO VST Prefs"
 
-typedef struct
-{
-	long						ID;
-	Str63						name;
-	long						flag;
-	float						value[ MAXVSTITEM];
-}	VSTPrefsStruct;
+typedef struct {
+	long	ID;
+	Str63	name;
+	long	flag;
+	float	value[MAXVSTITEM];
+} VSTPrefsStruct;
 
-static	VSTPrefsStruct	*VSTPref[ MAXVSTPREF];
+static VSTPrefsStruct *VSTPref[MAXVSTPREF];
+
+static void ByteSwapVSTPrefStruct(VSTPrefsStruct *astruct);
 
 void PurgeVSTEffects(void)
 {
 	short i, x;
 	
-	for (i = 0; i < 10; i++)
-	{
-		if (MADDriver->masterVST[ i] != NULL)
-		{
-			if (MADDriver->masterVST[ i]->Active)
-			{
-				dispatcher(MADDriver->masterVST[ i], true, effMainsChanged, 0, false, 0, 0);
-				dispatcher(MADDriver->masterVST[ i], true, effMainsChanged, 0, true, 0, 0);
+	for (i = 0; i < 10; i++) {
+		if (MADDriver->masterVST[i] != NULL) {
+			if (MADDriver->masterVST[i]->Active) {
+				dispatcher(MADDriver->masterVST[i], true, effMainsChanged, 0, false, 0, 0);
+				dispatcher(MADDriver->masterVST[i], true, effMainsChanged, 0, true, 0, 0);
 			}
 		}
 	}
 	
-	for (i = 0; i < MAXTRACK; i++)
-	{
-		for (x = 0; x < 4; x++)
-		{
-			if (MADDriver->chanVST[ i][ x] != NULL)
-			{
-				if (MADDriver->chanVST[ i][ x]->Active)
-				{
-					dispatcher(MADDriver->chanVST[ i][ x], true, effMainsChanged, 0, false, 0, 0);
-					dispatcher(MADDriver->chanVST[ i][ x], true, effMainsChanged, 0, true, 0, 0);
+	for (i = 0; i < MAXTRACK; i++) {
+		for (x = 0; x < 4; x++) {
+			if (MADDriver->chanVST[i][x] != NULL) {
+				if (MADDriver->chanVST[i][x]->Active) {
+					dispatcher(MADDriver->chanVST[i][x], true, effMainsChanged, 0, false, 0, 0);
+					dispatcher(MADDriver->chanVST[i][x], true, effMainsChanged, 0, true, 0, 0);
 				}
 			}
 		}
@@ -101,16 +90,14 @@ long dispatcher(VSTEffect *effect, Boolean applyOnBoth, long opCode, long index,
 	short	fileID;
 	long	result;
 
-	fileID = FSpOpenResFile(&VSTPlug[ effect->id].file, fsCurPerm);
+	fileID = FSpOpenResFile(&VSTPlug[effect->id].file, fsCurPerm);
 	UseResFile(fileID);
 	
-	result = effect->ce[ 0]->dispatcher(effect->ce[ 0], opCode, index, value, ptr, opt);
+	result = effect->ce[0]->dispatcher(effect->ce[0], opCode, index, value, ptr, opt);
 	
-	if (applyOnBoth)
-	{
-		if (effect->ce[ 1])
-		{
-			result = effect->ce[ 1]->dispatcher(effect->ce[ 1], opCode, index, value, ptr, opt);
+	if (applyOnBoth) {
+		if (effect->ce[1]) {
+			result = effect->ce[ 1]->dispatcher(effect->ce[1], opCode, index, value, ptr, opt);
 		}
 	}
 	
@@ -126,37 +113,37 @@ void GetVSTPrefName(Str255 str, long *flag)
 	GrafPtr		myPort;
 	
 	GetPort(&myPort);
-
-	TheDia = GetNewDialog(187,NULL, (WindowPtr) -1L);
+	
+	TheDia = GetNewDialog(187, NULL, (WindowPtr) -1L);
 	SetPortDialogPort(TheDia);
 	AutoPosition(TheDia);
 	
-	if (str[ 0] == 0) SetDText(TheDia, 4, "\pMy new settings");
-	else SetDText(TheDia, 4, str);
+	if (str[ 0] == 0)
+		SetDText(TheDia, 4, "\pMy new settings");
+	else
+		SetDText(TheDia, 4, str);
 	
 	SelectDialogItemText(TheDia, 4, 0, 32767);
 	
-	if (*flag) InverseRadio(6, TheDia);
+	if (*flag)
+		InverseRadio(6, TheDia);
 	
-	do
-	{
+	do {
 		ModalDialog(MyDlgFilterDesc, &itemHit);
-	
-		switch (itemHit)
-		{
+		
+		switch (itemHit) {
 			case 6:
 				InverseRadio(6, TheDia);
 				*flag = !*flag;
-			break;
+				break;
 		}
+		
+	} while (itemHit != 1 && itemHit != 2);
 	
-	}while (itemHit != 1 && itemHit != 2);
-
-	if (itemHit == 1)
-	{
+	if (itemHit == 1) {
 		GetDText(TheDia, 4, str);
-	}
-	else str[ 0] = 0;
+	} else
+		str[0] = 0;
 	
 	DisposeDialog(TheDia);
 	
@@ -172,21 +159,17 @@ short PressPresetButton(long id, Point myPt, short *curSelec)
 	presetMenu = NewMenu(244, "\pPreset Menu");
 	
 	
-	for (i = 0, maxitem = 0; i < MAXVSTPREF;i++)
-	{
-		if (VSTPref[ i] != NULL)
-		{
-			if (VSTPref[ i]->ID == id)
-			{
-				AppendMenu(presetMenu, VSTPref[ i]->name);
-				table[ maxitem] = i;
+	for (i = 0, maxitem = 0; i < MAXVSTPREF;i++) {
+		if (VSTPref[i] != NULL) {
+			if (VSTPref[i]->ID == id) {
+				AppendMenu(presetMenu, VSTPref[i]->name);
+				table[maxitem] = i;
 				maxitem++;
 			}
 		}
 	}
 	
-	if (maxitem == 0)
-	{
+	if (maxitem == 0) {
 		AppendMenu(presetMenu, "\p(No settings available");
 	}
 	
@@ -197,57 +180,47 @@ short PressPresetButton(long id, Point myPt, short *curSelec)
 	
 	LocalToGlobal(&myPt);
 	
-	if (*curSelec != -1)
-	{
+	if (*curSelec != -1) {
 		SetItemMark(presetMenu, *curSelec+1, 0xa5);
 	
-		mresult = PopUpMenuSelect(	presetMenu,
+		mresult = PopUpMenuSelect(presetMenu,
 									myPt.v,
 									myPt.h,
 									*curSelec+1);
 	
 		SetItemMark(presetMenu, *curSelec+1, 0);
-	}
-	else
-	{
-		mresult = PopUpMenuSelect(	presetMenu,
+	} else {
+		mresult = PopUpMenuSelect(presetMenu,
 									myPt.v,
 									myPt.h,
 									maxitem + 2);
 	}
 	
-	if (HiWord(mresult ) != 0 )
-	{
-		if (LoWord(mresult) - 1 >= maxitem)
-		{
+	if (HiWord(mresult) != 0) {
+		if (LoWord(mresult) - 1 >= maxitem) {
 			*curSelec = LoWord(mresult) - 2;
 			
 			returnVal = -1;
-		}
-		else
-		{
+		} else {
 			temp = LoWord(mresult) - 1;
 			returnVal = table[ temp];
 			
 			GetKeys(km);
-			if (IsPressed(0x33))		// Delete this pref
-			{
-				if (InfoL(104))
-				{
-					DisposePtr((Ptr) VSTPref[ table[ temp]]);
-					VSTPref[ table[ temp]] = NULL;
+			if (IsPressed(0x33)) {		// Delete this pref
+				if (InfoL(104)) {
+					DisposePtr((Ptr)VSTPref[table[temp]]);
+					VSTPref[table[temp]] = NULL;
 					
 					*curSelec = -1;
 				}
 				returnVal = -2;
-			}
-			else *curSelec = temp;
+			} else
+				*curSelec = temp;
 		}
-	}
-	else returnVal = -2;
+	} else
+		returnVal = -2;
 	
 	DeleteMenu(GetMenuID(presetMenu));
-	
 	DisposeMenu(presetMenu);
 	
 	return returnVal;
@@ -257,67 +230,68 @@ void HandleVSTChoice(short item, VSTEffect** vst, short channelID)
 {
 	CurrentcurSelec = -1;	// for the popup !
 	
-	if (*vst)
-	{
-	}
-	else
-	{
+	if (*vst) {
+		
+	} else {
 		*vst = CreateVSTEffect(item);
 	}
 	
 	VSTEditorOpen(*vst, NULL, 0, 0, false, channelID);
 	
-/*	if (VSTEditor(*vst, NULL, 0, 0, false) == false)
+#if 0
+	if (VSTEditor(*vst, NULL, 0, 0, false) == false)
 	{
 		DisposeVSTEffect(*vst);
 		*vst = NULL;
-	}*/
+	}
+#endif
 }
 
 long audioMasterFct(AEffect *effect, long opcode, long index, long value, void *ptr, float opt)
 {
-	long	returnVal = 0;
-
-	switch (opcode)
-	{
+	long returnVal = 0;
+	
+	switch (opcode) {
 		case audioMasterAutomate:
-			value = 0;	index = 0;	returnVal = 0;
+			value = 0;
+			index = 0;
+			returnVal = 0;
 			break;
-		
+			
 		case audioMasterVersion:
 			returnVal = 2;
 			break;
-		
+			
 		case audioMasterIdle:
 			
 			break;
-		
+			
 		case audioMasterPinConnected:
-		
+			
 			break;
-		
+			
 		case audioMasterWillReplaceOrAccumulate:
-		
+			
 			break;
-		
+			
 		case audioMasterOpenWindow:
-		//	Debugger();
+			//Debugger();
 			break;
-		
+			
 		case audioMasterProcessEvents:
-		//		Debugger();
+			//Debugger();
 			break;
-		
+			
 		case audioMasterWantMidi:
-		//		Debugger();
+			//Debugger();
 			break;
-		
+			
 		case audioMasterSizeWindow:
-		//	Debugger();
+			//Debugger();
 			break;
-		
+			
 		default:
-		//	Debugger();
+			//Debugger();
 			break;
 	}
 	
@@ -333,43 +307,49 @@ static inline short ClipConvert(float x)
 {
 	//A FAIRE : LA GESTION DU CLIP ICI !!!!
 	
-	if (x > 1) return 32767;
-	else if (x < -1) return -32767;
-	else return x * 32767.;
+	if (x > 1)
+		return 32767;
+	else if (x < -1)
+		return -32767;
+	else
+		return x * 32767.;
 }
 
 static inline char ClipConvert8(float x)
 {
 	//A FAIRE : LA GESTION DU CLIP ICI !!!!
 	
-	if (x >= 1) return 127;
-	else if (x <= -1) return -128;
-	else return x * 128.;
+	if (x >= 1)
+		return 127;
+	else if (x <= -1)
+		return -128;
+	else
+		return x * 128.;
 }
 
 void ApplyVSTFilter(VSTEffect *effect, sData *SDataSrc, long Start, long End)
 {
-	short			*data16;
-	char			*data8;
-	long			datasize, byteleft;
-	long			i;
-	float 			*in1	=	inputs[0];
-    float 			*in2	=	inputs[1];
+	short	*data16;
+	char	*data8;
+	long	datasize, byteleft;
+	int		i;
+	float	*in1	= inputs[0];
+    float	*in2	= inputs[1];
     
-    float 			*out1	=	outputs[0];
-    float 			*out2	=	outputs[1];
+    float	*out1	= outputs[0];
+    float	*out2	= outputs[1];
     
-    float 			*out21	=	outputs2[0];
-    float 			*out22	=	outputs2[1];
+    float	*out21	= outputs2[0];
+    float	*out22	= outputs2[1];
     
-    AEffect			*ce[ 2];
+    AEffect	*ce[2];
 	
 	MADDriver->currentlyExporting = true;
 	dispatcher(effect, true, effMainsChanged, 0, false, 0, 0);
 	dispatcher(effect, true, effMainsChanged, 0, true, 0, 0);
 	
-	ce[ 0] = effect->ce[ 0];
-	ce[ 1] = effect->ce[ 1];
+	ce[0] = effect->ce[0];
+	ce[1] = effect->ce[1];
 	
 	//byteleft = SDataSrc->size;
 	
@@ -378,118 +358,98 @@ void ApplyVSTFilter(VSTEffect *effect, sData *SDataSrc, long Start, long End)
 	data16 = (short*) (SDataSrc->data + Start);
 	data8 = (char*) (SDataSrc->data + Start);
 	
-	while (byteleft > 0)
-	{
-		if (SDataSrc->stereo)
-		{
-			if (SDataSrc->amp == 8)
-			{
+	while (byteleft > 0) {
+		if (SDataSrc->stereo) {
+			if (SDataSrc->amp == 8) {
 				byteleft -= VSTBUFFERSIZE*2;
 				
-				if (byteleft < 0) datasize = (byteleft + VSTBUFFERSIZE*2)/2;
-				else datasize = VSTBUFFERSIZE;
-			}
-			else
-			{
+				if (byteleft < 0)
+					datasize = (byteleft + VSTBUFFERSIZE*2)/2;
+				else
+					datasize = VSTBUFFERSIZE;
+			} else {
 				byteleft -= VSTBUFFERSIZE*4;
 				
-				if (byteleft < 0) datasize = (byteleft + VSTBUFFERSIZE*4)/4;
-				else datasize = VSTBUFFERSIZE;
+				if (byteleft < 0)
+					datasize = (byteleft + VSTBUFFERSIZE*4)/4;
+				else
+					datasize = VSTBUFFERSIZE;
 			}
-		}
-		else
-		{
-			if (SDataSrc->amp == 8)
-			{
+		} else {
+			if (SDataSrc->amp == 8) {
 				byteleft -= VSTBUFFERSIZE;
 				
-				if (byteleft < 0) datasize = byteleft + VSTBUFFERSIZE;
-				else datasize = VSTBUFFERSIZE;
-			}
-			else
-			{
+				if (byteleft < 0)
+					datasize = byteleft + VSTBUFFERSIZE;
+				else
+					datasize = VSTBUFFERSIZE;
+			} else {
 				byteleft -= VSTBUFFERSIZE*2;
 				
-				if (byteleft < 0) datasize = (byteleft + VSTBUFFERSIZE*2)/2;
-				else datasize = VSTBUFFERSIZE;
+				if (byteleft < 0)
+					datasize = (byteleft + VSTBUFFERSIZE*2)/2;
+				else
+					datasize = VSTBUFFERSIZE;
 			}
 		}
 		
-		if (SDataSrc->stereo)
-		{
-			if (SDataSrc->amp == 8)
-			{
-				for (i = 0; i < datasize; i++)
-				{
-					in1[ i] = data8[ i*2] / 128.;
-					in2[ i] = data8[ i*2 + 1] / 128.;
+		if (SDataSrc->stereo) {
+			if (SDataSrc->amp == 8) {
+				for (i = 0; i < datasize; i++) {
+					in1[i] = data8[i * 2] / 128.;
+					in2[i] = data8[i * 2 + 1] / 128.;
+				}
+			} else {
+				for (i = 0; i < datasize; i++) {
+					in1[i] = data16[i * 2] / 32767.;
+					in2[i] = data16[i * 2 + 1] / 32767.;
 				}
 			}
-			else
-			{
-				for (i = 0; i < datasize; i++)
-				{
-					in1[ i] = data16[ i*2] / 32767.;
-					in2[ i] = data16[ i*2 + 1] / 32767.;
+		} else {
+			if (SDataSrc->amp == 8) {
+				for (i = 0; i < datasize; i++) {
+					in1[i] = data8[i] / 128.;
+					in2[i] = data8[i] / 128.;
 				}
-			}
-		}
-		else
-		{
-			if (SDataSrc->amp == 8)
-			{
-				for (i = 0; i < datasize; i++)
-				{
-					in1[ i] = data8[ i] / 128.;
-					in2[ i] = data8[ i] / 128.;
-				}
-			}
-			else
-			{
-				for (i = 0; i < datasize; i++)
-				{
-					in1[ i] = data16[ i] / 32767.;
-					in2[ i] = data16[ i] / 32767.;
+			} else {
+				for (i = 0; i < datasize; i++) {
+					in1[i] = data16[i] / 32767.;
+					in2[i] = data16[i] / 32767.;
 				}
 			}
 		}
 		
-		if (datasize != VSTBUFFERSIZE)
-		{
-			for (i = datasize; i < VSTBUFFERSIZE; i++)
-			{
-				in1[ i] = 0;
-				in2[ i] = 0;
+		if (datasize != VSTBUFFERSIZE) {
+			for (i = datasize; i < VSTBUFFERSIZE; i++) {
+				in1[i] = 0;
+				in2[i] = 0;
 			}
 		}
 		
 		// APPLY FILTER -- APPLY FILTER -- APPLY FILTER -- APPLY FILTER -- APPLY FILTER -- APPLY FILTER -- 
 		
-		if (ce[ 0]->numInputs == 2 && ce[ 0]->numOutputs == 2)
-			ce[ 0]->processReplacing(ce[ 0], inputs, outputs, datasize);
+		if (ce[0]->numInputs == 2 && ce[0]->numOutputs == 2)
+			ce[0]->processReplacing(ce[0], inputs, outputs, datasize);
 		
-		if (ce[ 0]->numInputs == 1 && ce[ 0]->numOutputs == 1)
-		{
-			ce[ 0]->processReplacing(ce[ 0], inputs, outputs, datasize);
-			ce[ 0]->processReplacing(ce[ 1], inputs + 1, outputs + 1, datasize);
+		if (ce[0]->numInputs == 1 && ce[0]->numOutputs == 1) {
+			ce[0]->processReplacing(ce[0], inputs, outputs, datasize);
+			ce[0]->processReplacing(ce[1], inputs + 1, outputs + 1, datasize);
 		}
 		
-		if (ce[ 0]->numInputs == 1 && ce[ 0]->numOutputs == 2)
-		{
-			for (i = 0; i < datasize; i++)
-			{
-				out1[ i] = 0;
-				out2[ i] = 0;
+		if (ce[0]->numInputs == 1 && ce[0]->numOutputs == 2) {
+			for (i = 0; i < datasize; i++) {
+				out1[i] = 0;
+				out2[i] = 0;
 				
-				out21[ i] = 0;
-				out22[ i] = 0;
+				out21[i] = 0;
+				out22[i] = 0;
 			}
 							
-			ce[ 0]->processReplacing(ce[ 0], inputs, outputs, datasize);
-			for (i = 0; i < datasize; i++) out1[ i] = (out1[ i] + out2[ i]) / 2.0;
+			ce[0]->processReplacing(ce[0], inputs, outputs, datasize);
+			for (i = 0; i < datasize; i++) out1[i] = (out1[i] + out2[i]) / 2.0;
 			
-			ce[ 1]->processReplacing(ce[ 1], &inputs[ 1], outputs2, datasize);
-			for (i = 0; i < datasize; i++) out2[ i] = (out21[ i] + out22[ i]) / 2.0;
+			ce[1]->processReplacing(ce[1], &inputs[ 1], outputs2, datasize);
+			for (i = 0; i < datasize; i++) out2[i] = (out21[i] + out22[i]) / 2.0;
 		}
 		
 		BlockMoveData(out1, in1, sizeof(float) * datasize);
@@ -497,50 +457,34 @@ void ApplyVSTFilter(VSTEffect *effect, sData *SDataSrc, long Start, long End)
 		
 		// APPLY FILTER -- APPLY FILTER -- APPLY FILTER -- APPLY FILTER -- APPLY FILTER -- APPLY FILTER -- 
 		
-		if (SDataSrc->stereo)
-		{
-			if (SDataSrc->amp == 8)
-			{
-				for (i = 0; i < datasize; i++)
-				{
-					data8[ i*2] 	= ClipConvert8(in1[ i]);
-					data8[ i*2 + 1] = ClipConvert8(in2[ i]);
+		if (SDataSrc->stereo) {
+			if (SDataSrc->amp == 8) {
+				for (i = 0; i < datasize; i++) {
+					data8[i * 2]		= ClipConvert8(in1[i]);
+					data8[i * 2 + 1]	= ClipConvert8(in2[i]);
+				}
+			} else {
+				for (i = 0; i < datasize; i++) {
+					data16[i * 2] 		= ClipConvert(in1[i]);
+					data16[i * 2 + 1] 	= ClipConvert(in2[i]);
 				}
 			}
-			else
-			{
-				for (i = 0; i < datasize; i++)
-				{
-					data16[ i*2] 		= ClipConvert(in1[ i]);
-					data16[ i*2 + 1] 	= ClipConvert(in2[ i]);
+		} else {
+			if (SDataSrc->amp == 8) {
+				for (i = 0; i < datasize; i++) {
+					data8[i] = (ClipConvert8(in1[i]) + ClipConvert8(in2[i])) / 2.;
 				}
-			}
-		}
-		else
-		{
-			if (SDataSrc->amp == 8)
-			{
-				for (i = 0; i < datasize; i++)
-				{
-					data8[ i] = (ClipConvert8(in1[ i]) + ClipConvert8(in2[ i])) / 2.;
-				}
-			}
-			else
-			{
-				for (i = 0; i < datasize; i++)
-				{
-					data16[ i] = (ClipConvert(in1[ i]) + ClipConvert(in2[ i])) / 2.;
+			} else {
+				for (i = 0; i < datasize; i++) {
+					data16[i] = (ClipConvert(in1[i]) + ClipConvert(in2[i])) / 2.;
 				}
 			}
 		}
 		
-		if (SDataSrc->stereo)
-		{
+		if (SDataSrc->stereo) {
 			data16 += datasize*2;
 			data8 += datasize*2;
-		}
-		else
-		{
+		} else {
 			data16 += datasize;
 			data8 += datasize;
 		}
@@ -555,39 +499,41 @@ void ApplyVSTFilter(VSTEffect *effect, sData *SDataSrc, long Start, long End)
 
 Boolean IsVSTChanEffect(MADDriverRec *intDriver, short channel)
 {
-	if (ReadyToProcess == false) return false;
+	if (ReadyToProcess == false)
+		return false;
 	
-	if (intDriver->curMusic != NULL)
-	{
-		if (intDriver->curMusic->header != NULL)
-		{
-			if (intDriver->curMusic->header->MultiChan)
-			{
-				Channel *curVoice = &intDriver->chan[ channel];
+	if (intDriver->curMusic != NULL) {
+		if (intDriver->curMusic->header != NULL) {
+			if (intDriver->curMusic->header->MultiChan) {
+				Channel *curVoice = &intDriver->chan[channel];
 				
-				if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0)
-				{
-					if (curVoice->TimeCounter > 0)
-					{
+				if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) {
+					if (curVoice->TimeCounter > 0) {
 						channel = curVoice->TrackID;
-					}
-					else return false;
-				}
-				else channel = curVoice->TrackID;
+					} else
+						return false;
+				} else
+					channel = curVoice->TrackID;
 			}
 			
-			if (intDriver->curMusic->header->chanBus[ channel].Active == false) return false;
+			if (intDriver->curMusic->header->chanBus[channel].Active == false)
+				return false;
 			
-			channel = intDriver->curMusic->header->chanBus[ channel].copyId;
+			channel = intDriver->curMusic->header->chanBus[channel].copyId;
 			
-		//	if (chanBus[ channel]->Active == false) return false;
+			//if (chanBus[ channel]->Active == false) return false;
 			
-			if (intDriver->chanVST[ channel][ 0]) if (intDriver->chanVST[ channel][ 0]) return true;
-			if (intDriver->chanVST[ channel][ 1]) if (intDriver->chanVST[ channel][ 1]) return true;
-			if (intDriver->chanVST[ channel][ 2]) if (intDriver->chanVST[ channel][ 2]) return true;
-			if (intDriver->chanVST[ channel][ 3]) if (intDriver->chanVST[ channel][ 3]) return true;
+			if (intDriver->chanVST[channel][0])
+				return true;
+			if (intDriver->chanVST[channel][1])
+				return true;
+			if (intDriver->chanVST[channel][2])
+				return true;
+			if (intDriver->chanVST[channel][3])
+				return true;
 			
-			if (intDriver->curMusic->header->chanBus[ channel].ByPass) return true;
+			if (intDriver->curMusic->header->chanBus[channel].ByPass)
+				return true;
 		}
 	}	
 	return false;
@@ -595,61 +541,49 @@ Boolean IsVSTChanEffect(MADDriverRec *intDriver, short channel)
 
 void ProcessVSTPlug(MADDriverRec *intDriver, long *data, long datasize, short channel)
 {
-	Boolean			gogo = false, Apply = false;
-	long			i, x;
-	float 			*in1	=	inputs[ 0];
-    float 			*in2	=	inputs[ 1];
-    
-    float 			*out1	=	outputs[0];
-    float 			*out2	=	outputs[1];
-    
-    float 			*out21	=	outputs2[0];
-    float 			*out22	=	outputs2[1];
+	Boolean	gogo = false, Apply = false;
+	long	i, x;
+	float 	*in1	= inputs[ 0];
+	float	*in2	= inputs[ 1];
+	float	*out1	= outputs[0];
+	float	*out2	= outputs[1];
+	float	*out21	= outputs2[0];
+	float	*out22	= outputs2[1];
 	
-	if (ReadyToProcess == false) return;
+	if (ReadyToProcess == false)
+		return;
 	
-	if (intDriver->curMusic != NULL)
-	{
-		if (intDriver->curMusic->header != NULL)
-		{
+	if (intDriver->curMusic != NULL) {
+		if (intDriver->curMusic->header != NULL) {
+			
+		} else
+			return;
+	} else
+		return;
+	
+	if (channel == -1) {		// GLOBAL EFFECTS
+		if (intDriver->curMusic->header->globalFXActive == false)
+			return;
 		
-		}
-		else return;
-	}
-	else return;
-	
-	if (channel == -1)		// GLOBAL EFFECTS
-	{
-		if (intDriver->curMusic->header->globalFXActive == false) return;
-		
-		for (x = 0; x < 10; x++)
-		{
-			if (intDriver->masterVST[ x])
-			{
+		for (x = 0; x < 10; x++) {
+			if (intDriver->masterVST[x]) {
 				gogo = true;
 			}
 		}
-	}
-	else
-	{
-		if (intDriver->curMusic != NULL)
-		{
-			if (intDriver->curMusic->header != NULL)
-			{
-				if (intDriver->curMusic->header->MultiChan)
-				{
-					Channel *curVoice = &intDriver->chan[ channel];
+	} else {
+		if (intDriver->curMusic != NULL) {
+			if (intDriver->curMusic->header != NULL) {
+				if (intDriver->curMusic->header->MultiChan) {
+					Channel *curVoice = &intDriver->chan[channel];
 					
-					if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0)
-					{
-						if (curVoice->TimeCounter > 0)
-						{
-							curVoice->TimeCounter --;
+					if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) {
+						if (curVoice->TimeCounter > 0) {
+							curVoice->TimeCounter--;
 							channel = curVoice->TrackID;
-						}
-						else return;
-					}
-					else channel = curVoice->TrackID;
+						} else
+							return;
+					} else
+						channel = curVoice->TrackID;
 				}
 			}
 		}
@@ -659,114 +593,75 @@ void ProcessVSTPlug(MADDriverRec *intDriver, long *data, long datasize, short ch
 		channel = intDriver->curMusic->header->chanBus[ channel].copyId;
 	}
 	
-	if (gogo == false) return;
+	if (gogo == false)
+		return;
 	
-	if (datasize <= currentdatasize)
-	{
+	if (datasize <= currentdatasize) {
 		short	toTest, ChanToApply;
 		
-		for (i = 0; i < datasize; i++)
-		{
-			in1[ i] = data[ i*2] / 32767.;
-			in2[ i] = data[ i*2 + 1] / 32767.;
+		for (i = 0; i < datasize; i++) {
+			in1[i] = data[i * 2] / 32767.;
+			in2[i] = data[i * 2 + 1] / 32767.;
 		}
 		
-		if (channel == -1) toTest = 10;
-		else toTest = 4;
+		if (channel == -1)
+			toTest = 10;
+		else
+			toTest = 4;
 		
 		ChanToApply = 0;
-		for (x = 0; x < toTest; x++)
-		{
-			VSTEffect	*vsteffect;
+		for (x = 0; x < toTest; x++) {
+			VSTEffect *vsteffect;
 			
-			if (channel == -1) vsteffect = intDriver->masterVST[ x];
-			else vsteffect = intDriver->chanVST[ channel][ x];
+			if (channel == -1)
+				vsteffect = intDriver->masterVST[ x];
+			else
+				vsteffect = intDriver->chanVST[ channel][ x];
 			
-			if (vsteffect)
-			{
-				if (vsteffect->Active)
-				{
+			if (vsteffect) {
+				if (vsteffect->Active) {
 					ChanToApply++;
 				}
 			}
 		}
 		
-		for (x = 0; x < toTest; x++)
-		{
-			VSTEffect	*vsteffect;
+		for (x = 0; x < toTest; x++) {
+			VSTEffect *vsteffect;
 			
-			if (channel == -1) vsteffect = intDriver->masterVST[ x];
-			else vsteffect = intDriver->chanVST[ channel][ x];
+			if (channel == -1)
+				vsteffect = intDriver->masterVST[x];
+			else
+				vsteffect = intDriver->chanVST[channel][x];
 			
-			if (vsteffect)
-			{
-				if (vsteffect->Active)
-				{
-					AEffect*	ce[ 2];
+			if (vsteffect) {
+				if (vsteffect->Active) {
+					AEffect* ce[2];
 					
-				/*	if (vsteffect->ProcessReplacingNotAvailable)
-					{
-						for (i = 0; i < datasize; i++)
-						{
-							out1[ i] = 0;
-							out2[ i] = 0;
-							
-							out21[ i] = 0;
-							out22[ i] = 0;
-						}
-						
-						ce[ 0] = vsteffect->ce[ 0];
-						ce[ 1] = vsteffect->ce[ 1];
-						
-						if (ce[ 0]->numInputs == 2 && ce[ 0]->numOutputs == 2)
-							ce[ 0]->process(ce[ 0], inputs, outputs, datasize);
-						
-						if (ce[ 0]->numInputs == 1 && ce[ 0]->numOutputs == 1)
-						{
-							ce[ 0]->process(ce[ 0], inputs, outputs, datasize);
-							ce[ 0]->process(ce[ 1], inputs + 1, outputs + 1, datasize);
-						}
-						
-						if (ce[ 0]->numInputs == 1 && ce[ 0]->numOutputs == 2)
-						{
-							ce[ 0]->process(ce[ 0], inputs, outputs, datasize);
-							for (i = 0; i < datasize; i++) out1[ i] = (out1[ i] + out2[ i]) / 2.0;
-							
-							ce[ 1]->process(ce[ 1], &inputs[ 1], outputs2, datasize);
-							for (i = 0; i < datasize; i++) out2[ i] = (out21[ i] + out22[ i]) / 2.0;
-						}
+					ce[0] = vsteffect->ce[0];
+					ce[1] = vsteffect->ce[1];
+					
+					if (ce[0]->numInputs == 2 && ce[0]->numOutputs == 2)
+						ce[0]->processReplacing(ce[0], inputs, outputs, datasize);
+					
+					if (ce[0]->numInputs == 1 && ce[0]->numOutputs == 1) {
+						ce[0]->processReplacing(ce[0], inputs, outputs, datasize);
+						ce[0]->processReplacing(ce[1], inputs + 1, outputs + 1, datasize);
 					}
-					else*/
-					{
-						ce[ 0] = vsteffect->ce[ 0];
-						ce[ 1] = vsteffect->ce[ 1];
-						
-						if (ce[ 0]->numInputs == 2 && ce[ 0]->numOutputs == 2)
-							ce[ 0]->processReplacing(ce[ 0], inputs, outputs, datasize);
-						
-						if (ce[ 0]->numInputs == 1 && ce[ 0]->numOutputs == 1)
-						{
-							ce[ 0]->processReplacing(ce[ 0], inputs, outputs, datasize);
-							ce[ 0]->processReplacing(ce[ 1], inputs + 1, outputs + 1, datasize);
+					
+					if (ce[0]->numInputs == 1 && ce[0]->numOutputs == 2) {
+						for (i = 0; i < datasize; i++) {
+							out1[i] = 0;
+							out2[i] = 0;
+							
+							out21[i] = 0;
+							out22[i] = 0;
 						}
 						
-						if (ce[ 0]->numInputs == 1 && ce[ 0]->numOutputs == 2)
-						{
-							for (i = 0; i < datasize; i++)
-							{
-								out1[ i] = 0;
-								out2[ i] = 0;
-								
-								out21[ i] = 0;
-								out22[ i] = 0;
-							}
-							
-							ce[ 0]->processReplacing(ce[ 0], inputs, outputs, datasize);
-							for (i = 0; i < datasize; i++) out1[ i] = (out1[ i] + out2[ i]) / 2.0;
-							
-							ce[ 1]->processReplacing(ce[ 1], &inputs[ 1], outputs2, datasize);
-							for (i = 0; i < datasize; i++) out2[ i] = (out21[ i] + out22[ i]) / 2.0;
-						}
+						ce[0]->processReplacing(ce[0], inputs, outputs, datasize);
+						for (i = 0; i < datasize; i++) out1[i] = (out1[i] + out2[i]) / 2.0;
+						
+						ce[1]->processReplacing(ce[1], &inputs[1], outputs2, datasize);
+						for (i = 0; i < datasize; i++) out2[i] = (out21[i] + out22[i]) / 2.0;
 					}
 					
 					if (ChanToApply > 1) {
@@ -779,12 +674,10 @@ void ProcessVSTPlug(MADDriverRec *intDriver, long *data, long datasize, short ch
 			}
 		}
 		
-		if (Apply == true)
-		{
-			for (i = 0; i < datasize; i++)
-			{
-				data[ i*2]		= out1[ i] * 32767.;
-				data[ i*2 + 1]	= out2[ i] * 32767.;
+		if (Apply == true) {
+			for (i = 0; i < datasize; i++) {
+				data[i * 2]		= out1[i] * 32767.;
+				data[i * 2 + 1]	= out2[i] * 32767.;
 			}
 		}
 	}
@@ -792,20 +685,22 @@ void ProcessVSTPlug(MADDriverRec *intDriver, long *data, long datasize, short ch
 
 void CloseVST(short no, VSTEffect *myEffect)
 {
-	OSErr	myErr;
+	OSErr myErr;
 
-	if (myEffect->connID == NULL) Debugger();
+	if (myEffect->connID == NULL)
+		Debugger();
 	myErr = CloseConnection(&myEffect->connID);
 	myEffect->connID = NULL;
 	
-	if (myEffect->vstMain == NULL) Debugger();
+	if (myEffect->vstMain == NULL)
+		Debugger();
 	//DisposePtr((Ptr) myEffect->vstMain);
 	myEffect->vstMain = NULL;
 	
 	if (myErr) Debugger();
 }
 
-void CloseVSTPlug(void)
+void CloseVSTPlug()
 {
 	long 	i, inOutBytes;
 	OSErr	iErr;
@@ -816,98 +711,51 @@ void CloseVSTPlug(void)
 	pStrcpy(spec.name, VSTPREFNAME);
 	
 	iErr = FSpDelete(&spec);
-	
 	iErr = FSpCreate(&spec, 'SNPL', 'PREF',smSystemScript);
-	
 	iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
 	if (iErr == noErr) {
 		for (i = 0; i < MAXVSTPREF; i++) {
 			if (VSTPref[i] != NULL) {
 				inOutBytes = sizeof(VSTPrefsStruct);
+				VSTPrefsStruct tempPref = *VSTPref[i];
+				ByteSwapVSTPrefStruct(&tempPref);
 			
-				iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, VSTPref[i], NULL);
+				iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &tempPref, NULL);
 			}
 		}
 		
 		FSCloseFork(fRefNum);
 	}
 	
-	// Save current state ***  ***  ***  ***  ***  ***  ***  *** 
-/*	
-	pStrcpy(spec.name, VSTPREFSTATE);
+	// ***  ***  ***  ***  ***  ***  ***  ***  ***  ***  ***
 	
-	iErr = FSpDelete(&spec);
+	DisposePtr((Ptr)inputs[0]);
+	DisposePtr((Ptr)inputs[1]);
 	
-	iErr = FSpCreate(&spec, 'SNPL', 'PREF',smSystemScript);
+	DisposePtr((Ptr)outputs[0]);
+	DisposePtr((Ptr)outputs[1]);
 	
-	iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
-	if (iErr == noErr)
-	{
-		VSTPrefsStruct	tempPref;
-		
-		for (i = 0; i < 10; i++)
-		{
-			if (MADDriver->masterVST[ i] != 0)
-			{
-				VSTEffect	*ce = MADDriver->masterVST[ i];	
-				
-				inOutBytes = sizeof(VSTPrefsStruct);
-				
-				tempPref.ID = ce->ce[ 0]->uniqueID;
-				
-				if (ce->ce[ 0]->numParams >= MAXVSTITEM) MyDebugStr(__LINE__, __FILE__, "Too many VSTITEM, press continue.");
-				
-				for (x = 0; x < ce->ce[ 0]->numParams && x < MAXVSTITEM; x++)
-				{
-					tempPref.value[ x] = ce->ce[ 0]->getParameter(ce->ce[ 0], x);
-				}
-				
-				iErr = FSWrite(fRefNum, &inOutBytes, &tempPref);
-			}
-			else
-			{
-				inOutBytes = sizeof(VSTPrefsStruct);
-				
-				tempPref.ID = 0;	// EMPTY EFFECT !!!!
-				
-				iErr = FSWrite(fRefNum, &inOutBytes, &tempPref);
-			}
-		}
-		
-		FSClose(fRefNum);
-	}*/
-	
-	// ***  ***  ***  ***  ***  ***  ***  ***  ***  ***  *** 
-	
-//	for (i = 0; i < tPlug; i++) CloseVST(i);
-	
-	DisposePtr((Ptr) inputs[ 0]);
-	DisposePtr((Ptr) inputs[ 1]);
-	
-	DisposePtr((Ptr) outputs[ 0]);
-	DisposePtr((Ptr) outputs[ 1]);
-	
-	DisposePtr((Ptr) outputs2[ 0]);
-	DisposePtr((Ptr) outputs2[ 1]);
+	DisposePtr((Ptr)outputs2[0]);
+	DisposePtr((Ptr)outputs2[1]);
 }
 
 void InitVST(short no, VSTEffect* myEffect)
 {
-	OSErr				myErr;
-	Str255				errName;
-	short				fileID;
-
+	OSErr	myErr;
+	Str255	errName;
+	short	fileID;
+	
 	audioMaster = audioMasterFct;
 	
 	fileID = FSpOpenResFile(&VSTPlug[ no].file, fsCurPerm);
 	UseResFile(fileID);
 	myErr = GetMemFragment(VSTPlug[no].call,
-								GetPtrSize(VSTPlug[no].call),
-								VSTPlug[no].file.name,
-                                kLoadCFrag,
-                                &myEffect->connID,
-                                (Ptr*)&myEffect->vstMain,
-                                errName);
+						   GetPtrSize(VSTPlug[no].call),
+						   VSTPlug[no].file.name,
+						   kLoadCFrag,
+						   &myEffect->connID,
+						   (Ptr*)&myEffect->vstMain,
+						   errName);
 	
 	if (myErr) DebugStr("\pErr in InitVST");
 	
@@ -916,15 +764,15 @@ void InitVST(short no, VSTEffect* myEffect)
 
 Boolean LoadVSTPLUG(short No, StringPtr theName)
 {
-	Handle		theRes;
-	short		fileID;
+	Handle	theRes;
+	short	fileID;
 
 	/***********************/
 	
-	HGetVol(NULL, &VSTPlug[No].file.vRefNum, &VSTPlug[ No].file.parID);
+	HGetVol(NULL, &VSTPlug[No].file.vRefNum, &VSTPlug[No].file.parID);
 	FSMakeFSSpec(VSTPlug[No].file.vRefNum, VSTPlug[No].file.parID, theName, &VSTPlug[No].file);
 	
-	Boolean		targetIsFolder, wasAliased;
+	Boolean targetIsFolder, wasAliased;
 	
 	ResolveAliasFile(&VSTPlug[No].file, true, &targetIsFolder, &wasAliased);
 	
@@ -946,8 +794,6 @@ Boolean LoadVSTPLUG(short No, StringPtr theName)
 	CloseResFile(fileID);
 	
 	/*************************/
-	
-	//InitVST(No);
 	
 	return true;
 }
@@ -982,10 +828,9 @@ void ScanDirVSTPlug(long dirID, short VRefNum)
 			
 			iErr = HSetVol(NULL, vRefNum, dirIDCopy);
 			if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "HSetVol error...");
-		}
-		else if((info.hFileInfo.ioFlAttrib & 16)) {
+		} else if((info.hFileInfo.ioFlAttrib & 16)) {
 			if (EqualString(info.hFileInfo.ioNamePtr, "\pPlugs", false, false) || PlugsFolderOK > 0) {
-				if ((EqualString(info.hFileInfo.ioNamePtr, "\pMacOS X", false, false) != true)) {
+				if ((EqualString(info.hFileInfo.ioNamePtr, "\pMacOS X", false, false))) {
 					PlugsFolderOK++;
 					ScanDirVSTPlug(info.dirInfo.ioDrDirID, VRefNum);
 					PlugsFolderOK--;
@@ -995,50 +840,61 @@ void ScanDirVSTPlug(long dirID, short VRefNum)
 	}
 }
 
+static void ByteSwapVSTPrefStruct(VSTPrefsStruct *astruct)
+{
+	int i;
+	MOT32(&astruct->flag);
+	MOT32(&astruct->ID);
+	for (i = 0; i < MAXVSTITEM; i++) {
+		MOT32(&astruct->value[i]);
+	}
+}
 
 void InitVSTPlug(void)
 {
-	short				vRefNum, fRefNum;
-	long				i, x, dirID, inOutBytes;
-	OSErr				iErr;
-	FSSpec				spec;
-	VSTPrefsStruct		tempStruct;
-	VSTEffect			*myEffect;
+	short			vRefNum, fRefNum;
+	long			i, x, dirID, inOutBytes;
+	OSErr			iErr;
+	FSSpec			spec;
+	VSTPrefsStruct	tempStruct;
+	VSTEffect		*myEffect;
 	
 	VSTDlog = NULL;
-	
 	currentdatasize = VSTBUFFERSIZE;
 	
-	inputs[0] 	= (float*) NewPtrClear(sizeof(float) * currentdatasize);
-	inputs[1] 	= (float*) NewPtrClear(sizeof(float) * currentdatasize);
+	inputs[0] 	= (float*)NewPtrClear(sizeof(float) * currentdatasize);
+	inputs[1] 	= (float*)NewPtrClear(sizeof(float) * currentdatasize);
 	
-	outputs[0]	= (float*) NewPtrClear(sizeof(float) * currentdatasize);
-	outputs[1]	= (float*) NewPtrClear(sizeof(float) * currentdatasize);
+	outputs[0]	= (float*)NewPtrClear(sizeof(float) * currentdatasize);
+	outputs[1]	= (float*)NewPtrClear(sizeof(float) * currentdatasize);
 	
-	outputs2[0]	= (float*) NewPtrClear(sizeof(float) * currentdatasize);
-	outputs2[1]	= (float*) NewPtrClear(sizeof(float) * currentdatasize);
+	outputs2[0]	= (float*)NewPtrClear(sizeof(float) * currentdatasize);
+	outputs2[1]	= (float*)NewPtrClear(sizeof(float) * currentdatasize);
 	
-	VSTPlug = (VSTInfo*) MyNewPtr(MAXVST * sizeof(VSTInfo));
+	VSTPlug = (VSTInfo*)MyNewPtr(MAXVST * sizeof(VSTInfo));
 	
 	HGetVol(NULL, &vRefNum, &dirID);
 	
-	for (i = 0; i < 10; i++) MADDriver->masterVST[ i] = NULL;
+	for (i = 0; i < 10; i++) MADDriver->masterVST[i] = NULL;
 	for (i = 0; i < MAXTRACK; i++) { for (x = 0; x < 4; x++) MADDriver->chanVST[i][x] = NULL; }
-	for (i = 0; i < MAXVSTPREF; i++) VSTPref[ i] = NULL;
+	for (i = 0; i < MAXVSTPREF; i++) VSTPref[i] = NULL;
 	
-	tPlug		= 0;
+	tPlug = 0;
 	PlugsFolderOK = 0;
 	
 	GetApplicationPackageFSSpecFromBundle(&spec);
 	ScanDirVSTPlug(spec.parID, spec.vRefNum);
 	
-	if (MacOSXSystem)
-		tPlug = 0;
+	//if (MacOSXSystem)
+	//	tPlug = 0;
+#ifdef __i386__
+	tPlug = 0;
+#endif
 	
 	// Load the Unique ID
 	for (i = 0; i < tPlug; i++) {
 		myEffect = CreateVSTEffect(i);
-		VSTPlug[ i].ID = myEffect->ce[ 0]->uniqueID;
+		VSTPlug[i].ID = myEffect->ce[0]->uniqueID;
 		DisposeVSTEffect(myEffect);
 	}
 	
@@ -1047,7 +903,7 @@ void InitVSTPlug(void)
 	// Load VST Pref File *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 	
 	iErr = FindFolder(kOnSystemDisk, kPreferencesFolderType, kCreateFolder, &spec.vRefNum, &spec.parID);
-	pStrcpy(spec.name, VSTPREFNAME);
+	FSMakeFSSpec(spec.vRefNum, spec.vRefNum, VSTPREFNAME, &spec);
 	
 	iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
 	if (iErr == noErr) {
@@ -1058,13 +914,13 @@ void InitVSTPlug(void)
 			iErr = FSRead(fRefNum, &inOutBytes, &tempStruct);
 			if (iErr == noErr) {
 				VSTPref[i] = (VSTPrefsStruct*)NewPtrClear(inOutBytes);
+				ByteSwapVSTPrefStruct(&tempStruct);
 				
 				*VSTPref[i] = tempStruct;
 				
 				i++;
 			}
-		}
-		while (iErr == noErr);
+		} while (iErr == noErr);
 		
 		FSCloseFork(fRefNum);
 	}
@@ -1085,47 +941,6 @@ void InitVSTPlug(void)
 	
 	
 	ReadyToProcess = true;
-	
-	// Load VST State File *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
-	
-#if 0
-	pStrcpy(spec.name, VSTPREFSTATE);
-	
-	FXCounter = 0;
-	
-	iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
-	if (iErr == noErr)
-	{
-		do
-		{
-			inOutBytes = sizeof(VSTPrefsStruct);
-			
-			iErr = FSRead(fRefNum, &inOutBytes, &tempStruct);
-			if (iErr == noErr)
-			{
-				if (FXCounter >= 10) Debugger();
-				
-				for (i = 0; i < tPlug; i++)
-				{
-					if (tempStruct.ID == VSTPlug[ i].ID)
-					{
-						MADDriver->masterVST[ FXCounter] = CreateVSTEffect(i);
-						
-						for (x = 0; x < MADDriver->masterVST[ FXCounter]->ce[ 0]->numParams; x++)
-						{
-							MADDriver->masterVST[ FXCounter]->ce[ 0]->setParameter(MADDriver->masterVST[ FXCounter]->ce[ 0], x, tempStruct.value[ x]);
-							if (MADDriver->masterVST[ FXCounter]->ce[ 1]) MADDriver->masterVST[ FXCounter]->ce[ 1]->setParameter(MADDriver->masterVST[ FXCounter]->ce[ 1], x, tempStruct.value[ x]);
-						}
-					}
-				}
-			}
-			FXCounter++;
-		}
-		while (iErr == noErr);
-		
-		FSClose(fRefNum);
-	}
-#endif
 }
 
 short ConvertUniqueIDToIndex(long uniqueID)
@@ -1141,7 +956,7 @@ short ConvertUniqueIDToIndex(long uniqueID)
 	return -1;
 }
 
-static	ControlHandle	VSTCntl[ 100], DescCntl[ 100];
+static	ControlHandle	VSTCntl[100], DescCntl[100];
 static	short			CurrentDialogItem;
 static	VSTEffect		*CurrentDialogCE;
 static	sData			*CurrentcurData, CurrentSData;
@@ -1151,25 +966,18 @@ static	Handle			theDITL;
 
 void VSTFilter(DialogPtr theDialog, EventRecord *theEventI, short *itemHit)
 {
-#if 0
-	WindowPtr		whichWindow;
-	short			thePart,i, theChar;
+	short			i, theChar;
 	GrafPtr			oldPort;
-	Point			aPoint, theCell;
-	Str255			str1, str2;
-	Boolean			DrawAll;
 	VstEvents		VstEvt;
 	VstMidiEvent	VstEv;
 	
 	GetPort(&oldPort);
 	SetPortDialogPort(theDialog);
 	
-	if (theEventI->what == keyDown || theEventI->what == keyDown)
-	{
+	if (theEventI->what == keyDown || theEventI->what == keyDown) {
 		theChar = theEventI->message & charCodeMask;
 		i = ConvertCharToNote(theChar);
-		if (i != -1)
-		{
+		if (i != -1) {
 			VstEvt.numEvents = 1;
 			VstEvt.reserved = 0;
 			VstEvt.events[ 0] = (VstEvent*) &VstEv;
@@ -1192,9 +1000,6 @@ void VSTFilter(DialogPtr theDialog, EventRecord *theEventI, short *itemHit)
 		}
 	}
 	SetPort(oldPort);
-	
-	return;
-#endif
 }
 
 void VSTSampleEditor(short item, sData	*curData, long Start, long End, Boolean StereoMode)
@@ -1205,14 +1010,12 @@ void VSTSampleEditor(short item, sData	*curData, long Start, long End, Boolean S
 	tempEffect = CreateVSTEffect(item);
 	
 	if (tempEffect) {
-		//VSTEditor(tempEffect, curData, Start, End, StereoMode);
 		VSTEditorOpen(tempEffect, curData, Start, End, StereoMode, -2);
 		
 		do {
 			ModalDialog(MyDlgFilterDesc, &itemHit);
 			
 			VSTEditorDoItemPress(itemHit, VSTDlog);
-		
 		} while (itemHit != 11 && itemHit != 14);
 		
 		VSTEditorClose(VSTDlog, itemHit);
@@ -1231,15 +1034,16 @@ void CheckVSTEditor(VSTEffect *ce)
 	}
 }
 
-Boolean VSTEditorOpen(VSTEffect *ce, sData	*curData, long Start, long End, Boolean StereoMode, short channelID)
+Boolean VSTEditorOpen(VSTEffect *ce, sData *curData, long Start, long End, Boolean StereoMode, short channelID)
 {
-	short					i, itemType;
-	Str255					theString, theString2;
-	GrafPtr					savedPort;
-	Rect					itemRect, itemRect2, itemRect3, caRect;
-	Handle					itemHandle;
-	ControlHandle			ctl;
-	ControlFontStyleRec		style;
+	short				itemType;
+	Str255				theString, theString2;
+	GrafPtr				savedPort;
+	Rect				itemRect, itemRect2, itemRect3, caRect;
+	Handle				itemHandle;
+	ControlHandle		ctl;
+	ControlFontStyleRec	style;
+	int					i;
 	
 	
 	if (VSTDlog != NULL) {
@@ -1436,7 +1240,6 @@ void VSTEditorDoItemPress(short itemHit, DialogPtr aDia)
 	}
 	
 	switch (itemHit) {
-#if 0
 		case 3:
 			CurrentDialogCE->Active = !CurrentDialogCE->Active;
 			
@@ -1444,7 +1247,6 @@ void VSTEditorDoItemPress(short itemHit, DialogPtr aDia)
 			
 			TurnRadio(3, aDia, CurrentDialogCE->Active);
 			break;
-#endif
 			
 		case 12:
 			if (CurrentcurData) {
@@ -1690,11 +1492,8 @@ Boolean VSTEditorClose(DialogPtr aDia, short itemHit)
 	//HideWindow(aDia);
 
 	UpdateALLWindow();
-	
 	ReleaseResource(theDITL);
-	
 	VSTDlog = NULL;
-	
 	CurrentDialogCE = NULL;
 	
 	if (itemHit == 11)
@@ -1705,43 +1504,38 @@ Boolean VSTEditorClose(DialogPtr aDia, short itemHit)
 
 void DisposeVSTEffect(VSTEffect	*myEffect)
 {
-	//dispatcher(myEffect, true, effMainsChanged, 0, false, 0, 0);
-	
+	dispatcher(myEffect, true, effMainsChanged, 0, false, 0, 0);
 	myEffect->Active = false;
-	
 	dispatcher(myEffect, true, effClose, 0, 0, 0, 0);
-	
 	CloseVST(myEffect->id, myEffect);
-	
 	DisposePtr((Ptr)myEffect);
 }
 
-#if 0
+
 long GetVSTEffectUniqueID(short effectID)
 {
 	short		fileID;
-	long		i, x, returnID;
-	Rect		*tRect;
+	long		returnID;
 	VSTEffect	*myEffect;
 	
-	myEffect = (VSTEffect*) NewPtrClear(sizeof(VSTEffect));
+	myEffect = (VSTEffect*)NewPtrClear(sizeof(VSTEffect));
 	
 	myEffect->id = effectID;
 	
 	InitVST(effectID, myEffect);
 	
-	fileID = FSpOpenResFile(&VSTPlug[ effectID].file, fsCurPerm);
+	fileID = FSpOpenResFile(&VSTPlug[effectID].file, fsCurPerm);
 	UseResFile(fileID);
 	
 	myEffect->ce[ 0] = myEffect->vstMain (audioMaster);
-	if (myEffect->ce[ 0] && myEffect->ce[ 0]->magic == kEffectMagic) {
+	if (myEffect->ce[ 0] && myEffect->ce[0]->magic == kEffectMagic) {
 		
 	} else
 		Debugger();
 	
 	CloseResFile(fileID);
 	
-	//dispatcher(myEffect, true, effOpen, 0, 0, 0, 0);
+	dispatcher(myEffect, true, effOpen, 0, 0, 0, 0);
 	
 	returnID = myEffect->ce[ 0]->uniqueID;
 	
@@ -1754,7 +1548,7 @@ long GetVSTEffectUniqueID(short effectID)
 	
 	return returnID;
 }
-#endif
+
 
 VSTEffect* CreateVSTEffect(short effectID)
 {
@@ -1774,29 +1568,26 @@ VSTEffect* CreateVSTEffect(short effectID)
 	myEffect->id = effectID;
 	
 	myEffect->ce[ 0] = myEffect->vstMain (audioMaster);
-	if (myEffect->ce[ 0] && myEffect->ce[ 0]->magic == kEffectMagic)
-	{
-	}
-	else Debugger();
-	
-	if (myEffect->ce[ 0]->numInputs == 2 && myEffect->ce[ 0]->numOutputs == 2)
-	{
-		myEffect->ce[ 1] = NULL;
-	}
-	else
-	{
-		myEffect->ce[ 1] = myEffect->vstMain (audioMaster);
+	if (myEffect->ce[ 0] && myEffect->ce[ 0]->magic == kEffectMagic) {
 		
-		if (myEffect->ce[ 1] && myEffect->ce[ 1]->magic == kEffectMagic)
-		{
-		}
-		else Debugger();
+	} else
+		Debugger();
+	
+	if (myEffect->ce[0]->numInputs == 2 && myEffect->ce[0]->numOutputs == 2) {
+		myEffect->ce[1] = NULL;
+	} else {
+		myEffect->ce[1] = myEffect->vstMain(audioMaster);
+		
+		if (myEffect->ce[1] && myEffect->ce[1]->magic == kEffectMagic) {
+			
+		} else
+			Debugger();
 	}
 	CloseResFile(fileID);
 	
 	dispatcher(myEffect, true, effOpen, 0, 0, 0, 0);
 	
-	//	dispatcher(myEffect, true, effSetSampleRate, 0, 0, 0, 44100.);
+	dispatcher(myEffect, true, effSetSampleRate, 0, 0, 0, 44100.);
 	
 	counter = 0;
 	
@@ -1829,13 +1620,11 @@ VSTEffect* CreateVSTEffect(short effectID)
 	return myEffect;
 }
 
-void FillVSTEffects(void)
+void FillVSTEffects()
 {
 	short		x, xx, i, alpha;
 	FXSets*		set;
 	VSTEffect*	myEffect;
-	
-	//return;
 	
 	for (i = 0; i < 10; i++) {
 		if (MADDriver->masterVST[ i])
@@ -1901,8 +1690,10 @@ void ApplyVSTSets(VSTEffect* myEffect, FXSets* set)
 {
 	short x;
 	
-	if (set->noArg != myEffect->ce[0]->numParams)
+	if (set->noArg != myEffect->ce[0]->numParams) {
 		DebugStr("\pApplyVSTSets");
+		return;
+	}
 	
 	for (x = 0; x < myEffect->ce[0]->numParams; x++) {
 		myEffect->ce[0]->setParameter(myEffect->ce[0], x, set->values[x]);

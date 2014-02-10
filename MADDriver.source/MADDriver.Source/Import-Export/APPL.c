@@ -24,7 +24,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include "MOD.h"
 
-static OSErr MADResetInstrument(InstrData		*curIns)
+static OSErr MADResetInstrument(InstrData *curIns)
 {
 	short i;
 	
@@ -72,24 +72,22 @@ static OSErr MADKillInstrument(MADMusic *music, short ins)
 	InstrData		*curIns;
 	Boolean			IsReading;
 	
-	if (music == NULL) return MADParametersErr;
+	if (music == NULL)
+		return MADParametersErr;
 	
-	curIns = &music->fid[ ins];
+	curIns = &music->fid[ins];
 	
 	IsReading = music->musicUnderModification;
 	music->musicUnderModification = true;
 	
-	for (i = 0; i < curIns->numSamples; i++)
-	{
-		if (music->sample[ ins * MAXSAMPLE + i] != NULL)
-		{
-			if (music->sample[ ins * MAXSAMPLE + i]->data != NULL)
-			{
-				DisposePtr((Ptr) music->sample[ ins * MAXSAMPLE + i]->data);
-				music->sample[ ins * MAXSAMPLE + i]->data = NULL;
+	for (i = 0; i < curIns->numSamples; i++) {
+		if (music->sample[ins * MAXSAMPLE + i] != NULL) {
+			if (music->sample[ins * MAXSAMPLE + i]->data != NULL) {
+				DisposePtr(music->sample[ins * MAXSAMPLE + i]->data);
+				music->sample[ins * MAXSAMPLE + i]->data = NULL;
 			}
-			DisposePtr((Ptr) music->sample[ ins * MAXSAMPLE + i]);
-			music->sample[ ins * MAXSAMPLE + i] = NULL;
+			DisposePtr((Ptr)music->sample[ins * MAXSAMPLE + i]);
+			music->sample[ins * MAXSAMPLE + i] = NULL;
 		}
 	}
 	
@@ -119,8 +117,7 @@ static OSErr LoadMADH(Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	MadHeader = MadFile->header;
 	MOT32(&MadHeader->MAD);
 	
-	if (MadHeader->MAD != 'MADK')
-	{
+	if (MadHeader->MAD != 'MADK') {
 		DisposePtr((Ptr)MadFile->header);
 		return MADFileNotSupportedByThisPlug;
 	}
@@ -133,26 +130,22 @@ static OSErr LoadMADH(Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	//////////////////
 	
 	MadFile->fid = (InstrData*) NewPtrClear(sizeof(InstrData) * (long) MAXINSTRU);
-	if (!MadFile->fid)
-	{
+	if (!MadFile->fid) {
 		DisposePtr((Ptr)MadFile->header);
 		return MADNeedMemory;
 	}
 	
 	MadFile->sample = (sData**) NewPtrClear(sizeof(sData*) * (long) MAXINSTRU * (long) MAXSAMPLE);
-	if (!MadFile->sample)
-	{
+	if (!MadFile->sample) {
 		DisposePtr((Ptr)MadFile->header);
 		DisposePtr((Ptr)MadFile->fid);
 		return MADNeedMemory;
 	}
 	
-	
 	/**** PARTITION ****/
-	for (i = MadHeader->numPat; i < MAXPATTERN; i++) MadFile->partition[ i] = NULL;
+	for (i = MadHeader->numPat; i < MAXPATTERN; i++) MadFile->partition[i] = NULL;
 	
-	for (i = 0; i < MadHeader->numPat; i++)
-	{
+	for (i = 0; i < MadHeader->numPat; i++) {
 		inOutCount = sizeof(PatHeader);
 		BlockMoveData(MADPtr + OffSetToSample, &tempPatHeader, inOutCount);
 		
@@ -162,12 +155,10 @@ static OSErr LoadMADH(Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		MOT32(&tempPatHeader.unused2);
 		
 		inOutCount = sizeof(PatHeader) + MadHeader->numChn * tempPatHeader.size * sizeof(Cmd);
-		MadFile->partition[ i] = (PatData*) NewPtr(inOutCount);
-		if (MadFile->partition[ i] == NULL)
-		{
-			for (x = 0; x < i; x++)
-			{
-				if (MadFile->partition[ x] != NULL)	DisposePtr((Ptr)MadFile->partition[ x]);
+		MadFile->partition[i] = (PatData*) NewPtr(inOutCount);
+		if (MadFile->partition[i] == NULL) {
+			for (x = 0; x < i; x++) {
+				if (MadFile->partition[x] != NULL)	DisposePtr((Ptr)MadFile->partition[ x]);
 			}
 			DisposePtr((Ptr)MadFile->header);
 			DisposePtr((Ptr)MadFile->fid);
@@ -210,40 +201,28 @@ static OSErr LoadMADH(Ptr MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			MOT16(&curIns->pannEnv[ x].val);
 		}
 		
-#if 0
-		for (x = 0; x < 12; x++)
-		{
-			MOT16(&curIns->pannEnv[ x].pos);
-			MOT16(&curIns->pannEnv[ x].val);
-		}
-#endif
-		
-		if (i != curIns->no)
-		{
-			MadFile->fid[ curIns->no] = *curIns;
+		if (i != curIns->no) {
+			MadFile->fid[curIns->no] = *curIns;
 			MADResetInstrument(curIns);
 		}
 	}
 	MadFile->header->numInstru = MAXINSTRU;
 	
-	for (i = 0; i < MAXINSTRU ; i++)
-	{
+	for (i = 0; i < MAXINSTRU ; i++) {
 		short x;
 		
-		for (x = 0; x < MadFile->fid[ i].numSamples ; x++)
-		{
+		for (x = 0; x < MadFile->fid[i].numSamples ; x++) {
 			sData	*curData;
 			
 			// ** Read Sample header **
 			
 			curData = MadFile->sample[ i*MAXSAMPLE + x] = (sData*) NewPtr(sizeof(sData));
-			if (curData == NULL)
-			{
+			if (curData == NULL) {
 				for (x = 0; x < MAXINSTRU ; x++) MADKillInstrument(MadFile, x);
 				
-				for (x = 0; x < MadFile->header->numPat; x++)
-				{
-					if (MadFile->partition[ x] != NULL)	DisposePtr((Ptr)MadFile->partition[ x]);
+				for (x = 0; x < MadFile->header->numPat; x++) {
+					if (MadFile->partition[ x] != NULL)
+						DisposePtr((Ptr)MadFile->partition[ x]);
 				}
 				DisposePtr((Ptr)MadFile->header);
 				

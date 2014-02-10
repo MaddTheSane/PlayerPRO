@@ -132,7 +132,7 @@ static Ptr ConvertSampleC4SPD(Ptr src, long srcSize, short amp, long srcC4SPD, l
 			{
 				pos >>= LRVAL;
 				
-				if (pos < 0 ||  1 + pos >= srcSize) {}
+				if (1 + pos >= srcSize) {}
 				else tempL = (left * src8[ pos] + right * src8[ 1 + pos]) >> LRVAL;
 				
 				dst8[ x] = tempL;

@@ -322,11 +322,9 @@ void			GetNoteString(short note, Str255	string);
 Boolean			GetIns(short *ins, short *samp);
 void			DoLoadOtherMusic(Boolean Affiche);
 void			Erreur(short ID, OSErr theErr);
-Handle			MyNewHandle(long);
-Ptr 			MyNewPtr(long);
 void			UpdateAHelpInfo(short *, short , DialogPtr );
 void			pStrcat(register unsigned char *s1, register unsigned char *s2);
-Boolean			ImportFile(Str255	, short , long , OSType );
+Boolean			ImportFile(Str255, short, long, OSType );
 void			AddMODList(Boolean, Str255 , short , long );
 pascal Boolean 	MyDlgFilter(DialogPtr, EventRecord *, short * );
 pascal Boolean 	MyDlgFilterSF(DialogPtr , EventRecord *, short *, void *);
@@ -456,10 +454,14 @@ extern	EventRecord	theEvent;
 extern	char		ENote[257][3];
 extern	char		EInstru[MAXINSTRU + 2][3], EArgu[257][2];
 extern	char		EEffect[30];
+#endif
+
 void RollCursor(void);
 Boolean QTTypeConversion(OSType fileType);
 Boolean CheckFileType(FSSpec theSpec, OSType theType);
-#endif
+
+__private_extern__ OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
+__private_extern__ OSErr GetApplicationResourceFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
 
 static inline void SwapPcmd(Pcmd *toswap)
 {

@@ -1348,42 +1348,6 @@ Boolean RunningOnClassic(void)
 	return false;
 }
 
-OSErr GetApplicationPackageFSSpec(FSSpecPtr theFSSpecPtr)
-{
-	OSErr err;
-	Str255 applName;
-	ProcessSerialNumber psn;
-	ProcessInfoRec info;
-	CInfoPBRec	block;
-	Str255		directoryName;
-	
-	info.processInfoLength = sizeof(ProcessInfoRec);
-	info.processName = applName;
-	info.processAppSpec = theFSSpecPtr;
-	err = GetCurrentProcess(&psn);
-	if (err != noErr)
-		return err;
-	err = GetProcessInformation(&psn, &info);
-	
-	block.dirInfo.ioDrParID = theFSSpecPtr->parID;
-	block.dirInfo.ioNamePtr = directoryName;
-	block.dirInfo.ioVRefNum = theFSSpecPtr->vRefNum;
-	block.dirInfo.ioFDirIndex = -1;
-	block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
-	err = PBGetCatInfoSync(&block);
-	block.dirInfo.ioFDirIndex = -1;
-	block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
-	err = PBGetCatInfoSync(&block);
-	block.dirInfo.ioFDirIndex = -1;
-	block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
-	err = PBGetCatInfoSync(&block);
-	
-	theFSSpecPtr->parID = block.dirInfo.ioDrParID;
-	theFSSpecPtr->vRefNum = block.dirInfo.ioVRefNum;
-	
-	return err;
-}
-
 OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr)
 {
 	OSErr err = fnfErr;
@@ -1452,34 +1416,9 @@ int main(int argc, char* argv[])
 	
 	HGetVol(NULL, &mainVRefNum, &mainParID);
 	
-#if 0
-	MIDImain(0, NULL);
-	
-	//////////////////////////
-	{
-		MADMusic	*tempMusic;
-		FSSpec		file;
-		
-		tempMusic = CreateFreeMADK();
-		
-		
-		
-		FindFolder(kOnSystemDisk, kSystemDesktopFolderType, kCreateFolder, &file.vRefNum, &file.parID);
-		pStrcpy(file.name, "\pMADK");
-		
-		WriteMADKFile(&file, tempMusic);
-		
-		ExitToShell();
-		
-	}
-#endif
-	//////////////////////////
-	
-	
 	curMusic = NULL;
 	SwitchCurMusic = NULL;
 	AlternateBuffer = false;
-	
 	
 	Handle	TempHandle = GetResource('MADK', 128);
 	if (TempHandle) {
@@ -1491,8 +1430,8 @@ int main(int argc, char* argv[])
 		
 		HUnlock(TempHandle);
 		DisposeHandle(TempHandle);
-	}
-	else MyDebugStr(__LINE__, __FILE__, "Fatal MEMORY ERROR 35: NEED MORE MEMORY !");
+	} else
+		MyDebugStr(__LINE__, __FILE__, "Fatal MEMORY ERROR 35: NEED MORE MEMORY !");
 	
 	
 	////////
@@ -7052,14 +6991,14 @@ void CloseBookMarks()
 
 void InitBookMarks()
 {
-	short		vRefNum, fRefNum;
-	long		dirID, i, eof, prev;
-	OSErr		iErr;
-	FSSpec		theSpec;
-	Ptr			data;
-	Handle		Text;
+	FSVolumeRefNum	vRefNum, fRefNum;
+	long			dirID, i, eof, prev;
+	OSErr			iErr;
+	FSSpec			theSpec;
+	Ptr				data;
+	Handle			Text;
 	
-	HGetVol(NULL, &vRefNum, &dirID);
+	FindFolder(kOnSystemDisk, kPreferencesFolderType, true, &vRefNum, &dirID);
 	
 	//	URLs[ MAXURL], URLsDesc[ MAXURL];
 	
@@ -7112,7 +7051,7 @@ void InitBookMarks()
 	}
 	
 	HUnlock(Text);
-	MyDisposHandle(& Text);
+	MyDisposHandle(&Text);
 	
 	//////////////////////////////////////////////////
 	
@@ -7120,12 +7059,12 @@ void InitBookMarks()
 	
 	iErr = FSpOpenDF(&theSpec, fsCurPerm, &fRefNum);
 	if (iErr) {
-#if 0
-		if (iErr == fnfErr)
-		{
-			iErr = Create(PLAYERPREF, 0, 'ttxt', 'TEXT');
-			iErr = FSpOpenDF(PLAYERPREF, 0, &fRefNum);
-			if (iErr) return;
+		if (iErr == fnfErr) {
+			long inOutBytes;
+			iErr = FSpCreate(&theSpec, 'ttxt', 'TEXT', smSystemScript);
+			iErr = FSpOpenDF(&theSpec, fsWrPerm, &fRefNum);
+			if (iErr)
+				return;
 			
 			Text = GetResource('TEXT', 400);
 			DetachResource(Text);
@@ -7135,11 +7074,10 @@ void InitBookMarks()
 			iErr = FSWrite(fRefNum, &inOutBytes, *Text);
 			
 			HUnlock(Text);
-			MyDisposHandle(& Text);
+			MyDisposHandle(&Text);
 			
 			iErr = FSCloseFork(fRefNum);
 		}
-#endif
 		
 		return;
 	}

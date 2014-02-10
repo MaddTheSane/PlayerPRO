@@ -24,8 +24,6 @@ short GetNoPPDG()
 	return tPlug;
 }
 
-OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
-
 OSErr CallPPDGPlugIns(short PlugNo, Pcmd *myPcmd)
 {
 	OSErr			iErr = noErr;
