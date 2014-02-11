@@ -4364,7 +4364,8 @@ pascal OSErr MyReceiveDropEditor(WindowPtr theWindow, void* handlerRefCon, DragR
 			
 			if (selectedControl == SaveBut)
 				SavePcmdFile(CreatePcmdFromSelection());
-			//	if (selectedControl == PoubBut) 	DoKeyPressEditor(8);
+			
+			//if (selectedControl == PoubBut) DoKeyPressEditor(8);
 			selectedControl = NULL;
 			
 			return noErr;
@@ -4414,7 +4415,7 @@ pascal OSErr MyReceiveDropEditor(WindowPtr theWindow, void* handlerRefCon, DragR
 		
 		SaveUndo(UPattern, CurrentPat, "\pUndo 'Drop Pcmd File'");
 		
-		//	PLSetSelect(-1, -1, -1, -1, &myList);
+		//PLSetSelect(-1, -1, -1, -1, &myList);
 		
 		PLSetSelect(CellSelec.h, CellSelec.v, CellSelec.h, CellSelec.v, &myList);
 		GetFlavorData(theDrag, theItem, flavorTypeHFS, &myFlavor, &textSize, 0);
@@ -4427,7 +4428,7 @@ pascal OSErr MyReceiveDropEditor(WindowPtr theWindow, void* handlerRefCon, DragR
 	return dragNotAcceptedErr;
 }
 
-void PrintEditor(void)
+void PrintEditor()
 {
 	Pcmd		*myPcmd;
 	Ptr			myText;

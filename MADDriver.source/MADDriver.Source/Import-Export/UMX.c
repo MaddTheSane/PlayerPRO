@@ -26,8 +26,8 @@
 
 static short FoundNote(short Period)
 {
-	short 			note;
-	short				MODTuning[ 70] =
+	short	note;
+	short	MODTuning[ 70] =
 	{
 		
 		// -> Tuning 0
@@ -40,14 +40,13 @@ static short FoundNote(short Period)
 	};
 	note = 0xFF;
 	
-	
-	if(Period != 0)
-	{
-		for(note = 0;note < 60;note++)
-		{
-			if(Period >= MODTuning[ note]) break;
+	if(Period != 0) {
+		for(note = 0;note < 60;note++) {
+			if(Period >= MODTuning[note])
+				break;
 		}
-		if(note >= NUMBER_NOTES) note = 0xFF;
+		if(note >= NUMBER_NOTES)
+			note = 0xFF;
 	}
 	
 	if (note != 0xFF) note += 24;
@@ -57,13 +56,12 @@ static short FoundNote(short Period)
 
 static void Convert16to8(Ptr srcPtr, Ptr destPtr, long size)
 {
-	long 	i;
+	long i;
 
 	size /= 2;
 	
-	for (i = 0; i < size; i ++)
-	{
-		destPtr[ i] = srcPtr[i*2];
+	for (i = 0; i < size; i ++) {
+		destPtr[i] = srcPtr[i * 2];
 	}
 }
 
@@ -86,8 +84,7 @@ static void AnalyseSignatureMOD(long EOFo, long temp, short *maxInstru, long *Pa
 	
 	MOT32(&temp);
 	
-	switch (temp)
-	{
+	switch (temp) {
 		case 'FLT4':	*PatternSize = sizeof(struct MODCom) * 64L * 4L;	*tracksNo = 4;	break;
 		case 'FLT8':	*PatternSize = sizeof(struct MODCom) * 64L * 4L;	*tracksNo = 4;	break;
 		case 'M.K.':	*PatternSize = sizeof(struct MODCom) * 64L * 4L;	*tracksNo = 4;	break;
@@ -161,8 +158,10 @@ static void AnalyseSignatureMOD(long EOFo, long temp, short *maxInstru, long *Pa
 			
 			if (test == 0) result = false;
 			
-			if (result) *maxInstru 		= 15;
-			else *maxInstru 			= 0;
+			if (result)
+				*maxInstru = 15;
+			else
+				*maxInstru = 0;
 			break;
 	}
 }
@@ -171,10 +170,10 @@ static struct MODCom* GetMODCommand(short position, short whichTracks, short whi
 {
 	struct MODCom*	myMODCom;
 	
-	myMODCom =	(struct MODCom*) (PatPtr +
-								whichPattern * 64L * sizeof(struct MODCom) * maxTracks +
-								position * sizeof(struct MODCom) * maxTracks +
-								whichTracks * sizeof(struct MODCom));
+	myMODCom =	(struct MODCom*)(PatPtr +
+								 whichPattern * 64L * sizeof(struct MODCom) * maxTracks +
+								 position * sizeof(struct MODCom) * maxTracks +
+								 whichTracks * sizeof(struct MODCom));
 	
 	return myMODCom;
 }
@@ -183,9 +182,9 @@ static OSErr PPConvertMod2Mad(Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriver
 {
 	short 			i, PatMax, x, tracksNo, z, maxInstru;
 	long 			sndSize, OffSetToSample, MPatSize, temp, inOutCount;
-	Ptr				theInstrument[ 64], MaxPtr;
-	long			lastIns[ 32], lastNote[ 32];
-	long 			finetune[16] = 
+	Ptr				theInstrument[64], MaxPtr;
+	long			lastIns[32], lastNote[32];
+	long 			finetune[16] =
 	{
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
@@ -266,7 +265,7 @@ static OSErr PPConvertMod2Mad(Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriver
 			theMOD->fid[i].numWords /= 2L;
 			
 			if (theMOD->fid[i].numWords < 0) theMOD->fid[i].numWords = 0;
-					
+			
 			sndSize = ((long) theMOD->fid[i].numWords) * 2L;
 		}
 		
@@ -275,15 +274,15 @@ static OSErr PPConvertMod2Mad(Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriver
 		if (theMOD->fid[i].loopWords > 2 && sndSize > 0)
 		{
 			if ((long) theMOD->fid[i].loopWord +
-				(long) theMOD->fid[i].loopWords > 
+				(long) theMOD->fid[i].loopWords >
 				(long) theMOD->fid[i].numWords)
 			{
 				theMOD->fid[ i].loopWords =	(long) theMOD->fid[i].numWords -
-											(long) theMOD->fid[i].loopWord;
-		
+				(long) theMOD->fid[i].loopWord;
+				
 				if ((long) theMOD->fid[i].loopWord +
-				(long) theMOD->fid[i].loopWords > 
-				(long) theMOD->fid[i].numWords)
+					(long) theMOD->fid[i].loopWords >
+					(long) theMOD->fid[i].numWords)
 				{
 					theMOD->fid[i].loopWord = 0;
 					theMOD->fid[i].loopWords = 0;
@@ -377,7 +376,7 @@ static OSErr PPConvertMod2Mad(Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriver
 			
 			curData->data 		= MADPlugNewPtr(curData->size, init);
 			if (curData->data == NULL) return MADNeedMemory;
-				
+			
 			BlockMoveData(theInstrument[i], curData->data, curData->size);
 			
 			memcpy(curData->data, theInstrument[i], curData->size);
@@ -469,6 +468,7 @@ static OSErr PPConvertMod2Mad(Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriver
 	return noErr;
 }
 
+#if 0
 static long ConvertSampleC4SPD(Ptr src, long srcSize, short amp, long srcC4SPD, Ptr dst, long dstC4SPD)
 {
 	short	*src16 = (short*) src, *dst16 = (short*) dst;
@@ -515,7 +515,6 @@ static long ConvertSampleC4SPD(Ptr src, long srcSize, short amp, long srcC4SPD, 
 	return (srcSize * dstC4SPD) / srcC4SPD;
 }
 
-#if 0
 static Ptr PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *PtrSize)
 {
 	long 				i, x, z, maxInstru;
@@ -860,34 +859,24 @@ static OSErr TestUMXFile(Ptr AlienFile, long EOFo)
 {
 	int		i;
 	char	modsig[5] = "M.K.";
-    char	mod6sig[5] = "6CHN";
-    char	mod8sig[5] = "8CHN";
-    char	s3msig[5] = "SCRM";
-    char	itsig[5] = "IMPM";
-    char	xmsig[17] = "Extended Module:";
+	char	mod6sig[5] = "6CHN";
+	char	mod8sig[5] = "8CHN";
+	char	s3msig[5] = "SCRM";
+	char	itsig[5] = "IMPM";
+	char	xmsig[17] = "Extended Module:";
 	
-	
-	for (i = 0; i < 5000 - 64; i++)
-	{
-		if (!memcmp(&AlienFile[i], s3msig, 4))
-		{
+	for (i = 0; i < 5000 - 64; i++) {
+		if (!memcmp(&AlienFile[i], s3msig, 4)) {
+			return noErr;
+		} else if (!memcmp(&AlienFile[i], itsig, 4)) {
+			return noErr;
+		} else if (!memcmp(&AlienFile[i], xmsig, 16)) {
+			return noErr;
+		} else if (!memcmp(&AlienFile[i], modsig, 4) ||
+				   !memcmp(&AlienFile[i], mod6sig, 4) ||
+				   !memcmp(&AlienFile[i], mod8sig, 4)) {
 			return noErr;
 		}
-		else
-			if (!memcmp(&AlienFile[i], itsig, 4))
-			{
-				return noErr;
-			}
-			else
-				if (!memcmp(&AlienFile[i], xmsig, 16))
-				{
-					return noErr;
-				}
-				else
-					if (!memcmp(&AlienFile[i], modsig, 4) || !memcmp(&AlienFile[i], mod6sig, 4) || !memcmp(&AlienFile[i], mod8sig, 4))
-					{
-						return noErr;
-					}
 	}
 	
 	return MADFileNotSupportedByThisPlug;
@@ -914,95 +903,92 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 
 static OSErr mainUMX(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
-	OSErr		myErr = noErr;
-	Ptr			AlienFile;
-	long		sndSize;
-	UNFILE		iFileRefI;
+	OSErr	myErr = noErr;
+	Ptr		AlienFile;
+	long	sndSize;
+	UNFILE	iFileRefI;
 	
-	switch (order)
-	{
+	switch (order) {
 		case 'IMPL':
 			iFileRefI = iFileOpen(AlienFileName);
-			if (iFileRefI)
-			{
+			if (iFileRefI) {
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
 				AlienFile = MADPlugNewPtr(sndSize * 2L, init);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
-				else
-				{
+				else {
 					DisposePtr(AlienFile);
 					
 					AlienFile = MADPlugNewPtr(sndSize, init);
 					iRead(sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestUMXFile(AlienFile, sndSize);
-					if (myErr == noErr)
-					{
+					if (myErr == noErr) {
 						myErr = PPConvertMod2Mad(AlienFile, sndSize, MadFile, init);
 					}
 					
-					DisposePtr(AlienFile);	AlienFile = NULL;
+					DisposePtr(AlienFile);
+					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else myErr = MADReadingErr;
-		break;
-		
+			} else
+				myErr = MADReadingErr;
+			break;
+			
 		case 'TEST':
 			iFileRefI = iFileOpen(AlienFileName);
-			if (iFileRefI)
-			{
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+			if (iFileRefI) {
+				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = MADPlugNewPtr(sndSize, init);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
 					iRead(sndSize, AlienFile, iFileRefI);
 					
 					sndSize = iGetEOF(iFileRefI);
-					
 					myErr = TestUMXFile(AlienFile, sndSize);
-					
-					DisposePtr(AlienFile);	AlienFile = NULL;
+					DisposePtr(AlienFile);
+					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else myErr = MADReadingErr;
-		break;
-		
+			} else
+				myErr = MADReadingErr;
+			break;
+			
 		case 'INFO':
 			iFileRefI = iFileOpen(AlienFileName);
-			if (iFileRefI)
-			{
+			if (iFileRefI) {
 				info->fileSize = iGetEOF(iFileRefI);
 				
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+				sndSize = 5000; // Read only 5000 first bytes for optimisation
 				
 				AlienFile = MADPlugNewPtr(sndSize, init);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
 					iRead(sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestUMXFile(AlienFile, info->fileSize);
 					
-					if (!myErr) myErr = ExtractUMXInfo(info, AlienFile);
+					if (!myErr)
+						myErr = ExtractUMXInfo(info, AlienFile);
 					
-					DisposePtr(AlienFile);	AlienFile = NULL;
+					DisposePtr(AlienFile);
+					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else myErr = MADReadingErr;
-		break;
-		
+			} else
+				myErr = MADReadingErr;
+			break;
+			
 		default:
 			myErr = MADOrderNotImplemented;
-		break;
+			break;
 	}
 	
 	return myErr;

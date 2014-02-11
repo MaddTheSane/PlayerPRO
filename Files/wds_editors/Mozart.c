@@ -731,8 +731,6 @@ void SwitchColor(short TrackNo)
 	RGBForeColor(&thePrefs.tracksColor[TrackNo]);
 }
 
-Boolean CreateNoteString(Cmd *theCommand, Str255 mainStr, Boolean AllStr);
-
 void DrawNewNote()
 {
 	Str255		aStr;
