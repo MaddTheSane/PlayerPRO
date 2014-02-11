@@ -36,7 +36,7 @@ void InitFKeyMenu(void)
 	FKeymaxItems++;
 	
 	for (i = 0 ; i < FKeymaxItems; i++) {
-		PKEYDesc[ i] = (unsigned char*) tempPtr;
+		PKEYDesc[i] = (unsigned char*) tempPtr;
 		tempPtr += tempPtr[0] + 1;
 		
 		FKeyWind[i] = *((long*)tempPtr);
@@ -53,7 +53,7 @@ void InitFKeyMenu(void)
 	FKeyMenu = NewMenu(366, "\pFKey Menu");
 	
 	for (i = 0 ; i < FKeymaxItems; i++) {
-		AppendMenu(FKeyMenu, PKEYDesc[ i]);
+		AppendMenu(FKeyMenu, PKEYDesc[i]);
 	}
 }
 
@@ -100,12 +100,12 @@ Boolean PressFKeyMenu(short itemID, DialogPtr dia, short whichFKey, Str255	str)
 	
 	curSelec = 1;
 	
-	if (thePrefs.FKeyItem[ whichFKey] != 0)
+	if (thePrefs.FKeyItem[whichFKey] != 0)
 	{
 		for (i = 0 ; i < FKeymaxItems; i++)
 		{
-			if (thePrefs.FKeyItem[ whichFKey] == FKeyItem[ i] &&
-				thePrefs.FKeyWind[ whichFKey] == FKeyWind[ i])
+			if (thePrefs.FKeyItem[whichFKey] == FKeyItem[i] &&
+				thePrefs.FKeyWind[whichFKey] == FKeyWind[i])
 				{
 					curSelec = i+1;
 				}
@@ -125,10 +125,10 @@ Boolean PressFKeyMenu(short itemID, DialogPtr dia, short whichFKey, Str255	str)
 	{
 		temp = LoWord(mresult);
 		
-		pStrcpy(str, PKEYDesc[ temp-1]);
+		pStrcpy(str, PKEYDesc[temp-1]);
 		
-		thePrefs.FKeyItem[ whichFKey] = FKeyItem[ temp-1];
-		thePrefs.FKeyWind[ whichFKey] = FKeyWind[ temp-1];
+		thePrefs.FKeyItem[whichFKey] = FKeyItem[temp-1];
+		thePrefs.FKeyWind[whichFKey] = FKeyWind[temp-1];
 		
 		returnVal = true;
 	}
@@ -167,39 +167,39 @@ void PressFKey(short whichFKey)
 			
 			for (i = 0, noActive = 0; i < curMusic->header->numChn; i++)
 			{
-				if (MADDriver->Active[ i] == true)
+				if (MADDriver->Active[i] == true)
 				{
 					noActive++;
 				}
 			}
 			
-			if (noActive <= 1 && MADDriver->Active[ whichFKey] == true)
+			if (noActive <= 1 && MADDriver->Active[whichFKey] == true)
 			{
-				for (i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = true;
+				for (i = 0, noActive = 0; i < curMusic->header->numChn; i++) MADDriver->Active[i] = true;
 			}
 			else
 			{
-				for (i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[ i] = false;
-				MADDriver->Active[ whichFKey] = true;
+				for (i = 0; i < curMusic->header->numChn; i++) MADDriver->Active[i] = false;
+				MADDriver->Active[whichFKey] = true;
 			}
 		}
 		else
 		{
-			MADDriver->Active[ whichFKey] = !MADDriver->Active[ whichFKey];	
+			MADDriver->Active[whichFKey] = !MADDriver->Active[whichFKey];	
 		}
 		
 		UPDATE_TrackActive();
 	}
 	else
 	{
-		if (!thePrefs.FKeyActive[ whichFKey])
+		if (!thePrefs.FKeyActive[whichFKey])
 			return;
-		if (!thePrefs.FKeyItem[ whichFKey])
+		if (!thePrefs.FKeyItem[whichFKey])
 			return;
 		
-		if (!FindRefWindow(thePrefs.FKeyWind[ whichFKey]))
+		if (!FindRefWindow(thePrefs.FKeyWind[whichFKey]))
 		{
-			switch (thePrefs.FKeyWind[ whichFKey]) {
+			switch (thePrefs.FKeyWind[whichFKey]) {
 				case RefStaff:
 					CreateStaffWindow();
 					break;
@@ -277,7 +277,7 @@ void PressFKey(short whichFKey)
 			}
 		}
 		
-		curDia = GetDialogFromWindow(FindRefWindow(thePrefs.FKeyWind[ whichFKey]));
+		curDia = GetDialogFromWindow(FindRefWindow(thePrefs.FKeyWind[whichFKey]));
 		
 		if (curDia) {
 			GrafPtr		curPort;
@@ -290,14 +290,14 @@ void PressFKey(short whichFKey)
 			
 			SetFKeyMode(true);
 			
-			GetDialogItem(curDia, thePrefs.FKeyItem[ whichFKey], &itemType, &itemHandle, &itemRect);
+			GetDialogItem(curDia, thePrefs.FKeyItem[whichFKey], &itemType, &itemHandle, &itemRect);
 			
 			theEvent.where.h = itemRect.left + (itemRect.right - itemRect.left) / 2;
 			theEvent.where.v = itemRect.top + (itemRect.bottom - itemRect.top) / 2;
 			
 			LocalToGlobal(&theEvent.where);
 			
-			ProcessDoItemPress(thePrefs.FKeyWind[ whichFKey], thePrefs.FKeyItem[ whichFKey], curDia);
+			ProcessDoItemPress(thePrefs.FKeyWind[whichFKey], thePrefs.FKeyItem[whichFKey], curDia);
 			SetFKeyMode(false);
 			
 			SetPort(curPort);

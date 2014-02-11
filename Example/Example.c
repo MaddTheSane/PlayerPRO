@@ -141,8 +141,8 @@ int main(int argc, char* argv[])
 			
 			(*openList)->componentSignature = 'SNPL';
 			(*openList)->osTypeCount		= 2;
-			(*openList)->osType[ 0] 		= 'MADK';
-			(*openList)->osType[ 1] 		= 'STrk';
+			(*openList)->osType[0]			= 'MADK';
+			(*openList)->osType[1]			= 'STrk';
 			
 			iErr = NavGetFile(			NULL,	// use system's default location
 							  &theReply,
@@ -186,7 +186,7 @@ int main(int argc, char* argv[])
 		if (iErr != noErr) End = true;
 		else
 		{
-			char	type[ 5];
+			char	type[5];
 #if 0
 			FInfo	info;
 			

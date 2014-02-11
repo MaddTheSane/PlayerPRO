@@ -24,7 +24,7 @@ static	Ptr				RecordingPtr, StartRecordingPtr;
 
 static	DialogPtr		deviceDialog;
 static	ListHandle		myList;
-static	Str255			deviceName[ 20], sourceNameList[ 20];
+static	Str255			deviceName[20], sourceNameList[20];
 static	MenuHandle		bitsM, rateM;
 static	short			curBits;
 static	short			curRate;
@@ -196,7 +196,7 @@ void SetUpDeviceInfo()
 		bitsM = NewMenu(345, "\pBits");
 		
 		for (i = 0; i < BitsList.no; i++) {
-			NumToString((*BitsList.l)[ i], str);
+			NumToString((*BitsList.l)[i], str);
 			pStrcat(str, "\p Bits");
 			
 			AppendMenu(bitsM, str);
@@ -449,9 +449,9 @@ void DrawSmallOscillo()
 	
 	for (i = 0; i < hSize; i++)
 	{
-		SetCPixel(itemRect.left + i, itemRect.top + SmallOsci[ i], &blackC);
-		SmallOsci[ i] = audioPtr[ i] / 16;
-		SetCPixel(itemRect.left + i, itemRect.top + SmallOsci[ i], &myC);
+		SetCPixel(itemRect.left + i, itemRect.top + SmallOsci[i], &blackC);
+		SmallOsci[i] = audioPtr[i] / 16;
+		SetCPixel(itemRect.left + i, itemRect.top + SmallOsci[i], &myC);
 	}
 	ForeColor(blackColor);
 }
@@ -1219,7 +1219,7 @@ void MicroOff()
 	myErr = SPBSetDeviceInfo(myInRefNum, siOSTypeInputSource, &fourchar);
 	
 	// Set Max Rate !!!
-	maxRate = (*RateList.l)[ RateList.no-1];
+	maxRate = (*RateList.l)[RateList.no-1];
 	myErr = SPBSetDeviceInfo(myInRefNum, siSampleRate, &maxRate);
 	//if (myErr) MyDebugStr(myErr, __FILE__, "5");
 	

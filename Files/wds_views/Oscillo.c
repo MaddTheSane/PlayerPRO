@@ -107,7 +107,7 @@ Byte	SwitchColorLV(short i)
 	GetGWorld(&oldPort, &oldGDeviceH);
 	SetGWorld(gGWorld, NULL);
 	
-	val =  Color2Index(&thePrefs.tracksColor[ i]);
+	val =  Color2Index(&thePrefs.tracksColor[i]);
 	
 	SetGWorld(oldPort, oldGDeviceH);
 	
@@ -160,12 +160,12 @@ void AdjustZoomOscillo2(Rect *vRect)
 
 void ComputeCurrentQuickPixMap()
 {
-	long i, rowBytes = (*osciPixMap[ 0])->rowBytes &0xFFF;
+	long i, rowBytes = (*osciPixMap[0])->rowBytes &0xFFF;
 	
 	if (CurrentQuickPixMap != NULL)
 		DisposePtr((Ptr)CurrentQuickPixMap);
 	
-	CurrentQuickPixMap = (long*) NewPtr(sizeof(long) * (*osciPixMap[ 0])->bounds.bottom);
+	CurrentQuickPixMap = (long*) NewPtr(sizeof(long) * (*osciPixMap[0])->bounds.bottom);
 	
 	for (i = 0; i < (*osciPixMap[0])->bounds.bottom; i++) {
 		CurrentQuickPixMap[i] = i * rowBytes;
@@ -258,7 +258,7 @@ Ptr	TransformationDSP(Ptr thePtr, short i)
 	if (i > AUDIODSPSIZE * 4L) MyDebugStr(__LINE__, __FILE__, "AudioDSPPtr too small");
 	
 	do {
-		AudioDSPPtr[ --i] = *tempPtr - bb;
+		AudioDSPPtr[--i] = *tempPtr - bb;
 		tempPtr += 4L;
 	} while (i != 0);
 	
@@ -441,11 +441,11 @@ void C8BitOsciPixMap(Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 	while (i-- > 0) *(pixMapPtr++) = 0xE5;
 	
 	for (x = 0; x < 5; x++) {
-		i = (*osciPixMap[ 0])->bounds.bottom - 2;
+		i = (*osciPixMap[0])->bounds.bottom - 2;
 		pixMapPtr = cpixMapPtr + CurrentQuickPixMap[1] + (x * ((*osciPixMap[0])->bounds.right - (*osciPixMap[0])->bounds.left)) / 4;
 		if (x == 4)
 			pixMapPtr--;
-		while (i-- > 0) *(pixMapPtr + CurrentQuickPixMap[ i]) = 0xE5;
+		while (i-- > 0) *(pixMapPtr + CurrentQuickPixMap[i]) = 0xE5;
 	}
 	
 	// Draw pts
@@ -486,8 +486,8 @@ void  Bresenham(long x1, long y1, long x2, long y2, long row, Byte color, Ptr sr
 	if (deltaY < 0)
 		deltaY = -deltaY;
 	
-	oPtr = src + CurrentQuickPixMap[ y1] + x1;
-	outPtr = src + CurrentQuickPixMap[ y2] + x2;
+	oPtr = src + CurrentQuickPixMap[y1] + x1;
+	outPtr = src + CurrentQuickPixMap[y2] + x2;
 	
 	if (y1 < y2)
 		row = -row;
@@ -546,7 +546,7 @@ void C8BitOsciPixMapLine(Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 	long		i, x;
 	Byte 		*ctempPtr = tempPtr, *ctempPtr2 = tempPtr2;
 	Ptr			cpixMapPtr = pixMapPtr;
-	long		lasti, lasttempPtr2, rowBytes = (*osciPixMap[ 0])->rowBytes + 0x8000;
+	long		lasti, lasttempPtr2, rowBytes = (*osciPixMap[0])->rowBytes + 0x8000;
 	
 	// Erase pts
 	
@@ -578,10 +578,10 @@ void C8BitOsciPixMapLine(Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr)
 	
 	for (x = 0; x < 5; x++) {
 		i = (*osciPixMap[0])->bounds.bottom - 2;
-		pixMapPtr = cpixMapPtr + CurrentQuickPixMap[ 1] + (x * ((*osciPixMap[ 0])->bounds.right - (*osciPixMap[ 0])->bounds.left)) / 4;
+		pixMapPtr = cpixMapPtr + CurrentQuickPixMap[1] + (x * ((*osciPixMap[0])->bounds.right - (*osciPixMap[0])->bounds.left)) / 4;
 		if (x == 4)
 			pixMapPtr--;
-		while (i-- > 0) *(pixMapPtr + CurrentQuickPixMap[ i]) = 0xE5;
+		while (i-- > 0) *(pixMapPtr + CurrentQuickPixMap[i]) = 0xE5;
 	}
 	
 	// Draw pts
@@ -630,15 +630,15 @@ void DrawOscilloscope2(OsciRec	*osciPtr, short no, Boolean lastCall)
 		tempRect.left = 0;
 	tempRect.right	=  caRect.right-16;
 	
-	tempRect.top	= osci[ no].VPos;
+	tempRect.top	= osci[no].VPos;
 	tempRect.bottom	= tempRect.top + OsciH;
 	
 	dstRect = tempRect;
 	
-	if (osciPixMap[ no] != NULL) {
+	if (osciPixMap[no] != NULL) {
 		for (i = 0; i < SIter; i++) {
-			if (gmax < osciPtr->SavePtr[i]) gmax = osciPtr->SavePtr[ i];
-			if (gmin > osciPtr->SavePtr[i]) gmin = osciPtr->SavePtr[ i];
+			if (gmax < osciPtr->SavePtr[i]) gmax = osciPtr->SavePtr[i];
+			if (gmin > osciPtr->SavePtr[i]) gmin = osciPtr->SavePtr[i];
 		}
 		
 		//
@@ -657,11 +657,11 @@ void DrawOscilloscope2(OsciRec	*osciPtr, short no, Boolean lastCall)
 		//
 		
 		for (i = 0; i < SIter; i++) {
-			if (gmax < osciPtr->SavePtr[ i]) gmax = osciPtr->SavePtr[ i];
-			if (gmin > osciPtr->SavePtr[ i]) gmin = osciPtr->SavePtr[ i];
+			if (gmax < osciPtr->SavePtr[i]) gmax = osciPtr->SavePtr[i];
+			if (gmin > osciPtr->SavePtr[i]) gmin = osciPtr->SavePtr[i];
 		}
 		
-		inRect = (*osciPixMap[ no])->bounds;
+		inRect = (*osciPixMap[no])->bounds;
 		
 		
 		if (lastCall || !thePrefs.osciTile) {
@@ -736,7 +736,7 @@ void DrawOscilloscope2(OsciRec	*osciPtr, short no, Boolean lastCall)
 					timeLevelR = 60;
 				}
 				
-				temp = osci[ no].VPos + OsciH -3 - maxLevelR;
+				temp = osci[no].VPos + OsciH -3 - maxLevelR;
 				if (temp < inRect.top)
 					temp = inRect.top;
 				
@@ -751,7 +751,7 @@ void DrawOscilloscope2(OsciRec	*osciPtr, short no, Boolean lastCall)
 					timeLevelL = 60;
 				}
 				
-				temp = osci[ no].VPos + OsciH -3 - maxLevelL;
+				temp = osci[no].VPos + OsciH -3 - maxLevelL;
 				if (temp < inRect.top)
 					temp = inRect.top;
 				
@@ -772,7 +772,7 @@ void DrawOscilloscope2(OsciRec	*osciPtr, short no, Boolean lastCall)
 		pStrcpy(str, "\pNot Enough Memory");
 		BackColor(blackColor);
 		ForeColor(redColor);
-		TETextBox(str+1, str[ 0], &tempRect, teCenter);
+		TETextBox(str+1, str[0], &tempRect, teCenter);
 		ForeColor(blackColor);
 		RGBBackColor(&theColor);
 	}
@@ -895,8 +895,8 @@ void  UpdateOscilloWindow(DialogPtr GetSelection)
 		
 		
 		
-		if (thePrefs.osciTile) osci[ i].VPos = OsciVStart;
-		else osci[ i].VPos = tempRect.top;
+		if (thePrefs.osciTile) osci[i].VPos = OsciVStart;
+		else osci[i].VPos = tempRect.top;
 		
 		BackColor(whiteColor);
 		if (thePrefs.osciTile)
@@ -907,9 +907,9 @@ void  UpdateOscilloWindow(DialogPtr GetSelection)
 					 srcCopy,
 					 NULL);
 		else
-			CopyBits((BitMap*)(*osciPixMap[ i]),
+			CopyBits((BitMap*)(*osciPixMap[i]),
 					 (BitMap*)*GetPortPixMap(GetDialogPort(OscilloDlog)),
-					 &(*osciPixMap[ i])->bounds,
+					 &(*osciPixMap[i])->bounds,
 					 &tempRect,
 					 srcCopy,
 					 NULL);
@@ -1293,7 +1293,7 @@ void SetWindowEnviron(void)
 				osci[1].VPos =	OsciVStart;
 			else
 				osci[1].VPos =	OsciVStart + OsciH + InterText;
-			osci[1].SavePtr		= osci[ 0].SavePtr + osci[ 0].Size;
+			osci[1].SavePtr		= osci[0].SavePtr + osci[0].Size;
 			osci[1].Size		= GetAudioSize();
 			pStrcpy(osci[1].Name, "\pRight Channel");
 			
@@ -1314,7 +1314,7 @@ void SetWindowEnviron(void)
 				osci[i].VPos		= OsciVStart;
 				osci[i].SavePtr		= (Byte*) (ValSaveData + i * GetAudioSize());
 				if (i * GetAudioSize() > VALSIZE) MyDebugStr(__LINE__, __FILE__, "");
-				osci[ i].Size		= GetAudioSize();
+				osci[i].Size		= GetAudioSize();
 				
 				if(thePrefs.osciTile)
 					pStrcpy(osci[i].Name, "\pAll Channels");
@@ -1340,7 +1340,7 @@ void SetWindowEnviron(void)
 			else
 				osci[1].VPos = OsciVStart + OsciH + InterText;
 			
-			osci[1].SavePtr		= osci[ 0].SavePtr + osci[ 0].Size;
+			osci[1].SavePtr		= osci[0].SavePtr + osci[0].Size;
 			osci[1].Size		= GetAudioSize();
 			pStrcpy(osci[1].Name, "\pRight Channel");
 			
@@ -1461,13 +1461,13 @@ void InitOscillo(void)
 	
 	VMMode = true; //Virtual memory is always enabled on OS X
 	
-	PreviousOscilloPtr = MADDriver->OsciDrawPtr[ 0];
+	PreviousOscilloPtr = MADDriver->OsciDrawPtr[0];
 	
 #if 0
 	for (i = 0; i < DRAWBUFFERSIZE; i++)
 	{
-		DrawBuf[ i] = NewPtrClear(MADDriver->BufSize);
-		AlreadyDraw[ i] = false;
+		DrawBuf[i] = NewPtrClear(MADDriver->BufSize);
+		AlreadyDraw[i] = false;
 	}
 	
 	DrawDraw = 0;
@@ -1710,7 +1710,7 @@ void ResetOscilloscope(void)
 		tempRect.bottom	= OsciH;
 		
 		if (NewOffscreenPixMap(&osciPixMap[i], &tempRect) != noErr) {
-			osciPixMap[ i] = NULL;
+			osciPixMap[i] = NULL;
 		} else {
 			rowbytes = (*osciPixMap[i])->rowBytes + 0x8000;
 			for (bb = 0; bb < (*osciPixMap[i])->bounds.bottom * rowbytes; bb++) {

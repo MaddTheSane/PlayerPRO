@@ -71,7 +71,7 @@ void DoNullTrackView(void)
 			if (MADDriver->Tube[i] == oldTube[i]) {
 				itemRect.bottom -= MADDriver->Tube[i];
 				MADDriver->Tube[i]--;
-				oldTube[ i] = MADDriver->Tube[i];
+				oldTube[i] = MADDriver->Tube[i];
 				
 				if (oldTube[i] >= 0)
 				{
@@ -137,7 +137,7 @@ void UpdateTrackView(DialogPtr GetSelection)  	/* Pointer to this dialog */
 	FrameRectRelief(&itemRect);
 	
 	for (i = 0; i < max; i++) {
-		itemRect = TracksBox[ i];
+		itemRect = TracksBox[i];
 		itemRect.top--;	itemRect.left--;
 		PaintRect(&itemRect);
 		itemRect.top++;	itemRect.left++;

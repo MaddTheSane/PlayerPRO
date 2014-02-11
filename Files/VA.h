@@ -37,7 +37,7 @@ void *VAColorToQD(short);
 #endif
 
 /*#ifdef VECTOR_ANIMATION_MAIN
-		VAGlobalsRecord		VA[ 10];
+		VAGlobalsRecord		VA[10];
 #else
-extern	VAGlobalsRecord		VA[ 10];
+extern	VAGlobalsRecord		VA[10];
 #endif*/

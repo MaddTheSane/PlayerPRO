@@ -130,8 +130,8 @@ void SetWClassic(short No)
 	pStrcpy(String, "\pPattern: ");
 	pStrcat(String, aStr);
 	
-	theStr[ 0] = 20;
-	for (x = 0; x < 20; x++) theStr[ x + 1] = curMusic->partition[ PatCopyXIM]->header.name[ x];
+	theStr[0] = 20;
+	for (x = 0; x < 20; x++) theStr[x + 1] = curMusic->partition[PatCopyXIM]->header.name[x];
 	for (x = 1; x < 20; x++) if (theStr[x] == 0) { theStr[0] = x - 1; break;}
 	pStrcat(String, "\p ");
 	pStrcat(String, theStr);
@@ -243,7 +243,7 @@ void AfficheClassicRect(short tt, short i)
 	
 	Note = false;
 	
-	if (tt < 0 || tt >= curMusic->partition[ PatCopyXIM]->header.size)
+	if (tt < 0 || tt >= curMusic->partition[PatCopyXIM]->header.size)
 		return;
 	
 	theCommand = GetMADCommand(tt, i, curMusic->partition[PatCopyXIM]);
@@ -392,15 +392,15 @@ void DoNullClassic(void)
 		PatternLength != curMusic->partition[PatCopyXIM]->header.size) {
 		PatCopyXIM = MADDriver->Pat;
 		PLCopyXIM = MADDriver->PL;
-		if (PatternLength != curMusic->partition[ PatCopyXIM]->header.size) {
-			PatternLength = curMusic->partition[ PatCopyXIM]->header.size;
+		if (PatternLength != curMusic->partition[PatCopyXIM]->header.size) {
+			PatternLength = curMusic->partition[PatCopyXIM]->header.size;
 			theEvent.what = 0;
 			DoGrowClassic();
 		}
 		
 		GetPortBounds(GetDialogPort(ClassicDlog), &caRect);
 		
-		PatternLength = curMusic->partition[ PatCopyXIM]->header.size;
+		PatternLength = curMusic->partition[PatCopyXIM]->header.size;
 		CurLarg = caRect.right / PatternLength;
 		CurLarg *= ZoomLevelPat;
 		
@@ -769,7 +769,7 @@ void DoItemPressClassic(short whichItem, DialogPtr whichDialog)
 				} else {
 					NumToString(curSelecInstru+1, theStr2);
 					pStrcat(theStr2, "\p ");
-					strcpy((Ptr) theStr, curMusic->fid[ curSelecInstru].name);
+					strcpy((Ptr) theStr, curMusic->fid[curSelecInstru].name);
 					MyC2PStr((Ptr) theStr);
 					pStrcat(theStr2, theStr);
 					SetDText(whichDialog, 6, theStr2);
@@ -862,7 +862,7 @@ void CreateClassicWindow(void)
 	ReaderCopy = MADDriver->PartitionReader;
 	PatCopyXIM = MADDriver->Pat;
 	InvertN = -1;
-	PatternLength = curMusic->partition[ PatCopyXIM]->header.size;
+	PatternLength = curMusic->partition[PatCopyXIM]->header.size;
 	SetWClassic(MADDriver->Pat);
 	
 	GetPortBounds(GetDialogPort(ClassicDlog), &caRect);

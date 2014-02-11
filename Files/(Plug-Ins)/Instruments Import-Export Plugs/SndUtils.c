@@ -24,8 +24,7 @@ void ConvertInstrumentIn(register Byte *tempPtr, register long sSize)
 {
 	register Byte val = 0x80;
 
-	while (sSize > 0)
-	{
+	while (sSize > 0) {
 		sSize--;
 		*(tempPtr + sSize) -= val;
 	}
@@ -35,7 +34,7 @@ sData* inMADCreateSample()
 {
 	sData	*curData;
 
-	curData = (sData*) NewPtrClear(sizeof(sData));
+	curData = (sData*)NewPtrClear(sizeof(sData));
 	
 	curData->size		= 0;
 	curData->loopBeg	= 0;
@@ -62,30 +61,27 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 					  sData			**sample,					// Ptr on samples data
 					  short			*sampleID)
 {
-	long 	inOutBytes, i;
+	long	inOutBytes, i;
 	sData	*curData;
 
-	if (theSound == NULL) return MADParametersErr;
-
-	if (*sampleID > MAXSAMPLE) return MADParametersErr;
+	if (theSound == NULL || *sampleID > MAXSAMPLE)
+		return MADParametersErr;
 
 	inOutBytes = GetPtrSize(theSound);
 	
 	///////
 	
-	if (*sampleID >= 0)		// replace this sample
-	{
-		curData = sample[ *sampleID];
-	}
-	else					// add a sample : why? because *sampleID == -1
-	{
+	if (*sampleID >= 0) {		// replace this sample
+		curData = sample[*sampleID];
+	} else {					// add a sample : why? because *sampleID == -1
 		*sampleID = InsHeader->numSamples;
 		InsHeader->numSamples++;
 		
-		curData = sample[ *sampleID] = inMADCreateSample();
+		curData = sample[*sampleID] = inMADCreateSample();
 	}
 	
-	if (curData->data != NULL) DisposePtr(curData->data);
+	if (curData->data != NULL)
+		DisposePtr(curData->data);
 	curData->data = theSound;
 	
 	curData->size		= inOutBytes;
@@ -97,10 +93,11 @@ OSErr inAddSoundToMAD(Ptr			theSound,
 	curData->relNote	= 60 - bFreq;
 	curData->stereo		= stereo;
 	
-	for(i=0; i<32; i++)
-	{
-		if (i < name[ 0]) curData->name[i] = name[i+1];
-		else curData->name[i] = '\0';
+	for (i = 0; i < 32; i++) {
+		if (i < name[0])
+			curData->name[i] = name[i + 1];
+		else
+			curData->name[i] = '\0';
 	}
 	
 	return noErr;

@@ -2,9 +2,9 @@
 
 typedef struct
 {
-	char	ID[ 12];
-	char	GravisID[ 10];
-	char	Description[ 60];
+	char	ID[12];
+	char	GravisID[10];
+	char	Description[60];
 	
 	Byte	InsNo;
 	Byte	VoiceNo;
@@ -21,17 +21,17 @@ typedef struct
 	Byte	Size3;
 	Byte	Size4;
 	
-	char	reserved[ 36];
+	char	reserved[36];
 	
 } PatchHeader;
 
 typedef struct
 {
 	short	ID;
-	char	name[ 16];
+	char	name[16];
 	long	size;
 	Byte	layer;
-	char	reserved[ 40];
+	char	reserved[40];
 } PatInsHeader;
 
 typedef struct
@@ -40,12 +40,12 @@ typedef struct
 	Byte	id;
 	long	size;
 	Byte	SampNo;
-	char	reserved[ 40];
+	char	reserved[40];
 } LayerHeader;
 
 typedef struct
 {
-	char			name[ 7];
+	char			name[7];
 	Byte			fractions;
 	long			size;
 	long			startLoop;
@@ -56,8 +56,8 @@ typedef struct
 	long			originRate;
 	short			tune;
 	Byte			balance;
-	Byte			Filter[ 6];
-	Byte			FilterOffset[ 6];
+	Byte			Filter[6];
+	Byte			FilterOffset[6];
 	Byte			TremoloSweep;
 	Byte			TremoloRate;
 	Byte			TremoloDepth;
@@ -68,7 +68,7 @@ typedef struct
 	Byte			Flag;
 	short			FreqScale;
 	unsigned short	FreqScaleFactor;
-	char			reserved[ 36];
+	char			reserved[36];
 	
 } PatSampHeader;
 
@@ -198,7 +198,7 @@ type
 
 
 const
-  scale_table : array[0..107] of DWord = ( {C-0..B-8}
+  scale_table : array[0..107] of DWord = ({C-0..B-8}
   { Octave 0 }  16351, 17323, 18354, 19445, 20601, 21826, 23124, 24499, 25956, 27500, 29135, 30867,
   { Octave 1 }  32703, 34647, 36708, 38890, 41203, 43653, 46249, 48999, 51913, 54999, 58270, 61735,
   { Octave 2 }  65406, 69295, 73416, 77781, 82406, 87306, 92498, 97998, 103826, 109999, 116540, 123470,

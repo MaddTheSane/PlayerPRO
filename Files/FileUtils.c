@@ -111,8 +111,7 @@ void PathNameFromDirID(long dirID, short vRefNum, StringPtr fullPathName)
 		block.dirInfo.ioFDirIndex = -1;
 		block.dirInfo.ioDrDirID = block.dirInfo.ioDrParID;
 		err = PBGetCatInfoSync(&block);
-		if (fullPathName[ 0] < 200)
-		{
+		if (fullPathName[0] < 200) {
 			pstrcat(directoryName, (StringPtr)"\p: ");
 			pstrinsert(fullPathName, directoryName);
 		}

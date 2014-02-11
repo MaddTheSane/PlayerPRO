@@ -30,165 +30,165 @@ static void GetMDEFRect(Rect *aRect, Rect *menuRect, short whichItem)
 
 static pascal void MyMenuNoteDefProc(short msg, MenuRef whichMenu, Rect *menuRect, Point hitPt, short *itemID)
 {
-	short					itemCount, j, mouseItem, mSize, Xpos, Ypos;
-	Str255					str;
-	Rect					tempRect;
-	GDHandle				aH;
-	RGBColor				theColor;
-	MenuTrackingDataPtr		mTracking;
-
+	short				itemCount, j, mouseItem, mSize, Xpos, Ypos;
+	Str255				str;
+	Rect				tempRect;
+	GDHandle			aH;
+	RGBColor			theColor;
+	MenuTrackingDataPtr	mTracking;
+	
 	GrafPtr				savedPort;
 	short				savedFont;
 	short				savedSize;
-	
 	
 	GetPort(&savedPort);
 	
 	savedFont = GetPortTextFont((CGrafPtr) savedPort);
 	savedSize = GetPortTextSize((CGrafPtr) savedPort);
-
-	
 	itemCount = CountMenuItems(whichMenu);
-
-	TextFont(0);	TextSize(0);
-
-	switch (msg)
-	{
-	case mDrawMsg:
-		theColor.red = 56797;
-		theColor.green = 56797;
-		theColor.blue = 56797;
-		
-	//	RGBForeColor(&theColor);
-		PaintRect(menuRect);
-		
-		ForeColor(blackColor);
-	//	RGBBackColor(&theColor);
-		
-		for (j = 1;  j <= itemCount;  j++)
-		{
-			GetMenuItemText(whichMenu, j, str);
-			tempRect.bottom--;
-			GetMDEFRect(&tempRect, menuRect, j);
-			
-			
-			if (GetMenuID(whichMenu) == j) ForeColor(redColor);
-			else ForeColor(blackColor);
-			TETextBox(str+1, str[ 0], &tempRect, teJustCenter);
-		}
-		
-		ForeColor(blackColor);
-	break;
-
-	case kMenuFindItemMsg:
-		mTracking = (MenuTrackingDataPtr) itemID;
 	
-		if (!PtInRect(hitPt, menuRect)) mouseItem = 0;
-		else
-		{
-			mouseItem = (hitPt.v - menuRect->top) / HIM;
-			mouseItem *= 12;
+	TextFont(0);
+	TextSize(0);
+	
+	switch (msg) {
+		case mDrawMsg:
+			theColor.red = 56797;
+			theColor.green = 56797;
+			theColor.blue = 56797;
 			
-			mouseItem += (hitPt.h - menuRect->left) / WIM;
-			mouseItem++;
+			//RGBForeColor(&theColor);
+			PaintRect(menuRect);
 			
-			if (mouseItem >= itemCount) mouseItem = itemCount;
-		}
-		
-		if (mouseItem == 0)
-		{		/* out of bounds or disabled */
-			GetMDEFRect(&tempRect, menuRect, mTracking->itemSelected);
-			InvertRect(&tempRect);
-			mTracking->itemSelected = 0;						/* return "cancel" code */
-		}
-		else if (mouseItem != mTracking->itemSelected )
-		{
-			GetMDEFRect(&tempRect, menuRect, mTracking->itemSelected);
-			InvertRect(&tempRect);
+			ForeColor(blackColor);
+			//RGBBackColor(&theColor);
 			
-			GetMDEFRect(&tempRect, menuRect, mouseItem);
-			InvertRect(&tempRect);
-			mTracking->itemSelected = mouseItem; 				/* return new */
-		}
-		
-		mTracking->itemUnderMouse = mTracking->itemSelected;
-		mTracking->itemRect = tempRect;
-		break;
-
-	case mSizeMsg:
-		mSize = 0;
-		for (j=1;  j<=itemCount;  j++ )
-		{
-			GetMenuItemText(whichMenu, j, str);
-			if (StringWidth(str) > mSize) mSize = StringWidth(str);
-		}
-		
-		SetMenuWidth(whichMenu, mSize + 2);
-		SetMenuHeight(whichMenu, itemCount*HIM);	/* assume 12 pts high */
-		break;
-
-	case mPopUpMsg:
-		
-		SetMenuID(whichMenu, *itemID);
-		//(*whichMenu)->menuID = *itemID;
-		
-		Xpos = (*itemID - 1) - ((*itemID - 1)/12)*12;
-		Ypos = (*itemID - 1) / 12;
-		
-		menuRect->top = hitPt.h - (Ypos * HIM);
-		menuRect->left = hitPt.v - (Xpos * WIM);
-		
-		Ypos = (itemCount - 1) / 12;
-		
-		menuRect->right = menuRect->left + 12*WIM;
-		menuRect->bottom = menuRect->top + (Ypos+1)*HIM;
-		
-		GetMouse(&hitPt);
-		
-		aH = GetDeviceList();
-		do
-		{
-			if (aH != NULL)
-			{
-				if (PtInRect(hitPt, &(*(*aH)->gdPMap)->bounds))
-				{
-					Rect 		ar = (*(*aH)->gdPMap)->bounds;
-					
-					if (menuRect->bottom > ar.bottom) 	OffsetRect(menuRect, 0, ar.bottom - menuRect->bottom);
-					if (menuRect->top < ar.top)			OffsetRect(menuRect, 0, ar.top - menuRect->top);
-					if (menuRect->right > ar.right) 	OffsetRect(menuRect, ar.right - menuRect->right, 0);
-					if (menuRect->left < ar.left)		OffsetRect(menuRect, ar.left - menuRect->left, 0);
-				}
+			for (j = 1;  j <= itemCount;  j++) {
+				GetMenuItemText(whichMenu, j, str);
+				tempRect.bottom--;
+				GetMDEFRect(&tempRect, menuRect, j);
+				
+				
+				if (GetMenuID(whichMenu) == j)
+					ForeColor(redColor);
+				else
+					ForeColor(blackColor);
+				
+				TETextBox(str+1, str[0], &tempRect, teJustCenter);
 			}
 			
-			aH = GetNextDevice(aH);
-		}
-		while (aH != NULL);
-	break;
-
+			ForeColor(blackColor);
+			break;
+			
+		case kMenuFindItemMsg:
+			mTracking = (MenuTrackingDataPtr)itemID;
+			
+			if (!PtInRect(hitPt, menuRect))
+				mouseItem = 0;
+			else {
+				mouseItem = (hitPt.v - menuRect->top) / HIM;
+				mouseItem *= 12;
+				
+				mouseItem += (hitPt.h - menuRect->left) / WIM;
+				mouseItem++;
+				
+				if (mouseItem >= itemCount)
+					mouseItem = itemCount;
+			}
+			
+			if (mouseItem == 0) {
+				/* out of bounds or disabled */
+				GetMDEFRect(&tempRect, menuRect, mTracking->itemSelected);
+				InvertRect(&tempRect);
+				/* return "cancel" code */
+				mTracking->itemSelected = 0;
+			} else if (mouseItem != mTracking->itemSelected) {
+				GetMDEFRect(&tempRect, menuRect, mTracking->itemSelected);
+				InvertRect(&tempRect);
+				
+				GetMDEFRect(&tempRect, menuRect, mouseItem);
+				InvertRect(&tempRect);
+				/* return new */
+				mTracking->itemSelected = mouseItem;
+			}
+			
+			mTracking->itemUnderMouse = mTracking->itemSelected;
+			mTracking->itemRect = tempRect;
+			break;
+			
+		case mSizeMsg:
+			mSize = 0;
+			for (j=1;  j<=itemCount;  j++) {
+				GetMenuItemText(whichMenu, j, str);
+				if (StringWidth(str) > mSize)
+					mSize = StringWidth(str);
+			}
+			
+			SetMenuWidth(whichMenu, mSize + 2);
+			SetMenuHeight(whichMenu, itemCount * HIM);	/* assume 12 pts high */
+			break;
+			
+		case mPopUpMsg:
+			SetMenuID(whichMenu, *itemID);
+			//(*whichMenu)->menuID = *itemID;
+			
+			Xpos = (*itemID - 1) - ((*itemID - 1)/12)*12;
+			Ypos = (*itemID - 1) / 12;
+			
+			menuRect->top = hitPt.h - (Ypos * HIM);
+			menuRect->left = hitPt.v - (Xpos * WIM);
+			
+			Ypos = (itemCount - 1) / 12;
+			
+			menuRect->right = menuRect->left + 12*WIM;
+			menuRect->bottom = menuRect->top + (Ypos+1)*HIM;
+			
+			GetMouse(&hitPt);
+			
+			aH = GetDeviceList();
+			do {
+				if (aH != NULL) {
+					if (PtInRect(hitPt, &(*(*aH)->gdPMap)->bounds)) {
+						Rect 		ar = (*(*aH)->gdPMap)->bounds;
+						
+						if (menuRect->bottom > ar.bottom)
+							OffsetRect(menuRect, 0, ar.bottom - menuRect->bottom);
+						if (menuRect->top < ar.top)
+							OffsetRect(menuRect, 0, ar.top - menuRect->top);
+						if (menuRect->right > ar.right)
+							OffsetRect(menuRect, ar.right - menuRect->right, 0);
+						if (menuRect->left < ar.left)
+							OffsetRect(menuRect, ar.left - menuRect->left, 0);
+					}
+				}
+				
+				aH = GetNextDevice(aH);
+			} while (aH != NULL);
+			break;
+			
 	}
 	
-	TextFont(savedFont);	TextSize(savedSize);
+	TextFont(savedFont);
+	TextSize(savedSize);
 }
 
 
-static void GetDText (DialogPtr dlog, short item, StringPtr str)
+static void GetDText(DialogPtr dlog, short item, StringPtr str)
 {
 	Handle	itemHandle;
 	short	itemType;
 	Rect	itemRect;
-
-	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
-	GetDialogItemText (itemHandle, str);
+	
+	GetDialogItem(dlog, item, &itemType, &itemHandle, &itemRect);
+	GetDialogItemText(itemHandle, str);
 }
 
-static void SetDText (DialogPtr dlog, short item, Str255 str)
+static void SetDText(DialogPtr dlog, short item, Str255 str)
 {
 	ControlHandle	control;
 	OSErr			err;
-
-	GetDialogItemAsControl(dlog, item, &control );
-	err = SetControlData(control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
+	
+	GetDialogItemAsControl(dlog, item, &control);
+	err = SetControlData(control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1));
 	DrawOneControl(control);
 }
 
@@ -211,50 +211,54 @@ static void AutoPosition(DialogPtr aDia)
 	GetQDGlobalsScreenBits(&screenBits);
 	
 	SetRect(&ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
-						screenBits.bounds.right - 8, screenBits.bounds.bottom - 8);
+			screenBits.bounds.right - 8, screenBits.bounds.bottom - 8);
 	
 	aH = GetDeviceList();
-	do
-	{
+	do {
 		aH = GetNextDevice(aH);
-		if (aH != NULL)
-		{
-			if (PtInRect(mouse, &(*(*aH)->gdPMap)->bounds))
-			{
+		if (aH != NULL) {
+			if (PtInRect(mouse, &(*(*aH)->gdPMap)->bounds)) {
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
-			
+				
 				SetRect(&ViewRect, ar.left + 8, ar.top + 43,
-									ar.right - 8, ar.bottom - 8);
+						ar.right - 8, ar.bottom - 8);
 			}
 		}
-	}
-	while (aH != NULL);
+	} while (aH != NULL);
 	
 	Position.h = mouse.h - XSize/2;
-	if (Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
-	else if (Position.h <= ViewRect.left) Position.h = ViewRect.left;
-
+	if (Position.h + XSize >= ViewRect.right)
+		Position.h = ViewRect.right - XSize;
+	else if (Position.h <= ViewRect.left)
+		Position.h = ViewRect.left;
+	
 	Position.v = mouse.v - YSize/2;
-	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
-	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
-
-	SetDialogDefaultItem(aDia, 1 );
-	SetDialogCancelItem(aDia, 2 );
-
+	if (Position.v + YSize >= ViewRect.bottom)
+		Position.v = ViewRect.bottom - YSize;
+	else if (Position.v <= ViewRect.top)
+		Position.v = ViewRect.top;
+	
+	SetDialogDefaultItem(aDia, 1);
+	SetDialogCancelItem(aDia, 2);
+	
 	MoveWindow(GetDialogWindow(aDia), Position.h, Position.v, false);
-
+	
 	ShowWindow(GetDialogWindow(aDia));
 }
 
-static Cmd* GetCmd(short row, short	track, Pcmd*	myPcmd)
+static Cmd* GetCmd(short row, short track, Pcmd* myPcmd)
 {
-	if (row < 0) row = 0;
-	else if (row >= myPcmd->length) row = myPcmd->length -1;
+	if (row < 0)
+		row = 0;
+	else if (row >= myPcmd->length)
+		row = myPcmd->length -1;
 
-	if (track < 0) track = 0;
-	else if (track >= myPcmd->tracks) track = myPcmd->tracks -1;
+	if (track < 0)
+		track = 0;
+	else if (track >= myPcmd->tracks)
+		track = myPcmd->tracks -1;
 	
-	return(&(myPcmd->myCmd[ (myPcmd->length * track) + row]));
+	return &(myPcmd->myCmd[(myPcmd->length * track) + row]);
 }
 
 static void OctavesName(short id, Str255 String)
@@ -360,24 +364,24 @@ static short Text2Note(Str255 myTT)
 
 static OSErr mainFadeNote(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
-	DialogPtr			myDia;
-	short				itemHit, itemType;
-	Rect				itemRect;
-	Handle				itemHandle;
-	Str255				aStr;
-	MenuHandle			noteMenu;
-	Point				myPt;
-	long				Result;
-	MenuDefSpec			defSpec2;
+	DialogPtr	myDia;
+	short		itemHit, itemType;
+	Rect		itemRect;
+	Handle		itemHandle;
+	Str255		aStr;
+	MenuHandle	noteMenu;
+	Point		myPt;
+	long		Result;
+	MenuDefSpec	defSpec2;
 	
 	defSpec2.defType = kMenuDefProcPtr;
 	defSpec2.u.defProc = NewMenuDefUPP(MyMenuNoteDefProc );
 	RegisterMenuDefinition(1972, &defSpec2);
-
+	
 	myDia = GetNewDialog(128, NULL, (WindowPtr) -1L);
 	SetPortDialogPort(myDia);
 	AutoPosition(myDia);
-
+	
 	SetDText(myDia, 3, "\pC 3");
 	SetDText(myDia, 4, "\pC 7");
 	SelectDialogItemText(myDia, 3, 0, 200);
@@ -386,37 +390,37 @@ static OSErr mainFadeNote(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	
 	do {
 	RESTART:
-	
+		
 		ModalDialog(thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 		
-		switch (itemHit)
-		{
+		switch (itemHit) {
 			case 7:
 			case 8:
 				InsertMenu(noteMenu, hierMenu);
 				
 				GetDialogItem(myDia, itemHit, &itemType, &itemHandle, &itemRect);
-				myPt.v = itemRect.top;	myPt.h = itemRect.left;
+				myPt.v = itemRect.top;
+				myPt.h = itemRect.left;
 				LocalToGlobal(&myPt);
 				
-				GetDText(myDia, itemHit-4, aStr);
+				GetDText(myDia, itemHit - 4, aStr);
 				SetItemMark(noteMenu, Text2Note(aStr) + 1, 0xa5);
 				
-				Result = PopUpMenuSelect( noteMenu,
-											myPt.v,
-											myPt.h,
-											Text2Note(aStr) + 1);
+				Result = PopUpMenuSelect(noteMenu,
+										 myPt.v,
+										 myPt.h,
+										 Text2Note(aStr) + 1);
 				
 				SetItemMark(noteMenu, Text2Note(aStr) + 1, 0);
 				
-				if (HiWord(Result) != 0 ) {
+				if (HiWord(Result) != 0) {
 					OctavesName(LoWord(Result) - 1, aStr);
 					SetDText(myDia, itemHit-4, aStr);
 					SelectDialogItemText(myDia, 3, 0, 200);
 				}
 				
 				DeleteMenu(GetMenuID(noteMenu));
-			break;
+				break;
 		}
 	} while (itemHit != 1 && itemHit != 2);
 	
@@ -424,7 +428,7 @@ static OSErr mainFadeNote(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		short	track, row;
 		long	from, to;
 		Cmd		*myCmd;
-	
+		
 		GetDText(myDia, 3, aStr);
 		from 	= Text2Note(aStr);
 		GetDText(myDia, 4, aStr);
@@ -452,21 +456,21 @@ static OSErr mainFadeNote(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 					myCmd->note	= from + ((to-from) * row) / (myPcmd->length-1);
 				
 				// my fade command : 0x10 min vol, 0x50 : max vol
-				// Refer to MAD description for more informations			
+				// Refer to MAD description for more information
 			}
 		}
 	}
 	
 	DisposeDialog(myDia);
-		
+	
 	DisposeMenu(noteMenu);
 	
 	return noErr;
 }
 
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x95, 0x45, 0xDB, 0x21, 0x5A, 0xDE, 0x49, 0xDC, 0x97, 0x17, 0x09, 0x3D, 0x09, 0xEC, 0x4D, 0x39)
 //9545DB21-5ADE-49DC-9717-093D09EC4D39
-#define PLUGINFACTORY FadeNoteFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainFadeNote //The old main function, renamed please
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x95, 0x45, 0xDB, 0x21, 0x5A, 0xDE, 0x49, 0xDC, 0x97, 0x17, 0x09, 0x3D, 0x09, 0xEC, 0x4D, 0x39)
+#define PLUGINFACTORY FadeNoteFactory 
+#define PLUGMAIN mainFadeNote
 
 #include "CFPlugin-DigitalBridge.c"

@@ -16,8 +16,10 @@
 
 OSErr TestWAV(PCMWavePtr CC)
 {
-	if (EndianU32_BtoN(CC->ckid) =='RIFF') return noErr;
-	else return MADFileNotSupportedByThisPlug;
+	if (EndianU32_BtoN(CC->ckid) =='RIFF')
+		return noErr;
+	else
+		return MADFileNotSupportedByThisPlug;
 }
 
 /*___________________ long byte swap for Intel <-> Motorola Conversions*/
@@ -44,36 +46,30 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 {
 	PCMWavePtr	WAVERsrc = NULL;
 	short		fRef;
-	long		fSize;
+	long		fSize, i;
 	
 	*stereo = false;
 	
-	if(!FSpOpenDF(fileSpec, fsRdPerm, &fRef))
-	{
+	if(!FSpOpenDF(fileSpec, fsRdPerm, &fRef)) {
 		GetEOF(fRef, &fSize);
-		if(!(WAVERsrc = (PCMWavePtr) NewPtr(fSize))) 
-		{
+		if(!(WAVERsrc = (PCMWavePtr) NewPtr(fSize)))  {
 			FSCloseFork(fRef);
 			return NULL;
 		}
 		
-		if(FSRead(fRef, &fSize, &(*WAVERsrc)))
-		{
+		if(FSRead(fRef, &fSize, &(*WAVERsrc))) {
 			FSCloseFork(fRef);
 			DisposePtr((Ptr)WAVERsrc);
 			return NULL;
 		}
 		
-		if(EndianU32_BtoN((*WAVERsrc).ckid) =='RIFF')
-		{
+		if(EndianU32_BtoN((*WAVERsrc).ckid) =='RIFF') {
 			(*WAVERsrc).cksize = longswap((*WAVERsrc).cksize);
 			
-			if(EndianU32_BtoN((*WAVERsrc).fccType) =='WAVE')
-			{
+			if(EndianU32_BtoN((*WAVERsrc).fccType) =='WAVE') {
 				(*WAVERsrc).dwDataOffset = longswap((*WAVERsrc).dwDataOffset);
 				
-				if(EndianU32_BtoN((*WAVERsrc).fmtType) == 'fmt ')
-				{
+				if(EndianU32_BtoN((*WAVERsrc).fmtType) == 'fmt ') {
 					(*WAVERsrc).wFormatTag      = shrtswap((*WAVERsrc).wFormatTag);
 					(*WAVERsrc).nCannels        = shrtswap((*WAVERsrc).nCannels);
 					(*WAVERsrc).nSamplesPerSec  = longswap((*WAVERsrc).nSamplesPerSec);
@@ -88,33 +84,28 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 					*sampleSize = (*WAVERsrc).wBitsPerSample;
 					*rate		= (*WAVERsrc).nSamplesPerSec;
 					
-					if ((*WAVERsrc).nCannels == 2) *stereo = true;
-					else *stereo = false;
+					if ((*WAVERsrc).nCannels == 2)
+						*stereo = true;
+					else
+						*stereo = false;
 					
-					if((*WAVERsrc).wFormatTag != 1)
-					{
-						DisposePtr((Ptr) WAVERsrc);
+					if((*WAVERsrc).wFormatTag != 1) {
+						DisposePtr((Ptr)WAVERsrc);
 						FSCloseFork(fRef);
 						return NULL;
 					}
-				}
-				else
-				{
-					DisposePtr((Ptr) WAVERsrc);
+				} else {
+					DisposePtr((Ptr)WAVERsrc);
 					FSCloseFork(fRef);
 					return NULL;
 				}	
-			}
-			else
-			{
-				DisposePtr((Ptr) WAVERsrc);
+			} else {
+				DisposePtr((Ptr)WAVERsrc);
 				FSCloseFork(fRef);
 				return NULL;
 			}
-		}
-		else
-		{
-			DisposePtr((Ptr) WAVERsrc);
+		} else {
+			DisposePtr((Ptr)WAVERsrc);
 			FSCloseFork(fRef);
 			return NULL;
 		}
@@ -126,56 +117,56 @@ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSi
 	
 	{
 		long sndSize = WAVERsrc->dataSize;
+		unsigned short *tt;
 		
 		memmove(WAVERsrc, WAVERsrc->theData, sndSize);
 		
 		SetPtrSize((Ptr) WAVERsrc, sndSize);
 		
-		switch (*sampleSize)
-		{
+		switch (*sampleSize) {
 			case 8:
 				ConvertInstrumentIn((Byte*) WAVERsrc, sndSize);
-			break;
-			
+				break;
+				
 			case 16:
-				{
-					long			i;
-					unsigned short	*tt = (unsigned short*) WAVERsrc;
-					
-					i = sndSize/2;
-					while (i-- > 0) tt[ i] = shrtswap(tt[ i]);
-				}
-			break;
+				tt = (unsigned short*)WAVERsrc;
+				
+				i = sndSize / 2;
+				while (i-- > 0) tt[i] = shrtswap(tt[i]);
+				break;
 		}
 	}
-	return (Ptr) WAVERsrc;
+	return (Ptr)WAVERsrc;
 }
 
 OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 {
-	OSErr					iErr;
-	Boolean					canceled;
-	Movie 					theMovie;
-	short					resRefNum, /*ins, samp,*/ resId;
-	Cursor					watchCrsr;
-	CursHandle				myCursH;
-	Str255					resName;
-	Boolean					dataRefWasChanged;
+	OSErr		iErr;
+	Boolean		canceled;
+	Movie		theMovie;
+	short		resRefNum, resId;
+	Cursor		watchCrsr;
+	CursHandle	myCursH;
+	Str255		resName;
+	Boolean		dataRefWasChanged;
 	
 	iErr = EnterMovies();
-	if (iErr)
-	{
+	if (iErr) {
 		return -1;
 	}
 	
 	myCursH = GetCursor(357);
 	
-	if (myCursH == NULL) Debugger();
-	DetachResource((Handle) myCursH);		HLock((Handle) myCursH);
-	watchCrsr = **myCursH;					HUnlock((Handle) myCursH);		DisposeHandle((Handle) myCursH);
+	if (myCursH == NULL)
+		Debugger();
+	DetachResource((Handle)myCursH);
+	HLock((Handle)myCursH);
+	watchCrsr = **myCursH;
+	HUnlock((Handle)myCursH);
+	DisposeHandle((Handle)myCursH);
 	
 	resRefNum = 0;
-	iErr = OpenMovieFile (&file, &resRefNum, fsCurPerm);
+	iErr = OpenMovieFile(&file, &resRefNum, fsCurPerm);
 	
 	resId = 0;
 	iErr = NewMovieFromFile(&theMovie, resRefNum, &resId, resName, 0, &dataRefWasChanged);
@@ -184,14 +175,12 @@ OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 	
 	canceled = FALSE;
 	
-	if (!canceled && iErr == noErr)
-	{
+	if (!canceled && iErr == noErr) {
 		short tmpvRef;
 		long tmpDirID;
 		
 		iErr = FindFolder(kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tmpvRef, &tmpDirID);
-		if (iErr == noErr)
-		{
+		if (iErr == noErr) {
 			iErr = FSMakeFSSpec(tmpvRef, tmpDirID, file.name, newfile);
 			/////////////////////////////////////////////////
 			//		WAVE CONVERSION
@@ -201,19 +190,17 @@ OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 			SetCursor(&watchCrsr);
 			
 			iErr = FSpDelete(newfile);
-			
-			iErr = ConvertMovieToFile(	theMovie,
-										0,
-							 			newfile,
-							 			'WAVE',
-							 			'SNPL',
-							 			smCurrentScript,
-							 			NULL,
-							 			0,
-							 			0);
+			iErr = ConvertMovieToFile(theMovie,
+									  0,
+									  newfile,
+									  'WAVE',
+									  'SNPL',
+									  smCurrentScript,
+									  NULL,
+									  0,
+									  0);
 			
 			DisposeMovie(theMovie);
-			
 			CloseMovieFile(resRefNum);
 		}
 	}

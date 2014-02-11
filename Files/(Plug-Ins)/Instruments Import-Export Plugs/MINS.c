@@ -6,54 +6,44 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <Carbon/Carbon.h>
 
-static OSErr TestMINS(InstrData *CC)
+static inline OSErr TestMINS(InstrData *CC)
 {
-	if (CC->type == 0 && CC->numSamples >= 0 && CC->numSamples < MAXSAMPLE) return noErr;
-	else return MADFileNotSupportedByThisPlug;
+	if (CC->type == 0 && CC->numSamples >= 0 && CC->numSamples < MAXSAMPLE)
+		return noErr;
+	else
+		return MADFileNotSupportedByThisPlug;
 }
 
 static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 {
 	short		i;
-//	Boolean		IsReading;
 
 	for (i = 0; i < curIns->numSamples; i++)
 	{
-		if (sample[ i] != NULL)
+		if (sample[i] != NULL)
 		{
-			if (sample[ i]->data != NULL)
+			if (sample[i]->data != NULL)
 			{
-				DisposePtr((Ptr) sample[ i]->data);
-				sample[ i]->data = NULL;
+				DisposePtr((Ptr) sample[i]->data);
+				sample[i]->data = NULL;
 			}
-			DisposePtr((Ptr) sample[ i]);
-			sample[ i] = NULL;
+			DisposePtr((Ptr) sample[i]);
+			sample[i] = NULL;
 		}
 	}
 	
 	
-	for (i = 0; i < 32; i++) curIns->name[ i]	= 0;
+	memset(curIns->name, 0, sizeof(curIns->name));
 	curIns->type		= 0;
 	curIns->numSamples	= 0;
 	
 	/**/
 	
-	for (i = 0; i < 96; i++) curIns->what[ i]		= 0;
-	for (i = 0; i < 12; i++)
-	{
-		curIns->volEnv[ i].pos		= 0;
-		curIns->volEnv[ i].val		= 0;
-	}
-	for (i = 0; i < 12; i++)
-	{
-		curIns->pannEnv[ i].pos	= 0;
-		curIns->pannEnv[ i].val	= 0;
-	}
-	for (i = 0; i < 12; i++)
-	{
-		curIns->pitchEnv[ i].pos	= 0;
-		curIns->pitchEnv[ i].val	= 0;
-	}
+	memset(curIns->what, 0, sizeof(curIns->what));
+	memset(curIns->volEnv, 0, sizeof(curIns->volEnv));
+	memset(curIns->pannEnv, 0, sizeof(curIns->pannEnv));
+	memset(curIns->pitchEnv, 0, sizeof(curIns->pitchEnv));
+	
 	curIns->volSize		= 0;
 	curIns->pannSize	= 0;
 	
@@ -117,18 +107,16 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 	long	inOutCount;
 	Ptr		theSound;
 
-	switch (order)
-	{
+	switch (order) {
 		case 'IMPL':
 			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
-			if (myErr == noErr)
-			{
+			if (myErr == noErr) {
 				GetEOF(iFileRefI, &inOutCount);
 				
 				theSound = NewPtr(inOutCount);
-				if (theSound == NULL) myErr = MADNeedMemory;
-				else
-				{
+				if (theSound == NULL)
+					myErr = MADNeedMemory;
+				else {
 					DisposePtr(theSound);
 					
 					MAD2KillInstrument(InsHeader, sample);
@@ -143,9 +131,8 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 					
 					// READ samples headers & data
 					
-					for (x = 0; x < InsHeader->numSamples; x++)
-					{
-						sData *curData = sample[ x] = inMADCreateSample();
+					for (x = 0; x < InsHeader->numSamples; x++) {
+						sData *curData = sample[x] = inMADCreateSample();
 						
 						inOutCount = sizeof(sData);
 						
@@ -154,18 +141,16 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 						ByteswapsData(curData);
 						
 						curData->data = NewPtr(curData->size);
-						if (curData->data != NULL)
-						{
+						if (curData->data != NULL) {
 							inOutCount = curData->size;
 							myErr = FSRead(iFileRefI, &inOutCount, curData->data);
 						}
 						
-						if (curData->amp == 16)
-						{
+						if (curData->amp == 16) {
 							SInt32 	ll;
 							short	*shortPtr = (short*) curData->data;
 							
-							for (ll = 0; ll < curData->size/2; ll++) MOT16(&shortPtr[ ll]);
+							for (ll = 0; ll < curData->size/2; ll++) MOT16(&shortPtr[ll]);
 						}
 
 					}
@@ -180,11 +165,11 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr)
 			{
-				inOutCount = 50L;
+				inOutCount = 50;
 				theSound = NewPtr(inOutCount);
-				if (theSound == NULL) myErr = MADNeedMemory;
-				else
-				{
+				if (theSound == NULL)
+					myErr = MADNeedMemory;
+				else {
 					FSRead(iFileRefI, &inOutCount, theSound);
 					
 					ByteswapInstrument((InstrData*)theSound);
@@ -196,7 +181,6 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 				
 				FSCloseFork(iFileRefI);
 			}
-		
 			break;
 		
 		case 'EXPL':
@@ -204,8 +188,7 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 			myErr = FSpCreate(AlienFileFSSpec, 'SNPL', 'MINs', smCurrentScript);
 			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			
-			if (myErr == noErr)
-			{
+			if (myErr == noErr) {
 				// Write instrument header
 				
 				inOutCount = sizeof(InstrData);
@@ -217,24 +200,22 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 				
 				// Write samples headers & data
 				
-				for (x = 0; x < InsHeader->numSamples; x++)
-				{
+				for (x = 0; x < InsHeader->numSamples; x++) {
 					sData	*curData;
 					sData	*copyData;
 					Ptr		copydataData;
-					curData = sample[ x];
+					curData = sample[x];
 					copyData = (sData*)NewPtr(sizeof(sData));
 					BlockMoveData(curData, copyData, sizeof(sData));
 					ByteswapsData(copyData);
 					copydataData = NewPtr(curData->size);
 					BlockMoveData(curData->data, copydataData, curData->size);
 #ifdef __LITTLE_ENDIAN__
-					if (curData->amp == 16)
-					{
-						SInt32 	ll;
+					if (curData->amp == 16) {
+						SInt32	ll;
 						short	*shortPtr = (short*) copydataData;
 						
-						for (ll = 0; ll < curData->size/2; ll++) MOT16(&shortPtr[ ll]);
+						for (ll = 0; ll < curData->size/2; ll++) MOT16(&shortPtr[ll]);
 					}
 #endif
 					
@@ -263,7 +244,7 @@ static OSErr mainMINs(OSType				order,						// Order to execute
 
 // 9C897935-C00B-4AAC-81D6-E43049E3A8E0
 #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x9C, 0x89, 0x79, 0x35, 0xC0, 0x0B, 0x4A, 0xAC, 0x81, 0xD6, 0xE4, 0x30, 0x49, 0xE3, 0xA8, 0xE0)
-#define PLUGINFACTORY MINsFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainMINs //The old main function, renamed please
+#define PLUGINFACTORY MINsFactory 
+#define PLUGMAIN mainMINs
 
 #include "CFPlugin-InstrBridge.c"

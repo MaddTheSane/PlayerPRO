@@ -10,8 +10,7 @@
 
 #define MAXINSTRPLUG 100
 
-typedef struct PPINFilterInfo
-{
+typedef struct PPINFilterInfo {
 	PPInstrumentPlugin	**xxxx;
 	CFStringRef			MenuName;
 	CFStringRef			AuthorString;
@@ -25,36 +24,31 @@ typedef struct PPINFilterInfo
 void DoPlayInstruInt2(sData *curData, InstrData *insData, short Note, short Instru, short effect, short arg, short vol, Channel *curVoice, long start, long end, long samp);
 extern Cursor PlayCrsr;
 
-#define kCustomWidth			410
-#define kCustomHeight			20
-#define kControlListID			164
+#define kCustomWidth 410
+#define kCustomHeight 20
+#define kControlListID 164
 
-static	Handle 		gDitlList = NULL;
-static	short 		gLastTryWidth;
-static	short 		gLastTryHeight;
-static	UInt16 		gfirstItem = 0;
-
+static Handle	gDitlList = NULL;
+static short	gLastTryWidth;
+static short	gLastTryHeight;
+static UInt16	gfirstItem = 0;
 
 OSErr ExtractFile(NavCBRecPtr callBackParms, FSSpec	*finalSpec);
 OSErr MyAEGetDescData(const AEDesc *desc, DescType *typeCode, void *dataBuffer, ByteCount maximumSize, ByteCount *actualSize);
 pascal Boolean MyInsCustomFilter(AEDesc *theItem, void *info, NavCallBackUserData callBackUD, NavFilterModes filterMode);
-pascal void myCustomEventNAVProc(	NavEventCallbackMessage 	callBackSelector, 
-								 NavCBRecPtr 				callBackParms, 
-								 NavCallBackUserData 		callBackUD);
+pascal void myCustomEventNAVProc(NavEventCallbackMessage callBackSelector, NavCBRecPtr callBackParms, NavCallBackUserData callBackUD);
 void HandleCustomMouseNAVDown(NavCBRecPtr callBackParms);
 void InitPPINMenu(void);
 
+static PPInfoPlug		thePPInfoPlug;
+static PPINFilterInfo 	*ThePPINPlug;
+static short			tPlug, sampPlug, instPlug, instMenuID[MAXINSTRPLUG], sampMenuID[MAXINSTRPLUG];
+static MenuHandle		PPINMenuSample, PPINMenuInstrument;
 
-static	PPInfoPlug		thePPInfoPlug;
-static	PPINFilterInfo 	*ThePPINPlug;
-static	short			tPlug, sampPlug, instPlug, instMenuID[ MAXINSTRPLUG], sampMenuID[ MAXINSTRPLUG];
-static	MenuHandle		PPINMenuSample, PPINMenuInstrument;
-
-static 	Boolean 	needUp;
-static 	Boolean		AddAll;
-static	Boolean 	PlayWhenClicked, DoPlayASoundFile;
-static	Boolean		ShowAllFiles;
-
+static Boolean	needUp;
+static Boolean	AddAll;
+static Boolean	PlayWhenClicked, DoPlayASoundFile;
+static Boolean	ShowAllFiles;
 
 void InitPlayWhenClicked(void)
 {
@@ -68,14 +62,14 @@ OSErr PPINGetPlugByID(OSType *type, short id, short samp)
 		if (id >= sampPlug)
 			return -1;
 		else {
-			*type = ThePPINPlug[ sampMenuID[id]].type;
+			*type = ThePPINPlug[sampMenuID[id]].type;
 			return noErr;
 		}
 	} else {
-		if (id >= instPlug) return -1;
-		else
-		{
-			*type = ThePPINPlug[ instMenuID[id]].type;
+		if (id >= instPlug)
+			return -1;
+		else {
+			*type = ThePPINPlug[instMenuID[id]].type;
 			return noErr;
 		}
 	}
@@ -104,11 +98,8 @@ void PPINGetFileName(void)
 	// default behavior for browser and dialog:
 	iErr = NavGetDefaultDialogOptions(&dialogOptions);
 	
-	dialogOptions.dialogOptionFlags	&=	~kNavAllowPreviews;
-	dialogOptions.dialogOptionFlags	|=	kNavNoTypePopup;
-	dialogOptions.dialogOptionFlags	&=	~kNavAllowStationery;
-	dialogOptions.dialogOptionFlags	|=	kNavDontAutoTranslate;
-	dialogOptions.dialogOptionFlags	&=	~kNavAllowMultipleFiles;
+	dialogOptions.dialogOptionFlags	&=	~(kNavAllowPreviews | kNavAllowStationery | kNavAllowMultipleFiles);
+	dialogOptions.dialogOptionFlags	|=	kNavNoTypePopup | kNavDontAutoTranslate;
 	
 	pStrcpy(dialogOptions.clientName, "\pPlayerPRO");
 	
@@ -117,8 +108,8 @@ void PPINGetFileName(void)
 	 
 	 (*openList)->componentSignature	= 'SNPL';
 	 (*openList)->osTypeCount			= tPlug+1;
-	 (*openList)->osType[ 0]			= 'INso';
-	 for (i = 1; i <= tPlug; i++) (*openList)->osType[ i] = ThePPINPlug[ i].type;*/
+	 (*openList)->osType[0]			= 'INso';
+	 for (i = 1; i <= tPlug; i++) (*openList)->osType[i] = ThePPINPlug[i].type;*/
 	
 	
 	iErr = NavGetFile(NULL,	// use system's default location
@@ -148,7 +139,7 @@ void PPINGetFileName(void)
 			}
 		}
 		
-		iErr = NavDisposeReply(&theReply);	// clean up after ourselves	
+		iErr = NavDisposeReply(&theReply);	// clean up after ourselves
 	} else
 		iErr = -1;
 	
@@ -159,7 +150,6 @@ void PPINGetFileName(void)
 	curMusic->hasChanged = true;
 	
 	UpdateALLWindow();
-	
 	SaveUndo(UAllSamples, 0, "\pUndo 'Open instrument'");
 	
 	iErr = NOpenSampleInt(ins, samp, replyspec);
@@ -187,17 +177,13 @@ OSErr CallPPINPlugIns(short PlugNo, OSType order, short ins, short *samp, FSSpec
 	PPInstrumentPlugin	**InstrPlugA = ThePPINPlug[PlugNo].xxxx;
 	
 	GetPort(&savedPort);
-	fileID = CFBundleOpenBundleResourceMap(ThePPINPlug[ PlugNo].file);
-	thePPInfoPlug.fileType = ThePPINPlug[ PlugNo].type;
+	fileID = CFBundleOpenBundleResourceMap(ThePPINPlug[PlugNo].file);
+	thePPInfoPlug.fileType = ThePPINPlug[PlugNo].type;
 	
-	myErr = (*InstrPlugA)->InstrMain(order,
-									 &curMusic->fid[ins],
-									 &curMusic->sample[curMusic->fid[ins].firstSample],
-									 samp,
-									 spec,
-									 &thePPInfoPlug);
+	myErr = (*InstrPlugA)->InstrMain(order, &curMusic->fid[ins], &curMusic->sample[curMusic->fid[ins].firstSample],
+									 samp, spec, &thePPInfoPlug);
 	
-	curMusic->fid[ ins].firstSample =  ins * MAXSAMPLE;
+	curMusic->fid[ins].firstSample = ins * MAXSAMPLE;
 	
 	CFBundleCloseBundleResourceMap(ThePPINPlug[PlugNo].file, fileID);
 	SetPort(savedPort);
@@ -236,9 +222,9 @@ void InitPPINPlug(void)
 	CFArrayRef  PlugLocsDigital = GetDefaultPluginFolderLocations();
 	CFIndex		i, x, PlugLocNums;
 	
-	thePPInfoPlug.RPlaySoundUPP				= inMADPlaySoundData;
-	thePPInfoPlug.UpdateALLWindowUPP 		= UpdateALLWindow;
-	thePPInfoPlug.MyDlgFilterUPP			= MyDlgFilterDesc;	
+	thePPInfoPlug.RPlaySoundUPP			= inMADPlaySoundData;
+	thePPInfoPlug.UpdateALLWindowUPP	= UpdateALLWindow;
+	thePPInfoPlug.MyDlgFilterUPP		= MyDlgFilterDesc;
 	
 	ThePPINPlug = (PPINFilterInfo*)NewPtr(MAXINSTRPLUG * sizeof(PPINFilterInfo));
 	
@@ -299,17 +285,14 @@ OSType PressPPINMenu(Rect *PopUpRect, OSType curType, short samp, Str255 name)
 	sel = 1;
 	for(i = 0; i < CountMenuItems(PPINMenu); i++) {
 		if (samp < 0) {
-			if (ThePPINPlug[ instMenuID[i]].type == curType)
+			if (ThePPINPlug[instMenuID[i]].type == curType)
 				sel = i + 1;
-		} else if (ThePPINPlug[ sampMenuID[i]].type == curType)
+		} else if (ThePPINPlug[sampMenuID[i]].type == curType)
 			sel = i + 1;
 	}
 	
 	SetItemMark(PPINMenu, sel, 0xa5);
-	mresult = PopUpMenuSelect(PPINMenu,
-							  Zone.v,
-							  Zone.h,
-							  sel);
+	mresult = PopUpMenuSelect(PPINMenu, Zone.v, Zone.h, sel);
 	SetItemMark(PPINMenu, sel, 0);
 	
 	DeleteMenu(GetMenuID(PPINMenu));
@@ -492,13 +475,13 @@ ENDPLAY:
 	
 	if (err == noErr) {
 #define	NOTE 48
-		short		track, samp = insData->what[ NOTE];
+		short		track, samp = insData->what[NOTE];
 		Channel		*curVoice;
 		Boolean		continueLoop;
 		KeyMap		km;
 		
 		track = GetWhichTrackPlay();
-		curVoice = &MADDriver->chan[ track];
+		curVoice = &MADDriver->chan[track];
 		
 		DoPlayInstruInt2(sampData[samp], insData, NOTE, -1, 0x00, 0x00, 64, curVoice, 0, 0, 0xFF);
 		
@@ -512,7 +495,7 @@ ENDPLAY:
 		while (continueLoop) {
 			GetKeys(km);
 			
-			if (MADDriver->chan[ track].maxPtr <= MADDriver->chan[ track].curPtr || MADDriver->chan[ track].curPtr == NULL)
+			if (MADDriver->chan[track].maxPtr <= MADDriver->chan[track].curPtr || MADDriver->chan[track].curPtr == NULL)
 				continueLoop = false;
 			if (MADIsPressed((unsigned char*) km, 0x37) && MADIsPressed((unsigned char*) km, 0x2F))
 				continueLoop = false;
@@ -528,7 +511,7 @@ ENDPLAY:
 		
 		for (i = 0; i < insData->numSamples; i++) {
 			if (sampData[i] != NULL) {
-				if (sampData[ i]->data != NULL)
+				if (sampData[i]->data != NULL)
 					DisposePtr((Ptr)sampData[i]->data);
 				DisposePtr((Ptr)sampData[i]);
 				sampData[i] = NULL;

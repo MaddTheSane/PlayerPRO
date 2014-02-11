@@ -40,13 +40,13 @@ RF *prf;
 
 #define MAXFILES	300
 
-static long		MADpos[ MAXFILES];
+static long		MADpos[MAXFILES];
 static short	MADcur = 0;
 static Ptr		MIDIGenPtr = NULL;
 
 static short MADopen(void)
 {
-	MADpos[ MADcur] = 0;
+	MADpos[MADcur] = 0;
 	MADcur++;
 	
 	if (MADcur >= MAXFILES) DebugStr("\pMADopen");
@@ -56,13 +56,13 @@ static short MADopen(void)
 
 static short MADread(short id, Ptr dst, long size)
 {
-	if (MADpos[ id] >= GetPtrSize(MIDIGenPtr)) return 0;
+	if (MADpos[id] >= GetPtrSize(MIDIGenPtr)) return 0;
 	
-	if (MADpos[ id] + size >= GetPtrSize(MIDIGenPtr)) size = GetPtrSize(MIDIGenPtr) - MADpos[ id];
+	if (MADpos[id] + size >= GetPtrSize(MIDIGenPtr)) size = GetPtrSize(MIDIGenPtr) - MADpos[id];
 	
-	BlockMoveData(MIDIGenPtr + MADpos[ id], dst, size);
+	BlockMoveData(MIDIGenPtr + MADpos[id], dst, size);
 	
-	MADpos[ id] += size;
+	MADpos[id] += size;
 	
 	return size;
 }

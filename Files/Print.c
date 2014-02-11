@@ -77,7 +77,7 @@ void PrintBitMap(BitMap aBit)
 	ClipRect(&destRect);
 	
 	CopyBits((BitMap*) &aBit,
-			 (BitMap*) *GetPortPixMap( (CGrafPtr) curPort),
+			 (BitMap*) *GetPortPixMap((CGrafPtr) curPort),
 			 &aBit.bounds,
 			 &destRect,
 			 ditherCopy,				//ditherCopy

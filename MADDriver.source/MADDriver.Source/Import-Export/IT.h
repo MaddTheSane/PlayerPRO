@@ -34,12 +34,12 @@ typedef struct ITPatForm
 typedef struct ITSampForm
 {
 	long		ID;
-	char		DOSName[ 12];
+	char		DOSName[12];
 	Byte		no;
 	Byte		GvL;
 	Byte		Flag;
 	Byte		Vol;
-	char		SampName[ 26];
+	char		SampName[26];
 	short		Convert;
 	long		length;
 	long		loopBegin;
@@ -80,7 +80,7 @@ typedef struct ITKeyMap
 typedef struct ITInsForm		// size = 547
 {
 	OSType		ID;
-	char		DOSName[ 12];
+	char		DOSName[12];
 	Byte		no;
 	Byte		NNA;
 	Byte		DCT;
@@ -90,13 +90,13 @@ typedef struct ITInsForm		// size = 547
 	Byte		PPC;
 	Byte		GbV;
 	Byte		DfP;
-	char		no2[ 2];
+	char		no2[2];
 	short	TrkVers;
 	Byte		NoS;
 	Byte		no3;
-	char		INSName[ 26];
-	char		no4[ 6];
-	ITKeyMap	keyMap[ 120];
+	char		INSName[26];
+	char		no4[6];
+	ITKeyMap	keyMap[120];
 	
 	// new structure
 	
@@ -109,7 +109,7 @@ typedef struct ITInsForm		// size = 547
 typedef struct ITOldInsForm		// size = 554
 {
 	OSType		ID;
-	char		DOSName[ 12];
+	char		DOSName[12];
 	Byte		no;
 	Byte		NNA;
 	Byte		DCT;
@@ -119,17 +119,17 @@ typedef struct ITOldInsForm		// size = 554
 	Byte		PPC;
 	Byte		GbV;
 	Byte		DfP;
-	char		no2[ 2];
+	char		no2[2];
 	short		TrkVers;
 	Byte		NoS;
 	Byte		no3;
-	char		INSName[ 26];
-	char		no4[ 6];
-	ITKeyMap	keyMap[ 120];
+	char		INSName[26];
+	char		no4[6];
+	ITKeyMap	keyMap[120];
 	
 	// old structure
 	
-	ITKeyMap	volEnv[ 100];
+	ITKeyMap	volEnv[100];
 	
 } ITOldInsForm;
 
@@ -137,7 +137,7 @@ typedef struct ITForm
 {
 	OSType				ID;
 	char				name[26];
-	char				no[ 2];
+	char				no[2];
 	
 	short				orderNum;
 	short				insNum;
@@ -156,10 +156,10 @@ typedef struct ITForm
 	char				null;
 	short				MsgLgth;
 	long				MsgOffset;
-	char				no2[ 4];
+	char				no2[4];
 	
-	char				chanPan[ 64];
-	char				chanVol[ 64];
+	char				chanPan[64];
+	char				chanVol[64];
 	
 	unsigned char		*orders;
 	long				*parapins;

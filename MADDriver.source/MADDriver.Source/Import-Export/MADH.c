@@ -31,7 +31,7 @@ Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatDat
 	if (PosX < 0) PosX = 0;
 	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 		
-	return(& (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
+	return(& (tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 #endif
 
@@ -93,12 +93,12 @@ static oldCmd* GetOldCommand(short PosX, short	TrackIdX, oldPatData*	tempMusicPa
 	if (PosX < 0) PosX = 0;
 	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 	
-	return(&(tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
+	return(&(tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
 static inline void MADHmystrcpy(Ptr a, BytePtr b)
 {
-	BlockMoveData(b + 1, a, b[ 0]);
+	BlockMoveData(b + 1, a, b[0]);
 }
 
 static void MOToldsData(struct oldsData * s)
@@ -188,7 +188,7 @@ static OSErr MADH2Mad(Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings
 	theMAD->header->tempo			= oldMAD->tempo;
 	
 	theMAD->sets = (FXSets*) NewPtrClear(MAXTRACK * sizeof(FXSets));
-	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[i].copyId = i;
 	MADHmystrcpy(theMAD->header->infos, "\pConverted by PlayerPRO MAD-H Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	/**** Patterns *******/
@@ -237,24 +237,24 @@ static OSErr MADH2Mad(Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings
 		/* CONVERSION */
 		/**************/
 		
-		theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear(sizeof(PatHeader) + theMAD->header->numChn * tempPat->header.size * sizeof(Cmd), init);
-		if (theMAD->partition[ i] == NULL) return MADNeedMemory;
+		theMAD->partition[i] = (PatData*) MADPlugNewPtrClear(sizeof(PatHeader) + theMAD->header->numChn * tempPat->header.size * sizeof(Cmd), init);
+		if (theMAD->partition[i] == NULL) return MADNeedMemory;
 		
-		theMAD->partition[ i]->header.size 		= tempPat->header.size;
-		theMAD->partition[ i]->header.compMode 	= 'NONE';
+		theMAD->partition[i]->header.size 		= tempPat->header.size;
+		theMAD->partition[i]->header.compMode 	= 'NONE';
 		
-		BlockMoveData(tempPat->header.name, theMAD->partition[ i]->header.name, 20);
+		BlockMoveData(tempPat->header.name, theMAD->partition[i]->header.name, 20);
 		
-		theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
+		theMAD->partition[i]->header.patBytes = 0;		theMAD->partition[i]->header.unused2 = 0;
 		
-		for (x = 0; x < theMAD->partition[ i]->header.size; x++)
+		for (x = 0; x < theMAD->partition[i]->header.size; x++)
 		{
 			for (z = 0; z < theMAD->header->numChn; z++)
 			{
 				struct oldCmd *oldCmd;
 				Cmd	*aCmd;
 				
-				aCmd = GetMADCommand( x,  z, theMAD->partition[ i]);
+				aCmd = GetMADCommand(x,  z, theMAD->partition[i]);
 				
 				oldCmd 	= GetOldCommand(	x,
 										z,
@@ -272,14 +272,14 @@ static OSErr MADH2Mad(Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings
 		DisposePtr((Ptr) tempPat);
 		tempPat = NULL;
 	}
-	for (i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[ i] = NULL;
+	for (i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[i] = NULL;
 	
 	for (i = 0; i < MAXTRACK; i++)
 	{
-		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		if (i % 2 == 0) theMAD->header->chanPan[i] = MAX_PANNING/4;
+		else theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING/4;
 		
-		theMAD->header->chanVol[ i] = MAX_VOLUME;
+		theMAD->header->chanVol[i] = MAX_VOLUME;
 	}
 	
 	theMAD->header->generalVol		= 64;
@@ -294,34 +294,34 @@ static OSErr MADH2Mad(Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings
 	theMAD->sample = (sData**) MADPlugNewPtrClear(sizeof(sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
 	if (!theMAD->sample) return MADNeedMemory;
 	
-	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
 	
 	for (i = 0; i < 64; i++)
 	{
-		//InstrData	*curIns = &theMAD->fid[ i];
+		//InstrData	*curIns = &theMAD->fid[i];
 		
-		BlockMoveData(oldMAD->fid[ i].name, theMAD->fid[ i].name, 32);
+		BlockMoveData(oldMAD->fid[i].name, theMAD->fid[i].name, 32);
 		
-		theMAD->fid[ i].type = oldMAD->fid[ i].type;
-		theMAD->fid[ i].numSamples = oldMAD->fid[ i].numSamples;
-		BlockMoveData(oldMAD->fid[ i].what, theMAD->fid[ i].what, 96);
-		BlockMoveData(oldMAD->fid[ i].volEnv, theMAD->fid[ i].volEnv, 12 * sizeof(EnvRec));
-		BlockMoveData(oldMAD->fid[ i].pannEnv, theMAD->fid[ i].pannEnv, 12 * sizeof(EnvRec));
-		theMAD->fid[ i].volSize = oldMAD->fid[ i].volSize;
-		theMAD->fid[ i].pannSize = oldMAD->fid[ i].pannSize;
-		theMAD->fid[ i].volSus = oldMAD->fid[ i].volSus;
-		theMAD->fid[ i].volBeg = oldMAD->fid[ i].volBeg;
-		theMAD->fid[ i].volEnd = oldMAD->fid[ i].volEnd;
-		theMAD->fid[ i].pannSus = oldMAD->fid[ i].pannSus;
-		theMAD->fid[ i].pannBeg = oldMAD->fid[ i].pannBeg;
-		theMAD->fid[ i].pannEnd = oldMAD->fid[ i].pannEnd;
-		theMAD->fid[ i].volType = oldMAD->fid[ i].volType;
-		theMAD->fid[ i].pannType = oldMAD->fid[ i].pannType;
-		theMAD->fid[ i].volFade = oldMAD->fid[ i].volFade;
-		theMAD->fid[ i].vibDepth = oldMAD->fid[ i].vibDepth;
-		theMAD->fid[ i].vibRate = oldMAD->fid[ i].vibRate;
+		theMAD->fid[i].type = oldMAD->fid[i].type;
+		theMAD->fid[i].numSamples = oldMAD->fid[i].numSamples;
+		BlockMoveData(oldMAD->fid[i].what, theMAD->fid[i].what, 96);
+		BlockMoveData(oldMAD->fid[i].volEnv, theMAD->fid[i].volEnv, 12 * sizeof(EnvRec));
+		BlockMoveData(oldMAD->fid[i].pannEnv, theMAD->fid[i].pannEnv, 12 * sizeof(EnvRec));
+		theMAD->fid[i].volSize = oldMAD->fid[i].volSize;
+		theMAD->fid[i].pannSize = oldMAD->fid[i].pannSize;
+		theMAD->fid[i].volSus = oldMAD->fid[i].volSus;
+		theMAD->fid[i].volBeg = oldMAD->fid[i].volBeg;
+		theMAD->fid[i].volEnd = oldMAD->fid[i].volEnd;
+		theMAD->fid[i].pannSus = oldMAD->fid[i].pannSus;
+		theMAD->fid[i].pannBeg = oldMAD->fid[i].pannBeg;
+		theMAD->fid[i].pannEnd = oldMAD->fid[i].pannEnd;
+		theMAD->fid[i].volType = oldMAD->fid[i].volType;
+		theMAD->fid[i].pannType = oldMAD->fid[i].pannType;
+		theMAD->fid[i].volFade = oldMAD->fid[i].volFade;
+		theMAD->fid[i].vibDepth = oldMAD->fid[i].vibDepth;
+		theMAD->fid[i].vibRate = oldMAD->fid[i].vibRate;
 		
-		for (x = 0; x < oldMAD->fid[ i].numSamples ; x++)
+		for (x = 0; x < oldMAD->fid[i].numSamples ; x++)
 		{
 			oldsData	 *oldcurData;
 			sData		 *curData;
@@ -330,7 +330,7 @@ static OSErr MADH2Mad(Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings
 			MOToldsData(oldcurData);
 			OffSetToSample += sizeof(oldsData);
 			
-			curData = theMAD->sample[ i*MAXSAMPLE + x] = (sData*) MADPlugNewPtrClear(sizeof(sData), init);
+			curData = theMAD->sample[i*MAXSAMPLE + x] = (sData*) MADPlugNewPtrClear(sizeof(sData), init);
 			
 			curData->size		= oldcurData->size;
 			curData->loopBeg 	= oldcurData->loopBeg;
@@ -353,7 +353,7 @@ static OSErr MADH2Mad(Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSettings
 				long 	ll;
 				short	*shortPtr = (short*) curData->data;
 				
-				for (ll = 0; ll < curData->size/2; ll++) MOT16(&shortPtr[ ll]);
+				for (ll = 0; ll < curData->size/2; ll++) MOT16(&shortPtr[ll]);
 			}
 #endif
 		}
@@ -385,7 +385,7 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	//myMOD->name[ 31] = '\0';
+	//myMOD->name[31] = '\0';
 	strlcpy(info->internalFileName, myMOD->name, sizeof(myMOD->name));
 	
 	/*** Tracks ***/
@@ -397,7 +397,7 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, Ptr AlienFile)
 	info->totalPatterns = 0;
 	for (i = 0; i < 128; i++)
 	{
-		if (myMOD->oPointers[ i] >= info->totalPatterns)	info->totalPatterns = myMOD->oPointers[ i];
+		if (myMOD->oPointers[i] >= info->totalPatterns)	info->totalPatterns = myMOD->oPointers[i];
 	}
 	info->totalPatterns++;
 	
@@ -409,7 +409,7 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, Ptr AlienFile)
 	
 	for (i = 0, info->totalInstruments = 0; i < 64 ; i++)
 	{
-		short numSamSwap = myMOD->fid[ i].numSamples;
+		short numSamSwap = myMOD->fid[i].numSamples;
 		MOT16(&numSamSwap);
 		if (numSamSwap > 0) info->totalInstruments++;
 	}

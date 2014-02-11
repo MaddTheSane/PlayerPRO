@@ -115,7 +115,7 @@ static inline void BlockZero(void* a, long size)
 	
 	for (i = 0; i < size ; i++)
 	{
-		b[ i] = 0;
+		b[i] = 0;
 	}
 }
 
@@ -139,10 +139,10 @@ static inline void DebugStr(unsigned char* x)
 {
 	char *temp;
 	
-	temp = NewPtr((x[ 0] + 1));
+	temp = NewPtr((x[0] + 1));
 	
-	BlockMoveData(x+1, temp, x[ 0]);
-	temp[ x[ 0]] = 0;
+	BlockMoveData(x+1, temp, x[0]);
+	temp[x[0]] = 0;
 	
 #ifdef _MAC_H
 	debugger(temp);
@@ -190,7 +190,7 @@ typedef struct PatHeader					// HEADER
 {
 	long	size;					// Length of pattern: standard = 64
 	OSType	compMode;				// Compression mode, none = 'NONE'
-	char	name[ 32];
+	char	name[32];
 	long	patBytes;				// Pattern Size in Bytes
 	long	unused2;
 }PatHeader;
@@ -199,7 +199,7 @@ typedef PatHeader PatternHeader;
 typedef struct PatData						// DATA STRUCTURE : HEADER + COMMANDS
 {									// Pattern = 64 notes to play
 	PatHeader	header;
-	Cmd			Cmds[ 1];
+	Cmd			Cmds[1];
 } PatData;
 typedef PatData PatternData;
 
@@ -219,7 +219,7 @@ typedef struct sData								// SAMPLE
 	Byte				loopType;
 	Byte				amp;				// 8 or 16 bits
 	char				relNote;
-	char 				name[ 32];			// Sample name
+	char 				name[32];			// Sample name
 	Byte				stereo;				// Stereo
 	Ptr					data;				// Used only in memory, not in files
 } sData;
@@ -240,7 +240,7 @@ typedef struct EnvRec				// Volume Enveloppe
 
 typedef struct InstrData				// INSTRUMENT
 {
-	char 	name[ 32];			// instrument name
+	char 	name[32];			// instrument name
 	Byte 	type;				// Instrument type = 0
 	Byte	no;					// Instrument number
 	
@@ -253,10 +253,10 @@ typedef struct InstrData				// INSTRUMENT
 	
 	/**/
 	
-	Byte	what[ 96];			// Sample number for all notes
-	EnvRec 	volEnv[ 12];		// Points for volume envelope
-	EnvRec	pannEnv[ 12];		// Points for panning envelope
-	EnvRec	pitchEnv[ 12];		// Points for panning envelope
+	Byte	what[96];			// Sample number for all notes
+	EnvRec 	volEnv[12];		// Points for volume envelope
+	EnvRec	pannEnv[12];		// Points for panning envelope
+	EnvRec	pitchEnv[12];		// Points for panning envelope
 
 	Byte	volSize;			// Number of volume points
 	Byte	pannSize;			// Number of panning points
@@ -340,7 +340,7 @@ typedef struct MADSpec
 	long		globalEffect[10];			// Global Effects IDs
 	Boolean		globalFXActive;				// Global FX Active?
 	
-	long		chanEffect[MAXTRACK][ 4];	// Channel Effect IDs
+	long		chanEffect[MAXTRACK][4];	// Channel Effect IDs
 	FXBus		chanBus[MAXTRACK];
 } MADSpec;
 
@@ -350,7 +350,7 @@ typedef struct FXSets
 	short	id;
 	long	FXID;
 	short	noArg;
-	float	values[ 100];
+	float	values[100];
 	Str63	name;
 } FXSets;	// and then float values
 

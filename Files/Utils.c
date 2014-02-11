@@ -742,8 +742,8 @@ void OSType2Str(OSType type, Str255 str)
 	memcpy(str + 1, &type, 4);
 	
 	for (i = 4; i > 0; i--) {
-		if (str[ i] == ' ')
-			str[ 0]--;
+		if (str[i] == ' ')
+			str[0]--;
 		else
 			return;
 	}
@@ -759,7 +759,7 @@ void pStrcpy(register unsigned char *s1, register const unsigned char *s2)
 		len = *s2;
 		for (i = 0; i <= len; i++)
 		{
-			s1[ i] = s2[ i];
+			s1[i] = s2[i];
 		}
 	}
 	else MyDebugStr(__LINE__, __FILE__, "String to biiig !");

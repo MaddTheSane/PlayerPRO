@@ -13,7 +13,7 @@ extern	Boolean 				DragManagerUse, newQuicktime;
 
 		DialogPtr				EQDlog;
 
-static	ControlHandle			EQCntl[ MAXBAR];
+static	ControlHandle			EQCntl[MAXBAR];
 static	ControlHandle			SaveBut, LoadBut, OnOff;
 static	short					*logoScale;
 
@@ -29,11 +29,11 @@ void DrawCourbe(DialogPtr dia)
 	
 	EraseRect(&itemRect);
 	
-	MoveTo(itemRect.left, itemRect.top + (MADDriver->Filter[ 0] * 256) / 2);
+	MoveTo(itemRect.left, itemRect.top + (MADDriver->Filter[0] * 256) / 2);
 	
 	for (i = 0; i < EQPACKET*2; i++)
 	{
-		LineTo(itemRect.left+i/4, itemRect.top + (MADDriver->Filter[ i] * 256) / 2);
+		LineTo(itemRect.left+i/4, itemRect.top + (MADDriver->Filter[i] * 256) / 2);
 	}
 }
 
@@ -50,7 +50,7 @@ void  UpdateEQWindow(DialogPtr GetSelection)
 
 	BeginUpdate(GetDialogWindow(EQDlog));
 
-	for (i = 0; i<MAXBAR;i++) SetControlVisibility(EQCntl[ i], true, false);
+	for (i = 0; i<MAXBAR;i++) SetControlVisibility(EQCntl[i], true, false);
 
 	ForeColor(blackColor);
 	
@@ -68,7 +68,7 @@ void  UpdateEQWindow(DialogPtr GetSelection)
 /*	ForeColor(whiteColor);
 	PaintRect(&itemRect);*/
 	
-	for (i = 0; i<MAXBAR;i++) SetControlVisibility(EQCntl[ i], false, false);
+	for (i = 0; i<MAXBAR;i++) SetControlVisibility(EQCntl[i], false, false);
 	
 	EndUpdate(GetDialogWindow(EQDlog));
 
@@ -98,7 +98,7 @@ void RecomputeEQ(void)
 	
 	prev = 0;
 	prevC = 0;
-	next = logoScale[ ((EQPACKET*2) / (MAXBAR-1))/4]*4;
+	next = logoScale[((EQPACKET*2) / (MAXBAR-1))/4]*4;
 	nextC = 1;
 	
 	for (i = 0 ; i < EQPACKET*2; i++)
@@ -112,7 +112,7 @@ void RecomputeEQ(void)
 				prev = next;
 				prevC = nextC;
 				
-				next = logoScale[ temp]*4;
+				next = logoScale[temp]*4;
 				nextC ++;
 			}
 			else
@@ -125,7 +125,7 @@ void RecomputeEQ(void)
 			}
 		}
 		
-		thePrefs.Filter[ i] = MADDriver->Filter[ i] = EQInterpolate(i, prev, next, GetControlValue(EQCntl[ prevC]) / 100.0, GetControlValue(EQCntl[ nextC]) / 100.0);
+		thePrefs.Filter[i] = MADDriver->Filter[i] = EQInterpolate(i, prev, next, GetControlValue(EQCntl[prevC]) / 100.0, GetControlValue(EQCntl[nextC]) / 100.0);
 	}
 	
 /*	for (i = 0; i < MAXBAR; i++)
@@ -133,10 +133,10 @@ void RecomputeEQ(void)
 			 x = (i * EQPACKET*2) / (MAXBAR-1);
 			 
 			 if (x / 4 >= 255) x = 4 * 255;
-			 x = logoScale[ x / 4] * 4;
+			 x = logoScale[x / 4] * 4;
 			
 			if (x >= EQPACKET*2) x = (EQPACKET*2) -1;
-			SetControlValue(EQCntl[ i], MADDriver->Filter[ x] * 100.0);
+			SetControlValue(EQCntl[i], MADDriver->Filter[x] * 100.0);
 		}*/
 	
 	//DrawCourbe(EQDlog);
@@ -147,7 +147,7 @@ void RecomputeEQ(void)
 	{
 		x = (i * EQPACKET) / MAXBAR;
 		
-		x = logoScale[ x/2]*4;
+		x = logoScale[x/2]*4;
 		
 		x = (x * khz)/(EQPACKET*2);
 		
@@ -164,7 +164,7 @@ void RecomputeEQ(void)
 		SetDText(EQDlog, 18+i, str);
 		
 		
-		NumToString(GetControlValue(EQCntl[ i]), str);
+		NumToString(GetControlValue(EQCntl[i]), str);
 		pStrcat(str, "\p %");
 		
 		SetDText(EQDlog, 30 + i, str);
@@ -305,7 +305,7 @@ void CreateEQWindow(void)
 	
 	for (i = 0; i < MAXBAR; i++) {
 		GetDialogItem(EQDlog, i + 2, &itemType, &itemHandle, &itemRect);
-		EQCntl[ i] = NewControl(GetDialogWindow(EQDlog), &itemRect, "\p", true, MADDriver->Filter[ (i * EQPACKET*2) / MAXBAR] * 100.0, 0, 200, 57, 0);
+		EQCntl[i] = NewControl(GetDialogWindow(EQDlog), &itemRect, "\p", true, MADDriver->Filter[(i * EQPACKET*2) / MAXBAR] * 100.0, 0, 200, 57, 0);
 		
 		if (MADDriver->Equalizer)
 			HiliteControl(EQCntl[i], 0);
@@ -318,14 +318,14 @@ void CreateEQWindow(void)
 		
 		if (x / 4 >= 255)
 			x = 4 * 255;
-		x = logoScale[ x / 4] * 4;
+		x = logoScale[x / 4] * 4;
 		
 		if (x >= EQPACKET * 2)
 			x = (EQPACKET * 2) -1;
 		SetControlValue(EQCntl[i], MADDriver->Filter[x] * 100.0);
 	}
 	
-	SetControlVisibility(EQCntl[ i], false, false);
+	SetControlVisibility(EQCntl[i], false, false);
 	
 	SelectWindow2(GetDialogWindow(EQDlog));
 	SizeWindow(GetDialogWindow(EQDlog), 216, 190, true);
@@ -406,14 +406,14 @@ void DoItemPressEQ(short whichItem, DialogPtr whichDialog)
 				HiliteControl(OnOff, 0);
 			
 			for (i = 0; i < MAXBAR; i++) {
-				SetControlVisibility(EQCntl[ i], true, false);
+				SetControlVisibility(EQCntl[i], true, false);
 				
 				if (MADDriver->Equalizer)
-					HiliteControl(EQCntl[ i], 0);
+					HiliteControl(EQCntl[i], 0);
 				else
-					HiliteControl(EQCntl[ i], 255);
+					HiliteControl(EQCntl[i], 255);
 				
-				SetControlVisibility(EQCntl[ i], false, false);
+				SetControlVisibility(EQCntl[i], false, false);
 			}
 			
 			
@@ -467,11 +467,11 @@ void DoItemPressEQ(short whichItem, DialogPtr whichDialog)
 					
 					val = (200* (myPt.h - itemRect.left)) / (itemRect.right-itemRect.left);
 					
-					SetControlVisibility(EQCntl[ whichItem-2], true, false);
+					SetControlVisibility(EQCntl[whichItem-2], true, false);
 					
-					SetControlValue(EQCntl[ whichItem-2], val);
+					SetControlValue(EQCntl[whichItem-2], val);
 					
-					SetControlVisibility(EQCntl[ whichItem-2], false, false);
+					SetControlVisibility(EQCntl[whichItem-2], false, false);
 					
 					/*	NumToString(val, str);
 					 pStrcat(str, "\p %");

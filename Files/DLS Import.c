@@ -53,7 +53,7 @@ typedef struct {
 
 /*typedef struct
 {
-	char			unused[ 0x70];		// 0x58
+	char			unused[0x70];		// 0x58
 	Str31			name;
 	QuictimeSs   	Ss[];
 	
@@ -119,8 +119,8 @@ OSErr CreateNameListQuicktime25(void)
 						tPtr = (Ptr) rsrc->data + 36;
 						
 						for (z = 1; z <= tPtr[0]; z++) {
-							if (tPtr[ z] == '(') tPtr[ z] = ' ';
-							if (tPtr[ z] == ')') tPtr[ z] = ' ';
+							if (tPtr[z] == '(') tPtr[z] = ' ';
+							if (tPtr[z] == ')') tPtr[z] = ' ';
 						}
 						
 						AppendMenu(QKInstruMenu[x], (unsigned char*)tPtr);
@@ -145,16 +145,16 @@ OSErr CreateNameListQuicktime25(void)
 				
 				tPtr = (Ptr) rsrc->data + 36;
 				
-				for (z = 1; z <= tPtr[ 0]; z++)
+				for (z = 1; z <= tPtr[0]; z++)
 				{
-					if (tPtr[ z] == '(') tPtr[ z] = ' ';
-					if (tPtr[ z] == ')') tPtr[ z] = ' ';
+					if (tPtr[z] == '(') tPtr[z] = ' ';
+					if (tPtr[z] == ')') tPtr[z] = ' ';
 				}
 				
 				x++;
-				QKInstruMenu[ x] = NewMenu(x, "\p");
-				AppendMenu(QKInstruMenu[ x], (unsigned char*) tPtr);
-				QKInstruSndID[ x][ 1] = 16385;
+				QKInstruMenu[x] = NewMenu(x, "\p");
+				AppendMenu(QKInstruMenu[x], (unsigned char*) tPtr);
+				QKInstruSndID[x][1] = 16385;
 				
 				ReleaseResource(hRsrc);
 			}
@@ -217,8 +217,8 @@ OSErr CreateNameListQuicktime(void)
 							tPtr[z] = ' ';
 					}
 					
-					AppendMenu(QKInstruMenu[ x], (unsigned char*) tPtr);
-					QKInstruSndID[ x][ GM] = i;
+					AppendMenu(QKInstruMenu[x], (unsigned char*) tPtr);
+					QKInstruSndID[x][GM] = i;
 					GM++;
 					
 					ReleaseResource(hRsrc);
@@ -232,17 +232,17 @@ OSErr CreateNameListQuicktime(void)
 				QuickInst = (QuicktimeInst*) *hRsrc;
 				tPtr = (Ptr) (((Ptr) &QuickInst->no) + 4L + QuickInst->no * sizeof(QuictimeSs));
 				
-				for (z = 1; z <= tPtr[ 0]; z++) {
-					if (tPtr[ z] == '(')
-						tPtr[ z] = ' ';
-					if (tPtr[ z] == ')')
-						tPtr[ z] = ' ';
+				for (z = 1; z <= tPtr[0]; z++) {
+					if (tPtr[z] == '(')
+						tPtr[z] = ' ';
+					if (tPtr[z] == ')')
+						tPtr[z] = ' ';
 				}
 				
 				x++;
-				QKInstruMenu[ x] = NewMenu(x, "\p");
-				AppendMenu(QKInstruMenu[ x], (unsigned char*) tPtr);
-				QKInstruSndID[ x][ 1] = 16393;
+				QKInstruMenu[x] = NewMenu(x, "\p");
+				AppendMenu(QKInstruMenu[x], (unsigned char*) tPtr);
+				QKInstruSndID[x][1] = 16393;
 				
 				ReleaseResource(hRsrc);
 			}
@@ -275,7 +275,7 @@ void UpdateQKInstruWindow(DialogPtr theDia)
 	DrawDialog(theDia);
 	oldFrameButton(theDia);
 	
-	DrawSmallPianoKey(curSPos, greenKey, SPianoRect[ curSPos]);
+	DrawSmallPianoKey(curSPos, greenKey, SPianoRect[curSPos]);
 	
 	EndUpdate(GetDialogWindow(theDia));
 	SetPort(savePort);
@@ -330,7 +330,7 @@ void PressSmallPianoQ(DialogPtr TheDia, InstrData	*inst, short ins)
 		}
 	} while (Button());
 	
-	MADDriver->chan[ LastCanal].KeyOn = false;
+	MADDriver->chan[LastCanal].KeyOn = false;
 }
 
 void DLSImport(void)
@@ -351,7 +351,7 @@ void DLSImport(void)
 	InstrData				*inst;
 	Handle					instCopy = NULL;
 	
-	for (i = 0; i < 18; i++) QKInstruMenu[ i] = NULL;
+	for (i = 0; i < 18; i++) QKInstruMenu[i] = NULL;
 	
 	if (CreateNameListQuicktime() != noErr) return;
 	
@@ -394,7 +394,7 @@ void DLSImport(void)
 	inst = &curMusic->fid[ins];
 	
 	MADPurgeTrackIfInstru(MADDriver, ins);
-	ComputeQuicktimeSound(QKInstruSndID[ CategoryID][ QKInstruID], curMusic->sample, &curMusic->fid[ ins], ins);
+	ComputeQuicktimeSound(QKInstruSndID[CategoryID][QKInstruID], curMusic->sample, &curMusic->fid[ins], ins);
 	CreateInstruList();
 	DrawInfoInstrument();
 	UpdateSampleWindows();
@@ -451,7 +451,7 @@ REGODIA:
 					SetDText(aDialog, 8, aStr);
 					
 					MADPurgeTrackIfInstru(MADDriver, ins);
-					ComputeQuicktimeSound(QKInstruSndID[CategoryID][QKInstruID], curMusic->sample, &curMusic->fid[ ins], ins);
+					ComputeQuicktimeSound(QKInstruSndID[CategoryID][QKInstruID], curMusic->sample, &curMusic->fid[ins], ins);
 					CreateInstruList();
 					DrawInfoInstrument();
 					UpdateSampleWindows();
@@ -500,7 +500,7 @@ REGODIA:
 					NumToString(QKInstruSndID[CategoryID][QKInstruID], aStr);
 					SetDText(aDialog, 17, aStr);
 				}
-				DeleteMenu(GetMenuID(QKInstruMenu[ CategoryID]));
+				DeleteMenu(GetMenuID(QKInstruMenu[CategoryID]));
 				break;
 				
 			case 11:	// Note menu
@@ -527,7 +527,7 @@ REGODIA:
 					SetDText(aDialog, 10, aStr);
 					
 					NDoPlayInstru(curSPos, ins, 0, 0, 0xFF);
-					MADDriver->chan[ LastCanal].KeyOn = false;
+					MADDriver->chan[LastCanal].KeyOn = false;
 					
 					GetDialogItem(aDialog, 13, &itemType, &itemHandle, &tempRect);
 					InvalWindowRect(GetDialogWindow(aDialog), &tempRect);
@@ -550,12 +550,12 @@ REGODIA:
 		
 		MADKillInstrument(curMusic, ins);
 		
-		BlockMoveData(*instCopy, &curMusic->fid[ ins], sizeof(InstrData));
+		BlockMoveData(*instCopy, &curMusic->fid[ins], sizeof(InstrData));
 		inOutCount = sizeof(InstrData);
 		
-		temp = curMusic->fid[ ins].numSamples;
+		temp = curMusic->fid[ins].numSamples;
 		
-		curMusic->fid[ ins].numSamples = 0;
+		curMusic->fid[ins].numSamples = 0;
 		
 		for (x = 0; x < temp; x++) {
 			sData	*curData;

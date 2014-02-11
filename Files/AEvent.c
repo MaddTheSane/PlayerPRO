@@ -43,7 +43,7 @@ static pascal OSErr ANEQApp (const AppleEvent *theAppleEvent, AppleEvent *reply,
 pascal OSErr AEPlayMusic(const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
 pascal OSErr AEStopMusic(const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
 pascal OSErr AESetVolume(const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
-pascal OSErr AESetSpeed( const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
+pascal OSErr AESetSpeed(const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
 pascal OSErr AESetDriver(const AppleEvent *theAppleEvent, AppleEvent *reply, long handlerRefCon);
 OSErr MyGotRequiredParams (const AppleEvent *theAppleEvent);
 

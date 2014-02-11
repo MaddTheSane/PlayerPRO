@@ -32,7 +32,7 @@
 
 extern Boolean DirectSaveAlways(Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
 
-char ASIO_DRIVER_NAME[ 255] = "Not Activated";
+char ASIO_DRIVER_NAME[255] = "Not Activated";
 
 enum {
 	// number of input and outputs supported by the host application
@@ -301,7 +301,7 @@ ASIOTime *bufferSwitchTimeInfo(ASIOTime *timeInfo, long index, ASIOBool processN
 			//	if (tempPtr < bufTampons) DebugStr("\p2");
 			//	if (tempPtr > bufTampons + 16000L) DebugStr("\p3");
 				
-				for (xx = 0; xx < asioDriverInfo.MADDriver->BufSize / asioDriverInfo.MADDriver->DriverSettings.oversampling; xx++) tempPtr[ xx] = 0;
+				for (xx = 0; xx < asioDriverInfo.MADDriver->BufSize / asioDriverInfo.MADDriver->DriverSettings.oversampling; xx++) tempPtr[xx] = 0;
 			}
 						
 		/*	{
@@ -317,8 +317,8 @@ ASIOTime *bufferSwitchTimeInfo(ASIOTime *timeInfo, long index, ASIOBool processN
 				asioDriverInfo.MADDriver->curDrawPtr++;
 				if (asioDriverInfo.MADDriver->curDrawPtr >= MAXDRAW) asioDriverInfo.MADDriver->curDrawPtr = 0;
 			
-				BlockMoveData(asioDriverInfo.MADDriver->OscilloWavePtr, asioDriverInfo.MADDriver->OsciDrawPtr[ asioDriverInfo.MADDriver->curDrawPtr], asioDriverInfo.MADDriver->OscilloWaveSize);
-				asioDriverInfo.MADDriver->newData[ asioDriverInfo.MADDriver->curDrawPtr] = true;
+				BlockMoveData(asioDriverInfo.MADDriver->OscilloWavePtr, asioDriverInfo.MADDriver->OsciDrawPtr[asioDriverInfo.MADDriver->curDrawPtr], asioDriverInfo.MADDriver->OscilloWaveSize);
+				asioDriverInfo.MADDriver->newData[asioDriverInfo.MADDriver->curDrawPtr] = true;
 				asioDriverInfo.MADDriver->curTime = TickCount();
 			}
 			
@@ -343,7 +343,7 @@ ASIOTime *bufferSwitchTimeInfo(ASIOTime *timeInfo, long index, ASIOBool processN
 				
 				for (xx = 0; xx < buffSize; xx++)
 				{
-					buff[ xx] = src[ xx*2];
+					buff[xx] = src[xx*2];
 				}
 				
 				reverseEndian(buff, 16, buffSize);
@@ -371,7 +371,7 @@ ASIOTime *bufferSwitchTimeInfo(ASIOTime *timeInfo, long index, ASIOBool processN
 				
 				for (xx = 0; xx < buffSize; xx++)
 				{
-					buff[ xx] = ((long) src[ xx*2]);
+					buff[xx] = ((long) src[xx*2]);
 				}
 				
 				reverseEndian(buff, 32, buffSize);
@@ -384,7 +384,7 @@ ASIOTime *bufferSwitchTimeInfo(ASIOTime *timeInfo, long index, ASIOBool processN
 				
 				for (xx = 0; xx < buffSize; xx++)
 				{
-					buff[ xx] = ((long) src[ xx*2])<<2;
+					buff[xx] = ((long) src[xx*2])<<2;
 				}
 				
 				reverseEndian(buff, 32, buffSize);
@@ -397,7 +397,7 @@ ASIOTime *bufferSwitchTimeInfo(ASIOTime *timeInfo, long index, ASIOBool processN
 				
 				for (xx = 0; xx < buffSize; xx++)
 				{
-					buff[ xx] = ((long) src[ xx*2])<<4;
+					buff[xx] = ((long) src[xx*2])<<4;
 				}
 				
 				reverseEndian(buff, 32, buffSize);
@@ -410,7 +410,7 @@ ASIOTime *bufferSwitchTimeInfo(ASIOTime *timeInfo, long index, ASIOBool processN
 				
 				for (xx = 0; xx < buffSize; xx++)
 				{
-					buff[ xx] = ((long) src[ xx*2])<<8;
+					buff[xx] = ((long) src[xx*2])<<8;
 				}
 				
 				reverseEndian(buff, 32, buffSize);
@@ -423,7 +423,7 @@ ASIOTime *bufferSwitchTimeInfo(ASIOTime *timeInfo, long index, ASIOBool processN
 				
 				for (xx = 0; xx < buffSize; xx++)
 				{
-					buff[ xx] = src[ xx*2];
+					buff[xx] = src[xx*2];
 				}
 			}
 			break;
@@ -437,7 +437,7 @@ ASIOTime *bufferSwitchTimeInfo(ASIOTime *timeInfo, long index, ASIOBool processN
 				
 				for (xx = 0; xx < buffSize; xx++)
 				{
-					buff[ xx] = src[ xx*2]<<16;
+					buff[xx] = src[xx*2]<<16;
 				}
 			}
 			break;

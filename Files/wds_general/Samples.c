@@ -197,7 +197,7 @@ void DrawSampleInt(long	sampleSize,
 				BE += channel;
 			}
 			
-			temp =(theShortSample[ BS]  + 0x8000);
+			temp =(theShortSample[BS]  + 0x8000);
 			minY = maxY = temp;
 			temp *= high;
 			temp >>= 16;
@@ -398,7 +398,7 @@ void UpdateDisplay(short InstruNo)
 	if (!SampleDlog[InstruNo])
 		return;
 	
-	val = GetControlValue(xScroll[ InstruNo]);
+	val = GetControlValue(xScroll[InstruNo]);
 	
 	switch (curSample[InstruNo]) {
 		case panningEnv:
@@ -414,8 +414,8 @@ void UpdateDisplay(short InstruNo)
 			break;
 			
 		default:
-			start = GetStartSampleValue(val, InstruNo); //(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
-			sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[ InstruNo];
+			start = GetStartSampleValue(val, InstruNo); //(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[InstruNo];
+			sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[InstruNo];
 			
 			
 			// Real Note
@@ -479,7 +479,7 @@ void UpdateDisplayPosition(short InstruNo)
 	Str255	StrTemp, StrTemp2;
 	Point	myPt;
 	long	val;
-	char	dest[ 80];
+	char	dest[80];
 	
 	if (!SampleDlog[InstruNo])
 		return;
@@ -494,7 +494,7 @@ void UpdateDisplayPosition(short InstruNo)
 			NumToString(AmpToByte(myPt.v, InstruNo), StrTemp2);
 			pStrcat(StrTemp, StrTemp2);
 			
-			SetDText(SampleDlog[ InstruNo], 38, StrTemp);
+			SetDText(SampleDlog[InstruNo], 38, StrTemp);
 			break;
 			
 		default:
@@ -540,8 +540,8 @@ void UpdateDisplayLoop(short InstruNo)
 				pStrcat(StrTemp, "\p Pt");
 				SetDText(SampleDlog[InstruNo], 11, StrTemp);
 			} else {
-				SetDText(SampleDlog[ InstruNo], 9, "\p-");
-				SetDText(SampleDlog[ InstruNo], 11, "\p-");
+				SetDText(SampleDlog[InstruNo], 9, "\p-");
+				SetDText(SampleDlog[InstruNo], 11, "\p-");
 			}
 			break;
 			
@@ -551,7 +551,7 @@ void UpdateDisplayLoop(short InstruNo)
 				pStrcat(StrTemp, "\p Pt");
 				SetDText(SampleDlog[InstruNo], 9, StrTemp);
 				
-				NumToString( curMusic->fid[InstruNo].volEnd+1, StrTemp);
+				NumToString(curMusic->fid[InstruNo].volEnd+1, StrTemp);
 				pStrcat(StrTemp, "\p Pt");
 				SetDText(SampleDlog[InstruNo], 11, StrTemp);
 			} else {
@@ -628,7 +628,7 @@ short ByteToPos(long bytePosi, short InstruNo)
 			break;
 			
 		default:
-			start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
+			start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[InstruNo];
 			sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[InstruNo];
 			break;
 	}
@@ -708,20 +708,20 @@ long PosToByte(short Pos, short InstruNo)
 	
 	switch (curSample[InstruNo]) {
 		case panningEnv:
-			start = (val * (ENVSIZE / SAMPLEDEF)) / ZoomLevel[ InstruNo];
-			sampleSize = ENVSIZE / ZoomLevel[ InstruNo];
+			start = (val * (ENVSIZE / SAMPLEDEF)) / ZoomLevel[InstruNo];
+			sampleSize = ENVSIZE / ZoomLevel[InstruNo];
 			break;
 			
 		case volumeEnv:
-			start = (val * (ENVSIZE / SAMPLEDEF)) / ZoomLevel[ InstruNo];
-			sampleSize = ENVSIZE / ZoomLevel[ InstruNo];
+			start = (val * (ENVSIZE / SAMPLEDEF)) / ZoomLevel[InstruNo];
+			sampleSize = ENVSIZE / ZoomLevel[InstruNo];
 			break;
 			
 		default:
-			start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
-			sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[ InstruNo];
+			start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[InstruNo];
+			sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[InstruNo];
 			
-			if (val == GetControlMaximum(xScroll[ InstruNo]))
+			if (val == GetControlMaximum(xScroll[InstruNo]))
 			{
 				//Debugger();
 			}
@@ -752,11 +752,11 @@ long PosToByte(short Pos, short InstruNo)
 				if (SampleDataD(InstruNo)->amp == 16) {
 					tempL /= 4;
 					tempL *= 4;
-					//if (curMode[ InstruNo]) tempL += 2;
+					//if (curMode[InstruNo]) tempL += 2;
 				} else {
 					tempL /= 2;
 					tempL *= 2;
-					//if (curMode[ InstruNo]) tempL++;
+					//if (curMode[InstruNo]) tempL++;
 				}
 			}
 			
@@ -960,10 +960,10 @@ void Loop2Selection(short InstruNo)
 {
 	switch (curSample[InstruNo]) {
 		case panningEnv:
-			if (!(curMusic->fid[ InstruNo].pannType & EFLOOP)) {
+			if (!(curMusic->fid[InstruNo].pannType & EFLOOP)) {
 				return;
 			} else {
-				InstrData	*curIns = &curMusic->fid[ InstruNo];
+				InstrData	*curIns = &curMusic->fid[InstruNo];
 				
 				SelecRect[InstruNo].start	= curIns->pannEnv[curIns->pannBeg].pos;
 				SelecRect[InstruNo].end	= curIns->pannEnv[curIns->pannEnd].pos + 2;
@@ -973,10 +973,10 @@ void Loop2Selection(short InstruNo)
 			break;
 			
 		case volumeEnv:
-			if (!(curMusic->fid[ InstruNo].volType & EFLOOP)) {
+			if (!(curMusic->fid[InstruNo].volType & EFLOOP)) {
 				return;
 			} else {
-				InstrData	*curIns = &curMusic->fid[ InstruNo];
+				InstrData	*curIns = &curMusic->fid[InstruNo];
 				
 				SelecRect[InstruNo].start	= curIns->volEnv[curIns->volBeg].pos;
 				SelecRect[InstruNo].end		= curIns->volEnv[curIns->volEnd].pos + 2;
@@ -1039,7 +1039,7 @@ void COPYSampleInt(DialogPtr theDia)
 	switch (curSample[CurWin]) {
 		case panningEnv:
 			if (Start != End) {
-				InstrData		*curIns = &curMusic->fid[ CurWin];
+				InstrData		*curIns = &curMusic->fid[CurWin];
 				short			i;
 				InstrData		copyEnv;
 				
@@ -1062,7 +1062,7 @@ void COPYSampleInt(DialogPtr theDia)
 			
 		case volumeEnv:
 			if (Start != End) {
-				InstrData		*curIns = &curMusic->fid[ CurWin];
+				InstrData		*curIns = &curMusic->fid[CurWin];
 				short			i;
 				InstrData		copyEnv;
 				
@@ -1157,11 +1157,11 @@ void PASTESampleInt(DialogPtr theDia)
 				// Paste volume envelope
 				
 				for (i = 0; i < pasteEnv.pannSize; i++) {
-					curIns->pannEnv[ i + whichPt].pos = pasteEnv.pannEnv[i].pos + Start;
-					if (curIns->pannEnv[ i + whichPt].pos >= ENVSIZE)
-						curIns->pannEnv[ i + whichPt].pos = ENVSIZE - 1;
+					curIns->pannEnv[i + whichPt].pos = pasteEnv.pannEnv[i].pos + Start;
+					if (curIns->pannEnv[i + whichPt].pos >= ENVSIZE)
+						curIns->pannEnv[i + whichPt].pos = ENVSIZE - 1;
 					
-					curIns->pannEnv[ i + whichPt].val = pasteEnv.pannEnv[i].val;
+					curIns->pannEnv[i + whichPt].val = pasteEnv.pannEnv[i].val;
 				}
 				
 				SelecRect[CurWin].start	= Start;
@@ -1186,7 +1186,7 @@ void PASTESampleInt(DialogPtr theDia)
 			if (anErr == noErr) GetScrapFlavorSize(scrap, 'vEnv', &lCntOrErr);
 			
 			if (lCntOrErr > 0) {
-				InstrData		*curIns = &curMusic->fid[ CurWin];
+				InstrData		*curIns = &curMusic->fid[CurWin];
 				short			i;
 				InstrData		pasteEnv;
 				Handle			tempH;
@@ -1205,7 +1205,7 @@ void PASTESampleInt(DialogPtr theDia)
 				// Make room on existing volume envelope
 				whichPt = curIns->volSize;
 				for (i = curIns->volSize-1; i >= 0 ; i--) {
-					if (curIns->volEnv[ i].pos >= Start) {
+					if (curIns->volEnv[i].pos >= Start) {
 						whichPt = i;
 						
 						if (i + pasteEnv.volSize < 12) {
@@ -1246,7 +1246,7 @@ void PASTESampleInt(DialogPtr theDia)
 			break;
 			
 		default:
-			NPASTESample(Start, CurWin, curSample[ CurWin]);
+			NPASTESample(Start, CurWin, curSample[CurWin]);
 			break;
 	}
 }
@@ -1317,7 +1317,7 @@ void AfficheOldPoint(short i)
 		if (UptRect.right > EE) UptRect.right = EE;
 		InvertRect(&UptRect);
 	}
-	else if (Clignote[ theInstru] == true && TokTak[ theInstru] == true)
+	else if (Clignote[theInstru] == true && TokTak[theInstru] == true)
 	{
 		if (UptRect.left >= SS &&
 			UptRect.left <= EE)
@@ -1440,7 +1440,7 @@ void DoNullInstrument()
 								SetCursor(&pencilCrsrStereo);
 							}
 							else SetCursor(&pencilCrsr);
-						} else if (SelectMode[ InstruNo] == eZoom)
+						} else if (SelectMode[InstruNo] == eZoom)
 							SetCursor(&ZoomInCrsr);
 						
 					END:;
@@ -1463,7 +1463,7 @@ void DoNullInstrument()
 				SetPortDialogPort(SampleDlog[i]);
 				
 				if (Clignote[i]) {
-					if (TokTak[i] == true || oldWindow == GetDialogWindow(SampleDlog[ i])) {
+					if (TokTak[i] == true || oldWindow == GetDialogWindow(SampleDlog[i])) {
 						TokTak[i] = !TokTak[i];
 						GetSampleRect(SampleDlog[i]);
 						
@@ -1488,16 +1488,16 @@ void DoNullInstrument()
 		InstruNo = MADDriver->chan[i].ins;
 		
 		if (InstruNo >= 0 || InstruNo <= MAXINSTRU) {
-			if (SampleDlog[ InstruNo] != NULL) {
+			if (SampleDlog[InstruNo] != NULL) {
 				switch (curSample[InstruNo]) {
 					case panningEnv:
-						if (curMusic->fid[ MADDriver->chan[i].ins].pannType & EFON) {
+						if (curMusic->fid[MADDriver->chan[i].ins].pannType & EFON) {
 							SetPortDialogPort(SampleDlog[InstruNo]);
 							GetSampleRect(SampleDlog[InstruNo]);
 							
 							if (MADDriver->chan[i].curPtr < MADDriver->chan[i].maxPtr) {
 								if (MADDriver->chan[i].pp > 0 && MADDriver->chan[i].pp < ENVSIZE) {
-									SwitchColor(MADDriver->chan[ i].TrackID);
+									SwitchColor(MADDriver->chan[i].TrackID);
 									
 									theIdle[i].oldPos = ByteToPos(MADDriver->chan[i].pp, InstruNo);
 									theIdle[i].oldInstru = InstruNo;
@@ -1523,7 +1523,7 @@ void DoNullInstrument()
 								{
 									SwitchColor(MADDriver->chan[i].TrackID);
 									
-									theIdle[i].oldPos = ByteToPos(MADDriver->chan[ i].p, InstruNo);
+									theIdle[i].oldPos = ByteToPos(MADDriver->chan[i].p, InstruNo);
 									theIdle[i].oldInstru = InstruNo;
 									
 									PenSize(2, 1);
@@ -1539,8 +1539,8 @@ void DoNullInstrument()
 						
 					default:
 						if (curSample[InstruNo] == MADDriver->chan[i].samp) {
-							SetPortDialogPort(SampleDlog[ InstruNo]);
-							GetSampleRect(SampleDlog[ InstruNo]);
+							SetPortDialogPort(SampleDlog[InstruNo]);
+							GetSampleRect(SampleDlog[InstruNo]);
 							
 							maxVal = (long)MADDriver->chan[i].maxPtr;
 							maxVal -= (long)SampleDataD(InstruNo)->data;
@@ -1549,7 +1549,7 @@ void DoNullInstrument()
 							curVal -= (long)SampleDataD(InstruNo)->data;
 							
 							if (maxVal > curVal && curVal > 0 && maxVal > 0) {
-								SwitchColor(MADDriver->chan[ i].TrackID);
+								SwitchColor(MADDriver->chan[i].TrackID);
 								
 								theIdle[i].oldPos = ByteToPos(curVal, InstruNo);
 								theIdle[i].oldInstru = InstruNo;
@@ -1698,8 +1698,8 @@ void UpdateSampleWindow(DialogPtr GetSelection)
 	} else {
 		GetSampleRect(GetSelection);
 		
-		tempRect.left = ByteToPos(SelecRect[ theInstru].start, theInstru);
-		tempRect.right = ByteToPos(SelecRect[ theInstru].end, theInstru);
+		tempRect.left = ByteToPos(SelecRect[theInstru].start, theInstru);
+		tempRect.right = ByteToPos(SelecRect[theInstru].end, theInstru);
 		tempRect.top = SampleRect.top;
 		tempRect.bottom = SampleRect.bottom;
 		
@@ -1757,7 +1757,7 @@ void UpdateSampleWindow(DialogPtr GetSelection)
 	TextFace(bold);
 	//if (StringWidth(str) < (itemRect.right - itemRect.left)/2) itemRect.left = 50;
 	itemRect.right -= 10;
-	TETextBox(str+1, str[ 0], &itemRect, teJustRight);
+	TETextBox(str+1, str[0], &itemRect, teJustRight);
 	TextFace(0);
 	
 	SetClip(saveClipRgn);
@@ -1822,8 +1822,8 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 				start = 0;
 				sampleSize = ENVSIZE;
 			} else {
-				start = (val * (ENVSIZE / SAMPLEDEF)) / ZoomLevel[ InstruNo];
-				sampleSize = ENVSIZE / ZoomLevel[ InstruNo];
+				start = (val * (ENVSIZE / SAMPLEDEF)) / ZoomLevel[InstruNo];
+				sampleSize = ENVSIZE / ZoomLevel[InstruNo];
 			}
 			
 			editPtEnv = -1;
@@ -1837,7 +1837,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 				start = 0;
 				sampleSize = SampleDataD(InstruNo)->size;
 			} else {
-				start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
+				start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[InstruNo];
 				sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[InstruNo];
 			}
 			break;
@@ -1884,7 +1884,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 				{
 					short 	tcoc;
 					
-					InstrData	*curIns = &curMusic->fid[ InstruNo];
+					InstrData	*curIns = &curMusic->fid[InstruNo];
 					
 					//	aPt.h = prevPt.h;
 					tcoc = PosToByte(aPt.h, InstruNo);
@@ -1935,7 +1935,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 					} else {
 						if (editPtEnv == -1) {
 							for (i = 0; i < curIns->pannSize; i++) {
-								if (tcoc >= curIns->pannEnv[ i].pos - 1 && tcoc <= curIns->pannEnv[i].pos + 1) {
+								if (tcoc >= curIns->pannEnv[i].pos - 1 && tcoc <= curIns->pannEnv[i].pos + 1) {
 									editPtEnv = i;
 									SetCursor(&CHandCrsr);
 									break;
@@ -1944,7 +1944,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 										short ww;
 										// déplace les pts après ce pt
 										
-										for (ww = 11; ww >= i; ww--) curIns->pannEnv[ ww] = curIns->pannEnv[ ww-1];
+										for (ww = 11; ww >= i; ww--) curIns->pannEnv[ww] = curIns->pannEnv[ww-1];
 										
 										curIns->pannSize++;
 										
@@ -1996,8 +1996,8 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 							/************/
 							
 							GetGWorld(&oldPort, &oldGDeviceH);
-							SetGWorld(BitMapSample[ InstruNo], NULL);
-							DrawSample(-1, -1, InstruNo, SampleDlog[ InstruNo]);
+							SetGWorld(BitMapSample[InstruNo], NULL);
+							DrawSample(-1, -1, InstruNo, SampleDlog[InstruNo]);
 							SetGWorld(oldPort, oldGDeviceH);
 							/************/
 							
@@ -2016,7 +2016,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 					
 					short 	tcoc;
 					
-					InstrData	*curIns = &curMusic->fid[ InstruNo];
+					InstrData	*curIns = &curMusic->fid[InstruNo];
 					
 					//	aPt.h = prevPt.h;
 					tcoc = PosToByte(aPt.h, InstruNo);
@@ -2077,7 +2077,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 										short ww;
 										// déplace les pts après ce pt
 										
-										for (ww = 11; ww >= i; ww--) curIns->volEnv[ ww] = curIns->volEnv[ ww-1];
+										for (ww = 11; ww >= i; ww--) curIns->volEnv[ww] = curIns->volEnv[ww-1];
 										
 										curIns->volSize++;
 										
@@ -2129,8 +2129,8 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 							/************/
 							
 							GetGWorld(&oldPort, &oldGDeviceH);
-							SetGWorld(BitMapSample[ InstruNo], NULL);
-							DrawSample(-1, -1, InstruNo, SampleDlog[ InstruNo]);
+							SetGWorld(BitMapSample[InstruNo], NULL);
+							DrawSample(-1, -1, InstruNo, SampleDlog[InstruNo]);
 							SetGWorld(oldPort, oldGDeviceH);
 							/************/
 							
@@ -2267,7 +2267,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 						
 						if (Clignote[InstruNo]) {
 							if (TokTak[InstruNo]) {
-								tempRect.left = ByteToPos(SelecRect[ InstruNo].start, InstruNo);
+								tempRect.left = ByteToPos(SelecRect[InstruNo].start, InstruNo);
 								tempRect.right = tempRect.left +1;
 								tempRect.top = SampleRect.top;
 								tempRect.bottom = SampleRect.bottom;
@@ -2304,7 +2304,7 @@ void DrawEnveloppe(short ins, DialogPtr	theDia)
 	Str255		aStr;
 	short		itemType;
 	short		i, high;
-	InstrData	*curIns = &curMusic->fid[ ins];
+	InstrData	*curIns = &curMusic->fid[ins];
 	
 	BackColor(whiteColor);
 	ForeColor(blackColor);
@@ -2320,14 +2320,14 @@ void DrawEnveloppe(short ins, DialogPtr	theDia)
 	RGBForeColor(&theColor);
 	for (i = 0; i < curIns->volSize; i++)
 	{
-		MoveTo(ByteToPos(curIns->volEnv[ i].pos, ins), SampleRect.top);
-		LineTo(ByteToPos(curIns->volEnv[ i].pos, ins), SampleRect.bottom);
+		MoveTo(ByteToPos(curIns->volEnv[i].pos, ins), SampleRect.top);
+		LineTo(ByteToPos(curIns->volEnv[i].pos, ins), SampleRect.bottom);
 	}
 	
 	PenSize(2, 2);
 	ForeColor(yellowColor);
 	if (curIns->volSize > 0) {
-		MoveTo(ByteToPos(0, ins), SampleRect.top + ((64 - curIns->volEnv[ 0].val) * high) / 64);
+		MoveTo(ByteToPos(0, ins), SampleRect.top + ((64 - curIns->volEnv[0].val) * high) / 64);
 		for (i = 0; i < curIns->volSize; i++) {
 			LineTo(ByteToPos(curIns->volEnv[i].pos, ins), SampleRect.top + ((64 - curIns->volEnv[i].val) * high) / 64);
 		}
@@ -2419,18 +2419,18 @@ void DrawPanningEnveloppe(short ins, DialogPtr theDia)
 	RGBForeColor(&theColor);
 	for (i = 0; i < curIns->pannSize; i++)
 	{
-		MoveTo(ByteToPos(curIns->pannEnv[ i].pos, ins), SampleRect.top);
-		LineTo(ByteToPos(curIns->pannEnv[ i].pos, ins), SampleRect.bottom);
+		MoveTo(ByteToPos(curIns->pannEnv[i].pos, ins), SampleRect.top);
+		LineTo(ByteToPos(curIns->pannEnv[i].pos, ins), SampleRect.bottom);
 	}
 	
 	PenSize(2, 2);
 	ForeColor(yellowColor);
 	if (curIns->pannSize > 0) {
-		MoveTo(ByteToPos(0, ins), SampleRect.top + ((64 - curIns->pannEnv[ 0].val) * high) / 64);
+		MoveTo(ByteToPos(0, ins), SampleRect.top + ((64 - curIns->pannEnv[0].val) * high) / 64);
 		for (i = 0; i < curIns->pannSize; i++) {
-			LineTo(ByteToPos(curIns->pannEnv[ i].pos, ins), SampleRect.top + ((64 - curIns->pannEnv[ i].val) * high) / 64);
+			LineTo(ByteToPos(curIns->pannEnv[i].pos, ins), SampleRect.top + ((64 - curIns->pannEnv[i].val) * high) / 64);
 		}
-		LineTo(SampleRect.right, SampleRect.top + ((64 - curIns->pannEnv[ curIns->pannSize-1].val) * high) / 64);
+		LineTo(SampleRect.right, SampleRect.top + ((64 - curIns->pannEnv[curIns->pannSize-1].val) * high) / 64);
 	}
 	
 	// Sustain Pt
@@ -2538,7 +2538,7 @@ void DrawSample(short tSS, short tSE, short InstruNo, DialogPtr theDia)
 	if (samp < 0)
 		samp = 0;	// ENVELOPPES !!!!
 	
-	if (samp >= curMusic->fid[ InstruNo].numSamples)
+	if (samp >= curMusic->fid[InstruNo].numSamples)
 		goto RENVOI;
 	
 	curData = curMusic->sample[curMusic->fid[InstruNo].firstSample + samp];
@@ -2578,7 +2578,7 @@ void DrawSample(short tSS, short tSE, short InstruNo, DialogPtr theDia)
 		start = 0;
 		sampleSize = curMusic->sample[curMusic->fid[InstruNo].firstSample + samp]->size;
 	} else {
-		start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
+		start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[InstruNo];
 		sampleSize = curMusic->sample[curMusic->fid[InstruNo].firstSample + samp]->size / ZoomLevel[InstruNo];
 		
 		end = start + sampleSize;
@@ -2645,7 +2645,7 @@ void DrawSample(short tSS, short tSE, short InstruNo, DialogPtr theDia)
 	
 ENDSAMPLE:
 	
-	if (curSample[ InstruNo] == volumeEnv) {
+	if (curSample[InstruNo] == volumeEnv) {
 		if ((curMusic->fid[InstruNo].volType & EFNOTE))
 			DrawEnveloppe(InstruNo, theDia);
 	}
@@ -2697,7 +2697,7 @@ void SetControlH(short theInstru)
 	
 	MySizeControl(xScroll[theInstru], caRect.right -13, 16);
 	
-	if (ZoomLevel[ theInstru] != 1) {
+	if (ZoomLevel[theInstru] != 1) {
 		SetControlMinimum(xScroll[theInstru], 0);
 		SetControlMaximum(xScroll[theInstru], ZoomLevel[theInstru] * SAMPLEDEF - SAMPLEDEF);
 		
@@ -2724,8 +2724,8 @@ void InternalUpdate(short InstruNo)
 	
 	UpdateWaveInfo();
 	
-	if (SampleDlog[ InstruNo] != NULL && IsWindowVisible(GetDialogWindow(SampleDlog[InstruNo])) == true) {
-		SetPortDialogPort(SampleDlog[ InstruNo]);
+	if (SampleDlog[InstruNo] != NULL && IsWindowVisible(GetDialogWindow(SampleDlog[InstruNo])) == true) {
+		SetPortDialogPort(SampleDlog[InstruNo]);
 		
 		GetDialogItem(SampleDlog[InstruNo], 30, &itemType, &itemHandle, &itemRect);
 		InvalWindowRect(GetDialogWindow(SampleDlog[InstruNo]), &itemRect);
@@ -2743,7 +2743,7 @@ void InternalUpdate(short InstruNo)
 					SelecRect[InstruNo].end		= 0;
 					ZoomLevel[InstruNo]			= 1;
 				}
-				//	HiliteControl(ZoomBut[ InstruNo], 0);
+				//	HiliteControl(ZoomBut[InstruNo], 0);
 				
 				ShowControl(FixedBut[InstruNo]);
 				ShowControl(EnvBut[InstruNo]);
@@ -2777,7 +2777,7 @@ void InternalUpdate(short InstruNo)
 					SelecRect[InstruNo].end		= 0;
 					ZoomLevel[InstruNo]			= 1;
 				}
-				//	HiliteControl(ZoomBut[ InstruNo], 0);
+				//	HiliteControl(ZoomBut[InstruNo], 0);
 				
 				ShowControl(FixedBut[InstruNo]);
 				ShowControl(EnvBut[InstruNo]);
@@ -2799,7 +2799,7 @@ void InternalUpdate(short InstruNo)
 				else
 					HiliteControl(SustainBut[InstruNo], 0);
 				
-				if (curMusic->fid[ InstruNo].volType & EFLOOP)
+				if (curMusic->fid[InstruNo].volType & EFLOOP)
 					HiliteControl(LoopBut[InstruNo], kControlButtonPart);
 				else
 					HiliteControl(LoopBut[InstruNo], 0);
@@ -2812,7 +2812,7 @@ void InternalUpdate(short InstruNo)
 				HideControl(LoopBut[InstruNo]);
 				
 				if (curSample[InstruNo] >= curMusic->fid[InstruNo].numSamples) {
-					curSample[ InstruNo] = volumeEnv;
+					curSample[InstruNo] = volumeEnv;
 					goto recheck;
 				}
 				
@@ -2821,17 +2821,17 @@ void InternalUpdate(short InstruNo)
 					SelecRect[InstruNo].end		= 0;
 					ZoomLevel[InstruNo]			= 1;
 				}
-				//	HiliteControl(ZoomBut[ InstruNo], 0);
+				//	HiliteControl(ZoomBut[InstruNo], 0);
 				break;
 		}
 		
-		InvalWindowRect(GetDialogWindow(SampleDlog[ InstruNo]), &SampleRect);
+		InvalWindowRect(GetDialogWindow(SampleDlog[InstruNo]), &SampleRect);
 		
 		SetControlH(InstruNo);
 		
-		if (BitMapSample[ InstruNo] != NULL) {
-			DisposeGWorld(BitMapSample[ InstruNo]);
-			BitMapSample[ InstruNo] = NULL;
+		if (BitMapSample[InstruNo] != NULL) {
+			DisposeGWorld(BitMapSample[InstruNo]);
+			BitMapSample[InstruNo] = NULL;
 		}
 		BitMapSample[InstruNo] = NULL;
 		if (NewGWorld(&BitMapSample[InstruNo], 8, &SampleRect, NULL, NULL, (GWorldFlags) 0) == noErr) {
@@ -2929,7 +2929,7 @@ void NCreateSampleWindow(short ins, short samp)
 		
 		GetDialogItem(SampleDlog[ins], 40, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		FixedBut[ ins] = NewControl(GetDialogWindow(SampleDlog[ins]),
+		FixedBut[ins] = NewControl(GetDialogWindow(SampleDlog[ins]),
 									&itemRect,
 									"\p",
 									true,
@@ -3040,7 +3040,7 @@ void NCreateSampleWindow(short ins, short samp)
 	ShowWindow(GetDialogWindow(SampleDlog[ins]));
 	SelectWindow2(GetDialogWindow(SampleDlog[ins]));
 	GetSampleRect(SampleDlog[ins]);
-	//SetMaxBottomWindow(256 + SampleRect.top + 17 + SAMPLERECTTOP, SampleDlog[ ins]);
+	//SetMaxBottomWindow(256 + SampleRect.top + 17 + SAMPLERECTTOP, SampleDlog[ins]);
 	SetMaxWindow(0, 256 + 15 + SAMPLERECTTOP, SampleDlog[ins]);
 	
 	InternalUpdate(ins);
@@ -3238,8 +3238,8 @@ pascal void actionProcSample(ControlHandle theControl, short ctlPart)
 	if (sVal != curVal) {
 		/************/
 		GetGWorld(&oldPort, &oldGDeviceH);
-		SetGWorld(BitMapSample[ CurWin], NULL);
-		DrawSample(-1, -1, CurWin, SampleDlog[ CurWin]);
+		SetGWorld(BitMapSample[CurWin], NULL);
+		DrawSample(-1, -1, CurWin, SampleDlog[CurWin]);
 		SetGWorld(oldPort, oldGDeviceH);
 		/************/
 		
@@ -3330,8 +3330,8 @@ void MoveLoopSelection(short InstruNo)
 			
 			InternalUpdate(InstruNo);
 			
-			InvalWindowRect(GetDialogWindow(SampleDlog[ InstruNo]), &SampleRect);
-			UpdateSampleWindow(SampleDlog[ InstruNo]);
+			InvalWindowRect(GetDialogWindow(SampleDlog[InstruNo]), &SampleRect);
+			UpdateSampleWindow(SampleDlog[InstruNo]);
 			
 			// Check to see if this instrument is currently playing, and update it!
 			
@@ -3385,7 +3385,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 	GetPort(&SavePort);
 	
 	InstruNo = FindSample(whichDialog);
-	NSelectInstruList(InstruNo, curSample[ InstruNo]);
+	NSelectInstruList(InstruNo, curSample[InstruNo]);
 	
 	SetPortDialogPort(whichDialog);
 	GetSampleRect(whichDialog);
@@ -3423,7 +3423,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 		}
 		
 		if (PtInRect(myPt, &SampleRect)) {
-			switch (curSample[ InstruNo]) {
+			switch (curSample[InstruNo]) {
 				case panningEnv:
 					
 					break;
@@ -3553,7 +3553,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 							break;
 					}
 					
-					InvalWindowRect(GetDialogWindow(SampleDlog[ InstruNo]), &SampleRect);
+					InvalWindowRect(GetDialogWindow(SampleDlog[InstruNo]), &SampleRect);
 					UpdateDisplaySelec(InstruNo);
 				} else {
 					if (IsPressed(0x0038)) {
@@ -3591,7 +3591,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 							
 						default:
 							val = GetControlValue(xScroll[InstruNo]);
-							start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
+							start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[InstruNo];
 							sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[InstruNo];
 							break;
 					}
@@ -3627,8 +3627,8 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 								
 								InvertSwitch = true;
 								
-								//SelecRect[ InstruNo].end = otherPoint;
-								//SelecRect[ InstruNo].start = beginPoint;
+								//SelecRect[InstruNo].end = otherPoint;
+								//SelecRect[InstruNo].start = beginPoint;
 								
 								SetSelection(InstruNo, beginPoint, otherPoint);
 							} else {
@@ -3647,8 +3647,8 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 								
 								InvertSwitch = false;
 								
-								//SelecRect[ InstruNo].start = otherPoint;
-								//SelecRect[ InstruNo].end = beginPoint;
+								//SelecRect[InstruNo].start = otherPoint;
+								//SelecRect[InstruNo].end = beginPoint;
 								
 								SetSelection(InstruNo, otherPoint, beginPoint);
 							}
@@ -3678,7 +3678,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 										actionProcSample(xScroll[InstruNo], kControlUpButtonPart);
 										
 										val = GetControlValue(xScroll[InstruNo]);
-										start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
+										start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[InstruNo];
 										sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[InstruNo];
 									}
 									
@@ -3690,7 +3690,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 										actionProcSample(xScroll[InstruNo], kControlDownButtonPart);
 										
 										val = GetControlValue(xScroll[InstruNo]);
-										start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[ InstruNo];
+										start = GetStartSampleValue(val, InstruNo);	//(val * (SampleDataD(InstruNo)->size / SAMPLEDEF)) / ZoomLevel[InstruNo];
 										sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[InstruNo];
 									}
 									break;
@@ -3715,8 +3715,8 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 					TokTak[InstruNo] = false;
 				} else
 					Clignote[InstruNo] = false;
-			} else if (SelectMode[ InstruNo] == ePencil) { 	/** Pencil Mode **/
-				DrawPencil(SampleDlog[ InstruNo], InstruNo);
+			} else if (SelectMode[InstruNo] == ePencil) { 	/** Pencil Mode **/
+				DrawPencil(SampleDlog[InstruNo], InstruNo);
 			}
 			
 		END3:;
@@ -3728,11 +3728,11 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 			if (curSample[InstruNo] < 0 && MyTrackControl(FixedBut[InstruNo], theEvent.where, NULL)) {
 				switch (curSample[InstruNo]) {
 					case panningEnv:
-						if (curMusic->fid[ InstruNo].pannType & EFNOTE) {
-							curMusic->fid[ InstruNo].pannType &= ~EFNOTE;
+						if (curMusic->fid[InstruNo].pannType & EFNOTE) {
+							curMusic->fid[InstruNo].pannType &= ~EFNOTE;
 							HiliteControl(FixedBut[InstruNo], kControlButtonPart);
 						} else {
-							curMusic->fid[ InstruNo].pannType |= EFNOTE;
+							curMusic->fid[InstruNo].pannType |= EFNOTE;
 							HiliteControl(FixedBut[InstruNo], 0);
 						}
 						
@@ -3740,7 +3740,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 						
 					case volumeEnv:
 						if (curMusic->fid[InstruNo].volType & EFNOTE) {
-							HiliteControl(FixedBut[ InstruNo], kControlButtonPart);
+							HiliteControl(FixedBut[InstruNo], kControlButtonPart);
 							curMusic->fid[InstruNo].volType &= ~EFNOTE;
 						} else {
 							curMusic->fid[InstruNo].volType |= EFNOTE;
@@ -3754,7 +3754,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 			break;
 			
 		case 13:
-			if(curSample[InstruNo] < 0 && MyTrackControl(EnvBut[ InstruNo], theEvent.where, NULL)) {
+			if(curSample[InstruNo] < 0 && MyTrackControl(EnvBut[InstruNo], theEvent.where, NULL)) {
 				switch (curSample[InstruNo]) {
 					case panningEnv:
 						if (curMusic->fid[InstruNo].pannType & EFON) {
@@ -3812,7 +3812,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 			break;
 			
 		case 37:
-			if(curSample[ InstruNo] < 0 && MyTrackControl(LoopBut[ InstruNo], theEvent.where, NULL)) {
+			if(curSample[InstruNo] < 0 && MyTrackControl(LoopBut[InstruNo], theEvent.where, NULL)) {
 				switch (curSample[InstruNo]) {
 					case panningEnv:
 						if (curMusic->fid[InstruNo].pannType & EFLOOP) {
@@ -3870,7 +3870,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 				HiliteControl(ZoomBut[InstruNo], kControlButtonPart);
 				
 				if (TickCount() - doubleClick <= GetDblTime()) {
-					ZoomLevel[ InstruNo] = 1;
+					ZoomLevel[InstruNo] = 1;
 					
 					SetControlValue(xScroll[InstruNo], 0);
 					SetControlH(InstruNo);
@@ -3898,7 +3898,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 			
 			InsertMenu(sMenu, hierMenu);
 			
-			for (i = 0, kk = 0; i < curMusic->fid[ InstruNo].numSamples; i++) {
+			for (i = 0, kk = 0; i < curMusic->fid[InstruNo].numSamples; i++) {
 				sData		*curData = curMusic->sample[curMusic->fid[InstruNo].firstSample + i];
 				Str255		str;
 				
@@ -3965,7 +3965,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 			DisposeMenu(sMenu);
 			
 			if (HiWord(mresult) != 0) {
-				short prevSample = curSample[ InstruNo];
+				short prevSample = curSample[InstruNo];
 				
 				switch (LoWord(mresult)) {
 					case 1:		// Volume Envelope
@@ -3981,11 +3981,11 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 						
 						if (LoWord(mresult) - 4 > 0) {
 							if (menuSampleId[LoWord(mresult) - 4] == menuSampleId[LoWord(mresult) - 5])
-								curMode[ InstruNo] = 1;
+								curMode[InstruNo] = 1;
 							else
-								curMode[ InstruNo] = 0;
+								curMode[InstruNo] = 0;
 						} else
-							curMode[ InstruNo] = 0;
+							curMode[InstruNo] = 0;
 						break;
 				}
 				
@@ -4134,8 +4134,8 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 					break;
 					
 				default:
-					//SelecRect[ CurWin].end = SampleDataD(CurWin)->size;
-					//SelecRect[ CurWin].start = 0;
+					//SelecRect[CurWin].end = SampleDataD(CurWin)->size;
+					//SelecRect[CurWin].start = 0;
 					
 					SetSelection(CurWin, 0, SampleDataD(CurWin)->size);
 					break;
@@ -4168,7 +4168,7 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 			
 			ResetSelectionSample(CurWin);
 			InternalUpdate(CurWin);
-			NSelectInstruList(CurWin, curSample[ CurWin]);
+			NSelectInstruList(CurWin, curSample[CurWin]);
 			break;
 			
 		case 0x1E: // --
@@ -4219,7 +4219,7 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 			End = FindByteEnd(CurWin);
 			
 			if (Start != End) {
-				InstrData *curIns = &curMusic->fid[ CurWin];
+				InstrData *curIns = &curMusic->fid[CurWin];
 				int ww;
 				SaveUndo(USample, CurWin, "\pUndo 'Delete instrument'");
 				
@@ -4249,10 +4249,10 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 						
 					case volumeEnv:
 						for (i = 0; i < curIns->volSize; i++) {
-							if (curIns->volEnv[ i].pos >= Start && curIns->volEnv[i].pos <= End) {
+							if (curIns->volEnv[i].pos >= Start && curIns->volEnv[i].pos <= End) {
 								for (ww = i; ww < curIns->volSize - 1; ww++)
 								{
-									curIns->volEnv[ww] = curIns->volEnv[ ww+1];
+									curIns->volEnv[ww] = curIns->volEnv[ww+1];
 								}
 								
 								curIns->volSize--;
@@ -4369,9 +4369,9 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 			
 			
 			case 9:
-			HiliteControl(SelectBut[ CurWin], 0);
-			HiliteControl(PencilBut[ CurWin], 0);
-			HiliteControl(ZoomBut[ CurWin], 0);
+			HiliteControl(SelectBut[CurWin], 0);
+			HiliteControl(PencilBut[CurWin], 0);
+			HiliteControl(ZoomBut[CurWin], 0);
 			
 			SelectMode[CurWin]++;
 			if (SelectMode[CurWin] > MODESIZE)
@@ -4405,11 +4405,11 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 #if 0
 				for (i = 1; i < 61; i++)
 				{
-					if (thePrefs.PianoKey[ (short) theChar] == MADDriver->pitchTable[ i * MAXSAMPLE +  0]) break;
+					if (thePrefs.PianoKey[(short) theChar] == MADDriver->pitchTable[i * MAXSAMPLE +  0]) break;
 				}
 #endif
 				
-				i = thePrefs.PianoKey[ (short) theChar];
+				i = thePrefs.PianoKey[(short) theChar];
 				
 				if (i != 0xFF && i != -1)
 					i += thePrefs.pianoOffset*12;
@@ -4429,7 +4429,7 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 						TrackMem[TouchIn] = 0;
 					
 					if (curSample[CurWin] < 0) {
-						DoPlayInstruInt(i, CurWin, 0, 0, 0xFF, &MADDriver->chan[ track], 0, 0);
+						DoPlayInstruInt(i, CurWin, 0, 0, 0xFF, &MADDriver->chan[track], 0, 0);
 					} else {
 						if (SelecRect[CurWin].start == SelecRect[CurWin].end)
 							DoPlayInstruInt(i, CurWin, 0, 0, 0xFF, &MADDriver->chan[track], 0, 0);
@@ -4776,8 +4776,8 @@ Boolean DragSample(RgnHandle myRgn, short theNo, EventRecord *theEvent)
 	
 #if 0
 	AddLoopToSndHandle(theSound,
-					   curMusic->fid[ theNo].loopBeg,
-					   curMusic->fid[ theNo].loopBeg + curMusic->fid[ theNo].loopSize);
+					   curMusic->fid[theNo].loopBeg,
+					   curMusic->fid[theNo].loopBeg + curMusic->fid[theNo].loopSize);
 #endif
 	
 	HLock(theSound);
@@ -4840,7 +4840,7 @@ Boolean DragSample(RgnHandle myRgn, short theNo, EventRecord *theEvent)
 		copyText = (mouseDownModifiers | mouseUpModifiers) & optionKey;
 		
 		if ((!copyText) && (DropLocationIsFinderTrash(&dropLocation))) {
-			DoKeyPressSample(SampleDlog[ theNo], 8);
+			DoKeyPressSample(SampleDlog[theNo], 8);
 			
 			curMusic->hasChanged = true;
 			

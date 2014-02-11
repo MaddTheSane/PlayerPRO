@@ -23,8 +23,7 @@ extern	WindowPtr				oldWindow;
 
 long GetDisplayID(long inDeviceNum);
 
-typedef struct
-{
+typedef struct {
 	CFragConnectionID							connID;
 	Str63										MenuName;
 	FSSpec										file;
@@ -34,7 +33,6 @@ typedef struct
 	PlayerMessageInfo							msgPlayer;
 	struct PlayerSetDefaultWindowSizeMessage	winSize;
 	void										*refCon;
-	
 } VisualInfo;
 
 //static	VisualInfo 	*VisualPlug;
@@ -154,13 +152,13 @@ void DoGrowVisual(void)
 	
 	GetQDGlobalsScreenBits(&screenBits);
 	
-	temp.left = VisualPlug[ currentID].winSize.minWidth;
-	temp.top = VisualPlug[ currentID].winSize.minHeight;
-	temp.right = VisualPlug[ currentID].winSize.maxWidth;
-	temp.bottom = VisualPlug[ currentID].winSize.maxHeight;
+	temp.left = VisualPlug[currentID].winSize.minWidth;
+	temp.top = VisualPlug[currentID].winSize.minHeight;
+	temp.right = VisualPlug[currentID].winSize.maxWidth;
+	temp.bottom = VisualPlug[currentID].winSize.maxHeight;
 	
-	if(VisualPlug[ currentID].winSize.minWidth == VisualPlug[ currentID].winSize.maxWidth &&
-	   VisualPlug[ currentID].winSize.minHeight == VisualPlug[ currentID].winSize.maxHeight) {
+	if(VisualPlug[currentID].winSize.minWidth == VisualPlug[currentID].winSize.maxWidth &&
+	   VisualPlug[currentID].winSize.minHeight == VisualPlug[currentID].winSize.maxHeight) {
 		return;
 	}
 	
@@ -192,8 +190,8 @@ OSStatus PlayerPROProc(void *appCookie, OSType message, struct PlayerMessageInfo
 		case kPlayerRegisterVisualPluginMessage:
 			VisualPlug[currentID].msgPlayer = *messageInfo;
 			
-			VisualPlug[currentID].winSize.defaultWidth =	VisualPlug[ currentID].winSize.minWidth 	= 	messageInfo->u.registerVisualPluginMessage.minWidth;
-			VisualPlug[currentID].winSize.defaultHeight	=	VisualPlug[ currentID].winSize.minHeight = 	messageInfo->u.registerVisualPluginMessage.minHeight;
+			VisualPlug[currentID].winSize.defaultWidth =	VisualPlug[currentID].winSize.minWidth 	= 	messageInfo->u.registerVisualPluginMessage.minWidth;
+			VisualPlug[currentID].winSize.defaultHeight	=	VisualPlug[currentID].winSize.minHeight = 	messageInfo->u.registerVisualPluginMessage.minHeight;
 			
 			VisualPlug[currentID].winSize.maxWidth = 	messageInfo->u.registerVisualPluginMessage.maxWidth;
 			VisualPlug[currentID].winSize.maxHeight =	messageInfo->u.registerVisualPluginMessage.maxHeight;
@@ -204,7 +202,7 @@ OSStatus PlayerPROProc(void *appCookie, OSType message, struct PlayerMessageInfo
 			break;
 			
 		case kPlayerSetDefaultWindowSizeMessage:
-			VisualPlug[ currentID].winSize = messageInfo->u.setDefaultWindowSizeMessage;
+			VisualPlug[currentID].winSize = messageInfo->u.setDefaultWindowSizeMessage;
 			break;
 			
 		default:
@@ -224,19 +222,19 @@ void CallVisualMain(long PlugNo, OSType msg)
 	
 	fileID = FSpOpenResFile(&VisualPlug[PlugNo].file, fsCurPerm);
 	
-	myErr = GetDiskFragment(&VisualPlug[PlugNo].file, 0, kCFragGoesToEOF, VisualPlug[PlugNo].file.name, kLoadCFrag, &VisualPlug[ PlugNo].connID, (Ptr *) &mainPLUG, errName);
+	myErr = GetDiskFragment(&VisualPlug[PlugNo].file, 0, kCFragGoesToEOF, VisualPlug[PlugNo].file.name, kLoadCFrag, &VisualPlug[PlugNo].connID, (Ptr *) &mainPLUG, errName);
 	
 	if (myErr == noErr) {
 		
-		VisualPlug[ PlugNo].msgInfo.u.initMessage.playerProc = PlayerPROProc;
-		VisualPlug[ PlugNo].msgInfo.u.initMessage.appCookie = (void*)PlugNo;
+		VisualPlug[PlugNo].msgInfo.u.initMessage.playerProc = PlayerPROProc;
+		VisualPlug[PlugNo].msgInfo.u.initMessage.appCookie = (void*)PlugNo;
 		
-		//VisualPlug[ PlugNo].msgVisual.u.initMessage.playerProc = PlayerPROProc;
-		//VisualPlug[ PlugNo].msgVisual.u.initMessage.appCookie = (void*) PlugNo;
+		//VisualPlug[PlugNo].msgVisual.u.initMessage.playerProc = PlayerPROProc;
+		//VisualPlug[PlugNo].msgVisual.u.initMessage.appCookie = (void*) PlugNo;
 		
 		myErr = mainPLUG (	msg,
-						  &VisualPlug[ PlugNo].msgInfo,
-						  &VisualPlug[ PlugNo].msgInfo.u.initMessage.refcon);		
+						  &VisualPlug[PlugNo].msgInfo,
+						  &VisualPlug[PlugNo].msgInfo.u.initMessage.refcon);		
 		
 		DisposePtr((Ptr) mainPLUG);
 	}
@@ -260,7 +258,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 		else 
 			port = GetDialogPort(VisualDlog);
 		
-		fileID = FSpOpenResFile(&VisualPlug[ PlugNo].file, fsCurPerm);
+		fileID = FSpOpenResFile(&VisualPlug[PlugNo].file, fsCurPerm);
 		UseResFile(fileID);
 	}
 	
@@ -316,16 +314,16 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 			Spectre = (Byte*) MakeCalculusSpectrum(GetAudioSourceSpectrum(1), false);
 			
 			for (i = 0; i < kVisualNumWaveformEntries; i++) {
-				currentData.waveformData[ 0][ i] = Wave[ i];
-				currentData.spectrumData[ 0][ i] = Spectre[ (i * 256) / kVisualNumSpectrumEntries];
+				currentData.waveformData[0][i] = Wave[i];
+				currentData.spectrumData[0][i] = Spectre[(i * 256) / kVisualNumSpectrumEntries];
 			}
 			
 			Wave = (Byte*) GetAudioChannel(false, intDriver->ASCBUFFERReal);
 			Spectre = (Byte*) MakeCalculusSpectrum(GetAudioSourceSpectrum(0), false);
 			
 			for (i = 0; i < kVisualNumWaveformEntries; i++) {
-				currentData.waveformData[ 1][ i] = Wave[ i];
-				currentData.spectrumData[ 1][ i] = Spectre[ (i * 256) / kVisualNumSpectrumEntries];
+				currentData.waveformData[1][i] = Wave[i];
+				currentData.spectrumData[1][i] = Spectre[(i * 256) / kVisualNumSpectrumEntries];
 			}
 			
 		}
@@ -351,12 +349,12 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 			
 			/*	for (i = 0; i < numSamples; i++)
 			 {
-			 sampleBuffer[ i] -= 0x8000;
+			 sampleBuffer[i] -= 0x8000;
 			 }*/
 			break;
 	}
 	
-	Err = VisualPlug[ PlugNo].msgPlayer.u.registerVisualPluginMessage.handler(msg, &msgVisual, VisualPlug[ PlugNo].refCon);
+	Err = VisualPlug[PlugNo].msgPlayer.u.registerVisualPluginMessage.handler(msg, &msgVisual, VisualPlug[PlugNo].refCon);
 	
 	if (Err ) {
 		//Debugger();//Erreur(Err, Err);
@@ -370,7 +368,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 #if 0
 				for (i = 0; i < numSamples; i++)
 				{
-					sampleBuffer[ i] += 0x8000;
+					sampleBuffer[i] += 0x8000;
 				}
 #endif
 				
@@ -380,7 +378,7 @@ void CallVisualFonction(MADDriverRec *intDriver, short PlugNo, OSType msg, CGraf
 				break;
 				
 			case kVisualPluginInitializeMessage:
-				VisualPlug[ PlugNo].refCon = msgVisual.u.initMessage.refcon;
+				VisualPlug[PlugNo].refCon = msgVisual.u.initMessage.refcon;
 				break;
 				
 			case kVisualPluginResizeMessage:
@@ -427,27 +425,27 @@ void LoadVisualPLUG(short No, StringPtr theName)
 	Boolean targetIsFolder, wasAliased;
 	/***********************/
 	
-	HGetVol(NULL, &VisualPlug[No].file.vRefNum, &VisualPlug[ No].file.parID);
+	HGetVol(NULL, &VisualPlug[No].file.vRefNum, &VisualPlug[No].file.parID);
 	pStrcpy(VisualPlug[No].file.name, theName);
 	
 	ResolveAliasFile(&VisualPlug[No].file, true, &targetIsFolder, &wasAliased);
 	
 	
 #if 0
-	fileID = FSpOpenResFile(&ThePPINPlug[ No].file, fsCurPerm);
+	fileID = FSpOpenResFile(&ThePPINPlug[No].file, fsCurPerm);
 	
 	GetIndString(tStr, 1000, 1);
-	BlockMoveData(tStr + 1, &ThePPINPlug[ No].type, 4);
+	BlockMoveData(tStr + 1, &ThePPINPlug[No].type, 4);
 	
 	GetIndString(tStr, 1000, 2);
-	BlockMoveData(tStr + 1, &ThePPINPlug[ No].mode, 4);
+	BlockMoveData(tStr + 1, &ThePPINPlug[No].mode, 4);
 	
-	GetIndString(ThePPINPlug[ No].MenuName, 1000, 3);
-	GetIndString(ThePPINPlug[ No].AuthorString, 1000, 4);
+	GetIndString(ThePPINPlug[No].MenuName, 1000, 3);
+	GetIndString(ThePPINPlug[No].AuthorString, 1000, 4);
 	
 	GetIndString(tStr, 1000, 5);
-	BlockMoveData(tStr + 1, &ThePPINPlug[ No].InsSamp, 4);
-	if (ThePPINPlug[ No].InsSamp != 'SAMP' && ThePPINPlug[ No].InsSamp != 'INST') MyDebugStr(__LINE__, __FILE__, "Plug-Ins SAMP/INST Error");
+	BlockMoveData(tStr + 1, &ThePPINPlug[No].InsSamp, 4);
+	if (ThePPINPlug[No].InsSamp != 'SAMP' && ThePPINPlug[No].InsSamp != 'INST') MyDebugStr(__LINE__, __FILE__, "Plug-Ins SAMP/INST Error");
 	
 	CloseResFile(fileID);
 #endif
@@ -535,13 +533,13 @@ void CreateVisualWindow(short ID)
 	CallVisualFonction(MADDriver, currentID, kVisualPluginEnableMessage, 0, NULL, 0);
 	
 	MySizeWindow(VisualDlog,
-				 VisualPlug[ currentID].winSize.defaultWidth,
-				 VisualPlug[ currentID].winSize.defaultHeight,
+				 VisualPlug[currentID].winSize.defaultWidth,
+				 VisualPlug[currentID].winSize.defaultHeight,
 				 true);
 	
 	
-	//wantedHeight = thePrefs.WinHi[ GetWRefCon(VisualDlog)];
-	//wantedWidth = thePrefs.WinLarg[ GetWRefCon(VisualDlog)];
+	//wantedHeight = thePrefs.WinHi[GetWRefCon(VisualDlog)];
+	//wantedWidth = thePrefs.WinLarg[GetWRefCon(VisualDlog)];
 	
 	//CallVisualFonction(MADDriver, currentID, kVisualPluginResizeMessage, 0, NULL, 0);
 	CallVisualFonction(MADDriver, currentID, kVisualPluginSetWindowMessage, 0, NULL, 0);
@@ -573,14 +571,14 @@ void CloseVisual(void)
 		
 		GetPortBounds(GetDialogPort(VisualDlog), &caRect);
 		
-		thePrefs.WinHi[ GetWRefCon(GetDialogWindow(VisualDlog))] = caRect.bottom;
-		thePrefs.WinLarg[ GetWRefCon(GetDialogWindow(VisualDlog))] = caRect.right;
-		thePrefs.WinEtat[ GetWRefCon(GetDialogWindow(VisualDlog))] = 1;
+		thePrefs.WinHi[GetWRefCon(GetDialogWindow(VisualDlog))] = caRect.bottom;
+		thePrefs.WinLarg[GetWRefCon(GetDialogWindow(VisualDlog))] = caRect.right;
+		thePrefs.WinEtat[GetWRefCon(GetDialogWindow(VisualDlog))] = 1;
 		
 		Start.h = Start.v = 0;
 		LocalToGlobal(&Start);
-		thePrefs.WinPos[ GetWRefCon(GetDialogWindow(VisualDlog))].v = Start.v;
-		thePrefs.WinPos[ GetWRefCon(GetDialogWindow(VisualDlog))].h = Start.h;
+		thePrefs.WinPos[GetWRefCon(GetDialogWindow(VisualDlog))].v = Start.v;
+		thePrefs.WinPos[GetWRefCon(GetDialogWindow(VisualDlog))].h = Start.h;
 		
 		CallVisualFonction(MADDriver, currentID, kVisualPluginDisableMessage, 0, NULL, 0);
 		CallVisualFonction(MADDriver, currentID, kVisualPluginHideWindowMessage, 0, NULL, 0);
@@ -592,7 +590,7 @@ void CloseVisual(void)
 		
 		SetPort(savedPort);
 		
-		CloseConnection(&VisualPlug[ currentID].connID);
+		CloseConnection(&VisualPlug[currentID].connID);
 		
 		SetItemMark(ViewsMenu, mVisual + currentID, noMark);
 	}
@@ -684,7 +682,7 @@ void InitVisual(void)
 	{
 		AppendMenu(ViewsMenu, "\p-");
 		
-		for (i = 0; i < tPlug; i++)	AppendMenu(ViewsMenu, VisualPlug[ i].file.name);
+		for (i = 0; i < tPlug; i++)	AppendMenu(ViewsMenu, VisualPlug[i].file.name);
 		
 		AppendMenu(ViewsMenu, "\p-");
 		

@@ -45,7 +45,7 @@ struct oldPatHeader					// HEADER
 {
 	long	size;					// Length of pattern: standard = 64
 	OSType	compMode;				// Compression mode, none = 'NONE'
-	char	name[ 32];
+	char	name[32];
 	long	patBytes;				// Pattern Size in Bytes
 	long	unused2;
 };
@@ -54,7 +54,7 @@ typedef struct oldPatHeader oldPatHeader;
 struct oldPatData						// DATA STRUCTURE : HEADER + COMMANDS
 {									// Pattern = 64 notes to play
 	oldPatHeader	header;
-	oldCmd			Cmds[ 1];
+	oldCmd			Cmds[1];
 };
 typedef struct oldPatData oldPatData;
 
@@ -75,7 +75,7 @@ struct oldsData								// SAMPLE
 	Byte				loopType;
 	Byte				amp;				// 8 or 16 bits
 	char				relNote;
-	char 				name[ 32];			// Sample name
+	char 				name[32];			// Sample name
 	Byte				stereo;				// Stereo
 	Ptr					data;				// Used only in memory, not in files
 };
@@ -97,7 +97,7 @@ typedef struct oldEnvRec oldEnvRec;
 
 struct oldInstrData				// INSTRUMENT
 {
-	char 	name[ 32];			// instrument name
+	char 	name[32];			// instrument name
 	Byte 	type;				// Instrument type = 0
 	Byte	no;					// Instrument number
 	
@@ -110,10 +110,10 @@ struct oldInstrData				// INSTRUMENT
 	
 	/**/
 	
-	Byte	what[ 96];			// Sample number for all notes
-	oldEnvRec 	volEnv[ 12];		// Points for volume envelope
-	oldEnvRec	pannEnv[ 12];		// Points for panning envelope
-//	EnvRec	pitchEnv[ 12];		// Points for panning envelope
+	Byte	what[96];			// Sample number for all notes
+	oldEnvRec 	volEnv[12];		// Points for volume envelope
+	oldEnvRec	pannEnv[12];		// Points for panning envelope
+//	EnvRec	pitchEnv[12];		// Points for panning envelope
 // ENVELOPPES PLUS LONGUES !!!!!!!
 	
 	Byte	volSize;			// Number of volume points
@@ -162,8 +162,8 @@ typedef struct oldInstrData oldInstrData;
 struct oldMADSpec
 {
 	OSType		MAD;						// Mad Identification
-	char 		name[ 32];					// Music's name
-	char		infos[ INFOSSIZE];			// Informations & Author name of the music
+	char 		name[32];					// Music's name
+	char		infos[INFOSSIZE];			// Informations & Author name of the music
 	Byte		generalPan;					// General Panning
 	Byte		MultiChanNo;				// Number of chan for multichannel
 	Byte		MultiChan;					// MultiChannel per tracks?
@@ -180,11 +180,11 @@ struct oldMADSpec
 	Byte 		numPointers;				// Partition length
 	Byte		numInstru;					// Instruments number
 	Byte		numSamples;					// Samples number
-	Byte		oPointers[ MAXPOINTER];		// Partition : Patterns ID List
+	Byte		oPointers[MAXPOINTER];		// Partition : Patterns ID List
 	short		speed;						// Default speed
 	short		tempo;						// Default tempo
-	Byte		chanPan[ MAXTRACK];			// Channel settings, from 0 to 256
-	Byte		chanVol[ MAXTRACK];			// Channel Volume, from 0 to 64
+	Byte		chanPan[MAXTRACK];			// Channel settings, from 0 to 256
+	Byte		chanVol[MAXTRACK];			// Channel Volume, from 0 to 64
 };
 typedef struct oldMADSpec oldMADSpec;
 

@@ -509,7 +509,7 @@ void DoSearchDown(void)
 	MADPurgeTrack(MADDriver);
 	
 	MADDriver->PL = newPL;
-	MADDriver->Pat = curMusic->header->oPointers[ MADDriver->PL];
+	MADDriver->Pat = curMusic->header->oPointers[MADDriver->PL];
 	MADDriver->PartitionReader = newPartitionReader;
 	
 	MADCheckSpeed(curMusic, MADDriver);
@@ -540,7 +540,7 @@ void SetCurrentMOD(Str255 theMODName)
 	pStrcat(aStr, aStr2);
 	
 	GetDialogItem(ToolsDlog , 1, &itemType, &itemHandle, &itemRect);
-	TETextBox(aStr + 1, aStr[ 0], &itemRect, teJustCenter);
+	TETextBox(aStr + 1, aStr[0], &itemRect, teJustCenter);
 	
 	//RGBBackColor(&theColor);
 	//ForeColor(blackColor);
@@ -649,16 +649,16 @@ void ScanTime()
 	{
 		if (TimeScanPtr[i] != NULL) DisposePtr((Ptr)TimeScanPtr[i]);
 		
-		TimeScanPtr[i] = (long*) NewPtr(curMusic->partition[ curMusic->header->oPointers[i]]->header.size * sizeof(long));
+		TimeScanPtr[i] = (long*) NewPtr(curMusic->partition[curMusic->header->oPointers[i]]->header.size * sizeof(long));
 		
-		for (x = 0; x < curMusic->partition[ curMusic->header->oPointers[ i]]->header.size; x++)
+		for (x = 0; x < curMusic->partition[curMusic->header->oPointers[i]]->header.size; x++)
 		{
 			time ++;
 			
-			(TimeScanPtr[ i])[ x] = timeResult + (time * 125L * speed * 60) / (50 * finespeed);
+			(TimeScanPtr[i])[x] = timeResult + (time * 125L * speed * 60) / (50 * finespeed);
 			
 			for (y = 0; y <  curMusic->header->numChn; y++) {
-				aCmd = GetMADCommand(x, y, curMusic->partition[ curMusic->header->oPointers[i]]);
+				aCmd = GetMADCommand(x, y, curMusic->partition[curMusic->header->oPointers[i]]);
 				if (aCmd == NULL) {
 					MyDebugStr(__LINE__, __FILE__, "Could not find the selected command!");
 					return;
@@ -685,7 +685,7 @@ void ScanTime()
 				/** SkipE **/
 				
 				if (aCmd->cmd == skipE) {
-					for (; x < curMusic->partition[ curMusic->header->oPointers[ i]]->header.size; x++) {
+					for (; x < curMusic->partition[curMusic->header->oPointers[i]]->header.size; x++) {
 						(TimeScanPtr[i])[x] = timeResult + (time * 125L * speed * 60) / (50 * finespeed);
 					}
 				}
@@ -739,7 +739,7 @@ void ScanTime()
 		{
 			for (y = curMusic->header->numChn-1; y >= 0 ; y--)
 			{
-				aCmd = GetMADCommand(x, y, curMusic->partition[ curMusic->header->oPointers[ i]]);
+				aCmd = GetMADCommand(x, y, curMusic->partition[curMusic->header->oPointers[i]]);
 				
 				if (aCmd->cmd == speedE)
 				{					

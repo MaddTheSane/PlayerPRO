@@ -103,10 +103,10 @@ OSErr NSoundQualityExportSnd(short ins, short samp, OSType *fileType, Str255 sNa
 	ShowWindow(GetDialogWindow(aDialog));
 	
 	if (samp < 0) {
-		strcpy(cstr, curMusic->fid[ ins].name);
+		strcpy(cstr, curMusic->fid[ins].name);
 		SetDText(aDialog, 4, "\pInstrument");
 	} else {
-		curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
+		curData = curMusic->sample[curMusic->fid[ins].firstSample + samp];
 		strcpy(cstr, curData->name);
 		SetDText(aDialog, 4, "\pSample");
 	}
@@ -122,8 +122,8 @@ OSErr NSoundQualityExportSnd(short ins, short samp, OSType *fileType, Str255 sNa
 	} else {
 		long tO = 0;
 		
-		for (i = 0; i < curMusic->fid[ ins].numSamples ; i++) {
-			tO += curMusic->sample[ curMusic->fid[ ins].firstSample + i]->size;
+		for (i = 0; i < curMusic->fid[ins].numSamples ; i++) {
+			tO += curMusic->sample[curMusic->fid[ins].firstSample + i]->size;
 		}
 		NumToString(tO/1024L, aStr);
 	}
@@ -173,7 +173,7 @@ REGODIA:
 	
 	if (itemHit == 1) {
 		GetDText(aDialog, 9, sName);
-		if (sName[ 0] == 0) {
+		if (sName[0] == 0) {
 			SelectDialogItemText(aDialog, 9, 0, 2000);
 			Erreur(65, 65);
 			goto REGODIA;
@@ -315,14 +315,14 @@ void ConvertInstrumentMode(sData *curData, short menuItem)
 					long 	templ;
 					
 					for (i = 0 ; i < curData->size; i+=2) {
-						templ = ((long) curData->data[ i] + (long) curData->data[ i + 1]);
+						templ = ((long) curData->data[i] + (long) curData->data[i + 1]);
 						
 						if (templ < -127)
 							templ = -127;
 						else if (templ > 127)
 							templ = 127;
 						
-						aNewPtr[ i / 2] = templ;
+						aNewPtr[i / 2] = templ;
 					}
 				} else {
 					short	*short16out = (short*) aNewPtr, *short16in = (short*) curData->data;
@@ -375,13 +375,13 @@ void ConvertInstrumentMode(sData *curData, short menuItem)
 				for (i = 0 ; i < curData->size; i++) {
 					if (1 + i * 2 >= curData->size*2L) MyDebugStr(__LINE__, __FILE__, "");
 					
-					aNewPtr[ i * 2] = aNewPtr[ 1 + i * 2] = curData->data[ i];
+					aNewPtr[i * 2] = aNewPtr[1 + i * 2] = curData->data[i];
 				}
 			} else {
 				short *short16out = (short*) aNewPtr, *short16in = (short*) curData->data;
 				
 				for (i = 0 ; i < curData->size/2; i++) {
-					short16out[ i * 2] = short16out[ 1 + i * 2] = short16in[ i];
+					short16out[i * 2] = short16out[1 + i * 2] = short16in[i];
 				}
 			}
 			
@@ -462,14 +462,14 @@ void SetUpPartition(short newVal)
 	
 	/****** PARTITION ********/
 	for (i = 0; i< curMusic->header->numPat; i++) {
-		theNewPartition = (PatData*) NewPtrClear(sizeof(PatHeader) + newVal * curMusic->partition[ i]->header.size * sizeof(Cmd));
+		theNewPartition = (PatData*) NewPtrClear(sizeof(PatHeader) + newVal * curMusic->partition[i]->header.size * sizeof(Cmd));
 		if (theNewPartition == NULL) {
 			MyDebugStr(__LINE__, __FILE__, "Memory Error");
 			return;
 		}
-		theNewPartition->header = curMusic->partition[ i]->header;
+		theNewPartition->header = curMusic->partition[i]->header;
 		
-		for (x = 0; x < curMusic->partition[ i]->header.size; x++) {
+		for (x = 0; x < curMusic->partition[i]->header.size; x++) {
 			for (z = 0; z < curMusic->header->numChn; z++) {
 				if (z < newVal) {
 					aCmd =  &(theNewPartition->Cmds[(curMusic->partition[i]->header.size * z) + x]);
@@ -528,13 +528,13 @@ void SetInstruName(short theNo, Str255 theNewName)
 void SetSampName(short	ins, short samp, Str255 theNewName)
 {
 	short i;
-	sData *curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
+	sData *curData = curMusic->sample[curMusic->fid[ins].firstSample + samp];
 	
-	if (samp >= curMusic->fid[ ins].numSamples)
+	if (samp >= curMusic->fid[ins].numSamples)
 		return;
 	
 	for (i = 0; i < 32; i++) {
-		if (i < theNewName[ 0])
+		if (i < theNewName[0])
 			curData->name[i] = theNewName[i + 1];
 		else
 			curData->name[i] = '\0';
@@ -670,7 +670,7 @@ Handle NAIFFtoSnd(Handle sound, long *loopStart, long *loopEnd, short	*sampleSiz
 				
 				too = (struct _extended80*) &CommC->sampleRate;
 				
-				*rate = (unsigned short) too->man[ 0];
+				*rate = (unsigned short) too->man[0];
 				*rate >>= (15 - (too->exp - 0x3FFF));
 				*rate <<= 16L;
 			}
@@ -689,10 +689,10 @@ Handle NAIFFtoSnd(Handle sound, long *loopStart, long *loopEnd, short	*sampleSiz
 			marker = (MarkerChunk*) CH;
 			if (marker->numMarkers == 2)
 			{
-				*loopStart = marker->Markers[ 0].position;
+				*loopStart = marker->Markers[0].position;
 				mm = (Marker*) marker->Markers;
 				mm = (Marker*) ((Ptr) mm + 8L);
-				mm = (Marker*) ((Ptr) mm + marker->Markers[ 0].markerName[0]);
+				mm = (Marker*) ((Ptr) mm + marker->Markers[0].markerName[0]);
 				*loopEnd = mm->position;
 				
 				if (*sampleSize == 16)
@@ -720,14 +720,14 @@ Handle NAIFFtoSnd(Handle sound, long *loopStart, long *loopEnd, short	*sampleSiz
 		{
 			for (i = 0; i < SizeH - StartId; i++)
 			{
-				(*sound)[ i] = (*sound + StartId)[ i * numChannels];
+				(*sound)[i] = (*sound + StartId)[i * numChannels];
 			}
 		}
 		else
 		{
 			for (i = 0; i < (SizeH - StartId)/2; i++)
 			{
-				((short*) *sound)[ i] = ((short*) (*sound + StartId))[ i * numChannels];
+				((short*) *sound)[i] = ((short*) (*sound + StartId))[i * numChannels];
 			}
 		}
 	}
@@ -1011,10 +1011,10 @@ RESTART:
 			samp = -1;	// ADD IT !
 		
 		if (samp < 0) {
-			samp = curMusic->fid[ ins].numSamples;
+			samp = curMusic->fid[ins].numSamples;
 			//if (samp >= MAXSAMPLE) return;
 			
-			//curMusic->fid[ ins].numSamples++;
+			//curMusic->fid[ins].numSamples++;
 			//curMusic->header->numSamples++;
 			
 			MADCreateSample(curMusic, ins, samp);
@@ -1033,7 +1033,7 @@ RESTART:
 			BlockMoveData(*newSound, tempPtr, inOutBytes);
 			// ICI: COLLER DANS LE FICHIER MOD !!!
 			
-			curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
+			curData = curMusic->sample[curMusic->fid[ins].firstSample + samp];
 			
 			if (curData->data != NULL)
 				DisposePtr(curData->data);
@@ -1240,7 +1240,7 @@ void NPASTESample(long Pos, short ins, short samp)
 		DisposeMovie(aMovie);
 	} else {
 		if (samp < 0)
-			samp = curMusic->fid[ ins].numSamples;
+			samp = curMusic->fid[ins].numSamples;
 		
 		lCntOrErr = 0;
 		anErr = GetCurrentScrap(&scrap);
@@ -1328,15 +1328,15 @@ void NPASTESample(long Pos, short ins, short samp)
 				newSound = NewHandle(lCntOrErr);
 				if (newSound) {
 					/* Check if it is necessary to create the sData struct */
-					if (samp >= curMusic->fid[ ins].numSamples) {
+					if (samp >= curMusic->fid[ins].numSamples) {
 						//	if (samp >= MAXSAMPLE) return;
-						samp = curMusic->fid[ ins].numSamples;
+						samp = curMusic->fid[ins].numSamples;
 						
 						MADCreateSample(curMusic, ins, samp);
 						
 						newSampleData = true;
 					}
-					curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
+					curData = curMusic->sample[curMusic->fid[ins].firstSample + samp];
 					/********************************************************/
 					
 					if (curData->size == 0)
@@ -1419,13 +1419,13 @@ void NPASTESample(long Pos, short ins, short samp)
 											for (i = inOutBytes-1 ; i >= 0; i--) {
 												if (1 + i * 2 >= inOutBytes*2L) MyDebugStr(__LINE__, __FILE__, "");
 												
-												(*newSound)[ i * 2] = (*newSound)[ 1 + i * 2] = (*newSound)[ i];
+												(*newSound)[i * 2] = (*newSound)[1 + i * 2] = (*newSound)[i];
 											}
 										} else {
 											short *short16out = (short*) *newSound, *short16in = (short*) *newSound;
 											
 											for (i = inOutBytes/2 -1 ; i >= 0; i--) {
-												short16out[ i * 2] = short16out[ 1 + i * 2] = short16in[ i];
+												short16out[i * 2] = short16out[1 + i * 2] = short16in[i];
 											}
 										}
 										
@@ -1554,8 +1554,8 @@ void NCOPYSample(long start, long length, short ins, short samp)
 		// COPY 'MINo' data
 		
 		inOutCount = sizeof(InstrData);
-		for (x = 0; x < curMusic->fid[ ins].numSamples; x++) {
-			sData	*curData = curMusic->sample[ curMusic->fid[ ins].firstSample + x];
+		for (x = 0; x < curMusic->fid[ins].numSamples; x++) {
+			sData	*curData = curMusic->sample[curMusic->fid[ins].firstSample + x];
 			
 			inOutCount += sizeof(sData);
 			inOutCount += curData->size;
@@ -1565,13 +1565,13 @@ void NCOPYSample(long start, long length, short ins, short samp)
 		if (theSound) {
 			HLock(theSound);
 			
-			BlockMoveData(&curMusic->fid[ ins], *theSound, sizeof(InstrData));
+			BlockMoveData(&curMusic->fid[ins], *theSound, sizeof(InstrData));
 			inOutCount = sizeof(InstrData);
 			
-			for (x = 0; x < curMusic->fid[ ins].numSamples; x++) {
+			for (x = 0; x < curMusic->fid[ins].numSamples; x++) {
 				sData	*curData;
 				
-				curData = curMusic->sample[ curMusic->fid[ ins].firstSample + x];
+				curData = curMusic->sample[curMusic->fid[ins].firstSample + x];
 				
 				BlockMoveData(curData, (*theSound) + inOutCount, sizeof(sData));
 				inOutCount += sizeof(sData);
@@ -1592,7 +1592,7 @@ void NCOPYSample(long start, long length, short ins, short samp)
 		// Copy a sample
 		/**************************/
 		
-		curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
+		curData = curMusic->sample[curMusic->fid[ins].firstSample + samp];
 		
 		inOutBytes = curData->size;
 		if (inOutBytes <= 2)
@@ -1848,7 +1848,7 @@ sData* ComputeRAWSound(Ptr srcSound, long length)
 			// Signed
 			if (thePrefs.RAWSigned) {
 				for (i = 0; i < size; i++) {
-					destSound[ i] = 0x80 - destSound[ i];
+					destSound[i] = 0x80 - destSound[i];
 				}
 			}
 			break;
@@ -1862,14 +1862,14 @@ sData* ComputeRAWSound(Ptr srcSound, long length)
 			// Coding
 			if (thePrefs.RAWLittleEndian) {
 				for (i = 0; i < size/2; i++) {
-					d16Sound[ i] = Tdecode16(&d16Sound[ i]);
+					d16Sound[i] = Tdecode16(&d16Sound[i]);
 				}
 			}
 			
 			// Signed
 			if (thePrefs.RAWSigned) {
 				for (i = 0; i < size/2; i++) {
-					d16Sound[ i] = 0x8000 - d16Sound[ i];
+					d16Sound[i] = 0x8000 - d16Sound[i];
 				}
 			}
 		}
@@ -2136,7 +2136,7 @@ REGODIA:
 								while (continueLoop) {
 									GetKeys(km);
 									
-									if (MADDriver->chan[ 0].samplePtr == NULL) continueLoop = false;
+									if (MADDriver->chan[0].samplePtr == NULL) continueLoop = false;
 									if (MADIsPressed((unsigned char*) km, 0x37) && MADIsPressed((unsigned char*) km, 0x2F)) continueLoop = false;
 									if (Button()) continueLoop = false;
 									DoGlobalNull();
@@ -2144,12 +2144,12 @@ REGODIA:
 								
 								SetCursor(GetQDGlobalsArrow(&qdarrow));
 								
-								if (MADDriver->chan[ 0].samplePtr != NULL) {
-									MADDriver->chan[ 0].curPtr 		= MADDriver->chan[ 0].maxPtr;
-									MADDriver->chan[ 0].samplePtr	= NULL;
-									MADDriver->chan[ 0].lAC			= 0;
-									MADDriver->chan[ 0].loopBeg 	= 0;
-									MADDriver->chan[ 0].loopSize 	= 0;
+								if (MADDriver->chan[0].samplePtr != NULL) {
+									MADDriver->chan[0].curPtr 		= MADDriver->chan[0].maxPtr;
+									MADDriver->chan[0].samplePtr	= NULL;
+									MADDriver->chan[0].lAC			= 0;
+									MADDriver->chan[0].loopBeg 	= 0;
+									MADDriver->chan[0].loopSize 	= 0;
 								}
 							}
 						}
@@ -2283,7 +2283,7 @@ REGODIA:
 				GetDText(aDialog, 24, theStr);
 				for (i = 1; i <= CountMenuItems(tempMenu); i++) {
 					GetMenuItemText(tempMenu, i, aStr);
-					aStr[ 0] = theStr[ 0];
+					aStr[0] = theStr[0];
 					if (EqualString(theStr, aStr, false, false))
 						break;
 				}
@@ -2305,10 +2305,10 @@ REGODIA:
 					long	tempL;
 					
 					GetMenuItemText(tempMenu, LoWord(mresult), theStr);
-					for (i = 1; i <= theStr[ 0]; i++) {
-						if (theStr[ i] == ' ') break;
+					for (i = 1; i <= theStr[0]; i++) {
+						if (theStr[i] == ' ') break;
 					}
-					theStr[ 0] = i-1;
+					theStr[0] = i-1;
 					
 					StringToNum(theStr, &tempL);
 					thePrefs.RAWRate =  tempL;
@@ -2328,12 +2328,12 @@ REGODIA:
 		curData = ComputeRAWSound(fileBuf, curEOF);
 		
 		if (samp < 0) {
-			samp = curMusic->fid[ ins].numSamples;
-			curMusic->fid[ ins].numSamples++;
+			samp = curMusic->fid[ins].numSamples;
+			curMusic->fid[ins].numSamples++;
 		} else {
-			if (curMusic->sample[ ins * MAXSAMPLE + samp]) {
-				DisposePtr(curMusic->sample[ ins * MAXSAMPLE + samp]->data);
-				DisposePtr((Ptr) curMusic->sample[ ins * MAXSAMPLE + samp]);
+			if (curMusic->sample[ins * MAXSAMPLE + samp]) {
+				DisposePtr(curMusic->sample[ins * MAXSAMPLE + samp]->data);
+				DisposePtr((Ptr) curMusic->sample[ins * MAXSAMPLE + samp]);
 			}
 		}
 		

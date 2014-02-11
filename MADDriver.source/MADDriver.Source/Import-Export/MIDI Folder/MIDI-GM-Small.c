@@ -148,7 +148,7 @@ typedef struct
 
 typedef struct
 {
-	char			unused[ 0x58];
+	char			unused[0x58];
 	Str31			name;
 	QuictimeSs25	Ss[];
 } QuicktimeInst25;
@@ -170,7 +170,7 @@ typedef struct
 
 typedef struct
 {
-	char			unused[ 0x62];
+	char			unused[0x62];
 	short			no;
 	QuictimeSs		Ss[];
 } QuicktimeInst;
@@ -216,8 +216,8 @@ static void SetInstruNameM(short theNo, Str255 theNewName, short MIDIgm, Ptr des
 	
 	for(i=0; i<32; i++)
 	{
-		if (i < aStr[ 0]) destName[ i] = aStr[ i+1];
-		else destName[ i] = '\0';
+		if (i < aStr[0]) destName[i] = aStr[i+1];
+		else destName[i] = '\0';
 	}
 }
 
@@ -304,34 +304,34 @@ void ComputeQuicktimeSound25(short GMInstruID, sData **sample, InstrData* inst, 
 	
 	for (i = 0; i < inst->numSamples; i++)
 	{
-		if (sample[ inst->firstSample + i] != NULL)
+		if (sample[inst->firstSample + i] != NULL)
 		{
-			if (sample[ inst->firstSample + i]->data != NULL)
+			if (sample[inst->firstSample + i]->data != NULL)
 			{
-				DisposePtr((Ptr) sample[ inst->firstSample + i]->data);
-				sample[ inst->firstSample + i]->data = NULL;
+				DisposePtr((Ptr) sample[inst->firstSample + i]->data);
+				sample[inst->firstSample + i]->data = NULL;
 			}
-			DisposePtr((Ptr) sample[ inst->firstSample + i]);
-			sample[ inst->firstSample + i] = NULL;
+			DisposePtr((Ptr) sample[inst->firstSample + i]);
+			sample[inst->firstSample + i] = NULL;
 		}
 	}
 	
-	for (i = 0; i < 32; i++) inst->name[ i]	= 0;
+	for (i = 0; i < 32; i++) inst->name[i]	= 0;
 	inst->type			= 0;
 	inst->numSamples	= 0;
 	
 	/**/
 	
-	for (i = 0; i < 96; i++) inst->what[ i]		= 0;
+	for (i = 0; i < 96; i++) inst->what[i]		= 0;
 	for (i = 0; i < 12; i++)
 	{
-		inst->volEnv[ i].pos		= 0;
-		inst->volEnv[ i].val		= 0;
+		inst->volEnv[i].pos		= 0;
+		inst->volEnv[i].val		= 0;
 	}
 	for (i = 0; i < 12; i++)
 	{
-		inst->pannEnv[ i].pos	= 0;
-		inst->pannEnv[ i].val	= 0;
+		inst->pannEnv[i].pos	= 0;
+		inst->pannEnv[i].val	= 0;
 	}
 	inst->volSize		= 0;
 	inst->pannSize		= 0;
@@ -371,9 +371,9 @@ void ComputeQuicktimeSound25(short GMInstruID, sData **sample, InstrData* inst, 
 			if (hRsrc != NULL)
 			{
 				QuictimeRsrc25	*rsrc, *maxrsrc;
-				short			sampleIDMap[ 500];
+				short			sampleIDMap[500];
 				
-				for (i = 0; i < 500; i++) sampleIDMap[ i] = -1;
+				for (i = 0; i < 500; i++) sampleIDMap[i] = -1;
 				
 				DetachResource(hRsrc);
 				HLock(hRsrc);
@@ -408,20 +408,20 @@ void ComputeQuicktimeSound25(short GMInstruID, sData **sample, InstrData* inst, 
 						
 						// SampleData exists already ??
 						
-						if (sampleIDMap[ GetNEShort(sdesc->sampleDataID)] != -1)
+						if (sampleIDMap[GetNEShort(sdesc->sampleDataID)] != -1)
 						{
 							for (ii = GetNELong(sdesc->pitchLow) - 12; ii <= GetNELong(sdesc->pitchHigh) - 12; ii++)
 							{
-								if (ii < NUMBER_NOTES && ii > 0) inst->what[ ii] = sampleIDMap[ GetNEShort(sdesc->sampleDataID)];
+								if (ii < NUMBER_NOTES && ii > 0) inst->what[ii] = sampleIDMap[GetNEShort(sdesc->sampleDataID)];
 							}
 							
 							goto NEXTSAMP;
 						}
-						else sampleIDMap[ GetNEShort(sdesc->sampleDataID)] = inst->numSamples;
+						else sampleIDMap[GetNEShort(sdesc->sampleDataID)] = inst->numSamples;
 						
 						for (ii = GetNELong(sdesc->pitchLow) - 12; ii <= GetNELong(sdesc->pitchHigh) - 12; ii++)
 						{
-							if (ii < NUMBER_NOTES && ii > 0) inst->what[ ii] = inst->numSamples;
+							if (ii < NUMBER_NOTES && ii > 0) inst->what[ii] = inst->numSamples;
 						}
 						
 						if (GetNELong(sdesc->offset) != 0) DebugStr("\pOffset!");
@@ -571,15 +571,15 @@ void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, sh
 	
 	for (i = 0; i < inst->numSamples; i++)
 	{
-		if (sample[ inst->firstSample + i] != NULL)
+		if (sample[inst->firstSample + i] != NULL)
 		{
-			if (sample[ inst->firstSample + i]->data != NULL)
+			if (sample[inst->firstSample + i]->data != NULL)
 			{
-				DisposePtr((Ptr) sample[ inst->firstSample + i]->data);
-				sample[ inst->firstSample + i]->data = NULL;
+				DisposePtr((Ptr) sample[inst->firstSample + i]->data);
+				sample[inst->firstSample + i]->data = NULL;
 			}
-			DisposePtr((Ptr) sample[ inst->firstSample + i]);
-			sample[ inst->firstSample + i] = NULL;
+			DisposePtr((Ptr) sample[inst->firstSample + i]);
+			sample[inst->firstSample + i] = NULL;
 		}
 	}
 	
@@ -885,7 +885,7 @@ static void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst
 				 iErr = GetAtomData(InfoData, insName, sizeof(insName));
 				 if (iErr) DebugLong(iErr);*/
 				
-				for (x = 0; x < 32 && x < NoteRequest->tone.instrumentName[0]; x++) inst->name[x]	= NoteRequest->tone.instrumentName[x + 1]; //insName[ x];
+				for (x = 0; x < 32 && x < NoteRequest->tone.instrumentName[0]; x++) inst->name[x]	= NoteRequest->tone.instrumentName[x + 1]; //insName[x];
 				
 				iErr = FindAtomById(insAt, &sat, true, 'lrgn', 0);
 				if (iErr)
@@ -992,7 +992,7 @@ static void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst
 					
 					for (ii = rgnh.RangeKey.usLow - 12; ii <= rgnh.RangeKey.usHigh - 12; ii++)
 					{
-						if (ii < NUMBER_NOTES && ii > 0) inst->what[ ii] = inst->numSamples;
+						if (ii < NUMBER_NOTES && ii > 0) inst->what[ii] = inst->numSamples;
 					}
 					
 					if (curMusic != NULL) curData = MADCreateSample(curMusic, inst->no, inst->numSamples);
@@ -1000,7 +1000,7 @@ static void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst
 					{
 						curData = (sData*) NewPtrClear(sizeof(sData));
 						if (curData == NULL) MyDebugStr(__LINE__, __FILE__, "");
-						sample[ inst->no * MAXSAMPLE + inst->numSamples] = curData;
+						sample[inst->no * MAXSAMPLE + inst->numSamples] = curData;
 						
 						inst->numSamples++;
 					}
@@ -1113,9 +1113,9 @@ static void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 	
 	short						x;
 	
-	short						sampleIDMap[ 500];
+	short						sampleIDMap[500];
 	
-	for (i = 0; i < 500; i++) sampleIDMap[ i] = -1;
+	for (i = 0; i < 500; i++) sampleIDMap[i] = -1;
 	
 	/***************/
 	
@@ -1131,20 +1131,20 @@ static void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 		iErr = QTGetAtomDataPtr(ai,mySampleDescAtom, &size, (Ptr*)&sdesc);
 		if (iErr) goto BAIL;
 		
-		if (sampleIDMap[ GetNEShort(sdesc->sampleDataID)] != -1)
+		if (sampleIDMap[GetNEShort(sdesc->sampleDataID)] != -1)
 		{
 			for (ii = GetNELong(sdesc->pitchLow) - 12; ii <= GetNELong(sdesc->pitchHigh) - 12; ii++)
 			{
-				if (ii < NUMBER_NOTES && ii > 0) inst->what[ ii] = sampleIDMap[ GetNEShort(sdesc->sampleDataID)];
+				if (ii < NUMBER_NOTES && ii > 0) inst->what[ii] = sampleIDMap[GetNEShort(sdesc->sampleDataID)];
 			}
 		}
 		else
 		{
-			sampleIDMap[ GetNEShort(sdesc->sampleDataID)] = inst->numSamples;
+			sampleIDMap[GetNEShort(sdesc->sampleDataID)] = inst->numSamples;
 			
 			for (ii = GetNELong(sdesc->pitchLow) - 12; ii <= GetNELong(sdesc->pitchHigh) - 12; ii++)
 			{
-				if (ii < NUMBER_NOTES && ii > 0) inst->what[ ii] = inst->numSamples;
+				if (ii < NUMBER_NOTES && ii > 0) inst->what[ii] = inst->numSamples;
 			}
 			
 			SetInstruNameM(inst->no, myNoteRequest.tone.instrumentName, GetNELong(myNoteRequest.tone.instrumentNumber), inst->name);
@@ -1174,7 +1174,7 @@ static void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 					{
 						curData = (sData*) NewPtrClear(sizeof(sData));
 						if (curData == NULL) MyDebugStr(__LINE__, __FILE__, "");
-						sample[ inst->no * MAXSAMPLE + inst->numSamples] = curData;
+						sample[inst->no * MAXSAMPLE + inst->numSamples] = curData;
 						
 						inst->numSamples++;
 					}

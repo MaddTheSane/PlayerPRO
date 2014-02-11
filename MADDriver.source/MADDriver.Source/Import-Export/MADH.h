@@ -45,7 +45,7 @@ struct oldPatHeader					// HEADER
 {
 	long	size;					// Length of pattern: standard = 64
 	OSType	compMode;				// Compression mode, none = 'NONE'
-	char	name[ 32];
+	char	name[32];
 	long	patBytes;				// Pattern Size in Bytes
 	long	unused2;
 };
@@ -76,7 +76,7 @@ struct oldsData								// SAMPLE
 	Byte				amp;				// 8 or 16 bits
 	Byte				panning;
 	char				relNote;
-	char 				name[ 32];			// Sample name
+	char 				name[32];			// Sample name
 	Ptr					data;				// Used only in memory, not in files
 };
 typedef struct oldsData oldsData;
@@ -90,16 +90,16 @@ typedef struct oldEnvRec oldEnvRec;
 
 struct oldInstrData				// INSTRUMENT
 {
-	char 	name[ 32];			// instrument name
+	char 	name[32];			// instrument name
 	Byte 	type;				// Instrument type = 0
 
 	short	numSamples;		// Number of samples in instrument
 
 	/**/
 
-	Byte		what[ 96];		// Sample number for all notes
-	oldEnvRec 		volEnv[ 12];	// Points for volume envelope
-	oldEnvRec		pannEnv[ 12];	// Points for panning envelope
+	Byte		what[96];		// Sample number for all notes
+	oldEnvRec 		volEnv[12];	// Points for volume envelope
+	oldEnvRec		pannEnv[12];	// Points for panning envelope
 	
 	Byte	volSize;			// Number of volume points
 	Byte	pannSize;			// Number of panning points
@@ -132,15 +132,15 @@ typedef struct oldInstrData oldInstrData;
 struct oldMADSpec
 {
 	OSType			MAD;					// Mad Identification: MADG in version 2.0
-	char			name[ 32];				// Music's name
-	char			infos[ 256];			// Informations & Author name of the music
+	char			name[32];				// Music's name
+	char			infos[256];			// Informations & Author name of the music
 	Byte			numPat;					// Patterns number
 	Byte			numChn;					// Channels number
 	Byte			numPointers;			// Partition length
-	Byte			oPointers[ 256];		// Partition : Patterns ID List
+	Byte			oPointers[256];		// Partition : Patterns ID List
 	short			speed;					// Default speed
 	short			tempo;					// Default tempo
-	oldInstrData 	fid[ 64];				// Instruments description
+	oldInstrData 	fid[64];				// Instruments description
 };
 typedef struct oldMADSpec oldMADSpec;
 

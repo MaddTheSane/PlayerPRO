@@ -205,7 +205,7 @@ void CreatePianoPixMap(void)
 				else
 					ForeColor(whiteColor);
 				
-				DrawChar(thePressChar[ i]);
+				DrawChar(thePressChar[i]);
 			}
 			
 			TextFont(kFontIDCourier);
@@ -261,7 +261,7 @@ void CreatePianoPixMap(void)
 					SwitchColorBack(i);
 					
 					NumToString(i, str);
-					TETextBox(str+1, str[ 0], &aRect, teCenter);
+					TETextBox(str+1, str[0], &aRect, teCenter);
 					
 					aRect.left += OCLARG;
 					aRect.right += OCLARG;
@@ -309,7 +309,7 @@ void GetToucheRect(Rect *theRect, short Id)
 			theRect->right--;
 			theRect->left++;
 			
-			if (BlackWhite[ Id % 12]) theRect->bottom--;
+			if (BlackWhite[Id % 12]) theRect->bottom--;
 			break;
 			
 		case eLargePiano:
@@ -620,7 +620,7 @@ void DoNullPiano(void)
 
 	if (MusicPlayActive) {
 		for (i = 0; i < curMusic->header->numChn; i++) {
-			theCommand = GetMADCommand(MADDriver->PartitionReader, i, curMusic->partition[ MADDriver->Pat ]);
+			theCommand = GetMADCommand(MADDriver->PartitionReader, i, curMusic->partition[MADDriver->Pat ]);
 			val = theCommand->note;
 			
 			if (val != 0xFF) {
@@ -633,7 +633,7 @@ void DoNullPiano(void)
 			
 				// NOUVELLES TOUCHES
 				
-				OldTouches[ i] = val;
+				OldTouches[i] = val;
 				GetToucheRect(&tempRect, OldTouches[i]);
 				AfficheTouche(i, &tempRect, MADDriver->chan[i].ins, OldTouches[i]);
 			}
@@ -844,13 +844,13 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 								
 								switch (thePrefs.KeyUpMode) {
 									case eStop:
-										MADDriver->chan[ LastCanal].loopBeg = 0;
-										MADDriver->chan[ LastCanal].loopSize = 0;
-										MADDriver->chan[ LastCanal].maxPtr = MADDriver->chan[ LastCanal].curPtr;
+										MADDriver->chan[LastCanal].loopBeg = 0;
+										MADDriver->chan[LastCanal].loopSize = 0;
+										MADDriver->chan[LastCanal].maxPtr = MADDriver->chan[LastCanal].curPtr;
 										break;
 										
 									case eNoteOFF:
-										MADDriver->chan[ LastCanal].KeyOn = false;
+										MADDriver->chan[LastCanal].KeyOn = false;
 										break;
 								}
 							}
@@ -913,9 +913,9 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 									
 									if (SampleDlog[bogus] != NULL &&
 										SelecRect[bogus].end != SelecRect[bogus].start) {
-										DoPlayInstruInt(temp, bogus, eff, arg, volCmd, &MADDriver->chan[ track], SelecRect[ bogus].start, SelecRect[ bogus].end);
+										DoPlayInstruInt(temp, bogus, eff, arg, volCmd, &MADDriver->chan[track], SelecRect[bogus].start, SelecRect[bogus].end);
 									} else {
-										DoPlayInstruInt(temp , bogus, eff, arg, volCmd, &MADDriver->chan[ track], 0, 0);
+										DoPlayInstruInt(temp , bogus, eff, arg, volCmd, &MADDriver->chan[track], 0, 0);
 									}
 									
 									if (pianoType == eSmallPiano) {
@@ -924,7 +924,7 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 										GetDialogItem(whichDialog, 6, &itemType, &itemHandle, &itemRect);
 										TextFace(bold);
 										GetNoteString(oldtemp, sTemp);
-										TETextBox(sTemp+1, sTemp[ 0], &itemRect, teCenter);
+										TETextBox(sTemp+1, sTemp[0], &itemRect, teCenter);
 										TextFace(0);
 									}
 								}
@@ -971,7 +971,7 @@ void DoItemPressPiano(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 						case eStop:
 							MADDriver->chan[LastCanal].loopBeg = 0;
 							MADDriver->chan[LastCanal].loopSize = 0;
-							MADDriver->chan[LastCanal].maxPtr = MADDriver->chan[ LastCanal].curPtr;
+							MADDriver->chan[LastCanal].maxPtr = MADDriver->chan[LastCanal].curPtr;
 							break;
 							
 						case eNoteOFF:
@@ -1244,9 +1244,9 @@ void NPianoRecordProcess(short i, short curSelecInstru, short volume, short trac
 	
 	/**/
 	
-	MADDriver->TrackLineReading[ track] = false;
+	MADDriver->TrackLineReading[track] = false;
 	
-	theCommand = GetMADCommand(MyRea, track, curMusic->partition[ curPat]);
+	theCommand = GetMADCommand(MyRea, track, curMusic->partition[curPat]);
 	
 	theCommand->ins = curSelecInstru + 1;		theCommand->note = i;
 	

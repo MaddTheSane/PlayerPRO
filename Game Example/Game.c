@@ -46,9 +46,9 @@ int main(int argc, char* argv[])
 	
 	for (i = 0 ; i < 4; i++)
 	{
-		mySound[ i] = GetResource('snd ', kStartSound + i);
-		DetachResource(mySound[ i]);
-		HLock(mySound[ i]);							// VERY IMPORTANT !!!!!!
+		mySound[i] = GetResource('snd ', kStartSound + i);
+		DetachResource(mySound[i]);
+		HLock(mySound[i]);							// VERY IMPORTANT !!!!!!
 	}
 	
 	
@@ -105,19 +105,19 @@ int main(int argc, char* argv[])
 				break;
 				
 			case 3:
-				MADPlaySndHandle(MADDriver, mySound[ 0], 0, 48);			// On track ID 0, C 3 = 48
+				MADPlaySndHandle(MADDriver, mySound[0], 0, 48);			// On track ID 0, C 3 = 48
 				break;
 				
 			case 4:
-				MADPlaySndHandle(MADDriver, mySound[ 1], 1, 0xFF);		// On track ID 0, 0xFF = normal rate (sample rate)
+				MADPlaySndHandle(MADDriver, mySound[1], 1, 0xFF);		// On track ID 0, 0xFF = normal rate (sample rate)
 				break;
 				
 			case 5:
-				MADPlaySndHandle(MADDriver, mySound[ 2], 2, 36);			// On track ID 1, at C 2 = 36
+				MADPlaySndHandle(MADDriver, mySound[2], 2, 36);			// On track ID 1, at C 2 = 36
 				break;
 				
 			case 6:
-				MADPlaySndHandle(MADDriver, mySound[ 3], 3, 60);			// On track ID 2, at C 4 = 60
+				MADPlaySndHandle(MADDriver, mySound[3], 3, 60);			// On track ID 2, at C 4 = 60
 				break;
 		}
 		
@@ -133,8 +133,8 @@ int main(int argc, char* argv[])
 	
 	for (i = 0 ; i < 4; i++)
 	{
-		HUnlock(mySound[ i]);
-		DisposeHandle(mySound[ i]);
+		HUnlock(mySound[i]);
+		DisposeHandle(mySound[i]);
 	}
 	return EXIT_SUCCESS;
 }

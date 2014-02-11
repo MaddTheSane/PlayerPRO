@@ -6,18 +6,17 @@
 
 #include <Carbon/Carbon.h>
 
-extern	EventRecord				theEvent, gModalDialogEvent;
-extern	Cursor					HandCrsr;
-extern	DialogPtr				AHelpDlog;
-extern	WindowPtr				oldWindow;
-extern	MenuHandle				SampleMenu;
-extern	KeyMap					km;
-extern	RGBColor				theColor;
-static	DialogPtr				VSTDlog;
-static	short					CurrentcurSelec;
-
-		short					tPlug;
-		short					PlugsFolderOK;
+extern	EventRecord	theEvent, gModalDialogEvent;
+extern	Cursor		HandCrsr;
+extern	DialogPtr	AHelpDlog;
+extern	WindowPtr	oldWindow;
+extern	MenuHandle	SampleMenu;
+extern	KeyMap		km;
+extern	RGBColor	theColor;
+static	DialogPtr	VSTDlog;
+static	short		CurrentcurSelec;
+		short		tPlug;
+		short		PlugsFolderOK;
 
 void SampleUpdateNow(void);
 VSTEffect* CreateVSTEffect(short effectID);
@@ -28,8 +27,8 @@ Boolean VSTEditorOpen(VSTEffect *ce, sData	*curData, long Start, long End, Boole
 void VSTEditorDoItemPress(short itemHit, DialogPtr aDia);
 void FillVSTEffects(void);
 
-static	float 		*inputs[ 2], *outputs[ 2], *outputs2[ 2];
-static	long		currentdatasize;
+static	float	*inputs[2], *outputs[2], *outputs2[2];
+static	long	currentdatasize;
 
 		audioMasterCallback audioMaster;
 
@@ -97,7 +96,7 @@ long dispatcher(VSTEffect *effect, Boolean applyOnBoth, long opCode, long index,
 	
 	if (applyOnBoth) {
 		if (effect->ce[1]) {
-			result = effect->ce[ 1]->dispatcher(effect->ce[1], opCode, index, value, ptr, opt);
+			result = effect->ce[1]->dispatcher(effect->ce[1], opCode, index, value, ptr, opt);
 		}
 	}
 	
@@ -118,7 +117,7 @@ void GetVSTPrefName(Str255 str, long *flag)
 	SetPortDialogPort(TheDia);
 	AutoPosition(TheDia);
 	
-	if (str[ 0] == 0)
+	if (str[0] == 0)
 		SetDText(TheDia, 4, "\pMy new settings");
 	else
 		SetDText(TheDia, 4, str);
@@ -154,10 +153,9 @@ short PressPresetButton(long id, Point myPt, short *curSelec)
 {
 	MenuHandle	presetMenu;
 	long		i, mresult, maxitem, temp;
-	short		returnVal = 0, table[ 200];
+	short		returnVal = 0, table[200];
 	
 	presetMenu = NewMenu(244, "\pPreset Menu");
-	
 	
 	for (i = 0, maxitem = 0; i < MAXVSTPREF;i++) {
 		if (VSTPref[i] != NULL) {
@@ -182,18 +180,18 @@ short PressPresetButton(long id, Point myPt, short *curSelec)
 	
 	if (*curSelec != -1) {
 		SetItemMark(presetMenu, *curSelec+1, 0xa5);
-	
+		
 		mresult = PopUpMenuSelect(presetMenu,
-									myPt.v,
-									myPt.h,
-									*curSelec+1);
-	
+								  myPt.v,
+								  myPt.h,
+								  *curSelec+1);
+		
 		SetItemMark(presetMenu, *curSelec+1, 0);
 	} else {
 		mresult = PopUpMenuSelect(presetMenu,
-									myPt.v,
-									myPt.h,
-									maxitem + 2);
+								  myPt.v,
+								  myPt.h,
+								  maxitem + 2);
 	}
 	
 	if (HiWord(mresult) != 0) {
@@ -203,7 +201,7 @@ short PressPresetButton(long id, Point myPt, short *curSelec)
 			returnVal = -1;
 		} else {
 			temp = LoWord(mresult) - 1;
-			returnVal = table[ temp];
+			returnVal = table[temp];
 			
 			GetKeys(km);
 			if (IsPressed(0x33)) {		// Delete this pref
@@ -300,7 +298,7 @@ long audioMasterFct(AEffect *effect, long opcode, long index, long value, void *
 
 /*void VSTActivate(short no, Boolean state)
 {
-	VSTPlug[ no].Active = state;
+	VSTPlug[no].Active = state;
 }*/
 
 static inline short ClipConvert(float x)
@@ -448,7 +446,7 @@ void ApplyVSTFilter(VSTEffect *effect, sData *SDataSrc, long Start, long End)
 			ce[0]->processReplacing(ce[0], inputs, outputs, datasize);
 			for (i = 0; i < datasize; i++) out1[i] = (out1[i] + out2[i]) / 2.0;
 			
-			ce[1]->processReplacing(ce[1], &inputs[ 1], outputs2, datasize);
+			ce[1]->processReplacing(ce[1], &inputs[1], outputs2, datasize);
 			for (i = 0; i < datasize; i++) out2[i] = (out21[i] + out22[i]) / 2.0;
 		}
 		
@@ -521,7 +519,7 @@ Boolean IsVSTChanEffect(MADDriverRec *intDriver, short channel)
 			
 			channel = intDriver->curMusic->header->chanBus[channel].copyId;
 			
-			//if (chanBus[ channel]->Active == false) return false;
+			//if (chanBus[channel]->Active == false) return false;
 			
 			if (intDriver->chanVST[channel][0])
 				return true;
@@ -543,8 +541,8 @@ void ProcessVSTPlug(MADDriverRec *intDriver, long *data, long datasize, short ch
 {
 	Boolean	gogo = false, Apply = false;
 	long	i, x;
-	float 	*in1	= inputs[ 0];
-	float	*in2	= inputs[ 1];
+	float 	*in1	= inputs[0];
+	float	*in2	= inputs[1];
 	float	*out1	= outputs[0];
 	float	*out2	= outputs[1];
 	float	*out21	= outputs2[0];
@@ -590,7 +588,7 @@ void ProcessVSTPlug(MADDriverRec *intDriver, long *data, long datasize, short ch
 		
 		gogo = true;
 		
-		channel = intDriver->curMusic->header->chanBus[ channel].copyId;
+		channel = intDriver->curMusic->header->chanBus[channel].copyId;
 	}
 	
 	if (gogo == false)
@@ -614,9 +612,9 @@ void ProcessVSTPlug(MADDriverRec *intDriver, long *data, long datasize, short ch
 			VSTEffect *vsteffect;
 			
 			if (channel == -1)
-				vsteffect = intDriver->masterVST[ x];
+				vsteffect = intDriver->masterVST[x];
 			else
-				vsteffect = intDriver->chanVST[ channel][ x];
+				vsteffect = intDriver->chanVST[channel][x];
 			
 			if (vsteffect) {
 				if (vsteffect->Active) {
@@ -747,7 +745,7 @@ void InitVST(short no, VSTEffect* myEffect)
 	
 	audioMaster = audioMasterFct;
 	
-	fileID = FSpOpenResFile(&VSTPlug[ no].file, fsCurPerm);
+	fileID = FSpOpenResFile(&VSTPlug[no].file, fsCurPerm);
 	UseResFile(fileID);
 	myErr = GetMemFragment(VSTPlug[no].call,
 						   GetPtrSize(VSTPlug[no].call),
@@ -776,7 +774,7 @@ Boolean LoadVSTPLUG(short No, StringPtr theName)
 	
 	ResolveAliasFile(&VSTPlug[No].file, true, &targetIsFolder, &wasAliased);
 	
-	fileID = FSpOpenResFile(&VSTPlug[ No].file, fsCurPerm);
+	fileID = FSpOpenResFile(&VSTPlug[No].file, fsCurPerm);
 	
 	theRes = Get1Resource('aEff', 0);
 	if (theRes == NULL) {
@@ -787,8 +785,8 @@ Boolean LoadVSTPLUG(short No, StringPtr theName)
 	HNoPurge(theRes);
 	HLock(theRes);
 	
-	VSTPlug[ No].call = NewPtr(GetHandleSize(theRes));
-	BlockMoveData(*theRes, VSTPlug[ No].call, GetHandleSize(theRes));
+	VSTPlug[No].call = NewPtr(GetHandleSize(theRes));
+	BlockMoveData(*theRes, VSTPlug[No].call, GetHandleSize(theRes));
 	HUnlock(theRes);
 	DisposeHandle(theRes);
 	CloseResFile(fileID);
@@ -930,11 +928,11 @@ void InitVSTPlug(void)
 	HSetVol(NULL, vRefNum, dirID);
 	
 	if (tPlug > 0) {
-		for (i = 0; i < tPlug; i++)	AppendMenu(VSTMenu, VSTPlug[ i].file.name);
+		for (i = 0; i < tPlug; i++)	AppendMenu(VSTMenu, VSTPlug[i].file.name);
 		
 		AppendMenu(SampleMenu, "\p-");
 		
-		for (i = 0; i < tPlug; i++)	AppendMenu(SampleMenu, VSTPlug[ i].file.name);
+		for (i = 0; i < tPlug; i++)	AppendMenu(SampleMenu, VSTPlug[i].file.name);
 	} else {
 		AppendMenu(VSTMenu, "\p(No VST Plugs available");
 	}
@@ -980,7 +978,7 @@ void VSTFilter(DialogPtr theDialog, EventRecord *theEventI, short *itemHit)
 		if (i != -1) {
 			VstEvt.numEvents = 1;
 			VstEvt.reserved = 0;
-			VstEvt.events[ 0] = (VstEvent*) &VstEv;
+			VstEvt.events[0] = (VstEvent*) &VstEv;
 			
 			VstEv.type = kVstMidiType;
 			VstEv.byteSize = 0;
@@ -988,9 +986,9 @@ void VSTFilter(DialogPtr theDialog, EventRecord *theEventI, short *itemHit)
 			VstEv.flags = 0;
 			VstEv.noteLength = 0;
 			VstEv.noteOffset = 0;
-			VstEv.midiData[ 0] = 0x90;
-			VstEv.midiData[ 1] = i + 12;
-			VstEv.midiData[ 2] = 127;
+			VstEv.midiData[0] = 0x90;
+			VstEv.midiData[1] = i + 12;
+			VstEv.midiData[2] = 127;
 			VstEv.detune = 0;
 			VstEv.noteOffVelocity = 0;
 			VstEv.reserved1 = 0;
@@ -1066,7 +1064,7 @@ Boolean VSTEditorOpen(VSTEffect *ce, sData *curData, long Start, long End, Boole
 	
 	SetPortDialogPort(VSTDlog);
 	
-	pStrcpy(theString, VSTPlug[ ce->id].file.name);
+	pStrcpy(theString, VSTPlug[ce->id].file.name);
 	pStrcat(theString, "\p / ");
 	
 	if (channelID == -2)
@@ -1091,7 +1089,7 @@ Boolean VSTEditorOpen(VSTEffect *ce, sData *curData, long Start, long End, Boole
 		GetDialogItem(VSTDlog, 7, &itemType, &itemHandle, &itemRect3);
 		
 		for (i = 0; i < ce->ce[0]->numParams; i++) {
-			VSTCntl[ i] = NewControl(GetDialogWindow(VSTDlog), &itemRect, "\p", true, ce->ce[ 0]->getParameter(ce->ce[ 0], i) * 100, 0, 100, 80, i);
+			VSTCntl[i] = NewControl(GetDialogWindow(VSTDlog), &itemRect, "\p", true, ce->ce[0]->getParameter(ce->ce[0], i) * 100, 0, 100, 80, i);
 			
 			dispatcher(ce, false, effGetParamName, i, 0, (Ptr)theString, 0);
 			MyC2PStr((Ptr)theString);
@@ -1263,18 +1261,18 @@ void VSTEditorDoItemPress(short itemHit, DialogPtr aDia)
 			mouse.h = itemRect2.left;
 			mouse.v = itemRect2.top;
 			
-			id = PressPresetButton(CurrentDialogCE->ce[ 0]->uniqueID, mouse, &CurrentcurSelec);
+			id = PressPresetButton(CurrentDialogCE->ce[0]->uniqueID, mouse, &CurrentcurSelec);
 			
 			if (id == -1) {
 				long flag;
 				
-				theString[ 0] = 0;
+				theString[0] = 0;
 				flag = 0;
 				GetVSTPrefName(theString, &flag);
 				if (theString[0] > 0) {
 					if (flag) {	// Clear all settings flags
 						for (i = 0; i < MAXVSTPREF; i++) {
-							if (VSTPref[ i] != NULL) {
+							if (VSTPref[i] != NULL) {
 								if (VSTPref[i]->ID == CurrentDialogCE->ce[0]->uniqueID) {
 									VSTPref[i]->flag = 0;
 								}
@@ -1286,15 +1284,15 @@ void VSTEditorDoItemPress(short itemHit, DialogPtr aDia)
 						if (VSTPref[i] == NULL) {
 							VSTPref[i] = (VSTPrefsStruct*)NewPtrClear(sizeof(VSTPrefsStruct));
 							
-							VSTPref[i]->ID = CurrentDialogCE->ce[ 0]->uniqueID;
+							VSTPref[i]->ID = CurrentDialogCE->ce[0]->uniqueID;
 							VSTPref[i]->flag = flag;
 							
 							pStrcpy(VSTPref[i]->name, theString);
 							
-							if (CurrentDialogCE->ce[ 0]->numParams >= MAXVSTITEM) MyDebugStr(__LINE__, __FILE__, "MAXVST TOO SMALL, Press continue.");
+							if (CurrentDialogCE->ce[0]->numParams >= MAXVSTITEM) MyDebugStr(__LINE__, __FILE__, "MAXVST TOO SMALL, Press continue.");
 							
-							for (x = 0; x < CurrentDialogCE->ce[ 0]->numParams && x < MAXVSTITEM; x++) {
-								VSTPref[ i]->value[ x] = CurrentDialogCE->ce[ 0]->getParameter(CurrentDialogCE->ce[ 0], x);
+							for (x = 0; x < CurrentDialogCE->ce[0]->numParams && x < MAXVSTITEM; x++) {
+								VSTPref[i]->value[x] = CurrentDialogCE->ce[0]->getParameter(CurrentDialogCE->ce[0], x);
 							}
 							
 							i = MAXVSTPREF;	// break
@@ -1308,8 +1306,8 @@ void VSTEditorDoItemPress(short itemHit, DialogPtr aDia)
 				if (IsPressed(0x0037)) {		// Replace this pref
 					long flag;
 					
-					pStrcpy(theString, VSTPref[ id]->name);
-					flag = VSTPref[ id]->flag;
+					pStrcpy(theString, VSTPref[id]->name);
+					flag = VSTPref[id]->flag;
 					GetVSTPrefName(theString, &flag);
 					
 					if (theString[0] > 0) {
@@ -1348,7 +1346,7 @@ void VSTEditorDoItemPress(short itemHit, DialogPtr aDia)
 							pStrcat(theString, theString2);
 							
 							SetControlData(DescCntl[x], kControlNoPart, kControlStaticTextTextTag, *theString, (Ptr) theString + 1);
-							Draw1Control(DescCntl[ x]);
+							Draw1Control(DescCntl[x]);
 						}
 						
 						if (CurrentcurData) {
@@ -1374,7 +1372,7 @@ void VSTEditorDoItemPress(short itemHit, DialogPtr aDia)
 				
 				theControl = NULL;
 				
-				for (i = 0; i < CurrentDialogCE->ce[ 0]->numParams; i++) {
+				for (i = 0; i < CurrentDialogCE->ce[0]->numParams; i++) {
 					Rect contrlRect;
 					
 					GetControlBounds(VSTCntl[i], &contrlRect);
@@ -1446,7 +1444,7 @@ void VSTEditorDoItemPress(short itemHit, DialogPtr aDia)
 				dispatcher(CurrentDialogCE, false, effEditMouse, myPt.h, myPt.v, NULL, 0);
 				
 				if (CurrentDialogCE->ce[1]) {
-					for (i = 0; i < CurrentDialogCE->ce[ 0]->numParams; i++) {
+					for (i = 0; i < CurrentDialogCE->ce[0]->numParams; i++) {
 						float myVal;
 						
 						myVal = CurrentDialogCE->ce[0]->getParameter(CurrentDialogCE->ce[0], i);
@@ -1527,8 +1525,8 @@ long GetVSTEffectUniqueID(short effectID)
 	fileID = FSpOpenResFile(&VSTPlug[effectID].file, fsCurPerm);
 	UseResFile(fileID);
 	
-	myEffect->ce[ 0] = myEffect->vstMain (audioMaster);
-	if (myEffect->ce[ 0] && myEffect->ce[0]->magic == kEffectMagic) {
+	myEffect->ce[0] = myEffect->vstMain (audioMaster);
+	if (myEffect->ce[0] && myEffect->ce[0]->magic == kEffectMagic) {
 		
 	} else
 		Debugger();
@@ -1537,7 +1535,7 @@ long GetVSTEffectUniqueID(short effectID)
 	
 	dispatcher(myEffect, true, effOpen, 0, 0, 0, 0);
 	
-	returnID = myEffect->ce[ 0]->uniqueID;
+	returnID = myEffect->ce[0]->uniqueID;
 	
 	dispatcher(myEffect, true, effClose, 0, 0, 0, 0);
 	
@@ -1567,8 +1565,8 @@ VSTEffect* CreateVSTEffect(short effectID)
 	
 	myEffect->id = effectID;
 	
-	myEffect->ce[ 0] = myEffect->vstMain (audioMaster);
-	if (myEffect->ce[ 0] && myEffect->ce[ 0]->magic == kEffectMagic) {
+	myEffect->ce[0] = myEffect->vstMain (audioMaster);
+	if (myEffect->ce[0] && myEffect->ce[0]->magic == kEffectMagic) {
 		
 	} else
 		Debugger();
@@ -1591,7 +1589,7 @@ VSTEffect* CreateVSTEffect(short effectID)
 	
 	counter = 0;
 	
-	if (myEffect->ce[ 0]->flags & effFlagsCanReplacing)
+	if (myEffect->ce[0]->flags & effFlagsCanReplacing)
 		myEffect->ProcessReplacingNotAvailable = false;
 	else
 		myEffect->ProcessReplacingNotAvailable = true;
@@ -1627,15 +1625,15 @@ void FillVSTEffects()
 	VSTEffect*	myEffect;
 	
 	for (i = 0; i < 10; i++) {
-		if (MADDriver->masterVST[ i])
-			curMusic->header->globalEffect[i] = MADDriver->masterVST[i]->ce[ 0]->uniqueID;
+		if (MADDriver->masterVST[i])
+			curMusic->header->globalEffect[i] = MADDriver->masterVST[i]->ce[0]->uniqueID;
 		else
 			curMusic->header->globalEffect[i] = 0;
 	}
 	
 	for (i = 0; i < MAXTRACK; i++) {
 		for (x = 0; x < 4; x++) {
-			if (MADDriver->chanVST[ i][ x])
+			if (MADDriver->chanVST[i][x])
 				curMusic->header->chanEffect[i][x] = MADDriver->chanVST[i][x]->ce[0]->uniqueID;
 			else
 				curMusic->header->chanEffect[i][x] = 0;
@@ -1673,8 +1671,8 @@ void FillVSTEffects()
 				set->id = i;
 				set->track = -1;
 				
-				set->FXID = myEffect->ce[ 0]->uniqueID;
-				set->noArg = myEffect->ce[ 0]->numParams;
+				set->FXID = myEffect->ce[0]->uniqueID;
+				set->noArg = myEffect->ce[0]->numParams;
 				
 				for (xx = 0; xx < set->noArg; xx++) {
 					set->values[xx] = myEffect->ce[0]->getParameter(myEffect->ce[0], xx);

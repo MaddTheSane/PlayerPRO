@@ -105,15 +105,15 @@ MADMusic* CreateFreeMADK(void)
 	
 	for (i = 0; i < MAXTRACK; i++)
 	{
-		if (i % 2 == 0) MADI->chanPan[ i] = MAX_PANNING/4;
-		else MADI->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		if (i % 2 == 0) MADI->chanPan[i] = MAX_PANNING/4;
+		else MADI->chanPan[i] = MAX_PANNING - MAX_PANNING/4;
 		
-		MADI->chanVol[ i] = MAX_VOLUME;
+		MADI->chanVol[i] = MAX_VOLUME;
 	}
 	
 	for (i = 0; i < MAXTRACK; i++)
 	{
-		MADI->chanBus[ i].copyId = i;
+		MADI->chanBus[i].copyId = i;
 	}
 	
 	music->fid = (InstrData*) NewPtrClear(sizeof(InstrData) * (long) MAXINSTRU);
@@ -136,7 +136,7 @@ MADMusic* CreateFreeMADK(void)
 	
 	for(i=0; i < MADI->numPat; i++)
 	{
-		music->partition[ i] = (PatData*) NewPtrClear(sizeof(PatHeader) + MADI->numChn * 64L * sizeof(Cmd));
+		music->partition[i] = (PatData*) NewPtrClear(sizeof(PatHeader) + MADI->numChn * 64L * sizeof(Cmd));
 		if (music->partition[i] == NULL)
 		{
 			for(i = 0; i < MADI->numPat; i++)
@@ -151,22 +151,22 @@ MADMusic* CreateFreeMADK(void)
 			return NULL;
 		}
 
-		music->partition[ i]->header.size 		= 64L;
-		music->partition[ i]->header.compMode 	= 'NONE';
-		music->partition[ i]->header.patBytes 	= 0;
-		music->partition[ i]->header.unused2 		= 0;
+		music->partition[i]->header.size 		= 64L;
+		music->partition[i]->header.compMode 	= 'NONE';
+		music->partition[i]->header.patBytes 	= 0;
+		music->partition[i]->header.unused2 		= 0;
 		
 		for (x = 0; x < 64; x++)
 		{
 			for (z = 0; z < music->header->numChn; z++)
 			{
-				aCmd = GetMADCommand( x,  z, music->partition[ i]);
+				aCmd = GetMADCommand(x,  z, music->partition[i]);
 				
 				MADKillCmd(aCmd);
 			}
 		}
 	}
-	for (i = music->header->numPat; i < MAXPATTERN ; i++) music->partition[ i] = NULL;
+	for (i = music->header->numPat; i < MAXPATTERN ; i++) music->partition[i] = NULL;
 	
 	music->sets = (FXSets*)NewPtrClear(MAXTRACK * sizeof(FXSets));
 	
@@ -193,11 +193,11 @@ void WriteMADKFile(FSSpec *newFile, MADMusic	*music)
 	
 	for (i = 0; i < music->header->numPat ; i++)
 	{
-		if (thePrefs.MADCompression) music->partition[ i]->header.compMode = 'MAD1';
+		if (thePrefs.MADCompression) music->partition[i]->header.compMode = 'MAD1';
 		
-		if (music->partition[ i]->header.compMode == 'MAD1')
+		if (music->partition[i]->header.compMode == 'MAD1')
 		{
-			PatData* PatMAD = CompressPartitionMAD1(music, music->partition[ i]);
+			PatData* PatMAD = CompressPartitionMAD1(music, music->partition[i]);
 			inOutCount = PatMAD->header.patBytes + sizeof(struct PatHeader);
 			
 			iErr = FSWrite(fRefNum, &inOutCount, PatMAD);
@@ -207,9 +207,9 @@ void WriteMADKFile(FSSpec *newFile, MADMusic	*music)
 		else
 		{
 			inOutCount = sizeof(PatHeader);
-			inOutCount += music->header->numChn * music->partition[ i]->header.size * sizeof(Cmd);
+			inOutCount += music->header->numChn * music->partition[i]->header.size * sizeof(Cmd);
 
-			iErr = FSWrite(fRefNum, &inOutCount, music->partition[ i]);
+			iErr = FSWrite(fRefNum, &inOutCount, music->partition[i]);
 		}
 	}
 	
@@ -227,12 +227,12 @@ long MADGetMusicSize(MADMusic	*music)
 	
 	fileSize = sizeof(MADSpec);
 	fileSize += (long) music->header->numInstru * sizeof(InstrData);
-	for (i = 0; i < music->header->numPat; i++) fileSize += sizeof(PatHeader) + music->header->numChn * music->partition[ i]->header.size * sizeof(Cmd);
+	for (i = 0; i < music->header->numPat; i++) fileSize += sizeof(PatHeader) + music->header->numChn * music->partition[i]->header.size * sizeof(Cmd);
 	for (i = 0; i < music->header->numInstru ; i++)
 	{
-		for (x = 0; x < music->fid[ i].numSamples ; x++)
+		for (x = 0; x < music->fid[i].numSamples ; x++)
 		{
-			sData	*curData = music->sample[ i * MAXSAMPLE + x];
+			sData	*curData = music->sample[i * MAXSAMPLE + x];
 			
 			fileSize += sizeof(sData);
 			fileSize += curData->size;
@@ -265,7 +265,7 @@ void ConvertTo64Rows(MADMusic *music)
 		
 		newSize = sizeof(PatHeader) + music->header->numChn * 64L * sizeof(Cmd);
 		
-		if (music->partition[ i]->header.size < 64)
+		if (music->partition[i]->header.size < 64)
 		{
 			Cmd		*srccmd, *dstcmd;
 			long	patsize;
@@ -277,7 +277,7 @@ void ConvertTo64Rows(MADMusic *music)
 			newPat->header.patBytes 	= 0;
 			newPat->header.unused2 		= 0;
 			
-			BlockMoveData(music->partition[ i]->header.name, newPat->header.name, 32);
+			BlockMoveData(music->partition[i]->header.name, newPat->header.name, 32);
 			
 			// Upgrade length to 64
 			
@@ -285,10 +285,10 @@ void ConvertTo64Rows(MADMusic *music)
 			{
 				for (z = 0; z < music->header->numChn; z++)
 				{
-					if (x < music->partition[ i]->header.size)
+					if (x < music->partition[i]->header.size)
 					{
 						// src
-						srccmd = GetMADCommand(patsize, z, music->partition[ i]);
+						srccmd = GetMADCommand(patsize, z, music->partition[i]);
 						
 						// dst
 						dstcmd = GetMADCommand(x, z, newPat);
@@ -306,7 +306,7 @@ void ConvertTo64Rows(MADMusic *music)
 			}
 			
 			// dst
-			dstcmd = GetMADCommand(music->partition[ i]->header.size-1, 0, newPat);		// Pose le pattern break
+			dstcmd = GetMADCommand(music->partition[i]->header.size-1, 0, newPat);		// Pose le pattern break
 			
 			MADKillCmd(dstcmd);
 			
@@ -315,15 +315,15 @@ void ConvertTo64Rows(MADMusic *music)
 			
 			// Replace old pattern
 			
-			DisposePtr((Ptr) music->partition[ i]);
-			music->partition[ i] = NULL;
+			DisposePtr((Ptr) music->partition[i]);
+			music->partition[i] = NULL;
 			
-			music->partition[ i] = newPat;
+			music->partition[i] = newPat;
 		}
-		else if (music->partition[ i]->header.size > 64)
+		else if (music->partition[i]->header.size > 64)
 		{
 			long 		patsize = 0;
-			PatData*	srcPat = music->partition[ i];
+			PatData*	srcPat = music->partition[i];
 			
 			while (patsize < srcPat->header.size)
 			{
@@ -366,14 +366,14 @@ void ConvertTo64Rows(MADMusic *music)
 				{
 					for (x = music->header->numPat; x > patID ; x--)
 					{
-						music->partition[ x] = music->partition[ x - 1];
+						music->partition[x] = music->partition[x - 1];
 					}
 					music->header->numPat++;
 				}
 				
-				for (x = music->header->numPat; x < MAXPATTERN; x++) music->partition[ x] = NULL;
+				for (x = music->header->numPat; x < MAXPATTERN; x++) music->partition[x] = NULL;
 				
-				music->partition[ patID] = newPat;
+				music->partition[patID] = newPat;
 				
 				patID++;
 			}
@@ -401,14 +401,14 @@ void ConvertTo64Rows(MADMusic *music)
 			
 			for (x = 0; x < music->header->numPointers ; x++)
 			{
-				if (music->header->oPointers[ x] > i) music->header->oPointers[ x] += patID - i;
+				if (music->header->oPointers[x] > i) music->header->oPointers[x] += patID - i;
 			}
 			
 			found = 0;
 			
 			for (x = music->header->numPointers-1; x >= 0 ; x--)
 			{
-				if (music->header->oPointers[ x] == i)
+				if (music->header->oPointers[x] == i)
 				{
 					found++;
 				
@@ -418,13 +418,13 @@ void ConvertTo64Rows(MADMusic *music)
 					{
 						if (z + patID - i< 256)
 						{
-							music->header->oPointers[ z + patID - i] = music->header->oPointers[ z];
+							music->header->oPointers[z + patID - i] = music->header->oPointers[z];
 						}
 					}
 					
 					for (z = 0; z <= patID - i; z++)
 					{
-						music->header->oPointers[ x + z] = i + z;
+						music->header->oPointers[x + z] = i + z;
 					}
 				}
 			}
@@ -442,7 +442,7 @@ long MADMinimize(MADMusic *music)
 {
 	short 		i, x, z;
 	Boolean		remove, IsReading;
-	Boolean		inst[ MAXINSTRU];
+	Boolean		inst[MAXINSTRU];
  	long		before, after;
  	
  	if (music->header == NULL) return 0;
@@ -463,7 +463,7 @@ long MADMinimize(MADMusic *music)
 			remove = true;
 			for (x = 0; x < music->header->numPointers; x++)
 			{
-				if (music->header->oPointers[ x] == i)
+				if (music->header->oPointers[x] == i)
 				{
 					remove = false;
 					break;
@@ -474,21 +474,21 @@ long MADMinimize(MADMusic *music)
 			{
 				music->header->numPat--;
 				
-				DisposePtr((Ptr) music->partition[ i]);
-				music->partition[ i] = NULL;
+				DisposePtr((Ptr) music->partition[i]);
+				music->partition[i] = NULL;
 				
 				for (x = i; x < music->header->numPat; x++)
 				{
-					music->partition[ x] = music->partition[ x + 1];
+					music->partition[x] = music->partition[x + 1];
 				}
-				for (x = music->header->numPat; x < MAXPATTERN; x++) music->partition[ x] = NULL;
+				for (x = music->header->numPat; x < MAXPATTERN; x++) music->partition[x] = NULL;
 				
 				/***** Update la partition list ******/
 				
 				for (x = 0; x < 128; x++)
 				{
-					if (music->header->oPointers[ x] > i) music->header->oPointers[ x]--;
-					else if (music->header->oPointers[ x] == i) music->header->oPointers[ x] = 0;
+					if (music->header->oPointers[x] > i) music->header->oPointers[x]--;
+					else if (music->header->oPointers[x] == i) music->header->oPointers[x] = 0;
 				}
 				
 				if (i > 0) i--;
@@ -497,34 +497,34 @@ long MADMinimize(MADMusic *music)
 	}
 	
 	// Check for unused instruments
-	for (i = 0; i < 32 ; i++) inst[ i] = false;
+	for (i = 0; i < 32 ; i++) inst[i] = false;
 	
 	for (i = 0; i < music->header->numPat; i++)
 	{
-		for (x = 0; x < music->partition[ i]->header.size; x++)
+		for (x = 0; x < music->partition[i]->header.size; x++)
 		{
 			for (z = 0; z < music->header->numChn; z++)
 			{
 				Cmd		*cmd;
 				
-				cmd = GetMADCommand(x, z, music->partition[ i]);
+				cmd = GetMADCommand(x, z, music->partition[i]);
 				
-				if (cmd->ins > 0) inst[ cmd->ins-1] = true;
+				if (cmd->ins > 0) inst[cmd->ins-1] = true;
 			}
 		}
 	}
 	
 	for (i = 0; i < MAXINSTRU; i++)
 	{
-		if (inst[ i] == false) MADKillInstrument(music, i);
+		if (inst[i] == false) MADKillInstrument(music, i);
 	}
 	
 	// Check for after loop data
 	for (i = 0; i < MAXINSTRU; i++)
 	{
-		for (x = 0; x < music->fid[ i].numSamples; x++)
+		for (x = 0; x < music->fid[i].numSamples; x++)
 		{
-			sData	*curData = music->sample[ i * MAXSAMPLE + x];
+			sData	*curData = music->sample[i * MAXSAMPLE + x];
 			
 			if (curData->loopSize > 2)
 			{
@@ -781,12 +781,12 @@ OSErr MADCreateDriverBuffer(MADDriverRec *intDriver)
 	
 	intDriver->curDrawPtr = 0;
 	for (i = 0; i < MAXDRAW; i++) {
-		intDriver->newData[ i] = false;
-		intDriver->OsciDrawPtr[ i] = (Ptr)MADNewPtrClear(BufSize / intDriver->DriverSettings.oversampling, intDriver->lib);
-		if (intDriver->OsciDrawPtr[ i] == NULL) {
+		intDriver->newData[i] = false;
+		intDriver->OsciDrawPtr[i] = (Ptr)MADNewPtrClear(BufSize / intDriver->DriverSettings.oversampling, intDriver->lib);
+		if (intDriver->OsciDrawPtr[i] == NULL) {
 			for (x = 0; x < MAXDRAW; x++) {
-				if (intDriver->OsciDrawPtr[ i] != NULL) {
-					DisposePtr(intDriver->OsciDrawPtr[ i]);
+				if (intDriver->OsciDrawPtr[i] != NULL) {
+					DisposePtr(intDriver->OsciDrawPtr[i]);
 				}
 			}
 			return MADNeedMemory;
@@ -961,7 +961,7 @@ OSErr MADCreateDriver(MADDriverSettings	*DriverInitParam, MADLibrary *lib, MADDr
 		return theErr;
 	}
 	
-	for (i = 0; i < MAXTRACK; i++) MDriver->Active[ i] = true;
+	for (i = 0; i < MAXTRACK; i++) MDriver->Active[i] = true;
 	
 	MDriver->DriverSettings		= *DriverInitParam;
 	MDriver->musicEnd			= false;
@@ -1353,7 +1353,7 @@ OSErr MADInitLibrary(FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **li
 OSErr MADInitLibrary(FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **lib)
 {
 	OSErr errmess = noErr;
-	long 	i, mytab[ 12] =
+	long 	i, mytab[12] =
 	{
 		1712L*16L,1616L*16L,1524L*16L,1440L*16L,1356L*16L,1280L*16L,
 		1208L*16L,1140L*16L,1076L*16L,1016L*16L,960L*16L,907L*16L
@@ -1368,7 +1368,7 @@ OSErr MADInitLibrary(FSSpec *PlugsFolderName, Boolean sysMemory, MADLibrary **li
 	
 	for (i = 0; i < 12; i++)
 	{
-		(*lib)->mytab[ i] = mytab[ i];
+		(*lib)->mytab[i] = mytab[i];
 	}
 	
 	MInitImportPlug(*lib, PlugsFolderName);
@@ -1467,10 +1467,10 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 	// Purge previous Effects !
 	for (i = 0; i < 10 ; i++)
 	{
-		if (driver->masterVST[ i])
+		if (driver->masterVST[i])
 		{
-			DisposeVSTEffect(driver->masterVST[ i]);
-			driver->masterVST[ i] = NULL;
+			DisposeVSTEffect(driver->masterVST[i]);
+			driver->masterVST[i] = NULL;
 		}
 	}
 	
@@ -1478,10 +1478,10 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 	{
 		for (x = 0; x < 4; x++)
 		{
-			if (driver->chanVST[ i][ x])
+			if (driver->chanVST[i][x])
 			{
-				DisposeVSTEffect(driver->chanVST[ i][ x]);
-				driver->chanVST[ i][ x] = NULL;
+				DisposeVSTEffect(driver->chanVST[i][x]);
+				driver->chanVST[i][x] = NULL;
 			}
 		}
 	}
@@ -1491,21 +1491,21 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 	
 	for (i = 0; i < 10 ; i++)	// Global Effects
 	{
-		if (music->header->globalEffect[ i])
+		if (music->header->globalEffect[i])
 		{
-			index = ConvertUniqueIDToIndex(music->sets[ alpha].FXID);
+			index = ConvertUniqueIDToIndex(music->sets[alpha].FXID);
 			
 			if (index >= 0)
 			{
-				driver->masterVST[ i] = CreateVSTEffect(index);
-				ApplyVSTSets(driver->masterVST[ i], &music->sets[ alpha]);
+				driver->masterVST[i] = CreateVSTEffect(index);
+				ApplyVSTSets(driver->masterVST[i], &music->sets[alpha]);
 			}
 			else if (MissingPlugs)
 			{
-				if (strlen((Ptr) MissingPlugs) > 0) strcat( (Ptr) MissingPlugs, ", ");
-				MYP2CStr(music->sets[ alpha].name);
-				strcpy( (Ptr) MissingPlugs,  (Ptr) &music->sets[ alpha].name);
-				MYC2PStr((Ptr) music->sets[ alpha].name);
+				if (strlen((Ptr) MissingPlugs) > 0) strcat((Ptr) MissingPlugs, ", ");
+				MYP2CStr(music->sets[alpha].name);
+				strcpy((Ptr) MissingPlugs,  (Ptr) &music->sets[alpha].name);
+				MYC2PStr((Ptr) music->sets[alpha].name);
 			}
 			alpha++;
 		}
@@ -1515,21 +1515,21 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, unsigned cha
 	{
 		for (x = 0; x < 4; x++)
 		{
-			if (music->header->chanEffect[ i][ x])
+			if (music->header->chanEffect[i][x])
 			{
-				index = ConvertUniqueIDToIndex(music->sets[ alpha].FXID);
+				index = ConvertUniqueIDToIndex(music->sets[alpha].FXID);
 			
 				if (index >= 0)
 				{
-					driver->chanVST[ i][ x] = CreateVSTEffect(index);
-					ApplyVSTSets(driver->chanVST[ i][ x], &music->sets[ alpha]);
+					driver->chanVST[i][x] = CreateVSTEffect(index);
+					ApplyVSTSets(driver->chanVST[i][x], &music->sets[alpha]);
 				}
 				else if (MissingPlugs)
 				{
-					strcat( (Ptr) MissingPlugs, ", ");
-					MYP2CStr(music->sets[ alpha].name);
-					strcpy( (Ptr) MissingPlugs,  (Ptr) &music->sets[ alpha].name);
-					MYC2PStr((Ptr) music->sets[ alpha].name);
+					strcat((Ptr) MissingPlugs, ", ");
+					MYP2CStr(music->sets[alpha].name);
+					strcpy((Ptr) MissingPlugs,  (Ptr) &music->sets[alpha].name);
+					MYC2PStr((Ptr) music->sets[alpha].name);
 				}
 				alpha++;
 			}
@@ -1691,7 +1691,7 @@ OSErr MADLoadMusicFilePString(MADLibrary *lib, MADMusic **music, char *plugType,
 	
 	MYP2CStr(fName);
 	
-	if (!strcmp("MADK", plugType)) 	iErr = MADLoadMADFileCString( music, (Ptr) fName);
+	if (!strcmp("MADK", plugType)) 	iErr = MADLoadMADFileCString(music, (Ptr) fName);
 	else								iErr = MADLoadMusicFileCString(lib, music, plugType, (Ptr) fName);
 	
 	MYC2PStr((Ptr) fName);
@@ -1714,20 +1714,20 @@ OSErr MADLoadMusicFilePString(MADLibrary *lib, MADMusic **music, char *plugType,
  
  for (i = 0; i < MDriver->header->numPat ; i++)
  {
- aPartition->partition[ i] = (PatData*) MADNewPtr(GetPtrSize((Ptr) MDriver->partition[ i]), &MDriver->DriverSettings);
- if (aPartition->partition[ i] == NULL) return -1;
+ aPartition->partition[i] = (PatData*) MADNewPtr(GetPtrSize((Ptr) MDriver->partition[i]), &MDriver->DriverSettings);
+ if (aPartition->partition[i] == NULL) return -1;
  
- BlockMoveData(MDriver->partition[ i], aPartition->partition[ i], GetPtrSize((Ptr) MDriver->partition[ i]));
+ BlockMoveData(MDriver->partition[i], aPartition->partition[i], GetPtrSize((Ptr) MDriver->partition[i]));
  }
- for (i = MDriver->header->numPat; i < MAXPATTERN ; i++) aPartition->partition[ i] = NULL;
+ for (i = MDriver->header->numPat; i < MAXPATTERN ; i++) aPartition->partition[i] = NULL;
  
  for (i = 0; i < MAXINSTRU ; i++)
  {
  for (x = 0; x < MDriver->header->fid[i].numSamples; x++)
  {
- sData	*dstData, *srcData = MDriver->sample[ i][ x];
+ sData	*dstData, *srcData = MDriver->sample[i][x];
  
- aPartition->sample[ i][ x] = dstData = (sData*) MADNewPtr(sizeof(sData), &MDriver->DriverSettings);
+ aPartition->sample[i][x] = dstData = (sData*) MADNewPtr(sizeof(sData), &MDriver->DriverSettings);
  if (dstData == NULL) return -1;
  
  BlockMoveData(srcData, dstData, sizeof(sData));
@@ -1867,7 +1867,7 @@ OSErr MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV)
 	
 	for (i = 0; i < MDriver->curMusic->header->numPointers; i++)
 	{
-		for (x = 0; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
+		for (x = 0; x < MDriver->curMusic->partition[MDriver->curMusic->header->oPointers[i]]->header.size; x++)
 		{
 			time ++;
 			
@@ -1875,7 +1875,7 @@ OSErr MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV)
 			{
 				MDriver->PL = i;
 				MDriver->PartitionReader = x;
-				MDriver->Pat = MDriver->curMusic->header->oPointers[ i];
+				MDriver->Pat = MDriver->curMusic->header->oPointers[i];
 				
 				MADCheckSpeed(MDriver->curMusic, MDriver);
 				
@@ -1886,7 +1886,7 @@ OSErr MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV)
 			
 			for (y = 0; y <  MDriver->curMusic->header->numChn; y++)
 			{
-				aCmd = GetMADCommand(x, y, MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]);
+				aCmd = GetMADCommand(x, y, MDriver->curMusic->partition[MDriver->curMusic->header->oPointers[i]]);
 								
 				/** SpeedE **/
 				
@@ -1913,7 +1913,7 @@ OSErr MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV)
 				
 				if (aCmd->cmd == skipE)
 				{
-					for (; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
+					for (; x < MDriver->curMusic->partition[MDriver->curMusic->header->oPointers[i]]->header.size; x++)
 					{
 					}
 				}
@@ -1966,7 +1966,7 @@ OSErr MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime)
 	
 	for (i = 0; i < MDriver->curMusic->header->numPointers; i++)
 	{
-		for (x = 0; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
+		for (x = 0; x < MDriver->curMusic->partition[MDriver->curMusic->header->oPointers[i]]->header.size; x++)
 		{
 			time ++;
 			
@@ -1978,7 +1978,7 @@ OSErr MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime)
 			
 			for (y = 0; y <  MDriver->curMusic->header->numChn; y++)
 			{
-				aCmd = GetMADCommand(x, y, MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]);
+				aCmd = GetMADCommand(x, y, MDriver->curMusic->partition[MDriver->curMusic->header->oPointers[i]]);
 				
 				/** SpeedE **/
 				
@@ -2005,7 +2005,7 @@ OSErr MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime)
 				
 				if (aCmd->cmd == skipE)
 				{
-					for (; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
+					for (; x < MDriver->curMusic->partition[MDriver->curMusic->header->oPointers[i]]->header.size; x++)
 					{
 						if (i == MDriver->PL	&&
 						   x == MDriver->PartitionReader)
@@ -2097,7 +2097,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 	
 	
 	/**** PARTITION ****/
-	for (i = MDriver->header->numPat; i < MAXPATTERN; i++) MDriver->partition[ i] = NULL;
+	for (i = MDriver->header->numPat; i < MAXPATTERN; i++) MDriver->partition[i] = NULL;
 	
 	for (i = 0; i < MDriver->header->numPat; i++)
 	{
@@ -2144,12 +2144,12 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 				break;
 		}
 		
-		MDriver->partition[ i] = (PatData*) NewPtr(inOutCount);
-		if (MDriver->partition[ i] == NULL)
+		MDriver->partition[i] = (PatData*) NewPtr(inOutCount);
+		if (MDriver->partition[i] == NULL)
 		{
 			for (x = 0; x < i; x++)
 			{
-				if (MDriver->partition[ x] != NULL)	DisposePtr((Ptr) MDriver->partition[ x]);
+				if (MDriver->partition[x] != NULL)	DisposePtr((Ptr) MDriver->partition[x]);
 			}
 			DisposePtr((Ptr) MDriver->header);
 			DisposePtr((Ptr) MDriver);
@@ -2160,35 +2160,35 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 		{
 #ifdef _MAC_H
 			case MADRsrcType:
-				ReadPartialResource(MADRsrc, OffSetToSample, MDriver->partition[ i], inOutCount);
+				ReadPartialResource(MADRsrc, OffSetToSample, MDriver->partition[i], inOutCount);
 				OffSetToSample += inOutCount;
 				break;
 #endif
 				
 			case MADFileType:
-				if (iRead(inOutCount, (Ptr) MDriver->partition[ i], srcFile)) theErr = MADIncompatibleFile;
+				if (iRead(inOutCount, (Ptr) MDriver->partition[i], srcFile)) theErr = MADIncompatibleFile;
 				break;
 				
 			case MADPtrType:
-				BlockMoveData(MADPtr + OffSetToSample, MDriver->partition[ i], inOutCount);
+				BlockMoveData(MADPtr + OffSetToSample, MDriver->partition[i], inOutCount);
 				OffSetToSample += inOutCount;
 				break;
 		}
 		
-		MOT32(&MDriver->partition[ i]->header.size);
-		MOT32(&MDriver->partition[ i]->header.compMode);
-		MOT32(&MDriver->partition[ i]->header.patBytes);
-		MOT32(&MDriver->partition[ i]->header.unused2);
+		MOT32(&MDriver->partition[i]->header.size);
+		MOT32(&MDriver->partition[i]->header.compMode);
+		MOT32(&MDriver->partition[i]->header.patBytes);
+		MOT32(&MDriver->partition[i]->header.unused2);
 		
-		if (MDriver->partition[ i]->header.compMode == 'MAD1')
+		if (MDriver->partition[i]->header.compMode == 'MAD1')
 		{
-			tempPat = DecompressPartitionMAD1(MDriver, MDriver->partition[ i]);
+			tempPat = DecompressPartitionMAD1(MDriver, MDriver->partition[i]);
 			
 			if (tempPat == NULL)
 			{
 				for (x = 0; x < i; x++)
 				{
-					if (MDriver->partition[ x] != NULL)	DisposePtr((Ptr) MDriver->partition[ x]);
+					if (MDriver->partition[x] != NULL)	DisposePtr((Ptr) MDriver->partition[x]);
 				}
 				DisposePtr((Ptr) MDriver->header);
 				DisposePtr((Ptr) MDriver);
@@ -2196,8 +2196,8 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 				return MADNeedMemory;
 			}
 			
-			DisposePtr((Ptr) MDriver->partition[ i]);
-			MDriver->partition[ i] = tempPat;
+			DisposePtr((Ptr) MDriver->partition[i]);
+			MDriver->partition[i] = tempPat;
 		}
 	}
 	
@@ -2207,7 +2207,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 	{
 		for (x = 0; x < MDriver->header->numPat; x++)
 		{
-			if (MDriver->partition[ x] != NULL)	DisposePtr((Ptr) MDriver->partition[ x]);
+			if (MDriver->partition[x] != NULL)	DisposePtr((Ptr) MDriver->partition[x]);
 		}
 		DisposePtr((Ptr) MDriver->header);
 		DisposePtr((Ptr) MDriver);
@@ -2237,7 +2237,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 	
 	for (i = MDriver->header->numInstru-1; i >= 0 ; i--)
 	{
-		InstrData	*curIns = &MDriver->fid[ i];
+		InstrData	*curIns = &MDriver->fid[i];
 		
 		MOT16(&curIns->numSamples);
 		MOT16(&curIns->firstSample);
@@ -2245,27 +2245,27 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 		
 		for (x = 0; x < 12; x++)
 		{
-			MOT16(&curIns->volEnv[ x].pos);
-			MOT16(&curIns->volEnv[ x].val);
+			MOT16(&curIns->volEnv[x].pos);
+			MOT16(&curIns->volEnv[x].val);
 
-			MOT16(&curIns->pannEnv[ x].pos);
-			MOT16(&curIns->pannEnv[ x].val);
+			MOT16(&curIns->pannEnv[x].pos);
+			MOT16(&curIns->pannEnv[x].val);
 
-			MOT16(&curIns->pitchEnv[ x].pos);
-			MOT16(&curIns->pitchEnv[ x].val);
+			MOT16(&curIns->pitchEnv[x].pos);
+			MOT16(&curIns->pitchEnv[x].val);
 		}
 		
 #if 0
 		for (x = 0; x < 12; x++)
 		{
-			PPBE16(&curIns->pannEnv[ x].pos);
-			PPBE16(&curIns->pannEnv[ x].val);
+			PPBE16(&curIns->pannEnv[x].pos);
+			PPBE16(&curIns->pannEnv[x].val);
 		}
 #endif
 		
 		if (i != curIns->no)
 		{
-			MDriver->fid[ curIns->no] = *curIns;
+			MDriver->fid[curIns->no] = *curIns;
 			MADResetInstrument(curIns);
 		}
 	}
@@ -2279,7 +2279,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 		
 		for (x = 0; x < MDriver->header->numPat; x++)
 		{
-			if (MDriver->partition[ x] != NULL)	DisposePtr((Ptr) MDriver->partition[ x]);
+			if (MDriver->partition[x] != NULL)	DisposePtr((Ptr) MDriver->partition[x]);
 		}
 		DisposePtr((Ptr) MDriver->header);
 		DisposePtr((Ptr) MDriver);
@@ -2289,20 +2289,20 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 	
 	for (i = 0; i < MAXINSTRU ; i++)
 	{
-		for (x = 0; x < MDriver->fid[ i].numSamples ; x++)
+		for (x = 0; x < MDriver->fid[i].numSamples ; x++)
 		{
 			sData	 *curData;
 			
 			// ** Read Sample header **
 			
-			curData = MDriver->sample[ i*MAXSAMPLE + x] = (sData*) NewPtr(sizeof(sData));
+			curData = MDriver->sample[i*MAXSAMPLE + x] = (sData*) NewPtr(sizeof(sData));
 			if (curData == NULL)
 			{
 				for (x = 0; x < MAXINSTRU ; x++) MADKillInstrument(MDriver, x);
 				
 				for (x = 0; x < MDriver->header->numPat; x++)
 				{
-					if (MDriver->partition[ x] != NULL)	DisposePtr((Ptr) MDriver->partition[ x]);
+					if (MDriver->partition[x] != NULL)	DisposePtr((Ptr) MDriver->partition[x]);
 				}
 				DisposePtr((Ptr) MDriver->header);
 				DisposePtr((Ptr) MDriver);
@@ -2345,7 +2345,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 				
 				for (x = 0; x < MDriver->header->numPat; x++)
 				{
-					if (MDriver->partition[ x] != NULL)	DisposePtr((Ptr) MDriver->partition[ x]);
+					if (MDriver->partition[x] != NULL)	DisposePtr((Ptr) MDriver->partition[x]);
 				}
 				DisposePtr((Ptr) MDriver->header);
 				DisposePtr((Ptr) MDriver);
@@ -2378,12 +2378,12 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 				long 	ll;
 				short	*shortPtr = (short*) curData->data;
 				
-				for (ll = 0; ll < curData->size/2; ll++) MOT16(&shortPtr[ ll]);
+				for (ll = 0; ll < curData->size/2; ll++) MOT16(&shortPtr[ll]);
 			}
 		}
 	}
 	
-	for (i = 0; i < MAXINSTRU; i++) MDriver->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) MDriver->fid[i].firstSample = i * MAXSAMPLE;
 	
 	// EFFECTS *** *** *** *** *** *** *** *** *** *** *** ***
 	
@@ -2396,7 +2396,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 		
 		for (i = 0; i < 10 ; i++)	// Global Effects
 		{
-			if (MDriver->header->globalEffect[ i])
+			if (MDriver->header->globalEffect[i])
 			{
 				int y = 0;
 				inOutCount = sizeof(FXSets);
@@ -2404,26 +2404,26 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 				{
 #ifdef _MAC_H
 					case MADRsrcType:
-						ReadPartialResource(MADRsrc, OffSetToSample, &MDriver->sets[ alpha], inOutCount);
+						ReadPartialResource(MADRsrc, OffSetToSample, &MDriver->sets[alpha], inOutCount);
 						OffSetToSample += inOutCount;
 						break;
 #endif
 						
 					case MADFileType:
-						if (iRead(inOutCount, (Ptr) &MDriver->sets[ alpha], srcFile)) theErr = MADIncompatibleFile;
+						if (iRead(inOutCount, (Ptr) &MDriver->sets[alpha], srcFile)) theErr = MADIncompatibleFile;
 						break;
 						
 					case MADPtrType:
-						BlockMoveData(MADPtr + OffSetToSample, &MDriver->sets[ alpha], inOutCount);
+						BlockMoveData(MADPtr + OffSetToSample, &MDriver->sets[alpha], inOutCount);
 						OffSetToSample += inOutCount;
 						break;
 				}
-				MOT16(&MDriver->sets[ alpha].id);
-				MOT16(&MDriver->sets[ alpha].noArg);
-				MOT16(&MDriver->sets[ alpha].track);
-				MOT32(&MDriver->sets[ alpha].FXID);
+				MOT16(&MDriver->sets[alpha].id);
+				MOT16(&MDriver->sets[alpha].noArg);
+				MOT16(&MDriver->sets[alpha].track);
+				MOT32(&MDriver->sets[alpha].FXID);
 				for (y = 0; y < 100; y++) {
-					MOT32(&MDriver->sets[ alpha].values[y]);
+					MOT32(&MDriver->sets[alpha].values[y]);
 				}
 				alpha++;
 			}
@@ -2433,7 +2433,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 		{
 			for (x = 0; x < 4; x++)
 			{
-				if (MDriver->header->chanEffect[ i][ x])
+				if (MDriver->header->chanEffect[i][x])
 				{
 					int y = 0;
 					inOutCount = sizeof(FXSets);
@@ -2441,26 +2441,26 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 					{
 #ifdef _MAC_H
 						case MADRsrcType:
-							ReadPartialResource(MADRsrc, OffSetToSample, &MDriver->sets[ alpha], inOutCount);
+							ReadPartialResource(MADRsrc, OffSetToSample, &MDriver->sets[alpha], inOutCount);
 							OffSetToSample += inOutCount;
 							break;
 #endif
 							
 						case MADFileType:
-							if (iRead(inOutCount, (Ptr) &MDriver->sets[ alpha], srcFile)) theErr = MADIncompatibleFile;
+							if (iRead(inOutCount, (Ptr) &MDriver->sets[alpha], srcFile)) theErr = MADIncompatibleFile;
 							break;
 							
 						case MADPtrType:
-							BlockMoveData(MADPtr + OffSetToSample, &MDriver->sets[ alpha], inOutCount);
+							BlockMoveData(MADPtr + OffSetToSample, &MDriver->sets[alpha], inOutCount);
 							OffSetToSample += inOutCount;
 							break;
 					}
-					MOT16(&MDriver->sets[ alpha].id);
-					MOT16(&MDriver->sets[ alpha].noArg);
-					MOT16(&MDriver->sets[ alpha].track);
-					MOT32(&MDriver->sets[ alpha].FXID);
+					MOT16(&MDriver->sets[alpha].id);
+					MOT16(&MDriver->sets[alpha].noArg);
+					MOT16(&MDriver->sets[alpha].track);
+					MOT32(&MDriver->sets[alpha].FXID);
 					for (y = 0; y < 100; y++) {
-						MOT32(&MDriver->sets[ alpha].values[y]);
+						MOT32(&MDriver->sets[alpha].values[y]);
 					}
 					alpha++;
 				}
@@ -2490,26 +2490,26 @@ OSErr MADKillSample(MADMusic *MDriver, short ins, short sample)
 	IsReading = MDriver->musicUnderModification;
 	MDriver->musicUnderModification = true;
 	
-	if (MDriver->sample[ ins * MAXSAMPLE + sample] == NULL) return MADParametersErr;
-	if (MDriver->fid[ ins].numSamples <= sample) return MADParametersErr;
+	if (MDriver->sample[ins * MAXSAMPLE + sample] == NULL) return MADParametersErr;
+	if (MDriver->fid[ins].numSamples <= sample) return MADParametersErr;
 	
-	if (MDriver->sample[ ins * MAXSAMPLE + sample]->data) DisposePtr(MDriver->sample[ ins * MAXSAMPLE + sample]->data);
-	DisposePtr((Ptr) MDriver->sample[ ins * MAXSAMPLE + sample]);
-	MDriver->sample[ ins * MAXSAMPLE + sample] = NULL;
+	if (MDriver->sample[ins * MAXSAMPLE + sample]->data) DisposePtr(MDriver->sample[ins * MAXSAMPLE + sample]->data);
+	DisposePtr((Ptr) MDriver->sample[ins * MAXSAMPLE + sample]);
+	MDriver->sample[ins * MAXSAMPLE + sample] = NULL;
 	
-	MDriver->fid[ ins].numSamples--;
+	MDriver->fid[ins].numSamples--;
 	
-	for (i = sample ; i < MDriver->fid[ ins].numSamples; i++)
+	for (i = sample ; i < MDriver->fid[ins].numSamples; i++)
 	{
-		MDriver->sample[ ins * MAXSAMPLE + i] = MDriver->sample[ ins * MAXSAMPLE + i + 1];
+		MDriver->sample[ins * MAXSAMPLE + i] = MDriver->sample[ins * MAXSAMPLE + i + 1];
 	}
 	
 	for (i = 0; i < NUMBER_NOTES; i++)
 	{
-		if (MDriver->fid[ ins].what[ i] >= sample)
+		if (MDriver->fid[ins].what[i] >= sample)
 		{
-			if (MDriver->fid[ ins].what[ i] > 0)
-				MDriver->fid[ ins].what[ i]--;
+			if (MDriver->fid[ins].what[i] > 0)
+				MDriver->fid[ins].what[i]--;
 		}
 	}
 	
@@ -2538,10 +2538,10 @@ sData	* MADCreateSample(MADMusic *MDriver, short ins, short sample)
 		
 		// Install it
 		
-		if (sample < MDriver->fid[ ins].numSamples) MyDebugStr(__LINE__, __FILE__, "MADCreateSample");
+		if (sample < MDriver->fid[ins].numSamples) MyDebugStr(__LINE__, __FILE__, "MADCreateSample");
 		
-		MDriver->sample[ ins * MAXSAMPLE + sample] = curData;
-		MDriver->fid[ ins].numSamples++;
+		MDriver->sample[ins * MAXSAMPLE + sample] = curData;
+		MDriver->fid[ins].numSamples++;
 	}
 	
 	return curData;		
@@ -2639,29 +2639,29 @@ OSErr MADCleanCurrentMusic(MADMusic *MDriver, MADDriverRec *intDriver)
 		if (intDriver)
 		{
 			if (intDriver->Pat > MDriver->header->numPat) MADReset(intDriver);
-			if (intDriver->PartitionReader > MDriver->partition[ intDriver->Pat]->header.size) MADReset(intDriver);
+			if (intDriver->PartitionReader > MDriver->partition[intDriver->Pat]->header.size) MADReset(intDriver);
 		}
 		
 		for (i = 0; i < MAXINSTRU; i++)
 		{
 			for (x = 0; x < 96; x++)
 			{
-				if (MDriver->fid[ i].what[ x])
+				if (MDriver->fid[i].what[x])
 				{
-					if (MDriver->fid[ i].what[ x] >= MDriver->fid[ i].numSamples)
+					if (MDriver->fid[i].what[x] >= MDriver->fid[i].numSamples)
 					{
-						MDriver->fid[ i].what[ x] = 0;
+						MDriver->fid[i].what[x] = 0;
 					}
 				}
 			}
 			
-			for (x = 0; x < MDriver->fid[ i].numSamples; x++)
+			for (x = 0; x < MDriver->fid[i].numSamples; x++)
 			{
-				sData	*curData = MDriver->sample[ i * MAXSAMPLE + x];
+				sData	*curData = MDriver->sample[i * MAXSAMPLE + x];
 				
 				if (curData == NULL)
 				{
-					curData = MDriver->sample[ i * MAXSAMPLE + x] = MADCreateSample(MDriver, i, x);
+					curData = MDriver->sample[i * MAXSAMPLE + x] = MADCreateSample(MDriver, i, x);
 				}
 				
 				if (curData->data == NULL)
@@ -2702,7 +2702,7 @@ OSErr MADResetInstrument(InstrData		*curIns)
 		return MADParametersErr;
 	}
 	
-	//for (i = 0; i < 32; i++) curIns->name[ i]	= 0;
+	//for (i = 0; i < 32; i++) curIns->name[i]	= 0;
 	memset(curIns->name, 0, sizeof(curIns->name));
 	curIns->type		= 0;
 	curIns->numSamples	= 0;
@@ -2743,22 +2743,22 @@ OSErr MADKillInstrument(MADMusic *music, short ins)
 
 	if (music == NULL) return MADParametersErr;
 	
-	curIns = &music->fid[ ins];
+	curIns = &music->fid[ins];
 	
 	IsReading = music->musicUnderModification;
 	music->musicUnderModification = true;
 	
 	for (i = 0; i < curIns->numSamples; i++)
 	{
-		if (music->sample[ ins * MAXSAMPLE + i] != NULL)
+		if (music->sample[ins * MAXSAMPLE + i] != NULL)
 		{
-			if (music->sample[ ins * MAXSAMPLE + i]->data != NULL)
+			if (music->sample[ins * MAXSAMPLE + i]->data != NULL)
 			{
-				DisposePtr((Ptr) music->sample[ ins * MAXSAMPLE + i]->data);
-				music->sample[ ins * MAXSAMPLE + i]->data = NULL;
+				DisposePtr((Ptr) music->sample[ins * MAXSAMPLE + i]->data);
+				music->sample[ins * MAXSAMPLE + i]->data = NULL;
 			}
-			DisposePtr((Ptr) music->sample[ ins * MAXSAMPLE + i]);
-			music->sample[ ins * MAXSAMPLE + i] = NULL;
+			DisposePtr((Ptr) music->sample[ins * MAXSAMPLE + i]);
+			music->sample[ins * MAXSAMPLE + i] = NULL;
 		}
 	}
 	
@@ -2788,7 +2788,7 @@ void MADCheckSpeed(MADMusic *MDriver, MADDriverRec *intDriver)
 	short			i, x, y;
 	short			curPartitionReader;
 	Cmd				*aCmd;
-	Boolean			CmdSpeed = false, FineFound = false, ArgFound[ MAXTRACK], NoteFound[ MAXTRACK], InsFound[ MAXTRACK];
+	Boolean			CmdSpeed = false, FineFound = false, ArgFound[MAXTRACK], NoteFound[MAXTRACK], InsFound[MAXTRACK];
 
 	if (!MDriver) return;
 	if (MDriver->header == NULL) return;
@@ -2796,9 +2796,9 @@ void MADCheckSpeed(MADMusic *MDriver, MADDriverRec *intDriver)
 	
 	for (i = 0; i < MAXTRACK; i++)
 	{
-		ArgFound[ i] = false;
-		NoteFound[ i] = false;
-		InsFound[ i] = false;
+		ArgFound[i] = false;
+		NoteFound[i] = false;
+		InsFound[i] = false;
 	}
 	
 	for (i = intDriver->PL; i >= 0; i--)
@@ -2806,20 +2806,20 @@ void MADCheckSpeed(MADMusic *MDriver, MADDriverRec *intDriver)
 		if (i == intDriver->PL)
 		{
 			curPartitionReader = intDriver->PartitionReader;
-			if (curPartitionReader >= MDriver->partition[ MDriver->header->oPointers[ i]]->header.size) curPartitionReader--;
+			if (curPartitionReader >= MDriver->partition[MDriver->header->oPointers[i]]->header.size) curPartitionReader--;
 		}
 		else
 		{
-			curPartitionReader = MDriver->partition[ MDriver->header->oPointers[ i]]->header.size-1;
+			curPartitionReader = MDriver->partition[MDriver->header->oPointers[i]]->header.size-1;
 		}
 
 		for (x = curPartitionReader; x >= 0; x--)
 		{
 			for (y = MDriver->header->numChn-1; y >= 0 ; y--)
 			{
-				Channel	*ch = &intDriver->chan[ y];
+				Channel	*ch = &intDriver->chan[y];
 				
-				aCmd = GetMADCommand(x, y, MDriver->partition[ MDriver->header->oPointers[ i]]);
+				aCmd = GetMADCommand(x, y, MDriver->partition[MDriver->header->oPointers[i]]);
 				
 				if (aCmd->cmd == speedE)
 				{					
@@ -2843,20 +2843,20 @@ void MADCheckSpeed(MADMusic *MDriver, MADDriverRec *intDriver)
 				
 				if (aCmd->arg != 0)
 				{
-					if (!ArgFound[ y]) ch->oldArg[ aCmd->cmd] = aCmd->arg;
-					ArgFound[ y] = true;
+					if (!ArgFound[y]) ch->oldArg[aCmd->cmd] = aCmd->arg;
+					ArgFound[y] = true;
 				}
 				
 				if (aCmd->ins != 0)
 				{
-					if (!InsFound[ y]) ch->insOld = aCmd->ins;
-					InsFound[ y] = true;
+					if (!InsFound[y]) ch->insOld = aCmd->ins;
+					InsFound[y] = true;
 				}
 				
 				if (aCmd->note != 0xFF)
 				{
-					if (!NoteFound[ y]) ch->noteOld = aCmd->note;
-					NoteFound[ y] = true;
+					if (!NoteFound[y]) ch->noteOld = aCmd->note;
+					NoteFound[y] = true;
 				}
 			}
 		}
@@ -2880,15 +2880,15 @@ void MADCheckSpeedPattern(MADMusic *MDriver, MADDriverRec *intDriver)
 	
 
 	curPartitionReader = intDriver->PartitionReader;
-	if (curPartitionReader >= MDriver->partition[ intDriver->Pat]->header.size) curPartitionReader--;
+	if (curPartitionReader >= MDriver->partition[intDriver->Pat]->header.size) curPartitionReader--;
 	
 	for (x = curPartitionReader; x >= 0; x--)
 	{
 		for (y = MDriver->header->numChn-1; y >= 0 ; y--)
 		{
-			//Channel	*ch = &intDriver->chan[ y];
+			//Channel	*ch = &intDriver->chan[y];
 			
-			aCmd = GetMADCommand(x, y, MDriver->partition[ intDriver->Pat]);
+			aCmd = GetMADCommand(x, y, MDriver->partition[intDriver->Pat]);
 			
 			if (aCmd)
 			{
@@ -3093,7 +3093,7 @@ OSErr MADReset(MADDriverRec *MDriver)
 	
 	if (MDriver->curMusic != NULL)
 	{
-		MDriver->Pat = MDriver->curMusic->header->oPointers[ MDriver->PL];
+		MDriver->Pat = MDriver->curMusic->header->oPointers[MDriver->PL];
 		MDriver->speed = MDriver->curMusic->header->speed;
 		MDriver->finespeed = MDriver->curMusic->header->tempo;
 	}
@@ -3108,17 +3108,17 @@ short MADGetNextReader(MADMusic *music, MADDriverRec *intDriver, short cur, shor
 	if (music->header == NULL) return 0;
 	
 	cur++;
-	if (cur >= music->partition[ intDriver->Pat]->header.size)
+	if (cur >= music->partition[intDriver->Pat]->header.size)
 	{
 		cur = 0;
 		
 		if (intDriver->JumpToNextPattern)
 		{
-			*pat = music->header->oPointers[ intDriver->PL + 1];
+			*pat = music->header->oPointers[intDriver->PL + 1];
 			
 			if (intDriver->speed == 1 && intDriver->PL + 1 >= music->header->numPointers)
 			{
-				*pat = music->header->oPointers[ 0];
+				*pat = music->header->oPointers[0];
 			}
 		}
 	}
@@ -3136,8 +3136,8 @@ OSErr MADDisposeMusic(MADMusic **music, MADDriverRec *MDriver)
 //	if ((*music)->currentDriver != NULL)
 	{
 		(*music)->musicUnderModification = true;
-	//	MADPurgeTrack( (*music)->currentDriver);
-	//	MADCleanDriver( (*music)->currentDriver);
+	//	MADPurgeTrack((*music)->currentDriver);
+	//	MADCleanDriver((*music)->currentDriver);
 		
 	//	MADDetachMusicFromDriver(*music);
 	}
@@ -3151,13 +3151,13 @@ OSErr MADDisposeMusic(MADMusic **music, MADDriverRec *MDriver)
 	{
 		for (x = 0; x < (*music)->header->numPat ; x++)
 		{
-			if ((*music)->partition[ x] != NULL) DisposePtr((Ptr)  (*music)->partition[ x]);
-			(*music)->partition[ x] = NULL;
+			if ((*music)->partition[x] != NULL) DisposePtr((Ptr)  (*music)->partition[x]);
+			(*music)->partition[x] = NULL;
 		}
 		
 		for (x = (*music)->header->numPat; x < MAXPATTERN ; x++)
 		{
-			if ((*music)->partition[ x] != NULL) DebugStr("\pMADDispose (*music) !");
+			if ((*music)->partition[x] != NULL) DebugStr("\pMADDispose (*music) !");
 		}
 		
 		for (x = 0; x < MAXINSTRU ; x++)
@@ -3212,7 +3212,7 @@ OSErr MADPlaySoundDataSYNC(MADDriverRec *MDriver, Ptr soundPtr, long size, long 
 		{
 			GetKeys(km);
 			
-			if (MDriver->chan[ channel].samplePtr == NULL) continueLoop = false;
+			if (MDriver->chan[channel].samplePtr == NULL) continueLoop = false;
 			if (MADIsPressed((unsigned char*) km, 0x37) && MADIsPressed((unsigned char*) km, 0x2F)) continueLoop = false;
 			if (Button()) continueLoop = false;
 			
@@ -3222,13 +3222,13 @@ OSErr MADPlaySoundDataSYNC(MADDriverRec *MDriver, Ptr soundPtr, long size, long 
 #endif
 		}
 		
-		if (MDriver->chan[ channel].samplePtr != NULL)
+		if (MDriver->chan[channel].samplePtr != NULL)
 		{
-			MDriver->chan[ channel].curPtr 		= MDriver->chan[ channel].maxPtr;
-			MDriver->chan[ channel].samplePtr	= NULL;
-			MDriver->chan[ channel].lAC			= 0;
-			MDriver->chan[ channel].loopBeg 	= 0;
-			MDriver->chan[ channel].loopSize 	= 0;
+			MDriver->chan[channel].curPtr 		= MDriver->chan[channel].maxPtr;
+			MDriver->chan[channel].samplePtr	= NULL;
+			MDriver->chan[channel].lAC			= 0;
+			MDriver->chan[channel].loopBeg 	= 0;
+			MDriver->chan[channel].loopSize 	= 0;
 		}
 	}
 	
@@ -3248,7 +3248,7 @@ OSErr MADPlaySoundData(MADDriverRec *MDriver, Ptr soundPtr, long size, long chan
 		MDriver->curMusic->musicUnderModification = true;
 	}
 	
-	curVoice = &MDriver->chan[ channel];
+	curVoice = &MDriver->chan[channel];
 	
 	curVoice->prevPtr		= NULL;
 	curVoice->samplePtr		= soundPtr;
@@ -3312,9 +3312,9 @@ void MADKeyOFF(MADDriverRec *MDriver, short track)
 	{
 		short i;
 		
-		for (i = 0; i < MAXTRACK; i++) MDriver->chan[ i].KeyOn = false;
+		for (i = 0; i < MAXTRACK; i++) MDriver->chan[i].KeyOn = false;
 	}
-	else MDriver->chan[ track].KeyOn = false;
+	else MDriver->chan[track].KeyOn = false;
 }
 
 #ifdef _MAC_H
@@ -3447,7 +3447,7 @@ OSErr MADPlaySndHandle(MADDriverRec *MDriver, Handle sound, long channel, long n
 				Send 	*= 2L;
 			}
 			
-			for (i = 0; i < Ssize; i++) rPtr[ i] = rPtr[ i] - 0x80;
+			for (i = 0; i < Ssize; i++) rPtr[i] = rPtr[i] - 0x80;
 			
 			switch (header->encode)
 			{
@@ -3494,7 +3494,7 @@ Cmd* GetMADCommand(short PosX, short	TrackIdX, PatData*	tempMusicPat)
 	if (PosX < 0) PosX = 0;
 	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 	
-	return(&(tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
+	return(&(tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
 void MADDisposeVolumeTable(MADDriverRec *intDriver)
@@ -3559,7 +3559,7 @@ void UpdateTracksNumber(MADDriverRec *MDriver)
 
 OSErr MADCreateVibrato(MADDriverRec *MDriver)
 {
-	short			i, vibrato_table[ 64] = 
+	short			i, vibrato_table[64] = 
 
 	{
 	0,24,49,74,97,120,141,161,
@@ -3578,7 +3578,7 @@ OSErr MADCreateVibrato(MADDriverRec *MDriver)
 	
 	
 
-	for (i = 0; i < 64; i++) MDriver->vibrato_table[ i] = vibrato_table[ i];
+	for (i = 0; i < 64; i++) MDriver->vibrato_table[i] = vibrato_table[i];
 
 	return noErr;
 
@@ -3594,7 +3594,7 @@ short			i, j, k;
 		for (i = 0; i < NUMBER_NOTES + 4; i++)
 		{
 				pitch = base / pow(2.0, (i+1) /12.0);
-				pitchTable[ i][ k] = floor(pitch + 0.5);
+				pitchTable[i][k] = floor(pitch + 0.5);
 		}
 	}
 */
@@ -3611,13 +3611,13 @@ void VIAOn2()
 
 	BitSet((Ptr) VIAPtr, 0);
 
-	if (ASCBasePtr[ 0x801] == 0)
+	if (ASCBasePtr[0x801] == 0)
 	{
-		ASCBasePtr[ 0x801] = 0x01;
-		ASCBasePtr[ 0x806] = 0xFF;
+		ASCBasePtr[0x801] = 0x01;
+		ASCBasePtr[0x806] = 0xFF;
 	}
 	
-	BitSet(&ASCBasePtr[ 0x802], 6);
+	BitSet(&ASCBasePtr[0x802], 6);
 }
 
 void SndOff()

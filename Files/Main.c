@@ -134,7 +134,7 @@ static		short			MainResFile;
 static		short			Quality, Mode;
 static		Boolean			NoSelectWindow2, NOWScrollMode, ShowIt;
 
-static		Str255			URLs[ MAXURL], URLsDesc[ MAXURL];
+static		Str255			URLs[MAXURL], URLsDesc[MAXURL];
 static		long			URLsNo;
 static		RgnHandle		gCursorRgn;
 
@@ -192,19 +192,19 @@ OSErr inMADPlaySoundData(Ptr soundPtr, long size, long channel, long note, long 
 		{
 			GetKeys(km);
 			
-			if (MADDriver->chan[ channel].samplePtr == NULL) continueLoop = false;
+			if (MADDriver->chan[channel].samplePtr == NULL) continueLoop = false;
 			if (MADIsPressed((unsigned char*) km, 0x37) && MADIsPressed((unsigned char*) km, 0x2F)) continueLoop = false;
 			if (Button()) continueLoop = false;
 			DoGlobalNull();
 		}
 		
-		if (MADDriver->chan[ channel].samplePtr != NULL)
+		if (MADDriver->chan[channel].samplePtr != NULL)
 		{
-			MADDriver->chan[ channel].curPtr 		= MADDriver->chan[ channel].maxPtr;
-			MADDriver->chan[ channel].samplePtr	= NULL;
-			MADDriver->chan[ channel].lAC			= 0;
-			MADDriver->chan[ channel].loopBeg 	= 0;
-			MADDriver->chan[ channel].loopSize 	= 0;
+			MADDriver->chan[channel].curPtr 		= MADDriver->chan[channel].maxPtr;
+			MADDriver->chan[channel].samplePtr	= NULL;
+			MADDriver->chan[channel].lAC			= 0;
+			MADDriver->chan[channel].loopBeg 	= 0;
+			MADDriver->chan[channel].loopSize 	= 0;
 		}
 	}
 	
@@ -413,26 +413,26 @@ void SetWindEtat(WindowPtr whichWindow)
 	if (WindowStateNOW != -1) {
 		if (thePrefs.WinPosO[WindowStateNOW][WRef].h != 0) {
 			MoveWindow(whichWindow,
-					   thePrefs.WinPosO[ WindowStateNOW][ WRef].h,
-					   thePrefs.WinPosO[ WindowStateNOW][ WRef].v,
+					   thePrefs.WinPosO[WindowStateNOW][WRef].h,
+					   thePrefs.WinPosO[WindowStateNOW][WRef].v,
 					   false);
 			
 			MoveWindow(whichWindow,
-					   thePrefs.WinPosO[ WindowStateNOW][ WRef].h,
-					   thePrefs.WinPosO[ WindowStateNOW][ WRef].v,
+					   thePrefs.WinPosO[WindowStateNOW][WRef].h,
+					   thePrefs.WinPosO[WindowStateNOW][WRef].v,
 					   false);
 			
-			if (thePrefs.WinPosO[ WindowStateNOW][ WRef].v < GetMBarHeight()) {
-				thePrefs.WinPosO[ WindowStateNOW][ WRef].v = 100;
-				thePrefs.WinPosO[ WindowStateNOW][ WRef].h = 100;
+			if (thePrefs.WinPosO[WindowStateNOW][WRef].v < GetMBarHeight()) {
+				thePrefs.WinPosO[WindowStateNOW][WRef].v = 100;
+				thePrefs.WinPosO[WindowStateNOW][WRef].h = 100;
 				MoveWindow(	whichWindow,
 						   100,
 						   100,
 						   false);
 			}
 			
-			tempRect. top = thePrefs.WinPosO[ WindowStateNOW][ WRef].v;
-			tempRect. left = thePrefs.WinPosO[ WindowStateNOW][ WRef].h;
+			tempRect. top = thePrefs.WinPosO[WindowStateNOW][WRef].v;
+			tempRect. left = thePrefs.WinPosO[WindowStateNOW][WRef].h;
 			
 			GetPortBounds(GetWindowPort(whichWindow), &caRect);
 			
@@ -441,8 +441,8 @@ void SetWindEtat(WindowPtr whichWindow)
 			
 			if (!RectInRgn(&tempRect, GetGrayRgn()))
 			{
-				thePrefs.WinPosO[ WindowStateNOW][ WRef].v = 100;
-				thePrefs.WinPosO[ WindowStateNOW][ WRef].h = 100;
+				thePrefs.WinPosO[WindowStateNOW][WRef].v = 100;
+				thePrefs.WinPosO[WindowStateNOW][WRef].h = 100;
 				MoveWindow(whichWindow,
 						   100,
 						   100,
@@ -460,7 +460,7 @@ void SetWindEtat(WindowPtr whichWindow)
 						 true);
 		}
 	} else {
-		if (thePrefs.WinPos[ WRef].h != 0) {
+		if (thePrefs.WinPos[WRef].h != 0) {
 			MoveWindow(whichWindow,
 					   thePrefs.WinPos[WRef].h,
 					   thePrefs.WinPos[WRef].v,
@@ -530,12 +530,12 @@ void SaveWindowState(short id)
 		if (pWindow) {
 			GetPortBounds(GetWindowPort(pWindow), &caRect);
 			
-			thePrefs.WinHiO[ id][ GetWRefCon(pWindow)] = caRect.bottom;
-			thePrefs.WinLargO[ id][ GetWRefCon(pWindow)] = caRect.right;
-			thePrefs.WinEtatO[ id][ GetWRefCon(pWindow)] = 1;						// Fenêtre active
+			thePrefs.WinHiO[id][GetWRefCon(pWindow)] = caRect.bottom;
+			thePrefs.WinLargO[id][GetWRefCon(pWindow)] = caRect.right;
+			thePrefs.WinEtatO[id][GetWRefCon(pWindow)] = 1;						// Fenêtre active
 			if (GetWRefCon(pWindow) != RefSample)	//GetWRefCon(pWindow) != RefTools &&
 			{
-				thePrefs.WinIDO[ id][ order] = GetWRefCon(pWindow);
+				thePrefs.WinIDO[id][order] = GetWRefCon(pWindow);
 				order++;
 			}
 			
@@ -543,8 +543,8 @@ void SaveWindowState(short id)
 			SetPortWindowPort(pWindow);
 			Start.h = Start.v = 0;
 			LocalToGlobal(&Start);
-			thePrefs.WinPosO[ id][ GetWRefCon(pWindow)].v = Start.v;
-			thePrefs.WinPosO[ id][ GetWRefCon(pWindow)].h = Start.h;
+			thePrefs.WinPosO[id][GetWRefCon(pWindow)].v = Start.v;
+			thePrefs.WinPosO[id][GetWRefCon(pWindow)].h = Start.h;
 			SetPort(savedPort);
 		}
 		
@@ -571,12 +571,12 @@ void CheckShowWindow(void)
 		if (pWindow) {
 			GetPortBounds(GetWindowPort(pWindow), &caRect);
 			
-			thePrefs.WinHi[ GetWRefCon(pWindow)] = caRect.bottom;
-			thePrefs.WinLarg[ GetWRefCon(pWindow)] = caRect.right;
-			thePrefs.WinEtat[ GetWRefCon(pWindow)] = 1;						// Fenêtre active
+			thePrefs.WinHi[GetWRefCon(pWindow)] = caRect.bottom;
+			thePrefs.WinLarg[GetWRefCon(pWindow)] = caRect.right;
+			thePrefs.WinEtat[GetWRefCon(pWindow)] = 1;						// Fenêtre active
 			
 			if (GetWRefCon(pWindow) != RefSample) {	//GetWRefCon(pWindow) != RefTools &&
-				thePrefs.WinID[ order] = GetWRefCon(pWindow);
+				thePrefs.WinID[order] = GetWRefCon(pWindow);
 				order++;
 			}
 			
@@ -584,8 +584,8 @@ void CheckShowWindow(void)
 			SetPortWindowPort(pWindow);
 			Start.h = Start.v = 0;
 			LocalToGlobal(&Start);
-			thePrefs.WinPos[ GetWRefCon(pWindow)].v = Start.v;
-			thePrefs.WinPos[ GetWRefCon(pWindow)].h = Start.h;
+			thePrefs.WinPos[GetWRefCon(pWindow)].v = Start.v;
+			thePrefs.WinPos[GetWRefCon(pWindow)].h = Start.h;
 			SetPort(savedPort);
 			
 			ClosePlayerWindow(GetDialogFromWindow(pWindow));
@@ -609,10 +609,10 @@ void ShowWindowPref(short whichState)
 	order = 29;
 	while (order >= 0) {
 		if (whichState == -1)
-			ID = thePrefs.WinID[ order];
+			ID = thePrefs.WinID[order];
 		else {
 			WindowStateNOW = whichState;
-			ID = thePrefs.WinIDO[ whichState][ order];
+			ID = thePrefs.WinIDO[whichState][order];
 		}
 		
 		if (ID != -1) {
@@ -824,8 +824,8 @@ void MusiqueDriverInit(void)
 	/**** Initialise le MOD Driver ****/
 	//curMusic = 0;
 	//curMusic->header = (MADSpec*) NULL;
-	//for (i = 0; i < MAXINSTRU ; i++)  for (x = 0; x < MAXSAMPLE ; x++) curMusic->sample[ i][ x] = (sData*) NULL;
-	//for (i = 0; i < MAXPATTERN ; i++) curMusic->partition[ i] = (PatData*) NULL;
+	//for (i = 0; i < MAXINSTRU ; i++)  for (x = 0; x < MAXSAMPLE ; x++) curMusic->sample[i][x] = (sData*) NULL;
+	//for (i = 0; i < MAXPATTERN ; i++) curMusic->partition[i] = (PatData*) NULL;
 	/**********************************/
 	
 	if (thePrefs.numChn < 2 || thePrefs.numChn > 32) thePrefs.numChn = 4;
@@ -1127,18 +1127,18 @@ pascal void MyMenu0xFFDefProc(short msg, MenuRef whichMenu, Rect *menuRect, Poin
 					str[2] = bstr[1];
 					
 					SetRect(&tempRect, menuRect->left, menuRect->bottom-HIM*3+1, menuRect->right, menuRect->bottom);
-					TETextBox(str+1, str[ 0], &tempRect, teCenter);
+					TETextBox(str+1, str[0], &tempRect, teCenter);
 					
 					
 					short tempValue = mTracking->itemSelected-1;
 					NumToString(tempValue, str);
 					SetRect(&tempRect, menuRect->left, menuRect->bottom-HIM*2 + 1, menuRect->right, menuRect->bottom);
-					TETextBox(str+1, str[ 0], &tempRect, teCenter);
+					TETextBox(str+1, str[0], &tempRect, teCenter);
 					
 					tempValue = (char) (mTracking->itemSelected-1);
 					NumToString(tempValue, str);
 					SetRect(&tempRect, menuRect->left, menuRect->bottom-HIM + 1, menuRect->right, menuRect->bottom);
-					TETextBox(str+1, str[ 0], &tempRect, teCenter);
+					TETextBox(str+1, str[0], &tempRect, teCenter);
 					
 				}
 				
@@ -1190,17 +1190,17 @@ pascal void MyMenu0xFFDefProc(short msg, MenuRef whichMenu, Rect *menuRect, Poin
 					str[2] = bstr[1];
 					
 					SetRect(&tempRect, menuRect->left, menuRect->bottom-HIM*3 + 1, menuRect->right, menuRect->bottom);
-					TETextBox(str+1, str[ 0], &tempRect, teCenter);
+					TETextBox(str+1, str[0], &tempRect, teCenter);
 					
 					short tempValue = mTracking->itemSelected-1;
 					NumToString(tempValue, str);
 					SetRect(&tempRect, menuRect->left, menuRect->bottom-HIM*2 + 1, menuRect->right, menuRect->bottom);
-					TETextBox(str+1, str[ 0], &tempRect, teCenter);
+					TETextBox(str+1, str[0], &tempRect, teCenter);
 					
 					tempValue = (char) (mTracking->itemSelected-1);
 					NumToString(tempValue, str);
 					SetRect(&tempRect, menuRect->left, menuRect->bottom-HIM + 1, menuRect->right, menuRect->bottom);
-					TETextBox(str+1, str[ 0], &tempRect, teCenter);
+					TETextBox(str+1, str[0], &tempRect, teCenter);
 				}
 			}
 			
@@ -1953,11 +1953,11 @@ void DoGlobalNull()
 		}	
 		
 		for (i = 0; i < MAXINSTRU; i++) {
-			for (x = 0; x < curMusic->fid[ i].numSamples; x++) {
-				if (curMusic->sample[ curMusic->fid[ i].firstSample + x] == NULL) MyDebugStr(__LINE__, __FILE__, "Sound Size not CORRECT !");
+			for (x = 0; x < curMusic->fid[i].numSamples; x++) {
+				if (curMusic->sample[curMusic->fid[i].firstSample + x] == NULL) MyDebugStr(__LINE__, __FILE__, "Sound Size not CORRECT !");
 				
-				if (curMusic->sample[ curMusic->fid[ i].firstSample + x]->data != NULL) {
-					if (curMusic->sample[ curMusic->fid[ i].firstSample + x]->size != GetPtrSize(curMusic->sample[ curMusic->fid[ i].firstSample + x]->data)) {
+				if (curMusic->sample[curMusic->fid[i].firstSample + x]->data != NULL) {
+					if (curMusic->sample[curMusic->fid[i].firstSample + x]->size != GetPtrSize(curMusic->sample[curMusic->fid[i].firstSample + x]->data)) {
 						MyDebugStr(__LINE__, __FILE__, "Sound Size not CORRECT !");
 					}
 				}
@@ -2321,7 +2321,7 @@ void EventLoop2(void)
 										MADDriver->chan[TrackMem[x]].maxPtr = MADDriver->chan[TrackMem[x]].curPtr;
 										
 										if (PianoRecording)
-											NPianoRecordProcess(0xFF, 0xFF, 0x10, TrackMem[ x]);
+											NPianoRecordProcess(0xFF, 0xFF, 0x10, TrackMem[x]);
 										break;
 										
 									case eNoteOFF:
@@ -2376,7 +2376,7 @@ void EventLoop2(void)
 			
 		{
 			for (i = 0; i < 15; i++) {
-				if (FKEYCo[ i] == (theEvent.message & keyCodeMask) >> 8L) {
+				if (FKEYCo[i] == (theEvent.message & keyCodeMask) >> 8L) {
 					PressFKey(i);
 					break;
 				}
@@ -2457,7 +2457,7 @@ void EventLoop2(void)
 						if (TrackMem[TouchIn] < 0 || TrackMem[TouchIn] >= MADDriver->DriverSettings.numChn) TrackMem[TouchIn] = 0;
 						
 						if (GetIns(&ins, NULL))
-							DoPlayInstruInt(i, ins, eff, arg, volCmd, &MADDriver->chan[ track], 0, 0);
+							DoPlayInstruInt(i, ins, eff, arg, volCmd, &MADDriver->chan[track], 0, 0);
 					}
 				}
 			} else
@@ -2913,8 +2913,8 @@ void DoMouseDown(EventRecord theEventI)
 			Start.h = Start.v = 0;
 			LocalToGlobal(&Start);
 			
-			thePrefs.WinPos[ GetWRefCon(whichWindow)].v = Start.v;
-			thePrefs.WinPos[ GetWRefCon(whichWindow)].h = Start.h;
+			thePrefs.WinPos[GetWRefCon(whichWindow)].v = Start.v;
+			thePrefs.WinPos[GetWRefCon(whichWindow)].h = Start.h;
 			break;
 			
 		case inDrag:
@@ -3227,7 +3227,7 @@ extern Str255	versString;
 void DrawVERSION(void)
 {
 	Str255				strTemp;
-	char				str2[ 300];
+	char				str2[300];
 	Handle				aHandle;
 	
 	/**********************/
@@ -3354,7 +3354,7 @@ pascal Boolean MyCustomFileFilter2(CInfoPBRec *pb, void *myDataPtr)
 				return false;
 			
 			for (i = 0; i < gMADLib->TotalPlug; i++) {
-				if (pb->hFileInfo.ioFlFndrInfo.fdType == Ptr2OSType(gMADLib->ThePlug[ i].type))
+				if (pb->hFileInfo.ioFlFndrInfo.fdType == Ptr2OSType(gMADLib->ThePlug[i].type))
 					return false;
 			}
 			
@@ -3426,7 +3426,7 @@ pascal short MyDlgHook2(short item, DialogPtr theDialog, void *myDataPtr)
 	GrafPtr				savePort;
 	FInfo				fndrInfo;
 	Str255				str;
-	char				tempC[ 5];
+	char				tempC[5];
 	
 	GetPort(&savePort);
 	SetPortDialogPort(theDialog);
@@ -3510,7 +3510,7 @@ pascal short MyDlgHook2(short item, DialogPtr theDialog, void *myDataPtr)
 					GetMenuItemText(showWhatMenu, showWhat, str);
 					SetDText(theDialog, 19, str);
 					
-					specificType = plugListO[ showWhat];
+					specificType = plugListO[showWhat];
 					
 					item = sfHookRebuildList;
 				}
@@ -3661,7 +3661,7 @@ pascal short MyDlgHook2(short item, DialogPtr theDialog, void *myDataPtr)
 					{
 						OSType2Str(fndrInfo.fdType, a);
 					}
-					else a[ 0] = 0;
+					else a[0] = 0;
 				}
 				SetDText(theDialog, 11, a);
 				
@@ -3732,7 +3732,7 @@ void NOpenMusic()
 		if (DoStandardOpen(&reply, "\pOpen a MADI music file", 'MADI') == noErr)
 		{
 			OSType 	tempType;
-			char	tempC[ 5];
+			char	tempC[5];
 			FInfo		fndrInfo;
 			OSErr	err;
 			
@@ -3776,7 +3776,7 @@ void InitImportMenu(void)
 	
 	for (i = 0; i < gMADLib->TotalPlug; i++) {
 		Str255 pMenuName;
-		GetPStrFromCFString(gMADLib->ThePlug[ i].MenuName, pMenuName);
+		GetPStrFromCFString(gMADLib->ThePlug[i].MenuName, pMenuName);
 		
 		switch (gMADLib->ThePlug[i].mode) {
 			case 'EXIM':
@@ -4062,7 +4062,7 @@ void Erreur(short ID, OSErr theErr)
 		OSType				sign = 'SNPL';
 		AppleEvent			aeEvent, reply;
 		AEDesc				target, listElem, fileList;
-		OSErr				err[ 2], iErr;
+		OSErr				err[2], iErr;
 		
 		
 		
@@ -4206,7 +4206,7 @@ void WindowsSettingsOption()
 	curSelec = 0;
 	SetDText(aDia, 7, "\p1");
 	
-	SetDText(aDia, 4, thePrefs.WinNames[ curSelec]);
+	SetDText(aDia, 4, thePrefs.WinNames[curSelec]);
 	SelectDialogItemText(aDia, 4, 0, 300);
 	
 	do {
@@ -4231,7 +4231,7 @@ void WindowsSettingsOption()
 				
 				if (HiWord(mresult) != 0) {
 					curSelec = LoWord(mresult) - 1;
-					SetDText(aDia, 4, thePrefs.WinNames[ curSelec]);
+					SetDText(aDia, 4, thePrefs.WinNames[curSelec]);
 					SelectDialogItemText(aDia, 4, 0, 300);
 					
 					NumToString(curSelec + 1, theString);
@@ -4248,7 +4248,7 @@ void WindowsSettingsOption()
 	if (itemHit == 1) {
 		SaveWindowState(curSelec);
 		
-		GetDText(aDia, 4, thePrefs.WinNames[ curSelec]);
+		GetDText(aDia, 4, thePrefs.WinNames[curSelec]);
 		
 		if (thePrefs.WinNames[curSelec][0] > 30)
 			thePrefs.WinNames[curSelec][0] = 30;
@@ -4322,7 +4322,7 @@ void HandleMenuChoice(long menuChoice)
 				
 #if 0
 			case 180:
-				HandleVSTChoice(theItem-3, &masterVST[ theItem-3]);
+				HandleVSTChoice(theItem-3, &masterVST[theItem-3]);
 				break;
 #endif
 				
@@ -4546,7 +4546,7 @@ void HandleViewsChoice(short theItem)
 				}
 				else
 				{
-					SelectWindow2( GetDialogWindow(DigitalDlog));
+					SelectWindow2(GetDialogWindow(DigitalDlog));
 					SetPortDialogPort(DigitalDlog);
 				}
 			}
@@ -5682,33 +5682,33 @@ void DoPreferences()
 		thePrefs.previousSpec.ESpeed = 8000;
 		thePrefs.previousSpec.generalVol = 64;
 		
-		for (i = 0 ; i < MAXTRACK; i++) thePrefs.previousSpec.chanPan[ i] = 256;
-		for (i = 0 ; i < MAXTRACK; i++) thePrefs.previousSpec.chanVol[ i] = 64;
+		for (i = 0 ; i < MAXTRACK; i++) thePrefs.previousSpec.chanPan[i] = 256;
+		for (i = 0 ; i < MAXTRACK; i++) thePrefs.previousSpec.chanVol[i] = 64;
 		
 		for (i = 0; i < 20; i++)
 		{
-			thePrefs.FKeyActive[ i]		= false;
-			thePrefs.FKeyItem[ i] 		= 0;
-			thePrefs.FKeyWind[ i]		= 0;
+			thePrefs.FKeyActive[i]		= false;
+			thePrefs.FKeyItem[i] 		= 0;
+			thePrefs.FKeyWind[i]		= 0;
 		}
 		
-		pStrcpy(thePrefs.WinNames[ 0], "\pState 1");
-		pStrcpy(thePrefs.WinNames[ 1], "\pState 2");
-		pStrcpy(thePrefs.WinNames[ 2], "\pState 3");
+		pStrcpy(thePrefs.WinNames[0], "\pState 1");
+		pStrcpy(thePrefs.WinNames[1], "\pState 2");
+		pStrcpy(thePrefs.WinNames[2], "\pState 3");
 		
 		for (x = 0; x < 3; x++)
 		{
 			for (i = 0; i < MAXWINDOWS; i++)
 			{
-				thePrefs.WinPosO[ x][ i] = thePrefs.WinPos[ i];
-				thePrefs.WinEtatO[ x][ i] = thePrefs.WinEtat[ i];
-				thePrefs.WinLargO[ x][ i] = thePrefs.WinLarg[ i];
-				thePrefs.WinHiO[ x][ i] = thePrefs.WinHi[ i];
-				thePrefs.WinIDO[ x][ i] = thePrefs.WinID[ i];
+				thePrefs.WinPosO[x][i] = thePrefs.WinPos[i];
+				thePrefs.WinEtatO[x][i] = thePrefs.WinEtat[i];
+				thePrefs.WinLargO[x][i] = thePrefs.WinLarg[i];
+				thePrefs.WinHiO[x][i] = thePrefs.WinHi[i];
+				thePrefs.WinIDO[x][i] = thePrefs.WinID[i];
 			}
 		}
 		
-		for (i = 0; i < MAXINSTRU; i++) thePrefs.OCArrow[ i] = true;
+		for (i = 0; i < MAXINSTRU; i++) thePrefs.OCArrow[i] = true;
 		
 		thePrefs.outPutMode = DeluxeStereoOutPut;
 		thePrefs.driverMode = SoundManagerDriver;
@@ -5718,9 +5718,9 @@ void DoPreferences()
 		thePrefs.channelNumber = 2;
 		thePrefs.FKeyTracks = true;
 		
-		for (i = 0; i < EQPACKET*2; i++)	thePrefs.Filter[ i] = 1.0;
+		for (i = 0; i < EQPACKET*2; i++)	thePrefs.Filter[i] = 1.0;
 		
-		for (i = 0; i < MAXTRACK; i++) thePrefs.SelectedTracks[ i] = false;
+		for (i = 0; i < MAXTRACK; i++) thePrefs.SelectedTracks[i] = false;
 		
 		pStrcpy(thePrefs.ASIODriverName, "\pApple Sound Manager");
 		
@@ -5759,7 +5759,7 @@ void DoPreferences()
 	
 	/*for (i = 0; i < 7; i++)
 	 {
-	 BlockMoveData(&thePrefs.tracksColor[ i * 32], &thePrefs.tracksColor[ 32 + i * 32], 32 * 6);
+	 BlockMoveData(&thePrefs.tracksColor[i * 32], &thePrefs.tracksColor[32 + i * 32], 32 * 6);
 	 }*/
 	
 	/////////
@@ -6130,7 +6130,7 @@ void DoReset()
 		GetDialogItem(aDia, 3, &itemType, &itemHandle, &tempRect);	// DELETE Patterns
 		if (ResetPatterns) {
 			for (x = 1; x < curMusic->header->numPat ; x++) {
-				if (curMusic->partition[ x] != NULL)
+				if (curMusic->partition[x] != NULL)
 					DisposePtr((Ptr) curMusic->partition[x]);
 				curMusic->partition[x] = NULL;
 			}
@@ -6138,8 +6138,8 @@ void DoReset()
 			
 			// Purge Track
 			for (tracks = 0; tracks < curMusic->header->numChn; tracks++) {
-				for (position = 0; position < curMusic->partition[ 0]->header.size; position++) {
-					aCmd = GetMADCommand(position, tracks, curMusic->partition[ 0]);
+				for (position = 0; position < curMusic->partition[0]->header.size; position++) {
+					aCmd = GetMADCommand(position, tracks, curMusic->partition[0]);
 					MADKillCmd(aCmd);
 				}
 			}
@@ -6167,9 +6167,9 @@ void DoReset()
 				// Purge Track
 				for (tracks = 0; tracks < curMusic->header->numChn; tracks++)
 				{
-					for (position = 0; position < curMusic->partition[ i]->header.size; position++)
+					for (position = 0; position < curMusic->partition[i]->header.size; position++)
 					{
-						aCmd = GetMADCommand(position, tracks, curMusic->partition[ i]);
+						aCmd = GetMADCommand(position, tracks, curMusic->partition[i]);
 						MADKillCmd(aCmd);
 					}
 				}
@@ -6586,7 +6586,7 @@ void AddRemoveBookmarksFilter(DialogPtr theDialog, EventRecord *theEventI, short
 						
 						for (i = 0; i < 299; i++)
 						{
-							if (thePrefs.PianoKey[ i] == theCell.v) thePrefs.PianoKey[ i] = -1;
+							if (thePrefs.PianoKey[i] == theCell.v) thePrefs.PianoKey[i] = -1;
 						}
 						DrawAllBookMarks();
 					}
@@ -6622,7 +6622,7 @@ void DrawAllBookMarks()
 	LAddRow(URLsNo, 0, BookmarkList);
 	
 	for (i = 0; i < URLsNo; i++) {
-		LSetCell(URLsDesc[ i] + 1, URLsDesc[ i][ 0], cSize, BookmarkList);
+		LSetCell(URLsDesc[i] + 1, URLsDesc[i][0], cSize, BookmarkList);
 		cSize.v++;
 	}
 	
@@ -6641,7 +6641,7 @@ void DrawAllBookMarks()
 	LSetDrawingMode(true, BookmarkList);
 	
 	for (i = 0; i < URLsNo; i++) {
-		LSetCell(URLsDesc[ i] + 1, URLsDesc[ i][ 0], cSize, BookmarkList);
+		LSetCell(URLsDesc[i] + 1, URLsDesc[i][0], cSize, BookmarkList);
 		cSize.v++;
 	}
 	
@@ -6649,7 +6649,7 @@ void DrawAllBookMarks()
 #endif
 }
 
-static	Str255		cURLs[ MAXURL], cURLsDesc[ MAXURL];
+static	Str255		cURLs[MAXURL], cURLsDesc[MAXURL];
 
 void AddRemoveBookmarks()
 {
@@ -6669,8 +6669,8 @@ void AddRemoveBookmarks()
 	
 	cURLsNo = URLsNo;
 	for (i = 0; i < cURLsNo; i++) {
-		pStrcpy(cURLs[ i], URLs[ i]);
-		pStrcpy(cURLsDesc[ i], URLsDesc[ i]);
+		pStrcpy(cURLs[i], URLs[i]);
+		pStrcpy(cURLsDesc[i], URLsDesc[i]);
 	}
 	
 	GetPort(&myPort);
@@ -6756,8 +6756,8 @@ void AddRemoveBookmarks()
 				}
 				else theCell.v = URLsNo;
 				
-				GetDText(TheDia, 5, URLsDesc[ theCell.v]);
-				GetDText(TheDia, 6, URLs[ theCell.v]);
+				GetDText(TheDia, 5, URLsDesc[theCell.v]);
+				GetDText(TheDia, 6, URLs[theCell.v]);
 				
 				if (URLsDesc[theCell.v][0] <= 0)
 					pStrcpy(URLsDesc[theCell.v], "\pYour new URL");
@@ -6803,8 +6803,8 @@ void AddRemoveBookmarks()
 				theCell.v = 0;
 				theCell.h = 0;
 				if (LGetSelect(true, &theCell, BookmarkList)) {
-					GetDText(TheDia, 5, URLsDesc[ theCell.v]);
-					GetDText(TheDia, 6, URLs[ theCell.v]);
+					GetDText(TheDia, 5, URLsDesc[theCell.v]);
+					GetDText(TheDia, 6, URLs[theCell.v]);
 				}
 				
 				DrawAllBookMarks();
@@ -6827,8 +6827,8 @@ void AddRemoveBookmarks()
 					{
 						lastSelected = theCell.v;
 						
-						SetDText(TheDia, 5, URLsDesc[ theCell.v]);
-						SetDText(TheDia, 6, URLs[ theCell.v]);
+						SetDText(TheDia, 5, URLsDesc[theCell.v]);
+						SetDText(TheDia, 6, URLs[theCell.v]);
 						
 						SelectDialogItemText(TheDia, 5, 0, 32767);
 					}
@@ -6905,7 +6905,7 @@ void CloseBookMarks()
 		iErr = FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &achar, &inOutBytes);
 		
 		inOutBytes = URLsDesc[i][0];
-		FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &URLsDesc[i][ 1], &inOutBytes);
+		FSWriteFork(fRefNum, fsAtMark, 0, inOutBytes, &URLsDesc[i][1], &inOutBytes);
 		
 		if (i != URLsNo - 1) {
 			inOutBytes = 1;
@@ -6930,7 +6930,7 @@ void InitBookMarks()
 	
 	FindFolder(kOnSystemDisk, kPreferencesFolderType, true, &vRefNum, &dirID);
 	
-	//	URLs[ MAXURL], URLsDesc[ MAXURL];
+	//	URLs[MAXURL], URLsDesc[MAXURL];
 	
 	///////// LOAD DEFAULT FILES IN ANY CASE !!!!!
 	
@@ -7030,7 +7030,7 @@ void InitBookMarks()
 	RETRY3:
 		
 		prev = i;
-		while (i < eof && data[ i] != '\r')
+		while (i < eof && data[i] != '\r')
 			i++;
 		if (i - prev == 0 && i < eof) {
 			i++;
@@ -7133,7 +7133,7 @@ void HandleNewSound(short theItem)
 					curData = MADCreateSample(curMusic, ins, samp);
 					curData->amp = 16;	// Force 16 bits quality!
 				} else
-					curData = curMusic->sample[ curMusic->fid[ ins].firstSample + samp];
+					curData = curMusic->sample[curMusic->fid[ins].firstSample + samp];
 				
 				NAppelPlug(ins, samp, ToneGenerator);
 				

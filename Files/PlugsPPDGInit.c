@@ -6,8 +6,7 @@
 #include "PPPrivate.h"
 #define FilterPlugMax 100
 
-typedef struct FilterInfo
-{
+typedef struct FilterInfo {
 	PPDigitalPlugin	**PlugCode;
 	CFStringRef		MenuName;
 	CFBundleRef		file;
@@ -40,10 +39,9 @@ OSErr CallPPDGPlugIns(short PlugNo, Pcmd *myPcmd)
 	SetPort(savedPort);
 	
 	
-	if (iErr != noErr)
-	{
+	if (iErr != noErr) {
 		Erreur(40, iErr);
-	}	
+	}
 	
 	return iErr;
 }
@@ -53,7 +51,7 @@ OSErr CallPPDGPlugIns(short PlugNo, Pcmd *myPcmd)
 void InitPPDGPlug(void)
 {
 	thePPInfoPlug.RPlaySoundUPP			= inMADPlaySoundData;
-	thePPInfoPlug.UpdateALLWindowUPP 	= UpdateALLWindow;
+	thePPInfoPlug.UpdateALLWindowUPP	= UpdateALLWindow;
 	thePPInfoPlug.MyDlgFilterUPP		= MyDlgFilterDesc;
 	
 	
@@ -62,7 +60,7 @@ void InitPPDGPlug(void)
 	
 	ThePlug = (FilterInfo*) NewPtr(FilterPlugMax * sizeof(FilterInfo));
 	
-	tPlug	= 0;
+	tPlug = 0;
 	
 	PPDigitalPlugin** tempMADPlug = NULL;
 	PlugLocNums = CFArrayGetCount(PlugLocsDigital);
@@ -85,7 +83,7 @@ void InitPPDGPlug(void)
 						break;
 					}
 					
-#pragma mark This is where we add the plug to the plug library.
+					// This is where we add the plug to the plug library.
 					short		resFileNum = CFBundleOpenBundleResourceMap(tempBundleRef);
 					CFTypeRef	OpaqueDictionaryType = NULL;
 					
@@ -116,13 +114,11 @@ void InitPPDGPlug(void)
 void InitPPDGMenu(void)
 {
 	short	i;
-	
 	PPDGMenu = GetMenu(159);
 	
 	for(i=0; i < tPlug; i++) {
 		Str255	PPDGPlugMenuName;
-		GetPStrFromCFString(ThePlug[ i].MenuName, PPDGPlugMenuName);
-
+		GetPStrFromCFString(ThePlug[i].MenuName, PPDGPlugMenuName);
 		AppendMenu(PPDGMenu, PPDGPlugMenuName);
 	}
 }

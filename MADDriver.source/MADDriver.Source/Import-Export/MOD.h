@@ -47,11 +47,11 @@ struct FileInstrDataz
 
 typedef struct MODDef
 {
-	char NameSignature[ 20];
-	struct FileInstrDataz fid[ 31];
+	char NameSignature[20];
+	struct FileInstrDataz fid[31];
 	Byte numPointers;
 	Byte maxPointers;
-	Byte oPointers[ MAXPTRS];
+	Byte oPointers[MAXPTRS];
 	OSType longFmtSignature;
 	struct MODPat patterns[];
 } MODDef;

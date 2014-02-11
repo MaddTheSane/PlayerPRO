@@ -161,7 +161,7 @@ Boolean FindInternal(short FindType)
 	
 	for (FPat = FStartPat; FPat < FEndPat; FPat++) {
 		if (FindWhere == Everywhere)
-			FEndPos = curMusic->partition[ FPat]->header.size;
+			FEndPos = curMusic->partition[FPat]->header.size;
 		
 		for (FPos = FStartPos; FPos < FEndPos; FPos++) {
 			for (FTrack = FStartTrack; FTrack< FEndTrack; FTrack++) {
@@ -171,7 +171,7 @@ Boolean FindInternal(short FindType)
 					if (FindTrack != FTrack) goto InBoucle;
 				}
 				
-				cmd = GetMADCommand(FPos, FTrack, curMusic->partition[ FPat]);
+				cmd = GetMADCommand(FPos, FTrack, curMusic->partition[FPat]);
 				
 				if (FInstruActi) {
 					if (cmd->ins == FindInstru)
@@ -499,7 +499,7 @@ short ExtractFunctionArgu(Str255 aStr)
 			return -1;
 	} else if (aStr[0] == 2) {
 		if (aStr[1] >= 'A' && aStr[1] <= 'F')
-			Oct = 10 + aStr[ 1] - 'A';
+			Oct = 10 + aStr[1] - 'A';
 		else if (aStr[1] >= '0' && aStr[1] <= '9')
 			Oct = aStr[1] - '0';
 		else
@@ -584,7 +584,7 @@ Boolean SetUpFind()
 		//GetClassicalSelection(&FStartPos, &FEndPos, &FStartTrack, &FEndTrack);
 		} else if (FindWhere == CurrentPat) {
 			FStartPos = 0;
-			FEndPos = curMusic->partition[ FStartPat]->header.size;
+			FEndPos = curMusic->partition[FStartPat]->header.size;
 			FStartTrack = 0;
 			FEndTrack = curMusic->header->numChn;
 		} else

@@ -32,9 +32,9 @@ typedef struct
 	short			oldShort;
 	Boolean			AffichageDIGI;
 	short			NoStart;
-	Point			WinPos[ 30];
-	short			WinEtat[ 30];
-	short			PianoKey[ 300];
+	Point			WinPos[30];
+	short			WinEtat[30];
+	short			PianoKey[300];
 	Boolean			oldBool;
 	Boolean			InstruListBig;
 	Boolean			PatListBig;
@@ -49,8 +49,8 @@ typedef struct
 	long			Mz;
 	unsigned long	firstStart;
 	short			WinLarg[30];
-	RGBColor		tracksColor[ MAXTRACK];
-	short			unused[ MAXTRACK];
+	RGBColor		tracksColor[MAXTRACK];
+	short			unused[MAXTRACK];
 	short			PianoPos;
 	short			volumeLevel;
 	Boolean			MADCompression;
@@ -65,14 +65,14 @@ typedef struct
 	Boolean			FSinScroll;
 	Boolean			RememberMusicList;
 	Boolean			OscilloLine;
-	long			WinID[ 30];
+	long			WinID[30];
 	Boolean			DigitalInstru;
 	Boolean			DigitalNote;
 	Boolean			DigitalEffect;
 	Boolean			DigitalArgu;
 	Boolean			DigitalVol;
 	Boolean			GoToStop;
-	Boolean			DriverEffects[ 20];
+	Boolean			DriverEffects[20];
 	Boolean			MADC;
 	short			OscilloSize;
 	short			OscilloType;
@@ -126,7 +126,7 @@ typedef struct
 	
 	/** News 4.5.2	**/
 	
-	Boolean			OCArrow[ MAXINSTRU];
+	Boolean			OCArrow[MAXINSTRU];
 	short			MozartC1h, MozartC2h;
 	OSType			SoundTypeSamp;
 	OSType			SoundTypeIns;
@@ -171,14 +171,14 @@ typedef struct
 	short			TempsUnit;
 	short			TrackHeight;
 	
-	short			FKeyActive[ 20];
-	short			FKeyItem[ 20];
-	short			FKeyWind[ 20];
+	short			FKeyActive[20];
+	short			FKeyItem[20];
+	short			FKeyWind[20];
 	
 	/** News 4.5.7 **/
 	
 	Boolean			NewPrefSystem;
-	unsigned char	NewPrefsCode[ 30];	
+	unsigned char	NewPrefsCode[30];	
 	
 	/** News 4.5.8 **/
 	
@@ -202,15 +202,15 @@ typedef struct
 	long			RAWLength;
 	long			RAWHeader;
 	
-	Byte			SelectedTracks[ MAXTRACK];
+	Byte			SelectedTracks[MAXTRACK];
 	
-	Point			WinPosO[ 3][ 30];
-	short			WinEtatO[ 3][ 30];
-	short			WinLargO[ 3][ 30];
-	short			WinHiO[ 3][ 30];
-	long			WinIDO[ 3][ 30];
+	Point			WinPosO[3][30];
+	short			WinEtatO[3][30];
+	short			WinLargO[3][30];
+	short			WinHiO[3][30];
+	long			WinIDO[3][30];
 	
-	Str32			WinNames[ 3];
+	Str32			WinNames[3];
 	
 	// 5.2
 	Boolean			clickSound;
@@ -356,7 +356,7 @@ pascal OSErr MyTrackingTools(short message, WindowPtr theWindow, void *handlerRe
 	long				textSize;
 	HFSFlavor			myFlavor;
 	FInfo				fndrInfo;
-	char				str[ 5];
+	char				str[5];
 	
 	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag)) return(noErr);
 	
@@ -600,7 +600,7 @@ short PressTypeMenu(short whichMenu, short item)
 					
 					GetMenuItemText(MenuDriver, i+1, str);
 					
-					str[ 0] -= 3;	StringToNum(str, &r);	str[ 0] += 3;
+					str[0] -= 3;	StringToNum(str, &r);	str[0] += 3;
 					
 					if (r == MADDriver->DriverSettings.MicroDelaySize) startitem = i+1;
 				}
@@ -624,7 +624,7 @@ short PressTypeMenu(short whichMenu, short item)
 					
 					GetMenuItemText(MenuDriver, i+1, str);
 					
-					str[ 0] -= 3;	StringToNum(str, &r);	str[ 0] += 3;
+					str[0] -= 3;	StringToNum(str, &r);	str[0] += 3;
 					
 					if (r == MADDriver->DriverSettings.ReverbSize) startitem = i+1;
 				}
@@ -641,7 +641,7 @@ short PressTypeMenu(short whichMenu, short item)
 				
 				GetMenuItemText(MenuDriver, i+1, str);
 				
-				str[ 0] -= 2;	StringToNum(str, &r);	str[ 0] += 2;
+				str[0] -= 2;	StringToNum(str, &r);	str[0] += 2;
 				
 				if (r == MADDriver->DriverSettings.ReverbStrength) startitem = i+1;
 			}
@@ -754,9 +754,9 @@ short PressTypeMenu(short whichMenu, short item)
 				else
 				{
 					GetMenuItemText(MenuDriver, LoWord(mresult), str);
-					str[ 0] -= 3;
+					str[0] -= 3;
 					StringToNum(str, &r);
-					str[ 0] += 3;
+					str[0] += 3;
 					
 					if (r >= 0 && r <= 1000) Init.MicroDelaySize = r;
 				}
@@ -772,9 +772,9 @@ short PressTypeMenu(short whichMenu, short item)
 					Init.Reverb = true;
 					
 					GetMenuItemText(MenuDriver, LoWord(mresult), str);
-					str[ 0] -= 3;
+					str[0] -= 3;
 					StringToNum(str, &r);
-					str[ 0] += 3;
+					str[0] += 3;
 					
 					if (r >= 0 && r <= 1000) Init.ReverbSize = r;
 				}
@@ -782,9 +782,9 @@ short PressTypeMenu(short whichMenu, short item)
 				
 			case 169:
 				GetMenuItemText(MenuDriver, LoWord(mresult), str);
-				str[ 0] -= 2;
+				str[0] -= 2;
 				StringToNum(str, &r);
-				str[ 0] += 2;
+				str[0] += 2;
 				
 				if (r >= 0 && r <= 1000) Init.ReverbStrength = r;
 				break;

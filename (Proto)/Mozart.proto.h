@@ -56,7 +56,6 @@ void SetUpLabels(void);
 void CreateMozartWindow(void);
 void CloseMozartWindow(void);
 void DoKeyPressMozart(short);
-Pcmd *CreatePcmdFromSelectionMozart(void);
 void COPYMozart(void);
 void GetMinMaxPcmd(Pcmd *, short *, short *);
 void PasteCmdBox(Pcmd *);

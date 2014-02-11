@@ -120,8 +120,8 @@ OSErr DBSndPlay (MADDriverRec *inMADDriver, SndChannelPtr chan)
 
 		doubleBuffer->dbNumFrames 		= 0;
 		doubleBuffer->dbFlags 			= 0;
-		doubleBuffer->dbUserInfo[ 0]	= (long) inMADDriver;
-		doubleBuffer->dbUserInfo[ 1]	= true;
+		doubleBuffer->dbUserInfo[0]	= (long) inMADDriver;
+		doubleBuffer->dbUserInfo[1]	= true;
 		
 		MyPPDoubleBackProc(chan, doubleBuffer);
 		
@@ -156,8 +156,8 @@ void PlayChannel(MADDriverRec *inMADDriver)
 {
 	OSErr					iErr;
 
-	MyPPDoubleBackProc(inMADDriver->MusicChannelPP, inMADDriver->TheHeader.dbhBufferPtr[ 0]);
-	MyPPDoubleBackProc(inMADDriver->MusicChannelPP, inMADDriver->TheHeader.dbhBufferPtr[ 1]);
+	MyPPDoubleBackProc(inMADDriver->MusicChannelPP, inMADDriver->TheHeader.dbhBufferPtr[0]);
+	MyPPDoubleBackProc(inMADDriver->MusicChannelPP, inMADDriver->TheHeader.dbhBufferPtr[1]);
 	
 #if CALL_NOT_IN_CARBON
 	iErr = SndPlayDoubleBuffer(inMADDriver->MusicChannelPP, &inMADDriver->TheHeader);

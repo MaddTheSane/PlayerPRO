@@ -119,7 +119,7 @@ void FillInterTextSpectrum(Rect *tempRect, short i)
 			break;
 	}
 	
-	pStrcat(aStr, osci[ i].Name);
+	pStrcat(aStr, osci[i].Name);
 	pStrcat(aStr, "\p (");
 	NumToString(i + 1, bStr);
 	pStrcat(aStr, bStr);
@@ -337,7 +337,7 @@ void C8BitSpectrumPixMap(Byte *tempPtr, Byte *tempPtr2, Ptr pixMapPtr, Byte *spo
 	for (i = 0; i < SIter; i += 2) {
 		high		= VFast;
 		while (high-- > 0 && *tempPtr2 > 0) {
-			*(pixMapPtr + CurrentQuickInt[ -*tempPtr2] + i) = 0xFF;
+			*(pixMapPtr + CurrentQuickInt[-*tempPtr2] + i) = 0xFF;
 			(*tempPtr2)--;			// Descente de la fréquence
 		}
 		
@@ -382,7 +382,7 @@ void DrawSpectrum(OsciRec *osciPtr, short no)
 	tempRect.left	= 0;
 	tempRect.right	= caRect.right-15;
 	
-	tempRect.top	= osci[ no].VPos;
+	tempRect.top	= osci[no].VPos;
 	tempRect.bottom	= tempRect.top + OsciH;
 	
 	C8BitSpectrumPixMap((Byte*)spectrumPtr + OsciOffSet/2,
@@ -425,7 +425,7 @@ void DoNullSpectrum(void)
 	
 	OsciSee = (caRect.bottom - 15 - OsciVStart) / (OsciH + InterText);
 	for (i = GetControlValue(VControl); i < GetControlValue(VControl) + OsciSee; i++)
-		DrawSpectrum(&osci[ i], i);
+		DrawSpectrum(&osci[i], i);
 	
 	if (Test)
 		ShowCursor();
@@ -812,7 +812,7 @@ void DoItemPressSpectrum(short whichItem, DialogPtr whichDialog)
 							osci[i].Freq = (OsciOffSet / 2) * 2 + (myPt.h / 2) * 2;
 							
 							ForeColor(redColor);
-							DrawOsciFreq2(osci[ i].Freq, osci[i].VPos, (OsciOffSet/2)*2, i, 215);
+							DrawOsciFreq2(osci[i].Freq, osci[i].VPos, (OsciOffSet/2)*2, i, 215);
 							ForeColor(blackColor);
 							
 							GetPortBounds(GetDialogPort(SpectrumDlog), &caRect);
@@ -1114,7 +1114,7 @@ void CloseSpectrum(void)
 		
 		SetItemMark(ViewsMenu, mSpectrumV, noMark);
 		
-		for (i = 0 ; i < 2; i++) if (specPixMap[ i] != NULL) ZapPixMap(&specPixMap[i]);
+		for (i = 0 ; i < 2; i++) if (specPixMap[i] != NULL) ZapPixMap(&specPixMap[i]);
 		if (CurrentQuickPixMap != NULL)
 			DisposePtr((Ptr)CurrentQuickPixMap);
 		
@@ -1140,7 +1140,7 @@ void ResetSpectrum(void)
 	InvalWindowRect(GetDialogWindow(SpectrumDlog), &caRect);
 	
 	for (i = 0 ; i < 2; i++) ErasePixMap(specPixMap[i]);
-	//for (i = 0; i < VALSIZE; i++) ValSaveData[ i] = 0;
+	//for (i = 0; i < VALSIZE; i++) ValSaveData[i] = 0;
 	
 	SetPort(savePort);
 }

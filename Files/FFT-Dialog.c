@@ -5,7 +5,7 @@
 #include "Undo.h"
 #include <math.h>
 
-static	double		ShiftFilter[ EQPACKET*2], HzFilter[ EQPACKET*2], loggedFilter[ EQPACKET*2];
+static	double		ShiftFilter[EQPACKET*2], HzFilter[EQPACKET*2], loggedFilter[EQPACKET*2];
 static	Boolean		EQPreview;
 static	Boolean		logMode;
 
@@ -96,8 +96,8 @@ void FFTSampleUpdate(DialogPtr TheDia, Boolean filter)
 		
 		ForeColor(yellowColor);
 		
-		MoveTo(itemRect.left + ShiftFilter[ 0]/4, 0);
-		for (i = 0; i < EQPACKET*2; i++) LineTo(itemRect.left + ShiftFilter[ i]/4, itemRect.top + i/4);
+		MoveTo(itemRect.left + ShiftFilter[0]/4, 0);
+		for (i = 0; i < EQPACKET*2; i++) LineTo(itemRect.left + ShiftFilter[i]/4, itemRect.top + i/4);
 	} else {
 		MoveTo(itemRect.left, itemRect.top + (itemRect.bottom-itemRect.top)/2 );
 		LineTo(itemRect.right, itemRect.top + (itemRect.bottom-itemRect.top)/2 );
@@ -105,7 +105,7 @@ void FFTSampleUpdate(DialogPtr TheDia, Boolean filter)
 		ForeColor(yellowColor);
 		
 		MoveTo(itemRect.left, itemRect.top + (2.0 - HzFilter[0]) * (EQPACKET / 4));
-		for (i = 0; i < EQPACKET*2; i++) LineTo(itemRect.left + i / 4, itemRect.top + (2.0 - HzFilter[ i]) * (EQPACKET / 4));
+		for (i = 0; i < EQPACKET*2; i++) LineTo(itemRect.left + i / 4, itemRect.top + (2.0 - HzFilter[i]) * (EQPACKET / 4));
 	}
 	
 	PenSize(1, 1);
@@ -131,16 +131,16 @@ void ApplyFilter(Boolean filter, sData *SDataSrc)
 	
 	if (logMode) {
 		if (filter) {
-			for (i = 0; i < 1024; i++) loggedFilter[ i] = 0;
+			for (i = 0; i < 1024; i++) loggedFilter[i] = 0;
 			
 			last = 0;
 			for (i = 1024-1; i >= 0; i--) {
-				cur = 4*logoScale[ i/4];
+				cur = 4*logoScale[i/4];
 				
 				loggedFilter[i] = ShiftFilter[cur];
 			}
 		} else {
-			for (i = 0; i < 256 * 4; i++) loggedFilter[ i] = 1;
+			for (i = 0; i < 256 * 4; i++) loggedFilter[i] = 1;
 			
 			last = 0;
 			for (i = 1024-1; i >= 0; i--) {
@@ -189,16 +189,16 @@ void FFTSampleFilter(sData *SDataSrc, short instru, Boolean filter)
 	HUnlock(rsrc);
 	DisposeHandle(rsrc);
 	
-	for (i = 0; i < 256; i++) ilogoScale[ i] = -1;
+	for (i = 0; i < 256; i++) ilogoScale[i] = -1;
 
-	for (i = 0; i < 256; i++) ilogoScale[ logoScale[ i]] = i;
+	for (i = 0; i < 256; i++) ilogoScale[logoScale[i]] = i;
 	
 	prev = 0;
 	for (i = 0; i < 256; i++) {
 		if (ilogoScale[i] == -1)
-			ilogoScale[ i] = prev;
+			ilogoScale[i] = prev;
 		else
-			prev = ilogoScale[ i];
+			prev = ilogoScale[i];
 	}
 	
 	//////////
@@ -245,14 +245,14 @@ void FFTSampleFilter(sData *SDataSrc, short instru, Boolean filter)
 			case 8:
 				if (itemHit == 7) {
 					if (logMode == true) {
-						if (filter) for (i = 0; i < EQPACKET*2; i++) ShiftFilter[ i] = ShiftFilter[ 4*ilogoScale[ i/4]];
-						else for (i = 0; i < EQPACKET*2; i++) HzFilter[ i] = HzFilter[ 4*ilogoScale[ i/4]];
+						if (filter) for (i = 0; i < EQPACKET*2; i++) ShiftFilter[i] = ShiftFilter[4*ilogoScale[i/4]];
+						else for (i = 0; i < EQPACKET*2; i++) HzFilter[i] = HzFilter[4*ilogoScale[i/4]];
 					}
 					logMode = false;
 				} else {
 					if (logMode == false) {
-						if (filter) for (i = EQPACKET*2 -1; i >= 0 ; i--) ShiftFilter[ i] = ShiftFilter[ 4*logoScale[ i/4]];
-						else for (i = EQPACKET*2 -1; i >= 0 ; i--) HzFilter[ i] = HzFilter[ 4*logoScale[ i/4]];
+						if (filter) for (i = EQPACKET*2 -1; i >= 0 ; i--) ShiftFilter[i] = ShiftFilter[4*logoScale[i/4]];
+						else for (i = EQPACKET*2 -1; i >= 0 ; i--) HzFilter[i] = HzFilter[4*logoScale[i/4]];
 					}
 					logMode = true;
 				}
@@ -291,8 +291,8 @@ void FFTSampleFilter(sData *SDataSrc, short instru, Boolean filter)
 			
 			case 5:
 				if (filter) {
-					if (logMode) for (i = 0; i < EQPACKET*2; i++) ShiftFilter[ i] = 4*logoScale[ i/4];
-					else for (i = 0; i < EQPACKET*2; i++) ShiftFilter[ i] = i;
+					if (logMode) for (i = 0; i < EQPACKET*2; i++) ShiftFilter[i] = 4*logoScale[i/4];
+					else for (i = 0; i < EQPACKET*2; i++) ShiftFilter[i] = i;
 				} else {
 					for (i = 0; i < EQPACKET * 2; i++) HzFilter[i] = 1.0;
 				}
@@ -342,9 +342,9 @@ void FFTSampleFilter(sData *SDataSrc, short instru, Boolean filter)
 							}
 						} else {
 							if (NewValue < lastPt) {
-								for (i = NewValue*4; i <= (lastPt*4) + 3; i++) ShiftFilter[ i] = EQInterpolate(i, NewValue*4, (lastPt*4), (double) oldValue * 4.0, (double) lastValue * 4.0);
+								for (i = NewValue*4; i <= (lastPt*4) + 3; i++) ShiftFilter[i] = EQInterpolate(i, NewValue*4, (lastPt*4), (double) oldValue * 4.0, (double) lastValue * 4.0);
 							} else {
-								for (i = NewValue*4 +3; i >= (lastPt*4); i--) ShiftFilter[ i] = EQInterpolate(i, NewValue*4, (lastPt*4), (double) oldValue * 4.0, (double) lastValue * 4.0);
+								for (i = NewValue*4 +3; i >= (lastPt*4); i--) ShiftFilter[i] = EQInterpolate(i, NewValue*4, (lastPt*4), (double) oldValue * 4.0, (double) lastValue * 4.0);
 							}
 						}
 					} else {

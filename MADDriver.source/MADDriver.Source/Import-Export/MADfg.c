@@ -62,8 +62,8 @@ static struct MusicPattern* oldDecompressPartitionMAD1(struct MusicPattern* myPa
 			case 0x03:
 				srcPtr++;
 				
-				((short*)myCmd)[ 0] = *((short*) srcPtr);
-				((short*)myCmd)[ 1] = ((short*) srcPtr)[ 1];
+				((short*)myCmd)[0] = *((short*) srcPtr);
+				((short*)myCmd)[1] = ((short*) srcPtr)[1];
 				
 				srcPtr += 4;
 				break;
@@ -71,8 +71,8 @@ static struct MusicPattern* oldDecompressPartitionMAD1(struct MusicPattern* myPa
 			case 0x02:
 				srcPtr++;
 								
-				((short*)myCmd)[ 0] = *((short*) srcPtr);
-				((short*)myCmd)[ 1] = 0L;
+				((short*)myCmd)[0] = *((short*) srcPtr);
+				((short*)myCmd)[1] = 0L;
 				
 				srcPtr += 2;
 				break;
@@ -80,8 +80,8 @@ static struct MusicPattern* oldDecompressPartitionMAD1(struct MusicPattern* myPa
 			case 0x01:
 				srcPtr++;
 				
-				((short*)myCmd)[ 0] = 0;
-				((short*)myCmd)[ 1] = *((short*) srcPtr);
+				((short*)myCmd)[0] = 0;
+				((short*)myCmd)[1] = *((short*) srcPtr);
 				
 				srcPtr += 2;
 				break;
@@ -109,7 +109,7 @@ static struct Command* GetOldCommand(short PosX, short TrackIdX, struct MusicPat
 	if (PosX < 0) PosX = 0;
 	else if (PosX >= tempMusicPat->header.PatternSize) PosX = tempMusicPat->header.PatternSize -1;
 		
-	return(& (tempMusicPat->Commands[ (tempMusicPat->header.PatternSize * TrackIdX) + PosX]));
+	return(& (tempMusicPat->Commands[(tempMusicPat->header.PatternSize * TrackIdX) + PosX]));
 }
 
 Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
@@ -117,12 +117,12 @@ Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatDat
 	if (PosX < 0) PosX = 0;
 	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 		
-	return(& (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
+	return(& (tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
 static inline void mystrcpy(Ptr a, BytePtr b)
 {
-	BlockMoveData(b + 1, a, b[ 0]);
+	BlockMoveData(b + 1, a, b[0]);
 }
 
 static void MOToldPatHeader(struct oldPatHeader * p) {
@@ -198,7 +198,7 @@ static OSErr MADFG2Mad(Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 	
 	
 	theMAD->sets = (FXSets*) NewPtrClear(MAXTRACK * sizeof(FXSets));
-	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[i].copyId = i;
 	
 	/**** Patterns *******/
 	
@@ -252,7 +252,7 @@ static OSErr MADFG2Mad(Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 			tempPat->header.PatternSize = 64L;
 			tempPat->header.CompressionMode = 'NONE';
 			
-			for (x = 0; x < 20; x++) tempPat->header.PatternName[ x] = 0;
+			for (x = 0; x < 20; x++) tempPat->header.PatternName[x] = 0;
 			
 			tempPat->header.unused2 = 0;
 		}
@@ -270,24 +270,24 @@ static OSErr MADFG2Mad(Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 		/* CONVERSION */
 		/**************/
 		
-		theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear(sizeof(PatHeader) + theMAD->header->numChn * tempPat->header.PatternSize * sizeof(Cmd), init);
-		if (theMAD->partition[ i] == NULL) return MADNeedMemory;
+		theMAD->partition[i] = (PatData*) MADPlugNewPtrClear(sizeof(PatHeader) + theMAD->header->numChn * tempPat->header.PatternSize * sizeof(Cmd), init);
+		if (theMAD->partition[i] == NULL) return MADNeedMemory;
 		
-		theMAD->partition[ i]->header.size 		= tempPat->header.PatternSize;
-		theMAD->partition[ i]->header.compMode 	= 'NONE';
+		theMAD->partition[i]->header.size 		= tempPat->header.PatternSize;
+		theMAD->partition[i]->header.compMode 	= 'NONE';
 		
-		BlockMoveData(tempPat->header.PatternName, theMAD->partition[ i]->header.name, 20);
+		BlockMoveData(tempPat->header.PatternName, theMAD->partition[i]->header.name, 20);
 		
-		theMAD->partition[ i]->header.patBytes = 0;		theMAD->partition[ i]->header.unused2 = 0;
+		theMAD->partition[i]->header.patBytes = 0;		theMAD->partition[i]->header.unused2 = 0;
 		
-		for (x = 0; x < theMAD->partition[ i]->header.size; x++)
+		for (x = 0; x < theMAD->partition[i]->header.size; x++)
 		{
 			for (z = 0; z < theMAD->header->numChn; z++)
 			{
 				struct Command *oldCmd;
 				Cmd	*aCmd;
 				
-				aCmd = GetMADCommand( x,  z, theMAD->partition[ i]);
+				aCmd = GetMADCommand(x,  z, theMAD->partition[i]);
 				
 				oldCmd 	= GetOldCommand(	x,
 										z,
@@ -309,14 +309,14 @@ static OSErr MADFG2Mad(Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 			}
 		}
 	}
-	for (i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[ i] = NULL;
+	for (i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[i] = NULL;
 	
 	for (i = 0; i < MAXTRACK; i++)
 	{
-		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		if (i % 2 == 0) theMAD->header->chanPan[i] = MAX_PANNING/4;
+		else theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING/4;
 		
-		theMAD->header->chanVol[ i] = MAX_VOLUME;
+		theMAD->header->chanVol[i] = MAX_VOLUME;
 	}
 	
 	theMAD->header->generalVol		= 64;
@@ -331,31 +331,31 @@ static OSErr MADFG2Mad(Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 	theMAD->sample = (sData**) MADPlugNewPtrClear(sizeof(sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
 	if (!theMAD->sample) return MADNeedMemory;
 	
-	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
 	
 	for (i = 0; i < 64; i++)
 	{
-		InstrData	*curIns = &theMAD->fid[ i];
+		InstrData	*curIns = &theMAD->fid[i];
 		
-		BlockMoveData(oldMAD->fid[ i].Filename, curIns->name, 32);
+		BlockMoveData(oldMAD->fid[i].Filename, curIns->name, 32);
 		curIns->type = 0;
 		
-		if (oldMAD->fid[ i].insSize > 0)
+		if (oldMAD->fid[i].insSize > 0)
 		{
 			sData	*curData;
 			
 			curIns->numSamples = 1;
 			curIns->volFade = DEFAULT_VOLFADE;
 			
-			curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear(sizeof(sData), init);
+			curData = theMAD->sample[i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear(sizeof(sData), init);
 			
-			curData->size		= oldMAD->fid[ i].insSize;
-			curData->loopBeg 	= oldMAD->fid[ i].loopStart;
-			curData->loopSize 	= oldMAD->fid[ i].loopLenght;
-			curData->vol		= oldMAD->fid[ i].volume;
-			curData->c2spd		= finetune[ oldMAD->fid[ i].fineTune];
+			curData->size		= oldMAD->fid[i].insSize;
+			curData->loopBeg 	= oldMAD->fid[i].loopStart;
+			curData->loopSize 	= oldMAD->fid[i].loopLenght;
+			curData->vol		= oldMAD->fid[i].volume;
+			curData->c2spd		= finetune[oldMAD->fid[i].fineTune];
 			curData->loopType	= 0;
-			curData->amp		= oldMAD->fid[ i].amplitude;
+			curData->amp		= oldMAD->fid[i].amplitude;
 			
 			curData->relNote	= 0;
 			
@@ -370,7 +370,7 @@ static OSErr MADFG2Mad(Ptr MADPtr, long size, MADMusic *theMAD, MADDriverSetting
 				long 	ll;
 				short	*shortPtr = (short*) curData->data;
 				
-				for (ll = 0; ll < curData->size/2; ll++) MOT16(&shortPtr[ ll]);
+				for (ll = 0; ll < curData->size/2; ll++) MOT16(&shortPtr[ll]);
 			}
 #endif
 		}
@@ -403,7 +403,7 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	//myMOD->NameSignature[ 31] = '\0';
+	//myMOD->NameSignature[31] = '\0';
 	strlcpy(info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
 	
 	/*** Tracks ***/
@@ -416,7 +416,7 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, Ptr AlienFile)
 	info->totalPatterns = 0;
 	for (i = 0; i < 128; i++)
 	{
-		if (myMOD->oPointers[ i] >= info->totalPatterns)	info->totalPatterns = myMOD->oPointers[ i];
+		if (myMOD->oPointers[i] >= info->totalPatterns)	info->totalPatterns = myMOD->oPointers[i];
 	}
 	info->totalPatterns++;
 	
@@ -428,7 +428,7 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, Ptr AlienFile)
 	
 	for (i = 0, info->totalInstruments = 0; i < MAXINSTRU ; i++)
 	{
-		long insSizeSwap = myMOD->fid[ i].insSize;
+		long insSizeSwap = myMOD->fid[i].insSize;
 		MOT32(&insSizeSwap);
 		if (insSizeSwap > 5) info->totalInstruments++;
 	}

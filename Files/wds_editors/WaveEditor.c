@@ -140,14 +140,14 @@ void SetWaveControl()
 		
 		SetControlMinimum(xScroll, 0);
 		
-		tt = curMusic->partition[ CurrentPat]->header.size - ((caRect.right - 14) - WaveRect.left) / XSize;
+		tt = curMusic->partition[CurrentPat]->header.size - ((caRect.right - 14) - WaveRect.left) / XSize;
 		if (tt < 0)
 			tt = 0;
 		SetControlMaximum(xScroll, tt);
 		
 		if (gUseControlSize) SetControlViewSize(xScroll, ((caRect.right - 14) - WaveRect.left) / XSize);
 		
-		CurrentPatSize = curMusic->partition[ CurrentPat]->header.size;
+		CurrentPatSize = curMusic->partition[CurrentPat]->header.size;
 		prevXSize = XSize;
 	}
 	
@@ -170,7 +170,7 @@ void SetWaveControl()
 		prevYSize = YSize;
 	}
 	
-	SetMaxWindow(WaveRect.left + curMusic->partition[ CurrentPat]->header.size*XSize + 14,
+	SetMaxWindow(WaveRect.left + curMusic->partition[CurrentPat]->header.size*XSize + 14,
 				 WaveRect.top + WaveDriverType.numChn*YSize + 15,
 				 WaveDlog);
 }
@@ -223,7 +223,7 @@ void DoNullWave(void)
 		pStrcpy(String, "\pPattern: ");
 		pStrcat(String, aStr);
 		
-		theStr[ 0] = 20;
+		theStr[0] = 20;
 		for (x = 0; x < 20; x++) theStr[x + 1] = curMusic->partition[CurrentPat]->header.name[x];
 		for (x = 1; x < 20; x++) if (theStr[x] == 0) { theStr[0] = x - 1; break;}
 		pStrcat(String, "\p ");
@@ -391,7 +391,7 @@ void GetMinMax(long BS, long BE, Ptr ptr, long *mi, long *mx)
 		long x;
 		
 		for (x = BS; x < BE; x++) {
-			temp =   ptr[ x*WaveDriverType.numChn];
+			temp =   ptr[x*WaveDriverType.numChn];
 			if (temp < 0)
 				temp += 128;
 			else
@@ -423,7 +423,7 @@ void UpdateCmdWave(short Pos, short track)
 	/**/ // SCAN FOR SPEED CHANGE
 	for (maxX = GetControlValue(xScroll); maxX < GetMaxXWave(); maxX++) {
 		for (tt = 0; tt < curMusic->header->numChn; tt++) {
-			theCommand = GetMADCommand(maxX, tt, curMusic->partition[ CurrentPat]);
+			theCommand = GetMADCommand(maxX, tt, curMusic->partition[CurrentPat]);
 			
 			if (theCommand->cmd == 0x0F) {
 				ComputeWave(GetControlValue(xScroll), GetMaxXWave(), track);
@@ -542,7 +542,7 @@ OSErr ComputeWave(short fromX, short toX, short chan)
 	
 	ForeColor(blackColor);
 	
-	if (toX == curMusic->partition[ CurrentPat]->header.size)
+	if (toX == curMusic->partition[CurrentPat]->header.size)
 	{
 		MoveTo(toX*XSize + XOffSet - 1, cRect.top);
 		LineTo(toX*XSize + XOffSet - 1, cRect.bottom);
@@ -578,21 +578,21 @@ OSErr ComputeWave(short fromX, short toX, short chan)
 	{
 		short 		pos, tt;
 		Cmd 		*theCmd;
-		Boolean		okT[ MAXTRACK];
+		Boolean		okT[MAXTRACK];
 		
-		for (tt = 0; tt < curMusic->header->numChn; tt++) okT[ tt] = false;
+		for (tt = 0; tt < curMusic->header->numChn; tt++) okT[tt] = false;
 		
 		for (pos = 0; pos < fromX; pos++)
 		{
 			for (tt = 0; tt < curMusic->header->numChn; tt++)
 			{
-				theCmd = GetMADCommand(pos, tt, curMusic->partition[ CurrentPat]);
+				theCmd = GetMADCommand(pos, tt, curMusic->partition[CurrentPat]);
 				
 				if (theCommand->note != 0xFF || theCommand->note != 0xFE)
 				{
 					short xt;
 					
-					okT[ tt] = true;
+					okT[tt] = true;
 					
 					for (xt = 0; xt < curMusic->header->numChn; xt++)
 					{
@@ -763,7 +763,7 @@ void DrawFrame()
 	MoveTo(0, WaveRect.top);
 	LineTo(caRect.right, WaveRect.top);
 	
-	if (curMusic->partition[ CurrentPat]->header.size > 100)
+	if (curMusic->partition[CurrentPat]->header.size > 100)
 		temp = 3;
 	else
 		temp = 2;
@@ -1124,8 +1124,8 @@ void DoItemPressWave(short whichItem, DialogPtr whichDialog)
 			//ctlPart = FindControl(myPt, GetDialogWindow(whichDialog), &theControl);
 			
 			theControl = NULL;
-			if (TestControl( xScroll, myPt)) theControl = xScroll;
-			if (TestControl( yScroll, myPt)) theControl = yScroll;
+			if (TestControl(xScroll, myPt)) theControl = xScroll;
+			if (TestControl(yScroll, myPt)) theControl = yScroll;
 			
 			if (theControl == xScroll || theControl == yScroll) {
 				MyControlUPP = NewControlActionUPP(actionProcWave);

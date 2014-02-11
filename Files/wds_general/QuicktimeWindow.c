@@ -268,7 +268,7 @@ void DrawQTItem(Boolean selected, Rect* bounds, Str255 data, FSSpec	*spec, RgnHa
 	if (itemRect.left < srcRect.left)
 		itemRect.left = srcRect.left;
 	
-	TETextBox(data+1, data[ 0], &itemRect, teCenter);
+	TETextBox(data+1, data[0], &itemRect, teCenter);
 	if (selected) {
 		InvertRect(&itemRect);
 	}

@@ -78,7 +78,7 @@ typedef struct s3minsform
 	unsigned short		insint512;
 	unsigned long		insintlastused;
 	unsigned char		insname[28];
-	unsigned char		inssig[ 4];
+	unsigned char		inssig[4];
 } s3minsform;
                
 #pragma pack(pop)

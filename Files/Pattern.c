@@ -376,11 +376,11 @@ pascal OSErr MyPATSendDataProc(FlavorType theFlavor, void *refCon, ItemReference
 		PBHSetVolSync(&wdpb);
 		HGetVol(NULL, &target.vRefNum, &target.parID);
 		
-		bStr[ 0] = 20;
-		for (x = 0; x < 20; x++) bStr[x + 1] = curMusic->partition[ DragPatSource]->header.name[x];
+		bStr[0] = 20;
+		for (x = 0; x < 20; x++) bStr[x + 1] = curMusic->partition[DragPatSource]->header.name[x];
 		for (x = 1; x < 20; x++) if (bStr[x] == 0) { bStr[0] = x - 1; break;}
 		
-		if (bStr[ 0] == 0) {
+		if (bStr[0] == 0) {
 			NumToString(DragPatSource, aStr);
 			pStrcpy(bStr, "\pPattern #");
 			pStrcat(bStr, aStr);
@@ -599,7 +599,7 @@ void SaveAPattern(void)
 	else
 		return;
 	
-	theStr[ 0] = 20;
+	theStr[0] = 20;
 	for (x = 0; x < 20; x++)
 		theStr[x + 1] = curMusic->partition[thePos]->header.name[x];
 	for (x = 1; x < 20; x++) {
@@ -745,15 +745,15 @@ void AddAPattern(void)
 	curMusic->partition[curMusic->header->numPat] = (PatData*) NewPtrClear(sizeof(PatHeader) + curMusic->header->numChn * 64L * sizeof(Cmd));
 	if (MemError()) MyDebugStr(__LINE__, __FILE__, "Error in AddAPattern...");
 	
-	curMusic->partition[ curMusic->header->numPat]->header.size = 64L;
-	curMusic->partition[ curMusic->header->numPat]->header.compMode = 'NONE';
-	strcpy((Ptr) curMusic->partition[ curMusic->header->numPat]->header.name, "New pattern");
-	curMusic->partition[ curMusic->header->numPat]->header.patBytes = 0;
-	curMusic->partition[ curMusic->header->numPat]->header.unused2 = 0;
+	curMusic->partition[curMusic->header->numPat]->header.size = 64L;
+	curMusic->partition[curMusic->header->numPat]->header.compMode = 'NONE';
+	strcpy((Ptr) curMusic->partition[curMusic->header->numPat]->header.name, "New pattern");
+	curMusic->partition[curMusic->header->numPat]->header.patBytes = 0;
+	curMusic->partition[curMusic->header->numPat]->header.unused2 = 0;
 	
 	for (u = 0; u < curMusic->header->numChn; u++) {
-		for (v = 0; v < curMusic->partition[ curMusic->header->numPat]->header.size; v++) {
-			MADKillCmd(GetMADCommand( v,  u, curMusic->partition[ curMusic->header->numPat]));
+		for (v = 0; v < curMusic->partition[curMusic->header->numPat]->header.size; v++) {
+			MADKillCmd(GetMADCommand(v,  u, curMusic->partition[curMusic->header->numPat]));
 		}
 	}
 	
@@ -963,7 +963,7 @@ Boolean DialogPatternInfo(short thePos)
 		SetDText(TheDia, 20, theStr);
 	}
 	
-	if (curMusic->partition[ thePos]->header.compMode == 'MAD1') {
+	if (curMusic->partition[thePos]->header.compMode == 'MAD1') {
 		SetDText(TheDia, 16, "\pMAD1");
 		curSelecPat = 1;
 	} else {
@@ -998,11 +998,11 @@ OnRepart:
 				if (HiWord(mresult) != 0) {
 					curSelecPat = (Byte) LoWord(mresult) - 1;
 					if (curSelecPat == 1) {
-						curMusic->partition[ thePos]->header.compMode = 'MAD1';
+						curMusic->partition[thePos]->header.compMode = 'MAD1';
 						SetDText(TheDia, 16, "\pMAD1");
 					} else {
 						SetDText(TheDia, 16, "\pNONE");
-						curMusic->partition[ thePos]->header.compMode = 'NONE';
+						curMusic->partition[thePos]->header.compMode = 'NONE';
 					}
 				}
 				DeleteMenu(GetMenuID(thePatternMenuIN));
@@ -1102,7 +1102,7 @@ OnRepart:
 		GetDText(TheDia, 3, theStr);
 		if (theStr[0] > 20)
 			theStr[0] = 20;
-		for (x = 0; x < theStr[ 0]; x++)
+		for (x = 0; x < theStr[0]; x++)
 			curMusic->partition[thePos]->header.name[x] = theStr[x + 1];
 		for (x = theStr[0]; x < 20; x++)
 			curMusic->partition[thePos]->header.name[x] = 0;
@@ -1657,7 +1657,7 @@ void SetPatList2(ListHandle	theList)
 		// SIZE
 		
 		strcat(mainStr, " - ");
-		NumToString(curMusic->partition[ tt]->header.size, (unsigned char*)stemp);
+		NumToString(curMusic->partition[tt]->header.size, (unsigned char*)stemp);
 		MyP2CStr((unsigned char*) stemp);
 		if (curMusic->partition[tt]->header.size< 100)
 			strcat(mainStr, " ");
@@ -1872,11 +1872,11 @@ void DuplicatePattern(short PatID)
 
 	/****** ALLOCATION *********/
 	
-	newSize = sizeof(PatHeader) + curMusic->header->numChn * curMusic->partition[ PatID]->header.size * sizeof(Cmd);
-	curMusic->partition[ curMusic->header->numPat] = (PatData*) NewPtrClear(newSize);
+	newSize = sizeof(PatHeader) + curMusic->header->numChn * curMusic->partition[PatID]->header.size * sizeof(Cmd);
+	curMusic->partition[curMusic->header->numPat] = (PatData*) NewPtrClear(newSize);
 	if (MemError()) MyDebugStr(__LINE__, __FILE__, "Error in AddAPattern...");
 	
-	BlockMoveData(curMusic->partition[ PatID], curMusic->partition[ curMusic->header->numPat], newSize);
+	BlockMoveData(curMusic->partition[PatID], curMusic->partition[curMusic->header->numPat], newSize);
 	
 	curMusic->header->numPat++;
 }
@@ -2044,7 +2044,7 @@ void COPYPatList(void)
 		
 		anErr = GetCurrentScrap(&scrap);
 		
-		anErr = PutScrapFlavor(scrap, 'PATT', 0, GetPtrSize((Ptr) curMusic->partition[ theCell.v]), curMusic->partition[ theCell.v]);
+		anErr = PutScrapFlavor(scrap, 'PATT', 0, GetPtrSize((Ptr) curMusic->partition[theCell.v]), curMusic->partition[theCell.v]);
 		
 		SetCursor(GetQDGlobalsArrow(&qdarrow));
 	}
@@ -2076,8 +2076,8 @@ void PASTEPatList(void)
 		
 		HLock(theHandle);
 		
-		curMusic->partition[ curMusic->header->numPat] = (PatData*) NewPtr(lCntOrErr);
-		BlockMoveData(*theHandle, curMusic->partition[ curMusic->header->numPat], lCntOrErr);
+		curMusic->partition[curMusic->header->numPat] = (PatData*) NewPtr(lCntOrErr);
+		BlockMoveData(*theHandle, curMusic->partition[curMusic->header->numPat], lCntOrErr);
 		curMusic->header->numPat++;
 		
 #if 0

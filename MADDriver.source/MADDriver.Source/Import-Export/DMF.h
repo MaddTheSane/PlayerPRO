@@ -27,19 +27,19 @@ typedef struct ITPatForm
 {
 	unsigned short		length;
 	unsigned short		row;
-	char				no[ 4];
+	char				no[4];
 	char				data[];
 } ITPatForm;
 
 typedef struct ITSampForm
 {
 	OSType		ID;
-	char		DOSName[ 12];
+	char		DOSName[12];
 	char		no;
 	char		GvL;
 	char		Flag;
 	char		Vol;
-	char		SampName[ 26];
+	char		SampName[26];
 	short	Convert;
 	long		length;
 	long		loopBegin;
@@ -74,7 +74,7 @@ typedef struct ITEnv
 typedef struct ITInsForm
 {
 	long		ID;
-	char		DOSName[ 12];
+	char		DOSName[12];
 	char		no;
 	char		NNA;
 	char		DCT;
@@ -84,13 +84,13 @@ typedef struct ITInsForm
 	char		PPC;
 	char		GbV;
 	char		DfP;
-	char		no2[ 2];
+	char		no2[2];
 	short		TrkVers;
 	char		NoS;
 	char		no3;
-	char		INSName[ 26];
-	char		no4[ 6];
-	char		keyMap[ 240];
+	char		INSName[26];
+	char		no4[6];
+	char		keyMap[240];
 	ITEnv		volEnv;
 	ITEnv		panEnv;
 	ITEnv		pitchEnv;
@@ -100,7 +100,7 @@ typedef struct ITForm
 {
 	long				ID;
 	char             		name[26];
-	char             		no[ 2];
+	char             		no[2];
 	
 	short				orderNum;
 	short				insNum;
@@ -119,10 +119,10 @@ typedef struct ITForm
 	char				null;
 	short			MsgLgth;
 	long				MsgOffset;
-	char				no2[ 4];
+	char				no2[4];
 	
-	char				chanPan[ 64];
-	char				chanVol[ 64];
+	char				chanPan[64];
+	char				chanVol[64];
 	
 	unsigned char  		*orders;
 	long				*parapins;

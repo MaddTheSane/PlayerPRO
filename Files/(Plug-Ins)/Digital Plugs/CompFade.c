@@ -92,7 +92,7 @@ static void AutoPosition(DialogPtr aDia)
 	ShowWindow(GetDialogWindow(aDia));
 }
 
-static Cmd* GetCmd(short row, short	track, Pcmd* myPcmd)
+static Cmd* GetCmd(short row, short track, Pcmd* myPcmd)
 {
 	if (row < 0)
 		row = 0;
@@ -104,7 +104,7 @@ static Cmd* GetCmd(short row, short	track, Pcmd* myPcmd)
 	else if (track >= myPcmd->tracks)
 		track = myPcmd->tracks - 1;
 	
-	return &(myPcmd->myCmd[ (myPcmd->length * track) + row]);
+	return &(myPcmd->myCmd[(myPcmd->length * track) + row]);
 }
 
 static short Text2Note(Str255 myTT)
@@ -175,18 +175,22 @@ static short Text2Note(Str255 myTT)
 
 static void StringToHex(Str255 str, long *oct)
 {
-	if (str[ 2] >= 'A' && str[ 2] <= 'F') *oct = 10 + str[ 2] - 'A';
-	if (str[ 2] >= '0' && str[ 2] <= '9') *oct = str[ 2] - '0';
+	if (str[2] >= 'A' && str[2] <= 'F')
+		*oct = 10 + str[2] - 'A';
+	if (str[2] >= '0' && str[2] <= '9')
+		*oct = str[2] - '0';
 	
-	if (str[ 1] >= 'A' && str[ 1] <= 'F') *oct += (10 + str[ 1] - 'A')<<4;
-	if (str[ 1] >= '0' && str[ 1] <= '9') *oct += (str[ 1] - '0')<<4;
+	if (str[1] >= 'A' && str[1] <= 'F')
+		*oct += (10 + str[1] - 'A') << 4;
+	if (str[1] >= '0' && str[1] <= '9')
+		*oct += (str[1] - '0') << 4;
 }
 
 static OSErr mainCompFade(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
-	DialogPtr			myDia;
-	short				itemHit, mode;
-	Str255				tStr;
+	DialogPtr	myDia;
+	short		itemHit, mode;
+	Str255		tStr;
 	
 	myDia = GetNewDialog(128, NULL, (WindowPtr) -1L);
 	SetPortDialogPort(myDia);
@@ -195,17 +199,16 @@ static OSErr mainCompFade(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	TurnRadio(7, myDia, true);
 	mode = 7;
 	
-	SetDText(myDia, 3, "\p1");	SetDText(myDia, 4, "\p64");
+	SetDText(myDia, 3, "\p1");
+	SetDText(myDia, 4, "\p64");
 	SelectDialogItemText(myDia, 3, 0, 200);
 	
-	do
-	{
+	do {
 	RESTART:
 	
 		ModalDialog(thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 		
-		switch (itemHit)
-		{
+		switch (itemHit) {
 			case 7:
 			case 8:
 			case 9:
@@ -219,78 +222,150 @@ static OSErr mainCompFade(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 				TurnRadio(itemHit, myDia, true);
 				mode = itemHit;
 				
-				switch (itemHit)
-				{
-					case 7:		SetDText(myDia, 15, "\pFrom 1 to 64");		SetDText(myDia, 3, "\p1");		SetDText(myDia, 4, "\p64");	break;
-					case 8:		SetDText(myDia, 15, "\pFrom C0 to B7");	SetDText(myDia, 3, "\pC0");	SetDText(myDia, 4, "\pB7");	break;
-					case 9:		SetDText(myDia, 15, "\pFrom 00 to FF");	SetDText(myDia, 3, "\p00");	SetDText(myDia, 4, "\pFF");	break;
-					case 10:	SetDText(myDia, 15, "\pFrom 00 to FF");	SetDText(myDia, 3, "\p00");	SetDText(myDia, 4, "\pFF");	break;
+				switch (itemHit) {
+					case 7:
+						SetDText(myDia, 15, "\pFrom 1 to 64");
+						SetDText(myDia, 3, "\p1");
+						SetDText(myDia, 4, "\p64");
+						break;
+						
+					case 8:
+						SetDText(myDia, 15, "\pFrom C0 to B7");
+						SetDText(myDia, 3, "\pC0");
+						SetDText(myDia, 4, "\pB7");
+						break;
+						
+					case 9:
+						SetDText(myDia, 15, "\pFrom 00 to FF");
+						SetDText(myDia, 3, "\p00");
+						SetDText(myDia, 4, "\pFF");
+						break;
+						
+					case 10:
+						SetDText(myDia, 15, "\pFrom 00 to FF");
+						SetDText(myDia, 3, "\p00");
+						SetDText(myDia, 4, "\pFF");
+						break;
 				}
 			break;
 		}
-		
-	}while (itemHit != 1 && itemHit != 2);
+	} while (itemHit != 1 && itemHit != 2);
 	
-	if (itemHit == 1)
-	{
+	if (itemHit == 1) {
 		short	track, row;
 		long	from, to, step;
 		Cmd		*myCmd;
 		
 		// Check values
 		
-		switch (mode)
-		{
+		switch (mode) {
 			case 7:
-				GetDText(myDia, 3, tStr);		StringToNum(tStr, &from);
-				GetDText(myDia, 4, tStr);		StringToNum(tStr, &to);
+				GetDText(myDia, 3, tStr);
+				StringToNum(tStr, &from);
+				GetDText(myDia, 4, tStr);
+				StringToNum(tStr, &to);
 				
-				if (from < 1 || from > 64)	{	SelectDialogItemText(myDia, 3, 0, 200);	SysBeep(1);	goto RESTART;}
-				if (to < 1 || to > 64)		{	SelectDialogItemText(myDia, 4, 0, 200);	SysBeep(1);	goto RESTART;}
+				if (from < 1 || from > 64) {
+					SelectDialogItemText(myDia, 3, 0, 200);
+					SysBeep(1);
+					goto RESTART;
+				}
+				
+				if (to < 1 || to > 64) {
+					SelectDialogItemText(myDia, 4, 0, 200);
+					SysBeep(1);
+					goto RESTART;
+				}
 			break;
 			
 			case 8:
-				GetDText(myDia, 3, tStr);		from 	= Text2Note(tStr);
-				GetDText(myDia, 4, tStr);		to 		= Text2Note(tStr);
+				GetDText(myDia, 3, tStr);
+				from = Text2Note(tStr);
+				GetDText(myDia, 4, tStr);
+				to = Text2Note(tStr);
 				
-				if (from < 0 || from >= 96)	{	SelectDialogItemText(myDia, 3, 0, 200);	SysBeep(1);	goto RESTART;}
-				if (to < 0 || to >= 96)		{	SelectDialogItemText(myDia, 4, 0, 200);	SysBeep(1);	goto RESTART;}
+				if (from < 0 || from >= 96) {
+					SelectDialogItemText(myDia, 3, 0, 200);
+					SysBeep(1);
+					goto RESTART;
+				}
+				
+				if (to < 0 || to >= 96) {
+					SelectDialogItemText(myDia, 4, 0, 200);
+					SysBeep(1);
+					goto RESTART;
+				}
 			break;
 			
 			case 9:
-				GetDText(myDia, 3, tStr);		StringToHex(tStr, &from);
-				GetDText(myDia, 4, tStr);		StringToHex(tStr, &to);
+				GetDText(myDia, 3, tStr);
+				StringToHex(tStr, &from);
+				GetDText(myDia, 4, tStr);
+				StringToHex(tStr, &to);
 				
-				if (from < 0 || from > 0xFF)	{	SelectDialogItemText(myDia, 3, 0, 200);	SysBeep(1);	goto RESTART;}
-				if (to < 0 || to > 0xFF)		{	SelectDialogItemText(myDia, 4, 0, 200);	SysBeep(1);	goto RESTART;}
+				if (from < 0 || from > 0xFF) {
+					SelectDialogItemText(myDia, 3, 0, 200);
+					SysBeep(1);
+					goto RESTART;
+				}
+				
+				if (to < 0 || to > 0xFF) {
+					SelectDialogItemText(myDia, 4, 0, 200);
+					SysBeep(1);
+					goto RESTART;
+				}
 			break;
 			
 			case 10:
-				GetDText(myDia, 3, tStr);		StringToHex(tStr, &from);
-				GetDText(myDia, 4, tStr);		StringToHex(tStr, &to);
+				GetDText(myDia, 3, tStr);
+				StringToHex(tStr, &from);
+				GetDText(myDia, 4, tStr);
+				StringToHex(tStr, &to);
 				
-				if (from < 0 || from > 0xFF)	{	SelectDialogItemText(myDia, 3, 0, 200);	SysBeep(1);	goto RESTART;}
-				if (to < 0 || to > 0xFF)		{	SelectDialogItemText(myDia, 4, 0, 200);	SysBeep(1);	goto RESTART;}
+				if (from < 0 || from > 0xFF) {
+					SelectDialogItemText(myDia, 3, 0, 200);
+					SysBeep(1);
+					goto RESTART;
+				}
+				
+				if (to < 0 || to > 0xFF) {
+					SelectDialogItemText(myDia, 4, 0, 200);
+					SysBeep(1);
+					goto RESTART;
+				}
 			break;
 		}
 		
-		GetDText(myDia, 11, tStr);		StringToNum(tStr, &step);
-		if (step < 1 || step > 64)	{	SelectDialogItemText(myDia, 11, 0, 200);	SysBeep(1);	goto RESTART;}
+		GetDText(myDia, 11, tStr);
+		StringToNum(tStr, &step);
+		if (step < 1 || step > 64) {
+			SelectDialogItemText(myDia, 11, 0, 200);
+			SysBeep(1);
+			goto RESTART;
+		}
 		
-		for (track = 0; track < myPcmd->tracks; track ++)
-		{
-			for (row = 0; row < myPcmd->length; row += step)
-			{
+		for (track = 0; track < myPcmd->tracks; track ++) {
+			for (row = 0; row < myPcmd->length; row += step) {
 				myCmd = GetCmd(row, track, myPcmd);
 				
 				if (myPcmd->length > 1)			// no zero div !!
 				{
-					switch (mode)
-					{
-						case 7:		myCmd->ins	= from + ((to-from) * row) / (myPcmd->length-1);	break;
-						case 8:		myCmd->note = from + ((to-from) * row) / (myPcmd->length-1);	break;
-						case 9:		myCmd->arg	= from + ((to-from) * row) / (myPcmd->length-1);	break;
-						case 10:	myCmd->vol	= from + ((to-from) * row) / (myPcmd->length-1);	break;
+					switch (mode) {
+						case 7:
+							myCmd->ins	= from + ((to-from) * row) / (myPcmd->length-1);
+							break;
+							
+						case 8:
+							myCmd->note = from + ((to-from) * row) / (myPcmd->length-1);
+							break;
+							
+						case 9:
+							myCmd->arg	= from + ((to-from) * row) / (myPcmd->length-1);
+							break;
+							
+						case 10:
+							myCmd->vol	= from + ((to-from) * row) / (myPcmd->length-1);
+							break;
 					}
 				}
 			}
@@ -302,9 +377,9 @@ static OSErr mainCompFade(Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	return noErr;
 }
 
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x2C, 0xE9, 0x02, 0x81, 0xE2, 0xC2, 0x47, 0x5A, 0xA0, 0xF0, 0xB9, 0x0C, 0x64, 0x1E, 0xAE, 0xB1)
 //2CE90281-E2C2-475A-A0F0-B90C641EAEB1
-#define PLUGINFACTORY CompFadeFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainCompFade //The old main function, renamed please
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x2C, 0xE9, 0x02, 0x81, 0xE2, 0xC2, 0x47, 0x5A, 0xA0, 0xF0, 0xB9, 0x0C, 0x64, 0x1E, 0xAE, 0xB1)
+#define PLUGINFACTORY CompFadeFactory 
+#define PLUGMAIN mainCompFade 
 
 #include "CFPlugin-DigitalBridge.c"

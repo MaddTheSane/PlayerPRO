@@ -241,7 +241,7 @@ Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, u
 				{
 					for (i = 0; i < MusSize; i ++)
 					{
-						soundPtr[ i] = ExtHeader->sampleArea[ i * numChannels];
+						soundPtr[i] = ExtHeader->sampleArea[i * numChannels];
 					}
 				}
 				else
@@ -249,7 +249,7 @@ Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, u
 					MusSize /= 2;
 					for (i = 0; i < MusSize; i ++)
 					{
-						((short*) soundPtr)[ i] = ((short*) ExtHeader->sampleArea)[ i * numChannels];
+						((short*) soundPtr)[i] = ((short*) ExtHeader->sampleArea)[i * numChannels];
 					}
 					MusSize *= 2;
 				}
@@ -366,7 +366,7 @@ OSErr main(		OSType					order,						// Order to execute
 /*		case 'EXPL':
 			if (*sampleID >= 0)
 			{
-				sData 	*curData = sample[ *sampleID];
+				sData 	*curData = sample[*sampleID];
 				short	temp, fRefNum;
 				Handle	tempHandle;
 				

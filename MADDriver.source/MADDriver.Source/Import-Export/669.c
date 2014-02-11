@@ -55,7 +55,7 @@ Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatDat
 	if (PosX < 0) PosX = 0;
 	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 		
-	return(& (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
+	return(& (tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
 static inline void mystrcpy(Ptr a, BytePtr b)
@@ -69,7 +69,7 @@ static OSErr Convert6692Mad(Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDr
 	short				i, x, z;
 	long				OffSetToSample, temp;
 	Ptr					MaxPtr;
-	Ptr					theInstrument[ 64], destPtr;
+	Ptr					theInstrument[64], destPtr;
 	short				Note, Octave;
 	Byte				*thePasByte;
 	
@@ -124,8 +124,8 @@ static OSErr Convert6692Mad(Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDr
 	theMAD->header->numPat = the669->NOP;
 	for(i=0; i<128; i++)
 	{
-		theMAD->header->oPointers[ i] = the669->orderList[ i];
-		if (theMAD->header->oPointers[ i] >= theMAD->header->numPat) theMAD->header->oPointers[ i] = theMAD->header->numPat-1;
+		theMAD->header->oPointers[i] = the669->orderList[i];
+		if (theMAD->header->oPointers[i] >= theMAD->header->numPat) theMAD->header->oPointers[i] = theMAD->header->numPat-1;
 	}
 	theMAD->header->numChn = 8;
 	
@@ -134,15 +134,15 @@ static OSErr Convert6692Mad(Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDr
 		DisposePtr((Ptr)theMAD->header);
 		return MADNeedMemory;
 	}
-	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[i].copyId = i;
 	
 	
 	for (i = 0; i < MAXTRACK; i++)
 	{
-		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		if (i % 2 == 0) theMAD->header->chanPan[i] = MAX_PANNING/4;
+		else theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING/4;
 		
-		theMAD->header->chanVol[ i] = MAX_VOLUME;
+		theMAD->header->chanVol[i] = MAX_VOLUME;
 	}
 	
 	theMAD->header->generalVol		= 64;
@@ -166,7 +166,7 @@ static OSErr Convert6692Mad(Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDr
 		return MADNeedMemory;
 	}
 	
-	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
 	
 	for(i=0; i<the669->NOS; i++)
 	{
@@ -179,10 +179,10 @@ static OSErr Convert6692Mad(Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDr
 		{
 			sData	*curData;
 			
-			theMAD->fid[ i].numSamples = 1;
+			theMAD->fid[i].numSamples = 1;
 			theMAD->fid[i].volFade = DEFAULT_VOLFADE;
 			
-			curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear(sizeof(sData), init);
+			curData = theMAD->sample[i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear(sizeof(sData), init);
 			
 			if (!curData) {
 				for (i = 0; i < MAXINSTRU * MAXSAMPLE; i++) {
@@ -234,7 +234,7 @@ static OSErr Convert6692Mad(Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDr
 			destPtr = curData->data;
 			for (temp = 0; temp < curData->size; temp++) *(destPtr + temp) -= 0x80;
 		}
-		else theMAD->fid[ i].numSamples = 0;
+		else theMAD->fid[i].numSamples = 0;
 	}
 	
 	PatInt = (struct PatSix*) the669 + 0x1f1 + the669->NOS * 0x19;
@@ -251,7 +251,7 @@ static OSErr Convert6692Mad(Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDr
 	
 	for (i = 0; i < theMAD->header->numPat; i++)
 	{
-		theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear(sizeof(PatHeader) + theMAD->header->numChn * 64L * sizeof(Cmd), init);
+		theMAD->partition[i] = (PatData*) MADPlugNewPtrClear(sizeof(PatHeader) + theMAD->header->numChn * 64L * sizeof(Cmd), init);
 		if (!theMAD->partition[i]) {
 			for (i = 0; i < MAXPATTERN; i++) {
 				if (theMAD->partition[i]) {
@@ -272,19 +272,19 @@ static OSErr Convert6692Mad(Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDr
 			DisposePtr((Ptr)theMAD->header);
 			return MADNeedMemory;
 		}
-		theMAD->partition[ i]->header.size = 64;
-		theMAD->partition[ i]->header.compMode = 'NONE';
-		for (x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
-		theMAD->partition[ i]->header.patBytes = 0;
-		theMAD->partition[ i]->header.unused2 = 0;
+		theMAD->partition[i]->header.size = 64;
+		theMAD->partition[i]->header.compMode = 'NONE';
+		for (x = 0; x < 20; x++) theMAD->partition[i]->header.name[x] = 0;
+		theMAD->partition[i]->header.patBytes = 0;
+		theMAD->partition[i]->header.unused2 = 0;
 		
 		for (x = 0 ; x < 64; x++)
 		{
 			for (z = 0; z<theMAD->header->numChn; z++)
 			{
-				aCmd = GetMADCommand(x, z, theMAD->partition[ i]);
+				aCmd = GetMADCommand(x, z, theMAD->partition[i]);
 				
-				theCommand = &PatInt[ i].Cmds[ x][ z];
+				theCommand = &PatInt[i].Cmds[x][z];
 				if ((Ptr) theCommand >= MaxPtr)
 				{
 					for (i = 0; i < MAXPATTERN; i++) {
@@ -375,7 +375,7 @@ static OSErr Extract669Info(PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	//the669->message[ 30] = '\0';
+	//the669->message[30] = '\0';
 	strlcpy(info->internalFileName, (the669->message), sizeof(info->internalFileName));
 	
 	/*** Total Patterns ***/

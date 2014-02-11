@@ -74,8 +74,8 @@ static	Str255					gListNavigateString;
 static	short					gTSThresh;
 static	long					gLastKeyTime;
 static	PrivateList				myList;
-static	FSSpec					*specList[ MAXITEM];
-static	unsigned char			*pathStrList[ MAXITEM];
+static	FSSpec					*specList[MAXITEM];
+static	unsigned char			*pathStrList[MAXITEM];
 static	EventHandlerUPP 		myWinEvtHandler;
 
 
@@ -189,9 +189,9 @@ void DrawMODListItem(short iD)
 	tempRect.bottom = tempRect.top + myList.HCell;
 	
 	if (iD >= myList.select.top && iD <= myList.select.bottom)
-		MDrawItem(true, &tempRect, specList[ iD]->name, aStr, specList[ iD]);
+		MDrawItem(true, &tempRect, specList[iD]->name, aStr, specList[iD]);
 	else
-		MDrawItem(false, &tempRect, specList[ iD]->name, aStr, specList[ iD]);
+		MDrawItem(false, &tempRect, specList[iD]->name, aStr, specList[iD]);
 	
 	/**/
 	
@@ -240,12 +240,12 @@ void MyKeySearchInList(short newChar)
 		MyResetTypeSelection();
 		
 	gLastKeyTime = theEvent.when;
-	gListNavigateString[ 0] ++;
-	gListNavigateString[ gListNavigateString[ 0]] = newChar;
+	gListNavigateString[0] ++;
+	gListNavigateString[gListNavigateString[0]] = newChar;
 	
 	theCell.v = theCell.h = 0;
 	
-	if (PLSearch((Ptr)(gListNavigateString + 1), gListNavigateString[ 0], 2, &theCell, &myList)) {
+	if (PLSearch((Ptr)(gListNavigateString + 1), gListNavigateString[0], 2, &theCell, &myList)) {
 		tCell.v = tCell.h = 0;
 		if (PLGetSelect(&tCell, &myList)) {
 			if (tCell.v == theCell.v)
@@ -456,11 +456,11 @@ void SaveMyMODListSTCf(FSSpec spec)
 	//theCell.v = 0;
 	theCell.h = 0;
 	for (theCell.v = 0 ; theCell.v < myList.maxY; theCell.v++) {
-		myFSS = *specList[ theCell.v];
+		myFSS = *specList[theCell.v];
 		
 		iErr = FSpGetFInfo(&myFSS, &fndrInfo);
 		if (iErr != 0 || (myFSS.parID == 0 && myFSS.vRefNum == 0)) {
-			pStrcpy(tempStr, pathStrList[ theCell.v]);
+			pStrcpy(tempStr, pathStrList[theCell.v]);
 		}
 		else iErr = PathNameFromDirIDTRUE(myFSS.parID,
 										  myFSS.vRefNum,
@@ -591,7 +591,7 @@ void OpenMODListSTCf(FSSpec spec)
 	for (theCell.v = val, i = 1; theCell.v < theNo + val ; theCell.v++, i += 2) {
 		GetIndString(aStr, 128, i);
 		
-		if (pathStrList[ theCell.v] != (unsigned char*) -1L)
+		if (pathStrList[theCell.v] != (unsigned char*) -1L)
 			DisposePtr((Ptr)pathStrList[theCell.v]);
 		pathStrList[theCell.v] = (unsigned char*)NewPtr(aStr[0] + 1);
 		pStrcpy(pathStrList[theCell.v], aStr);
@@ -725,8 +725,8 @@ void NMoveMusicCell(short whichCell, short noCell)
 	myFSS = (FSSpec*)NewPtr(sizeof(FSSpec) * 100);
 	
 	for (i = 0; i < noCell; i++) {
-		myFSS[ i] = *specList[ whichCell + i];
-		pStrcpy(myPath[ i], pathStrList[ whichCell + i]);
+		myFSS[i] = *specList[whichCell + i];
+		pStrcpy(myPath[i], pathStrList[whichCell + i]);
 	}
 	
 	MLDelRow(noCell, whichCell);
@@ -906,7 +906,7 @@ void DrawNumberMusic()
 		
 		GetBackColor(&copyCol);
 		RGBBackColor(&theColor);
-		TETextBox(tempStr+1, tempStr[ 0], &tempRect, teFlushLeft);
+		TETextBox(tempStr+1, tempStr[0], &tempRect, teFlushLeft);
 		RGBBackColor(&copyCol);
 	}
 }
@@ -1301,7 +1301,7 @@ Boolean NDragMusicFile(RgnHandle myRgn, EventRecord *theEvent, Point theCell, sh
 		Rect dragRegionRect;
 		
 		FSpGetFInfo(specList[theCell.v + i], &fndrInfo);
-		type = GetOSTypeFromSpecUsingUTI(*specList[theCell.v + 1]);
+		type = GetOSTypeFromSpecUsingUTI(*specList[theCell.v]);
 		myNewFile.fileType		= type;
 		myNewFile.fileCreator	= fndrInfo.fdCreator;
 		myNewFile.fdFlags		= fndrInfo.fdFlags;
@@ -1381,7 +1381,7 @@ void DragMODSelect()
 				cellRect.bottom	= cellRect.top + 16;
 				cellRect.right 	= cellRect.left + 16;
 				
-				myFSS = *specList[ myList.select.top + i];
+				myFSS = *specList[myList.select.top + i];
 				
 				IconRef	iconref;
 				SInt16	label;
@@ -1633,7 +1633,7 @@ void ShowMusicInfo(Str255 name, short VRef, long parID, short id)
 			MADMusicIdentifyFSp(gMADLib, tempC, &fss) != noErr) {
 			EraseMODInfo();
 			
-			pStrcpy(PathNameStr, pathStrList[ id]);
+			pStrcpy(PathNameStr, pathStrList[id]);
 			DrawPathName();
 			SetDText(MODListDlog, 12, name);
 			
@@ -1695,12 +1695,12 @@ void ShowMusicInfo(Str255 name, short VRef, long parID, short id)
 					NumToString(info.totalInstruments, StrTemp);
 					SetDText(MODListDlog, 17, StrTemp);
 					
-					StrTemp[ 0] = 4;
-					((UInt32*) (StrTemp + 1 ))[ 0] = EndianU32_NtoB(info.signature);
+					StrTemp[0] = 4;
+					((UInt32*) (StrTemp + 1 ))[0] = EndianU32_NtoB(info.signature);
 					SetDText(MODListDlog, 15, StrTemp);
 				} else {
-					StrTemp[ 0] = 4;
-					((long*) (StrTemp + 1 ))[ 0] = fndrInfo.fdType;
+					StrTemp[0] = 4;
+					((long*) (StrTemp + 1 ))[0] = fndrInfo.fdType;
 					SetDText(MODListDlog, 15, StrTemp);
 					
 					SetDText(MODListDlog, 16, "\pQuicktime Sound");
@@ -1767,7 +1767,7 @@ Boolean OpenFirst2(short pos)
 	Point		tCell;
 	
 	if (myList.maxY > pos && pos >= 0) {
-		myFSS = *specList[ pos];
+		myFSS = *specList[pos];
 		
 		tCell.v = tCell.h = 0;
 		if (PLGetSelect(&tCell, &myList)) {
@@ -2089,7 +2089,7 @@ void UpdateFileInformations(DialogPtr theDia)
 		
 	EraseRect(&itemRect);
 		
-	iErr = GetIconRefFromFile(specList[ FileInfoID], &iconref, &label);
+	iErr = GetIconRefFromFile(specList[FileInfoID], &iconref, &label);
 		
 	if (iErr == noErr) {
 		PlotIconRef(&itemRect, kAlignNone, kTransformNone, kIconServicesNormalUsageFlag, iconref);
@@ -2521,7 +2521,7 @@ void DoItemPressMODList(short whichItem, DialogPtr whichDialog)
 							goto OnRefaitEvent;
 					}
 					
-					myFSS = *specList[ theCell.v];
+					myFSS = *specList[theCell.v];
 					
 					if (ImportFile(myFSS.name, myFSS.vRefNum, myFSS.parID, 0)) {
 						DoPlay();
@@ -2648,7 +2648,7 @@ OSErr CheckFileAvailable(short ID)
 	if (iErr == fnfErr || iErr == fLckdErr) {
 		WDPBRec		wdpb;
 		
-		wdpb.ioNamePtr = pathStrList[ ID];
+		wdpb.ioNamePtr = pathStrList[ID];
 		iErr = PBHSetVolSync(&wdpb);
 		if (iErr == noErr)
 			HGetVol(NULL, &specList[ID]->vRefNum, &specList[ID]->parID);
@@ -2739,7 +2739,7 @@ void DoKeyPressMODList(short theChar)
 				if (IsPressed(0x0037)) {
 					if (IsPressed(0x0038)) {
 						if (InfoL(102)) {
-							FSpDelete(specList[ theCell.v]);
+							FSpDelete(specList[theCell.v]);
 							MLDelRow(rowDelete, theCell.v);
 						}
 					} else {
@@ -2786,7 +2786,7 @@ void DoKeyPressMODList(short theChar)
 				goto OnRefaitEvent;
 			
 			if (CheckFileAvailable(theCell.v) == noErr) {
-				myFSS = *specList[ theCell.v];
+				myFSS = *specList[theCell.v];
 				
 				if (ImportFile(myFSS.name, myFSS.vRefNum, myFSS.parID, 0)) {
 					if (thePrefs.AutoPlayWhenOpen)

@@ -34,8 +34,8 @@ typedef struct ULTEvt
 
 typedef struct ULTIns
 {
-	char		name[ 32];
-	char		dosname[ 12];
+	char		name[32];
+	char		dosname[12];
 	long		loopStart;
 	long		loopEnd;
 	long		sizeStart;
@@ -47,8 +47,8 @@ typedef struct ULTIns
 
 typedef struct ULTForm
 {
-	char				ID[ 15];
-	char             		name[ 32];
+	char				ID[15];
+	char             		name[32];
 	char             		reserved;
 } ULTForm;
 
@@ -59,7 +59,7 @@ typedef struct ULTSuite
 	
 	//-----------
 	
-	Byte				pattSeq[ 256];
+	Byte				pattSeq[256];
 	Byte				NOC;
 	Byte				NOP;
 } ULTSuite;

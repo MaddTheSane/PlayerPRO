@@ -64,7 +64,7 @@ static OSErr mainQTInst(OSType					order,				// Order to execute
 			{
 				OSType				compType = 'NONE';
 				unsigned long		rate;
-				sData 				*curData = sample[ *sampleID];
+				sData 				*curData = sample[*sampleID];
 				short				numChan;
 				
 				myErr = FSpCreate(AlienFileFSSpec, 'TVOD', 'AIFF', smCurrentScript);

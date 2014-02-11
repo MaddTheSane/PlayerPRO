@@ -58,12 +58,12 @@ Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatDat
 	if (PosX < 0) PosX = 0;
 	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 		
-	return(& (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
+	return(& (tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
 static inline void mystrcpy(Ptr a, BytePtr b)
 {
-	BlockMoveData(b + 1, a, b[ 0]);
+	BlockMoveData(b + 1, a, b[0]);
 }
 
 static OSErr ConvertULT2Mad(Ptr theULT, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
@@ -84,7 +84,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, long MODSize, MADMusic *theMAD, MADDrive
 	
 	for (i = 0 ; i < 64; i ++)
 	{
-		theInstrument[ i] = NULL;
+		theInstrument[i] = NULL;
 	}
 	
 	/**** Header principal *****/
@@ -124,22 +124,22 @@ static OSErr ConvertULT2Mad(Ptr theULT, long MODSize, MADMusic *theMAD, MADDrive
 	theMAD->header->tempo				= 125;
 	
 	theMAD->sets = (FXSets*) NewPtrClear(MAXTRACK * sizeof(FXSets));
-	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[i].copyId = i;
 	
-	for(i=0; i<128; i++) theMAD->header->oPointers[ i] = 0;
+	for(i=0; i<128; i++) theMAD->header->oPointers[i] = 0;
 	for(i=0; i<128; i++)
 	{
-		theMAD->header->oPointers[ i] = ULTSuite.pattSeq[i];
+		theMAD->header->oPointers[i] = ULTSuite.pattSeq[i];
 		
-		if (theMAD->header->oPointers[ i] < 0 || theMAD->header->oPointers[ i] >= 128) theMAD->header->oPointers[ i] = 0;
+		if (theMAD->header->oPointers[i] < 0 || theMAD->header->oPointers[i] >= 128) theMAD->header->oPointers[i] = 0;
 	}
 	
 	for (i = 0; i < MAXTRACK; i++)
 	{
-		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		if (i % 2 == 0) theMAD->header->chanPan[i] = MAX_PANNING/4;
+		else theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING/4;
 		
-		theMAD->header->chanVol[ i] = MAX_VOLUME;
+		theMAD->header->chanVol[i] = MAX_VOLUME;
 	}
 	
 	theMAD->header->generalVol		= 64;
@@ -156,18 +156,18 @@ static OSErr ConvertULT2Mad(Ptr theULT, long MODSize, MADMusic *theMAD, MADDrive
 	theMAD->sample = (sData**) MADPlugNewPtrClear(sizeof(sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
 	if (!theMAD->sample) return MADNeedMemory;
 	
-	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
 	
 	for(i  = 0 ; i < MAXINSTRU; i++)
 	{
-		for (x = 0; x < MAXSAMPLE; x++) theMAD->sample[ i*MAXSAMPLE + x] = NULL;
+		for (x = 0; x < MAXSAMPLE; x++) theMAD->sample[i*MAXSAMPLE + x] = NULL;
 		
 		theMAD->fid[i].numSamples	= 0;
 	}
 	
 	for(i=0; i<ULTSuite.NOS; i++)
 	{
-		InstrData		*curIns = &theMAD->fid[ i];
+		InstrData		*curIns = &theMAD->fid[i];
 		
 		curIns->type	= 0;
 		
@@ -177,7 +177,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, long MODSize, MADMusic *theMAD, MADDrive
 			curIns->numSamples	= 1;
 			curIns->volFade			= DEFAULT_VOLFADE;
 			
-			curData = theMAD->sample[ i*MAXSAMPLE +  0] = (sData*) MADPlugNewPtrClear(sizeof(sData), init);
+			curData = theMAD->sample[i*MAXSAMPLE +  0] = (sData*) MADPlugNewPtrClear(sizeof(sData), init);
 			if (curData == NULL) return MADNeedMemory;
 			
 			ULTSuite.ins[i].loopStart	= Tdecode32(&ULTSuite.ins[i].loopStart);
@@ -224,25 +224,25 @@ static OSErr ConvertULT2Mad(Ptr theULT, long MODSize, MADMusic *theMAD, MADDrive
 	
 	theMAD->header->numChn = ULTSuite.NOC;
 	
-	for (i = 0; i < MAXPATTERN; i++) theMAD->partition[ i] = NULL;
+	for (i = 0; i < MAXPATTERN; i++) theMAD->partition[i] = NULL;
 	for (i = 0; i < theMAD->header->numPat ; i++)
 	{
-		theMAD->partition[ i] = (PatData*) MADPlugNewPtrClear(sizeof(PatHeader) + theMAD->header->numChn * 64 * sizeof(Cmd), init);
-		if (theMAD->partition[ i] == NULL) return MADNeedMemory;
+		theMAD->partition[i] = (PatData*) MADPlugNewPtrClear(sizeof(PatHeader) + theMAD->header->numChn * 64 * sizeof(Cmd), init);
+		if (theMAD->partition[i] == NULL) return MADNeedMemory;
 		
-		theMAD->partition[ i]->header.size 			= 64;
-		theMAD->partition[ i]->header.compMode 	= 'NONE';
+		theMAD->partition[i]->header.size 			= 64;
+		theMAD->partition[i]->header.compMode 	= 'NONE';
 		
-		for (x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
+		for (x = 0; x < 20; x++) theMAD->partition[i]->header.name[x] = 0;
 		
-		MaxPtr = (Ptr) theMAD->partition[ i];
+		MaxPtr = (Ptr) theMAD->partition[i];
 		MaxPtr += sizeof(PatHeader) + theMAD->header->numChn * 64 * sizeof(Cmd);
 		
 		for (Row = 0; Row < 64; Row++)
 		{
 			for(z = 0; z < theMAD->header->numChn; z++)
 			{
-				aCmd = GetMADCommand(Row, z, theMAD->partition[ i]);
+				aCmd = GetMADCommand(Row, z, theMAD->partition[i]);
 				
 				aCmd->note		= 0xFF;
 				aCmd->ins			= 0;

@@ -80,10 +80,10 @@ OSErr				result;
 			marker = (MarkerChunk*) CH;
 			if (marker->numMarkers == 2)
 			{
-				*loopStart = marker->Markers[ 0].position;
+				*loopStart = marker->Markers[0].position;
 				mm = (Marker*) marker->Markers;
 				mm = (Marker*) ((Ptr) mm + 8L);
-				mm = (Marker*) ((Ptr) mm + marker->Markers[ 0].markerName[0]);
+				mm = (Marker*) ((Ptr) mm + marker->Markers[0].markerName[0]);
 				*loopEnd = mm->position;
 				
 				if (*sampleSize == 16)
@@ -116,14 +116,14 @@ OSErr				result;
 		{
 			for (i = 0; i < SizeH - StartId; i++)
 			{
-				(sound)[ i] = (sound + StartId)[ i * numChannels];
+				(sound)[i] = (sound + StartId)[i * numChannels];
 			}
 		}
 		else
 		{
 			for (i = 0; i < (SizeH - StartId)/2; i++)
 			{
-				((short*) sound)[ i] = ((short*) (sound + StartId))[ i * numChannels];
+				((short*) sound)[i] = ((short*) (sound + StartId))[i * numChannels];
 			}
 		}
 	}
@@ -277,7 +277,7 @@ EXP OSErr main(		OSType					order,						// Order to execute
 			{
 				OSType				compType = 'NONE';
 				unsigned long		rate;
-				sData 				*curData = sample[ *sampleID];
+				sData 				*curData = sample[*sampleID];
 				short				numChan;
 				
 				myErr = FSpCreate(AlienFileFSSpec, 'TVOD', 'AIFF', smCurrentScript);
@@ -305,10 +305,10 @@ EXP OSErr main(		OSType					order,						// Order to execute
 					marker = (MarkerChunk*) CH;
 					if (marker->numMarkers == 2)
 					{
-						*loopStart = marker->Markers[ 0].position;
+						*loopStart = marker->Markers[0].position;
 						mm = (Marker*) marker->Markers;
 						mm = (Marker*) ((Ptr) mm + 8L);
-						mm = (Marker*) ((Ptr) mm + marker->Markers[ 0].markerName[0]);
+						mm = (Marker*) ((Ptr) mm + marker->Markers[0].markerName[0]);
 						*loopEnd = mm->position;
 						
 						if (*sampleSize == 16)

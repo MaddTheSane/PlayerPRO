@@ -45,9 +45,9 @@ struct Instru
 
 struct MTMDef
 {
-	char			Id[ 3];
+	char			Id[3];
 	char			vers;
-	char 			songname[ 20];
+	char 			songname[20];
 	unsigned short	tracks;
 	char			patNo;
 	char			positionNo;
@@ -56,7 +56,7 @@ struct MTMDef
 	char			attribute;
 	char			beats;
 	char			trackback;
-	char			voicePos[ 32];
+	char			voicePos[32];
 };
 typedef struct MTMDef MTMDef;
 

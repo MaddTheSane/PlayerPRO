@@ -4,7 +4,7 @@ typedef struct CrsrRec
 {
 	short	total;
 	short	current;
-	short	no[ 30];
+	short	no[30];
 }CrsrRec;
 
 static	CrsrRec	MyCrsrRec;
@@ -40,10 +40,10 @@ void InitRollCrsr(void)
 	
 	for (i = 0; i < MyCrsrRec.total; i++)
 	{
-		tempH = GetCursor(MyCrsrRec.no[ i*2]);
+		tempH = GetCursor(MyCrsrRec.no[i*2]);
 		DetachResource((Handle) tempH);
 		HLock((Handle) tempH);
-			myCursor[ i] = **tempH;
+			myCursor[i] = **tempH;
 		HUnlock((Handle) tempH);
 		DisposeHandle((Handle) tempH);
 	}
@@ -57,7 +57,7 @@ void RollCursor(void)
 	MyCrsrRec.current ++;
 	if (MyCrsrRec.current >= MyCrsrRec.total) MyCrsrRec.current = 0;
 	
-	SetCursor(&myCursor[ MyCrsrRec.current]);
+	SetCursor(&myCursor[MyCrsrRec.current]);
 }
 
 void CloseRollCrsrc()

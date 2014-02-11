@@ -40,7 +40,7 @@ void CloseEffect(Channel *ch, short notUsed, MADDriverRec *intDriver)
 		case arpeggioE:
 			if (ch->arpUse)
 			{
-				ch->period = ch->arp[ 0];
+				ch->period = ch->arp[0];
 				ch->arpUse = false;
 			}
 			break;
@@ -118,7 +118,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 				ch->arpindex++;
 				if (ch->arpindex >= MAX_ARP) ch->arpindex = 0;
 				
-				ch->period = ch->arp[ ch->arpindex];
+				ch->period = ch->arp[ch->arpindex];
 			}
 			break;
 			
@@ -132,7 +132,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 					if (intDriver->PartitionReader != 0)
 					{
 						intDriver->PL++;
-						intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
+						intDriver->Pat = intDriver->curMusic->header->oPointers[intDriver->PL];
 					}
 					
 					intDriver->PartitionReader = HI(ch->arg) * 10 + LOW(ch->arg);
@@ -140,7 +140,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 					if (intDriver->PL >= intDriver->curMusic->header->numPointers)
 					{
 						intDriver->PL = 0;
-						intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
+						intDriver->Pat = intDriver->curMusic->header->oPointers[intDriver->PL];
 						
 						MADCleanDriver(intDriver);
 						if (!intDriver->DriverSettings.repeatMusic) intDriver->Reading = false;
@@ -172,12 +172,12 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 					}
 					
 					intDriver->PL = ch->arg;
-					intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
+					intDriver->Pat = intDriver->curMusic->header->oPointers[intDriver->PL];
 					
 					if (intDriver->PL >= intDriver->curMusic->header->numPointers)
 					{
 						intDriver->PL = 0;
-						intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
+						intDriver->Pat = intDriver->curMusic->header->oPointers[intDriver->PL];
 						
 						MADCleanDriver(intDriver);
 						if (!intDriver->DriverSettings.repeatMusic) intDriver->Reading = false;
@@ -228,7 +228,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 			switch (ch->vibtype)
 			{
 				case 0:
-					offset = intDriver->vibrato_table[ q];
+					offset = intDriver->vibrato_table[q];
 					break;
 					
 				case 1:
@@ -346,7 +346,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 						{
 							intDriver->PartitionReader = ch->PatternLoopE6-1;
 							intDriver->PL = ch->PatternLoopE6ID;
-							intDriver->Pat = intDriver->curMusic->header->oPointers[ intDriver->PL];
+							intDriver->Pat = intDriver->curMusic->header->oPointers[intDriver->PL];
 						}
 					}
 				}
@@ -445,11 +445,11 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 				break;
 				
 			default:
-				ch->arg = ch->oldArg[ ch->cmd];
+				ch->arg = ch->oldArg[ch->cmd];
 				break;
 		}
 	}
-	else ch->oldArg[ ch->cmd] = ch->arg;
+	else ch->oldArg[ch->cmd] = ch->arg;
 	
 	switch (ch->cmd)
 	{
@@ -486,13 +486,13 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 				if (inNote != 0xFF)
 				{
 					note = inNote + HI(ch->arg);
-					if (note < NUMBER_NOTES) ch->arp[ 1] = GetOldPeriod(note, ch->fineTune, intDriver);
+					if (note < NUMBER_NOTES) ch->arp[1] = GetOldPeriod(note, ch->fineTune, intDriver);
 					
 					note = inNote + LOW(ch->arg);
-					if (note < NUMBER_NOTES) ch->arp[ 2] = GetOldPeriod(note, ch->fineTune, intDriver);
+					if (note < NUMBER_NOTES) ch->arp[2] = GetOldPeriod(note, ch->fineTune, intDriver);
 					
 					ch->arpindex = 0;
-					ch->arp[ 0] = ch->period;
+					ch->arp[0] = ch->period;
 					
 					ch->arpUse = true;
 				}
@@ -552,7 +552,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 				break;
 				
 			case 5:		// Set finetune value
-				//	ch->fineTune	= finetune[ LOW(ch->arg)];
+				//	ch->fineTune	= finetune[LOW(ch->arg)];
 				//	ch->period	= GetOldPeriod(ch->Amiga, ch->fineTune);
 				break;
 				

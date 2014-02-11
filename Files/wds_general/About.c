@@ -46,14 +46,14 @@ void MyScrollRect(Rect	*rect)
 	larg /= 4;
 	haut = rect->bottom - rect->top;
 	
-	src = (long*) ((long) VA[ 0].quickrow[ zeroPt.v + rect->top + 1] + (long) zeroPt.h + (long) rect->left);
-	dst = (long*) ((long) src - (long) VA[ 0].row);
+	src = (long*) ((long) VA[0].quickrow[zeroPt.v + rect->top + 1] + (long) zeroPt.h + (long) rect->left);
+	dst = (long*) ((long) src - (long) VA[0].row);
 	
 	for (i = 0; i < haut; i++)
 	{
-		for (x = 0; x < larg; x++) dst[ x] = src[ x];
-		dst += VA[ 0].row/4;
-		src += VA[ 0].row/4;
+		for (x = 0; x < larg; x++) dst[x] = src[x];
+		dst += VA[0].row/4;
+		src += VA[0].row/4;
 	}
 }
 #endif
@@ -81,11 +81,11 @@ void DoScrollText(DialogPtr aDia)
 		RGBForeColor(&color);
 		GetIndString(tempStr, 131, curPosT/60);
 		OffsetRect(&textRect, 2, 2);
-		TETextBox(tempStr + 1, tempStr[ 0], &textRect, teCenter);
+		TETextBox(tempStr + 1, tempStr[0], &textRect, teCenter);
 		OffsetRect(&textRect, -2, -2);
 		SwitchColor(curPosT % 32);
 		
-		TETextBox(tempStr + 1, tempStr[ 0], &textRect, teCenter);
+		TETextBox(tempStr + 1, tempStr[0], &textRect, teCenter);
 		
 		BackColor(whiteColor);
 		MoveTo(textRect.left, textRect.bottom);
@@ -93,7 +93,7 @@ void DoScrollText(DialogPtr aDia)
 		
 		ForeColor(blackColor);
 		
-		if (tempStr[ 0] == 0) curPosT = 1;
+		if (tempStr[0] == 0) curPosT = 1;
 	}
 	
 	curPosT++;

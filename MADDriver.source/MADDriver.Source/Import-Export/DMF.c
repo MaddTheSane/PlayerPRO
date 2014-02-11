@@ -58,12 +58,12 @@ Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatDat
 	if (PosX < 0) PosX = 0;
 	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
 		
-	return(& (tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]));
+	return(& (tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
 static inline void mystrcpy(Ptr a, BytePtr b)
 {
-	BlockMoveData(b + 1, a, b[ 0]);
+	BlockMoveData(b + 1, a, b[0]);
 }
 
 #if 0
@@ -213,10 +213,10 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 	long				starting;
 	Ptr					MaxPtr;
 	//OSErr				theErr;
-	Ptr					theInstrument[ 64], destPtr;
+	Ptr					theInstrument[64], destPtr;
 	Byte				tempChar, *theITCopy;
 	//short				Note, Octave, maxTrack;
-	//short				ITperiod[ 12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
+	//short				ITperiod[12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
 	//long				note_st3period;
 	//long				note_amigaperiod;
 	//Byte				*ChannelSettings;
@@ -231,7 +231,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 
 	for (i = 0 ; i < 64; i ++)
 	{
-		theInstrument[ i] = NULL;
+		theInstrument[i] = NULL;
 	}
 
 	/**** Header principal *****/
@@ -240,12 +240,12 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 	BlockMoveData(theITCopy, &ITinfo, sizeof(ITinfo));
 	theITCopy += 192;
 	
-	ITinfo.orderNum	= Tdecode16( &ITinfo.orderNum);
-	ITinfo.insNum		= Tdecode16( &ITinfo.insNum);
-	ITinfo.smpNum		= Tdecode16( &ITinfo.smpNum);
-	ITinfo.patNum		= Tdecode16( &ITinfo.patNum);
-	ITinfo.flags		= Tdecode16( &ITinfo.flags);
-	ITinfo.cwtv			= Tdecode16( &ITinfo.cwtv);
+	ITinfo.orderNum	= Tdecode16(&ITinfo.orderNum);
+	ITinfo.insNum		= Tdecode16(&ITinfo.insNum);
+	ITinfo.smpNum		= Tdecode16(&ITinfo.smpNum);
+	ITinfo.patNum		= Tdecode16(&ITinfo.patNum);
+	ITinfo.flags		= Tdecode16(&ITinfo.flags);
+	ITinfo.cwtv			= Tdecode16(&ITinfo.cwtv);
 	
 	/**** Order Num *****/
 	ITinfo.orders = (unsigned char *) MADPlugNewPtr(ITinfo.orderNum, init);
@@ -265,7 +265,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 	theITCopy += ITinfo.insNum * 4L;
 	for (i = 0; i < ITinfo.insNum; i++)
 	{
-		ITinfo.parapins[ i] = Tdecode32( &ITinfo.parapins[ i]);
+		ITinfo.parapins[i] = Tdecode32(&ITinfo.parapins[i]);
 	}
 	
 	/**** Samp Num *****/
@@ -281,7 +281,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 	theITCopy += ITinfo.smpNum * 4L;
 	for (i = 0; i < ITinfo.smpNum; i++)
 	{
-		ITinfo.parapsamp[ i] = Tdecode32( &ITinfo.parapsamp[ i]);
+		ITinfo.parapsamp[i] = Tdecode32(&ITinfo.parapsamp[i]);
 	}
 	
 	/**** Pat Num *****/
@@ -298,7 +298,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 	theITCopy += ITinfo.patNum * 4L;
 	for (i = 0; i < ITinfo.patNum; i++)
 	{
-		ITinfo.parappat[ i] = Tdecode32( &ITinfo.parappat[ i]);
+		ITinfo.parappat[i] = Tdecode32(&ITinfo.parappat[i]);
 	}
 	
 	/**** Ins Data ****/
@@ -341,9 +341,9 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 		 ITinfo.insdata[i].insloopend		= 0;
 		 }
 		 
-		 ITinfo.insdata[i].c2spd						= Tdecode32( &ITinfo.insdata[i].c2spd);
-		 ITinfo.insdata[i].insgvspos				= Tdecode16( &ITinfo.insdata[i].insgvspos);
-		 ITinfo.insdata[i].insint512				= Tdecode16( &ITinfo.insdata[i].insint512);
+		 ITinfo.insdata[i].c2spd						= Tdecode32(&ITinfo.insdata[i].c2spd);
+		 ITinfo.insdata[i].insgvspos				= Tdecode16(&ITinfo.insdata[i].insgvspos);
+		 ITinfo.insdata[i].insint512				= Tdecode16(&ITinfo.insdata[i].insint512);
 		 ITinfo.insdata[i].insintlastused	= Tdecode32(&ITinfo.insdata[i].insintlastused);
 		 
 		 if (ITinfo.insdata[i].instype == 1 && ITinfo.insdata[i].inspack == 0 && ITinfo.insdata[i].inssig == 'SCRS')
@@ -356,11 +356,11 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 		 
 		 theITCopy += tempL;
 		 
-		 theInstrument[ i] = (Ptr) theITCopy;
+		 theInstrument[i] = (Ptr) theITCopy;
 		 }
 		 else
 		 {
-		 theInstrument[ i] = 0L;
+		 theInstrument[i] = 0L;
 		 }*/
 	}
 	
@@ -404,8 +404,8 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 		ITinfo.sampdata[i].SusLoopEnd			= Tdecode32(&ITinfo.sampdata[i].SusLoopEnd);
 		ITinfo.sampdata[i].samplePtr			= Tdecode32(&ITinfo.sampdata[i].samplePtr);
 		
-		theInstrument[ i] = (Ptr) theIT;
-		theInstrument[ i] += ITinfo.sampdata[i].samplePtr;
+		theInstrument[i] = (Ptr) theIT;
+		theInstrument[i] += ITinfo.sampdata[i].samplePtr;
 	}
 	
 	
@@ -436,20 +436,20 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 	theMAD->header->speed			= ITinfo.iSpeed;
 	theMAD->header->tempo			= ITinfo.iTempo;
 	
-	for(i=0; i<128; i++) theMAD->header->oPointers[ i] = 0;
+	for(i=0; i<128; i++) theMAD->header->oPointers[i] = 0;
 	for(i=0; i<ITinfo.orderNum; i++)
 	{
-		theMAD->header->oPointers[ i] = ITinfo.orders[i];
+		theMAD->header->oPointers[i] = ITinfo.orders[i];
 		
-		if (theMAD->header->oPointers[ i] < 0 || theMAD->header->oPointers[ i] >= ITinfo.patNum) theMAD->header->oPointers[ i] = 0;
+		if (theMAD->header->oPointers[i] < 0 || theMAD->header->oPointers[i] >= ITinfo.patNum) theMAD->header->oPointers[i] = 0;
 	}
 	
 	for (i = 0; i < MAXTRACK; i++)
 	{
-		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		if (i % 2 == 0) theMAD->header->chanPan[i] = MAX_PANNING/4;
+		else theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING/4;
 		
-		theMAD->header->chanVol[ i] = MAX_VOLUME;
+		theMAD->header->chanVol[i] = MAX_VOLUME;
 	}
 	
 	theMAD->header->generalVol		= 64;
@@ -468,7 +468,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 		
 		return MADNeedMemory;
 	}
-	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[i].copyId = i;
 
 	// ********************
 	// ***** INSTRUMENTS *****
@@ -503,11 +503,11 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 		return MADNeedMemory;
 	}
 	
-	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
 
 	for(i  = 0 ; i < MAXINSTRU; i++)
 	{
-		for (x = 0; x < MAXSAMPLE; x++) theMAD->sample[ i*MAXSAMPLE + x] = NULL;
+		for (x = 0; x < MAXSAMPLE; x++) theMAD->sample[i*MAXSAMPLE + x] = NULL;
 		
 		theMAD->fid[i].numSamples	= 0;
 	}
@@ -522,18 +522,18 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 	{
 		for(i=0; i<ITinfo.smpNum; i++)
 		{
-			InstrData		*curIns = &theMAD->fid[ i];
+			InstrData		*curIns = &theMAD->fid[i];
 			
 			curIns->type	= 0;
 			
-			if (theInstrument[ i] != NULL)
+			if (theInstrument[i] != NULL)
 			{
 				sData	*curData;
 				
 				curIns->numSamples	= 1;
 				curIns->volFade			= DEFAULT_VOLFADE;
 				
-				curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear(sizeof(sData), 1);
+				curData = theMAD->sample[i*MAXSAMPLE + 0] = (sData*) MADPlugNewPtrClear(sizeof(sData), 1);
 				if (curData == NULL) {
 					for (i = 0; i < MAXSAMPLE * MAXINSTRU; i++) {
 						if (theMAD->sample[i]) {
@@ -616,7 +616,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 	maxTrack = 0;
 	for(i=0;i<32;i++)
 	{
-		if(ITinfo.chanset[ i]<16) maxTrack++;
+		if(ITinfo.chanset[i]<16) maxTrack++;
 	}
 	maxTrack++;
 	maxTrack /= 2;
@@ -630,18 +630,18 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 	
 	starting = 0;
 
-	for (i = 0; i < MAXPATTERN; i++) theMAD->partition[ i] = NULL;
+	for (i = 0; i < MAXPATTERN; i++) theMAD->partition[i] = NULL;
 	for (i = 0; i < theMAD->header->numPat ; i++)
 	{
 		ITPatForm		*curITPat;
 		
 		curITPat = (ITPatForm*) (theIT + ITinfo.parappat[i]);
 		
-		curITPat->length 	= Tdecode16( &curITPat->length);
-		curITPat->row 		= Tdecode16( &curITPat->row);
+		curITPat->length 	= Tdecode16(&curITPat->length);
+		curITPat->row 		= Tdecode16(&curITPat->row);
 		
-		theMAD->partition[ i] = (PatData*) MADNewPtrClear(sizeof(PatHeader) + theMAD->header->numChn * curITPat->row * sizeof(Cmd), init);
-		if (theMAD->partition[ i] == NULL) {
+		theMAD->partition[i] = (PatData*) MADNewPtrClear(sizeof(PatHeader) + theMAD->header->numChn * curITPat->row * sizeof(Cmd), init);
+		if (theMAD->partition[i] == NULL) {
 			for (i = 0; i < MAXPATTERN; i++) {
 				if (theMAD->partition[i]) {
 					DisposePtr((Ptr)theMAD->partition[i]);
@@ -670,19 +670,19 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 			return MADNeedMemory;
 		}
 		
-		theMAD->partition[ i]->header.size 			= curITPat->row;
-		theMAD->partition[ i]->header.compMode 	= 'NONE';
+		theMAD->partition[i]->header.size 			= curITPat->row;
+		theMAD->partition[i]->header.compMode 	= 'NONE';
 		
-		for (x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
+		for (x = 0; x < 20; x++) theMAD->partition[i]->header.name[x] = 0;
 		
-		MaxPtr = (Ptr) theMAD->partition[ i];
+		MaxPtr = (Ptr) theMAD->partition[i];
 		MaxPtr += sizeof(PatHeader) + theMAD->header->numChn * curITPat->row * sizeof(Cmd);
 		
 		for (Row = 0; Row < curITPat->row; Row++)
 		{
 			for(z = 0; z < theMAD->header->numChn; z++)
 			{
-				aCmd = GetMADCommand(Row, z, theMAD->partition[ i]);
+				aCmd = GetMADCommand(Row, z, theMAD->partition[i]);
 				
 				aCmd->note		= 0xFF;
 				aCmd->ins			= 0;
@@ -711,7 +711,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 					{
 						// Channel
 						channel = (tempChar-1) & 63;
-						if (channel >= 0 && channel < theMAD->header->numChn) aCmd = GetMADCommand(Row, channel, theMAD->partition[ i]);
+						if (channel >= 0 && channel < theMAD->header->numChn) aCmd = GetMADCommand(Row, channel, theMAD->partition[i]);
 						else aCmd = NULL;
 					}
 					
@@ -761,9 +761,9 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 					{
 						if (aCmd != NULL)
 						{
-							/*	if (theITCopy[ 0] != 255)
+							/*	if (theITCopy[0] != 255)
 							 {
-							 ConvertITEffect(theITCopy[ 0], theITCopy[ 1], &aCmd->cmd, &aCmd->arg);
+							 ConvertITEffect(theITCopy[0], theITCopy[1], &aCmd->cmd, &aCmd->arg);
 							 }	*/
 						}
 						curDataPat += 2;
@@ -795,12 +795,12 @@ static OSErr ExtractITInfo(PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	//ITinfo.name[ 25] = '\0';
+	//ITinfo.name[25] = '\0';
 	strlcpy(info->internalFileName, ITinfo.name, sizeof(ITinfo.name));
 	
 	/*** Total Patterns ***/
 	
-	info->totalPatterns = Tdecode16( &ITinfo.patNum);
+	info->totalPatterns = Tdecode16(&ITinfo.patNum);
 	
 	/*** Partition Length ***/
 	
@@ -808,11 +808,11 @@ static OSErr ExtractITInfo(PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Total Instruments ***/
 	
-	info->totalInstruments = Tdecode16( &ITinfo.insNum);
+	info->totalInstruments = Tdecode16(&ITinfo.insNum);
 	
 	/*** Tracks ***/
 	
-	//info->totalTracks	 = Tdecode16( &ITinfo.insNum);
+	//info->totalTracks	 = Tdecode16(&ITinfo.insNum);
 	
 	mystrcpy(info->formatDescription, "\pDMF Plug");
 

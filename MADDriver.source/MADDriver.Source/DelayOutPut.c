@@ -61,7 +61,7 @@ void MADCreateOverShoot(MADDriverRec *intDriver)
 			
 			for (i = 0; i < MAXCHANEFFECT; i++)
 			{
-				intDriver->DASCEffectBuffer[ i]	= (long*) MADNewPtrClear(((long) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, intDriver->lib);
+				intDriver->DASCEffectBuffer[i]	= (long*) MADNewPtrClear(((long) intDriver->ASCBUFFER * 8L) + intDriver->MDelay*2L*8L, intDriver->lib);
 			}
 		break;
 		
@@ -70,9 +70,9 @@ void MADCreateOverShoot(MADDriverRec *intDriver)
 			
 			intDriver->OverShoot = (Ptr) MADNewPtrClear(256L * 32L, intDriver->lib);
 			
-			for (i = 0; i < 256L * 16L; i++)						intDriver->OverShoot[ i] = 0;
-			for (i = 256L * 16L, x = 0; i < 256L * 17L; i++, x++)	intDriver->OverShoot[ i] = x;
-			for (i = 256L * 17L; i < 256L * 32L; i++)				intDriver->OverShoot[ i] = 0xFF;
+			for (i = 0; i < 256L * 16L; i++)						intDriver->OverShoot[i] = 0;
+			for (i = 256L * 16L, x = 0; i < 256L * 17L; i++, x++)	intDriver->OverShoot[i] = x;
+			for (i = 256L * 17L; i < 256L * 32L; i++)				intDriver->OverShoot[i] = 0xFF;
 			
 			intDriver->OverShoot += 256L*16L;
 			intDriver->OverShoot += 128L;
@@ -92,8 +92,8 @@ void MADKillOverShoot(MADDriverRec *intDriver)
 			
 			for (i = 0; i < MAXCHANEFFECT; i++)
 			{
-				if (intDriver->DASCEffectBuffer[ i] != NULL) DisposePtr((Ptr) intDriver->DASCEffectBuffer[ i]);
-				intDriver->DASCEffectBuffer[ i] = NULL;
+				if (intDriver->DASCEffectBuffer[i] != NULL) DisposePtr((Ptr) intDriver->DASCEffectBuffer[i]);
+				intDriver->DASCEffectBuffer[i] = NULL;
 			}
 		break;
 
@@ -767,8 +767,8 @@ void Play16StereoDelay(MADDriverRec *intDriver)
 
 	for (i = 0; i < MAXCHANEFFECT; i++)
 	{
-		intDriver->EffectBufferID[ i] = -1;
-		intDriver->EffectBufferRealID[ i] = -1;
+		intDriver->EffectBufferID[i] = -1;
+		intDriver->EffectBufferRealID[i] = -1;
 	}
 	
 	for (i = 0 ; i < intDriver->MultiChanNo; i++)	//intDriver->DriverSettings.numChn
@@ -777,14 +777,14 @@ void Play16StereoDelay(MADDriverRec *intDriver)
 #warning VST Channel effect
 		if (IsVSTChanEffect(intDriver, i) && chanCounter < MAXCHANEFFECT)
 		{
-			trackID = intDriver->curMusic->header->chanBus[ intDriver->chan[ i].TrackID].copyId;
+			trackID = intDriver->curMusic->header->chanBus[intDriver->chan[i].TrackID].copyId;
 		
 			// Try to find a DASCEffectBuffer with the same ID
 			
 			find = -1;
 			for (ii = 0; ii < MAXCHANEFFECT; ii++)
 			{
-				if (intDriver->EffectBufferID[ ii] == trackID) find = ii;
+				if (intDriver->EffectBufferID[ii] == trackID) find = ii;
 			}
 			
 			 if (find == -1)
@@ -792,14 +792,14 @@ void Play16StereoDelay(MADDriverRec *intDriver)
 			    find = chanCounter;
 			    chanCounter++;
 			}
-			Sample16BufferAddDelay(&intDriver->chan[ i], intDriver->DASCEffectBuffer[ find], intDriver);
+			Sample16BufferAddDelay(&intDriver->chan[i], intDriver->DASCEffectBuffer[find], intDriver);
 			
-			intDriver->EffectBufferID[ find] = trackID;
-			intDriver->EffectBufferRealID[ find] = i;
+			intDriver->EffectBufferID[find] = trackID;
+			intDriver->EffectBufferRealID[find] = i;
 		}
 		else
 #endif
-			Sample16BufferAddDelay(&intDriver->chan[ i], intDriver->DASCBuffer, intDriver);
+			Sample16BufferAddDelay(&intDriver->chan[i], intDriver->DASCBuffer, intDriver);
 	}
 }
 

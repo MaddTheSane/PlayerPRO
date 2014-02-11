@@ -6,43 +6,40 @@
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
 
-static OSErr mainCrop(sData					*theData,
-				long					SelectionStart,
-				long					SelectionEnd,
-				PPInfoPlug				*thePPInfoPlug,
-				short					StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
+static OSErr mainCrop(sData			*theData,
+					  long			SelectionStart,
+					  long			SelectionEnd,
+					  PPInfoPlug	*thePPInfoPlug,
+					  short			StereoMode)				// StereoMode = 0 apply on all channels, = 1 apply on current channel
 {
-	long	i;
-
-	switch (theData->amp)
-	{
+	long i;
+	
+	switch (theData->amp) {
 		case 8:
 		{
 			Ptr	SamplePtr = theData->data + SelectionStart;
-			for (i = 0; i < SelectionEnd - SelectionStart; i++)
-			{
-				theData->data[ i] = SamplePtr[ i];
+			for (i = 0; i < SelectionEnd - SelectionStart; i++) {
+				theData->data[i] = SamplePtr[i];
 			}
 			
 			theData->size = SelectionEnd - SelectionStart;
 			SetPtrSize(theData->data, theData->size);
 		}
-		break;
-
+			break;
+			
 		case 16:
 		{
 			short	*SamplePtr = ((short*) theData->data) + (SelectionStart / 2);
 			short	*data = (short*) theData->data;
 			
-			for (i = 0; i < (SelectionEnd - SelectionStart) / 2; i++)
-			{
-				data[ i] = SamplePtr[ i];
+			for (i = 0; i < (SelectionEnd - SelectionStart) / 2; i++) {
+				data[i] = SamplePtr[i];
 			}
 			
 			theData->size = SelectionEnd - SelectionStart;
 			SetPtrSize(theData->data, theData->size);
 		}
-		break;
+			break;
 	}
 	
 	return noErr;

@@ -6,16 +6,15 @@
 
 short GetNoPPDG();
 
-static PrivateList		myList;
-static DialogPtr		aDialog;
+static PrivateList	myList;
+static DialogPtr	aDialog;
 
-#define POSINS		10
+#define POSINS 10
 
-short	plugType[ 100];
-short	plugID[ 100];
+short plugType[100];
+short plugID[100];
 
-enum
-{
+enum {
 	eMusicFilePlug,
 	eSoundFilePlug,
 	eSoundFilterPlug,
@@ -24,9 +23,12 @@ enum
 
 void DrawPlugInfo(short iD)
 {
-	short		pos;
-	Str255		aStr;
-	Rect		destRect;
+	short	pos;
+	Str255	aStr;
+	Rect	destRect;
+			CFURLRef	tempURL;
+			FSSpec		tempSpec;
+			FSRef		tempRef;
 	
 	pos = iD - GetControlValue(myList.yScroll);
 	
@@ -36,39 +38,32 @@ void DrawPlugInfo(short iD)
 	NNumToString(iD + 1, aStr);
 	pStrcat(aStr, "\p  ");
 	
-	switch (plugType[iD])
-	{
+	switch (plugType[iD]) {
 		case eMusicFilePlug:
-		{
-			CFURLRef	tempURL;
-			FSSpec		tempSpec;
-			FSRef		tempRef;
-			tempURL = CFBundleCopyBundleURL(MADDriver->lib->ThePlug[ iD].file);
+			tempURL = CFBundleCopyBundleURL(MADDriver->lib->ThePlug[iD].file);
 			CFURLGetFSRef(tempURL, &tempRef);
 			FSGetCatalogInfo(&tempRef, kFSCatInfoNone, NULL, NULL, &tempSpec, NULL);
 			pStrcat(aStr, tempSpec.name);
 			CFRelease(tempURL);
-		}
 			break;
 			
 		case eSoundFilePlug:
-			
+			//TODO: handle Sound file plug-in
 			break;
 			
 		case eDigitalEditorPlug:
-			
+			//TODO: handle Digital file plug-in
 			break;
 			
 		case eSoundFilterPlug:
-			
+			//TODO: handle Filter file plug-in
 			break;
 	}
 	
 	MoveTo(myList.rect.left + POSINS, myList.rect.top + 10 + myList.HCell*pos);
 	DrawString(aStr);
 	
-	if (iD >= myList.select.top && iD <= myList.select.bottom)
-	{
+	if (iD >= myList.select.top && iD <= myList.select.bottom) {
 		Rect 			t;
 		RGBColor		hilite;
 		
@@ -82,12 +77,9 @@ void DrawPlugInfo(short iD)
 		
 		if (hilite.red == 0 &&
 		   hilite.green == 0 &&
-		   hilite.blue == 0)
-		{
+		   hilite.blue == 0) {
 			InvertRect(&t);
-		}
-		else
-		{
+		} else {
 			RGBBackColor(&hilite);
 			
 			CopyBits ((BitMap*) *GetPortPixMap(GetDialogPort(aDialog)),
@@ -95,7 +87,7 @@ void DrawPlugInfo(short iD)
 					  &t,
 					  &t,
 					  srcCopy,
-					  nil);
+					  NULL);
 			
 			ForeColor(blackColor);
 			BackColor(whiteColor);
@@ -105,12 +97,13 @@ void DrawPlugInfo(short iD)
 
 void AboutPlugs()
 {
-	short			itemHit, itemType, i, x;
-	Handle			itemHandle;
-	Rect			itemRect;
-	FontInfo		ThisFontInfo;
+	short		itemHit, itemType, x;
+	Handle		itemHandle;
+	Rect		itemRect;
+	FontInfo	ThisFontInfo;
+	int			i;
 	
-	aDialog = GetNewDialog(154, NULL, (WindowPtr) -1L);
+	aDialog = GetNewDialog(154, NULL, (WindowPtr)-1L);
 	SetPortDialogPort(aDialog);
 	
 	ChangeDialogFont(aDialog);
@@ -148,39 +141,29 @@ void AboutPlugs()
 	
 	///////// LIST CREATION ////////////
 	
-	for (i = 0, x = 0; i < MADDriver->lib->TotalPlug; i++, x++)
-	{
-		plugType[ x]	= eMusicFilePlug;
-		plugID[ x]		= i;
- 	}
-	
-	for (i = 0, x = 0; i < GetNoPPDG(); i++, x++)
-	{
-		plugType[ x]	= eDigitalEditorPlug;
-		plugID[ x]		= i;
+	for (i = 0, x = 0; i < MADDriver->lib->TotalPlug; i++, x++) {
+		plugType[x]	= eMusicFilePlug;
+		plugID[x]		= i;
 	}
 	
-	do
-	{
+	for (i = 0, x = 0; i < GetNoPPDG(); i++, x++) {
+		plugType[x]	= eDigitalEditorPlug;
+		plugID[x]	= i;
+	}
+	
+	do {
+		Point	pt;
 		ModalDialog(MyDlgFilterDesc, &itemHit);
 		
-		switch (itemHit)
-		{
+		switch (itemHit) {
 			case 2:
-			{
-				Point	pt;
-				
 				GetMouse(&pt);
-				
 				PLScroll(pt, &myList);
-				
 				PLClick(pt, 0, &myList);
-				
-			}
 				break;
 		}
 		
-	}while (itemHit != 1);
+	} while (itemHit != 1);
 	
 	DisposeDialog(aDialog);
 }
@@ -191,14 +174,10 @@ void UpdatePlugsAbout(DialogPtr aDialog)
 	short		i;
 	
 	BeginUpdate(GetDialogWindow(aDialog));
-	
 	DrawDialog(aDialog);
-	
 	oldFrameButton(aDialog);
-	
 	saveClipRgn = NewRgn();
 	GetClip(saveClipRgn);
-	
 	ClipRect(&myList.rect);
 	
 	ForeColor(whiteColor);
@@ -215,6 +194,5 @@ void UpdatePlugsAbout(DialogPtr aDialog)
 	InsetRect(&myList.rect, -1, -1);
 	FrameRect(&myList.rect);
 	InsetRect(&myList.rect, 1, 1);
-	
 	EndUpdate(GetDialogWindow(aDialog));
 }

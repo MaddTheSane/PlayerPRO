@@ -115,7 +115,7 @@ OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInf
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if (!strcmp(kindFile, inMADDriver->ThePlug[ i].type))
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type))
 		{
 			return(CallImportPlug(inMADDriver, i, 'INFO', AlienFile, &aMAD, InfoRec));
 		}
@@ -130,7 +130,7 @@ OSErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MAD
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if (!strcmp(kindFile, inMADDriver->ThePlug[ i].type))
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type))
 		{
 			*theNewMAD = (MADMusic*) calloc(sizeof(MADMusic), 1);
 			if (!theNewMAD) return MADNeedMemory;
@@ -154,10 +154,10 @@ OSErr CheckMADFile(char* name)
 	{
 		iRead(CharlMADcheckLength, charl, refNum);
 		
-		if (charl[ 0] == 'M' &&							// MADK
-		   charl[ 1] == 'A' &&
-		   charl[ 2] == 'D' &&
-		   charl[ 3] == 'K') err = noErr;
+		if (charl[0] == 'M' &&							// MADK
+		   charl[1] == 'A' &&
+		   charl[2] == 'D' &&
+		   charl[3] == 'K') err = noErr;
 		else err = MADIncompatibleFile;
 		
 		iClose(refNum);
@@ -212,7 +212,7 @@ Boolean	MADPlugAvailable(MADLibrary *inMADDriver, char* kindFile)
 	if (!strcmp(kindFile, "MADK")) return TRUE;
 	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if (!strcmp(kindFile, inMADDriver->ThePlug[ i].type)) return TRUE;
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) return TRUE;
 	}
 	return FALSE;
 }
@@ -224,7 +224,7 @@ OSErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MAD
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if (!strcmp(kindFile, inMADDriver->ThePlug[ i].type))
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type))
 		{
 			return(CallImportPlug(inMADDriver, i, 'EXPL', AlienFile, theNewMAD, &InfoRec));
 		}
@@ -240,7 +240,7 @@ OSErr PPTestFile(MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if (!strcmp(kindFile, inMADDriver->ThePlug[ i].type))
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type))
 		{
 			return(CallImportPlug(inMADDriver, i, 'TEST', AlienFile, &aMAD, &InfoRec));
 		}
@@ -256,17 +256,17 @@ OSType GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 	
 	for (i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if (inMADDriver->ThePlug[ i].mode == mode || inMADDriver->ThePlug[ i].mode == 'EXIM')
+		if (inMADDriver->ThePlug[i].mode == mode || inMADDriver->ThePlug[i].mode == 'EXIM')
 		{
 			if (ID == x)
 			{
 				short 	xx;
 				OSType	type;
 				
-				xx = strlen(inMADDriver->ThePlug[ i].type);
+				xx = strlen(inMADDriver->ThePlug[i].type);
 				if (xx > 4) xx = 4;
 				type = '    ';
-				memcpy(&type, inMADDriver->ThePlug[ i].type, xx);
+				memcpy(&type, inMADDriver->ThePlug[i].type, xx);
 				MOT32(&type);
 				
 				return type;

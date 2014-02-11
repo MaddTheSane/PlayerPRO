@@ -106,25 +106,25 @@ void MyNullHook()
 	
 	pLength = pkt->len;	
 	
-	if (pkt->data[ 0] >= 0x90 && pkt->data[ 0] <= 0x9F)							// NOTE ON
+	if (pkt->data[0] >= 0x90 && pkt->data[0] <= 0x9F)							// NOTE ON
 	{
-		myNote = pkt->data[ 1] - 12;
+		myNote = pkt->data[1] - 12;
 		if (myNote >= 0 && myNote < NUMBER_NOTES)
 		{
-			if (thePrefs.MIDIChanInsTrack) curins = pkt->data[ 0] - 0x90;
+			if (thePrefs.MIDIChanInsTrack) curins = pkt->data[0] - 0x90;
 			else
 			{
 				curins = -1;
 				GetIns(&curins, NULL);
 			}
 			
-			if (thePrefs.MIDIVelocity) curvol = MidiVolume[ pkt->data[ 2]];
+			if (thePrefs.MIDIVelocity) curvol = MidiVolume[pkt->data[2]];
 			else curvol = 0xFF;
 			
 			/*****************************/
-			if (pkt->data[ 2] == 0)
+			if (pkt->data[2] == 0)
 			{
-				pkt->data[ 0] -= 0x10;
+				pkt->data[0] -= 0x10;
 				goto NOTEOFF; 							// This is a NOTE-OFF
 			}
 			/*****************************/
@@ -148,21 +148,21 @@ void MyNullHook()
 			
 			TouchIn++;
 			if (TouchIn < 0 || TouchIn >= 10) TouchIn = 0;
-			TouchMem[ TouchIn] = myNote;
-			TrackMem[ TouchIn] = track;			// + 1
-			if (TrackMem[ TouchIn] < 0 || TrackMem[ TouchIn] >= MADDriver->DriverSettings.numChn) TrackMem[ TouchIn] = 0;
+			TouchMem[TouchIn] = myNote;
+			TrackMem[TouchIn] = track;			// + 1
+			if (TrackMem[TouchIn] < 0 || TrackMem[TouchIn] >= MADDriver->DriverSettings.numChn) TrackMem[TouchIn] = 0;
 		}
 	}
-	else if (pkt->data[ 0] >= 0x80 && pkt->data[ 0] <= 0x8F)							// NOTE OFF
+	else if (pkt->data[0] >= 0x80 && pkt->data[0] <= 0x8F)							// NOTE OFF
 	{
 	NOTEOFF:
 	
-		myNote = pkt->data[ 1] - 12;
+		myNote = pkt->data[1] - 12;
 		if (myNote >= 0 && myNote < NUMBER_NOTES)
 		{
 			for(i=0; i<10;i++)
 			{
-				if (TouchMem[ i] == myNote)
+				if (TouchMem[i] == myNote)
 				{
 					if (PianoDlog != NULL)
 					{
@@ -177,17 +177,17 @@ void MyNullHook()
 							case eStop:
 								if (PianoRecording)
 								{
-									NPianoRecordProcess(0xFF, 0xFF, 0x10, TrackMem[ i]);
+									NPianoRecordProcess(0xFF, 0xFF, 0x10, TrackMem[i]);
 								}
 							break;
 							
 							case eNoteOFF:
 								if (PianoRecording)
 								{
-									NPianoRecordProcess(0xFE, 0xFF, 0xFF, TrackMem[ i]);
+									NPianoRecordProcess(0xFE, 0xFF, 0xFF, TrackMem[i]);
 								}
 								
-								MADDriver->chan[ TrackMem[ i]].KeyOn = false;
+								MADDriver->chan[TrackMem[i]].KeyOn = false;
 							break;
 						}
 						
@@ -325,7 +325,7 @@ void DoMidiSpeaker(short note, short Instru, long arg)
 
 	if (thePrefs.MIDIVelocity)
 	{
-		vol = MidiVolume[ arg];
+		vol = MidiVolume[arg];
 		vol += 0x10;
 	}
 	else vol = 0xFF;
@@ -341,7 +341,7 @@ void DoMidiSpeaker(short note, short Instru, long arg)
 		if (chan >= curMusic->header->numChn) chan = curMusic->header->numChn-1;
 	}
 	
-	DoPlayInstruInt(note, Instru, 0, 0, vol, &MADDriver->chan[ chan], 0, 0);
+	DoPlayInstruInt(note, Instru, 0, 0, vol, &MADDriver->chan[chan], 0, 0);
 }
 
 /*void SquidAllNotesOff(short PortRefNum)
@@ -392,7 +392,7 @@ void SelectOMSConnections(Boolean Input)
 			
 			OpenOrCloseConnection(false);
 			
-			gChosenInputID = (*prevSelectionIN)->id[ 0];
+			gChosenInputID = (*prevSelectionIN)->id[0];
 			
 			OpenOrCloseConnection(true);
 		}
@@ -407,7 +407,7 @@ void SelectOMSConnections(Boolean Input)
 			if (prevSelectionOUT) OMSDisposeHandle(prevSelectionOUT);
 			prevSelectionOUT = out;
 			
-			gChosenOutputID = (*prevSelectionOUT)->id[ 0];
+			gChosenOutputID = (*prevSelectionOUT)->id[0];
 			
 			gOutNodeRefNum = OMSUniqueIDToRefNum(gChosenOutputID);
 		}
@@ -429,7 +429,7 @@ void SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte)
 	pack.flags	= 0;
 	pack.len	= 1;
 	
-	pack.data[ 0] = MIDIByte;
+	pack.data[0] = MIDIByte;
 	
 	OMSWritePacket2(&pack, gOutNodeRefNum, gOutputPortRefNum);
 }
@@ -461,7 +461,7 @@ void SendMIDITimingClock(MADDriverRec *MDriver)
 	
 	for (i = 0; i < MDriver->curMusic->header->numPointers; i++)
 	{
-		for (x = 0; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
+		for (x = 0; x < MDriver->curMusic->partition[MDriver->curMusic->header->oPointers[i]]->header.size; x++)
 		{
 			time ++;
 			
@@ -473,7 +473,7 @@ void SendMIDITimingClock(MADDriverRec *MDriver)
 			
 			for (y = 0; y <  MDriver->curMusic->header->numChn; y++)
 			{
-				aCmd = GetMADCommand(x, y, MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]);
+				aCmd = GetMADCommand(x, y, MDriver->curMusic->partition[MDriver->curMusic->header->oPointers[i]]);
 				
 				/** SpeedE **/
 				
@@ -500,7 +500,7 @@ void SendMIDITimingClock(MADDriverRec *MDriver)
 				
 				if (aCmd->cmd == skipE)
 				{
-					for (; x < MDriver->curMusic->partition[ MDriver->curMusic->header->oPointers[ i]]->header.size; x++)
+					for (; x < MDriver->curMusic->partition[MDriver->curMusic->header->oPointers[i]]->header.size; x++)
 					{
 						if (i == MDriver->PL	&&
 							x == MDriver->PartitionReader)
@@ -522,9 +522,9 @@ void SendMIDITimingClock(MADDriverRec *MDriver)
 	high >>= 7;
 	low = curTime & 0x007F;
 	
-	pack.data[ 0] = 0xF2;
-	pack.data[ 1] = high;
-	pack.data[ 2] = low;
+	pack.data[0] = 0xF2;
+	pack.data[1] = high;
+	pack.data[2] = low;
 	
 	OMSWritePacket2(&pack, gOutNodeRefNum, gOutputPortRefNum);
 }

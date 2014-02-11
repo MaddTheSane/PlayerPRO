@@ -99,13 +99,13 @@ void four1(float *data, unsigned long nn, int isign)
 		for (m = 1; m < mmax; m += 2) {
 			for (i=m; i <= n; i += istep) {
 				j = i + mmax;
-				tempr = wr*data[ j] - wi*data[ j + 1];
-				tempi = wr*data[ j + 1] + wi*data[ j];
+				tempr = wr*data[j] - wi*data[j + 1];
+				tempi = wr*data[j + 1] + wi*data[j];
 				
-				data[ j] 		= data[ i] - tempr;
-				data[ j + 1] 	= data[ i + 1] - tempi;
-				data[ i] 		+= tempr;
-				data[ i+1] 		+= tempi;
+				data[j] 		= data[i] - tempr;
+				data[j + 1] 	= data[i + 1] - tempi;
+				data[i] 		+= tempr;
+				data[i+1] 		+= tempi;
 			}
 			wr = (wtemp=wr)*wpr - wi*wpi + wr;
 			wi = wi*wpr + wtemp*wpi + wi;
@@ -139,27 +139,27 @@ void realft(float *data, unsigned long n, int isign)
 	for (i = 2; i <= (n >> 2); i++) {
 		i4	= 1 + (i3=np3 - (i2=1 +(i1=i+i-1)));
 		
-		h1r	= c1*(data[ i1] + data[i3]);
-		h1i	= c1*(data[ i2] - data[i4]);
+		h1r	= c1*(data[i1] + data[i3]);
+		h1i	= c1*(data[i2] - data[i4]);
 		
-		h2r	= -c2*(data[ i2] + data[ i4]);
-		h2i	= c2*(data[ i1] - data[ i3]);
+		h2r	= -c2*(data[i2] + data[i4]);
+		h2i	= c2*(data[i1] - data[i3]);
 		
-		data[ i1] = h1r + wr*h2r - wi*h2i;
-		data[ i2] = h1i + wr*h2i + wi*h2r;
-		data[ i3] = h1r - wr*h2r + wi*h2i;
-		data[ i4] = -h1i + wr*h2i + wi*h2r;
+		data[i1] = h1r + wr*h2r - wi*h2i;
+		data[i2] = h1i + wr*h2i + wi*h2r;
+		data[i3] = h1r - wr*h2r + wi*h2i;
+		data[i4] = -h1i + wr*h2i + wi*h2r;
 		
 		wr	= (wtemp = wr)*wpr - wi*wpi + wr;
 		wi	= wi*wpr + wtemp*wpi + wi;
 	}
 	
 	if (isign == 1) {
-		data[ 1]	= (h1r=data[1]) + data[ 2];
-		data[ 2]	= h1r - data[ 2];
+		data[1]	= (h1r=data[1]) + data[2];
+		data[2]	= h1r - data[2];
 	} else {
-		data[ 1]	= c1*((h1r = data[1]) + data[2]);
-		data[ 2]	= c1*(h1r - data[ 2]);
+		data[1]	= c1*((h1r = data[1]) + data[2]);
+		data[2]	= c1*(h1r - data[2]);
 		four1(data, n>>1, -1);
 	}
 }
@@ -173,17 +173,17 @@ Ptr MakeCalculusSpectrum(Ptr srcPtr, Boolean logScale)
 	realft(x, 256, 1);
 	
 	for (i= 1; i<=256; i++) {
-		temp = x[ i];
+		temp = x[i];
 		temp >>= 3;
 		
 		if (temp < 0) temp = -temp;
 		
 		if (temp > 255) temp = 255;
-		//	else temp = logoScale[ temp];
+		//	else temp = logoScale[temp];
 		
-		xInt[ i-1] = temp;
+		xInt[i-1] = temp;
 	}
-	xInt[ 0] = 0;
+	xInt[0] = 0;
 	
 	if (logScale) {
 		lastLog = logoScale[255];

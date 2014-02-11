@@ -18,7 +18,6 @@ short Note2PosStaff(short);
 void DrawStaffNotes(void);
 void UpdateStaffWindow(DialogPtr);
 void CalculDiffStartStaff(void);
-Pcmd *CreatePcmdFromSelectionStaff(void);
 void OpenPcmdStaff(FSSpec *);
 void DoItemPressStaff(short, DialogPtr);
 pascal void actionProcStaff(ControlHandle, short);

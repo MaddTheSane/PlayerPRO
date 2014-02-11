@@ -51,7 +51,7 @@ extern	short					curTrack, curActif;
 extern	Boolean					DragManagerUse, PianoRecording;
 extern	Cursor					ContextCrsr, PlayCrsr, HandCrsr, CHandCrsr;
 extern	RGBColor				theColor;
-extern	TEHandle				TEH[ 6];
+extern	TEHandle				TEH[6];
 extern	DialogPtr				AdapDlog;
 extern	DialogPtr				theProgressDia;
 		DialogPtr					EditorDlog;
@@ -62,9 +62,9 @@ static	short					CurrentPat, DiffStartH, DiffStartV;
 static	short					DefaultFX, DefaultArg, DefaultVol;
 static	Str32					NoteCharTemp;
 static	Point						CellSelec;
-static	ControlHandle				FillBut, CheckBut[ 4], OpenBut, SaveBut, InfoBut, PrefBut, ShowBut, PlayBut, DownBut, UpBut, RecBut, FXBut, TraceBut, FindBut;
+static	ControlHandle				FillBut, CheckBut[4], OpenBut, SaveBut, InfoBut, PrefBut, ShowBut, PlayBut, DownBut, UpBut, RecBut, FXBut, TraceBut, FindBut;
 static	Boolean						DidTryToDrag;
-static	RGBColor					Gray[ 5];
+static	RGBColor					Gray[5];
 static	RGBColor					yellC, greenC, blueC, redC;
 		Boolean					EditorKeyRecording;
 
@@ -234,10 +234,10 @@ void CreateEditorPixMap(short PatID)
 	GetGWorld(&oldPort, &oldGDeviceH);
 
 
-	if (curMusic->partition[ PatID]->header.size < 100) BigNumber = false;
+	if (curMusic->partition[PatID]->header.size < 100) BigNumber = false;
 	else BigNumber = true;
 	
-	SetRect(&aRect, 0, 0, LEFTBORD, myList.HCell * curMusic->partition[ PatID]->header.size);
+	SetRect(&aRect, 0, 0, LEFTBORD, myList.HCell * curMusic->partition[PatID]->header.size);
 	
 	NewGWorld(	&theGWorld, 0, &aRect, nil, nil, (GWorldFlags) 0);
 	
@@ -251,7 +251,7 @@ void CreateEditorPixMap(short PatID)
 	TextFont(4);	TextSize(9);
 
 	SetRect(&nRect, 0, 0, LEFTBORD, myList.HCell);
-	for (i = 0; i < curMusic->partition[ PatID]->header.size; i++)
+	for (i = 0; i < curMusic->partition[PatID]->header.size; i++)
 	{
 		NTStr(3, i, (Ptr) aStr);
 		TETextBox((Ptr) aStr, 3, &nRect, teCenter);
@@ -465,10 +465,10 @@ void OutPutHexShort(Str255 outch, short column, short shortNumber)
 	j=column;
 	
 	for(i = 1; i <= column; i++) {
-		outch[ i] = buffer[j];
+		outch[i] = buffer[j];
 		j--;
 	}
-	outch[ 0] = column;
+	outch[0] = column;
 }
 
 void NTStr(short NoDigi, short val, char *theText)
@@ -542,10 +542,10 @@ void GetNoteString(short note, Str255 string)
 	if (note < 0 || note > NUMBER_NOTES)
 		pStrcpy(string, "\p---");
 
-	string[ 0] = 3;
-	string[ 1] = ENote[note][0];
-	string[ 2] = ENote[note][1];
-	string[ 3] = ENote[note][2];
+	string[0] = 3;
+	string[1] = ENote[note][0];
+	string[2] = ENote[note][1];
+	string[3] = ENote[note][2];
 }
 
 void InitStringEditor(void)
@@ -620,7 +620,7 @@ void ConvertTEH(unsigned char *dst, short length)
 		if (length >= 3)
 			dst[2] =' ';
 	} else if ((*TEH[curActif])->teLength == 3) {
-		dst[ 0] = (*cHdle)[0];
+		dst[0] = (*cHdle)[0];
 		if (length >= 2)
 			dst[1] = (*cHdle)[1];
 		if (length >= 3)
@@ -644,19 +644,19 @@ Boolean CreateNoteString(Cmd *theCommand, Str255 mainStr, Boolean AllStr)
 			mainStr[charID++] = EInstru[theCommand->ins][1];
 			mainStr[charID++] = EInstru[theCommand->ins][2];
 		} else {
-			mainStr[ charID++] = ' ';
-			mainStr[ charID++] = ' ';
-			mainStr[ charID++] = ' ';
+			mainStr[charID++] = ' ';
+			mainStr[charID++] = ' ';
+			mainStr[charID++] = ' ';
 		}
 	}
 
 	if (thePrefs.DigitalNote || AllStr) {
 		if (charID != 1)
-			mainStr[ charID++] = ' ';
+			mainStr[charID++] = ' ';
 
 		if (AcceptKeysTools() == true && theCommand == GetCmdDlogActif() && curActif == NoteTE && (MADDriver->Reading == false || thePrefs.MusicTrace == false)) {
 			Note = true;
-			ConvertTEH(&mainStr[ charID], 3);
+			ConvertTEH(&mainStr[charID], 3);
 			charID += 3;
 		} else if (theCommand->note != 0xFF) {
 			Note = true;
@@ -664,9 +664,9 @@ Boolean CreateNoteString(Cmd *theCommand, Str255 mainStr, Boolean AllStr)
 			mainStr[charID++] = ENote[theCommand->note][1];
 			mainStr[charID++] = ENote[theCommand->note][2];
 		} else {
-			mainStr[ charID++] = ' ';
-			mainStr[ charID++] = ' ';
-			mainStr[ charID++] = ' ';
+			mainStr[charID++] = ' ';
+			mainStr[charID++] = ' ';
+			mainStr[charID++] = ' ';
 		}
 	}
 
@@ -738,7 +738,7 @@ void SetNewPat()
 	Str255	String, aStr, theStr;
 	Rect		caRect;
 
-	myList.maxY = curMusic->partition[ CurrentPat]->header.size;
+	myList.maxY = curMusic->partition[CurrentPat]->header.size;
 	if (myList.maxX != curMusic->header->numChn) {
 		myList.maxX = curMusic->header->numChn;
 		CheckColumn();
@@ -746,13 +746,13 @@ void SetNewPat()
 		GetPortBounds(GetDialogPort(EditorDlog), &caRect);
 		
 		myList.rect.right = caRect.right - 15;
-	//myList.rect.right = myList.rect.left + //curMusic->header->numChn * myList.LCell;
+		//myList.rect.right = myList.rect.left + //curMusic->header->numChn * myList.LCell;
 	}
 
 	PLCheckSelect(&myList);
 
 	if (GetControlMaximum(myList.yScroll) !=
-		curMusic->partition[ CurrentPat]->header.size -
+		curMusic->partition[CurrentPat]->header.size -
 		(myList.rect.bottom - myList.rect.top) / myList.HCell) {
 			PLSetControl(&myList);
 			DrawLeft(NULL, false);
@@ -769,7 +769,7 @@ void SetNewPat()
 	pStrcpy(String, "\pPattern: ");
 	pStrcat(String, aStr);
 	
-	theStr[ 0] = 20;
+	theStr[0] = 20;
 	for (x = 0; x < 20; x++) theStr[x + 1] = curMusic->partition[CurrentPat]->header.name[x];
 	for (x = 1; x < 20; x++)
 		if (theStr[x] == 0) {
@@ -819,7 +819,7 @@ void UpdateEditorInfo(void)
 	InvalWindowRect(GetDialogWindow(EditorDlog), &cellRect);
 	
 	SetMaxWindow(myList.rect.left + 15 + curMusic->header->numChn * myList.LCell,
-				 myList.rect.top + 15 + curMusic->partition[ CurrentPat]->header.size * myList.HCell,
+				 myList.rect.top + 15 + curMusic->partition[CurrentPat]->header.size * myList.HCell,
 				 EditorDlog);
 	
 	CreateCurRect();
@@ -831,9 +831,7 @@ void UpdatePartitionWindow(DialogPtr);
 
 void CreateCurRect()
 {
-	short	temp;
-
-	temp = ReaderCopy - GetControlValue(myList.yScroll);
+	short temp = ReaderCopy - GetControlValue(myList.yScroll);
 
 	CurRect.top = myList.rect.top + temp*myList.HCell;
 	CurRect.bottom = CurRect.top + myList.HCell;
@@ -989,7 +987,7 @@ void DrawEditorUp(void)
 		
 		NumToString(i + 1 + GetControlValue(myList.xScroll), aStr);
 		
-		MyTETextBox(&thePrefs.tracksColor[i + GetControlValue(myList.xScroll)], &tempRect, aStr, MADDriver->Active[ i]);
+		MyTETextBox(&thePrefs.tracksColor[i + GetControlValue(myList.xScroll)], &tempRect, aStr, MADDriver->Active[i]);
 		
 		ForeColor(blackColor);
 		
@@ -1176,7 +1174,7 @@ void DoGrowPartition(void)
 	if (temp.right < temp.left) temp.right = temp.left;
 	temp.top = 110;
 	
-	temp.bottom = myList.rect.top + 16 + curMusic->partition[ CurrentPat]->header.size * myList.HCell;
+	temp.bottom = myList.rect.top + 16 + curMusic->partition[CurrentPat]->header.size * myList.HCell;
 	//temp.bottom += 16;
 
 	LocalToGlobal(&aPt);
@@ -1479,10 +1477,10 @@ void MyLUpdate()
 		LineTo(xPos - 4, myList.rect.bottom);
 		
 		yPos	=	myList.rect.top + 9;
-		CmdPtr	=	GetMADCommand(GetControlValue(myList.yScroll), x, curMusic->partition[ CurrentPat]);
+		CmdPtr	=	GetMADCommand(GetControlValue(myList.yScroll), x, curMusic->partition[CurrentPat]);
 		
 		if (MADDriver->Active[x] == false)
-			RGBForeColor(&Gray[ 0]);
+			RGBForeColor(&Gray[0]);
 		
 		for (i = GetControlValue(myList.yScroll); i < PLGetMaxYValue(&myList); i++) {
 			if (CreateNoteString(CmdPtr, aStr, false)) {
@@ -1554,9 +1552,10 @@ void MyLUpdateSpecific(short startY, short endY)
 		LineTo(xPos - 4, myList.rect.bottom);
 		
 		yPos	= myList.rect.top + 9 + (startY - GetControlValue(myList.yScroll)) * myList.HCell;
-		CmdPtr	= GetMADCommand(startY, x, curMusic->partition[ CurrentPat]);
+		CmdPtr	= GetMADCommand(startY, x, curMusic->partition[CurrentPat]);
 		
-		if (MADDriver->Active[x] == false) RGBForeColor(&Gray[0]);
+		if (MADDriver->Active[x] == false)
+			RGBForeColor(&Gray[0]);
 		
 		for (i = startY; i < endY; i++) {
 			if (CreateNoteString(CmdPtr, aStr, false)) {
@@ -1838,7 +1837,7 @@ Boolean MLClick(Point pt, short modifiers)
 		tP = pt;
 		ConvertPointAndType(&tP, &type);
 		
-		theCmd = GetMADCommand(tP.v, tP.h, curMusic->partition[ CurrentPat]);
+		theCmd = GetMADCommand(tP.v, tP.h, curMusic->partition[CurrentPat]);
 		
 		SetCursor(GetQDGlobalsArrow(&qdarrow));
 		
@@ -1902,7 +1901,7 @@ Boolean MLClick(Point pt, short modifiers)
 					UPDATE_Note(tP.v, tP.h);
 				}
 				DeleteMenu(GetMenuID(tMenu));
-				DisposeMenu( tMenu);
+				DisposeMenu(tMenu);
 				break;
 				
 			case InstruTE:
@@ -2109,9 +2108,9 @@ void SetInstruEditor(short instru)
 	TextFont(0);	TextSize(0);
 	//RGBBackColor(&theColor);
 	//SetDText(EditorDlog, 16, MyC2PStr(text));
-	SetControlTitle(CheckBut[ 3], aStr);
+	SetControlTitle(CheckBut[3], aStr);
 	
-	//strcpy((Ptr) aStr, curMusic->fid[ curInstru-1].name);
+	//strcpy((Ptr) aStr, curMusic->fid[curInstru-1].name);
 	//MyC2PStr((Ptr) aStr);
 	//SetDText(EditorDlog, 18, aStr);
 	TextFont(4);
@@ -2211,7 +2210,7 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 				if (MADDriver->Reading == false) {
 					GetKeys(km);
 					if (IsPressed(0x37)) {	// On joue la note = PlayCrsr
-						//short		VolExtCopy[ MAXTRACK];
+						//short		VolExtCopy[MAXTRACK];
 						long		rePat;
 						long		reReader;
 						long		rePL;
@@ -2329,7 +2328,7 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 		case 39:
 			//RGBBackColor(&theColor);
 			if(MyTrackControl((ControlHandle) CheckBut[whichItem - 37], theEvent.where, NULL)) {
-				SetControlValue((ControlHandle) CheckBut[whichItem - 37], !GetControlValue((ControlHandle) CheckBut[ whichItem - 37]));
+				SetControlValue((ControlHandle) CheckBut[whichItem - 37], !GetControlValue((ControlHandle) CheckBut[whichItem - 37]));
 				
 				switch (whichItem) {
 					case 40:
@@ -2386,9 +2385,9 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 				
 				pStrcpy(aStr, "\pVol: ");
 				
-				aStr[ 6] = EArgu[ DefaultVol][ 0];
-				aStr[ 7] = EArgu[ DefaultVol][ 1];
-				aStr[ 0] += 2;
+				aStr[6] = EArgu[DefaultVol][0];
+				aStr[7] = EArgu[DefaultVol][1];
+				aStr[0] += 2;
 				
 				TextFont(0);
 				TextSize(0);
@@ -2440,12 +2439,12 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 				
 				TextFont(0);	TextSize(0);
 				//RGBBackColor(&theColor);
-				SetControlTitle(CheckBut[ 1], aStr);
+				SetControlTitle(CheckBut[1], aStr);
 				//BackColor(whiteColor);
 				TextFont(4);	TextSize(9);
 				
 				OnOffArg = true;
-				SetControlValue((ControlHandle) CheckBut[ 1], OnOffArg);
+				SetControlValue((ControlHandle) CheckBut[1], OnOffArg);
 			}
 			DeleteMenu(GetMenuID(curMenu));
 			DisposeMenu(curMenu);
@@ -2479,8 +2478,8 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 				
 				pStrcpy(aStr, "\pFX: ");
 				
-				aStr[ 5] = EEffect[ DefaultFX];
-				aStr[ 0] ++;
+				aStr[5] = EEffect[DefaultFX];
+				aStr[0] ++;
 				
 				TextFont(0);
 				TextSize(0);
@@ -2573,9 +2572,9 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 				
 				TextFont(0);	TextSize(0);
 				//RGBBackColor(&theColor);
-				SetControlTitle(CheckBut[ 3], aStr);
+				SetControlTitle(CheckBut[3], aStr);
 				
-				//strcpy((Ptr) aStr, curMusic->fid[ curInstru-1].name);
+				//strcpy((Ptr) aStr, curMusic->fid[curInstru-1].name);
 				//MyC2PStr((Ptr) aStr);
 				//SetDText(whichDialog, 18, aStr);
 				
@@ -2678,7 +2677,7 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 					
 #if 0
 					RGBBackColor(&theColor);
-					for (i = 0; i < 4; i++) HiliteControl(CheckBut[ i], 0);
+					for (i = 0; i < 4; i++) HiliteControl(CheckBut[i], 0);
 					BackColor(whiteColor);
 #endif
 				} else {
@@ -2686,7 +2685,7 @@ void DoItemPressPartition(short whichItem, DialogPtr whichDialog)    			/* Item 
 					
 #if 0
 					RGBBackColor(&theColor);
-					for (i = 0; i < 4; i++) HiliteControl(CheckBut[ i], 255);
+					for (i = 0; i < 4; i++) HiliteControl(CheckBut[i], 255);
 					BackColor(whiteColor);
 #endif
 				}
@@ -3140,7 +3139,7 @@ void CreatePartitionWindow(void)
 	for (i = 0; i < 4; i++) {
 		GetDialogItem(EditorDlog , 37 + i, &itemType, &itemHandle, &itemRect);
 		CheckBut[i] = NewControl(editorWind, &itemRect, "\p", true, 0, 0, 1, 1, 0);
-		//HiliteControl(CheckBut[ i], 255);
+		//HiliteControl(CheckBut[i], 255);
 	}
 	SetControlTitle(CheckBut[3], "\pIns: 000");
 	SetControlValue(CheckBut[3], true);
@@ -3244,7 +3243,7 @@ void InternalEditorInit()
 	SetNewPat();
 	
 	SetMaxWindow(myList.rect.left + 15 + curMusic->header->numChn * cSize.h,
-				 myList.rect.top + 15 + curMusic->partition[ CurrentPat]->header.size * myList.HCell,
+				 myList.rect.top + 15 + curMusic->partition[CurrentPat]->header.size * myList.HCell,
 				 EditorDlog);
 	
 	theEvent.what = 0;
@@ -3267,7 +3266,7 @@ void InternalEditorInit()
 	SetPort(SavePort);
 }
 
-void ClosePartitionWindow(void)
+void ClosePartitionWindow()
 {
 	Point	Start;
 	Rect	caRect;
@@ -3327,7 +3326,7 @@ void DigitalEditorProcess(short whichNote, short *eff, short *arg, short *volCmd
 	
 	theCell.v = theCell.h = 0;
 	if (PLGetSelect(&theCell, &myList)) {
-		theCommand = GetMADCommand(theCell.v, theCell.h, curMusic->partition[ CurrentPat]);
+		theCommand = GetMADCommand(theCell.v, theCell.h, curMusic->partition[CurrentPat]);
 		
 		//if (InstruListDlog != NULL)
 		//{
@@ -3557,7 +3556,7 @@ void DoKeyPressEditor(short theChar)
 			
 			for (X = myList.select.left; X <= myList.select.right; X++) {
 				for (Y = myList.select.top; Y <= myList.select.bottom; Y++) {
-					theCommand = GetMADCommand(Y, X, curMusic->partition[ CurrentPat]);
+					theCommand = GetMADCommand(Y, X, curMusic->partition[CurrentPat]);
 					
 					if (theCommand->note != 0xFF) {
 						if (theEvent.modifiers & shiftKey) {
@@ -3604,7 +3603,7 @@ void DoKeyPressEditor(short theChar)
 			
 			for (X = myList.select.left; X <= myList.select.right; X++) {
 				for (Y = myList.select.top; Y <= myList.select.bottom; Y++) {
-					theCommand = GetMADCommand(Y, X, curMusic->partition[ CurrentPat]);
+					theCommand = GetMADCommand(Y, X, curMusic->partition[CurrentPat]);
 					theCommand->ins		= 0;
 					theCommand->note	= 0xFF;
 					theCommand->cmd		= 0;
@@ -3626,7 +3625,7 @@ void DoKeyPressEditor(short theChar)
 			break;
 			
 		case selectAll:
-			PLSetSelect(0, 0, curMusic->header->numChn, curMusic->partition[ CurrentPat]->header.size, &myList);
+			PLSetSelect(0, 0, curMusic->header->numChn, curMusic->partition[CurrentPat]->header.size, &myList);
 			break;
 			
 		case getinfo:
@@ -3668,7 +3667,8 @@ Ptr ConvertPcmd2Text(Pcmd *myPcmd)
 	
 	mSize = 5 + myPcmd->tracks * myPcmd->length * 16L;
 	myText = NewPtrClear(mSize);
-	if (myText == NULL) MyDebugStr(__LINE__, __FILE__, "Memory Error");
+	if (myText == NULL)
+		MyDebugStr(__LINE__, __FILE__, "Memory Error");
 	strcpy(myText, "");
 	
 	for (i = 0; i < myPcmd->length; i++) {
@@ -3693,7 +3693,7 @@ Ptr ConvertPcmd2Text(Pcmd *myPcmd)
 	return myText;
 }
 
-Pcmd* CreatePcmdFromSelection(void)
+Pcmd* CreatePcmdFromSelection()
 {
 	Point	theCell;
 	Cmd		*cmd, *cmd2;
@@ -3713,15 +3713,15 @@ Pcmd* CreatePcmdFromSelection(void)
 		return NULL;
 	}
 	
-	myPcmd->structSize 	= sizeof(Pcmd) + count * sizeof(Cmd);
-	myPcmd->tracks 		= myList.select.right - myList.select.left + 1;
-	myPcmd->length 		= myList.select.bottom - myList.select.top + 1;
-	myPcmd->trackStart 	= myList.select.left;
-	myPcmd->posStart 	= myList.select.top;
+	myPcmd->structSize	= sizeof(Pcmd) + count * sizeof(Cmd);
+	myPcmd->tracks		= myList.select.right - myList.select.left + 1;
+	myPcmd->length		= myList.select.bottom - myList.select.top + 1;
+	myPcmd->trackStart	= myList.select.left;
+	myPcmd->posStart	= myList.select.top;
 	
 	for (X = myList.select.left; X <= myList.select.right; X++) {
 		for (Y = myList.select.top; Y <= myList.select.bottom; Y++) {
-			cmd = GetMADCommand(Y, X, curMusic->partition[ CurrentPat]);
+			cmd = GetMADCommand(Y, X, curMusic->partition[CurrentPat]);
 			cmd2 = GetCmd(Y - myList.select.top, X - myList.select.left, myPcmd);
 			
 			*cmd2 = *cmd;
@@ -3746,7 +3746,7 @@ void ApplyOnAllCell(short ins, short note, short ef, short argu, short vol)
 			theCell.v = Y;
 			theCell.h = X;
 			
-			theCommand = GetMADCommand(theCell.v, theCell.h, curMusic->partition[ CurrentPat]);
+			theCommand = GetMADCommand(theCell.v, theCell.h, curMusic->partition[CurrentPat]);
 			
 			if (ins != -1)
 				theCommand->ins = ins;
@@ -3821,7 +3821,7 @@ void PasteCmdEditor(Point theCell, Pcmd *myPcmd)
 	SetPort(SavePort);
 }
 
-void COPYEditor(void)
+void COPYEditor()
 {
 	Pcmd		*myPcmd;
 	Ptr			myText;
@@ -4201,7 +4201,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 				pStrcpy(str, curMusic->musicFileName);
 				
 				for (i = str[0]; i > 0; i--) {
-					if (str[ i] == '.') {
+					if (str[i] == '.') {
 						str[0] = i - 1;
 						i = 0;
 					}
@@ -4239,7 +4239,7 @@ pascal OSErr MySendDataProcEditor(FlavorType theFlavor,  void *refCon, ItemRefer
 			beginNumber++;
 			NumToString(beginNumber, tempStr);
 			pStrcpy(sName, str);
-			if (sName[ 0] > 27) sName[ 0] = 27;
+			if (sName[0] > 27) sName[0] = 27;
 			pStrcat(sName, "\p #");
 			pStrcat(sName, tempStr);
 			

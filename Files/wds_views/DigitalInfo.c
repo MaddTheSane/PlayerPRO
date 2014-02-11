@@ -12,8 +12,8 @@ extern	RGBColor				theColor;
 
 		DialogPtr				DigitalDlog;
 
-static	long					oldDigiValue[ ITEMNO][ MAXTRACK];
-static	long					oldDigiValue2[ MAXTRACK];
+static	long					oldDigiValue[ITEMNO][MAXTRACK];
+static	long					oldDigiValue2[MAXTRACK];
 static	Rect					viewRect;
 static	ControlHandle			ControlDigi;
 
@@ -157,10 +157,10 @@ void DoNullDigiWindow(void)
 					break;
 					
 				case 4:
-					if (MADDriver->chan[ i].cmd == -1)
+					if (MADDriver->chan[i].cmd == -1)
 						pStrcpy(tempStr, "\p--");
 					else {
-						val = MADDriver->chan[ i].arg;
+						val = MADDriver->chan[i].arg;
 						sprintf((Ptr)tempStr, "%lX", val);
 						MyC2PStr((Ptr)tempStr);
 					}
@@ -189,12 +189,12 @@ void DoNullDigiWindow(void)
 					break;
 					
 				case 8:
-					val = MADDriver->chan[ i].loopBeg;
+					val = MADDriver->chan[i].loopBeg;
 					NumToString(val, tempStr);
 					break;
 					
 				case 9:
-					val = MADDriver->chan[ i].loopSize;
+					val = MADDriver->chan[i].loopSize;
 					NumToString(val, tempStr);
 					break;
 					
@@ -269,7 +269,7 @@ void DoNullDigiWindow(void)
 					else
 						val = 0;
 					
-					if (oldDigiValue[ x][ i] != val) {
+					if (oldDigiValue[x][i] != val) {
 						if (val)
 							ForeColor(redColor);
 						else

@@ -22,8 +22,8 @@ void SmallEffect(void)
 	
 	for (i = 0; i < MAXINSTRU ; i++)
 	{
-		MADDriver->InstruTube[ i] = 64;
-		MADDriver->InstruActif[ i] = 1;
+		MADDriver->InstruTube[i] = 64;
+		MADDriver->InstruActif[i] = 1;
 	}
 }
 
@@ -193,7 +193,7 @@ void CreateInstruView(void)
 	itemRect.right--;
 	itemRect.left++;
 	for (i = 0; i < 128; i++) {
-		InstruBox[ i] = itemRect;
+		InstruBox[i] = itemRect;
 		
 		itemRect.left += ILARG;
 		itemRect.right += ILARG;

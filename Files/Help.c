@@ -11,7 +11,7 @@
 //#include "asiodrivers.h"
 
 //extern	AsioDrivers*	asioDrivers;
-extern	char 			ASIO_DRIVER_NAME[ 255];
+extern	char 			ASIO_DRIVER_NAME[255];
 
 extern	Boolean		Stereo, StereoMixing, NewSoundManager, MIDIHardware, MIDIHardwareAlreadyOpen;
 extern	Prefs		thePrefs;
@@ -113,14 +113,14 @@ void SwitchDriverTo(short aaa)
 	OSErr				iErr;
 	FSSpec				spec;
 	long				fulltime, curTime, i;
-	double				filter[ (EQPACKET*2) + 2];
+	double				filter[(EQPACKET*2) + 2];
 	
 	IsPlaying = MADDriver->Reading;
 	IsEQ = MADDriver->Equalizer;
 	IsJumpToNextPattern = MADDriver->JumpToNextPattern;
 	for (i = 0; i <= EQPACKET*2; i++)
 	{
-		filter[ i] = MADDriver->Filter[ i];
+		filter[i] = MADDriver->Filter[i];
 	}
 	
 	//// Save AdapValue ////
@@ -186,7 +186,7 @@ void SwitchDriverTo(short aaa)
 	MADDriver->JumpToNextPattern = IsJumpToNextPattern;
 	
 	for (i = 0; i <= EQPACKET * 2; i++) {
-		MADDriver->Filter[ i] = filter[ i];
+		MADDriver->Filter[i] = filter[i];
 	}
 	
 	MADDriver->SendMIDIClockData = thePrefs.SendMIDIClockData;
@@ -208,7 +208,7 @@ void DrawAllNote(void)
 		if (i == NUMBER_NOTES) {
 			pStrcpy(String, "\p000");
 			
-			for(x=0; x<290; x++) if (thePrefs.PianoKey[ x] == 0xFF) break;
+			for(x=0; x<290; x++) if (thePrefs.PianoKey[x] == 0xFF) break;
 		} else {
 			GetNoteString(i, String);
 			
@@ -223,7 +223,7 @@ void DrawAllNote(void)
 			pStrcat(String, tempString);
 		}
 		
-		LSetCell(String + 1, String[ 0], cSize, PianoList);
+		LSetCell(String + 1, String[0], cSize, PianoList);
 		cSize.v++;
 	}
 }
@@ -806,7 +806,7 @@ void InitCOLOR(short colorID)
 				NTStr(2, i + 8*x + 1, (Ptr) aStr);
 				
 				MyC2PStr((Ptr) aStr);
-				MyTETextBox(&thePrefs.tracksColor[ i + 8*x], &aRc, aStr, true);
+				MyTETextBox(&thePrefs.tracksColor[i + 8*x], &aRc, aStr, true);
 			}
 		}
 	} else {
@@ -825,7 +825,7 @@ void InitCOLOR(short colorID)
 		NTStr(2, i + 8*x + 1, (Ptr) aStr);
 		
 		MyC2PStr((Ptr) aStr);
-		MyTETextBox(&thePrefs.tracksColor[ i + 8*x], &aRc, aStr, true);
+		MyTETextBox(&thePrefs.tracksColor[i + 8*x], &aRc, aStr, true);
 		
 		//TETextBox((Ptr) aStr, 2, &aRc, teCenter);
 	}
@@ -948,7 +948,7 @@ void DrawChooseColorWindow(void)
 			aRect.bottom = aRect.top + COLARG - 2;
 			aRect.right = aRect.left + COLARG - 2;
 			
-			RGBForeColor(&(*hCTab)->ctTable[ i * 32 + x].rgb);
+			RGBForeColor(&(*hCTab)->ctTable[i * 32 + x].rgb);
 			PaintRect(&aRect);
 		}
 	}
@@ -1006,7 +1006,7 @@ void DoCOLOR(short itemHit)
 			InsetRect(&aRc, 1, 1);
 			FrameRect(&aRc);
 			
-			GetColor(where, "\pSelect a new color", &thePrefs.tracksColor[myPt.h + 8 * myPt.v], &thePrefs.tracksColor[ myPt.h + 8*myPt.v]);
+			GetColor(where, "\pSelect a new color", &thePrefs.tracksColor[myPt.h + 8 * myPt.v], &thePrefs.tracksColor[myPt.h + 8*myPt.v]);
 			
 			InitCOLOR(myPt.h + 8*myPt.v);
 			
@@ -1677,7 +1677,7 @@ void DoKEY(short itemHit)
 			thePrefs.FKeyTracks = true;
 			
 			for (i = 0; i < 13; i++) {
-				//TurnRadio(base + 2 + i, prefDlog, thePrefs.FKeyActive[ i]);
+				//TurnRadio(base + 2 + i, prefDlog, thePrefs.FKeyActive[i]);
 				InactiveControl(base + 2 + i, prefDlog);
 			}
 			break;
@@ -1689,7 +1689,7 @@ void DoKEY(short itemHit)
 			thePrefs.FKeyTracks = false;
 			
 			for (i = 0; i < 13; i++) {
-				//TurnRadio(base + 2 + i, prefDlog, thePrefs.FKeyActive[ i]);
+				//TurnRadio(base + 2 + i, prefDlog, thePrefs.FKeyActive[i]);
 				ActiveControl(base + 2 + i, prefDlog);
 			}
 			break;
@@ -1719,7 +1719,7 @@ void InitKEY()
 		TurnRadio(base + 1, prefDlog, false);
 		
 		for (i = 0; i < 13; i++) {
-			//TurnRadio(base + 2 + i, prefDlog, thePrefs.FKeyActive[ i]);
+			//TurnRadio(base + 2 + i, prefDlog, thePrefs.FKeyActive[i]);
 			InactiveControl(base + 2 + i, prefDlog);
 		}
 	} else {
@@ -1734,7 +1734,7 @@ void InitKEY()
 		} else
 			SetDText(prefDlog, base + 28 + i, "\p-");
 		
-		TurnRadio(base + 2 + i, prefDlog, thePrefs.FKeyActive[ i]);
+		TurnRadio(base + 2 + i, prefDlog, thePrefs.FKeyActive[i]);
 	}
 }
 

@@ -186,7 +186,7 @@ Boolean DoWorkingWindow(void)
 				
 				pStrcpy(EstimatedTime, str2); pStrcat(EstimatedTime, "\p ");
 				GetDialogItem (theProgressDia, 7, &itemType, &itemHandle, &itemRect);
-				TETextBox(EstimatedTime+1, EstimatedTime[ 0], &itemRect, teJustRight);
+				TETextBox(EstimatedTime+1, EstimatedTime[0], &itemRect, teJustRight);
 				
 				// Elapsed time
 				
@@ -368,7 +368,7 @@ Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, O
 	
 	copyDriver->PL = 0;
 	copyDriver->PartitionReader = 0;
-	copyDriver->Pat = copyMusic->header->oPointers[ copyDriver->PL];
+	copyDriver->Pat = copyMusic->header->oPointers[copyDriver->PL];
 	
 	copyDriver->speed = copyMusic->header->speed;
 	copyDriver->finespeed = copyMusic->header->tempo;
@@ -416,11 +416,11 @@ Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, O
 			copyMusic->partition[copyMusic->header->numPat] = (PatData*)NewPtrClear(sizeof(PatHeader) + copyMusic->header->numChn * DEndPos * sizeof(Cmd));
 			if (MemError()) MyDebugStr(__LINE__, __FILE__, "Error in AddAPattern...");
 			
-			copyMusic->partition[ copyMusic->header->numPat]->header.size = DEndPos;
-			copyMusic->partition[ copyMusic->header->numPat]->header.compMode = 'NONE';
+			copyMusic->partition[copyMusic->header->numPat]->header.size = DEndPos;
+			copyMusic->partition[copyMusic->header->numPat]->header.compMode = 'NONE';
 			strcpy(copyMusic->partition[copyMusic->header->numPat]->header.name, "New pattern");
-			copyMusic->partition[ copyMusic->header->numPat]->header.patBytes = 0;
-			copyMusic->partition[ copyMusic->header->numPat]->header.unused2 = 0;
+			copyMusic->partition[copyMusic->header->numPat]->header.patBytes = 0;
+			copyMusic->partition[copyMusic->header->numPat]->header.unused2 = 0;
 			
 			for (u = 0; u < copyMusic->header->numChn; u++) {
 				for (v = 0; v < copyMusic->partition[copyMusic->header->numPat]->header.size; v++) {
@@ -441,9 +441,9 @@ Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, O
 			
 			copyMusic->header->numPat++;
 			
-			//for (i = 0; i < DStartTrack; i++) copyDriver->Active[ i] = false;
-			//for (i = DStartTrack; i < DEndTrack; i++) if (copyDriver->Active[ i] = true;
-			//for (i = DEndTrack; i < MAXTRACK; i++) copyDriver->Active[ i] = false;
+			//for (i = 0; i < DStartTrack; i++) copyDriver->Active[i] = false;
+			//for (i = DStartTrack; i < DEndTrack; i++) if (copyDriver->Active[i] = true;
+			//for (i = DEndTrack; i < MAXTRACK; i++) copyDriver->Active[i] = false;
 		}
 			break;
 			
@@ -453,7 +453,7 @@ Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, O
 			
 		default:
 			for (i = 0; i < copyMusic->header->numPointers; i++) {
-				if (copyMusic->header->oPointers[ i] == patternID) {
+				if (copyMusic->header->oPointers[i] == patternID) {
 					copyDriver->PL = i;
 					copyDriver->Pat = patternID;
 					

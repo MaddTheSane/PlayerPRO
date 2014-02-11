@@ -275,6 +275,6 @@ void Play8PolyPhonic(MADDriverRec *intDriver)
 	
 	for (i = 0 ; i < intDriver->DriverSettings.numChn; i++)	//
 	{
-		Sample8BufferAddPoly(&intDriver->chan[ i], intDriver->IntDataPtr + i, intDriver->DriverSettings.numChn, intDriver);
+		Sample8BufferAddPoly(&intDriver->chan[i], intDriver->IntDataPtr + i, intDriver->DriverSettings.numChn, intDriver);
 	}
 }

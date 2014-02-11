@@ -287,8 +287,8 @@ void DrawPartiListItem(short iD)
 		NumToString(curMusic->header->oPointers[iD], tempStr);
 		
 		pStrcpy(aStr, "\p");
-		if (curMusic->header->oPointers[ iD]< 10) pStrcat(aStr, "\p ");
-		if (curMusic->header->oPointers[ iD]< 100) pStrcat(aStr, "\p ");
+		if (curMusic->header->oPointers[iD]< 10) pStrcat(aStr, "\p ");
+		if (curMusic->header->oPointers[iD]< 100) pStrcat(aStr, "\p ");
 		pStrcat(aStr, tempStr);
 		
 		MoveTo(myList.rect.left + POSID, myList.rect.top + 10 + myList.HCell*pos);
@@ -296,7 +296,7 @@ void DrawPartiListItem(short iD)
 		
 		/** NAME **/
 		
-		strncpy((Ptr) aStr, curMusic->partition[ curMusic->header->oPointers[ iD]]->header.name, 32);
+		strncpy((Ptr) aStr, curMusic->partition[curMusic->header->oPointers[iD]]->header.name, 32);
 		MyC2PStr((Ptr) aStr);
 		
 		MoveTo(myList.rect.left + POSNAME, myList.rect.top + 10 + myList.HCell*pos);
@@ -446,7 +446,7 @@ Boolean CheckValidParti(Byte theValue, short thePos)
 		return false;
 	}
 #if 0
-	else if (temp == 1 && curMusic->header->oPointers[ thePos] == numPat) { // la plus haute pattern ne peut pas etre detruite
+	else if (temp == 1 && curMusic->header->oPointers[thePos] == numPat) { // la plus haute pattern ne peut pas etre detruite
 		Erreur(36, -1);
 		return false;
 	}
@@ -525,22 +525,22 @@ void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 				if (theCell.v < 256) {
 					InsertMenu(thePatternMenu, hierMenu);
 					
-					SetItemMark(thePatternMenu, curMusic->header->oPointers[ theCell.v] + 1, 0xa5);
+					SetItemMark(thePatternMenu, curMusic->header->oPointers[theCell.v] + 1, 0xa5);
 					
 					mresult = PopUpMenuSelect(thePatternMenu,
 											  myPt.v,
 											  myPt.h + 10,
-											  curMusic->header->oPointers[ theCell.v] + 1);
+											  curMusic->header->oPointers[theCell.v] + 1);
 					
-					SetItemMark(thePatternMenu, curMusic->header->oPointers[ theCell.v] + 1, 0);
+					SetItemMark(thePatternMenu, curMusic->header->oPointers[theCell.v] + 1, 0);
 					
 					if (HiWord(mresult ) != 0 ) {
 						SaveUndo(UHeader, 0, "\pUndo 'Partition Modification'");
 						
-						curMusic->header->oPointers[ theCell.v] = (Byte) LoWord(mresult) - 1;
+						curMusic->header->oPointers[theCell.v] = (Byte) LoWord(mresult) - 1;
 						
 						MADDriver->PL = theCell.v;
-						MADDriver->Pat = curMusic->header->oPointers[ MADDriver->PL];
+						MADDriver->Pat = curMusic->header->oPointers[MADDriver->PL];
 						MADDriver->PartitionReader = 0;
 						MADPurgeTrack(MADDriver);
 						
@@ -567,7 +567,7 @@ void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 						PatCopy2 = theCell.v;
 						
 						newPL = PatCopy2;
-						newPat = curMusic->header->oPointers[ newPL];
+						newPat = curMusic->header->oPointers[newPL];
 						
 						if (newPL >= curMusic->header->numPointers && MADDriver->Reading == true) {
 							newPL = 0;
@@ -624,7 +624,7 @@ void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 			if (GetControlHilite(InfoBut) == 0 && MyTrackControl(InfoBut, theEvent.where, NULL)) {
 				theCell.v = theCell.h = 0;
 				if (PLGetSelect(&theCell, &myList)) {
-					DialogPatternInfo(curMusic->header->oPointers[ theCell.v]);
+					DialogPatternInfo(curMusic->header->oPointers[theCell.v]);
 				}
 			}
 			break;
@@ -670,7 +670,7 @@ void DoItemPressParti(short whichItem, DialogPtr whichDialog)    			/* Item hit 
 				theCell.v = theCell.h = 0;
 				if (PLGetSelect(&theCell, &myList)) {
 					MADDriver->PL = theCell.v;
-					OpenSelectedPattern(curMusic->header->oPointers[ MADDriver->PL]);
+					OpenSelectedPattern(curMusic->header->oPointers[MADDriver->PL]);
 				}
 			}
 			break;
@@ -897,7 +897,7 @@ void DoKeyPressParti(short theChar)
 	if (PLGetSelect(&theCell, &myList)) {
 		if (theCell.v != PatCopy2) {
 			MADDriver->PL = theCell.v;
-			MADDriver->Pat = curMusic->header->oPointers[ MADDriver->PL];
+			MADDriver->Pat = curMusic->header->oPointers[MADDriver->PL];
 			
 			if (MADDriver->PL >= curMusic->header->numPointers) {
 				MADDriver->PL = 0;
@@ -983,7 +983,7 @@ void PASTEParti(void)
 			SaveUndo(UHeader, 0, "\pUndo 'Paste Partition'");
 			
 			for (count = 0; count < lCntOrErr ; count++) {
-				if (CheckValidParti((*theHandle)[ count], theCell.v + count)) {
+				if (CheckValidParti((*theHandle)[count], theCell.v + count)) {
 					curMusic->header->oPointers[theCell.v + count] = (*theHandle)[count];
 				}
 			}

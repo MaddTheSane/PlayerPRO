@@ -100,7 +100,7 @@ void WriteLineList(void)
 			}
 			
 			myRes = NewHandle(4L);
-			*((long*) (*myRes)) = lineList[ i];
+			*((long*) (*myRes)) = lineList[i];
 			GetMenuItemText(sectMenu,  i + 1, rName);
 			
 			UseResFile(iHelpPP);

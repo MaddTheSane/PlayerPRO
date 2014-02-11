@@ -21,12 +21,12 @@ void OSType2Str(OSType type, Str255 str)
 {
 	short i;
 
-	str[ 0] = 4;
+	str[0] = 4;
 	BlockMoveData(&type, str+1, 4);
 
 	for (i = 4; i > 0; i--)
 	{
-		if (str[ i] == ' ') str[ 0]--;
+		if (str[i] == ' ') str[0]--;
 		else return;
 	}
 }
@@ -34,7 +34,7 @@ void OSType2Str(OSType type, Str255 str)
 void OSType2Ptr(OSType type, Ptr str)
 {
 	BlockMoveData(&type, str, 4);
-	str[ 4] = 0;
+	str[4] = 0;
 }
 
 Boolean AppleEventsInstalled (void)
@@ -90,7 +90,7 @@ OSErr MyGotRequiredParams (AppleEvent *theAppleEvent)
 
 void ReadAndPlayMusic(Str255	myFile, OSType	fdType)
 {
-	char str[ 5];
+	char str[5];
 	
 	OSType2Ptr(fdType, str);
 	

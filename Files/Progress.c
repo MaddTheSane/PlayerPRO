@@ -29,7 +29,7 @@ void InitRollCrsr(void)
 	DisposeHandle(tempHandle);
 	
 	for (i = 0; i < MyCrsrRec.total; i++) {
-		tempH = GetCursor(MyCrsrRec.no[ i*2]);
+		tempH = GetCursor(MyCrsrRec.no[i*2]);
 		DetachResource((Handle)tempH);
 		HLock((Handle)tempH);
 			myCursor[i] = **tempH;
@@ -49,7 +49,7 @@ void RollCursor(void)
 	if (MyCrsrRec.current >= MyCrsrRec.total)
 		MyCrsrRec.current = 0;
 	
-	SetCursor(&myCursor[ MyCrsrRec.current]);
+	SetCursor(&myCursor[MyCrsrRec.current]);
 }
 
 void CloseRollCrsrc()

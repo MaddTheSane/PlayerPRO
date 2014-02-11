@@ -189,7 +189,7 @@ void SetSampNameM(Str255 theNewName, Ptr destName)
 	short	i;
 	
 	for(i = 0; i < 32; i++) {
-		if (i < theNewName[ 0])
+		if (i < theNewName[0])
 			destName[i] = theNewName[i + 1];
 		else
 			destName[i] = '\0';
@@ -691,7 +691,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 #endif
 				
 				for (x = 0; x < 32 && x < NoteRequest->tone.instrumentName[0]; x++)
-					inst->name[x] = NoteRequest->tone.instrumentName[x + 1]; //insName[ x];
+					inst->name[x] = NoteRequest->tone.instrumentName[x + 1]; //insName[x];
 				
 				iErr = FindAtomById(insAt, &sat, true, 'lrgn', 0);
 				if (iErr)
@@ -1068,7 +1068,7 @@ void Quicktime2Converter(void)
 	SaveUndo(USample, ins, "\pUndo 'Create MIDI instrument'");
 	
 	sample = curMusic->sample;
-	inst = &curMusic->fid[ ins];
+	inst = &curMusic->fid[ins];
 	
 	for (i = 0; i < inst->numSamples; i++) {
 		if (sample[inst->firstSample + i] != NULL) {
@@ -1081,13 +1081,13 @@ void Quicktime2Converter(void)
 		}
 	}
 	
-	for (i = 0; i < 32; i++) inst->name[ i]	= 0;
+	for (i = 0; i < 32; i++) inst->name[i]	= 0;
 	inst->type			= 0;
 	inst->numSamples	= 0;
 	inst->no			= ins;
 	/**/
 	
-	for (i = 0; i < 96; i++) inst->what[ i]		= 0;
+	for (i = 0; i < 96; i++) inst->what[i]		= 0;
 	for (i = 0; i < 12; i++) {
 		inst->volEnv[i].pos		= 0;
 		inst->volEnv[i].val		= 0;
@@ -1197,7 +1197,7 @@ void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, sh
 	
 	for (i = 0; i < inst->numSamples; i++) {
 		if (sample[inst->firstSample + i] != NULL) {
-			if (sample[ inst->firstSample + i]->data != NULL) {
+			if (sample[inst->firstSample + i]->data != NULL) {
 				DisposePtr((Ptr)sample[inst->firstSample + i]->data);
 				sample[inst->firstSample + i]->data = NULL;
 			}

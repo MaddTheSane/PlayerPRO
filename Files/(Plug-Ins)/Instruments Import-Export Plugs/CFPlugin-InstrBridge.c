@@ -41,7 +41,7 @@ static HRESULT CFInstrPlugQueryInterface(void *myInstance, REFIID iid, LPVOID *p
 	} else if (CFEqual(interfaceID, IUnknownUUID)) {
 		//  If the IUnknown interface was requested, same as above.
 		
-		((CFInstrPlugType *) myInstance)->_PPROCFPlugFormat->AddRef(myInstance);
+		((CFInstrPlugType*)myInstance)->_PPROCFPlugFormat->AddRef(myInstance);
 		*ppv = myInstance;
 		CFRelease(interfaceID);
 		return S_OK;
@@ -71,8 +71,7 @@ static ULONG CFInstrPlugRelease(void *myInstance)
 	if (((CFInstrPlugType*)myInstance)->_refCount == 0) {
 		_deallocCFInstrPlugType((CFInstrPlugType*)myInstance);
 		return 0;
-	}
-	else
+	} else
 		return ((CFInstrPlugType*)myInstance)->_refCount;
 }
 
@@ -87,20 +86,19 @@ static PPInstrumentPlugin CFInstrPlugFormat =
 
 static CFInstrPlugType *_allocCFInstrPlugType(CFUUIDRef factoryID)
 {
-	//  Allocate memory for the new instance.
+	// Allocate memory for the new instance.
 	CFInstrPlugType *newOne = (CFInstrPlugType*)malloc(sizeof(CFInstrPlugType));
 	
-	//  Point to the function table
+	// Point to the function table
 	newOne->_PPROCFPlugFormat = &CFInstrPlugFormat;
 	
-	//  Retain and keep an open instance refcount for each factory.
+	// Retain and keep an open instance refcount for each factory.
 	if (factoryID) {
 		newOne->_factoryID = (CFUUIDRef)CFRetain(factoryID);
 		CFPlugInAddInstanceForFactory(factoryID);
 	}
 	
-	//  This function returns the IUnknown interface so set the refCount to one.
-	
+	// This function returns the IUnknown interface so set the refCount to one.
 	newOne->_refCount = 1;
 	return newOne;
 }

@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include "PTMID.H"
 
-MS rgmsDecided[ MAXSAMPS];
+MS rgmsDecided[MAXSAMPS];
 int cmsDecided, wMinpitch, wMaxpitch;
 
 /**
@@ -126,7 +126,7 @@ static int WConvertMidipitch(int pitch, unsigned long *cDev)
  * date: 1/7/1994 - added calls to WConvertMidipitch
  */
  
-short 				MIDIInstMOD[ 129];
+short 				MIDIInstMOD[129];
  
 static void AnalyzePtune(Tune *ptune)
 {
@@ -137,13 +137,13 @@ static void AnalyzePtune(Tune *ptune)
 	short					i, NewIns;
 	
 	for (i = 0; i < 129; i++) 
-		MIDIInstMOD[ i] = -1;
+		MIDIInstMOD[i] = -1;
 	NewIns = 0;
 	
 	while (NULL != ptune) {
 	    for (pei = ptune->pei; NULL != pei; pei = pei->pei) { 		/** With each event **/
 	    	if (-1 != pei->pitch) {
-		        pei->vol = midivolume[ pei->vol];					// ** Convert volumes **
+		        pei->vol = midivolume[pei->vol];					// ** Convert volumes **
 				
 				if (pei->inst < 0) {
 					pei->inst = 128;
@@ -152,12 +152,12 @@ static void AnalyzePtune(Tune *ptune)
 				if (pei->inst > 128)
 					Debugger();
 				
-				if (MIDIInstMOD[ pei->inst] == -1) {					// A new instrument !!
-					MIDIInstMOD[ pei->inst] = NewIns;
+				if (MIDIInstMOD[pei->inst] == -1) {					// A new instrument !!
+					MIDIInstMOD[pei->inst] = NewIns;
 					NewIns++;
 				}
 				
-				pei->inst = MIDIInstMOD[ pei->inst];
+				pei->inst = MIDIInstMOD[pei->inst];
 			}
 	    }
 		ptune = ptune->ptune;

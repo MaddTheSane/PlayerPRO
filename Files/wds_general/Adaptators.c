@@ -42,7 +42,7 @@ extern	DialogPtr				EditorDlog;
 
 static	Rect					viewRect;
 static	Rect					VolumeRect, LeftRightRect;
-static	ControlHandle			MainFx[ 10];
+static	ControlHandle			MainFx[10];
 static	ControlHandle			MainFXOnOff;
 static	ControlHandle			FineBut, ScrollAdap, SaveBut, FlipBut, LoadBut, ResetPitchBut, ResetPanBut, ResetSpeedBut, volCntl[MAXTRACK], pannCntl[MAXTRACK];
 static	ControlHandle			OnOff[MAXTRACK], Mono[MAXTRACK], hardvolCntl, softvolCntl, speedCntl, pitchCntl, panCntl;
@@ -357,7 +357,7 @@ void DoNullAdap(void)
 		
 		GetPortVisibleRegion(GetDialogPort(AdapDlog), visibleRegion);
 		
-		TextVal[ 0] = 0;
+		TextVal[0] = 0;
 		
 		if (PtInRgn(pt, visibleRegion)) {
 			Rect	contrlRect;
@@ -367,7 +367,7 @@ void DoNullAdap(void)
 			found = false;
 			
 			for (i = 0; i < gCurrentTrack; i++) {
-				GetControlBounds(volCntl[ i], &contrlRect);
+				GetControlBounds(volCntl[i], &contrlRect);
 				
 				if (PtInRect(pt, &contrlRect)) {
 					found = true;
@@ -375,7 +375,7 @@ void DoNullAdap(void)
 					percent = true;
 				}
 				
-				GetControlBounds(pannCntl[ i], &contrlRect);
+				GetControlBounds(pannCntl[i], &contrlRect);
 				
 				if (PtInRect(pt, &contrlRect)) {
 					found = true;
@@ -387,7 +387,7 @@ void DoNullAdap(void)
 					GetControlBounds(VSTFx[i][x], &contrlRect);
 					
 					if (PtInRect(pt, &contrlRect)) {
-						if (curMusic->header->chanBus[ i].copyId == i) {
+						if (curMusic->header->chanBus[i].copyId == i) {
 							found = true;
 							if (MADDriver->chanVST[i][x])
 								pStrcpy(TextVal, MADDriver->chanVST[i][x]->name);
@@ -402,12 +402,12 @@ void DoNullAdap(void)
 			}
 			
 			for (x = 0; x < 10; x++) {
-				GetControlBounds(MainFx[ x], &contrlRect);
+				GetControlBounds(MainFx[x], &contrlRect);
 				
 				if (PtInRect(pt, &contrlRect)) {
 					found = true;
-					if (MADDriver->masterVST[ x])
-						pStrcpy(TextVal, MADDriver->masterVST[ x]->name);
+					if (MADDriver->masterVST[x])
+						pStrcpy(TextVal, MADDriver->masterVST[x]->name);
 					else
 						pStrcpy(TextVal, "\pNo Effect");}
 			}
@@ -571,13 +571,13 @@ void FillOnOffControl(short id, short curval)
 		SetControlValue(OnOff[id], 0);
 	}
 	
-	GetControlBounds(OnOff[ id], &contrlRect);
+	GetControlBounds(OnOff[id], &contrlRect);
 	
-	MyMoveControl(OnOff[ id], contrlRect.left, VolumeRect.top - (GetControlValue(ScrollAdap) - id)*DISVOL);
+	MyMoveControl(OnOff[id], contrlRect.left, VolumeRect.top - (GetControlValue(ScrollAdap) - id)*DISVOL);
 	
-	SetControlVisibility(OnOff[ id], true, false);
-	Draw1Control(OnOff[ id]);
-	SetControlVisibility(OnOff[ id], false, false);
+	SetControlVisibility(OnOff[id], true, false);
+	Draw1Control(OnOff[id]);
+	SetControlVisibility(OnOff[id], false, false);
 }
 
 void FillVSTOnOffControl(short id, short curval)
@@ -585,9 +585,9 @@ void FillVSTOnOffControl(short id, short curval)
 	Rect	contrlRect;
 	
 	if (curval) {
-		SetControlValue(VSTOnOff[ id], 1);
+		SetControlValue(VSTOnOff[id], 1);
 	} else {
-		SetControlValue(VSTOnOff[ id], 0);
+		SetControlValue(VSTOnOff[id], 0);
 	}
 	
 	GetControlBounds(VSTOnOff[id], &contrlRect);
@@ -629,13 +629,13 @@ void FillFxControl(short id)
 				MoveTo(contrlRect.left, contrlRect.bottom-3);
 				
 				pStrcpy(str1, "\pTrack ");
-				NumToString(curMusic->header->chanBus[ id].copyId + 1, str2);
+				NumToString(curMusic->header->chanBus[id].copyId + 1, str2);
 				pStrcat(str1, str2);
 				
 				TextFace(bold);
 				SetRect(&itemRect, contrlRect.left + 2, contrlRect.top, contrlRect.left + 20 + 40, contrlRect.bottom-1);
-				SwitchColor(curMusic->header->chanBus[ id].copyId);
-				TETextBox((Ptr) str1 + 1, str1[ 0], &itemRect, teJustCenter);
+				SwitchColor(curMusic->header->chanBus[id].copyId);
+				TETextBox((Ptr) str1 + 1, str1[0], &itemRect, teJustCenter);
 				//MyTETextBox2(str1, &itemRect);
 				RGBBackColor(&theColor);
 				itemRect.left--;
@@ -674,7 +674,7 @@ void FillMonoControl(short id)
 {
 	Rect	contrlRect;
 	
-	GetControlBounds(Mono[ id], &contrlRect);
+	GetControlBounds(Mono[id], &contrlRect);
 	
 	MyMoveControl(Mono[id], contrlRect.left, VolumeRect.top - (GetControlValue(ScrollAdap) - id) * DISVOL);
 	SetControlVisibility(Mono[id], true, false);
@@ -704,7 +704,7 @@ void FillBarStereo(short id, short curval, short maxval)
 
 	if (id < 0) MyDebugStr(__LINE__, __FILE__, "");
 	
-	GetControlBounds(pannCntl[ id], &contrlRect);
+	GetControlBounds(pannCntl[id], &contrlRect);
 	
 	MyMoveControl(pannCntl[id], contrlRect.left, VolumeRect.top - (GetControlValue(ScrollAdap) - id) * DISVOL - 1);
 	SetControlValue(pannCntl[id], (curval * 100) / maxval);
@@ -741,10 +741,10 @@ void FillPulseRect(short id)
 		PaintRect(&itemRect);
 	}
 	
-	oldTube[ id] = MADDriver->Tube[id];
+	oldTube[id] = MADDriver->Tube[id];
 	
 	MoveTo(pulseRect[id].left + 3, pulseRect[id].bottom -3);
-	NTStr(3, MADDriver->chan[ id].ins+1, (Ptr) str2); MyC2PStr((Ptr) str2);
+	NTStr(3, MADDriver->chan[id].ins+1, (Ptr) str2); MyC2PStr((Ptr) str2);
 	TextFace(bold);
 	DrawString(str2);
 	TextFace(0);
@@ -828,7 +828,7 @@ void UpdateAdapWindow(DialogPtr	GetSelection)
 			
 			//itemRect.left++;
 			SwitchColor(i);
-			TETextBox((Ptr) str1 + 1, str1[ 0], &itemRect, teJustLeft);
+			TETextBox((Ptr) str1 + 1, str1[0], &itemRect, teJustLeft);
 			//MyTETextBox2(str1, &itemRect);
 			RGBBackColor(&theColor);
 			itemRect.left--;
@@ -1031,7 +1031,7 @@ void CreateControlAdap()
 		if (VSTDest[i]) { DisposeControl(VSTDest[i]); VSTDest[i] = NULL;}
 		if (OnOff[i]) { DisposeControl(OnOff[i]); OnOff[i] = NULL;}
 		
-		for (x = 0; x < 4; x++) { if (VSTFx[i][x]) { DisposeControl(VSTFx[i][ x]); VSTFx[i][x] = NULL;} }
+		for (x = 0; x < 4; x++) { if (VSTFx[i][x]) { DisposeControl(VSTFx[i][x]); VSTFx[i][x] = NULL;} }
 	}
 	
 	GetDialogItem(AdapDlog, 2, &itemType, &itemHandle, &itemRect);
@@ -1124,9 +1124,9 @@ void CreateControlAdap()
 		
 		
 		OffsetRect(&cRect, 3, 0);
-		pulseRect[ i] = cRect;
-		pulseRect[ i].right = pulseRect[ i].left + PICSIZE;
-		pulseRect[ i].bottom = pulseRect[ i].top + 14;
+		pulseRect[i] = cRect;
+		pulseRect[i].right = pulseRect[i].left + PICSIZE;
+		pulseRect[i].bottom = pulseRect[i].top + 14;
 		
 		itemRect.top 	+= DISVOL;
 		itemRect.bottom += DISVOL;
@@ -1492,7 +1492,7 @@ void LoadAdaptatorsInt(FSSpec *file)
 		for (i = 0; i < 10 ; i++) {	// Global Effects
 			if (curMusic->header->globalEffect[i]) {
 				inOutBytes = sizeof(FXSets);
-				iErr = FSRead(fRefNum, &inOutBytes, &curMusic->sets[ alpha]);
+				iErr = FSRead(fRefNum, &inOutBytes, &curMusic->sets[alpha]);
 				alpha++;
 			}
 		}
@@ -1583,7 +1583,7 @@ void LoadAdaptatorsInt(FSSpec *file)
 	
 	(*openList)->componentSignature = 'SNPL';
 	(*openList)->osTypeCount		= 1;
-	(*openList)->osType[ 0] 		= TUNINGTYPE;
+	(*openList)->osType[0] 		= TUNINGTYPE;
 	
 	iErr = NavGetFile(			NULL,	// use system's default location
 								&theReply,
@@ -2114,9 +2114,9 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 			if (GetControlHilite(FlipBut) == 0 && MyTrackControl(FlipBut, theEvent.where, NULL)) {
 				for (i = 1; i < gCurrentTrack; i++) {
 					if (i % 2 == 0)
-						curMusic->header->chanPan[ i] = curMusic->header->chanPan[ 0];
+						curMusic->header->chanPan[i] = curMusic->header->chanPan[0];
 					else
-						curMusic->header->chanPan[ i] = MAX_PANNING -curMusic->header->chanPan[ 0];
+						curMusic->header->chanPan[i] = MAX_PANNING -curMusic->header->chanPan[0];
 				}
 				
 				InvalWindowRect(GetDialogWindow(whichDialog), &viewRect);
@@ -2301,8 +2301,8 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 					
 					LocalToGlobal(&Zone);
 					
-					if (MADDriver->masterVST[ i]) {
-						item = MADDriver->masterVST[ i]->id+3;
+					if (MADDriver->masterVST[i]) {
+						item = MADDriver->masterVST[i]->id+3;
 						SetItemMark(VSTMenu, item, diamondMark);
 					} else
 						item = 0;
@@ -2380,7 +2380,7 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 			for (i = 0; i < gCurrentTrack; i++) {
 				Rect contrlRect;
 				
-				GetControlBounds(VSTDest[ i], &contrlRect);
+				GetControlBounds(VSTDest[i], &contrlRect);
 				
 				if (PtInRect(myPt, &contrlRect)) {
 					kindCntl = 'D';
@@ -2473,7 +2473,7 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 							DisableMenuItem(VSTDestMenu, i + 4);
 							
 							for (x = 0; x < curMusic->header->numChn; x++) {
-								if (curMusic->header->chanBus[ x].copyId != x) DisableMenuItem(VSTDestMenu, x + 4);
+								if (curMusic->header->chanBus[x].copyId != x) DisableMenuItem(VSTDestMenu, x + 4);
 							}
 							
 							InsertMenu(VSTDestMenu, hierMenu);
@@ -2483,10 +2483,10 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 							
 							LocalToGlobal(&Zone);
 							
-							if (curMusic->header->chanBus[ i].copyId != i) {
-								item = curMusic->header->chanBus[ i].copyId + 4;
+							if (curMusic->header->chanBus[i].copyId != i) {
+								item = curMusic->header->chanBus[i].copyId + 4;
 							} else {
-								if (curMusic->header->chanBus[ i].ByPass)
+								if (curMusic->header->chanBus[i].ByPass)
 									item = 2;
 								else
 									item = 1;
@@ -2539,7 +2539,7 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 						break;
 						
 					case 'F':
-						if (curMusic->header->chanBus[ i].copyId == i && curMusic->header->chanBus[ i].Active == true) {
+						if (curMusic->header->chanBus[i].copyId == i && curMusic->header->chanBus[i].Active == true) {
 							long		mresult, temp;
 							Point		Zone;
 							short		item;
@@ -2630,11 +2630,11 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 						break;
 						
 					case 'V':
-						//	if (GetControlHilite(volCntl[ i]) == 0)
+						//	if (GetControlHilite(volCntl[i]) == 0)
 					{
 						/*	if (!AppearanceManager)
 						 {
-						 if (MyTrackControl(volCntl[ i], theEvent.where, NULL))
+						 if (MyTrackControl(volCntl[i], theEvent.where, NULL))
 						 {
 						 
 						 }
@@ -2679,11 +2679,11 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 						break;
 						
 					case 'P':
-						//	if (GetControlHilite(pannCntl[ i]) == 0)
+						//	if (GetControlHilite(pannCntl[i]) == 0)
 					{
 						/*	if (!AppearanceManager) 
 						 {
-						 if (MyTrackControl(pannCntl[ i], theEvent.where, NULL))
+						 if (MyTrackControl(pannCntl[i], theEvent.where, NULL))
 						 {
 						 
 						 }
@@ -2721,12 +2721,12 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 												else
 													MADDriver->chan[ww].pann = curMusic->header->chanPan[ww] = MAX_PANNING -curMusic->header->chanPan[i];
 												
-												FillBarStereo(ww, curMusic->header->chanPan[ ww], MAX_PANNING);
+												FillBarStereo(ww, curMusic->header->chanPan[ww], MAX_PANNING);
 											}
 										}
 									}
 									
-									DrawValueIndicator(100.*((curMusic->header->chanPan[ i] - 32) / 32.), true, NULL);
+									DrawValueIndicator(100.*((curMusic->header->chanPan[i] - 32) / 32.), true, NULL);
 								}
 								WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 								
@@ -2741,14 +2741,14 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 						break;
 						
 					case 'E':
-						SetControlVisibility(VSTOnOff[ i], true, false);
-						if (GetControlHilite(VSTOnOff[ i]) == 0 && MyTrackControl(VSTOnOff[ i], theEvent.where, NULL)) {
+						SetControlVisibility(VSTOnOff[i], true, false);
+						if (GetControlHilite(VSTOnOff[i]) == 0 && MyTrackControl(VSTOnOff[i], theEvent.where, NULL)) {
 							if (IsPressed(0x3A)) {
 								short		ww, noActive;
 								Boolean		newVal;
 								
 								for (ww = 0, noActive = 0; ww < curMusic->header->numChn; ww++) {
-									if (curMusic->header->chanBus[ ww].Active == true) {
+									if (curMusic->header->chanBus[ww].Active == true) {
 										noActive++;
 									}
 								}
@@ -2758,14 +2758,14 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 									newVal = false;
 								
 								for (ww = 0; ww < gCurrentTrack; ww++) {
-									curMusic->header->chanBus[ ww].Active = newVal;
+									curMusic->header->chanBus[ww].Active = newVal;
 								}
 								
 								if (newVal == false) {
 									curMusic->header->chanBus[i].Active = !newVal;
 								}
 							} else {
-								curMusic->header->chanBus[ i].Active = !curMusic->header->chanBus[ i].Active;
+								curMusic->header->chanBus[i].Active = !curMusic->header->chanBus[i].Active;
 							}
 							
 							ResetAdaptators();
@@ -2773,7 +2773,7 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 						break;
 						
 					case 'O':
-						if (GetControlHilite(OnOff[ i]) == 0 && MyTrackControl(OnOff[ i], theEvent.where, NULL)) {
+						if (GetControlHilite(OnOff[i]) == 0 && MyTrackControl(OnOff[i], theEvent.where, NULL)) {
 							if (IsPressed(0x3A)) {
 								short		ww, noActive;
 								Boolean		newVal;
@@ -2792,7 +2792,7 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 									MADDriver->Active[ww] = newVal;
 									
 									FillOnOffControl(ww, MADDriver->Active[ww]);
-									FillBarControl( ww, curMusic->header->chanVol[ww], MAX_CHANVOL);
+									FillBarControl(ww, curMusic->header->chanVol[ww], MAX_CHANVOL);
 									FillBarStereo(ww, curMusic->header->chanPan[ww], MAX_PANNING);
 								}
 								
