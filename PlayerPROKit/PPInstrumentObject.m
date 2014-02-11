@@ -114,6 +114,7 @@
 {
 	@protected
 	InstrData theInstrument;
+	NSInteger number;			// Instrument number
 }
 @synthesize theInstrument;
 @synthesize number;

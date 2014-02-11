@@ -21,9 +21,6 @@
 @end
 
 @interface PPInstrumentObject : NSObject <NSFastEnumeration, PPObject>
-{
-	NSInteger		number;				// Instrument number
-}
 + (instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObjectWrapper*)mus;
 - (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
 

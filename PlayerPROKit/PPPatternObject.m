@@ -179,4 +179,137 @@ static inline void SwapPcmd(Pcmd *toswap)
 	return noErr;
 }
 
+static inline NSString *GetEffectString(short theEffect)
+{
+	short effectChar = theEffect;
+	char theChar;
+	switch (theEffect) {
+		case 16:
+		case 17:
+		case 18:
+			effectChar++;
+			
+			//fall through
+		case 10 ... 15:
+			theChar = 'A' + effectChar - 10;
+			return [[NSString alloc] initWithFormat:@"%c", theChar];
+			break;
+			
+		case 0 ... 9:
+			return [@(theEffect) stringValue];
+			break;
+			
+		default:
+			break;
+	}
+	
+	return @" ";
+}
+
+static NSString* octaveNameFromNote(short octNote)
+{
+	const char NNames[][3] = {"C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "};
+	
+	if (octNote > 95) {
+		return @"---";
+	}
+	
+	return [[NSString alloc] initWithFormat:@"%s%i", NNames[octNote % 12], octNote / 12];
+}
+
+
+BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL AllStr)
+{
+ 	BOOL Note = NO;
+	
+	if (theCommand->ins != 0) {
+		Note = YES;
+		[mainStr appendString:[NSString stringWithFormat:@"%03d", theCommand->ins]];
+	} else {
+		[mainStr appendString:@"   "];
+	}
+	
+	[mainStr appendString:@" "];
+	
+	if (theCommand->note == 0xFE) {
+		Note = YES;
+		[mainStr appendString:@"OFF"];
+	} else if (theCommand->note != 0xFF) {
+		Note = true;
+		[mainStr appendString:octaveNameFromNote(theCommand->note)];
+	} else {
+		[mainStr appendString:@"   "];
+	}
+	
+	[mainStr appendString:@" "];
+	
+	if (theCommand->cmd != 0) {
+		Note = YES;
+		[mainStr appendString:GetEffectString(theCommand->cmd)];
+	} else {
+		if (theCommand->arg != 0)
+			[mainStr appendString:GetEffectString(theCommand->cmd)];
+		else
+			[mainStr appendString:@" "];
+	}
+	
+	[mainStr appendString:@" "];
+	
+	if (theCommand->arg != 0) {
+		Note = YES;
+		[mainStr appendString:[NSString stringWithFormat:@"%02X", theCommand->arg]];
+	} else {
+		[mainStr appendString:@"  "];
+	}
+	
+	[mainStr appendString:@" "];
+	
+	if (theCommand->vol != 0xFF) {
+		Note = YES;
+		[mainStr appendString:[NSString stringWithFormat:@"%02X", theCommand->vol]];
+	} else {
+		[mainStr appendString:@"  "];
+	}
+	
+	
+	return Note;
+}
+
++ (NSString *)stringFromPcmdData:(Pcmd*)myPcmd
+{
+	int	i, x;
+	NSMutableString *myText = [[NSMutableString alloc] init];
+	NSMutableString *myStr;
+	size_t	mSize;
+	
+	mSize = 5 + myPcmd->tracks * myPcmd->length * 16L;
+	
+	for (i = 0; i < myPcmd->length; i++) {
+		for (x = 0; x < myPcmd->tracks; x++) {
+			myStr = [[NSMutableString alloc] init];
+			Cmd *myCmd = GetCmd(i, x, myPcmd);
+			
+			if (CreateNoteString(myCmd, myStr, YES)) {
+				[myText appendString:myStr];
+			} else
+				[myText appendString:@"              "];
+			
+			if (x < myPcmd->tracks - 1)
+				[myText appendString:@"\t"];
+			else
+				[myText appendString:@"\r"];
+		}
+	}
+	
+	if ([myText length] >= mSize)
+		PPDebugStr(__LINE__, __FILE__, "ZZZ");
+	
+	return [[NSString alloc] initWithString:myText];
+}
+
+- (OSErr)exportPcmdToURL:(NSURL*)theURL
+{
+	return noErr;
+}
+
 @end
