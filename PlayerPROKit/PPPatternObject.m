@@ -8,6 +8,7 @@
 
 #import "PPPatternObject.h"
 #import "PPPatternObject_PPKPrivate.h"
+#import "PPPatternObject_PcmdHandling.h"
 #import "PPMusicObject_PPKPrivate.h"
 
 #define kPPPatternName @"PlayerPROKit Pattern Name"
@@ -27,6 +28,11 @@ static inline void SwapPcmd(Pcmd *toswap)
 }
 
 @implementation PPPatternObject
+{
+	@package
+	PatHeader patternHeader;
+}
+
 @synthesize commands;
 @synthesize index;
 @synthesize patternHeader;
@@ -305,6 +311,78 @@ BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL AllStr)
 		PPDebugStr(__LINE__, __FILE__, "ZZZ");
 	
 	return [[NSString alloc] initWithString:myText];
+}
+
+static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPatternObject *tempMusicPat)
+{
+	Cmd *theCmd, tmpCmd;
+	if (tempMusicPat == NULL)
+		return NULL;
+	
+	if (PosX < 0)
+		PosX = 0;
+	else if (PosX >= tempMusicPat->patternHeader.size)
+		PosX = tempMusicPat->patternHeader.size -1;
+	
+	tmpCmd = [[tempMusicPat commands][(tempMusicPat->patternHeader.size * TrackIdX) + PosX] theCommand];
+	theCmd = malloc(sizeof(Cmd));
+	*theCmd = tmpCmd;
+	
+	return theCmd;
+}
+
+- (Pcmd*)pcmdWithLeft:(int)left right:(int)right top:(int)top bottom:(int)bottom
+{
+	[self writeBackToStruct];
+	int count = (bottom - top + 1) * (right - left + 1), X, Y;
+	Cmd *cmd, *cmd2;
+
+	size_t theSize = sizeof(Pcmd) + count * sizeof(Cmd);
+	Pcmd *thePcmd = calloc(theSize, 1);
+	thePcmd->structSize = (int)theSize;
+	thePcmd->tracks		= right - left + 1;
+	thePcmd->length		= bottom - top + 1;
+	thePcmd->trackStart = left;
+	thePcmd->posStart	= top;
+
+	for (X = left; X <= right; X++) {
+		for (Y = top; Y <= bottom; Y++) {
+			cmd = GetMADCommandFromPatternObj(Y, X, self);
+			cmd2 = GetCmd(Y - top, X - left, thePcmd);
+			
+			*cmd2 = *cmd;
+			free(cmd);
+		}
+	}
+	
+	return thePcmd;
+}
+
+- (Pcmd*)pcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange
+{
+	[self writeBackToStruct];
+	NSInteger count = (trackRange.length) * (posRange.length), X, Y;
+	Cmd *cmd, *cmd2;
+	
+	size_t theSize = sizeof(Pcmd) + count * sizeof(Cmd);
+	Pcmd *thePcmd = calloc(theSize, 1);
+	thePcmd->structSize = (int)theSize;
+	thePcmd->tracks		= trackRange.length;
+	thePcmd->length		= posRange.length;
+	thePcmd->trackStart = trackRange.location;
+	thePcmd->posStart	= posRange.location;
+	
+	for (X = trackRange.location; X <= NSMaxRange(trackRange); X++) {
+		for (Y = posRange.location; Y <= NSMaxRange(posRange); Y++) {
+			cmd = GetMADCommandFromPatternObj(Y, X, self);
+			cmd2 = GetCmd(Y - NSMaxRange(posRange), X - NSMaxRange(trackRange), thePcmd);
+			
+			*cmd2 = *cmd;
+			free(cmd);
+		}
+	}
+	
+	return thePcmd;
 }
 
 - (OSErr)exportPcmdToURL:(NSURL*)theURL

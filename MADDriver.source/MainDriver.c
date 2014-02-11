@@ -3138,7 +3138,7 @@ void MADKeyOFF(MADDriverRec *MDriver, short track)
 
 #pragma pack(pop)
 
-Cmd* GetMADCommand(short PosX, short TrackIdX, PatData*	tempMusicPat)
+Cmd* GetMADCommand(short PosX, short TrackIdX, PatData* tempMusicPat)
 {
 	if (tempMusicPat == NULL)
 		return NULL;
@@ -3148,7 +3148,7 @@ Cmd* GetMADCommand(short PosX, short TrackIdX, PatData*	tempMusicPat)
 	else if (PosX >= tempMusicPat->header.size)
 		PosX = tempMusicPat->header.size -1;
 	
-	return &(tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]);
+	return &(tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]);
 }
 
 void MADDisposeVolumeTable( MADDriverRec *intDriver)
@@ -3156,6 +3156,7 @@ void MADDisposeVolumeTable( MADDriverRec *intDriver)
 	if (intDriver == NULL) {
 		return;
 	}
+	
 	if (intDriver->DriverSettings.outPutMode == DeluxeStereoOutPut)
 		MADKillOverShoot(intDriver);
 }

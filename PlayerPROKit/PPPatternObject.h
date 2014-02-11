@@ -19,12 +19,4 @@
 @property int patternSize;
 - (id)initWithMusic:(PPMusicObjectWrapper *)mus;
 - (id)initWithMusic:(PPMusicObjectWrapper *)mus patternAtIndex:(short)ptnIdx;
-
-@end
-
-@interface PPPatternObject (PcmdHandling)
-+ (OSErr)testPcmdFileAtURL:(NSURL*)theURL;
-+ (NSString *)stringFromPcmdData:(Pcmd*)myPcmd;
-- (OSErr)importPcmdFromURL:(NSURL*)theURL;
-- (OSErr)exportPcmdToURL:(NSURL*)theURL;
 @end

@@ -63,52 +63,48 @@ static inline UInt32 Tdecode32( void *msg_buf)
 #define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
 #endif
 
-static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
+static OSErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
-	SixSixNine			*the669;
-	short				i, PatMax, x, z;
-	SInt32				sndSize, OffSetToSample, OldTicks;
-	size_t temp;
-	Ptr					MaxPtr;
-	//OSErr				theErr;
-	Ptr					theInstrument[ 64], destPtr;
-	//unsigned short		tempS;
-	short				Note, Octave;
-	Byte				*thePasByte;
+	SixSixNine	*the669;
+	short		i, x, z;
+	SInt32		OffSetToSample;
+	size_t		temp;
+	Ptr			MaxPtr;
+	Ptr			theInstrument[64], destPtr;
+	short		Note, Octave;
+	Byte		*thePasByte;
 	
 	/**** Variables pour le MAD ****/
-	Cmd					*aCmd;
+	Cmd			*aCmd;
 	
 	/**** Variables pour le MOD ****/
-	
 	struct PatSix		*PatInt;
 	struct PatCmd		*theCommand;
 	struct SampleInfo	*SInfo;
+	
 	/********************************/
 	
-	the669 = (SixSixNine*) AlienFile;
+	the669 = (SixSixNine*)AlienFile;
+	theMAD->header = (MADSpec*)calloc(sizeof(MADSpec), 1);
 	
-	theMAD->header = (MADSpec*) calloc( sizeof( MADSpec), 1);
-	
-	if (!theMAD->header) {
+	if (!theMAD->header)
 		return MADNeedMemory;
-	}
 	
-	MaxPtr = (Ptr)((size_t) the669 + MODSize);
+	MaxPtr = (Ptr)((size_t)the669 + MODSize);
 	
-	OffSetToSample = 0x1f1 +  the669->NOS * 25 + the669->NOP * 0x600L;
+	OffSetToSample = 0x1f1 + the669->NOS * 25 + the669->NOP * 0x600L;
 	
 	for (i = 0; i < the669->NOS ; i++) {
 		temp = (size_t) the669;
 		temp += 0x1f1L + i*25L + 13L;
 		
-		SInfo = (SampleInfo*) temp;
+		SInfo = (SampleInfo*)temp;
 		
-		SInfo->length =	Tdecode16(&SInfo->length);
-		SInfo->loopStart = Tdecode16(&SInfo->loopStart);
-		SInfo->loopEnd = Tdecode16(&SInfo->loopEnd);
+		PPLE16(&SInfo->length);
+		PPLE16(&SInfo->loopStart);
+		PPLE16(&SInfo->loopEnd);
 		
-		theInstrument[i] = (Ptr)((size_t) the669 + (size_t)OffSetToSample);
+		theInstrument[i] = (Ptr)((size_t)the669 + (size_t)OffSetToSample);
 		OffSetToSample += SInfo->length;
 	}
 	
@@ -183,7 +179,7 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 			theMAD->fid[i].numSamples = 1;
 			theMAD->fid[i].volFade = DEFAULT_VOLFADE;
 			
-			curData = theMAD->sample[i * MAXSAMPLE + 0] = (sData*) calloc(sizeof(sData), 1);
+			curData = theMAD->sample[i * MAXSAMPLE + 0] = (sData*)calloc(sizeof(sData), 1);
 			
 			if (!curData) {
 				for (i = 0; i < MAXINSTRU * MAXSAMPLE; i++) {
@@ -210,7 +206,8 @@ static OSErr Convert6692Mad( Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 			curData->amp		= 8;
 			
 			curData->relNote	= 0;
-			//	for (x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
+			//strlcpy(curData->name, instru[i]->name, sizeof(curData->name));
+			//for (x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
 			
 			curData->data 		= malloc(curData->size);
 			if (curData->data == NULL) {
@@ -475,7 +472,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 			if (iFileRefI) {
 				info->fileSize = iGetEOF(iFileRefI);
 				
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+				sndSize = 5000L; // Read only 5000 first bytes for optimisation
 				
 				AlienFile = (Ptr)malloc(sndSize);
 				if (AlienFile == NULL)
