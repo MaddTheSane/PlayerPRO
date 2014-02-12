@@ -41,6 +41,12 @@
 #include "embeddedPlugs.h"
 #endif
 
+#ifdef MADAPPIMPORT
+#include "APPL.h"
+#else
+static OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
+#endif
+
 enum {
 	ins 	= 1 << 0,
 	note	= 1 << 1,
@@ -162,17 +168,17 @@ static void MOToldMADSpec(oldMADSpec * m)
 	PPBE32(&m->ESpeed);
 }
 
-static OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
+OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short		i, x;
 	long		inOutCount, OffSetToSample = 0, z;
 	OSType		MADType = 0;
-	/*SInt32		finetune[16] =
-	 {
-	 8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
-	 7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
-	 };*/
-	
+#if 0
+	SInt32		finetune[16] = {
+		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
+		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
+	};
+#endif
 	
 	/**** Old MADH variables ****/
 	
@@ -486,6 +492,18 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /* MAIN FUNCTION */
 /*****************/
 
+#ifdef MADAPPIMPORT
+OSErr TESTMADI(void *AlienFile)
+{
+	return TestoldMADFile(AlienFile);
+}
+
+OSErr ExtractMADIInfo(void *info, void *AlienFile)
+{
+	return ExtractoldMADInfo(info, AlienFile);
+}
+
+#else
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
 OSErr mainMADI( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
@@ -497,8 +515,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
-	switch(order)
-	{
+	switch (order) {
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI) {
@@ -575,3 +592,4 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	
 	return myErr;
 }
+#endif

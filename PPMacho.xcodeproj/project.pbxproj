@@ -94,6 +94,9 @@
 
 /* Begin PBXBuildFile section */
 		55007E9D161A552C00297A3F /* FileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 55113CBB133688D60008C2AF /* FileUtils.c */; };
+		5501BEC718AC029E00602206 /* MADfg.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E310BB5368005208D1 /* MADfg.c */; };
+		5501BEC818AC05A400602206 /* MADH.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E510BB5368005208D1 /* MADH.c */; };
+		5501BEC918AC092500602206 /* MADI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E710BB5368005208D1 /* MADI.c */; };
 		5504A6E216619E10005BDE4B /* ClassicPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6E416619E10005BDE4B /* ClassicPrefs.xib */; };
 		5504A6E516619E1C005BDE4B /* DigitalPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6E716619E1C005BDE4B /* DigitalPrefs.xib */; };
 		5504A6E816619E25005BDE4B /* BoxPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6EA16619E25005BDE4B /* BoxPrefs.xib */; };
@@ -1711,6 +1714,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5501BEC618ABFFEB00602206 /* APPL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPL.h; sourceTree = "<group>"; };
 		55085D791836BAAA004A152F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MidiPrefs.xib; sourceTree = "<group>"; };
 		55085D7C1836BAB2004A152F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PianoPrefs.xib; sourceTree = "<group>"; };
 		55085D7E1836DD85004A152F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3153,6 +3157,7 @@
 			children = (
 				55868A6810BFB46100FCC24D /* APPL-Info.plist */,
 				553340DD10BB5368005208D1 /* APPL.c */,
+				5501BEC618ABFFEB00602206 /* APPL.h */,
 			);
 			name = APPL;
 			sourceTree = "<group>";
@@ -6342,7 +6347,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5501BEC818AC05A400602206 /* MADH.c in Sources */,
 				55868A7C10BFB4B300FCC24D /* APPL.c in Sources */,
+				5501BEC918AC092500602206 /* MADI.c in Sources */,
+				5501BEC718AC029E00602206 /* MADfg.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8116,6 +8124,10 @@
 			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"MADAPPIMPORT=1",
+				);
 				GCC_WARN_PEDANTIC = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 			};
@@ -10022,6 +10034,10 @@
 			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"MADAPPIMPORT=1",
+				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 			};
 			name = Release;
@@ -10031,6 +10047,10 @@
 			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"MADAPPIMPORT=1",
+				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 			};
 			name = Debug;

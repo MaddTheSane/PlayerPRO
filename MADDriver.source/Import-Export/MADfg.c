@@ -37,6 +37,12 @@
 #define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
 #endif
 
+#ifdef MADAPPIMPORT
+#include "APPL.h"
+#else
+static OSErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init);
+#endif
+
 static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myPat, short Tracks, MADDriverSettings *init)
 {
 	struct MusicPattern*	finalPtr;
@@ -71,8 +77,8 @@ static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myP
 			case 0x03:
 				srcPtr++;
 				
-				((short*)myCmd)[ 0] = *((short*) srcPtr);
-				((short*)myCmd)[ 1] = ((short*) srcPtr)[ 1];
+				((short*)myCmd)[0] = ((short*)srcPtr)[0];
+				((short*)myCmd)[1] = ((short*)srcPtr)[ 1];
 				
 				srcPtr += 4;
 				break;
@@ -80,8 +86,8 @@ static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myP
 			case 0x02:
 				srcPtr++;
 				
-				((short*)myCmd)[ 0] = *((short*) srcPtr);
-				((short*)myCmd)[ 1] = 0L;
+				((short*)myCmd)[0] = *((short*)srcPtr);
+				((short*)myCmd)[1] = 0;
 				
 				srcPtr += 2;
 				break;
@@ -89,8 +95,8 @@ static struct MusicPattern* oldDecompressPartitionMAD1( struct MusicPattern* myP
 			case 0x01:
 				srcPtr++;
 				
-				((short*)myCmd)[ 0] = 0;
-				((short*)myCmd)[ 1] = *((short*) srcPtr);
+				((short*)myCmd)[0] = 0;
+				((short*)myCmd)[1] = *((short*)srcPtr);
 				
 				srcPtr += 2;
 				break;
@@ -123,7 +129,7 @@ static struct Command* GetOldCommand( short PosX, short TrackIdX, struct MusicPa
 	return &(tempMusicPat->Commands[ (tempMusicPat->header.PatternSize * TrackIdX) + PosX]);
 }
 
-static void MOToldPatHeader(struct oldPatHeader * p) {
+static inline void MOToldPatHeader(struct oldPatHeader * p) {
 	PPBE32(&p->PatternSize);
 	PPBE32(&p->CompressionMode);
 	PPBE32(&p->PatBytes);
@@ -148,7 +154,7 @@ static void MOToldMADSpec(struct oldMADSpec * m){
 	}
 }
 
-static OSErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
+OSErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short 		i, x;
 	long 		inOutCount = 0, OffSetToSample = 0;
@@ -372,18 +378,20 @@ static OSErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSetti
 	return noErr;
 }
 
-static OSErr TestoldMADFile( Ptr AlienFile)
+static OSErr TestoldMADFile(void *AlienFile)
 {
-	OSType myMADSign = *((OSType*) AlienFile);
+	OSType myMADSign = *((OSType*)AlienFile);
 	PPBE32(&myMADSign);
 	
-	if(	myMADSign == 'MADF' || myMADSign == 'MADG') return noErr;
-	else return  MADFileNotSupportedByThisPlug;
+	if (myMADSign == 'MADF' || myMADSign == 'MADG')
+		return noErr;
+	else
+		return  MADFileNotSupportedByThisPlug;
 }
 
-static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
+static OSErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
 {
-	oldMADSpec	*myMOD = ( oldMADSpec*) AlienFile;
+	oldMADSpec	*myMOD = (oldMADSpec*)AlienFile;
 	//long		PatternSize;
 	short		i;
 	//short		tracksNo;
@@ -395,8 +403,7 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Internal name ***/
 	
-	myMOD->NameSignature[ 31] = '\0';
-	strlcpy( info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
+	strlcpy(info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
 	
 	/*** Tracks ***/
 	
@@ -406,9 +413,9 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	/*** Total Patterns ***/
 	
 	info->totalPatterns = 0;
-	for (i = 0; i < 128; i++)
-	{
-		if (myMOD->oPointers[ i] >= info->totalPatterns)	info->totalPatterns = myMOD->oPointers[ i];
+	for (i = 0; i < 128; i++) {
+		if (myMOD->oPointers[i] >= info->totalPatterns)
+			info->totalPatterns = myMOD->oPointers[i];
 	}
 	info->totalPatterns++;
 	
@@ -418,43 +425,42 @@ static OSErr ExtractoldMADInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Total Instruments ***/
 	
-	for (i = 0, info->totalInstruments = 0; i < MAXINSTRU ; i++)
-	{
-		SInt32 insSizeSwap = myMOD->fid[ i].insSize;
+	for (i = 0, info->totalInstruments = 0; i < MAXINSTRU ; i++) {
+		SInt32 insSizeSwap = myMOD->fid[i].insSize;
 		PPBE32(&insSizeSwap);
-		if (insSizeSwap > 5) info->totalInstruments++;
+		if (insSizeSwap > 5)
+			info->totalInstruments++;
 	}
 	
-	strlcpy( info->formatDescription, "MAD-FG Plug", sizeof(info->formatDescription));
+	strlcpy(info->formatDescription, "MAD-FG Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
 
 #ifndef _MAC_H
-
 EXP OSErr FillPlug( PlugInfo *p);
 EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy( p->type, 		"MADF", sizeof(p->type));
-	strlcpy( p->MenuName, 	"MAD-FG Files", sizeof(p->MenuName));
-	p->mode	=	MADPlugImport;
+	strlcpy(p->type, 		"MADF", sizeof(p->type));
+	strlcpy(p->MenuName, 	"MAD-FG", sizeof(p->MenuName));
+	p->mode	= MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
 	return noErr;
 }
 #endif
 
-
 /*****************/
 /* MAIN FUNCTION */
 /*****************/
 
+#ifndef MADAPPIMPORT
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainMADfg( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+OSErr mainMADfg(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	OSErr	myErr = noErr;
@@ -547,3 +553,14 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	
 	return myErr;
 }
+#else
+OSErr ExtractMADFGInfo(void *info, void *AlienFile)
+{
+	return ExtractoldMADInfo(info, AlienFile);
+}
+
+OSErr TestMADFGFile(void *AlienFile)
+{
+	return TestoldMADFile(AlienFile);
+}
+#endif

@@ -24,6 +24,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 #include <CoreServices/CoreServices.h>
+#include "APPL.h"
 
 static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 {
@@ -248,7 +249,7 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	return noErr;
 }
 
-static inline OSErr TESTMADH(MADSpec* MADPtr)
+static inline OSErr TESTMADk(MADSpec* MADPtr)
 {
 	OSType madType = MADPtr->MAD;
 	PPBE32(&madType);
@@ -258,7 +259,7 @@ static inline OSErr TESTMADH(MADSpec* MADPtr)
 		return MADFileNotSupportedByThisPlug;
 }
 
-static OSErr INFOMADF(MADSpec* MADPtr, PPInfoRec *info)
+static OSErr INFOMADkApp(MADSpec* MADPtr, PPInfoRec *info)
 {
 	//short	i;
 	
@@ -293,8 +294,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 	if (FSPathMakeRef((UInt8*)AlienFileName, &fileRef, NULL) != noErr)
 		return MADReadingErr;
 	
-	switch(order)
-	{
+	switch (order) {
 		case MADPlugImport:
 			iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
 			if (iFileRefI == -1)
@@ -310,6 +310,38 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					myErr = LoadMADH(*myRes, MadFile, init);
 					HUnlock(myRes);
 					DisposeHandle(myRes);
+				} else if (Count1Resources('MADI') > 0) {
+					myRes = Get1IndResource('MADI', 1);
+					DetachResource(myRes);
+					
+					HLock(myRes);
+					myErr = MADI2Mad(*myRes, GetHandleSize(myRes), MadFile, init);
+					HUnlock(myRes);
+					DisposeHandle(myRes);
+				} else if (Count1Resources('MADH') > 0) {
+					myRes = Get1IndResource('MADH', 1);
+					DetachResource(myRes);
+					
+					HLock(myRes);
+					myErr = MADH2Mad(*myRes, GetHandleSize(myRes), MadFile, init);
+					HUnlock(myRes);
+					DisposeHandle(myRes);
+				} else if (Count1Resources('MADF') > 0) {
+					myRes = Get1IndResource('MADF', 1);
+					DetachResource(myRes);
+					
+					HLock(myRes);
+					myErr = MADFG2Mad(*myRes, GetHandleSize(myRes), MadFile, init);
+					HUnlock(myRes);
+					DisposeHandle(myRes);
+				} else if (Count1Resources('MADG') > 0) {
+					myRes = Get1IndResource('MADG', 1);
+					DetachResource(myRes);
+					
+					HLock(myRes);
+					myErr = MADFG2Mad(*myRes, GetHandleSize(myRes), MadFile, init);
+					HUnlock(myRes);
+					DisposeHandle(myRes);
 				} else
 					myErr = MADFileNotSupportedByThisPlug;
 				
@@ -322,16 +354,56 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 			if (iFileRefI == -1)
 				myErr = MADFileNotSupportedByThisPlug;
 			else {
-				UseResFile( iFileRefI);
+				UseResFile(iFileRefI);
 				
 				if (Count1Resources('MADK') > 0) {
 					myRes = Get1IndResource('MADK', 1);
 					DetachResource(myRes);
 					
 					HLock(myRes);
-					myErr = TESTMADH((MADSpec*)*myRes);
+					myErr = TESTMADk((MADSpec*)*myRes);
 					HUnlock(myRes);
 					DisposeHandle(myRes);
+				} else if (Count1Resources('MADI') > 0) {
+					myRes = Get1IndResource('MADI', 1);
+					DetachResource(myRes);
+					
+					HLock(myRes);
+					myErr = TESTMADI(*myRes);
+					HUnlock(myRes);
+					DisposeHandle(myRes);
+					
+					strlcpy(info->formatDescription, "MADI Application", sizeof(info->formatDescription));
+				} else if (Count1Resources('MADH') > 0) {
+					myRes = Get1IndResource('MADH', 1);
+					DetachResource(myRes);
+					
+					HLock(myRes);
+					myErr = TESTMADH(*myRes);
+					HUnlock(myRes);
+					DisposeHandle(myRes);
+					
+					strlcpy(info->formatDescription, "MADH Application", sizeof(info->formatDescription));
+				} else if (Count1Resources('MADF') > 0) {
+					myRes = Get1IndResource('MADF', 1);
+					DetachResource(myRes);
+					
+					HLock(myRes);
+					myErr = TestMADFGFile(*myRes);
+					HUnlock(myRes);
+					DisposeHandle(myRes);
+					
+					strlcpy(info->formatDescription, "MAD-FG Application", sizeof(info->formatDescription));
+				} else if (Count1Resources('MADG') > 0) {
+					myRes = Get1IndResource('MADG', 1);
+					DetachResource(myRes);
+					
+					HLock(myRes);
+					myErr = TestMADFGFile(*myRes);
+					HUnlock(myRes);
+					DisposeHandle(myRes);
+					
+					strlcpy(info->formatDescription, "MAD-FG Application", sizeof(info->formatDescription));
 				} else
 					myErr = MADFileNotSupportedByThisPlug;
 				
@@ -352,7 +424,43 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					DetachResource(myRes);
 					
 					HLock(myRes);
-					myErr = INFOMADF((MADSpec*)*myRes, info);
+					myErr = INFOMADkApp((MADSpec*)*myRes, info);
+					HUnlock(myRes);
+					DisposeHandle(myRes);
+				} else if (Count1Resources('MADI') > 0) {
+					myRes = Get1IndResource('MADI', 1);
+					info->fileSize = GetResourceSizeOnDisk(myRes);
+					DetachResource(myRes);
+					
+					HLock(myRes);
+					myErr = ExtractMADIInfo(*myRes, info);
+					HUnlock(myRes);
+					DisposeHandle(myRes);
+				} else if (Count1Resources('MADH') > 0) {
+					myRes = Get1IndResource('MADH', 1);
+					info->fileSize = GetResourceSizeOnDisk(myRes);
+					DetachResource(myRes);
+					
+					HLock(myRes);
+					myErr = ExtractMADHInfo(*myRes, info);
+					HUnlock(myRes);
+					DisposeHandle(myRes);
+				} else if (Count1Resources('MADF') > 0) {
+					myRes = Get1IndResource('MADF', 1);
+					info->fileSize = GetResourceSizeOnDisk(myRes);
+					DetachResource(myRes);
+					
+					HLock(myRes);
+					myErr = ExtractMADFGInfo(*myRes, info);
+					HUnlock(myRes);
+					DisposeHandle(myRes);
+				} else if (Count1Resources('MADG') > 0) {
+					myRes = Get1IndResource('MADG', 1);
+					info->fileSize = GetResourceSizeOnDisk(myRes);
+					DetachResource(myRes);
+					
+					HLock(myRes);
+					myErr = ExtractMADFGInfo(*myRes, info);
 					HUnlock(myRes);
 					DisposeHandle(myRes);
 				} else
