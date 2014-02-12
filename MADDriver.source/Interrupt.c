@@ -662,7 +662,6 @@ SInt32 GetOld2Period(short note, SInt32 c2spd, MADDriverRec *intDriver)
 	if (note == 0xFF || note == 0xFE)
 		return 4242;
 	
-	//if(!c2spd) DebugStr("\pNo c2spd");
 	if(!c2spd)
 		return 4242;
 	
@@ -688,7 +687,7 @@ SInt32 getlinearperiod(short note, SInt32 c2spd, MADDriverRec *intDriver)
 	return ((10 * 12 - note) * 64);
 }
 
-#define LOGFAC 2*16
+#define LOGFAC 2 * 16
 
 static const int logtab[]={
 	LOGFAC*907,LOGFAC*900,LOGFAC*894,LOGFAC*887,LOGFAC*881,LOGFAC*875,LOGFAC*868,LOGFAC*862,
@@ -708,12 +707,11 @@ static const int logtab[]={
 
 SInt32 getlogperiod(short note, SInt32 fine, MADDriverRec *intDriver)
 {
-	Byte	n,o;
+	Byte	n;
 	int		i;
 	
 	n = note % 12;
-	o = note / 12;
-	i = (n << 3) + (fine >> 4);  /* n*8 + fine/16 */
+	i = (n << 3) + (fine >> 4);
 	
 	return logtab[i];
 }
@@ -1180,7 +1178,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 			
 			switch(intDriver->DriverSettings.outPutBits) {
 				case 8:
-					for (i = 0; i < intDriver->ASCBUFFER*Tracks; i++)
+					for (i = 0; i < intDriver->ASCBUFFER * Tracks; i++)
 						intDriver->IntDataPtr[i] = 0x80;
 					break;
 					

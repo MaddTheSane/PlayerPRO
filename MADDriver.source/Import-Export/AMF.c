@@ -394,10 +394,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
-	myErr = noErr;
-	
-	switch(order)
-	{
+	switch (order) {
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI) {
@@ -410,7 +407,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 				// ** MEMORY Test End
 				
 				else {
-					free( AlienFile);
+					free(AlienFile);
 					
 					AlienFile = malloc(sndSize);
 					myErr = iRead(sndSize, AlienFile,iFileRefI);
@@ -424,8 +421,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else
+			} else
 				myErr = MADReadingErr;
 			break;
 			
@@ -445,10 +441,8 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					AlienFile = NULL;
 				}
 				iClose( iFileRefI);
-			}
-			else
+			} else
 				myErr = MADReadingErr;
-			
 			break;
 			
 		case MADPlugInfo:
@@ -470,10 +464,8 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else
+			} else
 				myErr = MADReadingErr;
-			
 			break;
 			
 		default:

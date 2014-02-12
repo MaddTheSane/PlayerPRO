@@ -487,7 +487,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 {
 	NSAssert([typeName isEqualToString:MADPackageUTI], @"Unknown type passed to %s: %@", sel_getName(_cmd), typeName);
 	PPDocument *theDoc = [[PPDocument alloc] init];
-	if (!theDoc) {
+	if (!theDoc && outError) {
 		*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFormattingError userInfo:nil];
 	}
 	[theDoc importMusicObjectWrapper:[[PPMusicObjectWrapper alloc] init]];

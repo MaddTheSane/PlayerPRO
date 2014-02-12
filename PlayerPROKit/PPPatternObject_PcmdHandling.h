@@ -12,7 +12,7 @@
 @interface PPPatternObject (PcmdHandling)
 + (OSErr)testPcmdFileAtURL:(NSURL*)theURL;
 + (NSString *)stringFromPcmdData:(Pcmd*)myPcmd;
-- (Pcmd*)pcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
+- (Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
 - (OSErr)importPcmdFromURL:(NSURL*)theURL;
-- (OSErr)exportPcmdToURL:(NSURL*)theURL;
+- (OSErr)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
 @end

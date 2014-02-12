@@ -31,6 +31,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 {
 	@package
 	PatHeader patternHeader;
+	PatData *patternData;
 }
 
 @synthesize commands;
@@ -159,6 +160,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 {
 	OSErr theErr = noErr;
 	NSNumber *curNum;
+	unsigned long pcmdLen;
 	theErr = [[self class] testPcmdFileAtURL:theURL];
 	if (theErr) {
 		return theErr;
@@ -168,7 +170,6 @@ static inline void SwapPcmd(Pcmd *toswap)
 	if (!pcmdData) {
 		return MADReadingErr;
 	}
-	unsigned long pcmdLen;
 	[theURL getResourceValue:&curNum forKey:NSURLFileSizeKey error:NULL];
 	
 	if (!curNum) {
@@ -194,8 +195,8 @@ static inline NSString *GetEffectString(short theEffect)
 		case 17:
 		case 18:
 			effectChar++;
-			
 			//fall through
+			
 		case 10 ... 15:
 			theChar = 'A' + effectChar - 10;
 			return [[NSString alloc] initWithFormat:@"%c", theChar];
@@ -224,7 +225,7 @@ static NSString* octaveNameFromNote(short octNote)
 }
 
 
-BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL AllStr)
+static BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL AllStr)
 {
  	BOOL Note = NO;
 	
@@ -241,7 +242,7 @@ BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL AllStr)
 		Note = YES;
 		[mainStr appendString:@"OFF"];
 	} else if (theCommand->note != 0xFF) {
-		Note = true;
+		Note = YES;
 		[mainStr appendString:octaveNameFromNote(theCommand->note)];
 	} else {
 		[mainStr appendString:@"   "];
@@ -276,7 +277,6 @@ BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL AllStr)
 	} else {
 		[mainStr appendString:@"  "];
 	}
-	
 	
 	return Note;
 }
@@ -331,34 +331,7 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 	return theCmd;
 }
 
-- (Pcmd*)pcmdWithLeft:(int)left right:(int)right top:(int)top bottom:(int)bottom
-{
-	[self writeBackToStruct];
-	int count = (bottom - top + 1) * (right - left + 1), X, Y;
-	Cmd *cmd, *cmd2;
-
-	size_t theSize = sizeof(Pcmd) + count * sizeof(Cmd);
-	Pcmd *thePcmd = calloc(theSize, 1);
-	thePcmd->structSize = (int)theSize;
-	thePcmd->tracks		= right - left + 1;
-	thePcmd->length		= bottom - top + 1;
-	thePcmd->trackStart = left;
-	thePcmd->posStart	= top;
-
-	for (X = left; X <= right; X++) {
-		for (Y = top; Y <= bottom; Y++) {
-			cmd = GetMADCommandFromPatternObj(Y, X, self);
-			cmd2 = GetCmd(Y - top, X - left, thePcmd);
-			
-			*cmd2 = *cmd;
-			free(cmd);
-		}
-	}
-	
-	return thePcmd;
-}
-
-- (Pcmd*)pcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange
+- (Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange
 {
 	[self writeBackToStruct];
 	NSInteger count = (trackRange.length) * (posRange.length), X, Y;
@@ -385,8 +358,23 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 	return thePcmd;
 }
 
-- (OSErr)exportPcmdToURL:(NSURL*)theURL
+- (OSErr)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange
 {
+	NSData *datToWrite;
+	if (trackRange.length == 0 || posRange.length) {
+		return MADParametersErr;
+	}
+	Pcmd *thePcmd = [self newPcmdWithTrackRange:trackRange positionRange:posRange];
+	SwapPcmd(thePcmd);
+	if (!thePcmd) {
+		return MADNeedMemory;
+	}
+	datToWrite = [[NSData alloc] initWithBytesNoCopy:thePcmd length:thePcmd->structSize];
+	
+	if (![datToWrite writeToURL:theURL atomically:YES]) {
+		return MADWritingErr;
+	}
+	
 	return noErr;
 }
 

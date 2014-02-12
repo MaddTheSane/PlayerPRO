@@ -753,12 +753,10 @@ static OSErr ConvertIT2Mad( Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriv
 		for (x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
 		
 		MaxPtr = (Ptr) theMAD->partition[ i];
-		MaxPtr += sizeof( PatHeader) + theMAD->header->numChn * curITPat->row * sizeof( Cmd);
+		MaxPtr += sizeof(PatHeader) + theMAD->header->numChn * curITPat->row * sizeof(Cmd);
 		
-		for (Row = 0; Row < curITPat->row; Row++)
-		{
-			for(z = 0; z < theMAD->header->numChn; z++)
-			{
+		for (Row = 0; Row < curITPat->row; Row++) {
+			for(z = 0; z < theMAD->header->numChn; z++) {
 				aCmd = GetMADCommand( Row, z, theMAD->partition[ i]);
 				
 				aCmd->note		= 0xFF;
