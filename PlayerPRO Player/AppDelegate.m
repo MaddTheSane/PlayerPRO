@@ -1406,8 +1406,7 @@ enum PPMusicToolbarTypes {
 		if (self.paused) {
 			[madDriver play];
 		} else {
-			[madDriver stop];
-			[madDriver cleanDriver];
+			[madDriver pause];
 		}
 		self.paused = !self.paused;
 	}

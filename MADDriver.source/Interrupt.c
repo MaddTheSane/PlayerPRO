@@ -1531,7 +1531,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	
 	// Applique l'effect, puis l'additionne au DASCBuffer
 	
-	if (intDriver->DriverSettings.outPutBits == 16) {
+	if (intDriver->DriverSettings.outPutBits == 16 && intDriver->hasVSTEnabled) {
 		ApplyVSTEffects(intDriver, false);
 	}
 	
@@ -1549,7 +1549,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	
 	// *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 	
-	if (intDriver->DriverSettings.outPutBits == 16) {
+	if (intDriver->DriverSettings.outPutBits == 16 && intDriver->hasVSTEnabled) {
 		ApplyVSTEffects(intDriver, true);
 	}
 	
@@ -1558,8 +1558,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 		SInt32		maxL, maxR, minL, minR, tempL;
 		SInt32		*tempLong = intDriver->DASCBuffer, centerL, centerR;
 		
-		switch (intDriver->DriverSettings.outPutBits)
-		{
+		switch (intDriver->DriverSettings.outPutBits) {
 			case 16:
 				maxL = maxR = -300000;
 				minL = minR = 300000;
