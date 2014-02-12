@@ -26,7 +26,7 @@
 			
 			for (track = 0; track < thePcmd->tracks; track++) {
 				for (row = 0; row < thePcmd->length; row++) {
-					myCmd = GetCmd(row, track, thePcmd);
+					myCmd = MADGetCmd(row, track, thePcmd);
 					
 					myCmd->ins 	= myCmd->ins;	// is this very usefull?
 					myCmd->note	= myCmd->note;	// is this very usefull?

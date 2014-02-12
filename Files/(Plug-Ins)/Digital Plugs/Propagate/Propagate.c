@@ -14,8 +14,8 @@ static OSErr mainPropagate(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug
 	for (track = 0; track < myPcmd->tracks; track ++) {
 		for (row = 0; row < myPcmd->length; row ++) {
 			Cmd *myCmd, *myCmdsrc;
-			myCmdsrc	= GetCmd(0, 0, myPcmd);
-			myCmd		= GetCmd(row, track, myPcmd);
+			myCmdsrc	= MADGetCmd(0, 0, myPcmd);
+			myCmd		= MADGetCmd(row, track, myPcmd);
 			*myCmd		= *myCmdsrc;
 		}
 	}

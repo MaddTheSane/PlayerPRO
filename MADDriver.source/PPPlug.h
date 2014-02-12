@@ -31,7 +31,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreFoundation/CFPlugInCOM.h>
 
-typedef OSErr (*RPlaySoundUPP) (MADDriverRec *theRec, char *, long, int, int, int, long, long, unsigned int, Boolean);
+typedef OSErr (*RPlaySoundUPP)(MADDriverRec *theRec, char *, long, int, int, int, long, long, unsigned int, Boolean);
 
 typedef struct _Pcmd
 {
@@ -75,7 +75,7 @@ PPEXPORT OSErr inAddSoundToMADCString(void			*theSound,
 
 PPEXPORT sData* inMADCreateSample();
 PPEXPORT void ConvertInstrumentIn(Byte *tempPtr, size_t sSize);
-PPEXPORT Cmd* GetCmd(short row, short track, Pcmd* myPcmd);
+PPEXPORT Cmd* MADGetCmd(short row, short track, Pcmd* myPcmd);
 
 PPEXPORT const CFStringRef kMadPlugMenuNameKey;
 PPEXPORT const CFStringRef kMadPlugAuthorNameKey;

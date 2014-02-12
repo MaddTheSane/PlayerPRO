@@ -22,8 +22,8 @@ static OSErr mainRevert(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	for (track = 0; track < myPcmd->tracks; track ++) {
 		for (row = 0; row < myPcmd->length; row ++) {
 			Cmd *myCmd, *myCmdsrc;
-			myCmdsrc	= GetCmd(row, track, srcCmd);
-			myCmd		= GetCmd(row, track, myPcmd);
+			myCmdsrc	= MADGetCmd(row, track, srcCmd);
+			myCmd		= MADGetCmd(row, track, myPcmd);
 			*myCmdsrc	= *myCmd;
 		}
 	}
@@ -31,8 +31,8 @@ static OSErr mainRevert(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	for (track = 0; track < myPcmd->tracks; track ++) {
 		for (row = 0; row < myPcmd->length; row ++) {
 			Cmd *myCmd, *myCmdsrc;
-			myCmdsrc	= GetCmd(myPcmd->length - 1 - row, track, srcCmd);
-			myCmd		= GetCmd(row, track, myPcmd);
+			myCmdsrc	= MADGetCmd(myPcmd->length - 1 - row, track, srcCmd);
+			myCmd		= MADGetCmd(row, track, myPcmd);
 			*myCmd		= *myCmdsrc;
 		}
 	}

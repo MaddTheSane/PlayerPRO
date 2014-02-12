@@ -72,7 +72,7 @@ static short NSStringToNote(NSString *myTT)
 			
 			for (short track = 0; track < thePcmd->tracks; track++) {
 				for (short row = 0; row < thePcmd->length; row++) {
-					myCmd = GetCmd(row, track, thePcmd);
+					myCmd = MADGetCmd(row, track, thePcmd);
 					
 					if (thePcmd->length > 1)			// no zero div !!
 						myCmd->note	= from + ((to-from) * row) / (thePcmd->length - 1);

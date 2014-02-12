@@ -37,7 +37,7 @@ sData* inMADCreateSample()
 	return curData;
 }
 
-Cmd* GetCmd(short row, short track, Pcmd* myPcmd)
+Cmd* MADGetCmd(short row, short track, Pcmd* myPcmd)
 {
 	if (row < 0)
 		row = 0;

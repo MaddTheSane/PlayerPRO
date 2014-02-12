@@ -366,7 +366,7 @@ static OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		{
 			for (row = 0; row < myPcmd->length; row += step)
 			{
-				myCmd = GetCmd( row, track, myPcmd);
+				myCmd = MADGetCmd( row, track, myPcmd);
 				
 				if (myPcmd->length > 1)			// no zero div !!
 				{

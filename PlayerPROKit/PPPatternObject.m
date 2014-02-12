@@ -293,7 +293,7 @@ static BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL All
 	for (i = 0; i < myPcmd->length; i++) {
 		for (x = 0; x < myPcmd->tracks; x++) {
 			myStr = [[NSMutableString alloc] init];
-			Cmd *myCmd = GetCmd(i, x, myPcmd);
+			Cmd *myCmd = MADGetCmd(i, x, myPcmd);
 			
 			if (CreateNoteString(myCmd, myStr, YES)) {
 				[myText appendString:myStr];
@@ -348,7 +348,7 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 	for (X = trackRange.location; X <= NSMaxRange(trackRange); X++) {
 		for (Y = posRange.location; Y <= NSMaxRange(posRange); Y++) {
 			cmd = GetMADCommandFromPatternObj(Y, X, self);
-			cmd2 = GetCmd(Y - NSMaxRange(posRange), X - NSMaxRange(trackRange), thePcmd);
+			cmd2 = MADGetCmd(Y - NSMaxRange(posRange), X - NSMaxRange(trackRange), thePcmd);
 			
 			*cmd2 = *cmd;
 			free(cmd);

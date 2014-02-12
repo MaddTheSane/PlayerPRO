@@ -22,7 +22,7 @@
 			
 			for (track = 0; track < thePcmd->tracks; track++) {
 				for (row = 0; row < thePcmd->length; row++) {
-					myCmd = GetCmd(row, track, thePcmd);
+					myCmd = MADGetCmd(row, track, thePcmd);
 					
 					if (myCmd->note != 0xFF && myCmd->note != 0xFE) {	// no notes = 0xFF
 						if (myCmd->note + trans < 0)
