@@ -235,6 +235,10 @@ typedef struct _PPInstrumentPlugin {
 
 // SndUtils.c Definition :
 
+#ifdef __cplusplus
+extern "C" {
+#endif	
+
 Ptr		ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *rate, Boolean *stereo);
 OSErr	ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug);
 void	pStrcpy(register unsigned char *s1, register const unsigned char *s2);
@@ -253,6 +257,10 @@ OSErr	inAddSoundToMAD(Ptr				theSound,
 						sData			**sample,					// Ptr on samples data
 						short			*sampleID);
 sData	*inMADCreateSample();
+
+#ifdef __cplusplus
+}
+#endif
 
 
 #if PRAGMA_STRUCT_ALIGN

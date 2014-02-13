@@ -156,6 +156,8 @@
 		55151F7A10DEDBDB0054ABC4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5515200810DEDC7E0054ABC4 /* XI.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55151F8010DEDBDB0054ABC4 /* XI.plugin */; };
 		5515200E10DEDC9B0054ABC4 /* XI.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105910D6C79E00BB619C /* XI.c */; };
+		551770CE18AD59F900C4FB35 /* wds_general.h in Headers */ = {isa = PBXBuildFile; fileRef = 551770CC18AD59F900C4FB35 /* wds_general.h */; };
+		551770CF18AD59F900C4FB35 /* wds_general.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 551770CD18AD59F900C4FB35 /* wds_general.cpp */; };
 		5518107B10C35A5100ADA9F4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5518109210C35A6C00ADA9F4 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5518109310C35A7500ADA9F4 /* Example.c in Sources */ = {isa = PBXBuildFile; fileRef = 5518105610C35A2600ADA9F4 /* Example.c */; };
@@ -1337,6 +1339,8 @@
 		55151F8010DEDBDB0054ABC4 /* XI.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XI.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55151F8110DEDBDB0054ABC4 /* XI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "XI-Info.plist"; path = "../../../XI-Info.plist"; sourceTree = "<group>"; };
 		551520A910DEEA670054ABC4 /* MuLaw.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MuLaw.r; sourceTree = "<group>"; };
+		551770CC18AD59F900C4FB35 /* wds_general.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wds_general.h; sourceTree = "<group>"; };
+		551770CD18AD59F900C4FB35 /* wds_general.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wds_general.cpp; sourceTree = "<group>"; };
 		5517F7541126203E0034F90C /* Lin-PlugImport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "Lin-PlugImport.c"; sourceTree = "<group>"; };
 		5518105610C35A2600ADA9F4 /* Example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Example.c; sourceTree = "<group>"; };
 		5518105810C35A2600ADA9F4 /* small MAD Music.madk */ = {isa = PBXFileReference; lastKnownFileType = file; path = "small MAD Music.madk"; sourceTree = "<group>"; };
@@ -3025,6 +3029,8 @@
 		55F0DA6610CC808500835D4E /* wds_general */ = {
 			isa = PBXGroup;
 			children = (
+				551770CC18AD59F900C4FB35 /* wds_general.h */,
+				551770CD18AD59F900C4FB35 /* wds_general.cpp */,
 				88E0C3DD0C2F21DD00D6C081 /* About.c */,
 				88E0C4190C2F21DD00D6C081 /* Tools.c */,
 				88E0C4010C2F21DD00D6C081 /* PubWindow.c */,
@@ -3429,6 +3435,7 @@
 				550004E018A948BD00408208 /* audioeffectx.h in Headers */,
 				552C6FE410CD9DB700C0E0D4 /* PPDefs.h in Headers */,
 				557DE27710E04C1500177B4C /* PPResDefs.h in Headers */,
+				551770CE18AD59F900C4FB35 /* wds_general.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5406,6 +5413,7 @@
 				55E8981A10EEC5BA004EB52B /* AboutPlugs.c in Sources */,
 				555E9B4E110192F900986239 /* MIDI-Hardware-OSX.c in Sources */,
 				55B1953E17FD5CC200E6F160 /* ScreenDevice.cpp in Sources */,
+				551770CF18AD59F900C4FB35 /* wds_general.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

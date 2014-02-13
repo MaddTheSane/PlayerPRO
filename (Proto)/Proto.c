@@ -14,6 +14,10 @@
 
 typedef OSType SFTypeList[4];
 
+#ifdef __cplusplus
+extern "C" {
+#endif	
+
 #include "3D.proto.h"
 #include "About.proto.h"
 #include "Adaptators.proto.h"
@@ -78,3 +82,7 @@ typedef OSType SFTypeList[4];
 #include "MIDI-Hardware.proto.h"
 #include "Functions.proto.h"
 //#include "VBLSound22stereo.proto.h"
+#ifdef __cplusplus
+}
+#endif
+		
