@@ -1253,8 +1253,8 @@ Boolean	ImportFile(Str255 fName, short vRefNum, long parID, OSType theType)
 		curMusic->header->generalPitch	= 252;//thePrefs.previousSpec.generalPitch;
 		curMusic->header->generalSpeed	= 252;//thePrefs.previousSpec.generalSpeed;
 		curMusic->header->generalPan	= thePrefs.previousSpec.generalPan;
-		curMusic->header->EPitch	= thePrefs.previousSpec.EPitch;
-		curMusic->header->ESpeed	= thePrefs.previousSpec.ESpeed;
+		curMusic->header->EPitch		= thePrefs.previousSpec.EPitch;
+		curMusic->header->ESpeed		= thePrefs.previousSpec.ESpeed;
 		
 		curMusic->header->generalVol	= thePrefs.previousSpec.generalVol;
 		for (i = 0 ; i < MAXTRACK; i++) curMusic->header->chanPan[i] = thePrefs.previousSpec.chanPan[i];

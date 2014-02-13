@@ -95,7 +95,7 @@ void DoNullDigiWindow(void)
 	Rect		tempRect, aRect;
 	Str255		tempStr = "\p";
 	GrafPtr		savePort;
-	long		val;
+	long		val = 0;
 	RgnHandle	saveClip;
 	
 	if (!DigitalDlog)

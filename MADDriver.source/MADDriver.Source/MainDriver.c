@@ -2343,9 +2343,9 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 			{
 				for (x = 0; x < MAXINSTRU ; x++) MADKillInstrument(MDriver, x);
 				
-				for (x = 0; x < MDriver->header->numPat; x++)
-				{
-					if (MDriver->partition[x] != NULL)	DisposePtr((Ptr) MDriver->partition[x]);
+				for (x = 0; x < MDriver->header->numPat; x++) {
+					if (MDriver->partition[x] != NULL)
+						DisposePtr((Ptr) MDriver->partition[x]);
 				}
 				DisposePtr((Ptr) MDriver->header);
 				DisposePtr((Ptr) MDriver);
@@ -2354,8 +2354,7 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 			}
 			
 			inOutCount = curData->size;
-			switch (InPutType)
-			{
+			switch (InPutType) {
 #ifdef _MAC_H
 				case MADRsrcType:
 					ReadPartialResource(MADRsrc, OffSetToSample, curData->data, inOutCount);
@@ -2373,13 +2372,14 @@ OSErr MADReadMAD(MADMusic **music, UNFILE srcFile, short InPutType, Handle MADRs
 					break;
 			}
 			
-			if (curData->amp == 16)
-			{
+#ifdef __LITTLE_ENDIAN__
+			if (curData->amp == 16) {
 				long 	ll;
 				short	*shortPtr = (short*) curData->data;
 				
 				for (ll = 0; ll < curData->size/2; ll++) MOT16(&shortPtr[ll]);
 			}
+#endif
 		}
 	}
 	

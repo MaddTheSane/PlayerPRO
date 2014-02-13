@@ -911,7 +911,7 @@ static void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst
 						DebugLong(iErr);
 					
 					INT16(&rgnh.RangeKey.usLow);
-					INT16(&rgnh.RangeKey.usHigh)
+					INT16(&rgnh.RangeKey.usHigh);
 					INT16(&rgnh.RangeVelocity.usLow);
 					INT16(&rgnh.RangeVelocity.usHigh);
 					INT16(&rgnh.fusOptions);

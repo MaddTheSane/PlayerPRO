@@ -586,7 +586,7 @@ void Sampler16Addin16DelayStereo(Channel *curVoice, long	*ASCBuffer, MADDriverRe
 	long				chnVolS, chnVol2S;
 	long				chnVolD, chnVol2D;
 	long				i = intDriver->ASCBUFFER;
-	long				chnVol, chnVol2;
+	long				chnVol = 0, chnVol2 = 0;
 	long				off = 0, tShortL = 0, tShortR = 0;
 	long				*ASCBuffer1, *ASCBuffer2;
 	Boolean				killSample = false;

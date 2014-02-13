@@ -73,7 +73,7 @@ OSErr NSoundQualityExportSnd(short ins, short samp, OSType *fileType, Str255 sNa
 	Str255		aStr;
 	Rect		itemRect;
 	Handle		itemHandle;
-	sData		*curData;
+	sData		*curData = NULL;
 	short		sampNo, instNo;
 	GrafPtr		thePort;
 	

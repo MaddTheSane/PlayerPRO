@@ -98,7 +98,7 @@ long DoVolPanning256(short whichChannel, Channel *ch, MADDriverRec *intDriver, B
 	long	pannValue, volFade;
 	long	temp;
 	long	volEnv;
-	long 	tVSYNC;
+	long 	tVSYNC = 0;
 	
 	if (Interpol)
 	{
@@ -2038,23 +2038,12 @@ void GenerateSound(MADDriverRec *intDriver)
 {
 	long i;
 	
-	if (intDriver->DriverSettings.driverMode == MIDISoundDriver) return;
+	if (intDriver->DriverSettings.driverMode == MIDISoundDriver)
+		return;
 
-	switch (intDriver->DriverSettings.outPutBits)
-	{
+	switch (intDriver->DriverSettings.outPutBits) {
 		case 8:
-			switch (intDriver->DriverSettings.outPutMode)
-		{
-				/*	case MonoOutPut:
-				 Play8Mono(intDriver);
-				 intDriver->IntDataPtr	+= intDriver->ASCBUFFER;
-				 break;
-				 
-				 case StereoOutPut:
-				 Play8Stereo(intDriver);
-				 intDriver->IntDataPtr	+= intDriver->ASCBUFFER*2L;
-				 break;
-				 */
+			switch (intDriver->DriverSettings.outPutMode) {
 			case DeluxeStereoOutPut:
 				Play8StereoDelay(intDriver);
 				intDriver->IntDataPtr	+= intDriver->ASCBUFFER*2L;
@@ -2070,18 +2059,7 @@ void GenerateSound(MADDriverRec *intDriver)
 			break;
 			
 		case 16:
-			switch (intDriver->DriverSettings.outPutMode)
-		{
-				/*	case MonoOutPut:
-				 Play16Mono(intDriver);
-				 intDriver->IntDataPtr	+= intDriver->ASCBUFFER*2L;
-				 break;
-				 
-				 case StereoOutPut:
-				 Play16Stereo(intDriver);
-				 intDriver->IntDataPtr	+= intDriver->ASCBUFFER*4L;
-				 break;
-				 */
+			switch (intDriver->DriverSettings.outPutMode) {
 			case DeluxeStereoOutPut:
 				Play16StereoDelay(intDriver);
 				intDriver->IntDataPtr	+= (intDriver->ASCBUFFER*4L) ;
@@ -2091,8 +2069,8 @@ void GenerateSound(MADDriverRec *intDriver)
 				break;
 				
 			case PolyPhonic:
-				//		case MultiFiles:
-				//	  Play16PolyPhonic(intDriver);
+				//case MultiFiles:
+				//  Play16PolyPhonic(intDriver);
 				intDriver->IntDataPtr	+= intDriver->ASCBUFFER * 2L * intDriver->DriverSettings.numChn;
 				break;
 		}
@@ -2103,18 +2081,21 @@ void GenerateSound(MADDriverRec *intDriver)
 EXP Boolean DirectSaveAlways(Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
 	Ptr						ptrCopy;
-	MADDriverSettings		driverCopy;
+	MADDriverSettings		driverCopy = {0};
 
-	if (intDriver == NULL) return false;	//intDriver = MADGetMADDriverPtr();
+	if (intDriver == NULL)
+		return false;
 	
 	/*** Copy values ***/
 	ptrCopy 		= intDriver->IntDataPtr;
-	if (driverType != NULL) driverCopy	= intDriver->DriverSettings;
+	if (driverType != NULL)
+		driverCopy	= intDriver->DriverSettings;
 	
 	/*** Install New Values ***/
 	
 	intDriver->IntDataPtr 		= myPtr;
-	if (driverType != NULL) intDriver->DriverSettings	= *driverType;
+	if (driverType != NULL)
+		intDriver->DriverSettings	= *driverType;
 	
 	/***/			/***/
 	/***/			/***/
@@ -2129,7 +2110,8 @@ EXP Boolean DirectSaveAlways(Ptr myPtr, MADDriverSettings *driverType, MADDriver
 	/*** Restore values ***/
 	
 	intDriver->IntDataPtr 		= ptrCopy;
-	if (driverType != NULL) intDriver->DriverSettings	= driverCopy;
+	if (driverType != NULL)
+		intDriver->DriverSettings	= driverCopy;
 	
 	return true;
 }
@@ -2137,20 +2119,24 @@ EXP Boolean DirectSaveAlways(Ptr myPtr, MADDriverSettings *driverType, MADDriver
 
 EXP Boolean DirectSave(Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
-	Ptr						ptrCopy;
-	MADDriverSettings		driverCopy;
+	Ptr					ptrCopy;
+	MADDriverSettings	driverCopy = {0};
 
-	if (intDriver == NULL) return false;	//intDriver = MADGetMADDriverPtr();
-	if (!intDriver->Reading) return false;
+	if (intDriver == NULL)
+		return false;
+	if (!intDriver->Reading)
+		return false;
 	
 	/*** Copy values ***/
 	ptrCopy 		= intDriver->IntDataPtr;
-	if (driverType != NULL) driverCopy	= intDriver->DriverSettings;
+	if (driverType != NULL) 
+		driverCopy	= intDriver->DriverSettings;
 	
 	/*** Install New Values ***/
 	
 	intDriver->IntDataPtr 		= myPtr;
-	if (driverType != NULL) intDriver->DriverSettings	= *driverType;
+	if (driverType != NULL) 
+		intDriver->DriverSettings	= *driverType;
 	
 	/***/			/***/
 	/***/			/***/
@@ -2168,11 +2154,6 @@ EXP Boolean DirectSave(Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *i
 	if (driverType != NULL) intDriver->DriverSettings	= driverCopy;
 	
 	if (intDriver->musicEnd == true) return false;
-	
-/*	if (intDriver->curMusic != NULL)
-	{
-		if (intDriver->PL >= intDriver->curMusic->header->numPointers) return false;
-	}*/
 	
 	return true;
 }

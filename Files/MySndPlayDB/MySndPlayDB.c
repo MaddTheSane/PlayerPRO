@@ -356,8 +356,8 @@ static void	InsertSndDoCommand (SndChannelPtr chan, SndCommand * newCmd) {
 }
 
 static pascal void NMResponseProc (NMRecPtr nmReqPtr) {
-	PerChanInfoPtr					perChanInfoPtr;
-	OSErr							err;
+	PerChanInfoPtr	perChanInfoPtr;
+	OSErr			err = noErr;
 
 	NMRemove (nmReqPtr);
 	gNMRecBusy = false;

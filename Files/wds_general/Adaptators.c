@@ -349,7 +349,7 @@ void DoNullAdap(void)
 	oldNullTicks2 = TickCount() + 10;
 	
 	if (oldWindow == GetDialogWindow(AdapDlog)) {
-		double val;
+		double val = 0;
 		
 		GetMouse(&pt);
 		
@@ -1863,7 +1863,7 @@ pascal void myTrackVolumeAction(ControlHandle theCntl, short ctlPart)
 
 void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 {
-	short				x, whichFxTrack, itemType, i, oldH = -10;
+	short				x, whichFxTrack = 0, itemType, i, oldH = -10;
 	Point				Location, myPt;
 	Handle				itemHandle;
 	Rect				itemRect;
@@ -1871,7 +1871,7 @@ void DoItemPressAdap(short whichItem, DialogPtr whichDialog)
 	RgnHandle			saveClip;
 	GrafPtr				savePort;
 	ControlActionUPP	MyControlUPP;
-	Byte				kindCntl;
+	Byte				kindCntl = 0;
 	
 	GetPort(&savePort);
 	SetPortDialogPort(whichDialog);

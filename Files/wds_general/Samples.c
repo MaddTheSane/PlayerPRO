@@ -1775,15 +1775,15 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 {
 	Point			aPt, prevPt, tempPt;
 	long long		BS, BE, sampleSize, x, start, nVal16E, nVal16S;
-	Ptr				theSample;
-	short			*theShortSample;
+	Ptr				theSample = NULL;
+	short			*theShortSample = NULL;
 	short			nVal8S, nVal8E, val;
 	Rect			tRect, tempRect;
 	RgnHandle		saveClipRgn;
 	Boolean			Inverse, firstTime;
 	GDHandle		oldGDeviceH;
 	CGrafPtr		oldPort;
-	short 			editPtEnv;
+	short 			editPtEnv = 0;
 	Boolean			PreInOutPt;
 	int				i;
 	
@@ -3376,7 +3376,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 	ControlHandle		theControl;
 	Handle				itemHandle;
 	RgnHandle			tempRgn;
-	Boolean				InvertSwitch;
+	Boolean				InvertSwitch = false;
 	GrafPtr				SavePort;
 	Rect				caRect, tempRect, oldSelect, itemRect;
 	ControlActionUPP	MyControlUPP;

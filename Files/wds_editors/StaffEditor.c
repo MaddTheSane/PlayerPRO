@@ -976,7 +976,7 @@ void DrawStaffNotes()
 			
 			for (i = 0; i < GetMaxXStaff() ;) {
 				Cmd 	*cmd, *note;
-				short	startNote, endNote, startScan;
+				short	startNote, endNote = 0, startScan;
 				
 				startScan = i;
 				
@@ -1014,7 +1014,7 @@ void DrawStaffNotes()
 					short silenceLength = startNote - startScan;
 					
 					while (silenceLength > 0) {
-						short remove, silenceLengthCopy, ttt;
+						short remove = 0, silenceLengthCopy, ttt;
 						
 						silIcon = NULL;
 						
@@ -1080,7 +1080,7 @@ void DrawStaffNotes()
 						Boolean	first = true;
 						
 						while (silenceLength > 0) {
-							short	prevleft, remove;
+							short	prevleft, remove = 0;
 							short 	silenceLengthCopy, ttt;
 							
 							
