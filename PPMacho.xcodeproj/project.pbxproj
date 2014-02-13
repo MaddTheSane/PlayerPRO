@@ -191,6 +191,10 @@
 		55356A05102BFE7D0093F21D /* Print.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FC0C2F21DD00D6C081 /* Print.c */; };
 		55356A1E102C06550093F21D /* MIDI-GM.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F60C2F21DD00D6C081 /* MIDI-GM.c */; };
 		55356A97102C08650093F21D /* PlugsPPINInit.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C60C2F21DD00D6C081 /* PlugsPPINInit.c */; };
+		553984DD18AD84DF00DD2EA2 /* wds_editor.h in Headers */ = {isa = PBXBuildFile; fileRef = 553984DB18AD84DF00DD2EA2 /* wds_editor.h */; };
+		553984DE18AD84DF00DD2EA2 /* wds_editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 553984DC18AD84DF00DD2EA2 /* wds_editor.cpp */; };
+		553984E918AD879600DD2EA2 /* PlayerPROApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 553984E718AD879600DD2EA2 /* PlayerPROApp.h */; };
+		553984EA18AD879600DD2EA2 /* PlayerPROApp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 553984E818AD879600DD2EA2 /* PlayerPROApp.cpp */; };
 		554CBD4C188CD1C1002E137B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		554CBD50188CD468002E137B /* NSColor+PPPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 554CBD4E188CD468002E137B /* NSColor+PPPreferences.h */; };
 		554CBD51188CD468002E137B /* NSColor+PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CBD4F188CD468002E137B /* NSColor+PPPreferences.m */; };
@@ -1415,6 +1419,10 @@
 		553341EA10BB5FFA005208D1 /* DMF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DMF-Info.plist"; path = "../../../DMF-Info.plist"; sourceTree = "<group>"; };
 		553341FC10BB600A005208D1 /* IT.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IT.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		553341FD10BB600A005208D1 /* IT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "IT-Info.plist"; path = "../../../IT-Info.plist"; sourceTree = "<group>"; };
+		553984DB18AD84DF00DD2EA2 /* wds_editor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wds_editor.h; sourceTree = "<group>"; };
+		553984DC18AD84DF00DD2EA2 /* wds_editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wds_editor.cpp; sourceTree = "<group>"; };
+		553984E718AD879600DD2EA2 /* PlayerPROApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROApp.h; sourceTree = "<group>"; };
+		553984E818AD879600DD2EA2 /* PlayerPROApp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PlayerPROApp.cpp; sourceTree = "<group>"; };
 		5542403E10DB602D00C08864 /* SoundDesignerII.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = SoundDesignerII.r; sourceTree = "<group>"; };
 		5542403F10DB602D00C08864 /* Mp3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mp3.r; sourceTree = "<group>"; };
 		5542404010DB602D00C08864 /* MPG3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MPG3.r; sourceTree = "<group>"; };
@@ -3048,6 +3056,8 @@
 		55F0DA6710CC80E600835D4E /* wds_editors */ = {
 			isa = PBXGroup;
 			children = (
+				553984DB18AD84DF00DD2EA2 /* wds_editor.h */,
+				553984DC18AD84DF00DD2EA2 /* wds_editor.cpp */,
 				88E0C3E30C2F21DD00D6C081 /* ClassicalP.c */,
 				88E0C4150C2F21DD00D6C081 /* Command.c */,
 				88E0C4160C2F21DD00D6C081 /* Editor.c */,
@@ -3220,6 +3230,8 @@
 				55F0DA6810CC813500835D4E /* wds_views */,
 				554CBD4D188CD45C002E137B /* Classes */,
 				554CBD58188CE960002E137B /* PreferenceHandler.h */,
+				553984E718AD879600DD2EA2 /* PlayerPROApp.h */,
+				553984E818AD879600DD2EA2 /* PlayerPROApp.cpp */,
 				88E0C3E00C2F21DD00D6C081 /* AEvent.c */,
 				88E0C3E10C2F21DD00D6C081 /* AudioCD.c */,
 				88E0C3E20C2F21DD00D6C081 /* Check.c */,
@@ -3436,6 +3448,8 @@
 				552C6FE410CD9DB700C0E0D4 /* PPDefs.h in Headers */,
 				557DE27710E04C1500177B4C /* PPResDefs.h in Headers */,
 				551770CE18AD59F900C4FB35 /* wds_general.h in Headers */,
+				553984DD18AD84DF00DD2EA2 /* wds_editor.h in Headers */,
+				553984E918AD879600DD2EA2 /* PlayerPROApp.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5414,6 +5428,8 @@
 				555E9B4E110192F900986239 /* MIDI-Hardware-OSX.c in Sources */,
 				55B1953E17FD5CC200E6F160 /* ScreenDevice.cpp in Sources */,
 				551770CF18AD59F900C4FB35 /* wds_general.cpp in Sources */,
+				553984DE18AD84DF00DD2EA2 /* wds_editor.cpp in Sources */,
+				553984EA18AD879600DD2EA2 /* PlayerPROApp.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
