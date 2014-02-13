@@ -49,10 +49,10 @@
 "Error reading file" = "Error reading file";
 
 /* Filter plug-in name */
-"FilterPlugName" = "Filter plug-in";
+"FilterPlugName" = "Filter Plug-in";
 
 /* Instrument plug-in name */
-"InstrumentPlugName" = "Instrument plug-in";
+"InstrumentPlugName" = "Instrument Plug-in";
 
 /* Invalid extension */
 "Invalid Extension" = "Invalid Extension";
@@ -161,7 +161,7 @@
 "The selected sound system is not available" = "The selected sound system is not available";
 
 /* Tracker plug-in name */
-"TrackerPlugName" = "Tracker plug-in";
+"TrackerPlugName" = "Tracker Plug-in";
 
 /* No comment provided by engineer. */
 "Try attaching music to the driver by selecting the music." = "Try attaching music to the driver by selecting the music.";

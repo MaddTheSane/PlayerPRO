@@ -1715,6 +1715,7 @@
 
 /* Begin PBXFileReference section */
 		5501BEC618ABFFEB00602206 /* APPL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPL.h; sourceTree = "<group>"; };
+		5501BECB18AC560E00602206 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		55085D791836BAAA004A152F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MidiPrefs.xib; sourceTree = "<group>"; };
 		55085D7C1836BAB2004A152F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PianoPrefs.xib; sourceTree = "<group>"; };
 		55085D7E1836DD85004A152F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1931,7 +1932,6 @@
 		553341EA10BB5FFA005208D1 /* DMF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DMF-Info.plist"; sourceTree = SOURCE_ROOT; };
 		553341FC10BB600A005208D1 /* IT.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IT.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		553341FD10BB600A005208D1 /* IT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IT-Info.plist"; sourceTree = SOURCE_ROOT; };
-		5533600111EBC65600525CAF /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Universal.xcconfig; sourceTree = "<group>"; };
 		553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PPCPlugs.xcconfig; sourceTree = "<group>"; };
 		553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "PPCPlugs-debug.xcconfig"; sourceTree = "<group>"; };
@@ -7203,7 +7203,7 @@
 		5533600311EBC66400525CAF /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5533600111EBC65600525CAF /* English */,
+				5501BECB18AC560E00602206 /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
