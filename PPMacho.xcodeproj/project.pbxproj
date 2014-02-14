@@ -502,10 +502,8 @@
 		88E0C4AF0C2F21E500D6C081 /* DigitalInfo.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4AE0C2F21E500D6C081 /* DigitalInfo.proto.h */; };
 		88E0C4B10C2F21E500D6C081 /* DragManager.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4B00C2F21E500D6C081 /* DragManager.proto.h */; };
 		88E0C4B30C2F21E500D6C081 /* Editor.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4B20C2F21E500D6C081 /* Editor.proto.h */; };
-		88E0C4B50C2F21E500D6C081 /* EtoileAsm.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4B40C2F21E500D6C081 /* EtoileAsm.proto.h */; };
 		88E0C4B70C2F21E500D6C081 /* fade.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4B60C2F21E500D6C081 /* fade.proto.h */; };
 		88E0C4B90C2F21E500D6C081 /* FFT.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4B80C2F21E500D6C081 /* FFT.proto.h */; };
-		88E0C4BB0C2F21E500D6C081 /* FileUtils.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4BA0C2F21E500D6C081 /* FileUtils.proto.h */; };
 		88E0C4BD0C2F21E500D6C081 /* FillPoly.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4BC0C2F21E500D6C081 /* FillPoly.proto.h */; };
 		88E0C4BF0C2F21E500D6C081 /* Fourier.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4BE0C2F21E500D6C081 /* Fourier.proto.h */; };
 		88E0C4C10C2F21E500D6C081 /* FourierInt.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4C00C2F21E500D6C081 /* FourierInt.proto.h */; };
@@ -519,7 +517,6 @@
 		88E0C4D10C2F21E500D6C081 /* LDEF.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4D00C2F21E500D6C081 /* LDEF.proto.h */; };
 		88E0C4D30C2F21E500D6C081 /* Liste.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4D20C2F21E500D6C081 /* Liste.proto.h */; };
 		88E0C4D50C2F21E500D6C081 /* Main.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4D40C2F21E500D6C081 /* Main.proto.h */; };
-		88E0C4D70C2F21E500D6C081 /* Main3D.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4D60C2F21E500D6C081 /* Main3D.proto.h */; };
 		88E0C4D90C2F21E500D6C081 /* MapPoly.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4D80C2F21E500D6C081 /* MapPoly.proto.h */; };
 		88E0C4DD0C2F21E500D6C081 /* MIDI-GM.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4DC0C2F21E500D6C081 /* MIDI-GM.proto.h */; };
 		88E0C4DF0C2F21E500D6C081 /* MIDI-Hardware.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4DE0C2F21E500D6C081 /* MIDI-Hardware.proto.h */; };
@@ -536,10 +533,8 @@
 		88E0C4F50C2F21E500D6C081 /* Print.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4F40C2F21E500D6C081 /* Print.proto.h */; };
 		88E0C4F70C2F21E500D6C081 /* PrintTEHandle.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4F60C2F21E500D6C081 /* PrintTEHandle.proto.h */; };
 		88E0C4F90C2F21E500D6C081 /* PrivateList.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4F80C2F21E500D6C081 /* PrivateList.proto.h */; };
-		88E0C4FB0C2F21E500D6C081 /* Progress.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4FA0C2F21E500D6C081 /* Progress.proto.h */; };
 		88E0C4FD0C2F21E500D6C081 /* ProgressBar.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4FC0C2F21E500D6C081 /* ProgressBar.proto.h */; };
 		88E0C4FF0C2F21E600D6C081 /* PubWindow.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4FE0C2F21E600D6C081 /* PubWindow.proto.h */; };
-		88E0C5010C2F21E600D6C081 /* Quicktime.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5000C2F21E600D6C081 /* Quicktime.proto.h */; };
 		88E0C5030C2F21E600D6C081 /* Record.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5020C2F21E600D6C081 /* Record.proto.h */; };
 		88E0C5090C2F21E600D6C081 /* SoundInput.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5080C2F21E600D6C081 /* SoundInput.proto.h */; };
 		88E0C50B0C2F21E600D6C081 /* Spectrum.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C50A0C2F21E600D6C081 /* Spectrum.proto.h */; };
@@ -550,7 +545,6 @@
 		88E0C5150C2F21E600D6C081 /* TrackView.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5140C2F21E600D6C081 /* TrackView.proto.h */; };
 		88E0C5170C2F21E600D6C081 /* Undo.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5160C2F21E600D6C081 /* Undo.proto.h */; };
 		88E0C5190C2F21E600D6C081 /* Utils.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5180C2F21E600D6C081 /* Utils.proto.h */; };
-		88E0C51B0C2F21E600D6C081 /* VAHeart.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C51A0C2F21E600D6C081 /* VAHeart.proto.h */; };
 		88E0C51D0C2F21E600D6C081 /* WaveEditor.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C51C0C2F21E600D6C081 /* WaveEditor.proto.h */; };
 		88E0C51F0C2F21E600D6C081 /* ZoomRect.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C51E0C2F21E600D6C081 /* ZoomRect.proto.h */; };
 		88E0C5210C2F21E600D6C081 /* QuicktimeWindow.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5200C2F21E600D6C081 /* QuicktimeWindow.proto.h */; };
@@ -1708,10 +1702,8 @@
 		88E0C4AE0C2F21E500D6C081 /* DigitalInfo.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DigitalInfo.proto.h; path = "(Proto)/DigitalInfo.proto.h"; sourceTree = "<group>"; };
 		88E0C4B00C2F21E500D6C081 /* DragManager.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = DragManager.proto.h; path = "(Proto)/DragManager.proto.h"; sourceTree = "<group>"; };
 		88E0C4B20C2F21E500D6C081 /* Editor.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Editor.proto.h; path = "(Proto)/Editor.proto.h"; sourceTree = "<group>"; };
-		88E0C4B40C2F21E500D6C081 /* EtoileAsm.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = EtoileAsm.proto.h; path = "(Proto)/EtoileAsm.proto.h"; sourceTree = "<group>"; };
 		88E0C4B60C2F21E500D6C081 /* fade.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = fade.proto.h; path = "(Proto)/fade.proto.h"; sourceTree = "<group>"; };
 		88E0C4B80C2F21E500D6C081 /* FFT.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = FFT.proto.h; path = "(Proto)/FFT.proto.h"; sourceTree = "<group>"; };
-		88E0C4BA0C2F21E500D6C081 /* FileUtils.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = FileUtils.proto.h; path = "(Proto)/FileUtils.proto.h"; sourceTree = "<group>"; };
 		88E0C4BC0C2F21E500D6C081 /* FillPoly.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = FillPoly.proto.h; path = "(Proto)/FillPoly.proto.h"; sourceTree = "<group>"; };
 		88E0C4BE0C2F21E500D6C081 /* Fourier.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Fourier.proto.h; path = "(Proto)/Fourier.proto.h"; sourceTree = "<group>"; };
 		88E0C4C00C2F21E500D6C081 /* FourierInt.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = FourierInt.proto.h; path = "(Proto)/FourierInt.proto.h"; sourceTree = "<group>"; };
@@ -1725,7 +1717,6 @@
 		88E0C4D00C2F21E500D6C081 /* LDEF.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = LDEF.proto.h; path = "(Proto)/LDEF.proto.h"; sourceTree = "<group>"; };
 		88E0C4D20C2F21E500D6C081 /* Liste.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Liste.proto.h; path = "(Proto)/Liste.proto.h"; sourceTree = "<group>"; };
 		88E0C4D40C2F21E500D6C081 /* Main.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Main.proto.h; path = "(Proto)/Main.proto.h"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		88E0C4D60C2F21E500D6C081 /* Main3D.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Main3D.proto.h; path = "(Proto)/Main3D.proto.h"; sourceTree = "<group>"; };
 		88E0C4D80C2F21E500D6C081 /* MapPoly.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MapPoly.proto.h; path = "(Proto)/MapPoly.proto.h"; sourceTree = "<group>"; };
 		88E0C4DC0C2F21E500D6C081 /* MIDI-GM.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "MIDI-GM.proto.h"; path = "(Proto)/MIDI-GM.proto.h"; sourceTree = "<group>"; };
 		88E0C4DE0C2F21E500D6C081 /* MIDI-Hardware.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = "MIDI-Hardware.proto.h"; path = "(Proto)/MIDI-Hardware.proto.h"; sourceTree = "<group>"; };
@@ -1742,10 +1733,8 @@
 		88E0C4F40C2F21E500D6C081 /* Print.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Print.proto.h; path = "(Proto)/Print.proto.h"; sourceTree = "<group>"; };
 		88E0C4F60C2F21E500D6C081 /* PrintTEHandle.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PrintTEHandle.proto.h; path = "(Proto)/PrintTEHandle.proto.h"; sourceTree = "<group>"; };
 		88E0C4F80C2F21E500D6C081 /* PrivateList.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PrivateList.proto.h; path = "(Proto)/PrivateList.proto.h"; sourceTree = "<group>"; };
-		88E0C4FA0C2F21E500D6C081 /* Progress.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Progress.proto.h; path = "(Proto)/Progress.proto.h"; sourceTree = "<group>"; };
 		88E0C4FC0C2F21E500D6C081 /* ProgressBar.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ProgressBar.proto.h; path = "(Proto)/ProgressBar.proto.h"; sourceTree = "<group>"; };
 		88E0C4FE0C2F21E600D6C081 /* PubWindow.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PubWindow.proto.h; path = "(Proto)/PubWindow.proto.h"; sourceTree = "<group>"; };
-		88E0C5000C2F21E600D6C081 /* Quicktime.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Quicktime.proto.h; path = "(Proto)/Quicktime.proto.h"; sourceTree = "<group>"; };
 		88E0C5020C2F21E600D6C081 /* Record.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Record.proto.h; path = "(Proto)/Record.proto.h"; sourceTree = "<group>"; };
 		88E0C5080C2F21E600D6C081 /* SoundInput.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SoundInput.proto.h; path = "(Proto)/SoundInput.proto.h"; sourceTree = "<group>"; };
 		88E0C50A0C2F21E600D6C081 /* Spectrum.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Spectrum.proto.h; path = "(Proto)/Spectrum.proto.h"; sourceTree = "<group>"; };
@@ -1756,7 +1745,6 @@
 		88E0C5140C2F21E600D6C081 /* TrackView.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = TrackView.proto.h; path = "(Proto)/TrackView.proto.h"; sourceTree = "<group>"; };
 		88E0C5160C2F21E600D6C081 /* Undo.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Undo.proto.h; path = "(Proto)/Undo.proto.h"; sourceTree = "<group>"; };
 		88E0C5180C2F21E600D6C081 /* Utils.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Utils.proto.h; path = "(Proto)/Utils.proto.h"; sourceTree = "<group>"; };
-		88E0C51A0C2F21E600D6C081 /* VAHeart.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = VAHeart.proto.h; path = "(Proto)/VAHeart.proto.h"; sourceTree = "<group>"; };
 		88E0C51C0C2F21E600D6C081 /* WaveEditor.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = WaveEditor.proto.h; path = "(Proto)/WaveEditor.proto.h"; sourceTree = "<group>"; };
 		88E0C51E0C2F21E600D6C081 /* ZoomRect.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ZoomRect.proto.h; path = "(Proto)/ZoomRect.proto.h"; sourceTree = "<group>"; };
 		88E0C5200C2F21E600D6C081 /* QuicktimeWindow.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = QuicktimeWindow.proto.h; path = "(Proto)/QuicktimeWindow.proto.h"; sourceTree = "<group>"; };
@@ -2759,10 +2747,8 @@
 				88E0C4AE0C2F21E500D6C081 /* DigitalInfo.proto.h */,
 				88E0C4B00C2F21E500D6C081 /* DragManager.proto.h */,
 				88E0C4B20C2F21E500D6C081 /* Editor.proto.h */,
-				88E0C4B40C2F21E500D6C081 /* EtoileAsm.proto.h */,
 				88E0C4B60C2F21E500D6C081 /* fade.proto.h */,
 				88E0C4B80C2F21E500D6C081 /* FFT.proto.h */,
-				88E0C4BA0C2F21E500D6C081 /* FileUtils.proto.h */,
 				88E0C4BC0C2F21E500D6C081 /* FillPoly.proto.h */,
 				88E0C4BE0C2F21E500D6C081 /* Fourier.proto.h */,
 				88E0C4C00C2F21E500D6C081 /* FourierInt.proto.h */,
@@ -2776,7 +2762,6 @@
 				88E0C4D00C2F21E500D6C081 /* LDEF.proto.h */,
 				88E0C4D20C2F21E500D6C081 /* Liste.proto.h */,
 				88E0C4D40C2F21E500D6C081 /* Main.proto.h */,
-				88E0C4D60C2F21E500D6C081 /* Main3D.proto.h */,
 				88E0C4D80C2F21E500D6C081 /* MapPoly.proto.h */,
 				88E0C4DC0C2F21E500D6C081 /* MIDI-GM.proto.h */,
 				88E0C4DE0C2F21E500D6C081 /* MIDI-Hardware.proto.h */,
@@ -2793,10 +2778,8 @@
 				88E0C4F40C2F21E500D6C081 /* Print.proto.h */,
 				88E0C4F60C2F21E500D6C081 /* PrintTEHandle.proto.h */,
 				88E0C4F80C2F21E500D6C081 /* PrivateList.proto.h */,
-				88E0C4FA0C2F21E500D6C081 /* Progress.proto.h */,
 				88E0C4FC0C2F21E500D6C081 /* ProgressBar.proto.h */,
 				88E0C4FE0C2F21E600D6C081 /* PubWindow.proto.h */,
-				88E0C5000C2F21E600D6C081 /* Quicktime.proto.h */,
 				88E0C5020C2F21E600D6C081 /* Record.proto.h */,
 				88E0C5080C2F21E600D6C081 /* SoundInput.proto.h */,
 				88E0C50A0C2F21E600D6C081 /* Spectrum.proto.h */,
@@ -2807,7 +2790,6 @@
 				88E0C5140C2F21E600D6C081 /* TrackView.proto.h */,
 				88E0C5160C2F21E600D6C081 /* Undo.proto.h */,
 				88E0C5180C2F21E600D6C081 /* Utils.proto.h */,
-				88E0C51A0C2F21E600D6C081 /* VAHeart.proto.h */,
 				88E0C51C0C2F21E600D6C081 /* WaveEditor.proto.h */,
 				88E0C51E0C2F21E600D6C081 /* ZoomRect.proto.h */,
 				88E0C5200C2F21E600D6C081 /* QuicktimeWindow.proto.h */,
@@ -3380,10 +3362,8 @@
 				88E0C4AF0C2F21E500D6C081 /* DigitalInfo.proto.h in Headers */,
 				88E0C4B10C2F21E500D6C081 /* DragManager.proto.h in Headers */,
 				88E0C4B30C2F21E500D6C081 /* Editor.proto.h in Headers */,
-				88E0C4B50C2F21E500D6C081 /* EtoileAsm.proto.h in Headers */,
 				88E0C4B70C2F21E500D6C081 /* fade.proto.h in Headers */,
 				88E0C4B90C2F21E500D6C081 /* FFT.proto.h in Headers */,
-				88E0C4BB0C2F21E500D6C081 /* FileUtils.proto.h in Headers */,
 				88E0C4BD0C2F21E500D6C081 /* FillPoly.proto.h in Headers */,
 				88E0C4BF0C2F21E500D6C081 /* Fourier.proto.h in Headers */,
 				88E0C4C10C2F21E500D6C081 /* FourierInt.proto.h in Headers */,
@@ -3397,7 +3377,6 @@
 				88E0C4D10C2F21E500D6C081 /* LDEF.proto.h in Headers */,
 				88E0C4D30C2F21E500D6C081 /* Liste.proto.h in Headers */,
 				88E0C4D50C2F21E500D6C081 /* Main.proto.h in Headers */,
-				88E0C4D70C2F21E500D6C081 /* Main3D.proto.h in Headers */,
 				88E0C4D90C2F21E500D6C081 /* MapPoly.proto.h in Headers */,
 				88E0C4DD0C2F21E500D6C081 /* MIDI-GM.proto.h in Headers */,
 				88E0C4DF0C2F21E500D6C081 /* MIDI-Hardware.proto.h in Headers */,
@@ -3415,11 +3394,9 @@
 				88E0C4F50C2F21E500D6C081 /* Print.proto.h in Headers */,
 				88E0C4F70C2F21E500D6C081 /* PrintTEHandle.proto.h in Headers */,
 				88E0C4F90C2F21E500D6C081 /* PrivateList.proto.h in Headers */,
-				88E0C4FB0C2F21E500D6C081 /* Progress.proto.h in Headers */,
 				88E0C4FD0C2F21E500D6C081 /* ProgressBar.proto.h in Headers */,
 				550004E218A948BD00408208 /* vstgui.h in Headers */,
 				88E0C4FF0C2F21E600D6C081 /* PubWindow.proto.h in Headers */,
-				88E0C5010C2F21E600D6C081 /* Quicktime.proto.h in Headers */,
 				88E0C5030C2F21E600D6C081 /* Record.proto.h in Headers */,
 				88E0C5090C2F21E600D6C081 /* SoundInput.proto.h in Headers */,
 				88E0C50B0C2F21E600D6C081 /* Spectrum.proto.h in Headers */,
@@ -3433,7 +3410,6 @@
 				88E0C5150C2F21E600D6C081 /* TrackView.proto.h in Headers */,
 				88E0C5170C2F21E600D6C081 /* Undo.proto.h in Headers */,
 				88E0C5190C2F21E600D6C081 /* Utils.proto.h in Headers */,
-				88E0C51B0C2F21E600D6C081 /* VAHeart.proto.h in Headers */,
 				88E0C51D0C2F21E600D6C081 /* WaveEditor.proto.h in Headers */,
 				88E0C51F0C2F21E600D6C081 /* ZoomRect.proto.h in Headers */,
 				88E0C5210C2F21E600D6C081 /* QuicktimeWindow.proto.h in Headers */,
