@@ -3,12 +3,12 @@
 
 void MDrawTheText(Rect *bounds, Str255 data, Boolean selected, Str63 Str);
 void MDrawItem(Boolean selected, Rect* bounds, Str255 data, Str63 Str, FSSpec*);
-pascal	OSErr	DTGetIcon(ConstStr255Param volName,
-						  short vRefNum,
-						  short iconType,
-						  OSType fileCreator,
-						  OSType fileType,
-						  Handle *iconHandle);
+pascal OSErr DTGetIcon(ConstStr255Param volName,
+					   short vRefNum,
+					   short iconType,
+					   OSType fileCreator,
+					   OSType fileType,
+					   Handle *iconHandle);
 						  
 extern	DialogPtr	MODListDlog;
 

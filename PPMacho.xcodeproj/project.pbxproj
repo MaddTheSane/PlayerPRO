@@ -162,8 +162,8 @@
 		5518109210C35A6C00ADA9F4 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5518109310C35A7500ADA9F4 /* Example.c in Sources */ = {isa = PBXBuildFile; fileRef = 5518105610C35A2600ADA9F4 /* Example.c */; };
 		551810CD10C35C3500ADA9F4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */; };
-		551E56F2102A9E8B0086C86E /* Main.cc in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F40C2F21DD00D6C081 /* Main.cc */; };
-		551E57A1102AB9A30086C86E /* Mozart.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4170C2F21DD00D6C081 /* Mozart.c */; };
+		551E56F2102A9E8B0086C86E /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F40C2F21DD00D6C081 /* Main.cpp */; };
+		551E57A1102AB9A30086C86E /* Mozart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4170C2F21DD00D6C081 /* Mozart.cpp */; };
 		551FEA6410E727AD00EDF2F1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		551FEA6510E727AD00EDF2F1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		551FEAD310E727B100EDF2F1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
@@ -187,9 +187,9 @@
 		5533421410BB6187005208D1 /* AMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DB10BB5368005208D1 /* AMF.c */; };
 		5533421D10BB6445005208D1 /* DMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DE10BB5368005208D1 /* DMF.c */; };
 		5533422410BB6675005208D1 /* IT.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E110BB5368005208D1 /* IT.c */; };
-		55356A01102BFDB80093F21D /* DLS Import.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E50C2F21DD00D6C081 /* DLS Import.c */; };
-		55356A05102BFE7D0093F21D /* Print.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FC0C2F21DD00D6C081 /* Print.c */; };
-		55356A1E102C06550093F21D /* MIDI-GM.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F60C2F21DD00D6C081 /* MIDI-GM.c */; };
+		55356A01102BFDB80093F21D /* DLS Import.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E50C2F21DD00D6C081 /* DLS Import.cpp */; };
+		55356A05102BFE7D0093F21D /* Print.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FC0C2F21DD00D6C081 /* Print.cpp */; };
+		55356A1E102C06550093F21D /* MIDI-GM.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F60C2F21DD00D6C081 /* MIDI-GM.cpp */; };
 		55356A97102C08650093F21D /* PlugsPPINInit.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C60C2F21DD00D6C081 /* PlugsPPINInit.c */; };
 		553984DD18AD84DF00DD2EA2 /* wds_editor.h in Headers */ = {isa = PBXBuildFile; fileRef = 553984DB18AD84DF00DD2EA2 /* wds_editor.h */; };
 		553984DE18AD84DF00DD2EA2 /* wds_editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 553984DC18AD84DF00DD2EA2 /* wds_editor.cpp */; };
@@ -422,57 +422,54 @@
 		55FD862410B22C3F00F8BDE6 /* OutPut8.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D90C2F21DD00D6C081 /* OutPut8.c */; };
 		55FD862510B22C4300F8BDE6 /* realft.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DA0C2F21DD00D6C081 /* realft.c */; };
 		55FD862610B22C4600F8BDE6 /* TickRemover.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */; };
-		88E0C41E0C2F21DE00D6C081 /* FKey.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3EA0C2F21DD00D6C081 /* FKey.c */; };
-		88E0C4200C2F21DE00D6C081 /* Spectrum.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4070C2F21DD00D6C081 /* Spectrum.c */; };
-		88E0C4210C2F21DE00D6C081 /* ActiveHelp.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DE0C2F21DD00D6C081 /* ActiveHelp.c */; };
-		88E0C4220C2F21DE00D6C081 /* StaffEditor.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4180C2F21DD00D6C081 /* StaffEditor.c */; };
+		88E0C41E0C2F21DE00D6C081 /* FKey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3EA0C2F21DD00D6C081 /* FKey.cpp */; };
+		88E0C4200C2F21DE00D6C081 /* Spectrum.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4070C2F21DD00D6C081 /* Spectrum.cpp */; };
+		88E0C4210C2F21DE00D6C081 /* ActiveHelp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DE0C2F21DD00D6C081 /* ActiveHelp.cpp */; };
+		88E0C4220C2F21DE00D6C081 /* StaffEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4180C2F21DD00D6C081 /* StaffEditor.cpp */; };
 		88E0C4230C2F21DE00D6C081 /* FourierNEW.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3EB0C2F21DD00D6C081 /* FourierNEW.c */; };
-		88E0C4240C2F21DE00D6C081 /* DragManager.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E60C2F21DD00D6C081 /* DragManager.c */; };
-		88E0C4250C2F21DE00D6C081 /* SoundInput.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4060C2F21DD00D6C081 /* SoundInput.c */; };
-		88E0C4260C2F21DE00D6C081 /* Partition.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F90C2F21DD00D6C081 /* Partition.c */; };
-		88E0C4290C2F21DE00D6C081 /* InstruList.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F10C2F21DD00D6C081 /* InstruList.c */; };
-		88E0C42A0C2F21DE00D6C081 /* Help.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3EE0C2F21DD00D6C081 /* Help.c */; };
+		88E0C4240C2F21DE00D6C081 /* DragManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E60C2F21DD00D6C081 /* DragManager.cpp */; };
+		88E0C4250C2F21DE00D6C081 /* SoundInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4060C2F21DD00D6C081 /* SoundInput.cpp */; };
+		88E0C4260C2F21DE00D6C081 /* Partition.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F90C2F21DD00D6C081 /* Partition.cpp */; };
+		88E0C4290C2F21DE00D6C081 /* InstruList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F10C2F21DD00D6C081 /* InstruList.cpp */; };
+		88E0C42A0C2F21DE00D6C081 /* Help.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3EE0C2F21DD00D6C081 /* Help.cpp */; };
 		88E0C42B0C2F21DE00D6C081 /* Help.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3EF0C2F21DD00D6C081 /* Help.h */; };
 		88E0C42C0C2F21DE00D6C081 /* About.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DD0C2F21DD00D6C081 /* About.c */; };
-		88E0C42D0C2F21DE00D6C081 /* Adaptators.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DF0C2F21DD00D6C081 /* Adaptators.c */; };
-		88E0C42E0C2F21DE00D6C081 /* AEvent.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E00C2F21DD00D6C081 /* AEvent.c */; };
-		88E0C42F0C2F21DE00D6C081 /* Editor.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4160C2F21DD00D6C081 /* Editor.c */; };
-		88E0C4310C2F21DE00D6C081 /* Check.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E20C2F21DD00D6C081 /* Check.c */; };
-		88E0C4320C2F21DE00D6C081 /* HelpOnline.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F00C2F21DD00D6C081 /* HelpOnline.c */; };
-		88E0C4330C2F21DE00D6C081 /* ClassicalP.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E30C2F21DD00D6C081 /* ClassicalP.c */; };
-		88E0C4340C2F21DE00D6C081 /* Command.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4150C2F21DD00D6C081 /* Command.c */; };
-		88E0C4350C2F21DE00D6C081 /* DigitalInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E40C2F21DD00D6C081 /* DigitalInfo.c */; };
-		88E0C4360C2F21DE00D6C081 /* FileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E90C2F21DD00D6C081 /* FileUtils.c */; };
-		88E0C4380C2F21DE00D6C081 /* InstruView.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F20C2F21DD00D6C081 /* InstruView.c */; };
-		88E0C4390C2F21DE00D6C081 /* MODList.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F70C2F21DD00D6C081 /* MODList.c */; };
-		88E0C43A0C2F21DE00D6C081 /* LDEF.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F30C2F21DD00D6C081 /* LDEF.c */; };
-		88E0C43B0C2F21DE00D6C081 /* Progress.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FF0C2F21DD00D6C081 /* Progress.c */; };
-		88E0C43C0C2F21DE00D6C081 /* Functions.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3EC0C2F21DD00D6C081 /* Functions.c */; };
-		88E0C43D0C2F21DE00D6C081 /* Oscillo.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F80C2F21DD00D6C081 /* Oscillo.c */; };
-		88E0C43E0C2F21DE00D6C081 /* Pattern.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FA0C2F21DD00D6C081 /* Pattern.c */; };
-		88E0C43F0C2F21DE00D6C081 /* Piano.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FB0C2F21DD00D6C081 /* Piano.c */; };
-		88E0C4410C2F21DE00D6C081 /* ProgressBar.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4000C2F21DD00D6C081 /* ProgressBar.c */; };
-		88E0C4420C2F21DE00D6C081 /* Record.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4030C2F21DD00D6C081 /* Record.c */; };
-		88E0C4430C2F21DE00D6C081 /* PrivateList.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FD0C2F21DD00D6C081 /* PrivateList.c */; };
+		88E0C42D0C2F21DE00D6C081 /* Adaptators.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DF0C2F21DD00D6C081 /* Adaptators.cpp */; };
+		88E0C42E0C2F21DE00D6C081 /* AEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E00C2F21DD00D6C081 /* AEvent.cpp */; };
+		88E0C42F0C2F21DE00D6C081 /* Editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4160C2F21DD00D6C081 /* Editor.cpp */; };
+		88E0C4310C2F21DE00D6C081 /* Check.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E20C2F21DD00D6C081 /* Check.cpp */; };
+		88E0C4320C2F21DE00D6C081 /* HelpOnline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F00C2F21DD00D6C081 /* HelpOnline.cpp */; };
+		88E0C4330C2F21DE00D6C081 /* ClassicalP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E30C2F21DD00D6C081 /* ClassicalP.cpp */; };
+		88E0C4340C2F21DE00D6C081 /* Command.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4150C2F21DD00D6C081 /* Command.cpp */; };
+		88E0C4350C2F21DE00D6C081 /* DigitalInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E40C2F21DD00D6C081 /* DigitalInfo.cpp */; };
+		88E0C4380C2F21DE00D6C081 /* InstruView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F20C2F21DD00D6C081 /* InstruView.cpp */; };
+		88E0C4390C2F21DE00D6C081 /* MODList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F70C2F21DD00D6C081 /* MODList.cpp */; };
+		88E0C43A0C2F21DE00D6C081 /* LDEF.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F30C2F21DD00D6C081 /* LDEF.cpp */; };
+		88E0C43C0C2F21DE00D6C081 /* Functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3EC0C2F21DD00D6C081 /* Functions.cpp */; };
+		88E0C43D0C2F21DE00D6C081 /* Oscillo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F80C2F21DD00D6C081 /* Oscillo.cpp */; };
+		88E0C43E0C2F21DE00D6C081 /* Pattern.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FA0C2F21DD00D6C081 /* Pattern.cpp */; };
+		88E0C43F0C2F21DE00D6C081 /* Piano.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FB0C2F21DD00D6C081 /* Piano.cpp */; };
+		88E0C4410C2F21DE00D6C081 /* ProgressBar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4000C2F21DD00D6C081 /* ProgressBar.cpp */; };
+		88E0C4420C2F21DE00D6C081 /* Record.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4030C2F21DD00D6C081 /* Record.cpp */; };
+		88E0C4430C2F21DE00D6C081 /* PrivateList.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FD0C2F21DD00D6C081 /* PrivateList.cpp */; };
 		88E0C4440C2F21DE00D6C081 /* PrivateList.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3FE0C2F21DD00D6C081 /* PrivateList.h */; };
-		88E0C4470C2F21DE00D6C081 /* Samples.cc in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4050C2F21DD00D6C081 /* Samples.cc */; };
-		88E0C4480C2F21DE00D6C081 /* Tools.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4190C2F21DD00D6C081 /* Tools.c */; };
-		88E0C4490C2F21DE00D6C081 /* TrackView.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4090C2F21DD00D6C081 /* TrackView.c */; };
-		88E0C44A0C2F21DE00D6C081 /* Undo.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C40A0C2F21DD00D6C081 /* Undo.c */; };
+		88E0C4470C2F21DE00D6C081 /* Samples.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4050C2F21DD00D6C081 /* Samples.cpp */; };
+		88E0C4480C2F21DE00D6C081 /* Tools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4190C2F21DD00D6C081 /* Tools.cpp */; };
+		88E0C4490C2F21DE00D6C081 /* TrackView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4090C2F21DD00D6C081 /* TrackView.cpp */; };
+		88E0C44A0C2F21DE00D6C081 /* Undo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C40A0C2F21DD00D6C081 /* Undo.cpp */; };
 		88E0C44B0C2F21DE00D6C081 /* Undo.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C40B0C2F21DD00D6C081 /* Undo.h */; };
-		88E0C44C0C2F21DE00D6C081 /* WaveEditor.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C41A0C2F21DD00D6C081 /* WaveEditor.c */; };
+		88E0C44C0C2F21DE00D6C081 /* WaveEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C41A0C2F21DD00D6C081 /* WaveEditor.cpp */; };
 		88E0C4520C2F21DE00D6C081 /* Utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4130C2F21DD00D6C081 /* Utils.c */; };
 		88E0C4530C2F21DE00D6C081 /* GetFileIcon.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C40D0C2F21DD00D6C081 /* GetFileIcon.c */; };
 		88E0C4540C2F21DE00D6C081 /* GetFileIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C40E0C2F21DD00D6C081 /* GetFileIcon.h */; };
 		88E0C4550C2F21DE00D6C081 /* PlugsPPDGInit.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C50C2F21DD00D6C081 /* PlugsPPDGInit.c */; };
 		88E0C4580C2F21DE00D6C081 /* PlugsSoundFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C70C2F21DD00D6C081 /* PlugsSoundFilter.c */; };
 		88E0C45A0C2F21DE00D6C081 /* Navigation.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4100C2F21DD00D6C081 /* Navigation.c */; };
-		88E0C45C0C2F21DE00D6C081 /* QuicktimeWindow.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4020C2F21DD00D6C081 /* QuicktimeWindow.c */; };
-		88E0C4600C2F21DE00D6C081 /* AudioCD.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E10C2F21DD00D6C081 /* AudioCD.c */; };
-		88E0C4610C2F21DE00D6C081 /* PubWindow.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4010C2F21DD00D6C081 /* PubWindow.c */; };
+		88E0C45C0C2F21DE00D6C081 /* QuicktimeWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4020C2F21DD00D6C081 /* QuicktimeWindow.cpp */; };
+		88E0C4610C2F21DE00D6C081 /* PubWindow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4010C2F21DD00D6C081 /* PubWindow.cpp */; };
 		88E0C4620C2F21DE00D6C081 /* G3.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3ED0C2F21DD00D6C081 /* G3.c */; };
-		88E0C4640C2F21DE00D6C081 /* Equalizer.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E70C2F21DD00D6C081 /* Equalizer.c */; };
-		88E0C4650C2F21DE00D6C081 /* FFT-Dialog.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E80C2F21DD00D6C081 /* FFT-Dialog.c */; };
+		88E0C4640C2F21DE00D6C081 /* Equalizer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E70C2F21DD00D6C081 /* Equalizer.cpp */; };
+		88E0C4650C2F21DE00D6C081 /* FFT-Dialog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E80C2F21DD00D6C081 /* FFT-Dialog.cpp */; };
 		88E0C4690C2F21DE00D6C081 /* Carbon.r in Rez */ = {isa = PBXBuildFile; fileRef = 88E0C3BE0C2F21DD00D6C081 /* Carbon.r */; };
 		88E0C46B0C2F21DE00D6C081 /* PlugVST.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C90C2F21DD00D6C081 /* PlugVST.c */; };
 		88E0C46D0C2F21DE00D6C081 /* ScreenDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4120C2F21DD00D6C081 /* ScreenDevice.h */; };
@@ -1627,49 +1624,47 @@
 		88E0C3DA0C2F21DD00D6C081 /* realft.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; lineEnding = 0; path = realft.c; sourceTree = "<group>"; };
 		88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = TickRemover.c; sourceTree = "<group>"; };
 		88E0C3DD0C2F21DD00D6C081 /* About.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = About.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C3DE0C2F21DD00D6C081 /* ActiveHelp.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ActiveHelp.c; sourceTree = "<group>"; };
-		88E0C3DF0C2F21DD00D6C081 /* Adaptators.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Adaptators.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C3E00C2F21DD00D6C081 /* AEvent.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AEvent.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C3DE0C2F21DD00D6C081 /* ActiveHelp.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = ActiveHelp.cpp; sourceTree = "<group>"; };
+		88E0C3DF0C2F21DD00D6C081 /* Adaptators.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Adaptators.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C3E00C2F21DD00D6C081 /* AEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = AEvent.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C3E10C2F21DD00D6C081 /* AudioCD.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AudioCD.c; sourceTree = "<group>"; };
-		88E0C3E20C2F21DD00D6C081 /* Check.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Check.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C3E30C2F21DD00D6C081 /* ClassicalP.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ClassicalP.c; sourceTree = "<group>"; };
-		88E0C3E40C2F21DD00D6C081 /* DigitalInfo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = DigitalInfo.c; sourceTree = "<group>"; };
-		88E0C3E50C2F21DD00D6C081 /* DLS Import.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "DLS Import.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C3E60C2F21DD00D6C081 /* DragManager.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = DragManager.c; sourceTree = "<group>"; };
-		88E0C3E70C2F21DD00D6C081 /* Equalizer.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Equalizer.c; sourceTree = "<group>"; };
-		88E0C3E80C2F21DD00D6C081 /* FFT-Dialog.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "FFT-Dialog.c"; sourceTree = "<group>"; };
-		88E0C3E90C2F21DD00D6C081 /* FileUtils.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = FileUtils.c; sourceTree = "<group>"; };
-		88E0C3EA0C2F21DD00D6C081 /* FKey.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = FKey.c; sourceTree = "<group>"; };
+		88E0C3E20C2F21DD00D6C081 /* Check.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Check.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C3E30C2F21DD00D6C081 /* ClassicalP.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = ClassicalP.cpp; sourceTree = "<group>"; };
+		88E0C3E40C2F21DD00D6C081 /* DigitalInfo.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = DigitalInfo.cpp; sourceTree = "<group>"; };
+		88E0C3E50C2F21DD00D6C081 /* DLS Import.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = "DLS Import.cpp"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C3E60C2F21DD00D6C081 /* DragManager.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = DragManager.cpp; sourceTree = "<group>"; };
+		88E0C3E70C2F21DD00D6C081 /* Equalizer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Equalizer.cpp; sourceTree = "<group>"; };
+		88E0C3E80C2F21DD00D6C081 /* FFT-Dialog.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = "FFT-Dialog.cpp"; sourceTree = "<group>"; };
+		88E0C3EA0C2F21DD00D6C081 /* FKey.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = FKey.cpp; sourceTree = "<group>"; };
 		88E0C3EB0C2F21DD00D6C081 /* FourierNEW.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = FourierNEW.c; sourceTree = "<group>"; };
-		88E0C3EC0C2F21DD00D6C081 /* Functions.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Functions.c; sourceTree = "<group>"; };
+		88E0C3EC0C2F21DD00D6C081 /* Functions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Functions.cpp; sourceTree = "<group>"; };
 		88E0C3ED0C2F21DD00D6C081 /* G3.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = G3.c; sourceTree = "<group>"; };
-		88E0C3EE0C2F21DD00D6C081 /* Help.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Help.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C3EE0C2F21DD00D6C081 /* Help.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Help.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C3EF0C2F21DD00D6C081 /* Help.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Help.h; sourceTree = "<group>"; };
-		88E0C3F00C2F21DD00D6C081 /* HelpOnline.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = HelpOnline.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C3F10C2F21DD00D6C081 /* InstruList.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = InstruList.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C3F20C2F21DD00D6C081 /* InstruView.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = InstruView.c; sourceTree = "<group>"; };
-		88E0C3F30C2F21DD00D6C081 /* LDEF.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = LDEF.c; sourceTree = "<group>"; };
-		88E0C3F40C2F21DD00D6C081 /* Main.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Main.cc; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C3F60C2F21DD00D6C081 /* MIDI-GM.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "MIDI-GM.c"; sourceTree = "<group>"; };
-		88E0C3F70C2F21DD00D6C081 /* MODList.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MODList.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C3F80C2F21DD00D6C081 /* Oscillo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Oscillo.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C3F90C2F21DD00D6C081 /* Partition.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Partition.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C3FA0C2F21DD00D6C081 /* Pattern.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Pattern.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C3FB0C2F21DD00D6C081 /* Piano.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Piano.c; sourceTree = "<group>"; };
-		88E0C3FC0C2F21DD00D6C081 /* Print.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Print.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C3FD0C2F21DD00D6C081 /* PrivateList.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = PrivateList.c; sourceTree = "<group>"; };
+		88E0C3F00C2F21DD00D6C081 /* HelpOnline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = HelpOnline.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C3F10C2F21DD00D6C081 /* InstruList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = InstruList.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C3F20C2F21DD00D6C081 /* InstruView.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = InstruView.cpp; sourceTree = "<group>"; };
+		88E0C3F30C2F21DD00D6C081 /* LDEF.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = LDEF.cpp; sourceTree = "<group>"; };
+		88E0C3F40C2F21DD00D6C081 /* Main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Main.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C3F60C2F21DD00D6C081 /* MIDI-GM.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = "MIDI-GM.cpp"; sourceTree = "<group>"; };
+		88E0C3F70C2F21DD00D6C081 /* MODList.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = MODList.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C3F80C2F21DD00D6C081 /* Oscillo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Oscillo.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C3F90C2F21DD00D6C081 /* Partition.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Partition.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C3FA0C2F21DD00D6C081 /* Pattern.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Pattern.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C3FB0C2F21DD00D6C081 /* Piano.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Piano.cpp; sourceTree = "<group>"; };
+		88E0C3FC0C2F21DD00D6C081 /* Print.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Print.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C3FD0C2F21DD00D6C081 /* PrivateList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = PrivateList.cpp; sourceTree = "<group>"; };
 		88E0C3FE0C2F21DD00D6C081 /* PrivateList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PrivateList.h; sourceTree = "<group>"; };
-		88E0C3FF0C2F21DD00D6C081 /* Progress.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Progress.c; sourceTree = "<group>"; };
-		88E0C4000C2F21DD00D6C081 /* ProgressBar.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ProgressBar.c; sourceTree = "<group>"; };
-		88E0C4010C2F21DD00D6C081 /* PubWindow.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = PubWindow.c; sourceTree = "<group>"; };
-		88E0C4020C2F21DD00D6C081 /* QuicktimeWindow.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = QuicktimeWindow.c; sourceTree = "<group>"; };
-		88E0C4030C2F21DD00D6C081 /* Record.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Record.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C4050C2F21DD00D6C081 /* Samples.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Samples.cc; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C4060C2F21DD00D6C081 /* SoundInput.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = SoundInput.c; sourceTree = "<group>"; };
-		88E0C4070C2F21DD00D6C081 /* Spectrum.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Spectrum.c; sourceTree = "<group>"; };
+		88E0C4000C2F21DD00D6C081 /* ProgressBar.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = ProgressBar.cpp; sourceTree = "<group>"; };
+		88E0C4010C2F21DD00D6C081 /* PubWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = PubWindow.cpp; sourceTree = "<group>"; };
+		88E0C4020C2F21DD00D6C081 /* QuicktimeWindow.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = QuicktimeWindow.cpp; sourceTree = "<group>"; };
+		88E0C4030C2F21DD00D6C081 /* Record.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Record.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C4050C2F21DD00D6C081 /* Samples.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Samples.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C4060C2F21DD00D6C081 /* SoundInput.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = SoundInput.cpp; sourceTree = "<group>"; };
+		88E0C4070C2F21DD00D6C081 /* Spectrum.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Spectrum.cpp; sourceTree = "<group>"; };
 		88E0C4080C2F21DD00D6C081 /* ThreadSystem.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = ThreadSystem.c; sourceTree = "<group>"; };
-		88E0C4090C2F21DD00D6C081 /* TrackView.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = TrackView.c; sourceTree = "<group>"; };
-		88E0C40A0C2F21DD00D6C081 /* Undo.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Undo.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C4090C2F21DD00D6C081 /* TrackView.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = TrackView.cpp; sourceTree = "<group>"; };
+		88E0C40A0C2F21DD00D6C081 /* Undo.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Undo.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C40B0C2F21DD00D6C081 /* Undo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Undo.h; sourceTree = "<group>"; };
 		88E0C40D0C2F21DD00D6C081 /* GetFileIcon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = GetFileIcon.c; path = Files/GetFileIcon.c; sourceTree = SOURCE_ROOT; };
 		88E0C40E0C2F21DD00D6C081 /* GetFileIcon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GetFileIcon.h; path = Files/GetFileIcon.h; sourceTree = SOURCE_ROOT; };
@@ -1677,12 +1672,12 @@
 		88E0C4100C2F21DD00D6C081 /* Navigation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Navigation.c; path = Files/Navigation.c; sourceTree = SOURCE_ROOT; };
 		88E0C4120C2F21DD00D6C081 /* ScreenDevice.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = ScreenDevice.h; path = Files/ScreenDevice.h; sourceTree = SOURCE_ROOT; };
 		88E0C4130C2F21DD00D6C081 /* Utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Utils.c; path = Files/Utils.c; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C4150C2F21DD00D6C081 /* Command.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Command.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C4160C2F21DD00D6C081 /* Editor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Editor.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C4170C2F21DD00D6C081 /* Mozart.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Mozart.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		88E0C4180C2F21DD00D6C081 /* StaffEditor.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = StaffEditor.c; sourceTree = "<group>"; };
-		88E0C4190C2F21DD00D6C081 /* Tools.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Tools.c; sourceTree = "<group>"; };
-		88E0C41A0C2F21DD00D6C081 /* WaveEditor.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = WaveEditor.c; sourceTree = "<group>"; };
+		88E0C4150C2F21DD00D6C081 /* Command.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Command.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C4160C2F21DD00D6C081 /* Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Editor.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C4170C2F21DD00D6C081 /* Mozart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Mozart.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C4180C2F21DD00D6C081 /* StaffEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = StaffEditor.cpp; sourceTree = "<group>"; };
+		88E0C4190C2F21DD00D6C081 /* Tools.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Tools.cpp; sourceTree = "<group>"; };
+		88E0C41A0C2F21DD00D6C081 /* WaveEditor.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = WaveEditor.cpp; sourceTree = "<group>"; };
 		88E0C4750C2F21E400D6C081 /* MAD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MAD.h; sourceTree = "<group>"; };
 		88E0C4770C2F21E400D6C081 /* PlayerHeaders.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = PlayerHeaders.c; path = Files/PlayerHeaders.c; sourceTree = SOURCE_ROOT; };
 		88E0C4790C2F21E400D6C081 /* Shuddup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Shuddup.h; path = Files/Shuddup.h; sourceTree = SOURCE_ROOT; };
@@ -3044,16 +3039,16 @@
 				551770CC18AD59F900C4FB35 /* wds_general.h */,
 				551770CD18AD59F900C4FB35 /* wds_general.cpp */,
 				88E0C3DD0C2F21DD00D6C081 /* About.c */,
-				88E0C4190C2F21DD00D6C081 /* Tools.c */,
-				88E0C4010C2F21DD00D6C081 /* PubWindow.c */,
+				88E0C4190C2F21DD00D6C081 /* Tools.cpp */,
+				88E0C4010C2F21DD00D6C081 /* PubWindow.cpp */,
 				554D7E2818AD915F0062CD04 /* Samples.h */,
-				88E0C4050C2F21DD00D6C081 /* Samples.cc */,
-				88E0C4020C2F21DD00D6C081 /* QuicktimeWindow.c */,
-				88E0C3F10C2F21DD00D6C081 /* InstruList.c */,
-				88E0C3F70C2F21DD00D6C081 /* MODList.c */,
-				88E0C4000C2F21DD00D6C081 /* ProgressBar.c */,
-				88E0C3DE0C2F21DD00D6C081 /* ActiveHelp.c */,
-				88E0C3DF0C2F21DD00D6C081 /* Adaptators.c */,
+				88E0C4050C2F21DD00D6C081 /* Samples.cpp */,
+				88E0C4020C2F21DD00D6C081 /* QuicktimeWindow.cpp */,
+				88E0C3F10C2F21DD00D6C081 /* InstruList.cpp */,
+				88E0C3F70C2F21DD00D6C081 /* MODList.cpp */,
+				88E0C4000C2F21DD00D6C081 /* ProgressBar.cpp */,
+				88E0C3DE0C2F21DD00D6C081 /* ActiveHelp.cpp */,
+				88E0C3DF0C2F21DD00D6C081 /* Adaptators.cpp */,
 			);
 			path = wds_general;
 			sourceTree = "<group>";
@@ -3063,12 +3058,12 @@
 			children = (
 				553984DB18AD84DF00DD2EA2 /* wds_editor.h */,
 				553984DC18AD84DF00DD2EA2 /* wds_editor.cpp */,
-				88E0C3E30C2F21DD00D6C081 /* ClassicalP.c */,
-				88E0C4150C2F21DD00D6C081 /* Command.c */,
-				88E0C4160C2F21DD00D6C081 /* Editor.c */,
-				88E0C4170C2F21DD00D6C081 /* Mozart.c */,
-				88E0C4180C2F21DD00D6C081 /* StaffEditor.c */,
-				88E0C41A0C2F21DD00D6C081 /* WaveEditor.c */,
+				88E0C3E30C2F21DD00D6C081 /* ClassicalP.cpp */,
+				88E0C4150C2F21DD00D6C081 /* Command.cpp */,
+				88E0C4160C2F21DD00D6C081 /* Editor.cpp */,
+				88E0C4170C2F21DD00D6C081 /* Mozart.cpp */,
+				88E0C4180C2F21DD00D6C081 /* StaffEditor.cpp */,
+				88E0C41A0C2F21DD00D6C081 /* WaveEditor.cpp */,
 			);
 			path = wds_editors;
 			sourceTree = "<group>";
@@ -3076,13 +3071,13 @@
 		55F0DA6810CC813500835D4E /* wds_views */ = {
 			isa = PBXGroup;
 			children = (
-				88E0C4070C2F21DD00D6C081 /* Spectrum.c */,
-				88E0C4090C2F21DD00D6C081 /* TrackView.c */,
-				88E0C3E40C2F21DD00D6C081 /* DigitalInfo.c */,
-				88E0C3F80C2F21DD00D6C081 /* Oscillo.c */,
-				88E0C3FB0C2F21DD00D6C081 /* Piano.c */,
-				88E0C3F20C2F21DD00D6C081 /* InstruView.c */,
-				88E0C3E70C2F21DD00D6C081 /* Equalizer.c */,
+				88E0C4070C2F21DD00D6C081 /* Spectrum.cpp */,
+				88E0C4090C2F21DD00D6C081 /* TrackView.cpp */,
+				88E0C3E40C2F21DD00D6C081 /* DigitalInfo.cpp */,
+				88E0C3F80C2F21DD00D6C081 /* Oscillo.cpp */,
+				88E0C3FB0C2F21DD00D6C081 /* Piano.cpp */,
+				88E0C3F20C2F21DD00D6C081 /* InstruView.cpp */,
+				88E0C3E70C2F21DD00D6C081 /* Equalizer.cpp */,
 			);
 			path = wds_views;
 			sourceTree = "<group>";
@@ -3237,34 +3232,32 @@
 				554CBD58188CE960002E137B /* PreferenceHandler.h */,
 				553984E718AD879600DD2EA2 /* PlayerPROApp.h */,
 				553984E818AD879600DD2EA2 /* PlayerPROApp.cpp */,
-				88E0C3E00C2F21DD00D6C081 /* AEvent.c */,
+				88E0C3E00C2F21DD00D6C081 /* AEvent.cpp */,
 				88E0C3E10C2F21DD00D6C081 /* AudioCD.c */,
-				88E0C3E20C2F21DD00D6C081 /* Check.c */,
-				88E0C3E50C2F21DD00D6C081 /* DLS Import.c */,
-				88E0C3E60C2F21DD00D6C081 /* DragManager.c */,
-				88E0C3E80C2F21DD00D6C081 /* FFT-Dialog.c */,
-				88E0C3E90C2F21DD00D6C081 /* FileUtils.c */,
-				88E0C3EA0C2F21DD00D6C081 /* FKey.c */,
+				88E0C3E20C2F21DD00D6C081 /* Check.cpp */,
+				88E0C3E50C2F21DD00D6C081 /* DLS Import.cpp */,
+				88E0C3E60C2F21DD00D6C081 /* DragManager.cpp */,
+				88E0C3E80C2F21DD00D6C081 /* FFT-Dialog.cpp */,
+				88E0C3EA0C2F21DD00D6C081 /* FKey.cpp */,
 				88E0C3EB0C2F21DD00D6C081 /* FourierNEW.c */,
-				88E0C3EC0C2F21DD00D6C081 /* Functions.c */,
+				88E0C3EC0C2F21DD00D6C081 /* Functions.cpp */,
 				88E0C3ED0C2F21DD00D6C081 /* G3.c */,
 				88E0C3EF0C2F21DD00D6C081 /* Help.h */,
-				88E0C3EE0C2F21DD00D6C081 /* Help.c */,
-				88E0C3F00C2F21DD00D6C081 /* HelpOnline.c */,
-				88E0C3F30C2F21DD00D6C081 /* LDEF.c */,
-				88E0C3F40C2F21DD00D6C081 /* Main.cc */,
-				88E0C3F60C2F21DD00D6C081 /* MIDI-GM.c */,
-				88E0C3F90C2F21DD00D6C081 /* Partition.c */,
-				88E0C3FA0C2F21DD00D6C081 /* Pattern.c */,
-				88E0C3FC0C2F21DD00D6C081 /* Print.c */,
+				88E0C3EE0C2F21DD00D6C081 /* Help.cpp */,
+				88E0C3F00C2F21DD00D6C081 /* HelpOnline.cpp */,
+				88E0C3F30C2F21DD00D6C081 /* LDEF.cpp */,
+				88E0C3F40C2F21DD00D6C081 /* Main.cpp */,
+				88E0C3F60C2F21DD00D6C081 /* MIDI-GM.cpp */,
+				88E0C3F90C2F21DD00D6C081 /* Partition.cpp */,
+				88E0C3FA0C2F21DD00D6C081 /* Pattern.cpp */,
+				88E0C3FC0C2F21DD00D6C081 /* Print.cpp */,
 				88E0C3FE0C2F21DD00D6C081 /* PrivateList.h */,
-				88E0C3FD0C2F21DD00D6C081 /* PrivateList.c */,
-				88E0C3FF0C2F21DD00D6C081 /* Progress.c */,
-				88E0C4030C2F21DD00D6C081 /* Record.c */,
-				88E0C4060C2F21DD00D6C081 /* SoundInput.c */,
+				88E0C3FD0C2F21DD00D6C081 /* PrivateList.cpp */,
+				88E0C4030C2F21DD00D6C081 /* Record.cpp */,
+				88E0C4060C2F21DD00D6C081 /* SoundInput.cpp */,
 				88E0C4080C2F21DD00D6C081 /* ThreadSystem.c */,
 				88E0C40B0C2F21DD00D6C081 /* Undo.h */,
-				88E0C40A0C2F21DD00D6C081 /* Undo.c */,
+				88E0C40A0C2F21DD00D6C081 /* Undo.cpp */,
 				554E15FF10D8BD0600BB619C /* FileUtils.exp */,
 			);
 			lineEnding = 0;
@@ -5360,63 +5353,60 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88E0C41E0C2F21DE00D6C081 /* FKey.c in Sources */,
-				88E0C4200C2F21DE00D6C081 /* Spectrum.c in Sources */,
-				88E0C4210C2F21DE00D6C081 /* ActiveHelp.c in Sources */,
-				88E0C4220C2F21DE00D6C081 /* StaffEditor.c in Sources */,
+				88E0C41E0C2F21DE00D6C081 /* FKey.cpp in Sources */,
+				88E0C4200C2F21DE00D6C081 /* Spectrum.cpp in Sources */,
+				88E0C4210C2F21DE00D6C081 /* ActiveHelp.cpp in Sources */,
+				88E0C4220C2F21DE00D6C081 /* StaffEditor.cpp in Sources */,
 				88E0C4230C2F21DE00D6C081 /* FourierNEW.c in Sources */,
-				88E0C4240C2F21DE00D6C081 /* DragManager.c in Sources */,
-				88E0C4250C2F21DE00D6C081 /* SoundInput.c in Sources */,
-				88E0C4260C2F21DE00D6C081 /* Partition.c in Sources */,
-				88E0C4290C2F21DE00D6C081 /* InstruList.c in Sources */,
-				88E0C42A0C2F21DE00D6C081 /* Help.c in Sources */,
+				88E0C4240C2F21DE00D6C081 /* DragManager.cpp in Sources */,
+				88E0C4250C2F21DE00D6C081 /* SoundInput.cpp in Sources */,
+				88E0C4260C2F21DE00D6C081 /* Partition.cpp in Sources */,
+				88E0C4290C2F21DE00D6C081 /* InstruList.cpp in Sources */,
+				88E0C42A0C2F21DE00D6C081 /* Help.cpp in Sources */,
 				88E0C42C0C2F21DE00D6C081 /* About.c in Sources */,
-				88E0C42D0C2F21DE00D6C081 /* Adaptators.c in Sources */,
-				88E0C42E0C2F21DE00D6C081 /* AEvent.c in Sources */,
-				88E0C42F0C2F21DE00D6C081 /* Editor.c in Sources */,
-				88E0C4310C2F21DE00D6C081 /* Check.c in Sources */,
-				88E0C4320C2F21DE00D6C081 /* HelpOnline.c in Sources */,
-				88E0C4330C2F21DE00D6C081 /* ClassicalP.c in Sources */,
-				88E0C4340C2F21DE00D6C081 /* Command.c in Sources */,
-				88E0C4350C2F21DE00D6C081 /* DigitalInfo.c in Sources */,
-				88E0C4360C2F21DE00D6C081 /* FileUtils.c in Sources */,
-				88E0C4380C2F21DE00D6C081 /* InstruView.c in Sources */,
-				88E0C4390C2F21DE00D6C081 /* MODList.c in Sources */,
-				88E0C43A0C2F21DE00D6C081 /* LDEF.c in Sources */,
-				88E0C43B0C2F21DE00D6C081 /* Progress.c in Sources */,
-				88E0C43C0C2F21DE00D6C081 /* Functions.c in Sources */,
-				88E0C43D0C2F21DE00D6C081 /* Oscillo.c in Sources */,
-				88E0C43E0C2F21DE00D6C081 /* Pattern.c in Sources */,
-				88E0C43F0C2F21DE00D6C081 /* Piano.c in Sources */,
+				88E0C42D0C2F21DE00D6C081 /* Adaptators.cpp in Sources */,
+				88E0C42E0C2F21DE00D6C081 /* AEvent.cpp in Sources */,
+				88E0C42F0C2F21DE00D6C081 /* Editor.cpp in Sources */,
+				88E0C4310C2F21DE00D6C081 /* Check.cpp in Sources */,
+				88E0C4320C2F21DE00D6C081 /* HelpOnline.cpp in Sources */,
+				88E0C4330C2F21DE00D6C081 /* ClassicalP.cpp in Sources */,
+				88E0C4340C2F21DE00D6C081 /* Command.cpp in Sources */,
+				88E0C4350C2F21DE00D6C081 /* DigitalInfo.cpp in Sources */,
+				88E0C4380C2F21DE00D6C081 /* InstruView.cpp in Sources */,
+				88E0C4390C2F21DE00D6C081 /* MODList.cpp in Sources */,
+				88E0C43A0C2F21DE00D6C081 /* LDEF.cpp in Sources */,
+				88E0C43C0C2F21DE00D6C081 /* Functions.cpp in Sources */,
+				88E0C43D0C2F21DE00D6C081 /* Oscillo.cpp in Sources */,
+				88E0C43E0C2F21DE00D6C081 /* Pattern.cpp in Sources */,
+				88E0C43F0C2F21DE00D6C081 /* Piano.cpp in Sources */,
 				554CBD51188CD468002E137B /* NSColor+PPPreferences.m in Sources */,
-				88E0C4410C2F21DE00D6C081 /* ProgressBar.c in Sources */,
-				88E0C4420C2F21DE00D6C081 /* Record.c in Sources */,
+				88E0C4410C2F21DE00D6C081 /* ProgressBar.cpp in Sources */,
+				88E0C4420C2F21DE00D6C081 /* Record.cpp in Sources */,
 				554CBD53188CD4AA002E137B /* PreferenceHandler.m in Sources */,
-				88E0C4430C2F21DE00D6C081 /* PrivateList.c in Sources */,
-				88E0C4470C2F21DE00D6C081 /* Samples.cc in Sources */,
-				88E0C4480C2F21DE00D6C081 /* Tools.c in Sources */,
-				88E0C4490C2F21DE00D6C081 /* TrackView.c in Sources */,
-				88E0C44A0C2F21DE00D6C081 /* Undo.c in Sources */,
-				88E0C44C0C2F21DE00D6C081 /* WaveEditor.c in Sources */,
+				88E0C4430C2F21DE00D6C081 /* PrivateList.cpp in Sources */,
+				88E0C4470C2F21DE00D6C081 /* Samples.cpp in Sources */,
+				88E0C4480C2F21DE00D6C081 /* Tools.cpp in Sources */,
+				88E0C4490C2F21DE00D6C081 /* TrackView.cpp in Sources */,
+				88E0C44A0C2F21DE00D6C081 /* Undo.cpp in Sources */,
+				88E0C44C0C2F21DE00D6C081 /* WaveEditor.cpp in Sources */,
 				88E0C4520C2F21DE00D6C081 /* Utils.c in Sources */,
 				88E0C4530C2F21DE00D6C081 /* GetFileIcon.c in Sources */,
 				88E0C4550C2F21DE00D6C081 /* PlugsPPDGInit.c in Sources */,
 				88E0C4580C2F21DE00D6C081 /* PlugsSoundFilter.c in Sources */,
 				88E0C45A0C2F21DE00D6C081 /* Navigation.c in Sources */,
-				88E0C45C0C2F21DE00D6C081 /* QuicktimeWindow.c in Sources */,
-				88E0C4600C2F21DE00D6C081 /* AudioCD.c in Sources */,
-				88E0C4610C2F21DE00D6C081 /* PubWindow.c in Sources */,
+				88E0C45C0C2F21DE00D6C081 /* QuicktimeWindow.cpp in Sources */,
+				88E0C4610C2F21DE00D6C081 /* PubWindow.cpp in Sources */,
 				88E0C4620C2F21DE00D6C081 /* G3.c in Sources */,
-				88E0C4640C2F21DE00D6C081 /* Equalizer.c in Sources */,
-				88E0C4650C2F21DE00D6C081 /* FFT-Dialog.c in Sources */,
+				88E0C4640C2F21DE00D6C081 /* Equalizer.cpp in Sources */,
+				88E0C4650C2F21DE00D6C081 /* FFT-Dialog.cpp in Sources */,
 				550004E318A959C600408208 /* PlugVisual.c in Sources */,
 				88E0C46B0C2F21DE00D6C081 /* PlugVST.c in Sources */,
 				554D7E2618AD90CB0062CD04 /* wds_menu.cpp in Sources */,
-				551E56F2102A9E8B0086C86E /* Main.cc in Sources */,
-				551E57A1102AB9A30086C86E /* Mozart.c in Sources */,
-				55356A01102BFDB80093F21D /* DLS Import.c in Sources */,
-				55356A05102BFE7D0093F21D /* Print.c in Sources */,
-				55356A1E102C06550093F21D /* MIDI-GM.c in Sources */,
+				551E56F2102A9E8B0086C86E /* Main.cpp in Sources */,
+				551E57A1102AB9A30086C86E /* Mozart.cpp in Sources */,
+				55356A01102BFDB80093F21D /* DLS Import.cpp in Sources */,
+				55356A05102BFE7D0093F21D /* Print.cpp in Sources */,
+				55356A1E102C06550093F21D /* MIDI-GM.cpp in Sources */,
 				55356A97102C08650093F21D /* PlugsPPINInit.c in Sources */,
 				55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */,
 				55FD861E10B22C2300F8BDE6 /* DelayOutPut.c in Sources */,

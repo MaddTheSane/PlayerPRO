@@ -693,8 +693,7 @@ OSErr ActiveSoundInput(Boolean RecordingMode, Handle *RecordedSound, Str255 name
 	}
 	
 onrecommence:
-	do
-	{
+	do {
 		MyModalDialog(deviceDialog, &itemHit);
 		
 		GetPort(&savePort);

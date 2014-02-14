@@ -17,8 +17,7 @@ enum
 	Everywhere
 };
 
-enum
-{
+enum {
 	Find = 0,
 	Next,
 	ReplaceFind,

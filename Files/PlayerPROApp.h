@@ -14,6 +14,12 @@ extern "C" {
 }
 #include <string>
 
+typedef struct CrsrRec {
+	short total;
+	short current;
+	short no[30];
+} CrsrRec;
+
 namespace PlayerPRO {
 	class PlayerPROApp {
 	public:
@@ -59,13 +65,26 @@ namespace PlayerPRO {
 		OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
 		OSErr GetApplicationResourceFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
 		
+		void PathNameFromDirID(long dirID, short vRefNum, StringPtr fullPathName);
+		void ScanDir(long dirID, short VRefNum, Boolean recurse);
+		void DoScanDir(long	DirID, short VRefNum);
+		
 		void Run();
 		
 		void		SetPortFromOldWindow();
 		CGrafPtr	GetPortFromOldWindow();
 		DialogPtr	GetDialogFromOldWindow();
+		
+		void InitRollCrsr();
+		void RollCursor();
+		void CloseRollCrsrc();
 
-	private:;
+	private:
+		Str255 asc_WorkStr;
+		long	previousTime;
+		CrsrRec	MyCrsrRec;
+		Cursor	*myCursor;
+
 	};
 	PlayerPROApp *TheApp;
 }
