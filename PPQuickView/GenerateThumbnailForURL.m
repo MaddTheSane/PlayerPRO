@@ -1,10 +1,9 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h>
 #include <QuickLook/QuickLook.h>
-#include "RDriver.h"
-#include "FileUtils.h"
 #include "PPQuickView.h"
 #import <Foundation/Foundation.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
 /* -----------------------------------------------------------------------------
     Generate a thumbnail for file
@@ -14,11 +13,11 @@
 
 OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thumbnail, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options, CGSize maxSize)
 {
-    // To complete your generator please implement the function GenerateThumbnailForURL in GenerateThumbnailForURL.c
-    return noErr;
+	// TODO: implement
+	return noErr;
 }
 
 void CancelThumbnailGeneration(void *thisInterface, QLThumbnailRequestRef thumbnail)
 {
-    // Implement only if supported
+	// Implement only if supported
 }

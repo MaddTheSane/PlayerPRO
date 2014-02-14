@@ -27,7 +27,6 @@
 // names if you decide to change the names defined in the Info.plist
 //
 
-
 // -----------------------------------------------------------------------------
 //	typedefs
 // -----------------------------------------------------------------------------
@@ -153,7 +152,7 @@ HRESULT QuickLookGeneratorQueryInterface(void *thisInstance, REFIID iid, LPVOID 
 //
 ULONG QuickLookGeneratorPluginAddRef(void *thisInstance)
 {
-    return ++((QLGeneratorPluginType*)thisInstance)->refCount;
+	return ++((QLGeneratorPluginType*)thisInstance)->refCount;
 }
 
 // -----------------------------------------------------------------------------
@@ -193,4 +192,3 @@ void *QuickLookGeneratorPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID)
 	/* If the requested type is incorrect, return NULL. */
 	return NULL;
 }
-
