@@ -19,6 +19,10 @@ static OSStatus CAAudioCallback(void						*inRefCon,
 								UInt32						inNumberFrames,
 								AudioBufferList				*ioData)
 {
+	size_t remaining, len;
+	AudioBuffer *abuf;
+	void *ptr;
+	UInt32 i = 0;
 	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
 	if (theRec->Reading == false) {
 		switch(theRec->DriverSettings.outPutBits) {
@@ -33,10 +37,6 @@ static OSStatus CAAudioCallback(void						*inRefCon,
 		}
 	}
 	
-	size_t remaining, len;
-	AudioBuffer *abuf;
-	void *ptr;
-	UInt32 i = 0;
 	for (i = 0; i < ioData->mNumberBuffers; i++) {
         abuf = &ioData->mBuffers[i];
         remaining = abuf->mDataByteSize;
@@ -80,6 +80,9 @@ OSErr initCoreAudio(MADDriverRec *inMADDriver)
 	struct AURenderCallbackStruct callback, blankCallback = {0};
 	AudioComponentDescription theDes = {0};
 	AudioStreamBasicDescription audDes = {0};
+	int outChn;
+	AudioComponent theComp;
+	
 	callback.inputProc = CAAudioCallback;
 	callback.inputProcRefCon = inMADDriver;
 	
@@ -93,7 +96,6 @@ OSErr initCoreAudio(MADDriverRec *inMADDriver)
 	audDes.mFormatID = kAudioFormatLinearPCM;
 	audDes.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
 	
-	int outChn;
 	switch (inMADDriver->DriverSettings.outPutMode) {
 		case MonoOutPut:
 			outChn = 1;
@@ -116,7 +118,7 @@ OSErr initCoreAudio(MADDriverRec *inMADDriver)
     audDes.mBytesPerFrame = audDes.mBitsPerChannel * audDes.mChannelsPerFrame / 8;
     audDes.mBytesPerPacket = audDes.mBytesPerFrame * audDes.mFramesPerPacket;
 	
-	AudioComponent theComp = AudioComponentFindNext(NULL, &theDes);
+	theComp = AudioComponentFindNext(NULL, &theDes);
 	if (theComp == NULL) {
 		return MADSoundManagerErr;
 	}
