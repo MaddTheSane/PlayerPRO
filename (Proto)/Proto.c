@@ -45,7 +45,6 @@ extern "C" {
 #include "Piano.proto.h"
 //#include "PlayerHeaders"
 #include "Record.proto.h"
-#include "Samples.proto.h"
 //#include "SetPriority.proto.h"
 //#include "SoundKit.proto.h"
 //#include "SoundKit22.proto.h"

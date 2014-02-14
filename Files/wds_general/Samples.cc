@@ -62,15 +62,16 @@ pascal OSErr 	MySendSampleProc(FlavorType theFlavor,  void *refCon, ItemReferenc
 Handle			SoundQualityExportSnd(short , OSType	*, short *, long *, Str255);
 void			SetMobiusRect(Rect*, short, short, short, short);
 void			DrawSample(short pSt, short pEn, short Instru, DialogPtr theDia);
-pascal OSErr 	MyTrackingSample(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag);
 void			NSelectInstruList(short , short);
 long			AmpToByte(short Pos, short InstruNo);
 void			ConvertInstrumentOut16(register	short	*tempPtr,	register long sSize);
 void			FFTSampleFilter(sData *SData, short instru, Boolean filter);
 void			SampleUpdateNow(void);
 
-extern	DialogPtr	InstruListDlog;
-extern	Boolean		PianoRecording, DragManagerUse;
+pascal OSErr DragTracking(DragTrackingMessage message, WindowRef theWindow, void *handlerRefCon, DragRef theDrag);
+
+//extern	DialogPtr	InstruListDlog;
+extern	Boolean		PianoRecording;
 extern	RGBColor	theColor;
 extern	Cursor		HandCrsr, beamCrsr, pencilCrsr, pencilCrsrStereo, CHandCrsr;
 
@@ -124,7 +125,6 @@ extern	RGBColor	theColor;
 #define	SAMPLEDEF 10
 #define SAMPLERECTTOP 60
 #define ENVSIZE 300
-
 
 void PrintPixMap(PixMapHandle aPix);
 short ByteToPos(long bytePosi, short InstruNo);
@@ -2303,7 +2303,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 	InternalUpdate(InstruNo);
 }
 
-void DrawEnveloppe(short ins, DialogPtr	theDia)
+void PlayerPRO::Samples::DrawEnvelope(short ins, DialogPtr theDia)
 {
 	Str255		aStr;
 	short		itemType;
@@ -2385,7 +2385,7 @@ void DrawEnveloppe(short ins, DialogPtr	theDia)
 	//SetSelectionZero(ins);
 }
 
-void DrawPanningEnveloppe(short ins, DialogPtr theDia)
+void PlayerPRO::Samples::DrawPanningEnvelope(short ins, DialogPtr theDia)
 {
 	Str255		aStr;
 	short		itemType;
@@ -2484,7 +2484,7 @@ void DrawPanningEnveloppe(short ins, DialogPtr theDia)
 	//SetSelectionZero(ins);
 }
 
-void DrawSample(short tSS, short tSE, short InstruNo, DialogPtr theDia)
+void PlayerPRO::Samples::DrawSample(short tSS, short tSE, short InstruNo, DialogPtr theDia)
 {
 	Point			PP;
 	long			sampleSize, val, start, end;
@@ -2505,14 +2505,14 @@ void DrawSample(short tSS, short tSE, short InstruNo, DialogPtr theDia)
 	if (curSample[InstruNo] == volumeEnv) {
 		grayDraw = true;
 		if (!(PlayerPRO::TheApp->curMusic->fid[InstruNo].volType & EFNOTE)) {
-			DrawEnveloppe(InstruNo, theDia);
+			DrawEnvelope(InstruNo, theDia);
 			return;
 		}
 	}
 	if (curSample[InstruNo] == panningEnv) {
 		grayDraw = true;
 		if (!(PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType & EFNOTE)) {
-			DrawPanningEnveloppe(InstruNo, theDia);
+			DrawPanningEnvelope(InstruNo, theDia);
 			return;
 		}
 	}
@@ -2651,11 +2651,11 @@ ENDSAMPLE:
 	
 	if (curSample[InstruNo] == volumeEnv) {
 		if ((PlayerPRO::TheApp->curMusic->fid[InstruNo].volType & EFNOTE))
-			DrawEnveloppe(InstruNo, theDia);
+			DrawEnvelope(InstruNo, theDia);
 	}
 	if (curSample[InstruNo] == panningEnv) {
 		if ((PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType & EFNOTE))
-			DrawPanningEnveloppe(InstruNo, theDia);
+			DrawPanningEnvelope(InstruNo, theDia);
 	}
 	
 	ForeColor(blackColor);
@@ -2889,7 +2889,7 @@ void UpdateSampleWindows(void)
 	SetCursor(GetQDGlobalsArrow(&PlayerPRO::TheApp->qdarrow));
 }
 
-void NCreateSampleWindow(short ins, short samp)
+void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 {
 	Rect		itemRect;
 	Handle		itemHandle;
@@ -3030,8 +3030,8 @@ void NCreateSampleWindow(short ins, short samp)
 		HideControl(SustainBut[ins]);
 		HideControl(LoopBut[ins]);
 		
-		if (DragManagerUse) {
-			MyTrackingHandlerUPP 		= NewDragTrackingHandlerUPP(MyTrackingSample);
+		if (PlayerPRO::TheApp->DragManagerUse) {
+			MyTrackingHandlerUPP 		= NewDragTrackingHandlerUPP(DragTracking);
 			MyReceiveDropHandlerUPP 	= NewDragReceiveHandlerUPP(MyReceiveDropHandler);
 			//mySendDataUPP 				= NewDragSendDataUPP(MySendSampleProc);
 			
@@ -3053,7 +3053,7 @@ void NCreateSampleWindow(short ins, short samp)
 
 extern KeyMap km;
 
-void CloseSampleWindow(DialogPtr theDia)
+PlayerPRO::Samples::~Samples()
 {
 	short	i;
 	
@@ -3062,7 +3062,7 @@ void CloseSampleWindow(DialogPtr theDia)
 	if (IsPressed(0x3A) == true) {
 		for (i = MAXINSTRU; i >= 0 ; i--) {
 			if (SampleDlog[i] != NULL) {
-				if (DragManagerUse) {
+				if (PlayerPRO::TheApp->DragManagerUse) {
 					RemoveTrackingHandler(MyTrackingHandlerUPP, GetDialogWindow(SampleDlog[i]));
 					RemoveReceiveHandler(MyReceiveDropHandlerUPP, GetDialogWindow(SampleDlog[i]));
 					
@@ -3079,9 +3079,9 @@ void CloseSampleWindow(DialogPtr theDia)
 			}
 		}
 	} else {
-		i = FindSample(theDia);
+		i = FindSample(theDialog);
 		
-		if (DragManagerUse) {
+		if (PlayerPRO::TheApp->DragManagerUse) {
 			RemoveTrackingHandler(MyTrackingHandlerUPP, GetDialogWindow(SampleDlog[i]));
 			RemoveReceiveHandler(MyReceiveDropHandlerUPP, GetDialogWindow(SampleDlog[i]));
 			
@@ -4477,19 +4477,18 @@ void ResetSelectionSample(short CurWin)
 	SetPort(SavePort);
 }
 
-static	Boolean	canAcceptDrag;
-
-pascal OSErr MyTrackingSample(short message, WindowPtr theWindow, void *handlerRefCon, DragReference theDrag)
+pascal OSErr DragTracking(DragTrackingMessage message, WindowRef theWindow, void *handlerRefCon, DragRef theDrag)
 {
 	unsigned long		attributes;
 	RgnHandle			theRgn;
 	Point				theMouse, localMouse;
 	Rect				tempRect;
+	PlayerPRO::Samples *DerefCon = static_cast<PlayerPRO::Samples*>(handlerRefCon);
 	
 	if (!PlayerPRO::TheApp->mainSystemDrag)
 		return noErr;
 	
-	if ((message != kDragTrackingEnterHandler) && (!canAcceptDrag))
+	if ((message != kDragTrackingEnterHandler) && (!DerefCon->GetCanAcceptDrag()))
 		return noErr;
 	
 	SetPortWindowPort(theWindow);
@@ -4499,7 +4498,7 @@ pascal OSErr MyTrackingSample(short message, WindowPtr theWindow, void *handlerR
 	
 	switch (message) {
 		case kDragTrackingEnterHandler:
-			canAcceptDrag = true;
+			DerefCon->SetCanAcceptDrag(true);
 			//IsMyTypeAvailable(theDrag);
 			break;
 			
@@ -4748,7 +4747,7 @@ Boolean DragSample(RgnHandle myRgn, short theNo, EventRecord *theEvent)
 	Rect				dragRegionRect;
 	Str255				theStr;
 	
-	if (!DragManagerUse || Instru == NULL || SampleDataD(theNo)->size == 0)
+	if (!PlayerPRO::TheApp->DragManagerUse || Instru == NULL || SampleDataD(theNo)->size == 0)
 		return false;
 	
 	//******************************************

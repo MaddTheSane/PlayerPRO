@@ -23,13 +23,24 @@ PlayerPRO::wds_general::~wds_general()
 }
 static short AHelp[] = {};
 
-void PlayerPRO::wds_general::DoNull()
-{
-	
-}
 
 void PlayerPRO::wds_general::DoHelp(short **items, short *lsize)
 {
 	*items = AHelp;
 	*lsize = 0;
+}
+
+void PlayerPRO::wds_general::DoNull()
+{
+	
+}
+
+bool PlayerPRO::wds_general::GetCanAcceptDrag()
+{
+	return canAcceptDrag;
+}
+
+void PlayerPRO::wds_general::SetCanAcceptDrag(bool val)
+{
+	canAcceptDrag = val;
 }

@@ -23,17 +23,17 @@ namespace PlayerPRO {
 		ListClickLoopUPP	mylClickLoopDesc;
 		NavEventUPP			MyDlgFilterNavDesc;
 		
-		Boolean		gUseControlSize, MusicPlayActive, UseAEErreur;
+		bool		gUseControlSize, MusicPlayActive, UseAEErreur;
 		short		gScrollBarID, curvRefNum;
 		long		curparID, StartTime;
-		Boolean		gUseNavigation, Micro, hasASC, End, Record;
+		bool		Micro, hasASC, End, Record;
 		DialogPtr	ToolsDlog;
 		Str63		lastLoadMODListName;
 		Cursor		watchCrsr, qdarrow;
 		Cursor		PlayCrsr, HandCrsr, CHandCrsr, ZoomInCrsr, ZoomOutCrsr;
-
+		bool		DragManagerUse;
 		
-		Boolean		mainSystemDrag, Direct, Stereo, StereoMixing, NewSoundManager, NewSoundManager31, Audio16;
+		bool		mainSystemDrag, Direct, Stereo, StereoMixing, NewSoundManager, NewSoundManager31, Audio16;
 		short		theDepth, RowBytes;
 		Prefs		thePrefs;
 		MenuHandle 	InternetMenu, AppleMenu, NoteMenu, InstruMenu, EffectMenu, TracksNumberMenu, BaseNote, InstruEditMenu, PatternEditMenu;
@@ -47,10 +47,10 @@ namespace PlayerPRO {
 		std::string EEffect(int idx);
 
 		
-		MADDriverRec	*MADDriver;
-		MADMusic		*curMusic;
-		MADLibrary		*gMADLib;
-		const EventTypeSpec *CarbonWinList();
+		MADDriverRec		*MADDriver;
+		MADMusic			*curMusic;
+		MADLibrary			*gMADLib;
+		const EventTypeSpec	*CarbonWinList();
 		
 		//void RollCursor();
 		Boolean QTTypeConversion(OSType fileType);
@@ -61,9 +61,9 @@ namespace PlayerPRO {
 		
 		void Run();
 		
-		void SetPortFromOldWindow();
-		CGrafPtr GetPortFromOldWindow();
-		DialogPtr GetDialogFromOldWindow();
+		void		SetPortFromOldWindow();
+		CGrafPtr	GetPortFromOldWindow();
+		DialogPtr	GetDialogFromOldWindow();
 
 	private:;
 	};

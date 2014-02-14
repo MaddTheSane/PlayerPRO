@@ -15,6 +15,11 @@ namespace PlayerPRO {
 		Samples();
 		~Samples();
 		void DoHelp(short **items, short *lsize);
+		void CreateSampleWindow(short ins, short samp);
+		void DrawEnvelope(short ins, DialogPtr theDia);
+		void DrawPanningEnvelope(short ins, DialogPtr theDia);
+		void DrawSample(short tSS, short tSE, short InstruNo, DialogPtr theDia);
+
 	};
 }
 

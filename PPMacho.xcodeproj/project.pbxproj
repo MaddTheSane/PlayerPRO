@@ -544,7 +544,6 @@
 		88E0C4FF0C2F21E600D6C081 /* PubWindow.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4FE0C2F21E600D6C081 /* PubWindow.proto.h */; };
 		88E0C5010C2F21E600D6C081 /* Quicktime.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5000C2F21E600D6C081 /* Quicktime.proto.h */; };
 		88E0C5030C2F21E600D6C081 /* Record.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5020C2F21E600D6C081 /* Record.proto.h */; };
-		88E0C5070C2F21E600D6C081 /* Samples.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5060C2F21E600D6C081 /* Samples.proto.h */; };
 		88E0C5090C2F21E600D6C081 /* SoundInput.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C5080C2F21E600D6C081 /* SoundInput.proto.h */; };
 		88E0C50B0C2F21E600D6C081 /* Spectrum.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C50A0C2F21E600D6C081 /* Spectrum.proto.h */; };
 		88E0C50D0C2F21E600D6C081 /* StaffEditor.proto.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C50C0C2F21E600D6C081 /* StaffEditor.proto.h */; };
@@ -1753,7 +1752,6 @@
 		88E0C4FE0C2F21E600D6C081 /* PubWindow.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = PubWindow.proto.h; path = "(Proto)/PubWindow.proto.h"; sourceTree = "<group>"; };
 		88E0C5000C2F21E600D6C081 /* Quicktime.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Quicktime.proto.h; path = "(Proto)/Quicktime.proto.h"; sourceTree = "<group>"; };
 		88E0C5020C2F21E600D6C081 /* Record.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Record.proto.h; path = "(Proto)/Record.proto.h"; sourceTree = "<group>"; };
-		88E0C5060C2F21E600D6C081 /* Samples.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Samples.proto.h; path = "(Proto)/Samples.proto.h"; sourceTree = "<group>"; };
 		88E0C5080C2F21E600D6C081 /* SoundInput.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SoundInput.proto.h; path = "(Proto)/SoundInput.proto.h"; sourceTree = "<group>"; };
 		88E0C50A0C2F21E600D6C081 /* Spectrum.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = Spectrum.proto.h; path = "(Proto)/Spectrum.proto.h"; sourceTree = "<group>"; };
 		88E0C50C0C2F21E600D6C081 /* StaffEditor.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = StaffEditor.proto.h; path = "(Proto)/StaffEditor.proto.h"; sourceTree = "<group>"; };
@@ -2805,7 +2803,6 @@
 				88E0C4FE0C2F21E600D6C081 /* PubWindow.proto.h */,
 				88E0C5000C2F21E600D6C081 /* Quicktime.proto.h */,
 				88E0C5020C2F21E600D6C081 /* Record.proto.h */,
-				88E0C5060C2F21E600D6C081 /* Samples.proto.h */,
 				88E0C5080C2F21E600D6C081 /* SoundInput.proto.h */,
 				88E0C50A0C2F21E600D6C081 /* Spectrum.proto.h */,
 				88E0C50C0C2F21E600D6C081 /* StaffEditor.proto.h */,
@@ -3431,7 +3428,6 @@
 				88E0C4FF0C2F21E600D6C081 /* PubWindow.proto.h in Headers */,
 				88E0C5010C2F21E600D6C081 /* Quicktime.proto.h in Headers */,
 				88E0C5030C2F21E600D6C081 /* Record.proto.h in Headers */,
-				88E0C5070C2F21E600D6C081 /* Samples.proto.h in Headers */,
 				88E0C5090C2F21E600D6C081 /* SoundInput.proto.h in Headers */,
 				88E0C50B0C2F21E600D6C081 /* Spectrum.proto.h in Headers */,
 				88E0C50D0C2F21E600D6C081 /* StaffEditor.proto.h in Headers */,
