@@ -9,19 +9,17 @@
 #import <Cocoa/Cocoa.h>
 
 @interface SampleCellView : NSTableCellView <NSComboBoxDataSource, NSComboBoxDelegate>
-{
-	IBOutlet NSPopUpButton *modeButton;
-	IBOutlet NSPopUpButton *ampButton;
-	IBOutlet NSComboBox *rateBox;
-	IBOutlet NSTextField *volumeField;
-	IBOutlet NSTextField *nameField;
-	IBOutlet NSTextField *loopStartField;
-	IBOutlet NSTextField *loopSizeField;
-	IBOutlet NSPopUpButton *loopTypeButton;
-	IBOutlet NSTextField *realNoteField;
-	IBOutlet NSTextField *realNoteLabel;
-	IBOutlet NSTextField *instrumentIndexLabel;
-}
+@property (weak) IBOutlet NSPopUpButton *modeButton;
+@property (weak) IBOutlet NSPopUpButton *ampButton;
+@property (weak) IBOutlet NSComboBox *rateBox;
+@property (weak) IBOutlet NSTextField *volumeField;
+@property (weak) IBOutlet NSTextField *nameField;
+@property (weak) IBOutlet NSTextField *loopStartField;
+@property (weak) IBOutlet NSTextField *loopSizeField;
+@property (weak) IBOutlet NSPopUpButton *loopTypeButton;
+@property (weak) IBOutlet NSTextField *relNoteField;
+@property (weak) IBOutlet NSTextField *relNoteLabel;
+@property (weak) IBOutlet NSTextField *instrumentIndexLabel;
 
 - (IBAction)modeChanged:(id)sender;
 - (IBAction)amplitudeChanged:(id)sender;

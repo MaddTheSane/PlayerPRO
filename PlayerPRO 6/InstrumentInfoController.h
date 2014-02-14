@@ -12,27 +12,24 @@
 @class PPInstrumentViewController;
 
 @interface InstrumentInfoController : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
-{
-	PPInstrumentObject *instrument;
-	IBOutlet NSView *pianoView;
-	IBOutlet NSTextField *instrumentNumber;
-	IBOutlet NSTextField *instrumentName;
-	IBOutlet NSMatrix *panningMatrix;
-	IBOutlet NSMatrix *volumeMatrix;
+@property (weak) IBOutlet NSView *pianoView;
+@property (weak) IBOutlet NSTextField *instrumentNumber;
+@property (weak) IBOutlet NSTextField *instrumentName;
+@property (weak) IBOutlet NSMatrix *panningMatrix;
+@property (weak) IBOutlet NSMatrix *volumeMatrix;
 	
-	IBOutlet NSButton *volumeFixedSpeedButton;
-	IBOutlet NSButton *volumeSustainButton;
-	IBOutlet NSButton *volumeLoopButton;
+@property (weak) IBOutlet NSButton *volumeFixedSpeedButton;
+@property (weak) IBOutlet NSButton *volumeSustainButton;
+@property (weak) IBOutlet NSButton *volumeLoopButton;
 	
-	IBOutlet NSButton *panningLoopButton;
-	IBOutlet NSButton *panningFixedSpeedButton;
-	IBOutlet NSButton *panningSustainButton;
+@property (weak) IBOutlet NSButton *panningLoopButton;
+@property (weak) IBOutlet NSButton *panningFixedSpeedButton;
+@property (weak) IBOutlet NSButton *panningSustainButton;
 
-	IBOutlet NSTableView *sampleTable;
-}
-
+@property (weak) IBOutlet NSTableView *sampleTable;
 @property (copy, nonatomic) PPInstrumentObject *instrument;
 @property (weak) PPInstrumentViewController *delegate;
+
 - (IBAction)okayButton:(id)sender;
 - (IBAction)cancelButton:(id)sender;
 - (IBAction)volumeEditButtonPressed:(id)sender;

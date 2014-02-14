@@ -15,6 +15,20 @@
 @end
 
 @implementation InstrumentInfoController
+@synthesize instrument;
+@synthesize delegate;
+@synthesize pianoView;
+@synthesize instrumentName;
+@synthesize instrumentNumber;
+@synthesize panningFixedSpeedButton;
+@synthesize panningLoopButton;
+@synthesize panningMatrix;
+@synthesize panningSustainButton;
+@synthesize sampleTable;
+@synthesize volumeFixedSpeedButton;
+@synthesize volumeLoopButton;
+@synthesize volumeMatrix;
+@synthesize volumeSustainButton;
 
 - (void)updateInstrumentInfo
 {
@@ -23,7 +37,6 @@
 	[instrumentNumber setStringValue:[NSString stringWithFormat:@"Instrument %ld", (long)instrument.number + 1]];
 }
 
-@synthesize instrument;
 
 - (void)setInstrument:(PPInstrumentObject *)ainstrument
 {
@@ -33,7 +46,6 @@
 	}
 }
 
-@synthesize delegate;
 
 - (id)initWithWindow:(NSWindow *)window
 {
@@ -57,7 +69,7 @@
 
 - (id)init
 {
-	return self = [self initWithWindowNibName:@"InstrumentInfoController"];
+	return self = [self initWithWindowNibName:@"InstrumentInfoView"];
 }
 
 - (void)windowDidLoad

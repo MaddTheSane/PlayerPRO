@@ -9,6 +9,17 @@
 #import "SampleCellView.h"
 
 @implementation SampleCellView
+@synthesize ampButton;
+@synthesize modeButton;
+@synthesize rateBox;
+@synthesize volumeField;
+@synthesize nameField;
+@synthesize loopStartField;
+@synthesize loopSizeField;
+@synthesize loopTypeButton;
+@synthesize relNoteField;
+@synthesize relNoteLabel;
+@synthesize instrumentIndexLabel;
 
 - (id)initWithFrame:(NSRect)frame
 {
