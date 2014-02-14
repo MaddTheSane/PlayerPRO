@@ -19,6 +19,7 @@ ToolsDlog(NULL)
 {
 	char tempASC[256] = "";
 	pStrcpy(asc_WorkStr, MYC2PStr(tempASC));
+	generalWindows = new std::vector<PlayerPRO::wds_general*>();
 	
 	memset(&km, 0, sizeof(km));
 	memset(&theColor, 0, sizeof(theColor));
@@ -28,37 +29,50 @@ ToolsDlog(NULL)
 
 PlayerPRO::PlayerPROApp::~PlayerPROApp()
 {
-	
+	delete generalWindows;
+}
+
+void PlayerPRO::PlayerPROApp::GetSizeString(long size, Str255 str, Boolean Convert)
+{
+	if (Convert) {
+		if (size < 9999) {
+			NumToString(size, str);
+			pStrcat(str, (StringPtr)"\p B");
+		} else {
+			NumToString(size/1024, str);
+			pStrcat(str, (StringPtr)"\p KiB");
+		}
+	} else {
+		NumToString(size, str);
+	}
 }
 
 Boolean PlayerPRO::PlayerPROApp::QTTypeConversion(OSType fileType)
 {
-	{
-		switch (fileType) {
-			case kQTFileTypeAIFF:
-			case kQTFileTypeAIFC:
-			case kQTFileTypeDVC:
-			case kQTFileTypeMIDI:
-			case kQTFileTypeMovie:
-			case kQTFileTypeWave:
-			case kQTFileTypeMuLaw:
-			case kQTFileTypeAVI:
-			case kQTFileTypeSoundDesignerII:
-			case kQTFileTypeSystemSevenSound:
-			case 'MPEG':
-			case 'Mp3 ':
-			case 'MPG3':
-			case 'mp3 ':
-			case 'MP3 ':
-			case 'mpg4':
-			case 'PLAY':
-				//case 0x3F3F3F3F:
-				return true;
-				break;
-		}
-		
-		return false;
+	switch (fileType) {
+		case kQTFileTypeAIFF:
+		case kQTFileTypeAIFC:
+		case kQTFileTypeDVC:
+		case kQTFileTypeMIDI:
+		case kQTFileTypeMovie:
+		case kQTFileTypeWave:
+		case kQTFileTypeMuLaw:
+		case kQTFileTypeAVI:
+		case kQTFileTypeSoundDesignerII:
+		case kQTFileTypeSystemSevenSound:
+		case 'MPEG':
+		case 'Mp3 ':
+		case 'MPG3':
+		case 'mp3 ':
+		case 'MP3 ':
+		case 'mpg4':
+		case 'PLAY':
+			//case 0x3F3F3F3F:
+			return true;
+			break;
 	}
+	
+	return false;
 }
 
 Boolean PlayerPRO::PlayerPROApp::CheckFileType(FSSpec theSpec, OSType theType)

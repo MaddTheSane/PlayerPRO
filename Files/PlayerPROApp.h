@@ -19,7 +19,7 @@ extern "C" {
 #include "wds_menu.h"
 #include "wds_editor.h"
 #include "wds_general.h"
-//#include <array>
+#include <vector>
 
 typedef struct CrsrRec {
 	short total;
@@ -87,13 +87,14 @@ namespace PlayerPRO {
 		void InitRollCrsr();
 		void RollCursor();
 		void CloseRollCrsrc();
+		static void GetSizeString(long size, Str255 str, Boolean Convert);
 
 	private:
 		Str255 asc_WorkStr;
 		long	previousTime;
 		CrsrRec	MyCrsrRec;
 		Cursor	*myCursor;
-		wds_general generalWindows[];
+		std::vector<wds_general*> *generalWindows;
 	};
 	PlayerPROApp *TheApp;
 }

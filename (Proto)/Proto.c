@@ -17,6 +17,7 @@ typedef OSType SFTypeList[4];
 #ifdef __cplusplus
 #include <string>
 #include <iostream>
+#include <vector>
 
 extern "C" {
 #endif	

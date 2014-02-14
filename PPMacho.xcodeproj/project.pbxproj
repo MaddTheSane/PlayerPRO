@@ -162,7 +162,6 @@
 		5518109210C35A6C00ADA9F4 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5518109310C35A7500ADA9F4 /* Example.c in Sources */ = {isa = PBXBuildFile; fileRef = 5518105610C35A2600ADA9F4 /* Example.c */; };
 		551810CD10C35C3500ADA9F4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */; };
-		551E56F2102A9E8B0086C86E /* Main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F40C2F21DD00D6C081 /* Main.cpp */; };
 		551E57A1102AB9A30086C86E /* Mozart.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4170C2F21DD00D6C081 /* Mozart.cpp */; };
 		551FEA6410E727AD00EDF2F1 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		551FEA6510E727AD00EDF2F1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -5378,7 +5377,6 @@
 				550004E318A959C600408208 /* PlugVisual.c in Sources */,
 				88E0C46B0C2F21DE00D6C081 /* PlugVST.c in Sources */,
 				554D7E2618AD90CB0062CD04 /* wds_menu.cpp in Sources */,
-				551E56F2102A9E8B0086C86E /* Main.cpp in Sources */,
 				551E57A1102AB9A30086C86E /* Mozart.cpp in Sources */,
 				55356A01102BFDB80093F21D /* DLS Import.cpp in Sources */,
 				55356A05102BFE7D0093F21D /* Print.cpp in Sources */,
