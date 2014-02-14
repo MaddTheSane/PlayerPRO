@@ -3,10 +3,8 @@
 #include <QuickLook/QuickLook.h>
 #include "RDriver.h"
 #include "FileUtils.h"
-#include "GetMetadataForFile.h"
-
-OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options);
-void CancelPreviewGeneration(void *thisInterface, QLPreviewRequestRef preview);
+#include "PPQuickView.h"
+#import <Foundation/Foundation.h>
 
 /* -----------------------------------------------------------------------------
    Generate a preview for file

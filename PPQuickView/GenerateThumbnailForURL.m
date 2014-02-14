@@ -3,10 +3,8 @@
 #include <QuickLook/QuickLook.h>
 #include "RDriver.h"
 #include "FileUtils.h"
-#include "GetMetadataForFile.h"
-
-OSStatus GenerateThumbnailForURL(void *thisInterface, QLThumbnailRequestRef thumbnail, CFURLRef url, CFStringRef contentTypeUTI, CFDictionaryRef options, CGSize maxSize);
-void CancelThumbnailGeneration(void *thisInterface, QLThumbnailRequestRef thumbnail);
+#include "PPQuickView.h"
+#import <Foundation/Foundation.h>
 
 /* -----------------------------------------------------------------------------
     Generate a thumbnail for file

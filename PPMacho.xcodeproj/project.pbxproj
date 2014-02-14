@@ -480,8 +480,8 @@
 		559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559C4188183EB4AB004A073C /* QuickLook.framework */; };
 		559C418E183EB4AB004A073C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		559C4194183EB4AB004A073C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 559C4192183EB4AB004A073C /* InfoPlist.strings */; };
-		559C4196183EB4AB004A073C /* GenerateThumbnailForURL.c in Sources */ = {isa = PBXBuildFile; fileRef = 559C4195183EB4AB004A073C /* GenerateThumbnailForURL.c */; };
-		559C4198183EB4AB004A073C /* GeneratePreviewForURL.c in Sources */ = {isa = PBXBuildFile; fileRef = 559C4197183EB4AB004A073C /* GeneratePreviewForURL.c */; };
+		559C4196183EB4AB004A073C /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 559C4195183EB4AB004A073C /* GenerateThumbnailForURL.m */; };
+		559C4198183EB4AB004A073C /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 559C4197183EB4AB004A073C /* GeneratePreviewForURL.m */; };
 		559C419A183EB4AB004A073C /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 559C4199183EB4AB004A073C /* main.c */; };
 		559C871917ECD8B400E4E13C /* PPiSettingsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559C871817ECD8B400E4E13C /* PPiSettingsDetailController.m */; };
 		55A6201818A6EFEA003B29B5 /* PreferenceNames.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55A6201B18A6EFEA003B29B5 /* PreferenceNames.strings */; };
@@ -2129,8 +2129,8 @@
 		559C4188183EB4AB004A073C /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		559C4191183EB4AB004A073C /* PPQuickView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PPQuickView-Info.plist"; sourceTree = "<group>"; };
 		559C4193183EB4AB004A073C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		559C4195183EB4AB004A073C /* GenerateThumbnailForURL.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GenerateThumbnailForURL.c; sourceTree = "<group>"; };
-		559C4197183EB4AB004A073C /* GeneratePreviewForURL.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = GeneratePreviewForURL.c; sourceTree = "<group>"; };
+		559C4195183EB4AB004A073C /* GenerateThumbnailForURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GenerateThumbnailForURL.m; sourceTree = "<group>"; };
+		559C4197183EB4AB004A073C /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeneratePreviewForURL.m; sourceTree = "<group>"; };
 		559C4199183EB4AB004A073C /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		559C419B183EB4AB004A073C /* PPQuickView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PPQuickView-Prefix.pch"; sourceTree = "<group>"; };
 		559C871717ECD8B400E4E13C /* PPiSettingsDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPiSettingsDetailController.h; sourceTree = "<group>"; };
@@ -2151,6 +2151,7 @@
 		55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicObject_PPKPrivate.h; sourceTree = "<group>"; };
 		55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDriverCarbon.h; sourceTree = "<group>"; };
 		55B23D111687D22700DCE923 /* MainDriverCarbon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MainDriverCarbon.c; sourceTree = "<group>"; };
+		55B5C80918AEC899004041FA /* PPQuickView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPQuickView.h; sourceTree = "<group>"; };
 		55B7665617E3BF9E004C1D45 /* PPPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPluginWindowController.h; sourceTree = "<group>"; };
 		55B7665717E3BF9E004C1D45 /* PPPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPluginWindowController.m; sourceTree = "<group>"; };
 		55B7665B17E3CDA2004C1D45 /* PPDigitalPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPluginWindowController.h; sourceTree = "<group>"; };
@@ -2699,12 +2700,12 @@
 			files = (
 				555C5FCB18445CBC00DBD5DA /* libPlayerPROCompact.a in Frameworks */,
 				555C5FCC18445CBC00DBD5DA /* libPlayerPROKit.a in Frameworks */,
+				559C418E183EB4AB004A073C /* CoreFoundation.framework in Frameworks */,
 				555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */,
 				555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */,
-				559C418E183EB4AB004A073C /* CoreFoundation.framework in Frameworks */,
-				555C5FC818445C3600DBD5DA /* Cocoa.framework in Frameworks */,
 				559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */,
 				55B1D404187C9B31002754C5 /* Foundation.framework in Frameworks */,
+				555C5FC818445C3600DBD5DA /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3820,8 +3821,9 @@
 		559C418F183EB4AB004A073C /* PPQuickView */ = {
 			isa = PBXGroup;
 			children = (
-				559C4195183EB4AB004A073C /* GenerateThumbnailForURL.c */,
-				559C4197183EB4AB004A073C /* GeneratePreviewForURL.c */,
+				55B5C80918AEC899004041FA /* PPQuickView.h */,
+				559C4195183EB4AB004A073C /* GenerateThumbnailForURL.m */,
+				559C4197183EB4AB004A073C /* GeneratePreviewForURL.m */,
 				559C4199183EB4AB004A073C /* main.c */,
 				559C4190183EB4AB004A073C /* Supporting Files */,
 			);
@@ -6312,8 +6314,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				559C4196183EB4AB004A073C /* GenerateThumbnailForURL.c in Sources */,
-				559C4198183EB4AB004A073C /* GeneratePreviewForURL.c in Sources */,
+				559C4196183EB4AB004A073C /* GenerateThumbnailForURL.m in Sources */,
+				559C4198183EB4AB004A073C /* GeneratePreviewForURL.m in Sources */,
 				559C419A183EB4AB004A073C /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
