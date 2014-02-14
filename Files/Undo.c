@@ -182,7 +182,7 @@ void ResetUndo(void)
 	DisableMenuItem(EditMenu, 1);
 }
 
-void SaveUndo(short UndoType, short ID, Str255 textMenu)
+void SaveUndo(short UndoType, short ID, ConstStr255Param textMenu)
 {
 	short		i, x;
 	long		tempL;

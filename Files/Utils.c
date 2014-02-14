@@ -687,7 +687,7 @@ short					pic_SIZE;
 	SetPort(currentPort);
 }*/
 
-void SetDText(DialogPtr dlog, short item, Str255 str)
+void SetDText(DialogPtr dlog, short item, ConstStr255Param str)
 {
 	ControlHandle	control;
 	OSStatus		err;

@@ -11,14 +11,13 @@ enum
 	UAllSamples
 };
 
-typedef struct
-{
+typedef struct {
 	short	UndoType;
 	short	ID;
 	Ptr		data;
 	long	dataSize;
 } UndoCmd;
 
-void SaveUndo(short UndoType, short ID, Str255 textMenu);
+void SaveUndo(short UndoType, short ID, ConstStr255Param textMenu);
 
 #endif

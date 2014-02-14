@@ -1,18 +1,24 @@
 #define MAINSYSTEM2
 
 #include <Carbon/Carbon.h>
+extern "C" {
 #include "Shuddup.h"
+}
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
+extern "C" {
 #include "Undo.h"
 #include "Help.h"
+}
 #include <QuickTime/QuickTime.h>
 #include "PPResDefs.h"
 #include "PPPrivate.h"
 #include <CoreMIDI/CoreMIDI.h>
 #include "PreferenceHandler.h"
+#include "PlayerPROApp.h"
 
+#if 0
 void DoChangeLoop(void);
 void VSTEditorDoNull(void);
 void VSTEditorDoItemPress(short itemHit, DialogPtr aDia);
@@ -7215,4 +7221,13 @@ void HandleNewSound(short theItem)
 			}
 			break;
 	}
+}
+
+#endif
+
+int main()
+{
+	
+	
+	return EXIT_SUCCESS;
 }

@@ -22,7 +22,7 @@ Boolean MyTrackControl(ControlHandle, Point, ControlActionUPP);
 short NewOffscreenBitMap(BitMap *, Rect *);
 void ZapBitMap(BitMap *);
 void BitToPic(PicHandle *, BitMap, Rect *);
-void SetDText(DialogPtr, short, Str255);
+void SetDText(DialogPtr, short, ConstStr255Param);
 void WriteCText(DialogPtr, short, char *);
 void GetDText(DialogPtr, short, StringPtr);
 void OSType2Str(OSType, Str255);

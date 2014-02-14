@@ -9,14 +9,16 @@
 
 #include <Carbon/Carbon.h>
 #include "RDriver.h"
+extern "C" {
 #include "Shuddup.h"
+}
 #include <string>
 
 namespace PlayerPRO {
-	struct PlayerPROApp {
+	class PlayerPROApp {
 	public:
-		KeyMap		km;
-		RGBColor	theColor;
+		KeyMap				km;
+		RGBColor			theColor;
 		ModalFilterUPP		MyDlgFilterDesc;
 		ListClickLoopUPP	mylClickLoopDesc;
 		NavEventUPP			MyDlgFilterNavDesc;
@@ -28,6 +30,8 @@ namespace PlayerPRO {
 		DialogPtr	ToolsDlog;
 		Str63		lastLoadMODListName;
 		Cursor		watchCrsr, qdarrow;
+		Cursor		PlayCrsr, HandCrsr, CHandCrsr, ZoomInCrsr, ZoomOutCrsr;
+
 		
 		Boolean		mainSystemDrag, Direct, Stereo, StereoMixing, NewSoundManager, NewSoundManager31, Audio16;
 		short		theDepth, RowBytes;
@@ -35,6 +39,7 @@ namespace PlayerPRO {
 		MenuHandle 	InternetMenu, AppleMenu, NoteMenu, InstruMenu, EffectMenu, TracksNumberMenu, BaseNote, InstruEditMenu, PatternEditMenu;
 		MenuHandle	ExportMenu, EditorMenu, FileMenu, VSTMenu, ViewsMenu, EditMenu, WindowMenu, HelpMenu;
 		EventRecord	theEvent;
+		WindowPtr	oldWindow;
 		
 		std::string ENote(int idx);
 		std::string EInstru(int idx);
@@ -45,7 +50,23 @@ namespace PlayerPRO {
 		MADDriverRec	*MADDriver;
 		MADMusic		*curMusic;
 		MADLibrary		*gMADLib;
-		EventTypeSpec *CarbonWinList();
+		const EventTypeSpec *CarbonWinList();
+		
+		//void RollCursor();
+		Boolean QTTypeConversion(OSType fileType);
+		Boolean CheckFileType(FSSpec theSpec, OSType theType);
+		
+		OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
+		OSErr GetApplicationResourceFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
+		
+		void Run();
+		
+		void SetPortFromOldWindow();
+		CGrafPtr GetPortFromOldWindow();
+		DialogPtr GetDialogFromOldWindow();
+
+	private:;
 	};
+	PlayerPROApp *TheApp;
 }
 

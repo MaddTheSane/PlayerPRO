@@ -389,78 +389,7 @@ void InitRecording(void);
 OSErr	PPINIdentifyFile(OSType *type, FSSpec	*AlienFile);
 void PPINGetFileName(void);
 pascal OSStatus CarbonWindowEventHandler(EventHandlerCallRef myHandler, EventRef event, void* userData);
-#endif
-
-#ifdef MAINSYSTEM2
-		ModalFilterUPP		MyDlgFilterDesc;
-		ListClickLoopUPP	mylClickLoopDesc;
-		NavEventUPP			MyDlgFilterNavDesc;
-
-		Boolean		gUseControlSize, MusicPlayActive, UseAEErreur;
-		short		gScrollBarID, curvRefNum;
-		long		MacOSXSystem, curparID, StartTime;
-		Boolean		gUseNavigation, Micro, hasASC, End, Record;
-		DialogPtr	ToolsDlog;
-		Str63		lastLoadMODListName;
-		Cursor		watchCrsr, qdarrow;
-
-		Boolean		mainSystemDrag, Direct, Stereo, StereoMixing, NewSoundManager, NewSoundManager31, Audio16;
-		short		theDepth, RowBytes;
-		Prefs		thePrefs;
-		//Rect		ScreenBounds;
-		MenuHandle 	InternetMenu, AppleMenu, NoteMenu, InstruMenu, EffectMenu, TracksNumberMenu, BaseNote, InstruEditMenu, PatternEditMenu;
-		MenuHandle	ExportMenu, EditorMenu, FileMenu, VSTMenu, ViewsMenu, EditMenu, WindowMenu, HelpMenu;
-		EventRecord	theEvent;
-
-		char		ENote[257][3];
-		char		EInstru[MAXINSTRU + 2][3], EArgu[257][2];
-		char		EEffect[30];
-		MADDriverRec	*MADDriver;
-		MADMusic		*curMusic;
-		MADLibrary		*gMADLib;
-		EventTypeSpec	CarbonWinlist[] = { {kEventClassWindow, kEventWindowClose },
-					   { kEventClassWindow, kEventWindowDrawContent },
-					   { kEventClassWindow, kEventWindowBoundsChanged } };
-
-#else
-
-extern	EventTypeSpec		CarbonWinlist[];
-extern	ModalFilterUPP		MyDlgFilterDesc;
-extern	ModalFilterYDUPP	MyDlgFilterSFDesc;
-extern	ListClickLoopUPP	mylClickLoopDesc;
-extern	NavEventUPP			MyDlgFilterNavDesc;
-
-extern	MADDriverRec	*MADDriver;
-extern	MADMusic		*curMusic;
-extern	MADLibrary		*gMADLib;
-
-extern	Boolean		gUseControlSize, MusicPlayActive, UseAEErreur;
-extern	short		gScrollBarID, VolumeH, SpeedH, PitchH, curvRefNum;
-extern	long		MacOSXSystem, curparID, StartTime;
-extern	Boolean		gUseNavigation, Micro, hasASC, End, Record;
-extern	DialogPtr	ToolsDlog;
-extern	Str63		lastLoadMODListName, curSoundName;
-extern	Cursor		watchCrsr, qdarrow;
-
-extern	Boolean		mainSystemDrag, Direct, Stereo, StereoMixing, NewSoundManager, NewSoundManager31, Audio16;
-extern	short		theDepth, RowBytes;
-extern	Prefs		thePrefs;
-//extern	Rect		ScreenBounds;
-extern	MenuHandle 	InternetMenu, AppleMenu, NoteMenu, InstruMenu, EffectMenu, TracksNumberMenu, BaseNote, InstruEditMenu, PatternEditMenu;
-extern	MenuHandle	ExportMenu, EditorMenu, FileMenu, VSTMenu, ViewsMenu, EditMenu, WindowMenu, HelpMenu;
-extern	EventRecord	theEvent;
-
-extern	char		ENote[257][3];
-extern	char		EInstru[MAXINSTRU + 2][3], EArgu[257][2];
-extern	char		EEffect[30];
-#endif
-
-void RollCursor(void);
-Boolean QTTypeConversion(OSType fileType);
-Boolean CheckFileType(FSSpec theSpec, OSType theType);
-
-__private_extern__ OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
-__private_extern__ OSErr GetApplicationResourceFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
+void pStrcat(register unsigned char *s1, register unsigned char *s2);
 
 static inline void SwapPcmd(Pcmd *toswap)
 {
@@ -473,3 +402,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 	MOT16(&toswap->tracks);
 	MOT16(&toswap->trackStart);
 }
+#endif
+
+void RollCursor(void);
+

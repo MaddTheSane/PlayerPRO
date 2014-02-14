@@ -16,6 +16,7 @@ namespace PlayerPRO {
 		wds_general(SInt16 dialogID, WindowPtr parentWindow = (WindowPtr) -1);
 		virtual ~wds_general();
 		virtual void DoHelp(short **items, short *lsize);
+		virtual void DoNull();
 		
 	protected:
 		DialogPtr theDialog;
