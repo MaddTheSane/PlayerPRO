@@ -27,50 +27,48 @@
 #pragma pack(push, 2)
 
 struct oldPatHeader {
-	SInt32	PatternSize;			// Length of pattern: standard = 64
-	OSType	CompressionMode;		// Compression mode, none = 'NONE'
+	int		PatternSize;		// Length of pattern: standard = 64
+	OSType	CompressionMode;	// Compression mode, none = 'NONE'
 	char	PatternName[20];
-	SInt32	PatBytes;				// Pattern Size in Bytes
-	SInt32	unused2;
+	int		PatBytes;			// Pattern Size in Bytes
+	int		unused2;
 };
 
 struct Command {
-	Byte	InstrumentNo;		// Instrument no
-	Byte 	AmigaPeriod;		// Note, see table
-	Byte 	EffectCmd;			// Effect cmd
-	Byte 	EffectArg;			// Effect arg
+	Byte InstrumentNo;	// Instrument no
+	Byte AmigaPeriod;	// Note, see table
+	Byte EffectCmd;		// Effect cmd
+	Byte EffectArg;		// Effect arg
 };
 
-struct MusicPattern
-{								// Pattern = 64 notes to play
+// Pattern = 64 notes to play
+struct MusicPattern {
 	struct oldPatHeader	header;
-	struct Command	Commands[];
+	struct Command		Commands[];
 };
 
 struct FileInstrData {
-	char 	Filename[32];		// Instrument's filename
-	SInt32 	insSize;			// Sample length
-	Byte 	fineTune;
-	Byte 	volume;				// Base volume
-	short	CompCode;			// Compression Code, 0 = nothing, M3 = MAC3, M6 = MAC6
-	short	freq;				// Base frequence, simple, double, quadruple
-	Byte	amplitude;			// 8 or 16 bits
-	SInt32	loopStart;			// LoopStart
-	SInt32	loopLenght;			// LoopLength
+	char	Filename[32];	// Instrument's filename
+	int		insSize;		// Sample length
+	Byte	fineTune;
+	Byte	volume;			// Base volume
+	short	CompCode;		// Compression Code, 0 = nothing, M3 = MAC3, M6 = MAC6
+	short	freq;			// Base frequence, simple, double, quadruple
+	Byte	amplitude;		// 8 or 16 bits
+	int		loopStart;		// LoopStart
+	int		loopLenght;		// LoopLength
 };
 
-typedef struct oldMADSpec
-{
+typedef struct oldMADSpec {
 	OSType	MADIdentification;		// Mad Identification: MADG in version 2.0
-	char 	NameSignature[32];		// Music's name
-	struct 	FileInstrData fid[64];	// 64 instruments descriptor
+	char	NameSignature[32];		// Music's name
+	struct	FileInstrData fid[64];	// 64 instruments descriptor
 	Byte	PatMax;
-	Byte 	numPointers;			// Patterns number
-	Byte	oPointers[128];			// Patterns list
-	Byte	Tracks;					// Tracks number
+	Byte 	numPointers;	// Patterns number
+	Byte	oPointers[128];	// Patterns list
+	Byte	Tracks;			// Tracks number
 } oldMADSpec;
 
 #pragma pack(pop)
-
 
 #endif

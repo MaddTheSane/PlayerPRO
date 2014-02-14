@@ -30,7 +30,6 @@
 #include <dispatch/dispatch.h>
 #endif
 #endif
-#include "MOD.h"
 #include "MADI.h"
 
 #ifdef WIN32
@@ -57,15 +56,14 @@ enum {
 
 static oldPatData* oldDecompressPartitionMAD1(oldMADSpec *header, oldPatData* myPat)
 {
-	oldPatData*				finalPtr;
-	Byte 					*srcPtr;
-	oldCmd					*myCmd;
-	short					maxCmd;
-	Byte					set;
+	oldPatData*	finalPtr;
+	Byte		*srcPtr;
+	oldCmd		*myCmd;
+	short		maxCmd;
+	Byte		set;
 	
 	finalPtr = (oldPatData*)calloc(sizeof(oldPatHeader) + myPat->header.size * header->numChn * sizeof(oldCmd), 1);
-	if (finalPtr == NULL)
-	{
+	if (finalPtr == NULL) 	{
 		//DebugStr("\pMemory3 Bug");
 		return NULL;
 	}
@@ -106,17 +104,17 @@ static oldPatData* oldDecompressPartitionMAD1(oldMADSpec *header, oldPatData* my
 	return finalPtr;
 }
 
-static oldCmd* GetOldCommand(short PosX, short	TrackIdX, oldPatData*	tempMusicPat)
+static oldCmd* GetOldCommand(short PosX, short TrackIdX, oldPatData* tempMusicPat)
 {
 	if (PosX < 0)
 		PosX = 0;
 	else if (PosX >= tempMusicPat->header.size)
 		PosX = tempMusicPat->header.size -1;
 	
-	return &(tempMusicPat->Cmds[ (tempMusicPat->header.size * TrackIdX) + PosX]);
+	return &(tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]);
 }
 
-static inline void MOToldsData(struct oldsData * s)
+static inline void MOToldsData(struct oldsData *s)
 {
 	PPBE32(&s->size);
 	PPBE32(&s->loopBeg);
@@ -124,21 +122,20 @@ static inline void MOToldsData(struct oldsData * s)
 	PPBE16(&s->c2spd);
 }
 
-static inline void MOToldPatHeader(struct oldPatHeader * p)
+static inline void MOToldPatHeader(struct oldPatHeader *p)
 {
 	PPBE32(&p->size);
 	PPBE32(&p->compMode);
 	PPBE32(&p->patBytes);
-	PPBE32(&p->unused2); // this is probably superfluous
 }
 
-static inline void MOToldEnvRec(struct oldEnvRec * e)
+static inline void MOToldEnvRec(struct oldEnvRec *e)
 {
 	PPBE16(&e->pos);
 	PPBE16(&e->val);
 }
 
-static inline void MOToldInstrData(struct oldInstrData * i)
+static inline void MOToldInstrData(struct oldInstrData *i)
 {
 	PPBE16(&i->firstSample);
 	PPBE16(&i->numSamples);
@@ -170,30 +167,27 @@ static void MOToldMADSpec(oldMADSpec * m)
 
 OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
 {
-	short		i, x;
-	long		inOutCount, OffSetToSample = 0, z;
-	OSType		MADType = 0;
+	short	i, x;
+	long	inOutCount, OffSetToSample = 0, z;
+	OSType	MADType = 0;
 #if 0
-	SInt32		finetune[16] = {
+	int		finetune[16] = {
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
 	};
 #endif
 	
 	/**** Old MADH variables ****/
-	
 	oldMADSpec *oldMAD = (oldMADSpec*)MADPtr;
-	
 	
 	/**** HEADER ****/
 	MADType = oldMAD->MAD;
 	PPBE32(&MADType);
 	if (MADType != 'MADI')
 		return MADFileNotSupportedByThisPlug;
-	OffSetToSample += sizeof( oldMADSpec);
+	OffSetToSample += sizeof(oldMADSpec);
 	PPBE32(&MADType);
 	MOToldMADSpec(oldMAD);
-	
 	
 	// Conversion
 	inOutCount = sizeof(MADSpec);
@@ -224,8 +218,8 @@ OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *ini
 	theMAD->header->speed			= 	oldMAD->speed;
 	theMAD->header->tempo			= 	oldMAD->tempo;
 	
-	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanPan[ i] = oldMAD->chanPan[ i];
-	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanVol[ i] = oldMAD->chanVol[ i];
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanPan[i] = oldMAD->chanPan[i];
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanVol[i] = oldMAD->chanVol[i];
 	
 	
 	theMAD->sets = (FXSets*)calloc(MAXTRACK, sizeof(FXSets));
@@ -234,8 +228,7 @@ OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *ini
 		theMAD->header->chanBus[i].copyId = i;
 	/**** Patterns *******/
 	
-	for (i = 0; i < oldMAD->numPat; i++)
-	{
+	for (i = 0; i < oldMAD->numPat; i++) 	{
 		struct oldPatData		*tempPat, *tempPat2;
 		struct oldPatHeader		tempPatHeader;
 		
@@ -250,9 +243,9 @@ OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *ini
 		MOToldPatHeader(&tempPatHeader);
 		
 		if (tempPatHeader.compMode == 'MAD1') {
-			inOutCount = sizeof( oldPatHeader) + tempPatHeader.patBytes;
+			inOutCount = sizeof(oldPatHeader) + tempPatHeader.patBytes;
 		} else {
-			inOutCount = sizeof( oldPatHeader) + oldMAD->numChn * tempPatHeader.size * sizeof( oldCmd);
+			inOutCount = sizeof(oldPatHeader) + oldMAD->numChn * tempPatHeader.size * sizeof(oldCmd);
 		}
 		
 		tempPat = (struct oldPatData*) malloc( inOutCount);
@@ -294,20 +287,20 @@ OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *ini
 				aCmd = GetMADCommand(x, z, theMAD->partition[i]);
 				oldCmd 	= GetOldCommand(x, z, tempPat);
 				
-				aCmd->ins 		= oldCmd->ins;
-				aCmd->note 		= oldCmd->note;
-				aCmd->cmd 		= oldCmd->cmd;
-				aCmd->arg 		= oldCmd->arg;
+				aCmd->ins		= oldCmd->ins;
+				aCmd->note		= oldCmd->note;
+				aCmd->cmd		= oldCmd->cmd;
+				aCmd->arg		= oldCmd->arg;
 				aCmd->vol		= oldCmd->vol;
-				aCmd->unused 	= oldCmd->unused;
+				aCmd->unused	= oldCmd->unused;
 			}
 		}
 		
 		free(tempPat);
 		tempPat = NULL;
 	}
-	for (i = theMAD->header->numPat; i < MAXPATTERN ; i++)
-		theMAD->partition[i] = NULL;
+	
+	for (i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[i] = NULL;
 	
 	/**** Instruments & Samples header *****/
 	
@@ -359,8 +352,7 @@ OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *ini
 	});
 	
 #else
-	for (i = 0; i < MAXINSTRU; i++)
-		theMAD->fid[i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
 #endif
 	
 	// Read Samples
@@ -395,8 +387,7 @@ OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *ini
 			
 			memcpy(curData->data, MADPtr + OffSetToSample, curData->size);
 			OffSetToSample += curData->size;
-			if (curData->amp == 16)
-			{
+			if (curData->amp == 16) 			{
 #ifdef __BLOCKS__
 				short *shortPtr = (short*)curData->data;
 				dispatch_apply(curData->size / 2, dispatch_get_global_queue(0, 0), ^(size_t ll) {
@@ -522,7 +513,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (Ptr)malloc(sndSize * 2L);
+				AlienFile = (Ptr)malloc(sndSize * 2);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				// ** MEMORY Test End
@@ -545,9 +536,9 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			break;
 			
 		case MADPlugTest:
-			iFileRefI = iFileOpenRead( AlienFileName);
+			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI) {
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = (Ptr)malloc(sndSize);
 				if (AlienFile == NULL)
@@ -569,7 +560,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			if (iFileRefI) {
 				info->fileSize = iGetEOF(iFileRefI);
 				
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = (Ptr)malloc(sndSize);
 				if (AlienFile == NULL)
