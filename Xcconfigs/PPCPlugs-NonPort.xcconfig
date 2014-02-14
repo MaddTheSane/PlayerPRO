@@ -1,0 +1,19 @@
+//
+//  PPCPlugs-debug.xcconfig
+//  PPMacho
+//
+//  Created by C.W. Betts on 9/18/13.
+//
+//
+
+ARCHS = $(ARCHS_STANDARD_32_64_BIT)
+MACOSX_DEPLOYMENT_TARGET = 10.7
+CLANG_ENABLE_OBJC_ARC[arch=i386] = NO
+
+INFOPLIST_FILE = ${PRODUCT_NAME}-Info.plist
+GENERATE_PKGINFO_FILE = YES
+SKIP_INSTALL = YES
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+EXPORTED_SYMBOLS_FILE = MADDriver.source/Import-Export/PlugExports-Mac.exp
+WRAPPER_EXTENSION = ppimpexp
+

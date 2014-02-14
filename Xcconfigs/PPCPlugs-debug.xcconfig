@@ -1,9 +1,0 @@
-//
-//  PPCPlugs-debug.xcconfig
-//  PPMacho
-//
-//  Created by C.W. Betts on 9/18/13.
-//
-//
-
-#include "PPCPlugs.xcconfig"

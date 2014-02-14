@@ -1938,7 +1938,7 @@
 		553341FD10BB600A005208D1 /* IT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IT-Info.plist"; sourceTree = SOURCE_ROOT; };
 		553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Universal.xcconfig; sourceTree = "<group>"; };
 		553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PPCPlugs.xcconfig; sourceTree = "<group>"; };
-		553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "PPCPlugs-debug.xcconfig"; sourceTree = "<group>"; };
+		553626B117EA6F5D00D3A3C8 /* PPCPlugs-NonPort.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "PPCPlugs-NonPort.xcconfig"; sourceTree = "<group>"; };
 		553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Cocoa Editor Images.xcassets"; path = "../../Cocoa/Cocoa Editor Images.xcassets"; sourceTree = "<group>"; };
 		5542403E10DB602D00C08864 /* SoundDesignerII.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = SoundDesignerII.r; sourceTree = "<group>"; };
 		5542403F10DB602D00C08864 /* Mp3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mp3.r; sourceTree = "<group>"; };
@@ -3488,7 +3488,7 @@
 			children = (
 				553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */,
 				553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */,
-				553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */,
+				553626B117EA6F5D00D3A3C8 /* PPCPlugs-NonPort.xcconfig */,
 			);
 			path = Xcconfigs;
 			sourceTree = "<group>";
@@ -7638,7 +7638,7 @@
 		};
 		5533410B10BB5460005208D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -7657,7 +7657,7 @@
 		};
 		5533411510BB547D005208D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -7675,7 +7675,7 @@
 		};
 		5533415110BB572C005208D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -7693,7 +7693,7 @@
 		};
 		553341D110BB5FE0005208D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -7711,7 +7711,7 @@
 		};
 		553341E710BB5FFA005208D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -7729,7 +7729,7 @@
 		};
 		553341FA10BB600A005208D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8837,7 +8837,7 @@
 		};
 		5586870E10BF5C4700FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8855,7 +8855,7 @@
 		};
 		5586871D10BF5C4A00FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8873,7 +8873,7 @@
 		};
 		5586872C10BF5C4E00FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8891,7 +8891,7 @@
 		};
 		5586874C10BF5D3700FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8909,7 +8909,7 @@
 		};
 		5586876110BF5E4D00FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8927,7 +8927,7 @@
 		};
 		558687DD10BF620500FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8945,7 +8945,7 @@
 		};
 		558687F910BF624E00FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8963,7 +8963,7 @@
 		};
 		5586881A10BF62F100FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8981,7 +8981,7 @@
 		};
 		5586882810BF62F500FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -8999,7 +8999,7 @@
 		};
 		5586883C10BF62FB00FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
@@ -9008,7 +9008,7 @@
 		};
 		5586889510BF67F100FCC24D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-NonPort.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -9021,7 +9021,7 @@
 		};
 		5586889610BF67F100FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-NonPort.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -9035,7 +9035,7 @@
 		};
 		55868A6410BFB46100FCC24D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-NonPort.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9048,7 +9048,7 @@
 		};
 		55868A6510BFB46100FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-debug.xcconfig */;
+			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-NonPort.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
