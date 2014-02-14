@@ -10,6 +10,7 @@
 #include "GetFileIcon.h"
 #include "Utils.h"
 #include "Navigation.h"
+#include "PlayerPROApp.h"
 
 #define BIGMUSICLIST	404
 #define MAXITEM			12000
@@ -357,9 +358,6 @@ void DoGrowMODList(DialogPtr theDialog)
 		SetControlValue(FlipBut, 1);
 	SetPort(SavePort);
 }
-
-void pstrinsert(StringPtr dst, StringPtr src);
-void pstrcat(StringPtr dst, StringPtr src);
 
 OSErr PathNameFromDirIDTRUE(long dirID, short vRefNum, StringPtr fullPathName)
 {

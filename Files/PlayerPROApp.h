@@ -7,12 +7,19 @@
  *
  */
 
+#ifndef __PLAYERPROAPP_H__
+#define __PLAYERPROAPP_H__
+
 #include <Carbon/Carbon.h>
 #include "RDriver.h"
 extern "C" {
 #include "Shuddup.h"
 }
 #include <string>
+#include "wds_menu.h"
+#include "wds_editor.h"
+#include "wds_general.h"
+//#include <array>
 
 typedef struct CrsrRec {
 	short total;
@@ -23,6 +30,9 @@ typedef struct CrsrRec {
 namespace PlayerPRO {
 	class PlayerPROApp {
 	public:
+		PlayerPROApp();
+		~PlayerPROApp();
+		
 		KeyMap				km;
 		RGBColor			theColor;
 		ModalFilterUPP		MyDlgFilterDesc;
@@ -32,7 +42,7 @@ namespace PlayerPRO {
 		bool		gUseControlSize, MusicPlayActive, UseAEErreur;
 		short		gScrollBarID, curvRefNum;
 		long		curparID, StartTime;
-		bool		Micro, hasASC, End, Record;
+		bool		Micro, End, Record;
 		DialogPtr	ToolsDlog;
 		Str63		lastLoadMODListName;
 		Cursor		watchCrsr, qdarrow;
@@ -51,7 +61,6 @@ namespace PlayerPRO {
 		std::string EInstru(int idx);
 		std::string EArgu(int idx);
 		std::string EEffect(int idx);
-
 		
 		MADDriverRec		*MADDriver;
 		MADMusic			*curMusic;
@@ -59,15 +68,15 @@ namespace PlayerPRO {
 		const EventTypeSpec	*CarbonWinList();
 		
 		//void RollCursor();
-		Boolean QTTypeConversion(OSType fileType);
-		Boolean CheckFileType(FSSpec theSpec, OSType theType);
+		static Boolean QTTypeConversion(OSType fileType);
+		static Boolean CheckFileType(FSSpec theSpec, OSType theType);
 		
-		OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
-		OSErr GetApplicationResourceFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
+		static OSErr GetApplicationPackageFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
+		static OSErr GetApplicationResourceFSSpecFromBundle(FSSpecPtr theFSSpecPtr);
 		
-		void PathNameFromDirID(long dirID, short vRefNum, StringPtr fullPathName);
+		static void PathNameFromDirID(long dirID, short vRefNum, StringPtr fullPathName);
 		void ScanDir(long dirID, short VRefNum, Boolean recurse);
-		void DoScanDir(long	DirID, short VRefNum);
+		void DoScanDir(long DirID, short VRefNum);
 		
 		void Run();
 		
@@ -84,8 +93,13 @@ namespace PlayerPRO {
 		long	previousTime;
 		CrsrRec	MyCrsrRec;
 		Cursor	*myCursor;
-
+		wds_general generalWindows[];
 	};
 	PlayerPROApp *TheApp;
 }
+
+extern "C" void pstrinsert(StringPtr dst, StringPtr src);
+extern "C" void pstrcat(StringPtr dst, StringPtr src);
+
+#endif
 

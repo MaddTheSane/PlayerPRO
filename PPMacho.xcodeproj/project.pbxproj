@@ -459,7 +459,7 @@
 		88E0C44A0C2F21DE00D6C081 /* Undo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C40A0C2F21DD00D6C081 /* Undo.cpp */; };
 		88E0C44B0C2F21DE00D6C081 /* Undo.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C40B0C2F21DD00D6C081 /* Undo.h */; };
 		88E0C44C0C2F21DE00D6C081 /* WaveEditor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C41A0C2F21DD00D6C081 /* WaveEditor.cpp */; };
-		88E0C4520C2F21DE00D6C081 /* Utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4130C2F21DD00D6C081 /* Utils.c */; };
+		88E0C4520C2F21DE00D6C081 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4130C2F21DD00D6C081 /* Utils.cpp */; };
 		88E0C4530C2F21DE00D6C081 /* GetFileIcon.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C40D0C2F21DD00D6C081 /* GetFileIcon.c */; };
 		88E0C4540C2F21DE00D6C081 /* GetFileIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C40E0C2F21DD00D6C081 /* GetFileIcon.h */; };
 		88E0C4550C2F21DE00D6C081 /* PlugsPPDGInit.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C50C2F21DD00D6C081 /* PlugsPPDGInit.c */; };
@@ -1665,7 +1665,7 @@
 		88E0C40F0C2F21DD00D6C081 /* InternetMapping.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = InternetMapping.c; path = Files/InternetMapping.c; sourceTree = SOURCE_ROOT; };
 		88E0C4100C2F21DD00D6C081 /* Navigation.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = Navigation.c; path = Files/Navigation.c; sourceTree = SOURCE_ROOT; };
 		88E0C4120C2F21DD00D6C081 /* ScreenDevice.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; name = ScreenDevice.h; path = Files/ScreenDevice.h; sourceTree = SOURCE_ROOT; };
-		88E0C4130C2F21DD00D6C081 /* Utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = Utils.c; path = Files/Utils.c; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		88E0C4130C2F21DD00D6C081 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; name = Utils.cpp; path = Files/Utils.cpp; sourceTree = "<group>"; };
 		88E0C4150C2F21DD00D6C081 /* Command.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Command.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C4160C2F21DD00D6C081 /* Editor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Editor.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C4170C2F21DD00D6C081 /* Mozart.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = Mozart.cpp; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -3256,7 +3256,7 @@
 				88E0C4100C2F21DD00D6C081 /* Navigation.c */,
 				88E0C4120C2F21DD00D6C081 /* ScreenDevice.h */,
 				55B1953D17FD5CC200E6F160 /* ScreenDevice.cpp */,
-				88E0C4130C2F21DD00D6C081 /* Utils.c */,
+				88E0C4130C2F21DD00D6C081 /* Utils.cpp */,
 			);
 			lineEnding = 0;
 			name = "Utils Group";
@@ -5365,7 +5365,7 @@
 				88E0C4490C2F21DE00D6C081 /* TrackView.cpp in Sources */,
 				88E0C44A0C2F21DE00D6C081 /* Undo.cpp in Sources */,
 				88E0C44C0C2F21DE00D6C081 /* WaveEditor.cpp in Sources */,
-				88E0C4520C2F21DE00D6C081 /* Utils.c in Sources */,
+				88E0C4520C2F21DE00D6C081 /* Utils.cpp in Sources */,
 				88E0C4530C2F21DE00D6C081 /* GetFileIcon.c in Sources */,
 				88E0C4550C2F21DE00D6C081 /* PlugsPPDGInit.c in Sources */,
 				88E0C4580C2F21DE00D6C081 /* PlugsSoundFilter.c in Sources */,

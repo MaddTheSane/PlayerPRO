@@ -7,6 +7,9 @@
  *
  */
 
+#ifndef __PLAYERPRO_WDS_GENERAL_H__
+#define __PLAYERPRO_WDS_GENERAL_H__
+
 #include <Carbon/Carbon.h>
 
 namespace PlayerPRO {
@@ -16,7 +19,6 @@ namespace PlayerPRO {
 		virtual ~wds_general();
 		virtual void DoHelp(short **items, short *lsize);
 		virtual void DoNull();
-		//DragTrackingHandlerProcPtr DragTracking;
 		
 		bool GetCanAcceptDrag();
 		void SetCanAcceptDrag(bool val);
@@ -27,3 +29,4 @@ namespace PlayerPRO {
 	};
 }
 
+#endif

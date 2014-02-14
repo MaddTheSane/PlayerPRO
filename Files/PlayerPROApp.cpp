@@ -14,6 +14,22 @@ void PlayerPRO::PlayerPROApp::Run()
 
 }
 
+PlayerPRO::PlayerPROApp::PlayerPROApp() : gUseControlSize(false), MusicPlayActive(false), UseAEErreur(false),
+ToolsDlog(NULL)
+{
+	char tempASC[256] = "";
+	pStrcpy(asc_WorkStr, MYC2PStr(tempASC));
+	
+	memset(&km, 0, sizeof(km));
+	memset(&theColor, 0, sizeof(theColor));
+	memset(&watchCrsr, 0, sizeof(watchCrsr));
+	memset(&qdarrow, 0, sizeof(qdarrow));
+}
+
+PlayerPRO::PlayerPROApp::~PlayerPROApp()
+{
+	
+}
 
 Boolean PlayerPRO::PlayerPROApp::QTTypeConversion(OSType fileType)
 {
@@ -57,19 +73,19 @@ Boolean PlayerPRO::PlayerPROApp::CheckFileType(FSSpec theSpec, OSType theType)
 	
 	switch (theType) {
 		case 'MADK':
-			MyP2CStr(theSpec.name);
-			if (CheckMADFile((Ptr) theSpec.name) == noErr)
+			MYP2CStr(theSpec.name);
+			if (CheckMADFile((Ptr)theSpec.name) == noErr)
 				Response = true;
 			else
 				Response = false;
-			MyC2PStr((Ptr)theSpec.name);
+			MYC2PStr((Ptr)theSpec.name);
 			break;
 			
 		default:
-			MyP2CStr(theSpec.name);
+			MYP2CStr(theSpec.name);
 			OSType2Ptr(theType, tempC);
-			err = PPTestFile(gMADLib, tempC, (Ptr)theSpec.name);
-			MyC2PStr((Ptr)theSpec.name);
+			err = PPTestFile(PlayerPRO::TheApp->gMADLib, tempC, (Ptr)theSpec.name);
+			MYC2PStr((Ptr)theSpec.name);
 			
 			if (err)
 				Response = false;
@@ -271,7 +287,8 @@ void PlayerPRO::PlayerPROApp::ScanDir(long dirID, short VRefNum, Boolean recurse
 	CInfoPBRec		info;
 	FSSpec			spec;
 	
-	if (remonte) return;
+	if (remonte)
+		return;
 	
 	info.hFileInfo.ioNamePtr = asc_WorkStr;
 	info.hFileInfo.ioVRefNum = VRefNum;
@@ -328,4 +345,13 @@ void PlayerPRO::PlayerPROApp::PathNameFromDirID(long dirID, short vRefNum, Strin
 	} while (block.dirInfo.ioDrDirID != 2 && err == noErr);
 }
 
-
+int main(int argc, char *argv[])
+{
+	PlayerPRO::TheApp = new PlayerPRO::PlayerPROApp();
+	
+	PlayerPRO::TheApp->Run();
+	
+	delete PlayerPRO::TheApp;
+	
+	return EXIT_SUCCESS;
+}
