@@ -8,6 +8,8 @@
  
 CFBundleName = "PlayerPRO 6";
 
+"Music Tracker" = "Music Tracker";
+"MIDI File" = "MIDI File";
 
 PPMTMFile = "MultiTracker Audio";
 PPS3MFile = "ScreamTracker Audio";
@@ -29,7 +31,4 @@ PPMADKFile = "PlayerPRO MADK Tracker";
 PPMADHFile = "PlayerPRO MADH Tracker";
 PPMADBundle = "PlayerPRO MAD Tracker Bundle";
 
-"Music Tracker" = "Music Tracker";
-
-"MIDI File" = "MIDI File";
 PPImpExpBundle = "PlayerPRO Import/Export Plug-in";

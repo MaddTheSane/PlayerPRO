@@ -1,8 +1,9 @@
 /* Localized versions of Info.plist keys */
 
 CFBundleName = "PlayerPRO Player";
-NSHumanReadableCopyright = "Copyright © 2013 SourceForge.";
+NSHumanReadableCopyright = "Copyright © 2013-2014 SourceForge.";
 
+"Music Tracker" = "Music Tracker";
 
 PPMTMFile = "MultiTracker Audio";
 PPS3MFile = "ScreamTracker Audio";
@@ -19,7 +20,6 @@ PPMADIFile = "PlayerPRO MADI Tracker";
 PPMADKFile = "PlayerPRO MADK Tracker";
 PPMADHFile = "PlayerPRO MADH Tracker";
 PPMADBundle = "PlayerPRO MAD Tracker Bundle";
-"Music Tracker" = "Music Tracker";
 
 "Old PlayerPRO Music List" = "Old PlayerPRO Music List";
 "PlayerPRO Music List" = "PlayerPRO Music List";

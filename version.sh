@@ -10,7 +10,7 @@ if [ $LOCALVER \> 1 ] ; then
         VER=$LOCALVER
     fi
 
-	## 31 is the base of the svn version
+    ## 31 is the base of the svn version
     VER=`expr ${VER} + 31`
 
     echo $VER
