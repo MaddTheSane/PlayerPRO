@@ -274,37 +274,36 @@ enum
 };
 
 enum {
-	RefInstruList 	= 1,
-	RefPartition 	= 2,
-	RefInstruEdit 	= 3,
-	RefBoutons 		= 4,
-	RefPatList 		= 5,
-	RefAdaptators	= 6,
-	RefMODList		= 7,
-	RefTools		= 8,
-	RefSample		= 9,
-	RefPiano		= 10,
-	RefClassic		= 11,
-	RefPlayer 		= 12,
-	RefMozart		= 13,
-	RefInstruView	= 14,
-	RefDigiView		= 15,
-	RefCmd			= 16,
-	RefPref			= 17,
-	RefTrackView	= 18,
-	RefSpectrum		= 20,
-	RefParti		= 21,
-	RefHelp			= 22,
-	RefFindReplace	= 23,
-	RefCube			= 24,
-	RefActiveHelp	= 25,
-	RefWave			= 26,
-	RefStaff		= 27,
-	RefSndExport	= 28,
-	RefQuicktime	= 29,
-	RefEqualizer	= 30,
-	RefVisual		= 31,
-	RefVST			= 32
+	RefInstruList = 1,
+	RefPartition,
+	RefInstruEdit,
+	RefBoutons,
+	RefPatList,
+	RefAdaptators,
+	RefMODList,
+	RefTools,
+	RefSample,
+	RefPiano,
+	RefClassic,
+	RefPlayer,
+	RefMozart,
+	RefInstruView,
+	RefDigiView,
+	RefCmd,
+	RefPref,
+	RefTrackView,
+	RefSpectrum = 20,
+	RefParti,
+	RefHelp,
+	RefFindReplace,
+	RefActiveHelp = 25,
+	RefWave,
+	RefStaff,
+	RefSndExport,
+	RefQuicktime,
+	RefEqualizer,
+	RefVisual,
+	RefVST
 };
 
 #define deletekey	0x08
@@ -314,8 +313,6 @@ enum {
 
 #define MyC2PStr MYC2PStr
 #define MyP2CStr MYP2CStr
-//unsigned char* MyC2PStr(Ptr cStr);
-//void MyP2CStr(unsigned char *cStr);
 void MyDebugStr(short line, Ptr file, Ptr text);
 void			NNumToString(short no, Str255 aStr);
 void			GetNoteString(short note, Str255	string);
@@ -403,6 +400,3 @@ static inline void SwapPcmd(Pcmd *toswap)
 	MOT16(&toswap->trackStart);
 }
 #endif
-
-void RollCursor(void);
-

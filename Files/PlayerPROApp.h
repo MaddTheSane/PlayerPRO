@@ -27,7 +27,40 @@ typedef struct CrsrRec {
 	short no[30];
 } CrsrRec;
 
+
 namespace PlayerPRO {
+	enum CursorNumber {
+		HelpCrsr = 0,
+		NoteCrsr,
+		DelCrsr,
+		PlayCrsr,
+		HandCrsr,
+		beamCrsr,
+		pencilCrsr,
+		pencilCrsrStereo,
+		CHandCrsr,
+		ContextCrsr,
+		watchCrsr,
+		ZoomInCrsr,
+		ZoomOutCrsr,
+		TotalCursors
+	};
+	
+	enum {
+		Find = 0,
+		Next,
+		ReplaceFind,
+		ReplaceAll
+	};
+	
+	enum {
+		allMusics = 1,
+		allReadable = 2,
+		allFiles = 3,
+		MADK = 5,
+		others = 7
+	};
+	
 	class PlayerPROApp {
 	public:
 		PlayerPROApp();
@@ -45,8 +78,6 @@ namespace PlayerPRO {
 		bool		Micro, End, Record;
 		DialogPtr	ToolsDlog;
 		Str63		lastLoadMODListName;
-		Cursor		watchCrsr, qdarrow;
-		Cursor		PlayCrsr, HandCrsr, CHandCrsr, ZoomInCrsr, ZoomOutCrsr;
 		bool		DragManagerUse;
 		
 		bool		mainSystemDrag, Direct, Stereo, StereoMixing, NewSoundManager, NewSoundManager31, Audio16;
@@ -88,13 +119,66 @@ namespace PlayerPRO {
 		void RollCursor();
 		void CloseRollCrsrc();
 		static void GetSizeString(long size, Str255 str, Boolean Convert);
+		
+		void SetCursorToQDArrow();
+		ProcessSerialNumber GetPlayerPROPSN();
+		void SetCursorOnNumber(short theNum);
+		static void GetMDEFRect(Rect *aRect, Rect *menuRect, short whichItem);
+		void DoGlobalNull();
+		void SKVolume(short vol);
+		void DoOSEvent(EventRecord *event, bool ModalCall);
+		short ConvertCharToNote(char theChar);
+		void EventLoop2();
+		
+		static void UseSameLeft(WindowPtr whichWindow);
+		static bool PtRect(Point thePoint, Rect *theRect);
+		void DrawVersion();
+		
+		short TouchMem[11];
+		short TrackMem[11];
+		short TouchIn;
+		short showWhat;
 
+		static OSErr FindAProcess(OSType typeToFind, OSType creatorToFind, ProcessSerialNumberPtr processSN);
+		OSErr OpenSelection(FSSpecPtr theDoc);
+		ConstStr255Param GetVersionString();
+		
+		void StartDialog();
+		void EndDialog();
+		
+		static OSErr NGetFileName(FSSpec *spec);
+		void InitImportMenu(void);
+		short IntInfoL(short ID);
+		short InfoL(short ID);
+		void MADErreur(OSErr err);
+		void IntErreur(short ID, OSErr theErr);
+		void OtherIntErreur(short ID, OSErr theErr, Str255 otherstr);
+		void Erreur(short ID, OSErr theErr);
+		
+		void DeletePreferences();
+		void DoPreferences();
+		
+		void DoReset();
+		
 	private:
 		Str255 asc_WorkStr;
 		long	previousTime;
 		CrsrRec	MyCrsrRec;
 		Cursor	*myCursor;
 		std::vector<wds_general*> *generalWindows;
+		MADMusic	*SwitchCurMusic, *tempCurMusic;
+		Boolean		AlternateBuffer;
+		Cursor	cursors[TotalCursors];
+		Cursor	qdarrow;
+
+		short	mainVRefNum, theOldDepth;
+		long	mainParID;
+		
+		DialogPtr			myStartUpDlog;
+		Str255				versString;
+		RgnHandle			gCursorRgn;
+		ProcessSerialNumber	playerPROPSN;
+		void LoadOldFilePrefs(FSIORefNum fRefNum);
 	};
 	PlayerPROApp *TheApp;
 }

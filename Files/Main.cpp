@@ -2483,8 +2483,8 @@ void EventLoop(void)
 	for(i=0; i<10; i++) TrackMem[i] = 0;
 	
 	SetEventMask(everyEvent);
-	//	gCursorRgn = NewRgn();
-	//	SetEmptyRgn(gCursorRgn);
+	//gCursorRgn = NewRgn();
+	//SetEmptyRgn(gCursorRgn);
 	
 	gCursorRgn = NULL;
 	
@@ -7224,10 +7224,3 @@ void HandleNewSound(short theItem)
 }
 
 #endif
-
-int main()
-{
-	
-	
-	return EXIT_SUCCESS;
-}

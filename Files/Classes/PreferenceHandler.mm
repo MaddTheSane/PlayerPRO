@@ -12,6 +12,7 @@
 #include "PreferenceHandler.h"
 #include "Shuddup.h"
 #include "Utils.h"
+#include "PlayerPROApp.h"
 
 #define makeNSRGB(red1, green1, blue1) [NSColor colorWithCalibratedRed:red1 / (CGFloat)USHRT_MAX green:green1 / (CGFloat)USHRT_MAX blue:blue1 / (CGFloat)USHRT_MAX alpha:1]
 
@@ -496,69 +497,70 @@ void ReadCFPreferences()
 	NSString *tempStr = nil;
 	NSArray *tempArray = nil;
 	int i;
-	memset(&thePrefs, 0, sizeof(Prefs));
-	thePrefs.addExtension = [defaults boolForKey:PPMAddExtension];
-	thePrefs.MADCompression = [defaults boolForKey:PPMMadCompression];
-	thePrefs.OscilloLine = [defaults boolForKey:PPMOscilloscopeDrawLines];
-#define PPCOLOR(val) ReadCFPreferencesWithQDColor(PPCColor ## val, &thePrefs.tracksColor[val - 1])
+	Prefs *thePrefs = &PlayerPRO::TheApp->thePrefs;
+	memset(thePrefs, 0, sizeof(Prefs));
+	thePrefs->addExtension = [defaults boolForKey:PPMAddExtension];
+	thePrefs->MADCompression = [defaults boolForKey:PPMMadCompression];
+	thePrefs->OscilloLine = [defaults boolForKey:PPMOscilloscopeDrawLines];
+#define PPCOLOR(val) ReadCFPreferencesWithQDColor(PPCColor ## val, &thePrefs->tracksColor[val - 1])
 	PPCOLORPOPULATE();
 #undef PPCOLOR
 #if defined(powerc) || defined (__powerc) || defined(__ppc__)
-	thePrefs.PPCMachine = true;
+	thePrefs->PPCMachine = true;
 #else
-	thePrefs.PPCMachine = false;
+	thePrefs->PPCMachine = false;
 #endif
 	tempStr = [defaults stringForKey:PPWindowName1];
-	CFStringGetPascalString((CFStringRef)tempStr, thePrefs.WinNames[0], sizeof(thePrefs.WinNames[0]), kCFStringEncodingMacRoman);
+	CFStringGetPascalString((CFStringRef)tempStr, thePrefs->WinNames[0], sizeof(thePrefs->WinNames[0]), kCFStringEncodingMacRoman);
 	tempStr = [defaults stringForKey:PPWindowName2];
-	CFStringGetPascalString((CFStringRef)tempStr, thePrefs.WinNames[1], sizeof(thePrefs.WinNames[0]), kCFStringEncodingMacRoman);
+	CFStringGetPascalString((CFStringRef)tempStr, thePrefs->WinNames[1], sizeof(thePrefs->WinNames[0]), kCFStringEncodingMacRoman);
 	tempStr = [defaults stringForKey:PPWindowName3];
-	CFStringGetPascalString((CFStringRef)tempStr, thePrefs.WinNames[2], sizeof(thePrefs.WinNames[0]), kCFStringEncodingMacRoman);
+	CFStringGetPascalString((CFStringRef)tempStr, thePrefs->WinNames[2], sizeof(thePrefs->WinNames[0]), kCFStringEncodingMacRoman);
 	tempStr = nil;
-	thePrefs.NoStart = [defaults integerForKey:PPStartNumber];
+	thePrefs->NoStart = [defaults integerForKey:PPStartNumber];
 	tempArray = [defaults arrayForKey:PPPianoKeys];
 	for (i = 0; i < 300; i++) {
-		thePrefs.PianoKey[i] = [[tempArray objectAtIndex:i] shortValue];
+		thePrefs->PianoKey[i] = [[tempArray objectAtIndex:i] shortValue];
 	}
-	thePrefs.LoopType = [defaults integerForKey:PPLoopType];
-	thePrefs.volumeLevel = [defaults integerForKey:PPVolumeLevel];
-	thePrefs.Compressor = 'NONE';
-	thePrefs.outPutMode = thePrefs.DirectDriverType.outPutMode = DeluxeStereoOutPut;	// force DeluxeStereoOutPut
-	thePrefs.channelNumber = 2;
-	thePrefs.DirectDriverType.numChn = 4;
-	thePrefs.DirectDriverType.TickRemover = thePrefs.TickRemover = true;
+	thePrefs->LoopType = [defaults integerForKey:PPLoopType];
+	thePrefs->volumeLevel = [defaults integerForKey:PPVolumeLevel];
+	thePrefs->Compressor = 'NONE';
+	thePrefs->outPutMode = thePrefs->DirectDriverType.outPutMode = DeluxeStereoOutPut;	// force DeluxeStereoOutPut
+	thePrefs->channelNumber = 2;
+	thePrefs->DirectDriverType.numChn = 4;
+	thePrefs->DirectDriverType.TickRemover = thePrefs->TickRemover = true;
 	
-	thePrefs.Reverb = thePrefs.DirectDriverType.Reverb = [defaults boolForKey:PPReverbToggle];
-	thePrefs.ReverbSize = thePrefs.DirectDriverType.ReverbSize = [defaults integerForKey:PPReverbAmount];
-	thePrefs.ReverbStrength = thePrefs.DirectDriverType.ReverbStrength = [defaults integerForKey:PPReverbStrength];
-	thePrefs.outPutRate = thePrefs.FrequenceSpeed = thePrefs.DirectDriverType.outPutRate = [defaults integerForKey:PPSoundOutRate];
-	thePrefs.outPutBits = thePrefs.amplitude = thePrefs.DirectDriverType.outPutBits = [defaults integerForKey:PPSoundOutBits];
-	thePrefs.driverMode = thePrefs.DirectDriverType.driverMode = [defaults integerForKey:PPSoundDriver];
-	thePrefs.surround = thePrefs.DirectDriverType.surround = [defaults boolForKey:PPSurroundToggle];
+	thePrefs->Reverb = thePrefs->DirectDriverType.Reverb = [defaults boolForKey:PPReverbToggle];
+	thePrefs->ReverbSize = thePrefs->DirectDriverType.ReverbSize = [defaults integerForKey:PPReverbAmount];
+	thePrefs->ReverbStrength = thePrefs->DirectDriverType.ReverbStrength = [defaults integerForKey:PPReverbStrength];
+	thePrefs->outPutRate = thePrefs->FrequenceSpeed = thePrefs->DirectDriverType.outPutRate = [defaults integerForKey:PPSoundOutRate];
+	thePrefs->outPutBits = thePrefs->amplitude = thePrefs->DirectDriverType.outPutBits = [defaults integerForKey:PPSoundOutBits];
+	thePrefs->driverMode = thePrefs->DirectDriverType.driverMode = [defaults integerForKey:PPSoundDriver];
+	thePrefs->surround = thePrefs->DirectDriverType.surround = [defaults boolForKey:PPSurroundToggle];
 	if ([defaults boolForKey:PPStereoDelayToggle]) {
-		thePrefs.MicroDelaySize = thePrefs.DirectDriverType.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
+		thePrefs->MicroDelaySize = thePrefs->DirectDriverType.MicroDelaySize = [defaults integerForKey:PPStereoDelayAmount];
 	} else {
-		thePrefs.MicroDelaySize = thePrefs.DirectDriverType.MicroDelaySize = 0;
+		thePrefs->MicroDelaySize = thePrefs->DirectDriverType.MicroDelaySize = 0;
 	}
 	
 	if ([defaults boolForKey:PPOversamplingToggle]) {
-		thePrefs.oversampling = thePrefs.DirectDriverType.oversampling = [defaults integerForKey:PPOversamplingAmount];
+		thePrefs->oversampling = thePrefs->DirectDriverType.oversampling = [defaults integerForKey:PPOversamplingAmount];
 	} else {
-		thePrefs.oversampling = thePrefs.DirectDriverType.oversampling = 1;
+		thePrefs->oversampling = thePrefs->DirectDriverType.oversampling = 1;
 	}
 	
-	ReadCFPreferencesWithQDColor(PPDEMarkerColorPref, &thePrefs.yellC);
-	thePrefs.StaffShowAllNotes = [defaults boolForKey:PPCEShowMarkers];
-	thePrefs.StaffShowLength = [defaults boolForKey:PPCEShowNotesLen];
-	thePrefs.TempsNum = [defaults integerForKey:PPCETempoNum];
-	thePrefs.TempsUnit = [defaults integerForKey:PPCETempoUnit];
-	thePrefs.TrackHeight = [defaults integerForKey:PPCETrackHeight];
+	ReadCFPreferencesWithQDColor(PPDEMarkerColorPref, &thePrefs->yellC);
+	thePrefs->StaffShowAllNotes = [defaults boolForKey:PPCEShowMarkers];
+	thePrefs->StaffShowLength = [defaults boolForKey:PPCEShowNotesLen];
+	thePrefs->TempsNum = [defaults integerForKey:PPCETempoNum];
+	thePrefs->TempsUnit = [defaults integerForKey:PPCETempoUnit];
+	thePrefs->TrackHeight = [defaults integerForKey:PPCETrackHeight];
 	
-	thePrefs.DigitalArgu = [defaults boolForKey:PPDEShowArgument];
-	thePrefs.DigitalEffect = [defaults boolForKey:PPDEShowEffect];
-	thePrefs.DigitalInstru = [defaults boolForKey:PPDEShowInstrument];
-	thePrefs.DigitalNote = [defaults boolForKey:PPDEShowNote];
-	thePrefs.DigitalVol = [defaults boolForKey:PPDEShowVolume];
+	thePrefs->DigitalArgu = [defaults boolForKey:PPDEShowArgument];
+	thePrefs->DigitalEffect = [defaults boolForKey:PPDEShowEffect];
+	thePrefs->DigitalInstru = [defaults boolForKey:PPDEShowInstrument];
+	thePrefs->DigitalNote = [defaults boolForKey:PPDEShowNote];
+	thePrefs->DigitalVol = [defaults boolForKey:PPDEShowVolume];
 	
 	[pool drain];
 }
@@ -569,57 +571,58 @@ void WriteCFPreferences()
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSMutableArray *tmpMutable = nil;
 	int i;
-	[defaults setBool:thePrefs.addExtension forKey:PPMAddExtension];
-	[defaults setBool:thePrefs.MADCompression forKey:PPMMadCompression];
-#define PPCOLOR(val) WriteCFPreferencesWithQDColor(PPCColor ## val, thePrefs.tracksColor[val - 1])
+	Prefs *thePrefs = &PlayerPRO::TheApp->thePrefs;
+	[defaults setBool:thePrefs->addExtension forKey:PPMAddExtension];
+	[defaults setBool:thePrefs->MADCompression forKey:PPMMadCompression];
+#define PPCOLOR(val) WriteCFPreferencesWithQDColor(PPCColor ## val, thePrefs->tracksColor[val - 1])
 	PPCOLORPOPULATE();
 #undef PPCOLOR
-	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs.WinNames[0], kCFStringEncodingMacRoman) autorelease] forKey:PPWindowName1];
-	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs.WinNames[1], kCFStringEncodingMacRoman) autorelease] forKey:PPWindowName2];
-	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs.WinNames[2], kCFStringEncodingMacRoman) autorelease] forKey:PPWindowName3];
-	[defaults setInteger:thePrefs.NoStart forKey:PPStartNumber];
+	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs->WinNames[0], kCFStringEncodingMacRoman) autorelease] forKey:PPWindowName1];
+	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs->WinNames[1], kCFStringEncodingMacRoman) autorelease] forKey:PPWindowName2];
+	[defaults setObject:[(NSString*)CFStringCreateWithPascalString(kCFAllocatorDefault, thePrefs->WinNames[2], kCFStringEncodingMacRoman) autorelease] forKey:PPWindowName3];
+	[defaults setInteger:thePrefs->NoStart forKey:PPStartNumber];
 	tmpMutable = [[NSMutableArray alloc] initWithCapacity:300];
 	for (i = 0; i < 300; i++) {
-		[tmpMutable addObject:[NSNumber numberWithShort:thePrefs.PianoKey[i]]];
+		[tmpMutable addObject:[NSNumber numberWithShort:thePrefs->PianoKey[i]]];
 	}
 	[defaults setObject:tmpMutable forKey:PPPianoKeys];
 	[tmpMutable release];
 	tmpMutable = nil;
-	[defaults setInteger:thePrefs.LoopType forKey:PPLoopType];
-	[defaults setInteger:thePrefs.volumeLevel forKey:PPVolumeLevel];
-	[defaults setInteger:thePrefs.ReverbStrength forKey:PPReverbStrength];
-	[defaults setInteger:thePrefs.ReverbSize forKey:PPReverbAmount];
-	[defaults setBool:thePrefs.Reverb forKey:PPReverbToggle];
-	[defaults setInteger:thePrefs.outPutRate forKey:PPSoundOutRate];
-	[defaults setInteger:thePrefs.outPutBits forKey:PPSoundOutBits];
-	[defaults setInteger:thePrefs.driverMode forKey:PPSoundDriver];
-	[defaults setBool:thePrefs.surround forKey:PPSurroundToggle];
-	if (thePrefs.MicroDelaySize > 0) {
+	[defaults setInteger:thePrefs->LoopType forKey:PPLoopType];
+	[defaults setInteger:thePrefs->volumeLevel forKey:PPVolumeLevel];
+	[defaults setInteger:thePrefs->ReverbStrength forKey:PPReverbStrength];
+	[defaults setInteger:thePrefs->ReverbSize forKey:PPReverbAmount];
+	[defaults setBool:thePrefs->Reverb forKey:PPReverbToggle];
+	[defaults setInteger:thePrefs->outPutRate forKey:PPSoundOutRate];
+	[defaults setInteger:thePrefs->outPutBits forKey:PPSoundOutBits];
+	[defaults setInteger:thePrefs->driverMode forKey:PPSoundDriver];
+	[defaults setBool:thePrefs->surround forKey:PPSurroundToggle];
+	if (thePrefs->MicroDelaySize > 0) {
 		[defaults setBool:YES forKey:PPStereoDelayToggle];
 	} else {
 		[defaults setBool:NO forKey:PPStereoDelayToggle];
 	}
-	[defaults setInteger:thePrefs.MicroDelaySize forKey:PPStereoDelayAmount];
+	[defaults setInteger:thePrefs->MicroDelaySize forKey:PPStereoDelayAmount];
 
-	if (thePrefs.oversampling > 1) {
+	if (thePrefs->oversampling > 1) {
 		[defaults setBool:YES forKey:PPOversamplingToggle];
 	} else {
 		[defaults setBool:NO forKey:PPOversamplingToggle];
 	}
-	[defaults setInteger:thePrefs.oversampling forKey:PPOversamplingAmount];
+	[defaults setInteger:thePrefs->oversampling forKey:PPOversamplingAmount];
 	
-	WriteCFPreferencesWithQDColor(PPDEMarkerColorPref, thePrefs.yellC);
-	[defaults setBool:thePrefs.StaffShowAllNotes forKey:PPCEShowMarkers];
-	[defaults setBool:thePrefs.StaffShowLength forKey:PPCEShowNotesLen];
-	[defaults setInteger:thePrefs.TempsNum forKey:PPCETempoNum];
-	[defaults setInteger:thePrefs.TempsUnit forKey:PPCETempoUnit];
-	[defaults setInteger:thePrefs.TrackHeight forKey:PPCETrackHeight];
+	WriteCFPreferencesWithQDColor(PPDEMarkerColorPref, thePrefs->yellC);
+	[defaults setBool:thePrefs->StaffShowAllNotes forKey:PPCEShowMarkers];
+	[defaults setBool:thePrefs->StaffShowLength forKey:PPCEShowNotesLen];
+	[defaults setInteger:thePrefs->TempsNum forKey:PPCETempoNum];
+	[defaults setInteger:thePrefs->TempsUnit forKey:PPCETempoUnit];
+	[defaults setInteger:thePrefs->TrackHeight forKey:PPCETrackHeight];
 	
-	[defaults setBool:thePrefs.DigitalArgu forKey:PPDEShowArgument];
-	[defaults setBool:thePrefs.DigitalEffect forKey:PPDEShowEffect];
-	[defaults setBool:thePrefs.DigitalInstru forKey:PPDEShowInstrument];
-	[defaults setBool:thePrefs.DigitalNote forKey:PPDEShowNote];
-	[defaults setBool:thePrefs.DigitalVol forKey:PPDEShowVolume];
+	[defaults setBool:thePrefs->DigitalArgu forKey:PPDEShowArgument];
+	[defaults setBool:thePrefs->DigitalEffect forKey:PPDEShowEffect];
+	[defaults setBool:thePrefs->DigitalInstru forKey:PPDEShowInstrument];
+	[defaults setBool:thePrefs->DigitalNote forKey:PPDEShowNote];
+	[defaults setBool:thePrefs->DigitalVol forKey:PPDEShowVolume];
 	
 	[defaults synchronize];
 	

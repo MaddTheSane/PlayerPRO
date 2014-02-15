@@ -197,7 +197,7 @@
 		554CBD4C188CD1C1002E137B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		554CBD50188CD468002E137B /* NSColor+PPPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = 554CBD4E188CD468002E137B /* NSColor+PPPreferences.h */; };
 		554CBD51188CD468002E137B /* NSColor+PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CBD4F188CD468002E137B /* NSColor+PPPreferences.m */; };
-		554CBD53188CD4AA002E137B /* PreferenceHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 554CBD52188CD4AA002E137B /* PreferenceHandler.m */; };
+		554CBD53188CD4AA002E137B /* PreferenceHandler.mm in Sources */ = {isa = PBXBuildFile; fileRef = 554CBD52188CD4AA002E137B /* PreferenceHandler.mm */; };
 		554D7E2618AD90CB0062CD04 /* wds_menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 554D7E2418AD90CB0062CD04 /* wds_menu.cpp */; };
 		554D7E2718AD90CB0062CD04 /* wds_menu.h in Headers */ = {isa = PBXBuildFile; fileRef = 554D7E2518AD90CB0062CD04 /* wds_menu.h */; };
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
@@ -1423,7 +1423,7 @@
 		554240C810DBF91300C08864 /* CFPlugin-DigitalBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "CFPlugin-DigitalBridge.c"; sourceTree = "<group>"; };
 		554CBD4E188CD468002E137B /* NSColor+PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+PPPreferences.h"; sourceTree = "<group>"; };
 		554CBD4F188CD468002E137B /* NSColor+PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+PPPreferences.m"; sourceTree = "<group>"; };
-		554CBD52188CD4AA002E137B /* PreferenceHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferenceHandler.m; sourceTree = "<group>"; };
+		554CBD52188CD4AA002E137B /* PreferenceHandler.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = PreferenceHandler.mm; sourceTree = "<group>"; };
 		554CBD55188CD7A3002E137B /* UserDefaultKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserDefaultKeys.m; sourceTree = "<group>"; };
 		554CBD58188CE960002E137B /* PreferenceHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferenceHandler.h; sourceTree = "<group>"; };
 		554D7E2418AD90CB0062CD04 /* wds_menu.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wds_menu.cpp; sourceTree = "<group>"; };
@@ -2844,7 +2844,7 @@
 				554CBD4E188CD468002E137B /* NSColor+PPPreferences.h */,
 				554CBD4F188CD468002E137B /* NSColor+PPPreferences.m */,
 				554CBD55188CD7A3002E137B /* UserDefaultKeys.m */,
-				554CBD52188CD4AA002E137B /* PreferenceHandler.m */,
+				554CBD52188CD4AA002E137B /* PreferenceHandler.mm */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -5357,7 +5357,7 @@
 				554CBD51188CD468002E137B /* NSColor+PPPreferences.m in Sources */,
 				88E0C4410C2F21DE00D6C081 /* ProgressBar.cpp in Sources */,
 				88E0C4420C2F21DE00D6C081 /* Record.cpp in Sources */,
-				554CBD53188CD4AA002E137B /* PreferenceHandler.m in Sources */,
+				554CBD53188CD4AA002E137B /* PreferenceHandler.mm in Sources */,
 				88E0C4430C2F21DE00D6C081 /* PrivateList.cpp in Sources */,
 				88E0C4470C2F21DE00D6C081 /* Samples.cpp in Sources */,
 				88E0C4480C2F21DE00D6C081 /* Tools.cpp in Sources */,
