@@ -12,7 +12,10 @@
 
 namespace PlayerPRO {
 	class wds_editor : public wds_general {
+	public:
 		wds_editor(SInt16 dialogID, WindowPtr parentWindow = (WindowPtr) -1);
 		virtual ~wds_editor();
+		
+	private:;
 	};
 }	

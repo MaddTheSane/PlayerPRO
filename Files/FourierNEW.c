@@ -5,14 +5,14 @@
 #include "VA.h"
 #include <math.h>
 
-static		Byte			*xInt;
-static		float			*x;
-static		short			*logoScale;
+static Byte		*xInt;
+static float	*x;
+static short	*logoScale;
 
-#define		PI      		M_PI
-#define		PI2				(M_PI * 2)
+#define PI  M_PI
+#define PI2 (M_PI * 2)
 
-void InitFourier(void)
+void InitFourier()
 {
 	int		i;
 	Handle	rsrc;

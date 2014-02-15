@@ -11,8 +11,16 @@
 
 #include <CoreServices/CoreServices.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 OSType String2OSType(StringPtr theStr);
 OSStatus MyInvalWindowRect(WindowRef window, const Rect *bounds);
 void MyPPBeep();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

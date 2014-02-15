@@ -75,14 +75,11 @@ pascal OSErr DragTracking(DragTrackingMessage message, WindowRef theWindow, void
 extern	Boolean		PianoRecording;
 extern	RGBColor	theColor;
 
-typedef struct IdleSample {
-		short			oldPos;
-		short			oldInstru;
-} IdleSample;
+static long oldNullTicks, Flashing;
 
 typedef struct LPoint {
-		long		start;
-		long		end;
+	long start;
+	long end;
 } LPoint;
 
 enum {
@@ -97,20 +94,7 @@ enum {
 	volumeEnv = -1
 };
 
-static 	Rect					SampleRect;
 		LPoint					SelecRect[MAXINSTRU];
-static	GWorldPtr				BitMapSample[MAXINSTRU];
-static	Boolean					Clignote[MAXINSTRU], TokTak[MAXINSTRU];
-static	long					ZoomLevel[MAXINSTRU];
-static	IdleSample				theIdle[MAXTRACK];
-static	ControlHandle			InfoBut[MAXINSTRU], PencilBut[MAXINSTRU], SelectBut[MAXINSTRU], ZoomBut[MAXINSTRU];
-static	short					DragInstruSource, SelectMode[MAXINSTRU];
-static	ControlHandle			xScroll[MAXINSTRU];
-static	short					curSample[MAXINSTRU];
-static  Byte					curMode[MAXINSTRU];
-static	ControlHandle			LoopBut[MAXINSTRU], SustainBut[MAXINSTRU], EnvBut[MAXINSTRU], FixedBut[MAXINSTRU];
-static	short 					gThumbPrev;
-static	Boolean					gNowMovingLoop = false;
 
 		DialogPtr				SampleDlog[MAXINSTRU];
 
@@ -128,7 +112,37 @@ short FindSample(DialogPtr	theDia);
 Boolean	IsPressed(unsigned short k);
 void ResetSelectionSample(short CurWin);
 
-long GetStartSampleValue(long val, short InstruNo)
+PlayerPRO::Samples::Samples() : wds_general(137, TheApp->ToolsWindow->GetDialogWindow()), gNowMovingLoop(false)
+{
+	short		i;
+	GrafPtr		SavePort;
+	
+	GetPort(&SavePort);
+	
+	Flashing = 200;
+	
+	gNowMovingLoop = false;
+	
+	GetSampleRect(SampleDlog[0]);
+	DisposeDialog(SampleDlog[0]);
+	
+	for (i = 0; i < MAXINSTRU; i++) {
+		Clignote[i] = false;
+		TokTak[i] = false;
+		
+		SelecRect[i].start	= 0;
+		SelecRect[i].end	= 0;
+		BitMapSample[i]		= NULL;
+		ZoomLevel[i]		= 1;
+		SampleDlog[i]		= NULL;
+		curSample[i]		= volumeEnv;
+	}
+	
+	SetPort(SavePort);
+
+}
+
+long PlayerPRO::Samples::GetStartSampleValue(long val, short InstruNo)
 {
 	long	start;
 	long	size;
@@ -151,21 +165,21 @@ long GetStartSampleValue(long val, short InstruNo)
 	return start;
 }
 
-void DrawSampleInt(long	sampleSize,
-					long 	start,
-					long 	tSS,
-					long 	tSE,
-					long 	high,
-					long	larg,
-					long	trueV,
-					long	trueH,
-					short	channel,
-					sData	*curData)
+void DrawSampleInt(long		sampleSize,
+				   long		start,
+				   long		tSS,
+				   long		tSE,
+				   long		high,
+				   long		larg,
+				   long		trueV,
+				   long		trueH,
+				   short	channel,
+				   sData	*curData)
 {
-	long long		temp, i;
-	Ptr				theSample = curData->data;
-	short			*theShortSample = (short*) curData->data;
-	long long		BS, BE, minY, maxY, x;
+	long long	temp, i;
+	Ptr			theSample = curData->data;
+	short		*theShortSample = (short*) curData->data;
+	long long	BS, BE, minY, maxY, x;
 	
 	if (curData->amp == 16) {
 		sampleSize /= 2;
@@ -177,6 +191,7 @@ void DrawSampleInt(long	sampleSize,
 			BS *=2;
 			BS += channel;
 		}
+		
 		temp = (theShortSample[BS]  + 0x8000);
 		temp *= high;
 		temp >>= 16;
@@ -282,21 +297,21 @@ void DrawSampleInt(long	sampleSize,
 	}
 }
 
-void SetSelectionZero(short no)
+void PlayerPRO::Samples::SetSelectionZero(short no)
 {
 	SelecRect[no].start		= 0;
 	SelecRect[no].end		= 0;
 	ZoomLevel[no]			= 1;
 }
 
-void SetSelection(short no, long start, long end)
+void PlayerPRO::Samples::SetSelection(short no, long start, long end)
 {
 	SelecRect[no].start		= start;
 	SelecRect[no].end		= end;
 	Clignote[no]			= false;
 }
 
-void EraseTikTak(short ins)
+void PlayerPRO::Samples::EraseTikTak(short ins)
 {
 	Rect	tempRect;
 
@@ -316,7 +331,7 @@ void EraseTikTak(short ins)
 	Clignote[ins] = false;
 }
 
-void DoGrowSample(DialogPtr theDia)
+void PlayerPRO::Samples::DoGrowSample(DialogPtr theDia)
 {
 	long		lSizeVH;
 	GrafPtr		SavePort;
@@ -339,13 +354,13 @@ void DoGrowSample(DialogPtr theDia)
 	LocalToGlobal(&aPt);
 	
 	lSizeVH = 0;
-	if (TheApp->theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(theDia), TheApp->theEvent.where, &temp);
+	if (TheApp->theEvent.what == mouseDown) lSizeVH = GrowWindow(::GetDialogWindow(theDia), TheApp->theEvent.where, &temp);
 	
 	if (lSizeVH != 0) {
 		tempA = LoWord(lSizeVH);
 		tempB = HiWord(lSizeVH);
 	} else {
-		GetPortBounds(GetDialogPort(theDia), &caRect);
+		GetPortBounds(::GetDialogPort(theDia), &caRect);
 		
 		tempA = caRect.right;
 		tempB = caRect.bottom;
@@ -353,17 +368,17 @@ void DoGrowSample(DialogPtr theDia)
 	
 	MySizeWindow(theDia, tempA, tempB , true);
 	
-	GetPortBounds(GetDialogPort(theDia), &caRect);
+	GetPortBounds(::GetDialogPort(theDia), &caRect);
 	
 	EraseRect(&caRect);
-	InvalWindowRect(GetDialogWindow(theDia), &caRect);
+	InvalWindowRect(::GetDialogWindow(theDia), &caRect);
 	
 	InternalUpdate(FindSample(theDia));
 	
 	SetPort(SavePort);
 }
 
-void UpdateDisplaySize(short InstruNo)
+void PlayerPRO::Samples::UpdateDisplaySize(short InstruNo)
 {
 	Str255	StrTemp;
 	
@@ -390,7 +405,7 @@ void UpdateDisplaySize(short InstruNo)
 	}
 }
 
-void UpdateDisplay(short InstruNo)
+void PlayerPRO::Samples::UpdateDisplay(short InstruNo)
 {
 	long	start, sampleSize, val;
 	Str255	StrTemp, aStr;
@@ -454,7 +469,7 @@ void UpdateDisplay(short InstruNo)
 #undef CurMusic
 }
 
-void UpdateDisplayQuality(short InstruNo)
+void PlayerPRO::Samples::UpdateDisplayQuality(short InstruNo)
 {
 	Str255	StrTemp;
 	
@@ -475,7 +490,7 @@ void UpdateDisplayQuality(short InstruNo)
 	}
 }
 
-void UpdateDisplayPosition(short InstruNo)
+void PlayerPRO::Samples::UpdateDisplayPosition(short InstruNo)
 {
 	Str255	StrTemp, StrTemp2;
 	Point	myPt;
@@ -522,7 +537,7 @@ void UpdateDisplayPosition(short InstruNo)
 	}
 }
 
-void UpdateDisplayLoop(short InstruNo)
+void PlayerPRO::Samples::UpdateDisplayLoop(short InstruNo)
 {
 	Str255	StrTemp;
 	long 	temp;
@@ -573,7 +588,7 @@ void UpdateDisplayLoop(short InstruNo)
 	}
 }
 
-long FindByteStart(short InstruNo)
+long PlayerPRO::Samples::FindByteStart(short InstruNo)
 {
 	long	tempL = SelecRect[InstruNo].start;
 	
@@ -606,7 +621,7 @@ long FindByteStart(short InstruNo)
 	return tempL;
 }
 
-short ByteToPos(long bytePosi, short InstruNo)
+short PlayerPRO::Samples::ByteToPos(long bytePosi, short InstruNo)
 {
 	long long	bytePos, val, start, sampleSize;
 	short		tempInt;
@@ -650,7 +665,7 @@ short ByteToPos(long bytePosi, short InstruNo)
 	return tempInt;
 }
 
-long AmpToByte(short Pos, short InstruNo)
+long PlayerPRO::Samples::AmpToByte(short Pos, short InstruNo)
 {
 	long tempL, sampleSize;
 	
@@ -699,7 +714,7 @@ long AmpToByte(short Pos, short InstruNo)
 	
 }
 
-long PosToByte(short Pos, short InstruNo)
+long PlayerPRO::Samples::PosToByte(short Pos, short InstruNo)
 {
 	long long	tempL, start, val, sampleSize;
 	
@@ -769,14 +784,14 @@ long PosToByte(short Pos, short InstruNo)
 	return tempL;
 }
 
-void GetSampleRect(DialogPtr theDia)
+void PlayerPRO::Samples::GetSampleRect(DialogPtr theDia)
 {
 	Rect caRect;
 	
 	if (theDia == NULL)
 		MyDebugStr(__LINE__, __FILE__, "Big big ERROR");
 	
-	GetPortBounds(GetDialogPort(theDia), &caRect);
+	GetPortBounds(::GetDialogPort(theDia), &caRect);
 	
 	SampleRect.top = SAMPLERECTTOP;
 	SampleRect.bottom = caRect.bottom - 15;
@@ -784,7 +799,7 @@ void GetSampleRect(DialogPtr theDia)
 	SampleRect.right = caRect.right;
 }
 
-long FindByteEnd(short InstruNo)
+long PlayerPRO::Samples::FindByteEnd(short InstruNo)
 {
 	long tempL;
 	
@@ -818,10 +833,11 @@ long FindByteEnd(short InstruNo)
 	return tempL;
 }
 
-void Selection2Loop(short InstruNo)
+void PlayerPRO::Samples::Selection2Loop(short InstruNo)
 {
 	InstrData	*curIns = &TheApp->curMusic->fid[InstruNo];
 	int			i;
+	
 	switch (curSample[InstruNo]) {
 		case panningEnv:
 			if (Clignote[InstruNo]) {
@@ -907,7 +923,7 @@ void Selection2Loop(short InstruNo)
 	InternalUpdate(InstruNo);
 }
 
-void SetSustainPoint(short InstruNo)
+void PlayerPRO::Samples::SetSustainPoint(short InstruNo)
 {
 	InstrData	*curIns = &TheApp->curMusic->fid[InstruNo];
 	int			i;
@@ -956,7 +972,7 @@ void SetSustainPoint(short InstruNo)
 	InternalUpdate(InstruNo);
 }
 
-void Loop2Selection(short InstruNo)
+void PlayerPRO::Samples::Loop2Selection(short InstruNo)
 {
 	switch (curSample[InstruNo]) {
 		case panningEnv:
@@ -1001,7 +1017,7 @@ void Loop2Selection(short InstruNo)
 
 static long oldByteStart, oldByteEnd;
 
-void UpdateDisplaySelec(short InstruNo)
+void PlayerPRO::Samples::UpdateDisplaySelec(short InstruNo)
 {
 	Str255	StrTemp;
 	long	newVal;
@@ -1024,7 +1040,7 @@ void UpdateDisplaySelec(short InstruNo)
 	}
 }
 
-void COPYSampleInt(DialogPtr theDia)
+void PlayerPRO::Samples::COPYSampleInt(DialogPtr theDia)
 {
 	short		CurWin;
 	long		Start, End;
@@ -1090,7 +1106,7 @@ void COPYSampleInt(DialogPtr theDia)
 	}
 }
 
-void PASTESampleInt(DialogPtr theDia)
+void PlayerPRO::Samples::PASTESampleInt(DialogPtr theDia)
 {
 	short				CurWin;
 	long				Start;
@@ -1251,7 +1267,7 @@ void PASTESampleInt(DialogPtr theDia)
 	}
 }
 
-void AfficheOldPoint(short i)
+void PlayerPRO::Samples::AfficheOldPoint(short i)
 {
 	register	short	 theInstru;
 	Rect		UptRect, selRect;
@@ -1278,7 +1294,7 @@ void AfficheOldPoint(short i)
 	BackColor(whiteColor);
 	if (BitMapSample[theInstru]) {
 		CopyBits((BitMap*) *GetPortPixMap(BitMapSample[theInstru]),
-				 (BitMap*) *GetPortPixMap(GetDialogPort(SampleDlog[theInstru])),
+				 (BitMap*) *GetPortPixMap(::GetDialogPort(SampleDlog[theInstru])),
 				 &UptRect,
 				 &UptRect,
 				 srcCopy,
@@ -1332,9 +1348,7 @@ void AfficheOldPoint(short i)
 	SetPort(SavePort);
 }
 
-static long oldNullTicks, Flashing;
-
-void DoNullInstrument()
+void PlayerPRO::Samples::DoNull()
 {
 	GrafPtr		SavePort;
 	long		maxChannels, maxVal, curVal;
@@ -1462,7 +1476,7 @@ void DoNullInstrument()
 				SetPortDialogPort(SampleDlog[i]);
 				
 				if (Clignote[i]) {
-					if (TokTak[i] == true || TheApp->oldWindow == GetDialogWindow(SampleDlog[i])) {
+					if (TokTak[i] == true || TheApp->oldWindow == ::GetDialogWindow(SampleDlog[i])) {
 						TokTak[i] = !TokTak[i];
 						GetSampleRect(SampleDlog[i]);
 						
@@ -1570,7 +1584,7 @@ void DoNullInstrument()
 	SetPort(SavePort);
 }
 
-short FindSample(DialogPtr	theDia)
+short FindSample(DialogPtr theDia)
 {
 	int i;
 	
@@ -1584,7 +1598,7 @@ short FindSample(DialogPtr	theDia)
 	return 0;
 }
 
-void DrawLoop(short ins)
+void PlayerPRO::Samples::DrawLoop(short ins)
 {
 	long	StartLoop;
 	long	SizeLoop, endLine, temp;
@@ -1632,7 +1646,7 @@ void DrawLoop(short ins)
 	}
 }
 
-void UpdateSampleWindow(DialogPtr GetSelection)
+void PlayerPRO::Samples::UpdateSampleWindow(DialogPtr GetSelection)
 {
 	Rect   		caRect, tempRect;
 	GrafPtr		SavePort;
@@ -1654,11 +1668,11 @@ void UpdateSampleWindow(DialogPtr GetSelection)
 	TextFont(4);
 	TextSize(9);
 	
-	BeginUpdate(GetDialogWindow(GetSelection));
+	BeginUpdate(::GetDialogWindow(GetSelection));
 	
 	visibleRegion = NewRgn();
 	
-	GetPortVisibleRegion(GetDialogPort(GetSelection), visibleRegion);
+	GetPortVisibleRegion(::GetDialogPort(GetSelection), visibleRegion);
 	
 	UpdateDialog(GetSelection, visibleRegion);
 	
@@ -1669,7 +1683,7 @@ void UpdateSampleWindow(DialogPtr GetSelection)
 	
 	if (BitMapSample[theInstru]) {
 		CopyBits((BitMap*) *GetPortPixMap(BitMapSample[theInstru]),
-				 (BitMap*) *GetPortPixMap(GetDialogPort(GetSelection)),
+				 (BitMap*) *GetPortPixMap(::GetDialogPort(GetSelection)),
 				 &(*GetPortPixMap(BitMapSample[theInstru]))->bounds,
 				 &(*GetPortPixMap(BitMapSample[theInstru]))->bounds,
 				 srcCopy,
@@ -1678,7 +1692,7 @@ void UpdateSampleWindow(DialogPtr GetSelection)
 	
 	RGBBackColor(&theColor);
 	
-	GetPortBounds(GetDialogPort(GetSelection), &caRect);
+	GetPortBounds(::GetDialogPort(GetSelection), &caRect);
 	
 	MoveTo(0, SampleRect.top - 1);
 	LineTo(caRect.right, SampleRect.top - 1);
@@ -1762,15 +1776,14 @@ void UpdateSampleWindow(DialogPtr GetSelection)
 	SetClip(saveClipRgn);
 	DisposeRgn(saveClipRgn);
 	
-	EndUpdate(GetDialogWindow(GetSelection));
+	EndUpdate(::GetDialogWindow(GetSelection));
 	
 	SetPort(SavePort);
 }
 
+//extern	short theDepth;
 
-extern	short theDepth;
-
-void DrawPencil(DialogPtr theDia, short InstruNo)
+void PlayerPRO::Samples::DrawPencil(DialogPtr theDia, short InstruNo)
 {
 	Point			aPt, prevPt, tempPt;
 	long long		BS, BE, sampleSize, x, start, nVal16E, nVal16S;
@@ -1811,7 +1824,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 	
 	if (TokTak[InstruNo]) {
 		Flashing = 0;
-		DoNullInstrument();
+		DoNull();
 	}
 	
 	switch (curSample[InstruNo]) {
@@ -1846,8 +1859,8 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 		/**/
 		WaitNextEvent(everyEvent, &TheApp->theEvent, 1, NULL);
 		
-		if (QDIsPortBuffered(GetDialogPort(theDia)))
-			QDFlushPortBuffer(GetDialogPort(theDia), NULL);
+		if (QDIsPortBuffered(::GetDialogPort(theDia)))
+			QDFlushPortBuffer(::GetDialogPort(theDia), NULL);
 		
 		Boolean		InOutPt = false;
 		
@@ -1926,7 +1939,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 							SetGWorld(oldPort, oldGDeviceH);
 							/************/
 							
-							InvalWindowRect(GetDialogWindow(theDia), &SampleRect);
+							InvalWindowRect(::GetDialogWindow(theDia), &SampleRect);
 							UpdateSampleWindow(theDia);
 							
 							prevPt = aPt;
@@ -2001,7 +2014,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 							SetGWorld(oldPort, oldGDeviceH);
 							/************/
 							
-							InvalWindowRect(GetDialogWindow(theDia), &SampleRect);
+							InvalWindowRect(::GetDialogWindow(theDia), &SampleRect);
 							UpdateSampleWindow(theDia);
 							
 							prevPt = aPt;
@@ -2060,7 +2073,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 							SetGWorld(oldPort, oldGDeviceH);
 							/************/
 							
-							InvalWindowRect(GetDialogWindow(theDia), &SampleRect);
+							InvalWindowRect(::GetDialogWindow(theDia), &SampleRect);
 							UpdateSampleWindow(theDia);
 							
 							prevPt = aPt;
@@ -2134,7 +2147,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 							SetGWorld(oldPort, oldGDeviceH);
 							/************/
 							
-							InvalWindowRect(GetDialogWindow(theDia), &SampleRect);
+							InvalWindowRect(::GetDialogWindow(theDia), &SampleRect);
 							UpdateSampleWindow(theDia);
 							
 							prevPt = aPt;
@@ -2188,8 +2201,10 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 							BE = SampleDataD(InstruNo)->size / 2;		// Where are in 16 bits!
 						
 						if (SampleDataD(InstruNo)->stereo) {
-							BS /= 2;		BS *= 2;
-							BE /= 2;		BE *= 2;
+							BS /= 2;
+							BS *= 2;
+							BE /= 2;
+							BE *= 2;
 							if (!IsPressed(0x38))
 								if (curMode[InstruNo])
 									BS++;
@@ -2657,41 +2672,11 @@ ENDSAMPLE:
 	ForeColor(blackColor);
 }
 
-void InitSampleWindow(void)
-{
-	short		i;
-	GrafPtr		SavePort;
-	
-	GetPort(&SavePort);
-	
-	Flashing = 200;
-	
-	gNowMovingLoop = false;
-	
-	SampleDlog[0] = GetNewDialog(137, NULL, GetDialogWindow(TheApp->ToolsDlog));
-	GetSampleRect(SampleDlog[0]);
-	DisposeDialog(SampleDlog[0]);
-	
-	for (i = 0; i < MAXINSTRU; i++) {
-		Clignote[i] = false;
-		TokTak[i] = false;
-		
-		SelecRect[i].start	= 0;
-		SelecRect[i].end	= 0;
-		BitMapSample[i]		= NULL;
-		ZoomLevel[i]		= 1;
-		SampleDlog[i]		= NULL;
-		curSample[i]		= volumeEnv;
-	}
-	
-	SetPort(SavePort);
-}
-
-void SetControlH(short theInstru)
+void PlayerPRO::Samples::SetControlH(short theInstru)
 {
 	Rect caRect;
 	
-	GetPortBounds(GetDialogPort(SampleDlog[theInstru]), &caRect);
+	GetPortBounds(::GetDialogPort(SampleDlog[theInstru]), &caRect);
 	
 	MyMoveControl(xScroll[theInstru], -1, caRect.bottom-15);
 	
@@ -2710,7 +2695,7 @@ void SetControlH(short theInstru)
 	}
 }
 
-void InternalUpdate(short InstruNo)
+void PlayerPRO::Samples::InternalUpdate(short InstruNo)
 {
 	Str255			String, mainStr;
 	GrafPtr			SavePort;
@@ -2724,11 +2709,11 @@ void InternalUpdate(short InstruNo)
 	
 	UpdateWaveInfo();
 	
-	if (SampleDlog[InstruNo] != NULL && IsWindowVisible(GetDialogWindow(SampleDlog[InstruNo])) == true) {
+	if (SampleDlog[InstruNo] != NULL && IsWindowVisible(::GetDialogWindow(SampleDlog[InstruNo])) == true) {
 		SetPortDialogPort(SampleDlog[InstruNo]);
 		
 		GetDialogItem(SampleDlog[InstruNo], 30, &itemType, &itemHandle, &itemRect);
-		InvalWindowRect(GetDialogWindow(SampleDlog[InstruNo]), &itemRect);
+		InvalWindowRect(::GetDialogWindow(SampleDlog[InstruNo]), &itemRect);
 		
 		GetSampleRect(SampleDlog[InstruNo]);
 		
@@ -2825,7 +2810,7 @@ void InternalUpdate(short InstruNo)
 				break;
 		}
 		
-		InvalWindowRect(GetDialogWindow(SampleDlog[InstruNo]), &SampleRect);
+		InvalWindowRect(::GetDialogWindow(SampleDlog[InstruNo]), &SampleRect);
 		
 		SetControlH(InstruNo);
 		
@@ -2858,26 +2843,26 @@ void InternalUpdate(short InstruNo)
 		strcat((Ptr) mainStr, (Ptr) String);
 		MyC2PStr((Ptr) mainStr);
 		
-			WindowPtr tempWin = GetDialogWindow(SampleDlog[InstruNo]);
-			Str255 winTitle;
-			
-			GetWTitle(tempWin, winTitle);
-			
-			if (!EqualString(mainStr, winTitle, true, true))
-				SetWTitle(tempWin, mainStr);
+		WindowPtr tempWin = ::GetDialogWindow(SampleDlog[InstruNo]);
+		Str255 winTitle;
+		
+		GetWTitle(tempWin, winTitle);
+		
+		if (!EqualString(mainStr, winTitle, true, true))
+			SetWTitle(tempWin, mainStr);
 		
 		DrawInfoInstrument();
 	}
 	SetPort(SavePort);
 }
 
-void UpdateSampleWindows(void)
+void PlayerPRO::Samples::UpdateSampleWindows()
 {
 	int i;
 	
 	TheApp->SetCursorOnNumber(PlayerPRO::watchCrsr);
 	
-	for(i=0; i<MAXINSTRU; i++) InternalUpdate(i);
+	for(i = 0; i < MAXINSTRU; i++) InternalUpdate(i);
 	
 	if (TheApp->thePrefs.ClassicalProjection)
 		UpdateMozartInfo();
@@ -3098,7 +3083,7 @@ extern EventRecord	theEvent;
 static long			doubleClick;
 static Point		lastPosition;
 
-void NAppelPlug(short InstruNo, short samp, short whichPlug)
+void PlayerPRO::Samples::NAppelPlug(short InstruNo, short samp, short whichPlug)
 {
 	long	End, Start;
 	sData	*curData = TheApp->curMusic->sample[TheApp->curMusic->fid[InstruNo].firstSample + samp];
@@ -3138,13 +3123,13 @@ void NAppelPlug(short InstruNo, short samp, short whichPlug)
 
 static	short 	currentInstru;
 
-void SampleUpdateNow(void)
+void PlayerPRO::Samples::SampleUpdateNow()
 {
 	InternalUpdate(currentInstru);
 	UpdateSampleWindow(SampleDlog[currentInstru]);
 }
 
-void NAppelVSTPlug(short InstruNo, short samp, short whichPlug)
+void PlayerPRO::Samples::NAppelVSTPlug(short InstruNo, short samp, short whichPlug)
 {
 	long	End, Start;
 	sData	*curData = TheApp->curMusic->sample[TheApp->curMusic->fid[InstruNo].firstSample + samp];
@@ -3182,9 +3167,9 @@ void NAppelVSTPlug(short InstruNo, short samp, short whichPlug)
 	VSTSampleEditor(whichPlug, curData, Start, End, StereoMode);
 }
 
-static	DialogPtr	theDialogControl;
+static DialogPtr theDialogControl;
 
-pascal void actionProcSample(ControlHandle theControl, short ctlPart)
+pascal void PlayerPRO::Samples::actionProcSample(ControlHandle theControl, short ctlPart)
 {
 	long			lRefCon;
 	short			CurWin, maxValue, minValue, curVal, sVal;
@@ -3242,7 +3227,7 @@ pascal void actionProcSample(ControlHandle theControl, short ctlPart)
 		/************/
 		
 		if (BitMapSample[CurWin])
-			InvalWindowRect(GetDialogWindow(SampleDlog[CurWin]), &(*GetPortPixMap(BitMapSample[CurWin]))->bounds);
+			InvalWindowRect(::GetDialogWindow(SampleDlog[CurWin]), &(*GetPortPixMap(BitMapSample[CurWin]))->bounds);
 		
 		UpdateSampleWindow(theDialogControl);
 		
@@ -3250,7 +3235,7 @@ pascal void actionProcSample(ControlHandle theControl, short ctlPart)
 	}
 }
 
-void MoveLoopSelection(short InstruNo)
+void PlayerPRO::Samples::MoveLoopSelection(short InstruNo)
 {
 	Boolean		firstTime = true;
 	Point		aPt, prevPt = {0};
@@ -3328,7 +3313,7 @@ void MoveLoopSelection(short InstruNo)
 			
 			InternalUpdate(InstruNo);
 			
-			InvalWindowRect(GetDialogWindow(SampleDlog[InstruNo]), &SampleRect);
+			InvalWindowRect(::GetDialogWindow(SampleDlog[InstruNo]), &SampleRect);
 			UpdateSampleWindow(SampleDlog[InstruNo]);
 			
 			// Check to see if this instrument is currently playing, and update it!
@@ -3356,8 +3341,8 @@ void MoveLoopSelection(short InstruNo)
 		
 		WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 		
-		if (QDIsPortBuffered(GetDialogPort(SampleDlog[InstruNo])))
-			QDFlushPortBuffer(GetDialogPort(SampleDlog[InstruNo]), NULL);
+		if (QDIsPortBuffered(::GetDialogPort(SampleDlog[InstruNo])))
+			QDFlushPortBuffer(::GetDialogPort(SampleDlog[InstruNo]), NULL);
 		
 	} while (Button());
 	
@@ -3366,7 +3351,7 @@ void MoveLoopSelection(short InstruNo)
 	TokTak[InstruNo] = false;
 }
 
-void DoItemPressSample(short whichItem, DialogPtr whichDialog)
+void PlayerPRO::Samples::DoItemPressSample(short whichItem, DialogPtr whichDialog)
 {
 	short				bogus, CurWin, temp, itemType, InstruNo;
 	Point				myPt, Pt2, aPt;
@@ -3479,7 +3464,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 					ZoomLevel[CurWin] *= 2;
 					SetControlH(CurWin);
 					
-					GetPortBounds(GetDialogPort(whichDialog), &caRect);
+					GetPortBounds(::GetDialogPort(whichDialog), &caRect);
 					
 					bogus = (myPt.h * SAMPLEDEF) / caRect.right;
 					bogus *= 2;
@@ -3551,7 +3536,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 							break;
 					}
 					
-					InvalWindowRect(GetDialogWindow(SampleDlog[InstruNo]), &SampleRect);
+					InvalWindowRect(::GetDialogWindow(SampleDlog[InstruNo]), &SampleRect);
 					UpdateDisplaySelec(InstruNo);
 				} else {
 					if (IsPressed(0x0038)) {
@@ -3661,7 +3646,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 											SelecRect[InstruNo].start = 0;
 									}
 									
-									GetPortBounds(GetDialogPort(whichDialog), &caRect);
+									GetPortBounds(::GetDialogPort(whichDialog), &caRect);
 									
 									if (Pt2.h > caRect.right) {
 										if (SelecRect[InstruNo].end > ENVSIZE)
@@ -3680,7 +3665,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 										sampleSize = SampleDataD(InstruNo)->size / ZoomLevel[InstruNo];
 									}
 									
-									GetPortBounds(GetDialogPort(whichDialog), &caRect);
+									GetPortBounds(::GetDialogPort(whichDialog), &caRect);
 									
 									if (Pt2.h > caRect.right) {
 										if (SelecRect[InstruNo].end > SampleDataD(InstruNo)->size)
@@ -3699,8 +3684,8 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 						
 						WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 						
-						if (QDIsPortBuffered(GetDialogPort(SampleDlog[InstruNo])))
-							QDFlushPortBuffer(GetDialogPort(SampleDlog[InstruNo]), NULL);
+						if (QDIsPortBuffered(::GetDialogPort(SampleDlog[InstruNo])))
+							QDFlushPortBuffer(::GetDialogPort(SampleDlog[InstruNo]), NULL);
 						
 					}
 					while (Button());
@@ -4106,7 +4091,7 @@ EndSample:
 	SetPort(SavePort);
 }
 
-void DoKeyPressSample(DialogPtr	theDia, short theChar)
+void PlayerPRO::Samples::DoKeyPressSample(DialogPtr	theDia, short theChar)
 {
 	GrafPtr		SavePort;
 	short		CurWin, i;
@@ -4447,12 +4432,12 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 	SetPort(SavePort);
 }
 
-void PrintSample(DialogPtr theDia)
+void PlayerPRO::Samples::PrintSample(DialogPtr theDia)
 {
 	PrintPixMap(GetPortPixMap(BitMapSample[FindSample(theDia)]));
 }
 
-void ResetSelectionSample(short CurWin)
+void PlayerPRO::Samples::ResetSelectionSample(short CurWin)
 {
 	GrafPtr	SavePort;
 	
@@ -4847,11 +4832,6 @@ Boolean DragSample(RgnHandle myRgn, short theNo, EventRecord *theEvent)
 			CreateInstruList();
 			UpdateSampleWindows();
 		}
-#if 0
-		else {
-			
-		}
-#endif
 		
 		AEDisposeDesc(&dropLocation);
 	}

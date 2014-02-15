@@ -1,6 +1,7 @@
 #include "Shuddup.h"
 #include "MAD.h"
 #include "RDriver.h"
+#include "ClassicalP.h"
 
 /******** HELP MODULE ********/
 enum
@@ -12,6 +13,11 @@ enum
 	HIns	= 8,
 	HPat	= 1
 };
+
+PlayerPRO::ClassicalP::ClassicalP(WindowPtr parentWindow) : wds_editor(147, parentWindow)
+{
+	
+}
 
 static short AHelp[] = {HInfo, HPlay, HZoom, HTrack, HIns, HPat};
 

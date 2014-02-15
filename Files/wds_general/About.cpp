@@ -5,9 +5,12 @@
 #include <stdio.h>
 #include "VideoToolbox.h"
 #include "VA.h"
+#include "About.h"
+#include "PlayerPROApp.h"
+#include "Utils.h"
 
-pascal Boolean AboutFilter(DialogPtr, EventRecord *, short *);
-pascal void ScrollProc (ControlHandle theControl, short theCode);
+static pascal Boolean AboutFilter(DialogPtr, EventRecord *, short *);
+static pascal void ScrollProc(ControlHandle theControl, short theCode);
 void ScrollTextClose(Boolean RemoveVBL);
 void ScrollTextInit(Boolean, Boolean);
 void InitBounceBall(short xx, short yy, short TypeB);
@@ -15,26 +18,10 @@ void DoInternetMenu(short theItem);
 
 //pascal Boolean AboutFilter(DialogPtr, EventRecord *, short *);
 
-static	TEHandle 		hTE;
-static	long			curPosT;
-static	Rect			scrollRect, textRect;
-static	Point			zeroPt;
-static	Boolean			AboutFirstCall;
-static	short 			gThumbPrev;
-static	GWorldPtr		gGWorldAbout = NULL, gMaskWorld = NULL, gResultWorld = NULL, gFreePict = NULL;
-static	PicHandle		backPict;
-
 Boolean	IsPressed(unsigned short);
 
-extern	Boolean		DebuggingMode;
-extern	KeyMap		km;
 extern	long		DeviationV;
 extern	short		RowBytes;
-
-void MegaPurge(void)
-{
-	//Do nothing
-}
 
 #if 0
 void MyScrollRect(Rect	*rect)
@@ -58,7 +45,7 @@ void MyScrollRect(Rect	*rect)
 }
 #endif
 
-void DoScrollText(DialogPtr aDia)
+void PlayerPRO::About::DoScrollText(DialogPtr aDia)
 {
 	Str255		tempStr;
 	GDHandle	oldGDeviceH;
@@ -119,7 +106,7 @@ void DoScrollText(DialogPtr aDia)
 	
 	
 	CopyBits((BitMap*)*GetPortPixMap(gResultWorld),
-			 (BitMap*)*GetPortPixMap(GetDialogPort(aDia)),
+			 (BitMap*)*GetPortPixMap(::GetDialogPort(aDia)),
 			 &scrollRect,
 			 &scrollRect,
 			 srcCopy,
@@ -131,7 +118,7 @@ void CloseScrollText(void)
 
 }
 
-void ShowPerformance(void)
+void PlayerPRO::About::ShowPerformance()
 {
 	Str255			aStr;
 	DialogPtr		aDialog;
@@ -145,24 +132,23 @@ void ShowPerformance(void)
 #define CSTTEST	4000
 	
 	do {
-		ModalDialog(MyDlgFilterDesc, &itemHit);
+		ModalDialog(TheApp->MyDlgFilterDesc, &itemHit);
 		if (itemHit == 7)
-			DebuggingMode = true;
+			MyPPBeep();
 		else if(itemHit == 8)
-			DebuggingMode = false;
+			MyPPBeep();
 		else if (itemHit == 1) {
-			SetCursor(&watchCrsr);
+			TheApp->SetCursorOnNumber(watchCursor);
 		
-			MADReset(MADDriver);
-			MADStopDriver(MADDriver);
+			MADReset(TheApp->MADDriver);
+			MADStopDriver(TheApp->MADDriver);
 			
-			MADDriver->Reading = true;
+			TheApp->MADDriver->Reading = true;
 
-			tempPtr = NewPtr(8L*MADDriver->ASCBUFFERReal);
+			tempPtr = NewPtr(8 * TheApp->MADDriver->ASCBUFFERReal);
 			
 			oldTicks = TickCount();
-			for (i = 0 ; i < CSTTEST; i++)
-			{
+			for (i = 0 ; i < CSTTEST; i++) {
 				proto *= 123;
 				proto -= 255;
 				proto /= 791;
@@ -179,8 +165,8 @@ void ShowPerformance(void)
 				
 				/** TEST ROUTINES **/
 			
-				NoteAnalyse(MADDriver);
-			//	Play16Stereo(MADDriver);
+				NoteAnalyse(TheApp->MADDriver);
+				//Play16Stereo(MADDriver);
 			
 				/*******************/
 			}
@@ -193,15 +179,15 @@ void ShowPerformance(void)
 			i *= 100;
 			sprintf((Ptr) aStr, "%.2f", i / (double)CSTTEST);
 			MyC2PStr((Ptr) aStr);
-			pStrcat(aStr, "\p %");
+			pStrcat(aStr, (StringPtr)"\p %");
 			SetDText(aDialog, 6, aStr);
 
 			DisposePtr(tempPtr);
 			
-			MADReset(MADDriver);
-			MADStartDriver(MADDriver);
+			MADReset(TheApp->MADDriver);
+			MADStartDriver(TheApp->MADDriver);
 			
-			SetCursor(GetQDGlobalsArrow(&qdarrow));
+			TheApp->SetCursorToQDArrow();
 		}
 	} while (itemHit != 2);
 	
@@ -209,7 +195,7 @@ void ShowPerformance(void)
 	DisposeDialog(aDialog);
 }
 
-void DoAbout(void)
+void PlayerPRO::About::DoAbout()
 {
 	GrafPtr			myPort;
 	DialogPtr		aDialog;
@@ -224,7 +210,7 @@ void DoAbout(void)
 	
 	GetPort(&myPort);
 	
-	GetKeys(km);
+	GetKeys(TheApp->km);
 	if (IsPressed(0x31) == true) {
 		ShowPerformance();
 		SetPort(myPort);
@@ -346,15 +332,15 @@ void DoAbout(void)
 	curPosT = 50;
 	
 	while (!Button()) {
-		while (oldTicks >= TickCount()) DoGlobalNull();
+		while (oldTicks >= TickCount()) TheApp->DoGlobalNull();
 		oldTicks = TickCount() + 1;
 		
 		DoScrollText(aDialog);
 		
-		WaitNextEvent(everyEvent, &theEvent, 1, NULL);
+		WaitNextEvent(everyEvent, &TheApp->theEvent, 1, NULL);
 		
-		if (QDIsPortBuffered(GetDialogPort(aDialog)))
-			QDFlushPortBuffer(GetDialogPort(aDialog), NULL);
+		if (QDIsPortBuffered(GetDialogPort()))
+			QDFlushPortBuffer(GetDialogPort(), NULL);
 		
 	}
 	
@@ -375,16 +361,16 @@ void DoAbout(void)
 	
 	while (Button()) {};
 	
-	WaitNextEvent(everyEvent, &theEvent, 1, NULL);
+	WaitNextEvent(everyEvent, &TheApp->theEvent, 1, NULL);
 	
 	FlushEvents(everyEvent, 0);
 	DisposeDialog(aDialog);
 }
 
-Boolean DoHelp(void)
+bool PlayerPRO::About::DoHelpWindow()
 {
 	short			itemType,itemHit;
-	DialogPtr		theDialog;
+	DialogPtr		theHDialog;
 	GrafPtr			myPort;
 	Handle			itemHandle,Text;
 	Rect			itemRect;
@@ -399,19 +385,22 @@ Boolean DoHelp(void)
 	
 	Gestalt(gestaltProcessorType, &GestaltResponse);
 	
-	theDialog = GetNewDialog(130, NULL, (WindowPtr) -1L);
-	SetPortDialogPort(theDialog);
-	DrawDialog(theDialog);
+	theHDialog = GetNewDialog(130, NULL, (WindowPtr) -1L);
+	SetPortDialogPort(theHDialog);
+	DrawDialog(theHDialog);
 	
-	GetDialogItem (theDialog, 2, &itemType, &itemHandle, &itemRect);
-	itemRect.left++;  itemRect.right--; itemRect.top++; itemRect.bottom--;
+	GetDialogItem (theHDialog, 2, &itemType, &itemHandle, &itemRect);
+	itemRect.left++;
+	itemRect.right--;
+	itemRect.top++;
+	itemRect.bottom--;
 	hTE = TEStyleNew(&itemRect, &itemRect);
 	
-	GetDialogItem (theDialog, 2, &itemType, &itemHandle, &itemRect);
+	GetDialogItem (theHDialog, 2, &itemType, &itemHandle, &itemRect);
 	itemRect.left = itemRect.right;
 	itemRect.right = itemRect.left + 16;
 	
-	vScroll = NewControl(GetDialogWindow(theDialog), &itemRect, "\p", true, 0, 0, 0, gScrollBarID, 0);
+	vScroll = NewControl(::GetDialogWindow(theHDialog), &itemRect, "\p", true, 0, 0, 0, TheApp->gScrollBarID, 0);
 	SetControlReference(vScroll, 1);
 	
 	Text = GetResource('TEXT', 5632);
@@ -430,17 +419,17 @@ Boolean DoHelp(void)
 	
 	AboutFirstCall = true;
 	
-	GetDialogItem (theDialog, 2, &itemType, &itemHandle, &itemRect);
+	GetDialogItem (theHDialog, 2, &itemType, &itemHandle, &itemRect);
 	itemRect.right++;
 	FrameRect(&itemRect);
 	
-	SetDialogDefaultItem(theDialog, 1);
+	SetDialogDefaultItem(theHDialog, 1);
 	
-	SetDText(theDialog, 4, "\p");
+	SetDText(theHDialog, 4, "\p");
 	StartupWait = 0;
 	//ControlSwitch(1, theDialog, 255);
 	//ControlSwitch(5, theDialog, 255);
-	ControlSwitch(7, theDialog, 255);
+	ControlSwitch(7, theHDialog, 255);
 	do {
 		ModalDialog(AboutFilterDesc, &itemHit);
 		
@@ -451,22 +440,22 @@ Boolean DoHelp(void)
 				break;
 				
 			case -5:
-				DoGlobalNull();
+				TheApp->DoGlobalNull();
 				
 				if (StartupWait != 0) {
 					if (TickCount() >= StartupWait) {
-						ControlSwitch(7, theDialog, 0);
+						ControlSwitch(7, theHDialog, 0);
 						
 						StartupWait = 0;
 						
-						SetDText(theDialog, 4, "\p");
+						SetDText(theHDialog, 4, "\p");
 					} else {
 						NumToString(1 + ((StartupWait - TickCount())/60), str);
 						
 						pStrcpy(str2, "\pWait ");
 						pStrcat(str2, str);
-						pStrcat(str2, "\p s");
-						SetDText(theDialog, 4, str2);
+						pStrcat(str2, (StringPtr)"\p s");
+						SetDText(theHDialog, 4, str2);
 					}
 				}
 				break;
@@ -474,7 +463,7 @@ Boolean DoHelp(void)
 		
 	} while (itemHit != 1 && itemHit != 6 && itemHit != 7);
 	
-	DisposeDialog(theDialog);
+	DisposeDialog(theHDialog);
 	TEDispose(hTE);
 	HUnlock(Text);
 	DisposeHandle(Text);
@@ -495,7 +484,7 @@ Boolean DoHelp(void)
 	return false;
 }
 
-void MyAdjustText (ControlHandle vScroll)
+void PlayerPRO::About::MyAdjustText(ControlHandle vScroll)
 {
 	short			oldScroll, newScroll, delta;
 	double			height;
@@ -516,7 +505,7 @@ void MyAdjustText (ControlHandle vScroll)
 		TEPinScroll(0, delta, CurrentTE);
 }
 
-void DoContent(WindowPtr theWindow, EventRecord *theEventI)
+void PlayerPRO::About::DoContent(WindowPtr theWindow, EventRecord *theEventI)
 {
 	short				cntlCode;
 	ControlHandle 		theControl;
@@ -530,7 +519,7 @@ void DoContent(WindowPtr theWindow, EventRecord *theEventI)
 	cntlCode = FindControl(theEventI->where, theWindow, &theControl);
 	switch (cntlCode) {
 		case kControlIndicatorPart:
-			if (gUseControlSize)
+			if (TheApp->gUseControlSize)
 				goto LiveScroll;
 			else
 				TrackControl(theControl, theEventI->where, NULL);
@@ -553,7 +542,7 @@ void DoContent(WindowPtr theWindow, EventRecord *theEventI)
 	SetPort(savePort);
 }
 
-pascal void ScrollProc (ControlHandle theControl, short theCode)
+pascal void ScrollProc(ControlHandle theControl, short theCode)
 {
 	short		pageSize;
 	short		scrollAmt = 0;
@@ -599,7 +588,7 @@ pascal void ScrollProc (ControlHandle theControl, short theCode)
 	MyAdjustText(theControl);
 }
 
-pascal Boolean AboutFilter (DialogPtr theDialog, EventRecord *theEventI, short *itemHit)
+pascal Boolean AboutFilter(DialogPtr theDialog, EventRecord *theEventI, short *itemHit)
 {
 	char		xMyFilter;
 	WindowPtr	whichWindow;
@@ -643,7 +632,7 @@ pascal Boolean AboutFilter (DialogPtr theDialog, EventRecord *theEventI, short *
 			break;
 			
 		case nullEvent:
-			DoGlobalNull();
+			TheApp->DoGlobalNull();
 			
 			*itemHit = -5;
 			
@@ -665,7 +654,7 @@ pascal Boolean AboutFilter (DialogPtr theDialog, EventRecord *theEventI, short *
 						
 						DragWindow(whichWindow,theEventI->where, &screenBits.bounds);
 						
-						xMyFilter				=	true;
+						xMyFilter = true;
 					}
 						break;
 						
@@ -684,8 +673,8 @@ pascal Boolean AboutFilter (DialogPtr theDialog, EventRecord *theEventI, short *
 		case keyDown:
 		case autoKey:
 			if((theEventI->message & charCodeMask)==0x0D || (theEventI->message & charCodeMask)==0x03) {
-				xMyFilter				=	true;
-				*itemHit				=	1;
+				xMyFilter	= true;
+				*itemHit	= 1;
 			}
 			break;
 	}

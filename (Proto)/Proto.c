@@ -24,7 +24,6 @@ extern "C" {
 EventRecord *CurrentEvent();
 void DoCPPGlobalNull();
 #include "3D.proto.h"
-#include "About.proto.h"
 #include "Adaptators.proto.h"
 #include "AEvent.proto.h"
 #include "ClassicalP.proto.h"

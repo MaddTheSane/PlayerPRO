@@ -73,11 +73,12 @@ namespace PlayerPRO {
 		ListClickLoopUPP	mylClickLoopDesc;
 		NavEventUPP			MyDlgFilterNavDesc;
 		
-		bool		gUseControlSize, MusicPlayActive, UseAEErreur;
+		bool		gUseControlSize;
+		bool MusicPlayActive;
+		bool UseAEErreur;
 		short		gScrollBarID, curvRefNum;
 		long		curparID, StartTime;
 		bool		Micro, End, Record;
-		DialogPtr	ToolsDlog;
 		Str63		lastLoadMODListName;
 		bool		DragManagerUse;
 		
