@@ -283,7 +283,7 @@ static OSErr mainXI(OSType		order,				// Order to execute
 				XMPATCHHEADER	pth;
 				char			start[0x42];
 				
-				BlockMoveData("Extended Instrument:                       FastTracker v2.00   ", start, 0x42);
+				BlockMoveData("Extended Instrument:                       \xA1\x46\x61stTracker v2.00   \x02\x01", start, 0x42);
 				
 				inOutCount = 0x42;
 				FSWriteFork(iFileRefI, fsAtMark, 0, inOutCount, start, NULL);
@@ -451,9 +451,9 @@ static OSErr mainXI(OSType		order,				// Order to execute
 	return myErr;
 }
 
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x62, 0x08, 0x75, 0xF5, 0x1E, 0x38, 0x45, 0xEF, 0x9F, 0xBA, 0xAA, 0xE9, 0x29, 0x50, 0x2D, 0x63)
 //620875F5-1E38-45EF-9FBA-AAE929502D63
-#define PLUGINFACTORY XIFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainXI //The old main function, renamed please
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x62, 0x08, 0x75, 0xF5, 0x1E, 0x38, 0x45, 0xEF, 0x9F, 0xBA, 0xAA, 0xE9, 0x29, 0x50, 0x2D, 0x63)
+#define PLUGINFACTORY XIFactory
+#define PLUGMAIN mainXI
 
 #include "CFPlugin-InstrBridge.c"

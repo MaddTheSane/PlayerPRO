@@ -24,12 +24,14 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include "MTM.h"
 
-Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
+Cmd* GetMADCommand(register short PosX, register short TrackIdX, register PatData* tempMusicPat)
 {
-	if (PosX < 0) PosX = 0;
-	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
+	if (PosX < 0)
+		PosX = 0;
+	else if (PosX >= tempMusicPat->header.size)
+		PosX = tempMusicPat->header.size -1;
 		
-	return(& (tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
+	return &(tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]);
 }
 
 static inline void mystrcpy(Ptr a, BytePtr b)
@@ -37,40 +39,9 @@ static inline void mystrcpy(Ptr a, BytePtr b)
 	BlockMoveData(b + 1, a, b[0]);
 }
 
-#ifdef _MAC_H
-#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
-#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
-#else
-#ifdef __LITTLE_ENDIAN__
-#define Tdecode16(msg_buf) *(short*)msg_buf
-#define Tdecode32(msg_buf) *(int*)msg_buf
-#else
-
-static inline UInt16 Tdecode16(void *msg_buf)
-{
-	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
-	return toswap;
-}
-
-static inline UInt32 Tdecode32(void *msg_buf)
-{
-	UInt32 toswap = *((UInt32*) msg_buf);
-	INT32(&toswap);
-	return toswap;
-}
-
-#endif
-#endif
-
-
 static struct MTMTrack* GetMTMCommand(short position, short whichTracks, Ptr PatPtr)
 {
-	Ptr					aPtr;
-	
-	aPtr =	 (PatPtr +
-			  whichTracks * 192L +
-			  position * 3L);
+	Ptr aPtr = (PatPtr + whichTracks * 192 + position * 3);
 	
 	return (struct MTMTrack*) aPtr;
 }
@@ -82,8 +53,7 @@ static OSErr ConvertMTM2Mad(MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MAD
 	Ptr				MaxPtr;
 	//OSErr			theErr;
 	Ptr				theInstrument[64], destPtr;
-	long 			finetune[16] = 
-	{
+	long 			finetune[16] = {
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
 	};
@@ -101,8 +71,8 @@ static OSErr ConvertMTM2Mad(MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MAD
 
 	/**** Calcul de divers offsets *****/
 
-	MTMFile->tracks = Tdecode16(&MTMFile->tracks);
-	MTMFile->comments = Tdecode16(&MTMFile->comments);
+	INT16(&MTMFile->tracks);
+	INT16(&MTMFile->comments);
 	
 	MaxPtr 		= (Ptr) ((long)	MTMFile + MTMFile);
 	positionPtr	= (Ptr) ((long)	MTMFile + 66L + MTMFile->NOS*37L);
@@ -115,15 +85,14 @@ static OSErr ConvertMTM2Mad(MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MAD
 	/**** Analyse des instruments ****/
 	if (MTMFile->NOS > 64) return MADUnknowErr;
 	
-	for (i = 0, OffSetToSample = 0; i < MTMFile->NOS ; i++)
-	{
+	for (i = 0, OffSetToSample = 0; i < MTMFile->NOS ; i++) {
 		theInstrument[i] = samplePtr + OffSetToSample;
 
 		instru[i] = (struct Instru*) ((long) MTMFile + 66L + i*37L);
 
-		instru[i]->size = Tdecode32(&instru[i]->size);
-		instru[i]->loopBegin = Tdecode32(&instru[i]->loopBegin);
-		instru[i]->loopEnd = Tdecode32(&instru[i]->loopEnd);
+		INT32(&instru[i]->size);
+		INT32(&instru[i]->loopBegin);
+		INT32(&instru[i]->loopEnd);
 
 
 		sndSize = instru[i]->size;
@@ -156,8 +125,7 @@ static OSErr ConvertMTM2Mad(MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MAD
 	/*** Copie des informations MTM -> MAD ***/
 	/*****************************************/
 	
-	for(i=0; i<22; i++)
-	{
+	for(i=0; i<22; i++) {
 		theMAD->header->name[i] = MTMFile->songname[i];
 	}
 	
@@ -167,8 +135,7 @@ static OSErr ConvertMTM2Mad(MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MAD
 	theMAD->header->speed = 6;
 	theMAD->header->numPat 				= MTMFile->patNo + 1;
 	theMAD->header->numPointers			= MTMFile->positionNo;
-	for(i=0; i<128; i++)
-	{
+	for (i = 0; i < 128; i++) {
 		theMAD->header->oPointers[i] 	= positionPtr[i];
 	}
 	theMAD->header->numChn 				= MTMFile->trackback;
@@ -251,10 +218,9 @@ static OSErr ConvertMTM2Mad(MTMDef *MTMFile, long MTMSize, MADMusic *theMAD, MAD
 		MaxPtr = (Ptr) theMAD->partition[i];
 		MaxPtr += sizeof(PatHeader) + theMAD->header->numChn * 64L * sizeof(Cmd);
 
-		for (z = 0; z < 32; z++) patTracks[z] = Tdecode16(&patTracks[z]);
+		for (z = 0; z < 32; z++) INT16(&patTracks[z]);
 
-		for(x=0; x<64; x++)
-		{
+		for(x=0; x<64; x++) {
 			for(z=0; z<theMAD->header->numChn; z++)
 			{
 				aCmd = GetMADCommand(x,  z, theMAD->partition[i]);

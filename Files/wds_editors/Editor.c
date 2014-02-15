@@ -3705,7 +3705,8 @@ Pcmd* CreatePcmdFromSelection()
 		return NULL;
 	
 	count = (myList.select.bottom - myList.select.top + 1) * (myList.select.right - myList.select.left + 1);
-	if (count <= 0) return NULL;
+	if (count <= 0)
+		return NULL;
 	
 	myPcmd = (Pcmd*)NewPtrClear(sizeof(Pcmd) + count * sizeof(Cmd));
 	if (myPcmd == NULL) {

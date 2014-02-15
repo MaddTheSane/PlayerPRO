@@ -24,38 +24,14 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include "669.h"
 
-#ifdef _MAC_H
-#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
-#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
-#else
-#ifdef __LITTLE_ENDIAN__
-#define Tdecode16(msg_buf) *(short*)msg_buf
-#define Tdecode32(msg_buf) *(int*)msg_buf
-#else
-
-static inline UInt16 Tdecode16(void *msg_buf)
+Cmd* GetMADCommand(register short PosX, register short TrackIdX, register PatData* tempMusicPat)
 {
-	UInt16 toswap = *((UInt16*) msg_buf);
-	INT16(&toswap);
-	return toswap;
-}
-
-static inline UInt32 Tdecode32(void *msg_buf)
-{
-	UInt32 toswap = *((UInt32*) msg_buf);
-	INT32(&toswap);
-	return toswap;
-}
-
-#endif
-#endif
-
-Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
-{
-	if (PosX < 0) PosX = 0;
-	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
+	if (PosX < 0)
+		PosX = 0;
+	else if (PosX >= tempMusicPat->header.size)
+		PosX = tempMusicPat->header.size -1;
 		
-	return(& (tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
+	return &(tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]);
 }
 
 static inline void mystrcpy(Ptr a, BytePtr b)
@@ -102,9 +78,9 @@ static OSErr Convert6692Mad(Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDr
 		
 		SInfo = (SampleInfo*) temp;
 		
-		SInfo->length =	Tdecode16(&SInfo->length);
-		SInfo->loopStart = Tdecode16(&SInfo->loopStart);
-		SInfo->loopEnd = Tdecode16(&SInfo->loopEnd);
+		INT16(&SInfo->length);
+		INT16(&SInfo->loopStart);
+		INT16(&SInfo->loopEnd);
 		
 		theInstrument[i] = (Ptr) ((long) the669 + (long) OffSetToSample);
 		OffSetToSample += SInfo->length;
