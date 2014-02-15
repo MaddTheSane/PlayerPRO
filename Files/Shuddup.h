@@ -399,4 +399,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 	MOT16(&toswap->tracks);
 	MOT16(&toswap->trackStart);
 }
+
+void RollCursor();
+
 #endif

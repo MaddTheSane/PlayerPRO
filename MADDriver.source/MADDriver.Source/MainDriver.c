@@ -3205,30 +3205,30 @@ OSErr MADPlaySoundDataSYNC(MADDriverRec *MDriver, Ptr soundPtr, long size, long 
 	KeyMap		km;
 	
 	iErr = MADPlaySoundData(MDriver, soundPtr, size, channel, note, amplitude, loopBeg, loopSize, rate, stereo);
-	if (iErr == noErr)
-	{
+	if (iErr == noErr) {
 		continueLoop = true;
-		while (continueLoop)
-		{
+		while (continueLoop) {
 			GetKeys(km);
 			
-			if (MDriver->chan[channel].samplePtr == NULL) continueLoop = false;
-			if (MADIsPressed((unsigned char*) km, 0x37) && MADIsPressed((unsigned char*) km, 0x2F)) continueLoop = false;
-			if (Button()) continueLoop = false;
+			if (MDriver->chan[channel].samplePtr == NULL)
+				continueLoop = false;
+			if (MADIsPressed((unsigned char*) km, 0x37) && MADIsPressed((unsigned char*) km, 0x2F))
+				continueLoop = false;
+			if (Button())
+				continueLoop = false;
 			
 #if MAINPLAYERPRO
 			DoGlobalNull();
-			WaitNextEvent(everyEvent, &theEvent, 1, NULL);
+			WaitNextEvent(everyEvent, CurrentEvent(), 1, NULL);
 #endif
 		}
 		
-		if (MDriver->chan[channel].samplePtr != NULL)
-		{
-			MDriver->chan[channel].curPtr 		= MDriver->chan[channel].maxPtr;
+		if (MDriver->chan[channel].samplePtr != NULL) {
+			MDriver->chan[channel].curPtr		= MDriver->chan[channel].maxPtr;
 			MDriver->chan[channel].samplePtr	= NULL;
 			MDriver->chan[channel].lAC			= 0;
-			MDriver->chan[channel].loopBeg 	= 0;
-			MDriver->chan[channel].loopSize 	= 0;
+			MDriver->chan[channel].loopBeg		= 0;
+			MDriver->chan[channel].loopSize		= 0;
 		}
 	}
 	
@@ -3240,11 +3240,12 @@ OSErr MADPlaySoundData(MADDriverRec *MDriver, Ptr soundPtr, long size, long chan
 {
 	Channel *curVoice;
 	
-	if (channel < 0)								return MADParametersErr;
-	if (channel >= MDriver->DriverSettings.numChn)	return MADParametersErr;
+	if (channel < 0)
+		return MADParametersErr;
+	if (channel >= MDriver->DriverSettings.numChn)
+		return MADParametersErr;
 	
-	if (MDriver->curMusic != NULL)
-	{
+	if (MDriver->curMusic != NULL) {
 		MDriver->curMusic->musicUnderModification = true;
 	}
 	
@@ -3254,52 +3255,58 @@ OSErr MADPlaySoundData(MADDriverRec *MDriver, Ptr soundPtr, long size, long chan
 	curVoice->samplePtr		= soundPtr;
 	curVoice->stereo			= stereo;
 	
-	curVoice->maxPtr 	= curVoice->curPtr = curVoice->begPtr = soundPtr;
-	curVoice->maxPtr 	+= size;
+	curVoice->maxPtr	= curVoice->curPtr = curVoice->begPtr = soundPtr;
+	curVoice->maxPtr	+= size;
 	curVoice->sizePtr	= size;
 	curVoice->lAC		= 0;
 	curVoice->pingpong	= false;
 	curVoice->PanningE8	= false;
-	curVoice->trig			= 0;
-	curVoice->preOff		= 0xFFFFFFFF;
-	curVoice->preVal		= 0;
-	curVoice->spreVal		= 0;
-	curVoice->preVal2		= *curVoice->curPtr;
+	curVoice->trig		= 0;
+	curVoice->preOff	= 0xFFFFFFFF;
+	curVoice->preVal	= 0;
+	curVoice->spreVal	= 0;
+	curVoice->preVal2	= *curVoice->curPtr;
 	if (curVoice->amp == 8) curVoice->preVal2R	= *(curVoice->curPtr+1);
 	else curVoice->preVal2R	= *(curVoice->curPtr+2);
 	curVoice->spreVal2	= *(short*) curVoice->curPtr;
 	curVoice->spreVal2R	= *(short*) (curVoice->curPtr+2);
 	
-	if (note == 0xFF) note = 48;
+	if (note == 0xFF)
+		note = 48;
 	curVoice->note		= note;
 	curVoice->ins		= 0;
 	curVoice->viboffset	= 0;
 	curVoice->amp		= amplitude;
 	curVoice->fineTune	= rate >> 16L;
 	
-	curVoice->period	= GetOldPeriod(curVoice->note, curVoice->fineTune, MDriver);
+	curVoice->period = GetOldPeriod(curVoice->note, curVoice->fineTune, MDriver);
 	
-	if (loopBeg > size) 					{ loopBeg = 0; loopSize = 0;}
-	if (loopBeg + loopSize > size) 			{ loopBeg = 0; loopSize = 0;}
-	
-	curVoice->loopBeg 		= loopBeg;
-	curVoice->loopSize	 	= loopSize;
-	
-	if (loopSize > 0)
-	{
-		curVoice->maxPtr 	= (Ptr) ((long) curVoice->begPtr + loopBeg + loopSize);
+	if (loopBeg > size) {
+		loopBeg = 0;
+		loopSize = 0;
 	}
 	
-	curVoice->pann		= 32;
+	if (loopBeg + loopSize > size) {
+		loopBeg = 0;
+		loopSize = 0;
+	}
 	
-	curVoice->vol 			= 64;
+	curVoice->loopBeg	= loopBeg;
+	curVoice->loopSize	= loopSize;
+	
+	if (loopSize > 0) {
+		curVoice->maxPtr = (Ptr)((size_t) curVoice->begPtr + loopBeg + loopSize);
+	}
+	
+	curVoice->pann	= 32;
+	
+	curVoice->vol			= 64;
 	curVoice->volFade		= 32767;
 	curVoice->nextvolFade	= 32767;
 	curVoice->volEnv		= 64;
 	curVoice->KeyOn			= true;
 	
-	if (MDriver->curMusic != NULL)
-	{
+	if (MDriver->curMusic != NULL) {
 		MDriver->curMusic->musicUnderModification = false;
 	}
 	
@@ -3308,13 +3315,12 @@ OSErr MADPlaySoundData(MADDriverRec *MDriver, Ptr soundPtr, long size, long chan
 
 void MADKeyOFF(MADDriverRec *MDriver, short track)
 {
-	if (track == -1)
-	{
+	if (track == -1) {
 		short i;
 		
 		for (i = 0; i < MAXTRACK; i++) MDriver->chan[i].KeyOn = false;
-	}
-	else MDriver->chan[track].KeyOn = false;
+	} else
+		MDriver->chan[track].KeyOn = false;
 }
 
 #ifdef _MAC_H
@@ -3342,20 +3348,22 @@ OSErr MADPlaySndHandle(MADDriverRec *MDriver, Handle sound, long channel, long n
 	/* determine what format sound we have. */
 	soundFormat = *(short*)soundPtr;
 	
-	switch (soundFormat)
-	{
-		case 1:						/* format 1 sound. */
+	switch (soundFormat) {
+		case 1:
+			/* format 1 sound. */
 			/* look inside the format 1 resource and deduce offsets. */
 			numSynths = ((short*)soundPtr)[1];					/* get # synths. */
 			numCmds = *(short*)(soundPtr+4+numSynths*6);		/* get # commands. */
 			break;
 			
-		case 2:						/* format 2 sound. */
-			numSynths = 0;			/* format 2 sounds have no synth's. */
+		case 2:
+			/* format 2 sound. */
+			numSynths = 0; /* format 2 sounds have no synth's. */
 			numCmds = ((short*)soundPtr)[2];
 			break;
 			
-		default:					/* jack says, what about 12? or 6? */
+		default:
+			/* jack says, what about 12? or 6? */
 			HUnlock(sound);
 			return MADUnknowErr;
 			break;
@@ -3365,47 +3373,48 @@ OSErr MADPlaySndHandle(MADDriverRec *MDriver, Handle sound, long channel, long n
 	offset = 6 + 6*numSynths + 8*numCmds;
 	header = (SoundHeaderPtr) ((*sound) + offset);
 	
-	switch (header->encode)
-	{
+	switch (header->encode) {
 		case cmpSH:
 			CmpHeader = (CmpSoundHeader*) header;
-			if (CmpHeader->numChannels > 2)
-			{
+			if (CmpHeader->numChannels > 2) {
 				HUnlock(sound);
 				return MADUnknowErr;
 			}
 			
-			if (CmpHeader->numChannels == 2) stereo = true;
-			else stereo = false;
+			if (CmpHeader->numChannels == 2)
+				stereo = true;
+			else
+				stereo = false;
 			
 			Sstart		= CmpHeader->loopStart;
 			Send		= CmpHeader->loopEnd;
 			Samp		= CmpHeader->sampleSize;
 			Sc2spd		= CmpHeader->sampleRate;
-			SbaseFreq 	= CmpHeader->baseFrequency;
-			Ssize 		= CmpHeader->numFrames;
-			rPtr 		= (Ptr) CmpHeader->sampleArea;
+			SbaseFreq	= CmpHeader->baseFrequency;
+			Ssize		= CmpHeader->numFrames;
+			rPtr		= (Ptr)CmpHeader->sampleArea;
 			Scomp		= CmpHeader->compressionID;
 			break;
 			
 		case extSH:
-			ExtHeader	= (ExtSoundHeader*) header;
-			if (ExtHeader->numChannels > 2)
-			{
+			ExtHeader	= (ExtSoundHeader*)header;
+			if (ExtHeader->numChannels > 2) {
 				HUnlock(sound);
 				return MADUnknowErr;
 			}
 			
-			if (ExtHeader->numChannels == 2) stereo = true;
-			else stereo = false;
+			if (ExtHeader->numChannels == 2)
+				stereo = true;
+			else
+				stereo = false;
 			
 			Sstart		= ExtHeader->loopStart;
 			Send		= ExtHeader->loopEnd;
 			Samp		= ExtHeader->sampleSize;
 			Sc2spd		= ExtHeader->sampleRate;
-			SbaseFreq 	= ExtHeader->baseFrequency;
-			Ssize 		= ExtHeader->numFrames;
-			rPtr 		= (Ptr) ExtHeader->sampleArea;
+			SbaseFreq	= ExtHeader->baseFrequency;
+			Ssize		= ExtHeader->numFrames;
+			rPtr		= (Ptr)ExtHeader->sampleArea;
 			Scomp		= 'NONE';
 			break;
 			
@@ -3413,44 +3422,39 @@ OSErr MADPlaySndHandle(MADDriverRec *MDriver, Handle sound, long channel, long n
 		case stdSH:
 			Sstart		= header->loopStart;
 			Send		= header->loopEnd;
-			if (header->encode == 0x40) Samp		= 0;
-			else Samp		= 8;
+			if (header->encode == 0x40)
+				Samp = 0;
+			else
+				Samp = 8;
 			Sc2spd		= header->sampleRate;
-			SbaseFreq 	= header->baseFrequency;
-			Ssize 		= header->length;
-			rPtr 		= (Ptr) header->sampleArea;
+			SbaseFreq	= header->baseFrequency;
+			Ssize		= header->length;
+			rPtr		= (Ptr)header->sampleArea;
 			Scomp		= 'NONE';
 			break;
 	}
 	
-	if (Samp == 16)
-	{
-		Ssize 	*= 2L;
-		Sstart 	*= 2L;
-		Send 	*= 2L;
+	if (Samp == 16) {
+		Ssize 	*= 2;
+		Sstart 	*= 2;
+		Send 	*= 2;
 		
-		if (stereo)
-		{
-			Ssize 	*= 2L;
-			Sstart 	*= 2L;
-			Send 	*= 2L;
+		if (stereo) {
+			Ssize	*= 2;
+			Sstart	*= 2;
+			Send	*= 2;
 		}
-	}
-	else
-	{
-		if (Samp == 8)
-		{
-			if (stereo)
-			{
-				Ssize 	*= 2L;
-				Sstart 	*= 2L;
-				Send 	*= 2L;
+	} else {
+		if (Samp == 8) {
+			if (stereo) {
+				Ssize	*= 2;
+				Sstart	*= 2;
+				Send	*= 2;
 			}
 			
 			for (i = 0; i < Ssize; i++) rPtr[i] = rPtr[i] - 0x80;
 			
-			switch (header->encode)
-			{
+			switch (header->encode) {
 				case extSH:
 					ExtHeader->sampleSize = 0;
 					break;
@@ -3470,7 +3474,8 @@ OSErr MADPlaySndHandle(MADDriverRec *MDriver, Handle sound, long channel, long n
 	
 	/*********************/
 	
-	if (note == 0xFF) note = 48;
+	if (note == 0xFF)
+		note = 48;
 	
 	return MADPlaySoundData(MDriver, rPtr, Ssize, channel, note + (60 - SbaseFreq), Samp, Sstart, Send - Sstart, Sc2spd, stereo);
 }
@@ -3485,16 +3490,18 @@ OSErr MADPlaySndHandle(MADDriverRec *MDriver, Handle sound, long channel, long n
 #pragma pack()
 #endif
 
-Cmd* GetMADCommand(short PosX, short	TrackIdX, PatData*	tempMusicPat)
+Cmd* GetMADCommand(short PosX, short TrackIdX, PatData* tempMusicPat)
 {
 	if (tempMusicPat == NULL) {
 		return NULL;
 	}
 	
-	if (PosX < 0) PosX = 0;
-	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
+	if (PosX < 0)
+		PosX = 0;
+	else if (PosX >= tempMusicPat->header.size)
+		PosX = tempMusicPat->header.size -1;
 	
-	return(&(tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
+	return &(tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]);
 }
 
 void MADDisposeVolumeTable(MADDriverRec *intDriver)
@@ -3515,12 +3522,19 @@ OSErr MADCreateVolumeTable(MADDriverRec *intDriver)
 	Tracks = intDriver->DriverSettings.numChn;
 
 
-	theErr = MADCreateMicroDelay(intDriver);			if (theErr != noErr) return theErr;
+	theErr = MADCreateMicroDelay(intDriver);
+	if (theErr != noErr)
+		return theErr;
 
-	switch (intDriver->DriverSettings.outPutMode)
-	{
-		case DeluxeStereoOutPut:			Tracks	= 1;		MADCreateOverShoot(intDriver);	break;
-		case PolyPhonic:					Tracks 	= 1;		break;
+	switch (intDriver->DriverSettings.outPutMode) {
+		case DeluxeStereoOutPut:
+			Tracks	= 1;
+			MADCreateOverShoot(intDriver);
+			break;
+			
+		case PolyPhonic:
+			Tracks 	= 1;
+			break;
 	}
 	
 	return noErr;
@@ -3539,18 +3553,17 @@ void MADChangeTracks(MADDriverRec *MDriver, short newVal)
 	
 	MDriver->trackDiv = MDriver->DriverSettings.numChn;
 	
-	if (play) MADStartDriver(MDriver);
-	if (reading) MADPlayMusic(MDriver);
+	if (play)
+		MADStartDriver(MDriver);
+	if (reading)
+		MADPlayMusic(MDriver);
 }
 
 void UpdateTracksNumber(MADDriverRec *MDriver)
 {
-	if (MDriver->curMusic != NULL)
-	{
-		if (MDriver->curMusic->header != NULL)
-		{
-			if (MDriver->curMusic->header->numChn != MDriver->DriverSettings.numChn)
-			{
+	if (MDriver->curMusic != NULL) {
+		if (MDriver->curMusic->header != NULL) {
+			if (MDriver->curMusic->header->numChn != MDriver->DriverSettings.numChn) {
 				MADChangeTracks(MDriver, MDriver->curMusic->header->numChn);
 			}
 		}
@@ -3559,9 +3572,7 @@ void UpdateTracksNumber(MADDriverRec *MDriver)
 
 OSErr MADCreateVibrato(MADDriverRec *MDriver)
 {
-	short			i, vibrato_table[64] = 
-
-	{
+	short i, vibrato_table[64] =  {
 	0,24,49,74,97,120,141,161,
 	180,197,212,224,235,244,250,253,
 	255,253,250,244,235,224,212,197,

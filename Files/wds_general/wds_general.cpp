@@ -21,19 +21,6 @@ PlayerPRO::wds_general::~wds_general()
 {
 	DisposeDialog(theDialog);
 }
-static short AHelp[] = {};
-
-
-void PlayerPRO::wds_general::DoHelp(short **items, short *lsize)
-{
-	*items = AHelp;
-	*lsize = 0;
-}
-
-void PlayerPRO::wds_general::DoNull()
-{
-	
-}
 
 bool PlayerPRO::wds_general::GetCanAcceptDrag()
 {
@@ -44,3 +31,14 @@ void PlayerPRO::wds_general::SetCanAcceptDrag(bool val)
 {
 	canAcceptDrag = val;
 }
+
+CGrafPtr PlayerPRO::wds_general::GetDialogPort()
+{
+	return ::GetDialogPort(theDialog);
+}
+
+WindowRef PlayerPRO::wds_general::GetDialogWindow()
+{
+	return ::GetDialogWindow(theDialog);
+}
+

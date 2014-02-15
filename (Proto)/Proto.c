@@ -21,6 +21,7 @@ typedef OSType SFTypeList[4];
 
 extern "C" {
 #endif	
+EventRecord *CurrentEvent();
 
 #include "3D.proto.h"
 #include "About.proto.h"

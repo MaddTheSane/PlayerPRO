@@ -19,6 +19,7 @@ extern "C" {
 #include "wds_menu.h"
 #include "wds_editor.h"
 #include "wds_general.h"
+#include "Tools.h"
 #include <vector>
 
 typedef struct CrsrRec {
@@ -159,6 +160,7 @@ namespace PlayerPRO {
 		void DoPreferences();
 		
 		void DoReset();
+		Tools *ToolsWindow;
 		
 	private:
 		Str255 asc_WorkStr;

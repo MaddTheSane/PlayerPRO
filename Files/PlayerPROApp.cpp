@@ -2747,6 +2747,11 @@ void PlayerPRO::PlayerPROApp::PathNameFromDirID(long dirID, short vRefNum, Strin
 	} while (block.dirInfo.ioDrDirID != 2 && err == noErr);
 }
 
+EventRecord *CurrentEvent()
+{
+	return &PlayerPRO::TheApp->theEvent;
+}
+
 int main(int argc, char *argv[])
 {
 	PlayerPRO::TheApp = new PlayerPRO::PlayerPROApp();

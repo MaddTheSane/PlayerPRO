@@ -13,7 +13,6 @@ long	GetDisplayID(long inDeviceNum );
 long	GetDisplayIDWithXandY(long inX, long inY);
 void	DoFullScreenNow(WindowPtr mWind);
 
-
 #ifdef __cplusplus
 }
 
@@ -115,7 +114,7 @@ protected:
 	LPDIRECTDRAW			mDDObj;
 	HWND					mFS_Win;
 #else			
-	long					mContextRef;
+	long	mContextRef;
 #endif
 };
 

@@ -17,11 +17,13 @@ namespace PlayerPRO {
 	public:
 		wds_general(SInt16 dialogID, WindowPtr parentWindow = (WindowPtr) -1);
 		virtual ~wds_general();
-		virtual void DoHelp(short **items, short *lsize);
-		virtual void DoNull();
+		virtual void DoHelp(short **items, short *lsize) = 0;
+		virtual void DoNull() = 0;
 		
 		bool GetCanAcceptDrag();
 		void SetCanAcceptDrag(bool val);
+		CGrafPtr GetDialogPort();
+		WindowRef GetDialogWindow();
 		
 	protected:
 		DialogPtr	theDialog;

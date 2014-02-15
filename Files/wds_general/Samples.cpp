@@ -73,7 +73,6 @@ pascal OSErr DragTracking(DragTrackingMessage message, WindowRef theWindow, void
 //extern	DialogPtr	InstruListDlog;
 extern	Boolean		PianoRecording;
 extern	RGBColor	theColor;
-extern	Cursor		HandCrsr, beamCrsr, pencilCrsr, pencilCrsrStereo, CHandCrsr;
 
 static	DragTrackingHandlerUPP	MyTrackingHandlerUPP;
 static	DragReceiveHandlerUPP	MyReceiveDropHandlerUPP;
@@ -1381,9 +1380,9 @@ void DoNullInstrument()
 					
 					GetKeys(PlayerPRO::TheApp->km);
 					if (IsPressed(0x003A) && ZoomLevel[InstruNo] != 1) {
-						SetCursor(&PlayerPRO::TheApp->ZoomOutCrsr);
+						PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::ZoomOutCrsr);
 					} else if (IsPressed(0x0037) && ZoomLevel[InstruNo] < 1024) {
-						SetCursor(&PlayerPRO::TheApp->ZoomInCrsr);
+						PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::ZoomInCrsr);
 					} else {
 						switch (curSample[InstruNo]) {
 							case panningEnv:
@@ -1393,7 +1392,7 @@ void DoNullInstrument()
 									
 									for (i = 0; i < curIns->pannSize; i++) {
 										if (tcoc >= curIns->pannEnv[i].pos - 1 && tcoc <= curIns->pannEnv[i].pos + 1) {
-											SetCursor(&HandCrsr);
+											PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
 											goto END;
 										}
 									}
@@ -1407,7 +1406,7 @@ void DoNullInstrument()
 									
 									for (i = 0; i < curIns->volSize; i++) {
 										if (tcoc >= curIns->volEnv[i].pos - 1 && tcoc <= curIns->volEnv[i].pos + 1) {
-											SetCursor(&HandCrsr);
+											PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
 											goto END;
 										}
 									}
@@ -1420,40 +1419,40 @@ void DoNullInstrument()
 									long end = ByteToPos(SampleDataD(InstruNo)->loopBeg + SampleDataD(InstruNo)->loopSize, InstruNo);
 									
 									if (pt.h >= start - 1 && pt.h <= start + 1) {
-										SetCursor(&HandCrsr);
+										PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
 										goto END;
 									}
 									
 									if (pt.h >= end-1 && pt.h <= end+1) {
-										SetCursor(&HandCrsr);
+										PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
 										goto END;
 									}
 								}
 								
 								if (SampleDataD(InstruNo)->size <= 0) {
-									SetCursor(GetQDGlobalsArrow(&PlayerPRO::TheApp->qdarrow));
+									PlayerPRO::TheApp->SetCursorToQDArrow();
 									goto END;
 								}
 								break;
 						}
 						
 						if (SelectMode[InstruNo] == eSelect)
-							SetCursor(&beamCrsr);
+							PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::beamCrsr);
 						else if (SelectMode[InstruNo] == ePencil) {
-							if (curSample[InstruNo] >= 0 && IsPressed(0x38) && SampleDataD(InstruNo)->stereo) 	{
-								SetCursor(&pencilCrsrStereo);
-							}
-							else SetCursor(&pencilCrsr);
+							if (curSample[InstruNo] >= 0 && IsPressed(0x38) && SampleDataD(InstruNo)->stereo) {
+								PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::pencilCrsrStereo);
+							} else
+								PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::pencilCrsr);
 						} else if (SelectMode[InstruNo] == eZoom)
-							SetCursor(&PlayerPRO::TheApp->ZoomInCrsr);
+							PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::ZoomInCrsr);
 						
 					END:;
 					}
 					
 				} else
-					SetCursor(GetQDGlobalsArrow(&PlayerPRO::TheApp->qdarrow));
+					PlayerPRO::TheApp->SetCursorToQDArrow();
 			} else
-				SetCursor(GetQDGlobalsArrow(&PlayerPRO::TheApp->qdarrow));
+				PlayerPRO::TheApp->SetCursorToQDArrow();
 			
 			DisposeRgn(visibleRegion);
 		}
@@ -1941,7 +1940,8 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 							for (i = 0; i < curIns->pannSize; i++) {
 								if (tcoc >= curIns->pannEnv[i].pos - 1 && tcoc <= curIns->pannEnv[i].pos + 1) {
 									editPtEnv = i;
-									SetCursor(&CHandCrsr);
+									PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::CHandCrsr);
+
 									break;
 								} else if (tcoc < curIns->pannEnv[i].pos) {
 									if (curIns->pannSize < 12) {
@@ -2074,7 +2074,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 							for (i = 0; i < curIns->volSize; i++) {
 								if (tcoc >= curIns->volEnv[i].pos - 1 && tcoc <= curIns->volEnv[i].pos + 1) {
 									editPtEnv = i;
-									SetCursor(&CHandCrsr);
+									PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::CHandCrsr);
 									break;
 								} else if (tcoc < curIns->volEnv[i].pos) {
 									if (curIns->volSize < 12) {
@@ -2879,14 +2879,14 @@ void UpdateSampleWindows(void)
 {
 	int i;
 	
-	SetCursor(&PlayerPRO::TheApp->watchCrsr);
+	PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::watchCrsr);
 	
 	for(i=0; i<MAXINSTRU; i++) InternalUpdate(i);
 	
 	if (PlayerPRO::TheApp->thePrefs.ClassicalProjection)
 		UpdateMozartInfo();
 	
-	SetCursor(GetQDGlobalsArrow(&PlayerPRO::TheApp->qdarrow));
+	PlayerPRO::TheApp->SetCursorToQDArrow();
 }
 
 void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
@@ -2902,7 +2902,7 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 	curMode[ins] = 0;
 	
 	if (SampleDlog[ins] == NULL) {
-		SampleDlog[ins] = GetNewDialog(137, NULL, GetDialogWindow(PlayerPRO::TheApp->ToolsDlog));
+		SampleDlog[ins] = GetNewDialog(137, NULL, PlayerPRO::TheApp->ToolsWindow->GetDialogWindow());
 		
 		ChangeDialogFont(SampleDlog[ins]);
 		
@@ -2921,7 +2921,7 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 		ZoomLevel[ins]			= 1;
 		
 		SetRect(&itemRect, -100, -100, -90, -90);
-		xScroll[ins] = NewControl(GetDialogWindow(SampleDlog[ins]),
+		xScroll[ins] = NewControl(::GetDialogWindow(SampleDlog[ins]),
 								   &itemRect,
 								   "\p.",
 								   true,
@@ -2933,7 +2933,7 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 		
 		GetDialogItem(SampleDlog[ins], 40, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		FixedBut[ins] = NewControl(GetDialogWindow(SampleDlog[ins]),
+		FixedBut[ins] = NewControl(::GetDialogWindow(SampleDlog[ins]),
 									&itemRect,
 									"\p",
 									true,
@@ -2945,7 +2945,7 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 		
 		GetDialogItem(SampleDlog[ins], 13, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		EnvBut[ins] = NewControl(GetDialogWindow(SampleDlog[ins]),
+		EnvBut[ins] = NewControl(::GetDialogWindow(SampleDlog[ins]),
 								  &itemRect,
 								  "\p",
 								  true,
@@ -2956,7 +2956,7 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 								  0);
 		GetDialogItem(SampleDlog[ins], 36, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		SustainBut[ins] = NewControl(GetDialogWindow(SampleDlog[ins]),
+		SustainBut[ins] = NewControl(::GetDialogWindow(SampleDlog[ins]),
 									  &itemRect,
 									  "\p",
 									  true,
@@ -2967,7 +2967,7 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 									  0);
 		GetDialogItem(SampleDlog[ins], 37, &itemType, &itemHandle, &itemRect);
 		//itemRect.right = itemRect.left;
-		LoopBut[ins] = NewControl(GetDialogWindow(SampleDlog[ins]),
+		LoopBut[ins] = NewControl(::GetDialogWindow(SampleDlog[ins]),
 								   &itemRect,
 								   "\p",
 								   true,
@@ -2978,7 +2978,7 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 								   0);
 		
 		GetDialogItem(SampleDlog[ins], 25, &itemType, &itemHandle, &itemRect);
-		InfoBut[ins] = NewControl(GetDialogWindow(SampleDlog[ins]),
+		InfoBut[ins] = NewControl(::GetDialogWindow(SampleDlog[ins]),
 								   &itemRect,
 								   "\p",
 								   true,
@@ -2990,7 +2990,7 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 		
 		
 		GetDialogItem(SampleDlog[ins] , 26, &itemType, &itemHandle, &itemRect);
-		PencilBut[ins] = NewControl(GetDialogWindow(SampleDlog[ins]),
+		PencilBut[ins] = NewControl(::GetDialogWindow(SampleDlog[ins]),
 									 &itemRect,
 									 "\p",
 									 true,
@@ -3000,7 +3000,7 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 									 kControlBevelButtonNormalBevelProc,
 									 0);
 		GetDialogItem(SampleDlog[ins], 27, &itemType, &itemHandle, &itemRect);
-		SelectBut[ins] = NewControl(GetDialogWindow(SampleDlog[ins]),
+		SelectBut[ins] = NewControl(::GetDialogWindow(SampleDlog[ins]),
 									 &itemRect,
 									 "\p",
 									 true,
@@ -3011,7 +3011,7 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 									 0);
 		
 		GetDialogItem(SampleDlog[ins], 18, &itemType, &itemHandle, &itemRect);
-		ZoomBut[ins] = NewControl(GetDialogWindow(SampleDlog[ins]),
+		ZoomBut[ins] = NewControl(::GetDialogWindow(SampleDlog[ins]),
 								   &itemRect,
 								   "\p",
 								   true,
@@ -3035,14 +3035,14 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 			MyReceiveDropHandlerUPP 	= NewDragReceiveHandlerUPP(MyReceiveDropHandler);
 			//mySendDataUPP 				= NewDragSendDataUPP(MySendSampleProc);
 			
-			InstallTrackingHandler(MyTrackingHandlerUPP, GetDialogWindow(SampleDlog[ins]), NULL);
+			InstallTrackingHandler(MyTrackingHandlerUPP, ::GetDialogWindow(SampleDlog[ins]), (void*)this);
 			//InstallReceiveHandler(MyReceiveDropHandlerUPP, GetDialogWindow(SampleDlog[ins]), NULL);
 		}
 	}
 	
 	SetPortDialogPort(SampleDlog[ins]);
-	ShowWindow(GetDialogWindow(SampleDlog[ins]));
-	SelectWindow2(GetDialogWindow(SampleDlog[ins]));
+	ShowWindow(::GetDialogWindow(SampleDlog[ins]));
+	SelectWindow2(::GetDialogWindow(SampleDlog[ins]));
 	GetSampleRect(SampleDlog[ins]);
 	//SetMaxBottomWindow(256 + SampleRect.top + 17 + SAMPLERECTTOP, SampleDlog[ins]);
 	SetMaxWindow(0, 256 + 15 + SAMPLERECTTOP, SampleDlog[ins]);
@@ -3063,8 +3063,8 @@ PlayerPRO::Samples::~Samples()
 		for (i = MAXINSTRU; i >= 0 ; i--) {
 			if (SampleDlog[i] != NULL) {
 				if (PlayerPRO::TheApp->DragManagerUse) {
-					RemoveTrackingHandler(MyTrackingHandlerUPP, GetDialogWindow(SampleDlog[i]));
-					RemoveReceiveHandler(MyReceiveDropHandlerUPP, GetDialogWindow(SampleDlog[i]));
+					RemoveTrackingHandler(MyTrackingHandlerUPP, ::GetDialogWindow(SampleDlog[i]));
+					RemoveReceiveHandler(MyReceiveDropHandlerUPP, ::GetDialogWindow(SampleDlog[i]));
 					
 					DisposeDragTrackingHandlerUPP(MyTrackingHandlerUPP);
 					DisposeDragReceiveHandlerUPP(MyReceiveDropHandlerUPP);
@@ -3082,8 +3082,8 @@ PlayerPRO::Samples::~Samples()
 		i = FindSample(theDialog);
 		
 		if (PlayerPRO::TheApp->DragManagerUse) {
-			RemoveTrackingHandler(MyTrackingHandlerUPP, GetDialogWindow(SampleDlog[i]));
-			RemoveReceiveHandler(MyReceiveDropHandlerUPP, GetDialogWindow(SampleDlog[i]));
+			RemoveTrackingHandler(MyTrackingHandlerUPP, ::GetDialogWindow(SampleDlog[i]));
+			RemoveReceiveHandler(MyReceiveDropHandlerUPP, ::GetDialogWindow(SampleDlog[i]));
 			
 			DisposeDragTrackingHandlerUPP(MyTrackingHandlerUPP);
 			DisposeDragReceiveHandlerUPP(MyReceiveDropHandlerUPP);
@@ -3097,7 +3097,7 @@ PlayerPRO::Samples::~Samples()
 		SampleDlog[i] = NULL;
 	}
 	
-	SetCursor(GetQDGlobalsArrow(&PlayerPRO::TheApp->qdarrow));
+	PlayerPRO::TheApp->SetCursorToQDArrow();
 }
 
 extern EventRecord	theEvent;
@@ -3274,7 +3274,7 @@ void MoveLoopSelection(short InstruNo)
 	
 	TokTak[InstruNo] = false;
 	
-	SetCursor(&CHandCrsr);
+	PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::CHandCrsr);
 	
 	SaveUndo(USample, InstruNo, "\pUndo 'Loop Edition'");
 	
@@ -3522,7 +3522,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 						};
 						
 						if (TickCount() >= TickEnd && curSample[InstruNo] != volumeEnv && curSample[InstruNo] != panningEnv) {
-							SetCursor(&HandCrsr);
+							PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
 							
 							tempRgn = NewRgn();
 							RectRgn(tempRgn, &tempRect);
@@ -3534,7 +3534,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 							
 							DisposeRgn(tempRgn);
 							
-							SetCursor(GetQDGlobalsArrow(&PlayerPRO::TheApp->qdarrow));
+							PlayerPRO::TheApp->SetCursorToQDArrow();
 							
 							goto EndSample;
 						}
