@@ -2747,9 +2747,7 @@ PlayerPRO::PlayerPROApp *TheApp;
 int main(int argc, char *argv[])
 {
 	TheApp = new PlayerPRO::PlayerPROApp();
-	
 	TheApp->Run();
-	
 	delete TheApp;
 	
 	return EXIT_SUCCESS;

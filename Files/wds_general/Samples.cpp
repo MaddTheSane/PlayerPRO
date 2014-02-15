@@ -39,6 +39,7 @@ void PlayerPRO::Samples::DoHelp(short **items, short *lsize)
 
 /*****************************/
 
+extern "C" {
 void			VSTSampleEditor(short item, sData	*curData, long Start, long End, Boolean StereoMode);
 void			NAppelVSTPlug(short InstruNo, short samp, short whichPlug);
 short			GetMaxSoundFilterPlugs(void);
@@ -57,7 +58,7 @@ void			ZapPixMap(PixMapHandle *offscreenPixMap);
 void			GetInstruName(short, Ptr);
 void			GetQualityString(short ID, Str255 str);
 Boolean			DragSample(RgnHandle myRgn, short theNo, EventRecord *theEvent);
-pascal OSErr 	MySendSampleProc(FlavorType theFlavor, void *refCon, ItemReference theItem, DragReference theDrag);
+pascal OSErr	MySendSampleProc(FlavorType theFlavor, void *refCon, ItemReference theItem, DragReference theDrag);
 Handle			SoundQualityExportSnd(short, OSType *, short *, long *, Str255);
 void			SetMobiusRect(Rect*, short, short, short, short);
 void			DrawSample(short pSt, short pEn, short Instru, DialogPtr theDia);
@@ -66,6 +67,7 @@ long			AmpToByte(short Pos, short InstruNo);
 void			ConvertInstrumentOut16(register	short	*tempPtr,	register long sSize);
 void			FFTSampleFilter(sData *SData, short instru, Boolean filter);
 void			SampleUpdateNow(void);
+}
 
 pascal OSErr DragTracking(DragTrackingMessage message, WindowRef theWindow, void *handlerRefCon, DragRef theDrag);
 
