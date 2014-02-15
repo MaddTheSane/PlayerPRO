@@ -318,7 +318,6 @@ void			NNumToString(short no, Str255 aStr);
 void			GetNoteString(short note, Str255	string);
 Boolean			GetIns(short *ins, short *samp);
 void			DoLoadOtherMusic(Boolean Affiche);
-void			Erreur(short ID, OSErr theErr);
 void			UpdateAHelpInfo(short *, short , DialogPtr );
 void			pStrcat(register unsigned char *s1, register unsigned char *s2);
 Boolean			ImportFile(Str255, short, long, OSType );

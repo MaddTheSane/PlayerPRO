@@ -464,8 +464,8 @@ pascal OSStatus CarbonWindowEventHandler(EventHandlerCallRef myHandler, EventRef
 	GetEventParameter(event, kEventParamDirectObject, typeWindowRef, NULL, sizeof(window), NULL, &window);
 	
 	if (GetEventKind(event) == kEventWindowDrawContent) {
-		PlayerPRO::TheApp->theEvent.message = (unsigned long) window;
-		DoUpdateEvent(&PlayerPRO::TheApp->theEvent);
+		TheApp->theEvent.message = (unsigned long) window;
+		DoUpdateEvent(&TheApp->theEvent);
 		result = noErr;
 	} else if (GetEventKind(event) == kEventWindowBoundsChanged) {
 		InvalWindowRect(window, GetWindowPortBounds(window, &bounds));
@@ -526,7 +526,7 @@ void PlayerPRO::PlayerPROApp::UseSameLeft(WindowPtr whichWindow)
 	
 	GetPortBounds(GetWindowPort(whichWindow), &caRect);
 	
-	stdRect.left = PlayerPRO::TheApp->thePrefs.WinPos[GetWRefCon(whichWindow)].h;
+	stdRect.left = TheApp->thePrefs.WinPos[GetWRefCon(whichWindow)].h;
 	stdRect.right = stdRect.left + caRect.right;
 	
 	SetWindowStandardState(whichWindow, &stdRect);
@@ -652,7 +652,7 @@ pascal Boolean MyCustomFileFilter2(CInfoPBRec *pb, void *myDataPtr)
 	if (pb->hFileInfo.ioFlAttrib & 16)
 		return false;
 	
-	switch (PlayerPRO::TheApp->showWhat) {
+	switch (TheApp->showWhat) {
 		case PlayerPRO::allMusics:
 			if (pb->hFileInfo.ioFlFndrInfo.fdType == 'sTAT')
 				return false;
@@ -661,9 +661,9 @@ pascal Boolean MyCustomFileFilter2(CInfoPBRec *pb, void *myDataPtr)
 			if (pb->hFileInfo.ioFlFndrInfo.fdType == 'MADK')
 				return false;
 			
-			for (i = 0; i < PlayerPRO::TheApp->gMADLib->TotalPlug; i++) {
+			for (i = 0; i < TheApp->gMADLib->TotalPlug; i++) {
 				//TODO: UTI Type
-				if (pb->hFileInfo.ioFlFndrInfo.fdType == Ptr2OSType(PlayerPRO::TheApp->gMADLib->ThePlug[i].type))
+				if (pb->hFileInfo.ioFlFndrInfo.fdType == Ptr2OSType(TheApp->gMADLib->ThePlug[i].type))
 					return false;
 			}
 			
@@ -684,7 +684,7 @@ pascal Boolean MyCustomFileFilter2(CInfoPBRec *pb, void *myDataPtr)
 			
 			FSMakeFSSpec(pb->hFileInfo.ioVRefNum, 0, pb->hFileInfo.ioNamePtr, &spec);
 			
-			if (MADMusicIdentifyFSp(PlayerPRO::TheApp->gMADLib, tempC, &spec) == noErr)
+			if (MADMusicIdentifyFSp(TheApp->gMADLib, tempC, &spec) == noErr)
 				return false;
 			else return true;
 			break;
@@ -714,9 +714,9 @@ void WriteSupportedFormat(DialogPtr	aDia)
 	
 	pStrcpy(text, "\pMADK");
 	
-	for (i = 0; i < PlayerPRO::TheApp->gMADLib->TotalPlug; i++) {
+	for (i = 0; i < TheApp->gMADLib->TotalPlug; i++) {
 		Str255 pMenuName;
-		GetPStrFromCFString(PlayerPRO::TheApp->gMADLib->ThePlug[i].MenuName, pMenuName);
+		GetPStrFromCFString(TheApp->gMADLib->ThePlug[i].MenuName, pMenuName);
 		
 		pStrcat(text, (StringPtr)"\p - ");
 		pStrcat(text, pMenuName);
@@ -2396,7 +2396,7 @@ void HandleExportFile(short theItem)
 		default:
 			if (CallPlug(0))
 				break;
-			SaveMOD(true, GetPPPlugType(PlayerPRO::TheApp->gMADLib, theItem - 4, 'EXPL'));
+			SaveMOD(true, GetPPPlugType(TheApp->gMADLib, theItem - 4, 'EXPL'));
 			break;
 	}
 }
@@ -2482,7 +2482,7 @@ Boolean PlayerPRO::PlayerPROApp::CheckFileType(FSSpec theSpec, OSType theType)
 		default:
 			MYP2CStr(theSpec.name);
 			OSType2Ptr(theType, tempC);
-			err = PPTestFile(PlayerPRO::TheApp->gMADLib, tempC, (Ptr)theSpec.name);
+			err = PPTestFile(TheApp->gMADLib, tempC, (Ptr)theSpec.name);
 			MYC2PStr((Ptr)theSpec.name);
 			
 			if (err)
@@ -2742,18 +2742,15 @@ void PlayerPRO::PlayerPROApp::PathNameFromDirID(long dirID, short vRefNum, Strin
 	} while (block.dirInfo.ioDrDirID != 2 && err == noErr);
 }
 
-EventRecord *CurrentEvent()
-{
-	return &PlayerPRO::TheApp->theEvent;
-}
+PlayerPRO::PlayerPROApp *TheApp;
 
 int main(int argc, char *argv[])
 {
-	PlayerPRO::TheApp = new PlayerPRO::PlayerPROApp();
+	TheApp = new PlayerPRO::PlayerPROApp();
 	
-	PlayerPRO::TheApp->Run();
+	TheApp->Run();
 	
-	delete PlayerPRO::TheApp;
+	delete TheApp;
 	
 	return EXIT_SUCCESS;
 }

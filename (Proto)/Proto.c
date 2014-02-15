@@ -22,7 +22,7 @@ typedef OSType SFTypeList[4];
 extern "C" {
 #endif	
 EventRecord *CurrentEvent();
-
+void DoCPPGlobalNull();
 #include "3D.proto.h"
 #include "About.proto.h"
 #include "Adaptators.proto.h"

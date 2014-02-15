@@ -176,7 +176,7 @@ pascal OSErr MyReceiveTools(WindowPtr theWindow, void* handlerRefCon, DragRefere
 	
 	CountDragItems(theDrag, &items);
 	
-	PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::watchCrsr);
+	TheApp->SetCursorOnNumber(PlayerPRO::watchCrsr);
 	
 	for (index = 1; index <= items; index++) {
 		GetDragItemReferenceNumber(theDrag, index, &theItem);
@@ -216,7 +216,7 @@ pascal OSErr MyReceiveTools(WindowPtr theWindow, void* handlerRefCon, DragRefere
 	if (iErr)
 		return iErr;
 	
-	PlayerPRO::TheApp->SetCursorToQDArrow();
+	TheApp->SetCursorToQDArrow();
 	
 	return noErr;
 }
@@ -225,7 +225,7 @@ void PlayerPRO::Tools::DrawTimeBar()
 {
 	GrafPtr SavePort;
 	
-	if (PlayerPRO::TheApp->curMusic == NULL)
+	if (TheApp->curMusic == NULL)
 		return;
 	GetPort(&SavePort);
 	SetPortDialogPort(theDialog);
@@ -241,11 +241,11 @@ void PlayerPRO::Tools::DoNull()
 	GetPort(&savePort);
 	SetPortDialogPort(theDialog);
 	
-	if (oldPartition != PlayerPRO::TheApp->MADDriver->PartitionReader || oldPL != PlayerPRO::TheApp->MADDriver->PL) {
-		oldPartition = PlayerPRO::TheApp->MADDriver->PartitionReader;
-		oldPL = PlayerPRO::TheApp->MADDriver->PL;
+	if (oldPartition != TheApp->MADDriver->PartitionReader || oldPL != TheApp->MADDriver->PL) {
+		oldPartition = TheApp->MADDriver->PartitionReader;
+		oldPL = TheApp->MADDriver->PL;
 		
-		if (oldPL < PlayerPRO::TheApp->curMusic->header->numPointers) {
+		if (oldPL < TheApp->curMusic->header->numPointers) {
 			if (oldTime != (TimeScanPtr[oldPL])[oldPartition]) {
 				DateTimeRec		dtrp;
 				Str255			aStr, bStr;
@@ -311,7 +311,7 @@ void PlayerPRO::Tools::UpdateToolsWindow(DialogPtr GetSelection)
 	
 	Draw1Control(progCntl);
 	
-	SetCurrentMOD(PlayerPRO::TheApp->curMusic->musicFileName);
+	SetCurrentMOD(TheApp->curMusic->musicFileName);
 	/*******/
 	EndUpdate(::GetDialogWindow(GetSelection));
 	
@@ -331,7 +331,7 @@ void PlayerPRO::Tools::CreateDialog()
 	SetWindEtat(GetDialogWindow());
 	SetPortDialogPort(theDialog);
 	
-	LoopCntlState = !PlayerPRO::TheApp->MADDriver->JumpToNextPattern;
+	LoopCntlState = !TheApp->MADDriver->JumpToNextPattern;
 	PreviousLoop = -1;
 	
 	MySizeWindow(theDialog, 183, 48, false);
@@ -407,20 +407,20 @@ void PlayerPRO::Tools::DoRecord()
 
 void PlayerPRO::Tools::DoRecule()
 {
-	if (PlayerPRO::TheApp->MADDriver-> PartitionReader != oldPartition2) {
-		PlayerPRO::TheApp->MADDriver->PartitionReader -= 2;
+	if (TheApp->MADDriver-> PartitionReader != oldPartition2) {
+		TheApp->MADDriver->PartitionReader -= 2;
 		
-		if (PlayerPRO::TheApp->MADDriver->PartitionReader < 0 && PlayerPRO::TheApp->MADDriver->PL >= 2) {
-			PlayerPRO::TheApp->MADDriver->PL -= 2;
-			PlayerPRO::TheApp->MADDriver->Pat = (PlayerPRO::TheApp->curMusic->header)->oPointers[PlayerPRO::TheApp->MADDriver->PL];
-			PlayerPRO::TheApp->MADDriver->PL++;
-			PlayerPRO::TheApp->MADDriver->PartitionReader = 62;
+		if (TheApp->MADDriver->PartitionReader < 0 && TheApp->MADDriver->PL >= 2) {
+			TheApp->MADDriver->PL -= 2;
+			TheApp->MADDriver->Pat = (TheApp->curMusic->header)->oPointers[TheApp->MADDriver->PL];
+			TheApp->MADDriver->PL++;
+			TheApp->MADDriver->PartitionReader = 62;
 		}
 		
-		if (PlayerPRO::TheApp->MADDriver->PartitionReader < 0)
-			PlayerPRO::TheApp->MADDriver->PartitionReader = 62;
+		if (TheApp->MADDriver->PartitionReader < 0)
+			TheApp->MADDriver->PartitionReader = 62;
 		
-		oldPartition2 = PlayerPRO::TheApp->MADDriver->PartitionReader;
+		oldPartition2 = TheApp->MADDriver->PartitionReader;
 	}
 }
 
@@ -431,29 +431,29 @@ void PlayerPRO::Tools::DoPause()
 	
 	FlushPlugin();
 
-	PlayerPRO::TheApp->MusicPlayActive = false;
+	TheApp->MusicPlayActive = false;
 	
-	PlayerPRO::TheApp->MADDriver->Reading = false;
-	MADPurgeTrack(PlayerPRO::TheApp->MADDriver);
-	MADCleanDriver(PlayerPRO::TheApp->MADDriver);
+	TheApp->MADDriver->Reading = false;
+	MADPurgeTrack(TheApp->MADDriver);
+	MADCleanDriver(TheApp->MADDriver);
 	//PurgeVSTEffects();
 	
-	if (PlayerPRO::TheApp->thePrefs.GoToStop) {
-		PlayerPRO::TheApp->MADDriver->Pat = RememberPat;
-		PlayerPRO::TheApp->MADDriver->PartitionReader = RememberReader;
-		PlayerPRO::TheApp->MADDriver->PL = RememberPL;
+	if (TheApp->thePrefs.GoToStop) {
+		TheApp->MADDriver->Pat = RememberPat;
+		TheApp->MADDriver->PartitionReader = RememberReader;
+		TheApp->MADDriver->PL = RememberPL;
 	}
 	
 	HiliteControl(playCntl, 0);
 	HiliteControl(stopCntl, kControlButtonPart);
 	
 	if (MIDIHardwareAlreadyOpen) {
-		if (PlayerPRO::TheApp->MADDriver->DriverSettings.driverMode == MIDISoundDriver) {
+		if (TheApp->MADDriver->DriverSettings.driverMode == MIDISoundDriver) {
 #if MACOS9VERSION
 			OMSAllNotesOff();
 #endif
 		}
-		AllNoteOff(PlayerPRO::TheApp->MADDriver);
+		AllNoteOff(TheApp->MADDriver);
 	}
 	
 	QTDoAction(false);
@@ -463,46 +463,46 @@ void PlayerPRO::Tools::DoStop()
 {
 	DoPause();
 	
-	PlayerPRO::TheApp->MADDriver->PartitionReader = 0;
-	PlayerPRO::TheApp->MADDriver->PL = 0;
-	PlayerPRO::TheApp->MADDriver->Pat = (PlayerPRO::TheApp->curMusic->header)->oPointers[PlayerPRO::TheApp->MADDriver->PL];
-	PlayerPRO::TheApp->MADDriver->PL++;
+	TheApp->MADDriver->PartitionReader = 0;
+	TheApp->MADDriver->PL = 0;
+	TheApp->MADDriver->Pat = (TheApp->curMusic->header)->oPointers[TheApp->MADDriver->PL];
+	TheApp->MADDriver->PL++;
 }
 
 void PlayerPRO::Tools::DoSearchUp()
 {
 	short newPL, newPartitionReader = 0;
 	
-	newPL = PlayerPRO::TheApp->MADDriver->PL;
+	newPL = TheApp->MADDriver->PL;
 	newPL++;
-	if (newPL >= PlayerPRO::TheApp->curMusic->header->numPointers)
+	if (newPL >= TheApp->curMusic->header->numPointers)
 		newPL--;
 	
-	MADPurgeTrack(PlayerPRO::TheApp->MADDriver);
+	MADPurgeTrack(TheApp->MADDriver);
 	
-	PlayerPRO::TheApp->MADDriver->PL = newPL;
-	PlayerPRO::TheApp->MADDriver->Pat = PlayerPRO::TheApp->curMusic->header->oPointers[PlayerPRO::TheApp->MADDriver->PL];
-	PlayerPRO::TheApp->MADDriver->PartitionReader = newPartitionReader;
+	TheApp->MADDriver->PL = newPL;
+	TheApp->MADDriver->Pat = TheApp->curMusic->header->oPointers[TheApp->MADDriver->PL];
+	TheApp->MADDriver->PartitionReader = newPartitionReader;
 	
-	MADCheckSpeed(PlayerPRO::TheApp->curMusic, PlayerPRO::TheApp->MADDriver);
+	MADCheckSpeed(TheApp->curMusic, TheApp->MADDriver);
 }
 
 void PlayerPRO::Tools::DoSearchDown()
 {
 	short newPL, newPartitionReader = 0;
 	
-	newPL = PlayerPRO::TheApp->MADDriver->PL;
+	newPL = TheApp->MADDriver->PL;
 	newPL--;
 	if (newPL <= 0)
 		newPL = 0;
 	
-	MADPurgeTrack(PlayerPRO::TheApp->MADDriver);
+	MADPurgeTrack(TheApp->MADDriver);
 	
-	PlayerPRO::TheApp->MADDriver->PL = newPL;
-	PlayerPRO::TheApp->MADDriver->Pat = PlayerPRO::TheApp->curMusic->header->oPointers[PlayerPRO::TheApp->MADDriver->PL];
-	PlayerPRO::TheApp->MADDriver->PartitionReader = newPartitionReader;
+	TheApp->MADDriver->PL = newPL;
+	TheApp->MADDriver->Pat = TheApp->curMusic->header->oPointers[TheApp->MADDriver->PL];
+	TheApp->MADDriver->PartitionReader = newPartitionReader;
 	
-	MADCheckSpeed(PlayerPRO::TheApp->curMusic, PlayerPRO::TheApp->MADDriver);
+	MADCheckSpeed(TheApp->curMusic, TheApp->MADDriver);
 }
 
 void PlayerPRO::Tools::SetCurrentMOD(ConstStr255Param theMODName)
@@ -524,7 +524,7 @@ void PlayerPRO::Tools::SetCurrentMOD(ConstStr255Param theMODName)
 	
 	pStrcpy(aStr, theMODName);
 	pStrcat(aStr, (StringPtr)"\p - ");
-	NumToString(PlayerPRO::TheApp->curMusic->header->numChn, aStr2);
+	NumToString(TheApp->curMusic->header->numChn, aStr2);
 	pStrcat(aStr, aStr2);
 	
 	GetDialogItem(theDialog , 1, &itemType, &itemHandle, &itemRect);
@@ -538,9 +538,9 @@ void PlayerPRO::Tools::SetCurrentMOD(ConstStr255Param theMODName)
 
 void PlayerPRO::Tools::DoRemember()
 {
-	RememberPat = PlayerPRO::TheApp->MADDriver->Pat;
-	RememberReader = PlayerPRO::TheApp->MADDriver->PartitionReader;
-	RememberPL = PlayerPRO::TheApp->MADDriver->PL;
+	RememberPat = TheApp->MADDriver->Pat;
+	RememberReader = TheApp->MADDriver->PartitionReader;
+	RememberPL = TheApp->MADDriver->PL;
 }
 
 void PlayerPRO::Tools::DoPlay()
@@ -554,18 +554,18 @@ void PlayerPRO::Tools::DoPlay()
 	HiliteControl(playCntl, kControlButtonPart);
 	
 	ScanTime();
-	MADCheckSpeed(PlayerPRO::TheApp->curMusic, PlayerPRO::TheApp->MADDriver);
+	MADCheckSpeed(TheApp->curMusic, TheApp->MADDriver);
 	
-	if (PlayerPRO::TheApp->MusicPlayActive == true)
+	if (TheApp->MusicPlayActive == true)
 		return;
-	PlayerPRO::TheApp->MusicPlayActive = true;
+	TheApp->MusicPlayActive = true;
 	
-	RememberPat		= PlayerPRO::TheApp->MADDriver->Pat;
-	RememberReader	= PlayerPRO::TheApp->MADDriver->PartitionReader;
-	RememberPL		= PlayerPRO::TheApp->MADDriver->PL;
+	RememberPat		= TheApp->MADDriver->Pat;
+	RememberReader	= TheApp->MADDriver->PartitionReader;
+	RememberPL		= TheApp->MADDriver->PL;
 	
-	PlayerPRO::TheApp->MADDriver->Reading = true;
-	MADPurgeTrack(PlayerPRO::TheApp->MADDriver);
+	TheApp->MADDriver->Reading = true;
+	MADPurgeTrack(TheApp->MADDriver);
 	
 	SetPort(savePort);
 }
@@ -576,14 +576,14 @@ pascal void myBackAction(ControlHandle theCntl, short ctlPart)
 {
 	if (ctlPart == kControlButtonPart) {
 		if (!IsPlay)
-			PlayerPRO::TheApp->ToolsWindow->DoPlay();
-		PlayerPRO::TheApp->ToolsWindow->DoRecule();
+			TheApp->ToolsWindow->DoPlay();
+		TheApp->ToolsWindow->DoRecule();
 	} else if (!IsPlay)
-		PlayerPRO::TheApp->ToolsWindow->DoPause();
+		TheApp->ToolsWindow->DoPause();
 	
-	PlayerPRO::TheApp->DoGlobalNull();
+	TheApp->DoGlobalNull();
 	
-	WaitNextEvent(everyEvent, &PlayerPRO::TheApp->theEvent, 1, NULL);
+	WaitNextEvent(everyEvent, &TheApp->theEvent, 1, NULL);
 }
 
 static short	doubleSpeed;
@@ -595,25 +595,25 @@ pascal void myForeAction(ControlHandle theCntl, short ctlPart)
 		if (!alreadyReady) {
 			alreadyReady = true;
 			if (IsPlay) {
-				PlayerPRO::TheApp->MADDriver->VExt = doubleSpeed;
+				TheApp->MADDriver->VExt = doubleSpeed;
 				//ChangeSpeed();
 			} else
-				PlayerPRO::TheApp->ToolsWindow->DoPlay();
+				TheApp->ToolsWindow->DoPlay();
 		}
 	} else {
 		if (alreadyReady) {
 			alreadyReady = false;
 			if (IsPlay) {
-				PlayerPRO::TheApp->MADDriver->VExt = doubleSpeed / 2;
+				TheApp->MADDriver->VExt = doubleSpeed / 2;
 				//ChangeSpeed();
 			} else
-				PlayerPRO::TheApp->ToolsWindow->DoPause();
+				TheApp->ToolsWindow->DoPause();
 		}
 	}
 	
-	PlayerPRO::TheApp->DoGlobalNull();
+	TheApp->DoGlobalNull();
 	
-	WaitNextEvent(everyEvent, &PlayerPRO::TheApp->theEvent, 1, NULL);
+	WaitNextEvent(everyEvent, &TheApp->theEvent, 1, NULL);
 }
 
 void PlayerPRO::Tools::ScanTime()
@@ -628,24 +628,24 @@ void PlayerPRO::Tools::ScanTime()
 	
 	timeResult		= 0;
 	time			= 0;
-	speed			= PlayerPRO::TheApp->curMusic->header->speed;
-	finespeed		= PlayerPRO::TheApp->curMusic->header->tempo;
+	speed			= TheApp->curMusic->header->speed;
+	finespeed		= TheApp->curMusic->header->tempo;
 	
 	dstPL	= 0;
 	
-	for (i = 0; i < PlayerPRO::TheApp->curMusic->header->numPointers; i++) {
+	for (i = 0; i < TheApp->curMusic->header->numPointers; i++) {
 		if (TimeScanPtr[i] != NULL)
 			DisposePtr((Ptr)TimeScanPtr[i]);
 		
-		TimeScanPtr[i] = (long*) NewPtr(PlayerPRO::TheApp->curMusic->partition[PlayerPRO::TheApp->curMusic->header->oPointers[i]]->header.size * sizeof(long));
+		TimeScanPtr[i] = (long*) NewPtr(TheApp->curMusic->partition[TheApp->curMusic->header->oPointers[i]]->header.size * sizeof(long));
 		
-		for (x = 0; x < PlayerPRO::TheApp->curMusic->partition[PlayerPRO::TheApp->curMusic->header->oPointers[i]]->header.size; x++) {
+		for (x = 0; x < TheApp->curMusic->partition[TheApp->curMusic->header->oPointers[i]]->header.size; x++) {
 			time ++;
 			
 			(TimeScanPtr[i])[x] = timeResult + (time * 125L * speed * 60) / (50 * finespeed);
 			
-			for (y = 0; y <  PlayerPRO::TheApp->curMusic->header->numChn; y++) {
-				aCmd = GetMADCommand(x, y, PlayerPRO::TheApp->curMusic->partition[PlayerPRO::TheApp->curMusic->header->oPointers[i]]);
+			for (y = 0; y <  TheApp->curMusic->header->numChn; y++) {
+				aCmd = GetMADCommand(x, y, TheApp->curMusic->partition[TheApp->curMusic->header->oPointers[i]]);
 				if (aCmd == NULL) {
 					MyDebugStr(__LINE__, __FILE__, "Could not find the selected command!");
 					return;
@@ -672,7 +672,7 @@ void PlayerPRO::Tools::ScanTime()
 				/** SkipE **/
 				
 				if (aCmd->cmd == skipE) {
-					for (; x < PlayerPRO::TheApp->curMusic->partition[PlayerPRO::TheApp->curMusic->header->oPointers[i]]->header.size; x++) {
+					for (; x < TheApp->curMusic->partition[TheApp->curMusic->header->oPointers[i]]->header.size; x++) {
 						(TimeScanPtr[i])[x] = timeResult + (time * 125L * speed * 60) / (50 * finespeed);
 					}
 				}
@@ -768,10 +768,10 @@ void PlayerPRO::Tools::DoChangeLoop()
 	
 	if (LoopCntlState) {
 		HiliteControl(LoopCntl, kControlButtonPart);
-		PlayerPRO::TheApp->MADDriver->JumpToNextPattern = false;
+		TheApp->MADDriver->JumpToNextPattern = false;
 	} else {
 		HiliteControl(LoopCntl, 0);
-		PlayerPRO::TheApp->MADDriver->JumpToNextPattern = true;
+		TheApp->MADDriver->JumpToNextPattern = true;
 	}
 }
 
@@ -788,58 +788,58 @@ void PlayerPRO::Tools::DoItemPressTools(short whichItem, DialogPtr whichDialog)
 	
 	switch (whichItem) {
 		case 2:
-			if (MyTrackControl(JumpBeforeCntl,PlayerPRO::TheApp-> theEvent.where, NULL)) {
+			if (MyTrackControl(JumpBeforeCntl,TheApp-> theEvent.where, NULL)) {
 				DoSearchDown();
 			}
 			break;
 			
 		case 3:
-			IsPlay = PlayerPRO::TheApp->MusicPlayActive;
-			MyTrackControl(BackCntl, PlayerPRO::TheApp->theEvent.where, BackUPP);
+			IsPlay = TheApp->MusicPlayActive;
+			MyTrackControl(BackCntl, TheApp->theEvent.where, BackUPP);
 			if (!IsPlay)
 				DoPause();
 			break;
 			
 		case 44:
-			if (MyTrackControl(RecordCntl, PlayerPRO::TheApp->theEvent.where, NULL)) {
+			if (MyTrackControl(RecordCntl, TheApp->theEvent.where, NULL)) {
 				DoRecord();
 			}
 			break;
 			
 		case 46:
-			if (MyTrackControl(LoopCntl, PlayerPRO::TheApp->theEvent.where, NULL)) {
+			if (MyTrackControl(LoopCntl, TheApp->theEvent.where, NULL)) {
 				DoChangeLoop();
 			}
 			break;
 			
 		case 4:
-			if (MyTrackControl(stopCntl, PlayerPRO::TheApp->theEvent.where, NULL)) {
+			if (MyTrackControl(stopCntl, TheApp->theEvent.where, NULL)) {
 				DoPause();
 			}
 			break;
 			
 		case 5:
-			if (MyTrackControl(playCntl, PlayerPRO::TheApp->theEvent.where, NULL)) {
+			if (MyTrackControl(playCntl, TheApp->theEvent.where, NULL)) {
 				DoPlay();
 			}
 			break;
 			
 		case 6:
-			doubleSpeed = PlayerPRO::TheApp->MADDriver->VExt *2;
-			IsPlay = PlayerPRO::TheApp->MusicPlayActive;
+			doubleSpeed = TheApp->MADDriver->VExt *2;
+			IsPlay = TheApp->MusicPlayActive;
 			alreadyReady = false;
 			
-			MyTrackControl(ForCntl, PlayerPRO::TheApp->theEvent.where, ForeUPP);
+			MyTrackControl(ForCntl, TheApp->theEvent.where, ForeUPP);
 			
 			if (IsPlay) {
-				PlayerPRO::TheApp->MADDriver->VExt = doubleSpeed / 2;
+				TheApp->MADDriver->VExt = doubleSpeed / 2;
 				//ChangeSpeed();
 			} else
 				DoPause();
 			break;
 			
 		case 7:
-			if (MyTrackControl(JumpNextCntl, PlayerPRO::TheApp->theEvent.where, NULL)) {
+			if (MyTrackControl(JumpNextCntl, TheApp->theEvent.where, NULL)) {
 				DoSearchUp();
 			}
 			break;
@@ -849,9 +849,9 @@ void PlayerPRO::Tools::DoItemPressTools(short whichItem, DialogPtr whichDialog)
 				GetDialogItem(theDialog , 10, &itemType, &itemHandle, &itemRect);
 				GetMouse(&myPt);
 				
-				PlayerPRO::TheApp->DoGlobalNull();
+				TheApp->DoGlobalNull();
 				
-				WaitNextEvent(everyEvent, &PlayerPRO::TheApp->theEvent, 1, NULL);
+				WaitNextEvent(everyEvent, &TheApp->theEvent, 1, NULL);
 				
 				if (temp != myPt.h) {
 					if (myPt.h < itemRect.left)
@@ -867,7 +867,7 @@ void PlayerPRO::Tools::DoItemPressTools(short whichItem, DialogPtr whichDialog)
 					
 					GetDialogItem (theDialog, 10, &itemType, &itemHandle, &itemRect);
 					
-					MADSetMusicStatus(PlayerPRO::TheApp->MADDriver, itemRect.left, itemRect.right, myPt.h);
+					MADSetMusicStatus(TheApp->MADDriver, itemRect.left, itemRect.right, myPt.h);
 					
 					DrawTimeBar();
 				}

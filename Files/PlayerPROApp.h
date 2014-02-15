@@ -182,8 +182,9 @@ namespace PlayerPRO {
 		ProcessSerialNumber	playerPROPSN;
 		void LoadOldFilePrefs(FSIORefNum fRefNum);
 	};
-	PlayerPROApp *TheApp;
 }
+
+extern PlayerPRO::PlayerPROApp *TheApp;
 
 extern "C" void pstrinsert(StringPtr dst, StringPtr src);
 extern "C" void pstrcat(StringPtr dst, StringPtr src);

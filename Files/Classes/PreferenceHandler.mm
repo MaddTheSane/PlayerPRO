@@ -487,7 +487,7 @@ void ReadCFPreferences()
 	NSString *tempStr = nil;
 	NSArray *tempArray = nil;
 	int i;
-	Prefs *thePrefs = &PlayerPRO::TheApp->thePrefs;
+	Prefs *thePrefs = &TheApp->thePrefs;
 	memset(thePrefs, 0, sizeof(Prefs));
 	thePrefs->addExtension = [defaults boolForKey:PPMAddExtension];
 	thePrefs->MADCompression = [defaults boolForKey:PPMMadCompression];
@@ -561,7 +561,7 @@ void WriteCFPreferences()
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSMutableArray *tmpMutable = nil;
 	int i;
-	Prefs *thePrefs = &PlayerPRO::TheApp->thePrefs;
+	Prefs *thePrefs = &TheApp->thePrefs;
 	[defaults setBool:thePrefs->addExtension forKey:PPMAddExtension];
 	[defaults setBool:thePrefs->MADCompression forKey:PPMMadCompression];
 #define PPCOLOR(val) WriteCFPreferencesWithQDColor(PPCColor ## val, thePrefs->tracksColor[val - 1])

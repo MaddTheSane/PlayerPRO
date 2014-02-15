@@ -3218,7 +3218,7 @@ OSErr MADPlaySoundDataSYNC(MADDriverRec *MDriver, Ptr soundPtr, long size, long 
 				continueLoop = false;
 			
 #if MAINPLAYERPRO
-			DoGlobalNull();
+			DoCPPGlobalNull();
 			WaitNextEvent(everyEvent, CurrentEvent(), 1, NULL);
 #endif
 		}

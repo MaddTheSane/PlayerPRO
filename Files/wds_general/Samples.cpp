@@ -12,9 +12,9 @@ extern "C" {
 #undef SampleDataS
 #undef SampleDataD
 
-#define SampleDataN(InsD, NoteD)	PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[InsD].firstSample + PlayerPRO::TheApp->curMusic->fid[InsD].what[NoteD]]
-#define SampleDataS(InsD, SampleD)	PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[InsD].firstSample + SampleD]
-#define SampleDataD(InsD)			PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[InsD].firstSample + curSample[InsD]]
+#define SampleDataN(InsD, NoteD)	TheApp->curMusic->sample[TheApp->curMusic->fid[InsD].firstSample + TheApp->curMusic->fid[InsD].what[NoteD]]
+#define SampleDataS(InsD, SampleD)	TheApp->curMusic->sample[TheApp->curMusic->fid[InsD].firstSample + SampleD]
+#define SampleDataD(InsD)			TheApp->curMusic->sample[TheApp->curMusic->fid[InsD].firstSample + curSample[InsD]]
 
 /******** HELP MODULE ********/
 enum {
@@ -95,8 +95,6 @@ enum {
 	volumeEnv = -1
 };
 
-extern	short					TouchIn, TouchMem[11], TrackMem[11];
-
 static 	Rect					SampleRect;
 		LPoint					SelecRect[MAXINSTRU];
 static	GWorldPtr				BitMapSample[MAXINSTRU];
@@ -138,7 +136,7 @@ long GetStartSampleValue(long val, short InstruNo)
 	if (samp < 0)
 		samp = 0;
 	
-	size = PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[InstruNo].firstSample + samp]->size;
+	size = TheApp->curMusic->sample[TheApp->curMusic->fid[InstruNo].firstSample + samp]->size;
 	
 	val = GetControlValue(xScroll[InstruNo]);
 	
@@ -339,7 +337,7 @@ void DoGrowSample(DialogPtr theDia)
 	LocalToGlobal(&aPt);
 	
 	lSizeVH = 0;
-	if (PlayerPRO::TheApp->theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(theDia), PlayerPRO::TheApp->theEvent.where, &temp);
+	if (TheApp->theEvent.what == mouseDown) lSizeVH = GrowWindow(GetDialogWindow(theDia), TheApp->theEvent.where, &temp);
 	
 	if (lSizeVH != 0) {
 		tempA = LoWord(lSizeVH);
@@ -372,13 +370,13 @@ void UpdateDisplaySize(short InstruNo)
 	
 	switch (curSample[InstruNo]) {
 		case panningEnv:
-			NumToString(PlayerPRO::TheApp->curMusic->fid[InstruNo].pannSize, StrTemp);
+			NumToString(TheApp->curMusic->fid[InstruNo].pannSize, StrTemp);
 			::pStrcat(StrTemp, (unsigned char*)"\p Pts");
 			SetDText(SampleDlog[InstruNo], 3, StrTemp);
 			break;
 			
 		case volumeEnv:
-			NumToString(PlayerPRO::TheApp->curMusic->fid[InstruNo].volSize, StrTemp);
+			NumToString(TheApp->curMusic->fid[InstruNo].volSize, StrTemp);
 			::pStrcat(StrTemp, (unsigned char*)"\p Pts");
 			SetDText(SampleDlog[InstruNo], 3, StrTemp);
 			break;
@@ -532,12 +530,12 @@ void UpdateDisplayLoop(short InstruNo)
 	
 	switch (curSample[InstruNo]) {
 		case panningEnv:
-			if (PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType & EFLOOP) {
-				NumToString(PlayerPRO::TheApp->curMusic->fid[InstruNo].pannBeg+1, StrTemp);
+			if (TheApp->curMusic->fid[InstruNo].pannType & EFLOOP) {
+				NumToString(TheApp->curMusic->fid[InstruNo].pannBeg+1, StrTemp);
 				pStrcat(StrTemp, (StringPtr)"\p Pt");
 				SetDText(SampleDlog[InstruNo], 9, StrTemp);
 				
-				NumToString(PlayerPRO::TheApp->curMusic->fid[InstruNo].pannEnd+1, StrTemp);
+				NumToString(TheApp->curMusic->fid[InstruNo].pannEnd+1, StrTemp);
 				pStrcat(StrTemp, (StringPtr)"\p Pt");
 				SetDText(SampleDlog[InstruNo], 11, StrTemp);
 			} else {
@@ -547,12 +545,12 @@ void UpdateDisplayLoop(short InstruNo)
 			break;
 			
 		case volumeEnv:
-			if (PlayerPRO::TheApp->curMusic->fid[InstruNo].volType & EFLOOP) {
-				NumToString(PlayerPRO::TheApp->curMusic->fid[InstruNo].volBeg + 1, StrTemp);
+			if (TheApp->curMusic->fid[InstruNo].volType & EFLOOP) {
+				NumToString(TheApp->curMusic->fid[InstruNo].volBeg + 1, StrTemp);
 				pStrcat(StrTemp, (StringPtr)"\p Pt");
 				SetDText(SampleDlog[InstruNo], 9, StrTemp);
 				
-				NumToString(PlayerPRO::TheApp->curMusic->fid[InstruNo].volEnd + 1, StrTemp);
+				NumToString(TheApp->curMusic->fid[InstruNo].volEnd + 1, StrTemp);
 				pStrcat(StrTemp, (StringPtr)"\p Pt");
 				SetDText(SampleDlog[InstruNo], 11, StrTemp);
 			} else {
@@ -820,17 +818,17 @@ long FindByteEnd(short InstruNo)
 
 void Selection2Loop(short InstruNo)
 {
-	InstrData	*curIns = &PlayerPRO::TheApp->curMusic->fid[InstruNo];
+	InstrData	*curIns = &TheApp->curMusic->fid[InstruNo];
 	int			i;
 	switch (curSample[InstruNo]) {
 		case panningEnv:
 			if (Clignote[InstruNo]) {
-				PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType &= ~EFLOOP;
+				TheApp->curMusic->fid[InstruNo].pannType &= ~EFLOOP;
 				
 				curIns->pannBeg = 0;
 				curIns->pannEnd = 0;
 			} else {
-				PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType |= EFLOOP;
+				TheApp->curMusic->fid[InstruNo].pannType |= EFLOOP;
 				
 				for (i = 0; i < curIns->pannSize; i++) {
 					if (FindByteStart(InstruNo) <= curIns->pannEnv[i].pos)
@@ -853,12 +851,12 @@ void Selection2Loop(short InstruNo)
 			
 		case volumeEnv:
 			if (Clignote[InstruNo]) {
-				PlayerPRO::TheApp->curMusic->fid[InstruNo].volType &= ~EFLOOP;
+				TheApp->curMusic->fid[InstruNo].volType &= ~EFLOOP;
 				
 				curIns->volBeg = 0;
 				curIns->volEnd = 0;
 			} else {
-				PlayerPRO::TheApp->curMusic->fid[InstruNo].volType |= EFLOOP;
+				TheApp->curMusic->fid[InstruNo].volType |= EFLOOP;
 				
 				for (i = 0; i < curIns->volSize; i++) {
 					if (FindByteStart(InstruNo) <= curIns->volEnv[i].pos)
@@ -909,17 +907,17 @@ void Selection2Loop(short InstruNo)
 
 void SetSustainPoint(short InstruNo)
 {
-	InstrData	*curIns = &PlayerPRO::TheApp->curMusic->fid[InstruNo];
+	InstrData	*curIns = &TheApp->curMusic->fid[InstruNo];
 	int			i;
 	
 	switch (curSample[InstruNo]) {
 		case panningEnv:
 			if (Clignote[InstruNo]) {
-				PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType &= ~EFSUSTAIN;
+				TheApp->curMusic->fid[InstruNo].pannType &= ~EFSUSTAIN;
 				
 				curIns->pannSus = 0;
 			} else {
-				PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType |= EFSUSTAIN;
+				TheApp->curMusic->fid[InstruNo].pannType |= EFSUSTAIN;
 				
 				for (i = 0; i < curIns->pannSize; i++) {
 					if (FindByteStart(InstruNo) <= curIns->pannEnv[i].pos)
@@ -933,11 +931,11 @@ void SetSustainPoint(short InstruNo)
 			
 		case volumeEnv:
 			if (Clignote[InstruNo]) {
-				PlayerPRO::TheApp->curMusic->fid[InstruNo].volType &= ~EFSUSTAIN;
+				TheApp->curMusic->fid[InstruNo].volType &= ~EFSUSTAIN;
 				
 				curIns->volSus = 0;
 			} else {
-				PlayerPRO::TheApp->curMusic->fid[InstruNo].volType |= EFSUSTAIN;
+				TheApp->curMusic->fid[InstruNo].volType |= EFSUSTAIN;
 				
 				for (i = 0; i < curIns->volSize; i++) {
 					if (FindByteStart(InstruNo) <= curIns->volEnv[i].pos)
@@ -960,10 +958,10 @@ void Loop2Selection(short InstruNo)
 {
 	switch (curSample[InstruNo]) {
 		case panningEnv:
-			if (!(PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType & EFLOOP)) {
+			if (!(TheApp->curMusic->fid[InstruNo].pannType & EFLOOP)) {
 				return;
 			} else {
-				InstrData *curIns = &PlayerPRO::TheApp->curMusic->fid[InstruNo];
+				InstrData *curIns = &TheApp->curMusic->fid[InstruNo];
 				
 				SelecRect[InstruNo].start	= curIns->pannEnv[curIns->pannBeg].pos;
 				SelecRect[InstruNo].end	= curIns->pannEnv[curIns->pannEnd].pos + 2;
@@ -973,10 +971,10 @@ void Loop2Selection(short InstruNo)
 			break;
 			
 		case volumeEnv:
-			if (!(PlayerPRO::TheApp->curMusic->fid[InstruNo].volType & EFLOOP)) {
+			if (!(TheApp->curMusic->fid[InstruNo].volType & EFLOOP)) {
 				return;
 			} else {
-				InstrData *curIns = &PlayerPRO::TheApp->curMusic->fid[InstruNo];
+				InstrData *curIns = &TheApp->curMusic->fid[InstruNo];
 				
 				SelecRect[InstruNo].start	= curIns->volEnv[curIns->volBeg].pos;
 				SelecRect[InstruNo].end		= curIns->volEnv[curIns->volEnd].pos + 2;
@@ -1039,7 +1037,7 @@ void COPYSampleInt(DialogPtr theDia)
 	switch (curSample[CurWin]) {
 		case panningEnv:
 			if (Start != End) {
-				InstrData		*curIns = &PlayerPRO::TheApp->curMusic->fid[CurWin];
+				InstrData		*curIns = &TheApp->curMusic->fid[CurWin];
 				short			i;
 				InstrData		copyEnv;
 				
@@ -1062,7 +1060,7 @@ void COPYSampleInt(DialogPtr theDia)
 			
 		case volumeEnv:
 			if (Start != End) {
-				InstrData		*curIns = &PlayerPRO::TheApp->curMusic->fid[CurWin];
+				InstrData		*curIns = &TheApp->curMusic->fid[CurWin];
 				short			i;
 				InstrData		copyEnv;
 				
@@ -1116,7 +1114,7 @@ void PASTESampleInt(DialogPtr theDia)
 			if (anErr == noErr) GetScrapFlavorSize(scrap, 'pEnv', &lCntOrErr);
 			
 			if (lCntOrErr > 0) {
-				InstrData		*curIns = &PlayerPRO::TheApp->curMusic->fid[CurWin];
+				InstrData		*curIns = &TheApp->curMusic->fid[CurWin];
 				short			i;
 				InstrData		pasteEnv;
 				Handle			tempH;
@@ -1152,7 +1150,7 @@ void PASTESampleInt(DialogPtr theDia)
 				curIns->pannSize += pasteEnv.pannSize;
 				if (curIns->pannSize > 12) {
 					curIns->pannSize = 12;
-					Erreur(79, -98);
+					TheApp->Erreur(79, -98);
 				}
 				// Paste volume envelope
 				
@@ -1186,7 +1184,7 @@ void PASTESampleInt(DialogPtr theDia)
 			if (anErr == noErr) GetScrapFlavorSize(scrap, 'vEnv', &lCntOrErr);
 			
 			if (lCntOrErr > 0) {
-				InstrData		*curIns = &PlayerPRO::TheApp->curMusic->fid[CurWin];
+				InstrData		*curIns = &TheApp->curMusic->fid[CurWin];
 				short			i;
 				InstrData		pasteEnv;
 				Handle			tempH;
@@ -1221,7 +1219,7 @@ void PASTESampleInt(DialogPtr theDia)
 				curIns->volSize += pasteEnv.volSize;
 				if (curIns->volSize > 12) {
 					curIns->volSize = 12;
-					Erreur(79, -98);
+					TheApp->Erreur(79, -98);
 				}
 				// Paste volume envelope
 				
@@ -1350,19 +1348,19 @@ void DoNullInstrument()
 	
 	GetPort(&SavePort);
 	
-	if (PlayerPRO::TheApp->oldWindow) {
-		if (GetWRefCon(PlayerPRO::TheApp->oldWindow) == RefSample && gNowMovingLoop == false) {
-			PlayerPRO::TheApp->SetPortFromOldWindow();
+	if (TheApp->oldWindow) {
+		if (GetWRefCon(TheApp->oldWindow) == RefSample && gNowMovingLoop == false) {
+			TheApp->SetPortFromOldWindow();
 			
-			pt = PlayerPRO::TheApp->theEvent.where;
+			pt = TheApp->theEvent.where;
 			GlobalToLocal(&pt);
 			
 			visibleRegion = NewRgn();
 			
-			GetPortVisibleRegion(PlayerPRO::TheApp->GetPortFromOldWindow(), visibleRegion);
+			GetPortVisibleRegion(TheApp->GetPortFromOldWindow(), visibleRegion);
 			
 			if (PtInRgn(pt, visibleRegion)) {
-				GetPortBounds(PlayerPRO::TheApp->GetPortFromOldWindow(), &caRect);
+				GetPortBounds(TheApp->GetPortFromOldWindow(), &caRect);
 				
 				SampleRect.top = SAMPLERECTTOP;
 				SampleRect.bottom = caRect.bottom - 15;
@@ -1370,25 +1368,25 @@ void DoNullInstrument()
 				SampleRect.right = caRect.right;
 				
 				if (PtInRect(pt, &SampleRect)) {
-					InstruNo = FindSample(PlayerPRO::TheApp->GetDialogFromOldWindow());
+					InstruNo = FindSample(TheApp->GetDialogFromOldWindow());
 					
 					UpdateDisplayPosition(InstruNo);
 					
-					GetKeys(PlayerPRO::TheApp->km);
+					GetKeys(TheApp->km);
 					if (IsPressed(0x003A) && ZoomLevel[InstruNo] != 1) {
-						PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::ZoomOutCrsr);
+						TheApp->SetCursorOnNumber(PlayerPRO::ZoomOutCrsr);
 					} else if (IsPressed(0x0037) && ZoomLevel[InstruNo] < 1024) {
-						PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::ZoomInCrsr);
+						TheApp->SetCursorOnNumber(PlayerPRO::ZoomInCrsr);
 					} else {
 						switch (curSample[InstruNo]) {
 							case panningEnv:
 								if (SelectMode[InstruNo] == ePencil) {
-									InstrData	*curIns = &PlayerPRO::TheApp->curMusic->fid[InstruNo];
+									InstrData	*curIns = &TheApp->curMusic->fid[InstruNo];
 									short		tcoc = PosToByte(pt.h, InstruNo);
 									
 									for (i = 0; i < curIns->pannSize; i++) {
 										if (tcoc >= curIns->pannEnv[i].pos - 1 && tcoc <= curIns->pannEnv[i].pos + 1) {
-											PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
+											TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
 											goto END;
 										}
 									}
@@ -1397,12 +1395,12 @@ void DoNullInstrument()
 								
 							case volumeEnv:
 								if (SelectMode[InstruNo] == ePencil) {
-									InstrData	*curIns = &PlayerPRO::TheApp->curMusic->fid[InstruNo];
+									InstrData	*curIns = &TheApp->curMusic->fid[InstruNo];
 									short		tcoc = PosToByte(pt.h, InstruNo);
 									
 									for (i = 0; i < curIns->volSize; i++) {
 										if (tcoc >= curIns->volEnv[i].pos - 1 && tcoc <= curIns->volEnv[i].pos + 1) {
-											PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
+											TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
 											goto END;
 										}
 									}
@@ -1415,40 +1413,40 @@ void DoNullInstrument()
 									long end = ByteToPos(SampleDataD(InstruNo)->loopBeg + SampleDataD(InstruNo)->loopSize, InstruNo);
 									
 									if (pt.h >= start - 1 && pt.h <= start + 1) {
-										PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
+										TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
 										goto END;
 									}
 									
 									if (pt.h >= end-1 && pt.h <= end+1) {
-										PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
+										TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
 										goto END;
 									}
 								}
 								
 								if (SampleDataD(InstruNo)->size <= 0) {
-									PlayerPRO::TheApp->SetCursorToQDArrow();
+									TheApp->SetCursorToQDArrow();
 									goto END;
 								}
 								break;
 						}
 						
 						if (SelectMode[InstruNo] == eSelect)
-							PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::beamCrsr);
+							TheApp->SetCursorOnNumber(PlayerPRO::beamCrsr);
 						else if (SelectMode[InstruNo] == ePencil) {
 							if (curSample[InstruNo] >= 0 && IsPressed(0x38) && SampleDataD(InstruNo)->stereo) {
-								PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::pencilCrsrStereo);
+								TheApp->SetCursorOnNumber(PlayerPRO::pencilCrsrStereo);
 							} else
-								PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::pencilCrsr);
+								TheApp->SetCursorOnNumber(PlayerPRO::pencilCrsr);
 						} else if (SelectMode[InstruNo] == eZoom)
-							PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::ZoomInCrsr);
+							TheApp->SetCursorOnNumber(PlayerPRO::ZoomInCrsr);
 						
 					END:;
 					}
 					
 				} else
-					PlayerPRO::TheApp->SetCursorToQDArrow();
+					TheApp->SetCursorToQDArrow();
 			} else
-				PlayerPRO::TheApp->SetCursorToQDArrow();
+				TheApp->SetCursorToQDArrow();
 			
 			DisposeRgn(visibleRegion);
 		}
@@ -1462,7 +1460,7 @@ void DoNullInstrument()
 				SetPortDialogPort(SampleDlog[i]);
 				
 				if (Clignote[i]) {
-					if (TokTak[i] == true || PlayerPRO::TheApp->oldWindow == GetDialogWindow(SampleDlog[i])) {
+					if (TokTak[i] == true || TheApp->oldWindow == GetDialogWindow(SampleDlog[i])) {
 						TokTak[i] = !TokTak[i];
 						GetSampleRect(SampleDlog[i]);
 						
@@ -1477,28 +1475,28 @@ void DoNullInstrument()
 		}
 	}
 	
-	maxChannels = PlayerPRO::TheApp->MADDriver->MultiChanNo;
-	if (PlayerPRO::TheApp->MADDriver->DriverSettings.numChn > maxChannels)
-		maxChannels = PlayerPRO::TheApp->MADDriver->DriverSettings.numChn;
+	maxChannels = TheApp->MADDriver->MultiChanNo;
+	if (TheApp->MADDriver->DriverSettings.numChn > maxChannels)
+		maxChannels = TheApp->MADDriver->DriverSettings.numChn;
 	
 	for(i = 0; i < maxChannels; i++) {
 		AfficheOldPoint(i);
 		
-		InstruNo = PlayerPRO::TheApp->MADDriver->chan[i].ins;
+		InstruNo = TheApp->MADDriver->chan[i].ins;
 		
 		if (InstruNo >= 0 || InstruNo <= MAXINSTRU) {
 			if (SampleDlog[InstruNo] != NULL) {
 				switch (curSample[InstruNo]) {
 					case panningEnv:
-						if (PlayerPRO::TheApp->curMusic->fid[PlayerPRO::TheApp->MADDriver->chan[i].ins].pannType & EFON) {
+						if (TheApp->curMusic->fid[TheApp->MADDriver->chan[i].ins].pannType & EFON) {
 							SetPortDialogPort(SampleDlog[InstruNo]);
 							GetSampleRect(SampleDlog[InstruNo]);
 							
-							if (PlayerPRO::TheApp->MADDriver->chan[i].curPtr < PlayerPRO::TheApp->MADDriver->chan[i].maxPtr) {
-								if (PlayerPRO::TheApp->MADDriver->chan[i].pp > 0 && PlayerPRO::TheApp->MADDriver->chan[i].pp < ENVSIZE) {
-									SwitchColor(PlayerPRO::TheApp->MADDriver->chan[i].TrackID);
+							if (TheApp->MADDriver->chan[i].curPtr < TheApp->MADDriver->chan[i].maxPtr) {
+								if (TheApp->MADDriver->chan[i].pp > 0 && TheApp->MADDriver->chan[i].pp < ENVSIZE) {
+									SwitchColor(TheApp->MADDriver->chan[i].TrackID);
 									
-									theIdle[i].oldPos = ByteToPos(PlayerPRO::TheApp->MADDriver->chan[i].pp, InstruNo);
+									theIdle[i].oldPos = ByteToPos(TheApp->MADDriver->chan[i].pp, InstruNo);
 									theIdle[i].oldInstru = InstruNo;
 									
 									PenSize(2, 1);
@@ -1513,16 +1511,16 @@ void DoNullInstrument()
 						break;
 						
 					case volumeEnv:
-						if (PlayerPRO::TheApp->curMusic->fid[PlayerPRO::TheApp->MADDriver->chan[i].ins].volType & EFON) {
+						if (TheApp->curMusic->fid[TheApp->MADDriver->chan[i].ins].volType & EFON) {
 							SetPortDialogPort(SampleDlog[InstruNo]);
 							GetSampleRect(SampleDlog[InstruNo]);
 							
-							if (PlayerPRO::TheApp->MADDriver->chan[i].curPtr < PlayerPRO::TheApp->MADDriver->chan[i].maxPtr) {
-								if (PlayerPRO::TheApp->MADDriver->chan[i].p > 0 && PlayerPRO::TheApp->MADDriver->chan[i].p < ENVSIZE)
+							if (TheApp->MADDriver->chan[i].curPtr < TheApp->MADDriver->chan[i].maxPtr) {
+								if (TheApp->MADDriver->chan[i].p > 0 && TheApp->MADDriver->chan[i].p < ENVSIZE)
 								{
-									SwitchColor(PlayerPRO::TheApp->MADDriver->chan[i].TrackID);
+									SwitchColor(TheApp->MADDriver->chan[i].TrackID);
 									
-									theIdle[i].oldPos = ByteToPos(PlayerPRO::TheApp->MADDriver->chan[i].p, InstruNo);
+									theIdle[i].oldPos = ByteToPos(TheApp->MADDriver->chan[i].p, InstruNo);
 									theIdle[i].oldInstru = InstruNo;
 									
 									PenSize(2, 1);
@@ -1537,18 +1535,18 @@ void DoNullInstrument()
 						break;
 						
 					default:
-						if (curSample[InstruNo] == PlayerPRO::TheApp->MADDriver->chan[i].samp) {
+						if (curSample[InstruNo] == TheApp->MADDriver->chan[i].samp) {
 							SetPortDialogPort(SampleDlog[InstruNo]);
 							GetSampleRect(SampleDlog[InstruNo]);
 							
-							maxVal = (long)PlayerPRO::TheApp->MADDriver->chan[i].maxPtr;
+							maxVal = (long)TheApp->MADDriver->chan[i].maxPtr;
 							maxVal -= (long)SampleDataD(InstruNo)->data;
 							
-							curVal = (long)PlayerPRO::TheApp->MADDriver->chan[i].curPtr;
+							curVal = (long)TheApp->MADDriver->chan[i].curPtr;
 							curVal -= (long)SampleDataD(InstruNo)->data;
 							
 							if (maxVal > curVal && curVal > 0 && maxVal > 0) {
-								SwitchColor(PlayerPRO::TheApp->MADDriver->chan[i].TrackID);
+								SwitchColor(TheApp->MADDriver->chan[i].TrackID);
 								
 								theIdle[i].oldPos = ByteToPos(curVal, InstruNo);
 								theIdle[i].oldInstru = InstruNo;
@@ -1722,7 +1720,7 @@ void UpdateSampleWindow(DialogPtr GetSelection)
 			break;
 			
 		default:
-			curData = PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[theInstru].firstSample + curSample[theInstru]];
+			curData = TheApp->curMusic->sample[TheApp->curMusic->fid[theInstru].firstSample + curSample[theInstru]];
 			
 			strcpy((Ptr)str, curData->name);
 			
@@ -1786,7 +1784,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 	Boolean			PreInOutPt;
 	int				i;
 	
-	PlayerPRO::TheApp->curMusic->hasChanged = true;
+	TheApp->curMusic->hasChanged = true;
 	SaveUndo(USample, InstruNo, "\pUndo 'Draw Instrument'");
 	
 	saveClipRgn = NewRgn();								/* get an empty region */
@@ -1844,7 +1842,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 	
 	do {
 		/**/
-		WaitNextEvent(everyEvent, &PlayerPRO::TheApp->theEvent, 1, NULL);
+		WaitNextEvent(everyEvent, &TheApp->theEvent, 1, NULL);
 		
 		if (QDIsPortBuffered(GetDialogPort(theDia)))
 			QDFlushPortBuffer(GetDialogPort(theDia), NULL);
@@ -1883,7 +1881,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 				{
 					short 	tcoc;
 					
-					InstrData	*curIns = &PlayerPRO::TheApp->curMusic->fid[InstruNo];
+					InstrData	*curIns = &TheApp->curMusic->fid[InstruNo];
 					
 					//	aPt.h = prevPt.h;
 					tcoc = PosToByte(aPt.h, InstruNo);
@@ -1936,7 +1934,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 							for (i = 0; i < curIns->pannSize; i++) {
 								if (tcoc >= curIns->pannEnv[i].pos - 1 && tcoc <= curIns->pannEnv[i].pos + 1) {
 									editPtEnv = i;
-									PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::CHandCrsr);
+									TheApp->SetCursorOnNumber(PlayerPRO::CHandCrsr);
 
 									break;
 								} else if (tcoc < curIns->pannEnv[i].pos) {
@@ -2006,7 +2004,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 							
 							prevPt = aPt;
 						} else
-							Erreur(79, -98);
+							TheApp->Erreur(79, -98);
 					}
 				}
 					break;
@@ -2016,7 +2014,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 					
 					short 	tcoc;
 					
-					InstrData	*curIns = &PlayerPRO::TheApp->curMusic->fid[InstruNo];
+					InstrData	*curIns = &TheApp->curMusic->fid[InstruNo];
 					
 					//	aPt.h = prevPt.h;
 					tcoc = PosToByte(aPt.h, InstruNo);
@@ -2070,7 +2068,7 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 							for (i = 0; i < curIns->volSize; i++) {
 								if (tcoc >= curIns->volEnv[i].pos - 1 && tcoc <= curIns->volEnv[i].pos + 1) {
 									editPtEnv = i;
-									PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::CHandCrsr);
+									TheApp->SetCursorOnNumber(PlayerPRO::CHandCrsr);
 									break;
 								} else if (tcoc < curIns->volEnv[i].pos) {
 									if (curIns->volSize < 12) {
@@ -2138,8 +2136,8 @@ void DrawPencil(DialogPtr theDia, short InstruNo)
 							UpdateSampleWindow(theDia);
 							
 							prevPt = aPt;
-						}
-						else Erreur(79, -98);
+						} else
+							TheApp->Erreur(79, -98);
 					}
 				}
 					break;
@@ -2304,7 +2302,7 @@ void PlayerPRO::Samples::DrawEnvelope(short ins, DialogPtr theDia)
 	Str255		aStr;
 	short		itemType;
 	short		i, high;
-	InstrData	*curIns = &PlayerPRO::TheApp->curMusic->fid[ins];
+	InstrData	*curIns = &TheApp->curMusic->fid[ins];
 	
 	BackColor(whiteColor);
 	ForeColor(blackColor);
@@ -2386,7 +2384,7 @@ void PlayerPRO::Samples::DrawPanningEnvelope(short ins, DialogPtr theDia)
 	Str255		aStr;
 	short		itemType;
 	short		i, high;
-	InstrData	*curIns = &PlayerPRO::TheApp->curMusic->fid[ins];
+	InstrData	*curIns = &TheApp->curMusic->fid[ins];
 	
 	BackColor(whiteColor);
 	ForeColor(blackColor);
@@ -2500,14 +2498,14 @@ void PlayerPRO::Samples::DrawSample(short tSS, short tSE, short InstruNo, Dialog
 	
 	if (curSample[InstruNo] == volumeEnv) {
 		grayDraw = true;
-		if (!(PlayerPRO::TheApp->curMusic->fid[InstruNo].volType & EFNOTE)) {
+		if (!(TheApp->curMusic->fid[InstruNo].volType & EFNOTE)) {
 			DrawEnvelope(InstruNo, theDia);
 			return;
 		}
 	}
 	if (curSample[InstruNo] == panningEnv) {
 		grayDraw = true;
-		if (!(PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType & EFNOTE)) {
+		if (!(TheApp->curMusic->fid[InstruNo].pannType & EFNOTE)) {
 			DrawPanningEnvelope(InstruNo, theDia);
 			return;
 		}
@@ -2538,10 +2536,10 @@ void PlayerPRO::Samples::DrawSample(short tSS, short tSE, short InstruNo, Dialog
 	if (samp < 0)
 		samp = 0;	// ENVELOPPES !!!!
 	
-	if (samp >= PlayerPRO::TheApp->curMusic->fid[InstruNo].numSamples)
+	if (samp >= TheApp->curMusic->fid[InstruNo].numSamples)
 		goto RENVOI;
 	
-	curData = PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[InstruNo].firstSample + samp];
+	curData = TheApp->curMusic->sample[TheApp->curMusic->fid[InstruNo].firstSample + samp];
 	if (curData == NULL)  {
 		MyDebugStr(__LINE__, __FILE__, "Samp ERR");
 		return;
@@ -2576,10 +2574,10 @@ void PlayerPRO::Samples::DrawSample(short tSS, short tSE, short InstruNo, Dialog
 	
 	if (ZoomLevel[InstruNo] == 1) {
 		start = 0;
-		sampleSize = PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[InstruNo].firstSample + samp]->size;
+		sampleSize = TheApp->curMusic->sample[TheApp->curMusic->fid[InstruNo].firstSample + samp]->size;
 	} else {
 		start = GetStartSampleValue(val, InstruNo);
-		sampleSize = PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[InstruNo].firstSample + samp]->size / ZoomLevel[InstruNo];
+		sampleSize = TheApp->curMusic->sample[TheApp->curMusic->fid[InstruNo].firstSample + samp]->size / ZoomLevel[InstruNo];
 		
 		end = start + sampleSize;
 	}
@@ -2646,11 +2644,11 @@ void PlayerPRO::Samples::DrawSample(short tSS, short tSE, short InstruNo, Dialog
 ENDSAMPLE:
 	
 	if (curSample[InstruNo] == volumeEnv) {
-		if ((PlayerPRO::TheApp->curMusic->fid[InstruNo].volType & EFNOTE))
+		if ((TheApp->curMusic->fid[InstruNo].volType & EFNOTE))
 			DrawEnvelope(InstruNo, theDia);
 	}
 	if (curSample[InstruNo] == panningEnv) {
-		if ((PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType & EFNOTE))
+		if ((TheApp->curMusic->fid[InstruNo].pannType & EFNOTE))
 			DrawPanningEnvelope(InstruNo, theDia);
 	}
 	
@@ -2668,7 +2666,7 @@ void InitSampleWindow(void)
 	
 	gNowMovingLoop = false;
 	
-	SampleDlog[0] = GetNewDialog(137, NULL, GetDialogWindow(PlayerPRO::TheApp->ToolsDlog));
+	SampleDlog[0] = GetNewDialog(137, NULL, GetDialogWindow(TheApp->ToolsDlog));
 	GetSampleRect(SampleDlog[0]);
 	DisposeDialog(SampleDlog[0]);
 	
@@ -2701,7 +2699,7 @@ void SetControlH(short theInstru)
 		SetControlMinimum(xScroll[theInstru], 0);
 		SetControlMaximum(xScroll[theInstru], ZoomLevel[theInstru] * SAMPLEDEF - SAMPLEDEF);
 		
-		if (PlayerPRO::TheApp->gUseControlSize)
+		if (TheApp->gUseControlSize)
 			SetControlViewSize(xScroll[theInstru], SAMPLEDEF);
 	} else {
 		SetControlMinimum(xScroll[theInstru], 0);
@@ -2750,22 +2748,22 @@ void InternalUpdate(short InstruNo)
 				ShowControl(SustainBut[InstruNo]);
 				ShowControl(LoopBut[InstruNo]);
 				
-				if (!(PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType & EFNOTE))
+				if (!(TheApp->curMusic->fid[InstruNo].pannType & EFNOTE))
 					HiliteControl(FixedBut[InstruNo], kControlButtonPart);
 				else
 					HiliteControl(FixedBut[InstruNo], 0);
 				
-				if (PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType & EFON)
+				if (TheApp->curMusic->fid[InstruNo].pannType & EFON)
 					HiliteControl(EnvBut[InstruNo], kControlButtonPart);
 				else
 					HiliteControl(EnvBut[InstruNo], 0);
 				
-				if (PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType & EFSUSTAIN)
+				if (TheApp->curMusic->fid[InstruNo].pannType & EFSUSTAIN)
 					HiliteControl(SustainBut[InstruNo], kControlButtonPart);
 				else
 					HiliteControl(SustainBut[InstruNo], 0);
 				
-				if (PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType & EFLOOP)
+				if (TheApp->curMusic->fid[InstruNo].pannType & EFLOOP)
 					HiliteControl(LoopBut[InstruNo], kControlButtonPart);
 				else
 					HiliteControl(LoopBut[InstruNo], 0);
@@ -2784,22 +2782,22 @@ void InternalUpdate(short InstruNo)
 				ShowControl(SustainBut[InstruNo]);
 				ShowControl(LoopBut[InstruNo]);
 				
-				if (!(PlayerPRO::TheApp->curMusic->fid[InstruNo].volType & EFNOTE))
+				if (!(TheApp->curMusic->fid[InstruNo].volType & EFNOTE))
 					HiliteControl(FixedBut[InstruNo], kControlButtonPart);
 				else
 					HiliteControl(FixedBut[InstruNo], 0);
 				
-				if (PlayerPRO::TheApp->curMusic->fid[InstruNo].volType & EFON)
+				if (TheApp->curMusic->fid[InstruNo].volType & EFON)
 					HiliteControl(EnvBut[InstruNo], kControlButtonPart);
 				else
 					HiliteControl(EnvBut[InstruNo], 0);
 				
-				if (PlayerPRO::TheApp->curMusic->fid[InstruNo].volType & EFSUSTAIN)
+				if (TheApp->curMusic->fid[InstruNo].volType & EFSUSTAIN)
 					HiliteControl(SustainBut[InstruNo], kControlButtonPart);
 				else
 					HiliteControl(SustainBut[InstruNo], 0);
 				
-				if (PlayerPRO::TheApp->curMusic->fid[InstruNo].volType & EFLOOP)
+				if (TheApp->curMusic->fid[InstruNo].volType & EFLOOP)
 					HiliteControl(LoopBut[InstruNo], kControlButtonPart);
 				else
 					HiliteControl(LoopBut[InstruNo], 0);
@@ -2811,7 +2809,7 @@ void InternalUpdate(short InstruNo)
 				HideControl(SustainBut[InstruNo]);
 				HideControl(LoopBut[InstruNo]);
 				
-				if (curSample[InstruNo] >= PlayerPRO::TheApp->curMusic->fid[InstruNo].numSamples) {
+				if (curSample[InstruNo] >= TheApp->curMusic->fid[InstruNo].numSamples) {
 					curSample[InstruNo] = volumeEnv;
 					goto recheck;
 				}
@@ -2875,14 +2873,14 @@ void UpdateSampleWindows(void)
 {
 	int i;
 	
-	PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::watchCrsr);
+	TheApp->SetCursorOnNumber(PlayerPRO::watchCrsr);
 	
 	for(i=0; i<MAXINSTRU; i++) InternalUpdate(i);
 	
-	if (PlayerPRO::TheApp->thePrefs.ClassicalProjection)
+	if (TheApp->thePrefs.ClassicalProjection)
 		UpdateMozartInfo();
 	
-	PlayerPRO::TheApp->SetCursorToQDArrow();
+	TheApp->SetCursorToQDArrow();
 }
 
 void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
@@ -2898,7 +2896,7 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 	curMode[ins] = 0;
 	
 	if (SampleDlog[ins] == NULL) {
-		SampleDlog[ins] = GetNewDialog(137, NULL, PlayerPRO::TheApp->ToolsWindow->GetDialogWindow());
+		SampleDlog[ins] = GetNewDialog(137, NULL, TheApp->ToolsWindow->GetDialogWindow());
 		
 		ChangeDialogFont(SampleDlog[ins]);
 		
@@ -2924,7 +2922,7 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 								   0,
 								   0,
 								   0,
-								   PlayerPRO::TheApp->gScrollBarID,
+								   TheApp->gScrollBarID,
 								   0);
 		
 		GetDialogItem(SampleDlog[ins], 40, &itemType, &itemHandle, &itemRect);
@@ -3026,7 +3024,7 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 		HideControl(SustainBut[ins]);
 		HideControl(LoopBut[ins]);
 		
-		if (PlayerPRO::TheApp->DragManagerUse) {
+		if (TheApp->DragManagerUse) {
 			MyTrackingHandlerUPP 		= NewDragTrackingHandlerUPP(DragTracking);
 			MyReceiveDropHandlerUPP 	= NewDragReceiveHandlerUPP(MyReceiveDropHandler);
 			//mySendDataUPP 				= NewDragSendDataUPP(MySendSampleProc);
@@ -3051,12 +3049,12 @@ PlayerPRO::Samples::~Samples()
 {
 	short	i;
 	
-	GetKeys(PlayerPRO::TheApp->km);
+	GetKeys(TheApp->km);
 	
 	if (IsPressed(0x3A) == true) {
 		for (i = MAXINSTRU; i >= 0 ; i--) {
 			if (SampleDlog[i] != NULL) {
-				if (PlayerPRO::TheApp->DragManagerUse) {
+				if (TheApp->DragManagerUse) {
 					RemoveTrackingHandler(MyTrackingHandlerUPP, ::GetDialogWindow(SampleDlog[i]));
 					RemoveReceiveHandler(MyReceiveDropHandlerUPP, ::GetDialogWindow(SampleDlog[i]));
 					
@@ -3075,7 +3073,7 @@ PlayerPRO::Samples::~Samples()
 	} else {
 		i = FindSample(theDialog);
 		
-		if (PlayerPRO::TheApp->DragManagerUse) {
+		if (TheApp->DragManagerUse) {
 			RemoveTrackingHandler(MyTrackingHandlerUPP, ::GetDialogWindow(SampleDlog[i]));
 			RemoveReceiveHandler(MyReceiveDropHandlerUPP, ::GetDialogWindow(SampleDlog[i]));
 			
@@ -3091,7 +3089,7 @@ PlayerPRO::Samples::~Samples()
 		SampleDlog[i] = NULL;
 	}
 	
-	PlayerPRO::TheApp->SetCursorToQDArrow();
+	TheApp->SetCursorToQDArrow();
 }
 
 extern EventRecord	theEvent;
@@ -3101,7 +3099,7 @@ static Point		lastPosition;
 void NAppelPlug(short InstruNo, short samp, short whichPlug)
 {
 	long	End, Start;
-	sData	*curData = PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[InstruNo].firstSample + samp];
+	sData	*curData = TheApp->curMusic->sample[TheApp->curMusic->fid[InstruNo].firstSample + samp];
 	short	StereoMode;
 	
 	Start 	= FindByteStart(InstruNo);
@@ -3147,7 +3145,7 @@ void SampleUpdateNow(void)
 void NAppelVSTPlug(short InstruNo, short samp, short whichPlug)
 {
 	long	End, Start;
-	sData	*curData = PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[InstruNo].firstSample + samp];
+	sData	*curData = TheApp->curMusic->sample[TheApp->curMusic->fid[InstruNo].firstSample + samp];
 	short	StereoMode;
 	
 	currentInstru = InstruNo;
@@ -3268,7 +3266,7 @@ void MoveLoopSelection(short InstruNo)
 	
 	TokTak[InstruNo] = false;
 	
-	PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::CHandCrsr);
+	TheApp->SetCursorOnNumber(PlayerPRO::CHandCrsr);
 	
 	SaveUndo(USample, InstruNo, "\pUndo 'Loop Edition'");
 	
@@ -3333,8 +3331,8 @@ void MoveLoopSelection(short InstruNo)
 			
 			// Check to see if this instrument is currently playing, and update it!
 			
-			for (i = 0; i< PlayerPRO::TheApp->MADDriver->DriverSettings.numChn; i++) {
-				Channel *curVoice = &PlayerPRO::TheApp->MADDriver->chan[i];
+			for (i = 0; i< TheApp->MADDriver->DriverSettings.numChn; i++) {
+				Channel *curVoice = &TheApp->MADDriver->chan[i];
 				
 				if (curVoice->ins == InstruNo && curVoice->samp == curSample[InstruNo]) {
 					if (curVoice->begPtr == SampleDataD(InstruNo)->data && curVoice->curPtr != curVoice->maxPtr) {
@@ -3352,7 +3350,7 @@ void MoveLoopSelection(short InstruNo)
 			prevPt = aPt;
 		}
 		
-		PlayerPRO::TheApp->DoGlobalNull();
+		TheApp->DoGlobalNull();
 		
 		WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 		
@@ -3455,12 +3453,12 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 					break;
 			}
 			
-			GetKeys(PlayerPRO::TheApp->km);
+			GetKeys(TheApp->km);
 			if (IsPressed(0x003A)) {
 				while (Button()){
 					
 				};
-				CurWin = FindSample(PlayerPRO::TheApp->GetDialogFromOldWindow());
+				CurWin = FindSample(TheApp->GetDialogFromOldWindow());
 				if (ZoomLevel[CurWin] > 1) {
 					ZoomLevel[CurWin] /= 2;
 					
@@ -3474,7 +3472,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 				while (Button()){
 					
 				};
-				CurWin = FindSample(PlayerPRO::TheApp->GetDialogFromOldWindow());
+				CurWin = FindSample(TheApp->GetDialogFromOldWindow());
 				if (ZoomLevel[CurWin] < 1024) {
 					ZoomLevel[CurWin] *= 2;
 					SetControlH(CurWin);
@@ -3516,7 +3514,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 						};
 						
 						if (TickCount() >= TickEnd && curSample[InstruNo] != volumeEnv && curSample[InstruNo] != panningEnv) {
-							PlayerPRO::TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
+							TheApp->SetCursorOnNumber(PlayerPRO::HandCrsr);
 							
 							tempRgn = NewRgn();
 							RectRgn(tempRgn, &tempRect);
@@ -3528,7 +3526,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 							
 							DisposeRgn(tempRgn);
 							
-							PlayerPRO::TheApp->SetCursorToQDArrow();
+							TheApp->SetCursorToQDArrow();
 							
 							goto EndSample;
 						}
@@ -3726,22 +3724,22 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 			if (curSample[InstruNo] < 0 && MyTrackControl(FixedBut[InstruNo], theEvent.where, NULL)) {
 				switch (curSample[InstruNo]) {
 					case panningEnv:
-						if (PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType & EFNOTE) {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType &= ~EFNOTE;
+						if (TheApp->curMusic->fid[InstruNo].pannType & EFNOTE) {
+							TheApp->curMusic->fid[InstruNo].pannType &= ~EFNOTE;
 							HiliteControl(FixedBut[InstruNo], kControlButtonPart);
 						} else {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType |= EFNOTE;
+							TheApp->curMusic->fid[InstruNo].pannType |= EFNOTE;
 							HiliteControl(FixedBut[InstruNo], 0);
 						}
 						
 						break;
 						
 					case volumeEnv:
-						if (PlayerPRO::TheApp->curMusic->fid[InstruNo].volType & EFNOTE) {
+						if (TheApp->curMusic->fid[InstruNo].volType & EFNOTE) {
 							HiliteControl(FixedBut[InstruNo], kControlButtonPart);
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].volType &= ~EFNOTE;
+							TheApp->curMusic->fid[InstruNo].volType &= ~EFNOTE;
 						} else {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].volType |= EFNOTE;
+							TheApp->curMusic->fid[InstruNo].volType |= EFNOTE;
 							HiliteControl(FixedBut[InstruNo], 0);
 						}
 						
@@ -3755,22 +3753,22 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 			if(curSample[InstruNo] < 0 && MyTrackControl(EnvBut[InstruNo], theEvent.where, NULL)) {
 				switch (curSample[InstruNo]) {
 					case panningEnv:
-						if (PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType & EFON) {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType &= ~EFON;
+						if (TheApp->curMusic->fid[InstruNo].pannType & EFON) {
+							TheApp->curMusic->fid[InstruNo].pannType &= ~EFON;
 							HiliteControl(EnvBut[InstruNo], 0);
 						} else {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType |= EFON;
+							TheApp->curMusic->fid[InstruNo].pannType |= EFON;
 							HiliteControl(EnvBut[InstruNo], kControlButtonPart);
 						}
 						
 						break;
 						
 					case volumeEnv:
-						if (PlayerPRO::TheApp->curMusic->fid[InstruNo].volType & EFON) {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].volType &= ~EFON;
+						if (TheApp->curMusic->fid[InstruNo].volType & EFON) {
+							TheApp->curMusic->fid[InstruNo].volType &= ~EFON;
 							HiliteControl(EnvBut[InstruNo], 0);
 						} else {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].volType |= EFON;
+							TheApp->curMusic->fid[InstruNo].volType |= EFON;
 							HiliteControl(EnvBut[InstruNo], kControlButtonPart);
 						}
 						
@@ -3784,22 +3782,22 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 			if(curSample[InstruNo] < 0 && MyTrackControl(SustainBut[InstruNo], theEvent.where, NULL)) {
 				switch (curSample[InstruNo]) {
 					case panningEnv:
-						if (PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType & EFSUSTAIN) {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType &= ~EFSUSTAIN;
+						if (TheApp->curMusic->fid[InstruNo].pannType & EFSUSTAIN) {
+							TheApp->curMusic->fid[InstruNo].pannType &= ~EFSUSTAIN;
 							HiliteControl(SustainBut[InstruNo], 0);
 						} else {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType |= EFSUSTAIN;
+							TheApp->curMusic->fid[InstruNo].pannType |= EFSUSTAIN;
 							HiliteControl(SustainBut[InstruNo], kControlButtonPart);
 						}
 						
 						break;
 						
 					case volumeEnv:
-						if (PlayerPRO::TheApp->curMusic->fid[InstruNo].volType & EFSUSTAIN) {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].volType &= ~EFSUSTAIN;
+						if (TheApp->curMusic->fid[InstruNo].volType & EFSUSTAIN) {
+							TheApp->curMusic->fid[InstruNo].volType &= ~EFSUSTAIN;
 							HiliteControl(SustainBut[InstruNo], 0);
 						} else {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].volType |= EFSUSTAIN;
+							TheApp->curMusic->fid[InstruNo].volType |= EFSUSTAIN;
 							HiliteControl(SustainBut[InstruNo], kControlButtonPart);
 						}
 						
@@ -3813,22 +3811,22 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 			if(curSample[InstruNo] < 0 && MyTrackControl(LoopBut[InstruNo], theEvent.where, NULL)) {
 				switch (curSample[InstruNo]) {
 					case panningEnv:
-						if (PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType & EFLOOP) {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType &= ~EFLOOP;
+						if (TheApp->curMusic->fid[InstruNo].pannType & EFLOOP) {
+							TheApp->curMusic->fid[InstruNo].pannType &= ~EFLOOP;
 							HiliteControl(LoopBut[InstruNo], 0);
 						} else {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].pannType |= EFLOOP;
+							TheApp->curMusic->fid[InstruNo].pannType |= EFLOOP;
 							HiliteControl(LoopBut[InstruNo], kControlButtonPart);
 						}
 						
 						break;
 						
 					case volumeEnv:
-						if (PlayerPRO::TheApp->curMusic->fid[InstruNo].volType & EFLOOP) {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].volType &= ~EFLOOP;
+						if (TheApp->curMusic->fid[InstruNo].volType & EFLOOP) {
+							TheApp->curMusic->fid[InstruNo].volType &= ~EFLOOP;
 							HiliteControl(LoopBut[InstruNo], 0);
 						} else {
-							PlayerPRO::TheApp->curMusic->fid[InstruNo].volType |= EFLOOP;
+							TheApp->curMusic->fid[InstruNo].volType |= EFLOOP;
 							HiliteControl(LoopBut[InstruNo], kControlButtonPart);
 						}
 						
@@ -3896,8 +3894,8 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 			
 			InsertMenu(sMenu, hierMenu);
 			
-			for (i = 0, kk = 0; i < PlayerPRO::TheApp->curMusic->fid[InstruNo].numSamples; i++) {
-				sData		*curData = PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[InstruNo].firstSample + i];
+			for (i = 0, kk = 0; i < TheApp->curMusic->fid[InstruNo].numSamples; i++) {
+				sData		*curData = TheApp->curMusic->sample[TheApp->curMusic->fid[InstruNo].firstSample + i];
 				Str255		str;
 				
 				strcpy((Ptr)str, curData->name);
@@ -4048,9 +4046,9 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 							break;
 					}
 					InternalUpdate(InstruNo);
-					if (PlayerPRO::TheApp->thePrefs.ClassicalProjection)
+					if (TheApp->thePrefs.ClassicalProjection)
 						UpdateMozartInfo();
-					PlayerPRO::TheApp->curMusic->hasChanged = true;
+					TheApp->curMusic->hasChanged = true;
 				}
 			}
 				break;
@@ -4076,11 +4074,11 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 							break;
 							
 						case 5:	// Hz Filter
-							FFTSampleFilter(PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[InstruNo].firstSample + curSample[InstruNo]], InstruNo, false);
+							FFTSampleFilter(TheApp->curMusic->sample[TheApp->curMusic->fid[InstruNo].firstSample + curSample[InstruNo]], InstruNo, false);
 							break;
 							
 						case 6:	// Hz Shift
-							FFTSampleFilter(PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[InstruNo].firstSample + curSample[InstruNo]], InstruNo, true);
+							FFTSampleFilter(TheApp->curMusic->sample[TheApp->curMusic->fid[InstruNo].firstSample + curSample[InstruNo]], InstruNo, true);
 							break;
 							
 						default:
@@ -4092,9 +4090,9 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 							break;
 					}
 					InternalUpdate(InstruNo);
-					if (PlayerPRO::TheApp->thePrefs.ClassicalProjection)
+					if (TheApp->thePrefs.ClassicalProjection)
 						UpdateMozartInfo();
-					PlayerPRO::TheApp->curMusic->hasChanged = true;
+					TheApp->curMusic->hasChanged = true;
 				}
 				break;
 		}
@@ -4193,12 +4191,12 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 			if (curSample[CurWin] == volumeEnv) {
 				curSample[CurWin] = panningEnv;
 			} else if (curSample[CurWin] == panningEnv) {
-				if (PlayerPRO::TheApp->curMusic->fid[CurWin].numSamples > 0)
+				if (TheApp->curMusic->fid[CurWin].numSamples > 0)
 					curSample[CurWin] = 0;
-			} else if (PlayerPRO::TheApp->curMusic->fid[CurWin].numSamples > 0) {
+			} else if (TheApp->curMusic->fid[CurWin].numSamples > 0) {
 				curSample[CurWin]++;
-				if (curSample[CurWin] >= PlayerPRO::TheApp->curMusic->fid[CurWin].numSamples) {
-					curSample[CurWin] = PlayerPRO::TheApp->curMusic->fid[CurWin].numSamples - 1;
+				if (curSample[CurWin] >= TheApp->curMusic->fid[CurWin].numSamples) {
+					curSample[CurWin] = TheApp->curMusic->fid[CurWin].numSamples - 1;
 				}
 			}
 			
@@ -4217,11 +4215,11 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 			End = FindByteEnd(CurWin);
 			
 			if (Start != End) {
-				InstrData *curIns = &PlayerPRO::TheApp->curMusic->fid[CurWin];
+				InstrData *curIns = &TheApp->curMusic->fid[CurWin];
 				int ww;
 				SaveUndo(USample, CurWin, "\pUndo 'Delete instrument'");
 				
-				PlayerPRO::TheApp->curMusic->hasChanged = true;
+				TheApp->curMusic->hasChanged = true;
 				
 				switch (curSample[CurWin]) {
 					case panningEnv:
@@ -4286,7 +4284,7 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 							SampleDataD(CurWin)->data		= NewPtr(0);
 							
 							InternalUpdate(CurWin);
-							if (PlayerPRO::TheApp->thePrefs.ClassicalProjection)
+							if (TheApp->thePrefs.ClassicalProjection)
 								UpdateMozartInfo();
 						} else {
 							newSnd = NewPtr(newSize);
@@ -4322,21 +4320,22 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 								
 								/***********************/
 								
-								PlayerPRO::TheApp->curMusic->hasChanged = true;
+								TheApp->curMusic->hasChanged = true;
 								
 								if (SelecRect[CurWin].start > SampleDataD(CurWin)->size)
 									SelecRect[CurWin].start = SampleDataD(CurWin)->size;	//xxx
 								SelecRect[CurWin].end = SelecRect[CurWin].start;
 								
 								InternalUpdate(CurWin);
-								if (PlayerPRO::TheApp->thePrefs.ClassicalProjection)
+								if (TheApp->thePrefs.ClassicalProjection)
 									UpdateMozartInfo();
 								
 								// Réduction de la sélection à une barre de clignotement:
 								
 								Clignote[CurWin] = true;
 								TokTak[CurWin] = false;
-							} else Erreur(5, -84);
+							} else
+								TheApp->Erreur(5, -84);
 						}
 						break;
 				}
@@ -4348,18 +4347,18 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 			if (curSample[CurWin] != volumeEnv && curSample[CurWin] != panningEnv) {
 				sData *curData;
 				
-				curData = PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[CurWin].firstSample + curSample[CurWin]];
+				curData = TheApp->curMusic->sample[TheApp->curMusic->fid[CurWin].firstSample + curSample[CurWin]];
 				
 				if (theChar == '/') {
 					if (curData->c2spd > 0)
 						curData->c2spd --;
 					
-					PlayerPRO::TheApp->curMusic->hasChanged = true;
+					TheApp->curMusic->hasChanged = true;
 				} else {
 					if (curData->c2spd < 60000)
 						curData->c2spd ++;
 					
-					PlayerPRO::TheApp->curMusic->hasChanged = true;
+					TheApp->curMusic->hasChanged = true;
 				}
 				
 				UpdateDisplay(CurWin);
@@ -4408,10 +4407,10 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 				}
 #endif
 				
-				i = PlayerPRO::TheApp->thePrefs.PianoKey[(short) theChar];
+				i = TheApp->thePrefs.PianoKey[(short) theChar];
 				
 				if (i != 0xFF && i != -1)
-					i += PlayerPRO::TheApp->thePrefs.pianoOffset * 12;
+					i += TheApp->thePrefs.pianoOffset * 12;
 				
 				if (i >= 0 && i < NUMBER_NOTES) {
 					short track = GetWhichTrackPlay();
@@ -4419,21 +4418,22 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 					SelectTouche(i, -1);
 					SelectToucheMozart(i, 0);
 					
-					TouchIn++;
-					if (TouchIn < 0 || TouchIn >= 10)
-						TouchIn = 0;
-					TouchMem[TouchIn] = i;
-					TrackMem[TouchIn] = track;
-					if (TrackMem[TouchIn] < 0 || TrackMem[TouchIn] >= PlayerPRO::TheApp->MADDriver->DriverSettings.numChn)
-						TrackMem[TouchIn] = 0;
+					TheApp->TouchIn++;
+					if (TheApp->TouchIn < 0 || TheApp->TouchIn >= 10)
+						TheApp->TouchIn = 0;
+					TheApp->TouchMem[TheApp->TouchIn] = i;
+					TheApp->TrackMem[TheApp->TouchIn] = track;
+					if (TheApp->TrackMem[TheApp->TouchIn] < 0 ||
+						TheApp->TrackMem[TheApp->TouchIn] >= TheApp->MADDriver->DriverSettings.numChn)
+						TheApp->TrackMem[TheApp->TouchIn] = 0;
 					
 					if (curSample[CurWin] < 0) {
-						DoPlayInstruInt(i, CurWin, 0, 0, 0xFF, &PlayerPRO::TheApp->MADDriver->chan[track], 0, 0);
+						DoPlayInstruInt(i, CurWin, 0, 0, 0xFF, &TheApp->MADDriver->chan[track], 0, 0);
 					} else {
 						if (SelecRect[CurWin].start == SelecRect[CurWin].end)
-							DoPlayInstruInt(i, CurWin, 0, 0, 0xFF, &PlayerPRO::TheApp->MADDriver->chan[track], 0, 0);
+							DoPlayInstruInt(i, CurWin, 0, 0, 0xFF, &TheApp->MADDriver->chan[track], 0, 0);
 						else {
-							DoPlayInstruInt(i, CurWin, 0, 0, 0xFF, &PlayerPRO::TheApp->MADDriver->chan[track], SelecRect[CurWin].start, SelecRect[CurWin].end);
+							DoPlayInstruInt(i, CurWin, 0, 0, 0xFF, &TheApp->MADDriver->chan[track], SelecRect[CurWin].start, SelecRect[CurWin].end);
 						}
 					}
 				}
@@ -4479,7 +4479,7 @@ pascal OSErr DragTracking(DragTrackingMessage message, WindowRef theWindow, void
 	Rect				tempRect;
 	PlayerPRO::Samples *DerefCon = static_cast<PlayerPRO::Samples*>(handlerRefCon);
 	
-	if (!PlayerPRO::TheApp->mainSystemDrag)
+	if (!TheApp->mainSystemDrag)
 		return noErr;
 	
 	if ((message != kDragTrackingEnterHandler) && (!DerefCon->GetCanAcceptDrag()))
@@ -4741,7 +4741,7 @@ Boolean DragSample(RgnHandle myRgn, short theNo, EventRecord *theEvent)
 	Rect				dragRegionRect;
 	Str255				theStr;
 	
-	if (!PlayerPRO::TheApp->DragManagerUse || Instru == NULL || SampleDataD(theNo)->size == 0)
+	if (!TheApp->DragManagerUse || Instru == NULL || SampleDataD(theNo)->size == 0)
 		return false;
 	
 	//******************************************
@@ -4840,7 +4840,7 @@ Boolean DragSample(RgnHandle myRgn, short theNo, EventRecord *theEvent)
 		if ((!copyText) && (DropLocationIsFinderTrash(&dropLocation))) {
 			DoKeyPressSample(SampleDlog[theNo], 8);
 			
-			PlayerPRO::TheApp->curMusic->hasChanged = true;
+			TheApp->curMusic->hasChanged = true;
 			
 			CreateInstruList();
 			UpdateSampleWindows();
