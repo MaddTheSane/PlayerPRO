@@ -44,7 +44,6 @@ EventRecord *CurrentEvent();
 #include "TextScroll.proto.h"
 #include "VideoToolbox.h"
 #include "Timer.proto.h"
-#include "Tools.proto.h"
 #include "Utils.proto.h"
 #include "WaveEditor.proto.h"
 #include "Command.proto.h"

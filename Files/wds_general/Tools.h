@@ -11,6 +11,11 @@
 
 #include "wds_general.h"
 
+extern "C" {
+pascal void myForeAction(ControlHandle theCntl, short ctlPart);
+pascal void myBackAction(ControlHandle theCntl, short ctlPart);
+}
+
 namespace PlayerPRO {
 	class Tools : public wds_general {
 	public:
@@ -26,15 +31,15 @@ namespace PlayerPRO {
 		void DoRecule();
 		void DoPause();
 		void DoStop();
-		void DoSearchUp();
-		void DoSearchDown();
+		static void DoSearchUp();
+		static void DoSearchDown();
 		void SetCurrentMOD(ConstStr255Param theMODName);
 		void DoRemember();
 		void DoPlay(void);
 		void ScanTime();
 		void DoChangeLoop();
 		void DoItemPressTools(short whichItem, DialogPtr whichDialog);
-
+		
 	private:
 		short	oldPartition, oldPartition2, oldPL;
 		long	maxTime, oldTime;

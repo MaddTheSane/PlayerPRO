@@ -11,6 +11,7 @@ extern "C" {
 
 pascal OSErr GetFileIcon(FSSpec *thing, IconSelectorValue iconSelector, Handle *theSuite);
 Boolean IsSuiteEmpty(Handle theSuite);
+
 #ifdef __cplusplus
 }
 #endif

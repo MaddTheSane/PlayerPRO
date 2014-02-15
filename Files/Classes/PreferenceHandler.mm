@@ -24,16 +24,6 @@ void MyPPBeep()
 	NSBeep();
 }
 
-Boolean CFPreferencesHaveBeenSet()
-{
-	BOOL isSet = NO;
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-	isSet = [[NSUserDefaults standardUserDefaults] boolForKey:PPPreferencesSet];
-	[pool drain];
-	
-	return isSet;
-}
-
 void RegisterCFDefaults()
 {
 	NSAutoreleasePool *pool = [NSAutoreleasePool new];

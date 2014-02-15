@@ -12,11 +12,18 @@
 #include <ApplicationServices/ApplicationServices.h>
 #include <CoreFoundation/CoreFoundation.h>
 
-Boolean CFPreferencesHaveBeenSet();
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void RegisterCFDefaults();
 void ResetCFPreferences();
 
 void ReadCFPreferences();
 void WriteCFPreferences();
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

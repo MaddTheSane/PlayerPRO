@@ -19,7 +19,9 @@ namespace PlayerPRO {
 		void DrawEnvelope(short ins, DialogPtr theDia);
 		void DrawPanningEnvelope(short ins, DialogPtr theDia);
 		void DrawSample(short tSS, short tSE, short InstruNo, DialogPtr theDia);
-
+	private:
+		DragTrackingHandlerUPP	MyTrackingHandlerUPP;
+		DragReceiveHandlerUPP	MyReceiveDropHandlerUPP;
 	};
 }
 

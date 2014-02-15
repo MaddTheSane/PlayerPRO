@@ -19,7 +19,6 @@ void Switch(void);
 void DeSwitch(void);
 void MusiqueDriverInit(void);
 short doDlgEvt(EventRecord *);
-void DoGlobalNull(void);
 void GlobalDoKey(WindowPtr, char);
 void ActivateProcedure(Boolean);
 void DoOSEvent(EventRecord *, Boolean);

@@ -8,9 +8,7 @@
  */
 
 #include "PlayerPROApp.h"
-extern "C" {
 #include "PreferenceHandler.h"
-}
 
 static const short FKEYCo[] = {0x7A, 0x78, 0x63, 0x76, 0x60, 0x61, 0x62, 0x64, 0x65, 0x6D, 0x67, 0x6F, 0x69, 0x6B, 0x71};
 
@@ -113,7 +111,7 @@ void PlayerPRO::PlayerPROApp::DoGlobalNull()
 	DoNullEditor();
 	DoNullClassic();
 	DoNullMozart();
-	DoNullTools();
+	ToolsWindow->DoNull();
 	DoNullDigiWindow();
 	DoNullWave();
 	DoNullMODList();
@@ -365,14 +363,12 @@ void PlayerPRO::PlayerPROApp::EventLoop2()
 			//
 			
 			if (theChar == '+')
-				DoSearchUp();
+				ToolsWindow->DoSearchUp();
 			else if (theChar == '-')
-				DoSearchDown();
+				ToolsWindow->DoSearchDown();
 			if (theChar == 27)
-				DoPause();	// ESC = Pause
-			//	if (theChar == '/') DoChangeLoop();
-			
-			//
+				ToolsWindow->DoPause();	// ESC = Pause
+			//if (theChar == '/') DoChangeLoop();
 			
 			if (theEvent.what != autoKey) {
 				short	 ins;
@@ -2357,7 +2353,7 @@ void PlayerPRO::PlayerPROApp::DoReset()
 	UPDATE_Total();
 	
 	ResetUndo();
-	ScanTime();
+	ToolsWindow->ScanTime();
 	
 	UpdateALLWindow();
 }
@@ -2631,7 +2627,6 @@ void PlayerPRO::PlayerPROApp::CloseRollCrsrc()
 	DisposePtr((Ptr)myCursor);
 }
 
-extern	KeyMap		km;
 void DrawNumberMusic();
 
 /*

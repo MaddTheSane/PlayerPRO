@@ -459,7 +459,7 @@ void PlayerPRO::Tools::DoPause()
 	QTDoAction(false);
 }
 
-void PlayerPRO::Tools::DoStop(void)
+void PlayerPRO::Tools::DoStop()
 {
 	DoPause();
 	
@@ -469,7 +469,7 @@ void PlayerPRO::Tools::DoStop(void)
 	PlayerPRO::TheApp->MADDriver->PL++;
 }
 
-void PlayerPRO::Tools::DoSearchUp(void)
+void PlayerPRO::Tools::DoSearchUp()
 {
 	short newPL, newPartitionReader = 0;
 	
@@ -487,7 +487,7 @@ void PlayerPRO::Tools::DoSearchUp(void)
 	MADCheckSpeed(PlayerPRO::TheApp->curMusic, PlayerPRO::TheApp->MADDriver);
 }
 
-void PlayerPRO::Tools::DoSearchDown(void)
+void PlayerPRO::Tools::DoSearchDown()
 {
 	short newPL, newPartitionReader = 0;
 	
@@ -576,18 +576,18 @@ pascal void myBackAction(ControlHandle theCntl, short ctlPart)
 {
 	if (ctlPart == kControlButtonPart) {
 		if (!IsPlay)
-			DoPlay();
-		DoRecule();
+			PlayerPRO::TheApp->ToolsWindow->DoPlay();
+		PlayerPRO::TheApp->ToolsWindow->DoRecule();
 	} else if (!IsPlay)
-		DoPause();
+		PlayerPRO::TheApp->ToolsWindow->DoPause();
 	
-	DoGlobalNull();
+	PlayerPRO::TheApp->DoGlobalNull();
 	
 	WaitNextEvent(everyEvent, &PlayerPRO::TheApp->theEvent, 1, NULL);
 }
 
-static	short		doubleSpeed;
-static	Boolean		alreadyReady;
+static short	doubleSpeed;
+static Boolean	alreadyReady;
 
 pascal void myForeAction(ControlHandle theCntl, short ctlPart)
 {
@@ -598,7 +598,7 @@ pascal void myForeAction(ControlHandle theCntl, short ctlPart)
 				PlayerPRO::TheApp->MADDriver->VExt = doubleSpeed;
 				//ChangeSpeed();
 			} else
-				DoPlay();
+				PlayerPRO::TheApp->ToolsWindow->DoPlay();
 		}
 	} else {
 		if (alreadyReady) {
@@ -607,11 +607,11 @@ pascal void myForeAction(ControlHandle theCntl, short ctlPart)
 				PlayerPRO::TheApp->MADDriver->VExt = doubleSpeed / 2;
 				//ChangeSpeed();
 			} else
-				DoPause();
+				PlayerPRO::TheApp->ToolsWindow->DoPause();
 		}
 	}
 	
-	DoGlobalNull();
+	PlayerPRO::TheApp->DoGlobalNull();
 	
 	WaitNextEvent(everyEvent, &PlayerPRO::TheApp->theEvent, 1, NULL);
 }
@@ -849,7 +849,7 @@ void PlayerPRO::Tools::DoItemPressTools(short whichItem, DialogPtr whichDialog)
 				GetDialogItem(theDialog , 10, &itemType, &itemHandle, &itemRect);
 				GetMouse(&myPt);
 				
-				DoGlobalNull();
+				PlayerPRO::TheApp->DoGlobalNull();
 				
 				WaitNextEvent(everyEvent, &PlayerPRO::TheApp->theEvent, 1, NULL);
 				

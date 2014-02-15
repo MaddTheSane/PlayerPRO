@@ -17,8 +17,7 @@ extern "C" {
 #define SampleDataD(InsD)			PlayerPRO::TheApp->curMusic->sample[PlayerPRO::TheApp->curMusic->fid[InsD].firstSample + curSample[InsD]]
 
 /******** HELP MODULE ********/
-enum
-{
+enum {
 	HInfo	= 25,
 	HSel	= 27,
 	HPenc	= 26,
@@ -48,7 +47,7 @@ void			NEditInstruInfo(short ins, short samp);
 void			SetMaxBottomWindow(short , DialogPtr);
 void			NCOPYSample(long, long, short, short);
 void			DoKeyPressSample(DialogPtr, short);
-short			PressSampleMenu(Rect	*PopUpRect);
+short			PressSampleMenu(Rect *PopUpRect);
 void			InternalUpdate(short whichWindow);
 void			DoKeyPlay(short temp);
 short			NewOffscreenPixMap(PixMapHandle *thePixMap, Rect *picRect);
@@ -58,8 +57,8 @@ void			ZapPixMap(PixMapHandle *offscreenPixMap);
 void			GetInstruName(short, Ptr);
 void			GetQualityString(short ID, Str255 str);
 Boolean			DragSample(RgnHandle myRgn, short theNo, EventRecord *theEvent);
-pascal OSErr 	MySendSampleProc(FlavorType theFlavor,  void *refCon, ItemReference theItem,  DragReference theDrag);
-Handle			SoundQualityExportSnd(short , OSType	*, short *, long *, Str255);
+pascal OSErr 	MySendSampleProc(FlavorType theFlavor, void *refCon, ItemReference theItem, DragReference theDrag);
+Handle			SoundQualityExportSnd(short, OSType *, short *, long *, Str255);
 void			SetMobiusRect(Rect*, short, short, short, short);
 void			DrawSample(short pSt, short pEn, short Instru, DialogPtr theDia);
 void			NSelectInstruList(short , short);
@@ -73,9 +72,6 @@ pascal OSErr DragTracking(DragTrackingMessage message, WindowRef theWindow, void
 //extern	DialogPtr	InstruListDlog;
 extern	Boolean		PianoRecording;
 extern	RGBColor	theColor;
-
-static	DragTrackingHandlerUPP	MyTrackingHandlerUPP;
-static	DragReceiveHandlerUPP	MyReceiveDropHandlerUPP;
 
 typedef struct IdleSample {
 		short			oldPos;
@@ -777,7 +773,8 @@ void GetSampleRect(DialogPtr theDia)
 {
 	Rect caRect;
 	
-	if (theDia == NULL) MyDebugStr(__LINE__, __FILE__, "Big big ERROR");
+	if (theDia == NULL)
+		MyDebugStr(__LINE__, __FILE__, "Big big ERROR");
 	
 	GetPortBounds(GetDialogPort(theDia), &caRect);
 	
@@ -1335,8 +1332,7 @@ void AfficheOldPoint(short i)
 	SetPort(SavePort);
 }
 
-static	long	oldNullTicks, Flashing;
-
+static long oldNullTicks, Flashing;
 
 void DoNullInstrument()
 {
@@ -3051,13 +3047,11 @@ void PlayerPRO::Samples::CreateSampleWindow(short ins, short samp)
 	SetPort(SavePort);
 }
 
-extern KeyMap km;
-
 PlayerPRO::Samples::~Samples()
 {
 	short	i;
 	
-	GetKeys(km);
+	GetKeys(PlayerPRO::TheApp->km);
 	
 	if (IsPressed(0x3A) == true) {
 		for (i = MAXINSTRU; i >= 0 ; i--) {
@@ -3358,7 +3352,7 @@ void MoveLoopSelection(short InstruNo)
 			prevPt = aPt;
 		}
 		
-		DoGlobalNull();
+		PlayerPRO::TheApp->DoGlobalNull();
 		
 		WaitNextEvent(everyEvent, &theEvent, 1, NULL);
 		
@@ -3461,7 +3455,7 @@ void DoItemPressSample(short whichItem, DialogPtr whichDialog)
 					break;
 			}
 			
-			GetKeys(km);
+			GetKeys(PlayerPRO::TheApp->km);
 			if (IsPressed(0x003A)) {
 				while (Button()){
 					
