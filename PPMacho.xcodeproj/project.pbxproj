@@ -102,6 +102,7 @@
 		550004E018A948BD00408208 /* audioeffectx.h in Headers */ = {isa = PBXBuildFile; fileRef = 550004D718A948BD00408208 /* audioeffectx.h */; };
 		550004E118A948BD00408208 /* vstcontrols.h in Headers */ = {isa = PBXBuildFile; fileRef = 550004D818A948BD00408208 /* vstcontrols.h */; };
 		550004E218A948BD00408208 /* vstgui.h in Headers */ = {isa = PBXBuildFile; fileRef = 550004D918A948BD00408208 /* vstgui.h */; };
+		550004E318A959C600408208 /* PlugVisual.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C80C2F21DD00D6C081 /* PlugVisual.c */; };
 		55096A3110E0A6E8000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55096A3210E0A6EF000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55096A3310E0A6F3000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -155,8 +156,6 @@
 		55151F7A10DEDBDB0054ABC4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5515200810DEDC7E0054ABC4 /* XI.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55151F8010DEDBDB0054ABC4 /* XI.plugin */; };
 		5515200E10DEDC9B0054ABC4 /* XI.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105910D6C79E00BB619C /* XI.c */; };
-		551770CE18AD59F900C4FB35 /* wds_general.h in Headers */ = {isa = PBXBuildFile; fileRef = 551770CC18AD59F900C4FB35 /* wds_general.h */; };
-		551770CF18AD59F900C4FB35 /* wds_general.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 551770CD18AD59F900C4FB35 /* wds_general.cpp */; };
 		5518107B10C35A5100ADA9F4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5518109210C35A6C00ADA9F4 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5518109310C35A7500ADA9F4 /* Example.c in Sources */ = {isa = PBXBuildFile; fileRef = 5518105610C35A2600ADA9F4 /* Example.c */; };
@@ -184,6 +183,10 @@
 		5533421410BB6187005208D1 /* AMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DB10BB5368005208D1 /* AMF.c */; };
 		5533421D10BB6445005208D1 /* DMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DE10BB5368005208D1 /* DMF.c */; };
 		5533422410BB6675005208D1 /* IT.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E110BB5368005208D1 /* IT.c */; };
+		55356A01102BFDB80093F21D /* DLS Import.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E50C2F21DD00D6C081 /* DLS Import.c */; };
+		55356A05102BFE7D0093F21D /* Print.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FC0C2F21DD00D6C081 /* Print.c */; };
+		55356A1E102C06550093F21D /* MIDI-GM.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F60C2F21DD00D6C081 /* MIDI-GM.c */; };
+		55356A97102C08650093F21D /* PlugsPPINInit.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C60C2F21DD00D6C081 /* PlugsPPINInit.c */; };
 		553984DD18AD84DF00DD2EA2 /* wds_editor.h in Headers */ = {isa = PBXBuildFile; fileRef = 553984DB18AD84DF00DD2EA2 /* wds_editor.h */; };
 		553984DE18AD84DF00DD2EA2 /* wds_editor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 553984DC18AD84DF00DD2EA2 /* wds_editor.cpp */; };
 		553984E918AD879600DD2EA2 /* PlayerPROApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 553984E718AD879600DD2EA2 /* PlayerPROApp.h */; };
@@ -232,8 +235,6 @@
 		55672E2B10CAD641008C5C3D /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
 		55672E9010CAD830008C5C3D /* OSX-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */; };
-		556885B318AF1AE7001D75D2 /* G3.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3ED0C2F21DD00D6C081 /* G3.c */; };
-		556885B418AF1AED001D75D2 /* FourierNEW.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3EB0C2F21DD00D6C081 /* FourierNEW.c */; };
 		5573A35A10B50DCC00FF8B50 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
 		5573A35B10B50DD000FF8B50 /* Effects.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D10C2F21DD00D6C081 /* Effects.c */; };
 		5573A35C10B50DD500FF8B50 /* Interrupt.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D20C2F21DD00D6C081 /* Interrupt.c */; };
@@ -380,6 +381,7 @@
 		55E4DFAB1630F40600E4F4F9 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */; };
 		55E4DFAC1630F40900E4F4F9 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		55E4DFAD1630F41A00E4F4F9 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */; };
+		55E8981A10EEC5BA004EB52B /* AboutPlugs.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */; };
 		55E898B010F17C2B004EB52B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55E898B110F17C2B004EB52B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55E8998510F18165004EB52B /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
@@ -417,11 +419,59 @@
 		55FD862410B22C3F00F8BDE6 /* OutPut8.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D90C2F21DD00D6C081 /* OutPut8.c */; };
 		55FD862510B22C4300F8BDE6 /* realft.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DA0C2F21DD00D6C081 /* realft.c */; };
 		55FD862610B22C4600F8BDE6 /* TickRemover.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */; };
+		88E0C41E0C2F21DE00D6C081 /* FKey.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3EA0C2F21DD00D6C081 /* FKey.c */; };
+		88E0C4200C2F21DE00D6C081 /* Spectrum.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4070C2F21DD00D6C081 /* Spectrum.c */; };
+		88E0C4210C2F21DE00D6C081 /* ActiveHelp.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DE0C2F21DD00D6C081 /* ActiveHelp.c */; };
+		88E0C4220C2F21DE00D6C081 /* StaffEditor.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4180C2F21DD00D6C081 /* StaffEditor.c */; };
+		88E0C4230C2F21DE00D6C081 /* FourierNEW.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3EB0C2F21DD00D6C081 /* FourierNEW.c */; };
+		88E0C4240C2F21DE00D6C081 /* DragManager.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E60C2F21DD00D6C081 /* DragManager.c */; };
+		88E0C4250C2F21DE00D6C081 /* SoundInput.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4060C2F21DD00D6C081 /* SoundInput.c */; };
+		88E0C4260C2F21DE00D6C081 /* Partition.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F90C2F21DD00D6C081 /* Partition.c */; };
+		88E0C4290C2F21DE00D6C081 /* InstruList.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F10C2F21DD00D6C081 /* InstruList.c */; };
+		88E0C42A0C2F21DE00D6C081 /* Help.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3EE0C2F21DD00D6C081 /* Help.c */; };
+		88E0C42B0C2F21DE00D6C081 /* Help.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3EF0C2F21DD00D6C081 /* Help.h */; };
+		88E0C42C0C2F21DE00D6C081 /* About.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DD0C2F21DD00D6C081 /* About.c */; };
+		88E0C42D0C2F21DE00D6C081 /* Adaptators.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DF0C2F21DD00D6C081 /* Adaptators.c */; };
+		88E0C42E0C2F21DE00D6C081 /* AEvent.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E00C2F21DD00D6C081 /* AEvent.c */; };
+		88E0C42F0C2F21DE00D6C081 /* Editor.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4160C2F21DD00D6C081 /* Editor.c */; };
+		88E0C4310C2F21DE00D6C081 /* Check.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E20C2F21DD00D6C081 /* Check.c */; };
+		88E0C4320C2F21DE00D6C081 /* HelpOnline.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F00C2F21DD00D6C081 /* HelpOnline.c */; };
+		88E0C4330C2F21DE00D6C081 /* ClassicalP.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E30C2F21DD00D6C081 /* ClassicalP.c */; };
+		88E0C4340C2F21DE00D6C081 /* Command.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4150C2F21DD00D6C081 /* Command.c */; };
+		88E0C4350C2F21DE00D6C081 /* DigitalInfo.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E40C2F21DD00D6C081 /* DigitalInfo.c */; };
+		88E0C4360C2F21DE00D6C081 /* FileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E90C2F21DD00D6C081 /* FileUtils.c */; };
+		88E0C4380C2F21DE00D6C081 /* InstruView.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F20C2F21DD00D6C081 /* InstruView.c */; };
+		88E0C4390C2F21DE00D6C081 /* MODList.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F70C2F21DD00D6C081 /* MODList.c */; };
+		88E0C43A0C2F21DE00D6C081 /* LDEF.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F30C2F21DD00D6C081 /* LDEF.c */; };
+		88E0C43B0C2F21DE00D6C081 /* Progress.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FF0C2F21DD00D6C081 /* Progress.c */; };
+		88E0C43C0C2F21DE00D6C081 /* Functions.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3EC0C2F21DD00D6C081 /* Functions.c */; };
+		88E0C43D0C2F21DE00D6C081 /* Oscillo.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3F80C2F21DD00D6C081 /* Oscillo.c */; };
+		88E0C43E0C2F21DE00D6C081 /* Pattern.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FA0C2F21DD00D6C081 /* Pattern.c */; };
+		88E0C43F0C2F21DE00D6C081 /* Piano.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FB0C2F21DD00D6C081 /* Piano.c */; };
+		88E0C4410C2F21DE00D6C081 /* ProgressBar.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4000C2F21DD00D6C081 /* ProgressBar.c */; };
+		88E0C4420C2F21DE00D6C081 /* Record.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4030C2F21DD00D6C081 /* Record.c */; };
+		88E0C4430C2F21DE00D6C081 /* PrivateList.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3FD0C2F21DD00D6C081 /* PrivateList.c */; };
+		88E0C4440C2F21DE00D6C081 /* PrivateList.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3FE0C2F21DD00D6C081 /* PrivateList.h */; };
 		88E0C4470C2F21DE00D6C081 /* Samples.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4050C2F21DD00D6C081 /* Samples.cpp */; };
 		88E0C4480C2F21DE00D6C081 /* Tools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4190C2F21DD00D6C081 /* Tools.cpp */; };
+		88E0C4490C2F21DE00D6C081 /* TrackView.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4090C2F21DD00D6C081 /* TrackView.c */; };
+		88E0C44A0C2F21DE00D6C081 /* Undo.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C40A0C2F21DD00D6C081 /* Undo.c */; };
+		88E0C44B0C2F21DE00D6C081 /* Undo.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C40B0C2F21DD00D6C081 /* Undo.h */; };
+		88E0C44C0C2F21DE00D6C081 /* WaveEditor.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C41A0C2F21DD00D6C081 /* WaveEditor.c */; };
+		88E0C4520C2F21DE00D6C081 /* Utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4130C2F21DD00D6C081 /* Utils.c */; };
 		88E0C4530C2F21DE00D6C081 /* GetFileIcon.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C40D0C2F21DD00D6C081 /* GetFileIcon.c */; };
 		88E0C4540C2F21DE00D6C081 /* GetFileIcon.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C40E0C2F21DD00D6C081 /* GetFileIcon.h */; };
+		88E0C4550C2F21DE00D6C081 /* PlugsPPDGInit.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C50C2F21DD00D6C081 /* PlugsPPDGInit.c */; };
+		88E0C4580C2F21DE00D6C081 /* PlugsSoundFilter.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C70C2F21DD00D6C081 /* PlugsSoundFilter.c */; };
+		88E0C45A0C2F21DE00D6C081 /* Navigation.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4100C2F21DD00D6C081 /* Navigation.c */; };
+		88E0C45C0C2F21DE00D6C081 /* QuicktimeWindow.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4020C2F21DD00D6C081 /* QuicktimeWindow.c */; };
+		88E0C4600C2F21DE00D6C081 /* AudioCD.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E10C2F21DD00D6C081 /* AudioCD.c */; };
+		88E0C4610C2F21DE00D6C081 /* PubWindow.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4010C2F21DD00D6C081 /* PubWindow.c */; };
+		88E0C4620C2F21DE00D6C081 /* G3.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3ED0C2F21DD00D6C081 /* G3.c */; };
+		88E0C4640C2F21DE00D6C081 /* Equalizer.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E70C2F21DD00D6C081 /* Equalizer.c */; };
+		88E0C4650C2F21DE00D6C081 /* FFT-Dialog.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3E80C2F21DD00D6C081 /* FFT-Dialog.c */; };
 		88E0C4690C2F21DE00D6C081 /* Carbon.r in Rez */ = {isa = PBXBuildFile; fileRef = 88E0C3BE0C2F21DD00D6C081 /* Carbon.r */; };
+		88E0C46B0C2F21DE00D6C081 /* PlugVST.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C90C2F21DD00D6C081 /* PlugVST.c */; };
 		88E0C46D0C2F21DE00D6C081 /* ScreenDevice.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4120C2F21DD00D6C081 /* ScreenDevice.h */; };
 		88E0C4760C2F21E400D6C081 /* MAD.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4750C2F21E400D6C081 /* MAD.h */; };
 		88E0C47A0C2F21E400D6C081 /* Shuddup.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4790C2F21E400D6C081 /* Shuddup.h */; };
@@ -3278,6 +3328,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88E0C42B0C2F21DE00D6C081 /* Help.h in Headers */,
+				88E0C4440C2F21DE00D6C081 /* PrivateList.h in Headers */,
+				88E0C44B0C2F21DE00D6C081 /* Undo.h in Headers */,
 				88E0C4540C2F21DE00D6C081 /* GetFileIcon.h in Headers */,
 				88E0C46D0C2F21DE00D6C081 /* ScreenDevice.h in Headers */,
 				88E0C4760C2F21E400D6C081 /* MAD.h in Headers */,
@@ -5276,17 +5329,67 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88E0C41E0C2F21DE00D6C081 /* FKey.c in Sources */,
+				88E0C4200C2F21DE00D6C081 /* Spectrum.c in Sources */,
+				88E0C4210C2F21DE00D6C081 /* ActiveHelp.c in Sources */,
+				88E0C4220C2F21DE00D6C081 /* StaffEditor.c in Sources */,
+				88E0C4230C2F21DE00D6C081 /* FourierNEW.c in Sources */,
+				88E0C4240C2F21DE00D6C081 /* DragManager.c in Sources */,
+				88E0C4250C2F21DE00D6C081 /* SoundInput.c in Sources */,
+				88E0C4260C2F21DE00D6C081 /* Partition.c in Sources */,
+				88E0C4290C2F21DE00D6C081 /* InstruList.c in Sources */,
+				88E0C42A0C2F21DE00D6C081 /* Help.c in Sources */,
+				88E0C42C0C2F21DE00D6C081 /* About.c in Sources */,
+				88E0C42D0C2F21DE00D6C081 /* Adaptators.c in Sources */,
+				88E0C42E0C2F21DE00D6C081 /* AEvent.c in Sources */,
+				88E0C42F0C2F21DE00D6C081 /* Editor.c in Sources */,
+				88E0C4310C2F21DE00D6C081 /* Check.c in Sources */,
+				88E0C4320C2F21DE00D6C081 /* HelpOnline.c in Sources */,
+				88E0C4330C2F21DE00D6C081 /* ClassicalP.c in Sources */,
+				88E0C4340C2F21DE00D6C081 /* Command.c in Sources */,
+				88E0C4350C2F21DE00D6C081 /* DigitalInfo.c in Sources */,
+				88E0C4360C2F21DE00D6C081 /* FileUtils.c in Sources */,
+				88E0C4380C2F21DE00D6C081 /* InstruView.c in Sources */,
+				88E0C4390C2F21DE00D6C081 /* MODList.c in Sources */,
+				88E0C43A0C2F21DE00D6C081 /* LDEF.c in Sources */,
+				88E0C43B0C2F21DE00D6C081 /* Progress.c in Sources */,
+				88E0C43C0C2F21DE00D6C081 /* Functions.c in Sources */,
+				88E0C43D0C2F21DE00D6C081 /* Oscillo.c in Sources */,
+				88E0C43E0C2F21DE00D6C081 /* Pattern.c in Sources */,
+				88E0C43F0C2F21DE00D6C081 /* Piano.c in Sources */,
 				554CBD51188CD468002E137B /* NSColor+PPPreferences.m in Sources */,
-				554CBD53188CD4AA002E137B /* PreferenceHandler.mm in Sources */,
-				88E0C4470C2F21DE00D6C081 /* Samples.cpp in Sources */,
-				88E0C4480C2F21DE00D6C081 /* Tools.cpp in Sources */,
+				88E0C4410C2F21DE00D6C081 /* ProgressBar.c in Sources */,
+				88E0C4420C2F21DE00D6C081 /* Record.c in Sources */,
+				554CBD53188CD4AA002E137B /* PreferenceHandler.m in Sources */,
+				88E0C4430C2F21DE00D6C081 /* PrivateList.c in Sources */,
+				88E0C4470C2F21DE00D6C081 /* Samples.c in Sources */,
+				88E0C4480C2F21DE00D6C081 /* Tools.c in Sources */,
+				88E0C4490C2F21DE00D6C081 /* TrackView.c in Sources */,
+				88E0C44A0C2F21DE00D6C081 /* Undo.c in Sources */,
+				88E0C44C0C2F21DE00D6C081 /* WaveEditor.c in Sources */,
+				88E0C4520C2F21DE00D6C081 /* Utils.c in Sources */,
 				88E0C4530C2F21DE00D6C081 /* GetFileIcon.c in Sources */,
-				554D7E2618AD90CB0062CD04 /* wds_menu.cpp in Sources */,
+				88E0C4550C2F21DE00D6C081 /* PlugsPPDGInit.c in Sources */,
+				88E0C4580C2F21DE00D6C081 /* PlugsSoundFilter.c in Sources */,
+				88E0C45A0C2F21DE00D6C081 /* Navigation.c in Sources */,
+				88E0C45C0C2F21DE00D6C081 /* QuicktimeWindow.c in Sources */,
+				88E0C4600C2F21DE00D6C081 /* AudioCD.c in Sources */,
+				88E0C4610C2F21DE00D6C081 /* PubWindow.c in Sources */,
+				88E0C4620C2F21DE00D6C081 /* G3.c in Sources */,
+				88E0C4640C2F21DE00D6C081 /* Equalizer.c in Sources */,
+				88E0C4650C2F21DE00D6C081 /* FFT-Dialog.c in Sources */,
+				550004E318A959C600408208 /* PlugVisual.c in Sources */,
+				88E0C46B0C2F21DE00D6C081 /* PlugVST.c in Sources */,
+				551E56F2102A9E8B0086C86E /* Main.c in Sources */,
+				551E57A1102AB9A30086C86E /* Mozart.c in Sources */,
+				55356A01102BFDB80093F21D /* DLS Import.c in Sources */,
+				55356A05102BFE7D0093F21D /* Print.c in Sources */,
+				55356A1E102C06550093F21D /* MIDI-GM.c in Sources */,
+				55356A97102C08650093F21D /* PlugsPPINInit.c in Sources */,
 				55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */,
 				55FD861E10B22C2300F8BDE6 /* DelayOutPut.c in Sources */,
 				55FD861F10B22C2700F8BDE6 /* Effects.c in Sources */,
 				55FD862010B22C2D00F8BDE6 /* Interrupt.c in Sources */,
-				556885B418AF1AED001D75D2 /* FourierNEW.c in Sources */,
 				55FD862110B22C3100F8BDE6 /* Mac-FileUtils.c in Sources */,
 				55FD862210B22C3400F8BDE6 /* Mac-SoundManager.c in Sources */,
 				55FD862310B22C3B00F8BDE6 /* MySndPlayDB.c in Sources */,
@@ -5295,6 +5398,7 @@
 				55FD862610B22C4600F8BDE6 /* TickRemover.c in Sources */,
 				550B011710BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
 				55672E9010CAD830008C5C3D /* OSX-PlugImport.c in Sources */,
+				55E8981A10EEC5BA004EB52B /* AboutPlugs.c in Sources */,
 				555E9B4E110192F900986239 /* MIDI-Hardware-OSX.c in Sources */,
 				55B1953E17FD5CC200E6F160 /* ScreenDevice.cpp in Sources */,
 				551770CF18AD59F900C4FB35 /* wds_general.cpp in Sources */,
