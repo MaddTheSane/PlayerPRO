@@ -23,17 +23,15 @@
 
 #pragma pack(push, 2)
 
-typedef struct ITPatForm
-{
-	unsigned short		length;
-	unsigned short		row;
-	long				no;
-	char				data[];
+typedef struct ITPatForm {
+	unsigned short	length;
+	unsigned short	row;
+	long			no;
+	char			data[];
 } ITPatForm;
 
-typedef struct ITSampForm
-{
-	long		ID;
+typedef struct ITSampForm {
+	OSType		ID;
 	char		DOSName[12];
 	Byte		no;
 	Byte		GvL;
@@ -54,25 +52,22 @@ typedef struct ITSampForm
 	Byte		ViT;
 } ITSampForm;
 
-typedef struct ITNode
-{
-	char		y;
+typedef struct ITNode {
+	char	y;
 	short	x;
 } ITNode;
 
-typedef struct ITEnv
-{
+typedef struct ITEnv {
 	Byte		Flag;
 	Byte		Num;
 	Byte		LpB;
 	Byte		LpE;
 	Byte		SLB;
 	Byte		SLE;
-	ITNode	nodes[25];
+	ITNode		nodes[25];
 } ITEnv;
 
-typedef struct ITKeyMap
-{
+typedef struct ITKeyMap {
 	Byte		note;
 	Byte		samp;
 } ITKeyMap;
@@ -85,13 +80,13 @@ typedef struct ITInsForm		// size = 547
 	Byte		NNA;
 	Byte		DCT;
 	Byte		DCA;
-	short	FadeOut;
+	short		FadeOut;
 	Byte		PPS;
 	Byte		PPC;
 	Byte		GbV;
 	Byte		DfP;
 	char		no2[2];
-	short	TrkVers;
+	short		TrkVers;
 	Byte		NoS;
 	Byte		no3;
 	char		INSName[26];
@@ -103,7 +98,6 @@ typedef struct ITInsForm		// size = 547
 	ITEnv	volEnv;
 	ITEnv	panEnv;
 	ITEnv	pitchEnv;
-	
 } ITInsForm;
 
 typedef struct ITOldInsForm		// size = 554
