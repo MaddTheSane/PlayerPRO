@@ -1131,14 +1131,13 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDrive
 		
 		if (s3minfo.parappat[ i] > 0)
 		{
-			theS3MCopy = (Byte*) theS3M;
-			theS3MCopy += ( (SInt32) s3minfo.parappat[i] )*16;
+			theS3MCopy = (Byte*)theS3M;
+			theS3MCopy += (s3minfo.parappat[i]) * 16;
 			theS3MCopy++;
 			theS3MCopy++;
 			
 			Row = 0;
-			while( Row < 64)
-			{
+			while (Row < 64) {
 				/*
 				 BYTE:flag, 	0		=	end of row
 				 &31		=	channel
@@ -1150,15 +1149,17 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDrive
 				tempChar = *theS3MCopy;
 				theS3MCopy++;
 				
-				if (tempChar == 0) Row++;
-				else
-				{
+				if (tempChar == 0)
+					Row++;
+				else {
 					// Channel
 					
 					channel = tempChar;
 					channel &= 31;
-					if (channel >= 0 && channel < theMAD->header->numChn) aCmd = GetMADCommand( Row, channel, theMAD->partition[ i]);
-					else aCmd = NULL;
+					if (channel >= 0 && channel < theMAD->header->numChn)
+						aCmd = GetMADCommand(Row, channel, theMAD->partition[i]);
+					else
+						aCmd = NULL;
 					
 					// PERIOD
 					
@@ -1166,7 +1167,7 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDrive
 					{
 						if (aCmd != NULL)
 						{
-							aCmd->note = theS3MCopy[ 0];
+							aCmd->note = theS3MCopy[0];
 							
 							if (aCmd->note == 255)
 							{
@@ -1175,7 +1176,6 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDrive
 							else if (aCmd->note == 254) // Note-OFF
 							{
 								aCmd->note = 0xFE;
-								//	Debugger();
 							}
 							else
 							{
@@ -1222,20 +1222,22 @@ static OSErr ConvertS3M2Mad( Ptr	theS3M, size_t size, MADMusic *theMAD, MADDrive
 		}
 	}
 	
-	free( s3minfo.orders);			free( s3minfo.parapins);
-	free( s3minfo.parappat);		free( s3minfo.insdata);
+	free(s3minfo.orders);
+	free(s3minfo.parapins);
+	free(s3minfo.parappat);
+	free(s3minfo.insdata);
 	
 	return noErr;
 }
 
-static OSErr ExtractS3MInfo( PPInfoRec *info, Ptr AlienFile)
+static OSErr ExtractS3MInfo(PPInfoRec *info, Ptr AlienFile)
 {
-	s3mform		*myS3M = ( s3mform*) AlienFile;
+	s3mform		*myS3M = (s3mform*)AlienFile;
 	s3mform		s3minfo;
 	/********************************/
 	
 	/**** Header principal *****/
-	memcpy( &s3minfo, AlienFile, 96);
+	memcpy(&s3minfo, AlienFile, 96);
 	
 	/*** Signature ***/
 	
@@ -1248,36 +1250,34 @@ static OSErr ExtractS3MInfo( PPInfoRec *info, Ptr AlienFile)
 	
 	/*** Total Patterns ***/
 	
-	PPLE16(  &s3minfo.patnum);
+	PPLE16(&s3minfo.patnum);
 	info->totalPatterns = s3minfo.patnum;
 	
 	/*** Partition Length ***/
 	
-	PPLE16( &s3minfo.ordernum);
+	PPLE16(&s3minfo.ordernum);
 	info->partitionLength = s3minfo.ordernum;
 	
 	/*** Total Instruments ***/
 	
-	PPLE16(  &s3minfo.insnum);
+	PPLE16(&s3minfo.insnum);
 	info->totalInstruments = s3minfo.insnum;
 	
 	//TODO:
 	info->totalTracks = 0;
 	
-	strlcpy( info->formatDescription, "S3M Plug", sizeof(info->formatDescription));
+	strlcpy(info->formatDescription, "S3M Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
 
-static OSErr TestS3MFile( Ptr AlienFile)
+static inline OSErr TestS3MFile(void *AlienFile)
 {
-	s3mform	*myS3M = ( s3mform*) AlienFile;
-	
-	if(myS3M->s3msig[ 0] == 'S' &&
-	   myS3M->s3msig[ 1] == 'C' &&
-	   myS3M->s3msig[ 2] == 'R' &&
-	   myS3M->s3msig[ 3] == 'M') return noErr;
-	else return  MADFileNotSupportedByThisPlug;
+	s3mform	*myS3M = (s3mform*)AlienFile;
+	if (memcmp(myS3M->s3msig, "SCRM", 4) == 0)
+		return noErr;
+	else
+		return MADFileNotSupportedByThisPlug;
 }
 
 #ifndef _MAC_H
@@ -1297,45 +1297,42 @@ EXP OSErr FillPlug( PlugInfo *p)
 #endif
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainS3M( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+OSErr mainS3M(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr		myErr;
-	Ptr			AlienFile;
-	size_t		sndSize;
-	UNFILE		iFileRefI;
+	OSErr	myErr;
+	Ptr		AlienFile;
+	size_t	sndSize;
+	UNFILE	iFileRefI;
 	
 	myErr = noErr;
 	
-	switch( order)
-	{
+	switch (order) {
 		case MADPlugExport:
-			AlienFile = ConvertMad2S3M( MadFile, init, &sndSize);
+			AlienFile = ConvertMad2S3M(MadFile, init, &sndSize);
 			
-			if (AlienFile != NULL)
-			{
+			if (AlienFile != NULL) {
 				iFileCreate( AlienFileName, 'S3M ');
-				iFileRefI = iFileOpenWrite( AlienFileName);
-				if (iFileRefI)
-				{
-					iWrite( sndSize, AlienFile, iFileRefI);
-					iClose( iFileRefI);
+				iFileRefI = iFileOpenWrite(AlienFileName);
+				if (iFileRefI) {
+					iWrite(sndSize, AlienFile, iFileRefI);
+					iClose(iFileRefI);
 				}
-				free( AlienFile);	AlienFile = NULL;
-			}
-			else myErr = MADNeedMemory;
+				free(AlienFile);
+				AlienFile = NULL;
+			} else
+				myErr = MADNeedMemory;
 			break;
 			
 		case MADPlugImport:
-			iFileRefI = iFileOpenRead( AlienFileName);
-			if (iFileRefI)
-			{
-				sndSize = iGetEOF( iFileRefI);
+			iFileRefI = iFileOpenRead(AlienFileName);
+			if (iFileRefI) {
+				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (Ptr)malloc( sndSize * 2L);
+				AlienFile = (Ptr)malloc(sndSize * 2);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
@@ -1344,68 +1341,69 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 					free( AlienFile);
 					
 					AlienFile = (Ptr)malloc( sndSize);
-					if (AlienFile == NULL) myErr = MADNeedMemory;
-					else
-					{
-						iRead( sndSize, AlienFile, iFileRefI);
+					if (AlienFile == NULL)
+						myErr = MADNeedMemory;
+					else {
+						iRead(sndSize, AlienFile, iFileRefI);
 						
-						myErr = TestS3MFile( AlienFile);
-						if (myErr == noErr)
-						{
-							myErr = ConvertS3M2Mad( AlienFile,  sndSize, MadFile, init);
+						myErr = TestS3MFile(AlienFile);
+						if (myErr == noErr) {
+							myErr = ConvertS3M2Mad(AlienFile,  sndSize, MadFile, init);
 						}
 					}
-					free( AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
-				iClose( iFileRefI);
-			}
-			else myErr = MADReadingErr;
+				iClose(iFileRefI);
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		case MADPlugTest:
-			iFileRefI = iFileOpenRead( AlienFileName);
-			if (iFileRefI)
-			{
-				sndSize = 1024L;
+			iFileRefI = iFileOpenRead(AlienFileName);
+			if (iFileRefI) {
+				sndSize = 1024;
 				
-				AlienFile = (Ptr)malloc( sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
-					myErr = iRead( sndSize, AlienFile, iFileRefI);
+				AlienFile = (Ptr)malloc(sndSize);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
+					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					
-					if(myErr == noErr) myErr = TestS3MFile( AlienFile);
+					if(myErr == noErr)
+						myErr = TestS3MFile(AlienFile);
 					
-					free( AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
-				iClose( iFileRefI);
-			}
-			else myErr = MADReadingErr;
+				iClose(iFileRefI);
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		case 'INFO':
-			iFileRefI = iFileOpenRead( AlienFileName);
-			if (iFileRefI)
-			{
-				info->fileSize = iGetEOF( iFileRefI);
+			iFileRefI = iFileOpenRead(AlienFileName);
+			if (iFileRefI) {
+				info->fileSize = iGetEOF(iFileRefI);
 				
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (Ptr)malloc( sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
-					myErr = iRead( sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr)
-					{
-						myErr = TestS3MFile( AlienFile);
-						if (!myErr) myErr = ExtractS3MInfo( info, AlienFile);
+				AlienFile = (Ptr)malloc(sndSize);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
+					myErr = iRead(sndSize, AlienFile, iFileRefI);
+					if (myErr == noErr) {
+						myErr = TestS3MFile(AlienFile);
+						if (!myErr)
+							myErr = ExtractS3MInfo(info, AlienFile);
 					}
-					free( AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
-				iClose( iFileRefI);
-			}
-			else myErr = MADReadingErr;
+				iClose(iFileRefI);
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		default:

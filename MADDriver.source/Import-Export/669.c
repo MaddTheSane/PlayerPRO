@@ -41,7 +41,7 @@ static OSErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MAD
 {
 	SixSixNine	*the669;
 	short		i, x, z;
-	SInt32		OffSetToSample;
+	size_t		OffSetToSample;
 	size_t		temp;
 	Ptr			MaxPtr;
 	Ptr			theInstrument[64], destPtr;
@@ -94,7 +94,7 @@ static OSErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MAD
 	theMAD->header->tempo = 125;
 	theMAD->header->speed = 6;
 	theMAD->header->numPat = the669->NOP;
-	for(i=0; i<128; i++) {
+	for (i = 0; i < 128; i++) {
 		theMAD->header->oPointers[i] = the669->orderList[i];
 		if (theMAD->header->oPointers[i] >= theMAD->header->numPat)
 			theMAD->header->oPointers[i] = theMAD->header->numPat - 1;
@@ -208,17 +208,14 @@ static OSErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MAD
 			theMAD->fid[i].numSamples = 0;
 	}
 	
-	PatInt = (struct PatSix*)the669 + 0x1f1 + the669->NOS * 0x19;
-	
-	temp = (SInt32) the669;
-	temp += 0x1f1L + (SInt32) the669->NOS * 0x19L;
-	
+	temp = (size_t)the669;
+	temp += 0x1f1 + (size_t)the669->NOS * 0x19;
 	PatInt = (struct PatSix*)temp;
 	
 	/***** TEMPORAIRE ********/
 	
 	theMAD->header->numChn = 8;
-	//	theMAD->header->PatMax = 1;
+	//theMAD->header->PatMax = 1;
 	
 	for (i = 0; i < theMAD->header->numPat; i++) {
 		theMAD->partition[i] = (PatData*)calloc(sizeof(PatHeader) + theMAD->header->numChn * 64 * sizeof(Cmd), 1);
@@ -325,6 +322,7 @@ static OSErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MAD
 
 static OSErr Extract669Info(PPInfoRec *info, void *AlienFile)
 {
+	//TODO: implement
 	SixSixNine	*the669 = (SixSixNine*)AlienFile;
 	
 	/*** Signature ***/
@@ -368,7 +366,7 @@ static OSErr Test669File(void *AlienFile)
 EXP OSErr FillPlug(PlugInfo *p);
 EXP OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
 	strlcpy(p->type, "669 ", sizeof(p->type));
 	strlcpy(p->MenuName, "669 Files", sizeof(p->MenuName));

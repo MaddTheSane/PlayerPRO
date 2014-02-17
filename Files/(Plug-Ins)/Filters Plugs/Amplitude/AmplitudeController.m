@@ -18,7 +18,7 @@
 		isMultipleIstanceSafe = YES;
 		
 		dispatch_block_t ampPlugBlock = ^{
-			SInt32	i = 0, temp = 0, Inc = self.amplitudeAmount;
+			int		i = 0, temp = 0, Inc = self.amplitudeAmount;
 			char	*Sample8Ptr = theData->data;
 			short	*Sample16Ptr = (short*)theData->data;
 			

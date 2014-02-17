@@ -23,45 +23,38 @@
 
 #pragma pack(push, 2)
 
-typedef struct ULTEvt
-{
-	Byte			note;
-	Byte			ins;
-	Byte			eff1;
-	Byte			eff2;
-	short		var;
+typedef struct ULTEvt {
+	Byte	note;
+	Byte	ins;
+	Byte	eff1;
+	Byte	eff2;
+	short	var;
 } ULTEvt;
 
-typedef struct ULTIns
-{
-	char		name[ 32];
-	char		dosname[ 12];
-	SInt32		loopStart;
-	SInt32		loopEnd;
-	SInt32		sizeStart;
-	SInt32		sizeEnd;
-	Byte		volume;
-	Byte		Bidi;
+typedef struct ULTIns {
+	char	name[32];
+	char	dosname[12];
+	int		loopStart;
+	int		loopEnd;
+	int		sizeStart;
+	int		sizeEnd;
+	Byte	volume;
+	Byte	Bidi;
 	short	finetune;
 } ULTIns;
 
-typedef struct ULTForm
-{
-	char				ID[ 15];
-	char             		name[ 32];
-	char             		reserved;
+typedef struct ULTForm {
+	char ID[15];
+	char name[32];
+	char reserved;
 } ULTForm;
 
-typedef struct ULTSuite
-{
-	Byte  			NOS;
-	ULTIns			*ins;
-	
-	//-----------
-	
-	Byte				pattSeq[ 256];
-	Byte				NOC;
-	Byte				NOP;
+typedef struct ULTSuite {
+	Byte	NOS;
+	ULTIns	*ins;
+	Byte	pattSeq[256];
+	Byte	NOC;
+	Byte	NOP;
 } ULTSuite;
 
 #pragma pack(pop)

@@ -158,28 +158,27 @@ static OSErr AMF2Mad( char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 		if (theMAD->partition[ i] == NULL)
 			return MADNeedMemory;
 		
-		theMAD->partition[ i]->header.size 		= (SInt32)patSize;
-		theMAD->partition[ i]->header.compMode 	= 'NONE';
+		theMAD->partition[i]->header.size		= (SInt32)patSize;
+		theMAD->partition[i]->header.compMode	= 'NONE';
 		
 		for (x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
 		
 		theMAD->partition[ i]->header.patBytes = 0;
 		theMAD->partition[ i]->header.unused2 = 0;
 		
-		for (x = 0; x < theMAD->header->numChn; x++ )
-		{
-			//	fread(&(module->patterns[t].track[i]),2,1,file);
-			READAMFFILE( &tempShort, 2);
+		for (x = 0; x < theMAD->header->numChn; x++ ) {
+			READAMFFILE(&tempShort, 2);
 		}
 	}
 	for (i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[ i] = NULL;
 	
-	for (i = 0; i < MAXTRACK; i++)
-	{
-		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+	for (i = 0; i < MAXTRACK; i++) {
+		if (i % 2 == 0)
+			theMAD->header->chanPan[i] = MAX_PANNING/4;
+		else
+			theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING/4;
 		
-		theMAD->header->chanVol[ i] = MAX_VOLUME;
+		theMAD->header->chanVol[i] = MAX_VOLUME;
 	}
 	
 	theMAD->header->generalVol		= 64;
@@ -189,64 +188,61 @@ static OSErr AMF2Mad( char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 	
 	/**** Instruments header *****/
 	
-	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
-	if (!theMAD->fid) return MADNeedMemory;
+	theMAD->fid = ( InstrData*)calloc(sizeof(InstrData), MAXINSTRU);
+	if (!theMAD->fid)
+		return MADNeedMemory;
 	
-	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
-	if (!theMAD->sample) return MADNeedMemory;
+	theMAD->sample = (sData**)calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
+	if (!theMAD->sample)
+		return MADNeedMemory;
 	
 	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
 	
-	for (i = 0; i < noIns; i++)
-	{
+	for (i = 0; i < noIns; i++) {
 		InstrData		*curIns = &theMAD->fid[ i];
 		
-		if (oldIns )
-		{
-			OLDINSTRUMENT	oi;
+		if (oldIns) {
+			OLDINSTRUMENT oi;
 			
-			READAMFFILE( &oi, sizeof( OLDINSTRUMENT));
+			READAMFFILE(&oi, sizeof(OLDINSTRUMENT));
 			
 			memcpy(curIns->name, oi.name, 32);
 			curIns->type = 0;
 			
-			if (oi.size > 0)
-			{
+			if (oi.size > 0) {
 				sData	*curData;
-				ushort oiloopstart = 0;
-				ushort oiloopend = 0;
+				ushort	oiloopstart = 0;
+				ushort	oiloopend = 0;
 				
 				curIns->numSamples = 1;
 				
-				curData = theMAD->sample[ i*MAXSAMPLE + 0] = (sData*) calloc( sizeof( sData), 1);
+				curData = theMAD->sample[i * MAXSAMPLE + 0] = (sData*)calloc(sizeof(sData), 1);
 				
-				curData->size		= Tdecode32( &oi.size);
+				curData->size		= Tdecode32(&oi.size);
 				//FIXME: were loopstart and loopend supposed to be byteswapped on PowerPC?
-				oiloopstart = Tdecode16( &oi.loopstart);
-				oiloopend = Tdecode16( &oi.loopend);
-				curData->loopBeg 	= oiloopstart;
-				curData->loopSize 	= oiloopend - oiloopstart;
-				if (oiloopend == 65535)
-				{
+				oiloopstart	= Tdecode16(&oi.loopstart);
+				oiloopend	= Tdecode16(&oi.loopend);
+				curData->loopBeg	= oiloopstart;
+				curData->loopSize	= oiloopend - oiloopstart;
+				if (oiloopend == 65535) {
 					curData->loopSize = curData->loopBeg = 0;
 				}
 				curData->vol		= oi.volume;
-				curData->c2spd		= Tdecode16( &oi.rate); //finetune[ oldMAD->fid[ i].fineTune];
+				curData->c2spd		= Tdecode16(&oi.rate); //finetune[ oldMAD->fid[ i].fineTune];
 				curData->loopType	= 0;
 				curData->amp		= 8;
 				
 				curData->relNote	= 0;
 				
-				curData->data 		= (char*)malloc( curData->size);
-				if (curData->data == NULL) return MADNeedMemory;
-			}
-			else curIns->numSamples = 0;
-		}
-		else
-		{
-			INSTRUMENT		oi;
+				curData->data 		= (char*)malloc(curData->size);
+				if (curData->data == NULL)
+					return MADNeedMemory;
+			} else
+				curIns->numSamples = 0;
+		} else {
+			INSTRUMENT oi;
 			
-			READAMFFILE( &oi, sizeof( INSTRUMENT));
+			READAMFFILE(&oi, sizeof(INSTRUMENT));
 			theAMFRead--;
 			
 			memcpy(curIns->name, oi.name, 32);
@@ -272,8 +268,9 @@ static OSErr AMF2Mad( char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 				
 				curData->relNote	= 0;
 				
-				curData->data 		= malloc( curData->size);
-				if (curData->data == NULL) return MADNeedMemory;
+				curData->data 		= malloc(curData->size);
+				if (curData->data == NULL)
+					return MADNeedMemory;
 			}
 			else
 				curIns->numSamples = 0;
@@ -288,8 +285,7 @@ static OSErr AMF2Mad( char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 			trckPtr = tempShort;
 	}
 	
-	for (t = 0; t < trckPtr; t++)
-	{
+	for (t = 0; t < trckPtr; t++) {
 		READAMFFILE(&tempShort, 2);
 		tempShort = Tdecode16(&tempShort);
 		
@@ -400,13 +396,11 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 			if (iFileRefI) {
 				sndSize = iGetEOF(iFileRefI);
 				
-				// ** MEMORY Test Start
+				// ** MEMORY Test
 				AlienFile = malloc(sndSize * 2L);
-				if (AlienFile == NULL)
+				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
-				// ** MEMORY Test End
-				
-				else {
+				} else {
 					free(AlienFile);
 					
 					AlienFile = malloc(sndSize);
@@ -428,7 +422,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI) {
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+				sndSize = 5000; // Read only 5000 first bytes for optimisation
 				
 				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
@@ -450,7 +444,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 			if (iFileRefI) {
 				info->fileSize = iGetEOF(iFileRefI);
 				
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+				sndSize = 5000; // Read only 5000 first bytes for optimisation
 				
 				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
@@ -475,4 +469,3 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 	
 	return myErr;
 }
-
