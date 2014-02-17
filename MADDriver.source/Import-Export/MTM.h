@@ -35,9 +35,9 @@ struct	MTMTrack
 struct Instru
 {
 	char	name[22];
-	SInt32	size;
-	SInt32	loopBegin;
-	SInt32	loopEnd;
+	int		size;
+	int		loopBegin;
+	int		loopEnd;
 	char	fineTune;
 	char	volume;
 	char	sampleSize;
@@ -45,9 +45,9 @@ struct Instru
 
 typedef struct MTMDef
 {
-	char			Id[ 3];
+	char			Id[3];
 	char			vers;
-	char 			songname[ 20];
+	char 			songname[20];
 	unsigned short	tracks;
 	char			patNo;
 	char			positionNo;
@@ -56,7 +56,7 @@ typedef struct MTMDef
 	char			attribute;
 	char			beats;
 	char			trackback;
-	char			voicePos[ 32];
+	char			voicePos[32];
 } MTMDef;
 
 #pragma pack(pop)

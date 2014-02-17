@@ -64,9 +64,6 @@ static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 	return noErr;
 }
 
-#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
-#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
-
 //hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
 static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
 {
@@ -156,17 +153,15 @@ static OSErr mainXI(void		*unused,
 					pth = (XMPATCHHEADER*)(theXI + 0x42);
 					
 					numSamples = *((short*)(theXI + 0x42 + sizeof(XMPATCHHEADER)));
-					InsHeader->numSamples = Tdecode16(&numSamples);
+					PPLE16(&numSamples);
+					InsHeader->numSamples = numSamples;
 					
-					pth->volfade 	= Tdecode16(&pth->volfade);
+					PPLE16(&pth->volfade);
 					
 					memcpy(InsHeader->what, pth->what, 96);
 					memcpy(InsHeader->volEnv, pth->volenv, 48);
 #ifdef __BIG_ENDIAN__
-					for (x = 0; x < 12; x++)
-					{
-						//InsHeader->volEnv[ x].pos = Tdecode16( &InsHeader->volEnv[ x].pos);	//
-						//InsHeader->volEnv[ x].val = Tdecode16( &InsHeader->volEnv[ x].val);	// 00...64
+					for (x = 0; x < 12; x++) {
 						PPLE16(&InsHeader->volEnv[x].pos);
 						PPLE16(&InsHeader->volEnv[x].val);
 					}
@@ -181,10 +176,7 @@ static OSErr mainXI(void		*unused,
 					
 					memcpy(InsHeader->pannEnv, pth->panenv, 48);
 #ifdef __BIG_ENDIAN__
-					for (x = 0; x < 12; x++)
-					{
-						//InsHeader->pannEnv[ x].pos = Tdecode16( &InsHeader->pannEnv[ x].pos);	//
-						//InsHeader->pannEnv[ x].val = Tdecode16( &InsHeader->pannEnv[ x].val);	// 00...64
+					for (x = 0; x < 12; x++) {
 						PPLE16(&InsHeader->pannEnv[x].pos);
 						PPLE16(&InsHeader->pannEnv[x].val);
 					}
@@ -207,9 +199,9 @@ static OSErr mainXI(void		*unused,
 						
 						wh = (XMWAVHEADER*)(theXI + 0x42 + 0x02 + sizeof(XMPATCHHEADER) + x * sizeof(XMWAVHEADER));
 						
-						wh->length 		= Tdecode32(&wh->length);
-						wh->loopstart 	= Tdecode32(&wh->loopstart);
-						wh->looplength 	= Tdecode32(&wh->looplength);
+						PPLE32(&wh->length);
+						PPLE32(&wh->loopstart);
+						PPLE32(&wh->looplength);
 						
 						///////////
 						
@@ -341,7 +333,7 @@ static OSErr mainXI(void		*unused,
 				memcpy(pth.what, InsHeader->what, 96);
 				memcpy(pth.volenv, InsHeader->volEnv, 48);
 				for (x = 0; x < 24; x++) {
-					pth.volenv[x] = Tdecode16(&pth.volenv[x]);
+					PPLE16(&pth.volenv[x]);
 				}
 				
 				pth.volpts	= InsHeader->volSize;
@@ -350,11 +342,11 @@ static OSErr mainXI(void		*unused,
 				pth.volbeg	= InsHeader->volBeg;
 				pth.volend	= InsHeader->volEnd;
 				pth.volfade = InsHeader->volFade;
-				pth.volfade = Tdecode16(&pth.volfade);
+				PPLE16(&pth.volfade);
 				
 				memcpy(pth.panenv, InsHeader->pannEnv, 48);
 				for (x = 0; x < 24; x++) {
-					pth.panenv[x] = Tdecode16(&pth.panenv[x]);
+					PPLE16(&pth.panenv[x]);
 				}
 				
 				pth.panpts = InsHeader->pannSize;
@@ -363,12 +355,12 @@ static OSErr mainXI(void		*unused,
 				pth.panbeg = InsHeader->pannBeg;
 				pth.panend = InsHeader->pannEnd;
 				
-				inOutCount = sizeof( XMPATCHHEADER);
+				inOutCount = sizeof(XMPATCHHEADER);
 				iWrite(inOutCount, &pth, iFileRefI);
 				
 				inOutCount = 2;
 				x = InsHeader->numSamples;
-				x = Tdecode16(&x);
+				PPLE16(&x);
 				iWrite(inOutCount, &x, iFileRefI);
 				
 				/** WRITE samples */
@@ -398,7 +390,7 @@ static OSErr mainXI(void		*unused,
 						wh.looplength /=2;
 					}
 					
-					wh.volume		= curData->vol;
+					wh.volume = curData->vol;
 					
 					wh.finetune = -128;
 					if (curData->c2spd > 8757)
@@ -418,9 +410,9 @@ static OSErr mainXI(void		*unused,
 					wh.relnote = curData->relNote;
 					strlcpy(wh.samplename, curData->name, sizeof(wh.samplename));
 					
-					wh.length 		= Tdecode32(&wh.length);
-					wh.loopstart 	= Tdecode32(&wh.loopstart);
-					wh.looplength 	= Tdecode32(&wh.looplength);
+					PPLE16(&wh.length);
+					PPLE16(&wh.loopstart);
+					PPLE16(&wh.looplength);
 					
 					inOutCount = sizeof(wh);
 					iWrite(inOutCount, &wh, iFileRefI);
@@ -444,8 +436,8 @@ static OSErr mainXI(void		*unused,
 							long	tL;
 							
 							/* Real to Delta */
-							long	oldV, newV;
-							long	xL;
+							long oldV, newV;
+							long xL;
 							
 							if (curData->stereo) {
 								for (i = 0; i < dstSize; i++) tt[ i] = tt[ i*2];
@@ -461,7 +453,7 @@ static OSErr mainXI(void		*unused,
 							}
 							
 							for (tL = 0; tL < dstSize / 2; tL++) {
-								*(tt + tL) = Tdecode16((void*)(tt + tL));
+								PPLE16((void*)(tt + tL));
 							}
 						} else {
 							/* Real to Delta */

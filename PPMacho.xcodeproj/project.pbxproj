@@ -9284,7 +9284,6 @@
 		};
 		55C358C016C42D1800FB9FA6 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
@@ -9309,7 +9308,6 @@
 		};
 		55C358C116C42D1800FB9FA6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;

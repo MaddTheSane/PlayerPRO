@@ -33,32 +33,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-#ifdef _MAC_H
-#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
-#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
-#else
-#ifdef __LITTLE_ENDIAN__
-#define Tdecode16(msg_buf) *(short*)msg_buf
-#define Tdecode32(msg_buf) *(int*)msg_buf
-#else
-
-static inline UInt16 Tdecode16( void *msg_buf)
-{
-	UInt16 toswap = *((UInt16*) msg_buf);
-	PPLE16(&toswap);
-	return toswap;
-}
-
-static inline UInt32 Tdecode32( void *msg_buf)
-{
-	UInt32 toswap = *((UInt32*) msg_buf);
-	PPLE32(&toswap);
-	return toswap;
-}
-
-#endif
-#endif
-
 #ifdef WIN32
 #define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
 #endif
@@ -422,13 +396,11 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 			if (iFileRefI) {
 				sndSize = iGetEOF(iFileRefI);
 				
-				// ** MEMORY Test Start
-				AlienFile = (Ptr)malloc(sndSize * 2L);
-				if (AlienFile == NULL)
+				// ** MEMORY Test
+				AlienFile = (Ptr)malloc(sndSize * 2);
+				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
-				// ** MEMORY Test End
-				
-				else {
+				} else {
 					free(AlienFile);
 					
 					AlienFile = (Ptr)malloc(sndSize);
