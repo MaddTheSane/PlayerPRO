@@ -64,7 +64,6 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 #pragma clang diagnostic pop
 #endif
 
-
 static inline NSURL *PPHomeURL()
 {
 	static NSURL *homeURL;

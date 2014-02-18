@@ -33,6 +33,9 @@
 #include "embeddedPlugs.h"
 #endif
 
+#define LOW(para) ((para) & 15)
+#define HI(para) ((para) >> 4)
+
 #if 0
 static void ConvertITEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
 {
