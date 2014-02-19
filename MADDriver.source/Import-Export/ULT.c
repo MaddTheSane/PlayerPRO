@@ -73,7 +73,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 	/**** Ins Num *****/
 	if (sizeof( ULTIns) != 64) //DebugStr("\pULTIns != 64");
 		return MADIncompatibleFile;
-	ULTSuite.ins = (ULTIns*) calloc( ULTSuite.NOS * sizeof(ULTIns), 1);
+	ULTSuite.ins = (ULTIns*)calloc(sizeof(ULTIns), ULTSuite.NOS);
 	memcpy(ULTSuite.ins, theULTCopy + sizeof(ULTinfo) + ULTinfo.reserved * 32 + 1, ULTSuite.NOS * sizeof(ULTIns));
 	
 	/**** Copy last infos *****/
@@ -93,7 +93,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 	strlcpy(theMAD->header->infos, "Converted by PlayerPRO ULT Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPat		= ULTSuite.NOP;
-	theMAD->header->numPointers	= 1;					// CHANGE
+	theMAD->header->numPointers	= 1; // CHANGE
 	theMAD->header->speed		= 6;
 	theMAD->header->tempo		= 125;
 	
@@ -126,16 +126,17 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 	// ********************
 	
 	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
-	if (!theMAD->fid) return MADNeedMemory;
+	if (!theMAD->fid)
+		return MADNeedMemory;
 	
-	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
-	if (!theMAD->sample) return MADNeedMemory;
+	theMAD->sample = ( sData**) calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
+	if (!theMAD->sample)
+		return MADNeedMemory;
 	
-	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
 	
-	for(i  = 0 ; i < MAXINSTRU; i++)
-	{
-		for (x = 0; x < MAXSAMPLE; x++) theMAD->sample[ i*MAXSAMPLE + x] = NULL;
+	for (i  = 0 ; i < MAXINSTRU; i++) {
+		for (x = 0; x < MAXSAMPLE; x++) theMAD->sample[i*MAXSAMPLE + x] = NULL;
 		
 		theMAD->fid[i].numSamples	= 0;
 	}
@@ -149,7 +150,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 			sData	*curData;
 			
 			curIns->numSamples	= 1;
-			curIns->volFade			= DEFAULT_VOLFADE;
+			curIns->volFade		= DEFAULT_VOLFADE;
 			
 			curData = theMAD->sample[ i*MAXSAMPLE +  0] = (sData*) calloc( sizeof( sData), 1);
 			if (curData == NULL) return MADNeedMemory;
@@ -158,7 +159,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 			PPLE32(&ULTSuite.ins[i].loopEnd);
 			PPLE32(&ULTSuite.ins[i].sizeStart);
 			PPLE32(&ULTSuite.ins[i].sizeEnd);
-			PPLE32(&ULTSuite.ins[i].finetune);
+			PPLE16(&ULTSuite.ins[i].finetune);
 			
 			curData->size		= ULTSuite.ins[i].sizeEnd - ULTSuite.ins[i].sizeStart;		// * 2 ???
 			curData->loopBeg	= ULTSuite.ins[i].loopStart;

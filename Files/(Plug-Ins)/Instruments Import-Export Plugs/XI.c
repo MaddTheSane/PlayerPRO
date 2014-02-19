@@ -410,9 +410,9 @@ static OSErr mainXI(void		*unused,
 					wh.relnote = curData->relNote;
 					strlcpy(wh.samplename, curData->name, sizeof(wh.samplename));
 					
-					PPLE16(&wh.length);
-					PPLE16(&wh.loopstart);
-					PPLE16(&wh.looplength);
+					PPLE32(&wh.length);
+					PPLE32(&wh.loopstart);
+					PPLE32(&wh.looplength);
 					
 					inOutCount = sizeof(wh);
 					iWrite(inOutCount, &wh, iFileRefI);

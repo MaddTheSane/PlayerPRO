@@ -40,7 +40,7 @@
 #define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
 #endif
 
-static inline struct MTMTrack* GetMTMCommand( short position, short whichTracks, void *PatPtr)
+static inline struct MTMTrack* GetMTMCommand(short position, short whichTracks, void *PatPtr)
 {
 	return (void*)((size_t)PatPtr + whichTracks * 192 + position * 3);
 }
@@ -158,8 +158,10 @@ static OSErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, M
 	for (i = 0; i < MAXTRACK; i++) {
 		theMAD->header->chanBus[i].copyId = i;
 		
-		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		if (i % 2 == 0)
+			theMAD->header->chanPan[i] = MAX_PANNING / 4;
+		else
+			theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING / 4;
 		
 		theMAD->header->chanVol[ i] = MAX_VOLUME;
 	}
@@ -209,7 +211,7 @@ static OSErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, M
 			curData->amp		= 8;
 			
 			curData->relNote	= 0;
-			//	for (x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
+			//for (x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
 			
 			curData->data = (Ptr)malloc(curData->size);
 			if (curData->data == NULL)
@@ -264,8 +266,8 @@ static OSErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, M
 					else
 						aCmd->note = 0xFF;
 					
-					aCmd->cmd 	= theCom->EffectCmd;
-					aCmd->arg 	= theCom->EffectArg;
+					aCmd->cmd	= theCom->EffectCmd;
+					aCmd->arg	= theCom->EffectArg;
 					aCmd->vol	= 0xFF;
 				}
 			}

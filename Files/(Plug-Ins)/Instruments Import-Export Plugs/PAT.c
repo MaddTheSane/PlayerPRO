@@ -74,7 +74,7 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 	InsHeader->numSamples = (PATHeader->LoSamp << 8) + PATHeader->HiSamp;
 	
 	// INS HEADER -- Read only the first instrument
-	PATIns = (PatInsHeader*) PATData;
+	PATIns = (PatInsHeader*)PATData;
 	
 	PPLE32(&PATIns->size);
 	PATData += 63;

@@ -78,7 +78,7 @@ static OSErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MAD
 		PPLE16(&SInfo->loopStart);
 		PPLE16(&SInfo->loopEnd);
 		
-		theInstrument[i] = (Ptr)((size_t)the669 + (size_t)OffSetToSample);
+		theInstrument[i] = (Ptr)((size_t)the669 + OffSetToSample);
 		OffSetToSample += SInfo->length;
 	}
 	
@@ -242,7 +242,7 @@ static OSErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MAD
 		theMAD->partition[i]->header.size = 64;
 		theMAD->partition[i]->header.compMode = 'NONE';
 		//TODO: dispatch this
-		for (x = 0; x < 20; x++) theMAD->partition[ i]->header.name[ x] = 0;
+		for (x = 0; x < 20; x++) theMAD->partition[i]->header.name[x] = 0;
 		theMAD->partition[i]->header.patBytes = 0;
 		theMAD->partition[i]->header.unused2 = 0;
 		
@@ -331,7 +331,6 @@ static OSErr Extract669Info(PPInfoRec *info, void *AlienFile)
 	
 	/*** Internal name ***/
 	
-	//the669->message[ 30] = '\0';
 	strlcpy(info->internalFileName, the669->message, sizeof(info->internalFileName));
 	
 	/*** Total Patterns ***/
