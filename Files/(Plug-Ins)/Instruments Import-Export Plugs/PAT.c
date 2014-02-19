@@ -203,7 +203,7 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 				tt = (short*)curData->data;
 				
 				for (tL = 0; tL < curData->size / 2; tL++) {
-					INT16((tt + tL));
+					INT16(tt + tL);
 					
 					if (signedData)
 						*(tt + tL) += 0x8000;

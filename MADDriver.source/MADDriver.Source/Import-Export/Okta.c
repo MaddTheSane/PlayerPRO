@@ -123,8 +123,7 @@ static OSErr ConvertOKTA2Mad(Ptr theOkta, long MODSize, MADMusic *theMAD, MADDri
 			case 'SAMP':
 				samps = (OktaInstru*)theOktaPos;
           		
-				for (i = 0; i * sizeof(OktaInstru) < aSect->length; i++)
-				{
+				for (i = 0; i * sizeof(OktaInstru) < aSect->length; i++) {
 					instru[i] = samps[i];
 					
 					INT32(&instru[i].length);

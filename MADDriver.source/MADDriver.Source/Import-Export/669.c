@@ -98,8 +98,7 @@ static OSErr Convert6692Mad(Ptr	AlienFile, long MODSize, MADMusic	*theMAD, MADDr
 	theMAD->header->tempo = 125;
 	theMAD->header->speed = 6;
 	theMAD->header->numPat = the669->NOP;
-	for(i=0; i<128; i++)
-	{
+	for (i = 0; i < 128; i++) {
 		theMAD->header->oPointers[i] = the669->orderList[i];
 		if (theMAD->header->oPointers[i] >= theMAD->header->numPat) theMAD->header->oPointers[i] = theMAD->header->numPat-1;
 	}
@@ -476,9 +475,8 @@ static OSErr main669(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoR
 	return myErr;
 }
 
-#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xF4, 0x42, 0xE8, 0xED, 0x0F, 0xDE, 0x48, 0x53, 0xA8, 0x75, 0xA1, 0x95, 0xE8, 0xF5, 0x10, 0x0E))
 //F442E8ED-0FDE-4853-A875-A195E8F5100E
-
+#define PLUGUUID (CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xF4, 0x42, 0xE8, 0xED, 0x0F, 0xDE, 0x48, 0x53, 0xA8, 0x75, 0xA1, 0x95, 0xE8, 0xF5, 0x10, 0x0E))
 #define PLUGMAIN main669
 #define PLUGINFACTORY SixSixNineFactory
 #include "CFPlugin-bridge.c"

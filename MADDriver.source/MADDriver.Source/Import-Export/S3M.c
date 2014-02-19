@@ -27,7 +27,7 @@
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
 
-static	Byte	LastAEffect[MAXTRACK], LastJEffect[MAXTRACK];
+static Byte LastAEffect[MAXTRACK], LastJEffect[MAXTRACK];
 
 #ifndef _SRC
 
@@ -46,10 +46,12 @@ static void ConvertS3MEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 	Byte		LoB1 = LOW(B1);
 	Byte		HiB1 = HI(B1);
 	
-	switch (B0 + 0x40)
-	{
+	switch (B0 + 0x40) {
 			// Speed
-		case 'A':	*Cmd = speedE;		*Arg = B1;	break;
+		case 'A':
+			*Cmd = speedE;
+			*Arg = B1;
+			break;
 			// Tempo
 		case 'T':	*Cmd = speedE;		*Arg = B1;	break;
 			
@@ -135,19 +137,17 @@ static void ConvertS3MEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 		case 'O':	*Cmd = offsetE;		*Arg = B1;	break;
 			
 		case 'S':		// Special Effects
-			switch (HiB1)
-		{
-			case 2:	*Cmd = extendedE;	*Arg = 5 << 4;		*Arg += LoB1;		break;	// FineTune
-			case 3:	*Cmd = extendedE;	*Arg = 4 << 4;		*Arg += LoB1;		break;	// Set Vibrato WaveForm
-			case 4:	*Cmd = extendedE;	*Arg = 7 << 4;		*Arg += LoB1;		break;	// Set Tremolo WaveForm
-			case 8:	*Cmd = extendedE;	*Arg = 8 << 4;		*Arg += LoB1;		break;	// Set Panning
-			case 0xB:	*Cmd = extendedE;	*Arg = 6 << 4;		*Arg += LoB1;		break;	// Loop pattern
-			case 0xC:	*Cmd = extendedE;	*Arg = 12 << 4;	*Arg += LoB1;		break;	// Cut sample
-			case 0xD:	*Cmd = extendedE;	*Arg = 13 << 4;	*Arg += LoB1;		break;	// Delay sample
-			case 0xE:	*Cmd = extendedE;	*Arg = 14 << 4;	*Arg += LoB1;		break;	// Delay pattern
-			default:	*Cmd = 0;		*Arg = 0;							break;
-				
-		}
+			switch (HiB1) {
+				case 2:	*Cmd = extendedE;	*Arg = 5 << 4;		*Arg += LoB1;		break;	// FineTune
+				case 3:	*Cmd = extendedE;	*Arg = 4 << 4;		*Arg += LoB1;		break;	// Set Vibrato WaveForm
+				case 4:	*Cmd = extendedE;	*Arg = 7 << 4;		*Arg += LoB1;		break;	// Set Tremolo WaveForm
+				case 8:	*Cmd = extendedE;	*Arg = 8 << 4;		*Arg += LoB1;		break;	// Set Panning
+				case 0xB:	*Cmd = extendedE;	*Arg = 6 << 4;		*Arg += LoB1;		break;	// Loop pattern
+				case 0xC:	*Cmd = extendedE;	*Arg = 12 << 4;	*Arg += LoB1;		break;	// Cut sample
+				case 0xD:	*Cmd = extendedE;	*Arg = 13 << 4;	*Arg += LoB1;		break;	// Delay sample
+				case 0xE:	*Cmd = extendedE;	*Arg = 14 << 4;	*Arg += LoB1;		break;	// Delay pattern
+				default:	*Cmd = 0;		*Arg = 0;							break;
+			}
 			break;
 			
 		case 'X':
@@ -159,8 +159,10 @@ static void ConvertS3MEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short chann
 				else *Arg = B1<<1;
 			}
 			break;
-		default:	*Cmd = 0;			*Arg = 0;		break;
-			
+		default:
+			*Cmd = 0;
+			*Arg = 0;
+			break;
 	}
 }
 
@@ -195,23 +197,22 @@ static void ConvertMADEffect(Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 		case offsetE:		*B0 = 'O' - 0x40;	*B1 = Arg;	break;
 			
 		case extendedE:
-			switch ((Arg & 0xF0) >> 4)
-		{
-			case 1:	*B0 = 'F' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
-			case 2:	*B0 = 'E' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
-				
-			case 5:	*B0 = 'S' - 0x40;	*B1 = 0x20 + (Arg & 0x0F);		break;
-				
-			case 4:	*B0 = 'S' - 0x40;	*B1 = 0x30 + (Arg & 0x0F);		break;
-			case 7:	*B0 = 'S' - 0x40;	*B1 = 0x40 + (Arg & 0x0F);		break;
-			case 6:	*B0 = 'S' - 0x40;	*B1 = 0xb0 + (Arg & 0x0F);		break;
-			case 12:	*B0 = 'S' - 0x40;	*B1 = 0xc0 + (Arg & 0x0F);		break;
-			case 13:	*B0 = 'S' - 0x40;	*B1 = 0xd0 + (Arg & 0x0F);		break;
-			case 14:	*B0 = 'S' - 0x40;	*B1 = 0xe0 + (Arg & 0x0F);		break;
-				
-			case 11:	*B0 = 'D' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
-			case 10:	*B0 = 'D' - 0x40;	*B1 = 0x0f + ((Arg & 0x0F)<<4);	break;
-		}
+			switch ((Arg & 0xF0) >> 4) {
+				case 1:	*B0 = 'F' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
+				case 2:	*B0 = 'E' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
+					
+				case 5:	*B0 = 'S' - 0x40;	*B1 = 0x20 + (Arg & 0x0F);		break;
+					
+				case 4:	*B0 = 'S' - 0x40;	*B1 = 0x30 + (Arg & 0x0F);		break;
+				case 7:	*B0 = 'S' - 0x40;	*B1 = 0x40 + (Arg & 0x0F);		break;
+				case 6:	*B0 = 'S' - 0x40;	*B1 = 0xb0 + (Arg & 0x0F);		break;
+				case 12:	*B0 = 'S' - 0x40;	*B1 = 0xc0 + (Arg & 0x0F);		break;
+				case 13:	*B0 = 'S' - 0x40;	*B1 = 0xd0 + (Arg & 0x0F);		break;
+				case 14:	*B0 = 'S' - 0x40;	*B1 = 0xe0 + (Arg & 0x0F);		break;
+					
+				case 11:	*B0 = 'D' - 0x40;	*B1 = 0xf0 + (Arg & 0x0F);		break;
+				case 10:	*B0 = 'D' - 0x40;	*B1 = 0x0f + ((Arg & 0x0F)<<4);	break;
+			}
 			break;
 	}
 }
@@ -248,28 +249,25 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 		}
 	}
 	
-	for (i = 0; i < theMAD->header->numPat;i++)
-	{
+	for (i = 0; i < theMAD->header->numPat;i++) {
 		PatternSize += 6L * theMAD->header->numChn * theMAD->partition[i]->header.size;
 		PatternSize += theMAD->partition[i]->header.size;		// byte 0 de fin de ligne
 		PatternSize += 16;
 	}
 	/********************************/
 	
-	*sndSize = 				sizeof(s3mform) +
-										theMAD->header->numPointers +
-										NoIns*2 +
-										theMAD->header->numPat*2 +
-										sizeof(s3minsform) * NoIns +
-										InstruSize +
-										PatternSize;
+	*sndSize = sizeof(s3mform) +
+	theMAD->header->numPointers +
+	NoIns*2 +
+	theMAD->header->numPat*2 +
+	sizeof(s3minsform) * NoIns +
+	InstruSize +
+	PatternSize;
 	
 	finalS3MCopy = finalS3M = MADPlugNewPtr(*sndSize, init);
 	maxfinalS3M = finalS3M + *sndSize;
-	if (finalS3M == NULL) return NULL;
-	
-	
-	
+	if (finalS3M == NULL)
+		return NULL;
 	
 	/********************************/
 	/* s3minfo -- s3minfo -- s3minfo -- s3minfo -- */
@@ -282,13 +280,17 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 		s3minfo->type			= 16;
 		s3minfo->sig2[0] = s3minfo->sig2[1] = 0;
 		
-		s3minfo->ordernum		=	theMAD->header->numPointers;		INT16(&s3minfo->ordernum);
-		s3minfo->insnum		= 	NoIns;													INT16(&s3minfo->insnum);
-		s3minfo->patnum		=	theMAD->header->numPat;						INT16(&s3minfo->patnum);
+		s3minfo->ordernum		=	theMAD->header->numPointers;
+		INT16(&s3minfo->ordernum);
+		s3minfo->insnum		= 	NoIns;
+		INT16(&s3minfo->insnum);
+		s3minfo->patnum		=	theMAD->header->numPat;
+		INT16(&s3minfo->patnum);
 		
 		s3minfo->flags			=	0;
 		s3minfo->cwtv			=	0x2013;
-		s3minfo->ffv			=	2;																INT16(&s3minfo->ffv);
+		s3minfo->ffv			=	2;
+		INT16(&s3minfo->ffv);
 		
 		
 		strncpy(s3minfo->s3msig, "SCRM", 4);
@@ -302,8 +304,12 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 		
 		for (i = 0; i < 32; i++) s3minfo->chanset[i] = 255;
 		
-		if (theMAD->header->numChn < 32) for (i = 0; i < theMAD->header->numChn; i++) s3minfo->chanset[i] = i;
-		else for (i = 0; i < 32; i++) s3minfo->chanset[i] = i;
+		if (theMAD->header->numChn < 32)
+			for (i = 0; i < theMAD->header->numChn; i++)
+				s3minfo->chanset[i] = i;
+		else
+			for (i = 0; i < 32; i++)
+				s3minfo->chanset[i] = i;
 		
 		finalS3MCopy += 96;
 	}
@@ -315,11 +321,10 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 		unsigned char	*orders;
 		
 		orders = (unsigned char *) finalS3MCopy;
-		for (i = 0; i < theMAD->header->numPointers; i++)
-		{
+		for (i = 0; i < theMAD->header->numPointers; i++) {
 			orders[i] = theMAD->header->oPointers[i];
 			
-		//	INT16(&orders[i]);
+			//INT16(&orders[i]);
 		}
 		finalS3MCopy += theMAD->header->numPointers;
 	}
@@ -341,7 +346,7 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 		parappat = (unsigned short *) finalS3MCopy;
 		
 		for (i = 0; i < theMAD->header->numPat; i++) parappat[i] = 0;
-		finalS3MCopy += theMAD->header->numPat*2L;
+		finalS3MCopy += theMAD->header->numPat * 2;
 	}
 	
 	/*********************************/
@@ -405,9 +410,7 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 			ins[i]->inssig[1]				=	'C';
 			ins[i]->inssig[2]				=	'R';
 			ins[i]->inssig[3]				=	'S';
-		}
-		else
-		{
+		} else {
 			parapins[i] =  (16L + finalS3MCopy - finalS3M) / 16L;
 			finalS3MCopy = finalS3M + parapins[i]*16L;
 			INT16(&parapins[i]);
@@ -420,21 +423,22 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 			strlcpy((Ptr) ins[i]->insdosname, theMAD->fid[i].name, sizeof(ins[i]->insdosname));
 			ins[i]->memsegh			=	0;
 			ins[i]->memsegl			=	0;
-			ins[i]->inslength			=	0;
-			ins[i]->insloopbeg			=	0;
-			ins[i]->insloopend			=	0;
-			ins[i]->insvol				=	0;
-			ins[i]->insdsk				=	0;
-			ins[i]->inspack				=	0;
+			ins[i]->inslength		=	0;
+			ins[i]->insloopbeg		=	0;
+			ins[i]->insloopend		=	0;
+			ins[i]->insvol			=	0;
+			ins[i]->insdsk			=	0;
+			ins[i]->inspack			=	0;
 			
-			ins[i]->insflags			= 	0;
+			ins[i]->insflags		= 	0;
 			
-			ins[i]->c2spd				=	NOFINETUNE;						INT32(&ins[i]->c2spd);
+			ins[i]->c2spd			=	NOFINETUNE;
+			INT32(&ins[i]->c2spd);
 			for (x = 0; x < 4; x++)		ins[i]->inssig2[x] = 0;
-			ins[i]->insgvspos			=	256;
-			ins[i]->insint512			=	0;
-			ins[i]->insintlastused		=	0;
-			strlcpy((Ptr) ins[i]->insname, theMAD->fid[i].name, 28);
+			ins[i]->insgvspos		=	256;
+			ins[i]->insint512		=	0;
+			ins[i]->insintlastused	=	0;
+			strlcpy((Ptr)ins[i]->insname, theMAD->fid[i].name, 28);
 		}
 		/**/
 		
@@ -460,8 +464,6 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, long *sndSi
 			ins[i]->memsegh = (long) (tempL &0x00FF0000)>>16L;
 			
 			finalS3MCopy = finalS3M + tempL*16L;
-			
-		//	if (finalS3MCopy + curData->size >= maxfinalS3M) Debugger();
 			
 			BlockMoveData(curData->data, finalS3MCopy, curData->size);
 			
