@@ -289,7 +289,7 @@ end:
 	@try {
 		NSData *nameData = [tmpVal.internalFileName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 		if (!nameData || nameData.length == 0) {
-			bzero(theInfo->internalFileName, sizeof(theInfo->internalFileName));
+			memset(theInfo->internalFileName, 0, sizeof(theInfo->internalFileName));
 		} else {
 			char fileNameInt[60] = {0};
 			[nameData getBytes:fileNameInt length:MIN(nameData.length, (sizeof(fileNameInt)))];
@@ -303,7 +303,7 @@ end:
 		theInfo->fileSize = [[tmpVal.musicWrapper fileAttributes][NSFileSize] longValue];
 	}
 	@catch (NSException *exception) {
-		bzero(theInfo, sizeof(PPInfoRec));
+		memset(theInfo, 0, sizeof(PPInfoRec));
 		theErr = MADIncompatibleFile;
 	}
 	@finally {

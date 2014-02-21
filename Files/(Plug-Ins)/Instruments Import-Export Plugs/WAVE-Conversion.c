@@ -134,25 +134,22 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *l
 	}
 	
 	{
-		*sndSize = WAVERsrc->dataSize;
+		unsigned short *tt;
 		
+		*sndSize = WAVERsrc->dataSize;
 		memmove(WAVERsrc, WAVERsrc->theData, *sndSize);
 		WAVERsrc = realloc(WAVERsrc, *sndSize);
 		
-		switch( *sampleSize)
-		{
+		switch (*sampleSize) {
 			case 8:
 				ConvertInstrumentIn((Byte*)WAVERsrc, *sndSize);
 				break;
 				
 			case 16:
-			{
-				unsigned short *tt = (unsigned short*)WAVERsrc;
-				
-				dispatch_apply((*sndSize)/2, dispatch_get_global_queue(0, 0), ^(size_t i) {
+				tt = (unsigned short*)WAVERsrc;
+				dispatch_apply((*sndSize) / 2, dispatch_get_global_queue(0, 0), ^(size_t i) {
 					tt[i] = shrtswap(tt[i]);
 				});
-			}
 				break;
 		}
 	}

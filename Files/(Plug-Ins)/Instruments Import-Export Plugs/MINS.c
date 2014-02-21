@@ -6,7 +6,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 
-static OSErr TestMINS(InstrData *CC)
+static inline OSErr TestMINS(InstrData *CC)
 {
 	if (CC->type == 0 && CC->numSamples >= 0 && CC->numSamples < MAXSAMPLE)
 		return noErr;
@@ -128,7 +128,6 @@ static OSErr mainMINs(void			*unused,
 			} else
 				myErr = MADReadingErr;
 			CFRelease(readStream);
-			
 			break;
 			
 		case MADPlugTest:
@@ -161,7 +160,6 @@ static OSErr mainMINs(void			*unused,
 			} else
 				myErr = MADReadingErr;
 			CFRelease(readStream);
-			
 			break;
 			
 		case MADPlugExport:
@@ -214,7 +212,6 @@ static OSErr mainMINs(void			*unused,
 			} else
 				myErr = MADWritingErr;
 			CFRelease(writeStream);
-			
 			break;
 			
 		default:
