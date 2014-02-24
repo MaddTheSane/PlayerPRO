@@ -248,13 +248,13 @@ static OSErr DecompressSample(short bits, Ptr reader, long length, Ptr destPtr)	
 {
 	int				stodo/*, t, u*/;
 	int				result,c_block=0;	/* compression bytes until next block */
-	ITPACK			status;
-	unsigned short	incnt;
+	ITPACK			status = {0};
+	unsigned short	incnt = 0;
 	
-	if (bits == 16) length/=2;
+	if (bits == 16)
+		length /= 2;
 	
-	while (length)
-	{
+	while (length) {
 		stodo=(length<SLBUFSIZE)?length:SLBUFSIZE;
 		
 		if (!c_block)
@@ -1162,7 +1162,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, long MODSize, MADMusic *theMAD, MADDriverS
 	for (i = 0; i < MAXPATTERN; i++) theMAD->partition[i] = NULL;
 	for (i = 0; i < theMAD->header->numPat ; i++)
 	{
-		ITPatForm		*curITPat;
+		ITPatForm		*curITPat = NULL;
 		
 		if (ITinfo.parappat[i])
 		{

@@ -69,28 +69,32 @@ Boolean GetMetadataForFile(void* thisInterface,
 	}
 	
 	{
-		char		type[ 5];
+		char		type[5];
 		OSType		info;
 		CFStringRef ostypes;
 		//Try to get the OSType of the UTI.
 		ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
 		
 		info = UTGetOSTypeFromString(ostypes);
-		CFRelease(ostypes);
-		if (!info) goto fail1;
+		if (ostypes)
+			CFRelease(ostypes);
+		
+		if (!info)
+			goto fail1;
 		
 		
-		OSType2Ptr( info, type);
+		OSType2Ptr(info, type);
 		//check to see if there is a
-		if( MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
-		{
+		if( MADPlugAvailable(MADLib, type)) {
 			CFURLRef tempRef = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, FALSE);
 			OSErr err = noErr;
-			err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, info, tempRef);
+			err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, type, tempRef);
 			CFRelease(tempRef);
-			if(err != noErr) goto fail1;
+			if(err != noErr)
+				goto fail1;
 			
-		} else goto fail1;
+		} else
+			goto fail1;
 		//Set the title metadata
 		CFStringRef title = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->header->name, kCFStringEncodingMacRoman); //TODO: Check for other encodings?
 		CFDictionarySetValue(attributes, kMDItemTitle, title);
@@ -99,9 +103,9 @@ Boolean GetMetadataForFile(void* thisInterface,
 	
 	{
 		//Set duration metadata
-		MADAttachDriverToMusic( MADDriver, MADMusic1, NULL);
+		MADAttachDriverToMusic(MADDriver, MADMusic1, NULL);
 		long fT, cT;
-		MADGetMusicStatus( MADDriver, &fT, &cT);	// Some infos about current music
+		MADGetMusicStatus(MADDriver, &fT, &cT);
 		double fTd = fT / 60.0;
 		
 		CFNumberRef duration = CFNumberCreate(kCFAllocatorDefault, kCFNumberDoubleType, &fTd);
@@ -110,11 +114,10 @@ Boolean GetMetadataForFile(void* thisInterface,
 	}
 	
 	{
-		CFMutableArrayRef InstruArray = CFArrayCreateMutable(kCFAllocatorDefault, MAXINSTRU * MAXSAMPLE, &kCFTypeArrayCallBacks);
+		CFMutableArrayRef InstruArray = CFArrayCreateMutable(kCFAllocatorDefault, MAXINSTRU * (MAXSAMPLE + 1), &kCFTypeArrayCallBacks);
 		int	i;
 
-		for( i = 0; i < MAXINSTRU ; i++)
-		{
+		for (i = 0; i < MAXINSTRU ; i++) {
 			InstrData *tempData = &MADMusic1->fid[i];
 			
 			CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, tempData->name, kCFStringEncodingMacRoman);//TODO: check for other encodings?
@@ -142,10 +145,8 @@ Boolean GetMetadataForFile(void* thisInterface,
 	{
 		CFMutableArrayRef PatArray = CFArrayCreateMutable(kCFAllocatorDefault, MAXPATTERN, &kCFTypeArrayCallBacks);
 		int i;
-		for( i = 0; i < MAXPATTERN; i++)
-		{
-			if (MADMusic1->partition != NULL && MADMusic1->partition[i] != NULL)
-			{
+		for (i = 0; i < MAXPATTERN; i++) {
+			if (MADMusic1->partition != NULL && MADMusic1->partition[i] != NULL) {
 				CFStringRef temp = CFStringCreateWithCString(kCFAllocatorDefault, MADMusic1->partition[i]->header.name, kCFStringEncodingMacRoman);//TODO: check for other encodings?
 				if (!(CFEqual(CFSTR(""), temp))) {
 					CFArrayAppendValue(PatArray, temp);
@@ -158,8 +159,8 @@ Boolean GetMetadataForFile(void* thisInterface,
 		CFRelease(PatArray);
 	}
 	
-	MADCleanDriver( MADDriver);
-	MADDisposeMusic( &MADMusic1, MADDriver);	// Dispose the current music
+	MADCleanDriver(MADDriver);
+	MADDisposeMusic(&MADMusic1, MADDriver);		// Dispose the current music
 	MADStopDriver(MADDriver);					// Stop driver interrupt function
 	MADDisposeDriver(MADDriver);				// Dispose music driver
 	MADDisposeLibrary(MADLib);					// Close music library
@@ -169,6 +170,5 @@ fail1:
 	MADStopDriver(MADDriver);				// Stop driver interrupt function
 	MADDisposeDriver(MADDriver);			// Dispose music driver
 	MADDisposeLibrary(MADLib);				// Close music library
-	
     return FALSE;
 }
