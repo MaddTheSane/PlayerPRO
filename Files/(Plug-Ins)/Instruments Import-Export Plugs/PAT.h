@@ -47,7 +47,7 @@ typedef struct _LayerHeader
 
 typedef struct _PatSampHeader
 {
-	char			name[ 7];
+	char			name[7];
 	Byte			fractions;
 	SInt32			size;
 	SInt32			startLoop;

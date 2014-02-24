@@ -57,6 +57,8 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 
 @interface PPApp_AppDelegate ()
 @property (nonatomic, strong) PPLibrary *madLib;
+@property (strong, readwrite) NSMutableArray *thePPColors;
+@property (strong) NSMutableArray *exportedObjects;
 @end
 
 @implementation PPApp_AppDelegate
@@ -66,6 +68,11 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 @synthesize trackerDict = _trackerDict;
 @synthesize window;
 @synthesize madLib;
+@synthesize aboutPlugInMenu;
+@synthesize musicExportMenu;
+@synthesize newInstrumentMenu;
+@synthesize instrumentExportMenu;
+
 - (void)setMadLib:(PPLibrary *)madLibb
 {
 	madLib = madLibb;
@@ -345,6 +352,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 	isQuitting = NO;
 	PPRegisterDebugFunc(CocoaDebugStr);
 	self.madLib = [[PPLibrary alloc] init];
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
 	filterHandler = [[PPFilterPlugHandler alloc] init];
 	digitalHandler = [[PPDigitalPlugHandler alloc] init];
@@ -369,6 +377,12 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 			[musicExportMenu addItem:mi];
 		}
 	}
+	
+	self.thePPColors = [[NSMutableArray alloc] initWithCapacity:96];
+#define PPCOLOR(val) [_thePPColors addObject:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor ## val]]]
+	PPCOLORPOPULATE();
+#undef PPCOLOR
+	self.exportedObjects = [[NSMutableArray alloc] init];
 	
 	plugInInfos = [[NSMutableArray alloc] init];
 	[self updatePlugInInfoMenu];

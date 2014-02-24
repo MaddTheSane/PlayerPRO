@@ -23,12 +23,6 @@ extern __weak PPLibrary *globalMadLib;
 @interface PPApp_AppDelegate : NSDocumentController <NSApplicationDelegate>
 {
 	NSMutableArray			*plugInInfos;
-	IBOutlet NSMenu			*aboutPlugInMenu;
-	
-	IBOutlet NSMenu			*musicExportMenu;
-	
-	IBOutlet NSMenu			*newInstrumentMenu;
-	IBOutlet NSMenu			*instrumentExportMenu;
 	
 	PPPreferences			*preferences;
 	PPInstrumentPlugHandler	*instrumentImporter;
@@ -37,13 +31,20 @@ extern __weak PPLibrary *globalMadLib;
 	
 	BOOL isQuitting;
 }
-@property (readonly, strong) NSDictionary *trackerDict;
-@property (readonly, strong) NSArray *trackerUTIs;
+@property (strong, readonly) NSMutableArray *thePPColors;
+@property (strong, readonly) NSDictionary *trackerDict;
+@property (strong, readonly) NSArray *trackerUTIs;
 @property (strong, readonly) PPInstrumentPlugHandler *instrumentPlugHandler;
 @property (strong, readonly) PPDigitalPlugHandler *digitalHandler;
 @property (strong, readonly) PPFilterPlugHandler *filterHandler;
 
+@property (weak) IBOutlet NSMenu *aboutPlugInMenu;
+@property (weak) IBOutlet NSMenu *musicExportMenu;
+@property (weak, getter = getNewInstrumentMenu) IBOutlet NSMenu *newInstrumentMenu;
+@property (weak) IBOutlet NSMenu *instrumentExportMenu;
+
 @property (weak) IBOutlet NSPanel *window;
+
 - (IBAction)showPreferences:(id)sender;
 - (IBAction)openFile:(id)sender;
 

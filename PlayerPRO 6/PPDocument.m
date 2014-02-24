@@ -134,13 +134,15 @@
 {
 	self.theMusic = [[PPMusicObjectWrapper alloc] initWithFileWrapper:fileWrapper];
 	if (self.theMusic) {
-		if (outError)
+		if (outError) {
 			*outError = nil;
+		}
 		
 		return YES;
 	} else {
-		if (outError)
+		if (outError) {
 			*outError = CreateErrorFromMADErrorType(MADReadingErr);
+		}
 		
 		return NO;
 	}
@@ -186,7 +188,6 @@
 		[[NSAlert alertWithError:CreateErrorFromMADErrorType(returnerr)] beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSModalResponse returnCode) {
 			;//Currently, do nothing
 		}];
-		//return;
 	}
 }
 
@@ -498,7 +499,7 @@
 						OSErr theErr = [_theMusic exportMusicToURL:theURL];
 						[_theDriver endExport];
 						return theErr;
-
+						
 					}];
 					[[NSApp delegate] addExportObject:expObj];
 				} else {
@@ -562,12 +563,14 @@
 	[self.editorsTab selectTabViewItemWithIdentifier:@"Wave"];
 }
 
-- (IBAction)okayExportSettings:(id)sender {
+- (IBAction)okayExportSettings:(id)sender
+{
 	[NSApp endSheet:self.exportWindow returnCode:NSAlertDefaultReturn];
 	[self.exportWindow close];
 }
 
-- (IBAction)cancelExportSettings:(id)sender {
+- (IBAction)cancelExportSettings:(id)sender
+{
 	[NSApp endSheet:self.exportWindow returnCode:NSAlertAlternateReturn];
 	[self.exportWindow close];
 }

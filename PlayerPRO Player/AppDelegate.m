@@ -85,7 +85,6 @@ static NSInteger selMusFromList = -1;
 - (void)musicListContentsDidMove;
 - (BOOL)musicListWillChange;
 - (void)musicListDidChange;
-- (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to;
 @end
 
 @implementation AppDelegate
@@ -98,6 +97,7 @@ static NSInteger selMusFromList = -1;
 @synthesize isQuitting;
 @synthesize trackerUTIs = _trackerUTIs;
 @synthesize trackerDict = _trackerDict;
+
 - (NSDictionary *)trackerDict
 {
 	if (!_trackerDict || [_trackerDict count] != [madLib pluginCount]) {
@@ -433,12 +433,10 @@ static NSInteger selMusFromList = -1;
 {
 	NSInteger tag = [sender tag];
 	[madDriver beginExport];
+	NSSavePanel *savePanel = [NSSavePanel savePanel];
 	
 	switch (tag) {
-		case -1:
-			//AIFF
-		{
-			NSSavePanel *savePanel = [NSSavePanel savePanel];
+		case -1: //AIFF
 			[savePanel setAllowedFileTypes:@[AVFileTypeAIFF]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
@@ -473,13 +471,9 @@ static NSInteger selMusFromList = -1;
 			} else {
 				[madDriver endExport];
 			}
-		}
 			break;
 			
-		case -2:
-			//MP4
-		{
-			NSSavePanel *savePanel = [NSSavePanel savePanel];
+		case -2: //MP4
 			[savePanel setAllowedFileTypes:@[@"com.apple.m4a-audio"]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
@@ -592,13 +586,9 @@ static NSInteger selMusFromList = -1;
 					[madDriver endExport];
 			} else
 				[madDriver endExport];
-		}
 			break;
 			
-			case -3:
-			// wave
-		{
-			NSSavePanel *savePanel = [NSSavePanel savePanel];
+		case -3: // wave
 			[savePanel setAllowedFileTypes:@[AVFileTypeWAVE]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
@@ -690,11 +680,9 @@ return; \
 					[madDriver endExport];
 			} else
 				[madDriver endExport];
-		}
 			break;
 			
 		default:
-		{
 			if (tag > madLib.pluginCount || tag < 0) {
 				NSBeep();
 				[madDriver endExport];
@@ -704,7 +692,6 @@ return; \
 				
 				return;
 			}
-			NSSavePanel *savePanel = [NSSavePanel savePanel];
 			[savePanel setAllowedFileTypes:[madLib pluginAtIndex:tag].UTItypes];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
@@ -735,18 +722,19 @@ return; \
 					}
 				}
 			}
-		}
 			[madDriver endExport];
 			break;
 	}
 }
 
-- (IBAction)okayExportSettings:(id)sender {
+- (IBAction)okayExportSettings:(id)sender
+{
 	[NSApp stopModalWithCode:NSAlertDefaultReturn];
 	[self.exportWindow close];
 }
 
-- (IBAction)cancelExportSettings:(id)sender {
+- (IBAction)cancelExportSettings:(id)sender
+{
 	[NSApp stopModalWithCode:NSAlertAlternateReturn];
 	[self.exportWindow close];
 }
@@ -1297,7 +1285,7 @@ enum PPMusicToolbarTypes {
 	NSOpenPanel *panel = [NSOpenPanel openPanel];
 	NSDictionary *playlistDict = @{@"PlayerPRO Music List" : @[PPMusicListUTI],
 								   @"PlayerPRO Old Music List" : @[PPOldMusicListUTI]};
-		
+	
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:self.trackerDict playlistDictionary:playlistDict instrumentDictionary:nil additionalDictionary:nil];
 	[av setupDefaults];
 	av.allowsMultipleSelectionOfTrackers = YES;
@@ -1341,7 +1329,7 @@ enum PPMusicToolbarTypes {
 - (IBAction)nextButtonPressed:(id)sender
 {
 	NSError *err;
-
+	
 	if (currentlyPlayingIndex.index + 1 < [musicList countOfMusicList]) {
 		currentlyPlayingIndex.index++;
 		[self selectCurrentlyPlayingMusic];
@@ -1401,7 +1389,8 @@ enum PPMusicToolbarTypes {
 	}
 }
 
-- (IBAction)pauseButtonPressed:(id)sender {
+- (IBAction)pauseButtonPressed:(id)sender
+{
 	if (self.music) {
 		if (self.paused) {
 			[madDriver play];
@@ -1461,19 +1450,6 @@ badTracker:
 	[musicPlugType setStringValue:PPDoubleDash];
 	[musicSignature setStringValue:PPDoubleDash];
 	[fileLocation setStringValue:PPDoubleDash];
-}
-
-- (void)moveMusicAtIndex:(NSUInteger)from toIndex:(NSUInteger)to
-{
-	PPMusicListObject *obj = [musicList objectInMusicListAtIndex:from];
-	[self willChangeValueForKey:kMusicListKVO];
-	[musicList removeObjectInMusicListAtIndex:from];
-	if (to > from) {
-		to--;
-	}
-	[musicList insertObject:obj inMusicListAtIndex:to];
-	[self didChangeValueForKey:kMusicListKVO];
-	[self musicListContentsDidMove];
 }
 
 - (void)musicListDidChange
@@ -1596,7 +1572,7 @@ badTracker:
 		NSArray* acceptedTypes = self.trackerUTIs;
 		NSArray* urls = [pb readObjectsForClasses:@[[NSURL class]]
 										  options:@{NSPasteboardURLReadingFileURLsOnlyKey : @YES,
-												    NSPasteboardURLReadingContentsConformToTypesKey : acceptedTypes}];
+													NSPasteboardURLReadingContentsConformToTypesKey : acceptedTypes}];
 		
 		if ([urls count] > 0) {
 			result = NSDragOperationCopy;
@@ -1627,7 +1603,7 @@ badTracker:
 			currentIndex = [dragIndexSet indexGreaterThanIndex:currentIndex];
 		}
 		[self willChangeValueForKey:kMusicListKVO];
-
+		
 		NSArray *selArray = [musicList arrayOfObjectsInMusicListAtIndexes:dragIndexSet];
 		[musicList removeObjectsInMusicListAtIndexes:dragIndexSet];
 		[musicList insertObjects:selArray inMusicListAtIndex:row - minRow];

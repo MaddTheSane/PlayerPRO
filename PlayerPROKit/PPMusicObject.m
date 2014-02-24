@@ -318,15 +318,14 @@ end:
 	if (self.filePath) {
 		copyWrap.filePath = self.filePath;
 	}
-	{
-		copyWrap.madInfo = madInfo;
-		copyWrap.internalFileName = internalFileName;
-		copyWrap.madAuthor = _madAuthor;
-		copyWrap.madType = madType;
-		copyWrap.instruments = [[NSMutableArray alloc] initWithArray:_instruments copyItems:YES];
-		copyWrap.patterns = [[NSMutableArray alloc] initWithArray:_patterns copyItems:YES];
-		[copyWrap syncMusicDataTypes];
-	}
+	
+	copyWrap.madInfo = madInfo;
+	copyWrap.internalFileName = internalFileName;
+	copyWrap.madAuthor = _madAuthor;
+	copyWrap.madType = madType;
+	copyWrap.instruments = [[NSMutableArray alloc] initWithArray:_instruments copyItems:YES];
+	copyWrap.patterns = [[NSMutableArray alloc] initWithArray:_patterns copyItems:YES];
+	[copyWrap syncMusicDataTypes];
 	return copyWrap;
 }
 
