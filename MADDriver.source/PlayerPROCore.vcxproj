@@ -109,6 +109,7 @@
     <ClCompile Include="MyDebugStr.c" />
     <ClCompile Include="OutPut8.c" />
     <ClCompile Include="realft.c" />
+    <ClCompile Include="stub-VSTPlugIn.c" />
     <ClCompile Include="TickRemover.c" />
     <ClCompile Include="Win-DirectSound.c" />
     <ClCompile Include="Win-PlugImport.c" />
@@ -122,6 +123,7 @@
     <ClInclude Include="PPPrivate.h" />
     <ClInclude Include="RDriver.h" />
     <ClInclude Include="RDriverInt.h" />
+    <ClInclude Include="VSTFunctions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
