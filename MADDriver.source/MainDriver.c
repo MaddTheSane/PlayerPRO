@@ -38,6 +38,10 @@ typedef void *CFReadStreamRef;
 
 ///////////////////////////////
 
+#ifdef WIN32
+#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
+#endif
+
 typedef enum InputType {
 	MADFileType = 1,
 	MADCFReadStreamType,
