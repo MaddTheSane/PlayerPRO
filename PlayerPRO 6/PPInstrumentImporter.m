@@ -67,7 +67,7 @@
 			CFIndex		PlugNums;
 			CFArrayRef	somePlugs;
 			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, BRIDGE(CFURLRef, aPlugLoc), CFSTR("plugin"));
-			PlugNums = CFArrayGetCount( somePlugs );
+			PlugNums = CFArrayGetCount(somePlugs);
 			if (PlugNums > 0) {
 				for (x = 0; x < PlugNums; x++) {
 					@autoreleasepool {
@@ -153,7 +153,7 @@
 - (OSErr)callInstumentPlugIn:(PPInstrumentImporterObject*)thePlug order:(OSType)theOrd instrument:(short)ins sample:(short*)samp URL:(NSURL*)theURL
 {
 	plugInfo.fileType = [thePlug type];
-	return [thePlug importInstrument:theURL instrumentDataReference:&(*curMusic)->fid[ ins] sampleDataReference:&(*curMusic)->sample[ (*curMusic)->fid[ ins].firstSample] instrumentSample:samp function:theOrd plugInfo:&plugInfo];
+	return [thePlug importInstrument:theURL instrumentDataReference:&(*curMusic)->fid[ins] sampleDataReference:&(*curMusic)->sample[(*curMusic)->fid[ins].firstSample] instrumentSample:samp function:theOrd plugInfo:&plugInfo];
 }
 
 - (OSErr)exportInstrumentOfType:(OSType)theType instrument:(short)ins sample:(short*)samp URL:(NSURL*)theURL

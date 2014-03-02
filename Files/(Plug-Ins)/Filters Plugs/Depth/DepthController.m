@@ -18,7 +18,7 @@
 		isMultipleIstanceSafe = YES;
 		
 		dispatch_block_t tmp = ^{
-			SInt32	i, temp, Inc = self.depthAmmount;
+			int		i, temp, Inc = self.depthAmmount;
 			char	*Sample8Ptr = (char*)theData->data;
 			short	*Sample16Ptr = (short*)theData->data;
 			

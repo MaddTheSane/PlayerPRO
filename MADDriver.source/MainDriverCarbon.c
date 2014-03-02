@@ -12,11 +12,11 @@
 
 OSErr MADLoadMusicFSRef(MADLibrary *lib, MADMusic **music, char *plugType, FSRefPtr theRef)
 {
+	CFURLRef tempURL;
+	OSErr returnErr = noErr;
 	if (theRef == NULL)
 		return MADParametersErr;
 	
-	CFURLRef tempURL;
-	OSErr returnErr = noErr;
 	tempURL = CFURLCreateFromFSRef(kCFAllocatorDefault, theRef);
 	returnErr = MADLoadMusicCFURLFile(lib, music, plugType, tempURL);
 	CFRelease(tempURL);
@@ -28,10 +28,10 @@ OSErr MADLoadMusicFSpFile(MADLibrary *lib, MADMusic **music, char *plugType, FSS
 #ifdef __LP64__
 	return MADOrderNotImplemented;
 #else
+	FSRef tempRef;
 	if (theSpec == NULL)
 		return MADParametersErr;
 	
-	FSRef tempRef;
 	FSpMakeFSRef(theSpec, &tempRef);
 	return MADLoadMusicFSRef(lib, music, plugType, &tempRef);
 #endif
@@ -39,10 +39,10 @@ OSErr MADLoadMusicFSpFile(MADLibrary *lib, MADMusic **music, char *plugType, FSS
 
 OSErr MADMusicIdentifyFSRef(MADLibrary *lib, char *type, FSRefPtr theRef)
 {
+	CFURLRef tempURL;
 	if (theRef == NULL)
 		return MADParametersErr;
 
-	CFURLRef tempURL;
 	OSErr returnErr = noErr;
 	tempURL = CFURLCreateFromFSRef(kCFAllocatorDefault, theRef);
 	returnErr = MADMusicIdentifyCFURL(lib, type, tempURL);
@@ -55,10 +55,10 @@ OSErr MADMusicIdentifyFSpFile(MADLibrary *lib, char *type, FSSpecPtr theSpec)
 #ifdef __LP64__
 	return MADOrderNotImplemented;
 #else
+	FSRef tempRef;
 	if (theSpec == NULL)
 		return MADParametersErr;
 	
-	FSRef tempRef;
 	FSpMakeFSRef(theSpec, &tempRef);
 	return MADMusicIdentifyFSRef(lib, type, &tempRef);
 #endif

@@ -45,9 +45,9 @@ static long		MADpos[MAXFILES];
 static short	MADcur = 0;
 static Ptr		MIDIGenPtr = NULL;
 
-short MADopen( void)
+short MADopen(void)
 {
-	MADpos[ MADcur] = 0;
+	MADpos[MADcur] = 0;
 	MADcur++;
 	
 	if (MADcur >= MAXFILES)
@@ -56,15 +56,15 @@ short MADopen( void)
 	return MADcur-1;
 }
 
-short MADread( short id, Ptr dst, long size)
+short MADread(short id, Ptr dst, long size)
 {
-	if (MADpos[ id] >= GetPtrSize(MIDIGenPtr))
+	if (MADpos[id] >= GetPtrSize(MIDIGenPtr))
 		return 0;
 	
 	if (MADpos[id] + size >= GetPtrSize(MIDIGenPtr))
-		size = GetPtrSize( MIDIGenPtr) - MADpos[ id];
+		size = GetPtrSize(MIDIGenPtr) - MADpos[id];
 	
-	BlockMoveData(MIDIGenPtr + MADpos[ id], dst, size);
+	BlockMoveData(MIDIGenPtr + MADpos[id], dst, size);
 	
 	MADpos[id] += size;
 	
@@ -88,9 +88,9 @@ short MADseek(short id, long size, short mode)
 			break;
 	}
 	
-	if (MADpos[ id] < 0)
+	if (MADpos[id] < 0)
 		return -1;
-	if (MADpos[ id] >= GetPtrSize(MIDIGenPtr))
+	if (MADpos[id] >= GetPtrSize(MIDIGenPtr))
 		return -1;
 	
 	return 0;

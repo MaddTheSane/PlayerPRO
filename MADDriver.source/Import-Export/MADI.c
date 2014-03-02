@@ -248,8 +248,8 @@ OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *ini
 			inOutCount = sizeof(oldPatHeader) + oldMAD->numChn * tempPatHeader.size * sizeof(oldCmd);
 		}
 		
-		tempPat = (struct oldPatData*) malloc( inOutCount);
-		if (tempPat == NULL) //DebugStr("\pMemory Prob1");
+		tempPat = (struct oldPatData*)malloc(inOutCount);
+		if (tempPat == NULL)
 			return MADNeedMemory;
 		
 		memcpy(tempPat, MADPtr + OffSetToSample, inOutCount);
@@ -271,10 +271,10 @@ OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *ini
 		if (theMAD->partition[i] == NULL)
 			return MADNeedMemory;
 		
-		theMAD->partition[i]->header.size 		= tempPat->header.size;
-		theMAD->partition[i]->header.compMode 	= 'NONE';
+		theMAD->partition[i]->header.size		= tempPat->header.size;
+		theMAD->partition[i]->header.compMode	= 'NONE';
 		
-		memcpy(theMAD->partition[ i]->header.name, tempPat->header.name, 20);
+		memcpy(theMAD->partition[i]->header.name, tempPat->header.name, 20);
 		
 		theMAD->partition[i]->header.patBytes = 0;
 		theMAD->partition[i]->header.unused2 = 0;
@@ -304,16 +304,16 @@ OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *ini
 	
 	/**** Instruments & Samples header *****/
 	
-	theMAD->fid = ( InstrData*) calloc(sizeof(InstrData), MAXINSTRU);
+	theMAD->fid = (InstrData*) calloc(sizeof(InstrData), MAXINSTRU);
 	if (!theMAD->fid) return MADNeedMemory;
 	
-	theMAD->sample = ( sData**) calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
+	theMAD->sample = (sData**) calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
 	if (!theMAD->sample)
 		return MADNeedMemory;
 	
 	for (i = 0; i < oldMAD->numInstru; i++) {
 		struct oldInstrData		oldIns;
-		//InstrData	*curIns = &theMAD->fid[ i];
+		//InstrData	*curIns = &theMAD->fid[i];
 		short		d;
 		
 		/** Lecture des instruments **/
@@ -350,7 +350,6 @@ OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *ini
 	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(0, 0), ^(size_t ii) {
 		theMAD->fid[ii].firstSample = ii * MAXSAMPLE;
 	});
-	
 #else
 	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
 #endif
@@ -432,8 +431,8 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
 	
 	/*** Internal name ***/
 	
-	//myMOD->name[ 31] = '\0';
-	strlcpy( info->internalFileName, myMOD->name, sizeof(myMOD->name));
+	//myMOD->name[31] = '\0';
+	strlcpy(info->internalFileName, myMOD->name, sizeof(myMOD->name));
 	
 	/*** Tracks ***/
 	
@@ -464,10 +463,10 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
 
 #ifndef _MAC_H
 
-EXP OSErr FillPlug( PlugInfo *p);
-EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP OSErr FillPlug(PlugInfo *p);
+EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
 	strlcpy(p->type, 		"MADI", sizeof(p->type));
 	strlcpy(p->MenuName, 	"MADI Files", sizeof(p->MenuName));
@@ -496,9 +495,9 @@ OSErr ExtractMADIInfo(void *info, void *AlienFile)
 
 #else
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainMADI( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+OSErr mainMADI(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	OSErr	myErr = noErr;
@@ -556,7 +555,7 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 			break;
 			
 		case 'INFO':
-			iFileRefI = iFileOpenRead( AlienFileName);
+			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI) {
 				info->fileSize = iGetEOF(iFileRefI);
 				

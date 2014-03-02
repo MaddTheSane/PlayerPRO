@@ -8,7 +8,7 @@
 #include "PPPlug.h"
 #include <Carbon/Carbon.h>
 
-void AddLoopToSndHandle( Handle sound, long Start, long End)
+void AddLoopToSndHandle(Handle sound, long Start, long End)
 {
 	Ptr 			soundPtr;
 	short 			soundFormat;
@@ -20,7 +20,7 @@ void AddLoopToSndHandle( Handle sound, long Start, long End)
 	OSErr 			result;
 	
 	/* make the sound safe to use at interrupt time. */
-	HLock( sound);
+	HLock(sound);
 	soundPtr = *sound;
 	
 	/* determine what format sound we have. */
@@ -146,7 +146,7 @@ Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, u
 			
 			MusSize = (*CmpHeader).numFrames;
 			
-			result = GetCompressionInfo( (*CmpHeader).compressionID, (*CmpHeader).format, numChannels, *sampleSize, &cp);
+			result = GetCompressionInfo((*CmpHeader).compressionID, (*CmpHeader).format, numChannels, *sampleSize, &cp);
 			if (result != noErr)
 				DebugStr("\pGetCompressionInfo");
 			
@@ -186,7 +186,7 @@ Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, u
 			
 			inputFrames = MusSize;
 			
-			dstPtr = NewPtr( inputFrames * numChannels * (*sampleSize/8) * cp.samplesPerPacket);
+			dstPtr = NewPtr(inputFrames * numChannels * (*sampleSize/8) * cp.samplesPerPacket);
 			if (dstPtr == NULL) {
 				DisposePtr(soundPtr);
 				return NULL;
@@ -208,7 +208,7 @@ Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, u
 			if (err != noErr)
 				DebugStr("\pClose failed");
 			
-			DisposePtr( soundPtr);
+			DisposePtr(soundPtr);
 			soundPtr = dstPtr;
 		}
 			
@@ -255,7 +255,7 @@ Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, u
 				} else {
 					MusSize /= 2;
 					for (i = 0; i < MusSize; i ++) {
-						((short*) soundPtr)[i] = ((short*) ExtHeader->sampleArea)[ i * numChannels];
+						((short*) soundPtr)[i] = ((short*) ExtHeader->sampleArea)[i * numChannels];
 					}
 					MusSize *= 2;
 				}
@@ -281,7 +281,7 @@ Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, u
 		ConvertInstrumentIn((Byte*)soundPtr, MusSize);
 	}
 	
-	SetPtrSize( soundPtr, MusSize);
+	SetPtrSize(soundPtr, MusSize);
 	
 	if (*loopEnd - *loopStart < 4) {
 		*loopEnd = 0;
@@ -323,17 +323,17 @@ OSErr main(OSType					order,				// Order to execute
 			unsigned long	rate;
 			Boolean			stereo;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr) {
-				GetEOF( iFileRefI, &inOutBytes);
+				GetEOF(iFileRefI, &inOutBytes);
 				
-				theSound = NewPtr( inOutBytes);
+				theSound = NewPtr(inOutBytes);
 				if (theSound == NULL)
 					myErr = MADNeedMemory;
 				else {
-					FSRead( iFileRefI, &inOutBytes, theSound);
+					FSRead(iFileRefI, &inOutBytes, theSound);
 					
-					theSound = NSndToPtr( theSound, &lS, &lE, &sS, &rate, &bFreq, &stereo);
+					theSound = NSndToPtr(theSound, &lS, &lE, &sS, &rate, &bFreq, &stereo);
 					
 					if (theSound)
 						inAddSoundToMAD(theSound, lS, lE, sS, bFreq, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
@@ -351,7 +351,7 @@ OSErr main(OSType					order,				// Order to execute
 		{
 			Ptr	theSound;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr) {
 				inOutBytes = 50L;
 				theSound = NewPtr(inOutBytes);

@@ -17,11 +17,11 @@ OSErr main(OSType		order,						// Order to execute
 	Ptr		AlienFile;
 	short	iFileRefI;
 	long	inOutBytes;
-		
-	switch(order) {
+	
+	switch (order) {
 		case 'PLAY':
-		break;
-		
+			break;
+			
 		case 'IMPL':
 		{
 			Ptr				theSound;
@@ -44,25 +44,25 @@ OSErr main(OSType		order,						// Order to execute
 				FSpDelete(&newFile);
 			}
 		}
-		break;
-		
+			break;
+			
 		case 'TEST':
 		{
 			FInfo fInfo;
 			
-			FSpGetFInfo( AlienFileFSSpec, &fInfo);
+			FSpGetFInfo(AlienFileFSSpec, &fInfo);
 			
 			if (fInfo.fdType == kQTFileTypeSoundDesignerII) myErr = noErr;
 			else myErr = MADFileNotSupportedByThisPlug;
 		}
-		break;
-		
+			break;
+			
 		case 'EXPL':
-		break;
-		
+			break;
+			
 		default:
 			myErr = MADOrderNotImplemented;
-		break;
+			break;
 	}
 	
 	return myErr;

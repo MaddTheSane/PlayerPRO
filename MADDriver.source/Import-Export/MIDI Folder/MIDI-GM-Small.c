@@ -298,7 +298,7 @@ void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, sh
 		pStrcpy(myNoteRequest.tone.synthesizerName, synthName);
 		
 		// display the instrument picker dialog box to elicit an instrument from the user
-		//iErr = NAPickInstrument( na, NULL, "\pPick an instrument:", &myNoteRequest.tone, kPickSameSynth + kPickUserInsts, 0, 0, 0);
+		//iErr = NAPickInstrument(na, NULL, "\pPick an instrument:", &myNoteRequest.tone, kPickSameSynth + kPickUserInsts, 0, 0, 0);
 		//if (iErr != noErr) goto BAIL;
 		
 		iErr = MusicSetPartInstrumentNumber(mc, 1, GetNELong(myNoteRequest.tone.instrumentNumber));
@@ -309,10 +309,10 @@ void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, sh
 		if (iErr)
 			goto BAIL;
 		
-		/*if (QK50)*/ Quicktime5( &myNoteRequest, sample, inst);
-		//		else TESTNEWSYSTEM( sample, inst, ai);
+		/*if (QK50)*/ Quicktime5(&myNoteRequest, sample, inst);
+		//		else TESTNEWSYSTEM(sample, inst, ai);
 		
-		CloseComponent( na);
+		CloseComponent(na);
 	}
 	
 BAIL:
@@ -368,7 +368,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 			
 			iErr = GetAtomData(sat, &noIns, sizeof(long));
 			if (iErr) DebugLong(iErr);
-			noIns = EndianU32_LtoN( noIns);
+			noIns = EndianU32_LtoN(noIns);
 			
 			
 			iErr = FindAtomById(at, &sat, true, 'lins', 0);
@@ -382,7 +382,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 				iErr = FindAtomById(insAt, &insHe, true, 'insh', 0);
 				if (iErr) DebugLong(iErr);
 				
-				iErr = GetAtomData(insHe, &curIns, sizeof( curIns));
+				iErr = GetAtomData(insHe, &curIns, sizeof(curIns));
 				if (iErr) DebugLong(iErr);
 				
 				curIns.cRegions = EndianU32_LtoN(curIns.cRegions);
@@ -390,16 +390,16 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 				curIns.Locale.ulInstrument = EndianU32_LtoN(curIns.Locale.ulInstrument);
 				
 #if 0
-				iErr = FindAtomById( insAt, &InfoAt, true, 'INFO', 0);
-				if (iErr) DebugLong( iErr);
+				iErr = FindAtomById(insAt, &InfoAt, true, 'INFO', 0);
+				if (iErr) DebugLong(iErr);
 				
-				iErr = FindAtomById( InfoAt, &InfoData, true, 'INAM', 0);
-				if (iErr) DebugLong( iErr);
+				iErr = FindAtomById(InfoAt, &InfoData, true, 'INAM', 0);
+				if (iErr) DebugLong(iErr);
 				
-				iErr = GetAtomData( InfoData, insName, sizeof( insName));
+				iErr = GetAtomData(InfoData, insName, sizeof(insName));
 #endif
 				if (GetNELong(NoteRequest->tone.instrumentNumber) >= 16384) { // DRUM KIT
-					if (BitTst( &curIns.Locale.ulBank, 31-31)) {
+					if (BitTst(&curIns.Locale.ulBank, 31-31)) {
 						long	gmID;
 						
 						gmID = GetNELong(NoteRequest->tone.instrumentNumber);
@@ -439,7 +439,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 				iErr = FindAtomById(insAt, &insHe, true, 'insh', 0);
 				if (iErr) DebugLong(iErr);
 				
-				iErr = GetAtomData(insHe, &curIns, sizeof( curIns));
+				iErr = GetAtomData(insHe, &curIns, sizeof(curIns));
 				if (iErr) DebugLong(iErr);
 				
 				curIns.cRegions = EndianU32_LtoN(curIns.cRegions);
@@ -447,14 +447,14 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 				curIns.Locale.ulInstrument = EndianU32_LtoN(curIns.Locale.ulInstrument);
 				
 #if 0
-				iErr = FindAtomById( insAt, &InfoAt, true, 'INFO', 0);
-				if (iErr) DebugLong( iErr);
+				iErr = FindAtomById(insAt, &InfoAt, true, 'INFO', 0);
+				if (iErr) DebugLong(iErr);
 				
-				iErr = FindAtomById( InfoAt, &InfoData, true, 'INAM', 0);
-				if (iErr) DebugLong( iErr);
+				iErr = FindAtomById(InfoAt, &InfoData, true, 'INAM', 0);
+				if (iErr) DebugLong(iErr);
 				
-				iErr = GetAtomData( InfoData, insName, sizeof( insName));
-				if (iErr) DebugLong( iErr);
+				iErr = GetAtomData(InfoData, insName, sizeof(insName));
+				if (iErr) DebugLong(iErr);
 #endif
 				
 				for (x = 0; x < 32 && x < NoteRequest->tone.instrumentName[0]; x++)
@@ -477,7 +477,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					
 					// Key range
 					
-					iErr = GetAtomDataById(rgnAt, 'rgnh', &rgnh, sizeof( rgnh));
+					iErr = GetAtomDataById(rgnAt, 'rgnh', &rgnh, sizeof(rgnh));
 					if (iErr) DebugLong(iErr);
 					
 					rgnh.RangeKey.usLow = EndianU16_LtoN(rgnh.RangeKey.usLow);
@@ -489,7 +489,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					
 					// Wave sample
 					
-					iErr = GetAtomDataById(rgnAt, 'wsmp', &wsmp, sizeof( wsmp));
+					iErr = GetAtomDataById(rgnAt, 'wsmp', &wsmp, sizeof(wsmp));
 					if (iErr) DebugLong(iErr);
 					
 					wsmp.cbSize = EndianU32_LtoN(wsmp.cbSize);
@@ -690,7 +690,7 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 			
 			for (ii = GetNELong(sdesc->pitchLow) - 12; ii <= GetNELong(sdesc->pitchHigh) - 12; ii++) {
 				if (ii < NUMBER_NOTES && ii > 0)
-					inst->what[ ii] = inst->numSamples;
+					inst->what[ii] = inst->numSamples;
 			}
 			
 			SetInstruNameM(inst->no, myNoteRequest.tone.instrumentName, GetNELong(myNoteRequest.tone.instrumentNumber), inst->name);
@@ -765,7 +765,7 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 						if (GetNEShort(sdesc->numChannels) == 2)
 							curData->stereo = true;
 						
-						if (GetNEShort(sdesc->numChannels) > 2) PPDebugStr( __LINE__, __FILE__, "More than 2 channels");
+						if (GetNEShort(sdesc->numChannels) > 2) PPDebugStr(__LINE__, __FILE__, "More than 2 channels");
 						
 						// **
 						curData->c2spd		= GetNEUnsignedFixed(sdesc->sampleRate) >> 16;
@@ -960,7 +960,7 @@ static OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, OSType type, s
 		}
 		
 		iErr = FSSetForkPosition(at.ref, fsFromStart, prePos + sck.cksize);
-		if (iErr) DebugLong( iErr);
+		if (iErr) DebugLong(iErr);
 		
 		listSize -= sck.cksize;
 		

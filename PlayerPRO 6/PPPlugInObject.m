@@ -94,17 +94,17 @@ OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, SInt32 c
 	if (iErr == noErr) {
 		continueLoop = true;
 		while (continueLoop) {
-			//GetKeys( km);
+			//GetKeys(km);
 			
 			if (MADDriverChannelIsDonePlaying(theRec, channel))
 				continueLoop = false;
-			//if (MADIsPressed( (unsigned char*) km, 0x37) && MADIsPressed( (unsigned char*) km, 0x2F)) continueLoop = false;
+			//if (MADIsPressed((unsigned char*) km, 0x37) && MADIsPressed((unsigned char*) km, 0x2F)) continueLoop = false;
 			//if (Button()) continueLoop = false;
 			//DoGlobalNull();
 		}
 #if 0
 		if (theRec->chan[channel].samplePtr != NULL) {
-			theRec->chan[channel].curPtr 	= theRec->chan[ channel].maxPtr;
+			theRec->chan[channel].curPtr 	= theRec->chan[channel].maxPtr;
 			theRec->chan[channel].samplePtr	= NULL;
 			theRec->chan[channel].lAC		= 0;
 			theRec->chan[channel].loopBeg	= 0;

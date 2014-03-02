@@ -213,17 +213,14 @@
 	sData **tmpsData = calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
 	
 	// **** INSTRUMENTS ***
-	for (i = 0; i < MAXINSTRU ; i++)
-	{
-		for (x = 0; x < tempInstrData[ i].numSamples ; x++)
-		{
+	for (i = 0; i < MAXINSTRU ; i++) {
+		for (x = 0; x < tempInstrData[i].numSamples ; x++) {
 			sData	*curData;
 			
 			// ** Read Sample header **
 			
-			curData = tmpsData[ i * MAXSAMPLE +  x] = (sData*)malloc( sizeof( sData));
-			if (curData == NULL)
-			{
+			curData = tmpsData[i * MAXSAMPLE +  x] = (sData*)malloc(sizeof(sData));
+			if (curData == NULL) {
 				if (theErr) {
 					*theErr = CreateErrorFromMADErrorType(MADNeedMemory);
 				}
@@ -241,7 +238,7 @@
 				return NO;
 			}
 			
-			inOutCount = sizeof( sData32);
+			inOutCount = sizeof(sData32);
 			[fileData getBytes:curData range:NSMakeRange(filePos, inOutCount)];
 			ByteSwapsData(curData);
 			filePos += inOutCount;
@@ -438,7 +435,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 			BS *=2;
 			BS += channel;
 		}
-		temp = (theShortSample[ BS]  + 0x8000);
+		temp = (theShortSample[BS]  + 0x8000);
 		temp *= high;
 		temp  /= (1 << 16);
 		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
@@ -457,7 +454,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 				BE += channel;
 			}
 			
-			temp =(theShortSample[ BS]  + 0x8000);
+			temp =(theShortSample[BS]  + 0x8000);
 			minY = maxY = temp;
 			temp *= high;
 			temp  /= (1 << 16);
@@ -513,7 +510,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 				BE += channel;
 			}
 			
-			temp = (unsigned char) (theSample[ BS] - 0x80);
+			temp = (unsigned char) (theSample[BS] - 0x80);
 			minY = maxY = temp;
 			temp *= high;
 			temp /= (1 << 8);

@@ -236,7 +236,7 @@ static OSErr mainXI(void		*unused,
 						reader += sizeof(XMWAVHEADER);
 						
 						for (x = 0; x < InsHeader->numSamples; x++) {
-							sData *curData = sample[ x];
+							sData *curData = sample[x];
 							
 							curData->data = malloc(curData->size);
 							if (curData->data != NULL) {
@@ -373,7 +373,7 @@ static OSErr mainXI(void		*unused,
 						8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
 					};
 					
-					curData = sample[ u];
+					curData = sample[u];
 					
 					if (curData->stereo)
 						wh.length = curData->size / 2;
@@ -440,7 +440,7 @@ static OSErr mainXI(void		*unused,
 							long xL;
 							
 							if (curData->stereo) {
-								for (i = 0; i < dstSize; i++) tt[ i] = tt[ i*2];
+								for (i = 0; i < dstSize; i++) tt[i] = tt[i*2];
 								dstSize /= 2;
 							}
 							

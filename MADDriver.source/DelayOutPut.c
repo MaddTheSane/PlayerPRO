@@ -28,7 +28,7 @@
 
 UInt32 getfrequency(UInt32 period);
 
-static inline void PrepareInline(SInt32 *VolInter, SInt32* rVolInter, double p2, double v1, double v2)
+static inline void PrepareInline(int *VolInter, int* rVolInter, double p2, double v1, double v2)
 {
 	double temp;
 	
@@ -110,7 +110,7 @@ void Sampler16AddDelay(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDr
 	SInt32	*ASCBuffer1, *ASCBuffer2;
 	Boolean	killSample = false;
 	Boolean	aa = true;
-	SInt32	VolInter1, VolInter2, rVolInter1, rVolInter2;
+	int		VolInter1, VolInter2, rVolInter1, rVolInter2;
 	int		aDD, aCC = curVoice->lAC, off = 0;
 	
 #if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
@@ -262,7 +262,7 @@ void Sampler16AddDelayStereo(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec 
 	SInt32	*ASCBuffer1, *ASCBuffer2;
 	Boolean	killSample = false;
 	Boolean	aa = true;
-	SInt32	VolInter1, VolInter2, rVolInter1, rVolInter2;
+	int		VolInter1, VolInter2, rVolInter1, rVolInter2;
 	int		aDD, aCC = curVoice->lAC, off = 0;
 	
 #if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
@@ -426,7 +426,7 @@ void Sampler16Addin16Delay(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *i
 	Boolean	killSample = false;
 	Boolean	aa = true;
 	int		aDD, aCC = curVoice->lAC;
-	SInt32	VolInter1, VolInter2, rVolInter1, rVolInter2;
+	int		VolInter1, VolInter2, rVolInter1, rVolInter2;
 	
 #if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
 	{
@@ -434,7 +434,7 @@ void Sampler16Addin16Delay(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *i
 		long double	temp;
 		
 		if (intDriver->XMLinear) {
-			finalperiod = getfrequency( curVoice->period);
+			finalperiod = getfrequency(curVoice->period);
 			finalperiod = (8363L*1712L)/(finalperiod?finalperiod:1);
 			
 			finalperiod = (finalperiod * 8363L) / (long)curVoice->fineTune;
@@ -583,7 +583,7 @@ void Sampler16Addin16DelayStereo(Channel *curVoice, SInt32 *ASCBuffer, MADDriver
 	Boolean	killSample = false;
 	Boolean	aa = true;
 	int		aDD, aCC = curVoice->lAC;
-	SInt32	VolInter1, VolInter2, rVolInter1, rVolInter2;
+	int		VolInter1, VolInter2, rVolInter1, rVolInter2;
 	
 #if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
 	{
@@ -855,7 +855,7 @@ void Sampler8in8AddDelay(Channel *curVoice, short *ASCBuffer, MADDriverRec *intD
 						aCC += aDD;
 						RightWeight = aCC & ((1 << BYTEDIV) - 1);
 						LeftWeight = (1 << BYTEDIV) - RightWeight;
-						off = (SInt32) (aCC>>BYTEDIV);
+						off = (int)(aCC>>BYTEDIV);
 					}
 					preVal = *(SndBuffer + off);
 				} else {
@@ -867,7 +867,7 @@ void Sampler8in8AddDelay(Channel *curVoice, short *ASCBuffer, MADDriverRec *intD
 							aCC = aCC & ((1 << BYTEDIV) - 1);
 							RightWeight = aCC & ((1 << BYTEDIV) - 1);
 							LeftWeight = (1 << BYTEDIV) - RightWeight;
-							off = (SInt32) (aCC>>BYTEDIV);
+							off = (int)(aCC >> BYTEDIV);
 							preOff = off;
 							
 							SndBuffer = curVoice->begPtr + curVoice->loopBeg;
@@ -1231,7 +1231,7 @@ void Sampler8in16AddDelayStereo(Channel *curVoice, short *ASCBuffer, MADDriverRe
 						aCC += aDD;
 						RightWeight = aCC & ((1 << BYTEDIV) - 1);
 						LeftWeight = (1 << BYTEDIV) - RightWeight;
-						off = (SInt32) 2*(aCC>>BYTEDIV);
+						off = (int)(2 * (aCC >> BYTEDIV));
 					}
 					preVal = *(SndBuffer + 2*off);
 					preValR = *(SndBuffer + 2*off + 2);
@@ -1245,7 +1245,7 @@ void Sampler8in16AddDelayStereo(Channel *curVoice, short *ASCBuffer, MADDriverRe
 							aCC = aCC & ((1 << BYTEDIV) - 1);
 							RightWeight = aCC & ((1 << BYTEDIV) - 1);
 							LeftWeight = (1 << BYTEDIV) - RightWeight;
-							off = (SInt32) 2*(aCC>>BYTEDIV);
+							off = (SInt32)(2 * (aCC >> BYTEDIV));
 							preOff = off;
 							
 							SndBuffer = curVoice->begPtr + curVoice->loopBeg;

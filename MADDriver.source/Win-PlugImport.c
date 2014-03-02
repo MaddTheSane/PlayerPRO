@@ -156,7 +156,7 @@ OSErr PPImportFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile, MAD
 	PPInfoRec	InfoRec;
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
-		if (!strcmp( kindFile, inMADDriver->ThePlug[i].type)) {
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
 			OSErr theErr = noErr;
 			*theNewMAD = (MADMusic*)calloc(sizeof(MADMusic), 1);
 			if (!*theNewMAD)
@@ -211,7 +211,7 @@ Boolean	MADPlugAvailable(MADLibrary* inMADDriver, char *kindFile)
 {
 	short i;
 	
-	if (!strcmp( kindFile, "MADK"))
+	if (!strcmp(kindFile, "MADK"))
 		return true;
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
@@ -272,7 +272,7 @@ void MInitImportPlug(MADLibrary* inMADDriver, char *PlugsFolderName)
 		strcpy_s(inPlugsFolderName, MAXFOLDLEN, PlugsFolderName);
 		strcat_s(inPlugsFolderName, MAXFOLDLEN, "/");
 		
-		strcpy_s( FindFolder, MAXFOLDLEN, inPlugsFolderName);
+		strcpy_s(FindFolder, MAXFOLDLEN, inPlugsFolderName);
 	} else {
 		strcpy_s(inPlugsFolderName, MAXFOLDLEN, "/");
 		strcpy_s(FindFolder, MAXFOLDLEN, inPlugsFolderName);
@@ -281,9 +281,9 @@ void MInitImportPlug(MADLibrary* inMADDriver, char *PlugsFolderName)
 	
 	hFind = FindFirstFileA(FindFolder, &fd);
 	
-	inMADDriver->ThePlug = (PlugInfo*) calloc( MAXPLUG, sizeof( PlugInfo));
+	inMADDriver->ThePlug = (PlugInfo*) calloc(MAXPLUG, sizeof(PlugInfo));
 	
-	while( hFind != INVALID_HANDLE_VALUE && bRet) {
+	while(hFind != INVALID_HANDLE_VALUE && bRet) {
 		if ((fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) == 0) {
 			if (inMADDriver->TotalPlug < MAXPLUG) {
 				char myCompleteFilename[MAXFOLDLEN];
@@ -318,7 +318,7 @@ OSType GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 {
 	short i, x;
 	
-	if (ID >= inMADDriver->TotalPlug) PPDebugStr( __LINE__, __FILE__, "PP-Plug ERROR. ");
+	if (ID >= inMADDriver->TotalPlug) PPDebugStr(__LINE__, __FILE__, "PP-Plug ERROR. ");
 	
 	for (i = 0, x = 0; i < inMADDriver->TotalPlug; i++) {
 		if (inMADDriver->ThePlug[i].mode == mode || inMADDriver->ThePlug[i].mode == MADPlugImportExport) {
@@ -338,7 +338,7 @@ OSType GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 		}
 	}
 	
-	PPDebugStr( __LINE__, __FILE__, "PP-Plug ERROR II.");
+	PPDebugStr(__LINE__, __FILE__, "PP-Plug ERROR II.");
 	
 	return noErr;
 }

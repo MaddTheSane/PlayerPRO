@@ -37,7 +37,7 @@ void InitMIDIHarware(void)
 
 void NDoPlayInstru(short Note, short Instru, short effect, short arg, short vol);
 
-void DoMidiSpeaker( short note, short Instru, SInt32 arg)
+void DoMidiSpeaker(short note, short Instru, SInt32 arg)
 {
 
 }
@@ -47,7 +47,7 @@ void OpenOrCloseConnection(Boolean opening)
 
 }
 
-void SelectOMSConnections( Boolean Input)
+void SelectOMSConnections(Boolean Input)
 {
 
 }

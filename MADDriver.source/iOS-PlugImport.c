@@ -297,7 +297,7 @@ OSErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MAD
 	PPInfoRec	InfoRec;
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
-		if (!strcmp( kindFile, inMADDriver->ThePlug[i].type)) {
+		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
 			*theNewMAD = (MADMusic*)calloc(sizeof(MADMusic), 1);
 			if (!theNewMAD)
 				return MADNeedMemory;
@@ -347,7 +347,7 @@ OSErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 	PPInfoRec	InfoRec;
 	OSErr		iErr = noErr;
 	
-	strcpy( type, "!!!!");
+	strcpy(type, "!!!!");
 	
 	// Check if we have access to this file
 	refNum = iFileOpenRead(AlienFile);

@@ -119,7 +119,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 	offset = 6 + 6*numSynths + 8*numCmds;
 	header = (SoundHeaderPtr)((*sound) + offset);
 	
-	switch( header->encode)
+	switch(header->encode)
 	{
 		case cmpSH:
 			CmpHeader = (CmpSoundHeader*) header;
@@ -150,17 +150,17 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 		{
 				/*	case threeToOne:
 				 MusSize *= 2;
-				 sound = DoExp1to3( sound, MusSize);
+				 sound = DoExp1to3(sound, MusSize);
 				 MusSize *= 3;
 				 break;
 				 
 				 case sixToOne:
-				 sound = DoExp1to6( sound, MusSize);
+				 sound = DoExp1to6(sound, MusSize);
 				 MusSize *= 6;
 				 break;*/
 				
 			default:
-				Erreur( 7, (OSErr) CompressID);
+				Erreur(7, (OSErr) CompressID);
 				break;
 		}
 			
@@ -231,7 +231,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 			
 			MusSize = header->length;
 			memcpy(*sound, (*header).sampleArea, MusSize);
-			HUnlock( sound);
+			HUnlock(sound);
 			break;
 	}
 	
@@ -379,7 +379,7 @@ int PutpatternsPtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init
 	ipw = wMaxchan;
 	ipwMax = wMaxchan * 3;
 	
-	for (i = 0; i < MAXPATTERN; i++) theMAD->partition[ i] = NULL;
+	for (i = 0; i < MAXPATTERN; i++) theMAD->partition[i] = NULL;
 	
 	for (wPat = 0; fGoing; wPat++)					/** Loop until told to stop **/
 	{
@@ -549,7 +549,7 @@ int PutpatternsPtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init
 			
 			for (iT = ipwMax - 1; iT > 0; iT -= 3)				/** Write division to file **/
 			{
-				WritePfile( theMAD->partition[ wPat], 63 - cDiv, (ipwMax -iT) / 3, pwNote[iT - 2], pwNote[iT - 1], pwNote[ iT]);
+				WritePfile(theMAD->partition[wPat], 63 - cDiv, (ipwMax -iT) / 3, pwNote[iT - 2], pwNote[iT - 1], pwNote[iT]);
 			}
 		}
 	}
@@ -568,7 +568,7 @@ int PutpatternsPtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init
  *       2/7/1994 - added MTM saving
  */
 
-extern  	short 				MIDIInstMOD[ 128];
+extern  	short 				MIDIInstMOD[128];
 extern		Boolean				UseQKIns;
 MADMusic			*curMusic = NULL;
 
@@ -607,18 +607,18 @@ void SavePtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	
 	for (i = 0; i < MAXTRACK; i++) {
 		if (i % 2 == 0)
-			theMAD->header->chanPan[ i] = MAX_PANNING / 4;
+			theMAD->header->chanPan[i] = MAX_PANNING / 4;
 		else
-			theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING / 4;
+			theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING / 4;
 		
-		theMAD->header->chanVol[ i] = MAX_VOLUME;
+		theMAD->header->chanVol[i] = MAX_VOLUME;
 	}
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
 	
 	
-	//	for (x = 0; x < 20; x++)		theMAD->header->name[ x] = szTitle[ x];
+	//	for (x = 0; x < 20; x++)		theMAD->header->name[x] = szTitle[x];
 	theMAD->header->MAD				=	'MADK';
 	theMAD->header->speed			= 	6;
 	theMAD->header->tempo			=	125;
@@ -626,21 +626,21 @@ void SavePtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	strcpy(theMAD->header->infos, "Converted by PlayerPRO MIDI Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)");
 	
 	for (cSamps = 0, x = 0; x < 129; x++) {
-		if (MIDIInstMOD[ x] != -1) cSamps++;
+		if (MIDIInstMOD[x] != -1) cSamps++;
 	}
 	
 	theMAD->header->numChn			=	wMaxchan;
 	
-	theMAD->sets = (FXSets*) NewPtrClear( MAXTRACK * sizeof(FXSets));
-	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	theMAD->sets = (FXSets*) NewPtrClear(MAXTRACK * sizeof(FXSets));
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[i].copyId = i;
 	
-	theMAD->fid = ( InstrData*) MADPlugNewPtrClear( sizeof( InstrData) * (long) MAXINSTRU, init);
+	theMAD->fid = (InstrData*) MADPlugNewPtrClear(sizeof(InstrData) * (long) MAXINSTRU, init);
 	if (!theMAD->fid) return;
 	
-	theMAD->sample = ( sData**) MADPlugNewPtrClear( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
+	theMAD->sample = (sData**) MADPlugNewPtrClear(sizeof(sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
 	if (!theMAD->sample) return;
 	
-	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
 	
 	for (iT = 0; iT < cSamps; iT++) {
 		Str255		tStr;
@@ -649,15 +649,15 @@ void SavePtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 		MidiIns = 0;
 		for (x = 0; x < 129; x++)
 		{
-			if (MIDIInstMOD[ x] == iT) MidiIns = x;
+			if (MIDIInstMOD[x] == iT) MidiIns = x;
 		}
 		
-		NumToString( MidiIns+1, tStr);
-		for (x = 1; x <= tStr[ 0]; x++) theMAD->fid[ iT].name[ x-1] = tStr[ x];
+		NumToString(MidiIns+1, tStr);
+		for (x = 1; x <= tStr[0]; x++) theMAD->fid[iT].name[x-1] = tStr[x];
 		
 		if (UseQKIns) {
 			if (MidiIns == 128) MidiIns = 16385;
-			ComputeQuicktimeSound(MidiIns, theMAD->sample, &theMAD->fid[ iT], iT);
+			ComputeQuicktimeSound(MidiIns, theMAD->sample, &theMAD->fid[iT], iT);
 		}
 	}
 	

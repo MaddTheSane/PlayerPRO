@@ -163,7 +163,7 @@ static OSErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, M
 		else
 			theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING / 4;
 		
-		theMAD->header->chanVol[ i] = MAX_VOLUME;
+		theMAD->header->chanVol[i] = MAX_VOLUME;
 	}
 #endif
 	
@@ -236,11 +236,11 @@ static OSErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, M
 		
 		for (x = 0; x < 20; x++) theMAD->partition[i]->header.name[x] = 0;
 		
-		theMAD->partition[ i]->header.patBytes = 0;
-		theMAD->partition[ i]->header.unused2 = 0;
+		theMAD->partition[i]->header.patBytes = 0;
+		theMAD->partition[i]->header.unused2 = 0;
 		
-		MaxPtr = (Ptr) theMAD->partition[ i];
-		MaxPtr += sizeof( PatHeader) + theMAD->header->numChn * 64L * sizeof( Cmd);
+		MaxPtr = (Ptr) theMAD->partition[i];
+		MaxPtr += sizeof(PatHeader) + theMAD->header->numChn * 64L * sizeof(Cmd);
 		
 		for (z = 0; z < 32; z++) PPLE16(&patTracks[z]);
 		
@@ -250,7 +250,7 @@ static OSErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, M
 				if ((Ptr)aCmd + sizeof(Cmd) > MaxPtr)
 					return MADUnknowErr;
 				
-				if (patTracks[ z] == 0) {
+				if (patTracks[z] == 0) {
 					aCmd->ins	= 0;
 					aCmd->note	= 0xFF;
 					aCmd->cmd	= 0;
@@ -285,7 +285,7 @@ static OSErr ExtractInfo(PPInfoRec *info, MTMDef *myFile)
 #ifndef __BLOCKS__
 	short	i;
 	
-	for (i = 0; i < sizeof( myFile->songname); i++) {
+	for (i = 0; i < sizeof(myFile->songname); i++) {
 		info->internalFileName[i] = myFile->songname[i];
 	}
 #else
@@ -318,13 +318,13 @@ static inline OSErr TestFile(MTMDef *myFile)
 
 #ifndef _MAC_H
 
-EXP OSErr FillPlug( PlugInfo *p);
-EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP OSErr FillPlug(PlugInfo *p);
+EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy( p->type, 		"MTM ", sizeof(p->type));
-	strlcpy( p->MenuName, 	"MTM Files", sizeof(p->MenuName));
+	strlcpy(p->type, 		"MTM ", sizeof(p->type));
+	strlcpy(p->MenuName, 	"MTM Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
@@ -382,7 +382,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 			if (iFileRefI) {
 				sndSize = 5000; // Read only 5000 first bytes for optimisation
 				
-				AlienFile = (Ptr)malloc( sndSize);
+				AlienFile = (Ptr)malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
@@ -412,7 +412,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 					free(AlienFile);
 					AlienFile = NULL;
 				}
-				iClose( iFileRefI);
+				iClose(iFileRefI);
 			} else
 				myErr = MADReadingErr;
 			break;

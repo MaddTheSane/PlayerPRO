@@ -28,7 +28,7 @@
 			CFIndex		PlugNums;
 			CFArrayRef	somePlugs;
 			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef)aPlugLoc, CFSTR("plugin"));
-			PlugNums = CFArrayGetCount( somePlugs );
+			PlugNums = CFArrayGetCount(somePlugs);
 			if (PlugNums > 0) {
 				for (x = 0; x < PlugNums; x++) {
 					@autoreleasepool {

@@ -65,13 +65,12 @@ static OSErr mainWave(void					*unused,
 			unsigned long	rate;
 			Boolean			stereo;
 			
-			theSound = ConvertWAV( AlienFileFSSpec, &lS, &lE, &sS, &rate, &stereo);
+			theSound = ConvertWAV(AlienFileFSSpec, &lS, &lE, &sS, &rate, &stereo);
 			
-			if (theSound != 0L)
-			{
-				myErr = CallRPlaySoundUPP( theSound, GetPtrSize( theSound), 0, 0xFF, sS, lS, lE, rate, stereo);
+			if (theSound != NULL) {
+				myErr = CallRPlaySoundUPP(theSound, GetPtrSize(theSound), 0, 0xFF, sS, lS, lE, rate, stereo);
 				
-				DisposePtr( theSound);
+				DisposePtr(theSound);
 				theSound = 0L;
 			}
 		}

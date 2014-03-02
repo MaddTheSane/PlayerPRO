@@ -14,10 +14,10 @@ static void ControlSwitch(short item, DialogPtr dlog, short Switch)
 	Rect		itemRect;
 
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
-	HiliteControl( (ControlHandle) itemHandle, Switch);
+	HiliteControl((ControlHandle) itemHandle, Switch);
 }
 
-static void AutoPosition( DialogPtr aDia)
+static void AutoPosition(DialogPtr aDia)
 {
 	Point		Position, mouse;
 	Rect		ViewRect, caRect;
@@ -25,35 +25,35 @@ static void AutoPosition( DialogPtr aDia)
 	GDHandle	aH;
 	BitMap		screenBits;
 	
-	GetMouse( &mouse);
-	LocalToGlobal( &mouse);
+	GetMouse(&mouse);
+	LocalToGlobal(&mouse);
 	
-	GetPortBounds( GetDialogPort( aDia), &caRect);
+	GetPortBounds(GetDialogPort(aDia), &caRect);
 	
 	XSize = (caRect.right - caRect.left);
 	YSize = (caRect.bottom - caRect.top);
 	
-	GetQDGlobalsScreenBits( &screenBits);
+	GetQDGlobalsScreenBits(&screenBits);
 	
-	SetRect( &ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
+	SetRect(&ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
 						screenBits.bounds.right - 8, screenBits.bounds.bottom - 8);
 	
 	aH = GetDeviceList();
 	do
 	{
-		aH = GetNextDevice( aH);
+		aH = GetNextDevice(aH);
 		if (aH != NULL)
 		{
-			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect(mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
-				SetRect( &ViewRect, ar.left + 8, ar.top + 43,
+				SetRect(&ViewRect, ar.left + 8, ar.top + 43,
 									ar.right - 8, ar.bottom - 8);
 			}
 		}
 	}
-	while( aH != NULL);
+	while(aH != NULL);
 	
 	Position.h = mouse.h - XSize/2;
 	if (Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
@@ -63,12 +63,12 @@ static void AutoPosition( DialogPtr aDia)
 	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
 	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
-	SetDialogDefaultItem( aDia, 1 );
-	SetDialogCancelItem( aDia, 2 );
+	SetDialogDefaultItem(aDia, 1 );
+	SetDialogCancelItem(aDia, 2 );
 
-	MoveWindow( GetDialogWindow( aDia), Position.h, Position.v, false);
+	MoveWindow(GetDialogWindow(aDia), Position.h, Position.v, false);
 
-	ShowWindow( GetDialogWindow( aDia));
+	ShowWindow(GetDialogWindow(aDia));
 }
 
 static void GetDText (DialogPtr dlog, short item, StringPtr str)
@@ -85,12 +85,12 @@ static void SetDText (DialogPtr dlog, short item, Str255 str)
 {
 	ControlHandle	control;
 
-	GetDialogItemAsControl( dlog, item, &control );
-	SetControlData( control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
-	DrawOneControl( control);
+	GetDialogItemAsControl(dlog, item, &control );
+	SetControlData(control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
+	DrawOneControl(control);
 }
 
-static Ptr ConvertSampleSize( Ptr src, long srcSize, short amp, long dstSize, Boolean stereo)
+static Ptr ConvertSampleSize(Ptr src, long srcSize, short amp, long dstSize, Boolean stereo)
 {
 	#define LRVAL	3L
 
@@ -100,7 +100,7 @@ static Ptr ConvertSampleSize( Ptr src, long srcSize, short amp, long dstSize, Bo
 	long			realsrcSize, tempL, tempR;
 	unsigned long	x, left, right, pos, newSize = dstSize;
 	
-	dst = NewPtrClear( newSize);
+	dst = NewPtrClear(newSize);
 	if (dst == NULL) return NULL;
 	
 	realsrcSize = srcSize;
@@ -111,7 +111,7 @@ static Ptr ConvertSampleSize( Ptr src, long srcSize, short amp, long dstSize, Bo
 	dst16 = (short*) dst;
 	dst8 = (char*) dst;
 		
-	switch( amp)
+	switch(amp)
 	{
 	case 8:
 		for (x = 0; x < newSize; x++)
@@ -127,25 +127,25 @@ static Ptr ConvertSampleSize( Ptr src, long srcSize, short amp, long dstSize, Bo
 				pos *= 2;
 				
 				if (2 + pos >= realsrcSize)	{}
-				else tempL = (left * src8[ pos] + right * src8[ 2 + pos]) >> LRVAL;
+				else tempL = (left * src8[pos] + right * src8[2 + pos]) >> LRVAL;
 			
-				dst8[ x] = tempL;
+				dst8[x] = tempL;
 				
 				x++;
 				
 				if (3 + pos >= realsrcSize)	{}
-				else tempR = (left * src8[ 1 + pos] + right * src8[ 3 + pos]) >> LRVAL;
+				else tempR = (left * src8[1 + pos] + right * src8[3 + pos]) >> LRVAL;
 				
-				dst8[ x] = tempR;
+				dst8[x] = tempR;
 			}
 			else
 			{
 				pos >>= LRVAL;
 				
 				if (1 + pos >= realsrcSize)	{}
-				else tempL = (left * src8[ pos] + right * src8[ 1 + pos]) >> LRVAL;
+				else tempL = (left * src8[pos] + right * src8[1 + pos]) >> LRVAL;
 			
-				dst8[ x] = tempL;
+				dst8[x] = tempL;
 			}
 		}
 	break;
@@ -164,16 +164,16 @@ static Ptr ConvertSampleSize( Ptr src, long srcSize, short amp, long dstSize, Bo
 				pos *= 2;
 				
 				if (2 + pos >= realsrcSize/2)	{}
-				else tempL = (left * src16[ pos] + right * src16[ 2 + pos]) >> LRVAL;
+				else tempL = (left * src16[pos] + right * src16[2 + pos]) >> LRVAL;
 				
-				dst16[ x] = tempL;
+				dst16[x] = tempL;
 				
 				x++;
 				
 				if (3 + pos >= realsrcSize/2)	{}
-				else tempR = (left * src16[ 1 + pos] + right * src16[ 3 + pos]) >> LRVAL;
+				else tempR = (left * src16[1 + pos] + right * src16[3 + pos]) >> LRVAL;
 				
-				dst16[ x] = tempR;
+				dst16[x] = tempR;
 				
 				
 			}
@@ -182,9 +182,9 @@ static Ptr ConvertSampleSize( Ptr src, long srcSize, short amp, long dstSize, Bo
 				pos >>= LRVAL;
 				
 				if (1 + pos >= realsrcSize/2)	{}
-				else tempL = (left * src16[ pos] + right * src16[ 1 + pos]) >> LRVAL;
+				else tempL = (left * src16[pos] + right * src16[1 + pos]) >> LRVAL;
 				
-				dst16[ x] = tempL;
+				dst16[x] = tempL;
 			}
 		}
 	break;
@@ -207,90 +207,90 @@ OSErr mainLength(			sData					*theData,
 	Rect			itemRect;
 	Boolean			ChangeRate;
 
-	myDia = GetNewDialog( 128, NULL, (WindowPtr) -1L);
-	SetPortDialogPort( myDia);
-	AutoPosition( myDia);
+	myDia = GetNewDialog(128, NULL, (WindowPtr) -1L);
+	SetPortDialogPort(myDia);
+	AutoPosition(myDia);
 	
 	/** Default values **/
-	NumToString( theData->size, tStr);
-	SetDText( myDia, 9, tStr);
-	SetDText( myDia, 12, tStr);
+	NumToString(theData->size, tStr);
+	SetDText(myDia, 9, tStr);
+	SetDText(myDia, 12, tStr);
 	
 	temp = theData->size;
 	if (theData->stereo) temp /= 2;
 	if (theData->amp == 16) temp /= 2;
-	NumToString( temp, tStr);
-	SetDText( myDia, 4, tStr);
-	SetDText( myDia, 7, tStr);
+	NumToString(temp, tStr);
+	SetDText(myDia, 4, tStr);
+	SetDText(myDia, 7, tStr);
 	
-	SelectDialogItemText( myDia, 7, 0, 10000);
+	SelectDialogItemText(myDia, 7, 0, 10000);
 	/********************/
 	
-	GetDialogItem( myDia, 14, &itemType, &itemHandle, &itemRect);
-	SetControlValue( (ControlHandle) itemHandle, true);
+	GetDialogItem(myDia, 14, &itemType, &itemHandle, &itemRect);
+	SetControlValue((ControlHandle) itemHandle, true);
 	changeMode = 0;
 	ChangeRate = false;
 	
-	ControlSwitch( 13, myDia, 255);
+	ControlSwitch(13, myDia, 255);
 	
 	ReGo:
 	
 	do
 	{
 //		#if defined(powerc) || defined(__powerc)
-		ModalDialog( thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+		ModalDialog(thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 //		#else
-//		ModalDialog( (ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
+//		ModalDialog((ModalFilterProcPtr) thePPInfoPlug->MyDlgFilterUPP, &itemHit);
 //		#endif
 		
-		switch( itemHit)
+		switch(itemHit)
 		{
 		case -5:
 		case 0:
 		//case nullEvent:
-			GetDText( myDia, 7, tStr);		StringToNum( tStr, &temp);
+			GetDText(myDia, 7, tStr);		StringToNum(tStr, &temp);
 			
 			if (theData->stereo) temp *= 2;
 			if (theData->amp == 16) temp *= 2;
 			
-			NumToString( temp, tStr);
+			NumToString(temp, tStr);
 			
-			SetDText( myDia, 12, tStr);
+			SetDText(myDia, 12, tStr);
 		break;
 		
 		case 14:
 		case 15:
 		case 16:
-				GetDialogItem( myDia, 14, &itemType, &itemHandle, &itemRect);	SetControlValue( (ControlHandle) itemHandle, false);
-				GetDialogItem( myDia, 15, &itemType, &itemHandle, &itemRect);	SetControlValue( (ControlHandle) itemHandle, false);
-				GetDialogItem( myDia, 16, &itemType, &itemHandle, &itemRect);	SetControlValue( (ControlHandle) itemHandle, false);
+				GetDialogItem(myDia, 14, &itemType, &itemHandle, &itemRect);	SetControlValue((ControlHandle) itemHandle, false);
+				GetDialogItem(myDia, 15, &itemType, &itemHandle, &itemRect);	SetControlValue((ControlHandle) itemHandle, false);
+				GetDialogItem(myDia, 16, &itemType, &itemHandle, &itemRect);	SetControlValue((ControlHandle) itemHandle, false);
 		
-				GetDialogItem( myDia, itemHit, &itemType, &itemHandle, &itemRect);
-				SetControlValue( (ControlHandle) itemHandle, true);
+				GetDialogItem(myDia, itemHit, &itemType, &itemHandle, &itemRect);
+				SetControlValue((ControlHandle) itemHandle, true);
 				changeMode = itemHit - 14;
 				
-				if (changeMode == 2) ControlSwitch( 13, myDia, 0);
-				else ControlSwitch( 13, myDia, true);
+				if (changeMode == 2) ControlSwitch(13, myDia, 0);
+				else ControlSwitch(13, myDia, true);
 			break;
 			
 		case 13:
 			ChangeRate = !ChangeRate;
-			GetDialogItem( myDia, 13, &itemType, &itemHandle, &itemRect);	SetControlValue( (ControlHandle) itemHandle, ChangeRate);
+			GetDialogItem(myDia, 13, &itemType, &itemHandle, &itemRect);	SetControlValue((ControlHandle) itemHandle, ChangeRate);
 		break;
 		}
 	}
-	while( itemHit != 1 && itemHit != 2);
+	while(itemHit != 1 && itemHit != 2);
 	
 	if (itemHit == 1)
 	{
 		long	newSize;
 		Ptr		newPtr;
 		
-		GetDText( myDia, 7, tStr);		StringToNum( tStr, &newSize);
+		GetDText(myDia, 7, tStr);		StringToNum(tStr, &newSize);
 		if (newSize <= 0 || newSize > 1024L*1024L*20L)
 		{
-			SysBeep( 1);
-			SelectDialogItemText( myDia, 7, 0, 10000);
+			SysBeep(1);
+			SelectDialogItemText(myDia, 7, 0, 10000);
 			goto ReGo;
 		}
 		
@@ -314,36 +314,36 @@ OSErr mainLength(			sData					*theData,
 			
 			if (newPtr != NULL)
 			{
-				DisposePtr( theData->data);
+				DisposePtr(theData->data);
 				theData->data		= newPtr;
 				theData->size		= newSize;
 			}
 		}
 		else
 		{
-			Ptr dst = NewPtrClear( newSize);
+			Ptr dst = NewPtrClear(newSize);
 			if (dst != NULL)
 			{
 				if (newSize > theData->size)
 				{
-					if (changeMode == 0) memcpy( dst, theData->data, theData->size);
+					if (changeMode == 0) memcpy(dst, theData->data, theData->size);
 					else
 					{
-						memcpy( dst + newSize - theData->size, theData->data,  theData->size);
+						memcpy(dst + newSize - theData->size, theData->data,  theData->size);
 						theData->loopBeg += newSize - theData->size;
 					}
 				}
 				else
 				{
-					if (changeMode == 0)  memcpy( dst, theData->data, newSize);
+					if (changeMode == 0)  memcpy(dst, theData->data, newSize);
 					else
 					{
-						memcpy( dst, theData->data + theData->size - newSize, newSize);
+						memcpy(dst, theData->data + theData->size - newSize, newSize);
 						theData->loopBeg -= theData->size - newSize;
 					}
 				}
 								
-				DisposePtr( theData->data);
+				DisposePtr(theData->data);
 				theData->data		= dst;
 				theData->size		= newSize;
 			}
@@ -355,7 +355,7 @@ OSErr mainLength(			sData					*theData,
 		if (theData->loopBeg + theData->loopSize > newSize) theData->loopSize = newSize - theData->loopBeg;
 	}
 	
-	DisposeDialog( myDia);
+	DisposeDialog(myDia);
 
 	return noErr;
 }

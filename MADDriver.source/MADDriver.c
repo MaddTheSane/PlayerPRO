@@ -13,7 +13,7 @@
 void MADDriverClearChannel(MADDriverRec *theRec, int channel)
 {
 	if (theRec->chan[channel].samplePtr != NULL) {
-		theRec->chan[channel].curPtr 	= theRec->chan[ channel].maxPtr;
+		theRec->chan[channel].curPtr 	= theRec->chan[channel].maxPtr;
 		theRec->chan[channel].samplePtr	= NULL;
 		theRec->chan[channel].lAC		= 0;
 		theRec->chan[channel].loopBeg	= 0;

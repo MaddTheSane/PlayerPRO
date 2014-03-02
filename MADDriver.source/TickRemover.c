@@ -97,7 +97,7 @@ void MADTickLoop8(size_t size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *AS
 void MADTickRemoverStart8(Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver)
 {
 	SInt32				i = intDriver->ASCBUFFER;
-	SInt32				curDoVol0 = DoVolPanning256( 0, curVoice, intDriver, false), curDoVol1 = DoVolPanning256( 1, curVoice, intDriver, false);
+	SInt32				curDoVol0 = DoVolPanning256(0, curVoice, intDriver, false), curDoVol1 = DoVolPanning256(1, curVoice, intDriver, false);
 	
 	if(curVoice->prevPtr != curVoice->begPtr ||
 	   (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) ||

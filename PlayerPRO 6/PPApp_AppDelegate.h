@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#import "PPExportObject.h"
+
 @class PPLibrary;
 @class PPPreferences;
 @class PPMusicList;
@@ -20,7 +22,7 @@
 
 extern __weak PPLibrary *globalMadLib;
 
-@interface PPApp_AppDelegate : NSDocumentController <NSApplicationDelegate>
+@interface PPApp_AppDelegate : NSDocumentController <NSApplicationDelegate, PPExportObjectDelegate>
 {
 	NSMutableArray			*plugInInfos;
 	
@@ -28,8 +30,6 @@ extern __weak PPLibrary *globalMadLib;
 	PPInstrumentPlugHandler	*instrumentImporter;
 	PPDigitalPlugHandler	*digitalHandler;
 	PPFilterPlugHandler		*filterHandler;
-	
-	BOOL isQuitting;
 }
 @property (strong, readonly) NSMutableArray *thePPColors;
 @property (strong, readonly) NSDictionary *trackerDict;

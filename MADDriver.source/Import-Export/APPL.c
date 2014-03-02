@@ -152,7 +152,7 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 				
 				for (x = 0; x < MadFile->header->numPat; x++) {
 					if (MadFile->partition[x] != NULL)
-						free( MadFile->partition[x]);
+						free(MadFile->partition[x]);
 				}
 				free(MadFile->header);
 				

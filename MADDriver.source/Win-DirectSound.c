@@ -48,9 +48,9 @@ static 	Ptr 					currentBuf = NULL;
 static 	Boolean					OnOff;
 static 	long					WIN95BUFFERSIZE;*/
 
-static char *TranslateDSError( HRESULT hr )
+static char *TranslateDSError(HRESULT hr )
 {
-    switch( hr )
+    switch(hr )
     {
     case DSERR_ALLOCATED:
         return "DSERR_ALLOCATED";
@@ -143,7 +143,7 @@ BOOL AppCreateWritePrimaryBuffer(
             (*lplpDsb)->lpVtbl->Play(*lplpDsb,0,0,DSBPLAY_LOOPING);
             return TRUE;
         }
-        //DEBUG else debugger( TranslateDSError( hr));
+        //DEBUG else debugger(TranslateDSError(hr));
     }
     // If we got here, then we failed SetCooperativeLevel.
     // CreateSoundBuffer, or SetFormat.
@@ -159,7 +159,7 @@ void AppDetermineHardwareCaps(LPDIRECTSOUND lpDirectSound)
     hr = lpDirectSound->lpVtbl->GetCaps(lpDirectSound, &dscaps);
     if(DS_OK == hr)
     {
-    	printf( "dwFlags = %ld", dscaps.dwFlags);
+    	printf("dwFlags = %ld", dscaps.dwFlags);
     	
     //DEBUG	if (dscaps.dwFlags & DSBCAPS_GLOBALFOCUS)	debugger("global");
     //DEBUG	if (dscaps.dwFlags & DSBCAPS_STICKYFOCUS)	debugger("sticky");
@@ -170,7 +170,7 @@ void AppDetermineHardwareCaps(LPDIRECTSOUND lpDirectSound)
        /*  printf("Hardware Buffers:      %i\n",dscaps.dwSize);
          printf("Hardware Memory:       %i\n",dscaps.dwMinSecondarySampleRate);
          printf("Hardware Free Memory:  %i\n",dscaps.dwFreeHwMemBytes);
-         printf( "Byebye");*/
+         printf("Byebye");*/
     }
     // .
     // .
@@ -189,7 +189,7 @@ BOOL WriteDataToBuffer(
     DWORD dwBytes2;
     HRESULT hr;
     
-	//	lpDirectSound->lpVtbl->SetCooperativeLevel( lpDirectSound, hwnd, DSSCL_EXCLUSIVE);
+	//	lpDirectSound->lpVtbl->SetCooperativeLevel(lpDirectSound, hwnd, DSSCL_EXCLUSIVE);
 		
     // Obtain write pointer.
     hr = lpDsb->lpVtbl->Lock(lpDsb, dwOffset, dwSoundBytes, &lpvPtr1, &dwBytes1, &lpvPtr2, &dwBytes2, 0);
@@ -214,7 +214,7 @@ BOOL WriteDataToBuffer(
         }
     }
     
-//		lpDirectSound->lpVtbl->SetCooperativeLevel( lpDirectSound, hwnd, DSSCL_NORMAL);
+//		lpDirectSound->lpVtbl->SetCooperativeLevel(lpDirectSound, hwnd, DSSCL_NORMAL);
     
     // If we got here, then we failed Lock, Unlock, or Restore.
     return FALSE;
@@ -260,7 +260,7 @@ BOOL LoadSamp(LPDIRECTSOUND lpDirectSound,
     }
     else
     {
-    	//DEBUG debugger( TranslateDSError( hr));
+    	//DEBUG debugger(TranslateDSError(hr));
     	
       *lplpDsb=NULL;
       return 0;
@@ -288,7 +288,7 @@ static void CALLBACK TimeProc(
 		
 		if(WinMADDriver->Reading == false)
 		{
-			switch( WinMADDriver->DriverSettings.outPutBits)
+			switch(WinMADDriver->DriverSettings.outPutBits)
 				{
 					case 8:
 						memset(WinMADDriver->currentBuf, 0x80, WinMADDriver->WIN95BUFFERSIZE);
@@ -300,15 +300,15 @@ static void CALLBACK TimeProc(
 				}
 		}
 
-		WinMADDriver->lpSwSamp->lpVtbl->GetCurrentPosition( WinMADDriver->lpSwSamp, &pos, &posp);
+		WinMADDriver->lpSwSamp->lpVtbl->GetCurrentPosition(WinMADDriver->lpSwSamp, &pos, &posp);
 		
 		if(pos > WinMADDriver->WIN95BUFFERSIZE/2 && WinMADDriver->OnOff == true)
 		{
 			WinMADDriver->OnOff = false;
 			
-			if (!DirectSave( WinMADDriver->currentBuf, NULL, WinMADDriver))
+			if (!DirectSave(WinMADDriver->currentBuf, NULL, WinMADDriver))
 			{
-				switch( WinMADDriver->DriverSettings.outPutBits)
+				switch(WinMADDriver->DriverSettings.outPutBits)
 				{
 					case 8:
 						memset(WinMADDriver->currentBuf, 0x80, WinMADDriver->WIN95BUFFERSIZE/2);
@@ -320,7 +320,7 @@ static void CALLBACK TimeProc(
 				}
 			}
 			
-			if (!WriteDataToBuffer( WinMADDriver->lpSwSamp, 0, (unsigned char*) WinMADDriver->currentBuf, WinMADDriver->WIN95BUFFERSIZE/2))
+			if (!WriteDataToBuffer(WinMADDriver->lpSwSamp, 0, (unsigned char*) WinMADDriver->currentBuf, WinMADDriver->WIN95BUFFERSIZE/2))
 			{
 				//DEBUG 	debugger("ERR");
 			}
@@ -329,9 +329,9 @@ static void CALLBACK TimeProc(
 		{
 			WinMADDriver->OnOff = true;
 			
-			if (!DirectSave( WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, NULL, WinMADDriver))
+			if (!DirectSave(WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, NULL, WinMADDriver))
 			{
-				switch( WinMADDriver->DriverSettings.outPutBits)
+				switch(WinMADDriver->DriverSettings.outPutBits)
 				{
 					case 8:
 						memset(WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, 0x80, WinMADDriver->WIN95BUFFERSIZE/2);
@@ -343,7 +343,7 @@ static void CALLBACK TimeProc(
 				}
 			}
 			
-			if (!WriteDataToBuffer( WinMADDriver->lpSwSamp, WinMADDriver->WIN95BUFFERSIZE/2, (unsigned char*) (WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2), WinMADDriver->WIN95BUFFERSIZE/2))
+			if (!WriteDataToBuffer(WinMADDriver->lpSwSamp, WinMADDriver->WIN95BUFFERSIZE/2, (unsigned char*) (WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2), WinMADDriver->WIN95BUFFERSIZE/2))
 			{
 				//DEBUG 	debugger("ERR");
 			}
@@ -356,21 +356,21 @@ static void CALLBACK TimeProc(
 }
 
 
-Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
+Boolean DirectSoundInit(MADDriverRec* WinMADDriver)
 {
 	WinMADDriver->OnOff					= false;
 	
 	WinMADDriver->WIN95BUFFERSIZE = WinMADDriver->BufSize;
 	WinMADDriver->WIN95BUFFERSIZE *= 2L;								// double buffer system
 	
-	WinMADDriver->currentBuf 		= (Ptr)calloc( WinMADDriver->WIN95BUFFERSIZE, 1);
+	WinMADDriver->currentBuf 		= (Ptr)calloc(WinMADDriver->WIN95BUFFERSIZE, 1);
 	
 	WinMADDriver->hwnd = GetForegroundWindow();	//GetForegroundWindow();
 	if (!WinMADDriver->hwnd) return false;
 	
 	if(DS_OK == DirectSoundCreate(NULL, &WinMADDriver->lpDirectSound, NULL))
 	{
-		if (!AppCreateWritePrimaryBuffer( WinMADDriver->lpDirectSound, &WinMADDriver->lpDirectSoundBuffer, WinMADDriver->hwnd, WinMADDriver))
+		if (!AppCreateWritePrimaryBuffer(WinMADDriver->lpDirectSound, &WinMADDriver->lpDirectSoundBuffer, WinMADDriver->hwnd, WinMADDriver))
 		{
 			WinMADDriver->lpDirectSound->lpVtbl->Release(WinMADDriver->lpDirectSound);
 			WinMADDriver->lpDirectSound = NULL;
@@ -384,7 +384,7 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 		WinMADDriver->lpSwSamp = NULL;
 		if (!LoadSamp(WinMADDriver->lpDirectSound, &WinMADDriver->lpSwSamp, NULL, WinMADDriver->WIN95BUFFERSIZE, DSBCAPS_LOCSOFTWARE, WinMADDriver))
 		{
-			//DEBUG debugger( "Error 2\n");		//DSBCAPS_LOCSOFTWARE
+			//DEBUG debugger("Error 2\n");		//DSBCAPS_LOCSOFTWARE
 			WinMADDriver->lpDirectSound->lpVtbl->Release(WinMADDriver->lpDirectSound);
 			WinMADDriver->lpDirectSound = NULL;
 			return false;
@@ -405,7 +405,7 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 		 *  MUST be in a FIXED CODE DLL!!! -> not in Win95
 		 */
 		 
-		// debugger( "timeSetEvent\n");
+		// debugger("timeSetEvent\n");
 		 
 		WinMADDriver->gwID = timeSetEvent(	40,   								/* how often                 */
 											40,   								/* timer resolution          */
@@ -422,7 +422,7 @@ Boolean DirectSoundInit( MADDriverRec* WinMADDriver)
 	return false;
 }
 
-void DirectSoundClose( MADDriverRec* WinMADDriver)
+void DirectSoundClose(MADDriverRec* WinMADDriver)
 {
 	if (WinMADDriver->currentBuf != NULL) {
 		free(WinMADDriver->currentBuf);
@@ -430,17 +430,17 @@ void DirectSoundClose( MADDriverRec* WinMADDriver)
 	if (WinMADDriver->lpDirectSound)
 	{
 		/* stop the timer */
-		timeEndPeriod( 20);
-		timeKillEvent( WinMADDriver->gwID);
+		timeEndPeriod(20);
+		timeKillEvent(WinMADDriver->gwID);
 		
-		WinMADDriver->lpSwSamp->lpVtbl->Stop( WinMADDriver->lpSwSamp);
-		WinMADDriver->lpSwSamp->lpVtbl->Release( WinMADDriver->lpSwSamp);
+		WinMADDriver->lpSwSamp->lpVtbl->Stop(WinMADDriver->lpSwSamp);
+		WinMADDriver->lpSwSamp->lpVtbl->Release(WinMADDriver->lpSwSamp);
 		WinMADDriver->lpSwSamp = NULL;
 		
 		WinMADDriver->lpDirectSoundBuffer->lpVtbl->Stop(WinMADDriver->lpDirectSoundBuffer);
   		WinMADDriver->lpDirectSoundBuffer->lpVtbl->Release(WinMADDriver->lpDirectSoundBuffer);
   
-		WinMADDriver->lpDirectSound->lpVtbl->Release( WinMADDriver->lpDirectSound);
+		WinMADDriver->lpDirectSound->lpVtbl->Release(WinMADDriver->lpDirectSound);
 		WinMADDriver->lpDirectSound = NULL;
 	}
 	WinMADDriver->OscilloWavePtr = NULL;

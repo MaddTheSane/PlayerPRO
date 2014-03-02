@@ -106,8 +106,8 @@ void 	CleanDriver(MADDriverRec *intDriver);
 
 #ifdef _MAC_H
 #pragma mark Core Audio Functions
-OSErr	initCoreAudio( MADDriverRec *inMADDriver);
-OSErr	closeCoreAudio( MADDriverRec *inMADDriver);
+OSErr	initCoreAudio(MADDriverRec *inMADDriver);
+OSErr	closeCoreAudio(MADDriverRec *inMADDriver);
 #endif
 
 #ifdef _ESOUND

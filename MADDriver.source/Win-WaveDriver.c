@@ -62,7 +62,7 @@ static long 				WIN95BUFFERSIZE;
 static long					MICROBUFState;
 */
 
-void W95_PlayStop( MADDriverRec*);
+void W95_PlayStop(MADDriverRec*);
 
 BOOL W95_IsThere(void)
 {
@@ -71,9 +71,9 @@ BOOL W95_IsThere(void)
 	return numdevs>0;
 }
 
-void W95_Exit( MADDriverRec *WinMADDriver)
+void W95_Exit(MADDriverRec *WinMADDriver)
 {
-	W95_PlayStop( WinMADDriver);
+	W95_PlayStop(WinMADDriver);
 
 	while(waveOutClose(WinMADDriver->hWaveOut)==WAVERR_STILLPLAYING) Sleep(20);
 	GlobalUnlock(WinMADDriver->hglobal);
@@ -85,9 +85,9 @@ ULONG GetPos(MADDriverRec *WinMADDriver)
 	MMTIME mmt;
 	mmt.wType = TIME_BYTES;
 	
-	waveOutGetPosition( WinMADDriver->hWaveOut, &mmt,sizeof(MMTIME));
+	waveOutGetPosition(WinMADDriver->hWaveOut, &mmt,sizeof(MMTIME));
 	
-	return( mmt.u.cb & 0xfffffff0);		// A cause du 16 bits??
+	return(mmt.u.cb & 0xfffffff0);		// A cause du 16 bits??
 }
 
 //static Ptr 		currentBuf, currentBuf2;
@@ -113,18 +113,18 @@ ULONG GetPos(MADDriverRec *WinMADDriver)
 		{
 			OnOff = false;
 			
-			if (!DirectSave( mydma, &WinMADDriver->DriverSettings, WinMADDriver))
+			if (!DirectSave(mydma, &WinMADDriver->DriverSettings, WinMADDriver))
 			{
-				for (i = 0; i < WIN95BUFFERSIZE/2; i++) mydma[ i] = 0;
+				for (i = 0; i < WIN95BUFFERSIZE/2; i++) mydma[i] = 0;
 			}
 		}
 		else if (OnOff == false && (pos < WIN95BUFFERSIZE/2))
 		{
 			OnOff = true;
 			
-			if (!DirectSave( mydma + WIN95BUFFERSIZE/2, &WinMADDriver->DriverSettings, WinMADDriver))
+			if (!DirectSave(mydma + WIN95BUFFERSIZE/2, &WinMADDriver->DriverSettings, WinMADDriver))
 			{
-				for (i = 0; i < WIN95BUFFERSIZE/2; i++) mydma[ i] = 0;
+				for (i = 0; i < WIN95BUFFERSIZE/2; i++) mydma[i] = 0;
 			}
 		}
 	}
@@ -159,7 +159,7 @@ void CALLBACK TimeProc(
 			{
 				dmaDst = WinMADDriver->mydma + WinMADDriver->MICROBUFState*WinMADDriver->BufSize;
 				
-				if (!DirectSave( dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
+				if (!DirectSave(dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
 				{
 					memset(dmaDst, 0, WinMADDriver->BufSize);
 				}
@@ -178,7 +178,7 @@ void CALLBACK TimeProc(
 			{
 				dmaDst = WinMADDriver->mydma + WinMADDriver->WIN95BUFFERSIZE/2L + WinMADDriver->MICROBUFState*WinMADDriver->BufSize;
 				
-				if (!DirectSave( dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
+				if (!DirectSave(dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
 				{
 					memset(dmaDst, 0, WinMADDriver->BufSize);
 				}
@@ -195,7 +195,7 @@ void CALLBACK TimeProc(
 	timersema--;
 }
 
-void W95_PlayStart( MADDriverRec *WinMADDriver)
+void W95_PlayStart(MADDriverRec *WinMADDriver)
 {
 	waveOutSetVolume(0,0xffffffff);
 	
@@ -210,7 +210,7 @@ void W95_PlayStart( MADDriverRec *WinMADDriver)
 	
 	WinMADDriver->MICROBUFState = 0;
 	
-	timeBeginPeriod( 20);      /* set the minimum resolution */
+	timeBeginPeriod(20);      /* set the minimum resolution */
 	
 	WinMADDriver->gwID = timeSetEvent(	40,   											/* how often                 */
 										40,   																/* timer resolution          */
@@ -222,10 +222,10 @@ void W95_PlayStart( MADDriverRec *WinMADDriver)
 	//////
 }
 
-void W95_PlayStop( MADDriverRec *WinMADDriver)
+void W95_PlayStop(MADDriverRec *WinMADDriver)
 {
 	WinMADDriver->Reading = false;
-	MADStopDriver( WinMADDriver);
+	MADStopDriver(WinMADDriver);
 	
 	
 	/* stop the timer */
@@ -242,7 +242,7 @@ void W95_PlayStop( MADDriverRec *WinMADDriver)
 	//#define DMODE_INTERP    4
 
 
-Boolean W95_Init( MADDriverRec *WinMADDriver)
+Boolean W95_Init(MADDriverRec *WinMADDriver)
 {
 	MMRESULT err;
 	PCMWAVEFORMAT wf;
@@ -256,13 +256,13 @@ Boolean W95_Init( MADDriverRec *WinMADDriver)
 	
 	if (WinMADDriver->WIN95BUFFERSIZE < 0) return false;
 	
-	WinMADDriver->hglobal= GlobalAlloc( GMEM_FIXED, WinMADDriver->WIN95BUFFERSIZE);	//GMEM_MOVEABLE | GMEM_SHARE
+	WinMADDriver->hglobal= GlobalAlloc(GMEM_FIXED, WinMADDriver->WIN95BUFFERSIZE);	//GMEM_MOVEABLE | GMEM_SHARE
 	if (WinMADDriver->hglobal == NULL) return false;
 	
 	WinMADDriver->mydata = GlobalLock(WinMADDriver->hglobal);
 	
 	/* get audio device name and put it into the driver structure: */
-	waveOutGetDevCaps( 0, &WinMADDriver->woc, sizeof(WAVEOUTCAPS));
+	waveOutGetDevCaps(0, &WinMADDriver->woc, sizeof(WAVEOUTCAPS));
 	
 	wf.wf.wFormatTag		=WAVE_FORMAT_PCM;
 	wf.wf.nChannels = 2;
@@ -271,10 +271,9 @@ Boolean W95_Init( MADDriverRec *WinMADDriver)
 	wf.wf.nBlockAlign		= wf.wf.nChannels * (wf.wBitsPerSample/8);
 	wf.wf.nAvgBytesPerSec	= wf.wf.nSamplesPerSec * wf.wf.nBlockAlign;
 	
-	err = waveOutOpen( &WinMADDriver->hWaveOut, 0, (LPCWAVEFORMATEX)&wf, (unsigned long) 0, (unsigned long) NULL,0L);
+	err = waveOutOpen(&WinMADDriver->hWaveOut, 0, (LPCWAVEFORMATEX)&wf, (unsigned long) 0, (unsigned long) NULL, 0L);
 	
-	if(err)
-	{
+	if(err) {
 		if(err==WAVERR_BADFORMAT)
 			myerr="This output format is not supported (Try another sampling rate?)";
 		else if(err==MMSYSERR_ALLOCATED)
@@ -286,7 +285,7 @@ Boolean W95_Init( MADDriverRec *WinMADDriver)
 		return false;
 	}
 	
-	W95_PlayStart( WinMADDriver);
+	W95_PlayStart(WinMADDriver);
 	
 	return true;
 }

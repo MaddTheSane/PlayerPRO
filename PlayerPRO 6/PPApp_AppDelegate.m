@@ -349,7 +349,6 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	isQuitting = NO;
 	PPRegisterDebugFunc(CocoaDebugStr);
 	self.madLib = [[PPLibrary alloc] init];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -547,6 +546,16 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 		return NO;
 	}
 	return [self handleFile:[NSURL fileURLWithPath:filename] ofType:utiFile];
+}
+
+- (void)PPExportObjectDidFinish:(PPExportObject*)theObj
+{
+	
+}
+
+- (void)PPExportObjectEncounteredError:(PPExportObject*)theObj errorCode:(OSErr)errCode errorString:(NSString*)errStr
+{
+	
 }
 
 @end

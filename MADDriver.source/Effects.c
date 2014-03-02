@@ -107,7 +107,7 @@ void CloseEffect(Channel *ch, short notUsed, MADDriverRec *intDriver)
 
 void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 {
-	SInt32 offset = 0;
+	int offset = 0;
 	
 	switch(ch->cmd) {
 		case arpeggioE:						// OK
@@ -527,8 +527,8 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 					break;
 					
 				case 5: // Set finetune value
-					//ch->fineTune	= finetune[ LOW( ch->arg)];
-					//ch->period	= GetOldPeriod( ch->Amiga, ch->fineTune);
+					//ch->fineTune	= finetune[LOW(ch->arg)];
+					//ch->period	= GetOldPeriod(ch->Amiga, ch->fineTune);
 					break;
 					
 				case 6: // Loop pattern

@@ -8,7 +8,7 @@
 
 struct oldInstrData				// INSTRUMENT
 {
-	char 	name[ 32];			// instrument name
+	char 	name[32];			// instrument name
 	Byte 	type;				// Instrument type = 0
 	Byte	no;					// Instrument number
 	
@@ -21,10 +21,10 @@ struct oldInstrData				// INSTRUMENT
 	
 	/**/
 	
-	Byte	what[ 96];			// Sample number for all notes
-	EnvRec 	volEnv[ 12];		// Points for volume envelope
-	EnvRec	pannEnv[ 12];		// Points for panning envelope
-//	EnvRec	pitchEnv[ 12];		// Points for panning envelope
+	Byte	what[96];			// Sample number for all notes
+	EnvRec 	volEnv[12];		// Points for volume envelope
+	EnvRec	pannEnv[12];		// Points for panning envelope
+//	EnvRec	pitchEnv[12];		// Points for panning envelope
 // ENVELOPPES PLUS LONGUES !!!!!!!
 	
 	Byte	volSize;			// Number of volume points
@@ -54,53 +54,53 @@ struct oldInstrData				// INSTRUMENT
 typedef struct oldInstrData oldInstrData;
 
 
-OSErr TestMINS( oldInstrData *CC)
+OSErr TestMINS(oldInstrData *CC)
 {
 	if (CC->type == 0 && CC->numSamples >= 0 && CC->numSamples < MAXSAMPLE) return noErr;
 	else return MADFileNotSupportedByThisPlug;
 }
 
-OSErr MAD2KillInstrument( InstrData *curIns, sData **sample)
+OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 {
 	short		i;
 	Boolean		IsReading;
 
 	for (i = 0; i < curIns->numSamples; i++)
 	{
-		if (sample[ i] != 0L)
+		if (sample[i] != 0L)
 		{
-			if (sample[ i]->data != 0L)
+			if (sample[i]->data != 0L)
 			{
-				DisposePtr( (Ptr) sample[ i]->data);
-				sample[ i]->data = 0L;
+				DisposePtr((Ptr) sample[i]->data);
+				sample[i]->data = 0L;
 			}
-			DisposePtr( (Ptr) sample[ i]);
-			sample[ i] = 0L;
+			DisposePtr((Ptr) sample[i]);
+			sample[i] = 0L;
 		}
 	}
 	
 	
-	for (i = 0; i < 32; i++) curIns->name[ i]	= 0;
+	for (i = 0; i < 32; i++) curIns->name[i]	= 0;
 	curIns->type		= 0;
 	curIns->numSamples	= 0;
 	
 	/**/
 	
-	for (i = 0; i < 96; i++) curIns->what[ i]		= 0;
+	for (i = 0; i < 96; i++) curIns->what[i]		= 0;
 	for (i = 0; i < 12; i++)
 	{
-		curIns->volEnv[ i].pos		= 0;
-		curIns->volEnv[ i].val		= 0;
+		curIns->volEnv[i].pos		= 0;
+		curIns->volEnv[i].val		= 0;
 	}
 	for (i = 0; i < 12; i++)
 	{
-		curIns->pannEnv[ i].pos	= 0;
-		curIns->pannEnv[ i].val	= 0;
+		curIns->pannEnv[i].pos	= 0;
+		curIns->pannEnv[i].val	= 0;
 	}
 	for (i = 0; i < 12; i++)
 	{
-		curIns->pitchEnv[ i].pos	= 0;
-		curIns->pitchEnv[ i].val	= 0;
+		curIns->pitchEnv[i].pos	= 0;
+		curIns->pitchEnv[i].val	= 0;
 	}
 	curIns->volSize		= 0;
 	curIns->pannSize	= 0;
@@ -135,48 +135,48 @@ OSErr main(		OSType					order,						// Order to execute
 	short	iFileRefI, x;
 	long	inOutCount;
 	
-	switch( order)
+	switch(order)
 	{
 		case 'IMPL':
 		{
 			Ptr				theSound;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr)
 			{
-				GetEOF( iFileRefI, &inOutCount);
+				GetEOF(iFileRefI, &inOutCount);
 				
-				theSound = NewPtr( inOutCount);
+				theSound = NewPtr(inOutCount);
 				if (theSound == 0L) myErr = MADNeedMemory;
 				else
 				{
-					DisposePtr( theSound);
+					DisposePtr(theSound);
 					
-					MAD2KillInstrument( InsHeader, sample);
+					MAD2KillInstrument(InsHeader, sample);
 					
 					// READ instrument header
 					
-					inOutCount = sizeof( oldInstrData);
+					inOutCount = sizeof(oldInstrData);
 					
 					{
 						oldInstrData		oldData;
 						short				i;
 						
 						
-						myErr = FSRead( iFileRefI, &inOutCount, &oldData);
+						myErr = FSRead(iFileRefI, &inOutCount, &oldData);
 						
-						BlockMoveData( oldData.name, InsHeader->name, 32);
+						BlockMoveData(oldData.name, InsHeader->name, 32);
 						InsHeader->type = oldData.type;
 						InsHeader->no = oldData.no;
 	
 						InsHeader->firstSample = oldData.firstSample;
 						InsHeader->numSamples = oldData.numSamples;
-						BlockMoveData( oldData.what, InsHeader->what, 96);
+						BlockMoveData(oldData.what, InsHeader->what, 96);
 						
 						for (i = 0; i < 12; i++)
 						{
-							InsHeader->volEnv[ i] = oldData.volEnv[ i];
-							InsHeader->pannEnv[ i] = oldData.pannEnv[ i];
+							InsHeader->volEnv[i] = oldData.volEnv[i];
+							InsHeader->pannEnv[i] = oldData.pannEnv[i];
 						}
 						
 						InsHeader->volSize = oldData.volSize;
@@ -203,22 +203,22 @@ OSErr main(		OSType					order,						// Order to execute
 					
 					for (x = 0; x < InsHeader->numSamples; x++)
 					{
-						sData *curData = sample[ x] = inMADCreateSample();
+						sData *curData = sample[x] = inMADCreateSample();
 						
-						inOutCount = sizeof( sData);
+						inOutCount = sizeof(sData);
 						
-						myErr = FSRead( iFileRefI, &inOutCount, curData);
+						myErr = FSRead(iFileRefI, &inOutCount, curData);
 						
-						curData->data = NewPtr( curData->size);
+						curData->data = NewPtr(curData->size);
 						if (curData->data != 0L)
 						{
 							inOutCount = curData->size;
-							myErr = FSRead( iFileRefI, &inOutCount, curData->data);
+							myErr = FSRead(iFileRefI, &inOutCount, curData->data);
 						}
 					}
 				}
 				
-				FSClose( iFileRefI);
+				FSClose(iFileRefI);
 			}
 		}
 		break;
@@ -227,22 +227,22 @@ OSErr main(		OSType					order,						// Order to execute
 		{
 			Ptr	theSound;
 			
-			myErr = FSpOpenDF( AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
 			if (myErr == noErr)
 			{
 				inOutCount = 50L;
-				theSound = NewPtr( inOutCount);
+				theSound = NewPtr(inOutCount);
 				if (theSound == 0L) myErr = MADNeedMemory;
 				else
 				{
-					FSRead( iFileRefI, &inOutCount, theSound);
+					FSRead(iFileRefI, &inOutCount, theSound);
 					
-					myErr = TestMINS( (oldInstrData*) theSound);
+					myErr = TestMINS((oldInstrData*) theSound);
 				}
 				
-				DisposePtr( theSound);
+				DisposePtr(theSound);
 				
-				FSClose( iFileRefI);
+				FSClose(iFileRefI);
 			}
 		}
 		break;

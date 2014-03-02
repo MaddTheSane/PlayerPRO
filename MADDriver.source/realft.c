@@ -45,36 +45,36 @@ double EQInterpolate(double p,double p1,double p2,double v1,double v2)
 
 //static short *SDataInter;
 
-OSErr MADInitEqualizer( MADDriverRec *intDriver)
+OSErr MADInitEqualizer(MADDriverRec *intDriver)
 {
 	int i;
 	
-	intDriver->Filter	= (double*) calloc( sizeof( double) * ((EQPACKET*2)+2), 1);
-	intDriver->fData	= (double*) calloc( sizeof( double) * ((EQPACKET*2)+2), 1);
+	intDriver->Filter = (double*)calloc(sizeof(double) * ((EQPACKET*2)+2), 1);
+	intDriver->fData  = (double*)calloc(sizeof(double) * ((EQPACKET*2)+2), 1);
 	
-	if (intDriver->Filter == NULL) return MADNeedMemory;
+	if (intDriver->Filter == NULL)
+		return MADNeedMemory;
 	if (intDriver->fData == NULL) {
 		free(intDriver->Filter);
 		return MADNeedMemory;
 	}
 	
-	for (i = 0; i <= EQPACKET*2; i++)
-	{
-		intDriver->Filter[ i] = 1.0;
+	for (i = 0; i <= EQPACKET * 2; i++) {
+		intDriver->Filter[i] = 1.0;
 	}
 	
 	return noErr;
 }
 
-void MADCloseEqualizer( MADDriverRec *intDriver)
+void MADCloseEqualizer(MADDriverRec *intDriver)
 {
-	free( intDriver->Filter);
-	free( intDriver->fData);
+	free(intDriver->Filter);
+	free(intDriver->fData);
 }
 
 #define SWAP(a,b) tempr=(a);(a)=(b);(b)=tempr
 
-void MADfour1( double *data,int nn,int isign)
+void MADfour1(double *data, int nn, int isign)
 {
 	int 		n, mmax, m, j, istep, i;
 	double 		wtemp, wr, wpr, wpi, wi, theta;
@@ -101,11 +101,11 @@ void MADfour1( double *data,int nn,int isign)
 		theta = M_PI / (isign * mmax);
 		wtemp = sin(theta);
 		wpr = -2.0 * wtemp * wtemp;
-		wpi = sin( 2.0 * theta);
+		wpi = sin(2.0 * theta);
 		wr = 1.0;
 		wi = 0.0;
 		for (m = 1; m < mmax; m += 2) {
-			for ( i = m; i <= n; i += istep) {
+			for (i = m; i <= n; i += istep) {
 				j = i + mmax;
 				tempr = wr * data[j] - wi*data[j + 1];
 				tempi = wr * data[j + 1] + wi * data[j];
@@ -197,20 +197,20 @@ void twofft(double *data1,double *data2,double *fft1,double *fft2, int n)
 }
 #endif
 
-void MADCallFFT( sData *SData, double *filter, MADDriverRec *intDriver, Boolean shift)
+void MADCallFFT(sData *SData, double *filter, MADDriverRec *intDriver, Boolean shift)
 {
 	if (filter == NULL) filter = intDriver->Filter;
 	
-	switch( SData->amp)
+	switch(SData->amp)
 	{
 		case 8:
-			if (SData->stereo) FFT8S( SData->data, SData->size, filter, intDriver, 2, shift);
-			else FFT8S( SData->data, SData->size, filter, intDriver, 1, shift);
+			if (SData->stereo) FFT8S(SData->data, SData->size, filter, intDriver, 2, shift);
+			else FFT8S(SData->data, SData->size, filter, intDriver, 1, shift);
 			break;
 			
 		case 16:
-			if (SData->stereo) FFT16S( (short*) SData->data, SData->size, filter, intDriver, 2, shift);
-			else FFT16S( (short*) SData->data, SData->size, filter, intDriver, 1, shift);
+			if (SData->stereo) FFT16S((short*) SData->data, SData->size, filter, intDriver, 2, shift);
+			else FFT16S((short*) SData->data, SData->size, filter, intDriver, 1, shift);
 			break;
 	}
 }
@@ -230,7 +230,7 @@ double MADEQInterpolate(double p,double p1,double p2,double v1,double v2)
 }
 #endif
 
-void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
+void FFT8S(char* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
 	SInt32	y, powersize;
 	SInt32	*shiftAr = NULL;
@@ -340,7 +340,7 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 			}
 			
 			for (i = 0 ; i < powersize; i++) {
-				if (shiftAr[ i] >= 0 && shiftAr[ i] < powersize)
+				if (shiftAr[i] >= 0 && shiftAr[i] < powersize)
 					fDataCopy2[shiftAr[i] + 1] += fDataCopy[i + 1];
 			}
 			
@@ -358,8 +358,8 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 		MADrealft(fDataCopy, powersize / 2, false);
 		
 		// First and last values MUST be zero! // ** //  // ** //  // ** //
-		pente = (fDataCopy[ powersize] - fDataCopy[ 1]) / (double) (powersize -1);
-		axe = fDataCopy[ 1];
+		pente = (fDataCopy[powersize] - fDataCopy[1]) / (double) (powersize -1);
+		axe = fDataCopy[1];
 		
 		for (i = 1 ; i <= powersize; i++) {
 			fDataCopy[i] -= (axe + (double)(i - 1) * pente);
@@ -417,8 +417,8 @@ void FFT8S( char* SData, size_t size, double *filter, MADDriverRec *intDriver, s
 	}
 }
 
-//static long PreviousAxe[ 2];
-//static long PreviousAxe2[ 2];
+//static long PreviousAxe[2];
+//static long PreviousAxe2[2];
 
 void FFT16S(short* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
@@ -515,7 +515,7 @@ void FFT16S(short* SData, size_t size, double *filter, MADDriverRec *intDriver, 
 		}
 		// ** //  // ** //  // ** //  // ** //  // ** //  // ** //  // ** //
 		
-		MADrealft( fDataCopy, powersize/2, true);
+		MADrealft(fDataCopy, powersize/2, true);
 		
 		if (shift) {
 			SInt32 a, b;
@@ -544,7 +544,7 @@ void FFT16S(short* SData, size_t size, double *filter, MADDriverRec *intDriver, 
 			}
 		}
 		
-		MADrealft( fDataCopy, powersize / 2, false);
+		MADrealft(fDataCopy, powersize / 2, false);
 		
 		for (i = 1 ; i <= powersize; i++)
 			fDataCopy[i] /= powersize / 2;
@@ -621,35 +621,35 @@ void FFT8S(char *SData, long size, double *filter, MADDriverRec *intDriver, shor
 			
 			if (x + EQPACKET*2*2 > size)
 			{
-				for (i = 0 ; i < (size - x)/2; i++) intDriver->fData[ i+1] = SData[ x + 2*i];
-				for (i = (size - x)/2 ; i < EQPACKET*2; i++) intDriver->fData[ i+1] = 0;
+				for (i = 0 ; i < (size - x)/2; i++) intDriver->fData[i+1] = SData[x + 2*i];
+				for (i = (size - x)/2 ; i < EQPACKET*2; i++) intDriver->fData[i+1] = 0;
 			}
 			else
 			{
-				for (i = 0 ; i < EQPACKET*2; i++) intDriver->fData[ i+1] = SData[ x + 2*i];
+				for (i = 0 ; i < EQPACKET*2; i++) intDriver->fData[i+1] = SData[x + 2*i];
 			}
 			
-			MADrealft( intDriver->fData, EQPACKET, true);
+			MADrealft(intDriver->fData, EQPACKET, true);
 			
-			MADrealft( intDriver->fData, EQPACKET, false);
+			MADrealft(intDriver->fData, EQPACKET, false);
 			
-			for (i = 1 ; i <= EQPACKET*2; i++) intDriver->fData[ i] /= EQPACKET;
+			for (i = 1 ; i <= EQPACKET*2; i++) intDriver->fData[i] /= EQPACKET;
 			
 			// Check data
 			for (i = 1 ; i <= EQPACKET*2; i++)
 			{
-				if (intDriver->fData[ i] > 127) intDriver->fData[ i] = 127;
-				if (intDriver->fData[ i] < -127) intDriver->fData[ i] = -127;
+				if (intDriver->fData[i] > 127) intDriver->fData[i] = 127;
+				if (intDriver->fData[i] < -127) intDriver->fData[i] = -127;
 			}
 			
 			// Restore data
 			if (x + EQPACKET*2*2 > size)
 			{
-				for (i = 0 ; i < (size - x)/2; i++) SData[ x + 2*i] = intDriver->fData[ i+1];
+				for (i = 0 ; i < (size - x)/2; i++) SData[x + 2*i] = intDriver->fData[i+1];
 			}
 			else
 			{
-				for (i = 0 ; i < EQPACKET*2; i++) SData[ x + 2*i] = intDriver->fData[ i+1];
+				for (i = 0 ; i < EQPACKET*2; i++) SData[x + 2*i] = intDriver->fData[i+1];
 			}
 			
 			//// ***********************              Now the left channel !

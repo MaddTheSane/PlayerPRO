@@ -24,12 +24,12 @@ static void SetDText (DialogPtr dlog, short item, Str255 str)
 	ControlHandle	control;
 	OSErr			err;
 
-	GetDialogItemAsControl( dlog, item, &control );
-	err = SetControlData( control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
-	DrawOneControl( control);
+	GetDialogItemAsControl(dlog, item, &control );
+	err = SetControlData(control, 0, kControlStaticTextTextTag, str[0], (Ptr)(str+1) );
+	DrawOneControl(control);
 }
 
-static void TurnRadio( short item, DialogPtr dlog, Boolean alors)
+static void TurnRadio(short item, DialogPtr dlog, Boolean alors)
 {
 	Handle		itemHandle;
 	short		itemType;
@@ -37,13 +37,13 @@ static void TurnRadio( short item, DialogPtr dlog, Boolean alors)
 
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
 
-	if (alors) SetControlValue( (ControlHandle) itemHandle, 255);
+	if (alors) SetControlValue((ControlHandle) itemHandle, 255);
 	
-	else SetControlValue( (ControlHandle) itemHandle, 0);
+	else SetControlValue((ControlHandle) itemHandle, 0);
 	
 }
 
-static void AutoPosition( DialogPtr aDia)
+static void AutoPosition(DialogPtr aDia)
 {
 	Point		Position, mouse;
 	Rect		ViewRect, caRect;
@@ -51,35 +51,35 @@ static void AutoPosition( DialogPtr aDia)
 	GDHandle	aH;
 	BitMap		screenBits;
 	
-	GetMouse( &mouse);
-	LocalToGlobal( &mouse);
+	GetMouse(&mouse);
+	LocalToGlobal(&mouse);
 	
-	GetPortBounds( GetDialogPort( aDia), &caRect);
+	GetPortBounds(GetDialogPort(aDia), &caRect);
 	
 	XSize = (caRect.right - caRect.left);
 	YSize = (caRect.bottom - caRect.top);
 	
-	GetQDGlobalsScreenBits( &screenBits);
+	GetQDGlobalsScreenBits(&screenBits);
 	
-	SetRect( &ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
+	SetRect(&ViewRect, screenBits.bounds.left + 8, screenBits.bounds.top + 43,
 						screenBits.bounds.right - 8, screenBits.bounds.bottom - 8);
 	
 	aH = GetDeviceList();
 	do
 	{
-		aH = GetNextDevice( aH);
+		aH = GetNextDevice(aH);
 		if (aH != NULL)
 		{
-			if (PtInRect( mouse, &(*(*aH)->gdPMap)->bounds))
+			if (PtInRect(mouse, &(*(*aH)->gdPMap)->bounds))
 			{
 				Rect	ar = (*(*aH)->gdPMap)->bounds;
 			
-				SetRect( &ViewRect, ar.left + 8, ar.top + 43,
+				SetRect(&ViewRect, ar.left + 8, ar.top + 43,
 									ar.right - 8, ar.bottom - 8);
 			}
 		}
 	}
-	while( aH != NULL);
+	while(aH != NULL);
 	
 	Position.h = mouse.h - XSize/2;
 	if (Position.h + XSize >= ViewRect.right) Position.h = ViewRect.right - XSize;
@@ -89,26 +89,26 @@ static void AutoPosition( DialogPtr aDia)
 	if (Position.v + YSize >= ViewRect.bottom) Position.v = ViewRect.bottom - YSize;
 	else if (Position.v <= ViewRect.top) Position.v = ViewRect.top;
 
-	SetDialogDefaultItem( aDia, 1 );
-	SetDialogCancelItem( aDia, 2 );
+	SetDialogDefaultItem(aDia, 1 );
+	SetDialogCancelItem(aDia, 2 );
 
-	MoveWindow( GetDialogWindow( aDia), Position.h, Position.v, false);
+	MoveWindow(GetDialogWindow(aDia), Position.h, Position.v, false);
 
-	ShowWindow( GetDialogWindow( aDia));
+	ShowWindow(GetDialogWindow(aDia));
 }
 
-static short Text2Note( Str255 myTT)
+static short Text2Note(Str255 myTT)
 {
 	short		Oct;
 	
-	if (myTT[ 0] > 2) Oct = myTT[ 3] - 48;
-	else Oct = myTT[ 2] - 48;
+	if (myTT[0] > 2) Oct = myTT[3] - 48;
+	else Oct = myTT[2] - 48;
 	
 	Oct *= 12;
 	
 	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
 	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
-	switch( myTT[1])
+	switch(myTT[1])
 	{
 		case 'C':
 		case 'c':
@@ -150,21 +150,21 @@ static short Text2Note( Str255 myTT)
 	
 	if (Oct != 0xFF)
 	{
-		if (myTT[ 2] == '#') Oct++;
+		if (myTT[2] == '#') Oct++;
 		if (Oct >= 96) Oct = 0xFF;
 		if (Oct < 0) Oct = 0xFF;
 	}
 	
-	return( Oct);
+	return(Oct);
 }
 
-static void StringToHex( Str255 str, long *oct)
+static void StringToHex(Str255 str, long *oct)
 {
-	if (str[ 2] >= 'A' && str[ 2] <= 'F') *oct = 10 + str[ 2] - 'A';
-	if (str[ 2] >= '0' && str[ 2] <= '9') *oct = str[ 2] - '0';
+	if (str[2] >= 'A' && str[2] <= 'F') *oct = 10 + str[2] - 'A';
+	if (str[2] >= '0' && str[2] <= '9') *oct = str[2] - '0';
 	
-	if (str[ 1] >= 'A' && str[ 1] <= 'F') *oct += (10 + str[ 1] - 'A')<<4;
-	if (str[ 1] >= '0' && str[ 1] <= '9') *oct += (str[ 1] - '0')<<4;
+	if (str[1] >= 'A' && str[1] <= 'F') *oct += (10 + str[1] - 'A')<<4;
+	if (str[1] >= '0' && str[1] <= '9') *oct += (str[1] - '0')<<4;
 }
 
 static Boolean PPModalDialogRep(DialogRef theDialog, EventRecord *theEvent, DialogItemIndex *itemHit)
@@ -179,58 +179,58 @@ static Boolean PPModalDialogRep(DialogRef theDialog, EventRecord *theEvent, Dial
 	
 	if (theEvent->what == updateEvt)
 	{
-		if ((WindowPtr) theEvent->message == GetDialogWindow( theDialog))
+		if ((WindowPtr) theEvent->message == GetDialogWindow(theDialog))
 		{
-			switch( GetWRefCon( GetDialogWindow( theDialog)))
+			switch(GetWRefCon(GetDialogWindow(theDialog)))
 			{
-				//case 0:		oldFrameButton( theDialog);					break;
-				//case 96:	oldFrameButton( theDialog);					break;
-				//case 9996:	oldFrameButton( theDialog);					break;
+				//case 0:		oldFrameButton(theDialog);					break;
+				//case 96:	oldFrameButton(theDialog);					break;
+				//case 9996:	oldFrameButton(theDialog);					break;
 				//case 9987:	DrawChooseColorWindow();					break;
-				//case 9467:	UpdateEditInstruWindow( theDialog);			break;
-				//case 7311:	UpdateSoundQualityExportSndWindow( theDialog);	break;
-				//case 966:	UpdateFileInformations( theDialog);			break;
-				//case 99802:	UpdatePlugsAbout( theDialog);					break;
+				//case 9467:	UpdateEditInstruWindow(theDialog);			break;
+				//case 7311:	UpdateSoundQualityExportSndWindow(theDialog);	break;
+				//case 966:	UpdateFileInformations(theDialog);			break;
+				//case 99802:	UpdatePlugsAbout(theDialog);					break;
 			}
 			
 			return false;
 		}
-		//DoUpdateEvent( theEvt);
+		//DoUpdateEvent(theEvt);
 		
 		*itemHit = -updateEvt;
 		
-		return( true);
+		return(true);
 	}
 	else if(theEvent->what == mouseDown)
 	{
-		thePart = FindWindow( theEvent->where, &whichWindow);
+		thePart = FindWindow(theEvent->where, &whichWindow);
 		
 		if (thePart == inDrag)
 		{
 			BitMap		screenBits;
 			
-			if (whichWindow != GetDialogWindow( theDialog)) return( false);
+			if (whichWindow != GetDialogWindow(theDialog)) return(false);
 			
-			GetQDGlobalsScreenBits( &screenBits);
+			GetQDGlobalsScreenBits(&screenBits);
 			
-			DragWindow( whichWindow, theEvent->where, &screenBits.bounds);
-			return( true);
+			DragWindow(whichWindow, theEvent->where, &screenBits.bounds);
+			return(true);
 		}
-		else return( false);
+		else return(false);
 	}
 	else if (theEvent->what == keyDown)
 	{
-		switch ( (theEvent->message) & charCodeMask )
+		switch ((theEvent->message) & charCodeMask )
 		{
 			case 0x0d:
 			case 0x03:
 				*itemHit = 1;
-				return( true );
+				return(true );
 			case 0x1b:
 				*itemHit = 2;
-				return( true );
+				return(true );
 			default:
-				return( false );
+				return(false );
 		}
 	}
 	else if (theEvent->what == nullEvent)
@@ -240,29 +240,29 @@ static Boolean PPModalDialogRep(DialogRef theDialog, EventRecord *theEvent, Dial
 		//LoopSet = thePrefs.LoopType;
 		//thePrefs.LoopType = 4;
 		
-		//if (GetWRefCon( GetDialogWindow( theDlg)) != 9996) DoGlobalNull();
+		//if (GetWRefCon(GetDialogWindow(theDlg)) != 9996) DoGlobalNull();
 		
 		//thePrefs.LoopType = LoopSet;
 		
-		/*GetCurrentProcess( &PSN);
+		/*GetCurrentProcess(&PSN);
 		 if(	PSN.highLongOfPSN != playerPROPSN.highLongOfPSN ||
 		 PSN.lowLongOfPSN != playerPROPSN.lowLongOfPSN)
 		 {
-		 SetFrontProcess( &playerPROPSN);
+		 SetFrontProcess(&playerPROPSN);
 		 }*/
 		
 		*itemHit = -5;
-		return( true );
+		return(true );
 	}
 	/*	else if (theEvt->what == activateEvt)
 	 {
 	 if (AHelpDlog != NULL)
 	 {
-	 if (MacIsWindowVisible( GetDialogWindow( AHelpDlog))) ActivateProcedure( true);
+	 if (MacIsWindowVisible(GetDialogWindow(AHelpDlog))) ActivateProcedure(true);
 	 }
 	 }	*/
 	
-	return( false);
+	return(false);
 }
 
 static OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
@@ -271,15 +271,15 @@ static OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	short				itemHit, mode;
 	Str255				tStr;
 	
-	myDia = GetNewDialog( 128, NULL, (WindowPtr) -1L);
-	SetPortDialogPort( myDia);
-	AutoPosition( myDia);
+	myDia = GetNewDialog(128, NULL, (WindowPtr) -1L);
+	SetPortDialogPort(myDia);
+	AutoPosition(myDia);
 	
-	TurnRadio( 7, myDia, true);
+	TurnRadio(7, myDia, true);
 	mode = 7;
 	
-	SetDText( myDia, 3, "\p1");	SetDText( myDia, 4, "\p64");
-	SelectDialogItemText( myDia, 3, 0, 200);
+	SetDText(myDia, 3, "\p1");	SetDText(myDia, 4, "\p64");
+	SelectDialogItemText(myDia, 3, 0, 200);
 	
 	ModalFilterUPP PPModalFilter = NewModalFilterUPP(PPModalDialogRep);
 	
@@ -287,34 +287,34 @@ static OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	{
 	RESTART:
 	
-		ModalDialog( PPModalFilter, &itemHit);
+		ModalDialog(PPModalFilter, &itemHit);
 		
-		switch( itemHit)
+		switch(itemHit)
 		{
 			case 7:
 			case 8:
 			case 9:
 			case 10:
 				
-				TurnRadio( 7, myDia, false);
-				TurnRadio( 8, myDia, false);
-				TurnRadio( 9, myDia, false);
-				TurnRadio( 10, myDia, false);
+				TurnRadio(7, myDia, false);
+				TurnRadio(8, myDia, false);
+				TurnRadio(9, myDia, false);
+				TurnRadio(10, myDia, false);
 				
-				TurnRadio( itemHit, myDia, true);
+				TurnRadio(itemHit, myDia, true);
 				mode = itemHit;
 				
-				switch( itemHit)
+				switch(itemHit)
 				{
-					case 7:		SetDText( myDia, 15, "\pFrom 1 to 64");		SetDText( myDia, 3, "\p1");		SetDText( myDia, 4, "\p64");	break;
-					case 8:		SetDText( myDia, 15, "\pFrom C0 to B7");	SetDText( myDia, 3, "\pC0");	SetDText( myDia, 4, "\pB7");	break;
-					case 9:		SetDText( myDia, 15, "\pFrom 00 to FF");	SetDText( myDia, 3, "\p00");	SetDText( myDia, 4, "\pFF");	break;
-					case 10:	SetDText( myDia, 15, "\pFrom 00 to FF");	SetDText( myDia, 3, "\p00");	SetDText( myDia, 4, "\pFF");	break;
+					case 7:		SetDText(myDia, 15, "\pFrom 1 to 64");		SetDText(myDia, 3, "\p1");		SetDText(myDia, 4, "\p64");	break;
+					case 8:		SetDText(myDia, 15, "\pFrom C0 to B7");	SetDText(myDia, 3, "\pC0");	SetDText(myDia, 4, "\pB7");	break;
+					case 9:		SetDText(myDia, 15, "\pFrom 00 to FF");	SetDText(myDia, 3, "\p00");	SetDText(myDia, 4, "\pFF");	break;
+					case 10:	SetDText(myDia, 15, "\pFrom 00 to FF");	SetDText(myDia, 3, "\p00");	SetDText(myDia, 4, "\pFF");	break;
 				}
 			break;
 		}
 		
-	}while( itemHit != 1 && itemHit != 2);
+	}while(itemHit != 1 && itemHit != 2);
 	
 	if (itemHit == 1)
 	{
@@ -324,53 +324,53 @@ static OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		
 		// Check values
 		
-		switch( mode)
+		switch(mode)
 		{
 			case 7:
-				GetDText( myDia, 3, tStr);		StringToNum( tStr, &from);
-				GetDText( myDia, 4, tStr);		StringToNum( tStr, &to);
+				GetDText(myDia, 3, tStr);		StringToNum(tStr, &from);
+				GetDText(myDia, 4, tStr);		StringToNum(tStr, &to);
 				
-				if (from < 1 || from > 64)	{	SelectDialogItemText( myDia, 3, 0, 200);	SysBeep( 1);	goto RESTART;}
-				if (to < 1 || to > 64)		{	SelectDialogItemText( myDia, 4, 0, 200);	SysBeep( 1);	goto RESTART;}
+				if (from < 1 || from > 64)	{	SelectDialogItemText(myDia, 3, 0, 200);	SysBeep(1);	goto RESTART;}
+				if (to < 1 || to > 64)		{	SelectDialogItemText(myDia, 4, 0, 200);	SysBeep(1);	goto RESTART;}
 			break;
 			
 			case 8:
-				GetDText( myDia, 3, tStr);		from 	= Text2Note( tStr);
-				GetDText( myDia, 4, tStr);		to 		= Text2Note( tStr);
+				GetDText(myDia, 3, tStr);		from 	= Text2Note(tStr);
+				GetDText(myDia, 4, tStr);		to 		= Text2Note(tStr);
 				
-				if (from < 0 || from >= 96)	{	SelectDialogItemText( myDia, 3, 0, 200);	SysBeep( 1);	goto RESTART;}
-				if (to < 0 || to >= 96)		{	SelectDialogItemText( myDia, 4, 0, 200);	SysBeep( 1);	goto RESTART;}
+				if (from < 0 || from >= 96)	{	SelectDialogItemText(myDia, 3, 0, 200);	SysBeep(1);	goto RESTART;}
+				if (to < 0 || to >= 96)		{	SelectDialogItemText(myDia, 4, 0, 200);	SysBeep(1);	goto RESTART;}
 			break;
 			
 			case 9:
-				GetDText( myDia, 3, tStr);		StringToHex( tStr, &from);
-				GetDText( myDia, 4, tStr);		StringToHex( tStr, &to);
+				GetDText(myDia, 3, tStr);		StringToHex(tStr, &from);
+				GetDText(myDia, 4, tStr);		StringToHex(tStr, &to);
 				
-				if (from < 0 || from > 0xFF)	{	SelectDialogItemText( myDia, 3, 0, 200);	SysBeep( 1);	goto RESTART;}
-				if (to < 0 || to > 0xFF)		{	SelectDialogItemText( myDia, 4, 0, 200);	SysBeep( 1);	goto RESTART;}
+				if (from < 0 || from > 0xFF)	{	SelectDialogItemText(myDia, 3, 0, 200);	SysBeep(1);	goto RESTART;}
+				if (to < 0 || to > 0xFF)		{	SelectDialogItemText(myDia, 4, 0, 200);	SysBeep(1);	goto RESTART;}
 			break;
 			
 			case 10:
-				GetDText( myDia, 3, tStr);		StringToHex( tStr, &from);
-				GetDText( myDia, 4, tStr);		StringToHex( tStr, &to);
+				GetDText(myDia, 3, tStr);		StringToHex(tStr, &from);
+				GetDText(myDia, 4, tStr);		StringToHex(tStr, &to);
 				
-				if (from < 0 || from > 0xFF)	{	SelectDialogItemText( myDia, 3, 0, 200);	SysBeep( 1);	goto RESTART;}
-				if (to < 0 || to > 0xFF)		{	SelectDialogItemText( myDia, 4, 0, 200);	SysBeep( 1);	goto RESTART;}
+				if (from < 0 || from > 0xFF)	{	SelectDialogItemText(myDia, 3, 0, 200);	SysBeep(1);	goto RESTART;}
+				if (to < 0 || to > 0xFF)		{	SelectDialogItemText(myDia, 4, 0, 200);	SysBeep(1);	goto RESTART;}
 			break;
 		}
 		
-		GetDText( myDia, 11, tStr);		StringToNum( tStr, &step);
-		if (step < 1 || step > 64)	{	SelectDialogItemText( myDia, 11, 0, 200);	SysBeep( 1);	goto RESTART;}
+		GetDText(myDia, 11, tStr);		StringToNum(tStr, &step);
+		if (step < 1 || step > 64)	{	SelectDialogItemText(myDia, 11, 0, 200);	SysBeep(1);	goto RESTART;}
 		
 		for (track = 0; track < myPcmd->tracks; track ++)
 		{
 			for (row = 0; row < myPcmd->length; row += step)
 			{
-				myCmd = MADGetCmd( row, track, myPcmd);
+				myCmd = MADGetCmd(row, track, myPcmd);
 				
 				if (myPcmd->length > 1)			// no zero div !!
 				{
-					switch( mode)
+					switch(mode)
 					{
 						case 7:		myCmd->ins	= from + ((to-from) * row) / (myPcmd->length-1);	break;
 						case 8:		myCmd->note = from + ((to-from) * row) / (myPcmd->length-1);	break;
@@ -382,7 +382,7 @@ static OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 		}
 	}
 	
-	DisposeDialog( myDia);
+	DisposeDialog(myDia);
 		
 	return noErr;
 }

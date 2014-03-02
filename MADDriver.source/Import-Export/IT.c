@@ -260,7 +260,7 @@ static OSErr DecompressSample(short bits, Ptr reader, size_t length, Ptr destPtr
 			if(!(result=read_itcompr16(&status, &reader, (short*)destPtr, stodo, &incnt)))
 				return 1;
 		} else {
-			if(!(result=read_itcompr8( &status, &reader, (Byte*) destPtr, stodo, &incnt)))
+			if(!(result=read_itcompr8(&status, &reader, (Byte*) destPtr, stodo, &incnt)))
 				return 1;
 		}
 		
@@ -322,13 +322,16 @@ static void ConvertITEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short channe
 		case 'D':
 			if (LoB1 == 0 || HiB1 == 0) {	// Slide volume
 			
-				*Cmd = slidevolE;		*Arg = B1;
+				*Cmd = slidevolE;
+				*Arg = B1;
 				
-				/*	if (*Arg == 0)				// Use last command
-				 {
-				 *Arg = LastAEffect[ channel];
-				 }
-				 else LastAEffect[ channel] = *Arg;*/
+#if 0
+				if (*Arg == 0)				// Use last command
+				{
+					*Arg = LastAEffect[channel];
+				}
+				else LastAEffect[channel] = *Arg;
+#endif
 			} else if (HiB1 == 0x0F) {		// Fine Slide volume DOWN
 				*Cmd = extendedE;
 				*Arg = 11 << 4;
@@ -621,7 +624,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	Ptr					theInstrument[256];
 	Byte				tempChar, *theITCopy;
 	short				maxTrack;
-	//short				ITperiod[ 12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
+	//short				ITperiod[12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
 	Boolean				useLinear;
 	
 	/**** Variables pour le MAD ****/
@@ -637,7 +640,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	/**** Header principal *****/
 	theITCopy = (Byte*) theIT;
 	
-	memcpy(&ITinfo, theITCopy, sizeof( ITinfo));
+	memcpy(&ITinfo, theITCopy, sizeof(ITinfo));
 	theITCopy += 192;
 	
 	PPLE16(&ITinfo.orderNum);
@@ -706,7 +709,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 			theITCopy = (Byte*) theIT;
 			theITCopy += ITinfo.parapins[i];
 			
-			memcpy( &ITinfo.insdata[i], theITCopy, sizeof( ITInsForm));
+			memcpy(&ITinfo.insdata[i], theITCopy, sizeof(ITInsForm));
 			
 			if (!ITcompMem((Ptr)&ITinfo.insdata[i].ID, "IMPI", 4)) {
 				free(ITinfo.orders);
@@ -779,7 +782,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	theMAD->header->tempo			= ITinfo.iTempo;
 	theMAD->header->XMLinear		= useLinear;
 	
-	//for(i=0; i<256; i++) theMAD->header->oPointers[ i] = 0;
+	//for(i=0; i<256; i++) theMAD->header->oPointers[i] = 0;
 	for(i = 0; i < ITinfo.orderNum; i++) {
 		theMAD->header->oPointers[i] = ITinfo.orders[i];
 		
@@ -849,7 +852,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 				
 				// Instrument conversion
 				
-				curIns->numSamples	= 0;	//ITinfo.insdata[ i].NoS;
+				curIns->numSamples	= 0;	//ITinfo.insdata[i].NoS;
 				PPLE16(&ITinfo.insdata[i].FadeOut);
 				
 				for (x = 0; x < 26; x++)
@@ -870,11 +873,11 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 						if (x >= 12 && x < 96+12) {
 							curIns->what[x-12] = ITinfo.insdata[i].keyMap[x].samp - 1 - minSamp;
 #if 0
-							if (ITinfo.insdata[ i].keyMap[ x].note != x) {
+							if (ITinfo.insdata[i].keyMap[x].note != x) {
 								Str32	str;
 								
-								NumToString( ITinfo.insdata[ i].keyMap[ x].note, str);
-								DebugStr( str);
+								NumToString(ITinfo.insdata[i].keyMap[x].note, str);
+								DebugStr(str);
 							}
 #endif
 						}
@@ -930,17 +933,14 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 							}
 							
 							
-							curData->relNote	= ((Byte) ITinfo.insdata[ i].keyMap[ zz].note) -zz;// - 12;
+							curData->relNote	= ((Byte) ITinfo.insdata[i].keyMap[zz].note) -zz;// - 12;
 							
 							/*
-							 if (((Byte) ITinfo.insdata[ i].keyMap[ zz].note))
+							 if (((Byte) ITinfo.insdata[i].keyMap[zz].note))
 							 {
-							 curData->relNote	= ((Byte) ITinfo.insdata[ i].keyMap[ zz].note) - zz;
+							 curData->relNote	= ((Byte) ITinfo.insdata[i].keyMap[zz].note) - zz;
 							 }
 							 else curData->relNote = -12;*/
-							
-							//	NumToString( ITinfo.insdata[ i].keyMap[ zz].note, str);
-							//	DebugStr( str);
 							
 							for (z = 0; z < 26; z++)
 								curData->name[z] = ITinfo.sampdata[prevSamp].SampName[z];
@@ -985,12 +985,6 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 									}
 								}
 								
-								if ((ITinfo.sampdata[prevSamp].Convert & 2)) {
-									//Str255 str;
-									//NumToString( i, str);
-									//DebugStr( str);
-								}
-								
 								if ((ITinfo.sampdata[prevSamp].Convert & 4)) {		// Delta values -> Real
 									if (curData->amp == 16) {
 										short *tt;
@@ -1026,12 +1020,6 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 											curData->data[xL] = newV;
 										}
 									}
-								}
-								
-								if ((ITinfo.sampdata[ prevSamp].Convert & 8)) {
-									//Str255 str;
-									//NumToString( i, str);
-									//DebugStr( str);
 								}
 							}
 							curIns->numSamples++;
@@ -1095,7 +1083,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 					if (ITinfo.sampdata[i].Flag & 8) {	// Compressed Sample
 						OSErr	err;
 						
-						err = DecompressSample(curData->amp, theInstrument[ i], curData->size, curData->data);
+						err = DecompressSample(curData->amp, theInstrument[i], curData->size, curData->data);
 						
 						if (err) {
 							size_t temp;
@@ -1121,9 +1109,9 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 						
 						for (temp = 0; temp < curData->size/2; temp++)
 						{
-							PPLE16(  &( (tempShort[ temp])));
+							PPLE16(&((tempShort[temp])));
 							
-							if (!(ITinfo.sampdata[ i].Convert & 1)) *(tempShort + temp) -= 0x8000;
+							if (!(ITinfo.sampdata[i].Convert & 1)) *(tempShort + temp) -= 0x8000;
 						}
 					}
 #endif
@@ -1152,7 +1140,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 		}
 	}
 	//	*********************
-	//	*           Check MaxTrack         *
+	//	*   Check MaxTrack  *
 	//	*********************
 	
 	maxTrack = 0;
@@ -1168,7 +1156,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 			
 			if (ITinfo.parappat[i] > 0) {
 				Ptr 			curDataPat = curITPat->data;
-				char			maskvariable = 0, prevmaskvariable[ MAXTRACK];
+				char			maskvariable = 0, prevmaskvariable[MAXTRACK];
 				Boolean			NeedChannelToRead = true;
 				short			xx, newmaxTrack;
 				
@@ -1303,7 +1291,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 			theMAD->partition[i]->header.size 		= DEFSIZE;
 			theMAD->partition[i]->header.compMode 	= 'NONE';
 			
-			strlcpy(theMAD->partition[i]->header.name, "Not used pattern", sizeof(theMAD->partition[ i]->header.name));
+			strlcpy(theMAD->partition[i]->header.name, "Not used pattern", sizeof(theMAD->partition[i]->header.name));
 			
 			for (Row = 0; Row < DEFSIZE; Row++) {
 				for(z = 0; z < theMAD->header->numChn; z++) {
@@ -1320,7 +1308,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 		
 		if (ITinfo.parappat[i]) {
 			Ptr 		curDataPat = curITPat->data;
-			char		maskvariable = 0, prevmaskvariable[ MAXTRACK];
+			char		maskvariable = 0, prevmaskvariable[MAXTRACK];
 			Boolean		NeedChannelToRead = true;
 			
 			char		lastnote[MAXTRACK], lastins[MAXTRACK], lastvol[MAXTRACK], lastcmd[MAXTRACK], lasteff[MAXTRACK];
@@ -1480,7 +1468,7 @@ static OSErr ExtractITInfo(PPInfoRec *info, void *AlienFile)
 	
 	/*** Tracks ***/
 	
-	//info->totalTracks	 = PPLE16(  &ITinfo.insNum);
+	//info->totalTracks	 = PPLE16( &ITinfo.insNum);
 	
 	strlcpy(info->formatDescription, "IT Plug", sizeof(info->formatDescription));
 	
@@ -1537,7 +1525,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 				// ** MEMORY Test End
 				
 				else {
-					free( AlienFile);
+					free(AlienFile);
 					
 					AlienFile = (Ptr)malloc(sndSize);
 					if (AlienFile == NULL)
@@ -1571,7 +1559,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					if(myErr == noErr)
 						myErr = TestITFile(AlienFile);
 					
-					free( AlienFile);
+					free(AlienFile);
 					AlienFile = NULL;
 				}
 				iClose(iFileRefI);

@@ -27,7 +27,7 @@
 					if (myCmd->note != 0xFF && myCmd->note != 0xFE) {	// no notes = 0xFF
 						if (myCmd->note + trans < 0)
 							myCmd->note = 0;
-						else if ( myCmd->note + trans >= 96)
+						else if (myCmd->note + trans >= 96)
 							myCmd->note = 96-1;
 						else
 							myCmd->note += trans;

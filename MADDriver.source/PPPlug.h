@@ -33,14 +33,13 @@
 
 typedef OSErr (*RPlaySoundUPP)(MADDriverRec *theRec, char *, long, int, int, int, long, long, unsigned int, Boolean);
 
-typedef struct _Pcmd
-{
-	short			tracks;					// number of tracks in myCmd[]
-	short			length;					// number of rows in myCmd[]
-	short			trackStart;				// track ID of first track in myCmd[]
-	short			posStart;				// row ID of first row in myCmd[]
-	int				structSize;				// struct size in bytes - see Definition
-	Cmd				myCmd[];
+typedef struct _Pcmd {
+	short	tracks;		// number of tracks in myCmd[]
+	short	length;		// number of rows in myCmd[]
+	short	trackStart;	// track ID of first track in myCmd[]
+	short	posStart;	// row ID of first row in myCmd[]
+	int		structSize;	// struct size in bytes - see Definition
+	Cmd		myCmd[];
 } Pcmd;
 
 #ifdef __cplusplus
@@ -89,8 +88,7 @@ PPEXPORT const CFStringRef kMadPlugModeKey;
 }
 #endif
 
-typedef struct _PPInfoPlug
-{
+typedef struct _PPInfoPlug {
 	RPlaySoundUPP RPlaySound;
 	MADDriverRec *driverRec;
 	OSType fileType;
@@ -104,7 +102,7 @@ typedef struct _PPInfoPlug
 //	*****************	FILTERS FOR SAMPLES/SOUNDS	***************/
 //
 //	Your main function have to be in this form:
-//	OSErr main( 	sData					*theData,					// Sample informations, see MAD.h
+//	OSErr main(sData					*theData,					// Sample informations, see MAD.h
 //					long					SelectionStart,				// SelectionStart
 //					long					SelectionEnd,				// SelectionEnd, your filter SHOULD apply his effect only on the selection
 //					PPInfoPlug				*thePPInfoPlug				// Some functions of PlayerPRO that you can use in your plugs
@@ -141,7 +139,7 @@ typedef struct _PPFiltersPlugin {
 //******************* INSTRUMENTS IMPORT/EXPORT PLUGS  ************/
 //
 //	Your main function have to be in this form:
-//	OSErr main( 	OSType					order,			// Order to execute
+//	OSErr main(OSType					order,			// Order to execute
 //					InstrData				*InsHeader,		// Ptr on instrument header
 //					sData					**sample,		// Ptr on samples data
 //					short					*sampleID,		// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
@@ -169,7 +167,7 @@ typedef struct _PPFiltersPlugin {
 
 typedef struct _PPInstrumentPlugin {
     IUNKNOWN_C_GUTS;
-	OSErr (STDMETHODCALLTYPE *InstrMain)(void* thisInterface, OSType,  InstrData*, sData**, short*, CFURLRef, PPInfoPlug*);
+	OSErr (STDMETHODCALLTYPE *InstrMain)(void* thisInterface, OSType, InstrData*, sData**, short*, CFURLRef, PPInfoPlug*);
 } PPInstrumentPlugin;
 
 #pragma mark Digital Editor Plugs
@@ -178,7 +176,7 @@ typedef struct _PPInstrumentPlugin {
 //******************* DIGITAL EDITOR PLUGS  ***********************/
 //
 //	Your main function have to be in this form:
-//	OSErr main( 	Pcmd					*Pcmd,						// Digital Selection
+//	OSErr main(Pcmd					*Pcmd,						// Digital Selection
 //					PPInfoPlug				*thePPInfoPlug)				// Some functions of PlayerPRO that you can use in your plugs
 //
 //

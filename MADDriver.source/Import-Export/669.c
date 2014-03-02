@@ -272,7 +272,7 @@ static OSErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MAD
 					return MADIncompatibleFile;
 				}
 				
-				thePasByte = ( Byte*) theCommand;
+				thePasByte = (Byte*) theCommand;
 				
 				if (thePasByte[0] == 0xFF) {
 					aCmd->cmd 	= 0;
@@ -377,7 +377,7 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 #endif
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr main669( OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+OSErr main669(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
 extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif

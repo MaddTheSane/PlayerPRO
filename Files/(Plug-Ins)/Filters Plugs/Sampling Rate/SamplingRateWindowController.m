@@ -64,7 +64,7 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
 				} else {
 					pos >>= LRVAL;
 					
-					if ( 1 + pos >= srcSize) {
+					if (1 + pos >= srcSize) {
 						
 					} else
 						tempL = (left * src8[pos] + right * src8[1 + pos]) >> LRVAL;

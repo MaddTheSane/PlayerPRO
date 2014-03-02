@@ -56,7 +56,7 @@ static OSErr mainMix(void			*unused,
 	
 	
 	
-	if ( lCntOrErr > 0) {
+	if (lCntOrErr > 0) {
 		NSString * instrumentStr = [[NSString alloc] initWithCString:theData->name encoding:NSMacOSRomanStringEncoding];
 		
 		MixWindowController *controller = [[MixWindowController alloc] initWithWindowNibName:@"MixWindowController"];
@@ -69,9 +69,9 @@ static OSErr mainMix(void			*unused,
 			long	i, length1, length2, resultLength, temp1, temp2;
 			Ptr		clipPtr, resultPtr;
 			
-			HLock( aHandle);
-			GetScrapFlavorData( scrap, soundListRsrc, &lCntOrErr, *aHandle);
-			HUnlock( aHandle);
+			HLock(aHandle);
+			GetScrapFlavorData(scrap, soundListRsrc, &lCntOrErr, *aHandle);
+			HUnlock(aHandle);
 			
 			HLockHi(aHandle);
 			
@@ -91,14 +91,14 @@ static OSErr mainMix(void			*unused,
 					
 					length1 = theData->size - SelectionStart;
 					
-					resultLength = SelectionStart + max( length1, length2);
+					resultLength = SelectionStart + max(length1, length2);
 					resultPtr = NewPtr(resultLength);
 					
 					worgPtr = theData->data; wclipPtr = clipPtr;
 					for (i = 0; i < SelectionStart; i++) // first pass to get max value.
 					{
 						temp1 = *worgPtr++;
-						peak = max( peak, labs( gp1 * temp1));
+						peak = max(peak, labs(gp1 * temp1));
 					}
 					for (i = 0; i < (resultLength - SelectionStart); i++)
 					{
@@ -109,7 +109,7 @@ static OSErr mainMix(void			*unused,
 							temp2 = (*wclipPtr & 0xFF) - 0x80;
 						} else temp2 = 0;
 						
-						peak = max( peak, labs((gp1 * temp1) + (gp2 * temp2)));
+						peak = max(peak, labs((gp1 * temp1) + (gp2 * temp2)));
 						
 						worgPtr++;
 						wclipPtr++;

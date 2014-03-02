@@ -46,10 +46,10 @@ OSErr CheckMADFile(const char *name)
 	else {
 		iRead(10, charl, refNum);
 		
-		if(charl[ 0] == 'M' &&
-		   charl[ 1] == 'A' &&
-		   charl[ 2] == 'D' &&
-		   charl[ 3] == 'K')
+		if(charl[0] == 'M' &&
+		   charl[1] == 'A' &&
+		   charl[2] == 'D' &&
+		   charl[3] == 'K')
 			err = noErr;
 		else
 			err = MADIncompatibleFile;

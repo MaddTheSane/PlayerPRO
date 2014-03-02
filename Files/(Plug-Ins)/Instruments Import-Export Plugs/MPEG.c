@@ -17,12 +17,11 @@ OSErr main(		OSType					order,						// Order to execute
 	Ptr		AlienFile;
 	UNFILE	iFileRefI;
 	long	inOutBytes;
-		
-	switch( order)
-	{
+	
+	switch (order) {
 		case 'PLAY':
-		break;
-		
+			break;
+			
 		case 'IMPL':
 		{
 			Ptr				theSound;
@@ -32,37 +31,37 @@ OSErr main(		OSType					order,						// Order to execute
 			Boolean			stereo;
 			FSSpec			newFile;
 			
-			myErr = ConvertDataToWAVE( *AlienFileFSSpec, &newFile, thePPInfoPlug);
+			myErr = ConvertDataToWAVE(*AlienFileFSSpec, &newFile, thePPInfoPlug);
 			if (myErr == noErr)
 			{
-				theSound = ConvertWAV( &newFile, &lS, &lE, &sS, &rate, &stereo);
+				theSound = ConvertWAV(&newFile, &lS, &lE, &sS, &rate, &stereo);
 				
-				if (theSound) inAddSoundToMAD( theSound, lS, lE, sS, 60, rate, stereo, newFile.name, InsHeader, sample, sampleID);
+				if (theSound) inAddSoundToMAD(theSound, lS, lE, sS, 60, rate, stereo, newFile.name, InsHeader, sample, sampleID);
 				else myErr = MADNeedMemory;
 				
-				FSpDelete( &newFile);
+				FSpDelete(&newFile);
 			}
 		}
-		break;
-		
+			break;
+			
 		case 'TEST':
 		{
 			FInfo fInfo;
 			
-			FSpGetFInfo( AlienFileFSSpec, &fInfo);
+			FSpGetFInfo(AlienFileFSSpec, &fInfo);
 			
 			if (fInfo.fdType == 'MPEG') myErr = noErr;
 			else myErr = MADFileNotSupportedByThisPlug;
 		}
-		break;
-		
+			break;
+			
 		case 'EXPL':
-		break;
-		
+			break;
+			
 		default:
 			myErr = MADOrderNotImplemented;
-		break;
+			break;
 	}
-		
+	
 	return myErr;
 }

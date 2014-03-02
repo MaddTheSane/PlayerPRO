@@ -59,7 +59,7 @@ void Settings()
 	
 	InitCursor();
 	
-	aDialog = GetNewDialog( MIDIImpDlog, NULL, (WindowPtr) -1L);
+	aDialog = GetNewDialog(MIDIImpDlog, NULL, (WindowPtr) -1L);
 	
 	SetPortDialogPort(aDialog);
 	SetDialogDefaultItem(aDialog, 1);
@@ -75,7 +75,7 @@ void Settings()
 	
 	do {
 	reZo:
-		ModalDialog( NULL, &itemHit);
+		ModalDialog(NULL, &itemHit);
 		
 		switch(itemHit)
 		{
@@ -100,13 +100,13 @@ void Settings()
 	
 	wMaxchan = r;
 	
-	GetDialogItem( aDialog, 5, &itemType, &itemHandle, &itemRect);
+	GetDialogItem(aDialog, 5, &itemType, &itemHandle, &itemRect);
 	if (GetControlValue((ControlHandle)itemHandle))
 		UseQKIns = true;
 	else
 		UseQKIns = false;
 	
-	DisposeDialog( aDialog);
+	DisposeDialog(aDialog);
 }
 
 /*

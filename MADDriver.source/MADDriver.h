@@ -71,10 +71,10 @@ struct __MADDriverRec {
 	SInt32			BytesToRemoveAtEnd, MIN_PITCH, MAX_PITCH, MOD_MIN_PITCH, MOD_MAX_PITCH, ASCBUFFERReal;
 	short			smallcounter, trackDiv;
 	SInt32			FREQBASE;
-	short			InstruActif[ MAXINSTRU];
+	short			InstruActif[MAXINSTRU];
 	char			*IntDataPtr;
-	void			*OsciDrawPtr[ MAXDRAW];
-	Boolean			newData[ MAXDRAW];
+	void			*OsciDrawPtr[MAXDRAW];
+	Boolean			newData[MAXDRAW];
 	Boolean			useOsciBuffers;
 	short			curDrawPtr;
 	unsigned long	curTime;

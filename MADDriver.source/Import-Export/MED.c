@@ -71,9 +71,9 @@ static MMD1NOTE 	*mmd1pat;
 
 
 static Ptr			theMEDRead;
-#define READMEDFILE(dst, size)	{memcpy( dst, theMEDRead, size);	theMEDRead += (long) size;}
+#define READMEDFILE(dst, size)	{memcpy(dst, theMEDRead, size);	theMEDRead += (long) size;}
 
-static BOOL MED_Init( MADDriverSettings *init)
+static BOOL MED_Init(MADDriverSettings *init)
 {
 	mh=NULL;
 	ms=NULL;
@@ -81,8 +81,8 @@ static BOOL MED_Init( MADDriverSettings *init)
 	mmd0pat=NULL;
 	mmd1pat=NULL;
 	
-	if(!(mh=(MMD0 *) malloc( sizeof(MMD0)))) return 0;
-	if(!(ms=(MMD0song *) malloc( sizeof(MMD0song)))) return 0;
+	if(!(mh=(MMD0 *) malloc(sizeof(MMD0)))) return 0;
+	if(!(ms=(MMD0song *) malloc(sizeof(MMD0song)))) return 0;
 	return 1;
 }
 
@@ -90,33 +90,33 @@ static void MED_Cleanup(void)
 {
 	if(mh != NULL)
 	{
-		free( mh);
+		free(mh);
 		mh = NULL;
 	}
 	if(ms != NULL)
 	{
-		free( ms);
+		free(ms);
 		ms = NULL;
 	}
 	if(ba != NULL)
 	{
-		free( ba);
+		free(ba);
 		ba = NULL;
 	}
 	
 	if(mmd0pat != NULL)
 	{
-		free( mmd0pat);
+		free(mmd0pat);
 		mmd0pat = NULL;
 	}
 	if(mmd1pat != NULL)
 	{
-		free( mmd1pat);
+		free(mmd1pat);
 		mmd1pat = NULL;
 	}
 }
 
-static void EffectCvt( UBYTE eff, UBYTE dat, Cmd *aCmd)
+static void EffectCvt(UBYTE eff, UBYTE dat, Cmd *aCmd)
 {
 	switch(eff){
 			
@@ -183,14 +183,14 @@ static void EffectCvt( UBYTE eff, UBYTE dat, Cmd *aCmd)
 	}
 }
 
-static void MED_Convert1( short col, short patID, MADMusic *theMAD)
+static void MED_Convert1(short col, short patID, MADMusic *theMAD)
 {
 	int t;
 	UBYTE a,b,c,d,inst,note,eff,dat;
 	MMD1NOTE *n;
 	Cmd	*aCmd;
 	
-	for(t=0;t<theMAD->partition[ patID]->header.size;t++){
+	for(t=0;t<theMAD->partition[patID]->header.size;t++){
 		
 		n= &d1note(t,col);
 		
@@ -204,7 +204,7 @@ static void MED_Convert1( short col, short patID, MADMusic *theMAD)
 		eff=c&0xf;
 		dat=d;
 		
-		aCmd = GetMADCommand( t, col, theMAD->partition[ patID]);
+		aCmd = GetMADCommand(t, col, theMAD->partition[patID]);
 		
 		aCmd->ins 	= inst;
 		if(note != 0)
@@ -217,24 +217,24 @@ static void MED_Convert1( short col, short patID, MADMusic *theMAD)
 		aCmd->arg 	= 0;
 		aCmd->vol	= 0xFF;
 		
-		EffectCvt( eff, dat, aCmd);
+		EffectCvt(eff, dat, aCmd);
 	}
 }
 
 
 
-static void MED_Convert0( short patID, MADMusic *theMAD)
+static void MED_Convert0(short patID, MADMusic *theMAD)
 {
 	int 		t, zz;
 	UBYTE 		a,b,c,inst,note,eff,dat/*, temp*/;
 	MMD0NOTE 	*n;
 	Cmd			*aCmd;
 	
-	for (t = 0 ; t < theMAD->partition[ patID]->header.size; t++)
+	for (t = 0 ; t < theMAD->partition[patID]->header.size; t++)
 	{
 		for (zz = 0 ; zz < theMAD->header->numChn; zz++)
 		{
-			n= &d0note( t, zz);
+			n= &d0note(t, zz);
 			
 			a = n->a;
 			b = n->b;
@@ -249,7 +249,7 @@ static void MED_Convert0( short patID, MADMusic *theMAD)
 			eff		=		b&0xf;
 			dat		=		c;
 			
-			aCmd = GetMADCommand( t, zz, theMAD->partition[ patID]);
+			aCmd = GetMADCommand(t, zz, theMAD->partition[patID]);
 			
 			aCmd->ins 	= inst;
 			
@@ -263,12 +263,12 @@ static void MED_Convert0( short patID, MADMusic *theMAD)
 			aCmd->arg 	= 0;
 			aCmd->vol	= 0xFF;
 			
-			EffectCvt( eff, dat, aCmd);
+			EffectCvt(eff, dat, aCmd);
 		}
 	}
 }
 
-static OSErr LoadMMD0Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *init)
+static OSErr LoadMMD0Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *init)
 {
 	int 		t, row /*,col*/;
 	UWORD 		numtracks, numlines, maxlines=0;
@@ -279,15 +279,15 @@ static OSErr LoadMMD0Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 	
 	for (t = 0; t < theMAD->header->numPat; t++)
 	{
-		theMEDRead = theMED + ba[ t];
-		READMEDFILE( &tC, sizeof( char));	numtracks = tC;
-		READMEDFILE( &tC, sizeof( char));	numlines = tC;
+		theMEDRead = theMED + ba[t];
+		READMEDFILE(&tC, sizeof(char));	numtracks = tC;
+		READMEDFILE(&tC, sizeof(char));	numlines = tC;
 		
 		if(numtracks > theMAD->header->numChn) theMAD->header->numChn = numtracks;
 		if(numlines  > maxlines) maxlines = numlines;
 	}
 	
-	mmd0pat = (MMD0NOTE *) calloc( theMAD->header->numChn * (maxlines+1) * sizeof(MMD0NOTE), 1);
+	mmd0pat = (MMD0NOTE *) calloc(theMAD->header->numChn * (maxlines+1) * sizeof(MMD0NOTE), 1);
 	if (mmd0pat == NULL) //Debugger();
 		return MADNeedMemory;
 	
@@ -296,23 +296,23 @@ static OSErr LoadMMD0Patterns( MADMusic *theMAD, Ptr theMED, MADDriverSettings *
 	
 	for (t = 0 ; t < theMAD->header->numPat; t++)
 	{
-		theMEDRead = theMED + ba[ t];
-		READMEDFILE( &tC, sizeof( char));	numtracks = tC;
-		READMEDFILE( &tC, sizeof( char));	numlines = tC;
+		theMEDRead = theMED + ba[t];
+		READMEDFILE(&tC, sizeof(char));	numtracks = tC;
+		READMEDFILE(&tC, sizeof(char));	numlines = tC;
 		
 		numlines++;
 		
-		theMAD->partition[ t] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * numlines * sizeof( Cmd), 1);
-		if (theMAD->partition[ t] == NULL) return MADNeedMemory;
+		theMAD->partition[t] = (PatData*) calloc(sizeof(PatHeader) + theMAD->header->numChn * numlines * sizeof(Cmd), 1);
+		if (theMAD->partition[t] == NULL) return MADNeedMemory;
 		
-		theMAD->partition[ t]->header.size 		= numlines;
-		theMAD->partition[ t]->header.compMode 	= 'NONE';
+		theMAD->partition[t]->header.size 		= numlines;
+		theMAD->partition[t]->header.compMode 	= 'NONE';
 		
-		for (x = 0; x < 20; x++) theMAD->partition[ t]->header.name[ x] = 0;
+		for (x = 0; x < 20; x++) theMAD->partition[t]->header.name[x] = 0;
 		
-		theMAD->partition[ t]->header.patBytes = 0;		theMAD->partition[ t]->header.unused2 = 0;
+		theMAD->partition[t]->header.patBytes = 0;		theMAD->partition[t]->header.unused2 = 0;
 		
-		//memset( mmd0pat, 0, of.numchn * maxlines * sizeof(MMD0NOTE));
+		//memset(mmd0pat, 0, of.numchn * maxlines * sizeof(MMD0NOTE));
 		
 		for (x = 0; x < theMAD->header->numChn * maxlines * sizeof(MMD0NOTE); x++) {
 			((Ptr)mmd0pat)[x] = 0;
@@ -341,9 +341,9 @@ static OSErr LoadMMD1Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *i
 	
 	for (t = 0 ; t < theMAD->header->numPat; t++)
 	{
-		theMEDRead = theMED + ba[ t];
-		READMEDFILE( &numtracks, sizeof( short));
-		READMEDFILE( &numlines, sizeof( short));
+		theMEDRead = theMED + ba[t];
+		READMEDFILE(&numtracks, sizeof(short));
+		READMEDFILE(&numlines, sizeof(short));
 		
 		if (numtracks > theMAD->header->numChn) theMAD->header->numChn = numtracks;
 		if (numlines  > maxlines) maxlines = numlines;
@@ -355,7 +355,7 @@ static OSErr LoadMMD1Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *i
 		}
 	}
 	
-	mmd1pat = (MMD1NOTE *) calloc( theMAD->header->numChn * (maxlines+1) * sizeof( MMD1NOTE), 1);
+	mmd1pat = (MMD1NOTE *) calloc(theMAD->header->numChn * (maxlines+1) * sizeof(MMD1NOTE), 1);
 	if (mmd1pat == NULL) //Debugger();
 		return MADNeedMemory;
 	
@@ -364,39 +364,39 @@ static OSErr LoadMMD1Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *i
 	
 	for(t=0;t<theMAD->header->numPat;t++){
 		
-		theMEDRead = theMED + ba[ t];
-		READMEDFILE( &numtracks, sizeof( short));
-		READMEDFILE( &numlines, sizeof( short));
+		theMEDRead = theMED + ba[t];
+		READMEDFILE(&numtracks, sizeof(short));
+		READMEDFILE(&numlines, sizeof(short));
 		
 		theMEDRead += 4L;
 		
 		numlines++;
 		
-		theMAD->partition[ t] = (PatData*) calloc( sizeof( PatHeader) + theMAD->header->numChn * numlines * sizeof( Cmd), 1);
-		if (theMAD->partition[ t] == NULL) return MADNeedMemory;
+		theMAD->partition[t] = (PatData*) calloc(sizeof(PatHeader) + theMAD->header->numChn * numlines * sizeof(Cmd), 1);
+		if (theMAD->partition[t] == NULL) return MADNeedMemory;
 		
-		theMAD->partition[ t]->header.size 		= numlines;
-		theMAD->partition[ t]->header.compMode 	= 'NONE';
+		theMAD->partition[t]->header.size 		= numlines;
+		theMAD->partition[t]->header.compMode 	= 'NONE';
 		
-		for (x = 0; x < 20; x++) theMAD->partition[ t]->header.name[ x] = 0;
+		for (x = 0; x < 20; x++) theMAD->partition[t]->header.name[x] = 0;
 		
-		theMAD->partition[ t]->header.patBytes = 0;		theMAD->partition[ t]->header.unused2 = 0;
+		theMAD->partition[t]->header.patBytes = 0;		theMAD->partition[t]->header.unused2 = 0;
 		
 		
 		
 		for (x = 0; x < theMAD->header->numChn * maxlines * sizeof(MMD0NOTE); x++)
 		{
-			((Ptr) mmd1pat)[ x] = 0;
+			((Ptr) mmd1pat)[x] = 0;
 		}
 		
 		for (row = 0 ; row < numlines ; row++)
 		{
-			READMEDFILE( &d1note( row, 0), sizeof(MMD1NOTE) * numtracks);
+			READMEDFILE(&d1note(row, 0), sizeof(MMD1NOTE) * numtracks);
 		}
 		
 		for(col=0;col< theMAD->header->numChn;col++)
 		{
-			MED_Convert1( col, t, theMAD);
+			MED_Convert1(col, t, theMAD);
 			track++;
 		}
 	}
@@ -404,7 +404,7 @@ static OSErr LoadMMD1Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *i
 	return noErr;
 }
 
-static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSettings *init)
+static OSErr MED_Load(Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	int 		t, i;
 	ULONG 		sa[64];
@@ -417,7 +417,7 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	/** READ MED HEADER **/
 	/*********************/
 	
-	READMEDFILE( mh, sizeof(MMD0));
+	READMEDFILE(mh, sizeof(MMD0));
 	
 	/**************************/
 	/** READ MMD0song struct **/
@@ -427,24 +427,24 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	if (MEDSize < (sizeof(MMD0) + mh->MMD0songP)) {
 		return MADIncompatibleFile;
 	}
-	READMEDFILE( ms, sizeof(MMD0song));
+	READMEDFILE(ms, sizeof(MMD0song));
 	
 	/***************************/
 	/** READ SamplePtr struct **/
 	/***************************/
 	
 	theMEDRead = theMED + mh->InstrHdrPP;
-	READMEDFILE( sa, sizeof(ULONG)*ms->numsamples);
+	READMEDFILE(sa, sizeof(ULONG)*ms->numsamples);
 	
 	/***************************/
 	/**    BLOCK PTR ARRAY    **/
 	/***************************/
 	
-	ba = (ULONG*) calloc( ms->numblocks * sizeof(ULONG), 1);
+	ba = (ULONG*) calloc(ms->numblocks * sizeof(ULONG), 1);
 	if (ba == NULL) return MADNeedMemory;
 	
 	theMEDRead = theMED + mh->MMD0BlockPP;
-	READMEDFILE( ba, sizeof(ULONG)*ms->numblocks);
+	READMEDFILE(ba, sizeof(ULONG)*ms->numblocks);
 	
 	
 	/********************/
@@ -453,14 +453,14 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	/********************/
 	/********************/
 	
-	inOutCount = sizeof( MADSpec);
-	theMAD->header = (MADSpec*) calloc( inOutCount, 1);
+	inOutCount = sizeof(MADSpec);
+	theMAD->header = (MADSpec*) calloc(inOutCount, 1);
 	if (theMAD->header == NULL) //DebugStr("\pHeader: I NEED MEMORY !!! NOW !");
 		return MADNeedMemory;
 	
 	theMAD->header->MAD = 'MADK';
 	
-	strlcpy( theMAD->header->infos, "Converted by PlayerPRO MED Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strlcpy(theMAD->header->infos, "Converted by PlayerPRO MED Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->speed			= 	ms->tempo2;
 	theMAD->header->tempo			=	((SInt32)ms->deftempo * 125L) / 33L;
@@ -473,20 +473,20 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	
 	for (i = 0; i < ms->songlen; i++)
 	{
-		theMAD->header->oPointers[ i] = ms->playseq[ i];
-		if (theMAD->header->oPointers[ i] >= theMAD->header->numPat)
-			theMAD->header->oPointers[ i] = theMAD->header->numPat-1;
+		theMAD->header->oPointers[i] = ms->playseq[i];
+		if (theMAD->header->oPointers[i] >= theMAD->header->numPat)
+			theMAD->header->oPointers[i] = theMAD->header->numPat-1;
 	}
 	
-	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
-	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	theMAD->sets = (FXSets*) calloc(MAXTRACK * sizeof(FXSets), 1);
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[i].copyId = i;
 	
 	for (i = 0; i < MAXTRACK; i++)
 	{
-		if (i % 2 == 0) theMAD->header->chanPan[ i] = MAX_PANNING/4;
-		else theMAD->header->chanPan[ i] = MAX_PANNING - MAX_PANNING/4;
+		if (i % 2 == 0) theMAD->header->chanPan[i] = MAX_PANNING/4;
+		else theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING/4;
 		
-		theMAD->header->chanVol[ i] = MAX_VOLUME;
+		theMAD->header->chanVol[i] = MAX_VOLUME;
 	}
 	
 	theMAD->header->generalVol		= 64;
@@ -497,33 +497,33 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 	/**      SAMPLES INS      **/
 	/***************************/
 	
-	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
+	theMAD->fid = (InstrData*) calloc(sizeof(InstrData) * (long) MAXINSTRU, 1);
 	if (!theMAD->fid) return MADNeedMemory;
 	
-	theMAD->sample = ( sData**) calloc( sizeof( sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
+	theMAD->sample = (sData**) calloc(sizeof(sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
 	if (!theMAD->sample) return MADNeedMemory;
 	
-	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[ i].firstSample = i * MAXSAMPLE;
+	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
 	
 	for (t = 0 ; t < ms->numsamples ; t++)
 	{
-		theMEDRead = theMED + sa[ t];
-		READMEDFILE( &s, sizeof(InstrHdr));
+		theMEDRead = theMED + sa[t];
+		READMEDFILE(&s, sizeof(InstrHdr));
 		
-		theMAD->fid[ t].type = 0;
+		theMAD->fid[t].type = 0;
 		
 		if (s.length > 0 && s.length < 0x4d4d4430)
 		{
 			sData	*curData;
 			
-			theMAD->fid[ t].numSamples = 1;
-			theMAD->fid[ t].volFade = DEFAULT_VOLFADE;
+			theMAD->fid[t].numSamples = 1;
+			theMAD->fid[t].volFade = DEFAULT_VOLFADE;
 			
-			curData = theMAD->sample[ t*MAXSAMPLE + 0] = (sData*) calloc( sizeof( sData), 1);
+			curData = theMAD->sample[t*MAXSAMPLE + 0] = (sData*) calloc(sizeof(sData), 1);
 			
 			curData->size		= s.length;
 			curData->loopBeg 	= ms->sample[t].rep<<1;
-			curData->loopSize 	= curData->loopBeg + (ms->sample[ t].replen<<1);
+			curData->loopSize 	= curData->loopBeg + (ms->sample[t].replen<<1);
 			if (curData->loopBeg + curData->loopSize > curData->size)
 			{
 				curData->loopSize = curData->size - curData->loopBeg;
@@ -535,51 +535,51 @@ static OSErr MED_Load( Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSett
 			
 			curData->relNote	= 0;
 			
-			curData->data 		= (Ptr)malloc( curData->size);
+			curData->data 		= (Ptr)malloc(curData->size);
 			if (curData->data == NULL) return MADNeedMemory;
 			
-			READMEDFILE( curData->data, curData->size);
+			READMEDFILE(curData->data, curData->size);
 		}
-		else theMAD->fid[ t].numSamples = 0;
+		else theMAD->fid[t].numSamples = 0;
 	}
 	
 	/***************************/
 	/**       PATTERNS        **/
 	/***************************/
 	
-	switch( mh->id)
+	switch(mh->id)
 	{
 		case 'MMD0':
-			if (LoadMMD0Patterns( theMAD, theMED, init) != noErr) return MADUnknowErr;
+			if (LoadMMD0Patterns(theMAD, theMED, init) != noErr) return MADUnknowErr;
 			break;
 			
 		case 'MMD1':
-			if (LoadMMD1Patterns( theMAD, theMED, init) != noErr) return MADUnknowErr;
+			if (LoadMMD1Patterns(theMAD, theMED, init) != noErr) return MADUnknowErr;
 			break;
 	}
 	
 	return noErr;
 }
 
-static Boolean compMem( Ptr a, Ptr b, long s)
+static Boolean compMem(Ptr a, Ptr b, long s)
 {
 	long 	i;
 	
 	for (i = 0; i < s; i++)
 	{
-		if (a[ i] != b[ i]) return false;
+		if (a[i] != b[i]) return false;
 	}
 	
 	return true;
 }
 
-static OSErr TestMEDFile( Ptr AlienFile)
+static OSErr TestMEDFile(Ptr AlienFile)
 {
-	if (compMem( AlienFile, "MMD0", 4) == false && compMem( AlienFile, "MMD1", 4) == false) return MADFileNotSupportedByThisPlug;
+	if (compMem(AlienFile, "MMD0", 4) == false && compMem(AlienFile, "MMD1", 4) == false) return MADFileNotSupportedByThisPlug;
 	else return noErr;
 }
 
-static OSErr ExtractMEDInfo( PPInfoRec *info, Ptr theMED)
+static OSErr ExtractMEDInfo(PPInfoRec *info, Ptr theMED)
 {
 	/*long	PatternSize;
 	 short	i;
@@ -589,14 +589,14 @@ static OSErr ExtractMEDInfo( PPInfoRec *info, Ptr theMED)
 	
 	theMEDRead = theMED;
 	
-	READMEDFILE( mh, sizeof(MMD0));
+	READMEDFILE(mh, sizeof(MMD0));
 	
 	theMEDRead = theMED + mh->MMD0songP;
-	READMEDFILE( ms, sizeof(MMD0song));
+	READMEDFILE(ms, sizeof(MMD0song));
 	
 	info->signature = mh->id;
 	
-	//strcpy( info->internalFileName, "");
+	//strcpy(info->internalFileName, "");
 	info->internalFileName[0] = '\0';
 	
 	info->totalPatterns = ms->numblocks;
@@ -604,20 +604,20 @@ static OSErr ExtractMEDInfo( PPInfoRec *info, Ptr theMED)
 	info->totalInstruments = ms->numsamples;
 	info->totalTracks = 0;
 	
-	strlcpy( info->formatDescription, "MED Plug", sizeof(info->formatDescription));
+	strlcpy(info->formatDescription, "MED Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
 
 #ifndef _MAC_H
 
-EXP OSErr FillPlug( PlugInfo *p);
-EXP OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP OSErr FillPlug(PlugInfo *p);
+EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy( p->type, 		"MED ", sizeof(p->type));
-	strlcpy( p->MenuName, 	"MED Files", sizeof(p->type));
+	strlcpy(p->type, 		"MED ", sizeof(p->type));
+	strlcpy(p->MenuName, 	"MED Files", sizeof(p->type));
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
@@ -627,9 +627,9 @@ EXP OSErr FillPlug( PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainMED( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+OSErr mainMED(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	OSErr	myErr = noErr;
@@ -637,84 +637,84 @@ extern OSErr PPImpExpMain( OSType order, Ptr AlienFileName, MADMusic *MadFile, P
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
-	if(MED_Init( init) == 0)
+	if(MED_Init(init) == 0)
 	{
 		MED_Cleanup();
 		return MADNeedMemory;
 	}
 	
-	switch( order)
+	switch(order)
 	{
 		case MADPlugImport:
-			iFileRefI = iFileOpenRead( AlienFileName);
+			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI)
 			{
-				sndSize = iGetEOF( iFileRefI);
+				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (Ptr)malloc( sndSize * 2L);
+				AlienFile = (Ptr)malloc(sndSize * 2L);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
 				else
 				{
-					free( AlienFile);
+					free(AlienFile);
 					
-					AlienFile = (Ptr)malloc( sndSize);
-					iRead( sndSize, AlienFile, iFileRefI);
+					AlienFile = (Ptr)malloc(sndSize);
+					iRead(sndSize, AlienFile, iFileRefI);
 					
-					myErr = TestMEDFile( AlienFile);
+					myErr = TestMEDFile(AlienFile);
 					if (myErr == noErr)
 					{
-						myErr = MED_Load( AlienFile,  sndSize, MadFile, init);
+						myErr = MED_Load(AlienFile,  sndSize, MadFile, init);
 					}
 					
-					free( AlienFile);	AlienFile = NULL;
+					free(AlienFile);	AlienFile = NULL;
 				}
-				iClose( iFileRefI);
+				iClose(iFileRefI);
 			}
 			else myErr = MADReadingErr;
 			break;
 			
 		case MADPlugTest:
-			iFileRefI = iFileOpenRead( AlienFileName);
+			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI)
 			{
 				sndSize = 1024L;
 				
-				AlienFile = (Ptr)malloc( sndSize);
+				AlienFile = (Ptr)malloc(sndSize);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
-					iRead( sndSize, AlienFile, iFileRefI);
-					myErr = TestMEDFile( AlienFile);
+					iRead(sndSize, AlienFile, iFileRefI);
+					myErr = TestMEDFile(AlienFile);
 					
-					free( AlienFile);	AlienFile = NULL;
+					free(AlienFile);	AlienFile = NULL;
 				}
-				iClose( iFileRefI);
+				iClose(iFileRefI);
 			}
 			else myErr = MADReadingErr;
 			break;
 			
 		case 'INFO':
-			iFileRefI = iFileOpenRead( AlienFileName);
+			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI)
 			{
-				info->fileSize = iGetEOF( iFileRefI);
+				info->fileSize = iGetEOF(iFileRefI);
 				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (Ptr)malloc( sndSize);
+				AlienFile = (Ptr)malloc(sndSize);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
-					iRead( sndSize, AlienFile, iFileRefI);
+					iRead(sndSize, AlienFile, iFileRefI);
 					
-					myErr = ExtractMEDInfo( info, AlienFile);
+					myErr = ExtractMEDInfo(info, AlienFile);
 					
-					free( AlienFile);	AlienFile = NULL;
+					free(AlienFile);	AlienFile = NULL;
 				}
-				iClose( iFileRefI);
+				iClose(iFileRefI);
 			}
 			else myErr = MADReadingErr;
 			break;

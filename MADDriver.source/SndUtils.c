@@ -4,7 +4,7 @@
 //
 //	Version 3.0
 //
-//	To use with PlayerPRO & CodeWarrior ( current vers 8)
+//	To use with PlayerPRO & CodeWarrior (current vers 8)
 //
 //	Antoine ROSSET
 //	16 Tranchees

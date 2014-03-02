@@ -57,13 +57,13 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 	/********************************/
 	
 	for (i = 0; i < 64; i ++) {
-		theInstrument[ i] = NULL;
+		theInstrument[i] = NULL;
 	}
 	
 	/**** Header principal *****/
 	theULTCopy = (Byte*)theULT;
 	
-	memcpy( &ULTinfo, theULTCopy, sizeof(ULTinfo));
+	memcpy(&ULTinfo, theULTCopy, sizeof(ULTinfo));
 	
 	//if (ULTinfo.reserved != 0) return MADFileNotSupportedByThisPlug;	// RES in v.1.4 see doc
 	
@@ -71,7 +71,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 	
 	
 	/**** Ins Num *****/
-	if (sizeof( ULTIns) != 64) //DebugStr("\pULTIns != 64");
+	if (sizeof(ULTIns) != 64) //DebugStr("\pULTIns != 64");
 		return MADIncompatibleFile;
 	ULTSuite.ins = (ULTIns*)calloc(sizeof(ULTIns), ULTSuite.NOS);
 	memcpy(ULTSuite.ins, theULTCopy + sizeof(ULTinfo) + ULTinfo.reserved * 32 + 1, ULTSuite.NOS * sizeof(ULTIns));
@@ -97,8 +97,8 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 	theMAD->header->speed		= 6;
 	theMAD->header->tempo		= 125;
 	
-	theMAD->sets = (FXSets*) calloc( MAXTRACK * sizeof(FXSets), 1);
-	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[ i].copyId = i;
+	theMAD->sets = (FXSets*) calloc(MAXTRACK * sizeof(FXSets), 1);
+	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[i].copyId = i;
 	
 	for (i = 0; i < 128; i++) theMAD->header->oPointers[i] = 0;
 	for (i = 0; i < 128; i++) {
@@ -125,11 +125,11 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 	// ***** INSTRUMENTS *****
 	// ********************
 	
-	theMAD->fid = ( InstrData*) calloc( sizeof( InstrData) * (long) MAXINSTRU, 1);
+	theMAD->fid = (InstrData*) calloc(sizeof(InstrData) * (long) MAXINSTRU, 1);
 	if (!theMAD->fid)
 		return MADNeedMemory;
 	
-	theMAD->sample = ( sData**) calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
+	theMAD->sample = (sData**) calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
 	if (!theMAD->sample)
 		return MADNeedMemory;
 	
@@ -152,7 +152,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 			curIns->numSamples	= 1;
 			curIns->volFade		= DEFAULT_VOLFADE;
 			
-			curData = theMAD->sample[ i*MAXSAMPLE +  0] = (sData*) calloc( sizeof( sData), 1);
+			curData = theMAD->sample[i*MAXSAMPLE +  0] = (sData*) calloc(sizeof(sData), 1);
 			if (curData == NULL) return MADNeedMemory;
 			
 			PPLE32(&ULTSuite.ins[i].loopStart);
@@ -234,7 +234,7 @@ static OSErr ExtractULTInfo(PPInfoRec *info, void *AlienFile)
 	/********************************/
 	
 	/**** Header principal *****/
-	memcpy( &ULTinfo, AlienFile, 49);
+	memcpy(&ULTinfo, AlienFile, 49);
 	
 	/*** Signature ***/
 	
@@ -243,16 +243,16 @@ static OSErr ExtractULTInfo(PPInfoRec *info, void *AlienFile)
 	/*** Internal name ***/
 	
 	ULTinfo.name[31] = '\0';
-	//pStrcpy( (unsigned char*) info->internalFileName, MYC2PStr( ULTinfo.name));
+	//pStrcpy((unsigned char*) info->internalFileName, MYC2PStr(ULTinfo.name));
 	strlcpy(info->internalFileName, ULTinfo.name, sizeof(ULTinfo.name));
 	
 	/*** Total Patterns ***/
 	
-	info->totalPatterns = 0;	//Tdecode16(  &ITinfo.patNum);
+	info->totalPatterns = 0;	//Tdecode16( &ITinfo.patNum);
 	
 	/*** Partition Length ***/
 	
-	info->partitionLength = 0;	//Tdecode16( &ITinfo.orderNum);
+	info->partitionLength = 0;	//Tdecode16(&ITinfo.orderNum);
 	
 	/*** Total Instruments ***/
 	
@@ -368,7 +368,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 				
 				sndSize = 5000; // Read only 5000 first bytes for optimisation
 				
-				AlienFile = (Ptr)malloc( sndSize);
+				AlienFile = (Ptr)malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {

@@ -622,7 +622,7 @@ PPEXPORT void	MADCleanDriver(MADDriverRec *intDriver);									// Clean the driv
 
 PPEXPORT OSErr	MADReset(MADDriverRec *MDriver);											// Reset the current music at the start position
 PPEXPORT OSErr	MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
-PPEXPORT OSErr	MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus( 0, 100, 50) = go to the middle of the music
+PPEXPORT OSErr	MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus(0, 100, 50) = go to the middle of the music
 
 PPEXPORT OSErr	MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char*);
 
