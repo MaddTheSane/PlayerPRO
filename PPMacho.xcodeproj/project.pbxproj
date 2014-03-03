@@ -1938,7 +1938,6 @@
 		553341FD10BB600A005208D1 /* IT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IT-Info.plist"; sourceTree = SOURCE_ROOT; };
 		553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Universal.xcconfig; sourceTree = "<group>"; };
 		553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PPCPlugs.xcconfig; sourceTree = "<group>"; };
-		553626B117EA6F5D00D3A3C8 /* PPCPlugs-NonPort.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "PPCPlugs-NonPort.xcconfig"; sourceTree = "<group>"; };
 		553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Cocoa Editor Images.xcassets"; path = "../../Cocoa/Cocoa Editor Images.xcassets"; sourceTree = "<group>"; };
 		5542403E10DB602D00C08864 /* SoundDesignerII.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = SoundDesignerII.r; sourceTree = "<group>"; };
 		5542403F10DB602D00C08864 /* Mp3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mp3.r; sourceTree = "<group>"; };
@@ -3487,7 +3486,6 @@
 			children = (
 				553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */,
 				553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */,
-				553626B117EA6F5D00D3A3C8 /* PPCPlugs-NonPort.xcconfig */,
 			);
 			path = Xcconfigs;
 			sourceTree = "<group>";
@@ -7703,8 +7701,6 @@
 			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_PEDANTIC = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 			};
 			name = Release;
@@ -7714,8 +7710,6 @@
 			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_WARN_PEDANTIC = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 			};
 			name = Debug;
@@ -9010,7 +9004,7 @@
 		};
 		5586889510BF67F100FCC24D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-NonPort.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -9023,7 +9017,7 @@
 		};
 		5586889610BF67F100FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-NonPort.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
@@ -9037,7 +9031,7 @@
 		};
 		55868A6410BFB46100FCC24D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-NonPort.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9050,7 +9044,7 @@
 		};
 		55868A6510BFB46100FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B117EA6F5D00D3A3C8 /* PPCPlugs-NonPort.xcconfig */;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (

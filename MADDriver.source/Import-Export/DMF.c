@@ -387,34 +387,34 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	theITCopy += ITinfo.orderNum;
 	
 	/**** Ins Num *****/
-	ITinfo.parapins = (SInt32 *)malloc(ITinfo.insNum * 4);
+	ITinfo.parapins = (int *)malloc(ITinfo.insNum * sizeof(int));
 	if (ITinfo.parapins == NULL) {
 		free(ITinfo.orders);
 		
 		return MADNeedMemory;
 	}
-	memcpy(ITinfo.parapins, theITCopy, ITinfo.insNum * 4);
+	memcpy(ITinfo.parapins, theITCopy, ITinfo.insNum * sizeof(int));
 	theITCopy += ITinfo.insNum * 4L;
 	for (i = 0; i < ITinfo.insNum; i++) {
 		PPLE32(&ITinfo.parapins[i]);
 	}
 	
 	/**** Samp Num *****/
-	ITinfo.parapsamp = (SInt32*)malloc(ITinfo.smpNum * 4);
+	ITinfo.parapsamp = (int*)malloc(ITinfo.smpNum * sizeof(int));
 	if (ITinfo.parapsamp == NULL) {
 		free(ITinfo.orders);
 		free(ITinfo.parapins);
 		
 		return MADNeedMemory;
 	}
-	memcpy(ITinfo.parapsamp, theITCopy, ITinfo.smpNum * 4);
+	memcpy(ITinfo.parapsamp, theITCopy, ITinfo.smpNum * sizeof(int));
 	theITCopy += ITinfo.smpNum * 4;
 	for (i = 0; i < ITinfo.smpNum; i++) {
 		PPLE32(&ITinfo.parapsamp[i]);
 	}
 	
 	/**** Pat Num *****/
-	ITinfo.parappat = (SInt32 *)malloc(ITinfo.patNum * 4);
+	ITinfo.parappat = (int *)malloc(ITinfo.patNum * sizeof(int));
 	if (ITinfo.parappat == NULL) {
 		free(ITinfo.orders);
 		free(ITinfo.parapins);
@@ -422,7 +422,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 		
 		return MADNeedMemory;
 	}
-	memcpy(ITinfo.parappat, theITCopy, ITinfo.patNum * 4L);
+	memcpy(ITinfo.parappat, theITCopy, ITinfo.patNum * sizeof(int));
 	theITCopy += ITinfo.patNum * 4L;
 	for (i = 0; i < ITinfo.patNum; i++) {
 		PPLE32(&ITinfo.parappat[i]);
