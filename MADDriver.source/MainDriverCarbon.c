@@ -40,10 +40,10 @@ OSErr MADLoadMusicFSpFile(MADLibrary *lib, MADMusic **music, char *plugType, FSS
 OSErr MADMusicIdentifyFSRef(MADLibrary *lib, char *type, FSRefPtr theRef)
 {
 	CFURLRef tempURL;
+	OSErr returnErr = noErr;
 	if (theRef == NULL)
 		return MADParametersErr;
 
-	OSErr returnErr = noErr;
 	tempURL = CFURLCreateFromFSRef(kCFAllocatorDefault, theRef);
 	returnErr = MADMusicIdentifyCFURL(lib, type, tempURL);
 	CFRelease(tempURL);

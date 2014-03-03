@@ -7703,6 +7703,8 @@
 			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_PEDANTIC = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 			};
 			name = Release;
@@ -7712,6 +7714,8 @@
 			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_PEDANTIC = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 			};
 			name = Debug;
