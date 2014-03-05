@@ -10,3 +10,10 @@ ipch
 **/*vers.plist
 PlayerPROCore.suo
 **/project.xcworkspace
+
+**~
+
+*/CMakeCache.txt
+*/Makefile
+*/CMakeFiles
+*/cmake_install.cmake
