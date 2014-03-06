@@ -7,7 +7,6 @@
 //
 
 #import "PPExportObject.h"
-#import "PPErrors.h"
 
 @implementation PPExportObject
 @synthesize delegate;

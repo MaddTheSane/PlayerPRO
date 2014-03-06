@@ -58,6 +58,8 @@
 
 - (NSArray *)instruments;
 
+- (OSErr)exportInstrumentListToURL:(NSURL*)outURL;
+
 @end
 
 @interface PPMusicObjectWrapper : PPMusicObject <NSCopying>
@@ -90,6 +92,7 @@
 + (OSErr)info:(PPInfoRec *)theInfo fromTrackerAtURL:(NSURL *)thURL;
 
 - (BOOL)addInstrument:(PPInstrumentObject*)theIns;
+- (BOOL)importInstrumentListFromURL:(NSURL *)insURL error:(out NSError *__autoreleasing*)theErr;
 
 #pragma mark Document-based code
 //For use with document classes, like NSDocument or UIDocument

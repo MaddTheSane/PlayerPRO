@@ -9,7 +9,7 @@
 #import "PPErrors.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 
-NSString * const PPMADErrorDomain = @"net.sourceforge.playerpro.PlayerPRO_Cocoa.ErrorDomain";
+NSString * const PPMADErrorDomain = @"net.sourceforge.playerpro.PlayerPROKit.ErrorDomain";
 
 NSError *CreateErrorFromMADErrorType(OSErr theErr)
 {
@@ -111,6 +111,9 @@ NSError *CreateErrorFromMADErrorType(OSErr theErr)
 			break;
 	}
 	
-	return [[NSError alloc] initWithDomain:PPMADErrorDomain code:theErr userInfo:@{NSLocalizedDescriptionKey: ErrorDescription, NSLocalizedFailureReasonErrorKey: errorReason, NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion}];
+	return [[NSError alloc] initWithDomain:PPMADErrorDomain code:theErr userInfo:
+			@{NSLocalizedDescriptionKey: ErrorDescription,
+			  NSLocalizedFailureReasonErrorKey: errorReason,
+			  NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion}];
 }
 

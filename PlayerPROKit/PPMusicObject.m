@@ -17,6 +17,7 @@
 #import "PPInstrumentObject.h"
 #import "PPInstrumentObject_PPKPrivate.h"
 #import "PPPatternObject.h"
+#import "PPErrors.h"
 
 static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 {
@@ -48,6 +49,63 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 @synthesize attachedDriver;
 @synthesize _currentMusic = currentMusic;
 @synthesize internalFileName;
+
+- (OSErr)exportInstrumentListToURL:(NSURL*)outURL
+{
+	NSMutableData *outData = [[NSMutableData alloc] init];
+	if (!outData) {
+		return MADNeedMemory;
+	}
+	
+	int i, x;
+	{
+		__block InstrData *tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
+		if (!tempInstrData) {
+			return MADNeedMemory;
+		}
+		memcpy(tempInstrData, [self internalMadMusicStruct]->fid, sizeof(InstrData) * MAXINSTRU);
+		
+		dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
+			ByteSwapInstrData(&tempInstrData[x]);
+		});
+		[outData appendBytes:tempInstrData length:sizeof(InstrData) * MAXINSTRU];
+		free(tempInstrData);
+	}
+	
+	for (i = 0; i < MAXINSTRU ; i++) {
+		for (x = 0; x < [self internalMadMusicStruct]->fid[i].numSamples ; x++) {
+			sData tempData, *curData = [self internalMadMusicStruct]->sample[i * MAXSAMPLE +  x];
+			sData32 writeData;
+			memcpy(&tempData, curData, sizeof(sData));
+			ByteSwapsData(&tempData);
+			memcpy(&writeData, &tempData, sizeof(sData32));
+			writeData.data = 0;
+			[outData appendBytes:&writeData length:sizeof(sData32)];
+#ifdef __LITTLE_ENDIAN__
+			{
+				Ptr dataData = malloc(curData->size);
+				if (!dataData)
+					return MADNeedMemory;
+				
+				memcpy(dataData, curData->data, curData->size);
+				if (curData->amp == 16) {
+					__block short *shortPtr = (short*) dataData;
+					
+					dispatch_apply(curData->size / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
+						PPBE16(&shortPtr[y]);
+					});
+				}
+				[outData appendBytes:dataData length:curData->size];
+				free(dataData);
+			}
+#else
+			[outData appendBytes:curData->data length:curData->size]
+#endif
+		}
+	}
+	BOOL successful = [outData writeToURL:outURL atomically:YES];
+	return successful ? noErr : MADWritingErr;
+}
 
 - (NSArray *)instruments
 {
@@ -292,7 +350,7 @@ end:
 			memset(theInfo->internalFileName, 0, sizeof(theInfo->internalFileName));
 		} else {
 			char fileNameInt[60] = {0};
-			[nameData getBytes:fileNameInt length:MIN(nameData.length, (sizeof(fileNameInt)))];
+			[nameData getBytes:fileNameInt length:MIN(nameData.length, sizeof(fileNameInt) - 1)];
 			strlcpy(theInfo->internalFileName, fileNameInt, sizeof(theInfo->internalFileName));
 		}
 		theInfo->signature = tmpVal.madType;
@@ -436,9 +494,11 @@ end:
 	if (self = [super init]) {
 		self.musicWrapper = wrapper;
 		NSDictionary *stuff = [wrapper fileWrappers];
+		
+		
+		
 		stuff = nil;
 		return nil;
-		
 	}
 	
 	return self;
@@ -508,6 +568,139 @@ end:
 {
 	[self syncMusicDataTypes];
 	return [super internalMadMusicStruct];
+}
+
+- (BOOL)importInstrumentListFromURL:(NSURL *)insURL error:(out NSError *__autoreleasing*)theErr
+{
+	NSData *fileData = [NSData dataWithContentsOfURL:insURL];
+	if (!fileData) {
+		if (theErr) {
+			*theErr = CreateErrorFromMADErrorType(MADReadingErr);
+		}
+		return NO;
+	}
+	short		x, i;
+	long		inOutCount, filePos = 0;
+	__block InstrData *tempInstrData;
+	{
+		tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
+		if (tempInstrData == NULL) {
+			if (theErr) {
+				*theErr = CreateErrorFromMADErrorType(MADIncompatibleFile);
+			}
+			return NO;
+		}
+		
+		// **** HEADER ***
+		inOutCount = sizeof(InstrData) * MAXINSTRU;
+		if ([fileData length] <= inOutCount) {
+			if (theErr) {
+				*theErr = CreateErrorFromMADErrorType(MADIncompatibleFile);
+			}
+			free(tempInstrData);
+			return NO;
+		}
+		[fileData getBytes:tempInstrData range:NSMakeRange(filePos, inOutCount)];
+		
+		dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
+			ByteSwapInstrData(&tempInstrData[x]);
+		});
+		filePos += inOutCount;
+	}
+	
+	//Clean up old instruments
+	
+	sData **tmpsData = calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
+	
+	// **** INSTRUMENTS ***
+	for (i = 0; i < MAXINSTRU ; i++) {
+		for (x = 0; x < tempInstrData[i].numSamples ; x++) {
+			sData	*curData;
+			
+			// ** Read Sample header **
+			
+			curData = tmpsData[i * MAXSAMPLE +  x] = (sData*)malloc(sizeof(sData));
+			if (curData == NULL) {
+				if (theErr) {
+					*theErr = CreateErrorFromMADErrorType(MADNeedMemory);
+				}
+				free(tempInstrData);
+				dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
+					if (tmpsData[x]) {
+						if (tmpsData[x]->data) {
+							free(tmpsData[x]->data);
+						}
+						free(tmpsData[x]);
+					}
+				});
+				
+				free(tmpsData);
+				return NO;
+			}
+			
+			inOutCount = sizeof(sData32);
+			[fileData getBytes:curData range:NSMakeRange(filePos, inOutCount)];
+			ByteSwapsData(curData);
+			filePos += inOutCount;
+			
+			// ** Read Sample DATA
+			
+			curData->data = malloc(curData->size);
+			if (curData->data == NULL)
+			{
+				if (theErr) {
+					*theErr = CreateErrorFromMADErrorType(MADNeedMemory);
+				}
+				
+				free(tempInstrData);
+				dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
+					if (tmpsData[x]) {
+						if (tmpsData[x]->data) {
+							free(tmpsData[x]->data);
+						}
+						free(tmpsData[x]);
+					}
+				});
+				
+				free(tmpsData);
+				return NO;
+			}
+			
+			inOutCount = curData->size;
+			[fileData getBytes:curData->data range:NSMakeRange(filePos, inOutCount)];
+			filePos += inOutCount;
+			if (curData->amp == 16) {
+				__block short *shortPtr = (short*)curData->data;
+				
+				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
+					PPBE16(&shortPtr[y]);
+				});
+			}
+		}
+	}
+	// *********************
+	
+	if (theErr) {
+		*theErr = nil;
+	}
+
+	for (x = 0; x < MAXINSTRU ; x++) MADKillInstrument(currentMusic, x);
+	memcpy(currentMusic->fid, tempInstrData, inOutCount);
+	free(tempInstrData);
+	
+	dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
+		if (currentMusic->sample[x]) {
+			if (currentMusic->sample[x]->data) {
+				free(currentMusic->sample[x]->data);
+			}
+			free(currentMusic->sample[x]);
+		}
+	});
+	free(currentMusic->sample);
+	currentMusic->sample = tmpsData;
+	[self syncMusicDataTypes];
+	
+	return YES;
 }
 
 @end

@@ -16,7 +16,6 @@
 #include <PlayerPROCore/PPPlug.h>
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
-#import "PPErrors.h"
 #import "UserDefaultKeys.h"
 #import "AppDelegate.h"
 

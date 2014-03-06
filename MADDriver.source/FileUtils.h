@@ -24,6 +24,14 @@
 #ifndef __PPC_FILEUTILS_H__
 #define __PPC_FILEUTILS_H__
 
+/*!
+ * @header		FileUtils.h
+ * @abstract	File operation API used by PlayerPRO.
+ * @discussion	This header was used as a bridge between Windows and Mac OS (pre-X) file APIs.
+ *				PlayerPROCore 6's version is a thin wrapper of the POSIX file APIs.
+ *
+ */
+
 #ifndef __MADI__
 #include "MAD.h"
 #endif
@@ -35,6 +43,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+/*!
+ * @typedef    UNFILE
+ * @abstract   A pointer to a file structure.
+ */
 typedef FILE* UNFILE;
 
 #ifdef __cplusplus
@@ -53,7 +66,7 @@ PPEXPORT UNFILE	iFileOpen(const char *name) DEPRECATED_ATTRIBUTE;
  * @abstract	Opens a file for reading
  * @result		an UNFILE that can be read from
  * @param		name
- *					The location of the file to read.
+ *					The location of the file to read
  * @discussion	The file location can be either relative or absolute.
  */
 PPEXPORT UNFILE	iFileOpenRead(const char *name);
@@ -63,10 +76,20 @@ PPEXPORT UNFILE	iFileOpenRead(const char *name);
  * @abstract	Opens a file for writing
  * @result		an UNFILE that can be written to
  * @param		name
- *					The location of the file to write.
+ *					The location of the file to write
  * @discussion	The file location can be either relative or absolute.
  */
 PPEXPORT UNFILE	iFileOpenWrite(const char *name);
+
+/*!
+ * @function	iFileOpenReadWrite
+ * @abstract	Opens a file for reading and writing
+ * @result		an UNFILE that can be written to/read from
+ * @param		name
+ *					The location of the file to read/write
+ * @discussion	The file location can be either relative or absolute.
+ */
+PPEXPORT UNFILE	iFileOpenReadWrite(const char *name);
 
 /*!
  * @function	iFileCreate
@@ -74,16 +97,17 @@ PPEXPORT UNFILE	iFileOpenWrite(const char *name);
  * @param		path
  *					The path to create the new file
  * @param		type
- *					The File Type to set the file to.
- * @discussion	type is ignored on platforms that aren't OS X.
- *				type is mostly used on pre-OS X versions of Mac OS, and is rarely used nowadays.
+ *					The File Type to set the file to
+ * @discussion	<tt>type</tt> is ignored on platforms that aren't OS X.
+ *				<tt>type</tt> is mostly used on pre-OS X versions of Mac OS, and is rarely used nowadays.
+ *				<tt>type</tt> may be zero.
  */
 PPEXPORT void	iFileCreate(const char *path, OSType type);
 
 /*!
  * @function	iGetEOF
  * @abstract	Get the length of the file
- * @result		the size of the file pointed to by iFileRefI
+ * @result		the size of the file pointed to by <tt>iFileRefI</tt>
  * @param		iFileRefI
  *					The file pointer to get the size from
  * @discussion	As this returns a 'long' data type, files larger than 2 GiB on non-LP64 systems (including Win64) may result in an invalid value, or even crash your app.
@@ -98,7 +122,7 @@ PPEXPORT long	iGetEOF(UNFILE iFileRefI);
  * @param		size
  *					The size of the data to read
  * @param		dest
- *					A pointer to put the data.
+ *					A pointer to put the data
  * @param		iFileRefI
  *					The file reference to read from. Must have been opened with iFileOpenRead
  * @discussion	The size cannot be larger than the data pointer, otherwise bad things will happen.
@@ -112,9 +136,9 @@ PPEXPORT OSErr	iRead(long size, void *dest, UNFILE iFileRefI);
  * @param		size
  *					The size of the data to write
  * @param		src
- *					A pointer to read data from.
+ *					A pointer to read data from
  * @param		iFileRefI
- *					The file reference to write to. Must have been opened with iFileOpenWrite
+ *					The file reference to write to; must have been opened with iFileOpenWrite
  * @discussion	The size cannot be larger than the data pointer, otherwise bad things will happen.
  *				Data is written to the file from the file's current position.
  */
@@ -125,7 +149,7 @@ PPEXPORT OSErr	iWrite(long size, const void *src, UNFILE iFileRefI);
  * @abstract    Change the file position of file pointed at by iFileRefI
  * @result      An error value. 0, or <tt>noErr</tt> if there was no error.
  * @param       size
- *					The offset from the current position.
+ *					The offset from the current position
  * @param		iFileRefI
  *					The file reference to change the file position on
  */
@@ -135,7 +159,7 @@ PPEXPORT OSErr	iSeekCur(long size, UNFILE iFileRefI);
  * @function	iClose
  * @abstract	Closes the file reference
  * @param		iFileRefI
- *					The file reference to close.
+ *					The file reference to close
  */
 PPEXPORT void	iClose(UNFILE iFileRefI);
 
@@ -250,7 +274,7 @@ static inline void PPLE16(void *msg_buf)
  *					The OSType to convert
  * @param		str
  *					The address of the char array to write to
- * @discussion  str must be at least five chars long: four for the size of the OSType, and one for the terminating null.
+ * @discussion  <tt>str</tt> must be at least five chars long: four for the size of the OSType, and one for the terminating null.
  *				Note that OSTypes use the Mac OS Roman encoding. If needed, use iconv to convert from the Mac OS Roman encoding.
  */
 static inline void OSType2Ptr(OSType type, char *str)

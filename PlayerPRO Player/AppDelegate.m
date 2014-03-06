@@ -10,7 +10,6 @@
 #import "PPPreferences.h"
 #import "PPMusicList.h"
 #import "UserDefaultKeys.h"
-#import "PPErrors.h"
 #import "PPInstrumentWindowController.h"
 #import "PPPlugInInfo.h"
 #import "PPPlugInInfoController.h"

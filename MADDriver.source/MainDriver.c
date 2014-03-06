@@ -2648,9 +2648,7 @@ OSErr MADKillCmd(Cmd *aCmd)
 	if (aCmd == NULL)
 		return MADParametersErr;
 	
-	memset(aCmd, 0, sizeof(Cmd));
-	aCmd->note 	= 0xFF;
-	aCmd->vol 	= 0xFF;
+	*aCmd = (Cmd){0, 0xff, 0, 0, 0xff, 0};
 	
 	return noErr;
 }
@@ -2723,11 +2721,10 @@ void MADCheckSpeed(MADMusic *MDriver, MADDriverRec *intDriver)
 		}
 	}
 	
-	
 	if (!CmdSpeed)
-		intDriver->speed 		= MDriver->header->speed;
+		intDriver->speed = MDriver->header->speed;
 	if (!FineFound)
-		intDriver->finespeed 	= MDriver->header->tempo;
+		intDriver->finespeed = MDriver->header->tempo;
 }
 
 void MADCheckSpeedPattern(MADMusic *MDriver, MADDriverRec *intDriver)
@@ -2739,7 +2736,6 @@ void MADCheckSpeedPattern(MADMusic *MDriver, MADDriverRec *intDriver)
 	
 	if (!MDriver || MDriver->header == NULL || !intDriver)
 		return;
-	
 	
 	curPartitionReader = intDriver->PartitionReader;
 	if (curPartitionReader >= MDriver->partition[intDriver->Pat]->header.size)
@@ -2825,8 +2821,7 @@ OSErr MADStartDriver(MADDriverRec *MDriver)
 	
 	MADCheckSpeed(MDriver->curMusic, MDriver);
 	
-	switch(MDriver->DriverSettings.driverMode)
-	{
+	switch(MDriver->DriverSettings.driverMode) {
 		case MIDISoundDriver:
 			//PlayChannel(MDriver);
 			break;
@@ -2834,7 +2829,6 @@ OSErr MADStartDriver(MADDriverRec *MDriver)
 #ifdef _MAC_H
 		case CoreAudioDriver:
 			break;
-			
 #endif
 			
 #ifdef _ESOUND
@@ -2872,8 +2866,7 @@ OSErr MADStopDriver(MADDriverRec *MDriver)
 	MDriver->levelL = 0;
 	MDriver->levelR = 0;
 	
-	switch(MDriver->DriverSettings.driverMode)
-	{
+	switch (MDriver->DriverSettings.driverMode) {
 		case MIDISoundDriver:
 			//AllNoteOff(MDriver);
 			//StopChannel(MDriver);
@@ -2959,7 +2952,7 @@ short MADGetNextReader(MADMusic *music, MADDriverRec *intDriver, short cur, shor
 
 OSErr MADDisposeMusic(MADMusic **music, MADDriverRec *MDriver)
 {
-	short		x;
+	short x;
 	
 	if (!music)
 		return noErr;

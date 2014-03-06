@@ -17,25 +17,21 @@
 
 @interface PPInstrumentViewController : NSViewController <NSOutlineViewDataSource, NSOutlineViewDelegate>
 {
-	IBOutlet NSDrawer *infoDrawer;
-	IBOutlet NSTextField *instrumentSize;
-	IBOutlet NSTextField *instrumentLoopStart;
-	IBOutlet NSTextField *instrumentLoopSize;
-	IBOutlet NSTextField *instrumentVolume;
-	IBOutlet NSTextField *instrumentRate;
-	IBOutlet NSTextField *instrumentNote;
-	IBOutlet NSTextField *instrumentBits;
-	IBOutlet NSTextField *instrumentMode;
-
-	IBOutlet NSImageView *waveFormImage;
-	IBOutlet NSOutlineView *instrumentView;
 	InstrumentInfoController *instrumentInfo;
-	
-	NSUndoManager *undoManager;
 }
+@property (weak) IBOutlet NSDrawer *infoDrawer;
+@property (weak) IBOutlet NSTextField *instrumentSize;
+@property (weak) IBOutlet NSTextField *instrumentLoopStart;
+@property (weak) IBOutlet NSTextField *instrumentLoopSize;
+@property (weak) IBOutlet NSTextField *instrumentVolume;
+@property (weak) IBOutlet NSTextField *instrumentRate;
+@property (weak) IBOutlet NSTextField *instrumentNote;
+@property (weak) IBOutlet NSTextField *instrumentBits;
+@property (weak) IBOutlet NSTextField *instrumentMode;
+@property (weak) IBOutlet NSImageView *waveFormImage;
+@property (weak) IBOutlet NSOutlineView *instrumentOutline;
 
 @property (weak) PPInstrumentPlugHandler *importer;
-@property (strong) NSUndoManager *undoManager;
 @property (weak) PPFilterPlugHandler *filterHandler;
 @property (weak) IBOutlet PPDocument *currentDocument;
 
@@ -51,12 +47,10 @@
 - (IBAction)deleteInstrument:(id)sender;
 - (IBAction)playInstrument:(id)sender;
 - (IBAction)showInstrumentInfo:(id)sender;
+- (IBAction)toggleInfo:(id)sender;
 
 - (IBAction)deleteSample:(id)sender;
-
 - (IBAction)playSample:(id)sender;
-
-- (IBAction)toggleInfo:(id)sender;
 
 - (void)replaceObjectInInstrumentsAtIndex:(NSUInteger)index withObject:(id)object;
 

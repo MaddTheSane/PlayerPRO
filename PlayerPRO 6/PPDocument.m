@@ -12,7 +12,6 @@
 #import "PPApp_AppDelegate.h"
 #import "UserDefaultKeys.h"
 #import "PPExportObject.h"
-#import "PPErrors.h"
 #import "BoxViewController.h"
 
 @interface PPDocument ()

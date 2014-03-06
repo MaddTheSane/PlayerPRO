@@ -34,7 +34,6 @@
 
 void iFileCreate(const char *path, OSType type)
 {
-
 #if defined _MAC_H && !TARGET_OS_IPHONE
 	CFURLRef fileURL;
 #endif
@@ -65,14 +64,14 @@ void iFileCreate(const char *path, OSType type)
 			fclose(tmpFile);
 		}
 	}
-#else	
+#else
 	fd = open(path, O_WRONLY|O_CREAT|O_TRUNC, 0644);
 	if (fd == -1) {
 		return;
 	}
 	close(fd);
 #endif
-
+	
 #if defined _MAC_H && !TARGET_OS_IPHONE
 	fileURL = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8*)path, strlen(path), false);
 	SetOSType(fileURL, type);
@@ -93,6 +92,15 @@ FILE* iFileOpenRead(const char *name)
 FILE* iFileOpenWrite(const char *name)
 {
 	return fopen(name, "wb");
+}
+
+FILE* iFileOpenReadWrite(const char *name)
+{
+	FILE* theVal = fopen(name, "a+b");
+	if (theVal) {
+		fseek(theVal, 0, SEEK_SET);
+	}
+	return theVal;
 }
 
 long iGetEOF(FILE* iFileRefI)

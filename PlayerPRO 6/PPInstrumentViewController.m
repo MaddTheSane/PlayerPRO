@@ -19,9 +19,13 @@
 #include <PlayerPROCore/PPPlug.h>
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
-#import "PPErrors.h"
 #import "UserDefaultKeys.h"
 #import "PPApp_AppDelegate.h"
+
+@interface PPInstrumentObject (Private)
+- (InstrData)theInstrument;
+- (void)setTheInstrument:(InstrData)theInstrument;
+@end
 
 @interface PPInstrumentViewController ()
 @property (weak) PPDriver *theDriver;
@@ -32,8 +36,17 @@
 @synthesize currentDocument;
 @synthesize importer;
 @synthesize theDriver;
-@synthesize undoManager;
+@synthesize instrumentOutline = instrumentView;
 @synthesize filterHandler;
+@synthesize infoDrawer;
+@synthesize instrumentBits;
+@synthesize instrumentLoopSize;
+@synthesize instrumentLoopStart;
+@synthesize instrumentMode;
+@synthesize instrumentNote;
+@synthesize instrumentRate;
+@synthesize instrumentSize;
+@synthesize instrumentVolume;
 
 - (void)colorsDidChange:(NSNotification*)aNot
 {
@@ -84,7 +97,6 @@
 	return [self importSampleFromURL:sampURL makeUserSelectInstrument:NO error:theErr];
 }
 
-#if 0
 - (BOOL)importSampleFromURL:(NSURL *)sampURL makeUserSelectInstrument:(BOOL)selIns error:(out NSError *__autoreleasing*)theErr;
 {
 	//TODO: handle selIns
@@ -98,7 +110,10 @@
 	};
 	short theSamp = 0;
 	short theIns = 0;
-	theOSErr = [importer importInstrumentOfType:plugType instrument:theIns sample:&theSamp URL:sampURL];
+
+	InstrData *tmpInstr = &[currentDocument.wrapper internalMadMusicStruct]->fid[theIns];
+	sData **tmpsData = &[currentDocument.wrapper internalMadMusicStruct]->sample[theIns];
+	theOSErr = [importer importInstrumentOfType:plugType instrumentReference:tmpInstr sampleReference:tmpsData sample:&theSamp URL:sampURL plugInfo:NULL];
 	if (theOSErr != noErr) {
 		if (theErr)
 			*theErr = CreateErrorFromMADErrorType(theOSErr);
@@ -118,196 +133,13 @@
 
 - (OSErr)exportInstrumentListToURL:(NSURL*)outURL
 {
-	NSMutableData *outData = [[NSMutableData alloc] init];
-	if (!outData) {
-		return MADNeedMemory;
-	}
-	
-	int i, x;
-	{
-		__block InstrData *tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
-		if (!tempInstrData) {
-			return MADNeedMemory;
-		}
-		memcpy(tempInstrData, [currentDocument.wrapper internalMadMusicStruct]->fid, sizeof(InstrData) * MAXINSTRU);
-		
-		dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
-			ByteSwapInstrData(&tempInstrData[x]);
-		});
-		[outData appendBytes:tempInstrData length:sizeof(InstrData) * MAXINSTRU];
-		free(tempInstrData);
-	}
-	for (i = 0; i < MAXINSTRU ; i++)
-	{
-		for (x = 0; x < [currentDocument.wrapper internalMadMusicStruct]->fid[i].numSamples ; x++)
-		{
-			sData tempData, *curData = [currentDocument.wrapper internalMadMusicStruct]->sample[i * MAXSAMPLE +  x];
-			sData32 writeData;
-			memcpy(&tempData, curData, sizeof(sData));
-			ByteSwapsData(&tempData);
-			memcpy(&writeData, &tempData, sizeof(sData32));
-			writeData.data = 0;
-			[outData appendBytes:&writeData length:sizeof(sData32)];
-			{
-				Ptr dataData = malloc(curData->size);
-				if (!dataData)
-					return MADNeedMemory;
-				
-				memcpy(dataData, curData->data, curData->size);
-				if (curData->amp == 16) {
-					__block short *shortPtr = (short*) dataData;
-					
-					dispatch_apply(curData->size / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
-						PPBE16(&shortPtr[y]);
-					});
-				}
-				[outData appendBytes:dataData length:curData->size];
-				free(dataData);
-			}
-		}
-	}
-	BOOL successful = [outData writeToURL:outURL atomically:YES];
-	return successful ? noErr : MADWritingErr;
+	return [currentDocument.wrapper exportInstrumentListToURL:outURL];
 }
 
 - (BOOL)importInstrumentListFromURL:(NSURL *)insURL error:(out NSError *__autoreleasing*)theErr
 {
-	NSData *fileData = [NSData dataWithContentsOfURL:insURL];
-	if (!fileData) {
-		if (theErr) {
-			*theErr = CreateErrorFromMADErrorType(MADReadingErr);
-		}
-		return NO;
-	}
-	short		x, i;
-	long		inOutCount, filePos = 0;
-	__block InstrData *tempInstrData;
-	{
-		tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
-		if (tempInstrData == NULL) {
-			if (theErr) {
-				*theErr = CreateErrorFromMADErrorType(MADIncompatibleFile);
-			}
-			return NO;
-		}
-		
-		// **** HEADER ***
-		inOutCount = sizeof(InstrData) * MAXINSTRU;
-		if ([fileData length] <= inOutCount) {
-			if (theErr) {
-				*theErr = CreateErrorFromMADErrorType(MADIncompatibleFile);
-			}
-			free(tempInstrData);
-			return NO;
-		}
-		[fileData getBytes:tempInstrData range:NSMakeRange(filePos, inOutCount)];
-		
-		dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
-			ByteSwapInstrData(&tempInstrData[x]);
-		});
-		filePos += inOutCount;
-	}
-	
-	//Clean up old instruments
-	
-	sData **tmpsData = calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
-	
-	// **** INSTRUMENTS ***
-	for (i = 0; i < MAXINSTRU ; i++) {
-		for (x = 0; x < tempInstrData[i].numSamples ; x++) {
-			sData	*curData;
-			
-			// ** Read Sample header **
-			
-			curData = tmpsData[i * MAXSAMPLE +  x] = (sData*)malloc(sizeof(sData));
-			if (curData == NULL) {
-				if (theErr) {
-					*theErr = CreateErrorFromMADErrorType(MADNeedMemory);
-				}
-				free(tempInstrData);
-				dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
-					if (tmpsData[x]) {
-						if (tmpsData[x]->data) {
-							free(tmpsData[x]->data);
-						}
-						free(tmpsData[x]);
-					}
-				});
-
-				free(tmpsData);
-				return NO;
-			}
-			
-			inOutCount = sizeof(sData32);
-			[fileData getBytes:curData range:NSMakeRange(filePos, inOutCount)];
-			ByteSwapsData(curData);
-			filePos += inOutCount;
-			
-			// ** Read Sample DATA
-			
-			curData->data = malloc(curData->size);
-			if (curData->data == NULL)
-			{
-				if (theErr) {
-					*theErr = CreateErrorFromMADErrorType(MADNeedMemory);
-				}
-				
-				free(tempInstrData);
-				dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
-					if (tmpsData[x]) {
-						if (tmpsData[x]->data) {
-							free(tmpsData[x]->data);
-						}
-						free(tmpsData[x]);
-					}
-				});
-				
-				free(tmpsData);
-				return NO;
-			}
-
-			inOutCount = curData->size;
-			[fileData getBytes:curData->data range:NSMakeRange(filePos, inOutCount)];
-			filePos += inOutCount;
-			if (curData->amp == 16) {
-				__block short *shortPtr = (short*)curData->data;
-				
-				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
-					PPBE16(&shortPtr[y]);
-				});
-			}
-		}
-	}
-	// *********************
-		
-	if (theErr) {
-		*theErr = nil;
-	}
-#if 0
-	for (x = 0; x < MAXINSTRU ; x++) MADKillInstrument(*curMusic, x);
-	memcpy((*curMusic)->fid, tempInstrData, inOutCount);
-	free(tempInstrData);
-
-	dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
-		if ((*curMusic)->sample[x]) {
-			if ((*curMusic)->sample[x]->data) {
-				free((*curMusic)->sample[x]->data);
-			}
-			free((*curMusic)->sample[x]);
-		}
-	});
-	free((*curMusic)->sample);
-	(*curMusic)->sample = tmpsData;
-	
-	(*curMusic)->hasChanged = TRUE;
-	[instrumentView reloadData];
-	[instrumentView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-	[instrumentView scrollToBeginningOfDocument:nil];
-#endif
-	
-	return YES;
+	return [currentDocument.wrapper importInstrumentListFromURL:insURL error:theErr];
 }
-#endif
 
 - (IBAction)importInstrument:(id)sender
 {
@@ -321,9 +153,10 @@
 	[vc setupDefaults];
 	if ([openPanel runModal] == NSFileHandlingPanelOKButton) {
 		NSError *err;
-		if ([self importSampleFromURL:[openPanel URL] makeUserSelectInstrument:NO error:&err] == NO)
-		{
-			[[NSAlert alertWithError:err] runModal];
+		if ([self importSampleFromURL:[openPanel URL] makeUserSelectInstrument:NO error:&err] == NO) {
+			[[NSAlert alertWithError:err] beginSheetModalForWindow:[self.currentDocument windowForSheet] completionHandler:^(NSModalResponse returnCode) {
+				//do nothing
+			}];
 		}
 	}
 }
@@ -544,7 +377,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 
 - (NSImage *)waveformImageFromSample:(PPSampleObject *)theDat
 {
-	NSSize imageSize = [waveFormImage convertSizeToBacking:[waveFormImage frame].size];
+	NSSize imageSize = [self.waveFormImage convertSizeToBacking:[self.waveFormImage frame].size];
 	BOOL datIsStereo = theDat.stereo;
 	imageSize.height *= 2;
 	imageSize.width *= 2;
@@ -556,7 +389,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 	
 	CGContextRef bitmapContext = CGBitmapContextCreateWithData(NULL, imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, (CGBitmapInfo)kCGImageAlphaPremultipliedLast, NULL, NULL);
 	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
-	NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
+	NSSize lineSize = [self.waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
 	CGContextSetLineWidth(bitmapContext, lineSize.height);
 	if (datIsStereo){
 		CGColorRef colorRef = CGColorCreateGenericRGB(0, 0, 1, .75);
@@ -575,8 +408,8 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
 		CGColorRelease(colorRef);
 		CGRect loopRect = CGRectMake(0, 0, imageSize.width, imageSize.height);
-		NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(2, 2)];
-		NSSize padSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
+		NSSize lineSize = [self.waveFormImage convertSizeToBacking:NSMakeSize(2, 2)];
+		NSSize padSize = [self.waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
 		CGContextSetLineWidth(bitmapContext, lineSize.height);
 		loopRect.origin.x =  ([theDat loopBegin] * imageSize.width / (double)[theDat.data length]);
 		loopRect.origin.y += padSize.width;
@@ -588,7 +421,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 	theCGimg = CGBitmapContextCreateImage(bitmapContext);
 	CGContextRelease(bitmapContext);
 	
-	NSImage *img = [[NSImage alloc] initWithCGImage:theCGimg size:[waveFormImage frame].size];
+	NSImage *img = [[NSImage alloc] initWithCGImage:theCGimg size:[self.waveFormImage frame].size];
 	CGImageRelease(theCGimg);
 	
 	return img;
@@ -614,7 +447,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 		[instrumentNote setStringValue:PPDoubleDash];
 		[instrumentBits setStringValue:PPDoubleDash];
 		[instrumentMode setStringValue:PPDoubleDash];
-		[waveFormImage setImage:nil];
+		self.waveFormImage.image = nil;
 		return;
 	}
 	[instrumentSize setIntegerValue:[[object data] length]];
@@ -625,7 +458,7 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 	[instrumentNote setStringValue:[NSString stringWithFormat:@"%d", [object relativeNote]]]; //TODO: properly set note.
 	[instrumentBits setStringValue:[NSString stringWithFormat:@"%u-bit", [object amplitude]]];
 	[instrumentMode setStringValue:([object loopType] == ePingPongLoop ? @"Ping-pong" : @"Classic")];
-	[waveFormImage setImage:[self waveformImageFromSample:object]];
+	self.waveFormImage.image = [self waveformImageFromSample:object];
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
