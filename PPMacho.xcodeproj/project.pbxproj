@@ -4052,8 +4052,8 @@
 		88E0C4950C2F21E500D6C081 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */,
 				5573A1321656FD1700A5AECA /* iOS Frameworks */,
+				5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */,
 				552F12E116AE08AF00394143 /* AVFoundation.framework */,
 				555C125016378B3500735225 /* AudioUnit.framework */,
 				55EE8EBC100404EB00E75E63 /* CoreAudio.framework */,

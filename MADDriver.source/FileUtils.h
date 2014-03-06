@@ -41,16 +41,14 @@ typedef FILE* UNFILE;
 extern "C" {
 #endif
 
-////////////////////////////////////////////////////////////
-
-/**
+/*!
  * @function	iFileOpen
  * @abstract	Deprecated: Calls iFileOpenRead
  * @discussion	You should be using iFileOpenRead instead
  */
 PPEXPORT UNFILE	iFileOpen(const char *name) DEPRECATED_ATTRIBUTE;
 
-/**
+/*!
  * @function	iFileOpenRead
  * @abstract	Opens a file for reading
  * @result		an UNFILE that can be read from
@@ -60,7 +58,7 @@ PPEXPORT UNFILE	iFileOpen(const char *name) DEPRECATED_ATTRIBUTE;
  */
 PPEXPORT UNFILE	iFileOpenRead(const char *name);
 
-/**
+/*!
  * @function	iFileOpenWrite
  * @abstract	Opens a file for writing
  * @result		an UNFILE that can be written to
@@ -70,7 +68,7 @@ PPEXPORT UNFILE	iFileOpenRead(const char *name);
  */
 PPEXPORT UNFILE	iFileOpenWrite(const char *name);
 
-/**
+/*!
  * @function	iFileCreate
  * @abstract	Create a file at path, optionally setting the file type
  * @param		path
@@ -82,7 +80,7 @@ PPEXPORT UNFILE	iFileOpenWrite(const char *name);
  */
 PPEXPORT void	iFileCreate(const char *path, OSType type);
 
-/**
+/*!
  * @function	iGetEOF
  * @abstract	Get the length of the file
  * @result		the size of the file pointed to by iFileRefI
@@ -93,10 +91,10 @@ PPEXPORT void	iFileCreate(const char *path, OSType type);
  */
 PPEXPORT long	iGetEOF(UNFILE iFileRefI);
 
-/**
+/*!
  * @function	iRead
  * @abstract	Reads data in file referenced from iFileRefI
- * @result		An error value. 0, or enum noErr if there was no error.
+ * @result		An error value. 0, or <tt>noErr</tt> if there was no error.
  * @param		size
  *					The size of the data to read
  * @param		dest
@@ -107,10 +105,10 @@ PPEXPORT long	iGetEOF(UNFILE iFileRefI);
  */
 PPEXPORT OSErr	iRead(long size, void *dest, UNFILE iFileRefI);
 
-/**
+/*!
  * @function	iWrite
  * @abstract	Writes data to file reference from iFileRefI
- * @result		An error value. 0, or enum noErr if there was no error.
+ * @result		An error value. 0, or <tt>noErr</tt> if there was no error.
  * @param		size
  *					The size of the data to write
  * @param		src
@@ -118,23 +116,22 @@ PPEXPORT OSErr	iRead(long size, void *dest, UNFILE iFileRefI);
  * @param		iFileRefI
  *					The file reference to write to. Must have been opened with iFileOpenWrite
  * @discussion	The size cannot be larger than the data pointer, otherwise bad things will happen.
- *				Data is written to the file from the current
+ *				Data is written to the file from the file's current position.
  */
 PPEXPORT OSErr	iWrite(long size, const void *src, UNFILE iFileRefI);
 
-/**
+/*!
  * @function    iSeekCur
  * @abstract    Change the file position of file pointed at by iFileRefI
- * @result      An error value. 0, or enum noErr if there was no error.
+ * @result      An error value. 0, or <tt>noErr</tt> if there was no error.
  * @param       size
  *					The offset from the current position.
  * @param		iFileRefI
  *					The file reference to change the file position on
- * @discussion  additional notes
  */
 PPEXPORT OSErr	iSeekCur(long size, UNFILE iFileRefI);
 
-/**
+/*!
  * @function	iClose
  * @abstract	Closes the file reference
  * @param		iFileRefI
@@ -142,10 +139,12 @@ PPEXPORT OSErr	iSeekCur(long size, UNFILE iFileRefI);
  */
 PPEXPORT void	iClose(UNFILE iFileRefI);
 
-////////////////////////////////////////////////////////////
+#ifdef __cplusplus
+}
+#endif
 
 //TODO: use system-based functions, such as the ones used on OS X/iOS
-/**
+/*!
  * @function    MADByteSwap32
  * @abstract    Byte-swaps a 32-bit value
  * @param       msg_buf
@@ -165,7 +164,7 @@ static inline void MADByteSwap32(void *msg_buf)
 }
 
 //TODO: use system-based functions, such as the ones used on OS X/iOS
-/**
+/*!
  * @function    MADByteSwap16
  * @abstract    Byte-swaps a 16-bit value
  * @param       msg_buf
@@ -182,9 +181,7 @@ static inline void MADByteSwap16(void *msg_buf)
 #endif
 }
 
-/////////////////////////////////
-
-/**
+/*!
  * @function    PPBE32
  * @abstract    Gets the native value of a 32-bit big-endian value
  * @param       msg_buf
@@ -192,7 +189,7 @@ static inline void MADByteSwap16(void *msg_buf)
  * @discussion  This function is preprocessed out on big endian machines.
  */
 
-/**
+/*!
  * @function    PPBE16
  * @abstract    Gets the native value of a 16-bit big-endian value
  * @param       msg_buf
@@ -215,9 +212,7 @@ static inline void PPBE16(void *msg_buf)
 #define PPBE16(msg_buf)
 #endif
 
-/////////////////////////////////
-
-/**
+/*!
  * @function    PPLE32
  * @abstract    Gets the native value of a 32-bit little-endian value
  * @param       msg_buf
@@ -225,7 +220,7 @@ static inline void PPBE16(void *msg_buf)
  * @discussion  This function is preprocessed out on little endian machines.
  */
 
-/**
+/*!
  * @function    PPLE16
  * @abstract    Gets the native value of a 16-bit little-endian value
  * @param       msg_buf
@@ -248,9 +243,7 @@ static inline void PPLE16(void *msg_buf)
 #define PPLE16(msg_buf)
 #endif
 
-/////////////////////////////////
-
-/**
+/*!
  * @function    OSType2Ptr
  * @abstract    Converts an OSType to a c-string.
  * @param       type
@@ -267,7 +260,7 @@ static inline void OSType2Ptr(OSType type, char *str)
 	str[4] = 0;
 }
 
-/**
+/*!
  * @function    Ptr2OSType
  * @abstract    Converts a c-string to an OSType
  * @result      The converted OSType.
@@ -288,9 +281,5 @@ static inline OSType Ptr2OSType(const char *str)
 	
 	return type;
 }
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif
