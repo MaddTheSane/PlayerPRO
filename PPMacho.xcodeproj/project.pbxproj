@@ -3884,8 +3884,8 @@
 			children = (
 				55BE998617978BB100D6DECC /* InfoPlist.strings */,
 				55BE998817978BB100D6DECC /* schema.strings */,
-				55BE998A17978BB100D6DECC /* GetMetadataForFile.m */,
 				55BE998B17978BB100D6DECC /* GetMetadataForFile.h */,
+				55BE998A17978BB100D6DECC /* GetMetadataForFile.m */,
 				55BE998D17978BB100D6DECC /* main.c */,
 				5578C53017DB94A60057D11B /* PPImport copy-Info.plist */,
 				55BE999117978BB200D6DECC /* schema.xml */,
