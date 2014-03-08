@@ -8,9 +8,7 @@
 
 #import "PPErrors.h"
 #include <PlayerPROCore/PlayerPROCore.h>
-#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
 #import "PPMusicObject.h"
-#endif
 
 NSString * const PPMADErrorDomain = @"net.sourceforge.playerpro.PlayerPROKit.ErrorDomain";
 
@@ -18,11 +16,11 @@ NSString * const PPMADErrorDomain = @"net.sourceforge.playerpro.PlayerPROKit.Err
 #define BUNDLEINIT
 #define PPErrorLocalizedString(theKey, comment) NSLocalizedStringWithDefaultValue(theKey, @"PPErrors", [NSBundle mainBundle], theKey, comment)
 #else
-#define BUNDLEINIT static NSBundle *PPKBundle \
+#define BUNDLEINIT static NSBundle *PPKBundle; \
 static dispatch_once_t errorOnceToken; \
 dispatch_once(&errorOnceToken, ^{ \
 PPKBundle = [NSBundle bundleForClass:[PPMusicObject class]]; \
-});
+})
 
 #define PPErrorLocalizedString(theKey, comment) NSLocalizedStringWithDefaultValue(theKey, @"PPErrors", PPKBundle, theKey, comment)
 #endif

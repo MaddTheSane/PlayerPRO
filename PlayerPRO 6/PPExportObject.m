@@ -7,6 +7,7 @@
 //
 
 #import "PPExportObject.h"
+#import <PlayerPROKit/PPErrors.h>
 
 @implementation PPExportObject
 @synthesize delegate;

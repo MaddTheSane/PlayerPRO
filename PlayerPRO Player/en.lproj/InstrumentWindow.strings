@@ -26,15 +26,26 @@
 /* Class = "NSTextFieldCell"; title = "Bit Rate:"; ObjectID = "40"; */
 "40.title" = "Bit Rate:";
 
-/* Class = "NSTextFieldCell"; title = "Real Note:"; ObjectID = "42"; */
+/* Class = "NSTextField"; ibShadowedToolTip = "Relative Note"; ObjectID = "41"; */
+"41.ibShadowedToolTip" = "Relative Note";
+
+/* Class = "NSTextFieldCell"; title = "Rel. Note:"; ObjectID = "42"; */
 "42.title" = "Rel. Note:";
-"42.toolTip" = "Relative Note";
 
 /* Class = "NSTextFieldCell"; title = "Bits:"; ObjectID = "44"; */
 "44.title" = "Bits:";
 
 /* Class = "NSTextFieldCell"; title = "Mode:"; ObjectID = "46"; */
 "46.title" = "Mode:";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No Size"; ObjectID = "50"; */
+"50.placeholderString" = "No Size";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No Loop"; ObjectID = "52"; */
+"52.placeholderString" = "No Loop";
+
+/* Class = "NSTextFieldCell"; placeholderString = "No Loop"; ObjectID = "54"; */
+"54.placeholderString" = "No Loop";
 
 /* Class = "NSTextFieldCell"; title = "Label"; ObjectID = "56"; */
 "56.title" = "Label";
