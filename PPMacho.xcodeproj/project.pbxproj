@@ -118,6 +118,9 @@
 		550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
 		550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
+		550D004F18CB808600FD0F17 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
+		550D005318CB80A000FD0F17 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
+		550D005418CB80A500FD0F17 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */; };
 		550FFAE617CEA4570003A2F3 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		550FFAE717CEA4570003A2F3 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -1743,6 +1746,8 @@
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
 		550B011310BA1E1C004FC5D7 /* PPPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPrivate.h; sourceTree = "<group>"; };
 		550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "OSX-CoreAudio.c"; sourceTree = "<group>"; };
+		550D005018CB808600FD0F17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file; name = Base; path = Base.lproj/PPErrors.strings; sourceTree = "<group>"; };
+		550D005218CB808E00FD0F17 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/PPErrors.strings; sourceTree = "<group>"; };
 		550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentCellView.h; sourceTree = "<group>"; };
 		550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentCellView.m; sourceTree = "<group>"; };
 		550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject.h; sourceTree = "<group>"; };
@@ -2847,6 +2852,7 @@
 			children = (
 				551292E0163DD68500C2C639 /* PlayerPROKit-Info.plist */,
 				551292E1163DD68500C2C639 /* InfoPlist.strings */,
+				550D005118CB808600FD0F17 /* PPErrors.strings */,
 				551292E4163DD68500C2C639 /* PlayerPROKit-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -5353,6 +5359,7 @@
 			files = (
 				551292E3163DD68500C2C639 /* InfoPlist.strings in Resources */,
 				55C9303B1819F6EC00D9E072 /* PPSoundSettingsViewController.xib in Resources */,
+				550D004F18CB808600FD0F17 /* PPErrors.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5460,6 +5467,7 @@
 				555776BE17EBF8FF0019D008 /* Images.xcassets in Resources */,
 				5521F41917FA541C002CDBA9 /* Trackers.xcassets in Resources */,
 				555776AA17EBF8FE0019D008 /* InfoPlist.strings in Resources */,
+				550D005418CB80A500FD0F17 /* PPErrors.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5506,6 +5514,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5578C52917DB94A50057D11B /* InfoPlist.strings in Resources */,
+				550D005318CB80A000FD0F17 /* PPErrors.strings in Resources */,
 				5578C52A17DB94A50057D11B /* schema.strings in Resources */,
 				5578C52B17DB94A50057D11B /* schema.xml in Resources */,
 			);
@@ -7159,6 +7168,15 @@
 			name = PianoPrefs.xib;
 			sourceTree = "<group>";
 		};
+		550D005118CB808600FD0F17 /* PPErrors.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				550D005018CB808600FD0F17 /* Base */,
+				550D005218CB808E00FD0F17 /* en */,
+			);
+			name = PPErrors.strings;
+			sourceTree = "<group>";
+		};
 		551292E1163DD68500C2C639 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -8251,6 +8269,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"BUILDINGPPRO=1",
+					"NOEXPORTFUNCS=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				LLVM_LTO = NO;
@@ -8269,6 +8288,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"BUILDINGPPRO=1",
+					"NOEXPORTFUNCS=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				LLVM_LTO = NO;
@@ -9198,6 +9218,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"BUILDINGPPRO=1",
+					"NOEXPORTFUNCS=1",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LLVM_LTO = NO;
@@ -9221,6 +9242,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"BUILDINGPPRO=1",
+					"NOEXPORTFUNCS=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
