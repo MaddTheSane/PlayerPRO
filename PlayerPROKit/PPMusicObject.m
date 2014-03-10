@@ -160,7 +160,7 @@ end:
 - (NSString *)internalFileName
 {
 	if (!internalFileName) {
-		self.internalFileName = [[NSString alloc] initWithCString:currentMusic->header->name encoding:NSMacOSRomanStringEncoding];
+		internalFileName = [[NSString alloc] initWithCString:currentMusic->header->name encoding:NSMacOSRomanStringEncoding];
 	}
 	return internalFileName;
 }
@@ -168,7 +168,7 @@ end:
 - (NSString*)madInfo
 {
 	if (!madInfo) {
-		self.madInfo = [[NSString alloc] initWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
+		madInfo = [[NSString alloc] initWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
 	}
 	return madInfo;
 }
@@ -284,6 +284,11 @@ end:
 	return currentMusic;
 }
 
+- (instancetype)initWithoutCreatingMusicStruct
+{
+	return self = [super init];
+}
+
 @end
 
 @interface PPMusicObjectWrapper ()
@@ -394,17 +399,18 @@ end:
 
 - (void)setUpObjCStructures
 {
+	int i;
 	self.internalFileName = [NSString stringWithCString:currentMusic->header->name encoding:NSMacOSRomanStringEncoding];
 	self.madInfo = [NSString stringWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
 	self.madAuthor = @"";
 	self.madType = currentMusic->header->MAD;
 	self.instruments = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU];
-	for (int i = 0; i < MAXINSTRU; i++) {
+	for (i = 0; i < MAXINSTRU; i++) {
 		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:self instrumentIndex:i];
 		[self.instruments addObject:insObj];
 	}
 	self.patterns = [[NSMutableArray alloc] initWithCapacity:currentMusic->header->numPat];
-	for (int i = 0; i < currentMusic->header->numPat; i++) {
+	for (i = 0; i < currentMusic->header->numPat; i++) {
 		PPPatternObject *obj = [[PPPatternObject alloc] initWithMusic:self patternAtIndex:i];
 		[self.patterns addObject:obj];
 	}
@@ -430,8 +436,7 @@ end:
 
 - (instancetype)initFromMusicObject:(PPMusicObject*)oldFormat
 {
-	if (self = [super init]) {
-		MADDisposeMusic(&currentMusic, NULL);
+	if (self = [super initWithoutCreatingMusicStruct]) {
 		currentMusic = DeepCopyMusic(oldFormat._currentMusic);
 		[self setUpObjCStructures];
 	}
@@ -565,8 +570,8 @@ end:
 		}
 		return NO;
 	}
-	short		x, i;
-	long		inOutCount, filePos = 0;
+	int		x, i;
+	long	inOutCount, filePos = 0;
 	__block InstrData *tempInstrData;
 	{
 		tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
@@ -684,7 +689,7 @@ end:
 	});
 	free(currentMusic->sample);
 	currentMusic->sample = tmpsData;
-	for (int i = 0; i < MAXINSTRU; i++) {
+	for (i = 0; i < MAXINSTRU; i++) {
 		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:self instrumentIndex:i];
 		[self.instruments replaceObjectAtIndex:i withObject:insObj];
 	}

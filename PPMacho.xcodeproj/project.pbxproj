@@ -4561,7 +4561,7 @@
 				5578C49C17D9E8840057D11B /* Copy Frameworks */,
 				5578C49F17D9E8A30057D11B /* Copy Plug-ins */,
 				5578C4F417DA996C0057D11B /* Copy Spotlight */,
-				55F41A3017EF8A8E00605DF8 /* Strip headers */,
+				55F41A3017EF8A8E00605DF8 /* Strip Headers */,
 			);
 			buildRules = (
 			);
@@ -5822,19 +5822,19 @@
 			shellPath = /bin/sh;
 			shellScript = "cd $SRCROOT\n\n\"$TARGET_BUILD_DIR\"/$PRODUCT_NAME Cocoa-Info.plist Cocoa\ntouch -amfc Cocoa-Info.plistvers.plist\n\n\"$TARGET_BUILD_DIR\"/$PRODUCT_NAME \"PlayerPRO Player/PlayerPRO Player-Info.plist\" player\ntouch -amfc \"PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist\"\n\n\"$TARGET_BUILD_DIR\"/$PRODUCT_NAME \"iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plist\" player\ntouch -amfc \"iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plistvers.plist\"\n\n";
 		};
-		55F41A3017EF8A8E00605DF8 /* Strip headers */ = {
+		55F41A3017EF8A8E00605DF8 /* Strip Headers */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Strip headers";
+			name = "Strip Headers";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Remove all headers from copied frameworks\nfind \"${TARGET_BUILD_DIR}\"/\"${PRODUCT_NAME}\".${WRAPPER_EXTENSION} -name Headers -o -name PrivateHeaders -print0 | xargs -0 rm -rf\n";
+			shellScript = "# Remove all headers from copied frameworks\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"Headers\" -print0 | xargs -0 rm -rf\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"PrivateHeaders\" -print0 | xargs -0 rm -rf\n";
 		};
 		55F41A3117EF8C2000605DF8 /* Strip Headers */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -5848,7 +5848,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Remove all headers from copied frameworks\nfind \"${TARGET_BUILD_DIR}\"/\"${PRODUCT_NAME}\".${WRAPPER_EXTENSION} -name Headers -o -name PrivateHeaders -print0 | xargs -0 rm -rf\n";
+			shellScript = "# Remove all headers from copied frameworks\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"Headers\" -print0 | xargs -0 rm -rf\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"PrivateHeaders\" -print0 | xargs -0 rm -rf\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
