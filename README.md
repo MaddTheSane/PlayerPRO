@@ -26,7 +26,7 @@ The instrument plug-ins now use `CFURL`s instead of the deprecated `FSSpec`s.
 
 iOS support has been added, but due to limitations in the iOS SDK, plug-ins are not supported: instead the default plug-ins are built-into the static library. 
 
-MSVC project files are available for the Windows version of the library. They were generated with Visual Studio 2010 Pro.
+Windows support is available.
 
 BeOS code has been recovered, but has not been tested.
 
