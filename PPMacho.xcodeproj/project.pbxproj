@@ -1839,7 +1839,7 @@
 		5523EC6716925FF80067B22A /* PPInstrumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentViewController.h; sourceTree = "<group>"; };
 		5523EC6816925FF80067B22A /* PPInstrumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentViewController.m; sourceTree = "<group>"; };
 		5523EC70169265AB0067B22A /* PPPlugInInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugInInfoController.h; sourceTree = "<group>"; };
-		5523EC71169265AB0067B22A /* PPPlugInInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPPlugInInfoController.m; path = ../Shared/PPPlugInInfoController.m; sourceTree = "<group>"; };
+		5523EC71169265AB0067B22A /* PPPlugInInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPlugInInfoController.m; sourceTree = "<group>"; };
 		5523EC75169265C30067B22A /* PPPlugInInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugInInfo.h; sourceTree = "<group>"; };
 		5523EC76169265C30067B22A /* PPPlugInInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPlugInInfo.m; sourceTree = "<group>"; };
 		5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "MIDI-Hardware-OSX.c"; sourceTree = "<group>"; };
@@ -2839,7 +2839,6 @@
 				558D4DD91666F14E00A333E8 /* PPDriver.m */,
 				55B1B4F5166A861900820424 /* PPMusicObject.h */,
 				55B1B4F6166A861900820424 /* PPMusicObject.m */,
-				5523EC71169265AB0067B22A /* PPPlugInInfoController.m */,
 				5532334D16766E5700076604 /* PPErrors.h */,
 				5532334E16766E5700076604 /* PPErrors.m */,
 				55453526186CD32900F69F4D /* OS X-specific code */,
@@ -3938,6 +3937,7 @@
 			isa = PBXGroup;
 			children = (
 				5523EC70169265AB0067B22A /* PPPlugInInfoController.h */,
+				5523EC71169265AB0067B22A /* PPPlugInInfoController.m */,
 				5523EC75169265C30067B22A /* PPPlugInInfo.h */,
 				5523EC76169265C30067B22A /* PPPlugInInfo.m */,
 				55323351167687A200076604 /* PPTimeFormatter.h */,

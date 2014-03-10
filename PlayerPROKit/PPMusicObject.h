@@ -16,8 +16,6 @@
 
 //Only use this class for playback!
 @interface PPMusicObject : NSObject
-@property (readonly, strong, nonatomic) NSString *internalFileName;
-@property (readonly, strong, nonatomic) NSString *madInfo;
 @property (readonly) int totalPatterns;
 @property (readonly) int totalPartitions;
 @property (readonly) int partitionLength;
@@ -38,10 +36,12 @@
 - (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib;
 - (instancetype)initWithPath:(NSString *)url driver:(PPDriver *)theLib;
 
-
 + (OSErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib;
 
 - (NSDictionary*)musicClasses;
+
+- (NSString*)internalFileName;
+- (NSString*)madInfo;
 
 //Save music to a URL in MADK format in PPMusicObject, and MAD bundle in PPMusicObjectWrapper
 - (OSErr)saveMusicToURL:(NSURL *)tosave;
@@ -68,8 +68,8 @@
 @property (readonly, strong) NSMutableArray *patterns;
 @property (readonly, strong) NSMutableArray *buses;
 @property (readonly) OSType madType;
-@property (readwrite, strong, nonatomic) NSString *internalFileName; //This is actually copied, but I don't want Clang to complain
-@property (readwrite, strong, nonatomic) NSString *madInfo; //Ditto
+@property (readwrite, copy, nonatomic) NSString *internalFileName;
+@property (readwrite, copy, nonatomic) NSString *madInfo;
 @property (copy) NSString *madAuthor;
 
 //Use to create a blank music object.

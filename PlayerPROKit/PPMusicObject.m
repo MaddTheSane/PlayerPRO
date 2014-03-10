@@ -38,8 +38,8 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	NSString *madInfo;
 	NSDictionary* madClasses;
 }
-@property (readwrite, strong, nonatomic) NSString *internalFileName;
-@property (readwrite, strong, nonatomic) NSString *madInfo;
+@property (readwrite, copy, nonatomic) NSString *internalFileName;
+@property (readwrite, copy, nonatomic) NSString *madInfo;
 @property (readwrite, strong) NSURL *filePath;
 @property (strong) NSArray *__instruments;
 @end
@@ -124,10 +124,10 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 - (NSDictionary*)musicClasses
 {
 	if (!madClasses) {
-		NSMutableArray *instru;
-		for (int i = 0; i < MAXINSTRU; i++) {
-			
-		}
+		NSMutableDictionary *madMutClasses = [[NSMutableDictionary alloc] init];
+		madMutClasses[@"PlayerPRO Instruments"] = [self instruments];
+		
+		madClasses = [[NSDictionary alloc] initWithDictionary:madMutClasses];
 	}
 	return madClasses;
 }
@@ -387,26 +387,6 @@ end:
 	return copyWrap;
 }
 
-- (NSString*)internalFileName
-{
-	return internalFileName;
-}
-
-- (void)setInternalFileName:(NSString *)_internalFileName
-{
-	internalFileName = [_internalFileName copy];
-}
-
-- (NSString*)madInfo
-{
-	return madInfo;
-}
-
-- (void)setMadInfo:(NSString *)_madInfo
-{
-	madInfo = [_madInfo copy];
-}
-
 #define kMADMusicName @"Mad Name"
 #define kMADMusicInfo @"Mad Info"
 #define kMADMusicType @"Mad Type"
@@ -558,6 +538,12 @@ end:
 	return nil;
 }
 
+- (OSErr)exportInstrumentListToURL:(NSURL*)outURL
+{
+	[self syncMusicDataTypes];
+	return [super exportInstrumentListToURL:outURL];
+}
+
 - (MADMusic *)copyMadMusicStruct
 {
 	[self syncMusicDataTypes];
@@ -698,7 +684,10 @@ end:
 	});
 	free(currentMusic->sample);
 	currentMusic->sample = tmpsData;
-	[self syncMusicDataTypes];
+	for (int i = 0; i < MAXINSTRU; i++) {
+		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:self instrumentIndex:i];
+		[self.instruments replaceObjectAtIndex:i withObject:insObj];
+	}
 	
 	return YES;
 }
