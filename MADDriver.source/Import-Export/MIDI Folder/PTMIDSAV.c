@@ -568,14 +568,9 @@ int PutpatternsPtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init
  *       2/7/1994 - added MTM saving
  */
 
-extern  	short 				MIDIInstMOD[128];
-extern		Boolean				UseQKIns;
-MADMusic			*curMusic = NULL;
-
-static inline void mystrcpy(Ptr a, BytePtr b)
-{
-	memmove(a, b + 1, b[0]);
-}
+extern  	short		MIDIInstMOD[128];
+extern		Boolean		UseQKIns;
+			MADMusic	*curMusic = NULL;
 
 void SavePtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 {

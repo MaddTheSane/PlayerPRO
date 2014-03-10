@@ -35,9 +35,9 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 {
 	NSLog(@"%s:%u error text:%s!", file, line, text);
 	NSInteger alert = NSRunAlertPanel(NSLocalizedString(@"MyDebugStr_Error", @"Error"),
-									  [NSString stringWithFormat:NSLocalizedString(@"MyDebugStr_MainText", @"The Main text to display"), text],
+									  NSLocalizedString(@"MyDebugStr_MainText", @"The Main text to display"),
 									  NSLocalizedString(@"MyDebugStr_Quit", @"Quit"), NSLocalizedString(@"MyDebugStr_Continue", @"Continue"),
-									  NSLocalizedString(@"MyDebugStr_Debug", @"Debug"));
+									  NSLocalizedString(@"MyDebugStr_Debug", @"Debug"), text);
 	switch (alert) {
 		case NSAlertAlternateReturn:
 			break;
