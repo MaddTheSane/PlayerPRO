@@ -51,7 +51,7 @@ static struct MusicPattern* oldDecompressPartitionMAD1(struct MusicPattern* myPa
 	short					maxCmd;
 	
 	finalPtr = (struct MusicPattern*) malloc(sizeof(struct oldPatHeader) + myPat->header.PatternSize * Tracks * sizeof(struct Command));
-	if (finalPtr == NULL) //DebugStr("\pDecompressPartitionMAD1");
+	if (finalPtr == NULL)
 		return NULL;
 	
 	memcpy(finalPtr, myPat, sizeof(struct oldPatHeader));
@@ -302,9 +302,9 @@ OSErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *in
 				aCmd->vol	= 0xFF;
 				
 				if (aCmd->cmd == 0x0C) {
-					aCmd->vol	= 0x10 + (aCmd->arg & 0x00FF);
-					aCmd->cmd	= 0;
-					aCmd->arg	= 0;
+					aCmd->vol = 0x10 + (aCmd->arg & 0x00FF);
+					aCmd->cmd = 0;
+					aCmd->arg = 0;
 				}
 			}
 		}
@@ -466,82 +466,76 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
-	switch(order)
-	{
+	switch (order) {
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if (iFileRefI)
-			{
+			if (iFileRefI) {
 				sndSize = iGetEOF(iFileRefI);
 				
-				// ** MEMORY Test Start
-				AlienFile = (Ptr)malloc(sndSize * 2L);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				// ** MEMORY Test End
-				
-				else
-				{
+				// ** MEMORY Test
+				AlienFile = (Ptr)malloc(sndSize * 2);
+				if (AlienFile == NULL) {
+					myErr = MADNeedMemory;
+				} else {
 					free(AlienFile);
 					
 					AlienFile = (Ptr)malloc(sndSize);
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr)
-					{
+					if (myErr == noErr) {
 						myErr = TestoldMADFile(AlienFile);
-						if (myErr == noErr)
-						{
+						if (myErr == noErr) {
 							myErr = MADFG2Mad(AlienFile, sndSize, MadFile, init);
 						}
 					}
-					free(AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else myErr = MADReadingErr;
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if (iFileRefI)
-			{
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+			if (iFileRefI) {
+				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = (Ptr)malloc(sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
+				if (AlienFile == NULL) {
+					myErr = MADNeedMemory;
+				} else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if(myErr == noErr) myErr = TestoldMADFile(AlienFile);
+					if(myErr == noErr)
+						myErr = TestoldMADFile(AlienFile);
 					
-					free(AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else myErr = MADReadingErr;
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		case 'INFO':
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if (iFileRefI)
-			{
+			if (iFileRefI) {
 				info->fileSize = iGetEOF(iFileRefI);
 				
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
-				
+				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				AlienFile = (Ptr)malloc(sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
+				if (AlienFile == NULL) {
+					myErr = MADNeedMemory;
+				} else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr)
-					{
+					if (myErr == noErr) {
 						myErr = ExtractoldMADInfo(info, AlienFile);
 					}
-					free(AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else myErr = MADReadingErr;
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		default:
