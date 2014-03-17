@@ -10,9 +10,10 @@
 
 @class PPInstrumentObject;
 @class PPInstrumentViewController;
+@class PPSmallPianoView;
 
 @interface InstrumentInfoController : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
-@property (weak) IBOutlet NSView *pianoView;
+@property (weak) IBOutlet PPSmallPianoView *pianoView;
 @property (weak) IBOutlet NSTextField *instrumentNumber;
 @property (weak) IBOutlet NSTextField *instrumentName;
 @property (weak) IBOutlet NSMatrix *panningMatrix;

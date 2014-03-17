@@ -458,6 +458,7 @@
 		5583C5FB16D0172F0078ACE8 /* Silence.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE91B10E08DB000177B4C /* Silence.plugin */; };
 		5583C5FC16D017380078ACE8 /* Smooth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE95E10E08DB900177B4C /* Smooth.plugin */; };
 		5583C60316D01DDE0078ACE8 /* Crop.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE62210E0884100177B4C /* Crop.plugin */; };
+		55852E1C18D67CCB0009BF55 /* PPSmallPianoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55852E1B18D67CCB0009BF55 /* PPSmallPianoView.m */; };
 		5586873D10BF5D0900FCC24D /* MADfg.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E310BB5368005208D1 /* MADfg.c */; };
 		5586873E10BF5D2700FCC24D /* MADI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E710BB5368005208D1 /* MADI.c */; };
 		5586873F10BF5D2D00FCC24D /* MADH.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E510BB5368005208D1 /* MADH.c */; };
@@ -2121,6 +2122,8 @@
 		55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+PPPreferences.m"; sourceTree = "<group>"; };
 		558328E518553B0B00DFACE4 /* PPMusicListDragClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicListDragClass.h; sourceTree = "<group>"; };
 		558328E618553B0B00DFACE4 /* PPMusicListDragClass.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMusicListDragClass.m; sourceTree = "<group>"; };
+		55852E1A18D67CCB0009BF55 /* PPSmallPianoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSmallPianoView.h; sourceTree = "<group>"; };
+		55852E1B18D67CCB0009BF55 /* PPSmallPianoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSmallPianoView.m; sourceTree = "<group>"; };
 		5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADfg.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5586871010BF5C4700FCC24D /* MADfg-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MADfg-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADH.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3757,6 +3760,8 @@
 				5578C53E17DBABBF0057D11B /* PPDocument.m */,
 				5521F41317FA4365002CDBA9 /* BoxViewController.h */,
 				5521F41417FA4365002CDBA9 /* BoxViewController.m */,
+				55852E1A18D67CCB0009BF55 /* PPSmallPianoView.h */,
+				55852E1B18D67CCB0009BF55 /* PPSmallPianoView.m */,
 				5523EC78169276AA0067B22A /* Instrument Code */,
 				55469C2416BF341500175A1F /* Pattern Code */,
 			);
@@ -6445,6 +6450,7 @@
 				55981C5311EE370D00656EE3 /* PPPreferences.m in Sources */,
 				55232A7611FDD2A60041A4EC /* SoundOutputController.m in Sources */,
 				55F41A3717EF96B000605DF8 /* PPExportObject.m in Sources */,
+				55852E1C18D67CCB0009BF55 /* PPSmallPianoView.m in Sources */,
 				55232AD811FDDFEA0041A4EC /* PianoPreferencesController.m in Sources */,
 				55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */,
 				55232AED11FDE2E40041A4EC /* MiscPreferenceController.m in Sources */,

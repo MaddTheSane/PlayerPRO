@@ -9,6 +9,7 @@
 #import <PlayerPROKit/PlayerPROKit.h>
 #import "InstrumentInfoController.h"
 #import "PPInstrumentViewController.h"
+#import "PPSmallPianoView.h"
 
 @interface InstrumentInfoController ()
 
