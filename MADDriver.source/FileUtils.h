@@ -29,6 +29,7 @@
  * @abstract	File operation API used by PlayerPRO.
  * @discussion	This header was used as a bridge between Windows and Mac OS (pre-X) file APIs.
  *				PlayerPROCore 6's version is a thin wrapper of the POSIX file APIs.
+ *				If you need more functionality, use another API instead.
  *
  */
 
@@ -56,7 +57,7 @@ extern "C" {
 
 /*!
  * @function	iFileOpen
- * @abstract	Deprecated: Calls iFileOpenRead
+ * @abstract	Deprecated: Calls <code>iFileOpenRead</code>
  * @discussion	You should be using iFileOpenRead instead
  */
 PPEXPORT UNFILE	iFileOpen(const char *name) DEPRECATED_ATTRIBUTE;
@@ -82,35 +83,25 @@ PPEXPORT UNFILE	iFileOpenRead(const char *name);
 PPEXPORT UNFILE	iFileOpenWrite(const char *name);
 
 /*!
- * @function	iFileOpenReadWrite
- * @abstract	Opens a file for reading and writing
- * @result		an UNFILE that can be written to/read from
- * @param		name
- *					The location of the file to read/write
- * @discussion	The file location can be either relative or absolute.
- */
-PPEXPORT UNFILE	iFileOpenReadWrite(const char *name);
-
-/*!
  * @function	iFileCreate
  * @abstract	Create a file at path, optionally setting the file type
  * @param		path
  *					The path to create the new file
  * @param		type
  *					The File Type to set the file to
- * @discussion	<tt>type</tt> is ignored on platforms that aren't OS X.
- *				<tt>type</tt> is mostly used on pre-OS X versions of Mac OS, and is rarely used nowadays.
- *				<tt>type</tt> may be zero.
+ * @discussion	<code>type</code> is ignored on platforms that aren't OS X.
+ *				<code>type</code> is mostly used on pre-OS X versions of Mac OS, and is rarely used nowadays.
+ *				If <code>type</code> is zero, the file type is not set.
  */
 PPEXPORT void	iFileCreate(const char *path, OSType type);
 
 /*!
  * @function	iGetEOF
  * @abstract	Get the length of the file
- * @result		the size of the file pointed to by <tt>iFileRefI</tt>
+ * @result		the size of the file pointed to by <code>iFileRefI</code>
  * @param		iFileRefI
  *					The file pointer to get the size from
- * @discussion	As this returns a 'long' data type, files larger than 2 GiB on non-LP64 systems (including Win64) may result in an invalid value, or even crash your app.
+ * @discussion	As this returns a 'long' data type, files larger than 2 GiB on non-LP64 systems (<i>including</i> Win64) may result in an invalid value, or even crash your app.
  *				As most tracker types (and audio files in general) are not that large, this will most likely not be an issue.
  */
 PPEXPORT long	iGetEOF(UNFILE iFileRefI);
@@ -118,7 +109,7 @@ PPEXPORT long	iGetEOF(UNFILE iFileRefI);
 /*!
  * @function	iRead
  * @abstract	Reads data in file referenced from iFileRefI
- * @result		An error value. 0, or <tt>noErr</tt> if there was no error.
+ * @result		An error value. 0, or <code>noErr</code> if there was no error.
  * @param		size
  *					The size of the data to read
  * @param		dest
@@ -132,7 +123,7 @@ PPEXPORT OSErr	iRead(long size, void *dest, UNFILE iFileRefI);
 /*!
  * @function	iWrite
  * @abstract	Writes data to file reference from iFileRefI
- * @result		An error value. 0, or <tt>noErr</tt> if there was no error.
+ * @result		An error value. 0, or <code>noErr</code> if there was no error.
  * @param		size
  *					The size of the data to write
  * @param		src
@@ -147,7 +138,7 @@ PPEXPORT OSErr	iWrite(long size, const void *src, UNFILE iFileRefI);
 /*!
  * @function    iSeekCur
  * @abstract    Change the file position of file pointed at by iFileRefI
- * @result      An error value. 0, or <tt>noErr</tt> if there was no error.
+ * @result      An error value. 0, or <code>noErr</code> if there was no error.
  * @param       size
  *					The offset from the current position
  * @param		iFileRefI
@@ -274,7 +265,7 @@ static inline void PPLE16(void *msg_buf)
  *					The OSType to convert
  * @param		str
  *					The address of the char array to write to
- * @discussion  <tt>str</tt> must be at least five chars long: four for the size of the OSType, and one for the terminating null.
+ * @discussion  <code>str</code> must be at least five chars long: four for the size of the OSType, and one for the terminating null.
  *				Note that OSTypes use the Mac OS Roman encoding. If needed, use iconv to convert from the Mac OS Roman encoding.
  */
 static inline void OSType2Ptr(OSType type, char *str)

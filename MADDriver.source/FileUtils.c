@@ -94,15 +94,6 @@ FILE* iFileOpenWrite(const char *name)
 	return fopen(name, "wb");
 }
 
-FILE* iFileOpenReadWrite(const char *name)
-{
-	FILE* theVal = fopen(name, "a+b");
-	if (theVal) {
-		fseek(theVal, 0, SEEK_SET);
-	}
-	return theVal;
-}
-
 long iGetEOF(FILE* iFileRefI)
 {
 	long curEOF, oldPos;
