@@ -24,6 +24,7 @@
 //Needed to quiet a few warnings on Windows.
 #define _CRT_SECURE_NO_WARNINGS 1
 #include <errno.h>
+#include <fcntl.h>
 #include "RDriver.h"
 #include "FileUtils.h"
 #include "PPPrivate.h"

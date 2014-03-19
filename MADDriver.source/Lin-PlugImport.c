@@ -46,12 +46,12 @@ OSErr CallImportPlug(MADLibrary				*inMADDriver,
 {
 	MADDriverSettings driverSettings = {0};
 	
-	return (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, driverSettings);
+	return (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);
 }
 
 typedef OSErr (*FILLPLUG)(PlugInfo *);
 
-void MInitImportPlug(MADLibrary *inMADDriver, Ptr PlugsFolderName)
+void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 {
 	inMADDriver->ThePlug = (PlugInfo*) calloc(MAXPLUG, sizeof(PlugInfo));
 	inMADDriver->TotalPlug = 0;
@@ -102,7 +102,7 @@ OSErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MAD
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
 		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
-			*theNewMAD = (MADMusic*) calloc(sizeof(MADMusic));
+			*theNewMAD = (MADMusic*) calloc(sizeof(MADMusic), 1);
 			if (!theNewMAD)
 				return MADNeedMemory;
 			
@@ -113,7 +113,7 @@ OSErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MAD
 }
 
 #define CharlMADcheckLength 10
-OSErr CheckMADFile(const char* name)
+OSErr CheckMADFile(char* name)
 {
 	UNFILE				refNum;
 	char				charl[CharlMADcheckLength];
