@@ -411,7 +411,7 @@ typedef struct PlugInfo
 } PlugInfo;
 #endif
 
-#if (defined(__UNIX__) && !(defined (_MAC_H) || defined (_BE_H)))
+#if (defined(__ELF__) && !(defined (_MAC_H) || defined (_BE_H)))
 #include <dlfcn.h>
 #include <sys/param.h>  //For PATH_MAX
 typedef OSErr (*MADPLUGFUNC)(OSType, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
@@ -510,7 +510,7 @@ typedef struct __VSTEffect {
 	Boolean				ProcessReplacingNotAvailable;
 } VSTEffect;
 
-#elif (defined(__UNIX__) && !(defined (_MAC_H) || defined (_BE_H)))
+#elif (defined(__ELF__) && !(defined (_MAC_H) || defined (_BE_H)))
 
 typedef struct __VSTEffect {
 	AEffect				*ce[2];

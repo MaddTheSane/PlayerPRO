@@ -16,7 +16,9 @@ ${SRCDIR}/OutPut8.c
 ${SRCDIR}/realft.c
 ${SRCDIR}/TickRemover.c
 ${SRCDIR}/stub-VSTPlugIn.c
+${SRCDIR}/MIDI-Hardware-Stub.c
 )
+
 set(PPC_Headers
 ${SRCDIR}/FileUtils.h
 ${SRCDIR}/MADDriver.h
@@ -51,4 +53,5 @@ endif(WIN32)
 find_package(PulseAudio)
 
 add_library (PlayerPROCore ${PPC_SRCs} ${PPC_Headers})
+target_link_libraries(PlayerPROCore m)
 
