@@ -1,4 +1,5 @@
-add_executable(PPPlay PPPlay.c)
+set(SRCDIR "${CMAKE_CURRENT_SOURCE_DIR}")
+add_executable(PPPlay ${SRCDIR}/PPPlay.c)
 SET(PPP_LIBS PlayerPROCore)
 
 if(UNIX)
