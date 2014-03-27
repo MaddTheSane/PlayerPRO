@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "557DE83410E08D9E00177B4C"
-               BuildableName = "Length.plugin"
-               BlueprintName = "Length"
+               BlueprintIdentifier = "5578C48017D9E8560057D11B"
+               BuildableName = "PlayerPRO Player.app"
+               BlueprintName = "PlayerPRO Player"
                ReferencedContainer = "container:PPMacho.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -29,6 +29,15 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "5578C48017D9E8560057D11B"
+            BuildableName = "PlayerPRO Player.app"
+            BlueprintName = "PlayerPRO Player"
+            ReferencedContainer = "container:PPMacho.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -39,6 +48,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "5578C48017D9E8560057D11B"
+            BuildableName = "PlayerPRO Player.app"
+            BlueprintName = "PlayerPRO Player"
+            ReferencedContainer = "container:PPMacho.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -46,8 +64,17 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
+      buildConfiguration = "Instrument"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "5578C48017D9E8560057D11B"
+            BuildableName = "PlayerPRO Player.app"
+            BlueprintName = "PlayerPRO Player"
+            ReferencedContainer = "container:PPMacho.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
