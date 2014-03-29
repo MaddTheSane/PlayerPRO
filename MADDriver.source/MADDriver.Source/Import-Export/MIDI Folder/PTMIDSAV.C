@@ -372,7 +372,7 @@ static void Convqpm(unsigned qpm, int rgbTempo[2], int ticks)
  
 static int PutpatternsPtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 {
-	int 				iT, iT2, wPat = 0, cDiv, ipw, ipwMax, fGoing;
+	int 				iT, iT2, wPat = 0, cDiv, ipw, ipwMax, fGoing = 0;
 	unsigned 			*pwLen, pwNote[3 * MAXCHANS], rgbTempo[2] = {6,125};
 	unsigned 			wNewtempo = 120;
 	unsigned long 		cDev = 0, i;
