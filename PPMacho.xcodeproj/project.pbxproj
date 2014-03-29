@@ -175,7 +175,6 @@
 		5523EC8116936F880067B22A /* PPDigitalPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */; };
 		5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */; };
 		552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552581FC16C6FC350016A31C /* InstrumentInfoController.m */; };
-		552581FF16C6FC350016A31C /* InstrumentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552581FD16C6FC350016A31C /* InstrumentInfoView.xib */; };
 		55268A521874CA8F00A82269 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55268A541874CA8F00A82269 /* Localizable.strings */; };
 		55268A5B1877EB7A00A82269 /* FadeVolumeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55268A5D1877EB7A00A82269 /* FadeVolumeController.xib */; };
 		55268A601877EB8E00A82269 /* FadeNoteController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55268A621877EB8E00A82269 /* FadeNoteController.xib */; };
@@ -547,6 +546,7 @@
 		55B23D231689321F00DCE923 /* PAT.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEADA10E727B100EDF2F1 /* PAT.plugin */; };
 		55B23D24168935D300DCE923 /* MINs.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEA6B10E727AD00EDF2F1 /* MINs.plugin */; };
 		55B23D2916893DE300DCE923 /* XI.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55151F8010DEDBDB0054ABC4 /* XI.plugin */; };
+		55B777A418E779ED001E5104 /* InstrumentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B777A318E77998001E5104 /* InstrumentInfoView.xib */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
 		55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B7E65A161D1D4E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -1851,7 +1851,6 @@
 		5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPlugInObject.m; sourceTree = "<group>"; };
 		552581FB16C6FC350016A31C /* InstrumentInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstrumentInfoController.h; sourceTree = "<group>"; };
 		552581FC16C6FC350016A31C /* InstrumentInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstrumentInfoController.m; sourceTree = "<group>"; };
-		552581FD16C6FC350016A31C /* InstrumentInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InstrumentInfoView.xib; sourceTree = "<group>"; };
 		55268A551874CA9800A82269 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		55268A561874CDD100A82269 /* CompFadeNoteFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompFadeNoteFormatter.h; sourceTree = "<group>"; };
 		55268A571874CDD200A82269 /* CompFadeNoteFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompFadeNoteFormatter.m; sourceTree = "<group>"; };
@@ -2188,6 +2187,7 @@
 		55B7665717E3BF9E004C1D45 /* PPPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPluginWindowController.m; sourceTree = "<group>"; };
 		55B7665B17E3CDA2004C1D45 /* PPDigitalPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPluginWindowController.h; sourceTree = "<group>"; };
 		55B7665C17E3CDA2004C1D45 /* PPDigitalPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPluginWindowController.m; sourceTree = "<group>"; };
+		55B777A218E77998001E5104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InstrumentInfoView.xib; sourceTree = "<group>"; };
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55BE998717978BB100D6DECC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -3417,7 +3417,7 @@
 				553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */,
 				55CBFC7211EB7BD90028C6BB /* InfoPlist.strings */,
 				55CBFC7B11EB7C950028C6BB /* MainMenu.xib */,
-				552581FD16C6FC350016A31C /* InstrumentInfoView.xib */,
+				55B777A318E77998001E5104 /* InstrumentInfoView.xib */,
 				55771DC31873714800AED8DC /* PPDocument.xib */,
 			);
 			path = Resources;
@@ -5754,6 +5754,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55B777A418E779ED001E5104 /* InstrumentInfoView.xib in Resources */,
 				553626B817EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets in Resources */,
 				55CBFC7311EB7BD90028C6BB /* InfoPlist.strings in Resources */,
 				55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */,
@@ -5771,7 +5772,6 @@
 				55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */,
 				557139E71685007B00831A5A /* OpenPanelViewController.xib in Resources */,
 				5521F41D17FA573B002CDBA9 /* PPPlugInInfoController.xib in Resources */,
-				552581FF16C6FC350016A31C /* InstrumentInfoView.xib in Resources */,
 				55771DC11873714800AED8DC /* PPDocument.xib in Resources */,
 				5521F41717FA541C002CDBA9 /* Trackers.xcassets in Resources */,
 				5573AF0817DF8FD400B68127 /* README.rtf in Resources */,
@@ -7379,6 +7379,14 @@
 				55A6201C18A6EFEC003B29B5 /* en */,
 			);
 			name = PreferenceNames.strings;
+			sourceTree = "<group>";
+		};
+		55B777A318E77998001E5104 /* InstrumentInfoView.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55B777A218E77998001E5104 /* Base */,
+			);
+			name = InstrumentInfoView.xib;
 			sourceTree = "<group>";
 		};
 		55BE998617978BB100D6DECC /* InfoPlist.strings */ = {
