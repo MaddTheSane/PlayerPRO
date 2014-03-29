@@ -2,24 +2,6 @@
   "images" : [
     {
       "size" : "29x29",
-      "idiom" : "iphone",
-      "filename" : "spotlight_iphone6_29x29@2x.png",
-      "scale" : "2x"
-    },
-    {
-      "size" : "40x40",
-      "idiom" : "iphone",
-      "filename" : "icon_40x40@2x.png",
-      "scale" : "2x"
-    },
-    {
-      "size" : "60x60",
-      "idiom" : "iphone",
-      "filename" : "main-icon-app-60@2.png",
-      "scale" : "2x"
-    },
-    {
-      "size" : "29x29",
       "idiom" : "ipad",
       "filename" : "spotlight_iphone6_29x29.png",
       "scale" : "1x"
