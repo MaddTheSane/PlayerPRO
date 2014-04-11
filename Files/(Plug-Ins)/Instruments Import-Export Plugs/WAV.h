@@ -15,6 +15,8 @@
 #include <PlayerPROCore/MAD.h>
 #include <CoreServices/CoreServices.h>
 
+#define __private_extern__ __attribute__((visibility("hidden")))
+
 #ifndef WIN32
 //Windows Defines
 #ifndef _INC_DLSMAC

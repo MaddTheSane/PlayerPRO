@@ -9,6 +9,8 @@
 #ifndef PPMacho_embeddedPlugs_h
 #define PPMacho_embeddedPlugs_h
 
+#define __private_extern__ __attribute__((visibility("hidden")))
+
 __private_extern__ OSErr main669(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
 __private_extern__ OSErr mainAMF(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
 __private_extern__ OSErr mainDMF(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);

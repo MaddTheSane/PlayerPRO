@@ -11,6 +11,8 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
+#define __private_extern__ __attribute__((visibility("hidden")))
+
 __private_extern__ OSErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init);
 __private_extern__ OSErr ExtractMADFGInfo(void *info, void *AlienFile);
 __private_extern__ OSErr TestMADFGFile(void *AlienFile);

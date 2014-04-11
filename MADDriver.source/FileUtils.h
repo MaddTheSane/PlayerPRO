@@ -57,8 +57,9 @@ extern "C" {
 
 /*!
  * @function	iFileOpen
- * @abstract	Deprecated: Calls <code>iFileOpenRead</code>
- * @discussion	You should be using iFileOpenRead instead
+ * @abstract	Deprecated: Calls iFileOpenRead()
+ * @discussion	You should be using iFileOpenRead() instead
+ * @deprecated	Use iFileOpenRead() instead
  */
 PPEXPORT UNFILE	iFileOpen(const char *name) DEPRECATED_ATTRIBUTE;
 
@@ -115,7 +116,7 @@ PPEXPORT long	iGetEOF(UNFILE iFileRefI);
  * @param		dest
  *					A pointer to put the data
  * @param		iFileRefI
- *					The file reference to read from. Must have been opened with iFileOpenRead
+ *					The file reference to read from. Must have been opened with iFileOpenRead()
  * @discussion	The size cannot be larger than the data pointer, otherwise bad things will happen.
  */
 PPEXPORT OSErr	iRead(long size, void *dest, UNFILE iFileRefI);
@@ -129,7 +130,7 @@ PPEXPORT OSErr	iRead(long size, void *dest, UNFILE iFileRefI);
  * @param		src
  *					A pointer to read data from
  * @param		iFileRefI
- *					The file reference to write to; must have been opened with iFileOpenWrite
+ *					The file reference to write to; must have been opened with iFileOpenWrite()
  * @discussion	The size cannot be larger than the data pointer, otherwise bad things will happen.
  *				Data is written to the file from the file's current position.
  */
