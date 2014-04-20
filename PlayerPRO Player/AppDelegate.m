@@ -1253,10 +1253,17 @@ enum PPMusicToolbarTypes {
 	} else if ([sharedWorkspace type:theUTI conformsToType:PPOldMusicListUTI]) {
 		if ([self musicListWillChange]) {
 			[self willChangeValueForKey:kMusicListKVO];
-			[musicList loadOldMusicListAtURL:theURL];
-			selMusFromList = musicList.selectedMusic;
-			[self didChangeValueForKey:kMusicListKVO];
-			[self musicListDidChange];
+			[musicList beginLoadingOfMusicListAtURL:theURL completionHandle:^(NSError *theErr) {
+				dispatch_async(dispatch_get_main_queue(), ^{
+					selMusFromList = musicList.selectedMusic;
+					[self didChangeValueForKey:kMusicListKVO];
+					[self musicListDidChange];
+					if (theErr) {
+						[[NSAlert alertWithError:theErr] runModal];
+					};
+					
+				});
+			}];
 			return YES;
 		}
 	} else {

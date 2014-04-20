@@ -252,7 +252,7 @@
 		555C5FCB18445CBC00DBD5DA /* libPlayerPROCompact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */; };
 		555C5FCC18445CBC00DBD5DA /* libPlayerPROKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */; };
 		5560643818C8FDC7002F72FC /* PPErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 5532334D16766E5700076604 /* PPErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5560643918C8FDC8002F72FC /* PPErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 5532334D16766E5700076604 /* PPErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5560643918C8FDC8002F72FC /* PPErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 5532334D16766E5700076604 /* PPErrors.h */; };
 		5560643A18C8FDD7002F72FC /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
 		5560643B18C8FDD8002F72FC /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
 		5560643C18C8FDD9002F72FC /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
@@ -2065,6 +2065,7 @@
 		55680A2619045F0A00F7616D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55680A3819046D9800F7616D /* PPSTImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSTImporter.h; sourceTree = "<group>"; };
 		55680A3919046D9800F7616D /* PPSTImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSTImporter.m; sourceTree = "<group>"; };
+		55680A4319048FA700F7616D /* STCFExport.exp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.exports; path = STCFExport.exp; sourceTree = "<group>"; };
 		556AE4BB16E290650074BBF9 /* PPByteswap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPByteswap.h; sourceTree = "<group>"; };
 		557139CD1684EF7500831A5A /* PPHilightableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHilightableButton.h; sourceTree = "<group>"; };
 		557139CE1684EF7500831A5A /* PPHilightableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHilightableButton.m; sourceTree = "<group>"; };
@@ -3790,6 +3791,7 @@
 				55680A2119045F0A00F7616D /* StcfImporter-Info.plist */,
 				55680A2219045F0A00F7616D /* InfoPlist.strings */,
 				55680A2519045F0A00F7616D /* StcfImporter-Prefix.pch */,
+				55680A4319048FA700F7616D /* STCFExport.exp */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -4231,12 +4233,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5578C51617DB901F0057D11B /* PPLibrary_PPKPrivate.h in Headers */,
+				5560643918C8FDC8002F72FC /* PPErrors.h in Headers */,
 				55F013E6187F5AB6002488D5 /* PPObjectProtocol.h in Headers */,
 				55DE87CE187E60F400C36533 /* PPFXSetObject.h in Headers */,
 				55C8EDEA187CC98200CC8C1B /* PPMadCommandObject.h in Headers */,
 				5578C51717DB901F0057D11B /* PPDriver_Private.h in Headers */,
 				5561700B1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */,
-				5560643918C8FDC8002F72FC /* PPErrors.h in Headers */,
 				5578C51117DB90110057D11B /* PlayerPROKit.h in Headers */,
 				55DE87C0187E052400C36533 /* PPPatternObject_PPKPrivate.h in Headers */,
 				5578C51217DB901F0057D11B /* PPLibrary.h in Headers */,
@@ -8207,6 +8209,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
+				EXPORTED_SYMBOLS_FILE = StcfImporter/STCFExport.exp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8227,6 +8230,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
+				EXPORTED_SYMBOLS_FILE = StcfImporter/STCFExport.exp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8247,6 +8251,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
+				EXPORTED_SYMBOLS_FILE = StcfImporter/STCFExport.exp;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";

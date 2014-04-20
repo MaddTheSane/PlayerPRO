@@ -23,7 +23,7 @@
 #define kMusicListKey3 @"Music List Key 3"
 #define kMusicListLocation3 @"Music Key Location 3"
 
-#if STCF_XPC_SERVICE
+#ifdef STCF_XPC_SERVICE
 // GetIndString isn't supported on 64-bit Mac OS X
 // This code is emulation for GetIndString.
 // Code based on Mozilla's Mac Eudora importer
@@ -306,9 +306,9 @@ static inline NSURL *PPHomeURL()
 }
 
 #if !TARGET_OS_IPHONE
+#ifdef STCF_XPC_SERVICE
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen
 {
-#if STCF_XPC_SERVICE
 	lostMusicCount = 0;
 	ResFileRefNum refNum;
 	Handle aHandle, locHand;
@@ -385,21 +385,32 @@ static inline NSURL *PPHomeURL()
 	
 	[self loadMusicList:newArray];
 
+	return noErr;
+}
+
 #else
+
+- (void)beginLoadingOfMusicListAtURL:(NSURL *)toOpen completionHandle:(void (^)(NSError *theErr))theHandle
+{
 	NSXPCConnection *conn = [[NSXPCConnection alloc] initWithServiceName:@"net.sourceforge.playerpro.StcfImporter"];
 	conn.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPSTImporterHelper)];
 	
 	[conn resume];
 	
-	[[conn remoteObjectProxy] loadStcfAtURL:toOpen withReply:^(PPMusicList *bookmarkData, NSError *error) {
-		if (error) {
+	[[conn remoteObjectProxy] loadStcfAtURL:toOpen withReply:^(NSData *bookmarkData, NSError *error) {
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			if (!error) {
+				[self loadMusicListFromData:bookmarkData];
+				theHandle(nil);
+			} else {
+				theHandle(error);
+			}
 			
-		}
+			[conn invalidate];
+		}];
 	}];
-	
-#endif
-	return noErr;
 }
+#endif
 #endif
 
 - (BOOL)loadMusicListAtURL:(NSURL *)fromURL

@@ -40,7 +40,11 @@
 
 - (BOOL)saveMusicListToURL:(NSURL *)toSave;
 - (BOOL)loadMusicListAtURL:(NSURL *)fromURL;
+#ifdef STCF_XPC_SERVICE
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen UNAVAILABLE_IPHONE;
+#else
+- (void)beginLoadingOfMusicListAtURL:(NSURL *)toOpen completionHandle:(void (^)(NSError *theErr))theHandle UNAVAILABLE_IPHONE;
+#endif
 
 - (NSURL*)URLAtIndex:(NSUInteger)index;
 - (BOOL)addMusicURL:(NSURL *)musicToLoad;

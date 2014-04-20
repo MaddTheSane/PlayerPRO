@@ -22,9 +22,9 @@
     return shared;
 }
 
-- (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(PPMusicList* bookmarkData, NSError *error))reply
+- (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(NSData* bookmarkData, NSError *error))reply
 {
-	PPMusicList *theList = [PPMusicList new];
+	PPMusicList *theList = [[PPMusicList alloc] init];
 	OSErr theErr = [theList loadOldMusicListAtURL:theURL];
 	if (theErr) {
 		NSError *tmpErr = CreateErrorFromMADErrorType(theErr);
@@ -32,7 +32,7 @@
 		return;
 	}
 	
-	reply(theList, nil);
+	reply([NSKeyedArchiver archivedDataWithRootObject:theList], nil);
 }
 
 - (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection

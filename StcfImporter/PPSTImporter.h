@@ -12,7 +12,7 @@
 
 @protocol PPSTImporterHelper <NSObject>
 
-- (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(PPMusicList* bookmarkData, NSError *error))reply;
+- (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(NSData* bookmarkData, NSError *error))reply;
 
 @end
 
