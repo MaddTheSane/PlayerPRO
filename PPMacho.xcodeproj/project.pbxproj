@@ -263,6 +263,9 @@
 		55680A1E19045F0A00F7616D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55680A2419045F0A00F7616D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55680A2219045F0A00F7616D /* InfoPlist.strings */; };
 		55680A2719045F0A00F7616D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A2619045F0A00F7616D /* main.m */; };
+		55680A2F1904631600F7616D /* PPMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A2E1904631600F7616D /* PPMusicList.m */; };
+		55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */; };
+		55680A3A19046D9800F7616D /* PPSTImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A3919046D9800F7616D /* PPSTImporter.m */; };
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		557139E61685007B00831A5A /* OpenPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139E41685007B00831A5A /* OpenPanelViewController.m */; };
 		557139E71685007B00831A5A /* OpenPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557139E51685007B00831A5A /* OpenPanelViewController.xib */; };
@@ -969,6 +972,13 @@
 			remoteGlobalIDString = 5578C50517DB8F9E0057D11B;
 			remoteInfo = libPlayerPROKit;
 		};
+		55680A301904661700F7616D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55680A1C19045F0A00F7616D;
+			remoteInfo = StcfImporter;
+		};
 		556885A918AED59F001D75D2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1567,6 +1577,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		55680A321904661E00F7616D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5573A1011656FAF100A5AECA /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2041,6 +2061,10 @@
 		55680A2319045F0A00F7616D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		55680A2519045F0A00F7616D /* StcfImporter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StcfImporter-Prefix.pch"; sourceTree = "<group>"; };
 		55680A2619045F0A00F7616D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		55680A2D1904631600F7616D /* PPTFMusicList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTFMusicList.h; sourceTree = "<group>"; };
+		55680A2E1904631600F7616D /* PPMusicList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMusicList.m; sourceTree = "<group>"; };
+		55680A3819046D9800F7616D /* PPSTImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSTImporter.h; sourceTree = "<group>"; };
+		55680A3919046D9800F7616D /* PPSTImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSTImporter.m; sourceTree = "<group>"; };
 		556AE4BB16E290650074BBF9 /* PPByteswap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPByteswap.h; sourceTree = "<group>"; };
 		557139CD1684EF7500831A5A /* PPHilightableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHilightableButton.h; sourceTree = "<group>"; };
 		557139CE1684EF7500831A5A /* PPHilightableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHilightableButton.m; sourceTree = "<group>"; };
@@ -3752,7 +3776,11 @@
 			isa = PBXGroup;
 			children = (
 				55680A2619045F0A00F7616D /* main.m */,
+				55680A2D1904631600F7616D /* PPTFMusicList.h */,
+				55680A2E1904631600F7616D /* PPMusicList.m */,
 				55680A2019045F0A00F7616D /* Supporting Files */,
+				55680A3819046D9800F7616D /* PPSTImporter.h */,
+				55680A3919046D9800F7616D /* PPSTImporter.m */,
 			);
 			path = StcfImporter;
 			sourceTree = "<group>";
@@ -4619,6 +4647,7 @@
 				5578C47F17D9E8560057D11B /* Resources */,
 				5578C49C17D9E8840057D11B /* Copy Frameworks */,
 				5578C49F17D9E8A30057D11B /* Copy Plug-ins */,
+				55680A321904661E00F7616D /* CopyFiles */,
 				5578C4F417DA996C0057D11B /* Copy Spotlight */,
 				55F41A3017EF8A8E00605DF8 /* Strip Headers */,
 			);
@@ -4630,6 +4659,7 @@
 				5578C49B17D9E8730057D11B /* PBXTargetDependency */,
 				55886F7317DEDAA200021A82 /* PBXTargetDependency */,
 				5578C53917DB959B0057D11B /* PBXTargetDependency */,
+				55680A311904661700F7616D /* PBXTargetDependency */,
 			);
 			name = "PlayerPRO Player";
 			productName = "PlayerPRO Player";
@@ -5348,6 +5378,7 @@
 				555776C217EBF8FF0019D008 /* iOS PlayerPRO PlayerTests */,
 				5578C51B17DB94A50057D11B /* PPImport-app */,
 				559C4186183EB4AB004A073C /* PPQuickView */,
+				55680A1C19045F0A00F7616D /* StcfImporter */,
 				5573A33E10B50D2600FF8B50 /* PlayerPROCore */,
 				551292D7163DD68500C2C639 /* PlayerPROKit */,
 				55C3589516C42D1800FB9FA6 /* PlayerPROCompact */,
@@ -5402,7 +5433,6 @@
 				557DE90D10E08DB000177B4C /* Silence */,
 				557DE95010E08DB900177B4C /* Smooth */,
 				557DE99310E08DC100177B4C /* Tone Generator */,
-				55680A1C19045F0A00F7616D /* StcfImporter */,
 			);
 		};
 /* End PBXProject section */
@@ -6089,6 +6119,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55680A2F1904631600F7616D /* PPMusicList.m in Sources */,
+				55680A3A19046D9800F7616D /* PPSTImporter.m in Sources */,
 				55680A2719045F0A00F7616D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6757,6 +6789,11 @@
 			isa = PBXTargetDependency;
 			target = 5578C50517DB8F9E0057D11B /* libPlayerPROKit */;
 			targetProxy = 555C5FCF18445CCC00DBD5DA /* PBXContainerItemProxy */;
+		};
+		55680A311904661700F7616D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55680A1C19045F0A00F7616D /* StcfImporter */;
+			targetProxy = 55680A301904661700F7616D /* PBXContainerItemProxy */;
 		};
 		556885AA18AED59F001D75D2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8175,9 +8212,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
 				MACH_O_TYPE = mh_execute;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				VALID_ARCHS = i386;
 				WRAPPER_EXTENSION = xpc;
 			};
 			name = Release;
@@ -8192,9 +8232,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
 				MACH_O_TYPE = mh_execute;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				VALID_ARCHS = i386;
 				WRAPPER_EXTENSION = xpc;
 			};
 			name = Instrument;
@@ -8211,9 +8254,12 @@
 				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
 				MACH_O_TYPE = mh_execute;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				VALID_ARCHS = i386;
 				WRAPPER_EXTENSION = xpc;
 			};
 			name = Debug;
@@ -10780,6 +10826,7 @@
 				55680A2B19045F0B00F7616D /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		5573A10C1656FAF100A5AECA /* Build configuration list for PBXNativeTarget "iOSPlayerPROCore" */ = {
 			isa = XCConfigurationList;

@@ -6,34 +6,17 @@
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
-#import "PPMusicList.h"
-#import "UserDefaultKeys.h"
-#include <PlayerPROCore/PlayerPROCore.h>
-#if !TARGET_OS_IPHONE
+#import "PPTFMusicList.h"
 #include <CoreServices/CoreServices.h>
-#endif
-#import <PlayerPROKit/PlayerPROKit.h>
-#import "PPSTImporter.h"
-
-#define kMUSICLISTKEY @"Music List Key1"
-
-#define kMUSICLISTKEY2 @"Music List Key2"
-#define kMusicListLocation2 @"Music Key Location2"
+#include <PlayerPROCore/FileUtils.h>
 
 #define kMusicListKey3 @"Music List Key 3"
 #define kMusicListLocation3 @"Music Key Location 3"
 
-static inline NSURL *PPHomeURL()
-{
-	static NSURL *homeURL;
-	if (homeURL == nil) {
-		homeURL = [NSURL fileURLWithPath:NSHomeDirectory() isDirectory:YES];
-	}
-	return homeURL;
-}
+static NSString * const kMusicListKVO = @"musicList";
 
 @interface PPMusicListObject ()
-@property (strong, readwrite, setter = setTheMusicUrl:) NSURL *musicUrl;
+@property (retain, readwrite, setter = setTheMusicUrl:) NSURL *musicUrl;
 @end
 
 @implementation PPMusicListObject
@@ -76,7 +59,7 @@ static inline NSURL *PPHomeURL()
 		}
 		return theSame;
 	} else if ([object isKindOfClass:[NSURL class]]) {
-		id dat1, dat2;
+		id dat1 = nil, dat2 = nil;
 		BOOL bothareValid = YES;
 		BOOL theSame = NO;
 		if (![musicUrl getResourceValue:&dat1 forKey:NSURLFileResourceIdentifierKey error:NULL]) {
@@ -135,6 +118,13 @@ static inline NSURL *PPHomeURL()
 	return self;
 }
 
+- (void)dealloc
+{
+	self.musicUrl = nil;
+	
+	[super dealloc];
+}
+
 - (NSString*)description
 {
 	return [NSString stringWithFormat:@"%@ : %@ - %@", [musicUrl description], [musicUrl path], self.fileName];
@@ -158,7 +148,7 @@ static inline NSURL *PPHomeURL()
 @end
 
 @interface PPMusicList ()
-@property (readonly) NSMutableArray *theMusicList;
+@property (strong, readonly) NSMutableArray *theMusicList;
 @end
 
 @implementation PPMusicList
@@ -263,15 +253,86 @@ static inline NSURL *PPHomeURL()
 	return YES;
 }
 
-#if !TARGET_OS_IPHONE
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen
 {
-	NSXPCConnection *conn = [[NSXPCConnection alloc] initWithServiceName:@"net.sourceforge.playerpro.StcfImporter"];
-	conn.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPSTImporterHelper)];
+	lostMusicCount = 0;
+	ResFileRefNum refNum;
+	Handle aHandle, locHand;
+	FSRef theRef;
+	UInt16 theNo, i;
+	CFURLGetFSRef((__bridge CFURLRef)toOpen, &theRef);
+	refNum = FSOpenResFile(&theRef, fsRdPerm);
+	OSErr resErr = ResError();
+	if (resErr) {
+		return resErr;
+	}
+	UseResFile(refNum);
+	aHandle = Get1Resource('STR#', 128);
+	if (aHandle == NULL)
+	{
+		CloseResFile(refNum);
+		return ResError();
+	}
+	locHand = Get1Resource('selc', 128);
+	if (locHand == NULL) {
+		CloseResFile(refNum);
+		return ResError();
+	}
+	DetachResource(aHandle);
+	DetachResource(locHand);
+	CloseResFile(refNum);
 	
+	HLock(aHandle);
+	theNo = *((UInt16*)(*aHandle));
+	PPBE16(&theNo);
+	
+	HUnlock(aHandle);
+	DisposeHandle(aHandle);
+	theNo /= 2;
+	
+	HLock(locHand);
+	short location = **((short**)locHand);
+	PPBE16(&location);
+	HUnlock(locHand);
+	DisposeHandle(locHand);
+	
+	NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:theNo];
+	
+	for(i = 0; i < theNo * 2; i += 2) {
+		StringPtr aStr, aStr2;
+		GetIndString(aStr, 128, i);
+		GetIndString(aStr2, 128, i + 1);
+		if (!aStr || !aStr2) {
+			break;
+		}
+		NSString *CFaStr, *CFaStr2;
+		CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman));
+		CFaStr2 = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman));
+
+		NSString *together = [@[CFaStr, CFaStr2] componentsJoinedByString:@":"];
+		CFaStr = CFaStr2 = nil;
+		
+		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)together, kCFURLHFSPathStyle, false));
+		together = nil;
+		if ([fullPath checkResourceIsReachableAndReturnError:NULL]) {
+			PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullPath];
+			[newArray addObject:obj];
+		} else {
+			if (location != -1 && location == (i / 2)) {
+				location = -1;
+			} else if (location != -1 && location > (i / 2)) {
+				location--;
+			}
+			lostMusicCount++;
+		}
+	}
+	
+	self.selectedMusic = (location >= [newArray count]) ? location : -1;
+	
+	[self loadMusicList:newArray];
+
 	return noErr;
 }
-#endif
 
 - (BOOL)loadMusicListAtURL:(NSURL *)fromURL
 {
@@ -290,6 +351,13 @@ static inline NSURL *PPHomeURL()
 		selectedMusic = -1;
 	}
 	return self;
+}
+
+- (void)dealloc
+{
+	
+	
+	[super dealloc];
 }
 
 - (BOOL)addMusicURL:(NSURL *)musicToLoad
@@ -321,7 +389,7 @@ static inline NSURL *PPHomeURL()
 
 - (NSURL*)URLAtIndex:(NSUInteger)index
 {
-	return [musicList[index] musicUrl];
+	return [[musicList objectAtIndex:index] musicUrl];
 }
 
 - (void)insertObjects:(NSArray*)anObj inMusicListAtIndex:(NSUInteger)idx
@@ -343,85 +411,8 @@ static inline NSURL *PPHomeURL()
 
 - (id)initWithCoder:(NSCoder *)decoder
 {
-	if ((self = [super init]))  {
-		lostMusicCount = 0;
-		NSMutableArray *BookmarkArray = [decoder decodeObjectForKey:kMusicListKey3];
-		if (!BookmarkArray) {
-			BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY2];
-			if (!BookmarkArray) {
-				BookmarkArray = [decoder decodeObjectForKey:kMUSICLISTKEY];
-				if (!BookmarkArray)
-					return nil;
-				
-				musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
-				for (NSData *bookData in BookmarkArray) {
-					BOOL isStale = NO;
-					NSURL *fullURL = [NSURL URLByResolvingBookmarkData:bookData options:NSURLBookmarkResolutionWithoutUI relativeToURL:nil bookmarkDataIsStale:&isStale error:nil];
-#ifdef DEBUG
-					if (isStale) {
-						NSLog(@"Bookmark pointing to %@ is stale", [fullURL path]);
-					}
-#endif
-					if (!fullURL) {
-						lostMusicCount++;
-						continue;
-					}
-					PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullURL];
-					[musicList addObject:obj];
-				}
-				selectedMusic = -1;
-			} else {
-				NSNumber *curSel;
-				if ((curSel = [decoder decodeObjectForKey:kMusicListLocation2])) {
-					selectedMusic = [curSel integerValue];
-				} else
-					selectedMusic = -1;
-				musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
-				for (NSData *bookData in BookmarkArray) {
-					BOOL isStale = NO;
-					NSURL *fullURL = [NSURL URLByResolvingBookmarkData:bookData options:NSURLBookmarkResolutionWithoutUI relativeToURL:PPHomeURL() bookmarkDataIsStale:&isStale error:nil];
-#ifdef DEBUG
-					if (isStale) {
-						NSLog(@"Bookmark pointing to %@ is stale.", [fullURL path]);
-					}
-#endif
-					if (!fullURL) {
-						if (selectedMusic == -1) {
-							//Do nothing
-						} else if (selectedMusic == [musicList count] + 1) {
-							selectedMusic = -1;
-						} else if (selectedMusic > [musicList count] + 1) {
-							selectedMusic--;
-						}
-						lostMusicCount++;
-						continue;
-					}
-					PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullURL];
-					[musicList addObject:obj];
-				}
-			}
-		} else {
-			selectedMusic = [decoder decodeIntegerForKey:kMusicListLocation3];
-			musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
-			for (NSURL *bookURL in BookmarkArray) {
-				if (![bookURL checkResourceIsReachableAndReturnError:NULL]) {
-					if (selectedMusic == -1) {
-						//Do nothing
-					} else if (selectedMusic == [musicList count] + 1) {
-						selectedMusic = -1;
-					} else if (selectedMusic > [musicList count] + 1) {
-						selectedMusic--;
-					}
-					lostMusicCount++;
-					continue;
-				}
-				PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:bookURL];
-				[musicList addObject:obj];
-			}
-			
-		}
-	}
-	return self;
+	//Do nothing for this version
+	return nil;
 }
 
 - (void)encodeWithCoder:(NSCoder *)encoder
@@ -468,7 +459,7 @@ static inline NSURL *PPHomeURL()
 
 - (id)objectInMusicListAtIndex:(NSUInteger)idx
 {
-	return musicList[idx];
+	return [musicList objectAtIndex:idx];
 }
 
 - (void)insertObject:(id)anObj inMusicListAtIndex:(NSUInteger)idx
@@ -483,7 +474,7 @@ static inline NSURL *PPHomeURL()
 
 - (void)replaceObjectInMusicListAtIndex:(NSUInteger)index withObject:(id)anObject
 {
-	musicList[index] = anObject;
+	[musicList replaceObjectAtIndex:index withObject:anObject];
 }
 
 @end

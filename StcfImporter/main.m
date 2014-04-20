@@ -7,7 +7,9 @@
 //
 
 #include <xpc/xpc.h>
-#include <Foundation/Foundation.h>
+#import <Foundation/Foundation.h>
+#include <Carbon/Carbon.h>
+#import "PPSTImporter.h"
 
 static void StcfImporter_peer_event_handler(xpc_connection_t peer, xpc_object_t event) 
 {
@@ -44,6 +46,15 @@ static void StcfImporter_event_handler(xpc_connection_t peer)
 
 int main(int argc, const char *argv[])
 {
-	xpc_main(StcfImporter_event_handler);
+    // Get the singleton service listener object.
+    NSXPCListener *serviceListener = [NSXPCListener serviceListener];
+    
+    // Configure the service listener with a delegate.
+    PPSTImporter *sharedZipper = [PPSTImporter sharedImporter];
+    serviceListener.delegate = sharedZipper;
+    
+    // Resume the listener. At this point, NSXPCListener will take over the execution of this service, managing its lifetime as needed.
+    [serviceListener resume];
+    
 	return 0;
 }

@@ -330,7 +330,7 @@ static Boolean CompareTwoNSURLs(NSURL *urla, NSURL *urlb)
 	}
 }
 
-CF_INLINE Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
+static inline Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
 {
 	@autoreleasepool {
 		return CompareTwoNSURLs((__bridge NSURL*)urla, (__bridge NSURL*)urlb);
