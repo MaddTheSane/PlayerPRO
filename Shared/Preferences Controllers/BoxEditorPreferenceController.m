@@ -16,7 +16,7 @@
 @synthesize octaveCheck;
 @synthesize offsetField;
 
--(id)init
+- (id)init
 {
 	if (self = [super initWithNibName:@"BoxPrefs" bundle:nil]) {
 		[self setTitle:NSLocalizedStringFromTable(@"Box Editor", @"PreferenceNames", @"Box Editor")];
@@ -24,7 +24,7 @@
 	return self;
 }
 
--(void)awakeFromNib
+- (void)awakeFromNib
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[notesCheck setState:[defaults boolForKey:PPBENotesProjection]];

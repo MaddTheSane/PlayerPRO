@@ -260,6 +260,9 @@
 		5561700A1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
 		5561700B1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
+		55680A1E19045F0A00F7616D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
+		55680A2419045F0A00F7616D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55680A2219045F0A00F7616D /* InfoPlist.strings */; };
+		55680A2719045F0A00F7616D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A2619045F0A00F7616D /* main.m */; };
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		557139E61685007B00831A5A /* OpenPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139E41685007B00831A5A /* OpenPanelViewController.m */; };
 		557139E71685007B00831A5A /* OpenPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557139E51685007B00831A5A /* OpenPanelViewController.xib */; };
@@ -2033,6 +2036,11 @@
 		555C125016378B3500735225 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject_PPKPrivate.h; sourceTree = "<group>"; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = net.sourceforge.playerpro.StcfImporter.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		55680A2119045F0A00F7616D /* StcfImporter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StcfImporter-Info.plist"; sourceTree = "<group>"; };
+		55680A2319045F0A00F7616D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55680A2519045F0A00F7616D /* StcfImporter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StcfImporter-Prefix.pch"; sourceTree = "<group>"; };
+		55680A2619045F0A00F7616D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		556AE4BB16E290650074BBF9 /* PPByteswap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPByteswap.h; sourceTree = "<group>"; };
 		557139CD1684EF7500831A5A /* PPHilightableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHilightableButton.h; sourceTree = "<group>"; };
 		557139CE1684EF7500831A5A /* PPHilightableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHilightableButton.m; sourceTree = "<group>"; };
@@ -2427,6 +2435,14 @@
 			files = (
 				555776C517EBF8FF0019D008 /* XCTest.framework in Frameworks */,
 				555776C617EBF9000019D008 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55680A1A19045F0A00F7616D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55680A1E19045F0A00F7616D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3732,6 +3748,25 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		55680A1F19045F0A00F7616D /* StcfImporter */ = {
+			isa = PBXGroup;
+			children = (
+				55680A2619045F0A00F7616D /* main.m */,
+				55680A2019045F0A00F7616D /* Supporting Files */,
+			);
+			path = StcfImporter;
+			sourceTree = "<group>";
+		};
+		55680A2019045F0A00F7616D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				55680A2119045F0A00F7616D /* StcfImporter-Info.plist */,
+				55680A2219045F0A00F7616D /* InfoPlist.strings */,
+				55680A2519045F0A00F7616D /* StcfImporter-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		557191D318A4103800F6DAD4 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -3989,6 +4024,7 @@
 				555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */,
 				555776CA17EBF9000019D008 /* iOS PlayerPRO PlayerTests */,
 				55534ACF1817C387006D6BCB /* updateInfoPlist */,
+				55680A1F19045F0A00F7616D /* StcfImporter */,
 				88E0C4950C2F21E500D6C081 /* Frameworks */,
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 			);
@@ -4054,6 +4090,7 @@
 				555776C317EBF8FF0019D008 /* iOS PlayerPRO PlayerTests.xctest */,
 				55534ACD1817C387006D6BCB /* updateInfoPlist */,
 				559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */,
+				55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4519,6 +4556,23 @@
 			productName = "iOS PlayerPRO PlayerTests";
 			productReference = 555776C317EBF8FF0019D008 /* iOS PlayerPRO PlayerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		55680A1C19045F0A00F7616D /* StcfImporter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55680A2819045F0B00F7616D /* Build configuration list for PBXNativeTarget "StcfImporter" */;
+			buildPhases = (
+				55680A1919045F0A00F7616D /* Sources */,
+				55680A1A19045F0A00F7616D /* Frameworks */,
+				55680A1B19045F0A00F7616D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = StcfImporter;
+			productName = StcfImporter;
+			productReference = 55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */;
+			productType = "com.apple.product-type.bundle";
 		};
 		5573A1021656FAF100A5AECA /* iOSPlayerPROCore */ = {
 			isa = PBXNativeTarget;
@@ -5348,6 +5402,7 @@
 				557DE90D10E08DB000177B4C /* Silence */,
 				557DE95010E08DB900177B4C /* Smooth */,
 				557DE99310E08DC100177B4C /* Tone Generator */,
+				55680A1C19045F0A00F7616D /* StcfImporter */,
 			);
 		};
 /* End PBXProject section */
@@ -5483,6 +5538,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				555776CF17EBF9000019D008 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55680A1B19045F0A00F7616D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55680A2419045F0A00F7616D /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6019,6 +6082,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				555776D117EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55680A1919045F0A00F7616D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55680A2719045F0A00F7616D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7252,6 +7323,14 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		55680A2219045F0A00F7616D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55680A2319045F0A00F7616D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		55771DC31873714800AED8DC /* PPDocument.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -8086,6 +8165,59 @@
 			};
 			name = Debug;
 		};
+		55680A2919045F0B00F7616D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
+				MACH_O_TYPE = mh_execute;
+				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				WRAPPER_EXTENSION = xpc;
+			};
+			name = Release;
+		};
+		55680A2A19045F0B00F7616D /* Instrument */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
+				MACH_O_TYPE = mh_execute;
+				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				WRAPPER_EXTENSION = xpc;
+			};
+			name = Instrument;
+		};
+		55680A2B19045F0B00F7616D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
+				MACH_O_TYPE = mh_execute;
+				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				WRAPPER_EXTENSION = xpc;
+			};
+			name = Debug;
+		};
 		5569FF521024B44400DDDF39 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -8105,6 +8237,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COMPRESS_PNG_FILES = YES;
+				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -8117,7 +8250,7 @@
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -8130,7 +8263,6 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -8245,7 +8377,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
-				STRIP_STYLE = all;
 				USER_HEADER_SEARCH_PATHS = Shared;
 				WRAPPER_EXTENSION = app;
 			};
@@ -8264,7 +8395,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
-				STRIP_STYLE = all;
 				USER_HEADER_SEARCH_PATHS = Shared;
 				WRAPPER_EXTENSION = app;
 			};
@@ -9113,6 +9243,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COMPRESS_PNG_FILES = YES;
+				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -9126,7 +9257,7 @@
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -9140,7 +9271,6 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
-				STRIP_INSTALLED_PRODUCT = YES;
 			};
 			name = Instrument;
 		};
@@ -9159,7 +9289,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
-				STRIP_STYLE = all;
 				USER_HEADER_SEARCH_PATHS = Shared;
 			};
 			name = Instrument;
@@ -9176,7 +9305,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
-				STRIP_STYLE = all;
 				USER_HEADER_SEARCH_PATHS = Shared;
 				WRAPPER_EXTENSION = app;
 			};
@@ -10127,7 +10255,7 @@
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNKNOWN_PRAGMAS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -10382,7 +10510,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
-				STRIP_STYLE = all;
 				USER_HEADER_SEARCH_PATHS = Shared;
 			};
 			name = Release;
@@ -10402,7 +10529,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
-				STRIP_STYLE = all;
 				USER_HEADER_SEARCH_PATHS = Shared;
 			};
 			name = Debug;
@@ -10645,6 +10771,15 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		55680A2819045F0B00F7616D /* Build configuration list for PBXNativeTarget "StcfImporter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55680A2919045F0B00F7616D /* Release */,
+				55680A2A19045F0B00F7616D /* Instrument */,
+				55680A2B19045F0B00F7616D /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		5573A10C1656FAF100A5AECA /* Build configuration list for PBXNativeTarget "iOSPlayerPROCore" */ = {
 			isa = XCConfigurationList;

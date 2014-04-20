@@ -65,7 +65,7 @@ static const TagCoupling TrackHeightCoupling[] = {{100, 1}, {110, 2}, {120, 3}, 
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPClassicalEditorPreferencesDidChange object:self];
 }
 
--(void)awakeFromNib
+- (void)awakeFromNib
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	{
