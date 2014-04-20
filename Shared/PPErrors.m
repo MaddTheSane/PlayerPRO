@@ -15,7 +15,9 @@ NSString * const PPMADErrorDomain = @"net.sourceforge.playerpro.PlayerPROKit.Err
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
 #define BUNDLEINIT
 #define PPErrorLocalizedString(theKey, comment) NSLocalizedStringWithDefaultValue(theKey, @"PPErrors", [NSBundle mainBundle], theKey, comment)
+
 #else
+
 #define BUNDLEINIT static NSBundle *PPKBundle; \
 static dispatch_once_t errorOnceToken; \
 dispatch_once(&errorOnceToken, ^{ \

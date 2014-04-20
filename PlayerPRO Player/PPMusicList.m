@@ -23,6 +23,42 @@
 #define kMusicListKey3 @"Music List Key 3"
 #define kMusicListLocation3 @"Music Key Location 3"
 
+#if STCF_XPC_SERVICE
+// GetIndString isn't supported on 64-bit Mac OS X
+// This code is emulation for GetIndString.
+// Code based on Mozilla's Mac Eudora importer
+static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
+{
+	Size handSize = GetHandleSize(aResource);
+	long curSize = 2;
+	
+	if (!aResource)
+		return NULL;
+	UInt8 *data = *(UInt8**)aResource;
+	UInt16 count = *(UInt16*)data;
+	PPBE16(&count);
+	
+	// First 2 bytes are the count of strings that this resource has.
+	if (count < aId)
+		return NULL;
+	// skip count
+	data += 2;
+	
+	// looking for data.  data is in order
+	while (--aId >= 0)
+	{
+		short toAdd = (*(UInt8*)data) + 1;
+		curSize += toAdd;
+		if (curSize >= handSize) {
+			return NULL;
+		}
+		data = data + toAdd;
+	}
+	
+	return data;
+}
+#endif
+
 static inline NSURL *PPHomeURL()
 {
 	static NSURL *homeURL;
@@ -272,6 +308,84 @@ static inline NSURL *PPHomeURL()
 #if !TARGET_OS_IPHONE
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen
 {
+#if STCF_XPC_SERVICE
+	lostMusicCount = 0;
+	ResFileRefNum refNum;
+	Handle aHandle, locHand;
+	FSRef theRef;
+	UInt16 theNo, i;
+	CFURLGetFSRef((__bridge CFURLRef)toOpen, &theRef);
+	refNum = FSOpenResFile(&theRef, fsRdPerm);
+	OSErr resErr = ResError();
+	if (resErr) {
+		return resErr;
+	}
+	UseResFile(refNum);
+	aHandle = Get1Resource('STR#', 128);
+	if (aHandle == NULL)
+	{
+		CloseResFile(refNum);
+		return ResError();
+	}
+	locHand = Get1Resource('selc', 128);
+	if (locHand == NULL) {
+		CloseResFile(refNum);
+		return ResError();
+	}
+	DetachResource(aHandle);
+	DetachResource(locHand);
+	CloseResFile(refNum);
+	
+	HLock(aHandle);
+	theNo = *((UInt16*)(*aHandle));
+	PPBE16(&theNo);
+	
+	theNo /= 2;
+	
+	HLock(locHand);
+	short location = **((short**)locHand);
+	PPBE16(&location);
+	HUnlock(locHand);
+	DisposeHandle(locHand);
+	
+	NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:theNo];
+	
+	for(i = 0; i < theNo * 2; i += 2) {
+		StringPtr aStr, aStr2;
+		aStr = GetStringFromHandle(aHandle, i);
+		aStr2 = GetStringFromHandle(aHandle, i + 1);
+		if (!aStr || !aStr2) {
+			break;
+		}
+		NSString *CFaStr, *CFaStr2;
+		CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman));
+		CFaStr2 = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman));
+
+		NSString *together = [@[CFaStr, CFaStr2] componentsJoinedByString:@":"];
+		CFaStr = CFaStr2 = nil;
+		
+		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)together, kCFURLHFSPathStyle, false));
+		together = nil;
+		if ([fullPath checkResourceIsReachableAndReturnError:NULL]) {
+			PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullPath];
+			[newArray addObject:obj];
+		} else {
+			if (location != -1 && location == (i / 2)) {
+				location = -1;
+			} else if (location != -1 && location > (i / 2)) {
+				location--;
+			}
+			lostMusicCount++;
+		}
+	}
+	HUnlock(aHandle);
+	DisposeHandle(aHandle);
+	
+	self.selectedMusic = (location >= [newArray count]) ? location : -1;
+	
+	[self loadMusicList:newArray];
+
+#else
 	NSXPCConnection *conn = [[NSXPCConnection alloc] initWithServiceName:@"net.sourceforge.playerpro.StcfImporter"];
 	conn.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPSTImporterHelper)];
 	
@@ -283,6 +397,7 @@ static inline NSURL *PPHomeURL()
 		}
 	}];
 	
+#endif
 	return noErr;
 }
 #endif

@@ -7,8 +7,8 @@
 //
 
 #import "PPSTImporter.h"
-#import "PPTFMusicList.h"
-#import "PPErrors.h"
+#import "PPMusicList.h"
+#import <PlayerPROKit/PPErrors.h>
 
 @implementation PPSTImporter
 
@@ -22,13 +22,6 @@
     return shared;
 }
 
-- (void)dealloc
-{
-	
-	
-	[super dealloc];
-}
-
 - (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(PPMusicList* bookmarkData, NSError *error))reply
 {
 	PPMusicList *theList = [PPMusicList new];
@@ -36,12 +29,10 @@
 	if (theErr) {
 		NSError *tmpErr = CreateErrorFromMADErrorType(theErr);
 		reply(nil, tmpErr);
-		[tmpErr release];
 		return;
 	}
 	
 	reply(theList, nil);
-	[theList release];
 }
 
 - (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection
