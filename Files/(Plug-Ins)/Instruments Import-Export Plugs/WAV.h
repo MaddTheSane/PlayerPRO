@@ -15,7 +15,7 @@
 #include <PlayerPROCore/MAD.h>
 #include <CoreServices/CoreServices.h>
 
-#define __private_extern__ __attribute__((visibility("hidden")))
+#define __private_extern __attribute__((visibility("hidden")))
 
 #ifndef WIN32
 //Windows Defines
@@ -81,12 +81,12 @@ typedef struct _pcwaveformat_tag {
 	char		theData[];
 } PCMWaveRec, *PCMWavePtr, **PCMWaveHnd;
 
-typedef struct _CK{
+typedef struct _CK {
 	FOURCC		ckid;
 	DWORD		cksize;
 } CK;
 
-typedef struct _MyAtom{
+typedef struct _MyAtom {
 	SInt32		pos;
 	SInt32		id;
 	SInt32		size;
@@ -97,16 +97,14 @@ typedef struct _MyAtom{
 extern "C" {
 #endif
 #ifndef __LP64__
-__private_extern__ Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo) DEPRECATED_ATTRIBUTE; //Returns memory allocated using Carbon's NewPtr.
-__private_extern__ OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug) DEPRECATED_ATTRIBUTE;
+__private_extern Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo) DEPRECATED_ATTRIBUTE; //Returns memory allocated using Carbon's NewPtr.
+__private_extern OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug) DEPRECATED_ATTRIBUTE;
 #endif
-__private_extern__ OSErr TestWAV(PCMWavePtr CC);
-__private_extern__ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loopEnd, short *sampleSize, unsigned int *rate, Boolean *stereo)
+__private_extern OSErr TestWAV(PCMWavePtr CC);
+__private_extern void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loopEnd, short *sampleSize, unsigned int *rate, Boolean *stereo)
 ;
 #ifdef __cplusplus
 }
 #endif
-
-
 
 #endif

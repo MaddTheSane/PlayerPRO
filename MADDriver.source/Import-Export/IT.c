@@ -619,7 +619,7 @@ void ConvertMADEffect(Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 
 static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
-	SInt32 				i, x, z, channel, Row;
+	SInt32 				i, x, z, channel = 0, Row;
 	Ptr					MaxPtr;
 	Ptr					theInstrument[256];
 	Byte				tempChar, *theITCopy;
@@ -628,7 +628,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	Boolean				useLinear;
 	
 	/**** Variables pour le MAD ****/
-	Cmd					*aCmd;
+	Cmd					*aCmd = NULL;
 	
 	/**** Variables pour le IT ****/
 	
@@ -1245,17 +1245,15 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	memset(theMAD->partition, 0, sizeof(theMAD->partition));
 	
 	for (i = 0; i < theMAD->header->numPat ; i++) {
-		ITPatForm		*curITPat;
+		ITPatForm		*curITPat = NULL;
 		
 		if (ITinfo.parappat[i]) {
 			curITPat = (ITPatForm*) (theIT + ITinfo.parappat[i]);
 #if 0
-			
 			curITPat->length	= PPLE16(&curITPat->length);
 			curITPat->row		= PPLE16(&curITPat->row);
 			
 			//Deja fait dans la recherche du maxtrack
-			 
 #endif
 			
 			theMAD->partition[i] = (PatData*) calloc(sizeof(PatHeader) + theMAD->header->numChn * curITPat->row * sizeof(Cmd), 1);

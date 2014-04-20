@@ -96,12 +96,12 @@ SInt32 DoVolPanning256(short whichChannel, Channel *ch, MADDriverRec *intDriver,
 	SInt32	pannValue, volFade;
 	SInt32	temp;
 	SInt32	volEnv;
-	SInt32 	tVSYNC;
+	SInt32 	tVSYNC = 0;
 	
 	if (Interpol) {
-		tVSYNC 		= intDriver->VSYNC;
-		tVSYNC 		/= intDriver->finespeed;
-		tVSYNC 		*= 8000;
+		tVSYNC = intDriver->VSYNC;
+		tVSYNC /= intDriver->finespeed;
+		tVSYNC *= 8000;
 		if (intDriver->VExt == 0) {
 			tVSYNC = 0;
 		} else

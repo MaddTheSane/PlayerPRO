@@ -12,10 +12,10 @@
 #include <CoreFoundation/CFDictionary.h>
 #include <CoreFoundation/CFString.h>
 
-#define __private_extern__ __attribute__((visibility("hidden")))
+#define __private_extern __attribute__((visibility("hidden")))
 
 // The import function to be implemented in GetMetadataForFile.c
-__private_extern__ Boolean GetMetadataForURL(void* thisInterface,
+__private_extern Boolean GetMetadataForURL(void* thisInterface,
 											 CFMutableDictionaryRef attributes,
 											 CFStringRef contentTypeUTI,
 											 CFURLRef urlForFile);

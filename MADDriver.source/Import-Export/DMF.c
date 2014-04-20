@@ -356,7 +356,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 #endif
 	
 	/**** Variables pour le MAD ****/
-	Cmd				*aCmd;
+	Cmd				*aCmd = NULL;
 	
 	/**** Variables pour le IT ****/
 	
