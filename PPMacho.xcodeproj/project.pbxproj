@@ -266,6 +266,8 @@
 		55680A2F1904631600F7616D /* PPMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A2E1904631600F7616D /* PPMusicList.m */; };
 		55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */; };
 		55680A3A19046D9800F7616D /* PPSTImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A3919046D9800F7616D /* PPSTImporter.m */; };
+		55680A3E1904847C00F7616D /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
+		55680A3F190484A600F7616D /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		557139E61685007B00831A5A /* OpenPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139E41685007B00831A5A /* OpenPanelViewController.m */; };
 		557139E71685007B00831A5A /* OpenPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557139E51685007B00831A5A /* OpenPanelViewController.xib */; };
@@ -5576,6 +5578,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55680A2419045F0A00F7616D /* InfoPlist.strings in Resources */,
+				55680A3F190484A600F7616D /* PPErrors.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6121,6 +6124,7 @@
 			files = (
 				55680A2F1904631600F7616D /* PPMusicList.m in Sources */,
 				55680A3A19046D9800F7616D /* PPSTImporter.m in Sources */,
+				55680A3E1904847C00F7616D /* PPErrors.m in Sources */,
 				55680A2719045F0A00F7616D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8211,7 +8215,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"NOEXPORTFUNCS=1",
+					"$(inherited)",
+				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
 				MACH_O_TYPE = mh_execute;
@@ -8231,7 +8238,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"NOEXPORTFUNCS=1",
+					"$(inherited)",
+				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
 				MACH_O_TYPE = mh_execute;
@@ -8252,7 +8262,10 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"NOEXPORTFUNCS=1",
+					"$(inherited)",
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";

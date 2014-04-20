@@ -28,9 +28,9 @@ PPKBundle = [NSBundle bundleForClass:[PPMusicObject class]]; \
 NSError *CreateErrorFromMADErrorType(OSErr theErr)
 {
 	BUNDLEINIT;
-	NSString *ErrorDescription;
-	NSString *errorReason;
-	NSString *recoverySuggestion;
+	NSString *ErrorDescription = nil;
+	NSString *errorReason = nil;
+	NSString *recoverySuggestion = nil;
 	
 	switch (theErr) {
 		case noErr:
