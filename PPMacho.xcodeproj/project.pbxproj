@@ -3778,9 +3778,9 @@
 				55680A2619045F0A00F7616D /* main.m */,
 				55680A2D1904631600F7616D /* PPTFMusicList.h */,
 				55680A2E1904631600F7616D /* PPMusicList.m */,
-				55680A2019045F0A00F7616D /* Supporting Files */,
 				55680A3819046D9800F7616D /* PPSTImporter.h */,
 				55680A3919046D9800F7616D /* PPSTImporter.m */,
+				55680A2019045F0A00F7616D /* Supporting Files */,
 			);
 			path = StcfImporter;
 			sourceTree = "<group>";
