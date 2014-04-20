@@ -13,7 +13,7 @@
 #include <CoreServices/CoreServices.h>
 #endif
 #import <PlayerPROKit/PlayerPROKit.h>
-#import "PPSTImporter.h"
+#include <xpc/xpc.h>
 
 #define kMUSICLISTKEY @"Music List Key1"
 
@@ -39,6 +39,7 @@ static inline NSURL *PPHomeURL()
 @implementation PPMusicListObject
 @synthesize musicUrl;
 @synthesize fileSize = _fileSize;
+
 - (unsigned long long)fileSize
 {
 	if (_fileSize == 0) {
@@ -147,12 +148,17 @@ static inline NSURL *PPHomeURL()
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-	return self = [self initWithURL:[aDecoder decodeObject]];
+	return self = [self initWithURL:[aDecoder decodeObjectForKey:@"URLKey"]];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-	[aCoder encodeObject:musicUrl];
+	[aCoder encodeObject:musicUrl forKey:@"URLKey"];
+}
+
++ (BOOL)supportsSecureCoding
+{
+	return YES;
 }
 
 @end
@@ -266,9 +272,18 @@ static inline NSURL *PPHomeURL()
 #if !TARGET_OS_IPHONE
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen
 {
-	NSXPCConnection *conn = [[NSXPCConnection alloc] initWithServiceName:@"net.sourceforge.playerpro.StcfImporter"];
-	conn.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPSTImporterHelper)];
-	
+	xpc_connection_t connection = xpc_connection_create("net.sourceforge.playerpro.StcfImporter", NULL);
+	xpc_object_t dict = xpc_dictionary_create(NULL, NULL, 0);
+	xpc_dictionary_set_string(dict, "oldURL", [toOpen fileSystemRepresentation]);
+	xpc_connection_set_event_handler(connection, ^(xpc_object_t object) {
+		if (xpc_get_type(object) == XPC_TYPE_ERROR) {
+			if (object == XPC_ERROR_CONNECTION_INVALID)
+				NSLog(@"invalid connection");
+		}
+	});
+	xpc_connection_resume(connection);
+	xpc_connection_send_message(connection, dict);
+
 	return noErr;
 }
 #endif
@@ -444,6 +459,11 @@ static inline NSURL *PPHomeURL()
 	if (![musicList containsObject:obj]) {
 		[musicList addObject:obj];
 	}
+}
+
++ (BOOL)supportsSecureCoding
+{
+	return YES;
 }
 
 - (NSUInteger)countOfMusicList

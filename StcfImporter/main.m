@@ -8,8 +8,7 @@
 
 #include <xpc/xpc.h>
 #import <Foundation/Foundation.h>
-#include <Carbon/Carbon.h>
-#import "PPSTImporter.h"
+#import "PPTFMusicList.h"
 
 static void StcfImporter_peer_event_handler(xpc_connection_t peer, xpc_object_t event) 
 {
@@ -26,7 +25,14 @@ static void StcfImporter_peer_event_handler(xpc_connection_t peer, xpc_object_t 
 		}
 	} else {
 		assert(type == XPC_TYPE_DICTIONARY);
+		PPMusicList *musicList = [PPMusicList new];
 		// Handle the message.
+		const char* theCPath = xpc_dictionary_get_string(event, "oldURL");
+		NSURL *theURL = [NSURL fileURLWithFileSystemRepresentation:theCPath isDirectory:NO relativeToURL:nil];
+		[musicList loadOldMusicListAtURL:theURL];
+		
+		
+		[musicList release];
 	}
 }
 
@@ -46,15 +52,6 @@ static void StcfImporter_event_handler(xpc_connection_t peer)
 
 int main(int argc, const char *argv[])
 {
-    // Get the singleton service listener object.
-    NSXPCListener *serviceListener = [NSXPCListener serviceListener];
-    
-    // Configure the service listener with a delegate.
-    PPSTImporter *sharedZipper = [PPSTImporter sharedImporter];
-    serviceListener.delegate = sharedZipper;
-    
-    // Resume the listener. At this point, NSXPCListener will take over the execution of this service, managing its lifetime as needed.
-    [serviceListener resume];
-    
+	xpc_main(StcfImporter_event_handler);
 	return 0;
 }

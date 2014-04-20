@@ -22,6 +22,7 @@ static NSString * const kMusicListKVO = @"musicList";
 @implementation PPMusicListObject
 @synthesize musicUrl;
 @synthesize fileSize = _fileSize;
+
 - (unsigned long long)fileSize
 {
 	if (_fileSize == 0) {
@@ -75,6 +76,11 @@ static NSString * const kMusicListKVO = @"musicList";
 		return NO;
 }
 
++ (BOOL)supportsSecureCoding
+{
+	return YES;
+}
+
 - (NSUInteger)hash
 {
 	return [[[[musicUrl filePathURL] absoluteURL] path] hash];
@@ -93,14 +99,12 @@ static NSString * const kMusicListKVO = @"musicList";
 	}
 }
 
-#if !TARGET_OS_IPHONE
 - (NSImage *)fileIcon
 {
 	NSImage *image = [[NSWorkspace sharedWorkspace] iconForFile:[musicUrl path]];
 	[image setSize:NSMakeSize(16, 16)];
 	return image;
 }
-#endif
 
 - (instancetype)initWithURL:(NSURL *)aURL
 {
@@ -137,12 +141,12 @@ static NSString * const kMusicListKVO = @"musicList";
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
-	return self = [self initWithURL:[aDecoder decodeObject]];
+	return self = [self initWithURL:[aDecoder decodeObjectForKey:@"URLKey"]];
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-	[aCoder encodeObject:musicUrl];
+	[aCoder encodeObject:musicUrl forKey:@"URLKey"];
 }
 
 @end
@@ -160,48 +164,6 @@ static NSString * const kMusicListKVO = @"musicList";
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"Size: %ld, selection: %ld, Contents: %@", (long)[musicList count], (long)selectedMusic, [musicList description]];
-}
-
-- (BOOL)saveApplicationMusicList
-{
-	NSFileManager *manager = [NSFileManager defaultManager];
-	NSURL *PPPPath = [[[manager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Player"];
-	if (![PPPPath checkResourceIsReachableAndReturnError:NULL]) {
-		//Just making sure...
-		[manager createDirectoryAtURL:PPPPath withIntermediateDirectories:YES attributes:nil error:NULL];
-	}
-
-	return [self saveMusicListToURL:[PPPPath URLByAppendingPathComponent:@"Player List" isDirectory:NO]];
-}
-
-- (BOOL)loadApplicationMusicList
-{
-	NSAssert([self countOfMusicList] == 0, @"Music list should be empty!");
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSData *listData = [defaults dataForKey:@"PlayerPRO Music List"];
-	if (listData) {
-		[self loadMusicListFromData:listData];
-		[defaults removeObjectForKey:@"PlayerPRO Music List"];
-		[self saveApplicationMusicList];
-		//Technically we did succeed...
-		return YES;
-	}
-	
-	NSFileManager *manager = [NSFileManager defaultManager];
-	NSURL *PPPPath = [[[manager URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:YES error:NULL] URLByAppendingPathComponent:@"PlayerPRO"] URLByAppendingPathComponent:@"Player"];
-	if (![PPPPath checkResourceIsReachableAndReturnError:NULL]) {
-		//Set up our directory for later use...
-		[manager createDirectoryAtURL:PPPPath withIntermediateDirectories:YES attributes:nil error:NULL];
-		//...Then say we failed
-		return NO;
-	}
-	return [self loadMusicListAtURL:[PPPPath URLByAppendingPathComponent:@"Player List" isDirectory:NO]];
-}
-
-- (BOOL)saveMusicListToURL:(NSURL *)toSave
-{
-	NSData *theList = [NSKeyedArchiver archivedDataWithRootObject:self];
-	return [theList writeToURL:toSave atomically:YES];
 }
 
 - (void)sortMusicListByName
@@ -228,9 +190,11 @@ static NSString * const kMusicListKVO = @"musicList";
 
 - (void)loadMusicList:(NSArray *)newArray
 {
+	NSMutableArray *tmpArray = musicList;
 	[self willChangeValueForKey:kMusicListKVO];
 	musicList = [newArray mutableCopy];
 	[self didChangeValueForKey:kMusicListKVO];
+	[tmpArray release];
 }
 
 - (void)clearMusicList
@@ -355,7 +319,7 @@ static NSString * const kMusicListKVO = @"musicList";
 
 - (void)dealloc
 {
-	
+	[musicList release];
 	
 	[super dealloc];
 }
@@ -426,6 +390,11 @@ static NSString * const kMusicListKVO = @"musicList";
 	//TODO: check for failed data initialization, and decrement changedIndex to match.
 	[encoder encodeInteger:selectedMusic forKey:kMusicListLocation3];
 	[encoder encodeObject:BookmarkArray forKey:kMusicListKey3];
+}
+
++ (BOOL)supportsSecureCoding
+{
+	return YES;
 }
 
 #pragma mark Key-valued Coding

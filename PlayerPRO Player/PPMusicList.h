@@ -14,7 +14,7 @@
 #define UNAVAILABLE_IPHONE UNAVAILABLE_ATTRIBUTE
 #endif
 
-@interface PPMusicListObject : NSObject <NSCopying, NSCoding>
+@interface PPMusicListObject : NSObject <NSCopying, NSSecureCoding>
 @property (strong, readonly) NSURL *musicUrl;
 @property (unsafe_unretained, readonly) NSString *fileName;
 #if !TARGET_OS_IPHONE
@@ -25,7 +25,7 @@
 - (instancetype)initWithURL:(NSURL *)aURL;
 @end
 
-@interface PPMusicList : NSObject <NSCoding, NSFastEnumeration>
+@interface PPMusicList : NSObject <NSSecureCoding, NSFastEnumeration>
 @property (readonly) NSUInteger lostMusicCount;
 @property NSInteger selectedMusic;
 

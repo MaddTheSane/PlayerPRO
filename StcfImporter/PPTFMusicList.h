@@ -14,7 +14,7 @@
 #define UNAVAILABLE_IPHONE UNAVAILABLE_ATTRIBUTE
 #endif
 
-@interface PPMusicListObject : NSObject <NSCopying, NSCoding>
+@interface PPMusicListObject : NSObject <NSCopying, NSSecureCoding>
 {
 	NSURL *musicUrl;
 	unsigned long long _fileSize;
@@ -28,7 +28,7 @@
 - (instancetype)initWithURL:(NSURL *)aURL;
 @end
 
-@interface PPMusicList : NSObject <NSCoding, NSFastEnumeration>
+@interface PPMusicList : NSObject <NSSecureCoding, NSFastEnumeration>
 {
 	NSMutableArray *musicList;
 	NSUInteger lostMusicCount;
@@ -44,11 +44,6 @@
 - (void)sortMusicListUsingComparator:(NSComparator)comp;
 - (void)sortMusicListWithOptions:(NSSortOptions)opts usingComparator:(NSComparator)comp;
 
-- (BOOL)saveApplicationMusicList;
-- (BOOL)loadApplicationMusicList;
-
-- (BOOL)saveMusicListToURL:(NSURL *)toSave;
-- (BOOL)loadMusicListAtURL:(NSURL *)fromURL;
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen UNAVAILABLE_IPHONE;
 
 - (NSURL*)URLAtIndex:(NSUInteger)index;
