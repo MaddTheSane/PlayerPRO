@@ -24,6 +24,11 @@ NSString * const PPMLDCUTI = @"net.sourceforge.playerpro.PlayerPRO-Player.player
 	return self;
 }
 
++ (instancetype)dragWithIndexSet:(NSIndexSet*)theSet
+{
+	return [[[self class] alloc] initWithIndexSet:theSet];
+}
+
 + (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
 {
 	if ([type isEqualToString:PPMLDCUTI])

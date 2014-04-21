@@ -420,13 +420,13 @@ static NSInteger selMusFromList = -1;
 
 #import "getAIFF.mi"
 
-- (NSInteger)showExportSettings
+- (void)beginExportSettingsWithHandler:(void(^)(NSModalResponse result))theHandle
 {
 	MADGetBestDriver(&exportSettings);
 	exportSettings.driverMode = NoHardwareDriver;
 	exportSettings.repeatMusic = FALSE;
 	[exportController settingsFromDriverSettings:&exportSettings];
-	return [NSApp runModalForWindow:self.exportWindow];
+	[self.window beginSheet:self.exportWindow completionHandler:theHandle];
 }
 
 - (IBAction)exportMusicAs:(id)sender
@@ -446,12 +446,17 @@ static NSInteger selMusFromList = -1;
 			
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as AIFF audio"];
-			[savePanel beginWithCompletionHandler:^(NSInteger result) {
+			[savePanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 				if (result != NSFileHandlingPanelOKButton) {
 					[madDriver endExport];
 				}
 				
-				if ([self showExportSettings] == NSAlertDefaultReturn) {
+				[self beginExportSettingsWithHandler:^(NSInteger result) {
+					if (result != NSAlertDefaultReturn) {
+						[madDriver endExport];
+						return;
+					}
+					
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						@autoreleasepool {
 							OSErr thErr =[self saveMusicAsAIFFToURL:[savePanel URL] usingSettings:&exportSettings];
@@ -470,9 +475,7 @@ static NSInteger selMusFromList = -1;
 							}
 						});
 					});
-				} else {
-					[madDriver endExport];
-				}
+				}];
 			}];
 		}
 			break;
@@ -487,13 +490,18 @@ static NSInteger selMusFromList = -1;
 			}
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as MPEG-4 Audio"];
-			[savePanel beginWithCompletionHandler:^(NSInteger result) {
+			[savePanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 				if (result != NSFileHandlingPanelOKButton) {
 					[madDriver endExport];
 					return;
 				}
 				
-				if ([self showExportSettings] == NSAlertDefaultReturn) {
+				[self beginExportSettingsWithHandler:^(NSInteger result) {
+					if (result != NSAlertDefaultReturn) {
+						[madDriver endExport];
+						return;
+					}
+					
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						OSErr theErr = noErr;
 						
@@ -592,8 +600,7 @@ static NSInteger selMusFromList = -1;
 						} else
 							NSLog(@"%@", [session error]);
 					});
-				} else
-					[madDriver endExport];
+				}];
 			}];
 		}
 			
@@ -607,13 +614,17 @@ static NSInteger selMusFromList = -1;
 			
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as Wave Audio"];
-			[savePanel beginWithCompletionHandler:^(NSInteger result) {
+			[savePanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 				if (result != NSFileHandlingPanelOKButton) {
 					[madDriver endExport];
 					return;
 				}
-				
-				if ([self showExportSettings] == NSAlertDefaultReturn) {
+				[self beginExportSettingsWithHandler:^(NSInteger result) {
+					if (result != NSAlertDefaultReturn) {
+						[madDriver endExport];
+						return;
+					}
+					
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						@autoreleasepool {
 							NSData *saveData = [self rawLESoundData:&exportSettings];
@@ -691,8 +702,7 @@ return; \
 							}
 						});
 					});
-				} else
-					[madDriver endExport];
+				}];
 			}];
 			break;
 		}
@@ -716,7 +726,8 @@ return; \
 			}
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", [madLib pluginAtIndex:tag].menuName]];
-			[savePanel beginWithCompletionHandler:^(NSInteger result) {
+			
+			[savePanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 				if (result != NSFileHandlingPanelOKButton) {
 					[madDriver endExport];
 					return;
@@ -750,13 +761,13 @@ return; \
 
 - (IBAction)okayExportSettings:(id)sender
 {
-	[NSApp stopModalWithCode:NSAlertDefaultReturn];
+	[self.window endSheet:self.exportWindow returnCode:NSAlertDefaultReturn];
 	[self.exportWindow close];
 }
 
 - (IBAction)cancelExportSettings:(id)sender
 {
-	[NSApp stopModalWithCode:NSAlertAlternateReturn];
+	[self.window endSheet:self.exportWindow returnCode:NSAlertAlternateReturn];
 	[self.exportWindow close];
 }
 
@@ -771,12 +782,16 @@ return; \
 	if (![self.musicName isEqualToString:@""]) {
 		[savePanel setNameFieldStringValue:self.musicName];
 	}
-	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-		NSURL *saveURL = [savePanel URL];
-		[self saveMusicToURL:saveURL];
-		[self addMusicToMusicList:saveURL loadIfPreferencesAllow:NO];
-	}
-	[madDriver endExport];
+	
+	[savePanel beginWithCompletionHandler:^(NSInteger result) {
+		if (result != NSFileHandlingPanelOKButton) {
+			NSURL *saveURL = [savePanel URL];
+			[self saveMusicToURL:saveURL];
+			[self addMusicToMusicList:saveURL loadIfPreferencesAllow:NO];
+			
+		}
+		[madDriver endExport];
+	}];
 }
 
 - (IBAction)saveMusic:(id)sender
@@ -917,8 +932,9 @@ return; \
 	}
 	
 	PPPlugInInfoController *infoCont = [[PPPlugInInfoController alloc] initWithPlugInInfo:inf];
-	[[infoCont window] center];
-	[NSApp runModalForWindow:[infoCont window]];
+	NSWindow *infoWindow = [infoCont window];
+	[infoWindow center];
+	[NSApp runModalForWindow:infoWindow];
 }
 
 - (void)updatePlugInInfoMenu
@@ -1427,7 +1443,7 @@ enum PPMusicToolbarTypes {
 		} else {
 			[madDriver pause];
 		}
-		self.paused = !self.paused;
+		self.paused = !_paused;
 	}
 }
 
@@ -1438,7 +1454,6 @@ enum PPMusicToolbarTypes {
 	PPInfoRec theInfo;
 	PPMusicListObject *obj;
 	char info[5] = {0};
-	char sig[5] = {0};
 	NSString *NSSig;
 	
 	if ([selected count] > 0) {
@@ -1461,8 +1476,7 @@ enum PPMusicToolbarTypes {
 	[musicInstrument setIntegerValue:theInfo.totalInstruments];
 	[musicPatterns setIntegerValue:theInfo.totalPatterns];
 	[musicPlugType setStringValue:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
-	OSType2Ptr(theInfo.signature, sig);
-	NSSig = [NSString stringWithCString:sig encoding:NSMacOSRomanStringEncoding];
+	NSSig = CFBridgingRelease(UTCreateStringForOSType(theInfo.signature));
 	if (!NSSig) {
 		NSSig = [NSString stringWithFormat:@"0x%08X", (unsigned int)theInfo.signature];
 	}
@@ -1666,8 +1680,8 @@ badTracker:
 - (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndices toPasteboard:(NSPasteboard*)pboard
 {
 	BOOL status = NO;
-	PPMusicListDragClass *dragClass = [[PPMusicListDragClass alloc] initWithIndexSet:rowIndices];
-	NSMutableArray *urlArrays = [NSMutableArray new];
+	PPMusicListDragClass *dragClass = [PPMusicListDragClass dragWithIndexSet:rowIndices];
+	NSMutableArray *urlArrays = [[NSMutableArray alloc] initWithCapacity:[rowIndices count]];
 	NSArray *ppmobjects = [musicList arrayOfObjectsInMusicListAtIndexes:rowIndices];
 	for (PPMusicListObject *obj in ppmobjects) {
 		[urlArrays addObject:obj.musicUrl];

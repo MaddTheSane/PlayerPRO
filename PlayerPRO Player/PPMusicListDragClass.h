@@ -15,4 +15,6 @@ extern NSString * const PPMLDCUTI;
 @property (readonly, copy) NSIndexSet *theIndexSet;
 
 - (instancetype)initWithIndexSet:(NSIndexSet*)theSet;
++ (instancetype)dragWithIndexSet:(NSIndexSet*)theSet;
+
 @end
