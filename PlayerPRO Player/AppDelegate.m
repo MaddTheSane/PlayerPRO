@@ -49,7 +49,8 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 	NSLog(@"%s:%u error text:%s!", file, line, text);
 	NSInteger alert = NSRunAlertPanel(NSLocalizedString(@"MyDebugStr_Error", @"Error"),
 									  NSLocalizedString(@"MyDebugStr_MainText", @"The Main text to display"),
-									  NSLocalizedString(@"MyDebugStr_Quit", @"Quit"), NSLocalizedString(@"MyDebugStr_Continue", @"Continue"),
+									  NSLocalizedString(@"MyDebugStr_Quit", @"Quit"),
+									  NSLocalizedString(@"MyDebugStr_Continue", @"Continue"),
 									  NSLocalizedString(@"MyDebugStr_Debug", @"Debug"), text);
 	switch (alert) {
 		case NSAlertAlternateReturn:
@@ -436,6 +437,7 @@ static NSInteger selMusFromList = -1;
 	
 	switch (tag) {
 		case -1: //AIFF
+		{
 			[savePanel setAllowedFileTypes:@[AVFileTypeAIFF]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
@@ -444,7 +446,11 @@ static NSInteger selMusFromList = -1;
 			
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as AIFF audio"];
-			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+			[savePanel beginWithCompletionHandler:^(NSInteger result) {
+				if (result != NSFileHandlingPanelOKButton) {
+					[madDriver endExport];
+				}
+				
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						@autoreleasepool {
@@ -467,12 +473,12 @@ static NSInteger selMusFromList = -1;
 				} else {
 					[madDriver endExport];
 				}
-			} else {
-				[madDriver endExport];
-			}
+			}];
+		}
 			break;
 			
 		case -2: //MP4
+		{
 			[savePanel setAllowedFileTypes:@[@"com.apple.m4a-audio"]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
@@ -481,7 +487,12 @@ static NSInteger selMusFromList = -1;
 			}
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as MPEG-4 Audio"];
-			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+			[savePanel beginWithCompletionHandler:^(NSInteger result) {
+				if (result != NSFileHandlingPanelOKButton) {
+					[madDriver endExport];
+					return;
+				}
+				
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						OSErr theErr = noErr;
@@ -583,11 +594,11 @@ static NSInteger selMusFromList = -1;
 					});
 				} else
 					[madDriver endExport];
-			} else
-				[madDriver endExport];
-			break;
+			}];
+		}
 			
 		case -3: // wave
+		{
 			[savePanel setAllowedFileTypes:@[AVFileTypeWAVE]];
 			[savePanel setCanCreateDirectories:YES];
 			[savePanel setCanSelectHiddenExtension:YES];
@@ -596,7 +607,12 @@ static NSInteger selMusFromList = -1;
 			
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as Wave Audio"];
-			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+			[savePanel beginWithCompletionHandler:^(NSInteger result) {
+				if (result != NSFileHandlingPanelOKButton) {
+					[madDriver endExport];
+					return;
+				}
+				
 				if ([self showExportSettings] == NSAlertDefaultReturn) {
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						@autoreleasepool {
@@ -677,11 +693,12 @@ return; \
 					});
 				} else
 					[madDriver endExport];
-			} else
-				[madDriver endExport];
+			}];
 			break;
+		}
 			
 		default:
+		{
 			if (tag > madLib.pluginCount || tag < 0) {
 				NSBeep();
 				[madDriver endExport];
@@ -699,7 +716,12 @@ return; \
 			}
 			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", [madLib pluginAtIndex:tag].menuName]];
-			if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
+			[savePanel beginWithCompletionHandler:^(NSInteger result) {
+				if (result != NSFileHandlingPanelOKButton) {
+					[madDriver endExport];
+					return;
+				}
+				
 				NSURL *fileURL = [savePanel URL];
 				OSErr err = [self.music exportMusicToURL:fileURL format:[madLib pluginAtIndex:tag].plugType library:madLib];
 				if (err != noErr) {
@@ -720,9 +742,9 @@ return; \
 						}
 					}
 				}
-			}
-			[madDriver endExport];
+			}];
 			break;
+		}
 	}
 }
 
@@ -1292,7 +1314,10 @@ enum PPMusicToolbarTypes {
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:self.trackerDict playlistDictionary:playlistDict instrumentDictionary:nil additionalDictionary:nil];
 	[av setupDefaults];
 	av.allowsMultipleSelectionOfTrackers = YES;
-	if ([panel runModal] == NSFileHandlingPanelOKButton) {
+	[panel beginSheetModalForWindow:[self window] completionHandler:^(NSInteger result) {
+		if (result != NSFileHandlingPanelOKButton) {
+			return;
+		}
 		NSArray *panelURLS = [panel URLs];
 		for (NSURL *theURL in panelURLS) {
 			NSString *filename = [theURL path];
@@ -1305,7 +1330,7 @@ enum PPMusicToolbarTypes {
 			}
 			[self handleFile:theURL ofType:utiFile]; //TODO: more efficient way of doing this!
 		}
-	}
+	}];
 }
 
 - (IBAction)saveMusicList:(id)sender
