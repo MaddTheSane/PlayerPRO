@@ -231,7 +231,6 @@
 		55534ACE1817C387006D6BCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55534AD11817C387006D6BCB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55534AD01817C387006D6BCB /* main.m */; };
 		5557769617EBDA740019D008 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5557769517EBDA740019D008 /* Media.xcassets */; };
-		555776A017EBF8FE0019D008 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		555776AA17EBF8FE0019D008 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 555776A817EBF8FE0019D008 /* InfoPlist.strings */; };
 		555776AC17EBF8FE0019D008 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776AB17EBF8FE0019D008 /* main.m */; };
 		555776B017EBF8FE0019D008 /* PPiAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776AF17EBF8FE0019D008 /* PPiAppDelegate.m */; };
@@ -268,6 +267,10 @@
 		55680A401904865600F7616D /* PPMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1BD5E120FBE51004FD083 /* PPMusicList.m */; };
 		55680A41190486E900F7616D /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		55680A42190487B000F7616D /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
+		55680A45190497B400F7616D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A44190497B400F7616D /* UIKit.framework */; };
+		55680A47190497E400F7616D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A46190497E400F7616D /* CoreGraphics.framework */; };
+		55680A4A190497FC00F7616D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A48190497FB00F7616D /* CoreFoundation.framework */; };
+		55680A4B190497FC00F7616D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A49190497FC00F7616D /* Foundation.framework */; };
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		557139E61685007B00831A5A /* OpenPanelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139E41685007B00831A5A /* OpenPanelViewController.m */; };
 		557139E71685007B00831A5A /* OpenPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557139E51685007B00831A5A /* OpenPanelViewController.xib */; };
@@ -2066,6 +2069,10 @@
 		55680A3819046D9800F7616D /* PPSTImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSTImporter.h; sourceTree = "<group>"; };
 		55680A3919046D9800F7616D /* PPSTImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSTImporter.m; sourceTree = "<group>"; };
 		55680A4319048FA700F7616D /* STCFExport.exp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.exports; path = STCFExport.exp; sourceTree = "<group>"; };
+		55680A44190497B400F7616D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		55680A46190497E400F7616D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		55680A48190497FB00F7616D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		55680A49190497FC00F7616D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		556AE4BB16E290650074BBF9 /* PPByteswap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPByteswap.h; sourceTree = "<group>"; };
 		557139CD1684EF7500831A5A /* PPHilightableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHilightableButton.h; sourceTree = "<group>"; };
 		557139CE1684EF7500831A5A /* PPHilightableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHilightableButton.m; sourceTree = "<group>"; };
@@ -2446,11 +2453,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55680A4A190497FC00F7616D /* CoreFoundation.framework in Frameworks */,
+				55680A4B190497FC00F7616D /* Foundation.framework in Frameworks */,
+				55680A47190497E400F7616D /* CoreGraphics.framework in Frameworks */,
+				55680A45190497B400F7616D /* UIKit.framework in Frameworks */,
 				55085D881836EE7B004A152F /* AudioToolbox.framework in Frameworks */,
 				55085D851836EE0F004A152F /* CoreAudio.framework in Frameworks */,
 				555776D817EBF9D80019D008 /* libiOSPlayerPROCore.a in Frameworks */,
 				555776D917EBF9D80019D008 /* libPlayerPROKit-iOS.a in Frameworks */,
-				555776A017EBF8FE0019D008 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3782,7 +3792,8 @@
 				55680A3919046D9800F7616D /* PPSTImporter.m */,
 				55680A2019045F0A00F7616D /* Supporting Files */,
 			);
-			path = StcfImporter;
+			name = StcfImporter;
+			path = ../StcfImporter;
 			sourceTree = "<group>";
 		};
 		55680A2019045F0A00F7616D /* Supporting Files */ = {
@@ -3843,6 +3854,10 @@
 		5573A1321656FD1700A5AECA /* iOS Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55680A48190497FB00F7616D /* CoreFoundation.framework */,
+				55680A49190497FC00F7616D /* Foundation.framework */,
+				55680A46190497E400F7616D /* CoreGraphics.framework */,
+				55680A44190497B400F7616D /* UIKit.framework */,
 				55085D861836EE7B004A152F /* AudioToolbox.framework */,
 				55085D871836EE7B004A152F /* AudioUnit.framework */,
 				55085D841836EE0F004A152F /* CoreAudio.framework */,
@@ -3863,6 +3878,7 @@
 				558328E618553B0B00DFACE4 /* PPMusicListDragClass.m */,
 				5578C49217D9E8570057D11B /* MainMenu.xib */,
 				5578C4F117DA97020057D11B /* InstrumentWindow.xib */,
+				55680A1F19045F0A00F7616D /* StcfImporter */,
 				5578C48417D9E8560057D11B /* Supporting Files */,
 			);
 			path = "PlayerPRO Player";
@@ -4053,7 +4069,6 @@
 				555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */,
 				555776CA17EBF9000019D008 /* iOS PlayerPRO PlayerTests */,
 				55534ACF1817C387006D6BCB /* updateInfoPlist */,
-				55680A1F19045F0A00F7616D /* StcfImporter */,
 				88E0C4950C2F21E500D6C081 /* Frameworks */,
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 			);
@@ -5350,7 +5365,7 @@
 				LastUpgradeCheck = 0510;
 				TargetAttributes = {
 					555776C217EBF8FF0019D008 = {
-						TestTargetID = 55CBF9A511EB77760028C6BB;
+						TestTargetID = 5557769E17EBF8FD0019D008;
 					};
 				};
 			};
@@ -7643,7 +7658,6 @@
 					"$(inherited)",
 					"BUILDINGPPRO=1",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
@@ -8068,7 +8082,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COPY_PHASE_STRIP = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "updateInfoPlist/updateInfoPlist-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -8086,7 +8099,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COPY_PHASE_STRIP = NO;
-				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "updateInfoPlist/updateInfoPlist-Prefix.pch";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -8158,9 +8170,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/iOS PlayerPRO Player.app/iOS PlayerPRO Player";
 				COMBINE_HIDPI_IMAGES = "";
-				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -8183,7 +8194,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/iOS PlayerPRO Player.app/iOS PlayerPRO Player";
 				COMBINE_HIDPI_IMAGES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -8231,7 +8242,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				EXPORTED_SYMBOLS_FILE = StcfImporter/STCFExport.exp;
-				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8267,12 +8277,12 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COMPRESS_PNG_FILES = YES;
-				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = "__MAC_OS_X_MEMORY_MANAGER_CLEAN__=1";
@@ -8285,10 +8295,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
-				INFOPLIST_OUTPUT_FORMAT = binary;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -8387,6 +8395,7 @@
 					"$(inherited)",
 					"BUILDINGPPRO=1",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "@rpath";
 				ONLY_ACTIVE_ARCH = NO;
@@ -8820,7 +8829,6 @@
 		557DE88310E08DA300177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8838,7 +8846,6 @@
 		557DE88410E08DA300177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9272,11 +9279,12 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_NS_ASSERTIONS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9292,11 +9300,9 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
-				INFOPLIST_OUTPUT_FORMAT = XML;
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
-				PLIST_FILE_OUTPUT_FORMAT = XML;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -9381,7 +9387,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = NO;
 				DSTROOT = /tmp/PlayerPROKit_iOS.dst;
 				GCC_OPTIMIZATION_LEVEL = s;
@@ -9392,6 +9397,7 @@
 					"BUILDINGPPRO=1",
 					"NOEXPORTFUNCS=1",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LLVM_LTO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -9415,7 +9421,7 @@
 					"BUILDINGPPRO=1",
 					"NOEXPORTFUNCS=1",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LLVM_LTO = NO;
 				ONLY_ACTIVE_ARCH = YES;
@@ -9484,7 +9490,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
@@ -9508,7 +9513,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
@@ -9569,7 +9573,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -9587,7 +9590,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,

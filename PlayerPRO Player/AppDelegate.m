@@ -1254,15 +1254,12 @@ enum PPMusicToolbarTypes {
 		if ([self musicListWillChange]) {
 			[self willChangeValueForKey:kMusicListKVO];
 			[musicList beginLoadingOfMusicListAtURL:theURL completionHandle:^(NSError *theErr) {
-				dispatch_async(dispatch_get_main_queue(), ^{
-					selMusFromList = musicList.selectedMusic;
-					[self didChangeValueForKey:kMusicListKVO];
-					[self musicListDidChange];
-					if (theErr) {
-						[[NSAlert alertWithError:theErr] runModal];
-					};
-					
-				});
+				selMusFromList = musicList.selectedMusic;
+				[self didChangeValueForKey:kMusicListKVO];
+				[self musicListDidChange];
+				if (theErr) {
+					[[NSAlert alertWithError:theErr] runModal];
+				};
 			}];
 			return YES;
 		}
@@ -1317,9 +1314,11 @@ enum PPMusicToolbarTypes {
 	[savePanel setAllowedFileTypes:@[PPMusicListUTI]];
 	[savePanel setCanCreateDirectories:YES];
 	[savePanel setCanSelectHiddenExtension:YES];
-	if ([savePanel runModal] == NSFileHandlingPanelOKButton) {
-		[musicList saveMusicListToURL:[savePanel URL]];
-	}
+	[savePanel beginSheetModalForWindow:[self window] completionHandler:^(NSInteger result) {
+		if (result == NSFileHandlingPanelOKButton) {
+			[musicList saveMusicListToURL:[savePanel URL]];
+		}
+	}];
 }
 
 - (IBAction)fastForwardButtonPressed:(id)sender
