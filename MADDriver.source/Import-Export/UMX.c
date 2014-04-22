@@ -119,35 +119,149 @@ static void AnalyseSignatureMOD(size_t EOFo, UInt32 temp, short *maxInstru, int 
 			*tracksNo = 3;
 			break;
 			
-		case '4CHN':	*PatternSize = sizeof(struct MODCom) * 64L * 4L;	*tracksNo = 4;	break;
-		case '5CHN':	*PatternSize = sizeof(struct MODCom) * 64L * 5L;	*tracksNo = 5;	break;
-		case '6CHN':	*PatternSize = sizeof(struct MODCom) * 64L * 6L;	*tracksNo = 6;	break;
-		case '7CHN':	*PatternSize = sizeof(struct MODCom) * 64L * 7L;	*tracksNo = 7;	break;
-		case '8CHN':	*PatternSize = sizeof(struct MODCom) * 64L * 8L;	*tracksNo = 8;	break;
-		case '9CHN':	*PatternSize = sizeof(struct MODCom) * 64L * 9L;	*tracksNo = 9;	break;
-		case '10CH':	*PatternSize = sizeof(struct MODCom) * 64L * 10L;	*tracksNo = 10;	break;
-		case '11CH':	*PatternSize = sizeof(struct MODCom) * 64L * 11L;	*tracksNo = 11;	break;
-		case '12CH':	*PatternSize = sizeof(struct MODCom) * 64L * 12L;	*tracksNo = 12;	break;
-		case '13CH':	*PatternSize = sizeof(struct MODCom) * 64L * 13L;	*tracksNo = 13;	break;
-		case '14CH':	*PatternSize = sizeof(struct MODCom) * 64L * 14L;	*tracksNo = 14;	break;
-		case '15CH':	*PatternSize = sizeof(struct MODCom) * 64L * 15L;	*tracksNo = 15;	break;
-		case '16CH':	*PatternSize = sizeof(struct MODCom) * 64L * 16L;	*tracksNo = 16;	break;
-		case '17CH':	*PatternSize = sizeof(struct MODCom) * 64L * 17L;	*tracksNo = 17;	break;
-		case '18CH':	*PatternSize = sizeof(struct MODCom) * 64L * 18L;	*tracksNo = 18;	break;
-		case '19CH':	*PatternSize = sizeof(struct MODCom) * 64L * 19L;	*tracksNo = 19;	break;
-		case '20CH':	*PatternSize = sizeof(struct MODCom) * 64L * 20L;	*tracksNo = 20;	break;
-		case '21CH':	*PatternSize = sizeof(struct MODCom) * 64L * 21L;	*tracksNo = 21;	break;
-		case '22CH':	*PatternSize = sizeof(struct MODCom) * 64L * 22L;	*tracksNo = 22;	break;
-		case '23CH':	*PatternSize = sizeof(struct MODCom) * 64L * 23L;	*tracksNo = 23;	break;
-		case '24CH':	*PatternSize = sizeof(struct MODCom) * 64L * 24L;	*tracksNo = 24;	break;
-		case '25CH':	*PatternSize = sizeof(struct MODCom) * 64L * 25L;	*tracksNo = 25;	break;
-		case '26CH':	*PatternSize = sizeof(struct MODCom) * 64L * 26L;	*tracksNo = 26;	break;
-		case '27CH':	*PatternSize = sizeof(struct MODCom) * 64L * 27L;	*tracksNo = 27;	break;
-		case '28CH':	*PatternSize = sizeof(struct MODCom) * 64L * 28L;	*tracksNo = 28;	break;
-		case '29CH':	*PatternSize = sizeof(struct MODCom) * 64L * 29L;	*tracksNo = 29;	break;
-		case '30CH':	*PatternSize = sizeof(struct MODCom) * 64L * 30L;	*tracksNo = 30;	break;
-		case '31CH':	*PatternSize = sizeof(struct MODCom) * 64L * 31L;	*tracksNo = 31;	break;
-		case '32CH':	*PatternSize = sizeof(struct MODCom) * 64L * 32L;	*tracksNo = 32;	break;
+		case '4CHN':
+			*PatternSize = sizeof(struct MODCom) * 64 * 4;
+			*tracksNo = 4;
+			break;
+			
+		case '5CHN':
+			*PatternSize = sizeof(struct MODCom) * 64 * 5;
+			*tracksNo = 5;
+			break;
+			
+		case '6CHN':
+			*PatternSize = sizeof(struct MODCom) * 64 * 6;
+			*tracksNo = 6;
+			break;
+			
+		case '7CHN':
+			*PatternSize = sizeof(struct MODCom) * 64 * 7;
+			*tracksNo = 7;
+			break;
+			
+		case '8CHN':
+			*PatternSize = sizeof(struct MODCom) * 64 * 8;
+			*tracksNo = 8;
+			break;
+			
+		case '9CHN':
+			*PatternSize = sizeof(struct MODCom) * 64 * 9;
+			*tracksNo = 9;
+			break;
+			
+		case '10CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 10;
+			*tracksNo = 10;
+			break;
+			
+		case '11CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 11;
+			*tracksNo = 11;
+			break;
+			
+		case '12CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 12;
+			*tracksNo = 12;
+			break;
+			
+		case '13CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 13;
+			*tracksNo = 13;
+			break;
+			
+		case '14CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 14;
+			*tracksNo = 14;
+			break;
+			
+		case '15CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 15;
+			*tracksNo = 15;
+			break;
+			
+		case '16CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 16;
+			*tracksNo = 16;
+			break;
+			
+		case '17CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 17;
+			*tracksNo = 17;
+			break;
+		case '18CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 18;
+			*tracksNo = 18;
+			break;
+			
+		case '19CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 19;
+			*tracksNo = 19;
+			break;
+			
+		case '20CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 20;
+			*tracksNo = 20;
+			break;
+			
+		case '21CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 21;
+			*tracksNo = 21;
+			break;
+			
+		case '22CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 22;
+			*tracksNo = 22;
+			break;
+			
+		case '23CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 23;
+			*tracksNo = 23;
+			break;
+			
+		case '24CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 24;
+			*tracksNo = 24;
+			break;
+			
+		case '25CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 25;
+			*tracksNo = 25;
+			break;
+			
+		case '26CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 26;
+			*tracksNo = 26;
+			break;
+			
+		case '27CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 27;
+			*tracksNo = 27;
+			break;
+			
+		case '28CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 28;
+			*tracksNo = 28;
+			break;
+			
+		case '29CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 29;
+			*tracksNo = 29;
+			break;
+			
+		case '30CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 30;
+			*tracksNo = 30;
+			break;
+			
+		case '31CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 31;
+			*tracksNo = 31;
+			break;
+			
+		case '32CH':
+			*PatternSize = sizeof(struct MODCom) * 64 * 32;
+			*tracksNo = 32;
+			break;
 			
 		default:
 			*PatternSize = sizeof(struct MODCom) * 64 * 4;
