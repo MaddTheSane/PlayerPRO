@@ -200,15 +200,15 @@ static NSInteger selMusFromList = -1;
 	init.outPutRate = (unsigned int)[defaults integerForKey:PPSoundOutRate];
 	init.outPutBits = [defaults integerForKey:PPSoundOutBits];
 	if ([defaults boolForKey:PPOversamplingToggle]) {
-		init.oversampling = (SInt32)[defaults integerForKey:PPOversamplingAmount];
+		init.oversampling = (int)[defaults integerForKey:PPOversamplingAmount];
 	} else {
 		init.oversampling = 1;
 	}
 	init.Reverb = [defaults boolForKey:PPReverbToggle];
-	init.ReverbSize = (SInt32)[defaults integerForKey:PPReverbAmount];
-	init.ReverbStrength = (SInt32)[defaults integerForKey:PPReverbStrength];
+	init.ReverbSize = (int)[defaults integerForKey:PPReverbAmount];
+	init.ReverbStrength = (int)[defaults integerForKey:PPReverbStrength];
 	if ([defaults boolForKey:PPStereoDelayToggle]) {
-		init.MicroDelaySize = (SInt32)[defaults integerForKey:PPStereoDelayAmount];
+		init.MicroDelaySize = (int)[defaults integerForKey:PPStereoDelayAmount];
 	} else {
 		init.MicroDelaySize = 0;
 	}

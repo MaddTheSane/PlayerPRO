@@ -28,14 +28,14 @@
 
 typedef struct sectheader
 {
-	SInt32 name;
-	SInt32 length;
+	int name;
+	int length;
 } sectheader;
 
 typedef struct OktaInstru
 {
 	char			name[20];
-	SInt32			length;
+	int				length;
 	unsigned short 	repeat;
 	unsigned short 	replen;
 	char 			pad1;
@@ -54,10 +54,10 @@ typedef struct OktaPattern
 typedef struct OktaHeader
 {
 	char			magic[12];
-	SInt32			noChannel;
-	SInt32			chanFlag;
-	SInt32			SampleDirectory;
-	SInt32			SampleLen;
+	int				noChannel;
+	int				chanFlag;
+	int				SampleDirectory;
+	int				SampleLen;
 	int				splitted[4];
 	
 	int				samp_count;

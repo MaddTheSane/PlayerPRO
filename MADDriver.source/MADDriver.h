@@ -68,9 +68,9 @@ struct __MADDriverRec {
 	/** Private variables - Not documented **/
 	/* DO NOT MODIFY OR USE these variables */
 	
-	SInt32			BytesToRemoveAtEnd, MIN_PITCH, MAX_PITCH, MOD_MIN_PITCH, MOD_MAX_PITCH, ASCBUFFERReal;
+	int				BytesToRemoveAtEnd, MIN_PITCH, MAX_PITCH, MOD_MIN_PITCH, MOD_MAX_PITCH, ASCBUFFERReal;
 	short			smallcounter, trackDiv;
-	SInt32			FREQBASE;
+	int				FREQBASE;
 	short			InstruActif[MAXINSTRU];
 	char			*IntDataPtr;
 	void			*OsciDrawPtr[MAXDRAW];
@@ -79,9 +79,9 @@ struct __MADDriverRec {
 	short			curDrawPtr;
 	unsigned long	curTime;
 	Boolean			XMLinear, MODMode, JumpToNextPattern, endPattern, MADPlay;
-	SInt32			ASCBUFFER;
+	int				ASCBUFFER;
 	size_t			BufSize;
-	SInt32			VSYNC, BufCounter, BytesToGenerate;
+	int				VSYNC, BufCounter, BytesToGenerate;
 	short			vibrato_table[64];
 	short			SendMIDIClockData;	//gOutNodeRefNum, MIDIPortRefNum
 	short			InstuNoOld[MAXTRACK];
@@ -89,24 +89,24 @@ struct __MADDriverRec {
 	short			VelocityOld[MAXTRACK];
 	Boolean			TrackLineReading[MAXTRACK], TrackReading[MAXTRACK], wasReading;
 	char			*OverShoot;
-	SInt32			*DASCBuffer;//, *DASCBufferOut;
-	SInt32			*DASCEffectBuffer[MAXCHANEFFECT];
-	SInt32			EffectBufferID[MAXCHANEFFECT];
-	SInt32			EffectBufferRealID[MAXCHANEFFECT];
+	int				*DASCBuffer;//, *DASCBufferOut;
+	int				*DASCEffectBuffer[MAXCHANEFFECT];
+	int				EffectBufferID[MAXCHANEFFECT];
+	int				EffectBufferRealID[MAXCHANEFFECT];
 	short			*DASCBuffer8;//, *DASCBuffer8Out;
 	double			*Filter, *fData;
-	SInt32			MDelay;
-	SInt32			RDelay;
+	int				MDelay;
+	int				RDelay;
 	void			*ReverbPtr;
 	short			PatDelay;
 	short			lastChannelUsed[MAXTRACK];
-	SInt32			MultiChanNo, globPan;
+	int				MultiChanNo, globPan;
 	Boolean			currentlyExporting;
 	Boolean			thisExport;
 	Boolean			OneMoreBeforeEnd;
 	Boolean			clipL, clipR;
-	SInt32			levelL, levelR;
-	SInt32			curCenterL, curCenterR;
+	int				levelL, levelR;
+	int				curCenterL, curCenterR;
 	
 	Boolean			hasVSTEnabled;
 	void			*vstEffects;

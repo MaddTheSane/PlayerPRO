@@ -84,7 +84,7 @@ void InitMIDIHarware(void)
 
 void NDoPlayInstru(short Note, short Instru, short effect, short arg, short vol);
 
-void DoMidiSpeaker(short note, short Instru, SInt32 arg)
+void DoMidiSpeaker(short note, short Instru, int arg)
 {
 	
 }

@@ -33,7 +33,7 @@ Boolean IsVSTChanEffect(MADDriverRec *intDriver, short channel)
 	return false;
 }
 
-void ProcessVSTPlug(MADDriverRec *intDriver, SInt32 *data, int datasize, short channel)
+void ProcessVSTPlug(MADDriverRec *intDriver, int *data, int datasize, short channel)
 {
 	
 }

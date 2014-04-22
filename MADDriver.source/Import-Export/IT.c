@@ -151,7 +151,7 @@ static uintptr_t read_itcompr8(ITPACK* status, char **reader, Byte *sl_buffer, u
 static uintptr_t read_itcompr16(ITPACK *status,Ptr *reader,short *sl_buffer,unsigned short count,unsigned short* incnt)
 {
 	short 			*dest=sl_buffer,*end=sl_buffer+ count;// (short*) ((Ptr) sl_buffer+ count);
-	SInt32 			x,y,needbits,havebits,new_count=0;
+	int				x,y,needbits,havebits,new_count=0;
 	unsigned short 	bits = status->bits;
 	unsigned short 	bufbits = status->bufbits;
 	short 			last = status->last;
@@ -619,20 +619,20 @@ void ConvertMADEffect(Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 
 static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
-	SInt32 				i, x, z, channel = 0, Row;
-	Ptr					MaxPtr;
-	Ptr					theInstrument[256];
-	Byte				tempChar, *theITCopy;
-	short				maxTrack;
-	//short				ITperiod[12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
-	Boolean				useLinear;
+	int		i, x, z, channel = 0, Row;
+	Ptr		MaxPtr;
+	Ptr		theInstrument[256];
+	Byte	tempChar, *theITCopy;
+	short	maxTrack;
+	//short	ITperiod[12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
+	Boolean	useLinear;
 	
 	/**** Variables pour le MAD ****/
-	Cmd					*aCmd = NULL;
+	Cmd *aCmd = NULL;
 	
 	/**** Variables pour le IT ****/
 	
-	ITForm				ITinfo = {0};
+	ITForm ITinfo = {0};
 	/********************************/
 		
 	memset(theInstrument, 0, sizeof(theInstrument));
@@ -672,7 +672,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	theITCopy += ITinfo.orderNum;
 	
 	/**** Ins Num *****/
-	ITinfo.parapins = (SInt32 *)malloc(ITinfo.insNum * 4);
+	ITinfo.parapins = (int *)malloc(ITinfo.insNum * 4);
 	if (ITinfo.parapins == NULL)
 		return MADNeedMemory;
 	memcpy(ITinfo.parapins, theITCopy, ITinfo.insNum * 4);
@@ -682,7 +682,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	//if (ITinfo.insNum > 0) DebugStr("\pInsNum");
 	
 	/**** Samp Num *****/
-	ITinfo.parapsamp = (SInt32 *)malloc(ITinfo.smpNum * 4);
+	ITinfo.parapsamp = (int *)malloc(ITinfo.smpNum * 4);
 	if (ITinfo.parapsamp == NULL)
 		return MADNeedMemory;
 	memcpy(ITinfo.parapsamp, theITCopy, ITinfo.smpNum * 4);
@@ -691,7 +691,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 		PPLE32(&ITinfo.parapsamp[i]);
 	
 	/**** Pat Num *****/
-	ITinfo.parappat = (SInt32 *)malloc(ITinfo.patNum * 4);
+	ITinfo.parappat = (int *)malloc(ITinfo.patNum * 4);
 	if (ITinfo.parappat == NULL)
 		return MADNeedMemory;
 	memcpy(ITinfo.parappat, theITCopy, ITinfo.patNum * 4);
@@ -993,8 +993,8 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 										
 										{
 											/* Delta to Real */
-											SInt32	oldV, newV;
-											SInt32	xL;
+											int	oldV, newV;
+											int	xL;
 											
 											oldV = 0;
 											for (xL = 0; xL < curData->size / 2; xL++) {
@@ -1008,8 +1008,8 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 										}
 									} else {
 										/* Delta to Real */
-										SInt32	oldV, newV;
-										SInt32	xL;
+										int	oldV, newV;
+										int	xL;
 										
 										oldV = 0;
 										for (xL = 0; xL < curData->size; xL++) {
@@ -1117,7 +1117,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 #endif
 					
 					if (!(ITinfo.sampdata[i].Convert & 1) && curData->amp == 8) {
-						SInt32 temp;
+						int temp;
 						
 						for (temp = 0; temp < curData->size; temp++)
 							*(curData->data + temp) -= 0x80;
@@ -1125,7 +1125,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 					
 					if (curData->amp == 16 && !(ITinfo.sampdata[i].Flag & 8)) {
 						unsigned short 	*tempShort = (unsigned short*)curData->data;
-						SInt32 			temp;
+						int				temp;
 						
 						for (temp = 0; temp < curData->size/2; temp++) {
 							PPLE16(&((tempShort[temp])));

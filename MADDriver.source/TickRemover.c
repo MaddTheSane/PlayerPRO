@@ -25,7 +25,7 @@
 #include "RDriverInt.h"
 #include "PPPrivate.h"
 
-void MADTickLoopFill8(Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, size_t size, short left, short right)
+void MADTickLoopFill8(Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, size_t size, short left, short right)
 {
 	size++;
 	while (size-- > 0) {
@@ -37,11 +37,12 @@ void MADTickLoopFill8(Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2,
 	curVoice->prevPtr = NULL;
 }
 
-void MADTickLoop8(size_t size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver)
+void MADTickLoop8(size_t size, Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, MADDriverRec *intDriver)
 {
-	SInt32		tLongL, tLongR;
-	SInt32		curLevelL = curVoice->curLevelL, curLevelR = curVoice->curLevelR, curLastWordL = curVoice->curLastWordL, curLastWordR = curVoice->curLastWordR, TICKREMOVESIZE = curVoice->TICKREMOVESIZE;
-	Boolean		LevelDirectionL = curVoice->LevelDirectionL, LevelDirectionR = curVoice->LevelDirectionR, RemoverWorking = curVoice->RemoverWorking;
+	int		tLongL, tLongR;
+	int		curLevelL = curVoice->curLevelL, curLevelR = curVoice->curLevelR, curLastWordL = curVoice->curLastWordL;
+	int		curLastWordR = curVoice->curLastWordR, TICKREMOVESIZE = curVoice->TICKREMOVESIZE;
+	Boolean	LevelDirectionL = curVoice->LevelDirectionL, LevelDirectionR = curVoice->LevelDirectionR, RemoverWorking = curVoice->RemoverWorking;
 	
 	if (TICKREMOVESIZE == 0)
 		return;
@@ -94,10 +95,11 @@ void MADTickLoop8(size_t size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *AS
 	curVoice->RemoverWorking = RemoverWorking;
 }
 
-void MADTickRemoverStart8(Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver)
+void MADTickRemoverStart8(Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, MADDriverRec *intDriver)
 {
-	SInt32				i = intDriver->ASCBUFFER;
-	SInt32				curDoVol0 = DoVolPanning256(0, curVoice, intDriver, false), curDoVol1 = DoVolPanning256(1, curVoice, intDriver, false);
+	int i = intDriver->ASCBUFFER;
+	int curDoVol0 = DoVolPanning256(0, curVoice, intDriver, false);
+	int curDoVol1 = DoVolPanning256(1, curVoice, intDriver, false);
 	
 	if(curVoice->prevPtr != curVoice->begPtr ||
 	   (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) ||
@@ -111,7 +113,7 @@ void MADTickRemoverStart8(Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuff
 		
 		// Right Channel
 		if (curVoice->prevVol0 != curDoVol0 && curVoice->prevPtr	== curVoice->begPtr && curVoice->begPtr != NULL) {
-			SInt32 diff = curVoice->prevVol0 - curDoVol0;
+			int diff = curVoice->prevVol0 - curDoVol0;
 			
 			if (diff > 0) {
 				if (curVoice->prevVol0 != 0)
@@ -131,7 +133,7 @@ void MADTickRemoverStart8(Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuff
 		
 		// Left Channel
 		if (curVoice->prevVol1 != curDoVol1 && curVoice->prevPtr == curVoice->begPtr && curVoice->begPtr != NULL) {
-			SInt32 diff = curVoice->prevVol1 - curDoVol1;
+			int diff = curVoice->prevVol1 - curDoVol1;
 			
 			if (diff > 0) {
 				if (curVoice->prevVol1 != 0)

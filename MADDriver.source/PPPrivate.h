@@ -35,9 +35,9 @@ extern "C" {
 
 void	MADCreateOverShoot(MADDriverRec *intDriver);
 void	MADKillOverShoot(MADDriverRec *intDriver);
-void 	Sampler16AddDeluxe(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver);
-void 	Sampler16Addin16Deluxe(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver);
-void 	Sample16BufferAddDeluxe(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler16AddDeluxe(Channel *curVoice, int *ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler16Addin16Deluxe(Channel *curVoice, int *ASCBuffer, MADDriverRec *intDriver);
+void 	Sample16BufferAddDeluxe(Channel *curVoice, int *ASCBuffer, MADDriverRec *intDriver);
 void 	Play16StereoDeluxe(MADDriverRec *intDriver);
 void 	Sampler8in8AddDeluxe(Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver);
 void 	Sampler8in16AddDeluxe(Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver);
@@ -46,9 +46,9 @@ void 	Play8StereoDeluxe(MADDriverRec *intDriver);
 
 /*** Delay ***/
 
-void	Sampler16AddDelay(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver);
-void	Sampler16Addin16Delay(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver);
-void	Sample16BufferAddDelay(Channel *curVoice, SInt32 *ASCBuffer, MADDriverRec *intDriver);
+void	Sampler16AddDelay(Channel *curVoice, int *ASCBuffer, MADDriverRec *intDriver);
+void	Sampler16Addin16Delay(Channel *curVoice, int *ASCBuffer, MADDriverRec *intDriver);
+void	Sample16BufferAddDelay(Channel *curVoice, int *ASCBuffer, MADDriverRec *intDriver);
 void	Play16StereoDelay(MADDriverRec *intDriver);
 void	Sampler8in8AddDelay(Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver);
 void	Sampler8in16AddDelay(Channel *curVoice, short *ASCBuffer, MADDriverRec *intDriver);

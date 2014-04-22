@@ -393,7 +393,7 @@ OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *ini
 					PPBE16(&shortPtr[ll]);
 				});
 #else
-				SInt32 	ll;
+				int		ll;
 				short	*shortPtr = (short*)curData->data;
 				
 				for (ll = 0; ll < curData->size/2; ll++)

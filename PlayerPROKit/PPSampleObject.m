@@ -45,7 +45,7 @@
 	
 	strlcpy(theSample.name, theName, sizeof(theSample.name));
 	NSInteger dataSize2 = [data length];
-	theSample.size = (SInt32)dataSize2;
+	theSample.size = (int)dataSize2;
 	if (theSample.data) {
 		free(theSample.data);
 		theSample.data = NULL;
@@ -140,9 +140,9 @@
 	theSample.stereo = astereo;
 }
 
-- (SInt32)dataSize
+- (int)dataSize
 {
-	return (SInt32)[data length];
+	return (int)[data length];
 }
 
 - (instancetype)init
@@ -215,7 +215,7 @@
 	
 	strlcpy(toReturn->name, theName, sizeof(toReturn->name));
 	NSInteger dataSize2 = [data length];
-	toReturn->size = (SInt32)dataSize2;
+	toReturn->size = (int)dataSize2;
 	toReturn->data = malloc(dataSize2);
 	[data getBytes:toReturn->data length:dataSize2];
 	

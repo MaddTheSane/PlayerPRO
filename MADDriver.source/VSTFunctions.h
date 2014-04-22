@@ -20,7 +20,7 @@ VSTEffect*	CreateVSTEffect(short effectID);
 short		ConvertUniqueIDToIndex(UInt32);
 void		ApplyVSTSets(VSTEffect* myEffect, FXSets* set);
 Boolean		IsVSTChanEffect(MADDriverRec *intDriver, short channel);
-void		ProcessVSTPlug(MADDriverRec *intDriver, SInt32 *data, int datasize, short channel);
+void		ProcessVSTPlug(MADDriverRec *intDriver, int *data, int datasize, short channel);
 
 #ifdef __cplusplus
 }

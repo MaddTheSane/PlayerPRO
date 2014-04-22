@@ -84,12 +84,12 @@ OSErr MADCreateVibrato(MADDriverRec *MDriver);
 PPEXPORT PatData* DecompressPartitionMAD1(MADMusic *MDriver, PatData* myPat);
 PPEXPORT PatData* CompressPartitionMAD1(MADMusic *MDriver, PatData* myPat);
 PPEXPORT void 	GenerateSound(MADDriverRec *intDriver);
-PPEXPORT SInt32	GetOldPeriod(short note, SInt32 c2spd, MADDriverRec *intDriver);
+PPEXPORT int	GetOldPeriod(short note, int c2spd, MADDriverRec *intDriver);
 PPEXPORT OSErr	MADResetInstrument(InstrData *curIns);
 PPEXPORT void	MADCheckSpeed(MADMusic *MDriver, MADDriverRec *intDriver);
 PPEXPORT OSErr	AddSoundToMAD(Ptr			theSound,
-							  SInt32		lS,
-							  SInt32		lE,
+							  int			lS,
+							  int			lE,
 							  short			sS,
 							  short			bFreq,
 							  UInt32		rate,
@@ -100,23 +100,23 @@ PPEXPORT OSErr	AddSoundToMAD(Ptr			theSound,
 
 PPEXPORT OSErr	MADCopyCurrentPartition(MADMusic *theNewMAD);
 PPEXPORT OSErr	MADLoadMADFileCString(MADMusic **, const char *fName);
-SInt32	DoVolPanning(short, Channel *ch, MADDriverRec *intDriver);
-SInt32	DoVolPanning256(short, Channel *ch, MADDriverRec *intDriver, Boolean);
+int	DoVolPanning(short, Channel *ch, MADDriverRec *intDriver);
+int	DoVolPanning256(short, Channel *ch, MADDriverRec *intDriver, Boolean);
 void	MADKeyOFF(MADDriverRec *MDriver, short track);
 
 PPEXPORT size_t	MADMinimize(MADMusic*);
 void	MADPurgeTrackIfInstru(MADDriverRec *intDriver, short instru);
-void	MADTickLoopFill8(Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, size_t size, short left, short right);
-void	MADTickLoop8(size_t size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver);
-void	MADTickRemoverStart8(Channel *curVoice, SInt32	*ASCBuffer1, SInt32	*ASCBuffer2, MADDriverRec *intDriver);
-void	MADTickRemoverLoop16(SInt32 size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver, SInt32 diffL, SInt32 diffR);
-void	MADTickRemoverLoop8(SInt32 size, Channel *curVoice, SInt32 *ASCBuffer1, SInt32 *ASCBuffer2, MADDriverRec *intDriver, SInt32 diff);
+void	MADTickLoopFill8(Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, size_t size, short left, short right);
+void	MADTickLoop8(size_t size, Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, MADDriverRec *intDriver);
+void	MADTickRemoverStart8(Channel *curVoice, int	*ASCBuffer1, int *ASCBuffer2, MADDriverRec *intDriver);
+void	MADTickRemoverLoop16(int size, Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, MADDriverRec *intDriver, int diffL, int diffR);
+void	MADTickRemoverLoop8(int size, Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, MADDriverRec *intDriver, int diff);
 
 short	MADGetNextReader(MADMusic *music, MADDriverRec *intDriver, short cur, short *pat);
 PPEXPORT OSErr	MADCleanCurrentMusic(MADMusic *MDriver, MADDriverRec *intDriver);
 void	CloseEffect(Channel *ch, short call, MADDriverRec *intDriver);
-SInt32	Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2);
-SInt32	InterpolateEnv(SInt32 p, EnvRec *a,EnvRec *b);
+int		Interpolate(int p, int p1, int p2, int v1, int v2);
+int		InterpolateEnv(int p, EnvRec *a,EnvRec *b);
 void	ProcessFadeOut(Channel *ch, MADDriverRec *intDriver);
 void	ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, Boolean);
 void	StartEnvelope(Channel *ch);

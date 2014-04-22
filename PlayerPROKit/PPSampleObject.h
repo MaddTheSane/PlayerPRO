@@ -19,7 +19,7 @@
 - (instancetype)initWithsData:(sData *)theData;
 - (sData *)createSData;
 
-@property (readonly) SInt32 dataSize DEPRECATED_ATTRIBUTE;
+- (int)dataSize DEPRECATED_ATTRIBUTE;
 @property int loopBegin;
 @property int loopSize;
 @property Byte volume;

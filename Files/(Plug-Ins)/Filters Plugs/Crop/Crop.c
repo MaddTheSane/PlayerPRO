@@ -23,7 +23,7 @@ static OSErr mainCrop(void			*unused,
 				theData->data[i] = SamplePtr[i];
 			}
 			
-			theData->size = (SInt32)(SelectionEnd - SelectionStart);
+			theData->size = (int)(SelectionEnd - SelectionStart);
 			theData->data = realloc(theData->data, theData->size);
 		}
 			break;
@@ -37,7 +37,7 @@ static OSErr mainCrop(void			*unused,
 				data[i] = SamplePtr[i];
 			}
 			
-			theData->size = (SInt32)(SelectionEnd - SelectionStart);
+			theData->size = (int)(SelectionEnd - SelectionStart);
 			theData->data = realloc(theData->data, theData->size);
 		}
 			break;

@@ -42,11 +42,11 @@ typedef struct oldCmd {
 
 // HEADER
 typedef struct oldPatHeader {
-	SInt32	size;		// Length of pattern: standard = 64
+	int		size;		// Length of pattern: standard = 64
 	OSType	compMode;	// Compression mode, none = 'NONE'
 	char	name[32];
-	SInt32	patBytes;	// Pattern Size in Bytes
-	SInt32	unused2;
+	int		patBytes;	// Pattern Size in Bytes
+	int		unused2;
 } oldPatHeader;
 
 // DATA STRUCTURE : HEADER + COMMANDS

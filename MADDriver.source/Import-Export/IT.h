@@ -27,13 +27,13 @@ typedef struct ITPatForm
 {
 	unsigned short	length;
 	unsigned short	row;
-	SInt32			no;
+	int				no;
 	char			data[];
 } ITPatForm;
 
 typedef struct ITSampForm
 {
-	SInt32		ID;
+	int			ID;
 	char		DOSName[12];
 	Byte		no;
 	Byte		GvL;
@@ -41,13 +41,13 @@ typedef struct ITSampForm
 	Byte		Vol;
 	char		SampName[26];
 	short		Convert;
-	SInt32		length;
-	SInt32		loopBegin;
-	SInt32		loopEnd;
-	SInt32		C5Speed;
-	SInt32		SusLoopBegin;
-	SInt32		SusLoopEnd;
-	SInt32		samplePtr;
+	int			length;
+	int			loopBegin;
+	int			loopEnd;
+	int			C5Speed;
+	int			SusLoopBegin;
+	int			SusLoopEnd;
+	int			samplePtr;
 	Byte		ViS;
 	Byte		ViD;
 	Byte		ViR;
@@ -155,16 +155,16 @@ typedef struct ITForm
 	char				panSeparation;
 	char				null;
 	short				MsgLgth;
-	SInt32				MsgOffset;
+	int					MsgOffset;
 	char				no2[4];
 	
 	char				chanPan[64];
 	char				chanVol[64];
 	
 	unsigned char		*orders;
-	SInt32				*parapins;
-	SInt32				*parapsamp;
-	SInt32				*parappat;
+	int					*parapins;
+	int					*parapsamp;
+	int					*parappat;
 	
 	ITInsForm			*insdata;
 	ITSampForm			*sampdata;

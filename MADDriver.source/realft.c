@@ -27,7 +27,7 @@
 #include "RDriverInt.h"
 #include "PPPrivate.h"
 
-SInt32 Interpolate(SInt32 p, SInt32 p1, SInt32 p2, SInt32 v1, SInt32 v2);
+int Interpolate(int p, int p1, int p2, int v1, int v2);
 double EQInterpolate(double p,double p1,double p2,double v1,double v2);
 
 double EQInterpolate(double p,double p1,double p2,double v1,double v2)
@@ -232,8 +232,8 @@ double MADEQInterpolate(double p,double p1,double p2,double v1,double v2)
 
 void FFT8S(char* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
-	SInt32	y, powersize;
-	SInt32	*shiftAr = NULL;
+	int		y, powersize;
+	int		*shiftAr = NULL;
 	double	pente, axe, *fDataCopy2 = NULL, *fDataCopy = intDriver->fData;
 	Boolean didInitFData = 0;
 	size_t	i;
@@ -271,7 +271,7 @@ void FFT8S(char* SData, size_t size, double *filter, MADDriverRec *intDriver, sh
 			return;
 		}
 		
-		shiftAr = (SInt32*)calloc(sizeof(SInt32), powersize + 2);
+		shiftAr = (int*)calloc(sizeof(int), powersize + 2);
 		if (shiftAr == NULL) {
 			if (didInitFData && fDataCopy) {
 				free(fDataCopy);
@@ -326,10 +326,10 @@ void FFT8S(char* SData, size_t size, double *filter, MADDriverRec *intDriver, sh
 		MADrealft(fDataCopy, powersize/2, true);
 		
 		if (shift) {
-			SInt32 a;
+			int a;
 			
 			for (i = 0 ; i < powersize; i++) {
-				a = (SInt32)((i * EQPACKET*2) / powersize);
+				a = (int)((i * EQPACKET*2) / powersize);
 				
 				if (a + 1 < powersize) {
 					shiftAr[i] = (EQInterpolate((double)(i * EQPACKET * 2) / (double)powersize, a, a + 1, filter[a], filter[a + 1]) * powersize) / (EQPACKET * 2);
@@ -422,9 +422,9 @@ void FFT8S(char* SData, size_t size, double *filter, MADDriverRec *intDriver, sh
 
 void FFT16S(short* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean shift)
 {
-	SInt32	y, powersize, *shiftAr = NULL;
+	int		y, powersize, *shiftAr = NULL;
 	double	pente, axe, *fDataCopy2 = NULL, *fDataCopy = intDriver->fData;
-	Boolean didInitFData = 0;
+	Boolean	didInitFData = 0;
 	size_t	i;
 	
 	size /= 2;
@@ -462,7 +462,7 @@ void FFT16S(short* SData, size_t size, double *filter, MADDriverRec *intDriver, 
 			return;
 		}
 		
-		shiftAr = (SInt32*)calloc(sizeof(SInt32) * (powersize + 2), 1);
+		shiftAr = (int*)calloc(sizeof(int) * (powersize + 2), 1);
 		if (shiftAr == NULL) {
 			if (didInitFData && fDataCopy) {
 				free(fDataCopy);
@@ -518,10 +518,10 @@ void FFT16S(short* SData, size_t size, double *filter, MADDriverRec *intDriver, 
 		MADrealft(fDataCopy, powersize/2, true);
 		
 		if (shift) {
-			SInt32 a, b;
+			int a, b;
 			
 			for (i = 0; i < powersize; i++) {
-				a = (SInt32)((i * EQPACKET * 2) / powersize);
+				a = (int)((i * EQPACKET * 2) / powersize);
 				b = a+1;
 				
 				shiftAr[i] = (EQInterpolate((double)(i * EQPACKET * 2) / (double)powersize, a, a + 1, filter[a], filter[a + 1]) * powersize) / (EQPACKET * 2);

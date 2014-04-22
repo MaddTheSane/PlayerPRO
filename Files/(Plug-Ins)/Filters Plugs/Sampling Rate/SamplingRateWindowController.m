@@ -137,7 +137,7 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
 			if (newPtr != NULL) {
 				free(theData->data);
 				theData->data	= newPtr;
-				theData->size	= (SInt32)newPtrSize;
+				theData->size	= (int)newPtrSize;
 				theData->c2spd	= newFreq;
 			}
 			

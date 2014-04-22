@@ -87,9 +87,9 @@ typedef struct _CK {
 } CK;
 
 typedef struct _MyAtom {
-	SInt32		pos;
-	SInt32		id;
-	SInt32		size;
+	int			pos;
+	int			id;
+	int			size;
 	FSIORefNum	ref;
 } MyAtom;
 

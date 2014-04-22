@@ -119,7 +119,7 @@ typedef struct Channel
 	Byte	arg;				// Argument of command
 	Byte	volcmd;				// Volume Command
 	
-	SInt32	arp[MAX_ARP];		// Used for arpeggio command
+	int		arp[MAX_ARP];		// Used for arpeggio command
 	int		arpindex;			// Used for arpeggio command
 	Boolean	arpUse;
 	
@@ -135,7 +135,7 @@ typedef struct Channel
 	
 	int 	volumerate;			// Used for slideVolume command
 	
-	SInt32	oldArg[16];
+	int		oldArg[16];
 	int		oldVibrate;
 	int		oldVibdepth;
 	
@@ -435,7 +435,7 @@ typedef struct PlugInfo
 typedef struct MADLibrary
 {
 	/** Plugs Import/Export variables **/
-	SInt32		mytab[12];
+	int			mytab[12];
 	PlugInfo	*ThePlug;	// Pointers on plugs code & infos
 	
 	OSType		IDType;		// IDType = 'MADD' -- READ ONLY --
@@ -450,32 +450,32 @@ typedef struct AEffect AEffect;
 
 struct AEffect
 {
-	SInt32 magic;
-	SInt32 (__callback *dispatcher)(AEffect *effect, SInt32 opCode, SInt32 index, SInt32 value, void *ptr, float opt);
-	void (__callback *process)(AEffect *effect, float **inputs, float **outputs, SInt32 sampleframes);
-	void (__callback *setParameter)(AEffect *effect, SInt32 index, float parameter);
-	float (__callback *getParameter)(AEffect *effect, SInt32 index);
+	int magic;
+	int (__callback *dispatcher)(AEffect *effect, int opCode, int index, int value, void *ptr, float opt);
+	void (__callback *process)(AEffect *effect, float **inputs, float **outputs, int sampleframes);
+	void (__callback *setParameter)(AEffect *effect, int index, float parameter);
+	float (__callback *getParameter)(AEffect *effect, int index);
 	
-	SInt32 numPrograms;
-	SInt32 numParams;
-	SInt32 numInputs;
-	SInt32 numOutputs;
-	SInt32 flags;
-	SInt32 resvd1;
-	SInt32 resvd2;
-	SInt32 initialDelay;
-	SInt32 realQualities;
-	SInt32 offQualities;
+	int numPrograms;
+	int numParams;
+	int numInputs;
+	int numOutputs;
+	int flags;
+	int resvd1;
+	int resvd2;
+	int initialDelay;
+	int realQualities;
+	int offQualities;
 	float ioRatio;
 	void *object;
 	void *user;
-	SInt32 uniqueID;
-	SInt32 version;
-	void (__callback *processReplacing)(AEffect *effect, float **inputs, float **outputs, SInt32 sampleframes);
+	int uniqueID;
+	int version;
+	void (__callback *processReplacing)(AEffect *effect, float **inputs, float **outputs, int sampleframes);
 	char future[60];
 };
 
-typedef	SInt32 (*audioMasterCallback)(AEffect *effect, SInt32 opcode, SInt32 index, SInt32 value, void *ptr, float opt);
+typedef	int (*audioMasterCallback)(AEffect *effect, int opcode, int index, int value, void *ptr, float opt);
 	
 typedef AEffect *(*VSTPlugInPtr)(audioMasterCallback cb);
 
@@ -689,7 +689,7 @@ PPEXPORT Boolean MADIsExporting(MADDriverRec *driver);
 PPEXPORT Boolean MADWasReading(MADDriverRec *driver) DEPRECATED_ATTRIBUTE;
 PPEXPORT void	MADSetReading(MADDriverRec *driver, Boolean toSet) DEPRECATED_ATTRIBUTE;
 
-PPEXPORT SInt32	MADAudioLength(MADDriverRec *theRec);
+PPEXPORT int	MADAudioLength(MADDriverRec *theRec);
 
 PPEXPORT size_t MADGetMusicSize(MADMusic*);
 

@@ -192,9 +192,9 @@ size_t MADGetMusicSize(MADMusic *music)
 
 void ConvertTo64Rows(MADMusic *music)
 {
-	SInt32	i, x, z;
+	int		i, x, z;
 	Boolean	IsReading;
-	SInt32	patID, found;
+	int		patID, found;
 	
 	if (music->header == NULL)
 		return;
@@ -205,23 +205,23 @@ void ConvertTo64Rows(MADMusic *music)
 	for (i = music->header->numPat-1; i >= 0 ; i--) {
 		// Resize pattern to 64 rows and put a pattern break
 		
-		SInt32		newSize;
-		PatData		*newPat = NULL;
+		int		newSize;
+		PatData	*newPat = NULL;
 		
 		patID = i;
 		
 		newSize = sizeof(PatHeader) + music->header->numChn * 64L * sizeof(Cmd);
 		
 		if (music->partition[i]->header.size < 64) {
-			Cmd		*srccmd = NULL, *dstcmd = NULL;
-			SInt32	patsize;
+			Cmd *srccmd = NULL, *dstcmd = NULL;
+			int patsize;
 			
 			newPat = (PatData*)calloc(newSize, 1);
 			
-			newPat->header.size 		= 64;
-			newPat->header.compMode 	= 'NONE';
-			newPat->header.patBytes 	= 0;
-			newPat->header.unused2 		= 0;
+			newPat->header.size		= 64;
+			newPat->header.compMode	= 'NONE';
+			newPat->header.patBytes	= 0;
+			newPat->header.unused2	= 0;
 			
 			memcpy(newPat->header.name, music->partition[i]->header.name, 32);
 			
@@ -261,16 +261,16 @@ void ConvertTo64Rows(MADMusic *music)
 			free(music->partition[i]);
 			music->partition[i] = newPat;
 		} else if (music->partition[i]->header.size > 64) {
-			SInt32 		patsize = 0;
+			int			patsize = 0;
 			PatData*	srcPat = music->partition[i];
 			
 			while (patsize < srcPat->header.size) {
 				newPat = (PatData*)calloc(newSize, 1);
 				
-				newPat->header.size 		= 64L;
-				newPat->header.compMode 	= 'NONE';
-				newPat->header.patBytes 	= 0;
-				newPat->header.unused2 		= 0;
+				newPat->header.size		= 64;
+				newPat->header.compMode	= 'NONE';
+				newPat->header.patBytes	= 0;
+				newPat->header.unused2	= 0;
 				
 				strlcpy(newPat->header.name, srcPat->header.name, 32);
 				
@@ -578,7 +578,7 @@ void MADDisposeDriverBuffer(MADDriverRec *intDriver)
 OSErr MADCreateDriverBuffer(MADDriverRec *intDriver)
 {
 	short	i, x;
-	SInt32 BufSize = 0;
+	int		BufSize = 0;
 	
 	if (intDriver == NULL) {
 		return MADParametersErr;
@@ -705,9 +705,9 @@ OSErr MADChangeDriverSettings(MADDriverSettings *DriverInitParam, MADDriverRec**
 
 OSErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADDriverRec** returnDriver)
 {
-	OSErr 					theErr;
-	SInt32					i;
-	MADDriverRec*			MDriver;
+	OSErr			theErr;
+	int				i;
+	MADDriverRec*	MDriver;
 	
 	if (DriverInitParam == NULL || lib == NULL || returnDriver == NULL)
 		return MADParametersErr;
@@ -1127,7 +1127,7 @@ OSErr MADDisposeDriver(MADDriverRec* MDriver)
 
 OSErr MADInitLibrary(const char *PlugsFolderName, MADLibrary **lib)
 {
-	SInt32 mytab[12] = {
+	static const int mytab[12] = {
 		1712*16, 1616*16, 1524*16, 1440*16, 1356*16, 1280*16,
 		1208*16, 1140*16, 1076*16, 1016*16, 960*16, 907*16
 	};
@@ -1162,8 +1162,8 @@ OSErr MADDisposeLibrary(MADLibrary *MLibrary)
 
 OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *MissingPlugs)
 {
-	short		alpha, x, i, index;
-	Boolean		needToReset;
+	short	alpha, x, i, index;
+	Boolean	needToReset;
 	
 	if (!driver)
 		return MADParametersErr;
@@ -1310,9 +1310,9 @@ OSErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *Missin
 
 OSErr MADLoadMusicPtr(MADMusic **music, Ptr myPtr)
 {
-	OSErr	theErr;
+	OSErr theErr;
 	
-	//	MADDisposeMusic(music);
+	//MADDisposeMusic(music);
 	
 	theErr = MADReadMAD(music, 0, MADPtrType, NULL, myPtr);
 	if (theErr != noErr)
@@ -3160,8 +3160,8 @@ void MADDisposeVolumeTable(MADDriverRec *intDriver)
 
 OSErr MADCreateVolumeTable(MADDriverRec *intDriver)
 {
-	SInt32 Tracks = 0;
-	OSErr theErr;
+	int		Tracks = 0;
+	OSErr	theErr;
 	if (intDriver == NULL)
 		return MADParametersErr;
 	
@@ -3293,11 +3293,11 @@ PatData* DecompressPartitionMAD1(MADMusic *MDriver, PatData* myPat)
 
 PatData* CompressPartitionMAD1(MADMusic *MDriver, PatData* myPat)
 {
-	PatData		*finalPtr;
-	UInt8 		*dstPtr, *setByte;
-	Cmd			*myCmd;
-	SInt32		maxCmd;
-	size_t		NewPtrSize = 0;
+	PatData	*finalPtr;
+	UInt8	*dstPtr, *setByte;
+	Cmd		*myCmd;
+	int		maxCmd;
+	size_t	NewPtrSize = 0;
 	
 	finalPtr = (PatData*)malloc(sizeof(PatHeader) + myPat->header.size * MDriver->header->numChn * 6L);
 	if (finalPtr == NULL)
@@ -3353,7 +3353,7 @@ PatData* CompressPartitionMAD1(MADMusic *MDriver, PatData* myPat)
 		myCmd++;
 	}
 	
-	finalPtr->header.patBytes = (SInt32)NewPtrSize;
+	finalPtr->header.patBytes = (int)NewPtrSize;
 	
 	finalPtr = realloc(finalPtr, NewPtrSize + sizeof(PatHeader));
 	
@@ -3405,7 +3405,7 @@ Boolean MADIsExporting(MADDriverRec *driver)
 	}
 }
 
-SInt32 MADAudioLength(MADDriverRec *theRec)
+int MADAudioLength(MADDriverRec *theRec)
 {
 	if (!theRec)
 		return 0;

@@ -31,7 +31,7 @@ typedef struct _PatInsHeader
 {
 	short	ID;
 	char	name[16];
-	SInt32	size;
+	int		size;
 	Byte	layer;
 	char	reserved[40];
 } PatInsHeader;
@@ -40,7 +40,7 @@ typedef struct _LayerHeader
 {
 	Byte	dup;
 	Byte	id;
-	SInt32	size;
+	int		size;
 	Byte	SampNo;
 	char	reserved[40];
 } LayerHeader;
@@ -49,13 +49,13 @@ typedef struct _PatSampHeader
 {
 	char			name[7];
 	Byte			fractions;
-	SInt32			size;
-	SInt32			startLoop;
-	SInt32			endLoop;
+	int				size;
+	int				startLoop;
+	int				endLoop;
 	unsigned short	rate;
-	SInt32			minFreq;
-	SInt32			maxFreq;
-	SInt32			originRate;
+	int				minFreq;
+	int				maxFreq;
+	int				originRate;
 	short			tune;
 	Byte			balance;
 	Byte			Filter[6];

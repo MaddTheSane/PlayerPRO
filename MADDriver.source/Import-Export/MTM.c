@@ -47,11 +47,11 @@ static inline struct MTMTrack* GetMTMCommand(short position, short whichTracks, 
 
 static OSErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, MADDriverSettings *init)
 {
-	short 			i, x, z;
-	SInt32 			sndSize, OffSetToSample, temp, inOutCount;
-	Ptr				MaxPtr;
-	Ptr				theInstrument[64], destPtr;
-	SInt32 			finetune[16] = {
+	short	i, x, z;
+	int		sndSize, OffSetToSample, temp, inOutCount;
+	Ptr		MaxPtr;
+	Ptr		theInstrument[64], destPtr;
+	int		finetune[16] = {
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
 	};

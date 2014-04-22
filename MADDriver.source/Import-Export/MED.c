@@ -167,7 +167,7 @@ static void EffectCvt(UBYTE eff, UBYTE dat, Cmd *aCmd)
 			else if(dat<0xf1)
 			{
 				aCmd->cmd = 0xf;
-				aCmd->arg = ((SInt32)dat*125L)/33L;
+				aCmd->arg = ((int)dat*125) / 33;
 			}
 			else if(dat==0xff)
 			{
@@ -270,10 +270,10 @@ static void MED_Convert0(short patID, MADMusic *theMAD)
 
 static OSErr LoadMMD0Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *init)
 {
-	int 		t, row /*,col*/;
-	UWORD 		numtracks, numlines, maxlines=0;
-	char		tC;
-	SInt32		x;
+	int		t, row /*,col*/;
+	UWORD	numtracks, numlines, maxlines=0;
+	char	tC;
+	int		x;
 	
 	// first, scan patterns to see how many channels are used
 	
@@ -333,9 +333,9 @@ static OSErr LoadMMD0Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *i
 
 static OSErr LoadMMD1Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *init)
 {
-	int t,row,col;
-	UWORD numtracks,numlines,maxlines=0,track=0;
-	SInt32	x;
+	int		t,row,col;
+	UWORD	numtracks,numlines,maxlines=0,track=0;
+	int		x;
 	
 	// first, scan patterns to see how many channels are used
 	
@@ -406,10 +406,10 @@ static OSErr LoadMMD1Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *i
 
 static OSErr MED_Load(Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSettings *init)
 {
-	int 		t, i;
-	ULONG 		sa[64];
-	InstrHdr 	s;
-	SInt32		inOutCount;
+	int			t, i;
+	ULONG		sa[64];
+	InstrHdr	s;
+	int			inOutCount;
 	
 	theMEDRead = theMED;
 	
@@ -463,7 +463,7 @@ static OSErr MED_Load(Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSetti
 	strlcpy(theMAD->header->infos, "Converted by PlayerPRO MED Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->speed			= 	ms->tempo2;
-	theMAD->header->tempo			=	((SInt32)ms->deftempo * 125L) / 33L;
+	theMAD->header->tempo			=	(ms->deftempo * 125) / 33;
 	theMAD->header->numChn			=	0;		// will be counted later
 	theMAD->header->numPat			=	ms->numblocks;
 	theMAD->header->numPointers		=	ms->songlen;

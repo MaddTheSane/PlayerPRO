@@ -50,8 +50,6 @@ typedef uint32_t		UInt32;
 typedef int32_t			SInt32;
 typedef UInt32			FourCharCode;
 typedef FourCharCode	OSType;
-typedef SInt32			Fixed;
-typedef UInt32			UnsignedFixed;
 #endif
 
 #endif

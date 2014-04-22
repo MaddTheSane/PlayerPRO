@@ -378,13 +378,13 @@ static void ConvertMADEffect(Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 
 static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *sndSize)
 {
-	int 		i, x, z;
+	int			i, x, z;
 	Ptr			finalS3M, finalS3MCopy, maxfinalS3M;
-	SInt32		InstruSize;
-	SInt32		NoIns;
+	int			InstruSize = 0;
+	int			NoIns = 0;
 	s3minsform	*ins[64];
 	Cmd			*aCmd;
-	int			PatternSize;
+	int			PatternSize = 0;
 	
 	s3mform		*s3minfo;
 	
@@ -394,9 +394,6 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *snd
 	/********************************/
 	/*       MAD INFORMATIONS       */
 	/********************************/
-	InstruSize = 0;
-	PatternSize = 0;
-	NoIns = 0;
 	for (i = 0; i < 64 ; i++)
 	{
 		if (theMAD->fid[i].numSamples > 0)
@@ -607,19 +604,17 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *snd
 	/* 	Sample Data -- Sample Data -- Sample Data   */
 	/*********************************/
 	
-	for (i = 0; i < NoIns; i++)
-	{
-		if (theMAD->fid[i].numSamples > 0)
-		{
-			sData			*curData = theMAD->sample[i*MAXSAMPLE + 0];
-			SInt32			tempL, dstSize;
+	for (i = 0; i < NoIns; i++) {
+		if (theMAD->fid[i].numSamples > 0) {
+			sData	*curData = theMAD->sample[i*MAXSAMPLE + 0];
+			int		tempL, dstSize;
 			
-			tempL = (SInt32)((16L + finalS3MCopy - finalS3M) / 16L);
+			tempL = (int)((16L + finalS3MCopy - finalS3M) / 16L);
 			
 			ins[i]->memsegl = tempL & 0x0000FFFF;
 			PPLE16( &ins[i]->memsegl);
 			
-			ins[i]->memsegh = (SInt32) (tempL &0x00FF0000)>>16L;
+			ins[i]->memsegh = (int)(tempL &0x00FF0000)>>16L;
 			
 			finalS3MCopy = finalS3M + tempL*16L;
 			
@@ -629,22 +624,17 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *snd
 			
 			dstSize = curData->size;
 			
-			if (curData->stereo == true)
-			{
-				if (curData->amp == 8)
-				{
-					for (x = 0 ; x < dstSize; x+=2)
-					{
-						finalS3MCopy[x / 2] = ((SInt32) finalS3MCopy[x] + (SInt32) finalS3MCopy[x + 1]) / 2L;
+			if (curData->stereo == true) {
+				if (curData->amp == 8) {
+					for (x = 0 ; x < dstSize; x+=2) {
+						finalS3MCopy[x / 2] = ((int) finalS3MCopy[x] + (int) finalS3MCopy[x + 1]) / 2L;
 					}
-				}
-				else
-				{
+				} else {
 					short *short16out = (short*) finalS3MCopy, *short16in = (short*) finalS3MCopy;
 					
 					for (x = 0 ; x < dstSize/2; x+=2)
 					{
-						short16out[x / 2] = ((SInt32) short16in[x] + (SInt32) short16in[x + 1]) / 2L;
+						short16out[x / 2] = ((int) short16in[x] + (int) short16in[x + 1]) / 2L;
 					}
 				}
 				dstSize /= 2;
@@ -656,8 +646,8 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *snd
 			}
 			else
 			{
-				short *b16 = (short*) finalS3MCopy;
-				SInt32 temp;
+				short	*b16 = (short*) finalS3MCopy;
+				int		temp;
 				
 				for (temp = 0; temp < dstSize/2; temp++)
 				{
@@ -675,20 +665,13 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *snd
 	
 	for (i = 0; i < theMAD->header->numPat; i++)
 	{
-		SInt32		Row = 0, maxtrackp;
-		short		*sizePtr;
-		Cmd			nullCmd;
-		
-		nullCmd.ins		= 0;
-		nullCmd.note	= 0xFF;
-		nullCmd.cmd		= 0xD;
-		nullCmd.arg		= 0;
-		nullCmd.vol		= 0xFF;
-		nullCmd.unused	= 0;
+		int		Row = 0, maxtrackp;
+		short	*sizePtr;
+		Cmd		nullCmd = (Cmd){0, 0xFF, 0xD, 0, 0xFF, 0};
 		
 		parappat[i] = (16 + (size_t)finalS3MCopy - (size_t)finalS3M) / 16;
-		finalS3MCopy = finalS3M + ((SInt32) parappat[i])*16;
-		PPLE16( &parappat[i]);
+		finalS3MCopy = finalS3M + (parappat[i])*16;
+		PPLE16(&parappat[i]);
 		
 		sizePtr = (short*) finalS3MCopy;
 		
@@ -804,21 +787,21 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *snd
 
 static OSErr ConvertS3M2Mad(Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriverSettings *init)
 {
-	SInt32 					i, x, z, channel, Row;
-	SInt32 					starting;
-	Ptr						MaxPtr;
-	Ptr						theInstrument[MAXINSTRU];
-	Byte					tempChar, *theS3MCopy;
-	short					Note, Octave, maxTrack;
-	//short					S3Mperiod[12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
-	Byte					S3Mpan[32];
+	int		i, x, z, channel, Row;
+	int		starting;
+	Ptr		MaxPtr;
+	Ptr		theInstrument[MAXINSTRU];
+	Byte	tempChar, *theS3MCopy;
+	short	Note, Octave, maxTrack;
+	//short	S3Mperiod[12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
+	Byte	S3Mpan[32];
 	
 	/**** Variables pour le MAD ****/
-	Cmd				*aCmd;
+	Cmd *aCmd;
 	
 	/**** Variables pour le S3M ****/
 	
-	s3mform			s3minfo;
+	s3mform s3minfo;
 	/********************************/
 	
 	for (i = 0 ; i < MAXINSTRU; i ++)
@@ -929,11 +912,11 @@ static OSErr ConvertS3M2Mad(Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriver
 			s3minfo.insdata[i].inssig[2] == 'R' &&
 			s3minfo.insdata[i].inssig[3] == 'S')
 	    {
-	    	SInt32 tempL;
+	    	int tempL;
 			
 	    	theS3MCopy = (Byte*) theS3M;
 	    	
-			tempL = (((SInt32)s3minfo.insdata[i].memsegh)<<16|s3minfo.insdata[i].memsegl)<<4;
+			tempL = (((int)s3minfo.insdata[i].memsegh)<<16|s3minfo.insdata[i].memsegl)<<4;
 	    	
 	    	theS3MCopy += tempL;
 	    	
@@ -1132,39 +1115,35 @@ static OSErr ConvertS3M2Mad(Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriver
 				free(theMAD->fid);
 				free(theMAD->sample);
 				return MADNeedMemory;
-			}
-			else
-			{
+			} else {
 				memcpy(curData->data, theInstrument [i], curData->size);
 				
-				switch(curData->amp)
-				{
+				switch(curData->amp) {
 					case 16:
 					{
-						short *b16 = (short*) curData->data;
-						SInt32 temp;
+						short	*b16 = (short*) curData->data;
+						int		temp;
 						
-						for (temp = 0; temp < curData->size/2; temp++)
-						{
+						for (temp = 0; temp < curData->size/2; temp++) {
 							PPLE16((b16 + temp));
 							
-							if (s3minfo.ffv != 1) *(b16 + temp) -= 0x8000;
+							if (s3minfo.ffv != 1)
+								*(b16 + temp) -= 0x8000;
 						}
 					}
 						break;
 						
 					case 8:
-						if (s3minfo.ffv != 1)
-						{
-							SInt32 temp;
+						if (s3minfo.ffv != 1) {
+							int temp;
 							
 							for (temp = 0; temp < curData->size; temp++) *(curData->data + temp) -= 0x80;
 						}
 						break;
 				}
 			}
-		}
-		else curIns->numSamples = 0;
+		} else
+			curIns->numSamples = 0;
 	}
 	
 	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;

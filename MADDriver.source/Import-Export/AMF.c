@@ -72,11 +72,11 @@ static OSErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSet
 {
 	Byte			tempByte;
 	short			i, x, noIns, tempShort, trackCount, trckPtr, t;
-	//SInt32			inOutCount, OffSetToSample = 0, z;
+	//int			inOutCount, OffSetToSample = 0, z;
 	//OSErr			theErr = noErr;
 	//Ptr				tempPtr;
 	OSType			AMFType;
-	/*SInt32			finetune[16] =
+	/*int			finetune[16] =
 	 {
 	 8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 	 7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
@@ -89,12 +89,17 @@ static OSErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSet
 	READAMFFILE(&AMFType, 4);		// AMF Type
 	PPBE32(&AMFType);
 	
-	if (AMFType >= 0x414D460C ) pan = 32;
-	else pan = 16;
+	if (AMFType >= 0x414D460C)
+		pan = 32;
+	else
+		pan = 16;
 	
-	if (AMFType == 0x414D4601 ) uusize = 3;
-	else if (AMFType >= 0x414D460A ) oldIns = 0;
-	else if (AMFType!= 0x414D4608 && AMFType != 0x414D4609) return MADFileNotSupportedByThisPlug;
+	if (AMFType == 0x414D4601 )
+		uusize = 3;
+	else if (AMFType >= 0x414D460A )
+		oldIns = 0;
+	else if (AMFType!= 0x414D4608 && AMFType != 0x414D4609)
+		return MADFileNotSupportedByThisPlug;
 	
 	// Conversion
 	theMAD->header = (MADSpec*) calloc(sizeof(MADSpec), 1);
@@ -158,7 +163,7 @@ static OSErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSet
 		if (theMAD->partition[i] == NULL)
 			return MADNeedMemory;
 		
-		theMAD->partition[i]->header.size		= (SInt32)patSize;
+		theMAD->partition[i]->header.size		= (int)patSize;
 		theMAD->partition[i]->header.compMode	= 'NONE';
 		
 		for (x = 0; x < 20; x++) theMAD->partition[i]->header.name[x] = 0;

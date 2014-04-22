@@ -15,7 +15,7 @@
 static Ptr CreateAudio8Ptr(long AudioLength, long AudioFreq, long AudioAmp, ToneGenerator AudioType, Boolean stereo)
 {
 	Ptr		Audio8Ptr;
-	SInt32	i, temp, inter = 0, x, dest;
+	int		i, temp, inter = 0, x, dest;
 	Boolean	UpDown;
 	
 	if (stereo)
@@ -127,7 +127,7 @@ static Ptr CreateAudio8Ptr(long AudioLength, long AudioFreq, long AudioAmp, Tone
 static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, ToneGenerator AudioType, Boolean stereo)
 {
 	short	*Audio16Ptr;
-	SInt32	i, temp, inter = 0, x, dest;
+	int		i, temp, inter = 0, x, dest;
 	Boolean	UpDown;
 	
 	if (stereo)
@@ -316,7 +316,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 			free(theData->data);
 			
 			theData->data = resultPtr;
-			theData->size = (SInt32)(theData->size  - (self.selectionEnd - self.selectionStart) + audioLength);
+			theData->size = (int)(theData->size - (self.selectionEnd - self.selectionStart) + audioLength);
 		};
 		
 		self.plugBlock = tmpBlock;

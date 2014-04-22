@@ -198,9 +198,9 @@ typedef struct sData		// SAMPLE
 //Used for file i/o
 typedef struct sData32
 {
-	SInt32 			size;		// Sample length
-	SInt32			loopBeg;	// LoopStart
-	SInt32			loopSize;	// LoopLength
+	int				size;		// Sample length
+	int				loopBeg;	// LoopStart
+	int				loopSize;	// LoopLength
 	Byte 			vol;		// Base volume
 	unsigned short	c2spd;		// c2spd
 	Byte			loopType;
