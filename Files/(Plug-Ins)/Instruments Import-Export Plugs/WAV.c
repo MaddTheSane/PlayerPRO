@@ -38,9 +38,9 @@ static OSErr mainWave(OSType					order,						// Order to execute
 					  FSSpec					*AlienFileFSSpec,			// IN/OUT file
 					  PPInfoPlug				*thePPInfoPlug)
 {
-	OSErr	myErr = noErr;
-	short	iFileRefI;
-	long	inOutBytes;
+	OSErr		myErr = noErr;
+	short		iFileRefI;
+	ByteCount	inOutBytes;
 	
 	switch (order)
 	{
@@ -93,7 +93,7 @@ static OSErr mainWave(OSType					order,						// Order to execute
 				if (theSound == NULL) myErr = MADNeedMemory;
 				else
 				{
-					FSRead(iFileRefI, &inOutBytes, theSound);
+					FSReadFork(iFileRefI, fsAtMark, 0, inOutBytes, theSound, &inOutBytes);
 					
 					myErr = TestWAV((PCMWavePtr) theSound);
 				}

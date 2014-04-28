@@ -54,6 +54,7 @@ static short FoundNote(short Period)
 	return note;
 }
 
+#if 0
 static void Convert16to8(Ptr srcPtr, Ptr destPtr, long size)
 {
 	long i;
@@ -64,6 +65,7 @@ static void Convert16to8(Ptr srcPtr, Ptr destPtr, long size)
 		destPtr[i] = srcPtr[i * 2];
 	}
 }
+#endif
 
 #ifndef _SRC
 Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)

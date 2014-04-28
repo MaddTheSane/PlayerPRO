@@ -1810,7 +1810,7 @@ void NDoPlayInstru(short Note, short Instru, short effect, short arg, short vol)
 
 void DoKeyPlay(short note)
 {
-	short	ins;
+	short	ins = 0;
 	
 	if (InstruListDlog == NULL)
 		return;
@@ -2575,14 +2575,14 @@ void DrawInfoInstrument(void)
 	SetPort(SavePort);
 }
 
-static Boolean firstCall;
+static Boolean firstCall = FALSE;
 
 Boolean DragInstruSelect(void)
 {
 	Point		aPt;
 	Rect		cellRect;
 	RgnHandle	tempRgn;
-	short		ins, samp;
+	short		ins = 0, samp = 0;
 
 	if (DragManagerUse) {
 		if (GetIns(&ins, &samp)) {
@@ -3675,7 +3675,7 @@ extern EventRecord theEvent;
 void DoItemPressInstruList(short whichItem, DialogPtr whichDialog)
 {
 	Cell		theCell;
-	short		temp;
+	short		temp = 0;
 	int			i;
 	Point		myPt;
 	Boolean		DoubleClick;
@@ -3966,9 +3966,10 @@ void DoItemPressInstruList(short whichItem, DialogPtr whichDialog)
 
 void DoKeyPressInstruList(short theChar, short xxxxxxx)
 {
-	GrafPtr		SavePort;
-	short		ins, samp;
-	Point		theCell = { 0, 0};
+	GrafPtr	SavePort;
+	short	ins = 0, samp = 0;
+	Point	theCell = { 0, 0};
+	short 	temp = 0;
 
 	if (InstruListDlog == NULL) return;
 	
@@ -4000,7 +4001,7 @@ void DoKeyPressInstruList(short theChar, short xxxxxxx)
 		theCell.h = 0;
 		if (PLGetSelect(&theCell, &myList))
 		{
-			short	ins, samp, temp;
+			short	ins, samp, temp = 0;
 			
 			ConvertIDtoInsSamp(theCell.v, &ins, &samp);
 			
@@ -4019,13 +4020,9 @@ void DoKeyPressInstruList(short theChar, short xxxxxxx)
 		} while (LNextCell(true, true, &theCell, InstruList));
 #endif
 	} else if (theChar == getinfo) {
-		short temp;
-		
 		if (GetIns(&temp, &samp))
 			NEditInstruInfo(temp, samp);
 	} else if (theChar == '/' || theChar == '*') {
-		short 	temp;
-		
 		if (GetIns(&temp, &samp)) {
 			if (samp >= 0) {
 				sData	*curData;
