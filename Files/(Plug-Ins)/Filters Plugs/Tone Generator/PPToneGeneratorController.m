@@ -9,6 +9,7 @@
 #import "PPToneGeneratorController.h"
 #include <PlayerPROCore/PPPlug.h>
 #include <math.h>
+#include <tgmath.h>
 
 #define KHZ 22254.54545
 

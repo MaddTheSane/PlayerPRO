@@ -107,7 +107,7 @@ static OSErr mainQTInst(void					*unused,
 						PPInfoPlug				*thePPInfoPlug)
 {
 	OSErr		myErr;
-	FSIORefNum	iFileRefI;
+	FSIORefNum	iFileRefI = -1;
 	ByteCount	inOutBytes;
 	FSSpec		tmpSpec;
 	

@@ -13,7 +13,6 @@
 #include <PlayerPROCore/PPPlug.h>
 
 #define max(a,b) (((a) > (b)) ? (a) : (b))
-#define labs(a) (((a) < 0) ? (-a) : (a))
 
 static OSErr mainNormalize(void			*unused,
 						   sData		*theData,
