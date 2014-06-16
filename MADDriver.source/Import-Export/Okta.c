@@ -33,32 +33,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-
-#ifdef _MAC_H
-#define decode16(msg_buf) CFSwapInt16LittleToHost(*(UInt16*)msg_buf)
-#define decode32(msg_buf) CFSwapInt32LittleToHost(*(UInt32*)msg_buf)
-#else
-#ifdef __LITTLE_ENDIAN__
-#define decode16(msg_buf) *(UInt16*)msg_buf
-#define decode32(msg_buf) *(UInt32*)msg_buf
-#else
-static inline UInt16 decode16 (void *msg_buf)
-{
-	UInt16 toswap = *((UInt16*) msg_buf);
-	PPLE16(&toswap);
-	return toswap;
-}
-
-static inline UInt32 decode32 (void *msg_buf)
-{
-	UInt32 toswap = *((UInt32*) msg_buf);
-	PPLE32(&toswap);
-	return toswap;
-}
-
-#endif
-#endif
-
 #if 0
 short FoundNote(short Period)
 {
@@ -121,7 +95,7 @@ static OSErr ConvertOKTA2Mad(Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDri
 	while(theOktaPos < MaxPtr)
 	{
 		aSect = (sectheader*) theOktaPos;
-		aSect->length = decode32 (&aSect->length);
+		PPLE32 (&aSect->length);
 		
 		theOktaPos += 8L;
 		
@@ -145,23 +119,28 @@ static OSErr ConvertOKTA2Mad(Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDri
 				{
 					instru[i] = samps[i];
 					
-					instru[i ].length = decode32 (&instru[i ].length);
-					instru[i ].repeat = decode16 (&instru[i ].repeat) * 2;
-					instru[i ].replen = decode16 (&instru[i ].replen) * 2;
+					PPLE32(&instru[i ].length);
+					PPLE16(&instru[i ].repeat);
+					instru[i ].repeat *= 2;
+					PPLE16(&instru[i ].replen);
+					instru[i ].replen *= 2;
 				}
 				Okta->samp_count = i;
 				break;
 				
 			case 'SPEE':
-				Okta->speed = decode16(theOktaPos);
+				Okta->speed = *((short*)theOktaPos);
+				PPLE16(&Okta->speed);
 				break;
 				
 			case 'SLEN':
-				Okta->slen = decode16(theOktaPos);
+				Okta->slen = *((short*)theOktaPos);
+				PPLE16(&Okta->slen);
 				break;
 				
 			case 'PLEN':
-				Okta->plen = decode16(theOktaPos);
+				Okta->plen = *((short*)theOktaPos);
+				PPLE16(&Okta->plen)
 				break;
 				
 			case 'PATT':
@@ -169,7 +148,8 @@ static OSErr ConvertOKTA2Mad(Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDri
 				break;
 				
 			case 'PBOD':
-				Okta->pbodlen[pbod_count] = decode16 (theOktaPos);
+				Okta->pbodlen[pbod_count] = *((short*)theOktaPos);
+				PPLE16(&Okta->pbodlen[pbod_count]);
 				
 				if (pbod_count == 0) theMAD->header->numChn = (aSect->length - 2L) / (Okta->pbodlen[pbod_count] * 4L);
 				else
@@ -420,7 +400,7 @@ static OSErr ExtractOKTAInfo(PPInfoRec *info, Ptr theOkta, long MODSize)
 		while(theOktaPos < MaxPtr)
 		{
 			aSect = (sectheader*) theOktaPos;
-			aSect->length = decode32 (&aSect->length);
+			PPLE32 (&aSect->length);
 			
 			theOktaPos += 8L;
 			PPBE32(&aSect->name);
