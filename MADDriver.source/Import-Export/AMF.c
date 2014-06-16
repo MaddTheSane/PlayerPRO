@@ -33,10 +33,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-#ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
-#endif
-
 //TODO: make this multiple-instance safe!
 static char *theAMFRead;
 
@@ -105,7 +101,7 @@ static OSErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSet
 	theMAD->header = (MADSpec*) calloc(sizeof(MADSpec), 1);
 	if (theMAD->header == NULL) return MADNeedMemory;
 	
-	strlcpy(theMAD->header->infos, "Converted by PlayerPRO AMF Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO AMF Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->MAD = 'MADK';
 	
@@ -359,7 +355,7 @@ static OSErr ExtractAMFInfo(PPInfoRec *info, char *AlienFile)
 	/*** Total Instruments ***/
 	info->totalInstruments = 0;
 	
-	strlcpy(info->formatDescription, "AMF Plug", sizeof(info->formatDescription));
+	strncpy(info->formatDescription, "AMF Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -371,8 +367,8 @@ EXP OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPI
 
 EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy(p->type, 		"AMF ", sizeof(p->type));
-	strlcpy(p->MenuName, 	"AMF Files", sizeof(p->MenuName));
+	strncpy(p->type, 		"AMF ", sizeof(p->type));
+	strncpy(p->MenuName, 	"AMF Files", sizeof(p->MenuName));
 	p->mode	=		MADPlugImport;
 	p->version =	2 << 16 | 0 << 8 | 0;
 	

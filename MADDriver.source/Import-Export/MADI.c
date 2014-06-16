@@ -32,10 +32,6 @@
 #endif
 #include "MADI.h"
 
-#ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
-#endif
-
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
 #include "embeddedPlugs.h"
 #endif
@@ -432,7 +428,7 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
 	/*** Internal name ***/
 	
 	//myMOD->name[31] = '\0';
-	strlcpy(info->internalFileName, myMOD->name, sizeof(myMOD->name));
+	strncpy(info->internalFileName, myMOD->name, sizeof(myMOD->name));
 	
 	/*** Tracks ***/
 	
@@ -456,7 +452,7 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
 	
 	info->totalInstruments = myMOD->numInstru;
 	
-	strlcpy(info->formatDescription, "MADI Plug", sizeof(info->formatDescription));
+	strncpy(info->formatDescription, "MADI Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -468,8 +464,8 @@ EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 
 EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy(p->type, 		"MADI", sizeof(p->type));
-	strlcpy(p->MenuName, 	"MADI Files", sizeof(p->MenuName));
+	strncpy(p->type, 		"MADI", sizeof(p->type));
+	strncpy(p->MenuName, 	"MADI Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	

@@ -21,10 +21,6 @@
 //
 /********************						***********************/
 
-#ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
-#endif
-
 #ifdef __APPLE__
 #include <PlayerPROCore/PlayerPROCore.h>
 #else
@@ -194,7 +190,7 @@ OSErr MADH2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *ini
 	//TODO: dispatch this
 	for (i = 0; i < MAXTRACK; i++)
 		theMAD->header->chanBus[i].copyId = i;
-	strlcpy(theMAD->header->infos, "Converted by PlayerPRO MAD-H Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO MAD-H Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	/**** Patterns *******/
 	
@@ -393,7 +389,7 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	//myMOD->name[31] = '\0';
-	strlcpy(info->internalFileName, myMOD->name, sizeof(myMOD->name));
+	strncpy(info->internalFileName, myMOD->name, sizeof(myMOD->name));
 	
 	/*** Tracks ***/
 	
@@ -422,7 +418,7 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, Ptr AlienFile)
 			info->totalInstruments++;
 	}
 	
-	strlcpy(info->formatDescription, "MADH Plug", sizeof(info->formatDescription));
+	strncpy(info->formatDescription, "MADH Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -433,8 +429,8 @@ EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 
 EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy(p->type, 		"MADH", sizeof(p->type));
-	strlcpy(p->MenuName, 	"MADH Files", sizeof(p->MenuName));
+	strncpy(p->type, 		"MADH", sizeof(p->type));
+	strncpy(p->MenuName, 	"MADH Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	

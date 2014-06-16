@@ -33,10 +33,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-#ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
-#endif
-
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
 
@@ -90,7 +86,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 	for (i = 0; i < 32; i++) theMAD->header->name[i] = 0;
 	for (i = 0; i < 32; i++) theMAD->header->name[i] = ULTinfo.name[i];
 	
-	strlcpy(theMAD->header->infos, "Converted by PlayerPRO ULT Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO ULT Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPat		= ULTSuite.NOP;
 	theMAD->header->numPointers	= 1; // CHANGE
@@ -244,7 +240,7 @@ static OSErr ExtractULTInfo(PPInfoRec *info, void *AlienFile)
 	
 	ULTinfo.name[31] = '\0';
 	//pStrcpy((unsigned char*) info->internalFileName, MYC2PStr(ULTinfo.name));
-	strlcpy(info->internalFileName, ULTinfo.name, sizeof(ULTinfo.name));
+	strncpy(info->internalFileName, ULTinfo.name, sizeof(ULTinfo.name));
 	
 	/*** Total Patterns ***/
 	
@@ -262,7 +258,7 @@ static OSErr ExtractULTInfo(PPInfoRec *info, void *AlienFile)
 	
 	info->totalTracks	 = 0;
 	
-	strlcpy(info->formatDescription, "ULT Plug", sizeof(info->formatDescription));
+	strncpy(info->formatDescription, "ULT Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -286,8 +282,8 @@ EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 
 EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy(p->type,		"ULT ", sizeof(p->type));
-	strlcpy(p->MenuName,	"ULT Files", sizeof(p->MenuName));
+	strncpy(p->type,		"ULT ", sizeof(p->type));
+	strncpy(p->MenuName,	"ULT Files", sizeof(p->MenuName));
 	p->mode	= MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	

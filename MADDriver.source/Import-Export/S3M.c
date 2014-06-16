@@ -36,10 +36,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-#ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
-#endif
-
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
 
@@ -426,7 +422,7 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *snd
 	{
 		s3minfo = (s3mform*) finalS3MCopy;
 		
-		strlcpy(s3minfo->name, theMAD->header->name, 28);
+		strncpy(s3minfo->name, theMAD->header->name, 28);
 		s3minfo->sig1 			= 26;
 		s3minfo->type			= 16;
 		s3minfo->sig2[0] = s3minfo->sig2[1] = 0;
@@ -518,7 +514,7 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *snd
 			ins[i] = (s3minsform*) finalS3MCopy;
 			
 			ins[i]->instype				=	1;
-			strlcpy((Ptr) ins[i]->insdosname, theMAD->fid[i].name, 12);
+			strncpy((Ptr) ins[i]->insdosname, theMAD->fid[i].name, 12);
 			ins[i]->memsegh			=	0;
 			ins[i]->memsegl			=	0;
 			ins[i]->inslength			=	curData->size;
@@ -559,7 +555,7 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *snd
 			ins[i]->insint512			=	0;
 			PPLE16(&ins[i]->insint512);
 			ins[i]->insintlastused		=	0;
-			strlcpy((Ptr)ins[i]->insname, theMAD->fid[i].name, 28);
+			strncpy((Ptr)ins[i]->insname, theMAD->fid[i].name, 28);
 			ins[i]->inssig[0]				=	'S';
 			ins[i]->inssig[1]				=	'C';
 			ins[i]->inssig[2]				=	'R';
@@ -576,7 +572,7 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *snd
 			ins[i] = (s3minsform*) finalS3MCopy;
 			
 			ins[i]->instype				=	0;
-			strlcpy((Ptr) ins[i]->insdosname, theMAD->fid[i].name, sizeof(ins[i]->insdosname));
+			strncpy((Ptr) ins[i]->insdosname, theMAD->fid[i].name, sizeof(ins[i]->insdosname));
 			ins[i]->memsegh			=	0;
 			ins[i]->memsegl			=	0;
 			ins[i]->inslength			=	0;
@@ -593,7 +589,7 @@ static Ptr	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *snd
 			ins[i]->insgvspos			=	256;
 			ins[i]->insint512			=	0;
 			ins[i]->insintlastused		=	0;
-			strlcpy((Ptr) ins[i]->insname, theMAD->fid[i].name, 28);
+			strncpy((Ptr) ins[i]->insname, theMAD->fid[i].name, 28);
 		}
 		/**/
 		
@@ -944,7 +940,7 @@ static OSErr ConvertS3M2Mad(Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriver
 	for(i = 29; i < 32; i++) theMAD->header->name[i] = 0;
 	for(i = 0; i < 28; i++) theMAD->header->name[i] = s3minfo.name[i];
 	
-	strlcpy(theMAD->header->infos, "Converted by PlayerPRO S3M Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO S3M Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPat		= s3minfo.patnum;
 	theMAD->header->numPointers	= s3minfo.ordernum;
@@ -1383,7 +1379,7 @@ static OSErr ExtractS3MInfo(PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	//myS3M->name[27] = '\0';
-	strlcpy(info->internalFileName, myS3M->name, sizeof(myS3M->name));
+	strncpy(info->internalFileName, myS3M->name, sizeof(myS3M->name));
 	
 	/*** Total Patterns ***/
 	
@@ -1403,7 +1399,7 @@ static OSErr ExtractS3MInfo(PPInfoRec *info, Ptr AlienFile)
 	//TODO:
 	info->totalTracks = 0;
 	
-	strlcpy(info->formatDescription, "S3M Plug", sizeof(info->formatDescription));
+	strncpy(info->formatDescription, "S3M Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -1424,8 +1420,8 @@ EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 
 EXP OSErr FillPlug(PlugInfo *p)
 {
-	strlcpy(p->type, "S3M ", sizeof(p->type));
-	strlcpy(p->MenuName, "S3M Files", sizeof(p->MenuName));
+	strncpy(p->type, "S3M ", sizeof(p->type));
+	strncpy(p->MenuName, "S3M Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImportExport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	

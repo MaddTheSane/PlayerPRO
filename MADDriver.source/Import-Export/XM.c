@@ -55,10 +55,6 @@ typedef SInt8			BYTE;
 
 typedef UInt8			UBYTE;
 
-#ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
-#endif
-
 #include "XM.h"
 
 /**************************************************************************
@@ -706,7 +702,7 @@ static OSErr XM_Load(Ptr theXM, size_t XMSize, MADMusic *theMAD, MADDriverSettin
 	if (theMAD->header->numPointers > 128)
 		theMAD->header->numPointers = 128;
 	
-	strlcpy(theMAD->header->infos, "Converted by PlayerPRO XM Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO XM Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	for (i = 0; i < mh->songlength; i++) {
 		theMAD->header->oPointers[i] = mh->orders[i];
@@ -1094,7 +1090,7 @@ static Ptr	ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndSiz
 				
 				wh.panning = 128;	//curData->panning;
 				wh.relnote = curData->relNote + modifc2spd;
-				strlcpy(wh.samplename, curData->name, sizeof(wh.samplename));
+				strncpy(wh.samplename, curData->name, sizeof(wh.samplename));
 				
 				theXMReadCopy = theXMRead;
 				PPLE32(&wh.length);
@@ -1278,9 +1274,9 @@ static OSErr ExtractXMInfo(PPInfoRec *info, void *AlienFile)
 	info->totalTracks = mh->numchn;
 	
 	if (mh->flags & 1)
-		strlcpy(info->formatDescription, "XM Linear Plug", sizeof(info->formatDescription));
+		strncpy(info->formatDescription, "XM Linear Plug", sizeof(info->formatDescription));
 	else
-		strlcpy(info->formatDescription, "XM Log Plug", sizeof(info->formatDescription));
+		strncpy(info->formatDescription, "XM Log Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -1292,8 +1288,8 @@ EXP OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPI
 
 EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy(p->type, 		"XM  ", sizeof(p->type));
-	strlcpy(p->MenuName, 	"XM Files", sizeof(p->MenuName));
+	strncpy(p->type, 		"XM  ", sizeof(p->type));
+	strncpy(p->MenuName, 	"XM Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImportExport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	

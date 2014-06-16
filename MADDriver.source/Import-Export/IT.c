@@ -34,10 +34,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-#ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
-#endif
-
 static Byte		LastAEffect[MAXTRACK], LastJEffect[MAXTRACK];
 static int		old_effect;
 
@@ -772,9 +768,9 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	
 	theMAD->header->MAD = 'MADK';
 	memset(theMAD->header->name, 0, sizeof(theMAD->header->name));
-	strlcpy(theMAD->header->name, ITinfo.name, sizeof(ITinfo.name));
+	strncpy(theMAD->header->name, ITinfo.name, sizeof(ITinfo.name));
 	
-	strlcpy(theMAD->header->infos, "Converted by PlayerPRO IT Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO IT Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPat			= ITinfo.patNum;
 	theMAD->header->numPointers		= ITinfo.orderNum;
@@ -1289,7 +1285,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 			theMAD->partition[i]->header.size 		= DEFSIZE;
 			theMAD->partition[i]->header.compMode 	= 'NONE';
 			
-			strlcpy(theMAD->partition[i]->header.name, "Not used pattern", sizeof(theMAD->partition[i]->header.name));
+			strncpy(theMAD->partition[i]->header.name, "Not used pattern", sizeof(theMAD->partition[i]->header.name));
 			
 			for (Row = 0; Row < DEFSIZE; Row++) {
 				for(z = 0; z < theMAD->header->numChn; z++) {
@@ -1447,7 +1443,7 @@ static OSErr ExtractITInfo(PPInfoRec *info, void *AlienFile)
 	
 	/*** Internal name ***/
 	
-	strlcpy(info->internalFileName, ITinfo.name, sizeof(ITinfo.name));
+	strncpy(info->internalFileName, ITinfo.name, sizeof(ITinfo.name));
 	
 	/*** Total Patterns ***/
 	
@@ -1468,7 +1464,7 @@ static OSErr ExtractITInfo(PPInfoRec *info, void *AlienFile)
 	
 	//info->totalTracks	 = PPLE16( &ITinfo.insNum);
 	
-	strlcpy(info->formatDescription, "IT Plug", sizeof(info->formatDescription));
+	strncpy(info->formatDescription, "IT Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -1490,8 +1486,8 @@ EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 
 EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy(p->type, 		"IT  ", sizeof(p->type));
-	strlcpy(p->MenuName, 	"IT Files", sizeof(p->MenuName));
+	strncpy(p->type, 		"IT  ", sizeof(p->type));
+	strncpy(p->MenuName, 	"IT Files", sizeof(p->MenuName));
 	p->mode		= MADPlugImport;
 	p->version	= 2 << 16 | 0 << 8 | 0;
 	

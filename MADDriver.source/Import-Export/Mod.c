@@ -35,10 +35,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-#ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
-#endif
-
 static short FoundNote(short Period)
 {
 	short 			note;
@@ -445,7 +441,7 @@ static OSErr PPConvertMod2Mad(Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriver
 	if (theMAD->header == NULL)
 		return MADNeedMemory;
 	
-	strlcpy(theMAD->header->infos, "Converted by PlayerPRO MOD Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO MOD Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->MAD = 'MADK';
 	theMAD->header->MODMode = true;
@@ -926,7 +922,7 @@ static OSErr ExtractMODInfo(PPInfoRec *info, void *AlienFile)
 	/*** Internal name ***/
 	
 	//myMOD->NameSignature[19] = '\0';
-	strlcpy(info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
+	strncpy(info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
 	
 	/*** Check MOD Type ***/
 	
@@ -959,7 +955,7 @@ static OSErr ExtractMODInfo(PPInfoRec *info, void *AlienFile)
 			info->totalInstruments++;
 	}
 	
-	strlcpy(info->formatDescription, "MOD Plug", sizeof(info->formatDescription));
+	strncpy(info->formatDescription, "MOD Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -986,8 +982,8 @@ EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 
 OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC, BeOS, and UNIX
 {
-	strlcpy(p->type, 		"MOD ", sizeof(p->type));		// NEVER MORE THAN 4 CHARS !!!!!!!!
-	strlcpy(p->MenuName, 	"MOD Files", sizeof(p->MenuName));
+	strncpy(p->type, 		"MOD ", sizeof(p->type));		// NEVER MORE THAN 4 CHARS !!!!!!!!
+	strncpy(p->MenuName, 	"MOD Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImportExport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	

@@ -36,10 +36,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-#ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
-#endif
-
 static inline struct MTMTrack* GetMTMCommand(short position, short whichTracks, void *PatPtr)
 {
 	return (void*)((size_t)PatPtr + whichTracks * 192 + position * 3);
@@ -124,7 +120,7 @@ static OSErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, M
 		theMAD->header->name[i] = MTMFile->songname[i];
 	}
 	
-	strlcpy(theMAD->header->infos, "Converted by PlayerPRO MTM Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO MTM Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->tempo		= 125;
 	theMAD->header->speed		= 6;
@@ -295,7 +291,7 @@ static OSErr ExtractInfo(PPInfoRec *info, MTMDef *myFile)
 #endif
 	info->internalFileName[21] = 0;
 	
-	strlcpy(info->formatDescription, "MTM Plug", sizeof(info->formatDescription));
+	strncpy(info->formatDescription, "MTM Plug", sizeof(info->formatDescription));
 	
 	info->totalPatterns		= myFile->patNo;
 	info->partitionLength	= myFile->positionNo;
@@ -323,8 +319,8 @@ EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 
 EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy(p->type, 		"MTM ", sizeof(p->type));
-	strlcpy(p->MenuName, 	"MTM Files", sizeof(p->MenuName));
+	strncpy(p->type, 		"MTM ", sizeof(p->type));
+	strncpy(p->MenuName, 	"MTM Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	

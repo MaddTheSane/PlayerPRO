@@ -33,10 +33,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-#ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
-#endif
-
 #ifdef MADAPPIMPORT
 #include "APPL.h"
 #else
@@ -200,7 +196,7 @@ OSErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *in
 	theMAD->header->speed			= 6;
 	theMAD->header->tempo			= 125;
 	
-	strlcpy(theMAD->header->infos, "Converted by PlayerPRO MAD-F-G Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO MAD-F-G Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	
 	theMAD->sets = (FXSets*)calloc(MAXTRACK * sizeof(FXSets), 1);
@@ -400,7 +396,7 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
 	
 	/*** Internal name ***/
 	
-	strlcpy(info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
+	strncpy(info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
 	
 	/*** Tracks ***/
 	
@@ -429,7 +425,7 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
 			info->totalInstruments++;
 	}
 	
-	strlcpy(info->formatDescription, "MAD-FG Plug", sizeof(info->formatDescription));
+	strncpy(info->formatDescription, "MAD-FG Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -440,8 +436,8 @@ EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 
 EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy(p->type, 		"MADF", sizeof(p->type));
-	strlcpy(p->MenuName, 	"MAD-FG", sizeof(p->MenuName));
+	strncpy(p->type, 		"MADF", sizeof(p->type));
+	strncpy(p->MenuName, 	"MAD-FG", sizeof(p->MenuName));
 	p->mode	= MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	

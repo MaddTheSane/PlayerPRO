@@ -33,9 +33,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-#ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
-#endif
 
 #ifdef _MAC_H
 #define decode16(msg_buf) CFSwapInt16LittleToHost(*(UInt16*)msg_buf)
@@ -228,7 +225,7 @@ static OSErr ConvertOKTA2Mad(Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDri
 	theMAD->header->tempo 			= 125;
 	theMAD->header->speed 			= Okta->speed;
 	
-	strlcpy(theMAD->header->infos, "Converted by PlayerPRO OKTA Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO OKTA Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	for (i = 0;  i < 128; i++) theMAD->header->oPointers[i] = 0;
 	for (i = 0;  i < pbod_count; i++) theMAD->header->oPointers[i] = Okta->patt[i];
@@ -387,7 +384,7 @@ static OSErr ExtractOKTAInfo(PPInfoRec *info, Ptr theOkta, long MODSize)
 	
 	/*** Internal name ***/
 	
-	strlcpy(info->internalFileName, "", 1);
+	strncpy(info->internalFileName, "", 1);
 	
 	{
 		//OktaInstru			*samps, *s, instru[120];
@@ -444,7 +441,7 @@ static OSErr ExtractOKTAInfo(PPInfoRec *info, Ptr theOkta, long MODSize)
 		info->totalInstruments = sbod_count;
 	}
 	
-	strlcpy(info->formatDescription, "OKTA Plug", sizeof(info->formatDescription));
+	strncpy(info->formatDescription, "OKTA Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -465,8 +462,8 @@ EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInf
 
 EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy(p->type, 		"OKTA", sizeof(p->type));
-	strlcpy(p->MenuName, 	"OKTAmed Files", sizeof(p->MenuName));
+	strncpy(p->type, 		"OKTA", sizeof(p->type));
+	strncpy(p->MenuName, 	"OKTAmed Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	

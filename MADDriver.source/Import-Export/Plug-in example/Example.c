@@ -25,10 +25,6 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include "Example.h"
 
-#ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
-#endif
-
 static short FoundNote(short Period)
 {
 	short 			note;
@@ -303,7 +299,7 @@ static OSErr PPConvertMod2Mad(Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriver
 	
 	//Some info about the tracker being imported.
 	//If your tracker doesn't have an info field, just do
-	strlcpy(theMAD->header->infos, "Converted by PlayerPRO MOD Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO MOD Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->MAD = 'MADK';
 	theMAD->header->MODMode = true;
@@ -832,7 +828,7 @@ static OSErr ExtractMODInfo(PPInfoRec *info, Ptr AlienFile)
 	/*** Internal name ***/
 	
 	myMOD->NameSignature[19] = '\0';
-	strlcpy(info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
+	strncpy(info->internalFileName, myMOD->NameSignature, sizeof(myMOD->NameSignature));
 	
 	/*** Check MOD Type ***/
 	
@@ -870,7 +866,7 @@ static OSErr ExtractMODInfo(PPInfoRec *info, Ptr AlienFile)
 	}
 	
 	//The plug-in type used to get the tracker
-	strlcpy(info->formatDescription, "MOD Plug", sizeof(info->formatDescription));
+	strncpy(info->formatDescription, "MOD Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -899,8 +895,8 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC, BeOS, and UNI
 {
 	//If your architecture supports it, you can get this metadata from the plug-in file itself
 	//You can also localize it if you feel so inclined
-	strlcpy(p->type, 		"MOD ", sizeof(p->type));// NEVER MORE THAN 4 CHARS!
-	strlcpy(p->MenuName, 	"MOD Files", sizeof(p->MenuName));
+	strncpy(p->type, 		"MOD ", sizeof(p->type));// NEVER MORE THAN 4 CHARS!
+	strncpy(p->MenuName, 	"MOD Files", sizeof(p->MenuName));
 	p->mode	=	MADPlugImportExport;
 	//Version 2.0.0
 	//Increment the version when you make big changes so the newer one will be used

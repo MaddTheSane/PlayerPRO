@@ -38,10 +38,6 @@ typedef void *CFReadStreamRef;
 
 ///////////////////////////////
 
-#ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
-#endif
-
 typedef enum InputType {
 	MADFileType = 1,
 	MADCFReadStreamType,
@@ -272,7 +268,7 @@ void ConvertTo64Rows(MADMusic *music)
 				newPat->header.patBytes	= 0;
 				newPat->header.unused2	= 0;
 				
-				strlcpy(newPat->header.name, srcPat->header.name, 32);
+				strncpy(newPat->header.name, srcPat->header.name, 32);
 				
 				for (x = 0; x < 64; x++, patsize++) {
 					for (z = 0; z < music->header->numChn; z++) {

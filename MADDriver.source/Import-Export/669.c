@@ -33,10 +33,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-#ifdef WIN32
-#define strlcpy(dst, src, size) strncpy_s(dst, size, src, _TRUNCATE)
-#endif
-
 static OSErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	SixSixNine	*the669;
@@ -86,9 +82,9 @@ static OSErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MAD
 	/******** Copie des informations dans le MAD ***/
 	
 	theMAD->header->MAD = 'MADK';
-	strlcpy(theMAD->header->name, the669->message, sizeof(theMAD->header->name));
+	strncpy(theMAD->header->name, the669->message, sizeof(theMAD->header->name));
 	
-	strlcpy(theMAD->header->infos, "Converted by PlayerPRO 669 Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO 669 Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPointers = 128;	//the669->loopOrder;
 	theMAD->header->tempo = 125;
@@ -180,7 +176,7 @@ static OSErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MAD
 			curData->amp		= 8;
 			
 			curData->relNote	= 0;
-			//strlcpy(curData->name, instru[i]->name, sizeof(curData->name));
+			//strncpy(curData->name, instru[i]->name, sizeof(curData->name));
 			//for (x = 0; x < 22; x++) curData->name[x] = instru[i]->name[x];
 			
 			curData->data 		= malloc(curData->size);
@@ -331,7 +327,7 @@ static OSErr Extract669Info(PPInfoRec *info, void *AlienFile)
 	
 	/*** Internal name ***/
 	
-	strlcpy(info->internalFileName, the669->message, sizeof(info->internalFileName));
+	strncpy(info->internalFileName, the669->message, sizeof(info->internalFileName));
 	
 	/*** Total Patterns ***/
 	
@@ -345,7 +341,7 @@ static OSErr Extract669Info(PPInfoRec *info, void *AlienFile)
 	
 	info->totalInstruments = 0;
 	
-	strlcpy(info->formatDescription, "669 Plug", sizeof(info->formatDescription));
+	strncpy(info->formatDescription, "669 Plug", sizeof(info->formatDescription));
 	
 	return noErr;
 }
@@ -367,8 +363,8 @@ EXP OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPI
 
 EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
-	strlcpy(p->type, "669 ", sizeof(p->type));
-	strlcpy(p->MenuName, "669 Files", sizeof(p->MenuName));
+	strncpy(p->type, "669 ", sizeof(p->type));
+	strncpy(p->MenuName, "669 Files", sizeof(p->MenuName));
 	p->mode	= MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
