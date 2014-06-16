@@ -156,7 +156,7 @@ OSErr initCoreAudio(MADDriverRec *inMADDriver)
 		AudioComponentInstanceDispose(inMADDriver->CAAudioUnit);
 		return MADSoundManagerErr;
 	}
-	return noErr;
+	return MADNoErr;
 }
 
 OSErr closeCoreAudio(MADDriverRec *inMADDriver)
@@ -182,5 +182,5 @@ OSErr closeCoreAudio(MADDriverRec *inMADDriver)
 		free(inMADDriver->CABuffer);
 	}
 	
-	return noErr;
+	return MADNoErr;
 }

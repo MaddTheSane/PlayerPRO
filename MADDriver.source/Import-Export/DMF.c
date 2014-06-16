@@ -895,7 +895,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	free(ITinfo.parapsamp);
 	free(ITinfo.sampdata);
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr ExtractITInfo(PPInfoRec *info, Ptr AlienFile)
@@ -936,7 +936,7 @@ static OSErr ExtractITInfo(PPInfoRec *info, Ptr AlienFile)
 	
 	strcpy(info->formatDescription, "DMF Plug");
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static inline OSErr TestITFile(void *AlienFile)
@@ -946,7 +946,7 @@ static inline OSErr TestITFile(void *AlienFile)
 	PPBE32(&myID);
 	
 	if (myID == 'DDMF')
-		return noErr;
+		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
 }
@@ -963,7 +963,7 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
-	return noErr;
+	return MADNoErr;
 }
 #endif
 
@@ -974,7 +974,7 @@ OSErr mainDMF(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *inf
 extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr = noErr;
+	OSErr	myErr = MADNoErr;
 	Ptr		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
@@ -997,9 +997,9 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 						myErr = MADNeedMemory;
 					} else {
 						myErr = iRead(sndSize, AlienFile, iFileRefI);
-						if (myErr == noErr) {
+						if (myErr == MADNoErr) {
 							myErr = TestITFile(AlienFile);
-							if (myErr == noErr) {
+							if (myErr == MADNoErr) {
 								myErr = ConvertIT2Mad(AlienFile, sndSize, MadFile, init);
 							}
 						}
@@ -1022,7 +1022,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 					myErr = MADNeedMemory;
 				} else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if(myErr == noErr)
+					if(myErr == MADNoErr)
 						myErr = TestITFile(AlienFile);
 					
 					free(AlienFile);
@@ -1046,7 +1046,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 					myErr = MADNeedMemory;
 				} else {
 					myErr = iRead(sndSize, AlienFile,iFileRefI);
-					if (myErr == noErr) {
+					if (myErr == MADNoErr) {
 						myErr = ExtractITInfo(info, AlienFile);
 					}
 					free(AlienFile);

@@ -114,7 +114,7 @@ OSErr iRead(long size, void *dest, FILE* iFileRefI)
 		return MADReadingErr;
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 OSErr iSeekCur(long size, FILE* iFileRefI)
@@ -129,7 +129,7 @@ OSErr iWrite(long size, const void *src, FILE* iFileRefI)
 		return MADWritingErr;
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 void iClose(FILE* iFileRefI)

@@ -9,7 +9,7 @@
 static inline OSErr TestMINS(InstrData *CC)
 {
 	if (CC->type == 0 && CC->numSamples >= 0 && CC->numSamples < MAXSAMPLE)
-		return noErr;
+		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
 }
@@ -36,7 +36,7 @@ static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 	memset(curIns, 0, sizeof(InstrData));
 	curIns->firstSample = firstSample;
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static inline void ByteswapsData(sData *toswap)
@@ -74,7 +74,7 @@ static OSErr mainMINs(void			*unused,
 					  CFURLRef		AlienFileCFURL,				// IN/OUT file
 					  PPInfoPlug	*thePPInfoPlug)
 {
-	OSErr				myErr = noErr;
+	OSErr				myErr = MADNoErr;
 	short				x;
 	long				inOutCount;
 	UInt8*				theSound;

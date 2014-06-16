@@ -273,7 +273,7 @@ static OSErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, M
 		patTracks += 32;
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr ExtractInfo(PPInfoRec *info, MTMDef *myFile)
@@ -299,7 +299,7 @@ static OSErr ExtractInfo(PPInfoRec *info, MTMDef *myFile)
 	info->totalInstruments	= myFile->NOS;
 	info->signature			= 'MTM ';
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static inline OSErr TestFile(MTMDef *myFile)
@@ -307,7 +307,7 @@ static inline OSErr TestFile(MTMDef *myFile)
 	if (myFile->Id[0] == 'M' &&
 		myFile->Id[1] == 'T' &&
 		myFile->Id[2] == 'M')
-		return noErr;
+		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
 }
@@ -324,7 +324,7 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
-	return noErr;
+	return MADNoErr;
 }
 #endif
 
@@ -339,7 +339,7 @@ OSErr mainMTM(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *inf
 extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr = noErr;
+	OSErr	myErr = MADNoErr;
 	Ptr		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
@@ -361,7 +361,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 					iRead(sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestFile((MTMDef*)AlienFile);
-					if (myErr == noErr) {
+					if (myErr == MADNoErr) {
 						myErr = ConvertMTM2Mad((MTMDef*)AlienFile, sndSize, MadFile, init);
 					}
 					

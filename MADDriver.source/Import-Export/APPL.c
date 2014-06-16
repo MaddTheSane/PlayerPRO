@@ -246,7 +246,7 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		}
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static inline OSErr TESTMADk(MADSpec* MADPtr)
@@ -254,7 +254,7 @@ static inline OSErr TESTMADk(MADSpec* MADPtr)
 	OSType madType = MADPtr->MAD;
 	PPBE32(&madType);
 	if (madType == 'MADK')
-		return noErr;
+		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
 }
@@ -276,7 +276,7 @@ static OSErr INFOMADkApp(MADSpec* MADPtr, PPInfoRec *info)
 	
 	info->totalInstruments	= MADPtr->numInstru;
 	
-	return noErr;
+	return MADNoErr;
 }
 
 /*****************/
@@ -286,7 +286,7 @@ static OSErr INFOMADkApp(MADSpec* MADPtr, PPInfoRec *info)
 extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	//TODO: learn how to get and parse resource forks using POSIX commands or CoreFoundation, but not Carbon
-	OSErr			myErr = noErr;
+	OSErr			myErr = MADNoErr;
 	FSRef			fileRef;
 	ResFileRefNum	iFileRefI;
 	Handle			myRes;

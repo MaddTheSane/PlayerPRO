@@ -49,7 +49,7 @@ static OSErr mainInvert(void		*unused,
 			break;
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 // E81B53F4-8CEE-4D32-98F2-780ADB447EB1

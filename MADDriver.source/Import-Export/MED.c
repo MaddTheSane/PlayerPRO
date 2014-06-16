@@ -324,7 +324,7 @@ static OSErr LoadMMD0Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *i
 		MED_Convert0(t, theMAD);
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr LoadMMD1Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *init)
@@ -397,7 +397,7 @@ static OSErr LoadMMD1Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *i
 		}
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr MED_Load(Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSettings *init)
@@ -546,15 +546,15 @@ static OSErr MED_Load(Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSetti
 	switch(mh->id)
 	{
 		case 'MMD0':
-			if (LoadMMD0Patterns(theMAD, theMED, init) != noErr) return MADUnknowErr;
+			if (LoadMMD0Patterns(theMAD, theMED, init) != MADNoErr) return MADUnknowErr;
 			break;
 			
 		case 'MMD1':
-			if (LoadMMD1Patterns(theMAD, theMED, init) != noErr) return MADUnknowErr;
+			if (LoadMMD1Patterns(theMAD, theMED, init) != MADNoErr) return MADUnknowErr;
 			break;
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static Boolean compMem(Ptr a, Ptr b, long s)
@@ -572,7 +572,7 @@ static Boolean compMem(Ptr a, Ptr b, long s)
 static OSErr TestMEDFile(Ptr AlienFile)
 {
 	if (compMem(AlienFile, "MMD0", 4) == false && compMem(AlienFile, "MMD1", 4) == false) return MADFileNotSupportedByThisPlug;
-	else return noErr;
+	else return MADNoErr;
 }
 
 static OSErr ExtractMEDInfo(PPInfoRec *info, Ptr theMED)
@@ -602,7 +602,7 @@ static OSErr ExtractMEDInfo(PPInfoRec *info, Ptr theMED)
 	
 	strncpy(info->formatDescription, "MED Plug", sizeof(info->formatDescription));
 	
-	return noErr;
+	return MADNoErr;
 }
 
 #ifndef _MAC_H
@@ -617,7 +617,7 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
-	return noErr;
+	return MADNoErr;
 }
 #endif
 
@@ -628,7 +628,7 @@ OSErr mainMED(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *inf
 extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr = noErr;
+	OSErr	myErr = MADNoErr;
 	Ptr		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
@@ -660,7 +660,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 					iRead(sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestMEDFile(AlienFile);
-					if (myErr == noErr)
+					if (myErr == MADNoErr)
 					{
 						myErr = MED_Load(AlienFile,  sndSize, MadFile, init);
 					}

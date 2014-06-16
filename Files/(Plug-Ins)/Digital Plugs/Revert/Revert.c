@@ -39,7 +39,7 @@ static OSErr mainRevert(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	
 	free(srcCmd);
 		
-	return noErr;
+	return MADNoErr;
 }
 
 #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x33, 0x7A, 0xC1, 0x07, 0x22, 0xD8, 0x44, 0x1F, 0x86, 0x39, 0xE2, 0xEE, 0xE8, 0xE3, 0x45, 0x92)

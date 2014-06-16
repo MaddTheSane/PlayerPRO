@@ -207,7 +207,7 @@ static OSErr PPMADInfoFile(const char *AlienFile, PPInfoRec	*InfoRec)
 	free(theMAD);
 	theMAD = NULL;
 	
-	return noErr;
+	return MADNoErr;
 }
 
 OSErr CallImportPlug(MADLibrary *inMADDriver, short PlugNo, OSType order, char *AlienFile, MADMusic *theNewMAD, PPInfoRec *info)
@@ -303,7 +303,7 @@ OSErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MAD
 				return MADNeedMemory;
 			
 			OSErr err = CallImportPlug(inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
-			if (err != noErr) {
+			if (err != MADNoErr) {
 				free(*theNewMAD);
 				*theNewMAD = NULL;
 			}
@@ -330,7 +330,7 @@ OSErr CheckMADFile(char* name)
 			charl[1] == 'A' &&
 			charl[2] == 'D' &&
 			charl[3] == 'K')
-			err = noErr;
+			err = MADNoErr;
 		else
 			err = MADIncompatibleFile;
 		
@@ -345,7 +345,7 @@ OSErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 	UNFILE		refNum;
 	short		i;
 	PPInfoRec	InfoRec;
-	OSErr		iErr = noErr;
+	OSErr		iErr = MADNoErr;
 	
 	strcpy(type, "!!!!");
 	
@@ -363,15 +363,15 @@ OSErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 	
 	// Is it a MAD file?
 	iErr = CheckMADFile(AlienFile);
-	if (iErr == noErr) {
+	if (iErr == MADNoErr) {
 		strcpy(type, "MADK");
-		return noErr;
+		return MADNoErr;
 	}
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
-		if (CallImportPlug(inMADDriver, i, MADPlugTest, AlienFile, NULL, &InfoRec) == noErr) {
+		if (CallImportPlug(inMADDriver, i, MADPlugTest, AlienFile, NULL, &InfoRec) == MADNoErr) {
 			strcpy(type, inMADDriver->ThePlug[i].type);
-			return noErr;
+			return MADNoErr;
 		}
 	}
 	

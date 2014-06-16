@@ -84,9 +84,9 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 		MADGetBestDriver(&init);
 		init.driverMode = NoHardwareDriver;
 		
-		if (MADInitLibrary(NULL, &MADLib) != noErr) {
+		if (MADInitLibrary(NULL, &MADLib) != MADNoErr) {
 			return FALSE;
-		} else if (MADCreateDriver(&init, MADLib, &MADDriver) != noErr) {
+		} else if (MADCreateDriver(&init, MADLib, &MADDriver) != MADNoErr) {
 			MADDisposeLibrary(MADLib);
 			return FALSE;
 		}
@@ -108,7 +108,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			else
 				strcpy(utiType, "!!!!");
 			
-			if (MADMusicIdentifyCFURL(MADLib, type, urlForFile) != noErr) {
+			if (MADMusicIdentifyCFURL(MADLib, type, urlForFile) != MADNoErr) {
 				//Couldn't identify via raw file, try by UTI
 				strcpy(type, utiType);
 			}
@@ -122,9 +122,9 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 #endif
 			
 			if (MADPlugAvailable(MADLib, type)) {
-				OSErr err = noErr;
+				OSErr err = MADNoErr;
 				err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, type, urlForFile);
-				if (err != noErr) {
+				if (err != MADNoErr) {
 					goto fail1;
 				}
 			} else
@@ -148,7 +148,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 				PPInfoRec rec;
 				{
 					char sig[5];
-					if (MADMusicInfoCFURL(MADLib, type, urlForFile, &rec) != noErr)
+					if (MADMusicInfoCFURL(MADLib, type, urlForFile, &rec) != MADNoErr)
 						goto skipInfo;
 					OSType2Ptr(rec.signature, sig);
 					NSString *NSSig = [[NSString alloc] initWithCString:sig encoding:NSMacOSRomanStringEncoding];

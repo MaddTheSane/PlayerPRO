@@ -21,7 +21,7 @@ static OSErr mainAIFF(void					*unused,
 
 static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **sample, short *sampleID, CFURLRef AlienFileURL, PPInfoPlug *thePPInfoPlug)
 {
-	OSErr	myErr = noErr;
+	OSErr	myErr = MADNoErr;
 	//char	*AlienFile;
 
 	
@@ -38,7 +38,7 @@ static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **
 			FSSpec			newFile;
 			
 			myErr = ConvertDataToWAVE(*AlienFileFSSpec, &newFile, thePPInfoPlug);
-			if (myErr == noErr) {
+			if (myErr == MADNoErr) {
 				theSound = ConvertWAV(&newFile, &lS, &lE, &sS, &rate, &stereo);
 				
 				if (theSound)

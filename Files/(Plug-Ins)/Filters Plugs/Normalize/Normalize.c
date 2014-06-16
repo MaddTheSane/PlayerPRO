@@ -97,7 +97,7 @@ static OSErr mainNormalize(void			*unused,
 			break;
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 // 9AAC8E6C-DAD4-453A-8A90-17D27CF2FFBC

@@ -91,7 +91,7 @@ OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, int chan
 	OSErr iErr = MADPlaySoundData(theRec, soundPtr, size, channel, note, amplitude, 0, 0, rate, stereo);
 	Boolean	continueLoop;
 	
-	if (iErr == noErr) {
+	if (iErr == MADNoErr) {
 		continueLoop = true;
 		while (continueLoop) {
 			//GetKeys(km);

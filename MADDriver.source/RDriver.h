@@ -63,6 +63,7 @@
 enum MADErrors
 {
 	MADIsRunningSheet				= 10,
+	MADNoErr						= 0,
 	MADNeedMemory 					= -1,
 	MADReadingErr					= -2,
 	MADIncompatibleFile				= -3,
@@ -587,7 +588,7 @@ PPEXPORT void	PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char
 /**
  @function MADInitLibrary
  @abstract MADLibrary initialization
- @result The error encountered, if any. Will be of type MADErrors unless zero (noErr)
+ @result The error encountered, if any. Will be of type MADErrors unless zero (MADNoErr)
  @param PlugsFolderName
  The folder location for the plug-ins for PlayerPROCore to look for.
  On certain platforms, this can be NULL

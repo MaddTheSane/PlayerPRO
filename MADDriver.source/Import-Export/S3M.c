@@ -1360,7 +1360,7 @@ static OSErr ConvertS3M2Mad(Ptr	theS3M, size_t size, MADMusic *theMAD, MADDriver
 	free(s3minfo.parappat);
 	free(s3minfo.insdata);
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr ExtractS3MInfo(PPInfoRec *info, Ptr AlienFile)
@@ -1401,14 +1401,14 @@ static OSErr ExtractS3MInfo(PPInfoRec *info, Ptr AlienFile)
 	
 	strncpy(info->formatDescription, "S3M Plug", sizeof(info->formatDescription));
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static inline OSErr TestS3MFile(void *AlienFile)
 {
 	s3mform	*myS3M = (s3mform*)AlienFile;
 	if (memcmp(myS3M->s3msig, "SCRM", 4) == 0)
-		return noErr;
+		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
 }
@@ -1425,7 +1425,7 @@ EXP OSErr FillPlug(PlugInfo *p)
 	p->mode	=	MADPlugImportExport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
-	return noErr;
+	return MADNoErr;
 }
 #endif
 
@@ -1440,7 +1440,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 	size_t	sndSize;
 	UNFILE	iFileRefI;
 	
-	myErr = noErr;
+	myErr = MADNoErr;
 	
 	switch (order) {
 		case MADPlugExport:
@@ -1480,7 +1480,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 						iRead(sndSize, AlienFile, iFileRefI);
 						
 						myErr = TestS3MFile(AlienFile);
-						if (myErr == noErr) {
+						if (myErr == MADNoErr) {
 							myErr = ConvertS3M2Mad(AlienFile,  sndSize, MadFile, init);
 						}
 					}
@@ -1503,7 +1503,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 				else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					
-					if(myErr == noErr)
+					if(myErr == MADNoErr)
 						myErr = TestS3MFile(AlienFile);
 					
 					free(AlienFile);
@@ -1526,7 +1526,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 					myErr = MADNeedMemory;
 				else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr) {
+					if (myErr == MADNoErr) {
 						myErr = TestS3MFile(AlienFile);
 						if (!myErr)
 							myErr = ExtractS3MInfo(info, AlienFile);

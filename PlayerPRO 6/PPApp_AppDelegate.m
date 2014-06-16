@@ -405,7 +405,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 				PPInfoRec rec;
 				char ostype[5] = {0};
 				//theURL = [theURL fileReferenceURL];
-				if ([madLib identifyFileAtURL:theURL type:ostype] != noErr || [madLib getInformationFromFileAtURL:theURL type:ostype info:&rec] != noErr) {
+				if ([madLib identifyFileAtURL:theURL type:ostype] != MADNoErr || [madLib getInformationFromFileAtURL:theURL type:ostype info:&rec] != MADNoErr) {
 					NSRunCriticalAlertPanel(NSLocalizedString(@"Unknown File", @"unknown file"), NSLocalizedString(@"The file type could not be identified.", @"Unidentified file"), nil, nil, nil);
 					return NO;
 				}
@@ -436,7 +436,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 #if 0
 	if ([sharedWorkspace type:theUTI conformsToType:PPPCMDUTI]) {
 		OSErr theOSErr = [patternHandler importPcmdFromURL:theURL];
-		if (theOSErr != noErr) {
+		if (theOSErr != MADNoErr) {
 			NSError *theErr = CreateErrorFromMADErrorType(theOSErr);
 			[[NSAlert alertWithError:theErr] runModal];
 			RELEASEOBJ(theErr);

@@ -191,11 +191,11 @@
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		short temp;
-		if ([self callInstumentPlugIn:obj order:MADPlugTest instrument:0 sample:&temp URL:ref] == noErr) {
+		if ([self callInstumentPlugIn:obj order:MADPlugTest instrument:0 sample:&temp URL:ref] == MADNoErr) {
 			if (outType) {
 				*outType = obj.type;
 			}
-			return noErr;
+			return MADNoErr;
 		}
 	}
 	if (outType) {

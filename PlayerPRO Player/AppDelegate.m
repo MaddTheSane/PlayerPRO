@@ -181,7 +181,7 @@ static NSInteger selMusFromList = -1;
 {
 	Boolean madWasReading = false;
 	long fullTime = 0, curTime = 0;
-	OSErr returnerr = noErr;
+	OSErr returnerr = MADNoErr;
 	if (madDriver) {
 		madWasReading = [madDriver isPlayingMusic];
 		[madDriver stop];
@@ -222,7 +222,7 @@ static NSInteger selMusFromList = -1;
 	else
 		returnerr = [madDriver changeDriverSettingsToSettings:init];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDriverDidChange object:self];
-	if (returnerr != noErr) {
+	if (returnerr != MADNoErr) {
 		NSError *err = CreateErrorFromMADErrorType(returnerr);
 		[[NSAlert alertWithError:err] runModal];
 		return;
@@ -369,7 +369,7 @@ static NSInteger selMusFromList = -1;
 
 - (NSMutableData*)rawSoundData:(MADDriverSettings*)theSet
 {
-	OSErr err = noErr;
+	OSErr err = MADNoErr;
 	PPDriver *theRec = [[PPDriver alloc] initWithLibrary:madLib settings:theSet error:&err];
 	
 	if (theRec == nil) {
@@ -461,7 +461,7 @@ static NSInteger selMusFromList = -1;
 						@autoreleasepool {
 							OSErr thErr =[self saveMusicAsAIFFToURL:[savePanel URL] usingSettings:&exportSettings];
 							[madDriver endExport];
-							if (thErr != noErr)
+							if (thErr != MADNoErr)
 								return;
 						}
 						dispatch_async(dispatch_get_main_queue(), ^{
@@ -503,7 +503,7 @@ static NSInteger selMusFromList = -1;
 					}
 					
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-						OSErr theErr = noErr;
+						OSErr theErr = MADNoErr;
 						
 						NSURL *oldURL = [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] musicUrl];
 						NSArray *metadataInfo;
@@ -519,7 +519,7 @@ static NSInteger selMusFromList = -1;
 						NSString *oldMusicInfo = self.musicInfo;
 						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", (oldMusicName && ![oldMusicName isEqualToString:@""]) ? oldMusicName : @"untitled"] isDirectory:NO];
 						
-						if ((theErr = [self saveMusicAsAIFFToURL:tmpURL usingSettings:&exportSettings]) != noErr) {
+						if ((theErr = [self saveMusicAsAIFFToURL:tmpURL usingSettings:&exportSettings]) != MADNoErr) {
 							expErr = CreateErrorFromMADErrorType(theErr);
 							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 							dispatch_async(dispatch_get_main_queue(), errBlock);
@@ -643,7 +643,7 @@ static NSInteger selMusFromList = -1;
 							};
 							
 #define checkError(res) { \
-if (res != noErr){ \
+if (res != MADNoErr){ \
 expErr = [NSError errorWithDomain:NSOSStatusErrorDomain code:res userInfo:nil];\
 dispatch_async(dispatch_get_main_queue(), errBlock);\
 return; \
@@ -735,7 +735,7 @@ return; \
 				
 				NSURL *fileURL = [savePanel URL];
 				OSErr err = [self.music exportMusicToURL:fileURL format:[madLib pluginAtIndex:tag].plugType library:madLib];
-				if (err != noErr) {
+				if (err != MADNoErr) {
 					if (isQuitting) {
 						[NSApp replyToApplicationShouldTerminate:YES];
 					} else {
@@ -819,7 +819,7 @@ return; \
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(out NSError *__autoreleasing*)theErr
 {
 	char fileType[5];
-	OSErr theOSErr = noErr;
+	OSErr theOSErr = MADNoErr;
 	if (self.music) {
 		[madDriver stop];
 		[madDriver stopDriver];
@@ -827,7 +827,7 @@ return; \
 	
 	theOSErr = [madLib identifyFileAtURL:musicToLoad type:fileType];
 	
-	if (theOSErr != noErr) {
+	if (theOSErr != MADNoErr) {
 		if (theErr) {
 			*theErr = CreateErrorFromMADErrorType(theOSErr);
 		}
@@ -841,7 +841,7 @@ return; \
 		theOSErr = MADReadingErr;
 	}
 	
-	if (theOSErr != noErr) {
+	if (theOSErr != MADNoErr) {
 		if (theErr) {
 			*theErr = CreateErrorFromMADErrorType(theOSErr);
 		}
@@ -1252,7 +1252,7 @@ enum PPMusicToolbarTypes {
 			{
 				PPInfoRec rec;
 				char ostype[5] = {0};
-				if ([madLib identifyFileAtURL:theURL type:ostype] != noErr || [madLib getInformationFromFileAtURL:theURL type:ostype info:&rec]) {
+				if ([madLib identifyFileAtURL:theURL type:ostype] != MADNoErr || [madLib getInformationFromFileAtURL:theURL type:ostype info:&rec]) {
 					NSRunCriticalAlertPanel(NSLocalizedString(@"Unknown File", @"unknown file"), NSLocalizedString(@"The file type could not be identified.", @"Unidentified file"), nil, nil, nil);
 					return NO;
 				}
@@ -1466,9 +1466,9 @@ enum PPMusicToolbarTypes {
 	obj = [musicList objectInMusicListAtIndex:[selected lastIndex]];
 	
 	musicURL = obj.musicUrl;
-	if ([madLib identifyFileAtURL:musicURL type:info] != noErr)
+	if ([madLib identifyFileAtURL:musicURL type:info] != MADNoErr)
 		goto badTracker;
-	if ([madLib getInformationFromFileAtURL:musicURL type:info info:&theInfo] != noErr)
+	if ([madLib getInformationFromFileAtURL:musicURL type:info info:&theInfo] != MADNoErr)
 		goto badTracker;
 	[fileName setStringValue:obj.fileName];
 	[internalName setStringValue:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];

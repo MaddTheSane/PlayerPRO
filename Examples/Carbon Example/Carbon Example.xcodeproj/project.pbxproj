@@ -416,6 +416,13 @@
 			remoteGlobalIDString = 5573A1031656FAF100A5AECA;
 			remoteInfo = iOSPlayerPROCore;
 		};
+		559696F4194E82050068C5AC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55680A1D19045F0A00F7616D;
+			remoteInfo = StcfImporter;
+		};
 		5598692816432693008C55FC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
@@ -464,7 +471,7 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		5526AB81188C9577008D0C14 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5526AB83188C958F008D0C14 /* Carbon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Carbon.xcassets; sourceTree = "<group>"; };
-		5526AB85188C95B9008D0C14 /* Example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Example.c; sourceTree = "<group>"; };
+		5526AB85188C95B9008D0C14 /* Example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Example.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5526ABC7188C9673008D0C14 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		5570E97512A4C24900167E1A /* PPMacho.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PPMacho.xcodeproj; path = ../../PPMacho.xcodeproj; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* PlayerPRO Example-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PlayerPRO Example-Info.plist"; sourceTree = "<group>"; };
@@ -560,6 +567,7 @@
 				5526AB73188C955D008D0C14 /* iOS PlayerPRO PlayerTests.xctest */,
 				5526AB75188C955D008D0C14 /* PPImport Cocoa.mdimporter */,
 				5526AB77188C955D008D0C14 /* PPQuickView.qlgenerator */,
+				559696F5194E82050068C5AC /* net.sourceforge.playerpro.StcfImporter.xpc */,
 				5570E9B412A4C24900167E1A /* PlayerPROCore.framework */,
 				5598692916432693008C55FC /* PlayerPROKit.framework */,
 				550FFADE17CD341A0003A2F3 /* libPlayerPROCompact.a */,
@@ -1064,6 +1072,13 @@
 			fileType = archive.ar;
 			path = libiOSPlayerPROCore.a;
 			remoteRef = 558678A61659A7DD00BCFB70 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		559696F5194E82050068C5AC /* net.sourceforge.playerpro.StcfImporter.xpc */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = net.sourceforge.playerpro.StcfImporter.xpc;
+			remoteRef = 559696F4194E82050068C5AC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5598692916432693008C55FC /* PlayerPROKit.framework */ = {

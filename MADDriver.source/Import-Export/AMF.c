@@ -69,7 +69,7 @@ static OSErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSet
 	Byte			tempByte;
 	short			i, x, noIns, tempShort, trackCount, trckPtr, t;
 	//int			inOutCount, OffSetToSample = 0, z;
-	//OSErr			theErr = noErr;
+	//OSErr			theErr = MADNoErr;
 	//Ptr				tempPtr;
 	OSType			AMFType;
 	/*int			finetune[16] =
@@ -311,7 +311,7 @@ static OSErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSet
 		}
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr TestAMFFile(void *AlienFile)
@@ -320,7 +320,7 @@ static OSErr TestAMFFile(void *AlienFile)
 	PPBE32(&myMADSign);
 	
 	if ((myMADSign & 0xFFFFFF00) == 0x414D4600)
-		return noErr;
+		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
 }
@@ -357,7 +357,7 @@ static OSErr ExtractAMFInfo(PPInfoRec *info, char *AlienFile)
 	
 	strncpy(info->formatDescription, "AMF Plug", sizeof(info->formatDescription));
 	
-	return noErr;
+	return MADNoErr;
 }
 
 #ifndef _MAC_H
@@ -372,7 +372,7 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	p->mode	=		MADPlugImport;
 	p->version =	2 << 16 | 0 << 8 | 0;
 	
-	return noErr;
+	return MADNoErr;
 }
 #endif
 
@@ -406,9 +406,9 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					
 					AlienFile = malloc(sndSize);
 					myErr = iRead(sndSize, AlienFile,iFileRefI);
-					if (myErr == noErr) {
+					if (myErr == MADNoErr) {
 						myErr = TestAMFFile(AlienFile);
-						if (myErr == noErr) {
+						if (myErr == MADNoErr) {
 							myErr = AMF2Mad(AlienFile, sndSize, MadFile, init);
 						}
 					}
@@ -452,7 +452,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					myErr = MADNeedMemory;
 				else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr)
+					if (myErr == MADNoErr)
 						myErr = ExtractAMFInfo(info, AlienFile);
 					
 					free(AlienFile);

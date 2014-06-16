@@ -220,7 +220,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 	
 	free(ULTSuite.ins);
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr ExtractULTInfo(PPInfoRec *info, void *AlienFile)
@@ -260,7 +260,7 @@ static OSErr ExtractULTInfo(PPInfoRec *info, void *AlienFile)
 	
 	strncpy(info->formatDescription, "ULT Plug", sizeof(info->formatDescription));
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr TestULTFile(void *AlienFile)
@@ -270,7 +270,7 @@ static OSErr TestULTFile(void *AlienFile)
 	PPBE32(&ultID);
 	
 	if (ultID == 'MAS_')
-		return noErr;
+		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
 }
@@ -287,7 +287,7 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	p->mode	= MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
-	return noErr;
+	return MADNoErr;
 }
 #endif
 
@@ -298,7 +298,7 @@ OSErr mainULT(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *inf
 extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr = noErr;
+	OSErr	myErr = MADNoErr;
 	Ptr		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
@@ -321,9 +321,9 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 						myErr = MADNeedMemory;
 					} else {
 						myErr = iRead(sndSize, AlienFile, iFileRefI);
-						if (myErr == noErr) {
+						if (myErr == MADNoErr) {
 							myErr = TestULTFile(AlienFile);
-							if (myErr == noErr) {
+							if (myErr == MADNoErr) {
 								myErr = ConvertULT2Mad(AlienFile, sndSize, MadFile, init);
 							}
 						}
@@ -346,7 +346,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					myErr = MADNeedMemory;
 				} else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr)
+					if (myErr == MADNoErr)
 						myErr = TestULTFile(AlienFile);
 					
 					free(AlienFile);
@@ -369,7 +369,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					myErr = MADNeedMemory;
 				} else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr) {
+					if (myErr == MADNoErr) {
 						myErr = ExtractULTInfo(info, AlienFile);
 					}
 					

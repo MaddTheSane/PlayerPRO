@@ -84,7 +84,7 @@ static OSErr mainSmooth(void		*unused,
 			break;
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 // CC5BCE43-E362-4260-BB51-555A5CD4008C

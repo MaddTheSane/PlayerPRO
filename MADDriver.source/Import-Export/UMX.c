@@ -597,7 +597,7 @@ static OSErr PPConvertMod2Mad(Ptr aMOD, size_t MODSize, MADMusic *theMAD, MADDri
 	}
 	for (i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[i] = NULL;
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static int ConvertSampleC4SPD(Ptr src, size_t srcSize, short amp, int srcC4SPD, Ptr dst, int dstC4SPD)
@@ -983,7 +983,7 @@ static OSErr ExtractUMXInfo(PPInfoRec *info, Ptr AlienFile)
 	
 	strncpy(info->formatDescription, "UMX Plug", sizeof(info->formatDescription));
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr TestUMXFile(Ptr AlienFile, long EOFo)
@@ -1004,22 +1004,22 @@ static OSErr TestUMXFile(Ptr AlienFile, long EOFo)
 	{
 		if (!memcmp(&AlienFile[i], s3msig, 4))
 		{
-			return noErr;
+			return MADNoErr;
 		}
 		else
 			if (!memcmp(&AlienFile[i], itsig, 4))
 			{
-				return noErr;
+				return MADNoErr;
 			}
 			else
 				if (!memcmp(&AlienFile[i], xmsig, 16))
 				{
-					return noErr;
+					return MADNoErr;
 				}
 				else
 					if (!memcmp(&AlienFile[i], modsig, 4) || !memcmp(&AlienFile[i], mod6sig, 4) || !memcmp(&AlienFile[i], mod8sig, 4))
 					{
-						return noErr;
+						return MADNoErr;
 					}
 	}
 	
@@ -1038,7 +1038,7 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
-	return noErr;
+	return MADNoErr;
 }
 #endif
 
@@ -1052,7 +1052,7 @@ OSErr mainUMX(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *inf
 extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr		myErr = noErr;
+	OSErr		myErr = MADNoErr;
 	Ptr			AlienFile;
 	long		sndSize;
 	UNFILE		iFileRefI;
@@ -1078,7 +1078,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 					iRead(sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestUMXFile(AlienFile, sndSize);
-					if (myErr == noErr)
+					if (myErr == MADNoErr)
 					{
 						myErr = PPConvertMod2Mad(AlienFile, sndSize, MadFile, init);
 					}

@@ -262,7 +262,7 @@ OSErr mainMix(	sData					*theData,
 	lCntOrErr = 0;
 	GetCurrentScrap(&scrap);
 	anErr = GetScrapFlavorFlags(scrap, soundListRsrc, &flags);
-	if (anErr == noErr) GetScrapFlavorSize(scrap, soundListRsrc, &lCntOrErr);	
+	if (anErr == MADNoErr) GetScrapFlavorSize(scrap, soundListRsrc, &lCntOrErr);	
 	
 	if (lCntOrErr > 0) {
 		Str255	s1, s2 = "\pUntitled";
@@ -372,7 +372,7 @@ OSErr mainMix(	sData					*theData,
 		
 	} else alertUser (1);
 
-	return noErr;
+	return MADNoErr;
 }
 
 // AE796F78-C31E-47B2-B86D-42EA6474B674

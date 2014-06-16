@@ -24,14 +24,14 @@
 - (void)run
 {
 	dispatch_async(dispatch_get_global_queue(0, 0), ^{
-		OSErr retErr = noErr;
+		OSErr retErr = MADNoErr;
 		__block NSString *errStr = nil;
 		
 		retErr = self.exportBlock(self.destination, &errStr);
 
 		if (delegate) {
 			dispatch_async(dispatch_get_main_queue(), ^{
-				if (retErr == noErr) {
+				if (retErr == MADNoErr) {
 					[delegate PPExportObjectDidFinish:self];
 				} else {
 					if (errStr == nil) {

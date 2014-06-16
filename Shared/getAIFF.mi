@@ -119,7 +119,7 @@ return MADWritingErr; \
 	audioFile = NULL;
 	checkError(res);
 #undef checkError
-	return noErr;
+	return MADNoErr;
 }
 
 - (OSErr)saveMusicAsAIFFToURL:(NSURL*)theURL usingSettings:(MADDriverSettings*)theSett
@@ -199,6 +199,6 @@ return MADWritingErr; \
 	audioFile = NULL;
 	checkError(res);
 #undef checkError
-	return noErr;
+	return MADNoErr;
 }
 

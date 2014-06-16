@@ -287,11 +287,11 @@
 {
 	if (self = [super init]) {
 		if (theErr)
-			*theErr = noErr;
+			*theErr = MADNoErr;
 		
 		thePPLib = theLib;
 		OSErr iErr = MADCreateDriver(theSettings, theLib._madLib, &theRec);
-		if (iErr != noErr) {
+		if (iErr != MADNoErr) {
 			if (theErr)
 				*theErr = iErr;
 			return nil;

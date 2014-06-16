@@ -50,7 +50,7 @@ OSErr CheckMADFile(const char *name)
 		   charl[1] == 'A' &&
 		   charl[2] == 'D' &&
 		   charl[3] == 'K')
-			err = noErr;
+			err = MADNoErr;
 		else
 			err = MADIncompatibleFile;
 		
@@ -120,7 +120,7 @@ OSErr PPMADInfoFile(char *AlienFile, PPInfoRec *InfoRec)
 	free(theMAD);
 	theMAD = NULL;
 	
-	return noErr;
+	return MADNoErr;
 }
 
 OSErr PPInfoFile(char *kindFile, char *AlienFile, PPInfoRec *InfoRec)
@@ -184,17 +184,17 @@ OSErr PPIdentifyFile(MADLibrary *lib, char *type, char *AlienFile)
 	
 	// Is it a MAD file?
 	iErr = CheckMADFile(AlienFile);
-	if(iErr == noErr) {
+	if(iErr == MADNoErr) {
 		strcpy(type, "MADK");
-		return noErr;
+		return MADNoErr;
 	}
 	
 	for(i = 0; i < inMADDriver->TotalPlug; i++)
 	{
-		if(CallImportPlug(i, MADPlugTest, AlienFile, 0L, &InfoRec) == noErr) {
+		if(CallImportPlug(i, MADPlugTest, AlienFile, 0L, &InfoRec) == MADNoErr) {
 			strcpy(type, inMADDriver->ThePlug[i].type);
 			
-			return noErr;
+			return MADNoErr;
 		}
 	}
 	

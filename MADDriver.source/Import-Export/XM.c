@@ -403,7 +403,7 @@ static OSErr XMReadPattern(MADMusic *theMAD, MADDriverSettings *init)
 		}
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr XMReadInstruments(MADMusic *theMAD, MADDriverSettings *init)
@@ -644,14 +644,14 @@ static OSErr XMReadInstruments(MADMusic *theMAD, MADDriverSettings *init)
 		}
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr XM_Load(Ptr theXM, size_t XMSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	int		i;
 	int		inOutCount;
-	OSErr	iErr = noErr;
+	OSErr	iErr = MADNoErr;
 	
 	theXMRead = theXM;
 	
@@ -1209,7 +1209,7 @@ static OSErr TestXMFile(Ptr AlienFile)
 				return MADFileNotSupportedByThisPlug;
 				break;
 		}
-		return noErr;
+		return MADNoErr;
 	}
 	return MADFileNotSupportedByThisPlug;
 }
@@ -1278,7 +1278,7 @@ static OSErr ExtractXMInfo(PPInfoRec *info, void *AlienFile)
 	else
 		strncpy(info->formatDescription, "XM Log Plug", sizeof(info->formatDescription));
 	
-	return noErr;
+	return MADNoErr;
 }
 
 #ifndef _MAC_H
@@ -1293,7 +1293,7 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	p->mode	=	MADPlugImportExport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
-	return noErr;
+	return MADNoErr;
 }
 #endif
 
@@ -1303,7 +1303,7 @@ OSErr mainXM(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *in
 extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr = noErr;
+	OSErr	myErr = MADNoErr;
 	Ptr		AlienFile;
 	long	sndSize;
 	UNFILE	iFileRefI;
@@ -1350,7 +1350,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 						iRead(sndSize, AlienFile, iFileRefI);
 						
 						myErr = TestXMFile(AlienFile);
-						if (myErr == noErr) {
+						if (myErr == MADNoErr) {
 							myErr = XM_Load(AlienFile, sndSize, MadFile, init);
 						}
 					}
@@ -1373,7 +1373,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 				} else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					
-					if (myErr == noErr)
+					if (myErr == MADNoErr)
 						myErr = TestXMFile(AlienFile);
 					
 					free(AlienFile);
@@ -1396,7 +1396,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					myErr = MADNeedMemory;
 				else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr) {
+					if (myErr == MADNoErr) {
 						myErr = TestXMFile(AlienFile);
 						if (!myErr)
 							myErr = ExtractXMInfo(info, AlienFile);

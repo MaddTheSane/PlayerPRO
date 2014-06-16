@@ -65,7 +65,7 @@ OSErr inAddSoundToMAD(void			*theSound,
 					  sData			**sample,					// Ptr on samples data
 					  short			*sampleID)
 {
-	OSErr theErr = noErr;
+	OSErr theErr = MADNoErr;
 	char *cName = calloc(name[0] + 1, 1);
 	if (!cName)
 		return MADNeedMemory;
@@ -129,5 +129,5 @@ OSErr inAddSoundToMADCString(void			*theSound,
 	
 	strlcpy(curData->name, name, sizeof(curData->name));
 	
-	return noErr;
+	return MADNoErr;
 }

@@ -313,7 +313,7 @@ static OSErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MAD
 		}
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr Extract669Info(PPInfoRec *info, void *AlienFile)
@@ -343,7 +343,7 @@ static OSErr Extract669Info(PPInfoRec *info, void *AlienFile)
 	
 	strncpy(info->formatDescription, "669 Plug", sizeof(info->formatDescription));
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr Test669File(void *AlienFile)
@@ -351,7 +351,7 @@ static OSErr Test669File(void *AlienFile)
 	SixSixNine *the669 = (SixSixNine*)AlienFile;
 	
 	if (the669->marker == 0x6669 || the669->marker == 0x6966)
-		return noErr;
+		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
 }
@@ -368,7 +368,7 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	p->mode	= MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
-	return noErr;
+	return MADNoErr;
 }
 #endif
 
@@ -378,7 +378,7 @@ OSErr main669(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *i
 extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr = noErr;
+	OSErr	myErr = MADNoErr;
 	Ptr		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
@@ -398,9 +398,9 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					
 					AlienFile = (Ptr)malloc(sndSize);
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr) {
+					if (myErr == MADNoErr) {
 						myErr = Test669File(AlienFile);
-						if (myErr == noErr)
+						if (myErr == MADNoErr)
 							myErr = Convert6692Mad(AlienFile, sndSize, MadFile, init);
 					}
 					free(AlienFile);
@@ -444,7 +444,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					myErr = MADNeedMemory;
 				else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI );
-					if (myErr == noErr)
+					if (myErr == MADNoErr)
 						myErr = Extract669Info(info, AlienFile);
 
 					free(AlienFile);

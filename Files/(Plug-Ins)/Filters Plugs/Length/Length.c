@@ -357,7 +357,7 @@ OSErr mainLength(			sData					*theData,
 	
 	DisposeDialog(myDia);
 
-	return noErr;
+	return MADNoErr;
 }
 
 // CC42BFBF-419A-4CCB-9DC7-49A0A702FD0B

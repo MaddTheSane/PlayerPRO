@@ -20,7 +20,7 @@ static OSErr mainPropagate(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug
 		}
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 #define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x7E, 0xD0, 0x0D, 0xF2, 0xDA, 0x2B, 0x4A, 0xCB, 0xAF, 0x6E, 0x54, 0x30, 0xE9, 0x79, 0xD5, 0x5F)

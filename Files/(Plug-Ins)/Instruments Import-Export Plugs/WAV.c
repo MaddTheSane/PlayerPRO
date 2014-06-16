@@ -53,7 +53,7 @@ static OSErr mainWave(void					*unused,
 					  CFURLRef				AlienFileRef,			// IN/OUT file
 					  PPInfoPlug			*thePPInfoPlug)
 {
-	OSErr myErr = noErr;
+	OSErr myErr = MADNoErr;
 		
 	switch (order) {
 #if 0

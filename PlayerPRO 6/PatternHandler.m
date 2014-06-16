@@ -50,7 +50,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 
 + (OSErr)testPcmdFileAtURL:(NSURL*)theURL
 {
-	OSErr err = noErr;
+	OSErr err = MADNoErr;
 	Pcmd thePcmd;
 	NSData *pcmdData = [[NSData alloc] initWithContentsOfURL:theURL];
 	if (!pcmdData) {
@@ -66,7 +66,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 
 - (OSErr)importPcmdFromURL:(NSURL*)theURL
 {
-	OSErr theErr = noErr;
+	OSErr theErr = MADNoErr;
 	theErr = [[self class] testPcmdFileAtURL:theURL];
 	if (theErr) {
 		return theErr;
@@ -94,7 +94,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 	
 	free(thePcmd);
 	
-	return noErr;
+	return MADNoErr;
 }
 
 @end

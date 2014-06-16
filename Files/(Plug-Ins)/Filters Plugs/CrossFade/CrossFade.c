@@ -94,7 +94,7 @@ static OSErr mainCrossFade(void			*unused,
 			break;
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 // C3D9EA39-A386-4636-B115-6B517215F095

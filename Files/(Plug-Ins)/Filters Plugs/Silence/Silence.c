@@ -27,7 +27,7 @@ static OSErr mainSilence(void		*unused,
 	short	*Sample16Ptr = (short*)theData->data;
 	
 	if (Sample8Ptr == NULL)
-		return noErr;
+		return MADNoErr;
 	
 	switch (theData->amp) {
 		case 8:
@@ -61,7 +61,7 @@ static OSErr mainSilence(void		*unused,
 			break;
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 // 54DEED74-6B67-4B3F-8B31-68283410C1D7

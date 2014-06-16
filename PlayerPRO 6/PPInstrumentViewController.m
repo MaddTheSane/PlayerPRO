@@ -102,7 +102,7 @@
 	//TODO: handle selIns
 	OSType plugType = 0;
 	OSErr theOSErr = [importer identifyInstrumentFile:sampURL type:&plugType];
-	if (theOSErr != noErr) {
+	if (theOSErr != MADNoErr) {
 		if (theErr)
 			*theErr = CreateErrorFromMADErrorType(theOSErr);
 		
@@ -114,7 +114,7 @@
 	InstrData *tmpInstr = &[currentDocument.wrapper internalMadMusicStruct]->fid[theIns];
 	sData **tmpsData = &[currentDocument.wrapper internalMadMusicStruct]->sample[theIns];
 	theOSErr = [importer importInstrumentOfType:plugType instrumentReference:tmpInstr sampleReference:tmpsData sample:&theSamp URL:sampURL plugInfo:NULL];
-	if (theOSErr != noErr) {
+	if (theOSErr != MADNoErr) {
 		if (theErr)
 			*theErr = CreateErrorFromMADErrorType(theOSErr);
 		

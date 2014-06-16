@@ -348,7 +348,7 @@ static OSErr ConvertOKTA2Mad(Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDri
 	
 	free(Okta);
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr ExtractOKTAInfo(PPInfoRec *info, Ptr theOkta, long MODSize)
@@ -423,7 +423,7 @@ static OSErr ExtractOKTAInfo(PPInfoRec *info, Ptr theOkta, long MODSize)
 	
 	strncpy(info->formatDescription, "OKTA Plug", sizeof(info->formatDescription));
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr TestOKTAFile(Ptr AlienFile)
@@ -431,7 +431,7 @@ static OSErr TestOKTAFile(Ptr AlienFile)
 	OSType myOKTA = *((OSType*) AlienFile);
 	PPBE32(&myOKTA);
 	
-	if (myOKTA == 'OKTA') return noErr;
+	if (myOKTA == 'OKTA') return MADNoErr;
 	else return  MADFileNotSupportedByThisPlug;
 }
 
@@ -447,7 +447,7 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	p->mode	=	MADPlugImport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
-	return noErr;
+	return MADNoErr;
 }
 #endif
 
@@ -458,7 +458,7 @@ OSErr mainOkta(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *in
 extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr = noErr;
+	OSErr	myErr = MADNoErr;
 	Ptr		AlienFile;
 	long	sndSize;
 	UNFILE	iFileRefI;
@@ -482,10 +482,10 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 					
 					AlienFile = (Ptr)malloc(sndSize);
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr)
+					if (myErr == MADNoErr)
 					{
 						myErr = TestOKTAFile(AlienFile);
-						if (myErr == noErr)
+						if (myErr == MADNoErr)
 						{
 							myErr = ConvertOKTA2Mad(AlienFile,  sndSize, MadFile, init);
 						}
@@ -509,7 +509,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 				else
 				{
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if(myErr == noErr) myErr = TestOKTAFile(AlienFile);
+					if(myErr == MADNoErr) myErr = TestOKTAFile(AlienFile);
 					
 					free(AlienFile);
 					AlienFile = NULL;
@@ -530,7 +530,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 				else
 				{
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr)
+					if (myErr == MADNoErr)
 					{
 						myErr = ExtractOKTAInfo(info, AlienFile, sndSize);
 					}

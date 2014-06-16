@@ -385,7 +385,7 @@ static inline NSURL *PPHomeURL()
 	
 	[self loadMusicList:newArray];
 
-	return noErr;
+	return MADNoErr;
 }
 
 #else

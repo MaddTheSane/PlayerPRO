@@ -27,7 +27,7 @@ enum {
 OSErr TestWAV(PCMWavePtr CC)
 {
 	if (CFSwapInt32BigToHost(CC->ckid) =='RIFF')
-		return noErr;
+		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
 }
@@ -224,9 +224,9 @@ OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 	
 	canceled = FALSE;
 	
-	if (!canceled && iErr == noErr) {
+	if (!canceled && iErr == MADNoErr) {
 		iErr = FindFolder(kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newfile->vRefNum, &newfile->parID);
-		if (iErr == noErr) {
+		if (iErr == MADNoErr) {
 			/////////////////////////////////////////////////
 			//		WAVE CONVERSION
 			/////////////////////////////////////////////////

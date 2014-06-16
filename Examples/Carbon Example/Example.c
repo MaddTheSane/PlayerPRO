@@ -97,10 +97,10 @@ int main( int argc, char* argv[])
 		MADGetBestDriver( &init);
 		
 		{
-			if (MADInitLibrary( NULL, &MADLib) != noErr) DebugStr("\pSmall Problem...");
+			if (MADInitLibrary( NULL, &MADLib) != MADNoErr) DebugStr("\pSmall Problem...");
 		}
 		
-		if (MADCreateDriver( &init, MADLib, &MADDriver) != noErr) DebugStr("\pSmall Problem...");
+		if (MADCreateDriver( &init, MADLib, &MADDriver) != MADNoErr) DebugStr("\pSmall Problem...");
 	}
 	/*********************************/
 	/*********************************/
@@ -175,7 +175,7 @@ int main( int argc, char* argv[])
 			else iErr = -1;
 		}
 		
-		if (iErr != noErr) End = true;
+		if (iErr != MADNoErr) End = true;
 		else
 		{
 			char	type[ 5];
@@ -183,7 +183,7 @@ int main( int argc, char* argv[])
 			
 			if (MADPlugAvailable( MADLib, type))		// Is available a plug to open this file?
 			{
-				if (MADLoadMusicFSpFile( MADLib, &MADMusic, type, &spec) == noErr)		// Load this music with help of Plugs
+				if (MADLoadMusicFSpFile( MADLib, &MADMusic, type, &spec) == MADNoErr)		// Load this music with help of Plugs
 					// in application folder, in 'Plugs' folder or internal resources
 				{
 					MADAttachDriverToMusic( MADDriver, MADMusic, NULL);

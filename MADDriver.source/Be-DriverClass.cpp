@@ -117,7 +117,7 @@ bool MADDriverClass::InitLibrary(MADDriverSettings *init)
 {
 	//	Reset data members to indicate that initialization isn't complete.
 	
-	libraryError = noErr;
+	libraryError = MADNoErr;
 	inited = false;
 	musicPlay = false;
 	curDriverRec = NULL;
@@ -126,7 +126,7 @@ bool MADDriverClass::InitLibrary(MADDriverSettings *init)
 	
 	//	Init the library: default plugins folder is "add-ons".
 
-	if ((libraryError = MADInitLibrary("add-ons", &MADLib)) != noErr) {
+	if ((libraryError = MADInitLibrary("add-ons", &MADLib)) != MADNoErr) {
 #if	DRIVERCLASS_DEBUG
 		debugger("Cannot initialize library.");
 #else
@@ -136,7 +136,7 @@ bool MADDriverClass::InitLibrary(MADDriverSettings *init)
 	
 	//	Init the driver.
 	
-	if ((libraryError = MADCreateDriver(init, MADLib, &curDriverRec)) != noErr) {
+	if ((libraryError = MADCreateDriver(init, MADLib, &curDriverRec)) != MADNoErr) {
 #if	DRIVERCLASS_DEBUG
 		debugger("Cannot create driver.");
 #else
@@ -175,9 +175,9 @@ bool MADDriverClass::LoadMusic(entry_ref* ref, OSType type, bool playIt)
 	char		plugName[5];
 	
 	libraryError = MADMusicIdentifyCString(MADLib, plugName, filePath.Path());
-	if (libraryError == noErr) {
+	if (libraryError == MADNoErr) {
 		libraryError = MADLoadMusicFileCString(MADLib, &curMusic, plugName, filePath.Path());
-		if (libraryError == noErr) {
+		if (libraryError == MADNoErr) {
 			MADAttachDriverToMusic(curDriverRec, curMusic);
 			if (playIt)
 				StartMusic();

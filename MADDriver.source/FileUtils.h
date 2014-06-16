@@ -110,7 +110,7 @@ PPEXPORT long	iGetEOF(UNFILE iFileRefI);
 /*!
  * @function	iRead
  * @abstract	Reads data in file referenced from iFileRefI
- * @result		An error value. 0, or <code>noErr</code> if there was no error.
+ * @result		An error value. 0, or <code>MADNoErr</code> if there was no error.
  * @param		size
  *					The size of the data to read
  * @param		dest
@@ -124,7 +124,7 @@ PPEXPORT OSErr	iRead(long size, void *dest, UNFILE iFileRefI);
 /*!
  * @function	iWrite
  * @abstract	Writes data to file reference from iFileRefI
- * @result		An error value. 0, or <code>noErr</code> if there was no error.
+ * @result		An error value. 0, or <code>MADNoErr</code> if there was no error.
  * @param		size
  *					The size of the data to write
  * @param		src
@@ -139,7 +139,7 @@ PPEXPORT OSErr	iWrite(long size, const void *src, UNFILE iFileRefI);
 /*!
  * @function    iSeekCur
  * @abstract    Change the file position of file pointed at by iFileRefI
- * @result      An error value. 0, or <code>noErr</code> if there was no error.
+ * @result      An error value. 0, or <code>MADNoErr</code> if there was no error.
  * @param       size
  *					The offset from the current position
  * @param		iFileRefI

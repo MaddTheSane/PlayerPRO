@@ -275,7 +275,7 @@ static OSErr DecompressSample(short bits, Ptr reader, size_t length, Ptr destPtr
 		destPtr += result;
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 
@@ -1425,7 +1425,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	if (ITinfo.sampdata)
 		free(ITinfo.sampdata);
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr ExtractITInfo(PPInfoRec *info, void *AlienFile)
@@ -1466,7 +1466,7 @@ static OSErr ExtractITInfo(PPInfoRec *info, void *AlienFile)
 	
 	strncpy(info->formatDescription, "IT Plug", sizeof(info->formatDescription));
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr TestITFile(const void *AlienFile)
@@ -1474,7 +1474,7 @@ static OSErr TestITFile(const void *AlienFile)
 	ITForm *myIT = (ITForm*)AlienFile;
 	
 	if (ITcompMem(&myIT->ID, "IMPM", 4))
-		return noErr;
+		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
 }
@@ -1491,7 +1491,7 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 	p->mode		= MADPlugImport;
 	p->version	= 2 << 16 | 0 << 8 | 0;
 	
-	return noErr;
+	return MADNoErr;
 }
 #endif
 
@@ -1501,7 +1501,7 @@ OSErr mainIT(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *in
 extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr		myErr = noErr;
+	OSErr		myErr = MADNoErr;
 	Ptr			AlienFile;
 	long		sndSize;
 	UNFILE		iFileRefI;
@@ -1527,9 +1527,9 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					else {
 						myErr = iRead(sndSize, AlienFile, iFileRefI);
 						
-						if (myErr == noErr) {
+						if (myErr == MADNoErr) {
 							myErr = TestITFile(AlienFile);
-							if (myErr == noErr)
+							if (myErr == MADNoErr)
 								myErr = ConvertIT2Mad(AlienFile, sndSize, MadFile, init);
 						}
 					}
@@ -1550,7 +1550,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					myErr = MADNeedMemory;
 				else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if(myErr == noErr)
+					if(myErr == MADNoErr)
 						myErr = TestITFile(AlienFile);
 					
 					free(AlienFile);
@@ -1572,7 +1572,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					myErr = MADNeedMemory;
 				else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if (myErr == noErr) {
+					if (myErr == MADNoErr) {
 						myErr = TestITFile(AlienFile);
 						if (!myErr)
 							myErr = ExtractITInfo(info, AlienFile);

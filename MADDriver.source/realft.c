@@ -63,7 +63,7 @@ OSErr MADInitEqualizer(MADDriverRec *intDriver)
 		intDriver->Filter[i] = 1.0;
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 void MADCloseEqualizer(MADDriverRec *intDriver)

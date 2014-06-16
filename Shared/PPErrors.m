@@ -35,7 +35,7 @@ NSError *CreateErrorFromMADErrorType(OSErr theErr)
 	NSString *recoverySuggestion;
 	
 	switch (theErr) {
-		case noErr:
+		case MADNoErr:
 			return nil;
 			break;
 			

@@ -104,7 +104,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		}
 	}
 	BOOL successful = [outData writeToURL:outURL atomically:YES];
-	return successful ? noErr : MADWritingErr;
+	return successful ? MADNoErr : MADWritingErr;
 }
 
 - (NSArray *)instruments
@@ -136,7 +136,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 {
 	char filetype[5];
 	CFURLRef tmpCFURL;
-	OSErr theErr = noErr;
+	OSErr theErr = MADNoErr;
 	if (!theInfo || !thURL || !theLib) {
 		return MADParametersErr;
 	}
@@ -147,7 +147,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 	tmpCFURL = CFBridgingRetain(thURL);
 	
-	if ((theErr = MADMusicIdentifyCFURL(theLib._madLib, filetype, tmpCFURL)) != noErr)
+	if ((theErr = MADMusicIdentifyCFURL(theLib._madLib, filetype, tmpCFURL)) != MADNoErr)
 		goto end;
 	
 	theErr = MADMusicInfoCFURL(theLib._madLib, filetype, tmpCFURL, theInfo);
@@ -176,7 +176,7 @@ end:
 - (instancetype)initWithURL:(NSURL *)url
 {
 	if (self = [super init]) {
-		if (MADLoadMusicCFURLFile(NULL, &currentMusic, "MADK", (__bridge CFURLRef)url) != noErr)
+		if (MADLoadMusicCFURLFile(NULL, &currentMusic, "MADK", (__bridge CFURLRef)url) != MADNoErr)
 			return nil;
 		
 		self.filePath = url;
@@ -198,11 +198,11 @@ end:
 	if (self = [super init]) {
 		char type[5];
 		CFURLRef tmpURL = CFBridgingRetain(url);
-		if (MADMusicIdentifyCFURL(theLib._madLib, type, tmpURL) != noErr) {
+		if (MADMusicIdentifyCFURL(theLib._madLib, type, tmpURL) != MADNoErr) {
 			CFRelease(tmpURL);
 			return nil;
 		}
-		if (MADLoadMusicCFURLFile(theLib._madLib, &currentMusic, type, tmpURL) != noErr) {
+		if (MADLoadMusicCFURLFile(theLib._madLib, &currentMusic, type, tmpURL) != MADNoErr) {
 			CFRelease(tmpURL);
 			return nil;
 		}
@@ -260,7 +260,7 @@ end:
 - (OSErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp
 {
 	OSErr retErr;
-	if ((retErr = MADMusicSaveCFURL(currentMusic, (__bridge CFURLRef)tosave, mad1Comp)) == noErr) {
+	if ((retErr = MADMusicSaveCFURL(currentMusic, (__bridge CFURLRef)tosave, mad1Comp)) == MADNoErr) {
 		currentMusic->hasChanged = false;
 	}
 	return retErr;
@@ -336,7 +336,7 @@ end:
 
 + (OSErr)info:(PPInfoRec *)theInfo fromTrackerAtURL:(NSURL *)thURL
 {
-	OSErr theErr = noErr;
+	OSErr theErr = MADNoErr;
 	if (!theInfo || !thURL)
 		return MADParametersErr;
 	
@@ -525,7 +525,7 @@ end:
 		return MADWritingErr;
 	} else {
 		self.filePath = tosave;
-		return noErr;
+		return MADNoErr;
 	}
 }
 
@@ -534,7 +534,7 @@ end:
 	if (![self.musicWrapper writeToURL:tosave options:NSFileWrapperWritingWithNameUpdating originalContentsURL:self.filePath error:NULL]) {
 		return MADWritingErr;
 	} else {
-		return noErr;
+		return MADNoErr;
 	}
 }
 

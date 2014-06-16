@@ -154,7 +154,7 @@
 
 - (void)MADDriverWithPreferences
 {
-	OSErr returnerr = noErr;
+	OSErr returnerr = MADNoErr;
 	MADDriverSettings init;
 	MADGetBestDriver(&init);
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -183,7 +183,7 @@
 	returnerr = [_theDriver changeDriverSettingsToSettings:init];
 	//[[NSNotificationCenter defaultCenter] postNotificationName:PPDriverDidChange object:self];
 	
-	if (returnerr != noErr) {
+	if (returnerr != MADNoErr) {
 		[[NSAlert alertWithError:CreateErrorFromMADErrorType(returnerr)] beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSModalResponse returnCode) {
 			;//Currently, do nothing
 		}];
@@ -243,7 +243,7 @@
 
 - (NSMutableData *)rawSoundData:(MADDriverSettings*)theSet
 {
-	OSErr err = noErr;
+	OSErr err = MADNoErr;
 	PPDriver *theRec = [[PPDriver alloc] initWithLibrary:globalMadLib settings:theSet error:&err];
 	
 	if (theRec == nil) {
@@ -326,7 +326,7 @@
 					//M4A
 				{
 					PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:theURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
-						OSErr theErr = noErr;
+						OSErr theErr = MADNoErr;
 						if (errStr)
 							*errStr = nil;
 						
@@ -408,7 +408,7 @@
 						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 						
 						if (didFinish) {
-							return noErr;
+							return MADNoErr;
 						} else {
 							if (errStr)
 								*errStr = [[NSString alloc] initWithFormat:@"export of \"%@\" failed.", oldMusicName];

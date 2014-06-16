@@ -13,7 +13,7 @@ OSErr main(		OSType					order,						// Order to execute
 				FSSpec					*AlienFileFSSpec,			// IN/OUT file
 				PPInfoPlug				*thePPInfoPlug)
 {
-	OSErr	myErr = noErr;
+	OSErr	myErr = MADNoErr;
 	Ptr		AlienFile;
 	short	iFileRefI;
 	long	inOutBytes;
@@ -32,7 +32,7 @@ OSErr main(		OSType					order,						// Order to execute
 			FSSpec			newFile;
 			
 			myErr = ConvertDataToWAVE(*AlienFileFSSpec, &newFile, thePPInfoPlug);
-			if (myErr == noErr)
+			if (myErr == MADNoErr)
 			{
 				theSound = ConvertWAV(&newFile, &lS, &lE, &sS, &rate, &stereo);
 				
@@ -50,7 +50,7 @@ OSErr main(		OSType					order,						// Order to execute
 			
 			FSpGetFInfo(AlienFileFSSpec, &fInfo);
 			
-			if (fInfo.fdType == kQTFileTypeAVI) myErr = noErr;
+			if (fInfo.fdType == kQTFileTypeAVI) myErr = MADNoErr;
 			else myErr = MADFileNotSupportedByThisPlug;
 		}
 			break;

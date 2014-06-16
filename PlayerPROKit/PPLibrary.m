@@ -76,7 +76,7 @@
 - (id)initWithPlugInCPath:(const char*)cPath
 {
 	if (self = [super init]) {
-		if (MADInitLibrary(cPath, &theLibrary) != noErr) {
+		if (MADInitLibrary(cPath, &theLibrary) != MADNoErr) {
 			return nil;
 		}
 		NSMutableArray *tmpArray = [NSMutableArray arrayWithCapacity:theLibrary->TotalPlug];

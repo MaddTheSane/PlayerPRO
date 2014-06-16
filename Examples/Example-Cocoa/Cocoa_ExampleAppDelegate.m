@@ -45,7 +45,7 @@
 	
 	char type[5] = {0};
 	
-	if(MADMusicIdentifyCFURL(MADLib, type, (CFURLRef)theURL) !=noErr)
+	if(MADMusicIdentifyCFURL(MADLib, type, (CFURLRef)theURL) !=MADNoErr)
 	{
 		return;
 	}

@@ -17,7 +17,7 @@ static inline OSErr TestPAT(char *CC)
 			return MADFileNotSupportedByThisPlug;
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
@@ -42,7 +42,7 @@ static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 	memset(curIns, 0, sizeof(InstrData));
 	curIns->firstSample = firstSample;
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
@@ -192,7 +192,7 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 		PATData += PATSamp->size;
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 //hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
@@ -214,7 +214,7 @@ static OSErr mainPAT(void			*unused,
 			  CFURLRef		AlienFileCFURL,			// IN/OUT file
 			  PPInfoPlug	*thePPInfoPlug)
 {
-	OSErr	myErr = noErr;
+	OSErr	myErr = MADNoErr;
 	UNFILE	iFileRefI;
 	long	inOutCount;
 	char *file = NULL;
@@ -267,7 +267,7 @@ static OSErr mainPAT(void			*unused,
 			Ptr	theSound;
 			
 			iFileRefI = iFileOpenRead(file);
-			if (myErr == noErr) {
+			if (myErr == MADNoErr) {
 				inOutCount = 50L;
 				theSound = malloc(inOutCount);
 				if (theSound == NULL)

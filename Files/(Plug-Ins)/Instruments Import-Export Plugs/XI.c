@@ -34,7 +34,7 @@ static inline OSErr TestXI(void *CC)
 	PPBE32(&Ident);
 	
 	if (Ident == 'Exte')
-		return noErr;
+		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
 }
@@ -61,7 +61,7 @@ static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 	memset(curIns, 0, sizeof(InstrData));
 	curIns->firstSample = firstSample;
 	
-	return noErr;
+	return MADNoErr;
 }
 
 //hack around the fact that there isn't an equivalent of CFStringGetMaximumSizeOfFileSystemRepresentation for CFURLs
@@ -82,7 +82,7 @@ static OSErr mainXI(void		*unused,
 					CFURLRef	AlienFileCFURL,	// IN/OUT file
 					PPInfoPlug	*thePPInfoPlug)
 {
-	OSErr	myErr = noErr;
+	OSErr	myErr = MADNoErr;
 	UNFILE	iFileRefI;
 	short	x;
 	long	inOutCount;

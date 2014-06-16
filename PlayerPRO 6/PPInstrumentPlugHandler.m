@@ -153,11 +153,11 @@
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		short temp;
 		PPInfoPlug tempPlug;
-		if ([self callInstumentPlugIn:obj order:MADPlugTest instrumentReference:NULL sampleReference:NULL sample:&temp URL:ref plugInfo:&tempPlug] == noErr) {
+		if ([self callInstumentPlugIn:obj order:MADPlugTest instrumentReference:NULL sampleReference:NULL sample:&temp URL:ref plugInfo:&tempPlug] == MADNoErr) {
 			if (outType) {
 				*outType = obj.type;
 			}
-			return noErr;
+			return MADNoErr;
 		}
 	}
 	if (outType) {

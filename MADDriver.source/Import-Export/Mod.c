@@ -598,7 +598,7 @@ static OSErr PPConvertMod2Mad(Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriver
 	for (i = theMAD->header->numPat; i < MAXPATTERN ; i++)
 		theMAD->partition[i] = NULL;
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static int ConvertSampleC4SPD(Ptr src, size_t srcSize, short amp, int srcC4SPD, Ptr dst, int dstC4SPD)
@@ -957,7 +957,7 @@ static OSErr ExtractMODInfo(PPInfoRec *info, void *AlienFile)
 	
 	strncpy(info->formatDescription, "MOD Plug", sizeof(info->formatDescription));
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static OSErr TestMODFile(char *AlienFile, long EOFo)
@@ -971,7 +971,7 @@ static OSErr TestMODFile(char *AlienFile, long EOFo)
 	if (maxInstru == 0)
 		return MADFileNotSupportedByThisPlug;
 	else
-		return noErr;
+		return MADNoErr;
 }
 
 
@@ -987,7 +987,7 @@ OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC, BeOS, and UNIX
 	p->mode	=	MADPlugImportExport;
 	p->version = 2 << 16 | 0 << 8 | 0;
 	
-	return noErr;
+	return MADNoErr;
 }
 #endif
 
@@ -1006,7 +1006,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 	long	sndSize;
 	UNFILE	iFileRefI;
 	
-	myErr = noErr;
+	myErr = MADNoErr;
 	
 	switch (order) {
 		case MADPlugImport:
@@ -1027,7 +1027,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 					iRead(sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestMODFile(AlienFile, sndSize);
-					if (myErr == noErr) {
+					if (myErr == MADNoErr) {
 						myErr = PPConvertMod2Mad(AlienFile, sndSize, MadFile, init);
 					}
 					

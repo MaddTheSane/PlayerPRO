@@ -156,7 +156,7 @@ static OSErr mainMix(void			*unused,
 		
 	} else alertUser (1);
 	
-	return noErr;
+	return MADNoErr;
 }
 
 // AE796F78-C31E-47B2-B86D-42EA6474B674

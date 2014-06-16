@@ -142,7 +142,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 
 + (OSErr)testPcmdFileAtURL:(NSURL*)theURL
 {
-	OSErr err = noErr;
+	OSErr err = MADNoErr;
 	Pcmd thePcmd;
 	NSData *pcmdData = [[NSData alloc] initWithContentsOfURL:theURL];
 	if (!pcmdData) {
@@ -158,7 +158,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 
 - (OSErr)importPcmdFromURL:(NSURL*)theURL
 {
-	OSErr theErr = noErr;
+	OSErr theErr = MADNoErr;
 	NSNumber *curNum;
 	unsigned long pcmdLen;
 	theErr = [[self class] testPcmdFileAtURL:theURL];
@@ -183,7 +183,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 	thePcmd = [pcmdData bytes];
 	//TODO: put cmd data into the pattern
 	
-	return noErr;
+	return MADNoErr;
 }
 
 static inline NSString *GetEffectString(short theEffect)
@@ -375,7 +375,7 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 		return MADWritingErr;
 	}
 	
-	return noErr;
+	return MADNoErr;
 }
 
 @end
