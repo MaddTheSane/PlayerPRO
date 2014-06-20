@@ -16,7 +16,6 @@
 #ifndef TARGET_OS_IPHONE
 #define TARGET_OS_IPHONE 0
 #endif
-#include <MacTypes.h>
 #endif
 
 #include <stdio.h>
@@ -35,21 +34,8 @@
 #define __LITTLE_ENDIAN__ 1
 #endif
 
-#ifndef __MACTYPES__
-#define __MACTYPES__
-typedef unsigned char 	Byte;
-typedef char 			*Ptr, **Handle;
-typedef unsigned char 	Boolean;
-typedef unsigned char 	Str255[256], Str63[64];
-typedef uint8_t			UInt8;
-typedef int8_t			SInt8;
-typedef uint16_t		UInt16;
-typedef int16_t			SInt16;
-typedef short			OSErr;
-typedef uint32_t		UInt32;
-typedef int32_t			SInt32;
-typedef UInt32			FourCharCode;
-typedef FourCharCode	OSType;
-#endif
+typedef short			MADErr;
+typedef uint8_t			MADByte;
+typedef uint32_t	MADFourChar;
 
 #endif

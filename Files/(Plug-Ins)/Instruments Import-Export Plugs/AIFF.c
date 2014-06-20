@@ -19,14 +19,13 @@ static OSErr mainAIFF(void					*unused,
 					  PPInfoPlug			*thePPInfoPlug)
 #endif
 
-static OSErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **sample, short *sampleID, CFURLRef AlienFileURL, PPInfoPlug *thePPInfoPlug)
+static MADErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData **sample, short *sampleID, CFURLRef AlienFileURL, PPInfoPlug *thePPInfoPlug)
 {
-	OSErr	myErr = MADNoErr;
+	MADErr	myErr = MADNoErr;
 	//char	*AlienFile;
 
 	
-	switch(order)
-	{
+	switch(order) {
 #if 0
 		case 'IMPL':
 		{

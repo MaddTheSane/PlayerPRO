@@ -152,21 +152,21 @@ enum {
 
 typedef struct Cmd			// COMMAND
 {
-	Byte	ins;					// Instrument no		0x00: no ins cmd
-	Byte 	note;					// Note, see table		0xFF : no note cmd
-	Byte 	cmd;					// Effect cmd
-	Byte 	arg;					// Effect argument
-	Byte	vol;					// Volume				0xFF : no volume cmd
-	Byte	unused;
+	MADByte	ins;					// Instrument no		0x00: no ins cmd
+	MADByte note;					// Note, see table		0xFF : no note cmd
+	MADByte cmd;					// Effect cmd
+	MADByte arg;					// Effect argument
+	MADByte	vol;					// Volume				0xFF : no volume cmd
+	MADByte	unused;
 } Cmd;
 
 typedef struct PatHeader	// HEADER
 {
-	int		size;					// Length of pattern: standard = 64
-	OSType	compMode;				// Compression mode, none = 'NONE'
-	char	name[32];
-	int		patBytes;				// Pattern Size in Bytes
-	int		unused2;
+	int			size;					// Length of pattern: standard = 64
+	MADFourChar	compMode;				// Compression mode, none = 'NONE'
+	char		name[32];
+	int			patBytes;				// Pattern Size in Bytes
+	int			unused2;
 } PatHeader;
 
 typedef struct PatData		// DATA STRUCTURE : HEADER + COMMANDS
@@ -184,14 +184,14 @@ typedef struct sData		// SAMPLE
 	int 			size;		// Sample length
 	int				loopBeg;	// LoopStart
 	int				loopSize;	// LoopLength
-	Byte 			vol;		// Base volume
+	MADByte			vol;		// Base volume
 	unsigned short	c2spd;		// c2spd
-	Byte			loopType;
-	Byte			amp;		// 8 or 16 bits
+	MADByte			loopType;
+	MADByte			amp;		// 8 or 16 bits
 	char			relNote;
 	char 			name[32];	// Sample name
-	Byte			stereo;		// Stereo
-	Ptr				data;		// Used only in memory, not in files
+	MADByte			stereo;		// Stereo
+	char			*data;		// Used only in memory, not in files
 } sData;
 
 //64-bit safe sample structure
@@ -201,14 +201,14 @@ typedef struct sData32
 	int				size;		// Sample length
 	int				loopBeg;	// LoopStart
 	int				loopSize;	// LoopLength
-	Byte 			vol;		// Base volume
+	MADByte 			vol;		// Base volume
 	unsigned short	c2spd;		// c2spd
-	Byte			loopType;
-	Byte			amp;		// 8 or 16 bits
+	MADByte			loopType;
+	MADByte			amp;		// 8 or 16 bits
 	char			relNote;
 	char 			name[32];	// Sample name
-	Byte			stereo;		// Stereo
-	UInt32			data;		// Used only in memory, not in files
+	MADByte			stereo;		// Stereo
+	uint32_t		data;		// Used only in memory, not in files
 } sData32;
 
 enum
@@ -226,8 +226,8 @@ typedef struct EnvRec			// Volume Enveloppe
 typedef struct InstrData		// INSTRUMENT
 {
 	char 	name[32];			// instrument name
-	Byte 	type;				// Instrument type = 0
-	Byte	no;					// Instrument number
+	MADByte type;				// Instrument type = 0
+	MADByte	no;					// Instrument number
 	
 	short	firstSample;		// First sample ID in sample list
 	short	numSamples;			// Number of samples in instrument
@@ -238,34 +238,34 @@ typedef struct InstrData		// INSTRUMENT
 	
 	/**/
 	
-	Byte	what[96];			// Sample number for all notes
+	MADByte	what[96];			// Sample number for all notes
 	EnvRec 	volEnv[12];			// Points for volume envelope
 	EnvRec	pannEnv[12];		// Points for panning envelope
 	EnvRec	pitchEnv[12];		// Points for panning envelope
 
-	Byte	volSize;			// Number of volume points
-	Byte	pannSize;			// Number of panning points
-	Byte	pitchSize;			// Number of panning points
+	MADByte	volSize;			// Number of volume points
+	MADByte	pannSize;			// Number of panning points
+	MADByte	pitchSize;			// Number of panning points
 	
-	Byte	volSus;				// Volume sustain point
-	Byte	volBeg;				// Volume loop start point
-	Byte	volEnd;				// Volume loop end point
+	MADByte	volSus;				// Volume sustain point
+	MADByte	volBeg;				// Volume loop start point
+	MADByte	volEnd;				// Volume loop end point
 	
-	Byte	pannSus;			// Panning sustain point
-	Byte	pannBeg;			// Panning loop start point
-	Byte	pannEnd;			// Panning loop end point
+	MADByte	pannSus;			// Panning sustain point
+	MADByte	pannBeg;			// Panning loop start point
+	MADByte	pannEnd;			// Panning loop end point
 	
-	Byte	pitchSus;			// Pitch sustain point
-	Byte	pitchBeg;			// Pitch loop start point
-	Byte	pitchEnd;			// Pitch loop end point
+	MADByte	pitchSus;			// Pitch sustain point
+	MADByte	pitchBeg;			// Pitch loop start point
+	MADByte	pitchEnd;			// Pitch loop end point
 	
-	Byte	volType;			// Volume type: bit 0: On; 1: Sustain; 2: Loop
-	Byte	pannType;			// Panning type: bit 0: On; 1: Sustain; 2: Loop
+	MADByte	volType;			// Volume type: bit 0: On; 1: Sustain; 2: Loop
+	MADByte	pannType;			// Panning type: bit 0: On; 1: Sustain; 2: Loop
 	
 	unsigned short	volFade;	// Volume fadeout
 	
-	Byte	vibDepth;
-	Byte	vibRate;
+	MADByte	vibDepth;
+	MADByte	vibRate;
 } InstrData;
 
 enum EFTypes
@@ -284,53 +284,52 @@ enum EFTypes
 
 typedef struct FXBus
 {
-	Boolean		ByPass;
-	short		copyId;
-	Boolean		Active;
+	unsigned char	ByPass;// Boolean
+	short			copyId;
+	unsigned char	Active; //Boolean
 } FXBus;
 
 typedef struct MADSpec
 {
-	OSType		MAD;						// Mad Identification
+	MADFourChar	MAD;						// Mad Identification
 	char 		name[32];					// Music's name
 	char		infos[INFOSSIZE];			// Informations & Author name of the music
-	Byte		generalPan;					// General Panning
-	Byte		MultiChanNo;				// Number of chan for multichannel
-	Byte		MultiChan;					// MultiChannel per tracks?
+	MADByte		generalPan;					// General Panning
+	MADByte		MultiChanNo;				// Number of chan for multichannel
+	MADByte		MultiChan;					// MultiChannel per tracks?
 	int			EPitch;						// New Pitch
 	int			ESpeed;						// New Speed
-	Byte		XMLinear;					// Linear picth table?
-	Byte		MODMode;					// Limit pitch to MOD pitch table
-	Byte		showCopyright;				// Show infos at startup? true or false
-	Byte		generalPitch;				// General Pitch
-	Byte		generalSpeed;				// General Speed
-	Byte		generalVol;					// Software general volume
-	Byte		numPat;						// Patterns number
-	Byte		numChn;						// Channels number
-	Byte 		numPointers;				// Partition length
-	Byte		numInstru;					// Instruments number
-	Byte		numSamples;					// Samples number
-	Byte		oPointers[MAXPOINTER];		// Partition : Patterns ID List
+	MADByte		XMLinear;					// Linear picth table?
+	MADByte		MODMode;					// Limit pitch to MOD pitch table
+	MADByte		showCopyright;				// Show infos at startup? true or false
+	MADByte		generalPitch;				// General Pitch
+	MADByte		generalSpeed;				// General Speed
+	MADByte		generalVol;					// Software general volume
+	MADByte		numPat;						// Patterns number
+	MADByte		numChn;						// Channels number
+	MADByte		numPointers;				// Partition length
+	MADByte		numInstru;					// Instruments number
+	MADByte		numSamples;					// Samples number
+	MADByte		oPointers[MAXPOINTER];		// Partition : Patterns ID List
 	short		speed;						// Default speed
 	short		tempo;						// Default tempo
-	Byte		chanPan[MAXTRACK];			// Channel settings, from 0 to 256
-	Byte		chanVol[MAXTRACK];			// Channel Volume, from 0 to 64
+	MADByte		chanPan[MAXTRACK];			// Channel settings, from 0 to 256
+	MADByte		chanVol[MAXTRACK];			// Channel Volume, from 0 to 64
 	
-	int			globalEffect[10];			// Global Effects IDs
-	Boolean		globalFXActive;				// Global FX Active?
+	int				globalEffect[10];			// Global Effects IDs
+	unsigned char	globalFXActive;				// Global FX Active?
 	
 	int			chanEffect[MAXTRACK][4];	// Channel Effect IDs
 	FXBus		chanBus[MAXTRACK];
 } MADSpec;
 
-typedef struct FXSets
-{
+typedef struct FXSets {
 	short	track;
 	short	id;
 	int		FXID;
 	short	noArg;
 	float	values[100];
-	Str63	name;
+	unsigned char	name[64];
 } FXSets;	// and then float values
 
 #pragma pack(pop)

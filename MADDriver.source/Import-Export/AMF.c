@@ -64,7 +64,7 @@ static inline UInt32 Tdecode32(void *msg_buf)
 #endif
 #endif
 
-static OSErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
+static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
 	Byte			tempByte;
 	short			i, x, noIns, tempShort, trackCount, trckPtr, t;
@@ -314,7 +314,7 @@ static OSErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSet
 	return MADNoErr;
 }
 
-static OSErr TestAMFFile(void *AlienFile)
+static MADErr TestAMFFile(void *AlienFile)
 {
 	OSType	myMADSign = *((OSType*) AlienFile);
 	PPBE32(&myMADSign);
@@ -325,7 +325,7 @@ static OSErr TestAMFFile(void *AlienFile)
 		return MADFileNotSupportedByThisPlug;
 }
 
-static OSErr ExtractAMFInfo(PPInfoRec *info, char *AlienFile)
+static MADErr ExtractAMFInfo(PPInfoRec *info, char *AlienFile)
 {
 	//TODO: implement
 	//long		PatternSize;
@@ -362,10 +362,10 @@ static OSErr ExtractAMFInfo(PPInfoRec *info, char *AlienFile)
 
 #ifndef _MAC_H
 
-EXP OSErr FillPlug(PlugInfo *p);
-EXP OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr FillPlug(PlugInfo *p);
+EXP MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
 	strncpy(p->type, 		"AMF ", sizeof(p->type));
 	strncpy(p->MenuName, 	"AMF Files", sizeof(p->MenuName));

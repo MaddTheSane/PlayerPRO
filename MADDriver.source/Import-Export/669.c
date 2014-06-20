@@ -33,7 +33,7 @@
 #include "embeddedPlugs.h"
 #endif
 
-static OSErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
+static MADErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	SixSixNine	*the669;
 	short		i, x, z;
@@ -316,7 +316,7 @@ static OSErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MAD
 	return MADNoErr;
 }
 
-static OSErr Extract669Info(PPInfoRec *info, void *AlienFile)
+static MADErr Extract669Info(PPInfoRec *info, void *AlienFile)
 {
 	//TODO: implement
 	SixSixNine	*the669 = (SixSixNine*)AlienFile;
@@ -346,7 +346,7 @@ static OSErr Extract669Info(PPInfoRec *info, void *AlienFile)
 	return MADNoErr;
 }
 
-static OSErr Test669File(void *AlienFile)
+static MADErr Test669File(void *AlienFile)
 {
 	SixSixNine *the669 = (SixSixNine*)AlienFile;
 	
@@ -358,10 +358,10 @@ static OSErr Test669File(void *AlienFile)
 
 #ifndef _MAC_H
 
-EXP OSErr FillPlug(PlugInfo *p);
-EXP OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr FillPlug(PlugInfo *p);
+EXP MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
 	strncpy(p->type, "669 ", sizeof(p->type));
 	strncpy(p->MenuName, "669 Files", sizeof(p->MenuName));
@@ -373,9 +373,9 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 #endif
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr main669(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr main669(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	OSErr	myErr = MADNoErr;
