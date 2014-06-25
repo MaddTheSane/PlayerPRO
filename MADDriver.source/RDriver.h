@@ -297,7 +297,7 @@ typedef struct MADDriverSettings
 //	To use with PlayerPRO for CodeWarrior
 //
 //	Your main function have to be in this form:
-//	MADErr PPImpExpMain(	OSType order,
+//	MADErr PPImpExpMain(	MADFourChar order,
 //						char *AlienFileName,
 //						MADMusic *MadFile,
 //						PPInfoRec *info,
@@ -362,7 +362,7 @@ enum PPPlugModes {
 #include <CoreFoundation/CFBundle.h>
 #endif
 
-typedef MADErr (*MADPLUGFUNC)(OSType, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
+typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
 
 typedef struct PlugInfo
 {

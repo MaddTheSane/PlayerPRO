@@ -36,12 +36,12 @@
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
 
-static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
+static MADErr ConvertULT2Mad(char* theULT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	size_t	i, x, z, Row;
-	Ptr		MaxPtr;
-	Ptr		theInstrument[64];
-	Byte	*theULTCopy;
+	char*		MaxPtr;
+	char*		theInstrument[64];
+	MADByte	*theULTCopy;
 	
 	/**** Variables pour le MAD ****/
 	Cmd				*aCmd;
@@ -57,7 +57,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 	}
 	
 	/**** Header principal *****/
-	theULTCopy = (Byte*)theULT;
+	theULTCopy = (MADByte*)theULT;
 	
 	memcpy(&ULTinfo, theULTCopy, sizeof(ULTinfo));
 	
@@ -202,7 +202,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 		
 		for (x = 0; x < 20; x++) theMAD->partition[i]->header.name[x] = 0;
 		
-		MaxPtr = (Ptr) theMAD->partition[i];
+		MaxPtr = (char*) theMAD->partition[i];
 		MaxPtr += sizeof(PatHeader) + theMAD->header->numChn * 64 * sizeof(Cmd);
 		
 		for (Row = 0; Row < 64; Row++) {
@@ -223,7 +223,7 @@ static OSErr ConvertULT2Mad(Ptr theULT, size_t MODSize, MADMusic *theMAD, MADDri
 	return MADNoErr;
 }
 
-static OSErr ExtractULTInfo(PPInfoRec *info, void *AlienFile)
+static MADErr ExtractULTInfo(PPInfoRec *info, void *AlienFile)
 {
 	//short		i, maxInstru, tracksNo;
 	ULTForm		ULTinfo;
@@ -263,10 +263,10 @@ static OSErr ExtractULTInfo(PPInfoRec *info, void *AlienFile)
 	return MADNoErr;
 }
 
-static OSErr TestULTFile(void *AlienFile)
+static MADErr TestULTFile(void *AlienFile)
 {
 	ULTForm	*myULT = (ULTForm*)AlienFile;
-	OSType ultID = *((OSType*)myULT->ID);
+	MADFourChar ultID = *((MADFourChar*)myULT->ID);
 	PPBE32(&ultID);
 	
 	if (ultID == 'MAS_')
@@ -277,10 +277,10 @@ static OSErr TestULTFile(void *AlienFile)
 
 #ifndef _MAC_H
 
-EXP OSErr FillPlug(PlugInfo *p);
-EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr FillPlug(PlugInfo *p);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
 	strncpy(p->type,		"ULT ", sizeof(p->type));
 	strncpy(p->MenuName,	"ULT Files", sizeof(p->MenuName));
@@ -293,13 +293,13 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainULT(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainULT(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr = MADNoErr;
-	Ptr		AlienFile;
+	MADErr	myErr = MADNoErr;
+	char*		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
@@ -310,13 +310,13 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test
-				AlienFile = (Ptr)malloc(sndSize * 2);
+				AlienFile = (char*)malloc(sndSize * 2);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
 					free(AlienFile);
 					
-					AlienFile = (Ptr)malloc(sndSize);
+					AlienFile = (char*)malloc(sndSize);
 					if (AlienFile == NULL) {
 						myErr = MADNeedMemory;
 					} else {
@@ -341,7 +341,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 			if (iFileRefI) {
 				sndSize = 1024;
 				
-				AlienFile = (Ptr)malloc(sndSize);
+				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
@@ -364,7 +364,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 				
 				sndSize = 5000; // Read only 5000 first bytes for optimisation
 				
-				AlienFile = (Ptr)malloc(sndSize);
+				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {

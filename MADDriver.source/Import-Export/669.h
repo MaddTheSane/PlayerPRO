@@ -24,7 +24,7 @@
 #pragma pack(push, 2)
 
 typedef struct PasByte {
-	Byte aByte[3];
+	MADByte aByte[3];
 } PasByte;
 
 struct PatCmd {
@@ -50,12 +50,12 @@ typedef struct	SampleInfo	{
 typedef struct SixSixNine	{
 	short		marker;
 	char		message[108];
-	Byte		NOS;
-	Byte		NOP;
-	Byte		loopOrder;
-	Byte		orderList[0x80];
-	Byte		tempoList[0x80];
-	Byte		breakList[0x80];
+	MADByte		NOS;
+	MADByte		NOP;
+	MADByte		loopOrder;
+	MADByte		orderList[0x80];
+	MADByte		tempoList[0x80];
+	MADByte		breakList[0x80];
 	SampleInfo	fid[];
 } SixSixNine;
 

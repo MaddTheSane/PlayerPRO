@@ -66,12 +66,12 @@ static inline UInt32 Tdecode32(void *msg_buf)
 
 static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
-	Byte			tempByte;
+	MADByte			tempByte;
 	short			i, x, noIns, tempShort, trackCount, trckPtr, t;
 	//int			inOutCount, OffSetToSample = 0, z;
-	//OSErr			theErr = MADNoErr;
-	//Ptr				tempPtr;
-	OSType			AMFType;
+	//MADErr			theErr = MADNoErr;
+	//char*				tempPtr;
+	MADFourChar			AMFType;
 	/*int			finetune[16] =
 	 {
 	 8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
@@ -316,7 +316,7 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 
 static MADErr TestAMFFile(void *AlienFile)
 {
-	OSType	myMADSign = *((OSType*) AlienFile);
+	MADFourChar	myMADSign = *((MADFourChar*) AlienFile);
 	PPBE32(&myMADSign);
 	
 	if ((myMADSign & 0xFFFFFF00) == 0x414D4600)
@@ -363,7 +363,7 @@ static MADErr ExtractAMFInfo(PPInfoRec *info, char *AlienFile)
 #ifndef _MAC_H
 
 EXP MADErr FillPlug(PlugInfo *p);
-EXP MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -381,12 +381,12 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /* MAIN FUNCTION */
 /*****************/
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainAMF(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainAMF(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr;
+	MADErr	myErr;
 	char	*AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;

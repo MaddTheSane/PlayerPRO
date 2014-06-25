@@ -39,7 +39,7 @@
 #ifdef MADAPPIMPORT
 #include "APPL.h"
 #else
-static OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
+static MADErr MADI2Mad(char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
 #endif
 
 enum {
@@ -53,10 +53,10 @@ enum {
 static oldPatData* oldDecompressPartitionMAD1(oldMADSpec *header, oldPatData* myPat)
 {
 	oldPatData*	finalPtr;
-	Byte		*srcPtr;
+	MADByte		*srcPtr;
 	oldCmd		*myCmd;
 	short		maxCmd;
-	Byte		set;
+	MADByte		set;
 	
 	finalPtr = (oldPatData*)calloc(sizeof(oldPatHeader) + myPat->header.size * header->numChn * sizeof(oldCmd), 1);
 	if (finalPtr == NULL) 	{
@@ -66,7 +66,7 @@ static oldPatData* oldDecompressPartitionMAD1(oldMADSpec *header, oldPatData* my
 	
 	memcpy(finalPtr, myPat, sizeof(oldPatHeader));
 	
-	srcPtr = (Byte*) myPat->Cmds;
+	srcPtr = (MADByte*) myPat->Cmds;
 	myCmd = (oldCmd*) finalPtr->Cmds;
 	maxCmd = finalPtr->header.size * header->numChn;
 	
@@ -161,11 +161,11 @@ static void MOToldMADSpec(oldMADSpec * m)
 	PPBE32(&m->ESpeed);
 }
 
-OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
+MADErr MADI2Mad(char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short	i, x;
 	long	inOutCount, OffSetToSample = 0, z;
-	OSType	MADType = 0;
+	MADFourChar	MADType = 0;
 #if 0
 	int		finetune[16] = {
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
@@ -402,9 +402,9 @@ OSErr MADI2Mad(Ptr MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *ini
 	return MADNoErr;
 }
 
-static OSErr TestoldMADFile(void *AlienFile)
+static MADErr TestoldMADFile(void *AlienFile)
 {
-	OSType myMADSign = *((OSType*)AlienFile);
+	MADFourChar myMADSign = *((MADFourChar*)AlienFile);
 	PPBE32(&myMADSign);
 	
 	if(	myMADSign == 'MADI')
@@ -413,7 +413,7 @@ static OSErr TestoldMADFile(void *AlienFile)
 		return MADFileNotSupportedByThisPlug;
 }
 
-static OSErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
+static MADErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
 {
 	oldMADSpec	*myMOD = (oldMADSpec*)AlienFile;
 	//long		PatternSize;
@@ -459,10 +459,10 @@ static OSErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
 
 #ifndef _MAC_H
 
-EXP OSErr FillPlug(PlugInfo *p);
-EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr FillPlug(PlugInfo *p);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
 	strncpy(p->type, 		"MADI", sizeof(p->type));
 	strncpy(p->MenuName, 	"MADI Files", sizeof(p->MenuName));
@@ -479,25 +479,25 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /*****************/
 
 #ifdef MADAPPIMPORT
-OSErr TESTMADI(void *AlienFile)
+MADErr TESTMADI(void *AlienFile)
 {
 	return TestoldMADFile(AlienFile);
 }
 
-OSErr ExtractMADIInfo(void *info, void *AlienFile)
+MADErr ExtractMADIInfo(void *info, void *AlienFile)
 {
 	return ExtractoldMADInfo(info, AlienFile);
 }
 
 #else
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainMADI(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainMADI(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr = MADNoErr;
-	Ptr		AlienFile;
+	MADErr	myErr = MADNoErr;
+	char*		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
@@ -508,7 +508,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (Ptr)malloc(sndSize * 2);
+				AlienFile = (char*)malloc(sndSize * 2);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				// ** MEMORY Test End
@@ -516,7 +516,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 				else {
 					free(AlienFile);
 					
-					AlienFile = (Ptr)malloc(sndSize);
+					AlienFile = (char*)malloc(sndSize);
 					myErr = iRead(sndSize , AlienFile, iFileRefI);
 					if (myErr == MADNoErr) {
 						myErr = TestoldMADFile(AlienFile);
@@ -535,7 +535,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 			if (iFileRefI) {
 				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (Ptr)malloc(sndSize);
+				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
@@ -557,7 +557,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 				
 				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (Ptr)malloc(sndSize);
+				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {

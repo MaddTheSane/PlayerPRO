@@ -18,6 +18,7 @@ PlayerPROCore.suo
 **/CMakeFiles
 **/cmake_install.cmake
 MADDriver.source/libPlayerPROCore*
+**/lib*.so
 
 Examples/PPPlay/PPPlay
 Examples/PPPlay/PPPlay.exe

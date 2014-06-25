@@ -35,10 +35,10 @@ typedef struct ITSampForm
 {
 	int			ID;
 	char		DOSName[12];
-	Byte		no;
-	Byte		GvL;
-	Byte		Flag;
-	Byte		Vol;
+	MADByte		no;
+	MADByte		GvL;
+	MADByte		Flag;
+	MADByte		Vol;
 	char		SampName[26];
 	short		Convert;
 	int			length;
@@ -48,10 +48,10 @@ typedef struct ITSampForm
 	int			SusLoopBegin;
 	int			SusLoopEnd;
 	int			samplePtr;
-	Byte		ViS;
-	Byte		ViD;
-	Byte		ViR;
-	Byte		ViT;
+	MADByte		ViS;
+	MADByte		ViD;
+	MADByte		ViR;
+	MADByte		ViT;
 } ITSampForm;
 
 typedef struct ITNode
@@ -62,38 +62,38 @@ typedef struct ITNode
 
 typedef struct ITEnv
 {
-	Byte		Flag;
-	Byte		Num;
-	Byte		LpB;
-	Byte		LpE;
-	Byte		SLB;
-	Byte		SLE;
+	MADByte		Flag;
+	MADByte		Num;
+	MADByte		LpB;
+	MADByte		LpE;
+	MADByte		SLB;
+	MADByte		SLE;
 	ITNode		nodes[25];
 } ITEnv;
 
 typedef struct ITKeyMap
 {
-	Byte		note;
-	Byte		samp;
+	MADByte		note;
+	MADByte		samp;
 } ITKeyMap;
 
 typedef struct ITInsForm		// size = 547
 {
-	OSType		ID;
+	MADFourChar		ID;
 	char		DOSName[12];
-	Byte		no;
-	Byte		NNA;
-	Byte		DCT;
-	Byte		DCA;
+	MADByte		no;
+	MADByte		NNA;
+	MADByte		DCT;
+	MADByte		DCA;
 	short		FadeOut;
-	Byte		PPS;
-	Byte		PPC;
-	Byte		GbV;
-	Byte		DfP;
+	MADByte		PPS;
+	MADByte		PPC;
+	MADByte		GbV;
+	MADByte		DfP;
 	char		no2[2];
 	short		TrkVers;
-	Byte		NoS;
-	Byte		no3;
+	MADByte		NoS;
+	MADByte		no3;
 	char		INSName[26];
 	char		no4[6];
 	ITKeyMap	keyMap[120];
@@ -108,21 +108,21 @@ typedef struct ITInsForm		// size = 547
 
 typedef struct ITOldInsForm		// size = 554
 {
-	OSType		ID;
+	MADFourChar		ID;
 	char		DOSName[12];
-	Byte		no;
-	Byte		NNA;
-	Byte		DCT;
-	Byte		DCA;
+	MADByte		no;
+	MADByte		NNA;
+	MADByte		DCT;
+	MADByte		DCA;
 	short		FadeOut;
-	Byte		PPS;
-	Byte		PPC;
-	Byte		GbV;
-	Byte		DfP;
+	MADByte		PPS;
+	MADByte		PPC;
+	MADByte		GbV;
+	MADByte		DfP;
 	char		no2[2];
 	short		TrkVers;
-	Byte		NoS;
-	Byte		no3;
+	MADByte		NoS;
+	MADByte		no3;
 	char		INSName[26];
 	char		no4[6];
 	ITKeyMap	keyMap[120];
@@ -135,7 +135,7 @@ typedef struct ITOldInsForm		// size = 554
 
 typedef struct ITForm
 {
-	OSType				ID;
+	MADFourChar				ID;
 	char				name[26];
 	char				no[2];
 	
@@ -148,10 +148,10 @@ typedef struct ITForm
 	short				flags;
 	short				special;
 	
-	Byte				globalVol;
-	Byte				mixVol;
-	Byte				iSpeed;
-	Byte				iTempo;
+	MADByte				globalVol;
+	MADByte				mixVol;
+	MADByte				iSpeed;
+	MADByte				iTempo;
 	char				panSeparation;
 	char				null;
 	short				MsgLgth;
@@ -736,7 +736,7 @@ In instrument mode, the following procedure is used:
 
                                 Internal Tables
 
-FineSineData       Label   Byte
+FineSineData       Label   MADByte
         DB       0,  2,  3,  5,  6,  8,  9, 11, 12, 14, 16, 17, 19, 20, 22, 23
         DB      24, 26, 27, 29, 30, 32, 33, 34, 36, 37, 38, 39, 41, 42, 43, 44
         DB      45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 56, 57, 58, 59
@@ -754,7 +754,7 @@ FineSineData       Label   Byte
         DB     -45,-44,-43,-42,-41,-39,-38,-37,-36,-34,-33,-32,-30,-29,-27,-26
         DB     -24,-23,-22,-20,-19,-17,-16,-14,-12,-11, -9, -8, -6, -5, -3, -2
 
-FineRampDownData   Label   Byte
+FineRampDownData   Label   MADByte
         DB      64, 63, 63, 62, 62, 61, 61, 60, 60, 59, 59, 58, 58, 57, 57, 56
         DB      56, 55, 55, 54, 54, 53, 53, 52, 52, 51, 51, 50, 50, 49, 49, 48
         DB      48, 47, 47, 46, 46, 45, 45, 44, 44, 43, 43, 42, 42, 41, 41, 40
@@ -772,7 +772,7 @@ FineRampDownData   Label   Byte
         DB     -48,-49,-49,-50,-50,-51,-51,-52,-52,-53,-53,-54,-54,-55,-55,-56
         DB     -56,-57,-57,-58,-58,-59,-59,-60,-60,-61,-61,-62,-62,-63,-63,-64
 
-FineSquareWave     Label   Byte
+FineSquareWave     Label   MADByte
         DB      128 Dup (64), 128 Dup (0)
 
 EmptyPattern            Label

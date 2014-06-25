@@ -32,7 +32,7 @@ typedef struct ITPatForm {
 } ITPatForm;
 
 typedef struct ITSampForm {
-	OSType	ID;
+	MADFourChar	ID;
 	char	DOSName[12];
 	char	no;
 	char	GvL;

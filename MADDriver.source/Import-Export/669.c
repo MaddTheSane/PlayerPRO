@@ -33,16 +33,16 @@
 #include "embeddedPlugs.h"
 #endif
 
-static MADErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
+static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	SixSixNine	*the669;
 	short		i, x, z;
 	size_t		OffSetToSample;
 	size_t		temp;
-	Ptr			MaxPtr;
-	Ptr			theInstrument[64], destPtr;
+	char*			MaxPtr;
+	char*			theInstrument[64], *destPtr;
 	short		Note, Octave;
-	Byte		*thePasByte;
+	MADByte		*thePasByte;
 	
 	/**** Variables pour le MAD ****/
 	Cmd			*aCmd;
@@ -60,7 +60,7 @@ static MADErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 	if (!theMAD->header)
 		return MADNeedMemory;
 	
-	MaxPtr = (Ptr)((size_t)the669 + MODSize);
+	MaxPtr = (char*)((size_t)the669 + MODSize);
 	
 	OffSetToSample = 0x1f1 + the669->NOS * 25 + the669->NOP * 0x600L;
 	
@@ -74,7 +74,7 @@ static MADErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 		PPLE16(&SInfo->loopStart);
 		PPLE16(&SInfo->loopEnd);
 		
-		theInstrument[i] = (Ptr)((size_t)the669 + OffSetToSample);
+		theInstrument[i] = (char*)((size_t)the669 + OffSetToSample);
 		OffSetToSample += SInfo->length;
 	}
 	
@@ -247,7 +247,7 @@ static MADErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 				aCmd = GetMADCommand(x, z, theMAD->partition[i]);
 				
 				theCommand = &PatInt[i].Cmds[x][z];
-				if ((Ptr)theCommand >= MaxPtr) {
+				if ((char*)theCommand >= MaxPtr) {
 					for (i = 0; i < MAXPATTERN; i++) {
 						if (theMAD->partition[i]) {
 							free(theMAD->partition[i]);
@@ -268,7 +268,7 @@ static MADErr Convert6692Mad(Ptr AlienFile, size_t MODSize, MADMusic *theMAD, MA
 					return MADIncompatibleFile;
 				}
 				
-				thePasByte = (Byte*) theCommand;
+				thePasByte = (MADByte*) theCommand;
 				
 				if (thePasByte[0] == 0xFF) {
 					aCmd->cmd 	= 0;
@@ -359,7 +359,7 @@ static MADErr Test669File(void *AlienFile)
 #ifndef _MAC_H
 
 EXP MADErr FillPlug(PlugInfo *p);
-EXP MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -373,13 +373,13 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 #endif
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-MADErr main669(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr main669(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr = MADNoErr;
-	Ptr		AlienFile;
+	MADErr	myErr = MADNoErr;
+	char*		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
@@ -390,13 +390,13 @@ extern MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile,
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test
-				AlienFile = (Ptr)malloc(sndSize * 2);
+				AlienFile = (char*)malloc(sndSize * 2);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
 					free(AlienFile);
 					
-					AlienFile = (Ptr)malloc(sndSize);
+					AlienFile = (char*)malloc(sndSize);
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					if (myErr == MADNoErr) {
 						myErr = Test669File(AlienFile);
@@ -416,7 +416,7 @@ extern MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile,
 			if (iFileRefI) {
 				sndSize = 1024L;
 				
-				AlienFile = (Ptr)malloc(sndSize);
+				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
@@ -439,7 +439,7 @@ extern MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile,
 				
 				sndSize = 5000L; // Read only 5000 first bytes for optimisation
 				
-				AlienFile = (Ptr)malloc(sndSize);
+				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {

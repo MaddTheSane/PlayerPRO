@@ -33,6 +33,10 @@
 #include <CoreFoundation/CFURL.h>
 #endif
 
+#ifndef _WIN32
+#include <unistd.h>
+#endif
+
 void iFileCreate(const char *path, MADFourChar type)
 {
 #if defined _MAC_H && !TARGET_OS_IPHONE

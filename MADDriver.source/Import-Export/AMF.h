@@ -47,10 +47,10 @@ typedef struct {
     uchar       type;
     char        name[32],filename[13];
     void        *sample;
-    UInt32      size;
+	uint32_t      size;
     ushort      rate;
     uchar       volume;
-    UInt32      loopstart,loopend;
+	uint32_t      loopstart,loopend;
 } INSTRUMENT;
 
 #pragma pack(pop)

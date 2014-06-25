@@ -34,23 +34,23 @@
 
 #ifndef WIN32
 //Windows Defines
-typedef SInt16			WORD;
-typedef UInt16			UWORD;
-typedef SInt32			HRESULT;
-typedef UInt32			ULONG;
+typedef int16_t			WORD;
+typedef uint16_t			UWORD;
+typedef int32_t			HRESULT;
+typedef uint32_t			ULONG;
 typedef void*			LPVOID;
-typedef SInt32			LONG;
+typedef int32_t			LONG;
 
-typedef UInt16			UINT;
-typedef Boolean			BOOL;
-typedef UInt32			DWORD;
-typedef UInt16			USHORT;
-typedef SInt16			SHORT;
-typedef FourCharCode	FOURCC;
-typedef SInt8			BYTE;
+typedef uint16_t			UINT;
+typedef MADBool			BOOL;
+typedef uint32_t			DWORD;
+typedef uint16_t			USHORT;
+typedef int16_t			SHORT;
+typedef MADFourChar	FOURCC;
+typedef int8_t			BYTE;
 #endif
 
-typedef UInt8			UBYTE;
+typedef uint8_t			UBYTE;
 
 #include "MED.h"
 
@@ -66,7 +66,7 @@ static MMD1NOTE 	*mmd1pat;
 #define d1note(row,col) mmd1pat[(row*(UWORD) theMAD->header->numChn)+col]
 
 
-static Ptr			theMEDRead;
+static char*			theMEDRead;
 #define READMEDFILE(dst, size)	{memcpy(dst, theMEDRead, size);	theMEDRead += (long) size;}
 
 static BOOL MED_Init(MADDriverSettings *init)
@@ -264,7 +264,7 @@ static void MED_Convert0(short patID, MADMusic *theMAD)
 	}
 }
 
-static OSErr LoadMMD0Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *init)
+static MADErr LoadMMD0Patterns(MADMusic *theMAD, char* theMED, MADDriverSettings *init)
 {
 	int		t, row /*,col*/;
 	UWORD	numtracks, numlines, maxlines=0;
@@ -311,7 +311,7 @@ static OSErr LoadMMD0Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *i
 		//memset(mmd0pat, 0, of.numchn * maxlines * sizeof(MMD0NOTE));
 		
 		for (x = 0; x < theMAD->header->numChn * maxlines * sizeof(MMD0NOTE); x++) {
-			((Ptr)mmd0pat)[x] = 0;
+			((char*)mmd0pat)[x] = 0;
 		}
 		
 		for (row = 0 ; row < numlines; row++) {
@@ -327,7 +327,7 @@ static OSErr LoadMMD0Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *i
 	return MADNoErr;
 }
 
-static OSErr LoadMMD1Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *init)
+static MADErr LoadMMD1Patterns(MADMusic *theMAD, char* theMED, MADDriverSettings *init)
 {
 	int		t,row,col;
 	UWORD	numtracks,numlines,maxlines=0,track=0;
@@ -382,7 +382,7 @@ static OSErr LoadMMD1Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *i
 		
 		for (x = 0; x < theMAD->header->numChn * maxlines * sizeof(MMD0NOTE); x++)
 		{
-			((Ptr) mmd1pat)[x] = 0;
+			((char*) mmd1pat)[x] = 0;
 		}
 		
 		for (row = 0 ; row < numlines ; row++)
@@ -400,7 +400,7 @@ static OSErr LoadMMD1Patterns(MADMusic *theMAD, Ptr theMED, MADDriverSettings *i
 	return MADNoErr;
 }
 
-static OSErr MED_Load(Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSettings *init)
+static MADErr MED_Load(char*	theMED, long MEDSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	int			t, i;
 	ULONG		sa[64];
@@ -531,7 +531,7 @@ static OSErr MED_Load(Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSetti
 			
 			curData->relNote	= 0;
 			
-			curData->data 		= (Ptr)malloc(curData->size);
+			curData->data 		= (char*)malloc(curData->size);
 			if (curData->data == NULL) return MADNeedMemory;
 			
 			READMEDFILE(curData->data, curData->size);
@@ -557,7 +557,7 @@ static OSErr MED_Load(Ptr	theMED, long MEDSize, MADMusic *theMAD, MADDriverSetti
 	return MADNoErr;
 }
 
-static Boolean compMem(Ptr a, Ptr b, long s)
+static MADBool compMem(char* a, char* b, long s)
 {
 	long 	i;
 	
@@ -569,13 +569,13 @@ static Boolean compMem(Ptr a, Ptr b, long s)
 	return true;
 }
 
-static OSErr TestMEDFile(Ptr AlienFile)
+static MADErr TestMEDFile(char* AlienFile)
 {
 	if (compMem(AlienFile, "MMD0", 4) == false && compMem(AlienFile, "MMD1", 4) == false) return MADFileNotSupportedByThisPlug;
 	else return MADNoErr;
 }
 
-static OSErr ExtractMEDInfo(PPInfoRec *info, Ptr theMED)
+static MADErr ExtractMEDInfo(PPInfoRec *info, char* theMED)
 {
 	/*long	PatternSize;
 	 short	i;
@@ -607,10 +607,10 @@ static OSErr ExtractMEDInfo(PPInfoRec *info, Ptr theMED)
 
 #ifndef _MAC_H
 
-EXP OSErr FillPlug(PlugInfo *p);
-EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr FillPlug(PlugInfo *p);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
 	strncpy(p->type, 		"MED ", sizeof(p->type));
 	strncpy(p->MenuName, 	"MED Files", sizeof(p->type));
@@ -623,13 +623,13 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainMED(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainMED(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr = MADNoErr;
-	Ptr		AlienFile;
+	MADErr	myErr = MADNoErr;
+	char*		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
@@ -648,7 +648,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (Ptr)malloc(sndSize * 2L);
+				AlienFile = (char*)malloc(sndSize * 2L);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
@@ -656,7 +656,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 				{
 					free(AlienFile);
 					
-					AlienFile = (Ptr)malloc(sndSize);
+					AlienFile = (char*)malloc(sndSize);
 					iRead(sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestMEDFile(AlienFile);
@@ -678,7 +678,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 			{
 				sndSize = 1024L;
 				
-				AlienFile = (Ptr)malloc(sndSize);
+				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
@@ -700,7 +700,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (Ptr)malloc(sndSize);
+				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{

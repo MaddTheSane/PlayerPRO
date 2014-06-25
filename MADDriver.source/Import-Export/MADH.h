@@ -32,18 +32,18 @@
 
 // COMMAND
 typedef struct oldCmd {
-	Byte ins;	// Instrument no		0x00: no ins cmd
-	Byte note;	// Note, see table		0xFF : no note cmd
-	Byte cmd;	// Effect cmd
-	Byte arg;	// Effect argument
-	Byte vol;	// Volume				0xFF : no volume cmd
-	Byte unused;
+	MADByte ins;	// Instrument no		0x00: no ins cmd
+	MADByte note;	// Note, see table		0xFF : no note cmd
+	MADByte cmd;	// Effect cmd
+	MADByte arg;	// Effect argument
+	MADByte vol;	// Volume				0xFF : no volume cmd
+	MADByte unused;
 } oldCmd;
 
 // HEADER
 typedef struct oldPatHeader {
 	int		size;		// Length of pattern: standard = 64
-	OSType	compMode;	// Compression mode, none = 'NONE'
+	MADFourChar	compMode;	// Compression mode, none = 'NONE'
 	char	name[32];
 	int		patBytes;	// Pattern Size in Bytes
 	int		unused2;
@@ -65,14 +65,14 @@ typedef struct oldsData {
 	int				size;		// Sample length
 	int				loopBeg;	// LoopStart
 	int				loopSize;	// LoopLength
-	Byte			vol;		// Base volume
+	MADByte			vol;		// Base volume
 	unsigned short	c2spd;		// c2spd
-	Byte			loopType;
-	Byte			amp;		// 8 or 16 bits
-	Byte			panning;
+	MADByte			loopType;
+	MADByte			amp;		// 8 or 16 bits
+	MADByte			panning;
 	char			relNote;
 	char			name[32];	// Sample name
-	UInt32			data;		// Used only in memory, not in files
+	uint32_t			data;		// Used only in memory, not in files
 } oldsData;
 
 // Volume Envelope
@@ -84,34 +84,34 @@ typedef struct oldEnvRec {
 // INSTRUMENT
 typedef struct oldInstrData {
 	char	name[32];			// instrument name
-	Byte	type;				// Instrument type = 0
+	MADByte	type;				// Instrument type = 0
 
 	short	numSamples;		// Number of samples in instrument
 
 	/**/
 
-	Byte		what[96];		// Sample number for all notes
+	MADByte		what[96];		// Sample number for all notes
 	oldEnvRec	volEnv[12];		// Points for volume envelope
 	oldEnvRec	pannEnv[12];	// Points for panning envelope
 	
-	Byte	volSize;	// Number of volume points
-	Byte	pannSize;	// Number of panning points
+	MADByte	volSize;	// Number of volume points
+	MADByte	pannSize;	// Number of panning points
 	
-	Byte	volSus;		// Volume sustain point
-	Byte	volBeg;		// Volume loop start point
-	Byte	volEnd;		// Volume loop end point
+	MADByte	volSus;		// Volume sustain point
+	MADByte	volBeg;		// Volume loop start point
+	MADByte	volEnd;		// Volume loop end point
 	
-	Byte	pannSus;	// Panning sustain point
-	Byte	pannBeg;	// Panning loop start point
-	Byte	pannEnd;	// Panning loop end point
+	MADByte	pannSus;	// Panning sustain point
+	MADByte	pannBeg;	// Panning loop start point
+	MADByte	pannEnd;	// Panning loop end point
 
-	Byte	volType;	// Volume type: bit 0: On; 1: Sustain; 2: Loop
-	Byte	pannType;	// Panning type: bit 0: On; 1: Sustain; 2: Loop
+	MADByte	volType;	// Volume type: bit 0: On; 1: Sustain; 2: Loop
+	MADByte	pannType;	// Panning type: bit 0: On; 1: Sustain; 2: Loop
 	
 	unsigned short volFade;	// Volume fadeout
 	
-	Byte	vibDepth;
-	Byte	vibRate;
+	MADByte	vibDepth;
+	MADByte	vibRate;
 } oldInstrData;
 
 // ***	
@@ -119,13 +119,13 @@ typedef struct oldInstrData {
 // ***	
 
 typedef struct oldMADSpec {
-	OSType			MAD;			// Mad Identification: MADG in version 2.0
+	MADFourChar			MAD;			// Mad Identification: MADG in version 2.0
 	char			name[32];		// Music's name
 	char			infos[256];		// Informations & Author name of the music
-	Byte			numPat;			// Patterns number
-	Byte			numChn;			// Channels number
-	Byte			numPointers;	// Partition length
-	Byte			oPointers[256];	// Partition : Patterns ID List
+	MADByte			numPat;			// Patterns number
+	MADByte			numChn;			// Channels number
+	MADByte			numPointers;	// Partition length
+	MADByte			oPointers[256];	// Partition : Patterns ID List
 	short			speed;			// Default speed
 	short			tempo;			// Default tempo
 	oldInstrData	fid[64];		// Instruments description

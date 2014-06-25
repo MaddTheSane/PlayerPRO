@@ -48,14 +48,14 @@ short FoundNote(short Period)
 }
 #endif
 
-static OSErr ConvertOKTA2Mad(Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
+static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short 				i, x, z, TrueTracks;
 	//short				PatMax, channel;
 	//long 				sndSize, OffSetToSample, OldTicks, temp, starting;
-	Ptr					MaxPtr, theOktaPos;
-	//OSErr				theErr;
-	Ptr					theInstrument[120] /*, destPtr*/;
+	char*					MaxPtr, *theOktaPos;
+	//MADErr				theErr;
+	char*					theInstrument[120] /*, destPtr*/;
 	//unsigned short		tempS;
 	//char				tempChar;
 	
@@ -71,7 +71,7 @@ static OSErr ConvertOKTA2Mad(Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDri
 	sectheader		*aSect;
 	//long				SectLength;
 	short			pbod_count, sbod_count;
-	OSType OKTAHeader = 0;
+	MADFourChar OKTAHeader = 0;
 	/********************************/
 	
 	for (i = 0 ; i < 64; i ++) theInstrument[i] = NULL;
@@ -85,7 +85,7 @@ static OSErr ConvertOKTA2Mad(Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDri
 	MaxPtr		= theOkta + MODSize;
 	theOktaPos	= theOkta;
 	
-	OKTAHeader = (*(OSType*)theOkta);
+	OKTAHeader = (*(MADFourChar*)theOkta);
 	PPBE32(&OKTAHeader);
 	if (OKTAHeader != 'OKTA') //DebugStr("\pError in OKTA");
 		return MADIncompatibleFile;
@@ -259,7 +259,7 @@ static OSErr ConvertOKTA2Mad(Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDri
 			
 			curData->relNote	= 0;
 			
-			curData->data 		= (Ptr)malloc(curData->size);
+			curData->data 		= (char*)malloc(curData->size);
 			if (curData->data == NULL) return MADNeedMemory;
 			
 			memcpy(curData->data, theInstrument[i], curData->size);
@@ -287,7 +287,7 @@ static OSErr ConvertOKTA2Mad(Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDri
 		theMAD->partition[i]->header.patBytes = 0;
 		theMAD->partition[i]->header.unused2 = 0;
 		
-		MaxPtr = (Ptr) theMAD->partition[i];
+		MaxPtr = (char*) theMAD->partition[i];
 		MaxPtr += sizeof(PatHeader) + theMAD->header->numChn * Okta->pbodlen[i] * sizeof(Cmd);
 		
 		for (x = 0; x < Okta->pbodlen[i]; x++)
@@ -295,7 +295,7 @@ static OSErr ConvertOKTA2Mad(Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDri
 			for(z=0; z<theMAD->header->numChn; z++)
 			{
 				aCmd = GetMADCommand(x, z, theMAD->partition[i]);
-				if ((Ptr) aCmd >= MaxPtr) //Debugger();
+				if ((char*) aCmd >= MaxPtr) //Debugger();
 					return MADIncompatibleFile;
 				aCmd->note		= 0xFF;
 				aCmd->ins			= 0;
@@ -351,7 +351,7 @@ static OSErr ConvertOKTA2Mad(Ptr	theOkta, long MODSize, MADMusic *theMAD, MADDri
 	return MADNoErr;
 }
 
-static OSErr ExtractOKTAInfo(PPInfoRec *info, Ptr theOkta, long MODSize)
+static MADErr ExtractOKTAInfo(PPInfoRec *info, char* theOkta, long MODSize)
 {
 	//long		PatternSize;
 	//short	i;
@@ -372,13 +372,13 @@ static OSErr ExtractOKTAInfo(PPInfoRec *info, Ptr theOkta, long MODSize)
 		sectheader		*aSect;
 		//long				SectLength;
 		short			pbod_count, sbod_count;
-		OSType OKTAHead = 0;
+		MADFourChar OKTAHead = 0;
 		
 		//short 				i, PatMax, x, z, channel, TrueTracks;
 		//long 					sndSize, OffSetToSample, OldTicks, temp, starting;
-		Ptr					MaxPtr, theOktaPos;
-		//OSErr				theErr;
-		//Ptr					theInstrument[120], destPtr;
+		char*					MaxPtr, *theOktaPos;
+		//MADErr				theErr;
+		//char*					theInstrument[120], destPtr;
 		//unsigned	short		tempS;
 		//char					tempChar;
 		
@@ -426,9 +426,9 @@ static OSErr ExtractOKTAInfo(PPInfoRec *info, Ptr theOkta, long MODSize)
 	return MADNoErr;
 }
 
-static OSErr TestOKTAFile(Ptr AlienFile)
+static MADErr TestOKTAFile(char* AlienFile)
 {
-	OSType myOKTA = *((OSType*) AlienFile);
+	MADFourChar myOKTA = *((MADFourChar*) AlienFile);
 	PPBE32(&myOKTA);
 	
 	if (myOKTA == 'OKTA') return MADNoErr;
@@ -437,10 +437,10 @@ static OSErr TestOKTAFile(Ptr AlienFile)
 
 #ifndef _MAC_H
 
-EXP OSErr FillPlug(PlugInfo *p);
-EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr FillPlug(PlugInfo *p);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
 	strncpy(p->type, 		"OKTA", sizeof(p->type));
 	strncpy(p->MenuName, 	"OKTAmed Files", sizeof(p->MenuName));
@@ -453,13 +453,13 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainOkta(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainOkta(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr = MADNoErr;
-	Ptr		AlienFile;
+	MADErr	myErr = MADNoErr;
+	char*		AlienFile;
 	long	sndSize;
 	UNFILE	iFileRefI;
 	
@@ -472,7 +472,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (Ptr)malloc(sndSize * 2L);
+				AlienFile = (char*)malloc(sndSize * 2L);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
@@ -480,7 +480,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 				{
 					free(AlienFile);
 					
-					AlienFile = (Ptr)malloc(sndSize);
+					AlienFile = (char*)malloc(sndSize);
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					if (myErr == MADNoErr)
 					{
@@ -504,7 +504,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 			{
 				sndSize = 1024L;
 				
-				AlienFile = (Ptr)malloc(sndSize);
+				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{
@@ -525,7 +525,7 @@ extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PP
 			{
 				info->fileSize = iGetEOF(iFileRefI);
 				sndSize = info->fileSize;
-				AlienFile = (Ptr)malloc(sndSize);
+				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				else
 				{

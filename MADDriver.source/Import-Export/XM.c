@@ -37,23 +37,23 @@
 
 #ifndef WIN32
 //Windows Defines
-typedef SInt16			WORD;
-typedef UInt16			UWORD;
-typedef SInt32			HRESULT;
-typedef UInt32			ULONG;
+typedef int16_t			WORD;
+typedef uint16_t			UWORD;
+typedef int32_t			HRESULT;
+typedef uint32_t			ULONG;
 typedef void*			LPVOID;
-typedef SInt32			LONG;
+typedef int32_t			LONG;
 
-typedef UInt16			UINT;
-typedef Boolean			BOOL;
-typedef UInt32			DWORD;
-typedef UInt16			USHORT;
-typedef SInt16			SHORT;
-typedef FourCharCode	FOURCC;
-typedef SInt8			BYTE;
+typedef uint16_t			UINT;
+typedef MADBool			BOOL;
+typedef uint32_t			DWORD;
+typedef uint16_t			USHORT;
+typedef int16_t			SHORT;
+typedef MADFourChar	FOURCC;
+typedef int8_t			BYTE;
 #endif
 
-typedef UInt8			UBYTE;
+typedef uint8_t			UBYTE;
 
 #include "XM.h"
 
@@ -66,14 +66,14 @@ typedef UInt8			UBYTE;
 #define IHSIZESMALL	33
 #define IHSSIZE		40
 
-static		Byte		LastAEffect[MAXTRACK];
+static		MADByte		LastAEffect[MAXTRACK];
 static		XMHEADER	*mh;
 static		char		*theXMRead, *theXMMax;
 
 #define READXMFILE(dst, size)	{memcpy(dst, theXMRead, size);	theXMRead += (long) size;}
 #define WRITEXMFILE(src, size)	{memcpy(theXMRead, src, size);	theXMRead += (long) size;}
 
-static Boolean XM_Init(MADDriverSettings *init)
+static MADBool XM_Init(MADDriverSettings *init)
 {
 	mh = (XMHEADER*)malloc(sizeof(XMHEADER));
 	if (mh == NULL)
@@ -268,7 +268,7 @@ static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd *aCmd, short channel)
 				aCmd->arg		= 0;
 				
 			{
-				Byte	lo, hi;
+				MADByte	lo, hi;
 				
 				lo = dat & 0xf;
 				hi = dat >> 4;
@@ -324,7 +324,7 @@ static void XM_Convert2XM(Cmd *aCmd)
 		aCmd->cmd = 0;
 }
 
-static OSErr XMReadPattern(MADMusic *theMAD, MADDriverSettings *init)
+static MADErr XMReadPattern(MADMusic *theMAD, MADDriverSettings *init)
 {
 	int t, u, v, i;
 	
@@ -342,7 +342,7 @@ static OSErr XMReadPattern(MADMusic *theMAD, MADDriverSettings *init)
 		XMPATHEADER 		ph;
 		XMNOTE				xmpat;
 		Cmd					*aCmd;
-		Ptr					theXMReadCopy;
+		char*					theXMReadCopy;
 		
 		theXMReadCopy = theXMRead;
 		READXMFILE(&ph.size, 		4);
@@ -406,7 +406,7 @@ static OSErr XMReadPattern(MADMusic *theMAD, MADDriverSettings *init)
 	return MADNoErr;
 }
 
-static OSErr XMReadInstruments(MADMusic *theMAD, MADDriverSettings *init)
+static MADErr XMReadInstruments(MADMusic *theMAD, MADDriverSettings *init)
 {
 	int			t, u, i, x;
 	//long		inOutCount = 0;
@@ -647,11 +647,11 @@ static OSErr XMReadInstruments(MADMusic *theMAD, MADDriverSettings *init)
 	return MADNoErr;
 }
 
-static MADErr XM_Load(Ptr theXM, size_t XMSize, MADMusic *theMAD, MADDriverSettings *init)
+static MADErr XM_Load(char* theXM, size_t XMSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	int		i;
 	int		inOutCount;
-	OSErr	iErr = MADNoErr;
+	MADErr	iErr = MADNoErr;
 	
 	theXMRead = theXM;
 	
@@ -753,10 +753,10 @@ static MADErr XM_Load(Ptr theXM, size_t XMSize, MADMusic *theMAD, MADDriverSetti
 
 //This Function isn't used right now. #if 0'ing out
 #if 0
-static int ConvertSampleC4SPDXM(Ptr src, size_t srcSize, short amp, int srcC4SPD, Ptr dst, int dstC4SPD)
+static int ConvertSampleC4SPDXM(char* src, size_t srcSize, short amp, int srcC4SPD, char* dst, int dstC4SPD)
 {
 	short	*src16 = (short*) src, *dst16 = (short*) dst;
-	Ptr		src8 = src, dst8 = dst;
+	char*		src8 = src, dst8 = dst;
 	int		x;
 	
 	if (amp == 8)
@@ -780,7 +780,7 @@ static int ConvertSampleC4SPDXM(Ptr src, size_t srcSize, short amp, int srcC4SPD
 
 static long XMGetPeriod(short note, int c2spd)
 {
-	UInt32 	period, n,o, mytab[12] = {1712 * 16, 1616 * 16, 1524 * 16, 1440 * 16, 1356 * 16, 1280 * 16,
+	uint32_t 	period, n,o, mytab[12] = {1712 * 16, 1616 * 16, 1524 * 16, 1440 * 16, 1356 * 16, 1280 * 16,
 		1208 * 16, 1140 * 16, 1076 * 16, 1016 * 16, 960 * 16, 907 * 16 };
 	
 	n = note % 12;
@@ -795,12 +795,12 @@ static long XMGetPeriod(short note, int c2spd)
 }
 
 
-static Ptr	ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndSize)
+static char*	ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndSize)
 {
 	int		u, i;
 	size_t	PatternSize, InstruSize;
 	int		NumberInstru;
-	Ptr		finalXMPtr;
+	char*		finalXMPtr;
 	
 	/********************************/
 	/* 			MAD INFORMATIONS    */
@@ -830,7 +830,7 @@ static Ptr	ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndSiz
 	
 	*sndSize = sizeof(XMHEADER) + InstruSize + PatternSize;
 	
-	theXMRead = finalXMPtr = (Ptr)malloc(*sndSize);
+	theXMRead = finalXMPtr = (char*)malloc(*sndSize);
 	theXMMax = theXMRead + *sndSize;
 	if (theXMRead == NULL)
 		return NULL;
@@ -890,7 +890,7 @@ static Ptr	ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndSiz
 		for (t = 0; t < theMAD->header->numPat; t++) {
 			short		PatternSize;
 			XMPATHEADER	ph;
-			Ptr			packingCopy, cc;
+			char*			packingCopy, *cc;
 			
 			ph.size = PHSIZE;
 			PPLE32(&ph.size);
@@ -944,7 +944,7 @@ static Ptr	ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndSiz
 			XMINSTHEADER 	ih;
 			size_t			ihsizecopy, ihssizecopy;
 			InstrData		*curIns = &theMAD->fid[t];
-			Ptr				theXMReadCopy = theXMRead;
+			char*				theXMReadCopy = theXMRead;
 			
 			//************************//
 			// Instrument header size //
@@ -1114,7 +1114,7 @@ static Ptr	ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndSiz
 			
 			for (u = 0 ; u < curIns->numSamples ; u++) {
 				sData	*curData = theMAD->sample[t * MAXSAMPLE + u];
-				Ptr		theXMReadCopy = theXMRead;
+				char*		theXMReadCopy = theXMRead;
 				int		curSize;
 				
 				WRITEXMFILE(curData->data, curData->size);
@@ -1152,7 +1152,7 @@ static Ptr	ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndSiz
 					}
 					
 					for (tL = 0; tL < curSize / 2; tL++) {
-						PPLE16((Ptr)(tt + tL));
+						PPLE16((char*)(tt + tL));
 					}
 				} else {
 					/* Real to Delta */
@@ -1183,7 +1183,7 @@ static inline MADBool compMem(const void *a, const void *b, size_t s)
 	}
 }
 
-static MADErr TestXMFile(Ptr AlienFile)
+static MADErr TestXMFile(char* AlienFile)
 {
 	if (compMem(AlienFile, "Extended Module: ", 17)) {
 		theXMRead = AlienFile;
@@ -1284,7 +1284,7 @@ static MADErr ExtractXMInfo(PPInfoRec *info, void *AlienFile)
 #ifndef _MAC_H
 
 EXP MADErr FillPlug(PlugInfo *p);
-EXP MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -1298,13 +1298,13 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 #endif
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-MADErr mainXM(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainXM(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	MADErr	myErr = MADNoErr;
-	Ptr		AlienFile;
+	char*		AlienFile;
 	long	sndSize;
 	UNFILE	iFileRefI;
 	
@@ -1335,7 +1335,7 @@ extern MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile,
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (Ptr)malloc(sndSize * 2);
+				AlienFile = (char*)malloc(sndSize * 2);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				// ** MEMORY Test End
@@ -1343,7 +1343,7 @@ extern MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile,
 				else {
 					free(AlienFile);
 					
-					AlienFile = (Ptr)malloc(sndSize);
+					AlienFile = (char*)malloc(sndSize);
 					if (AlienFile == NULL)
 						myErr = MADNeedMemory;
 					else {
@@ -1367,7 +1367,7 @@ extern MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile,
 			if (iFileRefI) {
 				sndSize = 1024;
 				
-				AlienFile = (Ptr)malloc(sndSize);
+				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
@@ -1391,7 +1391,7 @@ extern MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile,
 				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (Ptr)malloc(sndSize);
+				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {

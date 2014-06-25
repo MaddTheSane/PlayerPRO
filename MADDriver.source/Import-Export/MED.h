@@ -25,9 +25,9 @@
 /*#define WORD  short
  #define UWORD unsigned short
  #define ULONG unsigned long
- #define UBYTE Byte
+ #define UBYTE MADByte
  #define BYTE char
- #define BOOL Boolean */
+ #define BOOL MADBool */
 
 #pragma pack(push, 2)
 

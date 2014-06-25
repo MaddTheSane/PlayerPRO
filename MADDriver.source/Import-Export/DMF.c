@@ -37,10 +37,10 @@
 #define HI(para) ((para) >> 4)
 
 #if 0
-static void ConvertITEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
+static void ConvertITEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg)
 {
-	Byte LoB1 = LOW(B1);
-	Byte HiB1 = HI(B1);
+	MADByte LoB1 = LOW(B1);
+	MADByte HiB1 = HI(B1);
 	
 	switch (B0 + 0x40) {
 			// Speed
@@ -213,7 +213,7 @@ static void ConvertITEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg)
 	}
 }
 
-static void ConvertMADEffect(Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
+static void ConvertMADEffect(MADByte Cmd, MADByte Arg, MADByte *B0, MADByte *B1)
 {
 	*B0 = 0;
 	*B1 = 0;
@@ -340,19 +340,19 @@ static void ConvertMADEffect(Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 }
 #endif
 
-static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
+static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	int		i, x, z, channel, Row;
 	int		starting;
-	Ptr		MaxPtr;
-	Ptr		theInstrument[64];
-	Byte	tempChar, *theITCopy;
+	char*		MaxPtr;
+	char*		theInstrument[64];
+	MADByte	tempChar, *theITCopy;
 #if 0
 	short	Note, Octave, maxTrack;
 	short	ITperiod[12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
 	int		note_st3period;
 	int		note_amigaperiod;
-	Byte	*ChannelSettings;
+	MADByte	*ChannelSettings;
 #endif
 	
 	/**** Variables pour le MAD ****/
@@ -368,7 +368,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	}
 	
 	/**** Header principal *****/
-	theITCopy = (Byte*) theIT;
+	theITCopy = (MADByte*) theIT;
 	
 	memcpy(&ITinfo, theITCopy, sizeof(ITinfo));
 	theITCopy += 192;
@@ -442,7 +442,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	}
 	for (i = 0; i < ITinfo.insNum; i++)
 	{
-		theITCopy = (Byte*) theIT;
+		theITCopy = (MADByte*) theIT;
 		theITCopy += ITinfo.parapins[i];
 		
 		memcpy(&ITinfo.insdata[i], theITCopy, sizeof(ITInsForm));
@@ -475,13 +475,13 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 		{
 			long tempL;
 			
-			theITCopy = (Byte*) theIT;
+			theITCopy = (MADByte*) theIT;
 			
 			tempL = (((long)ITinfo.insdata[i].memsegh)<<16|ITinfo.insdata[i].memsegl)<<4;
 			
 			theITCopy += tempL;
 			
-			theInstrument[i] = (Ptr) theITCopy;
+			theInstrument[i] = (char*) theITCopy;
 		}
 		else
 		{
@@ -504,7 +504,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	}
 	
 	for (i = 0; i < ITinfo.smpNum; i++) {
-		theITCopy = (Byte*)theIT;
+		theITCopy = (MADByte*)theIT;
 		theITCopy += ITinfo.parapsamp[i];
 		
 		memcpy(&ITinfo.sampdata[i], theITCopy, sizeof(ITSampForm));
@@ -528,7 +528,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 		PPLE32(&ITinfo.sampdata[i].SusLoopEnd);
 		PPLE32(&ITinfo.sampdata[i].samplePtr);
 		
-		theInstrument[i] = (Ptr)theIT;
+		theInstrument[i] = (char*)theIT;
 		theInstrument[i] += ITinfo.sampdata[i].samplePtr;
 	}
 	
@@ -798,7 +798,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 		
 		for (x = 0; x < 20; x++) theMAD->partition[i]->header.name[x] = 0;
 		
-		MaxPtr = (Ptr) theMAD->partition[i];
+		MaxPtr = (char*) theMAD->partition[i];
 		MaxPtr += sizeof(PatHeader) + theMAD->header->numChn * curITPat->row * sizeof(Cmd);
 		
 		for (Row = 0; Row < curITPat->row; Row++) {
@@ -814,9 +814,9 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 		}
 		
 		if (ITinfo.parappat[i] > 0) {
-			Ptr		curDataPat = curITPat->data;
-			Byte	maskvariable = 0;
-			Boolean	NeedChannelToRead = true;
+			char*		curDataPat = curITPat->data;
+			MADByte	maskvariable = 0;
+			MADBool	NeedChannelToRead = true;
 			
 			Row = 0;
 			while(Row < curITPat->row) {
@@ -898,7 +898,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	return MADNoErr;
 }
 
-static OSErr ExtractITInfo(PPInfoRec *info, Ptr AlienFile)
+static MADErr ExtractITInfo(PPInfoRec *info, char* AlienFile)
 {
 	//short		i, maxInstru, tracksNo;
 	ITForm		ITinfo;
@@ -939,10 +939,10 @@ static OSErr ExtractITInfo(PPInfoRec *info, Ptr AlienFile)
 	return MADNoErr;
 }
 
-static inline OSErr TestITFile(void *AlienFile)
+static inline MADErr TestITFile(void *AlienFile)
 {
 	ITForm	*myIT = (ITForm*)AlienFile;
-	OSType myID = myIT->ID;
+	MADFourChar myID = myIT->ID;
 	PPBE32(&myID);
 	
 	if (myID == 'DDMF')
@@ -953,10 +953,10 @@ static inline OSErr TestITFile(void *AlienFile)
 
 #ifndef _MAC_H
 
-extern EXP OSErr FillPlug(PlugInfo *p);
-extern EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+extern EXP MADErr FillPlug(PlugInfo *p);
+extern EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
 	strcpy(p->type, 		"DMF ");
 	strcpy(p->MenuName, 	"DMF Files");
@@ -969,13 +969,13 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainDMF(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainDMF(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr = MADNoErr;
-	Ptr		AlienFile;
+	MADErr	myErr = MADNoErr;
+	char*		AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
 	

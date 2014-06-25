@@ -34,7 +34,7 @@
 #include "embeddedPlugs.h"
 #endif
 
-static Byte		LastAEffect[MAXTRACK], LastJEffect[MAXTRACK];
+static MADByte		LastAEffect[MAXTRACK], LastJEffect[MAXTRACK];
 static int		old_effect;
 
 #define LOW(para) ((para) & 15)
@@ -45,13 +45,13 @@ typedef struct ITPACK {
 	unsigned short	bits;    /* current number of bits */
 	unsigned short	bufbits; /* bits in buffer */
 	short			last;    /* last output */
-	Byte			buf;     /* bit buffer */
+	MADByte			buf;     /* bit buffer */
 } ITPACK;
 
 
-static inline Byte _mm_read_UBYTE(char **samplePtr)
+static inline MADByte _mm_read_UBYTE(char **samplePtr)
 {
-	Byte val = *((Byte*)*samplePtr);
+	MADByte val = *((MADByte*)*samplePtr);
 	*samplePtr += 1;
 	return val;
 }
@@ -67,14 +67,14 @@ static inline unsigned short ReadUS(char **samplePtr)
 
 /* unpack a 8bit IT packed sample */
 
-static uintptr_t read_itcompr8(ITPACK* status, char **reader, Byte *sl_buffer, unsigned short count, unsigned short* incnt)
+static uintptr_t read_itcompr8(ITPACK* status, char **reader, MADByte *sl_buffer, unsigned short count, unsigned short* incnt)
 {
-	Byte 				*dest=sl_buffer,*end=sl_buffer+count;
+	MADByte 				*dest=sl_buffer,*end=sl_buffer+count;
 	unsigned short 		x,y,needbits,havebits,new_count=0;
 	unsigned short 		bits = status->bits;
 	unsigned short 		bufbits = status->bufbits;
 	char 				last = status->last;
-	Byte 				buf;
+	MADByte 				buf;
 	
 	//FIXME: Static analyzer says that this assignment may be garbage under certain circumstances.
 	buf = status->buf;
@@ -144,14 +144,14 @@ static uintptr_t read_itcompr8(ITPACK* status, char **reader, Byte *sl_buffer, u
 }
 
 // unpack a 16bit IT packed sample
-static uintptr_t read_itcompr16(ITPACK *status,Ptr *reader,short *sl_buffer,unsigned short count,unsigned short* incnt)
+static uintptr_t read_itcompr16(ITPACK *status,char* *reader,short *sl_buffer,unsigned short count,unsigned short* incnt)
 {
-	short 			*dest=sl_buffer,*end=sl_buffer+ count;// (short*) ((Ptr) sl_buffer+ count);
+	short 			*dest=sl_buffer,*end=sl_buffer+ count;// (short*) ((char*) sl_buffer+ count);
 	int				x,y,needbits,havebits,new_count=0;
 	unsigned short 	bits = status->bits;
 	unsigned short 	bufbits = status->bufbits;
 	short 			last = status->last;
-	Byte 			buf;
+	MADByte 			buf;
 	
 	//FIXME: Static analyzer says that this assignment may be garbage under certain circumstances.
 	buf = status->buf;
@@ -223,7 +223,7 @@ static uintptr_t read_itcompr16(ITPACK *status,Ptr *reader,short *sl_buffer,unsi
 
 #define SLBUFSIZE 2048
 
-static OSErr DecompressSample(short bits, Ptr reader, size_t length, Ptr destPtr)		// sloader.c
+static MADErr DecompressSample(short bits, char* reader, size_t length, char* destPtr)		// sloader.c
 {
 	size_t			stodo;
 	size_t			result, c_block=0;	/* compression bytes until next block */
@@ -256,7 +256,7 @@ static OSErr DecompressSample(short bits, Ptr reader, size_t length, Ptr destPtr
 			if(!(result=read_itcompr16(&status, &reader, (short*)destPtr, stodo, &incnt)))
 				return 1;
 		} else {
-			if(!(result=read_itcompr8(&status, &reader, (Byte*) destPtr, stodo, &incnt)))
+			if(!(result=read_itcompr8(&status, &reader, (MADByte*) destPtr, stodo, &incnt)))
 				return 1;
 		}
 		
@@ -279,7 +279,7 @@ static OSErr DecompressSample(short bits, Ptr reader, size_t length, Ptr destPtr
 }
 
 
-static inline Boolean ITcompMem(const void *a, const void *b, size_t s)
+static inline MADBool ITcompMem(const void *a, const void *b, size_t s)
 {
 	if (memcmp(a, b, s) == 0)
 		return true;
@@ -287,11 +287,11 @@ static inline Boolean ITcompMem(const void *a, const void *b, size_t s)
 		return false;
 }
 
-static void ConvertITEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short channel)
+static void ConvertITEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg, short channel)
 {
-	Byte LoB1 = LOW(B1);
-	Byte HiB1 = HI(B1);
-	Byte B0X40 = B0 + 0x40;
+	MADByte LoB1 = LOW(B1);
+	MADByte HiB1 = HI(B1);
+	MADByte B0X40 = B0 + 0x40;
 	
 	switch(B0X40) {
 			// Speed
@@ -483,7 +483,7 @@ static void ConvertITEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short channe
 }
 
 #if 0
-void ConvertMADEffect(Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
+void ConvertMADEffect(MADByte Cmd, MADByte Arg, MADByte *B0, MADByte *B1)
 {
 	*B0 = 0;
 	*B1 = 0;
@@ -613,15 +613,15 @@ void ConvertMADEffect(Byte Cmd, Byte Arg, Byte *B0, Byte *B1)
 }
 #endif
 
-static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
+static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	int		i, x, z, channel = 0, Row;
-	Ptr		MaxPtr;
-	Ptr		theInstrument[256];
-	Byte	tempChar, *theITCopy;
+	char*		MaxPtr;
+	char*		theInstrument[256];
+	MADByte	tempChar, *theITCopy;
 	short	maxTrack;
 	//short	ITperiod[12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
-	Boolean	useLinear;
+	MADBool	useLinear;
 	
 	/**** Variables pour le MAD ****/
 	Cmd *aCmd = NULL;
@@ -634,7 +634,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	memset(theInstrument, 0, sizeof(theInstrument));
 		
 	/**** Header principal *****/
-	theITCopy = (Byte*) theIT;
+	theITCopy = (MADByte*) theIT;
 	
 	memcpy(&ITinfo, theITCopy, sizeof(ITinfo));
 	theITCopy += 192;
@@ -702,12 +702,12 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 		if (ITinfo.insdata == NULL)
 			return MADNeedMemory;
 		for (i = 0; i < ITinfo.insNum; i++) {
-			theITCopy = (Byte*) theIT;
+			theITCopy = (MADByte*) theIT;
 			theITCopy += ITinfo.parapins[i];
 			
 			memcpy(&ITinfo.insdata[i], theITCopy, sizeof(ITInsForm));
 			
-			if (!ITcompMem((Ptr)&ITinfo.insdata[i].ID, "IMPI", 4)) {
+			if (!ITcompMem((char*)&ITinfo.insdata[i].ID, "IMPI", 4)) {
 				free(ITinfo.orders);
 				free(ITinfo.parapins);
 				free(ITinfo.parappat);
@@ -726,12 +726,12 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	if (ITinfo.sampdata == NULL)
 		return MADNeedMemory;
 	for (i = 0; i < ITinfo.smpNum; i++) {
-		theITCopy = (Byte*)theIT;
+		theITCopy = (MADByte*)theIT;
 		theITCopy += ITinfo.parapsamp[i];
 		
 		memcpy(&ITinfo.sampdata[i], theITCopy, sizeof(ITSampForm));
 		
-		if (!ITcompMem((Ptr) &ITinfo.sampdata[i].ID, "IMPS", 4)) {
+		if (!ITcompMem((char*) &ITinfo.sampdata[i].ID, "IMPS", 4)) {
 			free(ITinfo.orders);
 			free(ITinfo.parapins);
 			free(ITinfo.parappat);
@@ -752,7 +752,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 		PPLE16(&ITinfo.sampdata[i].Convert);
 		
 		if (ITinfo.sampdata[i].length > 0) {
-			theInstrument[i] = (Ptr)theIT;
+			theInstrument[i] = (char*)theIT;
 			theInstrument[i] += ITinfo.sampdata[i].samplePtr;
 		} else
 			theInstrument[i] = 0;
@@ -929,27 +929,27 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 							}
 							
 							
-							curData->relNote	= ((Byte) ITinfo.insdata[i].keyMap[zz].note) -zz;// - 12;
+							curData->relNote	= ((MADByte) ITinfo.insdata[i].keyMap[zz].note) -zz;// - 12;
 							
 							/*
-							 if (((Byte) ITinfo.insdata[i].keyMap[zz].note))
+							 if (((MADByte) ITinfo.insdata[i].keyMap[zz].note))
 							 {
-							 curData->relNote	= ((Byte) ITinfo.insdata[i].keyMap[zz].note) - zz;
+							 curData->relNote	= ((MADByte) ITinfo.insdata[i].keyMap[zz].note) - zz;
 							 }
 							 else curData->relNote = -12;*/
 							
 							for (z = 0; z < 26; z++)
 								curData->name[z] = ITinfo.sampdata[prevSamp].SampName[z];
 							
-							curData->data 		= (Ptr)malloc(curData->size);
+							curData->data 		= (char*)malloc(curData->size);
 							if (curData->data == NULL) {
 								curData->loopBeg	= 0;
 								curData->loopSize	= 0;
 								curData->size		= 0;
-								curData->data 		= (Ptr)malloc(curData->size);
+								curData->data 		= (char*)malloc(curData->size);
 							} else {
 								if (ITinfo.sampdata[prevSamp].Flag&8) {	// Compressed Sample
-									OSErr	err;
+									MADErr	err;
 									
 									err = DecompressSample(curData->amp, theInstrument[prevSamp], curData->size, curData->data);
 									
@@ -1071,13 +1071,13 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 				for (x = 0; x < 26; x++)
 					curIns->name[x] = ITinfo.sampdata[i].SampName[x];
 				
-				curData->data 		= (Ptr)malloc(curData->size);
+				curData->data 		= (char*)malloc(curData->size);
 				if (curData->data == NULL)
 					return MADNeedMemory;
 				
 				if (curData->data != NULL) {
 					if (ITinfo.sampdata[i].Flag & 8) {	// Compressed Sample
-						OSErr	err;
+						MADErr	err;
 						
 						err = DecompressSample(curData->amp, theInstrument[i], curData->size, curData->data);
 						
@@ -1151,9 +1151,9 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 			PPLE16(&curITPat->row);
 			
 			if (ITinfo.parappat[i] > 0) {
-				Ptr 			curDataPat = curITPat->data;
+				char* 			curDataPat = curITPat->data;
 				char			maskvariable = 0, prevmaskvariable[MAXTRACK];
-				Boolean			NeedChannelToRead = true;
+				MADBool			NeedChannelToRead = true;
 				short			xx, newmaxTrack;
 				
 				for (xx = 0; xx < MAXTRACK; xx++)
@@ -1261,7 +1261,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 			
 			memset(theMAD->partition[i]->header.name, 0, 20);
 			
-			MaxPtr = (Ptr)theMAD->partition[i];
+			MaxPtr = (char*)theMAD->partition[i];
 			MaxPtr += sizeof(PatHeader) + theMAD->header->numChn * curITPat->row * sizeof(Cmd);
 			
 			for (Row = 0; Row < curITPat->row; Row++) {
@@ -1301,9 +1301,9 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 		}
 		
 		if (ITinfo.parappat[i]) {
-			Ptr 		curDataPat = curITPat->data;
+			char* 		curDataPat = curITPat->data;
 			char		maskvariable = 0, prevmaskvariable[MAXTRACK];
-			Boolean		NeedChannelToRead = true;
+			MADBool		NeedChannelToRead = true;
 			
 			char		lastnote[MAXTRACK], lastins[MAXTRACK], lastvol[MAXTRACK], lastcmd[MAXTRACK], lasteff[MAXTRACK];
 			
@@ -1428,7 +1428,7 @@ static OSErr ConvertIT2Mad(Ptr theIT, size_t MODSize, MADMusic *theMAD, MADDrive
 	return MADNoErr;
 }
 
-static OSErr ExtractITInfo(PPInfoRec *info, void *AlienFile)
+static MADErr ExtractITInfo(PPInfoRec *info, void *AlienFile)
 {
 	//short			i;
 	ITForm			ITinfo;
@@ -1469,7 +1469,7 @@ static OSErr ExtractITInfo(PPInfoRec *info, void *AlienFile)
 	return MADNoErr;
 }
 
-static OSErr TestITFile(const void *AlienFile)
+static MADErr TestITFile(const void *AlienFile)
 {
 	ITForm *myIT = (ITForm*)AlienFile;
 	
@@ -1481,10 +1481,10 @@ static OSErr TestITFile(const void *AlienFile)
 
 #ifndef _MAC_H
 
-EXP OSErr FillPlug(PlugInfo *p);
-EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr FillPlug(PlugInfo *p);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
 	strncpy(p->type, 		"IT  ", sizeof(p->type));
 	strncpy(p->MenuName, 	"IT Files", sizeof(p->MenuName));
@@ -1496,13 +1496,13 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 #endif
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainIT(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainIT(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr		myErr = MADNoErr;
-	Ptr			AlienFile;
+	MADErr		myErr = MADNoErr;
+	char*			AlienFile;
 	long		sndSize;
 	UNFILE		iFileRefI;
 	
@@ -1513,7 +1513,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (Ptr)malloc(sndSize * 2L);
+				AlienFile = (char*)malloc(sndSize * 2L);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				// ** MEMORY Test End
@@ -1521,7 +1521,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 				else {
 					free(AlienFile);
 					
-					AlienFile = (Ptr)malloc(sndSize);
+					AlienFile = (char*)malloc(sndSize);
 					if (AlienFile == NULL)
 						myErr = MADNeedMemory;
 					else {
@@ -1545,7 +1545,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 			if (iFileRefI) {
 				sndSize = 1024L;
 				
-				AlienFile = (Ptr)malloc(sndSize);
+				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
@@ -1567,7 +1567,7 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 				
 				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (Ptr)malloc(sndSize);
+				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {

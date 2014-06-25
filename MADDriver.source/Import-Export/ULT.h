@@ -24,10 +24,10 @@
 #pragma pack(push, 2)
 
 typedef struct ULTEvt {
-	Byte	note;
-	Byte	ins;
-	Byte	eff1;
-	Byte	eff2;
+	MADByte	note;
+	MADByte	ins;
+	MADByte	eff1;
+	MADByte	eff2;
 	short	var;
 } ULTEvt;
 
@@ -38,8 +38,8 @@ typedef struct ULTIns {
 	int		loopEnd;
 	int		sizeStart;
 	int		sizeEnd;
-	Byte	volume;
-	Byte	Bidi;
+	MADByte	volume;
+	MADByte	Bidi;
 	short	finetune;
 } ULTIns;
 
@@ -50,11 +50,11 @@ typedef struct ULTForm {
 } ULTForm;
 
 typedef struct ULTSuite {
-	Byte	NOS;
+	MADByte	NOS;
 	ULTIns	*ins;
-	Byte	pattSeq[256];
-	Byte	NOC;
-	Byte	NOP;
+	MADByte	pattSeq[256];
+	MADByte	NOC;
+	MADByte	NOP;
 } ULTSuite;
 
 #pragma pack(pop)

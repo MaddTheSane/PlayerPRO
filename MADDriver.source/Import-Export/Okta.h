@@ -45,10 +45,10 @@ typedef struct OktaInstru
 
 typedef struct OktaPattern
 {
-	Byte b1;
-	Byte b2;
-	Byte b3;
-	Byte b4;
+	MADByte b1;
+	MADByte b2;
+	MADByte b3;
+	MADByte b4;
 } OktaPattern;
 
 typedef struct OktaHeader
@@ -66,7 +66,7 @@ typedef struct OktaHeader
   	int				slen;
   	int				plen;
 
-	Ptr				pbod[128]; //TODO: check for 32-64-bit inconsistencies
+	char*				pbod[128]; //TODO: check for 32-64-bit inconsistencies
 	int				pbodlen[128];
        
 	unsigned char	*patt; //TODO: check for 32-64-bit inconsistencies
