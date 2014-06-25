@@ -52,7 +52,7 @@ typedef struct MODDef
     MADByte			numPointers;
     MADByte			maxPointers;
     MADByte			oPointers[MAXPTRS];
-    MADFourChar			longFmtSignature;
+    MADFourChar		longFmtSignature;
 	struct MODPat	patterns[];
 } MODDef;
 

@@ -42,11 +42,11 @@ typedef struct oldCmd {
 
 // HEADER
 typedef struct oldPatHeader {
-	int		size;		// Length of pattern: standard = 64
+	int			size;		// Length of pattern: standard = 64
 	MADFourChar	compMode;	// Compression mode, none = 'NONE'
-	char	name[32];
-	int		patBytes;	// Pattern Size in Bytes
-	int		unused2;
+	char		name[32];
+	int			patBytes;	// Pattern Size in Bytes
+	int			unused2;
 } oldPatHeader;
 
 // DATA STRUCTURE : HEADER + COMMANDS
@@ -72,7 +72,7 @@ typedef struct oldsData {
 	MADByte			panning;
 	char			relNote;
 	char			name[32];	// Sample name
-	uint32_t			data;		// Used only in memory, not in files
+	uint32_t		data;		// Used only in memory, not in files
 } oldsData;
 
 // Volume Envelope
@@ -119,7 +119,7 @@ typedef struct oldInstrData {
 // ***	
 
 typedef struct oldMADSpec {
-	MADFourChar			MAD;			// Mad Identification: MADG in version 2.0
+	MADFourChar		MAD;			// Mad Identification: MADG in version 2.0
 	char			name[32];		// Music's name
 	char			infos[256];		// Informations & Author name of the music
 	MADByte			numPat;			// Patterns number

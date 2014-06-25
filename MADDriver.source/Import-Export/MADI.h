@@ -42,11 +42,11 @@ typedef struct oldCmd {
 
 // HEADER
 typedef struct oldPatHeader {
-	int		size;		// Length of pattern: standard = 64
+	int			size;		// Length of pattern: standard = 64
 	MADFourChar	compMode;	// Compression mode, none = 'NONE'
-	char	name[32];
-	int		patBytes;	// Pattern Size in Bytes
-	int		unused2;
+	char		name[32];
+	int			patBytes;	// Pattern Size in Bytes
+	int			unused2;
 } oldPatHeader;
 
 // DATA STRUCTURE : HEADER + COMMANDS
@@ -65,14 +65,14 @@ typedef struct oldsData {
 	int				size;		// Sample length
 	int				loopBeg;	// LoopStart
 	int				loopSize;	// LoopLength
-	MADByte 			vol;		// Base volume
+	MADByte			vol;		// Base volume
 	unsigned short	c2spd;		// c2spd
 	MADByte			loopType;
 	MADByte			amp;		// 8 or 16 bits
 	char			relNote;
 	char 			name[32];	// Sample name
 	MADByte			stereo;		// Stereo
-	uint32_t			data;		// Used only in memory, not in files
+	uint32_t		data;		// Used only in memory, not in files
 } oldsData;
 
 // Volume Envelope

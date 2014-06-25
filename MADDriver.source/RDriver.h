@@ -223,8 +223,8 @@ typedef struct MADMusic
 	InstrData	*fid;						// Instruments
 	sData		**sample;					// Samples
 	FXSets		*sets;						// FXSettings
-    MADFourChar		originalFormat;
-    MADPStr255		musicFileName; // Pascal string
+    MADFourChar	originalFormat;
+    MADPStr255	musicFileName;				// Pascal string
     MADBool		musicUnderModification;		// Tell the driver to NOT access music data
     MADBool		hasChanged;
 } MADMusic;
@@ -384,7 +384,7 @@ typedef struct PlugInfo
 typedef MADErr (*PLUGDLLFUNC)(MADFourChar, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
-    MADFourChar		mode;				// Mode support : Import +/ Export
+    MADFourChar	mode;				// Mode support : Import +/ Export
 	int			version;			// Plug-in version
 	HMODULE		hLibrary;
 	PLUGDLLFUNC	IOPlug;				// Plug CODE
@@ -401,7 +401,7 @@ typedef	MADErr (*MADPlug)(MADFourChar order, char *AlienFileName, MADMusic *MadF
 
 typedef struct PlugInfo
 {
-    MADFourChar		mode;				// Mode support : Import +/ Export
+    MADFourChar	mode;				// Mode support : Import +/ Export
 	int			version;			// Plug-in version
 	image_id	hLibrary;
 	MADPlug		IOPlug;				// Plug CODE
@@ -418,7 +418,7 @@ typedef struct PlugInfo
 typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
-    MADFourChar		mode;				// Mode support : Import +/ Export
+    MADFourChar	mode;				// Mode support : Import +/ Export
 	int			version;			// Plug-in version
 	void*		hLibrary;
 	MADPLUGFUNC	IOPlug;				// Plug CODE
@@ -439,7 +439,7 @@ typedef struct MADLibrary
 	int			mytab[12];
 	PlugInfo	*ThePlug;	// Pointers on plugs code & infos
 	
-    MADFourChar		IDType;		// IDType = 'MADD' -- READ ONLY --
+    MADFourChar	IDType;		// IDType = 'MADD' -- READ ONLY --
 	short		TotalPlug;	// Number of Plugs in pointer ThePlug
 } MADLibrary;
 
@@ -485,13 +485,13 @@ typedef AEffect *(*VSTPlugInPtr)(audioMasterCallback cb);
 #if !TARGET_OS_IPHONE
 //TODO: update VST headers
 typedef struct __VSTEffect {
-	AEffect				*ce[2];
-	short				VSTid;
-	CFStringRef			name;
-	MADBool				Active;
-	CFBundleRef			connID;
-	VSTPlugInPtr		vstMain;
-	MADBool				ProcessReplacingNotAvailable;
+	AEffect			*ce[2];
+	short			VSTid;
+	CFStringRef		name;
+	MADBool			Active;
+	CFBundleRef		connID;
+	VSTPlugInPtr	vstMain;
+	MADBool			ProcessReplacingNotAvailable;
 } VSTEffect;
 #else
 typedef struct __VSTEffect {
@@ -502,25 +502,25 @@ typedef struct __VSTEffect {
 #elif defined(WIN32)
 
 typedef struct __VSTEffect {
-	AEffect				*ce[2];
-	short				VSTid;
-	char				name[50];
-	MADBool				Active;
-	HMODULE				connID;
-	VSTPlugInPtr		vstMain;
-	MADBool				ProcessReplacingNotAvailable;
+	AEffect			*ce[2];
+	short			VSTid;
+	char			name[50];
+	MADBool			Active;
+	HMODULE			connID;
+	VSTPlugInPtr	vstMain;
+	MADBool			ProcessReplacingNotAvailable;
 } VSTEffect;
 
 #elif (defined(__ELF__) && !(defined (_MAC_H) || defined (_BE_H)))
 
 typedef struct __VSTEffect {
-	AEffect				*ce[2];
-	short				VSTid;
-	char				name[50];
-    MADBool				Active;
-	void				*connID;
-	VSTPlugInPtr		vstMain;
-    MADBool				ProcessReplacingNotAvailable;
+	AEffect			*ce[2];
+	short			VSTid;
+	char			name[50];
+    MADBool			Active;
+	void			*connID;
+	VSTPlugInPtr	vstMain;
+    MADBool			ProcessReplacingNotAvailable;
 } VSTEffect;
 #endif
 

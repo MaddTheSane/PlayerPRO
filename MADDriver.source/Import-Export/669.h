@@ -42,9 +42,9 @@ struct PatSix {
 
 typedef struct	SampleInfo	{
 	//char	InstruFilename[13];
-	unsigned	short	length;
-	unsigned	short	loopStart;
-	unsigned	short	loopEnd;
+	unsigned short	length;
+	unsigned short	loopStart;
+	unsigned short	loopEnd;
 } SampleInfo;
 
 typedef struct SixSixNine	{

@@ -201,7 +201,7 @@ typedef struct sData32
 	int				size;		// Sample length
 	int				loopBeg;	// LoopStart
 	int				loopSize;	// LoopLength
-	MADByte 			vol;		// Base volume
+	MADByte			vol;		// Base volume
 	unsigned short	c2spd;		// c2spd
 	MADByte			loopType;
 	MADByte			amp;		// 8 or 16 bits
@@ -324,11 +324,11 @@ typedef struct MADSpec
 } MADSpec;
 
 typedef struct FXSets {
-	short	track;
-	short	id;
-	int		FXID;
-	short	noArg;
-	float	values[100];
+	short			track;
+	short			id;
+	int				FXID;
+	short			noArg;
+	float			values[100];
 	unsigned char	name[64];
 } FXSets;	// and then float values
 

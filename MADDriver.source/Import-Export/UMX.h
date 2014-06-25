@@ -37,23 +37,23 @@ struct MODPat
 
 struct FileInstrDataz
 {
-	char Filename[22];
-	unsigned short numWords;
-	MADByte fineTune;
-	MADByte volume;
-	unsigned short loopWord;
-	unsigned short loopWords;
+	char			Filename[22];
+	unsigned short	numWords;
+	MADByte			fineTune;
+	MADByte			volume;
+	unsigned short	loopWord;
+	unsigned short	loopWords;
 };
 
 typedef struct MODDef
 {
-	char NameSignature[20];
-	struct FileInstrDataz fid[31];
-	MADByte numPointers;
-	MADByte maxPointers;
-	MADByte oPointers[MAXPTRS];
-	MADFourChar longFmtSignature;
-	struct MODPat patterns[];
+	char					NameSignature[20];
+	struct FileInstrDataz	fid[31];
+	MADByte					numPointers;
+	MADByte					maxPointers;
+	MADByte					oPointers[MAXPTRS];
+	MADFourChar				longFmtSignature;
+	struct MODPat			patterns[];
 } MODDef;
 
 #pragma pack(pop)

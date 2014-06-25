@@ -22,12 +22,6 @@
 /********************						***********************/
 #ifndef __MED_H_
 #define __MED_H_
-/*#define WORD  short
- #define UWORD unsigned short
- #define ULONG unsigned long
- #define UBYTE MADByte
- #define BYTE char
- #define BOOL MADBool */
 
 #pragma pack(push, 2)
 

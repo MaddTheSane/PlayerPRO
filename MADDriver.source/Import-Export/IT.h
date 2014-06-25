@@ -73,13 +73,13 @@ typedef struct ITEnv
 
 typedef struct ITKeyMap
 {
-	MADByte		note;
-	MADByte		samp;
+	MADByte note;
+	MADByte samp;
 } ITKeyMap;
 
 typedef struct ITInsForm		// size = 547
 {
-	MADFourChar		ID;
+	MADFourChar	ID;
 	char		DOSName[12];
 	MADByte		no;
 	MADByte		NNA;
@@ -108,7 +108,7 @@ typedef struct ITInsForm		// size = 547
 
 typedef struct ITOldInsForm		// size = 554
 {
-	MADFourChar		ID;
+	MADFourChar	ID;
 	char		DOSName[12];
 	MADByte		no;
 	MADByte		NNA;
@@ -135,7 +135,7 @@ typedef struct ITOldInsForm		// size = 554
 
 typedef struct ITForm
 {
-	MADFourChar				ID;
+	MADFourChar			ID;
 	char				name[26];
 	char				no[2];
 	

@@ -23,8 +23,7 @@
 
 #pragma pack(push, 2)
 
-typedef struct s3mform
-{
+typedef struct s3mform {
 	char				name[28];
 	char				sig1;
 	char				type;
@@ -50,8 +49,7 @@ typedef struct s3mform
 	struct s3minsform	*insdata;
 } s3mform;
 
-typedef struct s3mPatform
-{
+typedef struct s3mPatform {
 	MADByte	note;		// hi = oct, lo = note
 	MADByte	intru;
 	MADByte	vol;
@@ -59,26 +57,25 @@ typedef struct s3mPatform
 	MADByte	ComArg;
 } s3mPatform;
 
-typedef struct s3minsform
-{
-	unsigned char		instype;
-	unsigned char		insdosname[12];
-	unsigned char		memsegh;
-	unsigned short		memsegl;
-	uint32_t				inslength;
-	uint32_t				insloopbeg;
-	uint32_t				insloopend;
-	unsigned char		insvol;
-	unsigned char		insdsk;
-	unsigned char		inspack;
-	unsigned char		insflags;
-	uint32_t				c2spd;
-	unsigned char		inssig2[4];
-	unsigned short		insgvspos;
-	unsigned short		insint512;
-	uint32_t				insintlastused;
-	unsigned char		insname[28];
-	unsigned char		inssig[4];
+typedef struct s3minsform {
+	unsigned char	instype;
+	unsigned char	insdosname[12];
+	unsigned char	memsegh;
+	unsigned short	memsegl;
+	uint32_t		inslength;
+	uint32_t		insloopbeg;
+	uint32_t		insloopend;
+	unsigned char	insvol;
+	unsigned char	insdsk;
+	unsigned char	inspack;
+	unsigned char	insflags;
+	uint32_t		c2spd;
+	unsigned char	inssig2[4];
+	unsigned short	insgvspos;
+	unsigned short	insint512;
+	uint32_t		insintlastused;
+	unsigned char	insname[28];
+	unsigned char	inssig[4];
 } s3minsform;
 
 #pragma pack(pop)

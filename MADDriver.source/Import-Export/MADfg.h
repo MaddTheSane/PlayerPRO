@@ -27,11 +27,11 @@
 #pragma pack(push, 2)
 
 struct oldPatHeader {
-	int		PatternSize;		// Length of pattern: standard = 64
+	int			PatternSize;		// Length of pattern: standard = 64
 	MADFourChar	CompressionMode;	// Compression mode, none = 'NONE'
-	char	PatternName[20];
-	int		PatBytes;			// Pattern Size in Bytes
-	int		unused2;
+	char		PatternName[20];
+	int			PatBytes;			// Pattern Size in Bytes
+	int			unused2;
 };
 
 struct Command {
@@ -61,12 +61,12 @@ struct FileInstrData {
 
 typedef struct oldMADSpec {
 	MADFourChar	MADIdentification;		// Mad Identification: MADG in version 2.0
-	char	NameSignature[32];		// Music's name
-	struct	FileInstrData fid[64];	// 64 instruments descriptor
-	MADByte	PatMax;
-	MADByte 	numPointers;	// Patterns number
-	MADByte	oPointers[128];	// Patterns list
-	MADByte	Tracks;			// Tracks number
+	char		NameSignature[32];		// Music's name
+	struct		FileInstrData fid[64];	// 64 instruments descriptor
+	MADByte		PatMax;
+	MADByte		numPointers;	// Patterns number
+	MADByte		oPointers[128];	// Patterns list
+	MADByte		Tracks;			// Tracks number
 } oldMADSpec;
 
 #pragma pack(pop)
