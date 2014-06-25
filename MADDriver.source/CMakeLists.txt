@@ -46,6 +46,6 @@ endif(WIN32)
 
 find_package(PulseAudio)
 
-add_library (PlayerPROCore ${PPC_SRCs} ${PPC_Headers})
+add_library(PlayerPROCore SHARED ${PPC_SRCs} ${PPC_Headers})
 target_link_libraries(PlayerPROCore m)
 

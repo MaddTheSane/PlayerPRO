@@ -94,7 +94,7 @@ PPEXPORT UNFILE	iFileOpenWrite(const char *name);
  *				<code>type</code> is mostly used on pre-OS X versions of Mac OS, and is rarely used nowadays.
  *				If <code>type</code> is zero, the file type is not set.
  */
-PPEXPORT void	iFileCreate(const char *path, OSType type);
+PPEXPORT void	iFileCreate(const char *path, MADFourChar type);
 
 /*!
  * @function	iGetEOF
@@ -119,7 +119,7 @@ PPEXPORT long	iGetEOF(UNFILE iFileRefI);
  *					The file reference to read from. Must have been opened with iFileOpenRead()
  * @discussion	The size cannot be larger than the data pointer, otherwise bad things will happen.
  */
-PPEXPORT OSErr	iRead(long size, void *dest, UNFILE iFileRefI);
+PPEXPORT MADErr	iRead(long size, void *dest, UNFILE iFileRefI);
 
 /*!
  * @function	iWrite
@@ -134,7 +134,7 @@ PPEXPORT OSErr	iRead(long size, void *dest, UNFILE iFileRefI);
  * @discussion	The size cannot be larger than the data pointer, otherwise bad things will happen.
  *				Data is written to the file from the file's current position.
  */
-PPEXPORT OSErr	iWrite(long size, const void *src, UNFILE iFileRefI);
+PPEXPORT MADErr	iWrite(long size, const void *src, UNFILE iFileRefI);
 
 /*!
  * @function    iSeekCur
@@ -145,7 +145,7 @@ PPEXPORT OSErr	iWrite(long size, const void *src, UNFILE iFileRefI);
  * @param		iFileRefI
  *					The file reference to change the file position on
  */
-PPEXPORT OSErr	iSeekCur(long size, UNFILE iFileRefI);
+PPEXPORT MADErr	iSeekCur(long size, UNFILE iFileRefI);
 
 /*!
  * @function	iClose
@@ -162,7 +162,7 @@ PPEXPORT void	iClose(UNFILE iFileRefI);
 //TODO: use system-based functions, such as the ones used on OS X/iOS
 /*!
  * @function    MADByteSwap32
- * @abstract    Byte-swaps a 32-bit value
+ * @abstract    MADByte-swaps a 32-bit value
  * @param       msg_buf
  *					A pointer to a 32-bit value. On output, the value will be byte-swapped.
  * @discussion  Refrain from using this function directly: use either PPLE32 or PPBE32
@@ -182,7 +182,7 @@ static inline void MADByteSwap32(void *msg_buf)
 //TODO: use system-based functions, such as the ones used on OS X/iOS
 /*!
  * @function    MADByteSwap16
- * @abstract    Byte-swaps a 16-bit value
+ * @abstract    MADByte-swaps a 16-bit value
  * @param       msg_buf
  *					a pointer to a 16-bit value. On output, the value will be byte-swapped.
  * @discussion  Refrain from using this function directly: use either PPLE16 or PPBE16
@@ -269,7 +269,7 @@ static inline void PPLE16(void *msg_buf)
  * @discussion  <code>str</code> must be at least five chars long: four for the size of the OSType, and one for the terminating null.
  *				Note that OSTypes use the Mac OS Roman encoding. If needed, use iconv to convert from the Mac OS Roman encoding.
  */
-static inline void OSType2Ptr(OSType type, char *str)
+static inline void OSType2Ptr(MADFourChar type, char *str)
 {
 	PPBE32(&type);
 	memcpy(str, &type, 4);
@@ -284,10 +284,10 @@ static inline void OSType2Ptr(OSType type, char *str)
  *					The string to convert to an OSType, null-terminated.
  * @discussion  Note that OSTypes use the Mac OS Roman encoding. UTF-8 special characters may cause issues. If needed, use iconv to convert to the Mac OS Roman encoding.
  */
-static inline OSType Ptr2OSType(const char *str)
+static inline MADFourChar Ptr2OSType(const char *str)
 {
 	short	i;
-	OSType	type = '    ';
+    MADFourChar	type = '    ';
 	
 	i = strlen(str);
 	if (i > 4)

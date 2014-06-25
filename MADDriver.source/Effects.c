@@ -28,7 +28,7 @@
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
 
-void parse_slidevol(Channel *ch, Byte Arg)
+void parse_slidevol(Channel *ch, MADByte Arg)
 {
 	if (HI(Arg))
 		ch->volumerate = HI(Arg);
@@ -206,7 +206,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 			
 		case vibratoE:
 		{
-			Byte q = (ch->viboffset >> 2) & 0x1f;
+            MADByte q = (ch->viboffset >> 2) & 0x1f;
 			
 			switch (ch->vibtype) {
 				case 0:
@@ -666,7 +666,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 				if (ch->loopBeg >= ch->sizePtr)
 					ch->loopBeg = ch->sizePtr;
 				
-				ch->maxPtr 	= (Ptr) ((size_t)ch->begPtr + ch->loopBeg + ch->loopSize);
+                ch->maxPtr 	= (char*) ((size_t)ch->begPtr + ch->loopBeg + ch->loopSize);
 				
 				if (ch->maxPtr < ch->begPtr)
 					ch->maxPtr = ch->begPtr;
@@ -678,7 +678,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 		case NOffSetE:
 			ch->curPtr = ch->begPtr;
 			
-			aL = ((UInt32)ch->arg * (UInt32)(ch->sizePtr)) / 255U;
+            aL = ((uint32_t)ch->arg * (uint32_t)(ch->sizePtr)) / 255U;
 			
 			if (ch->amp == 16)
 				aL /= 2;
@@ -696,7 +696,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 				ch->maxPtr = ch->begPtr + ch->sizePtr;
 			else {
 				if (ch->loopSize > 2) {
-					ch->maxPtr 	= (Ptr)((long)ch->begPtr + ch->loopBeg + ch->loopSize);
+                    ch->maxPtr 	= (char*)((long)ch->begPtr + ch->loopBeg + ch->loopSize);
 				}
 			}
 			break;

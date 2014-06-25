@@ -21,7 +21,7 @@ void MADDriverClearChannel(MADDriverRec *theRec, int channel)
 	}
 }
 
-Boolean MADDriverChannelIsDonePlaying(MADDriverRec *theRec, int channel)
+MADBool MADDriverChannelIsDonePlaying(MADDriverRec *theRec, int channel)
 {
 	//TODO: more work here!
 	return theRec->chan[channel].samplePtr == NULL;

@@ -57,12 +57,12 @@ void	Play8StereoDelay(MADDriverRec *intDriver);
 
 /*** 8 Bits ***/
 
-void 	Sampler8in8Add(Channel *curVoice, Ptr ASCBuffer, MADDriverRec *intDriver);
-void 	Sampler8in16Add(Channel *curVoice, Ptr ASCBuffer, MADDriverRec *intDriver);
-void 	Sampler8in8AddPoly(Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver);
-void 	Sampler8in16AddPoly(Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver);
-void 	Sample8BufferAdd(Channel *curVoice, Ptr ASCBuffer, MADDriverRec *intDriver);
-void 	Sample8BufferAddPoly(Channel *curVoice, Ptr ASCBuffer, short chanNo, MADDriverRec *intDriver);
+void 	Sampler8in8Add(Channel *curVoice, char *ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler8in16Add(Channel *curVoice, char *ASCBuffer, MADDriverRec *intDriver);
+void 	Sampler8in8AddPoly(Channel *curVoice, char *ASCBuffer, short chanNo, MADDriverRec *intDriver);
+void 	Sampler8in16AddPoly(Channel *curVoice, char *ASCBuffer, short chanNo, MADDriverRec *intDriver);
+void 	Sample8BufferAdd(Channel *curVoice, char *ASCBuffer, MADDriverRec *intDriver);
+void 	Sample8BufferAddPoly(Channel *curVoice, char *ASCBuffer, short chanNo, MADDriverRec *intDriver);
 void	Play8Mono(MADDriverRec *intDriver);
 void 	Play8Stereo(MADDriverRec *intDriver);
 void 	Play8PolyPhonic(MADDriverRec *intDriver);
@@ -95,8 +95,8 @@ void	DoVolCmd(Channel *ch, short call, MADDriverRec *intDriver);
 
 void 	NoteAnalyse(MADDriverRec *intDriver);
 void 	ReadNote(Channel *curVoice, Cmd *theCommand, MADDriverRec *intDriver);
-void 	Filter8Bit(Byte *myPtr, MADDriverRec *intDriver);
-void 	Filter8BitX(Byte *myPtr, MADDriverRec *intDriver);
+void 	Filter8Bit(MADByte *myPtr, MADDriverRec *intDriver);
+void 	Filter8BitX(MADByte *myPtr, MADDriverRec *intDriver);
 void 	Filter16BitX(short *myPtr, MADDriverRec *intDriver);
 void 	BufferCopyM(MADDriverRec *intDriver);
 void 	BufferCopyS(MADDriverRec *intDriver);
@@ -132,26 +132,26 @@ OSErr initPortAudio(MADDriverRec *inMADDriver);
 OSErr closePortAudio(MADDriverRec *inMADDriver);
 #endif
 
-OSErr	CallImportPlug(MADLibrary	*inMADDriver,
+MADErr	CallImportPlug(MADLibrary	*inMADDriver,
 					   short		PlugNo,			// CODE du plug
-					   OSType		order,
+                       MADFourChar		order,
 					   char			*AlienFile,
 					   MADMusic		*theNewMAD,
 					   PPInfoRec	*info);
 
 
-OSErr	PPTestFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile);
-OSErr	PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec	*InfoRec);
-OSErr	PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD);
-OSErr	PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD);
-OSErr	PPIdentifyFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile);
+MADErr	PPTestFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile);
+MADErr	PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec	*InfoRec);
+MADErr	PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD);
+MADErr	PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD);
+MADErr	PPIdentifyFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile);
 
-OSType	GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType type);
+MADFourChar	GetPPPlugType(MADLibrary *inMADDriver, short ID, MADFourChar type);
 void	MInitImportPlug(MADLibrary *inMADDriver, const char*);
 void	CloseImportPlug(MADLibrary *inMADDriver);
-OSErr	CheckMADFile(char *AlienFile);
+MADErr	CheckMADFile(char *AlienFile);
 
-PPEXPORT void ConvertInstrumentIn(Byte *tempPtr, size_t sSize);
+PPEXPORT void ConvertInstrumentIn(MADByte *tempPtr, size_t sSize);
 
 #if defined _MAC_H && !TARGET_OS_IPHONE
 void SetOSType(CFURLRef, OSType);

@@ -284,9 +284,9 @@ enum EFTypes
 
 typedef struct FXBus
 {
-	unsigned char	ByPass;// Boolean
+	unsigned char	ByPass;// MADBool
 	short			copyId;
-	unsigned char	Active; //Boolean
+	unsigned char	Active; //MADBool
 } FXBus;
 
 typedef struct MADSpec

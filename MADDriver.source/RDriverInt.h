@@ -55,53 +55,53 @@ extern "C" {
 
 /*** General Functions ***/
 
-PPEXPORT OSErr		MADKillInstrument(MADMusic*, short ins);
-PPEXPORT OSErr		MADKillSample(MADMusic *, short ins, short sample);
+PPEXPORT MADErr		MADKillInstrument(MADMusic*, short ins);
+PPEXPORT MADErr		MADKillSample(MADMusic *, short ins, short sample);
 PPEXPORT sData		*MADCreateSample(MADMusic *MDriver, short ins, short sample);
-PPEXPORT OSErr		MADKillCmd(Cmd*);
+PPEXPORT MADErr		MADKillCmd(Cmd*);
 PPEXPORT void		UpdateTracksNumber(MADDriverRec *);
-PPEXPORT OSErr		MADCreateVolumeTable(MADDriverRec *intDriver);
+PPEXPORT MADErr		MADCreateVolumeTable(MADDriverRec *intDriver);
 PPEXPORT void		MADDisposeVolumeTable(MADDriverRec *intDriver);
 PPEXPORT MADMusic*	CreateFreeMADK();
 
 
 //TODO: either migrate all these functions to PlayerPROCore or remove them from the header.
 void	AllNoteOff(MADDriverRec *intDriver);
-Boolean	MADIsPressed(unsigned char* km2, unsigned short k);
-OSErr	MADCreateTiming(MADDriverRec *intDriver);
-OSErr	MADCreateDriverBuffer(MADDriverRec *intDriver);
+MADBool	MADIsPressed(unsigned char* km2, unsigned short k);
+MADErr	MADCreateTiming(MADDriverRec *intDriver);
+MADErr	MADCreateDriverBuffer(MADDriverRec *intDriver);
 void	MADDisposeDriverBuffer(MADDriverRec *intDriver);
-OSErr	MADCreateReverb(MADDriverRec *intDriver);
+MADErr	MADCreateReverb(MADDriverRec *intDriver);
 void	MADDisposeReverb(MADDriverRec *intDriver);
-OSErr	MADCreateMicroDelay(MADDriverRec *intDriver);
-OSErr	DBSndClose(MADDriverRec *inMADDriver);
+MADErr	MADCreateMicroDelay(MADDriverRec *intDriver);
+MADErr	DBSndClose(MADDriverRec *inMADDriver);
 void	StopChannel(MADDriverRec *inMADDriver);
 void	PlayChannel(MADDriverRec *inMADDriver);
 void	MADPurgeTrack(MADDriverRec *intDriver);
-PPEXPORT Boolean DirectSave(Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
-PPEXPORT Boolean DirectSaveAlways(Ptr myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
-OSErr MADCreateVibrato(MADDriverRec *MDriver);
+PPEXPORT MADBool DirectSave(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
+PPEXPORT MADBool DirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
+MADErr MADCreateVibrato(MADDriverRec *MDriver);
 PPEXPORT PatData* DecompressPartitionMAD1(MADMusic *MDriver, PatData* myPat);
 PPEXPORT PatData* CompressPartitionMAD1(MADMusic *MDriver, PatData* myPat);
 PPEXPORT void 	GenerateSound(MADDriverRec *intDriver);
 PPEXPORT int	GetOldPeriod(short note, int c2spd, MADDriverRec *intDriver);
-PPEXPORT OSErr	MADResetInstrument(InstrData *curIns);
+PPEXPORT MADErr	MADResetInstrument(InstrData *curIns);
 PPEXPORT void	MADCheckSpeed(MADMusic *MDriver, MADDriverRec *intDriver);
-PPEXPORT OSErr	AddSoundToMAD(Ptr			theSound,
+PPEXPORT MADErr	AddSoundToMAD(char			*theSound,
 							  int			lS,
 							  int			lE,
 							  short			sS,
 							  short			bFreq,
-							  UInt32		rate,
-							  Boolean		stereo,
-							  Str255		name,
+                              uint32_t		rate,
+                              MADBool		stereo,
+                              MADPStr255		name,
 							  short			ins,
 							  short			*sampleID);
 
-PPEXPORT OSErr	MADCopyCurrentPartition(MADMusic *theNewMAD);
-PPEXPORT OSErr	MADLoadMADFileCString(MADMusic **, const char *fName);
+PPEXPORT MADErr	MADCopyCurrentPartition(MADMusic *theNewMAD);
+PPEXPORT MADErr	MADLoadMADFileCString(MADMusic **, const char *fName);
 int	DoVolPanning(short, Channel *ch, MADDriverRec *intDriver);
-int	DoVolPanning256(short, Channel *ch, MADDriverRec *intDriver, Boolean);
+int	DoVolPanning256(short, Channel *ch, MADDriverRec *intDriver, MADBool);
 void	MADKeyOFF(MADDriverRec *MDriver, short track);
 
 PPEXPORT size_t	MADMinimize(MADMusic*);
@@ -113,35 +113,35 @@ void	MADTickRemoverLoop16(int size, Channel *curVoice, int *ASCBuffer1, int *ASC
 void	MADTickRemoverLoop8(int size, Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, MADDriverRec *intDriver, int diff);
 
 short	MADGetNextReader(MADMusic *music, MADDriverRec *intDriver, short cur, short *pat);
-PPEXPORT OSErr	MADCleanCurrentMusic(MADMusic *MDriver, MADDriverRec *intDriver);
+PPEXPORT MADErr	MADCleanCurrentMusic(MADMusic *MDriver, MADDriverRec *intDriver);
 void	CloseEffect(Channel *ch, short call, MADDriverRec *intDriver);
 int		Interpolate(int p, int p1, int p2, int v1, int v2);
 int		InterpolateEnv(int p, EnvRec *a,EnvRec *b);
 void	ProcessFadeOut(Channel *ch, MADDriverRec *intDriver);
-void	ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, Boolean);
+void	ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, MADBool);
 void	StartEnvelope(Channel *ch);
 void	StartPanning(Channel *ch);
 void	SetUpCmdEffect(Channel *ch, MADDriverRec *intDriver);
-OSErr	MADInitEqualizer(MADDriverRec *intDriver);
+MADErr	MADInitEqualizer(MADDriverRec *intDriver);
 void	MADCloseEqualizer(MADDriverRec *intDriver);
 void	MADrealft(double *data,int n,int isign);
-void	MADCallFFT(sData *SData, double *filter, MADDriverRec *intDriver, Boolean);
-void	FFT16S(short* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean);
-void	FFT8S(char	*SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, Boolean);
+void	MADCallFFT(sData *SData, double *filter, MADDriverRec *intDriver, MADBool);
+void	FFT16S(short* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, MADBool);
+void	FFT8S(char	*SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, MADBool);
 void	IntNoteOff(Channel *curVoice, MADDriverRec *intDriver);
-Boolean	NewMADCommand(Cmd *theNoteCmd);
+MADBool	NewMADCommand(Cmd *theNoteCmd);
 short	FindAFreeChannel(MADDriverRec *intDriver);
 
 // Effects.c
 
-void parse_slidevol(Channel *ch, Byte Arg);
+void parse_slidevol(Channel *ch, MADByte Arg);
 void ConvertTo64Rows(MADMusic *music);
 
 // MIDI
 void InitMIDIHarware(void);
 void OpenMIDIHardware(MADDriverRec *rec);
 void CloseMIDIHarware(void);
-void SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte);
+void SendMIDIClock(MADDriverRec *intDriver, MADByte MIDIByte);
 
 #ifdef __cplusplus
 }

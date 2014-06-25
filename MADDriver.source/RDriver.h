@@ -90,9 +90,9 @@ typedef struct Channel
 	int		ID;					// Channel ID - 0 to MAXTRACK
 	int		TrackID;			// TrackID - 0 to MAXTRACK (Used in multiChannel mode)
 	
-	char	*begPtr;			// Sample Data Ptr - Beginning of data
-	char	*maxPtr;			// Sample Data Ptr - End of data
-	char	*curPtr;			// Sample Data Ptr - Current position
+	char	*begPtr;			// Sample Data char* - Beginning of data
+	char	*maxPtr;			// Sample Data char* - End of data
+	char	*curPtr;			// Sample Data char* - Current position
 	size_t	sizePtr;			// Sample Size in bytes
 	
 	int		amp;				// Sample amplitude: 8 or 16 bits
@@ -117,12 +117,12 @@ typedef struct Channel
 	int		pann;				// Channel pan (0 to 64)
 	
 	int		cmd;				// Command
-	Byte	arg;				// Argument of command
-	Byte	volcmd;				// Volume Command
+    MADByte	arg;				// Argument of command
+    MADByte	volcmd;				// Volume Command
 	
 	int		arp[MAX_ARP];		// Used for arpeggio command
 	int		arpindex;			// Used for arpeggio command
-	Boolean	arpUse;
+    MADBool	arpUse;
 	
 	char	viboffset;			// Used for vibrato command
 	int		vibdepth;			// Used for vibrato command
@@ -146,7 +146,7 @@ typedef struct Channel
 	
 	/**/
 	
-	Boolean	KeyOn;
+    MADBool	KeyOn;
 	short	a;
 	short	b;
 	float	p;
@@ -164,7 +164,7 @@ typedef struct Channel
 	int		nextpannEnv;
 	//long	pannEnvInter;
 	
-	Boolean	volEnvActive, pannEnvActive;
+    MADBool	volEnvActive, pannEnvActive;
 	
 	short	aaa;
 	short	bbb;
@@ -178,22 +178,22 @@ typedef struct Channel
 	int		lastWordR, curLastWordR;
 	int		curLevelL, curLevelR;
 	
-	Boolean	LevelDirectionL, LevelDirectionR, RemoverWorking;
+    MADBool	LevelDirectionL, LevelDirectionR, RemoverWorking;
 	
 	int		prevVol0;
 	int		prevVol1;
 	
 	/**/
 	
-	Boolean	GEffect;
+    MADBool	GEffect;
 	short	GPat, GReader;
 	
 	/**/
 	
-	Boolean	stereo;
+    MADBool	stereo;
 	
-	Byte	loopType;
-	Boolean	pingpong;
+    MADByte	loopType;
+    MADBool	pingpong;
 	
 	int		preOff;
 	char	preVal, preVal2;
@@ -204,7 +204,7 @@ typedef struct Channel
 	int		TICKREMOVESIZE;
 	
 	
-	Boolean	PanningE8;
+    MADBool	PanningE8;
 	short	trig;
 	short	PatternLoopE6, PatternLoopE6Count, PatternLoopE6ID;
 	
@@ -223,10 +223,10 @@ typedef struct MADMusic
 	InstrData	*fid;						// Instruments
 	sData		**sample;					// Samples
 	FXSets		*sets;						// FXSettings
-	OSType		originalFormat;
-	Str255		musicFileName;
-	Boolean		musicUnderModification;		// Tell the driver to NOT access music data
-	Boolean		hasChanged;
+    MADFourChar		originalFormat;
+    MADPStr255		musicFileName; // Pascal string
+    MADBool		musicUnderModification;		// Tell the driver to NOT access music data
+    MADBool		hasChanged;
 } MADMusic;
 
 /********************						***********************/
@@ -283,10 +283,10 @@ typedef struct MADDriverSettings
 	int				ReverbSize;			// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
 	int				ReverbStrength;		// Reverb strength in % (0 <-> 70)
 	int				oversampling;		// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
-	Boolean			TickRemover;		// Remove volume/sample/loop ticks.
-	Boolean			surround;			// Surround effect active? true/false
-	Boolean			Reverb;				// Reverb effect active? true/false
-	Boolean			repeatMusic;		// If music finished, repeat it or stop.
+    MADBool			TickRemover;		// Remove volume/sample/loop ticks.
+    MADBool			surround;			// Surround effect active? true/false
+    MADBool			Reverb;				// Reverb effect active? true/false
+    MADBool			repeatMusic;		// If music finished, repeat it or stop.
 } MADDriverSettings;
 
 /******************************************************************/
@@ -297,7 +297,7 @@ typedef struct MADDriverSettings
 //	To use with PlayerPRO for CodeWarrior
 //
 //	Your main function have to be in this form:
-//	OSErr PPImpExpMain(	OSType order,
+//	MADErr PPImpExpMain(	OSType order,
 //						char *AlienFileName,
 //						MADMusic *MadFile,
 //						PPInfoRec *info,
@@ -325,7 +325,7 @@ typedef struct PPInfoRec
 	
 	long	fileSize;
 	
-	OSType	signature;
+    MADFourChar	signature;
 	
 	short	totalTracks;
 	short	totalInstruments;
@@ -340,15 +340,15 @@ typedef struct PPInfoRec
 /********************						***********************/
 
 enum PPPlugModes {
-	MADPlugImport =				(OSType)'IMPL',
-	MADPlugExport =				(OSType)'EXPL',
-	MADPlugInfo =				(OSType)'INFO',
-	MADPlugTest =				(OSType)'TEST',
-	MADPlugPlay =				(OSType)'PLAY',
-	MADPlugImportExport =		(OSType)'EXIM',
-	MADPlugSampleImporter =		(OSType)'SAMP',
-	MADPlugInstrumentImporter =	(OSType)'INST',
-	MADPlugNonePlug =			(OSType)'NONE'
+    MADPlugImport =				(MADFourChar)'IMPL',
+    MADPlugExport =				(MADFourChar)'EXPL',
+    MADPlugInfo =				(MADFourChar)'INFO',
+    MADPlugTest =				(MADFourChar)'TEST',
+    MADPlugPlay =				(MADFourChar)'PLAY',
+    MADPlugImportExport =		(MADFourChar)'EXIM',
+    MADPlugSampleImporter =		(MADFourChar)'SAMP',
+    MADPlugInstrumentImporter =	(MADFourChar)'INST',
+    MADPlugNonePlug =			(MADFourChar)'NONE'
 };
 
 #pragma pack(pop)
@@ -362,7 +362,7 @@ enum PPPlugModes {
 #include <CoreFoundation/CFBundle.h>
 #endif
 
-typedef OSErr (*MADPLUGFUNC)(OSType, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
+typedef MADErr (*MADPLUGFUNC)(OSType, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
 
 typedef struct PlugInfo
 {
@@ -381,10 +381,10 @@ typedef struct PlugInfo
 
 #ifdef WIN32
 #include <windows.h>
-typedef OSErr (*PLUGDLLFUNC)(OSType, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
+typedef MADErr (*PLUGDLLFUNC)(MADFourChar, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
-	OSType		mode;				// Mode support : Import +/ Export
+    MADFourChar		mode;				// Mode support : Import +/ Export
 	int			version;			// Plug-in version
 	HMODULE		hLibrary;
 	PLUGDLLFUNC	IOPlug;				// Plug CODE
@@ -397,11 +397,11 @@ typedef struct PlugInfo
 
 #ifdef _BE_H
 //TODO: include BeOS headers!
-typedef	OSErr (*MADPlug)(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+typedef	MADErr (*MADPlug)(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 typedef struct PlugInfo
 {
-	OSType		mode;				// Mode support : Import +/ Export
+    MADFourChar		mode;				// Mode support : Import +/ Export
 	int			version;			// Plug-in version
 	image_id	hLibrary;
 	MADPlug		IOPlug;				// Plug CODE
@@ -415,10 +415,10 @@ typedef struct PlugInfo
 #if (defined(__ELF__) && !(defined (_MAC_H) || defined (_BE_H)))
 #include <dlfcn.h>
 #include <sys/param.h>  //For PATH_MAX
-typedef OSErr (*MADPLUGFUNC)(OSType, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
+typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
-	OSType		mode;				// Mode support : Import +/ Export
+    MADFourChar		mode;				// Mode support : Import +/ Export
 	int			version;			// Plug-in version
 	void*		hLibrary;
 	MADPLUGFUNC	IOPlug;				// Plug CODE
@@ -439,7 +439,7 @@ typedef struct MADLibrary
 	int			mytab[12];
 	PlugInfo	*ThePlug;	// Pointers on plugs code & infos
 	
-	OSType		IDType;		// IDType = 'MADD' -- READ ONLY --
+    MADFourChar		IDType;		// IDType = 'MADD' -- READ ONLY --
 	short		TotalPlug;	// Number of Plugs in pointer ThePlug
 } MADLibrary;
 
@@ -488,10 +488,10 @@ typedef struct __VSTEffect {
 	AEffect				*ce[2];
 	short				VSTid;
 	CFStringRef			name;
-	Boolean				Active;
+	MADBool				Active;
 	CFBundleRef			connID;
 	VSTPlugInPtr		vstMain;
-	Boolean				ProcessReplacingNotAvailable;
+	MADBool				ProcessReplacingNotAvailable;
 } VSTEffect;
 #else
 typedef struct __VSTEffect {
@@ -505,10 +505,10 @@ typedef struct __VSTEffect {
 	AEffect				*ce[2];
 	short				VSTid;
 	char				name[50];
-	Boolean				Active;
+	MADBool				Active;
 	HMODULE				connID;
 	VSTPlugInPtr		vstMain;
-	Boolean				ProcessReplacingNotAvailable;
+	MADBool				ProcessReplacingNotAvailable;
 } VSTEffect;
 
 #elif (defined(__ELF__) && !(defined (_MAC_H) || defined (_BE_H)))
@@ -517,10 +517,10 @@ typedef struct __VSTEffect {
 	AEffect				*ce[2];
 	short				VSTid;
 	char				name[50];
-	Boolean				Active;
+    MADBool				Active;
 	void				*connID;
 	VSTPlugInPtr		vstMain;
-	Boolean				ProcessReplacingNotAvailable;
+    MADBool				ProcessReplacingNotAvailable;
 } VSTEffect;
 #endif
 
@@ -597,79 +597,79 @@ PPEXPORT void	PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char
  @discussion You must call this function if you want to use other functions & variables.
  Needed to help set up the MADDriver structure and load non-MADK audio trackers.
  */
-PPEXPORT OSErr	MADInitLibrary(const char *PlugsFolderName, MADLibrary **MADLib);
+PPEXPORT MADErr	MADInitLibrary(const char *PlugsFolderName, MADLibrary **MADLib);
 
-PPEXPORT OSErr	MADDisposeLibrary(MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
+PPEXPORT MADErr	MADDisposeLibrary(MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
 PPEXPORT void	MADGetBestDriver(MADDriverSettings *DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
-PPEXPORT Boolean MADSoundDriverIsAvalable(short theDriver);
+PPEXPORT MADBool MADSoundDriverIsAvalable(short theDriver);
 PPEXPORT int	MADSoundDriverList();
 
-PPEXPORT OSErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
-PPEXPORT OSErr	MADDisposeDriver(MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
+PPEXPORT MADErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
+PPEXPORT MADErr	MADDisposeDriver(MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
 
-PPEXPORT OSErr	MADChangeDriverSettings(MADDriverSettings *DriverInitParam, MADDriverRec** returnDriver);
+PPEXPORT MADErr	MADChangeDriverSettings(MADDriverSettings *DriverInitParam, MADDriverRec** returnDriver);
 
 PPEXPORT MADDriverSettings MADGetDriverSettings(MADDriverRec *theDriver);
 
-PPEXPORT OSErr	MADStartDriver(MADDriverRec *MDriver);										// NEW - Activates the sound generating procedure (interruption)
-PPEXPORT OSErr	MADStopDriver(MADDriverRec *MDriver);										// NEW - DEActivates the sound generating procedure (interruption)
+PPEXPORT MADErr	MADStartDriver(MADDriverRec *MDriver);										// NEW - Activates the sound generating procedure (interruption)
+PPEXPORT MADErr	MADStopDriver(MADDriverRec *MDriver);										// NEW - DEActivates the sound generating procedure (interruption)
 
-PPEXPORT OSErr	MADPlayMusic(MADDriverRec *MDriver);										// NEW - Read and play current music in memory - Call MADStartInterruption BEFORE
-PPEXPORT OSErr	MADStopMusic(MADDriverRec *MDriver);										// NEW - Stop reading current music in memory, Use MADCleanDriver to stop sounds
-PPEXPORT Boolean MADIsPlayingMusic(MADDriverRec *driver);									// NEW - See if PlayerPRO is playing music
+PPEXPORT MADErr	MADPlayMusic(MADDriverRec *MDriver);										// NEW - Read and play current music in memory - Call MADStartInterruption BEFORE
+PPEXPORT MADErr	MADStopMusic(MADDriverRec *MDriver);										// NEW - Stop reading current music in memory, Use MADCleanDriver to stop sounds
+PPEXPORT MADBool MADIsPlayingMusic(MADDriverRec *driver);									// NEW - See if PlayerPRO is playing music
 
 PPEXPORT void	MADCleanDriver(MADDriverRec *intDriver);									// Clean the driver : stop playing sounds
 
-PPEXPORT OSErr	MADReset(MADDriverRec *MDriver);											// Reset the current music at the start position
-PPEXPORT OSErr	MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
-PPEXPORT OSErr	MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus(0, 100, 50) = go to the middle of the music
+PPEXPORT MADErr	MADReset(MADDriverRec *MDriver);											// Reset the current music at the start position
+PPEXPORT MADErr	MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
+PPEXPORT MADErr	MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus(0, 100, 50) = go to the middle of the music
 
-PPEXPORT OSErr	MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char*);
+PPEXPORT MADErr	MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char*);
 
-PPEXPORT OSErr	MADLoadMusicPtr(MADMusic **music, char *myPtr);								// MAD ONLY - Load a MAD Ptr into memory, you can free() your Ptr after this call
+PPEXPORT MADErr	MADLoadMusicPtr(MADMusic **music, char *myPtr);								// MAD ONLY - Load a MAD char* into memory, you can free() your char* after this call
 
-PPEXPORT OSErr	MADLoadMusicFileCString(MADLibrary *, MADMusic **music, char *type, char *fName);			// Load a music file with plugs
+PPEXPORT MADErr	MADLoadMusicFileCString(MADLibrary *, MADMusic **music, char *type, char *fName);			// Load a music file with plugs
 
-PPEXPORT OSErr	MADMusicIdentifyCString(MADLibrary *, char *type, char *cName);			// Identify what kind of music format is cName file.
+PPEXPORT MADErr	MADMusicIdentifyCString(MADLibrary *, char *type, char *cName);			// Identify what kind of music format is cName file.
 
-PPEXPORT OSErr	MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec);
+PPEXPORT MADErr	MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec);
 	
-PPEXPORT OSErr	MADMusicExportCString(MADLibrary *lib, MADMusic *music, char *type, char* cName);
+PPEXPORT MADErr	MADMusicExportCString(MADLibrary *lib, MADMusic *music, char *type, char* cName);
 
-PPEXPORT OSErr	MADMusicSaveCString(MADMusic *music, const char *cName, Boolean compressMAD);
-//PPEXPORT OSErr	MADMusicSavePointer(MADMusic *music, void **outPtr, size_t *outPtrSize, Boolean compressMAD);
+PPEXPORT MADErr	MADMusicSaveCString(MADMusic *music, const char *cName, MADBool compressMAD);
+//PPEXPORT MADErr	MADMusicSavePointer(MADMusic *music, void **outPtr, size_t *outPtrSize, MADBool compressMAD);
 
 #ifdef _MAC_H
-PPEXPORT OSErr	MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef);
-PPEXPORT OSErr	MADMusicIdentifyCFURL(MADLibrary *lib, char *type, CFURLRef URLRef);
-PPEXPORT OSErr	MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec);
-PPEXPORT OSErr	MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL);
-PPEXPORT OSErr	MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, Boolean compressMAD);
+PPEXPORT MADErr	MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef);
+PPEXPORT MADErr	MADMusicIdentifyCFURL(MADLibrary *lib, char *type, CFURLRef URLRef);
+PPEXPORT MADErr	MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec);
+PPEXPORT MADErr	MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL);
+PPEXPORT MADErr	MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, MADBool compressMAD);
 #endif
 
-PPEXPORT Boolean MADPlugAvailable(MADLibrary *, char *type);								// Is plug 'type' available?
+PPEXPORT MADBool MADPlugAvailable(MADLibrary *, char *type);								// Is plug 'type' available?
 
-PPEXPORT OSErr	MADDisposeMusic(MADMusic **, MADDriverRec *MDriver);								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
+PPEXPORT MADErr	MADDisposeMusic(MADMusic **, MADDriverRec *MDriver);								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
 
 PPEXPORT void	MADChangeTracks(MADDriverRec *MDriver, short);				// Change current tracks number of the music driver
 PPEXPORT Cmd*	GetMADCommand(short		position,						// Extract a Command from a PatData structure
 							  short		channel,
 							  PatData*	aPatData);
 
-PPEXPORT OSErr	MADPlaySoundData(MADDriverRec	*MDriver,
+PPEXPORT MADErr	MADPlaySoundData(MADDriverRec	*MDriver,
 								 const char		*soundPtr,				// Sound Pointer to data
 								 size_t			size,					// Sound size in bytes
 								 int			channel,				// channel ID on which to play sound
-								 Byte			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
+                                 MADByte			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
 								 int			amplitude,				// 8 or 16 bits
 								 size_t			loopBeg,				// loop beginning
 								 size_t			loopSize,				// loop size in bytes
 								 unsigned int	rate,					// sample rate of the sound data, by ex: rate22khz
-								 Boolean		stereo);				// sample is in stereo or in mono?
+                                 MADBool		stereo);				// sample is in stereo or in mono?
 							
 #if 0
-PPEXPORT OSErr	MADPlaySoundDataSYNC(MADDriverRec	*MDriver,
+PPEXPORT MADErr	MADPlaySoundDataSYNC(MADDriverRec	*MDriver,
 									 char			*soundPtr,				// Sound Pointer to data
 									 long			size,					// Sound size in bytes
 									 long			channel,				// channel ID on which to play sound
@@ -678,17 +678,17 @@ PPEXPORT OSErr	MADPlaySoundDataSYNC(MADDriverRec	*MDriver,
 									 long			loopBeg,				// loop beginning
 									 long			loopSize,				// loop size in bytes
 									 double			rate,					// sample rate of the sound data, by ex: rate22khz
-									 Boolean		stereo);				// sample is in stereo or in mono?
+									 MADBool		stereo);				// sample is in stereo or in mono?
 #endif
 
-PPEXPORT Boolean MADIsDonePlaying(MADDriverRec *MDriver);
+PPEXPORT MADBool MADIsDonePlaying(MADDriverRec *MDriver);
 	
 PPEXPORT void	MADBeginExport(MADDriverRec *driver);
 PPEXPORT void	MADEndExport(MADDriverRec *driver);
-PPEXPORT Boolean MADIsExporting(MADDriverRec *driver);
+PPEXPORT MADBool MADIsExporting(MADDriverRec *driver);
 
-PPEXPORT Boolean MADWasReading(MADDriverRec *driver) DEPRECATED_ATTRIBUTE;
-PPEXPORT void	MADSetReading(MADDriverRec *driver, Boolean toSet) DEPRECATED_ATTRIBUTE;
+PPEXPORT MADBool MADWasReading(MADDriverRec *driver) DEPRECATED_ATTRIBUTE;
+PPEXPORT void	MADSetReading(MADDriverRec *driver, MADBool toSet) DEPRECATED_ATTRIBUTE;
 
 PPEXPORT int	MADAudioLength(MADDriverRec *theRec);
 
@@ -696,7 +696,7 @@ PPEXPORT size_t MADGetMusicSize(MADMusic*);
 
 PPEXPORT void	MADDriverClearChannel(MADDriverRec *theRec, int channel);
 
-PPEXPORT Boolean MADDriverChannelIsDonePlaying(MADDriverRec *theRec, int chan);
+PPEXPORT MADBool MADDriverChannelIsDonePlaying(MADDriverRec *theRec, int chan);
 
 #ifdef __cplusplus
 }

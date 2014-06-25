@@ -18,7 +18,7 @@ VSTEffect* CreateVSTEffect(short effectID)
 	return NULL;
 }
 
-short ConvertUniqueIDToIndex(UInt32 idx)
+short ConvertUniqueIDToIndex(uint32_t idx)
 {
 	return 0;
 }
@@ -28,7 +28,7 @@ void ApplyVSTSets(VSTEffect* myEffect, FXSets* set)
 	
 }
 
-Boolean IsVSTChanEffect(MADDriverRec *intDriver, short channel)
+MADBool IsVSTChanEffect(MADDriverRec *intDriver, short channel)
 {
 	return false;
 }

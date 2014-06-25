@@ -42,7 +42,7 @@ void MADTickLoop8(size_t size, Channel *curVoice, int *ASCBuffer1, int *ASCBuffe
 	int		tLongL, tLongR;
 	int		curLevelL = curVoice->curLevelL, curLevelR = curVoice->curLevelR, curLastWordL = curVoice->curLastWordL;
 	int		curLastWordR = curVoice->curLastWordR, TICKREMOVESIZE = curVoice->TICKREMOVESIZE;
-	Boolean	LevelDirectionL = curVoice->LevelDirectionL, LevelDirectionR = curVoice->LevelDirectionR, RemoverWorking = curVoice->RemoverWorking;
+	MADBool	LevelDirectionL = curVoice->LevelDirectionL, LevelDirectionR = curVoice->LevelDirectionR, RemoverWorking = curVoice->RemoverWorking;
 	
 	if (TICKREMOVESIZE == 0)
 		return;
@@ -106,7 +106,7 @@ void MADTickRemoverStart8(Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, M
 	   curVoice->prevVol0 != curDoVol0 ||
 	   curVoice->prevVol1 != curDoVol1)
 	{
-		Boolean	DoIT = false;
+		MADBool	DoIT = false;
 		
 		curVoice->LevelDirectionL = true;
 		curVoice->LevelDirectionR = true;

@@ -35,15 +35,15 @@ extern short		gOutNodeRefNum, gOutputPortRefNum;
 void SampleMIDI(Channel *curVoice, short channel, short curN, MADDriverRec *intDriver);
 void ApplyFilters(MADDriverRec *intDriver);
 void ApplySurround(MADDriverRec *intDriver);
-void SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte);
+void SendMIDIClock(MADDriverRec *intDriver, MADByte MIDIByte);
 void SendMIDITimingClock(MADDriverRec *intDriver);
-void ConvertInstrument(Byte *tempPtr, size_t sSize);
+void ConvertInstrument(MADByte *tempPtr, size_t sSize);
 
 void ProcessVisualPlug(MADDriverRec*, short*, int);
 
-void ConvertInstrument(Byte *tempPtr, size_t sSize)
+void ConvertInstrument(MADByte *tempPtr, size_t sSize)
 {
-	Byte val = 0x80;
+	MADByte val = 0x80;
 
 	while (sSize > 0) {
 		sSize--;
@@ -51,9 +51,9 @@ void ConvertInstrument(Byte *tempPtr, size_t sSize)
 	}
 }
 
-void ConvertInstrumentIn(Byte *tempPtr, size_t sSize)
+void ConvertInstrumentIn(MADByte *tempPtr, size_t sSize)
 {
-	Byte val = 0x80;
+	MADByte val = 0x80;
 
 	while (sSize > 0) {
 		sSize--;
@@ -90,7 +90,7 @@ void ConvertInstrumentOut16(short *tempPtr, size_t sSize)
 	ConvertInstrument16(tempPtr, sSize);
 }
 
-int DoVolPanning256(short whichChannel, Channel *ch, MADDriverRec *intDriver, Boolean Interpol)	// MAX = 256
+int DoVolPanning256(short whichChannel, Channel *ch, MADDriverRec *intDriver, MADBool Interpol)	// MAX = 256
 {
 	// Compute Volume !
 	int pannValue, volFade;
@@ -333,7 +333,7 @@ void ProcessFadeOut(Channel *ch, MADDriverRec *intDriver)
 	}
 }
 
-void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
+void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, MADBool Recurrent)
 {
 	int			v;
 	InstrData	*curIns;
@@ -350,7 +350,7 @@ void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
 		return;
 	
 	if (curIns->volType & EFON) {
-		Byte 	a,b;
+		MADByte 	a,b;
 		float	p;
 		
 		//  active? -> copy variables
@@ -442,7 +442,7 @@ void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
 	}
 }
 
-void ProcessPanning(Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
+void ProcessPanning(Channel *ch, MADDriverRec *intDriver, MADBool Recurrent)
 {
 	int			v;
 	InstrData	*curIns;
@@ -461,7 +461,7 @@ void ProcessPanning(Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
 	
 	if (curIns->pannType & EFON) {
 		//  active? -> copy variables
-		Byte 	aa,bb;
+		MADByte 	aa,bb;
 		float	pp;
 		
 		aa = ch->aa;
@@ -554,7 +554,7 @@ void StartPanning(Channel *ch)
 	ch->bb=1;
 }
 
-static const UInt32 lineartable[800] = {
+static const uint32_t lineartable[800] = {
 	535232,534749,534266,533784,533303,532822,532341,531861,
 	531381,530902,530423,529944,529466,528988,528511,528034,
 	527558,527082,526607,526131,525657,525183,524709,524236,
@@ -654,14 +654,14 @@ static const UInt32 lineartable[800] = {
 };
 
 
-UInt32 getfrequency(UInt32 period)
+uint32_t getfrequency(uint32_t period)
 {
 	return lineartable[period % 768] >> (period / 768);
 }
 
 int GetOld2Period(short note, int c2spd, MADDriverRec *intDriver)
 {
-	UInt32 	period, n, o;
+	uint32_t 	period, n, o;
 	
 	if (note == 0xFF || note == 0xFE)
 		return 4242;
@@ -675,7 +675,7 @@ int GetOld2Period(short note, int c2spd, MADDriverRec *intDriver)
 	n = note%12;
 	o = note/12;
 	
-	period = (UInt32) ((UInt32) (8363U * ((UInt32) intDriver->lib->mytab[n]) ) >> o ) / (UInt32) c2spd;
+	period = (uint32_t) ((uint32_t) (8363U * ((uint32_t) intDriver->lib->mytab[n]) ) >> o ) / (uint32_t) c2spd;
 	
 	if (period == 0)
 		period = 7242;
@@ -711,7 +711,7 @@ static const int logtab[]={
 
 int getlogperiod(short note, int fine, MADDriverRec *intDriver)
 {
-	Byte	n;
+	MADByte	n;
 	int		i;
 	
 	n = note % 12;
@@ -731,9 +731,9 @@ int GetOldPeriod(short note, int c2spd, MADDriverRec *intDriver)
 	return GetOld2Period(note, c2spd, intDriver);
 }
 
-Boolean NewMADCommand(Cmd *theNoteCmd)
+MADBool NewMADCommand(Cmd *theNoteCmd)
 {
-	Boolean	result = false;
+	MADBool	result = false;
 	Cmd		intCmd = *theNoteCmd;
 	
 	if (intCmd.ins != 0 && (intCmd.note != 0xFF && intCmd.note != 0xFE)) {
@@ -769,7 +769,7 @@ void IntNoteOff(Channel *curVoice, MADDriverRec *intDriver)
 void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 {
 	Cmd		intCmd = *theNoteCmd;
-	Boolean	ChangedInstru = false;
+	MADBool	ChangedInstru = false;
 	
 	/********************************************/
 	/*        EXTRA small positionning          */
@@ -1025,7 +1025,7 @@ void StartEffect(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 	SetUpEffect(curVoice, intDriver);
 }
 
-void ComputeReverb8(Byte *orgPtr, Byte *destPtr, int xx, int strength)
+void ComputeReverb8(MADByte *orgPtr, MADByte *destPtr, int xx, int strength)
 {
 	int temp1;
 	
@@ -1090,7 +1090,7 @@ short FindAFreeChannel(MADDriverRec *intDriver)
 	return chanID;
 }
 
-void ApplyVSTEffects(MADDriverRec *intDriver, Boolean ByPass)
+void ApplyVSTEffects(MADDriverRec *intDriver, MADBool ByPass)
 {
 	int i;
 	if (!intDriver) return;
@@ -1160,7 +1160,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	int		InterruptBufferSize, i, ASCBUFFERCopy, ASCBUFFERRealCopy;
 	void	*DataPtrCopy;
 	int		tVSYNC;
-	Boolean	NoteReading;
+	MADBool	NoteReading;
 	int		*DASCopy, *DASECopy[MAXCHANEFFECT];
 	short	*DASCopy8;
 	
@@ -1780,7 +1780,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 			switch (intDriver->DriverSettings.outPutBits)
 			{
 				case 8:
-					ComputeReverb8((Byte*)intDriver->ReverbPtr, (Byte*)intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->DriverSettings.ReverbStrength);
+					ComputeReverb8((MADByte*)intDriver->ReverbPtr, (MADByte*)intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->DriverSettings.ReverbStrength);
 					memmove(intDriver->ReverbPtr, (void*)((size_t)intDriver->ReverbPtr + intDriver->ASCBUFFERReal*2L), intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L);
 					memmove((void*)((size_t)intDriver->ReverbPtr + intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L), intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L);
 					break;
@@ -1798,9 +1798,9 @@ void NoteAnalyse(MADDriverRec *intDriver)
 		switch (intDriver->DriverSettings.outPutBits)
 		{
 			case 8:
-				ConvertInstrument((Byte*)intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*2));
+				ConvertInstrument((MADByte*)intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*2));
 				FFT8S(intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*2), intDriver->Filter, intDriver, 2, false);
-				ConvertInstrumentIn((Byte*)intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*2));
+				ConvertInstrumentIn((MADByte*)intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*2));
 				break;
 				
 			case 16:
@@ -1926,7 +1926,7 @@ void GenerateSound(MADDriverRec *intDriver)
 	}
 }
 
-Boolean DirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
+MADBool DirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
 	char				*ptrCopy;
 	MADDriverSettings	driverCopy;
@@ -1964,7 +1964,7 @@ Boolean DirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRe
 	return true;
 }
 
-Boolean DirectSave(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
+MADBool DirectSave(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
 	char				*ptrCopy;
 	MADDriverSettings	driverCopy;

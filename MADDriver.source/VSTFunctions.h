@@ -17,9 +17,9 @@ extern "C" {
 
 void		DisposeVSTEffect(VSTEffect *myEffect);
 VSTEffect*	CreateVSTEffect(short effectID);
-short		ConvertUniqueIDToIndex(UInt32);
+short		ConvertUniqueIDToIndex(uint32_t);
 void		ApplyVSTSets(VSTEffect* myEffect, FXSets* set);
-Boolean		IsVSTChanEffect(MADDriverRec *intDriver, short channel);
+MADBool		IsVSTChanEffect(MADDriverRec *intDriver, short channel);
 void		ProcessVSTPlug(MADDriverRec *intDriver, int *data, int datasize, short channel);
 
 #ifdef __cplusplus

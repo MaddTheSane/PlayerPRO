@@ -33,7 +33,7 @@
 #include <CoreFoundation/CFURL.h>
 #endif
 
-void iFileCreate(const char *path, OSType type)
+void iFileCreate(const char *path, MADFourChar type)
 {
 #if defined _MAC_H && !TARGET_OS_IPHONE
 	CFURLRef fileURL;
@@ -107,7 +107,7 @@ long iGetEOF(FILE* iFileRefI)
 	return curEOF;
 }
 
-OSErr iRead(long size, void *dest, FILE* iFileRefI)
+MADErr iRead(long size, void *dest, FILE* iFileRefI)
 {
 	fread(dest, size, 1, iFileRefI);
 	if (ferror(iFileRefI)) {
@@ -117,12 +117,12 @@ OSErr iRead(long size, void *dest, FILE* iFileRefI)
 	return MADNoErr;
 }
 
-OSErr iSeekCur(long size, FILE* iFileRefI)
+MADErr iSeekCur(long size, FILE* iFileRefI)
 {
 	return fseek(iFileRefI, size, SEEK_CUR);
 }
 
-OSErr iWrite(long size, const void *src, FILE* iFileRefI)
+MADErr iWrite(long size, const void *src, FILE* iFileRefI)
 {
 	fwrite(src, size, 1, iFileRefI);
 	if (ferror(iFileRefI)) {
