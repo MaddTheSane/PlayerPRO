@@ -647,7 +647,7 @@ static OSErr XMReadInstruments(MADMusic *theMAD, MADDriverSettings *init)
 	return MADNoErr;
 }
 
-static OSErr XM_Load(Ptr theXM, size_t XMSize, MADMusic *theMAD, MADDriverSettings *init)
+static MADErr XM_Load(Ptr theXM, size_t XMSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	int		i;
 	int		inOutCount;
@@ -1174,7 +1174,7 @@ static Ptr	ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndSiz
 	return finalXMPtr;
 }
 
-static inline Boolean compMem(const void *a, const void *b, size_t s)
+static inline MADBool compMem(const void *a, const void *b, size_t s)
 {
 	if (memcmp(a, b, s) == 0) {
 		return true;
@@ -1183,7 +1183,7 @@ static inline Boolean compMem(const void *a, const void *b, size_t s)
 	}
 }
 
-static OSErr TestXMFile(Ptr AlienFile)
+static MADErr TestXMFile(Ptr AlienFile)
 {
 	if (compMem(AlienFile, "Extended Module: ", 17)) {
 		theXMRead = AlienFile;
@@ -1214,7 +1214,7 @@ static OSErr TestXMFile(Ptr AlienFile)
 	return MADFileNotSupportedByThisPlug;
 }
 
-static OSErr ExtractXMInfo(PPInfoRec *info, void *AlienFile)
+static MADErr ExtractXMInfo(PPInfoRec *info, void *AlienFile)
 {
 	short i;
 	
@@ -1283,10 +1283,10 @@ static OSErr ExtractXMInfo(PPInfoRec *info, void *AlienFile)
 
 #ifndef _MAC_H
 
-EXP OSErr FillPlug(PlugInfo *p);
-EXP OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr FillPlug(PlugInfo *p);
+EXP MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
+EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
 	strncpy(p->type, 		"XM  ", sizeof(p->type));
 	strncpy(p->MenuName, 	"XM Files", sizeof(p->MenuName));
@@ -1298,12 +1298,12 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 #endif
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-OSErr mainXM(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainXM(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #else
-extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	OSErr	myErr = MADNoErr;
+	MADErr	myErr = MADNoErr;
 	Ptr		AlienFile;
 	long	sndSize;
 	UNFILE	iFileRefI;
