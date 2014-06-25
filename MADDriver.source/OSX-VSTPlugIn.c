@@ -18,7 +18,7 @@ VSTEffect* CreateVSTEffect(short effectID)
 	return NULL;
 }
 
-short ConvertUniqueIDToIndex(UInt32 idx)
+short ConvertUniqueIDToIndex(uint32_t idx)
 {
 	return 0;
 }

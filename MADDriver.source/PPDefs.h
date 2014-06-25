@@ -16,6 +16,7 @@
 #ifndef TARGET_OS_IPHONE
 #define TARGET_OS_IPHONE 0
 #endif
+#include <MacTypes.h>
 #endif
 
 #include <stdio.h>

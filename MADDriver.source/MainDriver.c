@@ -46,7 +46,7 @@ typedef enum InputType {
 
 static MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFReadStreamRef MADRsrc, char *MADPtr);
 
-static inline unsigned char* MYC2PStr(unsigned char *cStr)
+static inline unsigned char* MYC2PStr(char *cStr)
 {
 	long size = strlen(cStr);
 	memmove(cStr + 1, cStr, size);
