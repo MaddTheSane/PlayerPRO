@@ -117,12 +117,12 @@ typedef struct Channel
 	int		pann;				// Channel pan (0 to 64)
 	
 	int		cmd;				// Command
-    MADByte	arg;				// Argument of command
-    MADByte	volcmd;				// Volume Command
+	MADByte	arg;				// Argument of command
+	MADByte	volcmd;				// Volume Command
 	
 	int		arp[MAX_ARP];		// Used for arpeggio command
 	int		arpindex;			// Used for arpeggio command
-    MADBool	arpUse;
+	MADBool	arpUse;
 	
 	char	viboffset;			// Used for vibrato command
 	int		vibdepth;			// Used for vibrato command
@@ -146,7 +146,7 @@ typedef struct Channel
 	
 	/**/
 	
-    MADBool	KeyOn;
+	MADBool	KeyOn;
 	short	a;
 	short	b;
 	float	p;
@@ -164,7 +164,7 @@ typedef struct Channel
 	int		nextpannEnv;
 	//long	pannEnvInter;
 	
-    MADBool	volEnvActive, pannEnvActive;
+	MADBool	volEnvActive, pannEnvActive;
 	
 	short	aaa;
 	short	bbb;
@@ -178,22 +178,22 @@ typedef struct Channel
 	int		lastWordR, curLastWordR;
 	int		curLevelL, curLevelR;
 	
-    MADBool	LevelDirectionL, LevelDirectionR, RemoverWorking;
+	MADBool	LevelDirectionL, LevelDirectionR, RemoverWorking;
 	
 	int		prevVol0;
 	int		prevVol1;
 	
 	/**/
 	
-    MADBool	GEffect;
+	MADBool	GEffect;
 	short	GPat, GReader;
 	
 	/**/
 	
-    MADBool	stereo;
+	MADBool	stereo;
 	
-    MADByte	loopType;
-    MADBool	pingpong;
+	MADByte	loopType;
+	MADBool	pingpong;
 	
 	int		preOff;
 	char	preVal, preVal2;
@@ -204,7 +204,7 @@ typedef struct Channel
 	int		TICKREMOVESIZE;
 	
 	
-    MADBool	PanningE8;
+	MADBool	PanningE8;
 	short	trig;
 	short	PatternLoopE6, PatternLoopE6Count, PatternLoopE6ID;
 	
@@ -223,10 +223,10 @@ typedef struct MADMusic
 	InstrData	*fid;						// Instruments
 	sData		**sample;					// Samples
 	FXSets		*sets;						// FXSettings
-    MADFourChar	originalFormat;
-    MADPStr255	musicFileName;				// Pascal string
-    MADBool		musicUnderModification;		// Tell the driver to NOT access music data
-    MADBool		hasChanged;
+	MADFourChar	originalFormat;
+	MADPStr255	musicFileName;				// Pascal string
+	MADBool		musicUnderModification;		// Tell the driver to NOT access music data
+	MADBool		hasChanged;
 } MADMusic;
 
 /********************						***********************/
@@ -283,10 +283,10 @@ typedef struct MADDriverSettings
 	int				ReverbSize;			// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
 	int				ReverbStrength;		// Reverb strength in % (0 <-> 70)
 	int				oversampling;		// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
-    MADBool			TickRemover;		// Remove volume/sample/loop ticks.
-    MADBool			surround;			// Surround effect active? true/false
-    MADBool			Reverb;				// Reverb effect active? true/false
-    MADBool			repeatMusic;		// If music finished, repeat it or stop.
+	MADBool			TickRemover;		// Remove volume/sample/loop ticks.
+	MADBool			surround;			// Surround effect active? true/false
+	MADBool			Reverb;				// Reverb effect active? true/false
+	MADBool			repeatMusic;		// If music finished, repeat it or stop.
 } MADDriverSettings;
 
 /******************************************************************/
@@ -325,7 +325,7 @@ typedef struct PPInfoRec
 	
 	long	fileSize;
 	
-    MADFourChar	signature;
+	MADFourChar	signature;
 	
 	short	totalTracks;
 	short	totalInstruments;
@@ -384,7 +384,7 @@ typedef struct PlugInfo
 typedef MADErr (*PLUGDLLFUNC)(MADFourChar, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
-    MADFourChar	mode;				// Mode support : Import +/ Export
+	MADFourChar	mode;				// Mode support : Import +/ Export
 	int			version;			// Plug-in version
 	HMODULE		hLibrary;
 	PLUGDLLFUNC	IOPlug;				// Plug CODE
@@ -401,7 +401,7 @@ typedef	MADErr (*MADPlug)(MADFourChar order, char *AlienFileName, MADMusic *MadF
 
 typedef struct PlugInfo
 {
-    MADFourChar	mode;				// Mode support : Import +/ Export
+	MADFourChar	mode;				// Mode support : Import +/ Export
 	int			version;			// Plug-in version
 	image_id	hLibrary;
 	MADPlug		IOPlug;				// Plug CODE
@@ -418,7 +418,7 @@ typedef struct PlugInfo
 typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
-    MADFourChar	mode;				// Mode support : Import +/ Export
+	MADFourChar	mode;				// Mode support : Import +/ Export
 	int			version;			// Plug-in version
 	void*		hLibrary;
 	MADPLUGFUNC	IOPlug;				// Plug CODE
@@ -439,7 +439,7 @@ typedef struct MADLibrary
 	int			mytab[12];
 	PlugInfo	*ThePlug;	// Pointers on plugs code & infos
 	
-    MADFourChar	IDType;		// IDType = 'MADD' -- READ ONLY --
+	MADFourChar	IDType;		// IDType = 'MADD' -- READ ONLY --
 	short		TotalPlug;	// Number of Plugs in pointer ThePlug
 } MADLibrary;
 
@@ -517,10 +517,10 @@ typedef struct __VSTEffect {
 	AEffect			*ce[2];
 	short			VSTid;
 	char			name[50];
-    MADBool			Active;
+	MADBool			Active;
 	void			*connID;
 	VSTPlugInPtr	vstMain;
-    MADBool			ProcessReplacingNotAvailable;
+	MADBool			ProcessReplacingNotAvailable;
 } VSTEffect;
 #endif
 

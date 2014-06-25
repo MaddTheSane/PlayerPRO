@@ -37,23 +37,25 @@
 
 #ifndef WIN32
 //Windows Defines
-typedef int16_t			WORD;
-typedef uint16_t			UWORD;
-typedef int32_t			HRESULT;
-typedef uint32_t			ULONG;
-typedef void*			LPVOID;
-typedef int32_t			LONG;
+typedef int16_t		WORD;
+typedef uint16_t	UWORD;
+#if !defined(__COREFOUNDATION_CFPLUGINCOM__)
+typedef int32_t		HRESULT;
+typedef uint32_t	ULONG;
+#endif
+typedef void*		LPVOID;
+typedef int32_t		LONG;
 
-typedef uint16_t			UINT;
-typedef MADBool			BOOL;
-typedef uint32_t			DWORD;
-typedef uint16_t			USHORT;
-typedef int16_t			SHORT;
+typedef uint16_t	UINT;
+typedef MADBool		BOOL;
+typedef uint32_t	DWORD;
+typedef uint16_t	USHORT;
+typedef int16_t		SHORT;
 typedef MADFourChar	FOURCC;
-typedef int8_t			BYTE;
+typedef int8_t		BYTE;
 #endif
 
-typedef uint8_t			UBYTE;
+typedef uint8_t		UBYTE;
 
 #include "XM.h"
 

@@ -47,7 +47,7 @@ struct __MADDriverRec {
 	/**  Drivers variables **/
 	
 	Channel			chan[MAXTRACK];									// Current driver channels -- READ ONLY --
-    MADBool			musicEnd;										// Is music playing finished? -- READ ONLY --
+	MADBool			musicEnd;										// Is music playing finished? -- READ ONLY --
 	short			Tube[MAXTRACK];									// Used in 'Tracks View' Window - View menu
 	short			PartitionReader;								// Current position in pattern (0...999)
 	short			Pat;											// Current ID Pattern, see 'Patterns list'
@@ -58,9 +58,9 @@ struct __MADDriverRec {
 	short			InstruTube[MAXINSTRU];							// Used in 'Instrument View' Window - View menu
 	short			VExt;											// External music speed, see 'Adaptators' window. 80 = normal
 	short			FreqExt;										// External music pitch, see 'Adaptators' window. 80 = normal
-    MADBool			Reading;										// Reading indicator
-    MADBool			Active[MAXTRACK];								// Channel Active?
-    MADBool			Equalizer;										// Is Equalizer Active?
+	MADBool			Reading;										// Reading indicator
+	MADBool			Active[MAXTRACK];								// Channel Active?
+	MADBool			Equalizer;										// Is Equalizer Active?
 	
 	void			*OscilloWavePtr;								// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
 	size_t			OscilloWaveSize;								// Size of previous buffer
@@ -74,11 +74,11 @@ struct __MADDriverRec {
 	short			InstruActif[MAXINSTRU];
 	char			*IntDataPtr;
 	void			*OsciDrawPtr[MAXDRAW];
-    MADBool			newData[MAXDRAW];
-    MADBool			useOsciBuffers;
+	MADBool			newData[MAXDRAW];
+	MADBool			useOsciBuffers;
 	short			curDrawPtr;
 	unsigned long	curTime;
-    MADBool			XMLinear, MODMode, JumpToNextPattern, endPattern, MADPlay;
+	MADBool			XMLinear, MODMode, JumpToNextPattern, endPattern, MADPlay;
 	int				ASCBUFFER;
 	size_t			BufSize;
 	int				VSYNC, BufCounter, BytesToGenerate;
@@ -87,7 +87,7 @@ struct __MADDriverRec {
 	short			InstuNoOld[MAXTRACK];
 	short			NoteOld[MAXTRACK];
 	short			VelocityOld[MAXTRACK];
-    MADBool			TrackLineReading[MAXTRACK], TrackReading[MAXTRACK], wasReading;
+	MADBool			TrackLineReading[MAXTRACK], TrackReading[MAXTRACK], wasReading;
 	char			*OverShoot;
 	int				*DASCBuffer;//, *DASCBufferOut;
 	int				*DASCEffectBuffer[MAXCHANEFFECT];
@@ -101,14 +101,14 @@ struct __MADDriverRec {
 	short			PatDelay;
 	short			lastChannelUsed[MAXTRACK];
 	int				MultiChanNo, globPan;
-    MADBool			currentlyExporting;
-    MADBool			thisExport;
-    MADBool			OneMoreBeforeEnd;
-    MADBool			clipL, clipR;
+	MADBool			currentlyExporting;
+	MADBool			thisExport;
+	MADBool			OneMoreBeforeEnd;
+	MADBool			clipL, clipR;
 	int				levelL, levelR;
 	int				curCenterL, curCenterR;
 	
-    MADBool			hasVSTEnabled;
+	MADBool			hasVSTEnabled;
 	void			*vstEffects;
 	VSTEffect		*masterVST[10];
 	VSTEffect		*chanVST[MAXTRACK][4];

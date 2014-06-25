@@ -38,7 +38,7 @@
 typedef short			MADErr;
 #ifndef __APPLE__
 typedef uint8_t			MADByte;
-typedef char			MADBool;
+typedef unsigned char	MADBool;
 typedef uint32_t		MADFourChar;
 typedef unsigned char	MADPStr255[256];
 #else
