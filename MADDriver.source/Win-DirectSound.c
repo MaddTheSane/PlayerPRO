@@ -50,55 +50,29 @@ static 	long					WIN95BUFFERSIZE;*/
 
 static char *TranslateDSError(HRESULT hr )
 {
-    switch(hr )
-    {
-    case DSERR_ALLOCATED:
-        return "DSERR_ALLOCATED";
+#define DSErrVal(theVal) case theVal: \
+return #theVal; \
+break
+	switch (hr) {
+			DSErrVal(DSERR_ALLOCATED);
+			DSErrVal(DSERR_CONTROLUNAVAIL);
+			DSErrVal(DSERR_INVALIDPARAM);
+			DSErrVal(DSERR_INVALIDCALL);
+			DSErrVal(DSERR_GENERIC);
+			DSErrVal(DSERR_PRIOLEVELNEEDED);
+			DSErrVal(DSERR_OUTOFMEMORY);
+			DSErrVal(DSERR_BADFORMAT);
+			DSErrVal(DSERR_UNSUPPORTED);
+			DSErrVal(DSERR_NODRIVER);
+			DSErrVal(DSERR_ALREADYINITIALIZED);
+			DSErrVal(DSERR_NOAGGREGATION);
+			DSErrVal(DSERR_BUFFERLOST);
+			DSErrVal(DSERR_OTHERAPPHASPRIO);
+			DSErrVal(DSERR_UNINITIALIZED);
 
-    case DSERR_CONTROLUNAVAIL:
-        return "DSERR_CONTROLUNAVAIL";
-
-    case DSERR_INVALIDPARAM:
-        return "DSERR_INVALIDPARAM";
-
-    case DSERR_INVALIDCALL:
-        return "DSERR_INVALIDCALL";
-
-    case DSERR_GENERIC:
-        return "DSERR_GENERIC";
-
-    case DSERR_PRIOLEVELNEEDED:
-        return "DSERR_PRIOLEVELNEEDED";
-
-    case DSERR_OUTOFMEMORY:
-        return "DSERR_OUTOFMEMORY";
-
-    case DSERR_BADFORMAT:
-        return "DSERR_BADFORMAT";
-
-    case DSERR_UNSUPPORTED:
-        return "DSERR_UNSUPPORTED";
-
-    case DSERR_NODRIVER:
-        return "DSERR_NODRIVER";
-
-    case DSERR_ALREADYINITIALIZED:
-        return "DSERR_ALREADYINITIALIZED";
-
-    case DSERR_NOAGGREGATION:
-        return "DSERR_NOAGGREGATION";
-
-    case DSERR_BUFFERLOST:
-        return "DSERR_BUFFERLOST";
-
-    case DSERR_OTHERAPPHASPRIO:
-        return "DSERR_OTHERAPPHASPRIO";
-
-    case DSERR_UNINITIALIZED:
-        return "DSERR_UNINITIALIZED";
-
-    default:
-        return "Unknown HRESULT";
+		default:
+			return "Unknown HRESULT";
+			break;
     }
 }
 

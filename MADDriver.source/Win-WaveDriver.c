@@ -43,24 +43,9 @@
 #define MICROBUF		10L
 
 
-static	char*			myerr;
-//static 	MADDriverRec	*WinMADDriver;
+static char* myerr;
 
 ////////////
-
-//TODO: move proper datatypes to MADDriverRec
-/*
-static WAVEOUTCAPS 	woc;
-static HWAVEOUT 		hWaveOut;
-static LPVOID 			mydata;
-static HGLOBAL 			hglobal;
-static WAVEHDR 			WaveOutHdr;
-static UINT 				gwID;
-static char 				*mydma;
-static Boolean 			OnOff;
-static long 				WIN95BUFFERSIZE;
-static long					MICROBUFState;
-*/
 
 void W95_PlayStop(MADDriverRec*);
 
