@@ -42,7 +42,7 @@ static MADErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSett
 static struct MusicPattern* oldDecompressPartitionMAD1(struct MusicPattern* myPat, short Tracks, MADDriverSettings *init)
 {
 	struct MusicPattern*	finalPtr;
-	MADByte 					*srcPtr;
+	MADByte 				*srcPtr;
 	struct Command			*myCmd;
 	short					maxCmd;
 	
@@ -59,10 +59,10 @@ static struct MusicPattern* oldDecompressPartitionMAD1(struct MusicPattern* myPa
 	/*** Decompression Routine ***/
 	
 	/*
-	 * First MADByte = 0x03 -> Instrument + AmigaPeriod + Effect + Cmd
-	 * First MADByte = 0x02 -> Instrument + AmigaPeriod
-	 * First MADByte = 0x01 -> Effect + Cmd
-	 * First MADByte = 0x00 -> nothing
+	 * First Byte = 0x03 -> Instrument + AmigaPeriod + Effect + Cmd
+	 * First Byte = 0x02 -> Instrument + AmigaPeriod
+	 * First Byte = 0x01 -> Effect + Cmd
+	 * First Byte = 0x00 -> nothing
 	 */
 	
 	while (maxCmd != 0) {
@@ -156,8 +156,8 @@ MADErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *i
 	short		i, x;
 	long		inOutCount = 0, OffSetToSample = 0;
 	int			z = 0;
-	MADBool		MADConvert = false;
-	MADFourChar		oldMadIdent = 0;
+	bool		MADConvert = false;
+	MADFourChar	oldMadIdent = 0;
 	int			finetune[16] = {
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
@@ -208,9 +208,9 @@ MADErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *i
 	
 	for (i = 0; i < oldMAD->PatMax; i++)
 	{
-		MADFourChar CompMode = 0;
-		struct MusicPattern		*tempPat, *tempPat2;
-		struct oldPatHeader		tempPatHeader;
+		MADFourChar			CompMode = 0;
+		struct MusicPattern	*tempPat, *tempPat2;
+		struct oldPatHeader	tempPatHeader;
 		
 		/** Lecture du header de la partition **/
 		if (!MADConvert) {
@@ -237,7 +237,7 @@ MADErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *i
 			return MADNeedMemory;
 		
 		if (MADConvert) {
-			tempPat = (struct MusicPattern*)((char*) tempPat + sizeof(struct oldPatHeader));
+			tempPat = (struct MusicPattern*)((size_t) tempPat + sizeof(struct oldPatHeader));
 			inOutCount -= sizeof(struct oldPatHeader);
 		}
 		
@@ -247,7 +247,7 @@ MADErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *i
 		
 		
 		if (MADConvert) {
-			tempPat = (struct MusicPattern*) ((char*) tempPat - sizeof(struct oldPatHeader));
+			tempPat = (struct MusicPattern*) ((size_t) tempPat - sizeof(struct oldPatHeader));
 			tempPat->header.PatternSize = 64;
 			tempPat->header.CompressionMode = 'NONE';
 			
@@ -457,7 +457,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 #endif
 {
 	MADErr	myErr = MADNoErr;
-	char*		AlienFile;
+	void*	AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
@@ -468,13 +468,13 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test
-				AlienFile = (char*)malloc(sndSize * 2);
+				AlienFile = malloc(sndSize * 2);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
 					free(AlienFile);
 					
-					AlienFile = (char*)malloc(sndSize);
+					AlienFile = malloc(sndSize);
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					if (myErr == MADNoErr) {
 						myErr = TestoldMADFile(AlienFile);
@@ -495,7 +495,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
@@ -517,7 +517,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 				info->fileSize = iGetEOF(iFileRefI);
 				
 				sndSize = 5000;	// Read only 5000 first bytes for optimisation
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
@@ -541,6 +541,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 	return myErr;
 }
 #else
+
 MADErr ExtractMADFGInfo(void *info, void *AlienFile)
 {
 	return ExtractoldMADInfo(info, AlienFile);

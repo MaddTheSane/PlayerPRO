@@ -33,24 +33,24 @@ typedef struct ITPatForm {
 
 typedef struct ITSampForm {
 	MADFourChar	ID;
-	char	DOSName[12];
-	char	no;
-	char	GvL;
-	char	Flag;
-	char	Vol;
-	char	SampName[26];
-	short	Convert;
-	int		length;
-	int		loopBegin;
-	int		loopEnd;
-	int		C5Speed;
-	int		SusLoopBegin;
-	int		SusLoopEnd;
-	int		samplePtr;
-	char	ViS;
-	char	ViD;
-	char	ViR;
-	char	ViT;
+	char		DOSName[12];
+	char		no;
+	char		GvL;
+	char		Flag;
+	char		Vol;
+	char		SampName[26];
+	short		Convert;
+	int			length;
+	int			loopBegin;
+	int			loopEnd;
+	int			C5Speed;
+	int			SusLoopBegin;
+	int			SusLoopEnd;
+	int			samplePtr;
+	char		ViS;
+	char		ViD;
+	char		ViR;
+	char		ViT;
 } ITSampForm;
 
 typedef struct ITNode {

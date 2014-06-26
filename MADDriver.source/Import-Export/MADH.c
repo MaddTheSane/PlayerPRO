@@ -41,7 +41,7 @@ static MADErr MADH2Mad(char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSet
 
 enum
 {
-	ins 	= 1,
+	ins 	= 1 << 0,
 	note	= 1 << 1,
 	cmd		= 1 << 2,
 	argu	= 1 << 3,
@@ -51,11 +51,11 @@ enum
 
 static oldPatData* oldDecompressPartitionMAD1(oldMADSpec *header, oldPatData* myPat)
 {
-	oldPatData*				finalPtr;
-	MADByte 					*srcPtr;
-	oldCmd					*myCmd;
-	short					maxCmd;
-	MADByte					set;
+	oldPatData*	finalPtr;
+	MADByte		*srcPtr;
+	oldCmd		*myCmd;
+	short		maxCmd;
+	MADByte		set;
 	
 	finalPtr = (oldPatData*)calloc(sizeof(oldPatHeader) + myPat->header.size * header->numChn * sizeof(oldCmd), 1);
 	if (finalPtr == NULL)
@@ -461,7 +461,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 #endif
 {
 	MADErr	myErr = MADNoErr;
-	char*		AlienFile;
+	void*	AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
@@ -472,7 +472,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (char*)malloc(sndSize * 2);
+				AlienFile = malloc(sndSize * 2);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				// ** MEMORY Test End
@@ -480,7 +480,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 				else {
 					free(AlienFile);
 					
-					AlienFile = (char*)malloc(sndSize);
+					AlienFile = malloc(sndSize);
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					if (myErr == MADNoErr) {
 						myErr = TestoldMADFile(AlienFile);
@@ -501,7 +501,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
@@ -524,7 +524,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 				
 				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {

@@ -146,7 +146,7 @@ typedef struct Channel
 	
 	/**/
 	
-	MADBool	KeyOn;
+	bool	KeyOn;
 	short	a;
 	short	b;
 	float	p;
@@ -164,7 +164,7 @@ typedef struct Channel
 	int		nextpannEnv;
 	//long	pannEnvInter;
 	
-	MADBool	volEnvActive, pannEnvActive;
+	bool	volEnvActive, pannEnvActive;
 	
 	short	aaa;
 	short	bbb;
@@ -178,22 +178,22 @@ typedef struct Channel
 	int		lastWordR, curLastWordR;
 	int		curLevelL, curLevelR;
 	
-	MADBool	LevelDirectionL, LevelDirectionR, RemoverWorking;
+	bool	LevelDirectionL, LevelDirectionR, RemoverWorking;
 	
 	int		prevVol0;
 	int		prevVol1;
 	
 	/**/
 	
-	MADBool	GEffect;
+	bool	GEffect;
 	short	GPat, GReader;
 	
 	/**/
 	
-	MADBool	stereo;
+	bool	stereo;
 	
 	MADByte	loopType;
-	MADBool	pingpong;
+	bool	pingpong;
 	
 	int		preOff;
 	char	preVal, preVal2;
@@ -225,8 +225,8 @@ typedef struct MADMusic
 	FXSets		*sets;						// FXSettings
 	MADFourChar	originalFormat;
 	MADPStr255	musicFileName;				// Pascal string
-	MADBool		musicUnderModification;		// Tell the driver to NOT access music data
-	MADBool		hasChanged;
+	bool		musicUnderModification;		// Tell the driver to NOT access music data
+	bool		hasChanged;
 } MADMusic;
 
 /********************						***********************/
@@ -283,10 +283,10 @@ typedef struct MADDriverSettings
 	int				ReverbSize;			// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
 	int				ReverbStrength;		// Reverb strength in % (0 <-> 70)
 	int				oversampling;		// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
-	MADBool			TickRemover;		// Remove volume/sample/loop ticks.
-	MADBool			surround;			// Surround effect active? true/false
-	MADBool			Reverb;				// Reverb effect active? true/false
-	MADBool			repeatMusic;		// If music finished, repeat it or stop.
+	bool			TickRemover;		// Remove volume/sample/loop ticks.
+	bool			surround;			// Surround effect active? true/false
+	bool			Reverb;				// Reverb effect active? true/false
+	bool			repeatMusic;		// If music finished, repeat it or stop.
 } MADDriverSettings;
 
 /******************************************************************/
@@ -297,7 +297,7 @@ typedef struct MADDriverSettings
 //	To use with PlayerPRO for CodeWarrior
 //
 //	Your main function have to be in this form:
-//	MADErr PPImpExpMain(	MADFourChar order,
+//	MADErr PPImpExpMain(MADFourChar order,
 //						char *AlienFileName,
 //						MADMusic *MadFile,
 //						PPInfoRec *info,
@@ -340,15 +340,15 @@ typedef struct PPInfoRec
 /********************						***********************/
 
 enum PPPlugModes {
-    MADPlugImport =				(MADFourChar)'IMPL',
-    MADPlugExport =				(MADFourChar)'EXPL',
-    MADPlugInfo =				(MADFourChar)'INFO',
-    MADPlugTest =				(MADFourChar)'TEST',
-    MADPlugPlay =				(MADFourChar)'PLAY',
-    MADPlugImportExport =		(MADFourChar)'EXIM',
-    MADPlugSampleImporter =		(MADFourChar)'SAMP',
-    MADPlugInstrumentImporter =	(MADFourChar)'INST',
-    MADPlugNonePlug =			(MADFourChar)'NONE'
+	MADPlugImport =				(MADFourChar)'IMPL',
+	MADPlugExport =				(MADFourChar)'EXPL',
+	MADPlugInfo =				(MADFourChar)'INFO',
+	MADPlugTest =				(MADFourChar)'TEST',
+	MADPlugPlay =				(MADFourChar)'PLAY',
+	MADPlugImportExport =		(MADFourChar)'EXIM',
+	MADPlugSampleImporter =		(MADFourChar)'SAMP',
+	MADPlugInstrumentImporter =	(MADFourChar)'INST',
+	MADPlugNonePlug =			(MADFourChar)'NONE'
 };
 
 #pragma pack(pop)
@@ -488,10 +488,10 @@ typedef struct __VSTEffect {
 	AEffect			*ce[2];
 	short			VSTid;
 	CFStringRef		name;
-	MADBool			Active;
+	Boolean			Active;
 	CFBundleRef		connID;
 	VSTPlugInPtr	vstMain;
-	MADBool			ProcessReplacingNotAvailable;
+	Boolean			ProcessReplacingNotAvailable;
 } VSTEffect;
 #else
 typedef struct __VSTEffect {
@@ -696,7 +696,7 @@ PPEXPORT size_t MADGetMusicSize(MADMusic*);
 
 PPEXPORT void	MADDriverClearChannel(MADDriverRec *theRec, int channel);
 
-PPEXPORT MADBool MADDriverChannelIsDonePlaying(MADDriverRec *theRec, int chan);
+PPEXPORT bool MADDriverChannelIsDonePlaying(MADDriverRec *theRec, int chan);
 
 #ifdef __cplusplus
 }

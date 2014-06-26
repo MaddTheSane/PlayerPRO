@@ -559,7 +559,7 @@ static MADErr MED_Load(char*	theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 	return MADNoErr;
 }
 
-static MADBool compMem(char* a, char* b, long s)
+static bool compMem(void* a, void* b, long s)
 {
 	long 	i;
 	
@@ -631,90 +631,85 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 #endif
 {
 	MADErr	myErr = MADNoErr;
-	char*		AlienFile;
+	void*	AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
-	if(MED_Init(init) == 0)
-	{
+	if(MED_Init(init) == 0) {
 		MED_Cleanup();
 		return MADNeedMemory;
 	}
 	
-	switch(order)
-	{
+	switch(order) {
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if (iFileRefI)
-			{
+			if (iFileRefI) {
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (char*)malloc(sndSize * 2L);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
+				AlienFile = malloc(sndSize * 2L);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
-				else
-				{
+				else {
 					free(AlienFile);
 					
-					AlienFile = (char*)malloc(sndSize);
+					AlienFile = malloc(sndSize);
 					iRead(sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestMEDFile(AlienFile);
-					if (myErr == MADNoErr)
-					{
+					if (myErr == MADNoErr) {
 						myErr = MED_Load(AlienFile,  sndSize, MadFile, init);
 					}
 					
-					free(AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			}
-			else myErr = MADReadingErr;
+			else
+				myErr = MADReadingErr;
 			break;
 			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if (iFileRefI)
-			{
-				sndSize = 1024L;
+			if (iFileRefI) {
+				sndSize = 1024;
 				
-				AlienFile = (char*)malloc(sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
+				AlienFile = malloc(sndSize);
+				if (AlienFile == NULL) {
+					myErr = MADNeedMemory;
+				} else {
 					iRead(sndSize, AlienFile, iFileRefI);
 					myErr = TestMEDFile(AlienFile);
 					
-					free(AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else myErr = MADReadingErr;
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		case 'INFO':
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if (iFileRefI)
-			{
+			if (iFileRefI) {
 				info->fileSize = iGetEOF(iFileRefI);
 				
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
+				else {
 					iRead(sndSize, AlienFile, iFileRefI);
-					
 					myErr = ExtractMEDInfo(info, AlienFile);
-					
-					free(AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else myErr = MADReadingErr;
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		default:

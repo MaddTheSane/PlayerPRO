@@ -81,7 +81,7 @@ static void Convert16to8(char* srcPtr, char* destPtr, size_t size)
 static void AnalyseSignatureMOD(long EOFo, MADFourChar temp, short *maxInstru, int *PatternSize, short *tracksNo, MODDef* aMOD)
 {
 	int		test, i;
-	MADBool	result;
+	bool	result;
 	
 	*maxInstru = 31;
 	
@@ -322,14 +322,13 @@ static inline struct MODCom* GetMODCommand(short position, short whichTracks, sh
 
 static MADErr PPConvertMod2Mad(char* aMOD, long MODSize, MADMusic *theMAD, MADDriverSettings* init)
 {
-	short	PatMax, x, tracksNo, z, maxInstru;
-	int		i;
+	short		PatMax, x, tracksNo, z, maxInstru;
+	int			i;
 	MADFourChar	temp;
-	int		sndSize, OffSetToSample, MPatSize, inOutCount;
-	char*		theInstrument[64], *MaxPtr;
-	int		lastIns[32], lastNote[32];
-	int		finetune[16] =
-	{
+	int			sndSize, OffSetToSample, MPatSize, inOutCount;
+	char		*theInstrument[64], *MaxPtr;
+	int			lastIns[32], lastNote[32];
+	int			finetune[16] = {
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
 	};
@@ -359,12 +358,14 @@ static MADErr PPConvertMod2Mad(char* aMOD, long MODSize, MADMusic *theMAD, MADDr
 		PatInt = (struct MODPat*) ((char*) MODInt->patterns - (char*) 0x4);
 		
 		PatMax = 0;
-		for(i=0; i<128; i++)
-		{
-			if (MODInt->oPointers[i] < 0) MODInt->oPointers[i] = 0;
-			if (MODInt->oPointers[i] > 128) MODInt->oPointers[i] = 0;
+		for (i = 0; i < 128; i++) {
+			if (MODInt->oPointers[i] < 0)
+				MODInt->oPointers[i] = 0;
+			if (MODInt->oPointers[i] > 128)
+				MODInt->oPointers[i] = 0;
 			
-			if (MODInt->oPointers[i] >= PatMax)	PatMax = MODInt->oPointers[i];
+			if (MODInt->oPointers[i] >= PatMax)
+				PatMax = MODInt->oPointers[i];
 		}
 		PatMax++;
 		
@@ -604,7 +605,7 @@ static MADErr PPConvertMod2Mad(char* aMOD, long MODSize, MADMusic *theMAD, MADDr
 static int ConvertSampleC4SPD(char* src, size_t srcSize, short amp, int srcC4SPD, char* dst, int dstC4SPD)
 {
 	short	*src16 = (short*) src, *dst16 = (short*) dst;
-	char*		src8 = src, *dst8 = dst;
+	char	*src8 = src, *dst8 = dst;
 	long	x;
 	size_t	dstSize;
 	
@@ -635,8 +636,8 @@ static char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *P
 {
 	int			i, x, z, maxInstru;
 	int			OffSetToSample, InstruSize, *alpha;
-	char*			theInstrument[64], *destPtr;
-	MADBool		CheckGoodMod;
+	char		*theInstrument[64], *destPtr;
+	bool		CheckGoodMod;
 	char		redut[4];
 	const short	MODTuning[75] =
 	{
@@ -655,7 +656,7 @@ static char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *P
 	/**** Variables for MOD file ****/
 	
 	MODDef			*theMOD;
-	char*				maxMOD;
+	char			*maxMOD;
 	struct MODCom	*n;
 	/********************************/
 	
@@ -719,7 +720,7 @@ static char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *P
 	if (!CheckGoodMod)
 		theMOD->oPointers[theMOD->numPointers + 1] = theMAD->header->numPat - 1;
 	
-	for(i=0; i<maxInstru; i++) {
+	for (i = 0; i < maxInstru; i++) {
 		if (theMAD->fid[i].numSamples > 0) {
 			sData	*curData = theMAD->sample[i*MAXSAMPLE + 0];
 			short	temp;
@@ -816,7 +817,7 @@ static char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *P
 				//short		note;
 				
 				if (x < theMAD->partition[i]->header.size) {
-					aCmd 	= GetMADCommand(x, z, theMAD->partition[i]);
+					aCmd = GetMADCommand(x, z, theMAD->partition[i]);
 				} else
 					aCmd = &nullCmd;
 				
@@ -905,7 +906,7 @@ static char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *P
 		n->d = theMAD->header->tempo;
 	}
 	
-	return((char*) theMOD);
+	return (char*)theMOD;
 }
 
 static MADErr ExtractMODInfo(PPInfoRec *info, void *AlienFile)
@@ -1002,7 +1003,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 #endif
 {
 	MADErr	myErr;
-	char*		AlienFile;
+	void*	AlienFile;
 	long	sndSize;
 	UNFILE	iFileRefI;
 	
@@ -1015,7 +1016,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (char*)malloc(sndSize * 2L);
+				AlienFile = malloc(sndSize * 2L);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				// ** MEMORY Test End
@@ -1023,7 +1024,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				else {
 					free(AlienFile);
 					
-					AlienFile = (char*)malloc(sndSize);
+					AlienFile = malloc(sndSize);
 					iRead(sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestMODFile(AlienFile, sndSize);
@@ -1044,7 +1045,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
@@ -1087,7 +1088,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				
 				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {

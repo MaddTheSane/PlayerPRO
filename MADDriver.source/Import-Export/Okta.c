@@ -50,14 +50,14 @@ short FoundNote(short Period)
 
 static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
-	short 				i, x, z, TrueTracks;
-	//short				PatMax, channel;
-	//long 				sndSize, OffSetToSample, OldTicks, temp, starting;
-	char*					MaxPtr, *theOktaPos;
-	//MADErr				theErr;
-	char*					theInstrument[120] /*, destPtr*/;
-	//unsigned short		tempS;
-	//char				tempChar;
+	short	i, x, z, TrueTracks;
+	char	*MaxPtr, *theOktaPos;
+	char	*theInstrument[120] /*, *destPtr*/;
+	//MADErr	theErr;
+	//short	PatMax, channel;
+	//long	sndSize, OffSetToSample, OldTicks, temp, starting;
+	//unsigned short	tempS;
+	//char	tempChar;
 	
 	
 	/**** Variables pour le MAD ****/
@@ -65,19 +65,19 @@ static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MAD
 	
 	/**** Variables pour le Okta ****/
 	
-	OktaHeader		*Okta;
-	OktaInstru			*samps, *s, instru[120];
-	OktaPattern 		*OktaCmd;
-	sectheader		*aSect;
+	OktaHeader	*Okta;
+	OktaInstru	*samps, *s, instru[120];
+	OktaPattern	*OktaCmd;
+	sectheader	*aSect;
 	//long				SectLength;
-	short			pbod_count, sbod_count;
-	MADFourChar OKTAHeader = 0;
+	short		pbod_count, sbod_count;
+	MADFourChar	OKTAHeader = 0;
 	/********************************/
 	
 	for (i = 0 ; i < 64; i ++) theInstrument[i] = NULL;
 	
-	theMAD->header = (MADSpec*) calloc(sizeof(MADSpec), 1);
-	Okta = (struct OktaHeader*) malloc(sizeof(struct OktaHeader));
+	theMAD->header = (MADSpec*)calloc(sizeof(MADSpec), 1);
+	Okta = (struct OktaHeader*)malloc(sizeof(struct OktaHeader));
 	
 	sbod_count = 0;
 	pbod_count = 0;
@@ -369,14 +369,14 @@ static MADErr ExtractOKTAInfo(PPInfoRec *info, char* theOkta, long MODSize)
 	{
 		//OktaInstru			*samps, *s, instru[120];
 		//OktaPattern 		*OktaCmd;
-		sectheader		*aSect;
 		//long				SectLength;
-		short			pbod_count, sbod_count;
+		sectheader	*aSect;
+		short		pbod_count, sbod_count;
 		MADFourChar OKTAHead = 0;
+		char		*MaxPtr, *theOktaPos;
 		
 		//short 				i, PatMax, x, z, channel, TrueTracks;
 		//long 					sndSize, OffSetToSample, OldTicks, temp, starting;
-		char*					MaxPtr, *theOktaPos;
 		//MADErr				theErr;
 		//char*					theInstrument[120], destPtr;
 		//unsigned	short		tempS;
@@ -397,16 +397,14 @@ static MADErr ExtractOKTAInfo(PPInfoRec *info, char* theOkta, long MODSize)
 		
 		theOktaPos += 8L;
 		
-		while(theOktaPos < MaxPtr)
-		{
+		while(theOktaPos < MaxPtr) {
 			aSect = (sectheader*) theOktaPos;
 			PPLE32 (&aSect->length);
 			
 			theOktaPos += 8L;
 			PPBE32(&aSect->name);
 			
-			switch(aSect->name)
-			{
+			switch(aSect->name) {
 				case 'PBOD':
 					pbod_count++;
 					break;
@@ -431,8 +429,10 @@ static MADErr TestOKTAFile(char* AlienFile)
 	MADFourChar myOKTA = *((MADFourChar*) AlienFile);
 	PPBE32(&myOKTA);
 	
-	if (myOKTA == 'OKTA') return MADNoErr;
-	else return  MADFileNotSupportedByThisPlug;
+	if (myOKTA == 'OKTA')
+		return MADNoErr;
+	else
+		return MADFileNotSupportedByThisPlug;
 }
 
 #ifndef _MAC_H
@@ -459,34 +459,30 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 #endif
 {
 	MADErr	myErr = MADNoErr;
-	char*		AlienFile;
+	void*	AlienFile;
 	long	sndSize;
 	UNFILE	iFileRefI;
 	
-	switch(order)
-	{
+	switch (order) {
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if (iFileRefI)
-			{
+			if (iFileRefI) {
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (char*)malloc(sndSize * 2L);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
+				AlienFile = malloc(sndSize * 2);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
-				else
-				{
+				else {
 					free(AlienFile);
 					
-					AlienFile = (char*)malloc(sndSize);
+					AlienFile = malloc(sndSize);
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if (myErr == MADNoErr)
-					{
+					if (myErr == MADNoErr) {
 						myErr = TestOKTAFile(AlienFile);
-						if (myErr == MADNoErr)
-						{
+						if (myErr == MADNoErr) {
 							myErr = ConvertOKTA2Mad(AlienFile,  sndSize, MadFile, init);
 						}
 					}
@@ -494,8 +490,8 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else myErr = MADReadingErr;
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		case MADPlugTest:
@@ -504,19 +500,19 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 			{
 				sndSize = 1024L;
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
+				else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if(myErr == MADNoErr) myErr = TestOKTAFile(AlienFile);
+					if(myErr == MADNoErr)
+						myErr = TestOKTAFile(AlienFile);
 					
 					free(AlienFile);
 					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else myErr = MADReadingErr;
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		case 'INFO':
@@ -525,21 +521,20 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 			{
 				info->fileSize = iGetEOF(iFileRefI);
 				sndSize = info->fileSize;
-				AlienFile = (char*)malloc(sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
+				AlienFile = malloc(sndSize);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
-					if (myErr == MADNoErr)
-					{
+					if (myErr == MADNoErr) {
 						myErr = ExtractOKTAInfo(info, AlienFile, sndSize);
 					}
 					free(AlienFile);
 					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else myErr = MADReadingErr;
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		default:

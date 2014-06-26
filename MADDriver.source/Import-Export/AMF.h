@@ -34,23 +34,23 @@ typedef unsigned short ushort;
 
 //TODO: Check pointer values use in files
 typedef struct {
-    uchar       type;
-    char        name[32],filename[13];
-    void        *sample;
-    ushort      size;
-    ushort      rate;
-    uchar       volume;
-    ushort      loopstart,loopend;
+	uchar		type;
+	char		name[32], filename[13];
+	void		*sample;
+	ushort		size;
+	ushort		rate;
+	uchar		volume;
+	ushort		loopstart, loopend;
 } OLDINSTRUMENT;
 
 typedef struct {
-    uchar       type;
-    char        name[32],filename[13];
-    void        *sample;
-	uint32_t      size;
-    ushort      rate;
-    uchar       volume;
-	uint32_t      loopstart,loopend;
+	uchar		type;
+	char		name[32],filename[13];
+	void		*sample;
+	uint32_t	size;
+	ushort		rate;
+	uchar		volume;
+	uint32_t	loopstart,loopend;
 } INSTRUMENT;
 
 #pragma pack(pop)

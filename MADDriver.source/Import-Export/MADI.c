@@ -163,8 +163,8 @@ static void MOToldMADSpec(oldMADSpec * m)
 
 MADErr MADI2Mad(char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
 {
-	short	i, x;
-	long	inOutCount, OffSetToSample = 0, z;
+	short		i, x;
+	long		inOutCount, OffSetToSample = 0, z;
 	MADFourChar	MADType = 0;
 #if 0
 	int		finetune[16] = {
@@ -497,7 +497,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 #endif
 {
 	MADErr	myErr = MADNoErr;
-	char*		AlienFile;
+	void*	AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
@@ -508,7 +508,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (char*)malloc(sndSize * 2);
+				AlienFile = malloc(sndSize * 2);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				// ** MEMORY Test End
@@ -516,7 +516,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 				else {
 					free(AlienFile);
 					
-					AlienFile = (char*)malloc(sndSize);
+					AlienFile = malloc(sndSize);
 					myErr = iRead(sndSize , AlienFile, iFileRefI);
 					if (myErr == MADNoErr) {
 						myErr = TestoldMADFile(AlienFile);
@@ -535,7 +535,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
@@ -557,7 +557,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 				
 				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {

@@ -350,7 +350,7 @@ void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, MADBool Recurrent)
 		return;
 	
 	if (curIns->volType & EFON) {
-		MADByte 	a,b;
+		MADByte	a,b;
 		float	p;
 		
 		//  active? -> copy variables
@@ -461,7 +461,7 @@ void ProcessPanning(Channel *ch, MADDriverRec *intDriver, MADBool Recurrent)
 	
 	if (curIns->pannType & EFON) {
 		//  active? -> copy variables
-		MADByte 	aa,bb;
+		MADByte	aa,bb;
 		float	pp;
 		
 		aa = ch->aa;
@@ -672,10 +672,10 @@ int GetOld2Period(short note, int c2spd, MADDriverRec *intDriver)
 	if (note < 0)
 		note = 0;
 	
-	n = note%12;
-	o = note/12;
+	n = note % 12;
+	o = note / 12;
 	
-	period = (uint32_t) ((uint32_t) (8363U * ((uint32_t) intDriver->lib->mytab[n]) ) >> o ) / (uint32_t) c2spd;
+	period = ((8363U * ( intDriver->lib->mytab[n]) ) >> o ) / c2spd;
 	
 	if (period == 0)
 		period = 7242;
@@ -733,7 +733,7 @@ int GetOldPeriod(short note, int c2spd, MADDriverRec *intDriver)
 
 MADBool NewMADCommand(Cmd *theNoteCmd)
 {
-	MADBool	result = false;
+	bool	result = false;
 	Cmd		intCmd = *theNoteCmd;
 	
 	if (intCmd.ins != 0 && (intCmd.note != 0xFF && intCmd.note != 0xFE)) {
@@ -769,7 +769,7 @@ void IntNoteOff(Channel *curVoice, MADDriverRec *intDriver)
 void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 {
 	Cmd		intCmd = *theNoteCmd;
-	MADBool	ChangedInstru = false;
+	bool	ChangedInstru = false;
 	
 	/********************************************/
 	/*        EXTRA small positionning          */
@@ -1160,7 +1160,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	int		InterruptBufferSize, i, ASCBUFFERCopy, ASCBUFFERRealCopy;
 	void	*DataPtrCopy;
 	int		tVSYNC;
-	MADBool	NoteReading;
+	bool	NoteReading;
 	int		*DASCopy, *DASECopy[MAXCHANEFFECT];
 	short	*DASCopy8;
 	

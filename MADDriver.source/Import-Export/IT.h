@@ -736,7 +736,7 @@ In instrument mode, the following procedure is used:
 
                                 Internal Tables
 
-FineSineData       Label   MADByte
+FineSineData       Label   Byte
         DB       0,  2,  3,  5,  6,  8,  9, 11, 12, 14, 16, 17, 19, 20, 22, 23
         DB      24, 26, 27, 29, 30, 32, 33, 34, 36, 37, 38, 39, 41, 42, 43, 44
         DB      45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 56, 57, 58, 59
@@ -754,7 +754,7 @@ FineSineData       Label   MADByte
         DB     -45,-44,-43,-42,-41,-39,-38,-37,-36,-34,-33,-32,-30,-29,-27,-26
         DB     -24,-23,-22,-20,-19,-17,-16,-14,-12,-11, -9, -8, -6, -5, -3, -2
 
-FineRampDownData   Label   MADByte
+FineRampDownData   Label   Byte
         DB      64, 63, 63, 62, 62, 61, 61, 60, 60, 59, 59, 58, 58, 57, 57, 56
         DB      56, 55, 55, 54, 54, 53, 53, 52, 52, 51, 51, 50, 50, 49, 49, 48
         DB      48, 47, 47, 46, 46, 45, 45, 44, 44, 43, 43, 42, 42, 41, 41, 40
@@ -772,7 +772,7 @@ FineRampDownData   Label   MADByte
         DB     -48,-49,-49,-50,-50,-51,-51,-52,-52,-53,-53,-54,-54,-55,-55,-56
         DB     -56,-57,-57,-58,-58,-59,-59,-60,-60,-61,-61,-62,-62,-63,-63,-64
 
-FineSquareWave     Label   MADByte
+FineSquareWave     Label   Byte
         DB      128 Dup (64), 128 Dup (0)
 
 EmptyPattern            Label

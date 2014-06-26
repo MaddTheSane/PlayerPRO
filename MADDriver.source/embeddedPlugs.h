@@ -11,20 +11,20 @@
 
 #define __private_extern __attribute__((visibility("hidden")))
 
-__private_extern MADErr main669(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
-__private_extern MADErr mainAMF(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
-__private_extern MADErr mainDMF(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
-__private_extern MADErr mainIT(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
-__private_extern MADErr mainMADfg(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
-__private_extern MADErr mainMADH(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
-__private_extern MADErr mainMADI(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
-__private_extern MADErr mainMED(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
-__private_extern MADErr mainMOD(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
-__private_extern MADErr mainMTM(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
-__private_extern MADErr mainOkta(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
-__private_extern MADErr mainS3M(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
-__private_extern MADErr mainULT(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
-__private_extern MADErr mainUMX(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
-__private_extern MADErr mainXM(OSType , char* , MADMusic* , PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr main669(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr mainAMF(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr mainDMF(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr mainIT(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr mainMADfg(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr mainMADH(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr mainMADI(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr mainMED(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr mainMOD(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr mainMTM(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr mainOkta(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr mainS3M(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr mainULT(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr mainUMX(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
+__private_extern MADErr mainXM(MADFourChar, char*, MADMusic*, PPInfoRec *, MADDriverSettings *);
 
 #endif

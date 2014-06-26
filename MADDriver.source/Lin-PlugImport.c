@@ -37,12 +37,12 @@ MADErr PPMADInfoFile(const char *AlienFile, PPInfoRec *InfoRec)
 	return MADNoErr;
 }
 
-MADErr CallImportPlug(MADLibrary				*inMADDriver,
-                     short					PlugNo,			// CODE du plug
-                     MADFourChar order,
-                     char					*AlienFile,
-                     MADMusic				*theNewMAD,
-                     PPInfoRec				*info)
+MADErr CallImportPlug(MADLibrary	*inMADDriver,
+                     short			PlugNo,			// CODE du plug
+                     MADFourChar	order,
+                     char			*AlienFile,
+                     MADMusic		*theNewMAD,
+                     PPInfoRec		*info)
 {
 	MADDriverSettings driverSettings = {0};
 	
@@ -115,9 +115,9 @@ MADErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 #define CharlMADcheckLength 10
 MADErr CheckMADFile(char* name)
 {
-	UNFILE				refNum;
-	char				charl[CharlMADcheckLength];
-	MADErr				err;
+	UNFILE	refNum;
+	char	charl[CharlMADcheckLength];
+	MADErr	err;
 	
 	refNum = iFileOpenRead(name);
 	if (!refNum)
@@ -140,10 +140,10 @@ MADErr CheckMADFile(char* name)
 
 MADErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 {
-	UNFILE				refNum;
-	short				i;
-	PPInfoRec			InfoRec;
-	MADErr				iErr = MADNoErr;
+	UNFILE		refNum;
+	short		i;
+	PPInfoRec	InfoRec;
+	MADErr		iErr = MADNoErr;
 	
 	strcpy(type, "!!!!");
 	
@@ -230,7 +230,8 @@ MADFourChar GetPPPlugType(MADLibrary *inMADDriver, short ID, MADFourChar mode)
 				MADFourChar	type = '    ';
 				
 				xx = strlen(inMADDriver->ThePlug[i].type);
-				if (xx > 4) xx = 4;
+				if (xx > 4)
+					xx = 4;
 				memcpy(&type, inMADDriver->ThePlug[i].type, xx);
 				PPBE32(&type);
 				

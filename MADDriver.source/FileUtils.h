@@ -286,7 +286,7 @@ static inline void OSType2Ptr(MADFourChar type, char *str)
  */
 static inline MADFourChar Ptr2OSType(const char *str)
 {
-	short	i;
+	short		i;
     MADFourChar	type = '    ';
 	
 	i = strlen(str);

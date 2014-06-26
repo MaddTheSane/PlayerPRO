@@ -28,11 +28,11 @@
 
 //TODO: Move to unicode functions?
 
-OSErr CheckMADFile(char *name)
+MADErr CheckMADFile(char *name)
 {
 	UNFILE	refNum;
 	char	charl[20];
-	OSErr	err;
+	MADErr	err;
 	
 	refNum = iFileOpenRead(name);
 	if (!refNum)
@@ -54,11 +54,11 @@ OSErr CheckMADFile(char *name)
 	return err;
 }
 
-OSErr TESTmain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+MADErr TESTmain(MADFourChar order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
-OSErr CallImportPlug(MADLibrary*	inMADDriver,
+MADErr CallImportPlug(MADLibrary*	inMADDriver,
 					 short			PlugNo,				// CODE ID
-					 OSType			order,
+					 MADFourChar	order,
 					 Ptr			AlienFile,
 					 MADMusic		*theNewMAD,
 					 PPInfoRec		*info)
@@ -69,7 +69,7 @@ OSErr CallImportPlug(MADLibrary*	inMADDriver,
 	return (inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);
 }
 
-OSErr PPTestFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile)
+MADErr PPTestFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile)
 {
 	short		i;
 	MADMusic	aMAD;
@@ -84,7 +84,7 @@ OSErr PPTestFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile)
 	return MADCannotFindPlug;
 }
 
-OSErr PPMADInfoFile(char *AlienFile, PPInfoRec	*InfoRec)
+MADErr PPMADInfoFile(char *AlienFile, PPInfoRec	*InfoRec)
 {
 	MADSpec	*theMAD;
 	long	fileSize;
@@ -118,7 +118,7 @@ OSErr PPMADInfoFile(char *AlienFile, PPInfoRec	*InfoRec)
 	return MADNoErr;
 }
 
-OSErr PPInfoFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)
+MADErr PPInfoFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)
 {
 	short		i;
 	MADMusic	aMAD;
@@ -136,7 +136,7 @@ OSErr PPInfoFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile, PPInf
 	return MADCannotFindPlug;
 }
 
-OSErr PPExportFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD)
+MADErr PPExportFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD)
 {
 	short		i;
 	PPInfoRec	InfoRec;
@@ -150,14 +150,14 @@ OSErr PPExportFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile, MAD
 	return MADCannotFindPlug;
 }
 
-OSErr PPImportFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD)
+MADErr PPImportFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD)
 {
 	short		i;
 	PPInfoRec	InfoRec;
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
 		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
-			OSErr theErr = MADNoErr;
+			MADErr theErr = MADNoErr;
 			*theNewMAD = (MADMusic*)calloc(sizeof(MADMusic), 1);
 			if (!*theNewMAD)
 				return MADNeedMemory;
@@ -173,12 +173,12 @@ OSErr PPImportFile(MADLibrary* inMADDriver, char *kindFile, char *AlienFile, MAD
 	return MADCannotFindPlug;
 }
 
-OSErr PPIdentifyFile(MADLibrary* inMADDriver, char *type, char *AlienFile)
+MADErr PPIdentifyFile(MADLibrary* inMADDriver, char *type, char *AlienFile)
 {
 	FILE*		refNum;
 	short		i;
 	PPInfoRec	InfoRec;
-	OSErr		iErr;
+	MADErr		iErr;
 	
 	strcpy_s(type, 5, "!!!!");
 	
@@ -222,12 +222,12 @@ Boolean	MADPlugAvailable(MADLibrary* inMADDriver, char *kindFile)
 	return false;
 }
 
-typedef OSErr (*PLUGFILLDLLFUNC)(PlugInfo*);
+typedef MADErr (*PLUGFILLDLLFUNC)(PlugInfo*);
 
 Boolean LoadPlugLib(char *name, PlugInfo* plug)
 {
 	PLUGFILLDLLFUNC	fpFuncAddress;
-	OSErr			err;
+	MADErr			err;
 	
 	strcpy_s(plug->file, sizeof(plug->file), name);
 	
@@ -314,7 +314,7 @@ void CloseImportPlug(MADLibrary* inMADDriver)
 	inMADDriver->ThePlug = NULL;
 }
 
-OSType GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
+MADFourChar GetPPPlugType(MADLibrary *inMADDriver, short ID, MADFourChar mode)
 {
 	short i, x;
 	
@@ -323,8 +323,8 @@ OSType GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 	for (i = 0, x = 0; i < inMADDriver->TotalPlug; i++) {
 		if (inMADDriver->ThePlug[i].mode == mode || inMADDriver->ThePlug[i].mode == MADPlugImportExport) {
 			if (ID == x) {
-				short	xx;
-				OSType	type = '    ';
+				short		xx;
+				MADFourChar	type = '    ';
 				
 				xx = strlen(inMADDriver->ThePlug[i].type);
 				if (xx > 4)

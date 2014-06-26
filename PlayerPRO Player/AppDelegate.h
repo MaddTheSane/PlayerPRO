@@ -18,8 +18,8 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate, NSTableViewDataSource>
 {
 	IBOutlet NSButton		*loopButton;
-    IBOutlet NSButton		*playButton;
-    IBOutlet NSButton		*stopButton;
+	IBOutlet NSButton		*playButton;
+	IBOutlet NSButton		*stopButton;
 	IBOutlet NSTextField	*songCurTime;
 	IBOutlet NSTextField	*songTotalTime;
 	IBOutlet NSSlider		*songPos;

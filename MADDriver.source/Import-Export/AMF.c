@@ -66,19 +66,18 @@ static inline UInt32 Tdecode32(void *msg_buf)
 
 static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
-	MADByte			tempByte;
-	short			i, x, noIns, tempShort, trackCount, trckPtr, t;
+	MADByte		tempByte;
+	short		i, x, noIns, tempShort, trackCount, trckPtr, t;
+	MADFourChar	AMFType;
+	short		pan, uusize, oldIns = 1;
 	//int			inOutCount, OffSetToSample = 0, z;
 	//MADErr			theErr = MADNoErr;
 	//char*				tempPtr;
-	MADFourChar			AMFType;
 	/*int			finetune[16] =
 	 {
 	 8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 	 7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
 	 };*/
-	
-	short			pan, uusize, oldIns = 1;
 	
 	theAMFRead = AMFCopyPtr;
 	

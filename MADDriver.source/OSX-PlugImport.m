@@ -358,7 +358,7 @@ static CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(const char *U
 	return FoldLocs;
 }
 
-static OSErr PPMADInfoFile(char *AlienFile, PPInfoRec *InfoRec)
+static MADErr PPMADInfoFile(char *AlienFile, PPInfoRec *InfoRec)
 {
 	MADSpec		*theMAD;
 	long		fileSize;
@@ -392,14 +392,14 @@ static OSErr PPMADInfoFile(char *AlienFile, PPInfoRec *InfoRec)
 	return MADNoErr;
 }
 
-OSErr CallImportPlug(MADLibrary				*inMADDriver,
+MADErr CallImportPlug(MADLibrary				*inMADDriver,
 					 short					PlugNo,			// CODE du plug
 					 OSType					order,
 					 char					*AlienFile,
 					 MADMusic				*theNewMAD,
 					 PPInfoRec				*info)
 {
-	OSErr				iErr = MADNoErr;
+	MADErr				iErr = MADNoErr;
 	CFBundleRefNum		resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
 	MADDriverSettings	driverSettings = {0};
 	
@@ -455,7 +455,7 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 	inMADDriver->ThePlug = NULL;
 }
 
-OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)
+MADErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)
 {
 	MADMusic aMAD;
 	
@@ -470,7 +470,7 @@ OSErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInf
 	return MADCannotFindPlug;
 }
 
-OSErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD)
+MADErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD)
 {
 	PPInfoRec InfoRec = {0};
 	
@@ -492,7 +492,7 @@ OSErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MAD
 	return MADCannotFindPlug;
 }
 
-OSErr CheckMADFile(char* name)
+MADErr CheckMADFile(char* name)
 {
 	UNFILE	refNum;
 	char	charl[CharlMADcheckLength];
@@ -566,7 +566,7 @@ Boolean	MADPlugAvailable(MADLibrary *inMADDriver, char* kindFile)
 	return FALSE;
 }
 
-OSErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD)
+MADErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD)
 {
 	PPInfoRec InfoRec;
 	
@@ -578,7 +578,7 @@ OSErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MAD
 	return MADCannotFindPlug;
 }
 
-OSErr PPTestFile(MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
+MADErr PPTestFile(MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
 {
 	MADMusic	aMAD;
 	PPInfoRec	InfoRec;
@@ -591,7 +591,7 @@ OSErr PPTestFile(MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
 	return MADCannotFindPlug;
 }
 
-OSType GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
+MADFourChar GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 {
 	short i, x;
 	

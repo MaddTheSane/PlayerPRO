@@ -235,7 +235,7 @@ void FFT8S(char* SData, size_t size, double *filter, MADDriverRec *intDriver, sh
 	int		y, powersize;
 	int		*shiftAr = NULL;
 	double	pente, axe, *fDataCopy2 = NULL, *fDataCopy = intDriver->fData;
-	MADBool didInitFData = 0;
+	bool	didInitFData = false;
 	size_t	i;
 	
 	if (nochan == 2) {	// STEREO
@@ -424,7 +424,7 @@ void FFT16S(short* SData, size_t size, double *filter, MADDriverRec *intDriver, 
 {
 	int		y, powersize, *shiftAr = NULL;
 	double	pente, axe, *fDataCopy2 = NULL, *fDataCopy = intDriver->fData;
-	MADBool	didInitFData = 0;
+	bool	didInitFData = false;
 	size_t	i;
 	
 	size /= 2;

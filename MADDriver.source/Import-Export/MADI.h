@@ -125,29 +125,29 @@ typedef struct oldInstrData {
 
 typedef struct oldMADSpec {
 	MADFourChar	MAD;					// Mad Identification
-	char	name[32];				// Music's name
-	char	infos[INFOSSIZE];		// Informations & Author name of the music
-	MADByte	generalPan;				// General Panning
-	MADByte	MultiChanNo;			// Number of chan for multichannel
-	MADByte	MultiChan;				// MultiChannel per tracks?
-	int		EPitch;					// New Pitch
-	int		ESpeed;					// New Speed
-	MADByte	XMLinear;				// Linear picth table?
-	MADByte	MODMode;				// Limit pitch to MOD pitch table
-	MADByte	showCopyright;			// Show infos at startup? true or false
-	MADByte	generalPitch;			// General Pitch
-	MADByte	generalSpeed;			// General Speed
-	MADByte	generalVol;				// Software general volume
-	MADByte	numPat;					// Patterns number
-	MADByte	numChn;					// Channels number
-	MADByte	numPointers;			// Partition length
-	MADByte	numInstru;				// Instruments number
-	MADByte	numSamples;				// Samples number
-	MADByte	oPointers[MAXPOINTER];	// Partition : Patterns ID List
-	short	speed;					// Default speed
-	short	tempo;					// Default tempo
-	MADByte	chanPan[MAXTRACK];		// Channel settings, from 0 to 256
-	MADByte	chanVol[MAXTRACK];		// Channel Volume, from 0 to 64
+	char		name[32];				// Music's name
+	char		infos[INFOSSIZE];		// Informations & Author name of the music
+	MADByte		generalPan;				// General Panning
+	MADByte		MultiChanNo;			// Number of chan for multichannel
+	MADByte		MultiChan;				// MultiChannel per tracks?
+	int			EPitch;					// New Pitch
+	int			ESpeed;					// New Speed
+	MADByte		XMLinear;				// Linear picth table?
+	MADByte		MODMode;				// Limit pitch to MOD pitch table
+	MADByte		showCopyright;			// Show infos at startup? true or false
+	MADByte		generalPitch;			// General Pitch
+	MADByte		generalSpeed;			// General Speed
+	MADByte		generalVol;				// Software general volume
+	MADByte		numPat;					// Patterns number
+	MADByte		numChn;					// Channels number
+	MADByte		numPointers;			// Partition length
+	MADByte		numInstru;				// Instruments number
+	MADByte		numSamples;				// Samples number
+	MADByte		oPointers[MAXPOINTER];	// Partition : Patterns ID List
+	short		speed;					// Default speed
+	short		tempo;					// Default tempo
+	MADByte		chanPan[MAXTRACK];		// Channel settings, from 0 to 256
+	MADByte		chanVol[MAXTRACK];		// Channel Volume, from 0 to 64
 } oldMADSpec;
 
 #pragma pack(pop)

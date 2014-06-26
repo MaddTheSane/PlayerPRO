@@ -344,8 +344,8 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 {
 	int		i, x, z, channel, Row;
 	int		starting;
-	char*		MaxPtr;
-	char*		theInstrument[64];
+	char	*MaxPtr;
+	char	*theInstrument[64];
 	MADByte	tempChar, *theITCopy;
 #if 0
 	short	Note, Octave, maxTrack;
@@ -814,9 +814,9 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 		}
 		
 		if (ITinfo.parappat[i] > 0) {
-			char*		curDataPat = curITPat->data;
+			char	*curDataPat = curITPat->data;
 			MADByte	maskvariable = 0;
-			MADBool	NeedChannelToRead = true;
+			bool	NeedChannelToRead = true;
 			
 			Row = 0;
 			while(Row < curITPat->row) {
@@ -953,8 +953,8 @@ static inline MADErr TestITFile(void *AlienFile)
 
 #ifndef _MAC_H
 
-extern EXP MADErr FillPlug(PlugInfo *p);
-extern EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr FillPlug(PlugInfo *p);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
 
 EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {

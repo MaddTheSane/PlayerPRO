@@ -68,14 +68,14 @@ typedef uint8_t		UBYTE;
 #define IHSIZESMALL	33
 #define IHSSIZE		40
 
-static		MADByte		LastAEffect[MAXTRACK];
-static		XMHEADER	*mh;
-static		char		*theXMRead, *theXMMax;
+static MADByte	LastAEffect[MAXTRACK];
+static XMHEADER	*mh;
+static char		*theXMRead, *theXMMax;
 
 #define READXMFILE(dst, size)	{memcpy(dst, theXMRead, size);	theXMRead += (long) size;}
 #define WRITEXMFILE(src, size)	{memcpy(theXMRead, src, size);	theXMRead += (long) size;}
 
-static MADBool XM_Init(MADDriverSettings *init)
+static bool XM_Init(MADDriverSettings *init)
 {
 	mh = (XMHEADER*)malloc(sizeof(XMHEADER));
 	if (mh == NULL)
@@ -340,11 +340,11 @@ static MADErr XMReadPattern(MADMusic *theMAD, MADDriverSettings *init)
 		LastAEffect[i] = 0;
 	
 	for (t = 0; t < mh->numpat; t++) {
-		short				PatternSize;
-		XMPATHEADER 		ph;
-		XMNOTE				xmpat;
-		Cmd					*aCmd;
-		char*					theXMReadCopy;
+		short		PatternSize;
+		XMPATHEADER	ph;
+		XMNOTE		xmpat;
+		Cmd			*aCmd;
+		char		*theXMReadCopy;
 		
 		theXMReadCopy = theXMRead;
 		READXMFILE(&ph.size, 		4);
@@ -892,7 +892,7 @@ static char*	ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndS
 		for (t = 0; t < theMAD->header->numPat; t++) {
 			short		PatternSize;
 			XMPATHEADER	ph;
-			char*			packingCopy, *cc;
+			char		*packingCopy, *cc;
 			
 			ph.size = PHSIZE;
 			PPLE32(&ph.size);
@@ -946,7 +946,7 @@ static char*	ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndS
 			XMINSTHEADER 	ih;
 			size_t			ihsizecopy, ihssizecopy;
 			InstrData		*curIns = &theMAD->fid[t];
-			char*				theXMReadCopy = theXMRead;
+			char			*theXMReadCopy = theXMRead;
 			
 			//************************//
 			// Instrument header size //
@@ -1116,7 +1116,7 @@ static char*	ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndS
 			
 			for (u = 0 ; u < curIns->numSamples ; u++) {
 				sData	*curData = theMAD->sample[t * MAXSAMPLE + u];
-				char*		theXMReadCopy = theXMRead;
+				char	*theXMReadCopy = theXMRead;
 				int		curSize;
 				
 				WRITEXMFILE(curData->data, curData->size);
@@ -1176,7 +1176,7 @@ static char*	ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndS
 	return finalXMPtr;
 }
 
-static inline MADBool compMem(const void *a, const void *b, size_t s)
+static inline bool compMem(const void *a, const void *b, size_t s)
 {
 	if (memcmp(a, b, s) == 0) {
 		return true;
@@ -1306,7 +1306,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 #endif
 {
 	MADErr	myErr = MADNoErr;
-	char*		AlienFile;
+	void*	AlienFile;
 	long	sndSize;
 	UNFILE	iFileRefI;
 	
@@ -1326,7 +1326,8 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				} else {
 					myErr = MADWritingErr;
 				}
-				free(AlienFile);	AlienFile = NULL;
+				free(AlienFile);
+				AlienFile = NULL;
 			} else
 				myErr = MADNeedMemory;
 			break;
@@ -1337,7 +1338,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (char*)malloc(sndSize * 2);
+				AlienFile = malloc(sndSize * 2);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				// ** MEMORY Test End
@@ -1345,7 +1346,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				else {
 					free(AlienFile);
 					
-					AlienFile = (char*)malloc(sndSize);
+					AlienFile = malloc(sndSize);
 					if (AlienFile == NULL)
 						myErr = MADNeedMemory;
 					else {
@@ -1369,7 +1370,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = 1024;
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
@@ -1391,9 +1392,9 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				info->fileSize = iGetEOF(iFileRefI);
 				
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+				sndSize = 5000; // Read only 5000 first bytes for optimisation
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {

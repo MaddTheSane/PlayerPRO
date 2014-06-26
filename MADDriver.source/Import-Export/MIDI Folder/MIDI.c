@@ -78,9 +78,9 @@ void CreateResult(Ptr aPtr)
 	DebugStr((unsigned char *) aPtr);
 }
 
-void  ConvertMidiFile(char	*src, MADMusic *theMAD, MADDriverSettings *init);
+void ConvertMidiFile(char *src, MADMusic *theMAD, MADDriverSettings *init);
 
-extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;

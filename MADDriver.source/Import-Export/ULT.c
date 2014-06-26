@@ -39,22 +39,20 @@
 static MADErr ConvertULT2Mad(char* theULT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	size_t	i, x, z, Row;
-	char*		MaxPtr;
-	char*		theInstrument[64];
+	char	*MaxPtr;
+	char	*theInstrument[64];
 	MADByte	*theULTCopy;
 	
 	/**** Variables pour le MAD ****/
-	Cmd				*aCmd;
+	Cmd		*aCmd;
 	
 	/**** Variables pour le ULT ****/
 	
-	ULTForm			ULTinfo;
-	ULTSuite		ULTSuite;
+	ULTForm		ULTinfo;
+	ULTSuite	ULTSuite;
 	/********************************/
 	
-	for (i = 0; i < 64; i ++) {
-		theInstrument[i] = NULL;
-	}
+	memset(theInstrument, 0, sizeof(theInstrument));
 	
 	/**** Header principal *****/
 	theULTCopy = (MADByte*)theULT;
@@ -299,7 +297,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 #endif
 {
 	MADErr	myErr = MADNoErr;
-	char*		AlienFile;
+	void*	AlienFile;
 	UNFILE	iFileRefI;
 	long	sndSize;
 	
@@ -310,7 +308,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test
-				AlienFile = (char*)malloc(sndSize * 2);
+				AlienFile = malloc(sndSize * 2);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
@@ -341,7 +339,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = 1024;
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
@@ -364,7 +362,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				
 				sndSize = 5000; // Read only 5000 first bytes for optimisation
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {

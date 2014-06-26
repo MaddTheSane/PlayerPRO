@@ -78,7 +78,7 @@ static void Convert16to8(char* srcPtr, char* destPtr, size_t size)
 static void AnalyseSignatureMOD(size_t EOFo, uint32_t temp, short *maxInstru, int *PatternSize, short *tracksNo, MODDef* aMOD)
 {
 	int		test, i;
-	MADBool	result;
+	bool	result;
 	
 	*maxInstru = 31;
 	
@@ -282,8 +282,7 @@ static void AnalyseSignatureMOD(size_t EOFo, uint32_t temp, short *maxInstru, in
 				
 				MODInt = (MODDef*) ((size_t)aMOD - 0x1E0);
 				
-				for(i=0; i<128; i++)
-				{
+				for (i = 0; i < 128; i++) {
 					if (MODInt->oPointers[i] < 0)
 						MODInt->oPointers[i] = 0;
 					if (MODInt->oPointers[i] > 128)
@@ -321,7 +320,7 @@ static MADErr PPConvertMod2Mad(char* aMOD, size_t MODSize, MADMusic *theMAD, MAD
 {
 	short	i, PatMax, x, tracksNo, z, maxInstru;
 	int		sndSize, OffSetToSample, MPatSize, temp, inOutCount;
-	char*		theInstrument[64], *MaxPtr;
+	char	*theInstrument[64], *MaxPtr;
 	int		lastIns[32], lastNote[32];
 	int		finetune[16] = {
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
@@ -648,14 +647,12 @@ static int ConvertSampleC4SPD(char* src, size_t srcSize, short amp, int srcC4SPD
 
 char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSize)
 {
-	int 				i, x, z, maxInstru;
-	int 				OffSetToSample, InstruSize, *alpha;
-	char*					theInstrument[64], *destPtr;
-	MADBool				CheckGoodMod;
-	char				redut[4];
-	short				MODTuning[75] =
-	
-	{
+	int		i, x, z, maxInstru;
+	int		OffSetToSample, InstruSize, *alpha;
+	char	*theInstrument[64], *destPtr;
+	bool	CheckGoodMod;
+	char	redut[4];
+	short	MODTuning[75] = {
 		
 		// -> Tuning 0
 		
@@ -1052,90 +1049,82 @@ MADErr mainUMX(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfo
 extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	MADErr		myErr = MADNoErr;
-	char*			AlienFile;
-	long		sndSize;
-	UNFILE		iFileRefI;
+	MADErr	myErr = MADNoErr;
+	void*	AlienFile;
+	long	sndSize;
+	UNFILE	iFileRefI;
 	
-	switch(order)
-	{
+	switch(order) {
 		case MADPlugImport:
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if (iFileRefI)
-			{
+			if (iFileRefI) {
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (char*)malloc(sndSize * 2L);
+				AlienFile = malloc(sndSize * 2);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
-				else
-				{
+				else {
 					free(AlienFile);
-					
-					AlienFile = (char*)malloc(sndSize);
+					AlienFile = malloc(sndSize);
 					iRead(sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestUMXFile(AlienFile, sndSize);
-					if (myErr == MADNoErr)
-					{
+					if (myErr == MADNoErr) {
 						myErr = PPConvertMod2Mad(AlienFile, sndSize, MadFile, init);
 					}
 					
-					free(AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else myErr = MADReadingErr;
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if (iFileRefI)
-			{
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+			if (iFileRefI) {
+				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
 				AlienFile = (char*)malloc(sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
 					iRead(sndSize, AlienFile, iFileRefI);
-					
 					sndSize = iGetEOF(iFileRefI);
-					
 					myErr = TestUMXFile(AlienFile, sndSize);
-					
-					free(AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else myErr = MADReadingErr;
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		case 'INFO':
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if (iFileRefI)
-			{
+			if (iFileRefI) {
 				info->fileSize = iGetEOF(iFileRefI);
 				
-				sndSize = 5000L;	// Read only 5000 first bytes for optimisation
+				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (char*)malloc(sndSize);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				else
-				{
+				AlienFile = malloc(sndSize);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
 					iRead(sndSize, AlienFile, iFileRefI);
-					
 					myErr = TestUMXFile(AlienFile, info->fileSize);
+					if (!myErr)
+						myErr = ExtractUMXInfo(info, AlienFile);
 					
-					if (!myErr) myErr = ExtractUMXInfo(info, AlienFile);
-					
-					free(AlienFile);	AlienFile = NULL;
+					free(AlienFile);
+					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else myErr = MADReadingErr;
+			} else
+				myErr = MADReadingErr;
 			break;
 			
 		default:

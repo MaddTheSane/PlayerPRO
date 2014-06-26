@@ -52,7 +52,7 @@ Cmd* MADGetCmd(short row, short track, Pcmd* myPcmd)
 	return &(myPcmd->myCmd[(myPcmd->length * track) + row]);
 }
 
-OSErr inAddSoundToMAD(void			*theSound,
+MADErr inAddSoundToMAD(void			*theSound,
 					  size_t		sndLen,
 					  long			lS,
 					  long			lE,
@@ -65,7 +65,7 @@ OSErr inAddSoundToMAD(void			*theSound,
 					  sData			**sample,					// Ptr on samples data
 					  short			*sampleID)
 {
-	OSErr theErr = MADNoErr;
+	MADErr theErr = MADNoErr;
 	char *cName = calloc(name[0] + 1, 1);
 	if (!cName)
 		return MADNeedMemory;
@@ -78,7 +78,7 @@ OSErr inAddSoundToMAD(void			*theSound,
 }
 
 
-OSErr inAddSoundToMADCString(void			*theSound,
+MADErr inAddSoundToMADCString(void			*theSound,
 							 size_t			sndLen,
 							 int			loopStart,
 							 int			loopEnd,

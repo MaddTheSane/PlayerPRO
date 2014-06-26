@@ -372,10 +372,10 @@ static void ConvertMADEffect(MADByte Cmd, MADByte Arg, MADByte *B0, MADByte *B1)
 	}
 }
 
-static char*	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *sndSize)
+static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *sndSize)
 {
 	int			i, x, z;
-	char*			finalS3M, *finalS3MCopy, *maxfinalS3M;
+	char		*finalS3M, *finalS3MCopy, *maxfinalS3M;
 	int			InstruSize = 0;
 	int			NoIns = 0;
 	s3minsform	*ins[64];
@@ -401,8 +401,7 @@ static char*	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 		}
 	}
 	
-	for (i = 0; i < theMAD->header->numPat;i++)
-	{
+	for (i = 0; i < theMAD->header->numPat; i++) {
 		PatternSize += 6 * theMAD->header->numChn * theMAD->partition[i]->header.size;
 		PatternSize += theMAD->partition[i]->header.size;		// byte 0 de fin de ligne
 		PatternSize += 16;
@@ -440,7 +439,7 @@ static char*	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 		PPLE16(&s3minfo->ffv);
 		
 		
-		strncpy(s3minfo->s3msig, "SCRM", 4);
+		memcpy(s3minfo->s3msig, "SCRM", 4);
 		
 		s3minfo->mastervol		= 64;
 		s3minfo->initialspeed	= theMAD->header->speed;
@@ -513,13 +512,13 @@ static char*	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 			
 			ins[i] = (s3minsform*) finalS3MCopy;
 			
-			ins[i]->instype				=	1;
+			ins[i]->instype		= 1;
 			strncpy((char*) ins[i]->insdosname, theMAD->fid[i].name, 12);
-			ins[i]->memsegh			=	0;
-			ins[i]->memsegl			=	0;
-			ins[i]->inslength			=	curData->size;
-			ins[i]->insloopbeg			=	curData->loopBeg;
-			ins[i]->insloopend			=	curData->loopBeg + curData->loopSize;
+			ins[i]->memsegh		= 0;
+			ins[i]->memsegl		= 0;
+			ins[i]->inslength	= curData->size;
+			ins[i]->insloopbeg	= curData->loopBeg;
+			ins[i]->insloopend	= curData->loopBeg + curData->loopSize;
 			
 			if (curData->amp == 16) {
 				ins[i]->inslength /= 2;
@@ -537,29 +536,29 @@ static char*	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 			PPLE32(&ins[i]->insloopbeg);
 			PPLE32(&ins[i]->insloopend);
 			
-			ins[i]->insvol				= curData->vol;
-			ins[i]->insdsk				= 0;
-			ins[i]->inspack				= 0;
+			ins[i]->insvol		= curData->vol;
+			ins[i]->insdsk		= 0;
+			ins[i]->inspack		= 0;
 			
-			ins[i]->insflags			= 0;
+			ins[i]->insflags	= 0;
 			if (curData->loopSize != 0)
 				ins[i]->insflags += 1;
 			if (curData->amp == 16)
 				ins[i]->insflags += 4;
 			
-			ins[i]->c2spd				=	curData->c2spd;
+			ins[i]->c2spd	=	curData->c2spd;
 			PPLE32(&ins[i]->c2spd);
 			for (x = 0; x < 4; x++)		ins[i]->inssig2[x] = 0;
-			ins[i]->insgvspos			=	256;
+			ins[i]->insgvspos		= 256;
 			PPLE16(&ins[i]->insgvspos);
-			ins[i]->insint512			=	0;
+			ins[i]->insint512		= 0;
 			PPLE16(&ins[i]->insint512);
-			ins[i]->insintlastused		=	0;
+			ins[i]->insintlastused	= 0;
 			strncpy((char*)ins[i]->insname, theMAD->fid[i].name, 28);
-			ins[i]->inssig[0]				=	'S';
-			ins[i]->inssig[1]				=	'C';
-			ins[i]->inssig[2]				=	'R';
-			ins[i]->inssig[3]				=	'S';
+			ins[i]->inssig[0] = 'S';
+			ins[i]->inssig[1] = 'C';
+			ins[i]->inssig[2] = 'R';
+			ins[i]->inssig[3] = 'S';
 		}
 		else
 		{
@@ -677,11 +676,12 @@ static char*	ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 		while(Row < 64)
 		{
 			maxtrackp = theMAD->header->numChn;
-			if (maxtrackp > 16) maxtrackp = 16;
+			if (maxtrackp > 16)
+				maxtrackp = 16;
 			
 			for (z = 0; z < maxtrackp; z++)
 			{
-				MADByte		*tempChar = (MADByte*) finalS3MCopy;
+				MADByte *tempChar = (MADByte*)finalS3MCopy;
 				
 				if (Row < theMAD->partition[i]->header.size)
 				{
@@ -1435,12 +1435,10 @@ MADErr mainS3M(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfo
 extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	MADErr	myErr;
-	char*		AlienFile;
+	MADErr	myErr = MADNoErr;
+	void*	AlienFile;
 	size_t	sndSize;
 	UNFILE	iFileRefI;
-	
-	myErr = MADNoErr;
 	
 	switch (order) {
 		case MADPlugExport:
@@ -1465,7 +1463,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 				sndSize = iGetEOF(iFileRefI);
 				
 				// ** MEMORY Test Start
-				AlienFile = (char*)malloc(sndSize * 2);
+				AlienFile = malloc(sndSize * 2);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
 				// ** MEMORY Test End
 				
@@ -1473,7 +1471,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 				{
 					free(AlienFile);
 					
-					AlienFile = (char*)malloc(sndSize);
+					AlienFile = malloc(sndSize);
 					if (AlienFile == NULL)
 						myErr = MADNeedMemory;
 					else {
@@ -1497,7 +1495,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = 1024;
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
@@ -1521,7 +1519,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 				
 				sndSize = 5000;	// Read only 5000 first bytes for optimisation
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
