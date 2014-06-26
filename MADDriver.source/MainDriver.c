@@ -189,7 +189,7 @@ size_t MADGetMusicSize(MADMusic *music)
 void ConvertTo64Rows(MADMusic *music)
 {
 	int		i, x, z;
-    MADBool	IsReading;
+    bool	IsReading;
 	int		patID, found;
 	
 	if (music->header == NULL)
@@ -476,7 +476,7 @@ static void BuildAvailableDriverList()
 	}
 }
 
-MADBool MADSoundDriverIsAvalable(short theDriver)
+bool MADSoundDriverIsAvalable(short theDriver)
 {
 	if (theDriver == NoHardwareDriver) {
 		return TRUE;
@@ -1498,7 +1498,7 @@ MADErr MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRe
 	return theErr;
 }
 
-MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, MADBool compressMAD)
+MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 {
 	char *URLcString = NULL;
     MADErr theErr = getCStringFromCFURL(urlRef, &URLcString);
@@ -2250,7 +2250,7 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 	return MADNoErr;
 }
 
-MADErr MADMusicSaveCString(MADMusic *music, const char *cName, MADBool compressMAD)
+MADErr MADMusicSaveCString(MADMusic *music, const char *cName, bool compressMAD)
 {
 	int		alpha = 0;
 	int		i, x;
@@ -2390,7 +2390,7 @@ MADErr MADMusicSaveCString(MADMusic *music, const char *cName, MADBool compressM
 	return theErr;
 }
 
-MADErr MADMusicSavePointer(MADMusic *music, void **outPtr, size_t *outPtrSize, MADBool compressMAD)
+MADErr MADMusicSavePointer(MADMusic *music, void **outPtr, size_t *outPtrSize, bool compressMAD)
 {
 	return MADOrderNotImplemented;
 }
@@ -2782,7 +2782,7 @@ MADErr MADPlayMusic(MADDriverRec *MDriver)
 	return MADNoErr;
 }
 
-MADBool MADIsPlayingMusic(MADDriverRec *driver)
+bool MADIsPlayingMusic(MADDriverRec *driver)
 {
 	if (driver == NULL)
 		return false;
@@ -3001,9 +3001,9 @@ MADErr MADDisposeMusic(MADMusic **music, MADDriverRec *MDriver)
 
 #pragma pack(push, 2)
 
-MADBool MADIsPressed(unsigned char* km2, unsigned short k)
+bool MADIsPressed(unsigned char* km2, unsigned short k)
 {
-    return (MADBool)((km2[k >> 3] >> (k & 7)) & 1);
+    return (bool)((km2[k >> 3] >> (k & 7)) & 1);
 }
 
 #if 0
@@ -3045,7 +3045,7 @@ MADErr MADPlaySoundDataSYNC(MADDriverRec *MDriver, char *soundPtr, long size, lo
 }
 #endif
 
-MADErr MADPlaySoundData(MADDriverRec *MDriver, const char *soundPtr, size_t size, int channel, MADByte note, int amplitude, size_t loopBeg, size_t loopSize, unsigned int rate, MADBool stereo)
+MADErr MADPlaySoundData(MADDriverRec *MDriver, const char *soundPtr, size_t size, int channel, MADByte note, int amplitude, size_t loopBeg, size_t loopSize, unsigned int rate, bool stereo)
 {
 	Channel *curVoice;
 	
@@ -3357,12 +3357,12 @@ PatData* CompressPartitionMAD1(MADMusic *MDriver, PatData* myPat)
 	return finalPtr;
 }
 
-MADBool MADWasReading(MADDriverRec *driver)
+bool MADWasReading(MADDriverRec *driver)
 {
 	return MADIsPlayingMusic(driver);
 }
 
-void MADSetReading(MADDriverRec *driver, MADBool toSet)
+void MADSetReading(MADDriverRec *driver, bool toSet)
 {
 	if (toSet == true) {
 		MADPlayMusic(driver);
@@ -3371,7 +3371,7 @@ void MADSetReading(MADDriverRec *driver, MADBool toSet)
 	}
 }
 
-MADBool MADIsDonePlaying(MADDriverRec *MDriver)
+bool MADIsDonePlaying(MADDriverRec *MDriver)
 {
 	if (!MDriver) {
 		return false;
@@ -3393,7 +3393,7 @@ void MADEndExport(MADDriverRec *driver)
 	}
 }
 
-MADBool MADIsExporting(MADDriverRec *driver)
+bool MADIsExporting(MADDriverRec *driver)
 {
 	if (!driver) {
 		return false;

@@ -19,7 +19,8 @@
 #define MAXPLUG	40
 
 #include "embeddedPlugs.h"
-
+// Pack it to save some bytes.
+#pragma pack(push, 1)
 typedef struct iPlugInfo {
 	OSType		mode;
 	UInt32		version;
@@ -175,6 +176,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.UTIType = CFSTR("net.sourceforge.playerpro.xm"),
 	}
 };
+#pragma pack(pop)
 
 static MADErr PPMADInfoFile(const char *AlienFile, PPInfoRec *InfoRec)
 {
@@ -378,7 +380,7 @@ MADErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 	return MADCannotFindPlug;
 }
 
-Boolean	MADPlugAvailable(MADLibrary *inMADDriver, char* kindFile)
+bool MADPlugAvailable(MADLibrary *inMADDriver, char* kindFile)
 {
 	short i;
 	

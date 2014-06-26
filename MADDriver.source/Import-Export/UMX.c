@@ -997,27 +997,16 @@ static MADErr TestUMXFile(char* AlienFile, long EOFo)
     char 		xmsig[17] = "Extended Module:";
 	
 	
-	for (i = 0; i < 5000 - 64; i++)
-	{
-		if (!memcmp(&AlienFile[i], s3msig, 4))
-		{
+	for (i = 0; i < 5000 - 64; i++) {
+		if (!memcmp(&AlienFile[i], s3msig, 4)) {
+			return MADNoErr;
+		} else if (!memcmp(&AlienFile[i], itsig, 4)) {
+			return MADNoErr;
+		} else if (!memcmp(&AlienFile[i], xmsig, 16)) {
+			return MADNoErr;
+		} else if (!memcmp(&AlienFile[i], modsig, 4) || !memcmp(&AlienFile[i], mod6sig, 4) || !memcmp(&AlienFile[i], mod8sig, 4)) {
 			return MADNoErr;
 		}
-		else
-			if (!memcmp(&AlienFile[i], itsig, 4))
-			{
-				return MADNoErr;
-			}
-			else
-				if (!memcmp(&AlienFile[i], xmsig, 16))
-				{
-					return MADNoErr;
-				}
-				else
-					if (!memcmp(&AlienFile[i], modsig, 4) || !memcmp(&AlienFile[i], mod6sig, 4) || !memcmp(&AlienFile[i], mod8sig, 4))
-					{
-						return MADNoErr;
-					}
 	}
 	
 	return MADFileNotSupportedByThisPlug;

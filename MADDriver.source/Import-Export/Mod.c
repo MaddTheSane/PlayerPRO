@@ -283,7 +283,7 @@ static void AnalyseSignatureMOD(long EOFo, MADFourChar temp, short *maxInstru, i
 				int		PatMax = 0;
 				MODDef	*MODInt;
 				
-				MODInt = (MODDef*) ((char*) aMOD - (char*) 0x1E0);
+				MODInt = (MODDef*) ((uintptr_t)aMOD - 0x1E0);
 				
 				for(i = 0; i < 128; i++) {
 					if (MODInt->oPointers[i] < 0)
@@ -312,9 +312,9 @@ static void AnalyseSignatureMOD(long EOFo, MADFourChar temp, short *maxInstru, i
 	}
 }
 
-static inline struct MODCom* GetMODCommand(short position, short whichTracks, short whichPattern, short maxTracks, char* PatPtr)
+static inline struct MODCom* GetMODCommand(short position, short whichTracks, short whichPattern, short maxTracks, void* PatPtr)
 {
-	return (struct MODCom*)(PatPtr +
+	return (struct MODCom*)((uintptr_t)PatPtr +
 							whichPattern * 64 * sizeof(struct MODCom) * maxTracks +
 							position * sizeof(struct MODCom) * maxTracks +
 							whichTracks * sizeof(struct MODCom));
@@ -354,8 +354,8 @@ static MADErr PPConvertMod2Mad(char* aMOD, long MODSize, MADMusic *theMAD, MADDr
 		return MADFileNotSupportedByThisPlug;	// This file is NOT a Mod file !!!!!! This should NEVER happen !
 	} else if (maxInstru == 15) {				// Old Mods format with 15 instruments
 		
-		MODInt = (MODDef*) ((char*) theMOD - (char*) 0x1E0);
-		PatInt = (struct MODPat*) ((char*) MODInt->patterns - (char*) 0x4);
+		MODInt = (MODDef*) ((uintptr_t) theMOD - 0x1E0);
+		PatInt = (struct MODPat*) ((uintptr_t) MODInt->patterns - 0x4);
 		
 		PatMax = 0;
 		for (i = 0; i < 128; i++) {
@@ -687,7 +687,7 @@ static char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *P
 	if (theMOD == NULL)
 		return NULL;
 	
-	maxMOD = ((char*) theMOD + *PtrSize);
+	maxMOD = (char*)((uintptr_t) theMOD + *PtrSize);
 	
 	theMOD->longFmtSignature = 'M.K.';
 	if (theMAD->header->numChn > 4) {
@@ -763,7 +763,7 @@ static char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *P
 	
 	InstruSize = 0;
 	
-	OffSetToSample = (long) 0x43c + theMAD->header->numPat * sizeof(struct MODCom) * 64L * theMAD->header->numChn;
+	OffSetToSample = 0x43c + theMAD->header->numPat * sizeof(struct MODCom) * 64 * theMAD->header->numChn;
 	
 	for (i = 0; i < maxInstru; i++) {
 		sData	*curData = theMAD->sample[i*MAXSAMPLE + 0];
@@ -803,14 +803,7 @@ static char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *P
 	}
 	
 	for (i = 0; i < theMAD->header->numPat; i++) {
-		Cmd			nullCmd;
-		
-		nullCmd.ins		= 0;
-		nullCmd.note	= 0xFF;
-		nullCmd.cmd		= 0;
-		nullCmd.arg		= 0;
-		nullCmd.vol		= 0xFF;
-		nullCmd.unused	= 0;
+		Cmd			nullCmd = {0, 0xFF, 0, 0, 0xFF, 0};
 		
 		for(x=0; x < 64; x++) {
 			for(z=0; z < theMAD->header->numChn; z++) {
@@ -827,7 +820,7 @@ static char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *P
 				//if ((char*) n < (char*) theMOD) DebugStr("\pOut");
 				if ((char*) n > maxMOD)
 					return NULL;
-				if ((char*) n < (char*) theMOD)
+				if ((uintptr_t) n < (uintptr_t) theMOD)
 					return NULL;
 				
 				

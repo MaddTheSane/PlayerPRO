@@ -38,7 +38,7 @@
 
 static inline struct MTMTrack* GetMTMCommand(short position, short whichTracks, void *PatPtr)
 {
-	return (void*)((size_t)PatPtr + whichTracks * 192 + position * 3);
+	return (void*)((uintptr_t)PatPtr + whichTracks * 192 + position * 3);
 }
 
 static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, MADDriverSettings *init)

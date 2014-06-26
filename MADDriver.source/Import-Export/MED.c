@@ -561,20 +561,15 @@ static MADErr MED_Load(char*	theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 
 static bool compMem(void* a, void* b, long s)
 {
-	long 	i;
-	
-	for (i = 0; i < s; i++)
-	{
-		if (a[i] != b[i]) return false;
-	}
-	
-	return true;
+	return memcmp(a, b, s) == 0;
 }
 
 static MADErr TestMEDFile(char* AlienFile)
 {
-	if (compMem(AlienFile, "MMD0", 4) == false && compMem(AlienFile, "MMD1", 4) == false) return MADFileNotSupportedByThisPlug;
-	else return MADNoErr;
+	if (compMem(AlienFile, "MMD0", 4) == false && compMem(AlienFile, "MMD1", 4) == false)
+		return MADFileNotSupportedByThisPlug;
+	else
+		return MADNoErr;
 }
 
 static MADErr ExtractMEDInfo(PPInfoRec *info, char* theMED)

@@ -43,20 +43,15 @@ static unsigned char* MYC2PStr(Ptr cStr)
 
 Boolean compMem(Ptr a, Ptr b, long s)
 {
-	long 	i;
-	
-	for (i = 0; i < s; i++)
-	{
-		if (a[i] != b[i]) return false;
-	}
-	
-	return true;
+	return memcmp(a, b, s) == 0;
 }
 
 OSErr TestMIDIFile(Ptr AlienFile)
 {
-	if (compMem(AlienFile, "MThd", 4)) return noErr;
-	else return MADFileNotSupportedByThisPlug;
+	if (compMem(AlienFile, "MThd", 4))
+		return noErr;
+	else
+		return MADFileNotSupportedByThisPlug;
 }
 
 OSErr ExtractMIDIInfo(PPInfoRec *info, Ptr theMIDI)

@@ -12,7 +12,7 @@
 
 void DoPlayInstruInt(short Note, short Instru, short effect, short arg, short vol, Channel *curVoice, int start, int end);
 void NPianoRecordProcess(short i, short, short, short);
-void OpenOrCloseConnection(MADBool opening);
+void OpenOrCloseConnection(bool opening);
 
 void MyNullHook()
 {
@@ -42,12 +42,12 @@ void DoMidiSpeaker(short note, short Instru, int arg)
 
 }
 
-void OpenOrCloseConnection(MADBool opening)
+void OpenOrCloseConnection(bool opening)
 {
 
 }
 
-void SelectOMSConnections(MADBool Input)
+void SelectOMSConnections(bool Input)
 {
 
 }

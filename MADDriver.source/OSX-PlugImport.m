@@ -168,7 +168,7 @@ badplug:
 	return false;
 }
 
-static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
+static BOOL MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
 	static dispatch_once_t typeIDToken;
 	PlugInfo *FillPlug;
@@ -180,12 +180,12 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 	});
 	
 	if (!tempBundle) {
-		return FALSE;
+		return NO;
 	}
 	
 	if ((inMADDriver->TotalPlug + 1) >= MAXPLUG) {
 		PPDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
-		return false;
+		return NO;
 	}
 	
 	FillPlug = &(inMADDriver->ThePlug[inMADDriver->TotalPlug]);
@@ -259,14 +259,14 @@ static Boolean MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 		filled = fillPlugFromBundle(tempBundle, FillPlug);
 		if (filled) {
 			inMADDriver->TotalPlug++;
-			return true;
+			return YES;
 		} else {
 			goto badplug;
 		}
 	}
 badplug:
 	memset(FillPlug, 0, sizeof(PlugInfo));
-	return false;
+	return NO;
 }
 
 #pragma mark Plug-in Locations
@@ -310,12 +310,12 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 	}
 }
 
-static Boolean CompareTwoNSURLs(NSURL *urla, NSURL *urlb)
+static BOOL CompareTwoNSURLs(NSURL *urla, NSURL *urlb)
 {
 	@autoreleasepool {
 		id refA = nil, refB = nil;
 		BOOL bothAreValid = YES;
-		Boolean theSame = false;
+		BOOL theSame = NO;
 		
 		if ([urla getResourceValue:&refA forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
 			bothAreValid = NO;
@@ -555,15 +555,15 @@ OSErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 	return MADCannotFindPlug;
 }
 
-Boolean	MADPlugAvailable(MADLibrary *inMADDriver, char* kindFile)
+bool MADPlugAvailable(MADLibrary *inMADDriver, char* kindFile)
 {
 	if (!strcmp(kindFile, "MADK"))
-		return TRUE;
+		return true;
 	for (int i = 0; i < inMADDriver->TotalPlug; i++) {
 		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type))
-			return TRUE;
+			return true;
 	}
-	return FALSE;
+	return false;
 }
 
 MADErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD)

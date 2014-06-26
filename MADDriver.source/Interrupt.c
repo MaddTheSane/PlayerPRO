@@ -90,7 +90,7 @@ void ConvertInstrumentOut16(short *tempPtr, size_t sSize)
 	ConvertInstrument16(tempPtr, sSize);
 }
 
-int DoVolPanning256(short whichChannel, Channel *ch, MADDriverRec *intDriver, MADBool Interpol)	// MAX = 256
+int DoVolPanning256(short whichChannel, Channel *ch, MADDriverRec *intDriver, bool Interpol)	// MAX = 256
 {
 	// Compute Volume !
 	int pannValue, volFade;
@@ -333,7 +333,7 @@ void ProcessFadeOut(Channel *ch, MADDriverRec *intDriver)
 	}
 }
 
-void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, MADBool Recurrent)
+void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 {
 	int			v;
 	InstrData	*curIns;
@@ -442,7 +442,7 @@ void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, MADBool Recurrent)
 	}
 }
 
-void ProcessPanning(Channel *ch, MADDriverRec *intDriver, MADBool Recurrent)
+void ProcessPanning(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 {
 	int			v;
 	InstrData	*curIns;
@@ -731,7 +731,7 @@ int GetOldPeriod(short note, int c2spd, MADDriverRec *intDriver)
 	return GetOld2Period(note, c2spd, intDriver);
 }
 
-MADBool NewMADCommand(Cmd *theNoteCmd)
+bool NewMADCommand(Cmd *theNoteCmd)
 {
 	bool	result = false;
 	Cmd		intCmd = *theNoteCmd;
@@ -1090,7 +1090,7 @@ short FindAFreeChannel(MADDriverRec *intDriver)
 	return chanID;
 }
 
-void ApplyVSTEffects(MADDriverRec *intDriver, MADBool ByPass)
+void ApplyVSTEffects(MADDriverRec *intDriver, bool ByPass)
 {
 	int i;
 	if (!intDriver) return;
@@ -1926,7 +1926,7 @@ void GenerateSound(MADDriverRec *intDriver)
 	}
 }
 
-MADBool DirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
+bool DirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
 	char				*ptrCopy;
 	MADDriverSettings	driverCopy;
@@ -1964,7 +1964,7 @@ MADBool DirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRe
 	return true;
 }
 
-MADBool DirectSave(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
+bool DirectSave(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
 	char				*ptrCopy;
 	MADDriverSettings	driverCopy;

@@ -197,7 +197,7 @@ void twofft(double *data1,double *data2,double *fft1,double *fft2, int n)
 }
 #endif
 
-void MADCallFFT(sData *SData, double *filter, MADDriverRec *intDriver, MADBool shift)
+void MADCallFFT(sData *SData, double *filter, MADDriverRec *intDriver, bool shift)
 {
 	if (filter == NULL) filter = intDriver->Filter;
 	
@@ -230,7 +230,7 @@ double MADEQInterpolate(double p,double p1,double p2,double v1,double v2)
 }
 #endif
 
-void FFT8S(char* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, MADBool shift)
+void FFT8S(char* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, bool shift)
 {
 	int		y, powersize;
 	int		*shiftAr = NULL;
@@ -420,7 +420,7 @@ void FFT8S(char* SData, size_t size, double *filter, MADDriverRec *intDriver, sh
 //static long PreviousAxe[2];
 //static long PreviousAxe2[2];
 
-void FFT16S(short* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, MADBool shift)
+void FFT16S(short* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, bool shift)
 {
 	int		y, powersize, *shiftAr = NULL;
 	double	pente, axe, *fDataCopy2 = NULL, *fDataCopy = intDriver->fData;

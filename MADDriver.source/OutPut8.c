@@ -30,7 +30,7 @@ void Sampler8in8AddPolyStereo(Channel *curVoice, char* ASCBuffer, short chanNo, 
 	char	*SndBuffer;
 	int		i = intDriver->ASCBUFFER, volChn;
 	short	temp;
-	MADBool	killSample = false;
+	bool	killSample = false;
 	long	aDD, aCC = curVoice->lAC, off;
 	
 #if defined(HAS_LONG_DOUBLE)
@@ -86,7 +86,7 @@ void Sampler8in8AddPoly(Channel *curVoice, char* ASCBuffer, short chanNo, MADDri
 {
 	char	*SndBuffer;
 	int		i = intDriver->ASCBUFFER, volChn;
-	MADBool	killSample = false;
+	bool	killSample = false;
 	int		aDD, aCC = curVoice->lAC, off;
 	
 #if defined(HAS_LONG_DOUBLE)
@@ -136,7 +136,7 @@ void Sampler16in8AddPolyStereo(Channel *curVoice, char* ASCBuffer, short chanNo,
 	char	*SndBuffer;
 	int		i = intDriver->ASCBUFFER, volChn;
 	short	temp;
-	MADBool	killSample = false;
+	bool	killSample = false;
 	long	aDD, aCC = curVoice->lAC, off;
 	
 #if defined(HAS_LONG_DOUBLE)
@@ -192,7 +192,7 @@ void Sampler16in8AddPoly(Channel *curVoice, char* ASCBuffer, short chanNo, MADDr
 {
 	char	*SndBuffer;
 	int		i = intDriver->ASCBUFFER, volChn;
-	MADBool	killSample = false;
+	bool	killSample = false;
 	long	aDD, aCC = curVoice->lAC, off;
 	
 #if defined(HAS_LONG_DOUBLE)

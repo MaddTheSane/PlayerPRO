@@ -28,7 +28,7 @@ void ApplyVSTSets(VSTEffect* myEffect, FXSets* set)
 	
 }
 
-MADBool IsVSTChanEffect(MADDriverRec *intDriver, short channel)
+bool IsVSTChanEffect(MADDriverRec *intDriver, short channel)
 {
 	return false;
 }

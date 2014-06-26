@@ -281,10 +281,7 @@ static MADErr DecompressSample(short bits, char* reader, size_t length, char *de
 
 static inline bool ITcompMem(const void *a, const void *b, size_t s)
 {
-	if (memcmp(a, b, s) == 0)
-		return true;
-	else
-		return false;
+	return memcmp(a, b, s) == 0;
 }
 
 static void ConvertITEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg, short channel)

@@ -1178,11 +1178,7 @@ static char*	ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndS
 
 static inline bool compMem(const void *a, const void *b, size_t s)
 {
-	if (memcmp(a, b, s) == 0) {
-		return true;
-	} else {
-		return false;
-	}
+	return memcmp(a, b, s) == 0;
 }
 
 static MADErr TestXMFile(char* AlienFile)

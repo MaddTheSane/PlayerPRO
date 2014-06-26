@@ -122,7 +122,7 @@ typedef struct Channel
 	
 	int		arp[MAX_ARP];		// Used for arpeggio command
 	int		arpindex;			// Used for arpeggio command
-	MADBool	arpUse;
+	bool	arpUse;
 	
 	char	viboffset;			// Used for vibrato command
 	int		vibdepth;			// Used for vibrato command
@@ -602,7 +602,7 @@ PPEXPORT MADErr	MADInitLibrary(const char *PlugsFolderName, MADLibrary **MADLib)
 PPEXPORT MADErr	MADDisposeLibrary(MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
 PPEXPORT void	MADGetBestDriver(MADDriverSettings *DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
-PPEXPORT MADBool MADSoundDriverIsAvalable(short theDriver);
+PPEXPORT bool	MADSoundDriverIsAvalable(short theDriver);
 PPEXPORT int	MADSoundDriverList();
 
 PPEXPORT MADErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
@@ -617,7 +617,7 @@ PPEXPORT MADErr	MADStopDriver(MADDriverRec *MDriver);										// NEW - DEActiva
 
 PPEXPORT MADErr	MADPlayMusic(MADDriverRec *MDriver);										// NEW - Read and play current music in memory - Call MADStartInterruption BEFORE
 PPEXPORT MADErr	MADStopMusic(MADDriverRec *MDriver);										// NEW - Stop reading current music in memory, Use MADCleanDriver to stop sounds
-PPEXPORT MADBool MADIsPlayingMusic(MADDriverRec *driver);									// NEW - See if PlayerPRO is playing music
+PPEXPORT bool MADIsPlayingMusic(MADDriverRec *driver);									// NEW - See if PlayerPRO is playing music
 
 PPEXPORT void	MADCleanDriver(MADDriverRec *intDriver);									// Clean the driver : stop playing sounds
 
@@ -637,7 +637,7 @@ PPEXPORT MADErr	MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, PP
 	
 PPEXPORT MADErr	MADMusicExportCString(MADLibrary *lib, MADMusic *music, char *type, char* cName);
 
-PPEXPORT MADErr	MADMusicSaveCString(MADMusic *music, const char *cName, MADBool compressMAD);
+PPEXPORT MADErr	MADMusicSaveCString(MADMusic *music, const char *cName, bool compressMAD);
 //PPEXPORT MADErr	MADMusicSavePointer(MADMusic *music, void **outPtr, size_t *outPtrSize, MADBool compressMAD);
 
 #ifdef _MAC_H
@@ -645,10 +645,10 @@ PPEXPORT MADErr	MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, char *t
 PPEXPORT MADErr	MADMusicIdentifyCFURL(MADLibrary *lib, char *type, CFURLRef URLRef);
 PPEXPORT MADErr	MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec);
 PPEXPORT MADErr	MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL);
-PPEXPORT MADErr	MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, MADBool compressMAD);
+PPEXPORT MADErr	MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD);
 #endif
 
-PPEXPORT MADBool MADPlugAvailable(MADLibrary *, char *type);								// Is plug 'type' available?
+PPEXPORT bool MADPlugAvailable(MADLibrary *, char *type);								// Is plug 'type' available?
 
 PPEXPORT MADErr	MADDisposeMusic(MADMusic **, MADDriverRec *MDriver);								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
 
@@ -666,7 +666,7 @@ PPEXPORT MADErr	MADPlaySoundData(MADDriverRec	*MDriver,
 								 size_t			loopBeg,				// loop beginning
 								 size_t			loopSize,				// loop size in bytes
 								 unsigned int	rate,					// sample rate of the sound data, by ex: rate22khz
-                                 MADBool		stereo);				// sample is in stereo or in mono?
+                                 bool			stereo);				// sample is in stereo or in mono?
 							
 #if 0
 PPEXPORT MADErr	MADPlaySoundDataSYNC(MADDriverRec	*MDriver,
@@ -678,17 +678,17 @@ PPEXPORT MADErr	MADPlaySoundDataSYNC(MADDriverRec	*MDriver,
 									 long			loopBeg,				// loop beginning
 									 long			loopSize,				// loop size in bytes
 									 double			rate,					// sample rate of the sound data, by ex: rate22khz
-									 MADBool		stereo);				// sample is in stereo or in mono?
+									 bool			stereo);				// sample is in stereo or in mono?
 #endif
 
-PPEXPORT MADBool MADIsDonePlaying(MADDriverRec *MDriver);
+PPEXPORT bool MADIsDonePlaying(MADDriverRec *MDriver);
 	
 PPEXPORT void	MADBeginExport(MADDriverRec *driver);
 PPEXPORT void	MADEndExport(MADDriverRec *driver);
-PPEXPORT MADBool MADIsExporting(MADDriverRec *driver);
+PPEXPORT bool	MADIsExporting(MADDriverRec *driver);
 
-PPEXPORT MADBool MADWasReading(MADDriverRec *driver) DEPRECATED_ATTRIBUTE;
-PPEXPORT void	MADSetReading(MADDriverRec *driver, MADBool toSet) DEPRECATED_ATTRIBUTE;
+PPEXPORT bool	MADWasReading(MADDriverRec *driver) DEPRECATED_ATTRIBUTE;
+PPEXPORT void	MADSetReading(MADDriverRec *driver, bool toSet) DEPRECATED_ATTRIBUTE;
 
 PPEXPORT int	MADAudioLength(MADDriverRec *theRec);
 
