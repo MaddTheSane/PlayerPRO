@@ -9,11 +9,11 @@
 #import "PPPlugInInfo.h"
 
 @interface PPPlugInInfo ()
-@property (readwrite, copy)		NSString *plugName;
-@property (readwrite, copy)		NSString *authorName;
-@property (readwrite, copy)		NSString *plugType;
-@property (readwrite, copy)		NSString *plugCopyright;
-@property (readwrite, retain)	NSURL    *plugURL;
+@property (readwrite, copy) NSString	*plugName;
+@property (readwrite, copy) NSString	*authorName;
+@property (readwrite, copy) NSString	*plugType;
+@property (readwrite, copy) NSString	*plugCopyright;
+@property (readwrite, strong) NSURL		*plugURL;
 @end
 
 @implementation PPPlugInInfo

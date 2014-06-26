@@ -907,21 +907,21 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 			s3minfo.insdata[i].inssig[1] == 'C' &&
 			s3minfo.insdata[i].inssig[2] == 'R' &&
 			s3minfo.insdata[i].inssig[3] == 'S')
-	    {
-	    	int tempL;
+		{
+			int tempL;
 			
-	    	theS3MCopy = (MADByte*) theS3M;
-	    	
+			theS3MCopy = (MADByte*) theS3M;
+			
 			tempL = (((int)s3minfo.insdata[i].memsegh)<<16|s3minfo.insdata[i].memsegl)<<4;
-	    	
-	    	theS3MCopy += tempL;
-	    	
-	    	theInstrument[i] = (char*) theS3MCopy;
-	    }
-	    else
-	    {
-	    	theInstrument[i] = NULL;
-	    }
+			
+			theS3MCopy += tempL;
+			
+			theInstrument[i] = (char*) theS3MCopy;
+		}
+		else
+		{
+			theInstrument[i] = NULL;
+		}
 	}
 	
 	/******** Le S3M a été lu et analysé ***********/

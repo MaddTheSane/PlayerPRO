@@ -267,7 +267,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 
 - (IBAction)showPreferences:(id)sender
 {
-    if (!preferences) {
+	if (!preferences) {
 		preferences = [[PPPreferences alloc] init];
 	}
 	[[preferences window] center];

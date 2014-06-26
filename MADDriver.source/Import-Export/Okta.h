@@ -68,7 +68,7 @@ typedef struct OktaHeader
 
 	char			*pbod[128]; //TODO: check for 32-64-bit inconsistencies
 	int				pbodlen[128];
-       
+	
 	unsigned char	*patt; //TODO: check for 32-64-bit inconsistencies
 	int				pointer;
 	int				patty;

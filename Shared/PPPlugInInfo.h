@@ -17,11 +17,11 @@
 	NSString	*plugCopyright;
 	//OSType capabilities;
 }
-@property (readonly) NSString *plugName;
-@property (readonly) NSString *authorName;
-@property (readonly) NSString *plugType;
-@property (readonly) NSString *plugCopyright;
-@property (readonly) NSURL    *plugURL;
+@property (readonly) NSString	*plugName;
+@property (readonly) NSString	*authorName;
+@property (readonly) NSString	*plugType;
+@property (readonly) NSString	*plugCopyright;
+@property (readonly) NSURL		*plugURL;
 
 - (id)initWithPlugName:(NSString*)pn author:(NSString*)aut;
 - (id)initWithPlugName:(NSString*)pn author:(NSString*)aut plugType:(NSString*)pt;

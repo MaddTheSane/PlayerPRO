@@ -46,8 +46,8 @@
 #include <string.h>
 
 /*!
- * @typedef    UNFILE
- * @abstract   A pointer to a file structure.
+ * @typedef		UNFILE
+ * @abstract	A pointer to a file structure.
  */
 typedef FILE* UNFILE;
 
@@ -137,10 +137,10 @@ PPEXPORT MADErr	iRead(long size, void *dest, UNFILE iFileRefI);
 PPEXPORT MADErr	iWrite(long size, const void *src, UNFILE iFileRefI);
 
 /*!
- * @function    iSeekCur
- * @abstract    Change the file position of file pointed at by iFileRefI
- * @result      An error value. 0, or <code>MADNoErr</code> if there was no error.
- * @param       size
+ * @function	iSeekCur
+ * @abstract	Change the file position of file pointed at by iFileRefI
+ * @result		An error value. 0, or <code>MADNoErr</code> if there was no error.
+ * @param		size
  *					The offset from the current position
  * @param		iFileRefI
  *					The file reference to change the file position on
@@ -287,7 +287,7 @@ static inline void OSType2Ptr(MADFourChar type, char *str)
 static inline MADFourChar Ptr2OSType(const char *str)
 {
 	short		i;
-    MADFourChar	type = '    ';
+	MADFourChar	type = '    ';
 	
 	i = strlen(str);
 	if (i > 4)

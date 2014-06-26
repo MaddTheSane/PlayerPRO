@@ -396,7 +396,7 @@ void FFT8S(char* SData, size_t size, double *filter, MADDriverRec *intDriver, sh
 			}
 		}
 		
-		//// ***********************              Now the left channel !
+		//// *********************** Now the left channel !
 		
 		SData++;
 	}
@@ -585,7 +585,7 @@ void FFT16S(short* SData, size_t size, double *filter, MADDriverRec *intDriver, 
 			}
 		}
 		
-		//// ***********************              Now the left channel !
+		//// *********************** Now the left channel !
 		
 		SData++;
 	}
@@ -652,7 +652,7 @@ void FFT8S(char *SData, long size, double *filter, MADDriverRec *intDriver, shor
 				for (i = 0 ; i < EQPACKET*2; i++) SData[x + 2*i] = intDriver->fData[i+1];
 			}
 			
-			//// ***********************              Now the left channel !
+			//// *********************** Now the left channel !
 			
 			SData++;
 		}

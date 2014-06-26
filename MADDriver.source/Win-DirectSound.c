@@ -91,7 +91,7 @@ BOOL AppCreateWritePrimaryBuffer(
     memset(&pcmwf, 0, sizeof(WAVEFORMATEX));
     pcmwf.wFormatTag 		= WAVE_FORMAT_PCM;
     
-    pcmwf.nChannels = 2;
+    pcmwf.nChannels				= 2;
     pcmwf.nSamplesPerSec		= WinMADDriver->DriverSettings.outPutRate;
     pcmwf.wBitsPerSample		= WinMADDriver->DriverSettings.outPutBits;
     pcmwf.nBlockAlign			= pcmwf.nChannels * (pcmwf.wBitsPerSample/8);
@@ -205,7 +205,7 @@ BOOL LoadSamp(LPDIRECTSOUND lpDirectSound,
     // Set up wave format structure.
     memset(&pcmwf, 0, sizeof(WAVEFORMATEX));
     pcmwf.wFormatTag			= WAVE_FORMAT_PCM;
-    pcmwf.nChannels = 2;
+    pcmwf.nChannels				= 2;
     pcmwf.nSamplesPerSec		= WinMADDriver->DriverSettings.outPutRate;
     pcmwf.wBitsPerSample		= WinMADDriver->DriverSettings.outPutBits;
     pcmwf.nBlockAlign			= pcmwf.nChannels * (pcmwf.wBitsPerSample/8);
@@ -214,9 +214,8 @@ BOOL LoadSamp(LPDIRECTSOUND lpDirectSound,
     // Set up DSBUFFERDESC structure.
     memset(&dsbdesc, 0, sizeof(DSBUFFERDESC)); // Zero it out.
     dsbdesc.dwSize = sizeof(DSBUFFERDESC);
-//    dsbdesc.dwFlags =	DSBCAPS_STATIC | DSBCAPS_CTRLDEFAULT | DSBCAPS_GETCURRENTPOSITION2;	//;	//;	// | flags;	//DSBCAPS_STATIC | DSBCAPS_CTRLPAN|DSBCAPS_CTRLVOLUME|DSBCAPS_CTRLFREQUENCY| DSBCAPS_GLOBALFOCUS|DSBCAPS_GETCURRENTPOSITION2|flags;
-  
-//  	dsbdesc.dwFlags =	DSBCAPS_CTRLPAN|DSBCAPS_CTRLVOLUME|DSBCAPS_CTRLFREQUENCY|flags;
+	//dsbdesc.dwFlags =	DSBCAPS_STATIC | DSBCAPS_CTRLDEFAULT | DSBCAPS_GETCURRENTPOSITION2;	//;	//;	// | flags;	//DSBCAPS_STATIC | DSBCAPS_CTRLPAN|DSBCAPS_CTRLVOLUME|DSBCAPS_CTRLFREQUENCY| DSBCAPS_GLOBALFOCUS|DSBCAPS_GETCURRENTPOSITION2|flags;
+	//dsbdesc.dwFlags =	DSBCAPS_CTRLPAN|DSBCAPS_CTRLVOLUME|DSBCAPS_CTRLFREQUENCY|flags;
   	
   	dsbdesc.dwFlags = DSBCAPS_CTRLPAN | DSBCAPS_CTRLVOLUME | DSBCAPS_CTRLFREQUENCY | DSBCAPS_GLOBALFOCUS;
     dsbdesc.dwBufferBytes = length;
@@ -225,12 +224,12 @@ BOOL LoadSamp(LPDIRECTSOUND lpDirectSound,
     hr = lpDirectSound->lpVtbl->CreateSoundBuffer(lpDirectSound, &dsbdesc, lplpDsb, NULL);
     if(hr == DS_OK)
     {
-//        lpDirectSound->lpVtbl->SetCooperativeLevel(
-//                lpDirectSound,hwnd, DSSCL_EXCLUSIVE);
+		//lpDirectSound->lpVtbl->SetCooperativeLevel(
+		//lpDirectSound,hwnd, DSSCL_EXCLUSIVE);
         // Succeeded! Valid interface is in *lplpDsb.
-  //      WriteDataToBuffer(*lplpDsb, 0, samp,length);
-//        lpDirectSound->lpVtbl->SetCooperativeLevel(
-//                lpDirectSound,hwnd, DSSCL_NORMAL);
+		//WriteDataToBuffer(*lplpDsb, 0, samp,length);
+		//lpDirectSound->lpVtbl->SetCooperativeLevel(
+		//lpDirectSound,hwnd, DSSCL_NORMAL);
     }
     else
     {
@@ -358,7 +357,7 @@ Boolean DirectSoundInit(MADDriverRec* WinMADDriver)
 		WinMADDriver->lpSwSamp = NULL;
 		if (!LoadSamp(WinMADDriver->lpDirectSound, &WinMADDriver->lpSwSamp, NULL, WinMADDriver->WIN95BUFFERSIZE, DSBCAPS_LOCSOFTWARE, WinMADDriver))
 		{
-			//DEBUG debugger("Error 2\n");		//DSBCAPS_LOCSOFTWARE
+			//DEBUG debugger("Error 2\n"); //DSBCAPS_LOCSOFTWARE
 			WinMADDriver->lpDirectSound->lpVtbl->Release(WinMADDriver->lpDirectSound);
 			WinMADDriver->lpDirectSound = NULL;
 			return false;
@@ -381,11 +380,11 @@ Boolean DirectSoundInit(MADDriverRec* WinMADDriver)
 		 
 		// debugger("timeSetEvent\n");
 		 
-		WinMADDriver->gwID = timeSetEvent(	40,   								/* how often                 */
-											40,   								/* timer resolution          */
-											TimeProc,  							/* callback function         */
-											(unsigned long) WinMADDriver,		/* info to pass to callback  */
-											TIME_PERIODIC); 					/* oneshot or periodic?      */
+		WinMADDriver->gwID = timeSetEvent(40,   							/* how often					*/
+										  40,   							/* timer resolution				*/
+										  TimeProc,  						/* callback function			*/
+										  (unsigned long) WinMADDriver,		/* info to pass to callback		*/
+										  TIME_PERIODIC); 					/* oneshot or periodic?			*/
 		
 		if (WinMADDriver->gwID == 0) return false;
 		else return true;

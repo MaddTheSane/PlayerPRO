@@ -6,7 +6,7 @@
 #import <PlayerPROKit/PlayerPROKit.h>
 
 /* -----------------------------------------------------------------------------
-    Generate a thumbnail for file
+	Generate a thumbnail for file
 
    This function's job is to create thumbnail for designated file as fast as possible
    ----------------------------------------------------------------------------- */

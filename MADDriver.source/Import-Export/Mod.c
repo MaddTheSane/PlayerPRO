@@ -415,8 +415,8 @@ static MADErr PPConvertMod2Mad(char* aMOD, long MODSize, MADMusic *theMAD, MADDr
 		
 		if (theMOD->fid[i].loopWords > 2 && sndSize > 0) {
 			if (theMOD->fid[i].loopWord +
-			    theMOD->fid[i].loopWords >
-			    theMOD->fid[i].numWords) {
+				theMOD->fid[i].loopWords >
+				theMOD->fid[i].numWords) {
 				theMOD->fid[i].loopWords = theMOD->fid[i].numWords -
 				theMOD->fid[i].loopWord;
 				

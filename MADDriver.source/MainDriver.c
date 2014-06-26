@@ -189,7 +189,7 @@ size_t MADGetMusicSize(MADMusic *music)
 void ConvertTo64Rows(MADMusic *music)
 {
 	int		i, x, z;
-    bool	IsReading;
+	bool	IsReading;
 	int		patID, found;
 	
 	if (music->header == NULL)
@@ -515,7 +515,7 @@ void MADGetBestDriver(MADDriverSettings *Init)
 	Init->driverMode		= Wave95NT;
 #else
 	//Fall-through: If we reach this, it's probably becasue we don't have an audio device for this platform.
-    Init->driverMode    = NoHardwareDriver;
+	Init->driverMode		= NoHardwareDriver;
 #endif
 }
 
@@ -1320,7 +1320,7 @@ MADErr MADLoadMusicPtr(MADMusic **music, char* myPtr)
 
 MADErr MADLoadMADFileCString(MADMusic **music, const char *fName)
 {
-    MADErr	theErr;
+	MADErr	theErr;
 	UNFILE	srcFile;
 	
 	if (fName == NULL || music == NULL)
@@ -1501,7 +1501,7 @@ MADErr MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRe
 MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 {
 	char *URLcString = NULL;
-    MADErr theErr = getCStringFromCFURL(urlRef, &URLcString);
+	MADErr theErr = getCStringFromCFURL(urlRef, &URLcString);
 	
 	if (theErr)
 		return theErr;
@@ -3003,7 +3003,7 @@ MADErr MADDisposeMusic(MADMusic **music, MADDriverRec *MDriver)
 
 bool MADIsPressed(unsigned char* km2, unsigned short k)
 {
-    return (bool)((km2[k >> 3] >> (k & 7)) & 1);
+	return (bool)((km2[k >> 3] >> (k & 7)) & 1);
 }
 
 #if 0

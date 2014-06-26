@@ -38,12 +38,12 @@ static OSStatus CAAudioCallback(void						*inRefCon,
 	}
 	
 	for (i = 0; i < ioData->mNumberBuffers; i++) {
-        abuf = &ioData->mBuffers[i];
-        remaining = abuf->mDataByteSize;
-        ptr = abuf->mData;
-        while (remaining > 0) {
-            if (theRec->CABufOff >= theRec->BufSize) {
-                if (!DirectSave(theRec->CABuffer, NULL, theRec)) {
+		abuf = &ioData->mBuffers[i];
+		remaining = abuf->mDataByteSize;
+		ptr = abuf->mData;
+		while (remaining > 0) {
+			if (theRec->CABufOff >= theRec->BufSize) {
+				if (!DirectSave(theRec->CABuffer, NULL, theRec)) {
 					switch(theRec->DriverSettings.outPutBits) {
 						case 8:
 							memset(theRec->CABuffer, 0x80, theRec->BufSize);
@@ -56,17 +56,17 @@ static OSStatus CAAudioCallback(void						*inRefCon,
 					}
 				}
 				theRec->CABufOff = 0;
-            }
+			}
 			
-            len = theRec->BufSize - theRec->CABufOff;
-            if (len > remaining)
-                len = remaining;
-            memcpy(ptr, (char *)theRec->CABuffer + theRec->CABufOff, len);
-            ptr = (char *)ptr + len;
-            remaining -= len;
-            theRec->CABufOff += len;
-        }
-    }
+			len = theRec->BufSize - theRec->CABufOff;
+			if (len > remaining)
+				len = remaining;
+			memcpy(ptr, (char *)theRec->CABuffer + theRec->CABufOff, len);
+			ptr = (char *)ptr + len;
+			remaining -= len;
+			theRec->CABufOff += len;
+		}
+	}
 	
 	/*if (BuffSize - pos > tickadd)	theRec->OscilloWavePtr = theRec->CABuffer + (int)pos;
 	 else */
@@ -115,8 +115,8 @@ OSErr initCoreAudio(MADDriverRec *inMADDriver)
 	audDes.mSampleRate = inMADDriver->DriverSettings.outPutRate;
 	audDes.mBitsPerChannel = inMADDriver->DriverSettings.outPutBits;
 	audDes.mFramesPerPacket = 1;
-    audDes.mBytesPerFrame = audDes.mBitsPerChannel * audDes.mChannelsPerFrame / 8;
-    audDes.mBytesPerPacket = audDes.mBytesPerFrame * audDes.mFramesPerPacket;
+	audDes.mBytesPerFrame = audDes.mBitsPerChannel * audDes.mChannelsPerFrame / 8;
+	audDes.mBytesPerPacket = audDes.mBytesPerFrame * audDes.mFramesPerPacket;
 	
 	theComp = AudioComponentFindNext(NULL, &theDes);
 	if (theComp == NULL) {

@@ -15,11 +15,11 @@
 + (instancetype)sharedImporter
 {
 	static dispatch_once_t onceToken;
-    static PPSTImporter *shared;
-    dispatch_once(&onceToken, ^{
-        shared = [PPSTImporter new];
-    });
-    return shared;
+	static PPSTImporter *shared;
+	dispatch_once(&onceToken, ^{
+		shared = [PPSTImporter new];
+	});
+	return shared;
 }
 
 - (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(NSData* bookmarkData, NSError *error))reply
@@ -37,11 +37,11 @@
 
 - (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection
 {
-    newConnection.exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPSTImporterHelper)];
-    newConnection.exportedObject = self;
-    [newConnection resume];
-    
-    return YES;
+	newConnection.exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPSTImporterHelper)];
+	newConnection.exportedObject = self;
+	[newConnection resume];
+	
+	return YES;
 }
 
 @end

@@ -247,24 +247,24 @@ static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd *aCmd, short channel)
 				aCmd->cmd		= 0;
 				break;
 				
-			case 'G'-55:                    // G - set global volume
+			case 'G'-55:					// G - set global volume
 				aCmd->arg = 0;
 				break;
 				
-			case 'H'-55:                    // H - global volume slide
+			case 'H'-55:					// H - global volume slide
 				aCmd->arg = 0;
 				break;
 				
-			case 'K'-55:                    // K - keyoff
+			case 'K'-55:					// K - keyoff
 				aCmd->ins		= 00;
 				aCmd->note		= 0xFE;
 				break;
 				
-			case 'L'-55:                    // L - set envelope position
+			case 'L'-55:					// L - set envelope position
 				aCmd->arg = 0;
 				break;
 				
-			case 'P'-55:                    // P - panning slide
+			case 'P'-55:					// P - panning slide
 				//	Convert en slide panning (volume cmd !)
 				aCmd->cmd		= 0;
 				aCmd->arg		= 0;
@@ -286,7 +286,7 @@ static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd *aCmd, short channel)
 			}
 				break;
 				
-			case 'R'-55:                    // R - multi retrig note
+			case 'R'-55:					// R - multi retrig note
 				aCmd->arg = 0;
 				break;
 				

@@ -250,20 +250,20 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 		case portamentoE:
 			if (ch->period != ch->pitchgoal) {
 				if (ch->period < ch->pitchgoal) {
-	        		ch->period += ch->pitchrate * 4;
-	        		if (ch->period > ch->pitchgoal) {
-	        			ch->cmd = 0;
+					ch->period += ch->pitchrate * 4;
+					if (ch->period > ch->pitchgoal) {
+						ch->cmd = 0;
 						ch->arg = 0;
-	        			ch->period = ch->pitchgoal;
-	        		}
-	        	} else if (ch->period > ch->pitchgoal) {
-	        		ch->period -= ch->pitchrate*4;
-	        		if (ch->period < ch->pitchgoal) {
-	        			ch->cmd = 0;
+						ch->period = ch->pitchgoal;
+					}
+				} else if (ch->period > ch->pitchgoal) {
+					ch->period -= ch->pitchrate*4;
+					if (ch->period < ch->pitchgoal) {
+						ch->cmd = 0;
 						ch->arg = 0;
-	        			ch->period = ch->pitchgoal;
-	        		}
-	        	}
+						ch->period = ch->pitchgoal;
+					}
+				}
 			}
 			break;
 			
@@ -792,7 +792,7 @@ void DoVolCmd(Channel *ch, short call, MADDriverRec *intDriver)
 			}
 			break;
 			
-		case 0xe:                       // pann slide right
+		case 0xe:						// pann slide right
 			if(vol & 0xf) {
 				ch->pann += volLO / 4;
 				
@@ -803,7 +803,7 @@ void DoVolCmd(Channel *ch, short call, MADDriverRec *intDriver)
 			}
 			break;
 			
-		case 0xf:                       // tone porta
+		case 0xf:						// tone porta
 			break;
 	}
 }

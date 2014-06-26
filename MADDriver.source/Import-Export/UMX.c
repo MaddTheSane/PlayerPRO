@@ -990,11 +990,11 @@ static MADErr TestUMXFile(char* AlienFile, long EOFo)
 	//short		tracksNo;
 	int i;
 	char 		modsig[5] = "M.K.";
-    char 		mod6sig[5] = "6CHN";
-    char 		mod8sig[5] = "8CHN";
-    char 		s3msig[5] = "SCRM";
-    char 		itsig[5] = "IMPM";
-    char 		xmsig[17] = "Extended Module:";
+	char 		mod6sig[5] = "6CHN";
+	char 		mod8sig[5] = "8CHN";
+	char 		s3msig[5] = "SCRM";
+	char 		itsig[5] = "IMPM";
+	char 		xmsig[17] = "Extended Module:";
 	
 	
 	for (i = 0; i < 5000 - 64; i++) {

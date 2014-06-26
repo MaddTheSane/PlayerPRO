@@ -129,7 +129,7 @@ typedef struct _PPInfoPlug {
 
 
 typedef struct _PPFiltersPlugin {
-    IUNKNOWN_C_GUTS;
+	IUNKNOWN_C_GUTS;
 	MADErr (STDMETHODCALLTYPE *FiltersMain)(void* thisInterface, sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short stereoMode);
 } PPFiltersPlugin;
 
@@ -166,7 +166,7 @@ typedef struct _PPFiltersPlugin {
 #define kPlayerPROInstrumentPlugInterfaceID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x8D, 0xC7, 0xC5, 0x82, 0x1C, 0x4B, 0x4F, 0x3C, 0xBE, 0xC8, 0x05, 0xCF, 0x83, 0x23, 0xCE, 0xA4)
 
 typedef struct _PPInstrumentPlugin {
-    IUNKNOWN_C_GUTS;
+	IUNKNOWN_C_GUTS;
 	MADErr (STDMETHODCALLTYPE *InstrMain)(void* thisInterface, OSType, InstrData*, sData**, short*, CFURLRef, PPInfoPlug*);
 } PPInstrumentPlugin;
 
@@ -203,7 +203,7 @@ typedef struct _PPInstrumentPlugin {
 #define kPlayerPRODigitalPlugInterfaceID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x34, 0xBA, 0x67, 0x5D, 0x3E, 0xD8, 0x49, 0xF9, 0x8D, 0x06, 0x28, 0xA7, 0x43, 0x6A, 0x0E, 0x4D)
 
 typedef struct _PPDigitalPlugin {
-    IUNKNOWN_C_GUTS;
+	IUNKNOWN_C_GUTS;
 	MADErr (STDMETHODCALLTYPE *MyProcPtr)(void* thisInterface, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug);
 } PPDigitalPlugin;
 

@@ -52,17 +52,17 @@
 
 - (id)initWithFrame:(NSRect)frame
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
+	self = [super initWithFrame:frame];
+	if (self) {
+		// Initialization code here.
+	}
+	
+	return self;
 }
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    // Drawing code here.
+	// Drawing code here.
 	if (isBlank) {
 		NSColor *grayOverlay = [NSColor colorWithDeviceWhite:0.65 alpha:1];
 		[grayOverlay set];

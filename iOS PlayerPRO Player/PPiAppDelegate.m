@@ -49,15 +49,15 @@
 	
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+	// Override point for customization after application launch.
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
-	    UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
-	    UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
-	    splitViewController.delegate = (id)navigationController.topViewController;
+		UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
+		UINavigationController *navigationController = [splitViewController.viewControllers lastObject];
+		splitViewController.delegate = (id)navigationController.topViewController;
 	}
 	self.madLib = [[PPLibrary alloc] init];
 	self.madDriver = [[PPDriver alloc] initWithLibrary:self.madLib settings:NULL];
-    return YES;
+	return YES;
 }
 							
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -92,9 +92,9 @@ PPEXPORT MADErr	AddSoundToMAD(char			*theSound,
 							  int			lE,
 							  short			sS,
 							  short			bFreq,
-                              uint32_t		rate,
-                              bool			stereo,
-                              MADPStr255	name,
+							  uint32_t		rate,
+							  bool			stereo,
+							  MADPStr255	name,
 							  short			ins,
 							  short			*sampleID);
 

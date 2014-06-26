@@ -12,12 +12,12 @@
 
 - (id)initWithFrame:(NSRect)frame
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
+	self = [super initWithFrame:frame];
+	if (self) {
+		// Initialization code here.
+	}
+	
+	return self;
 }
 
 - (void)setState:(NSInteger)value
@@ -29,7 +29,7 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    [super drawRect:dirtyRect];
+	[super drawRect:dirtyRect];
 	if ([self state] == NSOnState) {
 		NSColor *grayOverlay = [NSColor colorWithDeviceWhite:0.2 alpha:0.5];
 		[grayOverlay set];

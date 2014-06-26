@@ -398,7 +398,7 @@ static inline NSURL *PPHomeURL()
 	[conn resume];
 	
 	[[conn remoteObjectProxy] loadStcfAtURL:toOpen withReply:^(NSData *bookmarkData, NSError *error) {
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			if (!error) {
 				[self loadMusicListFromData:bookmarkData];
 				theHandle(nil);

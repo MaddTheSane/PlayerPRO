@@ -21,7 +21,7 @@ int main(int argc, const char * argv[])
 			return EXIT_FAILURE;
 		}
 		NSString *plistLocation = [[NSFileManager defaultManager] stringWithFileSystemRepresentation:argv[1] length:strlen(argv[1])];
-	    NSMutableDictionary *plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistLocation];
+		NSMutableDictionary *plistDict = [[NSMutableDictionary alloc] initWithContentsOfFile:plistLocation];
 		if (!plistDict) {
 			fprintf(stderr, "Could not open dictionary!\n");
 			return EXIT_FAILURE;
@@ -66,6 +66,6 @@ int main(int argc, const char * argv[])
 		plistDict[@"MPXCommitHash"] = outString;
 		[plistDict writeToFile:[NSString stringWithFormat:@"%@vers.plist", plistLocation] atomically:NO];
 	}
-    return EXIT_SUCCESS;
+	return EXIT_SUCCESS;
 }
 

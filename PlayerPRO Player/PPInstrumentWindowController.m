@@ -34,12 +34,12 @@
 
 - (id)initWithWindow:(NSWindow *)window
 {
-    if (self = [super initWithWindow:window]) {
-        // Initialization code here.
+	if (self = [super initWithWindow:window]) {
+		// Initialization code here.
 		[[NSApp delegate] addObserver:self forKeyPath:@"music" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
-    }
-    
-    return self;
+	}
+	
+	return self;
 }
 
 - (IBAction)toggleInfo:(id)sender
@@ -54,9 +54,9 @@
 
 - (void)windowDidLoad
 {
-    [super windowDidLoad];
+	[super windowDidLoad];
 	
-    // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 	//[instrumentView reloadData];
 	[instrumentView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
 }

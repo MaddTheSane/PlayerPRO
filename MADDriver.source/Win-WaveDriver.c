@@ -28,7 +28,7 @@
 #include <stdlib.h>
 #include <math.h>
 //#include "mmreg.h"
-#include "mmsystem.h"
+#include <mmsystem.h>
 
 #ifdef _MSC_VER
 #pragma comment(lib, "winmm.lib")
@@ -195,13 +195,13 @@ void W95_PlayStart(MADDriverRec *WinMADDriver)
 	
 	WinMADDriver->MICROBUFState = 0;
 	
-	timeBeginPeriod(20);      /* set the minimum resolution */
+	timeBeginPeriod(20);	/* set the minimum resolution */
 	
-	WinMADDriver->gwID = timeSetEvent(	40,   											/* how often                 */
-										40,   																/* timer resolution          */
-										TimeProc,  														/* callback function         */
-										(unsigned long)  WinMADDriver,    			/* info to pass to callback  */
-										TIME_PERIODIC); 											/* oneshot or periodic?      */
+	WinMADDriver->gwID = timeSetEvent(40,								/* how often                 */
+									  40,								/* timer resolution          */
+									  TimeProc,							/* callback function         */
+									  (unsigned long)  WinMADDriver,	/* info to pass to callback  */
+									  TIME_PERIODIC);					/* oneshot or periodic?      */
 							  
 							  
 	//////
@@ -234,8 +234,8 @@ Boolean W95_Init(MADDriverRec *WinMADDriver)
 	//long	i;
 	
 	WinMADDriver->WIN95BUFFERSIZE = WinMADDriver->BufSize;
-	WinMADDriver->WIN95BUFFERSIZE *= 2L;								// double buffer system
-	WinMADDriver->WIN95BUFFERSIZE *= MICROBUF;					// multi internal buffer system
+	WinMADDriver->WIN95BUFFERSIZE *= 2L;		// double buffer system
+	WinMADDriver->WIN95BUFFERSIZE *= MICROBUF;	// multi internal buffer system
 	
 	WinMADDriver->MICROBUFState = 0;
 	

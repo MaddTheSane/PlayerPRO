@@ -177,8 +177,8 @@ ULONG QuickLookGeneratorPluginRelease(void *thisInstance)
 // -----------------------------------------------------------------------------
 void *QuickLookGeneratorPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID)
 {
-	QLGeneratorPluginType *result;
-	CFUUIDRef                 uuid;
+	QLGeneratorPluginType	*result;
+	CFUUIDRef				uuid;
 	
 	/* If correct type is being requested, allocate an
 	 * instance of kQLGeneratorTypeID and return the IUnknown interface.

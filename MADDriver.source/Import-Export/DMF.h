@@ -97,16 +97,16 @@ typedef struct ITInsForm
 typedef struct ITForm
 {
 	int				ID;
-	char            name[26];
-	char            no[2];
+	char			name[26];
+	char			no[2];
 	
 	short			orderNum;
 	short			insNum;
 	short			smpNum;
 	short			patNum;
-	short     		cwtv;
+	short			cwtv;
 	short			Cmwt;
-	short      		flags;
+	short			flags;
 	short			special;
 	
 	char			globalVol;

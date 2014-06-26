@@ -38,11 +38,11 @@ MADErr PPMADInfoFile(const char *AlienFile, PPInfoRec *InfoRec)
 }
 
 MADErr CallImportPlug(MADLibrary	*inMADDriver,
-                     short			PlugNo,			// CODE du plug
-                     MADFourChar	order,
-                     char			*AlienFile,
-                     MADMusic		*theNewMAD,
-                     PPInfoRec		*info)
+					  short			PlugNo,			// CODE du plug
+					  MADFourChar	order,
+					  char			*AlienFile,
+					  MADMusic		*theNewMAD,
+					  PPInfoRec		*info)
 {
 	MADDriverSettings driverSettings = {0};
 	

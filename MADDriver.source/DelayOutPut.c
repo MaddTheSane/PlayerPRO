@@ -775,8 +775,8 @@ void Play16StereoDelay(MADDriverRec *intDriver)
 			}
 			
 			if (find == -1) {
-			    find = chanCounter;
-			    chanCounter++;
+				find = chanCounter;
+				chanCounter++;
 			}
 			Sample16BufferAddDelay(&intDriver->chan[i], intDriver->DASCEffectBuffer[find], intDriver);
 			

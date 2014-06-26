@@ -42,10 +42,10 @@ static int		old_effect;
 
 /* IT-Compressed status structure */
 typedef struct ITPACK {
-	unsigned short	bits;    /* current number of bits */
-	unsigned short	bufbits; /* bits in buffer */
-	short			last;    /* last output */
-	MADByte			buf;     /* bit buffer */
+	unsigned short	bits;		/* current number of bits */
+	unsigned short	bufbits;	/* bits in buffer */
+	short			last;		/* last output */
+	MADByte			buf;		/* bit buffer */
 } ITPACK;
 
 

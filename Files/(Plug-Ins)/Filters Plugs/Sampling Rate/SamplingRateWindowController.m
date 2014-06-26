@@ -120,8 +120,8 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
 
 - (instancetype)initWithWindow:(NSWindow *)window
 {
-    self = [super initWithWindow:window];
-    if (self) {
+	self = [super initWithWindow:window];
+	if (self) {
 		isMultipleIstanceSafe = YES;
 		
 		dispatch_block_t tmp = ^{
@@ -156,9 +156,9 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
 				theData->loopSize = theData->size - theData->loopBeg;
 		};
 		self.plugBlock = tmp;
-    }
-    
-    return self;
+	}
+	
+	return self;
 }
 
 #if 0

@@ -41,7 +41,7 @@ typedef struct MMD0 {
 	UWORD   pblock;
 	UWORD   pline;
 	UWORD   pseqnum;
-	WORD    actplayline;
+	WORD	actplayline;
 	UBYTE   counter;
 	UBYTE   extra_songs;	/* number of songs - 1 */
 } MMD0;						/* length = 52 bytes */
@@ -62,7 +62,7 @@ typedef struct MMD0song {
 	UWORD   songlen;		/* offs: 506 */
 	UBYTE   playseq[256];	/* offs: 508 */
 	UWORD   deftempo;		/* offs: 764 */
-	BYTE    playtransp;		/* offs: 766 */
+	BYTE	playtransp;		/* offs: 766 */
 	UBYTE   flags;			/* offs: 767 */
 	UBYTE   flags2;			/* offs: 768 */
 	UBYTE   tempo2;			/* offs: 769 */
@@ -84,7 +84,7 @@ typedef struct MMD1NOTE{
 
 typedef struct InstrHdr {
 	ULONG   length;
-	WORD    type;
+	WORD	type;
 	/* Followed by actual data */
 } InstrHdr;
 

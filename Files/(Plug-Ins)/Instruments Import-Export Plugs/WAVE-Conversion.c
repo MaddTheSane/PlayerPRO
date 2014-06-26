@@ -91,14 +91,14 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *l
 				(*WAVERsrc).dwDataOffset = longswap((*WAVERsrc).dwDataOffset);
 				
 				if (CFSwapInt32BigToHost((*WAVERsrc).fmtType) == 'fmt ') {
-					(*WAVERsrc).wFormatTag      = shrtswap((*WAVERsrc).wFormatTag);
-					(*WAVERsrc).nCannels        = shrtswap((*WAVERsrc).nCannels);
-					(*WAVERsrc).nSamplesPerSec  = longswap((*WAVERsrc).nSamplesPerSec);
-					(*WAVERsrc).nSamplesPerSec  = CFSwapInt32BigToHost((*WAVERsrc).nSamplesPerSec) << 16; //FIXME: is this right for LE machines?
-					(*WAVERsrc).nAvgBytesPerSec = longswap((*WAVERsrc).nAvgBytesPerSec);
-					(*WAVERsrc).nBlockAlign     = shrtswap((*WAVERsrc).nBlockAlign);
-					(*WAVERsrc).wBitsPerSample  = shrtswap((*WAVERsrc).wBitsPerSample);
-					(*WAVERsrc).dataSize        = longswap((*WAVERsrc).dataSize);
+					(*WAVERsrc).wFormatTag		= shrtswap((*WAVERsrc).wFormatTag);
+					(*WAVERsrc).nCannels		= shrtswap((*WAVERsrc).nCannels);
+					(*WAVERsrc).nSamplesPerSec	= longswap((*WAVERsrc).nSamplesPerSec);
+					(*WAVERsrc).nSamplesPerSec	= CFSwapInt32BigToHost((*WAVERsrc).nSamplesPerSec) << 16; //FIXME: is this right for LE machines?
+					(*WAVERsrc).nAvgBytesPerSec	= longswap((*WAVERsrc).nAvgBytesPerSec);
+					(*WAVERsrc).nBlockAlign		= shrtswap((*WAVERsrc).nBlockAlign);
+					(*WAVERsrc).wBitsPerSample	= shrtswap((*WAVERsrc).wBitsPerSample);
+					(*WAVERsrc).dataSize		= longswap((*WAVERsrc).dataSize);
 					
 					*loopStart	= 0;
 					*loopEnd 	= 0;

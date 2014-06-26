@@ -75,7 +75,7 @@ static BOOL MED_Init(MADDriverSettings *init)
 {
 	mh=NULL;
 	ms=NULL;
-	ba=NULL;        // blockarr
+	ba=NULL;		// blockarr
 	mmd0pat=NULL;
 	mmd1pat=NULL;
 	
@@ -118,16 +118,16 @@ static void EffectCvt(UBYTE eff, UBYTE dat, Cmd *aCmd)
 {
 	switch(eff){
 			
-			// 0x0 0x1 0x2 0x3 0x4      // PT effects
+			// 0x0 0x1 0x2 0x3 0x4		// PT effects
 			
-		case 0x5:       // PT vibrato with speed/depth nibbles swapped
+		case 0x5:		// PT vibrato with speed/depth nibbles swapped
 			aCmd->cmd = 4;
 			aCmd->arg = (dat>>4) | ((dat&0xf)<<4);
 			break;
 			
-		case 0x6:       // not used
-		case 0x7:       // not used
-		case 0x8:       // midi hold/decay
+		case 0x6:		// not used
+		case 0x7:		// not used
+		case 0x8:		// midi hold/decay
 			break;
 			
 		case 0x9:
@@ -140,12 +140,12 @@ static void EffectCvt(UBYTE eff, UBYTE dat, Cmd *aCmd)
 			
 			// 0xa 0xb 0xc all PT effects
 			
-		case 0xd:       // same as PT volslide
+		case 0xd:		// same as PT volslide
 			aCmd->cmd = 0xa;
 			aCmd->arg = dat;
 			break;
 			
-		case 0xe:       // synth jmp - midi
+		case 0xe:		// synth jmp - midi
 			break;
 			
 		case 0xf:
@@ -174,7 +174,7 @@ static void EffectCvt(UBYTE eff, UBYTE dat, Cmd *aCmd)
 			}
 			break;
 			
-		default:        // all normal PT effects are handled here :)
+		default:		// all normal PT effects are handled here :)
 			aCmd->cmd = eff;
 			aCmd->arg = dat;
 			break;

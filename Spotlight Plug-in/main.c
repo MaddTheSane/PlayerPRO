@@ -103,14 +103,13 @@ static MDImportPlug *AllocMetadataImporterPluginType(CFUUIDRef inFactoryID)
 //
 static void DeallocMetadataImporterPluginType(MDImportPlug *thisInstance)
 {
-    CFUUIDRef theFactoryID;
-
-    theFactoryID = thisInstance->factoryID;
-    free(thisInstance);
-    if (theFactoryID) {
-        CFPlugInRemoveInstanceForFactory(theFactoryID);
-        CFRelease(theFactoryID);
-    }
+	CFUUIDRef theFactoryID = thisInstance->factoryID;
+	
+	free(thisInstance);
+	if (theFactoryID) {
+		CFPlugInRemoveInstanceForFactory(theFactoryID);
+		CFRelease(theFactoryID);
+	}
 }
 
 // -----------------------------------------------------------------------------
@@ -120,18 +119,18 @@ static void DeallocMetadataImporterPluginType(MDImportPlug *thisInstance)
 //
 static HRESULT MetadataImporterQueryInterface(void *thisInstance, REFIID iid, LPVOID *ppv)
 {
-    CFUUIDRef interfaceID = CFUUIDCreateFromUUIDBytes(kCFAllocatorDefault, iid);
+	CFUUIDRef interfaceID = CFUUIDCreateFromUUIDBytes(kCFAllocatorDefault, iid);
 	
-    if (CFEqual(interfaceID, kMDImporterInterfaceID)) {
+	if (CFEqual(interfaceID, kMDImporterInterfaceID)) {
 		/* If the right interface was requested, bump the ref count,
 		 * set the ppv parameter equal to the instance, and
 		 * return good status.
 		 */
-        ((MDImportPlug*)thisInstance)->conduitInterface = &testInterfaceFtbl;
-        ((MDImporterURLInterfaceStruct *)((MDImportPlug*)thisInstance)->conduitInterface)->AddRef(thisInstance);
-        *ppv = thisInstance;
-        CFRelease(interfaceID);
-        return S_OK;
+		((MDImportPlug*)thisInstance)->conduitInterface = &testInterfaceFtbl;
+		((MDImporterURLInterfaceStruct *)((MDImportPlug*)thisInstance)->conduitInterface)->AddRef(thisInstance);
+		*ppv = thisInstance;
+		CFRelease(interfaceID);
+		return S_OK;
 	} else if (CFEqual(interfaceID, kMDImporterURLInterfaceID)) {
 		/* If the right interface was requested, bump the ref count,
 		 * set the ppv parameter equal to the instance, and
@@ -177,13 +176,13 @@ static ULONG MetadataImporterPluginAddRef(void *thisInstance)
 //
 static ULONG MetadataImporterPluginRelease(void *thisInstance)
 {
-    ((MDImportPlug*)thisInstance)->refCount -= 1;
-    if (((MDImportPlug*)thisInstance)->refCount == 0) {
-        DeallocMetadataImporterPluginType((MDImportPlug*)thisInstance );
-        return 0;
-    } else {
-        return ((MDImportPlug*)thisInstance)->refCount;
-    }
+	((MDImportPlug*)thisInstance)->refCount -= 1;
+	if (((MDImportPlug*)thisInstance)->refCount == 0) {
+		DeallocMetadataImporterPluginType((MDImportPlug*)thisInstance );
+		return 0;
+	} else {
+		return ((MDImportPlug*)thisInstance)->refCount;
+	}
 }
 
 // -----------------------------------------------------------------------------

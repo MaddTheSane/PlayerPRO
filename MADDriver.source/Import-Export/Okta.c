@@ -36,15 +36,15 @@
 #if 0
 short FoundNote(short Period)
 {
-	short	NCount = 1;
+	short NCount = 1;
 	
-	while(NCount < NUMBER_NOTES+1)
-    {
-    	if (Period >= MADpitchTable[NCount]) return(NCount);
-    	NCount++;
-    }
-    
-    return 0;
+	while (NCount < NUMBER_NOTES+1) {
+		if (Period >= MADpitchTable[NCount])
+			return NCount;
+		NCount++;
+	}
+	
+	return 0;
 }
 #endif
 
@@ -114,7 +114,7 @@ static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MAD
 				
 			case 'SAMP':
 				samps = (OktaInstru*) theOktaPos;
-          		
+				
 				for (i = 0; i * sizeof(OktaInstru) < aSect->length; i++)
 				{
 					instru[i] = samps[i];

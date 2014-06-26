@@ -661,12 +661,12 @@ PPEXPORT MADErr	MADPlaySoundData(MADDriverRec	*MDriver,
 								 const char		*soundPtr,				// Sound Pointer to data
 								 size_t			size,					// Sound size in bytes
 								 int			channel,				// channel ID on which to play sound
-                                 MADByte			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
+								 MADByte		note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
 								 int			amplitude,				// 8 or 16 bits
 								 size_t			loopBeg,				// loop beginning
 								 size_t			loopSize,				// loop size in bytes
 								 unsigned int	rate,					// sample rate of the sound data, by ex: rate22khz
-                                 bool			stereo);				// sample is in stereo or in mono?
+								 bool			stereo);				// sample is in stereo or in mono?
 							
 #if 0
 PPEXPORT MADErr	MADPlaySoundDataSYNC(MADDriverRec	*MDriver,

@@ -48,7 +48,7 @@
 
 - (NSString *)windowNibName 
 {
-    return @"preferences";
+	return @"preferences";
 }
 
 -(void)displayViewController:(NSViewController *)vc

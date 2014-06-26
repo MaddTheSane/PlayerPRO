@@ -50,12 +50,12 @@
 
 - (id)initWithWindow:(NSWindow *)window
 {
-    self = [super initWithWindow:window];
-    if (self) {
-        // Initialization code here.
-    }
-    
-    return self;
+	self = [super initWithWindow:window];
+	if (self) {
+		// Initialization code here.
+	}
+	
+	return self;
 }
 
 - (void)instrumentSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo

@@ -10,8 +10,8 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 
 @interface Cocoa_ExampleAppDelegate : NSObject <NSApplicationDelegate> {
-    NSWindow *window;
-    IBOutlet NSImageView *fileIcon;
+	NSWindow *window;
+	IBOutlet NSImageView *fileIcon;
 	
 	IBOutlet NSTextField *fileName;
 	MADDriverRec	*MADDriver;
