@@ -458,18 +458,18 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 		}
 		
 #if 0
-		if (ITinfo.insdata[i].insflags&1) {
-			ITinfo.insdata[i].insloopbeg		= Tdecode32(&ITinfo.insdata[i].insloopbeg);
-			ITinfo.insdata[i].insloopend		= Tdecode32(&ITinfo.insdata[i].insloopend);
+		if (ITinfo.insdata[i].insflags & 1) {
+			PPLE32(&ITinfo.insdata[i].insloopbeg);
+			PPLE32(&ITinfo.insdata[i].insloopend);
 		} else {
 			ITinfo.insdata[i].insloopbeg		= 0;
 			ITinfo.insdata[i].insloopend		= 0;
 		}
 		
-		ITinfo.insdata[i].c2spd						= Tdecode32( &ITinfo.insdata[i].c2spd);
-		ITinfo.insdata[i].insgvspos				= Tdecode16( &ITinfo.insdata[i].insgvspos);
-		ITinfo.insdata[i].insint512				= Tdecode16( &ITinfo.insdata[i].insint512);
-		ITinfo.insdata[i].insintlastused	= Tdecode32(&ITinfo.insdata[i].insintlastused);
+		PPLE32(&ITinfo.insdata[i].c2spd);
+		PPLE16(&ITinfo.insdata[i].insgvspos);
+		PPLE16(&ITinfo.insdata[i].insint512);
+		PPLE32(&ITinfo.insdata[i].insintlastused);
 		
 		if (ITinfo.insdata[i].instype == 1 && ITinfo.insdata[i].inspack == 0 && ITinfo.insdata[i].inssig == 'SCRS')
 		{

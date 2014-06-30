@@ -38,32 +38,6 @@ static char *theAMFRead;
 
 #define READAMFFILE(dst, size)	{memcpy(dst, theAMFRead, size); theAMFRead += (long)size;}
 
-#ifdef _MAC_H
-#define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
-#define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)
-#else
-#ifdef __LITTLE_ENDIAN__
-#define Tdecode16(msg_buf) *(short*)msg_buf
-#define Tdecode32(msg_buf) *(int*)msg_buf
-#else
-
-static inline UInt16 Tdecode16(void *msg_buf)
-{
-	UInt16 toswap = *((UInt16*) msg_buf);
-	PPLE16(&toswap);
-	return toswap;
-}
-
-static inline UInt32 Tdecode32(void *msg_buf)
-{
-	UInt32 toswap = *((UInt32*) msg_buf);
-	PPLE32(&toswap);
-	return toswap;
-}
-
-#endif
-#endif
-
 static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
 {
 	MADByte		tempByte;
@@ -112,7 +86,8 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 	theMAD->header->numPat = tempByte;
 	
 	READAMFFILE(&tempShort, 2);
-	trackCount = Tdecode16(&tempShort);
+	PPLE16(&tempShort);
+	trackCount = tempShort;
 	
 	if (AMFType >= 0x414D4609 ) {
 		READAMFFILE(&tempByte, 1);
@@ -150,7 +125,8 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 		
 		if (AMFType >= 0x414D460E ) {
 			READAMFFILE(&tempShort, 2);
-			patSize = Tdecode16(&tempShort);
+			PPLE16(&tempShort);
+			patSize = tempShort;
 		} else
 			patSize = 64;
 		
@@ -213,22 +189,28 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 				sData	*curData;
 				ushort	oiloopstart = 0;
 				ushort	oiloopend = 0;
+				ushort	oisize = 0;
 				
 				curIns->numSamples = 1;
 				
 				curData = theMAD->sample[i * MAXSAMPLE + 0] = (sData*)calloc(sizeof(sData), 1);
 				
-				curData->size		= Tdecode32(&oi.size);
+				oisize			= oi.size;
+				PPLE16(&oisize);
+				curData->size	= oisize;
 				//FIXME: were loopstart and loopend supposed to be byteswapped on PowerPC?
-				oiloopstart	= Tdecode16(&oi.loopstart);
-				oiloopend	= Tdecode16(&oi.loopend);
+				oiloopstart	= oi.loopstart;
+				oiloopend	= oi.loopend;
+				PPLE16(&oiloopstart);
+				PPLE16(&oiloopend);
 				curData->loopBeg	= oiloopstart;
 				curData->loopSize	= oiloopend - oiloopstart;
 				if (oiloopend == 65535) {
 					curData->loopSize = curData->loopBeg = 0;
 				}
 				curData->vol		= oi.volume;
-				curData->c2spd		= Tdecode16(&oi.rate); //finetune[oldMAD->fid[i].fineTune];
+				curData->c2spd		= oi.rate; //finetune[oldMAD->fid[i].fineTune];
+				PPLE16(&curData->c2spd)
 				curData->loopType	= 0;
 				curData->amp		= 8;
 				
@@ -250,14 +232,19 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 			
 			if (oi.size > 0) {
 				sData	*curData;
+				int		loopEnd;
 				
 				curIns->numSamples = 1;
 				
 				curData = theMAD->sample[i * MAXSAMPLE + 0] = (sData*)calloc(sizeof(sData), 1);
 				
-				curData->size		= Tdecode32(&oi.size);
-				curData->loopBeg 	= Tdecode32(&oi.loopstart);
-				curData->loopSize 	= Tdecode32(&oi.loopend) - Tdecode32(&oi.loopstart);
+				curData->size		= oi.size;
+				curData->loopBeg 	= oi.loopstart;
+				loopEnd				= oi.loopend;
+				PPLE32(&curData->size);
+				PPLE32(&curData->loopBeg);
+				PPLE32(&loopEnd);
+				curData->loopSize 	= loopEnd - curData->loopBeg;
 				if (oi.loopend == 65535) {
 					curData->loopSize = curData->loopBeg = 0;
 				}
@@ -280,14 +267,14 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 	trckPtr = 0;
 	for (t = 0; t < trackCount; t++) {
 		READAMFFILE(&tempShort, 2);
-		tempShort = Tdecode16(&tempShort);
+		PPLE16(&tempShort);
 		if (tempShort > trckPtr)
 			trckPtr = tempShort;
 	}
 	
 	for (t = 0; t < trckPtr; t++) {
 		READAMFFILE(&tempShort, 2);
-		tempShort = Tdecode16(&tempShort);
+		PPLE16(&tempShort);
 		
 		READAMFFILE(&tempByte, 1);
 		

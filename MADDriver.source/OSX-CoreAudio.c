@@ -19,10 +19,11 @@ static OSStatus CAAudioCallback(void						*inRefCon,
 								UInt32						inNumberFrames,
 								AudioBufferList				*ioData)
 {
-	size_t remaining, len;
-	AudioBuffer *abuf;
-	void *ptr;
-	UInt32 i = 0;
+	size_t		remaining, len;
+	AudioBuffer	*abuf;
+	void		*ptr;
+	UInt32		i = 0;
+	
 	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
 	if (theRec->Reading == false) {
 		switch(theRec->DriverSettings.outPutBits) {
