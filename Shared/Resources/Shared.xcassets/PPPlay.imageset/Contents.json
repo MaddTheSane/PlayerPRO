@@ -2,6 +2,10 @@
   "images" : [
     {
       "idiom" : "mac",
+      "filename" : "PPPlay.pdf"
+    },
+    {
+      "idiom" : "mac",
       "scale" : "1x",
       "filename" : "PPPlay.png"
     },

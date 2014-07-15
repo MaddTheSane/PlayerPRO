@@ -2,6 +2,10 @@
   "images" : [
     {
       "idiom" : "mac",
+      "filename" : "PPPrevTrack.pdf"
+    },
+    {
+      "idiom" : "mac",
       "scale" : "1x",
       "filename" : "PPPrevTrack.png"
     },
