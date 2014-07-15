@@ -1,16 +1,16 @@
 {
   "images" : [
     {
-      "idiom" : "mac",
+      "idiom" : "universal",
       "filename" : "PPPlay.pdf"
     },
     {
-      "idiom" : "mac",
+      "idiom" : "universal",
       "scale" : "1x",
       "filename" : "PPPlay.png"
     },
     {
-      "idiom" : "mac",
+      "idiom" : "universal",
       "scale" : "2x",
       "filename" : "PPPlayx2.png"
     }

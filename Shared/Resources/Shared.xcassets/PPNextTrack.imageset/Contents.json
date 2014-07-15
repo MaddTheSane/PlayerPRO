@@ -1,16 +1,16 @@
 {
   "images" : [
     {
-      "idiom" : "mac",
+      "idiom" : "universal",
       "filename" : "PPNextTrack.pdf"
     },
     {
-      "idiom" : "mac",
+      "idiom" : "universal",
       "scale" : "1x",
       "filename" : "PPNextTrack.png"
     },
     {
-      "idiom" : "mac",
+      "idiom" : "universal",
       "scale" : "2x",
       "filename" : "PPNextTrackx2.png"
     }

@@ -1,16 +1,16 @@
 {
   "images" : [
     {
-      "idiom" : "mac",
+      "idiom" : "universal",
       "filename" : "PPPrevTrack.pdf"
     },
     {
-      "idiom" : "mac",
+      "idiom" : "universal",
       "scale" : "1x",
       "filename" : "PPPrevTrack.png"
     },
     {
-      "idiom" : "mac",
+      "idiom" : "universal",
       "scale" : "2x",
       "filename" : "PPPrevTrackx2.png"
     }
