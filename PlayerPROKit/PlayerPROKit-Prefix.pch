@@ -2,11 +2,11 @@
 // Prefix header for all source files of the 'PlayerPROKit' target in the 'PlayerPROKit' project
 //
 
-#include <CoreFoundation/CoreFoundation.h>
+@import CoreFoundation;
 #include <tgmath.h>
 
 #ifdef __OBJC__
-	#import <Foundation/Foundation.h>
+	@import Foundation;
 	#if TARGET_OS_IPHONE
 		#import <UIKit/UIKit.h>
 	#else

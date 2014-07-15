@@ -6,6 +6,9 @@
 //
 //
 
+#ifndef __PLAYERPROKIT_PPPATTERNOBJECT_PCMDHANDLING__
+#define __PLAYERPROKIT_PPPATTERNOBJECT_PCMDHANDLING__
+
 #import <PlayerPROKit/PPPatternObject.h>
 #include <PlayerPROCore/PPPlug.h>
 
@@ -16,3 +19,5 @@
 - (OSErr)importPcmdFromURL:(NSURL*)theURL;
 - (OSErr)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
 @end
+
+#endif

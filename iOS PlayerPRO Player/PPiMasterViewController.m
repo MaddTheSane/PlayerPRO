@@ -9,7 +9,7 @@
 #import "PPiMasterViewController.h"
 #import "PPiDetailViewController.h"
 #import "PPiSettingsDetailController.h"
-#import <PlayerPROKit/PlayerPROKit.h>
+@import PlayerPROKit;
 
 
 @interface PPiMasterViewController ()

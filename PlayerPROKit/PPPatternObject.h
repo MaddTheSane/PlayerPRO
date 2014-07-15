@@ -6,6 +6,9 @@
 //
 //
 
+#ifndef __PLAYERPROKIT_PPPATTERNOBJECT__
+#define __PLAYERPROKIT_PPPATTERNOBJECT__
+
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPMadCommandObject.h>
@@ -20,3 +23,5 @@
 - (id)initWithMusic:(PPMusicObjectWrapper *)mus;
 - (id)initWithMusic:(PPMusicObjectWrapper *)mus patternAtIndex:(short)ptnIdx;
 @end
+
+#endif

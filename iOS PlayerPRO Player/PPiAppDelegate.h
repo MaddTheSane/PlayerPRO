@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <PlayerPROKit/PlayerPROKit.h>
+@import PlayerPROKit;
 
 enum {
 	PPStopPlaying = 0,

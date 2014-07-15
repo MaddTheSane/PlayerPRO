@@ -36,7 +36,7 @@
 {
 	if (self = [super initWithWindow:window]) {
 		// Initialization code here.
-		[[NSApp delegate] addObserver:self forKeyPath:@"music" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
+		[(NSObject*)[NSApp delegate] addObserver:self forKeyPath:@"music" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:nil];
 	}
 	
 	return self;
@@ -64,7 +64,7 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[[NSApp delegate] removeObserver:self forKeyPath:@"music"];
+	[(NSObject*)[NSApp delegate] removeObserver:self forKeyPath:@"music"];
 }
 
 #pragma mark NSOutlineView delegates and data ref calls
