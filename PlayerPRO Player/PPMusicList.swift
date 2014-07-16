@@ -10,13 +10,17 @@ import Cocoa
 
 let kMusicListLocation3 = "Music Key Location 3";
 let kMusicListKey3 = "Music List Key 3"
-let kMusicListKVO = "musicList"
 let kPlayerList = "Player List"
 
 class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 	var musicList: [PPMusicListObject] = []
 	var lostMusicCount:UInt = 0;
 	var selectedMusic = 0;
+	
+	override class func initialize()
+	{
+		NSKeyedUnarchiver.setClass(self, forClassName: "PPMusicList")
+	}
 		
 	func countByEnumeratingWithState(state: UnsafePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafePointer<AnyObject?>, count len: Int) -> Int {
 		return musicList.bridgeToObjectiveC().countByEnumeratingWithState(state, objects: buffer, count: len);
@@ -42,7 +46,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 	func clearMusicList() {
 		let theIndex = NSIndexSet(indexesInRange: NSMakeRange(0, musicList.count))
 		self.willChange(.Removal, valuesAtIndexes: theIndex, forKey: kMusicListKVO)
-		musicList.removeAll(keepCapacity: false)
+		musicList.removeAll()
 		self.didChange(.Removal, valuesAtIndexes: theIndex, forKey: kMusicListKVO)
 	}
 	
@@ -75,12 +79,18 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 						var lolwut = CreateErrorFromMADErrorType(MADUnknownErr)
 						theHandle(theErr: lolwut)
 					} else {
-						
+						var pathsURL: [PPMusicListObject] = []
 						self.lostMusicCount = invalidAny as UInt;
 						self.selectedMusic = selectedAny as Int;
 						for aPath in pathsAny as NSArray {
-							
+							var tmpURL = NSURL.fileURLWithPath(aPath as String)
+							if (!tmpURL) {
+								continue;
+							}
+							var tmpObj = PPMusicListObject(URL: tmpURL)
+							pathsURL.append(tmpObj)
 						}
+						self.loadMusicList(pathsURL)
 						
 						theHandle(theErr: nil)
 					}
@@ -137,7 +147,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 		lostMusicCount = 0;
 		var BookmarkArray : NSArray = aDecoder.decodeObjectForKey(kMusicListKey3) as NSArray;
 		selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation3);
-		musicList.removeAll(keepCapacity: false);
+		musicList.removeAll();
 		for bookURL : AnyObject in BookmarkArray {
 			var BookURLURL = bookURL as NSURL;
 			if (!BookURLURL.checkResourceIsReachableAndReturnError(nil)) {
@@ -247,8 +257,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 		let musicArray = musicList.bridgeToObjectiveC()
 		self.willChange(.Removal, valuesAtIndexes: idxSet, forKey: kMusicListKVO)
 		musicList = musicList.filter({
-			(individualElement: PPMusicListObject) -> Bool in
-			let idx = musicArray.indexOfObject(individualElement)
+			let idx = musicArray.indexOfObject($0)
 			if (idxSet.containsIndex(idx)) {
 				return false
 			} else {
@@ -260,7 +269,18 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 	
 	func insertObjects(anObj: NSArray, inMusicListAtIndex idx:Int)
 	{
+		let theIndexSet = NSIndexSet(indexesInRange: NSMakeRange(idx, anObj.count))
+		self.willChange(.Insertion, valuesAtIndexes: theIndexSet, forKey: kMusicListKVO)
+		var currentIndex = theIndexSet.firstIndex;
+		var count = theIndexSet.count;
 		
+		for (var i = 0; i < count; i++) {
+			var tempObj = anObj.objectAtIndex(i) as PPMusicListObject
+			musicList.insert(tempObj, atIndex: currentIndex)
+			currentIndex = theIndexSet.indexGreaterThanIndex(currentIndex);
+		}
+
+		self.didChange(.Insertion, valuesAtIndexes: theIndexSet, forKey: kMusicListKVO)
 	}
 	
 	/*

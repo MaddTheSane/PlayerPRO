@@ -11,10 +11,15 @@ import Cocoa
 let kURLKey = "URLKey";
 
 class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
+	override class func initialize()
+	{
+		NSKeyedUnarchiver.setClass(self, forClassName: "PPMusicListObject")
+	}
+
 	var musicURL: NSURL! = nil;
 	init(URL: NSURL!)
 	{
-		if (URL?) {
+		if (!URL) {
 			// How to fail?
 			//return nil;
 		}
@@ -28,6 +33,46 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
 		super.init();
 	}
 	
+	override func isEqual(object: AnyObject!) -> Bool {
+		var dat1: AnyObject? = nil
+		var dat2: AnyObject? = nil
+		var bothAreValid = true
+		var theSame = false
+		if (!object) {
+			return false;
+		}
+		
+		if (self === object) {
+			return true
+		}
+		
+		if (object.isKindOfClass(PPMusicListObject)) {
+			if (!musicURL.getResourceValue(&dat1, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
+				bothAreValid = false;
+			}
+			if (!(object as PPMusicListObject).musicURL.getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
+				bothAreValid = false;
+			}
+			if (bothAreValid) {
+				theSame = dat1 as NSData == dat2 as NSData
+			}
+			return theSame
+		} else if (object.isKindOfClass(NSURL)) {
+			if (!musicURL.getResourceValue(&dat1, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
+				bothAreValid = false;
+			}
+			if (!(object as NSURL).getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
+				bothAreValid = false;
+			}
+			if (bothAreValid) {
+				theSame = dat1 as NSData == dat2 as NSData
+			}
+			return theSame
+		} else {
+			return false
+		}
+	}
+
 	var fileIcon: NSImage {get {
 		var image = NSWorkspace.sharedWorkspace().iconForFile(musicURL.path);
 		image.size = NSMakeSize(16, 16);
@@ -41,7 +86,7 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
 		var isValid = musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)
 		
 		if (!musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)) {
-			//NSLog("PPMusicListObject: Could not find out if extension is hidden in file \"%@\", error: %@", musicUrl.path, err.localizedDescription);
+			NSLog("PPMusicListObject: Could not find out if extension is hidden in file \"%@\", error: %@", musicURL.path, err!.localizedDescription);
 			return musicURL.lastPathComponent;
 		} else {
 			var retStr = val as String;
