@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 C.W. Betts. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 
 let kURLKey = "URLKey";
 
@@ -73,12 +73,6 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
 		}
 	}
 
-	var fileIcon: NSImage {get {
-		var image = NSWorkspace.sharedWorkspace().iconForFile(musicURL.path);
-		image.size = NSMakeSize(16, 16);
-		return image;
-	}}
-	
 	var fileName: String {get {
 		var val: AnyObject? = nil;
 		var err: NSError? = nil;
@@ -117,6 +111,4 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
 	convenience init(coder aDecoder: NSCoder!) {
 		self.init(URL:aDecoder.decodeObjectForKey(kURLKey) as NSURL);
 	}
-
-	
 }

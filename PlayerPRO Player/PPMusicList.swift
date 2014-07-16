@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 C.W. Betts. All rights reserved.
 //
 
-import Cocoa
+import Foundation
 
 let kMusicListLocation3 = "Music Key Location 3";
 let kMusicListKey3 = "Music List Key 3"
@@ -57,47 +57,6 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 			let lhsString: NSString = isOrderedBefore.var2.fileName
 			var result = rhsString.localizedStandardCompare(lhsString)
 			return result == NSComparisonResult.OrderedAscending;
-			})
-	}
-	
-	func beginLoadingOfMusicListAtURL(toOpen: NSURL, completionHandle theHandle: (theErr: NSError!) ->Void)
-	{
-		var conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
-		conn.remoteObjectInterface = NSXPCInterface(`protocol`: PPSTImporterHelper.self);
-		
-		conn.resume()
-		
-		conn.remoteObjectProxy.loadStcfAtURL(toOpen, withReply: {(bookmarkData:[NSObject : AnyObject]!, error: NSError!) -> Void in
-			NSOperationQueue.mainQueue().addOperationWithBlock({
-				if (error) {
-					theHandle(theErr: error)
-				} else {
-					var invalidAny: AnyObject? = bookmarkData["lostMusicCount"];
-					var selectedAny: AnyObject? = bookmarkData["SelectedMusic"]
-					var pathsAny: AnyObject? = bookmarkData["MusicPaths"]
-					if (!invalidAny || !selectedAny || !pathsAny) {
-						var lolwut = CreateErrorFromMADErrorType(MADUnknownErr)
-						theHandle(theErr: lolwut)
-					} else {
-						var pathsURL: [PPMusicListObject] = []
-						self.lostMusicCount = invalidAny as UInt;
-						self.selectedMusic = selectedAny as Int;
-						for aPath in pathsAny as NSArray {
-							var tmpURL = NSURL.fileURLWithPath(aPath as String)
-							if (!tmpURL) {
-								continue;
-							}
-							var tmpObj = PPMusicListObject(URL: tmpURL)
-							pathsURL.append(tmpObj)
-						}
-						self.loadMusicList(pathsURL)
-						
-						theHandle(theErr: nil)
-					}
-				}
-				
-				conn.invalidate();
-				})
 			})
 	}
 	
