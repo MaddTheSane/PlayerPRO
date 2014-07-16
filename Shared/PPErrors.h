@@ -7,8 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#include <PlayerPROCore/PPDefs.h>
+#include <PlayerPROCore/RDriver.h>
 
 extern NSString * const PPMADErrorDomain;
 
-NSError *CreateErrorFromMADErrorType(OSErr theErr) NS_RETURNS_RETAINED;
+NSError *CreateErrorFromMADErrorType(MADErr theErr) NS_RETURNS_RETAINED;
 

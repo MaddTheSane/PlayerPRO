@@ -57,31 +57,6 @@
 #define MAXCHANEFFECT		20
 
 /********************						***********************/
-/*** 			  		  Error messages 						***/
-/********************						***********************/
-
-enum MADErrors
-{
-	MADIsRunningSheet				= 10,
-	MADNoErr						= 0,
-	MADNeedMemory 					= -1,
-	MADReadingErr					= -2,
-	MADIncompatibleFile				= -3,
-	MADLibraryNotInitialized		= -4,
-	MADParametersErr				= -5,
-	MADUnknowErr					= -6,
-	MADSoundManagerErr				= -7,
-	MADOrderNotImplemented			= -8,
-	MADFileNotSupportedByThisPlug	= -9,
-	MADCannotFindPlug				= -10,
-	MADMusicHasNoDriver				= -11,
-	MADDriverHasNoMusic				= -12,
-	MADSoundSystemUnavailable		= -13,
-	MADWritingErr					= -14,
-	MADUnknownErr					= MADUnknowErr
-};
-
-/********************						***********************/
 /*** 			   Channel structure definition					***/
 /********************						***********************/
 
