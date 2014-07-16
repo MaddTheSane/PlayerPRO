@@ -84,7 +84,7 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 	theMAD->header->MAD = 'MADK';
 	strncpy(theMAD->header->name, the669->message, sizeof(theMAD->header->name));
 	
-	strncpy(theMAD->header->infos, "Converted by PlayerPRO 669 Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO 669 Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPointers = 128;	//the669->loopOrder;
 	theMAD->header->tempo = 125;

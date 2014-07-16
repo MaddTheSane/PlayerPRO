@@ -324,8 +324,7 @@ static OSErr mainXI(void		*unused,
 				short			u, i, x;
 				long			inOutCount = 0;
 				XMPATCHHEADER	pth;
-				char			start[0x42];
-				memcpy(start, "Extended Instrument:                       \xA1\x46\x61stTracker v2.00   \x02\x01", 0x42);
+				char			start[0x42] = "Extended Instrument:                       \241FastTracker v2.00   \x02\x01";
 				
 				inOutCount = 0x42;
 				iWrite(inOutCount, start, iFileRefI);

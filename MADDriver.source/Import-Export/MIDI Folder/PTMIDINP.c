@@ -65,7 +65,7 @@ short MADread(short id, Ptr dst, long size)
 	if (MADpos[id] + size >= GetPtrSize(MIDIGenPtr))
 		size = GetPtrSize(MIDIGenPtr) - MADpos[id];
 	
-	BlockMoveData(MIDIGenPtr + MADpos[id], dst, size);
+	memcpy(dst, MIDIGenPtr + MADpos[id], size);
 	
 	MADpos[id] += size;
 	
@@ -74,8 +74,7 @@ short MADread(short id, Ptr dst, long size)
 
 short MADseek(short id, long size, short mode)
 {
-	switch(mode)
-	{
+	switch (mode) {
 		case SEEK_CUR:
 			MADpos[id] += size;
 			break;
