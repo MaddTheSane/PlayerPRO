@@ -318,7 +318,7 @@
 						[_theDriver endExport];
 						return theErr;
 					}];
-					[[NSApp delegate] addExportObject:expObj];
+					[(PPApp_AppDelegate*)[NSApp delegate] addExportObject:expObj];
 				}
 					break;
 					
@@ -416,7 +416,7 @@
 							return MADWritingErr;
 						}
 					}];
-					[[NSApp delegate] addExportObject:expObj];
+					[(PPApp_AppDelegate*)[NSApp delegate] addExportObject:expObj];
 				}
 					break;
 					
@@ -500,7 +500,7 @@
 						return theErr;
 						
 					}];
-					[[NSApp delegate] addExportObject:expObj];
+					[(PPApp_AppDelegate*)[NSApp delegate] addExportObject:expObj];
 				} else {
 					[_theDriver endExport];
 				}
@@ -533,7 +533,7 @@
 						[_theDriver endExport];
 						return theErr;
 					}];
-					[[NSApp delegate] addExportObject:expObj];
+					[(PPApp_AppDelegate*)[NSApp delegate] addExportObject:expObj];
 				} else
 					[_theDriver endExport];
 			}];

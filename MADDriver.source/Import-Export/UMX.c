@@ -438,7 +438,7 @@ static MADErr PPConvertMod2Mad(char* aMOD, size_t MODSize, MADMusic *theMAD, MAD
 	theMAD->header = (MADSpec*) calloc(inOutCount, 1);
 	if (theMAD->header == NULL) return MADNeedMemory;
 	
-	strncpy(theMAD->header->infos, "Converted by PlayerPRO UMX Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO UMX Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->MAD = 'MADK';
 	theMAD->header->MODMode = true;
@@ -989,12 +989,12 @@ static MADErr TestUMXFile(char* AlienFile, long EOFo)
 	//long		PatternSize, i;
 	//short		tracksNo;
 	int i;
-	char 		modsig[5] = "M.K.";
-	char 		mod6sig[5] = "6CHN";
-	char 		mod8sig[5] = "8CHN";
-	char 		s3msig[5] = "SCRM";
-	char 		itsig[5] = "IMPM";
-	char 		xmsig[17] = "Extended Module:";
+	const char 		modsig[5] = "M.K.";
+	const char 		mod6sig[5] = "6CHN";
+	const char 		mod8sig[5] = "8CHN";
+	const char 		s3msig[5] = "SCRM";
+	const char 		itsig[5] = "IMPM";
+	const char 		xmsig[17] = "Extended Module:";
 	
 	
 	for (i = 0; i < 5000 - 64; i++) {

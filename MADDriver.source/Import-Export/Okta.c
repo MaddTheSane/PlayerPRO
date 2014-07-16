@@ -205,7 +205,7 @@ static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MAD
 	theMAD->header->tempo 			= 125;
 	theMAD->header->speed 			= Okta->speed;
 	
-	strncpy(theMAD->header->infos, "Converted by PlayerPRO OKTA Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO OKTA Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	for (i = 0;  i < 128; i++) theMAD->header->oPointers[i] = 0;
 	for (i = 0;  i < pbod_count; i++) theMAD->header->oPointers[i] = Okta->patt[i];

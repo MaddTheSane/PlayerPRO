@@ -442,7 +442,7 @@ static MADErr PPConvertMod2Mad(char* aMOD, long MODSize, MADMusic *theMAD, MADDr
 	if (theMAD->header == NULL)
 		return MADNeedMemory;
 	
-	strncpy(theMAD->header->infos, "Converted by PlayerPRO MOD Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO MOD Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->MAD = 'MADK';
 	theMAD->header->MODMode = true;

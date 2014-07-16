@@ -299,7 +299,7 @@ static OSErr PPConvertMod2Mad(Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriver
 	
 	//Some info about the tracker being imported.
 	//If your tracker doesn't have an info field, just do
-	strncpy(theMAD->header->infos, "Converted by PlayerPRO MOD Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO MOD Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->MAD = 'MADK';
 	theMAD->header->MODMode = true;

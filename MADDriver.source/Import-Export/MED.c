@@ -458,7 +458,7 @@ static MADErr MED_Load(char*	theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 	
 	theMAD->header->MAD = 'MADK';
 	
-	strncpy(theMAD->header->infos, "Converted by PlayerPRO MED Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO MED Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->speed			= 	ms->tempo2;
 	theMAD->header->tempo			=	(ms->deftempo * 125) / 33;
@@ -559,7 +559,7 @@ static MADErr MED_Load(char*	theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 	return MADNoErr;
 }
 
-static bool compMem(void* a, void* b, long s)
+static inline bool compMem(void* a, void* b, long s)
 {
 	return memcmp(a, b, s) == 0;
 }

@@ -704,7 +704,7 @@ static MADErr XM_Load(char* theXM, size_t XMSize, MADMusic *theMAD, MADDriverSet
 	if (theMAD->header->numPointers > 128)
 		theMAD->header->numPointers = 128;
 	
-	strncpy(theMAD->header->infos, "Converted by PlayerPRO XM Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO XM Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	for (i = 0; i < mh->songlength; i++) {
 		theMAD->header->oPointers[i] = mh->orders[i];

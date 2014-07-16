@@ -144,7 +144,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 				*loopEnd *=2;
 			}
 			HLock(sound);
-			BlockMoveData((*CmpHeader).sampleArea, *sound, MusSize);
+			memmove(*sound, CmpHeader->sampleArea, MusSize);
 			HUnlock(sound);
 			
 			switch(CompressID)
@@ -619,7 +619,7 @@ void SavePtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	theMAD->header->speed			= 	6;
 	theMAD->header->tempo			=	125;
 	
-	strcpy(theMAD->header->infos, "Converted by PlayerPRO MIDI Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)");
+	strlcpy(theMAD->header->infos, "Converted by PlayerPRO MIDI Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	for (cSamps = 0, x = 0; x < 129; x++) {
 		if (MIDIInstMOD[x] != -1) cSamps++;

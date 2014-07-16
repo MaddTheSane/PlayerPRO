@@ -120,7 +120,7 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 		theMAD->header->name[i] = MTMFile->songname[i];
 	}
 	
-	strncpy(theMAD->header->infos, "Converted by PlayerPRO MTM Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO MTM Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->tempo		= 125;
 	theMAD->header->speed		= 6;

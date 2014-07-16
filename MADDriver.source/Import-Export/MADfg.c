@@ -196,7 +196,7 @@ MADErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *i
 	theMAD->header->speed			= 6;
 	theMAD->header->tempo			= 125;
 	
-	strncpy(theMAD->header->infos, "Converted by PlayerPRO MAD-F-G Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO MAD-F-G Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	
 	theMAD->sets = (FXSets*)calloc(MAXTRACK * sizeof(FXSets), 1);

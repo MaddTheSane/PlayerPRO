@@ -84,7 +84,7 @@ static MADErr ConvertULT2Mad(char* theULT, size_t MODSize, MADMusic *theMAD, MAD
 	for (i = 0; i < 32; i++) theMAD->header->name[i] = 0;
 	for (i = 0; i < 32; i++) theMAD->header->name[i] = ULTinfo.name[i];
 	
-	strncpy(theMAD->header->infos, "Converted by PlayerPRO ULT Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO ULT Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	theMAD->header->numPat		= ULTSuite.NOP;
 	theMAD->header->numPointers	= 1; // CHANGE

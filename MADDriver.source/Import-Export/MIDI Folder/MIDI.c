@@ -41,7 +41,7 @@ static unsigned char* MYC2PStr(Ptr cStr)
 	return (unsigned char*)cStr;
 }
 
-Boolean compMem(Ptr a, Ptr b, long s)
+static inline bool compMem(Ptr a, Ptr b, long s)
 {
 	return memcmp(a, b, s) == 0;
 }

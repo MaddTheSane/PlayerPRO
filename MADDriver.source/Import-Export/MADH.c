@@ -190,7 +190,7 @@ MADErr MADH2Mad(char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *
 	//TODO: dispatch this
 	for (i = 0; i < MAXTRACK; i++)
 		theMAD->header->chanBus[i].copyId = i;
-	strncpy(theMAD->header->infos, "Converted by PlayerPRO MAD-H Plug (\xA9\x41ntoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
+	strncpy(theMAD->header->infos, "Converted by PlayerPRO MAD-H Plug (\251Antoine ROSSET <rossetantoine@bluewin.ch>)", sizeof(theMAD->header->infos));
 	
 	/**** Patterns *******/
 	
