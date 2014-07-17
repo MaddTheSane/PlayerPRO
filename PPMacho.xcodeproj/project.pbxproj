@@ -214,6 +214,7 @@
 		554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E126410D6F4F700BB619C /* Propagate.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF010D6C79D00BB619C /* Propagate.c */; };
 		554E126610D6F50500BB619C /* Revert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF410D6C79D00BB619C /* Revert.c */; };
+		5559096F19783D570026A7DC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5559096E19783D570026A7DC /* Localizable.strings */; };
 		555E9B4E110192F900986239 /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */; };
 		55672E1C10CAD641008C5C3D /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55672E1D10CAD641008C5C3D /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
@@ -1494,6 +1495,7 @@
 		554E125410D6F3E600BB619C /* Revert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Revert-Info.plist"; path = "../../../Revert-Info.plist"; sourceTree = "<group>"; };
 		554E15FF10D8BD0600BB619C /* FileUtils.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; lineEnding = 0; path = FileUtils.exp; sourceTree = "<group>"; };
 		5550D057189C1DD200FCF88F /* Navigation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Navigation.h; path = Files/Navigation.h; sourceTree = "<group>"; };
+		5559096C19783D400026A7DC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		555E9B491101912100986239 /* MIDI-Hardware-Mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Mac.c"; path = "Files/MIDI-Hardware-Mac.c"; sourceTree = "<group>"; };
 		555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-OSX.c"; path = "Files/MIDI-Hardware-OSX.c"; sourceTree = "<group>"; };
 		555E9B4B1101912100986239 /* MIDI-Hardware-Stub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Stub.c"; path = "Files/MIDI-Hardware-Stub.c"; sourceTree = "<group>"; };
@@ -3170,6 +3172,7 @@
 		88E0C3CA0C2F21DD00D6C081 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5559096E19783D570026A7DC /* Localizable.strings */,
 				5514AA6C10D017E9009A6BD3 /* Language-rez.r */,
 				55DB45D40FEAB8CD0088C375 /* DFTB.r */,
 				88E0C3BE0C2F21DD00D6C081 /* Carbon.r */,
@@ -4767,6 +4770,7 @@
 				55E89D3D10F26A4B004EB52B /* INS.icns in Resources */,
 				55F7DB6C17FCD30500338025 /* LICENSE.txt in Resources */,
 				55F7DB6D17FCD30A00338025 /* README.rtf in Resources */,
+				5559096F19783D570026A7DC /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5910,6 +5914,14 @@
 				5514AA6E10D01803009A6BD3 /* French */,
 			);
 			name = "Language-rez.r";
+			sourceTree = "<group>";
+		};
+		5559096E19783D570026A7DC /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5559096C19783D400026A7DC /* English */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		55784A1017FA2A7100B78840 /* PPMenus.r */ = {
