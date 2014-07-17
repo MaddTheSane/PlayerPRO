@@ -60,9 +60,7 @@
 #define PPDEPatternWrappingPartition @"Digital Editor Pattern Wrapping Partition?"
 #define PPDEDragAsPcmd @"Digital Editor Drag as Pcmd?"
 
-#define PPCOLOR(num) static NSString *const PPCColor##num = @"PPColor " @#num
-PPCOLORPOPULATE();
-#undef PPCOLOR
+#define PPCColorArray @"PPColorArray"
 
 #define PPBEMarkersEnabled @"Box Editor Markers On?"
 #define PPBEMarkersOffset @"Box Editor Markers Offset"
