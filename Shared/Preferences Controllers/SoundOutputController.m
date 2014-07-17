@@ -101,28 +101,28 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 
-- (void)soundOutReverbStrengthDidChange:(short)rev
+- (void)soundOutReverbStrengthDidChange:(int)rev
 {
 	[[NSUserDefaults standardUserDefaults] setInteger:rev forKey:PPReverbStrength];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 
-- (void)soundOutReverbSizeDidChange:(short)rev
+- (void)soundOutReverbSizeDidChange:(int)rev
 {
 	[[NSUserDefaults standardUserDefaults] setInteger:rev forKey:PPReverbAmount];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 
-- (void)soundOutOversamplingAmountDidChange:(short)ovs
+- (void)soundOutOversamplingAmountDidChange:(int)ovs
 {
 	[[NSUserDefaults standardUserDefaults] setInteger:ovs forKey:PPOversamplingAmount];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPSoundPreferencesDidChange object:self];
 }
 
-- (void)soundOutStereoDelayAmountDidChange:(short)std
+- (void)soundOutStereoDelayAmountDidChange:(int)std
 {
 	[[NSUserDefaults standardUserDefaults] setInteger:std forKey:PPStereoDelayAmount];
 	
