@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include "VideoToolbox.h"
 #include "VA.h"
+#include "LocalizationCarbonStrings.h"
 
 pascal Boolean AboutFilter(DialogPtr, EventRecord *, short *);
 pascal void ScrollProc (ControlHandle theControl, short theCode);
@@ -79,7 +80,7 @@ void DoScrollText(DialogPtr aDia)
 		
 		color .red = color .green = color .blue = 30583;
 		RGBForeColor(&color);
-		GetIndString(tempStr, 131, curPosT/60);
+		GetCFIndexString(tempStr, 131, curPosT/60);
 		OffsetRect(&textRect, 2, 2);
 		TETextBox(tempStr + 1, tempStr[0], &textRect, teCenter);
 		OffsetRect(&textRect, -2, -2);

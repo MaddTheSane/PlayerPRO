@@ -12,6 +12,7 @@
 #include "PPPrivate.h"
 #include <CoreMIDI/CoreMIDI.h>
 #include "PreferenceHandler.h"
+#include "LocalizationCarbonStrings.h"
 
 void DoChangeLoop(void);
 void VSTEditorDoNull(void);
@@ -3911,7 +3912,7 @@ short IntInfoL(short ID)
 	
 	GetPort(&savedPort);
 	
-	GetIndString(theString, 128, ID);
+	GetCFIndexString(theString, 128, ID);
 	ParamText(theString, NULL, NULL, NULL);
 	
 	aDia = GetNewDialog(3001, NULL, (WindowPtr) -1L);
@@ -3986,7 +3987,7 @@ void IntErreur(short ID, OSErr theErr)
 	
 	GetPort(&savedPort);
 	
-	GetIndString(theString, 128, ID);
+	GetCFIndexString(theString, 128, ID);
 	NumToString(theErr, theString2);
 	
 	NumToString(MemError(), theMemStr);
@@ -4020,7 +4021,7 @@ void OtherIntErreur(short ID, OSErr theErr, Str255 otherstr)
 	
 	GetPort(&savedPort);
 	
-	GetIndString(theString, 128, ID);
+	GetCFIndexString(theString, 128, ID);
 	NumToString(theErr, theString2);
 	
 	NumToString(MemError(), theMemStr);
@@ -7079,7 +7080,7 @@ void DoInternetMenu(short theItem)
 		case 2:
 		case 3:
 		case 4:
-			GetIndString(str, 133, theItem);
+			GetCFIndexString(str, 133, theItem);
 			
 			err = LaunchURLC(str);
 			

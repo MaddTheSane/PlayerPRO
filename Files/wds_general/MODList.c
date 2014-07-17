@@ -10,6 +10,7 @@
 #include "GetFileIcon.h"
 #include "Utils.h"
 #include "Navigation.h"
+#include "LocalizationCarbonStrings.h"
 
 #define BIGMUSICLIST	404
 #define MAXITEM			12000
@@ -589,7 +590,7 @@ void OpenMODListSTCf(FSSpec spec)
 	
 	theCell.h = 0;
 	for (theCell.v = val, i = 1; theCell.v < theNo + val ; theCell.v++, i += 2) {
-		GetIndString(aStr, 128, i);
+		GetCFIndexString(aStr, 128, i);
 		
 		if (pathStrList[theCell.v] != (unsigned char*) -1L)
 			DisposePtr((Ptr)pathStrList[theCell.v]);
@@ -598,7 +599,7 @@ void OpenMODListSTCf(FSSpec spec)
 		
 		pStrcat(aStr, "\p:");
 		
-		GetIndString(myFSS.name, 128, i+1);
+		GetCFIndexString(myFSS.name, 128, i+1);
 		
 		wdpb.ioNamePtr = aStr;
 		iErr = PBHSetVolSync(&wdpb);

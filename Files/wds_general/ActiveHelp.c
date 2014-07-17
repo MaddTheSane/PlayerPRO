@@ -2,6 +2,7 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include <stdio.h>
+#include "LocalizationCarbonStrings.h"
 
 		DialogPtr				AHelpDlog;
 extern	EventRecord				theEvent;
@@ -139,7 +140,7 @@ void DoAHelpInfo(void)
 							lastitem = i;
 							lastwref = wref;
 							
-							GetIndString(aStr, wref * 200, i + 1);
+							GetCFIndexString(aStr, wref * 200, i + 1);
 							
 							SetPortDialogPort(AHelpDlog);
 							TextFont(kFontIDGeneva);
