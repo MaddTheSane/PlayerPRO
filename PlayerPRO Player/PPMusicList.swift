@@ -15,7 +15,7 @@ let kPlayerList = "Player List"
 class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 	var musicList: [PPMusicListObject] = []
 	var lostMusicCount:UInt = 0;
-	var selectedMusic = 0;
+	var selectedMusic = -1;
 	
 	override class func initialize()
 	{
@@ -241,41 +241,4 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 
 		self.didChange(.Insertion, valuesAtIndexes: theIndexSet, forKey: kMusicListKVO)
 	}
-	
-	/*
-	- (NSArray*)arrayOfObjectsInMusicListAtIndexes:(NSIndexSet*)theSet
-	{
-	return [musicList objectsAtIndexes:theSet];
-	}
-	
-	- (void)removeObjectsInMusicListAtIndexes:(NSIndexSet *)set
-	{
-	if ([set containsIndex:selectedMusic]) {
-	self.selectedMusic = -1;
-	}
-	[self willChange:NSKeyValueChangeRemoval valuesAtIndexes:set forKey:kMusicListKVO];
-	[musicList removeObjectsAtIndexes:set];
-	[self didChange:NSKeyValueChangeRemoval valuesAtIndexes:set forKey:kMusicListKVO];
-	}
-	
-	- (id)objectInMusicListAtIndex:(NSUInteger)idx
-	{
-	return musicList[idx];
-	}
-	
-	- (void)insertObject:(id)anObj inMusicListAtIndex:(NSUInteger)idx
-	{
-	[musicList insertObject:anObj atIndex:idx];
-	}
-	
-	- (void)removeObjectInMusicListAtIndex:(NSUInteger)object
-	{
-	[musicList removeObjectAtIndex:object];
-	}
-	
-	- (void)replaceObjectInMusicListAtIndex:(NSUInteger)index withObject:(id)anObject
-	{
-	musicList[index] = anObject;
-	}*/
-
 }
