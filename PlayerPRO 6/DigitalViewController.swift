@@ -10,6 +10,8 @@ import Cocoa
 
 class DigitalViewController: NSViewController {
 
+	@IBOutlet var currentDocument: PPDocument
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.

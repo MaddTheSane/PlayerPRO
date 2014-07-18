@@ -7,6 +7,7 @@
 //
 
 #import "BoxViewController.h"
+#import "PPDocument.h"
 
 @interface BoxViewController ()
 

@@ -3826,6 +3826,7 @@
 			isa = PBXGroup;
 			children = (
 				5539D88F1978B90D005A1569 /* PlayerPRO 6-Bridging-Header.h */,
+				55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */,
 				5539D88E1978B8E4005A1569 /* Views */,
 				557EF732168BDE95001BF077 /* PPPlugInCommon.h */,
 				55CB01A611EB82FA0028C6BB /* main.m */,
@@ -3833,7 +3834,6 @@
 				55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */,
 				55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */,
 				55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */,
-				55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */,
 				5523EC7F16936F870067B22A /* PPDigitalPlugHandler.h */,
 				5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */,
 				5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */,
