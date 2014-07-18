@@ -17,10 +17,10 @@
 - (void)soundOutOversamplingDidChangeActive:(BOOL)isAct;
 - (void)soundOutStereoDelayDidChangeActive:(BOOL)isAct;
 - (void)soundOutSurroundDidChangeActive:(BOOL)isAct;
-- (void)soundOutReverbStrengthDidChange:(short)rev;
-- (void)soundOutReverbSizeDidChange:(short)rev;
-- (void)soundOutOversamplingAmountDidChange:(short)ovs;
-- (void)soundOutStereoDelayAmountDidChange:(short)std;
+- (void)soundOutReverbStrengthDidChange:(int)rev;
+- (void)soundOutReverbSizeDidChange:(int)rev;
+- (void)soundOutOversamplingAmountDidChange:(int)ovs;
+- (void)soundOutStereoDelayAmountDidChange:(int)std;
 @optional
 - (void)soundOutDriverDidChange:(short)driv;
 @end

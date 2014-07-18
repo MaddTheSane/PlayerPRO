@@ -1579,22 +1579,22 @@ badTracker:
 	exportSettings.surround = isAct;
 }
 
-- (void)soundOutReverbStrengthDidChange:(short)rev
+- (void)soundOutReverbStrengthDidChange:(int)rev
 {
 	exportSettings.ReverbStrength = rev;
 }
 
-- (void)soundOutReverbSizeDidChange:(short)rev
+- (void)soundOutReverbSizeDidChange:(int)rev
 {
 	exportSettings.ReverbSize = rev;
 }
 
-- (void)soundOutOversamplingAmountDidChange:(short)ovs
+- (void)soundOutOversamplingAmountDidChange:(int)ovs
 {
 	exportSettings.oversampling = ovs;
 }
 
-- (void)soundOutStereoDelayAmountDidChange:(short)std
+- (void)soundOutStereoDelayAmountDidChange:(int)std
 {
 	exportSettings.MicroDelaySize = std;
 }
