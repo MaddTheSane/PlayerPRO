@@ -11,6 +11,7 @@
 #import "PPSoundSettingsViewController.h"
 
 @class BoxViewController;
+@class DigitalViewController;
 
 @interface PPDocument : NSDocument <PPSoundSettingsViewControllerDelegate>
 @property (weak) IBOutlet NSWindow	*exportWindow;
@@ -22,6 +23,7 @@
 @property (weak) IBOutlet NSTextField *totalTimeLabel;
 @property (weak) IBOutlet NSSlider *playbackPositionSlider;
 @property (weak) IBOutlet BoxViewController *boxController;
+@property (weak) IBOutlet DigitalViewController *digitalController;
 @property (weak) IBOutlet NSTabView *editorsTab;
 
 @property (strong) PPSoundSettingsViewController *exportController;

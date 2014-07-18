@@ -13,6 +13,7 @@
 #import "UserDefaultKeys.h"
 #import "PPExportObject.h"
 #import "BoxViewController.h"
+#import "PlayerPRO_6-swift.h"
 
 @interface PPDocument ()
 @property (readwrite, strong) PPDriver *theDriver;

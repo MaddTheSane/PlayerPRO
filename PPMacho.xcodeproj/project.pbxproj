@@ -215,6 +215,7 @@
 		5533422410BB6675005208D1 /* IT.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E110BB5368005208D1 /* IT.c */; };
 		5533600411EBC66400525CAF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5533600311EBC66400525CAF /* Localizable.strings */; };
 		553626B817EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */; };
+		5539D8911978B90E005A1569 /* DigitalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5539D8901978B90E005A1569 /* DigitalViewController.swift */; };
 		5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
@@ -1571,13 +1572,6 @@
 			remoteGlobalIDString = 557DE3BD10E06BB500177B4C;
 			remoteInfo = "Filters Plugs";
 		};
-		55F1BDA61975C83600AD2C03 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 55F1BD8E1975C83400AD2C03;
-			remoteInfo = iOSPlayerPROCore;
-		};
 		55F1BDB01975C8EE00AD2C03 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1976,6 +1970,8 @@
 		553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Universal.xcconfig; sourceTree = "<group>"; };
 		553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PPCPlugs.xcconfig; sourceTree = "<group>"; };
 		553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Cocoa Editor Images.xcassets"; path = "../../Cocoa/Cocoa Editor Images.xcassets"; sourceTree = "<group>"; };
+		5539D88F1978B90D005A1569 /* PlayerPRO 6-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO 6-Bridging-Header.h"; sourceTree = "<group>"; };
+		5539D8901978B90E005A1569 /* DigitalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigitalViewController.swift; sourceTree = "<group>"; };
 		5542403E10DB602D00C08864 /* SoundDesignerII.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = SoundDesignerII.r; sourceTree = "<group>"; };
 		5542403F10DB602D00C08864 /* Mp3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mp3.r; sourceTree = "<group>"; };
 		5542404010DB602D00C08864 /* MPG3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MPG3.r; sourceTree = "<group>"; };
@@ -3568,6 +3564,16 @@
 			path = Xcconfigs;
 			sourceTree = "<group>";
 		};
+		5539D88E1978B8E4005A1569 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5539D8901978B90E005A1569 /* DigitalViewController.swift */,
+				5521F41317FA4365002CDBA9 /* BoxViewController.h */,
+				5521F41417FA4365002CDBA9 /* BoxViewController.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		55453526186CD32900F69F4D /* OS X-specific code */ = {
 			isa = PBXGroup;
 			children = (
@@ -3819,6 +3825,8 @@
 		557191D318A4103800F6DAD4 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5539D88F1978B90D005A1569 /* PlayerPRO 6-Bridging-Header.h */,
+				5539D88E1978B8E4005A1569 /* Views */,
 				557EF732168BDE95001BF077 /* PPPlugInCommon.h */,
 				55CB01A611EB82FA0028C6BB /* main.m */,
 				55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */,
@@ -3842,8 +3850,6 @@
 				55F41A3617EF96AF00605DF8 /* PPExportObject.m */,
 				5578C53D17DBABBE0057D11B /* PPDocument.h */,
 				5578C53E17DBABBF0057D11B /* PPDocument.m */,
-				5521F41317FA4365002CDBA9 /* BoxViewController.h */,
-				5521F41417FA4365002CDBA9 /* BoxViewController.m */,
 				55852E1A18D67CCB0009BF55 /* PPSmallPianoView.h */,
 				55852E1B18D67CCB0009BF55 /* PPSmallPianoView.m */,
 				5523EC78169276AA0067B22A /* Instrument Code */,
@@ -5381,7 +5387,6 @@
 				55ADC3F517D7F4A0001F27D4 /* PBXTargetDependency */,
 				55ADC3F717D7F52B001F27D4 /* PBXTargetDependency */,
 				55CBFA0011EB77AA0028C6BB /* PBXTargetDependency */,
-				55F1BDA71975C83600AD2C03 /* PBXTargetDependency */,
 			);
 			name = "PlayerPRO 6";
 			productName = Cocoa;
@@ -6651,6 +6656,7 @@
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
 				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,
 				552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */,
+				5539D8911978B90E005A1569 /* DigitalViewController.swift in Sources */,
 				5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */,
 				5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */,
 				5578C54017DBABC50057D11B /* PPDocument.m in Sources */,
@@ -7332,11 +7338,6 @@
 			isa = PBXTargetDependency;
 			target = 557DE3BD10E06BB500177B4C /* Filters Plugs */;
 			targetProxy = 55EE2D8617E12F0D00FED42A /* PBXContainerItemProxy */;
-		};
-		55F1BDA71975C83600AD2C03 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 55F1BD8E1975C83400AD2C03 /* iOSPlayerPROCore */;
-			targetProxy = 55F1BDA61975C83600AD2C03 /* PBXContainerItemProxy */;
 		};
 		55F1BDB11975C8EE00AD2C03 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9566,6 +9567,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = EditorIcon;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9576,6 +9578,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = Shared;
 			};
 			name = Release;
@@ -9585,6 +9588,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = EditorIcon;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9595,6 +9599,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = Shared;
 			};
 			name = Debug;
