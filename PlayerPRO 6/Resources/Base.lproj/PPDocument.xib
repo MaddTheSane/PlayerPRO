@@ -159,7 +159,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="17"/>
             </connections>
-            <point key="canvasLocation" x="140.5" y="119"/>
+            <point key="canvasLocation" x="412.5" y="-385"/>
         </window>
         <window title="Export Settings" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="100026">
             <windowStyleMask key="styleMask" titled="YES"/>
@@ -220,7 +220,7 @@ Gw
             </view>
         </window>
         <customObject id="-3" userLabel="Application"/>
-        <viewController id="fvI-Iq-sXE" userLabel="Digital View Controller" customClass="DigitalViewController">
+        <viewController id="fvI-Iq-sXE" userLabel="Digital View Controller" customClass="DigitalViewController" customModule="PlayerPRO_6">
             <connections>
                 <outlet property="currentDocument" destination="-2" id="LoB-8W-hnE"/>
                 <outlet property="view" destination="3cF-zg-o6h" id="iSe-6E-HLQ"/>
