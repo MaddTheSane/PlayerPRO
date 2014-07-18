@@ -232,13 +232,15 @@ Gw
                 <outlet property="view" destination="BQP-AN-bfF" id="opZ-Zq-cWh"/>
             </connections>
         </viewController>
-        <viewController id="euO-9U-7Ee" userLabel="Classic View Controller">
+        <viewController id="euO-9U-7Ee" userLabel="Classic View Controller" customClass="ClassicalViewController" customModule="PlayerPRO_6">
             <connections>
+                <outlet property="currentDocument" destination="-2" id="QRV-Gt-h9e"/>
                 <outlet property="view" destination="9ML-I9-VAO" id="xzn-pU-xhT"/>
             </connections>
         </viewController>
-        <viewController id="UmV-E5-CNH" userLabel="Wave View Controller">
+        <viewController id="UmV-E5-CNH" userLabel="Wave View Controller" customClass="WaveViewController" customModule="PlayerPRO_6">
             <connections>
+                <outlet property="currentDocument" destination="-2" id="t1V-rn-jKw"/>
                 <outlet property="view" destination="UQt-sf-rgN" id="jMn-XP-STC"/>
             </connections>
         </viewController>
