@@ -44,6 +44,7 @@ extension PatHeader {
 		toRet.size = self.size.bigEndian
 		toRet.compMode = self.compMode.bigEndian
 		toRet.patBytes = self.patBytes.bigEndian
+		toRet.unused2 = self.unused2.bigEndian
 		
 		return toRet
 	}}
@@ -109,11 +110,9 @@ extension sData32 {
 		toRet.loopBeg = self.loopBeg.bigEndian
 		toRet.loopSize = self.loopBeg.bigEndian
 		toRet.c2spd = self.c2spd.bigEndian
+		//Not byte-swapping data, as it isn't used
 		
 		return toRet
 	}}
 	
 }
-
-
-
