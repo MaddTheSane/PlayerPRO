@@ -2,7 +2,7 @@
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
-#define ISUSINGPPPLUG 1
+#import "PPPlugInCommon.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 #include "PPByteswap.h"
@@ -15,7 +15,6 @@
 #import "PPDocument.h"
 #import "PPExportObject.h"
 #import "PPInstrumentImporterObject.h"
-#import "PPPlugInCommon.h"
 
 #import "PPDigitalPlugHandler.h"
 #import "PPFilterPlugHandler.h"

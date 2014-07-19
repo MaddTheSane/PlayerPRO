@@ -21,20 +21,14 @@ extension MADSpec {
 	}}
 }
 
-/*
 extension FXSets {
 	var bigEndian: FXSets {get {
 		var toRet = self
-		toRet.FXID = self.FXID.bigEndian
-		toRet.id = self.id.bigEndian
-		toRet.noArg = self.noArg.bigEndian
-		toRet.track = self.track.bigEndian
-		let array: Array<Float> = [0,0,0]
+		ByteSwapFXSets(&toRet);
 		
 		return toRet
 	}}
 }
-*/
 
 extension FXBus {
 	var bigEndian: FXBus {get {
