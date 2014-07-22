@@ -35,31 +35,27 @@
 
 static short FoundNote(short Period)
 {
-	short 			note;
-	short				MODTuning[70] =
-	{
-		
+	short	note = 0xFF;
+	short	MODTuning[70] = {
 		// -> Tuning 0
-		
 		1712,1616,1524,1440,1356,1280,1208,1140,1076,1016,960,906,
 		856,808,762,720,678,640,604,570,538,508,480,453,
 		428,404,381,360,339,320,302,285,269,254,240,226,
 		214,202,190,180,170,160,151,143,135,127,120,113,
 		107,101,95,90,85,80,75,71,67,63,60,56
 	};
-	note = 0xFF;
 	
-	
-	if(Period != 0)
-	{
-		for(note = 0;note < 60;note++)
-		{
-			if(Period >= MODTuning[note]) break;
+	if (Period != 0) {
+		for (note = 0;note < 60;note++) {
+			if(Period >= MODTuning[note])
+				break;
 		}
-		if(note >= NUMBER_NOTES) note = 0xFF;
+		if (note >= NUMBER_NOTES)
+			note = 0xFF;
 	}
 	
-	if (note != 0xFF) note += 24;
+	if (note != 0xFF)
+		note += 24;
 	
 	return note;
 }
@@ -71,7 +67,7 @@ static void Convert16to8(char* srcPtr, char* destPtr, size_t size)
 	size /= 2;
 	
 	for (i = 0; i < size; i ++) {
-		destPtr[i] = srcPtr[i*2];
+		destPtr[i] = srcPtr[i * 2];
 	}
 }
 

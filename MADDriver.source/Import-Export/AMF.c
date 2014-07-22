@@ -33,9 +33,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-//TODO: make this multiple-instance safe!
-static char *theAMFRead;
-
 #define READAMFFILE(dst, size)	{memcpy(dst, theAMFRead, size); theAMFRead += (long)size;}
 
 static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
@@ -53,7 +50,7 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 	 7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
 	 };*/
 	
-	theAMFRead = AMFCopyPtr;
+	char *theAMFRead = AMFCopyPtr;
 	
 	READAMFFILE(&AMFType, 4);		// AMF Type
 	PPBE32(&AMFType);

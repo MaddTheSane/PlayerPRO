@@ -39,9 +39,11 @@
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
 
-static MADByte LastAEffect[MAXTRACK], LastJEffect[MAXTRACK];
+struct S3Meffects {
+	 MADByte LastAEffect[MAXTRACK], LastJEffect[MAXTRACK];
+};
 
-static void ConvertS3MEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg, short channel)
+static void ConvertS3MEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg, short channel, struct S3Meffects *sEffects)
 {
 	MADByte LoB1 = LOW(B1);
 	MADByte HiB1 = HI(B1);
@@ -145,9 +147,9 @@ static void ConvertS3MEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg,
 			
 			if (*Arg == 0) {
 				// Use last command
-				*Arg = LastJEffect[channel];
+				*Arg = sEffects->LastJEffect[channel];
 			} else
-				LastJEffect[channel] = *Arg;
+				sEffects->LastJEffect[channel] = *Arg;
 			break;
 			
 		case 'K':
@@ -785,12 +787,13 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 {
 	int		i, x, z, channel, Row;
 	int		starting;
-	char*		MaxPtr;
-	char*		theInstrument[MAXINSTRU];
+	char	*MaxPtr;
+	char	*theInstrument[MAXINSTRU];
 	MADByte	tempChar, *theS3MCopy;
 	short	Note, Octave, maxTrack;
 	//short	S3Mperiod[12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
 	MADByte	S3Mpan[32];
+	struct S3Meffects sEffects = {0};
 	
 	/**** Variables pour le MAD ****/
 	Cmd *aCmd;
@@ -1203,9 +1206,6 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 	
 	theMAD->header->numChn = maxTrack;
 	
-	for (i = 0; i < MAXTRACK; i++) LastAEffect[i] = 0;
-	for (i = 0; i < MAXTRACK; i++) LastJEffect[i] = 0;
-	
 	starting = 0;
 	
 	for (i = 0; i < MAXPATTERN; i++) theMAD->partition[i] = NULL;
@@ -1345,7 +1345,7 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 						{
 							if (theS3MCopy[0] != 255)
 							{
-								ConvertS3MEffect(theS3MCopy[0], theS3MCopy[1], &aCmd->cmd, &aCmd->arg, channel);
+								ConvertS3MEffect(theS3MCopy[0], theS3MCopy[1], &aCmd->cmd, &aCmd->arg, channel, &sEffects);
 							}
 						}
 						theS3MCopy += 2L;

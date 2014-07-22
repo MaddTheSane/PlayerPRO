@@ -34,8 +34,10 @@
 #include "embeddedPlugs.h"
 #endif
 
-static MADByte		LastAEffect[MAXTRACK], LastJEffect[MAXTRACK];
-static int		old_effect;
+struct ITInfo {
+	MADByte	LastAEffect[MAXTRACK], LastJEffect[MAXTRACK];
+	int		old_effect;
+};
 
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
@@ -284,7 +286,7 @@ static inline bool ITcompMem(const void *a, const void *b, size_t s)
 	return memcmp(a, b, s) == 0;
 }
 
-static void ConvertITEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg, short channel)
+static void ConvertITEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg, short channel, struct ITInfo *theIT)
 {
 	MADByte LoB1 = LOW(B1);
 	MADByte HiB1 = HI(B1);
@@ -379,9 +381,9 @@ static void ConvertITEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg, 
 			*Arg = B1;
 			
 			if (*Arg == 0) 				// Use last command
-				*Arg = LastJEffect[channel];
+				*Arg = theIT->LastJEffect[channel];
 			else
-				LastJEffect[channel] = *Arg;
+				theIT->LastJEffect[channel] = *Arg;
 			
 			break;
 			
@@ -458,7 +460,7 @@ static void ConvertITEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg, 
 			break;
 			
 		case 'X':
-			if(old_effect & 1) {
+			if(theIT->old_effect & 1) {
 				if (B1 <= 128) {
 					*Cmd = panningE;
 					if (B1 == 128)
@@ -619,7 +621,7 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 	short	maxTrack;
 	//short	ITperiod[12] = {1712,1616,1524,1440,1356,1280,1208,1140,1076,1016, 960, 907};
 	bool	useLinear;
-	
+	struct ITInfo itInfo = {0};
 	/**** Variables pour le MAD ****/
 	Cmd *aCmd = NULL;
 	
@@ -647,15 +649,15 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 	if (ITinfo.cmwt < 0x100)
 		return MADFileNotSupportedByThisPlug;
 	
-	old_effect = 0;
+	itInfo.old_effect = 0;
 	useLinear = false;
 	
 	if(ITinfo.flags&8) {
 		useLinear = true;	//(UF_XMPERIODS | UF_LINEAR);
-		old_effect |= 2;
+		itInfo.old_effect |= 2;
 	}
 	if((ITinfo.cwtv >= 0x106) && (ITinfo.flags & 16))
-		old_effect |= 1;
+		itInfo.old_effect |= 1;
 	
 	/**** Order Num *****/
 	ITinfo.orders = (unsigned char *)malloc(ITinfo.orderNum);
@@ -1230,8 +1232,8 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 	// ***** TEMPORAIRE ******
 	// ********************
 	
-	memset(LastAEffect, 0, sizeof(LastAEffect));
-	memset(LastJEffect, 0, sizeof(LastJEffect));
+	memset(itInfo.LastAEffect, 0, sizeof(itInfo.LastAEffect));
+	memset(itInfo.LastJEffect, 0, sizeof(itInfo.LastJEffect));
 		
 	theMAD->header->numChn = maxTrack;
 	
@@ -1396,7 +1398,7 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 						lastcmd[channel] = cmd;
 						
 						if (aCmd != NULL)
-							ConvertITEffect(eff, cmd, &aCmd->cmd, &aCmd->arg, channel);
+							ConvertITEffect(eff, cmd, &aCmd->cmd, &aCmd->arg, channel, &itInfo);
 					}
 				}
 			}
