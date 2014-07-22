@@ -31,10 +31,10 @@
 - (PPLibraryObject *)pluginAtIndex:(NSUInteger)idx;
 @property (readonly) NSUInteger pluginCount;
 
-- (OSErr)identifyFileAtPath:(NSString*)apath type:(char*)atype;
-- (OSErr)identifyFileAtURL:(NSURL*)apath type:(char*)atype;
+- (MADErr)identifyFileAtPath:(NSString*)apath type:(char*)atype;
+- (MADErr)identifyFileAtURL:(NSURL*)apath type:(char*)atype;
 
-- (OSErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype info:(PPInfoRec*)infoRec;
-- (OSErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype info:(PPInfoRec*)infoRec;
+- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype info:(PPInfoRec*)infoRec;
+- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype info:(PPInfoRec*)infoRec;
 
 @end

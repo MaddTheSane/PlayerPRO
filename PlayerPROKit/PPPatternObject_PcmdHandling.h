@@ -13,11 +13,11 @@
 #include <PlayerPROCore/PPPlug.h>
 
 @interface PPPatternObject (PcmdHandling)
-+ (OSErr)testPcmdFileAtURL:(NSURL*)theURL;
++ (MADErr)testPcmdFileAtURL:(NSURL*)theURL;
 + (NSString *)stringFromPcmdData:(Pcmd*)myPcmd;
 - (Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
-- (OSErr)importPcmdFromURL:(NSURL*)theURL;
-- (OSErr)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
+- (MADErr)importPcmdFromURL:(NSURL*)theURL;
+- (MADErr)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
 @end
 
 #endif

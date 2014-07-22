@@ -36,7 +36,7 @@
 - (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib;
 - (instancetype)initWithPath:(NSString *)url driver:(PPDriver *)theLib;
 
-+ (OSErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib;
++ (MADErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib;
 
 - (NSDictionary*)musicClasses;
 
@@ -44,9 +44,9 @@
 - (NSString*)madInfo;
 
 //Save music to a URL in MADK format in PPMusicObject, and MAD bundle in PPMusicObjectWrapper
-- (OSErr)saveMusicToURL:(NSURL *)tosave;
-- (OSErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp;
-- (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib;
+- (MADErr)saveMusicToURL:(NSURL *)tosave;
+- (MADErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp;
+- (MADErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib;
 
 //This method sets the music object as the playback music
 - (void)attachToDriver:(PPDriver *)theDriv;
@@ -58,7 +58,7 @@
 
 - (NSArray *)instruments;
 
-- (OSErr)exportInstrumentListToURL:(NSURL*)outURL;
+- (MADErr)exportInstrumentListToURL:(NSURL*)outURL;
 
 @end
 
@@ -85,11 +85,11 @@
 - (instancetype)initWithURL:(NSURL *)url;
 
 //Creates a MADK tracker file
-- (OSErr)exportMusicToURL:(NSURL *)tosave;
+- (MADErr)exportMusicToURL:(NSURL *)tosave;
 
-- (OSErr)createCopyMusicToURL:(NSURL *)tosave;
+- (MADErr)createCopyMusicToURL:(NSURL *)tosave;
 
-+ (OSErr)info:(PPInfoRec *)theInfo fromTrackerAtURL:(NSURL *)thURL;
++ (MADErr)info:(PPInfoRec *)theInfo fromTrackerAtURL:(NSURL *)thURL;
 
 - (BOOL)addInstrument:(PPInstrumentObject*)theIns;
 - (BOOL)importInstrumentListFromURL:(NSURL *)insURL error:(out NSError *__autoreleasing*)theErr;

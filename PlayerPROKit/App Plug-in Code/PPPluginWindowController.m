@@ -62,7 +62,7 @@ NSString * const PPPlugReturnCode = @"PlayerPROKit Return Code";
 	}
 }
 
-- (OSErr)runAsModal
+- (MADErr)runAsModal
 {
 	self.isRunningModal = YES;
 	NSInteger retVal = [NSApp runModalForWindow:self.window];
@@ -73,7 +73,7 @@ NSString * const PPPlugReturnCode = @"PlayerPROKit Return Code";
 	return retVal;
 }
 
-- (OSErr)runAsSheet
+- (MADErr)runAsSheet
 {
 	if (isMultipleIstanceSafe) {
 		if (!parentWindow) {

@@ -120,22 +120,22 @@
 		MADDisposeLibrary(theLibrary);
 }
 
-- (OSErr)identifyFileAtPath:(NSString*)apath type:(char*)atype
+- (MADErr)identifyFileAtPath:(NSString*)apath type:(char*)atype
 {
 	return [self identifyFileAtURL:[NSURL fileURLWithPath:apath] type:atype];
 }
 
-- (OSErr)identifyFileAtURL:(NSURL*)apath type:(char*)atype
+- (MADErr)identifyFileAtURL:(NSURL*)apath type:(char*)atype
 {
 	return MADMusicIdentifyCFURL(theLibrary, atype, (__bridge CFURLRef)apath);
 }
 
-- (OSErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype info:(PPInfoRec*)infoRec
+- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype info:(PPInfoRec*)infoRec
 {
 	return [self getInformationFromFileAtURL:[NSURL fileURLWithPath:apath] type:atype info:infoRec];
 }
 
-- (OSErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype info:(PPInfoRec*)infoRec
+- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype info:(PPInfoRec*)infoRec
 {
 	return MADMusicInfoCFURL(theLibrary, atype, (__bridge CFURLRef)apath, infoRec);
 }

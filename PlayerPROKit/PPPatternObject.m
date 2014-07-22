@@ -140,9 +140,9 @@ static inline void SwapPcmd(Pcmd *toswap)
 	return new;
 }
 
-+ (OSErr)testPcmdFileAtURL:(NSURL*)theURL
++ (MADErr)testPcmdFileAtURL:(NSURL*)theURL
 {
-	OSErr err = MADNoErr;
+	MADErr err = MADNoErr;
 	Pcmd thePcmd;
 	NSData *pcmdData = [[NSData alloc] initWithContentsOfURL:theURL];
 	if (!pcmdData) {
@@ -156,9 +156,9 @@ static inline void SwapPcmd(Pcmd *toswap)
 	return err;
 }
 
-- (OSErr)importPcmdFromURL:(NSURL*)theURL
+- (MADErr)importPcmdFromURL:(NSURL*)theURL
 {
-	OSErr theErr = MADNoErr;
+	MADErr theErr = MADNoErr;
 	NSNumber *curNum;
 	unsigned long pcmdLen;
 	theErr = [[self class] testPcmdFileAtURL:theURL];
@@ -358,7 +358,7 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 	return thePcmd;
 }
 
-- (OSErr)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange
+- (MADErr)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange
 {
 	NSData *datToWrite;
 	if (trackRange.length == 0 || posRange.length) {

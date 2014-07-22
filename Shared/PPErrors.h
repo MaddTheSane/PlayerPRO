@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PPDefs.h>
-#include <PlayerPROCore/RDriver.h>
 
 extern NSString * const PPMADErrorDomain;
 
