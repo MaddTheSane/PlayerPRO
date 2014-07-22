@@ -32,18 +32,18 @@
 	return MADGetDriverSettings(theRec);
 }
 
-- (OSErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo
+- (MADErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo
 {
 	return [self playSoundDataFromPointer:theSnd withSize:sndSize fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:0xFF withLoopStartingAt:0 andLoopLength:0];
 
 }
 
-- (OSErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote
+- (MADErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote
 {
 	return [self playSoundDataFromPointer:theSnd withSize:sndSize fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:theNote withLoopStartingAt:0 andLoopLength:0];
 }
 
-- (OSErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopInRange:(NSRange)loopRange
+- (MADErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopInRange:(NSRange)loopRange
 {
 	if (loopRange.location == NSNotFound) {
 		return MADParametersErr;
@@ -51,7 +51,7 @@
 	return [self playSoundDataFromPointer:theSnd withSize:sndSize fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:0xFF withLoopStartingAt:loopRange.location andLoopLength:loopRange.length];
 }
 
-- (OSErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopInRange:(NSRange)loopRange
+- (MADErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopInRange:(NSRange)loopRange
 {
 	if (loopRange.location == NSNotFound) {
 		return MADParametersErr;
@@ -60,28 +60,28 @@
 
 }
 
-- (OSErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen
+- (MADErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen
 {
 	return [self playSoundDataFromPointer:theSnd withSize:sndSize fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:0xFF withLoopStartingAt:loopStart andLoopLength:loopLen];
 }
 
-- (OSErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen
+- (MADErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen
 {
 	return MADPlaySoundData(theRec, theSnd, sndSize, theChan, theNote, amp, loopStart, loopLen, rate, stereo);
 }
 
-- (OSErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo
+- (MADErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo
 {
 	return [self playSoundDataFromPointer:[theSnd bytes] withSize:[theSnd length] fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:0xFF withLoopStartingAt:0 andLoopLength:0];
 
 }
 
-- (OSErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote
+- (MADErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote
 {
 	return [self playSoundDataFromPointer:[theSnd bytes] withSize:[theSnd length] fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:theNote withLoopStartingAt:0 andLoopLength:0];
 }
 
-- (OSErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopInRange:(NSRange)loopRange
+- (MADErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopInRange:(NSRange)loopRange
 {
 	if (loopRange.location == NSNotFound) {
 		return MADParametersErr;
@@ -89,7 +89,7 @@
 	return [self playSoundDataFromPointer:[theSnd bytes] withSize:[theSnd length] fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:0xFF withLoopStartingAt:loopRange.location andLoopLength:loopRange.length];
 }
 
-- (OSErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopInRange:(NSRange)loopRange
+- (MADErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopInRange:(NSRange)loopRange
 {
 	if (loopRange.location == NSNotFound) {
 		return MADParametersErr;
@@ -97,12 +97,12 @@
 	return [self playSoundDataFromPointer:[theSnd bytes] withSize:[theSnd length] fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:theNote withLoopStartingAt:loopRange.location andLoopLength:loopRange.length];
 }
 
-- (OSErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen
+- (MADErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen
 {
 	return [self playSoundDataFromPointer:[theSnd bytes] withSize:[theSnd length] fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:0xFF withLoopStartingAt:loopStart andLoopLength:loopLen];
 }
 
-- (OSErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen
+- (MADErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen
 {
 	return [self playSoundDataFromPointer:[theSnd bytes] withSize:[theSnd length] fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:theNote withLoopStartingAt:loopStart andLoopLength:loopLen];
 }
@@ -112,9 +112,9 @@
 	return 0; //TODO:implement!
 }
 
-- (OSErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett
+- (MADErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett
 {
-	OSErr theErr;
+	MADErr theErr;
 	[self willChangeValueForKey:@"driverSettings"];
 	theErr = MADChangeDriverSettings(&theSett, &theRec);
 	[self didChangeValueForKey:@"driverSettings"];
@@ -152,19 +152,19 @@
 		MADEndExport(theRec);
 }
 
-- (OSErr)setMusicStatusWithCurrentTime:(long)curTime maximumTime:(long)maxV minimumTime:(long)minV
+- (MADErr)setMusicStatusWithCurrentTime:(long)curTime maximumTime:(long)maxV minimumTime:(long)minV
 {
 	return MADSetMusicStatus(theRec, minV, maxV, curTime);
 }
 
-- (OSErr)getMusicStatusWithCurrentTime:(long*)curTime totalTime:(long*)totTime
+- (MADErr)getMusicStatusWithCurrentTime:(long*)curTime totalTime:(long*)totTime
 {
 	return MADGetMusicStatus(theRec, totTime, curTime);
 }
 
 - (NSTimeInterval)musicPosition
 {
-	OSErr iErr;
+	MADErr iErr;
 	long curV, totV;
 	NSTimeInterval musPos = 0;
 	iErr = MADGetMusicStatus(theRec, &totV, &curV);
@@ -180,7 +180,7 @@
 {
 	long curV = musicPosition * 60;
 	long tempCurV, tempTotV;
-	OSErr iErr = MADGetMusicStatus(theRec, &tempTotV, &tempCurV);
+	MADErr iErr = MADGetMusicStatus(theRec, &tempTotV, &tempCurV);
 	if (iErr) {
 		return; //This will probably be a thrown exception in the future
 	}
@@ -231,9 +231,9 @@
 	return MADAudioLength(theRec);
 }
 
-- (OSErr)play
+- (MADErr)play
 {
-	OSErr iErr = MADStartDriver(theRec);
+	MADErr iErr = MADStartDriver(theRec);
 	if (iErr) {
 		return iErr;
 	}
@@ -241,19 +241,19 @@
 	return MADPlayMusic(theRec);
 }
 
-- (OSErr)pause
+- (MADErr)pause
 {
 	return MADStopMusic(theRec);
 }
 
-- (OSErr)stopDriver
+- (MADErr)stopDriver
 {
 	return MADStopDriver(theRec);
 }
 
-- (OSErr)stop
+- (MADErr)stop
 {
-	OSErr theErr = MADStopMusic(theRec);
+	MADErr theErr = MADStopMusic(theRec);
 	if (theErr) {
 		return theErr;
 	}
@@ -283,14 +283,14 @@
 	return self = [self initWithLibrary:theLib settings:theSettings error:NULL];
 }
 
-- (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out OSErr*)theErr
+- (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out MADErr*)theErr
 {
 	if (self = [super init]) {
 		if (theErr)
 			*theErr = MADNoErr;
 		
 		thePPLib = theLib;
-		OSErr iErr = MADCreateDriver(theSettings, theLib._madLib, &theRec);
+		MADErr iErr = MADCreateDriver(theSettings, theLib._madLib, &theRec);
 		if (iErr != MADNoErr) {
 			if (theErr)
 				*theErr = iErr;

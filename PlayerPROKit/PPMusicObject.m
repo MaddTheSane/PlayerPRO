@@ -50,7 +50,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 @synthesize _currentMusic = currentMusic;
 @synthesize internalFileName;
 
-- (OSErr)exportInstrumentListToURL:(NSURL*)outURL
+- (MADErr)exportInstrumentListToURL:(NSURL*)outURL
 {
 	NSMutableData *outData = [[NSMutableData alloc] init];
 	if (!outData) {
@@ -132,11 +132,11 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return madClasses;
 }
 
-+ (OSErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib
++ (MADErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib
 {
 	char filetype[5];
 	CFURLRef tmpCFURL;
-	OSErr theErr = MADNoErr;
+	MADErr theErr = MADNoErr;
 	if (!theInfo || !thURL || !theLib) {
 		return MADParametersErr;
 	}
@@ -252,21 +252,21 @@ end:
 	}
 }
 
-- (OSErr)saveMusicToURL:(NSURL *)tosave
+- (MADErr)saveMusicToURL:(NSURL *)tosave
 {
 	return [self saveMusicToURL:tosave compress:NO];
 }
 
-- (OSErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp
+- (MADErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp
 {
-	OSErr retErr;
+	MADErr retErr;
 	if ((retErr = MADMusicSaveCFURL(currentMusic, (__bridge CFURLRef)tosave, mad1Comp)) == MADNoErr) {
 		currentMusic->hasChanged = false;
 	}
 	return retErr;
 }
 
-- (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib
+- (MADErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib
 {
 	if ([form isEqualToString:@"MADK"]) {
 		return [self saveMusicToURL:tosave];
@@ -334,9 +334,9 @@ end:
 @implementation PPMusicObjectWrapper
 @synthesize madType;
 
-+ (OSErr)info:(PPInfoRec *)theInfo fromTrackerAtURL:(NSURL *)thURL
++ (MADErr)info:(PPInfoRec *)theInfo fromTrackerAtURL:(NSURL *)thURL
 {
-	OSErr theErr = MADNoErr;
+	MADErr theErr = MADNoErr;
 	if (!theInfo || !thURL)
 		return MADParametersErr;
 	
@@ -498,7 +498,7 @@ end:
 	return self = [self initFromMusicObject:tmpObj];
 }
 
-- (OSErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib
+- (MADErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib
 {
 	if ([form isEqualToString:@"MADK"]) {
 		return [self exportMusicToURL:tosave];
@@ -507,19 +507,19 @@ end:
 	return [super exportMusicToURL:tosave format:form library:otherLib];
 }
 
-- (OSErr)exportMusicToURL:(NSURL *)tosave
+- (MADErr)exportMusicToURL:(NSURL *)tosave
 {
 	[self syncMusicDataTypes];
 	
 	return [super saveMusicToURL:tosave];
 }
 
-- (OSErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp
+- (MADErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp
 {
 	return [self saveMusicToURL:tosave];
 }
 
-- (OSErr)saveMusicToURL:(NSURL *)tosave
+- (MADErr)saveMusicToURL:(NSURL *)tosave
 {
 	if (![self.musicWrapper writeToURL:tosave options:NSFileWrapperWritingWithNameUpdating originalContentsURL:self.filePath error:NULL]) {
 		return MADWritingErr;
@@ -529,7 +529,7 @@ end:
 	}
 }
 
-- (OSErr)createCopyMusicToURL:(NSURL *)tosave
+- (MADErr)createCopyMusicToURL:(NSURL *)tosave
 {
 	if (![self.musicWrapper writeToURL:tosave options:NSFileWrapperWritingWithNameUpdating originalContentsURL:self.filePath error:NULL]) {
 		return MADWritingErr;
@@ -543,7 +543,7 @@ end:
 	return nil;
 }
 
-- (OSErr)exportInstrumentListToURL:(NSURL*)outURL
+- (MADErr)exportInstrumentListToURL:(NSURL*)outURL
 {
 	[self syncMusicDataTypes];
 	return [super exportInstrumentListToURL:outURL];
