@@ -60,7 +60,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 	patternHeader.size = patternSize;
 }
 
-- (id)initWithMusic:(PPMusicObjectWrapper *)mus
+- (instancetype)initWithMusic:(PPMusicObjectWrapper *)mus
 {
 	if (self = [super init]) {
 		if (!mus) {
@@ -81,7 +81,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 	return self;
 }
 
-- (id)initWithMusic:(PPMusicObjectWrapper *)mus patternAtIndex:(short)ptnIdx
+- (instancetype)initWithMusic:(PPMusicObjectWrapper *)mus patternAtIndex:(short)ptnIdx
 {
 	if (self = [self initWithMusic:mus]) {
 		patternHeader = _musicWrapper._currentMusic->partition[ptnIdx]->header;
@@ -111,7 +111,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 }
 
 #pragma mark NSCoding protocol
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
 		self.patternName = [aDecoder decodeObjectForKey:kPPPatternName];

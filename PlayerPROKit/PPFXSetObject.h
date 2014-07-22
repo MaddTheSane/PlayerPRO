@@ -19,7 +19,7 @@
 @property (readonly, unsafe_unretained) NSArray *values;
 @property (copy) NSString *name;
 
-- (id)initWithFXSet:(FXSets*)theSet;
+- (instancetype)initWithFXSet:(FXSets*)theSet;
 
 - (void)replaceSetAtIndex:(NSInteger)theLoc withFloat:(float)theNum;
 

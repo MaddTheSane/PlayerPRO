@@ -54,7 +54,7 @@
 //Creates a music struct for use outside of PlayerPROKit.
 - (MADMusic *)copyMadMusicStruct;
 
-- (MADMusic *)internalMadMusicStruct NS_RETURNS_INNER_POINTER;
+@property (readonly) MADMusic *internalMadMusicStruct NS_RETURNS_INNER_POINTER;
 
 - (NSArray *)instruments;
 

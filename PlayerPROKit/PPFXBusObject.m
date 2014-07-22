@@ -15,12 +15,12 @@
 @implementation PPFXBusObject
 @synthesize theBus;
 
-- (id)init
+- (instancetype)init
 {
 	return self = [self initWithFXBus:NULL];
 }
 
-- (id)initWithFXBus:(FXBus *)set
+- (instancetype)initWithFXBus:(FXBus *)set
 {
 	if (self = [super init]) {
 		if (set) {
@@ -74,7 +74,7 @@
 
 #pragma mark NSCoding protocol
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
 		theBus.ByPass = [aDecoder decodeBoolForKey:kPPBypass];

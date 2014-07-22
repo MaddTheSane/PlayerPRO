@@ -24,12 +24,12 @@
 @end
 
 @interface PPLibrary : NSObject <NSFastEnumeration>
-- (id)init;
-- (id)initWithPlugInPath:(NSString *)path;
-- (id)initWithPlugInURL:(NSURL *)URL;
+- (instancetype)init;
+- (instancetype)initWithPlugInPath:(NSString *)path;
+- (instancetype)initWithPlugInURL:(NSURL *)URL;
 
 - (PPLibraryObject *)pluginAtIndex:(NSUInteger)idx;
-- (NSUInteger)pluginCount;
+@property (readonly) NSUInteger pluginCount;
 
 - (OSErr)identifyFileAtPath:(NSString*)apath type:(char*)atype;
 - (OSErr)identifyFileAtURL:(NSURL*)apath type:(char*)atype;

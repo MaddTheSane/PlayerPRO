@@ -73,12 +73,12 @@
 	theCommand.vol = volume;
 }
 
-- (id)init
+- (instancetype)init
 {
 	return [self initWithCmd:NULL];
 }
 
-- (id)initWithCmd:(Cmd *)theCmd
+- (instancetype)initWithCmd:(Cmd *)theCmd
 {
 	if (self = [super init]) {
 		if (!theCmd) {
@@ -124,7 +124,7 @@
 
 #pragma mark NSCoding protocol
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
 		theCommand.ins = [(NSNumber*)[aDecoder decodeObjectForKey:kPPMadCommandInstrument] unsignedCharValue];

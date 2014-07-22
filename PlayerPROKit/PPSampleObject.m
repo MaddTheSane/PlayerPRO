@@ -245,7 +245,7 @@
 	[aCoder encodeInteger:self.instrumentIndex forKey:INSTRUMENTINDEXKEY];
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
 		name = [aDecoder decodeObjectForKey:NAMEKEY];
