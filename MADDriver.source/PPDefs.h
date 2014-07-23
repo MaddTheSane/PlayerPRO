@@ -52,6 +52,10 @@
 /********************						***********************/
 //Thsese had to be moved here to make Swift happy
 
+/*!
+ *	@enum MADErr
+ *	@abstract error values returned by most PlayerPRO functions
+ */
 typedef MADENUM(short, MADErr) {
 	MADIsRunningSheet				= 10,
 	MADNoErr						= 0,
