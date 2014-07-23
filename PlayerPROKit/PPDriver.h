@@ -19,9 +19,9 @@
 @property NSTimeInterval musicPosition;
 @property BOOL isExporting;
 
-- (id)initWithLibrary:(PPLibrary *)theLib;
-- (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings;
-- (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out MADErr*)theErr;
+- (instancetype)initWithLibrary:(PPLibrary *)theLib;
+- (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings;
+- (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out MADErr*)theErr;
 
 - (MADErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett;
 

@@ -73,7 +73,7 @@
 @synthesize _madLib = theLibrary;
 @synthesize trackerLibs;
 
-- (id)initWithPlugInCPath:(const char*)cPath
+- (instancetype)initWithPlugInCPath:(const char*)cPath
 {
 	if (self = [super init]) {
 		if (MADInitLibrary(cPath, &theLibrary) != MADNoErr) {
@@ -89,12 +89,12 @@
 	return self;
 }
 
-- (id)init
+- (instancetype)init
 {
 	return [self initWithPlugInCPath:NULL];
 }
 
-- (id)initWithPlugInPath:(NSString *)path
+- (instancetype)initWithPlugInPath:(NSString *)path
 {
 	return [self initWithPlugInCPath:[path fileSystemRepresentation]];
 }

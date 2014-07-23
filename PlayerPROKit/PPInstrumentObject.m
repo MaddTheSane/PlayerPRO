@@ -88,7 +88,7 @@
 	return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
 		envelopeRec.pos = [aDecoder decodeIntForKey:PPEnvPos];

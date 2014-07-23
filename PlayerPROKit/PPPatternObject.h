@@ -17,6 +17,6 @@
 @property (copy) NSString *patternName;
 @property (readonly, weak) PPMusicObjectWrapper *musicWrapper;
 @property int patternSize;
-- (id)initWithMusic:(PPMusicObjectWrapper *)mus;
-- (id)initWithMusic:(PPMusicObjectWrapper *)mus patternAtIndex:(short)ptnIdx;
+- (instancetype)initWithMusic:(PPMusicObjectWrapper *)mus;
+- (instancetype)initWithMusic:(PPMusicObjectWrapper *)mus patternAtIndex:(short)ptnIdx;
 @end

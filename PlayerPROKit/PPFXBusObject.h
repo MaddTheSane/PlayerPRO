@@ -16,6 +16,6 @@
 @property short copyID;
 @property (getter = isActive) BOOL active;
 
-- (id)initWithFXBus:(FXBus *)set;
+- (instancetype)initWithFXBus:(FXBus *)set;
 
 @end

@@ -12,8 +12,8 @@
 
 @interface PPMadCommandObject : NSObject <PPObject>
 
-- (id)init;
-- (id)initWithCmd:(Cmd *)theCmd;
+- (instancetype)init;
+- (instancetype)initWithCmd:(Cmd *)theCmd;
 
 @property (readonly) Cmd theCommand;
 @property Byte instrument;

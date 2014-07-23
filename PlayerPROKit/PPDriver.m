@@ -264,26 +264,26 @@
 	return MADStopDriver(theRec);
 }
 
-- (id)init
+- (instancetype)init
 {
 	NSAssert(NO, @"PPDriver cannot be inited without a library!");
 	[self doesNotRecognizeSelector:_cmd];
 	return nil;
 }
 
-- (id)initWithLibrary:(PPLibrary *)theLib
+- (instancetype)initWithLibrary:(PPLibrary *)theLib
 {
 	MADDriverSettings theSet = {0};
 	MADGetBestDriver(&theSet);
 	return [self initWithLibrary:theLib settings:&theSet error:NULL];
 }
 
-- (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings
+- (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings
 {
 	return self = [self initWithLibrary:theLib settings:theSettings error:NULL];
 }
 
-- (id)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out MADErr*)theErr
+- (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out MADErr*)theErr
 {
 	if (self = [super init]) {
 		if (theErr)

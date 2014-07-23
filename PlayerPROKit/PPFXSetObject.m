@@ -22,7 +22,7 @@
 @implementation PPFXSetObject
 @synthesize theSet;
 
-- (id)initWithFXSet:(FXSets*)theSett
+- (instancetype)initWithFXSet:(FXSets*)theSett
 {
 	if (self = [super init]) {
 		if (!theSett) {
@@ -144,7 +144,7 @@
 
 #pragma mark NSCoding protocol
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
 		self.name = [aDecoder decodeObjectForKey:kPPName];
