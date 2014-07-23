@@ -15,6 +15,7 @@
 
 @end
 
+#if 0
 static short NSStringToNote(NSString *myTT)
 {
 	if (!myTT || [myTT isEqualToString:@""] || [myTT isEqualToString:@"---"] || [myTT length] < 2) {
@@ -71,6 +72,7 @@ static int NSStringToHex(NSString *str)
 	
 	return tmpVal;
 }
+#endif
 
 @implementation ComplexFadeController
 @synthesize fadeType;

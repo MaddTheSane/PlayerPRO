@@ -77,7 +77,7 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 						 (MTMFile->patNo + 1) * 32 * 2 + MTMFile->comments);
 	
 	/**** Analyse des instruments ****/
-	if (MTMFile->NOS > 64) return MADUnknowErr;
+	if (MTMFile->NOS > 64) return MADUnknownErr;
 	
 	for (i = 0, OffSetToSample = 0; i < MTMFile->NOS ; i++) {
 		theInstrument[i] = samplePtr + OffSetToSample;
@@ -90,7 +90,7 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 		
 		sndSize = instru[i]->size;
 		if (theInstrument[i] + sndSize > MaxPtr)
-			return MADUnknowErr;
+			return MADUnknownErr;
 		
 		OffSetToSample += sndSize;
 	}
@@ -244,7 +244,7 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 			for(z=0; z<theMAD->header->numChn; z++) {
 				aCmd = GetMADCommand(x, z, theMAD->partition[i]);
 				if ((char*)aCmd + sizeof(Cmd) > MaxPtr)
-					return MADUnknowErr;
+					return MADUnknownErr;
 				
 				if (patTracks[z] == 0) {
 					aCmd->ins	= 0;
