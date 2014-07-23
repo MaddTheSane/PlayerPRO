@@ -39,8 +39,8 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 	short		i, x, z;
 	size_t		OffSetToSample;
 	size_t		temp;
-	char*			MaxPtr;
-	char*			theInstrument[64], *destPtr;
+	char		*MaxPtr;
+	char		*theInstrument[64], *destPtr;
 	short		Note, Octave;
 	MADByte		*thePasByte;
 	

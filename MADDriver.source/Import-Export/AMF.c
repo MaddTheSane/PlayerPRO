@@ -207,7 +207,7 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 				}
 				curData->vol		= oi.volume;
 				curData->c2spd		= oi.rate; //finetune[oldMAD->fid[i].fineTune];
-				PPLE16(&curData->c2spd)
+				PPLE16(&curData->c2spd);
 				curData->loopType	= 0;
 				curData->amp		= 8;
 				

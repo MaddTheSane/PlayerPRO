@@ -7,6 +7,11 @@
  *
  */
 
+/*!
+ *	@header		PPPrivate.h
+ *	@abstract	Private functions used internally by PlayerPROCore.
+ */
+
 #ifndef __PLAYERPROCORE_PPPRIVATE__
 #define __PLAYERPROCORE_PPPRIVATE__
 
