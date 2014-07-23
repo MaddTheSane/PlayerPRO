@@ -10,7 +10,7 @@ import Cocoa
 
 class ClassicalViewController: NSViewController {
 
-	@IBOutlet var currentDocument: PPDocument
+	@IBOutlet var currentDocument: PPDocument?
 
     override func viewDidLoad() {
         super.viewDidLoad()

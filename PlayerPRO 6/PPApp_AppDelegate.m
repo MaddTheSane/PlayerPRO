@@ -22,7 +22,6 @@
 #import "PPDocument.h"
 #import "PPInstrumentViewController.h"
 #import <PlayerPROKit/PlayerPROKit.h>
-#include <PlayerPROCore/RDriverInt.h>
 
 #define kUnresolvableFile @"Unresolvable files"
 #define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."

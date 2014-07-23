@@ -14,7 +14,7 @@
 #import "PPPlugInInfoController.h"
 #import "OpenPanelViewController.h"
 #import "PPMusicListDragClass.h"
-#include <PlayerPROCore/RDriverInt.h>
+//#include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
 #import <AVFoundation/AVFoundation.h>
 #import "PlayerPRO_Player-Swift.h"

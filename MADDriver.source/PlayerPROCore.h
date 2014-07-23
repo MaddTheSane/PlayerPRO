@@ -15,7 +15,6 @@
 #include <PlayerPROCore/PPDefs.h>
 #include <PlayerPROCore/RDriver.h>
 #ifdef ISUSINGPPPLUG
-#include <PlayerPROCore/MADDriver.h>
 #include <PlayerPROCore/PPPlug.h>
 #endif
 

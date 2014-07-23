@@ -11,14 +11,37 @@ import Foundation
 let kURLKey = "URLKey";
 
 class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
-	override class func initialize()
-	{
+	private(set) var musicURL: NSURL! = nil;
+
+	var fileName: String {get {
+		var val: AnyObject? = nil;
+		var err: NSError? = nil;
+		
+		var isValid = musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)
+		
+		if (!musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)) {
+			NSLog("PPMusicListObject: Could not find out if extension is hidden in file \"%@\", error: %@", musicURL.path, err!.localizedDescription);
+			return musicURL.lastPathComponent;
+		} else {
+			var retStr = val as String;
+			return retStr;
+		}
+	}}
+	
+	var fileSize : UInt64 {get {
+		var manager = NSFileManager.defaultManager();
+		var theparam = manager.attributesOfItemAtPath(musicURL.path, error: nil)
+		if (!theparam) {
+			return 0;
+		}
+		return theparam.bridgeToObjectiveC().fileSize()
+	}}
+
+	override class func initialize() {
 		NSKeyedUnarchiver.setClass(self, forClassName: "PPMusicListObject")
 	}
-
-	var musicURL: NSURL! = nil;
-	init(URL: NSURL!)
-	{
+	
+	init(URL: NSURL!) {
 		if (!URL) {
 			// How to fail?
 			//return nil;
@@ -73,31 +96,8 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
 		}
 	}
 
-	var fileName: String {get {
-		var val: AnyObject? = nil;
-		var err: NSError? = nil;
-		
-		var isValid = musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)
-		
-		if (!musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)) {
-			NSLog("PPMusicListObject: Could not find out if extension is hidden in file \"%@\", error: %@", musicURL.path, err!.localizedDescription);
-			return musicURL.lastPathComponent;
-		} else {
-			var retStr = val as String;
-			return retStr;
-		}
-	}}
-	
-	var fileSize : UInt64 {get {
-		var manager = NSFileManager.defaultManager();
-		var theparam = manager.attributesOfItemAtPath(musicURL.path, error: nil)
-		if (!theparam) {
-			return 0;
-		}
-		return theparam.bridgeToObjectiveC().fileSize()
-	}}
-
 	func copyWithZone(zone: NSZone) -> AnyObject! {
+		//this class is immutable
 		return self;
 	}
 	class func supportsSecureCoding() -> Bool {
