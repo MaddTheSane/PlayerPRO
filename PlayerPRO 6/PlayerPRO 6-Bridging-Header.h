@@ -6,9 +6,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 #include "PPByteswap.h"
-#include <AudioToolbox/AudioToolbox.h>
 
-#import <PlayerPROKit/PlayerPROKit.h>
 #import "UserDefaultKeys.h"
 #import "OpenPanelViewController.h"
 #import "PPTimeFormatter.h"

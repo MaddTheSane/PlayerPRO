@@ -3,10 +3,9 @@
 //
 
 #define ISUSINGPPPLUG 1
-#import "UserDefaultKeys.h"
-#import "PPSTImporter.h"
-#import <PlayerPROKit/PlayerPROKit.h>
-
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 #include "PPByteswap.h"
+
+#import "UserDefaultKeys.h"
+#import "PPSTImporter.h"

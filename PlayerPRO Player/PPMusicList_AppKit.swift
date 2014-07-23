@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import PlayerPROKit
 
 extension PPMusicListObject {
 	var fileIcon: NSImage {get {
