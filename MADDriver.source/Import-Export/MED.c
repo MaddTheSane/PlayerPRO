@@ -545,11 +545,13 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 	switch(medInfo->mh->id)
 	{
 		case 'MMD0':
-			if (LoadMMD0Patterns(theMAD, theMED, init, medInfo) != MADNoErr) return MADUnknowErr;
+			if (LoadMMD0Patterns(theMAD, theMED, init, medInfo) != MADNoErr)
+				return MADUnknownErr;
 			break;
 			
 		case 'MMD1':
-			if (LoadMMD1Patterns(theMAD, theMED, init, medInfo) != MADNoErr) return MADUnknowErr;
+			if (LoadMMD1Patterns(theMAD, theMED, init, medInfo) != MADNoErr)
+				return MADUnknownErr;
 			break;
 	}
 	

@@ -53,8 +53,42 @@
 //Thsese had to be moved here to make Swift happy
 
 /*!
- *	@enum MADErr
- *	@abstract error values returned by most PlayerPRO functions
+ *	@enum		MADErr
+ *	@abstract	error values returned by most PlayerPRO functions
+ *	@constant	MADIsRunningSheet
+ *	@discussion	Not so much an error, but a way for PlayerPROKit to
+ *				notify the application that a sheet is running.
+ *	@constant	MADNoErr
+ *				No error was encountered
+ *	@constant	MADNeedMemory
+ *				There isn't enough memory to execute the command.
+ *	@constant	MADReadingErr
+ *				An error occured when trying to reading a file
+ *	@constant	MADIncompatibleFile
+ *				The file isn't compatible with PlayerPROCore
+ *	@constant	MADLibraryNotInitialized
+ *				A library function was called without an initialized library
+ *	@constant	MADParametersErr
+ *				Bad parapaters were sent to a function.
+ *	@constant	MADUnknownErr
+ *				An unknown error occured
+ *	@constant	MADSoundManagerErr
+ *				An error occured when trying to initialize the sound system
+ *	@constant	MADOrderNotImplemented
+ *				the plug-in doesn't implement the order specified.
+ *	@constant	MADFileNotSupportedByThisPlug
+ *				The file that a plug-in attempted to load was incompatible
+ *				with said plug-in
+ *	@constant	MADCannotFindPlug
+ *				PlayerPRO couldn't find the plug-in specified.
+ *	@constant	MADMusicHasNoDriver
+ *				Attempted to use a music function that wasn't attached to a driver.
+ *	@constant	MADDriverHasNoMusic
+ *				Attempted to use a driver function that requires the use of a loaded music file
+ *	@constant	MADSoundSystemUnavailable
+ *				The sound system requested isn't available for the current architecture
+ *	@constant	MADWritingErr
+ *				An error occured when trying to write to a file
  */
 typedef MADENUM(short, MADErr) {
 	MADIsRunningSheet				= 10,
@@ -64,7 +98,7 @@ typedef MADENUM(short, MADErr) {
 	MADIncompatibleFile				= -3,
 	MADLibraryNotInitialized		= -4,
 	MADParametersErr				= -5,
-	MADUnknowErr					= -6,
+	MADUnknownErr					= -6,
 	MADSoundManagerErr				= -7,
 	MADOrderNotImplemented			= -8,
 	MADFileNotSupportedByThisPlug	= -9,
@@ -73,7 +107,6 @@ typedef MADENUM(short, MADErr) {
 	MADDriverHasNoMusic				= -12,
 	MADSoundSystemUnavailable		= -13,
 	MADWritingErr					= -14,
-	MADUnknownErr					= MADUnknowErr
 };
 
 #ifndef __APPLE__

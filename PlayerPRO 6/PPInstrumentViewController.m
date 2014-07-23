@@ -225,9 +225,11 @@
 
 - (IBAction)playSample:(id)sender
 {
+#if 0
 	NSInteger tag = [sender tag];
 	short sampNum = tag % MAXSAMPLE;
 	short instrNum = tag / MAXSAMPLE;
+#endif
 }
 
 - (void)awakeFromNib
