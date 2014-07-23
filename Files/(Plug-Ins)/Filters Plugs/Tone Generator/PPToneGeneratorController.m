@@ -13,11 +13,11 @@
 
 #define KHZ 22254.54545
 
-static Ptr CreateAudio8Ptr(long AudioLength, long AudioFreq, long AudioAmp, ToneGenerator AudioType, Boolean stereo)
+static Ptr CreateAudio8Ptr(long AudioLength, long AudioFreq, long AudioAmp, ToneGenerator AudioType, bool stereo)
 {
 	Ptr		Audio8Ptr;
 	int		i, temp, inter = 0, x, dest;
-	Boolean	UpDown;
+	bool	UpDown;
 	
 	if (stereo)
 		AudioLength *= 2L;
@@ -125,11 +125,11 @@ static Ptr CreateAudio8Ptr(long AudioLength, long AudioFreq, long AudioAmp, Tone
 	return Audio8Ptr;
 }
 
-static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, ToneGenerator AudioType, Boolean stereo)
+static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, ToneGenerator AudioType, bool stereo)
 {
 	short	*Audio16Ptr;
 	int		i, temp, inter = 0, x, dest;
-	Boolean	UpDown;
+	bool	UpDown;
 	
 	if (stereo)
 		AudioLength *= 2L;

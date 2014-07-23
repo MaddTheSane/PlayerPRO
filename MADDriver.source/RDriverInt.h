@@ -21,6 +21,15 @@
 //
 /********************						***********************/
 
+/*!
+ *	@header		RDriverInt.h
+ *	@abstract	Internal functions used by PlayerPROCore.
+ *	@discussion	Refrain from using this header, as the functions here might not even be available.
+ *				Many functions have been removed or renamed over the course of PlayerPRO's lifetime,
+ *				thus you should only use the functions here if you know what you're doing.
+ */
+
+
 #ifndef __RDRIVERINTH__
 #define __RDRIVERINTH__
 

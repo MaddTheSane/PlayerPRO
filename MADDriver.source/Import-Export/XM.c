@@ -666,19 +666,19 @@ static MADErr XM_Load(char* theXM, size_t XMSize, MADMusic *theMAD, MADDriverSet
 	READXMFILE(xmData->mh, sizeof(XMHEADER));
 	/* BigEndian <-> LittleEndian */
 	
-	PPLE16(&mh->version);
-	PPLE32(&mh->headersize);
-	PPLE16(&mh->songlength);
-	PPLE16(&mh->restart);
-	PPLE16(&mh->numchn);
-	PPLE16(&mh->numpat);
-	PPLE16(&mh->numins);
+	PPLE16(&xmData->mh->version);
+	PPLE32(&xmData->mh->headersize);
+	PPLE16(&xmData->mh->songlength);
+	PPLE16(&xmData->mh->restart);
+	PPLE16(&xmData->mh->numchn);
+	PPLE16(&xmData->mh->numpat);
+	PPLE16(&xmData->mh->numins);
 	if (xmData->mh->numins > MAXINSTRU)
 		xmData->mh->numins = MAXINSTRU;
 	
-	PPLE16(&mh->flags);
-	PPLE16(&mh->bpm);
-	PPLE16(&mh->tempo);
+	PPLE16(&xmData->mh->flags);
+	PPLE16(&xmData->mh->bpm);
+	PPLE16(&xmData->mh->tempo);
 	
 	/********************/
 	/** MAD ALLOCATION **/
@@ -1195,11 +1195,11 @@ static MADErr TestXMFile(char* AlienFile, struct staticXMData *xmData)
 		READXMFILE(xmData->mh, sizeof(XMHEADER));
 		/* BigEndian <-> LittleEndian */
 		
-		PPLE16(&mh->version);
-		PPLE16(&mh->songlength);
-		PPLE16(&mh->numchn);
-		PPLE16(&mh->numpat);
-		PPLE16(&mh->numins);
+		PPLE16(&xmData->mh->version);
+		PPLE16(&xmData->mh->songlength);
+		PPLE16(&xmData->mh->numchn);
+		PPLE16(&xmData->mh->numpat);
+		PPLE16(&xmData->mh->numins);
 		
 		switch (xmData->mh->version) {
 			case 0x104:
@@ -1227,12 +1227,12 @@ static MADErr ExtractXMInfo(PPInfoRec *info, void *AlienFile, struct staticXMDat
 	READXMFILE(xmData->mh, sizeof(XMHEADER));
 	/* BigEndian <-> LittleEndian */
 	
-	PPLE16(&mh->version);
-	PPLE16(&mh->songlength);
-	PPLE16(&mh->numchn);
-	PPLE16(&mh->numpat);
-	PPLE16(&mh->numins);
-	PPLE16(&mh->flags);
+	PPLE16(&xmData->mh->version);
+	PPLE16(&xmData->mh->songlength);
+	PPLE16(&xmData->mh->numchn);
+	PPLE16(&xmData->mh->numpat);
+	PPLE16(&xmData->mh->numins);
+	PPLE16(&xmData->mh->flags);
 	
 	switch(xmData->mh->version) {
 		case 0x104:

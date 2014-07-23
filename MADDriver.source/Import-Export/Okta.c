@@ -140,7 +140,7 @@ static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MAD
 				
 			case 'PLEN':
 				Okta->plen = *((short*)theOktaPos);
-				PPLE16(&Okta->plen)
+				PPLE16(&Okta->plen);
 				break;
 				
 			case 'PATT':

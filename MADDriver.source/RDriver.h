@@ -57,31 +57,6 @@
 #define MAXCHANEFFECT		20
 
 /********************						***********************/
-/*** 			  		  Error messages 						***/
-/********************						***********************/
-
-enum MADErrors
-{
-	MADIsRunningSheet				= 10,
-	MADNoErr						= 0,
-	MADNeedMemory 					= -1,
-	MADReadingErr					= -2,
-	MADIncompatibleFile				= -3,
-	MADLibraryNotInitialized		= -4,
-	MADParametersErr				= -5,
-	MADUnknowErr					= -6,
-	MADSoundManagerErr				= -7,
-	MADOrderNotImplemented			= -8,
-	MADFileNotSupportedByThisPlug	= -9,
-	MADCannotFindPlug				= -10,
-	MADMusicHasNoDriver				= -11,
-	MADDriverHasNoMusic				= -12,
-	MADSoundSystemUnavailable		= -13,
-	MADWritingErr					= -14,
-	MADUnknownErr					= MADUnknowErr
-};
-
-/********************						***********************/
 /*** 			   Channel structure definition					***/
 /********************						***********************/
 
@@ -561,41 +536,41 @@ enum MADEffectsID {
 extern "C" {
 #endif
 
-/**
- @function	PPDebugStr
- @abstract	PlayerPROCore's internal debugger function
- @param		line
- The line number
- @param		file
- The file that has the problem
- @param		text
- Developer text that is used to help debug the issue. IT CANNOT BE NULL, although a blank string is fine.
- @discussion NORMALLY it is never called, only when a FATAL error has occured.
- This function is usually invoked using the macros __LINE__ and __FILE__ for the line and file paramaters.
+/*!
+ *	@function	PPDebugStr
+ *	@abstract	PlayerPROCore's internal debugger function
+ *	@param		line
+ *				The line number
+ *	@param		file
+ *				The file that has the problem
+ *	@param		text
+ *				Developer text that is used to help debug the issue. IT CANNOT BE NULL, although an empty string is fine.
+ *	@discussion NORMALLY it is never called, only when a FATAL error has occured.
+ *				This function is usually invoked using the macros __LINE__ and __FILE__ for the line and file paramaters.
  */
 PPEXPORT void	PPDebugStr(short line, const char* file, const char* text);
 	
-/**
- @function PPRegisterDebugFunc
- @abstract used to set a delegate for PPDebugStr
- @param debugFunc
- The function to call when PPDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling abort()
- @discussion Use this function to call your own debug function when PPDebugStr is called, otherwise calls to PPDebugStr will crash your app.
- You can reset to the default PPDebugStr implementation by calling this function with NULL.
+/*!
+ *	@function	PPRegisterDebugFunc
+ *	@abstract	used to set a delegate for PPDebugStr
+ *	@param		debugFunc
+ *				The function to call when PPDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling abort()
+ *	@discussion	Use this function to call your own debug function when PPDebugStr is called, otherwise calls to PPDebugStr will crash your app.
+ *				You can reset to the default PPDebugStr implementation by calling this function with NULL.
  */
 PPEXPORT void	PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*));
 
-/**
- @function MADInitLibrary
- @abstract MADLibrary initialization
- @result The error encountered, if any. Will be of type MADErrors unless zero (MADNoErr)
- @param PlugsFolderName
- The folder location for the plug-ins for PlayerPROCore to look for.
- On certain platforms, this can be NULL
- @param MADLib
- Usually a pointer passed by reference. If successful, it will return an initialized MADLibrary struct.
- @discussion You must call this function if you want to use other functions & variables.
- Needed to help set up the MADDriver structure and load non-MADK audio trackers.
+/*!
+ *	@function	MADInitLibrary
+ *	@abstract	MADLibrary initialization
+ *	@result		The error encountered, if any. Will be of type MADErrors unless \c MADNoErr
+ *	@param		PlugsFolderName
+ *				The folder location for the plug-ins for PlayerPROCore to look for.
+ *				On certain platforms, this can be NULL
+ *	@param		MADLib
+ *				Usually a pointer passed by reference. If successful, it will return an initialized MADLibrary struct.
+ *	@discussion	You must call this function if you want to use other functions & variables.
+ *				Needed to help set up the MADDriver structure and load non-MADK audio trackers.
  */
 PPEXPORT MADErr	MADInitLibrary(const char *PlugsFolderName, MADLibrary **MADLib);
 

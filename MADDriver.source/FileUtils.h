@@ -25,12 +25,11 @@
 #define __PPC_FILEUTILS_H__
 
 /*!
- * @header		FileUtils.h
- * @abstract	File operation API used by PlayerPRO.
- * @discussion	This header was used as a bridge between Windows and Mac OS (pre-X) file APIs.
- *				PlayerPROCore 6's version is a thin wrapper of the POSIX file APIs.
+ *	@header		FileUtils.h
+ *	@abstract	File operation API used by PlayerPRO.
+ *	@discussion	This header was used as a bridge between Windows and Mac OS (pre-OS X) file APIs.
+ *				PlayerPROCore 6's version is a thin wrapper over the POSIX file APIs.
  *				If you need more functionality, use another API instead.
- *
  */
 
 #ifndef __MADI__
@@ -57,9 +56,9 @@ extern "C" {
 
 /*!
  * @function	iFileOpen
- * @abstract	Deprecated: Calls iFileOpenRead()
- * @discussion	You should be using iFileOpenRead() instead
- * @deprecated	Use iFileOpenRead() instead
+ * @abstract	Deprecated: Calls <code>iFileOpenRead()</code>
+ * @discussion	You should be using <code>iFileOpenRead()</code> instead
+ * @deprecated	Use <code>iFileOpenRead()</code> instead
  */
 PPEXPORT UNFILE	iFileOpen(const char *name) DEPRECATED_ATTRIBUTE;
 
@@ -69,7 +68,7 @@ PPEXPORT UNFILE	iFileOpen(const char *name) DEPRECATED_ATTRIBUTE;
  * @result		an UNFILE that can be read from
  * @param		name
  *					The location of the file to read
- * @discussion	The file location can be either relative or absolute.
+ * @discussion	The file location can be either relative or absolute to the current directory.
  */
 PPEXPORT UNFILE	iFileOpenRead(const char *name);
 
@@ -79,7 +78,7 @@ PPEXPORT UNFILE	iFileOpenRead(const char *name);
  * @result		an UNFILE that can be written to
  * @param		name
  *					The location of the file to write
- * @discussion	The file location can be either relative or absolute.
+ * @discussion	The file location can be either relative or absolute to the current directory.
  */
 PPEXPORT UNFILE	iFileOpenWrite(const char *name);
 
@@ -90,8 +89,9 @@ PPEXPORT UNFILE	iFileOpenWrite(const char *name);
  *					The path to create the new file
  * @param		type
  *					The File Type to set the file to
- * @discussion	<code>type</code> is ignored on platforms that aren't OS X.
+ * @discussion	<code>type</code> is ignored on platforms that aren't OS X. This includes iOS.
  *				<code>type</code> is mostly used on pre-OS X versions of Mac OS, and is rarely used nowadays.
+ *				It has been replaced by file extensions denoting the file type.
  *				If <code>type</code> is zero, the file type is not set.
  */
 PPEXPORT void	iFileCreate(const char *path, MADFourChar type);
@@ -162,9 +162,9 @@ PPEXPORT void	iClose(UNFILE iFileRefI);
 //TODO: use system-based functions, such as the ones used on OS X/iOS
 /*!
  * @function    MADByteSwap32
- * @abstract    MADByte-swaps a 32-bit value
+ * @abstract    Byte-swaps a 32-bit value
  * @param       msg_buf
- *					A pointer to a 32-bit value. On output, the value will be byte-swapped.
+ *					A pointer to a 32-bit value. On return, the value will be byte-swapped.
  * @discussion  Refrain from using this function directly: use either PPLE32 or PPBE32
  */
 static inline void MADByteSwap32(void *msg_buf)
@@ -182,9 +182,9 @@ static inline void MADByteSwap32(void *msg_buf)
 //TODO: use system-based functions, such as the ones used on OS X/iOS
 /*!
  * @function    MADByteSwap16
- * @abstract    MADByte-swaps a 16-bit value
+ * @abstract    Byte-swaps a 16-bit value
  * @param       msg_buf
- *					a pointer to a 16-bit value. On output, the value will be byte-swapped.
+ *					a pointer to a 16-bit value. On return, the value will be byte-swapped.
  * @discussion  Refrain from using this function directly: use either PPLE16 or PPBE16
  */
 static inline void MADByteSwap16(void *msg_buf)
@@ -202,62 +202,52 @@ static inline void MADByteSwap16(void *msg_buf)
  * @abstract    Gets the native value of a 32-bit big-endian value
  * @param       msg_buf
  *					A pointer to a 32-bit value from, or to, a big endian source. On return, the value is swapped on little-endian machines.
- * @discussion  This function is preprocessed out on big endian machines.
  */
+static inline void PPBE32(void *msg_buf)
+{
+#ifdef __LITTLE_ENDIAN__
+	MADByteSwap32(msg_buf);
+#endif
+}
 
 /*!
  * @function    PPBE16
  * @abstract    Gets the native value of a 16-bit big-endian value
  * @param       msg_buf
  *					A pointer to a 16-bit value from, or to, a big endian source. On return, the value is swapped on little-endian machines.
- * @discussion  This function is preprocessed out on big endian machines.
  */
-
-#ifdef __LITTLE_ENDIAN__
-static inline void PPBE32(void *msg_buf)
-{
-	MADByteSwap32(msg_buf);
-}
-
 static inline void PPBE16(void *msg_buf)
 {
+#ifdef __LITTLE_ENDIAN__
 	MADByteSwap16(msg_buf);
-}
-#else
-#define PPBE32(msg_buf)
-#define PPBE16(msg_buf)
 #endif
+}
 
 /*!
  * @function    PPLE32
  * @abstract    Gets the native value of a 32-bit little-endian value
  * @param       msg_buf
  *					A pointer to a 32-bit value from, or to, a little endian source. On return, the value is swapped on big-endian machines.
- * @discussion  This function is preprocessed out on little endian machines.
  */
+static inline void PPLE32(void *msg_buf)
+{
+#ifdef __BIG_ENDIAN__
+	MADByteSwap32(msg_buf);
+#endif
+}
 
 /*!
  * @function    PPLE16
  * @abstract    Gets the native value of a 16-bit little-endian value
  * @param       msg_buf
  *					A pointer to a 16-bit value from, or to, a little endian source. On return, the value is swapped on big-endian machines.
- * @discussion  This function is preprocessed out on little endian machines.
  */
-
-#ifdef __BIG_ENDIAN__
-static inline void PPLE32(void *msg_buf)
-{
-	MADByteSwap32(msg_buf);
-}
-
 static inline void PPLE16(void *msg_buf)
 {
+#ifdef __BIG_ENDIAN__
 	MADByteSwap16(msg_buf);
-}
-#else
-#define PPLE32(msg_buf)
-#define PPLE16(msg_buf)
 #endif
+}
 
 /*!
  * @function    OSType2Ptr
