@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import PlayerPROCore
 import PlayerPROKit
 
 extension PPMusicListObject {
@@ -33,7 +34,7 @@ extension PPMusicList {
 					var selectedAny: AnyObject? = bookmarkData["SelectedMusic"]
 					var pathsAny: AnyObject? = bookmarkData["MusicPaths"]
 					if (!invalidAny || !selectedAny || !pathsAny) {
-						var lolwut = CreateErrorFromMADErrorType(MADUnknownErr)
+						var lolwut = CreateErrorFromMADErrorType(.UnknownErr)
 						theHandle(theErr: lolwut)
 					} else {
 						var pathsURL: [PPMusicListObject] = []

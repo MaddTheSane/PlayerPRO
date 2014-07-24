@@ -100,12 +100,12 @@
 	return theSample.c2spd;
 }
 
-- (void)setLoopType:(Byte)loopType
+- (void)setLoopType:(MADLoopType)loopType
 {
 	theSample.loopType = loopType;
 }
 
-- (Byte)loopType
+- (MADLoopType)loopType
 {
 	return theSample.loopType;
 }
@@ -151,6 +151,11 @@
 }
 
 - (instancetype)initWithsData:(sData *)theData
+{
+	return self = [self initWithSData:theData];
+}
+
+- (instancetype)initWithSData:(sData *)theData
 {
 	if (self = [super init]) {
 		if (!theData) {
@@ -303,7 +308,7 @@
 	NSAssert(NO, @"Mutable command called on immutable object!");
 }
 
-- (void)setLoopType:(Byte)loopType
+- (void)setLoopType:(MADLoopType)loopType
 {
 	NSAssert(NO, @"Mutable command called on immutable object!");
 }
