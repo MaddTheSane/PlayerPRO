@@ -13,9 +13,9 @@ let kMusicListKey3 = "Music List Key 3"
 let kPlayerList = "Player List"
 
 class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
-	var musicList: [PPMusicListObject] = []
-	var lostMusicCount:UInt = 0;
-	var selectedMusic = -1;
+	internal(set) var musicList: [PPMusicListObject] = []
+	internal(set) var lostMusicCount:UInt = 0;
+	internal(set) var selectedMusic = -1;
 	
 	override class func initialize()
 	{

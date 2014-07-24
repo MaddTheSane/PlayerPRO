@@ -12,7 +12,6 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 @class PPInstrumentWindowController;
-@class PPCurrentlyPlayingIndex;
 @class PPMusicList;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate, NSTableViewDataSource>
