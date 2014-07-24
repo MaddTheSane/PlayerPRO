@@ -243,16 +243,19 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 	}
 	
 	func outlineViewSelectionDidChange(notification: NSNotification!) {
-		var object: AnyObject? = instrumentView?.itemAtRow(instrumentView!.selectedRow)
+		var object: AnyObject? = instrumentView!.itemAtRow(instrumentView!.selectedRow)
 		
 		if (object?.isKindOfClass(PPInstrumentObject)) {
 			if ((object as PPInstrumentObject).countOfSamples() > 0) {
-				object = object?.samplesObjectAtIndex(0)
+				object = (object as PPInstrumentObject).samplesObjectAtIndex(0)
 			} else {
 				object = nil
 			}
 		}
 		
+		if (!object?.isKindOfClass(PPSampleObject)) {
+			object = nil
+		}
 		
 		if (!object) {
 			((instrumentSize?) as NSTextField ).stringValue = PPDoubleDash
@@ -265,8 +268,7 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 			((instrumentMode?) as NSTextField ).stringValue = PPDoubleDash
 			((waveFormImage?) as NSImageView ).image = nil
 			return;
-		}
-		
+		} else {
 		var sampleObj = object as PPSampleObject
 		
 		((instrumentSize?) as NSTextField ).integerValue = sampleObj.data.length
@@ -277,7 +279,9 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 		((instrumentNote?) as NSTextField ).stringValue = "\(sampleObj.amplitude)" //TODO: properly set note.
 		((instrumentBits?) as NSTextField ).stringValue = "\(sampleObj.amplitude)-bit"
 		((instrumentMode?) as NSTextField ).stringValue = sampleObj.loopType == .ePingPongLoop ? "Ping-Pong" : "Classic"
-		((waveFormImage?) as NSImageView ).image = waveformImageFromSample(sampleObj)
+		var sampImage = waveformImageFromSample(sampleObj)
+		((waveFormImage?) as NSImageView ).image = sampImage
+		}
 	}
 	
 	func outlineView(outlineView: NSOutlineView!, numberOfChildrenOfItem item: AnyObject!) -> Int {
