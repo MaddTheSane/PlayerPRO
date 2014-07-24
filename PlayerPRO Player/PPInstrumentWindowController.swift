@@ -48,7 +48,7 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 		instrumentView?.selectRowIndexes(NSIndexSet(index:0), byExtendingSelection:false)
     }
 
-	private func drawCGSampleInt(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int, trueH: Int, channel: Int16, curData: PPSampleObject!, ctxRef: CGContextRef!) {
+	public class func drawCGSampleInt(start startI: Int, tSS: Int, tSE: Int, high: Int, larg: Int, trueV: Int, trueH: Int, channel: Int16, curData: PPSampleObject!, ctxRef: CGContextRef!) {
 		CGContextSaveGState(ctxRef);
 		
 		var start:Int = startI
@@ -191,30 +191,31 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 		CGContextRestoreGState(ctxRef);
 	}
 	
-	private func waveformImageFromSample(theDat:PPSampleObject) -> NSImage? {
+	private func waveformImageFromSample(theDat:PPSampleObject!) -> NSImage? {
 		//This code causes the Swift compiler to crash.
-		/*
+		
 		var imageSize = waveFormImage!.convertSizeToBacking(waveFormImage!.frame.size)
 		let datIsStereo = theDat.stereo;
 		imageSize.height *= 2;
 		imageSize.width *= 2;
 		var theCGimg: CGImageRef? = nil
 		let rowBytes: UInt = 4 * UInt(imageSize.width)
-		let defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
-		var bitmapContext = CGBitmapContextCreateWithData(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, CGBitmapInfo.fromRaw( CGImageAlphaInfo.PremultipliedLast.toRaw())!, nil, nil);
+		let defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!
+		let bitMapFormat = CGBitmapInfo.fromRaw( CGImageAlphaInfo.PremultipliedLast.toRaw())
+		var bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, bitMapFormat!);
 		CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
 		let lineSize = waveFormImage!.convertSizeToBacking(NSMakeSize(1, 1));
 		CGContextSetLineWidth(bitmapContext, lineSize.height);
 		if (datIsStereo) {
 			let colorRef1 = CGColorCreateGenericRGB(0, 0, 1, 0.75);
 			CGContextSetStrokeColorWithColor(bitmapContext, colorRef1);
-			drawCGSampleInt(start: 0, 0, Int(imageSize.width), Int(imageSize.height), Int(imageSize.width), 0, 0, 1, theDat, bitmapContext)
+			PPInstrumentWindowController.drawCGSampleInt(start: 0, tSS: 0, tSE: Int(imageSize.width), high: Int(imageSize.height), larg: Int(imageSize.width), trueV: 0, trueH: 0, channel: 1, curData: theDat, ctxRef: bitmapContext)
 		}
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		
 		let colorRef2 = CGColorCreateGenericRGB(1, 0, 0, stereoTrans);
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef2);
-		drawCGSampleInt(start: 0, 0, Int(imageSize.width), Int(imageSize.height), Int(imageSize.width), 0, 0, 0, theDat, bitmapContext)
+		PPInstrumentWindowController.drawCGSampleInt(start: 0, tSS: 0, tSE: Int(imageSize.width), high: Int(imageSize.height), larg: Int(imageSize.width), trueV: 0, trueH: 0, channel: 0, curData: theDat, ctxRef: bitmapContext)
 		
 		if (theDat.loopSize != 0) {
 			let colorRef3 = CGColorCreateGenericRGB(1, 0.1, 0.5, 0.8);
@@ -233,8 +234,6 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 		theCGimg = CGBitmapContextCreateImage(bitmapContext);
 		
 		return NSImage(CGImage: theCGimg, size: waveFormImage!.frame.size)
-*/
-		return nil
 	}
 
 	override func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: [NSObject : AnyObject]!, context: UnsafePointer<()>) {
