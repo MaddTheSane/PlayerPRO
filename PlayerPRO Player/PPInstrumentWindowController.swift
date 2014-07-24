@@ -269,18 +269,18 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 			((waveFormImage?) as NSImageView ).image = nil
 			return;
 		} else {
-		var sampleObj = object as PPSampleObject
-		
-		((instrumentSize?) as NSTextField ).integerValue = sampleObj.data.length
-		((instrumentLoopStart?) as NSTextField ).integerValue = Int(sampleObj.loopBegin)
-		((instrumentLoopSize?) as NSTextField ).integerValue = Int(sampleObj.loopSize)
-		((instrumentVolume?) as NSTextField ).integerValue = Int(sampleObj.volume)
-		((instrumentRate?) as NSTextField ).stringValue = "\(sampleObj.c2spd) Hz"
-		((instrumentNote?) as NSTextField ).stringValue = "\(sampleObj.amplitude)" //TODO: properly set note.
-		((instrumentBits?) as NSTextField ).stringValue = "\(sampleObj.amplitude)-bit"
-		((instrumentMode?) as NSTextField ).stringValue = sampleObj.loopType == .ePingPongLoop ? "Ping-Pong" : "Classic"
-		var sampImage = waveformImageFromSample(sampleObj)
-		((waveFormImage?) as NSImageView ).image = sampImage
+			var sampleObj = object as PPSampleObject
+			
+			((instrumentSize?) as NSTextField ).integerValue = sampleObj.data.length
+			((instrumentLoopStart?) as NSTextField ).integerValue = Int(sampleObj.loopBegin)
+			((instrumentLoopSize?) as NSTextField ).integerValue = Int(sampleObj.loopSize)
+			((instrumentVolume?) as NSTextField ).integerValue = Int(sampleObj.volume)
+			((instrumentRate?) as NSTextField ).stringValue = "\(sampleObj.c2spd) Hz"
+			((instrumentNote?) as NSTextField ).stringValue = "\(sampleObj.amplitude)" //TODO: properly set note.
+			((instrumentBits?) as NSTextField ).stringValue = "\(sampleObj.amplitude)-bit"
+			((instrumentMode?) as NSTextField ).stringValue = sampleObj.loopType == .ePingPongLoop ? "Ping-Pong" : "Classic"
+			var sampImage = waveformImageFromSample(sampleObj)
+			((waveFormImage?) as NSImageView ).image = sampImage
 		}
 	}
 	
