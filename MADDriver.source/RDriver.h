@@ -57,6 +57,32 @@
 #define MAXCHANEFFECT		20
 
 /********************						***********************/
+/*** 					   EFFECTS ID							***/
+/********************						***********************/
+
+typedef MADENUM(int, MADEffectsID) {
+	arpeggioE 		= 0,	//	0x00
+	downslideE 		= 1,	//	0x01
+	upslideE 		= 2,	//	0x02
+	portamentoE 	= 3,	//	0x03
+	vibratoE 		= 4,	//	0x04
+	portaslideE 	= 5,	//	0x05
+	vibratoslideE	= 6,	//	0x06
+	nothingE 		= 7,	//	0x07
+	panningE		= 8,	//	0x08
+	offsetE 		= 9,	//	0x09
+	slidevolE 		= 10,	//	0x0A
+	fastskipE 		= 11,	//	0x0B
+	volumeE 		= 12,	//	0x0C
+	skipE 			= 13,	//	0x0D
+	extendedE 		= 14,	//	0x0E
+	speedE 			= 15,	//	0x0F
+	noteoffE 		= 16,	//	0x0G
+	LoopE			= 17,	// 	0x0L
+	NOffSetE		= 18	//  0x0O
+};
+
+/********************						***********************/
 /*** 			   Channel structure definition					***/
 /********************						***********************/
 
@@ -91,9 +117,9 @@ typedef struct Channel
 	int		vol;				// Channel vol (0 to 64)
 	int		pann;				// Channel pan (0 to 64)
 	
-	int		cmd;				// Command
-	MADByte	arg;				// Argument of command
-	MADByte	volcmd;				// Volume Command
+	MADEffectsID	cmd;		// Command
+	MADByte			arg;		// Argument of command
+	MADByte			volcmd;		// Volume Command
 	
 	int		arp[MAX_ARP];		// Used for arpeggio command
 	int		arpindex;			// Used for arpeggio command
@@ -208,7 +234,7 @@ typedef struct MADMusic
 /*** 			     Driver Settings definition					***/
 /********************						***********************/
 
-enum MADSoundOutput
+typedef MADENUM(short, MADSoundOutput)
 {
 	CoreAudioDriver = 1,		// OSX ONLY Core Audio driver
 	DirectSound95NT,			// WINDOWS ONLY
@@ -223,7 +249,7 @@ enum MADSoundOutput
 };
 
 //Used for MADSoundDriverList()
-enum MADSoundDriverAvailable
+typedef MADOPTIONS(unsigned int, MADSoundDriverAvailable)
 {
 	MIDISoundDriverBit	= 1 << MIDISoundDriver,
 	BeOSSoundDriverBit	= 1 << BeOSSoundDriver,
@@ -236,32 +262,31 @@ enum MADSoundDriverAvailable
 	ASIOSoundManagerBit	= 1 << ASIOSoundManager
 };
 
-enum OutputChannels
+typedef MADENUM(short, MADOutputChannel)
 {
-	oldMonoOutPut = 1,	// NOT SUPPORTED anymore
-	oldStereoOutPut,	// NOT SUPPORTED anymore
+	MonoOutPut = 1,		// NOT SUPPORTED anymore
+	StereoOutPut,		// NOT SUPPORTED anymore
 	DeluxeStereoOutPut,	// USE THIS ONE ONLY !!!!!!!!!!!!!!
-	PolyPhonic,			// Do NOT use it ! Standard hardware doesn't support it !
-	
-	StereoOutPut = oldStereoOutPut,
-	MonoOutPut = oldMonoOutPut
+	PolyPhonic			// Do NOT use it ! Standard hardware doesn't support it !
 };
 
-typedef struct MADDriverSettings
-{
-	short			numChn;				// Active tracks from 2 to 32, automatically setup when a new music is loaded
-	short			outPutBits;			// 8 or 16 Bits TODO: 24 Bits
-	short			outPutMode;			// Now, only DeluxeStereoOutPut is available !
-	short			driverMode;			// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
-	unsigned int	outPutRate;			// Integer of audio sample rate
-	int				MicroDelaySize;		// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
-	int				ReverbSize;			// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
-	int				ReverbStrength;		// Reverb strength in % (0 <-> 70)
-	int				oversampling;		// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
-	bool			TickRemover;		// Remove volume/sample/loop ticks.
-	bool			surround;			// Surround effect active? true/false
-	bool			Reverb;				// Reverb effect active? true/false
-	bool			repeatMusic;		// If music finished, repeat it or stop.
+static const MADOutputChannel oldMonoOutPut = MonoOutPut;
+static const MADOutputChannel oldStereoOutPut = StereoOutPut;
+
+typedef struct MADDriverSettings {
+	short				numChn;		// Active tracks from 2 to 32, automatically setup when a new music is loaded
+	short				outPutBits;	// 8 or 16 Bits TODO: 24 Bits
+	MADOutputChannel	outPutMode;	// Now, only DeluxeStereoOutPut is available !
+	MADSoundOutput		driverMode;	// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
+	unsigned int		outPutRate;	// Integer of audio sample rate
+	int		MicroDelaySize;			// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
+	int		ReverbSize;				// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
+	int		ReverbStrength;			// Reverb strength in % (0 <-> 70)
+	int		oversampling;			// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
+	bool	TickRemover;			// Remove volume/sample/loop ticks.
+	bool	surround;				// Surround effect active? true/false
+	bool	Reverb;					// Reverb effect active? true/false
+	bool	repeatMusic;			// If music finished, repeat it or stop.
 } MADDriverSettings;
 
 /******************************************************************/
@@ -293,8 +318,7 @@ typedef struct MADDriverSettings
 //
 /********************						***********************/
 
-typedef struct PPInfoRec
-{
+typedef struct PPInfoRec {
 	int		totalPatterns;
 	int		partitionLength;
 	
@@ -314,7 +338,7 @@ typedef struct PPInfoRec
 /*** 			Informations about Plugs: ThePlug[]				***/
 /********************						***********************/
 
-enum PPPlugModes {
+typedef MADENUM(MADFourChar, PPPlugModes) {
 	MADPlugImport =				(MADFourChar)'IMPL',
 	MADPlugExport =				(MADFourChar)'EXPL',
 	MADPlugInfo =				(MADFourChar)'INFO',
@@ -500,32 +524,6 @@ typedef struct __VSTEffect {
 #endif
 
 typedef struct __MADDriverRec MADDriverRec;
-
-/********************						***********************/
-/*** 					   EFFECTS ID							***/
-/********************						***********************/
-
-enum MADEffectsID {
-	arpeggioE 		= 0,	//	0x00
-	downslideE 		= 1,	//	0x01
-	upslideE 		= 2,	//	0x02
-	portamentoE 	= 3,	//	0x03
-	vibratoE 		= 4,	//	0x04
-	portaslideE 	= 5,	//	0x05
-	vibratoslideE	= 6,	//	0x06
-	nothingE 		= 7,	//	0x07
-	panningE		= 8,	//	0x08
-	offsetE 		= 9,	//	0x09
-	slidevolE 		= 10,	//	0x0A
-	fastskipE 		= 11,	//	0x0B
-	volumeE 		= 12,	//	0x0C
-	skipE 			= 13,	//	0x0D
-	extendedE 		= 14,	//	0x0E
-	speedE 			= 15,	//	0x0F
-	noteoffE 		= 16,	//	0x0G
-	LoopE			= 17,	// 	0x0L
-	NOffSetE		= 18	//  0x0O
-};
 
 /********************						***********************/
 /*** 					   FUNCTIONS							***/

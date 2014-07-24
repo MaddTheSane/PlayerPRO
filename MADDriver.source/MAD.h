@@ -140,12 +140,12 @@
 
 #pragma pack(push, 2)
 
-#define DEFAULT_VOLFADE		300
+static const unsigned short DEFAULT_VOLFADE = 300;
 #define MAXINSTRU			255
 #define MAXPOINTER			999
 #define MAXTRACK			256
 //#define MAXTRACKMULTI		99
-#define MADID				'MADK'
+static const MADFourChar MADID = 'MADK';
 
 // ***	
 // ***	PATTERN DESCRIPTION
@@ -153,19 +153,19 @@
 
 
 /*!
- *	@struct		Cmd
- *	@abstract	command function used in a pattern
- *	@var		ins
- *				Instrument number \c0x00 is no instrument command
- *	@var		note
- *				Note, see table. \c0xFF is no note command
- *	@var		cmd
+ *	\struct		Cmd
+ *	\abstract	command function used in a pattern
+ *	\var		ins
+ *				Instrument number \c 0x00 is no instrument command
+ *	\var		note
+ *				Note, see table. \c 0xFF is no note command
+ *	\var		cmd
  *				effect command
- *	@var		arg
+ *	\var		arg
  *				Effect argument
- *	@var		vol
- *				Volume of the effect. \c0xFF is no volume command
- *	@var		unused
+ *	\var		vol
+ *				Volume of the effect. \c 0xFF is no volume command
+ *	\var		unused
  *				Unused, kept in for future use.
  */
 typedef struct Cmd {
