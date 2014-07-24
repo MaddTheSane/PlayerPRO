@@ -17,6 +17,7 @@
 #define TARGET_OS_IPHONE 0
 #endif
 #include <MacTypes.h>
+#include <CoreFoundation/CFAvailability.h>
 #endif
 
 #include <stdio.h>
@@ -35,6 +36,10 @@
 #define __LITTLE_ENDIAN__ 1
 #endif
 
+#ifdef __APPLE__
+#define MADENUM CF_ENUM
+#define MADOPTIONS CF_OPTIONS
+#else
 #if (__cplusplus && __cplusplus >= 201103L && (__has_extension(cxx_strong_enums) || __has_feature(objc_fixed_enum))) || (!__cplusplus && __has_feature(objc_fixed_enum))
 #define MADENUM(_type, _name) enum _name : _type _name; enum _name : _type
 #if (__cplusplus)
@@ -45,6 +50,7 @@
 #else
 #define MADENUM(_type, _name) _type _name; enum
 #define MADOPTIONS(_type, _name) _type _name; enum
+#endif
 #endif
 
 /********************						***********************/
