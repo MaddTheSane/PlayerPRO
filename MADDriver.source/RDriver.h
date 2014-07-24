@@ -40,7 +40,7 @@
 /********************						***********************/
 
 #define NUMBER_NOTES		96
-#define NOFINETUNE			8363
+static const unsigned int NOFINETUNE = 8363;
 #define MIN_VOLUME			0
 #define MAX_VOLUME			64
 #define MAX_CHANVOL			128
@@ -216,8 +216,7 @@ typedef struct Channel
 /*** 		Music description - used in Import/Export filter	***/
 /********************						***********************/
 
-typedef struct MADMusic
-{
+typedef struct MADMusic {
 	int			position, fullTime;
 	MADSpec		*header;					// Music Header - See 'MAD.h'
 	PatData		*partition[MAXPATTERN];		// Patterns
@@ -273,20 +272,49 @@ typedef MADENUM(short, MADOutputChannel)
 static const MADOutputChannel oldMonoOutPut = MonoOutPut;
 static const MADOutputChannel oldStereoOutPut = StereoOutPut;
 
+/*!
+ *	@struct	MADDriverSettings
+ *	@var	numChn
+ *			Active tracks from 2 to 32, automatically setup when a new music is loaded
+ *	@var	outPutBits
+ *			8 or 16 Bits TODO: 24 Bits
+ *	@var	outPutMode
+ *			Now, only \c DeluxeStereoOutPut is available!
+ *	@var	driverMode
+ *			The Playback driver
+ *	@var	outPutRate
+ *			Audio Sample Rate
+ *	@var	MicroDelaySize
+ *			Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms
+ *	@var	ReverbSize
+ *			Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
+ *	@var	ReverbStrength
+ *			Reverb strength in % (0 <-> 70)
+ *	@var	oversampling
+ *			OverSampling value, 1 = normal; works on select compilers
+ *	@var	TickRemover
+ *			Remove volume/sample/loop ticks
+ *	@var	surround
+ *			Surround effect active?
+ *	@var	Reverb
+ *			Reverb effect active?
+ *	@var	repeatMusic
+ *			If music finished, repeat it or stop.
+ */
 typedef struct MADDriverSettings {
-	short				numChn;		// Active tracks from 2 to 32, automatically setup when a new music is loaded
-	short				outPutBits;	// 8 or 16 Bits TODO: 24 Bits
-	MADOutputChannel	outPutMode;	// Now, only DeluxeStereoOutPut is available !
-	MADSoundOutput		driverMode;	// MIDISoundDriver, SoundManagerDriver, BeOSSoundDriver, DirectSound95NT or Wave95NT
-	unsigned int		outPutRate;	// Integer of audio sample rate
-	int		MicroDelaySize;			// Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms)
-	int		ReverbSize;				// Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
-	int		ReverbStrength;			// Reverb strength in % (0 <-> 70)
-	int		oversampling;			// OverSampling value, 1 = normal; works ONLY on 64bits processor (PowerPC)
-	bool	TickRemover;			// Remove volume/sample/loop ticks.
-	bool	surround;				// Surround effect active? true/false
-	bool	Reverb;					// Reverb effect active? true/false
-	bool	repeatMusic;			// If music finished, repeat it or stop.
+	short				numChn;
+	short				outPutBits;
+	MADOutputChannel	outPutMode;
+	MADSoundOutput		driverMode;
+	unsigned int		outPutRate;
+	int		MicroDelaySize;
+	int		ReverbSize;
+	int		ReverbStrength;
+	int		oversampling;
+	bool	TickRemover;
+	bool	surround;
+	bool	Reverb;
+	bool	repeatMusic;
 } MADDriverSettings;
 
 /******************************************************************/
@@ -357,9 +385,7 @@ typedef MADENUM(MADFourChar, PPPlugModes) {
 #include <CoreFoundation/CFString.h>
 #include <CoreFoundation/CFArray.h>
 #include <CoreFoundation/CFURL.h>
-#if !TARGET_OS_IPHONE
 #include <CoreFoundation/CFBundle.h>
-#endif
 
 typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
 
@@ -370,9 +396,7 @@ typedef struct PlugInfo
 	MADPLUGFUNC	IOPlug;			// Plug CODE
 	CFStringRef	MenuName;		// Plug name
 	CFStringRef	AuthorString;	// Plug author
-#if !TARGET_OS_IPHONE
 	CFBundleRef	file;			// Location of plug file
-#endif
 	CFArrayRef	UTItypes;		// CFStrings of supported UTIs
 	char		type[5];		// OSType of file support.
 } PlugInfo;
@@ -381,6 +405,7 @@ typedef struct PlugInfo
 #ifdef WIN32
 #include <windows.h>
 typedef MADErr (*PLUGDLLFUNC)(MADFourChar, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
+
 typedef struct PlugInfo
 {
 	MADFourChar	mode;				// Mode support : Import +/ Export
@@ -432,8 +457,7 @@ typedef struct PlugInfo
 /*** 		Global structure : PlayerPRO variables				***/
 /********************						***********************/
 
-typedef struct MADLibrary
-{
+typedef struct MADLibrary {
 	/** Plugs Import/Export variables **/
 	int			mytab[12];
 	PlugInfo	*ThePlug;	// Pointers on plugs code & infos
