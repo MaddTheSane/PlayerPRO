@@ -1014,7 +1014,7 @@ return; \
 	exportController.delegate = self;
 	[exportSettingsBox setContentView:[exportController view]];
 	
-	instrumentController = [[PPInstrumentWindowController alloc] init];
+	instrumentController = [[PPInstrumentWindowController alloc] initWithWindowNibName:@"InstrumentWindow"];
 	
 	timeChecker = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0] interval:1/8.0 target:self selector:@selector(updateMusicStats:) userInfo:nil repeats:YES];
 	[[NSRunLoop mainRunLoop] addTimer:timeChecker forMode:NSRunLoopCommonModes];

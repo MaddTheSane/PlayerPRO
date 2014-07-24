@@ -17,14 +17,14 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 	internal(set) var lostMusicCount:UInt = 0;
 	internal(set) var selectedMusic = -1;
 	
-	override class func initialize()
-	{
+	override class func initialize() {
 		NSKeyedUnarchiver.setClass(self, forClassName: "PPMusicList")
 	}
 		
 	func countByEnumeratingWithState(state: UnsafePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafePointer<AnyObject?>, count len: Int) -> Int {
 		return musicList.bridgeToObjectiveC().countByEnumeratingWithState(state, objects: buffer, count: len);
 	}
+	
 	func encodeWithCoder(aCoder: NSCoder!) {
 		var BookmarkArray: [NSURL] = [];
 		for obj in musicList {
@@ -60,8 +60,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 			})
 	}
 	
-	func addMusicURL(theURL: NSURL) -> Bool
-	{
+	func addMusicURL(theURL: NSURL) -> Bool {
 		var obj: PPMusicListObject! = PPMusicListObject(URL: theURL);
 		
 		if (!obj) {
@@ -226,8 +225,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 		self.didChange(.Removal, valuesAtIndexes: idxSet, forKey: kMusicListKVO)
 	}
 	
-	func insertObjects(anObj: NSArray, inMusicListAtIndex idx:Int)
-	{
+	func insertObjects(anObj: NSArray, inMusicListAtIndex idx:Int) {
 		let theIndexSet = NSIndexSet(indexesInRange: NSMakeRange(idx, anObj.count))
 		self.willChange(.Insertion, valuesAtIndexes: theIndexSet, forKey: kMusicListKVO)
 		var currentIndex = theIndexSet.firstIndex;

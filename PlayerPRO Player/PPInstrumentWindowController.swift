@@ -294,13 +294,24 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 		return 0
 	}
 	
-	func outlineView(outlineView: NSOutlineView!, objectValueForTableColumn tableColumn: NSTableColumn!, byItem item: AnyObject!) -> AnyObject! {
-		if (item.isKindOfClass(PPInstrumentObject)) {
-			return (item as PPInstrumentObject).name
-		} else if (item.isKindOfClass(PPSampleObject)) {
-			return (item as PPSampleObject).name
+	func outlineView(outlineView: NSOutlineView!, child index: Int, ofItem item: AnyObject!) -> AnyObject! {
+		if (!item) {
+			return (NSApplication.sharedApplication().delegate as AppDelegate).music.instruments()[index];
 		}
-		return nil
+		if (item.isKindOfClass(PPInstrumentObject)) {
+			return (item as PPInstrumentObject).samplesObjectAtIndex(UInt(index))
+		}
+		return nil;
+	}
+	
+	func outlineView(outlineView: NSOutlineView!, objectValueForTableColumn tableColumn: NSTableColumn!, byItem item: AnyObject!) -> AnyObject! {
+		var toRet: String? = nil
+		if (item.isKindOfClass(PPInstrumentObject)) {
+			toRet = (item as PPInstrumentObject).name
+		} else if (item.isKindOfClass(PPSampleObject)) {
+			toRet = (item as PPSampleObject).name
+		}
+		return toRet
 	}
 	
 	func outlineView(outlineView: NSOutlineView!, isItemExpandable item: AnyObject!) -> Bool {
