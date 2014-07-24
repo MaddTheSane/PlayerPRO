@@ -7,7 +7,7 @@
 //
 
 #import "PPPlugInInfoController.h"
-#import "PPPlugInInfo.h"
+#import "PlayerPRO_Player-Swift.h"
 
 @interface PPPlugInInfoController ()
 @property (strong) PPPlugInInfo *info;

@@ -7,6 +7,7 @@
 //
 
 import Swift
+import PlayerPROCore
 
 extension MADSpec {
 	var bigEndian: MADSpec { get {

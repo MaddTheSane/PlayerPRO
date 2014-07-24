@@ -48,10 +48,10 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 		instrumentView?.selectRowIndexes(NSIndexSet(index:0), byExtendingSelection:false)
     }
 
-	private func DrawCGSampleInt(startI: Int, tSS: Int, tSE: Int, high: Int, larg: Int, trueV: Int, trueH: Int, channel: Int16, curData: PPSampleObject!, ctxRef: CGContextRef!) {
+	private func drawCGSampleInt(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int, trueH: Int, channel: Int16, curData: PPSampleObject!, ctxRef: CGContextRef!) {
 		CGContextSaveGState(ctxRef);
 		
-		var start = startI
+		var start:Int = startI
 		
 		var i: Int = 0;
 		var sampleSize = curData.data.length;
@@ -78,7 +78,7 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 			temp = CGFloat(Int(theShortSample[BS]) + 0x8000);
 			temp *= CGFloat(high);
 			temp  /= CGFloat((1 << 16));
-			CGContextMoveToPoint(ctxRef, CGFloat(Double((trueH + tSS))), CGFloat(Double(trueV + temp)));
+			CGContextMoveToPoint(ctxRef, CGFloat(trueH + tSS), trueV + temp);
 			
 			for (i = tSS; i < tSE; i++) {
 				BS = start + (i * sampleSize) / larg;
@@ -139,7 +139,7 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 			temp *= CGFloat(high);
 			temp /= CGFloat((1 << 8));
 			
-			CGContextMoveToPoint(ctxRef, CGFloat(trueH + tSS), CGFloat(trueV + temp));
+			CGContextMoveToPoint(ctxRef, CGFloat(trueH + tSS), trueV + temp);
 			
 			for (i = tSS; i < tSE; i++) {
 				BS = start + (i * sampleSize) / larg;
@@ -148,6 +148,7 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 				if (isStereo) {
 					BS /= 2;
 					BS *= 2;
+					
 					BE /= 2;
 					BE *= 2;
 					
@@ -200,24 +201,24 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 		var theCGimg: CGImageRef? = nil
 		let rowBytes: UInt = 4 * UInt(imageSize.width)
 		let defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)
-		var colorRef: CGColorRef? = nil
 		var bitmapContext = CGBitmapContextCreateWithData(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, CGBitmapInfo.fromRaw( CGImageAlphaInfo.PremultipliedLast.toRaw())!, nil, nil);
 		CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
 		let lineSize = waveFormImage!.convertSizeToBacking(NSMakeSize(1, 1));
 		CGContextSetLineWidth(bitmapContext, lineSize.height);
 		if (datIsStereo) {
-			colorRef = CGColorCreateGenericRGB(0, 0, 1, 0.75);
-			CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
-			DrawCGSampleInt(0, tSS: 0, tSE: Int(imageSize.width), high: Int(imageSize.height), larg: Int(imageSize.width), trueV: 0, trueH: 0, channel: 1, curData: theDat, ctxRef: bitmapContext)
+			let colorRef1 = CGColorCreateGenericRGB(0, 0, 1, 0.75);
+			CGContextSetStrokeColorWithColor(bitmapContext, colorRef1);
+			drawCGSampleInt(start: 0, 0, Int(imageSize.width), Int(imageSize.height), Int(imageSize.width), 0, 0, 1, theDat, bitmapContext)
 		}
+		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		
-		colorRef = CGColorCreateGenericRGB(1, 0, 0, datIsStereo ? 0.75 : 1);
-		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
-		DrawCGSampleInt(0, tSS: 0, tSE: Int(imageSize.width), high: Int(imageSize.height), larg: Int(imageSize.width), trueV: 0, trueH: 0, channel: 0, curData: theDat, ctxRef: bitmapContext)
+		let colorRef2 = CGColorCreateGenericRGB(1, 0, 0, stereoTrans);
+		CGContextSetStrokeColorWithColor(bitmapContext, colorRef2);
+		drawCGSampleInt(start: 0, 0, Int(imageSize.width), Int(imageSize.height), Int(imageSize.width), 0, 0, 0, theDat, bitmapContext)
 		
 		if (theDat.loopSize != 0) {
-			colorRef = CGColorCreateGenericRGB(1, 0.1, 0.5, 0.8);
-			CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
+			let colorRef3 = CGColorCreateGenericRGB(1, 0.1, 0.5, 0.8);
+			CGContextSetStrokeColorWithColor(bitmapContext, colorRef3);
 			var loopRect = CGRectMake(0, 0, imageSize.width, imageSize.height);
 			var lineSize = waveFormImage!.convertSizeToBacking(NSMakeSize(2, 2));
 			var padSize = waveFormImage!.convertSizeToBacking(NSMakeSize(1, 1));

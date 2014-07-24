@@ -32,10 +32,6 @@
  *				If you need more functionality, use another API instead.
  */
 
-#ifndef __MADI__
-#include "MAD.h"
-#endif
-
 #ifdef _MAC_H
 #include <CoreFoundation/CFByteOrder.h>
 #endif

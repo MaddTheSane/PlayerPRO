@@ -11,6 +11,11 @@ framework module PlayerPROCore {
 		export *
 	}
 	
+	module FileUtils {
+		header "FileUtils.h"
+		export *
+	}
+	
 	module MADDriver {
 		use PPDefs
 		private header "MADDriver.h"

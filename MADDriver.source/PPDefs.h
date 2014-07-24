@@ -17,7 +17,7 @@
 #define TARGET_OS_IPHONE 0
 #endif
 #include <MacTypes.h>
-#include <CoreFoundation/CoreFoundation.h>
+#include <CoreFoundation/CFAvailability.h>
 #endif
 
 #include <stdio.h>

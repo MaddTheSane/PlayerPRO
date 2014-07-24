@@ -4,6 +4,7 @@
 
 #define ISUSINGPPPLUG 1
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/PPPlug.h>
 #include "PPByteswap.h"
 
