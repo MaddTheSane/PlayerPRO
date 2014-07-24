@@ -10,9 +10,9 @@
 #ifndef __PLAYERPROCORE_H__
 #define __PLAYERPROCORE_H__
 
+#include <PlayerPROCore/PPDefs.h>
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPDefs.h>
 #include <PlayerPROCore/RDriver.h>
 #ifdef ISUSINGPPPLUG
 #include <PlayerPROCore/PPPlug.h>
