@@ -38,7 +38,7 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 	SixSixNine	*the669;
 	short		i, x, z;
 	size_t		OffSetToSample;
-	size_t		temp;
+	uintptr_t	temp;
 	char		*MaxPtr;
 	char		*theInstrument[64], *destPtr;
 	short		Note, Octave;
@@ -60,12 +60,12 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 	if (!theMAD->header)
 		return MADNeedMemory;
 	
-	MaxPtr = (char*)((size_t)the669 + MODSize);
+	MaxPtr = (char*)((uintptr_t)the669 + MODSize);
 	
 	OffSetToSample = 0x1f1 + the669->NOS * 25 + the669->NOP * 0x600L;
 	
 	for (i = 0; i < the669->NOS ; i++) {
-		temp = (size_t) the669;
+		temp = (uintptr_t) the669;
 		temp += 0x1f1L + i*25L + 13L;
 		
 		SInfo = (SampleInfo*)temp;
@@ -74,7 +74,7 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 		PPLE16(&SInfo->loopStart);
 		PPLE16(&SInfo->loopEnd);
 		
-		theInstrument[i] = (char*)((size_t)the669 + OffSetToSample);
+		theInstrument[i] = (char*)((uintptr_t)the669 + OffSetToSample);
 		OffSetToSample += SInfo->length;
 	}
 	
@@ -138,7 +138,7 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
 	
 	for(i = 0; i < the669->NOS; i++) {
-		temp = (size_t) the669;
+		temp = (uintptr_t) the669;
 		temp += 0x1f1 + i * 25 + 13;
 		
 		SInfo = (SampleInfo*)temp;
@@ -204,8 +204,8 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 			theMAD->fid[i].numSamples = 0;
 	}
 	
-	temp = (size_t)the669;
-	temp += 0x1f1 + (size_t)the669->NOS * 0x19;
+	temp = (uintptr_t)the669;
+	temp += 0x1f1 + (uintptr_t)the669->NOS * 0x19;
 	PatInt = (struct PatSix*)temp;
 	
 	/***** TEMPORAIRE ********/

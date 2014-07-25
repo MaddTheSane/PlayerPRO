@@ -666,7 +666,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 				if (ch->loopBeg >= ch->sizePtr)
 					ch->loopBeg = ch->sizePtr;
 				
-				ch->maxPtr 	= (char*) ((size_t)ch->begPtr + ch->loopBeg + ch->loopSize);
+				ch->maxPtr 	= (char*) ((uintptr_t)ch->begPtr + ch->loopBeg + ch->loopSize);
 				
 				if (ch->maxPtr < ch->begPtr)
 					ch->maxPtr = ch->begPtr;

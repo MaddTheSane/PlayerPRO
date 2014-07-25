@@ -68,12 +68,12 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 	PPLE16(&MTMFile->tracks);
 	PPLE16(&MTMFile->comments);
 	
-	MaxPtr 		= (char*) ((size_t)MTMFile + MTMFile);
-	positionPtr	= (char*) ((size_t)MTMFile + 66 + MTMFile->NOS * 37);
-	patPtr 		= (char*) ((size_t)MTMFile + 194 + MTMFile->NOS * 37);
-	destPtr		= (char*) ((size_t)MTMFile + 194 + MTMFile->NOS * 37 + MTMFile->tracks * 192);
+	MaxPtr 		= (char*) ((uintptr_t)MTMFile + MTMFile);
+	positionPtr	= (char*) ((uintptr_t)MTMFile + 66 + MTMFile->NOS * 37);
+	patPtr 		= (char*) ((uintptr_t)MTMFile + 194 + MTMFile->NOS * 37);
+	destPtr		= (char*) ((uintptr_t)MTMFile + 194 + MTMFile->NOS * 37 + MTMFile->tracks * 192);
 	patTracks	= (short*)destPtr;
-	samplePtr 	= (char*) ((size_t)MTMFile + 194 + MTMFile->NOS * 37 + MTMFile->tracks * 192 +
+	samplePtr 	= (char*) ((uintptr_t)MTMFile + 194 + MTMFile->NOS * 37 + MTMFile->tracks * 192 +
 						 (MTMFile->patNo + 1) * 32 * 2 + MTMFile->comments);
 	
 	/**** Analyse des instruments ****/
@@ -82,7 +82,7 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 	for (i = 0, OffSetToSample = 0; i < MTMFile->NOS ; i++) {
 		theInstrument[i] = samplePtr + OffSetToSample;
 		
-		instru[i] = (struct Instru*)((size_t)MTMFile + 66 + i * 37);
+		instru[i] = (struct Instru*)((uintptr_t)MTMFile + 66 + i * 37);
 		
 		PPLE32(&instru[i]->size);
 		PPLE32(&instru[i]->loopBegin);

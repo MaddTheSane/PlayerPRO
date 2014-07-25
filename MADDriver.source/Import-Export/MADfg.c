@@ -237,7 +237,7 @@ MADErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *i
 			return MADNeedMemory;
 		
 		if (MADConvert) {
-			tempPat = (struct MusicPattern*)((size_t) tempPat + sizeof(struct oldPatHeader));
+			tempPat = (struct MusicPattern*)((uintptr_t) tempPat + sizeof(struct oldPatHeader));
 			inOutCount -= sizeof(struct oldPatHeader);
 		}
 		
@@ -247,7 +247,7 @@ MADErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *i
 		
 		
 		if (MADConvert) {
-			tempPat = (struct MusicPattern*) ((size_t) tempPat - sizeof(struct oldPatHeader));
+			tempPat = (struct MusicPattern*) ((uintptr_t) tempPat - sizeof(struct oldPatHeader));
 			tempPat->header.PatternSize = 64;
 			tempPat->header.CompressionMode = 'NONE';
 			
