@@ -8,7 +8,7 @@
 
 import Cocoa
 
-private let UTIArray = [PPMLDCUTI];
+private let PPMLDCUTIArray = [PPMLDCUTI];
 
 class PPMusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
 	private(set) var theIndexSet: NSIndexSet
@@ -19,11 +19,11 @@ class PPMusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, 
 	}
 	
 	class func readableTypesForPasteboard(pasteboard: NSPasteboard!) -> [AnyObject]! {
-		return UTIArray
+		return PPMLDCUTIArray
 	}
 	
 	func writableTypesForPasteboard(pasteboard: NSPasteboard!) -> [AnyObject]! {
-		return UTIArray
+		return PPMLDCUTIArray
 	}
 	
 	class func readingOptionsForType(type: String!, pasteboard: NSPasteboard!) -> NSPasteboardReadingOptions {
