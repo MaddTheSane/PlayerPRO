@@ -11,8 +11,6 @@
 
 @class PPMusicList;
 
-@class PPMusicList;
-
 enum {
 	PPStopPlaying = 0,
 	PPLoopMusic,
