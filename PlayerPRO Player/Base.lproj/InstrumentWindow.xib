@@ -6,7 +6,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6185.11"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="PPInstrumentWindowController" customModule="PlayerPRO_Player">
+        <customObject id="-2" userLabel="File's Owner" customClass="PPInstrumentWindowController">
             <connections>
                 <outlet property="infoDrawer" destination="21" id="144"/>
                 <outlet property="instrumentBits" destination="61" id="132"/>
@@ -302,6 +302,7 @@
                 <constraint firstAttribute="trailing" secondItem="49" secondAttribute="trailing" constant="20" symbolic="YES" id="4ul-3J-cYY"/>
                 <constraint firstAttribute="centerX" secondItem="47" secondAttribute="centerX" id="6yV-X4-jTh"/>
                 <constraint firstItem="43" firstAttribute="leading" secondItem="41" secondAttribute="leading" id="7bh-VF-N37"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="47" secondAttribute="trailing" constant="20" symbolic="YES" id="9et-e7-zhc"/>
                 <constraint firstItem="43" firstAttribute="trailing" secondItem="39" secondAttribute="trailing" id="9jD-fN-QMT"/>
                 <constraint firstItem="39" firstAttribute="leading" secondItem="20" secondAttribute="leading" constant="20" symbolic="YES" id="A5G-m8-Vfq"/>
                 <constraint firstItem="43" firstAttribute="trailing" secondItem="33" secondAttribute="trailing" id="Aa8-6O-0R2"/>
@@ -309,7 +310,7 @@
                 <constraint firstItem="31" firstAttribute="leading" secondItem="20" secondAttribute="leading" constant="20" symbolic="YES" id="Dfo-yn-LTj"/>
                 <constraint firstItem="31" firstAttribute="leading" secondItem="33" secondAttribute="leading" id="Iq2-2M-iJN"/>
                 <constraint firstItem="43" firstAttribute="trailing" secondItem="35" secondAttribute="trailing" id="JWb-Cj-eDy"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="47" secondAttribute="bottom" constant="20" symbolic="YES" id="KZZ-sM-UVr"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="47" secondAttribute="bottom" priority="999" constant="20" symbolic="YES" id="KZZ-sM-UVr"/>
                 <constraint firstItem="51" firstAttribute="leading" secondItem="33" secondAttribute="trailing" constant="8" symbolic="YES" id="McA-Kt-qyv"/>
                 <constraint firstItem="37" firstAttribute="leading" secondItem="20" secondAttribute="leading" constant="20" symbolic="YES" id="NJL-Ca-0Sf"/>
                 <constraint firstItem="61" firstAttribute="leading" secondItem="43" secondAttribute="trailing" constant="8" symbolic="YES" id="RYk-8J-YeF"/>

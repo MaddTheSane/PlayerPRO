@@ -10,6 +10,7 @@
 #import "PPPreferences.h"
 #import "PPMusicList.h"
 #import "UserDefaultKeys.h"
+#import "PPInstrumentWindowController.h"
 #import "PPPlugInInfoController.h"
 #import "OpenPanelViewController.h"
 #include "PPByteswap.h"
@@ -992,7 +993,7 @@ return; \
 	exportController.delegate = self;
 	[exportSettingsBox setContentView:[exportController view]];
 	
-	instrumentController = [[PPInstrumentWindowController alloc] initWithWindowNibName:@"InstrumentWindow"];
+	instrumentController = [[PPInstrumentWindowController alloc] init];
 	
 	timeChecker = [[NSTimer alloc] initWithFireDate:[NSDate dateWithTimeIntervalSinceNow:0] interval:1/8.0 target:self selector:@selector(updateMusicStats:) userInfo:nil repeats:YES];
 	[[NSRunLoop mainRunLoop] addTimer:timeChecker forMode:NSRunLoopCommonModes];
