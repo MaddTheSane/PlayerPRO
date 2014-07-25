@@ -11,7 +11,6 @@
 #import "UserDefaultKeys.h"
 #import "PPPlugInInfoController.h"
 #import "OpenPanelViewController.h"
-#import "PPMusicListDragClass.h"
 #include "PPByteswap.h"
 #import <AVFoundation/AVFoundation.h>
 #import "PlayerPRO_Player-Swift.h"
@@ -1677,7 +1676,7 @@ badTracker:
 - (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndices toPasteboard:(NSPasteboard*)pboard
 {
 	BOOL status = NO;
-	PPMusicListDragClass *dragClass = [PPMusicListDragClass dragWithIndexSet:rowIndices];
+	PPMusicListDragClass *dragClass = [[PPMusicListDragClass alloc] initWithIndexSet:rowIndices];
 	NSMutableArray *urlArrays = [[NSMutableArray alloc] initWithCapacity:[rowIndices count]];
 	NSArray *ppmobjects = [musicList arrayOfObjectsInMusicListAtIndexes:rowIndices];
 	for (PPMusicListObject *obj in ppmobjects) {
