@@ -8,6 +8,7 @@
 
 #import "PPiAppDelegate.h"
 #import "UserDefaultKeys.h"
+#import "PPMusicList.h"
 
 @interface PPiAppDelegate ()
 @property (readwrite, strong) PPLibrary *madLib;
@@ -15,6 +16,7 @@
 @end
 
 @implementation PPiAppDelegate
+@synthesize musicList;
 
 + (void)initialize
 {
@@ -57,6 +59,7 @@
 	}
 	self.madLib = [[PPLibrary alloc] init];
 	self.madDriver = [[PPDriver alloc] initWithLibrary:self.madLib settings:NULL];
+	self.musicList = [[PPMusicList alloc] init];
 	return YES;
 }
 							

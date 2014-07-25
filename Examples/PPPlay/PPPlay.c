@@ -12,9 +12,7 @@
 "Maintained by Charles \"Madd the Sane \" Betts\n"\
 "=======================================================================\n" \
 "       This program is FREEWARE - Read README.TXT for more info\n" \
-"\n"
-
-#define PPBanner2 \
+"\n" \
 "     E-Mail : computers57@hotmail.com    \n"\
 "=======================================================================\n" \
 " Current settings: 44Khz-16bits-Stereo-MicroDelay 35ms-Interpolation \n" \
@@ -37,7 +35,7 @@ int main(int argc, char *argv[])
 	int					returntype = EXIT_SUCCESS;
 	
 	
-	printf("%s%s", PPbanner, PPBanner2);
+	printf("%s", PPbanner);
 	
 	if (argc != 2) {
 		fprintf(stderr ,"Usage: %s MyMusicFile\n", argv[0]);

@@ -1,0 +1,5 @@
+explicit module PlayerPROCore.RDriverInt {
+	use PPDefs
+	header "RDriverInt.h"
+	export *
+}

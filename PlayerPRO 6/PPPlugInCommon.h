@@ -9,6 +9,10 @@
 #ifndef PPMacho_PPPlugInCommon_h
 #define PPMacho_PPPlugInCommon_h
 
+#define ISUSINGPPPLUG
+#include <PlayerPROCore/PlayerPROCore.h>
+#import <Foundation/NSArray.h>
+
 void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID);
 NSArray *DefaultPlugInLocations();
 OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, int channel, int note, int amplitude, long loopBeg, long loopSize, unsigned int rate, Boolean stereo);

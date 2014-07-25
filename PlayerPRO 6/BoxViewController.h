@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class PPDocument;
+
 @interface BoxViewController : NSViewController
+
+@property (weak) IBOutlet PPDocument *currentDocument;
 
 @end

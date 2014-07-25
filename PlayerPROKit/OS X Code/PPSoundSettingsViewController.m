@@ -266,12 +266,12 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 	}
 }
 
-- (id)init
+- (instancetype)init
 {
 	return [self initWithNibName:@"PPSoundSettingsViewController" bundle:[NSBundle bundleForClass:[PPSoundSettingsViewController class]]];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if (self) {

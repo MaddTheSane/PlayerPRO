@@ -6,9 +6,8 @@
 //
 //
 
-#define ISUSINGPPPLUG 1
-#import "PPInstrumentImporterObject.h"
 #import "PPPlugInCommon.h"
+#import "PPInstrumentImporterObject.h"
 
 NSString * const kMadPlugIsSampleKey = @"MADPlugIsSample";
 

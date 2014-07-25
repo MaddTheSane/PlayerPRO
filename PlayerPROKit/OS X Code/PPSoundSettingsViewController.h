@@ -41,7 +41,7 @@
 @property (weak) IBOutlet NSPopUpButton *reverbPercent;
 @property (weak) IBOutlet id<PPSoundSettingsViewControllerDelegate> delegate;
 
-- (id)init;
+- (instancetype)init;
 - (void)settingsFromDriverSettings:(MADDriverSettings*)sett;
 
 - (IBAction)changeBits:(id)sender;

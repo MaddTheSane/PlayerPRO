@@ -62,18 +62,6 @@
 extern "C" {
 #endif
 
-/*** General Functions ***/
-
-PPEXPORT MADErr		MADKillInstrument(MADMusic*, short ins);
-PPEXPORT MADErr		MADKillSample(MADMusic *, short ins, short sample);
-PPEXPORT sData		*MADCreateSample(MADMusic *MDriver, short ins, short sample);
-PPEXPORT MADErr		MADKillCmd(Cmd*);
-PPEXPORT void		UpdateTracksNumber(MADDriverRec *);
-PPEXPORT MADErr		MADCreateVolumeTable(MADDriverRec *intDriver);
-PPEXPORT void		MADDisposeVolumeTable(MADDriverRec *intDriver);
-PPEXPORT MADMusic*	CreateFreeMADK();
-
-
 //TODO: either migrate all these functions to PlayerPROCore or remove them from the header.
 void	AllNoteOff(MADDriverRec *intDriver);
 bool	MADIsPressed(unsigned char* km2, unsigned short k);

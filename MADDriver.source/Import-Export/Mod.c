@@ -991,12 +991,10 @@ MADErr mainMOD(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfo
 extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 #endif
 {
-	MADErr	myErr;
+	MADErr	myErr = MADNoErr;
 	void*	AlienFile;
 	long	sndSize;
 	UNFILE	iFileRefI;
-	
-	myErr = MADNoErr;
 	
 	switch (order) {
 		case MADPlugImport:

@@ -8,11 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@class PPMusicList;
-
 @protocol PPSTImporterHelper <NSObject>
 
-- (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(NSData* bookmarkData, NSError *error))reply;
+- (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary* bookmarkData, NSError *error))reply;
 
 @end
 

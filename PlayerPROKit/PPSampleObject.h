@@ -16,16 +16,17 @@
 @property (readonly) sData theSample;
 
 - (instancetype)init;
-- (instancetype)initWithsData:(sData *)theData;
+- (instancetype)initWithsData:(in sData *)theData;
+- (instancetype)initWithSData:(in sData *)theData;
 - (sData *)createSData;
 
 - (int)dataSize DEPRECATED_ATTRIBUTE;
 @property int loopBegin;
 @property int loopSize;
-@property Byte volume;
+@property MADByte volume;
 @property unsigned short c2spd;
-@property Byte loopType;
-@property Byte amplitude;
+@property MADLoopType loopType;
+@property MADByte amplitude;
 @property char relativeNote;
 @property (copy) NSString *name;
 @property (getter = isStereo) BOOL stereo;

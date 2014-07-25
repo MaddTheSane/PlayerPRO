@@ -505,7 +505,7 @@ static NSInteger selMusFromList = -1;
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						OSErr theErr = MADNoErr;
 						
-						NSURL *oldURL = [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] musicUrl];
+						NSURL *oldURL = [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] musicURL];
 						NSArray *metadataInfo;
 						__block NSError *expErr = nil;
 						dispatch_block_t errBlock = ^{
@@ -1465,7 +1465,7 @@ enum PPMusicToolbarTypes {
 	
 	obj = [musicList objectInMusicListAtIndex:[selected lastIndex]];
 	
-	musicURL = obj.musicUrl;
+	musicURL = obj.musicURL;
 	if ([madLib identifyFileAtURL:musicURL type:info] != MADNoErr)
 		goto badTracker;
 	if ([madLib getInformationFromFileAtURL:musicURL type:info info:&theInfo] != MADNoErr)
@@ -1684,7 +1684,7 @@ badTracker:
 	NSMutableArray *urlArrays = [[NSMutableArray alloc] initWithCapacity:[rowIndices count]];
 	NSArray *ppmobjects = [musicList arrayOfObjectsInMusicListAtIndexes:rowIndices];
 	for (PPMusicListObject *obj in ppmobjects) {
-		[urlArrays addObject:obj.musicUrl];
+		[urlArrays addObject:obj.musicURL];
 	}
 	[pboard clearContents]; // clear pasteboard to take ownership
 	status = [pboard writeObjects:[[urlArrays copy] arrayByAddingObject:dragClass]]; // write the URLs

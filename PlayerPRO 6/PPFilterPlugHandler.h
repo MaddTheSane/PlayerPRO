@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/PPPlug.h>
+
 @class PPFilterPlugObject;
 
 @interface PPFilterPlugHandler : NSObject <NSFastEnumeration>

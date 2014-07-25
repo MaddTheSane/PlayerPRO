@@ -49,6 +49,17 @@ static inline void ByteSwapInstrData(InstrData *toSwap)
 	});
 }
 
+static inline void ByteSwapFXSets(FXSets *toSwap)
+{
+	PPBE16(&toSwap->track);
+	PPBE16(&toSwap->id);
+	PPBE32(&toSwap->FXID);
+	PPBE16(&toSwap->noArg);
+	dispatch_apply(100, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
+		PPBE32(&toSwap->values[i]);
+	});
+}
+
 static inline void ByteSwapsData(sData *toSwap)
 {
 	PPBE32(&toSwap->size);

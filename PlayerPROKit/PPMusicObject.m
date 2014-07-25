@@ -691,7 +691,7 @@ end:
 	currentMusic->sample = tmpsData;
 	for (i = 0; i < MAXINSTRU; i++) {
 		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:self instrumentIndex:i];
-		[self.instruments replaceObjectAtIndex:i withObject:insObj];
+		(self.instruments)[i] = insObj;
 	}
 	
 	return YES;
