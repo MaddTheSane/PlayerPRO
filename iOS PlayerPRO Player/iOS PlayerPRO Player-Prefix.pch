@@ -4,14 +4,14 @@
 //  The contents of this file are implicitly included at the beginning of every source file.
 //
 
-@import Darwin.Availability;
+#include <Availability.h>
 #include <tgmath.h>
 
 #ifndef __IPHONE_8_0
 #warning "This project uses features only available in iOS SDK 8.0 and later."
 #endif
 
-@import PlayerPROCore;
+#include <PlayerPROCore/PlayerPROCore.h>
 
 #ifdef __OBJC__
 	@import UIKit;

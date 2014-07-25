@@ -10,13 +10,12 @@
 #import "UserDefaultKeys.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 #if !TARGET_OS_IPHONE
-#include <CoreServices/CoreServices.h>
 #import "PlayerPRO_Player-Swift.h"
+#import "PPSTImporter.h"
 #else
-
+#import "iOS_PlayerPRO_Player-Swift.h"
 #endif
 #import <PlayerPROKit/PlayerPROKit.h>
-#import "PPSTImporter.h"
 
 #define kMUSICLISTKEY @"Music List Key1"
 

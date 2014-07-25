@@ -19,8 +19,8 @@
 #import <PlayerPROKit/PPErrors.h>
 #import <PlayerPROKit/PPFXBusObject.h>
 #import <PlayerPROKit/PPFXSetObject.h>
-#if !TARGET_OS_IPHONE
 #import <PlayerPROKit/PPPatternObject_PcmdHandling.h>
+#if !TARGET_OS_IPHONE
 #import <PlayerPROKit/PPSoundSettingsViewController.h>
 #if defined(ISUSINGPPPLUG)
 #import <PlayerPROKit/PPPluginWindowController.h>
