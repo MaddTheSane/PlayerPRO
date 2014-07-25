@@ -19,28 +19,6 @@
 #define kUnresolvableFile @"Unresolvable files"
 #define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."
 
-@interface PPCurrentlyPlayingIndex : NSObject
-@property NSInteger index;
-@property (strong) NSURL *playbackURL;
-- (void)movePlayingIndexToOtherIndex:(PPCurrentlyPlayingIndex *)othidx;
-@end
-
-@implementation PPCurrentlyPlayingIndex
-@synthesize index;
-@synthesize playbackURL;
-
-- (void)movePlayingIndexToOtherIndex:(PPCurrentlyPlayingIndex *)othidx
-{
-	othidx.index = index;
-	othidx.playbackURL = playbackURL;
-}
-
-- (NSString *)description
-{
-	return [NSString stringWithFormat:@"Index: %ld URL: %@ URL Path: %@", (long)index, playbackURL, [playbackURL path]];
-}
-@end
-
 static void CocoaDebugStr(short line, const char *file, const char *text)
 {
 	NSLog(@"%s:%u error text:%s!", file, line, text);

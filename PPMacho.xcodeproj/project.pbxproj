@@ -246,6 +246,8 @@
 		555776D117EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776D017EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m */; };
 		555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		555C0F8B19822096003B9347 /* PPMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1BD5E120FBE51004FD083 /* PPMusicList.m */; };
+		555C0F8D19829663003B9347 /* PPCurrentlyPlayingIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555C0F8C19829663003B9347 /* PPCurrentlyPlayingIndex.swift */; };
+		555C0F8E1982980C003B9347 /* PPCurrentlyPlayingIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555C0F8C19829663003B9347 /* PPCurrentlyPlayingIndex.swift */; };
 		555C125116378B3500735225 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		555C5FC818445C3600DBD5DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -2062,6 +2064,7 @@
 		555776CC17EBF9000019D008 /* iOS PlayerPRO PlayerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS PlayerPRO PlayerTests-Info.plist"; sourceTree = "<group>"; };
 		555776CE17EBF9000019D008 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		555776D017EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iOS_PlayerPRO_PlayerTests.m; sourceTree = "<group>"; };
+		555C0F8C19829663003B9347 /* PPCurrentlyPlayingIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPCurrentlyPlayingIndex.swift; sourceTree = "<group>"; };
 		555C125016378B3500735225 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject_PPKPrivate.h; sourceTree = "<group>"; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -3901,6 +3904,7 @@
 				55D1BD5E120FBE51004FD083 /* PPMusicList.m */,
 				55F4C3E319763FDD000997BE /* PPMusicListObject.swift */,
 				55CDD0271976F40A00E3DDE1 /* PPMusicList_AppKit.swift */,
+				555C0F8C19829663003B9347 /* PPCurrentlyPlayingIndex.swift */,
 				55F4C3E119763FDB000997BE /* PlayerPRO Player-Bridging-Header.h */,
 				5578C48F17D9E8560057D11B /* AppDelegate.h */,
 				5578C49017D9E8560057D11B /* AppDelegate.m */,
@@ -6240,6 +6244,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				555C0F8E1982980C003B9347 /* PPCurrentlyPlayingIndex.swift in Sources */,
 				550D7996197A20C200F0A8F8 /* PPiSettingsDetailController.m in Sources */,
 				555776B917EBF8FF0019D008 /* PPiMasterViewController.m in Sources */,
 				55771DBF1871482D00AED8DC /* PPTimeFormatter.m in Sources */,
@@ -6298,6 +6303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				555C0F8D19829663003B9347 /* PPCurrentlyPlayingIndex.swift in Sources */,
 				55F4C3E519763FDD000997BE /* PPMusicListObject.swift in Sources */,
 				55E382EC1981509100EC330B /* PPPlugInInfo.swift in Sources */,
 				55CDD0281976F40A00E3DDE1 /* PPMusicList_AppKit.swift in Sources */,
