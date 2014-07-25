@@ -744,7 +744,7 @@
 
 #pragma mark NSCoding protocol
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
 		

@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <AppKit/NSPasteboard.h>
 
-extern NSString * const PPMLDCUTI;
-
 @interface PPMusicListDragClass : NSObject <NSPasteboardReading, NSPasteboardWriting, NSCoding>
 @property (readonly, copy) NSIndexSet *theIndexSet;
 

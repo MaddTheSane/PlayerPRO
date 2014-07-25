@@ -127,7 +127,7 @@
 		550FFAED17CEA5540003A2F3 /* AIFF.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102C10D6C79E00BB619C /* AIFF.c */; };
 		55105C9C13BE638D00902106 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5511F4E6186CF3AD008F6BE1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
-		5511F4E9186CFC63008F6BE1 /* AIFF.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 550FFAEB17CEA4570003A2F3 /* AIFF.plugin */; };
+		5511F4E9186CFC63008F6BE1 /* AIFF.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 550FFAEB17CEA4570003A2F3 /* AIFF.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		551292D9163DD68500C2C639 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		551292E3163DD68500C2C639 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 551292E1163DD68500C2C639 /* InfoPlist.strings */; };
 		551292ED163DD74100C2C639 /* PlayerPROKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 551292E5163DD68500C2C639 /* PlayerPROKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -140,7 +140,7 @@
 		55149C651832EE92009C850B /* embeddedPlugs.h in Headers */ = {isa = PBXBuildFile; fileRef = 550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */; };
 		55151F7A10DEDBDB0054ABC4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5515200E10DEDC9B0054ABC4 /* XI.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105910D6C79E00BB619C /* XI.c */; };
-		5517DAC5180CAD61001413D0 /* ULT.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; };
+		5517DAC5180CAD61001413D0 /* ULT.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		551FEA6510E727AD00EDF2F1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		551FEAD410E727B100EDF2F1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		551FEB7C10E728D400EDF2F1 /* MINS.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E103710D6C79E00BB619C /* MINS.c */; };
@@ -216,7 +216,7 @@
 		5533422410BB6675005208D1 /* IT.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E110BB5368005208D1 /* IT.c */; };
 		5533600411EBC66400525CAF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5533600311EBC66400525CAF /* Localizable.strings */; };
 		553626B817EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */; };
-		5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
+		5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -244,6 +244,7 @@
 		555776D817EBF9D80019D008 /* libiOSPlayerPROCore.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A1031656FAF100A5AECA /* libiOSPlayerPROCore.a */; };
 		555776D917EBF9D80019D008 /* libPlayerPROKit-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55B0F59E17DF0F0500653BCD /* libPlayerPROKit-iOS.a */; };
 		555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
+		555C0F8B19822096003B9347 /* PPMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1BD5E120FBE51004FD083 /* PPMusicList.m */; };
 		555C125116378B3500735225 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		555C5FC818445C3600DBD5DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
@@ -262,11 +263,9 @@
 		55680A1E19045F0A00F7616D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55680A2419045F0A00F7616D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55680A2219045F0A00F7616D /* InfoPlist.strings */; };
 		55680A2719045F0A00F7616D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A2619045F0A00F7616D /* main.m */; };
-		55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */; };
+		55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55680A3A19046D9800F7616D /* PPSTImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A3919046D9800F7616D /* PPSTImporter.m */; };
-		55680A401904865600F7616D /* PPMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1BD5E120FBE51004FD083 /* PPMusicList.m */; };
 		55680A41190486E900F7616D /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
-		55680A42190487B000F7616D /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		55680A45190497B400F7616D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A44190497B400F7616D /* UIKit.framework */; };
 		55680A47190497E400F7616D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A46190497E400F7616D /* CoreGraphics.framework */; };
 		55680A4A190497FC00F7616D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A48190497FB00F7616D /* CoreFoundation.framework */; };
@@ -330,10 +329,10 @@
 		5573AF0817DF8FD400B68127 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 552C716210CDC11400C0E0D4 /* README.rtf */; };
 		5573AF0917DF8FD500B68127 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 552C716210CDC11400C0E0D4 /* README.rtf */; };
 		5574BCEC169634DE00CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
-		5574BCF01696355A00CF3C37 /* DMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341E910BB5FFA005208D1 /* DMF.ppimpexp */; };
-		5574BCF11696355A00CF3C37 /* Revert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E123010D6F3E600BB619C /* Revert.plugin */; };
+		5574BCF01696355A00CF3C37 /* DMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341E910BB5FFA005208D1 /* DMF.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5574BCF11696355A00CF3C37 /* Revert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E123010D6F3E600BB619C /* Revert.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5574BCF9169645FE00CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
-		5574BCFC169649CB00CF3C37 /* Propagate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11FD10D6F3E100BB619C /* Propagate.plugin */; };
+		5574BCFC169649CB00CF3C37 /* Propagate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11FD10D6F3E100BB619C /* Propagate.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5574BCFD16964D1900CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55771DBF1871482D00AED8DC /* PPTimeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55323352167687A200076604 /* PPTimeFormatter.m */; };
 		55771DC11873714800AED8DC /* PPDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55771DC31873714800AED8DC /* PPDocument.xib */; };
@@ -351,21 +350,21 @@
 		5578C49117D9E8560057D11B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C49017D9E8560057D11B /* AppDelegate.m */; };
 		5578C49417D9E8570057D11B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5578C49217D9E8570057D11B /* MainMenu.xib */; };
 		5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
-		5578C49E17D9E8A00057D11B /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
-		5578C4A017D9E8B50057D11B /* MOD.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
-		5578C4A117D9E8B50057D11B /* 669.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
-		5578C4A217D9E8B50057D11B /* AMF.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 553341D310BB5FE0005208D1 /* AMF.ppimpexp */; };
-		5578C4A317D9E8B50057D11B /* DMF.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 553341E910BB5FFA005208D1 /* DMF.ppimpexp */; };
-		5578C4A417D9E8B50057D11B /* IT.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 553341FC10BB600A005208D1 /* IT.ppimpexp */; };
-		5578C4A517D9E8B50057D11B /* MADfg.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */; };
-		5578C4A617D9E8B50057D11B /* MADH.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */; };
-		5578C4A717D9E8B50057D11B /* MADI.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586872D10BF5C4E00FCC24D /* MADI.ppimpexp */; };
-		5578C4A817D9E8B50057D11B /* MED.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586874D10BF5D3700FCC24D /* MED.ppimpexp */; };
-		5578C4A917D9E8B50057D11B /* MTM.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586876210BF5E4D00FCC24D /* MTM.ppimpexp */; };
-		5578C4AA17D9E8B50057D11B /* Okta.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 558687DE10BF620500FCC24D /* Okta.ppimpexp */; };
-		5578C4AB17D9E8B50057D11B /* S3M.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; };
-		5578C4AE17D9E8B50057D11B /* XM.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; };
-		5578C4B017D9E8B50057D11B /* APPL.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
+		5578C49E17D9E8A00057D11B /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C4A017D9E8B50057D11B /* MOD.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C4A117D9E8B50057D11B /* 669.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C4A217D9E8B50057D11B /* AMF.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 553341D310BB5FE0005208D1 /* AMF.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C4A317D9E8B50057D11B /* DMF.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 553341E910BB5FFA005208D1 /* DMF.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C4A417D9E8B50057D11B /* IT.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 553341FC10BB600A005208D1 /* IT.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C4A517D9E8B50057D11B /* MADfg.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C4A617D9E8B50057D11B /* MADH.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C4A717D9E8B50057D11B /* MADI.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586872D10BF5C4E00FCC24D /* MADI.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C4A817D9E8B50057D11B /* MED.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586874D10BF5D3700FCC24D /* MED.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C4A917D9E8B50057D11B /* MTM.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586876210BF5E4D00FCC24D /* MTM.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C4AA17D9E8B50057D11B /* Okta.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 558687DE10BF620500FCC24D /* Okta.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C4AB17D9E8B50057D11B /* S3M.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C4AE17D9E8B50057D11B /* XM.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C4B017D9E8B50057D11B /* APPL.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C4B217DA4AA90057D11B /* PPMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1BD5E120FBE51004FD083 /* PPMusicList.m */; };
 		5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
@@ -385,9 +384,9 @@
 		5578C4DA17DA95C20057D11B /* MiscPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6ED16619E2E005BDE4B /* MiscPrefs.xib */; };
 		5578C4EF17DA97020057D11B /* InstrumentWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5578C4F117DA97020057D11B /* InstrumentWindow.xib */; };
 		5578C4F817DAB2830057D11B /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
-		5578C4F917DAB28A0057D11B /* PlayerPROKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5578C4F917DAB28A0057D11B /* PlayerPROKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C4FC17DB8A2F0057D11B /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
-		5578C4FD17DB8A3B0057D11B /* PlayerPROKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5578C4FD17DB8A3B0057D11B /* PlayerPROKit.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C4FE17DB8A580057D11B /* PPSampleObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */; };
 		5578C4FF17DB8A5C0057D11B /* PPSampleObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5578C50017DB8A640057D11B /* PPInstrumentObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -414,8 +413,8 @@
 		5578C52A17DB94A50057D11B /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55BE998817978BB100D6DECC /* schema.strings */; };
 		5578C52B17DB94A50057D11B /* schema.xml in Resources */ = {isa = PBXBuildFile; fileRef = 55BE999117978BB200D6DECC /* schema.xml */; };
 		5578C53517DB953F0057D11B /* libPlayerPROKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */; };
-		5578C53617DB956D0057D11B /* PPImport Cocoa.mdimporter in Copy Spotlight Importer */ = {isa = PBXBuildFile; fileRef = 5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */; };
-		5578C53717DB957A0057D11B /* PPImport Cocoa.mdimporter in Copy Spotlight */ = {isa = PBXBuildFile; fileRef = 5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */; };
+		5578C53617DB956D0057D11B /* PPImport Cocoa.mdimporter in Copy Spotlight Importer */ = {isa = PBXBuildFile; fileRef = 5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C53717DB957A0057D11B /* PPImport Cocoa.mdimporter in Copy Spotlight */ = {isa = PBXBuildFile; fileRef = 5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */; };
 		5578C54017DBABC50057D11B /* PPDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C53E17DBABBF0057D11B /* PPDocument.m */; };
 		557DE42E10E06BF200177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -463,11 +462,11 @@
 		5582136617E4225800B84F51 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		5582136717E4225A00B84F51 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		558328E718553B0B00DFACE4 /* PPMusicListDragClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 558328E618553B0B00DFACE4 /* PPMusicListDragClass.m */; };
-		5583C5F716D015D70078ACE8 /* Invert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE7FF10E08D8900177B4C /* Invert.plugin */; };
-		5583C5FA16D016700078ACE8 /* Normalize.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE8C810E08DA800177B4C /* Normalize.plugin */; };
-		5583C5FB16D0172F0078ACE8 /* Silence.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE91B10E08DB000177B4C /* Silence.plugin */; };
-		5583C5FC16D017380078ACE8 /* Smooth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE95E10E08DB900177B4C /* Smooth.plugin */; };
-		5583C60316D01DDE0078ACE8 /* Crop.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE62210E0884100177B4C /* Crop.plugin */; };
+		5583C5F716D015D70078ACE8 /* Invert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE7FF10E08D8900177B4C /* Invert.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5583C5FA16D016700078ACE8 /* Normalize.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE8C810E08DA800177B4C /* Normalize.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5583C5FB16D0172F0078ACE8 /* Silence.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE91B10E08DB000177B4C /* Silence.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5583C5FC16D017380078ACE8 /* Smooth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE95E10E08DB900177B4C /* Smooth.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5583C60316D01DDE0078ACE8 /* Crop.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE62210E0884100177B4C /* Crop.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55852E1C18D67CCB0009BF55 /* PPSmallPianoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55852E1B18D67CCB0009BF55 /* PPSmallPianoView.m */; };
 		5586873D10BF5D0900FCC24D /* MADfg.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E310BB5368005208D1 /* MADfg.c */; };
 		5586873E10BF5D2700FCC24D /* MADI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E710BB5368005208D1 /* MADI.c */; };
@@ -514,11 +513,11 @@
 		55ADC3D717D6F390001F27D4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55ADC3DD17D6F43F001F27D4 /* WAV.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105610D6C79E00BB619C /* WAV.c */; };
 		55ADC3DE17D7A51B001F27D4 /* WAVE-Conversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105710D6C79E00BB619C /* WAVE-Conversion.c */; };
-		55ADC3E217D7B484001F27D4 /* Wave.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55ADC3DB17D6F390001F27D4 /* Wave.plugin */; };
+		55ADC3E217D7B484001F27D4 /* Wave.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55ADC3DB17D6F390001F27D4 /* Wave.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55ADC3E817D7E4DE001F27D4 /* MADDriver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; };
 		55ADC3E917D7E4E5001F27D4 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; };
-		55ADC3F117D7F475001F27D4 /* Complex Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55B797DC10D6E6C40073E379 /* Complex Fade.plugin */; };
+		55ADC3F117D7F475001F27D4 /* Complex Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55B797DC10D6E6C40073E379 /* Complex Fade.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55ADC3FA17D7FFAA001F27D4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55ADC3FB17D8004B001F27D4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55ADC3FC17D80052001F27D4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -554,9 +553,9 @@
 		55B23D1E1689314500DCE923 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B23D1F1689314E00DCE923 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B23D201689315500DCE923 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
-		55B23D231689321F00DCE923 /* PAT.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEADA10E727B100EDF2F1 /* PAT.plugin */; };
-		55B23D24168935D300DCE923 /* MINs.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEA6B10E727AD00EDF2F1 /* MINs.plugin */; };
-		55B23D2916893DE300DCE923 /* XI.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55151F8010DEDBDB0054ABC4 /* XI.plugin */; };
+		55B23D231689321F00DCE923 /* PAT.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEADA10E727B100EDF2F1 /* PAT.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55B23D24168935D300DCE923 /* MINs.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEA6B10E727AD00EDF2F1 /* MINs.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55B23D2916893DE300DCE923 /* XI.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55151F8010DEDBDB0054ABC4 /* XI.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55B777A418E779ED001E5104 /* InstrumentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B777A318E77998001E5104 /* InstrumentInfoView.xib */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
 		55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -628,19 +627,19 @@
 		55C9303A1819E68700D9E072 /* CocoaFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C930381819E68700D9E072 /* CocoaFuncs.m */; };
 		55C9303B1819F6EC00D9E072 /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */; };
 		55CB01A711EB82FA0028C6BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CB01A611EB82FA0028C6BB /* main.m */; };
-		55CBFAD211EB77ED0028C6BB /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
-		55CBFAD311EB77ED0028C6BB /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
-		55CBFAD411EB77ED0028C6BB /* AMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341D310BB5FE0005208D1 /* AMF.ppimpexp */; };
-		55CBFAD611EB77ED0028C6BB /* IT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341FC10BB600A005208D1 /* IT.ppimpexp */; };
-		55CBFAD711EB77ED0028C6BB /* MADfg.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */; };
-		55CBFAD811EB77ED0028C6BB /* MADH.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */; };
-		55CBFAD911EB77ED0028C6BB /* MADI.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586872D10BF5C4E00FCC24D /* MADI.ppimpexp */; };
-		55CBFADA11EB77ED0028C6BB /* MED.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586874D10BF5D3700FCC24D /* MED.ppimpexp */; };
-		55CBFADB11EB77ED0028C6BB /* MTM.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586876210BF5E4D00FCC24D /* MTM.ppimpexp */; };
-		55CBFADC11EB77ED0028C6BB /* Okta.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 558687DE10BF620500FCC24D /* Okta.ppimpexp */; };
-		55CBFADD11EB77ED0028C6BB /* S3M.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; };
-		55CBFADE11EB77ED0028C6BB /* ULT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; };
-		55CBFAE011EB77ED0028C6BB /* XM.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; };
+		55CBFAD211EB77ED0028C6BB /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55CBFAD311EB77ED0028C6BB /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55CBFAD411EB77ED0028C6BB /* AMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341D310BB5FE0005208D1 /* AMF.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55CBFAD611EB77ED0028C6BB /* IT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341FC10BB600A005208D1 /* IT.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55CBFAD711EB77ED0028C6BB /* MADfg.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55CBFAD811EB77ED0028C6BB /* MADH.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55CBFAD911EB77ED0028C6BB /* MADI.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586872D10BF5C4E00FCC24D /* MADI.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55CBFADA11EB77ED0028C6BB /* MED.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586874D10BF5D3700FCC24D /* MED.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55CBFADB11EB77ED0028C6BB /* MTM.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586876210BF5E4D00FCC24D /* MTM.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55CBFADC11EB77ED0028C6BB /* Okta.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 558687DE10BF620500FCC24D /* Okta.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55CBFADD11EB77ED0028C6BB /* S3M.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55CBFADE11EB77ED0028C6BB /* ULT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55CBFAE011EB77ED0028C6BB /* XM.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55CBFC7311EB7BD90028C6BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7211EB7BD90028C6BB /* InfoPlist.strings */; };
@@ -652,7 +651,7 @@
 		55D2922118AADB8F00EB7A7D /* PPPatternObject_PcmdHandling.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55D2921E18AADB4600EB7A7D /* PPPatternObject_PcmdHandling.h */; };
 		55D2922218AADBF600EB7A7D /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		55D2922318AADBF600EB7A7D /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
-		55D57E1C18601BBC00192497 /* MIDI.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppimpexp */; };
+		55D57E1C18601BBC00192497 /* MIDI.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55DE87BC187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87BB187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h */; };
 		55DE87BD187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87BB187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h */; };
 		55DE87BF187E051F00C36533 /* PPPatternObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87BE187E051100C36533 /* PPPatternObject_PPKPrivate.h */; };
@@ -678,17 +677,17 @@
 		55E8998710F18175004EB52B /* QuicktimeGeneric.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E104C10D6C79E00BB619C /* QuicktimeGeneric.c */; };
 		55E8999110F18AF1004EB52B /* WAVE-Conversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105710D6C79E00BB619C /* WAVE-Conversion.c */; };
 		55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */; };
-		55EA019C16AF1D3900D6AEA0 /* Backwards.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE5DF10E0882800177B4C /* Backwards.plugin */; };
+		55EA019C16AF1D3900D6AEA0 /* Backwards.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE5DF10E0882800177B4C /* Backwards.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */; };
-		55EA01A216AF368F00D6AEA0 /* CrossFade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE66310E0885C00177B4C /* CrossFade.plugin */; };
+		55EA01A216AF368F00D6AEA0 /* CrossFade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE66310E0885C00177B4C /* CrossFade.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55ECB33E180A280800497C7E /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55ECB340180A280800497C7E /* Main_iPad.storyboard */; };
 		55ECB341180A281400497C7E /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55ECB343180A281400497C7E /* Main_iPhone.storyboard */; };
-		55EE2D8817E12F9300FED42A /* Amplitude.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE43410E06BF200177B4C /* Amplitude.plugin */; };
-		55EE2D8917E12F9300FED42A /* Depth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6A410E0886400177B4C /* Depth.plugin */; };
-		55EE2D8A17E12F9300FED42A /* Echo.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6E510E0886A00177B4C /* Echo.plugin */; };
-		55EE2D8B17E12F9300FED42A /* Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE7BC10E08D8400177B4C /* Fade.plugin */; };
-		55EE2D8C17E12F9300FED42A /* Length.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE84210E08D9E00177B4C /* Length.plugin */; };
-		55EE2D8E17E12F9300FED42A /* Sampling Rate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE90B10E08DAC00177B4C /* Sampling Rate.plugin */; };
+		55EE2D8817E12F9300FED42A /* Amplitude.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE43410E06BF200177B4C /* Amplitude.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55EE2D8917E12F9300FED42A /* Depth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6A410E0886400177B4C /* Depth.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55EE2D8A17E12F9300FED42A /* Echo.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6E510E0886A00177B4C /* Echo.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55EE2D8B17E12F9300FED42A /* Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE7BC10E08D8400177B4C /* Fade.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55EE2D8C17E12F9300FED42A /* Length.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE84210E08D9E00177B4C /* Length.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55EE2D8E17E12F9300FED42A /* Sampling Rate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE90B10E08DAC00177B4C /* Sampling Rate.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55F013E5187F5AB6002488D5 /* PPObjectProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55F013E6187F5AB6002488D5 /* PPObjectProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; };
 		55F013E7187F5D5D002488D5 /* PPObjectProtocol.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; };
@@ -699,7 +698,7 @@
 		55F013ED1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
 		55F41A3717EF96B000605DF8 /* PPExportObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F41A3617EF96AF00605DF8 /* PPExportObject.m */; };
 		55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
-		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; };
+		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 /* End PBXBuildFile section */
 
@@ -1974,6 +1973,8 @@
 		553341EA10BB5FFA005208D1 /* DMF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DMF-Info.plist"; sourceTree = SOURCE_ROOT; };
 		553341FC10BB600A005208D1 /* IT.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IT.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		553341FD10BB600A005208D1 /* IT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IT-Info.plist"; sourceTree = SOURCE_ROOT; };
+		5535A652197F2D1D00D36CC9 /* PPCore-private.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = "PPCore-private.modulemap"; sourceTree = "<group>"; };
+		5535A653197F2D1D00D36CC9 /* PPCore.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = PPCore.modulemap; sourceTree = "<group>"; };
 		553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Universal.xcconfig; sourceTree = "<group>"; };
 		553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PPCPlugs.xcconfig; sourceTree = "<group>"; };
 		553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Cocoa Editor Images.xcassets"; path = "../../Cocoa/Cocoa Editor Images.xcassets"; sourceTree = "<group>"; };
@@ -3454,6 +3455,8 @@
 		55268AA91877EECF00A82269 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5535A653197F2D1D00D36CC9 /* PPCore.modulemap */,
+				5535A652197F2D1D00D36CC9 /* PPCore-private.modulemap */,
 				5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */,
 				55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */,
 				55268AAA1877EF0000A82269 /* InfoPlist.strings */,
@@ -6118,6 +6121,7 @@
 				55771DBF1871482D00AED8DC /* PPTimeFormatter.m in Sources */,
 				555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */,
 				555776B017EBF8FE0019D008 /* PPiAppDelegate.m in Sources */,
+				555C0F8B19822096003B9347 /* PPMusicList.m in Sources */,
 				555776AC17EBF8FE0019D008 /* main.m in Sources */,
 				555776BC17EBF8FF0019D008 /* PPiDetailViewController.m in Sources */,
 			);
@@ -6135,8 +6139,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55680A42190487B000F7616D /* UserDefaultKeys.m in Sources */,
-				55680A401904865600F7616D /* PPMusicList.m in Sources */,
 				55680A3A19046D9800F7616D /* PPSTImporter.m in Sources */,
 				55680A2719045F0A00F7616D /* main.m in Sources */,
 			);
@@ -7628,6 +7630,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -7649,6 +7652,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
@@ -8080,7 +8084,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COPY_PHASE_STRIP = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "updateInfoPlist/updateInfoPlist-Prefix.pch";
@@ -8097,7 +8100,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
 				COPY_PHASE_STRIP = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "updateInfoPlist/updateInfoPlist-Prefix.pch";
@@ -8116,7 +8118,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8132,6 +8133,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "iOS PlayerPRO Player/iOS Player-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -8144,7 +8146,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -8161,6 +8162,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "iOS PlayerPRO Player/iOS Player-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -8219,6 +8222,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				EXPORTED_SYMBOLS_FILE = StcfImporter/STCFExport.exp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8240,6 +8244,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				EXPORTED_SYMBOLS_FILE = StcfImporter/STCFExport.exp;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -8261,7 +8266,6 @@
 		5569FF521024B44400DDDF39 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -8274,7 +8278,9 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COMPRESS_PNG_FILES = YES;
 				DEAD_CODE_STRIPPING = YES;
@@ -8301,6 +8307,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
+				WARNING_CFLAGS = "-Wno-incomplete-umbrella";
 			};
 			name = Release;
 		};
@@ -8362,6 +8369,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
 				FRAMEWORK_VERSION = B;
@@ -8374,6 +8382,8 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "@rpath";
+				MODULEMAP_FILE = MADDriver.source/Resources/PPCore.modulemap;
+				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = PlayerPROCore;
 				SDKROOT = macosx;
@@ -8386,6 +8396,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
 				FRAMEWORK_VERSION = B;
@@ -8398,6 +8409,8 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "@rpath";
+				MODULEMAP_FILE = MADDriver.source/Resources/PPCore.modulemap;
+				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = PlayerPROCore;
 				SDKROOT = macosx;
@@ -8409,6 +8422,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -8416,6 +8430,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO Player/PlayerPRO Player-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = Shared;
 				WRAPPER_EXTENSION = app;
 			};
@@ -8426,6 +8441,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -8434,6 +8450,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO Player/PlayerPRO Player-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = Shared;
 				WRAPPER_EXTENSION = app;
 			};
@@ -8443,6 +8461,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
@@ -8462,6 +8481,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
@@ -9264,7 +9284,6 @@
 		559344191002F01700F95B82 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -9277,7 +9296,9 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_NS_ASSERTIONS = YES;
@@ -9307,6 +9328,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
+				WARNING_CFLAGS = "-Wno-incomplete-umbrella";
 			};
 			name = Debug;
 		};
@@ -9489,6 +9511,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -9512,6 +9535,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
 				DEAD_CODE_STRIPPING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -9536,6 +9560,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = EditorIcon;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9543,9 +9568,10 @@
 					"PLAYERPRO6=1",
 				);
 				INFOPLIST_FILE = "Cocoa-Info.plistvers.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";
 				USER_HEADER_SEARCH_PATHS = Shared;
 			};
 			name = Release;
@@ -9555,6 +9581,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = EditorIcon;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9562,9 +9589,11 @@
 					"PLAYERPRO6=1",
 				);
 				INFOPLIST_FILE = "Cocoa-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = Shared;
 			};
 			name = Debug;

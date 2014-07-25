@@ -7,8 +7,7 @@
 //
 
 #import "PPMusicListDragClass.h"
-
-NSString * const PPMLDCUTI = @"net.sourceforge.playerpro.PlayerPRO-Player.playerlistdragtype";
+#import "UserDefaultKeys.h"
 
 @interface PPMusicListDragClass ()
 @property (readwrite, copy) NSIndexSet *theIndexSet;

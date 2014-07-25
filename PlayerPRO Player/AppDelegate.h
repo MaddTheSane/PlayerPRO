@@ -13,7 +13,6 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 @class PPInstrumentWindowController;
-@class PPCurrentlyPlayingIndex;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate, NSTableViewDataSource>
 {

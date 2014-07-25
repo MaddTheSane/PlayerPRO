@@ -1,0 +1,27 @@
+framework module PlayerPROCore {
+	umbrella header "PlayerPROCore.h"
+	module PPDefs {
+		header "PPDefs.h"
+		export *
+	}
+
+	module PPPlug {
+		use PPDefs
+		header "PPPlug.h"
+		export *
+	}
+	
+	module FileUtils {
+		header "FileUtils.h"
+		export *
+	}
+	
+	module MADDriver {
+		use PPDefs
+		private header "MADDriver.h"
+		export *
+	}
+	
+	export *
+	module * { export * }
+}

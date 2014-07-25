@@ -517,11 +517,11 @@ MADErr CheckMADFile(char* name)
 	return err;
 }
 
-OSErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
+MADErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 {
 	UNFILE		refNum;
 	PPInfoRec	InfoRec;
-	OSErr		iErr = MADNoErr;
+	MADErr		iErr = MADNoErr;
 	
 	strcpy(type, "!!!!");
 	

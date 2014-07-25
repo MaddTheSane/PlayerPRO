@@ -99,7 +99,7 @@
 	return [self initWithPlugInCPath:[path fileSystemRepresentation]];
 }
 
-- (id)initWithPlugInURL:(NSURL *)URL
+- (instancetype)initWithPlugInURL:(NSURL *)URL
 {
 	return [self initWithPlugInPath:[URL path]];
 }
