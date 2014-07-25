@@ -13,7 +13,6 @@
 #import "OpenPanelViewController.h"
 #import "PPInstrumentPlugHandler.h"
 #import "PPInstrumentImporterObject.h"
-#import "PPPlugInInfo.h"
 #import "PPPlugInInfoController.h"
 #import "PPDigitalPlugHandler.h"
 #import "PPDigitalPlugInObject.h"
@@ -22,6 +21,7 @@
 #import "PPDocument.h"
 #import "PPInstrumentViewController.h"
 #import <PlayerPROKit/PlayerPROKit.h>
+#import "PlayerPRO_6-Swift.h"
 
 #define kUnresolvableFile @"Unresolvable files"
 #define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."
