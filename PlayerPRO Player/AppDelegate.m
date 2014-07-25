@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "PPPreferences.h"
+#import "PPMusicList.h"
 #import "UserDefaultKeys.h"
 #import "PPPlugInInfoController.h"
 #import "OpenPanelViewController.h"
