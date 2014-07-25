@@ -32,8 +32,8 @@
  *				If you need more functionality, use another API instead.
  */
 
-#ifndef __MADI__
-#include "MAD.h"
+#ifndef __PPDEFS_H
+#include "PPDefs.h"
 #endif
 
 #ifdef _MAC_H

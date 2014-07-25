@@ -53,6 +53,113 @@
 #endif
 #endif
 
+#ifdef __GNUC__
+#define HAS_LONG_LONG 1
+#define HAS_LONG_DOUBLE 1
+#endif
+
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#define PPEXPORT extern
+#ifdef __cplusplus
+#define EXP extern "C"
+#else
+#define EXP extern
+#endif
+#else
+#define PPEXPORT extern __attribute__((visibility("default")))
+#ifdef __cplusplus
+#define EXP extern "C" __attribute__((visibility("default")))
+#else
+#define EXP PPEXPORT
+#endif
+#endif
+#endif
+
+#ifdef _MSC_VER
+#define HAS_LONG_LONG 1
+//MSVC's long double datatype is the same size as a regular double
+#undef HAS_LONG_DOUBLE
+#endif
+
+#if TARGET_OS_IPHONE
+//iOS also has long double the same size as double
+#undef HAS_LONG_DOUBLE
+#endif
+
+#if !defined(__BIG_ENDIAN__) && defined(WORDS_BIGENDIAN)
+#define __BIG_ENDIAN__ 1
+#endif
+
+//////////////////////////////////////////////////////////////////////
+#if defined(__APPLE__)			// MACINTOSH
+#define _MAC_H
+
+//////////////////////////////////////////////////////////////////////
+#else 			// WIN32 - 95/NT
+
+#ifndef DEPRECATED_ATTRIBUTE
+#if defined(__GNUC__) && ((__GNUC__ >= 4) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 1)))
+#define DEPRECATED_ATTRIBUTE __attribute__((deprecated))
+#else
+#define DEPRECATED_ATTRIBUTE
+#endif
+#endif
+
+#ifdef LINUX
+#define __UNIX__ 1
+#endif
+
+#endif
+
+#ifdef WIN32
+#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#define PPEXPORT extern
+#ifdef __cplusplus
+#define EXP extern "C"
+#else
+#define EXP extern
+#endif
+#else
+#ifdef __cplusplus
+#define EXP extern "C" __declspec(dllexport)
+#else
+#define EXP extern __declspec(dllexport)
+#endif
+#ifdef BUILDINGPPRO
+#define PPEXPORT extern __declspec(dllexport)
+#else
+#define PPEXPORT extern __declspec(dllimport)
+#ifdef _MSC_VER
+#pragma comment(lib, "PlayerPROCore.lib")
+#endif
+#endif
+#endif
+#endif
+
+//Final checks
+#ifndef EXP
+#define PPEXPORT extern
+#ifdef __cplusplus
+#define EXP extern "C"
+#else
+#define EXP PPEXPORT
+#endif
+#endif
+
+#if !defined(_MAC_H)
+
+#ifndef TRUE
+#define TRUE 1
+#endif
+
+#ifndef FALSE
+#define FALSE 0
+#endif
+
+#endif
+
+
 /********************						***********************/
 /*** 			  		  Error messages 						***/
 /********************						***********************/
