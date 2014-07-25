@@ -6060,6 +6060,7 @@
 				"$(SRCROOT)/Cocoa-Info.plist",
 				"$(SRCROOT)/version.sh",
 				"$(SRCROOT)/iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plist",
+				"$(SRCROOT)/.git/HEAD",
 			);
 			outputPaths = (
 				"PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist",
