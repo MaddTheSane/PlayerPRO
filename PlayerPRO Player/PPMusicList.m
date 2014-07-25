@@ -295,7 +295,14 @@ static inline NSURL *PPHomeURL()
 
 - (BOOL)loadMusicListFromData:(NSData *)theDat
 {
-	PPMusicList *preList = [NSKeyedUnarchiver unarchiveObjectWithData:theDat];
+	PPMusicList *preList;
+	@try {
+		preList = [NSKeyedUnarchiver unarchiveObjectWithData:theDat];
+	}
+	@catch (NSException *exception) {
+		return NO;
+	}
+	
 	if (!preList)
 		return NO;
 	
