@@ -10,7 +10,7 @@ import Cocoa
 
 private let UTIArray = [PPMLDCUTI];
 
-class PPMusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSCoding {
+class PPMusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
 	private(set) var theIndexSet: NSIndexSet
 	init(indexSet: NSIndexSet!) {
 		theIndexSet = indexSet
@@ -57,6 +57,9 @@ class PPMusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, 
 		}
 	}
 
+	class func supportsSecureCoding() -> Bool {
+		return true
+	}
 	
 	func encodeWithCoder(aCoder: NSCoder) {
 		aCoder.encodeObject(theIndexSet, forKey: PPMLDCUTI)
