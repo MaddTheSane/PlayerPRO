@@ -167,7 +167,13 @@ static inline NSURL *PPHomeURL()
 
 - (BOOL)loadMusicListFromData:(NSData *)theDat
 {
-	PPMusicList *preList = [NSKeyedUnarchiver unarchiveObjectWithData:theDat];
+	PPMusicList *preList;
+	@try {
+		preList = [NSKeyedUnarchiver unarchiveObjectWithData:theDat];
+	}
+	@catch (NSException *exception) {
+		return NO;
+	}
 	if (!preList)
 		return NO;
 	
@@ -178,7 +184,6 @@ static inline NSURL *PPHomeURL()
 }
 
 #if !TARGET_OS_IPHONE
-
 - (void)beginLoadingOfMusicListAtURL:(NSURL *)toOpen completionHandle:(void (^)(NSError *theErr))theHandle
 {
 	NSXPCConnection *conn = [[NSXPCConnection alloc] initWithServiceName:@"net.sourceforge.playerpro.StcfImporter"];
@@ -213,13 +218,11 @@ static inline NSURL *PPHomeURL()
 					
 					theHandle(nil);
 				}
-				
-				[conn invalidate];
 			}
+			[conn invalidate];
 		}];
 	}];
 }
-
 #endif
 
 - (BOOL)loadMusicListAtURL:(NSURL *)fromURL

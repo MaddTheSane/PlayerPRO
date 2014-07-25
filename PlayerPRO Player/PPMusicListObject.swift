@@ -8,7 +8,7 @@
 
 import Foundation
 
-let kURLKey = "URLKey";
+private let kMusicListURLKey = "URLKey";
 
 class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
 	private(set) var musicURL: NSURL! = nil;
@@ -54,6 +54,12 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
 
 		}
 		super.init();
+	}
+	
+	override var hash: Int {
+	get {
+		return musicURL.filePathURL.path.hash
+	}
 	}
 	
 	override func isEqual(object: AnyObject!) -> Bool {
@@ -105,10 +111,10 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
 	}
 	
 	func encodeWithCoder(aCoder: NSCoder!) {
-		aCoder.encodeObject(musicURL, forKey: kURLKey)
+		aCoder.encodeObject(musicURL, forKey: kMusicListURLKey)
 	}
 	
 	convenience init(coder aDecoder: NSCoder!) {
-		self.init(URL:aDecoder.decodeObjectForKey(kURLKey) as NSURL);
+		self.init(URL:aDecoder.decodeObjectForKey(kMusicListURLKey) as NSURL);
 	}
 }

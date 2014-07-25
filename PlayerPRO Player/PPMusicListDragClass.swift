@@ -8,8 +8,6 @@
 
 import Cocoa
 
-private let PPMLDCUTIArray = [PPMLDCUTI];
-
 class PPMusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
 	private(set) var theIndexSet: NSIndexSet
 	init(indexSet: NSIndexSet!) {
@@ -19,11 +17,11 @@ class PPMusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, 
 	}
 	
 	class func readableTypesForPasteboard(pasteboard: NSPasteboard!) -> [AnyObject]! {
-		return PPMLDCUTIArray
+		return [PPMLDCUTI]
 	}
 	
 	func writableTypesForPasteboard(pasteboard: NSPasteboard!) -> [AnyObject]! {
-		return PPMLDCUTIArray
+		return [PPMLDCUTI]
 	}
 	
 	class func readingOptionsForType(type: String!, pasteboard: NSPasteboard!) -> NSPasteboardReadingOptions {
@@ -42,7 +40,7 @@ class PPMusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, 
 	
 	convenience init(pasteboardPropertyList propertyList: AnyObject!, ofType type: String!) {
 		if (type == PPMLDCUTI) {
-			var unArchive = NSUnarchiver(forReadingWithData: propertyList as NSData)
+			var unArchive = NSKeyedUnarchiver(forReadingWithData: propertyList as NSData)
 			self.init(indexSet:unArchive.decodeObjectForKey(PPMLDCUTI) as NSIndexSet)
 		} else {
 			self.init()
