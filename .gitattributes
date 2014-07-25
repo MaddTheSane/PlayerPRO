@@ -2,3 +2,5 @@
 *.pdf	-text
 *       text=auto
 Examples/PPPlay/Read.TXT text=crlf
+*.m diff=objc
+*.h diff=objc
