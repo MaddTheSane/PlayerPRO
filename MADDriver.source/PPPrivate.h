@@ -156,8 +156,6 @@ void	MInitImportPlug(MADLibrary *inMADDriver, const char*);
 void	CloseImportPlug(MADLibrary *inMADDriver);
 MADErr	CheckMADFile(char *AlienFile);
 
-PPEXPORT void ConvertInstrumentIn(MADByte *tempPtr, size_t sSize);
-
 #if defined _MAC_H && !TARGET_OS_IPHONE
 void SetOSType(CFURLRef, OSType);
 #endif

@@ -276,7 +276,7 @@ static void AnalyseSignatureMOD(size_t EOFo, uint32_t temp, short *maxInstru, in
 				int 		PatMax = 0;
 				MODDef		*MODInt;
 				
-				MODInt = (MODDef*) ((size_t)aMOD - 0x1E0);
+				MODInt = (MODDef*) ((uintptr_t)aMOD - 0x1E0);
 				
 				for (i = 0; i < 128; i++) {
 					if (MODInt->oPointers[i] < 0)
@@ -800,7 +800,7 @@ char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSiz
 				{
 					Convert16to8(destPtr,
 								 destPtr,
-								 (size_t) (theMOD->fid[i].numWords) * 2);
+								 (theMOD->fid[i].numWords) * 2);
 					
 					theMOD->fid[i].loopWord /=2;
 					theMOD->fid[i].loopWords /=2;

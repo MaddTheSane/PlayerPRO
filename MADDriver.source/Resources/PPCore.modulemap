@@ -12,6 +12,7 @@ framework module PlayerPROCore {
 	}
 	
 	module FileUtils {
+		use PPDefs
 		header "FileUtils.h"
 		export *
 	}

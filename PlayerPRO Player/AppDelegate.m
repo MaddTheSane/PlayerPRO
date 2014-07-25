@@ -155,7 +155,7 @@ static NSInteger selMusFromList = -1;
 
 - (void)MADDriverWithPreferences
 {
-	Boolean madWasReading = false;
+	BOOL madWasReading = NO;
 	long fullTime = 0, curTime = 0;
 	OSErr returnerr = MADNoErr;
 	if (madDriver) {

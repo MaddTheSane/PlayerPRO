@@ -765,7 +765,7 @@ static char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *P
 		sData	*curData = theMAD->sample[i*MAXSAMPLE + 0];
 		
 		if (theMAD->fid[i].numSamples > 0) {
-			destPtr = (char*) ((size_t) theMOD + (size_t) OffSetToSample + (size_t) InstruSize);
+			destPtr = (char*) ((uintptr_t) theMOD + OffSetToSample + InstruSize);
 			
 			if (curData->c2spd > 8757 || curData->c2spd < 7895) {
 				ConvertSampleC4SPD(theInstrument[i], curData->size, curData->amp, curData->c2spd, destPtr, 8363);

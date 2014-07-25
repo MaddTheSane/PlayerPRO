@@ -35,8 +35,11 @@
 /* Class = "NSTextFieldCell"; title = "Bits:"; ObjectID = "44"; */
 "44.title" = "Bits:";
 
-/* Class = "NSTextFieldCell"; title = "Mode:"; ObjectID = "46"; */
-"46.title" = "Mode:";
+/* Class = "NSTextField"; ibShadowedToolTip = "Loop type"; ObjectID = "45"; */
+"45.ibShadowedToolTip" = "Loop type";
+
+/* Class = "NSTextFieldCell"; title = "Loop:"; ObjectID = "46"; */
+"46.title" = "Loop:";
 
 /* Class = "NSTextFieldCell"; placeholderString = "No Size"; ObjectID = "50"; */
 "50.placeholderString" = "No Size";

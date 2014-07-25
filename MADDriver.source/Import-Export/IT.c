@@ -614,6 +614,7 @@ void ConvertMADEffect(MADByte Cmd, MADByte Arg, MADByte *B0, MADByte *B1)
 
 static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
+	size_t	temp = 0;
 	int		i, x, z, channel = 0, Row;
 	char	*MaxPtr;
 	char	*theInstrument[256];
@@ -837,6 +838,7 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 		short minSamp;
 		
 		for (i = 0; i < ITinfo.insNum; i++) {
+					size_t temp = 0;
 			InstrData *curIns	= &theMAD->fid[i];
 			
 			curIns->type		= 0;
@@ -953,7 +955,6 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 									err = DecompressSample(curData->amp, theInstrument[prevSamp], curData->size, curData->data);
 									
 									if (err) {
-										size_t temp;
 										
 										for (temp = 0; temp < curData->size; temp++)
 											*(curData->data + temp) = 0;
@@ -962,7 +963,6 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 									memcpy(curData->data, theInstrument[prevSamp], curData->size);
 								
 								if (!(ITinfo.sampdata[prevSamp].Convert & 1) && curData->amp == 8) {
-									size_t temp;
 									
 									for (temp = 0; temp < curData->size; temp++)
 										*(curData->data + temp) -= 0x80;
@@ -970,7 +970,6 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 								
 								if (curData->amp == 16 && !(ITinfo.sampdata[prevSamp].Flag & 8)) {
 									unsigned short *tempShort = (unsigned short*)curData->data;
-									size_t temp;
 									
 									for (temp = 0; temp < curData->size / 2; temp++) {
 										PPLE16(&((tempShort[temp])));
@@ -1081,7 +1080,6 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 						err = DecompressSample(curData->amp, theInstrument[i], curData->size, curData->data);
 						
 						if (err) {
-							size_t temp;
 							
 							for (temp = 0; temp < curData->size; temp++)
 								*(curData->data + temp) = 0;
@@ -1090,17 +1088,13 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 						memcpy(curData->data, theInstrument[i], curData->size);
 					
 #if 0
-					if (!(ITinfo.sampdata[i].Convert & 1) && curData->amp == 8)
-					{
-						long temp;
+					if (!(ITinfo.sampdata[i].Convert & 1) && curData->amp == 8) {
 						
 						for (temp = 0; temp < curData->size; temp++) *(curData->data + temp) -= 0x80;
 					}
 					
-					if (curData->amp == 16)
-					{
-						unsigned short 	*tempShort = (unsigned short*) curData->data;
-						long 						temp;
+					if (curData->amp == 16) {
+						unsigned short *tempShort = (unsigned short*) curData->data;
 						
 						for (temp = 0; temp < curData->size/2; temp++)
 						{
@@ -1120,7 +1114,6 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 					
 					if (curData->amp == 16 && !(ITinfo.sampdata[i].Flag & 8)) {
 						unsigned short 	*tempShort = (unsigned short*)curData->data;
-						int				temp;
 						
 						for (temp = 0; temp < curData->size/2; temp++) {
 							PPLE16(&((tempShort[temp])));

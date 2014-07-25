@@ -60,7 +60,7 @@ static const unsigned int NOFINETUNE = 8363;
 /*** 					   EFFECTS ID							***/
 /********************						***********************/
 
-typedef MADENUM(int, MADEffectsID) {
+typedef MADENUM(int, MADEffectID) {
 	arpeggioE 		= 0,	//	0x00
 	downslideE 		= 1,	//	0x01
 	upslideE 		= 2,	//	0x02
@@ -98,8 +98,8 @@ typedef struct Channel
 	
 	int		amp;				// Sample amplitude: 8 or 16 bits
 	
-	size_t	loopBeg;			// Loop Beginning
-	size_t	loopSize;			// Loop Size
+	uintptr_t	loopBeg;		// Loop Beginning
+	size_t		loopSize;		// Loop Size
 	
 	int		ins;				// Current Instrument ID
 	int		insOld;				// Previous Instrument ID played on this channel
@@ -117,9 +117,9 @@ typedef struct Channel
 	int		vol;				// Channel vol (0 to 64)
 	int		pann;				// Channel pan (0 to 64)
 	
-	MADEffectsID	cmd;		// Command
-	MADByte			arg;		// Argument of command
-	MADByte			volcmd;		// Volume Command
+	MADEffectID	cmd;			// Command
+	MADByte		arg;			// Argument of command
+	MADByte		volcmd;			// Volume Command
 	
 	int		arp[MAX_ARP];		// Used for arpeggio command
 	int		arpindex;			// Used for arpeggio command

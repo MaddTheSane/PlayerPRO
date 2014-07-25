@@ -32,6 +32,10 @@
  *				If you need more functionality, use another API instead.
  */
 
+#ifndef __PPDEFS_H
+#include "PPDefs.h"
+#endif
+
 #ifdef _MAC_H
 #include <CoreFoundation/CFByteOrder.h>
 #endif
@@ -64,7 +68,7 @@ PPEXPORT UNFILE	iFileOpen(const char *name) DEPRECATED_ATTRIBUTE;
  * @result		an UNFILE that can be read from
  * @param		name
  *					The location of the file to read
- * @discussion	The file location can be either relative or absolute to the current directory.
+ * @discussion	The file location can be either relative to the current directory or absolute.
  */
 PPEXPORT UNFILE	iFileOpenRead(const char *name);
 
@@ -74,7 +78,7 @@ PPEXPORT UNFILE	iFileOpenRead(const char *name);
  * @result		an UNFILE that can be written to
  * @param		name
  *					The location of the file to write
- * @discussion	The file location can be either relative or absolute to the current directory.
+ * @discussion	The file location can be either relative to the current directory or absolute.
  */
 PPEXPORT UNFILE	iFileOpenWrite(const char *name);
 

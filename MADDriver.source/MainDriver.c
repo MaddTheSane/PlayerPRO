@@ -1801,15 +1801,15 @@ static inline void ByteSwapPatHeader(PatHeader *toSwap)
 
 MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFReadStreamRef MADReadStream, char* MADPtr)
 {
-	short 					i, x;
-	size_t 					inOutCount, OffSetToSample = 0;
-	MADErr					theErr = MADNoErr;
-	PatHeader				tempPatHeader;
-	PatData*				tempPat;
-	MADMusic 				*MDriver;
+	short		i, x;
+	size_t		inOutCount, OffSetToSample = 0;
+	MADErr		theErr = MADNoErr;
+	PatHeader	tempPatHeader;
+	PatData*	tempPat;
+	MADMusic	*MDriver;
 	
 #ifdef _MAC_H
-	CFIndex					bytesRead = 0;
+	CFIndex		bytesRead = 0;
 	
 	if (InPutType == MADCFReadStreamType) {
 		CFStreamStatus theStat;
