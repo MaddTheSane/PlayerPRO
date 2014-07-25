@@ -6,9 +6,11 @@
 //
 //
 
+@import CoreServices.CarbonCore;
 #import "PPSTImporter.h"
 #import <PlayerPROKit/PPErrors.h>
-#import <PlayerPROCore/FileUtils.h>
+#include <PlayerPROCore/MAD.h>
+#include <PlayerPROCore/FileUtils.h>
 
 static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 {

@@ -173,6 +173,7 @@ static inline NSURL *PPHomeURL()
 	@catch (NSException *exception) {
 		return NO;
 	}
+	
 	if (!preList)
 		return NO;
 	
