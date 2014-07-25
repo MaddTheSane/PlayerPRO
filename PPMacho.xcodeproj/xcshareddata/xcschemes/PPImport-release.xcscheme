@@ -49,15 +49,6 @@
       debugDocumentVersioning = "YES"
       debugXPCServices = "NO"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "55BE997717978AEF00D6DECC"
-            BuildableName = "PlayerPROImporter.mdimporter"
-            BlueprintName = "PPImport"
-            ReferencedContainer = "container:PPMacho.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

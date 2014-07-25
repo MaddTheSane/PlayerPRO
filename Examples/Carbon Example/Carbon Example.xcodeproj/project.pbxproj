@@ -12,8 +12,8 @@
 		5526AB86188C95B9008D0C14 /* Example.c in Sources */ = {isa = PBXBuildFile; fileRef = 5526AB85188C95B9008D0C14 /* Example.c */; };
 		5526ABC8188C9673008D0C14 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5526ABC7188C9673008D0C14 /* Carbon.framework */; };
 		5570EA0B12A4C25400167E1A /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5570E9B412A4C24900167E1A /* PlayerPROCore.framework */; };
-		558678B41659A97000BCFB70 /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5570E9B412A4C24900167E1A /* PlayerPROCore.framework */; };
-		55A4928A162F6EEC003EBF4A /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9B612A4C24900167E1A /* MOD.ppimpexp */; };
+		558678B41659A97000BCFB70 /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5570E9B412A4C24900167E1A /* PlayerPROCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55A4928A162F6EEC003EBF4A /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5570E9B612A4C24900167E1A /* MOD.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -569,11 +569,11 @@
 				5526AB77188C955D008D0C14 /* PPQuickView.qlgenerator */,
 				559696F5194E82050068C5AC /* net.sourceforge.playerpro.StcfImporter.xpc */,
 				5570E9B412A4C24900167E1A /* PlayerPROCore.framework */,
+				558678A71659A7DD00BCFB70 /* PlayerPROCore.framework */,
 				5598692916432693008C55FC /* PlayerPROKit.framework */,
+				5526AB7B188C955D008D0C14 /* PlayerPROKit.framework */,
 				550FFADE17CD341A0003A2F3 /* libPlayerPROCompact.a */,
-				558678A71659A7DD00BCFB70 /* libiOSPlayerPROCore.a */,
 				5526AB79188C955D008D0C14 /* libPlayerPROKit.a */,
-				5526AB7B188C955D008D0C14 /* libPlayerPROKit-iOS.a */,
 				5570E9B612A4C24900167E1A /* MOD.ppimpexp */,
 				5570E9B812A4C24900167E1A /* 669.ppimpexp */,
 				5570E9BA12A4C24900167E1A /* AMF.ppimpexp */,
@@ -653,7 +653,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Carbon Example" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -738,10 +738,10 @@
 			remoteRef = 5526AB78188C955D008D0C14 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		5526AB7B188C955D008D0C14 /* libPlayerPROKit-iOS.a */ = {
+		5526AB7B188C955D008D0C14 /* PlayerPROKit.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libPlayerPROKit-iOS.a";
+			fileType = wrapper.framework;
+			path = PlayerPROKit.framework;
 			remoteRef = 5526AB7A188C955D008D0C14 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1067,10 +1067,10 @@
 			remoteRef = 5570EA0712A4C24900167E1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		558678A71659A7DD00BCFB70 /* libiOSPlayerPROCore.a */ = {
+		558678A71659A7DD00BCFB70 /* PlayerPROCore.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libiOSPlayerPROCore.a;
+			fileType = wrapper.framework;
+			path = PlayerPROCore.framework;
 			remoteRef = 558678A61659A7DD00BCFB70 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
