@@ -121,8 +121,6 @@
 		550D004F18CB808600FD0F17 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		550D005318CB80A000FD0F17 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		550D005418CB80A500FD0F17 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
-		550D798B1979DD2600F0A8F8 /* ClassicalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550D798A1979DD2600F0A8F8 /* ClassicalViewController.swift */; };
-		550D798D1979DD5900F0A8F8 /* WaveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550D798C1979DD5900F0A8F8 /* WaveViewController.swift */; };
 		550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */; };
 		550FFAE617CEA4570003A2F3 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		550FFAE717CEA4570003A2F3 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -218,7 +216,6 @@
 		5533422410BB6675005208D1 /* IT.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E110BB5368005208D1 /* IT.c */; };
 		5533600411EBC66400525CAF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5533600311EBC66400525CAF /* Localizable.strings */; };
 		553626B817EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */; };
-		5539D8911978B90E005A1569 /* DigitalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5539D8901978B90E005A1569 /* DigitalViewController.swift */; };
 		5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
@@ -1776,8 +1773,6 @@
 		550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "OSX-CoreAudio.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		550D005018CB808600FD0F17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/PPErrors.strings; sourceTree = "<group>"; };
 		550D005218CB808E00FD0F17 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPErrors.strings; sourceTree = "<group>"; };
-		550D798A1979DD2600F0A8F8 /* ClassicalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicalViewController.swift; sourceTree = "<group>"; };
-		550D798C1979DD5900F0A8F8 /* WaveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveViewController.swift; sourceTree = "<group>"; };
 		550D798E1979F33D00F0A8F8 /* PPByteSwap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPByteSwap.swift; sourceTree = "<group>"; };
 		550D7991197A1CF500F0A8F8 /* PPByteSwap-swiftBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "PPByteSwap-swiftBridge.c"; sourceTree = "<group>"; };
 		550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentCellView.h; sourceTree = "<group>"; };
@@ -1982,7 +1977,6 @@
 		553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PPCPlugs.xcconfig; sourceTree = "<group>"; };
 		553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Cocoa Editor Images.xcassets"; path = "../../Cocoa/Cocoa Editor Images.xcassets"; sourceTree = "<group>"; };
 		5539D88F1978B90D005A1569 /* PlayerPRO 6-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO 6-Bridging-Header.h"; sourceTree = "<group>"; };
-		5539D8901978B90E005A1569 /* DigitalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigitalViewController.swift; sourceTree = "<group>"; };
 		5542403E10DB602D00C08864 /* SoundDesignerII.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = SoundDesignerII.r; sourceTree = "<group>"; };
 		5542403F10DB602D00C08864 /* Mp3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mp3.r; sourceTree = "<group>"; };
 		5542404010DB602D00C08864 /* MPG3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MPG3.r; sourceTree = "<group>"; };
@@ -3582,9 +3576,6 @@
 		5539D88E1978B8E4005A1569 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5539D8901978B90E005A1569 /* DigitalViewController.swift */,
-				550D798A1979DD2600F0A8F8 /* ClassicalViewController.swift */,
-				550D798C1979DD5900F0A8F8 /* WaveViewController.swift */,
 				5521F41317FA4365002CDBA9 /* BoxViewController.h */,
 				5521F41417FA4365002CDBA9 /* BoxViewController.m */,
 			);
@@ -6654,9 +6645,7 @@
 				55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */,
 				55CB01A711EB82FA0028C6BB /* main.m in Sources */,
 				5521F41517FA4365002CDBA9 /* BoxViewController.m in Sources */,
-				550D798B1979DD2600F0A8F8 /* ClassicalViewController.swift in Sources */,
 				55981C5311EE370D00656EE3 /* PPPreferences.m in Sources */,
-				550D798D1979DD5900F0A8F8 /* WaveViewController.swift in Sources */,
 				55232A7611FDD2A60041A4EC /* SoundOutputController.m in Sources */,
 				55F41A3717EF96B000605DF8 /* PPExportObject.m in Sources */,
 				55852E1C18D67CCB0009BF55 /* PPSmallPianoView.m in Sources */,
@@ -6683,7 +6672,6 @@
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
 				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,
 				552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */,
-				5539D8911978B90E005A1569 /* DigitalViewController.swift in Sources */,
 				5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */,
 				5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */,
 				5578C54017DBABC50057D11B /* PPDocument.m in Sources */,
