@@ -718,6 +718,9 @@
 		55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
+		55FEF84519844FD600D2E79C /* DigitalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84419844FD600D2E79C /* DigitalViewController.m */; };
+		55FEF84B1984506C00D2E79C /* ClassicalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84A1984506C00D2E79C /* ClassicalViewController.m */; };
+		55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84E1984509400D2E79C /* WaveViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2295,6 +2298,12 @@
 		55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSoundSettingsViewController.m; sourceTree = "<group>"; };
 		55F4C3E119763FDB000997BE /* PlayerPRO Player-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO Player-Bridging-Header.h"; sourceTree = "<group>"; };
 		55F4C3E319763FDD000997BE /* PPMusicListObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPMusicListObject.swift; sourceTree = "<group>"; };
+		55FEF84319844FD600D2E79C /* DigitalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigitalViewController.h; sourceTree = "<group>"; };
+		55FEF84419844FD600D2E79C /* DigitalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigitalViewController.m; sourceTree = "<group>"; };
+		55FEF8491984506C00D2E79C /* ClassicalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassicalViewController.h; sourceTree = "<group>"; };
+		55FEF84A1984506C00D2E79C /* ClassicalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassicalViewController.m; sourceTree = "<group>"; };
+		55FEF84D1984509400D2E79C /* WaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveViewController.h; sourceTree = "<group>"; };
+		55FEF84E1984509400D2E79C /* WaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveViewController.m; sourceTree = "<group>"; };
 		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = FileUtils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = DelayOutPut.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C3D10C2F21DD00D6C081 /* Effects.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Effects.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -3573,15 +3582,6 @@
 			path = Xcconfigs;
 			sourceTree = "<group>";
 		};
-		5539D88E1978B8E4005A1569 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				5521F41317FA4365002CDBA9 /* BoxViewController.h */,
-				5521F41417FA4365002CDBA9 /* BoxViewController.m */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
 		55453526186CD32900F69F4D /* OS X-specific code */ = {
 			isa = PBXGroup;
 			children = (
@@ -3835,7 +3835,6 @@
 			children = (
 				5539D88F1978B90D005A1569 /* PlayerPRO 6-Bridging-Header.h */,
 				55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */,
-				5539D88E1978B8E4005A1569 /* Views */,
 				557EF732168BDE95001BF077 /* PPPlugInCommon.h */,
 				55CB01A611EB82FA0028C6BB /* main.m */,
 				55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */,
@@ -3858,6 +3857,10 @@
 				55F41A3617EF96AF00605DF8 /* PPExportObject.m */,
 				5578C53D17DBABBE0057D11B /* PPDocument.h */,
 				5578C53E17DBABBF0057D11B /* PPDocument.m */,
+				55FEF8471984502900D2E79C /* Box View */,
+				55FEF8481984505600D2E79C /* Classical View */,
+				55FEF8461984500B00D2E79C /* Digital View */,
+				55FEF84C1984508600D2E79C /* Wave View */,
 				55852E1A18D67CCB0009BF55 /* PPSmallPianoView.h */,
 				55852E1B18D67CCB0009BF55 /* PPSmallPianoView.m */,
 				5523EC78169276AA0067B22A /* Instrument Code */,
@@ -4104,6 +4107,42 @@
 				5557769517EBDA740019D008 /* Media.xcassets */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		55FEF8461984500B00D2E79C /* Digital View */ = {
+			isa = PBXGroup;
+			children = (
+				55FEF84319844FD600D2E79C /* DigitalViewController.h */,
+				55FEF84419844FD600D2E79C /* DigitalViewController.m */,
+			);
+			path = "Digital View";
+			sourceTree = "<group>";
+		};
+		55FEF8471984502900D2E79C /* Box View */ = {
+			isa = PBXGroup;
+			children = (
+				5521F41317FA4365002CDBA9 /* BoxViewController.h */,
+				5521F41417FA4365002CDBA9 /* BoxViewController.m */,
+			);
+			name = "Box View";
+			sourceTree = "<group>";
+		};
+		55FEF8481984505600D2E79C /* Classical View */ = {
+			isa = PBXGroup;
+			children = (
+				55FEF8491984506C00D2E79C /* ClassicalViewController.h */,
+				55FEF84A1984506C00D2E79C /* ClassicalViewController.m */,
+			);
+			path = "Classical View";
+			sourceTree = "<group>";
+		};
+		55FEF84C1984508600D2E79C /* Wave View */ = {
+			isa = PBXGroup;
+			children = (
+				55FEF84D1984509400D2E79C /* WaveViewController.h */,
+				55FEF84E1984509400D2E79C /* WaveViewController.m */,
+			);
+			path = "Wave View";
 			sourceTree = "<group>";
 		};
 		88E0C3A60C2F21DD00D6C081 = {
@@ -6649,7 +6688,9 @@
 				55232A7611FDD2A60041A4EC /* SoundOutputController.m in Sources */,
 				55F41A3717EF96B000605DF8 /* PPExportObject.m in Sources */,
 				55852E1C18D67CCB0009BF55 /* PPSmallPianoView.m in Sources */,
+				55FEF84519844FD600D2E79C /* DigitalViewController.m in Sources */,
 				55232AD811FDDFEA0041A4EC /* PianoPreferencesController.m in Sources */,
+				55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */,
 				55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */,
 				55232AED11FDE2E40041A4EC /* MiscPreferenceController.m in Sources */,
 				55232AF011FDE5180041A4EC /* BoxEditorPreferenceController.m in Sources */,
@@ -6670,6 +6711,7 @@
 				550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */,
 				55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */,
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
+				55FEF84B1984506C00D2E79C /* ClassicalViewController.m in Sources */,
 				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,
 				552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */,
 				5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */,
