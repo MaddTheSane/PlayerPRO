@@ -133,10 +133,10 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 	BOOL reverbState = sett->Reverb;
 	BOOL stereoDelayState = sett->MicroDelaySize > 0;
 	
-	reverbActive = reverbState;
-	oversamplingActive = oversamplingState;
-	stereoDelayActive = stereoDelayState;
-	surroundActive = sett->surround;
+	self.reverbActive = reverbState;
+	self.oversamplingActive = oversamplingState;
+	self.stereoDelayActive = stereoDelayState;
+	self.surroundActive = sett->surround;
 	
 	if ([self view]) {
 		[oversampling setState:oversamplingState];
@@ -389,7 +389,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 	}
 }
 
-- (short)stereoDelayFromTag:(NSInteger)theTag
+- (int)stereoDelayFromTag:(NSInteger)theTag
 {
 	int toSet = 0;
 	int i = 0;
@@ -407,7 +407,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 	return toSet;
 }
 
-- (short)oversamplingFromTag:(NSInteger)theTag
+- (int)oversamplingFromTag:(NSInteger)theTag
 {
 	int toSet = 0;
 	int i = 0;
@@ -457,10 +457,10 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 			[delegate soundOutSurroundDidChangeActive:surroundState];
 		}
 	}
-	reverbActive = reverbState;
-	stereoDelayActive = stereoDelayState;
-	oversamplingActive = oversamplingState;
-	surroundActive = surroundState;
+	self.reverbActive = reverbState;
+	self.stereoDelayActive = stereoDelayState;
+	self.oversamplingActive = oversamplingState;
+	self.surroundActive = surroundState;
 }
 
 - (IBAction)changeOversampling:(id)sender
