@@ -13,6 +13,9 @@
 #import "UserDefaultKeys.h"
 #import "PPExportObject.h"
 #import "BoxViewController.h"
+#import "WaveViewController.h"
+#import "ClassicalViewController.h"
+#import "DigitalViewController.h"
 
 @interface PPDocument ()
 @property (readwrite, strong) PPDriver *theDriver;

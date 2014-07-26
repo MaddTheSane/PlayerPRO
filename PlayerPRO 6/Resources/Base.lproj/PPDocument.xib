@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1090" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PPDocument">
             <connections>
                 <outlet property="boxController" destination="LsL-Pc-9w4" id="ya3-2S-kpA"/>
+                <outlet property="classicalController" destination="euO-9U-7Ee" id="Pg9-SL-8VP"/>
                 <outlet property="currentTimeLabel" destination="WaK-0d-ulU" id="wSC-OM-A0w"/>
+                <outlet property="digitalController" destination="fvI-Iq-sXE" id="gMx-Vi-a4v"/>
                 <outlet property="editorsTab" destination="eP8-FW-QMd" id="b10-ZB-cms"/>
                 <outlet property="exportSettingsBox" destination="100036" id="100042"/>
                 <outlet property="exportWindow" destination="100026" id="100041"/>
@@ -17,11 +19,12 @@
                 <outlet property="playbackPositionSlider" destination="oP5-bp-Z0e" id="e4y-UQ-cKW"/>
                 <outlet property="reverseButton" destination="3cJ-rm-kq9" id="8Sh-w9-ekG"/>
                 <outlet property="totalTimeLabel" destination="jwX-rY-VeA" id="ehf-Tb-kNo"/>
+                <outlet property="waveController" destination="UmV-E5-CNH" id="wyQ-Mk-TUe"/>
                 <outlet property="window" destination="5" id="18"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="documentWindow" id="5" userLabel="Document Window">
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" visibleAtLaunch="NO" animationBehavior="documentWindow" id="5" userLabel="Document Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" unifiedTitleAndToolbar="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenPrimary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -285,22 +288,25 @@ Gw
             </view>
         </window>
         <customObject id="-3" userLabel="Application"/>
-        <viewController id="fvI-Iq-sXE" userLabel="Digital View Controller">
+        <viewController id="fvI-Iq-sXE" userLabel="Digital View Controller" customClass="DigitalViewController">
             <connections>
+                <outlet property="currentDocument" destination="-2" id="sNh-Il-43a"/>
                 <outlet property="view" destination="3cF-zg-o6h" id="iSe-6E-HLQ"/>
             </connections>
         </viewController>
         <viewController id="LsL-Pc-9w4" customClass="BoxViewController">
             <connections>
+                <outlet property="currentDocument" destination="-2" id="nrd-eA-YfA"/>
                 <outlet property="view" destination="BQP-AN-bfF" id="opZ-Zq-cWh"/>
             </connections>
         </viewController>
-        <viewController id="euO-9U-7Ee" userLabel="Classic View Controller">
+        <viewController id="euO-9U-7Ee" userLabel="Classic View Controller" customClass="ClassicalViewController">
             <connections>
+                <outlet property="currentDocument" destination="-2" id="lhU-Va-wbQ"/>
                 <outlet property="view" destination="9ML-I9-VAO" id="xzn-pU-xhT"/>
             </connections>
         </viewController>
-        <viewController id="UmV-E5-CNH" userLabel="Wave View Controller">
+        <viewController id="UmV-E5-CNH" userLabel="Wave View Controller" customClass="WaveViewController">
             <connections>
                 <outlet property="view" destination="UQt-sf-rgN" id="jMn-XP-STC"/>
             </connections>
