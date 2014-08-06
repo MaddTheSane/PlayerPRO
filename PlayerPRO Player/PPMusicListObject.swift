@@ -107,6 +107,7 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
 		//this class is immutable
 		return self;
 	}
+
 	class func supportsSecureCoding() -> Bool {
 		return true;
 	}
