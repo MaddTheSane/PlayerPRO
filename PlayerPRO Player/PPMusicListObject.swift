@@ -39,6 +39,7 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
 
 	override class func initialize() {
 		NSKeyedUnarchiver.setClass(self, forClassName: "PPMusicListObject")
+		NSKeyedArchiver.setClassName("PPMusicListObject", forClass: self)
 	}
 	
 	init(URL: NSURL!) {
@@ -94,7 +95,7 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
 				bothAreValid = false;
 			}
 			if (bothAreValid) {
-				theSame = dat1 as NSData == dat2 as NSData
+				theSame = (dat1 as NSData) == (dat2 as NSData)
 			}
 			return theSame
 		} else {

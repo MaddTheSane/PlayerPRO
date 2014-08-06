@@ -22,6 +22,51 @@ extension MADFourChar {
 	}
 }
 
+func &(lhs: MADBool, rhs: MADBool) -> MADBool {
+	if lhs {
+		return rhs
+	}
+	return false
+}
+
+func |(lhs: MADBool, rhs: MADBool) -> MADBool {
+	if lhs {
+		return true
+	}
+	return rhs
+}
+
+func ^(lhs: MADBool, rhs: MADBool) -> MADBool {
+	return MADBool(lhs != rhs)
+}
+
+
+@prefix func !(a: MADBool) -> MADBool {
+	return a ^ true
+}
+
+func &=(inout lhs: MADBool, rhs: MADBool) {
+	var lhsB: MADBool = 0
+	var rhsB: MADBool = 0
+	if lhs {
+		lhsB = 1
+	}
+	if rhs {
+		rhsB = 1
+	}
+	lhs = lhsB & rhsB
+}
+
+extension MADBool {
+	init(_ v : LogicValue) {
+		if v.getLogicValue() {
+			self = 1
+		} else {
+			self = 0
+		}
+	}
+}
+
 extension MADBool : BooleanLiteralConvertible {
 	public static func convertFromBooleanLiteral(value: BooleanLiteralType) -> MADBool {
 		if (value == true) {
@@ -41,4 +86,3 @@ extension MADBool : LogicValue {
 		}
 	}
 }
-

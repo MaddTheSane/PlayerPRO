@@ -22,6 +22,7 @@ extension MADSpec {
 	}}
 }
 
+/*
 extension FXSets {
 	var bigEndian: FXSets {get {
 		var toRet = self
@@ -30,6 +31,7 @@ extension FXSets {
 		return toRet
 	}}
 }
+*/
 
 extension FXBus {
 	var bigEndian: FXBus {get {
@@ -98,6 +100,7 @@ extension sData {
 		toRet.loopBeg = self.loopBeg.bigEndian
 		toRet.loopSize = self.loopBeg.bigEndian
 		toRet.c2spd = self.c2spd.bigEndian
+		//Not byte-swapping data, as it isn't used
 		
 		return toRet
 	}}
