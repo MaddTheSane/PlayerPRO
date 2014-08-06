@@ -1,0 +1,35 @@
+//
+//  MIDI.pch
+//  PPMacho
+//
+//  Created by C.W. Betts on 12/24/13.
+//
+//
+
+#ifndef PPMacho_MIDI_pch
+#define PPMacho_MIDI_pch
+
+#include <Carbon/Carbon.h>
+#include <QuickTime/QuickTime.h>
+#include <PlayerPROCore/PlayerPROCore.h>
+
+#if 0
+#define Debugger() oldDebug(__LINE__, __FILE__)
+static inline void oldDebug(short line, char* file)
+{
+	PPDebugStr(line, file, "Carbon debug function called!");
+}
+#else
+#define Debugger() PPDebugStr(__LINE__, __FILE__, "Carbon debug function called!")
+
+#endif
+
+#define DebugStr(thePDebugStr) oldDebugStr(thePDebugStr, __LINE__, __FILE__)
+static inline void oldDebugStr(ConstStr255Param debuggerMsg, short kube, const char* file)
+{
+	char tmp[512] = {0};
+	memcpy(tmp, &(debuggerMsg[1]), debuggerMsg[0]);
+	PPDebugStr(kube, file, tmp);
+}
+
+#endif

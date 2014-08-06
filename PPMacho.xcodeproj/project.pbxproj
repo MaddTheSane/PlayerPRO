@@ -479,14 +479,7 @@
 		5586884910BF632C00FCC24D /* UMX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5533410010BB5368005208D1 /* UMX.c */; };
 		5586884A10BF633300FCC24D /* XM.c in Sources */ = {isa = PBXBuildFile; fileRef = 5533410310BB5368005208D1 /* XM.c */; };
 		5586889310BF67F100FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
-		558688A210BF683000FCC24D /* MIDI-GM-Small.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340EC10BB5368005208D1 /* MIDI-GM-Small.c */; };
-		558688A310BF683100FCC24D /* MIDI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340ED10BB5368005208D1 /* MIDI.c */; };
-		558688A510BF683300FCC24D /* PTMID.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F010BB5368005208D1 /* PTMID.c */; };
-		558688A610BF683400FCC24D /* PTMIDINP.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F210BB5368005208D1 /* PTMIDINP.c */; };
-		558688A710BF683400FCC24D /* PTMIDSAV.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F310BB5368005208D1 /* PTMIDSAV.c */; };
-		558688A810BF683500FCC24D /* PTMIDZAP.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F410BB5368005208D1 /* PTMIDZAP.c */; };
 		558688A910BF683C00FCC24D /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
-		55868A4510BFB44700FCC24D /* Midi_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */; };
 		55868A7C10BFB4B300FCC24D /* APPL.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DD10BB5368005208D1 /* APPL.c */; };
 		558D4DDA1666F14E00A333E8 /* PPDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DD81666F14E00A333E8 /* PPDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4DD91666F14E00A333E8 /* PPDriver.m */; };
@@ -682,6 +675,20 @@
 		55EA01A216AF368F00D6AEA0 /* CrossFade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE66310E0885C00177B4C /* CrossFade.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55ECB33E180A280800497C7E /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55ECB340180A280800497C7E /* Main_iPad.storyboard */; };
 		55ECB341180A281400497C7E /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55ECB343180A281400497C7E /* Main_iPhone.storyboard */; };
+		55ECD2761992C2ED00480788 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
+		55ECD27C1992C2ED00480788 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55ECD27A1992C2ED00480788 /* InfoPlist.strings */; };
+		55ECD27F1992C2ED00480788 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECD27E1992C2ED00480788 /* main.m */; };
+		55ECD2861992C37300480788 /* Midi_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */; };
+		55ECD2871992C39A00480788 /* MIDI-GM-Small.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340EC10BB5368005208D1 /* MIDI-GM-Small.c */; };
+		55ECD2881992C39A00480788 /* MIDI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340ED10BB5368005208D1 /* MIDI.c */; };
+		55ECD2891992C39A00480788 /* PTMID.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F010BB5368005208D1 /* PTMID.c */; };
+		55ECD28A1992C39A00480788 /* PTMIDINP.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F210BB5368005208D1 /* PTMIDINP.c */; };
+		55ECD28B1992C39A00480788 /* PTMIDSAV.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F310BB5368005208D1 /* PTMIDSAV.c */; };
+		55ECD28C1992C39A00480788 /* PTMIDZAP.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F410BB5368005208D1 /* PTMIDZAP.c */; };
+		55ECD28D1992C3B000480788 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55ECD28E1992C3BC00480788 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		55ECD2911992C5C100480788 /* MIDI.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECD28F1992C58000480788 /* MIDI.m */; };
+		55ECD2941992C6A600480788 /* PPMIDIImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECD2931992C6A600480788 /* PPMIDIImporter.m */; };
 		55EE2D8817E12F9300FED42A /* Amplitude.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE43410E06BF200177B4C /* Amplitude.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EE2D8917E12F9300FED42A /* Depth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6A410E0886400177B4C /* Depth.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EE2D8A17E12F9300FED42A /* Echo.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6E510E0886A00177B4C /* Echo.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -1574,6 +1581,13 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
+		55ECD2831992C35200480788 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55ECD2741992C2ED00480788;
+			remoteInfo = "MIDI Import";
+		};
 		55EE2D8617E12F0D00FED42A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -2189,7 +2203,7 @@
 		5586883E10BF62FB00FCC24D /* XM-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XM-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5586889710BF67F100FCC24D /* MIDI.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MIDI.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5586889810BF67F100FCC24D /* MIDI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MIDI-Info.plist"; sourceTree = SOURCE_ROOT; };
-		55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = Midi_Plug.rsrc.r; path = ../Midi_Plug.rsrc.r; sourceTree = "<group>"; };
+		55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Midi_Plug.rsrc.r; sourceTree = "<group>"; };
 		55868A6710BFB46100FCC24D /* APPL.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APPL.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		55868A6810BFB46100FCC24D /* APPL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "APPL-Info.plist"; sourceTree = SOURCE_ROOT; };
 		558D4DD81666F14E00A333E8 /* PPDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDriver.h; sourceTree = "<group>"; };
@@ -2269,6 +2283,14 @@
 		55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPlugObject.m; sourceTree = "<group>"; };
 		55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPlugHandler.h; sourceTree = "<group>"; };
 		55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPlugHandler.m; sourceTree = "<group>"; };
+		55ECD2751992C2ED00480788 /* net.sourceforge.playerpro.MIDI-Import.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "net.sourceforge.playerpro.MIDI-Import.xpc"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55ECD2791992C2ED00480788 /* MIDI Import-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MIDI Import-Info.plist"; sourceTree = "<group>"; };
+		55ECD27B1992C2ED00480788 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55ECD27D1992C2ED00480788 /* MIDI Import-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MIDI Import-Prefix.pch"; sourceTree = "<group>"; };
+		55ECD27E1992C2ED00480788 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		55ECD28F1992C58000480788 /* MIDI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIDI.m; sourceTree = "<group>"; };
+		55ECD2921992C6A600480788 /* PPMIDIImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMIDIImporter.h; sourceTree = "<group>"; };
+		55ECD2931992C6A600480788 /* PPMIDIImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMIDIImporter.m; sourceTree = "<group>"; };
 		55ED547310D5F9CD00824C61 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		55EE8EBC100404EB00E75E63 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -2864,6 +2886,16 @@
 				55E898B010F17C2B004EB52B /* Carbon.framework in Frameworks */,
 				55E8998510F18165004EB52B /* QuickTime.framework in Frameworks */,
 				5523EC79169358470067B22A /* PlayerPROCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ECD2721992C2ED00480788 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55ECD28E1992C3BC00480788 /* Carbon.framework in Frameworks */,
+				55ECD28D1992C3B000480788 /* PlayerPROCore.framework in Frameworks */,
+				55ECD2761992C2ED00480788 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3544,20 +3576,9 @@
 		553340EB10BB5368005208D1 /* MIDI */ = {
 			isa = PBXGroup;
 			children = (
-				55E527A8186A2A690020F3D6 /* MIDI.pch */,
-				5517DAC6180CAE2C001413D0 /* dls.h */,
-				5517DAC7180CAE2C001413D0 /* dls2.h */,
-				5517DAC8180CAE2C001413D0 /* dlsmac.h */,
-				55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */,
-				55ADC3E517D7CBF8001F27D4 /* Midi-rsrc.h */,
 				5586889810BF67F100FCC24D /* MIDI-Info.plist */,
-				553340EC10BB5368005208D1 /* MIDI-GM-Small.c */,
-				553340ED10BB5368005208D1 /* MIDI.c */,
-				553340F010BB5368005208D1 /* PTMID.c */,
-				553340F110BB5368005208D1 /* PTMID.h */,
-				553340F210BB5368005208D1 /* PTMIDINP.c */,
-				553340F310BB5368005208D1 /* PTMIDSAV.c */,
-				553340F410BB5368005208D1 /* PTMIDZAP.c */,
+				55E527A8186A2A690020F3D6 /* MIDI.pch */,
+				55ECD28F1992C58000480788 /* MIDI.m */,
 			);
 			name = MIDI;
 			path = "MIDI Folder";
@@ -4032,6 +4053,39 @@
 			path = "Plug-in example";
 			sourceTree = "<group>";
 		};
+		55ECD2771992C2ED00480788 /* MIDI Import */ = {
+			isa = PBXGroup;
+			children = (
+				5517DAC6180CAE2C001413D0 /* dls.h */,
+				5517DAC7180CAE2C001413D0 /* dls2.h */,
+				5517DAC8180CAE2C001413D0 /* dlsmac.h */,
+				55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */,
+				55ADC3E517D7CBF8001F27D4 /* Midi-rsrc.h */,
+				553340EC10BB5368005208D1 /* MIDI-GM-Small.c */,
+				553340ED10BB5368005208D1 /* MIDI.c */,
+				553340F010BB5368005208D1 /* PTMID.c */,
+				553340F110BB5368005208D1 /* PTMID.h */,
+				553340F210BB5368005208D1 /* PTMIDINP.c */,
+				553340F310BB5368005208D1 /* PTMIDSAV.c */,
+				553340F410BB5368005208D1 /* PTMIDZAP.c */,
+				55ECD27E1992C2ED00480788 /* main.m */,
+				55ECD2921992C6A600480788 /* PPMIDIImporter.h */,
+				55ECD2931992C6A600480788 /* PPMIDIImporter.m */,
+				55ECD2781992C2ED00480788 /* Supporting Files */,
+			);
+			path = "MIDI Import";
+			sourceTree = "<group>";
+		};
+		55ECD2781992C2ED00480788 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				55ECD2791992C2ED00480788 /* MIDI Import-Info.plist */,
+				55ECD27A1992C2ED00480788 /* InfoPlist.strings */,
+				55ECD27D1992C2ED00480788 /* MIDI Import-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		55F16D1B186F918F00E75C3E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -4119,6 +4173,7 @@
 				555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */,
 				555776CA17EBF9000019D008 /* iOS PlayerPRO PlayerTests */,
 				55534ACF1817C387006D6BCB /* updateInfoPlist */,
+				55ECD2771992C2ED00480788 /* MIDI Import */,
 				88E0C4950C2F21E500D6C081 /* Frameworks */,
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 			);
@@ -4185,6 +4240,7 @@
 				55534ACD1817C387006D6BCB /* updateInfoPlist */,
 				559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */,
 				55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */,
+				55ECD2751992C2ED00480788 /* net.sourceforge.playerpro.MIDI-Import.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5241,6 +5297,7 @@
 			);
 			comments = "This would only be used in the library and not the application.  It currently does not compile.  I may look into it, I may not.";
 			dependencies = (
+				55ECD2841992C35200480788 /* PBXTargetDependency */,
 				5586888C10BF67F100FCC24D /* PBXTargetDependency */,
 			);
 			name = MIDI;
@@ -5405,6 +5462,24 @@
 			productReference = 55E898B710F17C2B004EB52B /* QuickTime.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		55ECD2741992C2ED00480788 /* MIDI Import */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55ECD2821992C2ED00480788 /* Build configuration list for PBXNativeTarget "MIDI Import" */;
+			buildPhases = (
+				55ECD2711992C2ED00480788 /* Sources */,
+				55ECD2721992C2ED00480788 /* Frameworks */,
+				55ECD2851992C36600480788 /* Rez */,
+				55ECD2731992C2ED00480788 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "MIDI Import";
+			productName = "MIDI Import";
+			productReference = 55ECD2751992C2ED00480788 /* net.sourceforge.playerpro.MIDI-Import.xpc */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -5415,7 +5490,7 @@
 				LastUpgradeCheck = 0510;
 				TargetAttributes = {
 					555776C217EBF8FF0019D008 = {
-						TestTargetID = 5557769E17EBF8FD0019D008;
+						TestTargetID = 55CBF9A511EB77760028C6BB;
 					};
 				};
 			};
@@ -5468,6 +5543,7 @@
 				5586881D10BF62F500FCC24D /* UMX */,
 				5586883110BF62FB00FCC24D /* XM */,
 				5586888B10BF67F100FCC24D /* MIDI */,
+				55ECD2741992C2ED00480788 /* MIDI Import */,
 				55868A5810BFB46100FCC24D /* APPL */,
 				55B797D410D6E66A0073E379 /* Digital Plugs */,
 				55B797DB10D6E6C40073E379 /* Complex Fade */,
@@ -5944,6 +6020,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55ECD2731992C2ED00480788 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55ECD27C1992C2ED00480788 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXRezBuildPhase section */
@@ -5951,7 +6035,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A4510BFB44700FCC24D /* Midi_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5960,6 +6043,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				55B797E610D6E7070073E379 /* CompFade.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ECD2851992C36600480788 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55ECD2861992C37300480788 /* Midi_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6507,12 +6598,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				558688A210BF683000FCC24D /* MIDI-GM-Small.c in Sources */,
-				558688A310BF683100FCC24D /* MIDI.c in Sources */,
-				558688A510BF683300FCC24D /* PTMID.c in Sources */,
-				558688A610BF683400FCC24D /* PTMIDINP.c in Sources */,
-				558688A710BF683400FCC24D /* PTMIDSAV.c in Sources */,
-				558688A810BF683500FCC24D /* PTMIDZAP.c in Sources */,
+				55ECD2911992C5C100480788 /* MIDI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6659,6 +6745,21 @@
 			files = (
 				55E8998710F18175004EB52B /* QuicktimeGeneric.c in Sources */,
 				55E8999110F18AF1004EB52B /* WAVE-Conversion.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ECD2711992C2ED00480788 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55ECD2881992C39A00480788 /* MIDI.c in Sources */,
+				55ECD28B1992C39A00480788 /* PTMIDSAV.c in Sources */,
+				55ECD2871992C39A00480788 /* MIDI-GM-Small.c in Sources */,
+				55ECD2891992C39A00480788 /* PTMID.c in Sources */,
+				55ECD28C1992C39A00480788 /* PTMIDZAP.c in Sources */,
+				55ECD2941992C6A600480788 /* PPMIDIImporter.m in Sources */,
+				55ECD28A1992C39A00480788 /* PTMIDINP.c in Sources */,
+				55ECD27F1992C2ED00480788 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7285,6 +7386,11 @@
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 55E898AA10F17C2B004EB52B /* PBXContainerItemProxy */;
 		};
+		55ECD2841992C35200480788 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55ECD2741992C2ED00480788 /* MIDI Import */;
+			targetProxy = 55ECD2831992C35200480788 /* PBXContainerItemProxy */;
+		};
 		55EE2D8717E12F0D00FED42A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 557DE3BD10E06BB500177B4C /* Filters Plugs */;
@@ -7636,6 +7742,14 @@
 				55085D8B1836EF96004A152F /* en */,
 			);
 			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		55ECD27A1992C2ED00480788 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55ECD27B1992C2ED00480788 /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -8224,7 +8338,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/iOS PlayerPRO Player.app/iOS PlayerPRO Player";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 				COMBINE_HIDPI_IMAGES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -8248,7 +8362,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/iOS PlayerPRO Player.app/iOS PlayerPRO Player";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 				COMBINE_HIDPI_IMAGES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -9284,11 +9398,12 @@
 			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI.pch";
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 			};
 			name = Release;
 		};
@@ -9297,11 +9412,12 @@
 			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI.pch";
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				ONLY_ACTIVE_ARCH = NO;
 			};
 			name = Debug;
@@ -9680,6 +9796,45 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				ONLY_ACTIVE_ARCH = NO;
 				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		55ECD2801992C2ED00480788 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MIDI Import/MIDI Import-Prefix.pch";
+				INFOPLIST_FILE = "MIDI Import/MIDI Import-Info.plist";
+				MACH_O_TYPE = mh_execute;
+				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				WRAPPER_EXTENSION = xpc;
+			};
+			name = Release;
+		};
+		55ECD2811992C2ED00480788 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MIDI Import/MIDI Import-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "MIDI Import/MIDI Import-Info.plist";
+				MACH_O_TYPE = mh_execute;
+				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				WRAPPER_EXTENSION = xpc;
 			};
 			name = Debug;
 		};
@@ -10243,6 +10398,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		55ECD2821992C2ED00480788 /* Build configuration list for PBXNativeTarget "MIDI Import" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55ECD2801992C2ED00480788 /* Release */,
+				55ECD2811992C2ED00480788 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		88E0C3A90C2F21DD00D6C081 /* Build configuration list for PBXProject "PPMacho" */ = {
 			isa = XCConfigurationList;
