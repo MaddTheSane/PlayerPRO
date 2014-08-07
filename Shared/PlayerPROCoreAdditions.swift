@@ -10,6 +10,25 @@ import Foundation
 import CoreServices
 import PlayerPROCore
 
+extension MADDriverSettings {
+	init() {
+		self.driverMode = .CoreAudioDriver
+		self.numChn = 4
+		self.outPutBits = 16
+		self.outPutMode = .DeluxeStereoOutPut
+		self.outPutRate = 44100
+		self.MicroDelaySize = 25
+		self.ReverbSize = 25
+		self.ReverbStrength = 25
+		self.oversampling = 1
+		self.TickRemover = false
+		self.surround = false
+		self.Reverb = false
+		self.repeatMusic = false
+		MADGetBestDriver(&self)
+	}
+}
+
 extension MADFourChar: Printable {
 	public var stringValue: String {
 	get {

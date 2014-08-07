@@ -7,8 +7,7 @@
 //
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#import <Foundation/NSObject.h>
-#import <AppKit/NSViewController.h>
+#import <Cocoa/Cocoa.h>
 
 @protocol PPSoundSettingsViewControllerDelegate <NSObject>
 - (void)soundOutBitsDidChange:(short)bits;
@@ -24,8 +23,6 @@
 @optional
 - (void)soundOutDriverDidChange:(short)driv;
 @end
-
-@class NSButton, NSMatrix, NSPopUpButton;
 
 @interface PPSoundSettingsViewController : NSViewController
 @property (weak) IBOutlet NSButton *oversampling;

@@ -7,7 +7,6 @@
 //
 
 #import "PPPreferences.h"
-#import "SoundOutputController.h"
 #import "PianoPreferencesController.h"
 #import "MusicListPreferenceController.h"
 #import "ColorPreferenceController.h"
@@ -16,6 +15,12 @@
 #import "DigitalEditorPreferenceControler.h"
 #import "ClassicEditorPreferenceController.h"
 #import "MidiHardwarePreferenceController.h"
+
+#ifdef PLAYERPRO6
+#import "PlayerPRO_6-Swift.h"
+#else
+#import "PlayerPRO_Player-Swift.h"
+#endif
 
 @interface PPPreferences ()
 @property (strong) NSArray *viewControllers;
