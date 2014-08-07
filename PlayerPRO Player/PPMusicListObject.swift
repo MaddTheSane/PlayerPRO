@@ -10,7 +10,24 @@ import Foundation
 
 private let kMusicListURLKey = "URLKey";
 
-class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
+func ==(lhs: PPMusicListObject, rhs: PPMusicListObject) -> Bool {
+	var dat1: AnyObject? = nil
+	var dat2: AnyObject? = nil
+	var bothAreValid = true
+	var theSame = false
+	if (!lhs.musicURL.getResourceValue(&dat1, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
+		bothAreValid = false;
+	}
+	if (!rhs.musicURL.getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
+		bothAreValid = false;
+	}
+	if (bothAreValid) {
+		theSame = (dat1 as NSData) == (dat2 as NSData)
+	}
+	return theSame
+}
+
+class PPMusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPrintable, Printable {
 	private(set) var musicURL: NSURL! = nil;
 
 	var fileName: String {get {
@@ -57,12 +74,22 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding {
 		super.init();
 	}
 	
-	override var hash: Int {
-	get {
-		return musicURL.filePathURL.path.hash
-	}
-	}
+	override var hash: Int { get {
+		return self.hashValue
+	}}
 	
+	override var hashValue: Int { get {
+		return musicURL.filePathURL.path.hashValue
+	}}
+
+	override var description: String { get {
+		return "\(musicURL.description) \(musicURL.path)"
+	}}
+	
+	override var debugDescription: String { get {
+		return "\(musicURL.description) \(musicURL.path): \(self.fileName)"
+	}}
+
 	override func isEqual(object: AnyObject!) -> Bool {
 		var dat1: AnyObject? = nil
 		var dat2: AnyObject? = nil

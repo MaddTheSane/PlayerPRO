@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PPCurrentlyPlayingIndex: NSObject {
+class PPCurrentlyPlayingIndex: NSObject, DebugPrintable {
 	public var index:Int = -1
 	public var playbackURL: NSURL? = nil
 	func movePlayingIndexToOtherIndex(othIdx: PPCurrentlyPlayingIndex) {
@@ -18,7 +18,11 @@ class PPCurrentlyPlayingIndex: NSObject {
 	
 	override var description: String {
 	get {
+		return self.debugDescription
+	}
+	}
+	
+	override var debugDescription: String { get {
 		return "Index: \(index) URL: \(playbackURL) URL Path: \(playbackURL!.path)"
-	}
-	}
+	}}
 }

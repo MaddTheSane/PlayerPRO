@@ -49,6 +49,15 @@
       debugDocumentVersioning = "YES"
       debugXPCServices = "NO"
       allowLocationSimulation = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "5578C51B17DB94A50057D11B"
+            BuildableName = "PPImport Cocoa.mdimporter"
+            BlueprintName = "PPImport-app"
+            ReferencedContainer = "container:PPMacho.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

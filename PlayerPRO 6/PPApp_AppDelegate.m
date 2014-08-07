@@ -10,7 +10,6 @@
 #import "PPPreferences.h"
 #import "UserDefaultKeys.h"
 #import "NSColor+PPPreferences.h"
-#import "OpenPanelViewController.h"
 #import "PPInstrumentPlugHandler.h"
 #import "PPInstrumentImporterObject.h"
 #import "PPPlugInInfoController.h"

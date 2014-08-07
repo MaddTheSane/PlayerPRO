@@ -10,16 +10,26 @@ import Foundation
 import CoreServices
 import PlayerPROCore
 
-extension MADFourChar {
-	var stringValue: String {
+extension MADFourChar: Printable {
+	public var stringValue: String {
 	get {
 		let toRet = UTCreateStringForOSType(self as OSType).takeRetainedValue()
 		return toRet as NSString
 	}
 	}
+	
 	init(_ toInit: String) {
 		self = UTGetOSTypeFromString(toInit as NSString as CFStringRef)
 	}
+	
+	static func convertFromStringLiteral(value: String) -> MADFourChar {
+		return MADFourChar(value)
+	}
+	
+	public var description: String { get {
+		return self.stringValue
+	}}
+
 }
 
 func &(lhs: MADBool, rhs: MADBool) -> MADBool {
@@ -57,7 +67,7 @@ func &=(inout lhs: MADBool, rhs: MADBool) {
 	lhs = lhsB & rhsB
 }
 
-extension MADBool {
+extension MADBool : BooleanLiteralConvertible, LogicValue {
 	init(_ v : LogicValue) {
 		if v.getLogicValue() {
 			self = 1
@@ -65,9 +75,7 @@ extension MADBool {
 			self = 0
 		}
 	}
-}
-
-extension MADBool : BooleanLiteralConvertible {
+	
 	public static func convertFromBooleanLiteral(value: BooleanLiteralType) -> MADBool {
 		if (value == true) {
 			return 1
@@ -75,9 +83,7 @@ extension MADBool : BooleanLiteralConvertible {
 			return 0
 		}
 	}
-}
-
-extension MADBool : LogicValue {
+	
 	public func getLogicValue() -> Bool {
 		if (self == 0) {
 			return false

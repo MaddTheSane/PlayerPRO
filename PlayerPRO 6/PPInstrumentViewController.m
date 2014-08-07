@@ -11,7 +11,6 @@
 #import "PPInstrumentPlugHandler.h"
 #import "PPInstrumentImporterObject.h"
 #import "PPInstrumentCellView.h"
-#import "OpenPanelViewController.h"
 #import "InstrumentInfoController.h"
 #import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
@@ -21,6 +20,7 @@
 #include "PPByteswap.h"
 #import "UserDefaultKeys.h"
 #import "PPApp_AppDelegate.h"
+#import "PlayerPRO_6-Swift.h"
 
 @interface PPInstrumentObject (Private)
 - (InstrData)theInstrument;

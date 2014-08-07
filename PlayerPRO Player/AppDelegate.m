@@ -12,7 +12,6 @@
 #import "UserDefaultKeys.h"
 #import "PPInstrumentWindowController.h"
 #import "PPPlugInInfoController.h"
-#import "OpenPanelViewController.h"
 #include "PPByteswap.h"
 #import <AVFoundation/AVFoundation.h>
 #import "PlayerPRO_Player-Swift.h"

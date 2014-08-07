@@ -10,7 +10,6 @@
 #import "PPInstrumentObject.h"
 #import "PPSampleObject.h"
 #import "PPInstrumentCellView.h"
-#import "OpenPanelViewController.h"
 #import "InstrumentInfoController.h"
 #import "PPFilterPlugObject.h"
 #include <PlayerPROCore/PPPlug.h>

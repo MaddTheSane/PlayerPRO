@@ -8,13 +8,28 @@
 
 import Cocoa
 
-class PPPlugInInfo: NSObject {
+func ==(lhs: PPPlugInInfo, rhs: PPPlugInInfo) -> Bool {
+	if (lhs === rhs) {
+		return true;
+	}
+	
+	if (lhs.plugName != rhs.plugName) {
+		return false;
+	} else if (lhs.authorName != rhs.authorName) {
+		return false;
+	} else if (lhs.plugType != rhs.plugType) {
+		return false;
+	} else {
+		return true;
+	}
+}
+
+class PPPlugInInfo: NSObject, Hashable, DebugPrintable {
 	private(set) var plugName: String;
 	private(set) var authorName: String;
 	private(set) var plugType: String
 	private(set) var plugCopyright: String
 	private(set) var plugURL: NSURL
-	
 	
 	init(plugName pn: String, author aut: String, plugType pt: String, plugURL pu: NSURL) {
 		var tmpBundle = NSBundle(URL: pu).infoDictionary
@@ -33,13 +48,22 @@ class PPPlugInInfo: NSObject {
 	
 	override var hash: Int {
 	get {
-		return plugName.hash ^ plugType.hash ^ authorName.hash ^ plugCopyright.hash
+		return self.hashValue
 	}
 	}
 	
+	override var hashValue: Int { get {
+		return plugName.hash ^ plugType.hash ^ authorName.hash ^ plugCopyright.hash
+	}}
+	
+	override var debugDescription: String { get {
+		return "\(plugName): \(authorName) (\(plugCopyright)), \(plugType)"
+
+	}}
+	
 	override var description: String {
 	get {
-		return "\(plugName): \(authorName) (\(plugCopyright)), \(plugType)"
+		return self.debugDescription
 	}
 	}
 	
