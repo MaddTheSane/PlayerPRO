@@ -108,9 +108,7 @@
 		55085D851836EE0F004A152F /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55085D841836EE0F004A152F /* CoreAudio.framework */; };
 		55085D881836EE7B004A152F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55085D861836EE7B004A152F /* AudioToolbox.framework */; };
 		5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508C3ED16CEB33B007CA458 /* SampleCellView.m */; };
-		55096A3210E0A6EF000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
-		55096A3C10E0A74A000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		550A474318A455CC0052AED7 /* VSTFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 550A474218A455CC0052AED7 /* VSTFunctions.h */; };
 		550A474418A455CC0052AED7 /* VSTFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 550A474218A455CC0052AED7 /* VSTFunctions.h */; };
 		550A474718A458380052AED7 /* stub-VSTPlugIn.c in Sources */ = {isa = PBXBuildFile; fileRef = 550A474518A458380052AED7 /* stub-VSTPlugIn.c */; };
@@ -263,7 +261,7 @@
 		55680A1E19045F0A00F7616D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55680A2419045F0A00F7616D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55680A2219045F0A00F7616D /* InfoPlist.strings */; };
 		55680A2719045F0A00F7616D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A2619045F0A00F7616D /* main.m */; };
-		55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55680A3A19046D9800F7616D /* PPSTImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A3919046D9800F7616D /* PPSTImporter.m */; };
 		55680A41190486E900F7616D /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		55680A45190497B400F7616D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A44190497B400F7616D /* UIKit.framework */; };
@@ -478,8 +476,6 @@
 		5586884810BF632500FCC24D /* ULT.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340FE10BB5368005208D1 /* ULT.c */; };
 		5586884910BF632C00FCC24D /* UMX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5533410010BB5368005208D1 /* UMX.c */; };
 		5586884A10BF633300FCC24D /* XM.c in Sources */ = {isa = PBXBuildFile; fileRef = 5533410310BB5368005208D1 /* XM.c */; };
-		5586889310BF67F100FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
-		558688A910BF683C00FCC24D /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
 		55868A7C10BFB4B300FCC24D /* APPL.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DD10BB5368005208D1 /* APPL.c */; };
 		558D4DDA1666F14E00A333E8 /* PPDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DD81666F14E00A333E8 /* PPDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4DD91666F14E00A333E8 /* PPDriver.m */; };
@@ -680,7 +676,6 @@
 		55ECD27F1992C2ED00480788 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECD27E1992C2ED00480788 /* main.m */; };
 		55ECD2861992C37300480788 /* Midi_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */; };
 		55ECD2871992C39A00480788 /* MIDI-GM-Small.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340EC10BB5368005208D1 /* MIDI-GM-Small.c */; };
-		55ECD2881992C39A00480788 /* MIDI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340ED10BB5368005208D1 /* MIDI.c */; };
 		55ECD2891992C39A00480788 /* PTMID.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F010BB5368005208D1 /* PTMID.c */; };
 		55ECD28A1992C39A00480788 /* PTMIDINP.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F210BB5368005208D1 /* PTMIDINP.c */; };
 		55ECD28B1992C39A00480788 /* PTMIDSAV.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F310BB5368005208D1 /* PTMIDSAV.c */; };
@@ -689,6 +684,10 @@
 		55ECD28E1992C3BC00480788 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55ECD2911992C5C100480788 /* MIDI.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECD28F1992C58000480788 /* MIDI.m */; };
 		55ECD2941992C6A600480788 /* PPMIDIImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECD2931992C6A600480788 /* PPMIDIImporter.m */; };
+		55ECD2961993017800480788 /* net.sourceforge.playerpro.MIDI-Import.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55ECD2751992C2ED00480788 /* net.sourceforge.playerpro.MIDI-Import.xpc */; };
+		55ECD297199301AB00480788 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		55ECD298199301BA00480788 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
+		55ECD299199304D700480788 /* MIDI.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppimpexp */; };
 		55EE2D8817E12F9300FED42A /* Amplitude.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE43410E06BF200177B4C /* Amplitude.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EE2D8917E12F9300FED42A /* Depth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6A410E0886400177B4C /* Depth.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EE2D8A17E12F9300FED42A /* Echo.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6E510E0886A00177B4C /* Echo.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -1598,14 +1597,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		55680A321904661E00F7616D /* CopyFiles */ = {
+		55680A321904661E00F7616D /* Copy XPC Services */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in CopyFiles */,
+				55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in Copy XPC Services */,
 			);
+			name = "Copy XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5573A1011656FAF100A5AECA /* CopyFiles */ = {
@@ -1656,6 +1656,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				55ECD299199304D700480788 /* MIDI.ppimpexp in Copy Plug-ins */,
 				5517DAC5180CAD61001413D0 /* ULT.ppimpexp in Copy Plug-ins */,
 				5578C4A017D9E8B50057D11B /* MOD.ppimpexp in Copy Plug-ins */,
 				5578C4A117D9E8B50057D11B /* 669.ppimpexp in Copy Plug-ins */,
@@ -1768,6 +1769,16 @@
 				55CBFAE011EB77ED0028C6BB /* XM.ppimpexp in Copy PlugIns */,
 			);
 			name = "Copy PlugIns";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ECD2951993016700480788 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				55ECD2961993017800480788 /* net.sourceforge.playerpro.MIDI-Import.xpc in CopyFiles */,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -2793,11 +2804,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55ECD297199301AB00480788 /* Cocoa.framework in Frameworks */,
 				55B7E65A161D1D4E000D988C /* PlayerPROCore.framework in Frameworks */,
-				5586889310BF67F100FCC24D /* Carbon.framework in Frameworks */,
-				558688A910BF683C00FCC24D /* QuickTime.framework in Frameworks */,
-				55096A3210E0A6EF000EFFE6 /* CoreFoundation.framework in Frameworks */,
-				55096A3C10E0A74A000EFFE6 /* CoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2896,6 +2904,7 @@
 				55ECD28E1992C3BC00480788 /* Carbon.framework in Frameworks */,
 				55ECD28D1992C3B000480788 /* PlayerPROCore.framework in Frameworks */,
 				55ECD2761992C2ED00480788 /* Foundation.framework in Frameworks */,
+				55ECD298199301BA00480788 /* QuickTime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4769,7 +4778,7 @@
 				5578C47F17D9E8560057D11B /* Resources */,
 				5578C49C17D9E8840057D11B /* Copy Frameworks */,
 				5578C49F17D9E8A30057D11B /* Copy Plug-ins */,
-				55680A321904661E00F7616D /* CopyFiles */,
+				55680A321904661E00F7616D /* Copy XPC Services */,
 				5578C4F417DA996C0057D11B /* Copy Spotlight */,
 				55F41A3017EF8A8E00605DF8 /* Strip Headers */,
 			);
@@ -5292,6 +5301,7 @@
 				55868A7710BFB46100FCC24D /* Rez */,
 				5586888F10BF67F100FCC24D /* Sources */,
 				5586889110BF67F100FCC24D /* Frameworks */,
+				55ECD2951993016700480788 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -6752,7 +6762,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55ECD2881992C39A00480788 /* MIDI.c in Sources */,
 				55ECD28B1992C39A00480788 /* PTMIDSAV.c in Sources */,
 				55ECD2871992C39A00480788 /* MIDI-GM-Small.c in Sources */,
 				55ECD2891992C39A00480788 /* PTMID.c in Sources */,
@@ -8448,6 +8457,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COMPRESS_PNG_FILES = YES;
+				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -9418,7 +9428,6 @@
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
-				ONLY_ACTIVE_ARCH = NO;
 			};
 			name = Debug;
 		};
@@ -9467,6 +9476,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_NS_ASSERTIONS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -9807,10 +9817,13 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MIDI Import/MIDI Import-Prefix.pch";
 				INFOPLIST_FILE = "MIDI Import/MIDI Import-Info.plist";
 				MACH_O_TYPE = mh_execute;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
 				WRAPPER_EXTENSION = xpc;
 			};
@@ -9824,6 +9837,7 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MIDI Import/MIDI Import-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9833,6 +9847,8 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "MIDI Import/MIDI Import-Info.plist";
 				MACH_O_TYPE = mh_execute;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
 				WRAPPER_EXTENSION = xpc;
 			};

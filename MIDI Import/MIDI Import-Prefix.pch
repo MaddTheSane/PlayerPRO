@@ -12,6 +12,7 @@
 #include <Carbon/Carbon.h>
 #include <QuickTime/QuickTime.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <tgmath.h>
 
 #if 0
 #define Debugger() oldDebug(__LINE__, __FILE__)

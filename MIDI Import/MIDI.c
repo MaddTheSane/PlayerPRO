@@ -45,15 +45,15 @@ static inline bool compMem(Ptr a, Ptr b, long s)
 	return memcmp(a, b, s) == 0;
 }
 
-OSErr TestMIDIFile(Ptr AlienFile)
+MADErr TestMIDIFile(Ptr AlienFile)
 {
 	if (compMem(AlienFile, "MThd", 4))
-		return noErr;
+		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
 }
 
-OSErr ExtractMIDIInfo(PPInfoRec *info, Ptr theMIDI)
+MADErr ExtractMIDIInfo(PPInfoRec *info, Ptr theMIDI)
 {
 	info->signature = 'Midi';
 	strcpy(info->internalFileName, "");
@@ -63,7 +63,7 @@ OSErr ExtractMIDIInfo(PPInfoRec *info, Ptr theMIDI)
 	info->totalTracks = 0;
 	strcpy(info->formatDescription, "Midi Plug");
 	
-	return noErr;
+	return MADNoErr;
 }
 
 void CreateResult(Ptr aPtr)
