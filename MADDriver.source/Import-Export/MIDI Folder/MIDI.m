@@ -55,6 +55,13 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 		}
 			break;
 			
+		case MADPlugImport:
+		{
+			[[conn remoteObjectProxy] importMIDIFileAtURL:ourURL withReply:^(NSData *fileData, MADErr error) {
+				
+			}];
+		}
+			
 		default:
 			theErr = MADOrderNotImplemented;
 			isDone = YES;

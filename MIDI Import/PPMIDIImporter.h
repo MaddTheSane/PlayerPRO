@@ -25,7 +25,6 @@
 
 @end
 
-@interface PPMIDIImporter : NSObject <NSXPCListenerDelegate, PPMIDIImportHelper>
-+ (instancetype)sharedImporter;
+@interface PPMIDIImporter : NSObject <PPMIDIImportHelper>
 
 @end

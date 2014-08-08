@@ -64,16 +64,6 @@ void ConvertMidiFile(char *src, MADMusic *theMAD, MADDriverSettings *init);
 
 @implementation PPMIDIImporter
 
-+ (instancetype)sharedImporter
-{
-	static dispatch_once_t onceToken;
-	static PPMIDIImporter *shared;
-	dispatch_once(&onceToken, ^{
-		shared = [PPMIDIImporter new];
-	});
-	return shared;
-}
-
 - (void)importMIDIFileAtURL:(NSURL*)theURL withReply:(void (^)(NSData *, MADErr error))reply
 {
 	
@@ -83,7 +73,6 @@ void ConvertMidiFile(char *src, MADMusic *theMAD, MADDriverSettings *init);
 {
 	PPInfoRec theInfo = {0};
 	MADErr theErr = MADNoErr;
-	//NSMutableDictionary *PPInfoDict = [[NSMutableDictionary alloc] initWithCapacity:8];
 	NSDictionary *fileInfo = [theURL resourceValuesForKeys:@[NSURLFileSizeKey] error:NULL];
 	if (!fileInfo) {
 		reply(nil, MADReadingErr);
@@ -124,15 +113,6 @@ void ConvertMidiFile(char *src, MADMusic *theMAD, MADDriverSettings *init);
 	myErr = TestMIDIFile([fileData bytes]);
 	[fileData release];
 	reply(myErr);
-}
-
-- (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection
-{
-	newConnection.exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPMIDIImportHelper)];
-	newConnection.exportedObject = self;
-	[newConnection resume];
-	
-	return YES;
 }
 
 @end
