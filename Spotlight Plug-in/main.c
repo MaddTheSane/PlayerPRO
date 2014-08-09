@@ -143,7 +143,7 @@ static HRESULT MetadataImporterQueryInterface(void *thisInstance, REFIID iid, LP
 		return S_OK;
 	} else if (CFEqual(interfaceID, IUnknownUUID)) {
 		/* If the IUnknown interface was requested, same as above. */
-		((MDImportPlug*)thisInstance)->conduitInterface = &testInterfaceFtbl;
+		((MDImportPlug*)thisInstance)->conduitInterface = &testInterfaceURLFtbl;
 		((MDImporterURLInterfaceStruct *)((MDImportPlug*)thisInstance)->conduitInterface)->AddRef(thisInstance);
 		*ppv = thisInstance;
 		CFRelease(interfaceID);

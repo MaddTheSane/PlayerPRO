@@ -56,7 +56,7 @@
 	[authorField setStringValue:self.info.authorName];
 	[typeField setStringValue:self.info.plugType];
 	[theCopyrightField setStringValue:self.info.plugCopyright];
-	NSImage *plugImage = [[NSWorkspace sharedWorkspace] iconForFile:[self.info.plugURL path]];
+	NSImage *plugImage = [[NSWorkspace sharedWorkspace] iconForFile:self.info.plugURL.path];
 	[plugImage setSize:NSMakeSize(64, 64)];
 	[pluginImage setImage:plugImage];
 }

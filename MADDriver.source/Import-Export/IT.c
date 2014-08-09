@@ -71,12 +71,12 @@ static inline unsigned short ReadUS(char **samplePtr)
 
 static uintptr_t read_itcompr8(ITPACK* status, char **reader, MADByte *sl_buffer, unsigned short count, unsigned short* incnt)
 {
-	MADByte			*dest=sl_buffer,*end=sl_buffer+count;
-	unsigned short	x,y,needbits,havebits,new_count=0;
+	MADByte			*dest = sl_buffer, *end = sl_buffer + count;
+	unsigned short	x = 0, y = 0, needbits = 0, havebits = 0, new_count=0;
 	unsigned short	bits = status->bits;
 	unsigned short	bufbits = status->bufbits;
 	char			last = status->last;
-	MADByte			buf;
+	MADByte			buf = 0;
 	
 	//FIXME: Static analyzer says that this assignment may be garbage under certain circumstances.
 	buf = status->buf;
@@ -84,7 +84,7 @@ static uintptr_t read_itcompr8(ITPACK* status, char **reader, MADByte *sl_buffer
 	while (dest < end) {
 		needbits = new_count ? 3 : bits;
 		x = havebits = 0;
-		while (needbits) {
+		while (needbits > 0) {
 			// feed buffer
 			if (!bufbits) {
 				if((*incnt)--)
@@ -227,15 +227,15 @@ static uintptr_t read_itcompr16(ITPACK *status,char* *reader,short *sl_buffer,un
 
 static MADErr DecompressSample(short bits, char* reader, size_t length, char *destPtr)		// sloader.c
 {
-	size_t			stodo;
-	size_t			result, c_block=0;	/* compression bytes until next block */
-	ITPACK			status;
-	unsigned short	incnt;
+	size_t			stodo = 0;
+	size_t			result = 0, c_block=0;	/* compression bytes until next block */
+	ITPACK			status = {0};
+	unsigned short	incnt = 0;
 	
 	if (bits == 16)
 		length /= 2;
 	
-	while(length) {
+	while(length > 0) {
 		stodo = (length < SLBUFSIZE) ? length : SLBUFSIZE;
 		
 		if (!c_block) {
