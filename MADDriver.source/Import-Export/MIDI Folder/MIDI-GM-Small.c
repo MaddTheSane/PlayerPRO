@@ -463,12 +463,12 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 				if (iErr) DebugLong(iErr);
 				
 				for (x = 0; x < curIns.cRegions; x++) {
-					RGNHEADER 	rgnh;
-					WSMPL 		wsmp;
+					RGNHEADER 	rgnh = {0};
+					WSMPL 		wsmp = {0};
 					WLOOP		loop;
-					WAVELINK	wlnk;
+					WAVELINK	wlnk = {0};
 					MyAtom 		wvpl, wave;
-					WAVEFORMAT	fmt;
+					WAVEFORMAT	fmt = {0};
 					MyAtom 		dataAt;
 					
 					iErr = FindAtomById(sat, &rgnAt, true, 'rgn ', x);
