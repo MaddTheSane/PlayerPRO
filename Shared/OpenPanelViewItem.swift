@@ -24,7 +24,7 @@ enum trackerType : UInt32 {
 	case other
 }
 
-class OpenPanelViewItem: NSObject, DebugPrintable {
+class OpenPanelViewItem: DebugPrintable, Printable {
 	private(set) var name: String! = nil
 	private(set) var theUtiType: trackerType = .tracker
 	private(set) var utis: [String]! = nil
@@ -33,22 +33,19 @@ class OpenPanelViewItem: NSObject, DebugPrintable {
 		switch (typ) {
 		case .trackerType:
 			theUtiType = .tracker;
-			break;
 			
 		case .playlistType:
 			theUtiType = .playlist
-			break;
 			
 		case .instrumentType:
 			theUtiType = .instrument
-			break;
 			
 		case .otherType:
-			fallthrough
+			theUtiType = .other
+			
 		default:
 			// Because we can't fail on inits yet...
 			theUtiType = .other
-			break;
 			
 		//default:
 		//	break;
@@ -56,11 +53,9 @@ class OpenPanelViewItem: NSObject, DebugPrintable {
 		
 		utis = ut
 		name = nam
-		
-		super.init()
 	}
 
-	override var debugDescription: String { get {
+	var debugDescription: String { get {
 		var des: String
 		if (theUtiType == .playlist) {
 			des = "Playlist";
@@ -77,7 +72,7 @@ class OpenPanelViewItem: NSObject, DebugPrintable {
 		return "\(name): \(des) - \(utis.description)"
 	}}
 
-	override var description: String { get {
+	var description: String { get {
 		return self.debugDescription
 	}}
 

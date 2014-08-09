@@ -70,7 +70,7 @@ func ^(lhs: MADBool, rhs: MADBool) -> MADBool {
 }
 
 
-@prefix func !(a: MADBool) -> MADBool {
+prefix func !(a: MADBool) -> MADBool {
 	return a ^ true
 }
 
@@ -86,9 +86,9 @@ func &=(inout lhs: MADBool, rhs: MADBool) {
 	lhs = lhsB & rhsB
 }
 
-extension MADBool : BooleanLiteralConvertible, LogicValue {
-	init(_ v : LogicValue) {
-		if v.getLogicValue() {
+extension MADBool : BooleanLiteralConvertible, BooleanType {
+	init(_ v : BooleanType) {
+		if v.boolValue {
 			self = 1
 		} else {
 			self = 0
@@ -103,11 +103,11 @@ extension MADBool : BooleanLiteralConvertible, LogicValue {
 		}
 	}
 	
-	public func getLogicValue() -> Bool {
+	public var boolValue: Bool { get {
 		if (self == 0) {
 			return false
 		} else {
 			return true
 		}
-	}
+		}}
 }

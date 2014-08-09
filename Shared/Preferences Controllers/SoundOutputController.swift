@@ -11,7 +11,11 @@ import PlayerPROKit
 
 class SoundOutputController: PPSoundSettingsViewController, PPSoundSettingsViewControllerDelegate {
 	
-	convenience init() {
+	convenience required init(coder: NSCoder!) {
+		self.init()
+	}
+	
+	convenience override init() {
 		self.init(nibName: "PPSoundSettingsViewController", bundle: NSBundle(forClass: PPSoundSettingsViewController.self))
 	}
 	
@@ -81,7 +85,7 @@ class SoundOutputController: PPSoundSettingsViewController, PPSoundSettingsViewC
 		NSNotificationCenter.defaultCenter().postNotificationName(PPSoundPreferencesDidChange, object: self)
 	}
 	
-	init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
 		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 		
 		self.delegate = self;

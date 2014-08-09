@@ -32,13 +32,13 @@ class PPMusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, 
 		}
 	}
 	
-	init() {
+	override init() {
 		theIndexSet = NSIndexSet()
 		
 		super.init()
 	}
 	
-	convenience init(pasteboardPropertyList propertyList: AnyObject!, ofType type: String!) {
+	convenience required init(pasteboardPropertyList propertyList: AnyObject!, ofType type: String!) {
 		if (type == PPMLDCUTI) {
 			var unArchive = NSKeyedUnarchiver(forReadingWithData: propertyList as NSData)
 			self.init(indexSet:unArchive.decodeObjectForKey(PPMLDCUTI) as NSIndexSet)
@@ -63,7 +63,7 @@ class PPMusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, 
 		aCoder.encodeObject(theIndexSet, forKey: PPMLDCUTI)
 	}
 	
-	convenience init(coder aDecoder: NSCoder!) {
+	convenience required init(coder aDecoder: NSCoder!) {
 		self.init(indexSet:aDecoder.decodeObjectForKey(PPMLDCUTI) as NSIndexSet)
 	}
 	

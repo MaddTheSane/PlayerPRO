@@ -51,7 +51,7 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPri
 		if (!theparam) {
 			return 0;
 		}
-		return theparam.bridgeToObjectiveC().fileSize()
+		return (theparam as NSDictionary).fileSize()
 	}}
 
 	override class func initialize() {
@@ -143,7 +143,7 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPri
 		aCoder.encodeObject(musicURL, forKey: kMusicListURLKey)
 	}
 	
-	convenience init(coder aDecoder: NSCoder!) {
+	convenience required init(coder aDecoder: NSCoder!) {
 		self.init(URL:aDecoder.decodeObjectForKey(kMusicListURLKey) as NSURL);
 	}
 }

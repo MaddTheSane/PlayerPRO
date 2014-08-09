@@ -21,6 +21,11 @@ class OpenPanelViewController: NSViewController {
 		openPanel.allowsMultipleSelection = self.allowsMultipleSelectionOfTrackers
 	}}
 	
+	required init(coder: NSCoder!) {
+		
+		super.init(coder: coder)
+	}
+	
 	@IBAction func selectUTI(sender: AnyObject!) {
 		var tag = (sender as NSMenuItem).tag;
 		var allowedUTIs = [String]();
@@ -110,28 +115,28 @@ class OpenPanelViewController: NSViewController {
 		openPanel = panel
 		super.init(nibName: "OpenPanelViewController", bundle: nil)
 		var mutArray = [OpenPanelViewItem]();
-		if (td) {
+		if (td != nil) {
 			var tdHere = td!
 			for (key, utis) in tdHere {
 				var obj = OpenPanelViewItem(type: .trackerType, utis: utis, name: key)
 				utiObjects.append(obj)
 			}
 		}
-		if (pd) {
+		if ((pd) != nil) {
 			var pdHere = td!
 			for (key, utis) in pdHere {
 				var obj = OpenPanelViewItem(type: .playlistType, utis: utis, name: key)
 				utiObjects.append(obj)
 			}
 		}
-		if (insDict) {
+		if ((insDict) != nil) {
 			var insHere = insDict!
 			for (key, utis) in insHere {
 				var obj = OpenPanelViewItem(type: .instrumentType, utis: utis, name: key)
 				utiObjects.append(obj)
 			}
 		}
-		if (adddict) {
+		if (adddict != nil) {
 			var addHere = adddict!
 			for (key, utis) in addHere {
 				var obj = OpenPanelViewItem(type: .otherType, utis: utis, name: key)

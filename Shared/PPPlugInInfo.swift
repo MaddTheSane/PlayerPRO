@@ -38,7 +38,7 @@ class PPPlugInInfo: NSObject, Hashable, DebugPrintable {
 		plugType = pt
 		plugURL = pu
 		var tmpCopy: AnyObject? = tmpBundle["NSHumanReadableCopyright"]
-		if (tmpCopy) {
+		if (tmpCopy != nil) {
 			plugCopyright = tmpCopy! as String
 		} else {
 			plugCopyright = "No Copyright Info available"
@@ -46,11 +46,9 @@ class PPPlugInInfo: NSObject, Hashable, DebugPrintable {
 		super.init()
 	}
 	
-	override var hash: Int {
-	get {
+	override var hash: Int { get {
 		return self.hashValue
-	}
-	}
+	}}
 	
 	override var hashValue: Int { get {
 		return plugName.hash ^ plugType.hash ^ authorName.hash ^ plugCopyright.hash
@@ -61,11 +59,9 @@ class PPPlugInInfo: NSObject, Hashable, DebugPrintable {
 
 	}}
 	
-	override var description: String {
-	get {
+	override var description: String { get {
 		return self.debugDescription
-	}
-	}
+	}}
 	
 	override func isEqual(object: AnyObject!) -> Bool {
 		if (!object) {
