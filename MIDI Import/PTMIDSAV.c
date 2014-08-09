@@ -22,22 +22,6 @@
 #include <errno.h>
 #include "PTMID.h"
 
-void pStrcat(unsigned char *s1, unsigned char *s2)
-{
-	unsigned char *p;
-	short len, i;
-	
-	if (*s1+*s2<=255) {
-		p = *s1 + s1 + 1;
-		*s1 += (len = *s2++);
-	} else {
-		*s1 = 255;
-		p = s1 + 256 - (len = *s2++);
-	}
-	for (i=len; i; --i)
-		*p++ = *s2++;
-}
-
 void Erreur(short a, short b)
 {
 	char errStr[256] = {0};

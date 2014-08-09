@@ -6,10 +6,9 @@
 //
 //
 
-#include <stdio.h>
 #include <PlayerPROCore/PlayerPROCore.h>
-#include "PPMIDIImporter.h"
-
+#import "PPMIDIImporter.h"
+#import "PPMidiHelper.h"
 
 extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {

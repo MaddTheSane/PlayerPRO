@@ -171,7 +171,21 @@ static OSErr GetAtomDataById(MyAtom at, OSType type, void *data, long size);
 /*************************/
 
 void pStrcpy(unsigned char *s1, const unsigned char *s2);
-void pStrcat(unsigned char *s1, unsigned char *s2);
+static void pStrcat(unsigned char *s1, unsigned char *s2)
+{
+	unsigned char *p;
+	short len, i;
+	
+	if (*s1+*s2<=255) {
+		p = *s1 + s1 + 1;
+		*s1 += (len = *s2++);
+	} else {
+		*s1 = 255;
+		p = s1 + 256 - (len = *s2++);
+	}
+	for (i=len; i; --i)
+		*p++ = *s2++;
+}
 
 
 static void OctavesMIDIName(short id, Str255 String)
@@ -239,7 +253,7 @@ void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, sh
 	}
 	
 	memset(inst, 0, sizeof(InstrData));
-	inst->no			= ins;
+	inst->no		= ins;
 	inst->volFade	= 900;
 	
 	/*********/
@@ -281,8 +295,8 @@ void ComputeQuicktimeSound(short GMInstruID, sData **sample, InstrData* inst, sh
 		
 		myNoteRequest.info.flags = 0;
 		myNoteRequest.info.midiChannelAssignment = 0;
-		*(short *)(&myNoteRequest.info.polyphony) = EndianS16_NtoB(2);				// simultaneous tones
-		*(Fixed *)(&myNoteRequest.info.typicalPolyphony) = EndianU32_NtoB(0x00010000);
+		*(short *)(&myNoteRequest.info.polyphony)			= EndianS16_NtoB(2);				// simultaneous tones
+		*(Fixed *)(&myNoteRequest.info.typicalPolyphony)	= EndianU32_NtoB(0x00010000);
 		
 		if (GMInstruID < 1)
 			GMInstruID = 1;

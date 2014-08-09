@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#include <PlayerPROCore/PPDefs.h>
 
 #define kPPTotalPatterns @"Total Patterns"
 #define kPPPartitionLength @"Partition Length"
