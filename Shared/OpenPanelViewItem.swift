@@ -46,9 +46,6 @@ class OpenPanelViewItem: DebugPrintable, Printable {
 		default:
 			// Because we can't fail on inits yet...
 			theUtiType = .other
-			
-		//default:
-		//	break;
 		}
 		
 		utis = ut
@@ -73,7 +70,19 @@ class OpenPanelViewItem: DebugPrintable, Printable {
 	}}
 
 	var description: String { get {
-		return self.debugDescription
+		var des: String
+		if (theUtiType == .playlist) {
+			des = "Playlist";
+		} else if (theUtiType == .instrument) {
+			des = "Instrument";
+		} else if (theUtiType == .tracker) {
+			des = "Tracker";
+		} else if (theUtiType == .other) {
+			des = "Other";
+		} else {
+			des = "Unknown";
+		}
+		return "\(name): \(des)"
 	}}
 
 }

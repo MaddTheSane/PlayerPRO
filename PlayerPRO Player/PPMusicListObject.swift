@@ -37,7 +37,7 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPri
 		var isValid = musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)
 		
 		if (!musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)) {
-			NSLog("PPMusicListObject: Could not find out if extension is hidden in file \"%@\", error: %@", musicURL.path, err!.localizedDescription);
+			println("PPMusicListObject: Could not find out if extension is hidden in file \(musicURL.path), error: \(err!.localizedDescription)");
 			return musicURL.lastPathComponent;
 		} else {
 			var retStr = val as String;
