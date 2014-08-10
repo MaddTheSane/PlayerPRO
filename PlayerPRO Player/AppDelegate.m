@@ -67,7 +67,6 @@ static NSInteger selMusFromList = -1;
 @synthesize toolsPanel;
 @synthesize instrumentController;
 @synthesize musicList;
-@synthesize currentlyPlayingIndex, previouslyPlayingIndex;
 @synthesize preferences;
 @synthesize isQuitting;
 @synthesize trackerUTIs = _trackerUTIs;
@@ -108,9 +107,9 @@ static NSInteger selMusFromList = -1;
 
 - (BOOL)loadMusicFromCurrentlyPlayingIndexWithError:(out NSError *__autoreleasing*)theErr
 {
-	currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
-	BOOL isGood = [self loadMusicURL:currentlyPlayingIndex.playbackURL error:theErr];
-	[currentlyPlayingIndex movePlayingIndexToOtherIndex:previouslyPlayingIndex];
+	self.currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:self.currentlyPlayingIndex.index];
+	BOOL isGood = [self loadMusicURL:self.currentlyPlayingIndex.playbackURL error:theErr];
+	[self.currentlyPlayingIndex movePlayingIndexToOtherIndex:self.previouslyPlayingIndex];
 	return isGood;
 }
 
@@ -125,7 +124,7 @@ static NSInteger selMusFromList = -1;
 			return;
 		}
 		if (load && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
-			currentlyPlayingIndex.index = similarMusicIndex;
+			self.currentlyPlayingIndex.index = similarMusicIndex;
 			[self selectCurrentlyPlayingMusic];
 			NSError *err;
 			if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
@@ -135,7 +134,7 @@ static NSInteger selMusFromList = -1;
 			[self selectMusicAtIndex:similarMusicIndex];
 		}
 	} else if (load && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
-		currentlyPlayingIndex.index = [musicList countOfMusicList] - 1;
+		self.currentlyPlayingIndex.index = [musicList countOfMusicList] - 1;
 		//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
 		[self selectCurrentlyPlayingMusic];
 		NSError *err;
@@ -260,9 +259,9 @@ static NSInteger selMusFromList = -1;
 
 - (void)selectCurrentlyPlayingMusic
 {
-	if (currentlyPlayingIndex.index >= 0) {
+	if (self.currentlyPlayingIndex.index >= 0) {
 		//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
-		[self selectMusicAtIndex:currentlyPlayingIndex.index];
+		[self selectMusicAtIndex:self.currentlyPlayingIndex.index];
 	}
 }
 
@@ -286,7 +285,7 @@ static NSInteger selMusFromList = -1;
 			break;
 			
 		case PPLoadNext:
-			if ([musicList countOfMusicList] > ++currentlyPlayingIndex.index) {
+			if ([musicList countOfMusicList] > ++self.currentlyPlayingIndex.index) {
 				[self selectCurrentlyPlayingMusic];
 				NSError *err;
 				if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
@@ -295,7 +294,7 @@ static NSInteger selMusFromList = -1;
 				}
 			} else {
 				if ([userDefaults boolForKey:PPLoopMusicWhenDone]) {
-					currentlyPlayingIndex.index = 0;
+					self.currentlyPlayingIndex.index = 0;
 					[self selectCurrentlyPlayingMusic];
 					NSError *err;
 					if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
@@ -313,7 +312,7 @@ static NSInteger selMusFromList = -1;
 			break;
 			
 		case PPLoadRandom:
-			currentlyPlayingIndex.index = random() % [musicList countOfMusicList];
+			self.currentlyPlayingIndex.index = random() % [musicList countOfMusicList];
 			[self selectCurrentlyPlayingMusic];
 			NSError *err;
 			if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
@@ -434,7 +433,7 @@ static NSInteger selMusFromList = -1;
 					
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						@autoreleasepool {
-							OSErr thErr =[self saveMusicAsAIFFToURL:[savePanel URL] usingSettings:&exportSettings];
+							OSErr thErr = [self saveMusicAsAIFFToURL:[savePanel URL] usingSettings:&exportSettings];
 							[madDriver endExport];
 							if (thErr != MADNoErr)
 								return;
@@ -480,7 +479,7 @@ static NSInteger selMusFromList = -1;
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
 						OSErr theErr = MADNoErr;
 						
-						NSURL *oldURL = [[musicList objectInMusicListAtIndex:previouslyPlayingIndex.index] musicURL];
+						NSURL *oldURL = [[musicList objectInMusicListAtIndex:self.previouslyPlayingIndex.index] musicURL];
 						NSArray *metadataInfo;
 						__block NSError *expErr = nil;
 						dispatch_block_t errBlock = ^{
@@ -505,12 +504,12 @@ static NSInteger selMusFromList = -1;
 							AVMutableMetadataItem *titleName = [AVMutableMetadataItem new];
 							[titleName setKeySpace:AVMetadataKeySpaceCommon];
 							[titleName setKey:AVMetadataCommonKeyTitle];
-							[titleName setValue:oldMusicName];
+							titleName.value = oldMusicName;
 							
 							AVMutableMetadataItem *dataInfo = [AVMutableMetadataItem new];
-							[titleName setKeySpace:AVMetadataKeySpaceCommon];
-							[titleName setKey:AVMetadataCommonKeySoftware];
-							[titleName setValue:@"PlayerPRO Player"];
+							dataInfo.keySpace = AVMetadataKeySpaceCommon;
+							dataInfo.key = AVMetadataCommonKeySoftware;
+							dataInfo.value = @"PlayerPRO Player";
 							
 							AVMutableMetadataItem *musicInfoQTUser = [AVMutableMetadataItem new];
 							[musicInfoQTUser setKeySpace:AVMetadataKeySpaceQuickTimeUserData];
@@ -773,11 +772,11 @@ return; \
 {
 	[madDriver beginExport];
 	
-	if (previouslyPlayingIndex.index == -1) {
+	if (self.previouslyPlayingIndex.index == -1) {
 		// saveMusicAs: will end the exporting when it is done.
 		[self saveMusicAs:sender];
 	} else {
-		NSURL *fileURL = previouslyPlayingIndex.playbackURL;
+		NSURL *fileURL = self.previouslyPlayingIndex.playbackURL;
 		NSString *filename = [fileURL path];
 		NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
 		NSString *utiFile = [sharedWorkspace typeOfFile:filename error:nil];
@@ -894,7 +893,7 @@ return; \
 - (void)doubleClickMusicList
 {
 	NSError *err;
-	currentlyPlayingIndex.index = [tableView selectedRow];
+	self.currentlyPlayingIndex.index = [tableView selectedRow];
 	if ([self loadMusicFromCurrentlyPlayingIndexWithError:&err] == NO)
 		[[NSAlert alertWithError:err] runModal];
 }
@@ -983,10 +982,10 @@ return; \
 	self.plugInInfos = [[NSMutableArray alloc] init];
 	[self updatePlugInInfoMenu];
 	
-	previouslyPlayingIndex = [[PPCurrentlyPlayingIndex alloc] init];
-	previouslyPlayingIndex.index = -1;
-	currentlyPlayingIndex = [[PPCurrentlyPlayingIndex alloc] init];
-	[previouslyPlayingIndex movePlayingIndexToOtherIndex:currentlyPlayingIndex];
+	self.previouslyPlayingIndex = [[PPCurrentlyPlayingIndex alloc] init];
+	self.previouslyPlayingIndex.index = -1;
+	self.currentlyPlayingIndex = [[PPCurrentlyPlayingIndex alloc] init];
+	[self.previouslyPlayingIndex movePlayingIndexToOtherIndex:self.currentlyPlayingIndex];
 	
 	exportController = [[PPSoundSettingsViewController alloc] init];
 	exportController.delegate = self;
@@ -1055,18 +1054,18 @@ return; \
 - (void)musicListContentsDidMove
 {
 	NSInteger i;
-	if (currentlyPlayingIndex.index != -1) {
+	if (self.currentlyPlayingIndex.index != -1) {
 		for (i = 0; i < [musicList countOfMusicList]; i++) {
-			if ([currentlyPlayingIndex.playbackURL isEqual:[musicList URLAtIndex:i]]) {
-				currentlyPlayingIndex.index = i;
+			if ([self.currentlyPlayingIndex.playbackURL isEqual:[musicList URLAtIndex:i]]) {
+				self.currentlyPlayingIndex.index = i;
 				break;
 			}
 		}
 	}
-	if (previouslyPlayingIndex.index != -1) {
+	if (self.previouslyPlayingIndex.index != -1) {
 		for (i = 0; i < [musicList countOfMusicList]; i++) {
-			if ([previouslyPlayingIndex.playbackURL isEqual:[musicList URLAtIndex:i]]) {
-				previouslyPlayingIndex.index = i;
+			if ([self.previouslyPlayingIndex.playbackURL isEqual:[musicList URLAtIndex:i]]) {
+				self.previouslyPlayingIndex.index = i;
 				break;
 			}
 		}
@@ -1084,7 +1083,7 @@ return; \
 - (IBAction)playSelectedMusic:(id)sender
 {
 	NSError *error;
-	currentlyPlayingIndex.index = [tableView selectedRow];
+	self.currentlyPlayingIndex.index = [tableView selectedRow];
 	if ([self loadMusicFromCurrentlyPlayingIndexWithError:&error] == NO) {
 		[[NSAlert alertWithError:error] runModal];
 	}
@@ -1129,9 +1128,9 @@ return; \
 	}
 	
 	self.paused = YES;
-	currentlyPlayingIndex.index = -1;
-	currentlyPlayingIndex.playbackURL = nil;
-	[currentlyPlayingIndex movePlayingIndexToOtherIndex:previouslyPlayingIndex];
+	self.currentlyPlayingIndex.index = -1;
+	self.currentlyPlayingIndex.playbackURL = nil;
+	[self.currentlyPlayingIndex movePlayingIndexToOtherIndex:self.previouslyPlayingIndex];
 	self.music = [PPMusicObject new];
 	[self setTitleForSongLabelBasedOnMusic];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPMusicDidChange object:self];
@@ -1161,7 +1160,7 @@ return; \
 			[self willChangeValueForKey:kMusicListKVO];
 			[musicList clearMusicList];
 			[self didChangeValueForKey:kMusicListKVO];
-			if (currentlyPlayingIndex.index != -1) {
+			if (self.currentlyPlayingIndex.index != -1) {
 				[self clearMusic];
 			}
 		}
@@ -1351,14 +1350,14 @@ enum PPMusicToolbarTypes {
 {
 	NSError *err;
 	
-	if (currentlyPlayingIndex.index + 1 < [musicList countOfMusicList]) {
-		currentlyPlayingIndex.index++;
+	if (self.currentlyPlayingIndex.index + 1 < [musicList countOfMusicList]) {
+		self.currentlyPlayingIndex.index++;
 		[self selectCurrentlyPlayingMusic];
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
 			[[NSAlert alertWithError:err] runModal];
 		}
 	} else if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoopMusicWhenDone]) {
-		currentlyPlayingIndex.index = 0;
+		self.currentlyPlayingIndex.index = 0;
 		[self selectCurrentlyPlayingMusic];
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
 			[[NSAlert alertWithError:err] runModal];
@@ -1377,8 +1376,8 @@ enum PPMusicToolbarTypes {
 
 - (IBAction)prevButtonPressed:(id)sender
 {
-	if (currentlyPlayingIndex.index > 0) {
-		currentlyPlayingIndex.index--;
+	if (self.currentlyPlayingIndex.index > 0) {
+		self.currentlyPlayingIndex.index--;
 		[self selectCurrentlyPlayingMusic];
 		NSError *err;
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
@@ -1473,13 +1472,13 @@ badTracker:
 
 - (void)musicListDidChange
 {
-	if (currentlyPlayingIndex.index != -1) {
+	if (self.currentlyPlayingIndex.index != -1) {
 		[madDriver stop];
 		[madDriver cleanDriver];
 	}
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtListLoad] && [musicList countOfMusicList] > 0) {
 		NSError *err;
-		currentlyPlayingIndex.index = selMusFromList != -1 ? selMusFromList : 0;
+		self.currentlyPlayingIndex.index = selMusFromList != -1 ? selMusFromList : 0;
 		[self selectCurrentlyPlayingMusic];
 		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
 			[[NSAlert alertWithError:err] runModal];

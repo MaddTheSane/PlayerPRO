@@ -357,9 +357,9 @@
 							[titleName setValue:oldMusicName];
 							
 							AVMutableMetadataItem *dataInfo = [AVMutableMetadataItem new];
-							[titleName setKeySpace:AVMetadataKeySpaceCommon];
-							[titleName setKey:AVMetadataCommonKeySoftware];
-							[titleName setValue:@"PlayerPRO 6"];
+							[dataInfo setKeySpace:AVMetadataKeySpaceCommon];
+							[dataInfo setKey:AVMetadataCommonKeySoftware];
+							[dataInfo setValue:@"PlayerPRO 6"];
 							
 							AVMutableMetadataItem *musicInfoQTUser = [AVMutableMetadataItem new];
 							[musicInfoQTUser setKeySpace:AVMetadataKeySpaceQuickTimeUserData];
