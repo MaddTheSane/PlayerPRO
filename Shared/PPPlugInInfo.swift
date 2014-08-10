@@ -51,7 +51,7 @@ class PPPlugInInfo: NSObject, Hashable, DebugPrintable {
 	}}
 	
 	override var hashValue: Int { get {
-		return plugName.hash ^ plugType.hash ^ authorName.hash ^ plugCopyright.hash
+		return plugName.hashValue ^ plugType.hashValue ^ authorName.hashValue ^ plugCopyright.hashValue
 	}}
 	
 	override var debugDescription: String { get {
