@@ -143,6 +143,12 @@ MADErr initSDL(MADDriverRec *inMADDriver);
 MADErr closeSDL(MADDriverRec *inMADDriver);
 #endif
 
+#ifdef _SDL_MIXER
+bool TestSDLMixerAvailability();
+MADErr initSDLMixer(MADDriverRec *inMADDriver);
+MADErr closeSDLMixer(MADDriverRec *inMADDriver);
+#endif
+
 MADErr	CallImportPlug(MADLibrary	*inMADDriver,
 					   short		PlugNo,			// CODE du plug
 					   MADFourChar	order,

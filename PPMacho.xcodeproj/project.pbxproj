@@ -116,6 +116,7 @@
 		550A474718A458380052AED7 /* stub-VSTPlugIn.c in Sources */ = {isa = PBXBuildFile; fileRef = 550A474518A458380052AED7 /* stub-VSTPlugIn.c */; };
 		550A474818A45D350052AED7 /* OSX-VSTPlugIn.c in Sources */ = {isa = PBXBuildFile; fileRef = 557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.c */; };
 		550A83B7199926B300700708 /* SDL-Audio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550A83B6199926B300700708 /* SDL-Audio.c */; };
+		550A83B919993DBF00700708 /* SDL-SDLMixer.c in Sources */ = {isa = PBXBuildFile; fileRef = 550A83B819993DBF00700708 /* SDL-SDLMixer.c */; };
 		550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
 		550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
@@ -1776,6 +1777,7 @@
 		550A474218A455CC0052AED7 /* VSTFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSTFunctions.h; sourceTree = "<group>"; };
 		550A474518A458380052AED7 /* stub-VSTPlugIn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "stub-VSTPlugIn.c"; sourceTree = "<group>"; };
 		550A83B6199926B300700708 /* SDL-Audio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "SDL-Audio.c"; sourceTree = "<group>"; };
+		550A83B819993DBF00700708 /* SDL-SDLMixer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "SDL-SDLMixer.c"; sourceTree = "<group>"; };
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
 		550B011310BA1E1C004FC5D7 /* PPPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPrivate.h; sourceTree = "<group>"; };
 		550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "OSX-CoreAudio.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -2885,8 +2887,10 @@
 			isa = PBXGroup;
 			children = (
 				550A83B6199926B300700708 /* SDL-Audio.c */,
+				550A83B819993DBF00700708 /* SDL-SDLMixer.c */,
 			);
 			name = "SDL Audio";
+			path = SDL;
 			sourceTree = "<group>";
 		};
 		551292DE163DD68500C2C639 /* PlayerPROKit */ = {
@@ -6251,6 +6255,7 @@
 				5573A36010B50DEB00FF8B50 /* MainDriver.c in Sources */,
 				5573A36210B50DF200FF8B50 /* OutPut8.c in Sources */,
 				5573A36310B50DF600FF8B50 /* realft.c in Sources */,
+				550A83B919993DBF00700708 /* SDL-SDLMixer.c in Sources */,
 				5573A36410B50DFF00FF8B50 /* TickRemover.c in Sources */,
 				5573A3EA10B5147C00FF8B50 /* MyDebugStr.c in Sources */,
 				55C930391819E68700D9E072 /* CocoaFuncs.m in Sources */,
@@ -8442,18 +8447,22 @@
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
+				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
 				FRAMEWORK_VERSION = B;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"BUILDINGPPRO=1",
 					_SDL,
+					_SDL_MIXER,
 					"SDL_IS_LINKED=0",
+					"SDL_MIXER_IS_LINKED=0",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					/Library/Frameworks/SDL2.framework/Headers,
+					/Library/Frameworks/SDL2_Mixer.framework/Headers,
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
@@ -8478,18 +8487,22 @@
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
+				FRAMEWORK_SEARCH_PATHS = /Library/Frameworks;
 				FRAMEWORK_VERSION = B;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"BUILDINGPPRO=1",
 					_SDL,
+					_SDL_MIXER,
 					"SDL_IS_LINKED=0",
+					"SDL_MIXER_IS_LINKED=0",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					/Library/Frameworks/SDL2.framework/Headers,
+					/Library/Frameworks/SDL2_Mixer.framework/Headers,
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";

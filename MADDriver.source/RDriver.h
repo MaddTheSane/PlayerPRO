@@ -244,6 +244,7 @@ typedef MADENUM(short, MADSoundOutput)
 	BeOSSoundDriver,			// BeOS/Haiku ONLY
 	MIDISoundDriver,			// Not yet available
 	SDLAudioDriver,				// SDL Audio. Available on systems that have SDL
+	SDLMixerDriver,				// SDL Mixer. recommended above the raw audio driver
 	ASIOSoundManager,			// ASIO Sound Driver by Steinberg //NOT Available
 	NoHardwareDriver = SHRT_MAX	// NO HARDWARE CONNECTION, will not produce any sound
 };
@@ -260,6 +261,7 @@ typedef MADOPTIONS(unsigned int, MADSoundDriverAvailable)
 	PortAudioDriverBit	= 1 << PortAudioDriver,
 	PulseAudioDriverBit	= 1 << PulseAudioDriver,
 	SDLAudioDriverBit	= 1 << SDLAudioDriver,
+	SDLMixerDriverBit	= 1 << SDLMixerDriver,
 	ASIOSoundManagerBit	= 1 << ASIOSoundManager
 };
 

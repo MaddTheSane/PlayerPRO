@@ -15,6 +15,13 @@
 
 #include "PPPrivate.h"
 
+#ifndef _SDL
+#error This file requires SDL to be enabled via preprocessor macros in order to build!
+#elif !defined(SDL_IS_LINKED)
+#error SDL_IS_LINKED needs to be defined, even if you are not linking to it.
+#warning You can set the value to 0 if you are not linking, and SDL will be loaded at run-time.
+#endif
+
 
 #if SDL_IS_LINKED
 #define SDL_OpenAudiop(desired, obtained, userdata) SDL_OpenAudio(desired, obtained)

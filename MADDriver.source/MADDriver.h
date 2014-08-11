@@ -28,9 +28,14 @@
 #include <esd.h>
 #endif
 
-#ifdef _SDL
+#if defined(_SDL) || defined(_SDL_MIXER)
 #include <SDL.h>
-#include <SDL_Audio.h>
+#include <SDL_audio.h>
+#ifdef _SDL_MIXER
+#include <SDL_mixer.h>
+#else
+#define SDL_MIXER_IS_LINKED 1
+#endif
 #if !SDL_IS_LINKED
 typedef int (SDLCALL *SDL_OpenAudioPtr)(SDL_AudioSpec *desired, SDL_AudioSpec *obtained);
 typedef void (SDLCALL *SDL_CloseAudioPtr)();
@@ -39,6 +44,9 @@ typedef int (SDLCALL *SDL_InitSubPtr)(Uint32);
 typedef Uint32 (SDLCALL *SDL_WasInitPtr)(Uint32 flags);
 typedef void (SDLCALL *SDL_QuitSubSystemPtr)(Uint32 flags);
 typedef void (SDLCALL *SDL_QuitPtr)(void);
+#endif
+#if !SDL_MIXER_IS_LINKED
+typedef Mix_Chunk *(SDLCALL *SDLMix_RawPtr)(Uint8 *mem, Uint32 len);
 #endif
 #endif
 
@@ -154,7 +162,7 @@ struct __MADDriverRec {
 	//TODO: EsounD driver
 #endif
 	
-#ifdef _SDL
+#if defined(_SDL) || defined (_SDL_MIXER)
 	char	*SDLBuffer;
 	size_t	SDLBufferOffset;
 #if !SDL_IS_LINKED
