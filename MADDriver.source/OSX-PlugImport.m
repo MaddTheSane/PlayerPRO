@@ -37,6 +37,13 @@ typedef enum _MADPlugCapabilities {
 	PPMADCanDoBoth = PPMADCanImport | PPMADCanExport
 } MADPlugCapabilities;
 
+CFStringRef MADCopyHomeDirectory()
+{
+	@autoreleasepool {
+		return CFBridgingRetain(NSHomeDirectory());
+	}
+}
+
 static Boolean GetBoolFromType(CFTypeRef theType)
 {
 	CFTypeID theID = CFGetTypeID(theType);

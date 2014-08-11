@@ -28,6 +28,20 @@
 #include <esd.h>
 #endif
 
+#ifdef _SDL
+#include <SDL.h>
+#include <SDL_Audio.h>
+#if !SDL_IS_LINKED
+typedef int (SDLCALL *SDL_OpenAudioPtr)(SDL_AudioSpec *desired, SDL_AudioSpec *obtained);
+typedef void (SDLCALL *SDL_CloseAudioPtr)();
+typedef int (SDLCALL *SDL_InitPtr)(Uint32);
+typedef int (SDLCALL *SDL_InitSubPtr)(Uint32);
+typedef Uint32 (SDLCALL *SDL_WasInitPtr)(Uint32 flags);
+typedef void (SDLCALL *SDL_QuitSubSystemPtr)(Uint32 flags);
+typedef void (SDLCALL *SDL_QuitPtr)(void);
+#endif
+#endif
+
 #ifndef BUILDINGPPRO
 #warning this header should NOT be used outside of PlayerPROCore! The functions and datatypes here may change FOR ANY REASON, including differing compiler includes and defines.
 #endif
@@ -140,6 +154,20 @@ struct __MADDriverRec {
 	//TODO: EsounD driver
 #endif
 	
+#ifdef _SDL
+	char	*SDLBuffer;
+	size_t	SDLBufferOffset;
+#if !SDL_IS_LINKED
+	void*					dlfcnPtr;
+	SDL_OpenAudioPtr		SDLOpenAudio;
+	SDL_CloseAudioPtr		SDLCloseAudio;
+	SDL_InitPtr				SDLInit;
+	SDL_InitSubPtr			SDLInitSub;
+	SDL_WasInitPtr			SDLWasInit;
+	SDL_QuitSubSystemPtr	SDLQuitSubSystem;
+	SDL_QuitPtr				SDLQuit;
+#endif
+#endif
 };
 
 

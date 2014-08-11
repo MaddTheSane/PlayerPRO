@@ -55,13 +55,14 @@ static inline unsigned char* MYC2PStr(char *cStr)
 	return (unsigned char*) cStr;
 }
 
-static inline void MYP2CStr(unsigned char *cStr)
+static inline char *MYP2CStr(unsigned char *pStr)
 {
-	long size = cStr[0];
-	memmove(cStr, cStr + 1, size);
-	cStr[size] = 0;
+	long size = pStr[0];
+	memmove(pStr, pStr + 1, size);
+	pStr[size] = 0;
+	
+	return (char*)pStr;
 }
-
 
 MADMusic* CreateFreeMADK()
 {
@@ -462,7 +463,7 @@ static void BuildAvailableDriverList()
 	if (driverlistInited == false) {
 		driverList = MIDISoundDriverBit |
 #ifdef _BE_H
-		1 << BeOSSoundDriver |
+		BeOSSoundDriverBit |
 #endif
 #ifdef WIN32
 		DirectSound95NTBit | Wave95NTBit |
@@ -475,17 +476,17 @@ static void BuildAvailableDriverList()
 #endif
 		0;
 		
-		driverlistInited = true;
-		
 #ifdef _SDL
 		if (TestSDLAvailability()) {
 			driverList |= SDLAudioDriverBit;
 		}
 #endif
+		
+		driverlistInited = true;
 	}
 }
 
-bool MADSoundDriverIsAvalable(short theDriver)
+bool MADSoundDriverIsAvalable(MADSoundOutput theDriver)
 {
 	if (theDriver == NoHardwareDriver) {
 		return TRUE;
@@ -594,8 +595,7 @@ MADErr MADCreateDriverBuffer(MADDriverRec *intDriver)
 	
 	BufSize = intDriver->ASCBUFFER;
 	
-	switch(intDriver->DriverSettings.outPutMode)
-	{
+	switch(intDriver->DriverSettings.outPutMode) {
 		case MonoOutPut:
 			BufSize = BufSize;
 			break;
@@ -747,27 +747,7 @@ MADErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADD
 	   DriverInitParam->outPutMode != PolyPhonic)
 		theErr = MADParametersErr;
 	
-	if (DriverInitParam->driverMode != MIDISoundDriver &&
-#ifdef _BE_H
-	   DriverInitParam->driverMode != BeOSSoundDriver &&
-#endif
-#ifdef WIN32
-	   DriverInitParam->driverMode != DirectSound95NT &&
-	   DriverInitParam->driverMode != Wave95NT &&
-#endif
-#ifdef _MAC_H
-	   DriverInitParam->driverMode != CoreAudioDriver &&
-#endif
-#ifdef HAVE_PULSEAUDIO
-	   DriverInitParam->driverMode != PulseAudioDriver &&
-#endif
-#ifdef HAVE_PORTAUDIO
-	   DriverInitParam->driverMode != PortAudioDriver &&
-#endif
-#ifdef _ESOUND
-	   DriverInitParam->driverMode != ESDDriver &&
-#endif
-	   DriverInitParam->driverMode != NoHardwareDriver) {
+	if (MADSoundDriverIsAvalable(DriverInitParam->driverMode)) {
 		if (theErr == MADNoErr) {
 			theErr = MADSoundSystemUnavailable;
 		}
@@ -907,14 +887,17 @@ MADErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADD
 			
 #ifdef WIN32
 		case DirectSound95NT:
-			MDriver->ASCBUFFER = 7500 * MDriver->DriverSettings.oversampling;
-			break;
-			
 		case Wave95NT:
 			MDriver->ASCBUFFER = 7500 * MDriver->DriverSettings.oversampling;
 			break;
-#endif
 			
+#endif
+
+#ifdef _SDL
+		case SDLAudioDriver:
+			MDriver->ASCBUFFER = 7500 * MDriver->DriverSettings.oversampling;
+			break;
+#endif
 		default:
 			MDriver->DriverSettings.driverMode = NoHardwareDriver;
 			MDriver->ASCBUFFER = 1024L * MDriver->DriverSettings.oversampling;
@@ -1060,6 +1043,19 @@ MADErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADD
 			break;
 #endif
 			
+#ifdef _SDL
+		case SDLAudioDriver:
+			theErr = initSDL(MDriver);
+			if (theErr != MADNoErr) {
+				MADCloseEqualizer(MDriver);
+				MADDisposeReverb(MDriver);
+				MADDisposeDriverBuffer(MDriver);
+				free(MDriver);
+				return theErr;
+			}
+			break;
+#endif
+			
 		case NoHardwareDriver:
 		case BeOSSoundDriver:
 			break;
@@ -1115,6 +1111,12 @@ MADErr MADDisposeDriver(MADDriverRec* MDriver)
 #ifdef HAVE_PORTAUDIO
 		case PortAudioDriver:
 			closeOSS(MDriver);
+			break;
+#endif
+			
+#ifdef _SDL
+		case SDLAudioDriver:
+			closeSDL(MDriver);
 			break;
 #endif
 			

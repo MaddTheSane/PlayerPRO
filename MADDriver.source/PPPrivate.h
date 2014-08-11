@@ -137,6 +137,12 @@ OSErr initPortAudio(MADDriverRec *inMADDriver);
 OSErr closePortAudio(MADDriverRec *inMADDriver);
 #endif
 
+#ifdef _SDL
+bool TestSDLAvailability();
+MADErr initSDL(MADDriverRec *inMADDriver);
+MADErr closeSDL(MADDriverRec *inMADDriver);
+#endif
+
 MADErr	CallImportPlug(MADLibrary	*inMADDriver,
 					   short		PlugNo,			// CODE du plug
 					   MADFourChar	order,
@@ -158,6 +164,8 @@ MADErr	CheckMADFile(char *AlienFile);
 
 #if defined _MAC_H && !TARGET_OS_IPHONE
 void SetOSType(CFURLRef, OSType);
+
+CFStringRef MADCopyHomeDirectory() CF_RETURNS_RETAINED;
 #endif
 
 #ifdef __cplusplus
