@@ -55,13 +55,14 @@ static inline unsigned char* MYC2PStr(char *cStr)
 	return (unsigned char*) cStr;
 }
 
-static inline void MYP2CStr(unsigned char *cStr)
+static inline char *MYP2CStr(unsigned char *pStr)
 {
-	long size = cStr[0];
-	memmove(cStr, cStr + 1, size);
-	cStr[size] = 0;
+	long size = pStr[0];
+	memmove(pStr, pStr + 1, size);
+	pStr[size] = 0;
+	
+	return (char*)pStr;
 }
-
 
 MADMusic* CreateFreeMADK()
 {
@@ -462,7 +463,7 @@ static void BuildAvailableDriverList()
 	if (driverlistInited == false) {
 		driverList = MIDISoundDriverBit |
 #ifdef _BE_H
-		1 << BeOSSoundDriver |
+		BeOSSoundDriverBit |
 #endif
 #ifdef WIN32
 		DirectSound95NTBit | Wave95NTBit |
@@ -589,8 +590,7 @@ MADErr MADCreateDriverBuffer(MADDriverRec *intDriver)
 	
 	BufSize = intDriver->ASCBUFFER;
 	
-	switch(intDriver->DriverSettings.outPutMode)
-	{
+	switch(intDriver->DriverSettings.outPutMode) {
 		case MonoOutPut:
 			BufSize = BufSize;
 			break;
@@ -882,9 +882,6 @@ MADErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADD
 			
 #ifdef WIN32
 		case DirectSound95NT:
-			MDriver->ASCBUFFER = 7500 * MDriver->DriverSettings.oversampling;
-			break;
-			
 		case Wave95NT:
 			MDriver->ASCBUFFER = 7500 * MDriver->DriverSettings.oversampling;
 			break;
