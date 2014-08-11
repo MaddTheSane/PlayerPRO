@@ -2258,6 +2258,9 @@
 		55D1BD5E120FBE51004FD083 /* PPMusicList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPMusicList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55D2921E18AADB4600EB7A7D /* PPPatternObject_PcmdHandling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPatternObject_PcmdHandling.h; sourceTree = "<group>"; };
 		55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO-PrefixHeader.pch"; sourceTree = "<group>"; };
+		55DCF079199983ED00A1B9A1 /* OSX-Specific-Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OSX-Specific-Extensions.swift"; sourceTree = "<group>"; };
+		55DCF07C1999841400A1B9A1 /* PPInstrumentWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPInstrumentWindowController.swift; sourceTree = "<group>"; };
+		55DCF07F1999879C00A1B9A1 /* PPMusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPMusicList.swift; sourceTree = "<group>"; };
 		55DE87BB187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentObject_PPKPrivate.h; sourceTree = "<group>"; };
 		55DE87BE187E051100C36533 /* PPPatternObject_PPKPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPatternObject_PPKPrivate.h; sourceTree = "<group>"; };
 		55DE87C4187E5B9100C36533 /* PPFXBusObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFXBusObject.h; sourceTree = "<group>"; };
@@ -3893,6 +3896,7 @@
 			children = (
 				55D1BD5D120FBE51004FD083 /* PPMusicList.h */,
 				55D1BD5E120FBE51004FD083 /* PPMusicList.m */,
+				55DCF07F1999879C00A1B9A1 /* PPMusicList.swift */,
 				55F4C3E319763FDD000997BE /* PPMusicListObject.swift */,
 				55CDD0271976F40A00E3DDE1 /* PPMusicList_AppKit.swift */,
 				555C0F8C19829663003B9347 /* PPCurrentlyPlayingIndex.swift */,
@@ -3901,6 +3905,7 @@
 				5578C49017D9E8560057D11B /* AppDelegate.m */,
 				5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */,
 				5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */,
+				55DCF07C1999841400A1B9A1 /* PPInstrumentWindowController.swift */,
 				552788021981C95100708906 /* PPMusicListDragClass.swift */,
 				5578C49217D9E8570057D11B /* MainMenu.xib */,
 				5578C4F117DA97020057D11B /* InstrumentWindow.xib */,
@@ -4063,6 +4068,7 @@
 				556AE4BB16E290650074BBF9 /* PPByteswap.h */,
 				550D798E1979F33D00F0A8F8 /* PPByteSwap.swift */,
 				55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */,
+				55DCF079199983ED00A1B9A1 /* OSX-Specific-Extensions.swift */,
 				55232AF411FDE5970041A4EC /* Preferences Controllers */,
 				5526AB10188C8655008D0C14 /* Resources */,
 			);

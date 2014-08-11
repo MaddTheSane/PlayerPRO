@@ -27,6 +27,40 @@ func ==(lhs: PPMusicListObject, rhs: PPMusicListObject) -> Bool {
 	return theSame
 }
 
+func ==(lhs: PPMusicListObject, rhs: NSURL) -> Bool {
+	var dat1: AnyObject? = nil
+	var dat2: AnyObject? = nil
+	var bothAreValid = true
+	var theSame = false
+	if (!lhs.musicURL.getResourceValue(&dat1, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
+		bothAreValid = false;
+	}
+	if (!rhs.getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
+		bothAreValid = false;
+	}
+	if (bothAreValid) {
+		theSame = (dat1 as NSData) == (dat2 as NSData)
+	}
+	return theSame
+}
+
+func ==(lhs: NSURL, rhs: PPMusicListObject) -> Bool {
+	var dat1: AnyObject? = nil
+	var dat2: AnyObject? = nil
+	var bothAreValid = true
+	var theSame = false
+	if (!lhs.getResourceValue(&dat1, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
+		bothAreValid = false;
+	}
+	if (!rhs.musicURL.getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
+		bothAreValid = false;
+	}
+	if (bothAreValid) {
+		theSame = (dat1 as NSData) == (dat2 as NSData)
+	}
+	return theSame
+}
+
 class PPMusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPrintable, Printable {
 	private(set) var musicURL: NSURL! = nil;
 
@@ -45,13 +79,17 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPri
 		}
 	}}
 	
+	internal var stashedFileSize: UInt64 = 0
 	var fileSize : UInt64 {get {
+		if stashedFileSize == 0 {
 		var manager = NSFileManager.defaultManager();
 		var theparam = manager.attributesOfItemAtPath(musicURL.path, error: nil)
 		if (!theparam) {
 			return 0;
 		}
-		return (theparam as NSDictionary).fileSize()
+		stashedFileSize = (theparam as NSDictionary).fileSize()
+		}
+		return stashedFileSize
 	}}
 
 	override class func initialize() {
