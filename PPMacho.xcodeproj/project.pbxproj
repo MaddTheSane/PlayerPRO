@@ -2089,6 +2089,7 @@
 		55680A48190497FB00F7616D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		55680A49190497FC00F7616D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		556AE4BB16E290650074BBF9 /* PPByteswap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPByteswap.h; sourceTree = "<group>"; };
+		557139CD1684EF7500831A5A /* PPHilightableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHilightableButton.h; sourceTree = "<group>"; };
 		557139CE1684EF7500831A5A /* PPHilightableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHilightableButton.m; sourceTree = "<group>"; };
 		557139E51685007B00831A5A /* OpenPanelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpenPanelViewController.xib; sourceTree = "<group>"; };
 		557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "OSX-VSTPlugIn.c"; sourceTree = "<group>"; };
