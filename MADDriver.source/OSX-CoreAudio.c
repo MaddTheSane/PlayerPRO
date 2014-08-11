@@ -75,7 +75,7 @@ static OSStatus CAAudioCallback(void						*inRefCon,
 	return noErr;
 }
 
-OSErr initCoreAudio(MADDriverRec *inMADDriver)
+MADErr initCoreAudio(MADDriverRec *inMADDriver)
 {
 	OSStatus result = noErr;
 	struct AURenderCallbackStruct callback, blankCallback = {0};
@@ -160,7 +160,7 @@ OSErr initCoreAudio(MADDriverRec *inMADDriver)
 	return MADNoErr;
 }
 
-OSErr closeCoreAudio(MADDriverRec *inMADDriver)
+MADErr closeCoreAudio(MADDriverRec *inMADDriver)
 {
 	struct AURenderCallbackStruct callback = {0};
 	

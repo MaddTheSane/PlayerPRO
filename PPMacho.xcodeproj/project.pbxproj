@@ -486,7 +486,7 @@
 		55ADC3DD17D6F43F001F27D4 /* WAV.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105610D6C79E00BB619C /* WAV.c */; };
 		55ADC3DE17D7A51B001F27D4 /* WAVE-Conversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105710D6C79E00BB619C /* WAVE-Conversion.c */; };
 		55ADC3E217D7B484001F27D4 /* Wave.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55ADC3DB17D6F390001F27D4 /* Wave.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		55ADC3E917D7E4E5001F27D4 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; };
 		55ADC3F117D7F475001F27D4 /* Complex Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55B797DC10D6E6C40073E379 /* Complex Fade.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55ADC3FA17D7FFAA001F27D4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -651,7 +651,7 @@
 		55F1BDAE1975C8EE00AD2C03 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */; };
 		55F1BDAF1975C8EE00AD2C03 /* PlayerPROCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55F1BDB31975C9E100AD2C03 /* embeddedPlugs.h in Headers */ = {isa = PBXBuildFile; fileRef = 550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */; };
-		55F1BDB41975C9E100AD2C03 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55F1BDB41975C9E100AD2C03 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		55F1BDB61975C9E100AD2C03 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55F1BDB71975C9E100AD2C03 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* FileUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55F1BDB81975C9E100AD2C03 /* MAD.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4750C2F21E400D6C081 /* MAD.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -4303,9 +4303,9 @@
 				5573A41210B5160000FF8B50 /* PPDefs.h in Headers */,
 				550A474318A455CC0052AED7 /* VSTFunctions.h in Headers */,
 				550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */,
+				55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */,
 				550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */,
 				55B23D0F1687D1D700DCE923 /* RDriverCarbon.h in Headers */,
-				55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4341,12 +4341,12 @@
 			files = (
 				55F1BDB71975C9E100AD2C03 /* FileUtils.h in Headers */,
 				55F1BDBB1975C9E100AD2C03 /* RDriverInt.h in Headers */,
-				55F1BDB41975C9E100AD2C03 /* MADDriver.h in Headers */,
 				55F1BDB31975C9E100AD2C03 /* embeddedPlugs.h in Headers */,
 				55F1BDB91975C9E100AD2C03 /* PPPrivate.h in Headers */,
 				55E382ED1981694300EC330B /* PPPlug.h in Headers */,
 				55F1BDBC1975C9E100AD2C03 /* VSTFunctions.h in Headers */,
 				55F1BE221975CEC900AD2C03 /* PlayerPROCore.h in Headers */,
+				55F1BDB41975C9E100AD2C03 /* MADDriver.h in Headers */,
 				55F1BDB61975C9E100AD2C03 /* PPDefs.h in Headers */,
 				55F1BDBA1975C9E100AD2C03 /* RDriver.h in Headers */,
 				55F1BDB81975C9E100AD2C03 /* MAD.h in Headers */,
@@ -7785,6 +7785,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -7799,6 +7800,8 @@
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -7807,6 +7810,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -7821,6 +7825,8 @@
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -8464,7 +8470,6 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
-				WARNING_CFLAGS = "-Wno-incomplete-umbrella";
 			};
 			name = Release;
 		};
@@ -8474,6 +8479,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
+				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
@@ -8492,6 +8498,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = PlayerPROCore;
 				SDKROOT = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
@@ -8501,6 +8509,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
+				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
@@ -8519,6 +8528,8 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = PlayerPROCore;
 				SDKROOT = macosx;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
@@ -9405,6 +9416,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_NS_ASSERTIONS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -9433,7 +9445,6 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
-				WARNING_CFLAGS = "-Wno-incomplete-umbrella";
 			};
 			name = Debug;
 		};

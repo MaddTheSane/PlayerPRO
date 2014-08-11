@@ -111,13 +111,13 @@ void 	CleanDriver(MADDriverRec *intDriver);
 
 #ifdef _MAC_H
 #pragma mark Core Audio Functions
-OSErr	initCoreAudio(MADDriverRec *inMADDriver);
-OSErr	closeCoreAudio(MADDriverRec *inMADDriver);
+MADErr	initCoreAudio(MADDriverRec *inMADDriver);
+MADErr	closeCoreAudio(MADDriverRec *inMADDriver);
 #endif
 
 #ifdef _ESOUND
-OSErr initESD(MADDriverRec *inMADDriver);
-OSErr closeESD(MADDriverRec *inMADDriver);
+MADErr initESD(MADDriverRec *inMADDriver);
+MADErr closeESD(MADDriverRec *inMADDriver);
 #endif
 
 #ifdef WIN32
@@ -128,13 +128,13 @@ void	W95_Exit(MADDriverRec* driver);
 #endif
 
 #ifdef HAVE_PULSEAUDIO
-OSErr initPulseAudio(MADDriverRec *inMADDriver);
-OSErr closePulseAudio(MADDriverRec *inMADDriver);
+MADErr initPulseAudio(MADDriverRec *inMADDriver);
+MADErr closePulseAudio(MADDriverRec *inMADDriver);
 #endif
 
 #ifdef HAVE_PORTAUDIO
-OSErr initPortAudio(MADDriverRec *inMADDriver);
-OSErr closePortAudio(MADDriverRec *inMADDriver);
+MADErr initPortAudio(MADDriverRec *inMADDriver);
+MADErr closePortAudio(MADDriverRec *inMADDriver);
 #endif
 
 MADErr	CallImportPlug(MADLibrary	*inMADDriver,

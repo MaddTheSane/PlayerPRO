@@ -10,6 +10,8 @@
 	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
@@ -17,7 +19,7 @@
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>6.0.0</string>
+	<string>${CURRENT_PROJECT_VERSION}</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>

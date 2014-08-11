@@ -14,8 +14,14 @@
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/RDriver.h>
-#ifdef ISUSINGPPPLUG
 #include <PlayerPROCore/PPPlug.h>
+
+#ifdef _MAC_H
+//! Project version number for PlayerPROCore.
+EXP double PlayerPROCoreVersionNumber;
+
+//! Project version string for PlayerPROCore.
+EXP const unsigned char PlayerPROCoreVersionString[];
 #endif
 
 #if defined(_MAC_H) && !TARGET_OS_IPHONE

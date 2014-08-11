@@ -367,15 +367,15 @@ typedef struct PPInfoRec {
 /********************						***********************/
 
 typedef MADENUM(MADFourChar, PPPlugModes) {
-	MADPlugImport =				(MADFourChar)'IMPL',
-	MADPlugExport =				(MADFourChar)'EXPL',
-	MADPlugInfo =				(MADFourChar)'INFO',
-	MADPlugTest =				(MADFourChar)'TEST',
-	MADPlugPlay =				(MADFourChar)'PLAY',
-	MADPlugImportExport =		(MADFourChar)'EXIM',
-	MADPlugSampleImporter =		(MADFourChar)'SAMP',
-	MADPlugInstrumentImporter =	(MADFourChar)'INST',
-	MADPlugNonePlug =			(MADFourChar)'NONE'
+	MADPlugImport =				'IMPL',
+	MADPlugExport =				'EXPL',
+	MADPlugInfo =				'INFO',
+	MADPlugTest =				'TEST',
+	MADPlugPlay =				'PLAY',
+	MADPlugImportExport =		'EXIM',
+	MADPlugSampleImporter =		'SAMP',
+	MADPlugInstrumentImporter =	'INST',
+	MADPlugNonePlug =			'NONE'
 };
 
 #pragma pack(pop)
@@ -598,9 +598,9 @@ PPEXPORT MADErr	MADInitLibrary(const char *PlugsFolderName, MADLibrary **MADLib)
 
 PPEXPORT MADErr	MADDisposeLibrary(MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
-PPEXPORT void	MADGetBestDriver(MADDriverSettings *DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
-PPEXPORT bool	MADSoundDriverIsAvalable(short theDriver);
-PPEXPORT int	MADSoundDriverList();
+PPEXPORT void						MADGetBestDriver(MADDriverSettings *DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
+PPEXPORT bool						MADSoundDriverIsAvalable(MADSoundOutput theDriver);
+PPEXPORT MADSoundDriverAvailable	MADSoundDriverList();
 
 PPEXPORT MADErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
 PPEXPORT MADErr	MADDisposeDriver(MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()

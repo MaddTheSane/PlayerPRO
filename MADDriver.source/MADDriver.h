@@ -120,8 +120,8 @@ struct __MADDriverRec {
 #endif
 	
 #ifdef WIN32
-	LPDIRECTSOUND		lpDirectSound; // The LPDIRECTSOUND to apply & get informations, etc.
-	LPDIRECTSOUNDBUFFER	lpDirectSoundBuffer, lpSwSamp; // ONLY available if you are using Win95 DirectSound driver
+	LPDIRECTSOUND		lpDirectSound;					// The LPDIRECTSOUND to apply & get informations, etc.
+	LPDIRECTSOUNDBUFFER	lpDirectSoundBuffer, lpSwSamp;	// ONLY available if you are using Win95 DirectSound driver
 	char* 				currentBuf;
 	MADBool				OnOff;
 	size_t				WIN95BUFFERSIZE;
