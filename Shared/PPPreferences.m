@@ -34,7 +34,7 @@
 - (id)init 
 {
 	if (self = [super initWithWindowNibName:@"preferences"]) {
-		self.viewControllers = @[[[SoundOutputController alloc] init],
+		self.viewControllers = @[[SoundOutputController newSoundSettingWindow],
 #if defined(PLAYERPRO6) && PLAYERPRO6
 					  [[PianoPreferencesController alloc] init],
 					  [[ColorPreferenceController alloc] init],

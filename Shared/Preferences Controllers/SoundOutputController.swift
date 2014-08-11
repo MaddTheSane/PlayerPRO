@@ -11,6 +11,16 @@ import PlayerPROKit
 
 class SoundOutputController: PPSoundSettingsViewController, PPSoundSettingsViewControllerDelegate {
 	
+	override class func newSoundSettingWindow() -> Self {
+		var ourself = self()
+		ourself.delegate = (ourself as SoundOutputController)
+		var aTitle = NSLocalizedString("Sound Output", tableName:"PreferenceNames", comment: "Sound Output");
+		ourself.title = aTitle
+		
+		return ourself
+	}
+	
+	/*
 	convenience required init(coder: NSCoder!) {
 		self.init()
 	}
@@ -18,6 +28,13 @@ class SoundOutputController: PPSoundSettingsViewController, PPSoundSettingsViewC
 	convenience override init() {
 		self.init(nibName: "PPSoundSettingsViewController", bundle: NSBundle(forClass: PPSoundSettingsViewController.self))
 	}
+	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+		
+		self.delegate = self;
+		var aTitle = NSLocalizedString("Sound Output", tableName:"PreferenceNames", comment: "Sound Output");
+		self.title = aTitle
+	}*/
 	
 	func soundOutDriverDidChange(driv: Int16) {
 		NSUserDefaults.standardUserDefaults().setInteger(Int(driv), forKey:PPSoundDriver);
@@ -83,14 +100,6 @@ class SoundOutputController: PPSoundSettingsViewController, PPSoundSettingsViewC
 		NSUserDefaults.standardUserDefaults().setInteger(Int(std), forKey:PPStereoDelayAmount);
 		
 		NSNotificationCenter.defaultCenter().postNotificationName(PPSoundPreferencesDidChange, object: self)
-	}
-	
-	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-		
-		self.delegate = self;
-		var aTitle = NSLocalizedString("Sound Output", tableName:"PreferenceNames", comment: "Sound Output");
-		self.title = aTitle
 	}
 	
 	override func awakeFromNib() {
