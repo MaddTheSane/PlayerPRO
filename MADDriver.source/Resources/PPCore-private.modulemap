@@ -1,5 +1,13 @@
 explicit module PlayerPROCore.RDriverInt {
-	use PPDefs
 	header "RDriverInt.h"
+	use PPDefs
 	export *
 }
+
+explicit module PlayerPROCore.MADDriver {
+	private header "MADDriver.h"
+	use RDriver
+	export *
+}
+
+

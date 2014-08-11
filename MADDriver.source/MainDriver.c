@@ -455,10 +455,11 @@ size_t MADMinimize(MADMusic *music)
 }
 
 static int driverList = 0;
+static bool driverlistInited = false;
 
 static void BuildAvailableDriverList()
 {
-	if (driverList == 0) {
+	if (driverlistInited == false) {
 		driverList = MIDISoundDriverBit |
 #ifdef _BE_H
 		1 << BeOSSoundDriver |
@@ -473,6 +474,14 @@ static void BuildAvailableDriverList()
 		ESDDriverBit |
 #endif
 		0;
+		
+		driverlistInited = true;
+		
+#ifdef _SDL
+		if (TestSDLAvailability()) {
+			driverList |= SDLAudioDriverBit;
+		}
+#endif
 	}
 }
 
@@ -488,7 +497,7 @@ bool MADSoundDriverIsAvalable(short theDriver)
 		return FALSE;
 }
 
-int MADSoundDriverList()
+MADSoundDriverAvailable MADSoundDriverList()
 {
 	BuildAvailableDriverList();
 	return driverList;
