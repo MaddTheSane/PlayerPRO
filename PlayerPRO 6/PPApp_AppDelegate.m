@@ -12,7 +12,6 @@
 #import "NSColor+PPPreferences.h"
 #import "PPInstrumentPlugHandler.h"
 #import "PPInstrumentImporterObject.h"
-#import "PPPlugInInfoController.h"
 #import "PPDigitalPlugHandler.h"
 #import "PPDigitalPlugInObject.h"
 #import "PPFilterPlugHandler.h"
@@ -283,7 +282,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 		return;
 	}
 	
-	PPPlugInInfoController *infoCont = [[PPPlugInInfoController alloc] initWithPlugInInfo:inf];
+	PPPlugInInfoController *infoCont = [PPPlugInInfoController windowControllerFromInfo:inf];
 	[[infoCont window] center];
 	[NSApp runModalForWindow:[infoCont window]];
 	//[infoCont showWindow:sender];

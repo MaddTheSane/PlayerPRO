@@ -11,7 +11,6 @@
 #import "PPMusicList.h"
 #import "UserDefaultKeys.h"
 #import "PPInstrumentWindowController.h"
-#import "PPPlugInInfoController.h"
 #include "PPByteswap.h"
 #import <AVFoundation/AVFoundation.h>
 #import "PlayerPRO_Player-Swift.h"
@@ -905,7 +904,7 @@ return; \
 		return;
 	}
 	
-	PPPlugInInfoController *infoCont = [[PPPlugInInfoController alloc] initWithPlugInInfo:inf];
+	PPPlugInInfoController *infoCont = [PPPlugInInfoController windowControllerFromInfo:inf];
 	NSWindow *infoWindow = [infoCont window];
 	[infoWindow center];
 	[NSApp runModalForWindow:infoWindow];

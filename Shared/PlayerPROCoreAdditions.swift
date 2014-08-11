@@ -10,7 +10,7 @@ import Foundation
 import CoreServices
 import PlayerPROCore
 
-extension MADDriverSettings {
+extension MADDriverSettings: DebugPrintable {
 	init() {
 		self.driverMode = .CoreAudioDriver
 		self.numChn = 4
@@ -27,27 +27,41 @@ extension MADDriverSettings {
 		self.repeatMusic = false
 		MADGetBestDriver(&self)
 	}
+	
+	public var debugDescription: String { get {
+		let onVal = "on"
+		let offVal = "off"
+		return "Driver Mode: \(driverMode), output mode: \(outPutMode); Channel count: \(numChn), output Rate: \(outPutRate), surround: \(surround == true ? onVal : offVal); micro-delay size: \(MicroDelaySize), reverb, is \(Reverb == true ? onVal: offVal), size: \(ReverbSize), strength: \(ReverbStrength); oversampling \(oversampling); repeat music: \(repeatMusic == true ? onVal : offVal); "
+		}}
 }
 
-extension MADFourChar: Printable {
+extension MADFourChar: Printable, DebugPrintable, StringLiteralConvertible {
 	public var stringValue: String {
 	get {
 		let toRet = UTCreateStringForOSType(self as OSType).takeRetainedValue()
 		return toRet as NSString
-	}
-	}
+		}}
 	
 	init(_ toInit: String) {
-		self = UTGetOSTypeFromString(toInit as NSString as CFStringRef)
+		self = UTGetOSTypeFromString(toInit as NSString as CFString)
 	}
 	
-	static func convertFromStringLiteral(value: String) -> MADFourChar {
+	public static func convertFromStringLiteral(value: String) -> MADFourChar {
 		return MADFourChar(value)
 	}
 	
 	public var description: String { get {
 		return self.stringValue
-	}}
+		}}
+	
+	public var debugDescription: String { get {
+		return self.description
+		}}
+
+	public static func convertFromExtendedGraphemeClusterLiteral(value: String) -> MADFourChar {
+		var tmpStr = String.convertFromExtendedGraphemeClusterLiteral(value)
+		return self.convertFromStringLiteral(tmpStr)
+	}
 
 }
 
