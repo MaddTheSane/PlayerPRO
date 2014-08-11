@@ -514,7 +514,7 @@
 		55ADC3DD17D6F43F001F27D4 /* WAV.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105610D6C79E00BB619C /* WAV.c */; };
 		55ADC3DE17D7A51B001F27D4 /* WAVE-Conversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105710D6C79E00BB619C /* WAVE-Conversion.c */; };
 		55ADC3E217D7B484001F27D4 /* Wave.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55ADC3DB17D6F390001F27D4 /* Wave.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; };
+		55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		55ADC3E817D7E4DE001F27D4 /* MADDriver.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; };
 		55ADC3E917D7E4E5001F27D4 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; };
 		55ADC3F117D7F475001F27D4 /* Complex Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55B797DC10D6E6C40073E379 /* Complex Fade.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -4287,9 +4287,9 @@
 				5573A41210B5160000FF8B50 /* PPDefs.h in Headers */,
 				550A474318A455CC0052AED7 /* VSTFunctions.h in Headers */,
 				550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */,
+				55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */,
 				550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */,
 				55B23D0F1687D1D700DCE923 /* RDriverCarbon.h in Headers */,
-				55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8364,7 +8364,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRINGS_FILE_OUTPUT_ENCODING = binary;
-				WARNING_CFLAGS = "-Wno-incomplete-umbrella";
+				WARNING_CFLAGS = "-Wno-gnu-variable-sized-type-not-at-end";
 			};
 			name = Release;
 		};
@@ -9392,7 +9392,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
-				WARNING_CFLAGS = "-Wno-incomplete-umbrella";
+				WARNING_CFLAGS = "-Wno-gnu-variable-sized-type-not-at-end";
 			};
 			name = Debug;
 		};
