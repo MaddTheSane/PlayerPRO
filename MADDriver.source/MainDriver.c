@@ -455,7 +455,7 @@ size_t MADMinimize(MADMusic *music)
 	return before - after;
 }
 
-static int driverList = 0;
+static MADSoundDriverAvailable driverList = 0;
 static bool driverlistInited = false;
 
 static void BuildAvailableDriverList()
@@ -742,7 +742,7 @@ MADErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADD
 	   DriverInitParam->outPutMode != PolyPhonic)
 		theErr = MADParametersErr;
 	
-	if (MADSoundDriverIsAvalable(DriverInitParam->driverMode)) {
+	if (!MADSoundDriverIsAvalable(DriverInitParam->driverMode)) {
 		if (theErr == MADNoErr) {
 			theErr = MADSoundSystemUnavailable;
 		}

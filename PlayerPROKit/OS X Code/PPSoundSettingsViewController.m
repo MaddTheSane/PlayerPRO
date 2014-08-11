@@ -66,9 +66,19 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 
 @synthesize delegate;
 
++ (instancetype)newSoundSettingWindow
+{
+	return [[self alloc] init];
+}
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+	return [self init];
+}
+
 -(void)setCurrentSoundDriver:(NSInteger)theDriver
 {
-	switch (theDriver) {
+	switch ((MADSoundOutput)theDriver) {
 		case CoreAudioDriver:
 			[soundDriver selectCellAtRow:0 column:0];
 			break;

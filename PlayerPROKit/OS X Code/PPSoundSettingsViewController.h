@@ -9,6 +9,10 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <Cocoa/Cocoa.h>
 
+#ifndef NS_DESIGNATED_INITIALIZER
+#define NS_DESIGNATED_INITIALIZER
+#endif
+
 @protocol PPSoundSettingsViewControllerDelegate <NSObject>
 - (void)soundOutBitsDidChange:(short)bits;
 - (void)soundOutRateDidChange:(unsigned int)rat;
@@ -38,7 +42,9 @@
 @property (weak) IBOutlet NSPopUpButton *reverbPercent;
 @property (weak) IBOutlet id<PPSoundSettingsViewControllerDelegate> delegate;
 
++ (instancetype)newSoundSettingWindow NS_RETURNS_RETAINED;
 - (instancetype)init;
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil NS_DESIGNATED_INITIALIZER;
 - (void)settingsFromDriverSettings:(MADDriverSettings*)sett;
 
 - (IBAction)changeBits:(id)sender;
