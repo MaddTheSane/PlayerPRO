@@ -492,10 +492,11 @@ bool MADSoundDriverIsAvalable(MADSoundOutput theDriver)
 		return TRUE;
 	}
 	BuildAvailableDriverList();
-	if (driverList & 1 << theDriver)
+	if (driverList & (1 << theDriver)) {
 		return TRUE;
-	else
+	} else {
 		return FALSE;
+	}
 }
 
 MADSoundDriverAvailable MADSoundDriverList()
@@ -898,6 +899,7 @@ MADErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADD
 			MDriver->ASCBUFFER = 7500 * MDriver->DriverSettings.oversampling;
 			break;
 #endif
+			
 		default:
 			MDriver->DriverSettings.driverMode = NoHardwareDriver;
 			MDriver->ASCBUFFER = 1024L * MDriver->DriverSettings.oversampling;
