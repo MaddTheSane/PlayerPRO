@@ -2092,7 +2092,6 @@
 		557139CE1684EF7500831A5A /* PPHilightableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHilightableButton.m; sourceTree = "<group>"; };
 		557139E51685007B00831A5A /* OpenPanelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpenPanelViewController.xib; sourceTree = "<group>"; };
 		557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "OSX-VSTPlugIn.c"; sourceTree = "<group>"; };
-		5573A1081656FAF100A5AECA /* PlayerPROCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
 		5573A1301656FCC100A5AECA /* iOS-PlugImport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "iOS-PlugImport.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PlayerPROCore-Info.plist"; path = "../../PlayerPROCore-Info.plist"; sourceTree = "<group>"; };
@@ -2288,11 +2287,8 @@
 		55F16D1C186F918F00E75C3E /* getAIFF.mi */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc.preprocessed; lineEnding = 0; path = getAIFF.mi; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55F1BD831975C27000AD2C03 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		55F1BD921975C83400AD2C03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		55F1BDE31975CBFE00AD2C03 /* PlayerPROKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		55F1BDE61975CBFE00AD2C03 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		55F1BDE71975CBFE00AD2C03 /* PlayerPROKit-iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPROKit-iOS.h"; sourceTree = "<group>"; };
 		55F41A2217EF800B00605DF8 /* version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = version.sh; sourceTree = "<group>"; usesTabs = 0; };
 		55F41A2D17EF853C00605DF8 /* PlayerPRO Player-Info.plistvers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPRO Player-Info.plistvers.plist"; sourceTree = "<group>"; };
 		55F41A2E17EF855800605DF8 /* Cocoa-Info.plistvers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Cocoa-Info.plistvers.plist"; path = "../../Cocoa-Info.plistvers.plist"; sourceTree = "<group>"; };
@@ -3878,15 +3874,6 @@
 			name = Classes;
 			sourceTree = "<group>";
 		};
-		5573A1051656FAF100A5AECA /* iOSPlayerPROCore */ = {
-			isa = PBXGroup;
-			children = (
-				5573A1081656FAF100A5AECA /* PlayerPROCore.h */,
-				55F1BD911975C83400AD2C03 /* Supporting Files */,
-			);
-			path = iOSPlayerPROCore;
-			sourceTree = "<group>";
-		};
 		5573A1321656FD1700A5AECA /* iOS Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -4083,31 +4070,6 @@
 			path = Shared;
 			sourceTree = "<group>";
 		};
-		55F1BD911975C83400AD2C03 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				55F1BD921975C83400AD2C03 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		55F1BDE41975CBFE00AD2C03 /* PlayerPROKit-iOS */ = {
-			isa = PBXGroup;
-			children = (
-				55F1BDE71975CBFE00AD2C03 /* PlayerPROKit-iOS.h */,
-				55F1BDE51975CBFE00AD2C03 /* Supporting Files */,
-			);
-			path = "PlayerPROKit-iOS";
-			sourceTree = "<group>";
-		};
-		55F1BDE51975CBFE00AD2C03 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				55F1BDE61975CBFE00AD2C03 /* Info.plist */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		55F8C3E117B998E200DFE937 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -4166,11 +4128,9 @@
 				5578C48317D9E8560057D11B /* PlayerPRO Player */,
 				55BE998517978BB100D6DECC /* Spotlight Plug-in */,
 				559C418F183EB4AB004A073C /* PPQuickView */,
-				5573A1051656FAF100A5AECA /* iOSPlayerPROCore */,
 				555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */,
 				555776CA17EBF9000019D008 /* iOS PlayerPRO PlayerTests */,
 				55534ACF1817C387006D6BCB /* updateInfoPlist */,
-				55F1BDE41975CBFE00AD2C03 /* PlayerPROKit-iOS */,
 				88E0C4950C2F21E500D6C081 /* Frameworks */,
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 			);
@@ -9733,7 +9693,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
@@ -9746,7 +9706,7 @@
 					"$(inherited)",
 					"BUILDINGPPRO=1",
 				);
-				INFOPLIST_FILE = iOSPlayerPROCore/Info.plist;
+				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -9770,7 +9730,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
@@ -9784,7 +9744,7 @@
 					"BUILDINGPPRO=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INFOPLIST_FILE = iOSPlayerPROCore/Info.plist;
+				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -9806,7 +9766,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -9814,7 +9774,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
-				INFOPLIST_FILE = "PlayerPROKit-iOS/Info.plist";
+				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -9835,7 +9795,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(DYLIB_CURRENT_VERSION)";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -9848,7 +9808,7 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
-				INFOPLIST_FILE = "PlayerPROKit-iOS/Info.plist";
+				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
