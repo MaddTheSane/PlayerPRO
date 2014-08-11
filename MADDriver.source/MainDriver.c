@@ -476,25 +476,20 @@ static void BuildAvailableDriverList()
 		0;
 		
 		driverlistInited = true;
-		
-#ifdef _SDL
-		if (TestSDLAvailability()) {
-			driverList |= SDLAudioDriverBit;
-		}
-#endif
 	}
 }
 
-bool MADSoundDriverIsAvalable(short theDriver)
+bool MADSoundDriverIsAvalable(MADSoundOutput theDriver)
 {
 	if (theDriver == NoHardwareDriver) {
 		return TRUE;
 	}
 	BuildAvailableDriverList();
-	if (driverList & 1 << theDriver)
+	if (driverList & (1 << theDriver)) {
 		return TRUE;
-	else
+	} else {
 		return FALSE;
+	}
 }
 
 MADSoundDriverAvailable MADSoundDriverList()
@@ -747,27 +742,7 @@ MADErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADD
 	   DriverInitParam->outPutMode != PolyPhonic)
 		theErr = MADParametersErr;
 	
-	if (DriverInitParam->driverMode != MIDISoundDriver &&
-#ifdef _BE_H
-	   DriverInitParam->driverMode != BeOSSoundDriver &&
-#endif
-#ifdef WIN32
-	   DriverInitParam->driverMode != DirectSound95NT &&
-	   DriverInitParam->driverMode != Wave95NT &&
-#endif
-#ifdef _MAC_H
-	   DriverInitParam->driverMode != CoreAudioDriver &&
-#endif
-#ifdef HAVE_PULSEAUDIO
-	   DriverInitParam->driverMode != PulseAudioDriver &&
-#endif
-#ifdef HAVE_PORTAUDIO
-	   DriverInitParam->driverMode != PortAudioDriver &&
-#endif
-#ifdef _ESOUND
-	   DriverInitParam->driverMode != ESDDriver &&
-#endif
-	   DriverInitParam->driverMode != NoHardwareDriver) {
+	if (MADSoundDriverIsAvalable(DriverInitParam->driverMode)) {
 		if (theErr == MADNoErr) {
 			theErr = MADSoundSystemUnavailable;
 		}

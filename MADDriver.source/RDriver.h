@@ -243,7 +243,6 @@ typedef MADENUM(short, MADSoundOutput)
 	ESDDriver,					// ESound Driver. available on most UNIX Systems
 	BeOSSoundDriver,			// BeOS/Haiku ONLY
 	MIDISoundDriver,			// Not yet available
-	SDLAudioDriver,				// SDL Audio. Available on systems that have SDL
 	ASIOSoundManager,			// ASIO Sound Driver by Steinberg //NOT Available
 	NoHardwareDriver = SHRT_MAX	// NO HARDWARE CONNECTION, will not produce any sound
 };
@@ -259,7 +258,6 @@ typedef MADOPTIONS(unsigned int, MADSoundDriverAvailable)
 	ESDDriverBit		= 1 << ESDDriver,
 	PortAudioDriverBit	= 1 << PortAudioDriver,
 	PulseAudioDriverBit	= 1 << PulseAudioDriver,
-	SDLAudioDriverBit	= 1 << SDLAudioDriver,
 	ASIOSoundManagerBit	= 1 << ASIOSoundManager
 };
 
