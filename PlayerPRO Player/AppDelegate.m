@@ -1129,9 +1129,12 @@ return; \
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:self.trackerDict playlistDictionary:nil instrumentDictionary:nil additionalDictionary:nil];
 	[av setupDefaults];
 	av.allowsMultipleSelectionOfTrackers = YES;
-	if ([panel runModal] == NSFileHandlingPanelOKButton) {
-		[self addMusicsToMusicList:[panel URLs]];
-	}
+	[panel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
+		if (result == NSFileHandlingPanelOKButton) {
+			[self addMusicsToMusicList:[panel URLs]];
+
+		}
+	}];
 }
 
 - (IBAction)toggleInfo:(id)sender
