@@ -10,5 +10,7 @@
 
 #import "UserDefaultKeys.h"
 #import "PPSTImporter.h"
-#import "AppDelegate.h"
+#import "PPPreferences.h"
+//#import "AppDelegate.h"
 #import "PPMusicList.h"
+#import "PPInstrumentWindowController.h"

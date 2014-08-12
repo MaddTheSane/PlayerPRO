@@ -324,7 +324,6 @@
 		5578C48817D9E8560057D11B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5578C48617D9E8560057D11B /* InfoPlist.strings */; };
 		5578C48A17D9E8560057D11B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C48917D9E8560057D11B /* main.m */; };
 		5578C48E17D9E8560057D11B /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 5578C48C17D9E8560057D11B /* Credits.rtf */; };
-		5578C49117D9E8560057D11B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C49017D9E8560057D11B /* AppDelegate.m */; };
 		5578C49417D9E8570057D11B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5578C49217D9E8570057D11B /* MainMenu.xib */; };
 		5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5578C49E17D9E8A00057D11B /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -469,6 +468,7 @@
 		55978AA51999DB07009EE5DF /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
 		55978AA71999DB18009EE5DF /* OSX-Only.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55978AA61999DB18009EE5DF /* OSX-Only.swift */; };
 		55978AA81999DB18009EE5DF /* OSX-Only.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55978AA61999DB18009EE5DF /* OSX-Only.swift */; };
+		55978AAA1999DF5C009EE5DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55978AA91999DF5C009EE5DF /* AppDelegate.swift */; };
 		55981C5311EE370D00656EE3 /* PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55981C5211EE370D00656EE3 /* PPPreferences.m */; };
 		5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
 		5599F13316C82100008DDAFB /* RDriverCarbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; };
@@ -2207,6 +2207,7 @@
 		558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLibrary_PPKPrivate.h; sourceTree = "<group>"; };
 		5590896710E883AF00CE70B8 /* WAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAV.h; sourceTree = "<group>"; };
 		55978AA61999DB18009EE5DF /* OSX-Only.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OSX-Only.swift"; sourceTree = "<group>"; };
+		55978AA91999DF5C009EE5DF /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55981C5111EE370D00656EE3 /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
 		55981C5211EE370D00656EE3 /* PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPreferences.m; sourceTree = "<group>"; };
 		55981C5411EE375400656EE3 /* preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = preferences.xib; sourceTree = "<group>"; };
@@ -3908,6 +3909,7 @@
 				55CDD0271976F40A00E3DDE1 /* PPMusicList_AppKit.swift */,
 				555C0F8C19829663003B9347 /* PPCurrentlyPlayingIndex.swift */,
 				55F4C3E119763FDB000997BE /* PlayerPRO Player-Bridging-Header.h */,
+				55978AA91999DF5C009EE5DF /* AppDelegate.swift */,
 				5578C48F17D9E8560057D11B /* AppDelegate.h */,
 				5578C49017D9E8560057D11B /* AppDelegate.m */,
 				5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */,
@@ -6335,8 +6337,8 @@
 				55E382F0198169C000EC330B /* PlayerPROCoreAdditions.swift in Sources */,
 				55413C471991B443001414D0 /* PPByteSwap.swift in Sources */,
 				5578C48A17D9E8560057D11B /* main.m in Sources */,
-				5578C49117D9E8560057D11B /* AppDelegate.m in Sources */,
 				550041AA1993438C00A2068E /* PPMusicList_AppKit.swift in Sources */,
+				55978AAA1999DF5C009EE5DF /* AppDelegate.swift in Sources */,
 				555F5C65199333900056AF01 /* OpenPanelViewItem.swift in Sources */,
 				5578C4B217DA4AA90057D11B /* PPMusicList.m in Sources */,
 				5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */,

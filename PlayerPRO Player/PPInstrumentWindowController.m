@@ -16,7 +16,8 @@
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
 #import "UserDefaultKeys.h"
-#import "AppDelegate.h"
+//#import "AppDelegate.h"
+#import "PlayerPRO_Player-Swift.h"
 
 @implementation PPInstrumentWindowController
 @synthesize infoDrawer;
