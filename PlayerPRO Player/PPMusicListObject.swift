@@ -7,6 +7,9 @@
 //
 
 import Foundation
+#if os(OSX)
+	import Cocoa
+#endif
 
 private let kMusicListURLKey = "URLKey";
 
@@ -64,6 +67,14 @@ func ==(lhs: NSURL, rhs: PPMusicListObject) -> Bool {
 class PPMusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPrintable, Printable {
 	private(set) var musicURL: NSURL! = nil;
 
+	#if os(OSX)
+	var fileIcon: NSImage {get {
+	var image = NSWorkspace.sharedWorkspace().iconForFile(musicURL.path);
+	image.size = NSMakeSize(16, 16);
+	return image;
+	}}
+	#endif
+	
 	var fileName: String {get {
 		var val: AnyObject? = nil;
 		var err: NSError? = nil;

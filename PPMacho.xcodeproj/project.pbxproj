@@ -93,7 +93,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		550041AA1993438C00A2068E /* PPMusicList_AppKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55CDD0271976F40A00E3DDE1 /* PPMusicList_AppKit.swift */; };
 		55007E9D161A552C00297A3F /* FileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 55113CBB133688D60008C2AF /* FileUtils.c */; };
 		5501BEC718AC029E00602206 /* MADfg.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E310BB5368005208D1 /* MADfg.c */; };
 		5501BEC818AC05A400602206 /* MADH.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E510BB5368005208D1 /* MADH.c */; };
@@ -2258,7 +2257,6 @@
 		55CBFC7011EB7BC90028C6BB /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPApp_AppDelegate.h; sourceTree = "<group>"; };
 		55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPApp_AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		55CDD0271976F40A00E3DDE1 /* PPMusicList_AppKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPMusicList_AppKit.swift; sourceTree = "<group>"; };
 		55CDD02B1976F6F400E3DDE1 /* iOS Player-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOS Player-Bridging-Header.h"; sourceTree = "<group>"; };
 		55D1BD58120FBAC0004FD083 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		55D1BD5D120FBE51004FD083 /* PPMusicList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicList.h; sourceTree = "<group>"; };
@@ -3905,7 +3903,6 @@
 				55D1BD5E120FBE51004FD083 /* PPMusicList.m */,
 				55DCF07F1999879C00A1B9A1 /* PPMusicList.swift */,
 				55F4C3E319763FDD000997BE /* PPMusicListObject.swift */,
-				55CDD0271976F40A00E3DDE1 /* PPMusicList_AppKit.swift */,
 				555C0F8C19829663003B9347 /* PPCurrentlyPlayingIndex.swift */,
 				55F4C3E119763FDB000997BE /* PlayerPRO Player-Bridging-Header.h */,
 				5578C48F17D9E8560057D11B /* AppDelegate.h */,
@@ -6336,7 +6333,6 @@
 				55413C471991B443001414D0 /* PPByteSwap.swift in Sources */,
 				5578C48A17D9E8560057D11B /* main.m in Sources */,
 				5578C49117D9E8560057D11B /* AppDelegate.m in Sources */,
-				550041AA1993438C00A2068E /* PPMusicList_AppKit.swift in Sources */,
 				555F5C65199333900056AF01 /* OpenPanelViewItem.swift in Sources */,
 				5578C4B217DA4AA90057D11B /* PPMusicList.m in Sources */,
 				5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */,
