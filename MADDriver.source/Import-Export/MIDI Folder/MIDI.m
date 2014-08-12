@@ -8,7 +8,6 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 #import "PPMIDIImporter.h"
-#import "PPMidiHelper.h"
 
 extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
@@ -24,6 +23,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 		case MADPlugInfo:
 		{
 			[[conn remoteObjectProxy] getMIDIInfoFromFileAtURL:ourURL withReply:^(NSDictionary * ppInfo, MADErr error) {
+				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 				if (error) {
 					theErr = error;
 					return;
@@ -41,6 +41,8 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 					[formatDescription getCString:info->internalFileName maxLength:60 encoding:NSMacOSRomanStringEncoding];
 				}
 				isDone = YES;
+				}];
+				[conn invalidate];
 			}];
 		}
 			break;
@@ -48,8 +50,11 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 		case MADPlugTest:
 		{
 			[[conn remoteObjectProxy] canImportMIDIFileAtURL:ourURL withReply:^(MADErr error) {
+				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 				theErr = error;
 				isDone = YES;
+				}];
+				[conn invalidate];
 			}];
 		}
 			break;
@@ -57,17 +62,21 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 		case MADPlugImport:
 		{
 			[[conn remoteObjectProxy] importMIDIFileAtURL:ourURL withReply:^(NSData *fileData, MADErr error) {
+				[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 				
+				}];
+				[conn invalidate];
 			}];
 		}
 			
 		default:
 			theErr = MADOrderNotImplemented;
 			isDone = YES;
+			[conn invalidate];
 			break;
 	}
 	
-	if (!isDone) {
+	if (isDone == NO) {
 		usleep(100);
 	}
 	return theErr;
