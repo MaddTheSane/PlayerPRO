@@ -37,4 +37,6 @@
 - (IBAction)dragAsClicked:(id)sender;
 - (IBAction)changeColor:(id)sender;
 
++ (instancetype)newPreferenceView;
+
 @end

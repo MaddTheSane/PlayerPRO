@@ -9,5 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @interface PianoPreferencesController : NSViewController
++ (instancetype)newPreferenceView;
 
 @end

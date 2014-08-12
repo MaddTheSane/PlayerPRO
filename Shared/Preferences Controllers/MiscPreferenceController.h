@@ -15,4 +15,5 @@
 @property (weak) IBOutlet NSButton *oscDrawLines;
 
 - (IBAction)changePrefs:(id)sender;
++ (instancetype)newPreferenceView;
 @end

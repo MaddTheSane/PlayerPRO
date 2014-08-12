@@ -17,7 +17,8 @@
 
 - (instancetype)init;
 - (instancetype)initWithsData:(in sData *)theData;
-- (instancetype)initWithSData:(in sData *)theData;
+- (instancetype)initWithSData:(in sData *)theData NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 - (sData *)createSData;
 
 - (int)dataSize DEPRECATED_ATTRIBUTE;

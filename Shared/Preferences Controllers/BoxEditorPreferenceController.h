@@ -16,5 +16,6 @@
 @property (weak) IBOutlet NSButton *markersCheck;
 
 - (IBAction)changeMarkerCheck:(id)sender;
++ (instancetype)newPreferenceView;
 
 @end

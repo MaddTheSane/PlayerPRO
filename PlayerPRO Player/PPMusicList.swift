@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import PlayerPROKit
 
 let kMusicListLocation3 = "Music Key Location 3";
 let kMusicListKey3 = "Music List Key 3"
 let kPlayerList = "Player List"
 
 class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
-	internal(set) var musicList = [PPMusicListObject]()
+	private(set) var musicList = [PPMusicListObject]()
 	internal(set) var lostMusicCount:UInt = 0;
 	internal(set) var selectedMusic = -1;
 	
@@ -30,7 +31,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 		var BookmarkArray: [NSURL] = [];
 		for obj in musicList {
 			var bookData : NSURL! = obj.musicURL;
-			if (bookData) {
+			if (bookData != nil) {
 				BookmarkArray.append(bookData)
 			}
 		}
@@ -240,4 +241,47 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 
 		self.didChange(.Insertion, valuesAtIndexes: theIndexSet, forKey: kMusicListKVO)
 	}
+	
+	#if os(OSX)
+	func beginLoadingOfMusicListAtURL(toOpen: NSURL, completionHandle theHandle: (theErr: NSError!) ->Void) {
+		var conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
+		conn.remoteObjectInterface = NSXPCInterface(`protocol`: PPSTImporterHelper.self);
+		
+		conn.resume()
+		
+		conn.remoteObjectProxy.loadStcfAtURL(toOpen, withReply: {(bookmarkData:[NSObject : AnyObject]!, error: NSError!) -> Void in
+			NSOperationQueue.mainQueue().addOperationWithBlock({
+				if (error != nil) {
+					theHandle(theErr: error)
+				} else {
+					var invalidAny: AnyObject? = bookmarkData["lostMusicCount"];
+					var selectedAny: AnyObject? = bookmarkData["SelectedMusic"]
+					var pathsAny: AnyObject? = bookmarkData["MusicPaths"]
+					if (invalidAny == nil || selectedAny == nil || pathsAny == nil) {
+						var lolwut = CreateErrorFromMADErrorType(.UnknownErr)
+						theHandle(theErr: lolwut)
+					} else {
+						var pathsURL: [PPMusicListObject] = []
+						self.lostMusicCount = invalidAny as UInt;
+						self.selectedMusic = selectedAny as Int;
+						for aPath in pathsAny as NSArray {
+							var tmpURL = NSURL.fileURLWithPath(aPath as String)
+							if (!tmpURL) {
+								continue;
+							}
+							var tmpObj = PPMusicListObject(URL: tmpURL)
+							pathsURL.append(tmpObj)
+						}
+						self.loadMusicList(pathsURL)
+						
+						theHandle(theErr: nil)
+					}
+				}
+				
+				conn.invalidate();
+			})
+		})
+	}
+	#endif
+
 }

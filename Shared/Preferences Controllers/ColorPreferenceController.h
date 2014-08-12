@@ -107,5 +107,6 @@
 @property (weak) IBOutlet NSColorWell *colorWell96;
 
 - (IBAction)changeColorWell:(id)sender;
++ (instancetype)newPreferenceView;
 
 @end

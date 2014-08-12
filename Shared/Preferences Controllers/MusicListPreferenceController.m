@@ -19,6 +19,11 @@
 @synthesize musicPlayingOutlet;
 @synthesize rememberMusicList;
 
++ (instancetype)newPreferenceView
+{
+	return [[self alloc] init];
+}
+
 -(NSInteger)playedMusic
 {
 	id curSelected = [musicPlayingOutlet selectedCell];

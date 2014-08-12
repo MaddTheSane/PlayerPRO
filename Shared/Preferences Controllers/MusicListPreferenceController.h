@@ -19,4 +19,6 @@
 
 - (IBAction)changePlayedMusic:(id)sender;
 - (IBAction)toggleButton:(id)sender;
+
++ (instancetype)newPreferenceView;
 @end

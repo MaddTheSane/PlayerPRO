@@ -10,4 +10,5 @@
 
 @interface MidiHardwarePreferenceController : NSViewController
 
++ (instancetype)newPreferenceView;
 @end

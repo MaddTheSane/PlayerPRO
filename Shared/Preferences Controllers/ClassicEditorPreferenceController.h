@@ -21,4 +21,5 @@
 - (IBAction)toggleNoteLength:(id)sender;
 - (IBAction)toggleMarkers:(id)sender;
 
++ (instancetype)newPreferenceView;
 @end
