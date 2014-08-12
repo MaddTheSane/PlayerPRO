@@ -19,6 +19,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 	
 	override class func initialize() {
 		NSKeyedUnarchiver.setClass(self, forClassName: "PPMusicList")
+		NSKeyedArchiver.setClassName("PPMusicList", forClass: self)
 	}
 		
 	func countByEnumeratingWithState(state: UnsafePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafePointer<AnyObject?>, count len: Int) -> Int {

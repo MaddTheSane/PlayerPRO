@@ -6,13 +6,12 @@
 //
 //
 
-import Cocoa
 import PlayerPROCore
 import PlayerPROKit
 import CoreGraphics
 
 extension PPSampleObject {
-class func drawCGSampleInt(start startI: Int, tSS: Int, tSE: Int, high: Int, larg: Int, trueV: Int, trueH: Int, channel: Int16, curData: PPSampleObject!, ctxRef: CGContextRef!) {
+class func drawCGSampleInt(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16, curData: PPSampleObject!, ctxRef: CGContextRef!) {
 	CGContextSaveGState(ctxRef);
 	
 	var start = startI
@@ -42,7 +41,7 @@ class func drawCGSampleInt(start startI: Int, tSS: Int, tSE: Int, high: Int, lar
 		temp = CGFloat(Int(theShortSample[BS]) + 0x8000);
 		temp *= CGFloat(high);
 		temp  /= CGFloat((1 << 16));
-		CGContextMoveToPoint(ctxRef, CGFloat(trueH + tSS), trueV + temp);
+		CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(tSS), CGFloat(trueV) + temp);
 		
 		for (i = tSS; i < tSE; i++) {
 			BS = start + (i * sampleSize) / larg;
@@ -63,7 +62,7 @@ class func drawCGSampleInt(start startI: Int, tSS: Int, tSE: Int, high: Int, lar
 			maxY = CGFloat(temp);
 			temp *= CGFloat(high);
 			temp /= CGFloat((1 << 16));
-			CGContextAddLineToPoint(ctxRef, CGFloat(trueH + i), CGFloat(temp + trueV));
+			CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), temp + CGFloat(trueV));
 			
 			if (BS != BE) {
 				for (x = BS; x < BE; x++) {
@@ -87,8 +86,8 @@ class func drawCGSampleInt(start startI: Int, tSS: Int, tSE: Int, high: Int, lar
 				minY *= CGFloat(high);
 				minY /= CGFloat((1 << 16));
 				
-				CGContextMoveToPoint(ctxRef, CGFloat(Double(trueH + i)), CGFloat(Double(minY + trueV)));
-				CGContextAddLineToPoint(ctxRef, CGFloat(Double(trueH + i)), CGFloat(Double(maxY + trueV)));
+				CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), minY + CGFloat(trueV));
+				CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), maxY + CGFloat(trueV));
 			}
 		}
 	} else {
@@ -103,7 +102,7 @@ class func drawCGSampleInt(start startI: Int, tSS: Int, tSE: Int, high: Int, lar
 		temp *= CGFloat(high);
 		temp /= CGFloat((1 << 8));
 		
-		CGContextMoveToPoint(ctxRef, CGFloat(trueH + tSS), trueV + temp);
+		CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(tSS), CGFloat(trueV) + temp);
 		
 		for (i = tSS; i < tSE; i++) {
 			BS = start + (i * sampleSize) / larg;
@@ -124,7 +123,7 @@ class func drawCGSampleInt(start startI: Int, tSS: Int, tSE: Int, high: Int, lar
 			minY = temp; maxY = temp;
 			temp *= CGFloat(high);
 			temp /= CGFloat(1 << 8);
-			CGContextAddLineToPoint(ctxRef, CGFloat(trueH + i), temp + trueV);
+			CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), temp + CGFloat(trueV));
 			
 			if (BS != BE) {
 				for (x = BS; x < BE; x++) {
@@ -146,8 +145,8 @@ class func drawCGSampleInt(start startI: Int, tSS: Int, tSE: Int, high: Int, lar
 				minY *= CGFloat(high);
 				minY /= CGFloat(1 << 8);
 				
-				CGContextMoveToPoint(ctxRef, CGFloat(trueH + i), minY + trueV);
-				CGContextAddLineToPoint(ctxRef, CGFloat(trueH + i), maxY + trueV);
+				CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), minY + CGFloat(trueV));
+				CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), maxY + CGFloat(trueV));
 			}
 		}
 	}

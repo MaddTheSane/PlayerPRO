@@ -48,17 +48,17 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 		
 		var start:Int = startI
 		
-		var i: Int = 0;
-		var sampleSize = curData.data.length;
-		var	temp: CGFloat = 0;
+		var i = 0;
+		var sampleSize = curData.data.length
+		var	temp: CGFloat = 0.0
 		var theSample = UnsafePointer<UInt8>(curData.data.bytes)
 		var theShortSample = UnsafePointer<UInt16>(curData.data.bytes)
-		var BS: Int = 0
-		var BE: Int = 0
-		var x: Int = 0
+		var BS = 0
+		var BE = 0
+		var x = 0
 		var isStereo = curData.stereo;
-		var minY: CGFloat = 0
-		var maxY: CGFloat = 0
+		var minY: CGFloat = 0.0
+		var maxY: CGFloat = 0.0
 		
 		if (curData.amplitude == 16) {
 			sampleSize /= 2
@@ -94,7 +94,7 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 				maxY = CGFloat(temp);
 				temp *= CGFloat(high);
 				temp /= CGFloat((1 << 16));
-				CGContextAddLineToPoint(ctxRef, CGFloat(trueH + i), CGFloat(temp + trueV));
+				CGContextAddLineToPoint(ctxRef, CGFloat((trueH + i)), CGFloat(temp + trueV));
 				
 				if (BS != BE) {
 					for (x = BS; x < BE; x++) {

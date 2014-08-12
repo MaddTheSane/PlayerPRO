@@ -82,15 +82,22 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPri
 	internal var stashedFileSize: UInt64 = 0
 	var fileSize : UInt64 {get {
 		if stashedFileSize == 0 {
-		var manager = NSFileManager.defaultManager();
-		var theparam = manager.attributesOfItemAtPath(musicURL.path, error: nil)
-		if (!theparam) {
-			return 0;
-		}
-		stashedFileSize = (theparam as NSDictionary).fileSize()
+			var val: AnyObject? = nil;
+			var err: NSError? = nil;
+			if (!musicURL.getResourceValue(&val, forKey:NSURLTotalFileSizeKey, error: &err)) {
+				var manager = NSFileManager.defaultManager();
+				var theparam = manager.attributesOfItemAtPath(musicURL.path, error: nil)
+				if (theparam == nil) {
+					return 0;
+				}
+				stashedFileSize = (theparam as NSDictionary).fileSize()
+			} else {
+				var retNum = val as NSNumber
+				stashedFileSize = val!.unsignedLongLongValue
+			}
 		}
 		return stashedFileSize
-	}}
+		}}
 
 	override class func initialize() {
 		NSKeyedUnarchiver.setClass(self, forClassName: "PPMusicListObject")
