@@ -10,16 +10,21 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
+#ifndef NS_DESIGNATED_INITIALIZER
+#define NS_DESIGNATED_INITIALIZER
+#endif
+
 @interface PPMadCommandObject : NSObject <PPObject>
 
 - (instancetype)init;
-- (instancetype)initWithCmd:(Cmd *)theCmd;
+- (instancetype)initWithCmd:(Cmd *)theCmd NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
 @property (readonly) Cmd theCommand;
-@property Byte instrument;
-@property Byte note;
-@property Byte command;
-@property Byte argument;
-@property Byte volume;
+@property MADByte instrument;
+@property MADByte note;
+@property MADByte command;
+@property MADByte argument;
+@property MADByte volume;
 - (void)resetCommand;
 @end

@@ -10,6 +10,10 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
+#ifndef NS_DESIGNATED_INITIALIZER
+#define NS_DESIGNATED_INITIALIZER
+#endif
+
 @interface PPSampleObject : NSObject <PPObject>
 @property (readwrite) NSInteger sampleIndex;
 @property (readwrite) NSInteger instrumentIndex;
@@ -17,7 +21,8 @@
 
 - (instancetype)init;
 - (instancetype)initWithsData:(in sData *)theData;
-- (instancetype)initWithSData:(in sData *)theData;
+- (instancetype)initWithSData:(in sData *)theData NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 - (sData *)createSData;
 
 - (int)dataSize DEPRECATED_ATTRIBUTE;

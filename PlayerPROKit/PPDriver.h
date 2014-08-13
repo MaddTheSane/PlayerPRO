@@ -12,6 +12,10 @@
 @class PPLibrary;
 @class PPMusicObject;
 
+#ifndef NS_DESIGNATED_INITIALIZER
+#define NS_DESIGNATED_INITIALIZER
+#endif
+
 @interface PPDriver : NSObject
 @property (nonatomic, strong) PPMusicObject *currentMusic;
 @property (readonly) PPLibrary *theLibrary;
@@ -21,7 +25,7 @@
 
 - (instancetype)initWithLibrary:(PPLibrary *)theLib;
 - (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings;
-- (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out MADErr*)theErr;
+- (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out MADErr*)theErr NS_DESIGNATED_INITIALIZER;
 
 - (MADErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett;
 

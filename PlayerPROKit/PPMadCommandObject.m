@@ -23,52 +23,52 @@
 
 @synthesize theCommand;
 
-- (Byte)instrument
+- (MADByte)instrument
 {
 	return theCommand.ins;
 }
 
-- (void)setInstrument:(Byte)instrument
+- (void)setInstrument:(MADByte)instrument
 {
 	theCommand.ins = instrument;
 }
 
-- (Byte)note
+- (MADByte)note
 {
 	return theCommand.note;
 }
 
-- (void)setNote:(Byte)note
+- (void)setNote:(MADByte)note
 {
 	theCommand.note = note;
 }
 
-- (Byte)command
+- (MADByte)command
 {
 	return theCommand.cmd;
 }
 
-- (void)setCommand:(Byte)command
+- (void)setCommand:(MADByte)command
 {
 	theCommand.cmd = command;
 }
 
-- (Byte)argument
+- (MADByte)argument
 {
 	return theCommand.arg;
 }
 
-- (void)setArgument:(Byte)argument
+- (void)setArgument:(MADByte)argument
 {
 	theCommand.arg = argument;
 }
 
-- (Byte)volume
+- (MADByte)volume
 {
 	return theCommand.vol;
 }
 
-- (void)setVolume:(Byte)volume
+- (void)setVolume:(MADByte)volume
 {
 	theCommand.vol = volume;
 }
