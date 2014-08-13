@@ -135,22 +135,25 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 					infoString = @"";
 				
 				NSattribs[kPPMDMADKInfo] = infoString;
-				
 			}
 			
 			NSString *title;
 			{
 				PPInfoRec rec;
 				{
-					char sig[5];
 					if (MADMusicInfoCFURL(MADLib, type, urlForFile, &rec) != MADNoErr)
 						goto skipInfo;
-					OSType2Ptr(rec.signature, sig);
-					NSString *NSSig = [[NSString alloc] initWithCString:sig encoding:NSMacOSRomanStringEncoding];
+					NSString *NSSig = CFBridgingRelease(UTCreateStringForOSType(rec.signature));
+					NSArray *tmpCodecArray;
 					if (!NSSig) {
+						char sig[5];
+						OSType2Ptr(rec.signature, sig);
+						NSSig = [[NSString alloc] initWithCString:sig encoding:NSMacOSRomanStringEncoding];
+					} else if (!NSSig) {
 						NSSig = [[NSString alloc] initWithFormat:@"0x%08X", (unsigned int)rec.signature];
 					}
-					NSattribs[(NSString*)kMDItemCodecs] = @[NSSig];
+					tmpCodecArray = @[NSSig];
+					NSattribs[(NSString*)kMDItemCodecs] = tmpCodecArray;
 				}
 				//Set the title metadata
 				
@@ -201,7 +204,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 				}
 			}
 			
-			NSattribs[kPPMDInstumentsList] = [InstruArray copy];
+			NSattribs[kPPMDInstumentsList] = InstruArray;
 		}
 		
 		{
@@ -213,7 +216,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 						[PatArray addObject:temp];
 				}
 			}
-			NSattribs[kPPMDPatternList] = [PatArray copy];
+			NSattribs[kPPMDPatternList] = PatArray;
 		}
 		
 		MADCleanDriver(MADDriver);
