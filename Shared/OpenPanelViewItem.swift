@@ -16,7 +16,6 @@ enum utiType: Int {
 	case otherType = -5
 };
 
-//enum trackerType : UInt32
 enum trackerType : UInt32 {
 	case tracker = 1
 	case playlist
