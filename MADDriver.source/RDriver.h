@@ -266,7 +266,7 @@ typedef MADENUM(short, MADOutputChannel)
 	MonoOutPut = 1,		// NOT SUPPORTED anymore
 	StereoOutPut,		// NOT SUPPORTED anymore
 	DeluxeStereoOutPut,	// USE THIS ONE ONLY !!!!!!!!!!!!!!
-	PolyPhonic			// Do NOT use it ! Standard hardware doesn't support it !
+	PolyPhonic			// Do NOT use it! Standard hardware doesn't support it!
 };
 
 static const MADOutputChannel oldMonoOutPut = MonoOutPut;
@@ -300,6 +300,8 @@ static const MADOutputChannel oldStereoOutPut = StereoOutPut;
  *			Reverb effect active?
  *	@var	repeatMusic
  *			If music finished, repeat it or stop.
+ *	@var	reserved
+ *			For future use.
  */
 typedef struct MADDriverSettings {
 	short				numChn;
@@ -315,6 +317,9 @@ typedef struct MADDriverSettings {
 	bool	surround;
 	bool	Reverb;
 	bool	repeatMusic;
+	union reserved {
+		char padding[44];
+	} reserved;
 } MADDriverSettings;
 
 /******************************************************************/

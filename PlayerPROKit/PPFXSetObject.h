@@ -10,6 +10,10 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
+#ifndef NS_DESIGNATED_INITIALIZER
+#define NS_DESIGNATED_INITIALIZER
+#endif
+
 @interface PPFXSetObject : NSObject <PPObject>
 @property (readonly) FXSets theSet;
 @property short track;

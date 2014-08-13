@@ -195,7 +195,7 @@ typedef struct EnvRec {
 	short	val;
 } EnvRec;
 
-typedef MADOPTIONS(MADByte, EFTypes) {
+typedef MADOPTIONS(MADByte, EFType) {
 	EFON		= 1 << 0,
 	EFSUSTAIN	= 1 << 1,
 	EFLOOP		= 1 << 2,
@@ -238,8 +238,8 @@ typedef struct InstrData		// INSTRUMENT
 	MADByte	pitchBeg;			// Pitch loop start point
 	MADByte	pitchEnd;			// Pitch loop end point
 	
-	EFTypes	volType;			// Volume type: bit 0: On; 1: Sustain; 2: Loop
-	EFTypes	pannType;			// Panning type: bit 0: On; 1: Sustain; 2: Loop
+	EFType	volType;			// Volume type: bit 0: On; 1: Sustain; 2: Loop
+	EFType	pannType;			// Panning type: bit 0: On; 1: Sustain; 2: Loop
 	
 	unsigned short	volFade;	// Volume fadeout
 	

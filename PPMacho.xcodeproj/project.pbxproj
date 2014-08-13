@@ -177,6 +177,8 @@
 		55268AAC1877EF2500A82269 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55268AAA1877EF0000A82269 /* InfoPlist.strings */; };
 		552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		552788031981C95100708906 /* PPMusicListDragClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552788021981C95100708906 /* PPMusicListDragClass.swift */; };
+		55281D07199B32D400C998AF /* PPPasteboardHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = 55281D06199B32D400C998AF /* PPPasteboardHandling.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55281D08199B33EF00C998AF /* PPPasteboardHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = 55281D06199B32D400C998AF /* PPPasteboardHandling.h */; };
 		552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 552A662816B5EBEB007C63F7 /* PPPlugInObject.m */; };
 		552C440217DFDE1100AFCB5C /* ComplexFadeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C440017DFDE1100AFCB5C /* ComplexFadeController.m */; };
 		552C440317DFDE1100AFCB5C /* ComplexFadeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C440117DFDE1100AFCB5C /* ComplexFadeController.xib */; };
@@ -1897,6 +1899,7 @@
 		552711E3124881F4005120FC /* UserDefaultKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultKeys.h; sourceTree = "<group>"; };
 		552711E4124881F4005120FC /* UserDefaultKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UserDefaultKeys.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		552788021981C95100708906 /* PPMusicListDragClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPMusicListDragClass.swift; sourceTree = "<group>"; };
+		55281D06199B32D400C998AF /* PPPasteboardHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPPasteboardHandling.h; path = ../PPPasteboardHandling.h; sourceTree = "<group>"; };
 		552A662716B5EBEA007C63F7 /* PPPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugInObject.h; sourceTree = "<group>"; };
 		552A662816B5EBEB007C63F7 /* PPPlugInObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPPlugInObject.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		552C43FF17DFDE1100AFCB5C /* ComplexFadeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComplexFadeController.h; sourceTree = "<group>"; };
@@ -3595,6 +3598,7 @@
 		55453526186CD32900F69F4D /* OS X-specific code */ = {
 			isa = PBXGroup;
 			children = (
+				55281D06199B32D400C998AF /* PPPasteboardHandling.h */,
 				55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */,
 				55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */,
 				55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */,
@@ -4254,6 +4258,7 @@
 				551292ED163DD74100C2C639 /* PlayerPROKit.h in Headers */,
 				55F013E5187F5AB6002488D5 /* PPObjectProtocol.h in Headers */,
 				55DE87BF187E051F00C36533 /* PPPatternObject_PPKPrivate.h in Headers */,
+				55281D07199B32D400C998AF /* PPPasteboardHandling.h in Headers */,
 				55D2921F18AADB7100EB7A7D /* PPPatternObject_PcmdHandling.h in Headers */,
 				55C8EDE3187CC8B200CC8C1B /* PPMadCommandObject.h in Headers */,
 				551292F0163DD7CE00C2C639 /* PPLibrary.h in Headers */,
@@ -4328,6 +4333,7 @@
 				5578C51117DB90110057D11B /* PlayerPROKit.h in Headers */,
 				55DE87C0187E052400C36533 /* PPPatternObject_PPKPrivate.h in Headers */,
 				5578C51217DB901F0057D11B /* PPLibrary.h in Headers */,
+				55281D08199B33EF00C998AF /* PPPasteboardHandling.h in Headers */,
 				55D2922018AADB7D00EB7A7D /* PPPatternObject_PcmdHandling.h in Headers */,
 				5578C51417DB901F0057D11B /* PPDriver.h in Headers */,
 				5578C51817DB901F0057D11B /* PPMusicObject.h in Headers */,

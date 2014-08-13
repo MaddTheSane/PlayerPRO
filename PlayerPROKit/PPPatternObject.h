@@ -18,10 +18,10 @@
 @interface PPPatternObject : NSObject <NSFastEnumeration, PPObject>
 @property (readonly) NSInteger index;
 @property (copy) NSString *patternName;
-@property (readonly, weak) PPMusicObjectWrapper *musicWrapper;
+@property (readonly, weak) PPMusicObject *musicWrapper;
 @property int patternSize;
-- (instancetype)initWithMusic:(PPMusicObjectWrapper *)mus;
-- (instancetype)initWithMusic:(PPMusicObjectWrapper *)mus patternAtIndex:(short)ptnIdx;
+- (instancetype)initWithMusic:(PPMusicObject *)mus;
+- (instancetype)initWithMusic:(PPMusicObject *)mus patternAtIndex:(short)ptnIdx;
 @end
 
 #endif

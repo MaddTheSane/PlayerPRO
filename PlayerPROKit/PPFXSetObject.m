@@ -7,6 +7,9 @@
 //
 
 #import "PPFXSetObject.h"
+#if !TARGET_OS_IPHONE
+#import "PPPasteboardHandling.h"
+#endif
 
 #define kPPTrack @"PlayerPROKit FXSets Track"
 #define kPPIdentifier @"PlayerPROKit FXSets Identifier"
@@ -21,6 +24,43 @@
 
 @implementation PPFXSetObject
 @synthesize theSet;
+
+#if !TARGET_OS_IPHONE
+#define sampleUTI @"net.sourceforge.playerpro.FXSet"
+
+static NSArray *UTIArray;
+static dispatch_once_t initUTIOnceToken;
+static const dispatch_block_t initUTIArray = ^{
+	UTIArray = @[sampleUTI];
+};
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return UTIArray;
+}
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return UTIArray;
+}
+- (id)pasteboardPropertyListForType:(NSString *)type
+{
+	if ([type isEqualToString:sampleUTI])
+		return [NSKeyedArchiver archivedDataWithRootObject:self];
+	else
+		return nil;
+}
+
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
+{
+	if ([type isEqualToString:sampleUTI])
+		return NSPasteboardReadingAsKeyedArchive;
+	else
+		return NSPasteboardReadingAsData;
+}
+#endif
 
 - (instancetype)initWithFXSet:(FXSets*)theSett
 {
@@ -85,7 +125,6 @@
 
 - (FXSets)theSet
 {
-	[self writeBackToStruct];
 	return theSet;
 }
 
@@ -144,6 +183,11 @@
 
 #pragma mark NSCoding protocol
 
++ (BOOL)supportsSecureCoding
+{
+	return YES;
+}
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
@@ -153,7 +197,6 @@
 		self.track = [(NSNumber*)[aDecoder decodeObjectForKey:kPPTrack] shortValue];
 		self.identifier = [(NSNumber*)[aDecoder decodeObjectForKey:kPPIdentifier] shortValue];
 		self.argumentNumbers = [(NSNumber*)[aDecoder decodeObjectForKey:kPPArgumentNumbers] shortValue];
-		[self writeBackToStruct];
 	}
 	return self;
 }

@@ -36,10 +36,9 @@
 @property (copy) NSString *musicName;
 @property (copy) NSString *musicInfo;
 @property (copy) NSString *authorString;
-- (PPMusicObjectWrapper*)wrapper;
+- (PPMusicObject*)wrapper;
 
 - (void)importMusicObject:(PPMusicObject*)theObj;
-- (void)importMusicObjectWrapper:(PPMusicObjectWrapper*)theWrap;
 - (IBAction)exportMusicAs:(id)sender;
 
 - (IBAction)showBoxEditor:(id)sender;
