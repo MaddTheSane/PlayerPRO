@@ -160,7 +160,6 @@
 		55232AED11FDE2E40041A4EC /* MiscPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AEC11FDE2E40041A4EC /* MiscPreferenceController.m */; };
 		55232AF011FDE5180041A4EC /* BoxEditorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AEF11FDE5180041A4EC /* BoxEditorPreferenceController.m */; };
 		55232AF311FDE56D0041A4EC /* DigitalEditorPreferenceControler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF211FDE56D0041A4EC /* DigitalEditorPreferenceControler.m */; };
-		55232AF711FDE5CB0041A4EC /* ClassicEditorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF611FDE5CB0041A4EC /* ClassicEditorPreferenceController.m */; };
 		55232AFA11FDE5F90041A4EC /* MidiHardwarePreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF911FDE5F90041A4EC /* MidiHardwarePreferenceController.m */; };
 		55232B0E11FDF2980041A4EC /* ColorPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232B0D11FDF2980041A4EC /* ColorPrefs.xib */; };
 		5523EC6A16925FF80067B22A /* PPInstrumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC6816925FF80067B22A /* PPInstrumentViewController.m */; };
@@ -341,7 +340,6 @@
 		5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		5578C4BD17DA4BC20057D11B /* PPTimeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55323352167687A200076604 /* PPTimeFormatter.m */; };
-		5578C4BF17DA4BF20057D11B /* MusicListPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AE611FDE2550041A4EC /* MusicListPreferenceController.m */; };
 		5578C4C017DA4C040057D11B /* MiscPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AEC11FDE2E40041A4EC /* MiscPreferenceController.m */; };
 		5578C4C117DA4C210057D11B /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
 		5578C4C217DA4C430057D11B /* MusicListPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6F016619E39005BDE4B /* MusicListPrefs.xib */; };
@@ -462,8 +460,6 @@
 		55978AA31999D82C009EE5DF /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
 		55978AA41999D9EF009EE5DF /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
 		55978AA51999DB07009EE5DF /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
-		55978AA71999DB18009EE5DF /* OSX-Only.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55978AA61999DB18009EE5DF /* OSX-Only.swift */; };
-		55978AA81999DB18009EE5DF /* OSX-Only.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55978AA61999DB18009EE5DF /* OSX-Only.swift */; };
 		55978AAA1999DF5C009EE5DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55978AA91999DF5C009EE5DF /* AppDelegate.swift */; };
 		55978AAB1999E5B2009EE5DF /* PPMusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07F1999879C00A1B9A1 /* PPMusicList.swift */; };
 		5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
@@ -631,13 +627,10 @@
 		55E52E2512455E5100315307 /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
 		55E763E5199ABBC900D7952F /* PPPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E763E4199ABBC900D7952F /* PPPreferences.swift */; };
 		55E763E6199ABBC900D7952F /* PPPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E763E4199ABBC900D7952F /* PPPreferences.swift */; };
-		55E763EE199ACD3000D7952F /* PianoPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AD711FDDFEA0041A4EC /* PianoPreferencesController.m */; };
-		55E763EF199ACD3100D7952F /* PianoPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AD711FDDFEA0041A4EC /* PianoPreferencesController.m */; };
 		55E763F0199ACDAA00D7952F /* ColorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AE911FDE29B0041A4EC /* ColorPreferenceController.m */; };
-		55E763F1199ACDAA00D7952F /* BoxEditorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AEF11FDE5180041A4EC /* BoxEditorPreferenceController.m */; };
-		55E763F2199ACDAA00D7952F /* DigitalEditorPreferenceControler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF211FDE56D0041A4EC /* DigitalEditorPreferenceControler.m */; };
-		55E763F3199ACDAA00D7952F /* ClassicEditorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF611FDE5CB0041A4EC /* ClassicEditorPreferenceController.m */; };
-		55E763F4199ACDAB00D7952F /* MusicListPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AE611FDE2550041A4EC /* MusicListPreferenceController.m */; };
+		55E763FB199AE81000D7952F /* MusicListPreferenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E763F9199AE79F00D7952F /* MusicListPreferenceController.swift */; };
+		55E763FC199AEAB200D7952F /* PianoPreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E763EB199AC40000D7952F /* PianoPreferencesController.swift */; };
+		55E763FE199AFC2B00D7952F /* ClassicEditorPreferenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E763FD199AFC2B00D7952F /* ClassicEditorPreferenceController.swift */; };
 		55E898B010F17C2B004EB52B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55E898B110F17C2B004EB52B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55E8998510F18165004EB52B /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
@@ -2211,10 +2204,7 @@
 		558D4DD91666F14E00A333E8 /* PPDriver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPDriver.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLibrary_PPKPrivate.h; sourceTree = "<group>"; };
 		5590896710E883AF00CE70B8 /* WAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAV.h; sourceTree = "<group>"; };
-		55978AA61999DB18009EE5DF /* OSX-Only.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OSX-Only.swift"; sourceTree = "<group>"; };
 		55978AA91999DF5C009EE5DF /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		55981C5111EE370D00656EE3 /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
-		55981C5211EE370D00656EE3 /* PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPreferences.m; sourceTree = "<group>"; };
 		55981C5411EE375400656EE3 /* preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = preferences.xib; sourceTree = "<group>"; };
 		559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPQuickView.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		559C4188183EB4AB004A073C /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
@@ -2286,9 +2276,9 @@
 		55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPROCoreAdditions.swift; sourceTree = "<group>"; };
 		55E527A8186A2A690020F3D6 /* MIDI.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIDI.pch; sourceTree = "<group>"; };
 		55E763E4199ABBC900D7952F /* PPPreferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPPreferences.swift; sourceTree = "<group>"; };
-		55E763E7199AC11100D7952F /* PP6Detector.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = PP6Detector.c; path = Shared/PP6Detector.c; sourceTree = SOURCE_ROOT; };
-		55E763E8199AC11100D7952F /* PP6Detector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PP6Detector.h; path = Shared/PP6Detector.h; sourceTree = SOURCE_ROOT; };
 		55E763EB199AC40000D7952F /* PianoPreferencesController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PianoPreferencesController.swift; sourceTree = "<group>"; };
+		55E763F9199AE79F00D7952F /* MusicListPreferenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListPreferenceController.swift; sourceTree = "<group>"; };
+		55E763FD199AFC2B00D7952F /* ClassicEditorPreferenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassicEditorPreferenceController.swift; sourceTree = "<group>"; };
 		55E898B710F17C2B004EB52B /* QuickTime.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickTime.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55E8997B10F17CCB004EB52B /* QuickTime-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "QuickTime-Info.plist"; sourceTree = SOURCE_ROOT; };
 		55EA019616AF15B500D6AEA0 /* PPFilterPlugObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPlugObject.h; sourceTree = "<group>"; };
@@ -3442,6 +3432,7 @@
 				55E763EB199AC40000D7952F /* PianoPreferencesController.swift */,
 				55232AD611FDDFEA0041A4EC /* PianoPreferencesController.h */,
 				55232AD711FDDFEA0041A4EC /* PianoPreferencesController.m */,
+				55E763F9199AE79F00D7952F /* MusicListPreferenceController.swift */,
 				55232AE511FDE2550041A4EC /* MusicListPreferenceController.h */,
 				55232AE611FDE2550041A4EC /* MusicListPreferenceController.m */,
 				55232AE811FDE29B0041A4EC /* ColorPreferenceController.h */,
@@ -3452,6 +3443,7 @@
 				55232AEF11FDE5180041A4EC /* BoxEditorPreferenceController.m */,
 				55232AF111FDE56D0041A4EC /* DigitalEditorPreferenceControler.h */,
 				55232AF211FDE56D0041A4EC /* DigitalEditorPreferenceControler.m */,
+				55E763FD199AFC2B00D7952F /* ClassicEditorPreferenceController.swift */,
 				55232AF511FDE5CB0041A4EC /* ClassicEditorPreferenceController.h */,
 				55232AF611FDE5CB0041A4EC /* ClassicEditorPreferenceController.m */,
 				55232AF811FDE5F90041A4EC /* MidiHardwarePreferenceController.h */,
@@ -4074,8 +4066,6 @@
 				55323351167687A200076604 /* PPTimeFormatter.h */,
 				55323352167687A200076604 /* PPTimeFormatter.m */,
 				55E763E4199ABBC900D7952F /* PPPreferences.swift */,
-				55981C5111EE370D00656EE3 /* PPPreferences.h */,
-				55981C5211EE370D00656EE3 /* PPPreferences.m */,
 				552711E3124881F4005120FC /* UserDefaultKeys.h */,
 				552711E4124881F4005120FC /* UserDefaultKeys.m */,
 				55F16D1C186F918F00E75C3E /* getAIFF.mi */,
@@ -4087,9 +4077,6 @@
 				550D798E1979F33D00F0A8F8 /* PPByteSwap.swift */,
 				55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */,
 				55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */,
-				55978AA61999DB18009EE5DF /* OSX-Only.swift */,
-				55E763E8199AC11100D7952F /* PP6Detector.h */,
-				55E763E7199AC11100D7952F /* PP6Detector.c */,
 				55232AF411FDE5970041A4EC /* Preferences Controllers */,
 				5526AB10188C8655008D0C14 /* Resources */,
 			);
@@ -6339,31 +6326,26 @@
 			files = (
 				5533C8FB19942AD9003AEB16 /* SoundOutputController.swift in Sources */,
 				555C0F8D19829663003B9347 /* PPCurrentlyPlayingIndex.swift in Sources */,
-				55978AA81999DB18009EE5DF /* OSX-Only.swift in Sources */,
 				557E0B70199AB1AE0058B6E1 /* PPInstrumentWindowController.swift in Sources */,
-				55E763EF199ACD3100D7952F /* PianoPreferencesController.m in Sources */,
 				55F4C3E519763FDD000997BE /* PPMusicListObject.swift in Sources */,
+				55E763FB199AE81000D7952F /* MusicListPreferenceController.swift in Sources */,
 				55E382EC1981509100EC330B /* PPPlugInInfo.swift in Sources */,
 				555F5C621993327D0056AF01 /* OpenPanelViewController.swift in Sources */,
 				552788031981C95100708906 /* PPMusicListDragClass.swift in Sources */,
-				55E763F2199ACDAA00D7952F /* DigitalEditorPreferenceControler.m in Sources */,
 				55588A97199951B300C3D4EE /* PPPlugInInfoController.swift in Sources */,
 				55E382F0198169C000EC330B /* PlayerPROCoreAdditions.swift in Sources */,
 				55978AAB1999E5B2009EE5DF /* PPMusicList.swift in Sources */,
 				55413C471991B443001414D0 /* PPByteSwap.swift in Sources */,
 				55E763F0199ACDAA00D7952F /* ColorPreferenceController.m in Sources */,
-				55E763F3199ACDAA00D7952F /* ClassicEditorPreferenceController.m in Sources */,
 				55E763E6199ABBC900D7952F /* PPPreferences.swift in Sources */,
 				5578C48A17D9E8560057D11B /* main.m in Sources */,
 				55978AAA1999DF5C009EE5DF /* AppDelegate.swift in Sources */,
-				55E763F1199ACDAA00D7952F /* BoxEditorPreferenceController.m in Sources */,
 				555F5C65199333900056AF01 /* OpenPanelViewItem.swift in Sources */,
 				5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */,
 				55978AA21999D82C009EE5DF /* PlayerPROKitAdditions.swift in Sources */,
 				557191D118A40D9900F6DAD4 /* MidiHardwarePreferenceController.m in Sources */,
 				5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */,
 				5578C4BD17DA4BC20057D11B /* PPTimeFormatter.m in Sources */,
-				5578C4BF17DA4BF20057D11B /* MusicListPreferenceController.m in Sources */,
 				5578C4C017DA4C040057D11B /* MiscPreferenceController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6693,12 +6675,10 @@
 				55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */,
 				55CB01A711EB82FA0028C6BB /* main.m in Sources */,
 				555F5C611993327D0056AF01 /* OpenPanelViewController.swift in Sources */,
-				55E763EE199ACD3000D7952F /* PianoPreferencesController.m in Sources */,
 				5521F41517FA4365002CDBA9 /* BoxViewController.m in Sources */,
 				55F41A3717EF96B000605DF8 /* PPExportObject.m in Sources */,
 				55852E1C18D67CCB0009BF55 /* PPSmallPianoView.m in Sources */,
 				55FEF84519844FD600D2E79C /* DigitalViewController.m in Sources */,
-				55978AA71999DB18009EE5DF /* OSX-Only.swift in Sources */,
 				5533C8FA19942AD9003AEB16 /* SoundOutputController.swift in Sources */,
 				55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */,
 				55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */,
@@ -6706,13 +6686,12 @@
 				55588A96199951B300C3D4EE /* PPPlugInInfoController.swift in Sources */,
 				55232AF011FDE5180041A4EC /* BoxEditorPreferenceController.m in Sources */,
 				55232AF311FDE56D0041A4EC /* DigitalEditorPreferenceControler.m in Sources */,
-				55232AF711FDE5CB0041A4EC /* ClassicEditorPreferenceController.m in Sources */,
 				55978AA31999D82C009EE5DF /* PlayerPROKitAdditions.swift in Sources */,
 				55232AFA11FDE5F90041A4EC /* MidiHardwarePreferenceController.m in Sources */,
 				552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */,
 				55801EB113D1ED9A007E24FC /* NSColor+PPPreferences.m in Sources */,
+				55E763FE199AFC2B00D7952F /* ClassicEditorPreferenceController.swift in Sources */,
 				55323353167687A200076604 /* PPTimeFormatter.m in Sources */,
-				55E763F4199ACDAB00D7952F /* MusicListPreferenceController.m in Sources */,
 				557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */,
 				557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */,
 				55E763E5199ABBC900D7952F /* PPPreferences.swift in Sources */,
@@ -6728,6 +6707,7 @@
 				55413C461991B43F001414D0 /* PPByteSwap.swift in Sources */,
 				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,
 				552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */,
+				55E763FC199AEAB200D7952F /* PianoPreferencesController.swift in Sources */,
 				5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */,
 				5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */,
 				5578C54017DBABC50057D11B /* PPDocument.m in Sources */,
@@ -9674,6 +9654,7 @@
 				);
 				INFOPLIST_FILE = "Cocoa-Info.plistvers.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
+				OTHER_SWIFT_FLAGS = "-DPLAYERPRO6";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";
@@ -9695,6 +9676,7 @@
 				);
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
+				OTHER_SWIFT_FLAGS = "-DPLAYERPRO6";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";

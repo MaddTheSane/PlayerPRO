@@ -7,7 +7,7 @@
 //
 
 #import "PPApp_AppDelegate.h"
-#import "PPPreferences.h"
+//#import "PPPreferences.h"
 #import "UserDefaultKeys.h"
 #import "NSColor+PPPreferences.h"
 #import "PPInstrumentPlugHandler.h"

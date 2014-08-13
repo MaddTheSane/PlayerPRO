@@ -8,7 +8,16 @@
 
 #import "ClassicEditorPreferenceController.h"
 #import "UserDefaultKeys.h"
-#import "PPPreferences.h"
+#ifdef PLAYERPRO6
+#import "PlayerPRO_6-Swift.h"
+#else
+#import "PlayerPRO_Player-Swift.h"
+#endif
+
+typedef struct _tagCoupling {
+	int amount;
+	NSInteger tag;
+} TagCoupling;
 
 static const TagCoupling TrackHeightCoupling[] = {{100, 1}, {110, 2}, {120, 3}, {130, 4}, {140, 5},
 	{160, 6}, {180, 7}, {200, 8}};

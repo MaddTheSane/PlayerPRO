@@ -8,7 +8,11 @@
 
 #import "MusicListPreferenceController.h"
 #import "UserDefaultKeys.h"
-#import "PPPreferences.h"
+#ifdef PLAYERPRO6
+#import "PlayerPRO_6-Swift.h"
+#else
+#import "PlayerPRO_Player-Swift.h"
+#endif
 
 @implementation MusicListPreferenceController
 @synthesize askToSave;

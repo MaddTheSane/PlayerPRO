@@ -9,7 +9,14 @@
 import Cocoa
 
 class PianoPreferencesController: NSViewController, PlayerPROPreference {
-	var aTemp = 0
+	required init(coder: NSCoder!) {
+		super.init(coder: coder)
+	}
+	
+	required override init(nibName nibNameOrNil: String!, bundle nibBundleOrNil: NSBundle!) {
+		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+	}
+	
 	class func newPreferenceView() -> Self {
 		var nullBundle: NSBundle! = nil
 		var ourself = self(nibName: "PianoPrefs", bundle: nullBundle)
