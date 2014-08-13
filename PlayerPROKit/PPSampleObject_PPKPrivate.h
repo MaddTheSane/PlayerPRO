@@ -7,8 +7,3 @@
 //
 
 #import "PPSampleObject.h"
-
-@interface PPSampleObjectImmutable : PPSampleObject <NSCopying>
-
-@end
-

@@ -112,7 +112,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	if (!___instruments) {
 		NSMutableArray *array = [NSMutableArray new];
 		for (NSInteger i = 0; i < MAXINSTRU; i++) {
-			PPInstrumentObjectImmutable *immIns = [[PPInstrumentObjectImmutable alloc] initWithMusicStruct:currentMusic atIndex:i];
+			PPInstrumentObject *immIns = [[PPInstrumentObject alloc] initWithMusicStruct:currentMusic atIndex:i];
 			[array addObject:immIns];
 		}
 		self.__instruments = [[NSArray alloc] initWithArray:array];

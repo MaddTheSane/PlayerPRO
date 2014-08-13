@@ -7,6 +7,9 @@
 //
 
 #import "PPFXBusObject.h"
+#if !TARGET_OS_IPHONE
+#import "PPPasteboardHandling.h"
+#endif
 
 #define kPPBypass @"PlayerPROKit FXBus ByPass"
 #define kPPCopyID @"PlayerPROKit FXBus CopyId"
@@ -60,11 +63,6 @@
 	theBus.Active = active;
 }
 
-- (void)writeBackToStruct
-{
-	//We don't need to do anything here.
-}
-
 #pragma mark NSCopying protocol
 
 - (id)copyWithZone:(NSZone *)zone
@@ -73,6 +71,10 @@
 }
 
 #pragma mark NSCoding protocol
++ (BOOL)supportsSecureCoding
+{
+	return YES;
+}
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {

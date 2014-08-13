@@ -10,6 +10,9 @@
 #import "PPPatternObject_PPKPrivate.h"
 #import "PPPatternObject_PcmdHandling.h"
 #import "PPMusicObject_PPKPrivate.h"
+#if !TARGET_OS_IPHONE
+#import "PPPasteboardHandling.h"
+#endif
 
 #define kPPPatternName @"PlayerPROKit Pattern Name"
 #define kPPPatternCommands @"PlayerPROKit Pattern Commands"
@@ -38,14 +41,8 @@ static inline void SwapPcmd(Pcmd *toswap)
 @synthesize index;
 @synthesize patternHeader;
 
-- (void)writeBackToStruct
-{
-	
-}
-
 - (PatHeader)patternHeader
 {
-	[self writeBackToStruct];
 	return patternHeader;
 }
 
@@ -333,7 +330,6 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 
 - (Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange
 {
-	[self writeBackToStruct];
 	NSInteger count = (trackRange.length) * (posRange.length), X, Y;
 	Cmd *cmd, *cmd2;
 	

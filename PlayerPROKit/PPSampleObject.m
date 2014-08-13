@@ -8,6 +8,9 @@
 
 #import "PPSampleObject.h"
 #import "PPSampleObject_PPKPrivate.h"
+#if !TARGET_OS_IPHONE
+#import "PPPasteboardHandling.h"
+#endif
 
 #define LOOPBEGINKEY @"Loop Begin"
 #define LOOPSIZEKEY @"Loop Size"
@@ -23,6 +26,16 @@
 #define SAMPLEINDEXKEY @"Sample Index"
 #define INSTRUMENTINDEXKEY @"Instrument Index"
 
+#if !TARGET_OS_IPHONE
+NSString * const sampleUTI = @"net.sourceforge.playerpro.sData";
+
+static NSArray *UTIArray;
+static dispatch_once_t initUTIOnceToken;
+static const dispatch_block_t initUTIArray = ^{
+	UTIArray = @[sampleUTI];
+};
+#endif
+
 @implementation PPSampleObject
 {
 	@protected
@@ -31,6 +44,35 @@
 @synthesize theSample;
 @synthesize name;
 @synthesize data;
+
+#if !TARGET_OS_IPHONE
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return UTIArray;
+}
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return UTIArray;
+}
+- (id)pasteboardPropertyListForType:(NSString *)type
+{
+	if ([type isEqualToString:sampleUTI])
+		return [NSKeyedArchiver archivedDataWithRootObject:self];
+	else
+		return nil;
+}
+
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
+{
+	if ([type isEqualToString:sampleUTI])
+		return NSPasteboardReadingAsKeyedArchive;
+	else
+		return NSPasteboardReadingAsData;
+}
+#endif
 
 - (void)writeBackToStruct
 {
@@ -56,7 +98,6 @@
 
 - (sData)theSample
 {
-	[self writeBackToStruct];
 	return theSample;
 }
 
@@ -233,6 +274,11 @@
 }
 
 #pragma mark NSCoding implementation
++ (BOOL)supportsSecureCoding
+{
+	return YES;
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
 	[aCoder encodeObject:name forKey:NAMEKEY];
@@ -268,64 +314,6 @@
 		self.instrumentIndex = [aDecoder decodeIntegerForKey:INSTRUMENTINDEXKEY];
 	}
 	return self;
-}
-
-@end
-
-@implementation PPSampleObjectImmutable
-
-- (id)copyWithZone:(NSZone *)zone
-{
-	PPSampleObject *retVal = [[PPSampleObject alloc] initWithsData:&self->theSample];
-	retVal.name = self.name;
-	retVal.data = self.data;
-	
-	return retVal;
-}
-
-- (void)setData:(NSData *)data
-{
-	NSAssert(NO, @"Mutable command called on immutable object!");
-}
-
-- (void)setAmplitude:(Byte)amplitude
-{
-	NSAssert(NO, @"Mutable command called on immutable object!");
-}
-
-- (void)setLoopSize:(int)loopSize
-{
-	NSAssert(NO, @"Mutable command called on immutable object!");
-}
-
-- (void)setLoopBegin:(int)loopBegin
-{
-	NSAssert(NO, @"Mutable command called on immutable object!");
-}
-
-- (void)setC2spd:(unsigned short)c2spd
-{
-	NSAssert(NO, @"Mutable command called on immutable object!");
-}
-
-- (void)setLoopType:(MADLoopType)loopType
-{
-	NSAssert(NO, @"Mutable command called on immutable object!");
-}
-
-- (void)setRelativeNote:(char)relativeNote
-{
-	NSAssert(NO, @"Mutable command called on immutable object!");
-}
-
-- (void)setVolume:(Byte)avolume
-{
-	NSAssert(NO, @"Mutable command called on immutable object!");
-}
-
-- (void)setStereo:(BOOL)astereo
-{
-	NSAssert(NO, @"Mutable command called on immutable object!");
 }
 
 @end

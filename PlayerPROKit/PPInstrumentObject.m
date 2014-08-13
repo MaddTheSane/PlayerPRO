@@ -12,6 +12,9 @@
 #import "PPInstrumentObject_PPKPrivate.h"
 #import "PPMusicObject.h"
 #import "PPMusicObject_PPKPrivate.h"
+#if !TARGET_OS_IPHONE
+#import "PPPasteboardHandling.h"
+#endif
 
 #pragma mark PlayerPROKit Envelope NSCoding keys
 #define PPEnvPos @"PlayerPROKit EnvRec Position"
@@ -47,10 +50,6 @@
 #define kPPPanningType @"panningType"
 
 
-@interface PPEnvelopeObjectImmutable : PPEnvelopeObject
-
-@end
-
 @implementation PPEnvelopeObject
 @synthesize envelopeRec;
 
@@ -74,11 +73,6 @@
 	envelopeRec.val = value;
 }
 
-- (void)writeBackToStruct
-{
-	//Do nothing
-}
-
 - (instancetype)initWithEnvRec:(EnvRec)theRec
 {
 	if (self = [super init]) {
@@ -86,6 +80,11 @@
 	}
 	
 	return self;
+}
+
++ (BOOL)supportsSecureCoding
+{
+	return YES;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
@@ -480,38 +479,6 @@
 	return self;
 }
 
-- (instancetype)initWithMusicStruct:(MADMusic*)theMus atIndex:(NSInteger)ind
-{
-	if (self = [super init]) {
-		theInstrument = theMus->fid[ind];
-		samples = [[NSMutableArray alloc] initWithCapacity:theInstrument.numSamples];
-		{
-			int sDataCount = theInstrument.numSamples + theInstrument.firstSample;
-			
-			for (int i = theInstrument.firstSample; i < sDataCount; i++) {
-				PPSampleObjectImmutable *sObj = [[PPSampleObjectImmutable alloc] initWithsData:theMus->sample[i]];
-				sObj.sampleIndex = i % MAXSAMPLE;
-				sObj.instrumentIndex = ind;
-				[samples addObject:sObj];
-			}
-		}
-		name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
-		theInstrument.no = number = ind;
-		//In case it's malformed, i.e. from CreateFreeMADK()
-		theInstrument.firstSample = MAXSAMPLE * ind; /*tempData->firstSample;*/
-		_panningEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
-		_volumeEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
-		_pitchEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
-		for (int i = 0; i < 12; i++) {
-			[_panningEnvelope addObject:[[PPEnvelopeObjectImmutable alloc] initWithEnvRec:theInstrument.pannEnv[i]]];
-			[_volumeEnvelope addObject:[[PPEnvelopeObjectImmutable alloc] initWithEnvRec:theInstrument.volEnv[i]]];
-			[_pitchEnvelope addObject:[[PPEnvelopeObjectImmutable alloc] initWithEnvRec:theInstrument.pitchEnv[i]]];
-		}
-
-	}
-	return self;
-}
-
 - (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
 {
 	if (self = [self initWithMusic:mus]) {
@@ -728,7 +695,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	[self writeBackToStruct];
+	//[self writeBackToStruct];
 	PPInstrumentObject *newObj = [[[self class] allocWithZone:zone] initWithMusic:_theMus instrumentIndex:theInstrument.no];
 	newObj.name = self.name;
 	
@@ -743,6 +710,11 @@
 }
 
 #pragma mark NSCoding protocol
+
++ (BOOL)supportsSecureCoding
+{
+	return YES;
+}
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
@@ -782,29 +754,6 @@
 	
 	[aCoder encodeBytes:&theInstrument.vibDepth length:1 forKey:PPVibDepth];
 	[aCoder encodeBytes:&theInstrument.vibRate length:1 forKey:PPVibRate];
-}
-
-@end
-
-@implementation PPEnvelopeObjectImmutable
-
-- (void)setPosition:(short)position
-{
-	NSAssert(NO, @"Mutable command called on immutable object!");
-}
-
-- (void)setValue:(short)value
-{
-	NSAssert(NO, @"Mutable command called on immutable object!");
-}
-
-@end
-
-@implementation PPInstrumentObjectImmutable
-
-- (instancetype)initWithMusic:(PPMusicObjectWrapper *)mus instrumentIndex:(short)insIdx
-{
-	return [self initWithMusicStruct:mus.internalMadMusicStruct atIndex:insIdx];
 }
 
 @end

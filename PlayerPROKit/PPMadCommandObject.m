@@ -8,6 +8,9 @@
 
 #import "PPMadCommandObject.h"
 #include <PlayerPROCore/RDriverInt.h>
+#if !TARGET_OS_IPHONE
+#import "PPPasteboardHandling.h"
+#endif
 
 #define kPPMadCommandInstrument @"PlayerPROKit Cmd Instrument"
 #define kPPMadCommandNote @"PlayerPROKit Cmd Note"
@@ -117,12 +120,12 @@
 	return [NSString stringWithFormat:@"ins: %u note: %u cmd: %u arg: %u vol: %u", theCommand.ins, theCommand.note, theCommand.cmd, theCommand.arg, theCommand.vol];
 }
 
-- (void)writeBackToStruct
-{
-	//We don't need to do anything here
-}
-
 #pragma mark NSCoding protocol
+
++ (BOOL)supportsSecureCoding
+{
+	return YES;
+}
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {

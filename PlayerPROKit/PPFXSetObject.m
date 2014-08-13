@@ -7,6 +7,9 @@
 //
 
 #import "PPFXSetObject.h"
+#if !TARGET_OS_IPHONE
+#import "PPPasteboardHandling.h"
+#endif
 
 #define kPPTrack @"PlayerPROKit FXSets Track"
 #define kPPIdentifier @"PlayerPROKit FXSets Identifier"
@@ -85,7 +88,6 @@
 
 - (FXSets)theSet
 {
-	[self writeBackToStruct];
 	return theSet;
 }
 
@@ -153,7 +155,6 @@
 		self.track = [(NSNumber*)[aDecoder decodeObjectForKey:kPPTrack] shortValue];
 		self.identifier = [(NSNumber*)[aDecoder decodeObjectForKey:kPPIdentifier] shortValue];
 		self.argumentNumbers = [(NSNumber*)[aDecoder decodeObjectForKey:kPPArgumentNumbers] shortValue];
-		[self writeBackToStruct];
 	}
 	return self;
 }
