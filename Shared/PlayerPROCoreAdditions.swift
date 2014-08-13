@@ -10,6 +10,47 @@ import Foundation
 import CoreServices
 import PlayerPROCore
 
+#if os(OSX)
+extension MADFourChar: Printable, DebugPrintable, StringLiteralConvertible {
+	public var stringValue: String {
+		get {
+			let toRet = UTCreateStringForOSType(self as OSType).takeRetainedValue()
+			return toRet as NSString
+		}}
+	
+	init(_ toInit: String) {
+		self = UTGetOSTypeFromString(toInit as NSString as CFString)
+	}
+	
+	/*
+	init(_ toInit: (Int8, Int8, Int8, Int8, Int8)) {
+		var tmpInit = toInit
+		var atmp = &tmpInit
+		var tmpPtr: UnsafeMutablePointer<Int8> = UnsafeMutablePointer<Int8>(tmpInit)
+		self = Ptr2OSType(tmpInit)
+	}
+	*/
+	
+	public static func convertFromStringLiteral(value: String) -> MADFourChar {
+		return MADFourChar(value)
+	}
+	
+	public var description: String { get {
+		return self.stringValue
+		}}
+	
+	public var debugDescription: String { get {
+		return self.description
+		}}
+	
+	public static func convertFromExtendedGraphemeClusterLiteral(value: String) -> MADFourChar {
+		var tmpStr = String.convertFromExtendedGraphemeClusterLiteral(value)
+		return self.convertFromStringLiteral(tmpStr)
+	}
+	
+}
+#endif
+
 extension MADDriverSettings: DebugPrintable {
 	init() {
 		self.driverMode = .CoreAudioDriver
