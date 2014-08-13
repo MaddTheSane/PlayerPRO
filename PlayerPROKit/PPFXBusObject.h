@@ -10,6 +10,10 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
+#ifndef NS_DESIGNATED_INITIALIZER
+#define NS_DESIGNATED_INITIALIZER
+#endif
+
 @interface PPFXBusObject : NSObject <PPObject>
 @property (readonly) FXBus theBus;
 @property BOOL bypass;

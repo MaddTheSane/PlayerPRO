@@ -8,6 +8,9 @@
 
 #import "PPMadCommandObject.h"
 #include <PlayerPROCore/RDriverInt.h>
+#if !TARGET_OS_IPHONE
+#import "PPPasteboardHandling.h"
+#endif
 
 #define kPPMadCommandInstrument @"PlayerPROKit Cmd Instrument"
 #define kPPMadCommandNote @"PlayerPROKit Cmd Note"
@@ -21,54 +24,91 @@
 	Cmd theCommand;
 }
 
+#if !TARGET_OS_IPHONE
+#define sampleUTI @"net.sourceforge.playerpro.MADCommand"
+
+static NSArray *UTIArray;
+static dispatch_once_t initUTIOnceToken;
+static const dispatch_block_t initUTIArray = ^{
+	UTIArray = @[sampleUTI];
+};
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return UTIArray;
+}
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return UTIArray;
+}
+- (id)pasteboardPropertyListForType:(NSString *)type
+{
+	if ([type isEqualToString:sampleUTI])
+		return [NSKeyedArchiver archivedDataWithRootObject:self];
+	else
+		return nil;
+}
+
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
+{
+	if ([type isEqualToString:sampleUTI])
+		return NSPasteboardReadingAsKeyedArchive;
+	else
+		return NSPasteboardReadingAsData;
+}
+#endif
+
 @synthesize theCommand;
 
-- (Byte)instrument
+- (MADByte)instrument
 {
 	return theCommand.ins;
 }
 
-- (void)setInstrument:(Byte)instrument
+- (void)setInstrument:(MADByte)instrument
 {
 	theCommand.ins = instrument;
 }
 
-- (Byte)note
+- (MADByte)note
 {
 	return theCommand.note;
 }
 
-- (void)setNote:(Byte)note
+- (void)setNote:(MADByte)note
 {
 	theCommand.note = note;
 }
 
-- (Byte)command
+- (MADByte)command
 {
 	return theCommand.cmd;
 }
 
-- (void)setCommand:(Byte)command
+- (void)setCommand:(MADByte)command
 {
 	theCommand.cmd = command;
 }
 
-- (Byte)argument
+- (MADByte)argument
 {
 	return theCommand.arg;
 }
 
-- (void)setArgument:(Byte)argument
+- (void)setArgument:(MADByte)argument
 {
 	theCommand.arg = argument;
 }
 
-- (Byte)volume
+- (MADByte)volume
 {
 	return theCommand.vol;
 }
 
-- (void)setVolume:(Byte)volume
+- (void)setVolume:(MADByte)volume
 {
 	theCommand.vol = volume;
 }
@@ -117,12 +157,12 @@
 	return [NSString stringWithFormat:@"ins: %u note: %u cmd: %u arg: %u vol: %u", theCommand.ins, theCommand.note, theCommand.cmd, theCommand.arg, theCommand.vol];
 }
 
-- (void)writeBackToStruct
-{
-	//We don't need to do anything here
-}
-
 #pragma mark NSCoding protocol
+
++ (BOOL)supportsSecureCoding
+{
+	return YES;
+}
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {

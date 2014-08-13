@@ -9,15 +9,17 @@
 #import <Foundation/Foundation.h>
 #import <PlayerPROCore/PlayerPROCore.h>
 
+#ifndef NS_DESIGNATED_INITIALIZER
+#define NS_DESIGNATED_INITIALIZER
+#endif
+
 @interface PPLibraryObject : NSObject
 @property (readonly, copy) NSString *menuName;
 @property (readonly, copy) NSString *authorString;
-#if !TARGET_OS_IPHONE
 @property (readonly, strong) NSBundle *plugFile;
-#endif
 @property (readonly, strong) NSString *plugType;
 @property (readonly, copy) NSArray* UTItypes;
-@property (readonly) OSType plugMode;
+@property (readonly) MADFourChar plugMode;
 @property (readonly) BOOL canExport;
 @property (readonly) BOOL canImport;
 @property (readonly) UInt32 plugVersion;
@@ -25,6 +27,7 @@
 
 @interface PPLibrary : NSObject <NSFastEnumeration>
 - (instancetype)init;
+- (instancetype)initWithPlugInCPath:(const char*)cPath NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithPlugInPath:(NSString *)path;
 - (instancetype)initWithPlugInURL:(NSURL *)URL;
 

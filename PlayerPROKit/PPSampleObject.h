@@ -10,6 +10,10 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
+#ifndef NS_DESIGNATED_INITIALIZER
+#define NS_DESIGNATED_INITIALIZER
+#endif
+
 @interface PPSampleObject : NSObject <PPObject>
 @property (readwrite) NSInteger sampleIndex;
 @property (readwrite) NSInteger instrumentIndex;

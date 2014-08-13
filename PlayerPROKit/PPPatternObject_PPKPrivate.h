@@ -12,6 +12,6 @@
 @interface PPPatternObject ()
 @property (nonatomic) PatHeader patternHeader;
 @property (strong) NSMutableArray *commands;
-@property (readwrite, weak) PPMusicObjectWrapper *musicWrapper;
+@property (readwrite, weak) PPMusicObject *musicWrapper;
 @property (readwrite) NSInteger index;
 @end

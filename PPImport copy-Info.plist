@@ -14,7 +14,6 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madk</string>
-				<string>net.sourceforge.playerpro.mad-bundle</string>
 				<string>com.quadmation.playerpro.mad</string>
 				<string>net.sourceforge.playerpro.tracker</string>
 				<string>com.quadmation.playerpro.madh</string>
@@ -64,26 +63,6 @@
 	<string></string>
 	<key>UTImportedTypeDeclarations</key>
 	<array>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>com.quadmation.playerpro.mad</string>
-				<string>com.apple.package</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>PlayerPRO Tracker (Bundle)</string>
-			<key>UTTypeIconFile</key>
-			<string>MAD</string>
-			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.mad-bundle</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>madbundle</string>
-				</array>
-			</dict>
-		</dict>
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>

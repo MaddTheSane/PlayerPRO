@@ -40,7 +40,7 @@ static ULONG		MetadataImporterPluginRelease(void *thisInstance);
 static Boolean GetMetadataForFile(void* thisInterface, CFMutableDictionaryRef attributes, CFStringRef contentTypeUTI, CFStringRef pathToFile)
 {
 	Boolean isGood = FALSE;
-	CFURLRef theURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, UTTypeConformsTo(contentTypeUTI, CFSTR("net.sourceforge.playerpro.mad-bundle")));
+	CFURLRef theURL = CFURLCreateWithFileSystemPath(kCFAllocatorDefault, pathToFile, kCFURLPOSIXPathStyle, false);
 	if (theURL) {
 		isGood = GetMetadataForURL(thisInterface, attributes, contentTypeUTI, theURL);
 		CFRelease(theURL);
@@ -165,7 +165,7 @@ static HRESULT MetadataImporterQueryInterface(void *thisInstance, REFIID iid, LP
 //
 static ULONG MetadataImporterPluginAddRef(void *thisInstance)
 {
-    return ++((MDImportPlug*)thisInstance)->refCount;
+	return ++((MDImportPlug*)thisInstance)->refCount;
 }
 
 // -----------------------------------------------------------------------------

@@ -11,24 +11,30 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
-				<string>madbundle</string>
+				<string>madk</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>MAD</string>
+			<key>CFBundleTypeMIMETypes</key>
+			<array>
+				<string>audio/x-mad</string>
+			</array>
 			<key>CFBundleTypeName</key>
-			<string>PPMADBundle</string>
+			<string>PPMADKFile</string>
+			<key>CFBundleTypeOSTypes</key>
+			<array>
+				<string>MADK</string>
+			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>LSHandlerRank</key>
 			<string>Owner</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>net.sourceforge.playerpro.mad-bundle</string>
+				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>LSTypeIsPackage</key>
-			<true/>
-			<key>NSDocumentClass</key>
-			<string>PPDocument</string>
+			<false/>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
@@ -257,34 +263,6 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>com.quadmation.playerpro.madh</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<false/>
-		</dict>
-		<dict>
-			<key>CFBundleTypeExtensions</key>
-			<array>
-				<string>madk</string>
-			</array>
-			<key>CFBundleTypeIconFile</key>
-			<string>MAD</string>
-			<key>CFBundleTypeMIMETypes</key>
-			<array>
-				<string>audio/x-mad</string>
-			</array>
-			<key>CFBundleTypeName</key>
-			<string>PPMADKFile</string>
-			<key>CFBundleTypeOSTypes</key>
-			<array>
-				<string>MADK</string>
-			</array>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSHandlerRank</key>
-			<string>Alternate</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.quadmation.playerpro.madk</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -830,26 +808,6 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>inslist</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
-				<string>com.quadmation.playerpro.mad</string>
-				<string>com.apple.package</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>PlayerPRO Tracker (Bundle)</string>
-			<key>UTTypeIconFile</key>
-			<string>MAD</string>
-			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.mad-bundle</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>public.filename-extension</key>
-				<array>
-					<string>madbundle</string>
 				</array>
 			</dict>
 		</dict>

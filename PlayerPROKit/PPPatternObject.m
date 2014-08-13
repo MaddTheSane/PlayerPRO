@@ -10,6 +10,9 @@
 #import "PPPatternObject_PPKPrivate.h"
 #import "PPPatternObject_PcmdHandling.h"
 #import "PPMusicObject_PPKPrivate.h"
+#if !TARGET_OS_IPHONE
+#import "PPPasteboardHandling.h"
+#endif
 
 #define kPPPatternName @"PlayerPROKit Pattern Name"
 #define kPPPatternCommands @"PlayerPROKit Pattern Commands"
@@ -34,18 +37,50 @@ static inline void SwapPcmd(Pcmd *toswap)
 	PatData *patternData;
 }
 
+#if !TARGET_OS_IPHONE
+#define sampleUTI @"net.sourceforge.playerpro.pattern"
+
+static NSArray *UTIArray;
+static dispatch_once_t initUTIOnceToken;
+static const dispatch_block_t initUTIArray = ^{
+	UTIArray = @[sampleUTI];
+};
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return UTIArray;
+}
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return UTIArray;
+}
+- (id)pasteboardPropertyListForType:(NSString *)type
+{
+	if ([type isEqualToString:sampleUTI])
+		return [NSKeyedArchiver archivedDataWithRootObject:self];
+	else
+		return nil;
+}
+
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
+{
+	if ([type isEqualToString:sampleUTI])
+		return NSPasteboardReadingAsKeyedArchive;
+	else
+		return NSPasteboardReadingAsData;
+}
+#endif
+
+
 @synthesize commands;
 @synthesize index;
 @synthesize patternHeader;
 
-- (void)writeBackToStruct
-{
-	
-}
-
 - (PatHeader)patternHeader
 {
-	[self writeBackToStruct];
 	return patternHeader;
 }
 
@@ -60,7 +95,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 	patternHeader.size = patternSize;
 }
 
-- (instancetype)initWithMusic:(PPMusicObjectWrapper *)mus
+- (instancetype)initWithMusic:(PPMusicObject *)mus
 {
 	if (self = [super init]) {
 		if (!mus) {
@@ -81,7 +116,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 	return self;
 }
 
-- (instancetype)initWithMusic:(PPMusicObjectWrapper *)mus patternAtIndex:(short)ptnIdx
+- (instancetype)initWithMusic:(PPMusicObject *)mus patternAtIndex:(short)ptnIdx
 {
 	if (self = [self initWithMusic:mus]) {
 		patternHeader = _musicWrapper._currentMusic->partition[ptnIdx]->header;
@@ -111,6 +146,11 @@ static inline void SwapPcmd(Pcmd *toswap)
 }
 
 #pragma mark NSCoding protocol
++ (BOOL)supportsSecureCoding
+{
+	return YES;
+}
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
@@ -333,7 +373,6 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 
 - (Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange
 {
-	[self writeBackToStruct];
 	NSInteger count = (trackRange.length) * (posRange.length), X, Y;
 	Cmd *cmd, *cmd2;
 	

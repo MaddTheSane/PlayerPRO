@@ -10,26 +10,35 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
+#ifndef NS_DESIGNATED_INITIALIZER
+#define NS_DESIGNATED_INITIALIZER
+#endif
+
 @class PPDriver;
 @class PPLibrary;
 @class PPInstrumentObject;
 
-//Only use this class for playback!
-@interface PPMusicObject : NSObject
+@interface PPMusicObject : NSObject <NSCopying>
 @property (readonly) int totalPatterns;
 @property (readonly) int totalPartitions;
 @property (readonly) int partitionLength;
 @property (readonly) short totalTracks;
 @property (readonly) short totalInstruments;
+@property (readonly, strong, nonatomic) NSMutableArray *sDatas;
+@property (readonly, strong, nonatomic) NSMutableArray *instruments;
+@property (readonly, strong, nonatomic) NSMutableArray *patterns;
+@property (readonly, strong, nonatomic) NSMutableArray *buses;
+@property (readwrite, copy, nonatomic) NSString *internalFileName;
+@property (readwrite, copy, nonatomic) NSString *madInformation;
 @property (readonly, weak) PPDriver *attachedDriver;
 @property (readonly) NSURL *filePath;
 
 //Creates a music object from the supplied MADK (PPMusicObject) or MAD bundle (PPMusicObjectWrapper)
-- (instancetype)initWithURL:(NSURL *)url;
+- (instancetype)initWithURL:(NSURL *)url NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithPath:(NSString *)url;
 
 //Creates a music object from any supported tracker type.
-- (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib;
+- (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithPath:(NSString *)url library:(PPLibrary *)theLib;
 
 //Creates a music object from any supported tracker type, also attaching a driver to the music.
@@ -56,50 +65,8 @@
 
 @property (readonly) MADMusic *internalMadMusicStruct NS_RETURNS_INNER_POINTER;
 
-- (NSArray *)instruments;
-
 - (MADErr)exportInstrumentListToURL:(NSURL*)outURL;
-
-@end
-
-@interface PPMusicObjectWrapper : PPMusicObject <NSCopying>
-@property (readonly, unsafe_unretained) NSArray *sDatas;
-@property (readonly, strong) NSMutableArray *instruments;
-@property (readonly, strong) NSMutableArray *patterns;
-@property (readonly, strong) NSMutableArray *buses;
-@property (readonly) OSType madType;
-@property (readwrite, copy, nonatomic) NSString *internalFileName;
-@property (readwrite, copy, nonatomic) NSString *madInfo;
-@property (copy) NSString *madAuthor;
-
-//Use to create a blank music object.
-- (instancetype)init;
-
-//Import from another PPMusicObject
-- (instancetype)initFromMusicObject:(PPMusicObject*)oldFormat;
-
-//Load a MAD bundle from a path
-- (instancetype)initWithPath:(NSString *)url;
-
-//Load a MAD bundle from a URL
-- (instancetype)initWithURL:(NSURL *)url;
-
-//Creates a MADK tracker file
-- (MADErr)exportMusicToURL:(NSURL *)tosave;
-
-- (MADErr)createCopyMusicToURL:(NSURL *)tosave;
-
-+ (MADErr)info:(PPInfoRec *)theInfo fromTrackerAtURL:(NSURL *)thURL;
-
 - (BOOL)addInstrument:(PPInstrumentObject*)theIns;
 - (BOOL)importInstrumentListFromURL:(NSURL *)insURL error:(out NSError *__autoreleasing*)theErr;
-
-#pragma mark Document-based code
-//For use with document classes, like NSDocument or UIDocument
-//Load a MAD bundle from a file wrapper.
-- (instancetype)initWithFileWrapper:(NSFileWrapper*)wrapper;
-
-//The file wrapper
-@property (strong, readonly) NSFileWrapper* musicWrapper;
 
 @end

@@ -13,17 +13,12 @@
 {
 	NSMutableArray	*samples;
 }
-- (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus;
-- (instancetype)initWithMusicStruct:(MADMusic*)theMus atIndex:(NSInteger)ind;
+- (instancetype)initWithMusic:(PPMusicObject *)mus;
+- (instancetype)initWithMusicStruct:(MADMusic *)theMus atIndex:(NSInteger)ind;
 
 @property InstrData theInstrument;
 @property (readwrite) NSInteger number;
 @property NSMutableArray *_volumeEnvelope;
 @property NSMutableArray *_panningEnvelope;
 @property NSMutableArray *_pitchEnvelope;
-@end
-
-@interface PPInstrumentObjectImmutable : PPInstrumentObject
-- (instancetype)initWithMusic:(PPMusicObject *)mus instrumentIndex:(short)insIdx;
-
 @end
