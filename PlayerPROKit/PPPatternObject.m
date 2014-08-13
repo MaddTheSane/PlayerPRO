@@ -95,7 +95,7 @@ static const dispatch_block_t initUTIArray = ^{
 	patternHeader.size = patternSize;
 }
 
-- (instancetype)initWithMusic:(PPMusicObjectWrapper *)mus
+- (instancetype)initWithMusic:(PPMusicObject *)mus
 {
 	if (self = [super init]) {
 		if (!mus) {
@@ -116,7 +116,7 @@ static const dispatch_block_t initUTIArray = ^{
 	return self;
 }
 
-- (instancetype)initWithMusic:(PPMusicObjectWrapper *)mus patternAtIndex:(short)ptnIdx
+- (instancetype)initWithMusic:(PPMusicObject *)mus patternAtIndex:(short)ptnIdx
 {
 	if (self = [self initWithMusic:mus]) {
 		patternHeader = _musicWrapper._currentMusic->partition[ptnIdx]->header;

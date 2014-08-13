@@ -19,7 +19,7 @@
 @property (readonly, strong) NSBundle *plugFile;
 @property (readonly, strong) NSString *plugType;
 @property (readonly, copy) NSArray* UTItypes;
-@property (readonly) OSType plugMode;
+@property (readonly) MADFourChar plugMode;
 @property (readonly) BOOL canExport;
 @property (readonly) BOOL canImport;
 @property (readonly) UInt32 plugVersion;

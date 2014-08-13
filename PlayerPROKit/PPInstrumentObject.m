@@ -472,7 +472,7 @@ static const dispatch_block_t initUTIArray = ^{
 	return number;
 }
 
-+ (instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObjectWrapper*)mus
++ (instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObject*)mus
 {
 	PPInstrumentObject *insObj = [[self alloc] initWithMusic:mus];
 	[mus addInstrument:insObj];
@@ -523,7 +523,7 @@ static const dispatch_block_t initUTIArray = ^{
 }
 #endif
 
-- (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus;
+- (instancetype)initWithMusic:(PPMusicObject*)mus;
 {
 	if (!mus) {
 		return nil;
@@ -580,7 +580,7 @@ static const dispatch_block_t initUTIArray = ^{
 	return self;
 }
 
-- (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
+- (instancetype)initWithMusic:(PPMusicObject*)mus instrumentIndex:(short)insIdx;
 {
 	if (self = [self initWithMusic:mus]) {
 		theInstrument = mus._currentMusic->fid[insIdx];
@@ -649,7 +649,7 @@ static const dispatch_block_t initUTIArray = ^{
 	return [samples count];
 }
 
-- (Byte)volumeType
+- (EFType)volumeType
 {
 	return theInstrument.volType;
 }
@@ -718,7 +718,7 @@ static const dispatch_block_t initUTIArray = ^{
 	return theInstrument.volType & EFNOTE;
 }
 
-- (Byte)panningType
+- (EFType)panningType
 {
 	return theInstrument.pannType;
 }

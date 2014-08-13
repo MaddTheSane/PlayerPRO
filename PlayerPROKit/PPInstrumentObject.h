@@ -11,7 +11,7 @@
 #import <PlayerPROKit/PPObjectProtocol.h>
 
 @class PPSampleObject;
-@class PPMusicObjectWrapper;
+@class PPMusicObject;
 
 @interface PPEnvelopeObject : NSObject <PPObject>
 @property (readonly) EnvRec envelopeRec;
@@ -21,14 +21,14 @@
 @end
 
 @interface PPInstrumentObject : NSObject <NSFastEnumeration, PPObject>
-+ (instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObjectWrapper*)mus;
-- (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus instrumentIndex:(short)insIdx;
++ (instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObject *)mus;
+- (instancetype)initWithMusic:(PPMusicObject *)mus instrumentIndex:(short)insIdx;
 
 - (NSArray*)volumeEnvelope;
 - (NSArray*)panningEnvelope;
 - (NSArray*)pitchEnvelope;
 
-@property (weak) PPMusicObjectWrapper *theMus;
+@property (weak) PPMusicObject *theMus;
 @property (copy) NSString *name;
 @property (readonly) NSInteger number;
 - (short)firstSample;
@@ -58,13 +58,13 @@
 @property Byte vibratoDepth;
 @property Byte vibratoRate;
 
-@property (readonly) Byte volumeType;
+@property (readonly) EFType volumeType;
 @property (getter = isVolumeTypeOn) BOOL volumeTypeOn;
 @property (getter = isVolumeTypeSustain) BOOL volumeTypeSustain;
 @property (getter = isVolumeTypeLoop) BOOL volumeTypeLoop;
 @property (getter = isVolumeTypeNote) BOOL volumeTypeNote;
 
-@property (readonly) Byte panningType;
+@property (readonly) EFType panningType;
 @property (getter = isPanningTypeOn) BOOL panningTypeOn;
 @property (getter = isPanningTypeSustain) BOOL panningTypeSustain;
 @property (getter = isPanningTypeLoop) BOOL panningTypeLoop;

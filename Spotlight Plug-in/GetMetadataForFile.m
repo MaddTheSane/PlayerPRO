@@ -44,8 +44,6 @@
 #define kPPMDFormatDescription @"net_sourceforge_playerpro_tracker_formatdescription"
 #define kPPMDMADKInfo @"net_sourceforge_playerpro_tracker_madkinfo"
 
-static Boolean GetMetadataForPackage(NSMutableDictionary *attributes, NSURL *pathToFile);
-
 /* -----------------------------------------------------------------------------
     Get metadata attributes from file
    
@@ -62,7 +60,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 		MADLibrary			*MADLib;
 		MADDriverSettings	init;
 		NSMutableDictionary *NSattribs = (__bridge NSMutableDictionary*)attributes;
-		NSURL *NSFileURL = (__bridge NSURL*)urlForFile;
+		NSURL				*NSFileURL = (__bridge NSURL*)urlForFile;
 		
 		//Before we do anything else, check to make sure it's not the Windows file winoldap.mod
 		//This file seems to crash the metadata importer, even though
@@ -77,9 +75,6 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 		/* Pull any available metadata from the file at the specified path */
 		/* Return the attribute keys and attribute values in the dict */
 		/* Return TRUE if successful, FALSE if there was no data provided */
-		if (UTTypeConformsTo(contentTypeUTI, CFSTR("net.sourceforge.playerpro.mad-bundle"))) {
-			return GetMetadataForPackage(NSattribs, NSFileURL);
-		}
 		
 		MADGetBestDriver(&init);
 		init.driverMode = NoHardwareDriver;
@@ -235,61 +230,4 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 		
 		return FALSE;
 	}
-}
-
-static Boolean GetMetadataForPackage(NSMutableDictionary *attributes, NSURL *pathToFile)
-{
-	PPMusicObjectWrapper *musFile = [[PPMusicObjectWrapper alloc] initWithURL:pathToFile];
-	if (!musFile) {
-		return FALSE;
-	}
-	attributes[(NSString*)kMDItemTitle] = musFile.internalFileName;
-	attributes[(NSString*)kMDItemAuthors] = @[musFile.madAuthor];
-	{
-		OSType codecType = musFile.madType;
-		char cType[5];
-		OSType2Ptr(codecType, cType);
-		NSString *theString = [[NSString alloc] initWithCString:cType encoding:NSMacOSRomanStringEncoding];
-		if (!theString) {
-			theString = [[NSString alloc] initWithFormat:@"0x%08X", (unsigned int)codecType];
-		}
-		attributes[(NSString*)kMDItemCodecs] = @[theString];
-	}
-	attributes[kPPMDPartitionLength] = @(musFile.partitionLength);
-	attributes[kPPMDTotalPatterns] = @(musFile.totalPatterns);
-	attributes[kPPMDPartitionLength] = @(musFile.totalPartitions);
-	attributes[kPPMDTotalInstruments] = @(musFile.totalInstruments);
-	attributes[kPPMDTotalTracks] = @(musFile.totalTracks);
-	
-	attributes[kPPMDFormatDescription] = @"MAD Bundle"; //TODO: localize?
-	attributes[kPPMDMADKInfo] = musFile.madInfo;
-	
-	NSMutableArray *tmpArray = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU * (MAXSAMPLE + 1)];
-	for (PPInstrumentObject *insObj in musFile.instruments) {
-		NSString *tmpStr = insObj.name;
-		if (![NSString PPstringIsEmpty:tmpStr]) {
-			[tmpArray addObject:tmpStr];
-		}
-		for (PPSampleObject *sampObj in insObj.samples) {
-			tmpStr = sampObj.name;
-			if (![NSString PPstringIsEmpty:tmpStr]) {
-				[tmpArray addObject:tmpStr];
-			}
-		}
-	}
-	attributes[kPPMDInstumentsList] = [tmpArray copy];
-	
-	tmpArray = [[NSMutableArray alloc] initWithCapacity:[musFile.patterns count]];
-	for (PPPatternObject *obj in musFile.patterns) {
-		NSString *patStr = obj.patternName;
-		if (![NSString PPstringIsEmpty:patStr]) {
-			[tmpArray addObject:patStr];
-		}
-	}
-	attributes[kPPMDPatternList] = [tmpArray copy];
-
-	//TODO: fill this out!
-	attributes[(NSString*)kMDItemDurationSeconds] = @0.0;
-	
-	return TRUE;
 }

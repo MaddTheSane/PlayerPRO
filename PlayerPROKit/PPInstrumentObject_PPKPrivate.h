@@ -13,8 +13,8 @@
 {
 	NSMutableArray	*samples;
 }
-- (instancetype)initWithMusic:(PPMusicObjectWrapper*)mus;
-- (instancetype)initWithMusicStruct:(MADMusic*)theMus atIndex:(NSInteger)ind;
+- (instancetype)initWithMusic:(PPMusicObject *)mus;
+- (instancetype)initWithMusicStruct:(MADMusic *)theMus atIndex:(NSInteger)ind;
 
 @property InstrData theInstrument;
 @property (readwrite) NSInteger number;

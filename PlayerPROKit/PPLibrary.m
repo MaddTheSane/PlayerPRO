@@ -53,7 +53,7 @@
 	return self;
 }
 
-- (OSType)plugMode
+- (MADFourChar)plugMode
 {
 	if (self.canExport && self.canImport)
 		return MADPlugImportExport;

@@ -19,14 +19,14 @@
 
 @interface PPDocument ()
 @property (readwrite, strong) PPDriver *theDriver;
-@property (strong) PPMusicObjectWrapper *theMusic;
+@property (strong) PPMusicObject *theMusic;
 @property MADDriverSettings exportSettings;
 @end
 
 @implementation PPDocument
 @synthesize exportSettings;
 
-- (PPMusicObjectWrapper*)wrapper
+- (PPMusicObject*)wrapper
 {
 	return self.theMusic;
 }
@@ -48,17 +48,7 @@
 
 - (void)setMusicInfo:(NSString *)musicInfo
 {
-	self.theMusic.madInfo = musicInfo;
-}
-
-- (NSString*)authorString
-{
-	return self.theMusic.madAuthor;
-}
-
-- (void)setAuthorString:(NSString *)authorString
-{
-	self.theMusic.madAuthor = authorString;
+	self.theMusic.madInformation = musicInfo;
 }
 
 - (void)soundPreferencesDidChange:(NSNotification *)notification
@@ -124,30 +114,9 @@
 	// Add any code here that needs to be executed once the windowController has loaded the document's window.
 }
 
-- (NSFileWrapper *)fileWrapperOfType:(NSString *)typeName error:(NSError **)outError
+- (BOOL)readFromURL:(NSURL *)url ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError
 {
-	if (outError) {
-		*outError = nil;
-	}
-	return self.theMusic.musicWrapper;
-}
-
-- (BOOL)readFromFileWrapper:(NSFileWrapper *)fileWrapper ofType:(NSString *)typeName error:(NSError **)outError
-{
-	self.theMusic = [[PPMusicObjectWrapper alloc] initWithFileWrapper:fileWrapper];
-	if (self.theMusic) {
-		if (outError) {
-			*outError = nil;
-		}
-		
-		return YES;
-	} else {
-		if (outError) {
-			*outError = CreateErrorFromMADErrorType(MADReadingErr);
-		}
-		
-		return NO;
-	}
+	return NO;
 }
 
 + (BOOL)autosavesInPlace
@@ -195,13 +164,8 @@
 
 - (void)importMusicObject:(PPMusicObject*)theObj
 {
-	[self importMusicObjectWrapper:[[PPMusicObjectWrapper alloc] initFromMusicObject:theObj]];
-}
-
-- (void)importMusicObjectWrapper:(PPMusicObjectWrapper*)theWrap
-{
 	if (!_theMusic) {
-		self.theMusic = theWrap;
+		self.theMusic = theObj;
 	}
 }
 
@@ -482,35 +446,7 @@
 			}];
 		}
 			break;
-			
-		case -3:
-			//MADK
-		{
-			NSSavePanel *savePanel = [NSSavePanel savePanel];
-			[savePanel setAllowedFileTypes:@[MADNativeUTI]];
-			[savePanel setCanCreateDirectories:YES];
-			[savePanel setCanSelectHiddenExtension:YES];
-			if (![musicName isEqualToString:@""]) {
-				[savePanel setNameFieldStringValue:musicName];
-			}
-			[savePanel setPrompt:@"Export"];
-			[savePanel setTitle:@"Export as MADK"];
-			[savePanel beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSInteger result) {
-				if (result == NSFileHandlingPanelOKButton) {
-					PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
-						OSErr theErr = [_theMusic exportMusicToURL:theURL];
-						[_theDriver endExport];
-						return theErr;
 						
-					}];
-					[(PPApp_AppDelegate*)[NSApp delegate] addExportObject:expObj];
-				} else {
-					[_theDriver endExport];
-				}
-			}];
-		}
-			break;
-			
 		default:
 		{
 			if (tag > [globalMadLib pluginCount] || tag < 0) {

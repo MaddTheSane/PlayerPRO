@@ -460,9 +460,9 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 			}
 			for (NSString *aUTI in trackerUTIs) {
 				if ([sharedWorkspace type:theUTI conformsToType:aUTI]) {
-					PPMusicObjectWrapper *theWrap = [[PPMusicObjectWrapper alloc] initWithURL:theURL library:madLib];
+					PPMusicObject *theWrap = [[PPMusicObject alloc] initWithURL:theURL library:madLib];
 					PPDocument *theDoc = [[PPDocument alloc] init];
-					[theDoc importMusicObjectWrapper:theWrap];
+					[theDoc importMusicObject:theWrap];
 					
 					[self addDocument:theDoc];
 					return YES;
@@ -502,7 +502,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 	if (!theDoc && outError) {
 		*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFormattingError userInfo:nil];
 	}
-	[theDoc importMusicObjectWrapper:[[PPMusicObjectWrapper alloc] init]];
+	[theDoc importMusicObject:[[PPMusicObject alloc] init]];
 	
 	return theDoc;
 }
