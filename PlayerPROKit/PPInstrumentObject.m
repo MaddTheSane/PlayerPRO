@@ -53,6 +53,46 @@
 @implementation PPEnvelopeObject
 @synthesize envelopeRec;
 
+#if !TARGET_OS_IPHONE
+#define envelopeUTI @"net.sourceforge.playerpro.envelope"
+#define sampleUTI @"net.sourceforge.playerpro.instrument"
+
+static NSArray *UTIArray;
+static NSArray *SampleUTIArray;
+static dispatch_once_t initUTIOnceToken;
+static const dispatch_block_t initUTIArray = ^{
+	UTIArray = @[envelopeUTI];
+	SampleUTIArray = @[sampleUTI];
+};
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return UTIArray;
+}
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return UTIArray;
+}
+- (id)pasteboardPropertyListForType:(NSString *)type
+{
+	if ([type isEqualToString:envelopeUTI])
+		return [NSKeyedArchiver archivedDataWithRootObject:self];
+	else
+		return nil;
+}
+
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
+{
+	if ([type isEqualToString:envelopeUTI])
+		return NSPasteboardReadingAsKeyedArchive;
+	else
+		return NSPasteboardReadingAsData;
+}
+#endif
+
 - (short)position
 {
 	return envelopeRec.pos;
@@ -121,6 +161,35 @@
 @synthesize _pitchEnvelope;
 @synthesize _volumeEnvelope;
 @synthesize _panningEnvelope;
+
+#if !TARGET_OS_IPHONE
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return SampleUTIArray;
+}
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return SampleUTIArray;
+}
+- (id)pasteboardPropertyListForType:(NSString *)type
+{
+	if ([type isEqualToString:sampleUTI])
+		return [NSKeyedArchiver archivedDataWithRootObject:self];
+	else
+		return nil;
+}
+
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
+{
+	if ([type isEqualToString:sampleUTI])
+		return NSPasteboardReadingAsKeyedArchive;
+	else
+		return NSPasteboardReadingAsData;
+}
+#endif
 
 - (NSArray*)volumeEnvelope
 {
@@ -473,6 +542,38 @@
 			[_panningEnvelope addObject:[PPEnvelopeObject new]];
 			[_volumeEnvelope addObject:[PPEnvelopeObject new]];
 			[_pitchEnvelope addObject:[PPEnvelopeObject new]];
+		}
+
+	}
+	return self;
+}
+
+- (instancetype)initWithMusicStruct:(MADMusic*)theMus atIndex:(NSInteger)ind
+{
+	if (self = [super init]) {
+		theInstrument = theMus->fid[ind];
+		samples = [[NSMutableArray alloc] initWithCapacity:theInstrument.numSamples];
+		{
+			int sDataCount = theInstrument.numSamples + theInstrument.firstSample;
+			
+			for (int i = theInstrument.firstSample; i < sDataCount; i++) {
+				PPSampleObject *sObj = [[PPSampleObject alloc] initWithsData:theMus->sample[i]];
+				sObj.sampleIndex = i % MAXSAMPLE;
+				sObj.instrumentIndex = ind;
+				[samples addObject:sObj];
+			}
+		}
+		name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
+		theInstrument.no = number = ind;
+		// In case it's malformed, i.e. from CreateFreeMADK()
+		theInstrument.firstSample = MAXSAMPLE * ind; /*tempData->firstSample;*/
+		_panningEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		_volumeEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		_pitchEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		for (int i = 0; i < 12; i++) {
+			[_panningEnvelope addObject:[[PPEnvelopeObject alloc] initWithEnvRec:theInstrument.pannEnv[i]]];
+			[_volumeEnvelope addObject:[[PPEnvelopeObject alloc] initWithEnvRec:theInstrument.volEnv[i]]];
+			[_pitchEnvelope addObject:[[PPEnvelopeObject alloc] initWithEnvRec:theInstrument.pitchEnv[i]]];
 		}
 
 	}

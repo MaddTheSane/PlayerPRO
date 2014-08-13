@@ -37,6 +37,44 @@ static inline void SwapPcmd(Pcmd *toswap)
 	PatData *patternData;
 }
 
+#if !TARGET_OS_IPHONE
+#define sampleUTI @"net.sourceforge.playerpro.pattern"
+
+static NSArray *UTIArray;
+static dispatch_once_t initUTIOnceToken;
+static const dispatch_block_t initUTIArray = ^{
+	UTIArray = @[sampleUTI];
+};
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return UTIArray;
+}
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return UTIArray;
+}
+- (id)pasteboardPropertyListForType:(NSString *)type
+{
+	if ([type isEqualToString:sampleUTI])
+		return [NSKeyedArchiver archivedDataWithRootObject:self];
+	else
+		return nil;
+}
+
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
+{
+	if ([type isEqualToString:sampleUTI])
+		return NSPasteboardReadingAsKeyedArchive;
+	else
+		return NSPasteboardReadingAsData;
+}
+#endif
+
+
 @synthesize commands;
 @synthesize index;
 @synthesize patternHeader;
@@ -108,6 +146,11 @@ static inline void SwapPcmd(Pcmd *toswap)
 }
 
 #pragma mark NSCoding protocol
++ (BOOL)supportsSecureCoding
+{
+	return YES;
+}
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {

@@ -24,6 +24,43 @@
 	Cmd theCommand;
 }
 
+#if !TARGET_OS_IPHONE
+#define sampleUTI @"net.sourceforge.playerpro.MADCommand"
+
+static NSArray *UTIArray;
+static dispatch_once_t initUTIOnceToken;
+static const dispatch_block_t initUTIArray = ^{
+	UTIArray = @[sampleUTI];
+};
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return UTIArray;
+}
+
+- (NSArray *)writableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+	dispatch_once(&initUTIOnceToken, initUTIArray);
+	return UTIArray;
+}
+- (id)pasteboardPropertyListForType:(NSString *)type
+{
+	if ([type isEqualToString:sampleUTI])
+		return [NSKeyedArchiver archivedDataWithRootObject:self];
+	else
+		return nil;
+}
+
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
+{
+	if ([type isEqualToString:sampleUTI])
+		return NSPasteboardReadingAsKeyedArchive;
+	else
+		return NSPasteboardReadingAsData;
+}
+#endif
+
 @synthesize theCommand;
 
 - (MADByte)instrument

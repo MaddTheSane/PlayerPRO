@@ -26,16 +26,6 @@
 #define SAMPLEINDEXKEY @"Sample Index"
 #define INSTRUMENTINDEXKEY @"Instrument Index"
 
-#if !TARGET_OS_IPHONE
-NSString * const sampleUTI = @"net.sourceforge.playerpro.sData";
-
-static NSArray *UTIArray;
-static dispatch_once_t initUTIOnceToken;
-static const dispatch_block_t initUTIArray = ^{
-	UTIArray = @[sampleUTI];
-};
-#endif
-
 @implementation PPSampleObject
 {
 	@protected
@@ -46,6 +36,14 @@ static const dispatch_block_t initUTIArray = ^{
 @synthesize data;
 
 #if !TARGET_OS_IPHONE
+#define sampleUTI @"net.sourceforge.playerpro.sData"
+
+static NSArray *UTIArray;
+static dispatch_once_t initUTIOnceToken;
+static const dispatch_block_t initUTIArray = ^{
+	UTIArray = @[sampleUTI];
+};
+
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
 {
 	dispatch_once(&initUTIOnceToken, initUTIArray);
