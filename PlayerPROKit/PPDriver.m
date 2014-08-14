@@ -73,7 +73,6 @@
 - (MADErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo
 {
 	return [self playSoundDataFromPointer:[theSnd bytes] withSize:[theSnd length] fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:0xFF withLoopStartingAt:0 andLoopLength:0];
-
 }
 
 - (MADErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote
@@ -267,7 +266,9 @@
 - (instancetype)init
 {
 	NSAssert(NO, @"PPDriver cannot be inited without a library!");
+	id noVal = [self initWithLibrary:NULL settings:NULL error:NULL];
 	[self doesNotRecognizeSelector:_cmd];
+	[noVal className];
 	return nil;
 }
 

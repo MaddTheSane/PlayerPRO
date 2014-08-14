@@ -110,7 +110,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 	}
 	
 	func loadMusicURL(musicToLoad: NSURL!, error theErr: NSErrorPointer? = nil) -> Bool {
-		
 		var fileType: [Int8] = [0,0,0,0,0]
 		var theOSErr = MADErr.NoErr;
 		if (self.music != nil) {
@@ -361,7 +360,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 			}
 		}
 	}
-
 	
 	@IBAction func removeSelectedMusic(sender: AnyObject!) {
 		var selMusic = tableView.selectedRowIndexes
@@ -481,12 +479,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 				var selArray = self.musicList.arrayOfObjectsInMusicListAtIndexes(dragIndexSet)
 				self.musicList.removeObjectsInMusicListAtIndexes(dragIndexSet)
 				self.musicList.insertObjects(selArray, inMusicListAtIndex: row - minRow)
-				})
+			})
 			musicListContentsDidMove()
 			return true;
 		}
-		tmpArray = dragPB.readObjectsForClasses([NSURL.self], options:[NSPasteboardURLReadingFileURLsOnlyKey :NSNumber(bool: true),
-				NSPasteboardURLReadingContentsConformToTypesKey : self.trackerUTIs])
+		tmpArray = dragPB.readObjectsForClasses([NSURL.self], options:[NSPasteboardURLReadingFileURLsOnlyKey : true,
+			NSPasteboardURLReadingContentsConformToTypesKey : self.trackerUTIs])
 		if (tmpArray != nil) {
 			if (tmpArray.count < 1) {
 				return false;
@@ -499,7 +497,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 					mutArray.append(PPMusicListObject(URL: curURL))
 				}
 				self.musicList.insertObjects(mutArray, inMusicListAtIndex: row)
-				})
+			})
 			musicListContentsDidMove()
 			return true;
 		}

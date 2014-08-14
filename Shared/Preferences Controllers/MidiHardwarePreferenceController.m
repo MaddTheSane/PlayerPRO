@@ -29,7 +29,7 @@
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
-	
+	defaults = nil;
 }
 
 @end
