@@ -11,6 +11,10 @@ import PlayerPROKit
 import PlayerPROCore
 import AVFoundation
 
+let kMADNativeUTI = "com.quadmation.playerpro.madk";
+let kMADGenericUTI = "com.quadmation.playerpro.mad";
+
+
 class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate, NSTableViewDataSource {
 	@IBOutlet var window: NSWindow! = nil
 	@IBOutlet var loopButton: NSButton!
@@ -57,9 +61,42 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 	var preferences: PPPreferences! = nil
 	var plugInInfos = [PPPlugInInfo]()
 	
-	var currentlyPlayingIndex	= PPCurrentlyPlayingIndex()
-	var previouslyPlayingIndex	= PPCurrentlyPlayingIndex()
+	private var currentlyPlayingIndex	= PPCurrentlyPlayingIndex()
+	private var previouslyPlayingIndex	= PPCurrentlyPlayingIndex()
 
+	private var _trackerDict: [String: [String!]]! = nil
+	private var _trackerUTIs = [String]()
+	
+	var trackerDict: [String: [String!]] { get {
+		if _trackerDict == nil || _trackerDict.count + 2 != Int(madLib.pluginCount) {
+			var localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker") as String
+			var localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker") as String
+			var tmpTrackerDict: [String: [String!]] = [localMADKName: [MADNativeUTI as String], localGenericMADName: [MADGenericUTI as String]]
+			
+			var i: UInt = 0
+			for (i = 0; i < madLib.pluginCount; i++) {
+				var obj = madLib.pluginAtIndex(i)
+				tmpTrackerDict[obj.menuName as String] = (obj.UTItypes) as? [String!]
+			}
+			_trackerDict = tmpTrackerDict
+		}
+		return _trackerDict
+		}}
+
+	var trackerUTIs: [String] { get {
+		if _trackerUTIs.isEmpty {
+			let arrayOfUTIs = trackerDict.values
+			var toAddUTI = [String]()
+			for anArray in arrayOfUTIs {
+				for arrayObj in anArray {
+					toAddUTI.append(arrayObj)
+				}
+			}
+			_trackerUTIs = toAddUTI
+		}
+		return _trackerUTIs
+		}}
+	
 	@IBAction func showMusicList(sender: AnyObject!) {
 		self.window.makeKeyAndOrderFront(sender)
 	}
@@ -272,8 +309,23 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		}
 	}
 	
+	private func changeValueForMusicListKey(theClosure: () -> Void) {
+		self.willChangeValueForKey(kMusicListKVO)
+		theClosure()
+		self.didChangeValueForKey(kMusicListKVO)
+	}
+	
+	@IBAction func sortMusicList(sender: AnyObject!) {
+		
+		changeValueForMusicListKey({
+			self.musicList.sortMusicListByName()
+		})
+		musicListContentsDidMove()
+	}
+
+	
 	func updateMusicStats(theTimer: NSTimer!) {
-		if (self.music) {
+		if (self.music != nil) {
 			var fT = 0
 			var cT = 0;
 			madDriver.getMusicStatusWithCurrentTime(&cT, totalTime: &fT)
@@ -290,6 +342,35 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		music.saveMusicToURL(tosave)
 	}
 
+	private func musicListContentsDidMove() {
+		var i = 0;
+		if (self.currentlyPlayingIndex.index != -1) {
+			for (i = 0; i < musicList.countOfMusicList; i++) {
+				if (self.currentlyPlayingIndex.playbackURL == musicList.URLAtIndex(i)) {
+					self.currentlyPlayingIndex.index = i;
+					break;
+				}
+			}
+		}
+		if (self.previouslyPlayingIndex.index != -1) {
+			for (i = 0; i < musicList.countOfMusicList; i++) {
+				if (self.previouslyPlayingIndex.playbackURL == musicList.URLAtIndex(i)) {
+					self.previouslyPlayingIndex.index = i;
+					break;
+				}
+			}
+		}
+	}
+
+	
+	@IBAction func removeSelectedMusic(sender: AnyObject!) {
+		var selMusic = tableView.selectedRowIndexes
+		changeValueForMusicListKey({
+			self.musicList.removeObjectsInMusicListAtIndexes(selMusic)
+		})
+		musicListContentsDidMove()
+	}
+	
 	class func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) -> [AVMutableMetadataItem] {
 		var titleName = AVMutableMetadataItem()
 		titleName.keySpace = AVMetadataKeySpaceCommon
@@ -379,6 +460,78 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		exportWindow.close()
 	}
 
+	func tableView(tableView: NSTableView!, acceptDrop info: NSDraggingInfo!, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
+		var dragPB = info.draggingPasteboard()
+		var tmpArray = dragPB.readObjectsForClasses([PPMusicListDragClass.self], options: nil)
+		if (tmpArray != nil && tmpArray.count != 0) {
+			var minRow = 0;
+			var tmpDragClass: AnyObject = tmpArray[0]
+			var dragClass = tmpDragClass as PPMusicListDragClass
+			var dragIndexSet = dragClass.theIndexSet;
+			
+			var currentIndex = dragIndexSet.firstIndex;
+			while currentIndex != NSNotFound {
+				if currentIndex <= row {
+					minRow++;
+				}
+				currentIndex = dragIndexSet.indexGreaterThanIndex(currentIndex)
+			}
+			
+			changeValueForMusicListKey({
+				var selArray = self.musicList.arrayOfObjectsInMusicListAtIndexes(dragIndexSet)
+				self.musicList.removeObjectsInMusicListAtIndexes(dragIndexSet)
+				self.musicList.insertObjects(selArray, inMusicListAtIndex: row - minRow)
+				})
+			musicListContentsDidMove()
+			return true;
+		}
+		tmpArray = dragPB.readObjectsForClasses([NSURL.self], options:[NSPasteboardURLReadingFileURLsOnlyKey :NSNumber(bool: true),
+				NSPasteboardURLReadingContentsConformToTypesKey : self.trackerUTIs])
+		if (tmpArray != nil) {
+			if (tmpArray.count < 1) {
+				return false;
+			}
+			
+			changeValueForMusicListKey({
+				var mutArray = [PPMusicListObject]()
+				for acurURL in tmpArray {
+					let curURL = acurURL as NSURL
+					mutArray.append(PPMusicListObject(URL: curURL))
+				}
+				self.musicList.insertObjects(mutArray, inMusicListAtIndex: row)
+				})
+			musicListContentsDidMove()
+			return true;
+		}
+		
+		return false;
+	}
+	
+	func tableView(tableView1: NSTableView!, validateDrop info: NSDraggingInfo!, proposedRow row: Int, proposedDropOperation dropOperation: NSTableViewDropOperation) -> NSDragOperation {
+		var result = NSDragOperation.None;
+		
+		if (info.draggingSource() === tableView1) {
+			result = .Move;
+			//TODO: check for number of indexes that are greater than the drop row.
+			tableView1.setDropRow(row, dropOperation: .Above)
+		} else {
+			var pb = info.draggingPasteboard();
+			
+			//list the file type UTIs we want to accept
+			var acceptedTypes = self.trackerUTIs;
+			
+			var urls = pb.readObjectsForClasses([NSURL.self], options: [NSPasteboardURLReadingFileURLsOnlyKey : true,
+				NSPasteboardURLReadingContentsConformToTypesKey : acceptedTypes]);
+			
+			if (urls.count > 0) {
+				result = .Copy
+				tableView1.setDropRow(row, dropOperation: .Above)
+			}
+		}
+		
+		return result;
+	}
+	
 	func tableView(tableView: NSTableView!, toolTipForCell cell: NSCell!, rect: NSRectPointer, tableColumn: NSTableColumn!, row: Int, mouseLocation: NSPoint) -> String! {
 		if (row >= 0 || row <= musicList.countOfMusicList) {
 			return nil;

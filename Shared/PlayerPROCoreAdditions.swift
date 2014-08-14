@@ -112,6 +112,7 @@ func &=(inout lhs: MADBool, rhs: MADBool) {
 }
 
 extension MADBool : BooleanLiteralConvertible, BooleanType {
+	public typealias BooleanLiteralType = Bool
 	init(_ v : BooleanType) {
 		if v.boolValue {
 			self = 1

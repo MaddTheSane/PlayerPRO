@@ -251,7 +251,6 @@
 		555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		55588A96199951B300C3D4EE /* PPPlugInInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55588A95199951B300C3D4EE /* PPPlugInInfoController.swift */; };
 		55588A97199951B300C3D4EE /* PPPlugInInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55588A95199951B300C3D4EE /* PPPlugInInfoController.swift */; };
-		555C0F8B19822096003B9347 /* PPMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1BD5E120FBE51004FD083 /* PPMusicList.m */; };
 		555C0F8D19829663003B9347 /* PPCurrentlyPlayingIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555C0F8C19829663003B9347 /* PPCurrentlyPlayingIndex.swift */; };
 		555C0F8E1982980C003B9347 /* PPCurrentlyPlayingIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555C0F8C19829663003B9347 /* PPCurrentlyPlayingIndex.swift */; };
 		555C125116378B3500735225 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
@@ -6278,7 +6277,6 @@
 				555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */,
 				55CDD02A1976F63600E3DDE1 /* PPMusicListObject.swift in Sources */,
 				555776B017EBF8FE0019D008 /* PPiAppDelegate.m in Sources */,
-				555C0F8B19822096003B9347 /* PPMusicList.m in Sources */,
 				555776AC17EBF8FE0019D008 /* main.m in Sources */,
 				55413C481991B444001414D0 /* PPByteSwap.swift in Sources */,
 				555776BC17EBF8FF0019D008 /* PPiDetailViewController.m in Sources */,
@@ -6685,7 +6683,6 @@
 				55F41A3717EF96B000605DF8 /* PPExportObject.m in Sources */,
 				55852E1C18D67CCB0009BF55 /* PPSmallPianoView.m in Sources */,
 				55FEF84519844FD600D2E79C /* DigitalViewController.m in Sources */,
-				55232AD811FDDFEA0041A4EC /* PianoPreferencesController.m in Sources */,
 				5533C8FA19942AD9003AEB16 /* SoundOutputController.swift in Sources */,
 				55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */,
 				55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */,

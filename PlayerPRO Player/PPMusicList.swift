@@ -209,8 +209,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 		return (musicList as NSArray).objectsAtIndexes(theSet)
 	}
 	
-	func removeObjectsInMusicListAtIndexes(idxSet :NSIndexSet )
-	{
+	func removeObjectsInMusicListAtIndexes(idxSet: NSIndexSet) {
 		if (idxSet.containsIndex(selectedMusic)) {
 			self.selectedMusic = -1;
 		}
