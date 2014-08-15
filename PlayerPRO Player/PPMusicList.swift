@@ -9,9 +9,9 @@
 import Foundation
 import PlayerPROKit
 
-let kMusicListLocation3 = "Music Key Location 3";
-let kMusicListKey3 = "Music List Key 3"
-let kPlayerList = "Player List"
+private let kMusicListLocation3 = "Music Key Location 3";
+private let kMusicListKey3 = "Music List Key 3"
+private let kPlayerList = "Player List"
 
 class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 	private(set) var musicList = [PPMusicListObject]()
@@ -54,9 +54,9 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 	
 	func sortMusicListByName() {
 		musicList.sort({
-			(isOrderedBefore: (var1:PPMusicListObject, var2:PPMusicListObject)) -> Bool in
-			let rhsString: NSString = isOrderedBefore.var1.fileName
-			let lhsString: NSString = isOrderedBefore.var2.fileName
+			(var1:PPMusicListObject, var2:PPMusicListObject) -> Bool in
+			let rhsString: NSString = var1.fileName
+			let lhsString: NSString = var2.fileName
 			var result = rhsString.localizedStandardCompare(lhsString)
 			return result == NSComparisonResult.OrderedAscending;
 			})
@@ -205,12 +205,17 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 		musicList.insert(object, atIndex: index)
 	}
 	
-	func arrayOfObjectsInMusicListAtIndexes(theSet : NSIndexSet) -> NSArray {
-		return (musicList as NSArray).objectsAtIndexes(theSet)
+	func arrayOfObjectsInMusicListAtIndexes(theSet : NSIndexSet) -> [PPMusicListObject] {
+		var tmpList = [PPMusicListObject]()
+		for (i, obj) in enumerate(musicList) {
+			if theSet.containsIndex(i) {
+				tmpList.append(obj)
+			}
+		}
+		return tmpList
 	}
 	
-	func removeObjectsInMusicListAtIndexes(idxSet :NSIndexSet )
-	{
+	func removeObjectsInMusicListAtIndexes(idxSet: NSIndexSet) {
 		if (idxSet.containsIndex(selectedMusic)) {
 			self.selectedMusic = -1;
 		}

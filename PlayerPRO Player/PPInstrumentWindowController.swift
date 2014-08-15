@@ -44,8 +44,6 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
     }
 
 	private func waveformImageFromSample(theDat:PPSampleObject!) -> NSImage? {
-		//This code causes the Swift compiler to crash.
-		
 		var imageSize = waveFormImage!.convertSizeToBacking(waveFormImage!.frame.size)
 		let datIsStereo = theDat.stereo;
 		imageSize.height *= 2;
@@ -58,20 +56,21 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 		CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
 		let lineSize = waveFormImage!.convertSizeToBacking(NSMakeSize(1, 1));
 		CGContextSetLineWidth(bitmapContext, lineSize.height);
+		var colorRef = CGColorCreateGenericGray(0, 0)
 		if (datIsStereo) {
-			let colorRef1 = CGColorCreateGenericRGB(0, 0, 1, 0.75);
-			CGContextSetStrokeColorWithColor(bitmapContext, colorRef1);
+			colorRef = CGColorCreateGenericRGB(0, 0, 1, 0.75);
+			CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
 			PPSampleObject.drawCGSampleInt(tSE: Int(imageSize.width), high: Int(imageSize.height), larg: Int(imageSize.width), channel: 1, curData: theDat, ctxRef: bitmapContext)
 		}
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		
-		let colorRef2 = CGColorCreateGenericRGB(1, 0, 0, stereoTrans);
-		CGContextSetStrokeColorWithColor(bitmapContext, colorRef2);
+		colorRef = CGColorCreateGenericRGB(1, 0, 0, stereoTrans);
+		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
 		PPSampleObject.drawCGSampleInt(tSE: Int(imageSize.width), high: Int(imageSize.height), larg: Int(imageSize.width), channel: 0, curData: theDat, ctxRef: bitmapContext)
 		
 		if (theDat.loopSize != 0) {
-			let colorRef3 = CGColorCreateGenericRGB(1, 0.1, 0.5, 0.8);
-			CGContextSetStrokeColorWithColor(bitmapContext, colorRef3);
+			colorRef = CGColorCreateGenericRGB(1, 0.1, 0.5, 0.8);
+			CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
 			var loopRect = CGRectMake(0, 0, imageSize.width, imageSize.height);
 			var lineSize = waveFormImage!.convertSizeToBacking(NSMakeSize(2, 2));
 			var padSize = waveFormImage!.convertSizeToBacking(NSMakeSize(1, 1));
@@ -138,7 +137,7 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 	
 	func outlineView(outlineView: NSOutlineView!, numberOfChildrenOfItem item: AnyObject!) -> Int {
 		if (!item) {
-			return (NSApplication.sharedApplication().delegate as AppDelegate).music.instruments().count
+			return (NSApplication.sharedApplication().delegate as AppDelegate).music.instruments.count
 		}
 		if (item.isKindOfClass(PPInstrumentObject)) {
 			return Int((item as PPInstrumentObject).countOfSamples())
@@ -148,7 +147,7 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 	
 	func outlineView(outlineView: NSOutlineView!, child index: Int, ofItem item: AnyObject!) -> AnyObject! {
 		if (!item) {
-			return (NSApplication.sharedApplication().delegate as AppDelegate).music.instruments()[index];
+			return (NSApplication.sharedApplication().delegate as AppDelegate).music.instruments[index];
 		}
 		if (item.isKindOfClass(PPInstrumentObject)) {
 			return (item as PPInstrumentObject).samplesObjectAtIndex(UInt(index))

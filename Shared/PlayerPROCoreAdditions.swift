@@ -111,7 +111,36 @@ func &=(inout lhs: MADBool, rhs: MADBool) {
 	lhs = lhsB & rhsB
 }
 
+#if false
+extension PPInfoRec: DebugPrintable {
+	init() {
+		totalPatterns = 0
+		partitionLength = 0
+		
+			fileSize = 0
+		
+			signature = "    "
+		
+			totalTracks = 0
+			totalInstruments = 0
+		
+		var help = ContiguousArray<Int8>()
+		//var tmp123 = UnsafeMutableBufferPointer<Int8>.generate(internalFileName)
+		var iFN = [Int8](count: 60, repeatedValue: 0)
+		iFN.withUnsafeBufferPointer({ (cArray: UnsafeBufferPointer<Int8>) -> () in
+			//do something with the C array
+		})
+
+	}
+	
+	public var debugDescription: String { get {
+		return ""
+		}}
+}
+	#endif
+
 extension MADBool : BooleanLiteralConvertible, BooleanType {
+	//public typealias BooleanLiteralType = Bool
 	init(_ v : BooleanType) {
 		if v.boolValue {
 			self = 1
