@@ -11,9 +11,34 @@ import PlayerPROKit
 import PlayerPROCore
 import AVFoundation
 
-let kMADNativeUTI = "com.quadmation.playerpro.madk";
-let kMADGenericUTI = "com.quadmation.playerpro.mad";
-
+func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) -> [AVMutableMetadataItem] {
+	var titleName = AVMutableMetadataItem()
+	titleName.keySpace = AVMetadataKeySpaceCommon
+	titleName.setKey(AVMetadataCommonKeyTitle)
+	titleName.setValue(oldMusicName)
+	
+	var dataInfo = AVMutableMetadataItem()
+	dataInfo.keySpace = AVMetadataKeySpaceCommon;
+	dataInfo.setKey(AVMetadataCommonKeySoftware)
+	dataInfo.setValue("PlayerPRO Player")
+	
+	var musicInfoQTUser = AVMutableMetadataItem();
+	musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
+	musicInfoQTUser.setKey(AVMetadataQuickTimeUserDataKeyInformation)
+	musicInfoQTUser.setValue(oldMusicInfo)
+	
+	var musicInfoiTunes = AVMutableMetadataItem();
+	musicInfoiTunes.keySpace = AVMetadataKeySpaceiTunes
+	musicInfoiTunes.setKey(AVMetadataiTunesMetadataKeyUserComment)
+	musicInfoiTunes.setValue(oldMusicInfo)
+	
+	var musicInfoQTMeta = AVMutableMetadataItem();
+	musicInfoQTMeta.keySpace = AVMetadataKeySpaceQuickTimeMetadata
+	musicInfoQTMeta.setKey(AVMetadataQuickTimeMetadataKeyInformation)
+	musicInfoQTMeta.setValue(oldMusicInfo)
+	
+	return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
+}
 
 class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate, NSTableViewDataSource {
 	@IBOutlet var window: NSWindow! = nil
@@ -50,7 +75,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 	var madDriver: PPDriver!
 	var madLib: PPLibrary!
 	var paused = true
-	var isQuitting = false
+	private var isQuitting = false
 	var instrumentController: PPInstrumentWindowController! = nil
 	
 	var exportSettings = MADDriverSettings()
@@ -64,13 +89,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 	private var currentlyPlayingIndex	= PPCurrentlyPlayingIndex()
 	private var previouslyPlayingIndex	= PPCurrentlyPlayingIndex()
 
+	private var musicName = ""
+	private var musicInfo = ""
+	private var selMusFromList = 0
+	
 	private var _trackerDict: [String: [String!]]! = nil
-	private var _trackerUTIs = [String]()
+	private var _trackerUTIs: [String!] = []
 	
 	var trackerDict: [String: [String!]] { get {
 		if _trackerDict == nil || _trackerDict.count + 2 != Int(madLib.pluginCount) {
-			var localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker") as String
-			var localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker") as String
+			var localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
+			var localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
 			var tmpTrackerDict: [String: [String!]] = [localMADKName: [MADNativeUTI as String], localGenericMADName: [MADGenericUTI as String]]
 			
 			var i: UInt = 0
@@ -83,14 +112,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		return _trackerDict
 		}}
 
-	var trackerUTIs: [String] { get {
+	var trackerUTIs: [String!] { get {
 		if _trackerUTIs.isEmpty {
 			let arrayOfUTIs = trackerDict.values
-			var toAddUTI = [String]()
+			var toAddUTI: [String!] = []
 			for anArray in arrayOfUTIs {
-				for arrayObj in anArray {
-					toAddUTI.append(arrayObj)
-				}
+				toAddUTI += anArray
 			}
 			_trackerUTIs = toAddUTI
 		}
@@ -102,15 +129,28 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 	}
 	
 	func clearMusic() {
+		if (music != nil) {
+			madDriver.stop()
+			madDriver.cleanDriver()
+		}
 		
+		self.paused = true;
+		currentlyPlayingIndex.index = -1;
+		currentlyPlayingIndex.playbackURL = nil;
+		currentlyPlayingIndex.movePlayingIndexToOtherIndex(previouslyPlayingIndex)
+		self.music = PPMusicObject();
+		setTitleForSongLabelBasedOnMusic()
+		NSNotificationCenter.defaultCenter().postNotificationName(PPMusicDidChange, object:self)
+		music.attachToDriver(madDriver)
 	}
 	
-	func setTitleForSongLabelBasedOnMusic() {
-		
+	private func setTitleForSongLabelBasedOnMusic() {
+		self.musicName = music.internalFileName;
+		self.musicInfo = music.madInformation
 	}
 	
 	func loadMusicURL(musicToLoad: NSURL!, error theErr: NSErrorPointer? = nil) -> Bool {
-		var fileType: [Int8] = [0,0,0,0,0]
+		var fileType = [Int8](count: 5, repeatedValue: 0)
 		var theOSErr = MADErr.NoErr;
 		if (self.music != nil) {
 			madDriver.stop()
@@ -369,33 +409,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		musicListContentsDidMove()
 	}
 	
-	class func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) -> [AVMutableMetadataItem] {
-		var titleName = AVMutableMetadataItem()
-		titleName.keySpace = AVMetadataKeySpaceCommon
-		titleName.setKey(AVMetadataCommonKeyTitle)
-		titleName.setValue(oldMusicName)
-		
-		var dataInfo = AVMutableMetadataItem()
-		dataInfo.keySpace = AVMetadataKeySpaceCommon;
-		dataInfo.setKey(AVMetadataCommonKeySoftware)
-		dataInfo.setValue("PlayerPRO Player")
-		
-		var musicInfoQTUser = AVMutableMetadataItem();
-		musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
-		musicInfoQTUser.setKey(AVMetadataQuickTimeUserDataKeyInformation)
-		musicInfoQTUser.setValue(oldMusicInfo)
-		
-		var musicInfoiTunes = AVMutableMetadataItem();
-		musicInfoiTunes.keySpace = AVMetadataKeySpaceiTunes
-		musicInfoiTunes.setKey(AVMetadataiTunesMetadataKeyUserComment)
-		musicInfoiTunes.setValue(oldMusicInfo)
-		
-		var musicInfoQTMeta = AVMutableMetadataItem();
-		musicInfoQTMeta.keySpace = AVMetadataKeySpaceQuickTimeMetadata
-		musicInfoQTMeta.setKey(AVMetadataQuickTimeMetadataKeyInformation)
-		musicInfoQTMeta.setValue(oldMusicInfo)
-		
-		return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
+	@IBAction func newMusic(sender: AnyObject) {
+		clearMusic()
 	}
 	
 	func rawSoundData(theSet: UnsafeMutablePointer<MADDriverSettings>) -> NSMutableData? {
@@ -457,7 +472,275 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		window.endSheet(exportWindow, returnCode: NSAlertAlternateReturn)
 		exportWindow.close()
 	}
+	
+	func musicListDidChange() {
+		
+	}
+	
+	func handleFile(theURL1: NSURL!, ofType theUTI: String) -> Bool {
+		var sharedWorkspace = NSWorkspace.sharedWorkspace()
+		var theURL = theURL1
+		if (theUTI  == MADGenericUTI) {
+			var invExt = NSLocalizedString("Invalid Extension", comment: "Invalid Extension")
+			var invExtDes = NSLocalizedString("The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", comment: "Invalid extension description")
+			var renameFile =  NSLocalizedString("Rename", comment: "rename file")
+			var openFile = NSLocalizedString("Open", comment: "Open a file")
+			var cancelOp = NSLocalizedString("Cancel", comment: "Cancel")
+			var retVal = NSAlertDefaultReturn
+			//var retVal = NSRunInformationalAlertPanel(NSLocalizedString(@"Invalid Extension", @"Invalid extension"), NSLocalizedString(@"The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", @"Invalid extension description"), NSLocalizedString(@"Rename", @"rename file"), NSLocalizedString(@"Open", @"Open a file"), NSLocalizedString(@"Cancel", @"Cancel"), [theURL lastPathComponent]);
+			switch (retVal) {
+			case NSAlertDefaultReturn:
+				
+				var rec: NSDictionary? = nil
+				var ostype = [Int8](count: 5, repeatedValue: 0)
+				
+				var identified = madLib.identifyFileAtURL(theURL, type: &ostype)
+				
+				if (madLib.identifyFileAtURL(theURL, type: &ostype) != .NoErr) || madLib.getInformationFromFileAtURL(theURL, type: &ostype, infoDictionary: &rec) != .NoErr {
+					//NSRunCriticalAlertPanel(NSLocalizedString(@"Unknown File", @"unknown file"), NSLocalizedString(@"The file type could not be identified.", @"Unidentified file"), nil, nil, nil);
+					return false;
+				}
+				var sigVala: AnyObject = rec![kPPSignature] ?? NSNumber(unsignedInt: "madk")
+				var sigValb: MADFourChar = (sigVala as NSNumber).unsignedIntValue
+				var sigVal = sigValb.stringValue
+				
+				
+				var tmpURL = theURL.URLByDeletingPathExtension.URLByAppendingPathExtension(sigVal.lowercaseString);
+				var err: NSError? = nil
+				if (NSFileManager.defaultManager().moveItemAtURL(theURL, toURL:tmpURL, error:&err) == false) {
+					NSLog("Could not move file, error: %@", err!);
+					//NSRunInformationalAlertPanel(NSLocalizedString(@"Rename Error", @"Rename Error"), NSLocalizedString(@"The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", @"Could not rename file"), nil, nil, nil, [tmpURL lastPathComponent], [theURL lastPathComponent]);
+				} else {
+					theURL = tmpURL;
+					//TODO: regenerate the UTI
+				}
+				
+				break;
+				
+			case NSAlertAlternateReturn:
+				break;
+				
+				//case NSAlertOtherReturn:
+			default:
+				return false;
+			}
+		}
+		if (sharedWorkspace.type(theUTI, conformsToType:PPMusicListUTI)) {
+			if (musicListWillChange()) {
+				changeValueForMusicListKey({ () -> Void in
+					self.musicList.loadMusicListAtURL(theURL)
+					self.selMusFromList = self.musicList.selectedMusic
+				})
+				musicListDidChange()
+				return true
+			}
+		} else if (sharedWorkspace.type(theUTI, conformsToType:PPOldMusicListUTI)) {
+			if (musicListWillChange()) {
+				self.willChangeValueForKey(kMusicListKVO)
+				musicList.beginLoadingOfMusicListAtURL(theURL, completionHandle: { (theErr) -> Void in
+					self.selMusFromList = self.musicList.selectedMusic
+					self.didChangeValueForKey(kMusicListKVO)
+					if theErr != nil {
+						NSAlert(error: theErr).runModal()
+					}
+				})
+				return true;
+			}
+		} else {
+			//TODO: check for valid extension.
+			for aUTI in trackerUTIs {
+				if (sharedWorkspace.type(theUTI, conformsToType:aUTI)) {
+					addMusicToMusicList(theURL)
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	func musicListWillChange() -> Bool {
+		return false
+	}
+	
+	@IBAction func saveMusicList(sender: AnyObject!) {
+		var savePanel = NSSavePanel()
+		savePanel.allowedFileTypes = [PPMusicListUTI]
+		savePanel.canCreateDirectories = true
+		savePanel.canSelectHiddenExtension = true
+		savePanel.beginSheetModalForWindow(self.window, completionHandler: { (result) -> Void in
+			if result == NSFileHandlingPanelOKButton {
+				self.musicList.saveMusicListToURL(savePanel.URL)
+			}
+		})
+	}
+	
+	@IBAction func fastForwardButtonPressed(sender: AnyObject!) {
+	
+	}
+	
+	@IBAction func loopButtonPressed(sender: AnyObject!) {
+	
+	}
+	
+	@IBAction func nextButtonPressed(sender: AnyObject!) {
+		var err: NSError? = nil
+		
+		if (self.currentlyPlayingIndex.index + 1 < musicList.countOfMusicList) {
+			currentlyPlayingIndex.index++;
+			selectCurrentlyPlayingMusic()
+			if (!loadMusicFromCurrentlyPlayingIndexWithError(&err)) {
+				NSAlert(error:err).runModal()
+			}
+		} else if (NSUserDefaults.standardUserDefaults().boolForKey(PPLoopMusicWhenDone)) {
+			currentlyPlayingIndex.index = 0;
+			selectCurrentlyPlayingMusic()
+			if (!loadMusicFromCurrentlyPlayingIndexWithError(&err)) {
+				NSAlert(error:err).runModal()
+			}
+		} else {
+			NSBeep();
+		}
+	}
+	
+	@IBAction func playButtonPressed(sender: AnyObject!) {
+		if (self.music != nil) {
+			madDriver.play()
+			self.paused = false;
+		}
+	}
+	
+	@IBAction func prevButtonPressed(sender: AnyObject!) {
+		if (currentlyPlayingIndex.index > 0) {
+			currentlyPlayingIndex.index--;
+			selectCurrentlyPlayingMusic()
+			var err: NSError? = nil
+			if (!loadMusicFromCurrentlyPlayingIndexWithError(&err)) {
+				NSAlert(error:err).runModal()
+			}
+		} else {
+			NSBeep();
+		}
+	}
+	
+	@IBAction func rewindButtonPressed(sender: AnyObject!) {
+	
+	}
+	
+	@IBAction func sliderChanged(sender: AnyObject!) {
+		if (self.music != nil) {
+			madDriver.setMusicStatusWithCurrentTime(Int(songPos.doubleValue), maximumTime: Int(songPos.maxValue), minimumTime:0)
+		}
+	}
+	
+	@IBAction func stopButtonPressed(sender: AnyObject!) {
+		if (self.music != nil) {
+			madDriver.stop()
+			madDriver.cleanDriver()
+			madDriver.setMusicStatusWithCurrentTime(0, maximumTime: 100, minimumTime: 0)
+			self.paused = true;
+		}
+	}
+	
+	@IBAction func pauseButtonPressed(sender: AnyObject!) {
+		if (self.music != nil) {
+			if (self.paused) {
+				madDriver.play()
+			} else {
+				madDriver.pause()
+			}
+			self.paused = !paused;
+		}
+	}
 
+	func application(sender: NSApplication!, openFile filename: String!) -> Bool {
+		var err: NSError? = nil
+		var utiFile = NSWorkspace.sharedWorkspace().typeOfFile(filename, error: &err)
+		if (err != nil) {
+			var tmpAlert = NSAlert()
+			tmpAlert.alertStyle = .WarningAlertStyle
+			tmpAlert.messageText = "Error opening file"
+			tmpAlert.informativeText = "Unable to open \(filename.lastPathComponent): \(err?.localizedFailureReason)"
+			//NSRunAlertPanel("Error opening file", "Unable to open %@: %@", nil, nil, nil, filename.lastPathComponent, err?.localizedFailureReason);
+			tmpAlert.runModal()
+			return false;
+		}
+		return handleFile(NSURL(fileURLWithPath: filename), ofType: utiFile)
+	}
+
+	private func badTracker() {
+		fileName.stringValue = PPDoubleDash
+		internalName.stringValue = PPDoubleDash
+		fileSize.stringValue = PPDoubleDash
+		musicInstrument.stringValue = PPDoubleDash
+		musicPatterns.stringValue = PPDoubleDash
+		musicPlugType.stringValue = PPDoubleDash
+		musicSignature.stringValue = PPDoubleDash
+		fileLocation.stringValue = PPDoubleDash
+	}
+	
+	func tableViewSelectionDidChange(notification: NSNotification!) {
+		var selected = tableView.selectedRowIndexes
+		var musicURL: NSURL! = nil
+		var theInfo: NSDictionary? = nil
+		//var theInfo = PPInfoRec()
+		//var obj: PPMusicListObject! = nil
+		//var swiftInfo = ContiguousArray<UInt>(count: 5, repeatedValue: 0)
+		var info = [Int8](count: 5, repeatedValue: 0)
+		var NSSig = ""
+		
+		if (selected.count > 0) {
+			musicList.selectedMusic = selected.firstIndex
+		}
+		
+		if (selected.count != 1) {
+		 badTracker()
+			return
+		}
+		
+		var obj = musicList.objectInMusicListAtIndex(selected.lastIndex)
+		
+		musicURL = obj.musicURL;
+		if (madLib.identifyFileAtURL(musicURL, type:&info) != MADErr.NoErr) {
+		 badTracker()
+			return
+		}
+		if (madLib.getInformationFromFileAtURL(musicURL, type:&info, infoDictionary:&theInfo) != MADErr.NoErr) {
+			badTracker()
+			return
+		}
+		fileName.stringValue = obj.fileName
+		var intNameV: AnyObject! = theInfo?[kPPInternalFileName] ?? ""
+		internalName.stringValue = intNameV as String
+		
+		let fsInt: AnyObject! = theInfo?[kPPFileSize] ?? NSNumber(long:0)
+		let fsInta = fsInt as NSNumber
+		let fsTmp = fsInta.longValue
+		fileSize.integerValue = fsTmp
+		
+		let ti: AnyObject! = theInfo?[kPPTotalInstruments] ?? NSNumber(short: 0)
+		let tia = ti as NSNumber
+		let tiTmp = tia.shortValue
+		musicInstrument.integerValue = Int(tiTmp);
+		
+		let mp: AnyObject! = theInfo?[kPPTotalPatterns] ?? NSNumber(short: 0)
+		let mpa = mp as NSNumber
+		let mpTmp = mpa.shortValue
+		musicPatterns.integerValue = Int(mpTmp)
+		
+		let musPlugTyp: AnyObject! = theInfo?[kPPFormatDescription] ?? ""
+		musicPlugType.stringValue = musPlugTyp as String
+		
+		let sig: AnyObject! = theInfo?[kPPSignature] ?? NSNumber(unsignedInt:0)
+		let siga: MADFourChar = (sig as NSNumber).unsignedIntValue
+		NSSig = siga.stringValue
+		if (NSSig == nil) {
+			NSSig = NSString(format: "0x%08X", siga)
+		}
+		musicSignature.stringValue = NSSig
+		
+		fileLocation.stringValue = musicURL.path
+	}
+	
 	func tableView(tableView: NSTableView!, acceptDrop info: NSDraggingInfo!, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
 		var dragPB = info.draggingPasteboard()
 		var tmpArray = dragPB.readObjectsForClasses([PPMusicListDragClass.self], options: nil)
@@ -535,6 +818,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 			return nil;
 		}
 		return musicList.URLAtIndex(row).path
+	}
+	
+	func tableView(tableView: NSTableView!, writeRowsWithIndexes rowIndexes: NSIndexSet!, toPasteboard pboard: NSPasteboard!) -> Bool {
+		var status = false;
+		var dragClass = PPMusicListDragClass(indexSet: rowIndexes)
+		var urlArrays = [NSURL]()
+		var ppmobjects = musicList.arrayOfObjectsInMusicListAtIndexes(rowIndexes)
+		for obj in ppmobjects {
+			urlArrays.append(obj.musicURL)
+		}
+		var tmpObjs:[AnyObject] = [dragClass] + urlArrays
+		pboard.clearContents(); // clear pasteboard to take ownership
+		status = pboard.writeObjects(tmpObjs) // write the URLs
+		return status;
 	}
 	
 	// PPSoundSettingsViewController delegate methods

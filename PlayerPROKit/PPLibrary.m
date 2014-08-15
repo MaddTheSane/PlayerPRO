@@ -136,6 +136,47 @@
 	return MADMusicInfoCFURL(theLibrary, atype, (__bridge CFURLRef)apath, infoRec);
 }
 
+- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict
+{
+	return  [self getInformationFromFileAtURL:[NSURL fileURLWithPath:apath] type:atype infoDictionary:infoDict];
+}
+
+- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing*)infoDict
+{
+	if (!infoDict) {
+		return MADParametersErr;
+	}
+	PPInfoRec infoRec = {0};
+	MADErr theErr = [self getInformationFromFileAtURL:apath type:atype info:&infoRec];
+	if (theErr != MADNoErr) {
+		return theErr;
+	}
+	*infoDict = @{kPPTotalPatterns: @(infoRec.totalPatterns),
+				  kPPPartitionLength: @(infoRec.partitionLength),
+				  kPPFileSize: @(infoRec.fileSize),
+				  kPPSignature: @(infoRec.signature),
+				  kPPTotalTracks: @(infoRec.totalTracks),
+				  kPPTotalInstruments: @(infoRec.totalInstruments),
+				  kPPInternalFileName: [NSString stringWithCString:infoRec.internalFileName encoding:NSMacOSRomanStringEncoding],
+				  kPPFormatDescription: [NSString stringWithCString:infoRec.formatDescription encoding:NSMacOSRomanStringEncoding]};
+	return theErr;
+}
+
++ (NSDictionary*)infoRecToDictionary:(PPInfoRec*)infoRec
+{
+	if (!infoRec) {
+		return nil;
+	}
+	return @{kPPTotalPatterns: @(infoRec->totalPatterns),
+			 kPPPartitionLength: @(infoRec->partitionLength),
+			 kPPFileSize: @(infoRec->fileSize),
+			 kPPSignature: @(infoRec->signature),
+			 kPPTotalTracks: @(infoRec->totalTracks),
+			 kPPTotalInstruments: @(infoRec->totalInstruments),
+			 kPPInternalFileName: [NSString stringWithCString:infoRec->internalFileName encoding:NSMacOSRomanStringEncoding],
+			 kPPFormatDescription: [NSString stringWithCString:infoRec->formatDescription encoding:NSMacOSRomanStringEncoding]};	
+}
+
 #pragma mark NSFastEnumeration protocol
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len

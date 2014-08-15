@@ -205,8 +205,14 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 		musicList.insert(object, atIndex: index)
 	}
 	
-	func arrayOfObjectsInMusicListAtIndexes(theSet : NSIndexSet) -> NSArray {
-		return (musicList as NSArray).objectsAtIndexes(theSet)
+	func arrayOfObjectsInMusicListAtIndexes(theSet : NSIndexSet) -> [PPMusicListObject] {
+		var tmpList = [PPMusicListObject]()
+		for (i, obj) in enumerate(musicList) {
+			if theSet.containsIndex(i) {
+				tmpList.append(obj)
+			}
+		}
+		return tmpList
 	}
 	
 	func removeObjectsInMusicListAtIndexes(idxSet: NSIndexSet) {

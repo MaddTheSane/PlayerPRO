@@ -13,6 +13,15 @@
 #define NS_DESIGNATED_INITIALIZER
 #endif
 
+#define kPPTotalPatterns @"Total Patterns"
+#define kPPPartitionLength @"Partition Length"
+#define kPPFileSize @"File Size"
+#define kPPSignature @"Signature"
+#define kPPTotalTracks @"Total Tracks"
+#define kPPTotalInstruments @"Total Instruments"
+#define kPPInternalFileName @"Internal File Name"
+#define kPPFormatDescription @"FormatDescription"
+
 @interface PPLibraryObject : NSObject
 @property (readonly, copy) NSString *menuName;
 @property (readonly, copy) NSString *authorString;
@@ -39,5 +48,10 @@
 
 - (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype info:(PPInfoRec*)infoRec;
 - (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype info:(PPInfoRec*)infoRec;
+
+- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
+- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
+
++ (NSDictionary*)infoRecToDictionary:(PPInfoRec*)infoRec;
 
 @end
