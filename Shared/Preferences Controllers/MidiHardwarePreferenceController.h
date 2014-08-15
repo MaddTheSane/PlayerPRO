@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PPPreferences.h"
 
-@interface MidiHardwarePreferenceController : NSViewController
+@interface MidiHardwarePreferenceController : NSViewController <PPPreferenceObject>
 
 @end

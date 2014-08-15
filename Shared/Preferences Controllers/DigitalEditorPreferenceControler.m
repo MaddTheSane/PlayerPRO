@@ -29,6 +29,12 @@
 @synthesize PPDEPatternWrappingMatrix;
 @synthesize PPDEVolume;
 
++ (instancetype)newPreferenceView
+{
+	return [[self alloc] init];
+}
+
+
 - (id)init
 {
 	if (self = [super initWithNibName:@"DigitalPrefs" bundle:nil]) {

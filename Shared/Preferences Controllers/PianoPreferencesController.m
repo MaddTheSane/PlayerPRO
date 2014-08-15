@@ -12,6 +12,11 @@
 
 @implementation PianoPreferencesController
 
++ (instancetype)newPreferenceView
+{
+	return [[self alloc] init];
+}
+
 -(id)init
 {
 	if (self = [super initWithNibName:@"PianoPrefs" bundle:nil]) {

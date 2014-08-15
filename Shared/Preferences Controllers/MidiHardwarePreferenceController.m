@@ -12,6 +12,11 @@
 
 @implementation MidiHardwarePreferenceController
 
++ (instancetype)newPreferenceView
+{
+	return [[self alloc] init];
+}
+
 -(id)init
 {
 	if (self = [super initWithNibName:@"MidiPrefs" bundle:nil]) {
@@ -24,7 +29,7 @@
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
-	
+	defaults = nil;
 }
 
 @end

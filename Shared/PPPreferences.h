@@ -20,6 +20,12 @@ typedef struct _tagCoupling {
 	NSInteger tag;
 } TagCoupling;
 
+@protocol PPPreferenceObject <NSObject>
+
++ (instancetype)newPreferenceView;
+
+@end
+
 @interface PPPreferences : NSWindowController
 @property (weak) IBOutlet NSBox *box;
 @property (weak) IBOutlet NSPopUpButton *popUp;

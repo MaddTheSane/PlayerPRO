@@ -16,6 +16,11 @@
 @synthesize octaveCheck;
 @synthesize offsetField;
 
++ (instancetype)newPreferenceView
+{
+	return [[self alloc] init];
+}
+
 - (id)init
 {
 	if (self = [super initWithNibName:@"BoxPrefs" bundle:nil]) {

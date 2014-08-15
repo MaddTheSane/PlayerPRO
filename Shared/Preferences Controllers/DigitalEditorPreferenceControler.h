@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PPPreferences.h"
 
-@interface DigitalEditorPreferenceControler : NSViewController
+@interface DigitalEditorPreferenceControler : NSViewController <PPPreferenceObject>
 @property (weak) IBOutlet NSButton *PPDEEffect;
 @property (weak) IBOutlet NSButton *PPDENote;
 @property (weak) IBOutlet NSButton *PPDEInstrument;

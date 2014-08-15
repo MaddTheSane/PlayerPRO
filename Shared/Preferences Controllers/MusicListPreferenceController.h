@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PPPreferences.h"
 
-@interface MusicListPreferenceController : NSViewController
+@interface MusicListPreferenceController : NSViewController <PPPreferenceObject>
 @property (weak) IBOutlet NSButtonCell *askToSave;
 @property (weak) IBOutlet NSButtonCell *autoPlay;
 @property (weak) IBOutlet NSButtonCell *goToStartupPos;

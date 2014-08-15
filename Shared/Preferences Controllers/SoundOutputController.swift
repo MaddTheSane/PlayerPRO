@@ -9,7 +9,11 @@
 import Cocoa
 import PlayerPROKit
 
-class SoundOutputController: PPSoundSettingsViewController, PPSoundSettingsViewControllerDelegate {
+class SoundOutputController: PPSoundSettingsViewController, PPSoundSettingsViewControllerDelegate, PPPreferenceObject {
+	
+	class func newPreferenceView() -> Self {
+		return self.newSoundSettingWindow()
+	}
 	
 	override class func newSoundSettingWindow() -> Self {
 		var ourself = self()

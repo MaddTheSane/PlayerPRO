@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PPPreferences.h"
 
-@interface ColorPreferenceController : NSViewController
+@interface ColorPreferenceController : NSViewController <PPPreferenceObject>
 @property (weak) IBOutlet NSColorWell *colorWell1;
 @property (weak) IBOutlet NSColorWell *colorWell2;
 @property (weak) IBOutlet NSColorWell *colorWell3;
