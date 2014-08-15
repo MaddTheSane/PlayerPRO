@@ -12,11 +12,10 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 #include "PPByteswap.h"
+#include <ApplicationServices/ApplicationServices.h>
 
 #ifdef __OBJC__
 #import <Cocoa/Cocoa.h>
-#else
-#include <ApplicationServices/ApplicationServices.h>
 #endif
 
 #endif

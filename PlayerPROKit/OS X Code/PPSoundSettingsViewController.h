@@ -7,8 +7,7 @@
 //
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#import <Foundation/NSObject.h>
-#import <AppKit/NSViewController.h>
+#import <Cocoa/Cocoa.h>
 
 #ifndef NS_DESIGNATED_INITIALIZER
 #define NS_DESIGNATED_INITIALIZER

@@ -22,6 +22,11 @@ static const TagCoupling TrackHeightCoupling[] = {{100, 1}, {110, 2}, {120, 3}, 
 @synthesize tempoUnitValue;
 @synthesize trackHeightButton;
 
++ (instancetype)newPreferenceView
+{
+	return [[self alloc] init];
+}
+
 -(id)init
 {
 	if (self = [super initWithNibName:@"ClassicPrefs" bundle:nil]) {

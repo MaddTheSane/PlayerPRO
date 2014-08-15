@@ -29,19 +29,19 @@
 - (id)init 
 {
 	if (self = [super initWithWindowNibName:@"preferences"]) {
-		self.viewControllers = @[[[SoundOutputController alloc] init],
+		self.viewControllers = @[[SoundOutputController newPreferenceView],
 #if defined(PLAYERPRO6) && PLAYERPRO6
-					  [[PianoPreferencesController alloc] init],
-					  [[ColorPreferenceController alloc] init],
-					  [[BoxEditorPreferenceController alloc] init],
-					  [[DigitalEditorPreferenceControler alloc] init],
-					  [[ClassicEditorPreferenceController alloc] init],
+					  [PianoPreferencesController newPreferenceView],
+					  [ColorPreferenceController newPreferenceView],
+					  [BoxEditorPreferenceController newPreferenceView],
+					  [DigitalEditorPreferenceControler newPreferenceView],
+					  [ClassicEditorPreferenceController newPreferenceView],
 #endif
-					  [[MidiHardwarePreferenceController alloc] init],
+					  [MidiHardwarePreferenceController newPreferenceView],
 #if !defined(PLAYERPRO6) || !PLAYERPRO6
-					  [[MusicListPreferenceController alloc] init],
+					  [MusicListPreferenceController newPreferenceView],
 #endif
-					  [[MiscPreferenceController alloc] init]];
+					  [MiscPreferenceController newPreferenceView]];
 	}
 	return self;
 }

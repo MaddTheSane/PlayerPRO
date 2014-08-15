@@ -9,9 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import "PPSoundSettingsViewController.h"
 #import "PPPreferences.h"
-#import "PPMusicList.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PlayerPROKit.h>
+@class PPMusicList;
 @class PPInstrumentWindowController;
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate, NSTableViewDataSource>

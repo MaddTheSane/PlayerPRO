@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PPPreferences.h"
 
-@interface BoxEditorPreferenceController : NSViewController
+@interface BoxEditorPreferenceController : NSViewController <PPPreferenceObject>
 @property (weak) IBOutlet NSButton *notesCheck;
 @property (weak) IBOutlet NSButton *octaveCheck;
 @property (weak) IBOutlet NSFormCell *loopField;

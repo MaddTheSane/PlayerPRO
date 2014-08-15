@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PPPreferences.h"
 
-@interface MiscPreferenceController : NSViewController
+@interface MiscPreferenceController : NSViewController <PPPreferenceObject>
 @property (weak) IBOutlet NSButtonCell *addExt;
 @property (weak) IBOutlet NSButtonCell *madCompression;
 @property (weak) IBOutlet NSButtonCell *noLoadMixerFromFile;

@@ -7,8 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PPPreferences.h"
 
-@interface ClassicEditorPreferenceController : NSViewController
+@interface ClassicEditorPreferenceController : NSViewController <PPPreferenceObject>
 @property (weak) IBOutlet NSTextField *tempoUnitValue;
 @property (weak) IBOutlet NSTextField *tempoNumberValue;
 @property (weak) IBOutlet NSTextField *markersLoopValue;

@@ -16,6 +16,11 @@
 @synthesize noLoadMixerFromFile;
 @synthesize oscDrawLines;
 
++ (instancetype)newPreferenceView
+{
+	return [[self alloc] init];
+}
+
 - (IBAction)changePrefs:(id)sender
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

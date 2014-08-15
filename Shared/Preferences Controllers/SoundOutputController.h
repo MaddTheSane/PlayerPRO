@@ -8,7 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 #import "PPSoundSettingsViewController.h"
+#import "PPPreferences.h"
 
-@interface SoundOutputController : PPSoundSettingsViewController <PPSoundSettingsViewControllerDelegate>
+@interface SoundOutputController : PPSoundSettingsViewController <PPSoundSettingsViewControllerDelegate, PPPreferenceObject>
 
 @end

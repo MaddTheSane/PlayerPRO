@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "PPPreferences.h"
 
-@interface PianoPreferencesController : NSViewController
+@interface PianoPreferencesController : NSViewController <PPPreferenceObject>
 
 @end
