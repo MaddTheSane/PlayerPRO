@@ -901,12 +901,12 @@ return; \
 
 - (IBAction)showPlugInInfo:(id)sender
 {
-	PPPlugInInfo *inf = (self.plugInInfos)[[sender tag]];
+	PlugInInfo *inf = (self.plugInInfos)[[sender tag]];
 	if (!inf) {
 		return;
 	}
 	
-	PPPlugInInfoController *infoCont = [PPPlugInInfoController windowControllerFromInfo:inf];
+	PlugInInfoController *infoCont = [PlugInInfoController windowControllerFromInfo:inf];
 	NSWindow *infoWindow = [infoCont window];
 	[infoWindow center];
 	[NSApp runModalForWindow:infoWindow];
@@ -915,7 +915,7 @@ return; \
 - (void)updatePlugInInfoMenu
 {
 	for (PPLibraryObject *obj in madLib) {
-		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name") plugURL:[obj.plugFile bundleURL]];
+		PlugInInfo *tmpInfo = [[PlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name") plugURL:[obj.plugFile bundleURL]];
 		if (![self.plugInInfos containsObject:tmpInfo]) {
 			[self.plugInInfos addObject:tmpInfo];
 		}
@@ -931,7 +931,7 @@ return; \
 	[aboutPlugInMenu removeAllItems];
 	
 	for (NSInteger i = 0; i < [self.plugInInfos count]; i++) {
-		PPPlugInInfo *pi = (self.plugInInfos)[i];
+		PlugInInfo *pi = (self.plugInInfos)[i];
 		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:pi.plugName action:@selector(showPlugInInfo:) keyEquivalent:@""];
 		[mi setTag:i];
 		[mi setTarget:self];
@@ -1427,7 +1427,7 @@ enum PPMusicToolbarTypes {
 	NSIndexSet *selected = [tableView selectedRowIndexes];
 	NSURL *musicURL;
 	PPInfoRec theInfo;
-	PPMusicListObject *obj;
+	MusicListObject *obj;
 	char info[5] = {0};
 	NSString *NSSig;
 	
@@ -1639,7 +1639,7 @@ badTracker:
 		[self willChangeValueForKey:kMusicListKVO];
 		NSMutableArray *mutArray = [NSMutableArray new];
 		for (NSURL *curURL in tmpArray) {
-			[mutArray addObject:[[PPMusicListObject alloc] initWithURL:curURL]];
+			[mutArray addObject:[[MusicListObject alloc] initWithURL:curURL]];
 		}
 		
 		[musicList insertObjects:mutArray inMusicListAtIndex:row];
@@ -1658,7 +1658,7 @@ badTracker:
 	PPMusicListDragClass *dragClass = [[PPMusicListDragClass alloc] initWithIndexSet:rowIndices];
 	NSMutableArray *urlArrays = [[NSMutableArray alloc] initWithCapacity:[rowIndices count]];
 	NSArray *ppmobjects = [musicList arrayOfObjectsInMusicListAtIndexes:rowIndices];
-	for (PPMusicListObject *obj in ppmobjects) {
+	for (MusicListObject *obj in ppmobjects) {
 		[urlArrays addObject:obj.musicURL];
 	}
 	[pboard clearContents]; // clear pasteboard to take ownership

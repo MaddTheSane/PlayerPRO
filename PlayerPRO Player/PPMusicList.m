@@ -25,42 +25,6 @@
 #define kMusicListKey3 @"Music List Key 3"
 #define kMusicListLocation3 @"Music Key Location 3"
 
-#ifdef STCF_XPC_SERVICE
-// GetIndString isn't supported on 64-bit Mac OS X
-// This code is emulation for GetIndString.
-// Code based on Mozilla's Mac Eudora importer
-static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
-{
-	Size handSize = GetHandleSize(aResource);
-	long curSize = 2;
-	
-	if (!aResource)
-		return NULL;
-	UInt8 *data = *(UInt8**)aResource;
-	UInt16 count = *(UInt16*)data;
-	PPBE16(&count);
-	
-	// First 2 bytes are the count of strings that this resource has.
-	if (count < aId)
-		return NULL;
-	// skip count
-	data += 2;
-	
-	// looking for data.  data is in order
-	while (--aId >= 0)
-	{
-		short toAdd = (*(UInt8*)data) + 1;
-		curSize += toAdd;
-		if (curSize >= handSize) {
-			return NULL;
-		}
-		data = data + toAdd;
-	}
-	
-	return data;
-}
-#endif
-
 static inline NSURL *PPHomeURL()
 {
 	static NSURL *homeURL;
@@ -211,7 +175,7 @@ static inline NSURL *PPHomeURL()
 						if (!tmpURL) {
 							continue;
 						}
-						PPMusicListObject *tmpObj =[[PPMusicListObject alloc] initWithURL:tmpURL];
+						MusicListObject *tmpObj =[[MusicListObject alloc] initWithURL:tmpURL];
 						[pathsURL addObject:tmpObj];
 					}
 					[self loadMusicList:pathsURL];
@@ -246,7 +210,7 @@ static inline NSURL *PPHomeURL()
 
 - (BOOL)addMusicURL:(NSURL *)musicToLoad
 {
-	PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:musicToLoad];
+	MusicListObject *obj = [[MusicListObject alloc] initWithURL:musicToLoad];
 	
 	if (!obj)
 		return NO;
@@ -318,7 +282,7 @@ static inline NSURL *PPHomeURL()
 						lostMusicCount++;
 						continue;
 					}
-					PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullURL];
+					MusicListObject *obj = [[MusicListObject alloc] initWithURL:fullURL];
 					[musicList addObject:obj];
 				}
 				selectedMusic = -1;
@@ -348,7 +312,7 @@ static inline NSURL *PPHomeURL()
 						lostMusicCount++;
 						continue;
 					}
-					PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:fullURL];
+					MusicListObject *obj = [[MusicListObject alloc] initWithURL:fullURL];
 					[musicList addObject:obj];
 				}
 			}
@@ -367,7 +331,7 @@ static inline NSURL *PPHomeURL()
 					lostMusicCount++;
 					continue;
 				}
-				PPMusicListObject *obj = [[PPMusicListObject alloc] initWithURL:bookURL];
+				MusicListObject *obj = [[MusicListObject alloc] initWithURL:bookURL];
 				[musicList addObject:obj];
 			}
 			
@@ -379,7 +343,7 @@ static inline NSURL *PPHomeURL()
 - (void)encodeWithCoder:(NSCoder *)encoder
 {
 	NSMutableArray *BookmarkArray = [[NSMutableArray alloc] initWithCapacity:[musicList count]];
-	for (PPMusicListObject *obj in musicList) {
+	for (MusicListObject *obj in musicList) {
 		NSURL *bookData = obj.musicURL;
 		if (bookData)
 			[BookmarkArray addObject:bookData];
@@ -396,7 +360,7 @@ static inline NSURL *PPHomeURL()
 
 #pragma mark Key-valued Coding
 
-- (void)addMusicListObject:(PPMusicListObject*)obj
+- (void)addMusicListObject:(MusicListObject*)obj
 {
 	if (![musicList containsObject:obj]) {
 		[musicList addObject:obj];

@@ -13,15 +13,10 @@ private let kMusicListLocation3 = "Music Key Location 3";
 private let kMusicListKey3 = "Music List Key 3"
 private let kPlayerList = "Player List"
 
-class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
+@objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 	private(set) var musicList = [PPMusicListObject]()
 	internal(set) var lostMusicCount:UInt = 0;
 	internal(set) var selectedMusic = -1;
-	
-	override class func initialize() {
-		NSKeyedUnarchiver.setClass(self, forClassName: "PPMusicList")
-		NSKeyedArchiver.setClassName("PPMusicList", forClass: self)
-	}
 	
 	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (musicList as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len);

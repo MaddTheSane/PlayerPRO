@@ -8,16 +8,16 @@
 
 import Cocoa
 
-class PPPlugInInfoController: NSWindowController {
+class PlugInInfoController: NSWindowController {
 
-	private var info: PPPlugInInfo!
+	private var info: PlugInInfo!
 	@IBOutlet var nameField: NSTextField!
 	@IBOutlet var authorField: NSTextField!
 	@IBOutlet var typeField: NSTextField!
 	@IBOutlet var theCopyrightField: NSTextField!
 	@IBOutlet var pluginImage: NSImageView!
 
-	class func windowControllerFromInfo(plugInfo: PPPlugInInfo) -> Self {
+	class func windowControllerFromInfo(plugInfo: PlugInInfo) -> Self {
 		var toRet = self(windowNibName:"PPPlugInInfoController")
 		toRet.info = plugInfo
 		

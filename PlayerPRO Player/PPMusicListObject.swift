@@ -13,7 +13,7 @@ import Foundation
 
 private let kMusicListURLKey = "URLKey";
 
-func ==(lhs: PPMusicListObject, rhs: PPMusicListObject) -> Bool {
+func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	var dat1: AnyObject? = nil
 	var dat2: AnyObject? = nil
 	var bothAreValid = true
@@ -30,7 +30,7 @@ func ==(lhs: PPMusicListObject, rhs: PPMusicListObject) -> Bool {
 	return theSame
 }
 
-func ==(lhs: PPMusicListObject, rhs: NSURL) -> Bool {
+func ==(lhs: MusicListObject, rhs: NSURL) -> Bool {
 	var dat1: AnyObject? = nil
 	var dat2: AnyObject? = nil
 	var bothAreValid = true
@@ -47,7 +47,7 @@ func ==(lhs: PPMusicListObject, rhs: NSURL) -> Bool {
 	return theSame
 }
 
-func ==(lhs: NSURL, rhs: PPMusicListObject) -> Bool {
+func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	var dat1: AnyObject? = nil
 	var dat2: AnyObject? = nil
 	var bothAreValid = true
@@ -64,7 +64,7 @@ func ==(lhs: NSURL, rhs: PPMusicListObject) -> Bool {
 	return theSame
 }
 
-class PPMusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPrintable, Printable {
+@objc(PPMusicListObject) class MusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPrintable, Printable {
 	private(set) var musicURL: NSURL! = nil;
 
 	#if os(OSX)
@@ -109,11 +109,6 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPri
 		}
 		return stashedFileSize
 		}}
-
-	override class func initialize() {
-		NSKeyedUnarchiver.setClass(self, forClassName: "PPMusicListObject")
-		NSKeyedArchiver.setClassName("PPMusicListObject", forClass: self)
-	}
 	
 	init(URL: NSURL!) {
 		if (!URL) {
@@ -159,22 +154,22 @@ class PPMusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPri
 			return true
 		}
 		
-		if (object.isKindOfClass(PPMusicListObject)) {
+		if var unwrapped = object as? MusicListObject {
 			if (!musicURL.getResourceValue(&dat1, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
 				bothAreValid = false;
 			}
-			if (!(object as PPMusicListObject).musicURL.getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
+			if (unwrapped.musicURL.getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
 				bothAreValid = false;
 			}
 			if (bothAreValid) {
 				theSame = dat1 as NSData == dat2 as NSData
 			}
 			return theSame
-		} else if (object.isKindOfClass(NSURL)) {
+		} else if var unwrapped = object as? NSURL {
 			if (!musicURL.getResourceValue(&dat1, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
 				bothAreValid = false;
 			}
-			if (!(object as NSURL).getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
+			if (unwrapped.getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
 				bothAreValid = false;
 			}
 			if (bothAreValid) {
