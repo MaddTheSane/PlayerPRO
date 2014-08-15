@@ -11,6 +11,9 @@ import PlayerPROKit
 import PlayerPROCore
 import AVFoundation
 
+private let kUnresolvableFile = "Unresolvable files"
+private let kUnresolvableFileDescription = "There were %lu file(s) that were unable to be resolved."
+
 func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) -> [AVMutableMetadataItem] {
 	var titleName = AVMutableMetadataItem()
 	titleName.keySpace = AVMetadataKeySpaceCommon
@@ -291,6 +294,65 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		}
 	}
 	
+	func MADDriverWithPreferences() {
+		var madWasReading = false;
+		var fullTime = 0, curTime = 0;
+		var returnerr = MADErr.NoErr;
+		if (madDriver != nil) {
+			madWasReading = madDriver.isPlayingMusic()
+			madDriver.stop()
+			//[madDriver stopDriver];
+			
+			madDriver.getMusicStatusWithCurrentTime(&curTime, totalTime:&fullTime)
+			
+			//madDriver = nil;
+		}
+		var theSettinit = MADDriverSettings();
+		MADGetBestDriver(&theSettinit);
+		var defaults = NSUserDefaults.standardUserDefaults()
+		
+		//TODO: Sanity Checking
+		theSettinit.surround = defaults.boolForKey(PPSurroundToggle)
+		theSettinit.outPutRate = UInt32(defaults.integerForKey(PPSoundOutRate))
+		theSettinit.outPutBits = Int16(defaults.integerForKey(PPSoundOutBits))
+		if defaults.boolForKey(PPOversamplingToggle) {
+			theSettinit.oversampling = Int32(defaults.integerForKey(PPOversamplingAmount))
+		} else {
+			theSettinit.oversampling = 1;
+		}
+		theSettinit.Reverb = defaults.boolForKey(PPReverbToggle)
+		theSettinit.ReverbSize = Int32(defaults.integerForKey(PPReverbAmount))
+		theSettinit.ReverbStrength = Int32(defaults.integerForKey(PPReverbStrength))
+		if defaults.boolForKey(PPStereoDelayToggle) {
+			theSettinit.MicroDelaySize = Int32(defaults.integerForKey(PPStereoDelayAmount))
+		} else {
+			theSettinit.MicroDelaySize = 0;
+		}
+		
+		theSettinit.driverMode = MADSoundOutput.fromRaw(Int16(defaults.integerForKey(PPSoundDriver))) ?? .CoreAudioDriver
+		theSettinit.repeatMusic = false;
+		
+		//OSErr returnerr = MADCreateDriver(&init, madLib, &madDriver);
+		if (!madDriver) {
+			madDriver = PPDriver(library:madLib, settings:&theSettinit, error: &returnerr)
+		} else {
+			returnerr = madDriver.changeDriverSettingsToSettings(theSettinit)
+		}
+		NSNotificationCenter.defaultCenter().postNotificationName(PPDriverDidChange, object:self)
+		if returnerr != .NoErr {
+			var err = CreateErrorFromMADErrorType(returnerr);
+			NSAlert(error: err).runModal()
+			return;
+		}
+		//MADStartDriver(madDriver);
+		if (self.music != nil) {
+			//MADAttachDriverToMusic(madDriver, music, NULL);
+			if (madWasReading) {
+				//MADSetMusicStatus(madDriver, 0, fullTime, curTime);
+				madDriver.play()
+			}
+		}
+	}
 	
 	func songIsDonePlaying() {
 		var err: NSError? = nil
@@ -381,6 +443,74 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		music.saveMusicToURL(tosave)
 	}
 
+	func CocoaDebugStr (Int16, UnsafePointer<Int8>, UnsafePointer<Int8> -> Void) {
+		
+	}
+	
+	func updatePlugInInfoMenu() {
+		
+	}
+	
+	func applicationDidFinishLaunching(notification: NSNotification!) {
+		let sranTime = time(nil) & 0xffffffff
+		srandom(UInt32(sranTime))
+		//PPRegisterDebugFunc(CFunctionPointer(&CocoaDebugStr));
+		madLib = PPLibrary();
+		//the NIB won't store the value anymore, so do this hackery to make sure there's some value in it.
+		songTotalTime.integerValue = 0
+		songCurTime.integerValue = 0
+		
+		tableView.registerForDraggedTypes([PPMLDCUTI, kUTTypeFileURL as NSString])
+		self.addObserver(self, forKeyPath:"paused", options:.New, context:nil)
+		self.paused = true;
+		self.willChangeValueForKey(kMusicListKVO)
+		if NSUserDefaults.standardUserDefaults().boolForKey(PPRememberMusicList) {
+			musicList.loadApplicationMusicList()
+		}
+		var selMus = musicList.selectedMusic;
+		self.didChangeValueForKey(kMusicListKVO)
+		
+		tableView.doubleAction = "doubleClickMusicList"
+		
+		let defaultCenter = NSNotificationCenter.defaultCenter()
+		defaultCenter.addObserver(self, selector:"soundPreferencesDidChange:", name:PPSoundPreferencesDidChange, object:nil)
+		
+		MADDriverWithPreferences()
+		//self.music = [PPMusicObject new];
+		music.attachToDriver(madDriver)
+		setTitleForSongLabelBasedOnMusic()
+		
+		//var i = 0
+		
+		for (var i: UInt = 0; i < madLib.pluginCount; i++) {
+			var obj = madLib.pluginAtIndex(i)
+			if (obj.canExport) {
+				var mi = NSMenuItem(title: "\(obj.menuName)...", action: "exportMusicAs:", keyEquivalent: "")
+				mi.tag = Int(i);
+				mi.target = self
+				musicExportMenu.addItem(mi)
+			}
+		}
+		
+		updatePlugInInfoMenu()
+		
+		exportController = PPSoundSettingsViewController();
+		exportController.delegate = self;
+		exportSettingsBox.contentView = exportController.view
+		
+		instrumentController = PPInstrumentWindowController()
+		
+		timeChecker = NSTimer(fireDate:NSDate(), interval:1/8.0, target:self, selector: "updateMusicStats:", userInfo:nil, repeats:true);
+		NSRunLoop.mainRunLoop().addTimer(timeChecker, forMode: NSRunLoopCommonModes)
+		var lostCount = musicList.lostMusicCount;
+		if (lostCount != 0) {
+			PPRunAlertPanel(kUnresolvableFile, message: kUnresolvableFileDescription, args: lostCount);
+		}
+		if (selMus != -1) {
+			selectMusicAtIndex(selMus)
+		}
+	}
+	
 	private func musicListContentsDidMove() {
 		var i = 0;
 		if (self.currentlyPlayingIndex.index != -1) {
