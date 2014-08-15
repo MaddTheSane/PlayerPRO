@@ -204,6 +204,8 @@
 		552C444517DFEF9B00AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		552C444617DFEF9F00AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		552C444717DFEFEF00AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		5531459C199E7ED6009405BA /* PPRunAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5531459B199E7ED6009405BA /* PPRunAlert.swift */; };
+		5531459D199E7ED6009405BA /* PPRunAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5531459B199E7ED6009405BA /* PPRunAlert.swift */; };
 		55323353167687A200076604 /* PPTimeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55323352167687A200076604 /* PPTimeFormatter.m */; };
 		5533416210BB577F005208D1 /* Mod.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F610BB5368005208D1 /* Mod.c */; };
 		5533416310BB5787005208D1 /* 669.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340D910BB5368005208D1 /* 669.c */; };
@@ -1933,6 +1935,7 @@
 		552C70C610CDB07E00C0E0D4 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; usesTabs = 0; wrapsLines = 0; };
 		552C716210CDC11400C0E0D4 /* README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = README.rtf; sourceTree = "<group>"; };
 		552F12E116AE08AF00394143 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		5531459B199E7ED6009405BA /* PPRunAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPRunAlert.swift; sourceTree = "<group>"; };
 		5532334D16766E5700076604 /* PPErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPErrors.h; path = ../Shared/PPErrors.h; sourceTree = "<group>"; };
 		5532334E16766E5700076604 /* PPErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = PPErrors.m; path = ../Shared/PPErrors.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55323351167687A200076604 /* PPTimeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTimeFormatter.h; sourceTree = "<group>"; };
@@ -4064,6 +4067,7 @@
 		55F16D1B186F918F00E75C3E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				5531459B199E7ED6009405BA /* PPRunAlert.swift */,
 				55588A95199951B300C3D4EE /* PPPlugInInfoController.swift */,
 				55E382EA1981509100EC330B /* PPPlugInInfo.swift */,
 				55323351167687A200076604 /* PPTimeFormatter.h */,
@@ -6344,6 +6348,7 @@
 				55E763E6199ABBC900D7952F /* PPPreferences.swift in Sources */,
 				5578C48A17D9E8560057D11B /* main.m in Sources */,
 				55978AAA1999DF5C009EE5DF /* AppDelegate.swift in Sources */,
+				5531459D199E7ED6009405BA /* PPRunAlert.swift in Sources */,
 				555F5C65199333900056AF01 /* OpenPanelViewItem.swift in Sources */,
 				5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */,
 				55978AA21999D82C009EE5DF /* PlayerPROKitAdditions.swift in Sources */,
@@ -6682,6 +6687,7 @@
 				5521F41517FA4365002CDBA9 /* BoxViewController.m in Sources */,
 				55F41A3717EF96B000605DF8 /* PPExportObject.m in Sources */,
 				55852E1C18D67CCB0009BF55 /* PPSmallPianoView.m in Sources */,
+				5531459C199E7ED6009405BA /* PPRunAlert.swift in Sources */,
 				55FEF84519844FD600D2E79C /* DigitalViewController.m in Sources */,
 				5533C8FA19942AD9003AEB16 /* SoundOutputController.swift in Sources */,
 				55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */,

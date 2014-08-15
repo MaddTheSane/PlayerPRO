@@ -486,8 +486,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 			var renameFile =  NSLocalizedString("Rename", comment: "rename file")
 			var openFile = NSLocalizedString("Open", comment: "Open a file")
 			var cancelOp = NSLocalizedString("Cancel", comment: "Cancel")
-			var retVal = NSAlertDefaultReturn
-			//var retVal = NSRunInformationalAlertPanel(NSLocalizedString(@"Invalid Extension", @"Invalid extension"), NSLocalizedString(@"The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", @"Invalid extension description"), NSLocalizedString(@"Rename", @"rename file"), NSLocalizedString(@"Open", @"Open a file"), NSLocalizedString(@"Cancel", @"Cancel"), [theURL lastPathComponent]);
+			var retVal = PPRunInformationalAlertPanel(NSLocalizedString("Invalid Extension", comment: "Invalid extension"), message: NSLocalizedString("The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", comment: "Invalid extension description"), defaultButton: NSLocalizedString("Rename", comment: "rename file"), alternateButton: NSLocalizedString("Open", comment:"Open a file"), otherButton: NSLocalizedString("Cancel", comment: "Cancel"), args: theURL.lastPathComponent);
 			switch (retVal) {
 			case NSAlertDefaultReturn:
 				
@@ -497,7 +496,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 				var identified = madLib.identifyFileAtURL(theURL, type: &ostype)
 				
 				if (madLib.identifyFileAtURL(theURL, type: &ostype) != .NoErr) || madLib.getInformationFromFileAtURL(theURL, type: &ostype, infoDictionary: &rec) != .NoErr {
-					//NSRunCriticalAlertPanel(NSLocalizedString(@"Unknown File", @"unknown file"), NSLocalizedString(@"The file type could not be identified.", @"Unidentified file"), nil, nil, nil);
+					PPRunCriticalAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
 					return false;
 				}
 				var sigVala: AnyObject = rec![kPPSignature] ?? NSNumber(unsignedInt: "madk")
@@ -508,8 +507,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 				var tmpURL = theURL.URLByDeletingPathExtension.URLByAppendingPathExtension(sigVal.lowercaseString);
 				var err: NSError? = nil
 				if (NSFileManager.defaultManager().moveItemAtURL(theURL, toURL:tmpURL, error:&err) == false) {
-					NSLog("Could not move file, error: %@", err!);
-					//NSRunInformationalAlertPanel(NSLocalizedString(@"Rename Error", @"Rename Error"), NSLocalizedString(@"The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", @"Could not rename file"), nil, nil, nil, [tmpURL lastPathComponent], [theURL lastPathComponent]);
+					println("Could not move file, error: \(err!)");
+					PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), args: tmpURL.lastPathComponent, theURL.lastPathComponent);
 				} else {
 					theURL = tmpURL;
 					//TODO: regenerate the UTI
@@ -622,9 +621,322 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		}
 	}
 	
-	@IBAction func rewindButtonPressed(sender: AnyObject!) {
-	
+	func beginExportSettingsWithHandler((Int) -> Void) {
+		
 	}
+	
+	func saveMusicAsAIFFToURL(aURL: NSURL, usingSettings: UnsafeMutablePointer<MADDriverSettings>) -> MADErr {
+		return MADErr.UnknownErr
+	}
+	
+	@IBAction func rewindButtonPressed(sender: AnyObject!) {
+	var tag = (sender as NSMenuItem).tag;
+	madDriver.beginExport()
+	var savePanel = NSSavePanel()
+	
+	switch (tag) {
+		case -1: //AIFF
+		
+			savePanel.allowedFileTypes = [AVFileTypeAIFF]
+			savePanel.canCreateDirectories = true
+			savePanel.canSelectHiddenExtension = true
+			if musicName.isEmpty {
+			savePanel.nameFieldStringValue = musicName
+			}
+			
+			savePanel.prompt = "Export"
+			savePanel.title = "Export as AIFF audio"
+			savePanel.beginSheetModalForWindow(self.window, completionHandler: { (result) -> Void in
+				
+			})
+			savePanel.beginSheetModalForWindow(self.window, completionHandler: { (result) -> Void in
+				if (result != NSFileHandlingPanelOKButton) {
+					self.madDriver.endExport()
+					return
+				}
+				
+				self.beginExportSettingsWithHandler( { (result) -> Void in
+					if (result != NSAlertDefaultReturn) {
+					self.madDriver.endExport()
+						return;
+					}
+					
+					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+						autoreleasepool {
+							var thErr = self.saveMusicAsAIFFToURL(savePanel.URL, usingSettings: &self.exportSettings);
+					self.madDriver.endExport()
+							if (thErr != .NoErr) {
+								return;
+							}
+						}
+						dispatch_async(dispatch_get_main_queue(), {
+							if (self.isQuitting) {
+							NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
+							} else {
+								var retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"%@\" is complete.", defaultButton: "OK", alternateButton: "Show File", args: savePanel.URL.lastPathComponent);
+								if (retVal == NSAlertAlternateReturn) {
+									NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL])
+								}
+							}
+						});
+					})
+				})
+			})
+			break;
+			
+		case -2: //MP4
+			savePanel.allowedFileTypes = ["com.apple.m4a-audio"];
+			savePanel.canCreateDirectories = true
+			savePanel.canSelectHiddenExtension = true
+			if (musicName != "") {
+				savePanel.nameFieldStringValue = musicName
+			}
+			savePanel.prompt = "Export"
+			savePanel.title = "Export as MPEG-4 Audio"
+			savePanel.beginSheetModalForWindow(self.window, completionHandler: {(result) -> Void in
+				if (result != NSFileHandlingPanelOKButton) {
+					self.madDriver.endExport()
+					return;
+				}
+				
+				self.beginExportSettingsWithHandler( { (result) -> Void in
+					if result != NSAlertDefaultReturn {
+					self.madDriver.endExport()
+						return;
+					}
+					
+					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+						var theErr = MADErr.NoErr;
+						
+						var oldURL = self.musicList.objectInMusicListAtIndex(self.previouslyPlayingIndex.index).musicURL
+						var expErr: NSError? = nil;
+						var errBlock: () -> Void = {
+							if (self.isQuitting) {
+								NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
+							} else {
+								PPRunAlertPanel("Export failed", message: "Export/coversion of the music file failed:\n%@", args: expErr!.localizedDescription);
+							}
+						};
+						let oldMusicName = self.musicName;
+						let oldMusicInfo = self.musicInfo;
+						let tmpName = oldMusicName != "" ? oldMusicName : "untitled"
+						var tmpURL = NSFileManager.defaultManager().URLForDirectory(.ItemReplacementDirectory, inDomain: .UserDomainMask, appropriateForURL: oldURL, create: true, error: nil).URLByAppendingPathComponent("\(tmpName).aiff", isDirectory: false)
+						
+						theErr = self.saveMusicAsAIFFToURL(tmpURL, usingSettings:&self.exportSettings)
+						if theErr != .NoErr {
+							expErr = CreateErrorFromMADErrorType(theErr);
+							NSFileManager.defaultManager().removeItemAtURL(tmpURL, error: nil)
+							dispatch_async(dispatch_get_main_queue(), errBlock);
+						}
+						
+						
+						var exportMov = AVAsset.assetWithURL(tmpURL) as AVAsset!
+							var metadataInfo = generateAVMetadataInfo(oldMusicName, oldMusicInfo)
+						
+						if (exportMov == nil) {
+							expErr = NSError(domain: NSCocoaErrorDomain, code: NSFileWriteUnknownError, userInfo: nil)
+							NSLog("Init Failed for %@, error: %@", oldMusicName, expErr!.localizedDescription);
+							NSFileManager.defaultManager().removeItemAtURL(tmpURL, error: nil)
+							dispatch_async(dispatch_get_main_queue(), errBlock);
+							return;
+						}
+						
+						var session = AVAssetExportSession(asset:exportMov, presetName:AVAssetExportPresetAppleM4A)
+						if (session == nil) {
+							expErr = NSError(domain: NSCocoaErrorDomain, code: NSFileWriteUnknownError, userInfo: nil)
+							NSLog("Export session creation for %@ failed, error: %@", oldMusicName, expErr!.localizedDescription);
+							NSFileManager.defaultManager().removeItemAtURL(tmpURL, error: nil)
+							dispatch_async(dispatch_get_main_queue(), errBlock);
+							return;
+						}
+						NSFileManager.defaultManager().removeItemAtURL(savePanel.URL, error: nil)
+						session.outputURL = savePanel.URL
+						session.outputFileType = AVFileTypeAppleM4A;
+						session.metadata = metadataInfo;
+						var sessionWaitSemaphore = dispatch_semaphore_create(0);
+						session.exportAsynchronouslyWithCompletionHandler({ () -> Void in
+							var tmp = dispatch_semaphore_signal(sessionWaitSemaphore)
+							})
+						dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
+						
+						var didFinish = session.status == .Completed;
+						NSFileManager.defaultManager().removeItemAtURL(savePanel.URL, error: nil)
+						
+						if (didFinish) {
+							dispatch_async(dispatch_get_main_queue(), {
+								if (self.isQuitting) {
+									NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
+								} else {
+									var retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"%@\" is complete.", defaultButton: "OK", alternateButton: "Show File", args: savePanel.URL.lastPathComponent);
+									if (retVal == NSAlertAlternateReturn) {
+										NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL])
+									}
+								}
+							});
+						} else {
+							NSLog("\(session.error)");
+						}
+					});
+				});
+			});
+			
+		case -3: // wave
+			/*
+			[savePanel setAllowedFileTypes:@[AVFileTypeWAVE]];
+			[savePanel setCanCreateDirectories:YES];
+			[savePanel setCanSelectHiddenExtension:YES];
+			if (![self.musicName isEqualToString:@""])
+				[savePanel setNameFieldStringValue:self.musicName];
+			
+			[savePanel setPrompt:@"Export"];
+			[savePanel setTitle:@"Export as Wave Audio"];
+			[savePanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
+				if (result != NSFileHandlingPanelOKButton) {
+					[madDriver endExport];
+					return;
+				}
+				[self beginExportSettingsWithHandler:^(NSInteger result) {
+					if (result != NSAlertDefaultReturn) {
+						[madDriver endExport];
+						return;
+					}
+					
+					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+						@autoreleasepool {
+							NSData *saveData = [self rawLESoundData:&exportSettings];
+							[madDriver endExport];
+							
+							if (!saveData)
+								return;
+							
+							__block NSError *expErr = nil;
+							dispatch_block_t errBlock = ^{
+								if (isQuitting) {
+									[NSApp replyToApplicationShouldTerminate:YES];
+								} else {
+									PPRunAlertPanel(@"Export failed", @"Export of the music file failed:\n%@", nil, nil, nil, [expErr localizedDescription]);
+								}
+							};
+
+
+				#define checkError(res) { \
+if (res != MADNoErr){ \
+expErr = [NSError errorWithDomain:NSOSStatusErrorDomain code:res userInfo:nil];\
+dispatch_async(dispatch_get_main_queue(), errBlock);\
+return; \
+} \
+}
+
+		AudioStreamBasicDescription asbd = {0};
+							asbd.mSampleRate = exportSettings.outPutRate;
+							asbd.mFormatID = kAudioFormatLinearPCM;
+							asbd.mFormatFlags = kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked;
+							asbd.mBitsPerChannel = exportSettings.outPutBits;
+							switch (exportSettings.outPutMode) {
+								case MonoOutPut:
+									asbd.mChannelsPerFrame = 1;
+									break;
+									
+								default:
+								case StereoOutPut:
+								case DeluxeStereoOutPut:
+									asbd.mChannelsPerFrame = 2;
+									break;
+									
+								case PolyPhonic:
+									asbd.mChannelsPerFrame = 4;
+									break;
+							}
+							asbd.mFramesPerPacket = 1;
+							asbd.mBytesPerFrame = asbd.mBitsPerChannel * asbd.mChannelsPerFrame / 8;
+							asbd.mBytesPerPacket = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
+							
+							CFURLRef url = CFBridgingRetain([savePanel URL]);
+							
+							AudioFileID audioFile;
+							OSStatus res;
+							res = AudioFileCreateWithURL(url, kAudioFileWAVEType, &asbd, kAudioFileFlags_EraseFile, &audioFile);
+							CFRelease(url);
+							checkError(res);
+							
+							UInt32 numBytes = (UInt32)[saveData length];
+							
+							res = AudioFileWriteBytes(audioFile, false, 0, &numBytes, [saveData bytes]);
+							checkError(res);
+							
+							res = AudioFileClose(audioFile);
+							checkError(res);
+//#undef checkError
+							
+						}
+						dispatch_async(dispatch_get_main_queue(), ^{
+							if (isQuitting) {
+								[NSApp replyToApplicationShouldTerminate:YES];
+							} else {
+								NSInteger retVal = PPRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"OK", @"Show File", nil, [[savePanel URL] lastPathComponent]);
+								if (retVal == NSAlertAlternateReturn) {
+									[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[[savePanel URL]]];
+								}
+							}
+						});
+					});
+				}];
+			}];
+*/
+			break;
+			
+		default:
+			/*
+			if (tag > madLib.pluginCount || tag < 0) {
+				NSBeep();
+				[madDriver endExport];
+				if (isQuitting) {
+					[NSApp replyToApplicationShouldTerminate:YES];
+				}
+				
+				return;
+			}
+			[savePanel setAllowedFileTypes:[madLib pluginAtIndex:tag].UTItypes];
+			[savePanel setCanCreateDirectories:YES];
+			[savePanel setCanSelectHiddenExtension:YES];
+			if (![self.musicName isEqualToString:@""]) {
+				[savePanel setNameFieldStringValue:self.musicName];
+			}
+			[savePanel setPrompt:@"Export"];
+			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", [madLib pluginAtIndex:tag].menuName]];
+			
+			[savePanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
+				if (result != NSFileHandlingPanelOKButton) {
+					[madDriver endExport];
+					return;
+				}
+				
+				NSURL *fileURL = [savePanel URL];
+				OSErr err = [self.music exportMusicToURL:fileURL format:[madLib pluginAtIndex:tag].plugType library:madLib];
+				if (err != MADNoErr) {
+					if (isQuitting) {
+						[NSApp replyToApplicationShouldTerminate:YES];
+					} else {
+						NSError *aerr = CreateErrorFromMADErrorType(err);
+						[[NSAlert alertWithError:aerr] runModal];
+					}
+				} else {
+					[self addMusicToMusicList:fileURL loadIfPreferencesAllow:NO];
+					if (isQuitting) {
+						[NSApp replyToApplicationShouldTerminate:YES];
+					} else {
+						NSInteger retVal = PPRunInformationalAlertPanel(@"Export complete", @"The export of the file \"%@\" is complete.", @"OK", @"Show File", nil, [[savePanel URL] lastPathComponent]);
+						if (retVal == NSAlertAlternateReturn) {
+							[[NSWorkspace sharedWorkspace] activateFileViewerSelectingURLs:@[fileURL]];
+						}
+					}
+				}
+			}];
+*/
+			break;
+
+}
+}
 	
 	@IBAction func sliderChanged(sender: AnyObject!) {
 		if (self.music != nil) {
@@ -652,6 +964,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		}
 	}
 
+	@IBAction func exportMusicAs(sender: AnyObject!) {
+	
+	}
+	
 	func application(sender: NSApplication!, openFile filename: String!) -> Bool {
 		var err: NSError? = nil
 		var utiFile = NSWorkspace.sharedWorkspace().typeOfFile(filename, error: &err)
@@ -660,7 +976,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 			tmpAlert.alertStyle = .WarningAlertStyle
 			tmpAlert.messageText = "Error opening file"
 			tmpAlert.informativeText = "Unable to open \(filename.lastPathComponent): \(err?.localizedFailureReason)"
-			//NSRunAlertPanel("Error opening file", "Unable to open %@: %@", nil, nil, nil, filename.lastPathComponent, err?.localizedFailureReason);
+			PPRunAlertPanel("Error opening file", message: "Unable to open %@: %@", args: filename.lastPathComponent, err!.localizedFailureReason);
 			tmpAlert.runModal()
 			return false;
 		}
