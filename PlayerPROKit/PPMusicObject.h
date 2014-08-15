@@ -33,7 +33,8 @@
 @property (readonly, weak) PPDriver *attachedDriver;
 @property (readonly) NSURL *filePath;
 
-//Creates a music object from the supplied MADK (PPMusicObject) or MAD bundle (PPMusicObjectWrapper)
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
+//Creates a music object from the supplied MADK
 - (instancetype)initWithURL:(NSURL *)url NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithPath:(NSString *)url;
 

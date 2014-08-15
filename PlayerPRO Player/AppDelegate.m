@@ -6,6 +6,8 @@
 //
 //
 
+#include <alloca.h>
+
 #import "AppDelegate.h"
 #import "PPPreferences.h"
 #import "PPMusicList.h"
@@ -407,13 +409,13 @@ static NSInteger selMusFromList = -1;
 	
 	[theRec play];
 	
-	NSMutableData *mutData = [[NSMutableData alloc] init];
-	soundPtr = calloc(full, 1);
+	NSMutableData *mutData = [[NSMutableData alloc] initWithCapacity:full * 60 * madDriver.totalMusicPlaybackTime / 2];
+	soundPtr = alloca(full);
 	
-	while ([theRec directSaveToPointer:soundPtr settings:theSet])
+	while ([theRec directSaveToPointer:soundPtr settings:theSet]) {
 		[mutData appendBytes:soundPtr length:full];
+	}
 	
-	free(soundPtr);
 	return mutData;
 }
 
@@ -1244,10 +1246,7 @@ enum PPMusicToolbarTypes {
 - (BOOL)handleFile:(NSURL *)theURL ofType:(NSString *)theUTI
 {
 	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
-	if ([sharedWorkspace type:theUTI conformsToType:MADPackageUTI]) {
-		// Do nothing right now
-		return NO;
-	} else if ([theUTI isEqualToString:MADGenericUTI]) {
+	if ([theUTI isEqualToString:MADGenericUTI]) {
 		NSInteger retVal = NSRunInformationalAlertPanel(NSLocalizedString(@"Invalid Extension", @"Invalid extension"), NSLocalizedString(@"The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", @"Invalid extension description"), NSLocalizedString(@"Rename", @"rename file"), NSLocalizedString(@"Open", @"Open a file"), NSLocalizedString(@"Cancel", @"Cancel"), [theURL lastPathComponent]);
 		switch (retVal) {
 			case NSAlertDefaultReturn:

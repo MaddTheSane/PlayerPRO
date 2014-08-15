@@ -251,13 +251,13 @@
 	
 	[theRec play];
 	
-	NSMutableData *mutData = [[NSMutableData alloc] init];
-	soundPtr = calloc(full, 1);
+	NSMutableData *mutData = [[NSMutableData alloc] initWithCapacity:full * 60 * _theDriver.totalMusicPlaybackTime / 2];
+	soundPtr = alloca(full);
 	
-	while ([theRec directSaveToPointer:soundPtr settings:theSet])
+	while ([theRec directSaveToPointer:soundPtr settings:theSet]) {
 		[mutData appendBytes:soundPtr length:full];
+	}
 	
-	free(soundPtr);
 	return mutData;
 }
 
