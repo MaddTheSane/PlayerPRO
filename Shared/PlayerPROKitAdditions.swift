@@ -24,7 +24,7 @@ class func drawCGSampleInt(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: 
 	var BS: Int = 0
 	var BE: Int = 0
 	var x: Int = 0
-	var isStereo = curData.stereo;
+	let isStereo = curData.stereo;
 	var minY: CGFloat = 0.0
 	var maxY: CGFloat = 0.0
 	

@@ -44,8 +44,6 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
     }
 
 	private func waveformImageFromSample(theDat:PPSampleObject!) -> NSImage? {
-		//This code causes the Swift compiler to crash.
-		
 		var imageSize = waveFormImage!.convertSizeToBacking(waveFormImage!.frame.size)
 		let datIsStereo = theDat.stereo;
 		imageSize.height *= 2;
