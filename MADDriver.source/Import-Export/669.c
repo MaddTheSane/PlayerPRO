@@ -396,14 +396,13 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				} else {
 					free(AlienFile);
 					
-					AlienFile = malloc(sndSize);
+					AlienFile = alloca(sndSize);
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					if (myErr == MADNoErr) {
 						myErr = Test669File(AlienFile);
 						if (myErr == MADNoErr)
 							myErr = Convert6692Mad(AlienFile, sndSize, MadFile, init);
 					}
-					free(AlienFile);
 					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
@@ -416,7 +415,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = 1024L;
 				
-				AlienFile = malloc(sndSize);
+				AlienFile = alloca(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
@@ -424,7 +423,6 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 					
 					myErr = Test669File(AlienFile);
 					
-					free(AlienFile);
 					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
@@ -439,7 +437,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				
 				sndSize = 5000L; // Read only 5000 first bytes for optimisation
 				
-				AlienFile = (char*)malloc(sndSize);
+				AlienFile = (char*)alloca(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
@@ -447,7 +445,6 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 					if (myErr == MADNoErr)
 						myErr = Extract669Info(info, AlienFile);
 
-					free(AlienFile);
 					AlienFile = NULL;
 				}
 				iClose(iFileRefI);

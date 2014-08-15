@@ -113,13 +113,12 @@ static OSErr mainWave(void					*unused,
 			CFURLGetFileSystemRepresentation(AlienFileRef, true, (unsigned char*)cPath, PATH_MAX);
 			UNFILE iFileRef = iFileOpenRead(cPath);
 			long inOutBytes = 100L;
-			Ptr AlienPtr = malloc(inOutBytes);
+			Ptr AlienPtr = alloca(inOutBytes);
 			if (AlienPtr == NULL) {
 				myErr = MADNeedMemory;
 			} else {
 				iRead(inOutBytes, AlienPtr, iFileRef);
 				myErr = TestWAV((PCMWavePtr)AlienPtr);
-				free(AlienPtr);
 			}
 			iClose(iFileRef);
 		}

@@ -383,11 +383,12 @@ static NSInteger selMusFromList = -1;
 	
 	[theRec play];
 	
-	NSMutableData *mutData = [[NSMutableData alloc] init];
-	soundPtr = alloca(full, 1);
+	NSMutableData *mutData = [[NSMutableData alloc] initWithCapacity:full * 60 * madDriver.totalMusicPlaybackTime / 2];
+	soundPtr = alloca(full);
 	
-	while ([theRec directSaveToPointer:soundPtr settings:theSet])
+	while ([theRec directSaveToPointer:soundPtr settings:theSet]) {
 		[mutData appendBytes:soundPtr length:full];
+	}
 	
 	return mutData;
 }

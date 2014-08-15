@@ -27,6 +27,21 @@
 	}
 }
 
+- (NSTimeInterval)totalMusicPlaybackTime
+{
+	MADErr iErr;
+	long curV, totV;
+	NSTimeInterval musPos = 0;
+	iErr = MADGetMusicStatus(theRec, &totV, &curV);
+	if (iErr)
+		return musPos;
+	
+	musPos = totV / 60.0;
+	
+	return musPos;
+
+}
+
 - (MADDriverSettings)driverSettings
 {
 	return MADGetDriverSettings(theRec);
