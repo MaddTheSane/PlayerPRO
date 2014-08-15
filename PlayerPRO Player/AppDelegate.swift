@@ -354,6 +354,38 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		}
 	}
 	
+	/*
+	override init() {
+		let ourDefaults = [PPRememberMusicList: true,
+			PPLoadMusicAtListLoad: false,
+			PPAfterPlayingMusic: PPPlaylistMode.StopPlaying.toRaw(),
+			PPGotoStartupAfterPlaying: true,
+			PPSaveModList: true,
+			PPLoadMusicAtMusicLoad: false,
+			PPLoopMusicWhenDone: false,
+			
+			PPSoundOutBits: 16,
+			PPSoundOutRate: 44100,
+			PPSoundDriver: MADSoundOutput.CoreAudioDriver.toRaw(),
+			PPStereoDelayToggle: true,
+			PPReverbToggle: false,
+			PPSurroundToggle: false,
+			PPOversamplingToggle: false,
+			PPStereoDelayAmount: 30,
+			PPReverbAmount: 25,
+			PPReverbStrength: 30,
+			PPOversamplingAmount: 1,
+			
+			PPMAddExtension: true,
+			PPMMadCompression: true,
+			PPMNoLoadMixerFromFiles: false,
+			PPMOscilloscopeDrawLines: true]
+	
+		NSUserDefaults.standardUserDefaults().registerDefaults(ourDefaults);
+		super.init()
+	}*/
+
+	
 	func songIsDonePlaying() {
 		var err: NSError? = nil
 		var userDefaults = NSUserDefaults.standardUserDefaults()
@@ -443,9 +475,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		music.saveMusicToURL(tosave)
 	}
 
-	func CocoaDebugStr (Int16, UnsafePointer<Int8>, UnsafePointer<Int8> -> Void) {
+	//func CocoaDebugStr (Int16, UnsafePointer<Int8>, UnsafePointer<Int8> -> Void) {
 		
-	}
+	//}
 	
 	func updatePlugInInfoMenu() {
 		
@@ -583,13 +615,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		theRec.play()
 		
 		var mutData = NSMutableData();
-		soundPtr = calloc(UInt(full), 1);
+		soundPtr = UnsafeMutablePointer<()>.alloc(full)
 		
 		while (theRec.directSaveToPointer(soundPtr, settings:theSet)) {
 			mutData.appendBytes(soundPtr, length: full)
 		}
 		
-		free(soundPtr);
+		soundPtr.dealloc(full);
 		return mutData;
 	}
 	
