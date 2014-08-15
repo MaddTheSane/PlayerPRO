@@ -271,7 +271,7 @@ MADErr MADH2Mad(char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *
 			}
 		}
 		
-		free((char*) tempPat);
+		free(tempPat);
 		tempPat = NULL;
 	}
 	for (i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[i] = NULL;

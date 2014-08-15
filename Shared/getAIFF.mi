@@ -14,9 +14,9 @@
 			PPBE16(&bePtr[i]);
 		});
 	}
-	return rsd;
+	return [[NSData alloc] initWithData:rsd];
 #else
-	return [self rawSoundData:theSet];
+	return [[NSData alloc] initWithData:[self rawSoundData:theSet]];
 #endif
 }
 
@@ -31,9 +31,9 @@
 			PPLE16(&lePtr[i]);
 		});
 	}
-	return rsd;
+	return [[NSData alloc] initWithData:rsd];
 #else
-	return [self rawSoundData:theSet];
+	return [[NSData alloc] initWithData:[self rawSoundData:theSet]];
 #endif
 }
 

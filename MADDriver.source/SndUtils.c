@@ -53,43 +53,42 @@ Cmd* MADGetCmd(short row, short track, Pcmd* myPcmd)
 }
 
 MADErr inAddSoundToMAD(void			*theSound,
-					  size_t		sndLen,
-					  long			lS,
-					  long			lE,
-					  short			sS,
-					  short			bFreq,
-					  unsigned int	rate,
-					  Boolean		stereo,
-					  Str255		name,
-					  InstrData		*InsHeader,					// Ptr on instrument header
-					  sData			**sample,					// Ptr on samples data
-					  short			*sampleID)
+					   size_t		sndLen,
+					   long			lS,
+					   long			lE,
+					   short		sS,
+					   short		bFreq,
+					   unsigned int	rate,
+					   Boolean		stereo,
+					   Str255		name,
+					   InstrData	*InsHeader,					// Ptr on instrument header
+					   sData		**sample,					// Ptr on samples data
+					   short		*sampleID)
 {
 	MADErr theErr = MADNoErr;
-	char *cName = calloc(name[0] + 1, 1);
+	char *cName = alloca(name[0] + 1);
 	if (!cName)
 		return MADNeedMemory;
 	memcpy(cName, &name[1], name[0]);
 	
 	theErr = inAddSoundToMADCString(theSound, sndLen, (int)lS, (int)lE, sS, bFreq, rate, stereo, cName, InsHeader, sample, sampleID);
 	
-	free(cName);
 	return theErr;
 }
 
 
 MADErr inAddSoundToMADCString(void			*theSound,
-							 size_t			sndLen,
-							 int			loopStart,
-							 int			loopEnd,
-							 short			sS,
-							 short			bFreq,
-							 unsigned int	rate,
-							 Boolean		stereo,
-							 char			*name,
-							 InstrData		*InsHeader,					// Ptr on instrument header
-							 sData			**sample,					// Ptr on samples data
-							 short			*sampleID)
+							  size_t		sndLen,
+							  int			loopStart,
+							  int			loopEnd,
+							  short			sS,
+							  short			bFreq,
+							  unsigned int	rate,
+							  Boolean		stereo,
+							  char			*name,
+							  InstrData		*InsHeader,					// Ptr on instrument header
+							  sData			**sample,					// Ptr on samples data
+							  short			*sampleID)
 {
 	long 	inOutBytes;
 	sData	*curData;
