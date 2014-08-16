@@ -8,8 +8,6 @@
 
 import Cocoa
 
-private let PPMLDCUTI = "net.sourceforge.playerpro.PlayerPRO-Player.playerlistdragtype"
-
 @objc(PPMusicListDragClass) class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
 	private(set) var theIndexSet: NSIndexSet
 	init(indexSet: NSIndexSet!) {
