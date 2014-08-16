@@ -28,8 +28,6 @@
 - (void)soundOutDriverDidChange:(short)driv;
 @end
 
-@class NSButton, NSMatrix, NSPopUpButton;
-
 @interface PPSoundSettingsViewController : NSViewController
 @property (weak) IBOutlet NSButton *oversampling;
 @property (weak) IBOutlet NSButton *reverb;

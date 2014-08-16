@@ -8,7 +8,6 @@
 #include "PPByteswap.h"
 
 #import "UserDefaultKeys.h"
-#import "OpenPanelViewController.h"
 #import "PPTimeFormatter.h"
 #import "PPDocument.h"
 #import "PPExportObject.h"
@@ -17,3 +16,4 @@
 #import "PPDigitalPlugHandler.h"
 #import "PPFilterPlugHandler.h"
 #import "PPInstrumentPlugHandler.h"
+#import "PPPreferences.h"
