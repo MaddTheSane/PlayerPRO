@@ -94,31 +94,31 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 
 	private var musicName = ""
 	private var musicInfo = ""
-	private var selMusFromList = 0
+	private var selMusFromList = -1
 	
-	private var _trackerDict: [String: [String!]]! = nil
-	private var _trackerUTIs: [String!] = []
+	private var _trackerDict = [String: [String]]()
+	private var _trackerUTIs: [String] = []
 	
-	var trackerDict: [String: [String!]] { get {
-		if _trackerDict == nil || _trackerDict.count + 2 != Int(madLib.pluginCount) {
+	var trackerDict: [String: [String]] { get {
+		if _trackerDict.isEmpty || _trackerDict.count != Int(madLib.pluginCount) + 2 {
 			var localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
 			var localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
-			var tmpTrackerDict: [String: [String!]] = [localMADKName: [MADNativeUTI as String], localGenericMADName: [MADGenericUTI as String]]
+			var tmpTrackerDict = [localMADKName: [MADNativeUTI], localGenericMADName: [MADGenericUTI]] as [String: [String]]
 			
 			var i: UInt = 0
 			for (i = 0; i < madLib.pluginCount; i++) {
 				var obj = madLib.pluginAtIndex(i)
-				tmpTrackerDict[obj.menuName as String] = (obj.UTItypes) as? [String!]
+				tmpTrackerDict[obj.menuName] = (obj.UTItypes) as? [String]
 			}
 			_trackerDict = tmpTrackerDict
 		}
 		return _trackerDict
 		}}
 
-	var trackerUTIs: [String!] { get {
+	var trackerUTIs: [String] { get {
 		if _trackerUTIs.isEmpty {
 			let arrayOfUTIs = trackerDict.values
-			var toAddUTI: [String!] = []
+			var toAddUTI = [String]()
 			for anArray in arrayOfUTIs {
 				toAddUTI += anArray
 			}
@@ -211,7 +211,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		if (keyPath == "paused") {
 			var boolVal = (change[NSKeyValueChangeNewKey] as NSNumber);
 			
-			//[pauseButton highlight:[boolVal boolValue]];
+			pauseButton.highlight(boolVal.boolValue)
 			switch (boolVal.boolValue) {
 				
 			case true:
@@ -1155,11 +1155,7 @@ return; \
 	
 	func tableViewSelectionDidChange(notification: NSNotification!) {
 		var selected = tableView.selectedRowIndexes
-		var musicURL: NSURL! = nil
 		var theInfo: NSDictionary? = nil
-		//var theInfo = PPInfoRec()
-		//var obj: PPMusicListObject! = nil
-		//var swiftInfo = ContiguousArray<UInt>(count: 5, repeatedValue: 0)
 		var info = [Int8](count: 5, repeatedValue: 0)
 		var NSSig = ""
 		
@@ -1168,13 +1164,13 @@ return; \
 		}
 		
 		if (selected.count != 1) {
-		 badTracker()
+			badTracker()
 			return
 		}
 		
-		var obj = musicList.objectInMusicListAtIndex(selected.lastIndex)
+		let obj = musicList.objectInMusicListAtIndex(selected.lastIndex)
 		
-		musicURL = obj.musicURL;
+		let musicURL = obj.musicURL;
 		if (madLib.identifyFileAtURL(musicURL, type:&info) != MADErr.NoErr) {
 		 badTracker()
 			return
@@ -1188,18 +1184,15 @@ return; \
 		internalName.stringValue = intNameV as String
 		
 		let fsInt: AnyObject! = theInfo?[kPPFileSize] ?? NSNumber(long:0)
-		let fsInta = fsInt as NSNumber
-		let fsTmp = fsInta.longValue
+		let fsTmp = (fsInt as NSNumber).longValue
 		fileSize.integerValue = fsTmp
 		
 		let ti: AnyObject! = theInfo?[kPPTotalInstruments] ?? NSNumber(short: 0)
-		let tia = ti as NSNumber
-		let tiTmp = tia.shortValue
+		let tiTmp = (ti as NSNumber).shortValue
 		musicInstrument.integerValue = Int(tiTmp);
 		
 		let mp: AnyObject! = theInfo?[kPPTotalPatterns] ?? NSNumber(short: 0)
-		let mpa = mp as NSNumber
-		let mpTmp = mpa.shortValue
+		let mpTmp = (mp as NSNumber).shortValue
 		musicPatterns.integerValue = Int(mpTmp)
 		
 		let musPlugTyp: AnyObject! = theInfo?[kPPFormatDescription] ?? ""
