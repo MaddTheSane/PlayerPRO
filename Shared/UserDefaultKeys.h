@@ -21,7 +21,6 @@ extern NSString * const PPDriverDidChange;
 //UTIs
 extern NSString * const MADNativeUTI;
 extern NSString * const MADGenericUTI;
-extern NSString * const MADPackageUTI;
 extern NSString * const PPMusicListUTI;
 extern NSString * const PPOldMusicListUTI;
 extern NSString * const PPPCMDUTI;
