@@ -6,6 +6,8 @@
 //
 //
 
+#include <Cocoa/Cocoa.h>
+#include <xpc/xpc.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 #import "PPMIDIImporter.h"
@@ -196,15 +198,27 @@ static MADErr MADReadMAD(MADMusic *MDriver, const void* MADPtr)
 extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	__block MADErr theErr = MADOrderNotImplemented;
-	NSXPCConnection *conn = [[NSXPCConnection alloc] initWithServiceName:@"net.sourceforge.playerpro.MIDI-Import"];
-	conn.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPMIDIImportHelper)];
+	xpc_connection_t conn = xpc_connection_create("net.sourceforge.playerpro.MIDI-Import", NULL);
+	//NSXPCConnection *conn = [[NSXPCConnection alloc] initWithServiceName:@"net.sourceforge.playerpro.MIDI-Import"];
+	//conn.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPMIDIImportHelper)];
 	
 	NSURL *ourURL = [[NSURL alloc] initFileURLWithFileSystemRepresentation:AlienFileName isDirectory:NO relativeToURL:nil];
+	xpc_object_t xpcURL = xpc_string_create([ourURL fileSystemRepresentation]);
+	const char * const keys[] = {"filePath"};
+	xpc_object_t values[] = {xpcURL};
+	xpc_object_t theDict = xpc_dictionary_create(keys, values, 1);
 	
-	[conn resume];
+	xpc_object_t retVal;
+
+	xpc_connection_resume(conn);
 	switch (order) {
 		case MADPlugInfo:
 		{
+			xpc_dictionary_set_int64(theDict, kPPMIDICall, PPInfoMIDI);
+			retVal = xpc_connection_send_message_with_reply_sync(conn, theDict);
+			theErr = xpc_dictionary_get_int64(retVal, kPPMIDIErr);
+			xpc_object_t ppInfo = xpc_dictionary_get_value(retVal, kPPMIDIInfo);
+#if 0
 			dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create(0);
 			[[conn remoteObjectProxy] getMIDIInfoFromFileAtURL:ourURL withReply:^(NSDictionary * ppInfo, MADErr error) {
 				if (error) {
@@ -227,11 +241,16 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				[conn invalidate];
 			}];
 			dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
+#endif
 		}
 			break;
 			
 		case MADPlugTest:
 		{
+			xpc_dictionary_set_int64(theDict, kPPMIDICall, PPTestMIDI);
+			retVal = xpc_connection_send_message_with_reply_sync(conn, theDict);
+			theErr = xpc_dictionary_get_int64(retVal, kPPMIDIErr);
+#if 0
 			dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create(0);
 			[[conn remoteObjectProxy] canImportMIDIFileAtURL:ourURL withReply:^(MADErr error) {
 				theErr = error;
@@ -239,11 +258,16 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				dispatch_semaphore_signal(sessionWaitSemaphore);
 			}];
 			dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
+#endif
 		}
 			break;
 			
 		case MADPlugImport:
 		{
+			xpc_dictionary_set_int64(theDict, kPPMIDICall, PPImportMIDI);
+			retVal = xpc_connection_send_message_with_reply_sync(conn, theDict);
+			theErr = xpc_dictionary_get_int64(retVal, kPPMIDIErr);
+#if 0
 			dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create(0);
 			[[conn remoteObjectProxy] importMIDIFileAtURL:ourURL withReply:^(NSData *fileData, MADErr error) {
 				if (error == MADNoErr) {
@@ -257,11 +281,11 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				dispatch_semaphore_signal(sessionWaitSemaphore);
 			}];
 			dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
+#endif
 		}
 			
 		default:
 			theErr = MADOrderNotImplemented;
-			[conn invalidate];
 			break;
 	}
 	

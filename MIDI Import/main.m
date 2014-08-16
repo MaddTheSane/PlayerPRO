@@ -12,30 +12,38 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <AppKit/AppKit.h>
 
-@interface ServiceDelegate : NSObject <NSXPCListenerDelegate>
-@end
-
-@implementation ServiceDelegate
-
-- (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection {
-	// This method is where the NSXPCListener configures, accepts, and resumes a new incoming NSXPCConnection.
-	
-	// Configure the connection.
-	// First, set the interface that the exported object implements.
-	newConnection.exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPMIDIImportHelper)];
-	
-	// Next, set the object that the connection exports. All messages sent on the connection to this service will be sent to the exported object to handle. The connection retains the exported object.
-	PPMIDIImporter *exportedObject = [PPMIDIImporter new];
-	newConnection.exportedObject = exportedObject;
-	
-	// Resuming the connection allows the system to deliver more incoming messages.
-	[newConnection resume];
-	
-	// Returning YES from this method tells the system that you have accepted this connection. If you want to reject the connection for some reason, call -invalidate on the connection and return NO.
-	return YES;
+static void MIDIImport_peer_event_handler(xpc_connection_t peer, xpc_object_t event)
+{
+	xpc_type_t type = xpc_get_type(event);
+	if (type == XPC_TYPE_ERROR) {
+		if (event == XPC_ERROR_CONNECTION_INVALID) {
+			// The client process on the other end of the connection has either
+			// crashed or cancelled the connection. After receiving this error,
+			// the connection is in an invalid state, and you do not need to
+			// call xpc_connection_cancel(). Just tear down any associated state
+			// here.
+		} else if (event == XPC_ERROR_TERMINATION_IMMINENT) {
+			// Handle per-connection termination cleanup.
+		}
+	} else {
+		assert(type == XPC_TYPE_DICTIONARY);
+		// Handle the message.
+	}
 }
 
-@end
+static void MIDIImport_event_handler(xpc_connection_t peer)
+{
+	// By defaults, new connections will target the default dispatch
+	// concurrent queue.
+	xpc_connection_set_event_handler(peer, ^(xpc_object_t event) {
+		MIDIImport_peer_event_handler(peer, event);
+	});
+	
+	// This will tell the connection to begin listening for events. If you
+	// have some other initialization that must be done asynchronously, then
+	// you can defer this call until after that initialization is done.
+	xpc_connection_resume(peer);
+}
 
 static void midiDebugFunc(short line, const char *file, const char *text)
 {
@@ -65,14 +73,6 @@ static void midiDebugFunc(short line, const char *file, const char *text)
 int main(int argc, const char *argv[])
 {
 	PPRegisterDebugFunc(midiDebugFunc);
-	// Get the singleton service listener object.
-	ServiceDelegate *delegate = [ServiceDelegate new];
-	
-	// Configure the service listener with a delegate.
-	NSXPCListener *listener = [NSXPCListener serviceListener];
-	listener.delegate = delegate;
-	
-	// Resume the listener. At this point, NSXPCListener will take over the execution of this service, managing its lifetime as needed.
-	[listener resume];
+	xpc_main(MIDIImport_event_handler);
 	return 0;
 }

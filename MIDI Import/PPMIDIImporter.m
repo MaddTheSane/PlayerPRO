@@ -212,14 +212,14 @@ void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init)
 	theInfo.fileSize = [[fileInfo objectForKey:NSURLFileSizeKey] longValue];
 	NSDictionary *PPInfoDict;
 	@autoreleasepool {
-		PPInfoDict = [@{kPPTotalPatterns: @(theInfo.totalPatterns),
-						kPPPartitionLength: @(theInfo.partitionLength),
-						kPPFileSize: @(theInfo.fileSize),
-						kPPSignature: @(theInfo.signature),
-						kPPTotalTracks: @(theInfo.totalTracks),
-						kPPTotalInstruments: @(theInfo.totalInstruments),
-						kPPInternalFileName: [NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding],
-						kPPFormatDescription: [NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]} retain];
+		PPInfoDict = [@{@kPPTotalPatterns: @(theInfo.totalPatterns),
+						@kPPPartitionLength: @(theInfo.partitionLength),
+						@kPPFileSize: @(theInfo.fileSize),
+						@kPPSignature: @(theInfo.signature),
+						@kPPTotalTracks: @(theInfo.totalTracks),
+						@kPPTotalInstruments: @(theInfo.totalInstruments),
+						@kPPInternalFileName: [NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding],
+						@kPPFormatDescription: [NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]} retain];
 	}
 	reply(PPInfoDict, MADNoErr);
 	[PPInfoDict autorelease];
@@ -236,3 +236,5 @@ void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init)
 }
 
 @end
+
+
