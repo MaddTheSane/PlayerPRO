@@ -25,13 +25,13 @@ func ==(lhs: PlugInInfo, rhs: PlugInInfo) -> Bool {
 }
 
 class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
-	/*@NSCopying */ private(set) var plugName: String;
-	private(set) var authorName: String;
+	/*@NSCopying */ private(set) var plugName: String
+	private(set) var authorName: String
 	private(set) var plugType: String
 	private(set) var plugCopyright: String
 	private(set) var plugURL: NSURL
 	
-	init(plugName pn: String, author aut: String, plugType pt: String, plugURL pu: NSURL) {
+	init(plugName pn: String, author aut: String = "Unknown Author", plugType pt: String = "unknown", plugURL pu: NSURL) {
 		var tmpBundle = NSBundle(URL: pu).infoDictionary
 		plugName = pn
 		authorName = aut
@@ -41,7 +41,7 @@ class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
 		if (tmpCopy != nil) {
 			plugCopyright = tmpCopy! as String
 		} else {
-			plugCopyright = "No Copyright Info available"
+			plugCopyright = "No copyright info available"
 		}
 		super.init()
 	}
