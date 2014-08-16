@@ -50,8 +50,8 @@ static NSInteger selMusFromList = -1;
 @property (strong, readonly) NSDictionary	*trackerDict;
 @property (strong, readonly) NSArray		*trackerUTIs;
 @property (strong) PPMusicList				*musicList;
-@property (strong) PPCurrentlyPlayingIndex	*currentlyPlayingIndex;
-@property (strong) PPCurrentlyPlayingIndex	*previouslyPlayingIndex;
+@property (strong) CurrentlyPlayingIndex	*currentlyPlayingIndex;
+@property (strong) CurrentlyPlayingIndex	*previouslyPlayingIndex;
 @property (strong) PPPreferences			*preferences;
 @property (strong) NSMutableArray			*plugInInfos;
 @property BOOL isQuitting;
@@ -983,9 +983,9 @@ return; \
 	self.plugInInfos = [[NSMutableArray alloc] init];
 	[self updatePlugInInfoMenu];
 	
-	self.previouslyPlayingIndex = [[PPCurrentlyPlayingIndex alloc] init];
+	self.previouslyPlayingIndex = [[CurrentlyPlayingIndex alloc] init];
 	self.previouslyPlayingIndex.index = -1;
-	self.currentlyPlayingIndex = [[PPCurrentlyPlayingIndex alloc] init];
+	self.currentlyPlayingIndex = [[CurrentlyPlayingIndex alloc] init];
 	[self.previouslyPlayingIndex movePlayingIndexToOtherIndex:self.currentlyPlayingIndex];
 	
 	exportController = [[PPSoundSettingsViewController alloc] init];
@@ -1608,10 +1608,10 @@ badTracker:
 		row = 0;
 	}
 	NSPasteboard *dragPB = [info draggingPasteboard];
-	NSArray *tmpArray = [dragPB readObjectsForClasses:@[[PPMusicListDragClass class]] options:nil];
+	NSArray *tmpArray = [dragPB readObjectsForClasses:@[[MusicListDragClass class]] options:nil];
 	if (tmpArray && [tmpArray count] != 0) {
 		NSUInteger minRow = 0;
-		PPMusicListDragClass *dragClass = tmpArray[0];
+		MusicListDragClass *dragClass = tmpArray[0];
 		NSIndexSet *dragIndexSet = dragClass.theIndexSet;
 		
 		NSUInteger currentIndex = [dragIndexSet firstIndex];
@@ -1655,7 +1655,7 @@ badTracker:
 - (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndices toPasteboard:(NSPasteboard*)pboard
 {
 	BOOL status = NO;
-	PPMusicListDragClass *dragClass = [[PPMusicListDragClass alloc] initWithIndexSet:rowIndices];
+	MusicListDragClass *dragClass = [[MusicListDragClass alloc] initWithIndexSet:rowIndices];
 	NSMutableArray *urlArrays = [[NSMutableArray alloc] initWithCapacity:[rowIndices count]];
 	NSArray *ppmobjects = [musicList arrayOfObjectsInMusicListAtIndexes:rowIndices];
 	for (MusicListObject *obj in ppmobjects) {
