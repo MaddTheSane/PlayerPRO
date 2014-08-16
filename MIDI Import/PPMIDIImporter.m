@@ -59,14 +59,31 @@ void CreateResult(Ptr aPtr)
 	DebugStr((unsigned char *) aPtr);
 }
 
-void ConvertMidiFile(char *src, MADMusic *theMAD, MADDriverSettings *init);
-
+void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init);
 
 @implementation PPMIDIImporter
 
 - (void)importMIDIFileAtURL:(NSURL*)theURL withReply:(void (^)(NSData *, MADErr error))reply
 {
+	MADErr theErr = MADNoErr;
+	MADDriverSettings init = {0};
+	MADMusic MadFile = {0};
+	NSData *fileData = [[NSData alloc] initWithContentsOfURL:theURL options:NSDataReadingMappedIfSafe error:NULL];
+	if (!fileData) {
+		reply(nil, theErr);
+		return;
+	}
+	const void *AlienFile = [fileData bytes];
+	theErr = TestMIDIFile(AlienFile);
+	if (theErr != MADNoErr) {
+		[fileData release];
+		reply(nil, theErr);
+		return;
+	}
+	ConvertMidiFile(AlienFile, &MadFile, &init);
+	[fileData release];
 	
+	reply(nil, MADUnknownErr);
 }
 
 - (void)getMIDIInfoFromFileAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary *, MADErr error))reply

@@ -13,7 +13,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/PPPlug.h>
 #include <Carbon/Carbon.h>
-#define MADPlugNewPtrClear(x, y) NewPtrClear(x)
+#define MADPlugNewPtrClear(x, y) calloc(x, 1)
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -104,8 +104,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 	offset = 6 + 6*numSynths + 8*numCmds;
 	header = (SoundHeaderPtr)((*sound) + offset);
 	
-	switch(header->encode)
-	{
+	switch (header->encode) {
 		case cmpSH:
 			CmpHeader = (CmpSoundHeader*) header;
 			CompressID = CmpHeader->compressionID;
@@ -114,11 +113,15 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 			*loopStart = CmpHeader->loopStart;
 			*loopEnd = CmpHeader->loopEnd;
 			*sampleSize = CmpHeader->sampleSize;
-			if (numChannels == 2) *stereo = true;
-			else *stereo = false;
+			if (numChannels == 2)
+				*stereo = true;
+			else
+				*stereo = false;
 			
-			if (sampleRate != NULL) 	*sampleRate	= CmpHeader->sampleRate;
-			if (baseFreq != NULL) 	*baseFreq 	= CmpHeader->baseFrequency;
+			if (sampleRate != NULL)
+				*sampleRate	= CmpHeader->sampleRate;
+			if (baseFreq != NULL)
+				*baseFreq 	= CmpHeader->baseFrequency;
 			
 			MusSize = (*CmpHeader).numFrames;
 			if (*stereo)
@@ -611,14 +614,16 @@ void SavePtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	
 	theMAD->header->numChn			=	wMaxchan;
 	
-	theMAD->sets = (FXSets*) NewPtrClear(MAXTRACK * sizeof(FXSets));
+	theMAD->sets = (FXSets*) calloc(MAXTRACK, sizeof(FXSets));
 	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[i].copyId = i;
 	
-	theMAD->fid = (InstrData*) MADPlugNewPtrClear(sizeof(InstrData) * (long) MAXINSTRU, init);
-	if (!theMAD->fid) return;
+	theMAD->fid = (InstrData*) calloc(sizeof(InstrData), MAXINSTRU);
+	if (!theMAD->fid)
+		return;
 	
-	theMAD->sample = (sData**) MADPlugNewPtrClear(sizeof(sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, init);
-	if (!theMAD->sample) return;
+	theMAD->sample = (sData**) calloc(sizeof(sData*) * MAXINSTRU, MAXSAMPLE);
+	if (!theMAD->sample)
+		return;
 	
 	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
 	
