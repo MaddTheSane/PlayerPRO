@@ -24,7 +24,7 @@ func ==(lhs: PlugInInfo, rhs: PlugInInfo) -> Bool {
 	}
 }
 
-class PlugInInfo: NSObject, Hashable, DebugPrintable {
+class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
 	/*@NSCopying */ private(set) var plugName: String;
 	private(set) var authorName: String;
 	private(set) var plugType: String

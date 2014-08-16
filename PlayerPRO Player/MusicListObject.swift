@@ -69,9 +69,9 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 
 	#if os(OSX)
 	var fileIcon: NSImage {get {
-	var image = NSWorkspace.sharedWorkspace().iconForFile(musicURL.path);
-	image.size = NSMakeSize(16, 16);
-	return image;
+		var image = NSWorkspace.sharedWorkspace().iconForFile(musicURL.path);
+		image.size = NSSize(width: 16, height: 16)
+		return image
 	}}
 	#endif
 	

@@ -10,9 +10,9 @@
 
 @interface PPPlugInObject : NSObject
 {
-	@protected
-	OSType			type;
-	UInt32			version;
+	@package
+	OSType	type;
+	UInt32	version;
 }
 @property (readonly, copy) NSString *menuName;
 @property (readonly, copy) NSString *authorString;

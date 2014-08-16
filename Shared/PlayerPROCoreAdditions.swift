@@ -76,6 +76,7 @@ extension MADDriverSettings: DebugPrintable {
 		}}
 }
 
+#if false
 func &(lhs: MADBool, rhs: MADBool) -> MADBool {
 	if lhs {
 		return rhs
@@ -110,6 +111,7 @@ func &=(inout lhs: MADBool, rhs: MADBool) {
 	}
 	lhs = lhsB & rhsB
 }
+#endif
 
 #if false
 extension PPInfoRec: DebugPrintable {
