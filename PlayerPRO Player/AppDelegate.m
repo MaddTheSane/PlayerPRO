@@ -107,8 +107,7 @@ static NSInteger selMusFromList = -1;
 														NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
 																						  [NSBundle mainBundle],
 																						  @"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
-														NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI],
-														NSLocalizedString(@"MAD Package", @"MAD Package"):@[MADPackageUTI]}];
+														NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI]}];
 		for (PPLibraryObject *obj in madLib) {
 			trackerDict[obj.menuName] = obj.UTItypes;
 		}

@@ -26,7 +26,6 @@ NSString * const kMusicListKVO = @"musicList";
 
 NSString * const MADNativeUTI = @"com.quadmation.playerpro.madk";
 NSString * const MADGenericUTI = @"com.quadmation.playerpro.mad";
-NSString * const MADPackageUTI = @"net.sourceforge.playerpro.mad-bundle";
 NSString * const PPMusicListUTI = @"net.sourceforge.playerpro.musiclist";
 NSString * const PPOldMusicListUTI = @"net.sourceforge.playerpro.stcfmusiclist";
 NSString * const PPPCMDUTI = @"com.quadmation.playerpro.pcmd";

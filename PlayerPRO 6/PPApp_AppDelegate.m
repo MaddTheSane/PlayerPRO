@@ -85,8 +85,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 											NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
 																			  [NSBundle mainBundle],
 																			  @"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
-											NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI] /*,
-											NSLocalizedString(@"MAD Package", @"MAD Package"):@[MADPackageUTI]*/}];
+											NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI]}];
 		for (PPLibraryObject *obj in madLib) {
 			trackerDict[obj.menuName] = obj.UTItypes;
 		}
@@ -394,7 +393,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 - (BOOL)handleFile:(NSURL *)theURL ofType:(NSString *)theUTI
 {
 	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
-	if ([sharedWorkspace type:theUTI conformsToType:MADPackageUTI]) {
+	if ([sharedWorkspace type:theUTI conformsToType:MADNativeUTI]) {
 		// Document controller should automatically handle this.
 		return YES;
 	} else if ([theUTI isEqualToString:MADGenericUTI]) {
@@ -497,7 +496,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 
 - (id)makeUntitledDocumentOfType:(NSString *)typeName error:(NSError *__autoreleasing *)outError
 {
-	NSAssert([typeName isEqualToString:MADPackageUTI], @"Unknown type passed to %s: %@", sel_getName(_cmd), typeName);
+	NSAssert([typeName isEqualToString:MADNativeUTI], @"Unknown type passed to %s: %@", sel_getName(_cmd), typeName);
 	PPDocument *theDoc = [[PPDocument alloc] init];
 	if (!theDoc && outError) {
 		*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFormattingError userInfo:nil];
