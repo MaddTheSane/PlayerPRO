@@ -580,10 +580,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		var theRec = PPDriver(library: madLib, settings: theSet, error: &err)
 		
 		if (theRec == nil) {
-			dispatch_async(dispatch_get_main_queue(), ({
+			dispatch_async(dispatch_get_main_queue()) {
 				var NSerr = CreateErrorFromMADErrorType(.UnknownErr);
 				NSAlert(error:NSerr).runModal()
-			}))
+			}
 			
 			return nil;
 		}
@@ -822,7 +822,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 					return;
 				}
 				
-				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
 					autoreleasepool {
 						var thErr = self.saveMusicAsAIFFToURL(savePanel.URL, usingSettings: &self.exportSettings);
 						self.madDriver.endExport()
@@ -830,7 +830,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 							return;
 						}
 					}
-					dispatch_async(dispatch_get_main_queue(), {
+					dispatch_async(dispatch_get_main_queue()) {
 						if (self.isQuitting) {
 							NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
 						} else {
@@ -839,8 +839,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 								NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL])
 							}
 						}
-					});
-				})
+					}
+				}
 			})
 		})
 		
@@ -866,7 +866,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 					return;
 				}
 				
-				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
+				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
 					var theErr = MADErr.NoErr;
 					
 					var oldURL = self.musicList.objectInMusicListAtIndex(self.previouslyPlayingIndex.index).musicURL
@@ -924,7 +924,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 					NSFileManager.defaultManager().removeItemAtURL(tmpURL, error: nil)
 					
 					if (didFinish) {
-						dispatch_async(dispatch_get_main_queue(), {
+						dispatch_async(dispatch_get_main_queue()) {
 							if (self.isQuitting) {
 								NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
 							} else {
@@ -933,11 +933,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 									NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([saveURL])
 								}
 							}
-						});
+						}
 					} else {
 						NSLog("\(session.error)");
 					}
-				});
+				}
 			});
 		});
 		
