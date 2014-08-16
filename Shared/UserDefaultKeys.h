@@ -21,14 +21,12 @@ extern NSString * const PPDriverDidChange;
 //UTIs
 extern NSString * const MADNativeUTI;
 extern NSString * const MADGenericUTI;
-extern NSString * const MADPackageUTI;
 extern NSString * const PPMusicListUTI;
 extern NSString * const PPOldMusicListUTI;
 extern NSString * const PPPCMDUTI;
 extern NSString * const PPGenericTrackerUTI;
 extern NSString * const PPGenericInstrumentUTI;
 extern NSString * const PPInstrumentListUTI;
-extern NSString * const PPMLDCUTI;
 
 //Music list preference keys
 extern NSString * const PPRememberMusicList;

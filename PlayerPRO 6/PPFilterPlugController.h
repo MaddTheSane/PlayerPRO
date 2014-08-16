@@ -12,7 +12,7 @@
 
 @interface PPFilterPlugController : NSObject 
 {
-	PPInfoPlug		theInfo;
+	PPInfoPlug	theInfo;
 }
 
 @property (readwrite, nonatomic) MADDriverRec **driverRec;

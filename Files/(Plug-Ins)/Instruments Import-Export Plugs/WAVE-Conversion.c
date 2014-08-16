@@ -63,10 +63,9 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *l
 	
 	{
 		CFIndex theLen = getCFURLFilePathRepresentationLength(theURL, true);
-		char *cfPath = calloc(theLen, 1);
+		char *cfPath = alloca(theLen);
 		CFURLGetFileSystemRepresentation(theURL, true, (unsigned char*)cfPath, theLen);
 		fRef = iFileOpenRead(cfPath);
-		free(cfPath);
 	}
 	
 	*stereo = false;

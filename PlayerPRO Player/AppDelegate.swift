@@ -85,12 +85,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 	@IBOutlet var exportSettingsBox: NSBox!
 	var exportController: PPSoundSettingsViewController!
 
-	var musicList = PPMusicList()
+	var musicList = MusicList()
 	var preferences: PPPreferences! = nil
-	var plugInInfos = [PPPlugInInfo]()
+	var plugInInfos = [PlugInInfo]()
 	
-	private var currentlyPlayingIndex	= PPCurrentlyPlayingIndex()
-	private var previouslyPlayingIndex	= PPCurrentlyPlayingIndex()
+	private var currentlyPlayingIndex	= CurrentlyPlayingIndex()
+	private var previouslyPlayingIndex	= CurrentlyPlayingIndex()
 
 	private var musicName = ""
 	private var musicInfo = ""
@@ -1218,11 +1218,11 @@ return; \
 	
 	func tableView(tableView: NSTableView!, acceptDrop info: NSDraggingInfo!, row: Int, dropOperation: NSTableViewDropOperation) -> Bool {
 		var dragPB = info.draggingPasteboard()
-		var tmpArray = dragPB.readObjectsForClasses([PPMusicListDragClass.self], options: nil)
+		var tmpArray = dragPB.readObjectsForClasses([MusicListDragClass.self], options: nil)
 		if (tmpArray != nil && tmpArray.count != 0) {
 			var minRow = 0;
 			var tmpDragClass: AnyObject = tmpArray[0]
-			var dragClass = tmpDragClass as PPMusicListDragClass
+			var dragClass = tmpDragClass as MusicListDragClass
 			var dragIndexSet = dragClass.theIndexSet;
 			
 			var currentIndex = dragIndexSet.firstIndex;
@@ -1249,10 +1249,10 @@ return; \
 			}
 			
 			changeValueForMusicListKey({
-				var mutArray = [PPMusicListObject]()
+				var mutArray = [MusicListObject]()
 				for acurURL in tmpArray {
 					let curURL = acurURL as NSURL
-					mutArray.append(PPMusicListObject(URL: curURL))
+					mutArray.append(MusicListObject(URL: curURL))
 				}
 				self.musicList.insertObjects(mutArray, inMusicListAtIndex: row)
 			})
@@ -1297,7 +1297,7 @@ return; \
 	
 	func tableView(tableView: NSTableView!, writeRowsWithIndexes rowIndexes: NSIndexSet!, toPasteboard pboard: NSPasteboard!) -> Bool {
 		var status = false;
-		var dragClass = PPMusicListDragClass(indexSet: rowIndexes)
+		var dragClass = MusicListDragClass(indexSet: rowIndexes)
 		var urlArrays = [NSURL]()
 		var ppmobjects = musicList.arrayOfObjectsInMusicListAtIndexes(rowIndexes)
 		for obj in ppmobjects {

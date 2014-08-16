@@ -14,7 +14,7 @@
 #define UNAVAILABLE_IPHONE UNAVAILABLE_ATTRIBUTE
 #endif
 
-@class PPMusicListObject;
+@class MusicListObject;
 
 @interface PPMusicList : NSObject <NSSecureCoding, NSFastEnumeration>
 @property (readonly) NSUInteger lostMusicCount;

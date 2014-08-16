@@ -13,15 +13,10 @@ private let kMusicListLocation3 = "Music Key Location 3";
 private let kMusicListKey3 = "Music List Key 3"
 private let kPlayerList = "Player List"
 
-class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
-	private(set) var musicList = [PPMusicListObject]()
+@objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration {
+	private(set) var musicList = [MusicListObject]()
 	internal(set) var lostMusicCount:UInt = 0;
 	internal(set) var selectedMusic = -1;
-	
-	override class func initialize() {
-		NSKeyedUnarchiver.setClass(self, forClassName: "PPMusicList")
-		NSKeyedArchiver.setClassName("PPMusicList", forClass: self)
-	}
 	
 	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (musicList as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len);
@@ -54,7 +49,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 	
 	func sortMusicListByName() {
 		musicList.sort({
-			(var1:PPMusicListObject, var2:PPMusicListObject) -> Bool in
+			(var1:MusicListObject, var2:MusicListObject) -> Bool in
 			let rhsString: NSString = var1.fileName
 			let lhsString: NSString = var2.fileName
 			var result = rhsString.localizedStandardCompare(lhsString)
@@ -63,7 +58,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 	}
 	
 	func addMusicURL(theURL: NSURL) -> Bool {
-		var obj: PPMusicListObject! = PPMusicListObject(URL: theURL);
+		var obj: MusicListObject! = MusicListObject(URL: theURL);
 		
 		if (!obj) {
 			return false;
@@ -121,7 +116,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 				lostMusicCount++;
 				continue;
 			}
-			var obj = PPMusicListObject(URL:BookURLURL);
+			var obj = MusicListObject(URL:BookURLURL);
 			musicList.append(obj)
 		}
 		super.init()
@@ -135,7 +130,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 		return musicList[index].musicURL;
 	}
 	
-	func loadMusicList(newArray: [PPMusicListObject])
+	func loadMusicList(newArray: [MusicListObject])
 	{
 		self.willChangeValueForKey(kMusicListKVO);
 		musicList = newArray;
@@ -143,7 +138,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 	}
 	
 	func loadMusicListFromData(theData: NSData) -> Bool {
-		var preList: PPMusicList! = NSKeyedUnarchiver.unarchiveObjectWithData(theData) as PPMusicList
+		var preList: MusicList! = NSKeyedUnarchiver.unarchiveObjectWithData(theData) as MusicList
 		if (!preList) {
 			return false
 		}
@@ -174,7 +169,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 	
 	// Key-valued Coding
 	
-	func addMusicListObject(object:PPMusicListObject)
+	func addMusicListObject(object:MusicListObject)
 	{
 		if ((musicList as NSArray).containsObject(object) == false) {
 			musicList.append(object)
@@ -185,12 +180,12 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 		return musicList.count
 		}}
 	
-	func replaceObjectInMusicListAtIndex(index: Int, withObject object: PPMusicListObject)
+	func replaceObjectInMusicListAtIndex(index: Int, withObject object: MusicListObject)
 	{
 		musicList[index] = object;
 	}
 	
-	func objectInMusicListAtIndex(index: Int) -> PPMusicListObject
+	func objectInMusicListAtIndex(index: Int) -> MusicListObject
 	{
 		return musicList[index];
 	}
@@ -200,13 +195,13 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 		musicList.removeAtIndex(atIndex);
 	}
 	
-	func insertObject(object :PPMusicListObject, inMusicListAtIndex index:Int)
+	func insertObject(object :MusicListObject, inMusicListAtIndex index:Int)
 	{
 		musicList.insert(object, atIndex: index)
 	}
 	
-	func arrayOfObjectsInMusicListAtIndexes(theSet : NSIndexSet) -> [PPMusicListObject] {
-		var tmpList = [PPMusicListObject]()
+	func arrayOfObjectsInMusicListAtIndexes(theSet : NSIndexSet) -> [MusicListObject] {
+		var tmpList = [MusicListObject]()
 		for (i, obj) in enumerate(musicList) {
 			if theSet.containsIndex(i) {
 				tmpList.append(obj)
@@ -239,7 +234,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 		var count = theIndexSet.count;
 		
 		for (var i = 0; i < count; i++) {
-			var tempObj = anObj.objectAtIndex(i) as PPMusicListObject
+			var tempObj = anObj.objectAtIndex(i) as MusicListObject
 			musicList.insert(tempObj, atIndex: currentIndex)
 			currentIndex = theIndexSet.indexGreaterThanIndex(currentIndex);
 		}
@@ -266,7 +261,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 						var lolwut = CreateErrorFromMADErrorType(.UnknownErr)
 						theHandle(theErr: lolwut)
 					} else {
-						var pathsURL: [PPMusicListObject] = []
+						var pathsURL: [MusicListObject] = []
 						self.lostMusicCount = invalidAny as UInt;
 						self.selectedMusic = selectedAny as Int;
 						for aPath in pathsAny as NSArray {
@@ -274,7 +269,7 @@ class PPMusicList: NSObject, NSSecureCoding, NSFastEnumeration {
 							if (!tmpURL) {
 								continue;
 							}
-							var tmpObj = PPMusicListObject(URL: tmpURL)
+							var tmpObj = MusicListObject(URL: tmpURL)
 							pathsURL.append(tmpObj)
 						}
 						self.loadMusicList(pathsURL)

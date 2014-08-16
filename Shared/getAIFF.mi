@@ -14,9 +14,9 @@
 			PPBE16(&bePtr[i]);
 		});
 	}
-	return [[NSData alloc] initWithData:rsd];
+	return [rsd copy];
 #else
-	return [[NSData alloc] initWithData:[self rawSoundData:theSet]];
+	return [[self rawSoundData:theSet] copy];
 #endif
 }
 
@@ -31,9 +31,9 @@
 			PPLE16(&lePtr[i]);
 		});
 	}
-	return [[NSData alloc] initWithData:rsd];
+	return [rsd copy];
 #else
-	return [[NSData alloc] initWithData:[self rawSoundData:theSet]];
+	return [[self rawSoundData:theSet] copy];
 #endif
 }
 
@@ -42,7 +42,7 @@
 	//TODO:metadata
 }
 
-- (OSErr)saveMusicAsWaveToURL:(NSURL*)theURL usingSettings:(MADDriverSettings*)theSett
+- (MADErr)saveMusicAsWaveToURL:(NSURL*)theURL usingSettings:(MADDriverSettings*)theSett
 {
 	NSData *saveData = [self rawLESoundData:theSett];
 	if (!saveData) {

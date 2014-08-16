@@ -11,19 +11,19 @@ import PlayerPROKit
 import CoreGraphics
 
 extension PPSampleObject {
-class func drawCGSampleInt(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16, curData: PPSampleObject!, ctxRef: CGContextRef!) {
+class func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16, currentData curData: PPSampleObject!, context ctxRef: CGContextRef!) {
+	
 	CGContextSaveGState(ctxRef);
 	
 	var start = startI
-	
-	var i: Int = 0;
+	var i = 0;
 	var sampleSize = curData.data.length;
 	var	temp: CGFloat = 0.0
 	var theSample = UnsafePointer<UInt8>(curData.data.bytes)
 	var theShortSample = UnsafePointer<UInt16>(curData.data.bytes)
-	var BS: Int = 0
-	var BE: Int = 0
-	var x: Int = 0
+	var BS = 0
+	var BE = 0
+	var x = 0
 	let isStereo = curData.stereo;
 	var minY: CGFloat = 0.0
 	var maxY: CGFloat = 0.0
@@ -159,17 +159,21 @@ extension PPDriver {
 	func playSoundData(FromPointer theSnd: UnsafePointer<()>, size sndSize: UInt, fromChannel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: UInt = 0, loopLength iloopLen: UInt = 0) -> MADErr {
 		var loopStart = iloopStart
 		var loopLen = iloopLen
-		if (loopStart == 0 || loopLen == 0) {
+		if (loopLen == 0) {
 			loopStart = 0
 			loopLen = 0
 		}
-	return self.playSoundDataFromPointer(theSnd, withSize: sndSize, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: 0, andLoopLength: 0)
+		return self.playSoundDataFromPointer(theSnd, withSize: sndSize, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: 0, andLoopLength: 0)
 	}
 
+	func playSoundData(FromPointer theSnd: UnsafePointer<()>, size sndSize: UInt, fromChannel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
+		return self.playSoundDataFromPointer(theSnd, withSize: sndSize, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopInRange: loopRange)
+	}
+	
 	func playSoundData(fromData theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: UInt = 0, loopLength iloopLen: UInt = 0) -> MADErr {
 		var loopStart = iloopStart
 		var loopLen = iloopLen
-		if (loopStart == 0 || loopLen == 0) {
+		if (loopLen == 0) {
 			loopStart = 0
 			loopLen = 0
 		}

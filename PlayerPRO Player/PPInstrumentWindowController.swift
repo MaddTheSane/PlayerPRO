@@ -60,13 +60,13 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 		if (datIsStereo) {
 			colorRef = CGColorCreateGenericRGB(0, 0, 1, 0.75);
 			CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
-			PPSampleObject.drawCGSampleInt(tSE: Int(imageSize.width), high: Int(imageSize.height), larg: Int(imageSize.width), channel: 1, curData: theDat, ctxRef: bitmapContext)
+			PPSampleObject.drawSample(tSE: Int(imageSize.width), high: Int(imageSize.height), larg: Int(imageSize.width), channel: 1, currentData: theDat, context: bitmapContext)
 		}
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		
 		colorRef = CGColorCreateGenericRGB(1, 0, 0, stereoTrans);
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
-		PPSampleObject.drawCGSampleInt(tSE: Int(imageSize.width), high: Int(imageSize.height), larg: Int(imageSize.width), channel: 0, curData: theDat, ctxRef: bitmapContext)
+		PPSampleObject.drawSample(tSE: Int(imageSize.width), high: Int(imageSize.height), larg: Int(imageSize.width), channel: 0, currentData: theDat, context: bitmapContext)
 		
 		if (theDat.loopSize != 0) {
 			colorRef = CGColorCreateGenericRGB(1, 0.1, 0.5, 0.8);

@@ -11,6 +11,7 @@
 #import "PPPreferences.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PlayerPROKit.h>
+@class PPMusicList;
 @class PPInstrumentWindowController;
 @class PPMusicList;
 

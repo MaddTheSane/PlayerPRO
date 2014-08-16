@@ -82,8 +82,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 											NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
 																			  [NSBundle mainBundle],
 																			  @"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
-											NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI] /*,
-											NSLocalizedString(@"MAD Package", @"MAD Package"):@[MADPackageUTI]*/}];
+											NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI]}];
 		for (PPLibraryObject *obj in madLib) {
 			trackerDict[obj.menuName] = obj.UTItypes;
 		}
@@ -277,12 +276,12 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 	if (tag < 0 || tag >= [plugInInfos count]) {
 		return;
 	}
-	PPPlugInInfo *inf = plugInInfos[tag];
+	PlugInInfo *inf = plugInInfos[tag];
 	if (!inf) {
 		return;
 	}
 	
-	PPPlugInInfoController *infoCont = [PPPlugInInfoController windowControllerFromInfo:inf];
+	PlugInInfoController *infoCont = [PlugInInfoController windowControllerFromInfo:inf];
 	[[infoCont window] center];
 	[NSApp runModalForWindow:[infoCont window]];
 	//[infoCont showWindow:sender];
@@ -293,28 +292,28 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 	NSInteger i;
 	
 	for (PPLibraryObject *obj in madLib) {
-		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name") plugURL:[obj.plugFile bundleURL]];
+		PlugInInfo *tmpInfo = [[PlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name") plugURL:[obj.plugFile bundleURL]];
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
 		}
 	}
 	
 	for (PPInstrumentImporterObject *obj in instrumentImporter) {
-		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"InstrumentPlugName", @"Instrument plug-in name") plugURL:[[obj file] bundleURL]];
+		PlugInInfo *tmpInfo = [[PlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"InstrumentPlugName", @"Instrument plug-in name") plugURL:[[obj file] bundleURL]];
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
 		}
 	}
 	
 	for (PPDigitalPlugInObject *obj in digitalHandler) {
-		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"DigitalPlugName", @"Digital plug-in name") plugURL:[[obj file] bundleURL]];
+		PlugInInfo *tmpInfo = [[PlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"DigitalPlugName", @"Digital plug-in name") plugURL:[[obj file] bundleURL]];
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
 		}
 	}
 	
 	for (PPFilterPlugObject *obj in filterHandler) {
-		PPPlugInInfo *tmpInfo = [[PPPlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"FilterPlugName", @"Filter plug-in name") plugURL:[[obj file] bundleURL]];
+		PlugInInfo *tmpInfo = [[PlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"FilterPlugName", @"Filter plug-in name") plugURL:[[obj file] bundleURL]];
 		if (![plugInInfos containsObject:tmpInfo]) {
 			[plugInInfos addObject:tmpInfo];
 		}
@@ -330,7 +329,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 	[aboutPlugInMenu removeAllItems];
 	
 	for (i = 0; i < [plugInInfos count]; i++) {
-		PPPlugInInfo *pi = plugInInfos[i];
+		PlugInInfo *pi = plugInInfos[i];
 		NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:pi.plugName action:@selector(showPlugInInfo:) keyEquivalent:@""];
 		[mi setTag:i];
 		[mi setTarget:self];
@@ -391,7 +390,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 - (BOOL)handleFile:(NSURL *)theURL ofType:(NSString *)theUTI
 {
 	NSWorkspace *sharedWorkspace = [NSWorkspace sharedWorkspace];
-	if ([sharedWorkspace type:theUTI conformsToType:MADPackageUTI]) {
+	if ([sharedWorkspace type:theUTI conformsToType:MADNativeUTI]) {
 		// Document controller should automatically handle this.
 		return YES;
 	} else if ([theUTI isEqualToString:MADGenericUTI]) {
@@ -494,7 +493,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 
 - (id)makeUntitledDocumentOfType:(NSString *)typeName error:(NSError *__autoreleasing *)outError
 {
-	NSAssert([typeName isEqualToString:MADPackageUTI], @"Unknown type passed to %s: %@", sel_getName(_cmd), typeName);
+	NSAssert([typeName isEqualToString:MADNativeUTI], @"Unknown type passed to %s: %@", sel_getName(_cmd), typeName);
 	PPDocument *theDoc = [[PPDocument alloc] init];
 	if (!theDoc && outError) {
 		*outError = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFormattingError userInfo:nil];

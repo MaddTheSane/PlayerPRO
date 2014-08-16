@@ -8,7 +8,7 @@
 
 import Cocoa
 
-func ==(lhs: PPPlugInInfo, rhs: PPPlugInInfo) -> Bool {
+func ==(lhs: PlugInInfo, rhs: PlugInInfo) -> Bool {
 	if (lhs === rhs) {
 		return true;
 	}
@@ -24,8 +24,8 @@ func ==(lhs: PPPlugInInfo, rhs: PPPlugInInfo) -> Bool {
 	}
 }
 
-class PPPlugInInfo: NSObject, Hashable, DebugPrintable {
-	private(set) var plugName: String;
+class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
+	/*@NSCopying */ private(set) var plugName: String;
 	private(set) var authorName: String;
 	private(set) var plugType: String
 	private(set) var plugCopyright: String
@@ -70,12 +70,12 @@ class PPPlugInInfo: NSObject, Hashable, DebugPrintable {
 		if (object === self) {
 			return true;
 		}
-		if (object.isKindOfClass(PPPlugInInfo)) {
-			if (plugName != (object as PPPlugInInfo).plugName) {
+		if var unwrapped = object as? PlugInInfo {
+			if (plugName != unwrapped.plugName) {
 				return false;
-			} else if (authorName != (object as PPPlugInInfo).authorName) {
+			} else if (authorName != unwrapped.authorName) {
 				return false;
-			} else if (plugType != (object as PPPlugInInfo).plugType) {
+			} else if (plugType != unwrapped.plugType) {
 				return false;
 			} else {
 				return true;
