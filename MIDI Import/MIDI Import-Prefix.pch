@@ -14,6 +14,10 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <tgmath.h>
 
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
+#endif
+
 #if 0
 #define Debugger() oldDebug(__LINE__, __FILE__)
 static inline void oldDebug(short line, char* file)
@@ -28,7 +32,7 @@ static inline void oldDebug(short line, char* file)
 #define DebugStr(thePDebugStr) oldDebugStr(thePDebugStr, __LINE__, __FILE__)
 static inline void oldDebugStr(ConstStr255Param debuggerMsg, short kube, const char* file)
 {
-	char tmp[512] = {0};
+	char tmp[256] = {0};
 	memcpy(tmp, &(debuggerMsg[1]), debuggerMsg[0]);
 	PPDebugStr(kube, file, tmp);
 }

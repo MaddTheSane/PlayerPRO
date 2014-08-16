@@ -7,7 +7,191 @@
 //
 
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/RDriverInt.h>
 #import "PPMIDIImporter.h"
+
+static MADErr MADReadMAD(MADMusic *MDriver, const void* MADPtr)
+{
+	short		i, x;
+	size_t		inOutCount, OffSetToSample = 0;
+	PatHeader	tempPatHeader;
+	
+	MDriver->musicUnderModification = false;
+	
+	/**** HEADER ****/
+	inOutCount = sizeof(MADSpec);
+	
+	MDriver->header = (MADSpec*)calloc(inOutCount, 1);
+	if (MDriver->header == NULL) {
+		return MADNeedMemory;
+	}
+	
+	memcpy(MDriver->header, MADPtr, inOutCount);
+	OffSetToSample += inOutCount;
+	
+	if (MDriver->header->MAD != 'MADK' || MDriver->header->numInstru > MAXINSTRU) {
+		free(MDriver->header);
+		return MADIncompatibleFile;
+	}
+	
+	if (MDriver->header->MultiChanNo == 0)
+		MDriver->header->MultiChanNo = 48;
+	
+	/**** PARTITION ****/
+	//TODO: dispatch this
+	dispatch_apply(MAXPATTERN - MDriver->header->numPat, dispatch_get_global_queue(0, 0), ^(size_t iTmp) {
+		size_t i = iTmp + MDriver->header->numPat;
+		MDriver->partition[i] = NULL;
+	});
+	
+	for (i = 0; i < MDriver->header->numPat; i++) {
+		/** Lecture du header de la partition **/
+		inOutCount = sizeof(PatHeader);
+		
+		memcpy(&tempPatHeader, MADPtr + OffSetToSample, inOutCount);
+		
+		inOutCount = sizeof(PatHeader) + MDriver->header->numChn * tempPatHeader.size * sizeof(Cmd);
+		
+		MDriver->partition[i] = (PatData*)malloc(inOutCount);
+		if (MDriver->partition[i] == NULL) {
+			for (x = 0; x < i; x++) {
+				if (MDriver->partition[x] != NULL)
+					free(MDriver->partition[x]);
+			}
+			free(MDriver->header);
+			
+			return MADNeedMemory;
+		}
+		
+		memcpy(MDriver->partition[i], MADPtr + OffSetToSample, inOutCount);
+		OffSetToSample += inOutCount;
+	}
+	
+	/**** INSTRUMENTS ****/
+	MDriver->fid = (InstrData*)calloc(sizeof(InstrData), MAXINSTRU);
+	if (!MDriver->fid) {
+		for (x = 0; x < MDriver->header->numPat; x++) {
+			if (MDriver->partition[x] != NULL)
+				free(MDriver->partition[x]);
+		}
+		free(MDriver->header);
+		
+		return MADNeedMemory;
+	}
+	
+	inOutCount = sizeof(InstrData) * MDriver->header->numInstru;
+	memcpy(MDriver->fid, MADPtr + OffSetToSample, inOutCount);
+	OffSetToSample += inOutCount;
+	
+	for (i = MDriver->header->numInstru - 1; i >= 0 ; i--) {
+		InstrData *curIns = &MDriver->fid[i];
+		
+		if (i != curIns->no) {
+			MDriver->fid[curIns->no] = *curIns;
+			MADResetInstrument(curIns);
+		}
+	}
+	MDriver->header->numInstru = MAXINSTRU;
+	
+	/**** SAMPLES ****/
+	MDriver->sample = (sData**) calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
+	if (!MDriver->sample) {
+		for (x = 0; x < MAXINSTRU ; x++)
+			MADKillInstrument(MDriver, x);
+		
+		for (x = 0; x < MDriver->header->numPat; x++) {
+			if (MDriver->partition[x] != NULL)
+				free(MDriver->partition[x]);
+		}
+		free(MDriver->header);
+		
+		return MADNeedMemory;
+	}
+	
+	for (i = 0; i < MAXINSTRU ; i++) {
+		for (x = 0; x < MDriver->fid[i].numSamples ; x++) {
+			sData	 *curData;
+			
+			// ** Read Sample header **
+			
+			curData = MDriver->sample[i * MAXSAMPLE + x] = (sData*)malloc(sizeof(sData));
+			if (curData == NULL) {
+				for (x = 0; x < MAXINSTRU ; x++)
+					MADKillInstrument(MDriver, x);
+				
+				for (x = 0; x < MDriver->header->numPat; x++) {
+					if (MDriver->partition[x] != NULL)
+						free(MDriver->partition[x]);
+				}
+				free(MDriver->header);
+				
+				return MADNeedMemory;
+			}
+			
+			inOutCount = sizeof(sData32);
+			
+			memcpy(curData, MADPtr + OffSetToSample, inOutCount);
+			OffSetToSample += inOutCount;
+			
+			// ** Read Sample DATA
+			
+			curData->data = (char*)malloc(curData->size);
+			if (curData->data == NULL) {
+				for (x = 0; x < MAXINSTRU ; x++)
+					MADKillInstrument(MDriver, x);
+				
+				for (x = 0; x < MDriver->header->numPat; x++) {
+					if (MDriver->partition[x] != NULL)
+						free(MDriver->partition[x]);
+				}
+				free(MDriver->header);
+				
+				return MADNeedMemory;
+			}
+			
+			inOutCount = curData->size;
+			memcpy(curData->data, MADPtr + OffSetToSample, inOutCount);
+			OffSetToSample += inOutCount;
+		}
+	}
+	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(0, 0), ^(size_t ixi) {
+		MDriver->fid[ixi].firstSample = ixi * MAXSAMPLE;
+	});
+	
+	// EFFECTS *** *** *** *** *** *** *** *** *** *** *** ***
+	
+	{
+		short	alpha;
+		
+		MDriver->sets = (FXSets*)calloc(sizeof(FXSets), MAXTRACK);
+		
+		alpha = 0;
+		
+		for (i = 0; i < 10 ; i++) {	// Global Effects
+			if (MDriver->header->globalEffect[i]) {
+				inOutCount = sizeof(FXSets);
+				memcpy(&MDriver->sets[alpha], MADPtr + OffSetToSample, inOutCount);
+				OffSetToSample += inOutCount;
+				alpha++;
+			}
+		}
+		
+		for (i = 0; i < MDriver->header->numChn ; i++) {	// Channel Effects
+			for (x = 0; x < 4; x++) {
+				if (MDriver->header->chanEffect[i][x]) {
+					inOutCount = sizeof(FXSets);
+					memcpy(&MDriver->sets[alpha], MADPtr + OffSetToSample, inOutCount);
+					OffSetToSample += inOutCount;
+					alpha++;
+				}
+			}
+		}
+	}
+	
+	MDriver->header->MAD = 'MADK';
+	
+	return MADNoErr;
+}
 
 extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
@@ -62,7 +246,13 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 		{
 			dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create(0);
 			[[conn remoteObjectProxy] importMIDIFileAtURL:ourURL withReply:^(NSData *fileData, MADErr error) {
-				
+				if (error == MADNoErr) {
+					NSData *aTmpData = fileData;
+					theErr = MADReadMAD(MadFile, [aTmpData bytes]);
+					aTmpData = nil;
+				} else {
+					theErr = error;
+				}
 				[conn invalidate];
 				dispatch_semaphore_signal(sessionWaitSemaphore);
 			}];

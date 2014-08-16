@@ -21,6 +21,7 @@
 
 #include <errno.h>
 #include "PTMID.h"
+#include "PTMIDZAP.h"
 
 void Erreur(short a, short b)
 {
@@ -556,9 +557,7 @@ int PutpatternsPtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init
  *       2/7/1994 - added MTM saving
  */
 
-extern  	short		MIDIInstMOD[128];
-extern		Boolean		UseQKIns;
-			MADMusic	*curMusic = NULL;
+MADMusic	*curMusic = NULL;
 
 void SavePtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 {
@@ -588,14 +587,14 @@ void SavePtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	theMAD->header = (MADSpec*)MADPlugNewPtrClear(inOutCount, init);
 	if (theMAD->header == NULL) DebugStr("\pHeader: I NEED MEMORY !!! NOW !");
 	
-	for (i = 0; i < MAXTRACK; i++) {
+	dispatch_apply(MAXTRACK, dispatch_get_global_queue(0, 0), ^(size_t i) {
 		if (i % 2 == 0)
 			theMAD->header->chanPan[i] = MAX_PANNING / 4;
 		else
 			theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING / 4;
 		
 		theMAD->header->chanVol[i] = MAX_VOLUME;
-	}
+	});
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
 	theMAD->header->generalPitch	= 80;
@@ -625,23 +624,26 @@ void SavePtunePfile(Tune *ptune, MADMusic *theMAD, MADDriverSettings *init)
 	if (!theMAD->sample)
 		return;
 	
-	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
+	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		theMAD->fid[i].firstSample = i * MAXSAMPLE;
+	});
 	
 	for (iT = 0; iT < cSamps; iT++) {
 		Str255		tStr;
 		short		MidiIns;
 		
 		MidiIns = 0;
-		for (x = 0; x < 129; x++)
-		{
-			if (MIDIInstMOD[x] == iT) MidiIns = x;
+		for (x = 0; x < 129; x++) {
+			if (MIDIInstMOD[x] == iT)
+				MidiIns = x;
 		}
 		
 		NumToString(MidiIns+1, tStr);
 		for (x = 1; x <= tStr[0]; x++) theMAD->fid[iT].name[x-1] = tStr[x];
 		
 		if (UseQKIns) {
-			if (MidiIns == 128) MidiIns = 16385;
+			if (MidiIns == 128)
+				MidiIns = 16385;
 			ComputeQuicktimeSound(MidiIns, theMAD->sample, &theMAD->fid[iT], iT);
 		}
 	}

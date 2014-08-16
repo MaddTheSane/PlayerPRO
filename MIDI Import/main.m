@@ -7,8 +7,10 @@
 //
 
 #include <xpc/xpc.h>
-#include <Foundation/Foundation.h>
-#include "PPMIDIImporter.h"
+#import <Foundation/Foundation.h>
+#import "PPMIDIImporter.h"
+#include <PlayerPROCore/PlayerPROCore.h>
+#import <AppKit/AppKit.h>
 
 @interface ServiceDelegate : NSObject <NSXPCListenerDelegate>
 @end
@@ -35,9 +37,34 @@
 
 @end
 
+static void midiDebugFunc(short line, const char *file, const char *text)
+{
+	@autoreleasepool {
+		NSLog(@"%s:%u, error text:%s!", file, line, text);
+		NSInteger alert = NSRunAlertPanel(NSLocalizedString(@"MyDebugStr_Error", @"Error"),
+										  NSLocalizedString(@"MyDebugStr_MainText", @"The Main text to display"),
+										  NSLocalizedString(@"MyDebugStr_Quit", @"Quit"), NSLocalizedString(@"MyDebugStr_Continue", @"Continue"),
+										  NSLocalizedString(@"MyDebugStr_Debug", @"Debug"), text);
+		switch (alert) {
+			case NSAlertAlternateReturn:
+				break;
+				
+			case NSAlertOtherReturn:
+				NSCAssert(NO, @"Chose to go to debugger.");
+				break;
+				
+			case NSAlertDefaultReturn:
+				NSLog(@"Choosing to fail!");
+			default:
+				abort();
+				break;
+		}
+	}
+}
 
 int main(int argc, const char *argv[])
 {
+	PPRegisterDebugFunc(midiDebugFunc);
 	// Get the singleton service listener object.
 	ServiceDelegate *delegate = [ServiceDelegate new];
 	
