@@ -645,12 +645,11 @@ return; \
 							asbd.mBytesPerFrame = asbd.mBitsPerChannel * asbd.mChannelsPerFrame / 8;
 							asbd.mBytesPerPacket = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
 							
-							CFURLRef url = CFBridgingRetain([savePanel URL]);
+							NSURL *url = [savePanel URL];
 							
 							AudioFileID audioFile;
 							OSStatus res;
-							res = AudioFileCreateWithURL(url, kAudioFileWAVEType, &asbd, kAudioFileFlags_EraseFile, &audioFile);
-							CFRelease(url);
+							res = AudioFileCreateWithURL((__bridge CFURLRef)(url), kAudioFileWAVEType, &asbd, kAudioFileFlags_EraseFile, &audioFile);
 							checkError(res);
 							
 							UInt32 numBytes = (UInt32)[saveData length];

@@ -88,14 +88,12 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			char type[5];
 			char utiType[5] = {0};
 			OSType info;
-			CFStringRef ostypes;
+			NSString *ostypes;
 			
 			//Try to get the OSType of the UTI.
-			ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
+			ostypes = CFBridgingRelease(UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType));
 			
-			info = UTGetOSTypeFromString(ostypes);
-			if (ostypes)
-				CFRelease(ostypes);
+			info = UTGetOSTypeFromString((__bridge CFStringRef)(ostypes));
 			if (info)
 				OSType2Ptr(info, utiType);
 			else

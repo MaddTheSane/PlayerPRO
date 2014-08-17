@@ -135,22 +135,15 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 + (MADErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib
 {
 	char filetype[5];
-	CFURLRef tmpCFURL;
 	MADErr theErr = MADNoErr;
 	if (!theInfo || !thURL || !theLib) {
 		return MADParametersErr;
 	}
 	
-	tmpCFURL = CFBridgingRetain(thURL);
+	if ((theErr = MADMusicIdentifyCFURL(theLib._madLib, filetype, (__bridge CFURLRef)(thURL))) != MADNoErr)
+		return theErr;
 	
-	if ((theErr = MADMusicIdentifyCFURL(theLib._madLib, filetype, tmpCFURL)) != MADNoErr)
-		goto end;
-	
-	theErr = MADMusicInfoCFURL(theLib._madLib, filetype, tmpCFURL, theInfo);
-	
-end:
-	CFRelease(tmpCFURL);
-	return theErr;
+	return MADMusicInfoCFURL(theLib._madLib, filetype, (__bridge CFURLRef)(thURL), theInfo);
 }
 
 - (NSString *)internalFileName
