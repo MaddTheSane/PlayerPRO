@@ -31,7 +31,7 @@
 
 #pragma pack(push, 2)
 
-static const unsigned short DEFAULT_VOLFADE = 300;
+#define DEFAULT_VOLFADE		300
 #define MAXINSTRU			255
 #define MAXPOINTER			999
 #define MAXTRACK			256
@@ -95,6 +95,13 @@ typedef struct PatData		// DATA STRUCTURE : HEADER + COMMANDS
 	PatHeader	header;
 	Cmd			Cmds[1];
 } PatData;
+
+//Internal Pattern Data
+//Because Swift is a dumb-dumb about C arrays in structs
+typedef struct IntPatData {
+	PatHeader	header;
+	Cmd			*Cmds;
+} IntPatData;
 
 // ***
 // ***	INSTRUMENT DESCRIPTION
@@ -178,7 +185,7 @@ typedef struct sData32 {
 	MADByte			amp;
 	char			relNote;
 	char 			name[32];
-	MADByte			stereo;
+	MADBool			stereo;
 	uint32_t		data;
 } sData32;
 

@@ -59,7 +59,7 @@ MADErr inAddSoundToMAD(void			*theSound,
 					   short		sS,
 					   short		bFreq,
 					   unsigned int	rate,
-					   Boolean		stereo,
+					   bool			stereo,
 					   Str255		name,
 					   InstrData	*InsHeader,					// Ptr on instrument header
 					   sData		**sample,					// Ptr on samples data
@@ -85,7 +85,7 @@ MADErr inAddSoundToMADCString(void			*theSound,
 							  short			sS,
 							  short			bFreq,
 							  unsigned int	rate,
-							  Boolean		stereo,
+							  bool			stereo,
 							  char			*name,
 							  InstrData		*InsHeader,					// Ptr on instrument header
 							  sData			**sample,					// Ptr on samples data

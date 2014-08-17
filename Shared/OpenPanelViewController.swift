@@ -111,9 +111,7 @@ class OpenPanelViewController: NSViewController {
 		switch (tag) {
 		case utiType.allType.toRaw():
 			for obj in utiObjects {
-				for uti in obj.utis {
-					allowedUTIs.append(uti)
-				}
+				allowedUTIs += obj.utis
 			}
 			openPanel.allowedFileTypes = allowedUTIs
 			if (allowsMultipleSelectionOfTrackers) {
@@ -123,9 +121,7 @@ class OpenPanelViewController: NSViewController {
 		case utiType.trackerType.toRaw():
 			for obj in utiObjects {
 				if (obj.theUtiType == trackerType.tracker) {
-					for uti in obj.utis {
-						allowedUTIs.append(uti)
-					}
+					allowedUTIs += obj.utis
 				}
 			}
 			openPanel.allowedFileTypes = allowedUTIs
@@ -136,9 +132,7 @@ class OpenPanelViewController: NSViewController {
 		case utiType.playlistType.toRaw():
 			for obj in utiObjects {
 				if (obj.theUtiType == .playlist) {
-					for uti in obj.utis {
-						allowedUTIs.append(uti)
-					}
+					allowedUTIs += obj.utis
 				}
 			}
 			openPanel.allowedFileTypes = allowedUTIs
@@ -149,9 +143,7 @@ class OpenPanelViewController: NSViewController {
 		case utiType.instrumentType.toRaw():
 			for obj in utiObjects {
 				if (obj.theUtiType == .instrument) {
-					for uti in obj.utis {
-						allowedUTIs.append(uti)
-					}
+					allowedUTIs += obj.utis
 				}
 			}
 			openPanel.allowedFileTypes = allowedUTIs
@@ -252,8 +244,8 @@ class OpenPanelViewController: NSViewController {
 		super.awakeFromNib()
 		// Do view setup here.
 		
-		var fileTypeSelectionMenu = popUp.menu;
-		var moreThanTwoTypes = hasMoreThanTwoTypes();
+		let fileTypeSelectionMenu = popUp.menu;
+		let moreThanTwoTypes = hasMoreThanTwoTypes();
 		if (moreThanTwoTypes) {
 			var mi0 = NSMenuItem(title: "All Openable Files", action: "selectUTI:", keyEquivalent: "")
 			mi0.tag = utiType.allType.toRaw()
@@ -326,9 +318,7 @@ class OpenPanelViewController: NSViewController {
 		var fileUTIs = [String]()
 		
 		for obj in utiObjects {
-			for someUTI in obj.utis {
-				fileUTIs.append(someUTI)
-			}
+			fileUTIs += obj.utis
 		}
 		
 		if (!allowsMultipleSelectionOfTrackers) {
@@ -341,13 +331,12 @@ class OpenPanelViewController: NSViewController {
 	
 	func hasMoreThanTwoTypes() -> Bool {
 		var i = 0;
-		var utiCount = utiObjects.count;
+		let utiCount = utiObjects.count;
 		if (utiCount < 2) {
 			return false;
 		}
 		
 		for (i = 1; i < utiCount; i++) {
-			
 			var obj1 = utiObjects[i - 1];
 			var obj2 = utiObjects[i];
 			if (obj1.theUtiType != obj2.theUtiType) {

@@ -43,7 +43,7 @@ static MIDIPortRef MADMIDIPortOutRef;
 static MIDIEndpointRef MADMIDIKeyboardEndRef;
 static void MADMIDINotifyProc(const MIDINotification *message, void *refCon);
 static void MADMIDIPortProc(const MIDIPacketList *pktlist, void *readProcRefCon, void *srcConnRefCon);
-void OpenOrCloseConnection(Boolean opening);
+static void OpenOrCloseConnection(Boolean opening);
 
 void CloseMIDIHarware()
 {

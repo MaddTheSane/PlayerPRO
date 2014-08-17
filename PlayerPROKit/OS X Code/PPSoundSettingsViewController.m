@@ -9,10 +9,14 @@
 #import <Cocoa/Cocoa.h>
 #import "PPSoundSettingsViewController.h"
 
+#pragma pack(push)
+
 typedef struct _tagCoupling {
 	int amount;
 	NSInteger tag;
 } TagCoupling;
+
+#pragma pack(pop)
 
 enum {
 	rate11Khz,
@@ -210,7 +214,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 			NSInteger theRate = sett->MicroDelaySize;
 			NSInteger toSet = 0;
 			int i = 0;
-			size_t sizeofCoupling = sizeof(StereoDelayCoupling) / sizeof(TagCoupling);
+			static const size_t sizeofCoupling = sizeof(StereoDelayCoupling) / sizeof(StereoDelayCoupling[0]);
 			for (i = 0; i < sizeofCoupling; i++) {
 				if (StereoDelayCoupling[i].amount == theRate) {
 					toSet = StereoDelayCoupling[i].tag;
@@ -226,7 +230,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 			NSInteger reverbAmount = sett->ReverbSize;
 			NSInteger toSet = 0;
 			int i = 0;
-			size_t sizeofCoupling = sizeof(ReverbAmountCoupling) / sizeof(TagCoupling);
+			static const size_t sizeofCoupling = sizeof(ReverbAmountCoupling) / sizeof(ReverbAmountCoupling[0]);
 			for (i = 0; i < sizeofCoupling; i++) {
 				if (ReverbAmountCoupling[i].amount == reverbAmount) {
 					toSet = ReverbAmountCoupling[i].tag;
@@ -242,7 +246,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 			NSInteger reverbPercentage = sett->ReverbStrength;
 			NSInteger toSet = 0;
 			int i = 0;
-			size_t sizeofCoupling = sizeof(ReverbPercentCoupling) / sizeof(TagCoupling);
+			static const size_t sizeofCoupling = sizeof(ReverbPercentCoupling) / sizeof(ReverbPercentCoupling[0]);
 			for (i = 0; i < sizeofCoupling; i++) {
 				if (ReverbPercentCoupling[i].amount == reverbPercentage) {
 					toSet = ReverbPercentCoupling[i].tag;
@@ -258,7 +262,7 @@ static const TagCoupling OversamplingCoupling[] = {{1, 1}, {2, 2}, {3, 3}, {4, 4
 			NSInteger oversamplingAmount = sett->oversampling;
 			NSInteger toSet = 0;
 			int i = 0;
-			size_t sizeofCoupling = sizeof(OversamplingCoupling) / sizeof(TagCoupling);
+			static const size_t sizeofCoupling = sizeof(OversamplingCoupling) / sizeof(OversamplingCoupling[0]);
 			for (i = 0; i < sizeofCoupling; i++) {
 				if (OversamplingCoupling[i].amount == oversamplingAmount) {
 					toSet = OversamplingCoupling[i].tag;

@@ -40,7 +40,7 @@
 /********************						***********************/
 
 #define NUMBER_NOTES		96
-static const unsigned int NOFINETUNE = 8363;
+#define NOFINETUNE			8363
 #define MIN_VOLUME			0
 #define MAX_VOLUME			64
 #define MAX_CHANVOL			128

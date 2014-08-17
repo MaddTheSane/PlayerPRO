@@ -19,12 +19,12 @@
 @synthesize theBus;
 
 #if !TARGET_OS_IPHONE
-#define sampleUTI @"net.sourceforge.playerpro.FXBus"
+NSString * const kPPKFXBusPasteboardUTI = @"net.sourceforge.playerpro.FXBus";
 
 static NSArray *UTIArray;
 static dispatch_once_t initUTIOnceToken;
 static const dispatch_block_t initUTIArray = ^{
-	UTIArray = @[sampleUTI];
+	UTIArray = @[kPPKFXBusPasteboardUTI];
 };
 
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
@@ -40,7 +40,7 @@ static const dispatch_block_t initUTIArray = ^{
 }
 - (id)pasteboardPropertyListForType:(NSString *)type
 {
-	if ([type isEqualToString:sampleUTI])
+	if ([type isEqualToString:kPPKFXBusPasteboardUTI])
 		return [NSKeyedArchiver archivedDataWithRootObject:self];
 	else
 		return nil;
@@ -48,7 +48,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 + (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
 {
-	if ([type isEqualToString:sampleUTI])
+	if ([type isEqualToString:kPPKFXBusPasteboardUTI])
 		return NSPasteboardReadingAsKeyedArchive;
 	else
 		return NSPasteboardReadingAsData;

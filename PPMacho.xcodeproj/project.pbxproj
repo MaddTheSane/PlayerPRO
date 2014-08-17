@@ -216,9 +216,6 @@
 		5533C8FB19942AD9003AEB16 /* SoundOutputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5533C8F919942AD9003AEB16 /* SoundOutputController.swift */; };
 		5533C90019943EEE003AEB16 /* MidiPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55085D7A1836BAAA004A152F /* MidiPrefs.xib */; };
 		553626B817EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */; };
-		55413C461991B43F001414D0 /* PPByteSwap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550D798E1979F33D00F0A8F8 /* PPByteSwap.swift */; };
-		55413C471991B443001414D0 /* PPByteSwap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550D798E1979F33D00F0A8F8 /* PPByteSwap.swift */; };
-		55413C481991B444001414D0 /* PPByteSwap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550D798E1979F33D00F0A8F8 /* PPByteSwap.swift */; };
 		55413C491991B947001414D0 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		55413C4A1992AF9A001414D0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55268AAA1877EF0000A82269 /* InfoPlist.strings */; };
 		55413C4B1992AFAB001414D0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 551292E1163DD68500C2C639 /* InfoPlist.strings */; };
@@ -264,6 +261,8 @@
 		555F447519A1411400B8C6EE /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
 		555F447619A1411700B8C6EE /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
 		555F447719A1411800B8C6EE /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
+		555F447819A155FA00B8C6EE /* PPByteSwap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550D798E1979F33D00F0A8F8 /* PPByteSwap.swift */; };
+		555F447919A155FB00B8C6EE /* PPByteSwap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550D798E1979F33D00F0A8F8 /* PPByteSwap.swift */; };
 		555F5C611993327D0056AF01 /* OpenPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555F5C601993327D0056AF01 /* OpenPanelViewController.swift */; };
 		555F5C621993327D0056AF01 /* OpenPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555F5C601993327D0056AF01 /* OpenPanelViewController.swift */; };
 		5560643818C8FDC7002F72FC /* PPErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 5532334D16766E5700076604 /* PPErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -6008,6 +6007,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				555F447819A155FA00B8C6EE /* PPByteSwap.swift in Sources */,
 				55A934F917F2121D00493DC5 /* PPFilterPluginWindowController.m in Sources */,
 				555F447619A1411700B8C6EE /* PlayerPROKitAdditions.swift in Sources */,
 				55DE87CF187E60F400C36533 /* PPFXSetObject.m in Sources */,
@@ -6153,7 +6153,6 @@
 				555776B017EBF8FE0019D008 /* PPiAppDelegate.m in Sources */,
 				555C0F8B19822096003B9347 /* PPMusicList.m in Sources */,
 				555776AC17EBF8FE0019D008 /* main.m in Sources */,
-				55413C481991B444001414D0 /* PPByteSwap.swift in Sources */,
 				555776BC17EBF8FF0019D008 /* PPiDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6210,7 +6209,6 @@
 				555F5C621993327D0056AF01 /* OpenPanelViewController.swift in Sources */,
 				552788031981C95100708906 /* MusicListDragClass.swift in Sources */,
 				55588A97199951B300C3D4EE /* PlugInInfoController.swift in Sources */,
-				55413C471991B443001414D0 /* PPByteSwap.swift in Sources */,
 				5578C48A17D9E8560057D11B /* main.m in Sources */,
 				5578C49117D9E8560057D11B /* AppDelegate.m in Sources */,
 				5578C4B217DA4AA90057D11B /* PPMusicList.m in Sources */,
@@ -6560,7 +6558,6 @@
 				55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */,
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
 				55FEF84B1984506C00D2E79C /* ClassicalViewController.m in Sources */,
-				55413C461991B43F001414D0 /* PPByteSwap.swift in Sources */,
 				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,
 				552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */,
 				5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */,
@@ -6628,6 +6625,7 @@
 				55F1BE111975CD7200AD2C03 /* PPFXBusObject.m in Sources */,
 				555F447719A1411800B8C6EE /* PlayerPROKitAdditions.swift in Sources */,
 				55F1BE0D1975CD7200AD2C03 /* PPPatternObject.m in Sources */,
+				555F447919A155FB00B8C6EE /* PPByteSwap.swift in Sources */,
 				55F1BE191975CD7200AD2C03 /* PPMusicObject.m in Sources */,
 				55F1BE0F1975CD7200AD2C03 /* PPMadCommandObject.m in Sources */,
 				55F1BE151975CD7200AD2C03 /* PPLibrary.m in Sources */,

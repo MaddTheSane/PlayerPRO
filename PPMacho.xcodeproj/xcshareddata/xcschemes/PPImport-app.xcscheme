@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5578C51B17DB94A50057D11B"
-               BuildableName = "PPImport Cocoa.mdimporter"
+               BuildableName = "PPImport.mdimporter"
                BlueprintName = "PPImport"
                ReferencedContainer = "container:PPMacho.xcodeproj">
             </BuildableReference>
@@ -48,7 +48,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5578C51B17DB94A50057D11B"
-            BuildableName = "PPImport Cocoa.mdimporter"
+            BuildableName = "PPImport.mdimporter"
             BlueprintName = "PPImport"
             ReferencedContainer = "container:PPMacho.xcodeproj">
          </BuildableReference>

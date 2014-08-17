@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5578C51B17DB94A50057D11B"
-               BuildableName = "PPImport Cocoa.mdimporter"
+               BuildableName = "PPImport.mdimporter"
                BlueprintName = "PPImport"
                ReferencedContainer = "container:PPMacho.xcodeproj">
             </BuildableReference>
@@ -32,8 +32,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "55BE997717978AEF00D6DECC"
-            BuildableName = "PlayerPROImporter.mdimporter"
+            BlueprintIdentifier = "5578C51B17DB94A50057D11B"
+            BuildableName = "PPImport.mdimporter"
             BlueprintName = "PPImport"
             ReferencedContainer = "container:PPMacho.xcodeproj">
          </BuildableReference>
@@ -53,7 +53,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5578C51B17DB94A50057D11B"
-            BuildableName = "PPImport Cocoa.mdimporter"
+            BuildableName = "PPImport.mdimporter"
             BlueprintName = "PPImport"
             ReferencedContainer = "container:PPMacho.xcodeproj">
          </BuildableReference>
@@ -71,7 +71,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5578C51B17DB94A50057D11B"
-            BuildableName = "PPImport Cocoa.mdimporter"
+            BuildableName = "PPImport.mdimporter"
             BlueprintName = "PPImport"
             ReferencedContainer = "container:PPMacho.xcodeproj">
          </BuildableReference>

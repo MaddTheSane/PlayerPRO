@@ -10,7 +10,7 @@ import Swift
 import PlayerPROCore
 
 extension MADSpec {
-	var bigEndian: MADSpec { get {
+	public var bigEndian: MADSpec { get {
 		var toRet = self
 		toRet.MAD = self.MAD.bigEndian;
 		toRet.speed = self.speed.bigEndian;
@@ -34,7 +34,7 @@ extension FXSets {
 */
 
 extension FXBus {
-	var bigEndian: FXBus {get {
+	public var bigEndian: FXBus {get {
 		var toRet = FXBus(ByPass: self.ByPass, copyId: self.copyId.bigEndian, Active: self.Active)
 		
 		return toRet
@@ -42,7 +42,7 @@ extension FXBus {
 }
 
 extension PatHeader {
-	var bigEndian: PatHeader {get {
+	public var bigEndian: PatHeader {get {
 		var toRet = self
 		toRet.size = self.size.bigEndian
 		toRet.compMode = self.compMode.bigEndian
@@ -54,7 +54,7 @@ extension PatHeader {
 }
 
 extension EnvRec {
-	var bigEndian: EnvRec {get {
+	public var bigEndian: EnvRec {get {
 		var toRet = EnvRec(pos: self.pos.bigEndian, val: self.val.bigEndian)
 		
 		return toRet
@@ -62,7 +62,7 @@ extension EnvRec {
 }
 
 extension InstrData {
-	var bigEndian: InstrData {get {
+	public var bigEndian: InstrData {get {
 		var toRet = self;
 		toRet.numSamples = self.numSamples.bigEndian
 		toRet.firstSample = self.firstSample.bigEndian
@@ -94,7 +94,7 @@ extension InstrData {
 }
 
 extension sData {
-	var bigEndian: sData { get {
+	public var bigEndian: sData { get {
 		var toRet = self
 		toRet.size = self.size.bigEndian
 		toRet.loopBeg = self.loopBeg.bigEndian
@@ -104,11 +104,10 @@ extension sData {
 		
 		return toRet
 	}}
-
 }
 
 extension sData32 {
-	var bigEndian: sData32 { get {
+	public var bigEndian: sData32 { get {
 		var toRet = self
 		toRet.size = self.size.bigEndian
 		toRet.loopBeg = self.loopBeg.bigEndian
@@ -118,5 +117,4 @@ extension sData32 {
 		
 		return toRet
 	}}
-	
 }
