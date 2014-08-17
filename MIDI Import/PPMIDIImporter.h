@@ -30,8 +30,13 @@ typedef NS_ENUM(NSInteger, PPMIDIImportValue) {
 //extern MADErr ImportMIDIFile(NSURL* theURL, NSData **);
 
 @interface PPMIDIImporter : NSObject
-- (void)importMIDIFileAtURL:(NSURL*)theURL withReply:(void (^)(NSData *, MADErr error))reply;
-- (void)getMIDIInfoFromFileAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary *, MADErr error))reply;
-- (void)canImportMIDIFileAtURL:(NSURL*)theURL withReply:(void (^)(MADErr error))reply;
+{
+	NSURL *internalURL;
+}
+- (instancetype)initWithURL:(NSURL*)theURL;
+
+- (MADErr)importMIDIFileToData:(out NSData**)reply;
+- (MADErr)getMIDIInfoToDictionary:(NSMutableDictionary*)reply;
+- (MADErr)canImportMIDIFile;
 
 @end
