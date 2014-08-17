@@ -162,7 +162,7 @@ MADMusic* CreateFreeMADK()
 	return music;
 }
 
-size_t MADGetMusicSize(MADMusic *music)
+size_t MADGetMusicSize(const MADMusic *music)
 {
 	int i, x;
 	size_t fileSize;
@@ -664,7 +664,7 @@ MADErr MADCreateTiming(MADDriverRec *intDriver)
 	return MADNoErr;
 }
 
-MADDriverSettings MADGetDriverSettings(MADDriverRec *theDriver)
+MADDriverSettings MADGetDriverSettings(const MADDriverRec *theDriver)
 {
 	return theDriver->DriverSettings;
 }

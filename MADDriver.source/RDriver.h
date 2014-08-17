@@ -612,7 +612,7 @@ PPEXPORT MADErr	MADDisposeDriver(MADDriverRec *MDriver);											// Dispose th
 
 PPEXPORT MADErr	MADChangeDriverSettings(MADDriverSettings *DriverInitParam, MADDriverRec** returnDriver);
 
-PPEXPORT MADDriverSettings MADGetDriverSettings(MADDriverRec *theDriver);
+PPEXPORT MADDriverSettings MADGetDriverSettings(const MADDriverRec *theDriver);
 
 PPEXPORT MADErr	MADStartDriver(MADDriverRec *MDriver);										// NEW - Activates the sound generating procedure (interruption)
 PPEXPORT MADErr	MADStopDriver(MADDriverRec *MDriver);										// NEW - DEActivates the sound generating procedure (interruption)
@@ -694,7 +694,7 @@ PPEXPORT void	MADSetReading(MADDriverRec *driver, bool toSet) DEPRECATED_ATTRIBU
 
 PPEXPORT int	MADAudioLength(MADDriverRec *theRec);
 
-PPEXPORT size_t MADGetMusicSize(MADMusic*);
+PPEXPORT size_t MADGetMusicSize(const MADMusic*);
 
 PPEXPORT void	MADDriverClearChannel(MADDriverRec *theRec, int channel);
 

@@ -7,11 +7,10 @@
 //
 
 import PlayerPROCore
-import PlayerPROKit
 import CoreGraphics
 
 extension PPSampleObject {
-public class func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16, currentData curData: PPSampleObject!, context ctxRef: CGContextRef!) {
+public class func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, currentData curData: PPSampleObject!, context ctxRef: CGContextRef!) {
 	
 	CGContextSaveGState(ctxRef);
 	

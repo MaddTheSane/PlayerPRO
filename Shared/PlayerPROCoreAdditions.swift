@@ -12,6 +12,8 @@ import PlayerPROCore
 #if os(OSX)
 import CoreServices
 
+let MadID: MADFourChar = "MADK"
+
 extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 	public var stringValue: String {
 		get {
@@ -114,14 +116,161 @@ func &=(inout lhs: MADBool, rhs: MADBool) {
 }
 #endif
 
-#if false
 extension PPInfoRec: DebugPrintable {
 	
 	public var debugDescription: String { get {
 		return ""
 		}}
 }
-	#endif
+
+extension sData32 {
+	public init() {
+		self.size = 0
+		self.loopBeg = 0
+		self.loopSize = 0
+		self.vol = sData.MaxVolume
+		self.c2spd = sData.NoFineTune
+		self.loopType = .eClassicLoop
+		self.amp = 8
+		self.relNote = 0
+		self.name.0 = 0
+		self.name.1 = 0
+		self.name.2 = 0
+		self.name.3 = 0
+		self.name.4 = 0
+		self.name.5 = 0
+		self.name.6 = 0
+		self.name.7 = 0
+		self.name.8 = 0
+		self.name.9 = 0
+		self.name.10 = 0
+		self.name.11 = 0
+		self.name.12 = 0
+		self.name.13 = 0
+		self.name.14 = 0
+		self.name.15 = 0
+		self.name.16 = 0
+		self.name.17 = 0
+		self.name.18 = 0
+		self.name.19 = 0
+		self.name.20 = 0
+		self.name.21 = 0
+		self.name.22 = 0
+		self.name.23 = 0
+		self.name.24 = 0
+		self.name.25 = 0
+		self.name.26 = 0
+		self.name.27 = 0
+		self.name.28 = 0
+		self.name.29 = 0
+		self.name.30 = 0
+		self.name.31 = 0
+		self.stereo = 0
+		self.data = 0
+	}
+	
+	public var toSData : sData { get {
+		var toRet = sData()
+		toRet.size = self.size
+		toRet.loopBeg = self.loopBeg
+		toRet.loopSize = self.loopSize
+		toRet.vol = self.vol
+		toRet.c2spd = self.c2spd
+		toRet.loopType = self.loopType
+		toRet.amp = self.amp
+		toRet.relNote = self.relNote
+		
+		var toRetName = reflect(toRet.name)
+		var ourName = reflect(self.name)
+		for i in 0 ..< toRetName.count {
+			//toRetName[i].0
+		}
+		toRet.stereo = self.stereo
+		
+		
+		return toRet
+		}}
+}
+
+private func iterate<C,R>(t:C, block:(String,Any)->R) {
+	let mirror = reflect(t)
+	for i in 0 ..< mirror.count {
+		block(mirror[i].0, mirror[i].1.value)
+	}
+}
+
+
+extension sData {
+	public static let MaxVolume: MADByte = 64
+	public static let NoFineTune: UInt16 = 8363
+
+	public var toSData32 : sData32 { get {
+		var toRet = sData32()
+		toRet.size = self.size
+		toRet.loopBeg = self.loopBeg
+		toRet.loopSize = self.loopSize
+		toRet.vol = self.vol
+		toRet.c2spd = self.c2spd
+		toRet.loopType = self.loopType
+		toRet.amp = self.amp
+		toRet.relNote = self.relNote
+		
+		var toRetName = reflect(toRet.name)
+		var ourName = reflect(self.name)
+		for i in 0 ..< toRetName.count {
+			//toRetName[i].0
+		}
+		toRet.stereo = self.stereo
+		
+		
+		return toRet
+		}}
+	
+	public init() {
+		self.size = 0
+		self.loopBeg = 0
+		self.loopSize = 0
+		self.vol = sData.MaxVolume
+		self.c2spd = sData.NoFineTune
+		self.loopType = .eClassicLoop
+		self.amp = 8
+		self.relNote = 0
+		self.name.0 = 0
+		self.name.1 = 0
+		self.name.2 = 0
+		self.name.3 = 0
+		self.name.4 = 0
+		self.name.5 = 0
+		self.name.6 = 0
+		self.name.7 = 0
+		self.name.8 = 0
+		self.name.9 = 0
+		self.name.10 = 0
+		self.name.11 = 0
+		self.name.12 = 0
+		self.name.13 = 0
+		self.name.14 = 0
+		self.name.15 = 0
+		self.name.16 = 0
+		self.name.17 = 0
+		self.name.18 = 0
+		self.name.19 = 0
+		self.name.20 = 0
+		self.name.21 = 0
+		self.name.22 = 0
+		self.name.23 = 0
+		self.name.24 = 0
+		self.name.25 = 0
+		self.name.26 = 0
+		self.name.27 = 0
+		self.name.28 = 0
+		self.name.29 = 0
+		self.name.30 = 0
+		self.name.31 = 0
+		self.stereo = 0
+		self.data = nil
+	}
+}
 
 extension MADBool : BooleanLiteralConvertible, BooleanType {
 	//public typealias BooleanLiteralType = Bool
@@ -150,13 +299,34 @@ extension MADBool : BooleanLiteralConvertible, BooleanType {
 		}}
 }
 
+extension Cmd {
+	public init() {
+		ins = 0
+		note = 0xff
+		cmd = 0
+		arg = 0
+		vol = 0xff
+		unused = 0
+	}
+	
+	public mutating func kill() -> MADErr {
+		return MADKillCmd(&self)
+	}
+}
+
+extension PatData {
+	public mutating func getMADCommand(position: Int16, channel: Int16) -> UnsafeMutablePointer<Cmd> {
+		return GetMADCommand(position, channel, &self)
+	}
+}
+
+//#pragma mark Plug-in functions
+
 extension Pcmd {
 	public mutating func getCommand(row: Int16, track: Int16) -> UnsafeMutablePointer<Cmd> {
 		return MADGetCmd(row, track, &self)
 	}
 }
-
-//#pragma mark Plug-in functions
 
 var kPlayerPROFiltersPlugTypeID: CFUUID { get {
 	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x79, 0xEA, 0x82, 0xAD, 0x5A, 0x53, 0x46, 0xAF, 0x82, 0xA9, 0x4A, 0x06, 0x85, 0xB4, 0x58, 0x8C)

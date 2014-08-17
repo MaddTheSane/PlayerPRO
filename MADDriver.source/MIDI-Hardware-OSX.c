@@ -39,11 +39,11 @@ void NPianoRecordProcess(short i, short, short, short);
 
 static MIDIClientRef MADMIDICliRef;
 static MIDIPortRef MADMIDIPortInRef;
-static MIDIPortRef MADMIDIPortOutRef;
+//static MIDIPortRef MADMIDIPortOutRef;
 static MIDIEndpointRef MADMIDIKeyboardEndRef;
 static void MADMIDINotifyProc(const MIDINotification *message, void *refCon);
 static void MADMIDIPortProc(const MIDIPacketList *pktlist, void *readProcRefCon, void *srcConnRefCon);
-static void OpenOrCloseConnection(Boolean opening);
+//static void OpenOrCloseConnection(Boolean opening);
 
 void CloseMIDIHarware()
 {
@@ -100,12 +100,12 @@ void SquidAllNotesOff(short PortRefNum)
 		SendKeyOn(PortRefNum, 0x80000000, KeyNum, 0);
 	}
 }
-#endif
 
 void OpenOrCloseConnection(Boolean opening)
 {
 	
 }
+#endif
 
 void SendMIDIClock(MADDriverRec *intDriver, Byte MIDIByte)
 {

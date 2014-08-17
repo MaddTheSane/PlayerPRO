@@ -36,7 +36,7 @@
 #define MAXPOINTER			999
 #define MAXTRACK			256
 //#define MAXTRACKMULTI		99
-static const MADFourChar MADID = 'MADK';
+#define MADID				'MADK'
 
 // ***	
 // ***	PATTERN DESCRIPTION
@@ -57,7 +57,7 @@ static const MADFourChar MADID = 'MADK';
  *	\var		vol
  *				Volume of the effect. \c 0xFF is no volume command
  *	\var		unused
- *				Unused, kept in for future use.
+ *				Unused, kept in for future use and/or padding.
  */
 typedef struct Cmd {
 	MADByte	ins;
