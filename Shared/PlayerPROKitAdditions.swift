@@ -11,7 +11,7 @@ import PlayerPROKit
 import CoreGraphics
 
 extension PPSampleObject {
-class func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16, currentData curData: PPSampleObject!, context ctxRef: CGContextRef!) {
+public class func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16, currentData curData: PPSampleObject!, context ctxRef: CGContextRef!) {
 	
 	CGContextSaveGState(ctxRef);
 	
@@ -156,7 +156,7 @@ class func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, 
 }
 
 extension PPDriver {
-	func playSoundData(FromPointer theSnd: UnsafePointer<()>, size sndSize: UInt, fromChannel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: UInt = 0, loopLength iloopLen: UInt = 0) -> MADErr {
+	public func playSoundData(FromPointer theSnd: UnsafePointer<()>, size sndSize: UInt, fromChannel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: UInt = 0, loopLength iloopLen: UInt = 0) -> MADErr {
 		var loopStart = iloopStart
 		var loopLen = iloopLen
 		if (loopLen == 0) {
@@ -166,11 +166,11 @@ extension PPDriver {
 		return self.playSoundDataFromPointer(theSnd, withSize: sndSize, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: 0, andLoopLength: 0)
 	}
 
-	func playSoundData(FromPointer theSnd: UnsafePointer<()>, size sndSize: UInt, fromChannel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
+	public func playSoundData(FromPointer theSnd: UnsafePointer<()>, size sndSize: UInt, fromChannel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
 		return self.playSoundDataFromPointer(theSnd, withSize: sndSize, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopInRange: loopRange)
 	}
 	
-	func playSoundData(fromData theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: UInt = 0, loopLength iloopLen: UInt = 0) -> MADErr {
+	public func playSoundData(fromData theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: UInt = 0, loopLength iloopLen: UInt = 0) -> MADErr {
 		var loopStart = iloopStart
 		var loopLen = iloopLen
 		if (loopLen == 0) {
@@ -180,7 +180,7 @@ extension PPDriver {
 		return self.playSoundDataFromData(theSnd, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: loopStart, andLoopLength: loopLen)
 	}
 	
-	func playSoundData(fromData theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
+	public func playSoundData(fromData theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
 		return self.playSoundDataFromData(theSnd, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopInRange: loopRange)
 	}
 }

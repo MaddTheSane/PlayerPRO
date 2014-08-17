@@ -69,6 +69,7 @@ MADErr inAddSoundToMAD(void			*theSound,
 	char *cName = alloca(name[0] + 1);
 	if (!cName)
 		return MADNeedMemory;
+	memset(cName, 0, name[0] + 1);
 	memcpy(cName, &name[1], name[0]);
 	
 	theErr = inAddSoundToMADCString(theSound, sndLen, (int)lS, (int)lE, sS, bFreq, rate, stereo, cName, InsHeader, sample, sampleID);

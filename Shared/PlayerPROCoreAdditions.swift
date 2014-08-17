@@ -7,32 +7,28 @@
 //
 
 import Foundation
-import CoreServices
 import PlayerPROCore
 
 #if os(OSX)
-extension MADFourChar: Printable, DebugPrintable, StringLiteralConvertible {
+import CoreServices
+
+extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 	public var stringValue: String {
 		get {
 			let toRet = UTCreateStringForOSType(self as OSType).takeRetainedValue()
 			return toRet as NSString
 		}}
 	
-	init(_ toInit: String) {
+	public init(_ toInit: String) {
 		self = UTGetOSTypeFromString(toInit as NSString as CFString)
 	}
 	
-	/*
-	init(_ toInit: (Int8, Int8, Int8, Int8, Int8)) {
+	#if false
+	public init(_ toInit: (Int8, Int8, Int8, Int8, Int8)) {
 		var tmpInit = toInit
 		var atmp = &tmpInit
 		var tmpPtr: UnsafeMutablePointer<Int8> = UnsafeMutablePointer<Int8>(tmpInit)
 		self = Ptr2OSType(tmpInit)
-	}
-	*/
-	
-	public static func convertFromStringLiteral(value: String) -> MADFourChar {
-		return MADFourChar(value)
 	}
 	
 	public var description: String { get {
@@ -42,6 +38,11 @@ extension MADFourChar: Printable, DebugPrintable, StringLiteralConvertible {
 	public var debugDescription: String { get {
 		return self.description
 		}}
+	#endif
+	
+	public static func convertFromStringLiteral(value: String) -> MADFourChar {
+		return MADFourChar(value)
+	}
 	
 	public static func convertFromExtendedGraphemeClusterLiteral(value: String) -> MADFourChar {
 		var tmpStr = String.convertFromExtendedGraphemeClusterLiteral(value)
@@ -52,7 +53,7 @@ extension MADFourChar: Printable, DebugPrintable, StringLiteralConvertible {
 #endif
 
 extension MADDriverSettings: DebugPrintable {
-	init() {
+	public init() {
 		self.driverMode = .CoreAudioDriver
 		self.numChn = 4
 		self.outPutBits = 16
@@ -115,7 +116,7 @@ func &=(inout lhs: MADBool, rhs: MADBool) {
 
 #if false
 extension PPInfoRec: DebugPrintable {
-	init() {
+	public init() {
 		totalPatterns = 0
 		partitionLength = 0
 		
@@ -143,7 +144,7 @@ extension PPInfoRec: DebugPrintable {
 
 extension MADBool : BooleanLiteralConvertible, BooleanType {
 	//public typealias BooleanLiteralType = Bool
-	init(_ v : BooleanType) {
+	public init(_ v : BooleanType) {
 		if v.boolValue {
 			self = 1
 		} else {

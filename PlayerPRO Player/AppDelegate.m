@@ -6,8 +6,6 @@
 //
 //
 
-#include <alloca.h>
-
 #import "AppDelegate.h"
 #import "PPPreferences.h"
 #import "PPMusicList.h"

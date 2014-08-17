@@ -501,6 +501,7 @@ MADSoundDriverAvailable MADSoundDriverList()
 
 void MADGetBestDriver(MADDriverSettings *Init)
 {
+	memset(Init, 0, sizeof(MADDriverSettings));
 	Init->outPutBits		= 16;
 	Init->outPutMode		= DeluxeStereoOutPut;
 	Init->outPutRate		= 44100;

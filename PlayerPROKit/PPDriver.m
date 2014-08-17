@@ -39,7 +39,6 @@
 	musPos = totV / 60.0;
 	
 	return musPos;
-
 }
 
 - (MADDriverSettings)driverSettings
@@ -282,7 +281,7 @@
 	NSAssert(NO, @"PPDriver cannot be inited without a library!");
 	id noVal = [self initWithLibrary:NULL settings:NULL error:NULL];
 	[self doesNotRecognizeSelector:_cmd];
-	[noVal className];
+	noVal = nil;
 	return nil;
 }
 

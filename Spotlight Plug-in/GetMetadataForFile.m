@@ -1,10 +1,8 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h>
 #import <Foundation/Foundation.h>
-#import <PlayerPROKit/PPMusicObject.h>
-#import <PlayerPROKit/PPSampleObject.h>
-#import <PlayerPROKit/PPInstrumentObject.h>
-#import <PlayerPROKit/PPPatternObject.h>
+#include "PPDefs.h"
+#include "MAD.h"
 #include "RDriver.h"
 #include "FileUtils.h"
 #include "GetMetadataForFile.h"
@@ -55,10 +53,10 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 						  CFStringRef contentTypeUTI, CFURLRef urlForFile)
 {
 	@autoreleasepool {
-		MADDriverRec		*MADDriver;
-		MADMusic			*MADMusic1;
-		MADLibrary			*MADLib;
-		MADDriverSettings	init;
+		MADDriverRec		*MADDriver = NULL;
+		MADMusic			*MADMusic1 = NULL;
+		MADLibrary			*MADLib = NULL;
+		MADDriverSettings	init = {0};
 		NSMutableDictionary *NSattribs = (__bridge NSMutableDictionary*)attributes;
 		NSURL				*NSFileURL = (__bridge NSURL*)urlForFile;
 		

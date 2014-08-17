@@ -8,6 +8,7 @@
 
 import Cocoa
 import PlayerPROKit
+import PlayerPROKit.Swift
 
 class SoundOutputController: PPSoundSettingsViewController, PPSoundSettingsViewControllerDelegate, PPPreferenceObject {
 	
