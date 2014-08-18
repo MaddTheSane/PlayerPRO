@@ -3784,18 +3784,6 @@
 				55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */,
 				55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */,
 				55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */,
-				5523EC7F16936F870067B22A /* PPDigitalPlugHandler.h */,
-				5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */,
-				5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */,
-				5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */,
-				55EA019616AF15B500D6AEA0 /* PPFilterPlugObject.h */,
-				55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */,
-				55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */,
-				55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */,
-				5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */,
-				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
-				552A662716B5EBEA007C63F7 /* PPPlugInObject.h */,
-				552A662816B5EBEB007C63F7 /* PPPlugInObject.m */,
 				55F41A3517EF96AF00605DF8 /* PPExportObject.h */,
 				55F41A3617EF96AF00605DF8 /* PPExportObject.m */,
 				5578C53D17DBABBE0057D11B /* PPDocument.h */,
@@ -3806,6 +3794,7 @@
 				55FEF84C1984508600D2E79C /* Wave View */,
 				55852E1A18D67CCB0009BF55 /* PPSmallPianoView.h */,
 				55852E1B18D67CCB0009BF55 /* PPSmallPianoView.m */,
+				55DD5A9819A1BF1A00F8AD1F /* Plug-in handling */,
 				5523EC78169276AA0067B22A /* Instrument Code */,
 				55469C2416BF341500175A1F /* Pattern Code */,
 			);
@@ -3958,6 +3947,25 @@
 				554E0FDD10D6C79D00BB619C /* Plug-ins */,
 			);
 			path = "PlayerPRO 6";
+			sourceTree = "<group>";
+		};
+		55DD5A9819A1BF1A00F8AD1F /* Plug-in handling */ = {
+			isa = PBXGroup;
+			children = (
+				5523EC7F16936F870067B22A /* PPDigitalPlugHandler.h */,
+				5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */,
+				5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */,
+				5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */,
+				55EA019616AF15B500D6AEA0 /* PPFilterPlugObject.h */,
+				55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */,
+				55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */,
+				55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */,
+				5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */,
+				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
+				552A662716B5EBEA007C63F7 /* PPPlugInObject.h */,
+				552A662816B5EBEB007C63F7 /* PPPlugInObject.m */,
+			);
+			name = "Plug-in handling";
 			sourceTree = "<group>";
 		};
 		55DE87C3187E18A500C36533 /* Private headers */ = {

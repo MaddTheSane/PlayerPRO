@@ -176,15 +176,15 @@ typedef struct PPInstrumentPlugin {
 //******************* DIGITAL EDITOR PLUGS  ***********************/
 //
 //	Your main function have to be in this form:
-//	OSErr main(Pcmd					*Pcmd,						// Digital Selection
-//					PPInfoPlug				*thePPInfoPlug)				// Some functions of PlayerPRO that you can use in your plugs
+//	OSErr main(	Pcmd					*Pcmd,						// Digital Selection
+//				PPInfoPlug				*thePPInfoPlug)				// Some functions of PlayerPRO that you can use in your plugs
 //
 //
 //	*****************						***********************/
 //
 //	If you want to reallocate Pcmd:
 //
-//	if (Pcmd != 0L) free(Pcmd);								// VERY IMPORTANT
+//	if (Pcmd != NULL) free(Pcmd);							// VERY IMPORTANT
 //	Pcmd = malloc sizeof(Pcmd) + noCell * sizeof(Cmd));		// Use malloc ONLY to allocate memory!
 //
 //	myPcmd->structSize 	= sizeof(Pcmd) + noCell * sizeof(Cmd);

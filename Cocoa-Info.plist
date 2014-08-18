@@ -35,15 +35,13 @@
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
+			<key>NSDocumentClass</key>
+			<string>PPDocument</string>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
 				<string>pppatn</string>
-			</array>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>com.quadmation.playerpro.pattern</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
 			<string>PATN</string>
@@ -55,6 +53,10 @@
 			</array>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>com.quadmation.playerpro.pattern</string>
+			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
 		</dict>
