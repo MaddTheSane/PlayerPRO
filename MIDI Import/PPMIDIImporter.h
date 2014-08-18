@@ -22,6 +22,7 @@
 #define kPPMIDICall				"PlugInCall"
 #define kPPMIDIInfo				"Info"
 #define kPPLocation				"filePath"
+#define kPPMADData				"Data "
 
 typedef NS_ENUM(SInt64, PPMIDIImportValue) {
 	PPImportMIDI,

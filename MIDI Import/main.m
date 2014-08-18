@@ -49,14 +49,22 @@ static void MIDIImport_peer_event_handler(xpc_connection_t peer, xpc_object_t ev
 		assert(type == XPC_TYPE_DICTIONARY);
 		// Handle the message.
 		const char *strPath = xpc_dictionary_get_string(event, kPPLocation);
-		SInt64 currentDict = xpc_dictionary_get_int64(event, kPPMIDICall);
+		PPMIDIImportValue currentDict = xpc_dictionary_get_int64(event, kPPMIDICall);
 		MADErr currErr = noErr;
-		NSURL *currentURL = [NSURL fileURLWithFileSystemRepresentation:strPath isDirectory:NO relativeToURL:nil];
-		PPMIDIImporter *importer = [[PPMIDIImporter alloc] initWithURL:currentURL];
+		PPMIDIImporter *importer;
+		@autoreleasepool {
+			NSURL *currentURL = [NSURL fileURLWithFileSystemRepresentation:strPath isDirectory:NO relativeToURL:nil];
+			importer = [[PPMIDIImporter alloc] initWithURL:currentURL];
+		}
 		switch (currentDict) {
 			case PPTestMIDI:
+			{
 				currErr = [importer canImportMIDIFile];
-				xpc_dictionary_set_int64(event, kPPMIDIErr, currErr);
+				xpc_object_t toRet = xpc_dictionary_create_reply(event);
+				xpc_dictionary_set_int64(toRet, kPPMIDIErr, currErr);
+				xpc_connection_send_message(peer, toRet);
+				xpc_release(toRet);
+			}
 				break;
 				
 			case PPInfoMIDI:
@@ -65,15 +73,35 @@ static void MIDIImport_peer_event_handler(xpc_connection_t peer, xpc_object_t ev
 				currErr = [importer getMIDIInfoToDictionary:tmpInfoDict];
 				xpc_object_t xpcDict = NSDictionaryToXPCDictionary(tmpInfoDict);
 				[tmpInfoDict release];
-				xpc_dictionary_set_value(event, kPPMIDIInfo, xpcDict);
+				xpc_object_t toRet = xpc_dictionary_create_reply(event);
+				xpc_dictionary_set_value(toRet, kPPMIDIInfo, xpcDict);
 				xpc_release(xpcDict);
-				xpc_dictionary_set_int64(event, kPPMIDIErr, currErr);
+				xpc_dictionary_set_int64(toRet, kPPMIDIErr, currErr);
+				xpc_connection_send_message(peer, toRet);
+				xpc_release(toRet);
+			}
+				break;
+				
+			case PPImportMIDI:
+			{
+				NSData *theDat = nil;
+				@autoreleasepool {
+					currErr = [importer importMIDIFileToData:&theDat];
+					[theDat retain];
+				}
+				xpc_object_t toRet = xpc_dictionary_create_reply(event);
+				xpc_dictionary_set_data(toRet, kPPMADData, theDat.bytes, theDat.length);
+				[theDat release];
+				xpc_dictionary_set_int64(toRet, kPPMIDIErr, currErr);
+				xpc_connection_send_message(peer, toRet);
+				xpc_release(toRet);
 			}
 				break;
 				
 			default:
 				break;
 		}
+		[importer release];
 	}
 }
 
@@ -118,7 +146,7 @@ static void midiDebugFunc(short line, const char *file, const char *text)
 
 int main(int argc, const char *argv[])
 {
-	PPRegisterDebugFunc(midiDebugFunc);
+	//PPRegisterDebugFunc(midiDebugFunc);
 	xpc_main(MIDIImport_event_handler);
 	return 0;
 }
