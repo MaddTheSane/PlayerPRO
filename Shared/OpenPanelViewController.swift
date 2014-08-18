@@ -8,6 +8,18 @@
 
 import Cocoa
 
+func ==(lhs: OpenPanelViewController.OpenPanelViewItem, rhs: OpenPanelViewController.OpenPanelViewItem) -> Bool {
+	if lhs.theUtiType != rhs.theUtiType {
+		return false
+	} else if lhs.name != rhs.name {
+		return false
+	} else if lhs.utis != rhs.utis {
+		return false
+	} else {
+		return true
+	}
+}
+
 class OpenPanelViewController: NSViewController {
 	enum utiType: Int {
 		case allType = -1
@@ -24,7 +36,7 @@ class OpenPanelViewController: NSViewController {
 		case other
 	}
 	
-	class OpenPanelViewItem: DebugPrintable, Printable {
+	class OpenPanelViewItem: DebugPrintable, Printable, Hashable {
 		let name: String
 		let theUtiType: trackerType
 		let utis: [String]
@@ -51,6 +63,10 @@ class OpenPanelViewController: NSViewController {
 			utis = ut
 			name = nam
 		}
+		
+		var hashValue: Int { get {
+			return name.hashValue ^ theUtiType.hashValue
+			}}
 		
 		var debugDescription: String { get {
 			var des: String
