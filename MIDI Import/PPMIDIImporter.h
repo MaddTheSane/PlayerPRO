@@ -17,11 +17,13 @@
 #define kPPTotalInstruments		"Total Instruments"
 #define kPPInternalFileName		"Internal File Name"
 #define kPPFormatDescription	"FormatDescription"
+
 #define kPPMIDIErr				"Error Value"
 #define kPPMIDICall				"PlugInCall"
 #define kPPMIDIInfo				"Info"
+#define kPPLocation				"filePath"
 
-typedef NS_ENUM(NSInteger, PPMIDIImportValue) {
+typedef NS_ENUM(SInt64, PPMIDIImportValue) {
 	PPImportMIDI,
 	PPInfoMIDI,
 	PPTestMIDI

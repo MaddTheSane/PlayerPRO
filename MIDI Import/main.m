@@ -12,6 +12,26 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <AppKit/AppKit.h>
 
+static xpc_object_t NSDictionaryToXPCDictionary(NSDictionary *theIn) XPC_RETURNS_RETAINED;
+
+xpc_object_t NSDictionaryToXPCDictionary(NSDictionary *theIn)
+{
+	xpc_object_t xpcDict = xpc_dictionary_create(NULL, NULL, 0);
+	
+	for (NSString *key in theIn) {
+		id object = [theIn objectForKey:key];
+		if ([object isKindOfClass:[NSNumber class]]) {
+			xpc_dictionary_set_int64(xpcDict, [key UTF8String], [(NSNumber*)object unsignedLongLongValue]);
+		} else if ([object isKindOfClass:[NSString class]]) {
+			xpc_dictionary_set_string(xpcDict, [key UTF8String], [(NSString*)object UTF8String]);
+		} else {
+			NSCAssert(NO, @"We really shouldn't have got here!");
+		}
+	}
+	
+	return xpcDict;
+}
+
 static void MIDIImport_peer_event_handler(xpc_connection_t peer, xpc_object_t event)
 {
 	xpc_type_t type = xpc_get_type(event);
@@ -28,6 +48,32 @@ static void MIDIImport_peer_event_handler(xpc_connection_t peer, xpc_object_t ev
 	} else {
 		assert(type == XPC_TYPE_DICTIONARY);
 		// Handle the message.
+		const char *strPath = xpc_dictionary_get_string(event, kPPLocation);
+		SInt64 currentDict = xpc_dictionary_get_int64(event, kPPMIDICall);
+		MADErr currErr = noErr;
+		NSURL *currentURL = [NSURL fileURLWithFileSystemRepresentation:strPath isDirectory:NO relativeToURL:nil];
+		PPMIDIImporter *importer = [[PPMIDIImporter alloc] initWithURL:currentURL];
+		switch (currentDict) {
+			case PPTestMIDI:
+				currErr = [importer canImportMIDIFile];
+				xpc_dictionary_set_int64(event, kPPMIDIErr, currErr);
+				break;
+				
+			case PPInfoMIDI:
+			{
+				NSMutableDictionary *tmpInfoDict = [[NSMutableDictionary alloc] init];
+				currErr = [importer getMIDIInfoToDictionary:tmpInfoDict];
+				xpc_object_t xpcDict = NSDictionaryToXPCDictionary(tmpInfoDict);
+				[tmpInfoDict release];
+				xpc_dictionary_set_value(event, kPPMIDIInfo, xpcDict);
+				xpc_release(xpcDict);
+				xpc_dictionary_set_int64(event, kPPMIDIErr, currErr);
+			}
+				break;
+				
+			default:
+				break;
+		}
 	}
 }
 
