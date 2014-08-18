@@ -9,6 +9,7 @@
 import Foundation
 import PlayerPROCore
 
+// MARK: Bridges to more modern Swift code.
 #if os(OSX)
 import CoreServices
 
@@ -54,31 +55,6 @@ extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 }
 #endif
 
-extension MADDriverSettings: DebugPrintable {
-	public init() {
-		self.driverMode = .CoreAudioDriver
-		self.numChn = 4
-		self.outPutBits = 16
-		self.outPutMode = .DeluxeStereoOutPut
-		self.outPutRate = 44100
-		self.MicroDelaySize = 25
-		self.ReverbSize = 25
-		self.ReverbStrength = 25
-		self.oversampling = 1
-		self.TickRemover = false
-		self.surround = false
-		self.Reverb = false
-		self.repeatMusic = false
-		MADGetBestDriver(&self)
-	}
-	
-	public var debugDescription: String { get {
-		let onVal = "on"
-		let offVal = "off"
-		return "Driver Mode: \(driverMode), output mode: \(outPutMode); Channel count: \(numChn), output Rate: \(outPutRate), surround: \(surround == true ? onVal : offVal); micro-delay size: \(MicroDelaySize), reverb, is \(Reverb == true ? onVal: offVal), size: \(ReverbSize), strength: \(ReverbStrength); oversampling \(oversampling); repeat music: \(repeatMusic == true ? onVal : offVal); "
-		}}
-}
-
 #if false
 func &(lhs: MADBool, rhs: MADBool) -> MADBool {
 	if lhs {
@@ -115,6 +91,60 @@ func &=(inout lhs: MADBool, rhs: MADBool) {
 	lhs = lhsB & rhsB
 }
 #endif
+
+extension MADBool : BooleanLiteralConvertible, BooleanType {
+	//public typealias BooleanLiteralType = Bool
+	public init(_ v : BooleanType) {
+		if v.boolValue {
+			self = 1
+		} else {
+			self = 0
+		}
+	}
+	
+	public static func convertFromBooleanLiteral(value: BooleanLiteralType) -> MADBool {
+		if (value == true) {
+			return 1
+		} else {
+			return 0
+		}
+	}
+	
+	public var boolValue: Bool { get {
+		if (self == 0) {
+			return false
+		} else {
+			return true
+		}
+		}}
+}
+
+// MARK: PlayerPRO MAD data types
+
+extension MADDriverSettings: DebugPrintable {
+	public init() {
+		self.driverMode = .CoreAudioDriver
+		self.numChn = 4
+		self.outPutBits = 16
+		self.outPutMode = .DeluxeStereoOutPut
+		self.outPutRate = 44100
+		self.MicroDelaySize = 25
+		self.ReverbSize = 25
+		self.ReverbStrength = 25
+		self.oversampling = 1
+		self.TickRemover = false
+		self.surround = false
+		self.Reverb = false
+		self.repeatMusic = false
+		MADGetBestDriver(&self)
+	}
+	
+	public var debugDescription: String { get {
+		let onVal = "on"
+		let offVal = "off"
+		return "Driver Mode: \(driverMode), output mode: \(outPutMode); Channel count: \(numChn), output Rate: \(outPutRate), surround: \(surround == true ? onVal : offVal); micro-delay size: \(MicroDelaySize), reverb, is \(Reverb == true ? onVal: offVal), size: \(ReverbSize), strength: \(ReverbStrength); oversampling \(oversampling); repeat music: \(repeatMusic == true ? onVal : offVal); "
+		}}
+}
 
 extension PPInfoRec: DebugPrintable {
 	
@@ -169,6 +199,17 @@ extension sData32 {
 		self.data = 0
 	}
 	
+	public var bigEndian: sData32 { get {
+		var toRet = self
+		toRet.size = self.size.bigEndian
+		toRet.loopBeg = self.loopBeg.bigEndian
+		toRet.loopSize = self.loopBeg.bigEndian
+		toRet.c2spd = self.c2spd.bigEndian
+		//Not byte-swapping data, as it isn't used
+		
+		return toRet
+	}}
+
 	public var toSData : sData { get {
 		var toRet = sData()
 		toRet.size = self.size
@@ -203,6 +244,17 @@ private func iterate<C,R>(t:C, block:(String,Any)->R) {
 extension sData {
 	public static let MaxVolume: MADByte = 64
 	public static let NoFineTune: UInt16 = 8363
+
+	public var bigEndian: sData { get {
+		var toRet = self
+		toRet.size = self.size.bigEndian
+		toRet.loopBeg = self.loopBeg.bigEndian
+		toRet.loopSize = self.loopBeg.bigEndian
+		toRet.c2spd = self.c2spd.bigEndian
+		//Not byte-swapping data, as it isn't used
+		
+		return toRet
+	}}
 
 	public var toSData32 : sData32 { get {
 		var toRet = sData32()
@@ -272,31 +324,62 @@ extension sData {
 	}
 }
 
-extension MADBool : BooleanLiteralConvertible, BooleanType {
-	//public typealias BooleanLiteralType = Bool
-	public init(_ v : BooleanType) {
-		if v.boolValue {
-			self = 1
-		} else {
-			self = 0
-		}
+extension EnvRec {
+	public init() {
+		pos = 0
+		val = 0
 	}
-	
-	public static func convertFromBooleanLiteral(value: BooleanLiteralType) -> MADBool {
-		if (value == true) {
-			return 1
-		} else {
-			return 0
-		}
+
+	public var bigEndian: EnvRec {get {
+		var toRet = EnvRec(pos: self.pos.bigEndian, val: self.val.bigEndian)
+		
+		return toRet
+	}}
+}
+
+extension FXBus {
+	public init() {
+		Active = false
+		ByPass = false
+		copyId = 0
 	}
-	
-	public var boolValue: Bool { get {
-		if (self == 0) {
-			return false
-		} else {
-			return true
-		}
-		}}
+	public var bigEndian: FXBus {get {
+		var toRet = FXBus(ByPass: self.ByPass, copyId: self.copyId.bigEndian, Active: self.Active)
+		
+		return toRet
+	}}
+}
+
+extension InstrData {
+	public var bigEndian: InstrData {get {
+		var toRet = self;
+		toRet.numSamples = self.numSamples.bigEndian
+		toRet.firstSample = self.firstSample.bigEndian
+		toRet.volFade = self.volFade.bigEndian
+		
+		toRet.MIDI = self.MIDI.bigEndian
+		toRet.MIDIType = self.MIDIType.bigEndian
+		
+		toRet.volEnv = (self.volEnv.0.bigEndian, self.volEnv.1.bigEndian,
+			self.volEnv.2.bigEndian, self.volEnv.3.bigEndian, self.volEnv.4.bigEndian,
+			self.volEnv.5.bigEndian, self.volEnv.6.bigEndian, self.volEnv.7.bigEndian,
+			self.volEnv.8.bigEndian, self.volEnv.9.bigEndian, self.volEnv.10.bigEndian,
+			self.volEnv.11.bigEndian)
+		
+		toRet.pannEnv = (self.pannEnv.0.bigEndian, self.pannEnv.1.bigEndian,
+			self.pannEnv.2.bigEndian, self.pannEnv.3.bigEndian, self.pannEnv.4.bigEndian,
+			self.pannEnv.5.bigEndian, self.pannEnv.6.bigEndian, self.pannEnv.7.bigEndian,
+			self.pannEnv.8.bigEndian, self.pannEnv.9.bigEndian, self.pannEnv.10.bigEndian,
+			self.pannEnv.11.bigEndian)
+
+		toRet.pitchEnv = (self.pitchEnv.0.bigEndian, self.pitchEnv.1.bigEndian,
+			self.pitchEnv.2.bigEndian, self.pitchEnv.3.bigEndian, self.pitchEnv.4.bigEndian,
+			self.pitchEnv.5.bigEndian, self.pitchEnv.6.bigEndian, self.pitchEnv.7.bigEndian,
+			self.pitchEnv.8.bigEndian, self.pitchEnv.9.bigEndian, self.pitchEnv.10.bigEndian,
+			self.pitchEnv.11.bigEndian)
+		
+		return toRet
+	}}
 }
 
 extension Cmd {
@@ -320,7 +403,19 @@ extension PatData {
 	}
 }
 
-//#pragma mark Plug-in functions
+extension PatHeader {
+	public var bigEndian: PatHeader {get {
+		var toRet = self
+		toRet.size = self.size.bigEndian
+		toRet.compMode = self.compMode.bigEndian
+		toRet.patBytes = self.patBytes.bigEndian
+		toRet.unused2 = self.unused2.bigEndian
+		
+		return toRet
+	}}
+}
+
+// MARK: Plug-in functions
 
 extension Pcmd {
 	public mutating func getCommand(row: Int16, track: Int16) -> UnsafeMutablePointer<Cmd> {
@@ -351,4 +446,3 @@ var kPlayerPRODigitalPlugTypeID: CFUUID { get{
 var kPlayerPRODigitalPlugInterfaceID: CFUUID { get{
 	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x34, 0xBA, 0x67, 0x5D, 0x3E, 0xD8, 0x49, 0xF9, 0x8D, 0x06, 0x28, 0xA7, 0x43, 0x6A, 0x0E, 0x4D)
 }}
-
