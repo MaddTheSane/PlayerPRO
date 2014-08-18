@@ -334,7 +334,6 @@
 		5578C4AA17D9E8B50057D11B /* Okta.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 558687DE10BF620500FCC24D /* Okta.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C4AB17D9E8B50057D11B /* S3M.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C4AE17D9E8B50057D11B /* XM.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		5578C4B017D9E8B50057D11B /* APPL.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C4B217DA4AA90057D11B /* PPMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D1BD5E120FBE51004FD083 /* PPMusicList.m */; };
 		5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
@@ -612,7 +611,6 @@
 		55ECD2961993017800480788 /* net.sourceforge.playerpro.MIDI-Import.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 55ECD2751992C2ED00480788 /* net.sourceforge.playerpro.MIDI-Import.xpc */; };
 		55ECD297199301AB00480788 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55ECD298199301BA00480788 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
-		55ECD299199304D700480788 /* MIDI.ppextimp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppextimp */; };
 		55EE2D8817E12F9300FED42A /* Amplitude.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE43410E06BF200177B4C /* Amplitude.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EE2D8917E12F9300FED42A /* Depth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6A410E0886400177B4C /* Depth.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EE2D8A17E12F9300FED42A /* Echo.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6E510E0886A00177B4C /* Echo.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -1628,7 +1626,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				55ECD299199304D700480788 /* MIDI.ppextimp in Copy Plug-ins */,
 				5517DAC5180CAD61001413D0 /* ULT.ppimpexp in Copy Plug-ins */,
 				5578C4A017D9E8B50057D11B /* MOD.ppimpexp in Copy Plug-ins */,
 				5578C4A117D9E8B50057D11B /* 669.ppimpexp in Copy Plug-ins */,
@@ -1643,7 +1640,6 @@
 				5578C4AA17D9E8B50057D11B /* Okta.ppimpexp in Copy Plug-ins */,
 				5578C4AB17D9E8B50057D11B /* S3M.ppimpexp in Copy Plug-ins */,
 				5578C4AE17D9E8B50057D11B /* XM.ppimpexp in Copy Plug-ins */,
-				5578C4B017D9E8B50057D11B /* APPL.ppimpexp in Copy Plug-ins */,
 			);
 			name = "Copy Plug-ins";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4779,7 +4775,7 @@
 				5578C49F17D9E8A30057D11B /* Copy Plug-ins */,
 				55680A321904661E00F7616D /* Copy XPC Services */,
 				5578C4F417DA996C0057D11B /* Copy Spotlight */,
-				55F41A3017EF8A8E00605DF8 /* Strip Headers */,
+				55F41A3017EF8A8E00605DF8 /* Strip Private Headers */,
 			);
 			buildRules = (
 			);
@@ -5396,7 +5392,7 @@
 				55CBFB3711EB780B0028C6BB /* Copy PlugIns */,
 				5573A1611658A3B800A5AECA /* Copy Frameworks */,
 				55BE99DE17978E4400D6DECC /* Copy Spotlight Importer */,
-				55F41A3117EF8C2000605DF8 /* Strip Headers */,
+				55F41A3117EF8C2000605DF8 /* Strip Private Headers */,
 				55A158F519955BA900968953 /* Embed XPC Services */,
 			);
 			buildRules = (
@@ -6110,33 +6106,33 @@
 			shellPath = /bin/sh;
 			shellScript = "cd $SRCROOT\n\n\"$TARGET_BUILD_DIR\"/$PRODUCT_NAME Cocoa-Info.plist Cocoa\ntouch -amfc Cocoa-Info.plistvers.plist\n\n\"$TARGET_BUILD_DIR\"/$PRODUCT_NAME \"PlayerPRO Player/PlayerPRO Player-Info.plist\" player\ntouch -amfc \"PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist\"\n\n\"$TARGET_BUILD_DIR\"/$PRODUCT_NAME \"iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plist\" player\ntouch -amfc \"iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plistvers.plist\"\n\n";
 		};
-		55F41A3017EF8A8E00605DF8 /* Strip Headers */ = {
+		55F41A3017EF8A8E00605DF8 /* Strip Private Headers */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Strip Headers";
+			name = "Strip Private Headers";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Remove all headers from copied frameworks\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"Headers\" -print0 | xargs -0 rm -rf\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"PrivateHeaders\" -print0 | xargs -0 rm -rf\n";
+			shellScript = "# Remove all headers from copied frameworks\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"PrivateHeaders\" -print0 | xargs -0 rm -rf\n";
 		};
-		55F41A3117EF8C2000605DF8 /* Strip Headers */ = {
+		55F41A3117EF8C2000605DF8 /* Strip Private Headers */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Strip Headers";
+			name = "Strip Private Headers";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Remove all headers from copied frameworks\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"Headers\" -print0 | xargs -0 rm -rf\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"PrivateHeaders\" -print0 | xargs -0 rm -rf\n";
+			shellScript = "# Remove all headers from copied frameworks\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"PrivateHeaders\" -print0 | xargs -0 rm -rf\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -1,12 +1,12 @@
-explicit module PlayerPROCore.MADDriverInt {
+explicit module PlayerPROCore.DriverInt {
 	header "RDriverInt.h"
-	use MADDefines
+	use Defines
 	export *
 }
 
-explicit module PlayerPROCore.MADMADDriver {
+explicit module PlayerPROCore.MADDriver {
 	private header "MADDriver.h"
-	use MADDriver
+	use Driver
 	export *
 }
 

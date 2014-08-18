@@ -33,6 +33,8 @@
 
 typedef OSErr (*RPlaySoundUPP)(MADDriverRec *theRec, char *, long, int, int, int, long, long, unsigned int, Boolean);
 
+#pragma pack(push, 2)
+
 typedef struct Pcmd {
 	short	tracks;		// number of tracks in myCmd[]
 	short	length;		// number of rows in myCmd[]
@@ -41,6 +43,8 @@ typedef struct Pcmd {
 	int		structSize;	// struct size in bytes - see Definition
 	Cmd		myCmd[];
 } Pcmd;
+
+#pragma pack(pop)
 
 #ifdef __cplusplus
 extern "C" {
