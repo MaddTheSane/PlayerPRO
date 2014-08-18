@@ -1,33 +1,33 @@
 framework module PlayerPROCore {
 	umbrella header "PlayerPROCore.h"
 	
-	module Defines {
+	module MADDefines {
 		header "PPDefs.h"
 		export *
 	}
 
-	module FileUtilities {
+	module MADFileUtilities {
 		header "FileUtils.h"
-		use Defines
+		use MADDefines
 		export *
 	}
 	
-	module MAD {
+	module MADStructures {
 		header "MAD.h"
-		use Defines
+		use MADDefines
 		export *
 	}
 	
-	module Driver {
+	module MADDriver {
 		header "RDriver.h"
-		use Defines
-		use MAD
+		use MADDefines
+		use MADStructures
 		export *
 	}
 	
-	module PlugIns {
+	module MADPlugIns {
 		header "PPPlug.h"
-		use Driver
+		use MADDriver
 		export *
 	}
 	

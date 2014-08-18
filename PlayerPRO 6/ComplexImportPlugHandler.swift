@@ -10,6 +10,7 @@ import Cocoa
 import PlayerPROKit
 
 final class ComplexImportPlugHandler: NSObject, NSFastEnumeration {
+	
 	var plugIns = [PPComplexImportPlugObject]()
 	override init() {
 		let defaultPlugLocs = DefaultPlugInLocations() as [NSURL]
@@ -22,17 +23,7 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration {
 					continue
 				}
 				var theBundle = NSBundle(URL: component);
-				var theMainClass: AnyClass! = theBundle.principalClass
-				if theMainClass == nil {
-					continue
-				}
-				//if var hil = theMainClass is PPComplexImportPlugObject.Type {
-				//	continue
-				//} else {
-				//	var theActualClass = theMainClass as? PPComplexImportPlugObject.Type
-				//}
-
-				//var theBundleClass: PPComplexImportPlugObject = PPComplexImportPlugObject(bundle:theBundle)
+				var aPlug = PPComplexImportPlugObject(bundle: theBundle)
 			}
 		}
 		
