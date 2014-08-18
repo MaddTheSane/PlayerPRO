@@ -3,3 +3,4 @@
 //
 
 #import "PPComplexImportPlugInterface.h"
+#import "PPMIDIImporter.h"

@@ -162,6 +162,23 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return madInfo;
 }
 
+- (instancetype)initWithMusicStruct:(MADMusic*)theStruct
+{
+	return [self initWithMusicStruct:theStruct copy:YES];
+}
+
+- (instancetype)initWithMusicStruct:(MADMusic*)theStruct copy:(BOOL)copyData
+{
+	if (self = [super init]) {
+		if (copyData) {
+			currentMusic = DeepCopyMusic(theStruct);
+		} else {
+			currentMusic = theStruct;
+		}
+	}
+	return self;
+}
+
 - (instancetype)initWithURL:(NSURL *)url
 {
 	if (self = [super init]) {
@@ -280,6 +297,27 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	copyWrap.patterns = [[NSMutableArray alloc] initWithArray:_patterns copyItems:YES];
 	return copyWrap;
 }
+
+#if 0
+- (void)setUpObjCStructures
+{
+	int i;
+	self.internalFileName = [NSString stringWithCString:currentMusic->header->name encoding:NSMacOSRomanStringEncoding];
+	self.madInfo = [NSString stringWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
+	self.madAuthor = @"";
+	self.madType = currentMusic->header->MAD;
+	self.instruments = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU];
+	for (i = 0; i < MAXINSTRU; i++) {
+		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:self instrumentIndex:i];
+		[self.instruments addObject:insObj];
+	}
+	self.patterns = [[NSMutableArray alloc] initWithCapacity:currentMusic->header->numPat];
+	for (i = 0; i < currentMusic->header->numPat; i++) {
+		PPPatternObject *obj = [[PPPatternObject alloc] initWithMusic:self patternAtIndex:i];
+		[self.patterns addObject:obj];
+	}
+}
+#endif
 
 - (BOOL)addInstrument:(PPInstrumentObject*)theIns
 {

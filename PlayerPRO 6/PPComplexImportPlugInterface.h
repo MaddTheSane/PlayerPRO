@@ -21,6 +21,6 @@ typedef void (^PPComplexImportHandler)(void);
 
 @end
 
-@protocol PPComplexImportPlugInterface <PPComplexImportPlugInterfaceBase>
+@protocol PPComplexImportPlugInterface <PPComplexImportPlugInterfaceBase, NSObject>
 - (instancetype)init;
 @end

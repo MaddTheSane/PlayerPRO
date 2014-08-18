@@ -15,6 +15,24 @@
 
 @implementation PPComplexImportPlugObject
 
+- (BOOL)respondsToSelector:(SEL)aSelector
+{
+#define HandleSelector(aSel) \
+if (aSelector == @selector( aSel )) { \
+	if ([_plugInterface respondsToSelector:@selector( aSel)]) { \
+		return YES; \
+	} else {\
+		return NO; \
+	}\
+}
+	HandleSelector(canImportURL:error:);
+	HandleSelector(getTrackerInformationFromURL:);
+	HandleSelector(getTrackerInformationFromURL:error:);
+	
+	return [super respondsToSelector:aSelector];
+#undef HandleSelector
+}
+
 - (instancetype)initWithBundle:(NSBundle*)ourBundle
 {
 	if (self = [super init]) {
@@ -23,6 +41,7 @@
 			return nil;
 		}
 		self.ourBundle = ourBundle;
+		self.plugInterface = [[bundClass alloc] init];
 	}
 	return self;
 }
@@ -35,6 +54,21 @@
 - (void)beginImportOfURL:(NSURL *)theURL withHandler:(PPComplexImportHandler)handler
 {
 	[self.plugInterface beginImportOfURL:theURL withHandler:handler];
+}
+
+- (BOOL)canImportURL:(NSURL*)theURL error:(out NSError**)outErr
+{
+	return [_plugInterface canImportURL:theURL error:outErr];
+}
+
+- (NSDictionary*)getTrackerInformationFromURL:(NSURL*)theURL
+{
+	return [_plugInterface getTrackerInformationFromURL:theURL];
+}
+
+- (NSDictionary*)getTrackerInformationFromURL:(NSURL*)theURL error:(out NSError**)outErr
+{
+	return [_plugInterface getTrackerInformationFromURL:theURL error:outErr];
 }
 
 @end

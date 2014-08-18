@@ -19,6 +19,15 @@
 /**************************************************************************
  **************************************************************************/
 
+#define kPPTotalPatterns @"Total Patterns"
+#define kPPPartitionLength @"Partition Length"
+#define kPPFileSize @"File Size"
+#define kPPSignature @"Signature"
+#define kPPTotalTracks @"Total Tracks"
+#define kPPTotalInstruments @"Total Instruments"
+#define kPPInternalFileName @"Internal File Name"
+#define kPPFormatDescription @"FormatDescription"
+
 static unsigned char* MYC2PStr(Ptr cStr)
 {
 	long length = strlen(cStr);
@@ -61,28 +70,17 @@ void CreateResult(Ptr aPtr)
 
 void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init);
 
-@interface PPMIDIImporter ()
-@property (retain) NSURL *internalURL;
-@end
-
 @implementation PPMIDIImporter
 
-- (void)dealloc
++ (instancetype)sharedImporter
 {
-	self.internalURL = nil;
-	
-	[super dealloc];
+	static dispatch_once_t onceToken;
+	static PPMIDIImporter *shared;
+	dispatch_once(&onceToken, ^{
+		shared = [PPMIDIImporter new];
+	});
+	return shared;
 }
-
-- (instancetype)initWithURL:(NSURL *)theURL
-{
-	if (self = [super init]) {
-		self.internalURL = theURL;
-	}
-	return self;
-}
-
-@synthesize internalURL;
 
 + (MADErr)fillData:(NSMutableData*)theData withMusic:(MADMusic*)music
 {
@@ -183,77 +181,86 @@ void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init)
 	return theErr;
 }
 
-- (MADErr)importMIDIFileToData:(out NSData**)reply;
+- (void)importMIDIFileAtURL:(NSURL*)theURL withReply:(void (^)(NSData *, MADErr error))reply
 {
 	MADErr theErr = MADNoErr;
 	MADDriverSettings init = {0};
-	if (!reply) {
-		return MADParametersErr;
-	}
-	MADMusic *MadFile = malloc(sizeof(MADMusic));
+	MADMusic MadFile = {0};
 	NSMutableData *madData = [[NSMutableData alloc] initWithCapacity:128];
-	NSData *fileData = [[NSData alloc] initWithContentsOfURL:internalURL options:0 error:NULL];
+	NSData *fileData = [[NSData alloc] initWithContentsOfURL:theURL options:NSDataReadingMappedIfSafe error:NULL];
 	if (!fileData) {
-		return MADReadingErr;
+		reply(nil, theErr);
+		return;
 	}
 	const void *AlienFile = [fileData bytes];
 	theErr = TestMIDIFile(AlienFile);
 	if (theErr != MADNoErr) {
 		[fileData release];
-		return theErr;
+		reply(nil, theErr);
+		return;
 	}
-	ConvertMidiFile(AlienFile, MadFile, &init);
+	ConvertMidiFile(AlienFile, &MadFile, &init);
 	[fileData release];
 	
-	theErr = [PPMIDIImporter fillData:madData withMusic:MadFile];
-	*reply = madData;
-	MADDisposeMusic(&MadFile, NULL);
+	theErr = [PPMIDIImporter fillData:madData withMusic:&MadFile];
+	
+	reply(madData, theErr);
 	[madData autorelease];
-	return theErr;
 }
 
-- (MADErr)getMIDIInfoToDictionary:(NSMutableDictionary*)reply;
+- (void)getMIDIInfoFromFileAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary *, MADErr error))reply
 {
 	PPInfoRec theInfo = {0};
 	MADErr theErr = MADNoErr;
-	NSDictionary *fileInfo = [internalURL resourceValuesForKeys:@[NSURLFileSizeKey] error:NULL];
+	NSDictionary *fileInfo = [theURL resourceValuesForKeys:@[NSURLFileSizeKey] error:NULL];
 	if (!fileInfo) {
-		return MADReadingErr;
+		reply(nil, MADReadingErr);
+		return;
 	}
-	NSData *fileData = [[NSData alloc] initWithContentsOfURL:internalURL options:NSDataReadingMappedIfSafe error:NULL];
+	NSData *fileData = [[NSData alloc] initWithContentsOfURL:theURL options:NSDataReadingMappedIfSafe error:NULL];
 	if (!fileData) {
-		return MADReadingErr;
+		reply(nil, MADReadingErr);
+		return;
 	}
 	theErr = ExtractMIDIInfo(&theInfo, [fileData bytes]);
 	[fileData release];
 	if (theErr) {
-		return theErr;
+		reply(nil, theErr);
+		return;
 	}
 	theInfo.fileSize = [[fileInfo objectForKey:NSURLFileSizeKey] longValue];
 	NSDictionary *PPInfoDict;
 	@autoreleasepool {
-		PPInfoDict = [@{@kPPTotalPatterns:		@(theInfo.totalPatterns),
-						@kPPPartitionLength:	@(theInfo.partitionLength),
-						@kPPFileSize:			@(theInfo.fileSize),
-						@kPPSignature:			@(theInfo.signature),
-						@kPPTotalTracks:		@(theInfo.totalTracks),
-						@kPPTotalInstruments:	@(theInfo.totalInstruments),
-						@kPPInternalFileName:	[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding],
-						@kPPFormatDescription:	[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]} retain];
+		PPInfoDict = [@{kPPTotalPatterns:		@(theInfo.totalPatterns),
+						kPPPartitionLength:		@(theInfo.partitionLength),
+						kPPFileSize:			@(theInfo.fileSize),
+						kPPSignature:			@(theInfo.signature),
+						kPPTotalTracks:			@(theInfo.totalTracks),
+						kPPTotalInstruments:	@(theInfo.totalInstruments),
+						kPPInternalFileName:	[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding],
+						kPPFormatDescription:	[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]} retain];
 	}
-	[reply addEntriesFromDictionary:PPInfoDict];
+	reply(PPInfoDict, MADNoErr);
 	[PPInfoDict autorelease];
-	return MADNoErr;
 }
 
-- (MADErr)canImportMIDIFile
+- (void)canImportMIDIFileAtURL:(NSURL*)theURL withReply:(void (^)(MADErr error))reply
 {
 	MADErr myErr = noErr;
-	NSData *fileData = [[NSData alloc] initWithContentsOfURL:internalURL options:NSDataReadingMappedIfSafe error:NULL];
+	NSData *fileData = [[NSData alloc] initWithContentsOfURL:theURL options:NSDataReadingMappedIfSafe error:NULL];
 
 	myErr = TestMIDIFile([fileData bytes]);
 	[fileData release];
-	return myErr;
+	reply(myErr);
+}
+
+- (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection
+{
+	newConnection.exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPMIDIImportHelper)];
+	newConnection.exportedObject = self;
+	[newConnection resume];
+	
+	return YES;
 }
 
 @end

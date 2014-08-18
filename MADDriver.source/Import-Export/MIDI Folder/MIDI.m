@@ -7,9 +7,9 @@
 //
 
 #include <Cocoa/Cocoa.h>
-#include <xpc/xpc.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 #import "PPMIDIImporter.h"
 
 static MADErr MADReadMAD(MADMusic *MDriver, const void* MADPtr)
@@ -198,57 +198,15 @@ static MADErr MADReadMAD(MADMusic *MDriver, const void* MADPtr)
 extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
 {
 	__block MADErr theErr = MADOrderNotImplemented;
-	xpc_connection_t conn = xpc_connection_create("net.sourceforge.playerpro.MIDI-Import", dispatch_get_main_queue());
+	NSXPCConnection *conn = [[NSXPCConnection alloc] initWithServiceName:@"net.sourceforge.playerpro.MIDI-Import"];
+	conn.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPMIDIImportHelper)];
 	
 	NSURL *ourURL = [[NSURL alloc] initFileURLWithFileSystemRepresentation:AlienFileName isDirectory:NO relativeToURL:nil];
-	xpc_object_t xpcURL = xpc_string_create([ourURL fileSystemRepresentation]);
-	const char * const keys[] = {kPPLocation};
-	xpc_object_t values[] = {xpcURL};
-	xpc_object_t theDict = xpc_dictionary_create(keys, values, 1);
 	
-	xpc_object_t retVal;
-
-	xpc_connection_set_event_handler(conn, ^(xpc_object_t event) {
-		xpc_type_t type = xpc_get_type(event);
-		
-		if (type == XPC_TYPE_ERROR) {
-			if (event == XPC_ERROR_CONNECTION_INTERRUPTED) {
-				// The service has either cancaled itself, crashed, or been
-				// terminated.  The XPC connection is still valid and sending a
-				// message to it will re-launch the service.  If the service is
-				// state-full, this is the time to initialize the new service.
-			}
-			
-			else if (event == XPC_ERROR_CONNECTION_INVALID) {
-				// The service is invalid. Either the service name supplied to
-				// xpc_connection_create() is incorrect or we (this process) have
-				// canceled the service; we can do any cleanup of appliation
-				// state at this point.
-				NSLog(@"Uh oh, connection invalid");
-				//xpc_release(serviceConnection);
-				//serviceConnection = nil;
-				//xpc_release(stack);
-				//stack = NULL;
-			}
-			
-			else {
-				NSLog(@"Unknown XPC error.");
-			}
-		}
-	});
-	xpc_connection_resume(conn);
-	
+	[conn resume];
 	switch (order) {
 		case MADPlugInfo:
 		{
-			xpc_dictionary_set_int64(theDict, kPPMIDICall, PPInfoMIDI);
-			xpc_connection_send_message_with_reply(conn, theDict, dispatch_get_global_queue(0, 0),  ^(xpc_object_t object) {
-			theErr = xpc_dictionary_get_int64(retVal, kPPMIDIErr);
-			xpc_object_t ppInfo = xpc_dictionary_get_value(retVal, kPPMIDIInfo);
-
-			});
-#if 0
-			dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create(0);
 			[[conn remoteObjectProxy] getMIDIInfoFromFileAtURL:ourURL withReply:^(NSDictionary * ppInfo, MADErr error) {
 				if (error) {
 					theErr = error;
@@ -266,57 +224,33 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 					[internalFileName getCString:info->internalFileName maxLength:60 encoding:NSMacOSRomanStringEncoding];
 					[formatDescription getCString:info->internalFileName maxLength:60 encoding:NSMacOSRomanStringEncoding];
 				}
-				dispatch_semaphore_signal(sessionWaitSemaphore);
 				[conn invalidate];
 			}];
-			dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
-#endif
 		}
 			break;
 			
 		case MADPlugTest:
 		{
-			xpc_dictionary_set_int64(theDict, kPPMIDICall, PPTestMIDI);
-			xpc_connection_send_message_with_reply(conn, theDict, NULL,  ^(xpc_object_t object) {
-				theErr = xpc_dictionary_get_int64(retVal, kPPMIDIErr);
-
-			});
-#if 0
-			dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create(0);
 			[[conn remoteObjectProxy] canImportMIDIFileAtURL:ourURL withReply:^(MADErr error) {
 				theErr = error;
 				[conn invalidate];
-				dispatch_semaphore_signal(sessionWaitSemaphore);
 			}];
-			dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
-#endif
 		}
 			break;
 			
 		case MADPlugImport:
 		{
-			xpc_dictionary_set_int64(theDict, kPPMIDICall, PPImportMIDI);
-			retVal = xpc_connection_send_message_with_reply_sync(conn, theDict);
-			theErr = xpc_dictionary_get_int64(retVal, kPPMIDIErr);
-#if 0
-			dispatch_semaphore_t sessionWaitSemaphore = dispatch_semaphore_create(0);
 			[[conn remoteObjectProxy] importMIDIFileAtURL:ourURL withReply:^(NSData *fileData, MADErr error) {
-				if (error == MADNoErr) {
-					NSData *aTmpData = fileData;
-					theErr = MADReadMAD(MadFile, [aTmpData bytes]);
-					aTmpData = nil;
-				} else {
-					theErr = error;
-				}
+				MADMusic *theNewMusic = malloc(sizeof(MADMusic));
+				MADReadMAD(theNewMusic, [fileData bytes]);
+				PPMusicObject *outObj = [[PPMusicObject alloc] initWithMusicStruct:theNewMusic copy:NO];
 				[conn invalidate];
-				dispatch_semaphore_signal(sessionWaitSemaphore);
 			}];
-			dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER);
-#endif
 		}
 			
 		default:
 			theErr = MADOrderNotImplemented;
+			[conn invalidate];
 			break;
 	}
 	
