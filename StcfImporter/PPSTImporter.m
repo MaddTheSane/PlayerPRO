@@ -99,7 +99,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:theNo];
 	
-	for(i = 0; i < theNo * 2; i += 2) {
+	for (i = 0; i < theNo * 2; i += 2) {
 		StringPtr aStr, aStr2;
 		aStr = GetStringFromHandle(aHandle, i);
 		aStr2 = GetStringFromHandle(aHandle, i + 1);

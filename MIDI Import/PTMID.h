@@ -75,15 +75,16 @@ typedef struct { /** MS structure represents a mix of samples **/
 	SI *psi;
 } MS;
 
-extern char bDrumch, szId[5];
-extern int fNocopy, fQuiet, fExtend, fStats, wPatmax, wMaxchan, wQuantval;
-extern int wRgmode, wModfmt;
-extern unsigned wQuant;
-extern SI *rgpsiDrum[128], **rgppsiIns[129], *psiTree;
-extern Sz szTitle, szProgram;
-extern MS rgmsDecided[MAXSAMPS];
-extern Fn fnSampath;
-extern Ptr	ResultText;
+extern char		bDrumch, szId[5];
+extern int		fNocopy, fQuiet, fExtend, fStats, wPatmax, wMaxchan, wQuantval;
+extern int		wRgmode, wModfmt;
+extern unsigned	wQuant;
+extern SI		*rgpsiDrum[128], **rgppsiIns[129], *psiTree;
+extern Sz		szTitle, szProgram;
+extern MS		rgmsDecided[MAXSAMPS];
+extern Fn		fnSampath;
+extern Ptr		ResultText;
+extern Boolean	UseQKIns;
 
 Tune *PtuneLoadFn(Sz, short*);
 

@@ -112,7 +112,7 @@ void Settings()
 /*
  * main: Parses arguments to program and opens appropriate MOD and MID files.
  */
-void ConvertMidiFile(char *src, MADMusic *theMAD, MADDriverSettings *init)
+void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short	channels;
 	Tune 	*ptuneMusic;
