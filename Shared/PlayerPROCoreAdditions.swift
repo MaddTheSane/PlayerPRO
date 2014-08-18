@@ -18,7 +18,7 @@ extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 	public var stringValue: String {
 		get {
 			let toRet = UTCreateStringForOSType(self as OSType).takeRetainedValue()
-			return toRet as NSString
+			return toRet as NSString as String
 		}}
 	
 	public init(_ toInit: String) {

@@ -63,7 +63,7 @@ import Cocoa
 		aCoder.encodeObject(theIndexSet, forKey: PPMLDCUTI)
 	}
 	
-	convenience required init(coder aDecoder: NSCoder!) {
+	convenience required init(coder aDecoder: NSCoder) {
 		self.init(indexSet:aDecoder.decodeObjectForKey(PPMLDCUTI) as NSIndexSet)
 	}
 	

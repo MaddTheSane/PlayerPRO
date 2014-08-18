@@ -24,7 +24,7 @@ func ==(lhs: PlugInInfo, rhs: PlugInInfo) -> Bool {
 	}
 }
 
-final class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
+class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
 	/*@NSCopying */ private(set) var plugName: String
 	private(set) var authorName: String
 	private(set) var plugType: String
@@ -64,7 +64,7 @@ final class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
 	}}
 	
 	override func isEqual(object: AnyObject!) -> Bool {
-		if (!object) {
+		if (object == nil) {
 			return false
 		}
 		if (object === self) {

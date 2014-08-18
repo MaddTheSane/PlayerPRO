@@ -13,14 +13,16 @@
 #define NS_DESIGNATED_INITIALIZER
 #endif
 
-#define kPPTotalPatterns @"Total Patterns"
-#define kPPPartitionLength @"Partition Length"
-#define kPPFileSize @"File Size"
-#define kPPSignature @"Signature"
-#define kPPTotalTracks @"Total Tracks"
-#define kPPTotalInstruments @"Total Instruments"
-#define kPPInternalFileName @"Internal File Name"
-#define kPPFormatDescription @"FormatDescription"
+__BEGIN_DECLS
+extern NSString * const kPPTotalPatterns;
+extern NSString * const kPPPartitionLength;
+extern NSString * const kPPFileSize;
+extern NSString * const kPPSignature;
+extern NSString * const kPPTotalTracks;
+extern NSString * const kPPTotalInstruments;
+extern NSString * const kPPInternalFileName;
+extern NSString * const kPPFormatDescription;
+__END_DECLS
 
 @interface PPLibraryObject : NSObject
 @property (readonly, copy) NSString *menuName;
