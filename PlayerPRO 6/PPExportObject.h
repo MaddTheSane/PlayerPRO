@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <PlayerPROCore/PPDefs.h>
 
-typedef OSErr (^PPExportBlock)(NSURL* theURL, NSString **errStr);
+typedef MADErr (^PPExportBlock)(NSURL* theURL, NSString **errStr);
 
 @protocol PPExportObjectDelegate;
 

@@ -36,6 +36,7 @@
 @property (copy) NSString *musicName;
 @property (copy) NSString *musicInfo;
 @property (copy) NSString *authorString;
+
 - (PPMusicObject*)wrapper;
 
 - (void)importMusicObject:(PPMusicObject*)theObj;

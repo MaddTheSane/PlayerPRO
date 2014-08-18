@@ -3,9 +3,7 @@
 //
 
 #import "PPPlugInCommon.h"
-#include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
-#include "PPByteswap.h"
+//#include "PPByteswap.h"
 
 #import "UserDefaultKeys.h"
 #import "PPTimeFormatter.h"
@@ -17,3 +15,4 @@
 #import "PPFilterPlugHandler.h"
 #import "PPInstrumentPlugHandler.h"
 #import "PPPreferences.h"
+#import "PPComplexImportPlugObject.h"
