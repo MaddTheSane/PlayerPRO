@@ -371,7 +371,7 @@ typedef struct PPInfoRec {
 /*** 			Informations about Plugs: ThePlug[]				***/
 /********************						***********************/
 
-typedef MADENUM(MADFourChar, PPPlugModes) {
+typedef MADENUM(MADFourChar, MADPlugModes) {
 	MADPlugImport =				'IMPL',
 	MADPlugExport =				'EXPL',
 	MADPlugInfo =				'INFO',
@@ -579,13 +579,27 @@ PPEXPORT void	PPDebugStr(short line, const char* file, const char* text);
 	
 /*!
  *	@function	PPRegisterDebugFunc
- *	@abstract	used to set a delegate for PPDebugStr
+ *	@abstract	used to set a callback for PPDebugStr
  *	@param		debugFunc
- *				The function to call when PPDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling abort()
+ *				The function to call when PPDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling \c abort()
  *	@discussion	Use this function to call your own debug function when PPDebugStr is called, otherwise calls to PPDebugStr will crash your app.
- *				You can reset to the default PPDebugStr implementation by calling this function with NULL.
+ *				You can reset to the default PPDebugStr implementation by calling this function and passing \c NULL to it.
  */
 PPEXPORT void	PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*));
+
+#ifdef __BLOCKS__
+/*!
+ *	@function	PPRegisterDebugBlock
+ *	@abstract	used to set a callback for PPDebugStr
+ *	@param		newdebugBlock
+ *				The block to call when PPDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling \c abort()
+ *	@discussion	Use this function to call your own debug function when PPDebugStr is called, otherwise calls to PPDebugStr will crash your app.
+ *				You can reset to the default PPDebugStr implementation by calling this function and passing \c NULL to it.
+ *				This function is only available if your compiler supports blocks (Clang), otherwise it is unavailable.
+ *				If PlayerPROCore was built without blocks support and you try to call this function, the linker won't be able to find the function.
+ */
+PPEXPORT void PPRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*));
+#endif
 
 /*!
  *	@function	MADInitLibrary

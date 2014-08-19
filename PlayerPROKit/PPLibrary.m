@@ -78,6 +78,21 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 @synthesize _madLib = theLibrary;
 @synthesize trackerLibs;
 
++ (void)deregisterDebugFunction
+{
+	PPRegisterDebugFunc(NULL);
+}
+
++ (void)registerDebugFunction:(void (*)(short, const char*, const char*))newDebugFunc
+{
+	PPRegisterDebugFunc(newDebugFunc);
+}
+
++ (void)registerDebugBlock:(void (^)(short, const char*, const char*))newDebugFunc
+{
+	PPRegisterDebugBlock(newDebugFunc);
+}
+
 - (instancetype)initWithPlugInCPath:(const char*)cPath
 {
 	if (self = [super init]) {

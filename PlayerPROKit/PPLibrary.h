@@ -41,6 +41,9 @@ __END_DECLS
 - (instancetype)initWithPlugInCPath:(const char*)cPath NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithPlugInPath:(NSString *)path;
 - (instancetype)initWithPlugInURL:(NSURL *)URL;
++ (void)deregisterDebugFunction;
++ (void)registerDebugFunction:(void (*)(short, const char*, const char*))newDebugFunc;
++ (void)registerDebugBlock:(void (^)(short, const char*, const char*))newDebugFunc;
 
 - (PPLibraryObject *)pluginAtIndex:(NSUInteger)idx;
 @property (readonly) NSUInteger pluginCount;
