@@ -17,3 +17,6 @@
 #import "PPPreferences.h"
 #import "PPComplexImportPlugInterface.h"
 #import "PPComplexImportPlugObject.h"
+#import "PPDigitalPlugInObject.h"
+#import "PPFilterPlugObject.h"
+#import "NSColor+PPPreferences.h"

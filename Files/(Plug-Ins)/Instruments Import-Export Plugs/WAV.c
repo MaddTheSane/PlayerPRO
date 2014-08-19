@@ -1,10 +1,7 @@
 /*	WAV		*/
 /*  IMPORT	*/
 
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/PPDefs.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/PlayerPROCore.h>
 #include "WAV.h"
 
 /*______________________________________________________________________

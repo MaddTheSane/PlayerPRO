@@ -9,7 +9,6 @@
 #import "PPDocument.h"
 #import <PlayerPROKit/PlayerPROKit.h>
 #import <AVFoundation/AVFoundation.h>
-#import "PPApp_AppDelegate.h"
 #import "UserDefaultKeys.h"
 #import "PPExportObject.h"
 #import "BoxViewController.h"
@@ -17,6 +16,8 @@
 #import "ClassicalViewController.h"
 #import "DigitalViewController.h"
 #import "PlayerPRO_6-swift.h"
+
+#define globalMadLib ((AppDelegate*)NSApplication.sharedApplication.delegate).madLib
 
 @interface PPDocument ()
 @property (readwrite, strong) PPDriver *theDriver;
@@ -286,7 +287,7 @@
 						[_theDriver endExport];
 						return theErr;
 					}];
-					[(PPApp_AppDelegate*)[NSApp delegate] addExportObject:expObj];
+					[(AppDelegate*)[NSApp delegate] addExportObject:expObj];
 				}
 					break;
 					
@@ -384,7 +385,7 @@
 							return MADWritingErr;
 						}
 					}];
-					[(PPApp_AppDelegate*)[NSApp delegate] addExportObject:expObj];
+					[(AppDelegate*)[NSApp delegate] addExportObject:expObj];
 				}
 					break;
 					
@@ -473,7 +474,7 @@
 						[_theDriver endExport];
 						return theErr;
 					}];
-					[(PPApp_AppDelegate*)[NSApp delegate] addExportObject:expObj];
+					[(AppDelegate*)[NSApp delegate] addExportObject:expObj];
 				} else
 					[_theDriver endExport];
 			}];
