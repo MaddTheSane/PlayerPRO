@@ -13,6 +13,35 @@ private func makeNSRGB(red: UInt16, green: UInt16, blue:UInt16) -> NSColor {
 	return NSColor(calibratedRed: CGFloat(red) / CGFloat(UInt16.max), green: CGFloat(green) / CGFloat(UInt16.max), blue: CGFloat(blue) / CGFloat(UInt16.max), alpha: 1)
 }
 
+func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
+	let swiftFile: String = NSString(UTF8String: file)
+	let swiftText: String = NSString(UTF8String: text)
+	NSLog("\(swiftFile):\(line), error text: \(swiftText)")
+	let errStr = NSLocalizedString("MyDebugStr_Error", comment: "Error")
+	let mainStr = NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display")
+	let quitStr = NSLocalizedString("MyDebugStr_Quit", comment: "Quit")
+	let contStr = NSLocalizedString("MyDebugStr_Continue", comment: "Continue")
+	let debuStr = NSLocalizedString("MyDebugStr_Debug", comment: "Debug")
+	//NSLog("%s:%u error text:%s!", file, line, text);
+
+	let alert = PPRunAlertPanel(errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr, args: swiftText)
+	switch (alert) {
+	case NSAlertAlternateReturn:
+		break;
+		
+	case NSAlertOtherReturn:
+		assert(false, "Chose to go to debugger.");
+		break;
+		
+	case NSAlertDefaultReturn:
+		NSLog("Choosing to fail!");
+		fallthrough
+	default:
+		abort();
+		break;
+	}
+}
+
 class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDelegate {
 	private var exportObjects = [PPExportObject]()
 	private var _trackerDict = [String: [String]]()
@@ -304,11 +333,158 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 		registerDefaults()
 	}
 	
+	func handleFile(theURL1: NSURL!, ofType theUTI: String) -> Bool {
+		var sharedWorkspace = NSWorkspace.sharedWorkspace()
+		var theURL = theURL1
+		if sharedWorkspace.type(theUTI, conformsToType: MADNativeUTI) {
+			// Document controller should automatically handle this.
+			return true
+		} else if (theUTI  == MADGenericUTI) {
+			let invExt = NSLocalizedString("Invalid Extension", comment: "Invalid Extension")
+			let invExtDes = NSLocalizedString("The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", comment: "Invalid extension description")
+			let renameFile =  NSLocalizedString("Rename", comment: "rename file")
+			let openFile = NSLocalizedString("Open", comment: "Open a file")
+			let cancelOp = NSLocalizedString("Cancel", comment: "Cancel")
+			let retVal = PPRunInformationalAlertPanel(NSLocalizedString("Invalid Extension", comment: "Invalid extension"), message: NSLocalizedString("The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", comment: "Invalid extension description"), defaultButton: NSLocalizedString("Rename", comment: "rename file"), alternateButton: NSLocalizedString("Open", comment:"Open a file"), otherButton: NSLocalizedString("Cancel", comment: "Cancel"), args: theURL.lastPathComponent);
+			switch (retVal) {
+			case NSAlertDefaultReturn:
+				
+				var rec: NSDictionary? = nil
+				var ostype = [Int8](count: 5, repeatedValue: 0)
+				
+				var identified = madLib.identifyFileAtURL(theURL, type: &ostype)
+				
+				if (madLib.identifyFileAtURL(theURL, type: &ostype) != MADErr.NoErr) || madLib.getInformationFromFileAtURL(theURL, type: &ostype, infoDictionary: &rec) != MADErr.NoErr {
+					PPRunCriticalAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
+					return false;
+				}
+				let sigVala: AnyObject = rec![kPPSignature] ?? NSNumber(unsignedInt: "madk")
+				let sigValb: MADFourChar = (sigVala as NSNumber).unsignedIntValue
+				let sigVal = sigValb.stringValue
+				
+				
+				let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(sigVal.lowercaseString);
+				var err: NSError? = nil
+				if (NSFileManager.defaultManager().moveItemAtURL(theURL, toURL:tmpURL, error:&err) == false) {
+					println("Could not move file, error: \(err!)");
+					PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), args: tmpURL.lastPathComponent, theURL.lastPathComponent);
+				} else {
+					theURL = tmpURL;
+					//TODO: regenerate the UTI
+				}
+				
+				break;
+				
+			case NSAlertAlternateReturn:
+				break;
+				
+				//case NSAlertOtherReturn:
+			default:
+				return false;
+			}
+		}
+			//TODO: check for valid extension.
+			for aUTI in trackerUTIs {
+				if (sharedWorkspace.type(theUTI, conformsToType:aUTI)) {
+					let theWrap = PPMusicObject(URL: theURL1, library: madLib)
+					var theDoc = PPDocument()
+					theDoc.importMusicObject(theWrap)
+					
+					self.addDocument(theDoc)
+					return true;
+				}
+			}
+		
+		return false;
+	}
+	
+	
 	required init(coder: NSCoder!) {
 		
 		
 		super.init(coder: coder)
 		registerDefaults()
+	}
+	
+	func addExportObject(expObj: PPExportObject) {
+	
+	}
+	
+	func applicationDidFinishLaunching(notification: NSNotification!) {
+		PPRegisterDebugBlock(CocoaDebugStr)
+		var defaults = NSUserDefaults.standardUserDefaults()
+		
+		for (i, obj) in enumerate(instrumentPlugHandler) {
+			if (obj.mode == MADPlugModes.ImportExport.toRaw() || obj.mode == MADPlugModes.Export.toRaw()) {
+				let mi = NSMenuItem(title: obj.menuName, action: "exportInstrument:", keyEquivalent: "")
+				mi.tag = i;
+				mi.target = nil
+				instrumentExportMenu.addItem(mi);
+			}
+		}
+		
+		for (i, rawObj) in enumerate(madLib) {
+			let obj = rawObj as PPLibraryObject;
+			if (obj.canExport) {
+				let mi = NSMenuItem(title: "\(obj.menuName)...", action: "exportMusicAs:", keyEquivalent: "")
+				mi.tag = i
+				mi.target = nil
+				musicExportMenu.addItem(mi)
+			}
+		}
+		
+		//#define PPCOLOR(val) [_thePPColors addObject:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor ## val]]]
+		//PPCOLORPOPULATE();
+		//#undef PPCOLOR
+		
+		updatePlugInInfoMenu()
+	}
+	
+	override func makeUntitledDocumentOfType(typeName: String!, error outError: NSErrorPointer) -> AnyObject! {
+		assert(typeName == MADNativeUTI, "Unknown type passed to %s: %@")
+		var theDoc = PPDocument()
+		theDoc.importMusicObject(PPMusicObject())
+
+		return theDoc
+	}
+	
+	@IBAction func openFile(sender: AnyObject?) {
+		var panel = NSOpenPanel();
+		let otherDict: [String : [String]]  = ["PCMD": [PPPCMDUTI], "Instrument List": [PPInstrumentListUTI]];
+		var plugCount = instrumentPlugHandler.plugInCount;
+		var samplesDict = [String: [String]]()
+		for obj in instrumentPlugHandler {
+			if (obj.mode == MADPlugModes.Import.toRaw() || obj.mode == MADPlugModes.ImportExport.toRaw()) {
+				samplesDict[obj.menuName] = (obj.UTITypes as [String]);
+			}
+		}
+		
+		var av = OpenPanelViewController(openPanel: panel, trackerDictionary: trackerDict, instrumentDictionary: samplesDict, additionalDictionary: otherDict)
+		av.setupDefaults()
+		panel.beginWithCompletionHandler { (retval) -> Void in
+			if retval == NSFileHandlingPanelOKButton {
+				let panelURL = panel.URL
+				let filename = panelURL.path
+				var err: NSError? = nil
+				let utiFile = NSWorkspace.sharedWorkspace().typeOfFile(filename, error: &err)
+				if err != nil {
+					PPRunAlertPanel("Error opening file", message: "Unable to open %@: %@", args: filename!.lastPathComponent, err!.localizedFailureReason!);
+					return
+				}
+				self.handleFile(panelURL, ofType: utiFile)
+			}
+		}
+	}
+
+	
+	func application(theApplication: NSApplication, openFile filename: String) -> Bool {
+		var err: NSError? = nil;
+		let utiFile = NSWorkspace.sharedWorkspace().typeOfFile(filename, error:&err)
+		if (err != nil) {
+			PPRunAlertPanel("Error opening file", message: "Unable to open %@: %@", args: filename.lastPathComponent, err!.localizedFailureReason!);
+			return false;
+		}
+		return handleFile(NSURL(fileURLWithPath: filename), ofType: utiFile) ;
 	}
 	
 	func PPExportObjectDidFinish(theObj: PPExportObject!) {
@@ -317,9 +493,5 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 	
 	func PPExportObjectEncounteredError(theObj: PPExportObject!, errorCode errCode: OSErr, errorString errStr: String!) {
 		
-	}
-	
-	func addExportObject(expObj: PPExportObject) {
-	
 	}
 }
