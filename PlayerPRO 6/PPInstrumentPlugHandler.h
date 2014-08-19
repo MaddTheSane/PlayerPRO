@@ -13,7 +13,9 @@
 @class PPInstrumentImporterObject;
 
 @interface PPInstrumentPlugHandler : NSObject <NSFastEnumeration>
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
 
+@property (readonly) NSArray *plugInArray;
 - (NSInteger)plugInCount;
 - (PPInstrumentImporterObject*)plugInAtIndex:(NSUInteger)idx;
 

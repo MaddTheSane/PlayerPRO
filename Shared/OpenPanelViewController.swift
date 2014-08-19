@@ -198,7 +198,7 @@ class OpenPanelViewController: NSViewController {
 		}
 	}
 	
-	init(openPanel panel:NSOpenPanel, trackerDictionary td: Dictionary<String, [String]>? = nil, playlistDictionary pd :Dictionary<String, [String]>? = nil, instrumentDictionary insDict: Dictionary<String, [String]>? = nil, additionalDictionary adddict: Dictionary<String, [String]>? = nil) {
+	init(openPanel panel: NSOpenPanel, trackerDictionary td: [String: [String]]? = nil, playlistDictionary pd: [String: [String]]? = nil, instrumentDictionary insDict: [String: [String]]? = nil, additionalDictionary adddict: [String: [String]]? = nil) {
 		openPanel = panel
 		multipleSelection = false
 		super.init(nibName: "OpenPanelViewController", bundle: nil)
@@ -246,7 +246,7 @@ class OpenPanelViewController: NSViewController {
 			})
 	}
 	
-	convenience init(openPanel panel:NSOpenPanel, trackerDictionary td: Dictionary<String, [String]>?, playlistDictionary pd :Dictionary<String, [String]>?) {
+	convenience init(openPanel panel:NSOpenPanel, trackerDictionary td: [String: [String]]?, playlistDictionary pd: [String: [String]]?) {
 		self.init(openPanel:panel, trackerDictionary:td, playlistDictionary:pd, instrumentDictionary:nil, additionalDictionary:nil)
 	}
 	/*

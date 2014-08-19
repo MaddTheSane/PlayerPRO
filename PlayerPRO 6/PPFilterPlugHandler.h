@@ -13,7 +13,9 @@
 @class PPFilterPlugObject;
 
 @interface PPFilterPlugHandler : NSObject <NSFastEnumeration>
-- (id)init;
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
+
+@property (readonly) NSArray *plugInArray;
 - (PPFilterPlugObject*)plugInAtIndex:(NSUInteger)idx;
 - (NSUInteger)plugInCount;
 

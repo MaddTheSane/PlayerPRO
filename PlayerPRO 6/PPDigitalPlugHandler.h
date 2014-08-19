@@ -12,10 +12,11 @@
 @class PPDigitalPlugInObject;
 
 @interface PPDigitalPlugHandler : NSObject <NSFastEnumeration>
-- (id)init;
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
 
-- (OSErr)callDigitalPlugIn:(NSUInteger)plugNum pcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug *)theInfo;
+- (MADErr)callDigitalPlugIn:(NSUInteger)plugNum pcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug *)theInfo;
 
+@property (readonly) NSArray *plugInArray;
 - (PPDigitalPlugInObject*)plugInAtIndex:(NSUInteger)idx;
 - (NSUInteger)plugInCount;
 

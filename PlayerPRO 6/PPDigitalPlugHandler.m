@@ -19,7 +19,12 @@
 @implementation PPDigitalPlugHandler
 @synthesize digitalPlugs;
 
-- (OSErr)callDigitalPlugIn:(NSUInteger)plugNum pcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug *)theInfo
+- (NSArray*)plugInArray
+{
+	return [digitalPlugs copy];
+}
+
+- (MADErr)callDigitalPlugIn:(NSUInteger)plugNum pcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug *)theInfo
 {
 	theInfo->fileType = 'PPDG';
 	PPDigitalPlugInObject *tmp = digitalPlugs[plugNum];

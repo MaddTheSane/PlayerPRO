@@ -48,6 +48,11 @@
 	return self;
 }
 
+- (NSArray*)plugInArray
+{
+	return [filterPlugs copy];
+}
+
 - (OSErr)callDigitalPlugAtIndex:(NSInteger)idx sampleData:(sData*)theInsData startLength:(long)start endLength:(long)end stereoMode:(short)stereo info:(PPInfoPlug *)theInfo
 {
 	PPFilterPlugObject *tmp = filterPlugs[idx];
