@@ -108,7 +108,8 @@ class SoundOutputController: PPSoundSettingsViewController, PPSoundSettingsViewC
 	}
 	
 	override func awakeFromNib() {
-		var defaults = NSUserDefaults.standardUserDefaults()
+		super.awakeFromNib()
+		let defaults = NSUserDefaults.standardUserDefaults()
 		
 		var drivSet = MADDriverSettings();
 		
@@ -132,7 +133,6 @@ class SoundOutputController: PPSoundSettingsViewController, PPSoundSettingsViewC
 		}
 		
 		settingsFromDriverSettings(&drivSet);
-		super.awakeFromNib()
 	}
 	
 }

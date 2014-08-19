@@ -14,9 +14,9 @@ private let kMusicListKey3 = "Music List Key 3"
 private let kPlayerList = "Player List"
 
 @objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration {
-	private(set) var musicList = [PPMusicListObject]()
-	internal(set) var lostMusicCount:UInt = 0;
-	internal(set) var selectedMusic = -1;
+	private(set)	var musicList = [PPMusicListObject]()
+	private(set)	var lostMusicCount:UInt = 0;
+	internal(set)	var selectedMusic = -1;
 	
 	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (musicList as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len);
@@ -33,7 +33,6 @@ private let kPlayerList = "Player List"
 		//TODO: check for failed data initialization, and decrement changedIndex to match.
 		aCoder.encodeInteger(selectedMusic, forKey: kMusicListLocation3);
 		aCoder.encodeObject(BookmarkArray, forKey: kMusicListKey3)
-
 	}
 	
 	func indexOfObjectSimilarToURL(theURL: NSURL) -> Int {
@@ -52,7 +51,7 @@ private let kPlayerList = "Player List"
 			(var1:PPMusicListObject, var2:PPMusicListObject) -> Bool in
 			let rhsString: NSString = var1.fileName
 			let lhsString: NSString = var2.fileName
-			var result = rhsString.localizedStandardCompare(lhsString)
+			let result = rhsString.localizedStandardCompare(lhsString)
 			return result == NSComparisonResult.OrderedAscending;
 			})
 	}

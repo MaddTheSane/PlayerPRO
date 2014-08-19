@@ -436,6 +436,8 @@
 		558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4DD91666F14E00A333E8 /* PPDriver.m */; };
 		558D4DDD1666F19600A333E8 /* PPLibrary_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */; };
 		55981C5311EE370D00656EE3 /* PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55981C5211EE370D00656EE3 /* PPPreferences.m */; };
+		55993EF219A3212100C2078E /* SafeGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55993EF119A3212100C2078E /* SafeGenerators.swift */; };
+		55993EF319A3212100C2078E /* SafeGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55993EF119A3212100C2078E /* SafeGenerators.swift */; };
 		5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
 		5599F13316C82100008DDAFB /* RDriverCarbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; };
 		559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559C4188183EB4AB004A073C /* QuickLook.framework */; };
@@ -2190,6 +2192,7 @@
 		55981C5111EE370D00656EE3 /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
 		55981C5211EE370D00656EE3 /* PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPreferences.m; sourceTree = "<group>"; };
 		55981C5411EE375400656EE3 /* preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = preferences.xib; sourceTree = "<group>"; };
+		55993EF119A3212100C2078E /* SafeGenerators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafeGenerators.swift; sourceTree = "<group>"; };
 		559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPQuickView.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		559C4188183EB4AB004A073C /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		559C4191183EB4AB004A073C /* PPQuickView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PPQuickView-Info.plist"; sourceTree = "<group>"; };
@@ -4109,6 +4112,7 @@
 				556AE4BB16E290650074BBF9 /* PPByteswap.h */,
 				55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */,
 				55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */,
+				55993EF119A3212100C2078E /* SafeGenerators.swift */,
 				55232AF411FDE5970041A4EC /* Preferences Controllers */,
 				5526AB10188C8655008D0C14 /* Resources */,
 			);
@@ -6160,6 +6164,7 @@
 				551292F1163DD7CE00C2C639 /* PPLibrary.m in Sources */,
 				558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */,
 				55C8EDE4187CC8B200CC8C1B /* PPMadCommandObject.m in Sources */,
+				55993EF219A3212100C2078E /* SafeGenerators.swift in Sources */,
 				55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */,
 				5578C4FE17DB8A580057D11B /* PPSampleObject.m in Sources */,
 				5578C50117DB8A6E0057D11B /* PPInstrumentObject.m in Sources */,
@@ -6781,6 +6786,7 @@
 				55F1BE0A1975CD7200AD2C03 /* PPInstrumentObject.m in Sources */,
 				55F1BE1B1975CD7200AD2C03 /* PPErrors.m in Sources */,
 				555F447519A1411400B8C6EE /* PlayerPROCoreAdditions.swift in Sources */,
+				55993EF319A3212100C2078E /* SafeGenerators.swift in Sources */,
 				55F1BE111975CD7200AD2C03 /* PPFXBusObject.m in Sources */,
 				555F447719A1411800B8C6EE /* PlayerPROKitAdditions.swift in Sources */,
 				55F1BE0D1975CD7200AD2C03 /* PPPatternObject.m in Sources */,

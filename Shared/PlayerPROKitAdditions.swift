@@ -155,55 +155,6 @@ public class func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high
 }
 }
 
-#if false
-//Disabled because I'm not yet comfortable using this yet.
-final public class PPLibraryGenerator: GeneratorType {
-	typealias Element = PPLibraryObject
-	let currentLibrary: PPLibrary
-	var currentNumber = 0
-	let totalNumber:Int
-	public init(library:PPLibrary) {
-		currentLibrary = library
-		totalNumber = Int(library.pluginCount)
-	}
-	public mutating func next() -> PPLibraryObject? {
-		if currentNumber > totalNumber {
-			var tmpPlug = currentLibrary.pluginAtIndex(UInt(currentNumber))
-			currentNumber++
-			return tmpPlug
-		}else {
-			return nil
-		}
-	}
-}
-
-extension PPLibrary: SequenceType {
-	public func generate() -> PPLibraryGenerator {
-		return PPLibraryGenerator(library: self);
-	}
-}
-
-#else
-
-extension PPLibrary: SequenceType {
-	public func generate() -> NSFastGenerator {
-		return NSFastGenerator(self);
-	}
-}
-
-extension PPInstrumentObject: SequenceType {
-	public func generate() -> NSFastGenerator {
-		return NSFastGenerator(self);
-	}
-}
-
-extension PPPatternObject: SequenceType {
-	public func generate() -> NSFastGenerator {
-		return NSFastGenerator(self);
-	}
-}
-#endif
-
 extension PPDriver {
 	public func playSoundData(FromPointer theSnd: UnsafePointer<()>, size sndSize: UInt, fromChannel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: UInt = 0, loopLength iloopLen: UInt = 0) -> MADErr {
 		var loopStart = iloopStart

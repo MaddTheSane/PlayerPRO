@@ -16,7 +16,7 @@ private func makeNSRGB(red: UInt16, green: UInt16, blue:UInt16) -> NSColor {
 class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDelegate {
 	private var exportObjects = [PPExportObject]()
 	private var _trackerDict = [String: [String]]()
-	private var _trackerUTIs: [String] = [String]()
+	private var _trackerUTIs = [String]()
 	var plugInInfos = [PlugInInfo]()
 	let madLib = PPLibrary()
 	let instrumentPlugHandler = PPInstrumentPlugHandler()
@@ -25,11 +25,12 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 	let preferences = PPPreferences()
 
 	@IBOutlet var aboutPlugInMenu: NSMenu!
+	@IBOutlet var instrumentExportMenu: NSMenu!
 
 	var trackerDict: [String: [String]] { get {
 		if _trackerDict.isEmpty || _trackerDict.count != Int(madLib.pluginCount) + 2 {
-			var localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
-			var localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
+			let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
+			let localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
 			var tmpTrackerDict = [localMADKName: [MADNativeUTI], localGenericMADName: [MADGenericUTI]] as [String: [String]]
 			
 			for objRaw in madLib {
@@ -59,11 +60,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 	}
 
 	@IBAction func showPlugInInfo(sender: AnyObject?) {
-		var tag = (sender as NSMenuItem).tag;
+		let tag = (sender as NSMenuItem).tag;
 		if (tag < 0 || tag >= plugInInfos.count) {
 			return;
 		}
-		var inf = plugInInfos[tag];
+		let inf = plugInInfos[tag];
 		
 		var infoCont = PlugInInfoController.windowControllerFromInfo(inf)
 		infoCont.window.center()
@@ -127,7 +128,10 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 	}
 	
 	private func registerDefaults() {
-		var defaults = [PPSoundOutBits: 16,
+		var tooLargeDict: [String: AnyObject] = [PPSoundDriver: Int(MADSoundOutput.CoreAudioDriver.toRaw()),
+			PPDEMarkerColorPref: makeNSRGB(65535, 65535, 39321).PPencodeColor()]
+		
+		let defaults1: [String: AnyObject]  = [PPSoundOutBits: 16,
 			PPSoundOutRate: 44100,
 			PPStereoDelayToggle: true,
 			PPReverbToggle: false,
@@ -137,19 +141,8 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 			PPReverbAmount: 25,
 			PPReverbStrength: 30,
 			PPOversamplingAmount: 1]
-		/*
-		var defaults = [PPSoundOutBits: 16,
-			PPSoundOutRate: 44100,
-			PPStereoDelayToggle: true,
-			PPReverbToggle: false,
-			PPSurroundToggle: false,
-			PPOversamplingToggle: false,
-			PPStereoDelayAmount: 30,
-			PPReverbAmount: 25,
-			PPReverbStrength: 30,
-			PPOversamplingAmount: 1,
-			
-			PPDEShowInstrument: true,
+
+		let defaults2: [String: AnyObject]  = [PPDEShowInstrument: true,
 			PPDEShowNote: true,
 			PPDEShowEffect: true,
 			PPDEShowArgument: true,
@@ -164,19 +157,20 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 			PPDELineHeightNormal: true,
 			PPDEMusicTraceOn: true,
 			PPDEPatternWrappingPartition: true,
-			PPDEDragAsPcmd: true,
-			
-			PPBEMarkersEnabled: true,
+			PPDEDragAsPcmd: true]
+		
+		let defaults3: [String: AnyObject]  = [PPBEMarkersEnabled: true,
 			PPBEMarkersOffset: 0,
 			PPBEMarkersLoop: 3,
 			PPBEOctaveMarkers: true,
 			PPBENotesProjection: false,
-			
+		
+			PPDEMarkerColorPref: makeNSRGB(65535, 65535, 39321).PPencodeColor(),
 			PPMAddExtension: true,
 			PPMMadCompression: true,
 			PPMNoLoadMixerFromFiles: false,
 			PPMOscilloscopeDrawLines: true,
-			
+		
 			PPCEShowNotesLen: false,
 			PPCEShowMarkers: true,
 			PPCEMarkerOffset: 0,
@@ -185,8 +179,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 			PPCETempoUnit: 4,
 			PPCETrackHeight: 130]
 		
-		PPSoundDriver: MADSoundOutput.CoreAudioDriver.toRaw(),
-		PPDEMarkerColorPref: makeNSRGB(65535, 65535, 39321).PPencodeColor(),
+		let defaults4: [String: AnyObject]  = [
 		PPCColor1: makeNSRGB(61166, 0, 0).PPencodeColor(),
 		PPCColor2: makeNSRGB(35980, 48316, 7196).PPencodeColor(),
 		PPCColor3: makeNSRGB(13107, 65535, 65535).PPencodeColor(),
@@ -282,11 +275,14 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 		PPCColor93: makeNSRGB(39321, 52428, 39321).PPencodeColor(),
 		PPCColor94: makeNSRGB(39321, 52428, 26214).PPencodeColor(),
 		PPCColor95: makeNSRGB(52428, 52428, 26214).PPencodeColor(),
-		PPCColor96: makeNSRGB(52428, 52428, 39321).PPencodeColor(),
-
-*/
+		PPCColor96: makeNSRGB(52428, 52428, 39321).PPencodeColor()]
+		var alltogether = NSMutableDictionary(dictionary: tooLargeDict)
+		alltogether.addEntriesFromDictionary(defaults1)
+		alltogether.addEntriesFromDictionary(defaults2)
+		alltogether.addEntriesFromDictionary(defaults3)
+		alltogether.addEntriesFromDictionary(defaults4)
 		
-		NSUserDefaults.standardUserDefaults().registerDefaults(defaults)
+		NSUserDefaults.standardUserDefaults().registerDefaults(alltogether)
 	}
 	
 	override init() {

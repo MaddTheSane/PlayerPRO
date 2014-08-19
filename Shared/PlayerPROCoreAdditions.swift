@@ -136,6 +136,15 @@ extension MADDriverSettings: DebugPrintable {
 		self.surround = false
 		self.Reverb = false
 		self.repeatMusic = false
+	}
+
+	public static func createWithBestDriver() -> MADDriverSettings {
+		var curSett = MADDriverSettings()
+		MADGetBestDriver(&curSett)
+		return curSett
+	}
+
+	public mutating func resetToBestDriver() {
 		MADGetBestDriver(&self)
 	}
 	
