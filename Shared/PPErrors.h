@@ -12,5 +12,5 @@
 __BEGIN_DECLS
 extern NSString * const PPMADErrorDomain;
 
-extern NSError *CreateErrorFromMADErrorType(MADErr theErr) NS_RETURNS_RETAINED;
+extern NSError *PPCreateErrorFromMADErrorType(MADErr theErr) NS_RETURNS_RETAINED;
 __END_DECLS

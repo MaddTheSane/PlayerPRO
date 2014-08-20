@@ -143,7 +143,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	NSDictionary *myDict;
 	OSErr myErr = [self loadOldMusicListAtURL:theURL toDictionary:&myDict];
 	if (myErr) {
-		NSError *nsErr = CreateErrorFromMADErrorType(myErr);
+		NSError *nsErr = PPCreateErrorFromMADErrorType(myErr);
 		reply(nil, nsErr);
 	} else {
 		reply(myDict, nil);

@@ -103,7 +103,7 @@
 	OSErr theOSErr = [importer identifyInstrumentFile:sampURL type:&plugType];
 	if (theOSErr != MADNoErr) {
 		if (theErr)
-			*theErr = CreateErrorFromMADErrorType(theOSErr);
+			*theErr = PPCreateErrorFromMADErrorType(theOSErr);
 		
 		return NO;
 	};
@@ -115,7 +115,7 @@
 	theOSErr = [importer importInstrumentOfType:plugType instrumentReference:tmpInstr sampleReference:tmpsData sample:&theSamp URL:sampURL plugInfo:NULL];
 	if (theOSErr != MADNoErr) {
 		if (theErr)
-			*theErr = CreateErrorFromMADErrorType(theOSErr);
+			*theErr = PPCreateErrorFromMADErrorType(theOSErr);
 		
 		return NO;
 	} else {
@@ -246,136 +246,6 @@
 
 #pragma mark NSOutlineView delegates and data ref calls
 
-static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg, long trueV, long trueH, short channel, PPSampleObject *curData, CGContextRef ctxRef)
-{
-	CGContextSaveGState(ctxRef);
-	
-	long		i;
-	size_t		sampleSize = [curData.data length];
-	CGFloat		temp;
-	const char	*theSample = [curData.data bytes];
-	const short	*theShortSample = (const short*)theSample;
-	long		BS, BE, x;
-	BOOL		isStereo = curData.stereo;
-	CGFloat		minY, maxY;
-	
-	if (curData.amplitude == 16) {
-		sampleSize /= 2;
-		start /= 2;
-		
-		BS = start + (tSS * sampleSize) / larg;
-		if (isStereo) {
-			BS /= 2;
-			BS *=2;
-			BS += channel;
-		}
-		temp = (theShortSample[BS]  + 0x8000);
-		temp *= high;
-		temp  /= (1 << 16);
-		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
-		
-		for (i = tSS; i < tSE; i++) {
-			BS = start + (i * sampleSize) / larg;
-			BE = start + ((i+1) * sampleSize) / larg;
-			
-			if (isStereo) {
-				BS /=2;
-				BS *=2;
-				BE /=2;
-				BE *=2;
-				
-				BS += channel;
-				BE += channel;
-			}
-			
-			temp =(theShortSample[BS]  + 0x8000);
-			minY = maxY = temp;
-			temp *= high;
-			temp  /= (1 << 16);
-			CGContextAddLineToPoint(ctxRef, trueH + i, temp + trueV);
-			
-			if (BS != BE) {
-				for (x = BS; x < BE; x++) {
-					temp = (theShortSample[x]  + 0x8000);
-					
-					if (temp > maxY)
-						maxY = temp;
-					if (temp < minY)
-						minY = temp;
-					
-					if (isStereo)
-						x++;
-				}
-				
-				maxY *= high;
-				maxY /= (1 << 16);
-				minY *= high;
-				minY /= (1 << 16);
-				
-				CGContextMoveToPoint(ctxRef, trueH + i, minY + trueV);
-				CGContextAddLineToPoint(ctxRef, trueH + i, maxY + trueV);
-			}
-		}
-	} else {
-		BS = start + (tSS * sampleSize) / larg;
-		if (isStereo) {
-			BS /= 2;
-			BS *=2;
-			BS += channel;
-		}
-		
-		temp = (unsigned char)(theSample[BS] - 0x80);
-		temp *= high;
-		temp /= (1 << 8);
-		
-		CGContextMoveToPoint(ctxRef, trueH + tSS, trueV + temp);
-		
-		for (i = tSS; i < tSE; i++) {
-			BS = start + (i * sampleSize) / larg;
-			BE = start + ((i + 1) * sampleSize) / larg;
-			
-			if (isStereo) {
-				BS /=2;
-				BS *=2;
-				BE /=2;
-				BE *=2;
-				
-				BS += channel;
-				BE += channel;
-			}
-			
-			temp = (unsigned char) (theSample[BS] - 0x80);
-			minY = maxY = temp;
-			temp *= high;
-			temp /= (1 << 8);
-			CGContextAddLineToPoint(ctxRef, trueH + i, temp + trueV);
-			
-			if (BS != BE) {
-				for (x = BS; x < BE; x++) {
-					temp = (unsigned char)(theSample[x] - 0x80);
-					
-					if (temp > maxY)
-						maxY = temp;
-					if (temp < minY)
-						minY = temp;
-					
-					if (isStereo)
-						x++;
-				}
-				maxY *= high;
-				maxY /= (1 << 8);
-				minY *= high;
-				minY /= (1 << 8);
-				
-				CGContextMoveToPoint(ctxRef, trueH + i, minY + trueV);
-				CGContextAddLineToPoint(ctxRef, trueH + i, maxY + trueV);
-			}
-		}
-	}
-	CGContextStrokePath(ctxRef);
-	CGContextRestoreGState(ctxRef);
-}
-
 - (NSImage *)waveformImageFromSample:(PPSampleObject *)theDat
 {
 	NSSize imageSize = [self.waveFormImage convertSizeToBacking:[self.waveFormImage frame].size];
@@ -392,18 +262,23 @@ static void DrawCGSampleInt(long start, long tSS, long tSE, long high, long larg
 	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
 	NSSize lineSize = [self.waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
 	CGContextSetLineWidth(bitmapContext, lineSize.height);
+		CGRect aRect;
+		aRect.size = imageSize;
+		aRect.origin = NSMakePoint(0, 0);
 	if (datIsStereo){
 		CGColorRef colorRef = CGColorCreateGenericRGB(0, 0, 1, .75);
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
 		CGColorRelease(colorRef);
-		DrawCGSampleInt(0, 0, imageSize.width, imageSize.height, imageSize.width, 0, 0, 1, theDat, bitmapContext);
+		[PPSampleObject drawSampleWithStart:0 tSS:0 rectangle:aRect channel:1 currentData:theDat context:bitmapContext];
+		//[PPSampleObject drawSampleWithStart:0 tSS:0 tSE:imageSize.width high:imageSize.height larg:imageSize.width trueV:0 trueH:0 channel:1 currentData:theDat context:bitmapContext];
 	}
 	
 	CGColorRef colorRef = CGColorCreateGenericRGB(1, 0, 0, datIsStereo ? 0.75 : 1);
 	CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
 	CGColorRelease(colorRef);
-	DrawCGSampleInt(0, 0, imageSize.width, imageSize.height, imageSize.width, 0, 0, 0, theDat, bitmapContext);
-	
+	//[PPSampleObject drawSampleWithStart:0 tSS:0 tSE:imageSize.width high:imageSize.height larg:imageSize.width trueV:0 trueH:0 channel:0 currentData:theDat context:bitmapContext];
+	[PPSampleObject drawSampleWithStart:0 tSS:0 rectangle:aRect channel:0 currentData:theDat context:bitmapContext];
+
 	if ([theDat loopSize]) {
 		CGColorRef colorRef = CGColorCreateGenericRGB(1, 0.1, .5, 0.8);
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);

@@ -157,7 +157,7 @@
 	//[[NSNotificationCenter defaultCenter] postNotificationName:PPDriverDidChange object:self];
 	
 	if (returnerr != MADNoErr) {
-		[[NSAlert alertWithError:CreateErrorFromMADErrorType(returnerr)] beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSModalResponse returnCode) {
+		[[NSAlert alertWithError:PPCreateErrorFromMADErrorType(returnerr)] beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSModalResponse returnCode) {
 			;//Currently, do nothing
 		}];
 	}
@@ -216,7 +216,7 @@
 	
 	if (theRec == nil) {
 		dispatch_async(dispatch_get_main_queue(), ^{
-			NSError *NSerr = CreateErrorFromMADErrorType(err);
+			NSError *NSerr = PPCreateErrorFromMADErrorType(err);
 			[[NSAlert alertWithError:NSerr] beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSModalResponse returnCode) {
 				;//Do nothing for now
 			}];

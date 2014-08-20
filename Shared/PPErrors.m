@@ -27,7 +27,7 @@ PPKBundle = [NSBundle bundleForClass:[PPMusicObject class]]; \
 #define PPErrorLocalizedString(theKey, comment) NSLocalizedStringWithDefaultValue(theKey, @"PPErrors", PPKBundle, theKey, comment)
 #endif
 
-NSError *CreateErrorFromMADErrorType(MADErr theErr)
+NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 {
 	BUNDLEINIT;
 	NSString *ErrorDescription;

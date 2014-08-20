@@ -164,7 +164,7 @@ static inline NSURL *PPHomeURL()
 				NSNumber *selectedAny = bookmarkData[@"SelectedMusic"];
 				NSArray *pathsAny = bookmarkData[@"MusicPaths"];
 				if (!invalidAny || !selectedAny || !pathsAny) {
-					NSError *lolwut = CreateErrorFromMADErrorType(MADUnknownErr);
+					NSError *lolwut = PPCreateErrorFromMADErrorType(MADUnknownErr);
 					theHandle(lolwut);
 				} else {
 					NSMutableArray *pathsURL = [NSMutableArray new];

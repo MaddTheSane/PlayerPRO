@@ -337,7 +337,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	NSData *fileData = [NSData dataWithContentsOfURL:insURL];
 	if (!fileData) {
 		if (theErr) {
-			*theErr = CreateErrorFromMADErrorType(MADReadingErr);
+			*theErr = PPCreateErrorFromMADErrorType(MADReadingErr);
 		}
 		return NO;
 	}
@@ -348,7 +348,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
 		if (tempInstrData == NULL) {
 			if (theErr) {
-				*theErr = CreateErrorFromMADErrorType(MADIncompatibleFile);
+				*theErr = PPCreateErrorFromMADErrorType(MADIncompatibleFile);
 			}
 			return NO;
 		}
@@ -357,7 +357,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		inOutCount = sizeof(InstrData) * MAXINSTRU;
 		if ([fileData length] <= inOutCount) {
 			if (theErr) {
-				*theErr = CreateErrorFromMADErrorType(MADIncompatibleFile);
+				*theErr = PPCreateErrorFromMADErrorType(MADIncompatibleFile);
 			}
 			free(tempInstrData);
 			return NO;
@@ -384,7 +384,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			curData = tmpsData[i * MAXSAMPLE +  x] = (sData*)malloc(sizeof(sData));
 			if (curData == NULL) {
 				if (theErr) {
-					*theErr = CreateErrorFromMADErrorType(MADNeedMemory);
+					*theErr = PPCreateErrorFromMADErrorType(MADNeedMemory);
 				}
 				free(tempInstrData);
 				dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
@@ -411,7 +411,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			if (curData->data == NULL)
 			{
 				if (theErr) {
-					*theErr = CreateErrorFromMADErrorType(MADNeedMemory);
+					*theErr = PPCreateErrorFromMADErrorType(MADNeedMemory);
 				}
 				
 				free(tempInstrData);
