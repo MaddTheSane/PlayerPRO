@@ -2154,8 +2154,6 @@
 		557DE91B10E08DB000177B4C /* Silence.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Silence.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE95E10E08DB900177B4C /* Smooth.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Smooth.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE9A110E08DC100177B4C /* Tone Generator.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tone Generator.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		557EF72F168BD4B5001BF077 /* PPInstrumentImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporter.h; sourceTree = "<group>"; };
-		557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentImporter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		557EF732168BDE95001BF077 /* PPPlugInCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPlugInCommon.h; sourceTree = "<group>"; };
 		557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporterObject.h; sourceTree = "<group>"; };
 		557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentImporterObject.m; sourceTree = "<group>"; };
@@ -3468,8 +3466,6 @@
 		5523EC78169276AA0067B22A /* Instrument Code */ = {
 			isa = PBXGroup;
 			children = (
-				557EF72F168BD4B5001BF077 /* PPInstrumentImporter.h */,
-				557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */,
 				557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */,
 				557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */,
 				5523EC6716925FF80067B22A /* PPInstrumentViewController.h */,

@@ -168,9 +168,8 @@ OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, int chan
 
 - (NSString *)description
 {
-	char typ[5];
-	OSType2Ptr(type, typ);
-	return [NSString stringWithFormat:@"%@ - type \"%@\" Location: %@", _menuName, [NSString stringWithCString:typ encoding:NSMacOSRomanStringEncoding], [_file bundlePath]];
+	NSString *typeString = CFBridgingRelease(UTCreateStringForOSType(type));
+	return [NSString stringWithFormat:@"%@ - type \"%@\" Location: %@", _menuName, typeString, [_file bundlePath]];
 }
 
 @end

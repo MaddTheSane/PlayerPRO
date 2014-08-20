@@ -1222,14 +1222,16 @@ enum PPMusicToolbarTypes {
 			case NSAlertDefaultReturn:
 			{
 				PPInfoRec rec;
-				char ostype[5] = {0};
-				if ([madLib identifyFileAtURL:theURL type:ostype] != MADNoErr || [madLib getInformationFromFileAtURL:theURL type:ostype info:&rec]) {
-					NSRunCriticalAlertPanel(NSLocalizedString(@"Unknown File", @"unknown file"), NSLocalizedString(@"The file type could not be identified.", @"Unidentified file"), nil, nil, nil);
-					return NO;
+				{
+					char ostype[5] = {0};
+					if ([madLib identifyFileAtURL:theURL type:ostype] != MADNoErr || [madLib getInformationFromFileAtURL:theURL type:ostype info:&rec]) {
+						NSRunCriticalAlertPanel(NSLocalizedString(@"Unknown File", @"unknown file"), NSLocalizedString(@"The file type could not be identified.", @"Unidentified file"), nil, nil, nil);
+						return NO;
+					}
 				}
-				OSType2Ptr(rec.signature, ostype);
+				NSString *ostype = CFBridgingRelease(UTCreateStringForOSType(rec.signature));
 				
-				NSURL *tmpURL = [[theURL URLByDeletingPathExtension] URLByAppendingPathExtension:[[NSString stringWithCString:ostype encoding:NSMacOSRomanStringEncoding] lowercaseString]];
+				NSURL *tmpURL = [[theURL URLByDeletingPathExtension] URLByAppendingPathExtension:[ostype lowercaseString]];
 				NSError *err;
 				if (![[NSFileManager defaultManager] moveItemAtURL:theURL toURL:tmpURL error:&err]) {
 					NSLog(@"Could not move file, error: %@", err);

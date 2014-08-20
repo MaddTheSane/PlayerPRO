@@ -15,9 +15,12 @@ NSString * const kMadPlugIsSampleKey = @"MADPlugIsSample";
 
 static inline OSType NSStringToOSType(NSString *CFstri)
 {
-	const char *thecOSType = [CFstri cStringUsingEncoding:NSMacOSRomanStringEncoding];
-	
-	return Ptr2OSType(thecOSType);
+	return UTGetOSTypeFromString((__bridge CFStringRef)(CFstri));
+}
+
+static inline NSString* OSTypeToNSString(OSType theOSType)
+{
+	return CFBridgingRelease(UTCreateStringForOSType(theOSType));
 }
 
 static Class strClass;
@@ -54,9 +57,8 @@ typedef enum _MADPlugCapabilities {
 
 - (NSString*)description
 {
-	char typeString[5] = {0};
-	OSType2Ptr(type, typeString);
-	return [NSString stringWithFormat:@"%@ - %@ Sample: %@ Type: %@ UTIs: %@", self.menuName, [self.file bundlePath], isSamp ? @"YES": @"NO", [NSString stringWithCString:typeString encoding:NSMacOSRomanStringEncoding], [UTITypes description]];
+	NSString *typeString = CFBridgingRelease(UTCreateStringForOSType(type));
+	return [NSString stringWithFormat:@"%@ - %@ Sample: %@ Type: %@ UTIs: %@", self.menuName, [self.file bundlePath], isSamp ? @"YES": @"NO", typeString, [UTITypes description]];
 }
 
 - (instancetype)initWithBundle:(NSBundle *)tempBundle
