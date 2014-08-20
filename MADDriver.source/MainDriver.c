@@ -162,7 +162,7 @@ MADMusic* CreateFreeMADK()
 	return music;
 }
 
-size_t MADGetMusicSize(MADMusic *music)
+size_t MADGetMusicSize(const MADMusic *music)
 {
 	int i, x;
 	size_t fileSize;
@@ -455,7 +455,7 @@ size_t MADMinimize(MADMusic *music)
 	return before - after;
 }
 
-static MADSoundDriverAvailable driverList = 0;
+static MADSoundOutputBit driverList = 0;
 static bool driverlistInited = false;
 
 static void BuildAvailableDriverList()
@@ -493,7 +493,7 @@ bool MADSoundDriverIsAvalable(MADSoundOutput theDriver)
 	}
 }
 
-MADSoundDriverAvailable MADSoundDriverList()
+MADSoundOutputBit MADSoundDriverList()
 {
 	BuildAvailableDriverList();
 	return driverList;
@@ -501,6 +501,7 @@ MADSoundDriverAvailable MADSoundDriverList()
 
 void MADGetBestDriver(MADDriverSettings *Init)
 {
+	memset(Init, 0, sizeof(MADDriverSettings));
 	Init->outPutBits		= 16;
 	Init->outPutMode		= DeluxeStereoOutPut;
 	Init->outPutRate		= 44100;
@@ -663,7 +664,7 @@ MADErr MADCreateTiming(MADDriverRec *intDriver)
 	return MADNoErr;
 }
 
-MADDriverSettings MADGetDriverSettings(MADDriverRec *theDriver)
+MADDriverSettings MADGetDriverSettings(const MADDriverRec *theDriver)
 {
 	return theDriver->DriverSettings;
 }

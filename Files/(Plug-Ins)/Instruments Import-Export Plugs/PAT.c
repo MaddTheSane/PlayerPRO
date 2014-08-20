@@ -7,10 +7,10 @@
 #include <PlayerPROCore/PPPlug.h>
 #include "PAT.h"
 
-static inline OSErr TestPAT(char *CC)
+static inline OSErr TestPAT(const char *CC)
 {
-	char	IDStr[12] = "GF1PATCH110";
-	short	i;
+	const char	IDStr[] = "GF1PATCH110";
+	short		i;
 	
 	for (i = 0; i < 12; i++) {
 		if (CC[i] != IDStr[i])
@@ -52,7 +52,7 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 	//LayerHeader		*PATLayer;
 	PatSampHeader	*PATSamp;
 	int				i, x;
-	unsigned int	scale_table[200] = {
+	const unsigned int	scale_table[200] = {
 		16351, 17323, 18354, 19445, 20601, 21826, 23124, 24499, 25956, 27500, 29135, 30867,
 		32703, 34647, 36708, 38890, 41203, 43653, 46249, 48999, 51913, 54999, 58270, 61735,
 		65406, 69295, 73416, 77781, 82406, 87306, 92498, 97998, 103826, 109999, 116540, 123470,
@@ -96,14 +96,13 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 		strlcpy(curData->name, PATSamp->name, sizeof(PATSamp->name));
 		
 		PPLE32(&PATSamp->size);
-		curData->size		= PATSamp->size;
 		PPLE32(&PATSamp->startLoop);
-		curData->loopBeg 	= PATSamp->startLoop;
 		PPLE32(&PATSamp->endLoop);
-		curData->loopSize 	= PATSamp->endLoop - PATSamp->startLoop;
 		PPLE16(&PATSamp->rate);
-		curData->c2spd		= PATSamp->rate;
-		
+		curData->size = PATSamp->size;
+		curData->loopBeg = PATSamp->startLoop;
+		curData->loopSize = PATSamp->endLoop - PATSamp->startLoop;
+		curData->c2spd = PATSamp->rate;
 		
 		curData->vol = 64;
 		curData->loopType = 0;
@@ -217,7 +216,8 @@ static OSErr mainPAT(void			*unused,
 	OSErr	myErr = MADNoErr;
 	UNFILE	iFileRefI;
 	long	inOutCount;
-	char *file = NULL;
+	Ptr		theSound;
+	char	*file = NULL;
 	
 	char *longStr = NULL;
 	CFIndex pathLen = getCFURLFilePathRepresentationLength(AlienFileCFURL, TRUE);
@@ -236,36 +236,26 @@ static OSErr mainPAT(void			*unused,
 	
 	switch (order) {
 		case MADPlugImport:
-		{
-			Ptr				theSound;
-			
 			iFileRefI = iFileOpenRead(file);
 			if (iFileRefI != NULL) {
 				inOutCount = iGetEOF(iFileRefI);
 				
-				theSound = malloc(inOutCount);
+				theSound = alloca(inOutCount);
 				if (theSound == NULL)
 					myErr = MADNeedMemory;
 				else {
 					iRead(inOutCount, theSound, iFileRefI);
 					
 					MAD2KillInstrument(InsHeader, sample);
-					
 					myErr = PATImport(InsHeader, sample, theSound);
-					
-					free(theSound);
 				}
 				
 				iClose(iFileRefI);
 			} else
 				myErr = MADReadingErr;
-		}
 			break;
 			
 		case MADPlugTest:
-		{
-			Ptr	theSound;
-			
 			iFileRefI = iFileOpenRead(file);
 			if (myErr == MADNoErr) {
 				inOutCount = 50L;
@@ -282,7 +272,6 @@ static OSErr mainPAT(void			*unused,
 				iClose(iFileRefI);
 			} else
 				myErr = MADIncompatibleFile;
-		}
 			break;
 			
 		default:
@@ -291,7 +280,6 @@ static OSErr mainPAT(void			*unused,
 	}
 	if (file)
 		free(file);
-	
 	
 	return myErr;
 }

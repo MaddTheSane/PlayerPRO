@@ -46,6 +46,9 @@
 - (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib;
 - (instancetype)initWithPath:(NSString *)url driver:(PPDriver *)theLib;
 
+- (instancetype)initWithMusicStruct:(MADMusic*)theStruct copy:(BOOL)copyData NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithMusicStruct:(MADMusic*)theStruct;
+
 + (MADErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib;
 
 - (NSDictionary*)musicClasses;

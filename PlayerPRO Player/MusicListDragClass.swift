@@ -11,7 +11,7 @@ import Cocoa
 let PPMLDCUTI = "net.sourceforge.playerpro.PlayerPRO-Player.playerlistdragtype"
 
 @objc(PPMusicListDragClass) class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
-	private(set) var theIndexSet: NSIndexSet
+	let theIndexSet: NSIndexSet
 	init(indexSet: NSIndexSet!) {
 		theIndexSet = indexSet
 		
@@ -65,7 +65,7 @@ let PPMLDCUTI = "net.sourceforge.playerpro.PlayerPRO-Player.playerlistdragtype"
 		aCoder.encodeObject(theIndexSet, forKey: PPMLDCUTI)
 	}
 	
-	convenience required init(coder aDecoder: NSCoder!) {
+	convenience required init(coder aDecoder: NSCoder) {
 		self.init(indexSet:aDecoder.decodeObjectForKey(PPMLDCUTI) as NSIndexSet)
 	}
 	

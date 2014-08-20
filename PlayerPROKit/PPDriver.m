@@ -39,7 +39,20 @@
 	musPos = totV / 60.0;
 	
 	return musPos;
+}
 
+- (NSTimeInterval)currentMusicPlaybackTime
+{
+	MADErr iErr;
+	long curV, totV;
+	NSTimeInterval musPos = 0;
+	iErr = MADGetMusicStatus(theRec, &totV, &curV);
+	if (iErr)
+		return musPos;
+	
+	musPos = curV / 60.0;
+	
+	return musPos;
 }
 
 - (MADDriverSettings)driverSettings
@@ -136,16 +149,16 @@
 
 - (void)beginExport
 {
-	[self willChangeValueForKey:@"isExporting"];
+	[self willChangeValueForKey:@"exporting"];
 	MADBeginExport(theRec);
-	[self didChangeValueForKey:@"isExporting"];
+	[self didChangeValueForKey:@"exporting"];
 }
 
 - (void)endExport
 {
-	[self willChangeValueForKey:@"isExporting"];
+	[self willChangeValueForKey:@"exporting"];
 	MADEndExport(theRec);
-	[self didChangeValueForKey:@"isExporting"];
+	[self didChangeValueForKey:@"exporting"];
 }
 
 - (BOOL)isExporting
@@ -153,7 +166,7 @@
 	return MADIsExporting(theRec);
 }
 
-- (void)setIsExporting:(BOOL)isExp
+- (void)setExporting:(BOOL)isExp
 {
 	if (isExp == MADIsExporting(theRec)) {
 		return;
@@ -280,9 +293,7 @@
 - (instancetype)init
 {
 	NSAssert(NO, @"PPDriver cannot be inited without a library!");
-	id noVal = [self initWithLibrary:NULL settings:NULL error:NULL];
 	[self doesNotRecognizeSelector:_cmd];
-	[noVal className];
 	return nil;
 }
 

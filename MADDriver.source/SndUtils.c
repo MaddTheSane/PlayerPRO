@@ -59,7 +59,7 @@ MADErr inAddSoundToMAD(void			*theSound,
 					   short		sS,
 					   short		bFreq,
 					   unsigned int	rate,
-					   Boolean		stereo,
+					   bool			stereo,
 					   Str255		name,
 					   InstrData	*InsHeader,					// Ptr on instrument header
 					   sData		**sample,					// Ptr on samples data
@@ -69,6 +69,7 @@ MADErr inAddSoundToMAD(void			*theSound,
 	char *cName = alloca(name[0] + 1);
 	if (!cName)
 		return MADNeedMemory;
+	memset(cName, 0, name[0] + 1);
 	memcpy(cName, &name[1], name[0]);
 	
 	theErr = inAddSoundToMADCString(theSound, sndLen, (int)lS, (int)lE, sS, bFreq, rate, stereo, cName, InsHeader, sample, sampleID);
@@ -84,7 +85,7 @@ MADErr inAddSoundToMADCString(void			*theSound,
 							  short			sS,
 							  short			bFreq,
 							  unsigned int	rate,
-							  Boolean		stereo,
+							  bool			stereo,
 							  char			*name,
 							  InstrData		*InsHeader,					// Ptr on instrument header
 							  sData			**sample,					// Ptr on samples data

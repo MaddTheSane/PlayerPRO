@@ -1,10 +1,8 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h>
 #import <Foundation/Foundation.h>
-#import <PlayerPROKit/PPMusicObject.h>
-#import <PlayerPROKit/PPSampleObject.h>
-#import <PlayerPROKit/PPInstrumentObject.h>
-#import <PlayerPROKit/PPPatternObject.h>
+#include "PPDefs.h"
+#include "MAD.h"
 #include "RDriver.h"
 #include "FileUtils.h"
 #include "GetMetadataForFile.h"
@@ -55,10 +53,10 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 						  CFStringRef contentTypeUTI, CFURLRef urlForFile)
 {
 	@autoreleasepool {
-		MADDriverRec		*MADDriver;
-		MADMusic			*MADMusic1;
-		MADLibrary			*MADLib;
-		MADDriverSettings	init;
+		MADDriverRec		*MADDriver = NULL;
+		MADMusic			*MADMusic1 = NULL;
+		MADLibrary			*MADLib = NULL;
+		MADDriverSettings	init = {0};
 		NSMutableDictionary *NSattribs = (__bridge NSMutableDictionary*)attributes;
 		NSURL				*NSFileURL = (__bridge NSURL*)urlForFile;
 		
@@ -90,14 +88,12 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			char type[5];
 			char utiType[5] = {0};
 			OSType info;
-			CFStringRef ostypes;
+			NSString *ostypes;
 			
 			//Try to get the OSType of the UTI.
-			ostypes = UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType);
+			ostypes = CFBridgingRelease(UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType));
 			
-			info = UTGetOSTypeFromString(ostypes);
-			if (ostypes)
-				CFRelease(ostypes);
+			info = UTGetOSTypeFromString((__bridge CFStringRef)(ostypes));
 			if (info)
 				OSType2Ptr(info, utiType);
 			else

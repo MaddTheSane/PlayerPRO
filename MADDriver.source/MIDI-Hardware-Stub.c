@@ -12,7 +12,6 @@
 
 void DoPlayInstruInt(short Note, short Instru, short effect, short arg, short vol, Channel *curVoice, int start, int end);
 void NPianoRecordProcess(short i, short, short, short);
-void OpenOrCloseConnection(bool opening);
 
 void MyNullHook()
 {
@@ -38,11 +37,6 @@ void InitMIDIHarware(void)
 void NDoPlayInstru(short Note, short Instru, short effect, short arg, short vol);
 
 void DoMidiSpeaker(short note, short Instru, int arg)
-{
-
-}
-
-void OpenOrCloseConnection(bool opening)
 {
 
 }

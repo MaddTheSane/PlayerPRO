@@ -13,9 +13,11 @@
 #include <PlayerPROCore/PPPlug.h>
 #include "PPByteswap.h"
 #include <ApplicationServices/ApplicationServices.h>
+#include <tgmath.h>
 
 #ifdef __OBJC__
-#import <Cocoa/Cocoa.h>
+@import Cocoa;
+@import PlayerPROKit;
 #endif
 
 #endif

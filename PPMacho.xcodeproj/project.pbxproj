@@ -43,9 +43,7 @@
 				5586884710BF631700FCC24D /* PBXTargetDependency */,
 				5586884310BF631700FCC24D /* PBXTargetDependency */,
 				5586875410BF5E4600FCC24D /* PBXTargetDependency */,
-				5546217A163A20AE0005F491 /* PBXTargetDependency */,
 				557F9AF517D92C5700325C78 /* PBXTargetDependency */,
-				5517DAC4180CAC6D001413D0 /* PBXTargetDependency */,
 			);
 			name = "Import-export";
 			productName = "Import-export";
@@ -108,9 +106,7 @@
 		55085D851836EE0F004A152F /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55085D841836EE0F004A152F /* CoreAudio.framework */; };
 		55085D881836EE7B004A152F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55085D861836EE7B004A152F /* AudioToolbox.framework */; };
 		5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508C3ED16CEB33B007CA458 /* SampleCellView.m */; };
-		55096A3210E0A6EF000EFFE6 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
-		55096A3C10E0A74A000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		550A474318A455CC0052AED7 /* VSTFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 550A474218A455CC0052AED7 /* VSTFunctions.h */; };
 		550A474418A455CC0052AED7 /* VSTFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 550A474218A455CC0052AED7 /* VSTFunctions.h */; };
 		550A474818A45D350052AED7 /* OSX-VSTPlugIn.c in Sources */ = {isa = PBXBuildFile; fileRef = 557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.c */; };
@@ -133,6 +129,7 @@
 		551292F0163DD7CE00C2C639 /* PPLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 551292EE163DD7CE00C2C639 /* PPLibrary.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		551292F1163DD7CE00C2C639 /* PPLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 551292EF163DD7CE00C2C639 /* PPLibrary.m */; };
 		551292F2163DDA8E00C2C639 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		551310FC19A2703D00A4A967 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		55149C611832D16C009C850B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552F12E116AE08AF00394143 /* AVFoundation.framework */; };
 		55149C621832D176009C850B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 552F12E116AE08AF00394143 /* AVFoundation.framework */; };
 		55149C641832EE86009C850B /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
@@ -148,7 +145,6 @@
 		552097BC187B11BF004FD220 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5521F3FD17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5521F3FF17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */; };
-		5521F40F17F75DAF002CDBA9 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		5521F41517FA4365002CDBA9 /* BoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F41417FA4365002CDBA9 /* BoxViewController.m */; };
 		5521F41717FA541C002CDBA9 /* Trackers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5521F41617FA541C002CDBA9 /* Trackers.xcassets */; };
 		5521F41817FA541C002CDBA9 /* Trackers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5521F41617FA541C002CDBA9 /* Trackers.xcassets */; };
@@ -165,7 +161,6 @@
 		5523EC6A16925FF80067B22A /* PPInstrumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC6816925FF80067B22A /* PPInstrumentViewController.m */; };
 		5523EC79169358470067B22A /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5523EC7C169361A00067B22A /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */; };
-		5523EC8116936F880067B22A /* PPDigitalPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */; };
 		5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */; };
 		552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552581FC16C6FC350016A31C /* InstrumentInfoController.m */; };
 		55268A521874CA8F00A82269 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55268A541874CA8F00A82269 /* Localizable.strings */; };
@@ -175,7 +170,6 @@
 		552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		552788031981C95100708906 /* MusicListDragClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552788021981C95100708906 /* MusicListDragClass.swift */; };
 		55281D07199B32D400C998AF /* PPPasteboardHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = 55281D06199B32D400C998AF /* PPPasteboardHandling.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55281D08199B33EF00C998AF /* PPPasteboardHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = 55281D06199B32D400C998AF /* PPPasteboardHandling.h */; };
 		552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 552A662816B5EBEB007C63F7 /* PPPlugInObject.m */; };
 		552C440217DFDE1100AFCB5C /* ComplexFadeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C440017DFDE1100AFCB5C /* ComplexFadeController.m */; };
 		552C440317DFDE1100AFCB5C /* ComplexFadeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C440117DFDE1100AFCB5C /* ComplexFadeController.xib */; };
@@ -217,9 +211,6 @@
 		5533C8FB19942AD9003AEB16 /* SoundOutputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5533C8F919942AD9003AEB16 /* SoundOutputController.swift */; };
 		5533C90019943EEE003AEB16 /* MidiPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55085D7A1836BAAA004A152F /* MidiPrefs.xib */; };
 		553626B817EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */; };
-		55413C461991B43F001414D0 /* PPByteSwap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550D798E1979F33D00F0A8F8 /* PPByteSwap.swift */; };
-		55413C471991B443001414D0 /* PPByteSwap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550D798E1979F33D00F0A8F8 /* PPByteSwap.swift */; };
-		55413C481991B444001414D0 /* PPByteSwap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550D798E1979F33D00F0A8F8 /* PPByteSwap.swift */; };
 		55413C491991B947001414D0 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		55413C4A1992AF9A001414D0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55268AAA1877EF0000A82269 /* InfoPlist.strings */; };
 		55413C4B1992AFAB001414D0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 551292E1163DD68500C2C639 /* InfoPlist.strings */; };
@@ -260,28 +251,27 @@
 		555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		555C5FCB18445CBC00DBD5DA /* libPlayerPROCompact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */; };
-		555C5FCC18445CBC00DBD5DA /* libPlayerPROKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */; };
+		555F447519A1411400B8C6EE /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
+		555F447619A1411700B8C6EE /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
+		555F447719A1411800B8C6EE /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
 		555F5C611993327D0056AF01 /* OpenPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555F5C601993327D0056AF01 /* OpenPanelViewController.swift */; };
 		555F5C621993327D0056AF01 /* OpenPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555F5C601993327D0056AF01 /* OpenPanelViewController.swift */; };
-		555F5C64199333900056AF01 /* OpenPanelViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555F5C63199333900056AF01 /* OpenPanelViewItem.swift */; };
-		555F5C65199333900056AF01 /* OpenPanelViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555F5C63199333900056AF01 /* OpenPanelViewItem.swift */; };
 		5560643818C8FDC7002F72FC /* PPErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 5532334D16766E5700076604 /* PPErrors.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5560643918C8FDC8002F72FC /* PPErrors.h in Headers */ = {isa = PBXBuildFile; fileRef = 5532334D16766E5700076604 /* PPErrors.h */; };
-		5560643B18C8FDD8002F72FC /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
 		5560643C18C8FDD9002F72FC /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
 		5561700A1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
-		5561700B1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
+		5561F1C019A52A6C0085015B /* ExportObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FD192D19A241FC001E1D9C /* ExportObject.swift */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
 		55680A1E19045F0A00F7616D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55680A2419045F0A00F7616D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55680A2219045F0A00F7616D /* InfoPlist.strings */; };
 		55680A2719045F0A00F7616D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A2619045F0A00F7616D /* main.m */; };
-		55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in CopyFiles */ = {isa = PBXBuildFile; fileRef = 55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55680A3A19046D9800F7616D /* PPSTImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A3919046D9800F7616D /* PPSTImporter.m */; };
 		55680A41190486E900F7616D /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		55680A45190497B400F7616D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A44190497B400F7616D /* UIKit.framework */; };
 		55680A47190497E400F7616D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A46190497E400F7616D /* CoreGraphics.framework */; };
 		55680A4A190497FC00F7616D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A48190497FB00F7616D /* CoreFoundation.framework */; };
 		55680A4B190497FC00F7616D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A49190497FC00F7616D /* Foundation.framework */; };
+		556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		557139E71685007B00831A5A /* OpenPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557139E51685007B00831A5A /* OpenPanelViewController.xib */; };
 		557191D118A40D9900F6DAD4 /* MidiHardwarePreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF911FDE5F90041A4EC /* MidiHardwarePreferenceController.m */; };
@@ -339,7 +329,6 @@
 		5578C4AA17D9E8B50057D11B /* Okta.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 558687DE10BF620500FCC24D /* Okta.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C4AB17D9E8B50057D11B /* S3M.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C4AE17D9E8B50057D11B /* XM.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		5578C4B017D9E8B50057D11B /* APPL.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		5578C4BD17DA4BC20057D11B /* PPTimeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55323352167687A200076604 /* PPTimeFormatter.m */; };
@@ -359,16 +348,6 @@
 		5578C4FF17DB8A5C0057D11B /* PPSampleObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5578C50017DB8A640057D11B /* PPInstrumentObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5578C50117DB8A6E0057D11B /* PPInstrumentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */; };
-		5578C51117DB90110057D11B /* PlayerPROKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 551292E5163DD68500C2C639 /* PlayerPROKit.h */; };
-		5578C51217DB901F0057D11B /* PPLibrary.h in Headers */ = {isa = PBXBuildFile; fileRef = 551292EE163DD7CE00C2C639 /* PPLibrary.h */; };
-		5578C51317DB901F0057D11B /* PPLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 551292EF163DD7CE00C2C639 /* PPLibrary.m */; };
-		5578C51417DB901F0057D11B /* PPDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DD81666F14E00A333E8 /* PPDriver.h */; };
-		5578C51517DB901F0057D11B /* PPDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4DD91666F14E00A333E8 /* PPDriver.m */; };
-		5578C51617DB901F0057D11B /* PPLibrary_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */; };
-		5578C51717DB901F0057D11B /* PPDriver_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F2166A850D00820424 /* PPDriver_Private.h */; };
-		5578C51817DB901F0057D11B /* PPMusicObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F5166A861900820424 /* PPMusicObject.h */; };
-		5578C51917DB901F0057D11B /* PPMusicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B1B4F6166A861900820424 /* PPMusicObject.m */; };
-		5578C51A17DB901F0057D11B /* PPMusicObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */; };
 		5578C51F17DB94A50057D11B /* GetMetadataForFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BE998A17978BB100D6DECC /* GetMetadataForFile.m */; };
 		5578C52017DB94A50057D11B /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 55BE998D17978BB100D6DECC /* main.c */; };
 		5578C52217DB94A50057D11B /* libPlayerPROCompact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */; };
@@ -380,11 +359,11 @@
 		5578C52917DB94A50057D11B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55BE998617978BB100D6DECC /* InfoPlist.strings */; };
 		5578C52A17DB94A50057D11B /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55BE998817978BB100D6DECC /* schema.strings */; };
 		5578C52B17DB94A50057D11B /* schema.xml in Resources */ = {isa = PBXBuildFile; fileRef = 55BE999117978BB200D6DECC /* schema.xml */; };
-		5578C53517DB953F0057D11B /* libPlayerPROKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */; };
-		5578C53617DB956D0057D11B /* PPImport Cocoa.mdimporter in Copy Spotlight Importer */ = {isa = PBXBuildFile; fileRef = 5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		5578C53717DB957A0057D11B /* PPImport Cocoa.mdimporter in Copy Spotlight */ = {isa = PBXBuildFile; fileRef = 5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C53617DB956D0057D11B /* PPImport.mdimporter in Copy Spotlight Importer */ = {isa = PBXBuildFile; fileRef = 5578C52F17DB94A50057D11B /* PPImport.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5578C53717DB957A0057D11B /* PPImport.mdimporter in Copy Spotlight */ = {isa = PBXBuildFile; fileRef = 5578C52F17DB94A50057D11B /* PPImport.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */; };
 		5578C54017DBABC50057D11B /* PPDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C53E17DBABBF0057D11B /* PPDocument.m */; };
+		5579ADB819A4551500DEC0FF /* DigitalPlugHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */; };
 		557DE42E10E06BF200177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE5D910E0882800177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE61C10E0884100177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -446,25 +425,14 @@
 		5586884810BF632500FCC24D /* ULT.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340FE10BB5368005208D1 /* ULT.c */; };
 		5586884910BF632C00FCC24D /* UMX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5533410010BB5368005208D1 /* UMX.c */; };
 		5586884A10BF633300FCC24D /* XM.c in Sources */ = {isa = PBXBuildFile; fileRef = 5533410310BB5368005208D1 /* XM.c */; };
-		5586889310BF67F100FCC24D /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
-		558688A210BF683000FCC24D /* MIDI-GM-Small.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340EC10BB5368005208D1 /* MIDI-GM-Small.c */; };
-		558688A310BF683100FCC24D /* MIDI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340ED10BB5368005208D1 /* MIDI.c */; };
-		558688A510BF683300FCC24D /* PTMID.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F010BB5368005208D1 /* PTMID.c */; };
-		558688A610BF683400FCC24D /* PTMIDINP.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F210BB5368005208D1 /* PTMIDINP.c */; };
-		558688A710BF683400FCC24D /* PTMIDSAV.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F310BB5368005208D1 /* PTMIDSAV.c */; };
-		558688A810BF683500FCC24D /* PTMIDZAP.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F410BB5368005208D1 /* PTMIDZAP.c */; };
-		558688A910BF683C00FCC24D /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
-		55868A4510BFB44700FCC24D /* Midi_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */; };
 		55868A7C10BFB4B300FCC24D /* APPL.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DD10BB5368005208D1 /* APPL.c */; };
 		558D4DDA1666F14E00A333E8 /* PPDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DD81666F14E00A333E8 /* PPDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4DD91666F14E00A333E8 /* PPDriver.m */; };
 		558D4DDD1666F19600A333E8 /* PPLibrary_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */; };
-		55978AA21999D82C009EE5DF /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
-		55978AA31999D82C009EE5DF /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
-		55978AA41999D9EF009EE5DF /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
-		55978AA51999DB07009EE5DF /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
 		55978AAA1999DF5C009EE5DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55978AA91999DF5C009EE5DF /* AppDelegate.swift */; };
-		55978AAB1999E5B2009EE5DF /* PPMusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07F1999879C00A1B9A1 /* PPMusicList.swift */; };
+		55978AAB1999E5B2009EE5DF /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07F1999879C00A1B9A1 /* MusicList.swift */; };
+		55993EF219A3212100C2078E /* SafeGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55993EF119A3212100C2078E /* SafeGenerators.swift */; };
+		55993EF319A3212100C2078E /* SafeGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55993EF119A3212100C2078E /* SafeGenerators.swift */; };
 		5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
 		5599F13316C82100008DDAFB /* RDriverCarbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; };
 		559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559C4188183EB4AB004A073C /* QuickLook.framework */; };
@@ -496,10 +464,6 @@
 		55ADC3FD17D8021C001F27D4 /* Fade Note.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E110510D6F09F00BB619C /* Fade Note.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55ADC3FE17D8021C001F27D4 /* Fade Volume.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E114C10D6F1BF00BB619C /* Fade Volume.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55ADC40017D8022D001F27D4 /* Note Translate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11B910D6F32900BB619C /* Note Translate.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		55B0F5AD17DF0FA900653BCD /* PPSampleObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */; };
-		55B0F5AF17DF0FB000653BCD /* PPSampleObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */; };
-		55B0F5B017DF0FBD00653BCD /* PPInstrumentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */; };
-		55B0F5B217DF0FC100653BCD /* PPInstrumentObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */; };
 		55B1B4F3166A850E00820424 /* PPDriver_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F2166A850D00820424 /* PPDriver_Private.h */; };
 		55B1B4F7166A861900820424 /* PPMusicObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F5166A861900820424 /* PPMusicObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B1B4F6166A861900820424 /* PPMusicObject.m */; };
@@ -516,6 +480,8 @@
 		55B23D231689321F00DCE923 /* PAT.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEADA10E727B100EDF2F1 /* PAT.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55B23D24168935D300DCE923 /* MINs.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEA6B10E727AD00EDF2F1 /* MINs.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55B23D2916893DE300DCE923 /* XI.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55151F8010DEDBDB0054ABC4 /* XI.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55B5DF0419A259370042E062 /* PPMIDIImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0319A259370042E062 /* PPMIDIImporter.swift */; };
+		55B5DF0719A25B6D0042E062 /* PPComplexImportPlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */; };
 		55B777A418E779ED001E5104 /* InstrumentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B777A318E77998001E5104 /* InstrumentInfoView.xib */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
 		55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -576,9 +542,6 @@
 		55C8EDE2187CC8B200CC8C1B /* PPPatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287316A8968C009013D8 /* PPPatternObject.m */; };
 		55C8EDE3187CC8B200CC8C1B /* PPMadCommandObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287616A89A9C009013D8 /* PPMadCommandObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55C8EDE4187CC8B200CC8C1B /* PPMadCommandObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287716A89A9C009013D8 /* PPMadCommandObject.m */; };
-		55C8EDE5187CC96900CC8C1B /* PPPatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287316A8968C009013D8 /* PPPatternObject.m */; };
-		55C8EDE9187CC98200CC8C1B /* PPPatternObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287216A8968C009013D8 /* PPPatternObject.h */; };
-		55C8EDEA187CC98200CC8C1B /* PPMadCommandObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287616A89A9C009013D8 /* PPMadCommandObject.h */; };
 		55C930391819E68700D9E072 /* CocoaFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C930381819E68700D9E072 /* CocoaFuncs.m */; };
 		55C9303A1819E68700D9E072 /* CocoaFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C930381819E68700D9E072 /* CocoaFuncs.m */; };
 		55C9303B1819F6EC00D9E072 /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */; };
@@ -600,33 +563,24 @@
 		55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55CBFC7311EB7BD90028C6BB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7211EB7BD90028C6BB /* InfoPlist.strings */; };
 		55CBFC7C11EB7C950028C6BB /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55CBFC7B11EB7C950028C6BB /* MainMenu.xib */; };
-		55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */; };
 		55CDD02A1976F63600E3DDE1 /* MusicListObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F4C3E319763FDD000997BE /* MusicListObject.swift */; };
 		55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55D1BD58120FBAC0004FD083 /* Credits.rtf */; };
 		55D2921F18AADB7100EB7A7D /* PPPatternObject_PcmdHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D2921E18AADB4600EB7A7D /* PPPatternObject_PcmdHandling.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55D2922018AADB7D00EB7A7D /* PPPatternObject_PcmdHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D2921E18AADB4600EB7A7D /* PPPatternObject_PcmdHandling.h */; };
 		55D2922218AADBF600EB7A7D /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
-		55D57E1C18601BBC00192497 /* MIDI.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55D57E1C18601BBC00192497 /* MIDI.ppextimp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppextimp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55DC597919A2E6B100212DD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DC597819A2E6B100212DD0 /* AppDelegate.swift */; };
+		55DC597B19A2FA9A00212DD0 /* SwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */; };
 		55DE87BC187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87BB187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h */; };
-		55DE87BD187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87BB187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h */; };
 		55DE87BF187E051F00C36533 /* PPPatternObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87BE187E051100C36533 /* PPPatternObject_PPKPrivate.h */; };
-		55DE87C0187E052400C36533 /* PPPatternObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87BE187E051100C36533 /* PPPatternObject_PPKPrivate.h */; };
-		55DE87C1187E131700C36533 /* PPMadCommandObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287716A89A9C009013D8 /* PPMadCommandObject.m */; };
 		55DE87C6187E5B9100C36533 /* PPFXBusObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87C4187E5B9100C36533 /* PPFXBusObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55DE87C7187E5B9100C36533 /* PPFXBusObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87C4187E5B9100C36533 /* PPFXBusObject.h */; };
 		55DE87C8187E5B9100C36533 /* PPFXBusObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DE87C5187E5B9100C36533 /* PPFXBusObject.m */; };
-		55DE87C9187E5B9100C36533 /* PPFXBusObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DE87C5187E5B9100C36533 /* PPFXBusObject.m */; };
 		55DE87CD187E60F400C36533 /* PPFXSetObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87CB187E60F400C36533 /* PPFXSetObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55DE87CE187E60F400C36533 /* PPFXSetObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87CB187E60F400C36533 /* PPFXSetObject.h */; };
 		55DE87CF187E60F400C36533 /* PPFXSetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DE87CC187E60F400C36533 /* PPFXSetObject.m */; };
-		55DE87D0187E60F400C36533 /* PPFXSetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DE87CC187E60F400C36533 /* PPFXSetObject.m */; };
 		55DEBFE918008D970089B940 /* PPSoundSettingsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287916A8B1FA009013D8 /* PPSoundSettingsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55DEBFEA18008D9E0089B940 /* PPSoundSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */; };
 		55E382EB1981509100EC330B /* PlugInInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EA1981509100EC330B /* PlugInInfo.swift */; };
 		55E382EC1981509100EC330B /* PlugInInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EA1981509100EC330B /* PlugInInfo.swift */; };
 		55E382ED1981694300EC330B /* PPPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* PPPlug.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55E382EF198169C000EC330B /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
-		55E382F0198169C000EC330B /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
 		55E52E2512455E5100315307 /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
 		55E763E5199ABBC900D7952F /* PPPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E763E4199ABBC900D7952F /* PPPreferences.swift */; };
 		55E763E6199ABBC900D7952F /* PPPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E763E4199ABBC900D7952F /* PPPreferences.swift */; };
@@ -645,6 +599,22 @@
 		55EA01A216AF368F00D6AEA0 /* CrossFade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE66310E0885C00177B4C /* CrossFade.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55ECB33E180A280800497C7E /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55ECB340180A280800497C7E /* Main_iPad.storyboard */; };
 		55ECB341180A281400497C7E /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55ECB343180A281400497C7E /* Main_iPhone.storyboard */; };
+		55ECD2761992C2ED00480788 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
+		55ECD27C1992C2ED00480788 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55ECD27A1992C2ED00480788 /* InfoPlist.strings */; };
+		55ECD27F1992C2ED00480788 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECD27E1992C2ED00480788 /* main.m */; };
+		55ECD2861992C37300480788 /* Midi_Plug.rsrc.r in Rez */ = {isa = PBXBuildFile; fileRef = 55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */; };
+		55ECD2871992C39A00480788 /* MIDI-GM-Small.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340EC10BB5368005208D1 /* MIDI-GM-Small.c */; };
+		55ECD2891992C39A00480788 /* PTMID.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F010BB5368005208D1 /* PTMID.c */; };
+		55ECD28A1992C39A00480788 /* PTMIDINP.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F210BB5368005208D1 /* PTMIDINP.c */; };
+		55ECD28B1992C39A00480788 /* PTMIDSAV.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F310BB5368005208D1 /* PTMIDSAV.c */; };
+		55ECD28C1992C39A00480788 /* PTMIDZAP.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340F410BB5368005208D1 /* PTMIDZAP.c */; };
+		55ECD28D1992C3B000480788 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55ECD28E1992C3BC00480788 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
+		55ECD2911992C5C100480788 /* MIDI.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECD28F1992C58000480788 /* MIDI.m */; };
+		55ECD2941992C6A600480788 /* PPMIDIImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECD2931992C6A600480788 /* PPMIDIImporter.m */; };
+		55ECD2961993017800480788 /* net.sourceforge.playerpro.MIDI-Import.xpc in Copy XPC Services */ = {isa = PBXBuildFile; fileRef = 55ECD2751992C2ED00480788 /* net.sourceforge.playerpro.MIDI-Import.xpc */; };
+		55ECD297199301AB00480788 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		55ECD298199301BA00480788 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
 		55EE2D8817E12F9300FED42A /* Amplitude.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE43410E06BF200177B4C /* Amplitude.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EE2D8917E12F9300FED42A /* Depth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6A410E0886400177B4C /* Depth.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EE2D8A17E12F9300FED42A /* Echo.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE6E510E0886A00177B4C /* Echo.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -652,7 +622,6 @@
 		55EE2D8C17E12F9300FED42A /* Length.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE84210E08D9E00177B4C /* Length.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EE2D8E17E12F9300FED42A /* Sampling Rate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE90B10E08DAC00177B4C /* Sampling Rate.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55F013E5187F5AB6002488D5 /* PPObjectProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55F013E6187F5AB6002488D5 /* PPObjectProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; };
 		55F013EB1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
 		55F013EC1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
 		55F1BDAE1975C8EE00AD2C03 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */; };
@@ -730,11 +699,11 @@
 		55F1BE201975CD7A00AD2C03 /* PPMusicObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */; };
 		55F1BE211975CD7A00AD2C03 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
 		55F1BE221975CEC900AD2C03 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55F41A3717EF96B000605DF8 /* PPExportObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F41A3617EF96AF00605DF8 /* PPExportObject.m */; };
 		55F4C3E519763FDD000997BE /* MusicListObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F4C3E319763FDD000997BE /* MusicListObject.swift */; };
 		55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
+		55FD192B19A1C12B001E1D9C /* ComplexImportPlugHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */; };
 		55FEF84519844FD600D2E79C /* DigitalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84419844FD600D2E79C /* DigitalViewController.m */; };
 		55FEF84B1984506C00D2E79C /* ClassicalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84A1984506C00D2E79C /* ClassicalViewController.m */; };
 		55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84E1984509400D2E79C /* WaveViewController.m */; };
@@ -776,13 +745,6 @@
 			remoteGlobalIDString = 55151F7210DEDBDB0054ABC4;
 			remoteInfo = XI;
 		};
-		5517DAC3180CAC6D001413D0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5586888B10BF67F100FCC24D;
-			remoteInfo = MIDI;
-		};
 		551FEA5E10E727AD00EDF2F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -811,12 +773,19 @@
 			remoteGlobalIDString = 551FEA5C10E727AD00EDF2F1;
 			remoteInfo = MINs;
 		};
-		5521F40D17F75CDB002CDBA9 /* PBXContainerItemProxy */ = {
+		552363A319A55C9B000D191D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55C3589516C42D1800FB9FA6;
-			remoteInfo = PlayerPROCompact;
+			remoteGlobalIDString = 5586888B10BF67F100FCC24D;
+			remoteInfo = MIDI;
+		};
+		552363A519A55C9B000D191D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55868A5810BFB46100FCC24D;
+			remoteInfo = APPL;
 		};
 		5533411910BB548E005208D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -887,13 +856,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5533411010BB547C005208D1;
 			remoteInfo = MOD;
-		};
-		55462179163A20AE0005F491 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 55868A5810BFB46100FCC24D;
-			remoteInfo = APPL;
 		};
 		554E10F510D6F09500BB619C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1000,12 +962,12 @@
 			remoteGlobalIDString = 55C3589516C42D1800FB9FA6;
 			remoteInfo = PlayerPROCompact;
 		};
-		555C5FCF18445CCC00DBD5DA /* PBXContainerItemProxy */ = {
+		5561EF97199FBE480054B3A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 5578C50517DB8F9E0057D11B;
-			remoteInfo = libPlayerPROKit;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
 		};
 		55680A301904661700F7616D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1055,13 +1017,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5578C51B17DB94A50057D11B;
 			remoteInfo = "PPImport-app";
-		};
-		5578C53317DB95350057D11B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5578C50517DB8F9E0057D11B;
-			remoteInfo = libPlayerPROKit;
 		};
 		5578C53817DB959B0057D11B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1588,6 +1543,13 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
+		55ECD2831992C35200480788 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55ECD2741992C2ED00480788;
+			remoteInfo = "MIDI Import";
+		};
 		55EE2D8617E12F0D00FED42A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1626,14 +1588,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		55680A321904661E00F7616D /* CopyFiles */ = {
+		55680A321904661E00F7616D /* Copy XPC Services */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
 			dstSubfolderSpec = 16;
 			files = (
-				55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in CopyFiles */,
+				55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in Copy XPC Services */,
 			);
+			name = "Copy XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5573A1611658A3B800A5AECA /* Copy Frameworks */ = {
@@ -1680,7 +1643,6 @@
 				5578C4AA17D9E8B50057D11B /* Okta.ppimpexp in Copy Plug-ins */,
 				5578C4AB17D9E8B50057D11B /* S3M.ppimpexp in Copy Plug-ins */,
 				5578C4AE17D9E8B50057D11B /* XM.ppimpexp in Copy Plug-ins */,
-				5578C4B017D9E8B50057D11B /* APPL.ppimpexp in Copy Plug-ins */,
 			);
 			name = "Copy Plug-ins";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1691,9 +1653,19 @@
 			dstPath = Contents/Library/Spotlight;
 			dstSubfolderSpec = 1;
 			files = (
-				5578C53717DB957A0057D11B /* PPImport Cocoa.mdimporter in Copy Spotlight */,
+				5578C53717DB957A0057D11B /* PPImport.mdimporter in Copy Spotlight */,
 			);
 			name = "Copy Spotlight";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55A158F519955BA900968953 /* Embed XPC Services */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			name = "Embed XPC Services";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		55BE99DE17978E4400D6DECC /* Copy Spotlight Importer */ = {
@@ -1702,7 +1674,7 @@
 			dstPath = Contents/Library/Spotlight;
 			dstSubfolderSpec = 1;
 			files = (
-				5578C53617DB956D0057D11B /* PPImport Cocoa.mdimporter in Copy Spotlight Importer */,
+				5578C53617DB956D0057D11B /* PPImport.mdimporter in Copy Spotlight Importer */,
 			);
 			name = "Copy Spotlight Importer";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1714,7 +1686,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				5511F4E9186CFC63008F6BE1 /* AIFF.plugin in Copy PlugIns */,
-				55D57E1C18601BBC00192497 /* MIDI.ppimpexp in Copy PlugIns */,
+				55D57E1C18601BBC00192497 /* MIDI.ppextimp in Copy PlugIns */,
 				55EE2D8817E12F9300FED42A /* Amplitude.plugin in Copy PlugIns */,
 				55EE2D8917E12F9300FED42A /* Depth.plugin in Copy PlugIns */,
 				55EE2D8A17E12F9300FED42A /* Echo.plugin in Copy PlugIns */,
@@ -1758,6 +1730,17 @@
 			name = "Copy PlugIns";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55ECD2951993016700480788 /* Copy XPC Services */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				55ECD2961993017800480788 /* net.sourceforge.playerpro.MIDI-Import.xpc in Copy XPC Services */,
+			);
+			name = "Copy XPC Services";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55F1BD381975BF7000AD2C03 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1793,7 +1776,6 @@
 		550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "OSX-CoreAudio.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		550D005018CB808600FD0F17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/PPErrors.strings; sourceTree = "<group>"; };
 		550D005218CB808E00FD0F17 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPErrors.strings; sourceTree = "<group>"; };
-		550D798E1979F33D00F0A8F8 /* PPByteSwap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPByteSwap.swift; sourceTree = "<group>"; };
 		550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentCellView.h; sourceTree = "<group>"; };
 		550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentCellView.m; sourceTree = "<group>"; };
 		550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject.h; sourceTree = "<group>"; };
@@ -1884,8 +1866,6 @@
 		5523EC6816925FF80067B22A /* PPInstrumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "MIDI-Hardware-OSX.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "MIDI-Hardware-Stub.c"; sourceTree = "<group>"; };
-		5523EC7F16936F870067B22A /* PPDigitalPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPlugHandler.h; sourceTree = "<group>"; };
-		5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPlugHandler.m; sourceTree = "<group>"; };
 		5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPlugInObject.h; sourceTree = "<group>"; };
 		5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPlugInObject.m; sourceTree = "<group>"; };
 		552581FB16C6FC350016A31C /* InstrumentInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstrumentInfoController.h; sourceTree = "<group>"; };
@@ -1993,7 +1973,7 @@
 		5535A653197F2D1D00D36CC9 /* PPCore.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = PPCore.modulemap; sourceTree = "<group>"; };
 		553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Universal.xcconfig; sourceTree = "<group>"; };
 		553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PPCPlugs.xcconfig; sourceTree = "<group>"; };
-		553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Cocoa Editor Images.xcassets"; path = "../../Cocoa/Cocoa Editor Images.xcassets"; sourceTree = "<group>"; };
+		553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Cocoa Editor Images.xcassets"; sourceTree = "<group>"; };
 		5539D88F1978B90D005A1569 /* PlayerPRO 6-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO 6-Bridging-Header.h"; sourceTree = "<group>"; };
 		55413C4D1992AFFF001414D0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		5542403E10DB602D00C08864 /* SoundDesignerII.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = SoundDesignerII.r; sourceTree = "<group>"; };
@@ -2081,8 +2061,8 @@
 		555C0F8C19829663003B9347 /* CurrentlyPlayingIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentlyPlayingIndex.swift; sourceTree = "<group>"; };
 		555C125016378B3500735225 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		555F5C601993327D0056AF01 /* OpenPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenPanelViewController.swift; sourceTree = "<group>"; };
-		555F5C63199333900056AF01 /* OpenPanelViewItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenPanelViewItem.swift; sourceTree = "<group>"; };
 		556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject_PPKPrivate.h; sourceTree = "<group>"; };
+		5561EF99199FC87B0054B3A7 /* PTMIDZAP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTMIDZAP.h; sourceTree = "<group>"; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = net.sourceforge.playerpro.StcfImporter.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		55680A2119045F0A00F7616D /* StcfImporter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StcfImporter-Info.plist"; sourceTree = "<group>"; };
@@ -2133,13 +2113,13 @@
 		5578C49017D9E8560057D11B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentWindowController.h; sourceTree = "<group>"; };
 		5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentWindowController.m; sourceTree = "<group>"; };
-		5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPlayerPROKit.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PPImport Cocoa.mdimporter"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5578C52F17DB94A50057D11B /* PPImport.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPImport.mdimporter; sourceTree = BUILT_PRODUCTS_DIR; };
 		5578C53017DB94A60057D11B /* PPImport copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PPImport copy-Info.plist"; path = "../PPImport copy-Info.plist"; sourceTree = "<group>"; };
 		5578C53A17DB9F630057D11B /* PPInstrumentPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPlugHandler.h; sourceTree = "<group>"; };
 		5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentPlugHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5578C53D17DBABBE0057D11B /* PPDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDocument.h; sourceTree = "<group>"; };
 		5578C53E17DBABBF0057D11B /* PPDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DigitalPlugHandler.swift; path = "Plug-in handling/DigitalPlugHandler.swift"; sourceTree = "<group>"; };
 		557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-FilterBridge.c"; sourceTree = "<group>"; };
 		557DE43410E06BF200177B4C /* Amplitude.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amplitude.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE43510E06BF200177B4C /* Amplitude-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Amplitude-Info.plist"; sourceTree = "<group>"; };
@@ -2171,8 +2151,6 @@
 		557DE91B10E08DB000177B4C /* Silence.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Silence.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE95E10E08DB900177B4C /* Smooth.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Smooth.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE9A110E08DC100177B4C /* Tone Generator.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tone Generator.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
-		557EF72F168BD4B5001BF077 /* PPInstrumentImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporter.h; sourceTree = "<group>"; };
-		557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentImporter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		557EF732168BDE95001BF077 /* PPPlugInCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPlugInCommon.h; sourceTree = "<group>"; };
 		557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporterObject.h; sourceTree = "<group>"; };
 		557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentImporterObject.m; sourceTree = "<group>"; };
@@ -2200,9 +2178,9 @@
 		5586882D10BF62F500FCC24D /* UMX-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UMX-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5586883D10BF62FB00FCC24D /* XM.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XM.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5586883E10BF62FB00FCC24D /* XM-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XM-Info.plist"; sourceTree = SOURCE_ROOT; };
-		5586889710BF67F100FCC24D /* MIDI.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MIDI.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
+		5586889710BF67F100FCC24D /* MIDI.ppextimp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MIDI.ppextimp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5586889810BF67F100FCC24D /* MIDI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MIDI-Info.plist"; sourceTree = SOURCE_ROOT; };
-		55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = Midi_Plug.rsrc.r; path = ../Midi_Plug.rsrc.r; sourceTree = "<group>"; };
+		55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Midi_Plug.rsrc.r; sourceTree = "<group>"; };
 		55868A6710BFB46100FCC24D /* APPL.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APPL.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		55868A6810BFB46100FCC24D /* APPL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "APPL-Info.plist"; sourceTree = SOURCE_ROOT; };
 		558D4DD81666F14E00A333E8 /* PPDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDriver.h; sourceTree = "<group>"; };
@@ -2211,6 +2189,7 @@
 		5590896710E883AF00CE70B8 /* WAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAV.h; sourceTree = "<group>"; };
 		55978AA91999DF5C009EE5DF /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55981C5411EE375400656EE3 /* preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = preferences.xib; sourceTree = "<group>"; };
+		55993EF119A3212100C2078E /* SafeGenerators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafeGenerators.swift; sourceTree = "<group>"; };
 		559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPQuickView.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		559C4188183EB4AB004A073C /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		559C4191183EB4AB004A073C /* PPQuickView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PPQuickView-Info.plist"; sourceTree = "<group>"; };
@@ -2238,6 +2217,10 @@
 		55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDriverCarbon.h; sourceTree = "<group>"; };
 		55B23D111687D22700DCE923 /* MainDriverCarbon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MainDriverCarbon.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55B5C80918AEC899004041FA /* PPQuickView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPQuickView.h; sourceTree = "<group>"; };
+		55B5DF0219A259350042E062 /* MIDI-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MIDI-Bridging-Header.h"; sourceTree = "<group>"; };
+		55B5DF0319A259370042E062 /* PPMIDIImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPMIDIImporter.swift; sourceTree = "<group>"; };
+		55B5DF0519A25B6D0042E062 /* PPComplexImportPlugObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPComplexImportPlugObject.h; sourceTree = "<group>"; };
+		55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPComplexImportPlugObject.m; sourceTree = "<group>"; };
 		55B7665617E3BF9E004C1D45 /* PPPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPluginWindowController.h; sourceTree = "<group>"; };
 		55B7665717E3BF9E004C1D45 /* PPPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPluginWindowController.m; sourceTree = "<group>"; };
 		55B7665B17E3CDA2004C1D45 /* PPDigitalPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPluginWindowController.h; sourceTree = "<group>"; };
@@ -2257,14 +2240,14 @@
 		55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO 6.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CBF9A811EB77760028C6BB /* Cocoa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Cocoa-Info.plist"; path = "../../Cocoa-Info.plist"; sourceTree = "<group>"; };
 		55CBFC7011EB7BC90028C6BB /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
-		55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPApp_AppDelegate.h; sourceTree = "<group>"; };
-		55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPApp_AppDelegate.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55CDD02B1976F6F400E3DDE1 /* iOS Player-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOS Player-Bridging-Header.h"; sourceTree = "<group>"; };
 		55D1BD58120FBAC0004FD083 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		55D1BD5D120FBE51004FD083 /* PPMusicList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicList.h; sourceTree = "<group>"; };
 		55D1BD5E120FBE51004FD083 /* PPMusicList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPMusicList.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55D2921E18AADB4600EB7A7D /* PPPatternObject_PcmdHandling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPatternObject_PcmdHandling.h; sourceTree = "<group>"; };
 		55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO-PrefixHeader.pch"; sourceTree = "<group>"; };
+		55DC597819A2E6B100212DD0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftBridge.swift; sourceTree = "<group>"; };
 		55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPROKitAdditions.swift; sourceTree = "<group>"; };
 		55DCF07C1999841400A1B9A1 /* PPInstrumentWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPInstrumentWindowController.swift; sourceTree = "<group>"; };
 		55DCF07F1999879C00A1B9A1 /* MusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicList.swift; sourceTree = "<group>"; };
@@ -2290,6 +2273,14 @@
 		55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPlugObject.m; sourceTree = "<group>"; };
 		55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPlugHandler.h; sourceTree = "<group>"; };
 		55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPlugHandler.m; sourceTree = "<group>"; };
+		55ECD2751992C2ED00480788 /* net.sourceforge.playerpro.MIDI-Import.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "net.sourceforge.playerpro.MIDI-Import.xpc"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55ECD2791992C2ED00480788 /* MIDI Import-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MIDI Import-Info.plist"; sourceTree = "<group>"; };
+		55ECD27B1992C2ED00480788 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55ECD27D1992C2ED00480788 /* MIDI Import-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MIDI Import-Prefix.pch"; sourceTree = "<group>"; };
+		55ECD27E1992C2ED00480788 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		55ECD28F1992C58000480788 /* MIDI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MIDI.m; sourceTree = "<group>"; };
+		55ECD2921992C6A600480788 /* PPMIDIImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMIDIImporter.h; sourceTree = "<group>"; };
+		55ECD2931992C6A600480788 /* PPMIDIImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMIDIImporter.m; sourceTree = "<group>"; };
 		55ED547310D5F9CD00824C61 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		55EE8EBC100404EB00E75E63 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
@@ -2306,8 +2297,6 @@
 		55F41A2217EF800B00605DF8 /* version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = version.sh; sourceTree = "<group>"; usesTabs = 0; };
 		55F41A2D17EF853C00605DF8 /* PlayerPRO Player-Info.plistvers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPRO Player-Info.plistvers.plist"; sourceTree = "<group>"; };
 		55F41A2E17EF855800605DF8 /* Cocoa-Info.plistvers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Cocoa-Info.plistvers.plist"; path = "../../Cocoa-Info.plistvers.plist"; sourceTree = "<group>"; };
-		55F41A3517EF96AF00605DF8 /* PPExportObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPExportObject.h; sourceTree = "<group>"; };
-		55F41A3617EF96AF00605DF8 /* PPExportObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPExportObject.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55F4287216A8968C009013D8 /* PPPatternObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPatternObject.h; sourceTree = "<group>"; };
 		55F4287316A8968C009013D8 /* PPPatternObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPPatternObject.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55F4287616A89A9C009013D8 /* PPMadCommandObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMadCommandObject.h; sourceTree = "<group>"; };
@@ -2316,6 +2305,9 @@
 		55F4287A16A8B1FA009013D8 /* PPSoundSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSoundSettingsViewController.m; sourceTree = "<group>"; };
 		55F4C3E119763FDB000997BE /* PlayerPRO Player-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO Player-Bridging-Header.h"; sourceTree = "<group>"; };
 		55F4C3E319763FDD000997BE /* MusicListObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListObject.swift; sourceTree = "<group>"; };
+		55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexImportPlugHandler.swift; sourceTree = "<group>"; };
+		55FD192C19A1C1D8001E1D9C /* PPComplexImportPlugInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPComplexImportPlugInterface.h; sourceTree = "<group>"; };
+		55FD192D19A241FC001E1D9C /* ExportObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportObject.swift; sourceTree = "<group>"; };
 		55FEF84319844FD600D2E79C /* DigitalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigitalViewController.h; sourceTree = "<group>"; };
 		55FEF84419844FD600D2E79C /* DigitalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigitalViewController.m; sourceTree = "<group>"; };
 		55FEF8491984506C00D2E79C /* ClassicalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassicalViewController.h; sourceTree = "<group>"; };
@@ -2545,19 +2537,10 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5578C50317DB8F9E0057D11B /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5521F40F17F75DAF002CDBA9 /* Cocoa.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5578C52117DB94A50057D11B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5578C53517DB953F0057D11B /* libPlayerPROKit.a in Frameworks */,
 				5578C52217DB94A50057D11B /* libPlayerPROCompact.a in Frameworks */,
 				5578C52317DB94A50057D11B /* CoreFoundation.framework in Frameworks */,
 				5578C52417DB94A50057D11B /* CoreServices.framework in Frameworks */,
@@ -2790,11 +2773,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				551310FC19A2703D00A4A967 /* PlayerPROKit.framework in Frameworks */,
+				55ECD297199301AB00480788 /* Cocoa.framework in Frameworks */,
 				55B7E65A161D1D4E000D988C /* PlayerPROCore.framework in Frameworks */,
-				5586889310BF67F100FCC24D /* Carbon.framework in Frameworks */,
-				558688A910BF683C00FCC24D /* QuickTime.framework in Frameworks */,
-				55096A3210E0A6EF000EFFE6 /* CoreFoundation.framework in Frameworks */,
-				55096A3C10E0A74A000EFFE6 /* CoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2812,7 +2793,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				555C5FCB18445CBC00DBD5DA /* libPlayerPROCompact.a in Frameworks */,
-				555C5FCC18445CBC00DBD5DA /* libPlayerPROKit.a in Frameworks */,
 				559C418E183EB4AB004A073C /* CoreFoundation.framework in Frameworks */,
 				555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */,
 				555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */,
@@ -2878,6 +2858,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55ECD2721992C2ED00480788 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55ECD28E1992C3BC00480788 /* Carbon.framework in Frameworks */,
+				55ECD28D1992C3B000480788 /* PlayerPROCore.framework in Frameworks */,
+				55ECD2761992C2ED00480788 /* Foundation.framework in Frameworks */,
+				55ECD298199301BA00480788 /* QuickTime.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55F1BD8B1975C83400AD2C03 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2936,6 +2927,7 @@
 				55B1B4F6166A861900820424 /* PPMusicObject.m */,
 				5532334D16766E5700076604 /* PPErrors.h */,
 				5532334E16766E5700076604 /* PPErrors.m */,
+				5561F1BF19A51CD40085015B /* Swift wrappers */,
 				55453526186CD32900F69F4D /* OS X-specific code */,
 				551292DF163DD68500C2C639 /* Supporting Files */,
 			);
@@ -3475,8 +3467,6 @@
 		5523EC78169276AA0067B22A /* Instrument Code */ = {
 			isa = PBXGroup;
 			children = (
-				557EF72F168BD4B5001BF077 /* PPInstrumentImporter.h */,
-				557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */,
 				557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */,
 				557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */,
 				5523EC6716925FF80067B22A /* PPInstrumentViewController.h */,
@@ -3576,20 +3566,11 @@
 		553340EB10BB5368005208D1 /* MIDI */ = {
 			isa = PBXGroup;
 			children = (
-				55E527A8186A2A690020F3D6 /* MIDI.pch */,
-				5517DAC6180CAE2C001413D0 /* dls.h */,
-				5517DAC7180CAE2C001413D0 /* dls2.h */,
-				5517DAC8180CAE2C001413D0 /* dlsmac.h */,
-				55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */,
-				55ADC3E517D7CBF8001F27D4 /* Midi-rsrc.h */,
 				5586889810BF67F100FCC24D /* MIDI-Info.plist */,
-				553340EC10BB5368005208D1 /* MIDI-GM-Small.c */,
-				553340ED10BB5368005208D1 /* MIDI.c */,
-				553340F010BB5368005208D1 /* PTMID.c */,
-				553340F110BB5368005208D1 /* PTMID.h */,
-				553340F210BB5368005208D1 /* PTMIDINP.c */,
-				553340F310BB5368005208D1 /* PTMIDSAV.c */,
-				553340F410BB5368005208D1 /* PTMIDZAP.c */,
+				55E527A8186A2A690020F3D6 /* MIDI.pch */,
+				55ECD28F1992C58000480788 /* MIDI.m */,
+				55B5DF0319A259370042E062 /* PPMIDIImporter.swift */,
+				55B5DF0219A259350042E062 /* MIDI-Bridging-Header.h */,
 			);
 			name = MIDI;
 			path = "MIDI Folder";
@@ -3830,6 +3811,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		5561F1BF19A51CD40085015B /* Swift wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */,
+				55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */,
+				55993EF119A3212100C2078E /* SafeGenerators.swift */,
+			);
+			name = "Swift wrappers";
+			sourceTree = "<group>";
+		};
 		55680A1F19045F0A00F7616D /* StcfImporter */ = {
 			isa = PBXGroup;
 			children = (
@@ -3858,26 +3849,12 @@
 			children = (
 				5539D88F1978B90D005A1569 /* PlayerPRO 6-Bridging-Header.h */,
 				55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */,
-				557EF732168BDE95001BF077 /* PPPlugInCommon.h */,
 				55CB01A611EB82FA0028C6BB /* main.m */,
-				55CBFD3811EB7CF10028C6BB /* PPApp_AppDelegate.h */,
-				55CBFD3911EB7CF10028C6BB /* PPApp_AppDelegate.m */,
+				55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */,
+				55DC597819A2E6B100212DD0 /* AppDelegate.swift */,
 				55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */,
 				55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */,
-				5523EC7F16936F870067B22A /* PPDigitalPlugHandler.h */,
-				5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */,
-				5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */,
-				5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */,
-				55EA019616AF15B500D6AEA0 /* PPFilterPlugObject.h */,
-				55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */,
-				55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */,
-				55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */,
-				5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */,
-				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
-				552A662716B5EBEA007C63F7 /* PPPlugInObject.h */,
-				552A662816B5EBEB007C63F7 /* PPPlugInObject.m */,
-				55F41A3517EF96AF00605DF8 /* PPExportObject.h */,
-				55F41A3617EF96AF00605DF8 /* PPExportObject.m */,
+				55FD192D19A241FC001E1D9C /* ExportObject.swift */,
 				5578C53D17DBABBE0057D11B /* PPDocument.h */,
 				5578C53E17DBABBF0057D11B /* PPDocument.m */,
 				55FEF8471984502900D2E79C /* Box View */,
@@ -3886,6 +3863,7 @@
 				55FEF84C1984508600D2E79C /* Wave View */,
 				55852E1A18D67CCB0009BF55 /* PPSmallPianoView.h */,
 				55852E1B18D67CCB0009BF55 /* PPSmallPianoView.m */,
+				55DD5A9819A1BF1A00F8AD1F /* Plug-in handling */,
 				5523EC78169276AA0067B22A /* Instrument Code */,
 				55469C2416BF341500175A1F /* Pattern Code */,
 			);
@@ -4041,6 +4019,29 @@
 			path = "PlayerPRO 6";
 			sourceTree = "<group>";
 		};
+		55DD5A9819A1BF1A00F8AD1F /* Plug-in handling */ = {
+			isa = PBXGroup;
+			children = (
+				557EF732168BDE95001BF077 /* PPPlugInCommon.h */,
+				557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */,
+				5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */,
+				5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */,
+				55EA019616AF15B500D6AEA0 /* PPFilterPlugObject.h */,
+				55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */,
+				55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */,
+				55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */,
+				5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */,
+				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
+				552A662716B5EBEA007C63F7 /* PPPlugInObject.h */,
+				552A662816B5EBEB007C63F7 /* PPPlugInObject.m */,
+				55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */,
+				55FD192C19A1C1D8001E1D9C /* PPComplexImportPlugInterface.h */,
+				55B5DF0519A25B6D0042E062 /* PPComplexImportPlugObject.h */,
+				55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */,
+			);
+			name = "Plug-in handling";
+			sourceTree = "<group>";
+		};
 		55DE87C3187E18A500C36533 /* Private headers */ = {
 			isa = PBXGroup;
 			children = (
@@ -4064,6 +4065,40 @@
 			path = "Plug-in example";
 			sourceTree = "<group>";
 		};
+		55ECD2771992C2ED00480788 /* MIDI Import */ = {
+			isa = PBXGroup;
+			children = (
+				5517DAC6180CAE2C001413D0 /* dls.h */,
+				5517DAC7180CAE2C001413D0 /* dls2.h */,
+				5517DAC8180CAE2C001413D0 /* dlsmac.h */,
+				55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */,
+				55ADC3E517D7CBF8001F27D4 /* Midi-rsrc.h */,
+				553340EC10BB5368005208D1 /* MIDI-GM-Small.c */,
+				553340ED10BB5368005208D1 /* MIDI.c */,
+				553340F010BB5368005208D1 /* PTMID.c */,
+				553340F110BB5368005208D1 /* PTMID.h */,
+				553340F210BB5368005208D1 /* PTMIDINP.c */,
+				553340F310BB5368005208D1 /* PTMIDSAV.c */,
+				553340F410BB5368005208D1 /* PTMIDZAP.c */,
+				5561EF99199FC87B0054B3A7 /* PTMIDZAP.h */,
+				55ECD27E1992C2ED00480788 /* main.m */,
+				55ECD2921992C6A600480788 /* PPMIDIImporter.h */,
+				55ECD2931992C6A600480788 /* PPMIDIImporter.m */,
+				55ECD2781992C2ED00480788 /* Supporting Files */,
+			);
+			path = "MIDI Import";
+			sourceTree = "<group>";
+		};
+		55ECD2781992C2ED00480788 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				55ECD2791992C2ED00480788 /* MIDI Import-Info.plist */,
+				55ECD27A1992C2ED00480788 /* InfoPlist.strings */,
+				55ECD27D1992C2ED00480788 /* MIDI Import-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		55F16D1B186F918F00E75C3E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -4078,12 +4113,8 @@
 				55F16D1C186F918F00E75C3E /* getAIFF.mi */,
 				557139CD1684EF7500831A5A /* PPHilightableButton.h */,
 				557139CE1684EF7500831A5A /* PPHilightableButton.m */,
-				555F5C63199333900056AF01 /* OpenPanelViewItem.swift */,
 				555F5C601993327D0056AF01 /* OpenPanelViewController.swift */,
 				556AE4BB16E290650074BBF9 /* PPByteswap.h */,
-				550D798E1979F33D00F0A8F8 /* PPByteSwap.swift */,
-				55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */,
-				55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */,
 				55232AF411FDE5970041A4EC /* Preferences Controllers */,
 				5526AB10188C8655008D0C14 /* Resources */,
 			);
@@ -4151,6 +4182,7 @@
 				555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */,
 				555776CA17EBF9000019D008 /* iOS PlayerPRO PlayerTests */,
 				55534ACF1817C387006D6BCB /* updateInfoPlist */,
+				55ECD2771992C2ED00480788 /* MIDI Import */,
 				88E0C4950C2F21E500D6C081 /* Frameworks */,
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 			);
@@ -4175,7 +4207,7 @@
 				5586881B10BF62F100FCC24D /* ULT.ppimpexp */,
 				5586882910BF62F500FCC24D /* UMX.ppimpexp */,
 				5586883D10BF62FB00FCC24D /* XM.ppimpexp */,
-				5586889710BF67F100FCC24D /* MIDI.ppimpexp */,
+				5586889710BF67F100FCC24D /* MIDI.ppextimp */,
 				55868A6710BFB46100FCC24D /* APPL.ppimpexp */,
 				55B797DC10D6E6C40073E379 /* Complex Fade.plugin */,
 				554E110510D6F09F00BB619C /* Fade Note.plugin */,
@@ -4208,13 +4240,13 @@
 				550FFAEB17CEA4570003A2F3 /* AIFF.plugin */,
 				55ADC3DB17D6F390001F27D4 /* Wave.plugin */,
 				5578C48117D9E8560057D11B /* PlayerPRO Player.app */,
-				5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */,
-				5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */,
+				5578C52F17DB94A50057D11B /* PPImport.mdimporter */,
 				5557769F17EBF8FE0019D008 /* iOS PlayerPRO Player.app */,
 				555776C317EBF8FF0019D008 /* iOS PlayerPRO PlayerTests.xctest */,
 				55534ACD1817C387006D6BCB /* updateInfoPlist */,
 				559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */,
 				55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */,
+				55ECD2751992C2ED00480788 /* net.sourceforge.playerpro.MIDI-Import.xpc */,
 				55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */,
 				55F1BDE31975CBFE00AD2C03 /* PlayerPROKit.framework */,
 			);
@@ -4329,33 +4361,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5578C50417DB8F9E0057D11B /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5578C51617DB901F0057D11B /* PPLibrary_PPKPrivate.h in Headers */,
-				5560643918C8FDC8002F72FC /* PPErrors.h in Headers */,
-				55F013E6187F5AB6002488D5 /* PPObjectProtocol.h in Headers */,
-				55DE87CE187E60F400C36533 /* PPFXSetObject.h in Headers */,
-				55C8EDEA187CC98200CC8C1B /* PPMadCommandObject.h in Headers */,
-				5578C51717DB901F0057D11B /* PPDriver_Private.h in Headers */,
-				5561700B1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */,
-				5578C51117DB90110057D11B /* PlayerPROKit.h in Headers */,
-				55DE87C0187E052400C36533 /* PPPatternObject_PPKPrivate.h in Headers */,
-				5578C51217DB901F0057D11B /* PPLibrary.h in Headers */,
-				55281D08199B33EF00C998AF /* PPPasteboardHandling.h in Headers */,
-				55D2922018AADB7D00EB7A7D /* PPPatternObject_PcmdHandling.h in Headers */,
-				5578C51417DB901F0057D11B /* PPDriver.h in Headers */,
-				5578C51817DB901F0057D11B /* PPMusicObject.h in Headers */,
-				55B0F5AF17DF0FB000653BCD /* PPSampleObject.h in Headers */,
-				55B0F5B217DF0FC100653BCD /* PPInstrumentObject.h in Headers */,
-				55C8EDE9187CC98200CC8C1B /* PPPatternObject.h in Headers */,
-				55DE87BD187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h in Headers */,
-				55DE87C7187E5B9100C36533 /* PPFXBusObject.h in Headers */,
-				5578C51A17DB901F0057D11B /* PPMusicObject_PPKPrivate.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		55F1BD8C1975C83400AD2C03 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -4425,9 +4430,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 551292EA163DD68500C2C639 /* Build configuration list for PBXNativeTarget "PlayerPROKit" */;
 			buildPhases = (
-				551292D5163DD68500C2C639 /* Headers */,
 				551292D3163DD68500C2C639 /* Sources */,
 				551292D4163DD68500C2C639 /* Frameworks */,
+				551292D5163DD68500C2C639 /* Headers */,
 				551292D6163DD68500C2C639 /* Resources */,
 			);
 			buildRules = (
@@ -4779,9 +4784,9 @@
 				5578C47F17D9E8560057D11B /* Resources */,
 				5578C49C17D9E8840057D11B /* Copy Frameworks */,
 				5578C49F17D9E8A30057D11B /* Copy Plug-ins */,
-				55680A321904661E00F7616D /* CopyFiles */,
+				55680A321904661E00F7616D /* Copy XPC Services */,
 				5578C4F417DA996C0057D11B /* Copy Spotlight */,
-				55F41A3017EF8A8E00605DF8 /* Strip Headers */,
+				55F41A3017EF8A8E00605DF8 /* Strip Private Headers */,
 			);
 			buildRules = (
 			);
@@ -4798,27 +4803,9 @@
 			productReference = 5578C48117D9E8560057D11B /* PlayerPRO Player.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5578C50517DB8F9E0057D11B /* libPlayerPROKit */ = {
+		5578C51B17DB94A50057D11B /* PPImport */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5578C50E17DB8FA00057D11B /* Build configuration list for PBXNativeTarget "libPlayerPROKit" */;
-			buildPhases = (
-				5578C50217DB8F9E0057D11B /* Sources */,
-				5578C50417DB8F9E0057D11B /* Headers */,
-				5578C50317DB8F9E0057D11B /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5521F40E17F75CDB002CDBA9 /* PBXTargetDependency */,
-			);
-			name = libPlayerPROKit;
-			productName = libPlayerPROKit;
-			productReference = 5578C50617DB8F9E0057D11B /* libPlayerPROKit.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		5578C51B17DB94A50057D11B /* PPImport-app */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5578C52C17DB94A50057D11B /* Build configuration list for PBXNativeTarget "PPImport-app" */;
+			buildConfigurationList = 5578C52C17DB94A50057D11B /* Build configuration list for PBXNativeTarget "PPImport" */;
 			buildPhases = (
 				5578C51E17DB94A50057D11B /* Sources */,
 				5578C52117DB94A50057D11B /* Frameworks */,
@@ -4827,12 +4814,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				5578C53417DB95350057D11B /* PBXTargetDependency */,
 				5578C51C17DB94A50057D11B /* PBXTargetDependency */,
 			);
-			name = "PPImport-app";
+			name = PPImport;
 			productName = PPImport;
-			productReference = 5578C52F17DB94A50057D11B /* PPImport Cocoa.mdimporter */;
+			productReference = 5578C52F17DB94A50057D11B /* PPImport.mdimporter */;
 			productType = "com.apple.product-type.bundle";
 		};
 		557DE42510E06BF200177B4C /* Amplitude */ = {
@@ -5302,16 +5288,18 @@
 				55868A7710BFB46100FCC24D /* Rez */,
 				5586888F10BF67F100FCC24D /* Sources */,
 				5586889110BF67F100FCC24D /* Frameworks */,
+				55ECD2951993016700480788 /* Copy XPC Services */,
 			);
 			buildRules = (
 			);
 			comments = "This would only be used in the library and not the application.  It currently does not compile.  I may look into it, I may not.";
 			dependencies = (
+				55ECD2841992C35200480788 /* PBXTargetDependency */,
 				5586888C10BF67F100FCC24D /* PBXTargetDependency */,
 			);
 			name = MIDI;
 			productName = MOD;
-			productReference = 5586889710BF67F100FCC24D /* MIDI.ppimpexp */;
+			productReference = 5586889710BF67F100FCC24D /* MIDI.ppextimp */;
 			productType = "com.apple.product-type.bundle";
 		};
 		55868A5810BFB46100FCC24D /* APPL */ = {
@@ -5344,7 +5332,6 @@
 			);
 			dependencies = (
 				555C5FCE18445CCC00DBD5DA /* PBXTargetDependency */,
-				555C5FD018445CCC00DBD5DA /* PBXTargetDependency */,
 			);
 			name = PPQuickView;
 			productName = PPQuickView;
@@ -5416,11 +5403,14 @@
 				55CBFB3711EB780B0028C6BB /* Copy PlugIns */,
 				5573A1611658A3B800A5AECA /* Copy Frameworks */,
 				55BE99DE17978E4400D6DECC /* Copy Spotlight Importer */,
-				55F41A3117EF8C2000605DF8 /* Strip Headers */,
+				55F41A3117EF8C2000605DF8 /* Strip Private Headers */,
+				55A158F519955BA900968953 /* Embed XPC Services */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				552363A419A55C9B000D191D /* PBXTargetDependency */,
+				552363A619A55C9B000D191D /* PBXTargetDependency */,
 				55534AE918183B0C006D6BCB /* PBXTargetDependency */,
 				5578C53217DB95290057D11B /* PBXTargetDependency */,
 				5578C4FB17DAB2910057D11B /* PBXTargetDependency */,
@@ -5453,9 +5443,28 @@
 			productReference = 55E898B710F17C2B004EB52B /* QuickTime.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
-		55F1BD8E1975C83400AD2C03 /* iOSPlayerPROCore */ = {
+		55ECD2741992C2ED00480788 /* MIDI Import */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 55F1BDA81975C83600AD2C03 /* Build configuration list for PBXNativeTarget "iOSPlayerPROCore" */;
+			buildConfigurationList = 55ECD2821992C2ED00480788 /* Build configuration list for PBXNativeTarget "MIDI Import" */;
+			buildPhases = (
+				55ECD2711992C2ED00480788 /* Sources */,
+				55ECD2721992C2ED00480788 /* Frameworks */,
+				55ECD2851992C36600480788 /* Rez */,
+				55ECD2731992C2ED00480788 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5561EF98199FBE480054B3A7 /* PBXTargetDependency */,
+			);
+			name = "MIDI Import";
+			productName = "MIDI Import";
+			productReference = 55ECD2751992C2ED00480788 /* net.sourceforge.playerpro.MIDI-Import.xpc */;
+			productType = "com.apple.product-type.bundle";
+		};
+		55F1BD8E1975C83400AD2C03 /* PlayerPROCore-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55F1BDA81975C83600AD2C03 /* Build configuration list for PBXNativeTarget "PlayerPROCore-iOS" */;
 			buildPhases = (
 				55F1BD8A1975C83400AD2C03 /* Sources */,
 				55F1BD8B1975C83400AD2C03 /* Frameworks */,
@@ -5466,7 +5475,7 @@
 			);
 			dependencies = (
 			);
-			name = iOSPlayerPROCore;
+			name = "PlayerPROCore-iOS";
 			productName = iOSPlayerPROCore;
 			productReference = 55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */;
 			productType = "com.apple.product-type.framework";
@@ -5500,7 +5509,7 @@
 				LastUpgradeCheck = 0600;
 				TargetAttributes = {
 					555776C217EBF8FF0019D008 = {
-						TestTargetID = 5557769E17EBF8FD0019D008;
+						TestTargetID = 55CBF9A511EB77760028C6BB;
 					};
 					55F1BD8E1975C83400AD2C03 = {
 						CreatedOnToolsVersion = 6.0;
@@ -5533,15 +5542,14 @@
 				55534ACC1817C387006D6BCB /* updateInfoPlist */,
 				5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */,
 				555776C217EBF8FF0019D008 /* iOS PlayerPRO PlayerTests */,
-				5578C51B17DB94A50057D11B /* PPImport-app */,
+				5578C51B17DB94A50057D11B /* PPImport */,
 				559C4186183EB4AB004A073C /* PPQuickView */,
 				55680A1C19045F0A00F7616D /* StcfImporter */,
 				5573A33E10B50D2600FF8B50 /* PlayerPROCore */,
-				55F1BD8E1975C83400AD2C03 /* iOSPlayerPROCore */,
+				55F1BD8E1975C83400AD2C03 /* PlayerPROCore-iOS */,
 				551292D7163DD68500C2C639 /* PlayerPROKit */,
 				55F1BDE21975CBFE00AD2C03 /* PlayerPROKit-iOS */,
 				55C3589516C42D1800FB9FA6 /* PlayerPROCompact */,
-				5578C50517DB8F9E0057D11B /* libPlayerPROKit */,
 				5533410810BB5460005208D1 /* Import-export */,
 				5533411010BB547C005208D1 /* MOD */,
 				5533414510BB572C005208D1 /* 669 */,
@@ -5559,6 +5567,7 @@
 				5586881D10BF62F500FCC24D /* UMX */,
 				5586883110BF62FB00FCC24D /* XM */,
 				5586888B10BF67F100FCC24D /* MIDI */,
+				55ECD2741992C2ED00480788 /* MIDI Import */,
 				55868A5810BFB46100FCC24D /* APPL */,
 				55B797D410D6E66A0073E379 /* Digital Plugs */,
 				55B797DB10D6E6C40073E379 /* Complex Fade */,
@@ -6035,6 +6044,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55ECD2731992C2ED00480788 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55ECD27C1992C2ED00480788 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55F1BD8D1975C83400AD2C03 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -6059,7 +6076,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55868A4510BFB44700FCC24D /* Midi_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6068,6 +6084,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				55B797E610D6E7070073E379 /* CompFade.r in Rez */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ECD2851992C36600480788 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55ECD2861992C37300480788 /* Midi_Plug.rsrc.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6095,33 +6119,33 @@
 			shellPath = /bin/sh;
 			shellScript = "cd $SRCROOT\n\n\"$TARGET_BUILD_DIR\"/$PRODUCT_NAME Cocoa-Info.plist Cocoa\ntouch -amfc Cocoa-Info.plistvers.plist\n\n\"$TARGET_BUILD_DIR\"/$PRODUCT_NAME \"PlayerPRO Player/PlayerPRO Player-Info.plist\" player\ntouch -amfc \"PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist\"\n\n\"$TARGET_BUILD_DIR\"/$PRODUCT_NAME \"iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plist\" player\ntouch -amfc \"iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plistvers.plist\"\n\n";
 		};
-		55F41A3017EF8A8E00605DF8 /* Strip Headers */ = {
+		55F41A3017EF8A8E00605DF8 /* Strip Private Headers */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Strip Headers";
+			name = "Strip Private Headers";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Remove all headers from copied frameworks\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"Headers\" -print0 | xargs -0 rm -rf\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"PrivateHeaders\" -print0 | xargs -0 rm -rf\n";
+			shellScript = "# Remove all headers from copied frameworks\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"PrivateHeaders\" -print0 | xargs -0 rm -rf\n";
 		};
-		55F41A3117EF8C2000605DF8 /* Strip Headers */ = {
+		55F41A3117EF8C2000605DF8 /* Strip Private Headers */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Strip Headers";
+			name = "Strip Private Headers";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Remove all headers from copied frameworks\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"Headers\" -print0 | xargs -0 rm -rf\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"PrivateHeaders\" -print0 | xargs -0 rm -rf\n";
+			shellScript = "# Remove all headers from copied frameworks\nfind \"$TARGET_BUILD_DIR/$FRAMEWORKS_FOLDER_PATH\" -name \"PrivateHeaders\" -print0 | xargs -0 rm -rf\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -6139,10 +6163,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				55A934F917F2121D00493DC5 /* PPFilterPluginWindowController.m in Sources */,
+				555F447619A1411700B8C6EE /* PlayerPROKitAdditions.swift in Sources */,
 				55DE87CF187E60F400C36533 /* PPFXSetObject.m in Sources */,
 				551292F1163DD7CE00C2C639 /* PPLibrary.m in Sources */,
 				558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */,
 				55C8EDE4187CC8B200CC8C1B /* PPMadCommandObject.m in Sources */,
+				55993EF219A3212100C2078E /* SafeGenerators.swift in Sources */,
 				55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */,
 				5578C4FE17DB8A580057D11B /* PPSampleObject.m in Sources */,
 				5578C50117DB8A6E0057D11B /* PPInstrumentObject.m in Sources */,
@@ -6151,6 +6177,7 @@
 				55DE87C8187E5B9100C36533 /* PPFXBusObject.m in Sources */,
 				5582135A17E4201B00B84F51 /* PPPluginWindowController.m in Sources */,
 				5582135B17E4201D00B84F51 /* PPDigitalPluginWindowController.m in Sources */,
+				556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */,
 				55C8EDE2187CC8B200CC8C1B /* PPPatternObject.m in Sources */,
 				5560643C18C8FDD9002F72FC /* PPErrors.m in Sources */,
 			);
@@ -6272,17 +6299,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55978AA51999DB07009EE5DF /* PlayerPROCoreAdditions.swift in Sources */,
 				555C0F8E1982980C003B9347 /* CurrentlyPlayingIndex.swift in Sources */,
 				559C871917ECD8B400E4E13C /* PPiSettingsDetailController.m in Sources */,
-				55978AA41999D9EF009EE5DF /* PlayerPROKitAdditions.swift in Sources */,
 				555776B917EBF8FF0019D008 /* PPiMasterViewController.m in Sources */,
 				55771DBF1871482D00AED8DC /* PPTimeFormatter.m in Sources */,
 				555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */,
 				55CDD02A1976F63600E3DDE1 /* MusicListObject.swift in Sources */,
 				555776B017EBF8FE0019D008 /* PPiAppDelegate.m in Sources */,
 				555776AC17EBF8FE0019D008 /* main.m in Sources */,
-				55413C481991B444001414D0 /* PPByteSwap.swift in Sources */,
 				555776BC17EBF8FF0019D008 /* PPiDetailViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6333,46 +6357,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				5533C8FB19942AD9003AEB16 /* SoundOutputController.swift in Sources */,
-				555C0F8D19829663003B9347 /* PPCurrentlyPlayingIndex.swift in Sources */,
+				555C0F8D19829663003B9347 /* CurrentlyPlayingIndex.swift in Sources */,
 				557E0B70199AB1AE0058B6E1 /* PPInstrumentWindowController.swift in Sources */,
-				55F4C3E519763FDD000997BE /* PPMusicListObject.swift in Sources */,
+				55F4C3E519763FDD000997BE /* MusicListObject.swift in Sources */,
 				55E763FB199AE81000D7952F /* MusicListPreferenceController.swift in Sources */,
-				55E382EC1981509100EC330B /* PPPlugInInfo.swift in Sources */,
+				55E382EC1981509100EC330B /* PlugInInfo.swift in Sources */,
 				555F5C621993327D0056AF01 /* OpenPanelViewController.swift in Sources */,
 				552788031981C95100708906 /* MusicListDragClass.swift in Sources */,
 				55588A97199951B300C3D4EE /* PlugInInfoController.swift in Sources */,
-				55E382F0198169C000EC330B /* PlayerPROCoreAdditions.swift in Sources */,
-				55978AAB1999E5B2009EE5DF /* PPMusicList.swift in Sources */,
-				55413C471991B443001414D0 /* PPByteSwap.swift in Sources */,
+				55978AAB1999E5B2009EE5DF /* MusicList.swift in Sources */,
 				55E763F0199ACDAA00D7952F /* ColorPreferenceController.m in Sources */,
 				55E763E6199ABBC900D7952F /* PPPreferences.swift in Sources */,
 				5578C48A17D9E8560057D11B /* main.m in Sources */,
 				55978AAA1999DF5C009EE5DF /* AppDelegate.swift in Sources */,
 				5531459D199E7ED6009405BA /* PPRunAlert.swift in Sources */,
-				555F5C65199333900056AF01 /* OpenPanelViewItem.swift in Sources */,
 				5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */,
-				55978AA21999D82C009EE5DF /* PlayerPROKitAdditions.swift in Sources */,
 				557191D118A40D9900F6DAD4 /* MidiHardwarePreferenceController.m in Sources */,
 				5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */,
 				5578C4BD17DA4BC20057D11B /* PPTimeFormatter.m in Sources */,
 				5578C4C017DA4C040057D11B /* MiscPreferenceController.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5578C50217DB8F9E0057D11B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5578C51317DB901F0057D11B /* PPLibrary.m in Sources */,
-				55DE87C9187E5B9100C36533 /* PPFXBusObject.m in Sources */,
-				5578C51517DB901F0057D11B /* PPDriver.m in Sources */,
-				55DE87C1187E131700C36533 /* PPMadCommandObject.m in Sources */,
-				5560643B18C8FDD8002F72FC /* PPErrors.m in Sources */,
-				5578C51917DB901F0057D11B /* PPMusicObject.m in Sources */,
-				55B0F5AD17DF0FA900653BCD /* PPSampleObject.m in Sources */,
-				55B0F5B017DF0FBD00653BCD /* PPInstrumentObject.m in Sources */,
-				55DE87D0187E60F400C36533 /* PPFXSetObject.m in Sources */,
-				55C8EDE5187CC96900CC8C1B /* PPPatternObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6590,12 +6593,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				558688A210BF683000FCC24D /* MIDI-GM-Small.c in Sources */,
-				558688A310BF683100FCC24D /* MIDI.c in Sources */,
-				558688A510BF683300FCC24D /* PTMID.c in Sources */,
-				558688A610BF683400FCC24D /* PTMIDINP.c in Sources */,
-				558688A710BF683400FCC24D /* PTMIDSAV.c in Sources */,
-				558688A810BF683500FCC24D /* PTMIDZAP.c in Sources */,
+				55B5DF0419A259370042E062 /* PPMIDIImporter.swift in Sources */,
+				55ECD2911992C5C100480788 /* MIDI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6680,47 +6679,46 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55E382EF198169C000EC330B /* PlayerPROCoreAdditions.swift in Sources */,
-				55CBFD3A11EB7CF10028C6BB /* PPApp_AppDelegate.m in Sources */,
 				55CB01A711EB82FA0028C6BB /* main.m in Sources */,
 				555F5C611993327D0056AF01 /* OpenPanelViewController.swift in Sources */,
 				5521F41517FA4365002CDBA9 /* BoxViewController.m in Sources */,
-				55F41A3717EF96B000605DF8 /* PPExportObject.m in Sources */,
 				55852E1C18D67CCB0009BF55 /* PPSmallPianoView.m in Sources */,
 				5531459C199E7ED6009405BA /* PPRunAlert.swift in Sources */,
 				55FEF84519844FD600D2E79C /* DigitalViewController.m in Sources */,
 				5533C8FA19942AD9003AEB16 /* SoundOutputController.swift in Sources */,
 				55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */,
 				55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */,
+				55B5DF0719A25B6D0042E062 /* PPComplexImportPlugObject.m in Sources */,
+				55FD192B19A1C12B001E1D9C /* ComplexImportPlugHandler.swift in Sources */,
 				55232AED11FDE2E40041A4EC /* MiscPreferenceController.m in Sources */,
 				55588A96199951B300C3D4EE /* PlugInInfoController.swift in Sources */,
 				55232AF011FDE5180041A4EC /* BoxEditorPreferenceController.m in Sources */,
 				55232AF311FDE56D0041A4EC /* DigitalEditorPreferenceControler.m in Sources */,
-				55978AA31999D82C009EE5DF /* PlayerPROKitAdditions.swift in Sources */,
 				55232AFA11FDE5F90041A4EC /* MidiHardwarePreferenceController.m in Sources */,
 				552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */,
+				55DC597919A2E6B100212DD0 /* AppDelegate.swift in Sources */,
 				55801EB113D1ED9A007E24FC /* NSColor+PPPreferences.m in Sources */,
 				55E763FE199AFC2B00D7952F /* ClassicEditorPreferenceController.swift in Sources */,
 				55323353167687A200076604 /* PPTimeFormatter.m in Sources */,
 				557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */,
+				5579ADB819A4551500DEC0FF /* DigitalPlugHandler.swift in Sources */,
 				557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */,
 				55E763E5199ABBC900D7952F /* PPPreferences.swift in Sources */,
 				5523EC6A16925FF80067B22A /* PPInstrumentViewController.m in Sources */,
 				55E382EB1981509100EC330B /* PlugInInfo.swift in Sources */,
-				5523EC8116936F880067B22A /* PPDigitalPlugHandler.m in Sources */,
 				5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */,
 				550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */,
-				555F5C64199333900056AF01 /* OpenPanelViewItem.swift in Sources */,
 				55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */,
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
+				5561F1C019A52A6C0085015B /* ExportObject.swift in Sources */,
 				55FEF84B1984506C00D2E79C /* ClassicalViewController.m in Sources */,
-				55413C461991B43F001414D0 /* PPByteSwap.swift in Sources */,
 				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,
 				552581FE16C6FC350016A31C /* InstrumentInfoController.m in Sources */,
 				55E763FC199AEAB200D7952F /* PianoPreferencesController.swift in Sources */,
 				5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */,
 				5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */,
 				5578C54017DBABC50057D11B /* PPDocument.m in Sources */,
+				55DC597B19A2FA9A00212DD0 /* SwiftBridge.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6730,6 +6728,20 @@
 			files = (
 				55E8998710F18175004EB52B /* QuicktimeGeneric.c in Sources */,
 				55E8999110F18AF1004EB52B /* WAVE-Conversion.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ECD2711992C2ED00480788 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55ECD28B1992C39A00480788 /* PTMIDSAV.c in Sources */,
+				55ECD2871992C39A00480788 /* MIDI-GM-Small.c in Sources */,
+				55ECD2891992C39A00480788 /* PTMID.c in Sources */,
+				55ECD28C1992C39A00480788 /* PTMIDZAP.c in Sources */,
+				55ECD2941992C6A600480788 /* PPMIDIImporter.m in Sources */,
+				55ECD28A1992C39A00480788 /* PTMIDINP.c in Sources */,
+				55ECD27F1992C2ED00480788 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6779,7 +6791,10 @@
 				55F1BE131975CD7200AD2C03 /* PPFXSetObject.m in Sources */,
 				55F1BE0A1975CD7200AD2C03 /* PPInstrumentObject.m in Sources */,
 				55F1BE1B1975CD7200AD2C03 /* PPErrors.m in Sources */,
+				555F447519A1411400B8C6EE /* PlayerPROCoreAdditions.swift in Sources */,
+				55993EF319A3212100C2078E /* SafeGenerators.swift in Sources */,
 				55F1BE111975CD7200AD2C03 /* PPFXBusObject.m in Sources */,
+				555F447719A1411800B8C6EE /* PlayerPROKitAdditions.swift in Sources */,
 				55F1BE0D1975CD7200AD2C03 /* PPPatternObject.m in Sources */,
 				55F1BE191975CD7200AD2C03 /* PPMusicObject.m in Sources */,
 				55F1BE0F1975CD7200AD2C03 /* PPMadCommandObject.m in Sources */,
@@ -6815,11 +6830,6 @@
 			target = 55151F7210DEDBDB0054ABC4 /* XI */;
 			targetProxy = 55151F8310DEDC0F0054ABC4 /* PBXContainerItemProxy */;
 		};
-		5517DAC4180CAC6D001413D0 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5586888B10BF67F100FCC24D /* MIDI */;
-			targetProxy = 5517DAC3180CAC6D001413D0 /* PBXContainerItemProxy */;
-		};
 		551FEA5D10E727AD00EDF2F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
@@ -6840,10 +6850,15 @@
 			target = 551FEA5C10E727AD00EDF2F1 /* MINs */;
 			targetProxy = 551FEB7810E7282700EDF2F1 /* PBXContainerItemProxy */;
 		};
-		5521F40E17F75CDB002CDBA9 /* PBXTargetDependency */ = {
+		552363A419A55C9B000D191D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 55C3589516C42D1800FB9FA6 /* PlayerPROCompact */;
-			targetProxy = 5521F40D17F75CDB002CDBA9 /* PBXContainerItemProxy */;
+			target = 5586888B10BF67F100FCC24D /* MIDI */;
+			targetProxy = 552363A319A55C9B000D191D /* PBXContainerItemProxy */;
+		};
+		552363A619A55C9B000D191D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55868A5810BFB46100FCC24D /* APPL */;
+			targetProxy = 552363A519A55C9B000D191D /* PBXContainerItemProxy */;
 		};
 		5533411A10BB548E005208D1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6894,11 +6909,6 @@
 			isa = PBXTargetDependency;
 			target = 5533411010BB547C005208D1 /* MOD */;
 			targetProxy = 5533429210BB73F3005208D1 /* PBXContainerItemProxy */;
-		};
-		5546217A163A20AE0005F491 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 55868A5810BFB46100FCC24D /* APPL */;
-			targetProxy = 55462179163A20AE0005F491 /* PBXContainerItemProxy */;
 		};
 		554E10F610D6F09500BB619C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -6975,10 +6985,10 @@
 			target = 55C3589516C42D1800FB9FA6 /* PlayerPROCompact */;
 			targetProxy = 555C5FCD18445CCC00DBD5DA /* PBXContainerItemProxy */;
 		};
-		555C5FD018445CCC00DBD5DA /* PBXTargetDependency */ = {
+		5561EF98199FBE480054B3A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5578C50517DB8F9E0057D11B /* libPlayerPROKit */;
-			targetProxy = 555C5FCF18445CCC00DBD5DA /* PBXContainerItemProxy */;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 5561EF97199FBE480054B3A7 /* PBXContainerItemProxy */;
 		};
 		55680A311904661700F7616D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7012,17 +7022,12 @@
 		};
 		5578C53217DB95290057D11B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5578C51B17DB94A50057D11B /* PPImport-app */;
+			target = 5578C51B17DB94A50057D11B /* PPImport */;
 			targetProxy = 5578C53117DB95290057D11B /* PBXContainerItemProxy */;
-		};
-		5578C53417DB95350057D11B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5578C50517DB8F9E0057D11B /* libPlayerPROKit */;
-			targetProxy = 5578C53317DB95350057D11B /* PBXContainerItemProxy */;
 		};
 		5578C53917DB959B0057D11B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5578C51B17DB94A50057D11B /* PPImport-app */;
+			target = 5578C51B17DB94A50057D11B /* PPImport */;
 			targetProxy = 5578C53817DB959B0057D11B /* PBXContainerItemProxy */;
 		};
 		557DE42610E06BF200177B4C /* PBXTargetDependency */ = {
@@ -7395,6 +7400,11 @@
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 55E898AA10F17C2B004EB52B /* PBXContainerItemProxy */;
 		};
+		55ECD2841992C35200480788 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55ECD2741992C2ED00480788 /* MIDI Import */;
+			targetProxy = 55ECD2831992C35200480788 /* PBXContainerItemProxy */;
+		};
 		55EE2D8717E12F0D00FED42A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 557DE3BD10E06BB500177B4C /* Filters Plugs */;
@@ -7402,7 +7412,7 @@
 		};
 		55F1BDB11975C8EE00AD2C03 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 55F1BD8E1975C83400AD2C03 /* iOSPlayerPROCore */;
+			target = 55F1BD8E1975C83400AD2C03 /* PlayerPROCore-iOS */;
 			targetProxy = 55F1BDB01975C8EE00AD2C03 /* PBXContainerItemProxy */;
 		};
 		55F1BDF71975CBFF00AD2C03 /* PBXTargetDependency */ = {
@@ -7417,7 +7427,7 @@
 		};
 		55F1BE241975D1CD00AD2C03 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 55F1BD8E1975C83400AD2C03 /* iOSPlayerPROCore */;
+			target = 55F1BD8E1975C83400AD2C03 /* PlayerPROCore-iOS */;
 			targetProxy = 55F1BE231975D1CD00AD2C03 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -7768,6 +7778,14 @@
 			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
 		};
+		55ECD27A1992C2ED00480788 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55ECD27B1992C2ED00480788 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -7815,6 +7833,7 @@
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
@@ -7823,7 +7842,6 @@
 					"BUILDINGPPRO=1",
 				);
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
-				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -7840,6 +7858,7 @@
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
@@ -7848,7 +7867,6 @@
 					"BUILDINGPPRO=1",
 				);
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
-				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -8352,7 +8370,6 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "iOS PlayerPRO Player/iOS Player-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -8362,7 +8379,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/iOS PlayerPRO Player.app/iOS PlayerPRO Player";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 				COMBINE_HIDPI_IMAGES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -8386,7 +8403,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/iOS PlayerPRO Player.app/iOS PlayerPRO Player";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
 				COMBINE_HIDPI_IMAGES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -8455,6 +8472,7 @@
 		5569FF521024B44400DDDF39 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -8472,6 +8490,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COMBINE_HIDPI_IMAGES = YES;
 				COMPRESS_PNG_FILES = YES;
+				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -8510,6 +8529,7 @@
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = B;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
@@ -8519,7 +8539,6 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
-				INSTALL_PATH = "@rpath";
 				MODULEMAP_FILE = MADDriver.source/Resources/PPCore.modulemap;
 				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
 				ONLY_ACTIVE_ARCH = NO;
@@ -8540,6 +8559,7 @@
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = B;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
@@ -8549,7 +8569,6 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
-				INSTALL_PATH = "@rpath";
 				MODULEMAP_FILE = MADDriver.source/Resources/PPCore.modulemap;
 				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
 				ONLY_ACTIVE_ARCH = NO;
@@ -8594,49 +8613,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO Player/PlayerPRO Player-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = Shared;
 				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		5578C50F17DB8FA00057D11B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_MODULES = NO;
-				DEAD_CODE_STRIPPING = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"BUILDINGPPRO=1",
-					"NOEXPORTFUNCS=1",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				LLVM_LTO = NO;
-				PRODUCT_NAME = PlayerPROKit;
-				STRIP_INSTALLED_PRODUCT = NO;
-			};
-			name = Release;
-		};
-		5578C51017DB8FA00057D11B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_MODULES = NO;
-				DEAD_CODE_STRIPPING = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					"BUILDINGPPRO=1",
-					"NOEXPORTFUNCS=1",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				LLVM_LTO = NO;
-				PRODUCT_NAME = PlayerPROKit;
-				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
 		};
@@ -8644,13 +8622,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source/MADDriver.Source";
 				INFOPLIST_FILE = "PPImport copy-Info.plist";
 				INSTALL_PATH = /Library/Spotlight;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "PPImport Cocoa";
+				PRODUCT_NAME = PPImport;
 				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Release;
@@ -8659,12 +8637,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source/MADDriver.Source";
 				INFOPLIST_FILE = "PPImport copy-Info.plist";
 				INSTALL_PATH = /Library/Spotlight;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "PPImport Cocoa";
+				PRODUCT_NAME = PPImport;
 				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Debug;
@@ -9373,28 +9351,34 @@
 		};
 		5586889510BF67F100FCC24D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI.pch";
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SWIFT_OBJC_BRIDGING_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI-Bridging-Header.h";
+				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Release;
 		};
 		5586889610BF67F100FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI.pch";
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				ONLY_ACTIVE_ARCH = NO;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SWIFT_OBJC_BRIDGING_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Debug;
 		};
@@ -9427,6 +9411,7 @@
 		559344191002F01700F95B82 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -9472,6 +9457,7 @@
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WARNING_CFLAGS = "-Wno-gnu-variable-sized-type-not-at-end";
 			};
 			name = Debug;
@@ -9619,6 +9605,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				LLVM_LTO = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PlayerPROCompact;
@@ -9643,6 +9630,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_INHIBIT_ALL_WARNINGS = YES;
 				LLVM_LTO = NO;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = PlayerPROCompact;
@@ -9690,7 +9678,6 @@
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = Shared;
 			};
 			name = Debug;
@@ -9726,6 +9713,53 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				ONLY_ACTIVE_ARCH = NO;
 				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		55ECD2801992C2ED00480788 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MIDI Import/MIDI Import-Prefix.pch";
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				INFOPLIST_FILE = "MIDI Import/MIDI Import-Info.plist";
+				MACH_O_TYPE = mh_execute;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				WRAPPER_EXTENSION = xpc;
+			};
+			name = Release;
+		};
+		55ECD2811992C2ED00480788 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "MIDI Import/MIDI Import-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
+				INFOPLIST_FILE = "MIDI Import/MIDI Import-Info.plist";
+				MACH_O_TYPE = mh_execute;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				WRAPPER_EXTENSION = xpc;
 			};
 			name = Debug;
 		};
@@ -10075,16 +10109,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5578C50E17DB8FA00057D11B /* Build configuration list for PBXNativeTarget "libPlayerPROKit" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5578C50F17DB8FA00057D11B /* Release */,
-				5578C51017DB8FA00057D11B /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		5578C52C17DB94A50057D11B /* Build configuration list for PBXNativeTarget "PPImport-app" */ = {
+		5578C52C17DB94A50057D11B /* Build configuration list for PBXNativeTarget "PPImport" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5578C52D17DB94A50057D11B /* Release */,
@@ -10408,7 +10433,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		55F1BDA81975C83600AD2C03 /* Build configuration list for PBXNativeTarget "iOSPlayerPROCore" */ = {
+		55ECD2821992C2ED00480788 /* Build configuration list for PBXNativeTarget "MIDI Import" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55ECD2801992C2ED00480788 /* Release */,
+				55ECD2811992C2ED00480788 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55F1BDA81975C83600AD2C03 /* Build configuration list for PBXNativeTarget "PlayerPROCore-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55F1BDA91975C83600AD2C03 /* Release */,

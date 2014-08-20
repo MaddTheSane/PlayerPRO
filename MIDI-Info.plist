@@ -5,7 +5,7 @@
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en_US</string>
+	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
@@ -20,8 +20,6 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
-	<key>CSResourcesFileMapped</key>
-	<true/>
 	<key>MADCanExport</key>
 	<false/>
 	<key>MADCanImport</key>
@@ -38,5 +36,7 @@
 	</array>
 	<key>NSHumanReadableCopyright</key>
 	<string>Written by A.ROSSET © 1995</string>
+	<key>NSPrincipalClass</key>
+	<string>PPMIDIImporter</string>
 </dict>
 </plist>

@@ -15,9 +15,12 @@ NSString * const kMadPlugIsSampleKey = @"MADPlugIsSample";
 
 static inline OSType NSStringToOSType(NSString *CFstri)
 {
-	const char *thecOSType = [CFstri cStringUsingEncoding:NSMacOSRomanStringEncoding];
-	
-	return Ptr2OSType(thecOSType);
+	return UTGetOSTypeFromString((__bridge CFStringRef)(CFstri));
+}
+
+static inline NSString* OSTypeToNSString(OSType theOSType)
+{
+	return CFBridgingRelease(UTCreateStringForOSType(theOSType));
 }
 
 static Class strClass;
@@ -45,18 +48,17 @@ static inline BOOL getBoolFromId(id NSType)
 @synthesize isSample = isSamp;
 @synthesize xxxx;
 
-typedef enum _MADPlugCapabilities {
+typedef NS_OPTIONS(unsigned char, MADPlugCapabilities) {
 	PPMADCanDoNothing	= 0,
 	PPMADCanImport		= 1 << 0,
 	PPMADCanExport		= 1 << 1,
 	PPMADCanDoBoth		= PPMADCanImport | PPMADCanExport
-} MADPlugCapabilities;
+};
 
 - (NSString*)description
 {
-	char typeString[5] = {0};
-	OSType2Ptr(type, typeString);
-	return [NSString stringWithFormat:@"%@ - %@ Sample: %@ Type: %@ UTIs: %@", self.menuName, [self.file bundlePath], isSamp ? @"YES": @"NO", [NSString stringWithCString:typeString encoding:NSMacOSRomanStringEncoding], [UTITypes description]];
+	NSString *typeString = CFBridgingRelease(UTCreateStringForOSType(type));
+	return [NSString stringWithFormat:@"%@ - %@ Sample: %@ Type: %@ UTIs: %@", self.menuName, [self.file bundlePath], isSamp ? @"YES": @"NO", typeString, [UTITypes description]];
 }
 
 - (instancetype)initWithBundle:(NSBundle *)tempBundle
@@ -103,8 +105,9 @@ typedef enum _MADPlugCapabilities {
 			type = NSStringToOSType(DictionaryTemp);
 		} else if ([DictionaryTemp isKindOfClass:numClass]) {
 			type = [(NSNumber*)DictionaryTemp unsignedIntValue];
-		} else
+		} else {
 			return nil;
+		}
 		
 		{
 			id canImportValue, canExportValue;

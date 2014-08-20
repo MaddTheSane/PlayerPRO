@@ -6,8 +6,6 @@
 //
 //
 
-#include <alloca.h>
-
 #import "AppDelegate.h"
 #import "PPPreferences.h"
 #import "PPMusicList.h"
@@ -197,7 +195,7 @@ static NSInteger selMusFromList = -1;
 		returnerr = [madDriver changeDriverSettingsToSettings:init];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDriverDidChange object:self];
 	if (returnerr != MADNoErr) {
-		NSError *err = CreateErrorFromMADErrorType(returnerr);
+		NSError *err = PPCreateErrorFromMADErrorType(returnerr);
 		[[NSAlert alertWithError:err] runModal];
 		return;
 	}
@@ -348,7 +346,7 @@ static NSInteger selMusFromList = -1;
 	
 	if (theRec == nil) {
 		dispatch_async(dispatch_get_main_queue(), ^{
-			NSError *NSerr = CreateErrorFromMADErrorType(MADUnknownErr);
+			NSError *NSerr = PPCreateErrorFromMADErrorType(MADUnknownErr);
 			[[NSAlert alertWithError:NSerr] runModal];
 		});
 		
@@ -494,7 +492,7 @@ static NSInteger selMusFromList = -1;
 						NSURL *tmpURL = [[[NSFileManager defaultManager] URLForDirectory:NSItemReplacementDirectory inDomain:NSUserDomainMask appropriateForURL:oldURL create:YES error:nil] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.aiff", (oldMusicName && ![oldMusicName isEqualToString:@""]) ? oldMusicName : @"untitled"] isDirectory:NO];
 						
 						if ((theErr = [self saveMusicAsAIFFToURL:tmpURL usingSettings:&exportSettings]) != MADNoErr) {
-							expErr = CreateErrorFromMADErrorType(theErr);
+							expErr = PPCreateErrorFromMADErrorType(theErr);
 							[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
 							dispatch_async(dispatch_get_main_queue(), errBlock);
 						}
@@ -647,12 +645,11 @@ return; \
 							asbd.mBytesPerFrame = asbd.mBitsPerChannel * asbd.mChannelsPerFrame / 8;
 							asbd.mBytesPerPacket = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
 							
-							CFURLRef url = CFBridgingRetain([savePanel URL]);
+							NSURL *url = [savePanel URL];
 							
 							AudioFileID audioFile;
 							OSStatus res;
-							res = AudioFileCreateWithURL(url, kAudioFileWAVEType, &asbd, kAudioFileFlags_EraseFile, &audioFile);
-							CFRelease(url);
+							res = AudioFileCreateWithURL((__bridge CFURLRef)(url), kAudioFileWAVEType, &asbd, kAudioFileFlags_EraseFile, &audioFile);
 							checkError(res);
 							
 							UInt32 numBytes = (UInt32)[saveData length];
@@ -713,7 +710,7 @@ return; \
 					if (isQuitting) {
 						[NSApp replyToApplicationShouldTerminate:YES];
 					} else {
-						NSError *aerr = CreateErrorFromMADErrorType(err);
+						NSError *aerr = PPCreateErrorFromMADErrorType(err);
 						[[NSAlert alertWithError:aerr] runModal];
 					}
 				} else {
@@ -803,7 +800,7 @@ return; \
 	
 	if (theOSErr != MADNoErr) {
 		if (theErr) {
-			*theErr = CreateErrorFromMADErrorType(theOSErr);
+			*theErr = PPCreateErrorFromMADErrorType(theOSErr);
 		}
 		self.paused = YES;
 		[self clearMusic];
@@ -817,7 +814,7 @@ return; \
 	
 	if (theOSErr != MADNoErr) {
 		if (theErr) {
-			*theErr = CreateErrorFromMADErrorType(theOSErr);
+			*theErr = PPCreateErrorFromMADErrorType(theOSErr);
 		}
 		self.paused = YES;
 		[self clearMusic];
@@ -1225,14 +1222,16 @@ enum PPMusicToolbarTypes {
 			case NSAlertDefaultReturn:
 			{
 				PPInfoRec rec;
-				char ostype[5] = {0};
-				if ([madLib identifyFileAtURL:theURL type:ostype] != MADNoErr || [madLib getInformationFromFileAtURL:theURL type:ostype info:&rec]) {
-					NSRunCriticalAlertPanel(NSLocalizedString(@"Unknown File", @"unknown file"), NSLocalizedString(@"The file type could not be identified.", @"Unidentified file"), nil, nil, nil);
-					return NO;
+				{
+					char ostype[5] = {0};
+					if ([madLib identifyFileAtURL:theURL type:ostype] != MADNoErr || [madLib getInformationFromFileAtURL:theURL type:ostype info:&rec]) {
+						NSRunCriticalAlertPanel(NSLocalizedString(@"Unknown File", @"unknown file"), NSLocalizedString(@"The file type could not be identified.", @"Unidentified file"), nil, nil, nil);
+						return NO;
+					}
 				}
-				OSType2Ptr(rec.signature, ostype);
+				NSString *ostype = CFBridgingRelease(UTCreateStringForOSType(rec.signature));
 				
-				NSURL *tmpURL = [[theURL URLByDeletingPathExtension] URLByAppendingPathExtension:[[NSString stringWithCString:ostype encoding:NSMacOSRomanStringEncoding] lowercaseString]];
+				NSURL *tmpURL = [[theURL URLByDeletingPathExtension] URLByAppendingPathExtension:[ostype lowercaseString]];
 				NSError *err;
 				if (![[NSFileManager defaultManager] moveItemAtURL:theURL toURL:tmpURL error:&err]) {
 					NSLog(@"Could not move file, error: %@", err);

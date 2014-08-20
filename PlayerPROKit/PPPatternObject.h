@@ -16,6 +16,7 @@
 #import <PlayerPROKit/PPObjectProtocol.h>
 
 @interface PPPatternObject : NSObject <NSFastEnumeration, PPObject>
+- (PPMadCommandObject *)objectAtIndexedSubscript:(NSInteger)index;
 @property (readonly) NSInteger index;
 @property (copy) NSString *patternName;
 @property (readonly, weak) PPMusicObject *musicWrapper;

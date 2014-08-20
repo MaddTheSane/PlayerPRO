@@ -54,15 +54,15 @@
 @synthesize envelopeRec;
 
 #if !TARGET_OS_IPHONE
-#define envelopeUTI @"net.sourceforge.playerpro.envelope"
-#define sampleUTI @"net.sourceforge.playerpro.instrument"
+NSString * const kPPKEnvelopePasteboardUTI = @"net.sourceforge.playerpro.envelope";
+NSString * const kPPKInstrumentPasteboardUTI = @"net.sourceforge.playerpro.instrument";
 
 static NSArray *UTIArray;
 static NSArray *SampleUTIArray;
 static dispatch_once_t initUTIOnceToken;
 static const dispatch_block_t initUTIArray = ^{
-	UTIArray = @[envelopeUTI];
-	SampleUTIArray = @[sampleUTI];
+	UTIArray = @[kPPKEnvelopePasteboardUTI];
+	SampleUTIArray = @[kPPKInstrumentPasteboardUTI];
 };
 
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
@@ -78,7 +78,7 @@ static const dispatch_block_t initUTIArray = ^{
 }
 - (id)pasteboardPropertyListForType:(NSString *)type
 {
-	if ([type isEqualToString:envelopeUTI])
+	if ([type isEqualToString:kPPKEnvelopePasteboardUTI])
 		return [NSKeyedArchiver archivedDataWithRootObject:self];
 	else
 		return nil;
@@ -86,7 +86,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 + (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
 {
-	if ([type isEqualToString:envelopeUTI])
+	if ([type isEqualToString:kPPKEnvelopePasteboardUTI])
 		return NSPasteboardReadingAsKeyedArchive;
 	else
 		return NSPasteboardReadingAsData;
@@ -162,6 +162,11 @@ static const dispatch_block_t initUTIArray = ^{
 @synthesize _volumeEnvelope;
 @synthesize _panningEnvelope;
 
+- (PPEnvelopeObject *)objectAtIndexedSubscript:(NSInteger)index
+{
+	return samples[index];
+}
+
 #if !TARGET_OS_IPHONE
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
 {
@@ -176,7 +181,7 @@ static const dispatch_block_t initUTIArray = ^{
 }
 - (id)pasteboardPropertyListForType:(NSString *)type
 {
-	if ([type isEqualToString:sampleUTI])
+	if ([type isEqualToString:kPPKInstrumentPasteboardUTI])
 		return [NSKeyedArchiver archivedDataWithRootObject:self];
 	else
 		return nil;
@@ -184,7 +189,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 + (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
 {
-	if ([type isEqualToString:sampleUTI])
+	if ([type isEqualToString:kPPKInstrumentPasteboardUTI])
 		return NSPasteboardReadingAsKeyedArchive;
 	else
 		return NSPasteboardReadingAsData;

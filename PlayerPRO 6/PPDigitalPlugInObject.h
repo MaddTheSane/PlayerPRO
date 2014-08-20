@@ -12,7 +12,9 @@
 #import "PPPlugInObject.h"
 
 @interface PPDigitalPlugInObject : PPPlugInObject
-- (instancetype)initWithBundle:(NSBundle*)toInit;
+- (id)init UNAVAILABLE_ATTRIBUTE;
+- (instancetype)initWithBundle:(NSBundle*)toInit NS_DESIGNATED_INITIALIZER;
++ (instancetype)createWithBundle:(NSBundle*)toInit NS_RETURNS_RETAINED;
 
-- (OSErr)callWithPcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug*)pi;
+- (MADErr)callWithPcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug*)pi;
 @end

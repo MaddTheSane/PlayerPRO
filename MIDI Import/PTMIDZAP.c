@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "PTMID.h"
+#include "PTMIDZAP.h"
 
 MS rgmsDecided[MAXSAMPS];
 int cmsDecided, wMinpitch, wMaxpitch;
@@ -130,7 +131,7 @@ int WConvertMidipitch(int pitch, unsigned long *cDev)
  * date: 1/7/1994 - added calls to WConvertMidipitch
  */
 
-short 				MIDIInstMOD[129];
+short MIDIInstMOD[128];
 
 void AnalyzePtune(Tune *ptune)
 {

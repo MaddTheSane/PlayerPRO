@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6206.8" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1090" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5056"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.8"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PPDocument">
@@ -222,7 +222,7 @@ Gw
                 </subviews>
             </view>
         </window>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <viewController id="fvI-Iq-sXE" userLabel="Digital View Controller" customClass="DigitalViewController">
             <connections>
                 <outlet property="currentDocument" destination="-2" id="sNh-Il-43a"/>
@@ -242,7 +242,7 @@ Gw
             </connections>
         </viewController>
         <viewController id="UmV-E5-CNH" userLabel="Wave View Controller" customClass="WaveViewController">
-=            <connections>
+            <connections>
                 <outlet property="currentDocument" destination="-2" id="t1V-rn-jKw"/>
                 <outlet property="view" destination="UQt-sf-rgN" id="jMn-XP-STC"/>
             </connections>

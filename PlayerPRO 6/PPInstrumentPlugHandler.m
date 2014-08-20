@@ -17,6 +17,11 @@
 @implementation PPInstrumentPlugHandler
 @synthesize instrumentIEArray;
 
+- (NSArray*)plugInArray
+{
+	return [instrumentIEArray copy];
+}
+
 - (id)init
 {
 	if (self = [super init]) {

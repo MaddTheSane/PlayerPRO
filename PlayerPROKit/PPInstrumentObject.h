@@ -28,6 +28,8 @@
 - (NSArray*)panningEnvelope;
 - (NSArray*)pitchEnvelope;
 
+- (PPEnvelopeObject *)objectAtIndexedSubscript:(NSInteger)index;
+
 @property (weak) PPMusicObject *theMus;
 @property (copy) NSString *name;
 @property (readonly) NSInteger number;

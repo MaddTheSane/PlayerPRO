@@ -26,12 +26,12 @@
 @synthesize theSet;
 
 #if !TARGET_OS_IPHONE
-#define sampleUTI @"net.sourceforge.playerpro.FXSet"
+NSString * const kPPKFXSetPasteboardUTI = @"net.sourceforge.playerpro.FXSet";
 
 static NSArray *UTIArray;
 static dispatch_once_t initUTIOnceToken;
 static const dispatch_block_t initUTIArray = ^{
-	UTIArray = @[sampleUTI];
+	UTIArray = @[kPPKFXSetPasteboardUTI];
 };
 
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
@@ -47,7 +47,7 @@ static const dispatch_block_t initUTIArray = ^{
 }
 - (id)pasteboardPropertyListForType:(NSString *)type
 {
-	if ([type isEqualToString:sampleUTI])
+	if ([type isEqualToString:kPPKFXSetPasteboardUTI])
 		return [NSKeyedArchiver archivedDataWithRootObject:self];
 	else
 		return nil;
@@ -55,7 +55,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 + (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
 {
-	if ([type isEqualToString:sampleUTI])
+	if ([type isEqualToString:kPPKFXSetPasteboardUTI])
 		return NSPasteboardReadingAsKeyedArchive;
 	else
 		return NSPasteboardReadingAsData;

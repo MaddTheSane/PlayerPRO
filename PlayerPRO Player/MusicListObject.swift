@@ -65,7 +65,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 }
 
 @objc(PPMusicListObject) class MusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPrintable, Printable {
-	private(set) var musicURL: NSURL! = nil;
+	private(set) var musicURL: NSURL
 
 	#if os(OSX)
 	var fileIcon: NSImage {get {
@@ -101,7 +101,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 				if (theparam == nil) {
 					return 0;
 				}
-				stashedFileSize = (theparam as NSDictionary).fileSize()
+				stashedFileSize = (theparam! as NSDictionary).fileSize()
 			} else {
 				var retNum = val as NSNumber
 				stashedFileSize = val!.unsignedLongLongValue
@@ -111,7 +111,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		}}
 	
 	init(URL: NSURL!) {
-		if (!URL) {
+		if (URL != nil) {
 			// How to fail?
 			//return nil;
 		}
@@ -119,7 +119,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 			self.musicURL = URL;
 		} else {
 			var tmpURL = URL.fileReferenceURL();
-			self.musicURL = tmpURL ? tmpURL : URL;
+			self.musicURL = tmpURL == nil ? tmpURL : URL;
 
 		}
 		super.init();
@@ -130,7 +130,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	}}
 	
 	override var hashValue: Int { get {
-		return musicURL.filePathURL.path.hashValue
+		return musicURL.filePathURL!.path!.hashValue
 	}}
 
 	override var description: String { get {
@@ -146,7 +146,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		var dat2: AnyObject? = nil
 		var bothAreValid = true
 		var theSame = false
-		if (!object) {
+		if (object == nil) {
 			return false;
 		}
 		
@@ -190,11 +190,11 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		return true;
 	}
 	
-	func encodeWithCoder(aCoder: NSCoder!) {
+	func encodeWithCoder(aCoder: NSCoder) {
 		aCoder.encodeObject(musicURL, forKey: kMusicListURLKey)
 	}
 	
-	convenience required init(coder aDecoder: NSCoder!) {
+	convenience required init(coder aDecoder: NSCoder) {
 		self.init(URL:aDecoder.decodeObjectForKey(kMusicListURLKey) as NSURL);
 	}
 }

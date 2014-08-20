@@ -21,9 +21,11 @@
 @property (readonly) PPLibrary *theLibrary;
 @property (readonly) MADDriverSettings driverSettings;
 @property NSTimeInterval musicPosition;
-@property BOOL isExporting;
+@property (getter=isExporting) BOOL exporting;
 @property (readonly) NSTimeInterval totalMusicPlaybackTime;
+@property (readonly) NSTimeInterval currentMusicPlaybackTime;
 
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithLibrary:(PPLibrary *)theLib;
 - (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings;
 - (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out MADErr*)theErr NS_DESIGNATED_INITIALIZER;
@@ -38,7 +40,7 @@
 
 - (BOOL)directSaveToPointer:(void*)thePtr settings:(MADDriverSettings*)theSett;
 - (NSInteger)audioLength DEPRECATED_ATTRIBUTE;
-- (NSInteger)audioDataLength;
+@property (readonly) NSInteger audioDataLength;
 
 - (MADErr)getMusicStatusWithCurrentTime:(long*)curTime totalTime:(long*)totTime;
 - (MADErr)setMusicStatusWithCurrentTime:(long)curTime maximumTime:(long)maxV minimumTime:(long)minV;
@@ -63,17 +65,17 @@
 - (MADErr)playSoundDataFromData:(NSData*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo;
 #endif
 
-- (int)availableChannel;
+@property (readonly) int availableChannel;
 
 - (MADErr)play;
 - (MADErr)pause;
 - (MADErr)stop;
-- (BOOL)isPlayingMusic;
+@property (readonly, getter=isPlayingMusic) BOOL playingMusic;
 - (BOOL)isDonePlaying DEPRECATED_ATTRIBUTE;
-- (BOOL)isDonePlayingMusic;
-- (BOOL)isPaused;
+@property (readonly, getter=isDonePlayingMusic) BOOL donePlayingMusic;
+@property (readonly, getter=isPaused) BOOL paused;
 
-- (PPMusicObject *)loadMusicFile:(NSString*)path;
-- (PPMusicObject *)loadMusicURL:(NSURL*)url;
+- (PPMusicObject *)loadMusicFile:(NSString*)path NS_RETURNS_RETAINED;
+- (PPMusicObject *)loadMusicURL:(NSURL*)url NS_RETURNS_RETAINED;
 
 @end

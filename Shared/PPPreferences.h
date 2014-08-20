@@ -15,14 +15,16 @@ typedef NS_ENUM(NSInteger, PPPlaylistMode) {
 	PPLoadRandom
 };
 
+#pragma pack(push)
 typedef struct _tagCoupling {
 	int amount;
 	NSInteger tag;
 } TagCoupling;
+#pragma pack(pop)
 
 @protocol PPPreferenceObject <NSObject>
 
-+ (instancetype)newPreferenceView;
++ (instancetype)newPreferenceView NS_RETURNS_RETAINED;
 
 @end
 

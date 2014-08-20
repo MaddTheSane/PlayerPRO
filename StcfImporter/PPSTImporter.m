@@ -99,7 +99,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:theNo];
 	
-	for(i = 0; i < theNo * 2; i += 2) {
+	for (i = 0; i < theNo * 2; i += 2) {
 		StringPtr aStr, aStr2;
 		aStr = GetStringFromHandle(aHandle, i);
 		aStr2 = GetStringFromHandle(aHandle, i + 1);
@@ -143,7 +143,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	NSDictionary *myDict;
 	OSErr myErr = [self loadOldMusicListAtURL:theURL toDictionary:&myDict];
 	if (myErr) {
-		NSError *nsErr = CreateErrorFromMADErrorType(myErr);
+		NSError *nsErr = PPCreateErrorFromMADErrorType(myErr);
 		reply(nil, nsErr);
 	} else {
 		reply(myDict, nil);

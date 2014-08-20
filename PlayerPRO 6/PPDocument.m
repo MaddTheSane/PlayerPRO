@@ -9,14 +9,14 @@
 #import "PPDocument.h"
 #import <PlayerPROKit/PlayerPROKit.h>
 #import <AVFoundation/AVFoundation.h>
-#import "PPApp_AppDelegate.h"
 #import "UserDefaultKeys.h"
-#import "PPExportObject.h"
 #import "BoxViewController.h"
 #import "WaveViewController.h"
 #import "ClassicalViewController.h"
 #import "DigitalViewController.h"
 #import "PlayerPRO_6-swift.h"
+
+#define globalMadLib ((AppDelegate*)NSApplication.sharedApplication.delegate).madLib
 
 @interface PPDocument ()
 @property (readwrite, strong) PPDriver *theDriver;
@@ -157,7 +157,7 @@
 	//[[NSNotificationCenter defaultCenter] postNotificationName:PPDriverDidChange object:self];
 	
 	if (returnerr != MADNoErr) {
-		[[NSAlert alertWithError:CreateErrorFromMADErrorType(returnerr)] beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSModalResponse returnCode) {
+		[[NSAlert alertWithError:PPCreateErrorFromMADErrorType(returnerr)] beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSModalResponse returnCode) {
 			;//Currently, do nothing
 		}];
 	}
@@ -216,7 +216,7 @@
 	
 	if (theRec == nil) {
 		dispatch_async(dispatch_get_main_queue(), ^{
-			NSError *NSerr = CreateErrorFromMADErrorType(err);
+			NSError *NSerr = PPCreateErrorFromMADErrorType(err);
 			[[NSAlert alertWithError:NSerr] beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSModalResponse returnCode) {
 				;//Do nothing for now
 			}];
@@ -278,7 +278,7 @@
 				case -1:
 					//AIFF
 				{
-					PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:theURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
+					ExportObject *expObj = [[ExportObject alloc] initWithDestination:theURL exportBlock:^MADErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
 						if (errStr)
 							*errStr = nil;
 						
@@ -286,14 +286,14 @@
 						[_theDriver endExport];
 						return theErr;
 					}];
-					[(PPApp_AppDelegate*)[NSApp delegate] addExportObject:expObj];
+					[(AppDelegate*)[NSApp delegate] addExportObject:expObj];
 				}
 					break;
 					
 				case -2:
 					//M4A
 				{
-					PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:theURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
+					ExportObject *expObj = [[ExportObject alloc] initWithDestination:theURL exportBlock:^MADErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
 						OSErr theErr = MADNoErr;
 						if (errStr)
 							*errStr = nil;
@@ -384,7 +384,7 @@
 							return MADWritingErr;
 						}
 					}];
-					[(PPApp_AppDelegate*)[NSApp delegate] addExportObject:expObj];
+					[(AppDelegate*)[NSApp delegate] addExportObject:expObj];
 				}
 					break;
 					
@@ -468,12 +468,12 @@
 			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", tmpObj.menuName]];
 			[savePanel beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSInteger result) {
 				if (result == NSFileHandlingPanelOKButton) {
-					PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
+					ExportObject *expObj = [[ExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
 						OSErr theErr = [_theMusic exportMusicToURL:theURL format:tmpObj.plugType library:globalMadLib];
 						[_theDriver endExport];
 						return theErr;
 					}];
-					[(PPApp_AppDelegate*)[NSApp delegate] addExportObject:expObj];
+					[(AppDelegate*)[NSApp delegate] addExportObject:expObj];
 				} else
 					[_theDriver endExport];
 			}];

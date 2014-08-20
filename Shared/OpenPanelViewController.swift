@@ -8,7 +8,100 @@
 
 import Cocoa
 
+func ==(lhs: OpenPanelViewController.OpenPanelViewItem, rhs: OpenPanelViewController.OpenPanelViewItem) -> Bool {
+	if lhs.theUtiType != rhs.theUtiType {
+		return false
+	} else if lhs.name != rhs.name {
+		return false
+	} else if lhs.utis != rhs.utis {
+		return false
+	} else {
+		return true
+	}
+}
+
 class OpenPanelViewController: NSViewController {
+	enum utiType: Int {
+		case allType = -1
+		case trackerType = -2
+		case playlistType = -3
+		case instrumentType = -4
+		case otherType = -5
+	};
+	
+	enum trackerType : UInt {
+		case tracker = 1
+		case playlist
+		case instrument
+		case other
+	}
+	
+	class OpenPanelViewItem: DebugPrintable, Printable, Hashable {
+		let name: String
+		let theUtiType: trackerType
+		let utis: [String]
+		
+		init(type typ: utiType, utis ut: [String], name nam: String) {
+			switch (typ) {
+			case .trackerType:
+				theUtiType = .tracker;
+				
+			case .playlistType:
+				theUtiType = .playlist
+				
+			case .instrumentType:
+				theUtiType = .instrument
+				
+			case .otherType:
+				theUtiType = .other
+				
+			default:
+				// Because we can't fail on inits yet...
+				theUtiType = .other
+			}
+			
+			utis = ut
+			name = nam
+		}
+		
+		var hashValue: Int { get {
+			return name.hashValue ^ theUtiType.hashValue
+			}}
+		
+		var debugDescription: String { get {
+			var des: String
+			if (theUtiType == .playlist) {
+				des = "Playlist";
+			} else if (theUtiType == .instrument) {
+				des = "Instrument";
+			} else if (theUtiType == .tracker) {
+				des = "Tracker";
+			} else if (theUtiType == .other) {
+				des = "Other";
+			} else {
+				des = "Unknown";
+			}
+			
+			return "\(name): \(des) - \(utis.description)"
+			}}
+		
+		var description: String { get {
+			var des: String
+			if (theUtiType == .playlist) {
+				des = "Playlist";
+			} else if (theUtiType == .instrument) {
+				des = "Instrument";
+			} else if (theUtiType == .tracker) {
+				des = "Tracker";
+			} else if (theUtiType == .other) {
+				des = "Other";
+			} else {
+				des = "Unknown";
+			}
+			return "\(name): \(des)"
+			}}
+	}
+	
 	private var openPanel: NSOpenPanel!
 	private var utiObjects = [OpenPanelViewItem]()
 	@IBOutlet var popUp: NSPopUpButton! = nil
@@ -34,9 +127,7 @@ class OpenPanelViewController: NSViewController {
 		switch (tag) {
 		case utiType.allType.toRaw():
 			for obj in utiObjects {
-				for uti in obj.utis {
-					allowedUTIs.append(uti)
-				}
+				allowedUTIs += obj.utis
 			}
 			openPanel.allowedFileTypes = allowedUTIs
 			if (allowsMultipleSelectionOfTrackers) {
@@ -46,9 +137,7 @@ class OpenPanelViewController: NSViewController {
 		case utiType.trackerType.toRaw():
 			for obj in utiObjects {
 				if (obj.theUtiType == trackerType.tracker) {
-					for uti in obj.utis {
-						allowedUTIs.append(uti)
-					}
+					allowedUTIs += obj.utis
 				}
 			}
 			openPanel.allowedFileTypes = allowedUTIs
@@ -59,9 +148,7 @@ class OpenPanelViewController: NSViewController {
 		case utiType.playlistType.toRaw():
 			for obj in utiObjects {
 				if (obj.theUtiType == .playlist) {
-					for uti in obj.utis {
-						allowedUTIs.append(uti)
-					}
+					allowedUTIs += obj.utis
 				}
 			}
 			openPanel.allowedFileTypes = allowedUTIs
@@ -72,9 +159,7 @@ class OpenPanelViewController: NSViewController {
 		case utiType.instrumentType.toRaw():
 			for obj in utiObjects {
 				if (obj.theUtiType == .instrument) {
-					for uti in obj.utis {
-						allowedUTIs.append(uti)
-					}
+					allowedUTIs += obj.utis
 				}
 			}
 			openPanel.allowedFileTypes = allowedUTIs
@@ -113,7 +198,7 @@ class OpenPanelViewController: NSViewController {
 		}
 	}
 	
-	init(openPanel panel:NSOpenPanel, trackerDictionary td: Dictionary<String, [String]>? = nil, playlistDictionary pd :Dictionary<String, [String]>? = nil, instrumentDictionary insDict: Dictionary<String, [String]>? = nil, additionalDictionary adddict: Dictionary<String, [String]>? = nil) {
+	init(openPanel panel: NSOpenPanel, trackerDictionary td: [String: [String]]? = nil, playlistDictionary pd: [String: [String]]? = nil, instrumentDictionary insDict: [String: [String]]? = nil, additionalDictionary adddict: [String: [String]]? = nil) {
 		openPanel = panel
 		multipleSelection = false
 		super.init(nibName: "OpenPanelViewController", bundle: nil)
@@ -161,7 +246,7 @@ class OpenPanelViewController: NSViewController {
 			})
 	}
 	
-	convenience init(openPanel panel:NSOpenPanel, trackerDictionary td: Dictionary<String, [String]>?, playlistDictionary pd :Dictionary<String, [String]>?) {
+	convenience init(openPanel panel:NSOpenPanel, trackerDictionary td: [String: [String]]?, playlistDictionary pd: [String: [String]]?) {
 		self.init(openPanel:panel, trackerDictionary:td, playlistDictionary:pd, instrumentDictionary:nil, additionalDictionary:nil)
 	}
 	/*
@@ -175,8 +260,8 @@ class OpenPanelViewController: NSViewController {
 		super.awakeFromNib()
 		// Do view setup here.
 		
-		var fileTypeSelectionMenu = popUp.menu;
-		var moreThanTwoTypes = hasMoreThanTwoTypes();
+		let fileTypeSelectionMenu = popUp.menu;
+		let moreThanTwoTypes = hasMoreThanTwoTypes();
 		if (moreThanTwoTypes) {
 			var mi0 = NSMenuItem(title: "All Openable Files", action: "selectUTI:", keyEquivalent: "")
 			mi0.tag = utiType.allType.toRaw()
@@ -249,9 +334,7 @@ class OpenPanelViewController: NSViewController {
 		var fileUTIs = [String]()
 		
 		for obj in utiObjects {
-			for someUTI in obj.utis {
-				fileUTIs.append(someUTI)
-			}
+			fileUTIs += obj.utis
 		}
 		
 		if (!allowsMultipleSelectionOfTrackers) {
@@ -264,13 +347,12 @@ class OpenPanelViewController: NSViewController {
 	
 	func hasMoreThanTwoTypes() -> Bool {
 		var i = 0;
-		var utiCount = utiObjects.count;
+		let utiCount = utiObjects.count;
 		if (utiCount < 2) {
 			return false;
 		}
 		
 		for (i = 1; i < utiCount; i++) {
-			
 			var obj1 = utiObjects[i - 1];
 			var obj2 = utiObjects[i];
 			if (obj1.theUtiType != obj2.theUtiType) {

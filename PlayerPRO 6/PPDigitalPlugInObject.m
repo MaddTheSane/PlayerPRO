@@ -60,12 +60,17 @@
 	return self;
 }
 
-- (OSErr)callWithPcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug*)pi
++ (instancetype)createWithBundle:(NSBundle*)toInit
+{
+	return [[self alloc] initWithBundle:toInit];
+}
+
+- (MADErr)callWithPcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug*)pi
 {
 	NSURL *tempURL = [self.file bundleURL];
 	CFBundleRef tempBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef) tempURL);
 	CFBundleRefNum resFileNum = CFBundleOpenBundleResourceMap(tempBundle);
-	OSErr iErr = (*plugCode)->MyProcPtr(plugCode, myPcmd, pi);
+	MADErr iErr = (*plugCode)->MyProcPtr(plugCode, myPcmd, pi);
 	
 	CFBundleCloseBundleResourceMap(tempBundle, resFileNum);
 	CFRelease(tempBundle);

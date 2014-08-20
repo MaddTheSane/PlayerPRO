@@ -13,14 +13,16 @@
 #define NS_DESIGNATED_INITIALIZER
 #endif
 
-#define kPPTotalPatterns @"Total Patterns"
-#define kPPPartitionLength @"Partition Length"
-#define kPPFileSize @"File Size"
-#define kPPSignature @"Signature"
-#define kPPTotalTracks @"Total Tracks"
-#define kPPTotalInstruments @"Total Instruments"
-#define kPPInternalFileName @"Internal File Name"
-#define kPPFormatDescription @"FormatDescription"
+__BEGIN_DECLS
+extern NSString * const kPPTotalPatterns;
+extern NSString * const kPPPartitionLength;
+extern NSString * const kPPFileSize;
+extern NSString * const kPPSignature;
+extern NSString * const kPPTotalTracks;
+extern NSString * const kPPTotalInstruments;
+extern NSString * const kPPInternalFileName;
+extern NSString * const kPPFormatDescription;
+__END_DECLS
 
 @interface PPLibraryObject : NSObject
 @property (readonly, copy) NSString *menuName;
@@ -39,6 +41,9 @@
 - (instancetype)initWithPlugInCPath:(const char*)cPath NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithPlugInPath:(NSString *)path;
 - (instancetype)initWithPlugInURL:(NSURL *)URL;
++ (void)deregisterDebugFunction;
++ (void)registerDebugFunction:(void (*)(short, const char*, const char*))newDebugFunc;
++ (void)registerDebugBlock:(void (^)(short, const char*, const char*))newDebugFunc;
 
 - (PPLibraryObject *)pluginAtIndex:(NSUInteger)idx;
 @property (readonly) NSUInteger pluginCount;
@@ -53,5 +58,6 @@
 - (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
 
 + (NSDictionary*)infoRecToDictionary:(PPInfoRec*)infoRec;
+- (PPLibraryObject *)objectAtIndexedSubscript:(NSInteger)index;
 
 @end

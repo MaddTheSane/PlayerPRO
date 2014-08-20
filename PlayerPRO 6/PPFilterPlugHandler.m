@@ -48,7 +48,12 @@
 	return self;
 }
 
-- (OSErr)callDigitalPlugAtIndex:(NSInteger)idx sampleData:(sData*)theInsData startLength:(long)start endLength:(long)end stereoMode:(short)stereo info:(PPInfoPlug *)theInfo
+- (NSArray*)plugInArray
+{
+	return [filterPlugs copy];
+}
+
+- (MADErr)callDigitalPlugAtIndex:(NSInteger)idx sampleData:(sData*)theInsData startLength:(long)start endLength:(long)end stereoMode:(short)stereo info:(PPInfoPlug *)theInfo
 {
 	PPFilterPlugObject *tmp = filterPlugs[idx];
 	theInfo->fileType = 'PLug';

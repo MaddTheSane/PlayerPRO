@@ -135,22 +135,15 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 + (MADErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib
 {
 	char filetype[5];
-	CFURLRef tmpCFURL;
 	MADErr theErr = MADNoErr;
 	if (!theInfo || !thURL || !theLib) {
 		return MADParametersErr;
 	}
 	
-	tmpCFURL = CFBridgingRetain(thURL);
+	if ((theErr = MADMusicIdentifyCFURL(theLib._madLib, filetype, (__bridge CFURLRef)(thURL))) != MADNoErr)
+		return theErr;
 	
-	if ((theErr = MADMusicIdentifyCFURL(theLib._madLib, filetype, tmpCFURL)) != MADNoErr)
-		goto end;
-	
-	theErr = MADMusicInfoCFURL(theLib._madLib, filetype, tmpCFURL, theInfo);
-	
-end:
-	CFRelease(tmpCFURL);
-	return theErr;
+	return MADMusicInfoCFURL(theLib._madLib, filetype, (__bridge CFURLRef)(thURL), theInfo);
 }
 
 - (NSString *)internalFileName
@@ -167,6 +160,23 @@ end:
 		madInfo = [[NSString alloc] initWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
 	}
 	return madInfo;
+}
+
+- (instancetype)initWithMusicStruct:(MADMusic*)theStruct
+{
+	return [self initWithMusicStruct:theStruct copy:YES];
+}
+
+- (instancetype)initWithMusicStruct:(MADMusic*)theStruct copy:(BOOL)copyData
+{
+	if (self = [super init]) {
+		if (copyData) {
+			currentMusic = DeepCopyMusic(theStruct);
+		} else {
+			currentMusic = theStruct;
+		}
+	}
+	return self;
 }
 
 - (instancetype)initWithURL:(NSURL *)url
@@ -288,6 +298,27 @@ end:
 	return copyWrap;
 }
 
+#if 0
+- (void)setUpObjCStructures
+{
+	int i;
+	self.internalFileName = [NSString stringWithCString:currentMusic->header->name encoding:NSMacOSRomanStringEncoding];
+	self.madInfo = [NSString stringWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
+	self.madAuthor = @"";
+	self.madType = currentMusic->header->MAD;
+	self.instruments = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU];
+	for (i = 0; i < MAXINSTRU; i++) {
+		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:self instrumentIndex:i];
+		[self.instruments addObject:insObj];
+	}
+	self.patterns = [[NSMutableArray alloc] initWithCapacity:currentMusic->header->numPat];
+	for (i = 0; i < currentMusic->header->numPat; i++) {
+		PPPatternObject *obj = [[PPPatternObject alloc] initWithMusic:self patternAtIndex:i];
+		[self.patterns addObject:obj];
+	}
+}
+#endif
+
 - (BOOL)addInstrument:(PPInstrumentObject*)theIns
 {
 	if ([[self instruments] count] >= MAXINSTRU) {
@@ -306,7 +337,7 @@ end:
 	NSData *fileData = [NSData dataWithContentsOfURL:insURL];
 	if (!fileData) {
 		if (theErr) {
-			*theErr = CreateErrorFromMADErrorType(MADReadingErr);
+			*theErr = PPCreateErrorFromMADErrorType(MADReadingErr);
 		}
 		return NO;
 	}
@@ -317,7 +348,7 @@ end:
 		tempInstrData = calloc(sizeof(InstrData), MAXINSTRU);
 		if (tempInstrData == NULL) {
 			if (theErr) {
-				*theErr = CreateErrorFromMADErrorType(MADIncompatibleFile);
+				*theErr = PPCreateErrorFromMADErrorType(MADIncompatibleFile);
 			}
 			return NO;
 		}
@@ -326,7 +357,7 @@ end:
 		inOutCount = sizeof(InstrData) * MAXINSTRU;
 		if ([fileData length] <= inOutCount) {
 			if (theErr) {
-				*theErr = CreateErrorFromMADErrorType(MADIncompatibleFile);
+				*theErr = PPCreateErrorFromMADErrorType(MADIncompatibleFile);
 			}
 			free(tempInstrData);
 			return NO;
@@ -353,7 +384,7 @@ end:
 			curData = tmpsData[i * MAXSAMPLE +  x] = (sData*)malloc(sizeof(sData));
 			if (curData == NULL) {
 				if (theErr) {
-					*theErr = CreateErrorFromMADErrorType(MADNeedMemory);
+					*theErr = PPCreateErrorFromMADErrorType(MADNeedMemory);
 				}
 				free(tempInstrData);
 				dispatch_apply(MAXSAMPLE * MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
@@ -380,7 +411,7 @@ end:
 			if (curData->data == NULL)
 			{
 				if (theErr) {
-					*theErr = CreateErrorFromMADErrorType(MADNeedMemory);
+					*theErr = PPCreateErrorFromMADErrorType(MADNeedMemory);
 				}
 				
 				free(tempInstrData);

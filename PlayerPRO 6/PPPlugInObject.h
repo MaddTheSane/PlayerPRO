@@ -20,5 +20,6 @@
 @property (readonly) OSType type;
 @property (readonly) UInt32 version;
 
-- (instancetype)initWithBundle:(NSBundle *)aBund;
+- (id)init UNAVAILABLE_ATTRIBUTE;
+- (instancetype)initWithBundle:(NSBundle *)aBund NS_DESIGNATED_INITIALIZER;
 @end

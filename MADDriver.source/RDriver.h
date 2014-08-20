@@ -40,7 +40,7 @@
 /********************						***********************/
 
 #define NUMBER_NOTES		96
-static const unsigned int NOFINETUNE = 8363;
+#define NOFINETUNE			8363
 #define MIN_VOLUME			0
 #define MAX_VOLUME			64
 #define MAX_CHANVOL			128
@@ -248,7 +248,7 @@ typedef MADENUM(short, MADSoundOutput)
 };
 
 //Used for MADSoundDriverList()
-typedef MADOPTIONS(unsigned int, MADSoundDriverAvailable)
+typedef MADOPTIONS(unsigned int, MADSoundOutputBit)
 {
 	MIDISoundDriverBit	= 1 << MIDISoundDriver,
 	BeOSSoundDriverBit	= 1 << BeOSSoundDriver,
@@ -371,7 +371,7 @@ typedef struct PPInfoRec {
 /*** 			Informations about Plugs: ThePlug[]				***/
 /********************						***********************/
 
-typedef MADENUM(MADFourChar, PPPlugModes) {
+typedef MADENUM(MADFourChar, MADPlugModes) {
 	MADPlugImport =				'IMPL',
 	MADPlugExport =				'EXPL',
 	MADPlugInfo =				'INFO',
@@ -579,13 +579,27 @@ PPEXPORT void	PPDebugStr(short line, const char* file, const char* text);
 	
 /*!
  *	@function	PPRegisterDebugFunc
- *	@abstract	used to set a delegate for PPDebugStr
+ *	@abstract	used to set a callback for PPDebugStr
  *	@param		debugFunc
- *				The function to call when PPDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling abort()
+ *				The function to call when PPDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling \c abort()
  *	@discussion	Use this function to call your own debug function when PPDebugStr is called, otherwise calls to PPDebugStr will crash your app.
- *				You can reset to the default PPDebugStr implementation by calling this function with NULL.
+ *				You can reset to the default PPDebugStr implementation by calling this function and passing \c NULL to it.
  */
 PPEXPORT void	PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*));
+
+#ifdef __BLOCKS__
+/*!
+ *	@function	PPRegisterDebugBlock
+ *	@abstract	used to set a callback for PPDebugStr
+ *	@param		newdebugBlock
+ *				The block to call when PPDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling \c abort()
+ *	@discussion	Use this function to call your own debug function when PPDebugStr is called, otherwise calls to PPDebugStr will crash your app.
+ *				You can reset to the default PPDebugStr implementation by calling this function and passing \c NULL to it.
+ *				This function is only available if your compiler supports blocks (Clang), otherwise it is unavailable.
+ *				If PlayerPROCore was built without blocks support and you try to call this function, the linker won't be able to find the function.
+ */
+PPEXPORT void PPRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*));
+#endif
 
 /*!
  *	@function	MADInitLibrary
@@ -603,16 +617,16 @@ PPEXPORT MADErr	MADInitLibrary(const char *PlugsFolderName, MADLibrary **MADLib)
 
 PPEXPORT MADErr	MADDisposeLibrary(MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
-PPEXPORT void						MADGetBestDriver(MADDriverSettings *DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
-PPEXPORT bool						MADSoundDriverIsAvalable(MADSoundOutput theDriver);
-PPEXPORT MADSoundDriverAvailable	MADSoundDriverList();
+PPEXPORT void				MADGetBestDriver(MADDriverSettings *DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
+PPEXPORT bool				MADSoundDriverIsAvalable(MADSoundOutput theDriver);
+PPEXPORT MADSoundOutputBit	MADSoundDriverList();
 
 PPEXPORT MADErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
 PPEXPORT MADErr	MADDisposeDriver(MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
 
 PPEXPORT MADErr	MADChangeDriverSettings(MADDriverSettings *DriverInitParam, MADDriverRec** returnDriver);
 
-PPEXPORT MADDriverSettings MADGetDriverSettings(MADDriverRec *theDriver);
+PPEXPORT MADDriverSettings MADGetDriverSettings(const MADDriverRec *theDriver);
 
 PPEXPORT MADErr	MADStartDriver(MADDriverRec *MDriver);										// NEW - Activates the sound generating procedure (interruption)
 PPEXPORT MADErr	MADStopDriver(MADDriverRec *MDriver);										// NEW - DEActivates the sound generating procedure (interruption)
@@ -694,7 +708,7 @@ PPEXPORT void	MADSetReading(MADDriverRec *driver, bool toSet) DEPRECATED_ATTRIBU
 
 PPEXPORT int	MADAudioLength(MADDriverRec *theRec);
 
-PPEXPORT size_t MADGetMusicSize(MADMusic*);
+PPEXPORT size_t MADGetMusicSize(const MADMusic*);
 
 PPEXPORT void	MADDriverClearChannel(MADDriverRec *theRec, int channel);
 
