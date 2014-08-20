@@ -455,7 +455,7 @@ size_t MADMinimize(MADMusic *music)
 	return before - after;
 }
 
-static MADSoundDriverAvailable driverList = 0;
+static MADSoundOutputBit driverList = 0;
 static bool driverlistInited = false;
 
 static void BuildAvailableDriverList()
@@ -493,7 +493,7 @@ bool MADSoundDriverIsAvalable(MADSoundOutput theDriver)
 	}
 }
 
-MADSoundDriverAvailable MADSoundDriverList()
+MADSoundOutputBit MADSoundDriverList()
 {
 	BuildAvailableDriverList();
 	return driverList;

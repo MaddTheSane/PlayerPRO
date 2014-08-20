@@ -248,7 +248,7 @@ typedef MADENUM(short, MADSoundOutput)
 };
 
 //Used for MADSoundDriverList()
-typedef MADOPTIONS(unsigned int, MADSoundDriverAvailable)
+typedef MADOPTIONS(unsigned int, MADSoundOutputBit)
 {
 	MIDISoundDriverBit	= 1 << MIDISoundDriver,
 	BeOSSoundDriverBit	= 1 << BeOSSoundDriver,
@@ -617,9 +617,9 @@ PPEXPORT MADErr	MADInitLibrary(const char *PlugsFolderName, MADLibrary **MADLib)
 
 PPEXPORT MADErr	MADDisposeLibrary(MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
 
-PPEXPORT void						MADGetBestDriver(MADDriverSettings *DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
-PPEXPORT bool						MADSoundDriverIsAvalable(MADSoundOutput theDriver);
-PPEXPORT MADSoundDriverAvailable	MADSoundDriverList();
+PPEXPORT void				MADGetBestDriver(MADDriverSettings *DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
+PPEXPORT bool				MADSoundDriverIsAvalable(MADSoundOutput theDriver);
+PPEXPORT MADSoundOutputBit	MADSoundDriverList();
 
 PPEXPORT MADErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
 PPEXPORT MADErr	MADDisposeDriver(MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
