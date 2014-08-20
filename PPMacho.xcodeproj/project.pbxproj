@@ -1976,7 +1976,7 @@
 		5535A653197F2D1D00D36CC9 /* PPCore.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = PPCore.modulemap; sourceTree = "<group>"; };
 		553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Universal.xcconfig; sourceTree = "<group>"; };
 		553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PPCPlugs.xcconfig; sourceTree = "<group>"; };
-		553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "Cocoa Editor Images.xcassets"; path = "../../Cocoa/Cocoa Editor Images.xcassets"; sourceTree = "<group>"; };
+		553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Cocoa Editor Images.xcassets"; sourceTree = "<group>"; };
 		5539D88F1978B90D005A1569 /* PlayerPRO 6-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO 6-Bridging-Header.h"; sourceTree = "<group>"; };
 		55413C4D1992AFFF001414D0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		5542403E10DB602D00C08864 /* SoundDesignerII.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = SoundDesignerII.r; sourceTree = "<group>"; };
