@@ -163,11 +163,11 @@ extension PPDriver {
 			loopStart = 0
 			loopLen = 0
 		}
-		return self.playSoundDataFromPointer(theSnd, withSize: sndSize, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: 0, andLoopLength: 0)
+		return self.playSoundDataFromPointer(theSnd, withSize: sndSize, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: loopStart, andLoopLength: loopLen)
 	}
 
 	public func playSoundData(FromPointer theSnd: UnsafePointer<()>, size sndSize: UInt, fromChannel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
-		return self.playSoundDataFromPointer(theSnd, withSize: sndSize, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopInRange: loopRange)
+		return self.playSoundDataFromPointer(theSnd, withSize: sndSize, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopRange.location), andLoopLength: UInt(loopRange.length))
 	}
 	
 	public func playSoundData(fromData theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: UInt = 0, loopLength iloopLen: UInt = 0) -> MADErr {
@@ -177,10 +177,10 @@ extension PPDriver {
 			loopStart = 0
 			loopLen = 0
 		}
-		return self.playSoundDataFromData(theSnd, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: loopStart, andLoopLength: loopLen)
+		return self.playSoundDataFromPointer(theSnd.bytes, withSize: UInt(theSnd.length), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: loopStart, andLoopLength: loopLen)
 	}
 	
 	public func playSoundData(fromData theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
-		return self.playSoundDataFromData(theSnd, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopInRange: loopRange)
+		return self.playSoundDataFromPointer(theSnd.bytes, withSize: UInt(theSnd.length), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopRange.location), andLoopLength: UInt(loopRange.length))
 	}
 }
