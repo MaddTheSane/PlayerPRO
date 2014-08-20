@@ -10,7 +10,6 @@
 #import <PlayerPROKit/PlayerPROKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "UserDefaultKeys.h"
-#import "PPExportObject.h"
 #import "BoxViewController.h"
 #import "WaveViewController.h"
 #import "ClassicalViewController.h"
@@ -279,7 +278,7 @@
 				case -1:
 					//AIFF
 				{
-					PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:theURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
+					ExportObject *expObj = [[ExportObject alloc] initWithDestination:theURL exportBlock:^MADErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
 						if (errStr)
 							*errStr = nil;
 						
@@ -294,7 +293,7 @@
 				case -2:
 					//M4A
 				{
-					PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:theURL exportBlock:^OSErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
+					ExportObject *expObj = [[ExportObject alloc] initWithDestination:theURL exportBlock:^MADErr(NSURL *theURL, NSString * __autoreleasing *errStr) {
 						OSErr theErr = MADNoErr;
 						if (errStr)
 							*errStr = nil;
@@ -469,7 +468,7 @@
 			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", tmpObj.menuName]];
 			[savePanel beginSheetModalForWindow:[self windowForSheet] completionHandler:^(NSInteger result) {
 				if (result == NSFileHandlingPanelOKButton) {
-					PPExportObject *expObj = [[PPExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
+					ExportObject *expObj = [[ExportObject alloc] initWithDestination:[savePanel URL] exportBlock:^OSErr(NSURL *theURL, NSString *__autoreleasing *errStr) {
 						OSErr theErr = [_theMusic exportMusicToURL:theURL format:tmpObj.plugType library:globalMadLib];
 						[_theDriver endExport];
 						return theErr;

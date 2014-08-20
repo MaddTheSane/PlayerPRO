@@ -8,10 +8,8 @@
 #import "UserDefaultKeys.h"
 #import "PPTimeFormatter.h"
 #import "PPDocument.h"
-#import "PPExportObject.h"
 #import "PPInstrumentImporterObject.h"
 
-#import "PPDigitalPlugHandler.h"
 #import "PPFilterPlugHandler.h"
 #import "PPInstrumentPlugHandler.h"
 #import "PPPreferences.h"

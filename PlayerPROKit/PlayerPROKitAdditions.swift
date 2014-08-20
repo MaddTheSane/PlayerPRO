@@ -156,31 +156,42 @@ public class func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high
 }
 
 extension PPDriver {
-	public func playSoundData(FromPointer theSnd: UnsafePointer<()>, size sndSize: UInt, fromChannel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: UInt = 0, loopLength iloopLen: UInt = 0) -> MADErr {
+	public func playSoundData(fromPointer theSnd: UnsafePointer<()>, size sndSize: Int, fromChannel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: Int = 0, loopLength iloopLen: Int = 0) -> MADErr {
 		var loopStart = iloopStart
 		var loopLen = iloopLen
 		if (loopLen == 0) {
 			loopStart = 0
 			loopLen = 0
 		}
-		return self.playSoundDataFromPointer(theSnd, withSize: sndSize, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: loopStart, andLoopLength: loopLen)
+		return self.playSoundDataFromPointer(theSnd, withSize: UInt(sndSize), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopStart), andLoopLength: UInt(loopLen))
 	}
 
-	public func playSoundData(FromPointer theSnd: UnsafePointer<()>, size sndSize: UInt, fromChannel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
-		return self.playSoundDataFromPointer(theSnd, withSize: sndSize, fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopRange.location), andLoopLength: UInt(loopRange.length))
+	public func playSoundData(fromPointer theSnd: UnsafePointer<()>, size sndSize: Int, fromChannel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
+		return self.playSoundDataFromPointer(theSnd, withSize: UInt(sndSize), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopRange.location), andLoopLength: UInt(loopRange.length))
 	}
 	
-	public func playSoundData(fromData theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: UInt = 0, loopLength iloopLen: UInt = 0) -> MADErr {
+	public func playSoundData(fromData theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: Int = 0, loopLength iloopLen: Int = 0) -> MADErr {
 		var loopStart = iloopStart
 		var loopLen = iloopLen
 		if (loopLen == 0) {
 			loopStart = 0
 			loopLen = 0
 		}
-		return self.playSoundDataFromPointer(theSnd.bytes, withSize: UInt(theSnd.length), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: loopStart, andLoopLength: loopLen)
+		return self.playSoundDataFromPointer(theSnd.bytes, withSize: UInt(theSnd.length), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopStart), andLoopLength: UInt(loopLen))
 	}
 	
 	public func playSoundData(fromData theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
 		return self.playSoundDataFromPointer(theSnd.bytes, withSize: UInt(theSnd.length), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopRange.location), andLoopLength: UInt(loopRange.length))
+	}
+	
+	public func playSoundData(fromData theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: Range<Int>) -> MADErr {
+		var loopStart = 0
+		var loopLen = 0
+		if !loopRange.isEmpty {
+			loopStart = loopRange.startIndex
+			loopLen = loopRange.endIndex - loopRange.startIndex
+		}
+		
+		return self.playSoundDataFromPointer(theSnd.bytes, withSize: UInt(theSnd.length), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopStart), andLoopLength: UInt(loopLen))
 	}
 }

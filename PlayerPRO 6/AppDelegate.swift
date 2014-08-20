@@ -43,14 +43,14 @@ func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<
 	}
 }
 
-class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDelegate {
-	private var exportObjects = [PPExportObject]()
+class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDelegate {
+	private var exportObjects = [ExportObject]()
 	private var _trackerDict = [String: [String]]()
 	private var _trackerUTIs = [String]()
 	var plugInInfos = [PlugInInfo]()
 	let madLib = PPLibrary()
 	let instrumentPlugHandler = PPInstrumentPlugHandler()
-	let digitalHandler = PPDigitalPlugHandler()
+	let digitalHandler = DigitalPlugHandler()
 	let filterHandler = PPFilterPlugHandler()
 	let preferences = PPPreferences()
 	var thePPColors = [NSColor]()
@@ -456,7 +456,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 		registerDefaults()
 	}
 	
-	func addExportObject(expObj: PPExportObject) {
+	func addExportObject(expObj: ExportObject) {
 	
 	}
 	
@@ -541,11 +541,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 		return handleFile(NSURL(fileURLWithPath: filename), ofType: utiFile) ;
 	}
 	
-	func PPExportObjectDidFinish(theObj: PPExportObject!) {
+	func ExportObjectDidFinish(theObj: ExportObject) {
 		
 	}
 	
-	func PPExportObjectEncounteredError(theObj: PPExportObject!, errorCode errCode: OSErr, errorString errStr: String!) {
+	func ExportObjectEncounteredError(theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: NSString?) {
 		
 	}
 }

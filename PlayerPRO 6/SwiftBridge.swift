@@ -16,15 +16,8 @@ extension PPInstrumentPlugHandler: SequenceType {
 	}
 }
 
-extension PPDigitalPlugHandler: SequenceType {
-	public func generate() -> IndexingGenerator<[PPDigitalPlugInObject]> {
-		return (plugInArray as [PPDigitalPlugInObject]).generate();
-	}
-}
-
 extension PPFilterPlugHandler: SequenceType {
 	public func generate() -> IndexingGenerator<[PPFilterPlugObject]> {
 		return (plugInArray as [PPFilterPlugObject]).generate();
 	}
 }
-
