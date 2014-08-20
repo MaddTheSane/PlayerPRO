@@ -14,7 +14,7 @@ private let kMusicListKey3 = "Music List Key 3"
 private let kPlayerList = "Player List"
 
 @objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration {
-	private(set)	var musicList = [PPMusicListObject]()
+	private(set)	var musicList = [MusicListObject]()
 	private(set)	var lostMusicCount:UInt = 0;
 	internal(set)	var selectedMusic = -1;
 	
@@ -22,7 +22,7 @@ private let kPlayerList = "Player List"
 		return (musicList as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len);
 	}
 	
-	func encodeWithCoder(aCoder: NSCoder!) {
+	func encodeWithCoder(aCoder: NSCoder) {
 		var BookmarkArray: [NSURL] = [];
 		for obj in musicList {
 			var bookData : NSURL! = obj.musicURL;
@@ -59,7 +59,7 @@ private let kPlayerList = "Player List"
 	func addMusicURL(theURL: NSURL) -> Bool {
 		var obj: MusicListObject! = MusicListObject(URL: theURL);
 		
-		if (!obj) {
+		if (obj == nil) {
 			return false;
 		}
 		
@@ -82,7 +82,7 @@ private let kPlayerList = "Player List"
 	func saveApplicationMusicList() -> Bool {
 		var manager = NSFileManager.defaultManager();
 
-		var PPPPath = manager.URLForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomain:NSSearchPathDomainMask.UserDomainMask, appropriateForURL:nil, create:true, error:nil).URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player");
+		var PPPPath = manager.URLForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomain:NSSearchPathDomainMask.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player");
 		if (!PPPPath.checkResourceIsReachableAndReturnError(nil)) {
 			//Just making sure...
 			manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories:true, attributes:nil, error:nil);
@@ -97,7 +97,7 @@ private let kPlayerList = "Player List"
 		super.init();
 	}
 	
-	required init(coder aDecoder: NSCoder!) {
+	required init(coder aDecoder: NSCoder) {
 		lostMusicCount = 0;
 		var BookmarkArray : NSArray = aDecoder.decodeObjectForKey(kMusicListKey3) as NSArray;
 		selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation3);
@@ -138,7 +138,7 @@ private let kPlayerList = "Player List"
 	
 	func loadMusicListFromData(theData: NSData) -> Bool {
 		var preList: MusicList! = NSKeyedUnarchiver.unarchiveObjectWithData(theData) as MusicList
-		if (!preList) {
+		if (preList == nil) {
 			return false
 		}
 		
@@ -150,7 +150,7 @@ private let kPlayerList = "Player List"
 	
 	func loadMusicListAtURL(fromURL: NSURL) -> Bool {
 		var listData: NSData! = NSData(contentsOfURL: fromURL)
-		if (!listData) {
+		if (listData == nil) {
 			return false
 		}
 		return loadMusicListFromData(listData)
@@ -158,7 +158,7 @@ private let kPlayerList = "Player List"
 	
 	func loadApplicationMusicList() -> Bool {
 		var manager = NSFileManager.defaultManager();
-		var PPPPath = manager.URLForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomain:NSSearchPathDomainMask.UserDomainMask, appropriateForURL:nil, create:true, error:nil).URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player");
+		var PPPPath = manager.URLForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomain:NSSearchPathDomainMask.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player");
 		if (!PPPPath.checkResourceIsReachableAndReturnError(nil)) {
 			manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories: true, attributes: nil, error: nil)
 			return false;
@@ -265,7 +265,7 @@ private let kPlayerList = "Player List"
 						self.selectedMusic = selectedAny as Int;
 						for aPath in pathsAny as NSArray {
 							var tmpURL = NSURL.fileURLWithPath(aPath as String)
-							if (!tmpURL) {
+							if (tmpURL == nil) {
 								continue;
 							}
 							var tmpObj = MusicListObject(URL: tmpURL)

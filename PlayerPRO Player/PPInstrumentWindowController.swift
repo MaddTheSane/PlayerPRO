@@ -136,7 +136,7 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 	}
 	
 	func outlineView(outlineView: NSOutlineView!, numberOfChildrenOfItem item: AnyObject!) -> Int {
-		if (!item) {
+		if (item == nil) {
 			return (NSApplication.sharedApplication().delegate as AppDelegate).music.instruments.count
 		}
 		if (item.isKindOfClass(PPInstrumentObject)) {
@@ -146,7 +146,7 @@ class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource,
 	}
 	
 	func outlineView(outlineView: NSOutlineView!, child index: Int, ofItem item: AnyObject!) -> AnyObject! {
-		if (!item) {
+		if (item == nil) {
 			return (NSApplication.sharedApplication().delegate as AppDelegate).music.instruments[index];
 		}
 		if (item.isKindOfClass(PPInstrumentObject)) {

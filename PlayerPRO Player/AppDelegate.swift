@@ -299,7 +299,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		var fullTime = 0, curTime = 0;
 		var returnerr = MADErr.NoErr;
 		if (madDriver != nil) {
-			madWasReading = madDriver.isPlayingMusic()
+			madWasReading = madDriver.playingMusic
 			madDriver.stop()
 			//[madDriver stopDriver];
 			
@@ -333,7 +333,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		theSettinit.repeatMusic = false;
 		
 		//OSErr returnerr = MADCreateDriver(&init, madLib, &madDriver);
-		if (!madDriver) {
+		if (madDriver == nil) {
 			madDriver = PPDriver(library:madLib, settings:&theSettinit, error: &returnerr)
 		} else {
 			returnerr = madDriver.changeDriverSettingsToSettings(theSettinit)
@@ -462,7 +462,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 			var fT = 0
 			var cT = 0;
 			madDriver.getMusicStatusWithCurrentTime(&cT, totalTime: &fT)
-			if (madDriver.isDonePlayingMusic() && paused == false && madDriver.isExporting == false) {
+			if (madDriver.donePlayingMusic && paused == false && madDriver.exporting == false) {
 				songIsDonePlaying()
 				madDriver.getMusicStatusWithCurrentTime(&cT, totalTime: &fT)
 			}
@@ -579,6 +579,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		var err = MADErr.NoErr;
 		var theRec = PPDriver(library: madLib, settings: theSet, error: &err)
 		
+		#if false
 		if (theRec == nil) {
 			dispatch_async(dispatch_get_main_queue()) {
 				var NSerr = CreateErrorFromMADErrorType(.UnknownErr);
@@ -587,12 +588,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 			
 			return nil;
 		}
+		#endif
 		
 		theRec.cleanDriver()
 		theRec.currentMusic = music
 		
 		var soundPtr:UnsafeMutablePointer<()> = nil;
-		var full = theRec.audioDataLength();
+		var full = theRec.audioDataLength;
 		if (theSet.memory.outPutBits == 16) {
 			full *= 2;
 		} else if (theSet.memory.outPutBits == 20 || theSet.memory.outPutBits == 24 ) {
@@ -666,7 +668,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 				var sigVal = sigValb.stringValue
 				
 				
-				var tmpURL = theURL.URLByDeletingPathExtension.URLByAppendingPathExtension(sigVal.lowercaseString);
+				var tmpURL = theURL!.URLByDeletingPathExtension!.URLByAppendingPathExtension(sigVal.lowercaseString);
 				var err: NSError? = nil
 				if (NSFileManager.defaultManager().moveItemAtURL(theURL, toURL:tmpURL, error:&err) == false) {
 					println("Could not move file, error: \(err!)");
@@ -881,7 +883,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 					let oldMusicName = self.musicName;
 					let oldMusicInfo = self.musicInfo;
 					let tmpName = oldMusicName != "" ? oldMusicName : "untitled"
-					let tmpURL = NSFileManager.defaultManager().URLForDirectory(.ItemReplacementDirectory, inDomain: .UserDomainMask, appropriateForURL: oldURL, create: true, error: nil).URLByAppendingPathComponent("\(tmpName).aiff", isDirectory: false)
+					let tmpURL = NSFileManager.defaultManager().URLForDirectory(.ItemReplacementDirectory, inDomain: .UserDomainMask, appropriateForURL: oldURL, create: true, error: nil)!.URLByAppendingPathComponent("\(tmpName).aiff", isDirectory: false)
 					
 					theErr = self.saveMusicAsAIFFToURL(tmpURL, usingSettings:&self.exportSettings)
 					if theErr != .NoErr {
@@ -903,6 +905,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 					}
 					
 					var session = AVAssetExportSession(asset:exportMov, presetName:AVAssetExportPresetAppleM4A)
+					#if false
 					if (session == nil) {
 						expErr = NSError(domain: NSCocoaErrorDomain, code: NSFileWriteUnknownError, userInfo: nil)
 						NSLog("Export session creation for %@ failed, error: %@", oldMusicName, expErr!.localizedDescription);
@@ -910,6 +913,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 						dispatch_async(dispatch_get_main_queue(), errBlock);
 						return;
 					}
+					#endif
 					NSFileManager.defaultManager().removeItemAtURL(saveURL, error: nil)
 					session.outputURL = saveURL
 					session.outputFileType = AVFileTypeAppleM4A;
@@ -1135,7 +1139,7 @@ return; \
 			tmpAlert.alertStyle = .WarningAlertStyle
 			tmpAlert.messageText = "Error opening file"
 			tmpAlert.informativeText = "Unable to open \(filename.lastPathComponent): \(err?.localizedFailureReason)"
-			PPRunAlertPanel("Error opening file", message: "Unable to open %@: %@", args: filename.lastPathComponent, err!.localizedFailureReason);
+			PPRunAlertPanel("Error opening file", message: "Unable to open %@: %@", args: filename.lastPathComponent, err!.localizedFailureReason!);
 			tmpAlert.runModal()
 			return false;
 		}
@@ -1183,27 +1187,29 @@ return; \
 		var intNameV: AnyObject! = theInfo?[kPPInternalFileName] ?? ""
 		internalName.stringValue = intNameV as String
 		
-		let fsInt: AnyObject! = theInfo?[kPPFileSize] ?? NSNumber(long:0)
+		let fsInt: AnyObject = theInfo![kPPFileSize] ?? NSNumber(long:0)
 		let fsTmp = (fsInt as NSNumber).longValue
 		fileSize.integerValue = fsTmp
 		
-		let ti: AnyObject! = theInfo?[kPPTotalInstruments] ?? NSNumber(short: 0)
+		let ti: AnyObject = theInfo![kPPTotalInstruments] ?? NSNumber(short: 0)
 		let tiTmp = (ti as NSNumber).shortValue
 		musicInstrument.integerValue = Int(tiTmp);
 		
-		let mp: AnyObject! = theInfo?[kPPTotalPatterns] ?? NSNumber(short: 0)
+		let mp: AnyObject = theInfo![kPPTotalPatterns] ?? NSNumber(short: 0)
 		let mpTmp = (mp as NSNumber).shortValue
 		musicPatterns.integerValue = Int(mpTmp)
 		
-		let musPlugTyp: AnyObject! = theInfo?[kPPFormatDescription] ?? ""
+		let musPlugTyp: AnyObject = theInfo?[kPPFormatDescription] ?? ""
 		musicPlugType.stringValue = musPlugTyp as String
 		
-		let sig: AnyObject! = theInfo?[kPPSignature] ?? NSNumber(unsignedInt:0)
+		let sig: AnyObject = theInfo![kPPSignature] ?? NSNumber(unsignedInt:0)
 		let siga: MADFourChar = (sig as NSNumber).unsignedIntValue
 		NSSig = siga.stringValue
+		#if false
 		if (NSSig == nil) {
 			NSSig = NSString(format: "0x%08X", siga)
 		}
+		#endif
 		musicSignature.stringValue = NSSig
 		
 		fileLocation.stringValue = musicURL.path
