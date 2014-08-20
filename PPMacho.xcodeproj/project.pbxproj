@@ -2930,6 +2930,7 @@
 				55B1B4F6166A861900820424 /* PPMusicObject.m */,
 				5532334D16766E5700076604 /* PPErrors.h */,
 				5532334E16766E5700076604 /* PPErrors.m */,
+				5561F1BF19A51CD40085015B /* Swift wrappers */,
 				55453526186CD32900F69F4D /* OS X-specific code */,
 				551292DF163DD68500C2C639 /* Supporting Files */,
 			);
@@ -3810,6 +3811,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		5561F1BF19A51CD40085015B /* Swift wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */,
+				55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */,
+				55993EF119A3212100C2078E /* SafeGenerators.swift */,
+			);
+			name = "Swift wrappers";
+			sourceTree = "<group>";
+		};
 		55680A1F19045F0A00F7616D /* StcfImporter */ = {
 			isa = PBXGroup;
 			children = (
@@ -4108,9 +4119,6 @@
 				557139CE1684EF7500831A5A /* PPHilightableButton.m */,
 				555F5C601993327D0056AF01 /* OpenPanelViewController.swift */,
 				556AE4BB16E290650074BBF9 /* PPByteswap.h */,
-				55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */,
-				55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */,
-				55993EF119A3212100C2078E /* SafeGenerators.swift */,
 				55232AF411FDE5970041A4EC /* Preferences Controllers */,
 				5526AB10188C8655008D0C14 /* Resources */,
 			);

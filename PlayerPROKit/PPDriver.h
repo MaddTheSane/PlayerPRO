@@ -75,7 +75,7 @@
 @property (readonly, getter=isDonePlayingMusic) BOOL donePlayingMusic;
 @property (readonly, getter=isPaused) BOOL paused;
 
-- (PPMusicObject *)loadMusicFile:(NSString*)path;
-- (PPMusicObject *)loadMusicURL:(NSURL*)url;
+- (PPMusicObject *)loadMusicFile:(NSString*)path NS_RETURNS_RETAINED;
+- (PPMusicObject *)loadMusicURL:(NSURL*)url NS_RETURNS_RETAINED;
 
 @end

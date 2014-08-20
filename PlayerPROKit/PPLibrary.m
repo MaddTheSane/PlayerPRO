@@ -93,6 +93,11 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 	PPRegisterDebugBlock(newDebugFunc);
 }
 
+- (PPLibraryObject *)objectAtIndexedSubscript:(NSInteger)index
+{
+	return trackerLibs[index];
+}
+
 - (instancetype)initWithPlugInCPath:(const char*)cPath
 {
 	if (self = [super init]) {

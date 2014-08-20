@@ -37,6 +37,11 @@ static inline void SwapPcmd(Pcmd *toswap)
 	PatData *patternData;
 }
 
+- (PPMadCommandObject *)objectAtIndexedSubscript:(NSInteger)index1;
+{
+	return commands[index1];
+}
+
 #if !TARGET_OS_IPHONE
 NSString * const kPPKPatternPasteboardUTI = @"net.sourceforge.playerpro.pattern";
 

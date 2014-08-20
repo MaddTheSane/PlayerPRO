@@ -162,6 +162,11 @@ static const dispatch_block_t initUTIArray = ^{
 @synthesize _volumeEnvelope;
 @synthesize _panningEnvelope;
 
+- (PPEnvelopeObject *)objectAtIndexedSubscript:(NSInteger)index
+{
+	return samples[index];
+}
+
 #if !TARGET_OS_IPHONE
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
 {

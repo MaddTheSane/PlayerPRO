@@ -58,5 +58,6 @@ __END_DECLS
 - (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
 
 + (NSDictionary*)infoRecToDictionary:(PPInfoRec*)infoRec;
+- (PPLibraryObject *)objectAtIndexedSubscript:(NSInteger)index;
 
 @end
