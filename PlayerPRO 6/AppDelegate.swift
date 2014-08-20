@@ -386,6 +386,26 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 				return false;
 			}
 		}
+		#if false
+			if (sharedWorkspace.type(theUTI, conformsToType:PPPCMDUTI)) {
+				var theOSErr = patternHandler.importPcmdFromURL(theURL)
+				if (theOSErr != MADErr.NoErr) {
+					var theErr = CreateErrorFromMADErrorType(theOSErr);
+					NSAlert(error: theErr).runModal()
+					return false;
+				}
+				return true;
+			} else if (sharedWorkspace.type(theUTI, conformsToType:PPInstrumentListUTI)) {
+				var err: NSError? = nil
+				if (!instrumentController.importInstrumentListFromURL(theURL, error:&err)) {
+					NSAlert(error: err!).runModal()
+				} else {
+					return true;
+				}
+			} //else
+		#endif
+
+		
 			//TODO: check for valid extension.
 			for aUTI in trackerUTIs {
 				if (sharedWorkspace.type(theUTI, conformsToType:aUTI)) {
@@ -397,6 +417,33 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 					return true;
 				}
 			}
+		
+		#if false
+		var instrumentArray = [String]();
+		for obj in instrumentPlugHandler {
+			instrumentArray += obj.UTITypes
+		}
+		#endif
+		
+		for obj in instrumentPlugHandler {
+			for aUTI in obj.UTITypes as [String] {
+				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
+					#if false
+						if (instrumentController.isWindowLoaded()) {
+							var theErr:NSError? = nil
+							if (!instrumentPlugHandler.importSampleFromURL(theURL, makeUserSelectInstrument: true, error:&theErr)) {
+								NSAlert(error: err!).runModal()
+								return false;
+							}
+							return true;
+						} else {
+							return false;
+						}
+					#endif
+				}
+			}
+		}
+
 		
 		return false;
 	}

@@ -48,12 +48,12 @@ static inline BOOL getBoolFromId(id NSType)
 @synthesize isSample = isSamp;
 @synthesize xxxx;
 
-typedef enum _MADPlugCapabilities {
+typedef NS_OPTIONS(unsigned char, MADPlugCapabilities) {
 	PPMADCanDoNothing	= 0,
 	PPMADCanImport		= 1 << 0,
 	PPMADCanExport		= 1 << 1,
 	PPMADCanDoBoth		= PPMADCanImport | PPMADCanExport
-} MADPlugCapabilities;
+};
 
 - (NSString*)description
 {
@@ -105,8 +105,9 @@ typedef enum _MADPlugCapabilities {
 			type = NSStringToOSType(DictionaryTemp);
 		} else if ([DictionaryTemp isKindOfClass:numClass]) {
 			type = [(NSNumber*)DictionaryTemp unsignedIntValue];
-		} else
+		} else {
 			return nil;
+		}
 		
 		{
 			id canImportValue, canExportValue;
