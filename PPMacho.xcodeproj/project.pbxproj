@@ -371,6 +371,7 @@
 		5578C53717DB957A0057D11B /* PPImport.mdimporter in Copy Spotlight */ = {isa = PBXBuildFile; fileRef = 5578C52F17DB94A50057D11B /* PPImport.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */; };
 		5578C54017DBABC50057D11B /* PPDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C53E17DBABBF0057D11B /* PPDocument.m */; };
+		5579ADB819A4551500DEC0FF /* DigitalPlugHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */; };
 		557DE42E10E06BF200177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE5D910E0882800177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE61C10E0884100177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -2121,6 +2122,7 @@
 		5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentPlugHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5578C53D17DBABBE0057D11B /* PPDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDocument.h; sourceTree = "<group>"; };
 		5578C53E17DBABBF0057D11B /* PPDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DigitalPlugHandler.swift; path = "Plug-in handling/DigitalPlugHandler.swift"; sourceTree = "<group>"; };
 		557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-FilterBridge.c"; sourceTree = "<group>"; };
 		557DE43410E06BF200177B4C /* Amplitude.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amplitude.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE43510E06BF200177B4C /* Amplitude-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Amplitude-Info.plist"; sourceTree = "<group>"; };
@@ -4016,6 +4018,7 @@
 			isa = PBXGroup;
 			children = (
 				557EF732168BDE95001BF077 /* PPPlugInCommon.h */,
+				557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */,
 				5523EC7F16936F870067B22A /* PPDigitalPlugHandler.h */,
 				5523EC8016936F880067B22A /* PPDigitalPlugHandler.m */,
 				5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */,
@@ -6697,6 +6700,7 @@
 				55801EB113D1ED9A007E24FC /* NSColor+PPPreferences.m in Sources */,
 				55323353167687A200076604 /* PPTimeFormatter.m in Sources */,
 				557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */,
+				5579ADB819A4551500DEC0FF /* DigitalPlugHandler.swift in Sources */,
 				55993EF619A340FF00C2078E /* PPRunAlert.swift in Sources */,
 				557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */,
 				5523EC6A16925FF80067B22A /* PPInstrumentViewController.m in Sources */,
