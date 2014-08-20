@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import PlayerPROCore
 import PlayerPROKit
 
 private func makeNSRGB(red: UInt16, green: UInt16, blue:UInt16) -> NSColor {
@@ -58,7 +59,9 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 	@IBOutlet var aboutPlugInMenu:		NSMenu!
 	@IBOutlet var instrumentExportMenu:	NSMenu!
 	@IBOutlet var newInstrumentMenu:	NSMenu!
-
+	
+	@IBOutlet var exportStatusPanel:	NSPanel!
+	
 	var trackerDict: [String: [String]] { get {
 		if _trackerDict.isEmpty || _trackerDict.count != Int(madLib.pluginCount) + 2 {
 			let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
@@ -169,7 +172,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 	}
 	
 	private func registerDefaults() {
-		var tooLargeDict: [String: AnyObject] = [PPSoundDriver: Int(MADSoundOutput.CoreAudioDriver.toRaw())]
+		let tooLargeDict: [String: AnyObject] = [PPSoundDriver: Int(MADSoundOutput.CoreAudioDriver.toRaw())]
 		
 		let defaults1: [String: AnyObject]  = [PPSoundOutBits: 16,
 			PPSoundOutRate: 44100,
@@ -433,6 +436,10 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 			}
 		}
 		
+		for i in 1 ... 96 {
+			let tmpColor = NSColor.PPDecodeColorWithData(defaults.dataForKey("PPCColor\(i)"))
+			thePPColors.append(tmpColor!)
+		}
 		//#define PPCOLOR(val) [_thePPColors addObject:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor ## val]]]
 		//PPCOLORPOPULATE();
 		//#undef PPCOLOR
@@ -441,7 +448,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, PPExportObjectDe
 	}
 	
 	override func makeUntitledDocumentOfType(typeName: String!, error outError: NSErrorPointer) -> AnyObject! {
-		assert(typeName == MADNativeUTI, "Unknown type passed to %s: %@")
+		assert(typeName == MADNativeUTI, "Unknown type passed to \(__FUNCTION__): \(typeName)")
 		var theDoc = PPDocument()
 		theDoc.importMusicObject(PPMusicObject())
 

@@ -26,6 +26,7 @@ class ExportObject: NSObject {
 		super.init()
 	}
 	
+	#if false
 	func run() {
 		dispatch_async(dispatch_get_global_queue(0, 0)) {
 			var retErr = MADErr.NoErr;
@@ -35,17 +36,19 @@ class ExportObject: NSObject {
 			
 			if (self.delegate != nil) {
 				dispatch_async(dispatch_get_main_queue()) {
+					var errStr2 = errStr
 					if (retErr == .NoErr) {
 						self.delegate?.PPExportObjectDidFinish(self)
 					} else {
 						if (errStr == nil) {
-							var tmpErr = CreateErrorFromMADErrorType(retErr);
-							errStr = tmpErr.description;
+							let tmpErr = CreateErrorFromMADErrorType(retErr)
+							errStr2 = tmpErr.description
 						}
-						self.delegate?.PPExportObjectEncounteredError(self, errorCode: retErr, errorString: errStr)
+						self.delegate?.PPExportObjectEncounteredError(self, errorCode: retErr, errorString: errStr2?)
 					}
 				}
 			}
 		}
 	}
+	#endif
 }

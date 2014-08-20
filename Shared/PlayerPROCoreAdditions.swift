@@ -55,43 +55,6 @@ extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 }
 #endif
 
-#if false
-func &(lhs: MADBool, rhs: MADBool) -> MADBool {
-	if lhs {
-		return rhs
-	}
-	return false
-}
-
-func |(lhs: MADBool, rhs: MADBool) -> MADBool {
-	if lhs {
-		return true
-	}
-	return rhs
-}
-
-func ^(lhs: MADBool, rhs: MADBool) -> MADBool {
-	return MADBool(lhs != rhs)
-}
-
-
-prefix func !(a: MADBool) -> MADBool {
-	return a ^ true
-}
-
-func &=(inout lhs: MADBool, rhs: MADBool) {
-	var lhsB: MADBool = 0
-	var rhsB: MADBool = 0
-	if lhs {
-		lhsB = 1
-	}
-	if rhs {
-		rhsB = 1
-	}
-	lhs = lhsB & rhsB
-}
-#endif
-
 extension MADBool : BooleanLiteralConvertible, BooleanType {
 	//public typealias BooleanLiteralType = Bool
 	public init(_ v : BooleanType) {
@@ -140,7 +103,7 @@ extension MADDriverSettings: DebugPrintable {
 
 	public static func createWithBestDriver() -> MADDriverSettings {
 		var curSett = MADDriverSettings()
-		MADGetBestDriver(&curSett)
+		curSett.resetToBestDriver()
 		return curSett
 	}
 
@@ -403,6 +366,12 @@ extension Cmd {
 	
 	public mutating func kill() -> MADErr {
 		return MADKillCmd(&self)
+	}
+}
+
+extension MADMusic {
+	public init() {
+		self = CreateFreeMADK().move()
 	}
 }
 

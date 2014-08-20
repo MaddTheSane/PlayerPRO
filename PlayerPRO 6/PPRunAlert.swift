@@ -34,16 +34,14 @@ private func PPRunAlertPanelBase(title: String, message msgFormat: String, defau
 	return theAlert.runModal()
 }
 
-
-func PPRunInformationalAlertPanel(title: String, message msgFormat: String, defaultButton: String? = nil, alternateButton: String? = nil, otherButton: String? = nil, #args: CVarArgType...) -> Int {
+internal func PPRunInformationalAlertPanel(title: String, message msgFormat: String, defaultButton: String? = nil, alternateButton: String? = nil, otherButton: String? = nil, #args: CVarArgType...) -> Int {
 	return PPRunAlertPanelBase(title, message: msgFormat, defaultButton, alternateButton, otherButton, .InformationalAlertStyle, getVaList(args))
 }
 
-func PPRunAlertPanel(title: String, message msgFormat: String, defaultButton: String? = nil, alternateButton: String? = nil, otherButton: String? = nil, #args: CVarArgType...) -> Int {
+internal func PPRunAlertPanel(title: String, message msgFormat: String, defaultButton: String? = nil, alternateButton: String? = nil, otherButton: String? = nil, #args: CVarArgType...) -> Int {
 	return PPRunAlertPanelBase(title, message: msgFormat, defaultButton, alternateButton, otherButton, .WarningAlertStyle, getVaList(args))
 }
 
-func PPRunCriticalAlertPanel(title: String, message msgFormat: String, defaultButton: String? = nil, alternateButton: String? = nil, otherButton: String? = nil, #args: CVarArgType...) -> Int {
+internal func PPRunCriticalAlertPanel(title: String, message msgFormat: String, defaultButton: String? = nil, alternateButton: String? = nil, otherButton: String? = nil, #args: CVarArgType...) -> Int {
 	return PPRunAlertPanelBase(title, message: msgFormat, defaultButton, alternateButton, otherButton, .CriticalAlertStyle, getVaList(args))
 }
-

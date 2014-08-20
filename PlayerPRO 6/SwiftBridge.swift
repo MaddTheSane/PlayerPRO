@@ -12,19 +12,19 @@ import Foundation
 
 extension PPInstrumentPlugHandler: SequenceType {
 	public func generate() -> IndexingGenerator<[PPInstrumentImporterObject]> {
-		return (plugInArray as NSArray as [PPInstrumentImporterObject]).generate();
+		return (plugInArray as [PPInstrumentImporterObject]).generate();
 	}
 }
 
 extension PPDigitalPlugHandler: SequenceType {
 	public func generate() -> IndexingGenerator<[PPDigitalPlugInObject]> {
-		return (plugInArray as NSArray as [PPDigitalPlugInObject]).generate();
+		return (plugInArray as [PPDigitalPlugInObject]).generate();
 	}
 }
 
 extension PPFilterPlugHandler: SequenceType {
 	public func generate() -> IndexingGenerator<[PPFilterPlugObject]> {
-		return (plugInArray as NSArray as [PPFilterPlugObject]).generate();
+		return (plugInArray as [PPFilterPlugObject]).generate();
 	}
 }
 

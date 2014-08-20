@@ -19,7 +19,6 @@
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
 #import "UserDefaultKeys.h"
-#import "PPApp_AppDelegate.h"
 #import "PlayerPRO_6-Swift.h"
 
 @interface PPInstrumentObject (Private)
@@ -75,8 +74,8 @@
 		[center addObserver:self selector:@selector(colorsDidChange:) name:PPColorsDidChange object:nil];
 		instrumentInfo = [[InstrumentInfoController alloc] init];
 		instrumentInfo.delegate = self;
-		self.filterHandler = [(PPApp_AppDelegate*)[[NSApplication sharedApplication] delegate] filterHandler];
-		self.importer = [(PPApp_AppDelegate*)[[NSApplication sharedApplication] delegate] instrumentPlugHandler];
+		self.filterHandler = [(AppDelegate*)[[NSApplication sharedApplication] delegate] filterHandler];
+		self.importer = [(AppDelegate*)[[NSApplication sharedApplication] delegate] instrumentPlugHandler];
 	}
 	
 	return self;
