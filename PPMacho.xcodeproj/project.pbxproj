@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
+		5513EACD19A5AE4200BCC483 /* OS X Applications */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 5513EACE19A5AE4200BCC483 /* Build configuration list for PBXAggregateTarget "OS X Applications" */;
+			buildPhases = (
+			);
+			dependencies = (
+				5513EAD219A5AE6000BCC483 /* PBXTargetDependency */,
+				5513EAD419A5AE6000BCC483 /* PBXTargetDependency */,
+			);
+			name = "OS X Applications";
+			productName = "OS X Applications";
+		};
 		55151F3610DEDBD70054ABC4 /* Instrument Plugs */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 55151F8210DEDBDC0054ABC4 /* Build configuration list for PBXAggregateTarget "Instrument Plugs" */;
@@ -728,6 +740,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
+		};
+		5513EAD119A5AE6000BCC483 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55CBF9A511EB77760028C6BB;
+			remoteInfo = "PlayerPRO 6";
+		};
+		5513EAD319A5AE6000BCC483 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5578C48017D9E8560057D11B;
+			remoteInfo = "PlayerPRO Player";
 		};
 		55151F7410DEDBDB0054ABC4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -5497,6 +5523,9 @@
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 0600;
 				TargetAttributes = {
+					5513EACD19A5AE4200BCC483 = {
+						CreatedOnToolsVersion = 6.0;
+					};
 					555776C217EBF8FF0019D008 = {
 						TestTargetID = 55CBF9A511EB77760028C6BB;
 					};
@@ -5528,8 +5557,9 @@
 			targets = (
 				55CBF9A511EB77760028C6BB /* PlayerPRO 6 */,
 				5578C48017D9E8560057D11B /* PlayerPRO Player */,
-				55534ACC1817C387006D6BCB /* updateInfoPlist */,
+				5513EACD19A5AE4200BCC483 /* OS X Applications */,
 				5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */,
+				55534ACC1817C387006D6BCB /* updateInfoPlist */,
 				555776C217EBF8FF0019D008 /* iOS PlayerPRO PlayerTests */,
 				5578C51B17DB94A50057D11B /* PPImport */,
 				559C4186183EB4AB004A073C /* PPQuickView */,
@@ -6808,6 +6838,16 @@
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 551292EB163DD72E00C2C639 /* PBXContainerItemProxy */;
 		};
+		5513EAD219A5AE6000BCC483 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55CBF9A511EB77760028C6BB /* PlayerPRO 6 */;
+			targetProxy = 5513EAD119A5AE6000BCC483 /* PBXContainerItemProxy */;
+		};
+		5513EAD419A5AE6000BCC483 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5578C48017D9E8560057D11B /* PlayerPRO Player */;
+			targetProxy = 5513EAD319A5AE6000BCC483 /* PBXContainerItemProxy */;
+		};
 		55151F7310DEDBDB0054ABC4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
@@ -7860,6 +7900,20 @@
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		5513EACF19A5AE4200BCC483 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		5513EAD019A5AE4200BCC483 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
 		};
@@ -9777,7 +9831,6 @@
 				MODULEMAP_FILE = MADDriver.source/Resources/PPCore.modulemap;
 				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_MODULE_NAME = PlayerPROCore;
 				PRODUCT_NAME = PlayerPROCore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -9815,7 +9868,6 @@
 				MODULEMAP_FILE = MADDriver.source/Resources/PPCore.modulemap;
 				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_MODULE_NAME = PlayerPROCore;
 				PRODUCT_NAME = PlayerPROCore;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -9843,7 +9895,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_MODULE_NAME = PlayerPROKit;
 				PRODUCT_NAME = PlayerPROKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -9877,7 +9928,6 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_MODULE_NAME = PlayerPROKit;
 				PRODUCT_NAME = PlayerPROKit;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -9907,6 +9957,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		5513EACE19A5AE4200BCC483 /* Build configuration list for PBXAggregateTarget "OS X Applications" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5513EACF19A5AE4200BCC483 /* Release */,
+				5513EAD019A5AE4200BCC483 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		55151F7D10DEDBDB0054ABC4 /* Build configuration list for PBXNativeTarget "XI" */ = {
 			isa = XCConfigurationList;

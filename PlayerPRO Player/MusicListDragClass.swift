@@ -8,9 +8,9 @@
 
 import Cocoa
 
-@objc(PPMusicListDragClass) class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
+class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
 	let theIndexSet: NSIndexSet
-	init(indexSet: NSIndexSet!) {
+	init(indexSet: NSIndexSet) {
 		theIndexSet = indexSet
 		
 		super.init()

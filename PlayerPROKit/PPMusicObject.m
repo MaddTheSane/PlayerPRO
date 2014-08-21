@@ -154,6 +154,32 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return internalFileName;
 }
 
+- (void)setInternalFileName:(NSString*)newInfo
+{
+	internalFileName = [newInfo copy];
+	NSData *outMacRoman = [internalFileName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+	if (!outMacRoman || outMacRoman.length == 0) {
+		memset(currentMusic->header->infos, 0, sizeof(currentMusic->header->infos));
+	} else {
+		char fileNameInt[32] = {0};
+		[outMacRoman getBytes:fileNameInt length:MIN(outMacRoman.length, sizeof(fileNameInt) - 1)];
+		strlcpy(currentMusic->header->name, fileNameInt, sizeof(currentMusic->header->name));
+	}
+}
+
+- (void)setMadInformation:(NSString*)newInfo
+{
+	madInfo = [newInfo copy];
+	NSData *outMacRoman = [madInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+	if (!outMacRoman || outMacRoman.length == 0) {
+		memset(currentMusic->header->infos, 0, sizeof(currentMusic->header->infos));
+	} else {
+		char fileNameInt[239] = {0};
+		[outMacRoman getBytes:fileNameInt length:MIN(outMacRoman.length, sizeof(fileNameInt) - 1)];
+		strlcpy(currentMusic->header->infos, fileNameInt, sizeof(currentMusic->header->infos));
+	}
+}
+
 - (NSString*)madInformation
 {
 	if (!madInfo) {

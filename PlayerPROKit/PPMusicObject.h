@@ -28,8 +28,8 @@
 @property (readonly, strong, nonatomic) NSMutableArray *instruments;
 @property (readonly, strong, nonatomic) NSMutableArray *patterns;
 @property (readonly, strong, nonatomic) NSMutableArray *buses;
-@property (readwrite, copy, nonatomic) NSString *internalFileName;
-@property (readwrite, copy, nonatomic) NSString *madInformation;
+@property (readwrite, copy) NSString *internalFileName;
+@property (readwrite, copy) NSString *madInformation;
 @property (readonly, weak) PPDriver *attachedDriver;
 @property (readonly) NSURL *filePath;
 
