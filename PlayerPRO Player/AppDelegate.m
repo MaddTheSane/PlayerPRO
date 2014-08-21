@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "PPPreferences.h"
-#import "PPMusicList.h"
 #import "UserDefaultKeys.h"
 #import "PPInstrumentWindowController.h"
 #include "PPByteswap.h"
@@ -47,7 +46,7 @@ static NSInteger selMusFromList = -1;
 @property (strong) NSString *musicInfo;
 @property (strong, readonly) NSDictionary	*trackerDict;
 @property (strong, readonly) NSArray		*trackerUTIs;
-@property (strong) PPMusicList				*musicList;
+@property (strong) MusicList				*musicList;
 @property (strong) CurrentlyPlayingIndex	*currentlyPlayingIndex;
 @property (strong) CurrentlyPlayingIndex	*previouslyPlayingIndex;
 @property (strong) Preferences				*preferences;
@@ -949,7 +948,7 @@ return; \
 	[self addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionNew context:NULL];
 	self.paused = YES;
 	[self willChangeValueForKey:kMusicListKVO];
-	musicList = [[PPMusicList alloc] init];
+	musicList = [[MusicList alloc] init];
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
 		[musicList loadApplicationMusicList];
 	}
