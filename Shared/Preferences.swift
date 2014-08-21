@@ -15,6 +15,13 @@ enum PPPlaylistMode: Int {
 	case LoadRandom
 };
 
+extension TagCoupling {
+	init(_ theAmount: Int32, _ theTag: Int) {
+		amount = theAmount
+		tag = theTag
+	}
+}
+
 class Preferences: NSWindowController {
 	@IBOutlet var box: NSBox! = nil
 	@IBOutlet var popUp: NSPopUpButton! = nil

@@ -308,7 +308,7 @@ private func homeURL() -> NSURL {
 	}
 	
 	func insertObjects(anObj: [MusicListObject], inMusicListAtIndex idx:Int) {
-		let theIndexSet = NSIndexSet(indexesInRange: NSMakeRange(idx, anObj.count))
+		let theIndexSet = NSIndexSet(indexesInRange: NSRange(location: idx, length: anObj.count))
 		self.willChange(.Insertion, valuesAtIndexes: theIndexSet, forKey: kMusicListKVO)
 		var currentIndex = theIndexSet.firstIndex;
 		var count = theIndexSet.count;
