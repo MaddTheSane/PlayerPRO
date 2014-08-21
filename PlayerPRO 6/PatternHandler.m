@@ -33,7 +33,7 @@ static inline void SwapPcmd(Pcmd *toswap)
 	[patternList removeAllObjects];
 }
 
-- (id)initWithMusic:(MADMusic **)mus
+- (instancetype)initWithMusic:(MADMusic **)mus
 {
 	if (self = [super init]) {
 		theMus = mus;

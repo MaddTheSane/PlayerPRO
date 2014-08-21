@@ -18,6 +18,7 @@
 @property (readonly) NSArray *plugInArray;
 - (PPFilterPlugObject*)plugInAtIndex:(NSUInteger)idx;
 - (NSUInteger)plugInCount;
+- (PPFilterPlugObject *)objectAtIndexedSubscript:(NSInteger)index;
 
 - (MADErr)callDigitalPlugAtIndex:(NSInteger)idx sampleData:(sData*)theInsData startLength:(long)start endLength:(long)end stereoMode:(short)stereo info:(PPInfoPlug *)theInfo;
 

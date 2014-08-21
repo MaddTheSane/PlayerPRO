@@ -21,7 +21,7 @@
 	theInfo.driverRec = *driverRec;
 }
 
-- (id)initWithMusic:(MADMusic**)theMus
+- (instancetype)initWithMusic:(MADMusic**)theMus
 {
 	if (self = [super init]) {
 		NSNotificationCenter *notCen = [NSNotificationCenter defaultCenter];
@@ -39,6 +39,11 @@
 	return [tmp callPluginWithData:theInsData selectionStart:start selectionEnd:end plugInInfo:&theInfo stereoMode:stereo];
 }
 
+- (PPEnvelopeObject *)objectAtIndexedSubscript:(NSInteger)index
+{
+	return [self plugInAtIndex:idx];
+}
+
 - (PPFilterPlugObject*)plugInAtIndex:(NSUInteger)idx
 {
 	return filterPlugs[idx];
@@ -49,7 +54,7 @@
 	return [filterPlugs count];
 }
 
-- (id)init
+- (instancetype)init
 {
 	[self doesNotRecognizeSelector:_cmd];
 	return nil;

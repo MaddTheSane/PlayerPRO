@@ -52,7 +52,7 @@ static NSInteger selMusFromList = -1;
 @property (strong) CurrentlyPlayingIndex	*previouslyPlayingIndex;
 @property (strong) Preferences				*preferences;
 @property (strong) NSMutableArray			*plugInInfos;
-@property BOOL isQuitting;
+@property BOOL								isQuitting;
 
 - (void)selectCurrentlyPlayingMusic;
 - (void)selectMusicAtIndex:(NSInteger)anIdx;

@@ -18,6 +18,7 @@
 @property (readonly) NSArray *plugInArray;
 - (NSInteger)plugInCount;
 - (PPInstrumentImporterObject*)plugInAtIndex:(NSUInteger)idx;
+- (PPInstrumentImporterObject *)objectAtIndexedSubscript:(NSInteger)index;
 
 - (void)addPlugInFromPath:(NSString*)thePath;
 - (void)addPlugInFromURL:(NSURL *)urlpath;

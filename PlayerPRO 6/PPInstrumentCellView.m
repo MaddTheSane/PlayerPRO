@@ -50,7 +50,7 @@
 	[self setNeedsDisplay:YES];
 }
 
-- (id)initWithFrame:(NSRect)frame
+- (instancetype)initWithFrame:(NSRect)frame
 {
 	self = [super initWithFrame:frame];
 	if (self) {

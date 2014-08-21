@@ -57,7 +57,7 @@
 	[self MADDriverWithPreferences];
 }
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init]) {
 		MADDriverSettings init;

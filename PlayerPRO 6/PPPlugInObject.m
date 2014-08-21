@@ -128,7 +128,7 @@ OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, int chan
 @synthesize type;
 @synthesize version;
 
-- (id)init
+- (instancetype)init
 {
 	[self doesNotRecognizeSelector:_cmd];
 	return nil;

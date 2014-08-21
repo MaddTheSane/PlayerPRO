@@ -16,7 +16,7 @@
 @property (readonly) OSType mode;
 @property (readonly) BOOL isSample;
 
-- (id)init UNAVAILABLE_ATTRIBUTE;
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithBundle:(NSBundle *)theBund NS_DESIGNATED_INITIALIZER;
 - (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insSamp function:(OSType)imporexp plugInfo:(PPInfoPlug*)plugInfo;
 

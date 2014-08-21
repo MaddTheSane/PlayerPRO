@@ -22,7 +22,7 @@
 	return [instrumentIEArray copy];
 }
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init]) {
 		NSArray *plugLocs = DefaultPlugInLocations();
@@ -108,6 +108,11 @@
 - (PPInstrumentImporterObject*)plugInAtIndex:(NSUInteger)idx
 {
 	return instrumentIEArray[idx];
+}
+
+- (PPInstrumentImporterObject *)objectAtIndexedSubscript:(NSInteger)index
+{
+	return [self plugInAtIndex:index];
 }
 
 - (NSInteger)plugInCount

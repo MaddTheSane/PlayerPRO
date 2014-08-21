@@ -48,7 +48,7 @@
 }
 
 
-- (id)initWithWindow:(NSWindow *)window
+- (instancetype)initWithWindow:(NSWindow *)window
 {
 	self = [super initWithWindow:window];
 	if (self) {
@@ -68,7 +68,7 @@
 	[sheet orderOut:nil];
 }
 
-- (id)init
+- (instancetype)init
 {
 	return self = [self initWithWindowNibName:@"InstrumentInfoView"];
 }
