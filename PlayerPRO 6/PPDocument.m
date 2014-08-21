@@ -174,7 +174,7 @@
 {
 	long fT, cT;
 	[_theDriver getMusicStatusWithCurrentTime:&cT totalTime:&fT];
-	if ([_theDriver isDonePlayingMusic] && _theDriver.isPlayingMusic && ![_theDriver isExporting]) {
+	if ([_theDriver isDonePlayingMusic] && !_theDriver.isPaused && ![_theDriver isExporting]) {
 		//[self songIsDonePlaying];
 		[_theDriver pause];
 		[_theDriver getMusicStatusWithCurrentTime:&cT totalTime:&fT];

@@ -61,9 +61,6 @@
 //This method sets the music object as the playback music
 - (void)attachToDriver:(PPDriver *)theDriv;
 
-//Creates a music struct for use outside of PlayerPROKit.
-- (MADMusic *)copyMadMusicStruct;
-
 @property (readonly) MADMusic *internalMadMusicStruct NS_RETURNS_INNER_POINTER;
 
 - (MADErr)exportInstrumentListToURL:(NSURL*)outURL;

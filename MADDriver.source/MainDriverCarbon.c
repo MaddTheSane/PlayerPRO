@@ -10,7 +10,7 @@
 
 #if defined(_MAC_H) && !TARGET_OS_IPHONE
 
-OSErr MADLoadMusicFSRef(MADLibrary *lib, MADMusic **music, char *plugType, FSRefPtr theRef)
+MADErr MADLoadMusicFSRef(MADLibrary *lib, MADMusic **music, char *plugType, FSRefPtr theRef)
 {
 	CFURLRef tempURL;
 	OSErr returnErr = noErr;
@@ -23,7 +23,7 @@ OSErr MADLoadMusicFSRef(MADLibrary *lib, MADMusic **music, char *plugType, FSRef
 	return returnErr;
 }
 
-OSErr MADLoadMusicFSpFile(MADLibrary *lib, MADMusic **music, char *plugType, FSSpecPtr theSpec)
+MADErr MADLoadMusicFSpFile(MADLibrary *lib, MADMusic **music, char *plugType, FSSpecPtr theSpec)
 {
 #ifdef __LP64__
 	return MADOrderNotImplemented;
@@ -37,7 +37,7 @@ OSErr MADLoadMusicFSpFile(MADLibrary *lib, MADMusic **music, char *plugType, FSS
 #endif
 }
 
-OSErr MADMusicIdentifyFSRef(MADLibrary *lib, char *type, FSRefPtr theRef)
+MADErr MADMusicIdentifyFSRef(MADLibrary *lib, char *type, FSRefPtr theRef)
 {
 	CFURLRef tempURL;
 	OSErr returnErr = noErr;
@@ -50,7 +50,7 @@ OSErr MADMusicIdentifyFSRef(MADLibrary *lib, char *type, FSRefPtr theRef)
 	return returnErr;
 }
 
-OSErr MADMusicIdentifyFSpFile(MADLibrary *lib, char *type, FSSpecPtr theSpec)
+MADErr MADMusicIdentifyFSpFile(MADLibrary *lib, char *type, FSSpecPtr theSpec)
 {
 #ifdef __LP64__
 	return MADOrderNotImplemented;

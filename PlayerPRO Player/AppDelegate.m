@@ -155,7 +155,7 @@ static NSInteger selMusFromList = -1;
 	long fullTime = 0, curTime = 0;
 	OSErr returnerr = MADNoErr;
 	if (madDriver) {
-		madWasReading = [madDriver isPlayingMusic];
+		madWasReading = ![madDriver isPaused];
 		[madDriver stop];
 		//[madDriver stopDriver];
 		

@@ -18,11 +18,19 @@
 extern "C" {
 #endif
 
-PPEXPORT OSErr MADLoadMusicFSRef(MADLibrary *lib, MADMusic **music, char *plugType, FSRefPtr theRef) DEPRECATED_ATTRIBUTE;
-PPEXPORT OSErr MADLoadMusicFSpFile(MADLibrary *lib, MADMusic **music, char *plugType, FSSpecPtr theSpec) DEPRECATED_ATTRIBUTE;
+#ifdef __LP64__
+#define UNAVAILABLE_ON_64BIT UNAVAILABLE_ATTRIBUTE
+#else
+#define UNAVAILABLE_ON_64BIT
+#endif
 
-PPEXPORT OSErr MADMusicIdentifyFSRef(MADLibrary *lib, char *type, FSRefPtr theRef) DEPRECATED_ATTRIBUTE;
-PPEXPORT OSErr MADMusicIdentifyFSpFile(MADLibrary *lib, char *type, FSSpecPtr theSpec) DEPRECATED_ATTRIBUTE;
+PPEXPORT MADErr MADLoadMusicFSRef(MADLibrary *lib, MADMusic **music, char *plugType, FSRefPtr theRef) DEPRECATED_ATTRIBUTE;
+PPEXPORT MADErr MADLoadMusicFSpFile(MADLibrary *lib, MADMusic **music, char *plugType, FSSpecPtr theSpec) DEPRECATED_ATTRIBUTE UNAVAILABLE_ON_64BIT;
+
+PPEXPORT MADErr MADMusicIdentifyFSRef(MADLibrary *lib, char *type, FSRefPtr theRef) DEPRECATED_ATTRIBUTE;
+PPEXPORT MADErr MADMusicIdentifyFSpFile(MADLibrary *lib, char *type, FSSpecPtr theSpec) DEPRECATED_ATTRIBUTE UNAVAILABLE_ON_64BIT;
+
+#undef UNAVAILABLE_ON_64BIT
 
 #ifdef __cplusplus
 }
