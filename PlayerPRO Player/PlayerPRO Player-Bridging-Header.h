@@ -12,3 +12,7 @@
 #import "PPSTImporter.h"
 #import "AppDelegate.h"
 #import "PPMusicList.h"
+
+#import "MusicListPreferenceController.h"
+#import "MiscPreferenceController.h"
+#import "MidiHardwarePreferenceController.h"

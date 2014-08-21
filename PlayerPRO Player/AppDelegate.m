@@ -50,7 +50,7 @@ static NSInteger selMusFromList = -1;
 @property (strong) PPMusicList				*musicList;
 @property (strong) CurrentlyPlayingIndex	*currentlyPlayingIndex;
 @property (strong) CurrentlyPlayingIndex	*previouslyPlayingIndex;
-@property (strong) PPPreferences			*preferences;
+@property (strong) Preferences				*preferences;
 @property (strong) NSMutableArray			*plugInInfos;
 @property BOOL isQuitting;
 
@@ -397,7 +397,7 @@ static NSInteger selMusFromList = -1;
 	MADGetBestDriver(&exportSettings);
 	exportSettings.driverMode = NoHardwareDriver;
 	exportSettings.repeatMusic = FALSE;
-	[exportController settingsFromDriverSettings:&exportSettings];
+	[exportController settingsFromDriverSettings:exportSettings];
 	[self.window beginSheet:self.exportWindow completionHandler:theHandle];
 }
 
@@ -849,7 +849,7 @@ return; \
 - (IBAction)showPreferences:(id)sender
 {
 	if (!preferences) {
-		preferences = [[PPPreferences alloc] init];
+		preferences = [Preferences newPreferenceController];
 		[[preferences window] center];
 	}
 	[preferences showWindow:sender];
@@ -984,7 +984,7 @@ return; \
 	self.currentlyPlayingIndex = [[CurrentlyPlayingIndex alloc] init];
 	[self.previouslyPlayingIndex movePlayingIndexToOtherIndex:self.currentlyPlayingIndex];
 	
-	exportController = [[PPSoundSettingsViewController alloc] init];
+	exportController = [[SoundSettingsViewController alloc] init];
 	exportController.delegate = self;
 	[exportSettingsBox setContentView:[exportController view]];
 	

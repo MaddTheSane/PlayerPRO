@@ -18,3 +18,13 @@
 #import "PPDigitalPlugInObject.h"
 #import "PPFilterPlugObject.h"
 #import "NSColor+PPPreferences.h"
+
+//Preferences
+#import "PianoPreferencesController.h"
+//#import "MusicListPreferenceController.h"
+#import "ColorPreferenceController.h"
+#import "MiscPreferenceController.h"
+#import "BoxEditorPreferenceController.h"
+#import "DigitalEditorPreferenceControler.h"
+#import "ClassicEditorPreferenceController.h"
+#import "MidiHardwarePreferenceController.h"

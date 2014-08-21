@@ -7,10 +7,10 @@
 //
 
 import Cocoa
+import PlayerPROCore
 import PlayerPROKit
-import PlayerPROKit.Swift
 
-class SoundOutputController: PPSoundSettingsViewController, PPSoundSettingsViewControllerDelegate, PPPreferenceObject {
+class SoundOutputController: SoundSettingsViewController, SoundSettingsViewControllerDelegate, PPPreferenceObject {
 	
 	class func newPreferenceView() -> Self {
 		return self.newSoundSettingWindow()
@@ -25,24 +25,8 @@ class SoundOutputController: PPSoundSettingsViewController, PPSoundSettingsViewC
 		return ourself
 	}
 	
-	/*
-	convenience required init(coder: NSCoder!) {
-		self.init()
-	}
-	
-	convenience override init() {
-		self.init(nibName: "PPSoundSettingsViewController", bundle: NSBundle(forClass: PPSoundSettingsViewController.self))
-	}
-	override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-		
-		self.delegate = self;
-		var aTitle = NSLocalizedString("Sound Output", tableName:"PreferenceNames", comment: "Sound Output");
-		self.title = aTitle
-	}*/
-	
-	func soundOutDriverDidChange(driv: Int16) {
-		NSUserDefaults.standardUserDefaults().setInteger(Int(driv), forKey:PPSoundDriver);
+	func soundOutDriverDidChange(driv: MADSoundOutput) {
+		NSUserDefaults.standardUserDefaults().setInteger(Int(driv.toRaw()), forKey:PPSoundDriver);
 		
 		NSNotificationCenter.defaultCenter().postNotificationName(PPSoundPreferencesDidChange, object: self)
 	}
@@ -132,7 +116,7 @@ class SoundOutputController: PPSoundSettingsViewController, PPSoundSettingsViewC
 			drivSet.MicroDelaySize = 0;
 		}
 		
-		settingsFromDriverSettings(&drivSet);
+		settingsFromDriverSettings(drivSet);
 	}
 	
 }

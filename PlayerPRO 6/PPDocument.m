@@ -92,7 +92,7 @@
 			return nil;
 		}
 		
-		self.exportController = [[PPSoundSettingsViewController alloc] init];
+		self.exportController = [[SoundSettingsViewController alloc] init];
 		self.exportController.delegate = self;
 		
 		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
@@ -269,7 +269,7 @@
 	MADGetBestDriver(&exportSettings);
 	exportSettings.driverMode = NoHardwareDriver;
 	exportSettings.repeatMusic = FALSE;
-	[_exportController settingsFromDriverSettings:&exportSettings];
+	[_exportController settingsFromDriverSettings:exportSettings];
 	
 	[[self windowForSheet] beginSheet:_exportWindow completionHandler:^(NSModalResponse returnCode) {
 		if (returnCode == NSAlertDefaultReturn) {

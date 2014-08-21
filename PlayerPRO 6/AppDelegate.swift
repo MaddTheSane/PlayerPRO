@@ -52,7 +52,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	let instrumentPlugHandler = PPInstrumentPlugHandler()
 	let digitalHandler = DigitalPlugHandler()
 	let filterHandler = PPFilterPlugHandler()
-	let preferences = PPPreferences()
+	let preferences = Preferences.newPreferenceController()
 	var thePPColors = [NSColor]()
 	
 	@IBOutlet var musicExportMenu:		NSMenu!
