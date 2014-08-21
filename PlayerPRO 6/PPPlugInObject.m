@@ -13,7 +13,7 @@
 void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
 {
 	CFArrayRef	factories		= NULL;
-	Boolean		foundInterface	= FALSE;
+	BOOL		foundInterface	= NO;
 	void		**formatPlugA	= NULL;
 	
 	CFPlugInRef plugToTest = CFBundleGetPlugIn(tempBundleRef);

@@ -26,7 +26,7 @@
 {
 	if (self = [super init]) {
 		NSArray *plugLocs = DefaultPlugInLocations();
-		
+		self.instrumentIEArray = [[NSMutableArray alloc] init];
 		NSInteger x, y;
 		
 		for (NSURL *aPlugLoc in plugLocs) {

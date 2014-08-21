@@ -484,7 +484,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 		
 		for i in 1 ... 96 {
-			let tmpColor = NSColor.PPDecodeColorWithData(defaults.dataForKey("PPCColor\(i)"))
+			let tmpColor = NSColor.PPDecodeColorWithData(defaults.dataForKey("PPColor \(i)"))
 			thePPColors.append(tmpColor!)
 		}
 		

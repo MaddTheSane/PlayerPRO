@@ -9,12 +9,10 @@
 #import "ColorPreferenceController.h"
 #import "UserDefaultKeys.h"
 #import "NSColor+PPPreferences.h"
+#import "PPColorPreferenceObject.h"
 
 @implementation ColorPreferenceController
-
-#define PPCOLOR(num) @synthesize colorWell ## num
-PPCOLORPOPULATE();
-#undef PPCOLOR
+@synthesize colors;
 
 + (instancetype)newPreferenceView
 {
@@ -32,13 +30,31 @@ PPCOLORPOPULATE();
 -(void)awakeFromNib
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-#define PPCOLOR(num) [colorWell ## num setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor ## num]]]
+	NSMutableArray *tmpColor = [[NSMutableArray alloc] initWithCapacity:96];
+	PPColorPreferenceObject *colorObj;
+	
+#define PPCOLOR(num) { \
+colorObj = [[PPColorPreferenceObject alloc] initWithColor:[NSColor PPDecodeColorWithData:[defaults dataForKey: PPCColor ## num ]] index: num - 1 ];\
+[tmpColor addObject:colorObj];\
+}
 	PPCOLORPOPULATE();
 #undef PPCOLOR
+	self.colors = tmpColor;
 }
+
+#if 0
+-(void)setPersonModelArray:(NSMutableArray *)a {
+	personModelArray = a;
+}
+
+-(NSArray*)colorsModelArray {
+	return personModelArray;
+}
+#endif
 
 - (IBAction)changeColorWell:(id)sender
 {
+#if 0
 	NSString *keyToChange;
 #define PPCOLOR(num) } else if (sender == colorWell ## num) \
 {\
@@ -53,6 +69,7 @@ keyToChange = PPCColor ## num
 	[[NSUserDefaults standardUserDefaults] setObject:[[sender color] PPencodeColor] forKey:keyToChange];
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPColorsDidChange object:self];
 #undef PPCOLOR
+#endif
 }
 
 @end
