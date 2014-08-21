@@ -57,7 +57,7 @@ typedef NS_OPTIONS(unsigned char, MADPlugCapabilities) {
 
 - (NSString*)description
 {
-	NSString *typeString = CFBridgingRelease(UTCreateStringForOSType(type));
+	NSString *typeString = OSTypeToNSString(type);
 	return [NSString stringWithFormat:@"%@ - %@ Sample: %@ Type: %@ UTIs: %@", self.menuName, [self.file bundlePath], isSamp ? @"YES": @"NO", typeString, [UTITypes description]];
 }
 

@@ -44,7 +44,7 @@
 
 - (NSString*)musicInfo
 {
-	return self.theMusic.madInfo;
+	return self.theMusic.madInformation;
 }
 
 - (void)setMusicInfo:(NSString *)musicInfo

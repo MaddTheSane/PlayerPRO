@@ -1117,7 +1117,7 @@ return; \
 - (void)setTitleForSongLabelBasedOnMusic
 {
 	self.musicName = self.music.internalFileName;
-	self.musicInfo = self.music.madInfo;
+	self.musicInfo = self.music.madInformation;
 }
 
 - (void)clearMusic

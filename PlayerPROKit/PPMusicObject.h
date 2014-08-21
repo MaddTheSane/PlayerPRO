@@ -53,9 +53,6 @@
 
 - (NSDictionary*)musicClasses;
 
-- (NSString*)internalFileName;
-- (NSString*)madInfo;
-
 //Save music to a URL in MADK format in PPMusicObject, and MAD bundle in PPMusicObjectWrapper
 - (MADErr)saveMusicToURL:(NSURL *)tosave;
 - (MADErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp;

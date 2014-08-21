@@ -25,7 +25,7 @@ func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<
 	let debuStr = NSLocalizedString("MyDebugStr_Debug", comment: "Debug")
 	//NSLog("%s:%u error text:%s!", file, line, text);
 
-	let alert = PPRunAlertPanel(errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr, args: swiftText)
+	let alert = PPRunCriticalAlertPanel(errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr, args: swiftText)
 	switch (alert) {
 	case NSAlertAlternateReturn:
 		break;
@@ -358,7 +358,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 				var identified = madLib.identifyFileAtURL(theURL, type: &ostype)
 				
 				if (madLib.identifyFileAtURL(theURL, type: &ostype) != MADErr.NoErr) || madLib.getInformationFromFileAtURL(theURL, type: &ostype, infoDictionary: &rec) != MADErr.NoErr {
-					PPRunCriticalAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
+					PPRunAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
 					return false;
 				}
 				let sigVala: AnyObject = rec![kPPSignature] ?? NSNumber(unsignedInt: "madk")
@@ -487,9 +487,6 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			let tmpColor = NSColor.PPDecodeColorWithData(defaults.dataForKey("PPCColor\(i)"))
 			thePPColors.append(tmpColor!)
 		}
-		//#define PPCOLOR(val) [_thePPColors addObject:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor ## val]]]
-		//PPCOLORPOPULATE();
-		//#undef PPCOLOR
 		
 		updatePlugInInfoMenu()
 	}

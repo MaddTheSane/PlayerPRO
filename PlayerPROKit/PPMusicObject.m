@@ -45,7 +45,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 @end
 
 @implementation PPMusicObject
-@synthesize madInformation;
+@synthesize madInformation = madInfo;
 @synthesize attachedDriver;
 @synthesize _currentMusic = currentMusic;
 @synthesize internalFileName;
@@ -154,7 +154,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return internalFileName;
 }
 
-- (NSString*)madInfo
+- (NSString*)madInformation
 {
 	if (!madInfo) {
 		madInfo = [[NSString alloc] initWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
