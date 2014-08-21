@@ -27,7 +27,7 @@ void Erreur(short a, short b)
 {
 	char errStr[256] = {0};
 	snprintf(errStr, sizeof(errStr), "Error called with values %d, %d", a, b);
-	PPDebugStr(__LINE__, __FILE__, errStr);
+	MADDebugStr(__LINE__, __FILE__, errStr);
 }
 
 #if 0

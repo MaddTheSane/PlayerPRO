@@ -939,7 +939,7 @@ return; \
 {
 	isQuitting = NO;
 	srandom(time(NULL) & 0xffffffff);
-	PPRegisterDebugFunc(CocoaDebugStr);
+	MADRegisterDebugFunc(CocoaDebugStr);
 	madLib = [[PPLibrary alloc] init];
 	//the NIB won't store the value anymore, so do this hackery to make sure there's some value in it.
 	[songTotalTime setIntegerValue:0];
@@ -1221,7 +1221,7 @@ enum PPMusicToolbarTypes {
 		switch (retVal) {
 			case NSAlertDefaultReturn:
 			{
-				PPInfoRec rec;
+				MADInfoRec rec;
 				{
 					char ostype[5] = {0};
 					if ([madLib identifyFileAtURL:theURL type:ostype] != MADNoErr || [madLib getInformationFromFileAtURL:theURL type:ostype info:&rec]) {
@@ -1424,7 +1424,7 @@ enum PPMusicToolbarTypes {
 {
 	NSIndexSet *selected = [tableView selectedRowIndexes];
 	NSURL *musicURL;
-	PPInfoRec theInfo;
+	MADInfoRec theInfo;
 	MusicListObject *obj;
 	char info[5] = {0};
 	NSString *NSSig;

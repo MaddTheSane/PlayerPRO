@@ -23,11 +23,11 @@ static inline void SwapPcmd(Pcmd *toswap)
 	if (!toswap) {
 		return;
 	}
-	PPBE32(&toswap->structSize);
-	PPBE16(&toswap->length);
-	PPBE16(&toswap->posStart);
-	PPBE16(&toswap->tracks);
-	PPBE16(&toswap->trackStart);
+	MADBE32(&toswap->structSize);
+	MADBE16(&toswap->length);
+	MADBE16(&toswap->posStart);
+	MADBE16(&toswap->tracks);
+	MADBE16(&toswap->trackStart);
 }
 
 @implementation PPPatternObject
@@ -353,7 +353,7 @@ static BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL All
 	}
 	
 	if ([myText length] >= mSize)
-		PPDebugStr(__LINE__, __FILE__, "ZZZ");
+		MADDebugStr(__LINE__, __FILE__, "ZZZ");
 	
 	return [[NSString alloc] initWithString:myText];
 }

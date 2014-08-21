@@ -333,14 +333,14 @@ typedef struct MADDriverSettings {
 //	MADErr PPImpExpMain(MADFourChar order,
 //						char *AlienFileName,
 //						MADMusic *MadFile,
-//						PPInfoRec *info,
+//						MADInfoRec *info,
 //						MADDriverSettings *DriverParam);
 //
 //	Actual plug have to support these orders:
 //
 //	order: 'TEST':	check the AlienFile to see if your Plug really supports it.
 //	order: 'IMPL':	convert the AlienFile into a MADMusic. You have to allocate MADMusic.
-//	order: 'INFO':	Fill PPInfoRec structure.
+//	order: 'INFO':	Fill MADInfoRec structure.
 //	order: 'EXPL':	Convert the MADMusic into AlienFile. You have to create the AlienFile.
 //					Don't delete the MADMusic Structure after conversion !!
 //
@@ -351,7 +351,7 @@ typedef struct MADDriverSettings {
 //
 /********************						***********************/
 
-typedef struct PPInfoRec {
+typedef struct MADInfoRec {
 	int		totalPatterns;
 	int		partitionLength;
 	
@@ -364,7 +364,7 @@ typedef struct PPInfoRec {
 	
 	char	internalFileName[60];
 	char	formatDescription[60];
-} PPInfoRec;
+} MADInfoRec;
 
 
 /********************						***********************/
@@ -392,7 +392,7 @@ typedef MADENUM(MADFourChar, MADPlugModes) {
 #include <CoreFoundation/CFURL.h>
 #include <CoreFoundation/CFBundle.h>
 
-typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
+typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, MADInfoRec *, MADDriverSettings *);
 
 typedef struct PlugInfo
 {
@@ -409,7 +409,7 @@ typedef struct PlugInfo
 
 #ifdef WIN32
 #include <windows.h>
-typedef MADErr (*PLUGDLLFUNC)(MADFourChar, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
+typedef MADErr (*PLUGDLLFUNC)(MADFourChar, char *, MADMusic *, MADInfoRec *, MADDriverSettings *);
 
 typedef struct PlugInfo
 {
@@ -426,7 +426,7 @@ typedef struct PlugInfo
 
 #ifdef _BE_H
 //TODO: include BeOS headers!
-typedef	MADErr (*MADPlug)(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+typedef	MADErr (*MADPlug)(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 typedef struct PlugInfo
 {
@@ -444,7 +444,7 @@ typedef struct PlugInfo
 #if (defined(__ELF__) && !(defined (_MAC_H) || defined (_BE_H)))
 #include <dlfcn.h>
 #include <sys/param.h>  //For PATH_MAX
-typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, PPInfoRec *, MADDriverSettings *);
+typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, MADInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {
 	MADFourChar	mode;				// Mode support : Import +/ Export
@@ -564,7 +564,7 @@ extern "C" {
 #endif
 
 /*!
- *	@function	PPDebugStr
+ *	@function	MADDebugStr
  *	@abstract	PlayerPROCore's internal debugger function
  *	@param		line
  *				The line number
@@ -575,30 +575,30 @@ extern "C" {
  *	@discussion NORMALLY it is never called, only when a FATAL error has occured.
  *				This function is usually invoked using the macros __LINE__ and __FILE__ for the line and file paramaters.
  */
-PPEXPORT void	PPDebugStr(short line, const char* file, const char* text);
+PPEXPORT void	MADDebugStr(short line, const char* file, const char* text);
 	
 /*!
- *	@function	PPRegisterDebugFunc
- *	@abstract	used to set a callback for PPDebugStr
+ *	@function	MADRegisterDebugFunc
+ *	@abstract	used to set a callback for MADDebugStr
  *	@param		debugFunc
- *				The function to call when PPDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling \c abort()
- *	@discussion	Use this function to call your own debug function when PPDebugStr is called, otherwise calls to PPDebugStr will crash your app.
- *				You can reset to the default PPDebugStr implementation by calling this function and passing \c NULL to it.
+ *				The function to call when MADDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling \c abort()
+ *	@discussion	Use this function to call your own debug function when MADDebugStr is called, otherwise calls to MADDebugStr will crash your app.
+ *				You can reset to the default MADDebugStr implementation by calling this function and passing \c NULL to it.
  */
-PPEXPORT void	PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*));
+PPEXPORT void	MADRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*));
 
 #ifdef __BLOCKS__
 /*!
- *	@function	PPRegisterDebugBlock
- *	@abstract	used to set a callback for PPDebugStr
+ *	@function	MADRegisterDebugBlock
+ *	@abstract	used to set a callback for MADDebugStr
  *	@param		newdebugBlock
- *				The block to call when PPDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling \c abort()
- *	@discussion	Use this function to call your own debug function when PPDebugStr is called, otherwise calls to PPDebugStr will crash your app.
- *				You can reset to the default PPDebugStr implementation by calling this function and passing \c NULL to it.
+ *				The block to call when MADDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling \c abort()
+ *	@discussion	Use this function to call your own debug function when MADDebugStr is called, otherwise calls to MADDebugStr will crash your app.
+ *				You can reset to the default MADDebugStr implementation by calling this function and passing \c NULL to it.
  *				This function is only available if your compiler supports blocks (Clang), otherwise it is unavailable.
  *				If PlayerPROCore was built without blocks support and you try to call this function, the linker won't be able to find the function.
  */
-PPEXPORT void PPRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*));
+PPEXPORT void MADRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*));
 #endif
 
 /*!
@@ -649,7 +649,7 @@ PPEXPORT MADErr	MADLoadMusicFileCString(MADLibrary *, MADMusic **music, char *ty
 
 PPEXPORT MADErr	MADMusicIdentifyCString(MADLibrary *, char *type, char *cName);			// Identify what kind of music format is cName file.
 
-PPEXPORT MADErr	MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec);
+PPEXPORT MADErr	MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, MADInfoRec *InfoRec);
 	
 PPEXPORT MADErr	MADMusicExportCString(MADLibrary *lib, MADMusic *music, char *type, char* cName);
 
@@ -659,7 +659,7 @@ PPEXPORT MADErr	MADMusicSaveCString(MADMusic *music, const char *cName, bool com
 #ifdef _MAC_H
 PPEXPORT MADErr	MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef);
 PPEXPORT MADErr	MADMusicIdentifyCFURL(MADLibrary *lib, char *type, CFURLRef URLRef);
-PPEXPORT MADErr	MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec);
+PPEXPORT MADErr	MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, MADInfoRec *InfoRec);
 PPEXPORT MADErr	MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL);
 PPEXPORT MADErr	MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD);
 #endif

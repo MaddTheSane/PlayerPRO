@@ -92,7 +92,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 					__block short *shortPtr = (short*) dataData;
 					
 					dispatch_apply(curData->size / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
-						PPBE16(&shortPtr[y]);
+						MADBE16(&shortPtr[y]);
 					});
 				}
 				[outData appendBytes:dataData length:curData->size];
@@ -132,7 +132,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return madClasses;
 }
 
-+ (MADErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib
++ (MADErr)info:(MADInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib
 {
 	char filetype[5];
 	MADErr theErr = MADNoErr;
@@ -461,7 +461,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 				__block short *shortPtr = (short*)curData->data;
 				
 				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
-					PPBE16(&shortPtr[y]);
+					MADBE16(&shortPtr[y]);
 				});
 			}
 		}

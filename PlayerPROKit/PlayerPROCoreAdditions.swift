@@ -117,7 +117,7 @@ extension MADDriverSettings: DebugPrintable {
 		}}
 }
 
-extension PPInfoRec: DebugPrintable {
+extension MADInfoRec: DebugPrintable {
 	
 	public var debugDescription: String { get {
 		return ""

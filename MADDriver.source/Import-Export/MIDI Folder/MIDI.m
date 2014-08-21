@@ -195,7 +195,7 @@ static MADErr MADReadMAD(MADMusic *MDriver, const void* MADPtr)
 	return MADNoErr;
 }
 
-extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 {
 	__block MADErr theErr = MADOrderNotImplemented;
 	NSXPCConnection *conn = [[NSXPCConnection alloc] initWithServiceName:@"net.sourceforge.playerpro.MIDI-Import"];

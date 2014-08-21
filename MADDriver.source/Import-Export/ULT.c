@@ -149,11 +149,11 @@ static MADErr ConvertULT2Mad(char* theULT, size_t MODSize, MADMusic *theMAD, MAD
 			curData = theMAD->sample[i*MAXSAMPLE +  0] = (sData*) calloc(sizeof(sData), 1);
 			if (curData == NULL) return MADNeedMemory;
 			
-			PPLE32(&ULTSuite.ins[i].loopStart);
-			PPLE32(&ULTSuite.ins[i].loopEnd);
-			PPLE32(&ULTSuite.ins[i].sizeStart);
-			PPLE32(&ULTSuite.ins[i].sizeEnd);
-			PPLE16(&ULTSuite.ins[i].finetune);
+			MADLE32(&ULTSuite.ins[i].loopStart);
+			MADLE32(&ULTSuite.ins[i].loopEnd);
+			MADLE32(&ULTSuite.ins[i].sizeStart);
+			MADLE32(&ULTSuite.ins[i].sizeEnd);
+			MADLE16(&ULTSuite.ins[i].finetune);
 			
 			curData->size		= ULTSuite.ins[i].sizeEnd - ULTSuite.ins[i].sizeStart;		// * 2 ???
 			curData->loopBeg	= ULTSuite.ins[i].loopStart;
@@ -221,7 +221,7 @@ static MADErr ConvertULT2Mad(char* theULT, size_t MODSize, MADMusic *theMAD, MAD
 	return MADNoErr;
 }
 
-static MADErr ExtractULTInfo(PPInfoRec *info, void *AlienFile)
+static MADErr ExtractULTInfo(MADInfoRec *info, void *AlienFile)
 {
 	//short		i, maxInstru, tracksNo;
 	ULTForm		ULTinfo;
@@ -265,7 +265,7 @@ static MADErr TestULTFile(void *AlienFile)
 {
 	ULTForm	*myULT = (ULTForm*)AlienFile;
 	MADFourChar ultID = *((MADFourChar*)myULT->ID);
-	PPBE32(&ultID);
+	MADBE32(&ultID);
 	
 	if (ultID == 'MAS_')
 		return MADNoErr;
@@ -276,7 +276,7 @@ static MADErr TestULTFile(void *AlienFile)
 #ifndef _MAC_H
 
 EXP MADErr FillPlug(PlugInfo *p);
-EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -291,9 +291,9 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-MADErr mainULT(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainULT(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
-extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	MADErr	myErr = MADNoErr;

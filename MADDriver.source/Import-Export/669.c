@@ -70,9 +70,9 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 		
 		SInfo = (SampleInfo*)temp;
 		
-		PPLE16(&SInfo->length);
-		PPLE16(&SInfo->loopStart);
-		PPLE16(&SInfo->loopEnd);
+		MADLE16(&SInfo->length);
+		MADLE16(&SInfo->loopStart);
+		MADLE16(&SInfo->loopEnd);
 		
 		theInstrument[i] = (char*)((uintptr_t)the669 + OffSetToSample);
 		OffSetToSample += SInfo->length;
@@ -316,7 +316,7 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 	return MADNoErr;
 }
 
-static MADErr Extract669Info(PPInfoRec *info, void *AlienFile)
+static MADErr Extract669Info(MADInfoRec *info, void *AlienFile)
 {
 	//TODO: implement
 	SixSixNine	*the669 = (SixSixNine*)AlienFile;
@@ -359,7 +359,7 @@ static MADErr Test669File(void *AlienFile)
 #ifndef _MAC_H
 
 EXP MADErr FillPlug(PlugInfo *p);
-EXP MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -373,9 +373,9 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 #endif
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-MADErr main669(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr main669(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
-extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	MADErr	myErr = MADNoErr;

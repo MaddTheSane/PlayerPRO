@@ -51,13 +51,13 @@ __END_DECLS
 - (MADErr)identifyFileAtPath:(NSString*)apath type:(out char*)atype;
 - (MADErr)identifyFileAtURL:(NSURL*)apath type:(out char*)atype;
 
-- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype info:(PPInfoRec*)infoRec;
-- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype info:(PPInfoRec*)infoRec;
+- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype info:(MADInfoRec*)infoRec;
+- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype info:(MADInfoRec*)infoRec;
 
 - (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
 - (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
 
-+ (NSDictionary*)infoRecToDictionary:(PPInfoRec*)infoRec;
++ (NSDictionary*)infoRecToDictionary:(MADInfoRec*)infoRec;
 - (PPLibraryObject *)objectAtIndexedSubscript:(NSInteger)index;
 
 @end

@@ -41,27 +41,27 @@ static OSErr MAD2KillInstrument(InstrData *curIns, sData **sample)
 
 static inline void ByteswapsData(sData *toswap)
 {
-	PPBE32(&toswap->size);
-	PPBE16(&toswap->c2spd);
-	PPBE32(&toswap->loopBeg);
-	PPBE32(&toswap->loopSize);
+	MADBE32(&toswap->size);
+	MADBE16(&toswap->c2spd);
+	MADBE32(&toswap->loopBeg);
+	MADBE32(&toswap->loopSize);
 }
 
 static inline void ByteswapInstrument(InstrData *toswap)
 {
-	PPBE16(&toswap->MIDIType);
-	PPBE16(&toswap->MIDI);
-	PPBE16(&toswap->firstSample);
-	PPBE16(&toswap->numSamples);
-	PPBE16(&toswap->volFade);
+	MADBE16(&toswap->MIDIType);
+	MADBE16(&toswap->MIDI);
+	MADBE16(&toswap->firstSample);
+	MADBE16(&toswap->numSamples);
+	MADBE16(&toswap->volFade);
 	
 	dispatch_apply(12, dispatch_get_global_queue(0, 0), ^(size_t i) {
-		PPBE16(&toswap->pannEnv[i].pos);
-		PPBE16(&toswap->pannEnv[i].val);
-		PPBE16(&toswap->pitchEnv[i].pos);
-		PPBE16(&toswap->pitchEnv[i].val);
-		PPBE16(&toswap->volEnv[i].pos);
-		PPBE16(&toswap->volEnv[i].val);
+		MADBE16(&toswap->pannEnv[i].pos);
+		MADBE16(&toswap->pannEnv[i].val);
+		MADBE16(&toswap->pitchEnv[i].pos);
+		MADBE16(&toswap->pitchEnv[i].val);
+		MADBE16(&toswap->volEnv[i].pos);
+		MADBE16(&toswap->volEnv[i].val);
 	});
 }
 
@@ -119,7 +119,7 @@ static OSErr mainMINs(void			*unused,
 					if (curData->amp == 16) {
 						short	*shortPtr = (short*)curData->data;
 						dispatch_apply(curData->size / 2, dispatch_get_global_queue(0, 0), ^(size_t ll) {
-							PPBE16(&shortPtr[ll]);
+							MADBE16(&shortPtr[ll]);
 						});
 					}
 				}
@@ -193,7 +193,7 @@ static OSErr mainMINs(void			*unused,
 					if (curData->amp == 16) {
 						short	*shortPtr = (short*) copydataData;
 						dispatch_apply(curData->size / 2, dispatch_get_global_queue(0, 0), ^(size_t ll) {
-							PPBE16(&shortPtr[ll]);
+							MADBE16(&shortPtr[ll]);
 						});
 					}
 					

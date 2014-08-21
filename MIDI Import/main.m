@@ -39,7 +39,7 @@ static void midiDebugFunc(short line, const char *file, const char *text)
 
 int main(int argc, const char *argv[])
 {
-	PPRegisterDebugFunc(midiDebugFunc);
+	MADRegisterDebugFunc(midiDebugFunc);
 	// Get the singleton service listener object.
 	NSXPCListener *serviceListener = [NSXPCListener serviceListener];
 	

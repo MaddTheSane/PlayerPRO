@@ -78,7 +78,7 @@ static void AnalyseSignatureMOD(size_t EOFo, uint32_t temp, short *maxInstru, in
 	
 	*maxInstru = 31;
 	
-	PPBE32(&temp);
+	MADBE32(&temp);
 	
 	switch(temp) {
 		case 'FLT4':
@@ -383,9 +383,9 @@ static MADErr PPConvertMod2Mad(char* aMOD, size_t MODSize, MADMusic *theMAD, MAD
 	{
 		theInstrument[i] = (char*) ((uintptr_t) theMOD + (int) OffSetToSample);
 		
-		PPBE16(&theMOD->fid[i].numWords);
-		PPBE16(&theMOD->fid[i].loopWord);
-		PPBE16(&theMOD->fid[i].loopWords);
+		MADBE16(&theMOD->fid[i].numWords);
+		MADBE16(&theMOD->fid[i].loopWord);
+		MADBE16(&theMOD->fid[i].loopWords);
 		
 		sndSize = ((int) theMOD->fid[i].numWords) * 2L;
 		
@@ -948,7 +948,7 @@ char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, size_t *PtrSiz
 	return((char*) theMOD);
 }
 
-static MADErr ExtractUMXInfo(PPInfoRec *info, char* AlienFile)
+static MADErr ExtractUMXInfo(MADInfoRec *info, char* AlienFile)
 {
 	//long	PatternSize;
 	//short	i;
@@ -1011,7 +1011,7 @@ static MADErr TestUMXFile(char* AlienFile, long EOFo)
 #ifndef _MAC_H
 
 EXP MADErr FillPlug(PlugInfo *p);
-EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -1029,9 +1029,9 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /*****************/
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-MADErr mainUMX(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainUMX(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
-extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	MADErr	myErr = MADNoErr;

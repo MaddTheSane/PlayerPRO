@@ -184,7 +184,7 @@ static BOOL MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
 	}
 	
 	if ((inMADDriver->TotalPlug + 1) >= MAXPLUG) {
-		PPDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
+		MADDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
 		return NO;
 	}
 	
@@ -358,7 +358,7 @@ static CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(const char *U
 	return FoldLocs;
 }
 
-static MADErr PPMADInfoFile(char *AlienFile, PPInfoRec *InfoRec)
+static MADErr PPMADInfoFile(char *AlienFile, MADInfoRec *InfoRec)
 {
 	MADSpec		*theMAD;
 	long		fileSize;
@@ -395,7 +395,7 @@ MADErr CallImportPlug(MADLibrary				*inMADDriver,
 					 OSType					order,
 					 char					*AlienFile,
 					 MADMusic				*theNewMAD,
-					 PPInfoRec				*info)
+					 MADInfoRec				*info)
 {
 	MADErr				iErr = MADNoErr;
 	CFBundleRefNum		resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
@@ -453,7 +453,7 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 	inMADDriver->ThePlug = NULL;
 }
 
-MADErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec *InfoRec)
+MADErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADInfoRec *InfoRec)
 {
 	MADMusic aMAD;
 	
@@ -470,7 +470,7 @@ MADErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPIn
 
 MADErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD)
 {
-	PPInfoRec InfoRec = {0};
+	MADInfoRec InfoRec = {0};
 	
 	for (int i = 0; i < inMADDriver->TotalPlug; i++) {
 		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
@@ -518,7 +518,7 @@ MADErr CheckMADFile(char* name)
 MADErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 {
 	UNFILE		refNum;
-	PPInfoRec	InfoRec;
+	MADInfoRec	InfoRec;
 	MADErr		iErr = MADNoErr;
 	
 	strcpy(type, "!!!!");
@@ -566,7 +566,7 @@ bool MADPlugAvailable(MADLibrary *inMADDriver, char* kindFile)
 
 MADErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD)
 {
-	PPInfoRec InfoRec;
+	MADInfoRec InfoRec;
 	
 	for (int i = 0; i < inMADDriver->TotalPlug; i++) {
 		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
@@ -579,7 +579,7 @@ MADErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 MADErr PPTestFile(MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
 {
 	MADMusic	aMAD;
-	PPInfoRec	InfoRec;
+	MADInfoRec	InfoRec;
 	
 	for (int i = 0; i < inMADDriver->TotalPlug; i++) {
 		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
@@ -594,7 +594,7 @@ MADFourChar GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 	short i, x;
 	
 	if (ID >= inMADDriver->TotalPlug)
-		PPDebugStr(__LINE__, __FILE__, "PP-Plug ERROR. ");
+		MADDebugStr(__LINE__, __FILE__, "PP-Plug ERROR. ");
 	
 	for (i = 0, x = 0; i < inMADDriver->TotalPlug; i++) {
 		if (inMADDriver->ThePlug[i].mode == mode || inMADDriver->ThePlug[i].mode == MADPlugImportExport) {
@@ -606,14 +606,14 @@ MADFourChar GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 				if (xx > 4)
 					xx = 4;
 				memcpy(inMADDriver->ThePlug[i].type, &type, xx);
-				PPBE32(&type);
+				MADBE32(&type);
 				return type;
 			}
 			x++;
 		}
 	}
 	
-	PPDebugStr(__LINE__, __FILE__, "PP-Plug ERROR II.");
+	MADDebugStr(__LINE__, __FILE__, "PP-Plug ERROR II.");
 	
 	return '!!!!';
 }

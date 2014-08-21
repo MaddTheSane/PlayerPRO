@@ -21,7 +21,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 		return NULL;
 	UInt8 *data = *(UInt8**)aResource;
 	UInt16 count = *(UInt16*)data;
-	PPBE16(&count);
+	MADBE16(&count);
 	
 	// First 2 bytes are the count of strings that this resource has.
 	if (count < aId)
@@ -87,13 +87,13 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	HLock(aHandle);
 	theNo = *((UInt16*)(*aHandle));
-	PPBE16(&theNo);
+	MADBE16(&theNo);
 	
 	theNo /= 2;
 	
 	HLock(locHand);
 	short location = **((short**)locHand);
-	PPBE16(&location);
+	MADBE16(&location);
 	HUnlock(locHand);
 	DisposeHandle(locHand);
 	

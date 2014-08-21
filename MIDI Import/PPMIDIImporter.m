@@ -49,7 +49,7 @@ static MADErr TestMIDIFile(const void *AlienFile)
 		return MADFileNotSupportedByThisPlug;
 }
 
-static MADErr ExtractMIDIInfo(PPInfoRec *info, const void *theMIDI)
+static MADErr ExtractMIDIInfo(MADInfoRec *info, const void *theMIDI)
 {
 	info->signature = 'Midi';
 	strcpy(info->internalFileName, "");
@@ -210,7 +210,7 @@ void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init)
 
 - (void)getMIDIInfoFromFileAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary *, MADErr error))reply
 {
-	PPInfoRec theInfo = {0};
+	MADInfoRec theInfo = {0};
 	MADErr theErr = MADNoErr;
 	NSDictionary *fileInfo = [theURL resourceValuesForKeys:@[NSURLFileSizeKey] error:NULL];
 	if (!fileInfo) {

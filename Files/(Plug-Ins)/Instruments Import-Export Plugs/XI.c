@@ -31,7 +31,7 @@ typedef UInt8			UBYTE;
 static inline OSErr TestXI(void *CC)
 {
 	OSType Ident = *((OSType*)CC);
-	PPBE32(&Ident);
+	MADBE32(&Ident);
 	
 	if (Ident == 'Exte')
 		return MADNoErr;
@@ -153,17 +153,17 @@ static OSErr mainXI(void		*unused,
 					pth = (XMPATCHHEADER*)(theXI + 0x42);
 					
 					numSamples = *((short*)(theXI + 0x42 + sizeof(XMPATCHHEADER)));
-					PPLE16(&numSamples);
+					MADLE16(&numSamples);
 					InsHeader->numSamples = numSamples;
 					
-					PPLE16(&pth->volfade);
+					MADLE16(&pth->volfade);
 					
 					memcpy(InsHeader->what, pth->what, 96);
 					memcpy(InsHeader->volEnv, pth->volenv, 48);
 #ifdef __BIG_ENDIAN__
 					for (x = 0; x < 12; x++) {
-						PPLE16(&InsHeader->volEnv[x].pos);
-						PPLE16(&InsHeader->volEnv[x].val);
+						MADLE16(&InsHeader->volEnv[x].pos);
+						MADLE16(&InsHeader->volEnv[x].val);
 					}
 #endif
 					
@@ -177,8 +177,8 @@ static OSErr mainXI(void		*unused,
 					memcpy(InsHeader->pannEnv, pth->panenv, 48);
 #ifdef __BIG_ENDIAN__
 					for (x = 0; x < 12; x++) {
-						PPLE16(&InsHeader->pannEnv[x].pos);
-						PPLE16(&InsHeader->pannEnv[x].val);
+						MADLE16(&InsHeader->pannEnv[x].pos);
+						MADLE16(&InsHeader->pannEnv[x].val);
 					}
 #endif
 					
@@ -199,9 +199,9 @@ static OSErr mainXI(void		*unused,
 						
 						wh = (XMWAVHEADER*)(theXI + 0x42 + 0x02 + sizeof(XMPATCHHEADER) + x * sizeof(XMWAVHEADER));
 						
-						PPLE32(&wh->length);
-						PPLE32(&wh->loopstart);
-						PPLE32(&wh->looplength);
+						MADLE32(&wh->length);
+						MADLE32(&wh->loopstart);
+						MADLE32(&wh->looplength);
 						
 						///////////
 						
@@ -249,7 +249,7 @@ static OSErr mainXI(void		*unused,
 									long	tL;
 									
 									for (tL = 0; tL < curData->size / 2; tL++) {
-										PPLE16((Ptr)(tt + tL));
+										MADLE16((Ptr)(tt + tL));
 									}
 #endif
 									
@@ -332,7 +332,7 @@ static OSErr mainXI(void		*unused,
 				memcpy(pth.what, InsHeader->what, 96);
 				memcpy(pth.volenv, InsHeader->volEnv, 48);
 				for (x = 0; x < 24; x++) {
-					PPLE16(&pth.volenv[x]);
+					MADLE16(&pth.volenv[x]);
 				}
 				
 				pth.volpts	= InsHeader->volSize;
@@ -341,11 +341,11 @@ static OSErr mainXI(void		*unused,
 				pth.volbeg	= InsHeader->volBeg;
 				pth.volend	= InsHeader->volEnd;
 				pth.volfade = InsHeader->volFade;
-				PPLE16(&pth.volfade);
+				MADLE16(&pth.volfade);
 				
 				memcpy(pth.panenv, InsHeader->pannEnv, 48);
 				for (x = 0; x < 24; x++) {
-					PPLE16(&pth.panenv[x]);
+					MADLE16(&pth.panenv[x]);
 				}
 				
 				pth.panpts = InsHeader->pannSize;
@@ -359,7 +359,7 @@ static OSErr mainXI(void		*unused,
 				
 				inOutCount = 2;
 				x = InsHeader->numSamples;
-				PPLE16(&x);
+				MADLE16(&x);
 				iWrite(inOutCount, &x, iFileRefI);
 				
 				/** WRITE samples */
@@ -409,9 +409,9 @@ static OSErr mainXI(void		*unused,
 					wh.relnote = curData->relNote;
 					strlcpy(wh.samplename, curData->name, sizeof(wh.samplename));
 					
-					PPLE32(&wh.length);
-					PPLE32(&wh.loopstart);
-					PPLE32(&wh.looplength);
+					MADLE32(&wh.length);
+					MADLE32(&wh.loopstart);
+					MADLE32(&wh.looplength);
 					
 					inOutCount = sizeof(wh);
 					iWrite(inOutCount, &wh, iFileRefI);
@@ -452,7 +452,7 @@ static OSErr mainXI(void		*unused,
 							}
 							
 							for (tL = 0; tL < dstSize / 2; tL++) {
-								PPLE16((void*)(tt + tL));
+								MADLE16((void*)(tt + tL));
 							}
 						} else {
 							/* Real to Delta */
