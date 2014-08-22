@@ -59,22 +59,25 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 	var exportController = SoundSettingsViewController()
 	private(set) var theDriver: PPDriver!
 	private(set) var theMusic: PPMusicObject!
+	private var exportSettings = MADDriverSettings()
 	dynamic var wrapper: PPMusicObject { get {
 		return theMusic
 		}}
+	
 	dynamic var musicName: String {
 		get {
 			return theMusic.internalFileName
 		} set {
 			theMusic.internalFileName = newValue
 		}}
+	
 	dynamic var musicInfo: String {
 		get {
 			return theMusic.madInformation
 		} set {
 			theMusic.madInformation = newValue
 		}}
-	private var exportSettings = MADDriverSettings()
+	
 
     override var windowNibName: String {
         // Override returning the nib file name of the document

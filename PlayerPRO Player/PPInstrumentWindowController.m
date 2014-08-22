@@ -83,12 +83,12 @@
 	CGRect aRect;
 	aRect.size = imageSize;
 	aRect.origin = NSMakePoint(0, 0);
+	
 	if (datIsStereo){
 		CGColorRef colorRef = CGColorCreateGenericRGB(0, 0, 1, .75);
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
 		CGColorRelease(colorRef);
 		[PPSampleObject drawSampleWithStart:0 tSS:0 rectangle:aRect channel:1 currentData:theDat context:bitmapContext];
-		//[PPSampleObject drawSampleWithStart:0 tSS:0 tSE:imageSize.width high:imageSize.height larg:imageSize.width trueV:0 trueH:0 channel:1 currentData:theDat context:bitmapContext];
 	}
 	
 	CGColorRef colorRef = CGColorCreateGenericRGB(1, 0, 0, datIsStereo ? 0.75 : 1);

@@ -17,7 +17,7 @@
 	return [[self alloc] init];
 }
 
--(id)init
+- (instancetype)init
 {
 	if (self = [super initWithNibName:@"PianoPrefs" bundle:nil]) {
 		[self setTitle:NSLocalizedStringFromTable(@"Piano", @"PreferenceNames", @"Piano")];
@@ -25,7 +25,7 @@
 	return self;
 }
 
--(void)awakeFromNib
+- (void)awakeFromNib
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	

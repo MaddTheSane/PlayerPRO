@@ -17,7 +17,7 @@
 	return [[self alloc] init];
 }
 
--(id)init
+- (instancetype)init
 {
 	if (self = [super initWithNibName:@"MidiPrefs" bundle:nil]) {
 		[self setTitle:NSLocalizedStringFromTable(@"MIDI Hardware", @"PreferenceNames", @"MIDI Hardware")];
@@ -25,7 +25,7 @@
 	return self;
 }
 
--(void)awakeFromNib
+- (void)awakeFromNib
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	

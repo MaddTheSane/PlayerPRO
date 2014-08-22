@@ -27,7 +27,7 @@ static const TagCoupling TrackHeightCoupling[] = {{100, 1}, {110, 2}, {120, 3}, 
 	return [[self alloc] init];
 }
 
--(id)init
+- (instancetype)init
 {
 	if (self = [super initWithNibName:@"ClassicPrefs" bundle:nil]) {
 		[self setTitle:NSLocalizedStringFromTable(@"Classic Editor", @"PreferenceNames", @"Classic Editor")];
