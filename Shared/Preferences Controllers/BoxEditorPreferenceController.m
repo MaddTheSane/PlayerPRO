@@ -21,7 +21,7 @@
 	return [[self alloc] init];
 }
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super initWithNibName:@"BoxPrefs" bundle:nil]) {
 		[self setTitle:NSLocalizedStringFromTable(@"Box Editor", @"PreferenceNames", @"Box Editor")];

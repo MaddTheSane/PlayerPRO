@@ -15,17 +15,20 @@ enum PPPlaylistMode: Int {
 	case LoadRandom
 };
 
-protocol PlayerPROPreference: NSObjectProtocol {
-	class func newPreferenceView() -> Self
+extension TagCoupling {
+	init(_ theAmount: Int32, _ theTag: Int) {
+		amount = theAmount
+		tag = theTag
+	}
 }
 
-class PPPreferences: NSWindowController {
+class Preferences: NSWindowController {
 	@IBOutlet var box: NSBox! = nil
 	@IBOutlet var popUp: NSPopUpButton! = nil
-	var viewControllers = [NSViewController]()
+	private var viewControllers = [NSViewController]()
 	
 	class func newPreferenceController() -> Self {
-		var ourself = self(windowNibName:"preferences")
+		var ourself = self(windowNibName: "preferences")
 		var tmpControllers = [NSViewController]()
 		tmpControllers.append(SoundOutputController.newPreferenceView())
 		#if PLAYERPRO6

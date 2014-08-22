@@ -259,35 +259,50 @@
 
 - (MADErr)play
 {
+	[self willChangeValueForKey:@"paused"];
 	MADErr iErr = MADStartDriver(theRec);
 	if (iErr) {
+		[self didChangeValueForKey:@"paused"];
 		return iErr;
 	}
 	
-	return MADPlayMusic(theRec);
+	iErr = MADPlayMusic(theRec);
+	[self didChangeValueForKey:@"paused"];
+	return iErr;
 }
 
 - (MADErr)pause
 {
-	return MADStopMusic(theRec);
+	[self willChangeValueForKey:@"paused"];
+	MADErr iErr = MADStopMusic(theRec);
+	[self didChangeValueForKey:@"paused"];
+	return iErr;
 }
 
 - (MADErr)stopDriver
 {
-	return MADStopDriver(theRec);
+	[self willChangeValueForKey:@"paused"];
+	MADErr iErr = MADStopDriver(theRec);
+	[self didChangeValueForKey:@"paused"];
+	return iErr;
 }
 
 - (MADErr)stop
 {
+	[self willChangeValueForKey:@"paused"];
 	MADErr theErr = MADStopMusic(theRec);
 	if (theErr) {
+		[self didChangeValueForKey:@"paused"];
 		return theErr;
 	}
 	MADReset(theRec);
 	if (theErr) {
+		[self didChangeValueForKey:@"paused"];
 		return theErr;
 	}
-	return MADStopDriver(theRec);
+	theErr = MADStopDriver(theRec);
+	[self didChangeValueForKey:@"paused"];
+	return theErr;
 }
 
 - (instancetype)init

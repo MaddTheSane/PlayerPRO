@@ -75,7 +75,7 @@ static void AnalyseSignatureMOD(long EOFo, OSType temp, short *maxInstru, int *P
 	
 	*maxInstru = 31;
 	
-	PPBE32(&temp);
+	MADBE32(&temp);
 	
 	switch(temp)
 	{
@@ -246,9 +246,9 @@ static OSErr PPConvertMod2Mad(Ptr aMOD,long MODSize, MADMusic	*theMAD, MADDriver
 	{
 		theInstrument[i] = (Ptr) ((uintptr_t) theMOD + OffSetToSample);
 		
-		PPBE16(&theMOD->fid[i].numWords);
-		PPBE16(&theMOD->fid[i].loopWord);
-		PPBE16(&theMOD->fid[i].loopWords);
+		MADBE16(&theMOD->fid[i].numWords);
+		MADBE16(&theMOD->fid[i].loopWord);
+		MADBE16(&theMOD->fid[i].loopWords);
 		
 		sndSize = (theMOD->fid[i].numWords) * 2;
 		
@@ -814,7 +814,7 @@ static Ptr PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *Ptr
 	return((Ptr) theMOD);
 }
 
-static OSErr ExtractMODInfo(PPInfoRec *info, Ptr AlienFile)
+static OSErr ExtractMODInfo(MADInfoRec *info, Ptr AlienFile)
 {
 	MODDef	*myMOD = (MODDef*) AlienFile;
 	int	PatternSize;
@@ -834,7 +834,7 @@ static OSErr ExtractMODInfo(PPInfoRec *info, Ptr AlienFile)
 	
 	AnalyseSignatureMOD(-1, info->signature, &maxInstru, &PatternSize, &info->totalTracks, myMOD);
 	//The signature of the file.
-	PPBE32(&info->signature);
+	MADBE32(&info->signature);
 	if (maxInstru == 0)
 	{
 		return MADFileNotSupportedByThisPlug;
@@ -887,7 +887,7 @@ static OSErr TestMODFile(Ptr AlienFile, long EOFo)
 //If your plug-in uses C++, export them using extern "C"
 // The EXP preprocessor define is defined as extern "C", so you can use that
 
-EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 #ifndef _MAC_H
 EXP OSErr FillPlug(PlugInfo *p);
@@ -910,7 +910,7 @@ EXP OSErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC, BeOS, and UNI
 /* MAIN FUNCTION */
 /*****************/
 //Every PlayerPRO import/export plug-in must have this function!
-extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain(OSType order, Ptr AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr;
 	Ptr		AlienFile;

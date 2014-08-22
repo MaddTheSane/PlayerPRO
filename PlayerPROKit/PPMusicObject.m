@@ -45,7 +45,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 @end
 
 @implementation PPMusicObject
-@synthesize madInformation;
+@synthesize madInformation = madInfo;
 @synthesize attachedDriver;
 @synthesize _currentMusic = currentMusic;
 @synthesize internalFileName;
@@ -92,7 +92,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 					__block short *shortPtr = (short*) dataData;
 					
 					dispatch_apply(curData->size / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
-						PPBE16(&shortPtr[y]);
+						MADBE16(&shortPtr[y]);
 					});
 				}
 				[outData appendBytes:dataData length:curData->size];
@@ -132,7 +132,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return madClasses;
 }
 
-+ (MADErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib
++ (MADErr)info:(MADInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib
 {
 	char filetype[5];
 	MADErr theErr = MADNoErr;
@@ -154,7 +154,33 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return internalFileName;
 }
 
-- (NSString*)madInfo
+- (void)setInternalFileName:(NSString*)newInfo
+{
+	internalFileName = [newInfo copy];
+	NSData *outMacRoman = [internalFileName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+	if (!outMacRoman || outMacRoman.length == 0) {
+		memset(currentMusic->header->infos, 0, sizeof(currentMusic->header->infos));
+	} else {
+		char fileNameInt[32] = {0};
+		[outMacRoman getBytes:fileNameInt length:MIN(outMacRoman.length, sizeof(fileNameInt) - 1)];
+		strlcpy(currentMusic->header->name, fileNameInt, sizeof(currentMusic->header->name));
+	}
+}
+
+- (void)setMadInformation:(NSString*)newInfo
+{
+	madInfo = [newInfo copy];
+	NSData *outMacRoman = [madInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+	if (!outMacRoman || outMacRoman.length == 0) {
+		memset(currentMusic->header->infos, 0, sizeof(currentMusic->header->infos));
+	} else {
+		char fileNameInt[239] = {0};
+		[outMacRoman getBytes:fileNameInt length:MIN(outMacRoman.length, sizeof(fileNameInt) - 1)];
+		strlcpy(currentMusic->header->infos, fileNameInt, sizeof(currentMusic->header->infos));
+	}
+}
+
+- (NSString*)madInformation
 {
 	if (!madInfo) {
 		madInfo = [[NSString alloc] initWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
@@ -435,7 +461,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 				__block short *shortPtr = (short*)curData->data;
 				
 				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t y) {
-					PPBE16(&shortPtr[y]);
+					MADBE16(&shortPtr[y]);
 				});
 			}
 		}

@@ -7,28 +7,42 @@
 //
 
 import Foundation
-import PlayerPROKit
+
+private let kMUSICLISTKEY = "Music List Key1"
+private let kMUSICLISTKEY2 = "Music List Key2"
+private let kMusicListLocation2 = "Music Key Location2"
 
 private let kMusicListLocation3 = "Music Key Location 3";
 private let kMusicListKey3 = "Music List Key 3"
 private let kPlayerList = "Player List"
 
-@objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration {
-	private(set)	var musicList = [MusicListObject]()
+private func homeURL() -> NSURL {
+	return NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
+}
+
+@objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, SequenceType {
+	private(set)	dynamic var musicList = [MusicListObject]()
 	private(set)	var lostMusicCount:UInt = 0;
-	internal(set)	var selectedMusic = -1;
+	
+	var		selectedMusic = -1;
 	
 	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (musicList as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len);
 	}
 	
+	func generate() -> IndexingGenerator<[MusicListObject]> {
+		return musicList.generate();
+	}
+	
+	@objc subscript (index: Int) -> MusicListObject {
+		return musicList[index]
+	}
+	
 	func encodeWithCoder(aCoder: NSCoder) {
 		var BookmarkArray: [NSURL] = [];
 		for obj in musicList {
-			var bookData : NSURL! = obj.musicURL;
-			if (bookData != nil) {
-				BookmarkArray.append(bookData)
-			}
+			var bookData : NSURL = obj.musicURL;
+			BookmarkArray.append(bookData)
 		}
 		//TODO: check for failed data initialization, and decrement changedIndex to match.
 		aCoder.encodeInteger(selectedMusic, forKey: kMusicListLocation3);
@@ -36,7 +50,13 @@ private let kPlayerList = "Player List"
 	}
 	
 	func indexOfObjectSimilarToURL(theURL: NSURL) -> Int {
-		return (musicList as NSArray).indexOfObject(theURL)
+		for (i, obj) in enumerate(musicList) {
+			if obj == theURL {
+				return i
+			}
+		}
+		
+		return NSNotFound
 	}
 	
 	func clearMusicList() {
@@ -98,27 +118,88 @@ private let kPlayerList = "Player List"
 	}
 	
 	required init(coder aDecoder: NSCoder) {
-		lostMusicCount = 0;
-		var BookmarkArray : NSArray = aDecoder.decodeObjectForKey(kMusicListKey3) as NSArray;
-		selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation3);
-		musicList.removeAll();
-		for bookURL : AnyObject in BookmarkArray {
-			var BookURLURL = bookURL as NSURL;
-			if (!BookURLURL.checkResourceIsReachableAndReturnError(nil)) {
-				if (selectedMusic == -1) {
-					//Do nothing
-				} else if (selectedMusic == musicList.count + 1) {
-					selectedMusic = -1;
-				} else if (selectedMusic > musicList.count + 1) {
-					selectedMusic--;
-				}
-				lostMusicCount++;
-				continue;
-			}
-			var obj = MusicListObject(URL:BookURLURL);
-			musicList.append(obj)
-		}
 		super.init()
+		lostMusicCount = 0;
+		var BookmarkArray: AnyObject? = aDecoder.decodeObjectForKey(kMusicListKey3);
+		if (BookmarkArray == nil) {
+			BookmarkArray = aDecoder.decodeObjectForKey(kMUSICLISTKEY2)
+			if (BookmarkArray == nil) {
+				BookmarkArray = aDecoder.decodeObjectForKey(kMUSICLISTKEY)
+				if (BookmarkArray == nil) {
+					return;
+				}
+				let dataBookArray = BookmarkArray as [NSData]
+				
+				//musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
+				for bookData in dataBookArray {
+					var isStale: ObjCBool = false;
+					let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: nil, bookmarkDataIsStale: &isStale, error: nil)
+					#if DEBUG
+						if (isStale) {
+						NSLog("Bookmark pointing to %@ is stale", fullURL.path);
+						}
+					#endif
+					if (fullURL == nil) {
+						lostMusicCount++;
+						continue;
+					}
+					let obj = MusicListObject(URL: fullURL);
+					musicList.append(obj)
+				}
+				selectedMusic = -1;
+			} else {
+				var curSel = aDecoder.decodeObjectForKey(kMusicListLocation2) as NSNumber?
+				if curSel != nil {
+					selectedMusic = curSel!.integerValue
+				} else {
+					selectedMusic = -1
+				}
+				//musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
+				let dataBookArray = BookmarkArray as [NSData]
+				for bookData in dataBookArray {
+					var isStale: ObjCBool = false;
+					let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: homeURL(), bookmarkDataIsStale: &isStale, error: nil)
+					#if DEBUG
+						if (isStale) {
+						NSLog("Bookmark pointing to \(fullURL.path) is stale.");
+						}
+					#endif
+					if (fullURL == nil) {
+						if (selectedMusic == -1) {
+							//Do nothing
+						} else if (selectedMusic == musicList.count + 1) {
+							selectedMusic = -1;
+						} else if (selectedMusic > musicList.count + 1) {
+							selectedMusic--;
+						}
+						lostMusicCount++;
+						continue;
+					}
+					let obj = MusicListObject(URL: fullURL);
+					musicList.append(obj)
+				}
+			}
+		} else {
+			selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation3);
+			//musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
+			let URLBookArray = BookmarkArray as [NSURL]
+			for bookURL in URLBookArray {
+				if (!bookURL.checkResourceIsReachableAndReturnError(nil)) {
+					if (selectedMusic == -1) {
+						//Do nothing
+					} else if (selectedMusic == musicList.count + 1) {
+						selectedMusic = -1;
+					} else if (selectedMusic > musicList.count + 1) {
+						selectedMusic--;
+					}
+					lostMusicCount++;
+					continue;
+				}
+				var obj = MusicListObject(URL: bookURL);
+				musicList.append(obj)
+			}
+			
+		}
 	}
 
 	class func supportsSecureCoding() -> Bool {
@@ -137,19 +218,19 @@ private let kPlayerList = "Player List"
 	}
 	
 	func loadMusicListFromData(theData: NSData) -> Bool {
-		var preList: MusicList! = NSKeyedUnarchiver.unarchiveObjectWithData(theData) as MusicList
+		var preList = NSKeyedUnarchiver.unarchiveObjectWithData(theData) as MusicList?
 		if (preList == nil) {
 			return false
 		}
 		
-		lostMusicCount = preList.lostMusicCount
-		loadMusicList(preList.musicList)
-		self.selectedMusic = preList.selectedMusic
+		lostMusicCount = preList!.lostMusicCount
+		loadMusicList(preList!.musicList)
+		self.selectedMusic = preList!.selectedMusic
 		return true
 	}
 	
 	func loadMusicListAtURL(fromURL: NSURL) -> Bool {
-		var listData: NSData! = NSData(contentsOfURL: fromURL)
+		var listData = NSData.dataWithContentsOfURL(fromURL, options: NSDataReadingOptions(0), error: nil)
 		if (listData == nil) {
 			return false
 		}
@@ -159,7 +240,7 @@ private let kPlayerList = "Player List"
 	func loadApplicationMusicList() -> Bool {
 		var manager = NSFileManager.defaultManager();
 		var PPPPath = manager.URLForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomain:NSSearchPathDomainMask.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player");
-		if (!PPPPath.checkResourceIsReachableAndReturnError(nil)) {
+		if (PPPPath.checkResourceIsReachableAndReturnError(nil) == false) {
 			manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories: true, attributes: nil, error: nil)
 			return false;
 		}
@@ -168,7 +249,7 @@ private let kPlayerList = "Player List"
 	
 	// Key-valued Coding
 	
-	func addMusicListObject(object:MusicListObject)
+	func addMusicListObject(object: MusicListObject)
 	{
 		if ((musicList as NSArray).containsObject(object) == false) {
 			musicList.append(object)
@@ -194,7 +275,7 @@ private let kPlayerList = "Player List"
 		musicList.removeAtIndex(atIndex);
 	}
 	
-	func insertObject(object :MusicListObject, inMusicListAtIndex index:Int)
+	func insertObject(object: MusicListObject, inMusicListAtIndex index:Int)
 	{
 		musicList.insert(object, atIndex: index)
 	}
@@ -226,14 +307,14 @@ private let kPlayerList = "Player List"
 		self.didChange(.Removal, valuesAtIndexes: idxSet, forKey: kMusicListKVO)
 	}
 	
-	func insertObjects(anObj: NSArray, inMusicListAtIndex idx:Int) {
-		let theIndexSet = NSIndexSet(indexesInRange: NSMakeRange(idx, anObj.count))
+	func insertObjects(anObj: [MusicListObject], inMusicListAtIndex idx:Int) {
+		let theIndexSet = NSIndexSet(indexesInRange: NSRange(location: idx, length: anObj.count))
 		self.willChange(.Insertion, valuesAtIndexes: theIndexSet, forKey: kMusicListKVO)
 		var currentIndex = theIndexSet.firstIndex;
 		var count = theIndexSet.count;
 		
 		for (var i = 0; i < count; i++) {
-			var tempObj = anObj.objectAtIndex(i) as MusicListObject
+			let tempObj = anObj[i]
 			musicList.insert(tempObj, atIndex: currentIndex)
 			currentIndex = theIndexSet.indexGreaterThanIndex(currentIndex);
 		}
@@ -243,7 +324,7 @@ private let kPlayerList = "Player List"
 	
 	#if os(OSX)
 	func beginLoadingOfMusicListAtURL(toOpen: NSURL, completionHandle theHandle: (theErr: NSError!) ->Void) {
-		var conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
+		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
 		conn.remoteObjectInterface = NSXPCInterface(`protocol`: PPSTImporterHelper.self);
 		
 		conn.resume()
@@ -260,7 +341,7 @@ private let kPlayerList = "Player List"
 						var lolwut = CreateErrorFromMADErrorType(.UnknownErr)
 						theHandle(theErr: lolwut)
 					} else {
-						var pathsURL: [MusicListObject] = []
+						var pathsURL = [MusicListObject]()
 						self.lostMusicCount = invalidAny as UInt;
 						self.selectedMusic = selectedAny as Int;
 						for aPath in pathsAny as NSArray {
@@ -276,11 +357,9 @@ private let kPlayerList = "Player List"
 						theHandle(theErr: nil)
 					}
 				}
-				
 				conn.invalidate();
 			})
 		})
 	}
 	#endif
-
 }

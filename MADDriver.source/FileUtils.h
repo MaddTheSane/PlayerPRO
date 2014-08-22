@@ -165,7 +165,7 @@ PPEXPORT void	iClose(UNFILE iFileRefI);
  * @abstract    Byte-swaps a 32-bit value
  * @param       msg_buf
  *					A pointer to a 32-bit value. On return, the value will be byte-swapped.
- * @discussion  Refrain from using this function directly: use either PPLE32 or PPBE32
+ * @discussion  Refrain from using this function directly: use either MADLE32 or MADBE32
  */
 static inline void MADByteSwap32(void *msg_buf)
 {
@@ -185,7 +185,7 @@ static inline void MADByteSwap32(void *msg_buf)
  * @abstract    Byte-swaps a 16-bit value
  * @param       msg_buf
  *					a pointer to a 16-bit value. On return, the value will be byte-swapped.
- * @discussion  Refrain from using this function directly: use either PPLE16 or PPBE16
+ * @discussion  Refrain from using this function directly: use either MADLE16 or MADBE16
  */
 static inline void MADByteSwap16(void *msg_buf)
 {
@@ -198,12 +198,12 @@ static inline void MADByteSwap16(void *msg_buf)
 }
 
 /*!
- * @function    PPBE32
+ * @function    MADBE32
  * @abstract    Gets the native value of a 32-bit big-endian value
  * @param       msg_buf
  *					A pointer to a 32-bit value from, or to, a big endian source. On return, the value is swapped on little-endian machines.
  */
-static inline void PPBE32(void *msg_buf)
+static inline void MADBE32(void *msg_buf)
 {
 #ifdef __LITTLE_ENDIAN__
 	MADByteSwap32(msg_buf);
@@ -211,12 +211,12 @@ static inline void PPBE32(void *msg_buf)
 }
 
 /*!
- * @function    PPBE16
+ * @function    MADBE16
  * @abstract    Gets the native value of a 16-bit big-endian value
  * @param       msg_buf
  *					A pointer to a 16-bit value from, or to, a big endian source. On return, the value is swapped on little-endian machines.
  */
-static inline void PPBE16(void *msg_buf)
+static inline void MADBE16(void *msg_buf)
 {
 #ifdef __LITTLE_ENDIAN__
 	MADByteSwap16(msg_buf);
@@ -224,12 +224,12 @@ static inline void PPBE16(void *msg_buf)
 }
 
 /*!
- * @function    PPLE32
+ * @function    MADLE32
  * @abstract    Gets the native value of a 32-bit little-endian value
  * @param       msg_buf
  *					A pointer to a 32-bit value from, or to, a little endian source. On return, the value is swapped on big-endian machines.
  */
-static inline void PPLE32(void *msg_buf)
+static inline void MADLE32(void *msg_buf)
 {
 #ifdef __BIG_ENDIAN__
 	MADByteSwap32(msg_buf);
@@ -237,12 +237,12 @@ static inline void PPLE32(void *msg_buf)
 }
 
 /*!
- * @function    PPLE16
+ * @function    MADLE16
  * @abstract    Gets the native value of a 16-bit little-endian value
  * @param       msg_buf
  *					A pointer to a 16-bit value from, or to, a little endian source. On return, the value is swapped on big-endian machines.
  */
-static inline void PPLE16(void *msg_buf)
+static inline void MADLE16(void *msg_buf)
 {
 #ifdef __BIG_ENDIAN__
 	MADByteSwap16(msg_buf);
@@ -261,7 +261,7 @@ static inline void PPLE16(void *msg_buf)
  */
 static inline void OSType2Ptr(MADFourChar type, char *str)
 {
-	PPBE32(&type);
+	MADBE32(&type);
 	memcpy(str, &type, 4);
 	str[4] = 0;
 }
@@ -283,7 +283,7 @@ static inline MADFourChar Ptr2OSType(const char *str)
 	if (i > 4)
 		i = 4;
 	memcpy(&type, str, i);
-	PPBE32(&type);
+	MADBE32(&type);
 	
 	return type;
 }

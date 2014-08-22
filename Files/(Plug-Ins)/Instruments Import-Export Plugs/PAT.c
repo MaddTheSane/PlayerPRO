@@ -76,7 +76,7 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 	// INS HEADER -- Read only the first instrument
 	PATIns = (PatInsHeader*)PATData;
 	
-	PPLE32(&PATIns->size);
+	MADLE32(&PATIns->size);
 	PATData += 63;
 	
 	strlcpy(InsHeader->name, PATIns->name, sizeof(PATIns->name));
@@ -95,10 +95,10 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		strlcpy(curData->name, PATSamp->name, sizeof(PATSamp->name));
 		
-		PPLE32(&PATSamp->size);
-		PPLE32(&PATSamp->startLoop);
-		PPLE32(&PATSamp->endLoop);
-		PPLE16(&PATSamp->rate);
+		MADLE32(&PATSamp->size);
+		MADLE32(&PATSamp->startLoop);
+		MADLE32(&PATSamp->endLoop);
+		MADLE16(&PATSamp->rate);
 		curData->size = PATSamp->size;
 		curData->loopBeg = PATSamp->startLoop;
 		curData->loopSize = PATSamp->endLoop - PATSamp->startLoop;
@@ -129,9 +129,9 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 		
 		///////////////
 		
-		PPLE32(&PATSamp->minFreq);
-		PPLE32(&PATSamp->maxFreq);
-		PPLE32(&PATSamp->originRate);
+		MADLE32(&PATSamp->minFreq);
+		MADLE32(&PATSamp->maxFreq);
+		MADLE32(&PATSamp->originRate);
 		
 		for (i = 0; i < 107; i++) {
 			if (scale_table[i] >= PATSamp->originRate) {
@@ -174,7 +174,7 @@ static OSErr PATImport(InstrData *InsHeader, sData **sample, Ptr PATData)
 				short *tt = (short*) curData->data;
 				
 				dispatch_apply(curData->size / 2, dispatch_get_global_queue(0, 0), ^(size_t tL) {
-					PPLE16((Ptr)(tt + tL));
+					MADLE16((Ptr)(tt + tL));
 					
 					if (signedData)
 						*(tt + tL) += 0x8000;

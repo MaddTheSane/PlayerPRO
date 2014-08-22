@@ -65,8 +65,8 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 	
 	/**** Calcul de divers offsets *****/
 	
-	PPLE16(&MTMFile->tracks);
-	PPLE16(&MTMFile->comments);
+	MADLE16(&MTMFile->tracks);
+	MADLE16(&MTMFile->comments);
 	
 	MaxPtr 		= (char*) ((uintptr_t)MTMFile + MTMFile);
 	positionPtr	= (char*) ((uintptr_t)MTMFile + 66 + MTMFile->NOS * 37);
@@ -84,9 +84,9 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 		
 		instru[i] = (struct Instru*)((uintptr_t)MTMFile + 66 + i * 37);
 		
-		PPLE32(&instru[i]->size);
-		PPLE32(&instru[i]->loopBegin);
-		PPLE32(&instru[i]->loopEnd);
+		MADLE32(&instru[i]->size);
+		MADLE32(&instru[i]->loopBegin);
+		MADLE32(&instru[i]->loopEnd);
 		
 		sndSize = instru[i]->size;
 		if (theInstrument[i] + sndSize > MaxPtr)
@@ -238,7 +238,7 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 		MaxPtr = (char*) theMAD->partition[i];
 		MaxPtr += sizeof(PatHeader) + theMAD->header->numChn * 64L * sizeof(Cmd);
 		
-		for (z = 0; z < 32; z++) PPLE16(&patTracks[z]);
+		for (z = 0; z < 32; z++) MADLE16(&patTracks[z]);
 		
 		for (x = 0; x < 64; x++) {
 			for(z=0; z<theMAD->header->numChn; z++) {
@@ -276,7 +276,7 @@ static MADErr ConvertMTM2Mad(MTMDef *MTMFile, size_t MTMSize, MADMusic *theMAD, 
 	return MADNoErr;
 }
 
-static MADErr ExtractInfo(PPInfoRec *info, MTMDef *myFile)
+static MADErr ExtractInfo(MADInfoRec *info, MTMDef *myFile)
 {
 #ifndef __BLOCKS__
 	short	i;
@@ -315,7 +315,7 @@ static inline MADErr TestFile(MTMDef *myFile)
 #ifndef _MAC_H
 
 EXP MADErr FillPlug(PlugInfo *p);
-EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -334,9 +334,9 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /*****************/
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-MADErr mainMTM(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainMTM(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
-extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	MADErr	myErr = MADNoErr;

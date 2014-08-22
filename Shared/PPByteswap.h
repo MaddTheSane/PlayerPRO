@@ -14,58 +14,58 @@
 
 static inline void ByteSwapMADSpec(MADSpec *toSwap)
 {
-	PPBE32(&toSwap->MAD);
-	PPBE16(&toSwap->speed);
-	PPBE16(&toSwap->tempo);
-	PPBE32(&toSwap->EPitch);
-	PPBE32(&toSwap->ESpeed);
+	MADBE32(&toSwap->MAD);
+	MADBE16(&toSwap->speed);
+	MADBE16(&toSwap->tempo);
+	MADBE32(&toSwap->EPitch);
+	MADBE32(&toSwap->ESpeed);
 }
 
 static inline void ByteSwapPatHeader(PatHeader *toSwap)
 {
-	PPBE32(&toSwap->size);
-	PPBE32(&toSwap->compMode);
-	PPBE32(&toSwap->patBytes);
-	PPBE32(&toSwap->unused2);
+	MADBE32(&toSwap->size);
+	MADBE32(&toSwap->compMode);
+	MADBE32(&toSwap->patBytes);
+	MADBE32(&toSwap->unused2);
 }
 
 static inline void ByteSwapInstrData(InstrData *toSwap)
 {
-	PPBE16(&toSwap->numSamples);
-	PPBE16(&toSwap->firstSample);
-	PPBE16(&toSwap->volFade);
+	MADBE16(&toSwap->numSamples);
+	MADBE16(&toSwap->firstSample);
+	MADBE16(&toSwap->volFade);
 	
-	PPBE16(&toSwap->MIDI);
-	PPBE16(&toSwap->MIDIType);
+	MADBE16(&toSwap->MIDI);
+	MADBE16(&toSwap->MIDIType);
 	dispatch_apply(12, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t x) {
-		PPBE16(&toSwap->volEnv[x].pos);
-		PPBE16(&toSwap->volEnv[x].val);
+		MADBE16(&toSwap->volEnv[x].pos);
+		MADBE16(&toSwap->volEnv[x].val);
 		
-		PPBE16(&toSwap->pannEnv[x].pos);
-		PPBE16(&toSwap->pannEnv[x].val);
+		MADBE16(&toSwap->pannEnv[x].pos);
+		MADBE16(&toSwap->pannEnv[x].val);
 		
-		PPBE16(&toSwap->pitchEnv[x].pos);
-		PPBE16(&toSwap->pitchEnv[x].val);
+		MADBE16(&toSwap->pitchEnv[x].pos);
+		MADBE16(&toSwap->pitchEnv[x].val);
 	});
 }
 
 static inline void ByteSwapFXSets(FXSets *toSwap)
 {
-	PPBE16(&toSwap->track);
-	PPBE16(&toSwap->id);
-	PPBE32(&toSwap->FXID);
-	PPBE16(&toSwap->noArg);
+	MADBE16(&toSwap->track);
+	MADBE16(&toSwap->id);
+	MADBE32(&toSwap->FXID);
+	MADBE16(&toSwap->noArg);
 	dispatch_apply(100, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t i) {
-		PPBE32(&toSwap->values[i]);
+		MADBE32(&toSwap->values[i]);
 	});
 }
 
 static inline void ByteSwapsData(sData *toSwap)
 {
-	PPBE32(&toSwap->size);
-	PPBE32(&toSwap->loopBeg);
-	PPBE32(&toSwap->loopSize);
-	PPBE16(&toSwap->c2spd);
+	MADBE32(&toSwap->size);
+	MADBE32(&toSwap->loopBeg);
+	MADBE32(&toSwap->loopSize);
+	MADBE16(&toSwap->c2spd);
 }
 
 #endif

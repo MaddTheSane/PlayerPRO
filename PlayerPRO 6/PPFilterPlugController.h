@@ -17,10 +17,11 @@
 
 @property (readwrite, nonatomic) MADDriverRec **driverRec;
 
-- (id)initWithMusic:(MADMusic**)theMus;
+- (instancetype)initWithMusic:(MADMusic**)theMus;
 
 - (PPFilterPlugObject*)plugInAtIndex:(NSUInteger)idx;
 - (NSUInteger)plugInCount;
+- (PPFilterPlugObject *)objectAtIndexedSubscript:(NSInteger)index;
 
 - (void)addPlugInFromPath:(NSString*)thePath;
 - (void)addPlugInFromURL:(NSURL *)urlpath;

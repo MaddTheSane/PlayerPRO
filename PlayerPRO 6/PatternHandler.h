@@ -16,7 +16,7 @@
 	NSMutableArray *patternList;
 }
 
-- (id)initWithMusic:(MADMusic **)mus;
+- (instancetype)initWithMusic:(MADMusic **)mus;
 
 @property MADMusic **theMus;
 @property MADDriverRec **theRec;

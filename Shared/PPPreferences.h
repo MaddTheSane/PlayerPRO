@@ -16,23 +16,12 @@ typedef NS_ENUM(NSInteger, PPPlaylistMode) {
 };
 
 #pragma pack(push)
-typedef struct _tagCoupling {
+typedef struct TagCoupling {
 	int amount;
 	NSInteger tag;
 } TagCoupling;
 #pragma pack(pop)
 
 @protocol PPPreferenceObject <NSObject>
-
 + (instancetype)newPreferenceView NS_RETURNS_RETAINED;
-
-@end
-
-@interface PPPreferences : NSWindowController
-@property (weak) IBOutlet NSBox *box;
-@property (weak) IBOutlet NSPopUpButton *popUp;
-
--(IBAction)changeViewController:(id)sender;
--(void)displayViewController:(NSViewController *)vc;
-
 @end

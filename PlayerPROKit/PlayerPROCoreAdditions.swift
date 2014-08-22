@@ -26,7 +26,7 @@ extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 		self = UTGetOSTypeFromString(toInit as NSString as CFString)
 	}
 	
-	#if false
+	/*
 	public init(_ toInit: (Int8, Int8, Int8, Int8, Int8)) {
 		var tmpInit = toInit
 		var atmp = &tmpInit
@@ -41,7 +41,7 @@ extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 	public var debugDescription: String { get {
 		return self.description
 		}}
-	#endif
+	*/
 	
 	public static func convertFromStringLiteral(value: String) -> MADFourChar {
 		return MADFourChar(value)
@@ -56,7 +56,6 @@ extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 #endif
 
 extension MADBool : BooleanLiteralConvertible, BooleanType {
-	//public typealias BooleanLiteralType = Bool
 	public init(_ v : BooleanType) {
 		if v.boolValue {
 			self = 1
@@ -65,7 +64,7 @@ extension MADBool : BooleanLiteralConvertible, BooleanType {
 		}
 	}
 	
-	public static func convertFromBooleanLiteral(value: BooleanLiteralType) -> MADBool {
+	public static func convertFromBooleanLiteral(value: Bool) -> MADBool {
 		if (value == true) {
 			return 1
 		} else {
@@ -118,7 +117,7 @@ extension MADDriverSettings: DebugPrintable {
 		}}
 }
 
-extension PPInfoRec: DebugPrintable {
+extension MADInfoRec: DebugPrintable {
 	
 	public var debugDescription: String { get {
 		return ""
@@ -323,7 +322,7 @@ extension FXBus {
 }
 
 extension InstrData {
-	public var bigEndian: InstrData {get {
+	public var bigEndian: InstrData { get {
 		var toRet = self;
 		toRet.numSamples = self.numSamples.bigEndian
 		toRet.firstSample = self.firstSample.bigEndian
@@ -376,7 +375,7 @@ extension MADMusic {
 }
 
 extension PatData {
-	public mutating func getMADCommand(position: Int16, channel: Int16) -> UnsafeMutablePointer<Cmd> {
+	public mutating func getCommand(position: Int16, channel: Int16) -> UnsafeMutablePointer<Cmd> {
 		return GetMADCommand(position, channel, &self)
 	}
 }

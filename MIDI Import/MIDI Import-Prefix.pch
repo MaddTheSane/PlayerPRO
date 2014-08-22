@@ -22,10 +22,10 @@
 #define Debugger() oldDebug(__LINE__, __FILE__)
 static inline void oldDebug(short line, char* file)
 {
-	PPDebugStr(line, file, "Carbon debug function called!");
+	MADDebugStr(line, file, "Carbon debug function called!");
 }
 #else
-#define Debugger() PPDebugStr(__LINE__, __FILE__, "Carbon debug function called!")
+#define Debugger() MADDebugStr(__LINE__, __FILE__, "Carbon debug function called!")
 
 #endif
 
@@ -34,7 +34,7 @@ static inline void oldDebugStr(ConstStr255Param debuggerMsg, short kube, const c
 {
 	char tmp[256] = {0};
 	memcpy(tmp, &(debuggerMsg[1]), debuggerMsg[0]);
-	PPDebugStr(kube, file, tmp);
+	MADDebugStr(kube, file, tmp);
 }
 
 #endif

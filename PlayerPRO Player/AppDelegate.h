@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PPSoundSettingsViewController.h"
 #import "PPPreferences.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PlayerPROKit.h>
@@ -15,7 +14,7 @@
 @class PPInstrumentWindowController;
 @class PPMusicList;
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate, NSTableViewDataSource>
+@interface AppDelegate : NSObject <NSApplicationDelegate, SoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate, NSTableViewDataSource>
 {
 	IBOutlet NSButton		*loopButton;
 	IBOutlet NSButton		*playButton;
@@ -47,7 +46,7 @@
 	
 	MADDriverSettings		exportSettings;
 	IBOutlet NSBox			*exportSettingsBox;
-	PPSoundSettingsViewController *exportController;
+	SoundSettingsViewController *exportController;
 }
 
 @property (strong) NSString* musicName;

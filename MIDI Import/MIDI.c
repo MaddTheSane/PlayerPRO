@@ -53,7 +53,7 @@ MADErr TestMIDIFile(Ptr AlienFile)
 		return MADFileNotSupportedByThisPlug;
 }
 
-MADErr ExtractMIDIInfo(PPInfoRec *info, Ptr theMIDI)
+MADErr ExtractMIDIInfo(MADInfoRec *info, Ptr theMIDI)
 {
 	info->signature = 'Midi';
 	strcpy(info->internalFileName, "");
@@ -74,7 +74,7 @@ void CreateResult(Ptr aPtr)
 
 void ConvertMidiFile(char *src, MADMusic *theMAD, MADDriverSettings *init);
 
-extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 {
 	OSErr	myErr = noErr;
 	Ptr		AlienFile;

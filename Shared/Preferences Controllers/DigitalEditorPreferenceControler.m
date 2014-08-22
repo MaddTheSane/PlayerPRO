@@ -35,7 +35,7 @@
 }
 
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super initWithNibName:@"DigitalPrefs" bundle:nil]) {
 		[self setTitle:NSLocalizedStringFromTable(@"Digital Editor", @"PreferenceNames", @"Digital Editor")];

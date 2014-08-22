@@ -53,7 +53,7 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 	char *theAMFRead = AMFCopyPtr;
 	
 	READAMFFILE(&AMFType, 4);		// AMF Type
-	PPBE32(&AMFType);
+	MADBE32(&AMFType);
 	
 	if (AMFType >= 0x414D460C)
 		pan = 32;
@@ -83,7 +83,7 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 	theMAD->header->numPat = tempByte;
 	
 	READAMFFILE(&tempShort, 2);
-	PPLE16(&tempShort);
+	MADLE16(&tempShort);
 	trackCount = tempShort;
 	
 	if (AMFType >= 0x414D4609 ) {
@@ -122,7 +122,7 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 		
 		if (AMFType >= 0x414D460E ) {
 			READAMFFILE(&tempShort, 2);
-			PPLE16(&tempShort);
+			MADLE16(&tempShort);
 			patSize = tempShort;
 		} else
 			patSize = 64;
@@ -193,13 +193,13 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 				curData = theMAD->sample[i * MAXSAMPLE + 0] = (sData*)calloc(sizeof(sData), 1);
 				
 				oisize			= oi.size;
-				PPLE16(&oisize);
+				MADLE16(&oisize);
 				curData->size	= oisize;
 				//FIXME: were loopstart and loopend supposed to be byteswapped on PowerPC?
 				oiloopstart	= oi.loopstart;
 				oiloopend	= oi.loopend;
-				PPLE16(&oiloopstart);
-				PPLE16(&oiloopend);
+				MADLE16(&oiloopstart);
+				MADLE16(&oiloopend);
 				curData->loopBeg	= oiloopstart;
 				curData->loopSize	= oiloopend - oiloopstart;
 				if (oiloopend == 65535) {
@@ -207,7 +207,7 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 				}
 				curData->vol		= oi.volume;
 				curData->c2spd		= oi.rate; //finetune[oldMAD->fid[i].fineTune];
-				PPLE16(&curData->c2spd);
+				MADLE16(&curData->c2spd);
 				curData->loopType	= 0;
 				curData->amp		= 8;
 				
@@ -238,9 +238,9 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 				curData->size		= oi.size;
 				curData->loopBeg 	= oi.loopstart;
 				loopEnd				= oi.loopend;
-				PPLE32(&curData->size);
-				PPLE32(&curData->loopBeg);
-				PPLE32(&loopEnd);
+				MADLE32(&curData->size);
+				MADLE32(&curData->loopBeg);
+				MADLE32(&loopEnd);
 				curData->loopSize 	= loopEnd - curData->loopBeg;
 				if (oi.loopend == 65535) {
 					curData->loopSize = curData->loopBeg = 0;
@@ -264,14 +264,14 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 	trckPtr = 0;
 	for (t = 0; t < trackCount; t++) {
 		READAMFFILE(&tempShort, 2);
-		PPLE16(&tempShort);
+		MADLE16(&tempShort);
 		if (tempShort > trckPtr)
 			trckPtr = tempShort;
 	}
 	
 	for (t = 0; t < trckPtr; t++) {
 		READAMFFILE(&tempShort, 2);
-		PPLE16(&tempShort);
+		MADLE16(&tempShort);
 		
 		READAMFFILE(&tempByte, 1);
 		
@@ -300,7 +300,7 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 static MADErr TestAMFFile(void *AlienFile)
 {
 	MADFourChar	myMADSign = *((MADFourChar*) AlienFile);
-	PPBE32(&myMADSign);
+	MADBE32(&myMADSign);
 	
 	if ((myMADSign & 0xFFFFFF00) == 0x414D4600)
 		return MADNoErr;
@@ -308,7 +308,7 @@ static MADErr TestAMFFile(void *AlienFile)
 		return MADFileNotSupportedByThisPlug;
 }
 
-static MADErr ExtractAMFInfo(PPInfoRec *info, char *AlienFile)
+static MADErr ExtractAMFInfo(MADInfoRec *info, char *AlienFile)
 {
 	//TODO: implement
 	//long		PatternSize;
@@ -346,7 +346,7 @@ static MADErr ExtractAMFInfo(PPInfoRec *info, char *AlienFile)
 #ifndef _MAC_H
 
 EXP MADErr FillPlug(PlugInfo *p);
-EXP MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -364,9 +364,9 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /* MAIN FUNCTION */
 /*****************/
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-MADErr mainAMF(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainAMF(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
-extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	MADErr	myErr;

@@ -28,8 +28,8 @@
 @property (readonly, strong, nonatomic) NSMutableArray *instruments;
 @property (readonly, strong, nonatomic) NSMutableArray *patterns;
 @property (readonly, strong, nonatomic) NSMutableArray *buses;
-@property (readwrite, copy, nonatomic) NSString *internalFileName;
-@property (readwrite, copy, nonatomic) NSString *madInformation;
+@property (readwrite, copy) NSString *internalFileName;
+@property (readwrite, copy) NSString *madInformation;
 @property (readonly, weak) PPDriver *attachedDriver;
 @property (readonly) NSURL *filePath;
 
@@ -49,12 +49,9 @@
 - (instancetype)initWithMusicStruct:(MADMusic*)theStruct copy:(BOOL)copyData NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithMusicStruct:(MADMusic*)theStruct;
 
-+ (MADErr)info:(PPInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib;
++ (MADErr)info:(MADInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib;
 
 - (NSDictionary*)musicClasses;
-
-- (NSString*)internalFileName;
-- (NSString*)madInfo;
 
 //Save music to a URL in MADK format in PPMusicObject, and MAD bundle in PPMusicObjectWrapper
 - (MADErr)saveMusicToURL:(NSURL *)tosave;
@@ -63,9 +60,6 @@
 
 //This method sets the music object as the playback music
 - (void)attachToDriver:(PPDriver *)theDriv;
-
-//Creates a music struct for use outside of PlayerPROKit.
-- (MADMusic *)copyMadMusicStruct;
 
 @property (readonly) MADMusic *internalMadMusicStruct NS_RETURNS_INNER_POINTER;
 

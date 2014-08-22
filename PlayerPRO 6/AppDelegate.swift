@@ -25,7 +25,7 @@ func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<
 	let debuStr = NSLocalizedString("MyDebugStr_Debug", comment: "Debug")
 	//NSLog("%s:%u error text:%s!", file, line, text);
 
-	let alert = PPRunAlertPanel(errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr, args: swiftText)
+	let alert = PPRunCriticalAlertPanel(errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr, args: swiftText)
 	switch (alert) {
 	case NSAlertAlternateReturn:
 		break;
@@ -43,6 +43,8 @@ func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<
 	}
 }
 
+let globalMadLib = (NSApplication.sharedApplication().delegate as AppDelegate).madLib
+
 class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDelegate {
 	private var exportObjects = [ExportObject]()
 	private var _trackerDict = [String: [String]]()
@@ -52,7 +54,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	let instrumentPlugHandler = PPInstrumentPlugHandler()
 	let digitalHandler = DigitalPlugHandler()
 	let filterHandler = PPFilterPlugHandler()
-	let preferences = PPPreferences()
+	let preferences = Preferences.newPreferenceController()
 	var thePPColors = [NSColor]()
 	
 	@IBOutlet var musicExportMenu:		NSMenu!
@@ -358,7 +360,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 				var identified = madLib.identifyFileAtURL(theURL, type: &ostype)
 				
 				if (madLib.identifyFileAtURL(theURL, type: &ostype) != MADErr.NoErr) || madLib.getInformationFromFileAtURL(theURL, type: &ostype, infoDictionary: &rec) != MADErr.NoErr {
-					PPRunCriticalAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
+					PPRunAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
 					return false;
 				}
 				let sigVala: AnyObject = rec![kPPSignature] ?? NSNumber(unsignedInt: "madk")
@@ -461,7 +463,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 	
 	func applicationDidFinishLaunching(notification: NSNotification!) {
-		PPRegisterDebugBlock(CocoaDebugStr)
+		MADRegisterDebugBlock(CocoaDebugStr)
 		var defaults = NSUserDefaults.standardUserDefaults()
 		
 		for (i, obj) in enumerate(instrumentPlugHandler) {
@@ -484,12 +486,9 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 		
 		for i in 1 ... 96 {
-			let tmpColor = NSColor.PPDecodeColorWithData(defaults.dataForKey("PPCColor\(i)"))
+			let tmpColor = NSColor.PPDecodeColorWithData(defaults.dataForKey("PPColor \(i)"))
 			thePPColors.append(tmpColor!)
 		}
-		//#define PPCOLOR(val) [_thePPColors addObject:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPCColor ## val]]]
-		//PPCOLORPOPULATE();
-		//#undef PPCOLOR
 		
 		updatePlugInInfoMenu()
 	}

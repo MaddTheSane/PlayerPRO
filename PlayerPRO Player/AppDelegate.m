@@ -8,7 +8,6 @@
 
 #import "AppDelegate.h"
 #import "PPPreferences.h"
-#import "PPMusicList.h"
 #import "UserDefaultKeys.h"
 #import "PPInstrumentWindowController.h"
 #include "PPByteswap.h"
@@ -47,12 +46,12 @@ static NSInteger selMusFromList = -1;
 @property (strong) NSString *musicInfo;
 @property (strong, readonly) NSDictionary	*trackerDict;
 @property (strong, readonly) NSArray		*trackerUTIs;
-@property (strong) PPMusicList				*musicList;
+@property (strong) MusicList				*musicList;
 @property (strong) CurrentlyPlayingIndex	*currentlyPlayingIndex;
 @property (strong) CurrentlyPlayingIndex	*previouslyPlayingIndex;
-@property (strong) PPPreferences			*preferences;
+@property (strong) Preferences				*preferences;
 @property (strong) NSMutableArray			*plugInInfos;
-@property BOOL isQuitting;
+@property BOOL								isQuitting;
 
 - (void)selectCurrentlyPlayingMusic;
 - (void)selectMusicAtIndex:(NSInteger)anIdx;
@@ -155,7 +154,7 @@ static NSInteger selMusFromList = -1;
 	long fullTime = 0, curTime = 0;
 	OSErr returnerr = MADNoErr;
 	if (madDriver) {
-		madWasReading = [madDriver isPlayingMusic];
+		madWasReading = ![madDriver isPaused];
 		[madDriver stop];
 		//[madDriver stopDriver];
 		
@@ -397,7 +396,7 @@ static NSInteger selMusFromList = -1;
 	MADGetBestDriver(&exportSettings);
 	exportSettings.driverMode = NoHardwareDriver;
 	exportSettings.repeatMusic = FALSE;
-	[exportController settingsFromDriverSettings:&exportSettings];
+	[exportController settingsFromDriverSettings:exportSettings];
 	[self.window beginSheet:self.exportWindow completionHandler:theHandle];
 }
 
@@ -849,7 +848,7 @@ return; \
 - (IBAction)showPreferences:(id)sender
 {
 	if (!preferences) {
-		preferences = [[PPPreferences alloc] init];
+		preferences = [Preferences newPreferenceController];
 		[[preferences window] center];
 	}
 	[preferences showWindow:sender];
@@ -939,7 +938,7 @@ return; \
 {
 	isQuitting = NO;
 	srandom(time(NULL) & 0xffffffff);
-	PPRegisterDebugFunc(CocoaDebugStr);
+	MADRegisterDebugFunc(CocoaDebugStr);
 	madLib = [[PPLibrary alloc] init];
 	//the NIB won't store the value anymore, so do this hackery to make sure there's some value in it.
 	[songTotalTime setIntegerValue:0];
@@ -949,7 +948,7 @@ return; \
 	[self addObserver:self forKeyPath:@"paused" options:NSKeyValueObservingOptionNew context:NULL];
 	self.paused = YES;
 	[self willChangeValueForKey:kMusicListKVO];
-	musicList = [[PPMusicList alloc] init];
+	musicList = [[MusicList alloc] init];
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
 		[musicList loadApplicationMusicList];
 	}
@@ -984,7 +983,7 @@ return; \
 	self.currentlyPlayingIndex = [[CurrentlyPlayingIndex alloc] init];
 	[self.previouslyPlayingIndex movePlayingIndexToOtherIndex:self.currentlyPlayingIndex];
 	
-	exportController = [[PPSoundSettingsViewController alloc] init];
+	exportController = [[SoundSettingsViewController alloc] init];
 	exportController.delegate = self;
 	[exportSettingsBox setContentView:[exportController view]];
 	
@@ -1117,7 +1116,7 @@ return; \
 - (void)setTitleForSongLabelBasedOnMusic
 {
 	self.musicName = self.music.internalFileName;
-	self.musicInfo = self.music.madInfo;
+	self.musicInfo = self.music.madInformation;
 }
 
 - (void)clearMusic
@@ -1221,7 +1220,7 @@ enum PPMusicToolbarTypes {
 		switch (retVal) {
 			case NSAlertDefaultReturn:
 			{
-				PPInfoRec rec;
+				MADInfoRec rec;
 				{
 					char ostype[5] = {0};
 					if ([madLib identifyFileAtURL:theURL type:ostype] != MADNoErr || [madLib getInformationFromFileAtURL:theURL type:ostype info:&rec]) {
@@ -1424,7 +1423,7 @@ enum PPMusicToolbarTypes {
 {
 	NSIndexSet *selected = [tableView selectedRowIndexes];
 	NSURL *musicURL;
-	PPInfoRec theInfo;
+	MADInfoRec theInfo;
 	MusicListObject *obj;
 	char info[5] = {0};
 	NSString *NSSig;

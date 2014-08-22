@@ -81,7 +81,7 @@ static void AnalyseSignatureMOD(long EOFo, MADFourChar temp, short *maxInstru, i
 	
 	*maxInstru = 31;
 	
-	PPBE32(&temp);
+	MADBE32(&temp);
 	
 	switch(temp)
 	{
@@ -391,9 +391,9 @@ static MADErr PPConvertMod2Mad(char* aMOD, long MODSize, MADMusic *theMAD, MADDr
 	for (i = 0; i < maxInstru ; i++) {
 		theInstrument[i] = (char*) ((uintptr_t) theMOD + OffSetToSample);
 		
-		PPBE16(&theMOD->fid[i].numWords);
-		PPBE16(&theMOD->fid[i].loopWord);
-		PPBE16(&theMOD->fid[i].loopWords);
+		MADBE16(&theMOD->fid[i].numWords);
+		MADBE16(&theMOD->fid[i].loopWord);
+		MADBE16(&theMOD->fid[i].loopWords);
 		
 		sndSize = theMOD->fid[i].numWords * 2;
 		
@@ -898,7 +898,7 @@ static char* PPConvertMad2Mod(MADMusic *theMAD, MADDriverSettings *init, long *P
 	return (char*)theMOD;
 }
 
-static MADErr ExtractMODInfo(PPInfoRec *info, void *AlienFile)
+static MADErr ExtractMODInfo(MADInfoRec *info, void *AlienFile)
 {
 	MODDef	*myMOD = (MODDef*)AlienFile;
 	int		PatternSize;
@@ -917,7 +917,7 @@ static MADErr ExtractMODInfo(PPInfoRec *info, void *AlienFile)
 	/*** Check MOD Type ***/
 	
 	AnalyseSignatureMOD(-1, info->signature, &maxInstru, &PatternSize, &info->totalTracks, myMOD);
-	PPBE32(&info->signature);
+	MADBE32(&info->signature);
 	if (maxInstru == 0) {
 		return MADFileNotSupportedByThisPlug;
 	} else if (maxInstru == 15) {	// Old mod format
@@ -968,7 +968,7 @@ static MADErr TestMODFile(char *AlienFile, long EOFo)
 
 #ifndef _MAC_H
 EXP MADErr FillPlug(PlugInfo *p);
-EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC, BeOS, and UNIX
 {
@@ -985,10 +985,10 @@ MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC, BeOS, and UNIX
 /* MAIN FUNCTION */
 /*****************/
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-MADErr mainMOD(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainMOD(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
 //Every PlayerPRO import/export plug-in must have this function!
-extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	MADErr	myErr = MADNoErr;

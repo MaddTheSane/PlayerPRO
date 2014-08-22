@@ -6,7 +6,6 @@
 
 #import "UserDefaultKeys.h"
 #import "PPTimeFormatter.h"
-#import "PPDocument.h"
 #import "PPInstrumentImporterObject.h"
 
 #import "PPFilterPlugHandler.h"
@@ -21,3 +20,15 @@
 #import "PPDigitalPlugInObject.h"
 #import "PPFilterPlugObject.h"
 #import "NSColor+PPPreferences.h"
+
+#import "BoxViewController.h"
+#import "DigitalViewController.h"
+#import "ClassicalViewController.h"
+#import "WaveViewController.h"
+
+//Preferences
+#import "ColorPreferenceController.h"
+#import "MiscPreferenceController.h"
+#import "BoxEditorPreferenceController.h"
+#import "DigitalEditorPreferenceControler.h"
+#import "MidiHardwarePreferenceController.h"

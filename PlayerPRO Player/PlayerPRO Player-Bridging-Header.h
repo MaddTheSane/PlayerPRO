@@ -10,11 +10,8 @@
 
 #import "UserDefaultKeys.h"
 #import "PPSTImporter.h"
-//#import "PPPreferences.h"
-//#import "AppDelegate.h"
-//#import "PPMusicList.h"
-//#import "PPInstrumentWindowController.h"
-//#import "MusicListPreferenceController.h"
-#import "ColorPreferenceController.h"
+#import "AppDelegate.h"
+
+#import "MusicListPreferenceController.h"
 #import "MiscPreferenceController.h"
 #import "MidiHardwarePreferenceController.h"

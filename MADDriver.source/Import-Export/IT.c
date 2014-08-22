@@ -639,13 +639,13 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 	memcpy(&ITinfo, theITCopy, sizeof(ITinfo));
 	theITCopy += 192;
 	
-	PPLE16(&ITinfo.orderNum);
-	PPLE16(&ITinfo.insNum);
-	PPLE16(&ITinfo.smpNum);
-	PPLE16(&ITinfo.patNum);
-	PPLE16(&ITinfo.flags);
-	PPLE16(&ITinfo.cwtv);
-	PPLE16(&ITinfo.cmwt);
+	MADLE16(&ITinfo.orderNum);
+	MADLE16(&ITinfo.insNum);
+	MADLE16(&ITinfo.smpNum);
+	MADLE16(&ITinfo.patNum);
+	MADLE16(&ITinfo.flags);
+	MADLE16(&ITinfo.cwtv);
+	MADLE16(&ITinfo.cmwt);
 	
 	if (ITinfo.cmwt < 0x100)
 		return MADFileNotSupportedByThisPlug;
@@ -674,7 +674,7 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 	memcpy(ITinfo.parapins, theITCopy, ITinfo.insNum * 4);
 	theITCopy += ITinfo.insNum * 4;
 	for (i = 0; i < ITinfo.insNum; i++)
-		PPLE32(&ITinfo.parapins[i]);
+		MADLE32(&ITinfo.parapins[i]);
 	//if (ITinfo.insNum > 0) DebugStr("\pInsNum");
 	
 	/**** Samp Num *****/
@@ -684,7 +684,7 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 	memcpy(ITinfo.parapsamp, theITCopy, ITinfo.smpNum * 4);
 	theITCopy += ITinfo.smpNum * 4;
 	for (i = 0; i < ITinfo.smpNum; i++)
-		PPLE32(&ITinfo.parapsamp[i]);
+		MADLE32(&ITinfo.parapsamp[i]);
 	
 	/**** Pat Num *****/
 	ITinfo.parappat = (int *)malloc(ITinfo.patNum * 4);
@@ -693,7 +693,7 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 	memcpy(ITinfo.parappat, theITCopy, ITinfo.patNum * 4);
 	theITCopy += ITinfo.patNum * 4;
 	for (i = 0; i < ITinfo.patNum; i++)
-		PPLE32(&ITinfo.parappat[i]);
+		MADLE32(&ITinfo.parappat[i]);
 	
 	if (ITinfo.flags & 4) {
 		/**** Ins Data ****/
@@ -742,14 +742,14 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 			return MADIncompatibleFile;
 		}
 		
-		PPLE32(&ITinfo.sampdata[i].length);
-		PPLE32(&ITinfo.sampdata[i].loopBegin);
-		PPLE32(&ITinfo.sampdata[i].loopEnd);
-		PPLE32(&ITinfo.sampdata[i].C5Speed);
-		PPLE32(&ITinfo.sampdata[i].SusLoopBegin);
-		PPLE32(&ITinfo.sampdata[i].SusLoopEnd);
-		PPLE32(&ITinfo.sampdata[i].samplePtr);
-		PPLE16(&ITinfo.sampdata[i].Convert);
+		MADLE32(&ITinfo.sampdata[i].length);
+		MADLE32(&ITinfo.sampdata[i].loopBegin);
+		MADLE32(&ITinfo.sampdata[i].loopEnd);
+		MADLE32(&ITinfo.sampdata[i].C5Speed);
+		MADLE32(&ITinfo.sampdata[i].SusLoopBegin);
+		MADLE32(&ITinfo.sampdata[i].SusLoopEnd);
+		MADLE32(&ITinfo.sampdata[i].samplePtr);
+		MADLE16(&ITinfo.sampdata[i].Convert);
 		
 		if (ITinfo.sampdata[i].length > 0) {
 			theInstrument[i] = (char*)theIT;
@@ -850,7 +850,7 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 				// Instrument conversion
 				
 				curIns->numSamples	= 0;	//ITinfo.insdata[i].NoS;
-				PPLE16(&ITinfo.insdata[i].FadeOut);
+				MADLE16(&ITinfo.insdata[i].FadeOut);
 				
 				for (x = 0; x < 26; x++)
 					curIns->name[x] = ITinfo.insdata[i].INSName[x];
@@ -972,7 +972,7 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 									unsigned short *tempShort = (unsigned short*)curData->data;
 									
 									for (temp = 0; temp < curData->size / 2; temp++) {
-										PPLE16(&((tempShort[temp])));
+										MADLE16(&((tempShort[temp])));
 										
 										if (!(ITinfo.sampdata[prevSamp].Convert & 1))
 											*(tempShort + temp) -= 0x8000;
@@ -1098,7 +1098,7 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 						
 						for (temp = 0; temp < curData->size/2; temp++)
 						{
-							PPLE16(&((tempShort[temp])));
+							MADLE16(&((tempShort[temp])));
 							
 							if (!(ITinfo.sampdata[i].Convert & 1)) *(tempShort + temp) -= 0x8000;
 						}
@@ -1116,7 +1116,7 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 						unsigned short 	*tempShort = (unsigned short*)curData->data;
 						
 						for (temp = 0; temp < curData->size/2; temp++) {
-							PPLE16(&((tempShort[temp])));
+							MADLE16(&((tempShort[temp])));
 							
 							if (!(ITinfo.sampdata[i].Convert & 1))
 								*(tempShort + temp) -= 0x8000;
@@ -1139,8 +1139,8 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 		if (ITinfo.parappat[i]) {
 			curITPat = (ITPatForm*)(theIT + ITinfo.parappat[i]);
 			
-			PPLE16(&curITPat->length);
-			PPLE16(&curITPat->row);
+			MADLE16(&curITPat->length);
+			MADLE16(&curITPat->row);
 			
 			if (ITinfo.parappat[i] > 0) {
 				char	*curDataPat = curITPat->data;
@@ -1238,8 +1238,8 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 		if (ITinfo.parappat[i]) {
 			curITPat = (ITPatForm*) (theIT + ITinfo.parappat[i]);
 #if 0
-			curITPat->length	= PPLE16(&curITPat->length);
-			curITPat->row		= PPLE16(&curITPat->row);
+			curITPat->length	= MADLE16(&curITPat->length);
+			curITPat->row		= MADLE16(&curITPat->row);
 			
 			//Deja fait dans la recherche du maxtrack
 #endif
@@ -1419,7 +1419,7 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 	return MADNoErr;
 }
 
-static MADErr ExtractITInfo(PPInfoRec *info, void *AlienFile)
+static MADErr ExtractITInfo(MADInfoRec *info, void *AlienFile)
 {
 	//short			i;
 	ITForm			ITinfo;
@@ -1438,22 +1438,22 @@ static MADErr ExtractITInfo(PPInfoRec *info, void *AlienFile)
 	
 	/*** Total Patterns ***/
 	
-	PPLE16(&ITinfo.patNum);
+	MADLE16(&ITinfo.patNum);
 	info->totalPatterns = ITinfo.patNum;
 	
 	/*** Partition Length ***/
 	
-	PPLE16(&ITinfo.orderNum);
+	MADLE16(&ITinfo.orderNum);
 	info->partitionLength = ITinfo.orderNum;
 	
 	/*** Total Instruments ***/
 	
-	PPLE16(&ITinfo.insNum);
+	MADLE16(&ITinfo.insNum);
 	info->totalInstruments = ITinfo.insNum;
 	
 	/*** Tracks ***/
 	
-	//info->totalTracks	 = PPLE16( &ITinfo.insNum);
+	//info->totalTracks	 = MADLE16( &ITinfo.insNum);
 	
 	strncpy(info->formatDescription, "IT Plug", sizeof(info->formatDescription));
 	
@@ -1473,7 +1473,7 @@ static MADErr TestITFile(const void *AlienFile)
 #ifndef _MAC_H
 
 EXP MADErr FillPlug(PlugInfo *p);
-EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -1487,9 +1487,9 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 #endif
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-MADErr mainIT(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainIT(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
-extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	MADErr	myErr = MADNoErr;

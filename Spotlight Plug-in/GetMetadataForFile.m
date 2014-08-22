@@ -135,7 +135,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			
 			NSString *title;
 			{
-				PPInfoRec rec;
+				MADInfoRec rec;
 				{
 					if (MADMusicInfoCFURL(MADLib, type, urlForFile, &rec) != MADNoErr)
 						goto skipInfo;

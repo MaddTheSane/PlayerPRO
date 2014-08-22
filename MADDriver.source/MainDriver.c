@@ -1454,7 +1454,7 @@ MADErr MADMusicIdentifyCFURL(MADLibrary *lib, char *type, CFURLRef URLRef)
 	return theErr;
 }
 
-MADErr MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, PPInfoRec *InfoRec)
+MADErr MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, MADInfoRec *InfoRec)
 {
 	char *URLcString = NULL;
 	MADErr theErr = getCStringFromCFURL(theRef, &URLcString);
@@ -1502,12 +1502,12 @@ MADErr MADMusicExportCString(MADLibrary *lib, MADMusic *music, char *type, char*
 	return PPExportFile(lib, type, cName, music);
 }
 
-MADErr MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, PPInfoRec *InfoRec)
+MADErr MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, MADInfoRec *InfoRec)
 {
 	if (lib == NULL || cName == NULL || InfoRec == NULL || type == NULL) {
 		return MADParametersErr;
 	}
-	memset(InfoRec, 0, sizeof(PPInfoRec));
+	memset(InfoRec, 0, sizeof(MADInfoRec));
 	return PPInfoFile(lib, type, cName, InfoRec);
 }
 
@@ -1706,10 +1706,10 @@ MADErr MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime)
 
 static inline void ByteSwapsData(sData *toSwap)
 {
-	PPBE32(&toSwap->size);
-	PPBE32(&toSwap->loopBeg);
-	PPBE32(&toSwap->loopSize);
-	PPBE16(&toSwap->c2spd);
+	MADBE32(&toSwap->size);
+	MADBE32(&toSwap->loopBeg);
+	MADBE32(&toSwap->loopSize);
+	MADBE16(&toSwap->c2spd);
 }
 
 static inline void SwapFXSets(FXSets *set)
@@ -1717,17 +1717,17 @@ static inline void SwapFXSets(FXSets *set)
 #ifndef __BLOCKS__
 	int y;
 #endif
-	PPBE16(&set->id);
-	PPBE16(&set->noArg);
-	PPBE16(&set->track);
-	PPBE32(&set->FXID);
+	MADBE16(&set->id);
+	MADBE16(&set->noArg);
+	MADBE16(&set->track);
+	MADBE32(&set->FXID);
 #ifdef __BLOCKS__
 	dispatch_apply(100, dispatch_get_global_queue(0, 0), ^(size_t y) {
-		PPBE32(&set->values[y]);
+		MADBE32(&set->values[y]);
 	});
 #else
 	for (y = 0; y < 100; y++) {
-		PPBE32(&set->values[y]);
+		MADBE32(&set->values[y]);
 	}
 #endif
 }
@@ -1737,48 +1737,48 @@ static inline void ByteSwapInstrData(InstrData *toSwap)
 #ifndef __BLOCKS__
 	int x;
 #endif
-	PPBE16(&toSwap->numSamples);
-	PPBE16(&toSwap->firstSample);
-	PPBE16(&toSwap->volFade);
+	MADBE16(&toSwap->numSamples);
+	MADBE16(&toSwap->firstSample);
+	MADBE16(&toSwap->volFade);
 	
-	PPBE16(&toSwap->MIDI);
-	PPBE16(&toSwap->MIDIType);
+	MADBE16(&toSwap->MIDI);
+	MADBE16(&toSwap->MIDIType);
 #ifdef __BLOCKS__
 	dispatch_apply(12, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
-		PPBE16(&toSwap->volEnv[x].pos);
-		PPBE16(&toSwap->volEnv[x].val);
-		PPBE16(&toSwap->pannEnv[x].pos);
-		PPBE16(&toSwap->pannEnv[x].val);
-		PPBE16(&toSwap->pitchEnv[x].pos);
-		PPBE16(&toSwap->pitchEnv[x].val);
+		MADBE16(&toSwap->volEnv[x].pos);
+		MADBE16(&toSwap->volEnv[x].val);
+		MADBE16(&toSwap->pannEnv[x].pos);
+		MADBE16(&toSwap->pannEnv[x].val);
+		MADBE16(&toSwap->pitchEnv[x].pos);
+		MADBE16(&toSwap->pitchEnv[x].val);
 	});
 #else
 	for (x = 0; x < 12; x++) {
-		PPBE16(&toSwap->volEnv[x].pos);
-		PPBE16(&toSwap->volEnv[x].val);
-		PPBE16(&toSwap->pannEnv[x].pos);
-		PPBE16(&toSwap->pannEnv[x].val);
-		PPBE16(&toSwap->pitchEnv[x].pos);
-		PPBE16(&toSwap->pitchEnv[x].val);
+		MADBE16(&toSwap->volEnv[x].pos);
+		MADBE16(&toSwap->volEnv[x].val);
+		MADBE16(&toSwap->pannEnv[x].pos);
+		MADBE16(&toSwap->pannEnv[x].val);
+		MADBE16(&toSwap->pitchEnv[x].pos);
+		MADBE16(&toSwap->pitchEnv[x].val);
 	}
 #endif
 }
 
 static inline void ByteSwapMADSpec(MADSpec *toSwap)
 {
-	PPBE32(&toSwap->MAD);
-	PPBE16(&toSwap->speed);
-	PPBE16(&toSwap->tempo);
-	PPBE32(&toSwap->EPitch);
-	PPBE32(&toSwap->ESpeed);
+	MADBE32(&toSwap->MAD);
+	MADBE16(&toSwap->speed);
+	MADBE16(&toSwap->tempo);
+	MADBE32(&toSwap->EPitch);
+	MADBE32(&toSwap->ESpeed);
 }
 
 static inline void ByteSwapPatHeader(PatHeader *toSwap)
 {
-	PPBE32(&toSwap->size);
-	PPBE32(&toSwap->compMode);
-	PPBE32(&toSwap->patBytes);
-	PPBE32(&toSwap->unused2);
+	MADBE32(&toSwap->size);
+	MADBE32(&toSwap->compMode);
+	MADBE32(&toSwap->patBytes);
+	MADBE32(&toSwap->unused2);
 }
 
 MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFReadStreamRef MADReadStream, char* MADPtr)
@@ -2126,12 +2126,12 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 				short	*shortPtr = (short*)curData->data;
 #ifdef __BLOCKS__
 				dispatch_apply(curData->size / 2, dispatch_get_global_queue(0, 0), ^(size_t ll) {
-					PPBE16(&shortPtr[ll]);
+					MADBE16(&shortPtr[ll]);
 				});
 #else
 				size_t 	ll;
 				for (ll = 0; ll < curData->size / 2; ll++)
-					PPBE16(&shortPtr[ll]);
+					MADBE16(&shortPtr[ll]);
 #endif
 			}
 		}
@@ -2326,12 +2326,12 @@ MADErr MADMusicSaveCString(MADMusic *music, const char *cName, bool compressMAD)
 				short *shortPtr = (short*)dataCopy;
 #ifdef __BLOCKS__
 				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t ll) {
-					PPBE16(&shortPtr[ll]);
+					MADBE16(&shortPtr[ll]);
 				});
 #else
 				size_t ll;
 				for (ll = 0; ll < inOutCount / 2 ; ll++) {
-					PPBE16(&shortPtr[ll]);
+					MADBE16(&shortPtr[ll]);
 				}
 #endif
 			}
@@ -2435,7 +2435,7 @@ sData *MADCreateSample(MADMusic *MDriver, short ins, short sample)
 		
 		// Install it
 		
-		if (sample < MDriver->fid[ins].numSamples) PPDebugStr(__LINE__, __FILE__, "MADCreateSample");
+		if (sample < MDriver->fid[ins].numSamples) MADDebugStr(__LINE__, __FILE__, "MADCreateSample");
 		
 		MDriver->sample[ins * MAXSAMPLE + sample] = curData;
 		MDriver->fid[ins].numSamples++;

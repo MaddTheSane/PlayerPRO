@@ -86,7 +86,7 @@ static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MAD
 	theOktaPos	= theOkta;
 	
 	OKTAHeader = (*(MADFourChar*)theOkta);
-	PPBE32(&OKTAHeader);
+	MADBE32(&OKTAHeader);
 	if (OKTAHeader != 'OKTA') //DebugStr("\pError in OKTA");
 		return MADIncompatibleFile;
 	
@@ -95,11 +95,11 @@ static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MAD
 	while(theOktaPos < MaxPtr)
 	{
 		aSect = (sectheader*) theOktaPos;
-		PPLE32 (&aSect->length);
+		MADLE32 (&aSect->length);
 		
 		theOktaPos += 8L;
 		
-		PPBE32(&aSect->name);
+		MADBE32(&aSect->name);
 		switch(aSect->name)
 		{
 			case 'CMOD':
@@ -119,10 +119,10 @@ static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MAD
 				{
 					instru[i] = samps[i];
 					
-					PPLE32(&instru[i ].length);
-					PPLE16(&instru[i ].repeat);
+					MADLE32(&instru[i ].length);
+					MADLE16(&instru[i ].repeat);
 					instru[i ].repeat *= 2;
-					PPLE16(&instru[i ].replen);
+					MADLE16(&instru[i ].replen);
 					instru[i ].replen *= 2;
 				}
 				Okta->samp_count = i;
@@ -130,17 +130,17 @@ static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MAD
 				
 			case 'SPEE':
 				Okta->speed = *((short*)theOktaPos);
-				PPLE16(&Okta->speed);
+				MADLE16(&Okta->speed);
 				break;
 				
 			case 'SLEN':
 				Okta->slen = *((short*)theOktaPos);
-				PPLE16(&Okta->slen);
+				MADLE16(&Okta->slen);
 				break;
 				
 			case 'PLEN':
 				Okta->plen = *((short*)theOktaPos);
-				PPLE16(&Okta->plen);
+				MADLE16(&Okta->plen);
 				break;
 				
 			case 'PATT':
@@ -149,7 +149,7 @@ static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MAD
 				
 			case 'PBOD':
 				Okta->pbodlen[pbod_count] = *((short*)theOktaPos);
-				PPLE16(&Okta->pbodlen[pbod_count]);
+				MADLE16(&Okta->pbodlen[pbod_count]);
 				
 				if (pbod_count == 0) theMAD->header->numChn = (aSect->length - 2L) / (Okta->pbodlen[pbod_count] * 4L);
 				else
@@ -351,7 +351,7 @@ static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MAD
 	return MADNoErr;
 }
 
-static MADErr ExtractOKTAInfo(PPInfoRec *info, char* theOkta, long MODSize)
+static MADErr ExtractOKTAInfo(MADInfoRec *info, char* theOkta, long MODSize)
 {
 	//long		PatternSize;
 	//short	i;
@@ -390,7 +390,7 @@ static MADErr ExtractOKTAInfo(PPInfoRec *info, char* theOkta, long MODSize)
 		theOktaPos	= theOkta;
 		
 		OKTAHead = (*(uint32_t*)theOkta);
-		PPBE32(&OKTAHead);
+		MADBE32(&OKTAHead);
 		
 		if (OKTAHead != 'OKTA') //DebugStr("\pError in OKTA");
 			return MADIncompatibleFile;
@@ -399,10 +399,10 @@ static MADErr ExtractOKTAInfo(PPInfoRec *info, char* theOkta, long MODSize)
 		
 		while(theOktaPos < MaxPtr) {
 			aSect = (sectheader*) theOktaPos;
-			PPLE32 (&aSect->length);
+			MADLE32 (&aSect->length);
 			
 			theOktaPos += 8L;
-			PPBE32(&aSect->name);
+			MADBE32(&aSect->name);
 			
 			switch(aSect->name) {
 				case 'PBOD':
@@ -427,7 +427,7 @@ static MADErr ExtractOKTAInfo(PPInfoRec *info, char* theOkta, long MODSize)
 static MADErr TestOKTAFile(char* AlienFile)
 {
 	MADFourChar myOKTA = *((MADFourChar*) AlienFile);
-	PPBE32(&myOKTA);
+	MADBE32(&myOKTA);
 	
 	if (myOKTA == 'OKTA')
 		return MADNoErr;
@@ -438,7 +438,7 @@ static MADErr TestOKTAFile(char* AlienFile)
 #ifndef _MAC_H
 
 EXP MADErr FillPlug(PlugInfo *p);
-EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -453,9 +453,9 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-MADErr mainOkta(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainOkta(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
-extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	MADErr	myErr = MADNoErr;

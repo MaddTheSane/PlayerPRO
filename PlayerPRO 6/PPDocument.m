@@ -44,7 +44,7 @@
 
 - (NSString*)musicInfo
 {
-	return self.theMusic.madInfo;
+	return self.theMusic.madInformation;
 }
 
 - (void)setMusicInfo:(NSString *)musicInfo
@@ -57,7 +57,7 @@
 	[self MADDriverWithPreferences];
 }
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init]) {
 		MADDriverSettings init;
@@ -92,7 +92,7 @@
 			return nil;
 		}
 		
-		self.exportController = [[PPSoundSettingsViewController alloc] init];
+		self.exportController = [[SoundSettingsViewController alloc] init];
 		self.exportController.delegate = self;
 		
 		NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
@@ -174,7 +174,7 @@
 {
 	long fT, cT;
 	[_theDriver getMusicStatusWithCurrentTime:&cT totalTime:&fT];
-	if ([_theDriver isDonePlayingMusic] && _theDriver.isPlayingMusic && ![_theDriver isExporting]) {
+	if ([_theDriver isDonePlayingMusic] && !_theDriver.isPaused && ![_theDriver isExporting]) {
 		//[self songIsDonePlaying];
 		[_theDriver pause];
 		[_theDriver getMusicStatusWithCurrentTime:&cT totalTime:&fT];
@@ -269,7 +269,7 @@
 	MADGetBestDriver(&exportSettings);
 	exportSettings.driverMode = NoHardwareDriver;
 	exportSettings.repeatMusic = FALSE;
-	[_exportController settingsFromDriverSettings:&exportSettings];
+	[_exportController settingsFromDriverSettings:exportSettings];
 	
 	[[self windowForSheet] beginSheet:_exportWindow completionHandler:^(NSModalResponse returnCode) {
 		if (returnCode == NSAlertDefaultReturn) {

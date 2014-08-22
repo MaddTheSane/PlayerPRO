@@ -11,7 +11,7 @@
 		size_t sndSize = [rsd length];
 		short *bePtr = [rsd mutableBytes];
 		dispatch_apply(sndSize / 2, dispatch_get_global_queue(0, 0), ^(size_t i) {
-			PPBE16(&bePtr[i]);
+			MADBE16(&bePtr[i]);
 		});
 	}
 	return [rsd copy];
@@ -28,7 +28,7 @@
 		size_t sndSize = [rsd length];
 		short *lePtr = [rsd mutableBytes];
 		dispatch_apply(sndSize / 2, dispatch_get_global_queue(0, 0), ^(size_t i) {
-			PPLE16(&lePtr[i]);
+			MADLE16(&lePtr[i]);
 		});
 	}
 	return [rsd copy];

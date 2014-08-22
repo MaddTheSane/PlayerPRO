@@ -154,28 +154,10 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 			return true
 		}
 		
-		if var unwrapped = object as? MusicListObject {
-			if (!musicURL.getResourceValue(&dat1, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
-				bothAreValid = false;
-			}
-			if (unwrapped.musicURL.getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
-				bothAreValid = false;
-			}
-			if (bothAreValid) {
-				theSame = dat1 as NSData == dat2 as NSData
-			}
-			return theSame
-		} else if var unwrapped = object as? NSURL {
-			if (!musicURL.getResourceValue(&dat1, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
-				bothAreValid = false;
-			}
-			if (unwrapped.getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
-				bothAreValid = false;
-			}
-			if (bothAreValid) {
-				theSame = (dat1 as NSData) == (dat2 as NSData)
-			}
-			return theSame
+		if let unwrapped = object as? MusicListObject {
+			return self == unwrapped
+		} else if let unwrapped = object as? NSURL {
+			return self == unwrapped
 		} else {
 			return false
 		}

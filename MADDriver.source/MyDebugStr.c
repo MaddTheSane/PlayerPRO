@@ -1,5 +1,5 @@
 /*
- *  PPDebugStr.c
+ *  MADDebugStr.c
  *  PPMacho
  *
  *  Created by C.W. Betts on 11/18/09.
@@ -15,7 +15,7 @@
 #include <Block.h>
 static void (^MyDebugBlock)(short, const char*, const char*);
 
-void PPRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*))
+void MADRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*))
 {
 	if (MyDebugBlock) {
 		Block_release(MyDebugBlock);
@@ -25,7 +25,7 @@ void PPRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*)
 	}
 }
 
-void PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*))
+void MADRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*))
 {
 	if (MyDebugBlock) {
 		Block_release(MyDebugBlock);
@@ -39,7 +39,7 @@ void PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const 
 	}
 }
 
-void PPDebugStr(short line, const char *file, const char *text)
+void MADDebugStr(short line, const char *file, const char *text)
 {
 	if (MyDebugBlock != NULL) {
 		MyDebugBlock(line, file, text);
@@ -54,12 +54,12 @@ void PPDebugStr(short line, const char *file, const char *text)
 
 static void (__callback *MyDebugFunc)(short, const char*, const char*);
 
-void PPRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*))
+void MADRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*))
 {
 	MyDebugFunc = debugFunc;
 }
 
-void PPDebugStr(short line, const char *file, const char *text)
+void MADDebugStr(short line, const char *file, const char *text)
 {
 	if (MyDebugFunc != NULL) {
 		(*MyDebugFunc)(line, file, text);

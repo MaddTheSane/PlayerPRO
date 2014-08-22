@@ -126,25 +126,25 @@ static inline struct Command* GetOldCommand(short PosX, short TrackIdX, struct M
 
 static inline void MOToldPatHeader(struct oldPatHeader * p)
 {
-	PPBE32(&p->PatternSize);
-	PPBE32(&p->CompressionMode);
-	PPBE32(&p->PatBytes);
-	PPBE32(&p->unused2); // this is superfluous
+	MADBE32(&p->PatternSize);
+	MADBE32(&p->CompressionMode);
+	MADBE32(&p->PatBytes);
+	MADBE32(&p->unused2); // this is superfluous
 }
 
 static void MOToldInstrData(struct FileInstrData * i)
 {
-	PPBE32(&i->insSize);
-	PPBE32(&i->loopStart);
-	PPBE32(&i->loopLenght);
-	PPBE16(&i->CompCode);
-	PPBE16(&i->freq);
+	MADBE32(&i->insSize);
+	MADBE32(&i->loopStart);
+	MADBE32(&i->loopLenght);
+	MADBE16(&i->CompCode);
+	MADBE16(&i->freq);
 }
 
 static void MOToldMADSpec(struct oldMADSpec * m)
 {
 	int i;
-	PPBE32(&m->MADIdentification);
+	MADBE32(&m->MADIdentification);
 	//TODO: dispatch this
 	for (i = 0; i < 64; i++) {
 		MOToldInstrData(&m->fid[i]);
@@ -362,7 +362,7 @@ MADErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *i
 				int		ll;
 				short	*shortPtr = (short*) curData->data;
 				
-				for (ll = 0; ll < curData->size/2; ll++) PPBE16(&shortPtr[ll]);
+				for (ll = 0; ll < curData->size/2; ll++) MADBE16(&shortPtr[ll]);
 			}
 		}
 		else curIns->numSamples = 0;
@@ -374,7 +374,7 @@ MADErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *i
 static MADErr TestoldMADFile(void *AlienFile)
 {
 	MADFourChar myMADSign = *((MADFourChar*)AlienFile);
-	PPBE32(&myMADSign);
+	MADBE32(&myMADSign);
 	
 	if (myMADSign == 'MADF' || myMADSign == 'MADG')
 		return MADNoErr;
@@ -382,7 +382,7 @@ static MADErr TestoldMADFile(void *AlienFile)
 		return  MADFileNotSupportedByThisPlug;
 }
 
-static MADErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
+static MADErr ExtractoldMADInfo(MADInfoRec *info, void *AlienFile)
 {
 	oldMADSpec	*myMOD = (oldMADSpec*)AlienFile;
 	//long		PatternSize;
@@ -392,7 +392,7 @@ static MADErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
 	/*** Signature ***/
 	
 	info->signature = myMOD->MADIdentification;
-	PPBE32(&info->signature);
+	MADBE32(&info->signature);
 	
 	/*** Internal name ***/
 	
@@ -401,7 +401,7 @@ static MADErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
 	/*** Tracks ***/
 	
 	info->totalTracks = myMOD->Tracks;
-	//PPBE16(&info->totalTracks);
+	//MADBE16(&info->totalTracks);
 	
 	/*** Total Patterns ***/
 	
@@ -420,7 +420,7 @@ static MADErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
 	
 	for (i = 0, info->totalInstruments = 0; i < MAXINSTRU ; i++) {
 		int insSizeSwap = myMOD->fid[i].insSize;
-		PPBE32(&insSizeSwap);
+		MADBE32(&insSizeSwap);
 		if (insSizeSwap > 5)
 			info->totalInstruments++;
 	}
@@ -432,7 +432,7 @@ static MADErr ExtractoldMADInfo(PPInfoRec *info, void *AlienFile)
 
 #ifndef _MAC_H
 EXP MADErr FillPlug(PlugInfo *p);
-EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -451,9 +451,9 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 
 #ifndef MADAPPIMPORT
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-MADErr mainMADfg(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainMADfg(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
-extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	MADErr	myErr = MADNoErr;

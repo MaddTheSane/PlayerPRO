@@ -264,7 +264,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 @synthesize audio8Ptr;
 @synthesize audio16Ptr;
 
-- (id)initWithWindow:(NSWindow *)window
+- (instancetype)initWithWindow:(NSWindow *)window
 {
 	if (self = [super initWithWindow:window]) {
 		disabledData = NO;

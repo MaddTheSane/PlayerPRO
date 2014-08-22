@@ -571,7 +571,7 @@ static MADErr TestMEDFile(char* AlienFile)
 		return MADNoErr;
 }
 
-static MADErr ExtractMEDInfo(PPInfoRec *info, char* theMED, struct MEDInfo *medInfo)
+static MADErr ExtractMEDInfo(MADInfoRec *info, char* theMED, struct MEDInfo *medInfo)
 {
 	/*long	PatternSize;
 	 short	i;
@@ -604,7 +604,7 @@ static MADErr ExtractMEDInfo(PPInfoRec *info, char* theMED, struct MEDInfo *medI
 #ifndef _MAC_H
 
 EXP MADErr FillPlug(PlugInfo *p);
-EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 {
@@ -619,9 +619,9 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-MADErr mainMED(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainMED(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
-extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	MADErr	myErr = MADNoErr;

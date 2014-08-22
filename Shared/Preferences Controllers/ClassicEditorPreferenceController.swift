@@ -8,6 +8,7 @@
 
 import Cocoa
 
+/*
 class TagCoupling {
 	var amount: Int32
 	var tag: Int
@@ -17,11 +18,11 @@ class TagCoupling {
 		tag = tag1
 	}
 }
-
+*/
 let TrackHeightCoupling = [TagCoupling(100, 1), TagCoupling(110, 2), TagCoupling(120, 3), TagCoupling(130, 4), TagCoupling(140, 5),
 	TagCoupling(160, 6), TagCoupling(180, 7), TagCoupling(200, 8)];
 
-class ClassicEditorPreferenceController: NSViewController, PlayerPROPreference {
+class ClassicEditorPreferenceController: NSViewController, PPPreferenceObject {
 	@IBOutlet var tempoNumberValue:		NSTextField!
 	@IBOutlet var markersLoopValue:		NSTextField!
 	@IBOutlet var markersOffsetValue:	NSTextField!

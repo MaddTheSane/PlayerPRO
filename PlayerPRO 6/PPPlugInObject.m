@@ -13,7 +13,7 @@
 void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
 {
 	CFArrayRef	factories		= NULL;
-	Boolean		foundInterface	= FALSE;
+	BOOL		foundInterface	= NO;
 	void		**formatPlugA	= NULL;
 	
 	CFPlugInRef plugToTest = CFBundleGetPlugIn(tempBundleRef);
@@ -128,7 +128,7 @@ OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, int chan
 @synthesize type;
 @synthesize version;
 
-- (id)init
+- (instancetype)init
 {
 	[self doesNotRecognizeSelector:_cmd];
 	return nil;

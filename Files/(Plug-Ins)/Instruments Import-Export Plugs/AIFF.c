@@ -105,7 +105,7 @@ static MADErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData *
 					memcpy(data, curData->data, curData->size);
 					
 					dispatch_apply(curData->size / 2, dispatch_get_global_queue(0, 0), ^(size_t i) {
-						PPBE16(&((short*)data)[i]);
+						MADBE16(&((short*)data)[i]);
 					});
 				} else
 					data = curData->data;

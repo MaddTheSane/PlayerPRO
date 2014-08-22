@@ -8,14 +8,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import <PlayerPROKit/PlayerPROKit.h>
-#import "PPSoundSettingsViewController.h"
 
 @class BoxViewController;
 @class DigitalViewController;
 @class ClassicalViewController;
 @class WaveViewController;
 
-@interface PPDocument : NSDocument <PPSoundSettingsViewControllerDelegate>
+@interface PPDocument : NSDocument <SoundSettingsViewControllerDelegate>
 @property (weak) IBOutlet NSWindow	*exportWindow;
 @property (weak) IBOutlet NSBox		*exportSettingsBox;
 @property (weak) IBOutlet NSButton *fastForwardButton;
@@ -31,7 +30,7 @@
 @property (weak) IBOutlet ClassicalViewController *classicalController;
 @property (weak) IBOutlet WaveViewController *waveController;
 
-@property (strong) PPSoundSettingsViewController *exportController;
+@property (strong) SoundSettingsViewController *exportController;
 @property (readonly, strong) PPDriver *theDriver;
 @property (copy) NSString *musicName;
 @property (copy) NSString *musicInfo;

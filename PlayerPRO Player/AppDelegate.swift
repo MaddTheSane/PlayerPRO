@@ -43,7 +43,7 @@ func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) -> [AVMu
 	return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
 }
 
-class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate, NSTableViewDataSource {
+class AppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewControllerDelegate, NSTableViewDelegate, NSToolbarDelegate, NSTableViewDataSource {
 	@IBOutlet var window: NSWindow! = nil
 	@IBOutlet var loopButton: NSButton!
 	@IBOutlet var playButton: NSButton!
@@ -83,10 +83,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 	
 	var exportSettings = MADDriverSettings()
 	@IBOutlet var exportSettingsBox: NSBox!
-	var exportController: PPSoundSettingsViewController!
+	var exportController: SoundSettingsViewController!
 
 	var musicList = MusicList()
-	var preferences: PPPreferences! = nil
+	var preferences = Preferences()
 	var plugInInfos = [PlugInInfo]()
 	
 	private var currentlyPlayingIndex	= CurrentlyPlayingIndex()
@@ -200,10 +200,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 	}
 
 	@IBAction func showPreferences(sender: AnyObject!) {
-		if (preferences == nil) {
-			preferences = PPPreferences()
-			preferences.window.center()
-		}
+		preferences.window.center()
 		preferences.showWindow(sender)
 	}
 
@@ -299,7 +296,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		var fullTime = 0, curTime = 0;
 		var returnerr = MADErr.NoErr;
 		if (madDriver != nil) {
-			madWasReading = madDriver.playingMusic
+			madWasReading = !madDriver.paused
 			madDriver.stop()
 			//[madDriver stopDriver];
 			
@@ -526,7 +523,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, PPSoundSettingsViewControlle
 		
 		updatePlugInInfoMenu()
 		
-		exportController = PPSoundSettingsViewController();
+		exportController = SoundSettingsViewController();
 		exportController.delegate = self;
 		exportSettingsBox.contentView = exportController.view
 		

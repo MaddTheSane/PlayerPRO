@@ -12,7 +12,7 @@ let PPMLDCUTI = "net.sourceforge.playerpro.PlayerPRO-Player.playerlistdragtype"
 
 @objc(PPMusicListDragClass) class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
 	let theIndexSet: NSIndexSet
-	init(indexSet: NSIndexSet!) {
+	init(indexSet: NSIndexSet) {
 		theIndexSet = indexSet
 		
 		super.init()

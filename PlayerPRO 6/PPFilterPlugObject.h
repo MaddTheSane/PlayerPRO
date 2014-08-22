@@ -12,7 +12,7 @@
 #import "PPPlugInObject.h"
 
 @interface PPFilterPlugObject : PPPlugInObject
-- (id)init UNAVAILABLE_ATTRIBUTE;
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithBundle:(NSBundle *)aBund NS_DESIGNATED_INITIALIZER;
 
 - (OSErr)callPluginWithData:(sData *)theData selectionStart:(long) SelectionStart selectionEnd:(long) SelectionEnd plugInInfo:(PPInfoPlug *)thePPInfoPlug stereoMode:(short)stereoMode;

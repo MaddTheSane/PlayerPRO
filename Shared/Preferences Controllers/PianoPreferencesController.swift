@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class PianoPreferencesController: NSViewController, PlayerPROPreference {
+class PianoPreferencesController: NSViewController, PPPreferenceObject {
 	required init(coder: NSCoder!) {
 		super.init(coder: coder)
 	}

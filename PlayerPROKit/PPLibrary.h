@@ -46,18 +46,18 @@ __END_DECLS
 + (void)registerDebugBlock:(void (^)(short, const char*, const char*))newDebugFunc;
 
 - (PPLibraryObject *)pluginAtIndex:(NSUInteger)idx;
+- (PPLibraryObject *)objectAtIndexedSubscript:(NSInteger)index;
 @property (readonly) NSUInteger pluginCount;
 
 - (MADErr)identifyFileAtPath:(NSString*)apath type:(out char*)atype;
 - (MADErr)identifyFileAtURL:(NSURL*)apath type:(out char*)atype;
 
-- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype info:(PPInfoRec*)infoRec;
-- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype info:(PPInfoRec*)infoRec;
+- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype info:(MADInfoRec*)infoRec;
+- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype info:(MADInfoRec*)infoRec;
 
 - (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
 - (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
 
-+ (NSDictionary*)infoRecToDictionary:(PPInfoRec*)infoRec;
-- (PPLibraryObject *)objectAtIndexedSubscript:(NSInteger)index;
++ (NSDictionary*)infoRecToDictionary:(MADInfoRec*)infoRec;
 
 @end

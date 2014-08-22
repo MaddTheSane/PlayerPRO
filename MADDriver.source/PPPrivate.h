@@ -142,11 +142,11 @@ MADErr	CallImportPlug(MADLibrary	*inMADDriver,
 					   MADFourChar	order,
 					   char			*AlienFile,
 					   MADMusic		*theNewMAD,
-					   PPInfoRec	*info);
+					   MADInfoRec	*info);
 
 
 MADErr	PPTestFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile);
-MADErr	PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, PPInfoRec	*InfoRec);
+MADErr	PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADInfoRec	*InfoRec);
 MADErr	PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD);
 MADErr	PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD);
 MADErr	PPIdentifyFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile);

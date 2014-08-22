@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class MusicListPreferenceController: NSViewController, PlayerPROPreference {
+class MusicListPreferenceController: NSViewController, PPPreferenceObject {
 	@IBOutlet var askToSave: NSButtonCell!
 	@IBOutlet var autoPlay: NSButtonCell!
 	@IBOutlet var goToStartupPos: NSButtonCell!

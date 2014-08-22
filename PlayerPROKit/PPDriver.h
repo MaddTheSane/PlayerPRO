@@ -12,6 +12,8 @@
 @class PPLibrary;
 @class PPMusicObject;
 
+#define UNAVAILABLE_REASON(theReason) __attribute__((unavailable(theReason)))
+
 #ifndef NS_DESIGNATED_INITIALIZER
 #define NS_DESIGNATED_INITIALIZER
 #endif
@@ -21,11 +23,11 @@
 @property (readonly) PPLibrary *theLibrary;
 @property (readonly) MADDriverSettings driverSettings;
 @property NSTimeInterval musicPosition;
-@property (getter=isExporting) BOOL exporting;
+@property (getter = isExporting) BOOL exporting;
 @property (readonly) NSTimeInterval totalMusicPlaybackTime;
 @property (readonly) NSTimeInterval currentMusicPlaybackTime;
 
-- (instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (instancetype)init UNAVAILABLE_REASON("PPDriver cannot be inited without a library!");
 - (instancetype)initWithLibrary:(PPLibrary *)theLib;
 - (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings;
 - (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out MADErr*)theErr NS_DESIGNATED_INITIALIZER;
@@ -39,7 +41,6 @@
 - (MADErr)stopDriver;
 
 - (BOOL)directSaveToPointer:(void*)thePtr settings:(MADDriverSettings*)theSett;
-- (NSInteger)audioLength DEPRECATED_ATTRIBUTE;
 @property (readonly) NSInteger audioDataLength;
 
 - (MADErr)getMusicStatusWithCurrentTime:(long*)curTime totalTime:(long*)totTime;
@@ -70,12 +71,18 @@
 - (MADErr)play;
 - (MADErr)pause;
 - (MADErr)stop;
-@property (readonly, getter=isPlayingMusic) BOOL playingMusic;
-- (BOOL)isDonePlaying DEPRECATED_ATTRIBUTE;
+
+//@property (readonly, getter=isPlayingMusic)		BOOL playingMusic;
 @property (readonly, getter=isDonePlayingMusic) BOOL donePlayingMusic;
-@property (readonly, getter=isPaused) BOOL paused;
+@property (readonly, getter=isPaused)			BOOL paused;
 
 - (PPMusicObject *)loadMusicFile:(NSString*)path NS_RETURNS_RETAINED;
 - (PPMusicObject *)loadMusicURL:(NSURL*)url NS_RETURNS_RETAINED;
 
+@end
+
+@interface PPDriver (deprecated)
+- (BOOL)isDonePlaying DEPRECATED_ATTRIBUTE;
+
+- (NSInteger)audioLength DEPRECATED_ATTRIBUTE;
 @end

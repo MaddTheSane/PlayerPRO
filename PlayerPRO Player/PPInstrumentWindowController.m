@@ -7,14 +7,8 @@
 //
 
 #import "PPInstrumentWindowController.h"
-#import "PPInstrumentObject.h"
-#import "PPSampleObject.h"
-#import "PPInstrumentCellView.h"
-#import "InstrumentInfoController.h"
-#import "PPFilterPlugObject.h"
-#include <PlayerPROCore/PPPlug.h>
-#include <PlayerPROCore/RDriverInt.h>
-@import PlayerPROKit;
+#include <PlayerPROCore/PlayerPROCore.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 #include "PPByteswap.h"
 #import "UserDefaultKeys.h"
 //#import "AppDelegate.h"
@@ -33,7 +27,7 @@
 @synthesize instrumentVolume;
 @synthesize waveFormImage;
 
-- (id)initWithWindow:(NSWindow *)window
+- (instancetype)initWithWindow:(NSWindow *)window
 {
 	if (self = [super initWithWindow:window]) {
 		// Initialization code here.
@@ -48,7 +42,7 @@
 	[infoDrawer toggle:sender];
 }
 
-- (id)init
+- (instancetype)init
 {
 	return self = [self initWithWindowNibName:@"InstrumentWindow"];
 }

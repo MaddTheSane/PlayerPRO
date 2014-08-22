@@ -18,7 +18,7 @@
 @implementation PPFilterPlugHandler
 @synthesize filterPlugs;
 
-- (id)init
+- (instancetype)init
 {
 	if (self = [super init]) {
 		self.filterPlugs = [[NSMutableArray alloc] initWithCapacity:20];
@@ -58,6 +58,11 @@
 	PPFilterPlugObject *tmp = filterPlugs[idx];
 	theInfo->fileType = 'PLug';
 	return [tmp callPluginWithData:theInsData selectionStart:start selectionEnd:end plugInInfo:theInfo stereoMode:stereo];
+}
+
+- (PPFilterPlugObject *)objectAtIndexedSubscript:(NSInteger)index;
+{
+	return [self plugInAtIndex:index];
 }
 
 - (PPFilterPlugObject*)plugInAtIndex:(NSUInteger)idx

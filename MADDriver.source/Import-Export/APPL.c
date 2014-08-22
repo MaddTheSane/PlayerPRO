@@ -44,17 +44,17 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	OffSetToSample += sizeof(MADSpec);
 	
 	MadHeader = MadFile->header;
-	PPBE32(&MadHeader->MAD);
+	MADBE32(&MadHeader->MAD);
 	
 	if (MadHeader->MAD != 'MADK') {
 		free(MadFile->header);
 		return MADFileNotSupportedByThisPlug;
 	}
 	
-	PPBE16(&MadHeader->speed);
-	PPBE16(&MadHeader->tempo);
-	PPBE32(&MadHeader->ESpeed);
-	PPBE32(&MadHeader->EPitch);
+	MADBE16(&MadHeader->speed);
+	MADBE16(&MadHeader->tempo);
+	MADBE32(&MadHeader->ESpeed);
+	MADBE32(&MadHeader->EPitch);
 	
 	//////////////////
 	
@@ -80,10 +80,10 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		inOutCount = sizeof(PatHeader);
 		memcpy(&tempPatHeader, MADPtr + OffSetToSample, inOutCount);
 		
-		PPBE32(&tempPatHeader.size);
-		PPBE32(&tempPatHeader.compMode);
-		PPBE32(&tempPatHeader.patBytes);
-		PPBE32(&tempPatHeader.unused2);
+		MADBE32(&tempPatHeader.size);
+		MADBE32(&tempPatHeader.compMode);
+		MADBE32(&tempPatHeader.patBytes);
+		MADBE32(&tempPatHeader.unused2);
 		
 		inOutCount = sizeof(PatHeader) + MadHeader->numChn * tempPatHeader.size * sizeof(Cmd);
 		MadFile->partition[i] = (PatData*)malloc(inOutCount);
@@ -100,10 +100,10 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		}
 		
 		memcpy(MadFile->partition[i], MADPtr + OffSetToSample, inOutCount);
-		PPBE32(&MadFile->partition[i]->header.size);
-		PPBE32(&MadFile->partition[i]->header.compMode);
-		PPBE32(&MadFile->partition[i]->header.patBytes);
-		PPBE32(&MadFile->partition[i]->header.unused2);
+		MADBE32(&MadFile->partition[i]->header.size);
+		MADBE32(&MadFile->partition[i]->header.compMode);
+		MADBE32(&MadFile->partition[i]->header.patBytes);
+		MADBE32(&MadFile->partition[i]->header.unused2);
 		OffSetToSample += inOutCount;
 	}
 	
@@ -115,19 +115,19 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	
 	for (i = MadFile->header->numInstru-1; i >= 0 ; i--) {
 		InstrData *curIns = &MadFile->fid[i];
-		PPBE16(&curIns->numSamples);
-		PPBE16(&curIns->firstSample);
-		PPBE16(&curIns->volFade);
+		MADBE16(&curIns->numSamples);
+		MADBE16(&curIns->firstSample);
+		MADBE16(&curIns->volFade);
 		
 		dispatch_apply(12, dispatch_get_global_queue(0, 0), ^(size_t x) {
-			PPBE16(&curIns->volEnv[x].pos);
-			PPBE16(&curIns->volEnv[x].val);
+			MADBE16(&curIns->volEnv[x].pos);
+			MADBE16(&curIns->volEnv[x].val);
 			
-			PPBE16(&curIns->pitchEnv[x].pos);
-			PPBE16(&curIns->pitchEnv[x].val);
+			MADBE16(&curIns->pitchEnv[x].pos);
+			MADBE16(&curIns->pitchEnv[x].val);
 			
-			PPBE16(&curIns->pannEnv[x].pos);
-			PPBE16(&curIns->pannEnv[x].val);
+			MADBE16(&curIns->pannEnv[x].pos);
+			MADBE16(&curIns->pannEnv[x].val);
 		});
 		
 		if (i != curIns->no) {
@@ -166,10 +166,10 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 			
 			// ** Read Sample DATA
 			
-			PPBE32(&curData->size);
-			PPBE32(&curData->loopBeg);
-			PPBE32(&curData->loopSize);
-			PPBE16(&curData->c2spd);
+			MADBE32(&curData->size);
+			MADBE32(&curData->loopBeg);
+			MADBE32(&curData->loopSize);
+			MADBE16(&curData->c2spd);
 			
 			inOutCount = curData->size;
 			
@@ -193,7 +193,7 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 				short *shortPtr = (short*)curData->data;
 				
 				dispatch_apply(curData->size / 2, dispatch_get_global_queue(0, 0), ^(size_t ll) {
-					PPBE16(&shortPtr[ll]);
+					MADBE16(&shortPtr[ll]);
 				});
 			}
 			
@@ -216,12 +216,12 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 				inOutCount = sizeof(FXSets);
 				memcpy(&MadFile->sets[alpha], MADPtr + OffSetToSample, inOutCount);
 				OffSetToSample += inOutCount;
-				PPBE16(&MadFile->sets[alpha].id);
-				PPBE16(&MadFile->sets[alpha].noArg);
-				PPBE16(&MadFile->sets[alpha].track);
-				PPBE32(&MadFile->sets[alpha].FXID);
+				MADBE16(&MadFile->sets[alpha].id);
+				MADBE16(&MadFile->sets[alpha].noArg);
+				MADBE16(&MadFile->sets[alpha].track);
+				MADBE32(&MadFile->sets[alpha].FXID);
 				dispatch_apply(100, dispatch_get_global_queue(0, 0), ^(size_t y) {
-					PPBE32(&MadFile->sets[alpha].values[y]);
+					MADBE32(&MadFile->sets[alpha].values[y]);
 				});
 				alpha++;
 			}
@@ -233,12 +233,12 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 					inOutCount = sizeof(FXSets);
 					memcpy(&MadFile->sets[alpha], MADPtr + OffSetToSample, inOutCount);
 					OffSetToSample += inOutCount;
-					PPBE16(&MadFile->sets[alpha].id);
-					PPBE16(&MadFile->sets[alpha].noArg);
-					PPBE16(&MadFile->sets[alpha].track);
-					PPBE32(&MadFile->sets[alpha].FXID);
+					MADBE16(&MadFile->sets[alpha].id);
+					MADBE16(&MadFile->sets[alpha].noArg);
+					MADBE16(&MadFile->sets[alpha].track);
+					MADBE32(&MadFile->sets[alpha].FXID);
 					dispatch_apply(100, dispatch_get_global_queue(0, 0), ^(size_t y) {
-						PPBE32(&MadFile->sets[alpha].values[y]);
+						MADBE32(&MadFile->sets[alpha].values[y]);
 					});
 					alpha++;
 				}
@@ -252,14 +252,14 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 static inline OSErr TESTMADk(MADSpec* MADPtr)
 {
 	OSType madType = MADPtr->MAD;
-	PPBE32(&madType);
+	MADBE32(&madType);
 	if (madType == 'MADK')
 		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
 }
 
-static OSErr INFOMADkApp(MADSpec* MADPtr, PPInfoRec *info)
+static OSErr INFOMADkApp(MADSpec* MADPtr, MADInfoRec *info)
 {
 	//short	i;
 	
@@ -272,7 +272,7 @@ static OSErr INFOMADkApp(MADSpec* MADPtr, PPInfoRec *info)
 	
 	info->totalTracks		= MADPtr->numChn;
 	info->signature			= MADPtr->MAD;
-	PPBE32(&info->signature);
+	MADBE32(&info->signature);
 	
 	info->totalInstruments	= MADPtr->numInstru;
 	
@@ -283,7 +283,7 @@ static OSErr INFOMADkApp(MADSpec* MADPtr, PPInfoRec *info)
 /* MAIN FUNCTION */
 /*****************/
 
-extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 {
 	//TODO: learn how to get and parse resource forks using POSIX commands or CoreFoundation, but not Carbon
 	OSErr			myErr = MADNoErr;

@@ -6,6 +6,7 @@
 //
 //
 
+#include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 #import "PPInstrumentViewController.h"
 #import "PPInstrumentPlugHandler.h"
@@ -14,7 +15,6 @@
 #import "InstrumentInfoController.h"
 #import "PPFilterPlugHandler.h"
 #import "PPFilterPlugObject.h"
-#import "PPDocument.h"
 #include <PlayerPROCore/PPPlug.h>
 #include <PlayerPROCore/RDriverInt.h>
 #include "PPByteswap.h"
@@ -66,7 +66,7 @@
 	[self loadInstrumentsFromMusic];
 }
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
+- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 {
 	if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
 		// Initialization code here.

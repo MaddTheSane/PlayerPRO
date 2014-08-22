@@ -80,17 +80,17 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 
 + (void)deregisterDebugFunction
 {
-	PPRegisterDebugFunc(NULL);
+	MADRegisterDebugFunc(NULL);
 }
 
 + (void)registerDebugFunction:(void (*)(short, const char*, const char*))newDebugFunc
 {
-	PPRegisterDebugFunc(newDebugFunc);
+	MADRegisterDebugFunc(newDebugFunc);
 }
 
 + (void)registerDebugBlock:(void (^)(short, const char*, const char*))newDebugFunc
 {
-	PPRegisterDebugBlock(newDebugFunc);
+	MADRegisterDebugBlock(newDebugFunc);
 }
 
 - (PPLibraryObject *)objectAtIndexedSubscript:(NSInteger)index
@@ -155,12 +155,12 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 	return MADMusicIdentifyCFURL(theLibrary, atype, (__bridge CFURLRef)apath);
 }
 
-- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype info:(PPInfoRec*)infoRec
+- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype info:(MADInfoRec*)infoRec
 {
 	return [self getInformationFromFileAtURL:[NSURL fileURLWithPath:apath] type:atype info:infoRec];
 }
 
-- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype info:(PPInfoRec*)infoRec
+- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype info:(MADInfoRec*)infoRec
 {
 	return MADMusicInfoCFURL(theLibrary, atype, (__bridge CFURLRef)apath, infoRec);
 }
@@ -175,7 +175,7 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 	if (!infoDict) {
 		return MADParametersErr;
 	}
-	PPInfoRec infoRec = {0};
+	MADInfoRec infoRec = {0};
 	MADErr theErr = [self getInformationFromFileAtURL:apath type:atype info:&infoRec];
 	if (theErr != MADNoErr) {
 		return theErr;
@@ -191,7 +191,7 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 	return theErr;
 }
 
-+ (NSDictionary*)infoRecToDictionary:(PPInfoRec*)infoRec
++ (NSDictionary*)infoRecToDictionary:(MADInfoRec*)infoRec
 {
 	if (!infoRec) {
 		return nil;

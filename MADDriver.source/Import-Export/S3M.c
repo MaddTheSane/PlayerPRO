@@ -429,16 +429,16 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 		s3minfo->sig2[0] = s3minfo->sig2[1] = 0;
 		
 		s3minfo->ordernum	= theMAD->header->numPointers;
-		PPLE16(&s3minfo->ordernum);
+		MADLE16(&s3minfo->ordernum);
 		s3minfo->insnum		= NoIns;
-		PPLE16(&s3minfo->insnum);
+		MADLE16(&s3minfo->insnum);
 		s3minfo->patnum		= theMAD->header->numPat;
-		PPLE16(&s3minfo->patnum);
+		MADLE16(&s3minfo->patnum);
 		
 		s3minfo->flags		= 0;
 		s3minfo->cwtv		= 0x2013;
 		s3minfo->ffv		= 2;
-		PPLE16(&s3minfo->ffv);
+		MADLE16(&s3minfo->ffv);
 		
 		
 		memcpy(s3minfo->s3msig, "SCRM", 4);
@@ -472,7 +472,7 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 		for (i = 0; i < theMAD->header->numPointers; i++) {
 			orders[i] = theMAD->header->oPointers[i];
 			
-			//PPLE16( &orders[i]);
+			//MADLE16( &orders[i]);
 		}
 		finalS3MCopy += theMAD->header->numPointers;
 	}
@@ -508,7 +508,7 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 			
 			parapins[i] =  (16L + finalS3MCopy - finalS3M) / 16;
 			finalS3MCopy = finalS3M + parapins[i]*16L;
-			PPLE16( &parapins[i]);
+			MADLE16( &parapins[i]);
 			
 			/**/
 			
@@ -534,9 +534,9 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 				ins[i]->insloopend /= 2;
 			}
 			
-			PPLE32(&ins[i]->inslength);
-			PPLE32(&ins[i]->insloopbeg);
-			PPLE32(&ins[i]->insloopend);
+			MADLE32(&ins[i]->inslength);
+			MADLE32(&ins[i]->insloopbeg);
+			MADLE32(&ins[i]->insloopend);
 			
 			ins[i]->insvol		= curData->vol;
 			ins[i]->insdsk		= 0;
@@ -549,12 +549,12 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 				ins[i]->insflags += 4;
 			
 			ins[i]->c2spd	=	curData->c2spd;
-			PPLE32(&ins[i]->c2spd);
+			MADLE32(&ins[i]->c2spd);
 			for (x = 0; x < 4; x++)		ins[i]->inssig2[x] = 0;
 			ins[i]->insgvspos		= 256;
-			PPLE16(&ins[i]->insgvspos);
+			MADLE16(&ins[i]->insgvspos);
 			ins[i]->insint512		= 0;
-			PPLE16(&ins[i]->insint512);
+			MADLE16(&ins[i]->insint512);
 			ins[i]->insintlastused	= 0;
 			strncpy((char*)ins[i]->insname, theMAD->fid[i].name, 28);
 			ins[i]->inssig[0] = 'S';
@@ -566,7 +566,7 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 		{
 			parapins[i] =  (16L + finalS3MCopy - finalS3M) / 16;
 			finalS3MCopy = finalS3M + parapins[i]*16L;
-			PPLE16( &parapins[i]);
+			MADLE16( &parapins[i]);
 			
 			/**/
 			
@@ -585,7 +585,7 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 			
 			ins[i]->insflags			= 	0;
 			
-			ins[i]->c2spd				=	NOFINETUNE;						PPLE32( &ins[i]->c2spd);
+			ins[i]->c2spd				=	NOFINETUNE;						MADLE32( &ins[i]->c2spd);
 			for (x = 0; x < 4; x++)		ins[i]->inssig2[x] = 0;
 			ins[i]->insgvspos			=	256;
 			ins[i]->insint512			=	0;
@@ -609,7 +609,7 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 			tempL = (int)((16L + finalS3MCopy - finalS3M) / 16L);
 			
 			ins[i]->memsegl = tempL & 0x0000FFFF;
-			PPLE16( &ins[i]->memsegl);
+			MADLE16( &ins[i]->memsegl);
 			
 			ins[i]->memsegh = (int)(tempL &0x00FF0000)>>16L;
 			
@@ -649,7 +649,7 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 				for (temp = 0; temp < dstSize/2; temp++)
 				{
 					*(b16 + temp) += 0x8000;
-					PPLE16((b16 + temp));
+					MADLE16((b16 + temp));
 				}
 			}
 			finalS3MCopy += dstSize;
@@ -668,7 +668,7 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 		
 		parappat[i] = (16 + (size_t)finalS3MCopy - (size_t)finalS3M) / 16;
 		finalS3MCopy = finalS3M + (parappat[i])*16;
-		PPLE16(&parappat[i]);
+		MADLE16(&parappat[i]);
 		
 		sizePtr = (short*) finalS3MCopy;
 		
@@ -774,7 +774,7 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 		
 		*sizePtr = finalS3MCopy - (char*) sizePtr;
 		*sizePtr -= 2;
-		PPLE16(sizePtr);
+		MADLE16(sizePtr);
 	}
 	
 	finalS3M = realloc(finalS3M, finalS3MCopy - finalS3M);
@@ -816,12 +816,12 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 	memcpy(&s3minfo, theS3MCopy, 96);
 	theS3MCopy += 96;
 	
-	PPLE16( &s3minfo.ordernum);
-	PPLE16( &s3minfo.insnum);
-	PPLE16( &s3minfo.patnum);
-	PPLE16( &s3minfo.flags);
-	PPLE16( &s3minfo.cwtv);
-	PPLE16( &s3minfo.ffv);
+	MADLE16( &s3minfo.ordernum);
+	MADLE16( &s3minfo.insnum);
+	MADLE16( &s3minfo.patnum);
+	MADLE16( &s3minfo.flags);
+	MADLE16( &s3minfo.cwtv);
+	MADLE16( &s3minfo.ffv);
 	
 	/**** Order Num *****/
 	s3minfo.orders = (unsigned char *) malloc(s3minfo.ordernum);
@@ -843,7 +843,7 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 	theS3MCopy += s3minfo.insnum * 2L;
 	for (i = 0; i < s3minfo.insnum; i++)
 	{
-		PPLE16( &s3minfo.parapins[i]);
+		MADLE16( &s3minfo.parapins[i]);
 	}
 	
 	
@@ -858,7 +858,7 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 	theS3MCopy += s3minfo.patnum * 2L;
 	for (i = 0; i < s3minfo.patnum; i++)
 	{
-		PPLE16( &s3minfo.parappat[i]);
+		MADLE16( &s3minfo.parappat[i]);
 	}
 	
 	// Panning information
@@ -886,13 +886,13 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 		
 		memcpy(&s3minfo.insdata[i], theS3MCopy, sizeof(s3minsform));
 		
-		PPLE16(&s3minfo.insdata[i].memsegl);
-		PPLE32(&s3minfo.insdata[i].inslength);
+		MADLE16(&s3minfo.insdata[i].memsegl);
+		MADLE32(&s3minfo.insdata[i].inslength);
 		
 		if (s3minfo.insdata[i].insflags&1)
 		{
-			PPLE32(&s3minfo.insdata[i].insloopbeg);
-			PPLE32(&s3minfo.insdata[i].insloopend);
+			MADLE32(&s3minfo.insdata[i].insloopbeg);
+			MADLE32(&s3minfo.insdata[i].insloopend);
 		}
 		else
 		{
@@ -900,10 +900,10 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 			s3minfo.insdata[i].insloopend		= 0;
 		}
 		
-		PPLE32( &s3minfo.insdata[i].c2spd);
-		PPLE16( &s3minfo.insdata[i].insgvspos);
-		PPLE16( &s3minfo.insdata[i].insint512);
-		PPLE32( &s3minfo.insdata[i].insintlastused);
+		MADLE32( &s3minfo.insdata[i].c2spd);
+		MADLE16( &s3minfo.insdata[i].insgvspos);
+		MADLE16( &s3minfo.insdata[i].insint512);
+		MADLE32( &s3minfo.insdata[i].insintlastused);
 		
 		if (s3minfo.insdata[i].instype == 1 && s3minfo.insdata[i].inspack == 0 &&
 			s3minfo.insdata[i].inssig[0] == 'S' &&
@@ -1124,7 +1124,7 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 						int		temp;
 						
 						for (temp = 0; temp < curData->size/2; temp++) {
-							PPLE16((b16 + temp));
+							MADLE16((b16 + temp));
 							
 							if (s3minfo.ffv != 1)
 								*(b16 + temp) -= 0x8000;
@@ -1363,7 +1363,7 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 	return MADNoErr;
 }
 
-static MADErr ExtractS3MInfo(PPInfoRec *info, char* AlienFile)
+static MADErr ExtractS3MInfo(MADInfoRec *info, char* AlienFile)
 {
 	s3mform		*myS3M = (s3mform*)AlienFile;
 	s3mform		s3minfo;
@@ -1383,17 +1383,17 @@ static MADErr ExtractS3MInfo(PPInfoRec *info, char* AlienFile)
 	
 	/*** Total Patterns ***/
 	
-	PPLE16(&s3minfo.patnum);
+	MADLE16(&s3minfo.patnum);
 	info->totalPatterns = s3minfo.patnum;
 	
 	/*** Partition Length ***/
 	
-	PPLE16(&s3minfo.ordernum);
+	MADLE16(&s3minfo.ordernum);
 	info->partitionLength = s3minfo.ordernum;
 	
 	/*** Total Instruments ***/
 	
-	PPLE16(&s3minfo.insnum);
+	MADLE16(&s3minfo.insnum);
 	info->totalInstruments = s3minfo.insnum;
 	
 	//TODO:
@@ -1416,7 +1416,7 @@ static inline MADErr TestS3MFile(void *AlienFile)
 #ifndef _MAC_H
 
 EXP MADErr FillPlug(PlugInfo *p);
-EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init);
+EXP MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 EXP MADErr FillPlug(PlugInfo *p)
 {
@@ -1430,9 +1430,9 @@ EXP MADErr FillPlug(PlugInfo *p)
 #endif
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-MADErr mainS3M(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+MADErr mainS3M(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
-extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, PPInfoRec *info, MADDriverSettings *init)
+extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #endif
 {
 	MADErr	myErr = MADNoErr;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6205" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6206.8" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment defaultVersion="1090" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6205"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.8"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MusicListPreferenceController" customModule="PlayerPRO_Player" customModuleProvider="target">
@@ -69,6 +69,7 @@
                     <constraints>
                         <constraint firstItem="6" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="16" id="XvN-ak-gwM"/>
                         <constraint firstItem="6" firstAttribute="top" secondItem="3" secondAttribute="top" constant="25" id="fOJ-rc-tHh"/>
+                        <constraint firstAttribute="centerX" secondItem="6" secondAttribute="centerX" id="uLb-yZ-f1a"/>
                         <constraint firstAttribute="bottom" secondItem="6" secondAttribute="bottom" constant="11" id="vQ1-GV-qba"/>
                     </constraints>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
@@ -140,6 +141,7 @@
                     </view>
                     <constraints>
                         <constraint firstItem="45" firstAttribute="top" secondItem="15" secondAttribute="top" constant="25" id="2Hv-7i-frs"/>
+                        <constraint firstAttribute="bottom" secondItem="45" secondAttribute="bottom" constant="11" id="IKZ-OC-nCV"/>
                         <constraint firstItem="45" firstAttribute="leading" secondItem="15" secondAttribute="leading" constant="16" id="Mwz-V9-QjB"/>
                     </constraints>
                     <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
