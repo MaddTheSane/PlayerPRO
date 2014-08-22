@@ -71,7 +71,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			var tmpTrackerDict = [localMADKName: [MADNativeUTI], localGenericMADName: [MADGenericUTI]] as [String: [String]]
 			
 			for objRaw in madLib {
-				var obj = objRaw as PPLibraryObject
+				let obj = objRaw as PPLibraryObject
 				tmpTrackerDict[obj.menuName] = (obj.UTItypes) as? [String]
 			}
 			_trackerDict = tmpTrackerDict
@@ -103,7 +103,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 		let inf = plugInInfos[tag];
 		
-		var infoCont = PlugInInfoController.windowControllerFromInfo(inf)
+		let infoCont = PlugInInfoController.windowControllerFromInfo(inf)
 		infoCont.window.center()
 		NSApplication.sharedApplication().runModalForWindow(infoCont.window)
 		//[infoCont showWindow:sender];
@@ -166,7 +166,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		aboutPlugInMenu.removeAllItems()
 		
 		for (i, pi) in enumerate(plugInInfos) {
-			var mi = NSMenuItem(title: pi.plugName, action: "showPlugInInfo:", keyEquivalent: "")
+			let mi = NSMenuItem(title: pi.plugName, action: "showPlugInInfo:", keyEquivalent: "")
 			mi.tag = i
 			mi.target = self
 			aboutPlugInMenu.addItem(mi)
@@ -322,7 +322,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			PPCColor95: makeNSRGB(52428, 52428, 26214).PPencodeColor(),
 			PPCColor96: makeNSRGB(52428, 52428, 39321).PPencodeColor()]
 		
-		var alltogether = NSMutableDictionary(dictionary: tooLargeDict)
+		let alltogether = NSMutableDictionary(dictionary: tooLargeDict)
 		alltogether.addEntriesFromDictionary(defaults1)
 		alltogether.addEntriesFromDictionary(defaults2)
 		alltogether.addEntriesFromDictionary(defaults3)
@@ -339,7 +339,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 	
 	func handleFile(theURL1: NSURL!, ofType theUTI: String) -> Bool {
-		var sharedWorkspace = NSWorkspace.sharedWorkspace()
+		let sharedWorkspace = NSWorkspace.sharedWorkspace()
 		var theURL = theURL1
 		if sharedWorkspace.type(theUTI, conformsToType: MADNativeUTI) {
 			// Document controller should automatically handle this.
@@ -357,7 +357,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 				var rec: NSDictionary? = nil
 				var ostype = [Int8](count: 5, repeatedValue: 0)
 				
-				var identified = madLib.identifyFileAtURL(theURL, type: &ostype)
+				let identified = madLib.identifyFileAtURL(theURL, type: &ostype)
 				
 				if (madLib.identifyFileAtURL(theURL, type: &ostype) != MADErr.NoErr) || madLib.getInformationFromFileAtURL(theURL, type: &ostype, infoDictionary: &rec) != MADErr.NoErr {
 					PPRunAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
@@ -392,7 +392,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			if (sharedWorkspace.type(theUTI, conformsToType:PPPCMDUTI)) {
 				var theOSErr = patternHandler.importPcmdFromURL(theURL)
 				if (theOSErr != MADErr.NoErr) {
-					var theErr = CreateErrorFromMADErrorType(theOSErr);
+					let theErr = CreateErrorFromMADErrorType(theOSErr);
 					NSAlert(error: theErr).runModal()
 					return false;
 				}
@@ -412,20 +412,13 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			for aUTI in trackerUTIs {
 				if (sharedWorkspace.type(theUTI, conformsToType:aUTI)) {
 					let theWrap = PPMusicObject(URL: theURL1, library: madLib)
-					var theDoc = PPDocument()
+					let theDoc = PPDocument()
 					theDoc.importMusicObject(theWrap)
 					
 					self.addDocument(theDoc)
 					return true;
 				}
 			}
-		
-		#if false
-		var instrumentArray = [String]();
-		for obj in instrumentPlugHandler {
-			instrumentArray += obj.UTITypes
-		}
-		#endif
 		
 		for obj in instrumentPlugHandler {
 			for aUTI in obj.UTITypes as [String] {
@@ -464,7 +457,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	
 	func applicationDidFinishLaunching(notification: NSNotification!) {
 		MADRegisterDebugBlock(CocoaDebugStr)
-		var defaults = NSUserDefaults.standardUserDefaults()
+		let defaults = NSUserDefaults.standardUserDefaults()
 		
 		for (i, obj) in enumerate(instrumentPlugHandler) {
 			if (obj.mode == MADPlugModes.ImportExport.toRaw() || obj.mode == MADPlugModes.Export.toRaw()) {
@@ -495,14 +488,14 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	
 	override func makeUntitledDocumentOfType(typeName: String!, error outError: NSErrorPointer) -> AnyObject! {
 		assert(typeName == MADNativeUTI, "Unknown type passed to \(__FUNCTION__): \(typeName)")
-		var theDoc = PPDocument()
+		let theDoc = PPDocument()
 		theDoc.importMusicObject(PPMusicObject())
 
 		return theDoc
 	}
 	
 	@IBAction func openFile(sender: AnyObject?) {
-		var panel = NSOpenPanel();
+		let panel = NSOpenPanel();
 		let otherDict: [String : [String]]  = ["PCMD": [PPPCMDUTI], "Instrument List": [PPInstrumentListUTI]];
 		var plugCount = instrumentPlugHandler.plugInCount;
 		var samplesDict = [String: [String]]()
@@ -512,7 +505,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			}
 		}
 		
-		var av = OpenPanelViewController(openPanel: panel, trackerDictionary: trackerDict, instrumentDictionary: samplesDict, additionalDictionary: otherDict)
+		let av = OpenPanelViewController(openPanel: panel, trackerDictionary: trackerDict, instrumentDictionary: samplesDict, additionalDictionary: otherDict)
 		av.setupDefaults()
 		panel.beginWithCompletionHandler { (retval) -> Void in
 			if retval == NSFileHandlingPanelOKButton {

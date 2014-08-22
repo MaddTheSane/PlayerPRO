@@ -51,15 +51,15 @@ class Preferences: NSWindowController {
 	}
 	
 	@IBAction func changeViewController(sender: AnyObject!) {
-		var i = (sender as NSMenuItem).tag
-		var vc = viewControllers[i];
+		let i = (sender as NSMenuItem).tag
+		let vc = viewControllers[i];
 		displayViewController(vc)
 	}
 	
-	func displayViewController(vc: NSViewController) {
+	private func displayViewController(vc: NSViewController) {
 		//try to end editing
-		var w = box.window;
-		var ended = w!.makeFirstResponder(w)
+		let w = box.window;
+		let ended = w!.makeFirstResponder(w)
 		
 		if (!ended) {
 			NSBeep();
@@ -94,12 +94,10 @@ class Preferences: NSWindowController {
         super.awakeFromNib()
     
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-		var menu = popUp.menu
-		var itemCount = viewControllers.count
+		let menu = popUp.menu
 		
 		for (i, vc) in enumerate(viewControllers) {
-			//var vc = viewControllers[i];
-			var mi = NSMenuItem(title: vc.title, action: "changeViewController:", keyEquivalent: "")
+			let mi = NSMenuItem(title: vc.title, action: "changeViewController:", keyEquivalent: "")
 			mi.tag = i
 			menu.addItem(mi)
 		}
@@ -108,5 +106,4 @@ class Preferences: NSWindowController {
 		displayViewController(viewControllers[0])
 		popUp.selectItemAtIndex(0)
     }
-
 }

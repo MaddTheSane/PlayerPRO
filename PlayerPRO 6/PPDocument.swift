@@ -40,7 +40,6 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 	return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
 }
 
-
 @objc(PPDocument) class PPDocument: NSDocument, SoundSettingsViewControllerDelegate {
 	@IBOutlet var exportWindow: NSWindow!
 	@IBOutlet var exportSettingsBox: NSBox!
@@ -141,9 +140,9 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
     }
 
 	func importMusicObject(theObj: PPMusicObject) {
-	if (theMusic == nil) {
-	self.theMusic = theObj;
-	}
+		if (theMusic == nil) {
+			self.theMusic = theObj;
+		}
 	}
 	
 	func rawSoundData(inout theSet: MADDriverSettings) -> NSMutableData? {
@@ -201,6 +200,27 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 		return mutData;
 	}
 	
+	func rawBESoundData(inout theSet: MADDriverSettings) -> NSData? {
+		let rsd = rawSoundData(&theSet)
+		if rsd == nil {
+			return nil
+		}
+		if (theSet.outPutBits == 16) {
+			let sndSize = rsd!.length;
+			let bePtr = UnsafeMutablePointer<UInt16>(rsd!.mutableBytes)
+			dispatch_apply(UInt(sndSize) / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
+				bePtr[Int(i)] = bePtr[Int(i)].bigEndian
+				return
+			})
+		}
+		return rsd!.copy() as NSData?
+	}
+	
+	func rawLESoundData(inout theSet: MADDriverSettings) -> NSData? {
+		return rawSoundData(&theSet)?.copy() as NSData?
+	}
+
+	
 	@IBAction func showBoxEditor(sender: AnyObject!) {
 		editorsTab.selectTabViewItemWithIdentifier("Box")
 	}
@@ -208,9 +228,11 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 	@IBAction func showClassicEditor(sender: AnyObject!) {
 		editorsTab.selectTabViewItemWithIdentifier("Classic")
 	}
+	
 	@IBAction func showDigitalEditor(sender: AnyObject!) {
 		editorsTab.selectTabViewItemWithIdentifier("Digital")
 	}
+	
 	@IBAction func showWavePreview(sender: AnyObject!) {
 		editorsTab.selectTabViewItemWithIdentifier("Wave")
 	}
@@ -235,48 +257,46 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 	}
 	
 	func soundOutBitsDidChange(bits: Int16) {
-	exportSettings.outPutBits = bits;
+		exportSettings.outPutBits = bits;
 	}
 	
 	func soundOutRateDidChange(rat: UInt32) {
-	exportSettings.outPutRate = rat;
+		exportSettings.outPutRate = rat;
 	}
 	
 	func soundOutReverbDidChangeActive(isAct: Bool) {
-	exportSettings.Reverb = isAct;
+		exportSettings.Reverb = isAct;
 	}
 	
 	func soundOutOversamplingDidChangeActive(isAct: Bool) {
-	if (!isAct) {
-	exportSettings.oversampling = 1;
-	}
+		if (!isAct) {
+			exportSettings.oversampling = 1;
+		}
 	}
 	
 	func soundOutStereoDelayDidChangeActive(isAct: Bool) {
-	if (!isAct) {
-	exportSettings.MicroDelaySize = 0;
-	}
+		if (!isAct) {
+			exportSettings.MicroDelaySize = 0;
+		}
 	}
 	
 	func soundOutSurroundDidChangeActive(isAct: Bool) {
-	exportSettings.surround = isAct;
+		exportSettings.surround = isAct;
 	}
 	
 	func soundOutReverbStrengthDidChange(rev: Int32) {
-	exportSettings.ReverbStrength = rev;
+		exportSettings.ReverbStrength = rev;
 	}
 	
 	func soundOutReverbSizeDidChange(rev: Int32) {
-	exportSettings.ReverbSize = rev;
+		exportSettings.ReverbSize = rev;
 	}
 	
 	func soundOutOversamplingAmountDidChange(ovs: Int32) {
-	exportSettings.oversampling = ovs;
+		exportSettings.oversampling = ovs;
 	}
 	
 	func soundOutStereoDelayAmountDidChange(std: Int32) {
-	exportSettings.MicroDelaySize = std;
+		exportSettings.MicroDelaySize = std;
 	}
-
-	
 }

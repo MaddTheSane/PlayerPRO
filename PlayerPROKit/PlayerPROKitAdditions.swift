@@ -25,9 +25,9 @@ extension PPSampleObject {
 		var start = startI
 		var i = 0;
 		var sampleSize = curData.data.length;
-		var	temp: CGFloat = 0.0
-		var theSample = UnsafePointer<UInt8>(curData.data.bytes)
-		var theShortSample = UnsafePointer<UInt16>(curData.data.bytes)
+		var temp: CGFloat = 0.0
+		let theSample = UnsafePointer<UInt8>(curData.data.bytes)
+		let theShortSample = UnsafePointer<UInt16>(curData.data.bytes)
 		var BS = 0
 		var BE = 0
 		var x = 0

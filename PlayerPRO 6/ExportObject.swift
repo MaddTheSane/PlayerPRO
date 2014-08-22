@@ -17,11 +17,11 @@ typealias PPExportBlock = @objc_block (theURL: NSURL, errStr: AutoreleasingUnsaf
 
 class ExportObject: NSObject {
 	weak var delegate: ExportObjectDelegate?
-	private(set) var destination: NSURL
-	private(set) var exportBlock: PPExportBlock
+	let destination: NSURL
+	let exportBlock: PPExportBlock
 	@objc init(destination dest: NSURL, exportBlock exportCode: PPExportBlock) {
-		self.exportBlock = exportCode
-		self.destination = dest
+		exportBlock = exportCode
+		destination = dest
 		
 		super.init()
 	}

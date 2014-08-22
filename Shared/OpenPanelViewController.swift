@@ -102,10 +102,10 @@ class OpenPanelViewController: NSViewController {
 			}}
 	}
 	
-	private var openPanel: NSOpenPanel!
+	let openPanel: NSOpenPanel
 	private var utiObjects = [OpenPanelViewItem]()
-	@IBOutlet var popUp: NSPopUpButton! = nil
 	private var multipleSelection: Bool
+	@IBOutlet var popUp: NSPopUpButton! = nil
 	
 	var allowsMultipleSelectionOfTrackers:Bool { get {
 		return multipleSelection
@@ -116,7 +116,9 @@ class OpenPanelViewController: NSViewController {
 	}}
 	
 	required init(coder: NSCoder!) {
+		println("initWithCoder was called?")
 		multipleSelection = false
+		openPanel = NSOpenPanel()
 		
 		super.init(coder: coder)
 	}
@@ -263,7 +265,7 @@ class OpenPanelViewController: NSViewController {
 		let fileTypeSelectionMenu = popUp.menu;
 		let moreThanTwoTypes = hasMoreThanTwoTypes();
 		if (moreThanTwoTypes) {
-			var mi0 = NSMenuItem(title: "All Openable Files", action: "selectUTI:", keyEquivalent: "")
+			let mi0 = NSMenuItem(title: "All Openable Files", action: "selectUTI:", keyEquivalent: "")
 			mi0.tag = utiType.allType.toRaw()
 			mi0.target = self
 			fileTypeSelectionMenu.addItem(mi0)
@@ -273,7 +275,7 @@ class OpenPanelViewController: NSViewController {
 		
 		for item in utiObjects {
 			if (item.theUtiType == .tracker) {
-				var mi0 = NSMenuItem(title: "All Trackers", action: "selectUTI:", keyEquivalent: "")
+				let mi0 = NSMenuItem(title: "All Trackers", action: "selectUTI:", keyEquivalent: "")
 				mi0.tag = utiType.trackerType.toRaw()
 				mi0.target = self
 				fileTypeSelectionMenu.addItem(mi0)
@@ -284,30 +286,33 @@ class OpenPanelViewController: NSViewController {
 		
 		for  item in utiObjects {
 			if (item.theUtiType == .playlist) {
-				var mi0 = NSMenuItem(title: "All Playlists", action: "selectUTI:", keyEquivalent: "")
+				let mi0 = NSMenuItem(title: "All Playlists", action: "selectUTI:", keyEquivalent: "")
 				mi0.tag = utiType.playlistType.toRaw()
 				mi0.target = self
 				fileTypeSelectionMenu.addItem(mi0)
+				
 				break;
 			}
 		}
 		
 		for item in utiObjects {
 			if (item.theUtiType == .instrument) {
-				var mi0 = NSMenuItem(title: "All Instruments", action: "selectUTI:", keyEquivalent: "")
+				let mi0 = NSMenuItem(title: "All Instruments", action: "selectUTI:", keyEquivalent: "")
 				mi0.tag = utiType.instrumentType.toRaw()
 				mi0.target = self
 				fileTypeSelectionMenu.addItem(mi0)
+				
 				break;
 			}
 		}
 		
 		for item in utiObjects {
 			if (item.theUtiType == .other) {
-				var mi0 = NSMenuItem(title: "All Other", action: "selectUTI:", keyEquivalent: "")
+				let mi0 = NSMenuItem(title: "All Other", action: "selectUTI:", keyEquivalent: "")
 				mi0.tag = utiType.otherType.toRaw()
 				mi0.target = self
 				fileTypeSelectionMenu.addItem(mi0)
+				
 				break;
 			}
 		}
@@ -316,13 +321,13 @@ class OpenPanelViewController: NSViewController {
 		for (i, curItem) in enumerate(utiObjects)  {
 			if (moreThanTwoTypes) {
 				if (i - 1 >= 0) {
-					var prevItem = utiObjects[i - 1];
+					let prevItem = utiObjects[i - 1];
 					if (curItem.theUtiType != prevItem.theUtiType) {
 						fileTypeSelectionMenu.addItem(NSMenuItem.separatorItem())
 					}
 				}
 			}
-			var mi = NSMenuItem(title: curItem.name, action: "selectUTI:", keyEquivalent: "")
+			let mi = NSMenuItem(title: curItem.name, action: "selectUTI:", keyEquivalent: "")
 			mi.tag = i
 			mi.target = self
 			fileTypeSelectionMenu.addItem(mi)
@@ -346,15 +351,14 @@ class OpenPanelViewController: NSViewController {
 	}
 	
 	func hasMoreThanTwoTypes() -> Bool {
-		var i = 0;
 		let utiCount = utiObjects.count;
 		if (utiCount < 2) {
 			return false;
 		}
 		
-		for (i = 1; i < utiCount; i++) {
-			var obj1 = utiObjects[i - 1];
-			var obj2 = utiObjects[i];
+		for (var i = 1; i < utiCount; i++) {
+			let obj1 = utiObjects[i - 1];
+			let obj2 = utiObjects[i];
 			if (obj1.theUtiType != obj2.theUtiType) {
 				return true;
 			}

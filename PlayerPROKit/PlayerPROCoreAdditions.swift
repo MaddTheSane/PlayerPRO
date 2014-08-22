@@ -315,7 +315,7 @@ extension FXBus {
 		copyId = 0
 	}
 	public var bigEndian: FXBus {get {
-		var toRet = FXBus(ByPass: self.ByPass, copyId: self.copyId.bigEndian, Active: self.Active)
+		let toRet = FXBus(ByPass: self.ByPass, copyId: self.copyId.bigEndian, Active: self.Active)
 		
 		return toRet
 	}}
