@@ -8,7 +8,7 @@
 
 import Cocoa
 
-func ==(lhs: OpenPanelViewController.OpenPanelViewItem, rhs: OpenPanelViewController.OpenPanelViewItem) -> Bool {
+private func ==(lhs: OpenPanelViewController.OpenPanelViewItem, rhs: OpenPanelViewController.OpenPanelViewItem) -> Bool {
 	if lhs.theUtiType != rhs.theUtiType {
 		return false
 	} else if lhs.name != rhs.name {
@@ -36,7 +36,7 @@ class OpenPanelViewController: NSViewController {
 		case other
 	}
 	
-	class OpenPanelViewItem: DebugPrintable, Printable, Hashable {
+	private class OpenPanelViewItem: DebugPrintable, Printable, Hashable {
 		let name: String
 		let theUtiType: trackerType
 		let utis: [String]
@@ -251,12 +251,6 @@ class OpenPanelViewController: NSViewController {
 	convenience init(openPanel panel:NSOpenPanel, trackerDictionary td: [String: [String]]?, playlistDictionary pd: [String: [String]]?) {
 		self.init(openPanel:panel, trackerDictionary:td, playlistDictionary:pd, instrumentDictionary:nil, additionalDictionary:nil)
 	}
-	/*
-	- (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd;
-	- (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd instrumentDictionary:(NSDictionary*)insDict;
-	- (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd instrumentDictionary:(NSDictionary*)insDict additionalDictionary:(NSDictionary *)adddict;
-	- (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd additionalDictionary:(NSDictionary *)adddict;
-	*/
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -350,7 +344,7 @@ class OpenPanelViewController: NSViewController {
 		openPanel.accessoryView = self.view
 	}
 	
-	func hasMoreThanTwoTypes() -> Bool {
+	private func hasMoreThanTwoTypes() -> Bool {
 		let utiCount = utiObjects.count;
 		if (utiCount < 2) {
 			return false;

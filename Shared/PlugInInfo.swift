@@ -25,11 +25,11 @@ func ==(lhs: PlugInInfo, rhs: PlugInInfo) -> Bool {
 }
 
 class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
-	/*@NSCopying */ private(set) var plugName: String
-	private(set) var authorName: String
-	private(set) var plugType: String
-	private(set) var plugCopyright: String
-	private(set) var plugURL: NSURL
+	let plugName: String
+	let authorName: String
+	let plugType: String
+	let plugCopyright: String
+	let plugURL: NSURL
 	
 	init(plugName pn: String, author aut: String = "Unknown Author", plugType pt: String = "unknown", plugURL pu: NSURL) {
 		let tmpBundle = NSBundle(URL: pu).infoDictionary
