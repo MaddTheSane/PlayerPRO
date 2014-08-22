@@ -8,7 +8,7 @@
 
 import Foundation
 
-#if false
+/*
 //Disabled because I'm not yet comfortable using this yet.
 final public class PPLibraryGenerator: GeneratorType {
 	typealias Element = PPLibraryObject
@@ -35,15 +35,13 @@ extension PPLibrary: SequenceType {
 		return PPLibraryGenerator(library: self);
 	}
 }
-
-#else
+*/
 
 extension PPLibrary: SequenceType {
 	public func generate() -> NSFastGenerator {
 		return NSFastGenerator(self);
 	}
 }
-#endif
 
 extension PPInstrumentObject: SequenceType {
 	public func generate() -> NSFastGenerator {

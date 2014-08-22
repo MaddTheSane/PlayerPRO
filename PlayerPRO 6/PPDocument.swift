@@ -60,6 +60,9 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 	var exportController = SoundSettingsViewController()
 	private(set) var theDriver: PPDriver!
 	private(set) var theMusic: PPMusicObject!
+	dynamic var wrapper: PPMusicObject { get {
+		return theMusic
+		}}
 	dynamic var musicName: String {
 		get {
 			return theMusic.internalFileName

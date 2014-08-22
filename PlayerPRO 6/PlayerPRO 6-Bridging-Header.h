@@ -7,7 +7,6 @@
 
 #import "UserDefaultKeys.h"
 #import "PPTimeFormatter.h"
-#import "PPDocument.h"
 #import "PPInstrumentImporterObject.h"
 
 #import "PPFilterPlugHandler.h"

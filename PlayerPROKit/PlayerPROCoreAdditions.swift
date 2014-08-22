@@ -26,7 +26,7 @@ extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 		self = UTGetOSTypeFromString(toInit as NSString as CFString)
 	}
 	
-	#if false
+	/*
 	public init(_ toInit: (Int8, Int8, Int8, Int8, Int8)) {
 		var tmpInit = toInit
 		var atmp = &tmpInit
@@ -41,7 +41,7 @@ extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 	public var debugDescription: String { get {
 		return self.description
 		}}
-	#endif
+	*/
 	
 	public static func convertFromStringLiteral(value: String) -> MADFourChar {
 		return MADFourChar(value)
