@@ -19,9 +19,13 @@
 #import "PPFilterPlugObject.h"
 #import "NSColor+PPPreferences.h"
 
+#import "BoxViewController.h"
+#import "DigitalViewController.h"
+#import "ClassicalViewController.h"
+#import "WaveViewController.h"
+
 //Preferences
 #import "PianoPreferencesController.h"
-//#import "MusicListPreferenceController.h"
 #import "ColorPreferenceController.h"
 #import "MiscPreferenceController.h"
 #import "BoxEditorPreferenceController.h"

@@ -43,6 +43,8 @@ func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<
 	}
 }
 
+let globalMadLib = (NSApplication.sharedApplication().delegate as AppDelegate).madLib
+
 class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDelegate {
 	private var exportObjects = [ExportObject]()
 	private var _trackerDict = [String: [String]]()
