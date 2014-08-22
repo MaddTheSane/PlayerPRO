@@ -262,9 +262,9 @@
 	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
 	NSSize lineSize = [self.waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
 	CGContextSetLineWidth(bitmapContext, lineSize.height);
-		CGRect aRect;
-		aRect.size = imageSize;
-		aRect.origin = NSMakePoint(0, 0);
+	CGRect aRect;
+	aRect.size = imageSize;
+	aRect.origin = NSMakePoint(0, 0);
 	if (datIsStereo){
 		CGColorRef colorRef = CGColorCreateGenericRGB(0, 0, 1, .75);
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);

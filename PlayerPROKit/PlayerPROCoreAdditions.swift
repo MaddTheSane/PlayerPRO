@@ -33,14 +33,6 @@ extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 		var tmpPtr: UnsafeMutablePointer<Int8> = UnsafeMutablePointer<Int8>(tmpInit)
 		self = Ptr2OSType(tmpInit)
 	}
-	
-	public var description: String { get {
-		return self.stringValue
-		}}
-	
-	public var debugDescription: String { get {
-		return self.description
-		}}
 	*/
 	
 	public static func convertFromStringLiteral(value: String) -> MADFourChar {
@@ -84,7 +76,7 @@ extension MADBool : BooleanLiteralConvertible, BooleanType {
 // MARK: PlayerPRO MAD data types
 
 extension MADDriverSettings: DebugPrintable {
-	public init() {
+	public init(bestDriver: Bool = false) {
 		self.driverMode = .CoreAudioDriver
 		self.numChn = 4
 		self.outPutBits = 16
@@ -98,12 +90,13 @@ extension MADDriverSettings: DebugPrintable {
 		self.surround = false
 		self.Reverb = false
 		self.repeatMusic = false
+		if bestDriver {
+			resetToBestDriver()
+		}
 	}
 
 	public static func createWithBestDriver() -> MADDriverSettings {
-		var curSett = MADDriverSettings()
-		curSett.resetToBestDriver()
-		return curSett
+		return MADDriverSettings(bestDriver: true)
 	}
 
 	public mutating func resetToBestDriver() {
