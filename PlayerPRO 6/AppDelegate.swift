@@ -452,7 +452,8 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 	
 	func addExportObject(expObj: ExportObject) {
-	
+		exportObjects.append(expObj);
+		expObj.run()
 	}
 	
 	func applicationDidFinishLaunching(notification: NSNotification!) {
@@ -460,7 +461,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		let defaults = NSUserDefaults.standardUserDefaults()
 		
 		for (i, obj) in enumerate(instrumentPlugHandler) {
-			if (obj.mode == MADPlugModes.ImportExport.toRaw() || obj.mode == MADPlugModes.Export.toRaw()) {
+			if (obj.mode == MADPlugModes.ImportExport || obj.mode == MADPlugModes.Export) {
 				let mi = NSMenuItem(title: obj.menuName, action: "exportInstrument:", keyEquivalent: "")
 				mi.tag = i;
 				mi.target = nil
@@ -500,7 +501,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		var plugCount = instrumentPlugHandler.plugInCount;
 		var samplesDict = [String: [String]]()
 		for obj in instrumentPlugHandler {
-			if (obj.mode == MADPlugModes.Import.toRaw() || obj.mode == MADPlugModes.ImportExport.toRaw()) {
+			if (obj.mode == .Import || obj.mode == .ImportExport) {
 				samplesDict[obj.menuName] = (obj.UTITypes as [String]);
 			}
 		}
@@ -533,11 +534,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		return handleFile(NSURL(fileURLWithPath: filename), ofType: utiFile) ;
 	}
 	
-	func ExportObjectDidFinish(theObj: ExportObject) {
+	func exportObjectDidFinish(theObj: ExportObject) {
 		
 	}
 	
-	func ExportObjectEncounteredError(theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: NSString?) {
+	func exportObjectEncounteredError(theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: NSString?) {
 		
 	}
 }

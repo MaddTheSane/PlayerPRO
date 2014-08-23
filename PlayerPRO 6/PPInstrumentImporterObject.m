@@ -37,7 +37,7 @@ static inline BOOL getBoolFromId(id NSType)
 
 @interface PPInstrumentImporterObject ()
 @property (readwrite, copy) NSArray *UTITypes;
-@property (readwrite) OSType mode;
+@property (readwrite) MADPlugModes mode;
 @property (readwrite) BOOL isSample;
 @property PPInstrumentPlugin **xxxx;
 @end

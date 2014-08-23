@@ -16,10 +16,6 @@ private let kMusicListLocation3 = "Music Key Location 3";
 private let kMusicListKey3 = "Music List Key 3"
 private let kPlayerList = "Player List"
 
-private func homeURL() -> NSURL {
-	return NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
-}
-
 @objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, SequenceType {
 	private(set)	dynamic var musicList = [MusicListObject]()
 	private(set)	var lostMusicCount:UInt = 0;
@@ -157,7 +153,7 @@ private func homeURL() -> NSURL {
 				let dataBookArray = BookmarkArray! as [NSData]
 				for bookData in dataBookArray {
 					var isStale: ObjCBool = false;
-					let aHomeURL = homeURL()
+					let aHomeURL = NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
 					let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: aHomeURL, bookmarkDataIsStale: &isStale, error: nil)
 					#if DEBUG
 						if (isStale) {

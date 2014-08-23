@@ -13,7 +13,7 @@
 
 @interface PPInstrumentImporterObject : PPPlugInObject
 @property (readonly, copy) NSArray *UTITypes;
-@property (readonly) OSType mode;
+@property (readonly) MADPlugModes mode;
 @property (readonly) BOOL isSample;
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;

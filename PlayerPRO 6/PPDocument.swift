@@ -115,9 +115,10 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 		returnerr = theDriver.changeDriverSettingsToSettings(theSett)
 		
 		if (returnerr != MADErr.NoErr) {
-			NSAlert(error: CreateErrorFromMADErrorType(returnerr)).beginSheetModalForWindow(self.windowForSheet, completionHandler: { (returnCode) -> Void in
+			println("Unable to change driver, \(self)")
+			//NSAlert(error: CreateErrorFromMADErrorType(returnerr)).beginSheetModalForWindow(self.windowForSheet, completionHandler: { (returnCode) -> Void in
 				 //currently, do nothing
-			})
+			//})
 		}
 	}
 	
@@ -188,8 +189,9 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 		}
 	}
 	
-	func rawSoundData(inout theSet: MADDriverSettings) -> NSMutableData? {
+	func rawSoundData(theSet1: MADDriverSettings) -> NSMutableData? {
 		var err = MADErr.NoErr;
+		var theSet = theSet1
 		var theRec = PPDriver(library: globalMadLib, settings: &theSet, error: &err)
 		
 		if (err != MADErr.NoErr) {
@@ -206,7 +208,7 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 		theRec.cleanDriver()
 		theRec.currentMusic = theMusic
 		
-		var soundPtr:UnsafeMutablePointer<()> = nil;
+		var soundPtr: UnsafeMutablePointer<UInt8> = nil;
 		var full = theRec.audioDataLength
 		if (theSet.outPutBits == 16) {
 			full *= 2;
@@ -232,7 +234,7 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 		theRec.play()
 		
 		var mutData = NSMutableData(capacity: full * 60 * Int(theRec.totalMusicPlaybackTime) / 2)
-		soundPtr = UnsafeMutablePointer<()>.alloc(full)
+		soundPtr = UnsafeMutablePointer<UInt8>.alloc(full)
 		
 		while theRec.directSaveToPointer(soundPtr, settings: &theSet) {
 			mutData.appendBytes(soundPtr, length: full)
@@ -243,8 +245,8 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 		return mutData;
 	}
 	
-	func rawBESoundData(inout theSet: MADDriverSettings) -> NSData? {
-		let rsd = rawSoundData(&theSet)
+	func rawBESoundData(theSet: MADDriverSettings) -> NSData? {
+		let rsd = rawSoundData(theSet)
 		if rsd == nil {
 			return nil
 		}
@@ -252,23 +254,24 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 			let sndSize = rsd!.length;
 			let bePtr = UnsafeMutablePointer<UInt16>(rsd!.mutableBytes)
 			dispatch_apply(UInt(sndSize) / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
-				bePtr[Int(i)] = bePtr[Int(i)].bigEndian
+				let iInt = Int(i)
+				bePtr[iInt] = bePtr[iInt].bigEndian
 				return
 			})
 		}
 		return rsd!.copy() as NSData?
 	}
 	
-	func rawLESoundData(inout theSet: MADDriverSettings) -> NSData? {
-		return rawSoundData(&theSet)?.copy() as NSData?
+	func rawLESoundData(theSet: MADDriverSettings) -> NSData? {
+		return rawSoundData(theSet)?.copy() as NSData?
 	}
 
 	private func applyMetadataToFileID(theID: AudioFileID) {
 		//TODO: implement, but how?
 	}
 	
-	private func saveMusic(waveToURL theURL: NSURL, inout theSett: MADDriverSettings) -> MADErr {
-		let saveData = rawLESoundData(&theSett)
+	private func saveMusic(waveToURL theURL: NSURL, theSett: MADDriverSettings) -> MADErr {
+		let saveData = rawLESoundData(theSett)
 		var audioFile: AudioFileID = nil;
 		if saveData == nil {
 			return MADErr.NeedMemory
@@ -321,8 +324,8 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 		return MADErr.NoErr
 	}
 	
-	private func saveMusic(AIFFToURL theURL: NSURL, inout theSett: MADDriverSettings) -> MADErr {
-		let saveData = rawBESoundData(&theSett)
+	private func saveMusic(AIFFToURL theURL: NSURL, theSett: MADDriverSettings) -> MADErr {
+		let saveData = rawBESoundData(theSett)
 		var audioFile: AudioFileID = nil;
 		if saveData == nil {
 			return MADErr.NeedMemory
@@ -389,7 +392,7 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 						if errStr != nil {
 							errStr.memory = nil
 						}
-						var theErr = self.saveMusic(AIFFToURL: theURL, theSett: &self.exportSettings)
+						var theErr = self.saveMusic(AIFFToURL: theURL, theSett: self.exportSettings)
 						self.theDriver.endExport()
 						return theErr
 					})
@@ -406,7 +409,7 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 						let oldMusicInfo = self.musicInfo;
 						let oldURL = self.fileURL;
 						let tmpURL = NSFileManager.defaultManager().URLForDirectory(.ItemReplacementDirectory, inDomain:.UserDomainMask, appropriateForURL:oldURL, create:true, error:nil)!.URLByAppendingPathComponent( NSString(format:"%@.aiff", oldMusicName != "" ? oldMusicName : "untitled"), isDirectory: false)
-						theErr = self.saveMusic(AIFFToURL: tmpURL, theSett: &self.exportSettings)
+						theErr = self.saveMusic(AIFFToURL: tmpURL, theSett: self.exportSettings)
 						self.theDriver.endExport()
 						if (theErr != MADErr.NoErr) {
 							if (errStr != nil) {

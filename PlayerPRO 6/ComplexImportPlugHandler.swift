@@ -9,11 +9,12 @@
 import Cocoa
 import PlayerPROKit
 
-final class ComplexImportPlugHandler: NSObject, NSFastEnumeration {
+final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, SequenceType {
 	
-	var plugIns = [PPComplexImportPlugObject]()
+	private(set) var plugIns = [PPComplexImportPlugObject]()
+	
 	override init() {
-		let defaultPlugLocs = DefaultPlugInLocations() as [NSURL]
+		let defaultPlugLocs = swiftDefaultPlugInLocations()
 		var defaultManager = NSFileManager.defaultManager()
 		
 		for url in defaultPlugLocs {
@@ -28,6 +29,14 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration {
 		}
 		
 		super.init()
+	}
+	
+	func generate() -> IndexingGenerator<[PPComplexImportPlugObject]> {
+		return plugIns.generate()
+	}
+	
+	@objc subscript (index: Int) -> PPComplexImportPlugObject {
+		return plugIns[index]
 	}
 	
 	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
