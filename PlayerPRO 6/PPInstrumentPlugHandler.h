@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
 
 @class PPInstrumentImporterObject;
 
@@ -16,7 +15,7 @@
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
 @property (readonly) NSArray *plugInArray;
-- (NSInteger)plugInCount;
+@property (readonly) NSInteger plugInCount;
 - (PPInstrumentImporterObject*)plugInAtIndex:(NSUInteger)idx;
 - (PPInstrumentImporterObject *)objectAtIndexedSubscript:(NSInteger)index;
 
@@ -24,10 +23,10 @@
 - (void)addPlugInFromURL:(NSURL *)urlpath;
 - (void)addPlugInFromBundle:(NSBundle *)theBund;
 
-- (OSErr)exportInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo;
-- (OSErr)importInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo;
-- (OSErr)testInstrumentFile:(NSURL *)toTest type:(OSType)theType;
+- (MADErr)exportInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo;
+- (MADErr)importInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo;
+- (MADErr)testInstrumentFile:(NSURL *)toTest type:(OSType)theType;
 - (BOOL)isPlugAvailable:(OSType)kind type:(OSType*)theType;
-- (OSErr)identifyInstrumentFile:(NSURL*)ref type:(OSType*)outType;
+- (MADErr)identifyInstrumentFile:(NSURL*)ref type:(OSType*)outType;
 
 @end

@@ -51,8 +51,74 @@ class InstrumentViewController: NSViewController, NSOutlineViewDataSource, NSOut
 		}
 	}
 
+	func importSampleFromURL(sampURL: NSURL, makeUserSelectInstrument selIns: Bool = false, error theErr: NSErrorPointer = nil) -> Bool {
+		//TODO: handle selIns
+		var plugType: MADFourChar = 0;
+		var theOSErr = importer.identifyInstrumentFile(sampURL, type: &plugType)
+		if (theOSErr != MADErr.NoErr) {
+			if (theErr != nil) {
+				theErr.memory = CreateErrorFromMADErrorType(theOSErr);
+			}
+			return false;
+		};
+		var theSamp: Int16 = 0;
+		var theIns: Int16  = 0;
+		
+		/*
+		InstrData *tmpInstr = &[currentDocument.wrapper internalMadMusicStruct]->fid[theIns];
+		sData **tmpsData = &[currentDocument.wrapper internalMadMusicStruct]->sample[theIns];
+		theOSErr = [importer importInstrumentOfType:plugType instrumentReference:tmpInstr sampleReference:tmpsData sample:&theSamp URL:sampURL plugInfo:NULL];
+		if (theOSErr != MADNoErr) {
+		if (theErr)
+		*theErr = PPCreateErrorFromMADErrorType(theOSErr);
+		
+		return NO;
+		} else {
+		if (theErr)
+		*theErr = nil;
+		
+		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:currentDocument.wrapper instrumentIndex:theIns];
+		[self replaceObjectInInstrumentsAtIndex:theIns withObject:insObj];
+		[instrumentView reloadData];
+		//(*curMusic)->hasChanged = TRUE;
+		return YES;
+		}
+		*/
+		return false
+	}
+
 	
-	func playSample(fromInstrument: Int16, sampleNumber: Int16, volume: UInt8 = 0xFF, note: UInt8 = 0xFF) {
+	func exportInstrumentListToURL(outURL: NSURL) -> MADErr {
+		return currentDocument.wrapper.exportInstrumentListToURL(outURL)
+	}
+
+	func importInstrumentListFromURL(insURL: NSURL, error theErr: NSErrorPointer = nil) -> Bool {
+		return currentDocument.wrapper.importInstrumentListFromURL(insURL, error: theErr)
+	}
+	
+	@IBAction func importInstrument(sender: AnyObject!) {
+		let plugCount = importer.plugInCount
+		var fileDict = [String: [String]]()
+		for obj in importer {
+			fileDict[obj.menuName] = (obj.UTITypes as [String]);
+		}
+		let openPanel = NSOpenPanel()
+		var vc = OpenPanelViewController(openPanel: openPanel, instrumentDictionary:fileDict)
+		vc.setupDefaults()
+		openPanel.beginSheetModalForWindow(currentDocument.windowForSheet, completionHandler: { (panelHandle) -> Void in
+			if panelHandle == NSFileHandlingPanelOKButton {
+				var err: NSError? = nil
+				if self.importSampleFromURL(openPanel.URL, error: &err) == false {
+					NSAlert(error:err!).beginSheetModalForWindow(self.currentDocument.windowForSheet, completionHandler: { (returnCode) -> Void in
+						//do nothing
+						return
+					})
+				}
+			}
+		})
+	}
+	
+	func playSample(fromInstrument: Int16, sampleNumber: Int16, volume: Byte = 0xFF, note: Byte = 0xFF) {
 		
 	}
 
@@ -65,10 +131,6 @@ class InstrumentViewController: NSViewController, NSOutlineViewDataSource, NSOut
 
 	
 	@IBAction func exportInstrument(sender: AnyObject!) {
-		
-	}
-	
-	@IBAction func importInstrument(sender: AnyObject!) {
 		
 	}
 	
@@ -183,7 +245,7 @@ class InstrumentViewController: NSViewController, NSOutlineViewDataSource, NSOut
 		return theView
 	}
 	
-	func replaceObjectInInstrumentsAtIndex(index: Int, withObject object: AnyClass!) {
+	func replaceObjectInInstrumentsAtIndex(index: Int, withObject object: AnyObject!) {
 		currentDocument.wrapper.instruments[index] = object;
 		//(*curMusic)->hasChanged = TRUE;
 	}

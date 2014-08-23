@@ -23,7 +23,7 @@ private enum bitRate {
 	case bits24
 }
 
-private struct TagCoupling {
+internal struct TagCoupling {
 	var amount:		Int32
 	var tag:		Int
 	

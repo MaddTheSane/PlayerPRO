@@ -120,13 +120,13 @@
 	return [instrumentIEArray count];
 }
 
-- (OSErr)callInstumentPlugIn:(PPInstrumentImporterObject*)thePlug order:(OSType)theOrd instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo
+- (MADErr)callInstumentPlugIn:(PPInstrumentImporterObject*)thePlug order:(OSType)theOrd instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo
 {
 	plugInfo->fileType = [thePlug type];
 	return [thePlug importInstrument:theURL instrumentDataReference:ins sampleDataReference:sampRef instrumentSample:samp function:theOrd plugInfo:plugInfo];
 }
 
-- (OSErr)exportInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo
+- (MADErr)exportInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		if (theType == obj.type) {
@@ -136,7 +136,7 @@
 	return MADCannotFindPlug;
 }
 
-- (OSErr)importInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo
+- (MADErr)importInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		if (theType == obj.type) {
@@ -146,7 +146,7 @@
 	return MADCannotFindPlug;
 }
 
-- (OSErr)testInstrumentFile:(NSURL *)toTest type:(OSType)theType
+- (MADErr)testInstrumentFile:(NSURL *)toTest type:(OSType)theType
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		if (theType == obj.type) {
@@ -158,7 +158,7 @@
 	return MADCannotFindPlug;
 }
 
-- (OSErr)identifyInstrumentFile:(NSURL*)ref type:(OSType*)outType
+- (MADErr)identifyInstrumentFile:(NSURL*)ref type:(OSType*)outType
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		short temp;
