@@ -8,7 +8,7 @@
 
 #import <PlayerPROKit/PlayerPROKit.h>
 #import "PPInstrumentCellView.h"
-#import "PPInstrumentViewController.h"
+#import "PlayerPRO_6-Swift.h"
 
 @implementation PPInstrumentCellView
 @synthesize numField;

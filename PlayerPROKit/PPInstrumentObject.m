@@ -649,7 +649,7 @@ static const dispatch_block_t initUTIArray = ^{
 	samples[index] = object;
 }
 
-- (NSUInteger)countOfSamples
+- (NSInteger)countOfSamples
 {
 	return [samples count];
 }

@@ -349,7 +349,7 @@ Gw
                 </customView>
             </subviews>
         </view>
-        <viewController id="FQe-II-xjQ" userLabel="Instrument View Controller" customClass="PPInstrumentViewController">
+        <viewController id="FQe-II-xjQ" userLabel="Instrument View Controller" customClass="InstrumentViewController" customModule="PlayerPRO_6" customModuleProvider="target">
             <connections>
                 <outlet property="currentDocument" destination="-2" id="dKG-lE-JMS"/>
                 <outlet property="view" destination="wbU-ef-Sat" id="spJ-vg-Atc"/>

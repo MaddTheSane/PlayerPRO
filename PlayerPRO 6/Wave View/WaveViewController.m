@@ -7,6 +7,7 @@
 //
 
 #import "WaveViewController.h"
+#import "PlayerPRO_6-Swift.h"
 
 @interface WaveViewController ()
 

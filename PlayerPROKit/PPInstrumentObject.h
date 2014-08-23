@@ -74,7 +74,7 @@
 
 - (void)addSamplesObject:(PPSampleObject *)object;
 - (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(PPSampleObject *)object;
-- (NSUInteger)countOfSamples;
+@property (readonly) NSInteger countOfSamples;
 - (PPSampleObject*)samplesObjectAtIndex:(NSUInteger)idx;
 
 @end

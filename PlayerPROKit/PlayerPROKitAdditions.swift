@@ -15,6 +15,7 @@ public func CreateErrorFromMADErrorType(theErr: MADErr) -> NSError? {
 }
 
 extension PPSampleObject {
+
 #if os(OSX)
 	public class func waveformImage(fromSample theDat: PPSampleObject, view: NSView) -> NSImage {
 		var imageSize = view.convertSizeToBacking(view.frame.size)
@@ -211,7 +212,7 @@ extension PPSampleObject {
 }
 
 extension PPDriver {
-	public func playSoundData(fromPointer theSnd: UnsafePointer<()>, size sndSize: Int, fromChannel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: Int = 0, loopLength iloopLen: Int = 0) -> MADErr {
+	public func playSoundData(fromPointer theSnd: UnsafePointer<()>, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: Int = 0, loopLength iloopLen: Int = 0) -> MADErr {
 		var loopStart = iloopStart
 		var loopLen = iloopLen
 		if (loopLen == 0) {
@@ -221,12 +222,12 @@ extension PPDriver {
 		return self.playSoundDataFromPointer(theSnd, withSize: UInt(sndSize), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopStart), andLoopLength: UInt(loopLen))
 	}
 
-	public func playSoundData(fromPointer theSnd: UnsafePointer<()>, size sndSize: Int, fromChannel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
+	public func playSoundData(fromPointer theSnd: UnsafePointer<()>, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
 		return self.playSoundDataFromPointer(theSnd, withSize: UInt(sndSize), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopRange.location), andLoopLength: UInt(loopRange.length))
 	}
 	
 	public func playSoundData(fromPointer theSnd: UnsafePointer<()>, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: Range<Int>) -> MADErr {
-		return playSoundData(fromPointer: theSnd, size: sndSize, fromChannel: theChan, amplitude: amp, bitRate: rate, stereo: stereo, note: theNote, loopInRange: NSRange(loopRange))
+		return playSoundData(fromPointer: theSnd, size: sndSize, channel: theChan, amplitude: amp, bitRate: rate, stereo: stereo, note: theNote, loopInRange: NSRange(loopRange))
 	}
 	
 	public func playSoundData(fromData theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: Int = 0, loopLength iloopLen: Int = 0) -> MADErr {

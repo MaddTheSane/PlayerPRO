@@ -7,6 +7,7 @@
 //
 
 #import "ClassicalViewController.h"
+#import "PlayerPRO_6-Swift.h"
 
 @interface ClassicalViewController ()
 
