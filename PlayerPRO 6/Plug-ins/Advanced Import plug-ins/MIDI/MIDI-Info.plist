@@ -5,7 +5,7 @@
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en_US</string>
+	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
@@ -20,23 +20,19 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
-	<key>MADCanExport</key>
-	<false/>
-	<key>MADCanImport</key>
-	<true/>
 	<key>MADPlugAuthorName</key>
 	<string>Antoine ROSSET</string>
 	<key>MADPlugMenuName</key>
-	<string>MADK Application</string>
-	<key>MADPlugMode</key>
-	<string>IMPL</string>
+	<string>MIDI</string>
 	<key>MADPlugType</key>
-	<string>APPL</string>
+	<string>Midi</string>
 	<key>MADPlugUTITypes</key>
 	<array>
-		<string>com.apple.application-file</string>
+		<string>public.midi-audio</string>
 	</array>
 	<key>NSHumanReadableCopyright</key>
 	<string>Written by A.ROSSET © 1995</string>
+	<key>NSPrincipalClass</key>
+	<string>PPMIDIImporter</string>
 </dict>
 </plist>
