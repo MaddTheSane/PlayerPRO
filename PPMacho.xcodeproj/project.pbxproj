@@ -2148,7 +2148,7 @@
 		5578C53017DB94A60057D11B /* PPImport copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PPImport copy-Info.plist"; path = "../PPImport copy-Info.plist"; sourceTree = "<group>"; };
 		5578C53A17DB9F630057D11B /* PPInstrumentPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPlugHandler.h; sourceTree = "<group>"; };
 		5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentPlugHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DigitalPlugHandler.swift; path = "Plug-in handling/DigitalPlugHandler.swift"; sourceTree = "<group>"; };
+		557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigitalPlugHandler.swift; sourceTree = "<group>"; };
 		557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-FilterBridge.c"; sourceTree = "<group>"; };
 		557DE43410E06BF200177B4C /* Amplitude.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amplitude.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE43510E06BF200177B4C /* Amplitude-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Amplitude-Info.plist"; sourceTree = "<group>"; };
@@ -3499,8 +3499,6 @@
 		5523EC78169276AA0067B22A /* Instrument Code */ = {
 			isa = PBXGroup;
 			children = (
-				557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */,
-				557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */,
 				550FBAB019A79A1600EFBD3D /* InstrumentViewController.swift */,
 				550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */,
 				550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */,
@@ -3508,8 +3506,6 @@
 				552581FC16C6FC350016A31C /* InstrumentInfoController.m */,
 				5508C3EC16CEB33B007CA458 /* SampleCellView.h */,
 				5508C3ED16CEB33B007CA458 /* SampleCellView.m */,
-				5578C53A17DB9F630057D11B /* PPInstrumentPlugHandler.h */,
-				5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */,
 			);
 			name = "Instrument Code";
 			sourceTree = "<group>";
@@ -3851,6 +3847,16 @@
 			name = "Swift wrappers";
 			sourceTree = "<group>";
 		};
+		5563A49B19AA7AD60051CC4B /* Document classes */ = {
+			isa = PBXGroup;
+			children = (
+				55A3CD4319A6DC8B00957845 /* PPDocument.swift */,
+				5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */,
+				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
+			);
+			name = "Document classes";
+			sourceTree = "<group>";
+		};
 		55680A1F19045F0A00F7616D /* StcfImporter */ = {
 			isa = PBXGroup;
 			children = (
@@ -3886,7 +3892,7 @@
 				55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */,
 				55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */,
 				55FD192D19A241FC001E1D9C /* ExportObject.swift */,
-				55A3CD4319A6DC8B00957845 /* PPDocument.swift */,
+				5563A49B19AA7AD60051CC4B /* Document classes */,
 				55FEF8471984502900D2E79C /* Box View */,
 				55FEF8481984505600D2E79C /* Classical View */,
 				55FEF8461984500B00D2E79C /* Digital View */,
@@ -4066,16 +4072,18 @@
 				55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */,
 				55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */,
 				55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */,
-				5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */,
-				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
 				552A662716B5EBEA007C63F7 /* PPPlugInObject.h */,
 				552A662816B5EBEB007C63F7 /* PPPlugInObject.m */,
+				557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */,
+				557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */,
+				5578C53A17DB9F630057D11B /* PPInstrumentPlugHandler.h */,
+				5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */,
 				55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */,
 				55FD192C19A1C1D8001E1D9C /* PPComplexImportPlugInterface.h */,
 				55B5DF0519A25B6D0042E062 /* PPComplexImportPlugObject.h */,
 				55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */,
 			);
-			name = "Plug-in handling";
+			path = "Plug-in handling";
 			sourceTree = "<group>";
 		};
 		55DE87C3187E18A500C36533 /* Private headers */ = {
