@@ -2180,6 +2180,8 @@
 		557DE91B10E08DB000177B4C /* Silence.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Silence.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE95E10E08DB900177B4C /* Smooth.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Smooth.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE9A110E08DC100177B4C /* Tone Generator.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tone Generator.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		557EF72F168BD4B5001BF077 /* PPInstrumentImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporter.h; sourceTree = "<group>"; };
+		557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentImporter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		557EF732168BDE95001BF077 /* PPPlugInCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPlugInCommon.h; sourceTree = "<group>"; };
 		557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporterObject.h; sourceTree = "<group>"; };
 		557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentImporterObject.m; sourceTree = "<group>"; };
@@ -3850,11 +3852,13 @@
 		5563A49B19AA7AD60051CC4B /* Document classes */ = {
 			isa = PBXGroup;
 			children = (
+				557EF72F168BD4B5001BF077 /* PPInstrumentImporter.h */,
+				557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */,
 				55A3CD4319A6DC8B00957845 /* PPDocument.swift */,
 				5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */,
 				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
 			);
-			name = "Document classes";
+			path = "Document classes";
 			sourceTree = "<group>";
 		};
 		55680A1F19045F0A00F7616D /* StcfImporter */ = {
