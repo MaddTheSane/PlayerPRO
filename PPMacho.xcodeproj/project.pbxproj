@@ -500,7 +500,6 @@
 		55B23D24168935D300DCE923 /* MINs.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEA6B10E727AD00EDF2F1 /* MINs.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55B23D2916893DE300DCE923 /* XI.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55151F8010DEDBDB0054ABC4 /* XI.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55B5DF0419A259370042E062 /* PPMIDIImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0319A259370042E062 /* PPMIDIImporter.swift */; };
-		55B5DF0719A25B6D0042E062 /* PPComplexImportPlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */; };
 		55B777A418E779ED001E5104 /* InstrumentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B777A318E77998001E5104 /* InstrumentInfoView.xib */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
 		55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -522,6 +521,11 @@
 		55B7E669161D1DF3000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55BE999D17978C7D00D6DECC /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		55BE999E17978C7D00D6DECC /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
+		55BF238919A93742005B1F96 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		55BF238A19A93775005B1F96 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		55BF238E19A937C9005B1F96 /* PPAPPLImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */; };
+		55BF238F19A937C9005B1F96 /* PPAPPLImporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */; };
+		55BF239019A94077005B1F96 /* PPComplexImportPlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */; };
 		55C3589716C42D1800FB9FA6 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
 		55C3589916C42D1800FB9FA6 /* Effects.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D10C2F21DD00D6C081 /* Effects.c */; };
 		55C3589A16C42D1800FB9FA6 /* Interrupt.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D20C2F21DD00D6C081 /* Interrupt.c */; };
@@ -2261,6 +2265,9 @@
 		55BE998B17978BB100D6DECC /* GetMetadataForFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetMetadataForFile.h; sourceTree = "<group>"; };
 		55BE998D17978BB100D6DECC /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		55BE999117978BB200D6DECC /* schema.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; lineEnding = 0; path = schema.xml; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xml; };
+		55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLImporter.h; sourceTree = "<group>"; };
+		55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLImporter.m; sourceTree = "<group>"; };
+		55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPAPPLImporter.xib; sourceTree = "<group>"; };
 		55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPlayerPROCompact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C930381819E68700D9E072 /* CocoaFuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaFuncs.m; sourceTree = "<group>"; };
 		55CB01A611EB82FA0028C6BB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -2804,8 +2811,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */,
 				55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */,
+				55BF238919A93742005B1F96 /* Cocoa.framework in Frameworks */,
+				55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */,
+				55BF238A19A93775005B1F96 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3273,6 +3282,9 @@
 		551E166F10CCD619003C842A /* Classic Application */ = {
 			isa = PBXGroup;
 			children = (
+				55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */,
+				55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */,
+				55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */,
 				55868A6810BFB46100FCC24D /* APPL-Info.plist */,
 				553340DD10BB5368005208D1 /* APPL.c */,
 				5501BEC618ABFFEB00602206 /* APPL.h */,
@@ -6008,6 +6020,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55BF238F19A937C9005B1F96 /* PPAPPLImporter.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6627,6 +6640,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55BF238E19A937C9005B1F96 /* PPAPPLImporter.m in Sources */,
 				5501BEC818AC05A400602206 /* MADH.c in Sources */,
 				55868A7C10BFB4B300FCC24D /* APPL.c in Sources */,
 				5501BEC918AC092500602206 /* MADI.c in Sources */,
@@ -6711,10 +6725,10 @@
 				55852E1C18D67CCB0009BF55 /* PPSmallPianoView.m in Sources */,
 				55FEF84519844FD600D2E79C /* DigitalViewController.m in Sources */,
 				55232AD811FDDFEA0041A4EC /* PianoPreferencesController.m in Sources */,
+				55BF239019A94077005B1F96 /* PPComplexImportPlugObject.m in Sources */,
 				5533C8FA19942AD9003AEB16 /* SoundOutputController.swift in Sources */,
 				55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */,
 				55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */,
-				55B5DF0719A25B6D0042E062 /* PPComplexImportPlugObject.m in Sources */,
 				55FD192B19A1C12B001E1D9C /* ComplexImportPlugHandler.swift in Sources */,
 				55232AED11FDE2E40041A4EC /* MiscPreferenceController.m in Sources */,
 				55588A96199951B300C3D4EE /* PlugInInfoController.swift in Sources */,

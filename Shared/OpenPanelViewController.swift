@@ -233,16 +233,14 @@ class OpenPanelViewController: NSViewController {
 			}
 		}
 		
-		utiObjects.sort({(isOrderedBefore: (lhs: OpenPanelViewItem, rhs: OpenPanelViewItem)) -> Bool in
-			let lhs = isOrderedBefore.lhs.theUtiType
-			let rhs = isOrderedBefore.rhs.theUtiType
-			if (lhs.toRaw() < rhs.toRaw()) {
+		utiObjects.sort({(lhs: OpenPanelViewItem, rhs: OpenPanelViewItem) -> Bool in
+			if (lhs.theUtiType.toRaw() < rhs.theUtiType.toRaw()) {
 				return true
-			} else if (lhs.toRaw() > rhs.toRaw()) {
+			} else if (lhs.theUtiType.toRaw() > rhs.theUtiType.toRaw()) {
 				return false
 			} else {
 				
-				let result = isOrderedBefore.lhs.name.localizedStandardCompare(isOrderedBefore.rhs.name);
+				let result = lhs.name.localizedStandardCompare(rhs.name);
 				return result == NSComparisonResult.OrderedAscending;
 			}
 			})

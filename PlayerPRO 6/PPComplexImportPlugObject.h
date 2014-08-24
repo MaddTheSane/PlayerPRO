@@ -11,13 +11,26 @@
 
 /**
  @class PPComplexImportPlugObject
- A tiny shim to make Swift behave.
- 
+ Not done in Swift because I don't know how to get it to behave.
  */
 
 @interface PPComplexImportPlugObject : NSObject <PPComplexImportPlugInterfaceBase>
 @property (readonly, strong) NSBundle *ourBundle;
+@property (readonly, copy) NSArray *utiArrays;
 
-- (instancetype)initWithBundle:(NSBundle*)ourBundle;
+- (instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (instancetype)initWithBundle:(NSBundle*)ourBundle NS_DESIGNATED_INITIALIZER;
+
+- (BOOL)plugInRespondsToSelector:(SEL)aSelector;
+
+#pragma mark plug-in functions
+
+- (void)beginImportOfURL:(NSURL*)theURL withHandler:(PPComplexImportHandler)handler;
+
+- (BOOL)canImportURL:(NSURL*)theURL;
+- (BOOL)canImportURL:(NSURL*)theURL error:(out NSError**)outErr;
+
+- (NSDictionary*)getTrackerInformationFromURL:(NSURL*)theURL;
+- (NSDictionary*)getTrackerInformationFromURL:(NSURL*)theURL error:(out NSError**)outErr;
 
 @end

@@ -10,21 +10,23 @@
 
 @interface PPComplexImportPlugObject ()
 @property (readwrite, strong) NSBundle *ourBundle;
+@property (readwrite, copy) NSArray *utiArrays;
 @property (strong) id<PPComplexImportPlugInterface> plugInterface;
 @end
 
 @implementation PPComplexImportPlugObject
 
-- (BOOL)respondsToSelector:(SEL)aSelector
+- (BOOL)plugInRespondsToSelector:(SEL)aSelector
 {
 #define HandleSelector(aSel) \
 if (aSelector == @selector( aSel )) { \
-	if ([_plugInterface respondsToSelector:@selector( aSel)]) { \
+	if ([_plugInterface respondsToSelector:@selector( aSel )]) { \
 		return YES; \
-	} else {\
+	} else { \
 		return NO; \
-	}\
+	} \
 }
+	
 	HandleSelector(canImportURL:error:);
 	HandleSelector(getTrackerInformationFromURL:);
 	HandleSelector(getTrackerInformationFromURL:error:);

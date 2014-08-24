@@ -18,17 +18,32 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, SequenceType 
 		var defaultManager = NSFileManager.defaultManager()
 		
 		for url in defaultPlugLocs {
-			var components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: NSDirectoryEnumerationOptions.fromRaw(0)!, error: nil) as [NSURL]
+			var components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: NSDirectoryEnumerationOptions(0), error: nil) as [NSURL]
 			for component in components {
 				if component.pathExtension != "ppextimp" {
 					continue
 				}
-				var theBundle = NSBundle(URL: component);
-				var aPlug = PPComplexImportPlugObject(bundle: theBundle)
+				let theBundle = NSBundle(URL: component);
+				let aClass: AnyClass? = theBundle.principalClass
+				if aClass == nil {
+					continue
+				}
+				
+				var aPlug = PPComplexImportPlugObject(bundle: theBundle) as PPComplexImportPlugObject?
+				
+				if aPlug != nil {
+					plugIns.append(aPlug!)
+				}
 			}
 		}
 		
 		super.init()
+	}
+	
+	var count: Int {
+		get {
+			return plugIns.count
+		}
 	}
 	
 	func generate() -> IndexingGenerator<[PPComplexImportPlugObject]> {

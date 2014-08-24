@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <PlayerPROKit/PPMusicObject.h>
 
-typedef void (^PPComplexImportHandler)(void);
+typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
 
 @protocol PPComplexImportPlugInterfaceBase <NSObject>
 - (BOOL)canImportURL:(NSURL*)theURL;
