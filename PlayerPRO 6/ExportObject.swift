@@ -50,9 +50,9 @@ class ExportObject: NSObject {
 			if aStr == nil {
 				let tmpErr = CreateErrorFromMADErrorType(errVal)!
 				aStr = tmpErr.description
-				let bStr: NSString = aStr ?? "Unknown error"
-				delegate?.exportObjectEncounteredError(self, errorCode: errVal, errorString: bStr)
 			}
+			let bStr: NSString = aStr ?? "Unknown error"
+			delegate?.exportObjectEncounteredError(self, errorCode: errVal, errorString: bStr)
 		}
 	}
 }

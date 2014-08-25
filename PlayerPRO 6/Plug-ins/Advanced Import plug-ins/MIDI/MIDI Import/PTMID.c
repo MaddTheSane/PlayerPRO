@@ -119,7 +119,7 @@ void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init)
 	
 	Init();
 	
-	if ((ptuneMusic = PtuneLoadFn(src, &channels)) == NULL) {
+	if ((ptuneMusic = PtuneLoadFn((Sz)src, &channels)) == NULL) {
 		DebugStr("\pNot a legal MIDI file");
 		return;
 	}

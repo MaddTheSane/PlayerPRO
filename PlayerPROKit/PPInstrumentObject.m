@@ -49,8 +49,25 @@
 #define kPPVolumeType @"volumeType"
 #define kPPPanningType @"panningType"
 
-
 @implementation PPEnvelopeObject
+{
+	EnvRec envelopeRec;
+	EnvRec *writeBackVal;
+}
+
+- (instancetype)initWithEnvRecPointer:(EnvRec*)theEnv
+{
+	if (self = [self initWithEnvRec:*theEnv]) {
+		writeBackVal = theEnv;
+	}
+	return self;
+}
+
+- (EnvRec)envelopeRec
+{
+	return *writeBackVal;
+}
+
 @synthesize envelopeRec;
 
 #if !TARGET_OS_IPHONE
@@ -95,28 +112,37 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (short)position
 {
-	return envelopeRec.pos;
+	return writeBackVal->pos;
 }
 
 - (void)setPosition:(short)position
 {
-	envelopeRec.pos = position;
+	writeBackVal->pos = position;
 }
 
 - (short)value
 {
-	return envelopeRec.val;
+	return writeBackVal->val;
 }
 
 - (void)setValue:(short)value
 {
-	envelopeRec.val = value;
+	writeBackVal->val = value;
+}
+
+- (instancetype)init
+{
+	if (self = [super init]) {
+		writeBackVal = &envelopeRec;
+	}
+	return self;
 }
 
 - (instancetype)initWithEnvRec:(EnvRec)theRec
 {
 	if (self = [super init]) {
 		envelopeRec = theRec;
+		writeBackVal = &envelopeRec;
 	}
 	
 	return self;
@@ -130,19 +156,20 @@ static const dispatch_block_t initUTIArray = ^{
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
-		envelopeRec.pos = [aDecoder decodeIntForKey:PPEnvPos];
-		envelopeRec.val = [aDecoder decodeIntForKey:PPEnvVal];
+		writeBackVal = &envelopeRec;
+		writeBackVal->pos = [aDecoder decodeIntForKey:PPEnvPos];
+		writeBackVal->val = [aDecoder decodeIntForKey:PPEnvVal];
 	}
 	return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-	[aCoder encodeInt:envelopeRec.pos forKey:PPEnvPos];
-	[aCoder encodeInt:envelopeRec.val forKey:PPEnvVal];
+	[aCoder encodeInt:writeBackVal->pos forKey:PPEnvPos];
+	[aCoder encodeInt:writeBackVal->val forKey:PPEnvVal];
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (instancetype)copyWithZone:(NSZone *)zone
 {
 	return [[[self class] alloc] initWithEnvRec:envelopeRec];
 }

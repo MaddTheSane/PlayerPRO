@@ -6,12 +6,18 @@
 //
 //
 
+import CoreFoundation
+import CoreFoundation.CFPlugInCOM
 import Foundation
 import PlayerPROCore
 import CoreGraphics
 
 public func CreateErrorFromMADErrorType(theErr: MADErr) -> NSError? {
 	return PPCreateErrorFromMADErrorType(theErr)
+}
+
+public func ErrorIsUserCancelled(theErr: NSError) -> Bool {
+	return PPErrorIsUserCancelled(theErr)
 }
 
 extension PPSampleObject {
@@ -214,9 +220,18 @@ extension PPSampleObject {
 	//	return self.octaveNameFromNote(Int16(octNote) /*, usingLetters: isUseLetters*/)
 	//}
 	
-	public class func octaveNameFromNote(octNote: Int16 , letters isUseLetters: Bool = true) -> String {
+	@objc public class func octaveNameFromNote(octNote: Int16) -> String {
+		return octaveNameFromNote(octNote, letters: true)
+	}
+
+	private class func octaveNameFromNote(octNote: Int16 , letters isUseLetters: Bool = true) -> String {
 		if isUseLetters {
-			return self.octaveNameFromNote(octNote /*, usingLetters: isUseLetters*/)
+			let NNames = ["C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "]
+			if (octNote > 95) {
+				return "---";
+			}
+			
+			return "\(NNames[Int(octNote % 12)])\(octNote / 12)"
 		} else {
 			let NNames_nonEnglish = ["Do", "Do#", "Ré", "Ré#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"]
 			if (octNote > 95) {

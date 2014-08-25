@@ -73,7 +73,7 @@
 	_data = nil;
 	NSInteger dataSize2 = [data length];
 	sampleWriteTo->size = (int)dataSize2;
-	if (theSample.data) {
+	if (sampleWriteTo->data) {
 		free(sampleWriteTo->data);
 		sampleWriteTo->data = NULL;
 	}
@@ -423,13 +423,13 @@ static const dispatch_block_t initUTIArray = ^{
 		sampleWriteTo = &theSample;
 		self.name = [aDecoder decodeObjectForKey:NAMEKEY];
 		self.data = [aDecoder decodeObjectForKey:DATAKEY];
-		theSample.loopBeg = [aDecoder decodeIntForKey:LOOPBEGINKEY];
-		theSample.loopSize = [aDecoder decodeIntForKey:LOOPSIZEKEY];
-		theSample.vol = [[aDecoder decodeObjectForKey:VOLUMEKEY] unsignedCharValue];
-		theSample.c2spd = [[aDecoder decodeObjectForKey:C2SPDKEY] unsignedShortValue];
-		theSample.loopType = [[aDecoder decodeObjectForKey:LOOPTYPEKEY] unsignedCharValue];
-		theSample.amp = [[aDecoder decodeObjectForKey:AMPLITUDEKEY] unsignedCharValue];
-		theSample.relNote = [[aDecoder decodeObjectForKey:RELATIVENOTEKEY] charValue];
+		self.loopBegin = [aDecoder decodeIntForKey:LOOPBEGINKEY];
+		self.loopSize = [aDecoder decodeIntForKey:LOOPSIZEKEY];
+		self.volume = [[aDecoder decodeObjectForKey:VOLUMEKEY] unsignedCharValue];
+		self.c2spd = [[aDecoder decodeObjectForKey:C2SPDKEY] unsignedShortValue];
+		self.loopType = [[aDecoder decodeObjectForKey:LOOPTYPEKEY] unsignedCharValue];
+		self.amplitude = [[aDecoder decodeObjectForKey:AMPLITUDEKEY] unsignedCharValue];
+		self.relativeNote = [[aDecoder decodeObjectForKey:RELATIVENOTEKEY] charValue];
 		self.stereo = [aDecoder decodeBoolForKey:STEREOKEY];
 		
 		self.sampleIndex = [aDecoder decodeIntegerForKey:SAMPLEINDEXKEY];

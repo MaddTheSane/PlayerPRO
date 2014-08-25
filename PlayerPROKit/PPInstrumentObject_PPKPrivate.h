@@ -9,6 +9,10 @@
 #import "PPInstrumentObject.h"
 #import "PPMusicObject.h"
 
+@interface PPEnvelopeObject ()
+- (instancetype)initWithEnvRecPointer:(EnvRec*)theEnv;
+@end
+
 @interface PPInstrumentObject ()
 {
 	NSMutableArray	*samples;

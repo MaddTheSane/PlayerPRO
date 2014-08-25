@@ -15,7 +15,7 @@ import CoreServices
 
 let MadID: MADFourChar = "MADK"
 
-extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
+extension MADFourChar: StringLiteralConvertible {
 	public var stringValue: String {
 		get {
 			let toRet = UTCreateStringForOSType(self as OSType).takeRetainedValue()
@@ -40,7 +40,6 @@ extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 	*/
 	
 	public init(_ toInit: (Int8, Int8, Int8, Int8, Int8)) {
-		//This is the only reliable way I got to get the string value from a C char array.
 		self = MADFourChar((toInit.0, toInit.1, toInit.2, toInit.3))
 	}
 
@@ -50,8 +49,21 @@ extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 		let val2 = MADFourChar(toInit.2)
 		let val3 = MADFourChar(toInit.3)
 		self = MADFourChar(val0 << 24) | (val1 << 16) | (val2 << 8) | (val3)
-}
+	}
+
+	public func toFourChar() -> (Int8, Int8, Int8, Int8) {
+		let var1 = (self >> 24) & 0xFF
+		let var2 = (self >> 16) & 0xFF
+		let var3 = (self >> 8) & 0xFF
+		let var4 = (self) & 0xFF
+		return (Int8(var1), Int8(var2), Int8(var3), Int8(var4))
+	}
 	
+	public func toFourChar() -> (Int8, Int8, Int8, Int8, Int8) {
+		let outVar: (Int8, Int8, Int8, Int8) = toFourChar()
+		return (outVar.0, outVar.1, outVar.2, outVar.3, 0)
+	}
+
 	public static func convertFromStringLiteral(value: String) -> MADFourChar {
 		return MADFourChar(value)
 	}

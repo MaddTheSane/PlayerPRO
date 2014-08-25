@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @import PlayerPROKit;
 
-@class PPMusicList;
+@class MusicList;
 
 enum {
 	PPStopPlaying = 0,
@@ -23,6 +23,6 @@ enum {
 @property (strong, nonatomic) UIWindow *window;
 @property (readonly, strong) PPLibrary *madLib;
 @property (readonly, strong) PPDriver *madDriver;
-@property (strong, nonatomic) PPMusicList *musicList;
+@property (strong, nonatomic) MusicList *musicList;
 
 @end
