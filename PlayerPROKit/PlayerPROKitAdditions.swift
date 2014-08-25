@@ -215,7 +215,16 @@ extension PPSampleObject {
 	//}
 	
 	public class func octaveNameFromNote(octNote: Int16 , letters isUseLetters: Bool = true) -> String {
-		return self.octaveNameFromNote(octNote /*, usingLetters: isUseLetters*/)
+		if isUseLetters {
+			return self.octaveNameFromNote(octNote /*, usingLetters: isUseLetters*/)
+		} else {
+			let NNames_nonEnglish = ["Do", "Do#", "Ré", "Ré#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"]
+			if (octNote > 95) {
+				return "---";
+			}
+		
+			return "\(NNames_nonEnglish[Int(octNote % 12)])\(octNote / 12)"
+		}
 	}
 }
 

@@ -155,7 +155,7 @@
 	[instrumentLoopSize setIntegerValue:[object loopSize]];
 	[instrumentVolume setIntegerValue:[(PPSampleObject*)object volume]];
 	[instrumentRate setStringValue:[NSString stringWithFormat:@"%u Hz", [object c2spd]]];
-	[instrumentNote setStringValue:[NSString stringWithFormat:@"%d", [object relativeNote]]]; //TODO: properly set note.
+	instrumentNote.stringValue = [PPSampleObject octaveNameFromNote:[object relativeNote]]; 
 	[instrumentBits setStringValue:[NSString stringWithFormat:@"%u-bit", [object amplitude]]];
 	[instrumentMode setStringValue: [object loopType] == ePingPongLoop ? @"Ping-pong" : @"Classic"];
 	[waveFormImage setImage:[self waveformImageFromSample:object]];
