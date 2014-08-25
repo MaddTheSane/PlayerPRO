@@ -116,3 +116,9 @@
 
 /* unknown reason */
 "Unknown reason" = "Unknown reason";
+
+"No Recovery needed" = "No recovery needed";
+
+"User Cancelled Action" = "User Cancelled Action";
+
+"User Cancelled Action description" = "You cancelled an operation.";

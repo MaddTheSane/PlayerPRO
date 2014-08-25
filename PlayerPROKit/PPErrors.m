@@ -26,8 +26,12 @@ PPKBundle = [NSBundle bundleForClass:[PPMusicObject class]]; \
 
 #define PPErrorLocalizedString(theKey, comment) NSLocalizedStringWithDefaultValue(theKey, @"PPErrors", PPKBundle, theKey, comment)
 #endif
-
 NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
+{
+	return PPCreateErrorFromMADErrorTypeIgnoringUserCancelled(theErr, NO);
+}
+
+NSError *PPCreateErrorFromMADErrorTypeIgnoringUserCancelled(MADErr theErr, BOOL ignoreUserCancelled)
 {
 	BUNDLEINIT;
 	NSString *ErrorDescription;
@@ -115,6 +119,16 @@ NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 			ErrorDescription = PPErrorLocalizedString(@"Unable to write to file", @"");
 			errorReason = PPErrorLocalizedString(@"Unable to write", @"");
 			recoverySuggestion = PPErrorLocalizedString(@"Make sure you have write permissions at the location you selected.", @"");
+			break;
+			
+		case MADUserCanceledErr:
+			if (ignoreUserCancelled) {
+				return nil;
+			} else {
+			ErrorDescription = PPErrorLocalizedString(@"User Cancelled Action", @"");
+			errorReason = PPErrorLocalizedString(@"User Cancelled Action description", @"");
+			recoverySuggestion = PPErrorLocalizedString(@"No Recovery needed", @"");
+			}
 			break;
 			
 		case MADUnknownErr:
