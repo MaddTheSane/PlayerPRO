@@ -30,10 +30,57 @@
 {
 	@protected
 	sData theSample;
+	sData *sampleWriteTo;
 }
 @synthesize theSample;
-@synthesize name;
-@synthesize data;
+@synthesize name = _name;
+@synthesize data = _data;
+
+- (NSString*)name
+{
+	if (!_name) {
+		_name = [[NSString alloc] initWithCString:sampleWriteTo->name encoding:NSMacOSRomanStringEncoding];
+	}
+	return _name;
+}
+
+- (void)setName:(NSString *)name
+{
+	char theName[32] = {0};
+	NSData *tmpCStr = [name dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+	NSInteger cStrLen = [tmpCStr length];
+	if (cStrLen > sizeof(theName) - 1) {
+		cStrLen = sizeof(theName) - 1;
+	}
+	[tmpCStr getBytes:theName length:cStrLen];
+	tmpCStr = nil;
+	
+	strlcpy(sampleWriteTo->name, theName, sizeof(sampleWriteTo->name));
+	
+	_name = [[NSString alloc] initWithCString:sampleWriteTo->name encoding:NSMacOSRomanStringEncoding];
+}
+
+- (NSData*)data
+{
+	if (!_data) {
+		_data = [[NSData alloc] initWithBytesNoCopy:sampleWriteTo->data length:sampleWriteTo->size freeWhenDone:NO];
+	}
+	return _data;
+}
+
+- (void)setData:(NSData *)data
+{
+	_data = nil;
+	NSInteger dataSize2 = [data length];
+	sampleWriteTo->size = (int)dataSize2;
+	if (theSample.data) {
+		free(sampleWriteTo->data);
+		sampleWriteTo->data = NULL;
+	}
+	sampleWriteTo->data = malloc(dataSize2);
+	[data getBytes:theSample.data length:dataSize2];
+	_data = [[NSData alloc] initWithBytesNoCopy:sampleWriteTo->data length:sampleWriteTo->size freeWhenDone:NO];
+}
 
 #if !TARGET_OS_IPHONE
 NSString * const kPPKSamplePasteboardUTI = @"net.sourceforge.playerpro.sData";
@@ -72,116 +119,103 @@ static const dispatch_block_t initUTIArray = ^{
 }
 #endif
 
-- (void)writeBackToStruct
+- (instancetype)initWithSDataPointer:(inout sData *)theData
 {
-	char theName[32] = {0};
-	NSData *tmpCStr = [name dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
-	NSInteger cStrLen = [tmpCStr length];
-	if (cStrLen > sizeof(theName) - 1) {
-		cStrLen = sizeof(theName) - 1;
+	if (self = [self initWithSData:theData]) {
+		self.data = nil;
+		sampleWriteTo = theData;
 	}
-	[tmpCStr getBytes:theName length:cStrLen];
-	tmpCStr = nil;
-	
-	strlcpy(theSample.name, theName, sizeof(theSample.name));
-	NSInteger dataSize2 = [data length];
-	theSample.size = (int)dataSize2;
-	if (theSample.data) {
-		free(theSample.data);
-		theSample.data = NULL;
-	}
-	theSample.data = malloc(dataSize2);
-	[data getBytes:theSample.data length:dataSize2];
+	return self;
 }
 
 - (sData)theSample
 {
-	return theSample;
+	return *sampleWriteTo;
 }
 
 - (void)setAmplitude:(Byte)amplitude
 {
-	theSample.amp = amplitude;
+	sampleWriteTo->amp = amplitude;
 }
 
 - (Byte)amplitude
 {
-	return theSample.amp;
+	return sampleWriteTo->amp;
 }
 
 - (void)setLoopSize:(int)loopSize
 {
-	theSample.loopSize = loopSize;
+	sampleWriteTo->loopSize = loopSize;
 }
 
 - (int)loopSize
 {
-	return theSample.loopSize;
+	return sampleWriteTo->loopSize;
 }
 
 - (void)setLoopBegin:(int)loopBegin
 {
-	theSample.loopBeg = loopBegin;
+	sampleWriteTo->loopBeg = loopBegin;
 }
 
 - (int)loopBegin
 {
-	return theSample.loopBeg;
+	return sampleWriteTo->loopBeg;
 }
 
 - (void)setC2spd:(unsigned short)c2spd
 {
-	theSample.c2spd = c2spd;
+	sampleWriteTo->c2spd = c2spd;
 }
 
 - (unsigned short)c2spd
 {
-	return theSample.c2spd;
+	return sampleWriteTo->c2spd;
 }
 
 - (void)setLoopType:(MADLoopType)loopType
 {
-	theSample.loopType = loopType;
+	sampleWriteTo->loopType = loopType;
 }
 
 - (MADLoopType)loopType
 {
-	return theSample.loopType;
+	return sampleWriteTo->loopType;
 }
 
 - (void)setRelativeNote:(char)relativeNote
 {
-	theSample.relNote = relativeNote;
+	sampleWriteTo->relNote = relativeNote;
 }
 
 - (char)relativeNote
 {
-	return theSample.relNote;
+	return sampleWriteTo->relNote;
 }
 
 - (Byte)volume
 {
-	return theSample.vol;
+	return sampleWriteTo->vol;
 }
 
 - (void)setVolume:(Byte)avolume
 {
-	theSample.vol = avolume;
+	sampleWriteTo->vol = avolume;
 }
 
 - (BOOL)isStereo
 {
-	return theSample.stereo;
+	return sampleWriteTo->stereo;
 }
 
 - (void)setStereo:(BOOL)astereo
 {
-	theSample.stereo = astereo;
+	sampleWriteTo->stereo = astereo;
 }
 
 - (int)dataSize
 {
-	return (int)[data length];
+	return (int)[self.data length];
 }
 
 - (instancetype)init
@@ -198,8 +232,9 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	if (self = [super init]) {
 		if (!theData) {
-			name = @"";
-			data = [[NSData alloc] init];
+			_name = @"";
+			_data = [[NSData alloc] init];
+			theSample.size = 0;
 			theSample.loopType = 0;
 			theSample.c2spd = NOFINETUNE;
 			theSample.amp = 8;
@@ -210,17 +245,18 @@ static const dispatch_block_t initUTIArray = ^{
 			theSample.relNote = 0;
 		} else {
 			theSample = *theData;
-			theSample.data = NULL;
-			data = [[NSData alloc] initWithBytes:theData->data length:theData->size];
-			name = [[NSString alloc] initWithCString:theData->name encoding:NSMacOSRomanStringEncoding];
+			//theSample.data = NULL;
+			self.data = [[NSData alloc] initWithBytes:theData->data length:theData->size];
+			//name = [[NSString alloc] initWithCString:theData->name encoding:NSMacOSRomanStringEncoding];
 		}
+		sampleWriteTo = &theSample;
 	}
 	return self;
 }
 
 - (void)dealloc
 {
-	if (theSample.data) {
+	if (sampleWriteTo == &theSample && theSample.data) {
 		free(theSample.data);
 		theSample.data = NULL;
 	}
@@ -230,8 +266,8 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	PPSampleObject *obj;
 	if ((obj = [[[self class] allocWithZone:zone] init])) {
-		obj.name = name;
-		obj.data = data;
+		obj.name = _name;
+		obj.data = _data;
 		obj.amplitude = theSample.amp;
 		obj.volume = theSample.vol;
 		obj.stereo = theSample.stereo ? YES : NO;
@@ -247,9 +283,9 @@ static const dispatch_block_t initUTIArray = ^{
 - (sData *)createSData
 {
 	sData *toReturn = malloc(sizeof(sData));
-	memcpy(toReturn, &theSample, sizeof(sData));
+	memcpy(toReturn, sampleWriteTo, sizeof(sData));
 	char theName[32] = {0};
-	NSData *tmpCStr = [name dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+	NSData *tmpCStr = [_name dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 	NSInteger cStrLen = [tmpCStr length];
 	if (cStrLen > sizeof(theName) - 1) {
 		cStrLen = sizeof(theName) - 1;
@@ -258,17 +294,17 @@ static const dispatch_block_t initUTIArray = ^{
 	tmpCStr = nil;
 	
 	strlcpy(toReturn->name, theName, sizeof(toReturn->name));
-	NSInteger dataSize2 = [data length];
+	NSInteger dataSize2 = [_data length];
 	toReturn->size = (int)dataSize2;
 	toReturn->data = malloc(dataSize2);
-	[data getBytes:toReturn->data length:dataSize2];
+	[_data getBytes:toReturn->data length:dataSize2];
 	
 	return toReturn;
 }
 
 - (NSString*)description
 {
-	return [NSString stringWithFormat:@"%@: size: %ld stereo: %@ Loop type: %d start: %d size: %d volume: %d amp: %d", name, (long)[data length], self.stereo ? @"Yes": @"No", self.loopType, self.loopBegin, self.loopSize, self.volume, self.amplitude];
+	return [NSString stringWithFormat:@"%@: size: %ld stereo: %@ Loop type: %d start: %d size: %d volume: %d amp: %d", self.name, (long)[self.data length], self.stereo ? @"Yes": @"No", self.loopType, self.loopBegin, self.loopSize, self.volume, self.amplitude];
 }
 
 #define kNoteCompareOptions (NSCaseInsensitiveSearch | NSWidthInsensitiveSearch | NSDiacriticInsensitiveSearch)
@@ -366,16 +402,16 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-	[aCoder encodeObject:name forKey:NAMEKEY];
-	[aCoder encodeObject:data forKey:DATAKEY];
-	[aCoder encodeInt:theSample.loopBeg forKey:LOOPBEGINKEY];
-	[aCoder encodeInt:theSample.loopSize forKey:LOOPSIZEKEY];
-	[aCoder encodeObject:@(theSample.vol) forKey:VOLUMEKEY];
-	[aCoder encodeObject:@(theSample.c2spd) forKey:C2SPDKEY];
-	[aCoder encodeObject:@(theSample.loopType) forKey:LOOPTYPEKEY];
-	[aCoder encodeObject:@(theSample.amp) forKey:AMPLITUDEKEY];
-	[aCoder encodeObject:@(theSample.relNote) forKey:RELATIVENOTEKEY];
-	[aCoder encodeBool:theSample.stereo forKey:STEREOKEY];
+	[aCoder encodeObject:self.name forKey:NAMEKEY];
+	[aCoder encodeObject:self.data forKey:DATAKEY];
+	[aCoder encodeInt:sampleWriteTo->loopBeg forKey:LOOPBEGINKEY];
+	[aCoder encodeInt:sampleWriteTo->loopSize forKey:LOOPSIZEKEY];
+	[aCoder encodeObject:@(sampleWriteTo->vol) forKey:VOLUMEKEY];
+	[aCoder encodeObject:@(sampleWriteTo->c2spd) forKey:C2SPDKEY];
+	[aCoder encodeObject:@(sampleWriteTo->loopType) forKey:LOOPTYPEKEY];
+	[aCoder encodeObject:@(sampleWriteTo->amp) forKey:AMPLITUDEKEY];
+	[aCoder encodeObject:@(sampleWriteTo->relNote) forKey:RELATIVENOTEKEY];
+	[aCoder encodeBool:sampleWriteTo->stereo forKey:STEREOKEY];
 	
 	[aCoder encodeInteger:self.sampleIndex forKey:SAMPLEINDEXKEY];
 	[aCoder encodeInteger:self.instrumentIndex forKey:INSTRUMENTINDEXKEY];
@@ -384,8 +420,9 @@ static const dispatch_block_t initUTIArray = ^{
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
-		name = [aDecoder decodeObjectForKey:NAMEKEY];
-		data = [aDecoder decodeObjectForKey:DATAKEY];
+		sampleWriteTo = &theSample;
+		self.name = [aDecoder decodeObjectForKey:NAMEKEY];
+		self.data = [aDecoder decodeObjectForKey:DATAKEY];
 		theSample.loopBeg = [aDecoder decodeIntForKey:LOOPBEGINKEY];
 		theSample.loopSize = [aDecoder decodeIntForKey:LOOPSIZEKEY];
 		theSample.vol = [[aDecoder decodeObjectForKey:VOLUMEKEY] unsignedCharValue];

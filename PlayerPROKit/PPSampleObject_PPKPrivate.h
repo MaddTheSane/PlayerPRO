@@ -7,3 +7,7 @@
 //
 
 #import "PPSampleObject.h"
+
+@interface PPSampleObject ()
+- (instancetype)initWithSDataPointer:(inout sData *)theData;
+@end
