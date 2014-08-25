@@ -1,7 +1,8 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
+      "idiom" : "universal",
+      "filename" : "JigsawWave.pdf"
     },
     {
       "idiom" : "universal",
@@ -10,7 +11,8 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "JigsawWave@2x.png"
     }
   ],
   "info" : {
