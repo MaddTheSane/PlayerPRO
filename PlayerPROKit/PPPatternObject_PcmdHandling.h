@@ -14,7 +14,8 @@
 
 @interface PPPatternObject (PcmdHandling)
 + (MADErr)testPcmdFileAtURL:(NSURL*)theURL;
-+ (NSString *)stringFromPcmdData:(Pcmd*)myPcmd;
++ (NSString *)stringFromPcmdData:(const Pcmd*)myPcmd;
++ (NSData*)dataFromPcmd:(const Pcmd*)thePcmd;
 - (Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
 - (MADErr)importPcmdFromURL:(NSURL*)theURL;
 - (MADErr)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
