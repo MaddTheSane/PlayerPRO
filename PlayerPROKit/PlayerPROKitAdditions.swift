@@ -210,9 +210,9 @@ extension PPSampleObject {
 		CGContextRestoreGState(ctxRef);
 	}
 	
-	public class func octaveNameFromNote(octNote: Int8, usingLetters isUseLetters: Bool = true) -> String {
-		return self.octaveNameFromNote(Int16(octNote), usingLetters: isUseLetters)
-	}
+	//public class func octaveNameFromNote(octNote: Int8 /*, usingLetters isUseLetters: Bool = true*/) -> String {
+	//	return self.octaveNameFromNote(Int16(octNote) /*, usingLetters: isUseLetters*/)
+	//}
 }
 
 extension PPDriver {

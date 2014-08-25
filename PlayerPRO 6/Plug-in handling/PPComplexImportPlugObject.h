@@ -23,14 +23,4 @@
 
 - (BOOL)plugInRespondsToSelector:(SEL)aSelector;
 
-#pragma mark plug-in functions
-
-- (void)beginImportOfURL:(NSURL*)theURL withHandler:(PPComplexImportHandler)handler;
-
-- (BOOL)canImportURL:(NSURL*)theURL;
-- (BOOL)canImportURL:(NSURL*)theURL error:(out NSError**)outErr;
-
-- (NSDictionary*)getTrackerInformationFromURL:(NSURL*)theURL;
-- (NSDictionary*)getTrackerInformationFromURL:(NSURL*)theURL error:(out NSError**)outErr;
-
 @end

@@ -283,6 +283,8 @@ static OSErr INFOMADkApp(MADSpec* MADPtr, MADInfoRec *info)
 /* MAIN FUNCTION */
 /*****************/
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 {
 	//TODO: learn how to get and parse resource forks using POSIX commands or CoreFoundation, but not Carbon
@@ -477,3 +479,4 @@ extern OSErr PPImpExpMain(OSType order, char *AlienFileName, MADMusic *MadFile, 
 	
 	return myErr;
 }
+#pragma clang diagnostic pop

@@ -39,6 +39,19 @@ extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 	}
 	*/
 	
+	public init(_ toInit: (Int8, Int8, Int8, Int8, Int8)) {
+		//This is the only reliable way I got to get the string value from a C char array.
+		self = MADFourChar((toInit.0, toInit.1, toInit.2, toInit.3))
+	}
+
+	public init(_ toInit: (Int8, Int8, Int8, Int8)) {
+		let val0 = MADFourChar(toInit.0)
+		let val1 = MADFourChar(toInit.1)
+		let val2 = MADFourChar(toInit.2)
+		let val3 = MADFourChar(toInit.3)
+		self = MADFourChar(val0 << 24) | (val1 << 16) | (val2 << 8) | (val3)
+}
+	
 	public static func convertFromStringLiteral(value: String) -> MADFourChar {
 		return MADFourChar(value)
 	}

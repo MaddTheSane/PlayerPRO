@@ -34,5 +34,7 @@
 	</array>
 	<key>NSHumanReadableCopyright</key>
 	<string>Written by A.ROSSET © 1995</string>
+	<key>NSPrincipalClass</key>
+	<string>PPAPPLImporter</string>
 </dict>
 </plist>

@@ -4,8 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.8"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="PPAPPLImporter">
+        <customObject id="-2" userLabel="File's Owner" customClass="PPAPPLImporterViewController">
             <connections>
+                <outlet property="resourceIDsTable" destination="tMa-t6-LPg" id="aMt-Cd-dhS"/>
+                <outlet property="resourceNamesTable" destination="u8H-yv-Lz2" id="Y3s-5S-vVN"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -15,7 +17,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="641" height="270"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1080"/>
             <view key="contentView" id="se5-gp-TjO">
                 <rect key="frame" x="0.0" y="0.0" width="641" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>

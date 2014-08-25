@@ -276,6 +276,7 @@
 		5560643C18C8FDD9002F72FC /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
 		5561700A1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
 		5561F1C019A52A6C0085015B /* ExportObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FD192D19A241FC001E1D9C /* ExportObject.swift */; };
+		5563A49E19AAC0D50051CC4B /* PPAPPLImporterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */; };
 		5566883D19A65C8700EE2FE3 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07F1999879C00A1B9A1 /* MusicList.swift */; };
 		5566883E19A6619800EE2FE3 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07F1999879C00A1B9A1 /* MusicList.swift */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
@@ -2094,6 +2095,8 @@
 		555F5C601993327D0056AF01 /* OpenPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenPanelViewController.swift; sourceTree = "<group>"; };
 		556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject_PPKPrivate.h; sourceTree = "<group>"; };
 		5561EF99199FC87B0054B3A7 /* PTMIDZAP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTMIDZAP.h; sourceTree = "<group>"; };
+		5563A49C19AAC0D50051CC4B /* PPAPPLImporterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLImporterViewController.h; sourceTree = "<group>"; };
+		5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLImporterViewController.m; sourceTree = "<group>"; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = net.sourceforge.playerpro.StcfImporter.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		55680A2119045F0A00F7616D /* StcfImporter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StcfImporter-Info.plist"; sourceTree = "<group>"; };
@@ -3284,6 +3287,8 @@
 		551E166F10CCD619003C842A /* Classic Application */ = {
 			isa = PBXGroup;
 			children = (
+				5563A49C19AAC0D50051CC4B /* PPAPPLImporterViewController.h */,
+				5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */,
 				55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */,
 				55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */,
 				55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */,
@@ -6653,6 +6658,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55BF238E19A937C9005B1F96 /* PPAPPLImporter.m in Sources */,
+				5563A49E19AAC0D50051CC4B /* PPAPPLImporterViewController.m in Sources */,
 				5501BEC818AC05A400602206 /* MADH.c in Sources */,
 				55868A7C10BFB4B300FCC24D /* APPL.c in Sources */,
 				5501BEC918AC092500602206 /* MADI.c in Sources */,
