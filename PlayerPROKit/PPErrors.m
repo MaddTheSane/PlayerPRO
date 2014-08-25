@@ -27,6 +27,17 @@ PPKBundle = [NSBundle bundleForClass:[PPMusicObject class]]; \
 #define PPErrorLocalizedString(theKey, comment) NSLocalizedStringWithDefaultValue(theKey, @"PPErrors", PPKBundle, theKey, comment)
 #endif
 
+BOOL PPErrorIsUserCancelled(NSError *theErr)
+{
+	if ([theErr.domain isEqualToString:PPMADErrorDomain]) {
+		if (theErr.code == MADUserCanceledErr) {
+			return YES;
+		}
+	}
+	
+	return NO;
+}
+
 NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 {
 	BUNDLEINIT;

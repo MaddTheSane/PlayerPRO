@@ -151,9 +151,9 @@ private let kPlayerList = "Player List"
 				}
 				//musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
 				let dataBookArray = BookmarkArray! as [NSData]
+				let aHomeURL = NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
 				for bookData in dataBookArray {
 					var isStale: ObjCBool = false;
-					let aHomeURL = NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
 					let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: aHomeURL, bookmarkDataIsStale: &isStale, error: nil)
 					#if DEBUG
 						if (isStale) {

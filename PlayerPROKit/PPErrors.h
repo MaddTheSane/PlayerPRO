@@ -13,4 +13,6 @@ __BEGIN_DECLS
 extern NSString * const PPMADErrorDomain;
 
 extern NSError *PPCreateErrorFromMADErrorType(MADErr theErr) NS_RETURNS_RETAINED;
+extern BOOL PPErrorIsUserCancelled(NSError *theErr);
+
 __END_DECLS
