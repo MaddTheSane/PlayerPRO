@@ -384,6 +384,26 @@
 		<dict>
 			<key>CFBundleTypeExtensions</key>
 			<array>
+				<string>ppextimp</string>
+			</array>
+			<key>CFBundleTypeIconFile</key>
+			<string></string>
+			<key>CFBundleTypeName</key>
+			<string>PPExtImpBundle</string>
+			<key>CFBundleTypeRole</key>
+			<string>None</string>
+			<key>LSHandlerRank</key>
+			<string>None</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.sourceforge.playerpro.ppextimp</string>
+			</array>
+			<key>LSTypeIsPackage</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
 				<string>mad</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
@@ -736,6 +756,26 @@
 				<key>public.filename-extension</key>
 				<array>
 					<string>ppimpexp</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>com.apple.bundle</string>
+				<string>com.apple.package</string>
+			</array>
+			<key>UTTypeDescription</key>
+			<string>PlayerPRO 6 Complex Import Plug-in</string>
+			<key>UTTypeIconFile</key>
+			<string></string>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.ppextimp</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>public.filename-extension</key>
+				<array>
+					<string>ppextimp</string>
 				</array>
 			</dict>
 		</dict>

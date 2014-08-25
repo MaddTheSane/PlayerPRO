@@ -156,7 +156,7 @@ extension PPSampleObject {
 			
 			temp = CGFloat((theSample[BS] - 0x80));
 			temp *= CGFloat(high);
-			temp /= CGFloat((1 << 8));
+			temp /= oneShiftedBy8;
 			
 			CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(tSS), CGFloat(trueV) + temp);
 			
@@ -208,6 +208,10 @@ extension PPSampleObject {
 		}
 		CGContextStrokePath(ctxRef);
 		CGContextRestoreGState(ctxRef);
+	}
+	
+	public class func octaveNameFromNote(octNote: Int8, usingLetters isUseLetters: Bool = true) -> String {
+		return self.octaveNameFromNote(Int16(octNote), usingLetters: isUseLetters)
 	}
 }
 

@@ -228,7 +228,7 @@
 		55413C4B1992AFAB001414D0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 551292E1163DD68500C2C639 /* InfoPlist.strings */; };
 		55413C4C1992AFFE001414D0 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */; };
 		55413C4E1992AFFF001414D0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55413C4D1992AFFF001414D0 /* Foundation.framework */; };
-		5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5546217B163A20D00005F491 /* Classic App.ppextimp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* Classic App.ppextimp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5547DA5619A5690E0014A620 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5519A5690E0014A620 /* Preferences.swift */; };
 		5547DA5719A5690E0014A620 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5519A5690E0014A620 /* Preferences.swift */; };
 		5547DA5919A570820014A620 /* SoundSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5819A570820014A620 /* SoundSettingsViewController.swift */; };
@@ -1741,7 +1741,7 @@
 				55B23D2916893DE300DCE923 /* XI.plugin in Copy PlugIns */,
 				55B23D24168935D300DCE923 /* MINs.plugin in Copy PlugIns */,
 				55B23D231689321F00DCE923 /* PAT.plugin in Copy PlugIns */,
-				5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */,
+				5546217B163A20D00005F491 /* Classic App.ppextimp in Copy PlugIns */,
 				55CBFAD211EB77ED0028C6BB /* MOD.ppimpexp in Copy PlugIns */,
 				55CBFAD311EB77ED0028C6BB /* 669.ppimpexp in Copy PlugIns */,
 				55CBFAD411EB77ED0028C6BB /* AMF.ppimpexp in Copy PlugIns */,
@@ -2212,7 +2212,7 @@
 		5586889710BF67F100FCC24D /* MIDI.ppextimp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MIDI.ppextimp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5586889810BF67F100FCC24D /* MIDI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MIDI-Info.plist"; sourceTree = "<group>"; };
 		55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Midi_Plug.rsrc.r; sourceTree = "<group>"; };
-		55868A6710BFB46100FCC24D /* APPL.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APPL.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
+		55868A6710BFB46100FCC24D /* Classic App.ppextimp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Classic App.ppextimp"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55868A6810BFB46100FCC24D /* APPL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "APPL-Info.plist"; sourceTree = "<group>"; };
 		558D4DD81666F14E00A333E8 /* PPDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDriver.h; sourceTree = "<group>"; };
 		558D4DD91666F14E00A333E8 /* PPDriver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPDriver.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -4255,7 +4255,7 @@
 				5586882910BF62F500FCC24D /* UMX.ppimpexp */,
 				5586883D10BF62FB00FCC24D /* XM.ppimpexp */,
 				5586889710BF67F100FCC24D /* MIDI.ppextimp */,
-				55868A6710BFB46100FCC24D /* APPL.ppimpexp */,
+				55868A6710BFB46100FCC24D /* Classic App.ppextimp */,
 				55B797DC10D6E6C40073E379 /* Complex Fade.plugin */,
 				554E110510D6F09F00BB619C /* Fade Note.plugin */,
 				554E114C10D6F1BF00BB619C /* Fade Volume.plugin */,
@@ -5348,9 +5348,9 @@
 			productReference = 5586889710BF67F100FCC24D /* MIDI.ppextimp */;
 			productType = "com.apple.product-type.bundle";
 		};
-		55868A5810BFB46100FCC24D /* APPL */ = {
+		55868A5810BFB46100FCC24D /* Classic App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 55868A6310BFB46100FCC24D /* Build configuration list for PBXNativeTarget "APPL" */;
+			buildConfigurationList = 55868A6310BFB46100FCC24D /* Build configuration list for PBXNativeTarget "Classic App" */;
 			buildPhases = (
 				55868A5B10BFB46100FCC24D /* Resources */,
 				55868A5C10BFB46100FCC24D /* Sources */,
@@ -5361,9 +5361,9 @@
 			dependencies = (
 				55868A5910BFB46100FCC24D /* PBXTargetDependency */,
 			);
-			name = APPL;
+			name = "Classic App";
 			productName = MOD;
-			productReference = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */;
+			productReference = 55868A6710BFB46100FCC24D /* Classic App.ppextimp */;
 			productType = "com.apple.product-type.bundle";
 		};
 		559C4186183EB4AB004A073C /* PPQuickView */ = {
@@ -5618,7 +5618,7 @@
 				5586883110BF62FB00FCC24D /* XM */,
 				5586888B10BF67F100FCC24D /* MIDI */,
 				55ECD2741992C2ED00480788 /* MIDI Import */,
-				55868A5810BFB46100FCC24D /* APPL */,
+				55868A5810BFB46100FCC24D /* Classic App */,
 				55B797D410D6E66A0073E379 /* Digital Plugs */,
 				55B797DB10D6E6C40073E379 /* Complex Fade */,
 				554E10F710D6F09F00BB619C /* Fade Note */,
@@ -6919,7 +6919,7 @@
 		};
 		552363A619A55C9B000D191D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 55868A5810BFB46100FCC24D /* APPL */;
+			target = 55868A5810BFB46100FCC24D /* Classic App */;
 			targetProxy = 552363A519A55C9B000D191D /* PBXContainerItemProxy */;
 		};
 		5533411A10BB548E005208D1 /* PBXTargetDependency */ = {
@@ -8575,7 +8575,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = "__MAC_OS_X_MEMORY_MANAGER_CLEAN__=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -9465,7 +9465,6 @@
 		};
 		55868A6410BFB46100FCC24D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9474,12 +9473,12 @@
 				);
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/APPL-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Release;
 		};
 		55868A6510BFB46100FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9488,6 +9487,7 @@
 				);
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/APPL-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Debug;
 		};
@@ -9520,10 +9520,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"__MAC_OS_X_MEMORY_MANAGER_CLEAN__=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -10452,7 +10449,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		55868A6310BFB46100FCC24D /* Build configuration list for PBXNativeTarget "APPL" */ = {
+		55868A6310BFB46100FCC24D /* Build configuration list for PBXNativeTarget "Classic App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55868A6410BFB46100FCC24D /* Release */,

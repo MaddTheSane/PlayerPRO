@@ -10,7 +10,7 @@
 
 @interface PPComplexImportPlugObject ()
 @property (readwrite, strong) NSBundle *ourBundle;
-@property (readwrite, copy) NSArray *utiArrays;
+@property (readwrite, copy) NSArray *UTITypes;
 @property (strong) id<PPComplexImportPlugInterface> plugInterface;
 @end
 
@@ -18,21 +18,7 @@
 
 - (BOOL)plugInRespondsToSelector:(SEL)aSelector
 {
-#define HandleSelector(aSel) \
-if (aSelector == @selector( aSel )) { \
-	if ([_plugInterface respondsToSelector:@selector( aSel )]) { \
-		return YES; \
-	} else { \
-		return NO; \
-	} \
-}
-	
-	HandleSelector(canImportURL:error:);
-	HandleSelector(getTrackerInformationFromURL:);
-	HandleSelector(getTrackerInformationFromURL:error:);
-	
-	return [super respondsToSelector:aSelector];
-#undef HandleSelector
+	return [_plugInterface respondsToSelector:aSelector];
 }
 
 - (instancetype)initWithBundle:(NSBundle*)ourBundle
@@ -44,6 +30,16 @@ if (aSelector == @selector( aSel )) { \
 		}
 		self.ourBundle = ourBundle;
 		self.plugInterface = [[bundClass alloc] init];
+		NSMutableDictionary *tempDict = [[ourBundle infoDictionary] mutableCopy];
+		[tempDict addEntriesFromDictionary:[ourBundle localizedInfoDictionary]];
+		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugUTITypesKey];
+		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
+			self.UTITypes = [DictionaryTemp copy];
+		} else if ([DictionaryTemp isKindOfClass:[NSString class]]) {
+			self.UTITypes = @[[NSString stringWithString:DictionaryTemp]];
+		} else
+			return nil;
+
 	}
 	return self;
 }

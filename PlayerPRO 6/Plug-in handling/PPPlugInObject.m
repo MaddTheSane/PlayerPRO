@@ -8,7 +8,6 @@
 
 #import "PPPlugInObject.h"
 #import "PPPlugInCommon.h"
-//#include <PlayerPROCore/MADDriver.h>
 
 void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
 {

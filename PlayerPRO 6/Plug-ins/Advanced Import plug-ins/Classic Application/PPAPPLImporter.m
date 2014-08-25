@@ -22,10 +22,35 @@
 
 - (BOOL)canImportURL:(NSURL *)theURL
 {
-	return NO;
+	return [self canImportURL:theURL error:NULL];
 }
 
 - (void)beginImportOfURL:(NSURL*)theURL withHandler:(PPComplexImportHandler)handler
+{
+	
+}
+
+- (BOOL)canImportURL:(NSURL*)theURL error:(out NSError**)outErr
+{
+	return NO;
+}
+
+- (NSDictionary*)getTrackerInformationFromURL:(NSURL*)theURL
+{
+	return [self getTrackerInformationFromURL:theURL error:NULL];
+}
+
+- (NSDictionary*)getTrackerInformationFromURL:(NSURL*)theURL error:(out NSError**)outErr
+{
+	return @{};
+}
+
+- (IBAction)importMusicObject:(id)sender
+{
+	
+}
+
+- (IBAction)cancelImport:(id)sender
 {
 	
 }

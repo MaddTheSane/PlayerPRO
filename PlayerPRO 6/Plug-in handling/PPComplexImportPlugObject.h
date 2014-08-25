@@ -16,7 +16,7 @@
 
 @interface PPComplexImportPlugObject : NSObject <PPComplexImportPlugInterfaceBase>
 @property (readonly, strong) NSBundle *ourBundle;
-@property (readonly, copy) NSArray *utiArrays;
+@property (readonly, copy) NSArray *UTITypes;
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithBundle:(NSBundle*)ourBundle NS_DESIGNATED_INITIALIZER;

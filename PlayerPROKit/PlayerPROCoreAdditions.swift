@@ -28,10 +28,14 @@ extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 	
 	/*
 	public init(_ toInit: (Int8, Int8, Int8, Int8, Int8)) {
-		var tmpInit = toInit
-		var atmp = &tmpInit
-		var tmpPtr: UnsafeMutablePointer<Int8> = UnsafeMutablePointer<Int8>(tmpInit)
-		self = Ptr2OSType(tmpInit)
+		//This is the only reliable way I got to get the string value from a C char array.
+		var toParse: String = ""
+		var mirror = reflect(toInit)
+		for i in 0..<mirror.count {
+			var aChar = mirror[i].1.value
+			toParse += NSString(bytes: &aChar, length: 1, encoding: NSMacOSRomanStringEncoding)
+		}
+		self = MADFourChar(toParse)
 	}
 	*/
 	
@@ -184,26 +188,12 @@ extension sData32 {
 		toRet.loopType = self.loopType
 		toRet.amp = self.amp
 		toRet.relNote = self.relNote
-		
-		var toRetName = reflect(toRet.name)
-		var ourName = reflect(self.name)
-		for i in 0 ..< toRetName.count {
-			//toRetName[i].0
-		}
+		toRet.name = self.name
 		toRet.stereo = self.stereo
-		
 		
 		return toRet
 		}}
 }
-
-private func iterate<C,R>(t:C, block:(String,Any)->R) {
-	let mirror = reflect(t)
-	for i in 0 ..< mirror.count {
-		block(mirror[i].0, mirror[i].1.value)
-	}
-}
-
 
 extension sData {
 	public static let MaxVolume: MADByte = 64
@@ -230,14 +220,8 @@ extension sData {
 		toRet.loopType = self.loopType
 		toRet.amp = self.amp
 		toRet.relNote = self.relNote
-		
-		var toRetName = reflect(toRet.name)
-		var ourName = reflect(self.name)
-		for i in 0 ..< toRetName.count {
-			//toRetName[i].0
-		}
+		toRet.name = self.name
 		toRet.stereo = self.stereo
-		
 		
 		return toRet
 		}}
