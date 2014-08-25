@@ -366,6 +366,7 @@ static const dispatch_block_t initUTIArray = ^{
 	return tmpVal;
 }
 
+#if 0
 + (NSString*)octaveNameFromNote:(short)octNote usingLetters:(BOOL)isUseLetters
 {
 #if 0
@@ -393,6 +394,7 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	return [self octaveNameFromNote:octNote usingLetters:YES];
 }
+#endif
 
 #pragma mark NSCoding implementation
 + (BOOL)supportsSecureCoding

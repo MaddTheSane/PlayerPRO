@@ -10,9 +10,15 @@
 #import "PPPatternObject_PPKPrivate.h"
 #import "PPPatternObject_PcmdHandling.h"
 #import "PPMusicObject_PPKPrivate.h"
+#import "PPSampleObject.h"
+//#import "PlayerPROKit/PlayerPROKit-Swift.h"
 #if !TARGET_OS_IPHONE
 #import "PPPasteboardHandling.h"
 #endif
+
+@interface PPSampleObject (inSwift)
++ (NSString*)octaveNameFromNote:(short)octNote;
+@end
 
 #define kPPPatternName @"PlayerPROKit Pattern Name"
 #define kPPPatternCommands @"PlayerPROKit Pattern Commands"
