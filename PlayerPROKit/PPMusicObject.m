@@ -312,7 +312,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	PPMusicObject *copyWrap = [[[self class] alloc] init];
+	PPMusicObject *copyWrap = [[PPMusicObject alloc] init];
 	if (self.filePath) {
 		copyWrap.filePath = self.filePath;
 	}
@@ -492,6 +492,26 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	}
 	
 	return YES;
+}
+
+#pragma mark NSSecureCoding functions
+
++ (BOOL)supportsSecureCoding
+{
+	return YES;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+	
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+	if (self = [super init]) {
+		
+	}
+	return self;
 }
 
 @end
