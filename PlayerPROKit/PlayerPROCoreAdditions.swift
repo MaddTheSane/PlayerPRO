@@ -376,11 +376,17 @@ extension MADMusic {
 	}
 }
 
+public func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> UnsafeMutablePointer<Cmd> {
+	return GetMADCommand(position, channel, aPat)
+}
+
+/*
 extension PatData {
 	public mutating func getCommand(position: Int16, channel: Int16) -> UnsafeMutablePointer<Cmd> {
 		return GetMADCommand(position, channel, &self)
 	}
 }
+*/
 
 extension PatHeader {
 	public var bigEndian: PatHeader {get {
@@ -396,11 +402,17 @@ extension PatHeader {
 
 // MARK: Plug-in functions
 
+public func GetCommand(row: Int16, track: Int16, aPat: UnsafeMutablePointer<Pcmd>) -> UnsafeMutablePointer<Cmd> {
+	return MADGetCmd(row, track, aPat)
+}
+
+/*
 extension Pcmd {
 	public mutating func getCommand(row: Int16, track: Int16) -> UnsafeMutablePointer<Cmd> {
 		return MADGetCmd(row, track, &self)
 	}
 }
+*/
 
 var kPlayerPROFiltersPlugTypeID: CFUUID { get {
 	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x79, 0xEA, 0x82, 0xAD, 0x5A, 0x53, 0x46, 0xAF, 0x82, 0xA9, 0x4A, 0x06, 0x85, 0xB4, 0x58, 0x8C)
