@@ -26,12 +26,8 @@ PPKBundle = [NSBundle bundleForClass:[PPMusicObject class]]; \
 
 #define PPErrorLocalizedString(theKey, comment) NSLocalizedStringWithDefaultValue(theKey, @"PPErrors", PPKBundle, theKey, comment)
 #endif
-NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
-{
-	return PPCreateErrorFromMADErrorTypeIgnoringUserCancelled(theErr, NO);
-}
 
-NSError *PPCreateErrorFromMADErrorTypeIgnoringUserCancelled(MADErr theErr, BOOL ignoreUserCancelled)
+NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 {
 	BUNDLEINIT;
 	NSString *ErrorDescription;
@@ -122,13 +118,9 @@ NSError *PPCreateErrorFromMADErrorTypeIgnoringUserCancelled(MADErr theErr, BOOL 
 			break;
 			
 		case MADUserCanceledErr:
-			if (ignoreUserCancelled) {
-				return nil;
-			} else {
 			ErrorDescription = PPErrorLocalizedString(@"User Cancelled Action", @"");
 			errorReason = PPErrorLocalizedString(@"User Cancelled Action description", @"");
 			recoverySuggestion = PPErrorLocalizedString(@"No Recovery needed", @"");
-			}
 			break;
 			
 		case MADUnknownErr:

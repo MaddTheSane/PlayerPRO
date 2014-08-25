@@ -13,5 +13,4 @@ __BEGIN_DECLS
 extern NSString * const PPMADErrorDomain;
 
 extern NSError *PPCreateErrorFromMADErrorType(MADErr theErr) NS_RETURNS_RETAINED;
-extern NSError *PPCreateErrorFromMADErrorTypeIgnoringUserCancelled(MADErr theErr, BOOL ignoreUserCancelled) NS_RETURNS_RETAINED;
 __END_DECLS
