@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -13,9 +14,10 @@
    height="32px"
    id="svg4059"
    sodipodi:version="0.32"
-   inkscape:version="0.46"
+   inkscape:version="0.48.5 r10040"
    sodipodi:docname="PPNextTrack.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.1">
   <defs
      id="defs4061">
     <linearGradient
@@ -46,16 +48,6 @@
        y1="8.5724287"
        x2="23.351397"
        y2="21.419827" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient2390"
-       id="linearGradient2599"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(0.8010217,0,0,0.9996312,0.819804,6.0925267e-3)"
-       x1="8.6697578"
-       y1="8.5724287"
-       x2="23.351397"
-       y2="21.419827" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -65,8 +57,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="11.197802"
-     inkscape:cx="16"
-     inkscape:cy="16"
+     inkscape:cx="1.0863589"
+     inkscape:cy="16.044652"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:grid-bbox="true"
@@ -74,7 +66,8 @@
      inkscape:window-width="857"
      inkscape:window-height="688"
      inkscape:window-x="426"
-     inkscape:window-y="131" />
+     inkscape:window-y="131"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata4064">
     <rdf:RDF>
@@ -91,7 +84,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
     <path
-       style="fill:url(#linearGradient2599);fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.17001827000000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.17001827000000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="M 24.0625 4.0625 L 24.0625 12.4375 L 15.25 4.09375 L 15.25 14.65625 L 4.09375 4.09375 L 4.09375 27.90625 L 15.25 17.46875 L 15.25 27.90625 L 24.0625 19.65625 L 24.0625 27.9375 L 27.9375 27.9375 L 27.9375 4.0625 L 24.0625 4.0625 z "
        id="path2387" />
   </g>

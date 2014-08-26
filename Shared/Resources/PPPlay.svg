@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="32"
    height="32"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.46"
+   inkscape:version="0.48.5 r10040"
    version="1.0"
    sodipodi:docname="PPPlay.svg"
    inkscape:output_extension="org.inkscape.output.svg.inkscape">
@@ -37,15 +37,6 @@
        inkscape:vp_z="744.09448 : 526.18109 : 1"
        inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
        id="perspective10" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient2390"
-       id="linearGradient2396"
-       x1="5.4569535"
-       y1="9.7483444"
-       x2="12.370861"
-       y2="17.642385"
-       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -58,15 +49,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="18.875"
-     inkscape:cx="16"
-     inkscape:cy="16"
+     inkscape:cx="7.1523179"
+     inkscape:cy="16.02649"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="930"
      inkscape:window-height="814"
      inkscape:window-x="341"
-     inkscape:window-y="65" />
+     inkscape:window-y="65"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -84,7 +76,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <path
-       style="fill:url(#linearGradient2396);fill-rule:evenodd;stroke:#000000;stroke-width:0.19;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       style="fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-width:0.19000000000000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
        d="M 4.095191,4.0951919 L 4.095191,27.904809 L 19.904809,16.05418 L 4.095191,4.0951919 z"
        id="path2387"
        sodipodi:nodetypes="cccc" />

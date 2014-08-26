@@ -1,25 +1,25 @@
-%PDF-1.4
+%PDF-1.5
 %µí®û
 3 0 obj
 << /Length 4 0 R
    /Filter /FlateDecode
 >>
 stream
-xœ]KMÂ0»¿_‘³àkûú1½z‚z£Š"Û°ëÀ¿ïª""!	!I¢µmÆñ<ôˆêî‘cÕh\2iìëofãÅê€ÇT­'Þèp„f9l`^y1ñ;²,U…·va+-Œç¥á…+ùwÜâúw^Í°£‚'a'À
+xœ-Š½
+€0ƒ÷{ŠÌ‚g{¶þ¬.‚à «8ˆ‚":¨ƒ¯o«’„¤àuÎˆ…ùú{[B±¶‚Û•óJ]ï&…‰jÐï/ôË	Æb–4Å—ûOŽÅ`ƒ¶œK-œß*4ÔÐáWH
 endstream
 endobj
 4 0 obj
-   132
+   108
 endobj
 2 0 obj
 <<
    /ExtGState <<
       /a0 << /CA 1 /ca 1 >>
    >>
-   /Pattern << /p5 5 0 R >>
 >>
 endobj
-6 0 obj
+5 0 obj
 << /Type /Page
    /Parent 1 0 R
    /MediaBox [ 0 0 25.6 25.6 ]
@@ -27,66 +27,43 @@ endobj
    /Group <<
       /Type /Group
       /S /Transparency
+      /I true
       /CS /DeviceRGB
    >>
    /Resources 2 0 R
 >>
 endobj
-7 0 obj
-<< /FunctionType 2
-   /Domain [ 0 1 ]
-   /C0 [ 0.2 0.2 0.2 ]
-   /C1 [ 0.372549 0.372549 0.372549 ]
-   /N 1
->>
-endobj
-5 0 obj
-<< /Type /Pattern
-   /PatternType 2
-   /Matrix [ 0.8 0 0 -0.8 0 25.6 ]
-   /Shading
-      << /ShadingType 2
-         /ColorSpace /DeviceRGB
-         /Coords [ 5.457031 9.75 12.371094 17.640625 ]
-         /Domain [ 0 1 ]
-         /Function 7 0 R
-         /Extend [ true true ]
-      >>
->>
-endobj
 1 0 obj
 << /Type /Pages
-   /Kids [ 6 0 R ]
+   /Kids [ 5 0 R ]
    /Count 1
 >>
 endobj
-8 0 obj
-<< /Creator (cairo 1.8.10 (http://cairographics.org))
-   /Producer (cairo 1.8.10 (http://cairographics.org))
+6 0 obj
+<< /Creator (cairo 1.12.16 (http://cairographics.org))
+   /Producer (cairo 1.12.16 (http://cairographics.org))
 >>
 endobj
-9 0 obj
+7 0 obj
 << /Type /Catalog
    /Pages 1 0 R
 >>
 endobj
 xref
-0 10
+0 8
 0000000000 65535 f 
-0000000974 00000 n 
-0000000245 00000 n 
+0000000510 00000 n 
+0000000222 00000 n 
 0000000015 00000 n 
-0000000223 00000 n 
-0000000672 00000 n 
-0000000345 00000 n 
-0000000547 00000 n 
-0000001039 00000 n 
-0000001166 00000 n 
+0000000200 00000 n 
+0000000294 00000 n 
+0000000575 00000 n 
+0000000704 00000 n 
 trailer
-<< /Size 10
-   /Root 9 0 R
-   /Info 8 0 R
+<< /Size 8
+   /Root 7 0 R
+   /Info 6 0 R
 >>
 startxref
-1218
+756
 %%EOF
