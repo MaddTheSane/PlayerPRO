@@ -11,7 +11,7 @@ import PlayerPROCore
 import PlayerPROKit
 import CoreGraphics
 
-class PPInstrumentWindowController: NSWindowController, NSOutlineViewDataSource, NSOutlineViewDelegate {
+class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, NSOutlineViewDelegate {
 	@IBOutlet var infoDrawer: NSDrawer?
 	@IBOutlet var instrumentSize: NSTextField?
 	@IBOutlet var instrumentLoopStart: NSTextField?

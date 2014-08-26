@@ -2287,7 +2287,7 @@
 		55DC597819A2E6B100212DD0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftBridge.swift; sourceTree = "<group>"; };
 		55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPROKitAdditions.swift; sourceTree = "<group>"; };
-		55DCF07C1999841400A1B9A1 /* PPInstrumentWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPInstrumentWindowController.swift; sourceTree = "<group>"; };
+		55DCF07C1999841400A1B9A1 /* InstrumentWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentWindowController.swift; sourceTree = "<group>"; };
 		55DCF07F1999879C00A1B9A1 /* MusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicList.swift; sourceTree = "<group>"; };
 		55DE87BB187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentObject_PPKPrivate.h; sourceTree = "<group>"; };
 		55DE87BE187E051100C36533 /* PPPatternObject_PPKPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPatternObject_PPKPrivate.h; sourceTree = "<group>"; };
@@ -3950,7 +3950,7 @@
 				5578C49017D9E8560057D11B /* AppDelegate.m */,
 				5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */,
 				5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */,
-				55DCF07C1999841400A1B9A1 /* PPInstrumentWindowController.swift */,
+				55DCF07C1999841400A1B9A1 /* InstrumentWindowController.swift */,
 				552788021981C95100708906 /* MusicListDragClass.swift */,
 				5578C49217D9E8570057D11B /* MainMenu.xib */,
 				5578C4F117DA97020057D11B /* InstrumentWindow.xib */,
