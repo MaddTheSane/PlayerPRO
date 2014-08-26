@@ -12,6 +12,8 @@
 "MyDebugStr_Continue" = "Continue";
 "MyDebugStr_Debug" = "Debug";
 
+"ComplexTrackerPlugName" = "Complex Tracker Plug-in";
+
 /* Cancel */
 "Cancel" = "Cancel";
 

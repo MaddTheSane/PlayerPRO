@@ -243,6 +243,24 @@ extension PPSampleObject {
 	}
 }
 
+extension PPPatternObject: SequenceType {
+	public func generate() -> NSFastGenerator {
+		return NSFastGenerator(self);
+	}
+}
+
+extension PPLibrary: SequenceType {
+	public func generate() -> NSFastGenerator {
+		return NSFastGenerator(self);
+	}
+}
+
+extension PPInstrumentObject: SequenceType {
+	public func generate() -> NSFastGenerator {
+		return NSFastGenerator(self);
+	}
+}
+
 extension PPDriver {
 	public func playSoundData(fromPointer theSnd: UnsafePointer<()>, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopStartingAt iloopStart: Int = 0, loopLength iloopLen: Int = 0) -> MADErr {
 		var loopStart = iloopStart

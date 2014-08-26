@@ -58,8 +58,8 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 	@IBOutlet var waveController: WaveViewController!
 	
 	var exportController = SoundSettingsViewController()
-	let theDriver: PPDriver
-	private(set) var theMusic: PPMusicObject!
+	dynamic let theDriver: PPDriver
+	dynamic private(set) var theMusic: PPMusicObject!
 	private var exportSettings = MADDriverSettings()
 	dynamic var wrapper: PPMusicObject { get {
 		return theMusic
@@ -124,6 +124,11 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 	
 	private func soundPreferencesDidChange(notification: NSNotification) {
 		resetPlayerPRODriver()
+	}
+	
+	convenience init(music: PPMusicObject) {
+		self.init()
+		theMusic = music
 	}
 	
 	override init() {

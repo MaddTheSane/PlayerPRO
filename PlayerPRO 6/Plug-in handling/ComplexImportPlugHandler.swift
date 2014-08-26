@@ -29,6 +29,12 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, SequenceType 
 					continue
 				}
 				
+				/*
+				let anonClass: AnyClass = aClass!
+				let ohaiClass = anonClass as NSObject.Type
+				
+				let aVal = ohaiClass()
+				*/
 				var aPlug = PPComplexImportPlugObject(bundle: theBundle) as PPComplexImportPlugObject?
 				
 				if aPlug != nil {

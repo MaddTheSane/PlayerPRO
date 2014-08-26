@@ -9,26 +9,19 @@
 #import "PPComplexImportPlugObject.h"
 
 @interface PPComplexImportPlugObject ()
-@property (readwrite, strong) NSBundle *ourBundle;
 @property (readwrite, copy) NSArray *UTITypes;
 @property (strong) id<PPComplexImportPlugInterface> plugInterface;
 @end
 
 @implementation PPComplexImportPlugObject
 
-- (BOOL)plugInRespondsToSelector:(SEL)aSelector
-{
-	return [_plugInterface respondsToSelector:aSelector];
-}
-
 - (instancetype)initWithBundle:(NSBundle*)ourBundle
 {
-	if (self = [super init]) {
+	if (self = [super initWithBundle:ourBundle]) {
 		Class bundClass = [ourBundle principalClass];
 		if (![bundClass conformsToProtocol:@protocol(PPComplexImportPlugInterface)]) {
 			return nil;
 		}
-		self.ourBundle = ourBundle;
 		self.plugInterface = [[bundClass alloc] init];
 		NSMutableDictionary *tempDict = [[ourBundle infoDictionary] mutableCopy];
 		[tempDict addEntriesFromDictionary:[ourBundle localizedInfoDictionary]];
@@ -39,7 +32,8 @@
 			self.UTITypes = @[[NSString stringWithString:DictionaryTemp]];
 		} else
 			return nil;
-
+		
+		type = 'CImp';
 	}
 	return self;
 }
