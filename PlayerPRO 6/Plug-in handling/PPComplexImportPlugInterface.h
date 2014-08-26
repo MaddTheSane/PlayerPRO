@@ -12,10 +12,12 @@
 typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
 
 @protocol PPComplexImportPlugInterfaceBase <NSObject>
+@required
 - (BOOL)canImportURL:(NSURL*)theURL error:(out NSError**)outErr;
 - (void)beginImportOfURL:(NSURL*)theURL withHandler:(PPComplexImportHandler)handler;
 @end
 
-@protocol PPComplexImportPlugInterface <PPComplexImportPlugInterfaceBase>
+@protocol PPComplexImportPlugInterface <PPComplexImportPlugInterfaceBase, NSObject>
+@required
 - (instancetype)init;
 @end
