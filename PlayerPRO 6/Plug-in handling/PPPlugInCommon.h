@@ -9,7 +9,6 @@
 #ifndef PPMacho_PPPlugInCommon_h
 #define PPMacho_PPPlugInCommon_h
 
-#define ISUSINGPPPLUG
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <Foundation/NSArray.h>
 

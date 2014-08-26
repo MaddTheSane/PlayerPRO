@@ -380,14 +380,6 @@ public func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePoint
 	return GetMADCommand(position, channel, aPat)
 }
 
-/*
-extension PatData {
-	public mutating func getCommand(position: Int16, channel: Int16) -> UnsafeMutablePointer<Cmd> {
-		return GetMADCommand(position, channel, &self)
-	}
-}
-*/
-
 extension PatHeader {
 	public var bigEndian: PatHeader {get {
 		var toRet = self
@@ -402,17 +394,9 @@ extension PatHeader {
 
 // MARK: Plug-in functions
 
-public func GetCommand(row: Int16, track: Int16, aPat: UnsafeMutablePointer<Pcmd>) -> UnsafeMutablePointer<Cmd> {
-	return MADGetCmd(row, track, aPat)
+public func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>) -> UnsafeMutablePointer<Cmd> {
+	return MADGetCmd(row, track, aPcmd)
 }
-
-/*
-extension Pcmd {
-	public mutating func getCommand(row: Int16, track: Int16) -> UnsafeMutablePointer<Cmd> {
-		return MADGetCmd(row, track, &self)
-	}
-}
-*/
 
 var kPlayerPROFiltersPlugTypeID: CFUUID { get {
 	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x79, 0xEA, 0x82, 0xAD, 0x5A, 0x53, 0x46, 0xAF, 0x82, 0xA9, 0x4A, 0x06, 0x85, 0xB4, 0x58, 0x8C)
@@ -422,18 +406,18 @@ var kPlayerPROFiltersPlugInterfaceID: CFUUID { get {
 	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xDA, 0x70, 0x82, 0xA2, 0xFE, 0xF1, 0x44, 0x75, 0xB1, 0xA4, 0x35, 0xC8, 0x1E, 0xD5, 0xDB, 0x8F)
 }}
 
-var kPlayerPROInstrumentPlugTypeID: CFUUID { get{
+var kPlayerPROInstrumentPlugTypeID: CFUUID { get {
 	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xFD, 0x71, 0x54, 0xD6, 0x20, 0xBF, 0x40, 0x07, 0x88, 0x1B, 0x8E, 0x44, 0x97, 0x0C, 0x3B, 0x0A)
 }}
 
-var kPlayerPROInstrumentPlugInterfaceID: CFUUID { get{
+var kPlayerPROInstrumentPlugInterfaceID: CFUUID { get {
 	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x8D, 0xC7, 0xC5, 0x82, 0x1C, 0x4B, 0x4F, 0x3C, 0xBE, 0xC8, 0x05, 0xCF, 0x83, 0x23, 0xCE, 0xA4)
 }}
 
-var kPlayerPRODigitalPlugTypeID: CFUUID { get{
+var kPlayerPRODigitalPlugTypeID: CFUUID { get {
 	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xE9, 0xE5, 0x57, 0x4F, 0x50, 0xB4, 0x43, 0xE0, 0x94, 0x8D, 0x8B, 0x7C, 0x80, 0xD4, 0x72, 0x61)
 }}
 
-var kPlayerPRODigitalPlugInterfaceID: CFUUID { get{
+var kPlayerPRODigitalPlugInterfaceID: CFUUID { get {
 	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x34, 0xBA, 0x67, 0x5D, 0x3E, 0xD8, 0x49, 0xF9, 0x8D, 0x06, 0x28, 0xA7, 0x43, 0x6A, 0x0E, 0x4D)
 }}
