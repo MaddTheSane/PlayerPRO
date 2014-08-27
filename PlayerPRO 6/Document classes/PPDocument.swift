@@ -132,32 +132,29 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 	}
 	
 	override init() {
-		var drivSettings = MADDriverSettings()
+		var drivSettings = MADDriverSettings(bestDriver: true)
+		let defaults = NSUserDefaults.standardUserDefaults()
 		
-			drivSettings.resetToBestDriver()
-			var defaults = NSUserDefaults.standardUserDefaults()
-			
-			//TODO: Sanity Checking
-			drivSettings.surround = defaults.boolForKey(PPSurroundToggle)
-			drivSettings.outPutRate = UInt32(defaults.integerForKey(PPSoundOutRate))
-			drivSettings.outPutBits = Int16(defaults.integerForKey(PPSoundOutBits))
-			if defaults.boolForKey(PPOversamplingToggle) {
-				drivSettings.oversampling = Int32(defaults.integerForKey(PPOversamplingAmount))
-			} else {
-				drivSettings.oversampling = 1
-			}
-			drivSettings.Reverb = defaults.boolForKey(PPReverbToggle)
-			drivSettings.ReverbSize = Int32(defaults.integerForKey(PPReverbAmount))
-			drivSettings.ReverbStrength = Int32(defaults.integerForKey(PPReverbStrength))
-			if (defaults.boolForKey(PPStereoDelayToggle)) {
-				drivSettings.MicroDelaySize = Int32(defaults.integerForKey(PPStereoDelayAmount))
-			} else {
-				drivSettings.MicroDelaySize = 0;
-			}
-			
-			drivSettings.driverMode = MADSoundOutput.fromRaw(Int16(defaults.integerForKey(PPSoundDriver)))!
-			drivSettings.repeatMusic = false;
+		//TODO: Sanity Checking
+		drivSettings.surround = defaults.boolForKey(PPSurroundToggle)
+		drivSettings.outPutRate = UInt32(defaults.integerForKey(PPSoundOutRate))
+		drivSettings.outPutBits = Int16(defaults.integerForKey(PPSoundOutBits))
+		if defaults.boolForKey(PPOversamplingToggle) {
+			drivSettings.oversampling = Int32(defaults.integerForKey(PPOversamplingAmount))
+		} else {
+			drivSettings.oversampling = 1
+		}
+		drivSettings.Reverb = defaults.boolForKey(PPReverbToggle)
+		drivSettings.ReverbSize = Int32(defaults.integerForKey(PPReverbAmount))
+		drivSettings.ReverbStrength = Int32(defaults.integerForKey(PPReverbStrength))
+		if (defaults.boolForKey(PPStereoDelayToggle)) {
+			drivSettings.MicroDelaySize = Int32(defaults.integerForKey(PPStereoDelayAmount))
+		} else {
+			drivSettings.MicroDelaySize = 0;
+		}
 		
+		drivSettings.driverMode = MADSoundOutput.fromRaw(Int16(defaults.integerForKey(PPSoundDriver)))!
+		drivSettings.repeatMusic = false;
 		
 		theDriver = PPDriver(library: globalMadLib, settings: &drivSettings)
 		super.init()
@@ -264,7 +261,7 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 				return
 			})
 		}
-		return rsd!.copy() as NSData?
+		return rsd?.copy() as NSData?
 	}
 	
 	func rawLESoundData(theSet: MADDriverSettings) -> NSData? {
@@ -341,7 +338,6 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 			tmpBytes = 1;
 			break;
 			
-			
 		case .PolyPhonic:
 			tmpBytes = 4;
 			break;
@@ -384,7 +380,7 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 	}
 	
 	private func showExportSettingsWithExportType(expType: Int, URL theURL: NSURL) {
-		MADGetBestDriver(&exportSettings);
+		//MADGetBestDriver(&exportSettings);
 		exportSettings.driverMode = .NoHardwareDriver;
 		exportSettings.repeatMusic = false;
 		exportController.settingsFromDriverSettings(exportSettings)

@@ -425,17 +425,16 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			} //else
 		#endif
 
-		
-			//TODO: check for valid extension.
-			for aUTI in trackerUTIs {
-				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
-					let theWrap = PPMusicObject(URL: theURL1, library: madLib)
-					let theDoc = PPDocument(music: theWrap)
-					
-					self.addDocument(theDoc)
-					return true;
-				}
+		//TODO: check for valid extension.
+		for aUTI in trackerUTIs {
+			if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
+				let theWrap = PPMusicObject(URL: theURL1, library: madLib)
+				let theDoc = PPDocument(music: theWrap)
+				
+				self.addDocument(theDoc)
+				return true;
 			}
+		}
 		
 		for obj in instrumentPlugHandler {
 			for aUTI in obj.UTITypes as [String] {
@@ -459,25 +458,32 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		for obj in complexImport {
 			for aUTI in obj.UTITypes as [String] {
 				if sharedWorkspace.type(theUTI, conformsToType: aUTI) {
-					obj.beginImportOfURL(theURL1, withHandler: { (ourObject, anErr) -> Void in
-						if anErr == .NoErr {
-							let aPPDoc = PPDocument(music: ourObject)
+					var aErr: NSError? = nil
+					let canImport = obj.canImportURL(theURL1, error: &aErr)
+					if canImport {
+						obj.beginImportOfURL(theURL1, withHandler: { (ourObject, anErr) -> Void in
+							if anErr == .NoErr {
+								let aPPDoc = PPDocument(music: ourObject)
+								
+								self.addDocument(aPPDoc)
+							} else {
+								let nsErr = CreateErrorFromMADErrorType(anErr)!
+								NSAlert(error: nsErr).runModal()
+							}
 							
-							self.addDocument(aPPDoc)
-						} else {
-							let nsErr = CreateErrorFromMADErrorType(anErr)!
-							NSAlert(error: nsErr).runModal()
-						}
+						})
+						return true
+					} else {
+						NSAlert(error: aErr!).runModal()
 						
-					})
+						return false;
+					}
 				}
 			}
 		}
 
-		
 		return false;
 	}
-	
 	
 	required init(coder: NSCoder!) {
 		
@@ -507,7 +513,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		for (i, rawObj) in enumerate(madLib) {
 			let obj = rawObj as PPLibraryObject;
 			if (obj.canExport) {
-				let mi = NSMenuItem(title: "\(obj.menuName)...", action: "exportMusicAs:", keyEquivalent: "")
+				let mi = NSMenuItem(title: "\(obj.menuName)…", action: "exportMusicAs:", keyEquivalent: "")
 				mi.tag = i
 				mi.target = nil
 				musicExportMenu.addItem(mi)
@@ -524,8 +530,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	
 	override func makeUntitledDocumentOfType(typeName: String!, error outError: NSErrorPointer) -> AnyObject! {
 		assert(typeName == MADNativeUTI, "Unknown type passed to \(__FUNCTION__): \(typeName)")
-		let theDoc = PPDocument()
-		theDoc.importMusicObject(PPMusicObject())
+		let theDoc = PPDocument(music: PPMusicObject())
 
 		return theDoc
 	}
@@ -557,7 +562,6 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			}
 		}
 	}
-
 	
 	func application(theApplication: NSApplication, openFile filename: String) -> Bool {
 		var err: NSError? = nil;

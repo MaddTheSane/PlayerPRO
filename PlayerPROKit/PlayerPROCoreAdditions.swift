@@ -124,10 +124,6 @@ extension MADDriverSettings: DebugPrintable {
 		}
 	}
 
-	public static func createWithBestDriver() -> MADDriverSettings {
-		return MADDriverSettings(bestDriver: true)
-	}
-
 	public mutating func resetToBestDriver() {
 		MADGetBestDriver(&self)
 	}

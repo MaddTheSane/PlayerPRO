@@ -272,6 +272,7 @@ typedef MADENUM(short, MADOutputChannel)
 static const MADOutputChannel oldMonoOutPut = MonoOutPut;
 static const MADOutputChannel oldStereoOutPut = StereoOutPut;
 
+#pragma pack(push, 8)
 /*!
  *	@struct	MADDriverSettings
  *	@var	numChn
@@ -321,6 +322,7 @@ typedef struct MADDriverSettings {
 		char padding[44];
 	} reserved;
 } MADDriverSettings;
+#pragma pack(pop)
 
 /******************************************************************/
 //******************* MUSICS IMPORT/EXPORT PLUGS  *****************/
