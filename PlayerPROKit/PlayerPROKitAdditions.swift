@@ -129,6 +129,10 @@ public func OctaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true
 extension PPSampleObject {
 
 #if os(OSX)
+	public func waveformImage(view: NSView) -> NSImage {
+		return PPSampleObject.waveformImage(fromSample: self, view: view)
+	}
+	
 	public class func waveformImage(fromSample theDat: PPSampleObject, view: NSView) -> NSImage {
 		var imageSize = view.convertSizeToBacking(view.frame.size)
 		let datIsStereo = theDat.stereo;
@@ -173,6 +177,14 @@ extension PPSampleObject {
 		return NSImage(CGImage: theCGimg, size: view.frame.size)
 	}
 #endif
+	
+	public func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect:CGRect, channel: Int16 = 0, context ctxRef: CGContext) {
+		return PPSampleObject.drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: self, context:ctxRef)
+	}
+	
+	public func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, context ctxRef: CGContext) {
+		return PPSampleObject.drawSample(start: startI, tSS: tSS, tSE: tSE, high: high, larg: larg, trueV: trueV, trueH: trueH, channel: channel, currentData: self, context: ctxRef)
+	}
 	
 	public class func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect:CGRect, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
 		return drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: curData, context:ctxRef)
