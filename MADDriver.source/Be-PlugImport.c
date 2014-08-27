@@ -167,7 +167,7 @@ OSErr PPImportFile(MADLibrary *MADLib, char *kindFile, char *AlienFile, MADMusic
 	return MADCannotFindPlug;
 }
 
-OSErr PPIdentifyFile(MADLibrary *lib, char *type, char *AlienFile)
+MADErr PPIdentifyFile(MADLibrary *lib, char *type, char *AlienFile)
 {
 	FILE*		refNum;
 	short		i;
@@ -203,7 +203,7 @@ OSErr PPIdentifyFile(MADLibrary *lib, char *type, char *AlienFile)
 	return MADCannotFindPlug;
 }
 
-Boolean	MADPlugAvailable(char *kindFile)
+bool MADPlugAvailable(const MADLibrary *inMADDriver, const char* kindFile)
 {
 	short		i;
 

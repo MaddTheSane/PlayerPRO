@@ -372,7 +372,7 @@ MADErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 	return MADCannotFindPlug;
 }
 
-bool MADPlugAvailable(MADLibrary *inMADDriver, char* kindFile)
+bool MADPlugAvailable(const MADLibrary *inMADDriver, const char* kindFile)
 {
 	short i;
 	
