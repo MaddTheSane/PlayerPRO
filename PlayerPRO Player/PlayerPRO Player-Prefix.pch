@@ -6,6 +6,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 
 #ifdef __OBJC__
-	#import <Cocoa/Cocoa.h>
-	#import <PlayerPROKit/PlayerPROKit.h>
+	@import Cocoa;
+	@import PlayerPROCore;
+	@import PlayerPROKit;
 #endif
