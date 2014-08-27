@@ -48,7 +48,7 @@ extension MADFourChar: StringLiteralConvertible {
 		let val1 = MADFourChar(toInit.1)
 		let val2 = MADFourChar(toInit.2)
 		let val3 = MADFourChar(toInit.3)
-		self = MADFourChar(val0 << 24) | (val1 << 16) | (val2 << 8) | (val3)
+		self = MADFourChar((val0 << 24) | (val1 << 16) | (val2 << 8) | (val3))
 	}
 
 	public func toFourChar() -> (Int8, Int8, Int8, Int8) {
@@ -142,6 +142,8 @@ extension MADInfoRec: DebugPrintable {
 		}}
 }
 
+private let BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
 extension sData32 {
 	public init() {
 		self.size = 0
@@ -152,38 +154,7 @@ extension sData32 {
 		self.loopType = .eClassicLoop
 		self.amp = 8
 		self.relNote = 0
-		self.name.0 = 0
-		self.name.1 = 0
-		self.name.2 = 0
-		self.name.3 = 0
-		self.name.4 = 0
-		self.name.5 = 0
-		self.name.6 = 0
-		self.name.7 = 0
-		self.name.8 = 0
-		self.name.9 = 0
-		self.name.10 = 0
-		self.name.11 = 0
-		self.name.12 = 0
-		self.name.13 = 0
-		self.name.14 = 0
-		self.name.15 = 0
-		self.name.16 = 0
-		self.name.17 = 0
-		self.name.18 = 0
-		self.name.19 = 0
-		self.name.20 = 0
-		self.name.21 = 0
-		self.name.22 = 0
-		self.name.23 = 0
-		self.name.24 = 0
-		self.name.25 = 0
-		self.name.26 = 0
-		self.name.27 = 0
-		self.name.28 = 0
-		self.name.29 = 0
-		self.name.30 = 0
-		self.name.31 = 0
+		self.name = BlankNameChar32
 		self.stereo = 0
 		self.data = 0
 	}
@@ -226,7 +197,6 @@ extension sData {
 		toRet.loopBeg = self.loopBeg.bigEndian
 		toRet.loopSize = self.loopBeg.bigEndian
 		toRet.c2spd = self.c2spd.bigEndian
-		//Not byte-swapping data, as it isn't used
 		
 		return toRet
 	}}
@@ -256,38 +226,7 @@ extension sData {
 		self.loopType = .eClassicLoop
 		self.amp = 8
 		self.relNote = 0
-		self.name.0 = 0
-		self.name.1 = 0
-		self.name.2 = 0
-		self.name.3 = 0
-		self.name.4 = 0
-		self.name.5 = 0
-		self.name.6 = 0
-		self.name.7 = 0
-		self.name.8 = 0
-		self.name.9 = 0
-		self.name.10 = 0
-		self.name.11 = 0
-		self.name.12 = 0
-		self.name.13 = 0
-		self.name.14 = 0
-		self.name.15 = 0
-		self.name.16 = 0
-		self.name.17 = 0
-		self.name.18 = 0
-		self.name.19 = 0
-		self.name.20 = 0
-		self.name.21 = 0
-		self.name.22 = 0
-		self.name.23 = 0
-		self.name.24 = 0
-		self.name.25 = 0
-		self.name.26 = 0
-		self.name.27 = 0
-		self.name.28 = 0
-		self.name.29 = 0
-		self.name.30 = 0
-		self.name.31 = 0
+		self.name = BlankNameChar32
 		self.stereo = 0
 		self.data = nil
 	}
@@ -312,6 +251,7 @@ extension FXBus {
 		ByPass = false
 		copyId = 0
 	}
+	
 	public var bigEndian: FXBus {get {
 		let toRet = FXBus(ByPass: self.ByPass, copyId: self.copyId.bigEndian, Active: self.Active)
 		
@@ -361,14 +301,8 @@ extension Cmd {
 		unused = 0
 	}
 	
-	public mutating func kill() -> MADErr {
-		return MADKillCmd(&self)
-	}
-}
-
-extension MADMusic {
-	public init() {
-		self = CreateFreeMADK().move()
+	public mutating func kill() {
+		MADKillCmd(&self)
 	}
 }
 
@@ -402,26 +336,14 @@ public func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcm
 	return MADGetCmd(row, track, aPcmd)
 }
 
-var kPlayerPROFiltersPlugTypeID: CFUUID { get {
-	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x79, 0xEA, 0x82, 0xAD, 0x5A, 0x53, 0x46, 0xAF, 0x82, 0xA9, 0x4A, 0x06, 0x85, 0xB4, 0x58, 0x8C)
-}}
+let kPlayerPROFiltersPlugTypeID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x79, 0xEA, 0x82, 0xAD, 0x5A, 0x53, 0x46, 0xAF, 0x82, 0xA9, 0x4A, 0x06, 0x85, 0xB4, 0x58, 0x8C)
 
-var kPlayerPROFiltersPlugInterfaceID: CFUUID { get {
-	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xDA, 0x70, 0x82, 0xA2, 0xFE, 0xF1, 0x44, 0x75, 0xB1, 0xA4, 0x35, 0xC8, 0x1E, 0xD5, 0xDB, 0x8F)
-}}
+let kPlayerPROFiltersPlugInterfaceID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xDA, 0x70, 0x82, 0xA2, 0xFE, 0xF1, 0x44, 0x75, 0xB1, 0xA4, 0x35, 0xC8, 0x1E, 0xD5, 0xDB, 0x8F)
 
-var kPlayerPROInstrumentPlugTypeID: CFUUID { get {
-	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xFD, 0x71, 0x54, 0xD6, 0x20, 0xBF, 0x40, 0x07, 0x88, 0x1B, 0x8E, 0x44, 0x97, 0x0C, 0x3B, 0x0A)
-}}
+let kPlayerPROInstrumentPlugTypeID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xFD, 0x71, 0x54, 0xD6, 0x20, 0xBF, 0x40, 0x07, 0x88, 0x1B, 0x8E, 0x44, 0x97, 0x0C, 0x3B, 0x0A)
 
-var kPlayerPROInstrumentPlugInterfaceID: CFUUID { get {
-	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x8D, 0xC7, 0xC5, 0x82, 0x1C, 0x4B, 0x4F, 0x3C, 0xBE, 0xC8, 0x05, 0xCF, 0x83, 0x23, 0xCE, 0xA4)
-}}
+let kPlayerPROInstrumentPlugInterfaceID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x8D, 0xC7, 0xC5, 0x82, 0x1C, 0x4B, 0x4F, 0x3C, 0xBE, 0xC8, 0x05, 0xCF, 0x83, 0x23, 0xCE, 0xA4)
 
-var kPlayerPRODigitalPlugTypeID: CFUUID { get {
-	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xE9, 0xE5, 0x57, 0x4F, 0x50, 0xB4, 0x43, 0xE0, 0x94, 0x8D, 0x8B, 0x7C, 0x80, 0xD4, 0x72, 0x61)
-}}
+let kPlayerPRODigitalPlugTypeID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xE9, 0xE5, 0x57, 0x4F, 0x50, 0xB4, 0x43, 0xE0, 0x94, 0x8D, 0x8B, 0x7C, 0x80, 0xD4, 0x72, 0x61)
 
-var kPlayerPRODigitalPlugInterfaceID: CFUUID { get {
-	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x34, 0xBA, 0x67, 0x5D, 0x3E, 0xD8, 0x49, 0xF9, 0x8D, 0x06, 0x28, 0xA7, 0x43, 0x6A, 0x0E, 0x4D)
-}}
+let kPlayerPRODigitalPlugInterfaceID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x34, 0xBA, 0x67, 0x5D, 0x3E, 0xD8, 0x49, 0xF9, 0x8D, 0x06, 0x28, 0xA7, 0x43, 0x6A, 0x0E, 0x4D)

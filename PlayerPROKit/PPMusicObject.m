@@ -245,10 +245,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (instancetype)init
 {
-	if (self = [super init]) {
-		currentMusic = CreateFreeMADK();
-	}
-	return self;
+	return self = [self initWithMusicStruct:CreateFreeMADK() copy:NO];
 }
 
 - (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib
@@ -492,26 +489,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	}
 	
 	return YES;
-}
-
-#pragma mark NSSecureCoding functions
-
-+ (BOOL)supportsSecureCoding
-{
-	return YES;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
-	
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
-	if (self = [super init]) {
-		
-	}
-	return self;
 }
 
 @end

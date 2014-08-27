@@ -18,7 +18,9 @@ public struct PPKPcmd {
 	public var length: Int
 	public var trackStart: Int
 	public var posStart: Int
-	//var structSize: Int32
+	public var structSize: Int { get {
+		return sizeof(Pcmd.Type) + myCmd.count * sizeof(Cmd.Type)
+		}}
 	public var myCmd = [Cmd]()
 	
 	public init(_ aPcmd: UnsafePointer<Pcmd>) {
@@ -72,6 +74,6 @@ public struct PPKPcmd {
 
 	
 	public var valid: Bool { get {
-		return false
+		return (tracks * length) == myCmd.count
 		}}
 }

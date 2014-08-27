@@ -20,19 +20,75 @@ public func ErrorIsUserCancelled(theErr: NSError) -> Bool {
 	return PPErrorIsUserCancelled(theErr)
 }
 
-public func OctaveNameFromNote(octNote: Int16 , letters isUseLetters: Bool = true) -> String {
+public func NoteFromString(myTT: String) -> Int8 {
+	let toRet: Int16 = NoteFromString(myTT)
+	return Int8(toRet)
+}
+
+public func NoteFromString(myTT: String) -> Int16
+{
+	let kNoteCompareOptions = NSStringCompareOptions.CaseInsensitiveSearch | NSStringCompareOptions.WidthInsensitiveSearch | NSStringCompareOptions.DiacriticInsensitiveSearch
+	if ( myTT == "" || myTT == "---" || countElements(myTT) < 2) {
+		return 0xFF;
+	}
+	
+	var idx = myTT.startIndex
+	let val1 = String(myTT[idx++])
+	let val2 = String(countElements(myTT) >= 3 ? myTT[idx++] : " ")
+	let val3 = String(myTT[idx])
+	var Oct = Int16(val3.toInt()!)
+	Oct *= 12;
+	
+	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
+	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
+
+	if val1.compare("C", options:kNoteCompareOptions) == NSComparisonResult.OrderedSame {
+		Oct += 0;
+	} else if val1.compare("D", options:kNoteCompareOptions) == NSComparisonResult.OrderedSame {
+		Oct += 2;
+	} else if val1.compare("E", options:kNoteCompareOptions) == NSComparisonResult.OrderedSame {
+		Oct += 4;
+	} else if val1.compare("F", options:kNoteCompareOptions) == NSComparisonResult.OrderedSame {
+		Oct += 5;
+	} else if val1.compare("G", options:kNoteCompareOptions) == NSComparisonResult.OrderedSame {
+		Oct += 7;
+	} else if val1.compare("A", options:kNoteCompareOptions) == NSComparisonResult.OrderedSame {
+		Oct += 9;
+	} else if val1.compare("B", options:kNoteCompareOptions) == NSComparisonResult.OrderedSame {
+		Oct += 11;
+	} else {
+		Oct = 0xFF;
+	}
+	
+	if (Oct != 0xFF) {
+		if (val2 == "#" || val2 == "♯"/*Unicode sharp sign, just in case*/) {
+			Oct++;
+		}
+		if Oct > 95 {
+			Oct = 0xFF;
+		}
+		if Oct < 0 {
+			Oct = 0xFF;
+		}
+	}
+	
+	return Oct;
+}
+
+public func OctaveNameFromNote(octNote: Int8, letters isUseLetters: Bool = true) -> String {
+	return OctaveNameFromNote(Int16(octNote), letters: isUseLetters)
+}
+
+public func OctaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true) -> String {
+	if (octNote > 95) {
+		return "---";
+	}
 	if isUseLetters {
 		let NNames = ["C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "]
-		if (octNote > 95) {
-			return "---";
-		}
 		
 		return "\(NNames[Int(octNote % 12)])\(octNote / 12)"
 	} else {
 		let NNames_nonEnglish = ["Do", "Do#", "Ré", "Ré#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"]
-		if (octNote > 95) {
-			return "---";
-		}
 	
 		return "\(NNames_nonEnglish[Int(octNote % 12)])\(octNote / 12)"
 	}
@@ -241,6 +297,11 @@ extension PPSampleObject {
 	@objc public class func octaveNameFromNote(octNote: Int16) -> String {
 		return OctaveNameFromNote(octNote, letters: true)
 	}
+
+	@objc public class func noteFromString(myTT: String) -> Int16 {
+		return NoteFromString(myTT)
+	}
+
 }
 
 extension PPPatternObject: SequenceType {
