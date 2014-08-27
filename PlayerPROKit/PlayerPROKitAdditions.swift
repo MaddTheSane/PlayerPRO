@@ -20,6 +20,24 @@ public func ErrorIsUserCancelled(theErr: NSError) -> Bool {
 	return PPErrorIsUserCancelled(theErr)
 }
 
+public func OctaveNameFromNote(octNote: Int16 , letters isUseLetters: Bool = true) -> String {
+	if isUseLetters {
+		let NNames = ["C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "]
+		if (octNote > 95) {
+			return "---";
+		}
+		
+		return "\(NNames[Int(octNote % 12)])\(octNote / 12)"
+	} else {
+		let NNames_nonEnglish = ["Do", "Do#", "Ré", "Ré#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"]
+		if (octNote > 95) {
+			return "---";
+		}
+	
+		return "\(NNames_nonEnglish[Int(octNote % 12)])\(octNote / 12)"
+	}
+}
+
 extension PPSampleObject {
 
 #if os(OSX)
@@ -221,25 +239,7 @@ extension PPSampleObject {
 	//}
 	
 	@objc public class func octaveNameFromNote(octNote: Int16) -> String {
-		return octaveNameFromNote(octNote, letters: true)
-	}
-
-	private class func octaveNameFromNote(octNote: Int16 , letters isUseLetters: Bool = true) -> String {
-		if isUseLetters {
-			let NNames = ["C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "]
-			if (octNote > 95) {
-				return "---";
-			}
-			
-			return "\(NNames[Int(octNote % 12)])\(octNote / 12)"
-		} else {
-			let NNames_nonEnglish = ["Do", "Do#", "Ré", "Ré#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"]
-			if (octNote > 95) {
-				return "---";
-			}
-		
-			return "\(NNames_nonEnglish[Int(octNote % 12)])\(octNote / 12)"
-		}
+		return OctaveNameFromNote(octNote, letters: true)
 	}
 }
 
