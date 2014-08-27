@@ -42,22 +42,30 @@ public func NoteFromString(myTT: String) -> Int16
 	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
 	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
 
-	if val1.compare("C", options:kNoteCompareOptions) == NSComparisonResult.OrderedSame {
-		Oct += 0;
-	} else if val1.compare("D", options:kNoteCompareOptions) == NSComparisonResult.OrderedSame {
-		Oct += 2;
-	} else if val1.compare("E", options:kNoteCompareOptions) == NSComparisonResult.OrderedSame {
-		Oct += 4;
-	} else if val1.compare("F", options:kNoteCompareOptions) == NSComparisonResult.OrderedSame {
-		Oct += 5;
-	} else if val1.compare("G", options:kNoteCompareOptions) == NSComparisonResult.OrderedSame {
-		Oct += 7;
-	} else if val1.compare("A", options:kNoteCompareOptions) == NSComparisonResult.OrderedSame {
-		Oct += 9;
-	} else if val1.compare("B", options:kNoteCompareOptions) == NSComparisonResult.OrderedSame {
-		Oct += 11;
-	} else {
-		Oct = 0xFF;
+	switch val1 {
+	case "c", "C":
+		Oct += 0
+	
+	case "d", "D":
+		Oct += 2
+	
+	case "e", "E":
+		Oct += 4
+	
+	case "f", "F":
+		Oct += 5
+	
+	case "g", "G":
+		Oct += 7
+	
+	case "a", "A":
+		Oct += 9
+	
+	case "b", "B":
+		Oct += 11
+	
+	default:
+		Oct = 0xFF
 	}
 	
 	if (Oct != 0xFF) {
