@@ -27,51 +27,75 @@ public func NoteFromString(myTT: String) -> Int8 {
 
 public func NoteFromString(myTT: String) -> Int16
 {
-	let kNoteCompareOptions = NSStringCompareOptions.CaseInsensitiveSearch | NSStringCompareOptions.WidthInsensitiveSearch | NSStringCompareOptions.DiacriticInsensitiveSearch
 	if ( myTT == "" || myTT == "---" || countElements(myTT) < 2) {
 		return 0xFF;
 	}
 	
-	var idx = myTT.startIndex
-	let val1 = String(myTT[idx++])
-	let val2 = String(countElements(myTT) >= 3 ? myTT[idx++] : " ")
-	let val3 = String(myTT[idx])
-	var Oct = Int16(val3.toInt()!)
-	Oct *= 12;
+	func findNote(inStr: String) -> (String, Bool) {
+		var idx = inStr.endIndex
+		--idx
+		var maybeSign = inStr[idx]
+		var maybeStr = inStr[inStr.startIndex ..< idx]
+		switch maybeSign {
+		case "#", "♯"/*Unicode sharp sign, just in case*/:
+			return (maybeStr, true)
+
+		case " ", "-":
+			return (maybeStr, false)
+			
+		default:
+			return (inStr, false)
+		}
+	}
+	
+	var idx = myTT.endIndex
+	let lastChar = myTT[--idx]
+	let octMaybe = String(lastChar).toInt()
+	if octMaybe == nil {
+		return 0xFF
+	}
 	
 	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
 	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
 
+	var Oct = Int16(octMaybe!)
+	Oct *= 12;
+	
+	let theRest = myTT[myTT.startIndex ..< idx]
+	let theRet = findNote(theRest)
+	let tmpNote = theRet.0
+	let val1 = tmpNote.lowercaseString
 	switch val1 {
-	case "c", "C":
+	case "c", "do":
 		Oct += 0
-	
-	case "d", "D":
+		
+	case "d", "ré", "re":
 		Oct += 2
-	
-	case "e", "E":
+		
+	case "e", "mi":
 		Oct += 4
-	
-	case "f", "F":
+		
+	case "f", "fa":
 		Oct += 5
-	
-	case "g", "G":
+		
+	case "g", "sol", "so":
 		Oct += 7
-	
-	case "a", "A":
+		
+	case "a", "la":
 		Oct += 9
-	
-	case "b", "B":
+		
+	case "b", "si", "ti":
 		Oct += 11
-	
+		
 	default:
 		Oct = 0xFF
 	}
 	
-	if (Oct != 0xFF) {
-		if (val2 == "#" || val2 == "♯"/*Unicode sharp sign, just in case*/) {
+	if Oct != 0xFF {
+		if theRet.1 {
 			Oct++;
 		}
+		
 		if Oct > 95 {
 			Oct = 0xFF;
 		}
@@ -304,6 +328,10 @@ extension PPSampleObject {
 	
 	@objc public class func octaveNameFromNote(octNote: Int16) -> String {
 		return OctaveNameFromNote(octNote, letters: true)
+	}
+
+	@objc public class func octaveNameFromNote(octNote: Int16, usingSingularLetter: Bool) -> String {
+		return OctaveNameFromNote(octNote, letters: usingSingularLetter)
 	}
 
 	@objc public class func noteFromString(myTT: String) -> Int16 {
