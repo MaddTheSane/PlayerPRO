@@ -40,7 +40,7 @@ class ExportObject: NSObject {
 	convenience init(destination dest: NSURL, block: PPSwiftExportBlock) {
 		let tmpExportBlock: PPExportBlock = { (theURL: NSURL, errStr: AutoreleasingUnsafeMutablePointer<NSString?>) -> MADErr in
 			var tmpStr: String? = nil
-			var retErr = block(theURL: dest, errStr: &tmpStr)
+			let retErr = block(theURL: dest, errStr: &tmpStr)
 			errStr.memory = tmpStr
 			return retErr
 		}
