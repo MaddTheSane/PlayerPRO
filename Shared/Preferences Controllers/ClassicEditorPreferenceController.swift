@@ -8,17 +8,6 @@
 
 import Cocoa
 
-/*
-class TagCoupling {
-	var amount: Int32
-	var tag: Int
-
-	init(_ amount1: Int32, _ tag1: Int) {
-		amount = amount1
-		tag = tag1
-	}
-}
-*/
 let TrackHeightCoupling = [TagCoupling(100, 1), TagCoupling(110, 2), TagCoupling(120, 3), TagCoupling(130, 4), TagCoupling(140, 5),
 	TagCoupling(160, 6), TagCoupling(180, 7), TagCoupling(200, 8)];
 
@@ -51,7 +40,7 @@ class ClassicEditorPreferenceController: NSViewController, PPPreferenceObject {
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		// Do view setup here.
-		var defaults = NSUserDefaults.standardUserDefaults()
+		let defaults = NSUserDefaults.standardUserDefaults()
 		
 		let aRate = Int32(defaults.integerForKey(PPCETrackHeight))
 		
@@ -67,13 +56,12 @@ class ClassicEditorPreferenceController: NSViewController, PPPreferenceObject {
 		}
 		trackHeightButton.selectItemAtIndex(toSet - 1)
 		
-		
 		tempoUnitValue.integerValue = defaults.integerForKey(PPCETempoUnit)
 		markersLoopValue.integerValue = defaults.integerForKey(PPCEMarkerLoop)
 		markersOffsetValue.integerValue = defaults.integerForKey(PPCEMarkerOffset)
 		notesLengthCheck.state = defaults.boolForKey(PPCEShowNotesLen) ? NSOnState : NSOffState
 		
-		var markersVal = defaults.boolForKey(PPCEShowMarkers)
+		let markersVal = defaults.boolForKey(PPCEShowMarkers)
 		markersLoopValue.enabled = markersVal
 		markersOffsetValue.enabled = markersVal
 		markersCheck.state = markersVal ? NSOnState : NSOffState
