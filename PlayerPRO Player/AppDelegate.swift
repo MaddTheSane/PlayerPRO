@@ -987,7 +987,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			})
 			
 		case -2: //MP4
-			savePanel.allowedFileTypes = ["com.apple.m4a-audio"];
+			savePanel.allowedFileTypes = [AVFileTypeAppleM4A];
 			savePanel.title = "Export as MPEG-4 Audio"
 			savePanel.beginSheetModalForWindow(self.window, completionHandler: {(result) -> Void in
 				if (result != NSFileHandlingPanelOKButton) {
