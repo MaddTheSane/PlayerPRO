@@ -208,42 +208,6 @@ void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init)
 	[madData autorelease];
 }
 
-- (void)getMIDIInfoFromFileAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary *, MADErr error))reply
-{
-	MADInfoRec theInfo = {0};
-	MADErr theErr = MADNoErr;
-	NSDictionary *fileInfo = [theURL resourceValuesForKeys:@[NSURLFileSizeKey] error:NULL];
-	if (!fileInfo) {
-		reply(nil, MADReadingErr);
-		return;
-	}
-	NSData *fileData = [[NSData alloc] initWithContentsOfURL:theURL options:NSDataReadingMappedIfSafe error:NULL];
-	if (!fileData) {
-		reply(nil, MADReadingErr);
-		return;
-	}
-	theErr = ExtractMIDIInfo(&theInfo, [fileData bytes]);
-	[fileData release];
-	if (theErr) {
-		reply(nil, theErr);
-		return;
-	}
-	theInfo.fileSize = [[fileInfo objectForKey:NSURLFileSizeKey] longValue];
-	NSDictionary *PPInfoDict;
-	@autoreleasepool {
-		PPInfoDict = [@{kPPTotalPatterns:		@(theInfo.totalPatterns),
-						kPPPartitionLength:		@(theInfo.partitionLength),
-						kPPFileSize:			@(theInfo.fileSize),
-						kPPSignature:			@(theInfo.signature),
-						kPPTotalTracks:			@(theInfo.totalTracks),
-						kPPTotalInstruments:	@(theInfo.totalInstruments),
-						kPPInternalFileName:	[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding],
-						kPPFormatDescription:	[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]} retain];
-	}
-	reply(PPInfoDict, MADNoErr);
-	[PPInfoDict autorelease];
-}
-
 - (void)canImportMIDIFileAtURL:(NSURL*)theURL withReply:(void (^)(MADErr error))reply
 {
 	MADErr myErr = noErr;
