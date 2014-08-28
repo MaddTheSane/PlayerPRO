@@ -118,5 +118,4 @@ class SoundOutputController: SoundSettingsViewController, SoundSettingsViewContr
 		
 		settingsFromDriverSettings(drivSet);
 	}
-	
 }

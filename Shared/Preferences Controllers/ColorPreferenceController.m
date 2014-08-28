@@ -19,7 +19,7 @@
 	return [[self alloc] init];
 }
 
--(id)init
+- (instancetype)init
 {
 	if (self = [super initWithNibName:@"ColorPrefs" bundle:nil]) {
 		[self setTitle:NSLocalizedStringFromTable(@"Colors", @"PreferenceNames", @"Colors")];
@@ -27,7 +27,7 @@
 	return self;
 }
 
--(void)awakeFromNib
+- (void)awakeFromNib
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSMutableArray *tmpColor = [[NSMutableArray alloc] initWithCapacity:96];
@@ -43,11 +43,11 @@ colorObj = [[PPColorPreferenceObject alloc] initWithColor:[NSColor PPDecodeColor
 }
 
 #if 0
--(void)setPersonModelArray:(NSMutableArray *)a {
+- (void)setPersonModelArray:(NSMutableArray *)a {
 	personModelArray = a;
 }
 
--(NSArray*)colorsModelArray {
+- (NSArray*)colorsModelArray {
 	return personModelArray;
 }
 #endif

@@ -10,9 +10,15 @@
 #import "PPPatternObject_PPKPrivate.h"
 #import "PPPatternObject_PcmdHandling.h"
 #import "PPMusicObject_PPKPrivate.h"
+#import "PPSampleObject.h"
+//#import "PlayerPROKit/PlayerPROKit-Swift.h"
 #if !TARGET_OS_IPHONE
 #import "PPPasteboardHandling.h"
 #endif
+
+@interface PPSampleObject (inSwift)
++ (NSString*)octaveNameFromNote:(short)octNote;
+@end
 
 #define kPPPatternName @"PlayerPROKit Pattern Name"
 #define kPPPatternCommands @"PlayerPROKit Pattern Commands"
@@ -28,6 +34,14 @@ static inline void SwapPcmd(Pcmd *toswap)
 	MADBE16(&toswap->posStart);
 	MADBE16(&toswap->tracks);
 	MADBE16(&toswap->trackStart);
+}
+
+static inline Pcmd* CopyPcmd(const Pcmd* tocopy)
+{
+	size_t structlen = tocopy->structSize;
+	Pcmd *toret = calloc(structlen, 1);
+	memcpy(toret, tocopy, structlen);
+	return toret;
 }
 
 @implementation PPPatternObject
@@ -258,18 +272,6 @@ static inline NSString *GetEffectString(short theEffect)
 	return @" ";
 }
 
-static NSString* octaveNameFromNote(short octNote)
-{
-	const char NNames[][3] = {"C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "};
-	
-	if (octNote > 95) {
-		return @"---";
-	}
-	
-	return [[NSString alloc] initWithFormat:@"%s%i", NNames[octNote % 12], octNote / 12];
-}
-
-
 static BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL AllStr)
 {
  	BOOL Note = NO;
@@ -288,7 +290,7 @@ static BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL All
 		[mainStr appendString:@"OFF"];
 	} else if (theCommand->note != 0xFF) {
 		Note = YES;
-		[mainStr appendString:octaveNameFromNote(theCommand->note)];
+		[mainStr appendString: [PPSampleObject octaveNameFromNote:theCommand->note]];
 	} else {
 		[mainStr appendString:@"   "];
 	}
@@ -326,14 +328,13 @@ static BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL All
 	return Note;
 }
 
-+ (NSString *)stringFromPcmdData:(Pcmd*)myPcmd
++ (NSString *)stringFromPcmdData:(const Pcmd*)thePcmd
 {
 	int	i, x;
 	NSMutableString *myText = [[NSMutableString alloc] init];
 	NSMutableString *myStr;
-	size_t	mSize;
-	
-	mSize = 5 + myPcmd->tracks * myPcmd->length * 16L;
+	Pcmd *myPcmd = CopyPcmd(thePcmd);
+	size_t	mSize = 5 + myPcmd->tracks * myPcmd->length * 16;
 	
 	for (i = 0; i < myPcmd->length; i++) {
 		for (x = 0; x < myPcmd->tracks; x++) {
@@ -351,6 +352,7 @@ static BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL All
 				[myText appendString:@"\r"];
 		}
 	}
+	free(myPcmd);
 	
 	if ([myText length] >= mSize)
 		MADDebugStr(__LINE__, __FILE__, "ZZZ");
@@ -374,6 +376,15 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 	*theCmd = tmpCmd;
 	
 	return theCmd;
+}
+
++ (NSData*)dataFromPcmd:(const Pcmd*)thePcmd
+{
+	size_t structSize = thePcmd->structSize;
+	Pcmd *newPcmd = calloc(structSize, 1);
+	memcpy(newPcmd, thePcmd, structSize);
+	SwapPcmd(newPcmd);
+	return [[NSData alloc] initWithBytesNoCopy:newPcmd length:structSize];
 }
 
 - (Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange

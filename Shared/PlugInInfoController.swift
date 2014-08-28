@@ -33,7 +33,7 @@ class PlugInInfoController: NSWindowController {
 		authorField.stringValue = self.info.authorName
 		typeField.stringValue = self.info.plugType
 		theCopyrightField.stringValue = self.info.plugCopyright
-		var plugImage = NSWorkspace.sharedWorkspace().iconForFile(info.plugURL.path)
+		let plugImage = NSWorkspace.sharedWorkspace().iconForFile(info.plugURL.path)
 		plugImage.size = plugImSize
 		pluginImage.image = plugImage
     }

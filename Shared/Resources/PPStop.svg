@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="32px"
    height="32px"
    id="svg2700"
    sodipodi:version="0.32"
-   inkscape:version="0.46"
+   inkscape:version="0.48.5 r10040"
    sodipodi:docname="PPStop.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   version="1.1">
   <defs
      id="defs2702">
     <linearGradient
@@ -36,15 +37,6 @@
        inkscape:vp_z="32 : 16 : 1"
        inkscape:persp3d-origin="16 : 10.666667 : 1"
        id="perspective2708" />
-    <linearGradient
-       inkscape:collect="always"
-       xlink:href="#linearGradient2712"
-       id="linearGradient2718"
-       x1="11.073602"
-       y1="10.21001"
-       x2="21.522081"
-       y2="21.998037"
-       gradientUnits="userSpaceOnUse" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -54,8 +46,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="11.197802"
-     inkscape:cx="16"
-     inkscape:cy="16"
+     inkscape:cx="1.0863589"
+     inkscape:cy="16.044652"
      inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:grid-bbox="true"
@@ -63,7 +55,8 @@
      inkscape:window-width="1248"
      inkscape:window-height="785"
      inkscape:window-x="406"
-     inkscape:window-y="111" />
+     inkscape:window-y="111"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata2705">
     <rdf:RDF>
@@ -80,7 +73,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer">
     <rect
-       style="fill:url(#linearGradient2718);fill-opacity:1;stroke:#000000;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1"
        id="rect2710"
        width="24"
        height="24"

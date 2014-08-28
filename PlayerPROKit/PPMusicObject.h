@@ -18,7 +18,7 @@
 @class PPLibrary;
 @class PPInstrumentObject;
 
-@interface PPMusicObject : NSObject <NSCopying>
+@interface PPMusicObject : NSObject <NSCopying, NSSecureCoding>
 @property (readonly) int totalPatterns;
 @property (readonly) int totalPartitions;
 @property (readonly) int partitionLength;
@@ -66,5 +66,11 @@
 - (MADErr)exportInstrumentListToURL:(NSURL*)outURL;
 - (BOOL)addInstrument:(PPInstrumentObject*)theIns;
 - (BOOL)importInstrumentListFromURL:(NSURL *)insURL error:(out NSError *__autoreleasing*)theErr;
+
+
+#pragma mark NSCoding functions
+// This is needed to make Swift and Xcode 6 happy
+// We need this to be here to make NSXPC happy.
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
 @end

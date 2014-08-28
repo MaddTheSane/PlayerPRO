@@ -33,7 +33,7 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPMiscPreferencesDidChange object:self];
 }
 
--(id)init
+- (instancetype)init
 {
 	if (self = [super initWithNibName:@"MiscPrefs" bundle:nil]) {
 		[self setTitle:NSLocalizedStringFromTable(@"Misc.", @"PreferenceNames", @"Misc.")];
@@ -41,7 +41,7 @@
 	return self;
 }
 
--(void)awakeFromNib
+- (void)awakeFromNib
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	[addExt setState:[defaults boolForKey:PPMAddExtension]];

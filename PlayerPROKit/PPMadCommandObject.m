@@ -25,12 +25,12 @@
 }
 
 #if !TARGET_OS_IPHONE
-#define sampleUTI @"net.sourceforge.playerpro.MADCommand"
+NSString * const kPPKMADCommandPasteboardUTI = @"net.sourceforge.playerpro.MADCommand";
 
 static NSArray *UTIArray;
 static dispatch_once_t initUTIOnceToken;
 static const dispatch_block_t initUTIArray = ^{
-	UTIArray = @[sampleUTI];
+	UTIArray = @[kPPKMADCommandPasteboardUTI];
 };
 
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
@@ -46,7 +46,7 @@ static const dispatch_block_t initUTIArray = ^{
 }
 - (id)pasteboardPropertyListForType:(NSString *)type
 {
-	if ([type isEqualToString:sampleUTI])
+	if ([type isEqualToString:kPPKMADCommandPasteboardUTI])
 		return [NSKeyedArchiver archivedDataWithRootObject:self];
 	else
 		return nil;
@@ -54,7 +54,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 + (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
 {
-	if ([type isEqualToString:sampleUTI])
+	if ([type isEqualToString:kPPKMADCommandPasteboardUTI])
 		return NSPasteboardReadingAsKeyedArchive;
 	else
 		return NSPasteboardReadingAsData;

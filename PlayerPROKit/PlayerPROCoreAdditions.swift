@@ -15,7 +15,7 @@ import CoreServices
 
 let MadID: MADFourChar = "MADK"
 
-extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
+extension MADFourChar: StringLiteralConvertible {
 	public var stringValue: String {
 		get {
 			let toRet = UTCreateStringForOSType(self as OSType).takeRetainedValue()
@@ -28,21 +28,42 @@ extension MADFourChar: /*Printable, DebugPrintable,*/ StringLiteralConvertible {
 	
 	/*
 	public init(_ toInit: (Int8, Int8, Int8, Int8, Int8)) {
-		var tmpInit = toInit
-		var atmp = &tmpInit
-		var tmpPtr: UnsafeMutablePointer<Int8> = UnsafeMutablePointer<Int8>(tmpInit)
-		self = Ptr2OSType(tmpInit)
+		//This is the only reliable way I got to get the string value from a C char array.
+		var toParse: String = ""
+		var mirror = reflect(toInit)
+		for i in 0..<mirror.count {
+			var aChar = mirror[i].1.value
+			toParse += NSString(bytes: &aChar, length: 1, encoding: NSMacOSRomanStringEncoding)
+		}
+		self = MADFourChar(toParse)
 	}
-	
-	public var description: String { get {
-		return self.stringValue
-		}}
-	
-	public var debugDescription: String { get {
-		return self.description
-		}}
 	*/
 	
+	public init(_ toInit: (Int8, Int8, Int8, Int8, Int8)) {
+		self = MADFourChar((toInit.0, toInit.1, toInit.2, toInit.3))
+	}
+
+	public init(_ toInit: (Int8, Int8, Int8, Int8)) {
+		let val0 = MADFourChar(toInit.0)
+		let val1 = MADFourChar(toInit.1)
+		let val2 = MADFourChar(toInit.2)
+		let val3 = MADFourChar(toInit.3)
+		self = MADFourChar(val0 << 24) | (val1 << 16) | (val2 << 8) | (val3)
+	}
+
+	public func toFourChar() -> (Int8, Int8, Int8, Int8) {
+		let var1 = (self >> 24) & 0xFF
+		let var2 = (self >> 16) & 0xFF
+		let var3 = (self >> 8) & 0xFF
+		let var4 = (self) & 0xFF
+		return (Int8(var1), Int8(var2), Int8(var3), Int8(var4))
+	}
+	
+	public func toFourChar() -> (Int8, Int8, Int8, Int8, Int8) {
+		let outVar: (Int8, Int8, Int8, Int8) = toFourChar()
+		return (outVar.0, outVar.1, outVar.2, outVar.3, 0)
+	}
+
 	public static func convertFromStringLiteral(value: String) -> MADFourChar {
 		return MADFourChar(value)
 	}
@@ -84,7 +105,7 @@ extension MADBool : BooleanLiteralConvertible, BooleanType {
 // MARK: PlayerPRO MAD data types
 
 extension MADDriverSettings: DebugPrintable {
-	public init() {
+	public init(bestDriver: Bool = false) {
 		self.driverMode = .CoreAudioDriver
 		self.numChn = 4
 		self.outPutBits = 16
@@ -98,12 +119,13 @@ extension MADDriverSettings: DebugPrintable {
 		self.surround = false
 		self.Reverb = false
 		self.repeatMusic = false
+		if bestDriver {
+			resetToBestDriver()
+		}
 	}
 
 	public static func createWithBestDriver() -> MADDriverSettings {
-		var curSett = MADDriverSettings()
-		curSett.resetToBestDriver()
-		return curSett
+		return MADDriverSettings(bestDriver: true)
 	}
 
 	public mutating func resetToBestDriver() {
@@ -191,26 +213,12 @@ extension sData32 {
 		toRet.loopType = self.loopType
 		toRet.amp = self.amp
 		toRet.relNote = self.relNote
-		
-		var toRetName = reflect(toRet.name)
-		var ourName = reflect(self.name)
-		for i in 0 ..< toRetName.count {
-			//toRetName[i].0
-		}
+		toRet.name = self.name
 		toRet.stereo = self.stereo
-		
 		
 		return toRet
 		}}
 }
-
-private func iterate<C,R>(t:C, block:(String,Any)->R) {
-	let mirror = reflect(t)
-	for i in 0 ..< mirror.count {
-		block(mirror[i].0, mirror[i].1.value)
-	}
-}
-
 
 extension sData {
 	public static let MaxVolume: MADByte = 64
@@ -237,14 +245,8 @@ extension sData {
 		toRet.loopType = self.loopType
 		toRet.amp = self.amp
 		toRet.relNote = self.relNote
-		
-		var toRetName = reflect(toRet.name)
-		var ourName = reflect(self.name)
-		for i in 0 ..< toRetName.count {
-			//toRetName[i].0
-		}
+		toRet.name = self.name
 		toRet.stereo = self.stereo
-		
 		
 		return toRet
 		}}
@@ -315,7 +317,7 @@ extension FXBus {
 		copyId = 0
 	}
 	public var bigEndian: FXBus {get {
-		var toRet = FXBus(ByPass: self.ByPass, copyId: self.copyId.bigEndian, Active: self.Active)
+		let toRet = FXBus(ByPass: self.ByPass, copyId: self.copyId.bigEndian, Active: self.Active)
 		
 		return toRet
 	}}
@@ -374,10 +376,8 @@ extension MADMusic {
 	}
 }
 
-extension PatData {
-	public mutating func getCommand(position: Int16, channel: Int16) -> UnsafeMutablePointer<Cmd> {
-		return GetMADCommand(position, channel, &self)
-	}
+public func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> UnsafeMutablePointer<Cmd> {
+	return GetMADCommand(position, channel, aPat)
 }
 
 extension PatHeader {
@@ -394,10 +394,8 @@ extension PatHeader {
 
 // MARK: Plug-in functions
 
-extension Pcmd {
-	public mutating func getCommand(row: Int16, track: Int16) -> UnsafeMutablePointer<Cmd> {
-		return MADGetCmd(row, track, &self)
-	}
+public func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>) -> UnsafeMutablePointer<Cmd> {
+	return MADGetCmd(row, track, aPcmd)
 }
 
 var kPlayerPROFiltersPlugTypeID: CFUUID { get {
@@ -408,18 +406,18 @@ var kPlayerPROFiltersPlugInterfaceID: CFUUID { get {
 	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xDA, 0x70, 0x82, 0xA2, 0xFE, 0xF1, 0x44, 0x75, 0xB1, 0xA4, 0x35, 0xC8, 0x1E, 0xD5, 0xDB, 0x8F)
 }}
 
-var kPlayerPROInstrumentPlugTypeID: CFUUID { get{
+var kPlayerPROInstrumentPlugTypeID: CFUUID { get {
 	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xFD, 0x71, 0x54, 0xD6, 0x20, 0xBF, 0x40, 0x07, 0x88, 0x1B, 0x8E, 0x44, 0x97, 0x0C, 0x3B, 0x0A)
 }}
 
-var kPlayerPROInstrumentPlugInterfaceID: CFUUID { get{
+var kPlayerPROInstrumentPlugInterfaceID: CFUUID { get {
 	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x8D, 0xC7, 0xC5, 0x82, 0x1C, 0x4B, 0x4F, 0x3C, 0xBE, 0xC8, 0x05, 0xCF, 0x83, 0x23, 0xCE, 0xA4)
 }}
 
-var kPlayerPRODigitalPlugTypeID: CFUUID { get{
+var kPlayerPRODigitalPlugTypeID: CFUUID { get {
 	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xE9, 0xE5, 0x57, 0x4F, 0x50, 0xB4, 0x43, 0xE0, 0x94, 0x8D, 0x8B, 0x7C, 0x80, 0xD4, 0x72, 0x61)
 }}
 
-var kPlayerPRODigitalPlugInterfaceID: CFUUID { get{
+var kPlayerPRODigitalPlugInterfaceID: CFUUID { get {
 	return CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x34, 0xBA, 0x67, 0x5D, 0x3E, 0xD8, 0x49, 0xF9, 0x8D, 0x06, 0x28, 0xA7, 0x43, 0x6A, 0x0E, 0x4D)
 }}

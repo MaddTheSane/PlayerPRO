@@ -9,12 +9,15 @@
 import Cocoa
 import PlayerPROKit
 
+func swiftDefaultPlugInLocations() -> [NSURL] {
+	return DefaultPlugInLocations() as [NSURL]
+}
+
 class DigitalPlugHandler: NSObject, NSFastEnumeration, SequenceType, Sliceable {
 	private var digitalPlugs = [PPDigitalPlugInObject]()
 	
 	override init() {
-		let defaultPlugLocs = DefaultPlugInLocations() as [NSURL]
-		super.init()
+		let defaultPlugLocs = swiftDefaultPlugInLocations()
 		for aPlugLoc in defaultPlugLocs {
 			let somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, "plugin")
 			if (somePlugs != nil) {
@@ -23,16 +26,23 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, SequenceType, Sliceable {
 					let tempBundle = NSBundle(URL: CFBundleCopyBundleURL(tempCFBundle));
 					var tempObj:PPDigitalPlugInObject? = PPDigitalPlugInObject.createWithBundle(tempBundle) //For some odd reason, the init function doesn't return PPDigitalPlugInObject!
 					if let foo = tempObj? {
-						self.digitalPlugs.append(foo)
+						digitalPlugs.append(foo)
 					}
 				}
 			}
 		}
+		super.init()
+	}
+	
+	func callDigitalPlugIn(plugNum: Int, pcmd myPcmd:UnsafeMutablePointer<Pcmd>, inout info theInfo: PPInfoPlug) -> MADErr {
+		theInfo.fileType = "PPDG";
+		let tmp = digitalPlugs[plugNum];
+		return tmp.callWithPcmd(myPcmd, plugInfo: &theInfo)
 	}
 	
 	func callDigitalPlugIn(plugNum: Int, pcmd myPcmd:UnsafeMutablePointer<Pcmd>, plugInfo theInfo:UnsafeMutablePointer<PPInfoPlug>) -> MADErr {
 		theInfo.memory.fileType = "PPDG";
-		var tmp = digitalPlugs[plugNum];
+		let tmp = digitalPlugs[plugNum];
 		return tmp.callWithPcmd(myPcmd, plugInfo: theInfo)
 	}
 	

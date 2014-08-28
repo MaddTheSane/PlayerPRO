@@ -202,6 +202,8 @@
  *				The sound system requested isn't available for the current architecture
  *	@constant	MADWritingErr
  *				An error occured when trying to write to a file
+ *	@constant	MADUserCanceledErr
+ *				The user cancelled an action. This shouldn't be seen by the user.
  */
 typedef MADENUM(short, MADErr) {
 	MADIsRunningSheet				= 10,
@@ -220,6 +222,7 @@ typedef MADENUM(short, MADErr) {
 	MADDriverHasNoMusic				= -12,
 	MADSoundSystemUnavailable		= -13,
 	MADWritingErr					= -14,
+	MADUserCanceledErr				= -15
 };
 
 #ifndef __APPLE__

@@ -10,6 +10,10 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
+#ifndef NS_DESIGNATED_INITIALIZER
+#define NS_DESIGNATED_INITIALIZER
+#endif
+
 @class PPSampleObject;
 @class PPMusicObject;
 
@@ -17,7 +21,9 @@
 @property (readonly) EnvRec envelopeRec;
 @property short position;
 @property short value;
-- (instancetype)initWithEnvRec:(EnvRec)theRec;
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithEnvRec:(EnvRec)theRec NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 @end
 
 @interface PPInstrumentObject : NSObject <NSFastEnumeration, PPObject>
@@ -74,7 +80,7 @@
 
 - (void)addSamplesObject:(PPSampleObject *)object;
 - (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(PPSampleObject *)object;
-- (NSUInteger)countOfSamples;
+@property (readonly) NSInteger countOfSamples;
 - (PPSampleObject*)samplesObjectAtIndex:(NSUInteger)idx;
 
 @end

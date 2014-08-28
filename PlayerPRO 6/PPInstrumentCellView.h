@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 //@class PPSampleButton;
-@class PPInstrumentViewController;
+@class InstrumentViewController;
 
 @interface PPInstrumentCellView : NSTableCellView
 {
@@ -21,7 +21,7 @@
 
 @property (weak) IBOutlet NSTextField *numField;
 @property (weak) IBOutlet NSButton *sampleButton;
-@property (weak) PPInstrumentViewController *controller;
+@property (weak) InstrumentViewController *controller;
 @property (nonatomic) BOOL isSample;
 @property (nonatomic) BOOL isLoopingSample;
 @property (nonatomic) BOOL isBlank;

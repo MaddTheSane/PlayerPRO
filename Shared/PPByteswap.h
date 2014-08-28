@@ -10,7 +10,7 @@
 #define PPMacho_PPByteswap_h
 
 #include <dispatch/dispatch.h>
-#include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/MAD.h>
 
 static inline void ByteSwapMADSpec(MADSpec *toSwap)
 {

@@ -16,15 +16,10 @@ private let kMusicListLocation3 = "Music Key Location 3";
 private let kMusicListKey3 = "Music List Key 3"
 private let kPlayerList = "Player List"
 
-private func homeURL() -> NSURL {
-	return NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
-}
-
 @objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, SequenceType {
 	private(set)	dynamic var musicList = [MusicListObject]()
 	private(set)	var lostMusicCount:UInt = 0;
-	
-	var		selectedMusic = -1;
+	dynamic var		selectedMusic = -1;
 	
 	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (musicList as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len);
@@ -41,7 +36,7 @@ private func homeURL() -> NSURL {
 	func encodeWithCoder(aCoder: NSCoder) {
 		var BookmarkArray: [NSURL] = [];
 		for obj in musicList {
-			var bookData : NSURL = obj.musicURL;
+			let bookData = obj.musicURL;
 			BookmarkArray.append(bookData)
 		}
 		//TODO: check for failed data initialization, and decrement changedIndex to match.
@@ -87,22 +82,22 @@ private func homeURL() -> NSURL {
 			return false;
 		}
 		
-		var theIndex = NSIndexSet(index:musicList.count);
+		let theIndex = NSIndexSet(index:musicList.count);
 		self.willChange(.Insertion, valuesAtIndexes: theIndex, forKey: kMusicListKVO)
 		musicList.append(obj)
 		self.didChange(.Insertion, valuesAtIndexes: theIndex, forKey: kMusicListKVO)
 		return true;
 	}
 	
-	func saveMusicListToURL(URL : NSURL) -> Bool {
+	func saveMusicListToURL(URL: NSURL) -> Bool {
 		var theList = NSKeyedArchiver.archivedDataWithRootObject(self);
 		return theList.writeToURL(URL, atomically: true)
 	}
 	
 	func saveApplicationMusicList() -> Bool {
-		var manager = NSFileManager.defaultManager();
+		let manager = NSFileManager.defaultManager();
 
-		var PPPPath = manager.URLForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomain:NSSearchPathDomainMask.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player");
+		let PPPPath = manager.URLForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomain:NSSearchPathDomainMask.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player");
 		if (!PPPPath.checkResourceIsReachableAndReturnError(nil)) {
 			//Just making sure...
 			manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories:true, attributes:nil, error:nil);
@@ -128,7 +123,7 @@ private func homeURL() -> NSURL {
 				if (BookmarkArray == nil) {
 					return;
 				}
-				let dataBookArray = BookmarkArray as [NSData]
+				let dataBookArray = BookmarkArray! as [NSData]
 				
 				//musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
 				for bookData in dataBookArray {
@@ -136,7 +131,7 @@ private func homeURL() -> NSURL {
 					let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: nil, bookmarkDataIsStale: &isStale, error: nil)
 					#if DEBUG
 						if (isStale) {
-						NSLog("Bookmark pointing to %@ is stale", fullURL.path);
+							println("Bookmark pointing to \(fullURL.path) is stale");
 						}
 					#endif
 					if (fullURL == nil) {
@@ -155,13 +150,14 @@ private func homeURL() -> NSURL {
 					selectedMusic = -1
 				}
 				//musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
-				let dataBookArray = BookmarkArray as [NSData]
+				let dataBookArray = BookmarkArray! as [NSData]
+				let aHomeURL = NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
 				for bookData in dataBookArray {
 					var isStale: ObjCBool = false;
-					let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: homeURL(), bookmarkDataIsStale: &isStale, error: nil)
+					let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: aHomeURL, bookmarkDataIsStale: &isStale, error: nil)
 					#if DEBUG
 						if (isStale) {
-						NSLog("Bookmark pointing to \(fullURL.path) is stale.");
+							println("Bookmark pointing to \(fullURL.path) is stale.");
 						}
 					#endif
 					if (fullURL == nil) {
@@ -181,8 +177,7 @@ private func homeURL() -> NSURL {
 			}
 		} else {
 			selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation3);
-			//musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
-			let URLBookArray = BookmarkArray as [NSURL]
+			let URLBookArray = BookmarkArray! as [NSURL]
 			for bookURL in URLBookArray {
 				if (!bookURL.checkResourceIsReachableAndReturnError(nil)) {
 					if (selectedMusic == -1) {
@@ -195,7 +190,7 @@ private func homeURL() -> NSURL {
 					lostMusicCount++;
 					continue;
 				}
-				var obj = MusicListObject(URL: bookURL);
+				let obj = MusicListObject(URL: bookURL);
 				musicList.append(obj)
 			}
 			
@@ -206,7 +201,7 @@ private func homeURL() -> NSURL {
 		return true;
 	}
 	
-	func URLAtIndex(index :Int) -> NSURL {
+	func URLAtIndex(index: Int) -> NSURL {
 		return musicList[index].musicURL;
 	}
 	
@@ -238,8 +233,8 @@ private func homeURL() -> NSURL {
 	}
 	
 	func loadApplicationMusicList() -> Bool {
-		var manager = NSFileManager.defaultManager();
-		var PPPPath = manager.URLForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomain:NSSearchPathDomainMask.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player");
+		let manager = NSFileManager.defaultManager();
+		let PPPPath = manager.URLForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomain:NSSearchPathDomainMask.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player");
 		if (PPPPath.checkResourceIsReachableAndReturnError(nil) == false) {
 			manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories: true, attributes: nil, error: nil)
 			return false;
@@ -249,9 +244,8 @@ private func homeURL() -> NSURL {
 	
 	// Key-valued Coding
 	
-	func addMusicListObject(object: MusicListObject)
-	{
-		if ((musicList as NSArray).containsObject(object) == false) {
+	func addMusicListObject(object: MusicListObject) {
+		if (musicList as NSArray).containsObject(object) == false {
 			musicList.append(object)
 		}
 	}
@@ -260,23 +254,19 @@ private func homeURL() -> NSURL {
 		return musicList.count
 		}}
 	
-	func replaceObjectInMusicListAtIndex(index: Int, withObject object: MusicListObject)
-	{
+	func replaceObjectInMusicListAtIndex(index: Int, withObject object: MusicListObject) {
 		musicList[index] = object;
 	}
 	
-	func objectInMusicListAtIndex(index: Int) -> MusicListObject
-	{
+	func objectInMusicListAtIndex(index: Int) -> MusicListObject {
 		return musicList[index];
 	}
 	
-	func removeObjectInMusicListAtIndex(atIndex: Int)
-	{
+	func removeObjectInMusicListAtIndex(atIndex: Int) {
 		musicList.removeAtIndex(atIndex);
 	}
 	
-	func insertObject(object: MusicListObject, inMusicListAtIndex index:Int)
-	{
+	func insertObject(object: MusicListObject, inMusicListAtIndex index:Int) {
 		musicList.insert(object, atIndex: index)
 	}
 	
@@ -291,7 +281,7 @@ private func homeURL() -> NSURL {
 	}
 	
 	func removeObjectsInMusicListAtIndexes(idxSet: NSIndexSet) {
-		if (idxSet.containsIndex(selectedMusic)) {
+		if idxSet.containsIndex(selectedMusic) {
 			self.selectedMusic = -1;
 		}
 		let musicArray = musicList as NSArray
@@ -323,7 +313,7 @@ private func homeURL() -> NSURL {
 	}
 	
 	#if os(OSX)
-	func beginLoadingOfMusicListAtURL(toOpen: NSURL, completionHandle theHandle: (theErr: NSError!) ->Void) {
+	@objc func beginLoadingOfMusicListAtURL(toOpen: NSURL, completionHandle theHandle: (theErr: NSError?) ->Void) {
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
 		conn.remoteObjectInterface = NSXPCInterface(`protocol`: PPSTImporterHelper.self);
 		
@@ -334,22 +324,22 @@ private func homeURL() -> NSURL {
 				if (error != nil) {
 					theHandle(theErr: error)
 				} else {
-					var invalidAny: AnyObject? = bookmarkData["lostMusicCount"];
-					var selectedAny: AnyObject? = bookmarkData["SelectedMusic"]
-					var pathsAny: AnyObject? = bookmarkData["MusicPaths"]
+					let invalidAny: AnyObject? = bookmarkData["lostMusicCount"];
+					let selectedAny: AnyObject? = bookmarkData["SelectedMusic"]
+					let pathsAny: AnyObject? = bookmarkData["MusicPaths"]
 					if (invalidAny == nil || selectedAny == nil || pathsAny == nil) {
-						var lolwut = CreateErrorFromMADErrorType(.UnknownErr)
+						let lolwut = CreateErrorFromMADErrorType(.UnknownErr)
 						theHandle(theErr: lolwut)
 					} else {
 						var pathsURL = [MusicListObject]()
 						self.lostMusicCount = invalidAny as UInt;
 						self.selectedMusic = selectedAny as Int;
-						for aPath in pathsAny as NSArray {
-							var tmpURL = NSURL.fileURLWithPath(aPath as String)
+						for aPath in pathsAny as NSArray as [NSString] {
+							let tmpURL = NSURL.fileURLWithPath(aPath)
 							if (tmpURL == nil) {
 								continue;
 							}
-							var tmpObj = MusicListObject(URL: tmpURL)
+							let tmpObj = MusicListObject(URL: tmpURL)
 							pathsURL.append(tmpObj)
 						}
 						self.loadMusicList(pathsURL)

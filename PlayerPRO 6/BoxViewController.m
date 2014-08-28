@@ -7,7 +7,7 @@
 //
 
 #import "BoxViewController.h"
-#import "PPDocument.h"
+#import "PlayerPRO_6-Swift.h"
 
 @interface BoxViewController ()
 

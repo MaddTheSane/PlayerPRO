@@ -60,7 +60,7 @@
 	}
 	self.madLib = [[PPLibrary alloc] init];
 	self.madDriver = [[PPDriver alloc] initWithLibrary:self.madLib settings:NULL];
-	self.musicList = [[PPMusicList alloc] init];
+	self.musicList = [[MusicList alloc] init];
 	return YES;
 }
 							

@@ -10,24 +10,24 @@ import Foundation
 import AppKit.NSAlert
 
 private func PPRunAlertPanelBase(title: String, message msgFormat: String, defaultButton: String?, alternateButton: String?, otherButton: String?, alertStyle: NSAlertStyle, args: CVaListPointer) -> Int {
-	var theAlert = NSAlert()
+	let theAlert = NSAlert()
 	theAlert.alertStyle = alertStyle
 	theAlert.messageText = title
 	theAlert.informativeText = NSString(format: msgFormat, arguments: args)
 	if defaultButton == nil && alternateButton == nil && otherButton == nil {
-		var defButt = theAlert.addButtonWithTitle("OK")
+		let defButt = theAlert.addButtonWithTitle("OK")
 		defButt.tag = NSAlertDefaultReturn
 	} else {
 		if defaultButton != nil {
-			var defButt = theAlert.addButtonWithTitle(defaultButton)
+			let defButt = theAlert.addButtonWithTitle(defaultButton)
 			defButt.tag = NSAlertDefaultReturn
 		}
 		if alternateButton != nil {
-			var altButt = theAlert.addButtonWithTitle(alternateButton)
+			let altButt = theAlert.addButtonWithTitle(alternateButton)
 			altButt.tag = NSAlertAlternateReturn
 		}
 		if otherButton != nil {
-			var othButt = theAlert.addButtonWithTitle(otherButton)
+			let othButt = theAlert.addButtonWithTitle(otherButton)
 			othButt.tag = NSAlertOtherReturn
 		}
 	}

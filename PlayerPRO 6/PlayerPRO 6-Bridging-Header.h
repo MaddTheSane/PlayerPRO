@@ -21,6 +21,8 @@
 #import "PPFilterPlugObject.h"
 #import "NSColor+PPPreferences.h"
 
+#import "PPInstrumentCellView.h"
+
 #import "BoxViewController.h"
 #import "DigitalViewController.h"
 #import "ClassicalViewController.h"

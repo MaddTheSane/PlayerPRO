@@ -65,11 +65,11 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 }
 
 @objc(PPMusicListObject) class MusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPrintable, Printable {
-	private(set) var musicURL: NSURL
+	let musicURL: NSURL
 
 	#if os(OSX)
 	var fileIcon: NSImage {get {
-		var image = NSWorkspace.sharedWorkspace().iconForFile(musicURL.path);
+		let image = NSWorkspace.sharedWorkspace().iconForFile(musicURL.path);
 		image.size = NSSize(width: 16, height: 16)
 		return image
 	}}
@@ -79,13 +79,11 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		var val: AnyObject? = nil;
 		var err: NSError? = nil;
 		
-		var isValid = musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)
-		
 		if (!musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)) {
 			println("PPMusicListObject: Could not find out if extension is hidden in file \(musicURL.path), error: \(err!.localizedDescription)");
 			return musicURL.lastPathComponent;
 		} else {
-			var retStr = val as String;
+			let retStr = val! as String;
 			return retStr;
 		}
 	}}
@@ -96,14 +94,14 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 			var val: AnyObject? = nil;
 			var err: NSError? = nil;
 			if (!musicURL.getResourceValue(&val, forKey:NSURLTotalFileSizeKey, error: &err)) {
-				var manager = NSFileManager.defaultManager();
-				var theparam = manager.attributesOfItemAtPath(musicURL.path, error: nil)
+				let manager = NSFileManager.defaultManager();
+				let theparam = manager.attributesOfItemAtPath(musicURL.path, error: nil)
 				if (theparam == nil) {
 					return 0;
 				}
 				stashedFileSize = (theparam! as NSDictionary).fileSize()
 			} else {
-				var retNum = val as NSNumber
+				let retNum = val as NSNumber
 				stashedFileSize = val!.unsignedLongLongValue
 			}
 		}
@@ -118,7 +116,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		if (URL.isFileReferenceURL()) {
 			self.musicURL = URL;
 		} else {
-			var tmpURL = URL.fileReferenceURL();
+			let tmpURL = URL.fileReferenceURL();
 			self.musicURL = tmpURL == nil ? tmpURL : URL;
 
 		}

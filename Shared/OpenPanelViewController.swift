@@ -8,7 +8,7 @@
 
 import Cocoa
 
-func ==(lhs: OpenPanelViewController.OpenPanelViewItem, rhs: OpenPanelViewController.OpenPanelViewItem) -> Bool {
+private func ==(lhs: OpenPanelViewController.OpenPanelViewItem, rhs: OpenPanelViewController.OpenPanelViewItem) -> Bool {
 	if lhs.theUtiType != rhs.theUtiType {
 		return false
 	} else if lhs.name != rhs.name {
@@ -36,7 +36,7 @@ class OpenPanelViewController: NSViewController {
 		case other
 	}
 	
-	class OpenPanelViewItem: DebugPrintable, Printable, Hashable {
+	private class OpenPanelViewItem: DebugPrintable, Printable, Hashable {
 		let name: String
 		let theUtiType: trackerType
 		let utis: [String]
@@ -102,10 +102,10 @@ class OpenPanelViewController: NSViewController {
 			}}
 	}
 	
-	private var openPanel: NSOpenPanel!
+	let openPanel: NSOpenPanel
 	private var utiObjects = [OpenPanelViewItem]()
-	@IBOutlet var popUp: NSPopUpButton! = nil
 	private var multipleSelection: Bool
+	@IBOutlet var popUp: NSPopUpButton! = nil
 	
 	var allowsMultipleSelectionOfTrackers:Bool { get {
 		return multipleSelection
@@ -116,7 +116,9 @@ class OpenPanelViewController: NSViewController {
 	}}
 	
 	required init(coder: NSCoder!) {
+		println("initWithCoder was called?")
 		multipleSelection = false
+		openPanel = NSOpenPanel()
 		
 		super.init(coder: coder)
 	}
@@ -231,16 +233,14 @@ class OpenPanelViewController: NSViewController {
 			}
 		}
 		
-		utiObjects.sort({(isOrderedBefore: (lhs: OpenPanelViewItem, rhs: OpenPanelViewItem)) -> Bool in
-			let lhs = isOrderedBefore.lhs.theUtiType
-			let rhs = isOrderedBefore.rhs.theUtiType
-			if (lhs.toRaw() < rhs.toRaw()) {
+		utiObjects.sort({(lhs: OpenPanelViewItem, rhs: OpenPanelViewItem) -> Bool in
+			if (lhs.theUtiType.toRaw() < rhs.theUtiType.toRaw()) {
 				return true
-			} else if (lhs.toRaw() > rhs.toRaw()) {
+			} else if (lhs.theUtiType.toRaw() > rhs.theUtiType.toRaw()) {
 				return false
 			} else {
 				
-				let result = isOrderedBefore.lhs.name.localizedStandardCompare(isOrderedBefore.rhs.name);
+				let result = lhs.name.localizedStandardCompare(rhs.name);
 				return result == NSComparisonResult.OrderedAscending;
 			}
 			})
@@ -249,12 +249,6 @@ class OpenPanelViewController: NSViewController {
 	convenience init(openPanel panel:NSOpenPanel, trackerDictionary td: [String: [String]]?, playlistDictionary pd: [String: [String]]?) {
 		self.init(openPanel:panel, trackerDictionary:td, playlistDictionary:pd, instrumentDictionary:nil, additionalDictionary:nil)
 	}
-	/*
-	- (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd;
-	- (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd instrumentDictionary:(NSDictionary*)insDict;
-	- (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd instrumentDictionary:(NSDictionary*)insDict additionalDictionary:(NSDictionary *)adddict;
-	- (id)initWithOpenPanel:(NSOpenPanel*)panel trackerDictionary:(NSDictionary *)td playlistDictionary:(NSDictionary*)pd additionalDictionary:(NSDictionary *)adddict;
-	*/
 	
 	override func awakeFromNib() {
 		super.awakeFromNib()
@@ -263,7 +257,7 @@ class OpenPanelViewController: NSViewController {
 		let fileTypeSelectionMenu = popUp.menu;
 		let moreThanTwoTypes = hasMoreThanTwoTypes();
 		if (moreThanTwoTypes) {
-			var mi0 = NSMenuItem(title: "All Openable Files", action: "selectUTI:", keyEquivalent: "")
+			let mi0 = NSMenuItem(title: "All Openable Files", action: "selectUTI:", keyEquivalent: "")
 			mi0.tag = utiType.allType.toRaw()
 			mi0.target = self
 			fileTypeSelectionMenu.addItem(mi0)
@@ -273,7 +267,7 @@ class OpenPanelViewController: NSViewController {
 		
 		for item in utiObjects {
 			if (item.theUtiType == .tracker) {
-				var mi0 = NSMenuItem(title: "All Trackers", action: "selectUTI:", keyEquivalent: "")
+				let mi0 = NSMenuItem(title: "All Trackers", action: "selectUTI:", keyEquivalent: "")
 				mi0.tag = utiType.trackerType.toRaw()
 				mi0.target = self
 				fileTypeSelectionMenu.addItem(mi0)
@@ -284,30 +278,33 @@ class OpenPanelViewController: NSViewController {
 		
 		for  item in utiObjects {
 			if (item.theUtiType == .playlist) {
-				var mi0 = NSMenuItem(title: "All Playlists", action: "selectUTI:", keyEquivalent: "")
+				let mi0 = NSMenuItem(title: "All Playlists", action: "selectUTI:", keyEquivalent: "")
 				mi0.tag = utiType.playlistType.toRaw()
 				mi0.target = self
 				fileTypeSelectionMenu.addItem(mi0)
+				
 				break;
 			}
 		}
 		
 		for item in utiObjects {
 			if (item.theUtiType == .instrument) {
-				var mi0 = NSMenuItem(title: "All Instruments", action: "selectUTI:", keyEquivalent: "")
+				let mi0 = NSMenuItem(title: "All Instruments", action: "selectUTI:", keyEquivalent: "")
 				mi0.tag = utiType.instrumentType.toRaw()
 				mi0.target = self
 				fileTypeSelectionMenu.addItem(mi0)
+				
 				break;
 			}
 		}
 		
 		for item in utiObjects {
 			if (item.theUtiType == .other) {
-				var mi0 = NSMenuItem(title: "All Other", action: "selectUTI:", keyEquivalent: "")
+				let mi0 = NSMenuItem(title: "All Other", action: "selectUTI:", keyEquivalent: "")
 				mi0.tag = utiType.otherType.toRaw()
 				mi0.target = self
 				fileTypeSelectionMenu.addItem(mi0)
+				
 				break;
 			}
 		}
@@ -316,13 +313,13 @@ class OpenPanelViewController: NSViewController {
 		for (i, curItem) in enumerate(utiObjects)  {
 			if (moreThanTwoTypes) {
 				if (i - 1 >= 0) {
-					var prevItem = utiObjects[i - 1];
+					let prevItem = utiObjects[i - 1];
 					if (curItem.theUtiType != prevItem.theUtiType) {
 						fileTypeSelectionMenu.addItem(NSMenuItem.separatorItem())
 					}
 				}
 			}
-			var mi = NSMenuItem(title: curItem.name, action: "selectUTI:", keyEquivalent: "")
+			let mi = NSMenuItem(title: curItem.name, action: "selectUTI:", keyEquivalent: "")
 			mi.tag = i
 			mi.target = self
 			fileTypeSelectionMenu.addItem(mi)
@@ -345,16 +342,15 @@ class OpenPanelViewController: NSViewController {
 		openPanel.accessoryView = self.view
 	}
 	
-	func hasMoreThanTwoTypes() -> Bool {
-		var i = 0;
+	private func hasMoreThanTwoTypes() -> Bool {
 		let utiCount = utiObjects.count;
 		if (utiCount < 2) {
 			return false;
 		}
 		
-		for (i = 1; i < utiCount; i++) {
-			var obj1 = utiObjects[i - 1];
-			var obj2 = utiObjects[i];
+		for (var i = 1; i < utiCount; i++) {
+			let obj1 = utiObjects[i - 1];
+			let obj2 = utiObjects[i];
 			if (obj1.theUtiType != obj2.theUtiType) {
 				return true;
 			}

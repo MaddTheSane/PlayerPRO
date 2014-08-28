@@ -32,3 +32,4 @@ PPMADHFile = "PlayerPRO MADH Tracker";
 PPMADBundle = "PlayerPRO MAD Tracker Bundle";
 
 PPImpExpBundle = "PlayerPRO Import/Export Plug-in";
+PPExtImpBundle = "PlayerPRO 6 Complex Import Plug-in";

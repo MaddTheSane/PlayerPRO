@@ -37,4 +37,8 @@
 @property (getter = isStereo) BOOL stereo;
 @property (copy) NSData *data;
 
++ (short)noteFromString:(NSString *)myTT;
+//+ (NSString*)octaveNameFromNote:(short)octNote;
+//+ (NSString*)octaveNameFromNote:(short)octNote usingLetters:(BOOL)isUseLetters;
+
 @end

@@ -79,7 +79,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewControllerD
 	var madLib: PPLibrary!
 	var paused = true
 	private var isQuitting = false
-	var instrumentController: PPInstrumentWindowController! = nil
+	var instrumentController = InstrumentWindowController()
 	
 	var exportSettings = MADDriverSettings()
 	@IBOutlet var exportSettingsBox: NSBox!
@@ -527,7 +527,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewControllerD
 		exportController.delegate = self;
 		exportSettingsBox.contentView = exportController.view
 		
-		instrumentController = PPInstrumentWindowController()
+		//instrumentController = InstrumentWindowController()
 		
 		timeChecker = NSTimer(fireDate:NSDate(), interval:1/8.0, target:self, selector: "updateMusicStats:", userInfo:nil, repeats:true);
 		NSRunLoop.mainRunLoop().addTimer(timeChecker, forMode: NSRunLoopCommonModes)

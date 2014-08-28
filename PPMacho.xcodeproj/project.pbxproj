@@ -129,6 +129,7 @@
 		550D004F18CB808600FD0F17 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		550D005318CB80A000FD0F17 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */; };
+		550FBAB119A79A1600EFBD3D /* InstrumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550FBAB019A79A1600EFBD3D /* InstrumentViewController.swift */; };
 		550FFAE617CEA4570003A2F3 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		550FFAE717CEA4570003A2F3 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		550FFAED17CEA5540003A2F3 /* AIFF.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102C10D6C79E00BB619C /* AIFF.c */; };
@@ -170,7 +171,6 @@
 		55232AF311FDE56D0041A4EC /* DigitalEditorPreferenceControler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF211FDE56D0041A4EC /* DigitalEditorPreferenceControler.m */; };
 		55232AFA11FDE5F90041A4EC /* MidiHardwarePreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF911FDE5F90041A4EC /* MidiHardwarePreferenceController.m */; };
 		55232B0E11FDF2980041A4EC /* ColorPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232B0D11FDF2980041A4EC /* ColorPrefs.xib */; };
-		5523EC6A16925FF80067B22A /* PPInstrumentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC6816925FF80067B22A /* PPInstrumentViewController.m */; };
 		5523EC79169358470067B22A /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5523EC7C169361A00067B22A /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */; };
 		5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */; };
@@ -228,7 +228,7 @@
 		55413C4B1992AFAB001414D0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 551292E1163DD68500C2C639 /* InfoPlist.strings */; };
 		55413C4C1992AFFE001414D0 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */; };
 		55413C4E1992AFFF001414D0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55413C4D1992AFFF001414D0 /* Foundation.framework */; };
-		5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5546217B163A20D00005F491 /* Classic App.ppextimp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* Classic App.ppextimp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5547DA5619A5690E0014A620 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5519A5690E0014A620 /* Preferences.swift */; };
 		5547DA5719A5690E0014A620 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5519A5690E0014A620 /* Preferences.swift */; };
 		5547DA5919A570820014A620 /* SoundSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5819A570820014A620 /* SoundSettingsViewController.swift */; };
@@ -276,6 +276,7 @@
 		5560643C18C8FDD9002F72FC /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
 		5561700A1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
 		5561F1C019A52A6C0085015B /* ExportObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FD192D19A241FC001E1D9C /* ExportObject.swift */; };
+		5563A49E19AAC0D50051CC4B /* PPAPPLImporterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */; };
 		5566883D19A65C8700EE2FE3 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07F1999879C00A1B9A1 /* MusicList.swift */; };
 		5566883E19A6619800EE2FE3 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07F1999879C00A1B9A1 /* MusicList.swift */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
@@ -403,7 +404,7 @@
 		557DEA5310E092CE00177B4C /* Normalize.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E101810D6C79E00BB619C /* Normalize.c */; };
 		557DEA5710E092E000177B4C /* Silence.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102010D6C79E00BB619C /* Silence.c */; };
 		557DEA5D10E0930100177B4C /* Smooth.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102310D6C79E00BB619C /* Smooth.c */; };
-		557E0B70199AB1AE0058B6E1 /* PPInstrumentWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07C1999841400A1B9A1 /* PPInstrumentWindowController.swift */; };
+		557E0B70199AB1AE0058B6E1 /* InstrumentWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07C1999841400A1B9A1 /* InstrumentWindowController.swift */; };
 		557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */; };
 		557F296818790DDA009D4BC8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
 		557F296918790DF2009D4BC8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
@@ -447,8 +448,6 @@
 		558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4DD91666F14E00A333E8 /* PPDriver.m */; };
 		558D4DDD1666F19600A333E8 /* PPLibrary_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */; };
 		55978AAA1999DF5C009EE5DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55978AA91999DF5C009EE5DF /* AppDelegate.swift */; };
-		55993EF219A3212100C2078E /* SafeGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55993EF119A3212100C2078E /* SafeGenerators.swift */; };
-		55993EF319A3212100C2078E /* SafeGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55993EF119A3212100C2078E /* SafeGenerators.swift */; };
 		5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
 		5599F13316C82100008DDAFB /* RDriverCarbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; };
 		559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559C4188183EB4AB004A073C /* QuickLook.framework */; };
@@ -498,7 +497,6 @@
 		55B23D24168935D300DCE923 /* MINs.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 551FEA6B10E727AD00EDF2F1 /* MINs.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55B23D2916893DE300DCE923 /* XI.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55151F8010DEDBDB0054ABC4 /* XI.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55B5DF0419A259370042E062 /* PPMIDIImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0319A259370042E062 /* PPMIDIImporter.swift */; };
-		55B5DF0719A25B6D0042E062 /* PPComplexImportPlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */; };
 		55B777A418E779ED001E5104 /* InstrumentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B777A318E77998001E5104 /* InstrumentInfoView.xib */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
 		55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -520,6 +518,11 @@
 		55B7E669161D1DF3000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55BE999D17978C7D00D6DECC /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; };
 		55BE999E17978C7D00D6DECC /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
+		55BF238919A93742005B1F96 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
+		55BF238A19A93775005B1F96 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		55BF238E19A937C9005B1F96 /* PPAPPLImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */; };
+		55BF238F19A937C9005B1F96 /* PPAPPLImporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */; };
+		55BF239019A94077005B1F96 /* PPComplexImportPlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */; };
 		55C3589716C42D1800FB9FA6 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
 		55C3589916C42D1800FB9FA6 /* Effects.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D10C2F21DD00D6C081 /* Effects.c */; };
 		55C3589A16C42D1800FB9FA6 /* Interrupt.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D20C2F21DD00D6C081 /* Interrupt.c */; };
@@ -712,6 +715,7 @@
 		55F1BE211975CD7A00AD2C03 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
 		55F1BE221975CEC900AD2C03 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55F4C3E519763FDD000997BE /* MusicListObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F4C3E319763FDD000997BE /* MusicListObject.swift */; };
+		55F8B09719AD154700C8F0A5 /* ComplexImportPlugObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F8B09519AD0DB100C8F0A5 /* ComplexImportPlugObject.swift */; };
 		55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
@@ -1738,7 +1742,7 @@
 				55B23D2916893DE300DCE923 /* XI.plugin in Copy PlugIns */,
 				55B23D24168935D300DCE923 /* MINs.plugin in Copy PlugIns */,
 				55B23D231689321F00DCE923 /* PAT.plugin in Copy PlugIns */,
-				5546217B163A20D00005F491 /* APPL.ppimpexp in Copy PlugIns */,
+				5546217B163A20D00005F491 /* Classic App.ppextimp in Copy PlugIns */,
 				55CBFAD211EB77ED0028C6BB /* MOD.ppimpexp in Copy PlugIns */,
 				55CBFAD311EB77ED0028C6BB /* 669.ppimpexp in Copy PlugIns */,
 				55CBFAD411EB77ED0028C6BB /* AMF.ppimpexp in Copy PlugIns */,
@@ -1808,6 +1812,7 @@
 		550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPSampleObject.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentObject.h; sourceTree = "<group>"; };
 		550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentObject.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		550FBAB019A79A1600EFBD3D /* InstrumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentViewController.swift; sourceTree = "<group>"; };
 		550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embeddedPlugs.h; sourceTree = "<group>"; };
 		550FFAEB17CEA4570003A2F3 /* AIFF.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AIFF.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		550FFAEC17CEA4590003A2F3 /* AIFF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AIFF-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -1888,8 +1893,6 @@
 		55232AF811FDE5F90041A4EC /* MidiHardwarePreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MidiHardwarePreferenceController.h; sourceTree = "<group>"; };
 		55232AF911FDE5F90041A4EC /* MidiHardwarePreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MidiHardwarePreferenceController.m; sourceTree = "<group>"; };
 		55232B0D11FDF2980041A4EC /* ColorPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPrefs.xib; sourceTree = "<group>"; };
-		5523EC6716925FF80067B22A /* PPInstrumentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentViewController.h; sourceTree = "<group>"; };
-		5523EC6816925FF80067B22A /* PPInstrumentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "MIDI-Hardware-OSX.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "MIDI-Hardware-Stub.c"; sourceTree = "<group>"; };
 		5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPlugInObject.h; sourceTree = "<group>"; };
@@ -1907,7 +1910,7 @@
 		552711E3124881F4005120FC /* UserDefaultKeys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserDefaultKeys.h; sourceTree = "<group>"; };
 		552711E4124881F4005120FC /* UserDefaultKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UserDefaultKeys.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		552788021981C95100708906 /* MusicListDragClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListDragClass.swift; sourceTree = "<group>"; };
-		55281D06199B32D400C998AF /* PPPasteboardHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPPasteboardHandling.h; path = ../PPPasteboardHandling.h; sourceTree = "<group>"; };
+		55281D06199B32D400C998AF /* PPPasteboardHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPasteboardHandling.h; sourceTree = "<group>"; };
 		552A662716B5EBEA007C63F7 /* PPPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugInObject.h; sourceTree = "<group>"; };
 		552A662816B5EBEB007C63F7 /* PPPlugInObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPPlugInObject.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		552C43FF17DFDE1100AFCB5C /* ComplexFadeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComplexFadeController.h; sourceTree = "<group>"; };
@@ -1942,8 +1945,8 @@
 		552C716210CDC11400C0E0D4 /* README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = README.rtf; sourceTree = "<group>"; };
 		552F12E116AE08AF00394143 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5531459B199E7ED6009405BA /* PPRunAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPRunAlert.swift; sourceTree = "<group>"; };
-		5532334D16766E5700076604 /* PPErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPErrors.h; path = ../Shared/PPErrors.h; sourceTree = "<group>"; };
-		5532334E16766E5700076604 /* PPErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = PPErrors.m; path = ../Shared/PPErrors.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5532334D16766E5700076604 /* PPErrors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPErrors.h; sourceTree = "<group>"; };
+		5532334E16766E5700076604 /* PPErrors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPErrors.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55323351167687A200076604 /* PPTimeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPTimeFormatter.h; sourceTree = "<group>"; };
 		55323352167687A200076604 /* PPTimeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPTimeFormatter.m; sourceTree = "<group>"; };
 		553340D910BB5368005208D1 /* 669.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = 669.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -2093,6 +2096,8 @@
 		555F5C601993327D0056AF01 /* OpenPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenPanelViewController.swift; sourceTree = "<group>"; };
 		556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject_PPKPrivate.h; sourceTree = "<group>"; };
 		5561EF99199FC87B0054B3A7 /* PTMIDZAP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTMIDZAP.h; sourceTree = "<group>"; };
+		5563A49C19AAC0D50051CC4B /* PPAPPLImporterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLImporterViewController.h; sourceTree = "<group>"; };
+		5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLImporterViewController.m; sourceTree = "<group>"; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = net.sourceforge.playerpro.StcfImporter.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		55680A2119045F0A00F7616D /* StcfImporter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StcfImporter-Info.plist"; sourceTree = "<group>"; };
@@ -2147,9 +2152,7 @@
 		5578C53017DB94A60057D11B /* PPImport copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "PPImport copy-Info.plist"; path = "../PPImport copy-Info.plist"; sourceTree = "<group>"; };
 		5578C53A17DB9F630057D11B /* PPInstrumentPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPlugHandler.h; sourceTree = "<group>"; };
 		5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentPlugHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		5578C53D17DBABBE0057D11B /* PPDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDocument.h; sourceTree = "<group>"; };
-		5578C53E17DBABBF0057D11B /* PPDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPDocument.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DigitalPlugHandler.swift; path = "Plug-in handling/DigitalPlugHandler.swift"; sourceTree = "<group>"; };
+		557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigitalPlugHandler.swift; sourceTree = "<group>"; };
 		557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-FilterBridge.c"; sourceTree = "<group>"; };
 		557DE43410E06BF200177B4C /* Amplitude.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amplitude.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE43510E06BF200177B4C /* Amplitude-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Amplitude-Info.plist"; sourceTree = "<group>"; };
@@ -2181,6 +2184,8 @@
 		557DE91B10E08DB000177B4C /* Silence.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Silence.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE95E10E08DB900177B4C /* Smooth.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Smooth.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE9A110E08DC100177B4C /* Tone Generator.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tone Generator.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
+		557EF72F168BD4B5001BF077 /* PPInstrumentImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporter.h; sourceTree = "<group>"; };
+		557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentImporter.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		557EF732168BDE95001BF077 /* PPPlugInCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPlugInCommon.h; sourceTree = "<group>"; };
 		557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporterObject.h; sourceTree = "<group>"; };
 		557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentImporterObject.m; sourceTree = "<group>"; };
@@ -2209,10 +2214,10 @@
 		5586883D10BF62FB00FCC24D /* XM.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XM.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5586883E10BF62FB00FCC24D /* XM-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XM-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5586889710BF67F100FCC24D /* MIDI.ppextimp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MIDI.ppextimp; sourceTree = BUILT_PRODUCTS_DIR; };
-		5586889810BF67F100FCC24D /* MIDI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MIDI-Info.plist"; sourceTree = SOURCE_ROOT; };
+		5586889810BF67F100FCC24D /* MIDI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MIDI-Info.plist"; sourceTree = "<group>"; };
 		55868A0710BFB31500FCC24D /* Midi_Plug.rsrc.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Midi_Plug.rsrc.r; sourceTree = "<group>"; };
-		55868A6710BFB46100FCC24D /* APPL.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = APPL.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		55868A6810BFB46100FCC24D /* APPL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "APPL-Info.plist"; sourceTree = SOURCE_ROOT; };
+		55868A6710BFB46100FCC24D /* Classic App.ppextimp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Classic App.ppextimp"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55868A6810BFB46100FCC24D /* APPL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "APPL-Info.plist"; sourceTree = "<group>"; };
 		558D4DD81666F14E00A333E8 /* PPDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDriver.h; sourceTree = "<group>"; };
 		558D4DD91666F14E00A333E8 /* PPDriver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPDriver.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLibrary_PPKPrivate.h; sourceTree = "<group>"; };
@@ -2220,7 +2225,6 @@
 		55978AA91999DF5C009EE5DF /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55981C5111EE370D00656EE3 /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
 		55981C5411EE375400656EE3 /* preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = preferences.xib; sourceTree = "<group>"; };
-		55993EF119A3212100C2078E /* SafeGenerators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafeGenerators.swift; sourceTree = "<group>"; };
 		559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPQuickView.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		559C4188183EB4AB004A073C /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		559C4191183EB4AB004A073C /* PPQuickView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PPQuickView-Info.plist"; sourceTree = "<group>"; };
@@ -2241,6 +2245,7 @@
 		55ADC3DC17D6F411001F27D4 /* Wave-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Wave-Info.plist"; sourceTree = SOURCE_ROOT; };
 		55ADC3E517D7CBF8001F27D4 /* Midi-rsrc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Midi-rsrc.h"; sourceTree = "<group>"; };
 		55ADC3E617D7E4A4001F27D4 /* MADDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MADDriver.h; sourceTree = "<group>"; };
+		55B0679C19ABCE7E00E2BFF7 /* PlayerPROKit-Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPROKit-Bridge.h"; sourceTree = "<group>"; };
 		55B0EF2018CE13410000E4CA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		55B1B4F2166A850D00820424 /* PPDriver_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDriver_Private.h; sourceTree = "<group>"; };
 		55B1B4F5166A861900820424 /* PPMusicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicObject.h; sourceTree = "<group>"; };
@@ -2266,6 +2271,9 @@
 		55BE998B17978BB100D6DECC /* GetMetadataForFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetMetadataForFile.h; sourceTree = "<group>"; };
 		55BE998D17978BB100D6DECC /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		55BE999117978BB200D6DECC /* schema.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; lineEnding = 0; path = schema.xml; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xml; };
+		55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLImporter.h; sourceTree = "<group>"; };
+		55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLImporter.m; sourceTree = "<group>"; };
+		55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPAPPLImporter.xib; sourceTree = "<group>"; };
 		55C358C216C42D1800FB9FA6 /* libPlayerPROCompact.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPlayerPROCompact.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		55C930381819E68700D9E072 /* CocoaFuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaFuncs.m; sourceTree = "<group>"; };
 		55CB01A611EB82FA0028C6BB /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -2279,7 +2287,7 @@
 		55DC597819A2E6B100212DD0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftBridge.swift; sourceTree = "<group>"; };
 		55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPROKitAdditions.swift; sourceTree = "<group>"; };
-		55DCF07C1999841400A1B9A1 /* PPInstrumentWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPInstrumentWindowController.swift; sourceTree = "<group>"; };
+		55DCF07C1999841400A1B9A1 /* InstrumentWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentWindowController.swift; sourceTree = "<group>"; };
 		55DCF07F1999879C00A1B9A1 /* MusicList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicList.swift; sourceTree = "<group>"; };
 		55DE87BB187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentObject_PPKPrivate.h; sourceTree = "<group>"; };
 		55DE87BE187E051100C36533 /* PPPatternObject_PPKPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPatternObject_PPKPrivate.h; sourceTree = "<group>"; };
@@ -2334,6 +2342,7 @@
 		55F4287716A89A9C009013D8 /* PPMadCommandObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMadCommandObject.m; sourceTree = "<group>"; };
 		55F4C3E119763FDB000997BE /* PlayerPRO Player-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO Player-Bridging-Header.h"; sourceTree = "<group>"; };
 		55F4C3E319763FDD000997BE /* MusicListObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListObject.swift; sourceTree = "<group>"; };
+		55F8B09519AD0DB100C8F0A5 /* ComplexImportPlugObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexImportPlugObject.swift; sourceTree = "<group>"; };
 		55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexImportPlugHandler.swift; sourceTree = "<group>"; };
 		55FD192C19A1C1D8001E1D9C /* PPComplexImportPlugInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPComplexImportPlugInterface.h; sourceTree = "<group>"; };
 		55FD192D19A241FC001E1D9C /* ExportObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportObject.swift; sourceTree = "<group>"; };
@@ -2812,8 +2821,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */,
 				55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */,
+				55BF238919A93742005B1F96 /* Cocoa.framework in Frameworks */,
+				55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */,
+				55BF238A19A93775005B1F96 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2932,30 +2943,7 @@
 		551292DE163DD68500C2C639 /* PlayerPROKit */ = {
 			isa = PBXGroup;
 			children = (
-				551292E5163DD68500C2C639 /* PlayerPROKit.h */,
-				55DE87C3187E18A500C36533 /* Private headers */,
-				55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */,
-				550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */,
-				550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */,
-				550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */,
-				550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */,
-				55F4287216A8968C009013D8 /* PPPatternObject.h */,
-				55D2921E18AADB4600EB7A7D /* PPPatternObject_PcmdHandling.h */,
-				55F4287316A8968C009013D8 /* PPPatternObject.m */,
-				55F4287616A89A9C009013D8 /* PPMadCommandObject.h */,
-				55F4287716A89A9C009013D8 /* PPMadCommandObject.m */,
-				55DE87C4187E5B9100C36533 /* PPFXBusObject.h */,
-				55DE87C5187E5B9100C36533 /* PPFXBusObject.m */,
-				55DE87CB187E60F400C36533 /* PPFXSetObject.h */,
-				55DE87CC187E60F400C36533 /* PPFXSetObject.m */,
-				551292EE163DD7CE00C2C639 /* PPLibrary.h */,
-				551292EF163DD7CE00C2C639 /* PPLibrary.m */,
-				558D4DD81666F14E00A333E8 /* PPDriver.h */,
-				558D4DD91666F14E00A333E8 /* PPDriver.m */,
-				55B1B4F5166A861900820424 /* PPMusicObject.h */,
-				55B1B4F6166A861900820424 /* PPMusicObject.m */,
-				5532334D16766E5700076604 /* PPErrors.h */,
-				5532334E16766E5700076604 /* PPErrors.m */,
+				5577287619ABE040008328D0 /* Source code */,
 				5561F1BF19A51CD40085015B /* Swift wrappers */,
 				55453526186CD32900F69F4D /* OS X-specific code */,
 				551292DF163DD68500C2C639 /* Supporting Files */,
@@ -2966,6 +2954,7 @@
 		551292DF163DD68500C2C639 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				55B0679C19ABCE7E00E2BFF7 /* PlayerPROKit-Bridge.h */,
 				551292E0163DD68500C2C639 /* PlayerPROKit-Info.plist */,
 				551292E1163DD68500C2C639 /* InfoPlist.strings */,
 				550D005118CB808600FD0F17 /* PPErrors.strings */,
@@ -3278,14 +3267,19 @@
 			name = DMF;
 			sourceTree = "<group>";
 		};
-		551E166F10CCD619003C842A /* APPL */ = {
+		551E166F10CCD619003C842A /* Classic Application */ = {
 			isa = PBXGroup;
 			children = (
+				5563A49C19AAC0D50051CC4B /* PPAPPLImporterViewController.h */,
+				5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */,
+				55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */,
+				55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */,
+				55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */,
 				55868A6810BFB46100FCC24D /* APPL-Info.plist */,
 				553340DD10BB5368005208D1 /* APPL.c */,
 				5501BEC618ABFFEB00602206 /* APPL.h */,
 			);
-			name = APPL;
+			path = "Classic Application";
 			sourceTree = "<group>";
 		};
 		551E167010CCD628003C842A /* IT */ = {
@@ -3498,18 +3492,13 @@
 		5523EC78169276AA0067B22A /* Instrument Code */ = {
 			isa = PBXGroup;
 			children = (
-				557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */,
-				557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */,
-				5523EC6716925FF80067B22A /* PPInstrumentViewController.h */,
-				5523EC6816925FF80067B22A /* PPInstrumentViewController.m */,
+				550FBAB019A79A1600EFBD3D /* InstrumentViewController.swift */,
 				550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */,
 				550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */,
 				552581FB16C6FC350016A31C /* InstrumentInfoController.h */,
 				552581FC16C6FC350016A31C /* InstrumentInfoController.m */,
 				5508C3EC16CEB33B007CA458 /* SampleCellView.h */,
 				5508C3ED16CEB33B007CA458 /* SampleCellView.m */,
-				5578C53A17DB9F630057D11B /* PPInstrumentPlugHandler.h */,
-				5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */,
 			);
 			name = "Instrument Code";
 			sourceTree = "<group>";
@@ -3577,7 +3566,6 @@
 				5546217D163A345F0005F491 /* PlugExports-Mac.exp */,
 				551E166C10CCD5DF003C842A /* 669 */,
 				551E166D10CCD5F3003C842A /* AMF */,
-				551E166F10CCD619003C842A /* APPL */,
 				551E166E10CCD607003C842A /* DMF */,
 				551E167010CCD628003C842A /* IT */,
 				551E167110CCD642003C842A /* MADfg */,
@@ -3591,7 +3579,6 @@
 				551E167A10CCD6BE003C842A /* ULT */,
 				551E167910CCD6B4003C842A /* UMX */,
 				551E167B10CCD6C8003C842A /* XM */,
-				553340EB10BB5368005208D1 /* MIDI */,
 			);
 			path = "Import-Export";
 			sourceTree = "<group>";
@@ -3599,14 +3586,14 @@
 		553340EB10BB5368005208D1 /* MIDI */ = {
 			isa = PBXGroup;
 			children = (
+				55ECD2771992C2ED00480788 /* MIDI Import */,
 				5586889810BF67F100FCC24D /* MIDI-Info.plist */,
 				55E527A8186A2A690020F3D6 /* MIDI.pch */,
 				55ECD28F1992C58000480788 /* MIDI.m */,
 				55B5DF0319A259370042E062 /* PPMIDIImporter.swift */,
 				55B5DF0219A259350042E062 /* MIDI-Bridging-Header.h */,
 			);
-			name = MIDI;
-			path = "MIDI Folder";
+			path = MIDI;
 			sourceTree = "<group>";
 		};
 		553626AE17EA6ED200D3A3C8 /* Xcconfigs */ = {
@@ -3642,12 +3629,12 @@
 		554E0FDD10D6C79D00BB619C /* Plug-ins */ = {
 			isa = PBXGroup;
 			children = (
+				55BF238819A92EEB005B1F96 /* Advanced Import plug-ins */,
 				554E0FDE10D6C79D00BB619C /* Digital Plugs */,
 				554E0FF710D6C79D00BB619C /* Filters Plugs */,
 				554E102910D6C79E00BB619C /* Instruments Import-Export Plugs */,
 			);
-			name = "Plug-ins";
-			path = "../Files/(Plug-Ins)";
+			path = "Plug-ins";
 			sourceTree = "<group>";
 		};
 		554E0FDE10D6C79D00BB619C /* Digital Plugs */ = {
@@ -3655,7 +3642,7 @@
 			children = (
 				554E11A610D6F2EE00BB619C /* Complex Fade */,
 				554E11A510D6F2DC00BB619C /* Fade Note */,
-				554E11A410D6F2CA00BB619C /* Fade Vol */,
+				554E11A410D6F2CA00BB619C /* Fade Volume */,
 				554E11E210D6F3AB00BB619C /* Note Translate */,
 				554E125E10D6F46600BB619C /* Propagate */,
 				554E125F10D6F4B800BB619C /* Revert */,
@@ -3710,7 +3697,7 @@
 			path = "Instruments Import-Export Plugs";
 			sourceTree = "<group>";
 		};
-		554E11A410D6F2CA00BB619C /* Fade Vol */ = {
+		554E11A410D6F2CA00BB619C /* Fade Volume */ = {
 			isa = PBXGroup;
 			children = (
 				552C440917DFE00000AFCB5C /* FadeVolumeController.h */,
@@ -3718,7 +3705,7 @@
 				554E117010D6F1BF00BB619C /* Fade Volume-Info.plist */,
 				55268A5D1877EB7A00A82269 /* FadeVolumeController.xib */,
 			);
-			path = "Fade Vol";
+			path = "Fade Volume";
 			sourceTree = "<group>";
 		};
 		554E11A510D6F2DC00BB619C /* Fade Note */ = {
@@ -3848,9 +3835,20 @@
 			children = (
 				55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */,
 				55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */,
-				55993EF119A3212100C2078E /* SafeGenerators.swift */,
 			);
 			name = "Swift wrappers";
+			sourceTree = "<group>";
+		};
+		5563A49B19AA7AD60051CC4B /* Document classes */ = {
+			isa = PBXGroup;
+			children = (
+				557EF72F168BD4B5001BF077 /* PPInstrumentImporter.h */,
+				557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */,
+				55A3CD4319A6DC8B00957845 /* PPDocument.swift */,
+				5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */,
+				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
+			);
+			path = "Document classes";
 			sourceTree = "<group>";
 		};
 		55680A1F19045F0A00F7616D /* StcfImporter */ = {
@@ -3887,9 +3885,7 @@
 				55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */,
 				55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */,
 				55FD192D19A241FC001E1D9C /* ExportObject.swift */,
-				55A3CD4319A6DC8B00957845 /* PPDocument.swift */,
-				5578C53D17DBABBE0057D11B /* PPDocument.h */,
-				5578C53E17DBABBF0057D11B /* PPDocument.m */,
+				5563A49B19AA7AD60051CC4B /* Document classes */,
 				55FEF8471984502900D2E79C /* Box View */,
 				55FEF8481984505600D2E79C /* Classical View */,
 				55FEF8461984500B00D2E79C /* Digital View */,
@@ -3917,6 +3913,37 @@
 			name = "iOS Frameworks";
 			sourceTree = "<group>";
 		};
+		5577287619ABE040008328D0 /* Source code */ = {
+			isa = PBXGroup;
+			children = (
+				551292E5163DD68500C2C639 /* PlayerPROKit.h */,
+				55DE87C3187E18A500C36533 /* Private headers */,
+				55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */,
+				550DBB8D169FB7A0006F5C85 /* PPSampleObject.h */,
+				550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */,
+				550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */,
+				550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */,
+				55F4287216A8968C009013D8 /* PPPatternObject.h */,
+				55D2921E18AADB4600EB7A7D /* PPPatternObject_PcmdHandling.h */,
+				55F4287316A8968C009013D8 /* PPPatternObject.m */,
+				55F4287616A89A9C009013D8 /* PPMadCommandObject.h */,
+				55F4287716A89A9C009013D8 /* PPMadCommandObject.m */,
+				55DE87C4187E5B9100C36533 /* PPFXBusObject.h */,
+				55DE87C5187E5B9100C36533 /* PPFXBusObject.m */,
+				55DE87CB187E60F400C36533 /* PPFXSetObject.h */,
+				55DE87CC187E60F400C36533 /* PPFXSetObject.m */,
+				551292EE163DD7CE00C2C639 /* PPLibrary.h */,
+				551292EF163DD7CE00C2C639 /* PPLibrary.m */,
+				558D4DD81666F14E00A333E8 /* PPDriver.h */,
+				558D4DD91666F14E00A333E8 /* PPDriver.m */,
+				55B1B4F5166A861900820424 /* PPMusicObject.h */,
+				55B1B4F6166A861900820424 /* PPMusicObject.m */,
+				5532334D16766E5700076604 /* PPErrors.h */,
+				5532334E16766E5700076604 /* PPErrors.m */,
+			);
+			name = "Source code";
+			sourceTree = "<group>";
+		};
 		5578C48317D9E8560057D11B /* PlayerPRO Player */ = {
 			isa = PBXGroup;
 			children = (
@@ -3929,7 +3956,7 @@
 				5578C49017D9E8560057D11B /* AppDelegate.m */,
 				5578C4D317DA88460057D11B /* PPInstrumentWindowController.h */,
 				5578C4D417DA88460057D11B /* PPInstrumentWindowController.m */,
-				55DCF07C1999841400A1B9A1 /* PPInstrumentWindowController.swift */,
+				55DCF07C1999841400A1B9A1 /* InstrumentWindowController.swift */,
 				552788021981C95100708906 /* MusicListDragClass.swift */,
 				5578C49217D9E8570057D11B /* MainMenu.xib */,
 				5578C4F117DA97020057D11B /* InstrumentWindow.xib */,
@@ -4040,6 +4067,15 @@
 			path = "Spotlight Plug-in";
 			sourceTree = "<group>";
 		};
+		55BF238819A92EEB005B1F96 /* Advanced Import plug-ins */ = {
+			isa = PBXGroup;
+			children = (
+				551E166F10CCD619003C842A /* Classic Application */,
+				553340EB10BB5368005208D1 /* MIDI */,
+			);
+			path = "Advanced Import plug-ins";
+			sourceTree = "<group>";
+		};
 		55CBFCD411EB7CA00028C6BB /* PlayerPRO 6 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4061,16 +4097,19 @@
 				55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */,
 				55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */,
 				55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */,
-				5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */,
-				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
 				552A662716B5EBEA007C63F7 /* PPPlugInObject.h */,
 				552A662816B5EBEB007C63F7 /* PPPlugInObject.m */,
+				557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */,
+				557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */,
+				5578C53A17DB9F630057D11B /* PPInstrumentPlugHandler.h */,
+				5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */,
 				55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */,
 				55FD192C19A1C1D8001E1D9C /* PPComplexImportPlugInterface.h */,
+				55F8B09519AD0DB100C8F0A5 /* ComplexImportPlugObject.swift */,
 				55B5DF0519A25B6D0042E062 /* PPComplexImportPlugObject.h */,
 				55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */,
 			);
-			name = "Plug-in handling";
+			path = "Plug-in handling";
 			sourceTree = "<group>";
 		};
 		55DE87C3187E18A500C36533 /* Private headers */ = {
@@ -4133,9 +4172,9 @@
 		55F16D1B186F918F00E75C3E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				55E382EA1981509100EC330B /* PlugInInfo.swift */,
 				5531459B199E7ED6009405BA /* PPRunAlert.swift */,
 				55588A95199951B300C3D4EE /* PlugInInfoController.swift */,
-				55E382EA1981509100EC330B /* PlugInInfo.swift */,
 				55323351167687A200076604 /* PPTimeFormatter.h */,
 				55323352167687A200076604 /* PPTimeFormatter.m */,
 				5547DA5519A5690E0014A620 /* Preferences.swift */,
@@ -4214,7 +4253,6 @@
 				555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */,
 				555776CA17EBF9000019D008 /* iOS PlayerPRO PlayerTests */,
 				55534ACF1817C387006D6BCB /* updateInfoPlist */,
-				55ECD2771992C2ED00480788 /* MIDI Import */,
 				88E0C4950C2F21E500D6C081 /* Frameworks */,
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 			);
@@ -4240,7 +4278,7 @@
 				5586882910BF62F500FCC24D /* UMX.ppimpexp */,
 				5586883D10BF62FB00FCC24D /* XM.ppimpexp */,
 				5586889710BF67F100FCC24D /* MIDI.ppextimp */,
-				55868A6710BFB46100FCC24D /* APPL.ppimpexp */,
+				55868A6710BFB46100FCC24D /* Classic App.ppextimp */,
 				55B797DC10D6E6C40073E379 /* Complex Fade.plugin */,
 				554E110510D6F09F00BB619C /* Fade Note.plugin */,
 				554E114C10D6F1BF00BB619C /* Fade Volume.plugin */,
@@ -5333,9 +5371,9 @@
 			productReference = 5586889710BF67F100FCC24D /* MIDI.ppextimp */;
 			productType = "com.apple.product-type.bundle";
 		};
-		55868A5810BFB46100FCC24D /* APPL */ = {
+		55868A5810BFB46100FCC24D /* Classic App */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 55868A6310BFB46100FCC24D /* Build configuration list for PBXNativeTarget "APPL" */;
+			buildConfigurationList = 55868A6310BFB46100FCC24D /* Build configuration list for PBXNativeTarget "Classic App" */;
 			buildPhases = (
 				55868A5B10BFB46100FCC24D /* Resources */,
 				55868A5C10BFB46100FCC24D /* Sources */,
@@ -5346,9 +5384,9 @@
 			dependencies = (
 				55868A5910BFB46100FCC24D /* PBXTargetDependency */,
 			);
-			name = APPL;
+			name = "Classic App";
 			productName = MOD;
-			productReference = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */;
+			productReference = 55868A6710BFB46100FCC24D /* Classic App.ppextimp */;
 			productType = "com.apple.product-type.bundle";
 		};
 		559C4186183EB4AB004A073C /* PPQuickView */ = {
@@ -5603,7 +5641,7 @@
 				5586883110BF62FB00FCC24D /* XM */,
 				5586888B10BF67F100FCC24D /* MIDI */,
 				55ECD2741992C2ED00480788 /* MIDI Import */,
-				55868A5810BFB46100FCC24D /* APPL */,
+				55868A5810BFB46100FCC24D /* Classic App */,
 				55B797D410D6E66A0073E379 /* Digital Plugs */,
 				55B797DB10D6E6C40073E379 /* Complex Fade */,
 				554E10F710D6F09F00BB619C /* Fade Note */,
@@ -6017,6 +6055,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55BF238F19A937C9005B1F96 /* PPAPPLImporter.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6204,7 +6243,6 @@
 				551292F1163DD7CE00C2C639 /* PPLibrary.m in Sources */,
 				558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */,
 				55C8EDE4187CC8B200CC8C1B /* PPMadCommandObject.m in Sources */,
-				55993EF219A3212100C2078E /* SafeGenerators.swift in Sources */,
 				55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */,
 				5578C4FE17DB8A580057D11B /* PPSampleObject.m in Sources */,
 				5578C50117DB8A6E0057D11B /* PPInstrumentObject.m in Sources */,
@@ -6394,7 +6432,7 @@
 			files = (
 				5533C8FB19942AD9003AEB16 /* SoundOutputController.swift in Sources */,
 				555C0F8D19829663003B9347 /* CurrentlyPlayingIndex.swift in Sources */,
-				557E0B70199AB1AE0058B6E1 /* PPInstrumentWindowController.swift in Sources */,
+				557E0B70199AB1AE0058B6E1 /* InstrumentWindowController.swift in Sources */,
 				55F4C3E519763FDD000997BE /* MusicListObject.swift in Sources */,
 				5566883D19A65C8700EE2FE3 /* MusicList.swift in Sources */,
 				55E763FB199AE81000D7952F /* MusicListPreferenceController.swift in Sources */,
@@ -6637,6 +6675,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55BF238E19A937C9005B1F96 /* PPAPPLImporter.m in Sources */,
+				5563A49E19AAC0D50051CC4B /* PPAPPLImporterViewController.m in Sources */,
 				5501BEC818AC05A400602206 /* MADH.c in Sources */,
 				55868A7C10BFB4B300FCC24D /* APPL.c in Sources */,
 				5501BEC918AC092500602206 /* MADI.c in Sources */,
@@ -6721,10 +6761,10 @@
 				55852E1C18D67CCB0009BF55 /* PPSmallPianoView.m in Sources */,
 				5531459C199E7ED6009405BA /* PPRunAlert.swift in Sources */,
 				55FEF84519844FD600D2E79C /* DigitalViewController.m in Sources */,
+				55BF239019A94077005B1F96 /* PPComplexImportPlugObject.m in Sources */,
 				5533C8FA19942AD9003AEB16 /* SoundOutputController.swift in Sources */,
 				55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */,
 				55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */,
-				55B5DF0719A25B6D0042E062 /* PPComplexImportPlugObject.m in Sources */,
 				55FD192B19A1C12B001E1D9C /* ComplexImportPlugHandler.swift in Sources */,
 				55232AED11FDE2E40041A4EC /* MiscPreferenceController.m in Sources */,
 				55588A96199951B300C3D4EE /* PlugInInfoController.swift in Sources */,
@@ -6733,13 +6773,13 @@
 				55232AFA11FDE5F90041A4EC /* MidiHardwarePreferenceController.m in Sources */,
 				552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */,
 				55DC597919A2E6B100212DD0 /* AppDelegate.swift in Sources */,
+				55F8B09719AD154700C8F0A5 /* ComplexImportPlugObject.swift in Sources */,
 				55801EB113D1ED9A007E24FC /* NSColor+PPPreferences.m in Sources */,
 				55E763FE199AFC2B00D7952F /* ClassicEditorPreferenceController.swift in Sources */,
 				55323353167687A200076604 /* PPTimeFormatter.m in Sources */,
 				557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */,
 				5579ADB819A4551500DEC0FF /* DigitalPlugHandler.swift in Sources */,
 				557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */,
-				5523EC6A16925FF80067B22A /* PPInstrumentViewController.m in Sources */,
 				55E382EB1981509100EC330B /* PlugInInfo.swift in Sources */,
 				5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */,
 				550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */,
@@ -6755,6 +6795,7 @@
 				5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */,
 				5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */,
 				55DC597B19A2FA9A00212DD0 /* SwiftBridge.swift in Sources */,
+				550FBAB119A79A1600EFBD3D /* InstrumentViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6828,7 +6869,6 @@
 				55F1BE0A1975CD7200AD2C03 /* PPInstrumentObject.m in Sources */,
 				55F1BE1B1975CD7200AD2C03 /* PPErrors.m in Sources */,
 				555F447519A1411400B8C6EE /* PlayerPROCoreAdditions.swift in Sources */,
-				55993EF319A3212100C2078E /* SafeGenerators.swift in Sources */,
 				55F1BE111975CD7200AD2C03 /* PPFXBusObject.m in Sources */,
 				555F447719A1411800B8C6EE /* PlayerPROKitAdditions.swift in Sources */,
 				55F1BE0D1975CD7200AD2C03 /* PPPatternObject.m in Sources */,
@@ -6903,7 +6943,7 @@
 		};
 		552363A619A55C9B000D191D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 55868A5810BFB46100FCC24D /* APPL */;
+			target = 55868A5810BFB46100FCC24D /* Classic App */;
 			targetProxy = 552363A519A55C9B000D191D /* PBXContainerItemProxy */;
 		};
 		5533411A10BB548E005208D1 /* PBXTargetDependency */ = {
@@ -8185,9 +8225,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -8202,9 +8242,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -8219,9 +8259,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/Fade Vol/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -8236,9 +8276,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/Fade Vol/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -8253,9 +8293,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -8270,9 +8310,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -8287,9 +8327,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -8304,9 +8344,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -8321,9 +8361,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -8338,9 +8378,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -8559,7 +8599,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_OPTIMIZATION_LEVEL = 3;
-				GCC_PREPROCESSOR_DEFINITIONS = "__MAC_OS_X_MEMORY_MANAGER_CLEAN__=1";
+				GCC_PREPROCESSOR_DEFINITIONS = "";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -8650,6 +8690,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO Player/PlayerPRO Player-Bridging-Header.h";
@@ -8670,6 +8711,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO Player/PlayerPRO Player-Bridging-Header.h";
@@ -8738,9 +8780,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -8754,9 +8796,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -8770,9 +8812,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -8786,9 +8828,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -8803,9 +8845,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -8820,9 +8862,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -8837,9 +8879,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -8854,9 +8896,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -8871,9 +8913,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -8888,9 +8930,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -8905,9 +8947,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -8922,9 +8964,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -8939,9 +8981,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -8956,9 +8998,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -8973,9 +9015,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -8990,9 +9032,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9006,9 +9048,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9022,9 +9064,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9039,9 +9081,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9056,9 +9098,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9073,9 +9115,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9090,9 +9132,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9107,9 +9149,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9124,9 +9166,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9141,9 +9183,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9158,9 +9200,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9175,9 +9217,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9192,9 +9234,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9208,9 +9250,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9224,9 +9266,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Filters Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9418,11 +9460,12 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI.pch";
+				GCC_PREFIX_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI.pch";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				SWIFT_OBJC_BRIDGING_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI-Bridging-Header.h";
 				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Release;
@@ -9434,39 +9477,41 @@
 				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ENABLE_MODULES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI.pch";
+				GCC_PREFIX_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI.pch";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				SWIFT_OBJC_BRIDGING_HEADER = "MADDriver.source/Import-Export/MIDI Folder/MIDI-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI-Bridging-Header.h";
 				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Debug;
 		};
 		55868A6410BFB46100FCC24D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"MADAPPIMPORT=1",
 				);
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/APPL-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Release;
 		};
 		55868A6510BFB46100FCC24D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
 					"MADAPPIMPORT=1",
 				);
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/APPL-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Debug;
 		};
@@ -9499,10 +9544,7 @@
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"__MAC_OS_X_MEMORY_MANAGER_CLEAN__=1",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_NEWLINE = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -9515,6 +9557,7 @@
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-DDEBUG";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -9626,9 +9669,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9643,9 +9686,9 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				INFOPLIST_FILE = "Files/(Plug-Ins)/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/Files/(Plug-Ins)/\"Digital Plugs\"";
+				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
@@ -9714,7 +9757,7 @@
 				);
 				INFOPLIST_FILE = "Cocoa-Info.plistvers.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
-				OTHER_SWIFT_FLAGS = "-DPLAYERPRO6";
+				OTHER_SWIFT_FLAGS = "-DPLAYERPRO6 $(inherited)";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";
@@ -9736,7 +9779,7 @@
 				);
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
-				OTHER_SWIFT_FLAGS = "-DPLAYERPRO6";
+				OTHER_SWIFT_FLAGS = "-DPLAYERPRO6 $(inherited)";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/PlayerPRO 6-Bridging-Header.h";
@@ -9788,9 +9831,9 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MIDI Import/MIDI Import-Prefix.pch";
+				GCC_PREFIX_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI Import/MIDI Import-Prefix.pch";
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				INFOPLIST_FILE = "MIDI Import/MIDI Import-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI Import/MIDI Import-Info.plist";
 				MACH_O_TYPE = mh_execute;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
@@ -9809,14 +9852,14 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "MIDI Import/MIDI Import-Prefix.pch";
+				GCC_PREFIX_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI Import/MIDI Import-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				INFOPLIST_FILE = "MIDI Import/MIDI Import-Info.plist";
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI Import/MIDI Import-Info.plist";
 				MACH_O_TYPE = mh_execute;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
@@ -10430,7 +10473,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		55868A6310BFB46100FCC24D /* Build configuration list for PBXNativeTarget "APPL" */ = {
+		55868A6310BFB46100FCC24D /* Build configuration list for PBXNativeTarget "Classic App" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55868A6410BFB46100FCC24D /* Release */,

@@ -25,19 +25,19 @@ func ==(lhs: PlugInInfo, rhs: PlugInInfo) -> Bool {
 }
 
 class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
-	/*@NSCopying */ private(set) var plugName: String
-	private(set) var authorName: String
-	private(set) var plugType: String
-	private(set) var plugCopyright: String
-	private(set) var plugURL: NSURL
+	let plugName: String
+	let authorName: String
+	let plugType: String
+	let plugCopyright: String
+	let plugURL: NSURL
 	
 	init(plugName pn: String, author aut: String = "Unknown Author", plugType pt: String = "unknown", plugURL pu: NSURL) {
-		var tmpBundle = NSBundle(URL: pu).infoDictionary
+		let tmpBundle = NSBundle(URL: pu).infoDictionary
 		plugName = pn
 		authorName = aut
 		plugType = pt
 		plugURL = pu
-		var tmpCopy: AnyObject? = tmpBundle["NSHumanReadableCopyright"]
+		let tmpCopy: AnyObject? = tmpBundle["NSHumanReadableCopyright"]
 		if (tmpCopy != nil) {
 			plugCopyright = tmpCopy! as String
 		} else {
@@ -67,19 +67,13 @@ class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
 		if (object == nil) {
 			return false
 		}
+		
 		if (object === self) {
 			return true;
 		}
-		if var unwrapped = object as? PlugInInfo {
-			if (plugName != unwrapped.plugName) {
-				return false;
-			} else if (authorName != unwrapped.authorName) {
-				return false;
-			} else if (plugType != unwrapped.plugType) {
-				return false;
-			} else {
-				return true;
-			}
+		
+		if let unwrapped = object as? PlugInInfo {
+			return self == unwrapped
 		} else {
 			return false;
 		}

@@ -34,7 +34,6 @@
 	return [[self alloc] init];
 }
 
-
 - (instancetype)init
 {
 	if (self = [super initWithNibName:@"DigitalPrefs" bundle:nil]) {
