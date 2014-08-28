@@ -16,11 +16,11 @@ class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NS
 		super.init()
 	}
 	
-	class func readableTypesForPasteboard(pasteboard: NSPasteboard!) -> [AnyObject]! {
+	class func readableTypesForPasteboard(pasteboard: NSPasteboard!) -> [AnyObject] {
 		return [PPMLDCUTI]
 	}
 	
-	func writableTypesForPasteboard(pasteboard: NSPasteboard!) -> [AnyObject]! {
+	func writableTypesForPasteboard(pasteboard: NSPasteboard!) -> [AnyObject] {
 		return [PPMLDCUTI]
 	}
 	
@@ -66,6 +66,4 @@ class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NS
 	convenience required init(coder aDecoder: NSCoder) {
 		self.init(indexSet:aDecoder.decodeObjectForKey(PPMLDCUTI) as NSIndexSet)
 	}
-	
-
 }

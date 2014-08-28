@@ -68,14 +68,14 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	let musicURL: NSURL
 
 	#if os(OSX)
-	var fileIcon: NSImage {get {
+	var fileIcon: NSImage { get {
 		let image = NSWorkspace.sharedWorkspace().iconForFile(musicURL.path);
 		image.size = NSSize(width: 16, height: 16)
 		return image
 	}}
 	#endif
 	
-	var fileName: String {get {
+	var fileName: String { get {
 		var val: AnyObject? = nil;
 		var err: NSError? = nil;
 		
@@ -89,7 +89,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	}}
 	
 	internal var stashedFileSize: UInt64 = 0
-	var fileSize : UInt64 {get {
+	var fileSize : UInt64 { get {
 		if stashedFileSize == 0 {
 			var val: AnyObject? = nil;
 			var err: NSError? = nil;
@@ -132,7 +132,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	}}
 
 	override var description: String { get {
-		return "\(musicURL.description) \(musicURL.path)"
+		return "\(musicURL.path): \(self.fileName)"
 	}}
 	
 	override var debugDescription: String { get {

@@ -468,7 +468,9 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 								self.addDocument(aPPDoc)
 							} else {
 								let nsErr = CreateErrorFromMADErrorType(anErr)!
-								NSAlert(error: nsErr).runModal()
+								if ErrorIsUserCancelled(nsErr) == false {
+									NSAlert(error: nsErr).runModal()
+								}
 							}
 							
 						})

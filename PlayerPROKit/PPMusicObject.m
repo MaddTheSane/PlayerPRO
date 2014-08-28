@@ -264,7 +264,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 - (void)attachToDriver:(PPDriver *)theDriv
 {
 	self.attachedDriver = theDriv;
-	[theDriv setCurrentMusic:self];
+	theDriv.currentMusic = self;
 }
 
 - (void)dealloc
@@ -285,6 +285,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	MADErr retErr;
 	if ((retErr = MADMusicSaveCFURL(currentMusic, (__bridge CFURLRef)tosave, mad1Comp)) == MADNoErr) {
 		currentMusic->hasChanged = false;
+		self.filePath = tosave;
 	}
 	return retErr;
 }
@@ -404,7 +405,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			
 			// ** Read Sample header **
 			
-			curData = tmpsData[i * MAXSAMPLE +  x] = (sData*)malloc(sizeof(sData));
+			curData = tmpsData[i * MAXSAMPLE + x] = (sData*)malloc(sizeof(sData));
 			if (curData == NULL) {
 				if (theErr) {
 					*theErr = PPCreateErrorFromMADErrorType(MADNeedMemory);
