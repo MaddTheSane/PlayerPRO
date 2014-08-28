@@ -20,9 +20,119 @@ public func ErrorIsUserCancelled(theErr: NSError) -> Bool {
 	return PPErrorIsUserCancelled(theErr)
 }
 
+public func NoteFromString(myTT: String) -> Int8 {
+	let toRet: Int16 = NoteFromString(myTT)
+	return Int8(toRet)
+}
+
+public func NoteFromString(myTT: String) -> Int16
+{
+	if ( myTT == "" || myTT == "---" || countElements(myTT) < 2) {
+		return 0xFF;
+	}
+	
+	func findNote(inStr: String) -> (String, Bool) {
+		var idx = inStr.endIndex
+		--idx
+		var maybeSign = inStr[idx]
+		var maybeStr = inStr[inStr.startIndex ..< idx]
+		switch maybeSign {
+		case "#", "♯"/*Unicode sharp sign, just in case*/:
+			return (maybeStr, true)
+
+		case " ", "-":
+			return (maybeStr, false)
+			
+		default:
+			return (inStr, false)
+		}
+	}
+	
+	var idx = myTT.endIndex
+	let lastChar = myTT[--idx]
+	let octMaybe = String(lastChar).toInt()
+	if octMaybe == nil {
+		return 0xFF
+	}
+	
+	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
+	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
+
+	var Oct = Int16(octMaybe!)
+	Oct *= 12;
+	
+	let theRest = myTT[myTT.startIndex ..< idx]
+	let theRet = findNote(theRest)
+	let tmpNote = theRet.0
+	let val1 = tmpNote.lowercaseString
+	switch val1 {
+	case "c", "do":
+		Oct += 0
+		
+	case "d", "ré", "re":
+		Oct += 2
+		
+	case "e", "mi":
+		Oct += 4
+		
+	case "f", "fa":
+		Oct += 5
+		
+	case "g", "sol", "so":
+		Oct += 7
+		
+	case "a", "la":
+		Oct += 9
+		
+	case "b", "si", "ti":
+		Oct += 11
+		
+	default:
+		Oct = 0xFF
+	}
+	
+	if Oct != 0xFF {
+		if theRet.1 {
+			Oct++;
+		}
+		
+		if Oct > 95 {
+			Oct = 0xFF;
+		}
+		if Oct < 0 {
+			Oct = 0xFF;
+		}
+	}
+	
+	return Oct;
+}
+
+public func OctaveNameFromNote(octNote: Int8, letters isUseLetters: Bool = true) -> String {
+	return OctaveNameFromNote(Int16(octNote), letters: isUseLetters)
+}
+
+public func OctaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true) -> String {
+	if (octNote > 95) {
+		return "---";
+	}
+	if isUseLetters {
+		let NNames = ["C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "]
+		
+		return "\(NNames[Int(octNote % 12)])\(octNote / 12)"
+	} else {
+		let NNames_nonEnglish = ["Do", "Do#", "Ré", "Ré#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"]
+	
+		return "\(NNames_nonEnglish[Int(octNote % 12)])\(octNote / 12)"
+	}
+}
+
 extension PPSampleObject {
 
 #if os(OSX)
+	public func waveformImage(view: NSView) -> NSImage {
+		return PPSampleObject.waveformImage(fromSample: self, view: view)
+	}
+	
 	public class func waveformImage(fromSample theDat: PPSampleObject, view: NSView) -> NSImage {
 		var imageSize = view.convertSizeToBacking(view.frame.size)
 		let datIsStereo = theDat.stereo;
@@ -67,6 +177,14 @@ extension PPSampleObject {
 		return NSImage(CGImage: theCGimg, size: view.frame.size)
 	}
 #endif
+	
+	public func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect:CGRect, channel: Int16 = 0, context ctxRef: CGContext) {
+		return PPSampleObject.drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: self, context:ctxRef)
+	}
+	
+	public func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, context ctxRef: CGContext) {
+		return PPSampleObject.drawSample(start: startI, tSS: tSS, tSE: tSE, high: high, larg: larg, trueV: trueV, trueH: trueH, channel: channel, currentData: self, context: ctxRef)
+	}
 	
 	public class func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect:CGRect, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
 		return drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: curData, context:ctxRef)
@@ -221,26 +339,17 @@ extension PPSampleObject {
 	//}
 	
 	@objc public class func octaveNameFromNote(octNote: Int16) -> String {
-		return octaveNameFromNote(octNote, letters: true)
+		return OctaveNameFromNote(octNote, letters: true)
 	}
 
-	private class func octaveNameFromNote(octNote: Int16 , letters isUseLetters: Bool = true) -> String {
-		if isUseLetters {
-			let NNames = ["C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "]
-			if (octNote > 95) {
-				return "---";
-			}
-			
-			return "\(NNames[Int(octNote % 12)])\(octNote / 12)"
-		} else {
-			let NNames_nonEnglish = ["Do", "Do#", "Ré", "Ré#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"]
-			if (octNote > 95) {
-				return "---";
-			}
-		
-			return "\(NNames_nonEnglish[Int(octNote % 12)])\(octNote / 12)"
-		}
+	@objc public class func octaveNameFromNote(octNote: Int16, usingSingularLetter: Bool) -> String {
+		return OctaveNameFromNote(octNote, letters: usingSingularLetter)
 	}
+
+	@objc public class func noteFromString(myTT: String) -> Int16 {
+		return NoteFromString(myTT)
+	}
+
 }
 
 extension PPPatternObject: SequenceType {

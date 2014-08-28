@@ -33,6 +33,11 @@ BOOL PPErrorIsUserCancelled(NSError *theErr)
 		if (theErr.code == MADUserCanceledErr) {
 			return YES;
 		}
+	} else if([theErr.domain isEqualToString:NSCocoaErrorDomain]) {
+		// Also catch Cocoa's user cancelled error.
+		if (theErr.code == NSUserCancelledError) {
+			return YES;
+		}
 	}
 	
 	return NO;

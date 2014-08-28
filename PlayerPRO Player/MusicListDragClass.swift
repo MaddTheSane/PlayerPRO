@@ -18,11 +18,11 @@ let PPMLDCUTI = "net.sourceforge.playerpro.PlayerPRO-Player.playerlistdragtype"
 		super.init()
 	}
 	
-	class func readableTypesForPasteboard(pasteboard: NSPasteboard!) -> [AnyObject]! {
+	class func readableTypesForPasteboard(pasteboard: NSPasteboard!) -> [AnyObject] {
 		return [PPMLDCUTI]
 	}
 	
-	func writableTypesForPasteboard(pasteboard: NSPasteboard!) -> [AnyObject]! {
+	func writableTypesForPasteboard(pasteboard: NSPasteboard!) -> [AnyObject] {
 		return [PPMLDCUTI]
 	}
 	
@@ -68,6 +68,4 @@ let PPMLDCUTI = "net.sourceforge.playerpro.PlayerPRO-Player.playerlistdragtype"
 	convenience required init(coder aDecoder: NSCoder) {
 		self.init(indexSet:aDecoder.decodeObjectForKey(PPMLDCUTI) as NSIndexSet)
 	}
-	
-
 }

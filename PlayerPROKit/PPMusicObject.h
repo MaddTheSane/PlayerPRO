@@ -18,7 +18,7 @@
 @class PPLibrary;
 @class PPInstrumentObject;
 
-@interface PPMusicObject : NSObject <NSCopying, NSSecureCoding>
+@interface PPMusicObject : NSObject <NSCopying>
 @property (readonly) int totalPatterns;
 @property (readonly) int totalPartitions;
 @property (readonly) int partitionLength;
@@ -33,16 +33,16 @@
 @property (readonly, weak) PPDriver *attachedDriver;
 @property (readonly) NSURL *filePath;
 
-- (instancetype)init NS_DESIGNATED_INITIALIZER;
-//Creates a music object from the supplied MADK
+- (instancetype)init;
+// Creates a music object from the supplied MADK file ONLY
 - (instancetype)initWithURL:(NSURL *)url NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithPath:(NSString *)url;
 
-//Creates a music object from any supported tracker type.
+// Creates a music object from any supported tracker type.
 - (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithPath:(NSString *)url library:(PPLibrary *)theLib;
 
-//Creates a music object from any supported tracker type, also attaching a driver to the music.
+// Creates a music object from any supported tracker type, also attaching a driver to the music.
 - (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib;
 - (instancetype)initWithPath:(NSString *)url driver:(PPDriver *)theLib;
 
@@ -53,7 +53,7 @@
 
 - (NSDictionary*)musicClasses;
 
-//Save music to a URL in MADK format in PPMusicObject, and MAD bundle in PPMusicObjectWrapper
+// Save music to a URL in MADK format.
 - (MADErr)saveMusicToURL:(NSURL *)tosave;
 - (MADErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp;
 - (MADErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib;
@@ -66,11 +66,5 @@
 - (MADErr)exportInstrumentListToURL:(NSURL*)outURL;
 - (BOOL)addInstrument:(PPInstrumentObject*)theIns;
 - (BOOL)importInstrumentListFromURL:(NSURL *)insURL error:(out NSError *__autoreleasing*)theErr;
-
-
-#pragma mark NSCoding functions
-// This is needed to make Swift and Xcode 6 happy
-// We need this to be here to make NSXPC happy.
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
 @end

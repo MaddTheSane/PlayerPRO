@@ -272,6 +272,7 @@ typedef MADENUM(short, MADOutputChannel)
 static const MADOutputChannel oldMonoOutPut = MonoOutPut;
 static const MADOutputChannel oldStereoOutPut = StereoOutPut;
 
+#pragma pack(push, 8)
 /*!
  *	@struct	MADDriverSettings
  *	@var	numChn
@@ -321,6 +322,7 @@ typedef struct MADDriverSettings {
 		char padding[44];
 	} reserved;
 } MADDriverSettings;
+#pragma pack(pop)
 
 /******************************************************************/
 //******************* MUSICS IMPORT/EXPORT PLUGS  *****************/
@@ -563,6 +565,8 @@ typedef struct __MADDriverRec MADDriverRec;
 extern "C" {
 #endif
 
+#pragma mark Debug functions that will crash
+
 /*!
  *	@function	MADDebugStr
  *	@abstract	PlayerPROCore's internal debugger function
@@ -572,8 +576,9 @@ extern "C" {
  *				The file that has the problem
  *	@param		text
  *				Developer text that is used to help debug the issue. IT CANNOT BE NULL, although an empty string is fine.
- *	@discussion NORMALLY it is never called, only when a FATAL error has occured.
- *				This function is usually invoked using the macros __LINE__ and __FILE__ for the line and file paramaters.
+ *	@discussion NORMALLY it is never called, only when a FATAL error has occured. <BR>
+ *				This function is usually invoked using the macros \c __LINE__ and \c 
+ *				__FILE__ for the line and file paramaters.
  */
 PPEXPORT void	MADDebugStr(short line, const char* file, const char* text);
 	
@@ -581,9 +586,12 @@ PPEXPORT void	MADDebugStr(short line, const char* file, const char* text);
  *	@function	MADRegisterDebugFunc
  *	@abstract	used to set a callback for MADDebugStr
  *	@param		debugFunc
- *				The function to call when MADDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling \c abort()
- *	@discussion	Use this function to call your own debug function when MADDebugStr is called, otherwise calls to MADDebugStr will crash your app.
- *				You can reset to the default MADDebugStr implementation by calling this function and passing \c NULL to it.
+ *				The function to call when MADDebugStr is called, hopefully to have your
+ *				app fail gracefully instead of instantly calling \c abort()
+ *	@discussion	Use this function to call your own debug function when MADDebugStr is
+ *				called, otherwise calls to MADDebugStr will crash your app.<BR>
+ *				You can reset to the default MADDebugStr implementation by calling this
+ *				function and passing \c NULL to it.
  */
 PPEXPORT void	MADRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*));
 
@@ -592,35 +600,84 @@ PPEXPORT void	MADRegisterDebugFunc(void (__callback *debugFunc)(short, const cha
  *	@function	MADRegisterDebugBlock
  *	@abstract	used to set a callback for MADDebugStr
  *	@param		newdebugBlock
- *				The block to call when MADDebugStr is called, hopefully to have your app fail gracefully instead of instantly calling \c abort()
- *	@discussion	Use this function to call your own debug function when MADDebugStr is called, otherwise calls to MADDebugStr will crash your app.
- *				You can reset to the default MADDebugStr implementation by calling this function and passing \c NULL to it.
- *				This function is only available if your compiler supports blocks (Clang), otherwise it is unavailable.
- *				If PlayerPROCore was built without blocks support and you try to call this function, the linker won't be able to find the function.
+ *				The block to call when MADDebugStr is called, hopefully to have your app
+ *				fail gracefully instead of instantly calling \c abort()
+ *	@discussion	Use this function to call your own debug function when MADDebugStr is
+ *				called, otherwise calls to MADDebugStr will crash your app.
+ *				You can reset to the default MADDebugStr implementation by calling this
+ *				function and passing \c NULL to it. <BR>
+ *				This function is only available if your compiler supports blocks (Clang),
+ *				otherwise it is unavailable. <BR>
+ *				If PlayerPROCore was built without blocks support and you try to call this
+ *				function, the linker won't be able to find the function.
  */
 PPEXPORT void MADRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*));
 #endif
 
+#pragma mark library initialization
+	
 /*!
  *	@function	MADInitLibrary
  *	@abstract	MADLibrary initialization
  *	@result		The error encountered, if any. Will be of type MADErrors unless \c MADNoErr
  *	@param		PlugsFolderName
- *				The folder location for the plug-ins for PlayerPROCore to look for.
- *				On certain platforms, this can be NULL
+ *				The folder location for the plug-ins for PlayerPROCore to look for. <BR>
+ *				On certain platforms, this can be \c NULL
  *	@param		MADLib
- *				Usually a pointer passed by reference. If successful, it will return an initialized MADLibrary struct.
- *	@discussion	You must call this function if you want to use other functions & variables.
+ *				Usually a pointer passed by reference. If successful, it will return an initialized \c MADLibrary struct.
+ *	@return		An error type on failure, or \c MADNoErr on success
+ *	@discussion	You must call this function if you want to use other functions & variables.<BR>
  *				Needed to help set up the MADDriver structure and load non-MADK audio trackers.
  */
 PPEXPORT MADErr	MADInitLibrary(const char *PlugsFolderName, MADLibrary **MADLib);
 
-PPEXPORT MADErr	MADDisposeLibrary(MADLibrary *MADLib);						// Close Library, close music, close driver, free all memory
+/*!
+ *	@function	MADDisposeLibrary
+ *	@abstract	Close Library, free all memory
+ *	@param		MADLib
+ *				The library to destroy
+ *	@return		An error type on failure, or \c MADNoErr on success
+ */
+PPEXPORT MADErr	MADDisposeLibrary(MADLibrary *MADLib);
 
-PPEXPORT void				MADGetBestDriver(MADDriverSettings *DriverInitParam);		// Found and identify the current Mac sound hardware and fill DriverInitParam
+/*!
+ *	@function	MADPlugAvailable
+ *	@abstract	Is plug \c 'type' available?
+ *	@param		MADLib
+ *				The library test for the availability of the plug-in
+ *	@param		type
+ *				The plug-in type to check for.
+ *	@return		\c true if a the plug-in is available. Otherwise, \c false .
+ */
+PPEXPORT bool MADPlugAvailable(const MADLibrary *MADLib, const char *type);
+
+#pragma mark back-end (driver) availability
+/**
+ *	@function	MADGetBestDriver
+ *	@abstract	Find and identify the current sound hardware and APIs and fill DriverInitParam.
+ *	@param		DriverInitParam
+ *				A pointer to the driver settings to modify. On return, is set to the best drivers
+ *				for the current sound hardware and APIs.
+ */
+PPEXPORT void				MADGetBestDriver(MADDriverSettings *DriverInitParam);
+
+/**
+ *	@function	MADSoundDriverIsAvalable
+ *	@abstract	Identifies if a back-end is available or not.
+ *	@param		theDriver
+ *				The driver to test for availability.
+ *	@return		A \c bool indicating if the driver is available or not.
+ */
 PPEXPORT bool				MADSoundDriverIsAvalable(MADSoundOutput theDriver);
+
+/**
+ *	@function	MADSoundDriverList
+ *	@abstract	Lists all the available sound back-ends available
+ *	@return		A \c bool indicating if the driver is available or not.
+ */
 PPEXPORT MADSoundOutputBit	MADSoundDriverList();
 
+#pragma mark -
 PPEXPORT MADErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
 PPEXPORT MADErr	MADDisposeDriver(MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
 
@@ -657,14 +714,13 @@ PPEXPORT MADErr	MADMusicSaveCString(MADMusic *music, const char *cName, bool com
 //PPEXPORT MADErr	MADMusicSavePointer(MADMusic *music, void **outPtr, size_t *outPtrSize, MADBool compressMAD);
 
 #ifdef _MAC_H
+#pragma mark OS X/iOS-only calls
 PPEXPORT MADErr	MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef);
 PPEXPORT MADErr	MADMusicIdentifyCFURL(MADLibrary *lib, char *type, CFURLRef URLRef);
 PPEXPORT MADErr	MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, MADInfoRec *InfoRec);
 PPEXPORT MADErr	MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL);
 PPEXPORT MADErr	MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD);
 #endif
-
-PPEXPORT bool MADPlugAvailable(MADLibrary *, char *type);								// Is plug 'type' available?
 
 PPEXPORT MADErr	MADDisposeMusic(MADMusic **, MADDriverRec *MDriver);								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
 
@@ -697,6 +753,8 @@ PPEXPORT MADErr	MADPlaySoundDataSYNC(MADDriverRec	*MDriver,
 									 bool			stereo);				// sample is in stereo or in mono?
 #endif
 
+#pragma mark MAD Driver functions
+	
 PPEXPORT bool MADIsDonePlaying(MADDriverRec *MDriver);
 	
 PPEXPORT void	MADBeginExport(MADDriverRec *driver);
@@ -714,7 +772,7 @@ PPEXPORT void	MADDriverClearChannel(MADDriverRec *theRec, int channel);
 
 PPEXPORT bool MADDriverChannelIsDonePlaying(MADDriverRec *theRec, int chan);
 
-/*** General Functions ***/
+#pragma mark General Functions
 
 PPEXPORT MADErr		MADKillInstrument(MADMusic*, short ins);
 PPEXPORT MADErr		MADKillSample(MADMusic *, short ins, short sample);

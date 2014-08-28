@@ -39,15 +39,17 @@ sData* inMADCreateSample()
 
 Cmd* MADGetCmd(short row, short track, Pcmd* myPcmd)
 {
-	if (row < 0)
+	if (row < 0) {
 		row = 0;
-	else if (row >= myPcmd->length)
+	} else if (row >= myPcmd->length) {
 		row = myPcmd->length - 1;
+	}
 	
-	if (track < 0)
+	if (track < 0) {
 		track = 0;
-	else if (track >= myPcmd->tracks)
+	} else if (track >= myPcmd->tracks) {
 		track = myPcmd->tracks - 1;
+	}
 	
 	return &(myPcmd->myCmd[(myPcmd->length * track) + row]);
 }

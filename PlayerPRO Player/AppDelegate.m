@@ -42,7 +42,7 @@ static void CocoaDebugStr(short line, const char *file, const char *text)
 
 static NSInteger selMusFromList = -1;
 
-@interface AppDelegate ()
+@interface PlayerAppDelegate ()
 @property (strong) NSString *musicInfo;
 @property (strong, readonly) NSDictionary	*trackerDict;
 @property (strong, readonly) NSArray		*trackerUTIs;
@@ -60,7 +60,7 @@ static NSInteger selMusFromList = -1;
 - (void)musicListDidChange;
 @end
 
-@implementation AppDelegate
+@implementation PlayerAppDelegate
 @synthesize madLib;
 @synthesize toolsPanel;
 @synthesize instrumentController;

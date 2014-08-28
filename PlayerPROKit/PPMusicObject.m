@@ -245,10 +245,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (instancetype)init
 {
-	if (self = [super init]) {
-		currentMusic = CreateFreeMADK();
-	}
-	return self;
+	return self = [self initWithMusicStruct:CreateFreeMADK() copy:NO];
 }
 
 - (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib
@@ -267,7 +264,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 - (void)attachToDriver:(PPDriver *)theDriv
 {
 	self.attachedDriver = theDriv;
-	[theDriv setCurrentMusic:self];
+	theDriv.currentMusic = self;
 }
 
 - (void)dealloc
@@ -288,6 +285,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	MADErr retErr;
 	if ((retErr = MADMusicSaveCFURL(currentMusic, (__bridge CFURLRef)tosave, mad1Comp)) == MADNoErr) {
 		currentMusic->hasChanged = false;
+		self.filePath = tosave;
 	}
 	return retErr;
 }
@@ -407,7 +405,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			
 			// ** Read Sample header **
 			
-			curData = tmpsData[i * MAXSAMPLE +  x] = (sData*)malloc(sizeof(sData));
+			curData = tmpsData[i * MAXSAMPLE + x] = (sData*)malloc(sizeof(sData));
 			if (curData == NULL) {
 				if (theErr) {
 					*theErr = PPCreateErrorFromMADErrorType(MADNeedMemory);
@@ -492,26 +490,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	}
 	
 	return YES;
-}
-
-#pragma mark NSSecureCoding functions
-
-+ (BOOL)supportsSecureCoding
-{
-	return YES;
-}
-
-- (void)encodeWithCoder:(NSCoder *)aCoder
-{
-	
-}
-
-- (instancetype)initWithCoder:(NSCoder *)aDecoder
-{
-	if (self = [super init]) {
-		
-	}
-	return self;
 }
 
 @end

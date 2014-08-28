@@ -9,6 +9,7 @@
 #import "PPInstrumentWindowController.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PlayerPROKit.h>
+@import PlayerPROKit;
 #include "PPByteswap.h"
 #import "UserDefaultKeys.h"
 //#import "AppDelegate.h"
@@ -164,7 +165,7 @@
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
 {
 	if (item == nil) {
-		return [((AppDelegate*)[NSApp delegate]).music.instruments count];
+		return [((PlayerAppDelegate*)[NSApp delegate]).music.instruments count];
 	}
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
 		return [item countOfSamples];
@@ -175,7 +176,7 @@
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
 {
 	if (item == nil) {
-		return ((AppDelegate*)[NSApp delegate]).music.instruments[index];
+		return ((PlayerAppDelegate*)[NSApp delegate]).music.instruments[index];
 	}
 	if ([item isKindOfClass:[PPInstrumentObject class]]) {
 		return [item samplesObjectAtIndex:index];

@@ -310,6 +310,7 @@ public class SoundSettingsViewController: NSViewController {
 			
 			stereoDelayNum.selectItemAtIndex(toSet - 1)
 			
+			toSet = 0
 			let reverbAmount = sett.ReverbSize
 			for i in ReverbAmountCoupling {
 				if i.amount == reverbAmount {
@@ -323,6 +324,7 @@ public class SoundSettingsViewController: NSViewController {
 			}
 			reverbNum.selectItemAtIndex(toSet - 1)
 			
+			toSet = 0
 			let reverbPercentage = sett.ReverbStrength;
 			for i in ReverbPercentCoupling {
 				if i.amount == reverbPercentage {
@@ -336,6 +338,7 @@ public class SoundSettingsViewController: NSViewController {
 			}
 			reverbPercent.selectItemAtIndex(toSet - 1)
 			
+			toSet = 0
 			let oversamplingAmount = sett.oversampling;
 			for i in OversamplingCoupling {
 				if i.amount == oversamplingAmount {
