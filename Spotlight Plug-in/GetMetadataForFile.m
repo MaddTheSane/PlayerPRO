@@ -33,14 +33,14 @@
 }
 @end
 
-#define kPPMDInstumentsList @"net_sourceforge_playerpro_tracker_instumentlist"
-#define kPPMDPatternList @"net_sourceforge_playerpro_tracker_patternlist"
-#define kPPMDTotalPatterns @"net_sourceforge_playerpro_tracker_totalpatterns"
-#define kPPMDPartitionLength @"net_sourceforge_playerpro_tracker_partitionlength"
-#define kPPMDTotalInstruments @"net_sourceforge_playerpro_tracker_totalinstruments"
-#define kPPMDTotalTracks @"net_sourceforge_playerpro_tracker_totaltracks"
-#define kPPMDFormatDescription @"net_sourceforge_playerpro_tracker_formatdescription"
-#define kPPMDMADKInfo @"net_sourceforge_playerpro_tracker_madkinfo"
+#define kPPMDInstumentsList		@"net_sourceforge_playerpro_tracker_instumentlist"
+#define kPPMDPatternList		@"net_sourceforge_playerpro_tracker_patternlist"
+#define kPPMDTotalPatterns		@"net_sourceforge_playerpro_tracker_totalpatterns"
+#define kPPMDPartitionLength	@"net_sourceforge_playerpro_tracker_partitionlength"
+#define kPPMDTotalInstruments	@"net_sourceforge_playerpro_tracker_totalinstruments"
+#define kPPMDTotalTracks		@"net_sourceforge_playerpro_tracker_totaltracks"
+#define kPPMDFormatDescription	@"net_sourceforge_playerpro_tracker_formatdescription"
+#define kPPMDMADKInfo			@"net_sourceforge_playerpro_tracker_madkinfo"
 
 /* -----------------------------------------------------------------------------
     Get metadata attributes from file
