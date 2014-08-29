@@ -160,7 +160,7 @@ void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init)
 	return theErr;
 }
 
-- (void)importMIDIFileAtURL:(NSURL*)theURL numberOfTracks:(NSInteger)trackNum useQTInstruments:(BOOL)qtIns withReply:(void (^)(NSData *theData, MADErr error))reply;
+- (void)importMIDIFileAtURL:(NSURL*)theURL numberOfTracks:(NSInteger)trackNum useQTInstruments:(BOOL)qtIns withReply:(void (^)(NSData *theData, MADErr error))reply
 {
 	MADErr theErr = MADNoErr;
 	UseQKIns = qtIns;

@@ -2257,6 +2257,7 @@
 		55ADC3E617D7E4A4001F27D4 /* MADDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MADDriver.h; sourceTree = "<group>"; };
 		55B0679C19ABCE7E00E2BFF7 /* PlayerPROKit-Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPROKit-Bridge.h"; sourceTree = "<group>"; };
 		55B0EF2018CE13410000E4CA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		55B1464419B02B1A00C6FE1B /* MIDI Import.exp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.exports; path = "MIDI Import.exp"; sourceTree = "<group>"; };
 		55B1B4F2166A850D00820424 /* PPDriver_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDriver_Private.h; sourceTree = "<group>"; };
 		55B1B4F5166A861900820424 /* PPMusicObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPMusicObject.h; sourceTree = "<group>"; };
 		55B1B4F6166A861900820424 /* PPMusicObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPMusicObject.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -4170,6 +4171,7 @@
 				55ECD2791992C2ED00480788 /* MIDI Import-Info.plist */,
 				55ECD27A1992C2ED00480788 /* InfoPlist.strings */,
 				55ECD27D1992C2ED00480788 /* MIDI Import-Prefix.pch */,
+				55B1464419B02B1A00C6FE1B /* MIDI Import.exp */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -9835,6 +9837,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				UNEXPORTED_SYMBOLS_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI Import/MIDI Import.exp";
 				WRAPPER_EXTENSION = xpc;
 			};
 			name = Release;
@@ -9861,6 +9864,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				UNEXPORTED_SYMBOLS_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI Import/MIDI Import.exp";
 				WRAPPER_EXTENSION = xpc;
 			};
 			name = Debug;
