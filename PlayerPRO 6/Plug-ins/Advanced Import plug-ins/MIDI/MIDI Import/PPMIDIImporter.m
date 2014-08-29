@@ -10,6 +10,7 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <string.h>
+#include "PTMID.h"
 
 #ifdef __LP64__
 #error This code will only work on 32-bit mode.
@@ -18,15 +19,6 @@
 
 /**************************************************************************
  **************************************************************************/
-
-#define kPPTotalPatterns @"Total Patterns"
-#define kPPPartitionLength @"Partition Length"
-#define kPPFileSize @"File Size"
-#define kPPSignature @"Signature"
-#define kPPTotalTracks @"Total Tracks"
-#define kPPTotalInstruments @"Total Instruments"
-#define kPPInternalFileName @"Internal File Name"
-#define kPPFormatDescription @"FormatDescription"
 
 static unsigned char* MYC2PStr(Ptr cStr)
 {
@@ -171,6 +163,10 @@ void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init)
 - (void)importMIDIFileAtURL:(NSURL*)theURL numberOfTracks:(NSInteger)trackNum useQTInstruments:(BOOL)qtIns withReply:(void (^)(NSData *theData, MADErr error))reply;
 {
 	MADErr theErr = MADNoErr;
+	UseQKIns = qtIns;
+	trackNum /= 2;
+	trackNum *= 2;
+	wMaxchan = trackNum;
 	MADDriverSettings init = {0};
 	MADMusic *MadFile = malloc(sizeof(MADMusic) + 20);
 	NSMutableData *madData = [[NSMutableData alloc] initWithCapacity:128];
