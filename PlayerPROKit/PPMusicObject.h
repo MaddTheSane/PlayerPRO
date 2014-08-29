@@ -51,7 +51,7 @@
 
 + (MADErr)info:(MADInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib;
 
-- (NSDictionary*)musicClasses;
+@property (nonatomic, readonly, copy) NSDictionary *musicClasses;
 
 // Save music to a URL in MADK format.
 - (MADErr)saveMusicToURL:(NSURL *)tosave;

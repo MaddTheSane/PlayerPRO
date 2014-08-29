@@ -13,11 +13,18 @@ NSString * const PPPlugReturnCode = @"PlayerPROKit Return Code";
 
 @interface PPPluginWindowController ()
 @property BOOL isRunningModal;
+- (instancetype)initWithCoder:(NSCoder *)coder NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithWindow:(NSWindow *)window NS_DESIGNATED_INITIALIZER;
 @end
 
 @implementation PPPluginWindowController
 @synthesize infoPlug;
 @synthesize plugBlock;
+
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+	return self = [super initWithCoder:coder];
+}
 
 #if 0
 - (instancetype)initWithWindowNibName:(NSString *)windowNibName

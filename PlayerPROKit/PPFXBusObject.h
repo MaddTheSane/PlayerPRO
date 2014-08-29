@@ -20,6 +20,6 @@
 @property short copyID;
 @property (getter = isActive) BOOL active;
 
-- (instancetype)initWithFXBus:(FXBus *)set;
+- (instancetype)initWithFXBus:(FXBus *)set NS_DESIGNATED_INITIALIZER;
 
 @end

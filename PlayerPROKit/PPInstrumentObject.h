@@ -30,17 +30,17 @@
 + (instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObject *)mus;
 - (instancetype)initWithMusic:(PPMusicObject *)mus instrumentIndex:(short)insIdx;
 
-- (NSArray*)volumeEnvelope;
-- (NSArray*)panningEnvelope;
-- (NSArray*)pitchEnvelope;
+@property (nonatomic, readonly, copy) NSArray *volumeEnvelope;
+@property (nonatomic, readonly, copy) NSArray *panningEnvelope;
+@property (nonatomic, readonly, copy) NSArray *pitchEnvelope;
 
 - (PPEnvelopeObject *)objectAtIndexedSubscript:(NSInteger)index;
 
 @property (weak) PPMusicObject *theMus;
 @property (copy) NSString *name;
 @property (readonly) NSInteger number;
-- (short)firstSample;
-- (NSArray*)samples;
+@property (nonatomic, readonly) short firstSample;
+@property (nonatomic, readonly, copy) NSArray *samples;
 
 @property short MIDI;
 @property (readonly) short MIDIType;

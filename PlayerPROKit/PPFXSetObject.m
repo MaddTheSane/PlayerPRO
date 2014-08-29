@@ -20,6 +20,7 @@
 
 @interface PPFXSetObject ()
 @property (readwrite, strong) NSMutableArray *sets;
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 @end
 
 @implementation PPFXSetObject

@@ -6,23 +6,24 @@
 //
 //
 
-#ifndef __PLAYERPROKIT_PPPATTERNOBJECT__
-#define __PLAYERPROKIT_PPPATTERNOBJECT__
-
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPMadCommandObject.h>
 #import <PlayerPROKit/PPMusicObject.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
+#ifndef NS_DESIGNATED_INITIALIZER
+#define NS_DESIGNATED_INITIALIZER
+#endif
+
 @interface PPPatternObject : NSObject <NSFastEnumeration, PPObject>
-- (PPMadCommandObject *)objectAtIndexedSubscript:(NSInteger)index;
 @property (readonly) NSInteger index;
 @property (copy) NSString *patternName;
 @property (readonly, weak) PPMusicObject *musicWrapper;
 @property int patternSize;
-- (instancetype)initWithMusic:(PPMusicObject *)mus;
+
+- (PPMadCommandObject *)objectAtIndexedSubscript:(NSInteger)index;
+
+- (instancetype)initWithMusic:(PPMusicObject *)mus NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithMusic:(PPMusicObject *)mus patternAtIndex:(short)ptnIdx;
 @end
-
-#endif

@@ -9,6 +9,10 @@
 #import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PPPlug.h>
 
+#ifndef NS_DESIGNATED_INITIALIZER
+#define NS_DESIGNATED_INITIALIZER
+#endif
+
 EXP NSString * const PPPlugInSheetDidEnd;
 EXP NSString * const PPPlugReturnCode;
 
@@ -22,7 +26,7 @@ EXP NSString * const PPPlugReturnCode;
 }
 
 - (instancetype)initWithWindowNibName:(NSString *)windowNibName UNAVAILABLE_ATTRIBUTE;
-- (instancetype)initWithWindowNibName:(NSString *)windowNibName infoPlug:(PPInfoPlug *)ip;
+- (instancetype)initWithWindowNibName:(NSString *)windowNibName infoPlug:(PPInfoPlug *)ip NS_DESIGNATED_INITIALIZER;
 
 @property PPInfoPlug *infoPlug;
 @property (copy) dispatch_block_t plugBlock;
