@@ -294,10 +294,10 @@ extension InstrData {
 extension Cmd {
 	public init() {
 		ins = 0
-		note = 0xff
+		note = 0xFF
 		cmd = 0
 		arg = 0
-		vol = 0xff
+		vol = 0xFF
 		unused = 0
 	}
 	
