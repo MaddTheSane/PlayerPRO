@@ -21,7 +21,8 @@ CFBundleGetInfoString = "PlayerPRO Main Library";
 "PPMADIFile" = "PlayerPRO MADI Tracker";
 "PPMADKFile" = "PlayerPRO MADK Tracker";
 "PPMADHFile" = "PlayerPRO MADH Tracker";
-"PPMADBundle" = "PlayerPRO Tracker Bundle";
 "Music Tracker" = "Music Tracker";
+"net.sourceforge.playerpro.tracker" = "Music Tracker";
 
 "PPImpExpBundle" = "PlayerPRO Import/Export PlugIn";
+"net.sourceforge.playerpro.ppimpexp" = "PlayerPRO Import/Export PlugIn";
