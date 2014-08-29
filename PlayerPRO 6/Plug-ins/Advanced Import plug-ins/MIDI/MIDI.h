@@ -11,8 +11,11 @@
 
 #define __private_extern __attribute__((visibility("hidden")))
 
+#import <Foundation/Foundation.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 @import Foundation;
 @import PlayerPROKit;
-__private_extern extern PPMusicObject *MIDIReadFromData(NSData *fileData);
+
+__private_extern extern PPMusicObject *MIDIReadFromData(NSData *fileData) NS_RETURNS_RETAINED;
 
 #endif
