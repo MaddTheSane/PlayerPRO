@@ -20,8 +20,11 @@ void MADRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*
 	if (MyDebugBlock) {
 		Block_release(MyDebugBlock);
 	}
+	
 	if (newdebugBlock) {
 		MyDebugBlock = Block_copy(newdebugBlock);
+	} else {
+		MyDebugBlock = NULL;
 	}
 }
 
@@ -30,6 +33,7 @@ void MADRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const
 	if (MyDebugBlock) {
 		Block_release(MyDebugBlock);
 	}
+	
 	if (debugFunc == NULL) {
 		MyDebugBlock = NULL;
 	} else {
@@ -45,6 +49,7 @@ void MADDebugStr(short line, const char *file, const char *text)
 		MyDebugBlock(line, file, text);
 	} else {
 		fprintf(stderr, "PlayerPROCore: %s:%u error text: %s!", file, line, text);
+		fflush(stderr);
 		
 		abort();
 	}
@@ -65,6 +70,7 @@ void MADDebugStr(short line, const char *file, const char *text)
 		(*MyDebugFunc)(line, file, text);
 	} else {
 		fprintf(stderr, "PlayerPROCore: %s:%u error text: %s!", file, line, text);
+		fflush(stderr);
 		
 		abort();
 	}

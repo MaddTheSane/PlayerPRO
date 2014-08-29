@@ -1827,34 +1827,48 @@ void ApplySurround(MADDriverRec *intDriver)
 	switch (intDriver->DriverSettings.outPutBits) {
 		case 8:
 			switch (intDriver->DriverSettings.outPutMode) {
-			case DeluxeStereoOutPut:
-			{
-				int		i = intDriver->ASCBUFFER;
-				char	*data = (char*)intDriver->IntDataPtr;
-				
-				while (i-- > 0) {
-					*data = -1 - *data;
-					data += 2;
+				case DeluxeStereoOutPut:
+				{
+					int		i = intDriver->ASCBUFFER;
+					char	*data = (char*)intDriver->IntDataPtr;
+					
+					while (i-- > 0) {
+						*data = -1 - *data;
+						data += 2;
+					}
 				}
+					break;
+					
+				case PolyPhonic:
+					break;
+					
+				default:
+					break;
+					
 			}
-				break;
-		}
 			break;
 			
 		case 16:
 			switch(intDriver->DriverSettings.outPutMode) {
-			case DeluxeStereoOutPut:
-			{
-				int		i = intDriver->ASCBUFFER;
-				short	*data = (short*)intDriver->IntDataPtr;
-				
-				while (i-- > 0) {
-					*data = -1 - *data;
-					data += 2;
+				case DeluxeStereoOutPut:
+				{
+					int		i = intDriver->ASCBUFFER;
+					short	*data = (short*)intDriver->IntDataPtr;
+					
+					while (i-- > 0) {
+						*data = -1 - *data;
+						data += 2;
+					}
 				}
+					break;
+					
+				case PolyPhonic:
+					break;
+					
+				default:
+					break;
+					
 			}
-				break;
-		}
 			break;
 	}
 }
