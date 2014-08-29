@@ -3584,15 +3584,15 @@
 		553340EB10BB5368005208D1 /* MIDI */ = {
 			isa = PBXGroup;
 			children = (
-				55ECD2771992C2ED00480788 /* MIDI Import */,
-				5586889810BF67F100FCC24D /* MIDI-Info.plist */,
+				55B5DF0219A259350042E062 /* MIDI-Bridging-Header.h */,
 				55E527A8186A2A690020F3D6 /* MIDI.pch */,
 				555A283419AFE21600FB4D5B /* MIDI.h */,
 				55ECD28F1992C58000480788 /* MIDI.m */,
+				5586889810BF67F100FCC24D /* MIDI-Info.plist */,
 				55B5DF0319A259370042E062 /* PPMIDIImporter.swift */,
 				555A283519AFE4F000FB4D5B /* MIDIImporterController.swift */,
 				555A283619AFE4F000FB4D5B /* MIDIImporterController.xib */,
-				55B5DF0219A259350042E062 /* MIDI-Bridging-Header.h */,
+				55ECD2771992C2ED00480788 /* MIDI Import */,
 			);
 			path = MIDI;
 			sourceTree = "<group>";
