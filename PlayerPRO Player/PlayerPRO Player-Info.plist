@@ -45,7 +45,7 @@
 			<string>Viewer</string>
 			<key>LSItemContentTypes</key>
 			<array>
-				<string>net.sourceforge.playerpro.stcfmusiclist</string>
+				<string>com.quadmation.playerpro.stcfmusiclist</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
@@ -574,7 +574,7 @@
 			<key>UTTypeIconFile</key>
 			<string>List</string>
 			<key>UTTypeIdentifier</key>
-			<string>net.sourceforge.playerpro.stcfmusiclist</string>
+			<string>com.quadmation.playerpro.stcfmusiclist</string>
 			<key>UTTypeTagSpecification</key>
 			<dict>
 				<key>com.apple.ostype</key>

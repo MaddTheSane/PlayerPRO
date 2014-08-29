@@ -1801,8 +1801,6 @@
 		55085D791836BAAA004A152F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MidiPrefs.xib; sourceTree = "<group>"; };
 		55085D7C1836BAB2004A152F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PianoPrefs.xib; sourceTree = "<group>"; };
 		55085D7E1836DD85004A152F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		55085D7F1836DD85004A152F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/schema.strings; sourceTree = "<group>"; };
-		55085D801836DDA0004A152F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		55085D841836EE0F004A152F /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreAudio.framework; sourceTree = DEVELOPER_DIR; };
 		55085D861836EE7B004A152F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		55085D871836EE7B004A152F /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = DEVELOPER_DIR; };
@@ -1814,7 +1812,6 @@
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
 		550B011310BA1E1C004FC5D7 /* PPPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPrivate.h; sourceTree = "<group>"; };
 		550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "OSX-CoreAudio.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		550D005018CB808600FD0F17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/PPErrors.strings; sourceTree = "<group>"; };
 		550D005218CB808E00FD0F17 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPErrors.strings; sourceTree = "<group>"; };
 		550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentCellView.h; sourceTree = "<group>"; };
 		550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentCellView.m; sourceTree = "<group>"; };
@@ -5586,6 +5583,13 @@
 					5513EACD19A5AE4200BCC483 = {
 						CreatedOnToolsVersion = 6.0;
 					};
+					5557769E17EBF8FD0019D008 = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 					555776C217EBF8FF0019D008 = {
 						TestTargetID = 55CBF9A511EB77760028C6BB;
 					};
@@ -7582,7 +7586,6 @@
 		550D005118CB808600FD0F17 /* PPErrors.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				550D005018CB808600FD0F17 /* Base */,
 				550D005218CB808E00FD0F17 /* en */,
 			);
 			name = PPErrors.strings;
@@ -7812,7 +7815,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				55BE998717978BB100D6DECC /* English */,
-				55085D801836DDA0004A152F /* fr */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -7821,7 +7823,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				55BE998917978BB100D6DECC /* English */,
-				55085D7F1836DD85004A152F /* fr */,
 			);
 			name = schema.strings;
 			sourceTree = "<group>";
