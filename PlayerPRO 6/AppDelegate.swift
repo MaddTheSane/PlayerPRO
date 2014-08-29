@@ -470,15 +470,12 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 								let nsErr = CreateErrorFromMADErrorType(anErr)!
 								if ErrorIsUserCancelled(nsErr) == false {
 									NSAlert(error: nsErr).runModal()
+								} else {
+									NSBeep()
 								}
 							}
-							
 						})
 						return true
-					} else {
-						NSAlert(error: aErr!).runModal()
-						
-						return false;
 					}
 				}
 			}

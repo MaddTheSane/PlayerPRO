@@ -13,19 +13,8 @@ import PlayerPROKit
 @objc(PPMIDIImporter) final public class MIDIImporter: NSObject, PPComplexImportPlugInterface {
 
 	public func beginImportOfURL(theURL: NSURL, withHandler handler: PPComplexImportHandler) {
-		var conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.MIDI-Import")
-		conn.remoteObjectInterface = NSXPCInterface(`protocol`: PPMIDIImportHelper.self)
-
-		conn.resume()
-		
-		conn.remoteObjectProxy.importMIDIFileAtURL(theURL, numberOfTracks: 8, useQTInstruments: true, withReply:{ (aDat, aErr) -> Void in
-			if aErr == MADErr.NoErr {
-				let tmpObj = MIDIReadFromData(aDat)
-				handler(tmpObj, aErr)
-			} else {
-				handler(nil, aErr)
-			}
-		})
+		let aImp = MIDIImporterController.newWithLocation(theURL, handler: handler)
+		aImp.beginImportModalSession()
 	}
 	
 	public func canImportURL(theURL: NSURL, error outErr: NSErrorPointer) -> Bool {

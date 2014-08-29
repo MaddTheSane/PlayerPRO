@@ -6,6 +6,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MIDIImporterController" customModule="MIDI">
             <connections>
+                <outlet property="theURLField" destination="jFE-gX-DaI" id="jnL-Oc-cWm"/>
                 <outlet property="trackNumField" destination="hUD-06-9XD" id="9lh-DM-lVz"/>
                 <outlet property="useQTIns" destination="Hpq-ob-Mnf" id="NVv-Br-7Ff"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
@@ -49,13 +50,22 @@ Gw
                         </connections>
                     </button>
                     <form verticalHuggingPriority="750" mode="track" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l9C-xb-aV8">
-                        <rect key="frame" x="20" y="228" width="191" height="22"/>
+                        <rect key="frame" x="20" y="203" width="191" height="22"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         <size key="cellSize" width="191" height="22"/>
                         <size key="intercellSpacing" width="1" height="8"/>
                         <formCell key="prototype" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" title="Field:" id="cvF-yo-KJr">
                             <font key="font" metaFont="system"/>
                             <font key="titleFont" metaFont="system"/>
+                            <connections>
+                                <binding destination="-2" name="value" keyPath="self.trackCount" id="hWa-Ty-0LU">
+                                    <dictionary key="options">
+                                        <string key="NSNoSelectionPlaceholder">8</string>
+                                        <string key="NSNotApplicablePlaceholder">8</string>
+                                        <string key="NSNullPlaceholder">8</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
                         </formCell>
                         <cells>
                             <column>
@@ -67,23 +77,44 @@ Gw
                         </cells>
                     </form>
                     <button translatesAutoresizingMaskIntoConstraints="NO" id="Hpq-ob-Mnf">
-                        <rect key="frame" x="18" y="204" width="194" height="18"/>
+                        <rect key="frame" x="18" y="179" width="194" height="18"/>
                         <buttonCell key="cell" type="check" title="Use QuickTime Instruments" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="XSJ-hq-cJX">
                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <binding destination="-2" name="value" keyPath="self.QTIns" id="ZnP-ew-UzH">
+                                <dictionary key="options">
+                                    <integer key="NSMultipleValuesPlaceholder" value="0"/>
+                                    <integer key="NSNoSelectionPlaceholder" value="1"/>
+                                    <integer key="NSNotApplicablePlaceholder" value="0"/>
+                                    <integer key="NSNullPlaceholder" value="0"/>
+                                </dictionary>
+                            </binding>
+                        </connections>
                     </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jFE-gX-DaI">
+                        <rect key="frame" x="18" y="233" width="444" height="17"/>
+                        <textFieldCell key="cell" lineBreakMode="truncatingMiddle" sendsActionOnEndEditing="YES" alignment="center" placeholderString="Label" id="R4b-75-MZE">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Hpq-ob-Mnf" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="34Q-Jz-4TN"/>
+                    <constraint firstItem="jFE-gX-DaI" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="7RV-S7-srg"/>
                     <constraint firstItem="5qO-B2-DxM" firstAttribute="width" secondItem="sU5-M1-hvq" secondAttribute="width" id="ALe-Ao-gby"/>
                     <constraint firstItem="5qO-B2-DxM" firstAttribute="leading" secondItem="sU5-M1-hvq" secondAttribute="trailing" constant="12" symbolic="YES" id="MVA-qN-vSh"/>
                     <constraint firstItem="Hpq-ob-Mnf" firstAttribute="top" secondItem="l9C-xb-aV8" secondAttribute="bottom" constant="8" symbolic="YES" id="VA0-Lu-brw"/>
                     <constraint firstAttribute="bottom" secondItem="5qO-B2-DxM" secondAttribute="bottom" constant="20" symbolic="YES" id="ViA-Pf-8kY"/>
                     <constraint firstAttribute="trailing" secondItem="5qO-B2-DxM" secondAttribute="trailing" constant="20" symbolic="YES" id="WTF-o9-Ow9"/>
                     <constraint firstItem="5qO-B2-DxM" firstAttribute="baseline" secondItem="sU5-M1-hvq" secondAttribute="baseline" id="WWa-0x-kfN"/>
-                    <constraint firstItem="l9C-xb-aV8" firstAttribute="top" secondItem="se5-gp-TjO" secondAttribute="top" constant="20" symbolic="YES" id="WxQ-x7-ZKX"/>
+                    <constraint firstItem="jFE-gX-DaI" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="bro-ge-SMY"/>
                     <constraint firstItem="l9C-xb-aV8" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="e76-Hy-jRy"/>
+                    <constraint firstItem="l9C-xb-aV8" firstAttribute="top" secondItem="jFE-gX-DaI" secondAttribute="bottom" constant="8" symbolic="YES" id="qCL-gM-AvT"/>
+                    <constraint firstAttribute="centerX" secondItem="jFE-gX-DaI" secondAttribute="centerX" id="wrV-M9-bcU"/>
                 </constraints>
             </view>
             <connections>
