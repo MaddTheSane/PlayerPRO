@@ -115,6 +115,7 @@ public func OctaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true
 	if (octNote > 95) {
 		return "---";
 	}
+	
 	if isUseLetters {
 		let NNames = ["C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "]
 		
@@ -333,10 +334,6 @@ extension PPSampleObject {
 		CGContextStrokePath(ctxRef);
 		CGContextRestoreGState(ctxRef);
 	}
-	
-	//public class func octaveNameFromNote(octNote: Int8 , letters isUseLetters: Bool = true) -> String {
-	//	return self.octaveNameFromNote(Int16(octNote) /*, usingLetters: isUseLetters*/)
-	//}
 	
 	@objc public class func octaveNameFromNote(octNote: Int16) -> String {
 		return OctaveNameFromNote(octNote, letters: true)

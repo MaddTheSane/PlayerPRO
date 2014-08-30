@@ -337,6 +337,11 @@ public func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePoint
 	return GetMADCommand(position, channel, aPat)
 }
 
+public func ReplaceCmd(row1: Int16, track1: Int16, command: Cmd, aPat: UnsafeMutablePointer<PatData>) {
+	var aCmd: UnsafeMutablePointer<Cmd> = GetCommand(row1, track1, aPat)
+	aCmd.memory = command
+}
+
 extension PatHeader {
 	public var bigEndian: PatHeader {get {
 		var toRet = self
@@ -357,6 +362,11 @@ public func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcm
 
 public func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>) -> UnsafeMutablePointer<Cmd> {
 	return MADGetCmd(row, track, aPcmd)
+}
+
+public func ReplaceCmd(row1: Int16, track1: Int16, command: Cmd, aPcmd: UnsafeMutablePointer<Pcmd>) {
+	var aCmd: UnsafeMutablePointer<Cmd> = GetCommand(row1, track1, aPcmd)
+	aCmd.memory = command
 }
 
 public let kPlayerPROFiltersPlugTypeID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x79, 0xEA, 0x82, 0xAD, 0x5A, 0x53, 0x46, 0xAF, 0x82, 0xA9, 0x4A, 0x06, 0x85, 0xB4, 0x58, 0x8C)!

@@ -13,6 +13,10 @@ public func GetCommand(row: Int16, track: Int16, aPcmd: PPKPcmd) -> Cmd {
 	return aPcmd.getCommand(row, track: track)
 }
 
+public func ReplaceCmd(row1: Int16, track1: Int16, command: Cmd, inout aPat: PPKPcmd) {
+	aPat.replaceCmd(atRow: row1, track: track1, command: command)
+}
+
 public struct PPKPcmd {
 	public var tracks: Int16
 	public var length: Int16
