@@ -20,9 +20,9 @@ public func ErrorIsUserCancelled(theErr: NSError) -> Bool {
 	return PPErrorIsUserCancelled(theErr)
 }
 
-public func NoteFromString(myTT: String) -> Int8 {
+public func NoteFromString(myTT: String) -> UInt8 {
 	let toRet: Int16 = NoteFromString(myTT)
-	return Int8(toRet)
+	return UInt8(toRet)
 }
 
 public func NoteFromString(myTT: String) -> Int16
@@ -107,7 +107,7 @@ public func NoteFromString(myTT: String) -> Int16
 	return Oct;
 }
 
-public func OctaveNameFromNote(octNote: Int8, letters isUseLetters: Bool = true) -> String {
+public func OctaveNameFromNote(octNote: UInt8, letters isUseLetters: Bool = true) -> String {
 	return OctaveNameFromNote(Int16(octNote), letters: isUseLetters)
 }
 
