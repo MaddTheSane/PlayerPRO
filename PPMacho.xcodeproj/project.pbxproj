@@ -4261,6 +4261,7 @@
 				88E0C3B60C2F21DD00D6C081 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		88E0C3B60C2F21DD00D6C081 /* Products */ = {
 			isa = PBXGroup;
