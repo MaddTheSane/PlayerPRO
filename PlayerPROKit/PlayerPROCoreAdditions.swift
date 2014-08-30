@@ -265,9 +265,7 @@ extension EnvRec {
 	}
 
 	public var bigEndian: EnvRec {get {
-		var toRet = EnvRec(pos: self.pos.bigEndian, val: self.val.bigEndian)
-		
-		return toRet
+		return EnvRec(pos: self.pos.bigEndian, val: self.val.bigEndian)
 	}}
 }
 
@@ -279,9 +277,7 @@ extension FXBus {
 	}
 	
 	public var bigEndian: FXBus {get {
-		let toRet = FXBus(ByPass: self.ByPass, copyId: self.copyId.bigEndian, Active: self.Active)
-		
-		return toRet
+		return FXBus(ByPass: self.ByPass, copyId: self.copyId.bigEndian, Active: self.Active)
 	}}
 }
 

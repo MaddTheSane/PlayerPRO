@@ -9,7 +9,6 @@
 #import "MiscPreferenceController.h"
 #import "UserDefaultKeys.h"
 
-
 @implementation MiscPreferenceController
 @synthesize addExt;
 @synthesize madCompression;

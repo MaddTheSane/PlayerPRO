@@ -189,6 +189,30 @@ static const dispatch_block_t initUTIArray = ^{
 @synthesize _volumeEnvelope;
 @synthesize _panningEnvelope;
 
+- (NSString*)name
+{
+	if (name != nil) {
+		name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
+	}
+	return name;
+}
+
+- (void)setName:(NSString *)name1
+{
+	char tempstr[32] = {0};
+	NSData *tmpCStr = [name1 dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+	NSInteger cStrLen = [tmpCStr length];
+	if (cStrLen > sizeof(tempstr) - 1) {
+		cStrLen = sizeof(tempstr) - 1;
+	}
+	[tmpCStr getBytes:tempstr length:cStrLen];
+	tmpCStr = nil;
+	
+	//memcpy(newData, &theInstrument, sizeof(InstrData));
+	strlcpy(theInstrument.name, tempstr, sizeof(theInstrument.name));
+	name = name1;
+}
+
 - (PPEnvelopeObject *)objectAtIndexedSubscript:(NSInteger)index
 {
 	return samples[index];

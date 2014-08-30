@@ -58,6 +58,6 @@ __END_DECLS
 - (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
 - (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
 
-+ (NSDictionary*)infoRecToDictionary:(MADInfoRec*)infoRec;
++ (NSDictionary*)infoRecToDictionary:(MADInfoRec)infoRec;
 
 @end

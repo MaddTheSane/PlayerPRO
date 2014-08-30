@@ -191,19 +191,16 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 	return theErr;
 }
 
-+ (NSDictionary*)infoRecToDictionary:(MADInfoRec*)infoRec
++ (NSDictionary*)infoRecToDictionary:(MADInfoRec)infoRec
 {
-	if (!infoRec) {
-		return nil;
-	}
-	return @{kPPTotalPatterns: @(infoRec->totalPatterns),
-			 kPPPartitionLength: @(infoRec->partitionLength),
-			 kPPFileSize: @(infoRec->fileSize),
-			 kPPSignature: @(infoRec->signature),
-			 kPPTotalTracks: @(infoRec->totalTracks),
-			 kPPTotalInstruments: @(infoRec->totalInstruments),
-			 kPPInternalFileName: [NSString stringWithCString:infoRec->internalFileName encoding:NSMacOSRomanStringEncoding],
-			 kPPFormatDescription: [NSString stringWithCString:infoRec->formatDescription encoding:NSMacOSRomanStringEncoding]};	
+	return @{kPPTotalPatterns:		@(infoRec.totalPatterns),
+			 kPPPartitionLength:	@(infoRec.partitionLength),
+			 kPPFileSize:			@(infoRec.fileSize),
+			 kPPSignature:			@(infoRec.signature),
+			 kPPTotalTracks:		@(infoRec.totalTracks),
+			 kPPTotalInstruments:	@(infoRec.totalInstruments),
+			 kPPInternalFileName:	[NSString stringWithCString:infoRec.internalFileName encoding:NSMacOSRomanStringEncoding],
+			 kPPFormatDescription:	[NSString stringWithCString:infoRec.formatDescription encoding:NSMacOSRomanStringEncoding]};
 }
 
 #pragma mark NSFastEnumeration protocol

@@ -9,12 +9,12 @@
 import Cocoa
 
 class PlugInInfoController: NSWindowController {
-	@IBOutlet var nameField: NSTextField!
-	@IBOutlet var authorField: NSTextField!
-	@IBOutlet var typeField: NSTextField!
-	@IBOutlet var theCopyrightField: NSTextField!
-	@IBOutlet var pluginImage: NSImageView!
-	private var info: PlugInInfo!
+	@IBOutlet weak var nameField:			NSTextField!
+	@IBOutlet weak var authorField:			NSTextField!
+	@IBOutlet weak var typeField:			NSTextField!
+	@IBOutlet weak var theCopyrightField:	NSTextField!
+	@IBOutlet weak var pluginImage:			NSImageView!
+	private var info:						PlugInInfo!
 
 	class func windowControllerFromInfo(plugInfo: PlugInInfo) -> Self {
 		var toRet = self(windowNibName:"PPPlugInInfoController")

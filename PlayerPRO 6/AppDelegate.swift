@@ -58,12 +58,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	let complexImport = ComplexImportPlugHandler()
 	var thePPColors = [NSColor]()
 	
-	@IBOutlet var musicExportMenu:		NSMenu!
-	@IBOutlet var aboutPlugInMenu:		NSMenu!
-	@IBOutlet var instrumentExportMenu:	NSMenu!
-	@IBOutlet var newInstrumentMenu:	NSMenu!
-	
-	@IBOutlet var exportStatusPanel:	NSPanel!
+	@IBOutlet weak var musicExportMenu:			NSMenu!
+	@IBOutlet weak var aboutPlugInMenu:			NSMenu!
+	@IBOutlet weak var instrumentExportMenu:	NSMenu!
+	@IBOutlet weak var newInstrumentMenu:		NSMenu!
+	@IBOutlet weak var exportStatusPanel:		NSPanel!
 	
 	var trackerDict: [String: [String]] { get {
 		if _trackerDict.isEmpty || _trackerDict.count != Int(madLib.pluginCount) + 2 {

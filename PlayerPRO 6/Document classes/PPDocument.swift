@@ -42,20 +42,20 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 }
 
 @objc(PPDocument) class PPDocument: NSDocument, SoundSettingsViewControllerDelegate {
-	@IBOutlet var exportWindow: NSWindow!
-	@IBOutlet var exportSettingsBox: NSBox!
-	@IBOutlet var fastForwardButton: NSButton!
-	@IBOutlet var playButton: NSButton!
-	@IBOutlet var reverseButton: NSButton!
-	@IBOutlet var currentTimeLabel: NSTextField!
-	@IBOutlet var totalTimeLabel: NSTextField!
-	@IBOutlet var playbackPositionSlider: NSSlider!
-	@IBOutlet var editorsTab: NSTabView!
+	@IBOutlet weak var exportWindow:			NSWindow!
+	@IBOutlet weak var exportSettingsBox:		NSBox!
+	@IBOutlet weak var fastForwardButton:		NSButton!
+	@IBOutlet weak var playButton:				NSButton!
+	@IBOutlet weak var reverseButton:			NSButton!
+	@IBOutlet weak var currentTimeLabel:		NSTextField!
+	@IBOutlet weak var totalTimeLabel:			NSTextField!
+	@IBOutlet weak var playbackPositionSlider:	NSSlider!
+	@IBOutlet weak var editorsTab:				NSTabView!
 	
-	@IBOutlet var boxController: BoxViewController!
-	@IBOutlet var digitalController: DigitalViewController!
-	@IBOutlet var classicalController: ClassicalViewController!
-	@IBOutlet var waveController: WaveViewController!
+	@IBOutlet weak var boxController:		BoxViewController!
+	@IBOutlet weak var digitalController:	DigitalViewController!
+	@IBOutlet weak var classicalController:	ClassicalViewController!
+	@IBOutlet weak var waveController:		WaveViewController!
 	
 	var exportController = SoundSettingsViewController()
 	dynamic let theDriver: PPDriver
