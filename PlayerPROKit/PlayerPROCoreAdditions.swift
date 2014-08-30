@@ -23,6 +23,10 @@ internal func CFStringToString(cfStr: CFString) -> String {
 	return cfStr as NSString as String
 }
 
+internal func StringToCFString(string: String) -> CFString {
+	return string as NSString as CFString
+}
+
 // MARK: Bridges to more modern Swift code.
 #if os(OSX)
 
@@ -42,11 +46,11 @@ extension MADFourChar: StringLiteralConvertible {
 	public var stringValue: String {
 		get {
 			let toRet = UTCreateStringForOSType(self as OSType).takeRetainedValue()
-			return toRet as NSString as String
+			return CFStringToString(toRet)
 		}}
 	
 	public init(_ toInit: String) {
-		self = UTGetOSTypeFromString(toInit as NSString as CFString)
+		self = UTGetOSTypeFromString(StringToCFString(toInit))
 	}
 	
 	/*
@@ -159,7 +163,6 @@ extension MADDriverSettings: DebugPrintable {
 }
 
 extension MADInfoRec: DebugPrintable {
-	
 	public var debugDescription: String { get {
 		return ""
 		}}
