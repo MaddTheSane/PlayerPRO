@@ -41,7 +41,6 @@ static MADErr MADReadMAD(MADMusic *MDriver, const void* MADPtr)
 		MDriver->header->MultiChanNo = 48;
 	
 	/**** PARTITION ****/
-	//TODO: dispatch this
 	dispatch_apply(MAXPATTERN - MDriver->header->numPat, dispatch_get_global_queue(0, 0), ^(size_t iTmp) {
 		size_t i = iTmp + MDriver->header->numPat;
 		MDriver->partition[i] = NULL;

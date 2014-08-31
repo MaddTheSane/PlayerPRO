@@ -1973,7 +1973,6 @@
 		553340E910BB5368005208D1 /* MED.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MED.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		553340EA10BB5368005208D1 /* MED.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MED.h; sourceTree = "<group>"; };
 		553340EC10BB5368005208D1 /* MIDI-GM-Small.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "MIDI-GM-Small.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		553340ED10BB5368005208D1 /* MIDI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MIDI.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		553340F010BB5368005208D1 /* PTMID.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; path = PTMID.c; sourceTree = "<group>"; };
 		553340F110BB5368005208D1 /* PTMID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTMID.h; sourceTree = "<group>"; };
 		553340F210BB5368005208D1 /* PTMIDINP.c */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.c; fileEncoding = 4; path = PTMIDINP.c; sourceTree = "<group>"; };
@@ -4147,7 +4146,6 @@
 				5517DAC7180CAE2C001413D0 /* dls2.h */,
 				5517DAC8180CAE2C001413D0 /* dlsmac.h */,
 				553340EC10BB5368005208D1 /* MIDI-GM-Small.c */,
-				553340ED10BB5368005208D1 /* MIDI.c */,
 				553340F010BB5368005208D1 /* PTMID.c */,
 				553340F110BB5368005208D1 /* PTMID.h */,
 				553340F210BB5368005208D1 /* PTMIDINP.c */,

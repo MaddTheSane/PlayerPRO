@@ -339,7 +339,6 @@ void InitQuicktimeInstruments(void)
 	QuicktimeInstruAvailable = true;
 }
 
-
 void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 {
 	FSIORefNum		iFileRef;
@@ -803,7 +802,6 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 	}
 	
 BAIL:
-	
 	;
 }
 
@@ -887,10 +885,8 @@ static long CountAtomById(MyAtom at, OSType type)
 		if (sck.ckid == type)
 			index++;
 		
-		switch(sck.ckid)
-		{
+		switch(sck.ckid) {
 			case 'LIST':
-				
 				fSize = sizeof(OSType);
 				iErr = FSReadFork(at.ref, fsAtMark, 0, fSize, &ilistType, &fSize);
 				
@@ -948,8 +944,7 @@ static OSErr FindAtomById(MyAtom at, MyAtom *retat, Boolean LIST, OSType type, s
 			index++;
 		}
 		
-		switch(sck.ckid)
-		{
+		switch (sck.ckid) {
 			case 'LIST':
 				//case 'INFO':
 				fSize = sizeof(OSType);
