@@ -253,7 +253,6 @@
 		555776C617EBF9000019D008 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		555776CF17EBF9000019D008 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 555776CD17EBF9000019D008 /* InfoPlist.strings */; };
 		555776D117EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776D017EBF9000019D008 /* iOS_PlayerPRO_PlayerTests.m */; };
-		555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		55588A96199951B300C3D4EE /* PlugInInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55588A95199951B300C3D4EE /* PlugInInfoController.swift */; };
 		55588A97199951B300C3D4EE /* PlugInInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55588A95199951B300C3D4EE /* PlugInInfoController.swift */; };
 		555A283719AFE4F000FB4D5B /* MIDIImporterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555A283519AFE4F000FB4D5B /* MIDIImporterController.swift */; };
@@ -280,6 +279,7 @@
 		5565976B19B3BAD000806DF2 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565976819B3BAD000806DF2 /* DetailViewController.swift */; };
 		5565976C19B3BAD000806DF2 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565976919B3BAD000806DF2 /* MasterViewController.swift */; };
 		5565976F19B3BB6E00806DF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5565977119B3BB6E00806DF2 /* Main.storyboard */; };
+		5565977319B3C1C000806DF2 /* UserDefaultKeys-Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565977219B3C1C000806DF2 /* UserDefaultKeys-Swift.swift */; };
 		5566883D19A65C8700EE2FE3 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07F1999879C00A1B9A1 /* MusicList.swift */; };
 		5566883E19A6619800EE2FE3 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07F1999879C00A1B9A1 /* MusicList.swift */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
@@ -2096,6 +2096,7 @@
 		5565976819B3BAD000806DF2 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		5565976919B3BAD000806DF2 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		5565977019B3BB6E00806DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		5565977219B3C1C000806DF2 /* UserDefaultKeys-Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaultKeys-Swift.swift"; sourceTree = "<group>"; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = net.sourceforge.playerpro.StcfImporter.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		55680A2119045F0A00F7616D /* StcfImporter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StcfImporter-Info.plist"; sourceTree = "<group>"; };
@@ -3790,6 +3791,7 @@
 		555776A617EBF8FE0019D008 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5565977219B3C1C000806DF2 /* UserDefaultKeys-Swift.swift */,
 				55CDD02B1976F6F400E3DDE1 /* iOS Player-Bridging-Header.h */,
 				555776A717EBF8FE0019D008 /* iOS PlayerPRO Player-Info.plist */,
 				555776A817EBF8FE0019D008 /* InfoPlist.strings */,
@@ -6350,9 +6352,9 @@
 			files = (
 				5565976A19B3BAD000806DF2 /* AppDelegate.swift in Sources */,
 				555C0F8E1982980C003B9347 /* CurrentlyPlayingIndex.swift in Sources */,
+				5565977319B3C1C000806DF2 /* UserDefaultKeys-Swift.swift in Sources */,
 				5565976B19B3BAD000806DF2 /* DetailViewController.swift in Sources */,
 				55771DBF1871482D00AED8DC /* PPTimeFormatter.m in Sources */,
-				555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */,
 				5566883E19A6619800EE2FE3 /* MusicList.swift in Sources */,
 				55CDD02A1976F63600E3DDE1 /* MusicListObject.swift in Sources */,
 				5565976C19B3BAD000806DF2 /* MasterViewController.swift in Sources */,

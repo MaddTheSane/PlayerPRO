@@ -24,8 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 	var window: UIWindow?
 	let madLib = PPLibrary()
 	var madDriver: PPDriver!
-	var musicList = [MusicList]()
+	var musicLists = [MusicList]()
 	var musicFiles = [MusicListObject]()
+	weak var musicList: MusicList!
 
 	override init() {
 		var tmpDict = [PPRememberMusicList: true,
