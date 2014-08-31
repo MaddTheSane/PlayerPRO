@@ -16,6 +16,8 @@ private let kMusicListLocation3 = "Music Key Location 3";
 private let kMusicListKey3 = "Music List Key 3"
 private let kPlayerList = "Player List"
 
+private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.ApplicationSupportDirectory, inDomain:.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player")
+
 @objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, SequenceType {
 	@objc private(set)	dynamic var musicList = [MusicListObject]()
 	@objc private(set)	var lostMusicCount:UInt = 0;
@@ -107,7 +109,6 @@ private let kPlayerList = "Player List"
 	@objc func saveApplicationMusicList() -> Bool {
 		let manager = NSFileManager.defaultManager();
 
-		let PPPPath = manager.URLForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomain:NSSearchPathDomainMask.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player");
 		if (!PPPPath.checkResourceIsReachableAndReturnError(nil)) {
 			//Just making sure...
 			manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories:true, attributes:nil, error:nil);
@@ -244,7 +245,6 @@ private let kPlayerList = "Player List"
 	
 	func loadApplicationMusicList() -> Bool {
 		let manager = NSFileManager.defaultManager();
-		let PPPPath = manager.URLForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomain:NSSearchPathDomainMask.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player");
 		if (PPPPath.checkResourceIsReachableAndReturnError(nil) == false) {
 			manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories: true, attributes: nil, error: nil)
 			return false;
