@@ -248,10 +248,6 @@
 		55534AD11817C387006D6BCB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55534AD01817C387006D6BCB /* main.m */; };
 		5557769617EBDA740019D008 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5557769517EBDA740019D008 /* Media.xcassets */; };
 		555776AA17EBF8FE0019D008 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 555776A817EBF8FE0019D008 /* InfoPlist.strings */; };
-		555776AC17EBF8FE0019D008 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776AB17EBF8FE0019D008 /* main.m */; };
-		555776B017EBF8FE0019D008 /* PPiAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776AF17EBF8FE0019D008 /* PPiAppDelegate.m */; };
-		555776B917EBF8FF0019D008 /* PPiMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776B817EBF8FF0019D008 /* PPiMasterViewController.m */; };
-		555776BC17EBF8FF0019D008 /* PPiDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555776BB17EBF8FF0019D008 /* PPiDetailViewController.m */; };
 		555776BE17EBF8FF0019D008 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 555776BD17EBF8FF0019D008 /* Images.xcassets */; };
 		555776C517EBF8FF0019D008 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555776C417EBF8FF0019D008 /* XCTest.framework */; };
 		555776C617EBF9000019D008 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
@@ -280,6 +276,10 @@
 		5561700A1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
 		5561F1C019A52A6C0085015B /* ExportObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FD192D19A241FC001E1D9C /* ExportObject.swift */; };
 		5563A49E19AAC0D50051CC4B /* PPAPPLImporterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */; };
+		5565976A19B3BAD000806DF2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565976719B3BAD000806DF2 /* AppDelegate.swift */; };
+		5565976B19B3BAD000806DF2 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565976819B3BAD000806DF2 /* DetailViewController.swift */; };
+		5565976C19B3BAD000806DF2 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565976919B3BAD000806DF2 /* MasterViewController.swift */; };
+		5565976F19B3BB6E00806DF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5565977119B3BB6E00806DF2 /* Main.storyboard */; };
 		5566883D19A65C8700EE2FE3 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07F1999879C00A1B9A1 /* MusicList.swift */; };
 		5566883E19A6619800EE2FE3 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07F1999879C00A1B9A1 /* MusicList.swift */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
@@ -461,7 +461,6 @@
 		559C4196183EB4AB004A073C /* GenerateThumbnailForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 559C4195183EB4AB004A073C /* GenerateThumbnailForURL.m */; };
 		559C4198183EB4AB004A073C /* GeneratePreviewForURL.m in Sources */ = {isa = PBXBuildFile; fileRef = 559C4197183EB4AB004A073C /* GeneratePreviewForURL.m */; };
 		559C419A183EB4AB004A073C /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 559C4199183EB4AB004A073C /* main.c */; };
-		559C871917ECD8B400E4E13C /* PPiSettingsDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 559C871817ECD8B400E4E13C /* PPiSettingsDetailController.m */; };
 		55A3CD4419A6DC8B00957845 /* PPDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A3CD4319A6DC8B00957845 /* PPDocument.swift */; };
 		55A6201818A6EFEA003B29B5 /* PreferenceNames.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55A6201B18A6EFEA003B29B5 /* PreferenceNames.strings */; };
 		55A6201918A6EFEA003B29B5 /* PreferenceNames.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55A6201B18A6EFEA003B29B5 /* PreferenceNames.strings */; };
@@ -617,8 +616,6 @@
 		55EA019C16AF1D3900D6AEA0 /* Backwards.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE5DF10E0882800177B4C /* Backwards.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */; };
 		55EA01A216AF368F00D6AEA0 /* CrossFade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE66310E0885C00177B4C /* CrossFade.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		55ECB33E180A280800497C7E /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55ECB340180A280800497C7E /* Main_iPad.storyboard */; };
-		55ECB341180A281400497C7E /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 55ECB343180A281400497C7E /* Main_iPhone.storyboard */; };
 		55ECD2761992C2ED00480788 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55ECD27C1992C2ED00480788 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55ECD27A1992C2ED00480788 /* InfoPlist.strings */; };
 		55ECD27F1992C2ED00480788 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ECD27E1992C2ED00480788 /* main.m */; };
@@ -1804,7 +1801,6 @@
 		55085D841836EE0F004A152F /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/CoreAudio.framework; sourceTree = DEVELOPER_DIR; };
 		55085D861836EE7B004A152F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		55085D871836EE7B004A152F /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = DEVELOPER_DIR; };
-		55085D8B1836EF96004A152F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		5508C3EC16CEB33B007CA458 /* SampleCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleCellView.h; sourceTree = "<group>"; };
 		5508C3ED16CEB33B007CA458 /* SampleCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleCellView.m; sourceTree = "<group>"; };
 		550A474218A455CC0052AED7 /* VSTFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSTFunctions.h; sourceTree = "<group>"; };
@@ -1848,8 +1844,6 @@
 		55149C441832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PPToneGeneratorController.xib; sourceTree = "<group>"; };
 		55149C451832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		55149C461832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InstrumentWindow.xib; sourceTree = "<group>"; };
-		55149C471832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
-		55149C481832CC66009C850B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		55149C4A1832CD8D009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPPlugInInfoController.strings; sourceTree = "<group>"; };
 		55149C4E1832CDA2009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/ClassicPrefs.strings; sourceTree = "<group>"; };
 		55149C501832CDAA009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DigitalPrefs.strings; sourceTree = "<group>"; };
@@ -1859,7 +1853,6 @@
 		55149C581832CEA3009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPToneGeneratorController.strings; sourceTree = "<group>"; };
 		55149C5A1832CEBF009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		55149C5C1832CEC4009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InstrumentWindow.strings; sourceTree = "<group>"; };
-		55149C5E1832CED1009C850B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPad.strings; sourceTree = "<group>"; };
 		55151E7410DD4F400054ABC4 /* CFPlugin-InstrBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-InstrBridge.c"; sourceTree = "<group>"; };
 		55151F8010DEDBDB0054ABC4 /* XI.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XI.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55151F8110DEDBDB0054ABC4 /* XI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XI-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -2081,14 +2074,7 @@
 		5557769F17EBF8FE0019D008 /* iOS PlayerPRO Player.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS PlayerPRO Player.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		555776A717EBF8FE0019D008 /* iOS PlayerPRO Player-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "iOS PlayerPRO Player-Info.plist"; sourceTree = "<group>"; };
 		555776A917EBF8FE0019D008 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		555776AB17EBF8FE0019D008 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		555776AD17EBF8FE0019D008 /* iOS PlayerPRO Player-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOS PlayerPRO Player-Prefix.pch"; sourceTree = "<group>"; };
-		555776AE17EBF8FE0019D008 /* PPiAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPiAppDelegate.h; sourceTree = "<group>"; };
-		555776AF17EBF8FE0019D008 /* PPiAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPiAppDelegate.m; sourceTree = "<group>"; };
-		555776B717EBF8FF0019D008 /* PPiMasterViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPiMasterViewController.h; sourceTree = "<group>"; };
-		555776B817EBF8FF0019D008 /* PPiMasterViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPiMasterViewController.m; sourceTree = "<group>"; };
-		555776BA17EBF8FF0019D008 /* PPiDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPiDetailViewController.h; sourceTree = "<group>"; };
-		555776BB17EBF8FF0019D008 /* PPiDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPiDetailViewController.m; sourceTree = "<group>"; };
 		555776BD17EBF8FF0019D008 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		555776C317EBF8FF0019D008 /* iOS PlayerPRO PlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "iOS PlayerPRO PlayerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		555776C417EBF8FF0019D008 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -2106,6 +2092,10 @@
 		5561EF99199FC87B0054B3A7 /* PTMIDZAP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTMIDZAP.h; sourceTree = "<group>"; };
 		5563A49C19AAC0D50051CC4B /* PPAPPLImporterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLImporterViewController.h; sourceTree = "<group>"; };
 		5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLImporterViewController.m; sourceTree = "<group>"; };
+		5565976719B3BAD000806DF2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		5565976819B3BAD000806DF2 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		5565976919B3BAD000806DF2 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		5565977019B3BB6E00806DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = net.sourceforge.playerpro.StcfImporter.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		55680A2119045F0A00F7616D /* StcfImporter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StcfImporter-Info.plist"; sourceTree = "<group>"; };
@@ -2240,8 +2230,6 @@
 		559C4197183EB4AB004A073C /* GeneratePreviewForURL.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = GeneratePreviewForURL.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		559C4199183EB4AB004A073C /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		559C419B183EB4AB004A073C /* PPQuickView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PPQuickView-Prefix.pch"; sourceTree = "<group>"; };
-		559C871717ECD8B400E4E13C /* PPiSettingsDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPiSettingsDetailController.h; sourceTree = "<group>"; };
-		559C871817ECD8B400E4E13C /* PPiSettingsDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPiSettingsDetailController.m; sourceTree = "<group>"; };
 		55A3CD4319A6DC8B00957845 /* PPDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPDocument.swift; sourceTree = "<group>"; };
 		55A6201C18A6EFEC003B29B5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PreferenceNames.strings; sourceTree = "<group>"; };
 		55A934F617F2121D00493DC5 /* PPFilterPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPluginWindowController.h; sourceTree = "<group>"; };
@@ -3789,17 +3777,10 @@
 		555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */ = {
 			isa = PBXGroup;
 			children = (
-				555776AE17EBF8FE0019D008 /* PPiAppDelegate.h */,
-				555776AF17EBF8FE0019D008 /* PPiAppDelegate.m */,
-				55CDD02B1976F6F400E3DDE1 /* iOS Player-Bridging-Header.h */,
-				555776B717EBF8FF0019D008 /* PPiMasterViewController.h */,
-				555776B817EBF8FF0019D008 /* PPiMasterViewController.m */,
-				555776BA17EBF8FF0019D008 /* PPiDetailViewController.h */,
-				555776BB17EBF8FF0019D008 /* PPiDetailViewController.m */,
-				559C871717ECD8B400E4E13C /* PPiSettingsDetailController.h */,
-				559C871817ECD8B400E4E13C /* PPiSettingsDetailController.m */,
-				55ECB340180A280800497C7E /* Main_iPad.storyboard */,
-				55ECB343180A281400497C7E /* Main_iPhone.storyboard */,
+				5565976719B3BAD000806DF2 /* AppDelegate.swift */,
+				5565976919B3BAD000806DF2 /* MasterViewController.swift */,
+				5565976819B3BAD000806DF2 /* DetailViewController.swift */,
+				5565977119B3BB6E00806DF2 /* Main.storyboard */,
 				555776BD17EBF8FF0019D008 /* Images.xcassets */,
 				555776A617EBF8FE0019D008 /* Supporting Files */,
 			);
@@ -3809,9 +3790,9 @@
 		555776A617EBF8FE0019D008 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				55CDD02B1976F6F400E3DDE1 /* iOS Player-Bridging-Header.h */,
 				555776A717EBF8FE0019D008 /* iOS PlayerPRO Player-Info.plist */,
 				555776A817EBF8FE0019D008 /* InfoPlist.strings */,
-				555776AB17EBF8FE0019D008 /* main.m */,
 				555776AD17EBF8FE0019D008 /* iOS PlayerPRO Player-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -5801,9 +5782,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55ECB33E180A280800497C7E /* Main_iPad.storyboard in Resources */,
+				5565976F19B3BB6E00806DF2 /* Main.storyboard in Resources */,
 				55A9351B17F28F9700493DC5 /* Shared.xcassets in Resources */,
-				55ECB341180A281400497C7E /* Main_iPhone.storyboard in Resources */,
 				555776BE17EBF8FF0019D008 /* Images.xcassets in Resources */,
 				5521F41917FA541C002CDBA9 /* Trackers.xcassets in Resources */,
 				555776AA17EBF8FE0019D008 /* InfoPlist.strings in Resources */,
@@ -6368,16 +6348,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5565976A19B3BAD000806DF2 /* AppDelegate.swift in Sources */,
 				555C0F8E1982980C003B9347 /* CurrentlyPlayingIndex.swift in Sources */,
-				559C871917ECD8B400E4E13C /* PPiSettingsDetailController.m in Sources */,
-				555776B917EBF8FF0019D008 /* PPiMasterViewController.m in Sources */,
+				5565976B19B3BAD000806DF2 /* DetailViewController.swift in Sources */,
 				55771DBF1871482D00AED8DC /* PPTimeFormatter.m in Sources */,
 				555776DD17EBFBD40019D008 /* UserDefaultKeys.m in Sources */,
 				5566883E19A6619800EE2FE3 /* MusicList.swift in Sources */,
 				55CDD02A1976F63600E3DDE1 /* MusicListObject.swift in Sources */,
-				555776B017EBF8FE0019D008 /* PPiAppDelegate.m in Sources */,
-				555776AC17EBF8FE0019D008 /* main.m in Sources */,
-				555776BC17EBF8FF0019D008 /* PPiDetailViewController.m in Sources */,
+				5565976C19B3BAD000806DF2 /* MasterViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7665,6 +7643,14 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		5565977119B3BB6E00806DF2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5565977019B3BB6E00806DF2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
 		55680A2219045F0A00F7616D /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -7851,24 +7837,6 @@
 				55149C3E1832CC64009C850B /* Base */,
 			);
 			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-		55ECB340180A280800497C7E /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55149C471832CC66009C850B /* Base */,
-				55149C5E1832CED1009C850B /* en */,
-			);
-			name = Main_iPad.storyboard;
-			sourceTree = "<group>";
-		};
-		55ECB343180A281400497C7E /* Main_iPhone.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				55149C481832CC66009C850B /* Base */,
-				55085D8B1836EF96004A152F /* en */,
-			);
-			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
 		};
 		55ECD27A1992C2ED00480788 /* InfoPlist.strings */ = {
