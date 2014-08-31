@@ -168,6 +168,58 @@ extension MADInfoRec: DebugPrintable {
 		}}
 }
 
+extension PlugInfo {
+
+	public var importer: Bool {
+		get {
+			switch (self.mode) {
+			case MADPlugModes.Import.toRaw(), MADPlugModes.ImportExport.toRaw():
+				return true
+
+			default:
+				return false
+			}
+		}
+	}
+
+	public var exporter: Bool {
+		get {
+			switch (self.mode) {
+			case MADPlugModes.Export.toRaw(), MADPlugModes.ImportExport.toRaw():
+				return true
+
+			default:
+				return false
+			}
+		}
+	}
+
+}
+
+public struct MADLibraryGenerator: GeneratorType {
+	private let maxPlugs: Int
+	private var currentPlug = 0
+	private let currentLib: MADLibrary
+    mutating public func next() -> PlugInfo? {
+		if currentPlug >= maxPlugs {
+			return nil
+		} else {
+			return currentLib.ThePlug[currentPlug++]
+		}
+    }
+	
+	internal init(library: MADLibrary) {
+		currentLib = library
+		maxPlugs = Int(library.TotalPlug)
+	}
+}
+
+extension MADLibrary: SequenceType {
+    public func generate() -> MADLibraryGenerator {
+        return MADLibraryGenerator(library: self)
+    }
+}
+
 private let BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
 extension sData32 {

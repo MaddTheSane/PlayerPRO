@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 	weak var musicList: MusicList!
 
 	override init() {
-		var tmpDict = [PPRememberMusicList: true,
+		let tmpDict = [PPRememberMusicList: true,
 		PPLoadMusicAtListLoad: false,
 		PPAfterPlayingMusic: PlaylistMode.StopPlaying.toRaw(),
 		PPGotoStartupAfterPlaying: true,

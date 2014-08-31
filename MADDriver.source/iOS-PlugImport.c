@@ -229,7 +229,10 @@ static void MovePluginInfoOver(const iPlugInfo *src, PlugInfo *dst)
 	CFRelease(tmpStr);
 	dst->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, tmpArray);
 	CFRelease(tmpArray);
-	dst->file = CFBundleGetMainBundle();
+	dst->file = CFBundleGetBundleWithIdentifier(CFSTR("net.sourceforge.playerpro.PlayerPROCore"));
+	if (dst->file == NULL) {
+		dst->file = CFBundleGetMainBundle();
+	}
 	if (dst->file) {
 		CFRetain(dst->file);
 	}
@@ -240,11 +243,10 @@ void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 	if (PlugsFolderName) {
 		fprintf(stderr, "Custom plug-in path %s ignored: the static libraries cannot load custom binaries.\n", PlugsFolderName);
 	}
-	CFIndex i, totalInterfaces;
-	totalInterfaces = sizeof(iOSPlugInfo) / sizeof(iOSPlugInfo[0]);
+	CFIndex totalInterfaces = sizeof(iOSPlugInfo) / sizeof(iOSPlugInfo[0]);
 	inMADDriver->ThePlug = (PlugInfo*)calloc(sizeof(PlugInfo), totalInterfaces);
 	inMADDriver->TotalPlug = 0;
-	for (i = 0; i < totalInterfaces; i++) {
+	for (CFIndex i = 0; i < totalInterfaces; i++) {
 		if (inMADDriver->TotalPlug - 1 < totalInterfaces) {
 			MovePluginInfoOver(&iOSPlugInfo[i], &inMADDriver->ThePlug[inMADDriver->TotalPlug]);
 			inMADDriver->TotalPlug++;
