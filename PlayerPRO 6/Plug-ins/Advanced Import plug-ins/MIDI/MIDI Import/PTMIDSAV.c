@@ -59,6 +59,80 @@ sData *MADCreateSample(MADMusic *MDriver, short ins, short sample)
 }
 #endif
 
+#if 0
+Handle DoExp1to3( Handle sound, unsigned long numSampleFrames)
+{
+	long	i;
+	Ptr		inState, outState;
+	Handle	outBuffer;
+	
+	outState = NewPtrClear( 128);
+	inState = NewPtrClear( 128);
+	if( inState == nil)
+	{
+		/* Error */
+	}
+	
+	outBuffer = NewHandle( numSampleFrames*6);
+	if( outBuffer == nil)
+	{
+		/* Error */
+	}
+	
+	HLock( sound);
+	HLock( outBuffer);
+	
+	Exp1to3( *sound, *outBuffer, numSampleFrames, inState, outState, 1, 1);
+	
+	HUnlock( sound);
+	HUnlock( outBuffer);
+	
+	DisposeHandle( sound);
+	sound = outBuffer;
+	
+	DisposePtr( inState);
+	DisposePtr( outState);
+	
+	return sound;
+}
+
+Handle DoExp1to6( Handle sound, unsigned long numSampleFrames)
+{
+	long	i;
+	Ptr		inState, outState;
+	Handle	outBuffer;
+	
+	outState = NewPtrClear( 128);
+	inState = NewPtrClear( 128);
+	if( inState == nil)
+	{
+		/* Error */
+	}
+	
+	outBuffer = NewHandle( numSampleFrames * 6);
+	if( outBuffer == nil)
+	{
+		/* Error */
+	}
+	
+	HLock( sound);
+	HLock( outBuffer);
+	
+	Exp1to6( *sound, *outBuffer, numSampleFrames, inState, outState, 1, 1);
+	
+	HUnlock( sound);
+	HUnlock( outBuffer);
+	
+	DisposeHandle( sound);
+	sound = outBuffer;
+	
+	DisposePtr( inState);
+	DisposePtr( outState);
+	
+	return sound;
+}
+#endif
+
 Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, Boolean *stereo)
 {
 	Ptr 			soundPtr;
@@ -125,8 +199,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 				*baseFreq 	= CmpHeader->baseFrequency;
 			
 			MusSize = (*CmpHeader).numFrames;
-			if (*stereo)
-			{
+			if (*stereo) {
 				MusSize *= 2;
 				*loopStart *=2;
 				*loopEnd *=2;
@@ -135,8 +208,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 			memmove(*sound, CmpHeader->sampleArea, MusSize);
 			HUnlock(sound);
 			
-			switch(CompressID)
-		{
+			switch(CompressID) {
 				/*	case threeToOne:
 				 MusSize *= 2;
 				 sound = DoExp1to3(sound, MusSize);
@@ -227,7 +299,9 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 	HUnlock(sound);
 	SetHandleSize(sound, MusSize);
 	
-	if (MemError() != noErr) Erreur(2, MemError());
+	if (MemError() != noErr) {
+		Erreur(2, MemError());
+	}
 	
 	if (*loopEnd - *loopStart < 4) {
 		*loopEnd = 0;

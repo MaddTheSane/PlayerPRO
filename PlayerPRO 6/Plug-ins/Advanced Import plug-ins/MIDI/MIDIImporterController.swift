@@ -38,9 +38,9 @@ import Cocoa
 	@IBAction func okayButtonPressed(sender: AnyObject) {
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.MIDI-Import")
 		conn.remoteObjectInterface = NSXPCInterface(`protocol`: PPMIDIImportHelper.self)
+		trackCount = GetTracksNumber(locationOfFile);
 		
 		conn.resume()
-		
 		conn.remoteObjectProxy.importMIDIFileAtURL(locationOfFile, numberOfTracks: trackCount, useQTInstruments: true, withReply:{ (aDat, aErr) -> Void in
 			if aErr == MADErr.NoErr {
 				let tmpObj = MIDIReadFromData(aDat)

@@ -62,8 +62,7 @@ void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init)
 	channels++;
 	channels /= 2;
 	channels *= 2;
-	
-	wMaxchan = channels;
+	//wMaxchan = channels;
 	
 	ResolvePtune(ptuneMusic);
 	

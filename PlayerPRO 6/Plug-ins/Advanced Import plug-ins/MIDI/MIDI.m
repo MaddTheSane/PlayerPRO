@@ -202,3 +202,40 @@ PPMusicObject *MIDIReadFromData(NSData *fileData)
 	MADReadMAD(theNewMusic, [fileData bytes]);
 	return [[PPMusicObject alloc] initWithMusicStruct:theNewMusic copy:NO];
 }
+
+static unsigned int LongFromFd(Ptr *fd, unsigned cb)
+{
+	unsigned char rgb[4];
+	unsigned int longT = 0;
+	unsigned ib = 0;
+	
+	//MADread(fd, (Ptr) rgb, cb);
+	memcpy(rgb, *fd, 4);
+	for (; ib < cb; ib++)
+		longT = (longT << 8) + rgb[ib];
+	return longT;
+}
+
+static short PtuneLoadFnChannel(const void *MIDIptr)
+{
+	char	rgbHeader[] = {'M', 'T', 'h', 'd', 0, 0, 0, 6, 0};
+	short	irfMax;
+	Ptr		ourPtr = (Ptr)MIDIptr;
+	
+	if (memcmp(MIDIptr, rgbHeader, 9)) {
+		return -1; /** Only process type 0 or type 1 general MIDI files **/
+	}
+	ourPtr += 10;
+	irfMax = (unsigned) LongFromFd(&ourPtr, 2); /** Get # tracks **/
+	irfMax++;
+	irfMax /= 2;
+	irfMax *= 2;
+	
+	return irfMax;
+}
+
+NSInteger GetTracksNumber(NSURL *theURL)
+{
+	NSData *aData = [[NSData alloc] initWithContentsOfURL:theURL];
+	return PtuneLoadFnChannel(aData.bytes);
+}
