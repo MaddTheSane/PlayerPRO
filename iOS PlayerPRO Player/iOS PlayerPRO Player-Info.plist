@@ -96,7 +96,12 @@
 		</dict>
 		<dict>
 			<key>CFBundleTypeIconFiles</key>
-			<array/>
+			<array>
+				<string>xm-ios</string>
+				<string>xm-ios@2x</string>
+				<string>xm-ipad</string>
+				<string>xm-ipad-large</string>
+			</array>
 			<key>CFBundleTypeName</key>
 			<string>PPXMFile</string>
 			<key>CFBundleTypeRole</key>
@@ -105,20 +110,6 @@
 			<array>
 				<string>net.sourceforge.playerpro.xm</string>
 			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeIconFiles</key>
-			<array/>
-			<key>CFBundleTypeName</key>
-			<string>PPMADBundle</string>
-			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
-			<key>LSItemContentTypes</key>
-			<array>
-				<string>net.sourceforge.playerpro.mad-bundle</string>
-			</array>
-			<key>LSTypeIsPackage</key>
-			<true/>
 		</dict>
 		<dict>
 			<key>CFBundleTypeExtensions</key>
