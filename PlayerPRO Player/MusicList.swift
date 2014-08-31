@@ -17,11 +17,11 @@ private let kMusicListKey3 = "Music List Key 3"
 private let kPlayerList = "Player List"
 
 @objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, SequenceType {
-	private(set)	dynamic var musicList = [MusicListObject]()
-	private(set)	var lostMusicCount:UInt = 0;
-	dynamic var		selectedMusic = -1;
+	@objc private(set)	dynamic var musicList = [MusicListObject]()
+	@objc private(set)	var lostMusicCount:UInt = 0;
+	@objc dynamic var	selectedMusic = -1;
 	
-	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
+	@objc func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (musicList as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len);
 	}
 	
@@ -33,7 +33,7 @@ private let kPlayerList = "Player List"
 		return musicList[index]
 	}
 	
-	func encodeWithCoder(aCoder: NSCoder) {
+	@objc func encodeWithCoder(aCoder: NSCoder) {
 		var BookmarkArray: [NSURL] = [];
 		for obj in musicList {
 			let bookData = obj.musicURL;
@@ -44,7 +44,7 @@ private let kPlayerList = "Player List"
 		aCoder.encodeObject(BookmarkArray, forKey: kMusicListKey3)
 	}
 	
-	func indexOfObjectSimilarToURL(theURL: NSURL) -> Int {
+	@objc func indexOfObjectSimilarToURL(theURL: NSURL) -> Int {
 		for (i, obj) in enumerate(musicList) {
 			if obj == theURL {
 				return i
@@ -54,14 +54,24 @@ private let kPlayerList = "Player List"
 		return NSNotFound
 	}
 	
-	func clearMusicList() {
+	func indexOfObjectSimilarToURL(theURL: NSURL) -> Int? {
+		for (i, obj) in enumerate(musicList) {
+			if obj == theURL {
+				return i
+			}
+		}
+	
+		return nil
+	}
+	
+	@objc func clearMusicList() {
 		let theIndex = NSIndexSet(indexesInRange: NSMakeRange(0, musicList.count))
 		self.willChange(.Removal, valuesAtIndexes: theIndex, forKey: kMusicListKVO)
 		musicList.removeAll()
 		self.didChange(.Removal, valuesAtIndexes: theIndex, forKey: kMusicListKVO)
 	}
 	
-	func sortMusicListByName() {
+	@objc func sortMusicListByName() {
 		musicList.sort({
 			(var1:MusicListObject, var2:MusicListObject) -> Bool in
 			let rhsString: NSString = var1.fileName
@@ -71,7 +81,7 @@ private let kPlayerList = "Player List"
 			})
 	}
 	
-	func addMusicURL(theURL: NSURL) -> Bool {
+	@objc func addMusicURL(theURL: NSURL) -> Bool {
 		var obj: MusicListObject! = MusicListObject(URL: theURL);
 		
 		if (obj == nil) {
@@ -89,12 +99,12 @@ private let kPlayerList = "Player List"
 		return true;
 	}
 	
-	func saveMusicListToURL(URL: NSURL) -> Bool {
+	@objc func saveMusicListToURL(URL: NSURL) -> Bool {
 		var theList = NSKeyedArchiver.archivedDataWithRootObject(self);
 		return theList.writeToURL(URL, atomically: true)
 	}
 	
-	func saveApplicationMusicList() -> Bool {
+	@objc func saveApplicationMusicList() -> Bool {
 		let manager = NSFileManager.defaultManager();
 
 		let PPPPath = manager.URLForDirectory(NSSearchPathDirectory.ApplicationSupportDirectory, inDomain:NSSearchPathDomainMask.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player");
@@ -106,7 +116,7 @@ private let kPlayerList = "Player List"
 		return self.saveMusicListToURL(PPPPath.URLByAppendingPathComponent(kPlayerList, isDirectory:false));
 	}
 	
-	override init() {
+	@objc override init() {
 		
 		
 		super.init();
@@ -280,7 +290,7 @@ private let kPlayerList = "Player List"
 		return tmpList
 	}
 	
-	func removeObjectsInMusicListAtIndexes(idxSet: NSIndexSet) {
+	@objc func removeObjectsInMusicListAtIndexes(idxSet: NSIndexSet) {
 		if idxSet.containsIndex(selectedMusic) {
 			self.selectedMusic = -1;
 		}
@@ -297,7 +307,7 @@ private let kPlayerList = "Player List"
 		self.didChange(.Removal, valuesAtIndexes: idxSet, forKey: kMusicListKVO)
 	}
 	
-	func insertObjects(anObj: [MusicListObject], inMusicListAtIndex idx:Int) {
+	@objc func insertObjects(anObj: [MusicListObject], inMusicListAtIndex idx:Int) {
 		let theIndexSet = NSIndexSet(indexesInRange: NSRange(location: idx, length: anObj.count))
 		self.willChange(.Insertion, valuesAtIndexes: theIndexSet, forKey: kMusicListKVO)
 		var currentIndex = theIndexSet.firstIndex;
