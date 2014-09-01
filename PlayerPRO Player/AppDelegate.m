@@ -1497,7 +1497,7 @@ badTracker:
 	return [[musicList URLAtIndex:row] path];
 }
 
-#pragma mark PPSoundSettingsViewControllerDelegate methods
+#pragma mark SoundSettingsViewControllerDelegate methods
 
 - (void)soundOutBitsDidChange:(short)bits
 {
