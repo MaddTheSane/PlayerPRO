@@ -10,11 +10,7 @@
 
 #import "PPFilterPlugHandler.h"
 #import "PPInstrumentPlugHandler.h"
-#import "ColorPreferenceController.h"
-#import "MiscPreferenceController.h"
-#import "BoxEditorPreferenceController.h"
-#import "DigitalEditorPreferenceControler.h"
-#import "MidiHardwarePreferenceController.h"
+#import "PPPreferences.h"
 #import "PPComplexImportPlugInterface.h"
 #import "PPComplexImportPlugObject.h"
 #import "PPDigitalPlugInObject.h"
