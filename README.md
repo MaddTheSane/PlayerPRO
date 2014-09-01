@@ -10,7 +10,7 @@ PlayerPRO 6 is a rewrite of the PlayerPRO to help make it work better with diffe
 
 There is a new framework, PlayerPROKit, that wraps many PlayerPROCore functions and data types as methods of Objective-C classes. It is 64-bit on OS X and requires 10.9 or later.
 
-The application has been split into two different apps: PlayerPRO Player and PlayerPRO 6. PlayerPRO Player allows playback of tracker files, as well as having a playlist. PlayerPRO 6 allows editing of tracker files. Both require 10.9 or later. There is also a new tracker "format" that is an OS X package that will be used for iCloud syncing with an iOS version. The default tracker of PlayerPROCore is still MADK, so you will need to export the packaged tracker if you want it to play it back on other OSes.
+The application has been split into two different apps: PlayerPRO Player and PlayerPRO 6. PlayerPRO Player allows playback of tracker files, as well as having a playlist. PlayerPRO 6 allows editing of tracker files. Both require 10.9 or later.
 
 Plug-ins now depend on the PlayerPROCore library directly instead of having the PlayerPRO functions looked up when loading. The previous method was needed for the Carbon app, but will not be needed for the Cocoa re-write.
 
@@ -42,6 +42,6 @@ Refrain from accessing the `MADDriverRec` struct directly: the size may differ f
 
 To install this on Unix derivatives like Linux, follow the instructions in **INSTALL**. Note that Unix support is lacking at the moment.
 
-To build the PlayerPRO application and library on OS X, either type `make` in Terminal or open the PPMacho project or the PlayerPRO Workspace.
+To build the PlayerPRO application and library on OS X, open the PPMacho project or the PlayerPRO Workspace.
 
-A Microsoft Visual C++ is available for those building on Windows.
+If you wish to build PlayerPROCore on Windows, you will have to use the same `Cmake` program as the Linux users.

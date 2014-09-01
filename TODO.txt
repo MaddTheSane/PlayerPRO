@@ -6,6 +6,6 @@ doesn't work as expected or desired.
 * Hardware MIDI support needs to use CoreMIDI on OS X.
 * The banner on the source files needs to be updated.
 * Linux support is currently a stub.
-* The Linux Makefile is bare-bones and the plug-ins aren't being built.
+* The Linux Makefile is bare-bones.
 
 Also note that there are TODOs scattered across the source files.

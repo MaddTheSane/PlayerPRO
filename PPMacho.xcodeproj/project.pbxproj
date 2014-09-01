@@ -8681,7 +8681,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GENERATE_PKGINFO_FILE = NO;
 				INFOPLIST_FILE = "iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plistvers.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
@@ -8709,7 +8708,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GENERATE_PKGINFO_FILE = NO;
 				INFOPLIST_FILE = "iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -8855,6 +8853,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -9800,6 +9799,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
@@ -10253,7 +10253,6 @@
 				);
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = MADDriver.source/Resources/PPCore.modulemap;
 				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
@@ -10291,7 +10290,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MODULEMAP_FILE = MADDriver.source/Resources/PPCore.modulemap;
 				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
@@ -10320,7 +10318,6 @@
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = PlayerPROKit;
@@ -10353,7 +10350,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = PlayerPROKit;
@@ -10870,6 +10866,7 @@
 				55ADD24219B4F858005588B5 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		55ADD24F19B4F896005588B5 /* Build configuration list for PBXNativeTarget "PlayerPRO Player Tests" */ = {
 			isa = XCConfigurationList;
@@ -10878,6 +10875,7 @@
 				55ADD25119B4F896005588B5 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		55ADD25E19B4F8BA005588B5 /* Build configuration list for PBXNativeTarget "PlayerPRO 6 Tests" */ = {
 			isa = XCConfigurationList;
@@ -10886,6 +10884,7 @@
 				55ADD26019B4F8BA005588B5 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		55B797D510D6E6A60073E379 /* Build configuration list for PBXAggregateTarget "Digital Plugs" */ = {
 			isa = XCConfigurationList;
