@@ -7,16 +7,29 @@
 //
 
 import Cocoa
+import PlayerPROCore
 import PlayerPROKit
 
 @objc(PPMIDIImporter) final public class MIDIImporter: NSObject, PPComplexImportPlugInterface {
 
-	public func beginImportOfURL(theURL: NSURL, withHandler: PPComplexImportHandler?) {
-		
+	public func beginImportOfURL(theURL: NSURL, withHandler handler: PPComplexImportHandler) {
+		let aImp = MIDIImporterController.newWithLocation(theURL, handler: handler)
+		aImp.beginImportModalSession()
 	}
 	
-	public func canImportURL(theURL: NSURL!, error outErr: NSErrorPointer) -> Bool {
-		return false
+	public func canImportURL(theURL: NSURL, error outErr: NSErrorPointer) -> Bool {
+		var myErr = MADErr.NoErr;
+		let fileData = NSData(contentsOfURL: theURL, options: .DataReadingMappedIfSafe, error: nil)
+		
+		let sig = "MThd"
+		if memcmp(fileData.bytes, sig, 4) == 0 {
+			return true
+		} else {
+			if outErr != nil {
+				outErr.memory = CreateErrorFromMADErrorType(.FileNotSupportedByThisPlug)
+			}
+			return false
+		}
 	}
 	
 	public override init() {
@@ -24,7 +37,4 @@ import PlayerPROKit
 		super.init()
 	}
 	
-	public func canImportURL(theURL: NSURL!) -> Bool {
-		return canImportURL(theURL, error:nil)
-	}
 }

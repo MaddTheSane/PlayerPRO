@@ -293,19 +293,19 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		let okayMusic = musicList.addMusicURL(theURL)
 		self.didChangeValueForKey(kMusicListKVO)
 		if (!okayMusic) {
-			let similarMusicIndex = musicList.indexOfObjectSimilarToURL(theURL)
-			if (similarMusicIndex == NSNotFound) {
+			let similarMusicIndex: Int? = musicList.indexOfObjectSimilarToURL(theURL)
+			if (similarMusicIndex == nil) {
 				return;
 			}
 			if (load && NSUserDefaults.standardUserDefaults().boolForKey(PPLoadMusicAtMusicLoad)) {
-				self.currentlyPlayingIndex.index = similarMusicIndex;
+				self.currentlyPlayingIndex.index = similarMusicIndex!;
 				selectCurrentlyPlayingMusic()
 				var err: NSError? = nil
 				if (!loadMusicFromCurrentlyPlayingIndexWithError(&err)) {
 					NSAlert(error: err).runModal()
 				}
 			} else {
-				selectMusicAtIndex(similarMusicIndex)
+				selectMusicAtIndex(similarMusicIndex!)
 			}
 		} else if (load && NSUserDefaults.standardUserDefaults().boolForKey(PPLoadMusicAtMusicLoad)) {
 			self.currentlyPlayingIndex.index = musicList.countOfMusicList - 1;

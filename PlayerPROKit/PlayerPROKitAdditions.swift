@@ -20,9 +20,9 @@ public func ErrorIsUserCancelled(theErr: NSError) -> Bool {
 	return PPErrorIsUserCancelled(theErr)
 }
 
-public func NoteFromString(myTT: String) -> Int8 {
+public func NoteFromString(myTT: String) -> UInt8 {
 	let toRet: Int16 = NoteFromString(myTT)
-	return Int8(toRet)
+	return UInt8(toRet)
 }
 
 public func NoteFromString(myTT: String) -> Int16
@@ -107,7 +107,7 @@ public func NoteFromString(myTT: String) -> Int16
 	return Oct;
 }
 
-public func OctaveNameFromNote(octNote: Int8, letters isUseLetters: Bool = true) -> String {
+public func OctaveNameFromNote(octNote: UInt8, letters isUseLetters: Bool = true) -> String {
 	return OctaveNameFromNote(Int16(octNote), letters: isUseLetters)
 }
 
@@ -115,6 +115,7 @@ public func OctaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true
 	if (octNote > 95) {
 		return "---";
 	}
+	
 	if isUseLetters {
 		let NNames = ["C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "]
 		
@@ -129,11 +130,11 @@ public func OctaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true
 extension PPSampleObject {
 
 #if os(OSX)
-	public func waveformImage(view: NSView) -> NSImage {
+	@objc(waveformImageUsingView:) public func waveformImage(#view: NSView) -> NSImage {
 		return PPSampleObject.waveformImage(fromSample: self, view: view)
 	}
 	
-	public class func waveformImage(fromSample theDat: PPSampleObject, view: NSView) -> NSImage {
+	@objc(waveformImageFromSample:usingView:) public class func waveformImage(fromSample theDat: PPSampleObject, view: NSView) -> NSImage {
 		var imageSize = view.convertSizeToBacking(view.frame.size)
 		let datIsStereo = theDat.stereo;
 		imageSize.height *= 2;
@@ -333,10 +334,6 @@ extension PPSampleObject {
 		CGContextStrokePath(ctxRef);
 		CGContextRestoreGState(ctxRef);
 	}
-	
-	//public class func octaveNameFromNote(octNote: Int8 , letters isUseLetters: Bool = true) -> String {
-	//	return self.octaveNameFromNote(Int16(octNote) /*, usingLetters: isUseLetters*/)
-	//}
 	
 	@objc public class func octaveNameFromNote(octNote: Int16) -> String {
 		return OctaveNameFromNote(octNote, letters: true)

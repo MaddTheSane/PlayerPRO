@@ -23,8 +23,8 @@ extension TagCoupling {
 }
 
 class Preferences: NSWindowController {
-	@IBOutlet var box: NSBox! = nil
-	@IBOutlet var popUp: NSPopUpButton! = nil
+	@IBOutlet weak var box:		NSBox! = nil
+	@IBOutlet weak var popUp:	NSPopUpButton! = nil
 	private var viewControllers = [NSViewController]()
 	
 	class func newPreferenceController() -> Self {

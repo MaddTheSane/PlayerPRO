@@ -65,7 +65,7 @@ class OpenPanelViewController: NSViewController {
 		}
 		
 		var hashValue: Int { get {
-			return name.hashValue ^ theUtiType.hashValue
+			return name.hashValue ^ theUtiType.hashValue ^ (utis as NSArray).hash
 			}}
 		
 		var debugDescription: String { get {
@@ -105,7 +105,7 @@ class OpenPanelViewController: NSViewController {
 	let openPanel: NSOpenPanel
 	private var utiObjects = [OpenPanelViewItem]()
 	private var multipleSelection: Bool
-	@IBOutlet var popUp: NSPopUpButton! = nil
+	@IBOutlet weak var popUp: NSPopUpButton! = nil
 	
 	var allowsMultipleSelectionOfTrackers:Bool { get {
 		return multipleSelection
@@ -211,14 +211,14 @@ class OpenPanelViewController: NSViewController {
 				utiObjects.append(obj)
 			}
 		}
-		if ((pd) != nil) {
+		if (pd != nil) {
 			var pdHere = td!
 			for (key, utis) in pdHere {
 				var obj = OpenPanelViewItem(type: .playlistType, utis: utis, name: key)
 				utiObjects.append(obj)
 			}
 		}
-		if ((insDict) != nil) {
+		if (insDict != nil) {
 			var insHere = insDict!
 			for (key, utis) in insHere {
 				var obj = OpenPanelViewItem(type: .instrumentType, utis: utis, name: key)
@@ -276,7 +276,7 @@ class OpenPanelViewController: NSViewController {
 			}
 		}
 		
-		for  item in utiObjects {
+		for item in utiObjects {
 			if (item.theUtiType == .playlist) {
 				let mi0 = NSMenuItem(title: "All Playlists", action: "selectUTI:", keyEquivalent: "")
 				mi0.tag = utiType.playlistType.toRaw()

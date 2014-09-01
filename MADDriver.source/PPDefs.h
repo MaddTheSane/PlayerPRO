@@ -163,7 +163,6 @@
 /********************						***********************/
 /*** 			  		  Error messages 						***/
 /********************						***********************/
-//Thsese had to be moved here to make Swift happy
 
 /*!
  *	@enum		MADErr

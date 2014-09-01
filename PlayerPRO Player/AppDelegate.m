@@ -405,17 +405,17 @@ static NSInteger selMusFromList = -1;
 	NSInteger tag = [sender tag];
 	[madDriver beginExport];
 	NSSavePanel *savePanel = [NSSavePanel savePanel];
+	[savePanel setCanCreateDirectories:YES];
+	[savePanel setCanSelectHiddenExtension:YES];
+	if (![self.musicName isEqualToString:@""]) {
+		[savePanel setNameFieldStringValue:self.musicName];
+	}
+	[savePanel setPrompt:@"Export"];
 	
 	switch (tag) {
 		case -1: //AIFF
 		{
 			[savePanel setAllowedFileTypes:@[AVFileTypeAIFF]];
-			[savePanel setCanCreateDirectories:YES];
-			[savePanel setCanSelectHiddenExtension:YES];
-			if (![self.musicName isEqualToString:@""])
-				[savePanel setNameFieldStringValue:self.musicName];
-			
-			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as AIFF audio"];
 			[savePanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 				if (result != NSFileHandlingPanelOKButton) {
@@ -453,13 +453,7 @@ static NSInteger selMusFromList = -1;
 			
 		case -2: //MP4
 		{
-			[savePanel setAllowedFileTypes:@[@"com.apple.m4a-audio"]];
-			[savePanel setCanCreateDirectories:YES];
-			[savePanel setCanSelectHiddenExtension:YES];
-			if (![self.musicName isEqualToString:@""]) {
-				[savePanel setNameFieldStringValue:self.musicName];
-			}
-			[savePanel setPrompt:@"Export"];
+			[savePanel setAllowedFileTypes:@[AVFileTypeAppleM4A]];
 			[savePanel setTitle:@"Export as MPEG-4 Audio"];
 			[savePanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 				if (result != NSFileHandlingPanelOKButton) {
@@ -578,12 +572,6 @@ static NSInteger selMusFromList = -1;
 		case -3: // wave
 		{
 			[savePanel setAllowedFileTypes:@[AVFileTypeWAVE]];
-			[savePanel setCanCreateDirectories:YES];
-			[savePanel setCanSelectHiddenExtension:YES];
-			if (![self.musicName isEqualToString:@""])
-				[savePanel setNameFieldStringValue:self.musicName];
-			
-			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:@"Export as Wave Audio"];
 			[savePanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 				if (result != NSFileHandlingPanelOKButton) {
@@ -689,12 +677,6 @@ return; \
 				return;
 			}
 			[savePanel setAllowedFileTypes:[madLib pluginAtIndex:tag].UTItypes];
-			[savePanel setCanCreateDirectories:YES];
-			[savePanel setCanSelectHiddenExtension:YES];
-			if (![self.musicName isEqualToString:@""]) {
-				[savePanel setNameFieldStringValue:self.musicName];
-			}
-			[savePanel setPrompt:@"Export"];
 			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", [madLib pluginAtIndex:tag].menuName]];
 			
 			[savePanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {

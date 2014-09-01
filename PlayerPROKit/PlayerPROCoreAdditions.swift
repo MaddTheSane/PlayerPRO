@@ -9,21 +9,48 @@
 import Foundation
 import PlayerPROCore
 
+#if false
+internal func CFStringToString(cfStr: CFString!) -> String? {
+	if cfStr == nil {
+		return nil
+	} else {
+		return cfStr! as NSString as String
+	}
+}
+#endif
+
+internal func CFStringToString(cfStr: CFString) -> String {
+	return cfStr as NSString as String
+}
+
+internal func StringToCFString(string: String) -> CFString {
+	return string as NSString as CFString
+}
+
 // MARK: Bridges to more modern Swift code.
 #if os(OSX)
+
 import CoreServices
 
-let MadID: MADFourChar = "MADK"
+public let PlugMenuNameKey = CFStringToString(kMadPlugMenuNameKey)
+public let PlugAuthorNameKey = CFStringToString(kMadPlugAuthorNameKey)
+public let PlugUTITypesKey = CFStringToString(kMadPlugUTITypesKey)
+public let PlugTypeKey = CFStringToString(kMadPlugTypeKey)
+public let PlugDoesImport = CFStringToString(kMadPlugDoesImport)
+public let PlugDoesExport = CFStringToString(kMadPlugDoesExport)
+public let PlugModeKey = CFStringToString(kMadPlugModeKey)
+
+public let MadID: MADFourChar = "MADK"
 
 extension MADFourChar: StringLiteralConvertible {
 	public var stringValue: String {
 		get {
 			let toRet = UTCreateStringForOSType(self as OSType).takeRetainedValue()
-			return toRet as NSString as String
+			return CFStringToString(toRet)
 		}}
 	
 	public init(_ toInit: String) {
-		self = UTGetOSTypeFromString(toInit as NSString as CFString)
+		self = UTGetOSTypeFromString(StringToCFString(toInit))
 	}
 	
 	/*
@@ -136,10 +163,61 @@ extension MADDriverSettings: DebugPrintable {
 }
 
 extension MADInfoRec: DebugPrintable {
-	
 	public var debugDescription: String { get {
 		return ""
 		}}
+}
+
+extension PlugInfo {
+
+	public var importer: Bool {
+		get {
+			switch (self.mode) {
+			case MADPlugModes.Import.toRaw(), MADPlugModes.ImportExport.toRaw():
+				return true
+
+			default:
+				return false
+			}
+		}
+	}
+
+	public var exporter: Bool {
+		get {
+			switch (self.mode) {
+			case MADPlugModes.Export.toRaw(), MADPlugModes.ImportExport.toRaw():
+				return true
+
+			default:
+				return false
+			}
+		}
+	}
+
+}
+
+public struct MADLibraryGenerator: GeneratorType {
+	private let maxPlugs: Int
+	private var currentPlug = 0
+	private let currentLib: MADLibrary
+    mutating public func next() -> PlugInfo? {
+		if currentPlug >= maxPlugs {
+			return nil
+		} else {
+			return currentLib.ThePlug[currentPlug++]
+		}
+    }
+	
+	internal init(library: MADLibrary) {
+		currentLib = library
+		maxPlugs = Int(library.TotalPlug)
+	}
+}
+
+extension MADLibrary: SequenceType {
+    public func generate() -> MADLibraryGenerator {
+        return MADLibraryGenerator(library: self)
+    }
 }
 
 private let BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -239,9 +317,7 @@ extension EnvRec {
 	}
 
 	public var bigEndian: EnvRec {get {
-		var toRet = EnvRec(pos: self.pos.bigEndian, val: self.val.bigEndian)
-		
-		return toRet
+		return EnvRec(pos: self.pos.bigEndian, val: self.val.bigEndian)
 	}}
 }
 
@@ -253,9 +329,7 @@ extension FXBus {
 	}
 	
 	public var bigEndian: FXBus {get {
-		let toRet = FXBus(ByPass: self.ByPass, copyId: self.copyId.bigEndian, Active: self.Active)
-		
-		return toRet
+		return FXBus(ByPass: self.ByPass, copyId: self.copyId.bigEndian, Active: self.Active)
 	}}
 }
 
@@ -294,10 +368,10 @@ extension InstrData {
 extension Cmd {
 	public init() {
 		ins = 0
-		note = 0xff
+		note = 0xFF
 		cmd = 0
 		arg = 0
-		vol = 0xff
+		vol = 0xFF
 		unused = 0
 	}
 	
@@ -312,6 +386,11 @@ public func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePoint
 
 public func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> UnsafeMutablePointer<Cmd> {
 	return GetMADCommand(position, channel, aPat)
+}
+
+public func ReplaceCmd(row1: Int16, track1: Int16, command: Cmd, aPat: UnsafeMutablePointer<PatData>) {
+	var aCmd: UnsafeMutablePointer<Cmd> = GetCommand(row1, track1, aPat)
+	aCmd.memory = command
 }
 
 extension PatHeader {
@@ -336,14 +415,19 @@ public func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcm
 	return MADGetCmd(row, track, aPcmd)
 }
 
-let kPlayerPROFiltersPlugTypeID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x79, 0xEA, 0x82, 0xAD, 0x5A, 0x53, 0x46, 0xAF, 0x82, 0xA9, 0x4A, 0x06, 0x85, 0xB4, 0x58, 0x8C)!
+public func ReplaceCmd(row1: Int16, track1: Int16, command: Cmd, aPcmd: UnsafeMutablePointer<Pcmd>) {
+	var aCmd: UnsafeMutablePointer<Cmd> = GetCommand(row1, track1, aPcmd)
+	aCmd.memory = command
+}
 
-let kPlayerPROFiltersPlugInterfaceID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xDA, 0x70, 0x82, 0xA2, 0xFE, 0xF1, 0x44, 0x75, 0xB1, 0xA4, 0x35, 0xC8, 0x1E, 0xD5, 0xDB, 0x8F)!
+public let kPlayerPROFiltersPlugTypeID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x79, 0xEA, 0x82, 0xAD, 0x5A, 0x53, 0x46, 0xAF, 0x82, 0xA9, 0x4A, 0x06, 0x85, 0xB4, 0x58, 0x8C)!
 
-let kPlayerPROInstrumentPlugTypeID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xFD, 0x71, 0x54, 0xD6, 0x20, 0xBF, 0x40, 0x07, 0x88, 0x1B, 0x8E, 0x44, 0x97, 0x0C, 0x3B, 0x0A)!
+public let kPlayerPROFiltersPlugInterfaceID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xDA, 0x70, 0x82, 0xA2, 0xFE, 0xF1, 0x44, 0x75, 0xB1, 0xA4, 0x35, 0xC8, 0x1E, 0xD5, 0xDB, 0x8F)!
 
-let kPlayerPROInstrumentPlugInterfaceID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x8D, 0xC7, 0xC5, 0x82, 0x1C, 0x4B, 0x4F, 0x3C, 0xBE, 0xC8, 0x05, 0xCF, 0x83, 0x23, 0xCE, 0xA4)!
+public let kPlayerPROInstrumentPlugTypeID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xFD, 0x71, 0x54, 0xD6, 0x20, 0xBF, 0x40, 0x07, 0x88, 0x1B, 0x8E, 0x44, 0x97, 0x0C, 0x3B, 0x0A)!
 
-let kPlayerPRODigitalPlugTypeID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xE9, 0xE5, 0x57, 0x4F, 0x50, 0xB4, 0x43, 0xE0, 0x94, 0x8D, 0x8B, 0x7C, 0x80, 0xD4, 0x72, 0x61)!
+public let kPlayerPROInstrumentPlugInterfaceID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x8D, 0xC7, 0xC5, 0x82, 0x1C, 0x4B, 0x4F, 0x3C, 0xBE, 0xC8, 0x05, 0xCF, 0x83, 0x23, 0xCE, 0xA4)!
 
-let kPlayerPRODigitalPlugInterfaceID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x34, 0xBA, 0x67, 0x5D, 0x3E, 0xD8, 0x49, 0xF9, 0x8D, 0x06, 0x28, 0xA7, 0x43, 0x6A, 0x0E, 0x4D)!
+public let kPlayerPRODigitalPlugTypeID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xE9, 0xE5, 0x57, 0x4F, 0x50, 0xB4, 0x43, 0xE0, 0x94, 0x8D, 0x8B, 0x7C, 0x80, 0xD4, 0x72, 0x61)!
+
+public let kPlayerPRODigitalPlugInterfaceID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x34, 0xBA, 0x67, 0x5D, 0x3E, 0xD8, 0x49, 0xF9, 0x8D, 0x06, 0x28, 0xA7, 0x43, 0x6A, 0x0E, 0x4D)!

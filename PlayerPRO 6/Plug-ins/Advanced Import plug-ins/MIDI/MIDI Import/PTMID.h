@@ -84,7 +84,7 @@ extern Sz		szTitle, szProgram;
 extern MS		rgmsDecided[MAXSAMPS];
 extern Fn		fnSampath;
 extern Ptr		ResultText;
-extern Boolean	UseQKIns;
+extern bool		UseQKIns;
 
 Tune *PtuneLoadFn(Sz, short*);
 

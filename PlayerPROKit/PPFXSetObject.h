@@ -23,7 +23,7 @@
 @property (readonly, unsafe_unretained) NSArray *values;
 @property (copy) NSString *name;
 
-- (instancetype)initWithFXSet:(FXSets*)theSet;
+- (instancetype)initWithFXSet:(FXSets*)theSet NS_DESIGNATED_INITIALIZER;
 
 - (void)replaceSetAtIndex:(NSInteger)theLoc withFloat:(float)theNum;
 

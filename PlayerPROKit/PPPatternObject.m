@@ -43,6 +43,9 @@ static inline Pcmd* CopyPcmd(const Pcmd* tocopy)
 	memcpy(toret, tocopy, structlen);
 	return toret;
 }
+@interface PPPatternObject ()
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+@end
 
 @implementation PPPatternObject
 {

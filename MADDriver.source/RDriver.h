@@ -233,21 +233,52 @@ typedef struct MADMusic {
 /*** 			     Driver Settings definition					***/
 /********************						***********************/
 
+/*!
+ *	@enum		MADSoundOutput
+ *	@abstract	Driver Settings definition
+ *	@seealso	MADSoundOutputBit
+ *	@seealso	MADSoundDriverList
+ *	@constant	CoreAudioDriver
+ *				OSX ONLY Core Audio driver
+ *	@constant	DirectSound95NT
+ *				Only available on Windows
+ *	@constant	Wave95NT
+ *				Only available on Windows
+ *	@constant	PortAudioDriver
+ *				Can be present on multiple OSes
+ *	@constant	PulseAudioDriver
+ *				Mostly used by Linux/Unix
+ *	@constant	ESDDriver
+ *				ESound Driver. available on most UNIX Systems
+ *	@constant	BeOSSoundDriver
+ *				BeOS/Haiku ONLY
+ *	@constant	MIDISoundDriver
+ *				Not yet available
+ *	@constant	ASIOSoundManager
+ *				ASIO Sound Driver by Steinberg //NOT Available
+ *	@constant	NoHardwareDriver
+ *				NO HARDWARE CONNECTION, will not produce any sound
+ */
 typedef MADENUM(short, MADSoundOutput)
 {
-	CoreAudioDriver = 1,		// OSX ONLY Core Audio driver
-	DirectSound95NT,			// WINDOWS ONLY
-	Wave95NT,					// WINDOWS ONLY
-	PortAudioDriver,			// Can be present on multiple OSes
-	PulseAudioDriver,			// Mostly used by Linux/Unix
-	ESDDriver,					// ESound Driver. available on most UNIX Systems
-	BeOSSoundDriver,			// BeOS/Haiku ONLY
-	MIDISoundDriver,			// Not yet available
-	ASIOSoundManager,			// ASIO Sound Driver by Steinberg //NOT Available
-	NoHardwareDriver = SHRT_MAX	// NO HARDWARE CONNECTION, will not produce any sound
+	CoreAudioDriver = 1,
+	DirectSound95NT,
+	Wave95NT,
+	PortAudioDriver,
+	PulseAudioDriver,
+	ESDDriver,
+	BeOSSoundDriver,
+	MIDISoundDriver,
+	ASIOSoundManager,
+	NoHardwareDriver = SHRT_MAX
 };
 
-//Used for MADSoundDriverList()
+/*!
+ *	@enum		MADSoundOutputBit
+ *	@abstract	Bit values of \c MADSoundOutput
+ *	@seealso	MADSoundOutput
+ *	@seealso	MADSoundDriverList
+ */
 typedef MADOPTIONS(unsigned int, MADSoundOutputBit)
 {
 	MIDISoundDriverBit	= 1 << MIDISoundDriver,
@@ -367,7 +398,6 @@ typedef struct MADInfoRec {
 	char	internalFileName[60];
 	char	formatDescription[60];
 } MADInfoRec;
-
 
 /********************						***********************/
 /*** 			Informations about Plugs: ThePlug[]				***/
@@ -575,10 +605,11 @@ extern "C" {
  *	@param		file
  *				The file that has the problem
  *	@param		text
- *				Developer text that is used to help debug the issue. IT CANNOT BE NULL, although an empty string is fine.
+ *				Developer text that is used to help debug the issue. IT CANNOT BE NULL,
+ *				although an empty string is fine.
  *	@discussion NORMALLY it is never called, only when a FATAL error has occured. <BR>
- *				This function is usually invoked using the macros \c __LINE__ and \c 
- *				__FILE__ for the line and file paramaters.
+ *				This function is usually invoked using the macros \c __LINE__ and
+ *				\c __FILE__ for the line and file paramaters.
  */
 PPEXPORT void	MADDebugStr(short line, const char* file, const char* text);
 	
@@ -600,7 +631,7 @@ PPEXPORT void	MADRegisterDebugFunc(void (__callback *debugFunc)(short, const cha
  *	@function	MADRegisterDebugBlock
  *	@abstract	used to set a callback for MADDebugStr
  *	@param		newdebugBlock
- *				The block to call when MADDebugStr is called, hopefully to have your app
+ *				The block to call when \c MADDebugStr is called, hopefully to have your app
  *				fail gracefully instead of instantly calling \c abort()
  *	@discussion	Use this function to call your own debug function when MADDebugStr is
  *				called, otherwise calls to MADDebugStr will crash your app.
@@ -652,7 +683,7 @@ PPEXPORT MADErr	MADDisposeLibrary(MADLibrary *MADLib);
 PPEXPORT bool MADPlugAvailable(const MADLibrary *MADLib, const char *type);
 
 #pragma mark back-end (driver) availability
-/**
+/*!
  *	@function	MADGetBestDriver
  *	@abstract	Find and identify the current sound hardware and APIs and fill DriverInitParam.
  *	@param		DriverInitParam
@@ -661,7 +692,7 @@ PPEXPORT bool MADPlugAvailable(const MADLibrary *MADLib, const char *type);
  */
 PPEXPORT void				MADGetBestDriver(MADDriverSettings *DriverInitParam);
 
-/**
+/*!
  *	@function	MADSoundDriverIsAvalable
  *	@abstract	Identifies if a back-end is available or not.
  *	@param		theDriver
@@ -670,10 +701,11 @@ PPEXPORT void				MADGetBestDriver(MADDriverSettings *DriverInitParam);
  */
 PPEXPORT bool				MADSoundDriverIsAvalable(MADSoundOutput theDriver);
 
-/**
+/*!
  *	@function	MADSoundDriverList
  *	@abstract	Lists all the available sound back-ends available
- *	@return		A \c bool indicating if the driver is available or not.
+ *	@return		A list of available sound drivers in a bit field.
+ *	@seealso	MADSoundOutputBit
  */
 PPEXPORT MADSoundOutputBit	MADSoundDriverList();
 

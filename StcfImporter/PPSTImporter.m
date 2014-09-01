@@ -106,9 +106,9 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 		if (!aStr || !aStr2) {
 			break;
 		}
-		NSString *CFaStr, *CFaStr2;
-		CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman));
-		CFaStr2 = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman));
+		
+		NSString *CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman));
+		NSString *CFaStr2 = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman));
 		
 		NSString *together = [@[CFaStr, CFaStr2] componentsJoinedByString:@":"];
 		CFaStr = CFaStr2 = nil;
@@ -131,7 +131,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	selectedMusic = (location >= [newArray count]) ? location : -1;
 	
-	*outDict = @{@"MusicPaths": [newArray copy],
+	*outDict = @{@"MusicPaths": newArray,
 				 @"SelectedMusic": @(selectedMusic),
 				 @"lostMusicCount": @(lostMusicCount)};
 	

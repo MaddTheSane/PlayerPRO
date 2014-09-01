@@ -12,17 +12,17 @@ import PlayerPROKit
 import CoreGraphics
 
 class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, NSOutlineViewDelegate {
-	@IBOutlet var infoDrawer: NSDrawer!
-	@IBOutlet var instrumentSize: NSTextField!
-	@IBOutlet var instrumentLoopStart: NSTextField!
-	@IBOutlet var instrumentLoopSize: NSTextField!
-	@IBOutlet var instrumentVolume: NSTextField!
-	@IBOutlet var instrumentRate: NSTextField!
-	@IBOutlet var instrumentNote: NSTextField!
-	@IBOutlet var instrumentBits: NSTextField!
-	@IBOutlet var instrumentMode: NSTextField!
-	@IBOutlet var waveFormImage: NSImageView!
-	@IBOutlet var instrumentView: NSOutlineView!
+	@IBOutlet weak var infoDrawer:			NSDrawer!
+	@IBOutlet weak var instrumentSize:		NSTextField!
+	@IBOutlet weak var instrumentLoopStart:	NSTextField!
+	@IBOutlet weak var instrumentLoopSize:	NSTextField!
+	@IBOutlet weak var instrumentVolume:	NSTextField!
+	@IBOutlet weak var instrumentRate:		NSTextField!
+	@IBOutlet weak var instrumentNote:		NSTextField!
+	@IBOutlet weak var instrumentBits:		NSTextField!
+	@IBOutlet weak var instrumentMode:		NSTextField!
+	@IBOutlet weak var waveFormImage:		NSImageView!
+	@IBOutlet weak var instrumentView:		NSOutlineView!
 	
 	@IBAction func toggleInfo(sender: AnyObject?) {
 		infoDrawer?.toggle(sender)
@@ -87,10 +87,10 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 			instrumentLoopSize!.integerValue = Int(sampleObj.loopSize)
 			instrumentVolume!.integerValue = Int(sampleObj.volume)
 			instrumentRate!.stringValue = "\(sampleObj.c2spd) Hz"
-			instrumentNote!.stringValue = OctaveNameFromNote(sampleObj.relativeNote)
+			instrumentNote!.stringValue = OctaveNameFromNote(UInt8(sampleObj.relativeNote))
 			instrumentBits!.stringValue = "\(sampleObj.amplitude)-bit"
 			instrumentMode!.stringValue = sampleObj.loopType == .ePingPongLoop ? "Ping-Pong" : "Classic"
-			var sampImage = sampleObj.waveformImage(waveFormImage!)
+			var sampImage = sampleObj.waveformImage(view: waveFormImage!)
 			waveFormImage!.image = sampImage
 		}
 	}

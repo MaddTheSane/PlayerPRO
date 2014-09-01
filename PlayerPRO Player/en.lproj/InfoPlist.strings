@@ -19,9 +19,30 @@ PPMADFGFile = "PlayerPRO MADfg Tracker";
 PPMADIFile = "PlayerPRO MADI Tracker";
 PPMADKFile = "PlayerPRO MADK Tracker";
 PPMADHFile = "PlayerPRO MADH Tracker";
-PPMADBundle = "PlayerPRO MAD Tracker Bundle";
 
 "Old PlayerPRO Music List" = "Old PlayerPRO Music List";
 "PlayerPRO Music List" = "PlayerPRO Music List";
 
 PPImpExpBundle = "PlayerPRO Import/Export PlugIn";
+
+//UTIs
+"net.sourceforge.playerpro.mtm" = "MultiTracker Audio";
+"net.sourceforge.playerpro.s3m" = "ScreamTracker Audio";
+"net.sourceforge.playerpro.mod" = "ProTracker Audio";
+"net.sourceforge.playerpro.xm" = "FastTracker Audio";
+"net.sourceforge.playerpro.it" = "ImpulseTracker Audio";
+"net.sourceforge.playerpro.amf" = "AMF Tracker Audio";
+"net.sourceforge.playerpro.669" = "669 Tracker Audio";
+"net.sourceforge.playerpro.okta" = "OKTAmed Tracker Audio";
+
+"com.quadmation.playerpro.mad" = "PlayerPRO MAD Tracker";
+"com.quadmation.playerpro.madfg" = "PlayerPRO MAD-fg Tracker";
+"com.quadmation.playerpro.madh" = "PlayerPRO MADH Tracker";
+"com.quadmation.playerpro.madi" = "PlayerPRO MADI Tracker";
+"com.quadmation.playerpro.madk" = "PlayerPRO MADK Tracker";
+"net.sourceforge.playerpro.tracker" = "Music Tracker";
+
+"com.quadmation.playerpro.stcfmusiclist" = "Old PlayerPRO Music List";
+"net.sourceforge.playerpro.musiclist" = "PlayerPRO Music List";
+
+"net.sourceforge.playerpro.ppimpexp" = "PlayerPRO Import/Export PlugIn";

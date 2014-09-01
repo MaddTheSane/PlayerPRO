@@ -1,8 +1,8 @@
 ﻿/* Localized versions of Info.plist keys */
 
-CFBundleShortVersionString = "1.5.3";
-CFBundleGetInfoString = "PlayerPRO Importer version 1.5.3, Copyright © 2013 SourceForge.";
-NSHumanReadableCopyright = "Copyright © 2013 SourceForge.";
+CFBundleShortVersionString = "1.6.0";
+CFBundleGetInfoString = "PlayerPRO Importer version 1.6.0, Copyright © 2013-2014 SourceForge.";
+NSHumanReadableCopyright = "Copyright © 2013-2014 SourceForge.";
 
 "PPMTMFile" = "MultiTracker Audio";
 "PPS3MFile" = "ScreamTracker Audio";
@@ -21,4 +21,20 @@ NSHumanReadableCopyright = "Copyright © 2013 SourceForge.";
 
 "Music Tracker" = "Music Tracker";
 
-"PPImpExpBundle" = "PlayerPRO Import/Export PlugIn";
+//UTIs
+"net.sourceforge.playerpro.mtm" = "MultiTracker Audio";
+"net.sourceforge.playerpro.s3m" = "ScreamTracker Audio";
+"net.sourceforge.playerpro.mod" = "ProTracker Audio";
+"net.sourceforge.playerpro.xm" = "FastTracker Audio";
+"net.sourceforge.playerpro.it" = "ImpulseTracker Audio";
+"net.sourceforge.playerpro.amf" = "AMF Tracker Audio";
+"net.sourceforge.playerpro.669" = "669 Tracker Audio";
+"net.sourceforge.playerpro.okta" = "OKTAmed Tracker Audio";
+
+"com.quadmation.playerpro.mad" = "PlayerPRO MAD Tracker";
+"com.quadmation.playerpro.madfg" = "PlayerPRO MAD-fg Tracker";
+"com.quadmation.playerpro.madh" = "PlayerPRO MADH Tracker";
+"com.quadmation.playerpro.madi" = "PlayerPRO MADI Tracker";
+"com.quadmation.playerpro.madk" = "PlayerPRO MADK Tracker";
+
+"net.sourceforge.playerpro.tracker" = "Music Tracker";

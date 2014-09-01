@@ -58,12 +58,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	let complexImport = ComplexImportPlugHandler()
 	var thePPColors = [NSColor]()
 	
-	@IBOutlet var musicExportMenu:		NSMenu!
-	@IBOutlet var aboutPlugInMenu:		NSMenu!
-	@IBOutlet var instrumentExportMenu:	NSMenu!
-	@IBOutlet var newInstrumentMenu:	NSMenu!
-	
-	@IBOutlet var exportStatusPanel:	NSPanel!
+	@IBOutlet weak var musicExportMenu:			NSMenu!
+	@IBOutlet weak var aboutPlugInMenu:			NSMenu!
+	@IBOutlet weak var instrumentExportMenu:	NSMenu!
+	@IBOutlet weak var newInstrumentMenu:		NSMenu!
+	@IBOutlet weak var exportStatusPanel:		NSPanel!
 	
 	var trackerDict: [String: [String]] { get {
 		if _trackerDict.isEmpty || _trackerDict.count != Int(madLib.pluginCount) + 2 {
@@ -470,15 +469,12 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 								let nsErr = CreateErrorFromMADErrorType(anErr)!
 								if ErrorIsUserCancelled(nsErr) == false {
 									NSAlert(error: nsErr).runModal()
+								} else {
+									NSBeep()
 								}
 							}
-							
 						})
 						return true
-					} else {
-						NSAlert(error: aErr!).runModal()
-						
-						return false;
 					}
 				}
 			}
@@ -540,7 +536,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	@IBAction func openFile(sender: AnyObject?) {
 		let panel = NSOpenPanel();
 		let otherDict: [String : [String]]  = ["PCMD": [PPPCMDUTI], "Instrument List": [PPInstrumentListUTI]];
-		var plugCount = instrumentPlugHandler.plugInCount;
+		let plugCount = instrumentPlugHandler.plugInCount;
 		var samplesDict = [String: [String]]()
 		for obj in instrumentPlugHandler {
 			if (obj.mode == .Import || obj.mode == .ImportExport) {

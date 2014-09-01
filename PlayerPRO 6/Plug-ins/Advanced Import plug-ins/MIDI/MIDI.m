@@ -7,10 +7,11 @@
 //
 
 #include <Cocoa/Cocoa.h>
-#include <PlayerPROCore/PlayerPROCore.h>
+@import PlayerPROCore;
 #include <PlayerPROCore/RDriverInt.h>
-#import <PlayerPROKit/PlayerPROKit.h>
+@import PlayerPROKit;
 #import "PPMIDIImporter.h"
+#import "MIDI.h"
 
 static MADErr MADReadMAD(MADMusic *MDriver, const void* MADPtr)
 {
@@ -40,7 +41,6 @@ static MADErr MADReadMAD(MADMusic *MDriver, const void* MADPtr)
 		MDriver->header->MultiChanNo = 48;
 	
 	/**** PARTITION ****/
-	//TODO: dispatch this
 	dispatch_apply(MAXPATTERN - MDriver->header->numPat, dispatch_get_global_queue(0, 0), ^(size_t iTmp) {
 		size_t i = iTmp + MDriver->header->numPat;
 		MDriver->partition[i] = NULL;
@@ -195,64 +195,46 @@ static MADErr MADReadMAD(MADMusic *MDriver, const void* MADPtr)
 	return MADNoErr;
 }
 
-extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
+PPMusicObject *MIDIReadFromData(NSData *fileData)
 {
-	__block MADErr theErr = MADOrderNotImplemented;
-	NSXPCConnection *conn = [[NSXPCConnection alloc] initWithServiceName:@"net.sourceforge.playerpro.MIDI-Import"];
-	conn.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPMIDIImportHelper)];
+	MADMusic *theNewMusic = malloc(sizeof(MADMusic));
+	MADReadMAD(theNewMusic, [fileData bytes]);
+	return [[PPMusicObject alloc] initWithMusicStruct:theNewMusic copy:NO];
+}
+
+static unsigned int LongFromFd(Ptr *fd, unsigned cb)
+{
+	unsigned char rgb[4];
+	unsigned int longT = 0;
+	unsigned ib = 0;
 	
-	NSURL *ourURL = [[NSURL alloc] initFileURLWithFileSystemRepresentation:AlienFileName isDirectory:NO relativeToURL:nil];
+	//MADread(fd, (Ptr) rgb, cb);
+	memcpy(rgb, *fd, 4);
+	for (; ib < cb; ib++)
+		longT = (longT << 8) + rgb[ib];
+	return longT;
+}
+
+static short PtuneLoadFnChannel(const void *MIDIptr)
+{
+	char	rgbHeader[] = {'M', 'T', 'h', 'd', 0, 0, 0, 6, 0};
+	short	irfMax;
+	Ptr		ourPtr = (Ptr)MIDIptr;
 	
-	[conn resume];
-	switch (order) {
-		case MADPlugInfo:
-		{
-			[[conn remoteObjectProxy] getMIDIInfoFromFileAtURL:ourURL withReply:^(NSDictionary * ppInfo, MADErr error) {
-				if (error) {
-					theErr = error;
-					return;
-				}
-				info->fileSize = [ppInfo[kPPFileSize] longValue];
-				info->totalPatterns = [ppInfo[kPPTotalPatterns] intValue];
-				info->partitionLength = [ppInfo[kPPPartitionLength] intValue];
-				info->signature = [ppInfo[kPPSignature] unsignedIntValue];
-				info->totalTracks = [ppInfo[kPPTotalTracks] shortValue];
-				info->totalInstruments = [ppInfo[kPPTotalInstruments] shortValue];
-				{
-					NSString *internalFileName = ppInfo[kPPInternalFileName];
-					NSString *formatDescription = ppInfo[kPPFormatDescription];
-					[internalFileName getCString:info->internalFileName maxLength:60 encoding:NSMacOSRomanStringEncoding];
-					[formatDescription getCString:info->internalFileName maxLength:60 encoding:NSMacOSRomanStringEncoding];
-				}
-				[conn invalidate];
-			}];
-		}
-			break;
-			
-		case MADPlugTest:
-		{
-			[[conn remoteObjectProxy] canImportMIDIFileAtURL:ourURL withReply:^(MADErr error) {
-				theErr = error;
-				[conn invalidate];
-			}];
-		}
-			break;
-			
-		case MADPlugImport:
-		{
-			[[conn remoteObjectProxy] importMIDIFileAtURL:ourURL withReply:^(NSData *fileData, MADErr error) {
-				MADMusic *theNewMusic = malloc(sizeof(MADMusic));
-				MADReadMAD(theNewMusic, [fileData bytes]);
-				PPMusicObject *outObj = [[PPMusicObject alloc] initWithMusicStruct:theNewMusic copy:NO];
-				[conn invalidate];
-			}];
-		}
-			
-		default:
-			theErr = MADOrderNotImplemented;
-			[conn invalidate];
-			break;
+	if (memcmp(MIDIptr, rgbHeader, 9)) {
+		return -1; /** Only process type 0 or type 1 general MIDI files **/
 	}
+	ourPtr += 10;
+	irfMax = (unsigned) LongFromFd(&ourPtr, 2); /** Get # tracks **/
+	irfMax++;
+	irfMax /= 2;
+	irfMax *= 2;
 	
-	return theErr;
+	return irfMax;
+}
+
+NSInteger GetTracksNumber(NSURL *theURL)
+{
+	NSData *aData = [[NSData alloc] initWithContentsOfURL:theURL];
+	return PtuneLoadFnChannel(aData.bytes);
 }

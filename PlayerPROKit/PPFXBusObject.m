@@ -15,6 +15,10 @@
 #define kPPCopyID @"PlayerPROKit FXBus CopyId"
 #define kPPIsActive @"PlayerPROKit FXBus Active"
 
+@interface PPFXBusObject ()
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+@end
+
 @implementation PPFXBusObject
 @synthesize theBus;
 

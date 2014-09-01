@@ -16,7 +16,7 @@
 
 // The import function to be implemented in GetMetadataForFile.c
 __private_extern Boolean GetMetadataForURL(void* thisInterface,
-											 CFMutableDictionaryRef attributes,
-											 CFStringRef contentTypeUTI,
-											 CFURLRef urlForFile);
+										   CFMutableDictionaryRef attributes,
+										   CFStringRef contentTypeUTI,
+										   CFURLRef urlForFile);
 #endif

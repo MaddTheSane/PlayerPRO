@@ -95,22 +95,23 @@ private let OversamplingCoupling = [TagCoupling(1, 1), TagCoupling(2, 2), TagCou
 }
 
 public class SoundSettingsViewController: NSViewController {
-	private var reverbActive = false
-	private var surroundActive = false
-	private var stereoDelayActive = false
-	private var oversamplingActive = false
-	@IBOutlet public var oversampling: NSButton!
-	@IBOutlet public var reverb: NSButton!
-	@IBOutlet public var stereoDelay: NSButton!
-	@IBOutlet public var surround: NSButton!
-	@IBOutlet public var rate: NSMatrix!
-	@IBOutlet public var outputBits: NSMatrix!
-	@IBOutlet public var soundDriver: NSMatrix!
-	@IBOutlet public var oversamplingNum: NSPopUpButton!
-	@IBOutlet public var reverbNum: NSPopUpButton!
-	@IBOutlet public var stereoDelayNum: NSPopUpButton!
-	@IBOutlet public var reverbPercent: NSPopUpButton!
-	@IBOutlet weak public var delegate: SoundSettingsViewControllerDelegate? = nil
+	private var reverbActive		= false
+	private var surroundActive		= false
+	private var stereoDelayActive	= false
+	private var oversamplingActive	= false
+	
+	@IBOutlet weak public var oversampling:		NSButton!
+	@IBOutlet weak public var reverb:			NSButton!
+	@IBOutlet weak public var stereoDelay:		NSButton!
+	@IBOutlet weak public var surround:			NSButton!
+	@IBOutlet weak public var rate:				NSMatrix!
+	@IBOutlet weak public var outputBits:		NSMatrix!
+	@IBOutlet weak public var soundDriver:		NSMatrix!
+	@IBOutlet weak public var oversamplingNum:	NSPopUpButton!
+	@IBOutlet weak public var reverbNum:		NSPopUpButton!
+	@IBOutlet weak public var stereoDelayNum:	NSPopUpButton!
+	@IBOutlet weak public var reverbPercent:	NSPopUpButton!
+	@IBOutlet weak public var delegate:			SoundSettingsViewControllerDelegate? = nil
 	
     override public func viewDidLoad() {
         super.viewDidLoad()
