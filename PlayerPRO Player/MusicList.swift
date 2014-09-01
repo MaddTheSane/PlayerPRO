@@ -8,20 +8,22 @@
 
 import Foundation
 
-private let kMUSICLISTKEY = "Music List Key1"
-private let kMUSICLISTKEY2 = "Music List Key2"
+private let kMusicListKey1 = "Music List Key1"
+private let kMusicListKey2 = "Music List Key2"
+
 private let kMusicListLocation2 = "Music Key Location2"
 
-private let kMusicListLocation3 = "Music Key Location 3";
 private let kMusicListKey3 = "Music List Key 3"
+private let kMusicListLocation3 = "Music Key Location 3"
+
 private let kPlayerList = "Player List"
 
 private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.ApplicationSupportDirectory, inDomain:.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player")
 
 @objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, SequenceType {
 	@objc private(set)	dynamic var musicList = [MusicListObject]()
-	@objc private(set)	var lostMusicCount:UInt = 0;
-	@objc dynamic var	selectedMusic = -1;
+	@objc private(set)	var lostMusicCount: UInt
+	@objc dynamic var	selectedMusic: Int
 	
 	@objc func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (musicList as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len);
@@ -35,8 +37,8 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return musicList[index]
 	}
 	
-	@objc func encodeWithCoder(aCoder: NSCoder) {
-		var BookmarkArray: [NSURL] = [];
+	func encodeWithCoder(aCoder: NSCoder) {
+		var BookmarkArray = [NSURL]()
 		for obj in musicList {
 			let bookData = obj.musicURL;
 			BookmarkArray.append(bookData)
@@ -56,6 +58,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return NSNotFound
 	}
 	
+	//This cannot be represented in Objective C
 	func indexOfObjectSimilarToURL(theURL: NSURL) -> Int? {
 		for (i, obj) in enumerate(musicList) {
 			if obj == theURL {
@@ -76,9 +79,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	@objc func sortMusicListByName() {
 		musicList.sort({
 			(var1:MusicListObject, var2:MusicListObject) -> Bool in
-			let rhsString: NSString = var1.fileName
-			let lhsString: NSString = var2.fileName
-			let result = rhsString.localizedStandardCompare(lhsString)
+			let result = var1.fileName.localizedStandardCompare(var2.fileName)
 			return result == NSComparisonResult.OrderedAscending;
 			})
 	}
@@ -118,20 +119,22 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	@objc override init() {
-		
+		lostMusicCount = 0
+		selectedMusic = -1
 		
 		super.init();
 	}
 	
 	required init(coder aDecoder: NSCoder) {
-		super.init()
 		lostMusicCount = 0;
 		var BookmarkArray: AnyObject? = aDecoder.decodeObjectForKey(kMusicListKey3);
 		if (BookmarkArray == nil) {
-			BookmarkArray = aDecoder.decodeObjectForKey(kMUSICLISTKEY2)
+			BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey2)
 			if (BookmarkArray == nil) {
-				BookmarkArray = aDecoder.decodeObjectForKey(kMUSICLISTKEY)
+				BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey1)
 				if (BookmarkArray == nil) {
+					selectedMusic = -1
+					super.init()
 					return;
 				}
 				let dataBookArray = BookmarkArray! as [NSData]
@@ -206,24 +209,24 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 			}
 			
 		}
+		super.init()
 	}
 
 	class func supportsSecureCoding() -> Bool {
 		return true;
 	}
 	
-	func URLAtIndex(index: Int) -> NSURL {
+	@objc func URLAtIndex(index: Int) -> NSURL {
 		return musicList[index].musicURL;
 	}
 	
-	func loadMusicList(newArray: [MusicListObject])
-	{
+	@objc func loadMusicList(newArray: [MusicListObject]) {
 		self.willChangeValueForKey(kMusicListKVO);
 		musicList = newArray;
 		self.didChangeValueForKey(kMusicListKVO);
 	}
 	
-	func loadMusicListFromData(theData: NSData) -> Bool {
+	private func loadMusicListFromData(theData: NSData) -> Bool {
 		var preList = NSKeyedUnarchiver.unarchiveObjectWithData(theData) as MusicList?
 		if (preList == nil) {
 			return false
@@ -235,7 +238,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return true
 	}
 	
-	func loadMusicListAtURL(fromURL: NSURL) -> Bool {
+	@objc func loadMusicListAtURL(fromURL: NSURL) -> Bool {
 		var listData = NSData.dataWithContentsOfURL(fromURL, options: NSDataReadingOptions(0), error: nil)
 		if (listData == nil) {
 			return false
@@ -243,7 +246,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return loadMusicListFromData(listData)
 	}
 	
-	func loadApplicationMusicList() -> Bool {
+	@objc func loadApplicationMusicList() -> Bool {
 		let manager = NSFileManager.defaultManager();
 		if (PPPPath.checkResourceIsReachableAndReturnError(nil) == false) {
 			manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories: true, attributes: nil, error: nil)
@@ -254,33 +257,33 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	
 	// Key-valued Coding
 	
-	func addMusicListObject(object: MusicListObject) {
+	@objc dynamic func addMusicListObject(object: MusicListObject) {
 		if (musicList as NSArray).containsObject(object) == false {
 			musicList.append(object)
 		}
 	}
 	
-	var countOfMusicList: Int {get {
+	@objc dynamic var countOfMusicList: Int { get {
 		return musicList.count
 		}}
 	
-	func replaceObjectInMusicListAtIndex(index: Int, withObject object: MusicListObject) {
+	@objc dynamic func replaceObjectInMusicListAtIndex(index: Int, withObject object: MusicListObject) {
 		musicList[index] = object;
 	}
 	
-	func objectInMusicListAtIndex(index: Int) -> MusicListObject {
+	@objc dynamic func objectInMusicListAtIndex(index: Int) -> MusicListObject {
 		return musicList[index];
 	}
 	
-	func removeObjectInMusicListAtIndex(atIndex: Int) {
+	@objc dynamic func removeObjectInMusicListAtIndex(atIndex: Int) {
 		musicList.removeAtIndex(atIndex);
 	}
 	
-	func insertObject(object: MusicListObject, inMusicListAtIndex index:Int) {
+	@objc dynamic func insertObject(object: MusicListObject, inMusicListAtIndex index: Int) {
 		musicList.insert(object, atIndex: index)
 	}
 	
-	func arrayOfObjectsInMusicListAtIndexes(theSet : NSIndexSet) -> [MusicListObject] {
+	@objc dynamic func arrayOfObjectsInMusicListAtIndexes(theSet : NSIndexSet) -> [MusicListObject] {
 		var tmpList = [MusicListObject]()
 		for (i, obj) in enumerate(musicList) {
 			if theSet.containsIndex(i) {
@@ -290,7 +293,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return tmpList
 	}
 	
-	@objc func removeObjectsInMusicListAtIndexes(idxSet: NSIndexSet) {
+	@objc dynamic func removeObjectsInMusicListAtIndexes(idxSet: NSIndexSet) {
 		if idxSet.containsIndex(selectedMusic) {
 			self.selectedMusic = -1;
 		}
@@ -311,7 +314,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		let theIndexSet = NSIndexSet(indexesInRange: NSRange(location: idx, length: anObj.count))
 		self.willChange(.Insertion, valuesAtIndexes: theIndexSet, forKey: kMusicListKVO)
 		var currentIndex = theIndexSet.firstIndex;
-		var count = theIndexSet.count;
+		let count = theIndexSet.count;
 		
 		for (var i = 0; i < count; i++) {
 			let tempObj = anObj[i]

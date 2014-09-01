@@ -13,55 +13,36 @@ import Foundation
 
 private let kMusicListURLKey = "URLKey";
 
-func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
+private func URLsPointingToTheSameFile(urlA: NSURL, urlB: NSURL) -> Bool {
 	var dat1: AnyObject? = nil
 	var dat2: AnyObject? = nil
 	var bothAreValid = true
 	var theSame = false
-	if (!lhs.musicURL.getResourceValue(&dat1, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
+	if !urlA.getResourceValue(&dat1, forKey:NSURLFileResourceIdentifierKey, error:nil) {
 		bothAreValid = false;
 	}
-	if (!rhs.musicURL.getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
+	if !urlB.getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil) {
 		bothAreValid = false;
 	}
-	if (bothAreValid) {
+	if bothAreValid {
 		theSame = (dat1 as NSData) == (dat2 as NSData)
 	}
 	return theSame
+}
+
+func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
+	if lhs === rhs {
+		return true
+	}
+	return URLsPointingToTheSameFile(lhs.musicURL, rhs.musicURL)
 }
 
 func ==(lhs: MusicListObject, rhs: NSURL) -> Bool {
-	var dat1: AnyObject? = nil
-	var dat2: AnyObject? = nil
-	var bothAreValid = true
-	var theSame = false
-	if (!lhs.musicURL.getResourceValue(&dat1, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
-		bothAreValid = false;
-	}
-	if (!rhs.getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
-		bothAreValid = false;
-	}
-	if (bothAreValid) {
-		theSame = (dat1 as NSData) == (dat2 as NSData)
-	}
-	return theSame
+	return URLsPointingToTheSameFile(lhs.musicURL, rhs)
 }
 
 func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
-	var dat1: AnyObject? = nil
-	var dat2: AnyObject? = nil
-	var bothAreValid = true
-	var theSame = false
-	if (!lhs.getResourceValue(&dat1, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
-		bothAreValid = false;
-	}
-	if (!rhs.musicURL.getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil)) {
-		bothAreValid = false;
-	}
-	if (bothAreValid) {
-		theSame = (dat1 as NSData) == (dat2 as NSData)
-	}
-	return theSame
+	return URLsPointingToTheSameFile(lhs, rhs.musicURL)
 }
 
 @objc(PPMusicListObject) class MusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPrintable, Printable {

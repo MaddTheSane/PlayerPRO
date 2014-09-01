@@ -296,8 +296,8 @@ public class SoundSettingsViewController: NSViewController {
 			}
 			setCurrentRate(convRate)
 			
-			let theRate = sett.MicroDelaySize;
-			var toSet = 0;
+			let theRate = sett.MicroDelaySize
+			var toSet: Int? = nil
 			for i in ReverbPercentCoupling {
 				if i.amount == theRate {
 					toSet = i.tag
@@ -305,13 +305,13 @@ public class SoundSettingsViewController: NSViewController {
 				}
 			}
 			
-			if (toSet == 0) {
+			if toSet == nil {
 				toSet = 4;
 			}
 			
-			stereoDelayNum.selectItemAtIndex(toSet - 1)
+			stereoDelayNum.selectItemAtIndex(toSet! - 1)
 			
-			toSet = 0
+			toSet = nil
 			let reverbAmount = sett.ReverbSize
 			for i in ReverbAmountCoupling {
 				if i.amount == reverbAmount {
@@ -320,12 +320,12 @@ public class SoundSettingsViewController: NSViewController {
 				}
 			}
 			
-			if (toSet == 0) {
+			if toSet == nil {
 				toSet = 4;
 			}
-			reverbNum.selectItemAtIndex(toSet - 1)
+			reverbNum.selectItemAtIndex(toSet! - 1)
 			
-			toSet = 0
+			toSet = nil
 			let reverbPercentage = sett.ReverbStrength;
 			for i in ReverbPercentCoupling {
 				if i.amount == reverbPercentage {
@@ -334,12 +334,12 @@ public class SoundSettingsViewController: NSViewController {
 				}
 			}
 			
-			if (toSet == 0) {
+			if toSet == nil {
 				toSet = 3;
 			}
-			reverbPercent.selectItemAtIndex(toSet - 1)
+			reverbPercent.selectItemAtIndex(toSet! - 1)
 			
-			toSet = 0
+			toSet = nil
 			let oversamplingAmount = sett.oversampling;
 			for i in OversamplingCoupling {
 				if i.amount == oversamplingAmount {
@@ -348,10 +348,10 @@ public class SoundSettingsViewController: NSViewController {
 				}
 			}
 			
-			if (toSet == 0) {
+			if toSet == nil {
 				toSet = 1;
 			}
-			oversamplingNum.selectItemAtIndex(toSet - 1)
+			oversamplingNum.selectItemAtIndex(toSet! - 1)
 			
 			if (delegate?.soundOutDriverDidChange? == nil) {
 				soundDriver.enabled = false;
@@ -473,7 +473,7 @@ public class SoundSettingsViewController: NSViewController {
 	}
 	
 	@IBAction public func changeReverbPercent(sender: AnyObject!) {
-		var toSet: Int32 = 0;
+		var toSet: Int32 = 0
 		let tag = (sender as NSMenuItem).tag
 		
 		for i in ReverbPercentCoupling {
