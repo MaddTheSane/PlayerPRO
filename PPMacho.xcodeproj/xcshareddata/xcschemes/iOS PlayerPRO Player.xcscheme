@@ -20,6 +20,34 @@
                ReferencedContainer = "container:PPMacho.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "55F1BD8E1975C83400AD2C03"
+               BuildableName = "PlayerPROCore.framework"
+               BlueprintName = "PlayerPROCore-iOS"
+               ReferencedContainer = "container:PPMacho.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "55F1BDE21975CBFE00AD2C03"
+               BuildableName = "PlayerPROKit.framework"
+               BlueprintName = "PlayerPROKit-iOS"
+               ReferencedContainer = "container:PPMacho.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction

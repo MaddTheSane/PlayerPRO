@@ -488,6 +488,9 @@
 		55ADC3FD17D8021C001F27D4 /* Fade Note.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E110510D6F09F00BB619C /* Fade Note.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55ADC3FE17D8021C001F27D4 /* Fade Volume.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E114C10D6F1BF00BB619C /* Fade Volume.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55ADC40017D8022D001F27D4 /* Note Translate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11B910D6F32900BB619C /* Note Translate.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55ADD23F19B4F858005588B5 /* PlayerPROKit_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD23E19B4F858005588B5 /* PlayerPROKit_Tests.swift */; };
+		55ADD24C19B4F895005588B5 /* PlayerPRO_Player_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD24B19B4F895005588B5 /* PlayerPRO_Player_Tests.m */; };
+		55ADD25B19B4F8BA005588B5 /* PlayerPRO_6_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD25A19B4F8BA005588B5 /* PlayerPRO_6_Tests.swift */; };
 		55B1B4F3166A850E00820424 /* PPDriver_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F2166A850D00820424 /* PPDriver_Private.h */; };
 		55B1B4F7166A861900820424 /* PPMusicObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F5166A861900820424 /* PPMusicObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B1B4F6166A861900820424 /* PPMusicObject.m */; };
@@ -1563,6 +1566,27 @@
 			remoteGlobalIDString = 55151F3610DEDBD70054ABC4;
 			remoteInfo = "Instrument Plugs";
 		};
+		55ADD23419B4F7F4005588B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5557769E17EBF8FD0019D008;
+			remoteInfo = "iOS PlayerPRO Player";
+		};
+		55ADD24D19B4F895005588B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5578C48017D9E8560057D11B;
+			remoteInfo = "PlayerPRO Player";
+		};
+		55ADD25C19B4F8BA005588B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55CBF9A511EB77760028C6BB;
+			remoteInfo = "PlayerPRO 6";
+		};
 		55B797E110D6E6D00073E379 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -2248,6 +2272,15 @@
 		55ADC3DB17D6F390001F27D4 /* Wave.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Wave.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55ADC3DC17D6F411001F27D4 /* Wave-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Wave-Info.plist"; sourceTree = SOURCE_ROOT; };
 		55ADC3E617D7E4A4001F27D4 /* MADDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MADDriver.h; sourceTree = "<group>"; };
+		55ADD23A19B4F858005588B5 /* PlayerPROKit Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PlayerPROKit Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55ADD23D19B4F858005588B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55ADD23E19B4F858005588B5 /* PlayerPROKit_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerPROKit_Tests.swift; sourceTree = "<group>"; };
+		55ADD24719B4F895005588B5 /* PlayerPRO Player Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PlayerPRO Player Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55ADD24A19B4F895005588B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55ADD24B19B4F895005588B5 /* PlayerPRO_Player_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerPRO_Player_Tests.m; sourceTree = "<group>"; };
+		55ADD25619B4F8BA005588B5 /* PlayerPRO 6 Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PlayerPRO 6 Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		55ADD25919B4F8BA005588B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55ADD25A19B4F8BA005588B5 /* PlayerPRO_6_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerPRO_6_Tests.swift; sourceTree = "<group>"; };
 		55B0679C19ABCE7E00E2BFF7 /* PlayerPROKit-Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPROKit-Bridge.h"; sourceTree = "<group>"; };
 		55B0EF2018CE13410000E4CA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		55B1464419B02B1A00C6FE1B /* MIDI Import.exp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.exports; path = "MIDI Import.exp"; sourceTree = "<group>"; };
@@ -2851,6 +2884,27 @@
 				55ADC3D717D6F390001F27D4 /* CoreFoundation.framework in Frameworks */,
 				55ADC3D617D6F390001F27D4 /* PlayerPROCore.framework in Frameworks */,
 				552097B2187AB8B9004FD220 /* AudioToolbox.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ADD23719B4F858005588B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ADD24419B4F895005588B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ADD25319B4F8BA005588B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4053,6 +4107,57 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		55ADD23B19B4F858005588B5 /* PlayerPROKit Tests */ = {
+			isa = PBXGroup;
+			children = (
+				55ADD23E19B4F858005588B5 /* PlayerPROKit_Tests.swift */,
+				55ADD23C19B4F858005588B5 /* Supporting Files */,
+			);
+			path = "PlayerPROKit Tests";
+			sourceTree = "<group>";
+		};
+		55ADD23C19B4F858005588B5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				55ADD23D19B4F858005588B5 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		55ADD24819B4F895005588B5 /* PlayerPRO Player Tests */ = {
+			isa = PBXGroup;
+			children = (
+				55ADD24B19B4F895005588B5 /* PlayerPRO_Player_Tests.m */,
+				55ADD24919B4F895005588B5 /* Supporting Files */,
+			);
+			path = "PlayerPRO Player Tests";
+			sourceTree = "<group>";
+		};
+		55ADD24919B4F895005588B5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				55ADD24A19B4F895005588B5 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		55ADD25719B4F8BA005588B5 /* PlayerPRO 6 Tests */ = {
+			isa = PBXGroup;
+			children = (
+				55ADD25A19B4F8BA005588B5 /* PlayerPRO_6_Tests.swift */,
+				55ADD25819B4F8BA005588B5 /* Supporting Files */,
+			);
+			path = "PlayerPRO 6 Tests";
+			sourceTree = "<group>";
+		};
+		55ADD25819B4F8BA005588B5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				55ADD25919B4F8BA005588B5 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		55B7665517E3BDFE004C1D45 /* App Plug-in Code */ = {
 			isa = PBXGroup;
 			children = (
@@ -4258,9 +4363,12 @@
 				552C70C210CDAF8C00C0E0D4 /* Documentation */,
 				88E0C3CE0C2F21DD00D6C081 /* MADDriver.source */,
 				551292DE163DD68500C2C639 /* PlayerPROKit */,
+				55ADD23B19B4F858005588B5 /* PlayerPROKit Tests */,
 				55F16D1B186F918F00E75C3E /* Shared */,
 				55CBFCD411EB7CA00028C6BB /* PlayerPRO 6 */,
+				55ADD25719B4F8BA005588B5 /* PlayerPRO 6 Tests */,
 				5578C48317D9E8560057D11B /* PlayerPRO Player */,
+				55ADD24819B4F895005588B5 /* PlayerPRO Player Tests */,
 				55BE998517978BB100D6DECC /* Spotlight Plug-in */,
 				559C418F183EB4AB004A073C /* PPQuickView */,
 				555776A517EBF8FE0019D008 /* iOS PlayerPRO Player */,
@@ -4333,6 +4441,9 @@
 				55ECD2751992C2ED00480788 /* net.sourceforge.playerpro.MIDI-Import.xpc */,
 				55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */,
 				55F1BDE31975CBFE00AD2C03 /* PlayerPROKit.framework */,
+				55ADD23A19B4F858005588B5 /* PlayerPROKit Tests.xctest */,
+				55ADD24719B4F895005588B5 /* PlayerPRO Player Tests.xctest */,
+				55ADD25619B4F8BA005588B5 /* PlayerPRO 6 Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4816,6 +4927,7 @@
 			);
 			dependencies = (
 				555776C917EBF9000019D008 /* PBXTargetDependency */,
+				55ADD23519B4F7F4005588B5 /* PBXTargetDependency */,
 			);
 			name = "iOS PlayerPRO PlayerTests";
 			productName = "iOS PlayerPRO PlayerTests";
@@ -5439,6 +5551,59 @@
 			productReference = 55ADC3DB17D6F390001F27D4 /* Wave.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		55ADD23919B4F858005588B5 /* PlayerPROKit Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55ADD24019B4F858005588B5 /* Build configuration list for PBXNativeTarget "PlayerPROKit Tests" */;
+			buildPhases = (
+				55ADD23619B4F858005588B5 /* Sources */,
+				55ADD23719B4F858005588B5 /* Frameworks */,
+				55ADD23819B4F858005588B5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "PlayerPROKit Tests";
+			productName = "PlayerPROKit Tests";
+			productReference = 55ADD23A19B4F858005588B5 /* PlayerPROKit Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		55ADD24619B4F895005588B5 /* PlayerPRO Player Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55ADD24F19B4F896005588B5 /* Build configuration list for PBXNativeTarget "PlayerPRO Player Tests" */;
+			buildPhases = (
+				55ADD24319B4F895005588B5 /* Sources */,
+				55ADD24419B4F895005588B5 /* Frameworks */,
+				55ADD24519B4F895005588B5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55ADD24E19B4F895005588B5 /* PBXTargetDependency */,
+			);
+			name = "PlayerPRO Player Tests";
+			productName = "PlayerPRO Player Tests";
+			productReference = 55ADD24719B4F895005588B5 /* PlayerPRO Player Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		55ADD25519B4F8BA005588B5 /* PlayerPRO 6 Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55ADD25E19B4F8BA005588B5 /* Build configuration list for PBXNativeTarget "PlayerPRO 6 Tests" */;
+			buildPhases = (
+				55ADD25219B4F8BA005588B5 /* Sources */,
+				55ADD25319B4F8BA005588B5 /* Frameworks */,
+				55ADD25419B4F8BA005588B5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55ADD25D19B4F8BA005588B5 /* PBXTargetDependency */,
+			);
+			name = "PlayerPRO 6 Tests";
+			productName = "PlayerPRO 6 Tests";
+			productReference = 55ADD25619B4F8BA005588B5 /* PlayerPRO 6 Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		55B797DB10D6E6C40073E379 /* Complex Fade */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55B797DE10D6E6C70073E379 /* Build configuration list for PBXNativeTarget "Complex Fade" */;
@@ -5566,9 +5731,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55F1BDFC1975CBFF00AD2C03 /* Build configuration list for PBXNativeTarget "PlayerPROKit-iOS" */;
 			buildPhases = (
+				55F1BDE01975CBFE00AD2C03 /* Headers */,
 				55F1BDDE1975CBFE00AD2C03 /* Sources */,
 				55F1BDDF1975CBFE00AD2C03 /* Frameworks */,
-				55F1BDE01975CBFE00AD2C03 /* Headers */,
 				55F1BDE11975CBFE00AD2C03 /* Resources */,
 			);
 			buildRules = (
@@ -5601,6 +5766,17 @@
 						};
 					};
 					555776C217EBF8FF0019D008 = {
+						TestTargetID = 5557769E17EBF8FD0019D008;
+					};
+					55ADD23919B4F858005588B5 = {
+						CreatedOnToolsVersion = 6.0;
+					};
+					55ADD24619B4F895005588B5 = {
+						CreatedOnToolsVersion = 6.0;
+						TestTargetID = 5578C48017D9E8560057D11B;
+					};
+					55ADD25519B4F8BA005588B5 = {
+						CreatedOnToolsVersion = 6.0;
 						TestTargetID = 55CBF9A511EB77760028C6BB;
 					};
 					55F1BD8E1975C83400AD2C03 = {
@@ -5692,6 +5868,9 @@
 				557DE90D10E08DB000177B4C /* Silence */,
 				557DE95010E08DB900177B4C /* Smooth */,
 				557DE99310E08DC100177B4C /* Tone Generator */,
+				55ADD23919B4F858005588B5 /* PlayerPROKit Tests */,
+				55ADD24619B4F895005588B5 /* PlayerPRO Player Tests */,
+				55ADD25519B4F8BA005588B5 /* PlayerPRO 6 Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -6092,6 +6271,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		55ADC3D217D6F390001F27D4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ADD23819B4F858005588B5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ADD24519B4F895005588B5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ADD25419B4F8BA005588B5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -6709,6 +6909,30 @@
 			files = (
 				55ADC3DD17D6F43F001F27D4 /* WAV.c in Sources */,
 				55ADC3DE17D7A51B001F27D4 /* WAVE-Conversion.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ADD23619B4F858005588B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55ADD23F19B4F858005588B5 /* PlayerPROKit_Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ADD24319B4F895005588B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55ADD24C19B4F895005588B5 /* PlayerPRO_Player_Tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55ADD25219B4F8BA005588B5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55ADD25B19B4F8BA005588B5 /* PlayerPRO_6_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7484,6 +7708,21 @@
 			isa = PBXTargetDependency;
 			target = 55151F3610DEDBD70054ABC4 /* Instrument Plugs */;
 			targetProxy = 55ADC3F617D7F52B001F27D4 /* PBXContainerItemProxy */;
+		};
+		55ADD23519B4F7F4005588B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */;
+			targetProxy = 55ADD23419B4F7F4005588B5 /* PBXContainerItemProxy */;
+		};
+		55ADD24E19B4F895005588B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5578C48017D9E8560057D11B /* PlayerPRO Player */;
+			targetProxy = 55ADD24D19B4F895005588B5 /* PBXContainerItemProxy */;
+		};
+		55ADD25D19B4F8BA005588B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55CBF9A511EB77760028C6BB /* PlayerPRO 6 */;
+			targetProxy = 55ADD25C19B4F8BA005588B5 /* PBXContainerItemProxy */;
 		};
 		55B797E210D6E6D00073E379 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8486,7 +8725,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -8500,7 +8739,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS PlayerPRO Player.app/iOS PlayerPRO Player";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -8510,7 +8749,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = "";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -8526,7 +8765,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUNDLE_LOADER)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS PlayerPRO Player.app/iOS PlayerPRO Player";
 				WRAPPER_EXTENSION = xctest;
 			};
 			name = Debug;
@@ -9647,6 +9886,121 @@
 			};
 			name = Debug;
 		};
+		55ADD24119B4F858005588B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "PlayerPROKit Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		55ADD24219B4F858005588B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "PlayerPROKit Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		55ADD25019B4F896005588B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "PlayerPRO Player Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayerPRO Player.app/Contents/MacOS/PlayerPRO Player";
+			};
+			name = Release;
+		};
+		55ADD25119B4F896005588B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "PlayerPRO Player Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayerPRO Player.app/Contents/MacOS/PlayerPRO Player";
+			};
+			name = Debug;
+		};
+		55ADD25F19B4F8BA005588B5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "PlayerPRO 6 Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
+			};
+			name = Release;
+		};
+		55ADD26019B4F8BA005588B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "PlayerPRO 6 Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PlayerPRO 6.app/Contents/MacOS/PlayerPRO 6";
+			};
+			name = Debug;
+		};
 		55B797D610D6E6A60073E379 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -10508,6 +10862,30 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		55ADD24019B4F858005588B5 /* Build configuration list for PBXNativeTarget "PlayerPROKit Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55ADD24119B4F858005588B5 /* Release */,
+				55ADD24219B4F858005588B5 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		55ADD24F19B4F896005588B5 /* Build configuration list for PBXNativeTarget "PlayerPRO Player Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55ADD25019B4F896005588B5 /* Release */,
+				55ADD25119B4F896005588B5 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		55ADD25E19B4F8BA005588B5 /* Build configuration list for PBXNativeTarget "PlayerPRO 6 Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55ADD25F19B4F8BA005588B5 /* Release */,
+				55ADD26019B4F8BA005588B5 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		55B797D510D6E6A60073E379 /* Build configuration list for PBXAggregateTarget "Digital Plugs" */ = {
 			isa = XCConfigurationList;

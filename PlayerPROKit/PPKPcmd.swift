@@ -59,6 +59,7 @@ public struct PPKPcmd: SequenceType {
 			myCmd.append(theirCmdPtr[i])
 		}
 	}
+	
 	public mutating func modifyCmdAtRow(row: Int, track: Int, commandBlock: (inout Cmd)-> ()) {
 		modifyCmdAtRow(Int16(row), track: Int16(track), commandBlock)
 	}
@@ -79,7 +80,6 @@ public struct PPKPcmd: SequenceType {
 		}
 		
 		commandBlock(&myCmd[Int((length * track) + row)])
-
 	}
 	
 	public mutating func addCmd(command: Cmd) {
