@@ -17,7 +17,7 @@ public func ReplaceCmd(row1: Int16, track1: Int16, command: Cmd, inout aPat: PPK
 	aPat.replaceCmd(atRow: row1, track: track1, command: command)
 }
 
-public struct PPKPcmd {
+public struct PPKPcmd: SequenceType {
 	public var tracks: Int16
 	public var length: Int16
 	public var trackStart: Int16
@@ -30,6 +30,10 @@ public struct PPKPcmd {
 			return nil
 		}
 		}}
+	
+	public func generate() -> IndexingGenerator<[Cmd]> {
+		return myCmd.generate()
+	}
 	
 	public var valid: Bool { get {
 		return Int(tracks * length) == myCmd.count
@@ -55,16 +59,42 @@ public struct PPKPcmd {
 			myCmd.append(theirCmdPtr[i])
 		}
 	}
+	public mutating func modifyCmdAtRow(row: Int, track: Int, commandBlock: (inout Cmd)-> ()) {
+		modifyCmdAtRow(Int16(row), track: Int16(track), commandBlock)
+	}
+	
+	public mutating func modifyCmdAtRow(row1: Int16, track track1: Int16, commandBlock: (inout Cmd)-> ()) {
+		var track = track1
+		var row = row1
+		if (row < 0) {
+			row = 0;
+		} else if (row >= length) {
+			row = length - 1;
+		}
+		
+		if (track < 0) {
+			track = 0;
+		} else if (track >= tracks) {
+			track = tracks - 1;
+		}
+		
+		commandBlock(&myCmd[Int((length * track) + row)])
+
+	}
 	
 	public mutating func addCmd(command: Cmd) {
 		myCmd.append(command)
 	}
 	
-	public mutating func replaceCmd(atRow row1: Int, track track1: Int, command: Cmd) {
-		replaceCmd(atRow: Int16(row1), track: Int16(track1), command: command)
+	public mutating func replaceCmd(atRow row1: Int16, track: Int16, command: Cmd) {
+		replaceCmdAtRow(row1, track: track, command: command)
 	}
 	
-	public mutating func replaceCmd(atRow row1: Int16, track track1: Int16, command: Cmd) {
+	public mutating func replaceCmdAtRow(row1: Int, track track1: Int, command: Cmd) {
+		replaceCmdAtRow(Int16(row1), track: Int16(track1), command: command)
+	}
+	
+	public mutating func replaceCmdAtRow(row1: Int16, track track1: Int16, command: Cmd) {
 		var track = track1
 		var row = row1
 		if (row < 0) {
