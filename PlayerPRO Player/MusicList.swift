@@ -49,13 +49,12 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	@objc func indexOfObjectSimilarToURL(theURL: NSURL) -> Int {
-		for (i, obj) in enumerate(musicList) {
-			if obj == theURL {
-				return i
-			}
+		let theInd: Int? = indexOfObjectSimilarToURL(theURL)
+		if theInd != nil {
+			return theInd!
+		} else {
+			return NSNotFound
 		}
-		
-		return NSNotFound
 	}
 	
 	//This cannot be represented in Objective C

@@ -48,7 +48,7 @@
 	SoundSettingsViewController *exportController;
 }
 
-@property (strong) NSString* musicName;
+@property (readonly, strong) NSString* musicName;
 
 @property (weak) IBOutlet NSWindow *window;
 @property (weak) IBOutlet NSWindow *exportWindow;
