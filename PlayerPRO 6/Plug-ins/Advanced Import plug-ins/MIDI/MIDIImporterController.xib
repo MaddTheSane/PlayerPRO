@@ -7,8 +7,6 @@
         <customObject id="-2" userLabel="File's Owner" customClass="MIDIImporterController" customModule="MIDI">
             <connections>
                 <outlet property="theURLField" destination="jFE-gX-DaI" id="jnL-Oc-cWm"/>
-                <outlet property="trackNumField" destination="hUD-06-9XD" id="9lh-DM-lVz"/>
-                <outlet property="useQTIns" destination="Hpq-ob-Mnf" id="NVv-Br-7Ff"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -57,21 +55,23 @@ Gw
                         <formCell key="prototype" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" title="Field:" id="cvF-yo-KJr">
                             <font key="font" metaFont="system"/>
                             <font key="titleFont" metaFont="system"/>
-                            <connections>
-                                <binding destination="-2" name="value" keyPath="self.trackCount" id="hWa-Ty-0LU">
-                                    <dictionary key="options">
-                                        <string key="NSNoSelectionPlaceholder">8</string>
-                                        <string key="NSNotApplicablePlaceholder">8</string>
-                                        <string key="NSNullPlaceholder">8</string>
-                                    </dictionary>
-                                </binding>
-                            </connections>
                         </formCell>
                         <cells>
                             <column>
                                 <formCell scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" title="Number of tracks:" placeholderString="8" id="hUD-06-9XD">
+                                    <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" groupingSize="0" minimumIntegerDigits="0" maximumIntegerDigits="42" id="jh4-Rf-gyj"/>
                                     <font key="font" metaFont="system"/>
                                     <font key="titleFont" metaFont="system"/>
+                                    <connections>
+                                        <binding destination="-2" name="value" keyPath="self.trackCount" id="xJ2-Yr-R9L">
+                                            <dictionary key="options">
+                                                <integer key="NSMultipleValuesPlaceholder" value="8"/>
+                                                <integer key="NSNoSelectionPlaceholder" value="8"/>
+                                                <integer key="NSNotApplicablePlaceholder" value="8"/>
+                                                <integer key="NSNullPlaceholder" value="8"/>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
                                 </formCell>
                             </column>
                         </cells>

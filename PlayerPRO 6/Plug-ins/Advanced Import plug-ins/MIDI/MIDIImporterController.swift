@@ -9,8 +9,6 @@
 import Cocoa
 
 /*final*/ class MIDIImporterController: NSWindowController {
-	@IBOutlet weak var useQTIns: NSButton!
-	@IBOutlet weak var trackNumField: NSFormCell!
 	@IBOutlet weak var theURLField: NSTextField!
 	private var locationOfFile: NSURL!
 	dynamic var QTIns = false
