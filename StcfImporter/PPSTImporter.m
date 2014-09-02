@@ -111,10 +111,8 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 		NSString *CFaStr2 = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman));
 		
 		NSString *together = [@[CFaStr, CFaStr2] componentsJoinedByString:@":"];
-		CFaStr = CFaStr2 = nil;
 		
 		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)together, kCFURLHFSPathStyle, false));
-		together = nil;
 		if ([fullPath checkResourceIsReachableAndReturnError:NULL]) {
 			[newArray addObject:[fullPath path]];
 		} else {
