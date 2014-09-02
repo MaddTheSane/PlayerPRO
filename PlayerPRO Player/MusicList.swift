@@ -69,7 +69,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	@objc func clearMusicList() {
-		let theIndex = NSIndexSet(indexesInRange: NSMakeRange(0, musicList.count))
+		let theIndex = NSIndexSet(indexesInRange: NSRange(location: 0, length: musicList.count))
 		self.willChange(.Removal, valuesAtIndexes: theIndex, forKey: kMusicListKVO)
 		musicList.removeAll()
 		self.didChange(.Removal, valuesAtIndexes: theIndex, forKey: kMusicListKVO)

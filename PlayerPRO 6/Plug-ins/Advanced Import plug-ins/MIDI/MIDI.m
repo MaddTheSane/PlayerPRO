@@ -214,16 +214,16 @@ static unsigned int LongFromFd(Ptr fd, unsigned cb)
 	return longT;
 }
 
-static short PtuneLoadFnChannel(NSFileHandle *wrapper)
+NSInteger GetTracksNumber(NSURL *theURL)
 {
-	const char	rgbHeader[] = {'M', 'T', 'h', 'd', 0, 0, 0, 6, 0};
-	char		tmpHeader[9] = {0};
-	short		irfMax;
-	//Ptr		ourPtr = (Ptr)MIDIptr;
+	NSFileHandle	*wrapper = [NSFileHandle fileHandleForReadingFromURL:theURL error:nil];
+	const char		rgbHeader[] = {'M', 'T', 'h', 'd', 0, 0, 0, 6, 0};
+	NSData			*rgbNSHeader = [[NSData alloc] initWithBytesNoCopy:(void*)rgbHeader length:sizeof(rgbHeader) freeWhenDone:NO];
+	char			tmpHeader[9] = {0};
+	short			irfMax;
 	
 	NSData * myData = [wrapper readDataOfLength:9];
-	[myData getBytes:tmpHeader length:9];
-	if (memcmp(tmpHeader, rgbHeader, 9)) {
+	if (![myData isEqual:rgbNSHeader]) {
 		return -1; /** Only process type 0 or type 1 general MIDI files **/
 	}
 	// Gobble a byte
@@ -237,10 +237,4 @@ static short PtuneLoadFnChannel(NSFileHandle *wrapper)
 	irfMax *= 2;
 	
 	return irfMax;
-}
-
-NSInteger GetTracksNumber(NSURL *theURL)
-{
-	NSFileHandle *wrapper = [NSFileHandle fileHandleForReadingFromURL:theURL error:nil];
-	return PtuneLoadFnChannel(wrapper);
 }

@@ -16,50 +16,6 @@
 @end
 
 #if 0
-static short NSStringToNote(NSString *myTT)
-{
-	if (!myTT || [myTT isEqualToString:@""] || [myTT isEqualToString:@"---"] || [myTT length] < 2) {
-		return 0xFF;
-	}
-	
-	short		Oct;
-	NSString	*val1 = [myTT substringWithRange:[myTT rangeOfComposedCharacterSequencesForRange:NSMakeRange(0, 1)]];
-	NSString	*val2 = [myTT length] >= 3 ? [myTT substringWithRange:[myTT rangeOfComposedCharacterSequencesForRange:NSMakeRange(1, 1)]] : @" ";
-	NSString	*val3 = [myTT substringWithRange:[myTT rangeOfComposedCharacterSequencesForRange:NSMakeRange([myTT length] >= 3 ? 2 : 1, 1)]];
-	Oct = [val3 intValue];
-	Oct *= 12;
-	
-	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
-	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
-	if ([val1 compare:@"C" options:kNoteCompareOptions] == NSOrderedSame) {
-		Oct += 0;
-	} else if ([val1 compare:@"D" options:kNoteCompareOptions] == NSOrderedSame) {
-		Oct += 2;
-	} else if ([val1 compare:@"E" options:kNoteCompareOptions] == NSOrderedSame) {
-		Oct += 4;
-	} else if ([val1 compare:@"F" options:kNoteCompareOptions] == NSOrderedSame) {
-		Oct += 5;
-	} else if ([val1 compare:@"G" options:kNoteCompareOptions] == NSOrderedSame) {
-		Oct += 7;
-	} else if ([val1 compare:@"A" options:kNoteCompareOptions] == NSOrderedSame) {
-		Oct += 9;
-	} else if ([val1 compare:@"B" options:kNoteCompareOptions] == NSOrderedSame) {
-		Oct += 11;
-	} else
-		Oct = 0xFF;
-	
-	if (Oct != 0xFF) {
-		if ([val2 isEqualToString:@"#"] || [val2 isEqualToString:@"♯"]/*Unicode sharp sign, just in case*/)
-			Oct++;
-		if (Oct > 95)
-			Oct = 0xFF;
-		if (Oct < 0)
-			Oct = 0xFF;
-	}
-	
-	return Oct;
-}
-
 static int NSStringToHex(NSString *str)
 {
 	NSScanner *tmpScanner = [[NSScanner alloc] initWithString:str];
