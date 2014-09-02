@@ -170,9 +170,9 @@ void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init)
 	MADDriverSettings init = {0};
 	MADMusic *MadFile = malloc(sizeof(MADMusic) + 20);
 	NSMutableData *madData = [[NSMutableData alloc] initWithCapacity:128];
-	NSData *fileData = [[NSData alloc] initWithContentsOfURL:theURL options:0 error:NULL];
+	NSData *fileData = [[NSData alloc] initWithContentsOfURL:theURL];
 	if (!fileData) {
-		reply(nil, theErr);
+		reply(nil, MADReadingErr);
 		return;
 	}
 	const void *AlienFile = [fileData bytes];

@@ -238,14 +238,24 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	@objc func loadMusicListAtURL(fromURL: NSURL) -> Bool {
-		var listData = NSData.dataWithContentsOfURL(fromURL, options: NSDataReadingOptions(0), error: nil)
-		if (listData == nil) {
+		var listData: NSData? = NSData(contentsOfURL:fromURL)
+		if let unWrappedListData = listData {
+			return loadMusicListFromData(unWrappedListData)
+		} else {
 			return false
 		}
-		return loadMusicListFromData(listData)
+	}
+	
+	private func clearMusicListInDefaults() {
+		let musListDefName = "PlayerPRO Music List"
+		let defaults = NSUserDefaults.standardUserDefaults()
+		if let listData = defaults.dataForKey(musListDefName) {
+			defaults.removeObjectForKey(musListDefName)
+		}
 	}
 	
 	@objc func loadApplicationMusicList() -> Bool {
+		clearMusicListInDefaults() //Otherwise the preference file is abnormally large.
 		let manager = NSFileManager.defaultManager();
 		if (PPPPath.checkResourceIsReachableAndReturnError(nil) == false) {
 			manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories: true, attributes: nil, error: nil)
