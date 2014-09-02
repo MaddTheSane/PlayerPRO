@@ -57,9 +57,7 @@ sData *MADCreateSample(MADMusic *MDriver, short ins, short sample)
 	
 	return curData;
 }
-#endif
 
-#if 0
 Handle DoExp1to3( Handle sound, unsigned long numSampleFrames)
 {
 	long	i;

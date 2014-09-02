@@ -19,10 +19,11 @@ import PlayerPROKit
 	
 	public func canImportURL(theURL: NSURL, error outErr: NSErrorPointer) -> Bool {
 		var myErr = MADErr.NoErr;
-		let fileData = NSData(contentsOfURL: theURL, options: .DataReadingMappedIfSafe, error: nil)
+		let aFile = NSFileHandle.fileHandleForReadingFromURL(theURL, error: nil)
+		let fileData = aFile.readDataOfLength(4)
+		let headerData = "MThd".dataUsingEncoding(NSASCIIStringEncoding, allowLossyConversion: true)
 		
-		let sig = "MThd"
-		if memcmp(fileData.bytes, sig, 4) == 0 {
+		if fileData == headerData {
 			return true
 		} else {
 			if outErr != nil {

@@ -59,11 +59,6 @@ void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init)
 	
 	InitQuicktimeInstruments();
 	
-	channels++;
-	channels /= 2;
-	channels *= 2;
-	//wMaxchan = channels;
-	
 	ResolvePtune(ptuneMusic);
 	
 	SavePtunePfile(ptuneMusic, theMAD, init);
