@@ -254,8 +254,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return loadMusicListAtURL(PPPPath.URLByAppendingPathComponent(kPlayerList, isDirectory: false))
 	}
 	
-	// Key-valued Coding
-	
+	// MARK: - Key-valued Coding
 	@objc dynamic func addMusicListObject(object: MusicListObject) {
 		if (musicList as NSArray).containsObject(object) == false {
 			musicList.append(object)

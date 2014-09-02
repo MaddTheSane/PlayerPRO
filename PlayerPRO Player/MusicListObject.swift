@@ -42,7 +42,7 @@ func ==(lhs: MusicListObject, rhs: NSURL) -> Bool {
 }
 
 func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
-	return URLsPointingToTheSameFile(lhs, rhs.musicURL)
+	return rhs == lhs
 }
 
 @objc(PPMusicListObject) class MusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPrintable, Printable {
