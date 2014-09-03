@@ -76,7 +76,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 			var err: NSError? = nil;
 			if (!musicURL.getResourceValue(&val, forKey:NSURLTotalFileSizeKey, error: &err)) {
 				let manager = NSFileManager.defaultManager();
-				let theparam = manager.attributesOfItemAtPath(musicURL.path, error: nil)
+				let theparam = manager.attributesOfItemAtPath(musicURL.path!, error: nil)
 				if (theparam == nil) {
 					return 0;
 				}
@@ -142,7 +142,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		}
 	}
 
-	func copyWithZone(zone: NSZone) -> AnyObject! {
+	func copyWithZone(zone: NSZone) -> AnyObject {
 		//this class is immutable
 		return self;
 	}
