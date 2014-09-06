@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+// Disabled because Xcode wants it to be in a custom framework. ick.
+//IB_DESIGNABLE
 @interface PPSmallPianoView : NSView
 
 @end

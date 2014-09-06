@@ -11,8 +11,8 @@ import PlayerPROKit
 
 enum ExportStatus {
 	case NotRan
-	case IsRunning
-	case IsDone
+	case Running
+	case Done
 	case EncounteredError
 }
 
@@ -28,7 +28,7 @@ typealias PPSwiftExportBlock = (theURL: NSURL, inout errStr: String?) -> MADErr
 class ExportObject: NSObject {
 	weak var delegate: ExportObjectDelegate?
 	let destination: NSURL
-	let exportBlock: PPExportBlock
+	private let exportBlock: PPExportBlock
 	private(set) var status = ExportStatus.NotRan
 	@objc init(destination dest: NSURL, exportBlock exportCode: PPExportBlock) {
 		exportBlock = exportCode
@@ -49,13 +49,13 @@ class ExportObject: NSObject {
 	}
 	
 	func run() {
-		status = .IsRunning
+		status = .Running
 		// TODO: multi-thread this!
 		var aStr: NSString? = nil
 		let errVal = exportBlock(theURL: destination, errStr: &aStr)
 		if errVal == .NoErr {
 			delegate?.exportObjectDidFinish(self)
-			status = .IsDone
+			status = .Done
 		} else {
 			if aStr == nil {
 				let tmpErr = CreateErrorFromMADErrorType(errVal)!
