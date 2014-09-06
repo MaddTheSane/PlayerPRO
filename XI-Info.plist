@@ -22,18 +22,6 @@
 	<string>2.0</string>
 	<key>CFPlugInDynamicRegistration</key>
 	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>620875F5-1E38-45EF-9FBA-AAE929502D63</key>
-		<string>XIFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>FD7154D6-20BF-4007-881B-8E44970C3B0A</key>
-		<array>
-			<string>620875F5-1E38-45EF-9FBA-AAE929502D63</string>
-		</array>
-	</dict>
 	<key>MADCanExport</key>
 	<true/>
 	<key>MADCanImport</key>
@@ -52,5 +40,7 @@
 	</array>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2000 Antoine ROSSET</string>
+	<key>NSPrincipalClass</key>
+	<string>PPXIPlug</string>
 </dict>
 </plist>

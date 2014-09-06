@@ -21,6 +21,7 @@ import PlayerPROKit
 		var myErr = MADErr.NoErr;
 		let aFile = NSFileHandle.fileHandleForReadingFromURL(theURL, error: nil)
 		let fileData = aFile.readDataOfLength(4)
+		aFile.closeFile()
 		let headerData = "MThd".dataUsingEncoding(NSASCIIStringEncoding, allowLossyConversion: true)
 		
 		if fileData == headerData {

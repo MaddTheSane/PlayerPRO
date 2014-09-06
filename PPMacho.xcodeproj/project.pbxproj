@@ -150,7 +150,6 @@
 		55149C641832EE86009C850B /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
 		55149C651832EE92009C850B /* embeddedPlugs.h in Headers */ = {isa = PBXBuildFile; fileRef = 550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */; };
 		55151F7A10DEDBDB0054ABC4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		5515200E10DEDC9B0054ABC4 /* XI.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105910D6C79E00BB619C /* XI.c */; };
 		5517DAC5180CAD61001413D0 /* ULT.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		551FEA6510E727AD00EDF2F1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		551FEAD410E727B100EDF2F1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -223,6 +222,19 @@
 		5533C8FA19942AD9003AEB16 /* SoundOutputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5533C8F919942AD9003AEB16 /* SoundOutputController.swift */; };
 		5533C8FB19942AD9003AEB16 /* SoundOutputController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5533C8F919942AD9003AEB16 /* SoundOutputController.swift */; };
 		5533C90019943EEE003AEB16 /* MidiPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55085D7A1836BAAA004A152F /* MidiPrefs.xib */; };
+		5535079219BBD4BC00B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5535079319BBD4BE00B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5535079419BBD4BE00B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5535079519BBD4BF00B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5535079619BBD4BF00B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5535079719BBD4C400B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5535079819BBD4C400B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5535079919BBD4C600B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5535079A19BBD4D000B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5535079B19BBD4D000B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5535079C19BBD4D100B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5535079D19BBD4D500B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		5535079E19BBD4D600B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		553626B817EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */; };
 		553B8B7219B3CD85007C2C64 /* xm-ios.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B6E19B3CD85007C2C64 /* xm-ios.png */; };
 		553B8B7319B3CD85007C2C64 /* xm-ios@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B6F19B3CD85007C2C64 /* xm-ios@2x.png */; };
@@ -2415,6 +2427,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5535079319BBD4BE00B9E815 /* PlayerPROKit.framework in Frameworks */,
 				550FFAE717CEA4570003A2F3 /* CoreFoundation.framework in Frameworks */,
 				550FFAE617CEA4570003A2F3 /* PlayerPROCore.framework in Frameworks */,
 				5511F4E6186CF3AD008F6BE1 /* AudioToolbox.framework in Frameworks */,
@@ -2439,6 +2452,7 @@
 			files = (
 				55151F7A10DEDBDB0054ABC4 /* CoreFoundation.framework in Frameworks */,
 				55B23D201689315500DCE923 /* PlayerPROCore.framework in Frameworks */,
+				5535079219BBD4BC00B9E815 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2448,6 +2462,7 @@
 			files = (
 				551FEA6510E727AD00EDF2F1 /* CoreFoundation.framework in Frameworks */,
 				55B23D1F1689314E00DCE923 /* PlayerPROCore.framework in Frameworks */,
+				5535079619BBD4BF00B9E815 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2457,6 +2472,7 @@
 			files = (
 				551FEAD410E727B100EDF2F1 /* CoreFoundation.framework in Frameworks */,
 				55B23D1E1689314500DCE923 /* PlayerPROCore.framework in Frameworks */,
+				5535079519BBD4BF00B9E815 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2539,6 +2555,7 @@
 			files = (
 				554E11F710D6F3E100BB619C /* CoreFoundation.framework in Frameworks */,
 				5574BCFD16964D1900CF3C37 /* PlayerPROCore.framework in Frameworks */,
+				5535079E19BBD4D600B9E815 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2548,6 +2565,7 @@
 			files = (
 				554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */,
 				5574BCEC169634DE00CF3C37 /* PlayerPROCore.framework in Frameworks */,
+				5535079D19BBD4D500B9E815 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2645,6 +2663,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5535079719BBD4C400B9E815 /* PlayerPROKit.framework in Frameworks */,
 				557DE5D910E0882800177B4C /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2653,6 +2672,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5535079819BBD4C400B9E815 /* PlayerPROKit.framework in Frameworks */,
 				557DE61C10E0884100177B4C /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2701,6 +2721,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5535079919BBD4C600B9E815 /* PlayerPROKit.framework in Frameworks */,
 				557DE7F910E08D8900177B4C /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2729,6 +2750,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5535079A19BBD4D000B9E815 /* PlayerPROKit.framework in Frameworks */,
 				557DE8C210E08DA800177B4C /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2747,6 +2769,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5535079B19BBD4D000B9E815 /* PlayerPROKit.framework in Frameworks */,
 				557DE91510E08DB000177B4C /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2755,6 +2778,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5535079C19BBD4D100B9E815 /* PlayerPROKit.framework in Frameworks */,
 				557DE95810E08DB900177B4C /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2890,6 +2914,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5535079419BBD4BE00B9E815 /* PlayerPROKit.framework in Frameworks */,
 				55ADC3D717D6F390001F27D4 /* CoreFoundation.framework in Frameworks */,
 				55ADC3D617D6F390001F27D4 /* PlayerPROCore.framework in Frameworks */,
 				552097B2187AB8B9004FD220 /* AudioToolbox.framework in Frameworks */,
@@ -6487,7 +6512,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				554F088119BBBC6E005A215E /* PPXIPlug.m in Sources */,
-				5515200E10DEDC9B0054ABC4 /* XI.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

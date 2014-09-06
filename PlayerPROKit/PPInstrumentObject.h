@@ -34,6 +34,8 @@
 @property (nonatomic, copy) NSMutableArray *panningEnvelope;
 @property (nonatomic, copy) NSMutableArray *pitchEnvelope;
 
+- (MADByte*)what NS_RETURNS_INNER_POINTER;
+
 - (PPEnvelopeObject *)objectAtIndexedSubscript:(NSInteger)index;
 - (void)resetInstrument;
 

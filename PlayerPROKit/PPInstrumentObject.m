@@ -245,6 +245,11 @@ static const dispatch_block_t initUTIArray = ^{
 }
 #endif
 
+- (MADByte*)what
+{
+	return theInstrument.what;
+}
+
 @synthesize volumeEnvelope = _volumeEnvelope;
 @synthesize panningEnvelope = _panningEnvelope;
 @synthesize pitchEnvelope = _pitchEnvelope;

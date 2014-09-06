@@ -236,5 +236,7 @@ NSInteger GetTracksNumber(NSURL *theURL)
 	irfMax /= 2;
 	irfMax *= 2;
 	
+	[wrapper closeFile];
+	
 	return irfMax;
 }
