@@ -115,10 +115,16 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (instancetype)init
 {
-	return [self initWithCmd:NULL];
+	return [self initWithCmdPtr:NULL];
 }
 
-- (instancetype)initWithCmd:(Cmd *)theCmd
+- (instancetype)initWithCmd:(Cmd)theCmd
+{
+	Cmd aCmd = theCmd;
+	return [self initWithCmdPtr:&aCmd];
+}
+
+- (instancetype)initWithCmdPtr:(Cmd *)theCmd
 {
 	if (self = [super init]) {
 		if (!theCmd) {
@@ -132,7 +138,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	return [[[self class] alloc] initWithCmd:&theCommand];
+	return [[[self class] alloc] initWithCmdPtr:&theCommand];
 }
 
 - (void)resetCommand;

@@ -217,6 +217,19 @@
 	}
 }
 
+- (NSData*)directSave
+{
+	size_t aSize = [self audioDataLength];
+	void* thePtr = malloc(aSize);
+	MADDriverSettings ourSettings = self.driverSettings;
+	NSData *ourData = nil;
+	if (DirectSave(thePtr, &ourSettings, theRec)) {
+		ourData = [[NSData alloc] initWithBytesNoCopy:thePtr length:aSize];
+	}
+ 
+	return ourData;
+}
+
 - (void)cleanDriver
 {
 	MADCleanDriver(theRec);
@@ -230,6 +243,18 @@
 - (BOOL)isPaused
 {
 	return !MADIsPlayingMusic(theRec);
+}
+
+- (void)setPaused:(BOOL)paused
+{
+	if (paused == self.paused) {
+		return;
+	}
+	if (paused) {
+		[self pause];
+	} else {
+		[self play];
+	}
 }
 
 - (BOOL)isPlayingMusic

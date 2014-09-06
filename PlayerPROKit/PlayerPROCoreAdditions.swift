@@ -169,7 +169,6 @@ extension MADInfoRec: DebugPrintable {
 }
 
 extension PlugInfo {
-
 	public var importer: Bool {
 		get {
 			switch (self.mode) {
@@ -193,7 +192,6 @@ extension PlugInfo {
 			}
 		}
 	}
-
 }
 
 public struct MADLibraryGenerator: GeneratorType {
@@ -388,9 +386,15 @@ public func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePoint
 	return GetMADCommand(position, channel, aPat)
 }
 
-public func ReplaceCmd(row1: Int16, track1: Int16, command: Cmd, aPat: UnsafeMutablePointer<PatData>) {
-	var aCmd: UnsafeMutablePointer<Cmd> = GetCommand(row1, track1, aPat)
+public func ReplaceCmd(position: Int16, channel: Int16, command: Cmd, aPat: UnsafeMutablePointer<PatData>) {
+	var aCmd: UnsafeMutablePointer<Cmd> = GetCommand(position, channel, aPat)
 	aCmd.memory = command
+}
+
+public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>, commandBlock: (inout Cmd)-> ()) {
+	var aCmd: Cmd = GetCommand(position, channel, aPat)
+	commandBlock(&aCmd)
+	ReplaceCmd(position, channel, aCmd, aPat)
 }
 
 extension PatHeader {
@@ -415,19 +419,20 @@ public func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcm
 	return MADGetCmd(row, track, aPcmd)
 }
 
-public func ReplaceCmd(row1: Int16, track1: Int16, command: Cmd, aPcmd: UnsafeMutablePointer<Pcmd>) {
-	var aCmd: UnsafeMutablePointer<Cmd> = GetCommand(row1, track1, aPcmd)
+public func ReplaceCmd(row: Int16, track: Int16, command: Cmd, aPcmd: UnsafeMutablePointer<Pcmd>) {
+	var aCmd: UnsafeMutablePointer<Cmd> = GetCommand(row, track, aPcmd)
 	aCmd.memory = command
 }
 
+public func ModifyCmdAtRow(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>, commandBlock: (inout Cmd)-> ()) {
+	var aCmd: Cmd = GetCommand(row, track, aPcmd)
+	commandBlock(&aCmd)
+	ReplaceCmd(row, track, aCmd, aPcmd)
+}
+
 public let kPlayerPROFiltersPlugTypeID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x79, 0xEA, 0x82, 0xAD, 0x5A, 0x53, 0x46, 0xAF, 0x82, 0xA9, 0x4A, 0x06, 0x85, 0xB4, 0x58, 0x8C)!
-
 public let kPlayerPROFiltersPlugInterfaceID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xDA, 0x70, 0x82, 0xA2, 0xFE, 0xF1, 0x44, 0x75, 0xB1, 0xA4, 0x35, 0xC8, 0x1E, 0xD5, 0xDB, 0x8F)!
-
 public let kPlayerPROInstrumentPlugTypeID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xFD, 0x71, 0x54, 0xD6, 0x20, 0xBF, 0x40, 0x07, 0x88, 0x1B, 0x8E, 0x44, 0x97, 0x0C, 0x3B, 0x0A)!
-
 public let kPlayerPROInstrumentPlugInterfaceID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x8D, 0xC7, 0xC5, 0x82, 0x1C, 0x4B, 0x4F, 0x3C, 0xBE, 0xC8, 0x05, 0xCF, 0x83, 0x23, 0xCE, 0xA4)!
-
 public let kPlayerPRODigitalPlugTypeID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xE9, 0xE5, 0x57, 0x4F, 0x50, 0xB4, 0x43, 0xE0, 0x94, 0x8D, 0x8B, 0x7C, 0x80, 0xD4, 0x72, 0x61)!
-
 public let kPlayerPRODigitalPlugInterfaceID = CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x34, 0xBA, 0x67, 0x5D, 0x3E, 0xD8, 0x49, 0xF9, 0x8D, 0x06, 0x28, 0xA7, 0x43, 0x6A, 0x0E, 0x4D)!

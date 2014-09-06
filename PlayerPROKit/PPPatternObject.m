@@ -129,7 +129,7 @@ static const dispatch_block_t initUTIArray = ^{
 		NSInteger size = _musicWrapper._currentMusic->header->numChn * 64;
 		self.commands = [[NSMutableArray alloc] initWithCapacity:size];
 		for (int i = 0; i < size; i++) {
-			PPMadCommandObject *tmpObj = [[PPMadCommandObject alloc] initWithCmd:NULL];
+			PPMadCommandObject *tmpObj = [[PPMadCommandObject alloc] init];
 			[self.commands addObject:tmpObj];
 		}
 		self.patternName = @"";
@@ -146,12 +146,56 @@ static const dispatch_block_t initUTIArray = ^{
 		NSInteger size = _musicWrapper._currentMusic->header->numChn * patternHeader.size;
 		self.commands = [[NSMutableArray alloc] initWithCapacity:size];
 		for (int i = 0; i < size; i++) {
-			PPMadCommandObject *tmpObj = [[PPMadCommandObject alloc] initWithCmd:&_musicWrapper._currentMusic->partition[ptnIdx]->Cmds[i]];
+			PPMadCommandObject *tmpObj = [[PPMadCommandObject alloc] initWithCmdPtr:&_musicWrapper._currentMusic->partition[ptnIdx]->Cmds[i]];
 			[self.commands addObject:tmpObj];
 		}
 		self.patternName = [[NSString alloc] initWithCString:patternHeader.name encoding:NSMacOSRomanStringEncoding];
 	}
 	return self;
+}
+
+- (PPMadCommandObject*)getCommandFromPosition:(short)PosX channel:(short)TrackIdX
+{
+	if (PosX < 0)
+		PosX = 0;
+	else if (PosX >= self.patternSize)
+		PosX = self.patternSize - 1;
+
+	return self.commands[(self.patternSize * TrackIdX) + PosX];
+}
+
+- (void)replaceCommandAtPosition:(short)PosX channel:(short)TrackIdX cmd:(Cmd)aCmd
+{
+	if (PosX < 0)
+		PosX = 0;
+	else if (PosX >= self.patternSize)
+		PosX = self.patternSize - 1;
+	
+	self.commands[(self.patternSize * TrackIdX) + PosX] = [[PPMadCommandObject alloc] initWithCmd:aCmd];
+}
+
+- (void)replaceCommandAtPosition:(short)PosX channel:(short)TrackIdX command:(PPMadCommandObject*)aCmd
+{
+	if (PosX < 0)
+		PosX = 0;
+	else if (PosX >= self.patternSize)
+		PosX = self.patternSize - 1;
+	
+	self.commands[(self.patternSize * TrackIdX) + PosX] = [aCmd copy];
+}
+
+- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX commandBlock:(void (^)(Cmd*))block
+{
+	PPMadCommandObject *tmpMCmd = [self getCommandFromPosition:PosX channel:TrackIdX];
+	Cmd tmpCmd = tmpMCmd.theCommand;
+	block(&tmpCmd);
+	[self replaceCommandAtPosition:PosX channel:TrackIdX cmd:tmpCmd];
+}
+
+- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX madCommandBlock:(void (^)(PPMadCommandObject*))block
+{
+	PPMadCommandObject *tmpMCmd = [self getCommandFromPosition:PosX channel:TrackIdX];
+	block(tmpMCmd);
 }
 
 #if 0
@@ -202,6 +246,7 @@ static const dispatch_block_t initUTIArray = ^{
 	return new;
 }
 
+#pragma mark - Pcmd handling
 + (MADErr)testPcmdFileAtURL:(NSURL*)theURL
 {
 	MADErr err = MADNoErr;

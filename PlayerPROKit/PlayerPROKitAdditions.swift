@@ -12,6 +12,23 @@ import Foundation
 import PlayerPROCore
 import CoreGraphics
 
+public func GetCommand(position: Int16, channel: Int16, aPat: PPPatternObject) -> Cmd {
+	var aCmd = aPat.getCommandFromPosition(position, channel: channel)
+	return aCmd.theCommand
+}
+
+public func ReplaceCmd(position: Int16, channel: Int16, command: Cmd, aPat: PPPatternObject) {
+	aPat.replaceCommandAtPosition(position, channel: channel, cmd: command)
+}
+
+public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObject, commandBlock: (inout Cmd)-> ()) {
+	aPat.modifyCommandAtPosition(position, channel: channel, commandBlock: { (aCmd) -> Void in
+		var tmpCmd = aCmd.memory
+		commandBlock(&tmpCmd)
+		aCmd.memory = tmpCmd
+	})
+}
+
 public func CreateErrorFromMADErrorType(theErr: MADErr) -> NSError? {
 	return PPCreateErrorFromMADErrorType(theErr)
 }

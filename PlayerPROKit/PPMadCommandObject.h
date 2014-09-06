@@ -17,7 +17,8 @@
 @interface PPMadCommandObject : NSObject <PPObject>
 
 - (instancetype)init;
-- (instancetype)initWithCmd:(Cmd *)theCmd NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCmdPtr:(Cmd *)theCmd NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCmd:(Cmd)theCmd;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
 @property (readonly) Cmd theCommand;

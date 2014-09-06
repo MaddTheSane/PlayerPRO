@@ -41,6 +41,7 @@
 - (MADErr)stopDriver;
 
 - (BOOL)directSaveToPointer:(void*)thePtr settings:(MADDriverSettings*)theSett;
+- (NSData*)directSave;
 @property (readonly) NSInteger audioDataLength;
 
 - (MADErr)getMusicStatusWithCurrentTime:(long*)curTime totalTime:(long*)totTime;
@@ -74,7 +75,7 @@
 
 //@property (readonly, getter=isPlayingMusic)		BOOL playingMusic;
 @property (readonly, getter=isDonePlayingMusic) BOOL donePlayingMusic;
-@property (readonly, getter=isPaused)			BOOL paused;
+@property (getter=isPaused)						BOOL paused;
 
 - (PPMusicObject *)loadMusicFile:(NSString*)path NS_RETURNS_RETAINED;
 - (PPMusicObject *)loadMusicURL:(NSURL*)url NS_RETURNS_RETAINED;

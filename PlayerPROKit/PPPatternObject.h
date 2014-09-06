@@ -26,4 +26,11 @@
 
 - (instancetype)initWithMusic:(PPMusicObject *)mus NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithMusic:(PPMusicObject *)mus patternAtIndex:(short)ptnIdx;
+
+- (PPMadCommandObject*)getCommandFromPosition:(short)PosX channel:(short)TrackIdX;
+- (void)replaceCommandAtPosition:(short)PosX channel:(short)TrackIdX cmd:(Cmd)aCmd;
+- (void)replaceCommandAtPosition:(short)PosX channel:(short)TrackIdX command:(PPMadCommandObject*)aCmd;
+- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX commandBlock:(void (^)(Cmd*))block;
+- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX madCommandBlock:(void (^)(PPMadCommandObject*))block;
+
 @end
