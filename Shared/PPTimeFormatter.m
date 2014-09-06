@@ -7,6 +7,8 @@
 //
 
 #import "PPTimeFormatter.h"
+#import <Foundation/Foundation.h>
+#import <stdio.h>
 
 @implementation PPTimeFormatter
 
