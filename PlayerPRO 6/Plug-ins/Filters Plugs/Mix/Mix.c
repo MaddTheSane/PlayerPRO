@@ -16,7 +16,7 @@
 #include <Carbon/Carbon.h>
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/MADPlug.h>
 
 typedef short	*shortPtr;
 typedef long	*longPtr;

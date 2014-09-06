@@ -2,7 +2,6 @@
 /*  IMPORT	*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
 #include <PlayerPROCore/RDriverInt.h>
 #include <CoreFoundation/CFByteOrder.h>
 #include "WAV.h"

@@ -2,10 +2,7 @@
 /*	v 1.0			*/
 /*	1999 by ANR 	*/
 
-
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/PlayerPROCore.h>
 
 static void ControlSwitch(short item, DialogPtr dlog, short Switch)
 {

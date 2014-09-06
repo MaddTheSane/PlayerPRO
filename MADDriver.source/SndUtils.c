@@ -18,7 +18,7 @@
 /********************						***********************/
 
 #include "PlayerPROCore.h"
-#include "PPPlug.h"
+#include "MADPlug.h"
 
 sData* inMADCreateSample()
 {

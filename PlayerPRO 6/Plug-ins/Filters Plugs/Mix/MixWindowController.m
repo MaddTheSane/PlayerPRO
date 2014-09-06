@@ -8,7 +8,7 @@
 
 #import "MixWindowController.h"
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/MADPlug.h>
 
 @interface MixWindowController ()
 

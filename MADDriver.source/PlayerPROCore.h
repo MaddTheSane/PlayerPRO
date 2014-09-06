@@ -14,7 +14,7 @@
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
 #include <PlayerPROCore/RDriver.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/MADPlug.h>
 
 #ifdef _MAC_H
 //! Project version number for PlayerPROCore.

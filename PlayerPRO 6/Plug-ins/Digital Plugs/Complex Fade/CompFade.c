@@ -6,7 +6,6 @@
 //	A small example of to use Digital Editor Plugs with a MODAL DIALOG
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
 #include "OldCarbHeaders.h"
 
 static void GetDText (DialogPtr dlog, short item, StringPtr str)

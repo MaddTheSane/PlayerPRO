@@ -8,7 +8,6 @@
 
 #import "DepthController.h"
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
 
 @implementation DepthController
 

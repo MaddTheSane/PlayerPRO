@@ -7,7 +7,7 @@
 //
 
 #import "PPToneGeneratorController.h"
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/MADPlug.h>
 #include <math.h>
 #include <tgmath.h>
 

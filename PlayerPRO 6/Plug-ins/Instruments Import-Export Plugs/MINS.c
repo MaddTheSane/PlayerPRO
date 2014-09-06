@@ -4,7 +4,7 @@
 /*	1996 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/MADPlug.h>
 
 static inline OSErr TestMINS(InstrData *CC)
 {

@@ -8,7 +8,6 @@
 
 #import "FadeWindowController.h"
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
 
 @implementation FadeWindowController
 

@@ -4,17 +4,15 @@
 /*	1999 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/MADPlug.h>
 #include "PAT.h"
 
 static inline OSErr TestPAT(const char *CC)
 {
 	const char	IDStr[] = "GF1PATCH110";
-	short		i;
 	
-	for (i = 0; i < 12; i++) {
-		if (CC[i] != IDStr[i])
-			return MADFileNotSupportedByThisPlug;
+	if (memcmp(CC, IDStr, 12)) {
+		return MADFileNotSupportedByThisPlug;
 	}
 	
 	return MADNoErr;

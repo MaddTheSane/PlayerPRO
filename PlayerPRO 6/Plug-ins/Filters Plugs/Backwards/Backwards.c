@@ -7,7 +7,6 @@
 //	there is no selection.
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
 
 static OSErr mainBackwards(void			*unused,
 						   sData		*theData,

@@ -10,7 +10,7 @@
 #define PPMacho_PlayerPRO_PrefixHeader_pch
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/MADPlug.h>
 #include "PPByteswap.h"
 #include <ApplicationServices/ApplicationServices.h>
 #include <tgmath.h>

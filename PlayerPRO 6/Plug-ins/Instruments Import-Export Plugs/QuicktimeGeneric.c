@@ -2,7 +2,7 @@
 /*	1999 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/MADPlug.h>
 #include <Carbon/Carbon.h>
 #include <QuickTime/QuickTime.h>
 #include "WAV.h"

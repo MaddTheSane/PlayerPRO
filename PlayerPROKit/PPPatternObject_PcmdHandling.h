@@ -10,7 +10,7 @@
 #define __PLAYERPROKIT_PPPATTERNOBJECT_PCMDHANDLING__
 
 #import <PlayerPROKit/PPPatternObject.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/MADPlug.h>
 
 @interface PPPatternObject (PcmdHandling)
 + (MADErr)testPcmdFileAtURL:(NSURL*)theURL;

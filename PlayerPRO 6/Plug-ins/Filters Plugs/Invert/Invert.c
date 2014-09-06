@@ -2,9 +2,7 @@
 /*	v 1.0			*/
 /*	1999 by ROSSET	*/
 
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/PlayerPROCore.h>
 
 static OSErr mainInvert(void		*unused,
 						sData		*theData,

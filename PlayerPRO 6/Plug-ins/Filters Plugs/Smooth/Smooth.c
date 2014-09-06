@@ -11,7 +11,7 @@
 
 #include <PlayerPROCore/MAD.h>
 #include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/MADPlug.h>
 
 static OSErr mainSmooth(void		*unused,
 						sData		*theData,

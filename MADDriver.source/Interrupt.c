@@ -25,7 +25,7 @@
 #include "RDriverInt.h"
 #include "VSTFunctions.h"
 #ifdef _MAC_H
-#include "PPPlug.h"
+#include "MADPlug.h"
 #endif
 #include "PPPrivate.h"
 #ifdef _MIDIHARDWARE_

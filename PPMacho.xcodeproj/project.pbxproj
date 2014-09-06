@@ -314,7 +314,7 @@
 		5573A3CE10B5127800FF8B50 /* MAD.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4750C2F21E400D6C081 /* MAD.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573A3CF10B5128000FF8B50 /* RDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47B0C2F21E400D6C081 /* RDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573A3D010B5128800FF8B50 /* RDriverInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47D0C2F21E400D6C081 /* RDriverInt.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		5573A3D110B5129100FF8B50 /* PPPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* PPPlug.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5573A3D110B5129100FF8B50 /* MADPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* MADPlug.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573A3E410B513BD00FF8B50 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* FileUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573A3EA10B5147C00FF8B50 /* MyDebugStr.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A3E810B5147C00FF8B50 /* MyDebugStr.c */; };
 		5573A41210B5160000FF8B50 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -392,6 +392,7 @@
 		5578C53717DB957A0057D11B /* PPImport.mdimporter in Copy Spotlight */ = {isa = PBXBuildFile; fileRef = 5578C52F17DB94A50057D11B /* PPImport.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */; };
 		5579ADB819A4551500DEC0FF /* DigitalPlugHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */; };
+		557DC36E19BBA76C003CACFE /* DocumentPluginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557DC36D19BBA76C003CACFE /* DocumentPluginHelper.swift */; };
 		557DE42E10E06BF200177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE5D910E0882800177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE61C10E0884100177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -568,7 +569,7 @@
 		55C358B916C42D1800FB9FA6 /* MAD.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4750C2F21E400D6C081 /* MAD.h */; };
 		55C358BA16C42D1800FB9FA6 /* RDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47B0C2F21E400D6C081 /* RDriver.h */; };
 		55C358BB16C42D1800FB9FA6 /* RDriverInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47D0C2F21E400D6C081 /* RDriverInt.h */; };
-		55C358BC16C42D1800FB9FA6 /* PPPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* PPPlug.h */; };
+		55C358BC16C42D1800FB9FA6 /* MADPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* MADPlug.h */; };
 		55C358BD16C42D1800FB9FA6 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; };
 		55C358BE16C42D1800FB9FA6 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* FileUtils.h */; };
 		55C358F716C42F7100FB9FA6 /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */; };
@@ -612,7 +613,7 @@
 		55DE87CF187E60F400C36533 /* PPFXSetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DE87CC187E60F400C36533 /* PPFXSetObject.m */; };
 		55E382EB1981509100EC330B /* PlugInInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EA1981509100EC330B /* PlugInInfo.swift */; };
 		55E382EC1981509100EC330B /* PlugInInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EA1981509100EC330B /* PlugInInfo.swift */; };
-		55E382ED1981694300EC330B /* PPPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* PPPlug.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55E382ED1981694300EC330B /* MADPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* MADPlug.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55E52E2512455E5100315307 /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
 		55E898B010F17C2B004EB52B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55E898B110F17C2B004EB52B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -2184,6 +2185,7 @@
 		5578C53A17DB9F630057D11B /* PPInstrumentPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPlugHandler.h; sourceTree = "<group>"; };
 		5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentPlugHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigitalPlugHandler.swift; sourceTree = "<group>"; };
+		557DC36D19BBA76C003CACFE /* DocumentPluginHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentPluginHelper.swift; sourceTree = "<group>"; };
 		557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-FilterBridge.c"; sourceTree = "<group>"; };
 		557DE43410E06BF200177B4C /* Amplitude.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amplitude.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE43510E06BF200177B4C /* Amplitude-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Amplitude-Info.plist"; sourceTree = "<group>"; };
@@ -2397,7 +2399,7 @@
 		88E0C4750C2F21E400D6C081 /* MAD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MAD.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		88E0C47B0C2F21E400D6C081 /* RDriver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RDriver.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		88E0C47D0C2F21E400D6C081 /* RDriverInt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RDriverInt.h; sourceTree = "<group>"; };
-		88E0C47F0C2F21E400D6C081 /* PPPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlug.h; sourceTree = "<group>"; };
+		88E0C47F0C2F21E400D6C081 /* MADPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MADPlug.h; sourceTree = "<group>"; };
 		88E0C4960C2F21E500D6C081 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -3917,6 +3919,7 @@
 				55A3CD4319A6DC8B00957845 /* PPDocument.swift */,
 				5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */,
 				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
+				557DC36D19BBA76C003CACFE /* DocumentPluginHelper.swift */,
 			);
 			path = "Document classes";
 			sourceTree = "<group>";
@@ -4061,7 +4064,7 @@
 				550B001B10BA0243004FC5D7 /* PlayerPROCore.h */,
 				550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */,
 				55ADC3E617D7E4A4001F27D4 /* MADDriver.h */,
-				88E0C47F0C2F21E400D6C081 /* PPPlug.h */,
+				88E0C47F0C2F21E400D6C081 /* MADPlug.h */,
 				5573A41010B5160000FF8B50 /* PPDefs.h */,
 				88E0C3C40C2F21DD00D6C081 /* FileUtils.h */,
 				88E0C4750C2F21E400D6C081 /* MAD.h */,
@@ -4528,7 +4531,7 @@
 				55C358B916C42D1800FB9FA6 /* MAD.h in Headers */,
 				55ADC3E917D7E4E5001F27D4 /* MADDriver.h in Headers */,
 				55C358BA16C42D1800FB9FA6 /* RDriver.h in Headers */,
-				55C358BC16C42D1800FB9FA6 /* PPPlug.h in Headers */,
+				55C358BC16C42D1800FB9FA6 /* MADPlug.h in Headers */,
 				55C358BD16C42D1800FB9FA6 /* PPDefs.h in Headers */,
 				55C358BE16C42D1800FB9FA6 /* FileUtils.h in Headers */,
 				55C358BB16C42D1800FB9FA6 /* RDriverInt.h in Headers */,
@@ -4544,7 +4547,7 @@
 				5573A3CE10B5127800FF8B50 /* MAD.h in Headers */,
 				5573A3CF10B5128000FF8B50 /* RDriver.h in Headers */,
 				5573A3D010B5128800FF8B50 /* RDriverInt.h in Headers */,
-				5573A3D110B5129100FF8B50 /* PPPlug.h in Headers */,
+				5573A3D110B5129100FF8B50 /* MADPlug.h in Headers */,
 				5573A3E410B513BD00FF8B50 /* FileUtils.h in Headers */,
 				5573A41210B5160000FF8B50 /* PPDefs.h in Headers */,
 				550A474318A455CC0052AED7 /* VSTFunctions.h in Headers */,
@@ -4563,7 +4566,7 @@
 				55F1BDBB1975C9E100AD2C03 /* RDriverInt.h in Headers */,
 				55F1BDB31975C9E100AD2C03 /* embeddedPlugs.h in Headers */,
 				55F1BDB91975C9E100AD2C03 /* PPPrivate.h in Headers */,
-				55E382ED1981694300EC330B /* PPPlug.h in Headers */,
+				55E382ED1981694300EC330B /* MADPlug.h in Headers */,
 				55F1BDBC1975C9E100AD2C03 /* VSTFunctions.h in Headers */,
 				55F1BE221975CEC900AD2C03 /* PlayerPROCore.h in Headers */,
 				55F1BDB41975C9E100AD2C03 /* MADDriver.h in Headers */,
@@ -7004,6 +7007,7 @@
 				55232AF011FDE5180041A4EC /* BoxEditorPreferenceController.m in Sources */,
 				55232AF311FDE56D0041A4EC /* DigitalEditorPreferenceControler.m in Sources */,
 				55232AF711FDE5CB0041A4EC /* ClassicEditorPreferenceController.m in Sources */,
+				557DC36E19BBA76C003CACFE /* DocumentPluginHelper.swift in Sources */,
 				55232AFA11FDE5F90041A4EC /* MidiHardwarePreferenceController.m in Sources */,
 				552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */,
 				55DC597919A2E6B100212DD0 /* AppDelegate.swift in Sources */,

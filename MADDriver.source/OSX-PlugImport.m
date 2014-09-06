@@ -14,7 +14,7 @@
 #include "RDriverInt.h"
 #include "FileUtils.h"
 #include "PPPrivate.h"
-#include "PPPlug.h"
+#include "MADPlug.h"
 #define CharlMADcheckLength 10
 
 const CFStringRef kMadPlugMenuNameKey =		CFSTR("MADPlugMenuName");

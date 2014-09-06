@@ -8,9 +8,7 @@
 //	appear at the end of the loop, and also linearize
 //	the harmonic content in it.
 
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/PlayerPROCore.h>
 
 #define min(a, b) (((a) < (b)) ? (a) : (b))
 

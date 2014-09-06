@@ -1,5 +1,5 @@
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/MADPlug.h>
 #include <Carbon/Carbon.h>
 #include "PTMID.h"
 #include "dlsmac.h"

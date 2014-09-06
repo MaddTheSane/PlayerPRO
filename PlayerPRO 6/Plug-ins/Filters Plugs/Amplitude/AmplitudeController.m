@@ -8,7 +8,6 @@
 
 #import "AmplitudeController.h"
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
 
 @implementation AmplitudeController
 

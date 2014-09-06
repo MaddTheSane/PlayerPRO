@@ -43,7 +43,11 @@ func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<
 	}
 }
 
-let globalMadLib = (NSApplication.sharedApplication().delegate as AppDelegate).madLib
+internal var globalMadLib: PPLibrary {
+	get {
+		return ((NSApp as NSApplication).delegate as AppDelegate).madLib
+	}
+}
 
 class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDelegate {
 	private var exportObjects = [ExportObject]()
@@ -54,8 +58,8 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	let instrumentPlugHandler = PPInstrumentPlugHandler()
 	let digitalHandler = DigitalPlugHandler()
 	let filterHandler = PPFilterPlugHandler()
-	let preferences = Preferences.newPreferenceController()
 	let complexImport = ComplexImportPlugHandler()
+	let preferences = Preferences.newPreferenceController()
 	var thePPColors = [NSColor]()
 	
 	@IBOutlet weak var musicExportMenu:			NSMenu!

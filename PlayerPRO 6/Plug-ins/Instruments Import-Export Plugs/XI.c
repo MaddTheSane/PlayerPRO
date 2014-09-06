@@ -4,7 +4,6 @@
 /*	1996 by ANR		*/
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
 
 #ifndef WIN32
 //Windows Defines

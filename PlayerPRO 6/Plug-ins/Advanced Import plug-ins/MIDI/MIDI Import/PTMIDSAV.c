@@ -11,7 +11,7 @@
 
 //#include <cmath>
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
+#include <PlayerPROCore/MADPlug.h>
 #include <Carbon/Carbon.h>
 #define MADPlugNewPtrClear(x, y) calloc(x, 1)
 #include <stdio.h>

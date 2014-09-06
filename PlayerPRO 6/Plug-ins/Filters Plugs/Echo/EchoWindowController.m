@@ -8,7 +8,6 @@
 
 #import "EchoWindowController.h"
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/PPPlug.h>
 
 #define timeConvert 22254 //≈22KHZ
 

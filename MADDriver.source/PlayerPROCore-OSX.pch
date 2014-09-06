@@ -2,7 +2,7 @@
 #include <tgmath.h>
 #include "MAD.h"
 #include "RDriver.h"
-#include "PPPlug.h"
+#include "MADPlug.h"
 #include "PPPrivate.h"
 
 #ifdef __OBJC__
