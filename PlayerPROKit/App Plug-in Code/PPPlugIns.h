@@ -46,7 +46,7 @@ typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
 - (BOOL)canImportSampleAtURL:(NSURL*)sampleURL;
 + (BOOL)isInstrument;
 
-- (MADErr)importSampleAtURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short*)sampleID pluginInfo:(PPInfoPlug *)info;
+- (MADErr)importSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID pluginInfo:(in PPInfoPlug *)info;
 
 @optional
 - (MADErr)playSampleAtURL:(NSURL*)aSample;
@@ -57,10 +57,10 @@ typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
 @protocol PPInstrumentExportPlugin <PPPlugin, NSObject>
 
 + (BOOL)isInstrument;
-- (MADErr)exportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short*)sampleID pluginInfo:(PPInfoPlug *)info;
+- (MADErr)exportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID pluginInfo:(PPInfoPlug *)info;
 
 @optional
-- (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short*)sampleID pluginInfo:(PPInfoPlug *)info handler:(void (^)(MADErr error))handle;
+- (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID pluginInfo:(PPInfoPlug *)info handler:(void (^)(MADErr error))handle;
 
 @end
 

@@ -12,6 +12,7 @@
 #import "PPInstrumentObject_PPKPrivate.h"
 #import "PPMusicObject.h"
 #import "PPMusicObject_PPKPrivate.h"
+#include <PlayerPROCore/RDriverInt.h>
 #if !TARGET_OS_IPHONE
 #import "PPPasteboardHandling.h"
 #endif
@@ -185,9 +186,6 @@ static const dispatch_block_t initUTIArray = ^{
 @synthesize theInstrument;
 @synthesize number;
 @synthesize name;
-@synthesize _pitchEnvelope;
-@synthesize _volumeEnvelope;
-@synthesize _panningEnvelope;
 
 - (NSString*)name
 {
@@ -247,20 +245,9 @@ static const dispatch_block_t initUTIArray = ^{
 }
 #endif
 
-- (NSArray*)volumeEnvelope
-{
-	return [NSArray arrayWithArray:_volumeEnvelope];
-}
-
-- (NSArray*)panningEnvelope
-{
-	return [NSArray arrayWithArray:_panningEnvelope];
-}
-
-- (NSArray*)pitchEnvelope
-{
-	return [NSArray arrayWithArray:_pitchEnvelope];
-}
+@synthesize volumeEnvelope = _volumeEnvelope;
+@synthesize panningEnvelope = _panningEnvelope;
+@synthesize pitchEnvelope = _pitchEnvelope;
 
 - (void)writeBackToStruct
 {
@@ -710,6 +697,11 @@ static const dispatch_block_t initUTIArray = ^{
 	return theInstrument.volType;
 }
 
+- (void)setVolumeType:(EFType)volumeType
+{
+	theInstrument.volType = volumeType;
+}
+
 - (void)setVolumeTypeOn:(BOOL)typeOn
 {
 	[self willChangeValueForKey:kPPVolumeType];
@@ -779,6 +771,11 @@ static const dispatch_block_t initUTIArray = ^{
 	return theInstrument.pannType;
 }
 
+- (void)setPanningType:(EFType)panningType
+{
+	theInstrument.pannType = panningType;
+}
+
 - (void)setPanningTypeOn:(BOOL)typeOn
 {
 	[self willChangeValueForKey:kPPPanningType];
@@ -843,9 +840,24 @@ static const dispatch_block_t initUTIArray = ^{
 	return theInstrument.pannType & EFNOTE;
 }
 
-- (PPSampleObject*)samplesObjectAtIndex:(NSUInteger)idx;
+- (PPSampleObject*)samplesObjectAtIndex:(NSUInteger)idx
 {
 	return samples[idx];
+}
+
+- (unsigned short)volumeFadeOut
+{
+	return theInstrument.volFade;
+}
+
+- (void)setVolumeFadeOut:(unsigned short)volumeFadeOut
+{
+	theInstrument.volFade = volumeFadeOut;
+}
+
+- (void)resetInstrument
+{
+	
 }
 
 #pragma mark NSCopying protocol

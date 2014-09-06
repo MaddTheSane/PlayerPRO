@@ -30,11 +30,14 @@
 + (instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObject *)mus;
 - (instancetype)initWithMusic:(PPMusicObject *)mus instrumentIndex:(short)insIdx;
 
-@property (nonatomic, readonly, copy) NSArray *volumeEnvelope;
-@property (nonatomic, readonly, copy) NSArray *panningEnvelope;
-@property (nonatomic, readonly, copy) NSArray *pitchEnvelope;
+@property (nonatomic, copy) NSMutableArray *volumeEnvelope;
+@property (nonatomic, copy) NSMutableArray *panningEnvelope;
+@property (nonatomic, copy) NSMutableArray *pitchEnvelope;
 
 - (PPEnvelopeObject *)objectAtIndexedSubscript:(NSInteger)index;
+- (void)resetInstrument;
+
+@property unsigned short volumeFadeOut;
 
 @property (weak) PPMusicObject *theMus;
 @property (copy) NSString *name;
@@ -66,13 +69,13 @@
 @property Byte vibratoDepth;
 @property Byte vibratoRate;
 
-@property (readonly) EFType volumeType;
+@property (readwrite) EFType volumeType;
 @property (getter = isVolumeTypeOn) BOOL volumeTypeOn;
 @property (getter = isVolumeTypeSustain) BOOL volumeTypeSustain;
 @property (getter = isVolumeTypeLoop) BOOL volumeTypeLoop;
 @property (getter = isVolumeTypeNote) BOOL volumeTypeNote;
 
-@property (readonly) EFType panningType;
+@property (readwrite) EFType panningType;
 @property (getter = isPanningTypeOn) BOOL panningTypeOn;
 @property (getter = isPanningTypeSustain) BOOL panningTypeSustain;
 @property (getter = isPanningTypeLoop) BOOL panningTypeLoop;

@@ -1,18 +1,26 @@
-/*	Complex Fade	*/
-/*	v 1.0			*/
-/*	1997 by ANR		*/
+//
+//  PPRevertPlug.m
+//  PPMacho
+//
+//  Created by C.W. Betts on 9/6/14.
+//
+//
 
-//	Usage:
-//	A small example of to use Digital Editor Plugs with a MODAL DIALOG
+#import "PPRevertPlug.h"
 
-#include <PlayerPROCore/PlayerPROCore.h>
+@implementation PPRevertPlug
 
-static OSErr mainRevert(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
++ (BOOL)hasUIConfiguration
+{
+	return NO;
+}
+
+- (MADErr)runWithPcmd:(inout Pcmd*)myPcmd pluginInfo:(in PPInfoPlug *)thePPInfoPlug
 {
 	short	track, row;
 	Pcmd	*srcCmd;
 	long	memSize;
-		
+	
 	memSize = myPcmd->structSize;
 	
 	srcCmd = (Pcmd*)calloc(memSize, 1);
@@ -38,13 +46,8 @@ static OSErr mainRevert(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 	}
 	
 	free(srcCmd);
-		
+	
 	return MADNoErr;
 }
 
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x33, 0x7A, 0xC1, 0x07, 0x22, 0xD8, 0x44, 0x1F, 0x86, 0x39, 0xE2, 0xEE, 0xE8, 0xE3, 0x45, 0x92)
-//337AC107-22D8-441F-8639-E2EEE8E34592
-#define PLUGINFACTORY RevertFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainRevert //The old main function, renamed please
-
-#include "CFPlugin-DigitalBridge.c"
+@end

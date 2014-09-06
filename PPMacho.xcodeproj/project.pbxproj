@@ -245,9 +245,10 @@
 		554E11B310D6F32900BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E11F710D6F3E100BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		554E126410D6F4F700BB619C /* Propagate.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF010D6C79D00BB619C /* Propagate.c */; };
-		554E126610D6F50500BB619C /* Revert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF410D6C79D00BB619C /* Revert.c */; };
 		554F087819BBAD4A005A215E /* PPPlugIns.h in Headers */ = {isa = PBXBuildFile; fileRef = 554F087719BBAD4A005A215E /* PPPlugIns.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		554F087B19BBB931005A215E /* PPRevertPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 554F087A19BBB931005A215E /* PPRevertPlug.m */; };
+		554F087E19BBBB40005A215E /* PPPropogatePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 554F087D19BBBB40005A215E /* PPPropogatePlug.m */; };
+		554F088119BBBC6E005A215E /* PPXIPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 554F088019BBBC6E005A215E /* PPXIPlug.m */; };
 		555143CA17B6EDCF00252657 /* PPToneGeneratorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555143C817B6EDCF00252657 /* PPToneGeneratorController.m */; };
 		55534ACE1817C387006D6BCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55534AD11817C387006D6BCB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55534AD01817C387006D6BCB /* main.m */; };
@@ -2054,9 +2055,7 @@
 		5549A3B919A685CE004E95E2 /* PPColorPreferenceObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPColorPreferenceObject.m; sourceTree = "<group>"; };
 		554E0FE110D6C79D00BB619C /* CompFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = CompFade.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E0FE210D6C79D00BB619C /* CompFade.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = CompFade.r; sourceTree = "<group>"; };
-		554E0FF010D6C79D00BB619C /* Propagate.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Propagate.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E0FF310D6C79D00BB619C /* Read-Me */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read-Me"; sourceTree = "<group>"; };
-		554E0FF410D6C79D00BB619C /* Revert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Revert.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E0FFD10D6C79E00BB619C /* Backwards.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Backwards.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E100010D6C79E00BB619C /* Crop.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Crop.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E100310D6C79E00BB619C /* CrossFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = CrossFade.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -2100,6 +2099,12 @@
 		554E123010D6F3E600BB619C /* Revert.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Revert.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E125410D6F3E600BB619C /* Revert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Revert-Info.plist"; sourceTree = "<group>"; };
 		554F087719BBAD4A005A215E /* PPPlugIns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugIns.h; sourceTree = "<group>"; };
+		554F087919BBB931005A215E /* PPRevertPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPRevertPlug.h; sourceTree = "<group>"; };
+		554F087A19BBB931005A215E /* PPRevertPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPRevertPlug.m; sourceTree = "<group>"; };
+		554F087C19BBBB40005A215E /* PPPropogatePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPropogatePlug.h; sourceTree = "<group>"; };
+		554F087D19BBBB40005A215E /* PPPropogatePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPropogatePlug.m; sourceTree = "<group>"; };
+		554F087F19BBBC6E005A215E /* PPXIPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPXIPlug.h; path = XI/PPXIPlug.h; sourceTree = "<group>"; };
+		554F088019BBBC6E005A215E /* PPXIPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPXIPlug.m; path = XI/PPXIPlug.m; sourceTree = "<group>"; };
 		555143C717B6EDCF00252657 /* PPToneGeneratorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPToneGeneratorController.h; sourceTree = "<group>"; };
 		555143C817B6EDCF00252657 /* PPToneGeneratorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPToneGeneratorController.m; sourceTree = "<group>"; };
 		55534ACD1817C387006D6BCB /* updateInfoPlist */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = updateInfoPlist; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3028,6 +3033,8 @@
 			children = (
 				55151F8110DEDBDB0054ABC4 /* XI-Info.plist */,
 				554E105910D6C79E00BB619C /* XI.c */,
+				554F087F19BBBC6E005A215E /* PPXIPlug.h */,
+				554F088019BBBC6E005A215E /* PPXIPlug.m */,
 			);
 			name = XI;
 			sourceTree = "<group>";
@@ -3828,7 +3835,8 @@
 		554E125E10D6F46600BB619C /* Propagate */ = {
 			isa = PBXGroup;
 			children = (
-				554E0FF010D6C79D00BB619C /* Propagate.c */,
+				554F087C19BBBB40005A215E /* PPPropogatePlug.h */,
+				554F087D19BBBB40005A215E /* PPPropogatePlug.m */,
 				554E122110D6F3E100BB619C /* Propagate-Info.plist */,
 			);
 			path = Propagate;
@@ -3837,7 +3845,8 @@
 		554E125F10D6F4B800BB619C /* Revert */ = {
 			isa = PBXGroup;
 			children = (
-				554E0FF410D6C79D00BB619C /* Revert.c */,
+				554F087919BBB931005A215E /* PPRevertPlug.h */,
+				554F087A19BBB931005A215E /* PPRevertPlug.m */,
 				554E125410D6F3E600BB619C /* Revert-Info.plist */,
 			);
 			path = Revert;
@@ -6477,6 +6486,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				554F088119BBBC6E005A215E /* PPXIPlug.m in Sources */,
 				5515200E10DEDC9B0054ABC4 /* XI.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6565,7 +6575,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554E126410D6F4F700BB619C /* Propagate.c in Sources */,
+				554F087E19BBBB40005A215E /* PPPropogatePlug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6573,7 +6583,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554E126610D6F50500BB619C /* Revert.c in Sources */,
+				554F087B19BBB931005A215E /* PPRevertPlug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
