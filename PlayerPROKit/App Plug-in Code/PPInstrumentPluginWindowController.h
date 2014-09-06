@@ -7,7 +7,7 @@
 //
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#import <PlayerPROKit/PlayerPROKit.h>
+#import <PlayerPROKit/PPPlugIns.h>
 #import <PlayerPROKit/PPPluginWindowController.h>
 
 @interface PPInstrumentPluginWindowController : PPPluginWindowController

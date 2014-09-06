@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <PlayerPROCore/PlayerPROCore.h>
+#import <PlayerPROKit/PPPlugIns.h>
 #import <PlayerPROKit/PPPluginWindowController.h>
 
 @interface PPDigitalPluginWindowController : PPPluginWindowController

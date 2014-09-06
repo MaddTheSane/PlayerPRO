@@ -6,6 +6,7 @@
 //
 //
 
+#import <PlayerPROKit/PPPlugIns.h>
 #import <PlayerPROKit/PPPluginWindowController.h>
 
 @interface PPFilterPluginWindowController : PPPluginWindowController

@@ -7,7 +7,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#include <PlayerPROCore/PPDefs.h>
 #include <PlayerPROCore/MADPlug.h>
+#import <PlayerPROKit/PPPlugIns.h>
 
 #ifndef NS_DESIGNATED_INITIALIZER
 #define NS_DESIGNATED_INITIALIZER
@@ -16,7 +18,7 @@
 EXP NSString * const PPPlugInSheetDidEnd;
 EXP NSString * const PPPlugReturnCode;
 
-@interface PPPluginWindowController : NSWindowController
+@interface PPPluginWindowController : NSWindowController <PPPlugin>
 {
 	@protected
 	PPInfoPlug *infoPlug;

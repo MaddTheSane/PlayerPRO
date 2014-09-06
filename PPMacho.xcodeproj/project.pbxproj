@@ -247,6 +247,7 @@
 		554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E126410D6F4F700BB619C /* Propagate.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF010D6C79D00BB619C /* Propagate.c */; };
 		554E126610D6F50500BB619C /* Revert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF410D6C79D00BB619C /* Revert.c */; };
+		554F087819BBAD4A005A215E /* PPPlugIns.h in Headers */ = {isa = PBXBuildFile; fileRef = 554F087719BBAD4A005A215E /* PPPlugIns.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		555143CA17B6EDCF00252657 /* PPToneGeneratorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555143C817B6EDCF00252657 /* PPToneGeneratorController.m */; };
 		55534ACE1817C387006D6BCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55534AD11817C387006D6BCB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55534AD01817C387006D6BCB /* main.m */; };
@@ -2098,6 +2099,7 @@
 		554E122110D6F3E100BB619C /* Propagate-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Propagate-Info.plist"; sourceTree = "<group>"; };
 		554E123010D6F3E600BB619C /* Revert.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Revert.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E125410D6F3E600BB619C /* Revert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Revert-Info.plist"; sourceTree = "<group>"; };
+		554F087719BBAD4A005A215E /* PPPlugIns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugIns.h; sourceTree = "<group>"; };
 		555143C717B6EDCF00252657 /* PPToneGeneratorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPToneGeneratorController.h; sourceTree = "<group>"; };
 		555143C817B6EDCF00252657 /* PPToneGeneratorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPToneGeneratorController.m; sourceTree = "<group>"; };
 		55534ACD1817C387006D6BCB /* updateInfoPlist */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = updateInfoPlist; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4164,6 +4166,7 @@
 		55B7665517E3BDFE004C1D45 /* App Plug-in Code */ = {
 			isa = PBXGroup;
 			children = (
+				554F087719BBAD4A005A215E /* PPPlugIns.h */,
 				55B7665617E3BF9E004C1D45 /* PPPluginWindowController.h */,
 				55B7665717E3BF9E004C1D45 /* PPPluginWindowController.m */,
 				55B7665B17E3CDA2004C1D45 /* PPDigitalPluginWindowController.h */,
@@ -4497,6 +4500,7 @@
 				55DE87C6187E5B9100C36533 /* PPFXBusObject.h in Headers */,
 				551292ED163DD74100C2C639 /* PlayerPROKit.h in Headers */,
 				55F013E5187F5AB6002488D5 /* PPObjectProtocol.h in Headers */,
+				554F087819BBAD4A005A215E /* PPPlugIns.h in Headers */,
 				55DE87BF187E051F00C36533 /* PPPatternObject_PPKPrivate.h in Headers */,
 				55281D07199B32D400C998AF /* PPPasteboardHandling.h in Headers */,
 				55D2921F18AADB7100EB7A7D /* PPPatternObject_PcmdHandling.h in Headers */,
