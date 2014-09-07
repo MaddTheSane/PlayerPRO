@@ -134,10 +134,10 @@ static OSErr mainQTInst(void					*unused,
 		case MADPlugImport:
 		{
 			Ptr				theSound;
-			long			lS, lE;
+			int				lS, lE;
 			short			sS;
 			unsigned long	rate;
-			Boolean			stereo;
+			bool			stereo;
 			FSSpec			newFile;
 			
 			myErr = ConvertDataToWAVE(tmpSpec, &newFile, thePPInfoPlug);

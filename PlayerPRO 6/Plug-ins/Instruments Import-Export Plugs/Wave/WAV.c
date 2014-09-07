@@ -77,10 +77,10 @@ static OSErr mainWave(void					*unused,
 		case MADPlugImport:
 		{
 			void			*theSound;
-			long			lS, lE;
+			int				lS, lE;
 			short			sS;
 			unsigned int	rate;
-			Boolean			stereo;
+			bool			stereo;
 			size_t			sndLen;
 			
 			theSound = ConvertWAVCFURL(AlienFileRef, &sndLen, &lS, &lE, &sS, &rate, &stereo);
@@ -98,7 +98,7 @@ static OSErr mainWave(void					*unused,
 				}
 				CFRelease(lastPath);
 				
-				inAddSoundToMADCString(theSound, sndLen, (int)lS, (int)lE, sS, 60, rate, stereo, shortName, InsHeader, sample, sampleID);
+				inAddSoundToMADCString(theSound, sndLen, lS, lE, sS, 60, rate, stereo, shortName, InsHeader, sample, sampleID);
 				free(shortName);
 			}
 		}
@@ -134,5 +134,5 @@ static OSErr mainWave(void					*unused,
 #define PLUGINFACTORY WaveFactory
 #define PLUGMAIN mainWave
 
-#include "CFPlugin-InstrBridge.c"
+#include "../CFPlugin-InstrBridge.c"
 

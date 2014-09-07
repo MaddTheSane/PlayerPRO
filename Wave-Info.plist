@@ -20,20 +20,6 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>E93F89D6-1126-4F7C-8319-1955A92CC6DD</key>
-		<string>WaveFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>FD7154D6-20BF-4007-881B-8E44970C3B0A</key>
-		<array>
-			<string>E93F89D6-1126-4F7C-8319-1955A92CC6DD</string>
-		</array>
-	</dict>
 	<key>MADCanExport</key>
 	<false/>
 	<key>MADCanImport</key>
@@ -52,5 +38,7 @@
 	</array>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 1996 Antoine ROSSET</string>
+	<key>NSPrincipalClass</key>
+	<string>PPWavePlug</string>
 </dict>
 </plist>

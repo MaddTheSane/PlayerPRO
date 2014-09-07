@@ -6,70 +6,67 @@
 //
 //
 
-#import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#import <Foundation/Foundation.h>
+#import <AppKit/NSDocument.h>
+
 @class PPSampleObject;
 @class PPInstrumentObject;
 @class PPMusicObject;
+@class PPDriver;
 
 typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
 
 @protocol PPPlugin <NSObject>
 @required
-+ (BOOL)hasUIConfiguration;
+@property (nonatomic, readonly) BOOL hasUIConfiguration;
 @end
 
 @protocol PPDigitalPlugin <PPPlugin, NSObject>
 
 @required
-- (MADErr)runWithPcmd:(inout Pcmd*)aPcmd pluginInfo:(in PPInfoPlug *)info;
+- (MADErr)runWithPcmd:(inout Pcmd*)aPcmd driver:(PPDriver *)driver;
 
 @optional
-- (void)beginRunWithPcmd:(Pcmd*)aPcmd pluginInfo:(PPInfoPlug *)info handler:(void (^)(MADErr error))handle;
+- (void)beginRunWithPcmd:(Pcmd*)aPcmd driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(void (^)(MADErr error))handle;
 
 @end
 
 @protocol PPFilterPlugin <PPPlugin, NSObject>
 
 @required
-- (MADErr)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode pluginInfo:(in PPInfoPlug*)info;
+- (MADErr)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver;
 
 @optional
-- (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode pluginInfo:(in PPInfoPlug*)info handler:(void (^)(MADErr error))handle;
+- (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(void (^)(MADErr error))handle;
 
 @end
 
 @protocol PPInstrumentImportPlugin <PPPlugin, NSObject>
 
-@required
-
 - (BOOL)canImportSampleAtURL:(NSURL*)sampleURL;
-+ (BOOL)isInstrument;
+@property (nonatomic, readonly, getter=isInstrument) BOOL instrument;
 
-- (MADErr)importSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID pluginInfo:(in PPInfoPlug *)info;
+- (MADErr)importSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID driver:(PPDriver*)driver;
 
 @optional
-- (MADErr)playSampleAtURL:(NSURL*)aSample;
-- (void)beginImportSampleAtURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short*)sampleID pluginInfo:(PPInfoPlug *)info handler:(void (^)(MADErr error))handle;
+- (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
+- (void)beginImportSampleAtURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short*)sampleID driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(void (^)(MADErr error))handle;
 
 @end
 
 @protocol PPInstrumentExportPlugin <PPPlugin, NSObject>
 
-+ (BOOL)isInstrument;
-- (MADErr)exportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID pluginInfo:(PPInfoPlug *)info;
+@property (nonatomic, readonly, getter=isInstrument) BOOL instrument;
+- (MADErr)exportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver;
 
 @optional
-- (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID pluginInfo:(PPInfoPlug *)info handler:(void (^)(MADErr error))handle;
+- (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(void (^)(MADErr error))handle;
 
 @end
 
 //This doesn't need to conform to PPPlugin because it will always have a UI.
-@protocol PPComplexImportPlugInterfaceBase <NSObject>
+@protocol PPComplexImportPlugInterface <NSObject>
 - (BOOL)canImportURL:(NSURL*)theURL error:(out NSError**)outErr;
 - (void)beginImportOfURL:(NSURL*)theURL withHandler:(PPComplexImportHandler)handler;
-@end
-
-@protocol PPComplexImportPlugInterface <PPComplexImportPlugInterfaceBase>
-- (instancetype)init;
 @end

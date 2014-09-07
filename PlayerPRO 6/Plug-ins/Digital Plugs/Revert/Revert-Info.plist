@@ -20,8 +20,6 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
 	<key>MADPlugMenuName</key>
 	<string>Revert</string>
 	<key>NSPrincipalClass</key>

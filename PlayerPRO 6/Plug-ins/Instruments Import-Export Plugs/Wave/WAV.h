@@ -34,12 +34,12 @@ typedef void*			LPVOID;
 
 typedef UInt16			UINT;
 #if !defined(BOOL) || !defined(__OBJC__)
-typedef Boolean			BOOL;
+//typedef Boolean			BOOL;
 #endif
 typedef FourCharCode	FOURCC;
 #endif
 
-
+#pragma pack(push, 2)
 typedef struct _infoformat_tag {
 	Str255	name;
 	Str32	smpls;
@@ -92,16 +92,17 @@ typedef struct _MyAtom {
 	int			size;
 	FSIORefNum	ref;
 } MyAtom;
+#pragma pack(pop)
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 #ifndef __LP64__
-__private_extern Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo) DEPRECATED_ATTRIBUTE; //Returns memory allocated using Carbon's NewPtr.
-__private_extern OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug) DEPRECATED_ATTRIBUTE;
+__private_extern Ptr ConvertWAV(FSSpec *fileSpec, int *loopStart, int *loopEnd, short *sampleSize, unsigned long *rate, bool *stereo) DEPRECATED_ATTRIBUTE; //Returns memory allocated using Carbon's NewPtr.
+__private_extern MADErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug) DEPRECATED_ATTRIBUTE;
 #endif
-__private_extern OSErr TestWAV(PCMWavePtr CC);
-__private_extern void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loopEnd, short *sampleSize, unsigned int *rate, Boolean *stereo)
+__private_extern MADErr TestWAV(const PCMWavePtr CC);
+__private_extern void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, int *loopStart, int *loopEnd, short *sampleSize, unsigned int *rate, bool *stereo)
 ;
 #ifdef __cplusplus
 }

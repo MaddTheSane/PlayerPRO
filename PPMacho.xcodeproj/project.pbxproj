@@ -236,7 +236,10 @@
 		5535079D19BBD4D500B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		5535079E19BBD4D600B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		5535079F19BBE8B300B9E815 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
-		553507A319BC1E0100B9E815 /* PPWavePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 553507A119BC1D9F00B9E815 /* PPWavePlug.m */; };
+		553507A519BC293C00B9E815 /* PPRevertPlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553507A419BC293C00B9E815 /* PPRevertPlug.swift */; };
+		553507A819BCA31000B9E815 /* PPNoteTranslatePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 553507A719BCA31000B9E815 /* PPNoteTranslatePlug.m */; };
+		553507AB19BCA86F00B9E815 /* PPWavePlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553507AA19BCA86F00B9E815 /* PPWavePlug.swift */; };
+		553507AD19BCB13200B9E815 /* AudioFileExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553507AC19BCB13200B9E815 /* AudioFileExt.swift */; };
 		553626B817EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */; };
 		553B8B7219B3CD85007C2C64 /* xm-ios.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B6E19B3CD85007C2C64 /* xm-ios.png */; };
 		553B8B7319B3CD85007C2C64 /* xm-ios@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B6F19B3CD85007C2C64 /* xm-ios@2x.png */; };
@@ -260,7 +263,6 @@
 		554E11F710D6F3E100BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		554F087819BBAD4A005A215E /* PPPlugIns.h in Headers */ = {isa = PBXBuildFile; fileRef = 554F087719BBAD4A005A215E /* PPPlugIns.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		554F087B19BBB931005A215E /* PPRevertPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 554F087A19BBB931005A215E /* PPRevertPlug.m */; };
 		554F087E19BBBB40005A215E /* PPPropogatePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 554F087D19BBBB40005A215E /* PPPropogatePlug.m */; };
 		554F088119BBBC6E005A215E /* PPXIPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 554F088019BBBC6E005A215E /* PPXIPlug.m */; };
 		555143CA17B6EDCF00252657 /* PPToneGeneratorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555143C817B6EDCF00252657 /* PPToneGeneratorController.m */; };
@@ -744,6 +746,7 @@
 		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		55FD192B19A1C12B001E1D9C /* ComplexImportPlugHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */; };
+		55FD51E619BCF51200986849 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55FD51E819BCF51200986849 /* InfoPlist.strings */; };
 		55FEF84519844FD600D2E79C /* DigitalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84419844FD600D2E79C /* DigitalViewController.m */; };
 		55FEF84B1984506C00D2E79C /* ClassicalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84A1984506C00D2E79C /* ClassicalViewController.m */; };
 		55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84E1984509400D2E79C /* WaveViewController.m */; };
@@ -2041,8 +2044,14 @@
 		553341FC10BB600A005208D1 /* IT.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IT.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		553341FD10BB600A005208D1 /* IT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IT-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5533C8F919942AD9003AEB16 /* SoundOutputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundOutputController.swift; sourceTree = "<group>"; };
-		553507A019BC1D9F00B9E815 /* PPWavePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPWavePlug.h; path = Wave/PPWavePlug.h; sourceTree = "<group>"; };
-		553507A119BC1D9F00B9E815 /* PPWavePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPWavePlug.m; path = Wave/PPWavePlug.m; sourceTree = "<group>"; };
+		553507A019BC1D9F00B9E815 /* PPWavePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPWavePlug.h; sourceTree = "<group>"; };
+		553507A119BC1D9F00B9E815 /* PPWavePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPWavePlug.m; sourceTree = "<group>"; };
+		553507A419BC293C00B9E815 /* PPRevertPlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPRevertPlug.swift; sourceTree = "<group>"; };
+		553507A619BCA31000B9E815 /* PPNoteTranslatePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPNoteTranslatePlug.h; sourceTree = "<group>"; };
+		553507A719BCA31000B9E815 /* PPNoteTranslatePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPNoteTranslatePlug.m; sourceTree = "<group>"; };
+		553507A919BCA86D00B9E815 /* Wave-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Wave-Bridging-Header.h"; sourceTree = "<group>"; };
+		553507AA19BCA86F00B9E815 /* PPWavePlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPWavePlug.swift; sourceTree = "<group>"; };
+		553507AC19BCB13200B9E815 /* AudioFileExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFileExt.swift; sourceTree = "<group>"; };
 		5535A652197F2D1D00D36CC9 /* PPCore-private.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = "PPCore-private.modulemap"; sourceTree = "<group>"; };
 		5535A653197F2D1D00D36CC9 /* PPCore.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = PPCore.modulemap; sourceTree = "<group>"; };
 		553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Universal.xcconfig; sourceTree = "<group>"; };
@@ -2114,8 +2123,6 @@
 		554E123010D6F3E600BB619C /* Revert.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Revert.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		554E125410D6F3E600BB619C /* Revert-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Revert-Info.plist"; sourceTree = "<group>"; };
 		554F087719BBAD4A005A215E /* PPPlugIns.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugIns.h; sourceTree = "<group>"; };
-		554F087919BBB931005A215E /* PPRevertPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPRevertPlug.h; sourceTree = "<group>"; };
-		554F087A19BBB931005A215E /* PPRevertPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPRevertPlug.m; sourceTree = "<group>"; };
 		554F087C19BBBB40005A215E /* PPPropogatePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPropogatePlug.h; sourceTree = "<group>"; };
 		554F087D19BBBB40005A215E /* PPPropogatePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPropogatePlug.m; sourceTree = "<group>"; };
 		554F087F19BBBC6E005A215E /* PPXIPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPXIPlug.h; path = XI/PPXIPlug.h; sourceTree = "<group>"; };
@@ -2404,6 +2411,7 @@
 		55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexImportPlugHandler.swift; sourceTree = "<group>"; };
 		55FD192C19A1C1D8001E1D9C /* PPComplexImportPlugInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPComplexImportPlugInterface.h; sourceTree = "<group>"; };
 		55FD192D19A241FC001E1D9C /* ExportObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportObject.swift; sourceTree = "<group>"; };
+		55FD51E719BCF51200986849 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		55FEF84319844FD600D2E79C /* DigitalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigitalViewController.h; sourceTree = "<group>"; };
 		55FEF84419844FD600D2E79C /* DigitalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigitalViewController.m; sourceTree = "<group>"; };
 		55FEF8491984506C00D2E79C /* ClassicalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassicalViewController.h; sourceTree = "<group>"; };
@@ -3070,13 +3078,17 @@
 		551520A310DEE9570054ABC4 /* Wave */ = {
 			isa = PBXGroup;
 			children = (
+				553507AC19BCB13200B9E815 /* AudioFileExt.swift */,
 				55ADC3DC17D6F411001F27D4 /* Wave-Info.plist */,
 				553507A019BC1D9F00B9E815 /* PPWavePlug.h */,
 				553507A119BC1D9F00B9E815 /* PPWavePlug.m */,
 				5590896710E883AF00CE70B8 /* WAV.h */,
 				554E105610D6C79E00BB619C /* WAV.c */,
+				553507AA19BCA86F00B9E815 /* PPWavePlug.swift */,
+				553507A919BCA86D00B9E815 /* Wave-Bridging-Header.h */,
+				55FD51E819BCF51200986849 /* InfoPlist.strings */,
 			);
-			name = Wave;
+			path = Wave;
 			sourceTree = "<group>";
 		};
 		551520A410DEE9640054ABC4 /* SoundDesignerII */ = {
@@ -3854,6 +3866,8 @@
 		554E11E210D6F3AB00BB619C /* Note Translate */ = {
 			isa = PBXGroup;
 			children = (
+				553507A619BCA31000B9E815 /* PPNoteTranslatePlug.h */,
+				553507A719BCA31000B9E815 /* PPNoteTranslatePlug.m */,
 				552C440E17DFE08700AFCB5C /* NoteTranslateController.h */,
 				552C440F17DFE08700AFCB5C /* NoteTranslateController.m */,
 				554E11DD10D6F32900BB619C /* Note Translate-Info.plist */,
@@ -3875,8 +3889,7 @@
 		554E125F10D6F4B800BB619C /* Revert */ = {
 			isa = PBXGroup;
 			children = (
-				554F087919BBB931005A215E /* PPRevertPlug.h */,
-				554F087A19BBB931005A215E /* PPRevertPlug.m */,
+				553507A419BC293C00B9E815 /* PPRevertPlug.swift */,
 				554E125410D6F3E600BB619C /* Revert-Info.plist */,
 			);
 			path = Revert;
@@ -6320,6 +6333,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55FD51E619BCF51200986849 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6596,6 +6610,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				553507A819BCA31000B9E815 /* PPNoteTranslatePlug.m in Sources */,
 				552C441117DFE08700AFCB5C /* NoteTranslateController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6612,7 +6627,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				554F087B19BBB931005A215E /* PPRevertPlug.m in Sources */,
+				553507A519BC293C00B9E815 /* PPRevertPlug.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6953,8 +6968,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				553507AD19BCB13200B9E815 /* AudioFileExt.swift in Sources */,
 				55ADC3DD17D6F43F001F27D4 /* WAV.c in Sources */,
-				553507A319BC1E0100B9E815 /* PPWavePlug.m in Sources */,
+				553507AB19BCA86F00B9E815 /* PPWavePlug.swift in Sources */,
 				55ADC3DE17D7A51B001F27D4 /* WAVE-Conversion.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -8168,6 +8184,14 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		55FD51E819BCF51200986849 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55FD51E719BCF51200986849 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -8650,6 +8674,7 @@
 		554E122E10D6F3E600BB619C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8659,6 +8684,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8667,6 +8693,7 @@
 		554E122F10D6F3E600BB619C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -8676,6 +8703,8 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -9899,6 +9928,7 @@
 		55ADC3D917D6F390001F27D4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -9911,6 +9941,8 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Wave/Wave-Bridging-Header.h";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9918,6 +9950,7 @@
 		55ADC3DA17D6F390001F27D4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -9930,6 +9963,9 @@
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Wave/Wave-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;

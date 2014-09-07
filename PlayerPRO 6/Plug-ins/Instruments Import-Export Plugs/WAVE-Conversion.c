@@ -23,7 +23,7 @@ enum {
 #define USEDEPRECATEDFUNCS 1
 #endif
 
-OSErr TestWAV(PCMWavePtr CC)
+OSErr TestWAV(const PCMWavePtr CC)
 {
 	if (CFSwapInt32BigToHost(CC->ckid) =='RIFF')
 		return MADNoErr;
@@ -54,7 +54,7 @@ static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean res
 }
 
 
-void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, long *loopStart, long *loopEnd, short *sampleSize, unsigned int *rate, Boolean *stereo)
+void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, int *loopStart, int *loopEnd, short *sampleSize, unsigned int *rate, bool *stereo)
 {
 	PCMWavePtr	WAVERsrc = NULL;
 	UNFILE		fRef;
@@ -166,7 +166,7 @@ extern CursHandle GetCursor(short) DEPRECATED_ATTRIBUTE;
 extern void SetCursor(const Cursor *) DEPRECATED_ATTRIBUTE;
 #endif
 
-Ptr ConvertWAV(FSSpec *fileSpec, long *loopStart, long *loopEnd, short	*sampleSize, unsigned long *rate, Boolean *stereo)
+Ptr ConvertWAV(FSSpec *fileSpec, int *loopStart, int *loopEnd, short *sampleSize, unsigned long *rate, bool *stereo)
 {
 	Ptr ptrReturn = NULL;
 	Ptr tmpPtr = NULL;

@@ -21,7 +21,7 @@ NSString * const PPPlugReturnCode = @"PlayerPROKit Return Code";
 @synthesize infoPlug;
 @synthesize plugBlock;
 
-+ (BOOL)hasUIConfiguration
+- (BOOL)hasUIConfiguration
 {
 	return YES;
 }

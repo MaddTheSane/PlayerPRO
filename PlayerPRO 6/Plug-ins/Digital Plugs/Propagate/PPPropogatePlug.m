@@ -10,12 +10,12 @@
 
 @implementation PPPropogatePlug
 
-+ (BOOL)hasUIConfiguration
+- (BOOL)hasUIConfiguration
 {
 	return NO;
 }
 
-- (MADErr)runWithPcmd:(inout Pcmd*)myPcmd pluginInfo:(in PPInfoPlug *)thePPInfoPlug
+- (MADErr)runWithPcmd:(inout Pcmd*)myPcmd driver:(PPDriver *)driver
 {
 	short track, row;
 	

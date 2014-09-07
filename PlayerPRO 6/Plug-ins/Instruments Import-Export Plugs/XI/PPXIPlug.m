@@ -32,12 +32,12 @@ typedef UInt8			UBYTE;
 
 @implementation PPXIPlug
 
-+ (BOOL)hasUIConfiguration
+- (BOOL)hasUIConfiguration
 {
 	return NO;
 }
 
-+ (BOOL)isInstrument
+- (BOOL)isInstrument
 {
 	return YES;
 }
@@ -58,7 +58,7 @@ typedef UInt8			UBYTE;
 	return [testData isEqual:headerData];
 }
 
-- (MADErr)importSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID pluginInfo:(in PPInfoPlug *)info;
+- (MADErr)importSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID driver:(PPDriver *)driver
 {
 	Ptr				theXI;
 	XMPATCHHEADER	*pth;
@@ -242,7 +242,7 @@ typedef UInt8			UBYTE;
 	return MADNoErr;
 }
 
-- (MADErr)exportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID pluginInfo:(PPInfoPlug *)info
+- (MADErr)exportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver *)driver
 {
 	NSFileHandle *iFileRefI = [NSFileHandle fileHandleForWritingToURL:sampleURL error:NULL];
 	MADErr myErr = MADNoErr;

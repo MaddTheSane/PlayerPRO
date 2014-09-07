@@ -20,21 +20,9 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>F997DE0A-C956-4A71-9378-1420508394CC</key>
-		<string>NoteTransFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>E9E5574F-50B4-43E0-948D-8B7C80D47261</key>
-		<array>
-			<string>F997DE0A-C956-4A71-9378-1420508394CC</string>
-		</array>
-	</dict>
 	<key>MADPlugMenuName</key>
 	<string>Note Translate</string>
+	<key>NSPrincipalClass</key>
+	<string>PPNoteTranslatePlug</string>
 </dict>
 </plist>

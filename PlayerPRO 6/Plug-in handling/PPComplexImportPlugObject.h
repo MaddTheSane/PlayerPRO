@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <PlayerPROKit/PPPlugIns.h>
 #import "PPComplexImportPlugInterface.h"
 #import "PPPlugInObject.h"
 
@@ -15,7 +16,7 @@
  Not done in Swift because I don't know how to get it to behave.
  */
 
-@interface PPComplexImportPlugObject : PPPlugInObject <PPComplexImportPlugInterfaceBase>
+@interface PPComplexImportPlugObject : PPPlugInObject <PPComplexImportPlugInterface>
 @property (readonly, copy) NSArray *UTITypes;
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
