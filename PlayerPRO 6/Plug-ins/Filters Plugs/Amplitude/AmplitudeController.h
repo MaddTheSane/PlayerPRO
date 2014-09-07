@@ -9,6 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 
-@interface AmplitudeController : PPFilterPluginWindowController
+@interface AmplitudeController : NSWindowController
 @property int amplitudeAmount;
 @end

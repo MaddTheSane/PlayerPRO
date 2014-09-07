@@ -353,10 +353,10 @@ extension Cmd {
 }
 
 public func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> Cmd {
-	return GetMADCommand(position, channel, aPat).memory
+	return GetCommand(position, channel, aPat).memory
 }
 
-public func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> UnsafeMutablePointer<Cmd> {
+internal func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> UnsafeMutablePointer<Cmd> {
 	return GetMADCommand(position, channel, aPat)
 }
 
@@ -386,10 +386,10 @@ extension PatHeader {
 // MARK: Plug-in functions
 
 public func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>) -> Cmd {
-	return MADGetCmd(row, track, aPcmd).memory
+	return GetCommand(row, track, aPcmd).memory
 }
 
-public func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>) -> UnsafeMutablePointer<Cmd> {
+internal func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>) -> UnsafeMutablePointer<Cmd> {
 	return MADGetCmd(row, track, aPcmd)
 }
 

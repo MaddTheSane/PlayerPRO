@@ -157,8 +157,6 @@
 		551FEB7E10E728F100EDF2F1 /* PAT.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E104110D6C79E00BB619C /* PAT.c */; };
 		552097B2187AB8B9004FD220 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
 		552097BC187B11BF004FD220 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
-		5521F3FD17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5521F3FF17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */; };
 		5521F41517FA4365002CDBA9 /* BoxViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5521F41417FA4365002CDBA9 /* BoxViewController.m */; };
 		5521F41717FA541C002CDBA9 /* Trackers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5521F41617FA541C002CDBA9 /* Trackers.xcassets */; };
 		5521F41817FA541C002CDBA9 /* Trackers.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5521F41617FA541C002CDBA9 /* Trackers.xcassets */; };
@@ -431,7 +429,6 @@
 		557DE99B10E08DC100177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DEA3910E0915900177B4C /* Invert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100F10D6C79E00BB619C /* Invert.c */; };
 		557DEA5310E092CE00177B4C /* Normalize.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E101810D6C79E00BB619C /* Normalize.c */; };
-		557DEA5710E092E000177B4C /* Silence.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102010D6C79E00BB619C /* Silence.c */; };
 		557DEA5D10E0930100177B4C /* Smooth.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102310D6C79E00BB619C /* Smooth.c */; };
 		557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */; };
 		557F296818790DDA009D4BC8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
@@ -439,10 +436,6 @@
 		557F9AF117D927DB00325C78 /* PPToneGeneratorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557F9AF317D927DB00325C78 /* PPToneGeneratorController.xib */; };
 		55801EB113D1ED9A007E24FC /* NSColor+PPPreferences.m in Sources */ = {isa = PBXBuildFile; fileRef = 55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */; };
 		5582135717E4200900B84F51 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
-		5582135817E4201300B84F51 /* PPPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B7665617E3BF9E004C1D45 /* PPPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5582135917E4201700B84F51 /* PPDigitalPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B7665B17E3CDA2004C1D45 /* PPDigitalPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5582135A17E4201B00B84F51 /* PPPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B7665717E3BF9E004C1D45 /* PPPluginWindowController.m */; };
-		5582135B17E4201D00B84F51 /* PPDigitalPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B7665C17E3CDA2004C1D45 /* PPDigitalPluginWindowController.m */; };
 		5582135C17E4224000B84F51 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		5582135D17E4224100B84F51 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		5582135E17E4224200B84F51 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
@@ -487,15 +480,12 @@
 		55A3CD4419A6DC8B00957845 /* PPDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55A3CD4319A6DC8B00957845 /* PPDocument.swift */; };
 		55A6201818A6EFEA003B29B5 /* PreferenceNames.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55A6201B18A6EFEA003B29B5 /* PreferenceNames.strings */; };
 		55A6201918A6EFEA003B29B5 /* PreferenceNames.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55A6201B18A6EFEA003B29B5 /* PreferenceNames.strings */; };
-		55A934F817F2121D00493DC5 /* PPFilterPluginWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 55A934F617F2121D00493DC5 /* PPFilterPluginWindowController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55A934F917F2121D00493DC5 /* PPFilterPluginWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55A934F717F2121D00493DC5 /* PPFilterPluginWindowController.m */; };
 		55A934FE17F2141200493DC5 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		55A9351917F28F9700493DC5 /* Shared.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55A9351817F28F9700493DC5 /* Shared.xcassets */; };
 		55A9351A17F28F9700493DC5 /* Shared.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55A9351817F28F9700493DC5 /* Shared.xcassets */; };
 		55A9351B17F28F9700493DC5 /* Shared.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55A9351817F28F9700493DC5 /* Shared.xcassets */; };
 		55ADC3D617D6F390001F27D4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55ADC3D717D6F390001F27D4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		55ADC3DD17D6F43F001F27D4 /* WAV.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105610D6C79E00BB619C /* WAV.c */; };
 		55ADC3DE17D7A51B001F27D4 /* WAVE-Conversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105710D6C79E00BB619C /* WAVE-Conversion.c */; };
 		55ADC3E217D7B484001F27D4 /* Wave.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55ADC3DB17D6F390001F27D4 /* Wave.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -747,6 +737,9 @@
 		55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		55FD192B19A1C12B001E1D9C /* ComplexImportPlugHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */; };
 		55FD51E619BCF51200986849 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55FD51E819BCF51200986849 /* InfoPlist.strings */; };
+		55FD51EB19BCFB4C00986849 /* PPSilencePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD51EA19BCFB4C00986849 /* PPSilencePlug.m */; };
+		55FD51ED19BCFD2700986849 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55FD51EC19BCFD2700986849 /* InfoPlist.strings */; };
+		55FD51F019BCFD9200986849 /* PPSamplingRatePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD51EF19BCFD9200986849 /* PPSamplingRatePlug.m */; };
 		55FEF84519844FD600D2E79C /* DigitalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84419844FD600D2E79C /* DigitalViewController.m */; };
 		55FEF84B1984506C00D2E79C /* ClassicalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84A1984506C00D2E79C /* ClassicalViewController.m */; };
 		55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84E1984509400D2E79C /* WaveViewController.m */; };
@@ -1917,8 +1910,6 @@
 		552097B3187B0917004FD220 /* Be-DriverClass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = "Be-DriverClass.cpp"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		552097B4187B0917004FD220 /* Be-DriverClass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = "Be-DriverClass.h"; sourceTree = "<group>"; };
 		552097B5187B0917004FD220 /* Be-PlugImport.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "Be-PlugImport.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPluginWindowController.h; sourceTree = "<group>"; };
-		5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentPluginWindowController.m; sourceTree = "<group>"; };
 		5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPlugController.h; sourceTree = "<group>"; };
 		5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPlugController.m; sourceTree = "<group>"; };
 		5521F41317FA4365002CDBA9 /* BoxViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoxViewController.h; sourceTree = "<group>"; };
@@ -2044,8 +2035,6 @@
 		553341FC10BB600A005208D1 /* IT.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IT.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		553341FD10BB600A005208D1 /* IT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IT-Info.plist"; sourceTree = SOURCE_ROOT; };
 		5533C8F919942AD9003AEB16 /* SoundOutputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundOutputController.swift; sourceTree = "<group>"; };
-		553507A019BC1D9F00B9E815 /* PPWavePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPWavePlug.h; sourceTree = "<group>"; };
-		553507A119BC1D9F00B9E815 /* PPWavePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPWavePlug.m; sourceTree = "<group>"; };
 		553507A419BC293C00B9E815 /* PPRevertPlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPRevertPlug.swift; sourceTree = "<group>"; };
 		553507A619BCA31000B9E815 /* PPNoteTranslatePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPNoteTranslatePlug.h; sourceTree = "<group>"; };
 		553507A719BCA31000B9E815 /* PPNoteTranslatePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPNoteTranslatePlug.m; sourceTree = "<group>"; };
@@ -2090,7 +2079,6 @@
 		554E101510D6C79E00BB619C /* Mix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Mix.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E101610D6C79E00BB619C /* Mix.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mix.r; sourceTree = "<group>"; };
 		554E101810D6C79E00BB619C /* Normalize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Normalize.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E102010D6C79E00BB619C /* Silence.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Silence.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E102310D6C79E00BB619C /* Smooth.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Smooth.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E102C10D6C79E00BB619C /* AIFF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AIFF.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E103010D6C79E00BB619C /* AVI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AVI.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -2109,7 +2097,6 @@
 		554E105110D6C79E00BB619C /* SoundDesignerII.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = SoundDesignerII.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E105410D6C79E00BB619C /* System7.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = System7.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E105510D6C79E00BB619C /* System7.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = System7.r; sourceTree = "<group>"; };
-		554E105610D6C79E00BB619C /* WAV.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = WAV.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E105710D6C79E00BB619C /* WAVE-Conversion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "WAVE-Conversion.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E106510D6C9E100BB619C /* Read-Me.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Read-Me.rtf"; sourceTree = "<group>"; };
 		554E110510D6F09F00BB619C /* Fade Note.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fade Note.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2296,8 +2283,6 @@
 		559C419B183EB4AB004A073C /* PPQuickView-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PPQuickView-Prefix.pch"; sourceTree = "<group>"; };
 		55A3CD4319A6DC8B00957845 /* PPDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPDocument.swift; sourceTree = "<group>"; };
 		55A6201C18A6EFEC003B29B5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PreferenceNames.strings; sourceTree = "<group>"; };
-		55A934F617F2121D00493DC5 /* PPFilterPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPluginWindowController.h; sourceTree = "<group>"; };
-		55A934F717F2121D00493DC5 /* PPFilterPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPluginWindowController.m; sourceTree = "<group>"; };
 		55A9351817F28F9700493DC5 /* Shared.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Shared.xcassets; sourceTree = "<group>"; };
 		55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PlayerPROCore-OSX.pch"; path = "../PlayerPROCore-OSX.pch"; sourceTree = "<group>"; };
 		55ADC3DB17D6F390001F27D4 /* Wave.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Wave.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2326,10 +2311,6 @@
 		55B5DF0319A259370042E062 /* PPMIDIImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPMIDIImporter.swift; sourceTree = "<group>"; };
 		55B5DF0519A25B6D0042E062 /* PPComplexImportPlugObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPComplexImportPlugObject.h; sourceTree = "<group>"; };
 		55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPComplexImportPlugObject.m; sourceTree = "<group>"; };
-		55B7665617E3BF9E004C1D45 /* PPPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPluginWindowController.h; sourceTree = "<group>"; };
-		55B7665717E3BF9E004C1D45 /* PPPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPluginWindowController.m; sourceTree = "<group>"; };
-		55B7665B17E3CDA2004C1D45 /* PPDigitalPluginWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPluginWindowController.h; sourceTree = "<group>"; };
-		55B7665C17E3CDA2004C1D45 /* PPDigitalPluginWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPDigitalPluginWindowController.m; sourceTree = "<group>"; };
 		55B777A218E77998001E5104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InstrumentInfoView.xib; sourceTree = "<group>"; };
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Complex Fade-Info.plist"; sourceTree = "<group>"; };
@@ -2412,6 +2393,11 @@
 		55FD192C19A1C1D8001E1D9C /* PPComplexImportPlugInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPComplexImportPlugInterface.h; sourceTree = "<group>"; };
 		55FD192D19A241FC001E1D9C /* ExportObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportObject.swift; sourceTree = "<group>"; };
 		55FD51E719BCF51200986849 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55FD51E919BCFB4C00986849 /* PPSilencePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSilencePlug.h; sourceTree = "<group>"; };
+		55FD51EA19BCFB4C00986849 /* PPSilencePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSilencePlug.m; sourceTree = "<group>"; };
+		55FD51EC19BCFD2700986849 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
+		55FD51EE19BCFD9200986849 /* PPSamplingRatePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSamplingRatePlug.h; sourceTree = "<group>"; };
+		55FD51EF19BCFD9200986849 /* PPSamplingRatePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSamplingRatePlug.m; sourceTree = "<group>"; };
 		55FEF84319844FD600D2E79C /* DigitalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigitalViewController.h; sourceTree = "<group>"; };
 		55FEF84419844FD600D2E79C /* DigitalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigitalViewController.m; sourceTree = "<group>"; };
 		55FEF8491984506C00D2E79C /* ClassicalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassicalViewController.h; sourceTree = "<group>"; };
@@ -3080,10 +3066,7 @@
 			children = (
 				553507AC19BCB13200B9E815 /* AudioFileExt.swift */,
 				55ADC3DC17D6F411001F27D4 /* Wave-Info.plist */,
-				553507A019BC1D9F00B9E815 /* PPWavePlug.h */,
-				553507A119BC1D9F00B9E815 /* PPWavePlug.m */,
 				5590896710E883AF00CE70B8 /* WAV.h */,
-				554E105610D6C79E00BB619C /* WAV.c */,
 				553507AA19BCA86F00B9E815 /* PPWavePlug.swift */,
 				553507A919BCA86D00B9E815 /* Wave-Bridging-Header.h */,
 				55FD51E819BCF51200986849 /* InfoPlist.strings */,
@@ -3310,6 +3293,8 @@
 			isa = PBXGroup;
 			children = (
 				557DE5CD10E087EB00177B4C /* Sampling Rate-Info.plist */,
+				55FD51EE19BCFD9200986849 /* PPSamplingRatePlug.h */,
+				55FD51EF19BCFD9200986849 /* PPSamplingRatePlug.m */,
 				552C443617DFE9D600AFCB5C /* SamplingRateWindowController.h */,
 				552C443717DFE9D600AFCB5C /* SamplingRateWindowController.m */,
 				55771DE41873857E00AED8DC /* SamplingRateWindowController.xib */,
@@ -3320,8 +3305,10 @@
 		551520E210DEF08B0054ABC4 /* Silence */ = {
 			isa = PBXGroup;
 			children = (
+				55FD51E919BCFB4C00986849 /* PPSilencePlug.h */,
+				55FD51EA19BCFB4C00986849 /* PPSilencePlug.m */,
 				557DE5CE10E087F500177B4C /* Silence-Info.plist */,
-				554E102010D6C79E00BB619C /* Silence.c */,
+				55FD51EC19BCFD2700986849 /* InfoPlist.strings */,
 			);
 			path = Silence;
 			sourceTree = "<group>";
@@ -4219,14 +4206,6 @@
 			isa = PBXGroup;
 			children = (
 				554F087719BBAD4A005A215E /* PPPlugIns.h */,
-				55B7665617E3BF9E004C1D45 /* PPPluginWindowController.h */,
-				55B7665717E3BF9E004C1D45 /* PPPluginWindowController.m */,
-				55B7665B17E3CDA2004C1D45 /* PPDigitalPluginWindowController.h */,
-				55B7665C17E3CDA2004C1D45 /* PPDigitalPluginWindowController.m */,
-				55A934F617F2121D00493DC5 /* PPFilterPluginWindowController.h */,
-				55A934F717F2121D00493DC5 /* PPFilterPluginWindowController.m */,
-				5521F3FB17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h */,
-				5521F3FC17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m */,
 			);
 			name = "App Plug-in Code";
 			path = "../App Plug-in Code";
@@ -4565,15 +4544,11 @@
 				55B1B4F7166A861900820424 /* PPMusicObject.h in Headers */,
 				5560643818C8FDC7002F72FC /* PPErrors.h in Headers */,
 				55B1B4FA166A8ED500820424 /* PPMusicObject_PPKPrivate.h in Headers */,
-				5521F3FD17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.h in Headers */,
 				55C8EDE1187CC8B200CC8C1B /* PPPatternObject.h in Headers */,
 				5578C4FF17DB8A5C0057D11B /* PPSampleObject.h in Headers */,
 				55DE87BC187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h in Headers */,
 				5578C50017DB8A640057D11B /* PPInstrumentObject.h in Headers */,
-				5582135817E4201300B84F51 /* PPPluginWindowController.h in Headers */,
 				5561700A1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */,
-				55A934F817F2121D00493DC5 /* PPFilterPluginWindowController.h in Headers */,
-				5582135917E4201700B84F51 /* PPDigitalPluginWindowController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6216,6 +6191,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55FD51ED19BCFD2700986849 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6506,7 +6482,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5547DA5919A570820014A620 /* SoundSettingsViewController.swift in Sources */,
-				55A934F917F2121D00493DC5 /* PPFilterPluginWindowController.m in Sources */,
 				555F447619A1411700B8C6EE /* PlayerPROKitAdditions.swift in Sources */,
 				55DE87CF187E60F400C36533 /* PPFXSetObject.m in Sources */,
 				551292F1163DD7CE00C2C639 /* PPLibrary.m in Sources */,
@@ -6515,11 +6490,8 @@
 				55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */,
 				5578C4FE17DB8A580057D11B /* PPSampleObject.m in Sources */,
 				5578C50117DB8A6E0057D11B /* PPInstrumentObject.m in Sources */,
-				5521F3FF17F4EFD0002CDBA9 /* PPInstrumentPluginWindowController.m in Sources */,
 				55BD5AF519ADBBF500D63F54 /* PPKPcmd.swift in Sources */,
 				55DE87C8187E5B9100C36533 /* PPFXBusObject.m in Sources */,
-				5582135A17E4201B00B84F51 /* PPPluginWindowController.m in Sources */,
-				5582135B17E4201D00B84F51 /* PPDigitalPluginWindowController.m in Sources */,
 				556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */,
 				55C8EDE2187CC8B200CC8C1B /* PPPatternObject.m in Sources */,
 				5560643C18C8FDD9002F72FC /* PPErrors.m in Sources */,
@@ -6823,6 +6795,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55FD51F019BCFD9200986849 /* PPSamplingRatePlug.m in Sources */,
 				552C443917DFE9D600AFCB5C /* SamplingRateWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6831,7 +6804,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DEA5710E092E000177B4C /* Silence.c in Sources */,
+				55FD51EB19BCFB4C00986849 /* PPSilencePlug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6969,7 +6942,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				553507AD19BCB13200B9E815 /* AudioFileExt.swift in Sources */,
-				55ADC3DD17D6F43F001F27D4 /* WAV.c in Sources */,
 				553507AB19BCA86F00B9E815 /* PPWavePlug.swift in Sources */,
 				55ADC3DE17D7A51B001F27D4 /* WAVE-Conversion.c in Sources */,
 			);

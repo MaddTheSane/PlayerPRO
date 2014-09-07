@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 
-@interface FadeNoteController : PPDigitalPluginWindowController
+@interface FadeNoteController : NSWindowController
 @property (weak) IBOutlet NSComboBox *fromBox;
 @property (weak) IBOutlet NSComboBox *toBox;
 @property (copy) NSString* initialFrom;

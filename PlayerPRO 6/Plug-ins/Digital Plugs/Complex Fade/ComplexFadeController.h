@@ -19,7 +19,7 @@ typedef NS_ENUM(NSInteger, FadeTypeEnum) {
 	fadeVolume
 };
 
-@interface ComplexFadeController : PPDigitalPluginWindowController
+@interface ComplexFadeController : NSWindowController
 @property (weak) IBOutlet NSFormCell *stepCell;
 @property (weak) IBOutlet NSFormCell *fromCell;
 @property (weak) IBOutlet NSFormCell *toCell;

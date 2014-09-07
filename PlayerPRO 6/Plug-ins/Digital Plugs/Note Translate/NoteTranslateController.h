@@ -9,6 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 
-@interface NoteTranslateController : PPDigitalPluginWindowController
+@interface NoteTranslateController : NSWindowController
 @property NSInteger transAmount;
 @end

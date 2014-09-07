@@ -18,7 +18,7 @@ typedef NS_ENUM(char, ToneGenerator)
 	wave = 6
 };
 
-@interface PPToneGeneratorController : PPFilterPluginWindowController
+@interface PPToneGeneratorController : NSWindowController
 @property (weak) IBOutlet NSMatrix *stereoOrMono;
 @property (weak) IBOutlet NSMatrix *audioBitRate;
 @property (weak) IBOutlet NSButton *silentRadio;

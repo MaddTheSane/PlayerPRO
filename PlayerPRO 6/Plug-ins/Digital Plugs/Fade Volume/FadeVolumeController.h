@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 
-@interface FadeVolumeController : PPDigitalPluginWindowController
+@interface FadeVolumeController : NSWindowController
 @property double fadeFrom;
 @property double fadeTo;
 @end

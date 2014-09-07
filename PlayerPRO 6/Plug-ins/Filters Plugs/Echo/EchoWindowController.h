@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 
-@interface EchoWindowController : PPFilterPluginWindowController
+@interface EchoWindowController : NSWindowController
 @property double echoStrength;
 @property int echoDelay;
 @end

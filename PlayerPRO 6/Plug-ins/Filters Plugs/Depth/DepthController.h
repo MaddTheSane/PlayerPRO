@@ -9,6 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 
-@interface DepthController : PPFilterPluginWindowController
+@interface DepthController : NSWindowController
 @property int depthAmmount;
 @end

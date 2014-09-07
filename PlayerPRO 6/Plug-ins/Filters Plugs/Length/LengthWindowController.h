@@ -11,7 +11,7 @@
 
 @class LengthViewController;
 
-@interface LengthWindowController : PPFilterPluginWindowController
+@interface LengthWindowController : NSWindowController
 
 @property (weak) IBOutlet LengthViewController *currentSize;
 @property (weak, getter = getNewSize) IBOutlet LengthViewController *newSize;

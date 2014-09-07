@@ -8,12 +8,12 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <Foundation/Foundation.h>
-#import <AppKit/NSDocument.h>
 
 @class PPSampleObject;
 @class PPInstrumentObject;
 @class PPMusicObject;
 @class PPDriver;
+@class NSDocument;
 
 typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
 

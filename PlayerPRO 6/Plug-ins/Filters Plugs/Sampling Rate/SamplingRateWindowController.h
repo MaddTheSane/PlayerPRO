@@ -7,9 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <PlayerPROKit/PlayerPROKit.h>
+@import PlayerPROKit;
 
-@interface SamplingRateWindowController : PPFilterPluginWindowController
+@interface SamplingRateWindowController : NSWindowController
+@property (strong) PPSampleObject *sampleToEdit;
 @property unsigned int currentRate;
 @property unsigned int changedRate;
 @end
