@@ -2989,10 +2989,10 @@ bool MADIsPressed(unsigned char* km2, unsigned short k)
 }
 
 #if 0
-MADErr MADPlaySoundDataSYNC(MADDriverRec *MDriver, char *soundPtr, long size, long channel, long note, long amplitude, long loopBeg, long loopSize, double rate, MADBool stereo)
+MADErr MADPlaySoundDataSYNC(MADDriverRec *MDriver, char *soundPtr, long size, long channel, long note, long amplitude, long loopBeg, long loopSize, double rate, bool stereo)
 {
 	MADErr		iErr;
-	MADBool		continueLoop;
+	bool		continueLoop;
 	KeyMap		km;
 	
 	iErr = MADPlaySoundData(MDriver, soundPtr, size, channel, note, amplitude, loopBeg, loopSize, rate, stereo);

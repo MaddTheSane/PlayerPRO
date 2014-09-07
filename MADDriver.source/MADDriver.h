@@ -108,7 +108,7 @@ struct __MADDriverRec {
 	int				levelL, levelR;
 	int				curCenterL, curCenterR;
 	
-	MADBool			hasVSTEnabled;
+	bool			hasVSTEnabled;
 	void			*vstEffects;
 	VSTEffect		*masterVST[10];
 	VSTEffect		*chanVST[MAXTRACK][4];
@@ -123,7 +123,7 @@ struct __MADDriverRec {
 	LPDIRECTSOUND		lpDirectSound;					// The LPDIRECTSOUND to apply & get informations, etc.
 	LPDIRECTSOUNDBUFFER	lpDirectSoundBuffer, lpSwSamp;	// ONLY available if you are using Win95 DirectSound driver
 	char* 				currentBuf;
-	MADBool				OnOff;
+	bool				OnOff;
 	size_t				WIN95BUFFERSIZE;
 	UINT				gwID;
 	HWND				hwnd;

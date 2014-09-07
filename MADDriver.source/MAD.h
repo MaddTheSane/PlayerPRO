@@ -159,7 +159,7 @@ typedef struct sData {
 	MADByte			amp;
 	char			relNote;
 	char 			name[32];
-	MADBool			stereo;
+	bool			stereo;
 	char			*data;
 } sData;
 
@@ -185,7 +185,7 @@ typedef struct sData32 {
 	MADByte			amp;
 	char			relNote;
 	char 			name[32];
-	MADBool			stereo;
+	bool			stereo;
 	uint32_t		data;
 } sData32;
 
@@ -261,9 +261,9 @@ typedef struct InstrData		// INSTRUMENT
 #define INFOSSIZE 239
 
 typedef struct FXBus {
-	MADBool	ByPass;
+	bool	ByPass;
 	short	copyId;
-	MADBool	Active;
+	bool	Active;
 } FXBus;
 
 typedef struct MADSpec
@@ -294,7 +294,7 @@ typedef struct MADSpec
 	MADByte		chanVol[MAXTRACK];			// Channel Volume, from 0 to 64
 	
 	int			globalEffect[10];			// Global Effects IDs
-	MADBool		globalFXActive;				// Global FX Active?
+	bool		globalFXActive;				// Global FX Active?
 	
 	int			chanEffect[MAXTRACK][4];	// Channel Effect IDs
 	FXBus		chanBus[MAXTRACK];

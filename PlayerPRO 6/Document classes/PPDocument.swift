@@ -306,7 +306,7 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 		}
 
 		var numBytes = UInt32(saveData!.length)
-		res = AudioFileWriteBytes(audioFile, false, 0, &numBytes, saveData!.bytes);
+		res = AudioFileWriteBytes(audioFile, 0, 0, &numBytes, saveData!.bytes);
 		if (res != noErr) {
 			if (audioFile != nil) {
 				AudioFileClose(audioFile);
@@ -359,7 +359,7 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 		}
 
 		var numBytes = UInt32(saveData!.length)
-		res = AudioFileWriteBytes(audioFile, false, 0, &numBytes, saveData!.bytes);
+		res = AudioFileWriteBytes(audioFile, 0, 0, &numBytes, saveData!.bytes);
 		if (res != noErr) {
 			if (audioFile != nil) {
 				AudioFileClose(audioFile);

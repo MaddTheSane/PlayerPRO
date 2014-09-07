@@ -103,32 +103,6 @@ extension MADFourChar: StringLiteralConvertible {
 }
 #endif
 
-extension MADBool : BooleanLiteralConvertible, BooleanType {
-	public init(_ v : BooleanType) {
-		if v.boolValue {
-			self = 1
-		} else {
-			self = 0
-		}
-	}
-	
-	public static func convertFromBooleanLiteral(value: Bool) -> MADBool {
-		if (value == true) {
-			return 1
-		} else {
-			return 0
-		}
-	}
-	
-	public var boolValue: Bool { get {
-		if (self == 0) {
-			return false
-		} else {
-			return true
-		}
-		}}
-}
-
 // MARK: PlayerPRO MAD data types
 
 extension MADDriverSettings: DebugPrintable {

@@ -205,7 +205,7 @@ typedef struct Channel
 	int		TICKREMOVESIZE;
 	
 	
-	MADBool	PanningE8;
+	bool	PanningE8;
 	short	trig;
 	short	PatternLoopE6, PatternLoopE6Count, PatternLoopE6ID;
 	
@@ -565,10 +565,10 @@ typedef struct __VSTEffect {
 	AEffect			*ce[2];
 	short			VSTid;
 	char			name[50];
-	MADBool			Active;
+	bool			Active;
 	HMODULE			connID;
 	VSTPlugInPtr	vstMain;
-	MADBool			ProcessReplacingNotAvailable;
+	bool			ProcessReplacingNotAvailable;
 } VSTEffect;
 
 #elif (defined(__ELF__) && !(defined (_MAC_H) || defined (_BE_H)))
@@ -577,10 +577,10 @@ typedef struct __VSTEffect {
 	AEffect			*ce[2];
 	short			VSTid;
 	char			name[50];
-	MADBool			Active;
+	bool			Active;
 	void			*connID;
 	VSTPlugInPtr	vstMain;
-	MADBool			ProcessReplacingNotAvailable;
+	bool			ProcessReplacingNotAvailable;
 } VSTEffect;
 #endif
 
@@ -743,7 +743,7 @@ PPEXPORT MADErr	MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, MA
 PPEXPORT MADErr	MADMusicExportCString(MADLibrary *lib, MADMusic *music, char *type, char* cName);
 
 PPEXPORT MADErr	MADMusicSaveCString(MADMusic *music, const char *cName, bool compressMAD);
-//PPEXPORT MADErr	MADMusicSavePointer(MADMusic *music, void **outPtr, size_t *outPtrSize, MADBool compressMAD);
+//PPEXPORT MADErr	MADMusicSavePointer(MADMusic *music, void **outPtr, size_t *outPtrSize, bool compressMAD);
 
 #ifdef _MAC_H
 #pragma mark OS X/iOS-only calls

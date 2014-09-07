@@ -47,7 +47,7 @@ typedef void*		LPVOID;
 typedef int32_t		LONG;
 
 typedef uint16_t	UINT;
-typedef MADBool		BOOL;
+typedef bool		BOOL;
 typedef uint32_t	DWORD;
 typedef uint16_t	USHORT;
 typedef int16_t		SHORT;

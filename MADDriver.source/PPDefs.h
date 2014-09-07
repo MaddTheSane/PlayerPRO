@@ -226,12 +226,10 @@ typedef MADENUM(short, MADErr) {
 
 #ifndef __APPLE__
 typedef uint8_t			MADByte;
-typedef unsigned char	MADBool;
 typedef uint32_t		MADFourChar;
 typedef unsigned char	MADPStr255[256];
 #else
 typedef Byte	MADByte;
-typedef Boolean	MADBool;
 typedef OSType	MADFourChar;
 typedef Str255	MADPStr255;
 #endif
