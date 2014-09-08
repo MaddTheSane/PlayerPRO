@@ -1,0 +1,58 @@
+//
+//  PPToneGeneratorPlug.m
+//  PPMacho
+//
+//  Created by C.W. Betts on 9/7/14.
+//
+//
+
+#import "PPToneGeneratorPlug.h"
+#import "PPToneGeneratorController.h"
+@import PlayerPROKit.PPSampleObject;
+
+@implementation PPToneGeneratorPlug
+
+- (BOOL)hasUIConfiguration
+{
+	return YES;
+}
+
+- (MADErr)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver;
+{
+	return MADOrderNotImplemented;
+}
+
+- (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handle;
+{
+	long	AudioLength;
+	int		AudioFreq, AudioAmp;
+	
+	AudioLength = selRange.length;
+	if (theData.amplitude == 16)
+		AudioLength /= 2;
+	if (theData.stereo)
+		AudioLength /= 2;
+	
+	AudioFreq	= 440;
+	AudioAmp	= 100;
+	
+	/********************/
+	
+	PPToneGeneratorController *controller = [[PPToneGeneratorController alloc] initWithWindowNibName:@"PPToneGeneratorController"];
+	
+	controller.theData = theData;
+	controller.audioLength = AudioLength;
+	controller.audioAmplitude = (double)(AudioAmp) / 100.0;
+	controller.audioFrequency = AudioFreq;
+	controller.selectionStart = selRange.location;
+	controller.selectionEnd = NSMaxRange(selRange);
+	controller.stereoMode = StereoMode;
+	controller.theDriver = driver;
+	controller.currentBlock = handle;
+
+	[controller.window beginSheet:[document windowForSheet] completionHandler:^(NSModalResponse returnCode) {
+		
+	}];
+}
+
+@end

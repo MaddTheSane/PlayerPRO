@@ -738,8 +738,11 @@
 		55FD192B19A1C12B001E1D9C /* ComplexImportPlugHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */; };
 		55FD51E619BCF51200986849 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55FD51E819BCF51200986849 /* InfoPlist.strings */; };
 		55FD51EB19BCFB4C00986849 /* PPSilencePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD51EA19BCFB4C00986849 /* PPSilencePlug.m */; };
-		55FD51ED19BCFD2700986849 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55FD51EC19BCFD2700986849 /* InfoPlist.strings */; };
 		55FD51F019BCFD9200986849 /* PPSamplingRatePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD51EF19BCFD9200986849 /* PPSamplingRatePlug.m */; };
+		55FD51F119BD021C00986849 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55FD51F319BD021C00986849 /* InfoPlist.strings */; };
+		55FD51F619BD024700986849 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55FD51F819BD024700986849 /* InfoPlist.strings */; };
+		55FD51FB19BD1DDA00986849 /* PPToneGeneratorPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD51FA19BD1DDA00986849 /* PPToneGeneratorPlug.m */; };
+		55FD51FE19BD279A00986849 /* PPSmoothPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FD51FD19BD279A00986849 /* PPSmoothPlug.m */; };
 		55FEF84519844FD600D2E79C /* DigitalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84419844FD600D2E79C /* DigitalViewController.m */; };
 		55FEF84B1984506C00D2E79C /* ClassicalViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84A1984506C00D2E79C /* ClassicalViewController.m */; };
 		55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55FEF84E1984509400D2E79C /* WaveViewController.m */; };
@@ -2395,9 +2398,14 @@
 		55FD51E719BCF51200986849 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		55FD51E919BCFB4C00986849 /* PPSilencePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSilencePlug.h; sourceTree = "<group>"; };
 		55FD51EA19BCFB4C00986849 /* PPSilencePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSilencePlug.m; sourceTree = "<group>"; };
-		55FD51EC19BCFD2700986849 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		55FD51EE19BCFD9200986849 /* PPSamplingRatePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSamplingRatePlug.h; sourceTree = "<group>"; };
 		55FD51EF19BCFD9200986849 /* PPSamplingRatePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSamplingRatePlug.m; sourceTree = "<group>"; };
+		55FD51F219BD021C00986849 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55FD51F719BD024700986849 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		55FD51F919BD1DDA00986849 /* PPToneGeneratorPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPToneGeneratorPlug.h; sourceTree = "<group>"; };
+		55FD51FA19BD1DDA00986849 /* PPToneGeneratorPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPToneGeneratorPlug.m; sourceTree = "<group>"; };
+		55FD51FC19BD279A00986849 /* PPSmoothPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSmoothPlug.h; sourceTree = "<group>"; };
+		55FD51FD19BD279A00986849 /* PPSmoothPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSmoothPlug.m; sourceTree = "<group>"; };
 		55FEF84319844FD600D2E79C /* DigitalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigitalViewController.h; sourceTree = "<group>"; };
 		55FEF84419844FD600D2E79C /* DigitalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DigitalViewController.m; sourceTree = "<group>"; };
 		55FEF8491984506C00D2E79C /* ClassicalViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassicalViewController.h; sourceTree = "<group>"; };
@@ -3298,6 +3306,7 @@
 				552C443617DFE9D600AFCB5C /* SamplingRateWindowController.h */,
 				552C443717DFE9D600AFCB5C /* SamplingRateWindowController.m */,
 				55771DE41873857E00AED8DC /* SamplingRateWindowController.xib */,
+				55FD51F819BD024700986849 /* InfoPlist.strings */,
 			);
 			path = "Sampling Rate";
 			sourceTree = "<group>";
@@ -3308,7 +3317,7 @@
 				55FD51E919BCFB4C00986849 /* PPSilencePlug.h */,
 				55FD51EA19BCFB4C00986849 /* PPSilencePlug.m */,
 				557DE5CE10E087F500177B4C /* Silence-Info.plist */,
-				55FD51EC19BCFD2700986849 /* InfoPlist.strings */,
+				55FD51F319BD021C00986849 /* InfoPlist.strings */,
 			);
 			path = Silence;
 			sourceTree = "<group>";
@@ -3318,6 +3327,8 @@
 			children = (
 				557DE5CF10E087FE00177B4C /* Smooth-Info.plist */,
 				554E102310D6C79E00BB619C /* Smooth.c */,
+				55FD51FC19BD279A00986849 /* PPSmoothPlug.h */,
+				55FD51FD19BD279A00986849 /* PPSmoothPlug.m */,
 			);
 			path = Smooth;
 			sourceTree = "<group>";
@@ -3326,6 +3337,8 @@
 			isa = PBXGroup;
 			children = (
 				557DE5D010E0880800177B4C /* Tone Generator-Info.plist */,
+				55FD51F919BD1DDA00986849 /* PPToneGeneratorPlug.h */,
+				55FD51FA19BD1DDA00986849 /* PPToneGeneratorPlug.m */,
 				555143C717B6EDCF00252657 /* PPToneGeneratorController.h */,
 				555143C817B6EDCF00252657 /* PPToneGeneratorController.m */,
 				55F8C3E117B998E200DFE937 /* Resources */,
@@ -6184,6 +6197,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55771DE21873857E00AED8DC /* SamplingRateWindowController.xib in Resources */,
+				55FD51F619BD024700986849 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6191,7 +6205,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55FD51ED19BCFD2700986849 /* InfoPlist.strings in Resources */,
+				55FD51F119BD021C00986849 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6813,6 +6827,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				557DEA5D10E0930100177B4C /* Smooth.c in Sources */,
+				55FD51FE19BD279A00986849 /* PPSmoothPlug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6821,6 +6836,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				555143CA17B6EDCF00252657 /* PPToneGeneratorController.m in Sources */,
+				55FD51FB19BD1DDA00986849 /* PPToneGeneratorPlug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8164,6 +8180,22 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		55FD51F319BD021C00986849 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55FD51F219BD021C00986849 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		55FD51F819BD024700986849 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55FD51F719BD024700986849 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -8653,7 +8685,6 @@
 					ISUSINGPPPLUG,
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -8672,7 +8703,6 @@
 					ISUSINGPPPLUG,
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -9907,7 +9937,6 @@
 					"$(inherited)",
 					"USEDEPRECATEDFUNCS=0",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
@@ -9929,7 +9958,6 @@
 					"$(inherited)",
 					"USEDEPRECATEDFUNCS=0",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",

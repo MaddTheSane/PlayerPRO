@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 
-@interface PPNoteTranslatePlug : NSObject <PPDigitalPlugin>
+EXP @interface PPNoteTranslatePlug : NSObject <PPDigitalPlugin>
 
 @end

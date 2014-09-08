@@ -21,6 +21,11 @@
 //
 /********************						***********************/
 
+/*!
+ *	@header	RDriver.h
+ *	@abstract The data types used internally by PlayerPROCore.
+ */
+
 #ifndef __RDRIVERH__
 #define __RDRIVERH__
 
@@ -193,8 +198,8 @@ typedef struct Channel
 	
 	bool	stereo;
 	
-	MADByte	loopType;
-	bool	pingpong;
+	MADLoopType	loopType;
+	bool		pingpong;
 	
 	int		preOff;
 	char	preVal, preVal2;
@@ -607,7 +612,7 @@ extern "C" {
  *	@param		text
  *				Developer text that is used to help debug the issue. IT CANNOT BE NULL,
  *				although an empty string is fine.
- *	@discussion NORMALLY it is never called, only when a FATAL error has occured. <BR>
+ *	@discussion NORMALLY it is never called, only when a FATAL error has occured. <br>
  *				This function is usually invoked using the macros \c __LINE__ and
  *				\c __FILE__ for the line and file paramaters.
  */
@@ -620,7 +625,7 @@ PPEXPORT void	MADDebugStr(short line, const char* file, const char* text);
  *				The function to call when MADDebugStr is called, hopefully to have your
  *				app fail gracefully instead of instantly calling \c abort()
  *	@discussion	Use this function to call your own debug function when MADDebugStr is
- *				called, otherwise calls to MADDebugStr will crash your app.<BR>
+ *				called, otherwise calls to MADDebugStr will crash your app.<br>
  *				You can reset to the default MADDebugStr implementation by calling this
  *				function and passing \c NULL to it.
  */
@@ -636,9 +641,9 @@ PPEXPORT void	MADRegisterDebugFunc(void (__callback *debugFunc)(short, const cha
  *	@discussion	Use this function to call your own debug function when MADDebugStr is
  *				called, otherwise calls to MADDebugStr will crash your app.
  *				You can reset to the default MADDebugStr implementation by calling this
- *				function and passing \c NULL to it. <BR>
+ *				function and passing \c NULL to it. <br>
  *				This function is only available if your compiler supports blocks (Clang),
- *				otherwise it is unavailable. <BR>
+ *				otherwise it is unavailable. <br>
  *				If PlayerPROCore was built without blocks support and you try to call this
  *				function, the linker won't be able to find the function.
  */
@@ -652,12 +657,12 @@ PPEXPORT void MADRegisterDebugBlock(void (^newdebugBlock)(short, const char*, co
  *	@abstract	MADLibrary initialization
  *	@result		The error encountered, if any. Will be of type MADErrors unless \c MADNoErr
  *	@param		PlugsFolderName
- *				The folder location for the plug-ins for PlayerPROCore to look for. <BR>
+ *				The folder location for the plug-ins for PlayerPROCore to look for. <br>
  *				On certain platforms, this can be \c NULL
  *	@param		MADLib
  *				Usually a pointer passed by reference. If successful, it will return an initialized \c MADLibrary struct.
  *	@return		An error type on failure, or \c MADNoErr on success
- *	@discussion	You must call this function if you want to use other functions & variables.<BR>
+ *	@discussion	You must call this function if you want to use other functions & variables.<br>
  *				Needed to help set up the MADDriver structure and load non-MADK audio trackers.
  */
 PPEXPORT MADErr	MADInitLibrary(const char *PlugsFolderName, MADLibrary **MADLib);

@@ -9,5 +9,4 @@
 #import <Foundation/Foundation.h>
 
 @protocol PPObject <NSCopying, NSSecureCoding, NSObject>
-- (void)writeBackToStruct UNAVAILABLE_ATTRIBUTE;
 @end

@@ -256,8 +256,8 @@ static inline void MADLE16(void *msg_buf)
  *					The OSType to convert
  * @param		str
  *					The address of the char array to write to
- * @discussion  <code>str</code> must be at least five chars long: four for the size of the OSType, and one for the terminating null.
- *				Note that OSTypes use the Mac OS Roman encoding. If needed, use iconv to convert from the Mac OS Roman encoding.
+ * @discussion  <code>str</code> must be at least five chars long: four for the size of the \c OSType, and one for the terminating null. <br>
+ *				Note that OSTypes use the Mac OS Roman encoding. If needed, use the iconv library to convert from the Mac OS Roman encoding.
  */
 static inline void OSType2Ptr(MADFourChar type, char *str)
 {

@@ -845,7 +845,7 @@ static const dispatch_block_t initUTIArray = ^{
 	return theInstrument.pannType & EFNOTE;
 }
 
-- (PPSampleObject*)samplesObjectAtIndex:(NSUInteger)idx
+- (PPSampleObject*)samplesObjectAtIndex:(NSInteger)idx
 {
 	return samples[idx];
 }

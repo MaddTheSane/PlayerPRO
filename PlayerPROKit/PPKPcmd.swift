@@ -127,10 +127,6 @@ public struct PPKPcmd: SequenceType {
 		myCmd[Int((length * track) + row)] = command
 	}
 	
-	public func getCommand(row1: Int, track track1: Int) -> Cmd {
-		return getCommand(Int16(row1), track: Int16(track1))
-	}
-	
 	public func getCommand(row1: Int16, track track1: Int16) -> Cmd {
 		var track = track1
 		var row = row1

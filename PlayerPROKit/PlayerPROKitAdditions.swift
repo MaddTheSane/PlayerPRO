@@ -236,12 +236,12 @@ extension PPSampleObject {
 				BS *= 2;
 				BS += Int(channel);
 			}
-			temp = CGFloat(Int(theShortSample[BS]) + 0x8000);
+			temp = CGFloat(theShortSample[BS] &+ 0x8000);
 			temp *= CGFloat(high);
 			temp /= oneShiftedBy16;
 			CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(tSS), CGFloat(trueV) + temp);
 			
-			for (i = tSS; i < tSE; i++) {
+			for i in tSS ..< tSE {
 				BS = start + (i * sampleSize) / larg;
 				BE = start + ((i + 1) * sampleSize) / larg;
 				
@@ -255,7 +255,7 @@ extension PPSampleObject {
 					BE += Int(channel);
 				}
 				
-				temp = CGFloat(Int(theShortSample[BS]) + 0x8000);
+				temp = CGFloat(theShortSample[BS] &+ 0x8000);
 				minY = CGFloat(temp);
 				maxY = CGFloat(temp);
 				temp *= CGFloat(high);
@@ -264,7 +264,7 @@ extension PPSampleObject {
 				
 				if (BS != BE) {
 					for (x = BS; x < BE; x++) {
-						temp = CGFloat(Int(theShortSample[x]) + 0x8000);
+						temp = CGFloat(theShortSample[x] &+ 0x8000);
 						
 						if (temp > maxY) {
 							maxY = temp;
@@ -296,13 +296,13 @@ extension PPSampleObject {
 				BS += Int(channel);
 			}
 			
-			temp = CGFloat((theSample[BS] - 0x80));
+			temp = CGFloat(theSample[BS] &- 0x80);
 			temp *= CGFloat(high);
 			temp /= oneShiftedBy8;
 			
 			CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(tSS), CGFloat(trueV) + temp);
 			
-			for (i = tSS; i < tSE; i++) {
+			for i in tSS..<tSE {
 				BS = start + (i * sampleSize) / larg;
 				BE = start + ((i + 1) * sampleSize) / larg;
 				
@@ -317,7 +317,7 @@ extension PPSampleObject {
 					BE += Int(channel);
 				}
 				
-				temp = CGFloat(theSample[BS] - 0x80);
+				temp = CGFloat(theSample[BS] &- 0x80);
 				minY = temp; maxY = temp;
 				temp *= CGFloat(high);
 				temp /= oneShiftedBy8;
@@ -325,7 +325,7 @@ extension PPSampleObject {
 				
 				if (BS != BE) {
 					for (x = BS; x < BE; x++) {
-						temp = CGFloat(theSample[x] - 0x80);
+						temp = CGFloat(theSample[x] &- 0x80);
 						
 						if (temp > maxY) {
 							maxY = temp;

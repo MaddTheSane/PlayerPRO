@@ -11,20 +11,20 @@ import PlayerPROKit
 import AudioUnit
 import AudioToolbox
 
-class PPWavePlug: NSObject, PPInstrumentImportPlugin, PPInstrumentExportPlugin {
-	var hasUIConfiguration: Bool {
+@objc(PPWavePlug) public class PPWavePlug: NSObject, PPInstrumentImportPlugin, PPInstrumentExportPlugin {
+	public var hasUIConfiguration: Bool {
 		get {
 			return false
 		}
 	}
 	
-	var instrument: Bool {
+	public var instrument: Bool {
 		get {
 			return false
 		}
 	}
 	
-	func canImportSampleAtURL(sampleURL: NSURL!) -> Bool {
+	public func canImportSampleAtURL(sampleURL: NSURL!) -> Bool {
 		var sampleHandle = NSFileHandle.fileHandleForReadingFromURL(sampleURL, error: nil)
 		if sampleHandle == nil {
 			return false
@@ -37,7 +37,7 @@ class PPWavePlug: NSObject, PPInstrumentImportPlugin, PPInstrumentExportPlugin {
 		return aErr == .NoErr
 	}
 	
-	func importSampleAtURL(sampleURL: NSURL!, instrument InsHeader: PPInstrumentObject!, sample: PPSampleObject!, sampleID: UnsafeMutablePointer<Int16>, driver: PPDriver!) -> MADErr {
+	public func importSampleAtURL(sampleURL: NSURL!, instrument InsHeader: PPInstrumentObject!, sample: PPSampleObject!, sampleID: UnsafeMutablePointer<Int16>, driver: PPDriver!) -> MADErr {
 		
 		var soundSize: UInt = 0;
 		var loopStart:Int32 = 0
@@ -61,11 +61,10 @@ class PPWavePlug: NSObject, PPInstrumentImportPlugin, PPInstrumentExportPlugin {
 		return .UnknownErr
 	}
 	
-	func exportSampleToURL(sampleURL: NSURL!, instrument InsHeader: PPInstrumentObject!, sample: PPSampleObject!, sampleID: Int16, driver: PPDriver!) -> MADErr {
+	public func exportSampleToURL(sampleURL: NSURL!, instrument InsHeader: PPInstrumentObject!, sample: PPSampleObject!, sampleID: Int16, driver: PPDriver!) -> MADErr {
 		var myErr = MADErr.NoErr
 		if (sampleID >= 0) {
-			//char* data = NULL;
-			var curData = InsHeader.samplesObjectAtIndex(UInt(sampleID))
+			var curData = InsHeader.samplesObjectAtIndex(Int(sampleID))
 			var asbd = AudioStreamBasicDescription()
 			asbd.mSampleRate = Float64(curData.c2spd)
 			asbd.mFormatID = AudioFormatID(kAudioFormatLinearPCM)

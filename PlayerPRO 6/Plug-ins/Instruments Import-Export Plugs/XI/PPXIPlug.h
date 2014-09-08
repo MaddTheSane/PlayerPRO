@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 
-@interface PPXIPlug : NSObject <PPInstrumentImportPlugin, PPInstrumentExportPlugin>
+EXP @interface PPXIPlug : NSObject <PPInstrumentImportPlugin, PPInstrumentExportPlugin>
 
 @end

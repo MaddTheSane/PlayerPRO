@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 @import PlayerPROKit;
 
-@interface PPSilencePlug : NSObject <PPFilterPlugin>
+EXP @interface PPSilencePlug : NSObject <PPFilterPlugin>
 
 @end

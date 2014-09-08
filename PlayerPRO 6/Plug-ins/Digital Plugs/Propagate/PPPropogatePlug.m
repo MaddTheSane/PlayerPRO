@@ -17,10 +17,11 @@
 
 - (MADErr)runWithPcmd:(inout Pcmd*)myPcmd driver:(PPDriver *)driver
 {
-	short track, row;
-	
-	for (track = 0; track < myPcmd->tracks; track ++) {
-		for (row = 0; row < myPcmd->length; row ++) {
+	for (short track = 0; track < myPcmd->tracks; track ++) {
+		for (short row = 0; row < myPcmd->length; row ++) {
+			if (row == 0 && track == 0) {
+				continue;
+			}
 			Cmd *myCmd, *myCmdsrc;
 			myCmdsrc	= MADGetCmd(0, 0, myPcmd);
 			myCmd		= MADGetCmd(row, track, myPcmd);

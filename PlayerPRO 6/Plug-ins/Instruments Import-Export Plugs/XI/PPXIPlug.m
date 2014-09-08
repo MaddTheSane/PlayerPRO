@@ -30,6 +30,12 @@ typedef UInt8			UBYTE;
 
 #include "XM.h"
 
+static const int 	finetune[16] = {
+	7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280,
+	8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
+};
+
+
 @implementation PPXIPlug
 
 - (BOOL)hasUIConfiguration
@@ -143,10 +149,6 @@ typedef UInt8			UBYTE;
 			
 			for (int x = 0; x < numSamples; x++) {
 				PPSampleObject *curData = [[PPSampleObject alloc] init];
-				const int 	finetune[16] = {
-					7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280,
-					8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
-				};
 				
 				wh = (XMWAVHEADER*)(theXI + 0x42 + 0x02 + sizeof(XMPATCHHEADER) + x * sizeof(XMWAVHEADER));
 				
@@ -301,10 +303,6 @@ typedef UInt8			UBYTE;
 		for (u = 0 ; u < InsHeader.countOfSamples ; u++) {
 			XMWAVHEADER		wh;
 			PPSampleObject	*curData = [InsHeader samplesObjectAtIndex:u];
-			const int		finetune[16] = {
-				7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280,
-				8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
-			};
 			
 			if (curData.stereo)
 				wh.length = (ULONG)(curData.data.length / 2);

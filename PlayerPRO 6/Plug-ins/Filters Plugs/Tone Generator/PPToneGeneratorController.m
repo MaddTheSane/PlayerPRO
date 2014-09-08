@@ -10,6 +10,7 @@
 #include <PlayerPROCore/MADPlug.h>
 #include <math.h>
 #include <tgmath.h>
+@import PlayerPROKit;
 
 #define KHZ 22254.54545
 
@@ -29,7 +30,7 @@ static Ptr CreateAudio8Ptr(long AudioLength, long AudioFreq, long AudioAmp, Tone
 	switch (AudioType) {
 		case wave:
 			for (i = 0, x = 0; i < AudioLength; i++, x++) {
-				temp = 127.0 * sin((((double)x * (double)AudioFreq * M_PI * 2.0) / KHZ));
+				temp = 127.0 * sin((((double)x * (long double)AudioFreq * M_PI * 2.0) / KHZ));
 				
 				/** Amplitude resizing **/
 				temp *= AudioAmp;
@@ -263,67 +264,71 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 @synthesize waveRadio;
 @synthesize audio8Ptr;
 @synthesize audio16Ptr;
+@synthesize theData;
 
 - (instancetype)initWithWindow:(NSWindow *)window
 {
 	if (self = [super initWithWindow:window]) {
-		disabledData = NO;
-		isMultipleIstanceSafe = YES;
 		
-		dispatch_block_t tmpBlock = ^{
-			if (!disabledData) {
-				if ([stereoOrMono selectedCell] == [stereoOrMono cellAtRow:0 column:0]) {
-					theData->stereo = FALSE;
-				} else {
-					//SHOULD be true
-					theData->stereo = TRUE;
-				}
-				if ([audioBitRate selectedCell] == [audioBitRate cellAtRow:0 column:0]) {
-					theData->amp = 8;
-				} else /*if ([audioBitRate selectedCell] == [audioBitRate cellAtRow:0 column:1])*/ {
-					//also SHOULD be true
-					theData->amp = 16;
-				}
-			}
-			char *resultPtr;
-			[self clearAudioPointers];
-			
-			switch (theData->amp) {
-				case 8:
-					audio8Ptr = CreateAudio8Ptr(audioLength, audioFrequency, audioAmplitude * 100, generator, theData->stereo);
-					break;
-					
-				case 16:
-				default:
-					audio16Ptr = CreateAudio16Ptr(audioLength, audioFrequency, audioAmplitude * 100, generator, theData->stereo);
-					audioLength *= 2;
-					break;
-			}
-			
-			if (theData->stereo)
-				audioLength *= 2;
-			
-			resultPtr = malloc(theData->size - (self.selectionEnd - self.selectionStart) + audioLength);
-			
-			memmove(theData->data, resultPtr, self.selectionStart);
-			
-			if (theData->amp == 8)
-				memmove(audio8Ptr, resultPtr + self.selectionStart, audioLength);
-			else
-				memmove(audio16Ptr, resultPtr + self.selectionStart, audioLength);
-			
-			memmove(theData->data + self.selectionEnd, resultPtr + self.selectionStart + audioLength, theData->size - self.selectionEnd);
-			
-			free(theData->data);
-			
-			theData->data = resultPtr;
-			theData->size = (int)(theData->size - (self.selectionEnd - self.selectionStart) + audioLength);
-		};
-		
-		self.plugBlock = tmpBlock;
 	}
 	
 	return self;
+}
+
+- (IBAction)cancel:(id)sender
+{
+	[(NSApplication*)NSApp endSheet:self.window];
+	_currentBlock(MADUserCanceledErr);
+}
+
+- (IBAction)okay:(id)sender
+{
+	if (!disabledData) {
+		if ([stereoOrMono selectedCell] == [stereoOrMono cellAtRow:0 column:0]) {
+			theData.stereo = NO;
+		} else {
+			//SHOULD be true
+			theData.stereo = YES;
+		}
+		if ([audioBitRate selectedCell] == [audioBitRate cellAtRow:0 column:0]) {
+			theData.amplitude = 8;
+		} else /*if ([audioBitRate selectedCell] == [audioBitRate cellAtRow:0 column:1])*/ {
+			//also SHOULD be true
+			theData.amplitude = 16;
+		}
+	}
+	char *resultPtr;
+	[self clearAudioPointers];
+	
+	switch (theData.amplitude) {
+		case 8:
+			audio8Ptr = CreateAudio8Ptr(audioLength, audioFrequency, audioAmplitude * 100, generator, theData.stereo);
+			break;
+			
+		case 16:
+		default:
+			audio16Ptr = CreateAudio16Ptr(audioLength, audioFrequency, audioAmplitude * 100, generator, theData.stereo);
+			audioLength *= 2;
+			break;
+	}
+	
+	if (theData.stereo)
+		audioLength *= 2;
+	NSMutableData *resultData = [[NSMutableData alloc] initWithLength:(theData.data.length - (self.selectionEnd - self.selectionStart) + audioLength)];
+	resultPtr = resultData.mutableBytes;
+	
+	memcpy(resultPtr, theData.data.bytes, self.selectionStart);
+	
+	if (theData.amplitude == 8)
+		memcpy(resultPtr + self.selectionStart, audio8Ptr, audioLength);
+	else
+		memcpy(resultPtr + self.selectionStart, audio16Ptr, audioLength);
+	
+	memcpy(resultPtr + self.selectionStart + audioLength, theData.data.bytes + self.selectionEnd, theData.data.length - self.selectionEnd);
+	
+	theData.data = [resultData copy];
+	[(NSApplication*)NSApp endSheet:self.window];
+	_currentBlock(MADNoErr);
 }
 
 - (void)windowDidLoad
@@ -332,12 +337,12 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 	if (audioLength <= 0)
 		audioLength = 2000;
-	if (theData->stereo) {
+	if (theData.stereo) {
 		[stereoOrMono selectCellAtRow:0 column:1];
 	} else {
 		[stereoOrMono selectCellAtRow:0 column:0];
 	}
-	switch (theData->amp) {
+	switch (theData.amplitude) {
 		case 8:
 			[audioBitRate selectCellAtRow:0 column:0];
 			break;
@@ -348,7 +353,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 			break;
 	}
 	
-	if (theData->size > 0) {
+	if (theData.data != nil && theData.data.length > 0) {
 		for (NSCell *cell in [[stereoOrMono cells] arrayByAddingObjectsFromArray:[audioBitRate cells]]) {
 			[cell setEnabled:NO];
 		}
@@ -368,21 +373,21 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 
 - (IBAction)playSample:(id)sender
 {
-	RPlaySoundUPP mPlay = self.infoPlug->RPlaySound;
+	//RPlaySoundUPP mPlay = self.infoPlug->RPlaySound;
 	[self clearAudioPointers];
 	
-	switch(theData->amp) {
+	switch(theData.amplitude) {
 		case 8:
-			audio8Ptr = CreateAudio8Ptr(audioLength, audioFrequency, audioAmplitude, generator, theData->stereo);
+			audio8Ptr = CreateAudio8Ptr(audioLength, audioFrequency, audioAmplitude, generator, theData.stereo);
 			if (audio8Ptr != NULL) {
-				mPlay(self.infoPlug->driverRec, audio8Ptr, audioLength, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
+				//mPlay(self.infoPlug->driverRec, audio8Ptr, audioLength, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
 			}
 			break;
 			
 		case 16:
-			audio16Ptr	= CreateAudio16Ptr(audioLength, audioFrequency, audioAmplitude, generator, theData->stereo);
+			audio16Ptr	= CreateAudio16Ptr(audioLength, audioFrequency, audioAmplitude, generator, theData.stereo);
 			if (audio16Ptr != NULL) {
-				mPlay(self.infoPlug->driverRec, (Ptr)audio16Ptr, audioLength*2, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
+				//mPlay(self.infoPlug->driverRec, (Ptr)audio16Ptr, audioLength*2, 0, 0xFF, theData->amp, 0, 0, theData->c2spd, theData->stereo);
 			}
 			break;
 	}
@@ -396,7 +401,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 - (void)clearAudioPointers
 {
 	//Stop any audio that's playing on the driver
-	MADStopDriver(self.infoPlug->driverRec);
+	[self.theDriver stopDriver];
 	
 	if (audio8Ptr) {
 		free(audio8Ptr);
@@ -410,40 +415,3 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 }
 
 @end
-
-// StereoMode = 0 apply on all channels, = 1 apply on current channel
-static OSErr mainToneGenerator(void *unused, sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short StereoMode)
-{
-	long	AudioLength;
-	int		AudioFreq, AudioAmp;
-	
-	AudioLength = SelectionEnd - SelectionStart;
-	if (theData->amp == 16)
-		AudioLength /= 2;
-	if (theData->stereo)
-		AudioLength /= 2;
-	
-	AudioFreq	= 440;
-	AudioAmp	= 100;
-	
-	/********************/
-	
-	PPToneGeneratorController *controller = [[PPToneGeneratorController alloc] initWithWindowNibName:@"PPToneGeneratorController" infoPlug:thePPInfoPlug];
-	
-	controller.theData = theData;
-	controller.audioLength = AudioLength;
-	controller.audioAmplitude = (double)(AudioAmp) / 100.0;
-	controller.audioFrequency = AudioFreq;
-	controller.selectionStart = SelectionStart;
-	controller.selectionEnd = SelectionEnd;
-	controller.stereoMode = StereoMode ? YES : NO;
-	
-	return [controller runAsSheet];
-}
-
-// 25FA16EC-75FF-4514-9C84-7202360044B9
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x25, 0xFA, 0x16, 0xEC, 0x75, 0xFF, 0x45, 0x14, 0x9C, 0x84, 0x72, 0x02, 0x36, 0x00, 0x44, 0xB9)
-#define PLUGMAIN mainToneGenerator
-#define PLUGINFACTORY ToneGeneratorFactory
-
-#include "CFPlugin-FilterBridge.c"

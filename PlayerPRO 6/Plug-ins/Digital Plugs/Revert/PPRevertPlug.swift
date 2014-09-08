@@ -23,8 +23,8 @@ import PlayerPROKit
 		let maxLenth = myPcmd.memory.length - 1
 		
 		for track in 0 ..< myPcmd.memory.tracks {
-			for row in 0 ..< myPcmd.memory.length {
-				var myCmdsrc	= GetCommand(maxLenth - row, track, srcCmd);
+			for row in 0 ... maxLenth {
+				var myCmdsrc	= srcCmd.getCommand(maxLenth - row, track: track) 
 				ReplaceCmd(row, track, myCmdsrc, myPcmd)
 			}
 		}

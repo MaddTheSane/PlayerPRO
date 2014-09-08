@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 
-@interface PPPropogatePlug : NSObject <PPDigitalPlugin>
+EXP @interface PPPropogatePlug : NSObject <PPDigitalPlugin>
 
 @end

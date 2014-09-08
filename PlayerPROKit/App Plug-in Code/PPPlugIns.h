@@ -16,6 +16,7 @@
 @class NSDocument;
 
 typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
+typedef void (^PPPlugErrorBlock)(MADErr error);
 
 @protocol PPPlugin <NSObject>
 @required
@@ -28,7 +29,7 @@ typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
 - (MADErr)runWithPcmd:(inout Pcmd*)aPcmd driver:(PPDriver *)driver;
 
 @optional
-- (void)beginRunWithPcmd:(Pcmd*)aPcmd driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(void (^)(MADErr error))handle;
+- (void)beginRunWithPcmd:(Pcmd*)aPcmd driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handle;
 
 @end
 
@@ -38,7 +39,7 @@ typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
 - (MADErr)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver;
 
 @optional
-- (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(void (^)(MADErr error))handle;
+- (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handle;
 
 @end
 
@@ -51,7 +52,7 @@ typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
 
 @optional
 - (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
-- (void)beginImportSampleAtURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short*)sampleID driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(void (^)(MADErr error))handle;
+- (void)beginImportSampleAtURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short*)sampleID driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handle;
 
 @end
 
@@ -61,7 +62,7 @@ typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
 - (MADErr)exportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver;
 
 @optional
-- (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(void (^)(MADErr error))handle;
+- (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handle;
 
 @end
 

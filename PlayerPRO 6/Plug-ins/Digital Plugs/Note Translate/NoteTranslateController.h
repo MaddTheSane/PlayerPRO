@@ -11,4 +11,9 @@
 
 @interface NoteTranslateController : NSWindowController
 @property NSInteger transAmount;
+@property Pcmd *thePcmd;
+@property (strong) PPPlugErrorBlock currentBlock;
+
+- (IBAction)okay:(id)sender;
+- (IBAction)cancel:(id)sender;
 @end

@@ -540,7 +540,6 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	@IBAction func openFile(sender: AnyObject?) {
 		let panel = NSOpenPanel();
 		let otherDict: [String : [String]]  = ["PCMD": [PPPCMDUTI], "Instrument List": [PPInstrumentListUTI]];
-		let plugCount = instrumentPlugHandler.plugInCount;
 		var samplesDict = [String: [String]]()
 		for obj in instrumentPlugHandler {
 			if (obj.mode == .Import || obj.mode == .ImportExport) {
