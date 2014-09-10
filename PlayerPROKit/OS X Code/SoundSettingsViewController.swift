@@ -219,7 +219,7 @@ public class SoundSettingsViewController: NSViewController {
 	}
 	
 	required override public convenience init() {
-		return self.init(nibName: "PPSoundSettingsViewController", bundle: NSBundle(forClass: SoundSettingsViewController.self))
+		self.init(nibName: "PPSoundSettingsViewController", bundle: NSBundle(forClass: SoundSettingsViewController.self))
 	}
 	
 	required override public init(nibName: String!, bundle: NSBundle!) {
@@ -360,7 +360,7 @@ public class SoundSettingsViewController: NSViewController {
 	}
 
 	required public init(coder: NSCoder!) {
-		return super.init(coder: coder)
+		super.init(coder: coder)
 	}
 	
 	@IBAction public func changeDriver(sender: AnyObject!) {
