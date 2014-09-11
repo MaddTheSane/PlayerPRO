@@ -400,7 +400,7 @@ public func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcm
 	return GetCommand(row, track, aPcmd).memory
 }
 
-internal func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>) -> UnsafeMutablePointer<Cmd> {
+private func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>) -> UnsafeMutablePointer<Cmd> {
 	return MADGetCmd(row, track, aPcmd)
 }
 

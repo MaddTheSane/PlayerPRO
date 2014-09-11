@@ -35,13 +35,13 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, SequenceType, Sliceable {
 	}
 	
 	func callDigitalPlugIn(plugNum: Int, pcmd myPcmd:UnsafeMutablePointer<Pcmd>, inout info theInfo: PPInfoPlug) -> MADErr {
-		theInfo.fileType = "PPDG";
+		theInfo.fileType = StringToOSType("PPDG")
 		let tmp = digitalPlugs[plugNum];
 		return tmp.callWithPcmd(myPcmd, plugInfo: &theInfo)
 	}
 	
 	func callDigitalPlugIn(plugNum: Int, pcmd myPcmd:UnsafeMutablePointer<Pcmd>, plugInfo theInfo:UnsafeMutablePointer<PPInfoPlug>) -> MADErr {
-		theInfo.memory.fileType = "PPDG";
+		theInfo.memory.fileType = StringToOSType("PPDG")
 		let tmp = digitalPlugs[plugNum];
 		return tmp.callWithPcmd(myPcmd, plugInfo: theInfo)
 	}

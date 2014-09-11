@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 @import PlayerPROKit;
 
-@interface PPSmoothPlug : NSObject <PPFilterPlugin>
+EXP @interface PPSmoothPlug : NSObject <PPFilterPlugin>
 
 @end

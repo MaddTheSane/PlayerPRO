@@ -8,13 +8,6 @@
 
 import Cocoa
 
-enum PPPlaylistMode: Int {
-	case StopPlaying = 0
-	case LoopMusic
-	case LoadNext
-	case LoadRandom
-};
-
 extension TagCoupling {
 	init(_ theAmount: Int32, _ theTag: Int) {
 		amount = theAmount

@@ -384,9 +384,9 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 					PPRunAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
 					return false;
 				}
-				let sigVala: AnyObject = rec![kPPSignature] ?? NSNumber(unsignedInt: "madk")
+				let sigVala: AnyObject = rec![kPPSignature] ?? NSNumber(unsignedInt: StringToOSType("madk"))
 				let sigValb: MADFourChar = (sigVala as NSNumber).unsignedIntValue
-				let sigVal = sigValb.stringValue
+				let sigVal = OSTypeToString(sigValb)
 				
 				
 				let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(sigVal.lowercaseString);

@@ -33,6 +33,16 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 @end
 
+static inline NSInteger PPSelectionStart(NSRange selRange)
+{
+	return selRange.location;
+}
+
+static inline NSInteger PPSelectionEnd(NSRange selRange)
+{
+	return selRange.location + selRange.length;
+}
+
 @protocol PPFilterPlugin <PPPlugin, NSObject>
 
 @required
