@@ -172,6 +172,8 @@ void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init)
 	NSMutableData *madData = [[NSMutableData alloc] initWithCapacity:128];
 	NSData *fileData = [[NSData alloc] initWithContentsOfURL:theURL];
 	if (!fileData) {
+		[madData release];
+		free(MadFile);
 		reply(nil, MADReadingErr);
 		return;
 	}
@@ -179,6 +181,8 @@ void ConvertMidiFile(const char *src, MADMusic *theMAD, MADDriverSettings *init)
 	theErr = TestMIDIFile(AlienFile);
 	if (theErr != MADNoErr) {
 		[fileData release];
+		[madData release];
+		free(MadFile);
 		reply(nil, theErr);
 		return;
 	}

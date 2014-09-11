@@ -77,8 +77,10 @@ static MADErr ConvertULT2Mad(char* theULT, size_t MODSize, MADMusic *theMAD, MAD
 	// ******** Copie des informations dans le MAD ***
 	
 	theMAD->header = (MADSpec*) calloc(sizeof(MADSpec), 1);
-	if (theMAD->header == NULL)
+	if (theMAD->header == NULL) {
+		free(ULTSuite.ins);
 		return MADNeedMemory;
+	}
 	
 	theMAD->header->MAD = 'MADK';
 	for (i = 0; i < 32; i++) theMAD->header->name[i] = 0;

@@ -48,17 +48,28 @@ import AudioToolbox
 		
 		let sndPtr = ConvertWAVCFURL(sampleURL as CFURL, &soundSize, &loopStart, &loopEnd, &sampleSize, &rate, &stereo)
 		
+		if sndPtr == nil {
+			return .ReadingErr
+		}
+		
 		var sample = PPSampleObject()
 		sample.loopBegin = loopStart
 		sample.loopSize = loopEnd - loopStart
-		//sample.volume = 64
+		sample.volume = 64
 		sample.amplitude = MADByte(sampleSize)
 		sample.c2spd = UInt16(rate)
 		sample.relativeNote = 0
 		sample.stereo = stereo
 		sample.data = NSData(bytesNoCopy: sndPtr, length: Int(soundSize), freeWhenDone: true)
 		
-		return .UnknownErr
+		if sampleID.memory == -1 {
+			InsHeader.addSamplesObject(sample)
+			sampleID.memory = Int16(InsHeader.countOfSamples - 1)
+		} else {
+			InsHeader.replaceObjectInSamplesAtIndex(Int(sampleID.memory), withObject: sample)
+		}
+		
+		return .NoErr
 	}
 	
 	public func exportSampleToURL(sampleURL: NSURL!, instrument InsHeader: PPInstrumentObject!, sample: PPSampleObject!, sampleID: Int16, driver: PPDriver!) -> MADErr {

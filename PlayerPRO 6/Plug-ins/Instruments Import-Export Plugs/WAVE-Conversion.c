@@ -43,40 +43,49 @@ OSErr TestWAV(const PCMWavePtr CC)
 /*_______________________________________________________________________*/
 
 
-static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean resolveAgainstBase)
+static CFIndex URLGetFileSize(CFURLRef theURL)
 {
-	CFStringRef fileString = CFURLCopyFileSystemPath(theRef, kCFURLPOSIXPathStyle);
-	CFIndex strLength = CFStringGetMaximumSizeOfFileSystemRepresentation(fileString);
-	CFRelease(fileString);
+	CFNumberRef fileSizeRef = NULL;
+	CFIndex fileSize = 200;
+	if (!CFURLCopyResourcePropertyForKey(theURL, kCFURLFileSizeKey, &fileSizeRef, NULL)) {
+		return fileSize;
+	}
 	
-	return strLength;
+	fileSize = CFNumberGetValue(fileSizeRef, kCFNumberCFIndexType, &fileSize);
+	CFRelease(fileSizeRef);
+	return fileSize;
 }
 
 void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, int *loopStart, int *loopEnd, short *sampleSize, unsigned int *rate, bool *stereo)
 {
 	PCMWavePtr	WAVERsrc = NULL;
-	UNFILE		fRef;
-	long		fSize;
-	
-	{
-		CFIndex theLen = getCFURLFilePathRepresentationLength(theURL, true);
-		char *cfPath = alloca(theLen);
-		CFURLGetFileSystemRepresentation(theURL, true, (unsigned char*)cfPath, theLen);
-		fRef = iFileOpenRead(cfPath);
+	long		fSize = 0;
+	CFReadStreamRef fRef = CFReadStreamCreateWithFile(kCFAllocatorDefault, theURL);
+	CFReadStreamOpen(fRef);
+	CFStreamStatus theStat = CFReadStreamGetStatus(fRef);
+	while (theStat != kCFStreamStatusOpen && theStat != kCFStreamStatusError) {
+		theStat = CFReadStreamGetStatus(fRef);
+	}
+	if (theStat == kCFStreamStatusError) {
+		CFReadStreamClose(fRef);
+		CFRelease(fRef);
+		return NULL;
 	}
 	
 	*stereo = false;
 	
 	if (fRef != NULL) {
-		fSize = iGetEOF(fRef);
+		fSize = URLGetFileSize(theURL);
 		if (!(WAVERsrc = (PCMWavePtr)malloc(fSize))) {
-			iClose(fRef);
+			CFReadStreamClose(fRef);
+			CFRelease(fRef);
 			return NULL;
 		}
 		
-		if (iRead(fSize, WAVERsrc, fRef)) {
+		if (CFReadStreamRead(fRef, (UInt8*)WAVERsrc, fSize) != fSize) {
 			free(WAVERsrc);
-			iClose(fRef);
+			CFReadStreamClose(fRef);
+			CFRelease(fRef);
 			return NULL;
 		}
 		
@@ -108,25 +117,30 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, int *loopStart, int *loo
 					
 					if (WAVERsrc->wFormatTag != 1) {
 						free(WAVERsrc);
-						iClose(fRef);
+						CFReadStreamClose(fRef);
+						CFRelease(fRef);
 						return NULL;
 					}
 				} else {
 					free(WAVERsrc);
-					iClose(fRef);
+					CFReadStreamClose(fRef);
+					CFRelease(fRef);
 					return NULL;
 				}
 			} else {
 				free(WAVERsrc);
-				iClose(fRef);
+				CFReadStreamClose(fRef);
+				CFRelease(fRef);
 				return NULL;
 			}
 		} else {
 			free(WAVERsrc);
-			iClose(fRef);
+			CFReadStreamClose(fRef);
+			CFRelease(fRef);
 			return NULL;
 		}
-		iClose(fRef);
+		CFReadStreamClose(fRef);
+		CFRelease(fRef);
 	}
 	
 	{
@@ -154,6 +168,8 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, int *loopStart, int *loo
 
 #if !defined(__LP64__) && USEDEPRECATEDFUNCS
 #ifdef QD_HEADERS_ARE_PRIVATE
+
+#pragma pack(push, 2)
 //Workaround so it can build on 10.7 and later SDKs
 typedef struct Cursor {
 	short data[16];
@@ -162,14 +178,15 @@ typedef struct Cursor {
 } Cursor, *CursPtr, **CursHandle;
 extern CursHandle GetCursor(short) DEPRECATED_ATTRIBUTE;
 extern void SetCursor(const Cursor *) DEPRECATED_ATTRIBUTE;
+#pragma pack(pop)
 #endif
 
 Ptr ConvertWAV(FSSpec *fileSpec, int *loopStart, int *loopEnd, short *sampleSize, unsigned long *rate, bool *stereo)
 {
 	Ptr ptrReturn = NULL;
 	Ptr tmpPtr = NULL;
-	FSRef tmpRef;
-	CFURLRef tmpURL;
+	FSRef tmpRef = {0};
+	CFURLRef tmpURL = NULL;
 	
 	FSpMakeFSRef(fileSpec, &tmpRef);
 	tmpURL = CFURLCreateFromFSRef(kCFAllocatorDefault, &tmpRef);
@@ -188,14 +205,14 @@ Ptr ConvertWAV(FSSpec *fileSpec, int *loopStart, int *loopEnd, short *sampleSize
 
 OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 {
-	OSErr		iErr;
-	Boolean		canceled;
-	Movie 		theMovie;
-	FSIORefNum	resRefNum, resId;
-	Cursor		watchCrsr;
-	CursHandle	myCursH;
-	Str255		resName;
-	Boolean		dataRefWasChanged;
+	OSErr		iErr = noErr;
+	Boolean		canceled = false;
+	Movie 		theMovie = NULL;
+	FSIORefNum	resRefNum = 0, resId = 0;
+	Cursor		watchCrsr = {0};
+	CursHandle	myCursH = NULL;
+	Str255		resName = {0};
+	Boolean		dataRefWasChanged = false;
 	
 	iErr = EnterMovies();
 	if (iErr)
@@ -203,17 +220,22 @@ OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 	
 	myCursH = GetCursor(357);
 	
-	if (myCursH == NULL) Debugger();
+	if (myCursH == NULL) {
+		MADDebugStr(__LINE__, __FILE__, "");
+		return MADUnknownErr;
+	}
 	DetachResource((Handle)myCursH);
 	HLock((Handle)myCursH);
 	watchCrsr = **myCursH;
 	HUnlock((Handle)myCursH);
 	DisposeHandle((Handle)myCursH);
 	
-	resRefNum = 0;
 	iErr = OpenMovieFile(&file, &resRefNum, fsCurPerm);
+	if (iErr) {
+		ExitMovies();
+		return -1;
+	}
 	
-	resId = 0;
 	iErr = NewMovieFromFile(&theMovie, resRefNum, &resId, resName, 0, &dataRefWasChanged);
 	
 	//CallUpdateALLWindowUPP();
@@ -227,7 +249,7 @@ OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 			//		WAVE CONVERSION
 			/////////////////////////////////////////////////
 			
-			FSMakeFSSpec(newfile->vRefNum, newfile->parID, file.name, newfile);
+			iErr = FSMakeFSSpec(newfile->vRefNum, newfile->parID, file.name, newfile);
 			
 			SetCursor(&watchCrsr);
 			
