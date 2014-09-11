@@ -30,6 +30,7 @@
 				551FEB7710E7282700EDF2F1 /* PBXTargetDependency */,
 				55151F8410DEDC0F0054ABC4 /* PBXTargetDependency */,
 				55ADC3F017D7F016001F27D4 /* PBXTargetDependency */,
+				5591709A19C2565900998D7F /* PBXTargetDependency */,
 				55A9351D17F2990600493DC5 /* PBXTargetDependency */,
 			);
 			name = "Instrument Plugs";
@@ -475,6 +476,8 @@
 		5591708F19C24C1600998D7F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		5591709119C24C1600998D7F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5591709619C24E7D00998D7F /* System7.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105410D6C79E00BB619C /* System7.c */; };
+		5591709719C2564400998D7F /* QuickTime.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55E898B710F17C2B004EB52B /* QuickTime.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5591709819C2564500998D7F /* System 7.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5591709519C24C1600998D7F /* System 7.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55993EF619A340FF00C2078E /* PPRunAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55993EF519A340FF00C2078E /* PPRunAlert.swift */; };
 		5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
 		5599F13316C82100008DDAFB /* RDriverCarbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; };
@@ -1463,6 +1466,13 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
+		5591709919C2565900998D7F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5591708619C24C1600998D7F;
+			remoteInfo = "System 7";
+		};
 		55A01A1A13BE63180049B720 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1780,6 +1790,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				5591709719C2564400998D7F /* QuickTime.plugin in Copy PlugIns */,
+				5591709819C2564500998D7F /* System 7.plugin in Copy PlugIns */,
 				5511F4E9186CFC63008F6BE1 /* AIFF.plugin in Copy PlugIns */,
 				55D57E1C18601BBC00192497 /* MIDI.ppextimp in Copy PlugIns */,
 				55EE2D8817E12F9300FED42A /* Amplitude.plugin in Copy PlugIns */,
@@ -3176,10 +3188,10 @@
 		551520BA10DEEB370054ABC4 /* PAT */ = {
 			isa = PBXGroup;
 			children = (
+				554E104210D6C79E00BB619C /* PAT.h */,
 				5591707D19C23A2300998D7F /* PPPATPlug.h */,
 				5591707E19C23A2300998D7F /* PPPATPlug.m */,
 				551FEB2810E727B100EDF2F1 /* PAT-Info.plist */,
-				554E104210D6C79E00BB619C /* PAT.h */,
 				5591708419C23C0600998D7F /* InfoPlist.strings */,
 			);
 			path = PAT;
@@ -7752,6 +7764,11 @@
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 5591708819C24C1600998D7F /* PBXContainerItemProxy */;
+		};
+		5591709A19C2565900998D7F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5591708619C24C1600998D7F /* System 7 */;
+			targetProxy = 5591709919C2565900998D7F /* PBXContainerItemProxy */;
 		};
 		55A01A1B13BE63180049B720 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

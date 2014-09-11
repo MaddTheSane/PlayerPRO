@@ -12,4 +12,7 @@
 @interface FadeWindowController : NSWindowController
 @property double fadeFrom;
 @property double fadeTo;
+@property BOOL stereoMode;
+@property (strong) PPSampleObject *theData;
+@property (copy) PPPlugErrorBlock currentBlock;
 @end

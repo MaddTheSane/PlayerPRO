@@ -46,7 +46,7 @@ import AudioToolbox
 		var rate: UInt32 = 0
 		var stereo = false
 		
-		let sndPtr = ConvertWAVCFURL(sampleURL, &soundSize, &loopStart, &loopEnd, &sampleSize, &rate, &stereo)
+		let sndPtr = ConvertWAVCFURL(sampleURL as CFURL, &soundSize, &loopStart, &loopEnd, &sampleSize, &rate, &stereo)
 		
 		var sample = PPSampleObject()
 		sample.loopBegin = loopStart
@@ -96,7 +96,7 @@ import AudioToolbox
 				data = curData.data
 			#endif
 			
-			res = AudioFileCreateWithURL(sampleURL, AudioFileTypeID(kAudioFileWAVEType), &asbd, UInt32(kAudioFileFlags_EraseFile), &audioFile);
+			res = AudioFileCreateWithURL(sampleURL as CFURL, AudioFileTypeID(kAudioFileWAVEType), &asbd, UInt32(kAudioFileFlags_EraseFile), &audioFile);
 			if (res != noErr) {
 				myErr = .WritingErr;
 			} else {
