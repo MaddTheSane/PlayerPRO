@@ -12,4 +12,6 @@
 @interface FadeVolumeController : NSWindowController
 @property double fadeFrom;
 @property double fadeTo;
+@property Pcmd *thePcmd;
+@property (copy) PPPlugErrorBlock currentBlock;
 @end

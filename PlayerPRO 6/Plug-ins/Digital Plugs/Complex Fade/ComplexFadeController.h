@@ -29,7 +29,6 @@ typedef NS_ENUM(NSInteger, FadeTypeEnum) {
 //@property (strong) IBOutlet CompFadeNoteFormatter *noteFormatter;
 @property FadeTypeEnum fadeType;
 
-- (IBAction)okOrCancel:(id)sender;
 - (IBAction)changeFadeType:(id)sender;
 
 @end

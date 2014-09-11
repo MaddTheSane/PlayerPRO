@@ -7,6 +7,7 @@
 //
 
 #import "PPSamplingRatePlug.h"
+#import "SamplingRateWindowController.h"
 
 @implementation PPSamplingRatePlug
 

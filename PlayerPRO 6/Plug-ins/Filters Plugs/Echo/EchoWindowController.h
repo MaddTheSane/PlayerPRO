@@ -12,4 +12,7 @@
 @interface EchoWindowController : NSWindowController
 @property double echoStrength;
 @property int echoDelay;
+@property NSRange selectionRange;
+@property (strong) PPSampleObject *theData;
+@property (copy) PPPlugErrorBlock currentBlock;
 @end

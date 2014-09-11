@@ -20,23 +20,9 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>47C646EE-2B4B-428B-9309-C65B75CBE7EF</key>
-		<string>FadeFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>79EA82AD-5A53-46AF-82A9-4A0685B4588C</key>
-		<array>
-			<string>47C646EE-2B4B-428B-9309-C65B75CBE7EF</string>
-		</array>
-	</dict>
 	<key>MADPlugMenuName</key>
 	<string>Fade</string>
 	<key>NSPrincipalClass</key>
-	<string>FadeWindowController</string>
+	<string>PPFadePlug</string>
 </dict>
 </plist>

@@ -20,23 +20,9 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>DA609751-C4B0-4814-BAE7-2B82CA59E64E</key>
-		<string>EchoFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>79EA82AD-5A53-46AF-82A9-4A0685B4588C</key>
-		<array>
-			<string>DA609751-C4B0-4814-BAE7-2B82CA59E64E</string>
-		</array>
-	</dict>
 	<key>MADPlugMenuName</key>
 	<string>Echo</string>
 	<key>NSPrincipalClass</key>
-	<string>EchoWindowController</string>
+	<string>PPEchoPlug</string>
 </dict>
 </plist>

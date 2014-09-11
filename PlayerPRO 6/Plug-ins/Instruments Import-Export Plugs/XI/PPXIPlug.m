@@ -71,10 +71,8 @@ static const int 	finetune[16] = {
 	XMWAVHEADER		*wh = NULL;
 	short			numSamples;
 	
-	NSFileHandle *iFileRefI = [NSFileHandle fileHandleForReadingFromURL:sampleURL error:NULL];
-	if (iFileRefI != NULL) {
-		NSData *xiData = [iFileRefI readDataToEndOfFile];
-		[iFileRefI closeFile];
+	NSData *xiData = [[NSData alloc] initWithContentsOfURL:sampleURL];
+	if (xiData != NULL) {
 		size_t inOutCount = xiData.length;
 		theXI = alloca(inOutCount);
 		memcpy(theXI, xiData.bytes, inOutCount);
@@ -406,6 +404,7 @@ static const int 	finetune[16] = {
 			} else
 				myErr = MADNeedMemory;
 		}
+		[iFileRefI synchronizeFile];
 		[iFileRefI closeFile];
 	} else {
 		myErr = MADWritingErr;

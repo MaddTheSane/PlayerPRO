@@ -9,6 +9,6 @@
 #import <Foundation/Foundation.h>
 @import PlayerPROKit;
 
-@interface PPSamplingRatePlug : NSObject <PPFilterPlugin>
+EXP @interface PPSamplingRatePlug : NSObject <PPFilterPlugin>
 
 @end

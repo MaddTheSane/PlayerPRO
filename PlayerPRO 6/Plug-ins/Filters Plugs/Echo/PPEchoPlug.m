@@ -28,6 +28,9 @@
 	EchoWindowController *controller = [[EchoWindowController alloc] initWithWindowNibName:@"EchoWindowController"];
 	controller.echoStrength = 0.50;
 	controller.echoDelay = 250;
+	controller.theData = theData;
+	controller.selectionRange = selRange;
+	controller.currentBlock = handle;
 
 }
 

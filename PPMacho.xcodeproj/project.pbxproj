@@ -427,8 +427,6 @@
 		557DE91510E08DB000177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE95810E08DB900177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE99B10E08DC100177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		557DEA3910E0915900177B4C /* Invert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100F10D6C79E00BB619C /* Invert.c */; };
-		557DEA5310E092CE00177B4C /* Normalize.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E101810D6C79E00BB619C /* Normalize.c */; };
 		557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */; };
 		557F296818790DDA009D4BC8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
 		557F296918790DF2009D4BC8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
@@ -468,6 +466,10 @@
 		558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4DD91666F14E00A333E8 /* PPDriver.m */; };
 		558D4DDD1666F19600A333E8 /* PPLibrary_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */; };
 		5591706D19C2210700998D7F /* PPEchoPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 5591706C19C2210700998D7F /* PPEchoPlug.m */; };
+		5591707019C2254000998D7F /* PPFadeNotePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 5591706F19C2254000998D7F /* PPFadeNotePlug.m */; };
+		5591707319C2296300998D7F /* PPFadeVolumePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 5591707219C2296300998D7F /* PPFadeVolumePlug.m */; };
+		5591707619C2317300998D7F /* PPNormalizePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 5591707519C2317300998D7F /* PPNormalizePlug.m */; };
+		5591707919C234C100998D7F /* PPInvertPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 5591707819C234C100998D7F /* PPInvertPlug.m */; };
 		55993EF619A340FF00C2078E /* PPRunAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55993EF519A340FF00C2078E /* PPRunAlert.swift */; };
 		5599F13216C820C3008DDAFB /* MainDriverCarbon.c in Sources */ = {isa = PBXBuildFile; fileRef = 55B23D111687D22700DCE923 /* MainDriverCarbon.c */; };
 		5599F13316C82100008DDAFB /* RDriverCarbon.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B23D0E1687D1D700DCE923 /* RDriverCarbon.h */; };
@@ -2076,12 +2078,10 @@
 		554E0FFD10D6C79E00BB619C /* Backwards.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Backwards.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E100010D6C79E00BB619C /* Crop.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Crop.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E100310D6C79E00BB619C /* CrossFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = CrossFade.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E100F10D6C79E00BB619C /* Invert.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Invert.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E101210D6C79E00BB619C /* Length.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Length.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E101310D6C79E00BB619C /* Length.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Length.r; sourceTree = "<group>"; };
 		554E101510D6C79E00BB619C /* Mix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Mix.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E101610D6C79E00BB619C /* Mix.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mix.r; sourceTree = "<group>"; };
-		554E101810D6C79E00BB619C /* Normalize.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Normalize.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E102C10D6C79E00BB619C /* AIFF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AIFF.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E103010D6C79E00BB619C /* AVI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AVI.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E103410D6C79E00BB619C /* DVC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = DVC.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -2274,6 +2274,14 @@
 		5590896710E883AF00CE70B8 /* WAV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WAV.h; sourceTree = "<group>"; };
 		5591706B19C2210700998D7F /* PPEchoPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPEchoPlug.h; sourceTree = "<group>"; };
 		5591706C19C2210700998D7F /* PPEchoPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPEchoPlug.m; sourceTree = "<group>"; };
+		5591706E19C2254000998D7F /* PPFadeNotePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFadeNotePlug.h; sourceTree = "<group>"; };
+		5591706F19C2254000998D7F /* PPFadeNotePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFadeNotePlug.m; sourceTree = "<group>"; };
+		5591707119C2296300998D7F /* PPFadeVolumePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFadeVolumePlug.h; sourceTree = "<group>"; };
+		5591707219C2296300998D7F /* PPFadeVolumePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFadeVolumePlug.m; sourceTree = "<group>"; };
+		5591707419C2317300998D7F /* PPNormalizePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPNormalizePlug.h; sourceTree = "<group>"; };
+		5591707519C2317300998D7F /* PPNormalizePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPNormalizePlug.m; sourceTree = "<group>"; };
+		5591707719C234C100998D7F /* PPInvertPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInvertPlug.h; sourceTree = "<group>"; };
+		5591707819C234C100998D7F /* PPInvertPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInvertPlug.m; sourceTree = "<group>"; };
 		55981C5111EE370D00656EE3 /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
 		55981C5411EE375400656EE3 /* preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = preferences.xib; sourceTree = "<group>"; };
 		55993EF519A340FF00C2078E /* PPRunAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPRunAlert.swift; sourceTree = "<group>"; };
@@ -3257,7 +3265,8 @@
 			isa = PBXGroup;
 			children = (
 				557DE5C910E087BA00177B4C /* Invert-Info.plist */,
-				554E100F10D6C79E00BB619C /* Invert.c */,
+				5591707719C234C100998D7F /* PPInvertPlug.h */,
+				5591707819C234C100998D7F /* PPInvertPlug.m */,
 			);
 			path = Invert;
 			sourceTree = "<group>";
@@ -3294,8 +3303,9 @@
 		551520E010DEF0750054ABC4 /* Normalize */ = {
 			isa = PBXGroup;
 			children = (
+				5591707419C2317300998D7F /* PPNormalizePlug.h */,
+				5591707519C2317300998D7F /* PPNormalizePlug.m */,
 				557DE5CC10E087E100177B4C /* Normalize-Info.plist */,
-				554E101810D6C79E00BB619C /* Normalize.c */,
 			);
 			path = Normalize;
 			sourceTree = "<group>";
@@ -3830,6 +3840,8 @@
 		554E11A410D6F2CA00BB619C /* Fade Volume */ = {
 			isa = PBXGroup;
 			children = (
+				5591707119C2296300998D7F /* PPFadeVolumePlug.h */,
+				5591707219C2296300998D7F /* PPFadeVolumePlug.m */,
 				552C440917DFE00000AFCB5C /* FadeVolumeController.h */,
 				552C440A17DFE00000AFCB5C /* FadeVolumeController.m */,
 				554E117010D6F1BF00BB619C /* Fade Volume-Info.plist */,
@@ -3843,6 +3855,8 @@
 			children = (
 				552C440417DFDF5A00AFCB5C /* FadeNoteController.h */,
 				552C440517DFDF5A00AFCB5C /* FadeNoteController.m */,
+				5591706E19C2254000998D7F /* PPFadeNotePlug.h */,
+				5591706F19C2254000998D7F /* PPFadeNotePlug.m */,
 				554E112910D6F0A000BB619C /* Fade Note-Info.plist */,
 				55268A621877EB8E00A82269 /* FadeNoteController.xib */,
 			);
@@ -6583,6 +6597,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				552C440717DFDF5A00AFCB5C /* FadeNoteController.m in Sources */,
+				5591707019C2254000998D7F /* PPFadeNotePlug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6591,6 +6606,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				552C440C17DFE00000AFCB5C /* FadeVolumeController.m in Sources */,
+				5591707319C2296300998D7F /* PPFadeVolumePlug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6779,7 +6795,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DEA3910E0915900177B4C /* Invert.c in Sources */,
+				5591707919C234C100998D7F /* PPInvertPlug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6804,7 +6820,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DEA5310E092CE00177B4C /* Normalize.c in Sources */,
+				5591707619C2317300998D7F /* PPNormalizePlug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

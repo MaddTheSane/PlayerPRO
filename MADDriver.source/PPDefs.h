@@ -167,9 +167,6 @@
 /*!
  *	@enum		MADErr
  *	@abstract	error values returned by most PlayerPRO functions
- *	@constant	MADIsRunningSheet
- *	@discussion	Not so much an error, but a way for PlayerPROKit to
- *				notify the application that a sheet is running.
  *	@constant	MADNoErr
  *				No error was encountered
  *	@constant	MADNeedMemory
@@ -205,7 +202,6 @@
  *				The user cancelled an action. This shouldn't be seen by the user.
  */
 typedef MADENUM(short, MADErr) {
-	MADIsRunningSheet				= 10,
 	MADNoErr						= 0,
 	MADNeedMemory 					= -1,
 	MADReadingErr					= -2,

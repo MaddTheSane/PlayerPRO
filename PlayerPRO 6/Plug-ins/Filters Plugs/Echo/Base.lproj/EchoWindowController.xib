@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="5053" systemVersion="13C64" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6246" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1090" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="5053"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6246"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="EchoWindowController">
@@ -11,7 +11,7 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <window title="Echo" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" visibleAtLaunch="NO" animationBehavior="alertPanel" id="1">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
@@ -24,7 +24,6 @@
                 <subviews>
                     <form verticalHuggingPriority="750" mode="track" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5">
                         <rect key="frame" x="20" y="61" width="232" height="52"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         <size key="cellSize" width="232" height="22"/>
                         <size key="intercellSpacing" width="1" height="8"/>
@@ -61,8 +60,7 @@
                         </cells>
                     </form>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="14">
-                        <rect key="frame" x="199" y="13" width="59" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <rect key="frame" x="176" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="15">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -71,12 +69,11 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="okOrCancel:" target="-2" id="24"/>
+                            <action selector="okay:" target="-2" id="3An-ql-oZH"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="18">
-                        <rect key="frame" x="117" y="13" width="82" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <rect key="frame" x="94" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="19">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -85,7 +82,7 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="okOrCancel:" target="-2" id="25"/>
+                            <action selector="cancel:" target="-2" id="9SX-h4-1Ny"/>
                         </connections>
                     </button>
                 </subviews>
@@ -97,6 +94,7 @@ Gw
                     <constraint firstItem="14" firstAttribute="leading" secondItem="18" secondAttribute="trailing" constant="12" symbolic="YES" id="21"/>
                     <constraint firstItem="18" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="20" symbolic="YES" id="RZq-TL-bJP"/>
                     <constraint firstAttribute="centerX" secondItem="5" secondAttribute="centerX" id="a2u-FP-Mhe"/>
+                    <constraint firstItem="14" firstAttribute="width" secondItem="18" secondAttribute="width" id="cAL-WM-2cF"/>
                     <constraint firstItem="14" firstAttribute="baseline" secondItem="18" secondAttribute="baseline" id="zhp-7J-ONv"/>
                 </constraints>
             </view>

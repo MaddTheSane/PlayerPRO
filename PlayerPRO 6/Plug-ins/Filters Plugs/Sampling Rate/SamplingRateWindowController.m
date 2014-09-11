@@ -122,15 +122,17 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
 {
 	NSData			*ourData = src.data;
 	size_t			srcSize = ourData.length;
-	short			*src16 = (short*)ourData.bytes, *dst16;
-	char			*src8 = (char*)ourData.bytes, *dst8;
+	const short		*src16 = ourData.bytes;
+	short			*dst16;
+	const char		*src8 = ourData.bytes;
+	char			*dst8;
 	Ptr				dst;
 	int				tempL = 0, tempR = 0;
 	size_t			newSize = 0;
 	unsigned int	x = 0, left = 0, right = 0, pos = 0;
 	short			amp = src.amplitude;
 	int				srcC4SPD = src.c2spd;
-	bool stereo = src.stereo;
+	const BOOL		stereo = src.stereo;
 	
 	srcC4SPD /= 100;
 	dstC4SPD /= 100;
@@ -141,7 +143,7 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
 	
 	dst = dstData.mutableBytes;
 	if (dst == NULL)
-		return NULL;
+		return nil;
 	
 	dst16 = (short*)dst;
 	dst8 = (char*)dst;
@@ -231,7 +233,7 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
 	return [dstData copy];
 }
 
-
+#if 0
 - (instancetype)initWithWindow:(NSWindow *)window
 {
 	self = [super initWithWindow:window];
@@ -274,7 +276,6 @@ static void *ConvertSampleC4SPD(Ptr src, unsigned int srcSize, short amp, int sr
 	return self;
 }
 
-#if 0
 - (void)windowDidLoad
 {
 	[super windowDidLoad];

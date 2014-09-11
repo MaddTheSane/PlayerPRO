@@ -14,4 +14,6 @@
 @property (weak) IBOutlet NSComboBox *toBox;
 @property (copy) NSString* initialFrom;
 @property (copy) NSString* initialTo;
+@property (copy) PPPlugErrorBlock currentBlock;
+@property Pcmd* thePcmd;
 @end

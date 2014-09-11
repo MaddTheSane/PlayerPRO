@@ -38,18 +38,15 @@ static int NSStringToHex(NSString *str)
 	return NO;
 }
 
+#if 0
 - (instancetype)initWithWindow:(NSWindow *)window
 {
 	if (self = [super initWithWindow:window]) {
-		isMultipleIstanceSafe = YES;
-		dispatch_block_t tmp = ^{
-			
-		};
-		self.plugBlock = tmp;
 	}
 	
 	return self;
 }
+#endif
 
 - (void)windowDidLoad
 {
@@ -81,13 +78,9 @@ static int NSStringToHex(NSString *str)
 	}
 }
 
-- (IBAction)okOrCancel:(id)sender
+- (IBAction)okay:(id)sender
 {
-	if ([sender tag] == 1) {
-		[super okOrCancel:sender];
-		return;
-	}
-	if (![self validateSettings]) {
+		if (![self validateSettings]) {
 		NSBeep();
 		NSAlert *badSettings = [[NSAlert alloc] init];
 		badSettings.messageText = @"Invalid Value";
@@ -97,12 +90,18 @@ static int NSStringToHex(NSString *str)
 		[badSettings beginSheetModalForWindow:[self window] completionHandler:^(NSModalResponse returnCode) {
 			;//Do nothing right now
 		}];
-	} else
-		[super okOrCancel:sender];
+		}
+
+}
+
+- (IBAction)cancel:(id)sender
+{
+	
 }
 
 @end
 
+#if 0
 static OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 {
 	ComplexFadeController *controller = [[ComplexFadeController alloc] initWithWindowNibName:@"ComplexFadeController" infoPlug:thePPInfoPlug];
@@ -118,3 +117,4 @@ static OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
 #define PLUGMAIN mainCompFade //The old main function, renamed please
 
 #include "CFPlugin-DigitalBridge.c"
+#endif 
