@@ -18,7 +18,6 @@ enum {
 	kmaxVolume = 7
 };
 
-
 #ifndef USEDEPRECATEDFUNCS
 #define USEDEPRECATEDFUNCS 1
 #endif
@@ -52,7 +51,6 @@ static CFIndex getCFURLFilePathRepresentationLength(CFURLRef theRef, Boolean res
 	
 	return strLength;
 }
-
 
 void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, int *loopStart, int *loopEnd, short *sampleSize, unsigned int *rate, bool *stereo)
 {
@@ -224,7 +222,7 @@ OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 	
 	if (!canceled && iErr == MADNoErr) {
 		iErr = FindFolder(kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newfile->vRefNum, &newfile->parID);
-		if (iErr == MADNoErr) {
+		if (iErr == noErr) {
 			/////////////////////////////////////////////////
 			//		WAVE CONVERSION
 			/////////////////////////////////////////////////

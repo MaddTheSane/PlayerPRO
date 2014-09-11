@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en_US</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>2.0</string>
+	<key>CFBundleSignature</key>
+	<string>SNPL</string>
+	<key>CFBundleVersion</key>
+	<string>2.0</string>
+	<key>MADPlugAuthorName</key>
+	<string>Antoine ROSSET</string>
+	<key>MADPlugMenuName</key>
+	<string>PAT</string>
+	<key>MADPlugType</key>
+	<string>PAT </string>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>net.sourceforge.playerpro.pat</string>
+	</array>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright © 1999 Antoine ROSSET</string>
+	<key>NSPrincipalClass</key>
+	<string>PPPATPlug</string>
+</dict>
+</plist>

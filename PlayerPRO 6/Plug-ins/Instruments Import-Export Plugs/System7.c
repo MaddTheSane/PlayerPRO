@@ -11,7 +11,96 @@
 Ptr MyExp1to3(Ptr sound, unsigned long numSampleFrames);
 Ptr MyExp1to6(Ptr sound, unsigned long numSampleFrames);
 
-void AddLoopToSndHandle(Handle sound, long Start, long End)
+//Taken from OS X's Kerberos source code file FSpUtils.c, as found ot:
+// http://www.opensource.apple.com/source/Kerberos/Kerberos-47/KerberosFramework/Common/Sources/FSpUtils.c
+//Note that the URL might change.
+static OSStatus CFURLToFSSpec (CFURLRef pathURL, FSSpec *outSpec)
+{
+	OSStatus err = noErr;
+	FSRef ref;
+	FSCatalogInfo info;
+	CFStringRef pathString = NULL;
+	CFURLRef parentURL = NULL;
+	CFStringRef nameString = NULL;
+	
+	// First, try to create an FSRef for the full path
+	if (err == noErr) {
+		if (CFURLGetFSRef(pathURL, &ref)) {
+			err = FSIsFSRefValid(&ref) ? noErr : fnfErr;
+		} else {
+			err = fnfErr;
+		}
+	}
+	
+	if (err == noErr) {
+		// It's a directory or a file that exists; convert directly into an FSSpec:
+		err = FSGetCatalogInfo(&ref, kFSCatInfoNone, NULL, NULL, outSpec, NULL);
+	} else {
+		Str255 fileName;
+		// The suck case.  The file doesn't exist.
+		err = noErr;
+		
+		// Get a CFString for the path
+		if (err == noErr) {
+			pathString = CFURLCopyFileSystemPath(pathURL, kCFURLPOSIXPathStyle);
+			if (pathString == NULL)
+				err = memFullErr;
+		}
+		
+		// Get a CFURL for the parent
+		if (err == noErr) {
+			parentURL = CFURLCreateCopyDeletingLastPathComponent(kCFAllocatorDefault, pathURL);
+			if (parentURL == NULL)
+				err = memFullErr;
+		}
+		
+		// Build an FSRef for the parent directory, which must be valid to make an FSSpec
+		if (err == noErr) {
+			Boolean converted = CFURLGetFSRef(parentURL, &ref);
+			if (!converted)
+				err = fnfErr;
+		}
+		
+		// Get the node ID of the parent directory
+		if (err == noErr)
+			err = FSGetCatalogInfo(&ref, kFSCatInfoNodeFlags|kFSCatInfoNodeID|kFSCatInfoVolume, &info, NULL, outSpec, NULL);
+		
+		// Get a CFString for the file name
+		if (err == noErr) {
+			nameString = CFURLCopyLastPathComponent(pathURL);
+			if (nameString == NULL)
+				err = memFullErr;
+		}
+		
+		// Copy the string into the FSSpec
+		if (err == noErr) {
+			Boolean converted = CFStringGetPascalString(pathString, fileName, sizeof(fileName),
+														kCFStringEncodingMacRoman);
+			if (!converted)
+				converted = CFStringGetPascalString(pathString, fileName, sizeof(fileName),
+													CFStringGetSystemEncoding());
+			
+			if (!converted)
+				err = fnfErr;
+		}
+		
+		// Set the node ID in the FSSpec
+		if (err == noErr)
+			err = FSMakeFSSpec(info.volume, info.nodeID, fileName, outSpec);
+	}
+	
+	// Free allocated memory
+	if (pathString != NULL)
+		CFRelease(pathString);
+	if (parentURL != NULL)
+		CFRelease(parentURL);
+	if (nameString != NULL)
+		CFRelease(nameString);
+	
+	return err;
+}
+
+static void AddLoopToSndHandle(Handle sound, long Start, long End)
 {
 	Ptr 			soundPtr;
 	short 			soundFormat;
@@ -20,7 +109,7 @@ void AddLoopToSndHandle(Handle sound, long Start, long End)
 	SoundHeaderPtr 	header;
 	CmpSoundHeader	*CmpHeader;
 	ExtSoundHeader	*ExtHeader;
-	OSErr 			result;
+	//OSErr 			result;
 	
 	// make the sound safe to use at interrupt time.
 	HLock(sound);
@@ -90,7 +179,7 @@ void AddLoopToSndHandle(Handle sound, long Start, long End)
 	HUnlock(sound);
 }
 
-Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, Boolean *stereo)
+static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, Boolean *stereo)
 {
 	short 			soundFormat, numChannels;
 	short 			numSynths, numCmds, CompressID;
@@ -98,11 +187,12 @@ Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize,
 	SoundHeaderPtr 	header;
 	CmpSoundHeader	*CmpHeader;
 	ExtSoundHeader	*ExtHeader;
-	SndCommand 		cmd;
+	//SndCommand 		cmd;
 	OSErr 			result;
-	long			i,x, numFrames;
-	Boolean			change = false;
-	Str255			aStr;
+	long i;
+	//long			i,x, numFrames;
+	//Boolean			change = false;
+	//Str255			aStr;
 	
 	*loopStart = 0;
 	*loopEnd = 0;
@@ -172,7 +262,7 @@ Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize,
 				SoundComponentData		inputFormat, outputFormat;
 				unsigned long			inputFrames, outputFrames;
 				unsigned long			inputBytes, outputBytes;
-				Ptr						inputPtr, outputPtr;
+				//Ptr						inputPtr, outputPtr;
 				OSErr					err;
 				Ptr						dstPtr;
 				
@@ -305,7 +395,7 @@ Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize,
 	return soundPtr;
 }
 
-OSErr TestSND(short *soundPtr)
+static OSErr TestSND(short *soundPtr)
 {
 	if (*soundPtr == 1 || *soundPtr == 2)
 		return noErr;
@@ -313,11 +403,11 @@ OSErr TestSND(short *soundPtr)
 		return MADFileNotSupportedByThisPlug;
 }
 
-Ptr IMPL(long *lS, long *lE, long *bFreq, short *sS, unsigned long *rate, FSSpec *AlienFileFSSpec, Boolean *stereo)
+static Ptr IMPL(long *lS, long *lE, long *bFreq, short *sS, unsigned long *rate, FSSpec *AlienFileFSSpec, Boolean *stereo)
 {
 	Handle			tempHandle;
 	Ptr 			theSound = NULL;
-	UNFILE			iFileRefI;
+	ResFileRefNum	iFileRefI;
 	OSErr			myErr = noErr;
 	
 	iFileRefI = FSpOpenResFile(AlienFileFSSpec, fsCurPerm);
@@ -379,18 +469,19 @@ End:;
 		return theSound;
 }
 
-OSErr main(OSType					order,						// Order to execute
-		   InstrData				*InsHeader,					// Ptr on instrument header
-		   sData					**sample,					// Ptr on samples data
-		   short					*sampleID,					// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
-		   // If sampleID == -1 : add sample else replace selected sample.
-		   FSSpec					*AlienFileFSSpec,			// IN/OUT file
-		   PPInfoPlug				*thePPInfoPlug)
+static MADErr Sys7Main(void* thisInterface, OSType order, InstrData* InsHeader, sData** sample, short* sampleID, CFURLRef alienFileURL, PPInfoPlug* thePPInfoPlug)
 {
-	OSErr	myErr = noErr;
-	Ptr		AlienFile;
-	short	iFileRefI;
-	long	inOutBytes;
+	OSErr			myErr = noErr;
+	//Ptr			AlienFile;
+	ResFileRefNum	iFileRefI;
+	//long			inOutBytes;
+	FSSpec			ourSpec;
+	OSStatus		didConvert = CFURLToFSSpec(alienFileURL, &ourSpec);
+#define AlienFileFSSpec (&ourSpec)
+	
+	if (didConvert != noErr) {
+		return MADReadingErr;
+	}
 	
 	switch(order) {
 #if 0
@@ -425,12 +516,15 @@ OSErr main(OSType					order,						// Order to execute
 			
 			theSound = IMPL(&lS, &lE, &bFreq, &sS, &rate, AlienFileFSSpec, &stereo);
 			
-			if (theSound != NULL)
-			{
-				inAddSoundToMAD(theSound, lS, lE, sS, bFreq, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
+			if (theSound != NULL) {
+				size_t soundSize = GetPtrSize(theSound);
+				void *theCSound = malloc(soundSize);
+				memcpy(theCSound, theSound, soundSize);
+				inAddSoundToMAD(theCSound, soundSize, lS, lE, sS, bFreq, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
 				myErr = noErr;
-			}
-			else myErr = MADNeedMemory;
+				DisposePtr(theSound);
+			} else
+				myErr = MADNeedMemory;
 		}
 			break;
 			
@@ -439,65 +533,18 @@ OSErr main(OSType					order,						// Order to execute
 			
 			iFileRefI = FSpOpenResFile(AlienFileFSSpec, fsCurPerm);
 			
-			if (ResError())
-			{
-				CloseResFile(iFileRefI);	myErr = ResError();		goto End;
+			if (ResError()) {
+				CloseResFile(iFileRefI);
+				myErr = ResError();
+				goto End;
 			}
 			
 			UseResFile(iFileRefI);
 			
-			if (Count1Resources('snd ') == 0) myErr = MADFileNotSupportedByThisPlug;
+			if (Count1Resources('snd ') == 0)
+				myErr = MADFileNotSupportedByThisPlug;
 			
 			CloseResFile(iFileRefI);
-			break;
-			
-		case 'EXPL':
-			if (*sampleID >= 0) {
-				sData 	*curData = sample[*sampleID];
-				short	temp, fRefNum, numChan;
-				Handle	tempHandle;
-				
-				tempHandle = NewHandle(2048);
-				
-				inOutBytes = curData->size;
-				
-				if (curData->stereo) numChan = 2;
-				else numChan = 1;
-				
-				SetupSndHeader((SndListHandle) tempHandle,
-							   numChan,
-							   ((unsigned long) curData->c2spd)<<16L,
-							   curData->amp,
-							   'NONE',
-							   60 - curData->relNote,
-							   inOutBytes,
-							   &temp);
-				
-				SetHandleSize(tempHandle, inOutBytes + temp);
-				
-				HLock(tempHandle);
-				BlockMoveData(curData->data, *tempHandle + temp, inOutBytes);
-				
-				if (curData->amp == 8) ConvertInstrumentIn((Byte*) *tempHandle + temp, inOutBytes);
-				
-				HUnlock(tempHandle);
-				
-				AddLoopToSndHandle(	tempHandle,
-								   curData->loopBeg,
-								   curData->loopBeg + curData->loopSize);
-				
-				FSpDelete(AlienFileFSSpec);
-				FSpCreateResFile(AlienFileFSSpec, 'movr', 'sfil', smCurrentScript);
-				fRefNum = FSpOpenResFile(AlienFileFSSpec, fsCurPerm);
-				UseResFile(fRefNum);
-				AddResource(tempHandle, 'snd ', 7438, AlienFileFSSpec->name);
-				WriteResource(tempHandle);
-				DetachResource(tempHandle);
-				
-				DisposeHandle(tempHandle);
-				
-				CloseResFile(fRefNum);
-			}
 			break;
 			
 		default:
@@ -509,3 +556,11 @@ End:
 	
 	return myErr;
 }
+
+// 94F2BEA7-89F4-440D-99BF-065198DB088B
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x94, 0xF2, 0xBE, 0xA7, 0x89, 0xF4, 0x44, 0x0D, 0x99, 0xBF, 0x06, 0x51, 0x98, 0xDB, 0x08, 0x8B)
+#define PLUGINFACTORY Sys7Factory
+#define PLUGMAIN Sys7Main
+
+//#include "../CFPlugin-InstrBridge.c"
+#include "CFPlugin-InstrBridge.c"

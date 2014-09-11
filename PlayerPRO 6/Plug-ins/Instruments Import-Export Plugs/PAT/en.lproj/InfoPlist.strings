@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  PPMacho
+
+  Created by C.W. Betts on 9/11/14.
+
+*/
+
+NSHumanReadableCopyright = "Copyright © 1999 Antoine ROSSET";
+MADPlugAuthorName = "Antoine ROSSET";

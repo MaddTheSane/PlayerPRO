@@ -24,14 +24,14 @@
 	<false/>
 	<key>CFPlugInFactories</key>
 	<dict>
-		<key>D54EE3CC-B94C-4245-9E82-2F1D65C0009D</key>
-		<string>PATFactory</string>
+		<key>94F2BEA7-89F4-440D-99BF-065198DB088B</key>
+		<string>Sys7Factory</string>
 	</dict>
 	<key>CFPlugInTypes</key>
 	<dict>
 		<key>FD7154D6-20BF-4007-881B-8E44970C3B0A</key>
 		<array>
-			<string>D54EE3CC-B94C-4245-9E82-2F1D65C0009D</string>
+			<string>94F2BEA7-89F4-440D-99BF-065198DB088B</string>
 		</array>
 	</dict>
 	<key>MADCanExport</key>
@@ -41,16 +41,38 @@
 	<key>MADPlugAuthorName</key>
 	<string>Antoine ROSSET</string>
 	<key>MADPlugIsSample</key>
-	<false/>
+	<true/>
 	<key>MADPlugMenuName</key>
-	<string>PAT</string>
+	<string>System 7</string>
 	<key>MADPlugType</key>
-	<string>PAT </string>
+	<string>sfil</string>
 	<key>MADPlugUTITypes</key>
 	<array>
-		<string>net.sourceforge.playerpro.pat</string>
+		<string>net.sourceforge.playerpro.oldmacsfilAudio</string>
 	</array>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 1999 Antoine ROSSET</string>
+	<string>Copyright @ 1996 Antoine ROSSET</string>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.audio</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.oldmacsfilAudio</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>sfil</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>sfil</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
 </dict>
 </plist>
