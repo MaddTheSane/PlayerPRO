@@ -29,7 +29,7 @@ import AudioToolbox
 		if sampleHandle == nil {
 			return false
 		}
-		let headerDat = sampleHandle.readDataOfLength(100)
+		let headerDat = sampleHandle.readDataOfLength(sizeof(PCMWaveRec.Type) + 20)
 		sampleHandle.closeFile()
 		
 		var aErr = TestWAV(PCMWavePtr(headerDat.bytes))

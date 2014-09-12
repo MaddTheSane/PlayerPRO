@@ -50,13 +50,17 @@ __END_DECLS
 @property (readonly) NSUInteger pluginCount;
 
 - (MADErr)identifyFileAtPath:(NSString*)apath type:(out char*)atype;
+- (MADErr)identifyFileAtPath:(NSString*)apath stringType:(out NSString* __autoreleasing *)atype;
 - (MADErr)identifyFileAtURL:(NSURL*)apath type:(out char*)atype;
+- (MADErr)identifyFileAtURL:(NSURL*)apath stringType:(out NSString* __autoreleasing *)atype;
 
-- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype info:(MADInfoRec*)infoRec;
-- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype info:(MADInfoRec*)infoRec;
+- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(in const char*)atype info:(MADInfoRec*)infoRec;
+- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(in const char*)atype info:(MADInfoRec*)infoRec;
 
-- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
-- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
+- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(in const char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
+- (MADErr)getInformationFromFileAtURL:(NSURL*)apath stringType:(NSString*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
+- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(in const char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
+- (MADErr)getInformationFromFileAtPath:(NSString*)apath stringType:(NSString*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
 
 + (NSDictionary*)infoRecToDictionary:(MADInfoRec)infoRec;
 

@@ -6,7 +6,7 @@
 //
 //
 
-#import <PlayerPROKit/PlayerPROKit.h>
+#import "PPLibrary.h"
 
 @interface PPLibrary ()
 @property (readonly) MADLibrary *_madLib;

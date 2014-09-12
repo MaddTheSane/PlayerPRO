@@ -150,27 +150,49 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 	return [self identifyFileAtURL:[NSURL fileURLWithPath:apath] type:atype];
 }
 
+- (MADErr)identifyFileAtPath:(NSString*)apath stringType:(out NSString* __autoreleasing *)atype
+{
+	if (!atype) {
+		return MADParametersErr;
+	}
+	char aChar[5] = {0};
+	MADErr anErr = [self identifyFileAtPath:apath type:aChar];
+	*atype = CFBridgingRelease(UTCreateStringForOSType(Ptr2OSType(aChar)));
+	return anErr;
+}
+
 - (MADErr)identifyFileAtURL:(NSURL*)apath type:(char*)atype
 {
 	return MADMusicIdentifyCFURL(theLibrary, atype, (__bridge CFURLRef)apath);
 }
 
-- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype info:(MADInfoRec*)infoRec
+- (MADErr)identifyFileAtURL:(NSURL*)apath stringType:(out NSString* __autoreleasing *)atype
+{
+	if (!atype) {
+		return MADParametersErr;
+	}
+	char aChar[5] = {0};
+	MADErr anErr = MADMusicIdentifyCFURL(theLibrary, aChar, (__bridge CFURLRef)apath);
+	*atype = CFBridgingRelease(UTCreateStringForOSType(Ptr2OSType(aChar)));
+	return anErr;
+}
+
+- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(in const char*)atype info:(MADInfoRec*)infoRec
 {
 	return [self getInformationFromFileAtURL:[NSURL fileURLWithPath:apath] type:atype info:infoRec];
 }
 
-- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype info:(MADInfoRec*)infoRec
+- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(in const char*)atype info:(MADInfoRec*)infoRec
 {
-	return MADMusicInfoCFURL(theLibrary, atype, (__bridge CFURLRef)apath, infoRec);
+	return MADMusicInfoCFURL(theLibrary, (char*)atype, (__bridge CFURLRef)apath, infoRec);
 }
 
-- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict
+- (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(in const char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict
 {
 	return  [self getInformationFromFileAtURL:[NSURL fileURLWithPath:apath] type:atype infoDictionary:infoDict];
 }
 
-- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(char*)atype infoDictionary:(out NSDictionary* __autoreleasing*)infoDict
+- (MADErr)getInformationFromFileAtURL:(NSURL*)apath type:(in const char*)atype infoDictionary:(out NSDictionary* __autoreleasing*)infoDict
 {
 	if (!infoDict) {
 		return MADParametersErr;
@@ -180,15 +202,20 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 	if (theErr != MADNoErr) {
 		return theErr;
 	}
-	*infoDict = @{kPPTotalPatterns: @(infoRec.totalPatterns),
-				  kPPPartitionLength: @(infoRec.partitionLength),
-				  kPPFileSize: @(infoRec.fileSize),
-				  kPPSignature: @(infoRec.signature),
-				  kPPTotalTracks: @(infoRec.totalTracks),
-				  kPPTotalInstruments: @(infoRec.totalInstruments),
-				  kPPInternalFileName: [NSString stringWithCString:infoRec.internalFileName encoding:NSMacOSRomanStringEncoding],
-				  kPPFormatDescription: [NSString stringWithCString:infoRec.formatDescription encoding:NSMacOSRomanStringEncoding]};
+	
+	*infoDict = [PPLibrary infoRecToDictionary:infoRec];
 	return theErr;
+}
+
+- (MADErr)getInformationFromFileAtURL:(NSURL*)apath stringType:(NSString*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict
+{
+	const char *tmpType = [atype cStringUsingEncoding:NSMacOSRomanStringEncoding];
+	return [self getInformationFromFileAtURL:apath type:tmpType infoDictionary:infoDict];
+}
+
+- (MADErr)getInformationFromFileAtPath:(NSString*)apath stringType:(NSString*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict
+{
+	return [self getInformationFromFileAtURL:[NSURL fileURLWithPath:apath] stringType:atype infoDictionary:infoDict];
 }
 
 + (NSDictionary*)infoRecToDictionary:(MADInfoRec)infoRec
