@@ -49,45 +49,51 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	let musicURL: NSURL
 
 	#if os(OSX)
-	var fileIcon: NSImage { get {
-		let image = NSWorkspace.sharedWorkspace().iconForFile(musicURL.path);
-		image.size = NSSize(width: 16, height: 16)
-		return image
-	}}
+	var fileIcon: NSImage {
+		get {
+			let image = NSWorkspace.sharedWorkspace().iconForFile(musicURL.path);
+			image.size = NSSize(width: 16, height: 16)
+			return image
+		}
+	}
 	#endif
 	
-	var fileName: String { get {
-		var val: AnyObject? = nil;
-		var err: NSError? = nil;
-		
-		if (!musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)) {
-			println("PPMusicListObject: Could not find out if extension is hidden in file \(musicURL.path), error: \(err!.localizedDescription)");
-			return musicURL.lastPathComponent;
-		} else {
-			let retStr = val! as String;
-			return retStr;
-		}
-	}}
-	
-	internal var stashedFileSize: UInt64 = 0
-	var fileSize : UInt64 { get {
-		if stashedFileSize == 0 {
+	@objc var fileName: String {
+		get {
 			var val: AnyObject? = nil;
 			var err: NSError? = nil;
-			if (!musicURL.getResourceValue(&val, forKey:NSURLTotalFileSizeKey, error: &err)) {
-				let manager = NSFileManager.defaultManager();
-				let theparam = manager.attributesOfItemAtPath(musicURL.path!, error: nil)
-				if (theparam == nil) {
-					return 0;
-				}
-				stashedFileSize = (theparam! as NSDictionary).fileSize()
+			
+			if (!musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)) {
+				println("PPMusicListObject: Could not find out if extension is hidden in file \(musicURL.path), error: \(err!.localizedDescription)");
+				return musicURL.lastPathComponent;
 			} else {
-				let retNum = val as NSNumber
-				stashedFileSize = val!.unsignedLongLongValue
+				let retStr = val! as String;
+				return retStr;
 			}
 		}
-		return stashedFileSize
-		}}
+	}
+	
+	private var stashedFileSize: UInt64? = nil
+	@objc var fileSize : UInt64 {
+		get {
+			if stashedFileSize == nil {
+				var val: AnyObject? = nil;
+				var err: NSError? = nil;
+				if (!musicURL.getResourceValue(&val, forKey:NSURLTotalFileSizeKey, error: &err)) {
+					let manager = NSFileManager.defaultManager();
+					let theparam = manager.attributesOfItemAtPath(musicURL.path!, error: nil)
+					if (theparam == nil) {
+						stashedFileSize = 0
+					}
+					stashedFileSize = (theparam! as NSDictionary).fileSize()
+				} else {
+					let retNum = val! as NSNumber
+					stashedFileSize = retNum.unsignedLongLongValue
+				}
+			}
+			return stashedFileSize!
+		}
+	}
 	
 	init(URL: NSURL) {
 		if (URL.isFileReferenceURL()) {
@@ -99,21 +105,29 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		super.init();
 	}
 	
-	override var hash: Int { get {
-		return self.hashValue
-	}}
+	override var hash: Int {
+		get {
+			return self.hashValue
+		}
+	}
 	
-	override var hashValue: Int { get {
-		return musicURL.filePathURL!.path!.hashValue
-	}}
+	override var hashValue: Int {
+		get {
+			return musicURL.filePathURL!.path!.hashValue
+		}
+	}
 
-	override var description: String { get {
-		return "\(musicURL.path): \(self.fileName)"
-	}}
+	override var description: String {
+		get {
+			return "\(musicURL.path): \(self.fileName)"
+		}
+	}
 	
-	override var debugDescription: String { get {
-		return "\(musicURL.description) \(musicURL.path): \(self.fileName)"
-	}}
+	override var debugDescription: String {
+		get {
+			return "\(musicURL.description) \(musicURL.path): \(self.fileName)"
+		}
+	}
 
 	override func isEqual(object: AnyObject?) -> Bool {
 		var dat1: AnyObject? = nil

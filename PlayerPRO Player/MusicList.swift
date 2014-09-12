@@ -37,17 +37,6 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return musicList[index]
 	}
 	
-	func encodeWithCoder(aCoder: NSCoder) {
-		var BookmarkArray = [NSURL]()
-		for obj in musicList {
-			let bookData = obj.musicURL;
-			BookmarkArray.append(bookData)
-		}
-		//TODO: check for failed data initialization, and decrement changedIndex to match.
-		aCoder.encodeInteger(selectedMusic, forKey: kMusicListLocation3);
-		aCoder.encodeObject(BookmarkArray, forKey: kMusicListKey3)
-	}
-	
 	@objc func indexOfObjectSimilarToURL(theURL: NSURL) -> Int {
 		let theInd: Int? = indexOfObjectSimilarToURL(theURL)
 		if theInd != nil {
@@ -75,9 +64,15 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		self.didChange(.Removal, valuesAtIndexes: theIndex, forKey: kMusicListKVO)
 	}
 	
+	@objc func sortMusicListUsingComparator(comparator: NSComparator) {
+		musicList.sort { (obj1, obj2) -> Bool in
+			return comparator(obj1, obj2) == NSComparisonResult.OrderedAscending
+		}
+	}
+	
 	@objc func sortMusicListByName() {
 		musicList.sort({
-			(var1:MusicListObject, var2:MusicListObject) -> Bool in
+			(var1, var2) -> Bool in
 			let result = var1.fileName.localizedStandardCompare(var2.fileName)
 			return result == NSComparisonResult.OrderedAscending;
 			})
@@ -143,11 +138,11 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 					var isStale: ObjCBool = false;
 					let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: nil, bookmarkDataIsStale: &isStale, error: nil)
 					#if DEBUG
-						if (isStale) {
+						if isStale {
 							println("Bookmark pointing to \(fullURL.path) is stale");
 						}
 					#endif
-					if (fullURL == nil) {
+					if fullURL == nil {
 						lostMusicCount++;
 						continue;
 					}
@@ -169,7 +164,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 					var isStale: ObjCBool = false;
 					let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: aHomeURL, bookmarkDataIsStale: &isStale, error: nil)
 					#if DEBUG
-						if (isStale) {
+						if isStale {
 							println("Bookmark pointing to \(fullURL.path) is stale.");
 						}
 					#endif
@@ -211,6 +206,17 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		super.init()
 	}
 
+	func encodeWithCoder(aCoder: NSCoder) {
+		var BookmarkArray = [NSURL]()
+		for obj in musicList {
+			let bookData = obj.musicURL;
+			BookmarkArray.append(bookData)
+		}
+		//TODO: check for failed data initialization, and decrement changedIndex to match.
+		aCoder.encodeInteger(selectedMusic, forKey: kMusicListLocation3);
+		aCoder.encodeObject(BookmarkArray, forKey: kMusicListKey3)
+	}
+	
 	class func supportsSecureCoding() -> Bool {
 		return true;
 	}
@@ -227,14 +233,14 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	
 	private func loadMusicListFromData(theData: NSData) -> Bool {
 		var preList = NSKeyedUnarchiver.unarchiveObjectWithData(theData) as MusicList?
-		if (preList == nil) {
+		if let postList = preList {
+			lostMusicCount = postList.lostMusicCount
+			loadMusicList(postList.musicList)
+			self.selectedMusic = postList.selectedMusic
+			return true
+		} else {
 			return false
 		}
-		
-		lostMusicCount = preList!.lostMusicCount
-		loadMusicList(preList!.musicList)
-		self.selectedMusic = preList!.selectedMusic
-		return true
 	}
 	
 	@objc func loadMusicListAtURL(fromURL: NSURL) -> Bool {
@@ -271,9 +277,11 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		}
 	}
 	
-	@objc dynamic var countOfMusicList: Int { get {
-		return musicList.count
-		}}
+	@objc dynamic var countOfMusicList: Int {
+		get {
+			return musicList.count
+		}
+	}
 	
 	@objc dynamic func replaceObjectInMusicListAtIndex(index: Int, withObject object: MusicListObject) {
 		musicList[index] = object;
@@ -318,7 +326,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		self.didChange(.Removal, valuesAtIndexes: idxSet, forKey: kMusicListKVO)
 	}
 	
-	@objc func insertObjects(anObj: [MusicListObject], inMusicListAtIndex idx:Int) {
+	@objc dynamic func insertObjects(anObj: [MusicListObject], inMusicListAtIndex idx:Int) {
 		let theIndexSet = NSIndexSet(indexesInRange: NSRange(location: idx, length: anObj.count))
 		self.willChange(.Insertion, valuesAtIndexes: theIndexSet, forKey: kMusicListKVO)
 		var currentIndex = theIndexSet.firstIndex;
@@ -334,7 +342,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	#if os(OSX)
-	@objc func beginLoadingOfMusicListAtURL(toOpen: NSURL, completionHandle theHandle: (theErr: NSError?) ->Void) {
+	@objc func beginLoadingOfOldMusicListAtURL(toOpen: NSURL, completionHandle theHandle: (theErr: NSError?) ->Void) {
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
 		conn.remoteObjectInterface = NSXPCInterface(`protocol`: PPSTImporterHelper.self);
 		

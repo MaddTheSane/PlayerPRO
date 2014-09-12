@@ -1246,7 +1246,7 @@ enum PPMusicToolbarTypes {
 	} else if ([sharedWorkspace type:theUTI conformsToType:PPOldMusicListUTI]) {
 		if ([self musicListWillChange]) {
 			[self willChangeValueForKey:kMusicListKVO];
-			[musicList beginLoadingOfMusicListAtURL:theURL completionHandle:^(NSError *theErr) {
+			[musicList beginLoadingOfOldMusicListAtURL:theURL completionHandle:^(NSError *theErr) {
 				selMusFromList = musicList.selectedMusic;
 				[self didChangeValueForKey:kMusicListKVO];
 				[self musicListDidChange];
