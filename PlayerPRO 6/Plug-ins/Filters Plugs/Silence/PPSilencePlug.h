@@ -6,8 +6,8 @@
 //
 //
 
-#import <Foundation/Foundation.h>
-@import PlayerPROKit;
+@import Foundation;
+@import PlayerPROKit.PPPlugIns;
 
 EXP @interface PPSilencePlug : NSObject <PPFilterPlugin>
 

@@ -7,7 +7,7 @@
 //
 
 @import Foundation;
-@import PlayerPROKit;
+@import PlayerPROKit.PPPlugIns;
 
 EXP @interface PPBackwardsPlug : NSObject <PPFilterPlugin>
 

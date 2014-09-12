@@ -1,5 +1,5 @@
 //
-//  PPEchoPlug.h
+//  PPCrossFadePlug.h
 //  PPMacho
 //
 //  Created by C.W. Betts on 9/11/14.
@@ -9,6 +9,6 @@
 @import Foundation;
 @import PlayerPROKit.PPPlugIns;
 
-EXP @interface PPEchoPlug : NSObject <PPFilterPlugin>
+EXP @interface PPCrossFadePlug : NSObject <PPFilterPlugin>
 
 @end

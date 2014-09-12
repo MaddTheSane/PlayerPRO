@@ -6,7 +6,7 @@
 //
 //
 
-#import <Foundation/Foundation.h>
+@import Foundation;
 @import PlayerPROKit.PPPlugIns;
 
 EXP @interface PPToneGeneratorPlug : NSObject <PPFilterPlugin>

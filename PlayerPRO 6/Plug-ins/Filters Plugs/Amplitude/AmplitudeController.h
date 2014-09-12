@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <PlayerPROKit/PlayerPROKit.h>
+@import PlayerPROKit.PPPlugIns;
 
 @interface AmplitudeController : NSWindowController
 @property int amplitudeAmount;

@@ -9,7 +9,7 @@
 import Foundation
 import PlayerPROKit
 
-@objc(PPDepthPlug) public class DepthPlug: NSObject, PPFilterPlugin {
+@objc(PPDepthPlug) final public class DepthPlug: NSObject, PPFilterPlugin {
 	public let hasUIConfiguration = true;
 	
 	public func runWithData(theData: PPSampleObject!, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver!) -> MADErr {

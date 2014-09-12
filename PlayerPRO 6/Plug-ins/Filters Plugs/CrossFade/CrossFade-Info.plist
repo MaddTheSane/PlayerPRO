@@ -20,21 +20,9 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>C3D9EA39-A386-4636-B115-6B517215F095</key>
-		<string>CrossFadeFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>79EA82AD-5A53-46AF-82A9-4A0685B4588C</key>
-		<array>
-			<string>C3D9EA39-A386-4636-B115-6B517215F095</string>
-		</array>
-	</dict>
 	<key>MADPlugMenuName</key>
 	<string>CrossFade</string>
+	<key>NSPrincipalClass</key>
+	<string>PPCrossFadePlug</string>
 </dict>
 </plist>

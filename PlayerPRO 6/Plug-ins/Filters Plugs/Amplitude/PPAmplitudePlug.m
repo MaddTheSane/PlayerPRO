@@ -7,7 +7,7 @@
 //
 
 #import "PPAmplitudePlug.h"
-@import PlayerPROKit;
+#import "AmplitudeController.h"
 
 @implementation PPAmplitudePlug
 
@@ -23,7 +23,16 @@
 
 - (void)beginRunWithData:(PPSampleObject *)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver *)driver parentDocument:(NSDocument *)document handler:(PPPlugErrorBlock)handle
 {
-	
+	AmplitudeController *controller = [[AmplitudeController alloc] initWithWindowNibName:@"AmplitudeController"];
+	controller.theData = theData;
+	controller.selectionRange = selRange;
+	controller.stereoMode = StereoMode;
+	controller.currentBlock = handle;
+	controller.amplitudeAmount = 120;
+
+	[controller.window beginSheet:[document windowForSheet] completionHandler:^(NSModalResponse returnCode) {
+		
+	}];
 }
 
 @end

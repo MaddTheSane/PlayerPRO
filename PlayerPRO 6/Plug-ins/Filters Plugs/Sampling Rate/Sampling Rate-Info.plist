@@ -23,6 +23,6 @@
 	<key>MADPlugMenuName</key>
 	<string>Sampling Rate</string>
 	<key>NSPrincipalClass</key>
-	<string>SamplingRateWindowController</string>
+	<string>PPSampleRatePlug</string>
 </dict>
 </plist>

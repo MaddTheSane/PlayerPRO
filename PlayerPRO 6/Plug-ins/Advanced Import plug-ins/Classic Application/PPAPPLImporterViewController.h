@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "PPAPPLImporter.h"
 
-@interface PPAPPLImporterViewController : NSWindowController
+EXP @interface PPAPPLImporterViewController : NSWindowController
 @property (weak) IBOutlet NSTableView *resourceNamesTable;
 @property (weak) IBOutlet NSTableView *resourceIDsTable;
 

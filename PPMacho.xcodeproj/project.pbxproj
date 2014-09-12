@@ -243,6 +243,7 @@
 		553672D419C2847900D4E2A5 /* DepthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553672D319C2847900D4E2A5 /* DepthController.swift */; };
 		553672D619C284AE00D4E2A5 /* DepthPlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553672D519C284AE00D4E2A5 /* DepthPlug.swift */; };
 		553672D719C2875300D4E2A5 /* AudioFileExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553507AC19BCB13200B9E815 /* AudioFileExt.swift */; };
+		553672DA19C2A05700D4E2A5 /* PPFadePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 553672D919C2A05700D4E2A5 /* PPFadePlug.m */; };
 		553B8B7219B3CD85007C2C64 /* xm-ios.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B6E19B3CD85007C2C64 /* xm-ios.png */; };
 		553B8B7319B3CD85007C2C64 /* xm-ios@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B6F19B3CD85007C2C64 /* xm-ios@2x.png */; };
 		553B8B7419B3CD85007C2C64 /* xm-ipad-large.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B7019B3CD85007C2C64 /* xm-ipad-large.png */; };
@@ -419,9 +420,6 @@
 		557DE65E10E0885C00177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE69F10E0886400177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE6E010E0886A00177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		557DE77B10E08A0200177B4C /* Backwards.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FFD10D6C79E00BB619C /* Backwards.c */; };
-		557DE77D10E08A0B00177B4C /* Crop.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100010D6C79E00BB619C /* Crop.c */; };
-		557DE77F10E08A1500177B4C /* CrossFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E100310D6C79E00BB619C /* CrossFade.c */; };
 		557DE7B610E08D8300177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE7F910E08D8900177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE83C10E08D9E00177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -748,6 +746,9 @@
 		55F1BE201975CD7A00AD2C03 /* PPMusicObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F9166A8ED500820424 /* PPMusicObject_PPKPrivate.h */; };
 		55F1BE211975CD7A00AD2C03 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
 		55F1BE221975CEC900AD2C03 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55F3D3FC19C2AB1E008172D7 /* CropPlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F3D3FB19C2AB1E008172D7 /* CropPlug.swift */; };
+		55F3D3FF19C2AE8F008172D7 /* PPCrossFadePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3D3FE19C2AE8F008172D7 /* PPCrossFadePlug.m */; };
+		55F3D40219C2B139008172D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55F3D40419C2B139008172D7 /* InfoPlist.strings */; };
 		55F4C3E519763FDD000997BE /* MusicListObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F4C3E319763FDD000997BE /* MusicListObject.swift */; };
 		55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -2108,6 +2109,8 @@
 		553672D119C283D100D4E2A5 /* PPAmplitudePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAmplitudePlug.m; sourceTree = "<group>"; };
 		553672D319C2847900D4E2A5 /* DepthController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepthController.swift; sourceTree = "<group>"; };
 		553672D519C284AE00D4E2A5 /* DepthPlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepthPlug.swift; sourceTree = "<group>"; };
+		553672D819C2A05700D4E2A5 /* PPFadePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFadePlug.h; sourceTree = "<group>"; };
+		553672D919C2A05700D4E2A5 /* PPFadePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFadePlug.m; sourceTree = "<group>"; };
 		5539D88F1978B90D005A1569 /* PlayerPRO 6-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO 6-Bridging-Header.h"; sourceTree = "<group>"; };
 		553B8B6E19B3CD85007C2C64 /* xm-ios.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ios.png"; sourceTree = "<group>"; };
 		553B8B6F19B3CD85007C2C64 /* xm-ios@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ios@2x.png"; sourceTree = "<group>"; };
@@ -2132,9 +2135,6 @@
 		554E0FE110D6C79D00BB619C /* CompFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = CompFade.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E0FE210D6C79D00BB619C /* CompFade.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = CompFade.r; sourceTree = "<group>"; };
 		554E0FF310D6C79D00BB619C /* Read-Me */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read-Me"; sourceTree = "<group>"; };
-		554E0FFD10D6C79E00BB619C /* Backwards.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Backwards.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E100010D6C79E00BB619C /* Crop.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Crop.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E100310D6C79E00BB619C /* CrossFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = CrossFade.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E101210D6C79E00BB619C /* Length.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Length.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E101310D6C79E00BB619C /* Length.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Length.r; sourceTree = "<group>"; };
 		554E101510D6C79E00BB619C /* Mix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Mix.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -2275,7 +2275,7 @@
 		557DE5CD10E087EB00177B4C /* Sampling Rate-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Sampling Rate-Info.plist"; sourceTree = "<group>"; };
 		557DE5CE10E087F500177B4C /* Silence-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Silence-Info.plist"; sourceTree = "<group>"; };
 		557DE5CF10E087FE00177B4C /* Smooth-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Smooth-Info.plist"; sourceTree = "<group>"; };
-		557DE5D010E0880800177B4C /* Tone Generator-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Tone Generator-Info.plist"; sourceTree = "<group>"; };
+		557DE5D010E0880800177B4C /* Tone Generator-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Tone Generator-Info.plist"; path = "../Tone Generator-Info.plist"; sourceTree = "<group>"; };
 		557DE5DF10E0882800177B4C /* Backwards.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Backwards.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE62210E0884100177B4C /* Crop.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Crop.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE66310E0885C00177B4C /* CrossFade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CrossFade.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2458,6 +2458,10 @@
 		55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		55F1BDE31975CBFE00AD2C03 /* PlayerPROKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55F3D3FB19C2AB1E008172D7 /* CropPlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropPlug.swift; sourceTree = "<group>"; };
+		55F3D3FD19C2AE8F008172D7 /* PPCrossFadePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPCrossFadePlug.h; sourceTree = "<group>"; };
+		55F3D3FE19C2AE8F008172D7 /* PPCrossFadePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPCrossFadePlug.m; sourceTree = "<group>"; };
+		55F3D40319C2B139008172D7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		55F41A2217EF800B00605DF8 /* version.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = version.sh; sourceTree = "<group>"; usesTabs = 0; };
 		55F41A2D17EF853C00605DF8 /* PlayerPRO Player-Info.plistvers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PlayerPRO Player-Info.plistvers.plist"; sourceTree = "<group>"; };
 		55F41A2E17EF855800605DF8 /* Cocoa-Info.plistvers.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Cocoa-Info.plistvers.plist"; path = "../../Cocoa-Info.plistvers.plist"; sourceTree = "<group>"; };
@@ -3164,11 +3168,11 @@
 		551520A310DEE9570054ABC4 /* Wave */ = {
 			isa = PBXGroup;
 			children = (
-				553507AC19BCB13200B9E815 /* AudioFileExt.swift */,
-				55ADC3DC17D6F411001F27D4 /* Wave-Info.plist */,
 				5590896710E883AF00CE70B8 /* WAV.h */,
-				553507AA19BCA86F00B9E815 /* PPWavePlug.swift */,
 				553507A919BCA86D00B9E815 /* Wave-Bridging-Header.h */,
+				553507AC19BCB13200B9E815 /* AudioFileExt.swift */,
+				553507AA19BCA86F00B9E815 /* PPWavePlug.swift */,
+				55ADC3DC17D6F411001F27D4 /* Wave-Info.plist */,
 				55FD51E819BCF51200986849 /* InfoPlist.strings */,
 			);
 			path = Wave;
@@ -3268,8 +3272,8 @@
 		551520C410DEED460054ABC4 /* Quicktime */ = {
 			isa = PBXGroup;
 			children = (
-				55E8997B10F17CCB004EB52B /* QuickTime-Info.plist */,
 				554E104C10D6C79E00BB619C /* QuicktimeGeneric.c */,
+				55E8997B10F17CCB004EB52B /* QuickTime-Info.plist */,
 			);
 			name = Quicktime;
 			sourceTree = "<group>";
@@ -3277,11 +3281,11 @@
 		551520C510DEEFEB0054ABC4 /* Amplitude */ = {
 			isa = PBXGroup;
 			children = (
-				557DE43510E06BF200177B4C /* Amplitude-Info.plist */,
 				553672D019C283D100D4E2A5 /* PPAmplitudePlug.h */,
 				553672D119C283D100D4E2A5 /* PPAmplitudePlug.m */,
 				552C441317DFE24200AFCB5C /* AmplitudeController.h */,
 				552C441417DFE24200AFCB5C /* AmplitudeController.m */,
+				557DE43510E06BF200177B4C /* Amplitude-Info.plist */,
 				55771DCD1873852B00AED8DC /* AmplitudeController.xib */,
 			);
 			path = Amplitude;
@@ -3290,10 +3294,9 @@
 		551520C610DEEFFC0054ABC4 /* Backwards */ = {
 			isa = PBXGroup;
 			children = (
-				557DE5C310E0876E00177B4C /* Backwards-Info.plist */,
-				554E0FFD10D6C79E00BB619C /* Backwards.c */,
 				553672CD19C27FD900D4E2A5 /* PPBackwardsPlug.h */,
 				553672CE19C27FD900D4E2A5 /* PPBackwardsPlug.m */,
+				557DE5C310E0876E00177B4C /* Backwards-Info.plist */,
 			);
 			path = Backwards;
 			sourceTree = "<group>";
@@ -3301,8 +3304,8 @@
 		551520C710DEF0060054ABC4 /* Crop */ = {
 			isa = PBXGroup;
 			children = (
+				55F3D3FB19C2AB1E008172D7 /* CropPlug.swift */,
 				557DE5C410E0877900177B4C /* Crop-Info.plist */,
-				554E100010D6C79E00BB619C /* Crop.c */,
 			);
 			path = Crop;
 			sourceTree = "<group>";
@@ -3310,8 +3313,9 @@
 		551520D910DEF0350054ABC4 /* CrossFade */ = {
 			isa = PBXGroup;
 			children = (
+				55F3D3FD19C2AE8F008172D7 /* PPCrossFadePlug.h */,
+				55F3D3FE19C2AE8F008172D7 /* PPCrossFadePlug.m */,
 				557DE5C510E0878100177B4C /* CrossFade-Info.plist */,
-				554E100310D6C79E00BB619C /* CrossFade.c */,
 			);
 			path = CrossFade;
 			sourceTree = "<group>";
@@ -3330,11 +3334,11 @@
 		551520DB10DEF0480054ABC4 /* Echo */ = {
 			isa = PBXGroup;
 			children = (
-				557DE5C710E0879D00177B4C /* Echo-Info.plist */,
 				5591706B19C2210700998D7F /* PPEchoPlug.h */,
 				5591706C19C2210700998D7F /* PPEchoPlug.m */,
 				552C441D17DFE35700AFCB5C /* EchoWindowController.h */,
 				552C441E17DFE35700AFCB5C /* EchoWindowController.m */,
+				557DE5C710E0879D00177B4C /* Echo-Info.plist */,
 				55771DD71873854C00AED8DC /* EchoWindowController.xib */,
 			);
 			path = Echo;
@@ -3343,9 +3347,11 @@
 		551520DC10DEF0500054ABC4 /* Fade */ = {
 			isa = PBXGroup;
 			children = (
-				557DE5C810E087A600177B4C /* Fade-Info.plist */,
+				553672D819C2A05700D4E2A5 /* PPFadePlug.h */,
+				553672D919C2A05700D4E2A5 /* PPFadePlug.m */,
 				552C442217DFE3EF00AFCB5C /* FadeWindowController.h */,
 				552C442317DFE3EF00AFCB5C /* FadeWindowController.m */,
+				557DE5C810E087A600177B4C /* Fade-Info.plist */,
 				55771DDC1873855C00AED8DC /* FadeWindowController.xib */,
 			);
 			path = Fade;
@@ -3354,9 +3360,9 @@
 		551520DD10DEF0590054ABC4 /* Invert */ = {
 			isa = PBXGroup;
 			children = (
-				557DE5C910E087BA00177B4C /* Invert-Info.plist */,
 				5591707719C234C100998D7F /* PPInvertPlug.h */,
 				5591707819C234C100998D7F /* PPInvertPlug.m */,
+				557DE5C910E087BA00177B4C /* Invert-Info.plist */,
 			);
 			path = Invert;
 			sourceTree = "<group>";
@@ -3364,15 +3370,15 @@
 		551520DE10DEF0600054ABC4 /* Length */ = {
 			isa = PBXGroup;
 			children = (
-				557DE5CA10E087C300177B4C /* Length-Info.plist */,
 				554E101210D6C79E00BB619C /* Length.c */,
 				554E101310D6C79E00BB619C /* Length.r */,
 				552C442717DFE48A00AFCB5C /* LengthWindowController.h */,
 				552C442817DFE48A00AFCB5C /* LengthWindowController.m */,
-				552C442917DFE48A00AFCB5C /* LengthWindowController.xib */,
 				552C442C17DFE4B800AFCB5C /* LengthViewController.h */,
 				552C442D17DFE4B800AFCB5C /* LengthViewController.m */,
+				552C442917DFE48A00AFCB5C /* LengthWindowController.xib */,
 				55771DE11873856E00AED8DC /* LengthViewController.xib */,
+				557DE5CA10E087C300177B4C /* Length-Info.plist */,
 			);
 			path = Length;
 			sourceTree = "<group>";
@@ -3403,11 +3409,11 @@
 		551520E110DEF07F0054ABC4 /* Sampling Rate */ = {
 			isa = PBXGroup;
 			children = (
-				557DE5CD10E087EB00177B4C /* Sampling Rate-Info.plist */,
 				55FD51EE19BCFD9200986849 /* PPSamplingRatePlug.h */,
 				55FD51EF19BCFD9200986849 /* PPSamplingRatePlug.m */,
 				552C443617DFE9D600AFCB5C /* SamplingRateWindowController.h */,
 				552C443717DFE9D600AFCB5C /* SamplingRateWindowController.m */,
+				557DE5CD10E087EB00177B4C /* Sampling Rate-Info.plist */,
 				55771DE41873857E00AED8DC /* SamplingRateWindowController.xib */,
 				55FD51F819BD024700986849 /* InfoPlist.strings */,
 			);
@@ -3428,9 +3434,9 @@
 		551520E310DEF0950054ABC4 /* Smooth */ = {
 			isa = PBXGroup;
 			children = (
-				557DE5CF10E087FE00177B4C /* Smooth-Info.plist */,
 				55FD51FC19BD279A00986849 /* PPSmoothPlug.h */,
 				55FD51FD19BD279A00986849 /* PPSmoothPlug.m */,
+				557DE5CF10E087FE00177B4C /* Smooth-Info.plist */,
 			);
 			path = Smooth;
 			sourceTree = "<group>";
@@ -3438,7 +3444,6 @@
 		551520E410DEF09D0054ABC4 /* Tone Generator */ = {
 			isa = PBXGroup;
 			children = (
-				557DE5D010E0880800177B4C /* Tone Generator-Info.plist */,
 				55FD51F919BD1DDA00986849 /* PPToneGeneratorPlug.h */,
 				55FD51FA19BD1DDA00986849 /* PPToneGeneratorPlug.m */,
 				555143C717B6EDCF00252657 /* PPToneGeneratorController.h */,
@@ -3485,10 +3490,10 @@
 				5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */,
 				55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */,
 				55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */,
-				55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */,
-				55868A6810BFB46100FCC24D /* APPL-Info.plist */,
 				553340DD10BB5368005208D1 /* APPL.c */,
 				5501BEC618ABFFEB00602206 /* APPL.h */,
+				55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */,
+				55868A6810BFB46100FCC24D /* APPL-Info.plist */,
 			);
 			path = "Classic Application";
 			sourceTree = "<group>";
@@ -3798,9 +3803,9 @@
 				55E527A8186A2A690020F3D6 /* MIDI.pch */,
 				555A283419AFE21600FB4D5B /* MIDI.h */,
 				55ECD28F1992C58000480788 /* MIDI.m */,
-				5586889810BF67F100FCC24D /* MIDI-Info.plist */,
 				55B5DF0319A259370042E062 /* PPMIDIImporter.swift */,
 				555A283519AFE4F000FB4D5B /* MIDIImporterController.swift */,
+				5586889810BF67F100FCC24D /* MIDI-Info.plist */,
 				555A283619AFE4F000FB4D5B /* MIDIImporterController.xib */,
 				55ECD2771992C2ED00480788 /* MIDI Import */,
 			);
@@ -3943,10 +3948,10 @@
 		554E11A510D6F2DC00BB619C /* Fade Note */ = {
 			isa = PBXGroup;
 			children = (
-				552C440417DFDF5A00AFCB5C /* FadeNoteController.h */,
-				552C440517DFDF5A00AFCB5C /* FadeNoteController.m */,
 				5591706E19C2254000998D7F /* PPFadeNotePlug.h */,
 				5591706F19C2254000998D7F /* PPFadeNotePlug.m */,
+				552C440417DFDF5A00AFCB5C /* FadeNoteController.h */,
+				552C440517DFDF5A00AFCB5C /* FadeNoteController.m */,
 				554E112910D6F0A000BB619C /* Fade Note-Info.plist */,
 				55268A621877EB8E00A82269 /* FadeNoteController.xib */,
 			);
@@ -4498,6 +4503,8 @@
 		55F8C3E117B998E200DFE937 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				557DE5D010E0880800177B4C /* Tone Generator-Info.plist */,
+				55F3D40419C2B139008172D7 /* InfoPlist.strings */,
 				557F9AF317D927DB00325C78 /* PPToneGeneratorController.xib */,
 				5557769517EBDA740019D008 /* Media.xcassets */,
 			);
@@ -6402,6 +6409,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				557F9AF117D927DB00325C78 /* PPToneGeneratorController.xib in Resources */,
+				55F3D40219C2B139008172D7 /* InfoPlist.strings in Resources */,
 				5557769617EBDA740019D008 /* Media.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6927,7 +6935,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				553672CF19C27FD900D4E2A5 /* PPBackwardsPlug.m in Sources */,
-				557DE77B10E08A0200177B4C /* Backwards.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6935,7 +6942,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DE77D10E08A0B00177B4C /* Crop.c in Sources */,
+				55F3D3FC19C2AB1E008172D7 /* CropPlug.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6943,7 +6950,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				557DE77F10E08A1500177B4C /* CrossFade.c in Sources */,
+				55F3D3FF19C2AE8F008172D7 /* PPCrossFadePlug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6970,6 +6977,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				552C442517DFE3EF00AFCB5C /* FadeWindowController.m in Sources */,
+				553672DA19C2A05700D4E2A5 /* PPFadePlug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8423,6 +8431,14 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		55F3D40419C2B139008172D7 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				55F3D40319C2B139008172D7 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		55FD51E819BCF51200986849 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -9415,15 +9431,16 @@
 		557DE62010E0884100177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -9432,15 +9449,17 @@
 		557DE62110E0884100177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -9490,7 +9509,6 @@
 					ISUSINGPPPLUG,
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
@@ -9509,7 +9527,6 @@
 					ISUSINGPPPLUG,
 					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";

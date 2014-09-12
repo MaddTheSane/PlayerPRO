@@ -1,15 +1,15 @@
 {
   "images" : [
     {
-      "idiom" : "universal"
+      "idiom" : "mac"
     },
     {
-      "idiom" : "universal",
+      "idiom" : "mac",
       "scale" : "1x",
       "filename" : "SineWave.png"
     },
     {
-      "idiom" : "universal",
+      "idiom" : "mac",
       "scale" : "2x"
     }
   ],

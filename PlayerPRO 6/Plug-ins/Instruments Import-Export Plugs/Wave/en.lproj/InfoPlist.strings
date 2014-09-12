@@ -5,3 +5,6 @@
   Created by C.W. Betts on 9/7/14.
 
 */
+
+NSHumanReadableCopyright = "Copyright © 1996 Antoine ROSSET";
+MADPlugMenuName = "PC Wave";

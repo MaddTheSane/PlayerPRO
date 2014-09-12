@@ -7,6 +7,7 @@
 //
 
 #import "PPInvertPlug.h"
+@import PlayerPROKit.PPSampleObject;
 
 @implementation PPInvertPlug
 

@@ -8,6 +8,7 @@
 
 #import "PPXIPlug.h"
 #import <Carbon/Carbon.h>
+@import PlayerPROKit;
 
 #ifndef WIN32
 //Windows Defines

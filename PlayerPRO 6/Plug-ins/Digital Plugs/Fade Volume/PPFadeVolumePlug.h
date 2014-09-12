@@ -6,9 +6,9 @@
 //
 //
 
-#import <Foundation/Foundation.h>
-#import <PlayerPROKit/PlayerPROKit.h>
+@import Foundation;
+@import PlayerPROKit.PPPlugIns;
 
-@interface PPFadeVolumePlug : NSObject <PPDigitalPlugin>
+EXP @interface PPFadeVolumePlug : NSObject <PPDigitalPlugin>
 
 @end

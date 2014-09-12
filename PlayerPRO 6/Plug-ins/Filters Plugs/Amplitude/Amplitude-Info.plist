@@ -20,23 +20,9 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>F1E5EA0B-1ABC-4D5F-89DF-3C89758EAC0E</key>
-		<string>AmplitudeFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>79EA82AD-5A53-46AF-82A9-4A0685B4588C</key>
-		<array>
-			<string>F1E5EA0B-1ABC-4D5F-89DF-3C89758EAC0E</string>
-		</array>
-	</dict>
 	<key>MADPlugMenuName</key>
 	<string>Amplitude</string>
 	<key>NSPrincipalClass</key>
-	<string>AmplitudeController</string>
+	<string>PPAmplitudePlug</string>
 </dict>
 </plist>

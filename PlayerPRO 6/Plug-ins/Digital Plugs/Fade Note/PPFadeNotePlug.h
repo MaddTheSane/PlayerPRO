@@ -6,8 +6,8 @@
 //
 //
 
-#import <Foundation/Foundation.h>
-#import <PlayerPROKit/PlayerPROKit.h>
+@import Foundation;
+@import PlayerPROKit.PPPlugIns;
 
 EXP @interface PPFadeNotePlug : NSObject <PPDigitalPlugin>
 

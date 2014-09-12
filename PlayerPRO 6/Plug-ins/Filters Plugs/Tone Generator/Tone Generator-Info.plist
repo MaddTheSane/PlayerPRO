@@ -37,6 +37,6 @@
 	<key>MADPlugMenuName</key>
 	<string>Tone Generator</string>
 	<key>NSPrincipalClass</key>
-	<string>PPToneGeneratorController</string>
+	<string>PPToneGeneratorPlug</string>
 </dict>
 </plist>
