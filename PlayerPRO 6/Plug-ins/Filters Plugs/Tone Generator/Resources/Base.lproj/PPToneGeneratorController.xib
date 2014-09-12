@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6206.8" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6246" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.8"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6246"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PPToneGeneratorController">
@@ -28,7 +29,7 @@
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5">
-                        <rect key="frame" x="239" y="13" width="59" height="32"/>
+                        <rect key="frame" x="216" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -37,11 +38,11 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="okOrCancel:" target="-2" id="ZQY-gm-qyt"/>
+                            <action selector="okay:" target="-2" id="s35-XA-BYc"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="9">
-                        <rect key="frame" x="157" y="13" width="82" height="32"/>
+                        <rect key="frame" x="134" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="10">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -50,7 +51,7 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="okOrCancel:" target="-2" id="X9h-r7-7XA"/>
+                            <action selector="cancel:" target="-2" id="4JE-Wk-iT6"/>
                         </connections>
                     </button>
                     <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="13">
@@ -233,7 +234,7 @@ Gw
                         </cells>
                     </form>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ckR-hm-ytw">
-                        <rect key="frame" x="14" y="13" width="65" height="32"/>
+                        <rect key="frame" x="14" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Play" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="DsG-SZ-Vlc">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -252,11 +253,13 @@ Gw
                     <constraint firstItem="164" firstAttribute="top" secondItem="324" secondAttribute="bottom" constant="8" symbolic="YES" id="337"/>
                     <constraint firstItem="ckR-hm-ytw" firstAttribute="baseline" secondItem="9" secondAttribute="baseline" id="65n-Az-fwB"/>
                     <constraint firstItem="9" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ckR-hm-ytw" secondAttribute="trailing" constant="12" symbolic="YES" id="AXb-Ya-FSy"/>
+                    <constraint firstItem="ckR-hm-ytw" firstAttribute="width" secondItem="5" secondAttribute="width" id="EwF-wi-0ZN"/>
                     <constraint firstItem="1UQ-xd-Aoh" firstAttribute="top" secondItem="164" secondAttribute="bottom" constant="8" symbolic="YES" id="HpE-sr-6bU"/>
                     <constraint firstAttribute="trailing" secondItem="164" secondAttribute="trailing" constant="20" symbolic="YES" id="LB0-d4-3Ra"/>
                     <constraint firstItem="9" firstAttribute="top" secondItem="1UQ-xd-Aoh" secondAttribute="bottom" constant="20" symbolic="YES" id="Y7K-Z8-RTM"/>
                     <constraint firstAttribute="centerX" secondItem="13" secondAttribute="centerX" id="aTs-RX-lLC"/>
                     <constraint firstAttribute="centerX" secondItem="324" secondAttribute="centerX" id="dNA-eD-PkR"/>
+                    <constraint firstItem="ckR-hm-ytw" firstAttribute="width" secondItem="9" secondAttribute="width" id="fYG-AT-ycP"/>
                     <constraint firstItem="164" firstAttribute="leading" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="jdU-hI-puF"/>
                     <constraint firstItem="9" firstAttribute="baseline" secondItem="5" secondAttribute="baseline" id="p7Q-vK-aY7"/>
                     <constraint firstAttribute="centerX" secondItem="1UQ-xd-Aoh" secondAttribute="centerX" id="tgM-eY-kOl"/>
@@ -271,7 +274,7 @@ Gw
     </objects>
     <resources>
         <image name="JigsawWave" width="39" height="39"/>
-        <image name="SilentWave" width="39" height="39"/>
+        <image name="SilentWave" width="55" height="1"/>
         <image name="SineWave" width="47" height="22"/>
         <image name="SquareWave" width="48" height="48"/>
     </resources>

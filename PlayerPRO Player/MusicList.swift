@@ -360,7 +360,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 							if (tmpURL == nil) {
 								continue;
 							}
-							let tmpObj = MusicListObject(URL: tmpURL)
+							let tmpObj = MusicListObject(URL: tmpURL!)
 							pathsURL.append(tmpObj)
 						}
 						self.loadMusicList(pathsURL)

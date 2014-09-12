@@ -25,7 +25,7 @@ private func URLsPointingToTheSameFile(urlA: NSURL, urlB: NSURL) -> Bool {
 		bothAreValid = false;
 	}
 	if bothAreValid {
-		theSame = (dat1 as NSData) == (dat2 as NSData)
+		theSame = (dat1! as NSData) == (dat2! as NSData)
 	}
 	return theSame
 }
@@ -89,17 +89,12 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		return stashedFileSize
 		}}
 	
-	init(URL: NSURL!) {
-		if (URL != nil) {
-			// How to fail?
-			//return nil;
-		}
+	init(URL: NSURL) {
 		if (URL.isFileReferenceURL()) {
-			self.musicURL = URL;
+			musicURL = URL;
 		} else {
 			let tmpURL = URL.fileReferenceURL();
-			self.musicURL = tmpURL == nil ? tmpURL : URL;
-
+			musicURL = tmpURL ?? URL
 		}
 		super.init();
 	}
@@ -120,16 +115,16 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		return "\(musicURL.description) \(musicURL.path): \(self.fileName)"
 	}}
 
-	override func isEqual(object: AnyObject!) -> Bool {
+	override func isEqual(object: AnyObject?) -> Bool {
 		var dat1: AnyObject? = nil
 		var dat2: AnyObject? = nil
 		var bothAreValid = true
 		var theSame = false
-		if (object == nil) {
+		if object == nil {
 			return false;
 		}
 		
-		if (self === object) {
+		if (self === object!) {
 			return true
 		}
 		

@@ -278,25 +278,26 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 		if saveData == nil {
 			return MADErr.NeedMemory
 		}
-		var tmpBytes: UInt32 = 0
+		var asbd = AudioStreamBasicDescription()
+		
+		asbd.mSampleRate = Float64(theSett.outPutRate)
+		asbd.mFormatID = UInt32(kAudioFormatLinearPCM)
+		asbd.mFormatFlags = UInt32(kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked)
+		asbd.mBitsPerChannel = UInt32(theSett.outPutBits)
 		switch (theSett.outPutMode) {
 		case .MonoOutPut:
-			tmpBytes = 1;
-			break;
-			
+			asbd.mChannelsPerFrame = 1;
 			
 		case .PolyPhonic:
-			tmpBytes = 4;
-			break;
+			asbd.mChannelsPerFrame = 4;
 			
 		default:
-			tmpBytes = 2;
-			break;
+			asbd.mChannelsPerFrame = 2;
 		}
+		asbd.mFramesPerPacket = 1;
+		asbd.mBytesPerFrame = asbd.mBitsPerChannel * asbd.mChannelsPerFrame / 8;
+		asbd.mBytesPerPacket = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
 
-		var tmpabc: UInt32 = UInt32(theSett.outPutBits) * tmpBytes / 8
-		
-		var asbd = AudioStreamBasicDescription(mSampleRate: Float64(theSett.outPutRate), mFormatID: UInt32(kAudioFormatLinearPCM), mFormatFlags: UInt32(kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked), mBytesPerPacket: tmpabc, mFramesPerPacket: 1, mBytesPerFrame: tmpabc, mChannelsPerFrame: tmpBytes, mBitsPerChannel: UInt32(theSett.outPutBits), mReserved: 0)
 		var res = AudioFileCreateWithURL(theURL, UInt32(kAudioFileWAVEType), &asbd, UInt32(kAudioFileFlags_EraseFile), &audioFile);
 		if (res != noErr) {
 			if (audioFile != nil) {
@@ -332,24 +333,27 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 		if saveData == nil {
 			return MADErr.NeedMemory
 		}
-		var tmpBytes: UInt32 = 0
+		
+		var asbd = AudioStreamBasicDescription()
+		
+		asbd.mSampleRate = Float64(theSett.outPutRate)
+		asbd.mFormatID = UInt32(kAudioFormatLinearPCM)
+		asbd.mFormatFlags = UInt32(kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked | kAudioFormatFlagIsBigEndian)
+		asbd.mBitsPerChannel = UInt32(theSett.outPutBits)
 		switch (theSett.outPutMode) {
 		case .MonoOutPut:
-			tmpBytes = 1;
-			break;
+			asbd.mChannelsPerFrame = 1;
 			
 		case .PolyPhonic:
-			tmpBytes = 4;
-			break;
+			asbd.mChannelsPerFrame = 4;
 			
 		default:
-			tmpBytes = 2;
-			break;
+			asbd.mChannelsPerFrame = 2;
 		}
+		asbd.mFramesPerPacket = 1;
+		asbd.mBytesPerFrame = asbd.mBitsPerChannel * asbd.mChannelsPerFrame / 8;
+		asbd.mBytesPerPacket = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
 
-		var tmpabc: UInt32 = UInt32(theSett.outPutBits) * tmpBytes / 8
-		
-		var asbd = AudioStreamBasicDescription(mSampleRate: Float64(theSett.outPutRate), mFormatID: UInt32(kAudioFormatLinearPCM), mFormatFlags: UInt32(kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked | kAudioFormatFlagIsBigEndian), mBytesPerPacket: tmpabc, mFramesPerPacket: 1, mBytesPerFrame: tmpabc, mChannelsPerFrame: tmpBytes, mBitsPerChannel: UInt32(theSett.outPutBits), mReserved: 0)
 		var res = AudioFileCreateWithURL(theURL, UInt32(kAudioFileAIFFType), &asbd, UInt32(kAudioFileFlags_EraseFile), &audioFile);
 		if (res != noErr) {
 			if (audioFile != nil) {

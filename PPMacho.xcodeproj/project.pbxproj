@@ -189,7 +189,6 @@
 		552C440C17DFE00000AFCB5C /* FadeVolumeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C440A17DFE00000AFCB5C /* FadeVolumeController.m */; };
 		552C441117DFE08700AFCB5C /* NoteTranslateController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C440F17DFE08700AFCB5C /* NoteTranslateController.m */; };
 		552C441617DFE24200AFCB5C /* AmplitudeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C441417DFE24200AFCB5C /* AmplitudeController.m */; };
-		552C441B17DFE2DE00AFCB5C /* DepthController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C441917DFE2DE00AFCB5C /* DepthController.m */; };
 		552C442017DFE35700AFCB5C /* EchoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C441E17DFE35700AFCB5C /* EchoWindowController.m */; };
 		552C442517DFE3EF00AFCB5C /* FadeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C442317DFE3EF00AFCB5C /* FadeWindowController.m */; };
 		552C442A17DFE48A00AFCB5C /* LengthWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C442817DFE48A00AFCB5C /* LengthWindowController.m */; };
@@ -239,6 +238,11 @@
 		553507AB19BCA86F00B9E815 /* PPWavePlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553507AA19BCA86F00B9E815 /* PPWavePlug.swift */; };
 		553507AD19BCB13200B9E815 /* AudioFileExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553507AC19BCB13200B9E815 /* AudioFileExt.swift */; };
 		553626B817EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */; };
+		553672CF19C27FD900D4E2A5 /* PPBackwardsPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 553672CE19C27FD900D4E2A5 /* PPBackwardsPlug.m */; };
+		553672D219C283D100D4E2A5 /* PPAmplitudePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 553672D119C283D100D4E2A5 /* PPAmplitudePlug.m */; };
+		553672D419C2847900D4E2A5 /* DepthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553672D319C2847900D4E2A5 /* DepthController.swift */; };
+		553672D619C284AE00D4E2A5 /* DepthPlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553672D519C284AE00D4E2A5 /* DepthPlug.swift */; };
+		553672D719C2875300D4E2A5 /* AudioFileExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553507AC19BCB13200B9E815 /* AudioFileExt.swift */; };
 		553B8B7219B3CD85007C2C64 /* xm-ios.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B6E19B3CD85007C2C64 /* xm-ios.png */; };
 		553B8B7319B3CD85007C2C64 /* xm-ios@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B6F19B3CD85007C2C64 /* xm-ios@2x.png */; };
 		553B8B7419B3CD85007C2C64 /* xm-ipad-large.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B7019B3CD85007C2C64 /* xm-ipad-large.png */; };
@@ -2100,6 +2104,12 @@
 		553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Universal.xcconfig; sourceTree = "<group>"; };
 		553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = PPCPlugs.xcconfig; sourceTree = "<group>"; };
 		553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Cocoa Editor Images.xcassets"; sourceTree = "<group>"; };
+		553672CD19C27FD900D4E2A5 /* PPBackwardsPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPBackwardsPlug.h; sourceTree = "<group>"; };
+		553672CE19C27FD900D4E2A5 /* PPBackwardsPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPBackwardsPlug.m; sourceTree = "<group>"; };
+		553672D019C283D100D4E2A5 /* PPAmplitudePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAmplitudePlug.h; sourceTree = "<group>"; };
+		553672D119C283D100D4E2A5 /* PPAmplitudePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAmplitudePlug.m; sourceTree = "<group>"; };
+		553672D319C2847900D4E2A5 /* DepthController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepthController.swift; sourceTree = "<group>"; };
+		553672D519C284AE00D4E2A5 /* DepthPlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DepthPlug.swift; sourceTree = "<group>"; };
 		5539D88F1978B90D005A1569 /* PlayerPRO 6-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO 6-Bridging-Header.h"; sourceTree = "<group>"; };
 		553B8B6E19B3CD85007C2C64 /* xm-ios.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ios.png"; sourceTree = "<group>"; };
 		553B8B6F19B3CD85007C2C64 /* xm-ios@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ios@2x.png"; sourceTree = "<group>"; };
@@ -3270,6 +3280,8 @@
 			isa = PBXGroup;
 			children = (
 				557DE43510E06BF200177B4C /* Amplitude-Info.plist */,
+				553672D019C283D100D4E2A5 /* PPAmplitudePlug.h */,
+				553672D119C283D100D4E2A5 /* PPAmplitudePlug.m */,
 				552C441317DFE24200AFCB5C /* AmplitudeController.h */,
 				552C441417DFE24200AFCB5C /* AmplitudeController.m */,
 				55771DCD1873852B00AED8DC /* AmplitudeController.xib */,
@@ -3282,6 +3294,8 @@
 			children = (
 				557DE5C310E0876E00177B4C /* Backwards-Info.plist */,
 				554E0FFD10D6C79E00BB619C /* Backwards.c */,
+				553672CD19C27FD900D4E2A5 /* PPBackwardsPlug.h */,
+				553672CE19C27FD900D4E2A5 /* PPBackwardsPlug.m */,
 			);
 			path = Backwards;
 			sourceTree = "<group>";
@@ -3307,9 +3321,11 @@
 		551520DA10DEF03F0054ABC4 /* Depth */ = {
 			isa = PBXGroup;
 			children = (
-				557DE5C610E0878E00177B4C /* Depth-Info.plist */,
+				553672D519C284AE00D4E2A5 /* DepthPlug.swift */,
+				553672D319C2847900D4E2A5 /* DepthController.swift */,
 				552C441817DFE2DE00AFCB5C /* DepthController.h */,
 				552C441917DFE2DE00AFCB5C /* DepthController.m */,
+				557DE5C610E0878E00177B4C /* Depth-Info.plist */,
 				55771DD21873853D00AED8DC /* DepthController.xib */,
 			);
 			path = Depth;
@@ -6906,6 +6922,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				552C441617DFE24200AFCB5C /* AmplitudeController.m in Sources */,
+				553672D219C283D100D4E2A5 /* PPAmplitudePlug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6913,6 +6930,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				553672CF19C27FD900D4E2A5 /* PPBackwardsPlug.m in Sources */,
 				557DE77B10E08A0200177B4C /* Backwards.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6937,7 +6955,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				552C441B17DFE2DE00AFCB5C /* DepthController.m in Sources */,
+				553672D419C2847900D4E2A5 /* DepthController.swift in Sources */,
+				553672D619C284AE00D4E2A5 /* DepthPlug.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7241,6 +7260,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55A3CD4419A6DC8B00957845 /* PPDocument.swift in Sources */,
+				553672D719C2875300D4E2A5 /* AudioFileExt.swift in Sources */,
 				55CB01A711EB82FA0028C6BB /* main.m in Sources */,
 				555F5C611993327D0056AF01 /* OpenPanelViewController.swift in Sources */,
 				5521F41517FA4365002CDBA9 /* BoxViewController.m in Sources */,
@@ -9467,6 +9487,7 @@
 		557DE6A210E0886400177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9476,6 +9497,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -9484,6 +9506,7 @@
 		557DE6A310E0886400177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9493,6 +9516,8 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -11243,6 +11268,7 @@
 				559170B019C26E1D00998D7F /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		559C419C183EB4AC004A073C /* Build configuration list for PBXNativeTarget "PPQuickView" */ = {
 			isa = XCConfigurationList;
