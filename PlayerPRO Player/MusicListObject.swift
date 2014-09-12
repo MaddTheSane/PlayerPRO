@@ -81,11 +81,16 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 				var err: NSError? = nil;
 				if (!musicURL.getResourceValue(&val, forKey:NSURLTotalFileSizeKey, error: &err)) {
 					let manager = NSFileManager.defaultManager();
-					let theparam = manager.attributesOfItemAtPath(musicURL.path!, error: nil)
-					if (theparam == nil) {
+					if let theparam = manager.attributesOfItemAtPath(musicURL.path!, error: nil) {
+						if let tmpfilesize: AnyObject = theparam[NSFileSize] {
+							let aFileSize = tmpfilesize as NSNumber
+							stashedFileSize = aFileSize.unsignedLongLongValue
+						} else {
+							stashedFileSize = 0
+						}
+					} else {
 						stashedFileSize = 0
 					}
-					stashedFileSize = (theparam! as NSDictionary).fileSize()
 				} else {
 					let retNum = val! as NSNumber
 					stashedFileSize = retNum.unsignedLongLongValue
@@ -113,7 +118,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	
 	override var hashValue: Int {
 		get {
-			return musicURL.filePathURL!.path!.hashValue
+			return musicURL.absoluteURL!.hash
 		}
 	}
 
@@ -130,10 +135,6 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	}
 
 	override func isEqual(object: AnyObject?) -> Bool {
-		var dat1: AnyObject? = nil
-		var dat2: AnyObject? = nil
-		var bothAreValid = true
-		var theSame = false
 		if object == nil {
 			return false;
 		}

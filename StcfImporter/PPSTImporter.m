@@ -96,6 +96,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	MADBE16(&location);
 	HUnlock(locHand);
 	DisposeHandle(locHand);
+	locHand = NULL;
 	
 	NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:theNo];
 	

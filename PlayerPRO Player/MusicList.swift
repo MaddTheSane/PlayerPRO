@@ -25,7 +25,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	@objc private(set)	var lostMusicCount: UInt
 	@objc dynamic var	selectedMusic: Int
 	
-	@objc func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
+	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (musicList as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len);
 	}
 	
@@ -38,16 +38,15 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	@objc func indexOfObjectSimilarToURL(theURL: NSURL) -> Int {
-		let theInd: Int? = indexOfObjectSimilarToURL(theURL)
-		if theInd != nil {
-			return theInd!
+		if let theInd = indexOfObjectSimilar(toURL: theURL) {
+			return theInd
 		} else {
 			return NSNotFound
 		}
 	}
 	
 	//This cannot be represented in Objective C
-	func indexOfObjectSimilarToURL(theURL: NSURL) -> Int? {
+	func indexOfObjectSimilar(toURL theURL: NSURL) -> Int? {
 		for (i, obj) in enumerate(musicList) {
 			if obj == theURL {
 				return i
@@ -272,7 +271,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	
 	// MARK: - Key-valued Coding
 	@objc dynamic func addMusicListObject(object: MusicListObject) {
-		if (musicList as NSArray).containsObject(object) == false {
+		if !contains(musicList, object) {
 			musicList.append(object)
 		}
 	}
