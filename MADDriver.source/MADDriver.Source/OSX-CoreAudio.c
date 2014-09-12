@@ -89,10 +89,7 @@ OSErr initCoreAudio(MADDriverRec *inMADDriver, long init)
 	//theDes.componentFlagsMask = 0;
 	AudioStreamBasicDescription audDes = {0};
 	audDes.mFormatID = kAudioFormatLinearPCM;
-	audDes.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
-#ifdef __BIG_ENDIAN__
-	audDes.mFormatFlags |= kLinearPCMFormatFlagIsBigEndian;
-#endif
+	audDes.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger | kAudioFormatFlagsNativeEndian;
 	
 	switch (inMADDriver->DriverSettings.outPutMode) {
 		case MonoOutPut:
