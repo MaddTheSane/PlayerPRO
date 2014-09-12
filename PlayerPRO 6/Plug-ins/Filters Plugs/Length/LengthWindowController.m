@@ -30,6 +30,11 @@
 	return self;
 }
 
+- (IBAction)okay:(id)sender
+{
+	
+}
+
 - (IBAction)cancel:(id)sender
 {
 	[(NSApplication*)NSApp endSheet:self.window];

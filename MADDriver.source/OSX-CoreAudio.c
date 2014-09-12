@@ -95,7 +95,7 @@ MADErr initCoreAudio(MADDriverRec *inMADDriver)
 #endif
 	theDes.componentManufacturer = kAudioUnitManufacturer_Apple;
 	audDes.mFormatID = kAudioFormatLinearPCM;
-	audDes.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger;
+	audDes.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger | kAudioFormatFlagsNativeEndian;
 	
 	switch (inMADDriver->DriverSettings.outPutMode) {
 		case MonoOutPut:
