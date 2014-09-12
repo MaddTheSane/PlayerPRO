@@ -24,9 +24,8 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, SequenceType, Sliceable {
 				for var i = 0; i < CFArrayGetCount(somePlugs); i++ {
 					var tempCFBundle = unsafeBitCast(CFArrayGetValueAtIndex(somePlugs, i), CFBundle.self)
 					let tempBundle = NSBundle(URL: CFBundleCopyBundleURL(tempCFBundle));
-					var tempObj:PPDigitalPlugInObject? = PPDigitalPlugInObject.createWithBundle(tempBundle) //For some odd reason, the init function doesn't return PPDigitalPlugInObject!
-					if let foo = tempObj? {
-						digitalPlugs.append(foo)
+					if let tempObj = PPDigitalPlugInObject(bundle: tempBundle) as PPDigitalPlugInObject? {
+						digitalPlugs.append(tempObj)
 					}
 				}
 			}
@@ -34,21 +33,13 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, SequenceType, Sliceable {
 		super.init()
 	}
 	
-	func callDigitalPlugIn(plugNum: Int, pcmd myPcmd:UnsafeMutablePointer<Pcmd>, inout info theInfo: PPInfoPlug) -> MADErr {
-		theInfo.fileType = StringToOSType("PPDG")
+	func beginCallDigitalPlugIn(plugNum: Int, pcmd myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentDocument doc: PPDocument, handler: PPPlugErrorBlock) {
 		let tmp = digitalPlugs[plugNum];
-		return tmp.callWithPcmd(myPcmd, plugInfo: &theInfo)
-	}
-	
-	func callDigitalPlugIn(plugNum: Int, pcmd myPcmd:UnsafeMutablePointer<Pcmd>, plugInfo theInfo:UnsafeMutablePointer<PPInfoPlug>) -> MADErr {
-		theInfo.memory.fileType = StringToOSType("PPDG")
-		let tmp = digitalPlugs[plugNum];
-		return tmp.callWithPcmd(myPcmd, plugInfo: theInfo)
+		tmp.beginCallWithPcmd(myPcmd, driver: driver, parentDocument: doc, handler: handler)
 	}
 	
 	func addPlugInFromBundle(theBund: NSBundle) {
-		let obj = PPDigitalPlugInObject.createWithBundle(theBund) //For some odd reason, the init function doesn't return PPDigitalPlugInObject!
-		if (obj != nil) {
+		if let obj = PPDigitalPlugInObject(bundle: theBund) as PPDigitalPlugInObject? {
 			digitalPlugs.append(obj)
 		}
 	}

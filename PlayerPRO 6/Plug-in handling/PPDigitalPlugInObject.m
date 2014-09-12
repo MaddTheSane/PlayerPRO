@@ -8,11 +8,12 @@
 
 #import "PPDigitalPlugInObject.h"
 #import "PPPlugInCommon.h"
-
-#define PPDGLoadPlug(theBundle) (PPDigitalPlugin**)GetCOMPlugInterface(theBundle, kPlayerPRODigitalPlugTypeID, kPlayerPRODigitalPlugInterfaceID)
+#import <PlayerPROKit/PPPlugIns.h>
+#import "PlayerPRO_6-Swift.h"
 
 @interface PPDigitalPlugInObject ()
-@property PPDigitalPlugin **plugCode;
+@property (strong) id<PPDigitalPlugin> plugCode;
+@property BOOL hasUI;
 @end
 
 @implementation PPDigitalPlugInObject
@@ -46,42 +47,25 @@
 - (instancetype)initWithBundle:(NSBundle*)toInit
 {
 	if (self = [super initWithBundle:toInit]) {
-		NSURL *bundleURL = [toInit bundleURL];
-		CFBundleRef tempBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef) bundleURL);
-		
-		plugCode = PPDGLoadPlug(tempBundle);
-		CFRelease(tempBundle);
-
-		if (!plugCode)
+		Class bundClass = [toInit principalClass];
+		if (![bundClass conformsToProtocol:@protocol(PPDigitalPlugin)]) {
 			return nil;
+		}
 		
+		self.plugCode = [[bundClass alloc] init];
+		self.hasUI = [self.plugCode hasUIConfiguration];
 		type = 'PPDG';
 	}
 	return self;
 }
 
-+ (instancetype)createWithBundle:(NSBundle*)toInit
+- (void)beginCallWithPcmd:(inout Pcmd*)myPcmd driver:(PPDriver*)driver parentDocument:(PPDocument*)theDoc handler:(PPPlugErrorBlock)handle
 {
-	return [[self alloc] initWithBundle:toInit];
-}
-
-- (MADErr)callWithPcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug*)pi
-{
-	NSURL *tempURL = [self.file bundleURL];
-	CFBundleRef tempBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef) tempURL);
-	CFBundleRefNum resFileNum = CFBundleOpenBundleResourceMap(tempBundle);
-	MADErr iErr = (*plugCode)->MyProcPtr(plugCode, myPcmd, pi);
-	
-	CFBundleCloseBundleResourceMap(tempBundle, resFileNum);
-	CFRelease(tempBundle);
-	
-	return iErr;
-}
-
-- (void)dealloc
-{
-	if (plugCode) {
-		(*plugCode)->Release(plugCode);
+	if (self.hasUI) {
+		[plugCode beginRunWithPcmd:myPcmd driver:driver parentDocument:theDoc handler:handle];
+	} else {
+		MADErr ourErr = [plugCode runWithPcmd:myPcmd driver:driver];
+		handle(ourErr);
 	}
 }
 

@@ -123,7 +123,8 @@
 - (MADErr)callInstumentPlugIn:(PPInstrumentImporterObject*)thePlug order:(OSType)theOrd instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo
 {
 	plugInfo->fileType = [thePlug type];
-	return [thePlug importInstrument:theURL instrumentDataReference:ins sampleDataReference:sampRef instrumentSample:samp function:theOrd plugInfo:plugInfo];
+	return MADOrderNotImplemented;
+	//return [thePlug importInstrument:theURL instrumentDataReference:ins sampleDataReference:sampRef instrumentSample:samp function:theOrd plugInfo:plugInfo];
 }
 
 - (MADErr)exportInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo

@@ -8,7 +8,17 @@
 
 import Foundation
 
-// files are here because these extensions cause Xcode's IntelliSense to crash.
+public func ==(lhs: PPPlugInObject, rhs: PPPlugInObject) -> Bool {
+	return lhs.isEqual(rhs)
+}
+
+extension PPPlugInObject: Hashable {
+	override public var hashValue: Int {
+		get {
+			return self.hash
+		}
+	}
+}
 
 extension PPInstrumentPlugHandler: SequenceType {
 	public func generate() -> IndexingGenerator<[PPInstrumentImporterObject]> {

@@ -20,21 +20,9 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>2.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>02B1554B-DE52-4745-932C-2987AA19D4EF</key>
-		<string>FadeVolFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>E9E5574F-50B4-43E0-948D-8B7C80D47261</key>
-		<array>
-			<string>02B1554B-DE52-4745-932C-2987AA19D4EF</string>
-		</array>
-	</dict>
 	<key>MADPlugMenuName</key>
 	<string>Volume Fade</string>
+	<key>NSPrincipalClass</key>
+	<string>PPFadeVolumePlug</string>
 </dict>
 </plist>

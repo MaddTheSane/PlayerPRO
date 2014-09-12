@@ -200,6 +200,7 @@ typedef struct PPInstrumentPlugin {
 //
 /********************						***********************/
 
+#if 0
 // E9E5574F-50B4-43E0-948D-8B7C80D47261
 #define kPlayerPRODigitalPlugTypeID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xE9, 0xE5, 0x57, 0x4F, 0x50, 0xB4, 0x43, 0xE0, 0x94, 0x8D, 0x8B, 0x7C, 0x80, 0xD4, 0x72, 0x61)
 
@@ -210,5 +211,6 @@ typedef struct PPDigitalPlugin {
 	IUNKNOWN_C_GUTS;
 	MADErr (STDMETHODCALLTYPE *MyProcPtr)(void* thisInterface, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug);
 } PPDigitalPlugin;
+#endif
 
 #endif

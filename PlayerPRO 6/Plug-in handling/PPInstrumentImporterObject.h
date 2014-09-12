@@ -11,13 +11,21 @@
 #include <PlayerPROCore/MADPlug.h>
 #import "PPPlugInObject.h"
 
+@class PPDocument;
+
 @interface PPInstrumentImporterObject : PPPlugInObject
 @property (readonly, copy) NSArray *UTITypes;
 @property (readonly) MADPlugModes mode;
-@property (readonly) BOOL isSample;
+@property (readonly) BOOL canImport;
+@property (readonly) BOOL canExport;
+@property (readonly, getter=isSample) BOOL sample;
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
-- (instancetype)initWithBundle:(NSBundle *)theBund NS_DESIGNATED_INITIALIZER;
-- (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insSamp function:(OSType)imporexp plugInfo:(PPInfoPlug*)plugInfo;
+- (instancetype)initWithBundle:(NSBundle *)theBund;
+
+- (BOOL)canImportFileAtURL:(NSURL *)fileURL;
+- (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
+- (void)beginImportSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handle;
+- (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handle;
 
 @end

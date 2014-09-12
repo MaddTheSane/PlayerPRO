@@ -11,10 +11,11 @@
 #include <PlayerPROCore/MADPlug.h>
 #import "PPPlugInObject.h"
 
+@class PPDocument;
+
 @interface PPDigitalPlugInObject : PPPlugInObject
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithBundle:(NSBundle*)toInit NS_DESIGNATED_INITIALIZER;
-+ (instancetype)createWithBundle:(NSBundle*)toInit NS_RETURNS_RETAINED;
 
-- (MADErr)callWithPcmd:(Pcmd*)myPcmd plugInfo:(PPInfoPlug*)pi;
+- (void)beginCallWithPcmd:(inout Pcmd*)myPcmd driver:(PPDriver*)driver parentDocument:(PPDocument*)theDoc handler:(PPPlugErrorBlock)handle;
 @end

@@ -452,6 +452,7 @@
 		5583C5FB16D0172F0078ACE8 /* Silence.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE91B10E08DB000177B4C /* Silence.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5583C5FC16D017380078ACE8 /* Smooth.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE95E10E08DB900177B4C /* Smooth.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5583C60316D01DDE0078ACE8 /* Crop.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE62210E0884100177B4C /* Crop.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55846BC719C3747900D26F94 /* PPInstrumentImporterCompatObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55846BC619C3747900D26F94 /* PPInstrumentImporterCompatObject.m */; };
 		55852E1C18D67CCB0009BF55 /* PPSmallPianoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 55852E1B18D67CCB0009BF55 /* PPSmallPianoView.m */; };
 		5586873D10BF5D0900FCC24D /* MADfg.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E310BB5368005208D1 /* MADfg.c */; };
 		5586873E10BF5D2700FCC24D /* MADI.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340E710BB5368005208D1 /* MADI.c */; };
@@ -2297,6 +2298,9 @@
 		557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentImporterObject.m; sourceTree = "<group>"; };
 		55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+PPPreferences.h"; sourceTree = "<group>"; };
 		55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+PPPreferences.m"; sourceTree = "<group>"; };
+		55846BC519C3747900D26F94 /* PPInstrumentImporterCompatObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporterCompatObject.h; sourceTree = "<group>"; };
+		55846BC619C3747900D26F94 /* PPInstrumentImporterCompatObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentImporterCompatObject.m; sourceTree = "<group>"; };
+		55846BC819C3752000D26F94 /* PPInstrumentImporterObject-private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PPInstrumentImporterObject-private.h"; sourceTree = "<group>"; };
 		55852E1A18D67CCB0009BF55 /* PPSmallPianoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSmallPianoView.h; sourceTree = "<group>"; };
 		55852E1B18D67CCB0009BF55 /* PPSmallPianoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSmallPianoView.m; sourceTree = "<group>"; };
 		5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MADfg.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4410,8 +4414,11 @@
 				55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */,
 				552A662716B5EBEA007C63F7 /* PPPlugInObject.h */,
 				552A662816B5EBEB007C63F7 /* PPPlugInObject.m */,
+				55846BC819C3752000D26F94 /* PPInstrumentImporterObject-private.h */,
 				557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */,
 				557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */,
+				55846BC519C3747900D26F94 /* PPInstrumentImporterCompatObject.h */,
+				55846BC619C3747900D26F94 /* PPInstrumentImporterCompatObject.m */,
 				5578C53A17DB9F630057D11B /* PPInstrumentPlugHandler.h */,
 				5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */,
 				55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */,
@@ -7306,6 +7313,7 @@
 				5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */,
 				55DC597B19A2FA9A00212DD0 /* SwiftBridge.swift in Sources */,
 				550FBAB119A79A1600EFBD3D /* InstrumentViewController.swift in Sources */,
+				55846BC719C3747900D26F94 /* PPInstrumentImporterCompatObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
