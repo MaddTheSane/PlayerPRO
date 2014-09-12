@@ -19,4 +19,12 @@
 @property (weak) IBOutlet NSBox *theNewBox;
 @property (weak) IBOutlet NSMatrix *lengthCompensationMatrix;
 
+@property NSRange selectionRange;
+@property BOOL stereoMode;
+@property (copy) PPPlugErrorBlock currentBlock;
+@property (strong) PPSampleObject *theData;
+
+- (IBAction)okay:(id)sender;
+- (IBAction)cancel:(id)sender;
+
 @end

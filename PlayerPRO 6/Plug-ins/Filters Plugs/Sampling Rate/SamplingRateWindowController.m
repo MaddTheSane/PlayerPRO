@@ -13,6 +13,7 @@
 #define LRVAL 3
 
 @implementation SamplingRateWindowController
+@synthesize theData;
 
 - (NSData*)convertSampleC4SPD:(PPSampleObject *)src newRate:(int)dstC4SPD
 {
@@ -129,44 +130,51 @@
 	return [dstData copy];
 }
 
-#if 0
+- (IBAction)okay:(id)sender
+{
+	int newFreq = self.changedRate;
+	NSData *newPtr = [self convertSampleC4SPD:self.theData newRate:newFreq];
+	
+	if (newPtr != NULL) {
+		theData.data	= newPtr;
+		theData.c2spd	= newFreq;
+		theData.loopBegin = (theData.loopBegin * (newFreq / 100)) / (int) (theData.c2spd / 100);
+		theData.loopSize = (theData.loopSize * (newFreq / 100)) / (int) (theData.c2spd / 100);
+	} else {
+		[(NSApplication*)NSApp endSheet:self.window];
+		_currentBlock(MADUnknownErr);
+		return;
+	}
+	
+	if (theData.loopBegin < 0) {
+		theData.loopSize += theData.loopBegin;
+		theData.loopBegin = 0;
+	}
+	if (theData.loopBegin > theData.data.length) {
+		theData.loopBegin = 0;
+		theData.loopSize = 0;
+	}
+	if (theData.loopSize < 0)
+		theData.loopSize = 0;
+	if (theData.loopBegin + theData.loopSize > theData.data.length)
+		theData.loopSize = (int)(theData.data.length - theData.loopBegin);
+
+	
+	[(NSApplication*)NSApp endSheet:self.window];
+	_currentBlock(MADNoErr);
+}
+
+- (IBAction)cancel:(id)sender
+{
+	[(NSApplication*)NSApp endSheet:self.window];
+	_currentBlock(MADUserCanceledErr);
+}
+
 - (instancetype)initWithWindow:(NSWindow *)window
 {
 	self = [super initWithWindow:window];
 	if (self) {
-		//isMultipleIstanceSafe = YES;
 		
-		dispatch_block_t tmp = ^{
-			int	newFreq = self.changedRate;
-			Ptr		newPtr;
-			size_t newPtrSize = 0;
-			
-			newPtr = ConvertSampleC4SPD(theData->data, theData->size, theData->amp, theData->c2spd, newFreq, theData->stereo, &newPtrSize);
-			
-			theData->loopBeg = (theData->loopBeg * (newFreq / 100)) / (long) (theData->c2spd / 100);
-			theData->loopSize = (theData->loopSize * (newFreq / 100)) / (long) (theData->c2spd / 100);
-			
-			if (newPtr != NULL) {
-				free(theData->data);
-				theData->data	= newPtr;
-				theData->size	= (int)newPtrSize;
-				theData->c2spd	= newFreq;
-			}
-			
-			
-			if (theData->loopBeg < 0) {
-				theData->loopSize += theData->loopBeg;
-				theData->loopBeg = 0;
-			}
-			if (theData->loopBeg > theData->size) {
-				theData->loopBeg = 0;
-				theData->loopSize = 0;
-			}
-			if (theData->loopSize < 0)
-				theData->loopSize = 0;
-			if (theData->loopBeg + theData->loopSize > theData->size)
-				theData->loopSize = theData->size - theData->loopBeg;
-		};
 	}
 	
 	return self;
@@ -177,21 +185,6 @@
 	[super windowDidLoad];
 	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 }
-
-static OSErr mainSampRate(void *unused, sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short StereoMode)
-{
-	
-	SamplingRateWindowController *controller = [[SamplingRateWindowController alloc] initWithWindowNibName:@"SamplingRateWindowController" infoPlug:thePPInfoPlug];
-	controller.currentRate = controller.changedRate = theData->c2spd;
-	controller.theData = theData;
-	controller.selectionStart = SelectionStart;
-	controller.selectionEnd = SelectionEnd;
-	controller.stereoMode = StereoMode ? YES : NO;
-	
-	return [controller runAsSheet];
-}
-
-#endif
 
 @end
 

@@ -30,6 +30,12 @@
 	return self;
 }
 
+- (IBAction)cancel:(id)sender
+{
+	[(NSApplication*)NSApp endSheet:self.window];
+	_currentBlock(MADUserCanceledErr);
+}
+
 - (void)windowDidLoad
 {
 	[super windowDidLoad];

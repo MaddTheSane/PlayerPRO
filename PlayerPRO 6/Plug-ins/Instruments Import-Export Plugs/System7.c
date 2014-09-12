@@ -398,7 +398,7 @@ static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *samp
 static OSErr TestSND(short *soundPtr)
 {
 	if (*soundPtr == 1 || *soundPtr == 2)
-		return noErr;
+		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
 }

@@ -10,7 +10,14 @@
 @import PlayerPROKit;
 
 @interface SamplingRateWindowController : NSWindowController
-@property (strong) PPSampleObject *sampleToEdit;
 @property unsigned int currentRate;
 @property unsigned int changedRate;
+@property NSRange selectionRange;
+@property BOOL stereoMode;
+@property (copy) PPPlugErrorBlock currentBlock;
+@property (strong) PPSampleObject *theData;
+
+- (IBAction)okay:(id)sender;
+- (IBAction)cancel:(id)sender;
+
 @end

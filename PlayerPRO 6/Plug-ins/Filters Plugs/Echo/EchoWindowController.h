@@ -13,6 +13,10 @@
 @property double echoStrength;
 @property int echoDelay;
 @property NSRange selectionRange;
-@property (strong) PPSampleObject *theData;
+@property BOOL stereoMode;
 @property (copy) PPPlugErrorBlock currentBlock;
+@property (strong) PPSampleObject *theData;
+
+- (IBAction)okay:(id)sender;
+- (IBAction)cancel:(id)sender;
 @end

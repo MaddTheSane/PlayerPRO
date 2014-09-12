@@ -23,7 +23,16 @@
 
 - (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handle;
 {
-	
+	SamplingRateWindowController *controller = [[SamplingRateWindowController alloc] initWithWindowNibName:@"SamplingRateWindowController"];
+	controller.currentRate = controller.changedRate = theData.c2spd;
+	controller.theData = theData;
+	controller.currentBlock = handle;
+	controller.selectionRange = selRange;
+	controller.stereoMode = StereoMode;
+
+	[controller.window beginSheet:[document windowForSheet] completionHandler:^(NSModalResponse returnCode) {
+		
+	}];
 }
 
 @end

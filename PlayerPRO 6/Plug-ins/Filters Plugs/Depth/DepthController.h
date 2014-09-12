@@ -11,4 +11,11 @@
 
 @interface DepthController : NSWindowController
 @property int depthAmmount;
+@property NSRange selectionRange;
+@property BOOL stereoMode;
+@property (copy) PPPlugErrorBlock currentBlock;
+@property (strong) PPSampleObject *theData;
+
+- (IBAction)okay:(id)sender;
+- (IBAction)cancel:(id)sender;
 @end
