@@ -41,6 +41,22 @@
 //#define NUMBER_FINETUNES 16
 #define AMIGA_CLOCKFREQ2 14317456
 
+#ifdef __GNUC__
+#define HAS_LONG_LONG 1
+#define HAS_LONG_DOUBLE 1
+#endif
+
+#ifdef _MSC_VER
+#define HAS_LONG_LONG 1
+//MSVC's long double datatype is the same size as a regular double
+#undef HAS_LONG_DOUBLE
+#endif
+
+#if TARGET_OS_IPHONE
+//iOS also has long double the same size as double
+#undef HAS_LONG_DOUBLE
+#endif
+
 #if defined(HAS_LONG_LONG) && defined(HAS_LONG_DOUBLE)
 // Work on 64bits for much better precision
 #define BYTEDIV 16

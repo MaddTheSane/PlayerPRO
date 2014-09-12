@@ -2021,8 +2021,6 @@
 		552C440F17DFE08700AFCB5C /* NoteTranslateController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoteTranslateController.m; sourceTree = "<group>"; };
 		552C441317DFE24200AFCB5C /* AmplitudeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmplitudeController.h; sourceTree = "<group>"; };
 		552C441417DFE24200AFCB5C /* AmplitudeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmplitudeController.m; sourceTree = "<group>"; };
-		552C441817DFE2DE00AFCB5C /* DepthController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DepthController.h; sourceTree = "<group>"; };
-		552C441917DFE2DE00AFCB5C /* DepthController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DepthController.m; sourceTree = "<group>"; };
 		552C441D17DFE35700AFCB5C /* EchoWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EchoWindowController.h; sourceTree = "<group>"; };
 		552C441E17DFE35700AFCB5C /* EchoWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EchoWindowController.m; sourceTree = "<group>"; };
 		552C442217DFE3EF00AFCB5C /* FadeWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FadeWindowController.h; sourceTree = "<group>"; };
@@ -3323,8 +3321,6 @@
 			children = (
 				553672D519C284AE00D4E2A5 /* DepthPlug.swift */,
 				553672D319C2847900D4E2A5 /* DepthController.swift */,
-				552C441817DFE2DE00AFCB5C /* DepthController.h */,
-				552C441917DFE2DE00AFCB5C /* DepthController.m */,
 				557DE5C610E0878E00177B4C /* Depth-Info.plist */,
 				55771DD21873853D00AED8DC /* DepthController.xib */,
 			);
