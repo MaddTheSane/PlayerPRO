@@ -71,20 +71,12 @@ import AudioToolbox
 		var myErr = MADErr.NoErr
 		if (sampleID >= 0) {
 			var curData = InsHeader.samplesObjectAtIndex(Int(sampleID))
-			var asbd = AudioStreamBasicDescription()
-			asbd.mSampleRate = Float64(curData.c2spd)
-			asbd.mFormatID = AudioFormatID(kAudioFormatLinearPCM)
-			asbd.mFormatFlags = AudioFormatFlags(kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked)
-			asbd.mBitsPerChannel = UInt32(curData.amplitude)
-			asbd.mChannelsPerFrame = curData.stereo ? 2 : 1;
-			asbd.mFramesPerPacket = 1;
-			asbd.mBytesPerFrame = asbd.mBitsPerChannel * asbd.mChannelsPerFrame / 8;
-			asbd.mBytesPerPacket = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
+			var asbd = AudioStreamBasicDescription(sampleRate: Float64(curData.c2spd), formatID: .LinearPCM, formatFlags: .IsSignedInteger | .IsPacked, bitsPerChannel: UInt32(curData.amplitude), channelsPerFrame: curData.stereo ? 2 : 1)
 			
 			var audioFile: AudioFileID = nil
 			var res: OSStatus = 0
 			var data: NSData
-			#if false
+			#if __BIG_ENDIAN__
 			if (curData.amplitude == 16) {
 				var mutData = curData.data.mutableCopy() as NSMutableData
 				var mutShortBytes = UnsafeMutablePointer<UInt16>(mutData.mutableBytes)

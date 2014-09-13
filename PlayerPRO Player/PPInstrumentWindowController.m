@@ -65,62 +65,6 @@
 
 #pragma mark NSOutlineView delegates and data ref calls
 
-- (NSImage *)waveformImageFromSample:(PPSampleObject *)theDat
-{
-	NSSize imageSize = [waveFormImage convertSizeToBacking:[waveFormImage frame].size];
-	BOOL datIsStereo = theDat.stereo;
-	imageSize.height *= 2;
-	imageSize.width *= 2;
-	CGImageRef theCGimg = NULL;
-	NSUInteger rowBytes = 4 * imageSize.width;
-	static CGColorSpaceRef defaultSpace = NULL;
-	if (defaultSpace == NULL)
-		defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-	
-	CGContextRef bitmapContext = CGBitmapContextCreateWithData(NULL, imageSize.width, imageSize.height, 8, rowBytes, defaultSpace, (CGBitmapInfo)kCGImageAlphaPremultipliedLast, NULL, NULL);
-	CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
-	NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
-	CGContextSetLineWidth(bitmapContext, lineSize.height);
-	CGRect aRect;
-	aRect.size = imageSize;
-	aRect.origin = NSMakePoint(0, 0);
-	
-	if (datIsStereo){
-		CGColorRef colorRef = CGColorCreateGenericRGB(0, 0, 1, .75);
-		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
-		CGColorRelease(colorRef);
-		[PPSampleObject drawSampleWithStart:0 tSS:0 rectangle:aRect channel:1 currentData:theDat context:bitmapContext];
-	}
-	
-	CGColorRef colorRef = CGColorCreateGenericRGB(1, 0, 0, datIsStereo ? 0.75 : 1);
-	CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
-	CGColorRelease(colorRef);
-	[PPSampleObject drawSampleWithStart:0 tSS:0 tSE:imageSize.width high:imageSize.height larg:imageSize.width trueV:0 trueH:0 channel:0 currentData:theDat context:bitmapContext];
-	
-	if ([theDat loopSize]) {
-		CGColorRef colorRef = CGColorCreateGenericRGB(1, 0.1, .5, 0.8);
-		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
-		CGColorRelease(colorRef);
-		CGRect loopRect = CGRectMake(0, 0, imageSize.width, imageSize.height);
-		NSSize lineSize = [waveFormImage convertSizeToBacking:NSMakeSize(2, 2)];
-		NSSize padSize = [waveFormImage convertSizeToBacking:NSMakeSize(1, 1)];
-		CGContextSetLineWidth(bitmapContext, lineSize.height);
-		loopRect.origin.x =  ([theDat loopBegin] * imageSize.width / (double)[theDat.data length]);
-		loopRect.origin.y += padSize.width;
-		loopRect.size.width = [theDat loopSize] * imageSize.width / (double)[theDat.data length];
-		loopRect.size.height -= padSize.width * 2;
-		CGContextStrokeRect(bitmapContext, loopRect);
-	}
-	
-	theCGimg = CGBitmapContextCreateImage(bitmapContext);
-	CGContextRelease(bitmapContext);
-	
-	NSImage *img = [[NSImage alloc] initWithCGImage:theCGimg size:[waveFormImage frame].size];
-	CGImageRelease(theCGimg);
-	
-	return img;
-}
-
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ([keyPath isEqualToString:@"music"]) {
@@ -159,7 +103,7 @@
 	instrumentNote.stringValue = [PPSampleObject octaveNameFromNote:[object relativeNote]]; 
 	[instrumentBits setStringValue:[NSString stringWithFormat:@"%u-bit", [object amplitude]]];
 	[instrumentMode setStringValue: [object loopType] == ePingPongLoop ? @"Ping-pong" : @"Classic"];
-	[waveFormImage setImage:[self waveformImageFromSample:object]];
+	waveFormImage.image = [object waveformImageUsingView:waveFormImage];
 }
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item

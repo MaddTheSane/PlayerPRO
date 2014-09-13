@@ -17,13 +17,12 @@ private func makeNSRGB(red: UInt16, green: UInt16, blue:UInt16) -> NSColor {
 func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
 	let swiftFile: String = NSString(UTF8String: file)
 	let swiftText: String = NSString(UTF8String: text)
-	NSLog("\(swiftFile):\(line), error text: \(swiftText)")
+	println("\(swiftFile):\(line), error text: \(swiftText)")
 	let errStr = NSLocalizedString("MyDebugStr_Error", comment: "Error")
 	let mainStr = NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display")
 	let quitStr = NSLocalizedString("MyDebugStr_Quit", comment: "Quit")
 	let contStr = NSLocalizedString("MyDebugStr_Continue", comment: "Continue")
 	let debuStr = NSLocalizedString("MyDebugStr_Debug", comment: "Debug")
-	//NSLog("%s:%u error text:%s!", file, line, text);
 
 	let alert = PPRunCriticalAlertPanel(errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr, args: swiftText)
 	switch (alert) {
@@ -35,7 +34,7 @@ func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<
 		break;
 		
 	case NSAlertDefaultReturn:
-		NSLog("Choosing to fail!");
+		println("Choosing to fail!");
 		fallthrough
 	default:
 		abort();
@@ -106,11 +105,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 
 	@IBAction func showPlugInInfo(sender: AnyObject?) {
-		let tag = (sender as NSMenuItem).tag;
+		let tag = (sender as NSMenuItem).tag
 		if (tag < 0 || tag >= plugInInfos.count) {
 			return;
 		}
-		let inf = plugInInfos[tag];
+		let inf = plugInInfos[tag]
 		
 		let infoCont = PlugInInfoController.windowControllerFromInfo(inf)
 		infoCont.window.center()
@@ -409,9 +408,8 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 				return false;
 			}
 		}
-		#if false
 			if (sharedWorkspace.type(theUTI, conformsToType:PPPCMDUTI)) {
-				var theOSErr = patternHandler.importPcmdFromURL(theURL)
+				var theOSErr = importPcmdFromURL(theURL)
 				if (theOSErr != MADErr.NoErr) {
 					let theErr = CreateErrorFromMADErrorType(theOSErr);
 					NSAlert(error: theErr).runModal()
@@ -420,13 +418,12 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 				return true;
 			} else if (sharedWorkspace.type(theUTI, conformsToType:PPInstrumentListUTI)) {
 				var err: NSError? = nil
-				if (!instrumentController.importInstrumentListFromURL(theURL, error:&err)) {
+				if (!importInstrumentListFromURL(theURL, error:&err)) {
 					NSAlert(error: err!).runModal()
 				} else {
 					return true;
 				}
 			} //else
-		#endif
 
 		//TODO: check for valid extension.
 		for aUTI in trackerUTIs {
@@ -442,18 +439,12 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		for obj in instrumentPlugHandler {
 			for aUTI in obj.UTITypes as [String] {
 				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
-					#if false
-						if (instrumentController.isWindowLoaded()) {
-							var theErr:NSError? = nil
-							if (!instrumentPlugHandler.importSampleFromURL(theURL, makeUserSelectInstrument: true, error:&theErr)) {
-								NSAlert(error: err!).runModal()
-								return false;
-							}
-							return true;
-						} else {
-							return false;
-						}
-					#endif
+					var theErr:NSError? = nil
+					if (!importSampleFromURL(theURL, makeUserSelectInstrument: true, error:&theErr)) {
+						NSAlert(error: theErr!).runModal()
+						return false;
+					}
+					return true;
 				}
 			}
 		}
@@ -485,6 +476,26 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 
 		return false;
+	}
+	
+	func importSampleFromURL(theURL: NSURL, makeUserSelectInstrument: Bool = false, error: NSErrorPointer = nil) -> Bool {
+		if error != nil {
+			error.memory = CreateErrorFromMADErrorType(.OrderNotImplemented)!
+		}
+		
+		return false
+	}
+	
+	func importPcmdFromURL(url: NSURL) -> MADErr {
+		return .OrderNotImplemented
+	}
+	
+	func importInstrumentListFromURL(url: NSURL, error: NSErrorPointer) -> Bool {
+		if error != nil {
+			error.memory = CreateErrorFromMADErrorType(.OrderNotImplemented)!
+		}
+		
+		return false
 	}
 	
 	required init(coder: NSCoder!) {

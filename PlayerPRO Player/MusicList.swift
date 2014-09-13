@@ -138,7 +138,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 					let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: nil, bookmarkDataIsStale: &isStale, error: nil)
 					#if DEBUG
 						if isStale {
-							println("Bookmark pointing to \(fullURL.path) is stale");
+							println("Bookmark pointing to \(fullURL.path) is stale.");
 						}
 					#endif
 					if fullURL == nil {

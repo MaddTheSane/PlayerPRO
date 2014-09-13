@@ -735,7 +735,7 @@ PPEXPORT MADErr	MADReset(MADDriverRec *MDriver);											// Reset the current 
 PPEXPORT MADErr	MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
 PPEXPORT MADErr	MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus(0, 100, 50) = go to the middle of the music
 
-PPEXPORT MADErr	MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char*);
+PPEXPORT MADErr	MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char* missingPlugins);
 
 PPEXPORT MADErr	MADLoadMusicPtr(MADMusic **music, char *myPtr);								// MAD ONLY - Load a MAD char* into memory, you can free() your char* after this call
 

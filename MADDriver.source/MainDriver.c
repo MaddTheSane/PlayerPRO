@@ -38,6 +38,12 @@ typedef void *CFReadStreamRef;
 
 ///////////////////////////////
 
+static inline void ByteSwapsData(sData *toSwap);
+static inline void SwapFXSets(FXSets *set);
+static inline void ByteSwapInstrData(InstrData *toSwap);
+static inline void ByteSwapMADSpec(MADSpec *toSwap);
+static inline void ByteSwapPatHeader(PatHeader *toSwap);
+
 typedef enum InputType {
 	MADFileType = 1,
 	MADCFReadStreamType,
@@ -1482,14 +1488,144 @@ MADErr MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRe
 
 MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 {
-	char *URLcString = NULL;
-	MADErr theErr = getCStringFromCFURL(urlRef, &URLcString);
+	int		alpha = 0;
+	int		i, x;
+	size_t	inOutCount;
+	CFWriteStreamRef	curFile = NULL;
+	MADErr	theErr = MADNoErr;
+	MADSpec aHeader;
 	
-	if (theErr)
-		return theErr;
+	if (music->musicUnderModification)
+		return MADWritingErr;
 	
-	theErr = MADMusicSaveCString(music, URLcString, compressMAD);
-	free(URLcString);
+	curFile = CFWriteStreamCreateWithFile(kCFAllocatorDefault, urlRef);
+	if (!curFile) {
+		return MADWritingErr;
+	}
+	CFStreamStatus theStat = CFWriteStreamGetStatus(curFile);
+	while (theStat != kCFStreamStatusOpen && theStat != kCFStreamStatusError) {
+		theStat = CFWriteStreamGetStatus(curFile);
+	}
+	if (theStat == kCFStreamStatusError) {
+		CFWriteStreamClose(curFile);
+		CFRelease(curFile);
+		return MADWritingErr;
+	}
+	
+	
+	//TODO: error-checking
+	
+	music->musicUnderModification = TRUE;
+	
+	for (i = 0, x = 0; i < MAXINSTRU; i++) {
+		music->fid[i].no = i;
+		
+		// Is there something in this instrument?
+		if (music->fid[i].numSamples > 0 || music->fid[i].name[0] != 0) {
+			x++;
+		}
+	}
+	
+	music->header->numInstru = x;
+	
+	aHeader = *music->header;
+	ByteSwapMADSpec(&aHeader);
+	CFWriteStreamWrite(curFile, (const UInt8*)&aHeader, sizeof(MADSpec));
+	
+	if (compressMAD) {
+		for (i = 0; i < music->header->numPat ; i++) {
+			if (music->partition[i]) {
+				PatData *tmpPat = CompressPartitionMAD1(music, music->partition[i]);
+				inOutCount = tmpPat->header.patBytes + sizeof(PatHeader);
+				tmpPat->header.compMode = 'MAD1';
+				ByteSwapPatHeader(&tmpPat->header);
+				CFWriteStreamWrite(curFile, (const UInt8*)tmpPat, inOutCount);
+				free(tmpPat);
+			}
+		}
+	} else {
+		for (i = 0; i < music->header->numPat; i++) {
+			if (music->partition[i]) {
+				PatData *tmpPat;
+				inOutCount = sizeof(PatHeader);
+				inOutCount += music->header->numChn * music->partition[i]->header.size * sizeof(Cmd);
+				tmpPat = calloc(inOutCount, 1);
+				memcpy(tmpPat, music->partition[i], inOutCount);
+				tmpPat->header.compMode = 'NONE';
+				ByteSwapPatHeader(&tmpPat->header);
+				CFWriteStreamWrite(curFile, (const UInt8*)tmpPat, inOutCount);
+				free(tmpPat);
+			}
+		}
+	}
+	
+	for (i = 0; i < MAXINSTRU; i++) {
+		if (music->fid[i].numSamples > 0 || music->fid[i].name[0] != 0) {	// Is there something in this instrument?
+			InstrData instData;
+			music->fid[i].no = i;
+			instData = music->fid[i];
+			ByteSwapInstrData(&instData);
+			CFWriteStreamWrite(curFile, (const UInt8*)&instData, sizeof(InstrData));
+		}
+	}
+	
+	for (i = 0; i < MAXINSTRU; i++) {
+		for (x = 0; x < music->fid[i].numSamples; x++) {
+			sData	curData;
+			sData32	copyData;
+			void	*dataCopy = NULL;
+			curData = *music->sample[music->fid[i].firstSample + x];
+			
+			inOutCount = sizeof(sData32);
+			ByteSwapsData(&curData);
+			memcpy(&copyData, &curData, inOutCount);
+			copyData.data = 0;
+			CFWriteStreamWrite(curFile, (const UInt8*)&copyData, inOutCount);
+			
+			inOutCount = music->sample[music->fid[i].firstSample + x]->size;
+			dataCopy = malloc(inOutCount);
+			memcpy(dataCopy, curData.data, inOutCount);
+			if (curData.amp == 16) {
+				short *shortPtr = (short*)dataCopy;
+				dispatch_apply(inOutCount / 2, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(size_t ll) {
+					MADBE16(&shortPtr[ll]);
+				});
+			}
+			CFWriteStreamWrite(curFile, (const UInt8*)dataCopy, inOutCount);
+			free(dataCopy);
+		}
+	}
+	
+	// EFFECTS *** *** *** *** *** *** *** *** *** *** *** ***
+	
+	for (i = 0; i < 10 ; i++) {	// Global Effects
+		if (music->header->globalEffect[i]) {
+			FXSets aSet;
+			inOutCount = sizeof(FXSets);
+			aSet = music->sets[alpha];
+			SwapFXSets(&aSet);
+			CFWriteStreamWrite(curFile, (const UInt8*)&aSet, inOutCount);
+			alpha++;
+		}
+	}
+	
+	for (i = 0; i < music->header->numChn; i++) {	// Channel Effects
+		for (x = 0; x < 4; x++) {
+			if (music->header->chanEffect[i][x]) {
+				FXSets aSet;
+				inOutCount = sizeof(FXSets);
+				aSet = music->sets[alpha];
+				SwapFXSets(&aSet);
+				CFWriteStreamWrite(curFile, (const UInt8*)&aSet, inOutCount);
+				alpha++;
+			}
+		}
+	}
+	
+	CFWriteStreamClose(curFile);
+	CFRelease(curFile);
+	music->header->numInstru = MAXINSTRU;
+	
 	return theErr;
 }
 #endif
