@@ -9,16 +9,6 @@
 import Foundation
 import PlayerPROCore
 
-#if false
-internal func CFStringToString(cfStr: CFString!) -> String? {
-	if cfStr == nil {
-		return nil
-	} else {
-		return cfStr! as NSString as String
-	}
-}
-#endif
-
 internal func CFStringToString(cfStr: CFString) -> String {
 	return cfStr as NSString as String
 }
@@ -51,8 +41,8 @@ public func StringToOSType(theString: String) -> MADFourChar {
 	return UTGetOSTypeFromString(StringToCFString(theString))
 }
 
-#if false
-extension MADFourChar: StringLiteralConvertible {
+/*
+	extension MADFourChar: StringLiteralConvertible {
 	public var OSTypeStringValue: String {
 		get {
 			let toRet = UTCreateStringForOSType(self as OSType).takeRetainedValue()
@@ -63,23 +53,24 @@ extension MADFourChar: StringLiteralConvertible {
 		self = UTGetOSTypeFromString(StringToCFString(toInit))
 	}
 	
-	/*
-	public init(_ toInit: (Int8, Int8, Int8, Int8, Int8)) {
-		//This is the only reliable way I got to get the string value from a C char array.
-		var toParse: String = ""
-		var mirror = reflect(toInit)
-		for i in 0..<mirror.count {
-			var aChar = mirror[i].1.value
-			toParse += NSString(bytes: &aChar, length: 1, encoding: NSMacOSRomanStringEncoding)
-		}
-		self = MADFourChar(toParse)
+	public static func convertFromStringLiteral(value: String) -> MADFourChar {
+		return MADFourChar(value)
 	}
-	*/
 	
+	public static func convertFromExtendedGraphemeClusterLiteral(value: String) -> MADFourChar {
+		var tmpStr = String.convertFromExtendedGraphemeClusterLiteral(value)
+		return self.convertFromStringLiteral(tmpStr)
+	}
+	
+}
+*/
+#endif
+
+extension MADFourChar {
 	public init(_ toInit: (Int8, Int8, Int8, Int8, Int8)) {
 		self = MADFourChar((toInit.0, toInit.1, toInit.2, toInit.3))
 	}
-
+	
 	public init(_ toInit: (Int8, Int8, Int8, Int8)) {
 		let val0 = MADFourChar(toInit.0)
 		let val1 = MADFourChar(toInit.1)
@@ -87,7 +78,7 @@ extension MADFourChar: StringLiteralConvertible {
 		let val3 = MADFourChar(toInit.3)
 		self = MADFourChar((val0 << 24) | (val1 << 16) | (val2 << 8) | (val3))
 	}
-
+	
 	public func toFourChar() -> (Int8, Int8, Int8, Int8) {
 		let var1 = (self >> 24) & 0xFF
 		let var2 = (self >> 16) & 0xFF
@@ -100,19 +91,7 @@ extension MADFourChar: StringLiteralConvertible {
 		let outVar: (Int8, Int8, Int8, Int8) = toFourChar()
 		return (outVar.0, outVar.1, outVar.2, outVar.3, 0)
 	}
-
-	public static func convertFromStringLiteral(value: String) -> MADFourChar {
-		return MADFourChar(value)
-	}
-	
-	public static func convertFromExtendedGraphemeClusterLiteral(value: String) -> MADFourChar {
-		var tmpStr = String.convertFromExtendedGraphemeClusterLiteral(value)
-		return self.convertFromStringLiteral(tmpStr)
-	}
-	
 }
-#endif
-#endif
 
 // MARK: PlayerPRO MAD data types
 
@@ -174,6 +153,36 @@ extension PlugInfo {
 			}
 		}
 	}
+	
+	public var plugInURL: NSURL {
+		get {
+			return CFBundleCopyBundleURL(file.takeUnretainedValue()) as NSURL
+		}
+	}
+	
+	public var types: [String] {
+		get {
+			return UTItypes.takeUnretainedValue() as NSArray as [String]
+		}
+	}
+	
+	public var fourCharType: MADFourChar {
+		get {
+			return MADFourChar(type)
+		}
+	}
+	
+	public var name: String {
+		get {
+			return CFStringToString(MenuName.takeUnretainedValue())
+		}
+	}
+	
+	public var author: String {
+		get {
+			return CFStringToString(AuthorString.takeUnretainedValue())
+		}
+	}
 }
 
 public struct MADLibraryGenerator: GeneratorType {
@@ -194,7 +203,35 @@ public struct MADLibraryGenerator: GeneratorType {
 	}
 }
 
+extension MADInfoRec {
+	public var internalName: String {
+		var toParse: String = ""
+		var mirror = reflect(internalFileName)
+		for i in 0..<mirror.count {
+			var aChar = mirror[i].1.value
+			toParse += NSString(bytes: &aChar, length: 1, encoding: NSMacOSRomanStringEncoding)
+		}
+		return toParse
+	}
+	
+	public var format: String {
+		var toParse: String = ""
+		var mirror = reflect(formatDescription)
+		for i in 0..<mirror.count {
+			var aChar = mirror[i].1.value
+			toParse += NSString(bytes: &aChar, length: 1, encoding: NSMacOSRomanStringEncoding)
+		}
+		return toParse
+	}
+}
+
 extension MADLibrary: SequenceType {
+	public var count: Int {
+		get {
+			return Int(TotalPlug)
+		}
+	}
+	
     public func generate() -> MADLibraryGenerator {
         return MADLibraryGenerator(library: self)
     }

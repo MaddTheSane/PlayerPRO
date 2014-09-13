@@ -250,24 +250,45 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 	}
 	
 	func rawBESoundData(theSet: MADDriverSettings) -> NSData? {
-		let rsd = rawSoundData(theSet)
-		if rsd == nil {
-			return nil
-		}
-		if (theSet.outPutBits == 16) {
-			let sndSize = rsd!.length;
-			let bePtr = UnsafeMutablePointer<UInt16>(rsd!.mutableBytes)
-			dispatch_apply(UInt(sndSize) / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
-				let iInt = Int(i)
-				bePtr[iInt] = bePtr[iInt].bigEndian
-				return
-			})
-		}
-		return rsd?.copy() as NSData?
+		#if __LITTLE_ENDIAN__
+			if let rsd = rawSoundData(theSet) {
+				if (theSet.outPutBits == 16) {
+					let sndSize = rsd.length;
+					let bePtr = UnsafeMutablePointer<UInt16>(rsd.mutableBytes)
+					dispatch_apply(UInt(sndSize) / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
+						let iInt = Int(i)
+						bePtr[iInt] = bePtr[iInt].bigEndian
+						return
+					})
+				}
+				return rsd.copy() as NSData
+			} else {
+				return nil
+			}
+		#else
+			return rawSoundData(theSet)?.copy() as NSData?
+		#endif
 	}
 	
 	func rawLESoundData(theSet: MADDriverSettings) -> NSData? {
-		return rawSoundData(theSet)?.copy() as NSData?
+		#if __BIG_ENDIAN__
+			if let rsd = rawSoundData(theSet) {
+				if (theSet.outPutBits == 16) {
+					let sndSize = rsd!.length;
+					let bePtr = UnsafeMutablePointer<UInt16>(rsd.mutableBytes)
+					dispatch_apply(UInt(sndSize) / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
+						let iInt = Int(i)
+						bePtr[iInt] = bePtr[iInt].littleEndian
+						return
+					})
+				}
+				return rsd.copy() as NSData
+			} else {
+				return nil
+			}
+		#else
+			return rawSoundData(theSet)?.copy() as NSData?
+		#endif
 	}
 
 	private func applyMetadataToFileID(theID: AudioFileID) {
@@ -275,114 +296,104 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 	}
 	
 	private func saveMusic(waveToURL theURL: NSURL, theSett: MADDriverSettings) -> MADErr {
-		let saveData = rawLESoundData(theSett)
-		var audioFile: AudioFileID = nil;
-		if saveData == nil {
-			return MADErr.NeedMemory
-		}
-		var asbd = AudioStreamBasicDescription()
-		
-		asbd.mSampleRate = Float64(theSett.outPutRate)
-		asbd.mFormatID = UInt32(kAudioFormatLinearPCM)
-		asbd.mFormatFlags = UInt32(kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked)
-		asbd.mBitsPerChannel = UInt32(theSett.outPutBits)
-		switch (theSett.outPutMode) {
-		case .MonoOutPut:
-			asbd.mChannelsPerFrame = 1;
+		if let saveData = rawLESoundData(theSett) {
+			var audioFile: AudioFileID = nil;
+			var tmpChannels: UInt32 = 0
 			
-		case .PolyPhonic:
-			asbd.mChannelsPerFrame = 4;
+			switch (theSett.outPutMode) {
+			case .MonoOutPut:
+				tmpChannels = 1
+				
+			case .PolyPhonic:
+				tmpChannels = 4
+				
+			default:
+				tmpChannels = 2
+			}
 			
-		default:
-			asbd.mChannelsPerFrame = 2;
-		}
-		asbd.mFramesPerPacket = 1;
-		asbd.mBytesPerFrame = asbd.mBitsPerChannel * asbd.mChannelsPerFrame / 8;
-		asbd.mBytesPerPacket = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
-
-		var res = AudioFileCreateWithURL(theURL, UInt32(kAudioFileWAVEType), &asbd, UInt32(kAudioFileFlags_EraseFile), &audioFile);
-		if (res != noErr) {
-			if (audioFile != nil) {
-				AudioFileClose(audioFile);
+			var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: .IsSignedInteger | .IsPacked, bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+			
+			var res = AudioFileCreateWithURL(theURL, UInt32(kAudioFileWAVEType), &asbd, UInt32(kAudioFileFlags_EraseFile), &audioFile);
+			if (res != noErr) {
+				if (audioFile != nil) {
+					AudioFileClose(audioFile);
+				}
+				return MADErr.WritingErr;
 			}
-			return MADErr.WritingErr;
-		}
-
-		var numBytes = UInt32(saveData!.length)
-		res = AudioFileWriteBytes(audioFile, 0, 0, &numBytes, saveData!.bytes);
-		if (res != noErr) {
-			if (audioFile != nil) {
-				AudioFileClose(audioFile);
+			
+			var numBytes = UInt32(saveData.length)
+			res = AudioFileWriteBytes(audioFile, 0, 0, &numBytes, saveData.bytes);
+			if (res != noErr) {
+				if (audioFile != nil) {
+					AudioFileClose(audioFile);
+				}
+				return MADErr.WritingErr;
 			}
-			return MADErr.WritingErr;
-		}
-
-		applyMetadataToFileID(audioFile)
-		res = AudioFileClose(audioFile);
-		if (res != noErr) {
-			if (audioFile != nil) {
-				AudioFileClose(audioFile);
+			
+			applyMetadataToFileID(audioFile)
+			res = AudioFileClose(audioFile);
+			if (res != noErr) {
+				if (audioFile != nil) {
+					AudioFileClose(audioFile);
+				}
+				return MADErr.WritingErr;
 			}
-			return MADErr.WritingErr;
+			
+			return MADErr.NoErr
+		} else {
+			return .NeedMemory
 		}
-		
-		return MADErr.NoErr
 	}
 	
 	private func saveMusic(AIFFToURL theURL: NSURL, theSett: MADDriverSettings) -> MADErr {
-		let saveData = rawBESoundData(theSett)
-		var audioFile: AudioFileID = nil;
-		if saveData == nil {
+		if let saveData = rawBESoundData(theSett) {
+			var audioFile: AudioFileID = nil;
+			
+			var tmpChannels: UInt32 = 0
+			
+			switch (theSett.outPutMode) {
+			case .MonoOutPut:
+				tmpChannels = 1
+				
+			case .PolyPhonic:
+				tmpChannels = 4
+				
+			default:
+				tmpChannels = 2
+			}
+			
+			var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: .IsSignedInteger | .IsPacked | .IsBigEndian, bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+			
+			var res = AudioFileCreateWithURL(theURL, UInt32(kAudioFileAIFFType), &asbd, UInt32(kAudioFileFlags_EraseFile), &audioFile);
+			if (res != noErr) {
+				if (audioFile != nil) {
+					AudioFileClose(audioFile);
+				}
+				return MADErr.WritingErr;
+			}
+			
+			var numBytes = UInt32(saveData.length)
+			res = AudioFileWriteBytes(audioFile, 0, 0, &numBytes, saveData.bytes);
+			if (res != noErr) {
+				if (audioFile != nil) {
+					AudioFileClose(audioFile);
+				}
+				return MADErr.WritingErr;
+			}
+			
+			applyMetadataToFileID(audioFile)
+			res = AudioFileClose(audioFile);
+			if (res != noErr) {
+				if (audioFile != nil) {
+					AudioFileClose(audioFile);
+				}
+				return MADErr.WritingErr;
+			}
+			
+			return MADErr.NoErr
+		} else {
 			return MADErr.NeedMemory
 		}
-		
-		var asbd = AudioStreamBasicDescription()
-		
-		asbd.mSampleRate = Float64(theSett.outPutRate)
-		asbd.mFormatID = UInt32(kAudioFormatLinearPCM)
-		asbd.mFormatFlags = UInt32(kAudioFormatFlagIsSignedInteger | kAudioFormatFlagIsPacked | kAudioFormatFlagIsBigEndian)
-		asbd.mBitsPerChannel = UInt32(theSett.outPutBits)
-		switch (theSett.outPutMode) {
-		case .MonoOutPut:
-			asbd.mChannelsPerFrame = 1;
-			
-		case .PolyPhonic:
-			asbd.mChannelsPerFrame = 4;
-			
-		default:
-			asbd.mChannelsPerFrame = 2;
-		}
-		asbd.mFramesPerPacket = 1;
-		asbd.mBytesPerFrame = asbd.mBitsPerChannel * asbd.mChannelsPerFrame / 8;
-		asbd.mBytesPerPacket = asbd.mBytesPerFrame * asbd.mFramesPerPacket;
-
-		var res = AudioFileCreateWithURL(theURL, UInt32(kAudioFileAIFFType), &asbd, UInt32(kAudioFileFlags_EraseFile), &audioFile);
-		if (res != noErr) {
-			if (audioFile != nil) {
-				AudioFileClose(audioFile);
-			}
-			return MADErr.WritingErr;
-		}
-
-		var numBytes = UInt32(saveData!.length)
-		res = AudioFileWriteBytes(audioFile, 0, 0, &numBytes, saveData!.bytes);
-		if (res != noErr) {
-			if (audioFile != nil) {
-				AudioFileClose(audioFile);
-			}
-			return MADErr.WritingErr;
-		}
-
-		applyMetadataToFileID(audioFile)
-		res = AudioFileClose(audioFile);
-		if (res != noErr) {
-			if (audioFile != nil) {
-				AudioFileClose(audioFile);
-			}
-			return MADErr.WritingErr;
-		}
-		
-		return MADErr.NoErr
 	}
 	
 	private func showExportSettingsWithExportType(expType: Int, URL theURL: NSURL) {

@@ -67,37 +67,41 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	@IBOutlet weak var newInstrumentMenu:		NSMenu!
 	@IBOutlet weak var exportStatusPanel:		NSPanel!
 	
-	var trackerDict: [String: [String]] { get {
-		if _trackerDict.isEmpty || _trackerDict.count != Int(madLib.pluginCount) + 2 {
-			let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
-			let localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
-			var tmpTrackerDict = [localMADKName: [MADNativeUTI], localGenericMADName: [MADGenericUTI]] as [String: [String]]
-			
-			for objRaw in madLib {
-				let obj = objRaw as PPLibraryObject
-				tmpTrackerDict[obj.menuName] = (obj.UTItypes) as? [String]
+	var trackerDict: [String: [String]] {
+		get {
+			if _trackerDict.isEmpty || _trackerDict.count != Int(madLib.pluginCount) + 2 {
+				let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
+				let localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
+				var tmpTrackerDict = [localMADKName: [MADNativeUTI], localGenericMADName: [MADGenericUTI]] as [String: [String]]
+				
+				for objRaw in madLib {
+					let obj = objRaw as PPLibraryObject
+					tmpTrackerDict[obj.menuName] = (obj.UTItypes) as? [String]
+				}
+				
+				for obj in complexImport {
+					tmpTrackerDict[obj.menuName] = (obj.UTITypes) as? [String]
+				}
+				
+				_trackerDict = tmpTrackerDict
 			}
-			
-			for obj in complexImport {
-				tmpTrackerDict[obj.menuName] = (obj.UTITypes) as? [String]
-			}
-			
-			_trackerDict = tmpTrackerDict
+			return _trackerDict
 		}
-		return _trackerDict
-		}}
+	}
 	
-	var trackerUTIs: [String] { get {
-		if _trackerUTIs.isEmpty {
-			let arrayOfUTIs = trackerDict.values
-			var toAddUTI = [String]()
-			for anArray in arrayOfUTIs {
-				toAddUTI += anArray
+	var trackerUTIs: [String] {
+		get {
+			if _trackerUTIs.isEmpty {
+				let arrayOfUTIs = trackerDict.values
+				var toAddUTI = [String]()
+				for anArray in arrayOfUTIs {
+					toAddUTI += anArray
+				}
+				_trackerUTIs = toAddUTI
 			}
-			_trackerUTIs = toAddUTI
+			return _trackerUTIs
 		}
-		return _trackerUTIs
-		}}
+	}
 
 	@IBAction func showPreferences(sender: AnyObject?) {
 		preferences.window.center()
@@ -127,50 +131,35 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		for rawObj in madLib {
 			let obj = rawObj as PPLibraryObject
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.menuName, plugType: trackerPlugName, plugURL: obj.plugFile.bundleURL)
-			let infoArray = plugInInfos.filter({ (hi) -> Bool in
-				return hi == tmpInfo
-			})
-			if infoArray.count == 0 {
+			if !contains(plugInInfos, tmpInfo) {
 				plugInInfos.append(tmpInfo)
 			}
 		}
 		
 		for obj in instrumentPlugHandler {
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: instrumentPlugName, plugURL: obj.file.bundleURL)
-			let infoArray = plugInInfos.filter({ (hi) -> Bool in
-				return hi == tmpInfo
-			})
-			if infoArray.count == 0 {
+			if !contains(plugInInfos, tmpInfo) {
 				plugInInfos.append(tmpInfo)
 			}
 		}
 		
 		for obj in digitalHandler {
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: digitalPlugName, plugURL: obj.file.bundleURL)
-			let infoArray = plugInInfos.filter({ (hi) -> Bool in
-				return hi == tmpInfo
-			})
-			if infoArray.count == 0 {
+			if !contains(plugInInfos, tmpInfo) {
 				plugInInfos.append(tmpInfo)
 			}
 		}
 		
 		for obj in filterHandler {
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: filterPlugName, plugURL: obj.file.bundleURL)
-			let infoArray = plugInInfos.filter({ (hi) -> Bool in
-				return hi == tmpInfo
-			})
-			if infoArray.count == 0 {
+			if !contains(plugInInfos, tmpInfo) {
 				plugInInfos.append(tmpInfo)
 			}
 		}
 		
 		for obj in complexImport {
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: complexTrackerPlugName, plugURL: obj.file.bundleURL)
-			let infoArray = plugInInfos.filter({ (hi) -> Bool in
-				return hi == tmpInfo
-			})
-			if infoArray.count == 0 {
+			if !contains(plugInInfos, tmpInfo) {
 				plugInInfos.append(tmpInfo)
 			}
 		}
@@ -375,11 +364,9 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			case NSAlertDefaultReturn:
 				
 				var rec: NSDictionary? = nil
-				var ostype = [Int8](count: 5, repeatedValue: 0)
+				var ostype: NSString? = nil
 				
-				let identified = madLib.identifyFileAtURL(theURL, type: &ostype)
-				
-				if (madLib.identifyFileAtURL(theURL, type: &ostype) != MADErr.NoErr) || madLib.getInformationFromFileAtURL(theURL, type: &ostype, infoDictionary: &rec) != MADErr.NoErr {
+				if (madLib.identifyFileAtURL(theURL, stringType: &ostype) != MADErr.NoErr) || madLib.getInformationFromFileAtURL(theURL, stringType: ostype, infoDictionary: &rec) != MADErr.NoErr {
 					PPRunAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
 					return false;
 				}

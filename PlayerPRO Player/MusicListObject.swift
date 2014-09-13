@@ -58,18 +58,22 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	}
 	#endif
 	
+	private var stashedFileName:String? = nil
 	@objc var fileName: String {
 		get {
-			var val: AnyObject? = nil;
-			var err: NSError? = nil;
-			
-			if (!musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)) {
-				println("PPMusicListObject: Could not find out if extension is hidden in file \(musicURL.path), error: \(err!.localizedDescription)");
-				return musicURL.lastPathComponent;
-			} else {
-				let retStr = val! as String;
-				return retStr;
+			if stashedFileName == nil {
+				var val: AnyObject? = nil;
+				var err: NSError? = nil;
+				
+				if (!musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)) {
+					println("PPMusicListObject: Could not find out if extension is hidden in file \(musicURL.path), error: \(err!.localizedDescription)");
+					stashedFileName = musicURL.lastPathComponent;
+				} else {
+					let retStr = val! as String;
+					stashedFileName = retStr;
+				}
 			}
+			return stashedFileName!
 		}
 	}
 	

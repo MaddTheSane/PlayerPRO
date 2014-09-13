@@ -38,7 +38,6 @@ __END_DECLS
 
 @interface PPLibrary : NSObject <NSFastEnumeration>
 - (instancetype)init;
-- (instancetype)initWithPlugInCPath:(const char*)cPath NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithPlugInPath:(NSString *)path;
 - (instancetype)initWithPlugInURL:(NSURL *)URL;
 + (void)deregisterDebugFunction;

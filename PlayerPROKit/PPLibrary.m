@@ -9,6 +9,10 @@
 #import "PPLibrary.h"
 #import "PPLibrary_PPKPrivate.h"
 
+@interface PPLibrary ()
+- (instancetype)initWithPlugInCPath:(const char*)cPath NS_DESIGNATED_INITIALIZER;
+@end
+
 NSString * const kPPTotalPatterns = @"Total Patterns";
 NSString * const kPPPartitionLength = @"Partition Length";
 NSString * const kPPFileSize = @"File Size";
@@ -157,6 +161,10 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 	}
 	char aChar[5] = {0};
 	MADErr anErr = [self identifyFileAtPath:apath type:aChar];
+	if (anErr != MADNoErr) {
+		*atype = nil;
+		return anErr;
+	}
 	*atype = CFBridgingRelease(UTCreateStringForOSType(Ptr2OSType(aChar)));
 	return anErr;
 }
@@ -173,6 +181,10 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 	}
 	char aChar[5] = {0};
 	MADErr anErr = MADMusicIdentifyCFURL(theLibrary, aChar, (__bridge CFURLRef)apath);
+	if (anErr != MADNoErr) {
+		*atype = nil;
+		return anErr;
+	}
 	*atype = CFBridgingRelease(UTCreateStringForOSType(Ptr2OSType(aChar)));
 	return anErr;
 }
