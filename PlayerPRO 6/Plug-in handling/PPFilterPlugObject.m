@@ -47,6 +47,21 @@
 - (instancetype)initWithBundle:(NSBundle *)aBund
 {
 	if (self = [super initWithBundle:aBund]) {
+		{
+			NSArray *archs = aBund.executableArchitectures;
+			BOOL hasArch = NO;
+			for (NSNumber *arch in archs) {
+				if ([arch isEqual:@(NSBundleExecutableArchitectureX86_64)]) {
+					hasArch = YES;
+					break;
+				}
+			}
+			
+			if (!hasArch) {
+				return nil;
+			}
+		}
+		
 		NSURL *bundleURL = [aBund bundleURL];
 		CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)bundleURL);
 		

@@ -32,7 +32,7 @@
 #warning this header should NOT be used outside of PlayerPROCore! The functions and datatypes here may change FOR ANY REASON, including differing compiler includes and defines.
 #endif
 
-struct __MADDriverRec {
+struct MADDriverRec {
 	/**********************/
 	/** Public variables **/
 	/**********************/

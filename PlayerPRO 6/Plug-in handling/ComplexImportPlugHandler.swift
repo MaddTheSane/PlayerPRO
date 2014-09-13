@@ -18,27 +18,28 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, SequenceType 
 		var defaultManager = NSFileManager.defaultManager()
 		
 		for url in defaultPlugLocs {
-			var components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: NSDirectoryEnumerationOptions(0), error: nil) as [NSURL]
-			for component in components {
-				if component.pathExtension != "ppextimp" {
-					continue
-				}
-				let theBundle = NSBundle(URL: component);
-				let aClass: AnyClass? = theBundle.principalClass
-				if aClass == nil {
-					continue
-				}
-				
-				/*
-				let anonClass: AnyClass = aClass!
-				let ohaiClass = anonClass as NSObject.Type
-				
-				let aVal = ohaiClass()
-				*/
-				var aPlug = PPComplexImportPlugObject(bundle: theBundle) as PPComplexImportPlugObject?
-				
-				if aPlug != nil {
-					plugIns.append(aPlug!)
+			if let components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: NSDirectoryEnumerationOptions(0), error: nil) as [NSURL]? {
+				for component in components {
+					if component.pathExtension != "ppextimp" {
+						continue
+					}
+					let theBundle = NSBundle(URL: component);
+					let aClass: AnyClass? = theBundle.principalClass
+					if aClass == nil {
+						continue
+					}
+					
+					/*
+					let anonClass: AnyClass = aClass!
+					let ohaiClass = anonClass as NSObject.Type
+					
+					let aVal = ohaiClass()
+					*/
+					var aPlug = PPComplexImportPlugObject(bundle: theBundle) as PPComplexImportPlugObject?
+					
+					if aPlug != nil {
+						plugIns.append(aPlug!)
+					}
 				}
 			}
 		}

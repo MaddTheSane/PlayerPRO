@@ -71,7 +71,16 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 - (instancetype)initWithBundleNoInit:(NSBundle *)tempBundle
 {
 	if (self = [super initWithBundle:tempBundle]) {
-		
+		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
+		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
+		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugUTITypesKey];
+		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
+			self.UTITypes = [DictionaryTemp copy];
+		} else if ([DictionaryTemp isKindOfClass:strClass]) {
+			self.UTITypes = @[[NSString stringWithString:DictionaryTemp]];
+		} else {
+			return nil;
+		}
 	}
 	return self;
 }
@@ -119,16 +128,7 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 		
 		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
 		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
-		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugUTITypesKey];
-		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
-			self.UTITypes = [DictionaryTemp copy];
-		} else if ([DictionaryTemp isKindOfClass:strClass]) {
-			self.UTITypes = @[[NSString stringWithString:DictionaryTemp]];
-		} else {
-			return nil;
-		}
-		
-		DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugTypeKey];
+		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugTypeKey];
 		if ([DictionaryTemp isKindOfClass:strClass]) {
 			type = NSStringToOSType(DictionaryTemp);
 		} else if ([DictionaryTemp isKindOfClass:numClass]) {

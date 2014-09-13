@@ -88,7 +88,8 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 
 	private func resetPlayerPRODriver() {
 		var returnerr = MADErr.NoErr;
-		var theSett = MADDriverSettings(bestDriver: true)
+		var theSett = MADDriverSettings()
+		theSett.resetToBestDriver()
 		let defaults = NSUserDefaults.standardUserDefaults()
 		
 		//TODO: Sanity Checking
@@ -132,7 +133,8 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 	}
 	
 	override init() {
-		var drivSettings = MADDriverSettings(bestDriver: true)
+		var drivSettings = MADDriverSettings()
+		drivSettings.resetToBestDriver()
 		let defaults = NSUserDefaults.standardUserDefaults()
 		
 		//TODO: Sanity Checking

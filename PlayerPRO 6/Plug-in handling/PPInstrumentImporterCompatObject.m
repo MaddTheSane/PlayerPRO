@@ -62,6 +62,7 @@ static inline BOOL getBoolFromId(id NSType)
 	});
 
 	if (self = [super initWithBundleNoInit:tempBundle]) {
+		return nil;
 		NSURL *tempBundleRef = [tempBundle bundleURL];
 		
 		CFBundleRef tempCFBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)tempBundleRef);
@@ -76,16 +77,7 @@ static inline BOOL getBoolFromId(id NSType)
 		
 		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
 		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
-		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugUTITypesKey];
-		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
-			self.UTITypes = [DictionaryTemp copy];
-		} else if ([DictionaryTemp isKindOfClass:strClass]) {
-			self.UTITypes = @[[NSString stringWithString:DictionaryTemp]];
-		} else
-			return nil;
-		
-		
-		DictionaryTemp = [tempDict valueForKey:kMadPlugIsSampleKey];
+		id DictionaryTemp = [tempDict valueForKey:kMadPlugIsSampleKey];
 		if ([DictionaryTemp isKindOfClass:numClass] || [DictionaryTemp isKindOfClass:strClass]) {
 			self.sample = [DictionaryTemp boolValue];
 		} else {

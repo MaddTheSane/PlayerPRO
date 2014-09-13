@@ -19,13 +19,11 @@ typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
 typedef void (^PPPlugErrorBlock)(MADErr error);
 
 @protocol PPPlugin <NSObject>
-@required
 @property (nonatomic, readonly) BOOL hasUIConfiguration;
 @end
 
 @protocol PPDigitalPlugin <PPPlugin, NSObject>
 
-@required
 - (MADErr)runWithPcmd:(inout Pcmd*)aPcmd driver:(PPDriver *)driver;
 
 @optional
@@ -45,7 +43,6 @@ static inline NSInteger PPSelectionEnd(NSRange selRange)
 
 @protocol PPFilterPlugin <PPPlugin, NSObject>
 
-@required
 - (MADErr)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver;
 
 @optional

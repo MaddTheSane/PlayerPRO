@@ -47,6 +47,21 @@
 - (instancetype)initWithBundle:(NSBundle*)toInit
 {
 	if (self = [super initWithBundle:toInit]) {
+		{
+			NSArray *archs = toInit.executableArchitectures;
+			BOOL hasArch = NO;
+			for (NSNumber *arch in archs) {
+				if ([arch isEqual:@(NSBundleExecutableArchitectureX86_64)]) {
+					hasArch = YES;
+					break;
+				}
+			}
+			
+			if (!hasArch) {
+				return nil;
+			}
+		}
+		
 		Class bundClass = [toInit principalClass];
 		if (![bundClass conformsToProtocol:@protocol(PPDigitalPlugin)]) {
 			return nil;

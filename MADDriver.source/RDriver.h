@@ -589,7 +589,7 @@ typedef struct __VSTEffect {
 } VSTEffect;
 #endif
 
-typedef struct __MADDriverRec MADDriverRec;
+typedef struct MADDriverRec MADDriverRec;
 
 /********************						***********************/
 /*** 					   FUNCTIONS							***/

@@ -117,7 +117,7 @@ extension MADFourChar: StringLiteralConvertible {
 // MARK: PlayerPRO MAD data types
 
 extension MADDriverSettings: DebugPrintable {
-	public init(bestDriver: Bool = false) {
+	public init() {
 		self.driverMode = .CoreAudioDriver
 		self.numChn = 4
 		self.outPutBits = 16
@@ -131,9 +131,6 @@ extension MADDriverSettings: DebugPrintable {
 		self.surround = false
 		self.Reverb = false
 		self.repeatMusic = false
-		if bestDriver {
-			resetToBestDriver()
-		}
 	}
 
 	public mutating func resetToBestDriver() {
