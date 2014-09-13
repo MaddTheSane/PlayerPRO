@@ -125,7 +125,7 @@ class InstrumentViewController: NSViewController, NSOutlineViewDataSource, NSOut
 	override func awakeFromNib() {
 		super.awakeFromNib()
 		// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-		instrumentOutline.selectRowIndexes(NSIndexSet(index: 0), byExtendingSelection: false)
+		//instrumentOutline.selectRowIndexes(NSIndexSet(index: 0), byExtendingSelection: false)
 		theDriver = currentDocument.theDriver;
 	}
 

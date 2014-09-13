@@ -20,20 +20,6 @@
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>CC42BFBF-419A-4CCB-9DC7-49A0A702FD0B</key>
-		<string>LengthFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>79EA82AD-5A53-46AF-82A9-4A0685B4588C</key>
-		<array>
-			<string>CC42BFBF-419A-4CCB-9DC7-49A0A702FD0B</string>
-		</array>
-	</dict>
 	<key>MADPlugMenuName</key>
 	<string>Length</string>
 	<key>NSPrincipalClass</key>
