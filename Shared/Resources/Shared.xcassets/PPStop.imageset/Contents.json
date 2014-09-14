@@ -13,6 +13,10 @@
       "idiom" : "universal",
       "scale" : "2x",
       "filename" : "PPStopx2.png"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {

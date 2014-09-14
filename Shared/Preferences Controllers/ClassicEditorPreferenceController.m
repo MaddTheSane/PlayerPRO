@@ -77,7 +77,7 @@ static const TagCoupling TrackHeightCoupling[] = {{100, 1}, {110, 2}, {120, 3}, 
 		NSInteger theRate = [defaults integerForKey:PPCETrackHeight];
 		NSInteger toSet = 0;
 		int i = 0;
-		size_t sizeofCoupling = sizeof(TrackHeightCoupling) / sizeof(TagCoupling);
+		size_t sizeofCoupling = sizeof(TrackHeightCoupling) / sizeof(TrackHeightCoupling[0]);
 		for (i = 0; i < sizeofCoupling; i++) {
 			if (TrackHeightCoupling[i].amount == theRate) {
 				toSet = TrackHeightCoupling[i].tag;

@@ -367,7 +367,7 @@
 				<string>ppimpexp</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string></string>
+			<string>ppBundle</string>
 			<key>CFBundleTypeName</key>
 			<string>PPImpExpBundle</string>
 			<key>CFBundleTypeRole</key>
@@ -387,7 +387,7 @@
 				<string>ppextimp</string>
 			</array>
 			<key>CFBundleTypeIconFile</key>
-			<string></string>
+			<string>ppBundle</string>
 			<key>CFBundleTypeName</key>
 			<string>PPExtImpBundle</string>
 			<key>CFBundleTypeRole</key>
@@ -748,7 +748,7 @@
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO Import-Export Bundle</string>
 			<key>UTTypeIconFile</key>
-			<string></string>
+			<string>ppBundle</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.ppimpexp</string>
 			<key>UTTypeTagSpecification</key>
@@ -768,7 +768,7 @@
 			<key>UTTypeDescription</key>
 			<string>PlayerPRO 6 Complex Import Plug-in</string>
 			<key>UTTypeIconFile</key>
-			<string></string>
+			<string>ppBundle</string>
 			<key>UTTypeIdentifier</key>
 			<string>net.sourceforge.playerpro.ppextimp</string>
 			<key>UTTypeTagSpecification</key>

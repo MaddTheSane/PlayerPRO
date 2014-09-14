@@ -63,28 +63,37 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		self.didChange(.Removal, valuesAtIndexes: theIndex, forKey: kMusicListKVO)
 	}
 	
-	@objc func sortMusicListUsingComparator(comparator: NSComparator) {
+	func sortMusicList(#block: (lhs: MusicListObject, rhs: MusicListObject) -> Bool) {
+		self.willChangeValueForKey(kMusicListKVO)
+		musicList.sort(block)
+		self.didChangeValueForKey(kMusicListKVO)
+	}
+	
+	@objc(sortMusicListUsingComparator:) func sortMusicList(#comparator: NSComparator) {
+		self.willChangeValueForKey(kMusicListKVO)
 		musicList.sort { (obj1, obj2) -> Bool in
 			return comparator(obj1, obj2) == NSComparisonResult.OrderedAscending
 		}
+		self.didChangeValueForKey(kMusicListKVO)
 	}
 	
 	@objc func sortMusicListByName() {
-		musicList.sort({
-			(var1, var2) -> Bool in
+		self.willChangeValueForKey(kMusicListKVO)
+		musicList.sort({ (var1, var2) -> Bool in
 			let result = var1.fileName.localizedStandardCompare(var2.fileName)
 			return result == NSComparisonResult.OrderedAscending;
 			})
+		self.didChangeValueForKey(kMusicListKVO)
 	}
 	
-	@objc func addMusicURL(theURL: NSURL) -> Bool {
-		var obj: MusicListObject! = MusicListObject(URL: theURL);
-		
-		if (obj == nil) {
-			return false;
+	@objc func addMusicURL(theURL: NSURL?) -> Bool {
+		if theURL == nil {
+			return false
 		}
 		
-		if ((musicList as NSArray).containsObject(obj)) {
+		let obj = MusicListObject(URL: theURL!);
+		
+		if contains(musicList, obj) {
 			return false;
 		}
 		
@@ -135,18 +144,12 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 				//musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
 				for bookData in dataBookArray {
 					var isStale: ObjCBool = false;
-					let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: nil, bookmarkDataIsStale: &isStale, error: nil)
-					#if DEBUG
-						if isStale {
-							println("Bookmark pointing to \(fullURL.path) is stale.");
-						}
-					#endif
-					if fullURL == nil {
+					if let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: nil, bookmarkDataIsStale: &isStale, error: nil) {
+						let obj = MusicListObject(URL: fullURL);
+						musicList.append(obj)
+					} else {
 						lostMusicCount++;
-						continue;
 					}
-					let obj = MusicListObject(URL: fullURL);
-					musicList.append(obj)
 				}
 				selectedMusic = -1;
 			} else {
@@ -161,13 +164,10 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 				let aHomeURL = NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
 				for bookData in dataBookArray {
 					var isStale: ObjCBool = false;
-					let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: aHomeURL, bookmarkDataIsStale: &isStale, error: nil)
-					#if DEBUG
-						if isStale {
-							println("Bookmark pointing to \(fullURL.path) is stale.");
-						}
-					#endif
-					if (fullURL == nil) {
+					if let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: aHomeURL, bookmarkDataIsStale: &isStale, error: nil) {
+						let obj = MusicListObject(URL: fullURL);
+						musicList.append(obj)
+					} else {
 						if (selectedMusic == -1) {
 							//Do nothing
 						} else if (selectedMusic == musicList.count + 1) {
@@ -176,10 +176,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 							selectedMusic--;
 						}
 						lostMusicCount++;
-						continue;
 					}
-					let obj = MusicListObject(URL: fullURL);
-					musicList.append(obj)
 				}
 			}
 		} else {
@@ -220,7 +217,10 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return true;
 	}
 	
-	@objc func URLAtIndex(index: Int) -> NSURL {
+	@objc func URLAtIndex(index: Int) -> NSURL? {
+		if index >= musicList.count {
+			return nil
+		}
 		return musicList[index].musicURL;
 	}
 	
@@ -299,13 +299,10 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	@objc dynamic func arrayOfObjectsInMusicListAtIndexes(theSet : NSIndexSet) -> [MusicListObject] {
-		var tmpList = [MusicListObject]()
-		for (i, obj) in enumerate(musicList) {
-			if theSet.containsIndex(i) {
-				tmpList.append(obj)
-			}
-		}
-		return tmpList
+		return musicList.filter({ (include) -> Bool in
+			var idx = find(self.musicList, include)
+			return theSet.containsIndex(idx!)
+		})
 	}
 	
 	@objc dynamic func removeObjectsInMusicListAtIndexes(idxSet: NSIndexSet) {
@@ -315,12 +312,8 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		let musicArray = musicList as NSArray
 		self.willChange(.Removal, valuesAtIndexes: idxSet, forKey: kMusicListKVO)
 		musicList = musicList.filter({
-			let idx = musicArray.indexOfObject($0)
-			if (idxSet.containsIndex(idx)) {
-				return false
-			} else {
-				return true
-			}
+			var idx = find(self.musicList, $0)
+			return !idxSet.containsIndex(idx!)
 			})
 		self.didChange(.Removal, valuesAtIndexes: idxSet, forKey: kMusicListKVO)
 	}
@@ -331,7 +324,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		var currentIndex = theIndexSet.firstIndex;
 		let count = theIndexSet.count;
 		
-		for (var i = 0; i < count; i++) {
+		for i in 0 ..< count {
 			let tempObj = anObj[i]
 			musicList.insert(tempObj, atIndex: currentIndex)
 			currentIndex = theIndexSet.indexGreaterThanIndex(currentIndex);
@@ -363,12 +356,10 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 						self.lostMusicCount = invalidAny as UInt;
 						self.selectedMusic = selectedAny as Int;
 						for aPath in pathsAny as NSArray as [NSString] {
-							let tmpURL = NSURL.fileURLWithPath(aPath)
-							if (tmpURL == nil) {
-								continue;
+							if let tmpURL = NSURL.fileURLWithPath(aPath) {
+								let tmpObj = MusicListObject(URL: tmpURL)
+								pathsURL.append(tmpObj)
 							}
-							let tmpObj = MusicListObject(URL: tmpURL!)
-							pathsURL.append(tmpObj)
 						}
 						self.loadMusicList(pathsURL)
 						

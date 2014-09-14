@@ -56,7 +56,7 @@ class OpenPanelViewController: NSViewController {
 				theUtiType = .other
 				
 			default:
-				// Because we can't fail on inits yet...
+				// TODO: fail
 				theUtiType = .other
 			}
 			
@@ -204,36 +204,32 @@ class OpenPanelViewController: NSViewController {
 		openPanel = panel
 		multipleSelection = false
 		super.init(nibName: "OpenPanelViewController", bundle: nil)
-		if (td != nil) {
-			var tdHere = td!
+		if let tdHere = td {
 			for (key, utis) in tdHere {
 				var obj = OpenPanelViewItem(type: .trackerType, utis: utis, name: key)
 				utiObjects.append(obj)
 			}
 		}
-		if (pd != nil) {
-			var pdHere = td!
+		if let pdHere = pd {
 			for (key, utis) in pdHere {
 				var obj = OpenPanelViewItem(type: .playlistType, utis: utis, name: key)
 				utiObjects.append(obj)
 			}
 		}
-		if (insDict != nil) {
-			var insHere = insDict!
+		if let insHere = insDict {
 			for (key, utis) in insHere {
 				var obj = OpenPanelViewItem(type: .instrumentType, utis: utis, name: key)
 				utiObjects.append(obj)
 			}
 		}
-		if (adddict != nil) {
-			var addHere = adddict!
+		if let addHere = adddict {
 			for (key, utis) in addHere {
 				var obj = OpenPanelViewItem(type: .otherType, utis: utis, name: key)
 				utiObjects.append(obj)
 			}
 		}
 		
-		utiObjects.sort({(lhs: OpenPanelViewItem, rhs: OpenPanelViewItem) -> Bool in
+		utiObjects.sort({(lhs, rhs) -> Bool in
 			if (lhs.theUtiType.toRaw() < rhs.theUtiType.toRaw()) {
 				return true
 			} else if (lhs.theUtiType.toRaw() > rhs.theUtiType.toRaw()) {
@@ -244,10 +240,6 @@ class OpenPanelViewController: NSViewController {
 				return result == NSComparisonResult.OrderedAscending;
 			}
 			})
-	}
-	
-	convenience init(openPanel panel:NSOpenPanel, trackerDictionary td: [String: [String]]?, playlistDictionary pd: [String: [String]]?) {
-		self.init(openPanel:panel, trackerDictionary:td, playlistDictionary:pd, instrumentDictionary:nil, additionalDictionary:nil)
 	}
 	
 	override func awakeFromNib() {

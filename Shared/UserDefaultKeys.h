@@ -7,6 +7,7 @@
 //
 #import <Foundation/NSString.h>
 
+#pragma GCC visibility push(hidden)
 //Notifications
 extern NSString * const PPListPreferencesDidChange;
 extern NSString * const PPSoundPreferencesDidChange;
@@ -195,3 +196,5 @@ extern NSString * const PPCETrackHeight;
 //Misc./other
 extern NSString * const PPDoubleDash;
 extern NSString * const kMusicListKVO;
+
+#pragma GCC visibility pop

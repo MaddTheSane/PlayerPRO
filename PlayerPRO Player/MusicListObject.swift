@@ -49,11 +49,16 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	let musicURL: NSURL
 
 	#if os(OSX)
+	var stashedFileIcon: NSImage? = nil
 	var fileIcon: NSImage {
 		get {
+			if let ourFileIcon = stashedFileIcon {
+				return ourFileIcon
+			}
 			let image = NSWorkspace.sharedWorkspace().iconForFile(musicURL.path);
 			image.size = NSSize(width: 16, height: 16)
-			return image
+			stashedFileIcon = image
+			return stashedFileIcon!
 		}
 	}
 	#endif
