@@ -1237,7 +1237,7 @@ enum PPMusicToolbarTypes {
 	if ([sharedWorkspace type:theUTI conformsToType:PPMusicListUTI]) {
 		if ([self musicListWillChange]) {
 			[self willChangeValueForKey:kMusicListKVO];
-			[musicList loadMusicListAtURL:theURL];
+			[musicList loadMusicListFromURL:theURL];
 			selMusFromList = musicList.selectedMusic;
 			[self didChangeValueForKey:kMusicListKVO];
 			[self musicListDidChange];

@@ -2563,7 +2563,7 @@ sData *MADCreateSample(MADMusic *MDriver, short ins, short sample)
 		//curData->loopSize	= 0;
 		curData->vol		= MAX_VOLUME;
 		curData->c2spd		= NOFINETUNE;
-		curData->loopType	= eClassicLoop;
+		curData->loopType	= MADLoopTypeClassic;
 		curData->amp		= 8;
 		//curData->relNote	= 0;
 		//curData->name

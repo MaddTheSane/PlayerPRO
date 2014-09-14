@@ -249,7 +249,7 @@ void MADCleanDriver(MADDriverRec *intDriver)
 		intDriver->chan[i].prevVol0		= DoVolPanning256(0, &intDriver->chan[i], intDriver, false);
 		intDriver->chan[i].prevVol1		= DoVolPanning256(1, &intDriver->chan[i], intDriver, false);
 		
-		intDriver->chan[i].loopType	= eClassicLoop;
+		intDriver->chan[i].loopType	= MADLoopTypeClassic;
 		intDriver->chan[i].pingpong	= false;
 		intDriver->chan[i].PanningE8 = false;
 		intDriver->chan[i].PatternLoopE6 = 1;
@@ -309,8 +309,8 @@ void ProcessFadeOut(Channel *ch, MADDriverRec *intDriver)
 {
 	if (intDriver->curMusic != NULL) {
 		if (!ch->KeyOn) {
-			if ((intDriver->curMusic->fid[ch->ins].volType & EFON) && (intDriver->curMusic->fid[ch->ins].volType & EFSUSTAIN)) {
-				if (intDriver->curMusic->fid[ch->ins].volType & EFLOOP)
+			if ((intDriver->curMusic->fid[ch->ins].volType & EFTypeOn) && (intDriver->curMusic->fid[ch->ins].volType & EFTypeSustain)) {
+				if (intDriver->curMusic->fid[ch->ins].volType & EFTypeLoop)
 					goto FADEOUT;
 			}
 			else FADEOUT:
@@ -326,7 +326,7 @@ void ProcessFadeOut(Channel *ch, MADDriverRec *intDriver)
 					ch->volFade		= 0;
 					ch->loopBeg		= 0;
 					ch->loopSize	= 0;
-					ch->loopType	= eClassicLoop;
+					ch->loopType	= MADLoopTypeClassic;
 				}
 			}
 		}
@@ -349,7 +349,7 @@ void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 	if (curIns->volSize <= 0)
 		return;
 	
-	if (curIns->volType & EFON) {
+	if (curIns->volType & EFTypeOn) {
 		MADByte	a,b;
 		float	p;
 		
@@ -367,7 +367,7 @@ void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 			float basePeriod = 0.0f;
 			sData	*curData;
 			
-			if ((curIns->volType & EFNOTE)) {
+			if ((curIns->volType & EFTypeNote)) {
 				curData = intDriver->curMusic->sample[curIns->firstSample + ch->samp];
 				if (curData == NULL)
 					return;
@@ -377,10 +377,10 @@ void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 			
 			v = InterpolateEnv(p, &curIns->volEnv[a], &curIns->volEnv[b]);
 			
-			if((curIns->volType & EFSUSTAIN) && ch->KeyOn && a==curIns->volSus && p==curIns->volEnv[a].pos) {
+			if((curIns->volType & EFTypeSustain) && ch->KeyOn && a==curIns->volSus && p==curIns->volEnv[a].pos) {
 				
 			} else {
-				if ((curIns->volType & EFNOTE))
+				if ((curIns->volType & EFTypeNote))
 					p += basePeriod / (float)ch->period;
 				else
 					p++;
@@ -389,7 +389,7 @@ void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 					a = b;
 					b++;
 					
-					if(curIns->volType & EFLOOP) {
+					if(curIns->volType & EFTypeLoop) {
 						if(b > curIns->volEnd) {
 							a=curIns->volBeg;
 							b=a+1;
@@ -398,7 +398,7 @@ void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 					} else {
 						if(b >= curIns->volSize) {
 							b--;
-							if ((curIns->volType & EFNOTE))
+							if ((curIns->volType & EFTypeNote))
 								p -= basePeriod / (float)ch->period;
 							else
 								p--;
@@ -415,13 +415,13 @@ void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 		ch->volEnv = v;
 		
 		if (b >= curIns->volSize) {	// Check if we are out of the enveloppe with a 0 or 1 value...
-			if (curIns->volType & EFLOOP) {
+			if (curIns->volType & EFTypeLoop) {
 				
 			} else {
 				if (ch->volEnv < 2) {
 					ch->curPtr		= ch->maxPtr;
 					ch->loopSize	= 0;
-					ch->loopType	= eClassicLoop;
+					ch->loopType	= MADLoopTypeClassic;
 				}
 			}
 		}
@@ -459,7 +459,7 @@ void ProcessPanning(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 	if (curIns->pannSize <= 0)
 		return;
 	
-	if (curIns->pannType & EFON) {
+	if (curIns->pannType & EFTypeOn) {
 		//  active? -> copy variables
 		MADByte	aa,bb;
 		float	pp;
@@ -476,7 +476,7 @@ void ProcessPanning(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 			
 			ch->pannEnvActive = true;
 			
-			if ((curIns->volType & EFNOTE)) {
+			if ((curIns->volType & EFTypeNote)) {
 				sData *curData;
 				
 				curData = intDriver->curMusic->sample[curIns->firstSample + ch->samp];
@@ -487,7 +487,7 @@ void ProcessPanning(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 			
 			v = InterpolateEnv(pp, &curIns->pannEnv[aa], &curIns->pannEnv[bb]);
 			
-			if ((curIns->pannType & EFNOTE))
+			if ((curIns->pannType & EFTypeNote))
 				pp += basePeriod / (float) ch->period;
 			else
 				pp++;
@@ -495,7 +495,7 @@ void ProcessPanning(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 			if(pp >= curIns->pannEnv[bb].pos) {
 				aa=bb; bb++;
 				
-				if(curIns->pannType & EFLOOP) {
+				if(curIns->pannType & EFTypeLoop) {
 					if(bb > curIns->pannEnd) {
 						aa=curIns->pannBeg;
 						bb=aa+1;
@@ -504,7 +504,7 @@ void ProcessPanning(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 				} else {
 					if(bb >= curIns->pannSize) {
 						bb--;
-						if ((curIns->pannType & EFNOTE))
+						if ((curIns->pannType & EFTypeNote) == EFTypeNote)
 							pp -= basePeriod / (float) ch->period;
 						else
 							pp--;
@@ -750,7 +750,7 @@ void KillChannel(Channel *curVoice, MADDriverRec *intDriver)
 	
 	curVoice->curPtr	= curVoice->maxPtr;
 	curVoice->loopSize	= 0;
-	curVoice->loopType	= eClassicLoop;
+	curVoice->loopType	= MADLoopTypeClassic;
 }
 
 void IntNoteOff(Channel *curVoice, MADDriverRec *intDriver)
@@ -911,7 +911,7 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 						} else {
 							curVoice->loopBeg 	= 0;
 							curVoice->loopSize	= 0;
-							curVoice->loopType	= eClassicLoop;
+							curVoice->loopType	= MADLoopTypeClassic;
 						}
 						if (theNoteCmd->note != 0xFF && theNoteCmd->note != 0xFE)
 							curVoice->viboffset = 0;

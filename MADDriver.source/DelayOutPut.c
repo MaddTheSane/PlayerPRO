@@ -140,7 +140,7 @@ void Sampler16AddDelay(Channel *curVoice, int *ASCBuffer, MADDriverRec *intDrive
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 #endif
 	
-	if (curVoice->pingpong == true && curVoice->loopType == ePingPongLoop)
+	if (curVoice->pingpong == true && curVoice->loopType == MADLoopTypePingPong)
 		aDD = -aDD;	// PINGPONG
 	
 	chnVol2S	= DoVolPanning256(0, curVoice, intDriver, true);
@@ -187,7 +187,7 @@ void Sampler16AddDelay(Channel *curVoice, int *ASCBuffer, MADDriverRec *intDrive
 			off = (aCC>>BYTEDIV);
 			
 			if (preOff != off) {
-				if (curVoice->loopType == ePingPongLoop && curVoice->loopSize > 0) {		// PINGPONG
+				if (curVoice->loopType == MADLoopTypePingPong && curVoice->loopSize > 0) {		// PINGPONG
 					preOff = off;
 					if ((SndBuffer + off +1 >= curVoice->maxPtr && !curVoice->pingpong) ||
 					   (SndBuffer + off +1 <= curVoice->begPtr + curVoice->loopBeg && curVoice->pingpong)) {
@@ -293,7 +293,7 @@ void Sampler16AddDelayStereo(Channel *curVoice, int *ASCBuffer, MADDriverRec *in
 #endif
 	
 	
-	if (curVoice->pingpong == true && curVoice->loopType == ePingPongLoop)
+	if (curVoice->pingpong == true && curVoice->loopType == MADLoopTypePingPong)
 		aDD = -aDD;	// PINGPONG
 	
 	chnVol2S	= DoVolPanning256(0, curVoice, intDriver, true);
@@ -340,7 +340,7 @@ void Sampler16AddDelayStereo(Channel *curVoice, int *ASCBuffer, MADDriverRec *in
 			off = (int)(2 * (aCC >> BYTEDIV));
 			
 			if (preOff != off) {
-				if (curVoice->loopType == ePingPongLoop && curVoice->loopSize > 0) { // PINGPONG
+				if (curVoice->loopType == MADLoopTypePingPong && curVoice->loopSize > 0) { // PINGPONG
 					preOff = off;
 					if ((SndBuffer + off +3 >= curVoice->maxPtr && !curVoice->pingpong) ||
 					   (SndBuffer + off +2 <= curVoice->begPtr + curVoice->loopBeg && curVoice->pingpong)) {
@@ -454,7 +454,7 @@ void Sampler16Addin16Delay(Channel *curVoice, int *ASCBuffer, MADDriverRec *intD
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 #endif
 	
-	if (curVoice->pingpong == true && curVoice->loopType == ePingPongLoop)
+	if (curVoice->pingpong == true && curVoice->loopType == MADLoopTypePingPong)
 		aDD = -aDD;	// PINGPONG
 	
 	chnVol2S	= DoVolPanning256(0, curVoice, intDriver, true);
@@ -501,7 +501,7 @@ void Sampler16Addin16Delay(Channel *curVoice, int *ASCBuffer, MADDriverRec *intD
 			off = (aCC >> BYTEDIV);
 			
 			if (preOff != off) {
-				if (curVoice->loopType == ePingPongLoop && curVoice->loopSize > 0) {		// PINGPONG
+				if (curVoice->loopType == MADLoopTypePingPong && curVoice->loopSize > 0) {		// PINGPONG
 					preOff = off;
 					if (((SndBuffer + off +1 >= (short*) curVoice->maxPtr) && !curVoice->pingpong) ||
 						(SndBuffer + off +1 <= (short*) (curVoice->begPtr + curVoice->loopBeg) && curVoice->pingpong)) {
@@ -612,7 +612,7 @@ void Sampler16Addin16DelayStereo(Channel *curVoice, int *ASCBuffer, MADDriverRec
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 #endif
 	
-	if (curVoice->pingpong == true && curVoice->loopType == ePingPongLoop)
+	if (curVoice->pingpong == true && curVoice->loopType == MADLoopTypePingPong)
 		aDD = -aDD;	// PINGPONG
 	
 	chnVol2S	= DoVolPanning256(0, curVoice, intDriver, true);
@@ -659,7 +659,7 @@ void Sampler16Addin16DelayStereo(Channel *curVoice, int *ASCBuffer, MADDriverRec
 			off = 2 * (aCC >> BYTEDIV);
 			
 			if (preOff != off) {
-				if (curVoice->loopType == ePingPongLoop && curVoice->loopSize > 0) {		// PINGPONG
+				if (curVoice->loopType == MADLoopTypePingPong && curVoice->loopSize > 0) {		// PINGPONG
 					preOff = off;
 					if ((SndBuffer + off +3 >= (short*) curVoice->maxPtr && !curVoice->pingpong) ||
 						(SndBuffer + off +2 <= (short*) (curVoice->begPtr + curVoice->loopBeg) && curVoice->pingpong)) {
@@ -819,7 +819,7 @@ void Sampler8in8AddDelay(Channel *curVoice, short *ASCBuffer, MADDriverRec *intD
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 #endif
 	
-	if (curVoice->pingpong == true && curVoice->loopType == ePingPongLoop)
+	if (curVoice->pingpong == true && curVoice->loopType == MADLoopTypePingPong)
 		aDD = -aDD;	// PINGPONG
 	
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0)
@@ -847,7 +847,7 @@ void Sampler8in8AddDelay(Channel *curVoice, short *ASCBuffer, MADDriverRec *intD
 			off = aCC>>BYTEDIV;
 			
 			if (preOff != off) {
-				if (curVoice->loopType == ePingPongLoop && curVoice->loopSize > 0) {		// PINGPONG
+				if (curVoice->loopType == MADLoopTypePingPong && curVoice->loopSize > 0) {		// PINGPONG
 					preOff = off;
 					if ((SndBuffer + off +1 >= curVoice->maxPtr && !curVoice->pingpong) ||
 						(SndBuffer + off +1 <= curVoice->begPtr + curVoice->loopBeg && curVoice->pingpong)) {
@@ -939,7 +939,7 @@ void Sampler8in16AddDelay(Channel *curVoice, short *ASCBuffer, MADDriverRec *int
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 #endif
 	
-	if (curVoice->pingpong == true && curVoice->loopType == ePingPongLoop)
+	if (curVoice->pingpong == true && curVoice->loopType == MADLoopTypePingPong)
 		aDD = -aDD;	// PINGPONG
 	
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0)
@@ -971,7 +971,7 @@ void Sampler8in16AddDelay(Channel *curVoice, short *ASCBuffer, MADDriverRec *int
 			off = aCC >> BYTEDIV;
 			
 			if (preOff != off) {
-				if (curVoice->loopType == ePingPongLoop && curVoice->loopSize > 0) {		// PINGPONG
+				if (curVoice->loopType == MADLoopTypePingPong && curVoice->loopSize > 0) {		// PINGPONG
 					preOff = off;
 					if((SndBuffer + 2*off +2 >= curVoice->maxPtr && !curVoice->pingpong) ||
 					   (SndBuffer + 2*off +2 <= (curVoice->begPtr + curVoice->loopBeg) && curVoice->pingpong)) {
@@ -1063,7 +1063,7 @@ void Sampler8in8AddDelayStereo(Channel *curVoice, short *ASCBuffer, MADDriverRec
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 #endif
 	
-	if (curVoice->pingpong == true && curVoice->loopType == ePingPongLoop)
+	if (curVoice->pingpong == true && curVoice->loopType == MADLoopTypePingPong)
 		aDD = -aDD;	// PINGPONG
 	
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0)
@@ -1091,7 +1091,7 @@ void Sampler8in8AddDelayStereo(Channel *curVoice, short *ASCBuffer, MADDriverRec
 			off = 2 * (aCC >> BYTEDIV);
 			
 			if (preOff != off) {
-				if (curVoice->loopType == ePingPongLoop && curVoice->loopSize > 0) {		// PINGPONG
+				if (curVoice->loopType == MADLoopTypePingPong && curVoice->loopSize > 0) {		// PINGPONG
 					preOff = off;
 					if((SndBuffer + off +3 >= curVoice->maxPtr && !curVoice->pingpong) ||
 					   (SndBuffer + off +2 <= curVoice->begPtr + curVoice->loopBeg && curVoice->pingpong)) {
@@ -1191,7 +1191,7 @@ void Sampler8in16AddDelayStereo(Channel *curVoice, short *ASCBuffer, MADDriverRe
 	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 #endif
 	
-	if (curVoice->pingpong == true && curVoice->loopType == ePingPongLoop)
+	if (curVoice->pingpong == true && curVoice->loopType == MADLoopTypePingPong)
 		aDD = -aDD;	// PINGPONG
 	
 	if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0)
@@ -1223,7 +1223,7 @@ void Sampler8in16AddDelayStereo(Channel *curVoice, short *ASCBuffer, MADDriverRe
 			off = 2*(aCC>>BYTEDIV);
 			
 			if (preOff != off) {
-				if (curVoice->loopType == ePingPongLoop && curVoice->loopSize > 0) {		// PINGPONG
+				if (curVoice->loopType == MADLoopTypePingPong && curVoice->loopSize > 0) {		// PINGPONG
 					preOff = off;
 					if ((SndBuffer + 2*off +6 >= curVoice->maxPtr && !curVoice->pingpong) ||
 					   (SndBuffer + 2*off +4 <= curVoice->begPtr + curVoice->loopBeg && curVoice->pingpong)) {

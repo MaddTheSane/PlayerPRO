@@ -53,7 +53,7 @@ static inline NSInteger PPSelectionEnd(NSRange selRange)
 @protocol PPInstrumentImportPlugin <PPPlugin, NSObject>
 
 - (BOOL)canImportSampleAtURL:(NSURL*)sampleURL;
-@property (nonatomic, readonly, getter=isInstrument) BOOL instrument;
+@property (nonatomic, readonly) BOOL isInstrument;
 
 - (MADErr)importSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID driver:(PPDriver*)driver;
 
@@ -65,7 +65,7 @@ static inline NSInteger PPSelectionEnd(NSRange selRange)
 
 @protocol PPInstrumentExportPlugin <PPPlugin, NSObject>
 
-@property (nonatomic, readonly, getter=isInstrument) BOOL instrument;
+@property (nonatomic, readonly) BOOL isInstrument;
 - (MADErr)exportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver;
 
 @optional

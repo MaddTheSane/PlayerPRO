@@ -102,7 +102,7 @@
 	[instrumentRate setStringValue:[NSString stringWithFormat:@"%u Hz", [object c2spd]]];
 	instrumentNote.stringValue = [PPSampleObject octaveNameFromNote:[object relativeNote]]; 
 	[instrumentBits setStringValue:[NSString stringWithFormat:@"%u-bit", [object amplitude]]];
-	[instrumentMode setStringValue: [object loopType] == ePingPongLoop ? @"Ping-pong" : @"Classic"];
+	[instrumentMode setStringValue: [object loopType] == MADLoopTypePingPong ? @"Ping-pong" : @"Classic"];
 	waveFormImage.image = [object waveformImageUsingView:waveFormImage];
 }
 

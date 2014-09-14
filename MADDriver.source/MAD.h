@@ -68,6 +68,11 @@ typedef struct Cmd {
 	MADByte	unused;
 } Cmd;
 
+typedef MADENUM(MADFourChar, PatternCompression) {
+	PatternCompressionNone = 'NONE',
+	PatternCompressionMAD1 = 'MAD1'
+};
+
 /*!
  *	@struct		PatHeader
  *	@abstract	Pattern header
@@ -83,11 +88,11 @@ typedef struct Cmd {
  *				Unused, kept in for future use.
  */
 typedef struct PatHeader {
-	int			size;
-	MADFourChar	compMode;
-	char		name[32];
-	int			patBytes;
-	int			unused2;
+	int					size;
+	PatternCompression	compMode;
+	char				name[32];
+	int					patBytes;
+	int					unused2;
 } PatHeader;
 
 typedef struct PatData		// DATA STRUCTURE : HEADER + COMMANDS
@@ -109,16 +114,16 @@ typedef struct IntPatData {
 
 /*!
  *	@enum		MADLoopType
- *	@constant	eClassicLoop
+ *	@constant	MADLoopTypeClassic
  *				Classic looping, starting over from the beginning after reaching the end.
- *	@constant	ePingPongLoop
+ *	@constant	MADLoopTypePingPong
  *				Ping-pong looping, changing the playback direction of the sound when it reaches the beginning or end.
  *
  */
 typedef MADENUM(MADByte, MADLoopType)
 {
-	eClassicLoop	= 0,
-	ePingPongLoop	= 1
+	MADLoopTypeClassic	= 0,
+	MADLoopTypePingPong	= 1
 };
 
 /*!
@@ -203,10 +208,10 @@ typedef struct EnvRec {
 } EnvRec;
 
 typedef MADOPTIONS(MADByte, EFType) {
-	EFON		= 1 << 0,
-	EFSUSTAIN	= 1 << 1,
-	EFLOOP		= 1 << 2,
-	EFNOTE		= 1 << 3
+	EFTypeOn		= 1 << 0,
+	EFTypeSustain	= 1 << 1,
+	EFTypeLoop		= 1 << 2,
+	EFTypeNote		= 1 << 3
 };
 
 typedef struct InstrData		// INSTRUMENT

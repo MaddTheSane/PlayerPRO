@@ -13,11 +13,7 @@ import AudioToolbox
 
 @objc(PPWavePlug) public class PPWavePlug: NSObject, PPInstrumentImportPlugin, PPInstrumentExportPlugin {
 	public let hasUIConfiguration = false
-	public var instrument: Bool {
-		@objc(isInstrument) get {
-			return false
-		}
-	}
+	public let isInstrument = false
 	
 	public func canImportSampleAtURL(sampleURL: NSURL!) -> Bool {
 		var sampleHandle = NSFileHandle.fileHandleForReadingFromURL(sampleURL, error: nil)

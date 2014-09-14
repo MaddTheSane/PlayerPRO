@@ -587,11 +587,11 @@ static MADErr XMReadInstruments(MADMusic *theMAD, MADDriverSettings *init, struc
 				}
 				
 				if ((wh.type & 0x3) == 1) {	// Forward Loop
-					curData->loopType = eClassicLoop;
+					curData->loopType = MADLoopTypeClassic;
 				}
 				
 				if ((wh.type & 0x3) == 2) {	// Ping-pong Loop
-					curData->loopType = ePingPongLoop;
+					curData->loopType = MADLoopTypePingPong;
 				}
 				
 				//	curData->panning	= wh.panning;
@@ -1086,7 +1086,7 @@ static char* ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndS
 				if (curData->amp == 16)
 					wh.type |= 0x10;
 				if (curData->loopSize > 0) {
-					if (curData->loopType == ePingPongLoop)
+					if (curData->loopType == MADLoopTypePingPong)
 						wh.type |= 0x2;
 					else
 						wh.type |= 0x1;

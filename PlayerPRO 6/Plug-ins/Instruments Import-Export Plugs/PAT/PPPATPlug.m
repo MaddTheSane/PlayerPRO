@@ -101,9 +101,9 @@
 		}
 		
 		if (PATSamp->Flag & 0x08)
-			curData.loopType = ePingPongLoop;
+			curData.loopType = MADLoopTypePingPong;
 		else
-			curData.loopType = eClassicLoop;
+			curData.loopType = MADLoopTypeClassic;
 		
 		///////////////
 		PatSampHeader tmpHeader = *PATSamp;

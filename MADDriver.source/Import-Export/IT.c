@@ -912,9 +912,9 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 							}
 							
 							if (ITinfo.sampdata[prevSamp].Flag & 64)
-								curData->loopType = ePingPongLoop;
+								curData->loopType = MADLoopTypePingPong;
 							else
-								curData->loopType = eClassicLoop;
+								curData->loopType = MADLoopTypeClassic;
 							
 							curData->vol			= ITinfo.sampdata[prevSamp].GvL;
 							curData->c2spd			= ITinfo.sampdata[prevSamp].C5Speed / 2;
@@ -1049,9 +1049,9 @@ static MADErr ConvertIT2Mad(char* theIT, size_t MODSize, MADMusic *theMAD, MADDr
 				}
 				
 				if (ITinfo.sampdata[i].Flag & 64)
-					curData->loopType = ePingPongLoop;
+					curData->loopType = MADLoopTypePingPong;
 				else
-					curData->loopType = eClassicLoop;
+					curData->loopType = MADLoopTypeClassic;
 				
 				curData->vol		= ITinfo.sampdata[i].GvL;
 				curData->c2spd		= ITinfo.sampdata[i].C5Speed / 2;

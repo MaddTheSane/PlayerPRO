@@ -204,24 +204,24 @@ public struct MADLibraryGenerator: GeneratorType {
 }
 
 extension MADInfoRec {
-	public var internalName: String {
-		var toParse: String = ""
+	public var internalName: String! {
+		var toParse = [CChar]()
 		var mirror = reflect(internalFileName)
 		for i in 0..<mirror.count {
-			var aChar = mirror[i].1.value
-			toParse += NSString(bytes: &aChar, length: 1, encoding: NSMacOSRomanStringEncoding)
+			var aChar = mirror[i].1.value as CChar
+			toParse.append(aChar)
 		}
-		return toParse
+		return NSString(CString: toParse, encoding: NSMacOSRomanStringEncoding)
 	}
 	
-	public var format: String {
-		var toParse: String = ""
+	public var format: String! {
+		var toParse = [CChar]()
 		var mirror = reflect(formatDescription)
 		for i in 0..<mirror.count {
-			var aChar = mirror[i].1.value
-			toParse += NSString(bytes: &aChar, length: 1, encoding: NSMacOSRomanStringEncoding)
+			var aChar = mirror[i].1.value as CChar
+			toParse.append(aChar)
 		}
-		return toParse
+		return NSString(CString: toParse, encoding: NSMacOSRomanStringEncoding)
 	}
 }
 
@@ -246,7 +246,7 @@ extension sData32 {
 		self.loopSize = 0
 		self.vol = sData.MaxVolume
 		self.c2spd = sData.NoFineTune
-		self.loopType = .eClassicLoop
+		self.loopType = .Classic
 		self.amp = 8
 		self.relNote = 0
 		self.name = BlankNameChar32
@@ -254,17 +254,6 @@ extension sData32 {
 		self.data = 0
 	}
 	
-	public var bigEndian: sData32 { get {
-		var toRet = self
-		toRet.size = self.size.bigEndian
-		toRet.loopBeg = self.loopBeg.bigEndian
-		toRet.loopSize = self.loopBeg.bigEndian
-		toRet.c2spd = self.c2spd.bigEndian
-		//Not byte-swapping data, as it isn't used
-		
-		return toRet
-	}}
-
 	public var toSData : sData { get {
 		var toRet = sData()
 		toRet.size = self.size
@@ -285,16 +274,6 @@ extension sData32 {
 extension sData {
 	public static let MaxVolume: MADByte = 64
 	public static let NoFineTune: UInt16 = 8363
-
-	public var bigEndian: sData { get {
-		var toRet = self
-		toRet.size = self.size.bigEndian
-		toRet.loopBeg = self.loopBeg.bigEndian
-		toRet.loopSize = self.loopBeg.bigEndian
-		toRet.c2spd = self.c2spd.bigEndian
-		
-		return toRet
-	}}
 
 	public var toSData32 : sData32 { get {
 		var toRet = sData32()
@@ -318,7 +297,7 @@ extension sData {
 		self.loopSize = 0
 		self.vol = sData.MaxVolume
 		self.c2spd = sData.NoFineTune
-		self.loopType = .eClassicLoop
+		self.loopType = .Classic
 		self.amp = 8
 		self.relNote = 0
 		self.name = BlankNameChar32
@@ -332,10 +311,6 @@ extension EnvRec {
 		pos = 0
 		val = 0
 	}
-
-	public var bigEndian: EnvRec {get {
-		return EnvRec(pos: self.pos.bigEndian, val: self.val.bigEndian)
-	}}
 }
 
 extension FXBus {
@@ -344,42 +319,9 @@ extension FXBus {
 		ByPass = false
 		copyId = 0
 	}
-	
-	public var bigEndian: FXBus {get {
-		return FXBus(ByPass: self.ByPass, copyId: self.copyId.bigEndian, Active: self.Active)
-	}}
 }
 
 extension InstrData {
-	public var bigEndian: InstrData { get {
-		var toRet = self;
-		toRet.numSamples = self.numSamples.bigEndian
-		toRet.firstSample = self.firstSample.bigEndian
-		toRet.volFade = self.volFade.bigEndian
-		
-		toRet.MIDI = self.MIDI.bigEndian
-		toRet.MIDIType = self.MIDIType.bigEndian
-		
-		toRet.volEnv = (self.volEnv.0.bigEndian, self.volEnv.1.bigEndian,
-			self.volEnv.2.bigEndian, self.volEnv.3.bigEndian, self.volEnv.4.bigEndian,
-			self.volEnv.5.bigEndian, self.volEnv.6.bigEndian, self.volEnv.7.bigEndian,
-			self.volEnv.8.bigEndian, self.volEnv.9.bigEndian, self.volEnv.10.bigEndian,
-			self.volEnv.11.bigEndian)
-		
-		toRet.pannEnv = (self.pannEnv.0.bigEndian, self.pannEnv.1.bigEndian,
-			self.pannEnv.2.bigEndian, self.pannEnv.3.bigEndian, self.pannEnv.4.bigEndian,
-			self.pannEnv.5.bigEndian, self.pannEnv.6.bigEndian, self.pannEnv.7.bigEndian,
-			self.pannEnv.8.bigEndian, self.pannEnv.9.bigEndian, self.pannEnv.10.bigEndian,
-			self.pannEnv.11.bigEndian)
-
-		toRet.pitchEnv = (self.pitchEnv.0.bigEndian, self.pitchEnv.1.bigEndian,
-			self.pitchEnv.2.bigEndian, self.pitchEnv.3.bigEndian, self.pitchEnv.4.bigEndian,
-			self.pitchEnv.5.bigEndian, self.pitchEnv.6.bigEndian, self.pitchEnv.7.bigEndian,
-			self.pitchEnv.8.bigEndian, self.pitchEnv.9.bigEndian, self.pitchEnv.10.bigEndian,
-			self.pitchEnv.11.bigEndian)
-		
-		return toRet
-	}}
 }
 
 extension Cmd {
@@ -414,18 +356,6 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: UnsafeMutableP
 	var aCmd: Cmd = GetCommand(position, channel, aPat)
 	commandBlock(&aCmd)
 	ReplaceCmd(position, channel, aCmd, aPat)
-}
-
-extension PatHeader {
-	public var bigEndian: PatHeader {get {
-		var toRet = self
-		toRet.size = self.size.bigEndian
-		toRet.compMode = self.compMode.bigEndian
-		toRet.patBytes = self.patBytes.bigEndian
-		toRet.unused2 = self.unused2.bigEndian
-		
-		return toRet
-	}}
 }
 
 // MARK: Plug-in functions

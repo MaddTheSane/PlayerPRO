@@ -588,7 +588,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					curData->loopBeg	= 0;
 					curData->loopSize	= 0;
 					curData->vol		= MAX_VOLUME;
-					curData->loopType	= eClassicLoop;
+					curData->loopType	= MADLoopTypeClassic;
 					curData->amp		= 8;
 					curData->relNote	= 60 - wsmp.usUnityNote;
 					
@@ -741,7 +741,7 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 					curData->loopSize	= 0;
 					curData->vol		= MAX_VOLUME;
 					curData->c2spd		= NOFINETUNE;
-					curData->loopType	= eClassicLoop;
+					curData->loopType	= MADLoopTypeClassic;
 					curData->amp		= 8;
 					// curData->name
 					

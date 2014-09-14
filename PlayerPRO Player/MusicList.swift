@@ -224,7 +224,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return musicList[index].musicURL;
 	}
 	
-	@objc func loadMusicList(newArray: [MusicListObject]) {
+	private func loadMusicList(newArray: [MusicListObject]) {
 		self.willChangeValueForKey(kMusicListKVO);
 		musicList = newArray;
 		self.didChangeValueForKey(kMusicListKVO);
@@ -242,7 +242,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		}
 	}
 	
-	@objc func loadMusicListAtURL(fromURL: NSURL) -> Bool {
+	@objc func loadMusicListFromURL(fromURL: NSURL) -> Bool {
 		var listData: NSData? = NSData(contentsOfURL:fromURL)
 		if let unWrappedListData = listData {
 			return loadMusicListFromData(unWrappedListData)
@@ -254,7 +254,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	private func clearMusicListInDefaults() {
 		let musListDefName = "PlayerPRO Music List"
 		let defaults = NSUserDefaults.standardUserDefaults()
-		if let listData = defaults.dataForKey(musListDefName) {
+		if let listData: AnyObject = defaults.objectForKey(musListDefName) {
 			defaults.removeObjectForKey(musListDefName)
 		}
 	}
@@ -266,7 +266,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 			manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories: true, attributes: nil, error: nil)
 			return false;
 		}
-		return loadMusicListAtURL(PPPPath.URLByAppendingPathComponent(kPlayerList, isDirectory: false))
+		return loadMusicListFromURL(PPPPath.URLByAppendingPathComponent(kPlayerList, isDirectory: false))
 	}
 	
 	// MARK: - Key-valued Coding

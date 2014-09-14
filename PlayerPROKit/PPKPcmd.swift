@@ -14,7 +14,7 @@ public func GetCommand(row: Int16, track: Int16, aPcmd: PPKPcmd) -> Cmd {
 }
 
 public func ReplaceCmd(row: Int16, track: Int16, command: Cmd, inout aPat: PPKPcmd) {
-	aPat.replaceCmd(atRow: row, track: track, command: command)
+	aPat.replaceCmdAtRow(row, track: track, command: command)
 }
 
 public func ModifyCmdAtRow(row: Int16, track: Int16, inout aPcmd: PPKPcmd, commandBlock: (inout Cmd)-> ()) {
@@ -25,7 +25,7 @@ public struct PPKPcmd: SequenceType {
 	public var tracks: Int16
 	public var length: Int16
 	public var trackStart: Int16
-	public var posStart: Int16
+	public var positionStart: Int16
 	public var myCmd = [Cmd]()
 	public var structSize: Int32? { get {
 		if self.valid {
@@ -39,20 +39,21 @@ public struct PPKPcmd: SequenceType {
 		return myCmd.generate()
 	}
 	
-	public var newPcmd: UnsafeMutablePointer<Pcmd> {
-		get {
-			var aPcmd: UnsafeMutablePointer<Pcmd> = UnsafeMutablePointer<Pcmd>(malloc(UInt(structSize!)))
+	public func newPcmd() -> UnsafeMutablePointer<Pcmd>? {
+		if let newSize = structSize {
+			var aPcmd = UnsafeMutablePointer<Pcmd>(malloc(UInt(newSize)))
 			aPcmd.memory.tracks = tracks
 			aPcmd.memory.length = length
 			aPcmd.memory.trackStart = trackStart
-			aPcmd.memory.posStart = posStart
-			aPcmd.memory.structSize = structSize!
+			aPcmd.memory.posStart = positionStart
+			aPcmd.memory.structSize = newSize
 			var theirCmdPtr = UnsafeMutablePointer<Cmd>(aPcmd.advancedBy(sizeof(Pcmd.Type)))
 			for i in 0 ..< myCmd.count {
 				theirCmdPtr[i] = myCmd[i]
 			}
-
 			return aPcmd
+		} else {
+			return nil
 		}
 	}
 	
@@ -66,8 +67,18 @@ public struct PPKPcmd: SequenceType {
 		tracks = 1
 		trackStart = 0
 		length = 1
-		posStart = 0
+		positionStart = 0
 		myCmd.append(Cmd())
+	}
+	
+	public init(tracks atr: Int16, startTrack: Int16 = 0, rows: Int16, startPosition: Int16 = 0) {
+		tracks = atr
+		trackStart = startTrack
+		length = rows
+		positionStart = startPosition
+		for i in 0 ..< atr + rows {
+			myCmd.append(Cmd())
+		}
 	}
 	
 	public init(_ aPcmd: UnsafePointer<Pcmd>) {
@@ -76,37 +87,48 @@ public struct PPKPcmd: SequenceType {
 		tracks = unwrapped.tracks
 		length = unwrapped.length
 		trackStart = unwrapped.trackStart
-		posStart = unwrapped.posStart
+		positionStart = unwrapped.posStart
 		let theirCmdPtr = UnsafePointer<Cmd>(aPcmd.advancedBy(sizeof(Pcmd.Type)))
 		for i in 0 ..< myCmdPos / sizeof(Cmd.Type) {
 			myCmd.append(theirCmdPtr[i])
 		}
 	}
 	
+	public mutating func addRow() {
+		length += 1
+		for i in 0 ..< tracks {
+			myCmd.append(Cmd())
+		}
+	}
+	
+	public mutating func addTrack() {
+		for i in length - 1 ... 0 {
+			let acmd = Cmd()
+			myCmd.insert(Cmd(), atIndex: Int(i * tracks))
+		}
+		tracks += 1
+	}
+	
 	public mutating func modifyCmdAtRow(row1: Int16, track track1: Int16, commandBlock: (inout Cmd)-> ()) {
 		var track = track1
 		var row = row1
-		if (row < 0) {
+		if (row1 < 0) {
 			row = 0;
-		} else if (row >= length) {
+		} else if (row1 >= length) {
 			row = length - 1;
 		}
 		
-		if (track < 0) {
+		if (track1 < 0) {
 			track = 0;
-		} else if (track >= tracks) {
+		} else if (track1 >= tracks) {
 			track = tracks - 1;
 		}
 		
 		commandBlock(&myCmd[Int((length * track) + row)])
 	}
 	
-	public mutating func addCmd(command: Cmd) {
+	public mutating func addCmd(command: Cmd = Cmd()) {
 		myCmd.append(command)
-	}
-	
-	public mutating func replaceCmd(atRow row1: Int16, track: Int16, command: Cmd) {
-		replaceCmdAtRow(row1, track: track, command: command)
 	}
 	
 	public mutating func replaceCmdAtRow(row1: Int16, track track1: Int16, command: Cmd) {
@@ -130,15 +152,15 @@ public struct PPKPcmd: SequenceType {
 	public func getCommand(row1: Int16, track track1: Int16) -> Cmd {
 		var track = track1
 		var row = row1
-		if (row < 0) {
+		if (row1 < 0) {
 			row = 0;
-		} else if (row >= length) {
+		} else if (row1 >= length) {
 			row = length - 1;
 		}
 		
-		if (track < 0) {
+		if (track1 < 0) {
 			track = 0;
-		} else if (track >= tracks) {
+		} else if (track1 >= tracks) {
 			track = tracks - 1;
 		}
 		

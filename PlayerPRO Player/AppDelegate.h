@@ -10,6 +10,7 @@
 #import "PPPreferences.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 @import PlayerPROKit;
+
 @class PPInstrumentWindowController;
 @class SoundSettingsViewController;
 

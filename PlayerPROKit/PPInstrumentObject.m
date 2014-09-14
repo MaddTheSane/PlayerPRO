@@ -711,9 +711,9 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	[self willChangeValueForKey:kPPVolumeType];
 	if (typeOn) {
-		theInstrument.volType |= EFON;
+		theInstrument.volType |= EFTypeOn;
 	} else {
-		theInstrument.volType &= ~EFON;
+		theInstrument.volType &= ~EFTypeOn;
 	}
 	[self didChangeValueForKey:kPPVolumeType];
 }
@@ -722,9 +722,9 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	[self willChangeValueForKey:kPPVolumeType];
 	if (typeSus) {
-		theInstrument.volType |= EFSUSTAIN;
+		theInstrument.volType |= EFTypeSustain;
 	} else {
-		theInstrument.volType &= ~EFSUSTAIN;
+		theInstrument.volType &= ~EFTypeSustain;
 	}
 	[self didChangeValueForKey:kPPVolumeType];
 }
@@ -733,9 +733,9 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	[self willChangeValueForKey:kPPVolumeType];
 	if (typeLoop) {
-		theInstrument.volType |= EFLOOP;
+		theInstrument.volType |= EFTypeLoop;
 	} else {
-		theInstrument.volType &= ~EFLOOP;
+		theInstrument.volType &= ~EFTypeLoop;
 	}
 	[self didChangeValueForKey:kPPVolumeType];
 }
@@ -744,31 +744,31 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	[self willChangeValueForKey:kPPVolumeType];
 	if (theLoop) {
-		theInstrument.volType |= EFNOTE;
+		theInstrument.volType |= EFTypeNote;
 	} else {
-		theInstrument.volType &= ~EFNOTE;
+		theInstrument.volType &= ~EFTypeNote;
 	}
 	[self didChangeValueForKey:kPPVolumeType];
 }
 
 - (BOOL)isVolumeTypeOn
 {
-	return theInstrument.volType & EFON;
+	return theInstrument.volType & EFTypeOn;
 }
 
 - (BOOL)isVolumeTypeSustain
 {
-	return theInstrument.volType & EFSUSTAIN;
+	return theInstrument.volType & EFTypeSustain;
 }
 
 - (BOOL)isVolumeTypeLoop
 {
-	return theInstrument.volType & EFLOOP;
+	return theInstrument.volType & EFTypeLoop;
 }
 
 - (BOOL)isVolumeTypeNote
 {
-	return theInstrument.volType & EFNOTE;
+	return theInstrument.volType & EFTypeNote;
 }
 
 - (EFType)panningType
@@ -785,9 +785,9 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	[self willChangeValueForKey:kPPPanningType];
 	if (typeOn) {
-		theInstrument.pannType |= EFON;
+		theInstrument.pannType |= EFTypeOn;
 	} else {
-		theInstrument.pannType &= ~EFON;
+		theInstrument.pannType &= ~EFTypeOn;
 	}
 	[self didChangeValueForKey:kPPPanningType];
 }
@@ -796,9 +796,9 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	[self willChangeValueForKey:kPPPanningType];
 	if (typeSus) {
-		theInstrument.pannType |= EFSUSTAIN;
+		theInstrument.pannType |= EFTypeSustain;
 	} else {
-		theInstrument.pannType &= ~EFSUSTAIN;
+		theInstrument.pannType &= ~EFTypeSustain;
 	}
 	[self didChangeValueForKey:kPPPanningType];
 }
@@ -807,9 +807,9 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	[self willChangeValueForKey:kPPPanningType];
 	if (theLoop) {
-		theInstrument.pannType |= EFLOOP;
+		theInstrument.pannType |= EFTypeLoop;
 	} else {
-		theInstrument.pannType &= ~EFLOOP;
+		theInstrument.pannType &= ~EFTypeLoop;
 	}
 	[self didChangeValueForKey:kPPPanningType];
 }
@@ -818,31 +818,31 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	[self willChangeValueForKey:kPPPanningType];
 	if (theLoop) {
-		theInstrument.pannType |= EFNOTE;
+		theInstrument.pannType |= EFTypeNote;
 	} else {
-		theInstrument.pannType &= ~EFNOTE;
+		theInstrument.pannType &= ~EFTypeNote;
 	}
 	[self didChangeValueForKey:kPPPanningType];
 }
 
 - (BOOL)isPanningTypeOn
 {
-	return theInstrument.pannType & EFON;
+	return theInstrument.pannType & EFTypeOn;
 }
 
 - (BOOL)isPanningTypeSustain
 {
-	return theInstrument.pannType & EFSUSTAIN;
+	return theInstrument.pannType & EFTypeSustain;
 }
 
 - (BOOL)isPanningTypeLoop
 {
-	return theInstrument.pannType & EFLOOP;
+	return theInstrument.pannType & EFTypeLoop;
 }
 
 - (BOOL)isPanningTypeNote
 {
-	return theInstrument.pannType & EFNOTE;
+	return theInstrument.pannType & EFTypeNote;
 }
 
 - (PPSampleObject*)samplesObjectAtIndex:(NSInteger)idx
