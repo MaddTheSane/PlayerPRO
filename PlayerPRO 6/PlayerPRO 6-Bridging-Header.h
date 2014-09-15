@@ -12,7 +12,6 @@
 #import "PPFilterPlugHandler.h"
 #import "PPInstrumentPlugHandler.h"
 #import "PPPreferences.h"
-#import "PPComplexImportPlugInterface.h"
 #import "PPComplexImportPlugObject.h"
 #import "PPDigitalPlugInObject.h"
 #import "PPFilterPlugObject.h"

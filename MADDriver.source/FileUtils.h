@@ -27,7 +27,7 @@
 /*!
  *	@header		FileUtils.h
  *	@abstract	File operation API used by PlayerPRO.
- *	@discussion	This header was used as a bridge between Windows and Mac OS (pre-OS X) file APIs.
+ *	@discussion	This header was used as a bridge between Windows and Mac OS (pre-OS X) file APIs. <br>
  *				PlayerPROCore 6's version is a thin wrapper over the POSIX file APIs.
  *				If you need more functionality, use another API instead.
  */

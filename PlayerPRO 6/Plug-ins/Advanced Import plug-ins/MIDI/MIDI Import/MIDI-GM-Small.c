@@ -82,23 +82,6 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst);
 #define	GetNEUnsignedFixed(toget) EndianU32_BtoL(toget.bigEndianValue)
 #endif
 
-static void ConvertInstrument16(short *tempPtr, long sSize)
-{
-	short val = 0x8000;
-	
-	sSize /= 2;
-	
-	while (sSize > 0) {
-		sSize--;
-		*(tempPtr++) += val;
-	}
-}
-
-static inline void ConvertInstrumentIn16(short *tempPtr, long sSize)
-{
-	ConvertInstrument16(tempPtr, sSize);
-}
-
 static void DebugLong(long type)
 {
 	Str31 str;

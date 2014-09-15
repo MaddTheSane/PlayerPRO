@@ -285,7 +285,6 @@ public class SoundSettingsViewController: NSViewController {
 				convRate = .rate22Khz;
 				break;
 				
-				
 			case 48000:
 				convRate = .rate48Khz;
 				break;

@@ -12,7 +12,7 @@
 #define PPFilterLoadPlug(theBundle) (PPFiltersPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROFiltersPlugTypeID, kPlayerPROFiltersPlugInterfaceID)
 
 @interface PPFilterPlugObject ()
-@property PPFiltersPlugin **plugData;
+@property (strong) id<PPFilterPlugin> plugData;
 @end
 
 @implementation PPFilterPlugObject
@@ -65,7 +65,7 @@
 		NSURL *bundleURL = [aBund bundleURL];
 		CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)bundleURL);
 		
-		plugData = PPFilterLoadPlug(cfBundle);
+		//plugData = PPFilterLoadPlug(cfBundle);
 		CFRelease(cfBundle);
 
 		if (!plugData)
@@ -76,22 +76,17 @@
 	return self;
 }
 
-- (OSErr)callPluginWithData:(sData *)theData selectionStart:(long) SelectionStart selectionEnd:(long) SelectionEnd plugInInfo:(PPInfoPlug *)thePPInfoPlug stereoMode:(short)stereoMode
+- (MADErr)callPluginWithData:(sData *)theData selectionStart:(long) SelectionStart selectionEnd:(long) SelectionEnd plugInInfo:(PPInfoPlug *)thePPInfoPlug stereoMode:(short)stereoMode
 {
 	CFBundleRef tempBund = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)[self.file bundleURL]);
 	CFBundleRefNum refNum = CFBundleOpenBundleResourceMap(tempBund);
+	MADErr iErr = MADOrderNotImplemented;
 	
-	OSErr iErr = (*plugData)->FiltersMain(plugData, theData, SelectionStart, SelectionEnd, thePPInfoPlug, stereoMode);
+	//OSErr iErr = (*plugData)->FiltersMain(plugData, theData, SelectionStart, SelectionEnd, thePPInfoPlug, stereoMode);
 	
 	CFBundleCloseBundleResourceMap(tempBund, refNum);
 	CFRelease(tempBund);
 	return iErr;
-}
-
-- (void)dealloc
-{
-	if (plugData)
-		(*plugData)->Release(plugData);
 }
 
 @end

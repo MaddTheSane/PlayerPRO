@@ -105,7 +105,7 @@ static OSErr mainMINs(void			*unused,
 				// READ samples headers & data
 				
 				for (x = 0; x < InsHeader->numSamples; x++) {
-					sData *curData = sample[x] = inMADCreateSample();
+					sData *curData = sample[x] = MADCreateSampleRaw();
 					
 					inOutCount = sizeof(sData32);
 					CFReadStreamRead(readStream, (UInt8*)curData, inOutCount);

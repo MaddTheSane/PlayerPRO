@@ -63,21 +63,22 @@ PPEXPORT OSErr inAddSoundToMAD(void			*theSound,
 							   sData		**sample,					// Ptr on samples data
 							   short		*sampleID) DEPRECATED_ATTRIBUTE;
 
-PPEXPORT OSErr inAddSoundToMADCString(void			*theSound,
-									  size_t		sndLen,
-									  int			loopStart,
-									  int			loopEnd,
-									  short			sS,
-									  short			bFreq,
-									  unsigned int	rate,
-									  bool			stereo,
-									  char			*name,
-									  InstrData		*InsHeader,				// Ptr on instrument header
-									  sData			**sample,				// Ptr on samples data
-									  short			*sampleID);
+PPEXPORT OSErr MADAddSoundToMAD(void			*theSound,
+								size_t			sndLen,
+								int				loopStart,
+								int				loopEnd,
+								short			sS,
+								short			bFreq,
+								unsigned int	rate,
+								bool			stereo,
+								char			*name,
+								InstrData		*InsHeader,				// Ptr on instrument header
+								sData			**sample,				// Ptr on samples data
+								short			*sampleID);
 
-PPEXPORT sData* inMADCreateSample();
+PPEXPORT sData *MADCreateSampleRaw();
 PPEXPORT void ConvertInstrumentIn(Byte *tempPtr, size_t sSize);
+PPEXPORT void ConvertInstrumentIn16(short *tempPtr, size_t sSize);
 PPEXPORT Cmd* MADGetCmd(short row, short track, Pcmd* myPcmd);
 
 PPEXPORT const CFStringRef kMadPlugMenuNameKey;
@@ -124,18 +125,6 @@ typedef struct PPInfoPlug {
 //	Don't forget to UPDATE the theData->size !!!!!!!!!!!!
 //
 /********************						***********************/
-
-// 79EA82AD-5A53-46AF-82A9-4A0685B4588C
-#define kPlayerPROFiltersPlugTypeID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x79, 0xEA, 0x82, 0xAD, 0x5A, 0x53, 0x46, 0xAF, 0x82, 0xA9, 0x4A, 0x06, 0x85, 0xB4, 0x58, 0x8C)
-
-// DA7082A2-FEF1-4475-B1A4-35C81ED5DB8F
-#define kPlayerPROFiltersPlugInterfaceID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xDA, 0x70, 0x82, 0xA2, 0xFE, 0xF1, 0x44, 0x75, 0xB1, 0xA4, 0x35, 0xC8, 0x1E, 0xD5, 0xDB, 0x8F)
-
-
-typedef struct PPFiltersPlugin {
-	IUNKNOWN_C_GUTS;
-	MADErr (STDMETHODCALLTYPE *FiltersMain)(void* thisInterface, sData *theData, long SelectionStart, long SelectionEnd, PPInfoPlug *thePPInfoPlug, short stereoMode);
-} PPFiltersPlugin;
 
 #pragma mark Instruments Import/Export Plugs
 
@@ -199,18 +188,5 @@ typedef struct PPInstrumentPlugin {
 //
 //
 /********************						***********************/
-
-#if 0
-// E9E5574F-50B4-43E0-948D-8B7C80D47261
-#define kPlayerPRODigitalPlugTypeID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0xE9, 0xE5, 0x57, 0x4F, 0x50, 0xB4, 0x43, 0xE0, 0x94, 0x8D, 0x8B, 0x7C, 0x80, 0xD4, 0x72, 0x61)
-
-// 34BA675D-3ED8-49F9-8D06-28A7436A0E4D
-#define kPlayerPRODigitalPlugInterfaceID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x34, 0xBA, 0x67, 0x5D, 0x3E, 0xD8, 0x49, 0xF9, 0x8D, 0x06, 0x28, 0xA7, 0x43, 0x6A, 0x0E, 0x4D)
-
-typedef struct PPDigitalPlugin {
-	IUNKNOWN_C_GUTS;
-	MADErr (STDMETHODCALLTYPE *MyProcPtr)(void* thisInterface, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug);
-} PPDigitalPlugin;
-#endif
 
 #endif

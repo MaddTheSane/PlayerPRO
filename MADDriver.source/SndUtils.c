@@ -20,6 +20,11 @@
 #include "PlayerPROCore.h"
 #include "MADPlug.h"
 
+sData *MADCreateSampleRaw()
+{
+	return inMADCreateSample();
+}
+
 sData* inMADCreateSample()
 {
 	sData *curData;
@@ -74,24 +79,24 @@ MADErr inAddSoundToMAD(void			*theSound,
 	memset(cName, 0, name[0] + 1);
 	memcpy(cName, &name[1], name[0]);
 	
-	theErr = inAddSoundToMADCString(theSound, sndLen, (int)lS, (int)lE, sS, bFreq, rate, stereo, cName, InsHeader, sample, sampleID);
+	theErr = MADAddSoundToMAD(theSound, sndLen, (int)lS, (int)lE, sS, bFreq, rate, stereo, cName, InsHeader, sample, sampleID);
 	
 	return theErr;
 }
 
 
-MADErr inAddSoundToMADCString(void			*theSound,
-							  size_t		sndLen,
-							  int			loopStart,
-							  int			loopEnd,
-							  short			sS,
-							  short			bFreq,
-							  unsigned int	rate,
-							  bool			stereo,
-							  char			*name,
-							  InstrData		*InsHeader,					// Ptr on instrument header
-							  sData			**sample,					// Ptr on samples data
-							  short			*sampleID)
+MADErr MADAddSoundToMAD(void			*theSound,
+						size_t			sndLen,
+						int				loopStart,
+						int				loopEnd,
+						short			sS,
+						short			bFreq,
+						unsigned int	rate,
+						bool			stereo,
+						char			*name,
+						InstrData		*InsHeader,			// Ptr on instrument header
+						sData			**sample,			// Ptr on samples data
+						short			*sampleID)
 {
 	long 	inOutBytes;
 	sData	*curData;

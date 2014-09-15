@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <PlayerPROKit/PPPlugIns.h>
-#import "PPComplexImportPlugInterface.h"
 #import "PPPlugInObject.h"
 
 /**

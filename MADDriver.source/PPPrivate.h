@@ -160,6 +160,8 @@ MADErr	CheckMADFile(char *AlienFile);
 void SetOSType(CFURLRef, OSType);
 #endif
 
+sData* inMADCreateSample();
+
 #ifdef __cplusplus
 }
 #endif

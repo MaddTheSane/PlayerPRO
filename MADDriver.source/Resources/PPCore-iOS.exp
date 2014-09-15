@@ -6,6 +6,7 @@
 
 _CompressPartitionMAD1
 _ConvertInstrumentIn
+_ConvertInstrumentIn16
 _CreateFreeMADK
 _DecompressPartitionMAD1
 _DirectSave
@@ -83,7 +84,7 @@ _iRead
 _iSeekCur
 _iWrite
 _inAddSoundToMAD
-_inAddSoundToMADCString
-_inMADCreateSample
+_MADAddSoundToMAD
+_MADCreateSampleRaw
 _PlayerPROCoreVersionString
 _PlayerPROCoreVersionNumber

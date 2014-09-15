@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "PPComplexImportPlugInterface.h"
 #import <PlayerPROKit/PPPlugIns.h>
 
 @interface PPAPPLImporter : NSObject <PPComplexImportPlugInterface, NSTableViewDelegate>
