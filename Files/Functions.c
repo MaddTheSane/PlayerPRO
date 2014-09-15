@@ -228,7 +228,7 @@ Boolean FindInternal(short FindType)
 					} else if (FindType == ReplaceAll) {
 						NReplaceInt(cmd, FTrack, FPos, false);
 					} else
-						MyDebugStr(__LINE__, __FILE__, "ReplaceInt ERROR");
+						MADDebugStr(__LINE__, __FILE__, "ReplaceInt ERROR");
 					
 					/***********************/
 				}
@@ -588,7 +588,7 @@ Boolean SetUpFind()
 			FStartTrack = 0;
 			FEndTrack = curMusic->header->numChn;
 		} else
-			MyDebugStr(__LINE__, __FILE__, "Find ERROR");
+			MADDebugStr(__LINE__, __FILE__, "Find ERROR");
 	}
 	
 	return true;

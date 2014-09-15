@@ -37,16 +37,6 @@ static MMD1NOTE 	*mmd1pat;
 static Ptr			theMEDRead;
 #define READMEDFILE(dst, size) {memcpy(dst, theMEDRead, size); theMEDRead += (long) size;}
 
-Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
-{
-	if (PosX < 0)
-		PosX = 0;
-	else if (PosX >= tempMusicPat->header.size)
-		PosX = tempMusicPat->header.size -1;
-		
-	return &(tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]);
-}
-
 static inline void mystrcpy(Ptr a, BytePtr b)
 {
 	BlockMoveData(b + 1, a, b[0]);

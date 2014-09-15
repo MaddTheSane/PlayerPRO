@@ -743,7 +743,7 @@ void AddAPattern(void)
 	/****** ALLOCATION *********/
 	
 	curMusic->partition[curMusic->header->numPat] = (PatData*) NewPtrClear(sizeof(PatHeader) + curMusic->header->numChn * 64L * sizeof(Cmd));
-	if (MemError()) MyDebugStr(__LINE__, __FILE__, "Error in AddAPattern...");
+	if (MemError()) MADDebugStr(__LINE__, __FILE__, "Error in AddAPattern...");
 	
 	curMusic->partition[curMusic->header->numPat]->header.size = 64L;
 	curMusic->partition[curMusic->header->numPat]->header.compMode = 'NONE';
@@ -1874,7 +1874,7 @@ void DuplicatePattern(short PatID)
 	
 	newSize = sizeof(PatHeader) + curMusic->header->numChn * curMusic->partition[PatID]->header.size * sizeof(Cmd);
 	curMusic->partition[curMusic->header->numPat] = (PatData*) NewPtrClear(newSize);
-	if (MemError()) MyDebugStr(__LINE__, __FILE__, "Error in AddAPattern...");
+	if (MemError()) MADDebugStr(__LINE__, __FILE__, "Error in AddAPattern...");
 	
 	BlockMoveData(curMusic->partition[PatID], curMusic->partition[curMusic->header->numPat], newSize);
 	

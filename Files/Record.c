@@ -364,7 +364,7 @@ void ConvertInstrumentMode(sData *curData, short menuItem)
 	} else {
 		aNewPtr = NewPtr(curData->size*2L);
 		if (aNewPtr == NULL)
-			MyDebugStr(__LINE__, __FILE__, "Need more memory");
+			MADDebugStr(__LINE__, __FILE__, "Need more memory");
 		else {
 			curData->stereo = true;
 			
@@ -373,7 +373,7 @@ void ConvertInstrumentMode(sData *curData, short menuItem)
 			
 			if (curData->amp == 8) {
 				for (i = 0 ; i < curData->size; i++) {
-					if (1 + i * 2 >= curData->size*2L) MyDebugStr(__LINE__, __FILE__, "");
+					if (1 + i * 2 >= curData->size*2L) MADDebugStr(__LINE__, __FILE__, "");
 					
 					aNewPtr[i * 2] = aNewPtr[1 + i * 2] = curData->data[i];
 				}
@@ -419,7 +419,7 @@ void ConvertInstrumentAmpli(sData *curData, short newAmpli)
 				break;
 				
 			default:
-				MyDebugStr(__LINE__, __FILE__, "Unknown amplitude");
+				MADDebugStr(__LINE__, __FILE__, "Unknown amplitude");
 				break;
 		}
 	} else if (curData->amp == 16) {
@@ -438,7 +438,7 @@ void ConvertInstrumentAmpli(sData *curData, short newAmpli)
 				break;
 				
 			default:
-				MyDebugStr(__LINE__, __FILE__, "Unknown amplitude");
+				MADDebugStr(__LINE__, __FILE__, "Unknown amplitude");
 				break;
 		}
 	}
@@ -464,7 +464,7 @@ void SetUpPartition(short newVal)
 	for (i = 0; i< curMusic->header->numPat; i++) {
 		theNewPartition = (PatData*) NewPtrClear(sizeof(PatHeader) + newVal * curMusic->partition[i]->header.size * sizeof(Cmd));
 		if (theNewPartition == NULL) {
-			MyDebugStr(__LINE__, __FILE__, "Memory Error");
+			MADDebugStr(__LINE__, __FILE__, "Memory Error");
 			return;
 		}
 		theNewPartition->header = curMusic->partition[i]->header;
@@ -489,7 +489,7 @@ void SetUpPartition(short newVal)
 	}
 	
 	if (MemError())
-		MyDebugStr(__LINE__, __FILE__, "Error in SetUp Partition...");
+		MADDebugStr(__LINE__, __FILE__, "Error in SetUp Partition...");
 	
 	curMusic->header->numChn = newVal;
 	
@@ -553,7 +553,7 @@ pascal Boolean MyFilterPro(DialogPtr theDialog, EventRecord *theEventI, short *i
 		if (!Append) {
 			Append = true;
 			theDITL = GetResource('DITL', 150);
-			if (theDITL == nil) MyDebugStr(__LINE__, __FILE__, " DITL 150 !!!!!!");
+			if (theDITL == nil) MADDebugStr(__LINE__, __FILE__, " DITL 150 !!!!!!");
 			base = CountDITL(theDialog);
 			
 			AppendDITL(theDialog, theDITL, appendDITLBottom);
@@ -779,7 +779,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 	ExtSoundHeader	*ExtHeader;
 	int				i;
 	
-	if (!sound) MyDebugStr(__LINE__, __FILE__, "NSndToHandle");
+	if (!sound) MADDebugStr(__LINE__, __FILE__, "NSndToHandle");
 	
 	*loopStart = 0;
 	*loopEnd = 0;
@@ -807,7 +807,7 @@ Handle NSndToHandle(Handle sound, long *loopStart, long *loopEnd, short *sampleS
 			break;
 			
 		default:					// jack says, what about 12? or 6?
-			MyDebugStr(__LINE__, __FILE__, " NSndToHandle... Burkk");
+			MADDebugStr(__LINE__, __FILE__, " NSndToHandle... Burkk");
 			break;
 	}
 	
@@ -1225,15 +1225,15 @@ void NPASTESample(long Pos, short ins, short samp)
 		
 		pStrcpy(newFile.name, "\pPasted sound");
 		iErr = FindFolder(kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newFile.vRefNum, &newFile.parID);
-		if (iErr) MyDebugStr(__LINE__, __FILE__, "FindFolder");
+		if (iErr) MADDebugStr(__LINE__, __FILE__, "FindFolder");
 		
 		FSpDelete(&newFile);
 		
 		iErr = ConvertMovieToFile(aMovie, nil, &newFile, 'WAVE', 'TVOD', 0, nil, 0, nil);
-		if (iErr) MyDebugStr(__LINE__, __FILE__, "ConvertMovieToFile");
+		if (iErr) MADDebugStr(__LINE__, __FILE__, "ConvertMovieToFile");
 		
 		iErr = NOpenSampleInt(ins, samp, newFile);
-		if (iErr) MyDebugStr(__LINE__, __FILE__, "NOpenSampleInt");
+		if (iErr) MADDebugStr(__LINE__, __FILE__, "NOpenSampleInt");
 		
 		FSpDelete(&newFile);
 		
@@ -1417,7 +1417,7 @@ void NPASTESample(long Pos, short ins, short samp)
 									if (MemError() == noErr) {
 										if (sS == 8) {
 											for (i = inOutBytes-1 ; i >= 0; i--) {
-												if (1 + i * 2 >= inOutBytes*2L) MyDebugStr(__LINE__, __FILE__, "");
+												if (1 + i * 2 >= inOutBytes*2L) MADDebugStr(__LINE__, __FILE__, "");
 												
 												(*newSound)[i * 2] = (*newSound)[1 + i * 2] = (*newSound)[i];
 											}
@@ -1697,7 +1697,7 @@ void AddLoopToSndHandle(Handle sound, long Start, long End)
 			break;
 			
 		default:					/* jack says, what about 12? or 6? */
-			MyDebugStr(__LINE__, __FILE__, " NSndToHandle... Burkk");
+			MADDebugStr(__LINE__, __FILE__, " NSndToHandle... Burkk");
 			return;
 			break;
 	} 

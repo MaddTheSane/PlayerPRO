@@ -223,7 +223,7 @@ void DeleteTempFile()
 	iErr = FSpDelete(&spec);
 }
 
-EXP void MyDebugStr(short line, Ptr file, Ptr text)
+void OurDebugStr(short line, const char *file, const char *text)
 {
 	fprintf(stderr, "PlayerPRO: %s:%u error text:%s!\n", file, line, text);
 	
@@ -276,13 +276,13 @@ void TESTBugs(void)
 	
 	do {
 		ttHdl = NewHandleClear(5410);
-		if (ttHdl == NULL) MyDebugStr(__LINE__, __FILE__, "");
+		if (ttHdl == NULL) MADDebugStr(__LINE__, __FILE__, "");
 		SetHandleSize(ttHdl, FreeMem() - 5000);
 		if (ttHdl != NULL)
 			DisposeHandle(ttHdl);
 		
 	} while (Button() == false);
-	if (MemError() != noErr) MyDebugStr(__LINE__, __FILE__, "");
+	if (MemError() != noErr) MADDebugStr(__LINE__, __FILE__, "");
 }
 
 void SKVolume(short vol)
@@ -851,7 +851,7 @@ void MusiqueDriverInit(void)
 	//if (init.driverMode == ASCSoundDriver || init.driverMode == AWACSoundDriver) Switch();
 	
 	iErr = MADCreateDriver(&init, gMADLib, &MADDriver);
-	if (iErr) MyDebugStr(__LINE__, __FILE__, "MusicDriver ERROR !");
+	if (iErr) MADDebugStr(__LINE__, __FILE__, "MusicDriver ERROR !");
 	
 	MADDriver->VolGlobal = thePrefs.softVolumeLevel;
 	MADDriver->SendMIDIClockData = thePrefs.SendMIDIClockData;
@@ -1339,6 +1339,8 @@ int main(int argc, char* argv[])
 	MenuDefSpec		defSpec;
 	MenuDefSpec		defSpec2;
 	
+	MADRegisterDebugFunc(OurDebugStr);
+	
 	WindowStateNOW = -1;
 	ShowIt = true;
 	UseAEErreur = false;
@@ -1362,7 +1364,7 @@ int main(int argc, char* argv[])
 		HUnlock(TempHandle);
 		DisposeHandle(TempHandle);
 	} else
-		MyDebugStr(__LINE__, __FILE__, "Fatal MEMORY ERROR 35: NEED MORE MEMORY !");
+		MADDebugStr(__LINE__, __FILE__, "Fatal MEMORY ERROR 35: NEED MORE MEMORY !");
 	
 	
 	////////
@@ -1451,7 +1453,7 @@ int main(int argc, char* argv[])
 		
 		myCursH = GetCursor(357);
 		if (myCursH == NULL)
-			MyDebugStr(__LINE__, __FILE__, "");
+			MADDebugStr(__LINE__, __FILE__, "");
 		else {
 			DetachResource((Handle) myCursH);
 			HLock((Handle) myCursH);
@@ -1462,7 +1464,7 @@ int main(int argc, char* argv[])
 		
 		myCursH = GetCursor(iBeamCursor);
 		if (myCursH == NULL)
-			MyDebugStr(__LINE__, __FILE__, "");
+			MADDebugStr(__LINE__, __FILE__, "");
 		else {
 			DetachResource((Handle) myCursH);
 			HLock((Handle) myCursH);
@@ -1473,7 +1475,7 @@ int main(int argc, char* argv[])
 		
 		myCursH = GetCursor(300);
 		if (myCursH == NULL)
-			MyDebugStr(__LINE__, __FILE__, "");
+			MADDebugStr(__LINE__, __FILE__, "");
 		else {
 			DetachResource((Handle) myCursH);
 			HLock((Handle) myCursH);
@@ -1484,7 +1486,7 @@ int main(int argc, char* argv[])
 		
 		myCursH = GetCursor(137);
 		if (myCursH == NULL)
-			MyDebugStr(__LINE__, __FILE__, "");
+			MADDebugStr(__LINE__, __FILE__, "");
 		else {
 			DetachResource((Handle) myCursH);
 			HLock((Handle) myCursH);
@@ -1495,7 +1497,7 @@ int main(int argc, char* argv[])
 		
 		myCursH = GetCursor(135);
 		if (myCursH == NULL)
-			MyDebugStr(__LINE__, __FILE__, "");
+			MADDebugStr(__LINE__, __FILE__, "");
 		else {
 			DetachResource((Handle) myCursH);
 			HLock((Handle) myCursH);
@@ -1506,7 +1508,7 @@ int main(int argc, char* argv[])
 		
 		myCursH = GetCursor(134);
 		if (myCursH == NULL)
-			MyDebugStr(__LINE__, __FILE__, "");
+			MADDebugStr(__LINE__, __FILE__, "");
 		else {
 			DetachResource((Handle) myCursH);
 			HLock((Handle) myCursH);
@@ -1517,7 +1519,7 @@ int main(int argc, char* argv[])
 		
 		myCursH = GetCursor(130);
 		if (myCursH == NULL)
-			MyDebugStr(__LINE__, __FILE__, "");
+			MADDebugStr(__LINE__, __FILE__, "");
 		else {
 			DetachResource((Handle) myCursH);
 			HLock((Handle) myCursH);
@@ -1528,7 +1530,7 @@ int main(int argc, char* argv[])
 		
 		myCursH = GetCursor(133);
 		if (myCursH == NULL)
-			MyDebugStr(__LINE__, __FILE__, "");
+			MADDebugStr(__LINE__, __FILE__, "");
 		else {
 			DetachResource((Handle) myCursH);
 			HLock((Handle) myCursH);
@@ -1539,7 +1541,7 @@ int main(int argc, char* argv[])
 		
 		myCursH = GetCursor(132);
 		if (myCursH == NULL)
-			MyDebugStr(__LINE__, __FILE__, "");
+			MADDebugStr(__LINE__, __FILE__, "");
 		else {
 			DetachResource((Handle) myCursH);
 			HLock((Handle) myCursH);
@@ -1550,7 +1552,7 @@ int main(int argc, char* argv[])
 		
 		myCursH = GetCursor(131);
 		if (myCursH == NULL)
-			MyDebugStr(__LINE__, __FILE__, "");
+			MADDebugStr(__LINE__, __FILE__, "");
 		else {
 			DetachResource((Handle) myCursH);
 			HLock((Handle) myCursH);
@@ -1561,7 +1563,7 @@ int main(int argc, char* argv[])
 		
 		myCursH = GetCursor(128);
 		if (myCursH == NULL)
-			MyDebugStr(__LINE__, __FILE__, "");
+			MADDebugStr(__LINE__, __FILE__, "");
 		else {
 			DetachResource((Handle) myCursH);
 			HLock((Handle) myCursH);
@@ -1572,7 +1574,7 @@ int main(int argc, char* argv[])
 		
 		myCursH = GetCursor(129);
 		if (myCursH == NULL)
-			MyDebugStr(__LINE__, __FILE__, "");
+			MADDebugStr(__LINE__, __FILE__, "");
 		else {
 			DetachResource((Handle) myCursH);
 			HLock((Handle) myCursH);
@@ -1583,7 +1585,7 @@ int main(int argc, char* argv[])
 		
 		myCursH = GetCursor(138);
 		if (myCursH == NULL)
-			MyDebugStr(__LINE__, __FILE__, "");
+			MADDebugStr(__LINE__, __FILE__, "");
 		else {
 			DetachResource((Handle) myCursH);
 			HLock((Handle) myCursH);
@@ -1955,11 +1957,11 @@ void DoGlobalNull()
 		
 		for (i = 0; i < MAXINSTRU; i++) {
 			for (x = 0; x < curMusic->fid[i].numSamples; x++) {
-				if (curMusic->sample[curMusic->fid[i].firstSample + x] == NULL) MyDebugStr(__LINE__, __FILE__, "Sound Size not CORRECT !");
+				if (curMusic->sample[curMusic->fid[i].firstSample + x] == NULL) MADDebugStr(__LINE__, __FILE__, "Sound Size not CORRECT !");
 				
 				if (curMusic->sample[curMusic->fid[i].firstSample + x]->data != NULL) {
 					if (curMusic->sample[curMusic->fid[i].firstSample + x]->size != GetPtrSize(curMusic->sample[curMusic->fid[i].firstSample + x]->data)) {
-						MyDebugStr(__LINE__, __FILE__, "Sound Size not CORRECT !");
+						MADDebugStr(__LINE__, __FILE__, "Sound Size not CORRECT !");
 					}
 				}
 			}
@@ -3043,7 +3045,7 @@ void DoMouseDown(EventRecord theEventI)
 
 void DoUpdateEvent(EventRecord *theEventI)
 {
-	if (theEventI->message == 0) MyDebugStr(__LINE__, __FILE__, "Err DoUpdateEvent");
+	if (theEventI->message == 0) MADDebugStr(__LINE__, __FILE__, "Err DoUpdateEvent");
 	
 	//if (EmptyRgn(((WindowPeek) theEventI->message)->updateRgn)) return;
 	
@@ -3338,7 +3340,7 @@ pascal Boolean MyCustomFileFilter2(CInfoPBRec *pb, void *myDataPtr)
 	char	tempC[5];
 	
 	if (pb == NULL)  {
-		MyDebugStr(__LINE__, __FILE__, "pb is NULL!");
+		MADDebugStr(__LINE__, __FILE__, "pb is NULL!");
 		return false;
 	}
 	
@@ -3366,7 +3368,7 @@ pascal Boolean MyCustomFileFilter2(CInfoPBRec *pb, void *myDataPtr)
 		case allReadable:
 			RollCursor();
 			
-			if (EqualString("\pIcon", pb->hFileInfo.ioNamePtr, false, false)) MyDebugStr(__LINE__, __FILE__, "");
+			if (EqualString("\pIcon", pb->hFileInfo.ioNamePtr, false, false)) MADDebugStr(__LINE__, __FILE__, "");
 			
 			
 			if (pb->hFileInfo.ioFlFndrInfo.fdType == 'sTAT')
@@ -3432,7 +3434,7 @@ pascal short MyDlgHook2(short item, DialogPtr theDialog, void *myDataPtr)
 	GetPort(&savePort);
 	SetPortDialogPort(theDialog);
 	
-	if (myDataPtr == NULL) MyDebugStr(__LINE__, __FILE__, "");
+	if (myDataPtr == NULL) MADDebugStr(__LINE__, __FILE__, "");
 	
 	IntReply = (StandardFileReply*) myDataPtr;
 	
@@ -5491,7 +5493,7 @@ void DoPreferences()
 	if (iErr == fnfErr) {
 		iErr = FSpCreate(&spec, 'SNPL', 'PREF', smSystemScript);
 		iErr = FSpOpenDF(&spec, fsCurPerm, &fRefNum);
-		if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "PlayerPREF ERROR 32");
+		if (iErr != noErr) MADDebugStr(__LINE__, __FILE__, "PlayerPREF ERROR 32");
 		aHandle = GetResource('AGGA', DEFAULTPREFSNUM);
 		if (aHandle != NULL) {
 			DetachResource(aHandle);
@@ -7183,7 +7185,7 @@ void HandleNewSound(short theItem)
 				
 				pStrcpy(newFile.name, "\pSelectionDigital.AIFF");
 				iErr = FindFolder(kOnSystemDisk, kDesktopFolderType, kCreateFolder, &newFile.vRefNum, &newFile.parID);
-				if (iErr) MyDebugStr(__LINE__, __FILE__, "FindFolder");
+				if (iErr) MADDebugStr(__LINE__, __FILE__, "FindFolder");
 				
 				FSpDelete(&newFile);
 				

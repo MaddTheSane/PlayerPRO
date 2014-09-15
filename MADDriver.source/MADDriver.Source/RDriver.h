@@ -722,8 +722,9 @@ enum MADEffectsID {
 extern "C" {
 #endif
 
-void MyDebugStr(short, char*, char*);								// Internal Debugger function, NORMALLY it is never called, only when FATAL error
+EXP void MADDebugStr(short, const char*, const char*);								// Internal Debugger function, NORMALLY it is never called, only when FATAL error
 																	// You NEED to provide this function, see examples!
+EXP void MADRegisterDebugFunc(void(*adebug)(short, const char*, const char*));
 
 MADLibrary* MADGetMADLibraryPtr();									// Get MADDriver structure pointer.
 

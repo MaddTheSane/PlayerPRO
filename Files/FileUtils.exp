@@ -13,6 +13,6 @@ _iWrite
 _iSeekCur
 _MYC2PStr
 _MYP2CStr
-_MyDebugStr
+_MADDebugStr
 _Ptr2OSType
 _OSType2Ptr

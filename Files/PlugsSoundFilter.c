@@ -127,7 +127,7 @@ void InitPlug(void)
 				if (tempMADPlug) {
 					if (tPlug > MAXFILTERSPLUGS)
 					{
-						MyDebugStr(__LINE__, __FILE__, "Too many plugs");
+						MADDebugStr(__LINE__, __FILE__, "Too many plugs");
 						break;
 					}
 					

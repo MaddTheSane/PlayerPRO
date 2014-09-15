@@ -488,7 +488,7 @@ void SetDText (DialogPtr dlog, short item, Str255 str)
 	Str255	myStr;
 	
 	GetDialogItem (dlog, item, &itemType, &itemHandle, &itemRect);
-	if (itemHandle == 0L) MyDebugStr(__LINE__, __FILE__, "Error in SetDText");
+	if (itemHandle == 0L) MADDebugStr(__LINE__, __FILE__, "Error in SetDText");
 	
 	GetDialogItemText (itemHandle, myStr);
 	if (RelString(myStr, str, true, true) != 0) SetDialogItemText (itemHandle, str);
@@ -1169,7 +1169,7 @@ void MusiqueDriverInit(void)
 	init.oversampling	= thePrefs.oversampling;
 	
 	iErr = MADCreateDriver(&init, MADLib, &MADDriver);
-	if (iErr) MyDebugStr(__LINE__, __FILE__, "MusicDriver ERROR !");
+	if (iErr) MADDebugStr(__LINE__, __FILE__, "MusicDriver ERROR !");
 }
 
 void DoPreferences2()
@@ -1226,7 +1226,7 @@ void DoPreferences2()
 		init.oversampling	= 1;
 		
 		iErr = MADCreateDriver(&init, MADLib, &MADDriver);
-		if (iErr) MyDebugStr(__LINE__, __FILE__, "MusicDriver ERROR !");
+		if (iErr) MADDebugStr(__LINE__, __FILE__, "MusicDriver ERROR !");
 	}
 	
 	HSetVol(0L, SvRefNum, SdirID);

@@ -160,7 +160,7 @@ Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, u
 			break;
 			
 		default:					// jack says, what about 12? or 6?
-			MyDebugStr(__LINE__, __FILE__, " NSndToHandle... Burkk");
+			MADDebugStr(__LINE__, __FILE__, " NSndToHandle... Burkk");
 			break;
 	}
 	
@@ -2968,7 +2968,7 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 				dstData = curMusic->sample[curMusic->fid[DestIns].firstSample +  DestSamp];
 				
 				if (dstData == NULL) {
-					MyDebugStr(__LINE__, __FILE__, "Arggggggg");
+					MADDebugStr(__LINE__, __FILE__, "Arggggggg");
 					return cantGetFlavorErr;
 				}
 				if (dstData->data != NULL) { DisposePtr(dstData->data);	dstData->data = NULL;}
@@ -3029,15 +3029,15 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 			
 			pStrcpy(tempFile.name, QTFile.name);
 			iErr = FindFolder(kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &tempFile.vRefNum, &tempFile.parID);
-			if (iErr) MyDebugStr(__LINE__, __FILE__, "FindFolder");
+			if (iErr) MADDebugStr(__LINE__, __FILE__, "FindFolder");
 			
 			FSpDelete(&tempFile);
 			
 			iErr = ConvertMovieToFile(aMovie, nil, &tempFile, 'WAVE', 'TVOD', 0, nil, 0, nil);
-			if (iErr) MyDebugStr(__LINE__, __FILE__, "ConvertMovieToFile");
+			if (iErr) MADDebugStr(__LINE__, __FILE__, "ConvertMovieToFile");
 			
 			iErr = NOpenSampleInt(DestIns, DestSamp, tempFile);
-			if (iErr) MyDebugStr(__LINE__, __FILE__, "NOpenSampleInt");
+			if (iErr) MADDebugStr(__LINE__, __FILE__, "NOpenSampleInt");
 			
 			FSpDelete(&tempFile);
 			
@@ -3074,7 +3074,7 @@ pascal OSErr MyReceiveDropHandler(WindowPtr theWindow, void* handlerRefCon, Drag
 		
 		pStrcpy(newFile.name, "\pDigital Selection");
 		iErr = FindFolder(kOnSystemDisk, kDesktopFolderType, kCreateFolder, &newFile.vRefNum, &newFile.parID);
-		if (iErr) MyDebugStr(__LINE__, __FILE__, "FindFolder");
+		if (iErr) MADDebugStr(__LINE__, __FILE__, "FindFolder");
 		
 		FSpDelete(&newFile);
 		
@@ -3277,11 +3277,11 @@ Boolean DragInstrument(RgnHandle myRgn, short no, EventRecord *theEvent)
 		short				numChan;
 		
 		if (curData == NULL) {
-			MyDebugStr(__LINE__, __FILE__, "Errorrr");
+			MADDebugStr(__LINE__, __FILE__, "Errorrr");
 			return false;
 		}
 		if (curData->data == NULL) {
-			MyDebugStr(__LINE__, __FILE__, "Errorrr");
+			MADDebugStr(__LINE__, __FILE__, "Errorrr");
 			return false;
 		}
 		

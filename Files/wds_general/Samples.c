@@ -774,7 +774,7 @@ void GetSampleRect(DialogPtr theDia)
 {
 	Rect caRect;
 	
-	if (theDia == NULL) MyDebugStr(__LINE__, __FILE__, "Big big ERROR");
+	if (theDia == NULL) MADDebugStr(__LINE__, __FILE__, "Big big ERROR");
 	
 	GetPortBounds(GetDialogPort(theDia), &caRect);
 	
@@ -1580,7 +1580,7 @@ short FindSample(DialogPtr	theDia)
 			return i;
 	}
 	
-	MyDebugStr(__LINE__, __FILE__, "FIND Sample ERROR");
+	MADDebugStr(__LINE__, __FILE__, "FIND Sample ERROR");
 	
 	return 0;
 }
@@ -2543,7 +2543,7 @@ void DrawSample(short tSS, short tSE, short InstruNo, DialogPtr theDia)
 	
 	curData = curMusic->sample[curMusic->fid[InstruNo].firstSample + samp];
 	if (curData == NULL)  {
-		MyDebugStr(__LINE__, __FILE__, "Samp ERR");
+		MADDebugStr(__LINE__, __FILE__, "Samp ERR");
 		return;
 	}
 	theSample = curData->data;
@@ -4294,7 +4294,7 @@ void DoKeyPressSample(DialogPtr	theDia, short theChar)
 							if (newSnd != NULL) {
 								BlockMoveData(SampleDataD(CurWin)->data, newSnd, Start);
 								
-								if (reste < 0) MyDebugStr(__LINE__, __FILE__, "Error in Sample Delete");
+								if (reste < 0) MADDebugStr(__LINE__, __FILE__, "Error in Sample Delete");
 								BlockMoveData(SampleDataD(CurWin)->data + End, newSnd + Start, reste);
 								
 								DisposePtr(SampleDataD(CurWin)->data);

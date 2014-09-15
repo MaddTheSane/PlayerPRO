@@ -29,18 +29,6 @@
 
 static Byte LastAEffect[MAXTRACK], LastJEffect[MAXTRACK];
 
-#ifndef _SRC
-
-Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
-{
-	if (PosX < 0) PosX = 0;
-	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-		
-	return(& (tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
-}
-
-#endif
-
 static void ConvertS3MEffect(Byte B0, Byte B1, Byte *Cmd, Byte *Arg, short channel)
 {
 	Byte		LoB1 = LOW(B1);

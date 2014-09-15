@@ -31,18 +31,6 @@ static	int		old_effect;
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
 
-#ifndef _SRC
-
-Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
-{
-	if (PosX < 0) PosX = 0;
-	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-	
-	return(& (tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
-}
-
-#endif
-
 /* IT-Compressed status structure */
 typedef struct ITPACK {
 	unsigned short	bits;    /* current number of bits */

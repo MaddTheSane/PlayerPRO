@@ -24,16 +24,6 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include "669.h"
 
-Cmd* GetMADCommand(register short PosX, register short TrackIdX, register PatData* tempMusicPat)
-{
-	if (PosX < 0)
-		PosX = 0;
-	else if (PosX >= tempMusicPat->header.size)
-		PosX = tempMusicPat->header.size -1;
-		
-	return &(tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]);
-}
-
 static inline void mystrcpy(Ptr a, BytePtr b)
 {
 	memcpy(a, b + 1, b[0]);

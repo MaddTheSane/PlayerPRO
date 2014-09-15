@@ -241,7 +241,7 @@ void CreateEditorPixMap(short PatID)
 	
 	NewGWorld(	&theGWorld, 0, &aRect, nil, nil, (GWorldFlags) 0);
 	
-	if (NewOffscreenPixMap(&EditorPix, &aRect) != noErr) MyDebugStr(__LINE__, __FILE__, "");
+	if (NewOffscreenPixMap(&EditorPix, &aRect) != noErr) MADDebugStr(__LINE__, __FILE__, "");
 
 	LockPixels(theGWorld->portPixMap);
 	SetGWorld(theGWorld, NULL);
@@ -514,7 +514,7 @@ void NTStr(short NoDigi, short val, char *theText)
 			break;
 			
 		default:
-			MyDebugStr(__LINE__, __FILE__, "NStr Error !!");
+			MADDebugStr(__LINE__, __FILE__, "NStr Error !!");
 			break;
 	}
 }
@@ -625,7 +625,7 @@ void ConvertTEH(unsigned char *dst, short length)
 			dst[1] = (*cHdle)[1];
 		if (length >= 3)
 			dst[2] = (*cHdle)[2];
-	} else MyDebugStr(__LINE__, __FILE__, "Major ERROR");
+	} else MADDebugStr(__LINE__, __FILE__, "Major ERROR");
 }
 
 Boolean CreateNoteString(Cmd *theCommand, Str255 mainStr, Boolean AllStr)
@@ -3668,7 +3668,7 @@ Ptr ConvertPcmd2Text(Pcmd *myPcmd)
 	mSize = 5 + myPcmd->tracks * myPcmd->length * 16L;
 	myText = NewPtrClear(mSize);
 	if (myText == NULL)
-		MyDebugStr(__LINE__, __FILE__, "Memory Error");
+		MADDebugStr(__LINE__, __FILE__, "Memory Error");
 	strcpy(myText, "");
 	
 	for (i = 0; i < myPcmd->length; i++) {
@@ -3688,7 +3688,7 @@ Ptr ConvertPcmd2Text(Pcmd *myPcmd)
 		}
 	}
 	
-	if (strlen(myText) >= mSize) MyDebugStr(__LINE__, __FILE__, "ZZZ");
+	if (strlen(myText) >= mSize) MADDebugStr(__LINE__, __FILE__, "ZZZ");
 	
 	return myText;
 }
@@ -3710,7 +3710,7 @@ Pcmd* CreatePcmdFromSelection()
 	
 	myPcmd = (Pcmd*)NewPtrClear(sizeof(Pcmd) + count * sizeof(Cmd));
 	if (myPcmd == NULL) {
-		MyDebugStr(__LINE__, __FILE__, "Memory WARNING");
+		MADDebugStr(__LINE__, __FILE__, "Memory WARNING");
 		return NULL;
 	}
 	
@@ -3835,7 +3835,7 @@ void COPYEditor()
 	
 	myPcmd = CreatePcmdFromSelection();
 	if (myPcmd == NULL) {
-		MyDebugStr(__LINE__, __FILE__, "CopyEditor Internal ERROR");
+		MADDebugStr(__LINE__, __FILE__, "CopyEditor Internal ERROR");
 		SetPort(SavePort);
 		return;
 	}

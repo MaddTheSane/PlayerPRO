@@ -414,7 +414,7 @@ Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, O
 			/****** ALLOCATION *********/
 			
 			copyMusic->partition[copyMusic->header->numPat] = (PatData*)NewPtrClear(sizeof(PatHeader) + copyMusic->header->numChn * DEndPos * sizeof(Cmd));
-			if (MemError()) MyDebugStr(__LINE__, __FILE__, "Error in AddAPattern...");
+			if (MemError()) MADDebugStr(__LINE__, __FILE__, "Error in AddAPattern...");
 			
 			copyMusic->partition[copyMusic->header->numPat]->header.size = DEndPos;
 			copyMusic->partition[copyMusic->header->numPat]->header.compMode = 'NONE';
@@ -477,7 +477,7 @@ Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, O
 	
 	if (Packet > 20)
 		Packet = 20;
-	if (Packet <= 0) MyDebugStr(__LINE__, __FILE__, "Memory Error, Increase Memory");
+	if (Packet <= 0) MADDebugStr(__LINE__, __FILE__, "Memory Error, Increase Memory");
 #endif
 	Packet = 20;
 	
@@ -487,13 +487,13 @@ Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, O
 		OpenWorkingWindow(copyMusic->header->numPointers);
 	
 	sndPtr =  NewPtrClear((copyDriver->ASCBUFFER * 2 * thePrefs.amplitude) / 8);
-	if (sndPtr == NULL) MyDebugStr(__LINE__, __FILE__, "Memory Error, Increase Memory");
+	if (sndPtr == NULL) MADDebugStr(__LINE__, __FILE__, "Memory Error, Increase Memory");
 	
 	outSound = NewPtrClear((copyDriver->ASCBUFFERReal * Packet * 2 * thePrefs.amplitude) / 8);
-	if (outSound == NULL) MyDebugStr(__LINE__, __FILE__, "Memory Error, Increase Memory");
+	if (outSound == NULL) MADDebugStr(__LINE__, __FILE__, "Memory Error, Increase Memory");
 	
 	compSound = NewPtrClear((copyDriver->ASCBUFFERReal * Packet * 2 * thePrefs.amplitude) / 8);
-	if (compSound == NULL) MyDebugStr(__LINE__, __FILE__, "Memory Error, Increase Memory");
+	if (compSound == NULL) MADDebugStr(__LINE__, __FILE__, "Memory Error, Increase Memory");
 	
 	////////
 	
@@ -520,7 +520,7 @@ Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, O
 	
 	iErr = SoundConverterOpen(&inputFormat, &outputFormat, &sc);
 	if (iErr != noErr) {
-		MyDebugStr(__LINE__, __FILE__, "Open failed, Compressor NOT available");
+		MADDebugStr(__LINE__, __FILE__, "Open failed, Compressor NOT available");
 		
 		DisposePtr(bufferSin);
 		DisposePtr(bufferSout);
@@ -540,11 +540,11 @@ Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, O
 	
 	/*	iErr = SoundConverterGetBufferSizes(sc, 1024, &inputFrames, &inputBytes, &outputBytes);
 	 if (iErr != noErr)
-	 MyDebugStr(__LINE__, __FILE__, "GetBufferSizes failed");*/
+	 MADDebugStr(__LINE__, __FILE__, "GetBufferSizes failed");*/
 	
 	iErr = SoundConverterBeginConversion(sc);
 	if (iErr != noErr)
-		MyDebugStr(__LINE__, __FILE__, "Begin Conversion failed");
+		MADDebugStr(__LINE__, __FILE__, "Begin Conversion failed");
 	
 	///////////////////////////////////
 	
@@ -573,7 +573,7 @@ Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, O
 			
 			sndHandle = NewHandle(20000);
 			if (sndHandle == NULL) {
-				MyDebugStr(__LINE__, __FILE__, "Need MEMORY");
+				MADDebugStr(__LINE__, __FILE__, "Need MEMORY");
 				CloseWorkingWindow();
 				return false;
 			}
@@ -605,9 +605,9 @@ Boolean CreateAIFFExporting(Boolean OnlyCurrent, short  fRef, FSSpec *newFile, O
 							   copyDriver->ASCBUFFERReal*Packet*thePrefs.channelNumber,
 							   0);
 		if (iErr)
-			MyDebugStr(__LINE__, __FILE__, "");
+			MADDebugStr(__LINE__, __FILE__, "");
 	} else
-		MyDebugStr(__LINE__, __FILE__, "");
+		MADDebugStr(__LINE__, __FILE__, "");
 	
 	/***********************************************************/
 	
@@ -706,10 +706,10 @@ void DoAIFFExporting(void)
 	
 	iErr = SoundConverterConvertBuffer(sc, outSound, inputFrames, compSound, &outputFrames, &outputBytes);
 	if (iErr != noErr)
-		MyDebugStr(__LINE__, __FILE__, "Conversion failed");
+		MADDebugStr(__LINE__, __FILE__, "Conversion failed");
 	
 	if (outputBytes > inOutCount)
-		MyDebugStr(__LINE__, __FILE__, "Err in memory size");
+		MADDebugStr(__LINE__, __FILE__, "Err in memory size");
 	
 	inOutCount = outputBytes;
 	
@@ -747,7 +747,7 @@ void StopAIFFExporting(void)
 	
 	iErr = SoundConverterEndConversion(sc, compSound, &outputFrames, &outputBytes);
 	if (iErr != noErr)
-		MyDebugStr(__LINE__, __FILE__, "End Conversion failed");
+		MADDebugStr(__LINE__, __FILE__, "End Conversion failed");
 	
 	if (outputBytes) {
 		Ptr outFile = compSound;
@@ -770,14 +770,14 @@ void StopAIFFExporting(void)
 	
 	iErr = SoundConverterClose(sc);
 	if (iErr != noErr)
-		MyDebugStr(__LINE__, __FILE__, "Close failed");
+		MADDebugStr(__LINE__, __FILE__, "Close failed");
 	
 	if (theType == 'sfil') {
 		Handle 	sndHandle2;
 		short	headerLen;
 		
 		sndHandle2 = NewHandle(20000);
-		if (sndHandle2 == NULL) {MyDebugStr(__LINE__, __FILE__, "Need MEMORY");	return;}
+		if (sndHandle2 == NULL) {MADDebugStr(__LINE__, __FILE__, "Need MEMORY");	return;}
 		
 		iErr = SetupSndHeader((SndListHandle)sndHandle2,
 							  thePrefs.channelNumber,

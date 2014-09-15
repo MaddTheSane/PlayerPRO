@@ -138,8 +138,8 @@ void SwitchDriverTo(short aaa)
 	MADGetMusicStatus(MADDriver, &fulltime, &curTime);
 	
 	MADDriver->Reading = false;
-	if (MADStopDriver(MADDriver) != noErr) MyDebugStr(__LINE__, __FILE__, "FatalError Driver X");
-	if (MADDisposeDriver(MADDriver) != noErr) MyDebugStr(__LINE__, __FILE__, "FatalError Driver Y");
+	if (MADStopDriver(MADDriver) != noErr) MADDebugStr(__LINE__, __FILE__, "FatalError Driver X");
+	if (MADDisposeDriver(MADDriver) != noErr) MADDebugStr(__LINE__, __FILE__, "FatalError Driver Y");
 	
 	SetCursor(&watchCrsr);
 	
@@ -163,7 +163,7 @@ void SwitchDriverTo(short aaa)
 		init.repeatMusic = true;
 	
 	iErr = MADCreateDriver(&init, gMADLib, &MADDriver);
-	if (iErr) MyDebugStr(__LINE__, __FILE__, "MusicDriver ERROR !");
+	if (iErr) MADDebugStr(__LINE__, __FILE__, "MusicDriver ERROR !");
 	
 	MADStartDriver(MADDriver);
 	MADAttachDriverToMusic(MADDriver, curMusic, NULL);

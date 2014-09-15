@@ -1048,7 +1048,7 @@ void DrawStaffNotes()
 						} else if (silenceLength >= 1) {
 							silIcon = silence[4];
 							remove = 1;
-						} else MyDebugStr(__LINE__, __FILE__, "");
+						} else MADDebugStr(__LINE__, __FILE__, "");
 						
 						tRect.right		= tRect.left + (*silIcon)->iconPMap.bounds.right;
 						tRect.top		= StaffRect.top + 1 + (x - GetControlValue(yScroll)) * YSize;
@@ -1056,7 +1056,7 @@ void DrawStaffNotes()
 						tRect.bottom	= tRect.top + (*silIcon)->iconPMap.bounds.bottom;
 						
 						if (silIcon) PlotCIcon(&tRect, silIcon);
-						else MyDebugStr(__LINE__, __FILE__, "");
+						else MADDebugStr(__LINE__, __FILE__, "");
 						
 						silenceLengthCopy	-= remove;
 						silenceLength		-= remove;
@@ -1127,7 +1127,7 @@ void DrawStaffNotes()
 							} else if (silenceLength >=  1) {
 								silIcon = noteIcn[4];
 								remove = 1;
-							} else MyDebugStr(__LINE__, __FILE__, "");
+							} else MADDebugStr(__LINE__, __FILE__, "");
 							
 							prevleft 		= tRect.right;
 							tRect.right		= tRect.left + (*demitonIcon[1])->iconPMap.bounds.right;
@@ -1187,14 +1187,14 @@ void DrawStaffNotes()
 									tRect.bottom	= tRect.top + (*demitonIcon[1])->iconPMap.bounds.bottom;
 									
 									PlotCIcon(&tRect, demitonIcon[1]);
-								} else MyDebugStr(__LINE__, __FILE__, "Your are in BIG troubles...");
+								} else MADDebugStr(__LINE__, __FILE__, "Your are in BIG troubles...");
 								
 								tRect.left += BEMOLSIZE;
 							}
 							else tRect.left += BEMOLSIZE / 2;
 							
-							if (silIcon == NULL) MyDebugStr(__LINE__, __FILE__, "");
-							if (ptIcon == NULL) MyDebugStr(__LINE__, __FILE__, "");
+							if (silIcon == NULL) MADDebugStr(__LINE__, __FILE__, "");
+							if (ptIcon == NULL) MADDebugStr(__LINE__, __FILE__, "");
 							
 							tRect.right = tRect.left + (*silIcon)->iconPMap.bounds.right;
 							
@@ -1388,7 +1388,7 @@ Pcmd* CreatePcmdFromSelectionStaff(void)
 	
 	myPcmd = (Pcmd*) NewPtrClear(sizeof(Pcmd) + count * sizeof(Cmd));
 	if (myPcmd == NULL) {
-		MyDebugStr(__LINE__, __FILE__, "Memory WARNING");
+		MADDebugStr(__LINE__, __FILE__, "Memory WARNING");
 		return NULL;
 	}
 	
@@ -1422,7 +1422,7 @@ Pcmd* CreatePcmdFromNoteStaff(Point myPt)
 		
 		myPcmd = (Pcmd*) NewPtrClear(sizeof(Pcmd) + sizeof(Cmd));
 		if (myPcmd == NULL) {
-			MyDebugStr(__LINE__, __FILE__, "Memory WARNING");
+			MADDebugStr(__LINE__, __FILE__, "Memory WARNING");
 			return NULL;
 		}
 		
@@ -2871,7 +2871,7 @@ void COPYStaff(void)
 	
 	myPcmd = CreatePcmdFromSelectionStaff();
 	if (myPcmd == NULL) {
-		MyDebugStr(__LINE__, __FILE__, "CopyStaff Internal ERROR");
+		MADDebugStr(__LINE__, __FILE__, "CopyStaff Internal ERROR");
 		SetPort(SavePort);
 		return;
 	}

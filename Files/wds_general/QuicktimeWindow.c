@@ -520,7 +520,7 @@ void SelectQTFile(FSSpec *file)
 	SetPortDialogPort(QuicktimeDlog);
 	
 	if (QTMovie != NULL) {
-		MyDebugStr(__LINE__, __FILE__, "QTMovie != NULL");
+		MADDebugStr(__LINE__, __FILE__, "QTMovie != NULL");
 	}
 	
 	QTFile = *file;
@@ -550,7 +550,7 @@ void SelectQTFile(FSSpec *file)
 RETRY:
 	
 	iErr = OpenMovieFile(&QTFile, &QTresRefNum, fsCurPerm);
-	if (iErr) MyDebugStr(__LINE__, __FILE__, "OpenMovieFile");
+	if (iErr) MADDebugStr(__LINE__, __FILE__, "OpenMovieFile");
 	
 	resId = 0;
 	iErr = NewMovieFromFile(&QTMovie, QTresRefNum, &resId, NULL, 0, &dataRefWasChanged);

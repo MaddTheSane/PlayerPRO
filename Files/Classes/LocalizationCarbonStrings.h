@@ -7,6 +7,11 @@
  *
  */
 
+#ifndef __LOCALIZEDCARBONSTRINGS_H__
+#define __LOCALIZEDCARBONSTRINGS_H__
+
 #include <CoreServices/CoreServices.h>
 
 __private_extern__ void GetCFIndexString(Str255 outStr, short listID, short indexID);
+
+#endif

@@ -33,14 +33,6 @@ static Ptr			theAMFRead;
 
 #define READAMFFILE(dst, size)	{BlockMoveData(theAMFRead, dst, size);	theAMFRead += (long) size;}
 
-Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
-{
-	if (PosX < 0) PosX = 0;
-	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-		
-	return(& (tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
-}
-
 #ifdef _MAC_H
 #define Tdecode16(msg_buf) CFSwapInt16LittleToHost(*(short*)msg_buf)
 #define Tdecode32(msg_buf) CFSwapInt32LittleToHost(*(int*)msg_buf)

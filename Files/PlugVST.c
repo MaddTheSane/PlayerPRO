@@ -818,14 +818,14 @@ void ScanDirVSTPlug(long dirID, short VRefNum)
 			HGetVol(NULL, &vRefNum, &dirIDCopy);
 			iErr = HSetVol(NULL, info.hFileInfo.ioVRefNum, dirID);
 			
-			if (tPlug > MAXVST) MyDebugStr(__LINE__, __FILE__, "Too many plugs");
+			if (tPlug > MAXVST) MADDebugStr(__LINE__, __FILE__, "Too many plugs");
 			
 			LoadVSTPLUG(tPlug, info.hFileInfo.ioNamePtr);
 			
 			tPlug++;
 			
 			iErr = HSetVol(NULL, vRefNum, dirIDCopy);
-			if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "HSetVol error...");
+			if (iErr != noErr) MADDebugStr(__LINE__, __FILE__, "HSetVol error...");
 		} else if((info.hFileInfo.ioFlAttrib & 16)) {
 			if (EqualString(info.hFileInfo.ioNamePtr, "\pPlugs", false, false) || PlugsFolderOK > 0) {
 				if ((EqualString(info.hFileInfo.ioNamePtr, "\pMacOS X", false, false))) {
@@ -1289,7 +1289,7 @@ void VSTEditorDoItemPress(short itemHit, DialogPtr aDia)
 							
 							pStrcpy(VSTPref[i]->name, theString);
 							
-							if (CurrentDialogCE->ce[0]->numParams >= MAXVSTITEM) MyDebugStr(__LINE__, __FILE__, "MAXVST TOO SMALL, Press continue.");
+							if (CurrentDialogCE->ce[0]->numParams >= MAXVSTITEM) MADDebugStr(__LINE__, __FILE__, "MAXVST TOO SMALL, Press continue.");
 							
 							for (x = 0; x < CurrentDialogCE->ce[0]->numParams && x < MAXVSTITEM; x++) {
 								VSTPref[i]->value[x] = CurrentDialogCE->ce[0]->getParameter(CurrentDialogCE->ce[0], x);

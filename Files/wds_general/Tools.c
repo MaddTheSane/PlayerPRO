@@ -660,7 +660,7 @@ void ScanTime()
 			for (y = 0; y <  curMusic->header->numChn; y++) {
 				aCmd = GetMADCommand(x, y, curMusic->partition[curMusic->header->oPointers[i]]);
 				if (aCmd == NULL) {
-					MyDebugStr(__LINE__, __FILE__, "Could not find the selected command!");
+					MADDebugStr(__LINE__, __FILE__, "Could not find the selected command!");
 					return;
 				}
 				/** SpeedE **/

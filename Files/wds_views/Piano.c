@@ -96,7 +96,7 @@ Boolean DragCommand(RgnHandle myRgn, Cmd myCmd, EventRecord *theEvent)
 	
 	myPcmd = (Pcmd*) NewPtrClear(sizeof(Pcmd) + 1 * sizeof(Cmd));
 	if (myPcmd == NULL)  {
-		MyDebugStr(__LINE__, __FILE__, "Memory WARNING");
+		MADDebugStr(__LINE__, __FILE__, "Memory WARNING");
 		return false;
 	}
 	
@@ -159,7 +159,7 @@ void CreatePianoPixMap(void)
 	NewGWorld(&theGWorld, 8, &aRect, nil, nil, 0);
 	
 	if (NewOffscreenPixMap(&PianoPix, &aRect) != noErr)
-		MyDebugStr(__LINE__, __FILE__, "Memory Error !!!");
+		MADDebugStr(__LINE__, __FILE__, "Memory Error !!!");
 	
 	LockPixels(GetPortPixMap(theGWorld));
 	SetGWorld(theGWorld, NULL);

@@ -133,7 +133,7 @@ void InitQuicktimeInstruments(void)
 	na = OpenDefaultComponent(kNoteAllocatorComponentType,0);
 	
 	iErr = NAStuffToneDescription(na, 1, &myNoteRequest.tone);
-	if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "NAStuff");
+	if (iErr != noErr) MADDebugStr(__LINE__, __FILE__, "NAStuff");
 	
 	CloseComponent(na);
 	
@@ -222,7 +222,7 @@ short GenerateDLSFromBundle()
 	AudioBundle = CFBundleCreate(kCFAllocatorDefault, bundleURL);
 	CFRelease(bundleURL);
 	if(AudioBundle == NULL) {
-		MyDebugStr(__LINE__, __FILE__, "Unable to load CoreAudio.component");
+		MADDebugStr(__LINE__, __FILE__, "Unable to load CoreAudio.component");
 		return -1;
 	}
 	
@@ -812,7 +812,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 					else {
 						curData = (sData*) NewPtrClear(sizeof(sData));
 						if (curData == NULL) {
-							MyDebugStr(__LINE__, __FILE__, "curData should not be NULL!");
+							MADDebugStr(__LINE__, __FILE__, "curData should not be NULL!");
 							return;
 						}
 						sample[inst->no * MAXSAMPLE + inst->numSamples] = curData;
@@ -860,7 +860,7 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 						if (fmt.nCannels == 2) {
 							curData->stereo = true;
 						}
-						if (fmt.nCannels > 2) MyDebugStr(__LINE__, __FILE__, "More than 2 channels");
+						if (fmt.nCannels > 2) MADDebugStr(__LINE__, __FILE__, "More than 2 channels");
 						
 						// **
 						curData->c2spd		= fmt.nSamplesPerSec;
@@ -950,14 +950,14 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 			mySampleInfoAtom = QTFindChildByID(ai, kParentAtomIsContainer, kaiSampleInfoType, GetNEShort(sdesc->sampleDataID), &no);	//
 			if (mySampleInfoAtom != 0) {
 				no = QTCountChildrenOfType(ai, mySampleInfoAtom, kaiSampleDataType);
-				if (no != 1) MyDebugStr(__LINE__, __FILE__, "kaiSampleDataType");
+				if (no != 1) MADDebugStr(__LINE__, __FILE__, "kaiSampleDataType");
 				
 				mySampleDataAtom = QTFindChildByIndex(ai, mySampleInfoAtom, kaiSampleDataType, 1, &atomID);
-				if (mySampleDataAtom == 0) MyDebugStr(__LINE__, __FILE__, "kaiSampleDataType");
+				if (mySampleDataAtom == 0) MADDebugStr(__LINE__, __FILE__, "kaiSampleDataType");
 				
 				size = 0;
 				iErr = QTGetAtomDataPtr(ai, mySampleDataAtom, &size, &data);
-				if (iErr) MyDebugStr(__LINE__, __FILE__, "QTGetAtomDataPtr");
+				if (iErr) MADDebugStr(__LINE__, __FILE__, "QTGetAtomDataPtr");
 				
 				inOutBytes = (GetNEShort(sdesc->sampleSize) * GetNELong(sdesc->numSamples)) / 8L;
 				
@@ -970,7 +970,7 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 						curData = MADCreateSample(curMusic, inst->no, inst->numSamples);
 					else {
 						curData = (sData*)NewPtrClear(sizeof(sData));
-						if (curData == NULL) MyDebugStr(__LINE__, __FILE__, "");
+						if (curData == NULL) MADDebugStr(__LINE__, __FILE__, "");
 						sample[inst->no * MAXSAMPLE + inst->numSamples] = curData;
 						
 						inst->numSamples++;
@@ -1017,7 +1017,7 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 						if (GetNEShort(sdesc->numChannels) == 2) {
 							curData->stereo = true;
 						}
-						if (GetNEShort(sdesc->numChannels) > 2) MyDebugStr(__LINE__, __FILE__, "More than 2 channels");
+						if (GetNEShort(sdesc->numChannels) > 2) MADDebugStr(__LINE__, __FILE__, "More than 2 channels");
 						
 						// **
 						curData->c2spd		= GetNEUnsignedFixed(sdesc->sampleRate) >> 16;
@@ -1156,7 +1156,7 @@ PROCESS:
 	SetNEFixed(&myNoteRequest.info.typicalPolyphony, 0x00010000);
 	
 	iErr = NAStuffToneDescription(na, GetNELong(myNoteRequest.tone.instrumentNumber), &myNoteRequest.tone);
-	if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "NAStuff Converter");
+	if (iErr != noErr) MADDebugStr(__LINE__, __FILE__, "NAStuff Converter");
 	
 	SetNEOSType(&myNoteRequest.tone.synthesizerType, synthType);//(myNoteRequest.tone.synthesizerType = synthType;
 	pStrcpy(myNoteRequest.tone.synthesizerName, synthName);
@@ -1288,7 +1288,7 @@ PROCESS:
 	iErr = NAStuffToneDescription(na, GMInstruID, &myNoteRequest.tone);
 	if (iErr != noErr) {
 		iErr = NAStuffToneDescription(na, 1, &myNoteRequest.tone);
-		if(iErr != noErr) MyDebugStr(__LINE__, __FILE__, "NAStuff ComputeQTSound");
+		if(iErr != noErr) MADDebugStr(__LINE__, __FILE__, "NAStuff ComputeQTSound");
 	}
 	
 	SetNEOSType(&myNoteRequest.tone.synthesizerType, synthType);
@@ -1324,7 +1324,7 @@ void ComputeInstSize(Str255	aStr, InstrData *inst, short ins)
 	long	i;
 	
 	for (i = 0; i < inst->numSamples; i++) {
-		if (curMusic->sample[inst->firstSample + i] == NULL) MyDebugStr(__LINE__, __FILE__, "Inst Error");
+		if (curMusic->sample[inst->firstSample + i] == NULL) MADDebugStr(__LINE__, __FILE__, "Inst Error");
 		
 		tot += curMusic->sample[inst->firstSample +  i]->size;
 	}
@@ -1370,7 +1370,7 @@ short OpenResFileQK(long dirID, short VRefNum)
 			ret = FSpOpenResFile(&spec, fsCurPerm);
 			
 			//	iErr = HSetVol(NULL, vRefNum, dirIDCopy);
-			//	if (iErr != noErr) MyDebugStr(__LINE__, __FILE__, "HSetVol error...");
+			//	if (iErr != noErr) MADDebugStr(__LINE__, __FILE__, "HSetVol error...");
 		}
 	}
 	

@@ -35,7 +35,7 @@ static CFTypeID arraytype;
 static void MakeMADPlug(MADFileFormatPlugin **tempMADPlug, MADLibrary *inMADDriver, CFBundleRef tempBundle)
 {
 	if ((inMADDriver->TotalPlug + 1) >= MAXPLUG) {
-		MyDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
+		MADDebugStr(__LINE__, __FILE__, "More plugs than allocated for!");
 		return;
 	}
 	if (stringtype == 0) {
@@ -523,7 +523,7 @@ OSType GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 {
 	short	i, x;
 	
-	if (ID >= inMADDriver->TotalPlug) MyDebugStr(__LINE__, __FILE__, "PP-Plug ERROR. ");
+	if (ID >= inMADDriver->TotalPlug) MADDebugStr(__LINE__, __FILE__, "PP-Plug ERROR. ");
 	
 	for (i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
 	{
@@ -545,7 +545,7 @@ OSType GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 		}
 	}
 	
-	MyDebugStr(__LINE__, __FILE__, "PP-Plug ERROR II.");
+	MADDebugStr(__LINE__, __FILE__, "PP-Plug ERROR II.");
 	
 	return '!!!!';
 }

@@ -102,7 +102,7 @@ Byte	SwitchColorLV(short i)
 	CGrafPtr	oldPort;
 	GDHandle	oldGDeviceH;
 	
-	if (gGWorld == NULL) MyDebugStr(__LINE__, __FILE__, "gGWorld = NULL");
+	if (gGWorld == NULL) MADDebugStr(__LINE__, __FILE__, "gGWorld = NULL");
 	
 	GetGWorld(&oldPort, &oldGDeviceH);
 	SetGWorld(gGWorld, NULL);
@@ -255,7 +255,7 @@ Ptr	TransformationDSP(Ptr thePtr, short i)
 #endif
 	Byte		bb = 0x80;
 	
-	if (i > AUDIODSPSIZE * 4L) MyDebugStr(__LINE__, __FILE__, "AudioDSPPtr too small");
+	if (i > AUDIODSPSIZE * 4L) MADDebugStr(__LINE__, __FILE__, "AudioDSPPtr too small");
 	
 	do {
 		AudioDSPPtr[--i] = *tempPtr - bb;
@@ -270,7 +270,7 @@ Ptr	Transformation8(Ptr thePtr)
 	Ptr		tempPtr = thePtr;
 	short	i = MADDriver->ASCBUFFERReal;
 	
-	if (i > AUDIODSPSIZE * 4L) MyDebugStr(__LINE__, __FILE__, "AudioDSPPtr too small");
+	if (i > AUDIODSPSIZE * 4L) MADDebugStr(__LINE__, __FILE__, "AudioDSPPtr too small");
 	
 	do {
 		AudioDSPPtr[--i] = *tempPtr;
@@ -284,7 +284,7 @@ Ptr	Inverse8(register Ptr thePtr, long Size)
 {
 	short i = Size;
 	
-	if (i > AUDIODSPSIZE * 4L) MyDebugStr(__LINE__, __FILE__, "AudioDSPPtr too small");
+	if (i > AUDIODSPSIZE * 4L) MADDebugStr(__LINE__, __FILE__, "AudioDSPPtr too small");
 	
 	do {
 		AudioDSPPtr[--i] = *thePtr++ + 0x80;
@@ -297,7 +297,7 @@ Ptr	Inverse16(register Ptr thePtr, long Size)
 {
 	short i = Size;
 	
-	if (i > AUDIODSPSIZE * 4L) MyDebugStr(__LINE__, __FILE__, "AudioDSPPtr too small");
+	if (i > AUDIODSPSIZE * 4L) MADDebugStr(__LINE__, __FILE__, "AudioDSPPtr too small");
 	
 	do {
 		AudioDSPPtr[--i] = *thePtr + 0x80;
@@ -1313,7 +1313,7 @@ void SetWindowEnviron(void)
 			for (i = 0; i < MADDriver->DriverSettings.numChn; i++) {
 				osci[i].VPos		= OsciVStart;
 				osci[i].SavePtr		= (Byte*) (ValSaveData + i * GetAudioSize());
-				if (i * GetAudioSize() > VALSIZE) MyDebugStr(__LINE__, __FILE__, "");
+				if (i * GetAudioSize() > VALSIZE) MADDebugStr(__LINE__, __FILE__, "");
 				osci[i].Size		= GetAudioSize();
 				
 				if(thePrefs.osciTile)
@@ -1383,7 +1383,7 @@ void SetWindowEnviron(void)
 	InvalWindowRect(GetDialogWindow(OscilloDlog), &caRect);
 	
 	SIter = caRect.right - 16 - 15;
-	//if (SIter > 740) MyDebugStr(__LINE__, __FILE__, "SIter is VERY BIG !");
+	//if (SIter > 740) MADDebugStr(__LINE__, __FILE__, "SIter is VERY BIG !");
 	for (i = 0; i < VALSIZE; i++) {
 		if (i % 2 == 0)
 			ValSaveData[i] = 0;

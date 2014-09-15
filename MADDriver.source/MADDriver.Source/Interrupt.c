@@ -368,7 +368,7 @@ void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
 			{
 				curData = intDriver->curMusic->sample[curIns->firstSample + ch->samp];
 				if (curData == NULL) {
-					MyDebugStr(__LINE__, __FILE__, "Note Enveloppe curData = NULL");
+					MADDebugStr(__LINE__, __FILE__, "Note Enveloppe curData = NULL");
 					return;	
 				}
 				
@@ -494,7 +494,7 @@ void ProcessPanning(Channel *ch, MADDriverRec *intDriver, Boolean Recurrent)
 				curData = intDriver->curMusic->sample[curIns->firstSample + ch->samp];
 				if (curData == NULL) 
 				{
-					MyDebugStr(__LINE__, __FILE__, "Note Enveloppe curData = NULL");
+					MADDebugStr(__LINE__, __FILE__, "Note Enveloppe curData = NULL");
 					return;
 				}
 				basePeriod = GetOldPeriod(48 + curData->relNote, ch->fineTune, intDriver);
@@ -566,7 +566,7 @@ void StartPanning(Channel *ch)
 	ch->bb=1;
 }
 
-static
+static const
 unsigned long lineartable[800] = {
 535232,534749,534266,533784,533303,532822,532341,531861,
 531381,530902,530423,529944,529466,528988,528511,528034,
@@ -726,7 +726,7 @@ long getlinearperiod(short note,long c2spd, MADDriverRec *intDriver)
 
 #define LOGFAC 2*16
 
-long logtab[]={
+static const long logtab[]={
 LOGFAC*907,LOGFAC*900,LOGFAC*894,LOGFAC*887,LOGFAC*881,LOGFAC*875,LOGFAC*868,LOGFAC*862,
 LOGFAC*856,LOGFAC*850,LOGFAC*844,LOGFAC*838,LOGFAC*832,LOGFAC*826,LOGFAC*820,LOGFAC*814,
 LOGFAC*808,LOGFAC*802,LOGFAC*796,LOGFAC*791,LOGFAC*785,LOGFAC*779,LOGFAC*774,LOGFAC*768,

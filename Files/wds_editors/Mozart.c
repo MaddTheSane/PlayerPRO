@@ -2240,7 +2240,7 @@ void PressPartition(Point myPt)
 				myPcmd = (Pcmd*) NewPtrClear(sizeof(Pcmd) + 1 * sizeof(Cmd));
 				if (myPcmd == NULL)
 				{
-					MyDebugStr(__LINE__, __FILE__, "Memory WARNING");
+					MADDebugStr(__LINE__, __FILE__, "Memory WARNING");
 					return;
 				}
 				
@@ -3118,7 +3118,7 @@ Pcmd* CreatePcmdFromSelectionMozart(void)
 	if (count <= 0) return NULL;
 	
 	myPcmd = (Pcmd*) NewPtrClear(sizeof(Pcmd) + count * sizeof(Cmd));
-	if (myPcmd == NULL) MyDebugStr(__LINE__, __FILE__, "Memory WARNING");
+	if (myPcmd == NULL) MADDebugStr(__LINE__, __FILE__, "Memory WARNING");
 	
 	myPcmd->structSize = sizeof(Pcmd) + count * sizeof(Cmd);
 	myPcmd->tracks = 1;

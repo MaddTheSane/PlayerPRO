@@ -18,16 +18,6 @@
 #include <errno.h>
 #include "PTMID.H"
 
-Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
-{
-	if (PosX < 0)
-		PosX = 0;
-	else if (PosX >= tempMusicPat->header.size)
-		PosX = tempMusicPat->header.size -1;
-		
-	return &(tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]);
-}
-
 void pStrcat(register unsigned char *s1, register unsigned char *s2)
 {
 	register unsigned char *p;

@@ -148,7 +148,6 @@
 		550B00EF10BA17E6004FC5D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550B00EE10BA17E6004FC5D7 /* InfoPlist.strings */; };
 		550B011410BA1E1C004FC5D7 /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
 		550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
-		550B011710BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
 		550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
 		550BFF2910BA01BA004FC5D7 /* Game.c in Sources */ = {isa = PBXBuildFile; fileRef = 550BFF2410BA01BA004FC5D7 /* Game.c */; };
 		550BFF2A10BA01BA004FC5D7 /* Game.r in Rez */ = {isa = PBXBuildFile; fileRef = 550BFF2510BA01BA004FC5D7 /* Game.r */; };
@@ -230,7 +229,6 @@
 		55672E2810CAD641008C5C3D /* ULT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; };
 		55672E2A10CAD641008C5C3D /* XM.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; };
 		55672E2B10CAD641008C5C3D /* APPL.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* APPL.ppimpexp */; };
-		55672E9010CAD830008C5C3D /* OSX-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */; };
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.c */; };
 		5573A35A10B50DCC00FF8B50 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
 		5573A35B10B50DD000FF8B50 /* Effects.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D10C2F21DD00D6C081 /* Effects.c */; };
@@ -361,7 +359,6 @@
 		559088E310E87ED100CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		559088E410E87ED700CE70B8 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		55A290BA17B6A0C200764F80 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D60C2F21DD00D6C081 /* MainDriver.c */; };
 		55B1953E17FD5CC200E6F160 /* ScreenDevice.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 55B1953D17FD5CC200E6F160 /* ScreenDevice.cpp */; };
 		55B797E310D6E6E50073E379 /* CompFade.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FE110D6C79D00BB619C /* CompFade.c */; };
 		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
@@ -379,6 +376,25 @@
 		55E4DFAD1630F41A00E4F4F9 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */; };
 		55E8877D19784CDC0045041F /* LocalizationCarbonStrings.h in Headers */ = {isa = PBXBuildFile; fileRef = 55E8877B19784CDC0045041F /* LocalizationCarbonStrings.h */; };
 		55E8877E19784CDC0045041F /* LocalizationCarbonStrings.c in Sources */ = {isa = PBXBuildFile; fileRef = 55E8877C19784CDC0045041F /* LocalizationCarbonStrings.c */; };
+		55E888B219C75CC60045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E8895719C75D0A0045041F /* PlayerPROCore.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E8897A19C75D670045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E889B019C760740045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A0719C760750045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A0819C760750045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A0919C760760045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A0A19C760770045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A0B19C760780045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A0C19C760780045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A0D19C760790045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A0E19C7607A0045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A0F19C7607A0045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A1019C7607B0045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A1119C7607B0045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A1219C7607C0045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A1319C7607C0045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A1419C7607D0045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55E88A1519C7607D0045041F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55E8981A10EEC5BA004EB52B /* AboutPlugs.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3C30C2F21DD00D6C081 /* AboutPlugs.c */; };
 		55E898B010F17C2B004EB52B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55E898B110F17C2B004EB52B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -408,15 +424,6 @@
 		55F7DBF517FCD39E00338025 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */; };
 		55F7DBF617FCD3A700338025 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		55FA5FBB102D2D6C00CB63DA /* ppApp.icns in Resources */ = {isa = PBXBuildFile; fileRef = 55FA5FBA102D2D6C00CB63DA /* ppApp.icns */; };
-		55FD861E10B22C2300F8BDE6 /* DelayOutPut.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */; };
-		55FD861F10B22C2700F8BDE6 /* Effects.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D10C2F21DD00D6C081 /* Effects.c */; };
-		55FD862010B22C2D00F8BDE6 /* Interrupt.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D20C2F21DD00D6C081 /* Interrupt.c */; };
-		55FD862110B22C3100F8BDE6 /* Mac-FileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D30C2F21DD00D6C081 /* Mac-FileUtils.c */; };
-		55FD862210B22C3400F8BDE6 /* Mac-SoundManager.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D50C2F21DD00D6C081 /* Mac-SoundManager.c */; };
-		55FD862310B22C3B00F8BDE6 /* MySndPlayDB.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D70C2F21DD00D6C081 /* MySndPlayDB.c */; };
-		55FD862410B22C3F00F8BDE6 /* OutPut8.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D90C2F21DD00D6C081 /* OutPut8.c */; };
-		55FD862510B22C4300F8BDE6 /* realft.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DA0C2F21DD00D6C081 /* realft.c */; };
-		55FD862610B22C4600F8BDE6 /* TickRemover.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */; };
 		88E0C41E0C2F21DE00D6C081 /* FKey.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3EA0C2F21DD00D6C081 /* FKey.c */; };
 		88E0C4200C2F21DE00D6C081 /* Spectrum.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C4070C2F21DD00D6C081 /* Spectrum.c */; };
 		88E0C4210C2F21DE00D6C081 /* ActiveHelp.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DE0C2F21DD00D6C081 /* ActiveHelp.c */; };
@@ -1236,6 +1243,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		55E8892019C75CF90045041F /* Copy Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				55E8895719C75D0A0045041F /* PlayerPROCore.framework in Copy Frameworks */,
+			);
+			name = "Copy Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55ED50BD10D40C3400824C61 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1825,6 +1843,7 @@
 				55096A5210E0A7B4000EFFE6 /* CoreFoundation.framework in Frameworks */,
 				55E4DFA71630F3EF00E4F4F9 /* ApplicationServices.framework in Frameworks */,
 				55E4DFA81630F3F600E4F4F9 /* CoreServices.framework in Frameworks */,
+				55E8897A19C75D670045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1836,6 +1855,7 @@
 				55096A5010E0A7AD000EFFE6 /* CoreFoundation.framework in Frameworks */,
 				55E4DFAB1630F40600E4F4F9 /* ApplicationServices.framework in Frameworks */,
 				55E4DFAC1630F40900E4F4F9 /* CoreServices.framework in Frameworks */,
+				55E889B019C760740045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1845,6 +1865,7 @@
 			files = (
 				55096A4E10E0A7A5000EFFE6 /* CoreFoundation.framework in Frameworks */,
 				55E4DFAD1630F41A00E4F4F9 /* ApplicationServices.framework in Frameworks */,
+				55E88A0719C760750045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1854,6 +1875,7 @@
 			files = (
 				553341E310BB5FFA005208D1 /* Carbon.framework in Frameworks */,
 				55096A4C10E0A79E000EFFE6 /* CoreFoundation.framework in Frameworks */,
+				55E88A0819C760750045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1863,6 +1885,7 @@
 			files = (
 				553341F610BB600A005208D1 /* Carbon.framework in Frameworks */,
 				55096A4A10E0A798000EFFE6 /* CoreFoundation.framework in Frameworks */,
+				55E88A0919C760760045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2064,6 +2087,7 @@
 			files = (
 				5586870B10BF5C4700FCC24D /* Carbon.framework in Frameworks */,
 				55096A4810E0A790000EFFE6 /* CoreFoundation.framework in Frameworks */,
+				55E88A0A19C760770045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2073,6 +2097,7 @@
 			files = (
 				5586871A10BF5C4A00FCC24D /* Carbon.framework in Frameworks */,
 				55096A4610E0A785000EFFE6 /* CoreFoundation.framework in Frameworks */,
+				55E88A0B19C760780045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2082,6 +2107,7 @@
 			files = (
 				5586872910BF5C4E00FCC24D /* Carbon.framework in Frameworks */,
 				55096A4410E0A77E000EFFE6 /* CoreFoundation.framework in Frameworks */,
+				55E88A0C19C760780045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2091,6 +2117,7 @@
 			files = (
 				5586874910BF5D3700FCC24D /* Carbon.framework in Frameworks */,
 				55096A3910E0A735000EFFE6 /* CoreFoundation.framework in Frameworks */,
+				55E88A0D19C760790045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2100,6 +2127,7 @@
 			files = (
 				5586875E10BF5E4D00FCC24D /* Carbon.framework in Frameworks */,
 				55096A3810E0A716000EFFE6 /* CoreFoundation.framework in Frameworks */,
+				55E88A0E19C7607A0045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2110,6 +2138,7 @@
 				558687DA10BF620500FCC24D /* Carbon.framework in Frameworks */,
 				55096A3710E0A70E000EFFE6 /* CoreFoundation.framework in Frameworks */,
 				55096A4110E0A76B000EFFE6 /* CoreServices.framework in Frameworks */,
+				55E88A0F19C7607A0045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2120,6 +2149,7 @@
 				558687F610BF624E00FCC24D /* Carbon.framework in Frameworks */,
 				55096A3610E0A708000EFFE6 /* CoreFoundation.framework in Frameworks */,
 				55096A4010E0A764000EFFE6 /* CoreServices.framework in Frameworks */,
+				55E88A1019C7607B0045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2130,6 +2160,7 @@
 				5586881710BF62F100FCC24D /* Carbon.framework in Frameworks */,
 				55096A3510E0A702000EFFE6 /* CoreFoundation.framework in Frameworks */,
 				55096A3F10E0A75D000EFFE6 /* CoreServices.framework in Frameworks */,
+				55E88A1119C7607B0045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2140,6 +2171,7 @@
 				5586882510BF62F500FCC24D /* Carbon.framework in Frameworks */,
 				55096A3410E0A6FB000EFFE6 /* CoreFoundation.framework in Frameworks */,
 				55096A3E10E0A757000EFFE6 /* CoreServices.framework in Frameworks */,
+				55E88A1219C7607C0045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2150,6 +2182,7 @@
 				5586883910BF62FB00FCC24D /* Carbon.framework in Frameworks */,
 				55096A3110E0A6E8000EFFE6 /* CoreFoundation.framework in Frameworks */,
 				55096A3D10E0A750000EFFE6 /* CoreServices.framework in Frameworks */,
+				55E88A1319C7607C0045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2161,6 +2194,7 @@
 				558688A910BF683C00FCC24D /* QuickTime.framework in Frameworks */,
 				55096A3210E0A6EF000EFFE6 /* CoreFoundation.framework in Frameworks */,
 				55096A3C10E0A74A000EFFE6 /* CoreServices.framework in Frameworks */,
+				55E88A1419C7607D0045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2170,6 +2204,7 @@
 			files = (
 				55096A3310E0A6F3000EFFE6 /* CoreFoundation.framework in Frameworks */,
 				55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */,
+				55E88A1519C7607D0045041F /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2206,6 +2241,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55E888B219C75CC60045041F /* PlayerPROCore.framework in Frameworks */,
 				55F7DBF617FCD3A700338025 /* CoreServices.framework in Frameworks */,
 				55A290BA17B6A0C200764F80 /* CoreFoundation.framework in Frameworks */,
 				55F7DBF517FCD39E00338025 /* ApplicationServices.framework in Frameworks */,
@@ -4320,6 +4356,7 @@
 				88E0C3AD0C2F21DD00D6C081 /* Headers */,
 				88E0C3AE0C2F21DD00D6C081 /* Sources */,
 				88E0C3AF0C2F21DD00D6C081 /* Resources */,
+				55E8892019C75CF90045041F /* Copy Frameworks */,
 				88E0C3B00C2F21DD00D6C081 /* Frameworks */,
 				88E0C3B10C2F21DD00D6C081 /* Rez */,
 				55FA5F7E102D2B9000CB63DA /* Copy PlugIns */,
@@ -5402,18 +5439,6 @@
 				55356A05102BFE7D0093F21D /* Print.c in Sources */,
 				55356A1E102C06550093F21D /* MIDI-GM.c in Sources */,
 				55356A97102C08650093F21D /* PlugsPPINInit.c in Sources */,
-				55AFDDD1102ECB7A00535CD6 /* MainDriver.c in Sources */,
-				55FD861E10B22C2300F8BDE6 /* DelayOutPut.c in Sources */,
-				55FD861F10B22C2700F8BDE6 /* Effects.c in Sources */,
-				55FD862010B22C2D00F8BDE6 /* Interrupt.c in Sources */,
-				55FD862110B22C3100F8BDE6 /* Mac-FileUtils.c in Sources */,
-				55FD862210B22C3400F8BDE6 /* Mac-SoundManager.c in Sources */,
-				55FD862310B22C3B00F8BDE6 /* MySndPlayDB.c in Sources */,
-				55FD862410B22C3F00F8BDE6 /* OutPut8.c in Sources */,
-				55FD862510B22C4300F8BDE6 /* realft.c in Sources */,
-				55FD862610B22C4600F8BDE6 /* TickRemover.c in Sources */,
-				550B011710BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
-				55672E9010CAD830008C5C3D /* OSX-PlugImport.c in Sources */,
 				55E8981A10EEC5BA004EB52B /* AboutPlugs.c in Sources */,
 				555E9B4E110192F900986239 /* MIDI-Hardware-OSX.c in Sources */,
 				55B1953E17FD5CC200E6F160 /* ScreenDevice.cpp in Sources */,
@@ -6219,10 +6244,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MOD;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -6241,10 +6262,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MOD;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -6260,10 +6277,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = 669;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6280,10 +6293,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = 669;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6298,10 +6307,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = AMF;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6318,10 +6323,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = AMF;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6336,10 +6337,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = DMF;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6356,10 +6353,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = DMF;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6374,10 +6367,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "IT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = IT;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -6394,10 +6383,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "IT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = IT;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7298,10 +7283,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MADfg;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7318,10 +7299,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MADfg;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7336,10 +7313,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MADH;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7356,10 +7329,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MADH;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7374,10 +7343,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MADI;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7394,10 +7359,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MADI;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7412,10 +7373,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MED;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7432,10 +7389,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MED;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7450,10 +7403,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MTM;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7470,10 +7419,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MTM;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7488,10 +7433,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = Okta;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7508,10 +7449,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = Okta;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7526,10 +7463,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = S3M;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7546,10 +7479,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = S3M;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7564,10 +7493,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = ULT;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7584,10 +7509,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = ULT;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7602,10 +7523,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = UMX;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7622,10 +7539,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = UMX;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7640,10 +7553,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = XM;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7660,10 +7569,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = XM;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7678,10 +7583,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MIDI;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7698,10 +7599,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MIDI;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7716,10 +7613,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = APPL;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -7736,10 +7629,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = APPL;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8067,10 +7956,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MOD;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -8088,10 +7973,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = 669;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8108,10 +7989,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = AMF;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8128,10 +8005,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = DMF;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8148,10 +8021,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "IT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = IT;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8168,10 +8037,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MADfg;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8188,10 +8053,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MADH;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8208,10 +8069,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MADI;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8228,10 +8085,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MED;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8248,10 +8101,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MTM;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8268,10 +8117,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = Okta;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8288,10 +8133,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = S3M;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8308,10 +8149,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = ULT;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8328,10 +8165,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = UMX;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8348,10 +8181,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = XM;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8368,10 +8197,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MIDI;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -8388,10 +8213,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = APPL;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9105,10 +8926,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MOD;
 				WRAPPER_EXTENSION = ppimpexp;
@@ -9124,10 +8941,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = 669;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9142,10 +8955,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = AMF;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9160,10 +8969,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = DMF;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9178,10 +8983,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "IT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = IT;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9196,10 +8997,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MADfg;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9214,10 +9011,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MADH;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9232,10 +9025,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MADI;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9250,10 +9039,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MED;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9268,10 +9053,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MTM;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9286,10 +9067,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = Okta;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9304,10 +9081,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = S3M;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9322,10 +9095,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = ULT;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9340,10 +9109,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = UMX;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9358,10 +9123,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = XM;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9376,10 +9137,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = MIDI;
 				WRAPPER_EXTENSION = ppimpexp;
 			};
@@ -9394,10 +9151,6 @@
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				INFOPLIST_FILE = "${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				OTHER_LDFLAGS = (
-					"-undefined",
-					dynamic_lookup,
-				);
 				PRODUCT_NAME = APPL;
 				WRAPPER_EXTENSION = ppimpexp;
 			};

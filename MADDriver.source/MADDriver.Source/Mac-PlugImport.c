@@ -46,7 +46,7 @@ static inline void pStrCpy(unsigned char *s1, unsigned char *s2)
 			s1[i] = s2[i];
 		}
 	}
-	else MyDebugStr(__LINE__, __FILE__, "String to biiig !");
+	else MADDebugStr(__LINE__, __FILE__, "String to biiig !");
 }
 
 Handle MADGet1Resource(OSType type, short id, MADLibrary* init)
@@ -62,8 +62,8 @@ Handle MADGet1Resource(OSType type, short id, MADLibrary* init)
 		HNoPurge(tH);
 		
 		dH = NewHandle(GetHandleSize(tH));
-		if (dH == NULL) MyDebugStr(__LINE__, __FILE__, "");
-		if (MemError() != noErr) MyDebugStr(__LINE__, __FILE__, "");
+		if (dH == NULL) MADDebugStr(__LINE__, __FILE__, "");
+		if (MemError() != noErr) MADDebugStr(__LINE__, __FILE__, "");
 		
 		HLock(dH);
 		HLock(tH);
@@ -311,7 +311,7 @@ OSType	GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 {
 	short	i, x;
 
-	if (ID >= inMADDriver->TotalPlug) MyDebugStr(__LINE__, __FILE__, "PP-Plug ERROR. ");
+	if (ID >= inMADDriver->TotalPlug) MADDebugStr(__LINE__, __FILE__, "PP-Plug ERROR. ");
 
 	for (i = 0, x = 0; i < inMADDriver->TotalPlug; i++)
 	{
@@ -333,7 +333,7 @@ OSType	GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 		}
 	}
 
-	MyDebugStr(__LINE__, __FILE__, "PP-Plug ERROR II.");
+	MADDebugStr(__LINE__, __FILE__, "PP-Plug ERROR II.");
 	
 	return noErr;
 }

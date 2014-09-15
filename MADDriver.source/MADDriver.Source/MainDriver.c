@@ -2538,7 +2538,7 @@ sData	* MADCreateSample(MADMusic *MDriver, short ins, short sample)
 		
 		// Install it
 		
-		if (sample < MDriver->fid[ins].numSamples) MyDebugStr(__LINE__, __FILE__, "MADCreateSample");
+		if (sample < MDriver->fid[ins].numSamples) MADDebugStr(__LINE__, __FILE__, "MADCreateSample");
 		
 		MDriver->sample[ins * MAXSAMPLE + sample] = curData;
 		MDriver->fid[ins].numSamples++;
@@ -3485,14 +3485,16 @@ OSErr MADPlaySndHandle(MADDriverRec *MDriver, Handle sound, long channel, long n
 #pragma pack()
 #endif
 
-Cmd* GetMADCommand(short PosX, short	TrackIdX, PatData*	tempMusicPat)
+Cmd* GetMADCommand(short PosX, short TrackIdX, PatData* tempMusicPat)
 {
 	if (tempMusicPat == NULL) {
 		return NULL;
 	}
 	
-	if (PosX < 0) PosX = 0;
-	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
+	if (PosX < 0) 
+		PosX = 0;
+	else if (PosX >= tempMusicPat->header.size) 
+		PosX = tempMusicPat->header.size -1;
 	
 	return(&(tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
 }

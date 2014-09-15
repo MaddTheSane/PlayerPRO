@@ -25,23 +25,13 @@
 #include "MOD.h"
 #include "MADI.h"
 
-#ifndef _SRC
-Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
-{
-	if (PosX < 0) PosX = 0;
-	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-		
-	return(& (tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
-}
-#endif
-
 enum
 {
-	ins 	= 1,
-	note	= 2,
-	cmd		= 4,
-	argu	= 8,
-	vol		= 16
+	ins 	= 1 << 0,
+	note	= 1 << 1,
+	cmd		= 1 << 2,
+	argu	= 1 << 3,
+	vol		= 1 << 4
 };
 
 

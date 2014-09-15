@@ -153,7 +153,7 @@ void MLDelRow(short no, short pos)
 	}
 	
 	myList.maxY -= no;
-	if (myList.maxY < 0) MyDebugStr(__LINE__, __FILE__, "");
+	if (myList.maxY < 0) MADDebugStr(__LINE__, __FILE__, "");
 	PLSetControl(&myList);
 	PLSetSelect(myList.select.left, myList.select.top, myList.select.right, myList.select.bottom, &myList);
 	
@@ -475,7 +475,7 @@ void SaveMyMODListSTCf(FSSpec spec)
 		
 		inOutBytes = (long) aCopy - (long) *aHandle;
 		if (inOutBytes > MAXSTCSIZE) {
-			MyDebugStr(__LINE__, __FILE__, "List too large for saving");
+			MADDebugStr(__LINE__, __FILE__, "List too large for saving");
 			theCell.v = myList.maxY;
 		}
 		
@@ -795,7 +795,7 @@ void  AddMODList(Boolean ShowInfo, Str255 theString, short VRef, long parID)
 	whichCell = IsAlreadyHere(theString);
 	
 	if(whichCell != -1) {
-		if (whichCell < 0) MyDebugStr(__LINE__, __FILE__, "AddModlist err");
+		if (whichCell < 0) MADDebugStr(__LINE__, __FILE__, "AddModlist err");
 		
 		theCell.v = whichCell;
 		theCell.h = 0;
@@ -2871,7 +2871,7 @@ void DoLoadOtherMusic(Boolean Affiche)
 ReRandom:
 	switch (thePrefs.LoopType) {
 		case 0:			// repeat
-			MyDebugStr(__LINE__, __FILE__, "What are you doing here??");
+			MADDebugStr(__LINE__, __FILE__, "What are you doing here??");
 			return;
 			break;
 			

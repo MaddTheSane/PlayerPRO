@@ -1,5 +1,5 @@
 /*
- *  MyDebugStr.c
+ *  MADDebugStr.c
  *  PPMacho
  *
  *  Created by C.W. Betts on 11/18/09.
@@ -10,9 +10,21 @@
 #include "MAD.h"
 #include <stdio.h>
 
-extern void MyDebugStr(short line, Ptr file, Ptr text)
+static void(*privateDebugStr)(short, const char*, const char*) = NULL;
+
+extern void MADRegisterDebugFunc(void(*adebug)(short, const char*, const char*))
 {
-	fprintf(stderr, "%s:%u error text:%s!", file, line, text);
-	
-	abort();
+	privateDebugStr = adebug;
+}
+
+extern void MADDebugStr(short line, const char* file, const char* text)
+{
+	if (privateDebugStr) {
+		(*privateDebugStr)(line, file, text);
+	} else {
+		fprintf(stderr, "%s:%u error text:%s!", file, line, text);
+		fflush(stderr);
+		
+		abort();
+	}
 }

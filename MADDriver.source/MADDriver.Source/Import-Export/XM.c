@@ -40,18 +40,6 @@ static		Ptr			theXMRead, theXMMax;
 #define READXMFILE(dst, size)	{memcpy(dst, theXMRead, size); theXMRead += (long) size;}
 #define WRITEXMFILE(src, size)	{memcpy(theXMRead, src, size); theXMRead += (long) size;}
 
-#ifndef _SRC
-
-Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
-{
-	if (PosX < 0) PosX = 0;
-	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-		
-	return(& (tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
-}
-
-#endif
-
 static Boolean XM_Init(MADDriverSettings *init)
 {
 	mh = (XMHEADER*) MADPlugNewPtr(sizeof(XMHEADER), init);

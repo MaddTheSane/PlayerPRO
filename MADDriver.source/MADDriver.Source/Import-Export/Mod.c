@@ -67,16 +67,6 @@ static void Convert16to8(Ptr srcPtr, Ptr destPtr, long size)
 	}
 }
 
-#ifndef _SRC
-Cmd* GetMADCommand(register short PosX, register short	TrackIdX, register PatData*	tempMusicPat)
-{
-	if (PosX < 0) PosX = 0;
-	else if (PosX >= tempMusicPat->header.size) PosX = tempMusicPat->header.size -1;
-	
-	return(& (tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
-}
-#endif
-
 static void AnalyseSignatureMOD(long EOFo, OSType temp, short *maxInstru, long *PatternSize, short *tracksNo, MODDef* aMOD)
 {
 	long 		test, i;

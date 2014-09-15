@@ -735,7 +735,7 @@ static const CFStringRef kMadPlugIsSampleKey = CFSTR("MADPlugIsSample");
 static void MakePPINPlug(PPInstrumentPlugin **tempPPINPlug, PPINFilterInfo *ThePPINPlugA, CFBundleRef tempBundle)
 {
 	if (tPlug > MAXINSTRPLUG) {
-		MyDebugStr(__LINE__, __FILE__, "Too many plugs");
+		MADDebugStr(__LINE__, __FILE__, "Too many plugs");
 		return;
 	}
 	//TODO: There's got to be a cleaner way...
