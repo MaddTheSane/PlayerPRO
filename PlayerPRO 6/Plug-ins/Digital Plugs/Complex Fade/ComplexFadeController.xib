@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6246" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment defaultVersion="1090" identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4514"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6246"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ComplexFadeController">
@@ -16,20 +16,19 @@
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
-        <customObject id="-3" userLabel="Application"/>
-        <window title="Complex Fade" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="alertPanel" id="1">
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Complex Fade" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" visibleAtLaunch="NO" animationBehavior="alertPanel" id="1">
             <windowStyleMask key="styleMask" titled="YES"/>
             <windowCollectionBehavior key="collectionBehavior" fullScreenAuxiliary="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="340" height="234"/>
+            <rect key="contentRect" x="196" y="240" width="340" height="231"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="2">
-                <rect key="frame" x="0.0" y="0.0" width="340" height="234"/>
+                <rect key="frame" x="0.0" y="0.0" width="340" height="231"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5">
-                        <rect key="frame" x="73" y="176" width="194" height="38"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <rect key="frame" x="73" y="173" width="194" height="38"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         <size key="cellSize" width="95" height="18"/>
                         <size key="intercellSpacing" width="4" height="2"/>
@@ -64,17 +63,15 @@
                         </connections>
                     </matrix>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wDQ-Ma-n9H">
-                        <rect key="frame" x="121" y="151" width="99" height="17"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="From C0 to B7" id="f5w-mI-8SG">
-                            <font key="font" metaFont="system"/>
+                        <rect key="frame" x="128" y="151" width="85" height="14"/>
+                        <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="From C0 to B7" id="f5w-mI-8SG">
+                            <font key="font" metaFont="smallSystem"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <form verticalHuggingPriority="750" mode="track" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="18">
                         <rect key="frame" x="20" y="61" width="300" height="82"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         <size key="cellSize" width="300" height="22"/>
                         <size key="intercellSpacing" width="1" height="8"/>
@@ -100,8 +97,7 @@
                         </cells>
                     </form>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="41">
-                        <rect key="frame" x="267" y="13" width="59" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <rect key="frame" x="244" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="42">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -110,12 +106,11 @@ DQ
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="okOrCancel:" target="-2" id="dp7-lb-xSq"/>
+                            <action selector="okay:" target="-2" id="aa4-5q-dYm"/>
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="46">
-                        <rect key="frame" x="185" y="13" width="82" height="32"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <rect key="frame" x="162" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="47">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -124,7 +119,7 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="okOrCancel:" target="-2" id="52"/>
+                            <action selector="showWindow:" target="-2" id="iMn-P4-XpH"/>
                         </connections>
                     </button>
                 </subviews>
@@ -138,6 +133,7 @@ Gw
                     <constraint firstAttribute="centerX" secondItem="5" secondAttribute="centerX" id="B02-fT-TMk"/>
                     <constraint firstItem="46" firstAttribute="top" secondItem="18" secondAttribute="bottom" constant="20" symbolic="YES" id="BmO-zd-WKS"/>
                     <constraint firstItem="46" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="2" secondAttribute="leading" constant="20" symbolic="YES" id="DJT-1F-tFf"/>
+                    <constraint firstItem="41" firstAttribute="width" secondItem="46" secondAttribute="width" id="EIL-ty-29M"/>
                     <constraint firstAttribute="centerX" secondItem="18" secondAttribute="centerX" id="gYD-hw-NO1"/>
                     <constraint firstItem="18" firstAttribute="top" secondItem="wDQ-Ma-n9H" secondAttribute="bottom" constant="8" symbolic="YES" id="ieH-VF-eOV"/>
                     <constraint firstItem="wDQ-Ma-n9H" firstAttribute="top" secondItem="5" secondAttribute="bottom" constant="8" symbolic="YES" id="las-RD-0gJ"/>

@@ -12,11 +12,11 @@
 //TODO: Make a note formatter
 //@class CompFadeNoteFormatter;
 
-typedef NS_ENUM(NSInteger, FadeTypeEnum) {
-	fadeInstrument = 1,
-	fadeNote,
-	fadeArgument,
-	fadeVolume
+typedef NS_ENUM(NSInteger, PPFadeType) {
+	PPFadeTypeInstrument = 1,
+	PPFadeTypeNote,
+	PPFadeTypeArgument,
+	PPFadeTypeVolume
 };
 
 @interface ComplexFadeController : NSWindowController
@@ -26,8 +26,10 @@ typedef NS_ENUM(NSInteger, FadeTypeEnum) {
 
 @property (weak) IBOutlet NSMatrix *fadeTypeMatrix;
 @property (weak) IBOutlet NSTextField *valueInfo;
+@property Pcmd *thePcmd;
 //@property (strong) IBOutlet CompFadeNoteFormatter *noteFormatter;
-@property FadeTypeEnum fadeType;
+@property PPFadeType fadeType;
+@property (copy) PPPlugErrorBlock currentBlock;
 
 - (IBAction)changeFadeType:(id)sender;
 

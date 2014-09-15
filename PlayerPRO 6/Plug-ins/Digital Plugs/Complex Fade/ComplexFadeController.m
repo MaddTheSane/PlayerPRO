@@ -60,19 +60,19 @@ static int NSStringToHex(NSString *str)
 {
 	self.fadeType = [sender tag];
 	switch (self.fadeType) {
-		case fadeInstrument:
+		case PPFadeTypeInstrument:
 			
 			break;
 			
-		case fadeArgument:
+		case PPFadeTypeArgument:
 			
 			break;
 			
-		case fadeNote:
+		case PPFadeTypeNote:
 			
 			break;
 			
-		case fadeVolume:
+		case PPFadeTypeVolume:
 			
 			break;
 	}
@@ -80,7 +80,7 @@ static int NSStringToHex(NSString *str)
 
 - (IBAction)okay:(id)sender
 {
-		if (![self validateSettings]) {
+	if (![self validateSettings]) {
 		NSBeep();
 		NSAlert *badSettings = [[NSAlert alloc] init];
 		badSettings.messageText = @"Invalid Value";
@@ -90,13 +90,18 @@ static int NSStringToHex(NSString *str)
 		[badSettings beginSheetModalForWindow:[self window] completionHandler:^(NSModalResponse returnCode) {
 			;//Do nothing right now
 		}];
-		}
-
+	} else {
+		
+		[(NSApplication*)NSApp endSheet:self.window];
+		self.currentBlock(MADNoErr);
+	}
+	
 }
 
 - (IBAction)cancel:(id)sender
 {
-	
+	[(NSApplication*)NSApp endSheet:self.window];
+	_currentBlock(MADUserCanceledErr);
 }
 
 @end
