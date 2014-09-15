@@ -166,7 +166,7 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 	}
 	
 	if (self.hasUI) {
-		[plugCode beginImportSampleAtURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver parentDocument:document handler:handler];
+		[plugCode beginImportSampleAtURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
 		MADErr ourErr = [plugCode importSampleAtURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver];
 		handler(ourErr);
@@ -181,7 +181,7 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 	}
 	
 	if (self.hasUI) {
-		[plugCode beginExportSampleToURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver parentDocument:document handler:handler];
+		[plugCode beginExportSampleToURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
 		MADErr ourErr = [plugCode exportSampleToURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver];
 		handler(ourErr);

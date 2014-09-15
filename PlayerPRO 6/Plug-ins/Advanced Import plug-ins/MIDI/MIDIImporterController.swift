@@ -25,7 +25,14 @@ import Cocoa
 	}
 	
 	func beginImportModalSession() {
+		trackCount = GetTracksNumber(locationOfFile);
+		if trackCount == -1 {
+			//NSApplication.sharedApplication().endModalSession(modalSession)
+			handler(nil, .IncompatibleFile)
+			return
+		}
 		modalSession = NSApplication.sharedApplication().beginModalSessionForWindow(self.window)
+		return
 	}
 	
 	override func awakeFromNib() {
@@ -34,12 +41,6 @@ import Cocoa
 	}
 	
 	@IBAction func okayButtonPressed(sender: AnyObject) {
-		trackCount = GetTracksNumber(locationOfFile);
-		if trackCount == -1 {
-			handler(nil, .IncompatibleFile)
-			NSApplication.sharedApplication().endModalSession(modalSession)
-			return
-		}
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.MIDI-Import")
 		conn.remoteObjectInterface = NSXPCInterface(`protocol`: PPMIDIImportHelper.self)
 		

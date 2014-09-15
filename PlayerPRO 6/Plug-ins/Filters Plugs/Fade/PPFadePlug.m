@@ -22,7 +22,7 @@
 	return MADOrderNotImplemented;
 }
 
-- (void)beginRunWithData:(PPSampleObject *)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver *)driver parentDocument:(NSDocument *)document handler:(PPPlugErrorBlock)handle
+- (void)beginRunWithData:(PPSampleObject *)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver *)driver parentWindow:(NSWindow*)document handler:(PPPlugErrorBlock)handle
 {
 	FadeWindowController *controller = [[FadeWindowController alloc] initWithWindowNibName:@"FadeWindowController"];
 	controller.theData = theData;
@@ -32,10 +32,9 @@
 	controller.fadeFrom = .70;
 	controller.stereoMode = StereoMode;
 	
-	[controller.window beginSheet:[document windowForSheet] completionHandler:^(NSModalResponse returnCode) {
+	[document beginSheet:controller.window completionHandler:^(NSModalResponse returnCode) {
 		
 	}];
-
 }
 
 @end

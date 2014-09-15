@@ -21,7 +21,7 @@
 	return MADOrderNotImplemented;
 }
 
-- (void)beginRunWithPcmd:(Pcmd *)aPcmd driver:(PPDriver *)driver parentDocument:(NSDocument *)document handler:(PPPlugErrorBlock)handle
+- (void)beginRunWithPcmd:(Pcmd *)aPcmd driver:(PPDriver *)driver parentWindow:(NSWindow*)document handler:(PPPlugErrorBlock)handle
 {
 	FadeVolumeController *controller = [[FadeVolumeController alloc] initWithWindowNibName:@"FadeVolumeController"];
 	controller.thePcmd = aPcmd;
@@ -29,8 +29,8 @@
 	controller.fadeTo = 1.0;
 	controller.currentBlock = handle;
 
-	[[controller window] beginSheet:[document windowForSheet] completionHandler:^(NSModalResponse returnCode) {
-		;
+	[document beginSheet:controller.window completionHandler:^(NSModalResponse returnCode) {
+		
 	}];
 }
 

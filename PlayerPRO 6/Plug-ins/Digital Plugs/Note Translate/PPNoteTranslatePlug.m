@@ -21,15 +21,15 @@
 	return MADOrderNotImplemented;
 }
 
-- (void)beginRunWithPcmd:(Pcmd *)aPcmd driver:(PPDriver *)driver parentDocument:(NSDocument *)document handler:(PPPlugErrorBlock)handle
+- (void)beginRunWithPcmd:(Pcmd *)aPcmd driver:(PPDriver *)driver parentWindow:(NSWindow *)document handler:(PPPlugErrorBlock)handle
 {
 	NoteTranslateController *controller = [[NoteTranslateController alloc] initWithWindowNibName:@"NoteTranslateController"];
 	controller.thePcmd = aPcmd;
 	controller.transAmount = 0;
 	controller.currentBlock = handle;
 	
-	[[controller window] beginSheet:[document windowForSheet] completionHandler:^(NSModalResponse returnCode) {
-		;
+	[document beginSheet:controller.window completionHandler:^(NSModalResponse returnCode) {
+		
 	}];
 }
 

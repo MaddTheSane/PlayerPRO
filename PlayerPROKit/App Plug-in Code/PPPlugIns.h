@@ -13,7 +13,7 @@
 @class PPInstrumentObject;
 @class PPMusicObject;
 @class PPDriver;
-@class NSDocument;
+@class NSWindow;
 
 typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
 typedef void (^PPPlugErrorBlock)(MADErr error);
@@ -27,7 +27,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 - (MADErr)runWithPcmd:(inout Pcmd*)aPcmd driver:(PPDriver *)driver;
 
 @optional
-- (void)beginRunWithPcmd:(Pcmd*)aPcmd driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handle;
+- (void)beginRunWithPcmd:(Pcmd*)aPcmd driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
 
 @end
 
@@ -46,7 +46,7 @@ static inline NSInteger PPSelectionEnd(NSRange selRange)
 - (MADErr)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver;
 
 @optional
-- (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handle;
+- (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
 
 @end
 
@@ -59,7 +59,7 @@ static inline NSInteger PPSelectionEnd(NSRange selRange)
 
 @optional
 - (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
-- (void)beginImportSampleAtURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short*)sampleID driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handle;
+- (void)beginImportSampleAtURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short*)sampleID driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
 
 @end
 
@@ -69,7 +69,7 @@ static inline NSInteger PPSelectionEnd(NSRange selRange)
 - (MADErr)exportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver;
 
 @optional
-- (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handle;
+- (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
 
 @end
 

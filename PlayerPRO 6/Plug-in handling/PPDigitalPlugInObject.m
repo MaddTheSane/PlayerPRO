@@ -77,7 +77,7 @@
 - (void)beginCallWithPcmd:(inout Pcmd*)myPcmd driver:(PPDriver*)driver parentDocument:(PPDocument*)theDoc handler:(PPPlugErrorBlock)handle
 {
 	if (self.hasUI) {
-		[plugCode beginRunWithPcmd:myPcmd driver:driver parentDocument:theDoc handler:handle];
+		[plugCode beginRunWithPcmd:myPcmd driver:driver parentWindow:[theDoc windowForSheet] handler:handle];
 	} else {
 		MADErr ourErr = [plugCode runWithPcmd:myPcmd driver:driver];
 		handle(ourErr);
