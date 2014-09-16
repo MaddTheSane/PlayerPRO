@@ -15,8 +15,8 @@ private func makeNSRGB(red: UInt16, green: UInt16, blue:UInt16) -> NSColor {
 }
 
 func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
-	let swiftFile: String = NSString(UTF8String: file)
-	let swiftText: String = NSString(UTF8String: text)
+	let swiftFile: String = NSString(UTF8String: file)!
+	let swiftText: String = NSString(UTF8String: text)!
 	println("\(swiftFile):\(line), error text: \(swiftText)")
 	let errStr = NSLocalizedString("MyDebugStr_Error", comment: "Error")
 	let mainStr = NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display")
@@ -183,7 +183,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 	
 	private func registerDefaults() {
-		let tooLargeDict: [String: AnyObject] = [PPSoundDriver: Int(MADSoundOutput.CoreAudioDriver.toRaw())]
+		let tooLargeDict: [String: AnyObject] = [PPSoundDriver: Int(MADSoundOutput.CoreAudioDriver.rawValue)]
 		
 		let defaults1: [String: AnyObject]  = [PPSoundOutBits: 16,
 			PPSoundOutRate: 44100,

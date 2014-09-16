@@ -45,13 +45,15 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, SequenceType, Sliceable {
 	}
 	
 	func addPlugInFromURL(urlpath: NSURL) {
-		let theBund = NSBundle(URL: urlpath)
-		addPlugInFromBundle(theBund)
+		if let theBund = NSBundle(URL: urlpath) {
+			addPlugInFromBundle(theBund)
+		}
 	}
 	
 	func addPlugInFromPath(thePath: String) {
-		let theBund = NSBundle(path: thePath);
-		addPlugInFromBundle(theBund)
+		if let theBund = NSBundle(path: thePath) {
+			addPlugInFromBundle(theBund)
+		}
 	}
 	
 	func generate() -> IndexingGenerator<[PPDigitalPlugInObject]> {

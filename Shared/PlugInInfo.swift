@@ -32,14 +32,17 @@ class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
 	let plugURL: NSURL
 	
 	init(plugName pn: String, author aut: String = "Unknown Author", plugType pt: String = "unknown", plugURL pu: NSURL) {
-		let tmpBundle = NSBundle(URL: pu).infoDictionary
 		plugName = pn
 		authorName = aut
 		plugType = pt
 		plugURL = pu
-		let tmpCopy: AnyObject? = tmpBundle["NSHumanReadableCopyright"]
-		if let acopy: AnyObject = tmpCopy {
-			plugCopyright = acopy as String
+		if let tmpBundle = NSBundle(URL: pu) {
+			let tmpCopy: AnyObject? = tmpBundle.infoDictionary["NSHumanReadableCopyright"]
+			if let acopy: AnyObject = tmpCopy {
+				plugCopyright = acopy as String
+			} else {
+				plugCopyright = "No copyright info available"
+			}
 		} else {
 			plugCopyright = "No copyright info available"
 		}

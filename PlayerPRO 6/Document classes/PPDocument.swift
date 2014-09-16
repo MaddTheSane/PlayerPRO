@@ -110,7 +110,7 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 			theSett.MicroDelaySize = 0;
 		}
 		
-		theSett.driverMode = MADSoundOutput.fromRaw(Int16(defaults.integerForKey(PPSoundDriver)))!
+		theSett.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver)))!
 		theSett.repeatMusic = false;
 		
 		returnerr = theDriver.changeDriverSettingsToSettings(theSett)
@@ -155,7 +155,7 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 			drivSettings.MicroDelaySize = 0;
 		}
 		
-		drivSettings.driverMode = MADSoundOutput.fromRaw(Int16(defaults.integerForKey(PPSoundDriver)))!
+		drivSettings.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver)))!
 		drivSettings.repeatMusic = false;
 		
 		theDriver = PPDriver(library: globalMadLib, settings: &drivSettings)

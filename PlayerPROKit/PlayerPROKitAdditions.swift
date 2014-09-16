@@ -159,7 +159,7 @@ extension PPSampleObject {
 		let aRect = CGRect(origin: CGPointZero, size: imageSize)
 		let rowBytes: UInt = 4 * UInt(imageSize.width)
 		let defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!
-		let bitMapFormat = CGBitmapInfo.fromRaw(CGImageAlphaInfo.PremultipliedLast.toRaw())!
+		let bitMapFormat = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
 		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, bitMapFormat);
 		CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
 		let lineSize = view.convertSizeToBacking(NSSize(width: 1, height: 1));

@@ -26,7 +26,7 @@ class SoundOutputController: SoundSettingsViewController, SoundSettingsViewContr
 	}
 	
 	func soundOutDriverDidChange(driv: MADSoundOutput) {
-		NSUserDefaults.standardUserDefaults().setInteger(Int(driv.toRaw()), forKey:PPSoundDriver);
+		NSUserDefaults.standardUserDefaults().setInteger(Int(driv.rawValue), forKey:PPSoundDriver);
 		
 		NSNotificationCenter.defaultCenter().postNotificationName(PPSoundPreferencesDidChange, object: self)
 	}
@@ -98,7 +98,7 @@ class SoundOutputController: SoundSettingsViewController, SoundSettingsViewContr
 		var drivSet = MADDriverSettings();
 		
 		drivSet.surround = defaults.boolForKey(PPSurroundToggle);
-		drivSet.driverMode = MADSoundOutput.fromRaw(Int16(defaults.integerForKey(PPSoundDriver)))!;
+		drivSet.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver)))!
 		drivSet.outPutBits = Int16(defaults.integerForKey(PPSoundOutBits))
 		drivSet.outPutRate = UInt32(defaults.integerForKey(PPSoundOutRate))
 		drivSet.outPutMode = .DeluxeStereoOutPut;

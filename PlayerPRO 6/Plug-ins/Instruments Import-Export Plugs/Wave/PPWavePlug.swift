@@ -16,16 +16,16 @@ import AudioToolbox
 	public let isInstrument = false
 	
 	public func canImportSampleAtURL(sampleURL: NSURL!) -> Bool {
-		var sampleHandle = NSFileHandle.fileHandleForReadingFromURL(sampleURL, error: nil)
-		if sampleHandle == nil {
+		if let sampleHandle = NSFileHandle(forReadingFromURL: sampleURL, error: nil){
+			let headerDat = sampleHandle.readDataOfLength(sizeof(PCMWaveRec.Type) + 20)
+			sampleHandle.closeFile()
+			
+			var aErr = TestWAV(PCMWavePtr(headerDat.bytes))
+			
+			return aErr == .NoErr
+		} else {
 			return false
 		}
-		let headerDat = sampleHandle.readDataOfLength(sizeof(PCMWaveRec.Type) + 20)
-		sampleHandle.closeFile()
-		
-		var aErr = TestWAV(PCMWavePtr(headerDat.bytes))
-		
-		return aErr == .NoErr
 	}
 	
 	public func importSampleAtURL(sampleURL: NSURL!, instrument InsHeader: PPInstrumentObject!, sample: PPSampleObject!, sampleID: UnsafeMutablePointer<Int16>, driver: PPDriver!) -> MADErr {

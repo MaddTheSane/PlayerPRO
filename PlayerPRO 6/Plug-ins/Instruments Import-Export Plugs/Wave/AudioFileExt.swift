@@ -50,14 +50,15 @@ internal enum AudioFormat: OSType {
 	case Audible				= 1096107074
 	case iLBC					= 1768710755
 	case AES3					= 1634038579
-	#if os(OSX)
+	//#if os(OSX)
+	#if false
 	func stringValue() -> String {
-		return OSTypeToString(self.toRaw())
+		return OSTypeToString(self.rawValue)
 	}
 	
-	init?(stringValue strVal: String) {
+	convenience init?(stringValue strVal: String) {
 		let fourChar = StringToOSType(strVal)
-		if let ourself = AudioFormat.fromRaw(fourChar) {
+		if let ourself = AudioFormat(rawValue: fourChar) {
 			self = ourself
 		} else {
 			return nil
@@ -66,70 +67,70 @@ internal enum AudioFormat: OSType {
 	
 	#endif
 }
-	
+
 internal struct AudioFormatFlag : RawOptionSetType {
-	private var value: UInt32 = 0
-	init(_ value: UInt32) { self.value = value }
-	func toRaw() -> UInt32 { return self.value }
-	static var allZeros: AudioFormatFlag { return self(0) }
-	static func fromRaw(raw: UInt32) -> AudioFormatFlag? { return self(raw) }
-	static func fromMask(raw: UInt32) -> AudioFormatFlag { return self(raw) }
+	var rawValue: UInt32 = 0
+	init(rawValue value: UInt32) { self.rawValue = value }
+	func toRaw() -> UInt32 { return self.rawValue }
+	static var allZeros: AudioFormatFlag { return self(rawValue: 0) }
+	static func fromRaw(raw: UInt32) -> AudioFormatFlag? { return self(rawValue: raw) }
+	static func fromMask(raw: UInt32) -> AudioFormatFlag { return self(rawValue: raw) }
 	static func convertFromNilLiteral() -> AudioFormatFlag { return FlagsAreAllClear }
 	
 	static var NativeFloatPacked: AudioFormatFlag {
 		return IsFloat | NativeEndian | IsPacked
 	}
 	
-	static var IsFloat:				AudioFormatFlag { return self(1 << 0) }
-	static var IsBigEndian:			AudioFormatFlag { return self(1 << 1) }
-	static var IsSignedInteger:		AudioFormatFlag { return self(1 << 2) }
-	static var IsPacked:			AudioFormatFlag { return self(1 << 3) }
-	static var IsAlignedHigh:		AudioFormatFlag { return self(1 << 4) }
-	static var IsNonInterleaved:	AudioFormatFlag { return self(1 << 5) }
-	static var IsNonMixable:		AudioFormatFlag { return self(1 << 6) }
-	static var FlagsAreAllClear:	AudioFormatFlag { return self(1 << 31) }
+	static var IsFloat:				AudioFormatFlag { return self(rawValue: 1 << 0) }
+	static var IsBigEndian:			AudioFormatFlag { return self(rawValue: 1 << 1) }
+	static var IsSignedInteger:		AudioFormatFlag { return self(rawValue: 1 << 2) }
+	static var IsPacked:			AudioFormatFlag { return self(rawValue: 1 << 3) }
+	static var IsAlignedHigh:		AudioFormatFlag { return self(rawValue: 1 << 4) }
+	static var IsNonInterleaved:	AudioFormatFlag { return self(rawValue: 1 << 5) }
+	static var IsNonMixable:		AudioFormatFlag { return self(rawValue: 1 << 6) }
+	static var FlagsAreAllClear:	AudioFormatFlag { return self(rawValue: 1 << 31) }
 	static var NativeEndian:		AudioFormatFlag {
 		#if __BIG_ENDIAN__
 			return IsBigEndian
 		#else
-			return self(0)
+			return self(rawValue: 0)
 		#endif
 	}
 	init(_ value: LinearPCMFormatFlag) {
-		self.value = value.toRaw()
+		self.rawValue = value.toRaw()
 	}
 }
 
 internal struct LinearPCMFormatFlag : RawOptionSetType {
-	private var value: UInt32 = 0
-	init(_ value: UInt32) { self.value = value }
-	func toRaw() -> UInt32 { return self.value }
-	static var allZeros: LinearPCMFormatFlag { return self(0) }
-	static func fromRaw(raw: UInt32) -> LinearPCMFormatFlag? { return self(raw) }
-	static func fromMask(raw: UInt32) -> LinearPCMFormatFlag { return self(raw) }
+	var rawValue: UInt32 = 0
+	init(rawValue value: UInt32) { self.rawValue = value }
+	func toRaw() -> UInt32 { return self.rawValue }
+	static var allZeros: LinearPCMFormatFlag { return self(rawValue: 0) }
+	static func fromRaw(raw: UInt32) -> LinearPCMFormatFlag? { return self(rawValue: raw) }
+	static func fromMask(raw: UInt32) -> LinearPCMFormatFlag { return self(rawValue: raw) }
 	static func convertFromNilLiteral() -> LinearPCMFormatFlag { return FlagsAreAllClear }
 	
 	static var NativeFloatPacked: LinearPCMFormatFlag {
 		return IsFloat | NativeEndian | IsPacked
 	}
 	
-	static var IsFloat:				LinearPCMFormatFlag { return self(1 << 0) }
-	static var IsBigEndian:			LinearPCMFormatFlag { return self(1 << 1) }
-	static var IsSignedInteger:		LinearPCMFormatFlag { return self(1 << 2) }
-	static var IsPacked:			LinearPCMFormatFlag { return self(1 << 3) }
-	static var IsAlignedHigh:		LinearPCMFormatFlag { return self(1 << 4) }
-	static var IsNonInterleaved :	LinearPCMFormatFlag { return self(1 << 5) }
-	static var IsNonMixable:		LinearPCMFormatFlag { return self(1 << 6) }
-	static var FlagsAreAllClear:	LinearPCMFormatFlag { return self(1 << 31) }
+	static var IsFloat:				LinearPCMFormatFlag { return self(rawValue: 1 << 0) }
+	static var IsBigEndian:			LinearPCMFormatFlag { return self(rawValue: 1 << 1) }
+	static var IsSignedInteger:		LinearPCMFormatFlag { return self(rawValue: 1 << 2) }
+	static var IsPacked:			LinearPCMFormatFlag { return self(rawValue: 1 << 3) }
+	static var IsAlignedHigh:		LinearPCMFormatFlag { return self(rawValue: 1 << 4) }
+	static var IsNonInterleaved :	LinearPCMFormatFlag { return self(rawValue: 1 << 5) }
+	static var IsNonMixable:		LinearPCMFormatFlag { return self(rawValue: 1 << 6) }
+	static var FlagsAreAllClear:	LinearPCMFormatFlag { return self(rawValue: 1 << 31) }
 	static var NativeEndian:		LinearPCMFormatFlag {
 		#if __BIG_ENDIAN__
 			return IsBigEndian
 		#else
-			return self(0)
+			return self(rawValue: 0)
 		#endif
 	}
-	static var FlagsSampleFractionShift: LinearPCMFormatFlag { return self(7) }
-	static var FlagsSampleFractionMask : LinearPCMFormatFlag { return self(0x3F << FlagsSampleFractionShift.toRaw()) }
+	static var FlagsSampleFractionShift: LinearPCMFormatFlag { return self(rawValue: 7) }
+	static var FlagsSampleFractionMask : LinearPCMFormatFlag { return self(rawValue: 0x3F << FlagsSampleFractionShift.toRaw()) }
 }
 
 extension AudioStreamBasicDescription {
@@ -147,10 +148,10 @@ extension AudioStreamBasicDescription {
 	
 	internal var formatID: AudioFormat {
 		get {
-			return AudioFormat.fromRaw(mFormatID)!
+			return AudioFormat(rawValue: mFormatID)!
 		}
 		set {
-			mFormatID = newValue.toRaw()
+			mFormatID = newValue.rawValue
 		}
 	}
 	
@@ -177,8 +178,8 @@ extension AudioStreamBasicDescription {
 	
 	internal init(sampleRate: Float64, formatID: AudioFormat = .LinearPCM, formatFlags: AudioFormatFlag, bitsPerChannel: UInt32, channelsPerFrame: UInt32, framesPerPacket: UInt32 = 1) {
 		mSampleRate = sampleRate
-		mFormatID = formatID.toRaw()
-		mFormatFlags = formatFlags.toRaw()
+		mFormatID = formatID.rawValue
+		mFormatFlags = formatFlags.rawValue
 		mBitsPerChannel = bitsPerChannel
 		mChannelsPerFrame = channelsPerFrame
 		mFramesPerPacket = framesPerPacket

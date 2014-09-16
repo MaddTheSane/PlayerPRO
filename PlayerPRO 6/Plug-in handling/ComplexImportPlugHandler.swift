@@ -23,8 +23,8 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, SequenceType 
 					if component.pathExtension != "ppextimp" {
 						continue
 					}
-					let theBundle = NSBundle(URL: component);
-					let aClass: AnyClass? = theBundle.principalClass
+					let theBundle = NSBundle(URL: component)
+					let aClass: AnyClass? = theBundle?.principalClass
 					if aClass == nil {
 						continue
 					}

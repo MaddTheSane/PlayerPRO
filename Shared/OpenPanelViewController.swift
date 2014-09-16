@@ -127,7 +127,7 @@ class OpenPanelViewController: NSViewController {
 		var tag = (sender as NSMenuItem).tag;
 		var allowedUTIs = [String]();
 		switch (tag) {
-		case utiType.allType.toRaw():
+		case utiType.allType.rawValue:
 			for obj in utiObjects {
 				allowedUTIs += obj.utis
 			}
@@ -136,7 +136,7 @@ class OpenPanelViewController: NSViewController {
 				openPanel.allowsMultipleSelection = true
 			}
 			
-		case utiType.trackerType.toRaw():
+		case utiType.trackerType.rawValue:
 			for obj in utiObjects {
 				if (obj.theUtiType == trackerType.tracker) {
 					allowedUTIs += obj.utis
@@ -147,7 +147,7 @@ class OpenPanelViewController: NSViewController {
 				openPanel.allowsMultipleSelection = true
 			}
 			
-		case utiType.playlistType.toRaw():
+		case utiType.playlistType.rawValue:
 			for obj in utiObjects {
 				if (obj.theUtiType == .playlist) {
 					allowedUTIs += obj.utis
@@ -158,7 +158,7 @@ class OpenPanelViewController: NSViewController {
 				openPanel.allowsMultipleSelection = true
 			}
 			
-		case utiType.instrumentType.toRaw():
+		case utiType.instrumentType.rawValue:
 			for obj in utiObjects {
 				if (obj.theUtiType == .instrument) {
 					allowedUTIs += obj.utis
@@ -169,7 +169,7 @@ class OpenPanelViewController: NSViewController {
 				openPanel.allowsMultipleSelection = true
 			}
 			
-		case utiType.otherType.toRaw():
+		case utiType.otherType.rawValue:
 			for obj in utiObjects {
 				if (obj.theUtiType == .other) {
 					for uti in obj.utis {
@@ -230,9 +230,9 @@ class OpenPanelViewController: NSViewController {
 		}
 		
 		utiObjects.sort({(lhs, rhs) -> Bool in
-			if (lhs.theUtiType.toRaw() < rhs.theUtiType.toRaw()) {
+			if (lhs.theUtiType.rawValue < rhs.theUtiType.rawValue) {
 				return true
-			} else if (lhs.theUtiType.toRaw() > rhs.theUtiType.toRaw()) {
+			} else if (lhs.theUtiType.rawValue > rhs.theUtiType.rawValue) {
 				return false
 			} else {
 				
@@ -250,7 +250,7 @@ class OpenPanelViewController: NSViewController {
 		let moreThanTwoTypes = hasMoreThanTwoTypes();
 		if (moreThanTwoTypes) {
 			let mi0 = NSMenuItem(title: "All Openable Files", action: "selectUTI:", keyEquivalent: "")
-			mi0.tag = utiType.allType.toRaw()
+			mi0.tag = utiType.allType.rawValue
 			mi0.target = self
 			fileTypeSelectionMenu.addItem(mi0)
 			
@@ -260,7 +260,7 @@ class OpenPanelViewController: NSViewController {
 		for item in utiObjects {
 			if (item.theUtiType == .tracker) {
 				let mi0 = NSMenuItem(title: "All Trackers", action: "selectUTI:", keyEquivalent: "")
-				mi0.tag = utiType.trackerType.toRaw()
+				mi0.tag = utiType.trackerType.rawValue
 				mi0.target = self
 				fileTypeSelectionMenu.addItem(mi0)
 				
@@ -271,7 +271,7 @@ class OpenPanelViewController: NSViewController {
 		for item in utiObjects {
 			if (item.theUtiType == .playlist) {
 				let mi0 = NSMenuItem(title: "All Playlists", action: "selectUTI:", keyEquivalent: "")
-				mi0.tag = utiType.playlistType.toRaw()
+				mi0.tag = utiType.playlistType.rawValue
 				mi0.target = self
 				fileTypeSelectionMenu.addItem(mi0)
 				
@@ -282,7 +282,7 @@ class OpenPanelViewController: NSViewController {
 		for item in utiObjects {
 			if (item.theUtiType == .instrument) {
 				let mi0 = NSMenuItem(title: "All Instruments", action: "selectUTI:", keyEquivalent: "")
-				mi0.tag = utiType.instrumentType.toRaw()
+				mi0.tag = utiType.instrumentType.rawValue
 				mi0.target = self
 				fileTypeSelectionMenu.addItem(mi0)
 				
@@ -293,7 +293,7 @@ class OpenPanelViewController: NSViewController {
 		for item in utiObjects {
 			if (item.theUtiType == .other) {
 				let mi0 = NSMenuItem(title: "All Other", action: "selectUTI:", keyEquivalent: "")
-				mi0.tag = utiType.otherType.toRaw()
+				mi0.tag = utiType.otherType.rawValue
 				mi0.target = self
 				fileTypeSelectionMenu.addItem(mi0)
 				

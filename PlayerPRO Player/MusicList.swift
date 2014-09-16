@@ -144,7 +144,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 				//musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
 				for bookData in dataBookArray {
 					var isStale: ObjCBool = false;
-					if let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: nil, bookmarkDataIsStale: &isStale, error: nil) {
+					if let fullURL = NSURL(byResolvingBookmarkData: bookData, options: .WithoutUI, relativeToURL: nil, bookmarkDataIsStale: &isStale, error: nil) {
 						let obj = MusicListObject(URL: fullURL);
 						musicList.append(obj)
 					} else {
@@ -164,9 +164,8 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 				let aHomeURL = NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
 				for bookData in dataBookArray {
 					var isStale: ObjCBool = false;
-					if let fullURL = NSURL.URLByResolvingBookmarkData(bookData, options: .WithoutUI, relativeToURL: aHomeURL, bookmarkDataIsStale: &isStale, error: nil) {
-						let obj = MusicListObject(URL: fullURL);
-						musicList.append(obj)
+					if let fullURL = NSURL(byResolvingBookmarkData: bookData, options: .WithoutUI, relativeToURL: aHomeURL, bookmarkDataIsStale: &isStale, error: nil) {
+						musicList.append(MusicListObject(URL: fullURL))
 					} else {
 						if (selectedMusic == -1) {
 							//Do nothing

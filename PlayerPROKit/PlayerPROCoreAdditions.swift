@@ -133,7 +133,7 @@ extension PlugInfo {
 	public var importer: Bool {
 		get {
 			switch (self.mode) {
-			case MADPlugModes.Import.toRaw(), MADPlugModes.ImportExport.toRaw():
+			case MADPlugModes.Import.rawValue, MADPlugModes.ImportExport.rawValue:
 				return true
 
 			default:
@@ -145,7 +145,7 @@ extension PlugInfo {
 	public var exporter: Bool {
 		get {
 			switch (self.mode) {
-			case MADPlugModes.Export.toRaw(), MADPlugModes.ImportExport.toRaw():
+			case MADPlugModes.Export.rawValue, MADPlugModes.ImportExport.rawValue:
 				return true
 
 			default:
