@@ -64,14 +64,17 @@ internal enum AudioFormat: OSType {
 			return nil
 		}
 	}
-	
 	#endif
 }
 
 internal struct AudioFormatFlag : RawOptionSetType {
-	var rawValue: UInt32 = 0
-	init(rawValue value: UInt32) { self.rawValue = value }
-	func toRaw() -> UInt32 { return self.rawValue }
+	private var value: UInt32 = 0
+	var rawValue: UInt32 {
+		get {
+			return value
+		}
+	}
+	init(rawValue value: UInt32) { self.value = value }
 	static var allZeros: AudioFormatFlag { return self(rawValue: 0) }
 	static func fromRaw(raw: UInt32) -> AudioFormatFlag? { return self(rawValue: raw) }
 	static func fromMask(raw: UInt32) -> AudioFormatFlag { return self(rawValue: raw) }
@@ -97,14 +100,18 @@ internal struct AudioFormatFlag : RawOptionSetType {
 		#endif
 	}
 	init(_ value: LinearPCMFormatFlag) {
-		self.rawValue = value.toRaw()
+		self.value = value.rawValue
 	}
 }
 
 internal struct LinearPCMFormatFlag : RawOptionSetType {
-	var rawValue: UInt32 = 0
-	init(rawValue value: UInt32) { self.rawValue = value }
-	func toRaw() -> UInt32 { return self.rawValue }
+	private var value: UInt32 = 0
+	var rawValue: UInt32 {
+		get {
+			return value
+		}
+	}
+	init(rawValue value: UInt32) { self.value = value }
 	static var allZeros: LinearPCMFormatFlag { return self(rawValue: 0) }
 	static func fromRaw(raw: UInt32) -> LinearPCMFormatFlag? { return self(rawValue: raw) }
 	static func fromMask(raw: UInt32) -> LinearPCMFormatFlag { return self(rawValue: raw) }
@@ -130,7 +137,7 @@ internal struct LinearPCMFormatFlag : RawOptionSetType {
 		#endif
 	}
 	static var FlagsSampleFractionShift: LinearPCMFormatFlag { return self(rawValue: 7) }
-	static var FlagsSampleFractionMask : LinearPCMFormatFlag { return self(rawValue: 0x3F << FlagsSampleFractionShift.toRaw()) }
+	static var FlagsSampleFractionMask : LinearPCMFormatFlag { return self(rawValue: 0x3F << FlagsSampleFractionShift.rawValue) }
 }
 
 extension AudioStreamBasicDescription {
@@ -160,7 +167,7 @@ extension AudioStreamBasicDescription {
 			return AudioFormatFlag.fromMask(mFormatFlags)
 		}
 		set {
-			mFormatFlags = newValue.toRaw()
+			mFormatFlags = newValue.rawValue
 		}
 	}
 	
