@@ -14,5 +14,7 @@
 @property (readonly) long size;
 @property (readonly, copy) NSString *name;
 
-- (instancetype)initWithHandle:(Handle)resHandle;
+- (instancetype)initWithHandle:(Handle)resHandle resourceIndex:(ResourceCount)resIdx;
+
+- (NSData*)data;
 @end

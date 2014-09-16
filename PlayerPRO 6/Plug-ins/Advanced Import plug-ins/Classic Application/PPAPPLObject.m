@@ -9,15 +9,16 @@
 #import "PPAPPLObject.h"
 
 @interface PPAPPLObject ()
+@property (readwrite, copy) NSString *name;
 @property (readwrite) ResID resourceID;
 @property (readwrite) ResType resourceType;
 @property (readwrite) long size;
-@property (readwrite, copy) NSString *name;
+@property ResourceCount indStrIdx;
 @end
 
 @implementation PPAPPLObject
 
-- (instancetype)initWithHandle:(Handle)resHandle
+- (instancetype)initWithHandle:(Handle)resHandle resourceIndex:(ResourceCount)resIdx
 {
 	if (self = [super init]) {
 		Str255 nameStr;
@@ -28,9 +29,23 @@
 		self.name = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, nameStr, kCFStringEncodingMacRoman));
 		self.resourceID = resIDShort;
 		self.resourceType = resTypeCode;
+		self.indStrIdx = resIdx;
 	}
 	
 	return self;
+}
+
+- (NSData*)data
+{
+	Handle myRes = Get1IndResource(self.resourceType, self.indStrIdx);
+	DetachResource(myRes);
+	
+	HLock(myRes);
+	NSData *ourData = [[NSData alloc] initWithBytes:*myRes length:GetHandleSize(myRes)];
+	HUnlock(myRes);
+	DisposeHandle(myRes);
+
+	return ourData;
 }
 
 @end

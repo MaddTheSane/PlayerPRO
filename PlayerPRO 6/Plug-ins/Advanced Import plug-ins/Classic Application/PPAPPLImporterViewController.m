@@ -13,6 +13,7 @@
 @end
 
 @implementation PPAPPLImporterViewController
+@synthesize resourceReference;
 
 - (void)windowDidLoad
 {
@@ -29,6 +30,11 @@
 - (IBAction)cancelImport:(id)sender
 {
 	
+}
+
+- (void)dealloc
+{
+	CloseResFile(resourceReference);
 }
 
 @end
