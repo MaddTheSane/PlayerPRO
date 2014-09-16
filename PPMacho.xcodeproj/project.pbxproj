@@ -124,6 +124,7 @@
 		550A474418A455CC0052AED7 /* VSTFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 550A474218A455CC0052AED7 /* VSTFunctions.h */; };
 		550A474818A45D350052AED7 /* OSX-VSTPlugIn.c in Sources */ = {isa = PBXBuildFile; fileRef = 557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.c */; };
 		550A8FD819C74ED200588849 /* ComplexFadePlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550A8FD719C74ED200588849 /* ComplexFadePlug.swift */; };
+		550A8FDB19C7B19A00588849 /* PPAPPLObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550A8FDA19C7B19A00588849 /* PPAPPLObject.m */; };
 		550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
 		550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
@@ -1909,6 +1910,8 @@
 		550A474518A458380052AED7 /* stub-VSTPlugIn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "stub-VSTPlugIn.c"; sourceTree = "<group>"; };
 		550A8FD619C74ED000588849 /* Complex Fade-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Complex Fade-Bridging-Header.h"; sourceTree = "<group>"; };
 		550A8FD719C74ED200588849 /* ComplexFadePlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexFadePlug.swift; sourceTree = "<group>"; };
+		550A8FD919C7B19A00588849 /* PPAPPLObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLObject.h; sourceTree = "<group>"; };
+		550A8FDA19C7B19A00588849 /* PPAPPLObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLObject.m; sourceTree = "<group>"; };
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
 		550B011310BA1E1C004FC5D7 /* PPPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPrivate.h; sourceTree = "<group>"; };
 		550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "OSX-CoreAudio.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -3492,6 +3495,8 @@
 		551E166F10CCD619003C842A /* Classic Application */ = {
 			isa = PBXGroup;
 			children = (
+				550A8FD919C7B19A00588849 /* PPAPPLObject.h */,
+				550A8FDA19C7B19A00588849 /* PPAPPLObject.m */,
 				5563A49C19AAC0D50051CC4B /* PPAPPLImporterViewController.h */,
 				5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */,
 				55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */,
@@ -7156,6 +7161,7 @@
 				5563A49E19AAC0D50051CC4B /* PPAPPLImporterViewController.m in Sources */,
 				5501BEC818AC05A400602206 /* MADH.c in Sources */,
 				55868A7C10BFB4B300FCC24D /* APPL.c in Sources */,
+				550A8FDB19C7B19A00588849 /* PPAPPLObject.m in Sources */,
 				5501BEC918AC092500602206 /* MADI.c in Sources */,
 				5501BEC718AC029E00602206 /* MADfg.c in Sources */,
 			);
@@ -10106,6 +10112,7 @@
 					"$(inherited)",
 					"MADAPPIMPORT=1",
 				);
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/APPL-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				WRAPPER_EXTENSION = ppextimp;
@@ -10120,6 +10127,7 @@
 					"$(inherited)",
 					"MADAPPIMPORT=1",
 				);
+				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/APPL-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				WRAPPER_EXTENSION = ppextimp;

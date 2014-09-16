@@ -12,6 +12,7 @@
 EXP @interface PPAPPLImporterViewController : NSWindowController
 @property (weak) IBOutlet NSTableView *resourceNamesTable;
 @property (weak) IBOutlet NSTableView *resourceIDsTable;
+@property (copy) PPComplexImportHandler currentBlock;
 
 - (IBAction)importMusicObject:(id)sender;
 - (IBAction)cancelImport:(id)sender;
