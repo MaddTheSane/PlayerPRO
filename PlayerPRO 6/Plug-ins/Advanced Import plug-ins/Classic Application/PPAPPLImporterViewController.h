@@ -9,11 +9,13 @@
 #import <Cocoa/Cocoa.h>
 #import "PPAPPLImporter.h"
 
-EXP @interface PPAPPLImporterViewController : NSWindowController
+@interface PPAPPLImporterViewController : NSWindowController
 @property (weak) IBOutlet NSTableView *resourceNamesTable;
 @property (weak) IBOutlet NSTableView *resourceIDsTable;
 @property (copy) PPComplexImportHandler currentBlock;
 @property ResFileRefNum resourceReference;
+@property (strong) NSArray *resourceIDs;
+@property (strong) NSArray *resourceTypes;
 
 - (IBAction)importMusicObject:(id)sender;
 - (IBAction)cancelImport:(id)sender;

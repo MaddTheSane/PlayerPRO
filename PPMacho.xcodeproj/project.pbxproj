@@ -466,7 +466,6 @@
 		5586884810BF632500FCC24D /* ULT.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340FE10BB5368005208D1 /* ULT.c */; };
 		5586884910BF632C00FCC24D /* UMX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5533410010BB5368005208D1 /* UMX.c */; };
 		5586884A10BF633300FCC24D /* XM.c in Sources */ = {isa = PBXBuildFile; fileRef = 5533410310BB5368005208D1 /* XM.c */; };
-		55868A7C10BFB4B300FCC24D /* APPL.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DD10BB5368005208D1 /* APPL.c */; };
 		558D4DDA1666F14E00A333E8 /* PPDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DD81666F14E00A333E8 /* PPDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */ = {isa = PBXBuildFile; fileRef = 558D4DD91666F14E00A333E8 /* PPDriver.m */; };
 		558D4DDD1666F19600A333E8 /* PPLibrary_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 558D4DDC1666F19600A333E8 /* PPLibrary_PPKPrivate.h */; };
@@ -7130,7 +7129,6 @@
 				55BF238E19A937C9005B1F96 /* PPAPPLImporter.m in Sources */,
 				5563A49E19AAC0D50051CC4B /* PPAPPLImporterViewController.m in Sources */,
 				5501BEC818AC05A400602206 /* MADH.c in Sources */,
-				55868A7C10BFB4B300FCC24D /* APPL.c in Sources */,
 				550A8FDB19C7B19A00588849 /* PPAPPLObject.m in Sources */,
 				5501BEC918AC092500602206 /* MADI.c in Sources */,
 				5501BEC718AC029E00602206 /* MADfg.c in Sources */,

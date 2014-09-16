@@ -9,6 +9,7 @@
 #import "PPAPPLImporter.h"
 #import "PPAPPLObject.h"
 #include "APPL.h"
+#import "PPAPPLImporterViewController.h"
 
 @interface PPAPPLImporter ()
 
@@ -41,22 +42,24 @@ static const OSType MADTypes[] = {'MADK', 'MADI', 'MADF', 'MADG', 'MADH'};
 	CFURLGetFSRef((__bridge CFURLRef)theURL, &fileRef);
 	iFileRefI = FSOpenResFile(&fileRef, fsRdPerm);
 	UseResFile(iFileRefI);
-	NSMutableDictionary *applObjectDict = [NSMutableDictionary new];
+	NSMutableDictionary *applObjectDict = [[NSMutableDictionary alloc] initWithCapacity:5];
 	
 	for (int i = 0; i < sizeof(MADTypes) / sizeof(MADTypes[0]); i++) {
 		OSType currentType = MADTypes[i];
-		NSMutableArray *applObjectArray = [NSMutableArray new];
 		ResourceCount n = Count1Resources(currentType);
+		NSMutableArray *applObjectArray = [[NSMutableArray alloc] initWithCapacity:n];
 		for (ResourceCount j = 1; j <= n; j++) {
 			Handle resourceHandle = Get1IndResource(currentType, j);
 
 			PPAPPLObject *obj = [[PPAPPLObject alloc] initWithHandle:resourceHandle resourceIndex:j];
 			[applObjectArray addObject:obj];
+			ReleaseResource(resourceHandle);
 		}
 		applObjectDict[CFBridgingRelease(UTCreateStringForOSType(currentType))] = [applObjectArray copy];
 	}
 	
-	//CloseResFile(iFileRefI);
+	PPAPPLImporterViewController *controller = [[PPAPPLImporterViewController alloc] initWithWindowNibName:@"PPAPPLImporter"];
+	controller.resourceReference = iFileRefI;
 }
 
 - (BOOL)canImportURL:(NSURL*)theURL error:(out NSError**)outErr
