@@ -8,20 +8,45 @@
 
 #import "PPToneGeneratorController.h"
 #include <PlayerPROCore/MADPlug.h>
-#include <math.h>
 #include <tgmath.h>
 @import PlayerPROKit;
 
 #define KHZ 22254.54545
 
-static Ptr CreateAudio8Ptr(long AudioLength, long AudioFreq, long AudioAmp, ToneGenerator AudioType, bool stereo)
+@interface PPToneGeneratorController ()
+@property (strong) NSArray *toneRadios;
+@property BOOL disabledData;
+@property char *audio8Ptr;
+@property short *audio16Ptr;
+- (void)clearAudioPointers;
+@end
+
+@implementation PPToneGeneratorController
+@synthesize audioAmplitude;
+@synthesize audioFrequency;
+@synthesize audioLength;
+@synthesize generator;
+@synthesize toneRadios;
+@synthesize disabledData;
+@synthesize audioBitRate;
+@synthesize stereoOrMono;
+@synthesize silentRadio;
+@synthesize triangleRadio;
+@synthesize squareRadio;
+@synthesize waveRadio;
+@synthesize audio8Ptr;
+@synthesize audio16Ptr;
+@synthesize theData;
+
++ (Ptr)createAudio8PtrWithLength:(int)AudioLength frequency:(int)AudioFreq amplitude:(double)AudioAmp generator:(ToneGenerator)AudioType stereo:(BOOL)stereo
 {
 	Ptr		Audio8Ptr;
 	int		i, temp, inter = 0, x, dest;
 	bool	UpDown;
 	
-	if (stereo)
-		AudioLength *= 2L;
+	if (stereo) {
+		AudioLength *= 2;
+	}
 	
 	Audio8Ptr = malloc(AudioLength);
 	if (Audio8Ptr == NULL)
@@ -30,7 +55,7 @@ static Ptr CreateAudio8Ptr(long AudioLength, long AudioFreq, long AudioAmp, Tone
 	switch (AudioType) {
 		case wave:
 			for (i = 0, x = 0; i < AudioLength; i++, x++) {
-				temp = 127.0 * sin((((double)x * (long double)AudioFreq * M_PI * 2.0) / KHZ));
+				double temp = 127.0 * sin((x * AudioFreq * M_PI * 2.0) / KHZ);
 				
 				/** Amplitude resizing **/
 				temp *= AudioAmp;
@@ -126,14 +151,29 @@ static Ptr CreateAudio8Ptr(long AudioLength, long AudioFreq, long AudioAmp, Tone
 	return Audio8Ptr;
 }
 
-static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, ToneGenerator AudioType, bool stereo)
++ (NSData *)audio8DataWithLength:(int)AudioLength frequency:(int)AudioFreq amplitude:(double)AudioAmp generator:(ToneGenerator)AudioType stereo:(BOOL)stereo
+{
+	void *ourData = [self createAudio8PtrWithLength:AudioLength frequency:AudioFreq amplitude:AudioAmp generator:AudioType stereo:stereo];
+	
+	if (ourData == NULL) {
+		return nil;
+	}
+	
+	if (stereo) {
+		AudioLength *= 2;
+	}
+	
+	return [[NSData alloc] initWithBytesNoCopy:ourData length:AudioLength];
+}
+
++ (short*)createAudio16PtrWithLength:(int)AudioLength frequency:(int)AudioFreq amplitude:(double)AudioAmp generator:(ToneGenerator)AudioType stereo:(BOOL)stereo
 {
 	short	*Audio16Ptr;
 	int		i, temp, inter = 0, x, dest;
 	bool	UpDown;
 	
 	if (stereo)
-		AudioLength *= 2L;
+		AudioLength *= 2;
 	
 	Audio16Ptr = (short*)malloc(AudioLength*2);
 	if (Audio16Ptr == NULL)
@@ -142,7 +182,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 	switch (AudioType) {
 		case wave:
 			for (i = 0, x = 0; i < AudioLength; i++, x++) {
-				temp = 32767.0 * sin((((double)x * (double)AudioFreq * M_PI * 2.0) / KHZ));
+				double temp = 32767.0 * sin((x * AudioFreq * M_PI * 2.0) / KHZ);
 				
 				/** Amplitude resizing **/
 				temp *= AudioAmp;
@@ -241,30 +281,21 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 	return Audio16Ptr;
 }
 
-@interface PPToneGeneratorController ()
-@property (strong) NSArray *toneRadios;
-@property BOOL disabledData;
-@property char *audio8Ptr;
-@property short *audio16Ptr;
-- (void)clearAudioPointers;
-@end
++ (NSData *)audio16DataWithLength:(int)AudioLength frequency:(int)AudioFreq amplitude:(double)AudioAmp generator:(ToneGenerator)AudioType stereo:(BOOL)stereo
+{
+	void *ourData = [self createAudio16PtrWithLength:AudioLength frequency:AudioFreq amplitude:AudioAmp generator:AudioType stereo:stereo];
+	
+	if (ourData == NULL) {
+		return nil;
+	}
+	
+	if (stereo) {
+		AudioLength *= 2;
+	}
+	
+	return [[NSData alloc] initWithBytesNoCopy:ourData length:AudioLength * 2];
+}
 
-@implementation PPToneGeneratorController
-@synthesize audioAmplitude;
-@synthesize audioFrequency;
-@synthesize audioLength;
-@synthesize generator;
-@synthesize toneRadios;
-@synthesize disabledData;
-@synthesize audioBitRate;
-@synthesize stereoOrMono;
-@synthesize silentRadio;
-@synthesize triangleRadio;
-@synthesize squareRadio;
-@synthesize waveRadio;
-@synthesize audio8Ptr;
-@synthesize audio16Ptr;
-@synthesize theData;
 
 - (instancetype)initWithWindow:(NSWindow *)window
 {
@@ -302,12 +333,12 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 	
 	switch (theData.amplitude) {
 		case 8:
-			audio8Ptr = CreateAudio8Ptr(audioLength, audioFrequency, audioAmplitude * 100, generator, theData.stereo);
+			audio8Ptr = [[self class] createAudio8PtrWithLength:audioLength frequency:audioFrequency amplitude:audioAmplitude * 100 generator:generator stereo:theData.stereo];
 			break;
 			
 		case 16:
 		default:
-			audio16Ptr = CreateAudio16Ptr(audioLength, audioFrequency, audioAmplitude * 100, generator, theData.stereo);
+			audio16Ptr = [[self class] createAudio16PtrWithLength:audioLength frequency:audioFrequency amplitude:audioAmplitude * 100 generator:generator stereo:theData.stereo];
 			audioLength *= 2;
 			break;
 	}
@@ -355,7 +386,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 	
 	if (theData.data != nil && theData.data.length > 0) {
 		for (NSCell *cell in [[stereoOrMono cells] arrayByAddingObjectsFromArray:[audioBitRate cells]]) {
-			[cell setEnabled:NO];
+			cell.enabled = NO;
 		}
 		
 		self.disabledData = YES;
@@ -366,7 +397,7 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 - (IBAction)toggleToneType:(id)sender
 {
 	generator = (ToneGenerator)[sender tag];
-	for (NSButtonCell *radio in toneRadios) {
+	for (NSButton *radio in toneRadios) {
 		[radio setIntegerValue:(generator == [radio tag]) ? NSOnState : NSOffState];
 	}
 }
@@ -375,19 +406,24 @@ static short* CreateAudio16Ptr(long AudioLength, long AudioFreq, long AudioAmp, 
 {
 	[self clearAudioPointers];
 	
+	NSData *ourData;
+	
 	switch(theData.amplitude) {
 		case 8:
-			audio8Ptr = CreateAudio8Ptr(audioLength, audioFrequency, audioAmplitude, generator, theData.stereo);
-			if (audio8Ptr != NULL) {
-				[_theDriver playSoundDataFromPointer:audio8Ptr withSize:audioLength fromChannel:0 amplitude:0xFF bitRate:theData.c2spd isStereo:theData.stereo];
+			ourData = [[self class] audio8DataWithLength:audioLength frequency:audioFrequency amplitude:audioAmplitude generator:generator stereo:theData.stereo];
+			if (ourData) {
+				[_theDriver playSoundDataFromData:ourData fromChannel:0 amplitude:0xFF bitRate:theData.c2spd isStereo:theData.stereo];
 			}
+			audio8Ptr = [[self class] createAudio8PtrWithLength:audioLength frequency:audioFrequency amplitude:audioAmplitude generator:generator stereo:theData.stereo];
 			break;
 			
 		case 16:
-			audio16Ptr	= CreateAudio16Ptr(audioLength, audioFrequency, audioAmplitude, generator, theData.stereo);
-			if (audio16Ptr != NULL) {
-				[_theDriver playSoundDataFromPointer:audio16Ptr withSize:audioLength * 2 fromChannel:0 amplitude:0xFF bitRate:theData.c2spd isStereo:theData.stereo];
+			ourData = [[self class] audio16DataWithLength:audioLength frequency:audioFrequency amplitude:audioAmplitude generator:generator stereo:theData.stereo];
+			if (ourData) {
+				[_theDriver playSoundDataFromData:ourData fromChannel:0 amplitude:0xFF bitRate:theData.c2spd isStereo:theData.stereo];
 			}
+			audio16Ptr = [[self class] createAudio16PtrWithLength:audioLength frequency:audioFrequency amplitude:audioAmplitude generator:generator stereo:theData.stereo];
+
 			break;
 	}
 }

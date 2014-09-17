@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, ToneGenerator)
 @property NSInteger selectionStart;
 @property NSInteger selectionEnd;
 @property BOOL stereoMode;
-@property long audioLength;
+@property int audioLength;
 @property double audioAmplitude;
 @property int audioFrequency;
 @property ToneGenerator generator;

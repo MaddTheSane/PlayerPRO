@@ -25,7 +25,7 @@
 - (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentWindow:(NSWindow*)document handler:(PPPlugErrorBlock)handle;
 {
 	long	AudioLength;
-	int		AudioFreq, AudioAmp;
+	int		AudioFreq = 440;
 	
 	AudioLength = selRange.length;
 	if (theData.amplitude == 16)
@@ -33,16 +33,13 @@
 	if (theData.stereo)
 		AudioLength /= 2;
 	
-	AudioFreq	= 440;
-	AudioAmp	= 100;
-	
 	/********************/
 	
 	PPToneGeneratorController *controller = [[PPToneGeneratorController alloc] initWithWindowNibName:@"PPToneGeneratorController"];
 	
 	controller.theData = theData;
-	controller.audioLength = AudioLength;
-	controller.audioAmplitude = (double)(AudioAmp) / 100.0;
+	controller.audioLength = (int)AudioLength;
+	controller.audioAmplitude = 1.0;
 	controller.audioFrequency = AudioFreq;
 	controller.selectionStart = selRange.location;
 	controller.selectionEnd = NSMaxRange(selRange);
