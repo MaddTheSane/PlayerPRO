@@ -20,6 +20,8 @@
 #include "PlayerPROCore.h"
 #include "MADPlug.h"
 
+sData* inMADCreateSample();
+
 sData *MADCreateSampleRaw()
 {
 	return inMADCreateSample();
