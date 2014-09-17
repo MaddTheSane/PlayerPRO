@@ -119,7 +119,7 @@ Gw
 </string>
                         </buttonCell>
                         <connections>
-                            <action selector="showWindow:" target="-2" id="iMn-P4-XpH"/>
+                            <action selector="cancel:" target="-2" id="JIH-8l-WhC"/>
                         </connections>
                     </button>
                 </subviews>

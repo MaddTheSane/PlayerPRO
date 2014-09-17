@@ -183,7 +183,7 @@ extension AudioStreamBasicDescription {
 		mReserved = 0
 	}
 	
-	internal init(sampleRate: Float64, formatID: AudioFormat = .LinearPCM, formatFlags: AudioFormatFlag, bitsPerChannel: UInt32, channelsPerFrame: UInt32, framesPerPacket: UInt32 = 1) {
+	internal init(sampleRate: Float64, formatID: AudioFormat = .LinearPCM, formatFlags: AudioFormatFlag = .NativeFloatPacked, bitsPerChannel: UInt32, channelsPerFrame: UInt32, framesPerPacket: UInt32 = 1) {
 		mSampleRate = sampleRate
 		mFormatID = formatID.rawValue
 		mFormatFlags = formatFlags.rawValue

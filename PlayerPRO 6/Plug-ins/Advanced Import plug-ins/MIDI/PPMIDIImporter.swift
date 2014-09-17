@@ -30,14 +30,13 @@ import PlayerPROKit
 				if outErr != nil {
 					outErr.memory = CreateErrorFromMADErrorType(.FileNotSupportedByThisPlug)
 				}
-				return false
 			}
 		} else {
 			if outErr != nil {
 				outErr.memory = CreateErrorFromMADErrorType(.ReadingErr)
 			}
-			return false
 		}
+		return false
 	}
 	
 	public override init() {

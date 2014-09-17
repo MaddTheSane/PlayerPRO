@@ -41,6 +41,7 @@ import Cocoa
 	}
 	
 	@IBAction func okayButtonPressed(sender: AnyObject) {
+		NSApplication.sharedApplication().endModalSession(modalSession)
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.MIDI-Import")
 		conn.remoteObjectInterface = NSXPCInterface(`protocol`: PPMIDIImportHelper.self)
 		
@@ -54,11 +55,10 @@ import Cocoa
 			}
 			conn.invalidate();
 		})
-		NSApplication.sharedApplication().endModalSession(modalSession)
 	}
 
 	@IBAction func cancelButtonPressed(sender: AnyObject) {
-		handler(nil, .UserCanceledErr)
 		NSApplication.sharedApplication().endModalSession(modalSession)
+		handler(nil, .UserCanceledErr)
 	}
 }

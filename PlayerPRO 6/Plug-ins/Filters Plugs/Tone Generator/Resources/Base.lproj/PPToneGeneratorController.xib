@@ -102,6 +102,9 @@ Gw
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
+                                    <connections>
+                                        <action selector="toggleToneType:" target="-2" id="QaB-3n-7K3"/>
+                                    </connections>
                                 </button>
                                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="57">
                                     <rect key="frame" x="8" y="9" width="48" height="48"/>
@@ -127,6 +130,9 @@ Gw
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
+                                    <connections>
+                                        <action selector="toggleToneType:" target="-2" id="GgV-5y-asA"/>
+                                    </connections>
                                 </button>
                                 <button tag="5" translatesAutoresizingMaskIntoConstraints="NO" id="117">
                                     <rect key="frame" x="63" y="24" width="73" height="18"/>
@@ -134,6 +140,9 @@ Gw
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
+                                    <connections>
+                                        <action selector="toggleToneType:" target="-2" id="c9u-5i-uXn"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </view>
