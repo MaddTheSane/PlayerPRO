@@ -30,14 +30,14 @@ static CFTypeID numbertype;
 static CFTypeID arraytype;
 static CFTypeID booleantype;
 
-typedef enum _MADPlugCapabilities {
+typedef NS_OPTIONS(unsigned char, MADPlugCapabilities) {
 	PPMADCanDoNothing = 0,
 	PPMADCanImport = 1 << 0,
 	PPMADCanExport = 1 << 1,
 	PPMADCanDoBoth = PPMADCanImport | PPMADCanExport
-} MADPlugCapabilities;
+};
 
-static Boolean GetBoolFromType(CFTypeRef theType)
+static BOOL GetBoolFromType(CFTypeRef theType)
 {
 	CFTypeID theID = CFGetTypeID(theType);
 	if (theID == booleantype) {
@@ -49,10 +49,10 @@ static Boolean GetBoolFromType(CFTypeRef theType)
 	} else if (theID == stringtype) {
 		return [(__bridge NSString*)theType boolValue];
 	} else
-		return false;
+		return NO;
 }
 
-static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
+static BOOL fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 {
 	{
 		CFTypeID InfoDictionaryType;
@@ -157,7 +157,7 @@ static Boolean fillPlugFromBundle(CFBundleRef theBundle, PlugInfo *thePlug)
 	thePlug->file = theBundle;
 	CFRetain(thePlug->file);
 	
-	return true;
+	return YES;
 	
 badplug4:
 	CFRelease(thePlug->UTItypes);
@@ -165,7 +165,7 @@ badplug3:
 	CFRelease(thePlug->AuthorString);
 	CFRelease(thePlug->MenuName);
 badplug:
-	return false;
+	return NO;
 }
 
 static BOOL MakeMADPlug(MADLibrary *inMADDriver, CFBundleRef tempBundle)
@@ -279,24 +279,25 @@ badplug:
  * Framework PlugIns
  */
 
-static CFMutableArrayRef CreateDefaultPluginFolderLocations()
+static CFMutableArrayRef CreateDefaultPluginFolderLocations() CF_RETURNS_RETAINED;
+CFMutableArrayRef CreateDefaultPluginFolderLocations()
 {
 	@autoreleasepool {
 		NSFileManager *fm = [NSFileManager defaultManager];
 		NSMutableArray *PlugFolds = [NSMutableArray arrayWithCapacity:6];
 		//Application Main Bundle
 		NSBundle *mainBundle = [NSBundle mainBundle];
-		if (mainBundle != NULL) {
+		if (mainBundle != nil) {
 			[PlugFolds addObject:[mainBundle builtInPlugInsURL]];
 		}
 		
 		mainBundle = [NSBundle bundleWithIdentifier:@"net.sourceforge.playerpro.PlayerPROCore"];
-		if (mainBundle != NULL) {
+		if (mainBundle != nil) {
 			[PlugFolds addObject:[mainBundle builtInPlugInsURL]];
 		}
 		
 		mainBundle = [NSBundle bundleWithIdentifier:@"net.sourceforge.playerpro.PlayerPROKit"];
-		if (mainBundle != NULL) {
+		if (mainBundle != nil) {
 			[PlugFolds addObject:[mainBundle builtInPlugInsURL]];
 		}
 		
@@ -312,32 +313,31 @@ static CFMutableArrayRef CreateDefaultPluginFolderLocations()
 
 static BOOL CompareTwoNSURLs(NSURL *urla, NSURL *urlb)
 {
-	@autoreleasepool {
-		id refA = nil, refB = nil;
-		BOOL bothAreValid = YES;
-		BOOL theSame = NO;
-		
-		if ([urla getResourceValue:&refA forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
-			bothAreValid = NO;
-		} else if ([urlb getResourceValue:&refB forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
-			bothAreValid = NO;
-		}
-		
-		if (bothAreValid)
-			theSame = [refA isEqual:refB];
-		
-		return theSame;
+	id refA = nil, refB = nil;
+	BOOL bothAreValid = YES;
+	BOOL theSame = NO;
+	
+	if ([urla getResourceValue:&refA forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
+		bothAreValid = NO;
+	} else if ([urlb getResourceValue:&refB forKey:NSURLFileResourceIdentifierKey error:NULL] == NO) {
+		bothAreValid = NO;
 	}
+	
+	if (bothAreValid)
+		theSame = [refA isEqual:refB];
+	
+	return theSame;
 }
 
-static inline Boolean CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
+static inline bool CompareTwoCFURLs(CFURLRef urla, CFURLRef urlb)
 {
 	@autoreleasepool {
 		return CompareTwoNSURLs((__bridge NSURL*)urla, (__bridge NSURL*)urlb);
 	}
 }
 
-static CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(const char *UserAddedPlace)
+static CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(const char *UserAddedPlace) CF_RETURNS_RETAINED;
+CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(const char *UserAddedPlace)
 {
 	CFMutableArrayRef FoldLocs = CreateDefaultPluginFolderLocations();
 	BOOL isTheSame = NO;
@@ -358,7 +358,7 @@ static CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(const char *U
 	return FoldLocs;
 }
 
-static MADErr PPMADInfoFile(char *AlienFile, MADInfoRec *InfoRec)
+static MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 {
 	MADSpec		*theMAD;
 	long		fileSize;
@@ -385,12 +385,10 @@ static MADErr PPMADInfoFile(char *AlienFile, MADInfoRec *InfoRec)
 	InfoRec->totalInstruments = theMAD->numInstru;
 	InfoRec->fileSize = fileSize;
 	
-	theMAD = NULL;
-	
 	return MADNoErr;
 }
 
-MADErr CallImportPlug(MADLibrary				*inMADDriver,
+MADErr CallImportPlug(MADLibrary			*inMADDriver,
 					 short					PlugNo,			// CODE du plug
 					 OSType					order,
 					 char					*AlienFile,
@@ -410,8 +408,6 @@ MADErr CallImportPlug(MADLibrary				*inMADDriver,
 void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 {
 	CFMutableArrayRef	PlugLocations = NULL;
-	CFArrayRef			somePlugs = NULL;
-	CFIndex				PlugLocNums, PlugNums, i, x;
 	
 	inMADDriver->ThePlug = (PlugInfo*)calloc(MAXPLUG, sizeof(PlugInfo));
 	inMADDriver->TotalPlug = 0;
@@ -421,13 +417,13 @@ void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 		PlugLocations = CreatePluginFolderLocationsWithFolderPath(PlugsFolderName);
 	}
 	
-	PlugLocNums	= CFArrayGetCount(PlugLocations);
+	CFIndex PlugLocNums = CFArrayGetCount(PlugLocations);
 	@autoreleasepool {
-		for (i = 0; i < PlugLocNums; i++) {
+		for (CFIndex i = 0; i < PlugLocNums; i++) {
 			CFURLRef aPlugLoc = CFArrayGetValueAtIndex(PlugLocations, i);
-			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, CFSTR("ppimpexp"));
-			PlugNums = CFArrayGetCount(somePlugs);
-			for (x = 0; x < PlugNums; x++) {
+			CFArrayRef somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, CFSTR("ppimpexp"));
+			CFIndex PlugNums = CFArrayGetCount(somePlugs);
+			for (CFIndex x = 0; x < PlugNums; x++) {
 				CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
 				MakeMADPlug(inMADDriver, tempBundleRef);
 				//We do this to prevent resource/memory leak
