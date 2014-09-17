@@ -9,7 +9,7 @@
 import Foundation
 import PlayerPROKit.PPPlugIns
 
-@objc(PPCompFadePlug) public class ComplexFadePlug: NSObject, PPDigitalPlugin {
+@objc(PPCompFadePlug) public final class ComplexFadePlug: NSObject, PPDigitalPlugin {
 	public let hasUIConfiguration = true
 	
 	public func runWithPcmd(aPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver!) -> MADErr {

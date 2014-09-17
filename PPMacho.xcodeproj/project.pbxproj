@@ -517,6 +517,7 @@
 		55ADD23F19B4F858005588B5 /* PlayerPROKit_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD23E19B4F858005588B5 /* PlayerPROKit_Tests.swift */; };
 		55ADD24C19B4F895005588B5 /* PlayerPRO_Player_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD24B19B4F895005588B5 /* PlayerPRO_Player_Tests.m */; };
 		55ADD25B19B4F8BA005588B5 /* PlayerPRO_6_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD25A19B4F8BA005588B5 /* PlayerPRO_6_Tests.swift */; };
+		55AF3F3719C9427300F75AC1 /* CompFadeNoteFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55268A571874CDD200A82269 /* CompFadeNoteFormatter.m */; };
 		55B1B4F3166A850E00820424 /* PPDriver_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F2166A850D00820424 /* PPDriver_Private.h */; };
 		55B1B4F7166A861900820424 /* PPMusicObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F5166A861900820424 /* PPMusicObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B1B4F6166A861900820424 /* PPMusicObject.m */; };
@@ -536,7 +537,6 @@
 		55B5BFF119AFDDB100EF692E /* PPRunAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55993EF519A340FF00C2078E /* PPRunAlert.swift */; };
 		55B5DF0419A259370042E062 /* PPMIDIImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0319A259370042E062 /* PPMIDIImporter.swift */; };
 		55B777A418E779ED001E5104 /* InstrumentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B777A318E77998001E5104 /* InstrumentInfoView.xib */; };
-		55B797E610D6E7070073E379 /* CompFade.r in Rez */ = {isa = PBXBuildFile; fileRef = 554E0FE210D6C79D00BB619C /* CompFade.r */; };
 		55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B7E65A161D1D4E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B7E65B161D1D58000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -6639,7 +6639,6 @@
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55B797E610D6E7070073E379 /* CompFade.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7200,6 +7199,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55AF3F3719C9427300F75AC1 /* CompFadeNoteFormatter.m in Sources */,
 				550A8FD819C74ED200588849 /* ComplexFadePlug.swift in Sources */,
 				552C440217DFDE1100AFCB5C /* ComplexFadeController.m in Sources */,
 			);

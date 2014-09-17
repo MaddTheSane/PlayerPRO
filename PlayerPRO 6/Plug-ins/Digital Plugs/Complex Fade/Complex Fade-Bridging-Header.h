@@ -3,4 +3,3 @@
 //
 
 #import "ComplexFadeController.h"
-#import "CompFadeNoteFormatter.h"

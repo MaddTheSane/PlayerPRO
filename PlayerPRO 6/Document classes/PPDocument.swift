@@ -576,12 +576,12 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 	}
 	
 	@IBAction func okayExportSettings(sender: AnyObject!) {
-		NSApplication.sharedApplication().endSheet(exportWindow, returnCode: NSAlertDefaultReturn)
+		(NSApp as NSApplication).endSheet(exportWindow, returnCode: NSAlertDefaultReturn)
 		exportWindow.close()
 	}
 	
 	@IBAction func cancelExportSettings(sender: AnyObject!) {
-		NSApplication.sharedApplication().endSheet(exportWindow, returnCode: NSAlertAlternateReturn)
+		(NSApp as NSApplication).endSheet(exportWindow, returnCode: NSAlertAlternateReturn)
 		exportWindow.close()
 	}
 	
