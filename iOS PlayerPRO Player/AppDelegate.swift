@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 	override init() {
 		let tmpDict = [PPRememberMusicList: true,
 		PPLoadMusicAtListLoad: false,
-		PPAfterPlayingMusic: PlaylistMode.StopPlaying.toRaw(),
+		PPAfterPlayingMusic: PlaylistMode.StopPlaying.rawValue,
 		PPGotoStartupAfterPlaying: true,
 		PPSaveModList: true,
 		PPLoadMusicAtMusicLoad: false,
@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 		
 		PPSoundOutBits: 16,
 		PPSoundOutRate: 44100,
-		PPSoundDriver: Int(MADSoundOutput.CoreAudioDriver.toRaw()),
+		PPSoundDriver: Int(MADSoundOutput.CoreAudioDriver.rawValue),
 		PPStereoDelayToggle: true,
 		PPReverbToggle: false,
 		PPSurroundToggle: false,

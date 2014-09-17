@@ -165,7 +165,7 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 		*atype = nil;
 		return anErr;
 	}
-	*atype = CFBridgingRelease(UTCreateStringForOSType(Ptr2OSType(aChar)));
+	*atype = [[NSString alloc] initWithBytes:aChar length:4 encoding:NSMacOSRomanStringEncoding];
 	return anErr;
 }
 
@@ -185,7 +185,7 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 		*atype = nil;
 		return anErr;
 	}
-	*atype = CFBridgingRelease(UTCreateStringForOSType(Ptr2OSType(aChar)));
+	*atype = [[NSString alloc] initWithBytes:aChar length:4 encoding:NSMacOSRomanStringEncoding];
 	return anErr;
 }
 
