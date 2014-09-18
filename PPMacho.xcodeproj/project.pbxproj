@@ -181,7 +181,6 @@
 		552788031981C95100708906 /* MusicListDragClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552788021981C95100708906 /* MusicListDragClass.swift */; };
 		55281D07199B32D400C998AF /* PPPasteboardHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = 55281D06199B32D400C998AF /* PPPasteboardHandling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 552A662816B5EBEB007C63F7 /* PPPlugInObject.m */; };
-		552C440217DFDE1100AFCB5C /* ComplexFadeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C440017DFDE1100AFCB5C /* ComplexFadeController.m */; };
 		552C440317DFDE1100AFCB5C /* ComplexFadeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C440117DFDE1100AFCB5C /* ComplexFadeController.xib */; };
 		552C440717DFDF5A00AFCB5C /* FadeNoteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C440517DFDF5A00AFCB5C /* FadeNoteController.m */; };
 		552C440C17DFE00000AFCB5C /* FadeVolumeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C440A17DFE00000AFCB5C /* FadeVolumeController.m */; };
@@ -267,6 +266,7 @@
 		554F087E19BBBB40005A215E /* PPPropogatePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 554F087D19BBBB40005A215E /* PPPropogatePlug.m */; };
 		554F088119BBBC6E005A215E /* PPXIPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 554F088019BBBC6E005A215E /* PPXIPlug.m */; };
 		555143CA17B6EDCF00252657 /* PPToneGeneratorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555143C817B6EDCF00252657 /* PPToneGeneratorController.m */; };
+		555269EF19CB53C300F8B95B /* ComplexFadeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555269EE19CB53C300F8B95B /* ComplexFadeController.swift */; };
 		55534ACE1817C387006D6BCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55534AD11817C387006D6BCB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55534AD01817C387006D6BCB /* main.m */; };
 		5557769617EBDA740019D008 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5557769517EBDA740019D008 /* Media.xcassets */; };
@@ -2014,8 +2014,6 @@
 		55281D06199B32D400C998AF /* PPPasteboardHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPasteboardHandling.h; sourceTree = "<group>"; };
 		552A662716B5EBEA007C63F7 /* PPPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugInObject.h; sourceTree = "<group>"; };
 		552A662816B5EBEB007C63F7 /* PPPlugInObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPPlugInObject.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		552C43FF17DFDE1100AFCB5C /* ComplexFadeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComplexFadeController.h; sourceTree = "<group>"; };
-		552C440017DFDE1100AFCB5C /* ComplexFadeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComplexFadeController.m; sourceTree = "<group>"; };
 		552C440117DFDE1100AFCB5C /* ComplexFadeController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComplexFadeController.xib; sourceTree = "<group>"; };
 		552C440417DFDF5A00AFCB5C /* FadeNoteController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FadeNoteController.h; sourceTree = "<group>"; };
 		552C440517DFDF5A00AFCB5C /* FadeNoteController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FadeNoteController.m; sourceTree = "<group>"; };
@@ -2173,6 +2171,7 @@
 		554F088019BBBC6E005A215E /* PPXIPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPXIPlug.m; path = XI/PPXIPlug.m; sourceTree = "<group>"; };
 		555143C717B6EDCF00252657 /* PPToneGeneratorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPToneGeneratorController.h; sourceTree = "<group>"; };
 		555143C817B6EDCF00252657 /* PPToneGeneratorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPToneGeneratorController.m; sourceTree = "<group>"; };
+		555269EE19CB53C300F8B95B /* ComplexFadeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexFadeController.swift; sourceTree = "<group>"; };
 		55534ACD1817C387006D6BCB /* updateInfoPlist */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = updateInfoPlist; sourceTree = BUILT_PRODUCTS_DIR; };
 		55534AD01817C387006D6BCB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55534AD31817C388006D6BCB /* updateInfoPlist-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "updateInfoPlist-Prefix.pch"; sourceTree = "<group>"; };
@@ -3951,9 +3950,8 @@
 			isa = PBXGroup;
 			children = (
 				550A8FD719C74ED200588849 /* ComplexFadePlug.swift */,
+				555269EE19CB53C300F8B95B /* ComplexFadeController.swift */,
 				550A8FD619C74ED000588849 /* Complex Fade-Bridging-Header.h */,
-				552C43FF17DFDE1100AFCB5C /* ComplexFadeController.h */,
-				552C440017DFDE1100AFCB5C /* ComplexFadeController.m */,
 				55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */,
 				552C440117DFDE1100AFCB5C /* ComplexFadeController.xib */,
 				55268A541874CA8F00A82269 /* Localizable.strings */,
@@ -7198,7 +7196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				550A8FD819C74ED200588849 /* ComplexFadePlug.swift in Sources */,
-				552C440217DFDE1100AFCB5C /* ComplexFadeController.m in Sources */,
+				555269EF19CB53C300F8B95B /* ComplexFadeController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
