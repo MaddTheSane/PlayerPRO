@@ -85,11 +85,11 @@
                                     <font key="font" metaFont="system"/>
                                     <font key="titleFont" metaFont="system"/>
                                 </formCell>
-                                <formCell scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" title="From:" id="36">
+                                <formCell scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" title="From:" placeholderString="1" id="36">
                                     <font key="font" metaFont="system"/>
                                     <font key="titleFont" metaFont="system"/>
                                 </formCell>
-                                <formCell scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" title="To:" id="38">
+                                <formCell scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="justified" title="To:" placeholderString="64" id="38">
                                     <font key="font" metaFont="system"/>
                                     <font key="titleFont" metaFont="system"/>
                                 </formCell>

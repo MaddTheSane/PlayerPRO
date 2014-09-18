@@ -508,7 +508,6 @@
 		55ADD23F19B4F858005588B5 /* PlayerPROKit_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD23E19B4F858005588B5 /* PlayerPROKit_Tests.swift */; };
 		55ADD24C19B4F895005588B5 /* PlayerPRO_Player_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD24B19B4F895005588B5 /* PlayerPRO_Player_Tests.m */; };
 		55ADD25B19B4F8BA005588B5 /* PlayerPRO_6_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD25A19B4F8BA005588B5 /* PlayerPRO_6_Tests.swift */; };
-		55AF3F3719C9427300F75AC1 /* CompFadeNoteFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55268A571874CDD200A82269 /* CompFadeNoteFormatter.m */; };
 		55AF3F3819C9FF9500F75AC1 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		55AF3F3919C9FF9500F75AC1 /* FileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 55113CBB133688D60008C2AF /* FileUtils.c */; };
 		55AF3F3A19C9FF9500F75AC1 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
@@ -2006,8 +2005,6 @@
 		552581FB16C6FC350016A31C /* InstrumentInfoController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InstrumentInfoController.h; sourceTree = "<group>"; };
 		552581FC16C6FC350016A31C /* InstrumentInfoController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstrumentInfoController.m; sourceTree = "<group>"; };
 		55268A551874CA9800A82269 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		55268A561874CDD100A82269 /* CompFadeNoteFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompFadeNoteFormatter.h; sourceTree = "<group>"; };
-		55268A571874CDD200A82269 /* CompFadeNoteFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompFadeNoteFormatter.m; sourceTree = "<group>"; };
 		55268A5C1877EB7A00A82269 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FadeVolumeController.xib; sourceTree = "<group>"; };
 		55268A5F1877EB8200A82269 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/FadeVolumeController.strings; sourceTree = "<group>"; };
 		55268A611877EB8E00A82269 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/FadeNoteController.xib; sourceTree = "<group>"; };
@@ -2139,8 +2136,6 @@
 		5547DA5819A570820014A620 /* SoundSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundSettingsViewController.swift; sourceTree = "<group>"; };
 		5549A3B819A685CE004E95E2 /* PPColorPreferenceObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPColorPreferenceObject.h; sourceTree = "<group>"; };
 		5549A3B919A685CE004E95E2 /* PPColorPreferenceObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPColorPreferenceObject.m; sourceTree = "<group>"; };
-		554E0FE110D6C79D00BB619C /* CompFade.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = CompFade.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E0FE210D6C79D00BB619C /* CompFade.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = CompFade.r; sourceTree = "<group>"; };
 		554E0FF310D6C79D00BB619C /* Read-Me */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read-Me"; sourceTree = "<group>"; };
 		554E101210D6C79E00BB619C /* Length.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Length.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E101310D6C79E00BB619C /* Length.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Length.r; sourceTree = "<group>"; };
@@ -3959,14 +3954,10 @@
 		554E11A610D6F2EE00BB619C /* Complex Fade */ = {
 			isa = PBXGroup;
 			children = (
-				554E0FE110D6C79D00BB619C /* CompFade.c */,
-				554E0FE210D6C79D00BB619C /* CompFade.r */,
 				550A8FD719C74ED200588849 /* ComplexFadePlug.swift */,
 				550A8FD619C74ED000588849 /* Complex Fade-Bridging-Header.h */,
 				552C43FF17DFDE1100AFCB5C /* ComplexFadeController.h */,
 				552C440017DFDE1100AFCB5C /* ComplexFadeController.m */,
-				55268A561874CDD100A82269 /* CompFadeNoteFormatter.h */,
-				55268A571874CDD200A82269 /* CompFadeNoteFormatter.m */,
 				55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */,
 				552C440117DFDE1100AFCB5C /* ComplexFadeController.xib */,
 				55268A541874CA8F00A82269 /* Localizable.strings */,
@@ -7211,7 +7202,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55AF3F3719C9427300F75AC1 /* CompFadeNoteFormatter.m in Sources */,
 				550A8FD819C74ED200588849 /* ComplexFadePlug.swift in Sources */,
 				552C440217DFDE1100AFCB5C /* ComplexFadeController.m in Sources */,
 			);

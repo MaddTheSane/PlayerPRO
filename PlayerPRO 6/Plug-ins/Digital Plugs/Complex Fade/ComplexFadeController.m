@@ -15,7 +15,6 @@
 
 @end
 
-#if 0
 static int NSStringToHex(NSString *str)
 {
 	NSScanner *tmpScanner = [[NSScanner alloc] initWithString:str];
@@ -28,14 +27,88 @@ static int NSStringToHex(NSString *str)
 	
 	return tmpVal;
 }
-#endif
 
 @implementation ComplexFadeController
 @synthesize fadeType;
+@synthesize thePcmd = myPcmd;
 
 - (BOOL)validateSettings;
 {
-	return NO;
+	int from, to, step;
+	NSNumberFormatter *numFormat = [NSNumberFormatter new];
+	NSNumber *ourNumber;
+
+	switch(fadeType) {
+		case PPFadeTypeInstrument:
+			if ([numFormat getObjectValue:&ourNumber forString:self.fromCell.stringValue errorDescription:nil]) {
+				from = ourNumber.intValue;
+			} else {
+				return NO;
+			}
+			
+			if ([numFormat getObjectValue:&ourNumber forString:self.toCell.stringValue errorDescription:nil]) {
+				to = ourNumber.intValue;
+			} else {
+				return NO;
+			}
+
+			if (from < 1 || from > 64) {
+				return NO;
+			}
+			if (to < 1 || to > 64) {
+				return NO;
+			}
+			break;
+			
+		case PPFadeTypeNote:
+			from = [PPSampleObject noteFromString:self.fromCell.stringValue];
+			to = [PPSampleObject noteFromString:self.toCell.stringValue];
+			
+			if (from < 0 || from >= 96) {
+				return NO;
+			}
+			if (to < 0 || to >= 96) {
+				return NO;
+			}
+			break;
+			
+		case PPFadeTypeArgument:
+			from = NSStringToHex(self.fromCell.stringValue);
+			to = NSStringToHex(self.toCell.stringValue);
+			
+			if (from < 0 || from > 0xFF) {
+				return NO;
+			}
+			if (to < 0 || to > 0xFF) {
+				return NO;
+			}
+			break;
+			
+		case PPFadeTypeVolume:
+			from = NSStringToHex(self.fromCell.stringValue);
+			to = NSStringToHex(self.toCell.stringValue);
+			
+			if (from < 0 || from > 0xFF) {
+				return NO;
+			}
+			if (to < 0 || to > 0xFF) {
+				return NO;
+			}
+			break;
+	}
+	
+	if ([numFormat getObjectValue:&ourNumber forString:self.stepCell.stringValue errorDescription:nil]) {
+		step = ourNumber.intValue;
+	} else {
+		return NO;
+	}
+
+	
+	if (step < 1 || step > 64) {
+		return NO;
+	}
+	
+	return YES;
 }
 
 #if 0
@@ -46,34 +119,40 @@ static int NSStringToHex(NSString *str)
 	
 	return self;
 }
-#endif
 
 - (void)windowDidLoad
 {
 	[super windowDidLoad];
 	// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-	
-	
 }
+#endif
 
 - (IBAction)changeFadeType:(id)sender
 {
 	self.fadeType = [sender tag];
 	switch (self.fadeType) {
 		case PPFadeTypeInstrument:
-			
+			self.valueInfo.stringValue = [[NSBundle bundleForClass:[self class]] localizedStringForKey:@"From 1 to 64" value:nil table:nil];
+			self.fromCell.placeholderString = @"1";
+			self.toCell.placeholderString = @"64";
 			break;
 			
 		case PPFadeTypeArgument:
-			
+			self.valueInfo.stringValue = [[NSBundle bundleForClass:[self class]] localizedStringForKey:@"From C0 to B7" value:nil table:nil];
+			self.fromCell.placeholderString = @"C0";
+			self.toCell.placeholderString = @"B7";
 			break;
 			
 		case PPFadeTypeNote:
-			
+			self.valueInfo.stringValue = [[NSBundle bundleForClass:[self class]] localizedStringForKey:@"From 00 to FF" value:nil table:nil];
+			self.fromCell.placeholderString = @"00";
+			self.toCell.placeholderString = @"FF";
 			break;
 			
 		case PPFadeTypeVolume:
-			
+			self.valueInfo.stringValue = [[NSBundle bundleForClass:[self class]] localizedStringForKey:@"From 00 to FF" value:nil table:nil];
+			self.fromCell.placeholderString = @"00";
+			self.toCell.placeholderString = @"FF";
 			break;
 	}
 }
@@ -91,11 +170,68 @@ static int NSStringToHex(NSString *str)
 			;//Do nothing right now
 		}];
 	} else {
+		int from = 0, to = 0, step = 1;
+		NSNumberFormatter *numFormat = [NSNumberFormatter new];
+		NSNumber *ourNumber;
 		
+		switch(fadeType) {
+			case PPFadeTypeInstrument:
+				ourNumber = [numFormat numberFromString:self.fromCell.stringValue];
+				from = ourNumber.intValue;
+				
+				ourNumber = [numFormat numberFromString:self.toCell.stringValue];
+				to = ourNumber.intValue;
+				break;
+				
+			case PPFadeTypeNote:
+				from = [PPSampleObject noteFromString:self.fromCell.stringValue];
+				to = [PPSampleObject noteFromString:self.toCell.stringValue];
+				break;
+				
+			case PPFadeTypeArgument:
+				from = NSStringToHex(self.fromCell.stringValue);
+				to = NSStringToHex(self.toCell.stringValue);
+				break;
+				
+			case PPFadeTypeVolume:
+				from = NSStringToHex(self.fromCell.stringValue);
+				to = NSStringToHex(self.toCell.stringValue);
+				break;
+		}
+		
+		if ([numFormat getObjectValue:&ourNumber forString:self.stepCell.stringValue errorDescription:nil]) {
+			step = ourNumber.intValue;
+		}
+		
+		for (short track = 0; track < myPcmd->tracks; track ++) {
+			for (short row = 0; row < myPcmd->length; row += step) {
+				Cmd *myCmd = MADGetCmd(row, track, myPcmd);
+				
+				if (myPcmd->length > 1) {			// no zero div !!
+					switch(fadeType) {
+						case PPFadeTypeInstrument:
+							myCmd->ins	= from + ((to-from) * row) / (myPcmd->length-1);
+							break;
+							
+						case PPFadeTypeNote:
+							myCmd->note = from + ((to-from) * row) / (myPcmd->length-1);
+							break;
+							
+						case PPFadeTypeArgument:
+							myCmd->arg	= from + ((to-from) * row) / (myPcmd->length-1);
+							break;
+							
+						case PPFadeTypeVolume:
+							myCmd->vol	= from + ((to-from) * row) / (myPcmd->length-1);
+							break;
+					}
+				}
+			}
+		}
+
 		[(NSApplication*)NSApp endSheet:self.window];
-		self.currentBlock(MADNoErr);
+		_currentBlock(MADNoErr);
 	}
-	
 }
 
 - (IBAction)cancel:(id)sender
@@ -105,21 +241,3 @@ static int NSStringToHex(NSString *str)
 }
 
 @end
-
-#if 0
-static OSErr mainCompFade(void *unused, Pcmd *myPcmd, PPInfoPlug *thePPInfoPlug)
-{
-	ComplexFadeController *controller = [[ComplexFadeController alloc] initWithWindowNibName:@"ComplexFadeController" infoPlug:thePPInfoPlug];
-	controller.thePcmd = myPcmd;
-	controller.fadeType = fadeInstrument;
-	
-	return [controller runAsSheet];
-}
-
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x2C, 0xE9, 0x02, 0x81, 0xE2, 0xC2, 0x47, 0x5A, 0xA0, 0xF0, 0xB9, 0x0C, 0x64, 0x1E, 0xAE, 0xB1)
-//2CE90281-E2C2-475A-A0F0-B90C641EAEB1
-#define PLUGINFACTORY CompFadeFactory //The factory name as defined in the Info.plist file
-#define PLUGMAIN mainCompFade //The old main function, renamed please
-
-#include "CFPlugin-DigitalBridge.c"
-#endif 
