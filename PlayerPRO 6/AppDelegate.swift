@@ -48,6 +48,7 @@ internal var globalMadLib: PPLibrary {
 	}
 }
 
+@NSApplicationMain
 class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDelegate {
 	private var exportObjects = [ExportObject]()
 	private var _trackerDict = [String: [String]]()
