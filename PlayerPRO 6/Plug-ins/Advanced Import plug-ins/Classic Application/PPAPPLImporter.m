@@ -10,6 +10,7 @@
 #import "PPAPPLObject.h"
 #include "APPL.h"
 #import "PPAPPLImporterViewController.h"
+#import "Classic_App-Swift.h"
 
 @interface PPAPPLImporter ()
 
