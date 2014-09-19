@@ -13,6 +13,46 @@ import CoreAudio
 	import PlayerPROKit
 #endif
 
+// MARK: Audio File
+
+internal enum AudioFileType: OSType {
+	case AIFF				= 1095321158
+	case AIFC				= 1095321155
+	case WAVE				= 1463899717
+	case SoundDesigner2		= 1399075430
+	case Next				= 1315264596
+	case MP3				= 1297106739
+	case MP2				= 1297106738
+	case MP1				= 1297106737
+	case AC3				= 1633889587
+	case AAC_ADTS			= 1633973363
+	case MPEG4				= 1836069990
+	case M4A				= 1832149350
+	case M4B				= 1832149606
+	case CAF				= 1667327590
+	case threeGP			= 862417008
+	case threeGP2			= 862416946
+	case AMR				= 1634562662
+	
+	
+	#if os(OSX)
+	func stringValue() -> String {
+		return OSTypeToString(self.rawValue)!
+	}
+	#endif
+}
+
+internal enum AudioFileFlags: UInt32 {
+	case EraseFile				= 1
+	case DontPageAlignAudioData	= 2
+}
+
+internal func AudioFileCreate(withURL inFileRef: CFURL, fileType inFileType: AudioFileType, inout format inFormat: AudioStreamBasicDescription, flags inFlags: AudioFileFlags, inout audioFile outAudioFile: AudioFileID) -> OSStatus {
+	return AudioFileCreateWithURL(inFileRef, inFileType.rawValue, &inFormat, inFlags.rawValue, &outAudioFile)
+}
+
+// MARK: Audio Format
+
 internal enum AudioFormat: OSType {
 	case DVIIntelIMA			= 0x6D730011
 	case MicrosoftGSM			= 0x6D730031
@@ -50,21 +90,9 @@ internal enum AudioFormat: OSType {
 	case Audible				= 1096107074
 	case iLBC					= 1768710755
 	case AES3					= 1634038579
-	//#if os(OSX)
-	#if false
 	func stringValue() -> String {
-		return OSTypeToString(self.rawValue)
+		return OSTypeToString(self.rawValue)!
 	}
-	
-	convenience init?(stringValue strVal: String) {
-		let fourChar = StringToOSType(strVal)
-		if let ourself = AudioFormat(rawValue: fourChar) {
-			self = ourself
-		} else {
-			return nil
-		}
-	}
-	#endif
 }
 
 internal struct AudioFormatFlag : RawOptionSetType {

@@ -32,9 +32,12 @@ public let PlugModeKey = CFStringToString(kMadPlugModeKey)
 
 public let MadID: MADFourChar = StringToOSType("MADK")
 
-public func OSTypeToString(theType: MADFourChar) -> String {
-	let toRet = UTCreateStringForOSType(theType).takeRetainedValue()
-	return CFStringToString(toRet)
+public func OSTypeToString(theType: MADFourChar) -> String? {
+	let toRet = UTCreateStringForOSType(theType)
+	if toRet == nil {
+		return nil
+	}
+	return CFStringToString(toRet.takeRetainedValue())
 }
 
 public func StringToOSType(theString: String) -> MADFourChar {
@@ -43,16 +46,6 @@ public func StringToOSType(theString: String) -> MADFourChar {
 
 /*
 	extension MADFourChar: StringLiteralConvertible {
-	public var OSTypeStringValue: String {
-		get {
-			let toRet = UTCreateStringForOSType(self as OSType).takeRetainedValue()
-			return CFStringToString(toRet)
-		}}
-	
-	public init(_ toInit: String) {
-		self = UTGetOSTypeFromString(StringToCFString(toInit))
-	}
-	
 	public static func convertFromStringLiteral(value: String) -> MADFourChar {
 		return MADFourChar(value)
 	}
@@ -64,11 +57,47 @@ public func StringToOSType(theString: String) -> MADFourChar {
 	
 }
 */
+#else
+	public func OSTypeToString(theType: MADFourChar) -> String? {
+		var ourOSType = [Int8](count: 5, repeatedValue: 0)
+	
+		OSType2Ptr(theType, &ourOSType)
+		return NSString(bytes: ourOSType, length: 4, encoding: NSMacOSRomanStringEncoding);
+	}
+	
+	public func StringToOSType(theString: String) -> MADFourChar {
+		var ourOSType = [Int8](count: 5, repeatedValue: 0)
+		let anNSStr = theString as NSString
+		var ourLen = anNSStr.lengthOfBytesUsingEncoding(NSMacOSRomanStringEncoding)
+		if ourLen > 4 {
+			ourLen = 4
+		} else if ourLen == 0 {
+			return 0
+		}
+		
+		let aData = anNSStr.cStringUsingEncoding(NSMacOSRomanStringEncoding)
+		
+		for i in 0 ..< ourLen {
+			ourOSType[i] = aData[i]
+		}
+		
+		return Ptr2OSType(ourOSType)
+	}
 #endif
 
 extension MADFourChar {
+	public init(_ toInit: String) {
+		self = StringToOSType(toInit)
+	}
+	
 	public init(_ toInit: (Int8, Int8, Int8, Int8, Int8)) {
 		self = MADFourChar((toInit.0, toInit.1, toInit.2, toInit.3))
+	}
+	
+	public var OSTypeStringValue: String? {
+		get {
+			return OSTypeToString(self)
+		}
 	}
 	
 	public init(_ toInit: (Int8, Int8, Int8, Int8)) {
@@ -124,9 +153,11 @@ extension MADDriverSettings: DebugPrintable {
 }
 
 extension MADInfoRec: DebugPrintable {
-	public var debugDescription: String { get {
-		return ""
-		}}
+	public var debugDescription: String {
+		get {
+			return ""
+		}
+	}
 }
 
 extension PlugInfo {

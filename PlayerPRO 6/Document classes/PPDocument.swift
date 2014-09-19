@@ -260,7 +260,7 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 				return nil
 			}
 		#else
-			return rawSoundData(theSet)?.copy() as NSData?
+			return (rawSoundData(theSet)?.copy() as NSData)
 		#endif
 	}
 	
@@ -281,7 +281,7 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 				return nil
 			}
 		#else
-			return rawSoundData(theSet)?.copy() as NSData?
+			return (rawSoundData(theSet)?.copy() as NSData)
 		#endif
 	}
 
@@ -342,7 +342,6 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 	private func saveMusic(AIFFToURL theURL: NSURL, theSett: MADDriverSettings) -> MADErr {
 		if let saveData = rawBESoundData(theSett) {
 			var audioFile: AudioFileID = nil;
-			
 			var tmpChannels: UInt32 = 0
 			
 			switch (theSett.outPutMode) {
@@ -358,30 +357,30 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 			
 			var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: .SignedInteger | .Packed | .BigEndian, bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 			
-			var res = AudioFileCreateWithURL(theURL, UInt32(kAudioFileAIFFType), &asbd, UInt32(kAudioFileFlags_EraseFile), &audioFile);
+			var res = AudioFileCreate(withURL: theURL, fileType: .AIFF, format: &asbd, flags: .EraseFile, audioFile: &audioFile)
 			if (res != noErr) {
 				if (audioFile != nil) {
-					AudioFileClose(audioFile);
+					AudioFileClose(audioFile)
 				}
-				return MADErr.WritingErr;
+				return MADErr.WritingErr
 			}
 			
 			var numBytes = UInt32(saveData.length)
-			res = AudioFileWriteBytes(audioFile, 0, 0, &numBytes, saveData.bytes);
+			res = AudioFileWriteBytes(audioFile, 0, 0, &numBytes, saveData.bytes)
 			if (res != noErr) {
 				if (audioFile != nil) {
-					AudioFileClose(audioFile);
+					AudioFileClose(audioFile)
 				}
-				return MADErr.WritingErr;
+				return MADErr.WritingErr
 			}
 			
 			applyMetadataToFileID(audioFile)
-			res = AudioFileClose(audioFile);
+			res = AudioFileClose(audioFile)
 			if (res != noErr) {
 				if (audioFile != nil) {
-					AudioFileClose(audioFile);
+					AudioFileClose(audioFile)
 				}
-				return MADErr.WritingErr;
+				return MADErr.WritingErr
 			}
 			
 			return MADErr.NoErr
