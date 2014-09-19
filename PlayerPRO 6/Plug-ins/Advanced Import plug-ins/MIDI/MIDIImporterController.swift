@@ -8,7 +8,7 @@
 
 import Cocoa
 
-/*final*/ class MIDIImporterController: NSWindowController {
+class MIDIImporterController: NSWindowController {
 	@IBOutlet weak var theURLField: NSTextField!
 	private var locationOfFile: NSURL!
 	dynamic var QTIns = false
@@ -27,12 +27,10 @@ import Cocoa
 	func beginImportModalSession() {
 		trackCount = GetTracksNumber(locationOfFile);
 		if trackCount == -1 {
-			//NSApplication.sharedApplication().endModalSession(modalSession)
 			handler(nil, .IncompatibleFile)
 			return
 		}
 		modalSession = NSApplication.sharedApplication().beginModalSessionForWindow(self.window)
-		return
 	}
 	
 	override func awakeFromNib() {

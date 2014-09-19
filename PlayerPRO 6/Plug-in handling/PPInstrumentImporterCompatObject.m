@@ -179,7 +179,7 @@ static inline BOOL getBoolFromId(id NSType)
 	
 	CFBundleRefNum fileID = CFBundleOpenBundleResourceMap(tempRef);
 	
-	OSErr returnType = (*xxxx)->InstrMain(xxxx, imporexp, insData, sdataref, insSamp, (__bridge CFURLRef)fileToImport, plugInfo);
+	OSErr returnType = (*xxxx)->InstrumentMain(xxxx, imporexp, insData, sdataref, insSamp, (__bridge CFURLRef)fileToImport, plugInfo);
 	
 	CFBundleCloseBundleResourceMap(tempRef, fileID);
 	CFRelease(tempRef);

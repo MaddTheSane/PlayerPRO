@@ -27,18 +27,16 @@ func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<
 	let alert = PPRunCriticalAlertPanel(errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr, args: swiftText)
 	switch (alert) {
 	case NSAlertAlternateReturn:
-		break;
+		break
 		
 	case NSAlertOtherReturn:
-		assert(false, "Chose to go to debugger.");
-		break;
+		assert(false, "Chose to go to debugger.")
 		
 	case NSAlertDefaultReturn:
-		println("Choosing to fail!");
+		println("Choosing to fail!")
 		fallthrough
 	default:
-		abort();
-		break;
+		abort()
 	}
 }
 
@@ -165,7 +163,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			}
 		}
 		
-		plugInInfos.sort({ (obj1:PlugInInfo, obj2:PlugInInfo) -> Bool in
+		plugInInfos.sort({ (obj1, obj2) -> Bool in
 			let menuNam1 = obj1.plugName
 			let menuNam2 = obj2.plugName
 			let res = menuNam1.localizedStandardCompare(menuNam2)
@@ -363,7 +361,6 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			let retVal = PPRunInformationalAlertPanel(NSLocalizedString("Invalid Extension", comment: "Invalid extension"), message: NSLocalizedString("The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", comment: "Invalid extension description"), defaultButton: NSLocalizedString("Rename", comment: "rename file"), alternateButton: NSLocalizedString("Open", comment:"Open a file"), otherButton: NSLocalizedString("Cancel", comment: "Cancel"), args: theURL.lastPathComponent);
 			switch (retVal) {
 			case NSAlertDefaultReturn:
-				
 				var rec: NSDictionary? = nil
 				var ostype: NSString? = nil
 				
@@ -375,7 +372,6 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 				let sigValb: MADFourChar = (sigVala as NSNumber).unsignedIntValue
 				let sigVal = OSTypeToString(sigValb)
 				
-				
 				let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(sigVal.lowercaseString);
 				var err: NSError? = nil
 				if (NSFileManager.defaultManager().moveItemAtURL(theURL, toURL:tmpURL, error:&err) == false) {
@@ -385,8 +381,6 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 					theURL = tmpURL;
 					//TODO: regenerate the UTI
 				}
-				
-				break;
 				
 			case NSAlertAlternateReturn:
 				break;
@@ -417,9 +411,8 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		for aUTI in trackerUTIs {
 			if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
 				let theWrap = PPMusicObject(URL: theURL1, library: madLib)
-				let theDoc = PPDocument(music: theWrap)
 				
-				self.addDocument(theDoc)
+				self.addDocument(PPDocument(music: theWrap))
 				return true;
 			}
 		}
@@ -487,8 +480,6 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 	
 	required init(coder: NSCoder!) {
-		
-		
 		super.init(coder: coder)
 		registerDefaults()
 	}
@@ -512,7 +503,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 		
 		for (i, rawObj) in enumerate(madLib) {
-			let obj = rawObj as PPLibraryObject;
+			let obj = rawObj as PPLibraryObject
 			if (obj.canExport) {
 				let mi = NSMenuItem(title: "\(obj.menuName)…", action: "exportMusicAs:", keyEquivalent: "")
 				mi.tag = i
@@ -564,13 +555,13 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 	
 	func application(theApplication: NSApplication, openFile filename: String) -> Bool {
-		var err: NSError? = nil;
+		var err: NSError? = nil
 		let utiFile = NSWorkspace.sharedWorkspace().typeOfFile(filename, error:&err)
 		if (err != nil) {
-			PPRunAlertPanel("Error opening file", message: "Unable to open %@: %@", args: filename.lastPathComponent, err!.localizedFailureReason!);
-			return false;
+			PPRunAlertPanel("Error opening file", message: "Unable to open %@: %@", args: filename.lastPathComponent, err!.localizedFailureReason!)
+			return false
 		}
-		return handleFile(NSURL(fileURLWithPath: filename), ofType: utiFile) ;
+		return handleFile(NSURL(fileURLWithPath: filename), ofType: utiFile)
 	}
 	
 	func exportObjectDidFinish(theObj: ExportObject) {

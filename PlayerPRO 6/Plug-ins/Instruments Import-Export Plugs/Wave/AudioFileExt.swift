@@ -76,21 +76,20 @@ internal struct AudioFormatFlag : RawOptionSetType {
 	}
 	init(rawValue value: UInt32) { self.value = value }
 	static var allZeros: AudioFormatFlag { return self(rawValue: 0) }
-	static func fromRaw(raw: UInt32) -> AudioFormatFlag? { return self(rawValue: raw) }
 	static func fromMask(raw: UInt32) -> AudioFormatFlag { return self(rawValue: raw) }
 	static func convertFromNilLiteral() -> AudioFormatFlag { return FlagsAreAllClear }
 	
 	static var NativeFloatPacked: AudioFormatFlag {
-		return IsFloat | NativeEndian | IsPacked
+		return Float | NativeEndian | Packed
 	}
 	
-	static var IsFloat:				AudioFormatFlag { return self(rawValue: 1 << 0) }
-	static var IsBigEndian:			AudioFormatFlag { return self(rawValue: 1 << 1) }
-	static var IsSignedInteger:		AudioFormatFlag { return self(rawValue: 1 << 2) }
-	static var IsPacked:			AudioFormatFlag { return self(rawValue: 1 << 3) }
-	static var IsAlignedHigh:		AudioFormatFlag { return self(rawValue: 1 << 4) }
-	static var IsNonInterleaved:	AudioFormatFlag { return self(rawValue: 1 << 5) }
-	static var IsNonMixable:		AudioFormatFlag { return self(rawValue: 1 << 6) }
+	static var Float:				AudioFormatFlag { return self(rawValue: 1 << 0) }
+	static var BigEndian:			AudioFormatFlag { return self(rawValue: 1 << 1) }
+	static var SignedInteger:		AudioFormatFlag { return self(rawValue: 1 << 2) }
+	static var Packed:				AudioFormatFlag { return self(rawValue: 1 << 3) }
+	static var AlignedHigh:			AudioFormatFlag { return self(rawValue: 1 << 4) }
+	static var NonInterleaved:		AudioFormatFlag { return self(rawValue: 1 << 5) }
+	static var NonMixable:			AudioFormatFlag { return self(rawValue: 1 << 6) }
 	static var FlagsAreAllClear:	AudioFormatFlag { return self(rawValue: 1 << 31) }
 	static var NativeEndian:		AudioFormatFlag {
 		#if __BIG_ENDIAN__
@@ -113,25 +112,24 @@ internal struct LinearPCMFormatFlag : RawOptionSetType {
 	}
 	init(rawValue value: UInt32) { self.value = value }
 	static var allZeros: LinearPCMFormatFlag { return self(rawValue: 0) }
-	static func fromRaw(raw: UInt32) -> LinearPCMFormatFlag? { return self(rawValue: raw) }
 	static func fromMask(raw: UInt32) -> LinearPCMFormatFlag { return self(rawValue: raw) }
 	static func convertFromNilLiteral() -> LinearPCMFormatFlag { return FlagsAreAllClear }
 	
 	static var NativeFloatPacked: LinearPCMFormatFlag {
-		return IsFloat | NativeEndian | IsPacked
+		return Float | NativeEndian | Packed
 	}
 	
-	static var IsFloat:				LinearPCMFormatFlag { return self(rawValue: 1 << 0) }
-	static var IsBigEndian:			LinearPCMFormatFlag { return self(rawValue: 1 << 1) }
-	static var IsSignedInteger:		LinearPCMFormatFlag { return self(rawValue: 1 << 2) }
-	static var IsPacked:			LinearPCMFormatFlag { return self(rawValue: 1 << 3) }
-	static var IsAlignedHigh:		LinearPCMFormatFlag { return self(rawValue: 1 << 4) }
-	static var IsNonInterleaved :	LinearPCMFormatFlag { return self(rawValue: 1 << 5) }
-	static var IsNonMixable:		LinearPCMFormatFlag { return self(rawValue: 1 << 6) }
+	static var Float:				LinearPCMFormatFlag { return self(rawValue: 1 << 0) }
+	static var BigEndian:			LinearPCMFormatFlag { return self(rawValue: 1 << 1) }
+	static var SignedInteger:		LinearPCMFormatFlag { return self(rawValue: 1 << 2) }
+	static var Packed:				LinearPCMFormatFlag { return self(rawValue: 1 << 3) }
+	static var AlignedHigh:			LinearPCMFormatFlag { return self(rawValue: 1 << 4) }
+	static var NonInterleaved:		LinearPCMFormatFlag { return self(rawValue: 1 << 5) }
+	static var NonMixable:			LinearPCMFormatFlag { return self(rawValue: 1 << 6) }
 	static var FlagsAreAllClear:	LinearPCMFormatFlag { return self(rawValue: 1 << 31) }
 	static var NativeEndian:		LinearPCMFormatFlag {
 		#if __BIG_ENDIAN__
-			return IsBigEndian
+			return BigEndian
 		#else
 			return self(rawValue: 0)
 		#endif
@@ -144,7 +142,7 @@ extension AudioStreamBasicDescription {
 	internal var audioFormatNativeEndian: Bool {
 		get {
 			if (formatID == .LinearPCM) {
-				let ourFlags = formatFlags & .IsBigEndian
+				let ourFlags = formatFlags & .BigEndian
 				if ourFlags == .NativeEndian {
 					return true
 				}

@@ -160,7 +160,7 @@ typedef struct PPInfoPlug {
 
 typedef struct PPInstrumentPlugin {
 	IUNKNOWN_C_GUTS;
-	MADErr (STDMETHODCALLTYPE *InstrMain)(void* thisInterface, OSType, InstrData*, sData**, short*, CFURLRef, PPInfoPlug*);
+	MADErr (STDMETHODCALLTYPE *InstrumentMain)(void* thisInterface, OSType, InstrData*, sData**, short*, CFURLRef, PPInfoPlug*);
 } PPInstrumentPlugin;
 
 #pragma mark Digital Editor Plugs

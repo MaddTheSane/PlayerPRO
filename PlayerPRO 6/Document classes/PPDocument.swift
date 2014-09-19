@@ -171,13 +171,11 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
         // Add any code here that needs to be executed once the windowController has loaded the document's window.
     }
 
-    override func dataOfType(typeName: String?, error outError: NSErrorPointer) -> NSData? {
-        // Insert code here to write your document to data of the specified type. If outError != NULL, ensure that you create and set an appropriate error when returning nil.
-        // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
+	override func writeToURL(url: NSURL!, ofType typeName: String!, error outError: NSErrorPointer) -> Bool {
 		outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-        return nil
-    }
-
+		return false
+	}
+	
 	override func readFromURL(url: NSURL!, ofType typeName: String!, error outError: NSErrorPointer) -> Bool {
 		outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
 		return false
@@ -212,7 +210,6 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 		theRec.cleanDriver()
 		theRec.currentMusic = theMusic
 		
-		var soundPtr: UnsafeMutablePointer<UInt8> = nil;
 		var full = theRec.audioDataLength
 		if (theSet.outPutBits == 16) {
 			full *= 2;
@@ -238,13 +235,10 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 		theRec.play()
 		
 		var mutData = NSMutableData(capacity: full * 60 * Int(theRec.totalMusicPlaybackTime) / 2)
-		soundPtr = UnsafeMutablePointer<UInt8>.alloc(full)
 		
-		while theRec.directSaveToPointer(soundPtr, settings: &theSet) {
-			mutData.appendBytes(soundPtr, length: full)
+		while let newData = theRec.directSave() {
+			mutData.appendData(newData)
 		}
-		
-		soundPtr.dealloc(full)
 		
 		return mutData;
 	}
@@ -311,7 +305,7 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 				tmpChannels = 2
 			}
 			
-			var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: .IsSignedInteger | .IsPacked, bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+			var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: .SignedInteger | .Packed, bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 			
 			var res = AudioFileCreateWithURL(theURL, UInt32(kAudioFileWAVEType), &asbd, UInt32(kAudioFileFlags_EraseFile), &audioFile);
 			if (res != noErr) {
@@ -362,7 +356,7 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 				tmpChannels = 2
 			}
 			
-			var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: .IsSignedInteger | .IsPacked | .IsBigEndian, bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+			var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: .SignedInteger | .Packed | .BigEndian, bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 			
 			var res = AudioFileCreateWithURL(theURL, UInt32(kAudioFileAIFFType), &asbd, UInt32(kAudioFileFlags_EraseFile), &audioFile);
 			if (res != noErr) {

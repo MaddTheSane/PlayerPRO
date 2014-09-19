@@ -67,7 +67,7 @@ import AudioToolbox
 		var myErr = MADErr.NoErr
 		if (sampleID >= 0) {
 			var curData = InsHeader.samplesObjectAtIndex(Int(sampleID))
-			var asbd = AudioStreamBasicDescription(sampleRate: Float64(curData.c2spd), formatID: .LinearPCM, formatFlags: .IsSignedInteger | .IsPacked, bitsPerChannel: UInt32(curData.amplitude), channelsPerFrame: curData.stereo ? 2 : 1)
+			var asbd = AudioStreamBasicDescription(sampleRate: Float64(curData.c2spd), formatID: .LinearPCM, formatFlags: .SignedInteger | .Packed, bitsPerChannel: UInt32(curData.amplitude), channelsPerFrame: curData.stereo ? 2 : 1)
 			
 			var audioFile: AudioFileID = nil
 			var res: OSStatus = 0

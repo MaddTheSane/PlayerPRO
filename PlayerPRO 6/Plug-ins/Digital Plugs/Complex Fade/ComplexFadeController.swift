@@ -47,7 +47,7 @@ class ComplexFadeController: NSWindowController {
 
 	@IBAction func changeFadeType(sender: AnyObject!) {
 		fadeType = PPFadeType(rawValue: (sender as NSButtonCell).tag)!
-		switch (self.fadeType) {
+		switch (fadeType) {
 		case .Instrument:
 			valueInfo.stringValue = NSLocalizedString("From 1 to 64", bundle: NSBundle(forClass: ComplexFadeController.self), comment: "From 1 to 64")
 			fromCell.placeholderString = "1";
@@ -77,16 +77,15 @@ class ComplexFadeController: NSWindowController {
 			badSettings.beginSheetModalForWindow(window, completionHandler: { (returnCode) -> Void in
 				
 			})
-
 		}
+		
 		var from: Int32 = 0
 		var to: Int32 = 0
 		var step = 0
 		let numFormatter = NSNumberFormatter()
-		var ourNumber: NSNumber? = nil
 		var ourUnknown: AnyObject? = nil
 		
-		switch(fadeType) {
+		switch fadeType {
 		case .Instrument:
 			if numFormatter.getObjectValue(&ourUnknown, forString: fromCell.stringValue, errorDescription: nil) {
 				if let aNumber = ourUnknown! as? NSNumber {
@@ -112,15 +111,14 @@ class ComplexFadeController: NSWindowController {
 				return
 			}
 			
-			if (from < 1 || from > 64) {
+			if from < 1 || from > 64 {
 				invalidSettings()
 				return
 			}
-			if (to < 1 || to > 64) {
+			if to < 1 || to > 64 {
 				invalidSettings()
 				return
 			}
-			break;
 			
 		case .Note:
 			var tmpFrom: Int16 = NoteFromString(fromCell.stringValue)
@@ -128,43 +126,27 @@ class ComplexFadeController: NSWindowController {
 			from = Int32(tmpFrom)
 			to = Int32(tmpTo)
 			
-			if (from < 0 || from >= 96) {
+			if from < 0 || from >= 96 {
 				invalidSettings()
 				return
 			}
-			if (to < 0 || to >= 96) {
+			if to < 0 || to >= 96 {
 				invalidSettings()
 				return
 			}
-			break;
 			
-		case .Argument:
+		case .Argument, .Volume:
 			from = StringToHex(self.fromCell.stringValue);
 			to = StringToHex(self.toCell.stringValue);
 			
-			if (from < 0 || from > 0xFF) {
+			if from < 0 || from > 0xFF {
 				invalidSettings()
 				return
 			}
-			if (to < 0 || to > 0xFF) {
+			if to < 0 || to > 0xFF {
 				invalidSettings()
 				return
 			}
-			break;
-			
-		case .Volume:
-			from = StringToHex(self.fromCell.stringValue);
-			to = StringToHex(self.toCell.stringValue);
-			
-			if (from < 0 || from > 0xFF) {
-				invalidSettings()
-				return
-			}
-			if (to < 0 || to > 0xFF) {
-				invalidSettings()
-				return
-			}
-			break;
 		}
 		
 		if numFormatter.getObjectValue(&ourUnknown, forString: stepCell.stringValue, errorDescription: nil) {
@@ -179,33 +161,29 @@ class ComplexFadeController: NSWindowController {
 			return
 		}
 		
-		if (step < 1 || step > 64) {
+		if step < 1 || step > 64 {
 			invalidSettings()
 			return
 		}
 		
 		let pcmdLength = thePcmd.memory.length
-		for (var track: Int16 = 0; track < thePcmd.memory.tracks; track++) {
-			for (var row: Int16 = 0; row < thePcmd.memory.length; row += step) {
+		for var track: Int16 = 0; track < thePcmd.memory.tracks; track++ {
+			for var row: Int16 = 0; row < pcmdLength; row += step {
 				var myCmd = MADGetCmd(row, track, thePcmd);
 				
-				if (pcmdLength > 1) {			// no zero div !!
-					switch(fadeType) {
+				if pcmdLength > 1 {			// no zero div !!
+					switch fadeType {
 					case .Instrument:
 						myCmd.memory.ins	= UInt8(from + ((to - from) * Int32(row)) / (Int32(pcmdLength) - 1))
-						break;
 						
 					case .Note:
 						myCmd.memory.note	= UInt8(from + ((to - from) * Int32(row)) / (Int32(pcmdLength) - 1))
-						break;
 						
 					case .Argument:
 						myCmd.memory.arg	= UInt8(from + ((to - from) * Int32(row)) / (Int32(pcmdLength) - 1))
-						break;
 						
 					case .Volume:
 						myCmd.memory.vol	= UInt8(from + ((to - from) * Int32(row)) / (Int32(pcmdLength) - 1))
-						break;
 					}
 				}
 			}

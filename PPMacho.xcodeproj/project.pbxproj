@@ -1908,7 +1908,6 @@
 		5508C3ED16CEB33B007CA458 /* SampleCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleCellView.m; sourceTree = "<group>"; };
 		550A474218A455CC0052AED7 /* VSTFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VSTFunctions.h; sourceTree = "<group>"; };
 		550A474518A458380052AED7 /* stub-VSTPlugIn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "stub-VSTPlugIn.c"; sourceTree = "<group>"; };
-		550A8FD619C74ED000588849 /* Complex Fade-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Complex Fade-Bridging-Header.h"; sourceTree = "<group>"; };
 		550A8FD719C74ED200588849 /* ComplexFadePlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexFadePlug.swift; sourceTree = "<group>"; };
 		550A8FD919C7B19A00588849 /* PPAPPLObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLObject.h; sourceTree = "<group>"; };
 		550A8FDA19C7B19A00588849 /* PPAPPLObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLObject.m; sourceTree = "<group>"; };
@@ -3961,7 +3960,6 @@
 			children = (
 				550A8FD719C74ED200588849 /* ComplexFadePlug.swift */,
 				555269EE19CB53C300F8B95B /* ComplexFadeController.swift */,
-				550A8FD619C74ED000588849 /* Complex Fade-Bridging-Header.h */,
 				55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */,
 				552C440117DFDE1100AFCB5C /* ComplexFadeController.xib */,
 				55268A541874CA8F00A82269 /* Localizable.strings */,
@@ -9147,6 +9145,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -10073,7 +10072,6 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/Classic App-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Debug;
@@ -10186,7 +10184,7 @@
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_SWIFT_FLAGS = "-DDEBUG";
+				OTHER_SWIFT_FLAGS = "-DDEBUG $(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
@@ -10433,7 +10431,7 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Digital Plugs/Complex Fade/Complex Fade-Bridging-Header.h";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -10452,8 +10450,7 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Digital Plugs/Complex Fade/Complex Fade-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_INSTALL_OBJC_HEADER = NO;
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};

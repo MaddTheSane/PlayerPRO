@@ -10,6 +10,10 @@ import Cocoa
 import PlayerPROCore
 import PlayerPROKit
 
+private func ==(rhs: NSData, lhs: NSData) -> Bool {
+	return rhs.isEqualToData(lhs)
+}
+
 @objc(PPMIDIImporter) final public class MIDIImporter: NSObject, PPComplexImportPlugInterface {
 
 	public func beginImportOfURL(theURL: NSURL, withHandler handler: PPComplexImportHandler) {
@@ -18,11 +22,17 @@ import PlayerPROKit
 	}
 	
 	public func canImportURL(theURL: NSURL, error outErr: NSErrorPointer) -> Bool {
+		func getHeaderData() -> NSData {
+			var headerData = NSMutableData(data: "MThd".dataUsingEncoding(NSASCIIStringEncoding, allowLossyConversion: true)!)
+			let headerAddlData: [Int8] = [0, 0, 0, 6, 0]
+			headerData.appendBytes(headerAddlData, length: headerAddlData.count)
+			return headerData.copy() as NSData
+		}
 		var myErr = MADErr.NoErr;
 		if let aFile = NSFileHandle(forReadingFromURL:theURL, error: nil) {
-			let fileData = aFile.readDataOfLength(4)
+			let fileData = aFile.readDataOfLength(9)
 			aFile.closeFile()
-			let headerData = "MThd".dataUsingEncoding(NSASCIIStringEncoding, allowLossyConversion: true)
+			let headerData = getHeaderData()
 			
 			if fileData == headerData {
 				return true
@@ -40,8 +50,6 @@ import PlayerPROKit
 	}
 	
 	public override init() {
-		
 		super.init()
 	}
-	
 }

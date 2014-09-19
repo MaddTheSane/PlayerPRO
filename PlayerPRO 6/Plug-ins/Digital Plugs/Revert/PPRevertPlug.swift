@@ -18,7 +18,7 @@ import PlayerPROKit
 		
 		for track in 0 ..< srcCmd.tracks {
 			for row in 0 ... maxLenth {
-				var myCmdsrc	= srcCmd.getCommand(maxLenth - row, track: track) 
+				var myCmdsrc = srcCmd.getCommand(maxLenth - row, track: track) 
 				ReplaceCmd(row, track, myCmdsrc, myPcmd)
 			}
 		}
