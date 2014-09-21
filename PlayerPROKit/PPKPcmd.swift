@@ -27,13 +27,15 @@ public struct PPKPcmd: SequenceType {
 	public var trackStart: Int16
 	public var positionStart: Int16
 	public var myCmd = [Cmd]()
-	public var structSize: Int32? { get {
-		if self.valid {
-			return Int32(sizeof(Pcmd.Type) + myCmd.count * sizeof(Cmd.Type))
-		} else {
-			return nil
+	public var structSize: Int32? {
+		get {
+			if self.valid {
+				return Int32(sizeof(Pcmd.Type) + myCmd.count * sizeof(Cmd.Type))
+			} else {
+				return nil
+			}
 		}
-		}}
+	}
 	
 	public func generate() -> IndexingGenerator<[Cmd]> {
 		return myCmd.generate()

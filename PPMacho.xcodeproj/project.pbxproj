@@ -265,6 +265,7 @@
 		554F087819BBAD4A005A215E /* PPPlugIns.h in Headers */ = {isa = PBXBuildFile; fileRef = 554F087719BBAD4A005A215E /* PPPlugIns.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		554F087E19BBBB40005A215E /* PPPropogatePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 554F087D19BBBB40005A215E /* PPPropogatePlug.m */; };
 		554F088119BBBC6E005A215E /* PPXIPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 554F088019BBBC6E005A215E /* PPXIPlug.m */; };
+		55510A4D19CDFC6800ACFC3B /* PPInstrumentPlugBridgeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55510A4C19CDFC6800ACFC3B /* PPInstrumentPlugBridgeObject.m */; };
 		555143CA17B6EDCF00252657 /* PPToneGeneratorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555143C817B6EDCF00252657 /* PPToneGeneratorController.m */; };
 		555269EF19CB53C300F8B95B /* ComplexFadeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555269EE19CB53C300F8B95B /* ComplexFadeController.swift */; };
 		555269F219CB638B00F8B95B /* TypeCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555269F119CB638B00F8B95B /* TypeCount.swift */; };
@@ -617,6 +618,8 @@
 		55BF238E19A937C9005B1F96 /* PPAPPLImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */; };
 		55BF238F19A937C9005B1F96 /* PPAPPLImporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */; };
 		55BF239019A94077005B1F96 /* PPComplexImportPlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */; };
+		55C5754019CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
+		55C5754119CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
 		55C8EDE1187CC8B200CC8C1B /* PPPatternObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287216A8968C009013D8 /* PPPatternObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55C8EDE2187CC8B200CC8C1B /* PPPatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287316A8968C009013D8 /* PPPatternObject.m */; };
 		55C8EDE3187CC8B200CC8C1B /* PPMadCommandObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287616A89A9C009013D8 /* PPMadCommandObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2170,6 +2173,8 @@
 		554F087D19BBBB40005A215E /* PPPropogatePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPropogatePlug.m; sourceTree = "<group>"; };
 		554F087F19BBBC6E005A215E /* PPXIPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PPXIPlug.h; path = XI/PPXIPlug.h; sourceTree = "<group>"; };
 		554F088019BBBC6E005A215E /* PPXIPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PPXIPlug.m; path = XI/PPXIPlug.m; sourceTree = "<group>"; };
+		55510A4B19CDFC6800ACFC3B /* PPInstrumentPlugBridgeObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPlugBridgeObject.h; sourceTree = "<group>"; };
+		55510A4C19CDFC6800ACFC3B /* PPInstrumentPlugBridgeObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentPlugBridgeObject.m; sourceTree = "<group>"; };
 		555143C717B6EDCF00252657 /* PPToneGeneratorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPToneGeneratorController.h; sourceTree = "<group>"; };
 		555143C817B6EDCF00252657 /* PPToneGeneratorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPToneGeneratorController.m; sourceTree = "<group>"; };
 		555269EE19CB53C300F8B95B /* ComplexFadeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexFadeController.swift; sourceTree = "<group>"; };
@@ -2409,6 +2414,9 @@
 		55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLImporter.h; sourceTree = "<group>"; };
 		55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLImporter.m; sourceTree = "<group>"; };
 		55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPAPPLImporter.xib; sourceTree = "<group>"; };
+		55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentPlugBridgeHelper.m; sourceTree = "<group>"; };
+		55C5754219CE32C6005109C9 /* PPInstrumentPlugBridgeHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPlugBridgeHelper.h; sourceTree = "<group>"; };
+		55C5754319CE3559005109C9 /* ARCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARCBridge.h; sourceTree = "<group>"; };
 		55C930381819E68700D9E072 /* CocoaFuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaFuncs.m; sourceTree = "<group>"; };
 		55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO 6.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CBF9A811EB77760028C6BB /* Cocoa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Cocoa-Info.plist"; path = "../../Cocoa-Info.plist"; sourceTree = "<group>"; };
@@ -4248,9 +4256,14 @@
 		559170A019C26E1D00998D7F /* PPCoreInstrumentPlugBridge */ = {
 			isa = PBXGroup;
 			children = (
+				55C5754319CE3559005109C9 /* ARCBridge.h */,
+				55510A4B19CDFC6800ACFC3B /* PPInstrumentPlugBridgeObject.h */,
+				55510A4C19CDFC6800ACFC3B /* PPInstrumentPlugBridgeObject.m */,
 				559170A319C26E1D00998D7F /* PPCoreInstrumentPlugBridgeProtocol.h */,
 				559170A419C26E1D00998D7F /* PPCoreInstrumentPlugBridge.h */,
 				559170A519C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m */,
+				55C5754219CE32C6005109C9 /* PPInstrumentPlugBridgeHelper.h */,
+				55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */,
 				559170A719C26E1D00998D7F /* main.m */,
 				559170A119C26E1D00998D7F /* Supporting Files */,
 			);
@@ -7110,7 +7123,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				559170A819C26E1D00998D7F /* main.m in Sources */,
+				55510A4D19CDFC6800ACFC3B /* PPInstrumentPlugBridgeObject.m in Sources */,
 				559170A619C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m in Sources */,
+				55C5754119CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7230,6 +7245,7 @@
 				5579ADB819A4551500DEC0FF /* DigitalPlugHandler.swift in Sources */,
 				55993EF619A340FF00C2078E /* PPRunAlert.swift in Sources */,
 				557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */,
+				55C5754019CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */,
 				55E382EB1981509100EC330B /* PlugInInfo.swift in Sources */,
 				5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */,
 				550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */,

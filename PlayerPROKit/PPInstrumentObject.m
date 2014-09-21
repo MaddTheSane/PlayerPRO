@@ -195,6 +195,14 @@ static const dispatch_block_t initUTIArray = ^{
 	return name;
 }
 
+- (instancetype)init
+{
+	if (self = [super init]) {
+		MADResetInstrument(&theInstrument);
+	}
+	return self;
+}
+
 - (void)setName:(NSString *)name1
 {
 	char tempstr[32] = {0};

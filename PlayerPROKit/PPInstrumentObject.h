@@ -29,6 +29,7 @@
 @interface PPInstrumentObject : NSObject <NSFastEnumeration, PPObject>
 + (instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObject *)mus;
 - (instancetype)initWithMusic:(PPMusicObject *)mus instrumentIndex:(short)insIdx;
+- (instancetype)init;
 
 @property (nonatomic, copy) NSMutableArray *volumeEnvelope;
 @property (nonatomic, copy) NSMutableArray *panningEnvelope;
