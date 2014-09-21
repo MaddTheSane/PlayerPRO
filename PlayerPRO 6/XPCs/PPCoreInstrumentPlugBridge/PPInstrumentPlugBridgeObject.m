@@ -7,13 +7,15 @@
 //
 
 #import "PPInstrumentPlugBridgeObject.h"
+#import "ARCBridge.h"
 
 @interface PPInstrumentPlugBridgeObject ()
-@property (strong, readwrite) NSBundle *bundleFile;
+@property (retain, readwrite) NSBundle *bundleFile;
 @end
 
 @implementation PPInstrumentPlugBridgeObject
 @synthesize xxxx;
+@synthesize bundleFile = _bundleFile;
 
 - (instancetype)init
 {
@@ -33,6 +35,12 @@
 	if (xxxx) {
 		(*xxxx)->Release(xxxx);
 	}
+	
+#if !__has_feature(objc_arc)
+	self.bundleFile = nil;
+	
+	[super dealloc];
+#endif
 }
 
 @end

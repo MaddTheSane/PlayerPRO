@@ -8,6 +8,13 @@
 
 #import "PPInstrumentPlugBridgeHelper.h"
 #import "ARCBridge.h"
+#import "PPEnvelopeObject32.h"
+
+#if __i386__
+typedef PPEnvelopeObject32 PPEnvelopeClass;
+#else
+typedef PPEnvelopeObject PPEnvelopeClass;
+#endif
 
 #pragma mark PlayerPROKit Sample NSCoding keys
 #define PPName @"PlayerPROKit Sample Name"
@@ -47,9 +54,9 @@
 #define STEREOKEY @"Stereo"
 #define DATAKEY @"Data"
 
-#if __LP64__
+#if !__i386__
 
-NSArray *EncodeSampleObjects(PPInstrumentObject *ourData)
+static NSArray *EncodeSampleObjects(PPInstrumentObject *ourData)
 {
 	NSMutableArray *ourArray = [[NSMutableArray alloc] initWithCapacity:ourData.countOfSamples];
 	for (PPSampleObject *sampObj in ourData.samples) {
@@ -76,13 +83,34 @@ NSData *PPInstrumentToData(PPInstrumentObject *ourData)
 	NSKeyedArchiver *ourArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:ourEncData];
 	[ourArchiver encodeObject:ourData.name forKey:PPName];
 	[ourArchiver encodeObject:EncodeSampleObjects(ourData) forKey:PPSamples];
-	[ourArchiver encodeInt:ourData.volumeType forKey:PPVolType];
+	[ourArchiver encodeInt32:ourData.volumeType forKey:PPVolType];
 	[ourArchiver encodeBytes:ourData.what length:96 forKey:PPWhat];
-	[ourArchiver encodeInt:ourData.MIDI forKey:PPMIDI];
-	[ourArchiver encodeInt:ourData.MIDIType forKey:PPMIDIType];
-	
+	[ourArchiver encodeInt32:ourData.MIDI forKey:PPMIDI];
+	[ourArchiver encodeInt32:ourData.MIDIType forKey:PPMIDIType];
+	[ourArchiver encodeInt32:ourData.volumeSize forKey:PPVolSize];
+	[ourArchiver encodeInt32:ourData.volumeSustain forKey:PPVolSus];
+	[ourArchiver encodeInt32:ourData.volumeBegin forKey:PPVolBeg];
+	[ourArchiver encodeInt32:ourData.volumeEnd forKey:PPVolEnd];
+
 	[ourArchiver finishEncoding];
 	return ourEncData;
+}
+
+static void getSamplesFromArray(PPInstrumentObject *instrument, NSArray *ourArray)
+{
+	for (NSDictionary *sampleDict in ourArray) {
+		PPSampleObject *sampObj = [[PPSampleObject alloc] init];
+		sampObj.name = sampleDict[NAMEKEY];
+		sampObj.data = sampleDict[DATAKEY];
+		sampObj.loopBegin = [(NSNumber*)sampleDict[LOOPBEGINKEY] intValue];
+		sampObj.loopSize = [(NSNumber*)sampleDict[LOOPSIZEKEY] intValue];
+		sampObj.loopType = [(NSNumber*)sampleDict[LOOPTYPEKEY] unsignedCharValue];
+		sampObj.volume = [(NSNumber*)sampleDict[VOLUMEKEY] unsignedCharValue];
+		sampObj.c2spd = [(NSNumber*)sampleDict[C2SPDKEY] unsignedShortValue];
+		sampObj.relativeNote = [(NSNumber*)sampleDict[RELATIVENOTEKEY] charValue];
+		sampObj.stereo = [(NSNumber*)sampleDict[RELATIVENOTEKEY] boolValue];
+		[instrument addSamplesObject:sampObj];
+	}
 }
 
 PPInstrumentObject *PPDataToInstrument(NSData *ourData)
@@ -94,8 +122,31 @@ PPInstrumentObject *PPDataToInstrument(NSData *ourData)
 	const uint8_t *whatData = [ourUnarchiver decodeBytesForKey:PPWhat returnedLength:&whatLen];
 	NSCAssert(whatLen == 96, @"How can \"what\" not be 96?");
 	memcpy(toRet.what, whatData, whatLen);
-	toRet.MIDI = [ourUnarchiver decodeIntForKey:PPMIDI];
-	//toRet.MIDIType = [ourUnarchiver decodeIntForKey:PPMIDI];
+	toRet.MIDI = [ourUnarchiver decodeInt32ForKey:PPMIDI];
+	switch ([ourUnarchiver decodeInt32ForKey:PPMIDI]) {
+		case 0:
+			toRet.MIDIOut = NO;
+			toRet.soundOut = YES;
+			break;
+			
+		case 1:
+			toRet.MIDIOut = YES;
+			toRet.soundOut = NO;
+			break;
+			
+		case 2:
+			toRet.MIDIOut = YES;
+			toRet.soundOut = YES;
+			break;
+			
+		case 3:
+			toRet.MIDIOut = NO;
+			toRet.soundOut = NO;
+			break;
+	}
+	getSamplesFromArray(toRet, [ourUnarchiver decodeObjectForKey:PPSamples]);
+	
+	toRet.volumeType = [ourUnarchiver decodeInt32ForKey:PPVolType];
 	return toRet;
 }
 
@@ -108,5 +159,6 @@ NSData *InstrumentToData(InstrData* insData, sData ** sampleData)
 
 InstrData *DataToInstrument(NSData *ourData, sData ***sampleData)
 {
+	*sampleData = NULL;
 	return NULL;
 }

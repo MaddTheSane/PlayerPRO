@@ -10,7 +10,11 @@
 #import <PlayerPROCore/PlayerPROCore.h>
 
 @interface PPInstrumentPlugBridgeObject : NSObject
-@property (strong, readonly) NSBundle *bundleFile;
+{
+	NSBundle *_bundleFile;
+	PPInstrumentPlugin **xxxx;
+}
+@property (retain, readonly) NSBundle *bundleFile;
 @property PPInstrumentPlugin **xxxx;
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;

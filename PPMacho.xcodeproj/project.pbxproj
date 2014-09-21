@@ -245,6 +245,7 @@
 		553B8B7319B3CD85007C2C64 /* xm-ios@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B6F19B3CD85007C2C64 /* xm-ios@2x.png */; };
 		553B8B7419B3CD85007C2C64 /* xm-ipad-large.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B7019B3CD85007C2C64 /* xm-ipad-large.png */; };
 		553B8B7519B3CD85007C2C64 /* xm-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B7119B3CD85007C2C64 /* xm-ipad.png */; };
+		553DD97219CF4055000CFC8D /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		55413C491991B947001414D0 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		55413C4B1992AFAB001414D0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 551292E1163DD68500C2C639 /* InfoPlist.strings */; };
 		55413C4C1992AFFE001414D0 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */; };
@@ -318,6 +319,14 @@
 		55680A47190497E400F7616D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A46190497E400F7616D /* CoreGraphics.framework */; };
 		55680A4A190497FC00F7616D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A48190497FB00F7616D /* CoreFoundation.framework */; };
 		55680A4B190497FC00F7616D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A49190497FC00F7616D /* Foundation.framework */; };
+		556BC17219CF477700508F49 /* PPEnvelopeObject32.m in Sources */ = {isa = PBXBuildFile; fileRef = 556BC17119CF460A00508F49 /* PPEnvelopeObject32.m */; };
+		556BC17719CF47FC00508F49 /* PPEnvelopeObject32.m in Sources */ = {isa = PBXBuildFile; fileRef = 556BC17119CF460A00508F49 /* PPEnvelopeObject32.m */; };
+		556BC17819CF47FC00508F49 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 559170A719C26E1D00998D7F /* main.m */; };
+		556BC17919CF47FC00508F49 /* PPInstrumentPlugBridgeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55510A4C19CDFC6800ACFC3B /* PPInstrumentPlugBridgeObject.m */; };
+		556BC17A19CF47FC00508F49 /* PPCoreInstrumentPlugBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 559170A519C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m */; };
+		556BC17B19CF47FC00508F49 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
+		556BC18419CF482600508F49 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		556BC18519CF482D00508F49 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		557139E71685007B00831A5A /* OpenPanelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557139E51685007B00831A5A /* OpenPanelViewController.xib */; };
@@ -1073,6 +1082,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 55534ACC1817C387006D6BCB;
 			remoteInfo = updateInfoPlist;
+		};
+		556BC17519CF47FC00508F49 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
 		};
 		5578C49817D9E86D0057D11B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2226,6 +2242,10 @@
 		55680A48190497FB00F7616D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		55680A49190497FC00F7616D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		556AE4BB16E290650074BBF9 /* PPByteswap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPByteswap.h; sourceTree = "<group>"; };
+		556BC17019CF460A00508F49 /* PPEnvelopeObject32.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPEnvelopeObject32.h; sourceTree = "<group>"; };
+		556BC17119CF460A00508F49 /* PPEnvelopeObject32.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPEnvelopeObject32.m; sourceTree = "<group>"; };
+		556BC18219CF47FC00508F49 /* PPCoreInstrumentPlugBridge32.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = PPCoreInstrumentPlugBridge32.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
+		556BC18319CF47FD00508F49 /* Info-32.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-32.plist"; sourceTree = "<group>"; };
 		557139CD1684EF7500831A5A /* PPHilightableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHilightableButton.h; sourceTree = "<group>"; };
 		557139CE1684EF7500831A5A /* PPHilightableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHilightableButton.m; sourceTree = "<group>"; };
 		557139E51685007B00831A5A /* OpenPanelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpenPanelViewController.xib; sourceTree = "<group>"; };
@@ -2706,6 +2726,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		556BC17C19CF47FC00508F49 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				556BC18519CF482D00508F49 /* Cocoa.framework in Frameworks */,
+				556BC18419CF482600508F49 /* PlayerPROCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5573A33D10B50D2600FF8B50 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -3005,6 +3034,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				553DD97219CF4055000CFC8D /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4264,6 +4294,8 @@
 				559170A519C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m */,
 				55C5754219CE32C6005109C9 /* PPInstrumentPlugBridgeHelper.h */,
 				55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */,
+				556BC17019CF460A00508F49 /* PPEnvelopeObject32.h */,
+				556BC17119CF460A00508F49 /* PPEnvelopeObject32.m */,
 				559170A719C26E1D00998D7F /* main.m */,
 				559170A119C26E1D00998D7F /* Supporting Files */,
 			);
@@ -4274,6 +4306,7 @@
 			isa = PBXGroup;
 			children = (
 				559170A219C26E1D00998D7F /* Info.plist */,
+				556BC18319CF47FD00508F49 /* Info-32.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -4644,6 +4677,7 @@
 				55ADD25619B4F8BA005588B5 /* PlayerPRO 6 Tests.xctest */,
 				5591709519C24C1600998D7F /* System 7.plugin */,
 				5591709F19C26E1C00998D7F /* PPCoreInstrumentPlugBridge.xpc */,
+				556BC18219CF47FC00508F49 /* PPCoreInstrumentPlugBridge32.xpc */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5127,6 +5161,24 @@
 			name = StcfImporter;
 			productName = StcfImporter;
 			productReference = 55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */;
+			productType = "com.apple.product-type.xpc-service";
+		};
+		556BC17319CF47FC00508F49 /* PPCoreInstrumentPlugBridge32 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 556BC17F19CF47FC00508F49 /* Build configuration list for PBXNativeTarget "PPCoreInstrumentPlugBridge32" */;
+			buildPhases = (
+				556BC17619CF47FC00508F49 /* Sources */,
+				556BC17C19CF47FC00508F49 /* Frameworks */,
+				556BC17E19CF47FC00508F49 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				556BC17419CF47FC00508F49 /* PBXTargetDependency */,
+			);
+			name = PPCoreInstrumentPlugBridge32;
+			productName = PPCoreInstrumentPlugBridge;
+			productReference = 556BC18219CF47FC00508F49 /* PPCoreInstrumentPlugBridge32.xpc */;
 			productType = "com.apple.product-type.xpc-service";
 		};
 		5573A33E10B50D2600FF8B50 /* PlayerPROCore */ = {
@@ -6012,6 +6064,7 @@
 				559C4186183EB4AB004A073C /* PPQuickView */,
 				55680A1C19045F0A00F7616D /* StcfImporter */,
 				5591709E19C26E1C00998D7F /* PPCoreInstrumentPlugBridge */,
+				556BC17319CF47FC00508F49 /* PPCoreInstrumentPlugBridge32 */,
 				5573A33E10B50D2600FF8B50 /* PlayerPROCore */,
 				55F1BD8E1975C83400AD2C03 /* PlayerPROCore-iOS */,
 				551292D7163DD68500C2C639 /* PlayerPROKit */,
@@ -6215,6 +6268,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				55680A2419045F0A00F7616D /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		556BC17E19CF47FC00508F49 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6787,6 +6847,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		556BC17619CF47FC00508F49 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				556BC17719CF47FC00508F49 /* PPEnvelopeObject32.m in Sources */,
+				556BC17819CF47FC00508F49 /* main.m in Sources */,
+				556BC17919CF47FC00508F49 /* PPInstrumentPlugBridgeObject.m in Sources */,
+				556BC17A19CF47FC00508F49 /* PPCoreInstrumentPlugBridge.m in Sources */,
+				556BC17B19CF47FC00508F49 /* PPInstrumentPlugBridgeHelper.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5573A33C10B50D2600FF8B50 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -7122,6 +7194,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				556BC17219CF477700508F49 /* PPEnvelopeObject32.m in Sources */,
 				559170A819C26E1D00998D7F /* main.m in Sources */,
 				55510A4D19CDFC6800ACFC3B /* PPInstrumentPlugBridgeObject.m in Sources */,
 				559170A619C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m in Sources */,
@@ -7552,6 +7625,11 @@
 			isa = PBXTargetDependency;
 			target = 55534ACC1817C387006D6BCB /* updateInfoPlist */;
 			targetProxy = 556885A918AED59F001D75D2 /* PBXContainerItemProxy */;
+		};
+		556BC17419CF47FC00508F49 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 556BC17519CF47FC00508F49 /* PBXContainerItemProxy */;
 		};
 		5578C49917D9E86D0057D11B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9159,6 +9237,39 @@
 			};
 			name = Release;
 		};
+		556BC18019CF47FC00508F49 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				INFOPLIST_FILE = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/Info-32.plist";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		556BC18119CF47FC00508F49 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/Info-32.plist";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
 		5573A34210B50D2900FF8B50 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */;
@@ -10122,6 +10233,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/Info.plist";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -10134,10 +10246,7 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/Info.plist";
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -10915,6 +11024,15 @@
 			buildConfigurations = (
 				55680A2919045F0B00F7616D /* Release */,
 				55680A2B19045F0B00F7616D /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		556BC17F19CF47FC00508F49 /* Build configuration list for PBXNativeTarget "PPCoreInstrumentPlugBridge32" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				556BC18019CF47FC00508F49 /* Release */,
+				556BC18119CF47FC00508F49 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
