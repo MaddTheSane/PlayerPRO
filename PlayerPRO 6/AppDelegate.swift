@@ -490,7 +490,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 	
 	func applicationDidFinishLaunching(notification: NSNotification!) {
-		MADRegisterDebugBlock(CocoaDebugStr)
+		PPLibrary.registerDebugBlock(CocoaDebugStr)
 		let defaults = NSUserDefaults.standardUserDefaults()
 		
 		for (i, obj) in enumerate(instrumentPlugHandler) {
