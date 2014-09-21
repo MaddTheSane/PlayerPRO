@@ -91,5 +91,6 @@
 - (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(PPSampleObject *)object;
 @property (readonly) NSInteger countOfSamples;
 - (PPSampleObject*)samplesObjectAtIndex:(NSInteger)idx;
+- (void)removeSamplesAtIndexes:(NSIndexSet *)indexes;
 
 @end

@@ -29,7 +29,6 @@ import AudioToolbox
 	}
 	
 	public func importSampleAtURL(sampleURL: NSURL!, instrument InsHeader: PPInstrumentObject!, sample: PPSampleObject!, sampleID: UnsafeMutablePointer<Int16>, driver: PPDriver!) -> MADErr {
-		
 		var soundSize: UInt = 0;
 		var loopStart:Int32 = 0
 		var loopEnd:Int32 = 0

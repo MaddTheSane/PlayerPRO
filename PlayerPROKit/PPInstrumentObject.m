@@ -214,7 +214,6 @@ static const dispatch_block_t initUTIArray = ^{
 	[tmpCStr getBytes:tempstr length:cStrLen];
 	tmpCStr = nil;
 	
-	//memcpy(newData, &theInstrument, sizeof(InstrData));
 	strlcpy(theInstrument.name, tempstr, sizeof(theInstrument.name));
 	name = name1;
 }
@@ -608,7 +607,7 @@ static const dispatch_block_t initUTIArray = ^{
 		theInstrument.no = number = -1;
 		theInstrument.firstSample = 0;
 		MADResetInstrument(&theInstrument);
-		name = @"";
+		self.name = @"";
 		_panningEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
 		_volumeEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
 		_pitchEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
@@ -886,9 +885,23 @@ static const dispatch_block_t initUTIArray = ^{
 	theInstrument.volFade = volumeFadeOut;
 }
 
+- (void)removeSamplesAtIndexes:(NSIndexSet *)indexes
+{
+	[samples removeObjectsAtIndexes:indexes];
+}
+
 - (void)resetInstrument
 {
-	
+	[self removeSamplesAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, samples.count)]];
+	theInstrument.no = number = -1;
+	theInstrument.firstSample = 0;
+	MADResetInstrument(&theInstrument);
+	self.name = @"";
+	for (int i = 0; i < 12; i++) {
+		[self replaceObjectInPanningEnvelopeAtIndex:i withObject:[PPEnvelopeObject new]];
+		[self replaceObjectInVolumeEnvelopeAtIndex:i withObject:[PPEnvelopeObject new]];
+		[self replaceObjectInPitchEnvelopeAtIndex:i withObject:[PPEnvelopeObject new]];
+	}
 }
 
 #pragma mark NSCopying protocol
@@ -926,7 +939,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-	[aCoder encodeObject:name forKey:PPName];
+	[aCoder encodeObject:self.name forKey:PPName];
 	[aCoder encodeInteger:number forKey:PPLocation];
 	[aCoder encodeInteger:self.firstSample forKey:PPSampCount];
 	[aCoder encodeInt:theInstrument.MIDI forKey:PPMIDI];
@@ -934,7 +947,7 @@ static const dispatch_block_t initUTIArray = ^{
 	[aCoder encodeBytes:&theInstrument.volSize length:1 forKey:PPVolSize];
 	[aCoder encodeBytes:&theInstrument.pannSize length:1 forKey:PPPannSize];
 	[aCoder encodeBytes:&theInstrument.pitchSize length:1 forKey:PPPitchSize];
-	[aCoder encodeBytes:theInstrument.what length:sizeof(theInstrument.what) forKey:PPNotes];
+	[aCoder encodeBytes:self.what length:sizeof(theInstrument.what) forKey:PPNotes];
 	[aCoder encodeInt:theInstrument.volFade forKey:PPVolFade];
 	
 	[aCoder encodeBytes:&theInstrument.volSus length:1 forKey:PPVolSus];

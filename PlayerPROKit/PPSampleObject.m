@@ -104,6 +104,7 @@ static const dispatch_block_t initUTIArray = ^{
 	dispatch_once(&initUTIOnceToken, initUTIArray);
 	return UTIArray;
 }
+
 - (id)pasteboardPropertyListForType:(NSString *)type
 {
 	if ([type isEqualToString:kPPKSamplePasteboardUTI])
@@ -247,8 +248,8 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	if (self = [super init]) {
 		if (!theData) {
-			_name = @"";
-			_data = [[NSData alloc] init];
+			strcpy(theSample.name, "");
+			theSample.data = NULL;
 			theSample.size = 0;
 			theSample.loopType = 0;
 			theSample.c2spd = NOFINETUNE;
@@ -258,13 +259,13 @@ static const dispatch_block_t initUTIArray = ^{
 			theSample.loopBeg = 0;
 			theSample.loopSize = 0;
 			theSample.relNote = 0;
+			sampleWriteTo = &theSample;
 		} else {
 			theSample = *theData;
-			//theSample.data = NULL;
+			theSample.data = NULL;
+			sampleWriteTo = &theSample;
 			self.data = [[NSData alloc] initWithBytes:theData->data length:theData->size];
-			//name = [[NSString alloc] initWithCString:theData->name encoding:NSMacOSRomanStringEncoding];
 		}
-		sampleWriteTo = &theSample;
 	}
 	return self;
 }
@@ -281,16 +282,16 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	PPSampleObject *obj;
 	if ((obj = [[[self class] allocWithZone:zone] init])) {
-		obj.name = _name;
-		obj.data = _data;
-		obj.amplitude = theSample.amp;
-		obj.volume = theSample.vol;
-		obj.stereo = theSample.stereo ? YES : NO;
-		obj.c2spd = theSample.c2spd;
-		obj.loopType = theSample.loopType;
-		obj.relativeNote = theSample.relNote;
-		obj.loopBegin = theSample.loopBeg;
-		obj.loopSize = theSample.loopSize;
+		obj.name = self.name;
+		obj.data = self.data;
+		obj.amplitude = self.amplitude;
+		obj.volume = self.volume;
+		obj.stereo = self.stereo;
+		obj.c2spd = self.c2spd;
+		obj.loopType = self.loopType;
+		obj.relativeNote = self.relativeNote;
+		obj.loopBegin = self.loopBegin;
+		obj.loopSize = self.loopSize;
 	}
 	return obj;
 }
