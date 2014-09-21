@@ -242,7 +242,7 @@ OSErr ConvertDataToWAVE(FSSpec file, FSSpec *newfile, PPInfoPlug *thePPInfoPlug)
 	
 	canceled = FALSE;
 	
-	if (!canceled && iErr == MADNoErr) {
+	if (!canceled && iErr == noErr) {
 		iErr = FindFolder(kOnSystemDisk, kTemporaryFolderType, kCreateFolder, &newfile->vRefNum, &newfile->parID);
 		if (iErr == noErr) {
 			/////////////////////////////////////////////////

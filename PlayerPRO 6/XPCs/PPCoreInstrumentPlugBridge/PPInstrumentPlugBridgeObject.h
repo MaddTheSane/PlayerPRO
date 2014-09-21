@@ -20,4 +20,6 @@
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithBundle:(NSBundle *)tempBundle;
 
+- (BOOL)canLoadFileAtURL:(NSURL*)theURL;
+
 @end

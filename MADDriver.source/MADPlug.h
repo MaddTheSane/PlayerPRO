@@ -94,12 +94,12 @@ PPEXPORT const CFStringRef kMadPlugModeKey;
 #endif
 
 typedef struct PPInfoPlug {
-	RPlaySoundUPP RPlaySound;
-	MADDriverRec *driverRec;
-	OSType fileType;
-	CFStringRef fileUTI;
-	CFTypeRef NSWindow;
-	CFTypeRef OutWindowController;
+	RPlaySoundUPP	RPlaySound;
+	MADDriverRec	*driverRec;
+	OSType			fileType;
+	CFStringRef		fileUTI;
+	CFTypeRef		NSWindow;
+	CFTypeRef		OutWindowController;
 } PPInfoPlug;
 
 #pragma mark Filters for Samples/Sounds

@@ -56,8 +56,7 @@ static HRESULT CFInstrPlugQueryInterface(void *myInstance, REFIID iid, LPVOID *p
 
 static ULONG CFInstrPlugAddRef(void *myInstance)
 {
-	((CFInstrPlugType*)myInstance)->_refCount += 1;
-	return ((CFInstrPlugType*)myInstance)->_refCount;
+	return ++((CFInstrPlugType*)myInstance)->_refCount;
 }
 
 // -------------------------------------------------------------------------------------------

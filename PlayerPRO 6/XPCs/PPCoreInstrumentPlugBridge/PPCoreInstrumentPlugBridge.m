@@ -7,8 +7,10 @@
 //
 
 #import "PPCoreInstrumentPlugBridge.h"
+#import "PPInstrumentPlugBridgeObject.h"
+#import "ARCBridge.h"
 
-NSString * const kMadPlugIsSampleKey = @"MADPlugIsSample";
+#define kMadPlugIsSampleKey @"MADPlugIsSample"
 
 static int nativeCPUArch()
 {
@@ -28,72 +30,11 @@ typedef NS_OPTIONS(unsigned char, MADPlugCapabilities) {
 	PPMADCanDoBoth		= PPMADCanImport | PPMADCanExport
 };
 
-#if 0
-void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
+void **PPINLoadPlug(CFBundleRef tempBundleRef)
 {
 	CFArrayRef	factories		= NULL;
 	BOOL		foundInterface	= NO;
 	void		**formatPlugA	= NULL;
-	
-	CFPlugInRef plugToTest = CFBundleGetPlugIn(tempBundleRef);
-	
-	if (!plugToTest)
-		return NULL;
-	
-	//  See if this plug-in implements the Test type.
-	factories = CFPlugInFindFactoriesForPlugInTypeInPlugIn(TypeUUID, plugToTest);
-	
-	if (factories != NULL) {
-		CFIndex	factoryCount, index;
-		
-		factoryCount = CFArrayGetCount(factories);
-		if (factoryCount > 0) {
-			for (index = 0 ; (index < factoryCount) && (foundInterface == false) ; index++) {
-				CFUUIDRef factoryID;
-				
-				//  Get the factory ID for the first location in the array of IDs.
-				factoryID = (CFUUIDRef) CFArrayGetValueAtIndex(factories, index);
-				if (factoryID) {
-					IUnknownVTbl **iunknown = NULL;
-					
-					//  Use the factory ID to get an IUnknown interface. Here the plug-in code is loaded.
-					iunknown = (IUnknownVTbl **)CFPlugInInstanceCreate(kCFAllocatorDefault, factoryID, TypeUUID);
-					
-					if (iunknown) {
-						//  If this is an IUnknown interface, query for the test interface.
-						(*iunknown)->QueryInterface(iunknown, CFUUIDGetUUIDBytes(InterfaceUUID), (LPVOID *)(&formatPlugA));
-						
-						// Now we are done with IUnknown
-						(*iunknown)->Release(iunknown);
-						
-						if (formatPlugA) {
-							// We found the interface we need
-							foundInterface = true;
-						}
-					}
-				}
-			}
-		} else {
-			//You can ignore the Clang static warning of incorrect decrement here.
-			CFRelease(factories);
-			return NULL;
-		}
-	} else
-		return NULL;
-	
-	//You can ignore the Clang static warning of incorrect decrement here.
-	CFRelease(factories);
-	
-	return formatPlugA;
-}
-#define PPINLoadPlug(theBundle) (PPInstrumentPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROInstrumentPlugTypeID, kPlayerPROInstrumentPlugInterfaceID)
-#else
-//#define PPINLoadPlug(theBundle) (PPInstrumentPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROInstrumentPlugTypeID, kPlayerPROInstrumentPlugInterfaceID)
-IUnknownVTbl **PPINLoadPlug(CFBundleRef tempBundleRef)
-{
-	CFArrayRef	factories		= NULL;
-	BOOL		foundInterface	= NO;
-	IUnknownVTbl		**formatPlugA	= NULL;
 	
 	CFPlugInRef plugToTest = CFBundleGetPlugIn(tempBundleRef);
 	
@@ -108,7 +49,7 @@ IUnknownVTbl **PPINLoadPlug(CFBundleRef tempBundleRef)
 		
 		factoryCount = CFArrayGetCount(factories);
 		if (factoryCount > 0) {
-			for (index = 0 ; (index < factoryCount) && (foundInterface == false) ; index++) {
+			for (index = 0; (index < factoryCount) && (foundInterface == false); index++) {
 				CFUUIDRef factoryID;
 				
 				//  Get the factory ID for the first location in the array of IDs.
@@ -146,7 +87,7 @@ IUnknownVTbl **PPINLoadPlug(CFBundleRef tempBundleRef)
 	
 	return formatPlugA;
 }
-#endif
+
 static Class strClass;
 static Class numClass;
 
@@ -160,6 +101,7 @@ static inline BOOL getBoolFromId(id NSType)
 }
 
 @implementation PPCoreInstrumentPlugBridge
+@synthesize plugIns;
 
 __unused static inline OSType NSStringToOSType(NSString *CFstri)
 {
@@ -171,7 +113,7 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 	return CFBridgingRelease(UTCreateStringForOSType(theOSType));
 }
 
-- (void)checkBundleAtURLIsInstrumentBundle:(NSURL*)bundle withReply:(void (^)(BOOL isPlug, BOOL isInstrument, BOOL isImport, BOOL isExport))reply
+- (void)checkBundleAtURLIsInstrumentBundle:(NSURL*)bundle withReply:(void (^)(BOOL isPlug, BOOL isInstrument, BOOL isImport))reply
 {
 	NSBundle *preBundle = [NSBundle bundleWithURL:bundle];
 	NSArray *archs = [preBundle executableArchitectures];
@@ -183,15 +125,15 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 		}
 	}
 	if (hasValidArch == NO) {
-		reply(NO, NO, NO, NO);
+		reply(NO, NO, NO);
 		return;
 	}
 	CFBundleRef postBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)bundle);
-	IUnknownVTbl **plugVtbl = PPINLoadPlug(postBundle);
+	IUnknownVTbl **plugVtbl = (IUnknownVTbl**)PPINLoadPlug(postBundle);
 	if (!plugVtbl) {
 		
 		CFRelease(postBundle);
-		reply(NO, NO, NO, NO);
+		reply(NO, NO, NO);
 	} else {
 		NSDictionary *infoPlist = [preBundle infoDictionary];
 		id DictionaryTemp;
@@ -245,7 +187,11 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 		
 		(*plugVtbl)->Release(plugVtbl);
 		CFRelease(postBundle);
-		reply(capabilities != PPMADCanDoNothing, !isSample, (capabilities & PPMADCanImport) == PPMADCanImport, (capabilities & PPMADCanExport) == PPMADCanExport);
+		reply((capabilities & PPMADCanImport) == PPMADCanImport, !isSample, (capabilities & PPMADCanImport) == PPMADCanImport);
+		
+		if ((capabilities & PPMADCanImport) == PPMADCanImport) {
+			[plugIns addObject:AUTORELEASEOBJ([[PPInstrumentPlugBridgeObject alloc] initWithBundle:preBundle])];
+		}
 	}
 }
 
@@ -257,6 +203,7 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 			strClass = [NSString class];
 			numClass = [NSNumber class];
 		});
+		plugIns = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
@@ -265,5 +212,16 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 {
 	
 }
+
+- (void)beginImportFileAtURL:(NSURL*)aFile withBundleURL:(NSURL*)bundle instrumentData:(NSData*)insData instrumentNumber:(short)insNum reply:(void (^)(MADErr error, NSData *outInsData))reply
+{
+	
+}
+
+- (void)beginImportFileAtURL:(NSURL*)aFile withBundleURL:(NSURL*)bundle sampleData:(NSData*)sampData instrumentNumber:(short)insNum sampleNumber:(short)sampNum reply:(void (^)(MADErr error, NSData *outInsData, short newSampleNum))reply
+{
+	
+}
+
 
 @end

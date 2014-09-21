@@ -1,0 +1,18 @@
+//
+//  PPInsPlugBridge.pch
+//  PPMacho
+//
+//  Created by C.W. Betts on 9/21/14.
+//
+//
+
+#ifndef PPMacho_PPInsPlugBridge_pch
+#define PPMacho_PPInsPlugBridge_pch
+
+#define __private_extern __attribute__((visibility("hidden")))
+
+#import <PlayerPROCore/PlayerPROCore.h>
+#import <Cocoa/Cocoa.h>
+
+
+#endif

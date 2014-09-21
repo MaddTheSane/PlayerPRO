@@ -1981,7 +1981,6 @@
 		55151E7410DD4F400054ABC4 /* CFPlugin-InstrBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-InstrBridge.c"; sourceTree = "<group>"; };
 		55151F8010DEDBDB0054ABC4 /* XI.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XI.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55151F8110DEDBDB0054ABC4 /* XI-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XI-Info.plist"; sourceTree = SOURCE_ROOT; };
-		551520A910DEEA670054ABC4 /* MuLaw.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MuLaw.r; sourceTree = "<group>"; };
 		5517DAC6180CAE2C001413D0 /* dls.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dls.h; sourceTree = "<group>"; };
 		5517DAC7180CAE2C001413D0 /* dls2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dls2.h; sourceTree = "<group>"; };
 		5517DAC8180CAE2C001413D0 /* dlsmac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = dlsmac.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
@@ -2138,12 +2137,6 @@
 		553B8B7019B3CD85007C2C64 /* xm-ipad-large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ipad-large.png"; sourceTree = "<group>"; };
 		553B8B7119B3CD85007C2C64 /* xm-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ipad.png"; sourceTree = "<group>"; };
 		55413C4D1992AFFF001414D0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		5542403E10DB602D00C08864 /* SoundDesignerII.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = SoundDesignerII.r; sourceTree = "<group>"; };
-		5542403F10DB602D00C08864 /* Mp3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mp3.r; sourceTree = "<group>"; };
-		5542404010DB602D00C08864 /* MPG3.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MPG3.r; sourceTree = "<group>"; };
-		5542404110DB602D00C08864 /* MPEG4.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MPEG4.r; sourceTree = "<group>"; };
-		5542404210DB602D00C08864 /* MPEG.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = MPEG.r; sourceTree = "<group>"; };
-		5542404310DB602D00C08864 /* AVI.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = AVI.r; sourceTree = "<group>"; };
 		5546217D163A345F0005F491 /* PlugExports-Mac.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; path = "PlugExports-Mac.exp"; sourceTree = "<group>"; };
 		55469C2516BF34D200175A1F /* PatternHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternHandler.h; sourceTree = "<group>"; };
 		55469C2616BF34D200175A1F /* PatternHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PatternHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -2158,19 +2151,13 @@
 		554E101510D6C79E00BB619C /* Mix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Mix.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E101610D6C79E00BB619C /* Mix.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mix.r; sourceTree = "<group>"; };
 		554E102C10D6C79E00BB619C /* AIFF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AIFF.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E103010D6C79E00BB619C /* AVI.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AVI.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E103410D6C79E00BB619C /* DVC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = DVC.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E103510D6C79E00BB619C /* DVC.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = DVC.r; sourceTree = "<group>"; };
 		554E103710D6C79E00BB619C /* MINS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MINS.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E103910D6C79E00BB619C /* MPEG.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MPEG.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E103D10D6C79E00BB619C /* MuLaw.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MuLaw.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E103F10D6C79E00BB619C /* old MINS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "old MINS.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E104210D6C79E00BB619C /* PAT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAT.h; sourceTree = "<group>"; };
 		554E104C10D6C79E00BB619C /* QuicktimeGeneric.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = QuicktimeGeneric.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E104D10D6C79E00BB619C /* snd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = snd.c; path = ../snd.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E104E10D6C79E00BB619C /* snd.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; name = snd.r; path = ../snd.r; sourceTree = "<group>"; };
 		554E105010D6C79E00BB619C /* SndUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = SndUtils.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E105110D6C79E00BB619C /* SoundDesignerII.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = SoundDesignerII.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E105410D6C79E00BB619C /* System7.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = System7.c; path = ../System7.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E105710D6C79E00BB619C /* WAVE-Conversion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "WAVE-Conversion.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E106510D6C9E100BB619C /* Read-Me.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Read-Me.rtf"; sourceTree = "<group>"; };
@@ -2246,6 +2233,7 @@
 		556BC17119CF460A00508F49 /* PPEnvelopeObject32.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPEnvelopeObject32.m; sourceTree = "<group>"; };
 		556BC18219CF47FC00508F49 /* PPCoreInstrumentPlugBridge32.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = PPCoreInstrumentPlugBridge32.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		556BC18319CF47FD00508F49 /* Info-32.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Info-32.plist"; sourceTree = "<group>"; };
+		556BC18619CF4F7000508F49 /* PPInsPlugBridge.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPInsPlugBridge.pch; sourceTree = "<group>"; };
 		557139CD1684EF7500831A5A /* PPHilightableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPHilightableButton.h; sourceTree = "<group>"; };
 		557139CE1684EF7500831A5A /* PPHilightableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPHilightableButton.m; sourceTree = "<group>"; };
 		557139E51685007B00831A5A /* OpenPanelViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = OpenPanelViewController.xib; sourceTree = "<group>"; };
@@ -3208,24 +3196,6 @@
 			path = Wave;
 			sourceTree = "<group>";
 		};
-		551520A410DEE9640054ABC4 /* SoundDesignerII */ = {
-			isa = PBXGroup;
-			children = (
-				5542403E10DB602D00C08864 /* SoundDesignerII.r */,
-				554E105110D6C79E00BB619C /* SoundDesignerII.c */,
-			);
-			name = SoundDesignerII;
-			sourceTree = "<group>";
-		};
-		551520A510DEE9740054ABC4 /* AVI */ = {
-			isa = PBXGroup;
-			children = (
-				5542404310DB602D00C08864 /* AVI.r */,
-				554E103010D6C79E00BB619C /* AVI.c */,
-			);
-			name = AVI;
-			sourceTree = "<group>";
-		};
 		551520A610DEE9800054ABC4 /* AIFF */ = {
 			isa = PBXGroup;
 			children = (
@@ -3233,36 +3203,6 @@
 				554E102C10D6C79E00BB619C /* AIFF.c */,
 			);
 			name = AIFF;
-			sourceTree = "<group>";
-		};
-		551520A710DEE98B0054ABC4 /* DVC */ = {
-			isa = PBXGroup;
-			children = (
-				554E103410D6C79E00BB619C /* DVC.c */,
-				554E103510D6C79E00BB619C /* DVC.r */,
-			);
-			name = DVC;
-			sourceTree = "<group>";
-		};
-		551520A810DEE9A40054ABC4 /* MPEG */ = {
-			isa = PBXGroup;
-			children = (
-				5542403F10DB602D00C08864 /* Mp3.r */,
-				5542404010DB602D00C08864 /* MPG3.r */,
-				5542404110DB602D00C08864 /* MPEG4.r */,
-				5542404210DB602D00C08864 /* MPEG.r */,
-				554E103910D6C79E00BB619C /* MPEG.c */,
-			);
-			name = MPEG;
-			sourceTree = "<group>";
-		};
-		551520B910DEEB170054ABC4 /* MuLaw */ = {
-			isa = PBXGroup;
-			children = (
-				551520A910DEEA670054ABC4 /* MuLaw.r */,
-				554E103D10D6C79E00BB619C /* MuLaw.c */,
-			);
-			name = MuLaw;
 			sourceTree = "<group>";
 		};
 		551520BA10DEEB370054ABC4 /* PAT */ = {
@@ -3950,14 +3890,9 @@
 			isa = PBXGroup;
 			children = (
 				551520A610DEE9800054ABC4 /* AIFF */,
-				551520A510DEE9740054ABC4 /* AVI */,
-				551520A710DEE98B0054ABC4 /* DVC */,
-				551520A810DEE9A40054ABC4 /* MPEG */,
 				551520C310DEED260054ABC4 /* MINS */,
-				551520B910DEEB170054ABC4 /* MuLaw */,
 				551520BA10DEEB370054ABC4 /* PAT */,
 				551520C410DEED460054ABC4 /* Quicktime */,
-				551520A410DEE9640054ABC4 /* SoundDesignerII */,
 				551520BB10DEEB5E0054ABC4 /* System 7 Sound */,
 				551520A310DEE9570054ABC4 /* Wave */,
 				551520A210DEE93E0054ABC4 /* XI */,
@@ -4305,6 +4240,7 @@
 		559170A119C26E1D00998D7F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				556BC18619CF4F7000508F49 /* PPInsPlugBridge.pch */,
 				559170A219C26E1D00998D7F /* Info.plist */,
 				556BC18319CF47FD00508F49 /* Info-32.plist */,
 			);
@@ -9244,12 +9180,15 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/Info-32.plist";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = i386;
 			};
 			name = Release;
 		};
@@ -9260,6 +9199,8 @@
 				CLANG_ENABLE_OBJC_ARC = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/Info-32.plist";
@@ -9267,6 +9208,7 @@
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = i386;
 			};
 			name = Debug;
 		};
@@ -10233,6 +10175,8 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/Info.plist";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -10246,6 +10190,8 @@
 			buildSettings = {
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/Info.plist";

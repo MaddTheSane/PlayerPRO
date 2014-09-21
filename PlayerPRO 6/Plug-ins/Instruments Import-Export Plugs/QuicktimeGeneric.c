@@ -106,10 +106,11 @@ static OSErr mainQTInst(void					*unused,
 						CFURLRef				AlienFileURLRef,	// IN/OUT file
 						PPInfoPlug				*thePPInfoPlug)
 {
-	OSErr		myErr;
+	MADErr		myErr = MADNoErr;
 	FSIORefNum	iFileRefI = -1;
 	ByteCount	inOutBytes;
 	FSSpec		tmpSpec;
+	OSErr		QTErr = noErr;
 	
 	myErr = CFURLToFSSpec(AlienFileURLRef, &tmpSpec);
 	switch (myErr) {
@@ -126,8 +127,7 @@ static OSErr mainQTInst(void					*unused,
 			break;
 	}
 	
-	switch (order)
-	{
+	switch (order) {
 		case MADPlugPlay:
 			break;
 			
@@ -160,20 +160,18 @@ static OSErr mainQTInst(void					*unused,
 			break;
 			
 		case MADPlugTest:
-#if 1
-			myErr = noErr;
-#else
 		{
+			Boolean canOpenAsMovie = false;
 			FInfo fInfo;
 			
 			FSpGetFInfo(&tmpSpec, &fInfo);
-			
-			if (fInfo.fdType == thePPInfoPlug->fileType)
-				myErr = noErr;
-			else
-				myErr = MADFileNotSupportedByThisPlug;
+			QTErr = CanQuickTimeOpenFile(&tmpSpec, fInfo.fdType, 0, NULL, &canOpenAsMovie, NULL, 0);
+			if (QTErr == noErr && canOpenAsMovie == true) {
+				myErr = MADNoErr;
+			} else {
+				myErr = MADIncompatibleFile;
+			}
 		}
-#endif
 			break;
 			
 		case MADPlugExport:
