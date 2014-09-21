@@ -295,29 +295,29 @@ static void ConvertITEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg, 
 	switch(B0X40) {
 			// Speed
 		case 'A':
-			*Cmd = speedE;
+			*Cmd = MADEffectIDSpeed;
 			*Arg = B1;
 			break;
 			// Tempo
 		case 'T':
-			*Cmd = speedE;
+			*Cmd = MADEffectIDSpeed;
 			*Arg = B1;
 			break;
 			
 		case 'B':
-			*Cmd = fastskipE;
+			*Cmd = MADEffectIDFastSkip;
 			*Arg = B1;
 			break;
 			
 		case 'C':
-			*Cmd = skipE;
+			*Cmd = MADEffectIDSkip;
 			*Arg = B1;
 			break;
 			
 		case 'D':
 			if (LoB1 == 0 || HiB1 == 0) {	// Slide volume
 			
-				*Cmd = slidevolE;
+				*Cmd = MADEffectIDSlideVolume;
 				*Arg = B1;
 				
 #if 0
@@ -328,11 +328,11 @@ static void ConvertITEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg, 
 				else LastAEffect[channel] = *Arg;
 #endif
 			} else if (HiB1 == 0x0F) {		// Fine Slide volume DOWN
-				*Cmd = extendedE;
+				*Cmd = MADEffectIDExtended;
 				*Arg = 11 << 4;
 				*Arg += LoB1;
 			} else if (LoB1 == 0x0F) {		// Fine Slide volume UP
-				*Cmd = extendedE;
+				*Cmd = MADEffectIDExtended;
 				*Arg = 10 << 4;
 				*Arg += HiB1;
 			}
@@ -340,44 +340,44 @@ static void ConvertITEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg, 
 			
 		case 'E':
 			if (HiB1 == 0x0F) {				// FineSlide DOWN
-				*Cmd = extendedE;
+				*Cmd = MADEffectIDExtended;
 				*Arg = 2 << 4;				//not supported
 				*Arg += LoB1;
 			} else if (HiB1 == 0x0E) {		// ExtraFineSlide DOWN
 				*Cmd = 0;
 				*Arg = 0;					//not supported
 			} else {						// Slide DOWN
-				*Cmd = upslideE;
+				*Cmd = MADEffectIDUpslide;
 				*Arg = B1;
 			}
 			break;
 			
 		case 'F':
 			if (HiB1 == 0x0F) {				// FineSlide UP
-				*Cmd = extendedE;
+				*Cmd = MADEffectIDExtended;
 				*Arg = 1 << 4;				//not supported
 				*Arg += LoB1;
 			} else if (HiB1 == 0x0E) {		// ExtraFineSlide UP
 				*Cmd = 0;
 				*Arg = 0;					//not supported
 			} else {						// Slide UP
-				*Cmd = downslideE;
+				*Cmd = MADEffectIDDownslide;
 				*Arg = B1;
 			}
 			break;
 			
 		case 'G':
-			*Cmd = portamentoE;
+			*Cmd = MADEffectIDPortamento;
 			*Arg = B1;
 			break;
 			
 		case 'H':
-			*Cmd = vibratoE;
+			*Cmd = MADEffectIDVibrato;
 			*Arg = B1;
 			break;
 			
 		case 'J':
-			*Cmd = arpeggioE;
+			*Cmd = MADEffectIDArpeggio;
 			*Arg = B1;
 			
 			if (*Arg == 0) 				// Use last command
@@ -388,66 +388,66 @@ static void ConvertITEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg, 
 			break;
 			
 		case 'K':
-			*Cmd = vibratoslideE;
+			*Cmd = MADEffectIDVibratoSlide;
 			*Arg = B1;
 			break;
 			
 		case 'L':
-			*Cmd = portaslideE;
+			*Cmd = MADEffectIDPortaSlide;
 			*Arg = B1;
 			break;
 			
 		case 'O':
-			*Cmd = offsetE;
+			*Cmd = MADEffectIDOffset;
 			*Arg = B1;
 			break;
 			
 		case 'S':		// Special Effects
 			switch(HiB1) {
 			case 2:		// FineTune
-				*Cmd = extendedE;
+				*Cmd = MADEffectIDExtended;
 				*Arg = 5 << 4;
 				*Arg += LoB1;
 				break;
 				
 			case 3:		// Set Vibrato WaveForm
-				*Cmd = extendedE;
+				*Cmd = MADEffectIDExtended;
 				*Arg = 4 << 4;
 				*Arg += LoB1;
 				break;
 				
 			case 4:		// Set Tremolo WaveForm
-				*Cmd = extendedE;
+				*Cmd = MADEffectIDExtended;
 				*Arg = 7 << 4;
 				*Arg += LoB1;
 				break;
 				
 			case 8:		// Set Panning
-				*Cmd = extendedE;
+				*Cmd = MADEffectIDExtended;
 				*Arg = 8 << 4;
 				*Arg += LoB1;
 				break;
 				
 			case 0xB:	// Loop pattern
-				*Cmd = extendedE;
+				*Cmd = MADEffectIDExtended;
 				*Arg = 6 << 4;
 				*Arg += LoB1;
 				break;
 				
 			case 0xC:	// Cut sample
-				*Cmd = extendedE;
+				*Cmd = MADEffectIDExtended;
 				*Arg = 12 << 4;
 				*Arg += LoB1;
 				break;
 				
 			case 0xD:	// Delay sample
-				*Cmd = extendedE;
+				*Cmd = MADEffectIDExtended;
 				*Arg = 13 << 4;
 				*Arg += LoB1;
 				break;
 				
 			case 0xE:	// Delay pattern
-				*Cmd = extendedE;
+				*Cmd = MADEffectIDExtended;
 				*Arg = 14 << 4;
 				*Arg += LoB1;
 				break;
@@ -462,14 +462,14 @@ static void ConvertITEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg, 
 		case 'X':
 			if(theIT->old_effect & 1) {
 				if (B1 <= 128) {
-					*Cmd = panningE;
+					*Cmd = MADEffectIDPanning;
 					if (B1 == 128)
 						*Arg = 255;
 					else
 						*Arg = B1<<1;
 				}
 			} else {
-				*Cmd = panningE;
+				*Cmd = MADEffectIDPanning;
 				*Arg = B1;
 			}
 			break;
@@ -489,67 +489,67 @@ void ConvertMADEffect(MADByte Cmd, MADByte Arg, MADByte *B0, MADByte *B1)
 	
 	switch(Cmd)
 	{
-		case speedE:
+		case MADEffectIDSpeed:
 			*B0 = 'A' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case fastskipE:
+		case MADEffectIDFastSkip:
 			*B0 = 'B' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case skipE:
+		case MADEffectIDSkip:
 			*B0 = 'C' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case slidevolE:
+		case MADEffectIDSlideVolume:
 			*B0 = 'D' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case upslideE:
+		case MADEffectIDUpslide:
 			*B0 = 'E' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case downslideE:
+		case MADEffectIDDownslide:
 			*B0 = 'F' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case portamentoE:
+		case MADEffectIDPortamento:
 			*B0 = 'G' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case vibratoE:
+		case MADEffectIDVibrato:
 			*B0 = 'H' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case arpeggioE:
+		case MADEffectIDArpeggio:
 			*B0 = 'J' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case vibratoslideE:
+		case MADEffectIDVibratoSlide:
 			*B0 = 'K' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case portaslideE:
+		case MADEffectIDPortaSlide:
 			*B0 = 'L' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case offsetE:
+		case MADEffectIDOffset:
 			*B0 = 'O' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case extendedE:
+		case MADEffectIDExtended:
 			switch((Arg & 0xF0) >> 4)
 		{
 			case 1:

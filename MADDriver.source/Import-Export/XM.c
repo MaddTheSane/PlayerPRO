@@ -221,7 +221,7 @@ static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd *aCmd, short channel)
 		if (aCmd->arg == 0xFF) {
 			switch(aCmd->cmd)
 			{
-				case portamentoE:
+				case MADEffectIDPortamento:
 					break;
 					
 				default:
@@ -230,7 +230,7 @@ static void XM_Convert2MAD(XMNOTE *xmtrack, Cmd *aCmd, short channel)
 			}
 		}
 		
-		if (aCmd->cmd == slidevolE) {
+		if (aCmd->cmd == MADEffectIDSlideVolume) {
 #if 0
 			if (aCmd->arg == 0)
 				aCmd->arg = LastAEffect[channel];

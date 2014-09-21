@@ -133,6 +133,11 @@ OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, int chan
 	return nil;
 }
 
+- (NSUInteger)hash
+{
+	return self.menuName.hash ^ self.authorString.hash ^ self.file.hash ^ type ^ version;
+}
+
 - (instancetype)initWithBundle:(NSBundle *)aBund
 {
 	if (self = [super init]) {
@@ -161,6 +166,7 @@ OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, int chan
 		}
 		
 		self.file = aBund;
+		self.type = '    ';
 	}
 	return self;
 }

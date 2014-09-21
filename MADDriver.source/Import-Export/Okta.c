@@ -330,7 +330,7 @@ static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MAD
 							OktaCmd->b4 &= 0xf;
 							if(	OktaCmd->b4 != 0)
 							{
-								aCmd->cmd = speedE;
+								aCmd->cmd = MADEffectIDSpeed;
 								aCmd->arg = OktaCmd->b4;
 							}
 							break;
@@ -338,7 +338,7 @@ static MADErr ConvertOKTA2Mad(char*	theOkta, long MODSize, MADMusic *theMAD, MAD
 					
 					/*	if (i == 0 && x == 0 && z == 0)
 					 {
-					 aCmd->cmd		= speedE;
+					 aCmd->cmd		= MADEffectIDSpeed;
 					 aCmd->arg		= Okta->speed;
 					 }*/
 				}

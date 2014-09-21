@@ -39,56 +39,56 @@ void parse_slidevol(Channel *ch, MADByte Arg)
 void CloseEffect(Channel *ch, short notUsed, MADDriverRec *intDriver)
 {
 	switch (ch->cmd) {
-		case arpeggioE:
+		case MADEffectIDArpeggio:
 			if (ch->arpUse) {
 				ch->period = ch->arp[0];
 				ch->arpUse = false;
 			}
 			break;
 			
-		case skipE:
+		case MADEffectIDSkip:
 			break;
 			
-		case fastskipE:
+		case MADEffectIDFastSkip:
 			break;
 			
-		case downslideE:
+		case MADEffectIDDownslide:
 			break;
 			
-		case upslideE:
+		case MADEffectIDUpslide:
 			break;
 			
-		case vibratoE:
+		case MADEffectIDVibrato:
 			ch->period = ch->periodOld;
 			break;
 			
-		case slidevolE:
+		case MADEffectIDSlideVolume:
 			break;
 			
-		case portamentoE:
+		case MADEffectIDPortamento:
 			break;
 			
-		case portaslideE:
-			ch->cmd = portamentoE;
+		case MADEffectIDPortaSlide:
+			ch->cmd = MADEffectIDPortamento;
 			CloseEffect(ch, 0, intDriver);
 			
-			ch->cmd = slidevolE;
+			ch->cmd = MADEffectIDSlideVolume;
 			CloseEffect(ch, 0, intDriver);
 			
-			ch->cmd = portaslideE;
+			ch->cmd = MADEffectIDPortaSlide;
 			break;
 			
-		case vibratoslideE:
-			ch->cmd = vibratoE;
+		case MADEffectIDVibratoSlide:
+			ch->cmd = MADEffectIDVibrato;
 			CloseEffect(ch, 0, intDriver);
 			
-			ch->cmd = slidevolE;
+			ch->cmd = MADEffectIDSlideVolume;
 			CloseEffect(ch, 0, intDriver);
 			
-			ch->cmd = vibratoslideE;
+			ch->cmd = MADEffectIDVibratoSlide;
 			break;
 			
-		case extendedE:
+		case MADEffectIDExtended:
 			switch (HI(ch->arg)) {
 				case 6:
 					
@@ -110,7 +110,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 	int offset = 0;
 	
 	switch(ch->cmd) {
-		case arpeggioE:						// OK
+		case MADEffectIDArpeggio:						// OK
 			if (ch->arg != 0 && ch->arpUse == true) {
 				ch->arpindex++;
 				if (ch->arpindex >= MAX_ARP)
@@ -120,7 +120,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 			}
 			break;
 			
-		case skipE:							// OK
+		case MADEffectIDSkip:							// OK
 			if (call == intDriver->speed - 1) {
 				intDriver->endPattern = true;
 				
@@ -150,7 +150,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 			}
 			break;
 			
-		case fastskipE:						// OK
+		case MADEffectIDFastSkip:						// OK
 			if (call == intDriver->speed - 1) {
 				intDriver->endPattern = true;
 				
@@ -182,7 +182,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 			}
 			break;
 			
-		case downslideE:						// OK
+		case MADEffectIDDownslide:						// OK
 			if (intDriver->MODMode) {
 				ch->period -= ch->slide*4;
 				if (ch->period < intDriver->MOD_MIN_PITCH)
@@ -193,7 +193,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 			}
 			break;
 			
-		case upslideE:							// OK
+		case MADEffectIDUpslide:							// OK
 			if (intDriver->MODMode) {
 				ch->period += ch->slide*4;
 				if (ch->period > intDriver->MOD_MAX_PITCH)
@@ -204,7 +204,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 			}
 			break;
 			
-		case vibratoE:
+		case MADEffectIDVibrato:
 		{
 			MADByte q = (ch->viboffset >> 2) & 0x1f;
 			
@@ -238,7 +238,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 		}
 			break;
 			
-		case slidevolE:						// OK
+		case MADEffectIDSlideVolume:						// OK
 			ch->vol += ch->volumerate;
 			
 			if (ch->vol < MIN_VOLUME)
@@ -247,7 +247,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 				ch->vol = MAX_VOLUME;
 			break;
 			
-		case portamentoE:
+		case MADEffectIDPortamento:
 			if (ch->period != ch->pitchgoal) {
 				if (ch->period < ch->pitchgoal) {
 					ch->period += ch->pitchrate * 4;
@@ -267,27 +267,27 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 			}
 			break;
 			
-		case portaslideE:
-			ch->cmd = portamentoE;
+		case MADEffectIDPortaSlide:
+			ch->cmd = MADEffectIDPortamento;
 			DoEffect(ch, call, intDriver);
 			
-			ch->cmd = slidevolE;
+			ch->cmd = MADEffectIDSlideVolume;
 			DoEffect(ch, call, intDriver);
 			
-			ch->cmd = portaslideE;
+			ch->cmd = MADEffectIDPortaSlide;
 			break;
 			
-		case vibratoslideE:
-			ch->cmd = vibratoE;
+		case MADEffectIDVibratoSlide:
+			ch->cmd = MADEffectIDVibrato;
 			DoEffect(ch, call, intDriver);
 			
-			ch->cmd = slidevolE;
+			ch->cmd = MADEffectIDSlideVolume;
 			DoEffect(ch, call, intDriver);
 			
-			ch->cmd = vibratoslideE;
+			ch->cmd = MADEffectIDVibratoSlide;
 			break;
 			
-		case extendedE:
+		case MADEffectIDExtended:
 			switch (HI(ch->arg)) {
 				case 12:
 					if (call >= LOW(ch->arg))
@@ -353,42 +353,42 @@ void SetUpCmdEffect(Channel *ch, MADDriverRec *intDriver)
 	
 	switch (vol >> 4) {
 		case 0x8:
-			ch->cmd = extendedE;
+			ch->cmd = MADEffectIDExtended;
 			ch->arg = 0xb0 | volLO;
 			
 			SetUpEffect(ch, intDriver);
 			break;
 			
 		case 0x9:
-			ch->cmd = extendedE;
+			ch->cmd = MADEffectIDExtended;
 			ch->arg = 0xa0 | volLO;
 			
 			SetUpEffect(ch, intDriver);
 			break;
 			
 		case 0xa: // set vibrato speed
-			ch->cmd = vibratoE;
+			ch->cmd = MADEffectIDVibrato;
 			ch->arg = vol << 4;
 			
 			SetUpEffect(ch, intDriver);
 			break;
 			
 		case 0xb: // vibrato
-			ch->cmd = vibratoE;
+			ch->cmd = MADEffectIDVibrato;
 			ch->arg = volLO;
 			
 			SetUpEffect(ch, intDriver);
 			break;
 			
 		case 0xc: // panning
-			ch->cmd = panningE;
+			ch->cmd = MADEffectIDPanning;
 			ch->arg = vol << 4;
 			
 			SetUpEffect(ch, intDriver);
 			break;
 			
 		case 0xf: // tone porta
-			ch->cmd = portamentoE;
+			ch->cmd = MADEffectIDPortamento;
 			ch->arg = vol << 4;
 			
 			SetUpEffect(ch, intDriver);
@@ -406,15 +406,15 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 	
 	if (ch->arg == 0) {
 		switch (ch->cmd) {
-			case arpeggioE:
-			case nothingE:
-			case fastskipE:
-			case volumeE:
-			case panningE:
-			case skipE:
-			case extendedE:
-			case speedE:
-				//case slidevolE:
+			case MADEffectIDArpeggio:
+			case MADEffectIDNothing:
+			case MADEffectIDFastSkip:
+			case MADEffectIDVolume:
+			case MADEffectIDPanning:
+			case MADEffectIDSkip:
+			case MADEffectIDExtended:
+			case MADEffectIDSpeed:
+				//case MADEffectIDSlideVolume:
 				break;
 				
 			default:
@@ -425,17 +425,17 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 		ch->oldArg[ch->cmd] = ch->arg;
 	
 	switch (ch->cmd) {
-		case upslideE: // OK
+		case MADEffectIDUpslide: // OK
 			if (ch->arg)
 				ch->slide = ch->arg;
 			break;
 			
-		case downslideE: // OK
+		case MADEffectIDDownslide: // OK
 			if (ch->arg)
 				ch->slide = ch->arg;
 			break;
 			
-		case vibratoE: // OK
+		case MADEffectIDVibrato: // OK
 			if (HI(ch->arg))
 				ch->vibrate = (ch->arg & 0xf0) >> 2;
 			else
@@ -453,7 +453,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 			ch->periodOld = ch->period;
 			break;
 			
-		case arpeggioE: // OK
+		case MADEffectIDArpeggio: // OK
 			if (ch->arg == 0)
 				ch->arpUse = false;
 			else {
@@ -480,11 +480,11 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 			}
 			break;
 			
-		case slidevolE: // OK
+		case MADEffectIDSlideVolume: // OK
 			parse_slidevol(ch, ch->arg);
 			break;
 			
-		case extendedE:
+		case MADEffectIDExtended:
 			switch (HI(ch->arg)) {
 				case 0: // Turn On/Off filter
 					break;
@@ -598,7 +598,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 			
 			break;
 			
-		case portamentoE:				// OK
+		case MADEffectIDPortamento:				// OK
 		{
 			int inNote = ch->note;
 			
@@ -614,7 +614,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 		}
 			break;
 			
-		case portaslideE:				// OK
+		case MADEffectIDPortaSlide:				// OK
 		{
 			int inNote = ch->note;
 			
@@ -630,13 +630,13 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 		}
 			break;
 			
-		case vibratoslideE:
+		case MADEffectIDVibratoSlide:
 			ch->periodOld = ch->period;
 			
 			parse_slidevol(ch, ch->arg);
 			break;
 			
-		case speedE:
+		case MADEffectIDSpeed:
 			if (ch->arg < 32) {
 				/** Setting de la speed + reset de la finespeed **/
 				if (ch->arg != 0) intDriver->speed = ch->arg;
@@ -646,13 +646,13 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 			}
 			break;
 			
-		case skipE:
+		case MADEffectIDSkip:
 			break;
 			
-		case fastskipE:
+		case MADEffectIDFastSkip:
 			break;
 			
-		case LoopE:
+		case MADEffectIDLoop:
 			if (ch->loopSize > 2) {
 				short direction = (char)ch->arg;
 				
@@ -675,7 +675,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 			}
 			break;
 			
-		case NOffSetE:
+		case MADEffectIDNOffset:
 			ch->curPtr = ch->begPtr;
 			
 			aL = (ch->arg * (ch->sizePtr)) / 255U;
@@ -701,7 +701,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 			}
 			break;
 			
-		case offsetE:
+		case MADEffectIDOffset:
 			ch->curPtr = ch->begPtr;
 			
 			aL = ch->arg;
@@ -715,7 +715,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 			ch->curPtr += aL;
 			break;
 			
-		case panningE:
+		case MADEffectIDPanning:
 			ch->pann = ch->arg;
 			
 			ch->pann = ((int)ch->pann *  MAX_PANNING) / 0xFF;
@@ -726,7 +726,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 				ch->pann = MAX_PANNING;
 			break;
 			
-		case volumeE:
+		case MADEffectIDVolume:
 			ch->vol = ch->arg;
 			
 			if (ch->vol < MIN_VOLUME)
