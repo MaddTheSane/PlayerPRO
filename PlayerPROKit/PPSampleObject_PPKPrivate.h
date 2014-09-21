@@ -10,4 +10,5 @@
 
 @interface PPSampleObject ()
 - (instancetype)initWithSDataPointer:(inout sData *)theData;
+- (void)setToSDataPointer:(inout sData *)theData;
 @end

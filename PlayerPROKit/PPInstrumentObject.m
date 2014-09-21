@@ -286,6 +286,24 @@ static const dispatch_block_t initUTIArray = ^{
 	}
 }
 
+- (void)replaceObjectInVolumeEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
+{
+	_volumeEnvelope[index] = object;
+	theInstrument.volEnv[index] = [_volumeEnvelope[index] envelopeRec];
+}
+
+- (void)replaceObjectInPanningEnvelopeAtIndex:(NSInteger)index withObject:(id)object
+{
+	_panningEnvelope[index] = object;
+	theInstrument.pannEnv[index] = [_panningEnvelope[index] envelopeRec];
+}
+
+- (void)replaceObjectInPitchEnvelopeAtIndex:(NSInteger)index withObject:(id)object
+{
+	_pitchEnvelope[index] = object;
+	theInstrument.pitchEnv[index] = [_pitchEnvelope[index] envelopeRec];
+}
+
 - (short)firstSample
 {
 	return theInstrument.firstSample;

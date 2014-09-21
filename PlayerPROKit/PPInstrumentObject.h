@@ -32,8 +32,11 @@
 - (instancetype)init;
 
 @property (nonatomic, copy) NSMutableArray *volumeEnvelope;
+- (void)replaceObjectInVolumeEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
 @property (nonatomic, copy) NSMutableArray *panningEnvelope;
+- (void)replaceObjectInPanningEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
 @property (nonatomic, copy) NSMutableArray *pitchEnvelope;
+- (void)replaceObjectInPitchEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
 
 - (MADByte*)what NS_RETURNS_INNER_POINTER;
 

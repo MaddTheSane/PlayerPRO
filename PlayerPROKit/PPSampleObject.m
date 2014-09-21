@@ -53,7 +53,6 @@
 		cStrLen = sizeof(theName) - 1;
 	}
 	[tmpCStr getBytes:theName length:cStrLen];
-	tmpCStr = nil;
 	
 	strlcpy(sampleWriteTo->name, theName, sizeof(sampleWriteTo->name));
 	
@@ -64,6 +63,9 @@
 {
 	if (!_data) {
 		_data = [[NSData alloc] initWithBytesNoCopy:sampleWriteTo->data length:sampleWriteTo->size freeWhenDone:NO];
+	}
+	if (!_data) {
+		_data = [[NSData alloc] init];
 	}
 	return _data;
 }
@@ -118,6 +120,19 @@ static const dispatch_block_t initUTIArray = ^{
 		return NSPasteboardReadingAsData;
 }
 #endif
+
+- (void)setToSDataPointer:(inout sData *)theData
+{
+	if (theData->data) {
+		free(theData->data);
+		theData->data = NULL;
+	}
+	NSData *currentData = self.data;
+	self.data = nil;
+	memmove(theData, sampleWriteTo, sizeof(sData));
+	sampleWriteTo = theData;
+	self.data = currentData;
+}
 
 - (instancetype)initWithSDataPointer:(inout sData *)theData
 {
