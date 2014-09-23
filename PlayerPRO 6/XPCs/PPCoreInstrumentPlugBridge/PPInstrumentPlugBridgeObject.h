@@ -11,6 +11,7 @@
 
 @interface PPInstrumentPlugBridgeObject : NSObject
 {
+@private
 	NSBundle *_bundleFile;
 	PPInstrumentPlugin **xxxx;
 }

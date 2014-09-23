@@ -210,7 +210,15 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 
 - (void)canImportFileAtURL:(NSURL*)aFile bundleURL:(NSURL*)bundle withReply:(void (^)(BOOL))reply
 {
+	for (PPInstrumentPlugBridgeObject *obj in plugIns) {
+		if ([obj.bundleFile.bundleURL isEqual:bundle]) {
+			BOOL toRet = [obj canLoadFileAtURL:aFile];
+			reply(toRet);
+			break;
+		}
+	}
 	
+	reply(NO);
 }
 
 - (void)beginImportFileAtURL:(NSURL*)aFile withBundleURL:(NSURL*)bundle instrumentData:(NSData*)insData instrumentNumber:(short)insNum reply:(void (^)(MADErr error, NSData *outInsData))reply

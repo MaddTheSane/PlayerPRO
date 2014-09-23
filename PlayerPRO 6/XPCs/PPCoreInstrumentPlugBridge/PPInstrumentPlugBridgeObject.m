@@ -9,6 +9,7 @@
 #import "PPInstrumentPlugBridgeObject.h"
 #import "PPCoreInstrumentPlugBridge.h"
 #import "ARCBridge.h"
+#import "PPInstrumentPlugBridgeHelper.h"
 
 @interface PPInstrumentPlugBridgeObject ()
 @property (retain, readwrite) NSBundle *bundleFile;
