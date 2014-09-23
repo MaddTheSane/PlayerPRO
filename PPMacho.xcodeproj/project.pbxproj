@@ -254,6 +254,7 @@
 		5547DA5719A5690E0014A620 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5519A5690E0014A620 /* Preferences.swift */; };
 		5547DA5919A570820014A620 /* SoundSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5819A570820014A620 /* SoundSettingsViewController.swift */; };
 		5549A3BA19A685CE004E95E2 /* PPColorPreferenceObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5549A3B919A685CE004E95E2 /* PPColorPreferenceObject.m */; };
+		5549F2C719D09C250072FB25 /* PPMINsPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 556BC18819CF5F2400508F49 /* PPMINsPlug.m */; };
 		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
 		554E10E110D6EF8800BB619C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -313,7 +314,6 @@
 		55680A2719045F0A00F7616D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A2619045F0A00F7616D /* main.m */; };
 		55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55680A3A19046D9800F7616D /* PPSTImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A3919046D9800F7616D /* PPSTImporter.m */; };
-		55680A41190486E900F7616D /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		55680A45190497B400F7616D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A44190497B400F7616D /* UIKit.framework */; };
 		55680A47190497E400F7616D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A46190497E400F7616D /* CoreGraphics.framework */; };
 		55680A4A190497FC00F7616D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A48190497FB00F7616D /* CoreFoundation.framework */; };
@@ -326,7 +326,6 @@
 		556BC17B19CF47FC00508F49 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
 		556BC18419CF482600508F49 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		556BC18519CF482D00508F49 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
-		556BC18919CF5F2400508F49 /* PPMINsPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 556BC18819CF5F2400508F49 /* PPMINsPlug.m */; };
 		556BC18A19CF75F900508F49 /* PPCoreInstrumentPlugBridge32.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 556BC18219CF47FC00508F49 /* PPCoreInstrumentPlugBridge32.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
@@ -797,6 +796,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5502F55E19D1E1EB00408339 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
 		550FFAE117CEA4570003A2F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1996,7 +2002,7 @@
 		5517F7541126203E0034F90C /* Lin-PlugImport.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "Lin-PlugImport.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5519D3491646C5C00085589D /* Win-WaveDriver.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = "Win-WaveDriver.c"; sourceTree = "<group>"; };
 		551FEA6B10E727AD00EDF2F1 /* MINs.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MINs.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
-		551FEAC910E727AD00EDF2F1 /* MINs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MINs-Info.plist"; sourceTree = SOURCE_ROOT; };
+		551FEAC910E727AD00EDF2F1 /* MINs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MINs-Info.plist"; sourceTree = "<group>"; };
 		551FEADA10E727B100EDF2F1 /* PAT.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PAT.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		551FEB2810E727B100EDF2F1 /* PAT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PAT-Info.plist"; sourceTree = "<group>"; };
 		552097B3187B0917004FD220 /* Be-DriverClass.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; lineEnding = 0; path = "Be-DriverClass.cpp"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
@@ -2160,8 +2166,7 @@
 		554E101510D6C79E00BB619C /* Mix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Mix.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E101610D6C79E00BB619C /* Mix.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mix.r; sourceTree = "<group>"; };
 		554E102C10D6C79E00BB619C /* AIFF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AIFF.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E103710D6C79E00BB619C /* MINS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = MINS.c; path = ../MINS.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E103F10D6C79E00BB619C /* old MINS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = "old MINS.c"; path = "../old MINS.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
+		554E103F10D6C79E00BB619C /* old MINS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "old MINS.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E104210D6C79E00BB619C /* PAT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAT.h; sourceTree = "<group>"; };
 		554E104C10D6C79E00BB619C /* QuicktimeGeneric.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = QuicktimeGeneric.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E104D10D6C79E00BB619C /* snd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = snd.c; path = ../snd.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -2458,8 +2463,6 @@
 		55DEBFED1801DFF70089B940 /* Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Example-Info.plist"; sourceTree = "<group>"; };
 		55DEBFEE1801DFF70089B940 /* Example.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Example.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55DEBFEF1801DFF70089B940 /* Example.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example.h; sourceTree = "<group>"; };
-		55E0421E19A5C46400D70E23 /* PPCore-OSX.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; path = "PPCore-OSX.exp"; sourceTree = "<group>"; };
-		55E0422019A5C59600D70E23 /* PPCore-iOS.exp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.exports; path = "PPCore-iOS.exp"; sourceTree = "<group>"; };
 		55E382EA1981509100EC330B /* PlugInInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlugInInfo.swift; sourceTree = "<group>"; };
 		55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPROCoreAdditions.swift; sourceTree = "<group>"; };
 		55E527A8186A2A690020F3D6 /* MIDI.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIDI.pch; sourceTree = "<group>"; };
@@ -2720,7 +2723,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55680A41190486E900F7616D /* PlayerPROKit.framework in Frameworks */,
 				55680A1E19045F0A00F7616D /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3246,7 +3248,6 @@
 				551FEAC910E727AD00EDF2F1 /* MINs-Info.plist */,
 				556BC18719CF5F2400508F49 /* PPMINsPlug.h */,
 				556BC18819CF5F2400508F49 /* PPMINsPlug.m */,
-				554E103710D6C79E00BB619C /* MINS.c */,
 				554E103F10D6C79E00BB619C /* old MINS.c */,
 			);
 			path = MINs;
@@ -3713,8 +3714,6 @@
 				5573A34010B50D2700FF8B50 /* PlayerPROCore-Info.plist */,
 				55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */,
 				5511F05B19B04EB10033A252 /* InfoPlist.strings */,
-				55E0422019A5C59600D70E23 /* PPCore-iOS.exp */,
-				55E0421E19A5C46400D70E23 /* PPCore-OSX.exp */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -5721,6 +5720,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				5502F55F19D1E1EB00408339 /* PBXTargetDependency */,
 				559170B319C2713700998D7F /* PBXTargetDependency */,
 			);
 			name = PPCoreInstrumentPlugBridge;
@@ -6662,6 +6662,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5549F2C719D09C250072FB25 /* PPMINsPlug.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7254,7 +7255,6 @@
 				55FD192B19A1C12B001E1D9C /* ComplexImportPlugHandler.swift in Sources */,
 				55232AED11FDE2E40041A4EC /* MiscPreferenceController.m in Sources */,
 				55588A96199951B300C3D4EE /* PlugInInfoController.swift in Sources */,
-				556BC18919CF5F2400508F49 /* PPMINsPlug.m in Sources */,
 				55232AF011FDE5180041A4EC /* BoxEditorPreferenceController.m in Sources */,
 				55232AF311FDE56D0041A4EC /* DigitalEditorPreferenceControler.m in Sources */,
 				55232AF711FDE5CB0041A4EC /* ClassicEditorPreferenceController.m in Sources */,
@@ -7371,6 +7371,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5502F55F19D1E1EB00408339 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 5502F55E19D1E1EB00408339 /* PBXContainerItemProxy */;
+		};
 		550FFAE017CEA4570003A2F3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
@@ -8494,13 +8499,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
 					"BUILDINGPPRO=1",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
 				VERSION_INFO_PREFIX = "";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -8519,13 +8525,14 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
 					"BUILDINGPPRO=1",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
 				VERSION_INFO_PREFIX = "";
 				WRAPPER_EXTENSION = framework;
 			};
@@ -8614,6 +8621,7 @@
 					"$(HEADER_SEARCH_PATHS)",
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/MINs/MINs-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -8632,6 +8640,7 @@
 					"$(HEADER_SEARCH_PATHS)",
 					"$(SRCROOT)/MADDriver.source/MADDriver.Source/Import-Export",
 				);
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/MINs/MINs-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -9110,7 +9119,6 @@
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../../../../Frameworks";
 				MACH_O_TYPE = mh_execute;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
 				WRAPPER_EXTENSION = xpc;
@@ -9133,7 +9141,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../../../../Frameworks";
 				MACH_O_TYPE = mh_execute;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
 				WRAPPER_EXTENSION = xpc;
@@ -9165,6 +9172,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
@@ -9183,6 +9191,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -9197,16 +9206,14 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
-				COMBINE_HIDPI_IMAGES = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/Info-32.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../../../../Frameworks @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 				VALID_ARCHS = i386;
 			};
 			name = Release;
@@ -9216,17 +9223,15 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
-				COMBINE_HIDPI_IMAGES = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/Info-32.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../../../../Frameworks @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 				VALID_ARCHS = i386;
 			};
 			name = Debug;
@@ -9242,14 +9247,14 @@
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				EXPORTED_SYMBOLS_FILE = "MADDriver.source/Resources/PPCore-OSX.exp";
 				FRAMEWORK_VERSION = B;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
 					"BUILDINGPPRO=1",
+					"$(inherited)",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				MODULEMAP_FILE = MADDriver.source/Resources/PPCore.modulemap;
 				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
@@ -9257,6 +9262,7 @@
 				PRODUCT_NAME = PlayerPROCore;
 				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
@@ -9272,14 +9278,14 @@
 				DYLIB_COMPATIBILITY_VERSION = 2;
 				DYLIB_CURRENT_VERSION = 6.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				EXPORTED_SYMBOLS_FILE = "MADDriver.source/Resources/PPCore-OSX.exp";
 				FRAMEWORK_VERSION = B;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
 					"BUILDINGPPRO=1",
+					"$(inherited)",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				MODULEMAP_FILE = MADDriver.source/Resources/PPCore.modulemap;
 				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
@@ -9287,6 +9293,7 @@
 				PRODUCT_NAME = PlayerPROCore;
 				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
@@ -9338,9 +9345,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"EMBEDPLUGS=1",
 					"NOEXPORTFUNCS=1",
-					"$(inherited)",
 					"BUILDINGPPRO=1",
+					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
@@ -9361,9 +9369,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"EMBEDPLUGS=1",
 					"NOEXPORTFUNCS=1",
-					"$(inherited)",
 					"BUILDINGPPRO=1",
+					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"$PROJECT_DIR\"/MADDriver.source",
@@ -10192,31 +10201,27 @@
 		559170AF19C26E1D00998D7F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../../../../Frameworks @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
 		559170B019C26E1D00998D7F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COMBINE_HIDPI_IMAGES = YES;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @loader_path/../../../../Frameworks @executable_path/../Frameworks @executable_path/../../../../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -10243,6 +10248,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_NS_ASSERTIONS = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -10262,6 +10268,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LLVM_LTO = NO;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_SWIFT_FLAGS = "-DDEBUG $(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -10281,9 +10288,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PPQuickView/PPQuickView-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"EMBEDPLUGS=1",
 					"NOEXPORTFUNCS=1",
-					"$(inherited)",
 					"BUILDINGPPRO=1",
+					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
@@ -10305,9 +10313,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PPQuickView/PPQuickView-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
+					"EMBEDPLUGS=1",
 					"NOEXPORTFUNCS=1",
-					"$(inherited)",
 					"BUILDINGPPRO=1",
+					"$(inherited)",
 				);
 				HEADER_SEARCH_PATHS = (
 					"\"$PROJECT_DIR\"/MADDriver.source",
@@ -10544,8 +10553,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
 					"PLAYERPRO6=1",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Cocoa-Info.plistvers.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
@@ -10566,8 +10575,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
 					"PLAYERPRO6=1",
+					"$(inherited)",
 				);
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
@@ -10626,6 +10635,7 @@
 				GCC_PREFIX_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI Import/MIDI Import-Prefix.pch";
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI Import/MIDI Import-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks @executable_path/../../../../../../../Frameworks @loader_path/../../../../../../../Frameworks";
 				MACH_O_TYPE = mh_execute;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
@@ -10653,6 +10663,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/MIDI/MIDI Import/MIDI Import-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks @executable_path/../../../../../../../Frameworks @loader_path/../../../../../../../Frameworks";
 				MACH_O_TYPE = mh_execute;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = NO;
@@ -10674,14 +10685,14 @@
 				DYLIB_CURRENT_VERSION = 6.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				EXPORTED_SYMBOLS_FILE = "MADDriver.source/Resources/PPCore-iOS.exp";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"NOEXPORTFUNCS=1",
-					"$(inherited)",
+					"EMBEDPLUGS=1",
 					"BUILDINGPPRO=1",
+					"$(inherited)",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -10694,6 +10705,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
@@ -10710,15 +10722,14 @@
 				DYLIB_CURRENT_VERSION = 6.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				EXPORTED_SYMBOLS_FILE = "MADDriver.source/Resources/PPCore-iOS.exp";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"NOEXPORTFUNCS=1",
-					"$(inherited)",
+					"EMBEDPLUGS=1",
 					"BUILDINGPPRO=1",
+					"$(inherited)",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPROCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -10730,6 +10741,7 @@
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
@@ -10747,6 +10759,10 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"BUILDINGPPRO=1",
+					"$(inherited)",
+				);
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -10757,6 +10773,7 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
@@ -10775,7 +10792,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPROKit/PlayerPROKit-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
+					"BUILDINGPPRO=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -10788,6 +10805,7 @@
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;

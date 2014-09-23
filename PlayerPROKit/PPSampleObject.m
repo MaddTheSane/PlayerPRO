@@ -80,7 +80,7 @@
 		sampleWriteTo->data = NULL;
 	}
 	sampleWriteTo->data = malloc(dataSize2);
-	[data getBytes:theSample.data length:dataSize2];
+	[data getBytes:sampleWriteTo->data length:dataSize2];
 	_data = [[NSData alloc] initWithBytesNoCopy:sampleWriteTo->data length:sampleWriteTo->size freeWhenDone:NO];
 }
 

@@ -32,7 +32,7 @@
 #endif
 #include "S3M.h"
 
-#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#if defined(EMBEDPLUGS) && EMBEDPLUGS
 #include "embeddedPlugs.h"
 #endif
 
@@ -1429,7 +1429,7 @@ EXP MADErr FillPlug(PlugInfo *p)
 }
 #endif
 
-#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#if defined(EMBEDPLUGS) && EMBEDPLUGS
 MADErr mainS3M(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
 extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)

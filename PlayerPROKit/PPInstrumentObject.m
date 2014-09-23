@@ -50,6 +50,10 @@
 #define kPPVolumeType @"volumeType"
 #define kPPPanningType @"panningType"
 
+@interface PPEnvelopeObject ()
+- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+@end
+
 @implementation PPEnvelopeObject
 {
 	EnvRec envelopeRec;
@@ -177,6 +181,12 @@ static const dispatch_block_t initUTIArray = ^{
 
 @end
 
+@interface PPInstrumentObject ()
+@property (nonatomic, copy) NSMutableArray *internalVolumeEnvelope;
+@property (nonatomic, copy) NSMutableArray *internalPanningEnvelope;
+@property (nonatomic, copy) NSMutableArray *internalPitchEnvelope;
+@end
+
 @implementation PPInstrumentObject
 {
 	@protected
@@ -186,6 +196,24 @@ static const dispatch_block_t initUTIArray = ^{
 @synthesize theInstrument;
 @synthesize number;
 @synthesize name;
+@synthesize internalVolumeEnvelope = _volumeEnvelope;
+@synthesize internalPanningEnvelope = _panningEnvelope;
+@synthesize internalPitchEnvelope = _pitchEnvelope;
+
+- (NSArray*)volumeEnvelope
+{
+	return [NSArray arrayWithArray:_volumeEnvelope];
+}
+
+- (NSArray*)panningEnvelope
+{
+	return [NSArray arrayWithArray:_panningEnvelope];
+}
+
+- (NSArray*)pitchEnvelope
+{
+	return [NSArray arrayWithArray:_pitchEnvelope];
+}
 
 - (NSString*)name
 {
@@ -218,7 +246,7 @@ static const dispatch_block_t initUTIArray = ^{
 	name = name1;
 }
 
-- (PPEnvelopeObject *)objectAtIndexedSubscript:(NSInteger)index
+- (PPSampleObject *)objectAtIndexedSubscript:(NSInteger)index
 {
 	return samples[index];
 }
@@ -256,10 +284,6 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	return theInstrument.what;
 }
-
-@synthesize volumeEnvelope = _volumeEnvelope;
-@synthesize panningEnvelope = _panningEnvelope;
-@synthesize pitchEnvelope = _pitchEnvelope;
 
 - (void)writeBackToStruct
 {
@@ -532,6 +556,11 @@ static const dispatch_block_t initUTIArray = ^{
 - (NSArray*)samples
 {
 	return [NSArray arrayWithArray:samples];
+}
+
+- (void)setSamples:(NSArray *)newSamples
+{
+	samples = [newSamples mutableCopy];
 }
 
 - (void)setNumber:(NSInteger)numberr

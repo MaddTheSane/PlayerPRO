@@ -32,7 +32,7 @@
 #endif
 #include "MADI.h"
 
-#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#if defined(EMBEDPLUGS) && EMBEDPLUGS
 #include "embeddedPlugs.h"
 #endif
 
@@ -490,7 +490,7 @@ MADErr ExtractMADIInfo(void *info, void *AlienFile)
 }
 
 #else
-#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#if defined(EMBEDPLUGS) && EMBEDPLUGS
 MADErr mainMADI(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
 extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)

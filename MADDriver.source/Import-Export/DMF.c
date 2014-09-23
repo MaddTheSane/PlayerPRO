@@ -29,7 +29,7 @@
 #endif
 #include "DMF.h"
 
-#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#if defined(EMBEDPLUGS) && EMBEDPLUGS
 #include "embeddedPlugs.h"
 #endif
 
@@ -968,7 +968,7 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 #endif
 
 
-#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#if defined(EMBEDPLUGS) && EMBEDPLUGS
 MADErr mainDMF(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
 extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)

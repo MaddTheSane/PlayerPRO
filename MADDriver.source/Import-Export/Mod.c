@@ -31,7 +31,7 @@
 #endif
 #include "MOD.h"
 
-#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#if defined(EMBEDPLUGS) && EMBEDPLUGS
 #include "embeddedPlugs.h"
 #endif
 
@@ -984,10 +984,9 @@ MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC, BeOS, and UNIX
 /*****************/
 /* MAIN FUNCTION */
 /*****************/
-#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
+#if defined(EMBEDPLUGS) && EMBEDPLUGS
 MADErr mainMOD(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
-//Every PlayerPRO import/export plug-in must have this function!
 extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #endif
 {

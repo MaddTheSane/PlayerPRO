@@ -23,7 +23,6 @@
 @property short value;
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithEnvRec:(EnvRec)theRec NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 @end
 
 @interface PPInstrumentObject : NSObject <NSFastEnumeration, PPObject>
@@ -31,16 +30,16 @@
 - (instancetype)initWithMusic:(PPMusicObject *)mus instrumentIndex:(short)insIdx;
 - (instancetype)init;
 
-@property (nonatomic, copy) NSMutableArray *volumeEnvelope;
-- (void)replaceObjectInVolumeEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
-@property (nonatomic, copy) NSMutableArray *panningEnvelope;
+@property (nonatomic, readonly, copy) NSArray *volumeEnvelope;
+@property (nonatomic, readonly, copy) NSArray *panningEnvelope;
+@property (nonatomic, readonly, copy) NSArray *pitchEnvelope;
 - (void)replaceObjectInPanningEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
-@property (nonatomic, copy) NSMutableArray *pitchEnvelope;
+- (void)replaceObjectInVolumeEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
 - (void)replaceObjectInPitchEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
 
 - (MADByte*)what NS_RETURNS_INNER_POINTER;
 
-- (PPEnvelopeObject *)objectAtIndexedSubscript:(NSInteger)index;
+- (PPSampleObject *)objectAtIndexedSubscript:(NSInteger)index;
 - (void)resetInstrument;
 
 @property unsigned short volumeFadeOut;
@@ -49,7 +48,7 @@
 @property (copy) NSString *name;
 @property (readonly) NSInteger number;
 @property (nonatomic, readonly) short firstSample;
-@property (nonatomic, readonly, copy) NSArray *samples;
+@property (nonatomic, copy) NSArray *samples;
 
 @property short MIDI;
 @property (readonly) short MIDIType;

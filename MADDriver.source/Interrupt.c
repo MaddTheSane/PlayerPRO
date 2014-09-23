@@ -43,7 +43,7 @@ void ProcessVisualPlug(MADDriverRec*, short*, int);
 
 void ConvertInstrument(MADByte *tempPtr, size_t sSize)
 {
-	MADByte val = 0x80;
+	static const MADByte val = 0x80;
 
 	while (sSize > 0) {
 		sSize--;
@@ -53,7 +53,7 @@ void ConvertInstrument(MADByte *tempPtr, size_t sSize)
 
 void ConvertInstrumentIn(MADByte *tempPtr, size_t sSize)
 {
-	MADByte val = 0x80;
+	static const MADByte val = 0x80;
 
 	while (sSize > 0) {
 		sSize--;
@@ -63,7 +63,7 @@ void ConvertInstrumentIn(MADByte *tempPtr, size_t sSize)
 
 void ConvertInstrument16(short *tempPtr, size_t sSize)
 {
-	short val = 0x8000;
+	static const short val = 0x8000;
 	
 	sSize /= 2;
 	
@@ -75,7 +75,7 @@ void ConvertInstrument16(short *tempPtr, size_t sSize)
 
 void ConvertInstrumentIn16(short *tempPtr, size_t sSize)
 {
-	short val = 0x8000;
+	static const short val = 0x8000;
 	 
 	sSize /= 2;
 	 

@@ -7,8 +7,23 @@
 //
 
 #import "PPMINsPlug.h"
+#include <PlayerPROCore/PlayerPROCore.h>
+@import PlayerPROKit.PPInstrumentObject;
+@import PlayerPROKit.PPSampleObject;
+
+@interface PPInstrumentObject (private)
+- (InstrData)theInstrument;
+@end
 
 static inline void ByteswapsData(sData *toswap)
+{
+	MADBE32(&toswap->size);
+	MADBE16(&toswap->c2spd);
+	MADBE32(&toswap->loopBeg);
+	MADBE32(&toswap->loopSize);
+}
+
+static inline void ByteswapsData32(sData32 *toswap)
 {
 	MADBE32(&toswap->size);
 	MADBE16(&toswap->c2spd);
@@ -149,7 +164,7 @@ static inline OSErr TestMINS(const InstrData *CC)
 		NSData *sampData = [readHandle readDataOfLength:inOutCount];
 		memcpy(curData->data, sampData.bytes, inOutCount);
 		if (curData->amp == 16) {
-			short	*shortPtr = (short*)curData->data;
+			short *shortPtr = (short*)curData->data;
 			dispatch_apply(curData->size / 2, dispatch_get_global_queue(0, 0), ^(size_t ll) {
 				MADBE16(&shortPtr[ll]);
 			});
@@ -159,13 +174,51 @@ static inline OSErr TestMINS(const InstrData *CC)
 		free(curData->data);
 		free(curData);
 	}
+	[readHandle closeFile];
 	
 	return MADNoErr;
 }
 
 - (MADErr)exportSampleToURL:(NSURL *)sampleURL instrument:(PPInstrumentObject *)InsHeader sample:(PPSampleObject *)sample sampleID:(short)sampleID driver:(PPDriver *)driver
 {
-	return MADOrderNotImplemented;
+	NSFileHandle *fileHand = [NSFileHandle fileHandleForWritingToURL:sampleURL error:NULL];
+	if (fileHand == nil) {
+		return MADWritingErr;
+	}
+	size_t inOutCount = sizeof(InstrData);
+	InstrData *tempIns = malloc(inOutCount);
+	InstrData headerData = [InsHeader theInstrument];
+	memcpy(tempIns, &headerData, sizeof(InstrData));
+	ByteswapInstrument(tempIns);
+	[fileHand writeData:[NSData dataWithBytesNoCopy:tempIns length:inOutCount]];
+	for (PPSampleObject *samp in [InsHeader samples]) {
+		sData32 toWrite = {0};
+		toWrite.amp = samp.amplitude;
+		toWrite.c2spd = samp.c2spd;
+		toWrite.loopBeg = samp.loopBegin;
+		toWrite.loopSize = samp.loopSize;
+		toWrite.loopType = samp.loopType;
+		toWrite.relNote = samp.relativeNote;
+		toWrite.stereo = samp.stereo;
+		toWrite.vol = samp.volume;
+		toWrite.size = (int)[samp.data length];
+		strlcpy(toWrite.name, [samp.name cStringUsingEncoding:NSMacOSRomanStringEncoding], sizeof(toWrite.name));
+		ByteswapsData32(&toWrite);
+		
+		[fileHand writeData:[NSData dataWithBytes:&toWrite length:sizeof(sData32)]];
+		
+		NSMutableData *sDataData = [samp.data mutableCopy];
+		if (samp.amplitude == 16) {
+			short	*shortPtr = (short*) sDataData.mutableBytes;
+			dispatch_apply(sDataData.length / 2, dispatch_get_global_queue(0, 0), ^(size_t ll) {
+				MADBE16(&shortPtr[ll]);
+			});
+		}
+		[fileHand writeData:sDataData];
+	}
+	[fileHand closeFile];
+	
+	return MADNoErr;
 }
 
 @end

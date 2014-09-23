@@ -144,7 +144,9 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, int *loopStart, int *loo
 	}
 	
 	{
+#if __BIG_ENDIAN__
 		unsigned short *tt;
+#endif
 		
 		*sndSize = WAVERsrc->dataSize;
 		memmove(WAVERsrc, WAVERsrc->theData, *sndSize);
@@ -156,10 +158,12 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, int *loopStart, int *loo
 				break;
 				
 			case 16:
+#if __BIG_ENDIAN__
 				tt = (unsigned short*)WAVERsrc;
 				dispatch_apply((*sndSize) / 2, dispatch_get_global_queue(0, 0), ^(size_t i) {
 					tt[i] = shrtswap(tt[i]);
 				});
+#endif
 				break;
 		}
 	}
