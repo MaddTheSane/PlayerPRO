@@ -23,6 +23,7 @@
 @property short value;
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithEnvRec:(EnvRec)theRec NS_DESIGNATED_INITIALIZER;
++ (instancetype)envelopeWithEnvRec:(EnvRec)theRec;
 @end
 
 @interface PPInstrumentObject : NSObject <NSFastEnumeration, PPObject>
@@ -36,6 +37,12 @@
 - (void)replaceObjectInPanningEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
 - (void)replaceObjectInVolumeEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
 - (void)replaceObjectInPitchEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
+- (PPEnvelopeObject*)panningEnvelopeObjectAtIndex:(NSInteger)index;
+- (PPEnvelopeObject*)volumeEnvelopeObjectAtIndex:(NSInteger)index;
+- (PPEnvelopeObject*)pitchEnvelopeObjectAtIndex:(NSInteger)index;
+@property (readonly) NSInteger countOfVolumeEnvelope;
+@property (readonly) NSInteger countOfPanningEnvelope;
+@property (readonly) NSInteger countOfPitchEnvelope;
 
 - (MADByte*)what NS_RETURNS_INNER_POINTER;
 

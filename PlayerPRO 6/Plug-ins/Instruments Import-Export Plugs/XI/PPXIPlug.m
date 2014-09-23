@@ -31,11 +31,10 @@ typedef UInt8			UBYTE;
 
 #include "XM.h"
 
-static const int 	finetune[16] = {
+static const int finetune[16] = {
 	7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280,
 	8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757
 };
-
 
 @implementation PPXIPlug
 
@@ -100,7 +99,6 @@ static const int 	finetune[16] = {
 			{
 				EnvRec tmpRec[12] = {0};
 				memcpy(tmpRec, pth->volenv, 48);
-				NSMutableArray *envArray = [NSMutableArray new];
 #ifdef __BIG_ENDIAN__
 				for (x = 0; x < 12; x++) {
 					MADLE16(&tmpRec[x].pos);
@@ -108,9 +106,8 @@ static const int 	finetune[16] = {
 				}
 #endif
 				for (int i = 0; i < 12; i++) {
-					[envArray addObject:[[PPEnvelopeObject alloc] initWithEnvRec:tmpRec[i]]];
+					[InsHeader replaceObjectInVolumeEnvelopeAtIndex:i withObject:[PPEnvelopeObject envelopeWithEnvRec:tmpRec[i]]];
 				}
-				InsHeader.volumeEnvelope = envArray;
 			}
 			
 			InsHeader.volumeSize	= pth->volpts;
@@ -129,11 +126,9 @@ static const int 	finetune[16] = {
 					MADLE16(&tmpRec[x].val);
 				}
 #endif
-				NSMutableArray *envArray = [NSMutableArray new];
 				for (int i = 0; i < 12; i++) {
-					[envArray addObject:[[PPEnvelopeObject alloc] initWithEnvRec:tmpRec[i]]];
+					[InsHeader replaceObjectInPanningEnvelopeAtIndex:i withObject:[PPEnvelopeObject envelopeWithEnvRec:tmpRec[i]]];
 				}
-				InsHeader.panningEnvelope = envArray;
 			}
 			
 			InsHeader.panningSize		= pth->panpts;
@@ -198,9 +193,7 @@ static const int 	finetune[16] = {
 							short	*tt = (short*)rawSampData;
 							
 #ifdef __BIG_ENDIAN__
-							long	tL;
-							
-							for (tL = 0; tL < curData->size / 2; tL++) {
+							for (long tL = 0; tL < curData->size / 2; tL++) {
 								MADLE16((Ptr)(tt + tL));
 							}
 #endif
@@ -243,6 +236,18 @@ static const int 	finetune[16] = {
 	return MADNoErr;
 }
 
+static NSData *startData()
+{
+	static NSData *currentData;
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		const char start[0x42] = "Extended Instrument:                       \241FastTracker v2.00   \x02\x01";
+		currentData = [[NSData alloc] initWithBytes:start length:0x42];
+	});
+	
+	return currentData;
+}
+
 - (MADErr)exportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver *)driver
 {
 	NSFileHandle *iFileRefI = [NSFileHandle fileHandleForWritingToURL:sampleURL error:NULL];
@@ -253,19 +258,19 @@ static const int 	finetune[16] = {
 		short			u, i, x;
 		long			inOutCount = 0;
 		XMPATCHHEADER	pth;
-		char			start[0x42] = "Extended Instrument:                       \241FastTracker v2.00   \x02\x01";
 		
-		NSData *currentData = [[NSData alloc] initWithBytes:start length:0x42];
-		[iFileRefI writeData:currentData];
+		[iFileRefI writeData:startData()];
 		
 		memcpy(pth.what, [InsHeader what], 96);
 		for (i = 0; i < 24; i += 2) {
 			pth.volenv[i] = [(PPEnvelopeObject*)InsHeader.volumeEnvelope[i / 2] position];
 			pth.volenv[i + 1] = [(PPEnvelopeObject*)InsHeader.volumeEnvelope[i / 2] value];
 		}
+#if __BIG_ENDIAN__
 		for (x = 0; x < 24; x++) {
 			MADLE16(&pth.volenv[x]);
 		}
+#endif
 		
 		pth.volpts	= InsHeader.volumeSize;
 		pth.volflg	= InsHeader.volumeType;
@@ -279,9 +284,11 @@ static const int 	finetune[16] = {
 			pth.panenv[i] = [(PPEnvelopeObject*)InsHeader.panningEnvelope[i / 2] position];
 			pth.panenv[i + 1] = [(PPEnvelopeObject*)InsHeader.panningEnvelope[i / 2] value];
 		}
+#if __BIG_ENDIAN__
 		for (x = 0; x < 24; x++) {
 			MADLE16(&pth.panenv[x]);
 		}
+#endif
 		
 		pth.panpts = InsHeader.panningSize;
 		pth.panflg = InsHeader.panningType;
@@ -405,8 +412,6 @@ static const int 	finetune[16] = {
 			} else
 				myErr = MADNeedMemory;
 		}
-		[iFileRefI synchronizeFile];
-		[iFileRefI closeFile];
 	} else {
 		myErr = MADWritingErr;
 	}

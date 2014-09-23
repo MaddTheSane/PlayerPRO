@@ -60,6 +60,11 @@
 	EnvRec *writeBackVal;
 }
 
++ (instancetype)envelopeWithEnvRec:(EnvRec)theRec
+{
+	return [[self alloc] initWithEnvRec:theRec];
+}
+
 - (instancetype)initWithEnvRecPointer:(EnvRec*)theEnv
 {
 	if (self = [self initWithEnvRec:*theEnv]) {
@@ -214,6 +219,25 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	return [NSArray arrayWithArray:_pitchEnvelope];
 }
+
+- (PPEnvelopeObject*)panningEnvelopeObjectAtIndex:(NSInteger)index
+{
+	return _panningEnvelope[index];
+}
+
+- (PPEnvelopeObject*)volumeEnvelopeObjectAtIndex:(NSInteger)index
+{
+	return _volumeEnvelope[index];
+}
+
+- (PPEnvelopeObject*)pitchEnvelopeObjectAtIndex:(NSInteger)index
+{
+	return _pitchEnvelope[index];
+}
+
+- (NSInteger)countOfVolumeEnvelope { return 12; }
+- (NSInteger)countOfPanningEnvelope { return 12; }
+- (NSInteger)countOfPitchEnvelope { return 12; }
 
 - (NSString*)name
 {
