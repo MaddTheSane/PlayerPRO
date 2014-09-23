@@ -21,7 +21,7 @@ framework module PlayerPROCore {
 	module Driver {
 		header "RDriver.h"
 		use Defines
-		use Structures
+		use MADStructures
 		export *
 	}
 	

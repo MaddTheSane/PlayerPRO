@@ -737,7 +737,7 @@ bool NewMADCommand(Cmd *theNoteCmd)
 	Cmd		intCmd = *theNoteCmd;
 	
 	if (intCmd.ins != 0 && (intCmd.note != 0xFF && intCmd.note != 0xFE)) {
-		if (intCmd.cmd != MADEffectIDPortamento && intCmd.cmd != MADEffectIDPortaSlide)
+		if (intCmd.cmd != MADEffectPortamento && intCmd.cmd != MADEffectPortaSlide)
 			result = true;
 	}
 	return result;
@@ -809,7 +809,7 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 		
 		if (intCmd.note == 0xFF) {
 			if (intCmd.ins == curVoice->insOld) {		// RESET ONLY VOLUME
-				if(intCmd.cmd != MADEffectIDVolume && intCmd.ins != 0 && curVoice->noteOld != 0xFF) {
+				if(intCmd.cmd != MADEffectVolume && intCmd.ins != 0 && curVoice->noteOld != 0xFF) {
 					short ins	= intCmd.ins - 1;
 					if (ins >= MAXINSTRU)
 						ins = MAXINSTRU-1;
@@ -886,7 +886,7 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 					
 					/**** RESET NOTE ****/
 					
-					if (ChangedInstru == true || (intCmd.cmd != MADEffectIDPortamento && intCmd.cmd != MADEffectIDPortaSlide)) {
+					if (ChangedInstru == true || (intCmd.cmd != MADEffectPortamento && intCmd.cmd != MADEffectPortaSlide)) {
 						curVoice->prevPtr		= NULL;
 						curVoice->maxPtr 		= curVoice->curPtr = curVoice->begPtr = curData->data;
 						curVoice->maxPtr 		+= curData->size;
@@ -916,7 +916,7 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 						if (theNoteCmd->note != 0xFF && theNoteCmd->note != 0xFE)
 							curVoice->viboffset = 0;
 						
-						if(intCmd.cmd != MADEffectIDPanning) {
+						if(intCmd.cmd != MADEffectPanning) {
 							if (curVoice->PanningE8 == false) {
 								curVoice->pann = intDriver->curMusic->header->chanPan[curVoice->TrackID];
 								if (curVoice->pann > MAX_PANNING)
@@ -930,7 +930,7 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 					StartEnvelope(curVoice);
 				}
 				
-				if(intCmd.cmd != MADEffectIDVolume && theNoteCmd->ins != 0) {
+				if(intCmd.cmd != MADEffectVolume && theNoteCmd->ins != 0) {
 					curVoice->vol 			= curData->vol;
 					if (curVoice->vol > MAX_VOLUME)
 						curVoice->vol = MAX_VOLUME;
@@ -959,7 +959,7 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 				curVoice->fineTune	= curData->c2spd;
 				curVoice->KeyOn		= true;
 				
-				if (intCmd.cmd != MADEffectIDPortamento && intCmd.cmd != MADEffectIDPortaSlide) {
+				if (intCmd.cmd != MADEffectPortamento && intCmd.cmd != MADEffectPortaSlide) {
 					curVoice->period	= GetOldPeriod(curVoice->note, curVoice->fineTune, intDriver);
 					curVoice->periodOld	= curVoice->period;
 				}
@@ -1301,7 +1301,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 							if (intDriver->Reading && intDriver->OneMoreBeforeEnd == false && intDriver->TrackLineReading[i]) {
 								Cmd *tempcmd = GetMADCommand(intDriver->PartitionReader, i, intDriver->curMusic->partition[intDriver->Pat]);
 								
-								if (tempcmd->cmd == MADEffectIDNoteOff) {// G-Effet, Note-Off previous channel note
+								if (tempcmd->cmd == MADEffectNoteOff) {// G-Effet, Note-Off previous channel note
 									switch(tempcmd->arg) {
 										case 0:
 											KillChannel(&intDriver->chan[intDriver->lastChannelUsed[i]], intDriver);

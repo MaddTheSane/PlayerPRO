@@ -167,7 +167,7 @@ class ComplexFadeController: NSWindowController {
 		}
 		
 		let pcmdLength = thePcmd.memory.length
-		for var track: Int16 = 0; track < thePcmd.memory.tracks; track++ {
+		for track in 0 ..< thePcmd.memory.tracks {
 			for var row: Int16 = 0; row < pcmdLength; row += step {
 				var myCmd = MADGetCmd(row, track, thePcmd);
 				

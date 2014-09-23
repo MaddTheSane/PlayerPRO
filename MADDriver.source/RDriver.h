@@ -66,25 +66,25 @@
 /********************						***********************/
 
 typedef MADENUM(int, MADEffectID) {
-	MADEffectIDArpeggio 	= 0,	//	0x00
-	MADEffectIDDownslide 	= 1,	//	0x01
-	MADEffectIDUpslide 		= 2,	//	0x02
-	MADEffectIDPortamento 	= 3,	//	0x03
-	MADEffectIDVibrato 		= 4,	//	0x04
-	MADEffectIDPortaSlide 	= 5,	//	0x05
-	MADEffectIDVibratoSlide	= 6,	//	0x06
-	MADEffectIDNothing 		= 7,	//	0x07
-	MADEffectIDPanning		= 8,	//	0x08
-	MADEffectIDOffset 		= 9,	//	0x09
-	MADEffectIDSlideVolume 	= 10,	//	0x0A
-	MADEffectIDFastSkip 	= 11,	//	0x0B
-	MADEffectIDVolume 		= 12,	//	0x0C
-	MADEffectIDSkip 		= 13,	//	0x0D
-	MADEffectIDExtended 	= 14,	//	0x0E
-	MADEffectIDSpeed 		= 15,	//	0x0F
-	MADEffectIDNoteOff 		= 16,	//	0x0G
-	MADEffectIDLoop			= 17,	// 	0x0L
-	MADEffectIDNOffset		= 18	//  0x0O
+	MADEffectArpeggio		= 0,	//	0x00
+	MADEffectDownslide		= 1,	//	0x01
+	MADEffectUpslide 		= 2,	//	0x02
+	MADEffectPortamento 	= 3,	//	0x03
+	MADEffectVibrato 		= 4,	//	0x04
+	MADEffectPortaSlide 	= 5,	//	0x05
+	MADEffectVibratoSlide	= 6,	//	0x06
+	MADEffectNothing 		= 7,	//	0x07
+	MADEffectPanning		= 8,	//	0x08
+	MADEffectOffset 		= 9,	//	0x09
+	MADEffectSlideVolume 	= 10,	//	0x0A
+	MADEffectFastSkip		= 11,	//	0x0B
+	MADEffectVolume 		= 12,	//	0x0C
+	MADEffectSkip			= 13,	//	0x0D
+	MADEffectExtended		= 14,	//	0x0E
+	MADEffectSpeed			= 15,	//	0x0F
+	MADEffectNoteOff 		= 16,	//	0x0G
+	MADEffectLoop			= 17,	// 	0x0L
+	MADEffectNOffset		= 18	//  0x0O
 };
 
 /********************						***********************/

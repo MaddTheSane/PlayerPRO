@@ -256,7 +256,7 @@ void ConvertTo64Rows(MADMusic *music)
 			
 			MADKillCmd(dstcmd);
 			
-			dstcmd->cmd = MADEffectIDSkip;
+			dstcmd->cmd = MADEffectSkip;
 			dstcmd->arg = 0;
 			
 			// Replace old pattern
@@ -325,7 +325,7 @@ void ConvertTo64Rows(MADMusic *music)
 				dstcmd = GetMADCommand(breakpos-1, 0, newPat);
 				MADKillCmd(dstcmd);
 				if (dstcmd) {
-					dstcmd->cmd = MADEffectIDSkip;
+					dstcmd->cmd = MADEffectSkip;
 					dstcmd->arg = 0;
 				}
 			}
@@ -1726,9 +1726,9 @@ MADErr MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV)
 			for (y = 0; y <  MDriver->curMusic->header->numChn; y++) {
 				aCmd = GetMADCommand(x, y, MDriver->curMusic->partition[MDriver->curMusic->header->oPointers[i]]);
 				
-				/** MADEffectIDSpeed **/
+				/** MADEffectSpeed **/
 				if (aCmd) {
-					if (aCmd->cmd == MADEffectIDSpeed) {
+					if (aCmd->cmd == MADEffectSpeed) {
 						/** Compute time for this interval **/
 						
 						timeResult += ((float) (time * 125L * speed * 60)) / ((float) (50 * finespeed));
@@ -1745,9 +1745,9 @@ MADErr MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV)
 						}
 					}
 					
-					/** MADEffectIDSkip **/
+					/** MADEffectSkip **/
 					
-					if (aCmd->cmd == MADEffectIDSkip) {
+					if (aCmd->cmd == MADEffectSkip) {
 						for (; x < MDriver->curMusic->partition[MDriver->curMusic->header->oPointers[i]]->header.size; x++) {
 							
 						}
@@ -1801,8 +1801,8 @@ MADErr MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime)
 				aCmd = GetMADCommand(x, y, MDriver->curMusic->partition[MDriver->curMusic->header->oPointers[i]]);
 				
 				if (aCmd) {
-					/** MADEffectIDSpeed **/
-					if (aCmd->cmd == MADEffectIDSpeed) {
+					/** MADEffectSpeed **/
+					if (aCmd->cmd == MADEffectSpeed) {
 						/** Compute time for this interval **/
 						
 						timeResult += ((float) (time * 125L * speed * 60)) / ((float) (50 * finespeed));
@@ -1817,8 +1817,8 @@ MADErr MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime)
 							if (aCmd->arg != 0)
 								finespeed = aCmd->arg;
 						}
-					} else if (aCmd->cmd == MADEffectIDSkip) {
-						/** MADEffectIDSkip **/
+					} else if (aCmd->cmd == MADEffectSkip) {
+						/** MADEffectSkip **/
 							for (; x < MDriver->curMusic->partition[MDriver->curMusic->header->oPointers[i]]->header.size; x++) {
 								if (i == MDriver->PL && x == MDriver->PartitionReader) {
 									*curTime = timeResult + ((float) (time * 125L * speed * 60)) / ((float) (50 * finespeed));
@@ -2799,7 +2799,7 @@ void MADCheckSpeed(MADMusic *MDriver, MADDriverRec *intDriver)
 				
 				aCmd = GetMADCommand(x, y, MDriver->partition[MDriver->header->oPointers[i]]);
 				
-				if (aCmd->cmd == MADEffectIDSpeed) {
+				if (aCmd->cmd == MADEffectSpeed) {
 					if (aCmd->arg < 32) {
 						if (aCmd->arg != 0) {
 							if (CmdSpeed == false)
@@ -2863,7 +2863,7 @@ void MADCheckSpeedPattern(MADMusic *MDriver, MADDriverRec *intDriver)
 			aCmd = GetMADCommand(x, y, MDriver->partition[intDriver->Pat]);
 			
 			if (aCmd) {
-				if (aCmd->cmd == MADEffectIDSpeed) {
+				if (aCmd->cmd == MADEffectSpeed) {
 					if (aCmd->arg < 32) {
 						if (aCmd->arg != 0) {
 							if (CmdSpeed == false)

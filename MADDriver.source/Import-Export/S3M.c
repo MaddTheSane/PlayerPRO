@@ -51,30 +51,30 @@ static void ConvertS3MEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg,
 	switch (B0 + 0x40) {
 			// Speed
 		case 'A':
-			*Cmd = MADEffectIDSpeed;
+			*Cmd = MADEffectSpeed;
 			*Arg = B1;
 			break;
 			
 			// Tempo
 		case 'T':
-			*Cmd = MADEffectIDSpeed;
+			*Cmd = MADEffectSpeed;
 			*Arg = B1;
 			break;
 			
 		case 'B':
-			*Cmd = MADEffectIDFastSkip;
+			*Cmd = MADEffectFastSkip;
 			*Arg = B1;
 			break;
 			
 		case 'C':
-			*Cmd = MADEffectIDSkip;
+			*Cmd = MADEffectSkip;
 			*Arg = B1;
 			break;
 			
 		case 'D':
 			// Slide volume
 			if (LoB1 == 0 || HiB1 == 0) {
-				*Cmd = MADEffectIDSlideVolume;
+				*Cmd = MADEffectSlideVolume;
 				*Arg = B1;
 #if 0
 				if (*Arg == 0)				// Use last command
@@ -86,12 +86,12 @@ static void ConvertS3MEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg,
 				
 			} else if (HiB1 == 0x0F) {
 				// Fine Slide volume DOWN
-				*Cmd = MADEffectIDExtended;
+				*Cmd = MADEffectExtended;
 				*Arg = 11 << 4;
 				*Arg += LoB1;
 			} else if (LoB1 == 0x0F) {
 				// Fine Slide volume UP
-				*Cmd = MADEffectIDExtended;
+				*Cmd = MADEffectExtended;
 				*Arg = 10 << 4;
 				*Arg += HiB1;
 			}
@@ -100,7 +100,7 @@ static void ConvertS3MEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg,
 		case 'E':
 			if (HiB1 == 0x0F) {
 				// FineSlide DOWN
-				*Cmd = MADEffectIDExtended;
+				*Cmd = MADEffectExtended;
 				*Arg = 2 << 4;		//not supported
 				*Arg += LoB1;
 			} else if (HiB1 == 0x0E) {
@@ -109,7 +109,7 @@ static void ConvertS3MEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg,
 				*Arg = 0;		//not supported
 			} else {
 				// Slide DOWN
-				*Cmd = MADEffectIDUpslide;
+				*Cmd = MADEffectUpslide;
 				*Arg = B1;
 			}
 			break;
@@ -117,7 +117,7 @@ static void ConvertS3MEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg,
 		case 'F':
 			if (HiB1 == 0x0F) {
 				// FineSlide UP
-				*Cmd = MADEffectIDExtended;
+				*Cmd = MADEffectExtended;
 				*Arg = 1 << 4;		//not supported
 				*Arg += LoB1;
 			} else if (HiB1 == 0x0E) {
@@ -126,23 +126,23 @@ static void ConvertS3MEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg,
 				*Arg = 0;		//not supported
 			} else {
 				// Slide UP
-				*Cmd = MADEffectIDDownslide;
+				*Cmd = MADEffectDownslide;
 				*Arg = B1;
 			}
 			break;
 			
 		case 'G':
-			*Cmd = MADEffectIDPortamento;
+			*Cmd = MADEffectPortamento;
 			*Arg = B1;
 			break;
 			
 		case 'H':
-			*Cmd = MADEffectIDVibrato;
+			*Cmd = MADEffectVibrato;
 			*Arg = B1;
 			break;
 			
 		case 'J':
-			*Cmd = MADEffectIDArpeggio;
+			*Cmd = MADEffectArpeggio;
 			*Arg = B1;
 			
 			if (*Arg == 0) {
@@ -153,66 +153,66 @@ static void ConvertS3MEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg,
 			break;
 			
 		case 'K':
-			*Cmd = MADEffectIDVibratoSlide;
+			*Cmd = MADEffectVibratoSlide;
 			*Arg = B1;
 			break;
 			
 		case 'L':
-			*Cmd = MADEffectIDPortaSlide;
+			*Cmd = MADEffectPortaSlide;
 			*Arg = B1;
 			break;
 			
 		case 'O':
-			*Cmd = MADEffectIDOffset;
+			*Cmd = MADEffectOffset;
 			*Arg = B1;
 			break;
 			
 		case 'S':		// Special Effects
 			switch (HiB1) {
 				case 2: // FineTune
-					*Cmd = MADEffectIDExtended;
+					*Cmd = MADEffectExtended;
 					*Arg = 5 << 4;
 					*Arg += LoB1;
 					break;
 					
 				case 3: // Set Vibrato WaveForm
-					*Cmd = MADEffectIDExtended;
+					*Cmd = MADEffectExtended;
 					*Arg = 4 << 4;
 					*Arg += LoB1;
 					break;
 					
 				case 4: // Set Tremolo WaveForm
-					*Cmd = MADEffectIDExtended;
+					*Cmd = MADEffectExtended;
 					*Arg = 7 << 4;
 					*Arg += LoB1;
 					break;
 					
 				case 8: // Set Panning
-					*Cmd = MADEffectIDExtended;
+					*Cmd = MADEffectExtended;
 					*Arg = 8 << 4;
 					*Arg += LoB1;
 					break;
 					
 				case 0xB: // Loop pattern
-					*Cmd = MADEffectIDExtended;
+					*Cmd = MADEffectExtended;
 					*Arg = 6 << 4;
 					*Arg += LoB1;
 					break;
 					
 				case 0xC: // Cut sample
-					*Cmd = MADEffectIDExtended;
+					*Cmd = MADEffectExtended;
 					*Arg = 12 << 4;
 					*Arg += LoB1;
 					break;
 					
 				case 0xD: // Delay sample
-					*Cmd = MADEffectIDExtended;
+					*Cmd = MADEffectExtended;
 					*Arg = 13 << 4;
 					*Arg += LoB1;
 					break;
 					
 				case 0xE: // Delay pattern
-					*Cmd = MADEffectIDExtended;
+					*Cmd = MADEffectExtended;
 					*Arg = 14 << 4;
 					*Arg += LoB1;
 					break;
@@ -227,7 +227,7 @@ static void ConvertS3MEffect(MADByte B0, MADByte B1, MADByte *Cmd, MADByte *Arg,
 			
 		case 'X':
 			if (B1 <= 128) {
-				*Cmd = MADEffectIDPanning;
+				*Cmd = MADEffectPanning;
 				
 				if (B1 == 128)
 					*Arg = 255;
@@ -248,7 +248,7 @@ static void ConvertMADEffect(MADByte Cmd, MADByte Arg, MADByte *B0, MADByte *B1)
 	*B1 = 0;
 	
 	switch (Cmd) {
-		case MADEffectIDSpeed:
+		case MADEffectSpeed:
 			if (Arg < 32) {
 				*B0 = 'A' - 0x40;
 				*B1 = Arg;
@@ -258,62 +258,62 @@ static void ConvertMADEffect(MADByte Cmd, MADByte Arg, MADByte *B0, MADByte *B1)
 			}
 			break;
 			
-		case MADEffectIDFastSkip:
+		case MADEffectFastSkip:
 			*B0 = 'B' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case MADEffectIDSkip:
+		case MADEffectSkip:
 			*B0 = 'C' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case MADEffectIDSlideVolume:
+		case MADEffectSlideVolume:
 			*B0 = 'D' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case MADEffectIDUpslide:
+		case MADEffectUpslide:
 			*B0 = 'E' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case MADEffectIDDownslide:
+		case MADEffectDownslide:
 			*B0 = 'F' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case MADEffectIDPortamento:
+		case MADEffectPortamento:
 			*B0 = 'G' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case MADEffectIDVibrato:
+		case MADEffectVibrato:
 			*B0 = 'H' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case MADEffectIDArpeggio:
+		case MADEffectArpeggio:
 			*B0 = 'J' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case MADEffectIDVibratoSlide:
+		case MADEffectVibratoSlide:
 			*B0 = 'K' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case MADEffectIDPortaSlide:
+		case MADEffectPortaSlide:
 			*B0 = 'L' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case MADEffectIDOffset:
+		case MADEffectOffset:
 			*B0 = 'O' - 0x40;
 			*B1 = Arg;
 			break;
 			
-		case MADEffectIDExtended:
+		case MADEffectExtended:
 			switch ((Arg & 0xF0) >> 4) {
 				case 1:
 					*B0 = 'F' - 0x40;
@@ -744,11 +744,11 @@ static char* ConvertMad2S3M(MADMusic *theMAD, MADDriverSettings *init, size_t *s
 					
 					// VOLUME
 					
-					if (aCmd->vol != 0xFF || aCmd->cmd == MADEffectIDVolume)
+					if (aCmd->vol != 0xFF || aCmd->cmd == MADEffectVolume)
 					{
 						*tempChar += 64;
 						
-						if (aCmd->cmd == MADEffectIDVolume) finalS3MCopy[0] = aCmd->arg;
+						if (aCmd->cmd == MADEffectVolume) finalS3MCopy[0] = aCmd->arg;
 						else finalS3MCopy[0] = aCmd->vol - 0x10;
 						
 						finalS3MCopy += 1L;
