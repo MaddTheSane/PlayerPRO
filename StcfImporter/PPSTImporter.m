@@ -6,11 +6,8 @@
 //
 //
 
-@import CoreServices.CarbonCore;
 #import "PPSTImporter.h"
-#import <PlayerPROKit/PPErrors.h>
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
+@import CoreServices.CarbonCore;
 
 static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 {
@@ -21,7 +18,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 		return NULL;
 	UInt8 *data = *(UInt8**)aResource;
 	UInt16 count = *(UInt16*)data;
-	MADBE16(&count);
+	count = CFSwapInt16BigToHost(count);
 	
 	// First 2 bytes are the count of strings that this resource has.
 	if (count < aId)
@@ -63,7 +60,9 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	Handle aHandle, locHand;
 	FSRef theRef;
 	UInt16 theNo, i;
-	CFURLGetFSRef((__bridge CFURLRef)toOpen, &theRef);
+	if (CFURLGetFSRef((__bridge CFURLRef)toOpen, &theRef) == NO) {
+		return fnfErr;
+	}
 	refNum = FSOpenResFile(&theRef, fsRdPerm);
 	OSErr resErr = ResError();
 	if (resErr) {
@@ -78,6 +77,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	}
 	locHand = Get1Resource('selc', 128);
 	if (locHand == NULL) {
+		ReleaseResource(aHandle);
 		CloseResFile(refNum);
 		return ResError();
 	}
@@ -87,13 +87,13 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	HLock(aHandle);
 	theNo = *((UInt16*)(*aHandle));
-	MADBE16(&theNo);
+	theNo = CFSwapInt16BigToHost(theNo);
 	
 	theNo /= 2;
 	
 	HLock(locHand);
 	short location = **((short**)locHand);
-	MADBE16(&location);
+	location = CFSwapInt16BigToHost(location);
 	HUnlock(locHand);
 	DisposeHandle(locHand);
 	locHand = NULL;
@@ -141,8 +141,8 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 {
 	NSDictionary *myDict;
 	OSErr myErr = [self loadOldMusicListAtURL:theURL toDictionary:&myDict];
-	if (myErr) {
-		NSError *nsErr = PPCreateErrorFromMADErrorType(myErr);
+	if (myErr != noErr) {
+		NSError *nsErr = [NSError errorWithDomain:NSOSStatusErrorDomain code:myErr userInfo:nil];
 		reply(nil, nsErr);
 	} else {
 		reply(myDict, nil);

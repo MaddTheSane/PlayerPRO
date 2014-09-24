@@ -15,8 +15,8 @@ int main(int argc, const char *argv[])
 	NSXPCListener *serviceListener = [NSXPCListener serviceListener];
 	
 	// Configure the service listener with a delegate.
-	PPSTImporter *sharedZipper = [PPSTImporter sharedImporter];
-	serviceListener.delegate = sharedZipper;
+	PPSTImporter *sharedImporter = [PPSTImporter sharedImporter];
+	serviceListener.delegate = sharedImporter;
 	
 	// Resume the listener. At this point, NSXPCListener will take over the execution of this service, managing its lifetime as needed.
 	[serviceListener resume];
