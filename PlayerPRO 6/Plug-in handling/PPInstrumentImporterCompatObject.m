@@ -13,9 +13,6 @@
 
 #define PPINLoadPlug(theBundle) (PPInstrumentPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROInstrumentPlugTypeID, kPlayerPROInstrumentPlugInterfaceID)
 
-static Class strClass;
-static Class numClass;
-
 @interface PPInstrumentImporterCompatObject ()
 @property BOOL is32Bit;
 @end
@@ -45,13 +42,10 @@ static Class numClass;
 		}
 	}
 	
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		strClass = [NSString class];
-		numClass = [NSNumber class];
-	});
-
 	if (self = [super initWithBundleNoInit:tempBundle]) {
+		if (has32 && !has64) {
+			self.is32Bit = YES;
+		}
 		NSXPCConnection *_connectionToService = [[NSXPCConnection alloc] initWithServiceName: self.is32Bit ? @"PPCoreInstrumentPlugBridge32" : @"PPCoreInstrumentPlugBridge"];
 		_connectionToService.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPCoreInstrumentPlugBridgeProtocol)];
 		[_connectionToService resume];

@@ -9,9 +9,11 @@
 #ifndef PPMacho_PlayerPRO_PrefixHeader_pch
 #define PPMacho_PlayerPRO_PrefixHeader_pch
 
+#include <CoreFoundation/CoreFoundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #include "PPByteswap.h"
 #include <ApplicationServices/ApplicationServices.h>
+#include <CoreGraphics/CoreGraphics.h>
 #include <tgmath.h>
 
 #ifdef __OBJC__

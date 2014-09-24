@@ -9,64 +9,6 @@
 #import "PPPlugInObject.h"
 #import "PPPlugInCommon.h"
 
-void **GetCOMPlugInterface(CFBundleRef tempBundleRef, CFUUIDRef TypeUUID, CFUUIDRef InterfaceUUID)
-{
-	CFArrayRef	factories		= NULL;
-	BOOL		foundInterface	= NO;
-	void		**formatPlugA	= NULL;
-	
-	CFPlugInRef plugToTest = CFBundleGetPlugIn(tempBundleRef);
-	
-	if (!plugToTest)
-		return NULL;
-	
-	//  See if this plug-in implements the Test type.
-	factories = CFPlugInFindFactoriesForPlugInTypeInPlugIn(TypeUUID, plugToTest);
-	
-	if (factories != NULL) {
-		CFIndex	factoryCount, index;
-		
-		factoryCount = CFArrayGetCount(factories);
-		if (factoryCount > 0) {
-			for (index = 0 ; (index < factoryCount) && (foundInterface == false) ; index++) {
-				CFUUIDRef factoryID;
-				
-				//  Get the factory ID for the first location in the array of IDs.
-				factoryID = (CFUUIDRef) CFArrayGetValueAtIndex(factories, index);
-				if (factoryID) {
-					IUnknownVTbl **iunknown = NULL;
-					
-					//  Use the factory ID to get an IUnknown interface. Here the plug-in code is loaded.
-					iunknown = (IUnknownVTbl **)CFPlugInInstanceCreate(kCFAllocatorDefault, factoryID, TypeUUID);
-					
-					if (iunknown) {
-						//  If this is an IUnknown interface, query for the test interface.
-						(*iunknown)->QueryInterface(iunknown, CFUUIDGetUUIDBytes(InterfaceUUID), (LPVOID *)(&formatPlugA));
-						
-						// Now we are done with IUnknown
-						(*iunknown)->Release(iunknown);
-						
-						if (formatPlugA) {
-							// We found the interface we need
-							foundInterface = true;
-						}
-					}
-				}
-			}
-		} else {
-			//You can ignore the Clang static warning of incorrect decrement here.
-			CFRelease(factories);
-			return NULL;
-		}
-	} else
-		return NULL;
-	
-	//You can ignore the Clang static warning of incorrect decrement here.
-	CFRelease(factories);
-	
-	return formatPlugA;
-}
-
 NSArray *DefaultPlugInLocations()
 {
 	static NSArray *immPlugLocs;
