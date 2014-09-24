@@ -11,6 +11,11 @@ import CoreFoundation.CFPlugInCOM
 import Foundation
 import PlayerPROCore
 import CoreGraphics
+#if os(OSX)
+	import Cocoa
+#else
+	import UIKit
+#endif
 
 public func GetCommand(position: Int16, channel: Int16, aPat: PPPatternObject) -> Cmd {
 	var aCmd = aPat.getCommandFromPosition(position, channel: channel)
@@ -144,6 +149,16 @@ public func OctaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true
 	}
 }
 
+#if os(iOS)
+	private func viewSize(view: UIView) -> CGSize {
+		var imageSize = view.bounds.size
+		let scale = view.contentScaleFactor
+		imageSize.width *= scale
+		imageSize.height *= scale
+		return imageSize
+	}
+#endif
+
 extension PPSampleObject {
 
 #if os(OSX)
@@ -180,8 +195,8 @@ extension PPSampleObject {
 			colorRef = CGColorCreateGenericRGB(1, 0.1, 0.5, 0.8)
 			CGContextSetStrokeColorWithColor(bitmapContext, colorRef)
 			var loopRect = aRect
-			var lineSize = view.convertSizeToBacking(NSSize(width: 2, height: 2))
-			var padSize = view.convertSizeToBacking(NSSize(width: 1, height: 1))
+			let lineSize = view.convertSizeToBacking(NSSize(width: 2, height: 2))
+			let padSize = view.convertSizeToBacking(NSSize(width: 1, height: 1))
 			CGContextSetLineWidth(bitmapContext, lineSize.height)
 			loopRect.origin.x =  CGFloat(theDat.loopBegin) * imageSize.width / CGFloat(theDat.data.length)
 			loopRect.origin.y += padSize.width
@@ -193,6 +208,52 @@ extension PPSampleObject {
 		var theCGimg = CGBitmapContextCreateImage(bitmapContext);
 		
 		return NSImage(CGImage: theCGimg, size: view.frame.size)
+	}
+#else
+	@objc(waveformImageUsingView:) public func waveformImage(#view: UIView) -> UIImage? {
+		return PPSampleObject.waveformImage(fromSample: self, view: view)
+	}
+	
+	@objc(waveformImageFromSample:usingView:) public class func waveformImage(fromSample theDat: PPSampleObject, view: UIView) -> UIImage? {
+		let imageSize = viewSize(view)
+		let scale = view.contentScaleFactor
+		let datIsStereo = theDat.stereo;
+		let aRect = CGRect(origin: CGPointZero, size: imageSize)
+		let rowBytes: UInt = 4 * UInt(imageSize.width)
+		let defaultSpace = CGColorSpaceCreateDeviceRGB()
+		let bitMapFormat = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
+		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, bitMapFormat);
+		CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
+		let lineSize = 1 * scale
+		CGContextSetLineWidth(bitmapContext, lineSize);
+		var colorRef: UIColor
+		if (datIsStereo) {
+			colorRef = UIColor(red: 0, green: 0, blue: 1, alpha: 0.75)
+			CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor);
+			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
+		}
+		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
+		
+		colorRef = UIColor(red: 1, green: 0, blue: 0, alpha: stereoTrans)
+		CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor);
+		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
+		
+		if (theDat.loopSize != 0) {
+			colorRef = UIColor(red: 1, green: 0.1, blue: 0.5, alpha: 0.8)
+			CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor)
+			var loopRect = aRect
+			let lineSize = 2 * scale
+			let padSize = 1 * scale
+			CGContextSetLineWidth(bitmapContext, lineSize)
+			loopRect.origin.x =  CGFloat(theDat.loopBegin) * imageSize.width / CGFloat(theDat.data.length)
+			loopRect.origin.y += padSize
+			loopRect.size.width = CGFloat(theDat.loopSize) * imageSize.width / CGFloat(theDat.data.length)
+			loopRect.size.height -= padSize * 2
+			CGContextStrokeRect(bitmapContext, loopRect);
+		}
+		
+		var theCGimg = CGBitmapContextCreateImage(bitmapContext);
+		return UIImage(CGImage: theCGimg)
 	}
 #endif
 	
