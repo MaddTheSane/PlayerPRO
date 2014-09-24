@@ -26,7 +26,7 @@ typealias PPSwiftExportBlock = (theURL: NSURL, inout errStr: String?) -> MADErr
 }
 
 class ExportObject: NSObject {
-	weak var delegate: ExportObjectDelegate?
+	weak var delegate: ExportObjectDelegate? = nil
 	let destination: NSURL
 	private let exportBlock: PPExportBlock
 	private(set) var status = ExportStatus.NotRan
@@ -38,7 +38,7 @@ class ExportObject: NSObject {
 	}
 	
 	convenience init(destination dest: NSURL, block: PPSwiftExportBlock) {
-		let tmpExportBlock: PPExportBlock = { (theURL: NSURL, errStr: AutoreleasingUnsafeMutablePointer<NSString?>) -> MADErr in
+		let tmpExportBlock: PPExportBlock = { (theURL, errStr) -> MADErr in
 			var tmpStr: String? = nil
 			let retErr = block(theURL: dest, errStr: &tmpStr)
 			errStr.memory = tmpStr
@@ -51,19 +51,28 @@ class ExportObject: NSObject {
 	func run() {
 		status = .Running
 		// TODO: multi-thread this!
-		var aStr: NSString? = nil
-		let errVal = exportBlock(theURL: destination, errStr: &aStr)
-		if errVal == .NoErr {
-			delegate?.exportObjectDidFinish(self)
-			status = .Done
-		} else {
-			if aStr == nil {
-				let tmpErr = CreateErrorFromMADErrorType(errVal)!
-				aStr = tmpErr.description
+		dispatch_async(dispatch_get_global_queue(0, 0), { () -> Void in
+			var aStr: NSString? = nil
+			let errVal = self.exportBlock(theURL: self.destination, errStr: &aStr)
+			if errVal == .NoErr {
+				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+					self.delegate?.exportObjectDidFinish(self)
+					return
+				})
+				self.status = .Done
+			} else {
+				if aStr == nil {
+					let tmpErr = CreateErrorFromMADErrorType(errVal)!
+					aStr = tmpErr.description
+				}
+				let bStr: NSString = aStr ?? "Unknown error"
+				dispatch_async(dispatch_get_main_queue(), { () -> Void in
+					self.delegate?.exportObjectEncounteredError(self, errorCode: errVal, errorString: bStr)
+					return
+				})
+				self.status = .EncounteredError
 			}
-			let bStr: NSString = aStr ?? "Unknown error"
-			delegate?.exportObjectEncounteredError(self, errorCode: errVal, errorString: bStr)
-			status = .EncounteredError
-		}
+			
+		})
 	}
 }

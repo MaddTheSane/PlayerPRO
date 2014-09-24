@@ -68,7 +68,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	
 	var trackerDict: [String: [String]] {
 		get {
-			if _trackerDict.isEmpty || _trackerDict.count != Int(madLib.pluginCount) + 2 {
+			if _trackerDict.isEmpty || _trackerDict.count != (Int(madLib.pluginCount) + 2 + complexImport.count) {
 				let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
 				let localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
 				var tmpTrackerDict = [localMADKName: [MADNativeUTI], localGenericMADName: [MADGenericUTI]] as [String: [String]]
@@ -101,7 +101,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			return _trackerUTIs
 		}
 	}
-
+	
+	class func globalMADLibrary() -> PPLibrary {
+		return globalMadLib
+	}
+	
 	@IBAction func showPreferences(sender: AnyObject?) {
 		preferences.window.center()
 		preferences.showWindow(sender)
@@ -117,7 +121,6 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		let infoCont = PlugInInfoController.windowControllerFromInfo(inf)
 		infoCont.window.center()
 		NSApplication.sharedApplication().runModalForWindow(infoCont.window)
-		//[infoCont showWindow:sender];
 	}
 
 	func updatePlugInInfoMenu() {
@@ -340,13 +343,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 	
 	override init() {
-		
-		
 		super.init()
 		registerDefaults()
 	}
 	
-	func handleFile(theURL1: NSURL!, ofType theUTI: String) -> Bool {
+	func handleFile(theURL1: NSURL, ofType theUTI: String) -> Bool {
 		let sharedWorkspace = NSWorkspace.sharedWorkspace()
 		var theURL = theURL1
 		if sharedWorkspace.type(theUTI, conformsToType: MADNativeUTI) {
@@ -561,7 +562,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			PPRunAlertPanel("Error opening file", message: "Unable to open %@: %@", args: filename.lastPathComponent, err!.localizedFailureReason!)
 			return false
 		}
-		return handleFile(NSURL(fileURLWithPath: filename), ofType: utiFile)
+		return handleFile(NSURL(fileURLWithPath: filename)!, ofType: utiFile)
 	}
 	
 	func exportObjectDidFinish(theObj: ExportObject) {

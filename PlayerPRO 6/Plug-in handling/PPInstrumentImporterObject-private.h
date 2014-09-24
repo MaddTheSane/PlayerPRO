@@ -20,7 +20,7 @@ typedef NS_OPTIONS(unsigned char, MADPlugCapabilities) {
 
 @interface PPInstrumentImporterObject ()
 @property (readwrite, copy) NSArray *UTITypes;
-@property (readwrite, getter=isSample) BOOL sample;
+@property (readwrite, getter=isSample, nonatomic) BOOL sample;
 @property (readwrite) BOOL canImport;
 @property (readwrite) BOOL canExport;
 

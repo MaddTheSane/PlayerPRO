@@ -9,28 +9,18 @@
 #import "PPPlugInCommon.h"
 #import "PPInstrumentImporterObject-private.h"
 #import "PPInstrumentImporterCompatObject.h"
+#import "PPCoreInstrumentPlugBridgeProtocol.h"
 
 #define PPINLoadPlug(theBundle) (PPInstrumentPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROInstrumentPlugTypeID, kPlayerPROInstrumentPlugInterfaceID)
 
 static Class strClass;
 static Class numClass;
 
-static inline BOOL getBoolFromId(id NSType)
-{
-	if ([NSType isKindOfClass:numClass] || [NSType isKindOfClass:strClass]) {
-		return [NSType boolValue];
-	} else {
-		return NO;
-	}
-}
-
 @interface PPInstrumentImporterCompatObject ()
-@property PPInstrumentPlugin **xxxx;
 @property BOOL is32Bit;
 @end
 
 @implementation PPInstrumentImporterCompatObject
-@synthesize xxxx;
 
 - (NSString*)description
 {
@@ -62,102 +52,49 @@ static inline BOOL getBoolFromId(id NSType)
 	});
 
 	if (self = [super initWithBundleNoInit:tempBundle]) {
-		return nil;
-		NSURL *tempBundleRef = [tempBundle bundleURL];
+		NSXPCConnection *_connectionToService = [[NSXPCConnection alloc] initWithServiceName: self.is32Bit ? @"PPCoreInstrumentPlugBridge32" : @"PPCoreInstrumentPlugBridge"];
+		_connectionToService.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPCoreInstrumentPlugBridgeProtocol)];
+		[_connectionToService resume];
+		__block BOOL toRet = NO;
 		
-		CFBundleRef tempCFBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)tempBundleRef);
-		
-		xxxx = PPINLoadPlug(tempCFBundle);
-		
-		CFRelease(tempCFBundle);
-		
-		if (!xxxx) {
+		dispatch_semaphore_t ourSemaphore = dispatch_semaphore_create(0);
+		dispatch_async(dispatch_get_global_queue(0, 0), ^{
+			[[_connectionToService remoteObjectProxy] checkBundleAtURLIsInstrumentBundle:tempBundle.bundleURL withReply:^(BOOL isPlug, BOOL isInstrument, BOOL isImport) {
+				toRet = isPlug;
+				self.sample = !isInstrument;
+				dispatch_semaphore_signal(ourSemaphore);
+				[_connectionToService invalidate];
+			}];
+		});
+		dispatch_semaphore_wait(ourSemaphore, dispatch_time(DISPATCH_TIME_NOW, 10000));
+		if (toRet == NO) {
 			return nil;
 		}
-		
-		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
-		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
-		id DictionaryTemp = [tempDict valueForKey:kMadPlugIsSampleKey];
-		if ([DictionaryTemp isKindOfClass:numClass] || [DictionaryTemp isKindOfClass:strClass]) {
-			self.sample = [DictionaryTemp boolValue];
-		} else {
-			self.sample = NO;
-		}
-		
-		DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugTypeKey];
-		if ([DictionaryTemp isKindOfClass:strClass]) {
-			type = NSStringToOSType(DictionaryTemp);
-		} else if ([DictionaryTemp isKindOfClass:numClass]) {
-			type = [(NSNumber*)DictionaryTemp unsignedIntValue];
-		} else {
-			return nil;
-		}
-		
-		{
-			id canImportValue, canExportValue;
-			canImportValue = [tempDict valueForKey:(__bridge NSString*)kMadPlugDoesImport];
-			canExportValue = [tempDict valueForKey:(__bridge NSString*)kMadPlugDoesExport];
-			if (canImportValue || canExportValue) {
-				MADPlugCapabilities capabilities = PPMADCanDoNothing;
-				if (canImportValue) {
-					if (getBoolFromId(canImportValue))
-						capabilities = PPMADCanImport;
-				}
-				if (canExportValue) {
-					if (getBoolFromId(canExportValue))
-						capabilities |= PPMADCanExport;
-				}
-				
-				if ((capabilities & PPMADCanImport) == PPMADCanImport) {
-					self.canImport = YES;
-				}
-				
-				if ((capabilities & PPMADCanExport) == PPMADCanExport) {
-					self.canExport = YES;
-				}
-				
-				if (!self.canImport && !self.canExport) {
-					return nil;
-				}
-				
-				
-			} else {
-				MADPlugModes ourMode = 0;
-				DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugModeKey];
-				if ([DictionaryTemp isKindOfClass:strClass]) {
-					ourMode = NSStringToOSType(DictionaryTemp);
-				} else if ([DictionaryTemp isKindOfClass:numClass]) {
-					ourMode = [(NSNumber*)DictionaryTemp unsignedIntValue];
-				} else
-					return nil;
-				
-				switch (ourMode) {
-					case MADPlugImportExport:
-						self.canExport = YES;
-						self.canImport = YES;
-						break;
-						
-					case MADPlugExport:
-						self.canExport = YES;
-						break;
-						
-					case MADPlugImport:
-						self.canImport = YES;
-						break;
-						
-					default:
-						return nil;
-						break;
-				}
-			}
-		}
+		self.canImport = YES;
+		self.canExport = NO;
 	}
 	return self;
 }
 
 - (BOOL)canImportFileAtURL:(NSURL *)fileURL
 {
-	return NO;
+	NSXPCConnection *_connectionToService = [[NSXPCConnection alloc] initWithServiceName: self.is32Bit ? @"PPCoreInstrumentPlugBridge32" : @"PPCoreInstrumentPlugBridge"];
+	_connectionToService.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPCoreInstrumentPlugBridgeProtocol)];
+	[_connectionToService resume];
+	__block BOOL toRet = NO;
+	
+	dispatch_semaphore_t ourSemaphore = dispatch_semaphore_create(0);
+	dispatch_async(dispatch_get_global_queue(0, 0), ^{
+		[[_connectionToService remoteObjectProxy] canImportFileAtURL:fileURL bundleURL:self.file.bundleURL withReply:^(BOOL ourReply) {
+			toRet = ourReply;
+			usleep(5);
+			dispatch_semaphore_signal(ourSemaphore);
+			[_connectionToService invalidate];
+		}];
+	});
+	dispatch_semaphore_wait(ourSemaphore, dispatch_time(DISPATCH_TIME_NOW, 5000));
+
+	return toRet;
 }
 
 - (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
@@ -165,26 +102,15 @@ static inline BOOL getBoolFromId(id NSType)
 	return MADOrderNotImplemented;
 }
 
-- (void)dealloc
+- (void)beginImportSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler
 {
-	if (xxxx) {
-		(*xxxx)->Release(xxxx);
-	}
+	handler(MADOrderNotImplemented);
 }
 
-- (OSErr)importInstrument:(NSURL *)fileToImport instrumentDataReference:(InstrData*)insData sampleDataReference:(sData**)sdataref instrumentSample:(short*)insSamp function:(OSType)imporexp plugInfo:(PPInfoPlug*)plugInfo
+- (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler
 {
-	NSURL *bundleURL = [self.file bundleURL];
-	CFBundleRef tempRef = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)bundleURL);
-	
-	CFBundleRefNum fileID = CFBundleOpenBundleResourceMap(tempRef);
-	
-	OSErr returnType = (*xxxx)->InstrumentMain(xxxx, imporexp, insData, sdataref, insSamp, (__bridge CFURLRef)fileToImport, plugInfo);
-	
-	CFBundleCloseBundleResourceMap(tempRef, fileID);
-	CFRelease(tempRef);
-	
-	return returnType;
+	handler(MADOrderNotImplemented);
 }
+
 
 @end

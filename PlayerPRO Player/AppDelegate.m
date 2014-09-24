@@ -73,7 +73,7 @@ static NSInteger selMusFromList = -1;
 
 - (NSDictionary *)trackerDict
 {
-	if (!_trackerDict || [_trackerDict count] != [madLib pluginCount]) {
+	if (!_trackerDict || [_trackerDict count] != ([madLib pluginCount] + 2)) {
 		NSMutableDictionary *trackerDict =
 		[NSMutableDictionary dictionaryWithDictionary:@{
 														NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",

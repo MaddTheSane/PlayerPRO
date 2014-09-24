@@ -18,7 +18,7 @@
 @property (readonly) MADPlugModes mode;
 @property (readonly) BOOL canImport;
 @property (readonly) BOOL canExport;
-@property (readonly, getter=isSample) BOOL sample;
+@property (readonly, getter=isSample, nonatomic) BOOL sample;
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithBundle:(NSBundle *)theBund;
