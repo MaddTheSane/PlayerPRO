@@ -153,9 +153,29 @@ extension MADDriverSettings: DebugPrintable {
 }
 
 extension MADInfoRec: DebugPrintable {
+	public var internalName: String! {
+		var toParse = [CChar]()
+		var mirror = reflect(internalFileName)
+		for i in 0..<mirror.count {
+			var aChar = mirror[i].1.value as CChar
+			toParse.append(aChar)
+		}
+		return NSString(CString: toParse, encoding: NSMacOSRomanStringEncoding)
+	}
+	
+	public var format: String! {
+		var toParse = [CChar]()
+		var mirror = reflect(formatDescription)
+		for i in 0..<mirror.count {
+			var aChar = mirror[i].1.value as CChar
+			toParse.append(aChar)
+		}
+		return NSString(CString: toParse, encoding: NSMacOSRomanStringEncoding)
+	}
+	
 	public var debugDescription: String {
 		get {
-			return ""
+			return "\(internalName), format \(format)"
 		}
 	}
 }
@@ -230,29 +250,7 @@ public struct MADLibraryGenerator: GeneratorType {
 	
 	internal init(library: MADLibrary) {
 		currentLib = library
-		maxPlugs = Int(library.TotalPlug)
-	}
-}
-
-extension MADInfoRec {
-	public var internalName: String! {
-		var toParse = [CChar]()
-		var mirror = reflect(internalFileName)
-		for i in 0..<mirror.count {
-			var aChar = mirror[i].1.value as CChar
-			toParse.append(aChar)
-		}
-		return NSString(CString: toParse, encoding: NSMacOSRomanStringEncoding)
-	}
-	
-	public var format: String! {
-		var toParse = [CChar]()
-		var mirror = reflect(formatDescription)
-		for i in 0..<mirror.count {
-			var aChar = mirror[i].1.value as CChar
-			toParse.append(aChar)
-		}
-		return NSString(CString: toParse, encoding: NSMacOSRomanStringEncoding)
+		maxPlugs = library.count
 	}
 }
 

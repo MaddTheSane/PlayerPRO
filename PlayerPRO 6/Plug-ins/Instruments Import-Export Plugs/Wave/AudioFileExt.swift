@@ -9,9 +9,7 @@
 import Foundation
 import AudioToolbox
 import CoreAudio
-#if os(OSX)
-	import PlayerPROKit
-#endif
+import PlayerPROKit
 
 // MARK: Audio File
 
@@ -34,12 +32,9 @@ internal enum AudioFileType: OSType {
 	case threeGP2			= 862416946
 	case AMR				= 1634562662
 	
-	
-	#if os(OSX)
 	func stringValue() -> String {
 		return OSTypeToString(self.rawValue)!
 	}
-	#endif
 }
 
 internal enum AudioFileFlags: UInt32 {
@@ -90,6 +85,7 @@ internal enum AudioFormat: OSType {
 	case Audible				= 1096107074
 	case iLBC					= 1768710755
 	case AES3					= 1634038579
+	
 	func stringValue() -> String {
 		return OSTypeToString(self.rawValue)!
 	}
