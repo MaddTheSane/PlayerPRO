@@ -18,8 +18,9 @@ internal func StringToCFString(string: String) -> CFString {
 }
 
 // MARK: Bridges to more modern Swift code.
-#if os(OSX)
+public let MadID = StringToOSType("MADK")
 
+#if os(OSX)
 import CoreServices
 
 public let PlugMenuNameKey = CFStringToString(kMadPlugMenuNameKey)
@@ -29,8 +30,6 @@ public let PlugTypeKey = CFStringToString(kMadPlugTypeKey)
 public let PlugDoesImport = CFStringToString(kMadPlugDoesImport)
 public let PlugDoesExport = CFStringToString(kMadPlugDoesExport)
 public let PlugModeKey = CFStringToString(kMadPlugModeKey)
-
-public let MadID: MADFourChar = StringToOSType("MADK")
 
 public func OSTypeToString(theType: MADFourChar) -> String? {
 	let toRet = UTCreateStringForOSType(theType)

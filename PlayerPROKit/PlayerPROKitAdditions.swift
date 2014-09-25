@@ -50,7 +50,7 @@ public func NoteFromString(myTT: String) -> UInt8 {
 public func NoteFromString(myTT: String) -> Int16
 {
 	if ( myTT == "" || myTT == "---" || countElements(myTT) < 2) {
-		return 0xFF;
+		return 0xFF
 	}
 	
 	func findNote(inStr: String) -> (String, Bool) {
@@ -81,7 +81,7 @@ public func NoteFromString(myTT: String) -> Int16
 	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
 
 	var Oct = Int16(octMaybe!)
-	Oct *= 12;
+	Oct *= 12
 	
 	let theRest = myTT[myTT.startIndex ..< idx]
 	let theRet = findNote(theRest)
@@ -115,14 +115,14 @@ public func NoteFromString(myTT: String) -> Int16
 	
 	if Oct != 0xFF {
 		if theRet.1 {
-			Oct++;
+			Oct++
 		}
 		
 		if Oct > 95 {
-			Oct = 0xFF;
+			Oct = 0xFF
 		}
 		if Oct < 0 {
-			Oct = 0xFF;
+			Oct = 0xFF
 		}
 	}
 	
@@ -134,8 +134,8 @@ public func OctaveNameFromNote(octNote: UInt8, letters isUseLetters: Bool = true
 }
 
 public func OctaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true) -> String {
-	if (octNote > 95) {
-		return "---";
+	if (octNote > 95 || octNote < 0) {
+		return "---"
 	}
 	
 	if isUseLetters {
@@ -168,26 +168,26 @@ extension PPSampleObject {
 	
 	@objc(waveformImageFromSample:usingView:) public class func waveformImage(fromSample theDat: PPSampleObject, view: NSView) -> NSImage {
 		var imageSize = view.convertSizeToBacking(view.frame.size)
-		let datIsStereo = theDat.stereo;
-		imageSize.height *= 2;
-		imageSize.width *= 2;
+		let datIsStereo = theDat.stereo
+		imageSize.height *= 2
+		imageSize.width *= 2
 		let aRect = CGRect(origin: CGPointZero, size: imageSize)
 		let rowBytes: UInt = 4 * UInt(imageSize.width)
 		let defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!
 		let bitMapFormat = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
-		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, bitMapFormat);
-		CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
-		let lineSize = view.convertSizeToBacking(NSSize(width: 1, height: 1));
-		CGContextSetLineWidth(bitmapContext, lineSize.height);
+		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, bitMapFormat)
+		CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height))
+		let lineSize = view.convertSizeToBacking(NSSize(width: 1, height: 1))
+		CGContextSetLineWidth(bitmapContext, lineSize.height)
 		var colorRef = CGColorCreateGenericGray(0, 0)
 		if (datIsStereo) {
-			colorRef = CGColorCreateGenericRGB(0, 0, 1, 0.75);
-			CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
+			colorRef = CGColorCreateGenericRGB(0, 0, 1, 0.75)
+			CGContextSetStrokeColorWithColor(bitmapContext, colorRef)
 			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
 		}
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		
-		colorRef = CGColorCreateGenericRGB(1, 0, 0, stereoTrans);
+		colorRef = CGColorCreateGenericRGB(1, 0, 0, stereoTrans)
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
 		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
 		
@@ -202,11 +202,10 @@ extension PPSampleObject {
 			loopRect.origin.y += padSize.width
 			loopRect.size.width = CGFloat(theDat.loopSize) * imageSize.width / CGFloat(theDat.data.length)
 			loopRect.size.height -= padSize.width * 2
-			CGContextStrokeRect(bitmapContext, loopRect);
+			CGContextStrokeRect(bitmapContext, loopRect)
 		}
 		
-		var theCGimg = CGBitmapContextCreateImage(bitmapContext);
-		
+		var theCGimg = CGBitmapContextCreateImage(bitmapContext)
 		return NSImage(CGImage: theCGimg, size: view.frame.size)
 	}
 #else
@@ -221,21 +220,21 @@ extension PPSampleObject {
 		let aRect = CGRect(origin: CGPointZero, size: imageSize)
 		let rowBytes: UInt = 4 * UInt(imageSize.width)
 		let defaultSpace = CGColorSpaceCreateDeviceRGB()
-		let bitMapFormat = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
-		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, bitMapFormat);
-		CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height));
+		let bitMapFormat = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue) | CGBitmapInfo.ByteOrderDefault
+		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, bitMapFormat)
+		CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height))
 		let lineSize = 1 * scale
-		CGContextSetLineWidth(bitmapContext, lineSize);
+		CGContextSetLineWidth(bitmapContext, lineSize)
 		var colorRef: UIColor
 		if (datIsStereo) {
 			colorRef = UIColor(red: 0, green: 0, blue: 1, alpha: 0.75)
-			CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor);
+			CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor)
 			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
 		}
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		
 		colorRef = UIColor(red: 1, green: 0, blue: 0, alpha: stereoTrans)
-		CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor);
+		CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor)
 		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
 		
 		if (theDat.loopSize != 0) {
@@ -249,10 +248,10 @@ extension PPSampleObject {
 			loopRect.origin.y += padSize
 			loopRect.size.width = CGFloat(theDat.loopSize) * imageSize.width / CGFloat(theDat.data.length)
 			loopRect.size.height -= padSize * 2
-			CGContextStrokeRect(bitmapContext, loopRect);
+			CGContextStrokeRect(bitmapContext, loopRect)
 		}
 		
-		var theCGimg = CGBitmapContextCreateImage(bitmapContext);
+		var theCGimg = CGBitmapContextCreateImage(bitmapContext)
 		return UIImage(CGImage: theCGimg)
 	}
 #endif
@@ -274,14 +273,14 @@ extension PPSampleObject {
 		
 		var start = startI
 		var i = 0;
-		var sampleSize = curData.data.length;
+		var sampleSize = curData.data.length
 		var temp: CGFloat = 0.0
 		let theSample = UnsafePointer<UInt8>(curData.data.bytes)
 		let theShortSample = UnsafePointer<UInt16>(curData.data.bytes)
 		var BS = 0
 		var BE = 0
 		var x = 0
-		let isStereo = curData.stereo;
+		let isStereo = curData.stereo
 		var minY: CGFloat = 0.0
 		var maxY: CGFloat = 0.0
 		let oneShiftedBy16 = CGFloat(1 << 16)
@@ -291,88 +290,81 @@ extension PPSampleObject {
 			sampleSize /= 2
 			start /= 2
 			
-			BS = start + (tSS * sampleSize) / larg;
+			BS = start + (tSS * sampleSize) / larg
 			if (isStereo) {
-				BS /= 2;
-				BS *= 2;
-				BS += Int(channel);
+				BS /= 2; BS *= 2;
+				BS += Int(channel)
 			}
-			temp = CGFloat(theShortSample[BS] &+ 0x8000);
+			temp = CGFloat(theShortSample[BS] &+ 0x8000)
 			temp *= CGFloat(high);
 			temp /= oneShiftedBy16;
-			CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(tSS), CGFloat(trueV) + temp);
+			CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(tSS), CGFloat(trueV) + temp)
 			
 			for i in tSS ..< tSE {
-				BS = start + (i * sampleSize) / larg;
-				BE = start + ((i + 1) * sampleSize) / larg;
+				BS = start + (i * sampleSize) / larg
+				BE = start + ((i + 1) * sampleSize) / larg
 				
 				if (isStereo) {
-					BS /= 2;
-					BS *= 2;
-					BE /= 2;
-					BE *= 2;
+					BS /= 2; BS *= 2;
+					BE /= 2; BE *= 2;
 					
-					BS += Int(channel);
-					BE += Int(channel);
+					BS += Int(channel)
+					BE += Int(channel)
 				}
 				
-				temp = CGFloat(theShortSample[BS] &+ 0x8000);
-				minY = CGFloat(temp);
-				maxY = CGFloat(temp);
-				temp *= CGFloat(high);
-				temp /= oneShiftedBy16;
-				CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), temp + CGFloat(trueV));
+				temp = CGFloat(theShortSample[BS] &+ 0x8000)
+				minY = CGFloat(temp)
+				maxY = CGFloat(temp)
+				temp *= CGFloat(high)
+				temp /= oneShiftedBy16
+				CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), temp + CGFloat(trueV))
 				
 				if (BS != BE) {
 					for (x = BS; x < BE; x++) {
-						temp = CGFloat(theShortSample[x] &+ 0x8000);
+						temp = CGFloat(theShortSample[x] &+ 0x8000)
 						
 						if (temp > maxY) {
-							maxY = temp;
+							maxY = temp
 						}
 						
 						if (temp < minY) {
-							minY = temp;
+							minY = temp
 						}
 						
 						if (isStereo) {
-							x++;
+							x++
 						}
 					}
 					
-					maxY *= CGFloat(high);
+					maxY *= CGFloat(high)
 					maxY /= oneShiftedBy16
-					minY *= CGFloat(high);
+					minY *= CGFloat(high)
 					minY /= oneShiftedBy16
 					
-					CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), minY + CGFloat(trueV));
-					CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), maxY + CGFloat(trueV));
+					CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), minY + CGFloat(trueV))
+					CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), maxY + CGFloat(trueV))
 				}
 			}
 		} else {
 			BS = start + (tSS * sampleSize) / larg;
 			if (isStereo) {
-				BS /= 2;
-				BS *= 2;
-				BS += Int(channel);
+				BS /= 2; BS *= 2;
+				BS += Int(channel)
 			}
 			
-			temp = CGFloat(theSample[BS] &- 0x80);
-			temp *= CGFloat(high);
-			temp /= oneShiftedBy8;
+			temp = CGFloat(theSample[BS] &- 0x80)
+			temp *= CGFloat(high)
+			temp /= oneShiftedBy8
 			
-			CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(tSS), CGFloat(trueV) + temp);
+			CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(tSS), CGFloat(trueV) + temp)
 			
 			for i in tSS..<tSE {
-				BS = start + (i * sampleSize) / larg;
-				BE = start + ((i + 1) * sampleSize) / larg;
+				BS = start + (i * sampleSize) / larg
+				BE = start + ((i + 1) * sampleSize) / larg
 				
 				if (isStereo) {
-					BS /= 2;
-					BS *= 2;
-					
-					BE /= 2;
-					BE *= 2;
+					BS /= 2; BS *= 2;
+					BE /= 2; BE *= 2;
 					
 					BS += Int(channel);
 					BE += Int(channel);
@@ -380,19 +372,19 @@ extension PPSampleObject {
 				
 				temp = CGFloat(theSample[BS] &- 0x80);
 				minY = temp; maxY = temp;
-				temp *= CGFloat(high);
-				temp /= oneShiftedBy8;
-				CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), temp + CGFloat(trueV));
+				temp *= CGFloat(high)
+				temp /= oneShiftedBy8
+				CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), temp + CGFloat(trueV))
 				
 				if (BS != BE) {
 					for (x = BS; x < BE; x++) {
-						temp = CGFloat(theSample[x] &- 0x80);
+						temp = CGFloat(theSample[x] &- 0x80)
 						
 						if (temp > maxY) {
-							maxY = temp;
+							maxY = temp
 						}
 						if (temp < minY) {
-							minY = temp;
+							minY = temp
 						}
 						
 						if (isStereo) {
@@ -404,8 +396,8 @@ extension PPSampleObject {
 					minY *= CGFloat(high);
 					minY /= oneShiftedBy8;
 					
-					CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), minY + CGFloat(trueV));
-					CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), maxY + CGFloat(trueV));
+					CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), minY + CGFloat(trueV))
+					CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), maxY + CGFloat(trueV))
 				}
 			}
 		}
@@ -414,7 +406,7 @@ extension PPSampleObject {
 	}
 	
 	@objc public class func octaveNameFromNote(octNote: Int16) -> String {
-		return OctaveNameFromNote(octNote, letters: true)
+		return OctaveNameFromNote(octNote)
 	}
 
 	@objc public class func octaveNameFromNote(octNote: Int16, usingSingularLetter: Bool) -> String {
