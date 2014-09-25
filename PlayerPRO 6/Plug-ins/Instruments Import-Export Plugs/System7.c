@@ -100,85 +100,6 @@ static OSStatus CFURLToFSSpec (CFURLRef pathURL, FSSpec *outSpec)
 	return err;
 }
 
-static void AddLoopToSndHandle(Handle sound, long Start, long End)
-{
-	Ptr 			soundPtr;
-	short 			soundFormat;
-	short 			numSynths, numCmds;
-	long 			offset;
-	SoundHeaderPtr 	header;
-	CmpSoundHeader	*CmpHeader;
-	ExtSoundHeader	*ExtHeader;
-	//OSErr 			result;
-	
-	// make the sound safe to use at interrupt time.
-	HLock(sound);
-	soundPtr = *sound;
-	
-	// determine what format sound we have.
-	soundFormat = *(short*)soundPtr;
-	
-	switch (soundFormat) {
-		case 1:						// format 1 sound.
-			// look inside the format 1 resource and deduce offsets.
-			numSynths = ((short*)soundPtr)[1];					// get # synths.
-			numCmds = *(short*)(soundPtr+4+numSynths*6);		// get # commands.
-			break;
-			
-		case 2:						// format 2 sound.
-			numSynths = 0;			// format 2 sounds have no synth's.
-			numCmds = ((short*)soundPtr)[2];
-			break;
-			
-		default:					// jack says, what about 12? or 6?
-			DebugStr("\p NSndToHandle... Burkk");
-	}
-	
-	// compute address of sound header.
-	offset = 6 + 6*numSynths + 8*numCmds;
-	header = (SoundHeaderPtr) ((*sound) + offset);
-	
-	switch (header->encode) {
-		case cmpSH:
-			CmpHeader = (CmpSoundHeader*) header;
-			if (CmpHeader->sampleSize == 16) {
-				Start /= 2;
-				End /= 2;
-			}
-			
-			if (CmpHeader->numChannels > 1) {
-				Start /= CmpHeader->numChannels;
-				End /= CmpHeader->numChannels;
-			}
-			
-			CmpHeader->loopStart	= Start;
-			CmpHeader->loopEnd		= End;
-			break;
-			
-		case extSH:
-			ExtHeader = (ExtSoundHeader*) header;
-			if (ExtHeader->sampleSize == 16) {
-				Start /= 2;
-				End /= 2;
-			}
-			
-			if (ExtHeader->numChannels > 1) {
-				Start /= ExtHeader->numChannels;
-				End /= ExtHeader->numChannels;
-			}
-			ExtHeader->loopStart	= Start;
-			ExtHeader->loopEnd		= End;
-			break;
-			
-		case stdSH:
-			header->loopStart	= Start;
-			header->loopEnd		= End;
-			break;
-	}
-	
-	HUnlock(sound);
-}
-
 static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, Boolean *stereo)
 {
 	short 			soundFormat, numChannels;
@@ -261,7 +182,7 @@ static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *samp
 				SoundConverter			sc;
 				SoundComponentData		inputFormat, outputFormat;
 				unsigned long			inputFrames, outputFrames;
-				unsigned long			inputBytes, outputBytes;
+				unsigned long			outputBytes;
 				//Ptr						inputPtr, outputPtr;
 				OSErr					err;
 				Ptr						dstPtr;
@@ -395,14 +316,6 @@ static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *samp
 	return soundPtr;
 }
 
-static OSErr TestSND(short *soundPtr)
-{
-	if (*soundPtr == 1 || *soundPtr == 2)
-		return MADNoErr;
-	else
-		return MADFileNotSupportedByThisPlug;
-}
-
 static Ptr IMPL(long *lS, long *lE, long *bFreq, short *sS, unsigned long *rate, FSSpec *AlienFileFSSpec, Boolean *stereo)
 {
 	Handle			tempHandle;
@@ -485,7 +398,7 @@ static MADErr Sys7Main(void* thisInterface, OSType order, InstrData* InsHeader, 
 	
 	switch(order) {
 #if 0
-		case 'PLAY':
+		case MADPlugPlay:
 		{
 			long			lS, lE, bFreq;
 			short			sS;
@@ -506,7 +419,7 @@ static MADErr Sys7Main(void* thisInterface, OSType order, InstrData* InsHeader, 
 			break;
 #endif
 			
-		case 'IMPL':
+		case MADPlugImport:
 		{
 			long			lS, lE, bFreq;
 			short			sS;
@@ -528,7 +441,7 @@ static MADErr Sys7Main(void* thisInterface, OSType order, InstrData* InsHeader, 
 		}
 			break;
 			
-		case 'TEST':
+		case MADPlugTest:
 			myErr = noErr;
 			
 			iFileRefI = FSpOpenResFile(AlienFileFSSpec, fsCurPerm);
