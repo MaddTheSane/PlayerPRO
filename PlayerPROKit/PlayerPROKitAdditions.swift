@@ -313,8 +313,7 @@ extension PPSampleObject {
 				}
 				
 				temp = CGFloat(theShortSample[BS] &+ 0x8000)
-				minY = CGFloat(temp)
-				maxY = CGFloat(temp)
+				minY = temp; maxY = temp;
 				temp *= CGFloat(high)
 				temp /= oneShiftedBy16
 				CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), temp + CGFloat(trueV))
@@ -421,19 +420,19 @@ extension PPSampleObject {
 
 extension PPPatternObject: SequenceType {
 	public func generate() -> NSFastGenerator {
-		return NSFastGenerator(self);
+		return NSFastGenerator(self)
 	}
 }
 
 extension PPLibrary: SequenceType {
 	public func generate() -> NSFastGenerator {
-		return NSFastGenerator(self);
+		return NSFastGenerator(self)
 	}
 }
 
 extension PPInstrumentObject: SequenceType {
-	public func generate() -> NSFastGenerator {
-		return NSFastGenerator(self);
+	public func generate() -> IndexingGenerator<[PPSampleObject]> {
+		return (samples as [PPSampleObject]).generate()
 	}
 }
 
