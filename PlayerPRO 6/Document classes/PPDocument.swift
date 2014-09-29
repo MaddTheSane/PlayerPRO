@@ -12,35 +12,6 @@ import PlayerPROKit
 import AVFoundation
 import AudioToolbox
 
-private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) -> [AVMetadataItem] {
-	var titleName = AVMutableMetadataItem()
-	titleName.keySpace = AVMetadataKeySpaceCommon
-	titleName.setKey(AVMetadataCommonKeyTitle)
-	titleName.setValue(oldMusicName)
-	
-	var dataInfo = AVMutableMetadataItem()
-	dataInfo.keySpace = AVMetadataKeySpaceCommon;
-	dataInfo.setKey(AVMetadataCommonKeySoftware)
-	dataInfo.setValue("PlayerPRO 6")
-	
-	var musicInfoQTUser = AVMutableMetadataItem();
-	musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
-	musicInfoQTUser.setKey(AVMetadataQuickTimeUserDataKeyInformation)
-	musicInfoQTUser.setValue(oldMusicInfo)
-	
-	var musicInfoiTunes = AVMutableMetadataItem();
-	musicInfoiTunes.keySpace = AVMetadataKeySpaceiTunes
-	musicInfoiTunes.setKey(AVMetadataiTunesMetadataKeyUserComment)
-	musicInfoiTunes.setValue(oldMusicInfo)
-	
-	var musicInfoQTMeta = AVMutableMetadataItem();
-	musicInfoQTMeta.keySpace = AVMetadataKeySpaceQuickTimeMetadata
-	musicInfoQTMeta.setKey(AVMetadataQuickTimeMetadataKeyInformation)
-	musicInfoQTMeta.setValue(oldMusicInfo)
-	
-	return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
-}
-
 @objc(PPDocument) class PPDocument: NSDocument, SoundSettingsViewControllerDelegate {
 	@IBOutlet weak var exportWindow:			NSWindow!
 	@IBOutlet weak var exportSettingsBox:		NSBox!
@@ -412,6 +383,40 @@ private func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) 
 				case -2:
 					let expObj = ExportObject(destination: theURL, exportBlock: { (theURL, errStr) -> MADErr in
 						var theErr = MADErr.NoErr;
+						func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) -> [AVMetadataItem] {
+							var titleName = AVMutableMetadataItem()
+							titleName.keySpace = AVMetadataKeySpaceCommon
+							titleName.setKey(AVMetadataCommonKeyTitle)
+							titleName.setValue(oldMusicName)
+							
+							var dataInfo = AVMutableMetadataItem()
+							dataInfo.keySpace = AVMetadataKeySpaceCommon;
+							dataInfo.setKey(AVMetadataCommonKeySoftware)
+							dataInfo.setValue("PlayerPRO 6")
+							
+							var musicInfoQTUser = AVMutableMetadataItem();
+							musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
+							musicInfoQTUser.setKey(AVMetadataQuickTimeUserDataKeyInformation)
+							musicInfoQTUser.setValue(oldMusicInfo)
+							
+							var musicNameQTUser = AVMutableMetadataItem();
+							musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
+							musicInfoQTUser.setKey(AVMetadataQuickTimeUserDataKeyFullName)
+							musicInfoQTUser.setValue(oldMusicName)
+							
+							var musicInfoiTunes = AVMutableMetadataItem();
+							musicInfoiTunes.keySpace = AVMetadataKeySpaceiTunes
+							musicInfoiTunes.setKey(AVMetadataiTunesMetadataKeyUserComment)
+							musicInfoiTunes.setValue(oldMusicInfo)
+							
+							var musicInfoQTMeta = AVMutableMetadataItem();
+							musicInfoQTMeta.keySpace = AVMetadataKeySpaceQuickTimeMetadata
+							musicInfoQTMeta.setKey(AVMetadataQuickTimeMetadataKeyInformation)
+							musicInfoQTMeta.setValue(oldMusicInfo)
+							
+							return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta, musicNameQTUser];
+						}
+
 						if errStr != nil {
 							errStr.memory = nil
 						}
