@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
-#include <PlayerPROCore/MADPlug.h>
 #import "PPPlugInObject.h"
 
 @class PPDocument;
