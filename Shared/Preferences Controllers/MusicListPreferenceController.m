@@ -24,6 +24,11 @@
 	return [[self alloc] init];
 }
 
+- (NSString*)preferenceIdentifier
+{
+	return PPMusicListPrefID;
+}
+
 -(NSInteger)playedMusic
 {
 	id curSelected = [musicPlayingOutlet selectedCell];

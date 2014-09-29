@@ -17,6 +17,11 @@
 	return [[self alloc] init];
 }
 
+- (NSString*)preferenceIdentifier
+{
+	return PPMIDIPrefID;
+}
+
 - (instancetype)init
 {
 	if (self = [super initWithNibName:@"MidiPrefs" bundle:nil]) {

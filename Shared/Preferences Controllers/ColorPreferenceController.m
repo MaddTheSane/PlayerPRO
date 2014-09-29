@@ -19,6 +19,11 @@
 	return [[self alloc] init];
 }
 
+- (NSString*)preferenceIdentifier
+{
+	return PPColorPrefID;
+}
+
 - (instancetype)init
 {
 	if (self = [super initWithNibName:@"ColorPrefs" bundle:nil]) {

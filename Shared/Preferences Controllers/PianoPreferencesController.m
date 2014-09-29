@@ -17,6 +17,11 @@
 	return [[self alloc] init];
 }
 
+- (NSString*)preferenceIdentifier
+{
+	return PPPianoPrefID;
+}
+
 - (instancetype)init
 {
 	if (self = [super initWithNibName:@"PianoPrefs" bundle:nil]) {

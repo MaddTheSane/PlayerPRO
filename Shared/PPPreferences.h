@@ -24,4 +24,5 @@ typedef struct TagCoupling {
 
 @protocol PPPreferenceObject <NSObject>
 + (instancetype)newPreferenceView NS_RETURNS_RETAINED;
+@property (nonatomic, readonly) NSString *preferenceIdentifier;
 @end

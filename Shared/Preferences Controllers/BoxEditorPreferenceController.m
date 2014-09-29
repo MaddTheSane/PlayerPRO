@@ -21,6 +21,11 @@
 	return [[self alloc] init];
 }
 
+- (NSString*)preferenceIdentifier
+{
+	return PPBoxPrefID;
+}
+
 - (instancetype)init
 {
 	if (self = [super initWithNibName:@"BoxPrefs" bundle:nil]) {

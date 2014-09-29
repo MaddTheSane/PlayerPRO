@@ -27,6 +27,11 @@ static const TagCoupling TrackHeightCoupling[] = {{100, 1}, {110, 2}, {120, 3}, 
 	return [[self alloc] init];
 }
 
+- (NSString*)preferenceIdentifier
+{
+	return PPClassicPrefID;
+}
+
 - (instancetype)init
 {
 	if (self = [super initWithNibName:@"ClassicPrefs" bundle:nil]) {

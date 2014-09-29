@@ -20,6 +20,11 @@
 	return [[self alloc] init];
 }
 
+- (NSString*)preferenceIdentifier
+{
+	return PPMiscPrefID;
+}
+
 - (IBAction)changePrefs:(id)sender
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

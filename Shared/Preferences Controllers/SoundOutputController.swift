@@ -11,6 +11,7 @@ import PlayerPROCore
 import PlayerPROKit
 
 class SoundOutputController: SoundSettingsViewController, SoundSettingsViewControllerDelegate, PPPreferenceObject {
+	let preferenceIdentifier = PPSoundSettPrefID
 	
 	class func newPreferenceView() -> Self {
 		return self.newSoundSettingWindow()

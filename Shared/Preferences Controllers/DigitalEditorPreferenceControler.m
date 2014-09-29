@@ -34,6 +34,11 @@
 	return [[self alloc] init];
 }
 
+- (NSString*)preferenceIdentifier
+{
+	return PPDigitalPrefID;
+}
+
 - (instancetype)init
 {
 	if (self = [super initWithNibName:@"DigitalPrefs" bundle:nil]) {

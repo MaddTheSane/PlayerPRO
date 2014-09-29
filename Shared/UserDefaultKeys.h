@@ -8,7 +8,7 @@
 #import <Foundation/NSString.h>
 
 #pragma GCC visibility push(hidden)
-//Notifications
+#pragma mark Notifications
 extern NSString * const PPListPreferencesDidChange;
 extern NSString * const PPSoundPreferencesDidChange;
 extern NSString * const PPDigitalEditorPrefrencesDidChange;
@@ -19,7 +19,7 @@ extern NSString * const PPColorsDidChange;
 extern NSString * const PPMusicDidChange;
 extern NSString * const PPDriverDidChange;
 
-//UTIs
+#pragma mark UTIs
 extern NSString * const MADNativeUTI;
 extern NSString * const MADGenericUTI;
 extern NSString * const PPMusicListUTI;
@@ -30,7 +30,7 @@ extern NSString * const PPGenericInstrumentUTI;
 extern NSString * const PPInstrumentListUTI;
 extern NSString * const PPMLDCUTI;
 
-//Music list preference keys
+#pragma mark Music list preference keys
 extern NSString * const PPRememberMusicList;
 extern NSString * const PPLoadMusicAtListLoad;
 extern NSString * const PPAfterPlayingMusic;
@@ -39,7 +39,7 @@ extern NSString * const PPSaveModList;
 extern NSString * const PPLoadMusicAtMusicLoad;
 extern NSString * const PPLoopMusicWhenDone;
 
-//Sound driver Preference keys
+#pragma mark Sound driver Preference keys
 extern NSString * const PPSoundOutBits;
 extern NSString * const PPSoundOutRate;
 extern NSString * const PPSoundDriver;
@@ -52,7 +52,7 @@ extern NSString * const PPReverbAmount;
 extern NSString * const PPReverbStrength;
 extern NSString * const PPOversamplingAmount;
 
-//Digital Editor preference keys
+#pragma mark Digital Editor preference keys
 extern NSString * const PPDEShowInstrument;
 extern NSString * const PPDEShowNote;
 extern NSString * const PPDEShowEffect;
@@ -72,7 +72,7 @@ extern NSString * const PPDEPatternWrappingPartition;
 extern NSString * const PPDEDragAsPcmd;
 
 #if !TARGET_OS_IPHONE
-//Color preference keys
+#pragma mark Color preference keys
 extern NSString * const PPCColor1;
 extern NSString * const PPCColor2;
 extern NSString * const PPCColor3;
@@ -171,20 +171,20 @@ extern NSString * const PPCColor95;
 extern NSString * const PPCColor96;
 #endif
 
-//Box editor preference keys
+#pragma mark Box editor preference keys
 extern NSString * const PPBEMarkersEnabled;
 extern NSString * const PPBEMarkersOffset;
 extern NSString * const PPBEMarkersLoop;
 extern NSString * const PPBEOctaveMarkers;
 extern NSString * const PPBENotesProjection;
 
-//miscelaneous preference keys
+#pragma mark miscelaneous preference keys
 extern NSString * const PPMAddExtension;
 extern NSString * const PPMMadCompression;
 extern NSString * const PPMNoLoadMixerFromFiles;
 extern NSString * const PPMOscilloscopeDrawLines;
 
-//Classic editor preference keys
+#pragma mark Classic editor preference keys
 extern NSString * const PPCEShowNotesLen;
 extern NSString * const PPCEShowMarkers;
 extern NSString * const PPCEMarkerOffset;
@@ -193,7 +193,18 @@ extern NSString * const PPCETempoNum;
 extern NSString * const PPCETempoUnit;
 extern NSString * const PPCETrackHeight;
 
-//Misc./other
+#pragma mark Preference identifiers
+#define PPSoundSettPrefID @"PPSoundOut"
+#define PPMusicListPrefID @"PPMusicList"
+#define PPPianoPrefID @"PPPiano"
+#define PPColorPrefID @"PPColors"
+#define PPMiscPrefID @"PPMisc"
+#define PPDigitalPrefID @"PPDigital"
+#define PPMIDIPrefID @"PPMIDI"
+#define PPBoxPrefID @"PPBox"
+#define PPClassicPrefID @"PPClassical"
+
+#pragma mark Misc./other
 extern NSString * const PPDoubleDash;
 extern NSString * const kMusicListKVO;
 
