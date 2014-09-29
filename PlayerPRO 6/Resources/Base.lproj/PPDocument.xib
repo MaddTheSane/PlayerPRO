@@ -247,117 +247,13 @@ Gw
                 <outlet property="view" destination="UQt-sf-rgN" id="jMn-XP-STC"/>
             </connections>
         </viewController>
-        <view id="wbU-ef-Sat">
-            <rect key="frame" x="0.0" y="0.0" width="343" height="408"/>
-            <autoresizingMask key="autoresizingMask"/>
-            <subviews>
-                <scrollView autohidesScrollers="YES" horizontalLineScroll="26" horizontalPageScroll="10" verticalLineScroll="26" verticalPageScroll="10" usesPredominantAxisScrolling="NO" id="LQq-QR-yZS">
-                    <rect key="frame" x="-1" y="-1" width="345" height="343"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    <clipView key="contentView" id="CSY-nt-NLf">
-                        <rect key="frame" x="1" y="1" width="343" height="341"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <outlineView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" alternatingRowBackgroundColors="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="24" viewBased="YES" indentationPerLevel="16" outlineTableColumn="CyX-h9-6iy" id="GVX-YN-a4b">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <size key="intercellSpacing" width="3" height="2"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <tableViewGridLines key="gridStyleMask" horizontal="YES"/>
-                                <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
-                                <tableColumns>
-                                    <tableColumn width="340.0859375" minWidth="16" maxWidth="1000" id="CyX-h9-6iy">
-                                        <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
-                                            <font key="font" metaFont="smallSystem"/>
-                                            <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" white="0.33333298560000002" alpha="1" colorSpace="calibratedWhite"/>
-                                        </tableHeaderCell>
-                                        <textFieldCell key="dataCell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Text" id="KuN-ux-JjE">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                        <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
-                                        <prototypeCellViews>
-                                            <tableCellView id="7eV-ca-tYa" customClass="PPInstrumentCellView">
-                                                <rect key="frame" x="1" y="1" width="340" height="24"/>
-                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                <subviews>
-                                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" id="xs4-db-36H">
-                                                        <rect key="frame" x="2" y="4" width="40" height="17"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="000" id="DMI-fn-K3f">
-                                                            <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
-                                                    <textField verticalHuggingPriority="750" id="zS4-Ah-LTp">
-                                                        <rect key="frame" x="46" y="4" width="292" height="17"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="qQ6-xz-4Ac">
-                                                            <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                                        </textFieldCell>
-                                                    </textField>
-                                                    <button verticalHuggingPriority="750" id="Jd0-Ci-96I">
-                                                        <rect key="frame" x="22" y="2" width="18" height="20"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" imagePosition="overlaps" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="49I-mr-lCU">
-                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                            <font key="font" metaFont="system"/>
-                                                        </buttonCell>
-                                                        <connections>
-                                                            <action selector="playSample:" target="7eV-ca-tYa" id="gB4-vv-IRR"/>
-                                                        </connections>
-                                                    </button>
-                                                    <imageView id="2yJ-S8-IiB">
-                                                        <rect key="frame" x="4" y="4" width="16" height="16"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSRefreshTemplate" id="8st-6j-xs4"/>
-                                                    </imageView>
-                                                </subviews>
-                                                <connections>
-                                                    <outlet property="loopImage" destination="2yJ-S8-IiB" id="SxB-3r-ERu"/>
-                                                    <outlet property="numField" destination="xs4-db-36H" id="766-n6-uuh"/>
-                                                    <outlet property="sampleButton" destination="Jd0-Ci-96I" id="lKu-T6-7MQ"/>
-                                                    <outlet property="textField" destination="zS4-Ah-LTp" id="ank-d4-Yag"/>
-                                                </connections>
-                                            </tableCellView>
-                                        </prototypeCellViews>
-                                    </tableColumn>
-                                </tableColumns>
-                                <connections>
-                                    <outlet property="dataSource" destination="FQe-II-xjQ" id="wrc-Av-bYq"/>
-                                    <outlet property="delegate" destination="FQe-II-xjQ" id="GSz-PR-xfm"/>
-                                </connections>
-                            </outlineView>
-                        </subviews>
-                        <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="k7o-mf-vFJ">
-                        <rect key="frame" x="1" y="362" width="301" height="16"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="bsH-Hv-qa6">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </scroller>
-                </scrollView>
-                <customView id="hSX-tO-yve">
-                    <rect key="frame" x="0.0" y="342" width="343" height="66"/>
-                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                </customView>
-            </subviews>
-        </view>
         <viewController id="FQe-II-xjQ" userLabel="Instrument View Controller" customClass="InstrumentViewController" customModule="PlayerPRO_6" customModuleProvider="target">
             <connections>
                 <outlet property="currentDocument" destination="-2" id="dKG-lE-JMS"/>
-                <outlet property="view" destination="wbU-ef-Sat" id="spJ-vg-Atc"/>
             </connections>
         </viewController>
     </objects>
     <resources>
-        <image name="NSRefreshTemplate" width="11" height="15"/>
         <image name="PPFastForward" width="26" height="26"/>
         <image name="PPPlay" width="26" height="26"/>
         <image name="PPReverse" width="26" height="26"/>

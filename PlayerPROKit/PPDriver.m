@@ -13,6 +13,7 @@
 #import "PPMusicObject.h"
 #import "PPMusicObject_PPKPrivate.h"
 #include <PlayerPROCore/RDriverInt.h>
+#import "PPErrors.h"
 
 @implementation PPDriver
 @synthesize rec = theRec;
@@ -337,29 +338,24 @@
 	return nil;
 }
 
-- (instancetype)initWithLibrary:(PPLibrary *)theLib
+- (instancetype)initWithLibrary:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)theErr
 {
 	MADDriverSettings theSet = {0};
 	MADGetBestDriver(&theSet);
-	return [self initWithLibrary:theLib settings:&theSet error:NULL];
+	return [self initWithLibrary:theLib settings:&theSet error:theErr];
 }
 
-- (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings
-{
-	return self = [self initWithLibrary:theLib settings:theSettings error:NULL];
-}
-
-- (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out MADErr*)theErr
+- (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out NSError* __autoreleasing*)theErr
 {
 	if (self = [super init]) {
 		if (theErr)
-			*theErr = MADNoErr;
+			*theErr = nil;
 		
 		thePPLib = theLib;
 		MADErr iErr = MADCreateDriver(theSettings, theLib._madLib, &theRec);
 		if (iErr != MADNoErr) {
 			if (theErr)
-				*theErr = iErr;
+				*theErr = PPCreateErrorFromMADErrorType(iErr);
 			return nil;
 		}
 	}

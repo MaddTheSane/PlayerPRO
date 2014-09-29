@@ -256,11 +256,13 @@ typedef struct MADMusic {
  *	@constant	ESDDriver
  *				ESound Driver. available on most UNIX Systems
  *	@constant	BeOSSoundDriver
- *				BeOS/Haiku ONLY
+ *				BeOS/Haiku Only
  *	@constant	MIDISoundDriver
  *				Not yet available
  *	@constant	ASIOSoundManager
- *				ASIO Sound Driver by Steinberg //NOT Available
+ *				ASIO Sound Driver by Steinberg<br>NOT Available
+ *	@constant	SoundManagerDriver
+ *				Deprecated and removed
  *	@constant	NoHardwareDriver
  *				NO HARDWARE CONNECTION, will not produce any sound
  */
@@ -275,6 +277,7 @@ typedef MADENUM(short, MADSoundOutput)
 	BeOSSoundDriver,
 	MIDISoundDriver,
 	ASIOSoundManager,
+	SoundManagerDriver,
 	NoHardwareDriver = SHRT_MAX
 };
 
@@ -294,7 +297,8 @@ typedef MADOPTIONS(unsigned int, MADSoundOutputBit)
 	ESDDriverBit		= 1 << ESDDriver,
 	PortAudioDriverBit	= 1 << PortAudioDriver,
 	PulseAudioDriverBit	= 1 << PulseAudioDriver,
-	ASIOSoundManagerBit	= 1 << ASIOSoundManager
+	ASIOSoundManagerBit	= 1 << ASIOSoundManager,
+	SoundManagerDriverBit= 1 << SoundManagerDriver
 };
 
 typedef MADENUM(short, MADOutputChannel)
@@ -305,8 +309,8 @@ typedef MADENUM(short, MADOutputChannel)
 	PolyPhonic			// Do NOT use it! Standard hardware doesn't support it!
 };
 
-static const MADOutputChannel oldMonoOutPut = MonoOutPut;
-static const MADOutputChannel oldStereoOutPut = StereoOutPut;
+#define oldMonoOutPut MonoOutPut
+#define oldStereoOutPut StereoOutPut
 
 #pragma pack(push, 8)
 /*!

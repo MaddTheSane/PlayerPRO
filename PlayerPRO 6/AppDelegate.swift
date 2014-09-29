@@ -525,6 +525,10 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		assert(typeName == MADNativeUTI, "Unknown type passed to \(__FUNCTION__): \(typeName)")
 		let theDoc = PPDocument(music: PPMusicObject())
 
+		if outError != nil {
+			outError.memory = nil
+		}
+		
 		return theDoc
 	}
 	

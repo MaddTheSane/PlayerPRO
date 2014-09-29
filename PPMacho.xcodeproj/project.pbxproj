@@ -130,7 +130,6 @@
 		550D004F18CB808600FD0F17 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		550D005318CB80A000FD0F17 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */; };
-		550FBAB119A79A1600EFBD3D /* InstrumentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550FBAB019A79A1600EFBD3D /* InstrumentViewController.swift */; };
 		550FFAE617CEA4570003A2F3 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		550FFAE717CEA4570003A2F3 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		550FFAED17CEA5540003A2F3 /* AIFF.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102C10D6C79E00BB619C /* AIFF.c */; };
@@ -665,6 +664,8 @@
 		55DE87C8187E5B9100C36533 /* PPFXBusObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DE87C5187E5B9100C36533 /* PPFXBusObject.m */; };
 		55DE87CD187E60F400C36533 /* PPFXSetObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87CB187E60F400C36533 /* PPFXSetObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55DE87CF187E60F400C36533 /* PPFXSetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DE87CC187E60F400C36533 /* PPFXSetObject.m */; };
+		55E2CD4F19DA1AC000BDFC4C /* InstrumentPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E2CD4E19DA1AC000BDFC4C /* InstrumentPanelController.swift */; };
+		55E2CD5119DA1B3400BDFC4C /* InsPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55E2CD5019DA1B3400BDFC4C /* InsPanel.xib */; };
 		55E382EB1981509100EC330B /* PlugInInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EA1981509100EC330B /* PlugInInfo.swift */; };
 		55E382EC1981509100EC330B /* PlugInInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EA1981509100EC330B /* PlugInInfo.swift */; };
 		55E382ED1981694300EC330B /* MADPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* MADPlug.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2469,6 +2470,8 @@
 		55DEBFED1801DFF70089B940 /* Example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Example-Info.plist"; sourceTree = "<group>"; };
 		55DEBFEE1801DFF70089B940 /* Example.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Example.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55DEBFEF1801DFF70089B940 /* Example.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example.h; sourceTree = "<group>"; };
+		55E2CD4E19DA1AC000BDFC4C /* InstrumentPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentPanelController.swift; sourceTree = "<group>"; };
+		55E2CD5019DA1B3400BDFC4C /* InsPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InsPanel.xib; sourceTree = "<group>"; };
 		55E382EA1981509100EC330B /* PlugInInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlugInInfo.swift; sourceTree = "<group>"; };
 		55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPROCoreAdditions.swift; sourceTree = "<group>"; };
 		55E527A8186A2A690020F3D6 /* MIDI.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIDI.pch; sourceTree = "<group>"; };
@@ -3735,6 +3738,7 @@
 				55CBFC7B11EB7C950028C6BB /* MainMenu.xib */,
 				55B777A318E77998001E5104 /* InstrumentInfoView.xib */,
 				55771DC31873714800AED8DC /* PPDocument.xib */,
+				55E2CD5019DA1B3400BDFC4C /* InsPanel.xib */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -4066,6 +4070,7 @@
 			children = (
 				557EF72F168BD4B5001BF077 /* PPInstrumentImporter.h */,
 				557EF730168BD4B5001BF077 /* PPInstrumentImporter.m */,
+				55E2CD4E19DA1AC000BDFC4C /* InstrumentPanelController.swift */,
 				55A3CD4319A6DC8B00957845 /* PPDocument.swift */,
 				5521F40117F65F19002CDBA9 /* PPFilterPlugController.h */,
 				5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */,
@@ -6555,6 +6560,7 @@
 				55A6201818A6EFEA003B29B5 /* PreferenceNames.strings in Resources */,
 				5504A6E516619E1C005BDE4B /* DigitalPrefs.xib in Resources */,
 				5504A6E816619E25005BDE4B /* BoxPrefs.xib in Resources */,
+				55E2CD5119DA1B3400BDFC4C /* InsPanel.xib in Resources */,
 				5504A6EB16619E2E005BDE4B /* MiscPrefs.xib in Resources */,
 				55232B0E11FDF2980041A4EC /* ColorPrefs.xib in Resources */,
 				55A9351917F28F9700493DC5 /* Shared.xcassets in Resources */,
@@ -7282,6 +7288,7 @@
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
 				5549A3BA19A685CE004E95E2 /* PPColorPreferenceObject.m in Sources */,
 				5561F1C019A52A6C0085015B /* ExportObject.swift in Sources */,
+				55E2CD4F19DA1AC000BDFC4C /* InstrumentPanelController.swift in Sources */,
 				5547DA5619A5690E0014A620 /* Preferences.swift in Sources */,
 				55FEF84B1984506C00D2E79C /* ClassicalViewController.m in Sources */,
 				552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */,
@@ -7289,7 +7296,6 @@
 				5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */,
 				5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */,
 				55DC597B19A2FA9A00212DD0 /* SwiftBridge.swift in Sources */,
-				550FBAB119A79A1600EFBD3D /* InstrumentViewController.swift in Sources */,
 				55846BC719C3747900D26F94 /* PPInstrumentImporterCompatObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

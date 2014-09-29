@@ -129,7 +129,7 @@ import AudioToolbox
 		drivSettings.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver)))!
 		drivSettings.repeatMusic = false;
 		
-		theDriver = PPDriver(library: globalMadLib, settings: &drivSettings)
+		theDriver = PPDriver(library: globalMadLib, settings: &drivSettings, error: nil)
 		super.init()
 		exportController.delegate = self;
 		
@@ -163,13 +163,13 @@ import AudioToolbox
 	}
 	
 	func rawSoundData(theSet1: MADDriverSettings) -> NSMutableData? {
-		var err = MADErr.NoErr;
+		var err: NSError? = nil
 		var theSet = theSet1
 		var theRec = PPDriver(library: globalMadLib, settings: &theSet, error: &err)
 		
-		if (err != MADErr.NoErr) {
+		if (err != nil) {
 			dispatch_async(dispatch_get_main_queue()) {
-				let NSerr = CreateErrorFromMADErrorType(err)!
+				let NSerr = err!
 				NSAlert(error: NSerr).beginSheetModalForWindow(self.windowForSheet, completionHandler: { (returnCode) -> Void in
 					//Do nothing
 				})
@@ -424,7 +424,7 @@ import AudioToolbox
 						let oldMusicName = self.musicName;
 						let oldMusicInfo = self.musicInfo;
 						let oldURL = self.fileURL;
-						let tmpURL = NSFileManager.defaultManager().URLForDirectory(.ItemReplacementDirectory, inDomain:.UserDomainMask, appropriateForURL:oldURL, create:true, error:nil)!.URLByAppendingPathComponent( NSString(format:"%@.aiff", oldMusicName != "" ? oldMusicName : "untitled"), isDirectory: false)
+						let tmpURL = NSFileManager.defaultManager().URLForDirectory(.ItemReplacementDirectory, inDomain:.UserDomainMask, appropriateForURL:oldURL, create:true, error:nil)!.URLByAppendingPathComponent( (oldMusicName != "" ? oldMusicName : "untitled") + ".aiff", isDirectory: false)
 						theErr = self.saveMusic(AIFFToURL: tmpURL, theSett: self.exportSettings)
 						self.theDriver.endExport()
 						if (theErr != MADErr.NoErr) {
