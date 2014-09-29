@@ -16,10 +16,10 @@
 #import "PPDigitalPlugInObject.h"
 #import "PPFilterPlugObject.h"
 #import "NSColor+PPPreferences.h"
+#import "PPInstrumentImporterCompatObject.h"
 
 #import "PPInstrumentCellView.h"
 
-#import "BoxViewController.h"
 #import "DigitalViewController.h"
 #import "ClassicalViewController.h"
 #import "WaveViewController.h"
