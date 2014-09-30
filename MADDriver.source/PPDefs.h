@@ -40,6 +40,12 @@
 #define MADENUM CF_ENUM
 #define MADOPTIONS CF_OPTIONS
 #else
+#ifndef __has_feature
+#define __has_feature(x) 0
+#endif
+#ifndef __has_extension
+#define __has_extension(x) 0
+#endif
 #if (__cplusplus && __cplusplus >= 201103L && (__has_extension(cxx_strong_enums) || __has_feature(objc_fixed_enum))) || (!__cplusplus && __has_feature(objc_fixed_enum))
 #define MADENUM(_type, _name) enum _name : _type _name; enum _name : _type
 #if (__cplusplus)
