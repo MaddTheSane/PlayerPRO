@@ -25,7 +25,7 @@
 @property (readonly) short totalTracks;
 @property (readonly) short totalInstruments;
 @property (readonly, strong, nonatomic) NSMutableArray *sDatas;
-@property (readonly, strong, nonatomic) NSMutableArray *instruments;
+@property (readonly, strong, nonatomic) NSArray *instruments;
 @property (readonly, strong, nonatomic) NSMutableArray *patterns;
 @property (readonly, strong, nonatomic) NSMutableArray *buses;
 @property (readwrite, copy) NSString *internalFileName;
@@ -51,8 +51,6 @@
 
 + (MADErr)info:(MADInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib;
 
-@property (nonatomic, readonly, copy) NSDictionary *musicClasses;
-
 // Save music to a URL in MADK format.
 - (MADErr)saveMusicToURL:(NSURL *)tosave;
 - (MADErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp;
@@ -60,6 +58,13 @@
 
 //This method sets the music object as the playback music
 - (void)attachToDriver:(PPDriver *)theDriv;
+
+- (void)addInstrumentsObject:(PPInstrumentObject *)object;
+- (void)replaceObjectInInstrumentsAtIndex:(NSInteger)index withObject:(PPInstrumentObject *)object;
+@property (readonly) NSInteger countOfInstruments;
+- (PPInstrumentObject*)instrumentsObjectAtIndex:(NSInteger)idx;
+- (void)removeInstrumentsAtIndexes:(NSIndexSet *)indexes;
+- (void)removeinstrumentsObjectAtIndex:(NSInteger)index;
 
 @property (readonly) MADMusic *internalMadMusicStruct NS_RETURNS_INNER_POINTER;
 

@@ -268,8 +268,6 @@
 		55510A4D19CDFC6800ACFC3B /* PPInstrumentPlugBridgeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55510A4C19CDFC6800ACFC3B /* PPInstrumentPlugBridgeObject.m */; };
 		555143CA17B6EDCF00252657 /* PPToneGeneratorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555143C817B6EDCF00252657 /* PPToneGeneratorController.m */; };
 		555269EF19CB53C300F8B95B /* ComplexFadeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555269EE19CB53C300F8B95B /* ComplexFadeController.swift */; };
-		555269F219CB638B00F8B95B /* TypeCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555269F119CB638B00F8B95B /* TypeCount.swift */; };
-		555269F519CB673E00F8B95B /* PPAPPLImportControllerAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555269F419CB673E00F8B95B /* PPAPPLImportControllerAdditions.swift */; };
 		55534ACE1817C387006D6BCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55534AD11817C387006D6BCB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55534AD01817C387006D6BCB /* main.m */; };
 		5557769617EBDA740019D008 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5557769517EBDA740019D008 /* Media.xcassets */; };
@@ -2202,10 +2200,6 @@
 		555143C717B6EDCF00252657 /* PPToneGeneratorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPToneGeneratorController.h; sourceTree = "<group>"; };
 		555143C817B6EDCF00252657 /* PPToneGeneratorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPToneGeneratorController.m; sourceTree = "<group>"; };
 		555269EE19CB53C300F8B95B /* ComplexFadeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexFadeController.swift; sourceTree = "<group>"; };
-		555269F019CB638900F8B95B /* Classic App-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Classic App-Bridging-Header.h"; sourceTree = "<group>"; };
-		555269F119CB638B00F8B95B /* TypeCount.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypeCount.swift; sourceTree = "<group>"; };
-		555269F319CB669000F8B95B /* PPAPPLImporterViewController-private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PPAPPLImporterViewController-private.h"; sourceTree = "<group>"; };
-		555269F419CB673E00F8B95B /* PPAPPLImportControllerAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPAPPLImportControllerAdditions.swift; sourceTree = "<group>"; };
 		55534ACD1817C387006D6BCB /* updateInfoPlist */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = updateInfoPlist; sourceTree = BUILT_PRODUCTS_DIR; };
 		55534AD01817C387006D6BCB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55534AD31817C388006D6BCB /* updateInfoPlist-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "updateInfoPlist-Prefix.pch"; sourceTree = "<group>"; };
@@ -3479,13 +3473,9 @@
 		551E166F10CCD619003C842A /* Classic Application */ = {
 			isa = PBXGroup;
 			children = (
-				555269F019CB638900F8B95B /* Classic App-Bridging-Header.h */,
-				555269F119CB638B00F8B95B /* TypeCount.swift */,
-				555269F419CB673E00F8B95B /* PPAPPLImportControllerAdditions.swift */,
 				550A8FD919C7B19A00588849 /* PPAPPLObject.h */,
 				550A8FDA19C7B19A00588849 /* PPAPPLObject.m */,
 				5563A49C19AAC0D50051CC4B /* PPAPPLImporterViewController.h */,
-				555269F319CB669000F8B95B /* PPAPPLImporterViewController-private.h */,
 				5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */,
 				55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */,
 				55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */,
@@ -7133,8 +7123,6 @@
 			files = (
 				55BF238E19A937C9005B1F96 /* PPAPPLImporter.m in Sources */,
 				5563A49E19AAC0D50051CC4B /* PPAPPLImporterViewController.m in Sources */,
-				555269F219CB638B00F8B95B /* TypeCount.swift in Sources */,
-				555269F519CB673E00F8B95B /* PPAPPLImportControllerAdditions.swift in Sources */,
 				5501BEC818AC05A400602206 /* MADH.c in Sources */,
 				550A8FDB19C7B19A00588849 /* PPAPPLObject.m in Sources */,
 				5501BEC918AC092500602206 /* MADI.c in Sources */,
@@ -10145,16 +10133,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_MODULES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
 					"MADAPPIMPORT=1",
+					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/APPL-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/Classic App-Bridging-Header.h";
 				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Release;
@@ -10163,16 +10149,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ENABLE_MODULES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
 					"MADAPPIMPORT=1",
+					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/APPL-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/Classic App-Bridging-Header.h";
 				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Debug;

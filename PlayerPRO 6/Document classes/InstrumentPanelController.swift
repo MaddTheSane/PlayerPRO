@@ -30,16 +30,10 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		
 	}
 	
-	func musicDidChange(aNot: NSNotification) {
-		
-	}
-	
 	@IBAction func playSample(sender: AnyObject!) {
-		#if false
-			let tag = sender.tag
-			let sampNum = tag % MAXSAMPLE
-			let instrNum = tag / MAXSAMPLE
-		#endif
+		let tag = (sender as NSButtonCell).tag
+		let sampNum = tag % Int(MAXSAMPLE)
+		let instrNum = tag / Int(MAXSAMPLE)
 	}
 	
 	private func loadInstrumentsFromMusic() {
@@ -244,8 +238,8 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		return theView
 	}
 	
-	func replaceObjectInInstrumentsAtIndex(index: Int, withObject object: AnyObject!) {
-		currentDocument.theMusic.instruments[index] = object;
+	func replaceObjectInInstrumentsAtIndex(index: Int, withObject object: PPInstrumentObject!) {
+		currentDocument.theMusic.replaceObjectInInstrumentsAtIndex(index, withObject: object)
 	}
 	
 }

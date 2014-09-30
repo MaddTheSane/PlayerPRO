@@ -55,7 +55,7 @@
 @property (copy) NSString *name;
 @property (readonly) NSInteger number;
 @property (nonatomic, readonly) short firstSample;
-@property (nonatomic, copy) NSArray *samples;
+@property (nonatomic, copy, readonly) NSArray *samples;
 
 @property short MIDI;
 @property (readonly) short MIDIType;
@@ -92,6 +92,8 @@
 @property (getter = isPanningTypeSustain) BOOL panningTypeSustain;
 @property (getter = isPanningTypeLoop) BOOL panningTypeLoop;
 @property (getter = isPanningTypeNote) BOOL panningTypeNote;
+
+@property (readonly, getter=isBlankInstrument) BOOL blankInstrument;
 
 - (void)addSamplesObject:(PPSampleObject *)object;
 - (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(PPSampleObject *)object;

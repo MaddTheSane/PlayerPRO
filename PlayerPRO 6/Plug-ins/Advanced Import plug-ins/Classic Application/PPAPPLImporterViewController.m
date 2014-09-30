@@ -10,8 +10,11 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 #include <CoreServices/CoreServices.h>
-#import "Classic_App-Swift.h"
-#import "PPAPPLImporterViewController-private.h"
+
+@interface PPAPPLImporterViewController ()
+@property (strong) NSDictionary *resources;
+@property (strong) NSArray *resourceCounts;
+@end
 
 static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 {
@@ -239,7 +242,6 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 @implementation PPAPPLImporterViewController
 @synthesize resourceReference;
 
-#if 0
 - (void)addResourceDictionary:(NSDictionary*)theDict;
 {
 	_resources = theDict;
@@ -248,7 +250,6 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 		
 	}
 }
-#endif
 
 - (void)windowDidLoad
 {

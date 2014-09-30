@@ -153,7 +153,7 @@ static NSInteger selMusFromList = -1;
 {
 	BOOL madWasReading = NO;
 	long fullTime = 0, curTime = 0;
-	OSErr returnerr = MADNoErr;
+	NSError *returnerr;
 	if (madDriver) {
 		madWasReading = ![madDriver isPaused];
 		[madDriver stop];
@@ -192,11 +192,10 @@ static NSInteger selMusFromList = -1;
 	if (!madDriver)
 		madDriver = [[PPDriver alloc] initWithLibrary:madLib settings:&init error:&returnerr];
 	else
-		returnerr = [madDriver changeDriverSettingsToSettings:init];
+		returnerr = PPCreateErrorFromMADErrorType([madDriver changeDriverSettingsToSettings:init]);
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDriverDidChange object:self];
-	if (returnerr != MADNoErr) {
-		NSError *err = PPCreateErrorFromMADErrorType(returnerr);
-		[[NSAlert alertWithError:err] runModal];
+	if (returnerr != nil) {
+		[[NSAlert alertWithError:returnerr] runModal];
 		return;
 	}
 	//MADStartDriver(madDriver);
@@ -341,7 +340,7 @@ static NSInteger selMusFromList = -1;
 
 - (NSMutableData*)rawSoundData:(MADDriverSettings*)theSet
 {
-	OSErr err = MADNoErr;
+	NSError *err;
 	PPDriver *theRec = [[PPDriver alloc] initWithLibrary:madLib settings:theSet error:&err];
 	
 	if (theRec == nil) {

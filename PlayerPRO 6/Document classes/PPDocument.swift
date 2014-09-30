@@ -28,7 +28,8 @@ import AudioToolbox
 	@IBOutlet weak var classicalController:	ClassicalViewController!
 	@IBOutlet weak var waveController:		WaveViewController!
 	
-	var exportController = SoundSettingsViewController()
+	let instrumentList = InstrumentPanelController()
+	let exportController = SoundSettingsViewController()
 	dynamic let theDriver: PPDriver
 	dynamic private(set) var theMusic: PPMusicObject!
 	private var exportSettings = MADDriverSettings()
@@ -36,16 +37,20 @@ import AudioToolbox
 	dynamic var musicName: String {
 		get {
 			return theMusic.internalFileName
-		} set {
+		}
+		set {
 			theMusic.internalFileName = newValue
-		}}
+		}
+	}
 	
 	dynamic var musicInfo: String {
 		get {
 			return theMusic.madInformation
-		} set {
+		}
+		set {
 			theMusic.madInformation = newValue
-		}}
+		}
+	}
 	
 
     override var windowNibName: String {
@@ -54,11 +59,6 @@ import AudioToolbox
         return "PPDocument"
     }
 
-	override func makeWindowControllers() {
-		let instrumentList = InstrumentPanelController()
-		addWindowController(instrumentList);
-	}
-	
 	private func resetPlayerPRODriver() {
 		var returnerr = MADErr.NoErr;
 		var theSett = MADDriverSettings()
@@ -137,6 +137,8 @@ import AudioToolbox
 		
 		let defaultCenter = NSNotificationCenter.defaultCenter()
 		defaultCenter.addObserver(self, selector: "soundPreferencesDidChange:", name: PPSoundPreferencesDidChange, object: nil)
+		
+		instrumentList.currentDocument = self
 	}
 	
     override func windowControllerDidLoadNib(aController: NSWindowController?) {
@@ -160,7 +162,7 @@ import AudioToolbox
 
 	func importMusicObject(theObj: PPMusicObject) {
 		if (theMusic == nil) {
-			self.theMusic = theObj;
+			theMusic = theObj
 		}
 	}
 	
@@ -191,15 +193,11 @@ import AudioToolbox
 		}
 		
 		switch (theSet.outPutMode) {
-		case .DeluxeStereoOutPut:
-			fallthrough
-		case .StereoOutPut:
-			full *= 2;
-			break;
+		case .DeluxeStereoOutPut, .StereoOutPut:
+			full *= 2
 			
 		case .PolyPhonic:
-			full *= 4;
-			break;
+			full *= 4
 			
 		default:
 			break;

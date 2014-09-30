@@ -957,6 +957,11 @@ static const dispatch_block_t initUTIArray = ^{
 	}
 }
 
+- (BOOL)isBlankInstrument
+{
+	return NO;
+}
+
 #pragma mark NSCopying protocol
 
 - (id)copyWithZone:(NSZone *)zone

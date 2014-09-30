@@ -37,9 +37,9 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	NSString *internalFileName;
 	NSString *madInfo;
 	NSDictionary* madClasses;
+	NSMutableArray	*_instruments;
 }
 @property (readwrite, strong) NSURL *filePath;
-@property (readwrite, strong, nonatomic) NSMutableArray *instruments;
 @property (readwrite, strong, nonatomic) NSMutableArray *patterns;
 @property (readwrite, strong, nonatomic) NSMutableArray *buses;
 @end
@@ -107,7 +107,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return successful ? MADNoErr : MADWritingErr;
 }
 
-- (NSMutableArray *)instruments
+- (NSArray *)instruments
 {
 	if (!_instruments) {
 		NSMutableArray *array = [NSMutableArray new];
@@ -115,21 +115,15 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			PPInstrumentObject *immIns = [[PPInstrumentObject alloc] initWithMusicStruct:currentMusic atIndex:i];
 			[array addObject:immIns];
 		}
-		self.instruments = array;
+		_instruments = array;
 	}
 	
 	return _instruments;
 }
 
-- (NSDictionary*)musicClasses
+- (void)setInstruments:(NSArray *)instruments
 {
-	if (!madClasses) {
-		NSMutableDictionary *madMutClasses = [[NSMutableDictionary alloc] init];
-		madMutClasses[@"PlayerPRO Instruments"] = [self instruments];
-		
-		madClasses = [[NSDictionary alloc] initWithDictionary:madMutClasses];
-	}
-	return madClasses;
+	_instruments = [instruments mutableCopy];
 }
 
 + (MADErr)info:(MADInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib
@@ -351,7 +345,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	NSIndexSet *addIDXSet =[NSIndexSet indexSetWithIndex:[self.instruments count]];
 	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:addIDXSet forKey:@"instruments"];
 	theIns.number = [self.instruments count];
-	[self.instruments addObject:theIns];
+	[_instruments addObject:theIns];
 	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:addIDXSet forKey:@"instruments"];
 	return YES;
 }
@@ -486,10 +480,49 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	currentMusic->sample = tmpsData;
 	for (i = 0; i < MAXINSTRU; i++) {
 		PPInstrumentObject *insObj = [[PPInstrumentObject alloc] initWithMusic:self instrumentIndex:i];
-		(self.instruments)[i] = insObj;
+		[self replaceObjectInInstrumentsAtIndex:i withObject:insObj];
 	}
 	
 	return YES;
+}
+
+- (void)addInstrumentsObject:(PPInstrumentObject *)object
+{
+	
+}
+
+- (void)replaceObjectInInstrumentsAtIndex:(NSInteger)index withObject:(PPInstrumentObject *)object
+{
+	NSParameterAssert(index < MAXINSTRU);
+	_instruments[index] = object;
+}
+
+- (NSInteger)countOfInstruments
+{
+	return [_instruments count];
+}
+
+- (PPInstrumentObject*)instrumentsObjectAtIndex:(NSInteger)idx
+{
+	NSParameterAssert(idx < MAXINSTRU);
+	return _instruments[idx];
+}
+
+- (void)removeInstrumentsAtIndexes:(NSIndexSet *)indexes
+{
+	[self willChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"instruments"];
+	NSUInteger currentIndex = [indexes firstIndex];
+	while (currentIndex != NSNotFound) {
+		[(PPInstrumentObject*)_instruments[currentIndex] resetInstrument];
+		currentIndex = [indexes indexGreaterThanIndex:currentIndex];
+	}
+
+	[self didChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"instruments"];
+}
+
+- (void)removeinstrumentsObjectAtIndex:(NSInteger)index
+{
+	[self removeInstrumentsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
 }
 
 @end
