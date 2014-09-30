@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6206.9" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6246" systemVersion="14A361p" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.9"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6246"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="InstrumentInfoController">
@@ -27,14 +28,14 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="196" y="240" width="480" height="535"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
             <value key="minSize" type="size" width="480" height="535"/>
             <value key="maxSize" type="size" width="480" height="535"/>
             <view key="contentView" id="2">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="535"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5">
+                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5">
                         <rect key="frame" x="407" y="13" width="59" height="32"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -47,7 +48,7 @@ DQ
                             <action selector="okayButton:" target="-2" id="81"/>
                         </connections>
                     </button>
-                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9">
+                    <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9">
                         <rect key="frame" x="325" y="13" width="82" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="10">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -60,7 +61,7 @@ Gw
                             <action selector="cancelButton:" target="-2" id="83"/>
                         </connections>
                     </button>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="13">
+                    <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="13">
                         <rect key="frame" x="18" y="498" width="286" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="14">
                             <font key="font" metaFont="system"/>
@@ -68,7 +69,7 @@ Gw
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="18">
+                    <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="18">
                         <rect key="frame" x="18" y="473" width="45" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Name:" id="19">
                             <font key="font" metaFont="system"/>
@@ -76,7 +77,7 @@ Gw
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="22">
+                    <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="22">
                         <rect key="frame" x="69" y="471" width="233" height="22"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="233" id="29"/>
@@ -93,7 +94,7 @@ Gw
                             <rect key="frame" x="1" y="1" width="444" height="62"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47">
+                                <matrix verticalHuggingPriority="750" misplaced="YES" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="47">
                                     <rect key="frame" x="91" y="14" width="157" height="38"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="157" id="76"/>
@@ -118,7 +119,7 @@ Gw
                                         </column>
                                     </cells>
                                 </matrix>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="92">
+                                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="92">
                                     <rect key="frame" x="12" y="7" width="77" height="32"/>
                                     <buttonCell key="cell" type="push" title="Edit…" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="93">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -128,7 +129,7 @@ Gw
                                         <action selector="volumeEditButtonPressed:" target="-2" id="175"/>
                                     </connections>
                                 </button>
-                                <button tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="97">
+                                <button misplaced="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="97">
                                     <rect key="frame" x="202" y="12" width="53" height="18"/>
                                     <buttonCell key="cell" type="check" title="Loop" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="98">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -138,7 +139,7 @@ Gw
                                         <action selector="volumeCheckClicked:" target="-2" id="189"/>
                                     </connections>
                                 </button>
-                                <button tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="103">
+                                <button misplaced="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="103">
                                     <rect key="frame" x="259" y="12" width="67" height="18"/>
                                     <buttonCell key="cell" type="check" title="Sustain" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="104">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -148,7 +149,7 @@ Gw
                                         <action selector="volumeCheckClicked:" target="-2" id="190"/>
                                     </connections>
                                 </button>
-                                <button tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="110">
+                                <button misplaced="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="110">
                                     <rect key="frame" x="330" y="12" width="98" height="18"/>
                                     <buttonCell key="cell" type="check" title="Fixed Speed" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="111">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -183,7 +184,7 @@ Gw
                             <rect key="frame" x="1" y="1" width="444" height="62"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <matrix verticalHuggingPriority="750" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="69">
+                                <matrix verticalHuggingPriority="750" misplaced="YES" allowsEmptySelection="NO" translatesAutoresizingMaskIntoConstraints="NO" id="69">
                                     <rect key="frame" x="91" y="14" width="127" height="38"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="127" id="77"/>
@@ -208,7 +209,7 @@ Gw
                                         </column>
                                     </cells>
                                 </matrix>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="84">
+                                <button verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="84">
                                     <rect key="frame" x="12" y="7" width="77" height="32"/>
                                     <buttonCell key="cell" type="push" title="Edit…" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="85">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -218,7 +219,7 @@ Gw
                                         <action selector="panningEditButtonPressed:" target="-2" id="186"/>
                                     </connections>
                                 </button>
-                                <button tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="114">
+                                <button misplaced="YES" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="114">
                                     <rect key="frame" x="202" y="12" width="53" height="18"/>
                                     <buttonCell key="cell" type="check" title="Loop" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="119">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -228,7 +229,7 @@ Gw
                                         <action selector="panningCheckClicked:" target="-2" id="185"/>
                                     </connections>
                                 </button>
-                                <button tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="115">
+                                <button misplaced="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="115">
                                     <rect key="frame" x="259" y="12" width="67" height="18"/>
                                     <buttonCell key="cell" type="check" title="Sustain" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="118">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -238,7 +239,7 @@ Gw
                                         <action selector="panningCheckClicked:" target="-2" id="187"/>
                                     </connections>
                                 </button>
-                                <button tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="116">
+                                <button misplaced="YES" tag="3" translatesAutoresizingMaskIntoConstraints="NO" id="116">
                                     <rect key="frame" x="330" y="12" width="98" height="18"/>
                                     <buttonCell key="cell" type="check" title="Fixed Speed" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="117">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -280,7 +281,7 @@ Gw
                             <rect key="frame" x="1" y="1" width="438" height="114"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
-                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowHeight="115" rowSizeStyle="automatic" viewBased="YES" id="156">
+                                <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="115" rowSizeStyle="automatic" viewBased="YES" id="156">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -386,7 +387,7 @@ Gw
                                                                 </menu>
                                                             </popUpButtonCell>
                                                         </popUpButton>
-                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="240">
+                                                        <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="240">
                                                             <rect key="frame" x="6" y="33" width="89" height="17"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Rate (c4spd):" id="241">
                                                                 <font key="font" metaFont="system"/>
@@ -448,7 +449,7 @@ Gw
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="293">
+                                                        <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="293">
                                                             <rect key="frame" x="316" y="64" width="69" height="17"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Loop Size:" id="294">
                                                                 <font key="font" metaFont="system"/>
@@ -470,7 +471,7 @@ Gw
                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="320">
+                                                        <textField verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="320">
                                                             <rect key="frame" x="185" y="33" width="73" height="17"/>
                                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Loop Type:" id="321">
                                                                 <font key="font" metaFont="system"/>
@@ -478,7 +479,7 @@ Gw
                                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                             </textFieldCell>
                                                         </textField>
-                                                        <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="346">
+                                                        <popUpButton verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="346">
                                                             <rect key="frame" x="262" y="27" width="99" height="26"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="94" id="352"/>
@@ -671,7 +672,7 @@ Gw
                             <rect key="frame" x="1" y="119" width="223" height="15"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
-                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="159">
+                        <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="159">
                             <rect key="frame" x="423" y="1" width="16" height="114"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>

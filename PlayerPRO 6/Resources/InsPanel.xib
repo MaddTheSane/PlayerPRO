@@ -160,9 +160,21 @@
                 <allowedToolbarItems>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="Tum-l5-qfe"/>
                     <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="GOe-MT-y26"/>
-                    <toolbarItem implicitItemIdentifier="5719716E-6E32-4CA5-8A46-4769B0F1C2D2" label="Info" paletteLabel="Info" tag="-1" image="NSInfo" id="A5Y-7m-OW2"/>
-                    <toolbarItem implicitItemIdentifier="E9B7ADB4-D977-4C48-9DE7-BA6538A0E019" label="Import" paletteLabel="Import Instrument" tag="-1" image="PPLoad" id="MgW-kx-itr"/>
-                    <toolbarItem implicitItemIdentifier="F8F37D0F-4742-4D2F-8E72-BABB229E0EE8" label="Export" paletteLabel="Export Instrument" tag="-1" image="PPSave" id="0Fw-tU-wib"/>
+                    <toolbarItem implicitItemIdentifier="5719716E-6E32-4CA5-8A46-4769B0F1C2D2" label="Info" paletteLabel="Info" tag="-1" image="NSInfo" id="A5Y-7m-OW2">
+                        <connections>
+                            <action selector="toggleInfo:" target="-2" id="n42-ya-ehb"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="E9B7ADB4-D977-4C48-9DE7-BA6538A0E019" label="Import" paletteLabel="Import Instrument" tag="-1" image="PPLoad" id="MgW-kx-itr">
+                        <connections>
+                            <action selector="importInstrument:" target="-2" id="Fcq-mf-7op"/>
+                        </connections>
+                    </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="F8F37D0F-4742-4D2F-8E72-BABB229E0EE8" label="Export" paletteLabel="Export Instrument" tag="-1" image="PPSave" id="0Fw-tU-wib">
+                        <connections>
+                            <action selector="exportInstrument:" target="-2" id="6gX-hF-AQE"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="C79D7EC4-DA64-4E47-BC52-9FD843EB20C5" label="New" paletteLabel="New Instrument" tag="-1" image="NSAddTemplate" id="p9L-aO-Ssj"/>
                     <toolbarItem implicitItemIdentifier="438694D1-78A1-4987-9A1B-29EA375C4D15" label="Delete" paletteLabel="Delete Sample" tag="-1" image="NSRemoveTemplate" id="8Wm-ZP-tBs"/>
                     <toolbarItem implicitItemIdentifier="5C017FBB-A861-4B9D-AEA6-3EAEA668DA70" label="Waveform" paletteLabel="Show Waveform" tag="-1" id="XgR-1p-9f9"/>

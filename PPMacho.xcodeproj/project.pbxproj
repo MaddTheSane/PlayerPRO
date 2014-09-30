@@ -1964,7 +1964,6 @@
 		550DBB8E169FB7A0006F5C85 /* PPSampleObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPSampleObject.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		550DBB90169FBEE7006F5C85 /* PPInstrumentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentObject.h; sourceTree = "<group>"; };
 		550DBB91169FBEE7006F5C85 /* PPInstrumentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentObject.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		550FBAB019A79A1600EFBD3D /* InstrumentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentViewController.swift; sourceTree = "<group>"; };
 		550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = embeddedPlugs.h; sourceTree = "<group>"; };
 		550FFAEB17CEA4570003A2F3 /* AIFF.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AIFF.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		550FFAEC17CEA4590003A2F3 /* AIFF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AIFF-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -3705,7 +3704,6 @@
 		5523EC78169276AA0067B22A /* Instrument Code */ = {
 			isa = PBXGroup;
 			children = (
-				550FBAB019A79A1600EFBD3D /* InstrumentViewController.swift */,
 				550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */,
 				550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */,
 				552581FB16C6FC350016A31C /* InstrumentInfoController.h */,

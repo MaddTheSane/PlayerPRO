@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 @class PPInstrumentObject;
-@class InstrumentViewController;
+@class InstrumentPanelController;
 @class PPSmallPianoView;
 
 @interface InstrumentInfoController : NSWindowController <NSTableViewDataSource, NSTableViewDelegate>
@@ -29,7 +29,7 @@
 
 @property (weak) IBOutlet NSTableView *sampleTable;
 @property (copy, nonatomic) PPInstrumentObject *instrument;
-@property (weak) InstrumentViewController *delegate;
+@property (weak) InstrumentPanelController *delegate;
 
 - (IBAction)okayButton:(id)sender;
 - (IBAction)cancelButton:(id)sender;

@@ -32,9 +32,6 @@ import AudioToolbox
 	dynamic let theDriver: PPDriver
 	dynamic private(set) var theMusic: PPMusicObject!
 	private var exportSettings = MADDriverSettings()
-	dynamic var wrapper: PPMusicObject { get {
-		return theMusic
-		}}
 	
 	dynamic var musicName: String {
 		get {
@@ -57,6 +54,11 @@ import AudioToolbox
         return "PPDocument"
     }
 
+	override func makeWindowControllers() {
+		let instrumentList = InstrumentPanelController()
+		addWindowController(instrumentList);
+	}
+	
 	private func resetPlayerPRODriver() {
 		var returnerr = MADErr.NoErr;
 		var theSett = MADDriverSettings()

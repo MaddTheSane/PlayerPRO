@@ -15,8 +15,8 @@
 @synthesize sampleButton;
 @synthesize controller;
 
-@synthesize isSample;
-- (void)setIsSample:(BOOL)aisSample
+@synthesize sample = isSample;
+- (void)setSample:(BOOL)aisSample
 {
 	isSample = aisSample;
 	if (isSample) {
@@ -30,8 +30,8 @@
 	}
 }
 
-@synthesize isLoopingSample;
-- (void)setIsLoopingSample:(BOOL)IsLoopingSample
+@synthesize loopingSample = isLoopingSample;
+- (void)setLoopingSample:(BOOL)IsLoopingSample
 {
 	isLoopingSample = IsLoopingSample;
 	if (isSample) {
@@ -43,8 +43,8 @@
 	}
 }
 
-@synthesize isBlank;
-- (void)setIsBlank:(BOOL)aisBlank
+@synthesize blank = isBlank;
+- (void)setBlank:(BOOL)aisBlank
 {
 	isBlank = aisBlank;
 	[self setNeedsDisplay:YES];
