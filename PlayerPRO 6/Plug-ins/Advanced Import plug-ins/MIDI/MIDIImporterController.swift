@@ -30,7 +30,7 @@ class MIDIImporterController: NSWindowController {
 			handler(nil, .IncompatibleFile)
 			return
 		}
-		modalSession = NSApplication.sharedApplication().beginModalSessionForWindow(self.window)
+		modalSession = NSApplication.sharedApplication().beginModalSessionForWindow(window!)
 	}
 	
 	override func awakeFromNib() {

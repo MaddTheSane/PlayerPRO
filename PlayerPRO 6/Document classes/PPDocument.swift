@@ -29,7 +29,7 @@ import AudioToolbox
 	@IBOutlet weak var waveController:		WaveViewController!
 	
 	let instrumentList = InstrumentPanelController()
-	let exportController = SoundSettingsViewController()
+	let exportController = SoundSettingsViewController.newSoundSettingWindow()!
 	dynamic let theDriver: PPDriver
 	dynamic private(set) var theMusic: PPMusicObject!
 	private var exportSettings = MADDriverSettings()
@@ -141,17 +141,17 @@ import AudioToolbox
 		instrumentList.currentDocument = self
 	}
 	
-    override func windowControllerDidLoadNib(aController: NSWindowController?) {
+    override func windowControllerDidLoadNib(aController: NSWindowController) {
         super.windowControllerDidLoadNib(aController)
         // Add any code here that needs to be executed once the windowController has loaded the document's window.
     }
 
-	override func writeToURL(url: NSURL!, ofType typeName: String!, error outError: NSErrorPointer) -> Bool {
+	override func writeToURL(url: NSURL, ofType typeName: String, error outError: NSErrorPointer) -> Bool {
 		outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
 		return false
 	}
 	
-	override func readFromURL(url: NSURL!, ofType typeName: String!, error outError: NSErrorPointer) -> Bool {
+	override func readFromURL(url: NSURL, ofType typeName: String, error outError: NSErrorPointer) -> Bool {
 		outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
 		return false
 	}
@@ -174,7 +174,7 @@ import AudioToolbox
 		if (err != nil) {
 			dispatch_async(dispatch_get_main_queue()) {
 				let NSerr = err!
-				NSAlert(error: NSerr).beginSheetModalForWindow(self.windowForSheet, completionHandler: { (returnCode) -> Void in
+				NSAlert(error: NSerr).beginSheetModalForWindow(self.windowForSheet!, completionHandler: { (returnCode) -> Void in
 					//Do nothing
 				})
 			}
@@ -205,13 +205,15 @@ import AudioToolbox
 		
 		theRec.play()
 		
-		var mutData = NSMutableData(capacity: full * 60 * Int(theRec.totalMusicPlaybackTime) / 2)
-		
-		while let newData = theRec.directSave() {
-			mutData.appendData(newData)
+		if let mutData = NSMutableData(capacity: full * 60 * Int(theRec.totalMusicPlaybackTime) / 2) {
+			while let newData = theRec.directSave() {
+				mutData.appendData(newData)
+			}
+			
+			return mutData;
+		} else {
+			return nil
 		}
-		
-		return mutData;
 	}
 	
 	func rawBESoundData(theSet: MADDriverSettings) -> NSData? {
@@ -366,7 +368,7 @@ import AudioToolbox
 		exportSettings.repeatMusic = false;
 		exportController.settingsFromDriverSettings(exportSettings)
 		
-		self.windowForSheet.beginSheet(exportWindow, completionHandler: { (returnCode) -> Void in
+		self.windowForSheet!.beginSheet(exportWindow, completionHandler: { (returnCode) -> Void in
 			if (returnCode == NSAlertDefaultReturn) {
 				switch (expType) {
 				case -1:
@@ -506,9 +508,9 @@ import AudioToolbox
 			savePanel.allowedFileTypes = [AVFileTypeAIFF]
 			savePanel.title = "Export as AIFF audio"
 			
-			savePanel.beginSheetModalForWindow(self.windowForSheet, completionHandler: { (result) -> Void in
+			savePanel.beginSheetModalForWindow(windowForSheet!, completionHandler: { (result) -> Void in
 				if result == NSFileHandlingPanelOKButton {
-					self.showExportSettingsWithExportType(-1, URL: savePanel.URL)
+					self.showExportSettingsWithExportType(-1, URL: savePanel.URL!)
 				} else {
 					self.theDriver.endExport()
 				}
@@ -520,9 +522,9 @@ import AudioToolbox
 			//MP4
 			savePanel.allowedFileTypes = [AVFileTypeAppleM4A]
 			savePanel.title = "Export as MPEG-4 Audio"
-			savePanel.beginSheetModalForWindow(self.windowForSheet, completionHandler: { (result) -> Void in
+			savePanel.beginSheetModalForWindow(windowForSheet!, completionHandler: { (result) -> Void in
 				if result == NSFileHandlingPanelOKButton {
-					self.showExportSettingsWithExportType(-2, URL: savePanel.URL)
+					self.showExportSettingsWithExportType(-2, URL: savePanel.URL!)
 				} else {
 					self.theDriver.endExport()
 				}
@@ -542,9 +544,9 @@ import AudioToolbox
 			savePanel.allowedFileTypes = tmpObj.UTItypes
 			savePanel.title = "Export as \(tmpObj.menuName)"
 			
-			savePanel.beginSheetModalForWindow(self.windowForSheet, completionHandler: { (result) -> Void in
+			savePanel.beginSheetModalForWindow(windowForSheet!, completionHandler: { (result) -> Void in
 				if result == NSFileHandlingPanelOKButton {
-					var expObj = ExportObject(destination: savePanel.URL, exportBlock: { (theURL, errStr) -> MADErr in
+					var expObj = ExportObject(destination: savePanel.URL!, exportBlock: { (theURL, errStr) -> MADErr in
 						var theErr = self.theMusic.exportMusicToURL(theURL, format: tmpObj.plugType, library: globalMadLib)
 						self.theDriver.endExport()
 						return theErr

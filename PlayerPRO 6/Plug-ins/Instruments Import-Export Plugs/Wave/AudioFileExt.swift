@@ -101,7 +101,7 @@ internal struct AudioFormatFlag : RawOptionSetType {
 	init(rawValue value: UInt32) { self.value = value }
 	static var allZeros: AudioFormatFlag { return self(rawValue: 0) }
 	static func fromMask(raw: UInt32) -> AudioFormatFlag { return self(rawValue: raw) }
-	static func convertFromNilLiteral() -> AudioFormatFlag { return FlagsAreAllClear }
+	init(nilLiteral: ()) { self = AudioFormatFlag.FlagsAreAllClear }
 	
 	static var NativeFloatPacked: AudioFormatFlag {
 		return Float | NativeEndian | Packed
@@ -137,7 +137,7 @@ internal struct LinearPCMFormatFlag : RawOptionSetType {
 	init(rawValue value: UInt32) { self.value = value }
 	static var allZeros: LinearPCMFormatFlag { return self(rawValue: 0) }
 	static func fromMask(raw: UInt32) -> LinearPCMFormatFlag { return self(rawValue: raw) }
-	static func convertFromNilLiteral() -> LinearPCMFormatFlag { return FlagsAreAllClear }
+	init(nilLiteral: ()) { self = LinearPCMFormatFlag.FlagsAreAllClear }
 	
 	static var NativeFloatPacked: LinearPCMFormatFlag {
 		return Float | NativeEndian | Packed

@@ -74,7 +74,7 @@ class ComplexFadeController: NSWindowController {
 			badSettings.informativeText = "There is one or more invalid value.";
 			badSettings.addButtonWithTitle("OK")
 			
-			badSettings.beginSheetModalForWindow(window, completionHandler: { (returnCode) -> Void in
+			badSettings.beginSheetModalForWindow(window!, completionHandler: { (returnCode) -> Void in
 				
 			})
 		}
@@ -151,7 +151,7 @@ class ComplexFadeController: NSWindowController {
 		
 		if numFormatter.getObjectValue(&ourUnknown, forString: stepCell.stringValue, errorDescription: nil) {
 			if let aNumber = ourUnknown! as? NSNumber {
-				step = aNumber
+				step = aNumber as Int
 			} else {
 				invalidSettings()
 				return
@@ -189,12 +189,12 @@ class ComplexFadeController: NSWindowController {
 			}
 		}
 		
-		(NSApp as NSApplication).endSheet(window)
+		(NSApp as NSApplication).endSheet(window!)
 		currentBlock(.NoErr)
 	}
 	
 	@IBAction func cancel(sender: AnyObject!) {
-		(NSApp as NSApplication).endSheet(window)
+		(NSApp as NSApplication).endSheet(window!)
 		currentBlock(.UserCanceledErr)
 	}
 }

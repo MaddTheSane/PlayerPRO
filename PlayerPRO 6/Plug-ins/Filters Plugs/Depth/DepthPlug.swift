@@ -23,7 +23,7 @@ import PlayerPROKit
 		controller.selectionRange = selRange
 		controller.stereoMode = StereoMode
 
-		document.beginSheet(controller.window, completionHandler: { (returnCode) -> Void in
+		document.beginSheet(controller.window!, completionHandler: { (returnCode) -> Void in
 			
 		})
 	}

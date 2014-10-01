@@ -107,7 +107,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 	
 	@IBAction func showPreferences(sender: AnyObject?) {
-		preferences.window.center()
+		preferences.window!.center()
 		preferences.showWindow(sender)
 	}
 
@@ -119,8 +119,8 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		let inf = plugInInfos[tag]
 		
 		let infoCont = PlugInInfoController.windowControllerFromInfo(inf)
-		infoCont.window.center()
-		NSApplication.sharedApplication().runModalForWindow(infoCont.window)
+		infoCont.window!.center()
+		NSApplication.sharedApplication().runModalForWindow(infoCont.window!)
 	}
 
 	func updatePlugInInfoMenu() {
@@ -394,7 +394,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			if (sharedWorkspace.type(theUTI, conformsToType:PPPCMDUTI)) {
 				var theOSErr = importPcmdFromURL(theURL)
 				if (theOSErr != MADErr.NoErr) {
-					let theErr = CreateErrorFromMADErrorType(theOSErr);
+					let theErr = CreateErrorFromMADErrorType(theOSErr)!
 					NSAlert(error: theErr).runModal()
 					return false;
 				}
@@ -480,7 +480,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		return false
 	}
 	
-	required init(coder: NSCoder!) {
+	required init?(coder: NSCoder) {
 		super.init(coder: coder)
 		registerDefaults()
 	}
@@ -521,7 +521,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		updatePlugInInfoMenu()
 	}
 	
-	override func makeUntitledDocumentOfType(typeName: String!, error outError: NSErrorPointer) -> AnyObject! {
+	override func makeUntitledDocumentOfType(typeName: String, error outError: NSErrorPointer) -> AnyObject? {
 		assert(typeName == MADNativeUTI, "Unknown type passed to \(__FUNCTION__): \(typeName)")
 		let theDoc = PPDocument(music: PPMusicObject())
 
@@ -542,19 +542,20 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			}
 		}
 		
-		let av = OpenPanelViewController(openPanel: panel, trackerDictionary: trackerDict, instrumentDictionary: samplesDict, additionalDictionary: otherDict)
-		av.setupDefaults()
-		panel.beginWithCompletionHandler { (retval) -> Void in
-			if retval == NSFileHandlingPanelOKButton {
-				let panelURL = panel.URL
-				let filename = panelURL.path
-				var err: NSError? = nil
-				let utiFile = NSWorkspace.sharedWorkspace().typeOfFile(filename, error: &err)
-				if err != nil {
-					PPRunAlertPanel("Error opening file", message: "Unable to open %@: %@", args: filename!.lastPathComponent, err!.localizedFailureReason!);
-					return
+		if let av = OpenPanelViewController(openPanel: panel, trackerDictionary: trackerDict, instrumentDictionary: samplesDict, additionalDictionary: otherDict) {
+			av.setupDefaults()
+			panel.beginWithCompletionHandler { (retval) -> Void in
+				if retval == NSFileHandlingPanelOKButton {
+					let panelURL = panel.URL!
+					let filename = panelURL.path!
+					var err: NSError? = nil
+					let utiFile = NSWorkspace.sharedWorkspace().typeOfFile(filename, error: &err)
+					if err != nil {
+						PPRunAlertPanel("Error opening file", message: "Unable to open %@: %@", args: filename.lastPathComponent, err!.localizedFailureReason!);
+						return
+					}
+					self.handleFile(panelURL, ofType: utiFile!)
 				}
-				self.handleFile(panelURL, ofType: utiFile)
 			}
 		}
 	}
@@ -566,7 +567,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			PPRunAlertPanel("Error opening file", message: "Unable to open %@: %@", args: filename.lastPathComponent, err!.localizedFailureReason!)
 			return false
 		}
-		return handleFile(NSURL(fileURLWithPath: filename)!, ofType: utiFile)
+		return handleFile(NSURL(fileURLWithPath: filename)!, ofType: utiFile!)
 	}
 	
 	func exportObjectDidFinish(theObj: ExportObject) {

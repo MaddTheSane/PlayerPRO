@@ -22,7 +22,7 @@ import PlayerPROKit.PPPlugIns
 		controller.fadeType = .Instrument;
 		controller.currentBlock = handler
 
-		window.beginSheet(controller.window, completionHandler: { (retVal) -> Void in
+		window.beginSheet(controller.window!, completionHandler: { (retVal) -> Void in
 			
 		})
 	}

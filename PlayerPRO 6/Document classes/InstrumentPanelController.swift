@@ -96,19 +96,20 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 			fileDict[obj.menuName] = (obj.UTITypes as [String]);
 		}
 		let openPanel = NSOpenPanel()
-		var vc = OpenPanelViewController(openPanel: openPanel, instrumentDictionary:fileDict)
-		vc.setupDefaults()
-		openPanel.beginSheetModalForWindow(currentDocument.windowForSheet, completionHandler: { (panelHandle) -> Void in
-			if panelHandle == NSFileHandlingPanelOKButton {
-				var err: NSError? = nil
-				if self.importSampleFromURL(openPanel.URL, error: &err) == false {
-					NSAlert(error:err!).beginSheetModalForWindow(self.currentDocument.windowForSheet, completionHandler: { (returnCode) -> Void in
-						//do nothing
-						return
-					})
+		if let vc = OpenPanelViewController(openPanel: openPanel, instrumentDictionary:fileDict) {
+			vc.setupDefaults()
+			openPanel.beginSheetModalForWindow(currentDocument.windowForSheet!, completionHandler: { (panelHandle) -> Void in
+				if panelHandle == NSFileHandlingPanelOKButton {
+					var err: NSError? = nil
+					if self.importSampleFromURL(openPanel.URL!, error: &err) == false {
+						NSAlert(error:err!).beginSheetModalForWindow(self.currentDocument.windowForSheet!, completionHandler: { (returnCode) -> Void in
+							//do nothing
+							return
+						})
+					}
 				}
-			}
-		})
+			})
+		}
 	}
 	
 	func playSample(fromInstrument: Int16, sampleNumber: Int16, volume: Byte = 0xFF, note: Byte = 0xFF) {
@@ -221,12 +222,12 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		theView.controller = self
 		if let obj = item as? PPInstrumentObject {
 			theView.sample = false
-			theView.textField.stringValue = obj.name
+			theView.textField!.stringValue = obj.name
 			theView.numField.stringValue = NSString(format:"%03ld", obj.number + 1)
 			theView.blank = obj.countOfSamples <= 0;
 		} else if let obj = item as? PPSampleObject {
 			theView.sample = true
-			theView.textField.stringValue = obj.name
+			theView.textField!.stringValue = obj.name
 			if item.loopSize != 0 {
 				theView.loopingSample = true
 			} else {
