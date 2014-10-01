@@ -10,11 +10,11 @@
 #ifndef __PLAYERPROCORE_H__
 #define __PLAYERPROCORE_H__
 
-#include <PlayerPROCore/PPDefs.h>
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/RDriver.h>
-#include <PlayerPROCore/MADPlug.h>
+#include "PPDefs.h"
+#include "MAD.h"
+#include "FileUtils.h"
+#include "RDriver.h"
+#include "MADPlug.h"
 
 #ifdef _MAC_H
 //! Project version number for PlayerPROCore.
@@ -25,7 +25,7 @@ EXP const unsigned char PlayerPROCoreVersionString[];
 #endif
 
 #if defined(_MAC_H) && !TARGET_OS_IPHONE
-#include <PlayerPROCore/RDriverCarbon.h>
+#include "RDriverCarbon.h"
 #endif
 
 #endif

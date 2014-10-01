@@ -41,7 +41,7 @@ public struct PPKPcmd: SequenceType {
 		return myCmd.generate()
 	}
 	
-	public func newPcmd() -> UnsafeMutablePointer<Pcmd>? {
+	/*public func newPcmd() -> UnsafeMutablePointer<Pcmd>? {
 		if let newSize = structSize {
 			var aPcmd = UnsafeMutablePointer<Pcmd>(malloc(UInt(newSize)))
 			aPcmd.memory.tracks = tracks
@@ -57,7 +57,7 @@ public struct PPKPcmd: SequenceType {
 		} else {
 			return nil
 		}
-	}
+	}*/
 	
 	public var valid: Bool {
 		get {
@@ -83,18 +83,18 @@ public struct PPKPcmd: SequenceType {
 		}
 	}
 	
-	public init(_ aPcmd: UnsafePointer<Pcmd>) {
+	/*public init(_ aPcmd: UnsafePointer<Pcmd>) {
 		let unwrapped = aPcmd.memory
 		let myCmdPos: Int = Int(unwrapped.structSize) - sizeof(Pcmd.Type)
 		tracks = unwrapped.tracks
 		length = unwrapped.length
 		trackStart = unwrapped.trackStart
 		positionStart = unwrapped.posStart
-		let theirCmdPtr = UnsafePointer<Cmd>(aPcmd.advancedBy(sizeof(Pcmd.Type)))
+		var theirCmdPtr = UnsafePointer<Cmd>(aPcmd.advancedBy(sizeof(Pcmd.Type)))
 		for i in 0 ..< myCmdPos / sizeof(Cmd.Type) {
 			myCmd.append(theirCmdPtr[i])
 		}
-	}
+	}*/
 	
 	public mutating func addRow() {
 		length += 1

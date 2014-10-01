@@ -162,11 +162,11 @@ public func OctaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true
 extension PPSampleObject {
 
 #if os(OSX)
-	@objc(waveformImageUsingView:) public func waveformImage(#view: NSView) -> NSImage {
+	@objc(waveformImageUsingView:) public func waveformImage(#view: NSView) -> NSImage? {
 		return PPSampleObject.waveformImage(fromSample: self, view: view)
 	}
 	
-	@objc(waveformImageFromSample:usingView:) public class func waveformImage(fromSample theDat: PPSampleObject, view: NSView) -> NSImage {
+	@objc(waveformImageFromSample:usingView:) public class func waveformImage(fromSample theDat: PPSampleObject, view: NSView) -> NSImage? {
 		var imageSize = view.convertSizeToBacking(view.frame.size)
 		let datIsStereo = theDat.stereo
 		imageSize.height *= 2

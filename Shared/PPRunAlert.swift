@@ -18,16 +18,16 @@ private func PPRunAlertPanelBase(title: String, message msgFormat: String, defau
 		let defButt = theAlert.addButtonWithTitle("OK")
 		defButt.tag = NSAlertDefaultReturn
 	} else {
-		if defaultButton != nil {
-			let defButt = theAlert.addButtonWithTitle(defaultButton)
+		if let aDefaultButton = defaultButton {
+			let defButt = theAlert.addButtonWithTitle(aDefaultButton)
 			defButt.tag = NSAlertDefaultReturn
 		}
-		if alternateButton != nil {
-			let altButt = theAlert.addButtonWithTitle(alternateButton)
+		if let aAlternateButton = alternateButton {
+			let altButt = theAlert.addButtonWithTitle(aAlternateButton)
 			altButt.tag = NSAlertAlternateReturn
 		}
-		if otherButton != nil {
-			let othButt = theAlert.addButtonWithTitle(otherButton)
+		if let aOtherButton = otherButton {
+			let othButt = theAlert.addButtonWithTitle(aOtherButton)
 			othButt.tag = NSAlertOtherReturn
 		}
 	}

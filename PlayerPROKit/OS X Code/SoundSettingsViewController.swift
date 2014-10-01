@@ -218,15 +218,11 @@ public class SoundSettingsViewController: NSViewController {
 		}
 	}
 	
-	required override public convenience init() {
-		self.init(nibName: "PPSoundSettingsViewController", bundle: NSBundle(forClass: SoundSettingsViewController.self))
-	}
-	
-	required override public init(nibName: String!, bundle: NSBundle!) {
+	required override public init?(nibName: String!, bundle: NSBundle!) {
 		super.init(nibName: nibName, bundle: bundle)
 	}
 	
-	public class func newSoundSettingWindow() -> Self {
+	public class func newSoundSettingWindow() -> Self? {
 		return self(nibName: "PPSoundSettingsViewController", bundle: NSBundle(forClass: SoundSettingsViewController.self))
 	}
 
@@ -240,7 +236,6 @@ public class SoundSettingsViewController: NSViewController {
 		self.stereoDelayActive = stereoDelayState;
 		self.surroundActive = sett.surround;
 		
-		if (self.view != nil) {
 			oversampling.state = Int(oversamplingState)
 			reverb.state = Int(reverbState)
 			stereoDelay.state = Int(stereoDelayState)
@@ -356,9 +351,8 @@ public class SoundSettingsViewController: NSViewController {
 				soundDriver.enabled = false;
 			}
 		}
-	}
 
-	required public init(coder: NSCoder!) {
+	required public init?(coder: NSCoder) {
 		super.init(coder: coder)
 	}
 	
@@ -430,13 +424,13 @@ public class SoundSettingsViewController: NSViewController {
 			if (stereoDelayState != stereoDelayActive) {
 				delegate?.soundOutStereoDelayDidChangeActive(stereoDelayState)
 				if stereoDelayState {
-					delegate?.soundOutStereoDelayAmountDidChange(stereoDelayFromTag(stereoDelayNum.selectedItem.tag))
+					delegate?.soundOutStereoDelayAmountDidChange(stereoDelayFromTag(stereoDelayNum.selectedItem!.tag))
 				}
 			}
 			if (oversamplingState != oversamplingActive) {
 				delegate?.soundOutOversamplingDidChangeActive(oversamplingState)
 				if (oversamplingState) {
-					delegate?.soundOutOversamplingAmountDidChange(oversamplingFromTag(oversamplingNum.selectedItem.tag))
+					delegate?.soundOutOversamplingAmountDidChange(oversamplingFromTag(oversamplingNum.selectedItem!.tag))
 				}
 			}
 			if (surroundState != surroundActive) {

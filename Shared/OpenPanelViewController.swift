@@ -115,7 +115,7 @@ class OpenPanelViewController: NSViewController {
 		openPanel.allowsMultipleSelection = multipleSelection
 	}}
 	
-	required init(coder: NSCoder!) {
+	required init?(coder: NSCoder) {
 		println("initWithCoder was called?")
 		multipleSelection = false
 		openPanel = NSOpenPanel()
@@ -200,7 +200,7 @@ class OpenPanelViewController: NSViewController {
 		}
 	}
 	
-	init(openPanel panel: NSOpenPanel, trackerDictionary td: [String: [String]]? = nil, playlistDictionary pd: [String: [String]]? = nil, instrumentDictionary insDict: [String: [String]]? = nil, additionalDictionary adddict: [String: [String]]? = nil) {
+	init?(openPanel panel: NSOpenPanel, trackerDictionary td: [String: [String]]? = nil, playlistDictionary pd: [String: [String]]? = nil, instrumentDictionary insDict: [String: [String]]? = nil, additionalDictionary adddict: [String: [String]]? = nil) {
 		openPanel = panel
 		multipleSelection = false
 		super.init(nibName: "OpenPanelViewController", bundle: nil)
@@ -246,7 +246,7 @@ class OpenPanelViewController: NSViewController {
 		super.awakeFromNib()
 		// Do view setup here.
 		
-		let fileTypeSelectionMenu = popUp.menu;
+		if let fileTypeSelectionMenu = popUp.menu {
 		let moreThanTwoTypes = hasMoreThanTwoTypes();
 		if (moreThanTwoTypes) {
 			let mi0 = NSMenuItem(title: "All Openable Files", action: "selectUTI:", keyEquivalent: "")
@@ -315,6 +315,7 @@ class OpenPanelViewController: NSViewController {
 			mi.tag = i
 			mi.target = self
 			fileTypeSelectionMenu.addItem(mi)
+		}
 		}
 		popUp.selectItemAtIndex(0)
 	}

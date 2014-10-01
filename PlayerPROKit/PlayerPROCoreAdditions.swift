@@ -278,7 +278,7 @@ extension sData32 {
 		self.amp = 8
 		self.relNote = 0
 		self.name = BlankNameChar32
-		self.stereo = 0
+		self.stereo = false
 		self.data = 0
 	}
 	
@@ -329,7 +329,7 @@ extension sData {
 		self.amp = 8
 		self.relNote = 0
 		self.name = BlankNameChar32
-		self.stereo = 0
+		self.stereo = false
 		self.data = nil
 	}
 }

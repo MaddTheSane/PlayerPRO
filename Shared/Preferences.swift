@@ -23,7 +23,7 @@ class Preferences: NSWindowController {
 	class func newPreferenceController() -> Self {
 		var ourself = self(windowNibName: "preferences")
 		var tmpControllers = [NSViewController]()
-		tmpControllers.append(SoundOutputController.newPreferenceView())
+		tmpControllers.append(SoundOutputController.newPreferenceView()!)
 		#if PLAYERPRO6
 			tmpControllers.append(PianoPreferencesController.newPreferenceView())
 			tmpControllers.append(ColorPreferenceController.newPreferenceView())
@@ -51,8 +51,8 @@ class Preferences: NSWindowController {
 	
 	private func displayViewController(vc: NSViewController) {
 		//try to end editing
-		let w = box.window;
-		let ended = w!.makeFirstResponder(w)
+		let w = box.window!
+		let ended = w.makeFirstResponder(w)
 		
 		if (!ended) {
 			NSBeep();
@@ -63,34 +63,36 @@ class Preferences: NSWindowController {
 		var v = vc.view;
 		
 		//Compute the new window frame
-		var currentSize = box.contentView.frame.size
+		var currentSize = (box.contentView as NSView).frame.size
 		var newSize = v.frame.size;
 		var deltaWidth = newSize.width - currentSize.width;
 		var deltaHeight = newSize.height - currentSize.height;
-		var windowFrame = w!.frame;
+		var windowFrame = w.frame;
 		windowFrame.size.height += deltaHeight;
 		windowFrame.origin.y -= deltaHeight;
 		windowFrame.size.width += deltaWidth;
 		
 		//Clear the box for resizing
 		box.contentView = nil
-		w!.setFrame(windowFrame, display: true, animate: true)
+		w.setFrame(windowFrame, display: true, animate: true)
 		
 		box.contentView = v;
 	}
 
-	override var windowNibName: String {get {
-		return "preferences"
-		}}
+	override var windowNibName: String {
+		get {
+			return "preferences"
+		}
+	}
 	
     override func awakeFromNib() {
         super.awakeFromNib()
     
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-		let menu = popUp.menu
+		let menu = popUp.menu!
 		
 		for (i, vc) in enumerate(viewControllers) {
-			let mi = NSMenuItem(title: vc.title, action: "changeViewController:", keyEquivalent: "")
+			let mi = NSMenuItem(title: vc.title!, action: "changeViewController:", keyEquivalent: "")
 			mi.tag = i
 			menu.addItem(mi)
 		}

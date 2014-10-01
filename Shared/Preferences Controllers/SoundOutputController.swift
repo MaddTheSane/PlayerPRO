@@ -10,20 +10,23 @@ import Cocoa
 import PlayerPROCore
 import PlayerPROKit
 
-class SoundOutputController: SoundSettingsViewController, SoundSettingsViewControllerDelegate, PPPreferenceObject {
+final class SoundOutputController: SoundSettingsViewController, SoundSettingsViewControllerDelegate, PPPreferenceObject {
 	let preferenceIdentifier = PPSoundSettPrefID
 	
-	class func newPreferenceView() -> Self {
+	class func newPreferenceView() -> Self? {
 		return self.newSoundSettingWindow()
 	}
 	
-	override class func newSoundSettingWindow() -> Self {
-		var ourself = self()
+	override class func newSoundSettingWindow() -> Self? {
+		if let ourself = self(nibName: "PPSoundSettingsViewController", bundle: NSBundle(forClass: SoundSettingsViewController.self)) {
 		ourself.delegate = (ourself as SoundOutputController)
 		var aTitle = NSLocalizedString("Sound Output", tableName:"PreferenceNames", comment: "Sound Output");
 		ourself.title = aTitle
 		
 		return ourself
+		} else {
+			return nil
+		}
 	}
 	
 	func soundOutDriverDidChange(driv: MADSoundOutput) {

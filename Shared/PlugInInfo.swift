@@ -37,7 +37,7 @@ class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
 		plugType = pt
 		plugURL = pu
 		if let tmpBundle = NSBundle(URL: pu) {
-			let tmpCopy: AnyObject? = tmpBundle.infoDictionary["NSHumanReadableCopyright"]
+			let tmpCopy: AnyObject? = tmpBundle.infoDictionary!["NSHumanReadableCopyright"]
 			if let acopy: AnyObject = tmpCopy {
 				plugCopyright = acopy as String
 			} else {
