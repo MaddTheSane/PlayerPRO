@@ -29,10 +29,10 @@ class PlugInInfoController: NSWindowController {
 		
 		// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 		
-		nameField.stringValue = self.info.plugName
-		authorField.stringValue = self.info.authorName
-		typeField.stringValue = self.info.plugType
-		theCopyrightField.stringValue = self.info.plugCopyright
+		nameField.stringValue = info.plugName
+		authorField.stringValue = info.authorName
+		typeField.stringValue = info.plugType
+		theCopyrightField.stringValue = info.plugCopyright
 		let plugImage = NSWorkspace.sharedWorkspace().iconForFile(info.plugURL.path!)
 		plugImage.size = plugImSize
 		pluginImage.image = plugImage

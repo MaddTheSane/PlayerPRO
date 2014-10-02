@@ -594,6 +594,7 @@ typedef struct __VSTEffect {
 #endif
 
 typedef struct MADDriverRec MADDriverRec;
+typedef struct MADDriverRec *MADDriverRef;
 
 /********************						***********************/
 /*** 					   FUNCTIONS							***/
@@ -719,27 +720,27 @@ PPEXPORT bool				MADSoundDriverIsAvalable(MADSoundOutput theDriver);
 PPEXPORT MADSoundOutputBit	MADSoundDriverList();
 
 #pragma mark -
-PPEXPORT MADErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRec** returnDriver);		// Music Driver initialization and memory allocation
-PPEXPORT MADErr	MADDisposeDriver(MADDriverRec *MDriver);											// Dispose the music driver, use it after RInitMusic()
+PPEXPORT MADErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRef* returnDriver);		// Music Driver initialization and memory allocation
+PPEXPORT MADErr	MADDisposeDriver(MADDriverRef MDriver);											// Dispose the music driver, use it after RInitMusic()
 
-PPEXPORT MADErr	MADChangeDriverSettings(MADDriverSettings *DriverInitParam, MADDriverRec** returnDriver);
+PPEXPORT MADErr	MADChangeDriverSettings(MADDriverSettings *DriverInitParam, MADDriverRef* returnDriver);
 
-PPEXPORT MADDriverSettings MADGetDriverSettings(const MADDriverRec *theDriver);
+PPEXPORT MADDriverSettings MADGetDriverSettings(const MADDriverRef theDriver);
 
-PPEXPORT MADErr	MADStartDriver(MADDriverRec *MDriver);										// NEW - Activates the sound generating procedure (interruption)
-PPEXPORT MADErr	MADStopDriver(MADDriverRec *MDriver);										// NEW - DEActivates the sound generating procedure (interruption)
+PPEXPORT MADErr	MADStartDriver(MADDriverRef MDriver);										// NEW - Activates the sound generating procedure (interruption)
+PPEXPORT MADErr	MADStopDriver(MADDriverRef MDriver);										// NEW - DEActivates the sound generating procedure (interruption)
 
-PPEXPORT MADErr	MADPlayMusic(MADDriverRec *MDriver);										// NEW - Read and play current music in memory - Call MADStartInterruption BEFORE
-PPEXPORT MADErr	MADStopMusic(MADDriverRec *MDriver);										// NEW - Stop reading current music in memory, Use MADCleanDriver to stop sounds
-PPEXPORT bool MADIsPlayingMusic(MADDriverRec *driver);									// NEW - See if PlayerPRO is playing music
+PPEXPORT MADErr	MADPlayMusic(MADDriverRef MDriver);										// NEW - Read and play current music in memory - Call MADStartInterruption BEFORE
+PPEXPORT MADErr	MADStopMusic(MADDriverRef MDriver);										// NEW - Stop reading current music in memory, Use MADCleanDriver to stop sounds
+PPEXPORT bool MADIsPlayingMusic(MADDriverRef driver);									// NEW - See if PlayerPRO is playing music
 
-PPEXPORT void	MADCleanDriver(MADDriverRec *intDriver);									// Clean the driver : stop playing sounds
+PPEXPORT void	MADCleanDriver(MADDriverRef intDriver);									// Clean the driver : stop playing sounds
 
-PPEXPORT MADErr	MADReset(MADDriverRec *MDriver);											// Reset the current music at the start position
-PPEXPORT MADErr	MADGetMusicStatus(MADDriverRec *MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
-PPEXPORT MADErr	MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus(0, 100, 50) = go to the middle of the music
+PPEXPORT MADErr	MADReset(MADDriverRef MDriver);											// Reset the current music at the start position
+PPEXPORT MADErr	MADGetMusicStatus(MADDriverRef MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
+PPEXPORT MADErr	MADSetMusicStatus(MADDriverRef MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus(0, 100, 50) = go to the middle of the music
 
-PPEXPORT MADErr	MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char* missingPlugins);
+PPEXPORT MADErr	MADAttachDriverToMusic(MADDriverRef driver, MADMusic *music, char* missingPlugins);
 
 PPEXPORT MADErr	MADLoadMusicPtr(MADMusic **music, char *myPtr);								// MAD ONLY - Load a MAD char* into memory, you can free() your char* after this call
 
@@ -763,14 +764,14 @@ PPEXPORT MADErr	MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type
 PPEXPORT MADErr	MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD);
 #endif
 
-PPEXPORT MADErr	MADDisposeMusic(MADMusic **, MADDriverRec *MDriver);								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
+PPEXPORT MADErr	MADDisposeMusic(MADMusic **, MADDriverRef MDriver);								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
 
-PPEXPORT void	MADChangeTracks(MADDriverRec *MDriver, short);				// Change current tracks number of the music driver
+PPEXPORT void	MADChangeTracks(MADDriverRef MDriver, short);				// Change current tracks number of the music driver
 PPEXPORT Cmd*	GetMADCommand(short		position,						// Extract a Command from a PatData structure
 							  short		channel,
 							  PatData*	aPatData);
 
-PPEXPORT MADErr	MADPlaySoundData(MADDriverRec	*MDriver,
+PPEXPORT MADErr	MADPlaySoundData(MADDriverRef	MDriver,
 								 const char		*soundPtr,				// Sound Pointer to data
 								 size_t			size,					// Sound size in bytes
 								 int			channel,				// channel ID on which to play sound
@@ -796,22 +797,22 @@ PPEXPORT MADErr	MADPlaySoundDataSYNC(MADDriverRec	*MDriver,
 
 #pragma mark MAD Driver functions
 	
-PPEXPORT bool MADIsDonePlaying(MADDriverRec *MDriver);
+PPEXPORT bool MADIsDonePlaying(MADDriverRef MDriver);
 	
-PPEXPORT void	MADBeginExport(MADDriverRec *driver);
-PPEXPORT void	MADEndExport(MADDriverRec *driver);
-PPEXPORT bool	MADIsExporting(MADDriverRec *driver);
+PPEXPORT void	MADBeginExport(MADDriverRef driver);
+PPEXPORT void	MADEndExport(MADDriverRef driver);
+PPEXPORT bool	MADIsExporting(MADDriverRef driver);
 
 PPEXPORT bool	MADWasReading(MADDriverRec *driver) DEPRECATED_ATTRIBUTE;
 PPEXPORT void	MADSetReading(MADDriverRec *driver, bool toSet) DEPRECATED_ATTRIBUTE;
 
-PPEXPORT int	MADAudioLength(MADDriverRec *theRec);
+PPEXPORT int	MADAudioLength(MADDriverRef theRec);
 
-PPEXPORT size_t MADGetMusicSize(const MADMusic*);
+PPEXPORT size_t MADGetMusicSize(const MADMusic* musSize);
 
-PPEXPORT void	MADDriverClearChannel(MADDriverRec *theRec, int channel);
+PPEXPORT void	MADDriverClearChannel(MADDriverRef theRec, int channel);
 
-PPEXPORT bool MADDriverChannelIsDonePlaying(MADDriverRec *theRec, int chan);
+PPEXPORT bool	MADDriverChannelIsDonePlaying(MADDriverRef theRec, int chan);
 
 #pragma mark General Functions
 

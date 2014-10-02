@@ -670,7 +670,7 @@ MADErr MADCreateTiming(MADDriverRec *intDriver)
 	return MADNoErr;
 }
 
-MADDriverSettings MADGetDriverSettings(const MADDriverRec *theDriver)
+MADDriverSettings MADGetDriverSettings(const MADDriverRef theDriver)
 {
 	return theDriver->DriverSettings;
 }

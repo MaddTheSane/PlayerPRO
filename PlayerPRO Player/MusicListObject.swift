@@ -55,7 +55,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 			if let ourFileIcon = stashedFileIcon {
 				return ourFileIcon
 			}
-			let image = NSWorkspace.sharedWorkspace().iconForFile(musicURL.path!);
+			let image = NSWorkspace.sharedWorkspace().iconForFile(musicURL.path!)
 			image.size = NSSize(width: 16, height: 16)
 			stashedFileIcon = image
 			return stashedFileIcon!
@@ -71,11 +71,11 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 				var err: NSError? = nil;
 				
 				if (!musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)) {
-					println("PPMusicListObject: Could not find out if extension is hidden in file \(musicURL.path), error: \(err!.localizedDescription)");
-					stashedFileName = musicURL.lastPathComponent;
+					println("PPMusicListObject: Could not find out if extension is hidden in file \(musicURL.path), error: \(err!.localizedDescription)")
+					stashedFileName = musicURL.lastPathComponent
 				} else {
-					let retStr = val! as String;
-					stashedFileName = retStr;
+					let retStr = val! as NSString as String
+					stashedFileName = retStr
 				}
 			}
 			return stashedFileName!

@@ -272,8 +272,8 @@ extension sData32 {
 		self.size = 0
 		self.loopBeg = 0
 		self.loopSize = 0
-		self.vol = sData.MaxVolume
-		self.c2spd = sData.NoFineTune
+		self.vol = sData.maximumVolume
+		self.c2spd = sData.noFineTune
 		self.loopType = .Classic
 		self.amp = 8
 		self.relNote = 0
@@ -300,10 +300,12 @@ extension sData32 {
 }
 
 extension sData {
-	public static let MaxVolume: MADByte = 64
-	public static let NoFineTune: UInt16 = 8363
+	public static let noFineTune: UInt16 = 8363
+	public static let minimumVolume: MADByte = 0
+	public static let maximumVolume: MADByte = 64
 
-	public var toSData32 : sData32 { get {
+	public var toSData32 : sData32 {
+		get {
 		var toRet = sData32()
 		toRet.size = self.size
 		toRet.loopBeg = self.loopBeg
@@ -317,14 +319,15 @@ extension sData {
 		toRet.stereo = self.stereo
 		
 		return toRet
-		}}
+		}
+	}
 	
 	public init() {
 		self.size = 0
 		self.loopBeg = 0
 		self.loopSize = 0
-		self.vol = sData.MaxVolume
-		self.c2spd = sData.NoFineTune
+		self.vol = sData.maximumVolume
+		self.c2spd = sData.noFineTune
 		self.loopType = .Classic
 		self.amp = 8
 		self.relNote = 0

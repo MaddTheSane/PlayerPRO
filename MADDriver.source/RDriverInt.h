@@ -113,8 +113,8 @@ PPEXPORT MADErr	AddSoundToMAD(char			*theSound,
 
 PPEXPORT MADErr	MADCopyCurrentPartition(MADMusic *theNewMAD);
 PPEXPORT MADErr	MADLoadMADFileCString(MADMusic **, const char *fName);
-int	DoVolPanning(short, Channel *ch, MADDriverRec *intDriver);
-int	DoVolPanning256(short, Channel *ch, MADDriverRec *intDriver, bool);
+int		DoVolPanning(short, Channel *ch, MADDriverRec *intDriver);
+int		DoVolPanning256(short, Channel *ch, MADDriverRec *intDriver, bool);
 void	MADKeyOFF(MADDriverRec *MDriver, short track);
 
 PPEXPORT size_t	MADMinimize(MADMusic*);

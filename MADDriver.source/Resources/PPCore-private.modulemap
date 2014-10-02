@@ -1,4 +1,4 @@
-explicit module PlayerPROCore.DriverInt {
+explicit module PlayerPROCore.DriverInternal {
 	header "RDriverInt.h"
 	use Defines
 	export *
