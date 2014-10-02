@@ -17,8 +17,9 @@
 //	Internet: 		rosset@dial.eunet.ch
 /********************						***********************/
 
-#include "PlayerPROCore.h"
+#include "RDriver.h"
 #include "MADPlug.h"
+#include "RDriverInt.h"
 
 sData* inMADCreateSample();
 

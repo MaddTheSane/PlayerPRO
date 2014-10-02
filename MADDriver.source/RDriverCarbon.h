@@ -8,7 +8,7 @@
 
 #ifndef PPMacho_RDriverCarbon_h
 #define PPMacho_RDriverCarbon_h
-#include <PlayerPROCore/RDriver.h>
+#include "RDriver.h"
 
 #if defined(_MAC_H) && !TARGET_OS_IPHONE
 

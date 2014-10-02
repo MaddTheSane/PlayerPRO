@@ -6,7 +6,7 @@
 //
 //
 
-#include <PlayerPROCore/RDriverCarbon.h>
+#include "RDriverCarbon.h"
 
 #if defined(_MAC_H) && !TARGET_OS_IPHONE
 
