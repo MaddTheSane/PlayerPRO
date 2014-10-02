@@ -79,27 +79,27 @@ extern "C" {
 #endif
 
 //TODO: either migrate all these functions to PlayerPROCore or remove them from the header.
-void	AllNoteOff(MADDriverRec *intDriver);
+void	AllNoteOff(MADDriverRef intDriver);
 bool	MADIsPressed(unsigned char* km2, unsigned short k);
-MADErr	MADCreateTiming(MADDriverRec *intDriver);
-MADErr	MADCreateDriverBuffer(MADDriverRec *intDriver);
-void	MADDisposeDriverBuffer(MADDriverRec *intDriver);
-MADErr	MADCreateReverb(MADDriverRec *intDriver);
-void	MADDisposeReverb(MADDriverRec *intDriver);
-MADErr	MADCreateMicroDelay(MADDriverRec *intDriver);
-MADErr	DBSndClose(MADDriverRec *inMADDriver);
-void	StopChannel(MADDriverRec *inMADDriver);
-void	PlayChannel(MADDriverRec *inMADDriver);
-void	MADPurgeTrack(MADDriverRec *intDriver);
-PPEXPORT bool DirectSave(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
-PPEXPORT bool DirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
-MADErr MADCreateVibrato(MADDriverRec *MDriver);
+MADErr	MADCreateTiming(MADDriverRef intDriver);
+MADErr	MADCreateDriverBuffer(MADDriverRef intDriver);
+void	MADDisposeDriverBuffer(MADDriverRef intDriver);
+MADErr	MADCreateReverb(MADDriverRef intDriver);
+void	MADDisposeReverb(MADDriverRef intDriver);
+MADErr	MADCreateMicroDelay(MADDriverRef intDriver);
+MADErr	DBSndClose(MADDriverRef inMADDriver);
+void	StopChannel(MADDriverRef inMADDriver);
+void	PlayChannel(MADDriverRef inMADDriver);
+void	MADPurgeTrack(MADDriverRef intDriver);
+PPEXPORT bool DirectSave(char *myPtr, MADDriverSettings *driverType, MADDriverRef intDriver);
+PPEXPORT bool DirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRef intDriver);
+MADErr MADCreateVibrato(MADDriverRef MDriver);
 PPEXPORT PatData* DecompressPartitionMAD1(MADMusic *MDriver, PatData* myPat);
 PPEXPORT PatData* CompressPartitionMAD1(MADMusic *MDriver, PatData* myPat);
-PPEXPORT void 	GenerateSound(MADDriverRec *intDriver);
-PPEXPORT int	GetOldPeriod(short note, int c2spd, MADDriverRec *intDriver);
+PPEXPORT void 	GenerateSound(MADDriverRef intDriver);
+PPEXPORT int	GetOldPeriod(short note, int c2spd, MADDriverRef intDriver);
 PPEXPORT MADErr	MADResetInstrument(InstrData *curIns);
-PPEXPORT void	MADCheckSpeed(MADMusic *MDriver, MADDriverRec *intDriver);
+PPEXPORT void	MADCheckSpeed(MADMusic *MDriver, MADDriverRef intDriver);
 PPEXPORT MADErr	AddSoundToMAD(char			*theSound,
 							  int			lS,
 							  int			lE,
@@ -113,37 +113,37 @@ PPEXPORT MADErr	AddSoundToMAD(char			*theSound,
 
 PPEXPORT MADErr	MADCopyCurrentPartition(MADMusic *theNewMAD);
 PPEXPORT MADErr	MADLoadMADFileCString(MADMusic **, const char *fName);
-int		DoVolPanning(short, Channel *ch, MADDriverRec *intDriver);
-int		DoVolPanning256(short, Channel *ch, MADDriverRec *intDriver, bool);
+int		DoVolPanning(short, Channel *ch, MADDriverRef intDriver);
+int		DoVolPanning256(short, Channel *ch, MADDriverRef intDriver, bool);
 void	MADKeyOFF(MADDriverRec *MDriver, short track);
 
 PPEXPORT size_t	MADMinimize(MADMusic*);
-void	MADPurgeTrackIfInstru(MADDriverRec *intDriver, short instru);
+void	MADPurgeTrackIfInstru(MADDriverRef intDriver, short instru);
 void	MADTickLoopFill8(Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, size_t size, short left, short right);
-void	MADTickLoop8(size_t size, Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, MADDriverRec *intDriver);
-void	MADTickRemoverStart8(Channel *curVoice, int	*ASCBuffer1, int *ASCBuffer2, MADDriverRec *intDriver);
-void	MADTickRemoverLoop16(int size, Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, MADDriverRec *intDriver, int diffL, int diffR);
-void	MADTickRemoverLoop8(int size, Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, MADDriverRec *intDriver, int diff);
+void	MADTickLoop8(size_t size, Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, MADDriverRef intDriver);
+void	MADTickRemoverStart8(Channel *curVoice, int	*ASCBuffer1, int *ASCBuffer2, MADDriverRef intDriver);
+void	MADTickRemoverLoop16(int size, Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, MADDriverRef intDriver, int diffL, int diffR);
+void	MADTickRemoverLoop8(int size, Channel *curVoice, int *ASCBuffer1, int *ASCBuffer2, MADDriverRef intDriver, int diff);
 
-short	MADGetNextReader(MADMusic *music, MADDriverRec *intDriver, short cur, short *pat);
-PPEXPORT MADErr	MADCleanCurrentMusic(MADMusic *MDriver, MADDriverRec *intDriver);
-void	CloseEffect(Channel *ch, short call, MADDriverRec *intDriver);
+short	MADGetNextReader(MADMusic *music, MADDriverRef intDriver, short cur, short *pat);
+PPEXPORT MADErr	MADCleanCurrentMusic(MADMusic *MDriver, MADDriverRef intDriver);
+void	CloseEffect(Channel *ch, short call, MADDriverRef intDriver);
 int		Interpolate(int p, int p1, int p2, int v1, int v2);
-int		InterpolateEnv(int p, EnvRec *a,EnvRec *b);
-void	ProcessFadeOut(Channel *ch, MADDriverRec *intDriver);
-void	ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, bool);
+int		InterpolateEnv(int p, EnvRec *a, EnvRec *b);
+void	ProcessFadeOut(Channel *ch, MADDriverRef intDriver);
+void	ProcessEnvelope(Channel *ch, MADDriverRef intDriver, bool);
 void	StartEnvelope(Channel *ch);
 void	StartPanning(Channel *ch);
-void	SetUpCmdEffect(Channel *ch, MADDriverRec *intDriver);
-MADErr	MADInitEqualizer(MADDriverRec *intDriver);
-void	MADCloseEqualizer(MADDriverRec *intDriver);
+void	SetUpCmdEffect(Channel *ch, MADDriverRef intDriver);
+MADErr	MADInitEqualizer(MADDriverRef intDriver);
+void	MADCloseEqualizer(MADDriverRef intDriver);
 void	MADrealft(double *data,int n,int isign);
-void	MADCallFFT(sData *SData, double *filter, MADDriverRec *intDriver, bool);
-void	FFT16S(short *SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, bool);
-void	FFT8S(char *SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, bool);
-void	IntNoteOff(Channel *curVoice, MADDriverRec *intDriver);
+void	MADCallFFT(sData *SData, double *filter, MADDriverRef intDriver, bool);
+void	FFT16S(short *SData, size_t size, double *filter, MADDriverRef intDriver, short nochan, bool);
+void	FFT8S(char *SData, size_t size, double *filter, MADDriverRef intDriver, short nochan, bool);
+void	IntNoteOff(Channel *curVoice, MADDriverRef intDriver);
 bool	NewMADCommand(Cmd *theNoteCmd);
-short	FindAFreeChannel(MADDriverRec *intDriver);
+short	FindAFreeChannel(MADDriverRef intDriver);
 
 // Effects.c
 
@@ -152,9 +152,9 @@ void ConvertTo64Rows(MADMusic *music);
 
 // MIDI
 void InitMIDIHarware(void);
-void OpenMIDIHardware(MADDriverRec *rec);
+void OpenMIDIHardware(MADDriverRef rec);
 void CloseMIDIHarware(void);
-void SendMIDIClock(MADDriverRec *intDriver, MADByte MIDIByte);
+void SendMIDIClock(MADDriverRef intDriver, MADByte MIDIByte);
 
 #ifdef __cplusplus
 }
