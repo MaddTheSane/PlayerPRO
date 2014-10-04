@@ -8,26 +8,21 @@ framework module PlayerPROCore {
 
 	module FileUtilities {
 		header "FileUtils.h"
-		use Defines
 		export *
 	}
 	
 	module MADStructures {
 		header "MAD.h"
-		use Defines
 		export *
 	}
 	
 	module Driver {
 		header "RDriver.h"
-		use Defines
-		use MADStructures
 		export *
 	}
 	
 	module PlugIns {
 		header "MADPlug.h"
-		use Driver
 		export *
 	}
 	

@@ -1,12 +1,10 @@
 explicit module PlayerPROCore.DriverInternal {
 	header "RDriverInt.h"
-	use Defines
 	export *
 }
 
 explicit module PlayerPROCore.MADDriver {
 	private header "MADDriver.h"
-	use Driver
 	export *
 }
 
