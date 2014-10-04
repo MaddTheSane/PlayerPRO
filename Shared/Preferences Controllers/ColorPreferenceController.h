@@ -9,10 +9,13 @@
 #import <Cocoa/Cocoa.h>
 #import "PPPreferences.h"
 
+@class PPColorPreferenceObject;
+
 @interface ColorPreferenceController : NSViewController <PPPreferenceObject>
 @property (weak) IBOutlet NSCollectionView *colorWells;
-@property NSMutableArray *colors;
+@property (copy) NSArray *colors;
 
 - (IBAction)changeColorWell:(id)sender;
 
+- (void)replaceObjectInColorsAtIndex:(NSInteger)index withObject:(PPColorPreferenceObject*)object;
 @end

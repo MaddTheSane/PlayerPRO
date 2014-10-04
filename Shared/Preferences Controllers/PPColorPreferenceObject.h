@@ -10,7 +10,7 @@
 
 @interface PPColorPreferenceObject : NSObject
 @property (strong) NSColor *color;
-@property NSInteger colorIndex;
+@property (readonly) NSInteger colorIndex;
 
 - (instancetype)initWithColor:(NSColor*)aColor index:(NSInteger)idx;
 

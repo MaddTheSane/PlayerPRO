@@ -163,9 +163,6 @@
 	[PPDEArgument setState:[defaults boolForKey:PPDEShowArgument]];
 	[PPDEVolume setState:[defaults boolForKey:PPDEShowVolume]];
 	
-	//[PPDEMarkerSelect setState:[defaults boolForKey:PPDEShowMarkers]];
-	[PPDEMarkerOffset setStringValue:[defaults stringForKey:PPDEMarkerOffsetPref]];
-	[PPDEMarkerLoop setStringValue:[defaults stringForKey:PPDEMarkerLoopPref]];
 	[PPDEMarkerColor setColor:[NSColor PPDecodeColorWithData:[defaults dataForKey:PPDEMarkerColorPref]]];
 	
 	[PPDEMouseClickControl setState:[defaults boolForKey:PPDEMouseClickControlPref]];

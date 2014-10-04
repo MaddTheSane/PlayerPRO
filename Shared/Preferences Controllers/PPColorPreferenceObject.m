@@ -8,6 +8,10 @@
 
 #import "PPColorPreferenceObject.h"
 
+@interface PPColorPreferenceObject ()
+@property (readwrite, setter=privateSetIndex:) NSInteger colorIndex;
+@end
+
 @implementation PPColorPreferenceObject
 
 - (instancetype)initWithColor:(NSColor*)aColor index:(NSInteger)idx

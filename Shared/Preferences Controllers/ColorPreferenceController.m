@@ -12,7 +12,24 @@
 #import "PPColorPreferenceObject.h"
 
 @implementation ColorPreferenceController
-@synthesize colors;
+{
+	NSMutableArray *_colors;
+}
+
+- (NSArray*)colors
+{
+	return [NSArray arrayWithArray:_colors];
+}
+
+- (void)setColors:(NSArray *)colors
+{
+	_colors = [colors mutableCopy];
+}
+
+- (void)replaceObjectInColorsAtIndex:(NSInteger)index withObject:(PPColorPreferenceObject*)object
+{
+	_colors[index] = object;
+}
 
 + (instancetype)newPreferenceView
 {
@@ -47,18 +64,19 @@ colorObj = [[PPColorPreferenceObject alloc] initWithColor:[NSColor PPDecodeColor
 	self.colors = tmpColor;
 }
 
-#if 0
-- (void)setPersonModelArray:(NSMutableArray *)a {
-	personModelArray = a;
-}
-
-- (NSArray*)colorsModelArray {
-	return personModelArray;
-}
-#endif
-
 - (IBAction)changeColorWell:(id)sender
 {
+	NSColor *sentColor = [sender color];
+	NSData *encData = [sentColor PPencodeColor];
+	NSString *keyToChange = PPCColor1;
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:PPColorsDidChange
+														object:self
+													  userInfo:@{PPColorChangedValue: @(0),
+																 PPColorChangedColor: sentColor}];
+	
+	[[NSUserDefaults standardUserDefaults] setObject:encData forKey:keyToChange];
+
 #if 0
 	NSString *keyToChange;
 #define PPCOLOR(num) } else if (sender == colorWell ## num) \
