@@ -247,75 +247,75 @@ class OpenPanelViewController: NSViewController {
 		// Do view setup here.
 		
 		if let fileTypeSelectionMenu = popUp.menu {
-		let moreThanTwoTypes = hasMoreThanTwoTypes();
-		if (moreThanTwoTypes) {
-			let mi0 = NSMenuItem(title: "All Openable Files", action: "selectUTI:", keyEquivalent: "")
-			mi0.tag = utiType.allType.rawValue
-			mi0.target = self
-			fileTypeSelectionMenu.addItem(mi0)
-			
-			fileTypeSelectionMenu.addItem(NSMenuItem.separatorItem())
-		}
-		
-		for item in utiObjects {
-			if (item.theUtiType == .tracker) {
-				let mi0 = NSMenuItem(title: "All Trackers", action: "selectUTI:", keyEquivalent: "")
-				mi0.tag = utiType.trackerType.rawValue
-				mi0.target = self
-				fileTypeSelectionMenu.addItem(mi0)
-				
-				break;
-			}
-		}
-		
-		for item in utiObjects {
-			if (item.theUtiType == .playlist) {
-				let mi0 = NSMenuItem(title: "All Playlists", action: "selectUTI:", keyEquivalent: "")
-				mi0.tag = utiType.playlistType.rawValue
-				mi0.target = self
-				fileTypeSelectionMenu.addItem(mi0)
-				
-				break;
-			}
-		}
-		
-		for item in utiObjects {
-			if (item.theUtiType == .instrument) {
-				let mi0 = NSMenuItem(title: "All Instruments", action: "selectUTI:", keyEquivalent: "")
-				mi0.tag = utiType.instrumentType.rawValue
-				mi0.target = self
-				fileTypeSelectionMenu.addItem(mi0)
-				
-				break;
-			}
-		}
-		
-		for item in utiObjects {
-			if (item.theUtiType == .other) {
-				let mi0 = NSMenuItem(title: "All Other", action: "selectUTI:", keyEquivalent: "")
-				mi0.tag = utiType.otherType.rawValue
-				mi0.target = self
-				fileTypeSelectionMenu.addItem(mi0)
-				
-				break;
-			}
-		}
-		fileTypeSelectionMenu.addItem(NSMenuItem.separatorItem())
-		
-		for (i, curItem) in enumerate(utiObjects)  {
+			let moreThanTwoTypes = hasMoreThanTwoTypes();
 			if (moreThanTwoTypes) {
-				if (i - 1 >= 0) {
-					let prevItem = utiObjects[i - 1];
-					if (curItem.theUtiType != prevItem.theUtiType) {
-						fileTypeSelectionMenu.addItem(NSMenuItem.separatorItem())
-					}
+				let mi0 = NSMenuItem(title: "All Openable Files", action: "selectUTI:", keyEquivalent: "")
+				mi0.tag = utiType.allType.rawValue
+				mi0.target = self
+				fileTypeSelectionMenu.addItem(mi0)
+				
+				fileTypeSelectionMenu.addItem(NSMenuItem.separatorItem())
+			}
+			
+			for item in utiObjects {
+				if (item.theUtiType == .tracker) {
+					let mi0 = NSMenuItem(title: "All Trackers", action: "selectUTI:", keyEquivalent: "")
+					mi0.tag = utiType.trackerType.rawValue
+					mi0.target = self
+					fileTypeSelectionMenu.addItem(mi0)
+					
+					break;
 				}
 			}
-			let mi = NSMenuItem(title: curItem.name, action: "selectUTI:", keyEquivalent: "")
-			mi.tag = i
-			mi.target = self
-			fileTypeSelectionMenu.addItem(mi)
-		}
+			
+			for item in utiObjects {
+				if (item.theUtiType == .playlist) {
+					let mi0 = NSMenuItem(title: "All Playlists", action: "selectUTI:", keyEquivalent: "")
+					mi0.tag = utiType.playlistType.rawValue
+					mi0.target = self
+					fileTypeSelectionMenu.addItem(mi0)
+					
+					break;
+				}
+			}
+			
+			for item in utiObjects {
+				if (item.theUtiType == .instrument) {
+					let mi0 = NSMenuItem(title: "All Instruments", action: "selectUTI:", keyEquivalent: "")
+					mi0.tag = utiType.instrumentType.rawValue
+					mi0.target = self
+					fileTypeSelectionMenu.addItem(mi0)
+					
+					break;
+				}
+			}
+			
+			for item in utiObjects {
+				if (item.theUtiType == .other) {
+					let mi0 = NSMenuItem(title: "All Other", action: "selectUTI:", keyEquivalent: "")
+					mi0.tag = utiType.otherType.rawValue
+					mi0.target = self
+					fileTypeSelectionMenu.addItem(mi0)
+					
+					break;
+				}
+			}
+			fileTypeSelectionMenu.addItem(NSMenuItem.separatorItem())
+			
+			for (i, curItem) in enumerate(utiObjects)  {
+				if (moreThanTwoTypes) {
+					if (i - 1 >= 0) {
+						let prevItem = utiObjects[i - 1];
+						if (curItem.theUtiType != prevItem.theUtiType) {
+							fileTypeSelectionMenu.addItem(NSMenuItem.separatorItem())
+						}
+					}
+				}
+				let mi = NSMenuItem(title: curItem.name, action: "selectUTI:", keyEquivalent: "")
+				mi.tag = i
+				mi.target = self
+				fileTypeSelectionMenu.addItem(mi)
+			}
 		}
 		popUp.selectItemAtIndex(0)
 	}
@@ -341,7 +341,7 @@ class OpenPanelViewController: NSViewController {
 			return false;
 		}
 		
-		for (var i = 1; i < utiCount; i++) {
+		for i in 1 ..< utiCount {
 			let obj1 = utiObjects[i - 1];
 			let obj2 = utiObjects[i];
 			if (obj1.theUtiType != obj2.theUtiType) {
