@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6206.8" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6249" systemVersion="14A379b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.8"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6249"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ColorPreferenceController">
@@ -50,7 +51,7 @@
                 <constraint firstItem="m8g-3e-Qm6" firstAttribute="leading" secondItem="1" secondAttribute="leading" constant="20" symbolic="YES" id="hMp-sW-yXp"/>
             </constraints>
         </customView>
-        <arrayController objectClassName="PPColorPreferenceObject" id="du0-sO-kxN" userLabel="Color Array Controller">
+        <arrayController objectClassName="PPColorPreferenceObject" selectsInsertedObjects="NO" id="du0-sO-kxN" userLabel="Color Array Controller">
             <declaredKeys>
                 <string>color</string>
                 <string>colorIndex</string>

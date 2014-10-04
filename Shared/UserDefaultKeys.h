@@ -18,6 +18,8 @@ extern NSString * const PPMiscPreferencesDidChange;
 extern NSString * const PPColorsDidChange;
 extern NSString * const PPMusicDidChange;
 extern NSString * const PPDriverDidChange;
+extern NSString * const PPColorChangedColor;
+extern NSString * const PPColorChangedValue;
 
 #pragma mark UTIs
 extern NSString * const MADNativeUTI;

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6206.9" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6249" systemVersion="14A379b" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.9"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6249"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DigitalEditorPreferenceControler">
@@ -38,7 +39,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="4">
-                                <rect key="frame" x="16" y="32" width="91" height="18"/>
+                                <rect key="frame" x="16" y="32" width="88" height="18"/>
                                 <buttonCell key="cell" type="check" title="Instrument" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="5">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -48,7 +49,7 @@
                                 </connections>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="6">
-                                <rect key="frame" x="16" y="12" width="91" height="18"/>
+                                <rect key="frame" x="16" y="12" width="88" height="18"/>
                                 <buttonCell key="cell" type="check" title="Note" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="7">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -58,7 +59,7 @@
                                 </connections>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="8">
-                                <rect key="frame" x="111" y="32" width="85" height="18"/>
+                                <rect key="frame" x="108" y="32" width="82" height="18"/>
                                 <buttonCell key="cell" type="check" title="Effect" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="11">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -68,7 +69,7 @@
                                 </connections>
                             </button>
                             <button horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="9">
-                                <rect key="frame" x="111" y="12" width="85" height="18"/>
+                                <rect key="frame" x="108" y="12" width="82" height="18"/>
                                 <buttonCell key="cell" type="check" title="Argument" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="10">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -78,7 +79,7 @@
                                 </connections>
                             </button>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="12">
-                                <rect key="frame" x="200" y="32" width="70" height="18"/>
+                                <rect key="frame" x="194" y="32" width="68" height="18"/>
                                 <buttonCell key="cell" type="check" title="Volume" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="15">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -132,7 +133,7 @@
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="18">
-                    <rect key="frame" x="98" y="261" width="46" height="17"/>
+                    <rect key="frame" x="98" y="261" width="45" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Offset:" id="19">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -140,21 +141,23 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="20" userLabel="Offset amount">
-                    <rect key="frame" x="150" y="258" width="34" height="22"/>
+                    <rect key="frame" x="149" y="258" width="34" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="34" id="fyG-M5-MUe"/>
                     </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="0" drawsBackground="YES" id="21">
+                        <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" minimumIntegerDigits="0" maximumIntegerDigits="42" id="jB1-xa-IsR"/>
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                     <connections>
+                        <binding destination="Oow-qz-cHS" name="value" keyPath="values.Digital Editor Marker Offset" id="1Sk-vt-59T"/>
                         <outlet property="nextKeyView" destination="24" id="99"/>
                     </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="22">
-                    <rect key="frame" x="190" y="261" width="40" height="17"/>
+                    <rect key="frame" x="189" y="261" width="40" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Loop:" id="23">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -162,18 +165,22 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="24" userLabel="Loop amount">
-                    <rect key="frame" x="236" y="258" width="27" height="22"/>
+                    <rect key="frame" x="235" y="258" width="27" height="22"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="27" id="RYW-yl-5ai"/>
                     </constraints>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="3" drawsBackground="YES" id="25">
+                        <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" minimumIntegerDigits="0" maximumIntegerDigits="42" id="wRH-1Z-Tyq"/>
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <binding destination="Oow-qz-cHS" name="value" keyPath="values.Digital Editor Marker Loop" id="XSJ-NT-Gnb"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="26">
-                    <rect key="frame" x="269" y="261" width="43" height="17"/>
+                    <rect key="frame" x="268" y="261" width="42" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Color:" id="27">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -181,7 +188,7 @@
                     </textFieldCell>
                 </textField>
                 <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="28">
-                    <rect key="frame" x="318" y="257" width="39" height="23"/>
+                    <rect key="frame" x="316" y="257" width="41" height="23"/>
                     <color key="color" red="0.05813049898" green="0.055541899059999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <action selector="changeColor:" target="-2" id="100"/>
@@ -194,7 +201,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="30">
-                                <rect key="frame" x="16" y="54" width="92" height="17"/>
+                                <rect key="frame" x="16" y="54" width="90" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Mouse click +" id="31">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>

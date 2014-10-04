@@ -95,7 +95,7 @@ PPEXPORT const CFStringRef kMadPlugModeKey;
 
 typedef struct PPInfoPlug {
 	RPlaySoundUPP	RPlaySound;
-	MADDriverRec	*driverRec;
+	MADDriverRef	driverRec;
 	OSType			fileType;
 	CFStringRef		fileUTI;
 	CFTypeRef		NSWindow;

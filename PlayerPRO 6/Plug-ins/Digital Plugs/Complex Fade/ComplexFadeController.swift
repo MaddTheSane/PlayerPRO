@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import PlayerPROCore
 import PlayerPROKit
 
 private func StringToHex(str: String) -> Int32 {

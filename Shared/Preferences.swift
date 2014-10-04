@@ -15,7 +15,7 @@ extension TagCoupling {
 	}
 }
 
-class Preferences: NSWindowController {
+final class Preferences: NSWindowController {
 	@IBOutlet weak var box:		NSBox! = nil
 	@IBOutlet weak var popUp:	NSPopUpButton! = nil
 	private var viewControllers = [NSViewController]()
@@ -100,5 +100,9 @@ class Preferences: NSWindowController {
 		//initially show the first controller
 		displayViewController(viewControllers[0])
 		popUp.selectItemAtIndex(0)
+    }
+    
+    @objc(displayViewControllerWithName:) func displayViewController(#name: String) {
+    	//TODO: implement
     }
 }
