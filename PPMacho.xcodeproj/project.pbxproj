@@ -168,6 +168,8 @@
 		55232AF711FDE5CB0041A4EC /* ClassicEditorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF611FDE5CB0041A4EC /* ClassicEditorPreferenceController.m */; };
 		55232AFA11FDE5F90041A4EC /* MidiHardwarePreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF911FDE5F90041A4EC /* MidiHardwarePreferenceController.m */; };
 		55232B0E11FDF2980041A4EC /* ColorPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55232B0D11FDF2980041A4EC /* ColorPrefs.xib */; };
+		5523AE6B19E0AFE7006FC0E0 /* PPSampleWaveformView.h in Headers */ = {isa = PBXBuildFile; fileRef = 5523AE6919E0AFE7006FC0E0 /* PPSampleWaveformView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5523AE6C19E0AFE7006FC0E0 /* PPSampleWaveformView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523AE6A19E0AFE7006FC0E0 /* PPSampleWaveformView.m */; };
 		5523EC79169358470067B22A /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5523EC7C169361A00067B22A /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */; };
 		5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */; };
@@ -2036,6 +2038,8 @@
 		55232AF811FDE5F90041A4EC /* MidiHardwarePreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MidiHardwarePreferenceController.h; sourceTree = "<group>"; };
 		55232AF911FDE5F90041A4EC /* MidiHardwarePreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MidiHardwarePreferenceController.m; sourceTree = "<group>"; };
 		55232B0D11FDF2980041A4EC /* ColorPrefs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPrefs.xib; sourceTree = "<group>"; };
+		5523AE6919E0AFE7006FC0E0 /* PPSampleWaveformView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleWaveformView.h; sourceTree = "<group>"; };
+		5523AE6A19E0AFE7006FC0E0 /* PPSampleWaveformView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSampleWaveformView.m; sourceTree = "<group>"; };
 		5523EC7A1693619F0067B22A /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "MIDI-Hardware-OSX.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "MIDI-Hardware-Stub.c"; sourceTree = "<group>"; };
 		5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDigitalPlugInObject.h; sourceTree = "<group>"; };
@@ -3830,6 +3834,8 @@
 		55453526186CD32900F69F4D /* OS X-specific code */ = {
 			isa = PBXGroup;
 			children = (
+				5523AE6919E0AFE7006FC0E0 /* PPSampleWaveformView.h */,
+				5523AE6A19E0AFE7006FC0E0 /* PPSampleWaveformView.m */,
 				55281D06199B32D400C998AF /* PPPasteboardHandling.h */,
 				5547DA5819A570820014A620 /* SoundSettingsViewController.swift */,
 				55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */,
@@ -4677,6 +4683,7 @@
 				554F087819BBAD4A005A215E /* PPPlugIns.h in Headers */,
 				55DE87BF187E051F00C36533 /* PPPatternObject_PPKPrivate.h in Headers */,
 				55281D07199B32D400C998AF /* PPPasteboardHandling.h in Headers */,
+				5523AE6B19E0AFE7006FC0E0 /* PPSampleWaveformView.h in Headers */,
 				55D2921F18AADB7100EB7A7D /* PPPatternObject_PcmdHandling.h in Headers */,
 				55C8EDE3187CC8B200CC8C1B /* PPMadCommandObject.h in Headers */,
 				551292F0163DD7CE00C2C639 /* PPLibrary.h in Headers */,
@@ -6638,6 +6645,7 @@
 				55DE87CF187E60F400C36533 /* PPFXSetObject.m in Sources */,
 				551292F1163DD7CE00C2C639 /* PPLibrary.m in Sources */,
 				558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */,
+				5523AE6C19E0AFE7006FC0E0 /* PPSampleWaveformView.m in Sources */,
 				55C8EDE4187CC8B200CC8C1B /* PPMadCommandObject.m in Sources */,
 				55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */,
 				5578C4FE17DB8A580057D11B /* PPSampleObject.m in Sources */,
