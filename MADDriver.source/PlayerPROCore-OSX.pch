@@ -2,6 +2,7 @@
 #include <tgmath.h>
 #include "MAD.h"
 #include "RDriver.h"
+#include "MADDriver.h"
 #include "MADPlug.h"
 #include "PPPrivate.h"
 

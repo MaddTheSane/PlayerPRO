@@ -49,7 +49,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	let musicURL: NSURL
 
 	#if os(OSX)
-	var stashedFileIcon: NSImage? = nil
+	private var stashedFileIcon: NSImage? = nil
 	var fileIcon: NSImage {
 		get {
 			if let ourFileIcon = stashedFileIcon {

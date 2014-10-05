@@ -11,6 +11,6 @@
 @class PPSampleObject;
 
 @interface PPSampleWaveformView : NSView
-@property (strong) PPSampleObject *sample;
+@property (nonatomic, strong) PPSampleObject *sample;
 
 @end

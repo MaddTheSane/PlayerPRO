@@ -13,6 +13,7 @@
 
 #ifdef __BLOCKS__
 #include <Block.h>
+
 static void (^MyDebugBlock)(short, const char*, const char*);
 
 void MADRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*))

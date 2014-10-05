@@ -63,7 +63,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		self.didChange(.Removal, valuesAtIndexes: theIndex, forKey: kMusicListKVO)
 	}
 	
-	func sortMusicList(#block: (lhs: MusicListObject, rhs: MusicListObject) -> Bool) {
+	@objc(sortMusicListUsingBlock:) func sortMusicList(#block: (lhs: MusicListObject, rhs: MusicListObject) -> Bool) {
 		self.willChangeValueForKey(kMusicListKVO)
 		musicList.sort(block)
 		self.didChangeValueForKey(kMusicListKVO)
