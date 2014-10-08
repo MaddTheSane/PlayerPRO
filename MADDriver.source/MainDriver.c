@@ -1042,6 +1042,9 @@ MADErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADD
 		case NoHardwareDriver:
 		case BeOSSoundDriver:
 			break;
+			
+		default:
+			break;
 	}
 	
 	*returnDriver = MDriver;
@@ -2963,6 +2966,9 @@ MADErr MADStartDriver(MADDriverRec *MDriver)
 			PlayChannelPortAudio(MDriver);
 			break;
 #endif
+			
+		default:
+			break;
 	}
 	
 	return MADNoErr;
@@ -3293,6 +3299,10 @@ MADErr MADCreateVolumeTable(MADDriverRec *intDriver)
 			
 		case PolyPhonic:
 			Tracks 	= 1;
+			break;
+			
+		default:
+			Tracks = 1;
 			break;
 	}
 	

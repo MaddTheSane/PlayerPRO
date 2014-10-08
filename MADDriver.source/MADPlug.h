@@ -31,7 +31,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreFoundation/CFPlugInCOM.h>
 
-typedef OSErr (*RPlaySoundUPP)(MADDriverRec *theRec, char *, long, int, int, int, long, long, unsigned int, Boolean);
+typedef OSErr (*RPlaySoundUPP)(MADDriverRef theRec, char *, long, int, int, int, long, long, unsigned int, Boolean);
 
 #pragma pack(push, 2)
 

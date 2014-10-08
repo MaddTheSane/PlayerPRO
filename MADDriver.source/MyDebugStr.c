@@ -12,6 +12,9 @@
 #include <stdio.h>
 
 #ifdef __BLOCKS__
+#if __has_feature(objc_arc)
+#import <Foundation/Foundation.h>
+#endif
 #include <Block.h>
 
 static void (^MyDebugBlock)(short, const char*, const char*);
@@ -19,11 +22,19 @@ static void (^MyDebugBlock)(short, const char*, const char*);
 void MADRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*))
 {
 	if (MyDebugBlock) {
+#if __has_feature(objc_arc)
+		MyDebugBlock = nil;
+#else
 		Block_release(MyDebugBlock);
+#endif
 	}
 	
 	if (newdebugBlock) {
+#if __has_feature(objc_arc)
+		MyDebugBlock = [newdebugBlock copy];
+#else
 		MyDebugBlock = Block_copy(newdebugBlock);
+#endif
 	} else {
 		MyDebugBlock = NULL;
 	}
@@ -32,15 +43,24 @@ void MADRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*
 void MADRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*))
 {
 	if (MyDebugBlock) {
+#if __has_feature(objc_arc)
+		MyDebugBlock = nil;
+#else
 		Block_release(MyDebugBlock);
+#endif
 	}
 	
 	if (debugFunc == NULL) {
 		MyDebugBlock = NULL;
 	} else {
-		MyDebugBlock = Block_copy(^(short line, const char *file, const char *text){
+		typeof(MyDebugBlock) funcBlock = ^(short line, const char *file, const char *text){
 			(*debugFunc)(line, file, text);
-		});
+		};
+#if __has_feature(objc_arc)
+		MyDebugBlock = [funcBlock copy];
+#else
+		MyDebugBlock = Block_copy(funcBlock);
+#endif
 	}
 }
 

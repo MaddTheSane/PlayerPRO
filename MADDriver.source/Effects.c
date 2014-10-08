@@ -734,6 +734,9 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 			else if (ch->vol > MAX_VOLUME)
 				ch->vol = MAX_VOLUME;
 			break;
+			
+		default:
+			break;
 	}
 }
 

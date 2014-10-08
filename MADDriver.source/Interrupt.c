@@ -1884,58 +1884,64 @@ void GenerateSound(MADDriverRec *intDriver)
 		case 8:
 			switch (intDriver->DriverSettings.outPutMode) {
 #if 0
-			case MonoOutPut:
-				Play8Mono(intDriver);
-				intDriver->IntDataPtr	+= intDriver->ASCBUFFER;
-				break;
-				
-			case StereoOutPut:
-				Play8Stereo(intDriver);
-				intDriver->IntDataPtr	+= intDriver->ASCBUFFER*2L;
-				break;
+				case MonoOutPut:
+					Play8Mono(intDriver);
+					intDriver->IntDataPtr	+= intDriver->ASCBUFFER;
+					break;
+					
+				case StereoOutPut:
+					Play8Stereo(intDriver);
+					intDriver->IntDataPtr	+= intDriver->ASCBUFFER*2L;
+					break;
+#else
+				default:
+					break;
 #endif
-			case DeluxeStereoOutPut:
-				Play8StereoDelay(intDriver);
-				intDriver->IntDataPtr	+= intDriver->ASCBUFFER*2L;
-				intDriver->DASCBuffer8	+= intDriver->ASCBUFFER*2L;
-				break;
-				
-			case PolyPhonic:
-				//case MultiFiles:
-				Play8PolyPhonic(intDriver);
-				intDriver->IntDataPtr	+= intDriver->ASCBUFFER * intDriver->DriverSettings.numChn;
-				break;
-		}
+				case DeluxeStereoOutPut:
+					Play8StereoDelay(intDriver);
+					intDriver->IntDataPtr	+= intDriver->ASCBUFFER*2L;
+					intDriver->DASCBuffer8	+= intDriver->ASCBUFFER*2L;
+					break;
+					
+				case PolyPhonic:
+					//case MultiFiles:
+					Play8PolyPhonic(intDriver);
+					intDriver->IntDataPtr	+= intDriver->ASCBUFFER * intDriver->DriverSettings.numChn;
+					break;
+			}
 			break;
 			
 		case 16:
 			switch (intDriver->DriverSettings.outPutMode) {
 #if 0
-			case MonoOutPut:
-				Play16Mono(intDriver);
-				intDriver->IntDataPtr	+= intDriver->ASCBUFFER*2L;
-				break;
-				
-			case StereoOutPut:
-				Play16Stereo(intDriver);
-				intDriver->IntDataPtr	+= intDriver->ASCBUFFER*4L;
-				break;
-				
+				case MonoOutPut:
+					Play16Mono(intDriver);
+					intDriver->IntDataPtr	+= intDriver->ASCBUFFER*2L;
+					break;
+					
+				case StereoOutPut:
+					Play16Stereo(intDriver);
+					intDriver->IntDataPtr	+= intDriver->ASCBUFFER*4L;
+					break;
+#else
+				default:
+					break;
 #endif
-			case DeluxeStereoOutPut:
-				Play16StereoDelay(intDriver);
-				intDriver->IntDataPtr	+= (intDriver->ASCBUFFER*4L) ;
-				intDriver->DASCBuffer	+= (intDriver->ASCBUFFER*2L) ;
-				
-				for (i = 0; i < MAXCHANEFFECT; i++) intDriver->DASCEffectBuffer[i] += (intDriver->ASCBUFFER*2L) ;
-				break;
-				
-			case PolyPhonic:
-				//case MultiFiles:
-				//Play16PolyPhonic(intDriver);
-				intDriver->IntDataPtr	+= intDriver->ASCBUFFER * 2L * intDriver->DriverSettings.numChn;
-				break;
-		}
+					
+				case DeluxeStereoOutPut:
+					Play16StereoDelay(intDriver);
+					intDriver->IntDataPtr	+= (intDriver->ASCBUFFER*4L) ;
+					intDriver->DASCBuffer	+= (intDriver->ASCBUFFER*2L) ;
+					
+					for (i = 0; i < MAXCHANEFFECT; i++) intDriver->DASCEffectBuffer[i] += (intDriver->ASCBUFFER*2L) ;
+					break;
+					
+				case PolyPhonic:
+					//case MultiFiles:
+					//Play16PolyPhonic(intDriver);
+					intDriver->IntDataPtr	+= intDriver->ASCBUFFER * 2L * intDriver->DriverSettings.numChn;
+					break;
+			}
 			break;
 	}
 }

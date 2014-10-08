@@ -124,6 +124,16 @@ extension MADFourChar {
 
 // MARK: PlayerPRO MAD data types
 
+public func NewMADDriverSettings(setToDefault: Bool = true) -> MADDriverSettings {
+	var ourSett = MADDriverSettings()
+	
+	if setToDefault {
+		ourSett.resetToBestDriver()
+	}
+	
+	return ourSett
+}
+
 extension MADDriverSettings: DebugPrintable {
 	public init() {
 		self.driverMode = .CoreAudioDriver
