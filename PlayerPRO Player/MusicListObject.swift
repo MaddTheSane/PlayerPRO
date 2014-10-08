@@ -50,7 +50,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 
 	#if os(OSX)
 	private var stashedFileIcon: NSImage? = nil
-	var fileIcon: NSImage {
+	@objc var fileIcon: NSImage {
 		get {
 			if let ourFileIcon = stashedFileIcon {
 				return ourFileIcon
@@ -113,34 +113,26 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		if (URL.isFileReferenceURL()) {
 			musicURL = URL;
 		} else {
-			let tmpURL = URL.fileReferenceURL();
+			let tmpURL = URL.fileReferenceURL()
 			musicURL = tmpURL ?? URL
 		}
 		super.init();
 	}
 	
 	override var hash: Int {
-		get {
-			return self.hashValue
-		}
+		return self.hashValue
 	}
 	
 	override var hashValue: Int {
-		get {
-			return musicURL.absoluteURL!.hash
-		}
+		return musicURL.absoluteURL!.hash
 	}
 
 	override var description: String {
-		get {
-			return "\(musicURL.path): \(self.fileName)"
-		}
+		return "\(musicURL.path): \(self.fileName)"
 	}
 	
 	override var debugDescription: String {
-		get {
-			return "\(musicURL.description) \(musicURL.path): \(self.fileName)"
-		}
+		return "\(musicURL.description) \(musicURL.path): \(self.fileName)"
 	}
 
 	override func isEqual(object: AnyObject?) -> Bool {

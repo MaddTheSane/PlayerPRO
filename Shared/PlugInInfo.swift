@@ -39,7 +39,7 @@ class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
 		if let tmpBundle = NSBundle(URL: pu) {
 			let tmpCopy: AnyObject? = tmpBundle.infoDictionary!["NSHumanReadableCopyright"]
 			if let acopy: AnyObject = tmpCopy {
-				plugCopyright = acopy as String
+				plugCopyright = acopy as NSString as String
 			} else {
 				plugCopyright = "No copyright info available"
 			}
@@ -49,22 +49,21 @@ class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
 		super.init()
 	}
 	
-	override var hash: Int { get {
+	override var hash: Int {
 		return self.hashValue
-	}}
+	}
 	
-	override var hashValue: Int { get {
+	override var hashValue: Int {
 		return plugName.hashValue ^ plugType.hashValue ^ authorName.hashValue ^ plugCopyright.hashValue
-	}}
+	}
 	
-	override var debugDescription: String { get {
+	override var debugDescription: String {
 		return "\(plugName): \(authorName) (\(plugCopyright)), \(plugType)"
-
-	}}
+	}
 	
-	override var description: String { get {
-		return self.debugDescription
-	}}
+	override var description: String {
+		return "\(plugName): \(authorName)"
+	}
 	
 	override func isEqual(object: AnyObject!) -> Bool {
 		if (object == nil) {

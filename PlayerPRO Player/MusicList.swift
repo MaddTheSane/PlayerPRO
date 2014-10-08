@@ -277,9 +277,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	@objc dynamic var countOfMusicList: Int {
-		get {
-			return musicList.count
-		}
+		return musicList.count
 	}
 	
 	@objc dynamic func replaceObjectInMusicListAtIndex(index: Int, withObject object: MusicListObject) {
@@ -292,7 +290,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	
 	@objc dynamic func removeMusicListAtIndexes(idxSet: NSIndexSet) {
 		if idxSet.containsIndex(selectedMusic) {
-			self.selectedMusic = -1;
+			selectedMusic = -1;
 		}
 		musicList = musicList.filter({
 			var idx = find(self.musicList, $0)
@@ -341,9 +339,9 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		
 		conn.resume()
 		
-		conn.remoteObjectProxy.loadStcfAtURL(toOpen, withReply: {(bookmarkData:[NSObject : AnyObject]!, error: NSError!) -> Void in
+		conn.remoteObjectProxy.loadStcfAtURL(toOpen, withReply: {(bookmarkData:[NSObject : AnyObject]!, error: NSError?) -> Void in
 			NSOperationQueue.mainQueue().addOperationWithBlock({
-				if (error != nil) {
+				if error != nil {
 					theHandle(theErr: error)
 				} else {
 					let invalidAny: AnyObject? = bookmarkData["lostMusicCount"]

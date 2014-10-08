@@ -14,9 +14,7 @@ public func ==(lhs: PPPlugInObject, rhs: PPPlugInObject) -> Bool {
 
 extension PPPlugInObject: Hashable {
 	override public var hashValue: Int {
-		get {
-			return self.hash
-		}
+		return self.hash
 	}
 }
 
