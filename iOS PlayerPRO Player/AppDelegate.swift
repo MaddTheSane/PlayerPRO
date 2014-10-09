@@ -55,7 +55,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 		
 		NSUserDefaults.standardUserDefaults().registerDefaults(tmpDict)
 		
-		madDriver = PPDriver(library: madLib, error: nil)
+		var settings = NewMADDriverSettings()
+		
+		madDriver = PPDriver(library: madLib, settings: &settings, error: nil)
 
 		super.init()
 	}

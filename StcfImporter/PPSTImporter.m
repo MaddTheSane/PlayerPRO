@@ -54,12 +54,12 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen toDictionary:(NSDictionary **)outDict
 {
-	NSUInteger lostMusicCount = 0;
-	NSInteger selectedMusic = -1;
-	ResFileRefNum refNum;
-	Handle aHandle, locHand;
-	FSRef theRef;
-	UInt16 theNo, i;
+	NSUInteger		lostMusicCount = 0;
+	NSInteger		selectedMusic = -1;
+	ResFileRefNum	refNum;
+	Handle	aHandle, locHand;
+	FSRef	theRef;
+	UInt16	theNo;
 	if (CFURLGetFSRef((__bridge CFURLRef)toOpen, &theRef) == NO) {
 		return fnfErr;
 	}
@@ -100,7 +100,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:theNo];
 	
-	for (i = 0; i < theNo * 2; i += 2) {
+	for (int i = 0; i < theNo * 2; i += 2) {
 		StringPtr aStr, aStr2;
 		aStr = GetStringFromHandle(aHandle, i);
 		aStr2 = GetStringFromHandle(aHandle, i + 1);
@@ -130,9 +130,9 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	
 	selectedMusic = (location >= [newArray count]) ? location : -1;
 	
-	*outDict = @{@"MusicPaths": newArray,
-				 @"SelectedMusic": @(selectedMusic),
-				 @"lostMusicCount": @(lostMusicCount)};
+	*outDict = @{@"MusicPaths":		newArray,
+				 @"SelectedMusic":	@(selectedMusic),
+				 @"lostMusicCount":	@(lostMusicCount)};
 	
 	return noErr;
 }

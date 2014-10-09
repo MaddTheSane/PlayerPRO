@@ -170,6 +170,7 @@ extension MADInfoRec: DebugPrintable {
 			var aChar = mirror[i].1.value as CChar
 			toParse.append(aChar)
 		}
+		toParse.append(0)
 		return NSString(CString: toParse, encoding: NSMacOSRomanStringEncoding)
 	}
 	
@@ -180,6 +181,7 @@ extension MADInfoRec: DebugPrintable {
 			var aChar = mirror[i].1.value as CChar
 			toParse.append(aChar)
 		}
+		toParse.append(0)
 		return NSString(CString: toParse, encoding: NSMacOSRomanStringEncoding)
 	}
 	

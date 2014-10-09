@@ -9,6 +9,10 @@
 #ifndef PPMacho_embeddedPlugs_h
 #define PPMacho_embeddedPlugs_h
 
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
+#endif
+
 #define __private_extern __attribute__((visibility("hidden")))
 
 __private_extern MADErr main669(MADFourChar, char*, MADMusic*, MADInfoRec *, MADDriverSettings *);
