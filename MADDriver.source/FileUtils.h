@@ -32,14 +32,11 @@
  *				If you need more functionality, use another API instead.
  */
 
-#ifndef __PPDEFS_H
-#include "PPDefs.h"
-#endif
-
 #ifdef _MAC_H
 #include <CoreFoundation/CFByteOrder.h>
 #endif
 
+#include "PPDefs.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

@@ -29,9 +29,7 @@
 #ifndef __RDRIVERH__
 #define __RDRIVERH__
 
-#ifndef __MADI__
 #include "MAD.h"
-#endif
 #include <limits.h>
 
 ////////////////////////////////////////////////
@@ -551,26 +549,20 @@ typedef AEffect *(*VSTPlugInPtr)(audioMasterCallback cb);
 
 #if defined(_MAC_H)
 
-#if !TARGET_OS_IPHONE
 //TODO: update VST headers
-typedef struct __VSTEffect {
+typedef struct VSTEffect {
 	AEffect			*ce[2];
 	short			VSTid;
 	CFStringRef		name;
-	Boolean			Active;
+	bool			Active;
 	CFBundleRef		connID;
 	VSTPlugInPtr	vstMain;
-	Boolean			ProcessReplacingNotAvailable;
+	bool			ProcessReplacingNotAvailable;
 } VSTEffect;
-#else
-typedef struct __VSTEffect {
-	
-} VSTEffect;
-#endif
 
 #elif defined(WIN32)
 
-typedef struct __VSTEffect {
+typedef struct VSTEffect {
 	AEffect			*ce[2];
 	short			VSTid;
 	char			name[50];
@@ -582,7 +574,7 @@ typedef struct __VSTEffect {
 
 #elif (defined(__ELF__) && !(defined (_MAC_H) || defined (_BE_H)))
 
-typedef struct __VSTEffect {
+typedef struct VSTEffect {
 	AEffect			*ce[2];
 	short			VSTid;
 	char			name[50];

@@ -34,9 +34,7 @@
 #define __RDRIVERINTH__
 
 #include <stdio.h>
-#ifndef __PPC_FILEUTILS_H__
 #include "FileUtils.h"
-#endif
 
 //#define NUMBER_FINETUNES 16
 #define AMIGA_CLOCKFREQ2 14317456

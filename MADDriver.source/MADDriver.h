@@ -9,9 +9,7 @@
 #ifndef PPMacho_MADDriver_h
 #define PPMacho_MADDriver_h
 
-#ifndef __RDRIVERH__
 #include "RDriver.h"
-#endif
 
 #ifdef WIN32
 #ifndef __DSOUND_INCLUDED__

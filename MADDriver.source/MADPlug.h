@@ -24,10 +24,7 @@
 #ifndef __PPPLUGH__
 #define __PPPLUGH__
 
-#ifndef __RDRIVERH__
 #include "RDriver.h"
-#endif
-
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreFoundation/CFPlugInCOM.h>
 

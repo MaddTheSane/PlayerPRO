@@ -426,7 +426,7 @@ public func ModifyCmdAtRow(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer
 }
 
 extension IntPcmd {
-	init() {
+	public init() {
 		tracks = 0
 		length = 0
 		trackStart = 0

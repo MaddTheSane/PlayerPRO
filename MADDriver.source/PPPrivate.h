@@ -15,13 +15,8 @@
 #ifndef __PLAYERPROCORE_PPPRIVATE__
 #define __PLAYERPROCORE_PPPRIVATE__
 
-#ifndef __RDRIVERH__
 #include "RDriver.h"
-#endif
-
-#ifndef PPMacho_MADDriver_h
 #include "MADDriver.h"
-#endif
 
 #ifndef BUILDINGPPRO
 #warning this header should NOT be used outside of PlayerPROCore! The functions and datatypes here may change FOR ANY REASON, including differing compiler includes and defines.
