@@ -26,3 +26,12 @@ bool MADDriverChannelIsDonePlaying(MADDriverRec *theRec, int channel)
 	//TODO: more work here!
 	return theRec->chan[channel].samplePtr == NULL;
 }
+
+IntPatData MADPatDataToInt(PatData *inPat)
+{
+	IntPatData toRet = {0};
+	toRet.header = inPat->header;
+	toRet.Cmds = inPat->Cmds;
+	
+	return toRet;
+}

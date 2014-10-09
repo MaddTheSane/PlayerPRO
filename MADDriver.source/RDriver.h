@@ -824,6 +824,9 @@ PPEXPORT MADErr		MADCreateVolumeTable(MADDriverRecPtr intDriver);
 PPEXPORT void		MADDisposeVolumeTable(MADDriverRecPtr intDriver);
 PPEXPORT MADMusic*	CreateFreeMADK();
 
+#pragma mark Swift helpers
+PPEXPORT IntPatData MADPatDataToInt(PatData *inPat);
+	
 #ifdef __cplusplus
 }
 #endif

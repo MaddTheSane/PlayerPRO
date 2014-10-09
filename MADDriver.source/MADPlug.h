@@ -44,12 +44,21 @@ typedef struct Pcmd {
 	Cmd		myCmd[];
 } Pcmd;
 
+typedef struct IntPcmd {
+	short	tracks;		// number of tracks in myCmd[]
+	short	length;		// number of rows in myCmd[]
+	short	trackStart;	// track ID of first track in myCmd[]
+	short	posStart;	// row ID of first row in myCmd[]
+	int		cmdCount;	// count of Cmds in array
+	Cmd		*myCmd;
+} IntPcmd;
+
 #pragma pack(pop)
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-	
+
 PPEXPORT OSErr inAddSoundToMAD(void			*theSound,
 							   size_t		sndLen,
 							   long			lS,
@@ -88,7 +97,13 @@ PPEXPORT const CFStringRef kMadPlugTypeKey;
 PPEXPORT const CFStringRef kMadPlugDoesImport;
 PPEXPORT const CFStringRef kMadPlugDoesExport;
 PPEXPORT const CFStringRef kMadPlugModeKey;
-	
+
+#pragma mark Swift helpers
+
+PPEXPORT IntPcmd MADPcmdToInt(Pcmd *inVal, bool copyValues);
+PPEXPORT Pcmd *MADIntPcmdToPcmd(IntPcmd inVal, bool freeIntPcmd);
+PPEXPORT MADErr MADCopyPcmdToPcmd(Pcmd* toCopy, Pcmd** outCopy);
+
 #ifdef __cplusplus
 }
 #endif

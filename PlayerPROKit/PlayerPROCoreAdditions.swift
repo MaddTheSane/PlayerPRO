@@ -278,6 +278,10 @@ extension MADLibrary: SequenceType {
     }
 }
 
+public func MADDebugString(line: UWord = __LINE__, file: String = __FILE__, text: String) {
+	MADDebugStr(Int16(line), file.fileSystemRepresentation(), (text as NSString).UTF8String)
+}
+
 private let BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
 extension sData32 {
@@ -402,8 +406,6 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: UnsafeMutableP
 	ReplaceCmd(position, channel, aCmd, aPat)
 }
 
-// MARK: Plug-in functions
-
 public func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>) -> Cmd {
 	return GetCommand(row, track, aPcmd).memory
 }
@@ -421,4 +423,15 @@ public func ModifyCmdAtRow(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer
 	var aCmd: Cmd = GetCommand(row, track, aPcmd)
 	commandBlock(&aCmd)
 	ReplaceCmd(row, track, aCmd, aPcmd)
+}
+
+extension IntPcmd {
+	init() {
+		tracks = 0
+		length = 0
+		trackStart = 0
+		posStart = 0
+		cmdCount = 0
+		myCmd = nil
+	}
 }

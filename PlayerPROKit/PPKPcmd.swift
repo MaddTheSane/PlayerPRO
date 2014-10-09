@@ -41,23 +41,35 @@ public struct PPKPcmd: SequenceType {
 		return myCmd.generate()
 	}
 	
-	/*public func newPcmd() -> UnsafeMutablePointer<Pcmd>? {
+	public func newIntPcmd() -> IntPcmd? {
 		if let newSize = structSize {
-			var aPcmd = UnsafeMutablePointer<Pcmd>(malloc(UInt(newSize)))
-			aPcmd.memory.tracks = tracks
-			aPcmd.memory.length = length
-			aPcmd.memory.trackStart = trackStart
-			aPcmd.memory.posStart = positionStart
-			aPcmd.memory.structSize = newSize
-			var theirCmdPtr = UnsafeMutablePointer<Cmd>(aPcmd.advancedBy(sizeof(Pcmd.Type)))
+			var toRet = IntPcmd()
+			toRet.tracks = tracks
+			toRet.length = length
+			toRet.trackStart = trackStart
+			toRet.posStart = positionStart
+			toRet.cmdCount = Int32(myCmd.count)
+			toRet.myCmd = UnsafeMutablePointer<Cmd>(malloc(UInt(myCmd.count * sizeof(Cmd.Type))))
+			
 			for i in 0 ..< myCmd.count {
-				theirCmdPtr[i] = myCmd[i]
+				toRet.myCmd[i] = myCmd[i]
 			}
-			return aPcmd
+			
+			return toRet
 		} else {
 			return nil
 		}
-	}*/
+	}
+	
+	public func newPcmd() -> UnsafeMutablePointer<Pcmd>? {
+		if let newSize = structSize {
+			var ourIntPcmd = newIntPcmd()!
+			var toRet = MADIntPcmdToPcmd(ourIntPcmd, true)
+			return toRet
+		} else {
+			return nil;
+		}
+	}
 	
 	public var valid: Bool {
 		get {
@@ -83,18 +95,20 @@ public struct PPKPcmd: SequenceType {
 		}
 	}
 	
-	/*public init(_ aPcmd: UnsafePointer<Pcmd>) {
-		let unwrapped = aPcmd.memory
-		let myCmdPos: Int = Int(unwrapped.structSize) - sizeof(Pcmd.Type)
-		tracks = unwrapped.tracks
-		length = unwrapped.length
-		trackStart = unwrapped.trackStart
-		positionStart = unwrapped.posStart
-		var theirCmdPtr = UnsafePointer<Cmd>(aPcmd.advancedBy(sizeof(Pcmd.Type)))
-		for i in 0 ..< myCmdPos / sizeof(Cmd.Type) {
-			myCmd.append(theirCmdPtr[i])
+	public init(_ aPcmd: UnsafeMutablePointer<Pcmd>) {
+		var ourIntPcmd = MADPcmdToInt(aPcmd, false)
+		self.init(intPcmd: ourIntPcmd)
+	}
+	
+	public init(intPcmd: IntPcmd) {
+		tracks = intPcmd.tracks
+		length = intPcmd.length
+		trackStart = intPcmd.trackStart
+		positionStart = intPcmd.posStart
+		for i in 0 ..< Int(intPcmd.cmdCount) {
+			myCmd.append(intPcmd.myCmd[i])
 		}
-	}*/
+	}
 	
 	public mutating func addRow() {
 		length += 1
