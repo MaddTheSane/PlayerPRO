@@ -31,7 +31,7 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreFoundation/CFPlugInCOM.h>
 
-typedef OSErr (*RPlaySoundUPP)(MADDriverRef theRec, char *, long, int, int, int, long, long, unsigned int, Boolean);
+typedef OSErr (*RPlaySoundUPP)(MADDriverRecPtr theRec, char *, long, int, int, int, long, long, unsigned int, Boolean);
 
 #pragma pack(push, 2)
 
@@ -95,7 +95,7 @@ PPEXPORT const CFStringRef kMadPlugModeKey;
 
 typedef struct PPInfoPlug {
 	RPlaySoundUPP	RPlaySound;
-	MADDriverRef	driverRec;
+	MADDriverRecPtr	driverRec;
 	OSType			fileType;
 	CFStringRef		fileUTI;
 	CFTypeRef		NSWindow;
