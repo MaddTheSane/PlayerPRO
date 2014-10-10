@@ -23,7 +23,7 @@
 
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "PPPrivate.h"
+#include "MADPrivate.h"
 #include "VSTFunctions.h"
 
 uint32_t getfrequency(uint32_t period);

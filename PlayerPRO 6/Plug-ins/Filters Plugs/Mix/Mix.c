@@ -14,9 +14,7 @@
 //	This plug does work ONLY with 8 bits data
 
 #include <Carbon/Carbon.h>
-#include <PlayerPROCore/MAD.h>
-#include <PlayerPROCore/FileUtils.h>
-#include <PlayerPROCore/MADPlug.h>
+#include <PlayerPROCore/PlayerPROCore.h>
 
 typedef short	*shortPtr;
 typedef long	*longPtr;

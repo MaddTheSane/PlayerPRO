@@ -11,8 +11,8 @@
 #include "RDriverInt.h"
 
 #include <CoreFoundation/CoreFoundation.h>
-#include "FileUtils.h"
-#include "PPPrivate.h"
+#include "MADFileUtils.h"
+#include "MADPrivate.h"
 
 #define CharlMADcheckLength 10
 

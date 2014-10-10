@@ -23,8 +23,8 @@
 
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "FileUtils.h"
-#include "PPPrivate.h"
+#include "MADFileUtils.h"
+#include "MADPrivate.h"
 
 //TODO: Move to unicode functions?
 

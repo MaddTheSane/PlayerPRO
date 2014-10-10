@@ -1,5 +1,5 @@
 /*
- *  PPPrivate.h
+ *  MADPrivate.h
  *  PlayerPROCore
  *
  *  Created by C.W. Betts on 6/30/09.
@@ -8,7 +8,7 @@
  */
 
 /*!
- *	@header		PPPrivate.h
+ *	@header		MADPrivate.h
  *	@abstract	Private functions used internally by PlayerPROCore.
  */
 

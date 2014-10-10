@@ -26,8 +26,8 @@
 #include <errno.h>
 #include <fcntl.h>
 #include "RDriver.h"
-#include "FileUtils.h"
-#include "PPPrivate.h"
+#include "MADFileUtils.h"
+#include "MADPrivate.h"
 
 #ifdef _MAC_H
 #include <CoreFoundation/CFURL.h>

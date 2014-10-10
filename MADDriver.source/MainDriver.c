@@ -23,9 +23,9 @@
 
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "FileUtils.h"
+#include "MADFileUtils.h"
 #include <string.h>
-#include "PPPrivate.h"
+#include "MADPrivate.h"
 #include "VSTFunctions.h"
 #ifdef _MAC_H
 #include <CoreFoundation/CoreFoundation.h>

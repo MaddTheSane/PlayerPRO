@@ -36,7 +36,7 @@
 
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "PPPrivate.h"
+#include "MADPrivate.h"
 
 ////////////
 

@@ -27,7 +27,7 @@
 #ifndef __MADI__
 #define __MADI__
 
-#include "PPDefs.h"
+#include "MADDefs.h"
 
 #pragma pack(push, 2)
 
@@ -306,12 +306,12 @@ typedef struct MADSpec
 } MADSpec;
 
 typedef struct FXSets {
-	short			track;
-	short			id;
-	int				FXID;
-	short			noArg;
-	float			values[100];
-	unsigned char	name[64];
+	short		track;
+	short		id;
+	int			FXID;
+	short		noArg;
+	float		values[100];
+	MADPStr63	name;
 } FXSets;	// and then float values
 
 #pragma pack(pop)

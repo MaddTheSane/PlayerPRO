@@ -25,7 +25,7 @@
 #define __PPC_FILEUTILS_H__
 
 /*!
- *	@header		FileUtils.h
+ *	@header		MADFileUtils.h
  *	@abstract	File operation API used by PlayerPRO.
  *	@discussion	This header was used as a bridge between Windows and Mac OS (pre-OS X) file APIs. <br>
  *				PlayerPROCore 6's version is a thin wrapper over the POSIX file APIs.
@@ -36,7 +36,7 @@
 #include <CoreFoundation/CFByteOrder.h>
 #endif
 
-#include "PPDefs.h"
+#include "MADDefs.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -86,10 +86,10 @@ PPEXPORT UNFILE	iFileOpenWrite(const char *name);
  *					The path to create the new file
  * @param		type
  *					The File Type to set the file to
- * @discussion	<code>type</code> is ignored on platforms that aren't OS X. This includes iOS.
- *				<code>type</code> is mostly used on pre-OS X versions of Mac OS, and is rarely used nowadays.
- *				It has been replaced by file extensions denoting the file type.
- *				If <code>type</code> is zero, the file type is not set.
+ * @discussion	\c type is ignored on platforms that aren't OS X. This includes iOS.<br>
+ *				\c type is mostly used on pre-OS X versions of Mac OS, and is rarely used nowadays.
+ *				It has been replaced by file extensions denoting the file type.<br>
+ *				If \c type is zero, the file type is not set.
  */
 PPEXPORT void	iFileCreate(const char *path, MADFourChar type);
 
@@ -99,7 +99,7 @@ PPEXPORT void	iFileCreate(const char *path, MADFourChar type);
  * @result		the size of the file pointed to by <code>iFileRefI</code>
  * @param		iFileRefI
  *					The file pointer to get the size from
- * @discussion	As this returns a 'long' data type, files larger than 2 GiB on non-LP64 systems (<i>including</i> Win64) may result in an invalid value, or even crash your app.
+ * @discussion	As this returns a 'long' data type, files larger than 2 GiB on non-LP64 systems (<i>including</i> Win64) may result in an invalid value, or even crash your app.<br>
  *				As most tracker types (and audio files in general) are not that large, this will most likely not be an issue.
  */
 PPEXPORT long	iGetEOF(UNFILE iFileRefI);

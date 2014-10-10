@@ -9,7 +9,7 @@
 
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "PPPrivate.h"
+#include "MADPrivate.h"
 
 //TODO: we should probably do something to prevent thread contention
 static OSStatus CAAudioCallback(void						*inRefCon,

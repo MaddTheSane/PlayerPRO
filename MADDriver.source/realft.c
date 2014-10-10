@@ -25,7 +25,7 @@
 #include <math.h>
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "PPPrivate.h"
+#include "MADPrivate.h"
 
 static double EQInterpolate(double p,double p1,double p2,double v1,double v2);
 

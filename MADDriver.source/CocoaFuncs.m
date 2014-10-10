@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "PPPrivate.h"
+#include "MADPrivate.h"
 
 void SetOSType(CFURLRef theURL, OSType theType)
 {

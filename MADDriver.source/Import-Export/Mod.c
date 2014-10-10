@@ -21,13 +21,11 @@
 //
 /********************						***********************/
 
-//NOTE: your plug-in should include PlayerPROCore/PlayerPROCore.h
-//These plug-ins use RDriver and FileUtils to build without having to create subdirs for headers
-#ifdef __APPLE__
+#if defined(__APPLE__) && !(defined(EMBEDPLUGS) && EMBEDPLUGS)
 #include <PlayerPROCore/PlayerPROCore.h>
 #else
 #include "RDriver.h"
-#include "FileUtils.h"
+#include "MADFileUtils.h"
 #endif
 #include "MOD.h"
 

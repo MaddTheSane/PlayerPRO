@@ -24,11 +24,11 @@
 //Needed to quiet a few warnings on Windows.
 #define _CRT_SECURE_NO_WARNINGS 1
 
-#ifdef __APPLE__
+#if defined(__APPLE__) && !(defined(EMBEDPLUGS) && EMBEDPLUGS)
 #include <PlayerPROCore/PlayerPROCore.h>
 #else
 #include "RDriver.h"
-#include "FileUtils.h"
+#include "MADFileUtils.h"
 #endif
 
 #if defined(EMBEDPLUGS) && EMBEDPLUGS

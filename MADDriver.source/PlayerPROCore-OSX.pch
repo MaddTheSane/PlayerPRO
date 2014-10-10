@@ -4,7 +4,7 @@
 #include "RDriver.h"
 #include "MADDriver.h"
 #include "MADPlug.h"
-#include "PPPrivate.h"
+#include "MADPrivate.h"
 
 #ifdef __OBJC__
 #import <Foundation/Foundation.h>

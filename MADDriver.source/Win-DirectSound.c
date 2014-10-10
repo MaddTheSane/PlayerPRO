@@ -24,7 +24,7 @@
 #define CINTERFACE
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "PPPrivate.h"
+#include "MADPrivate.h"
 #include "OBJBASE.h"
 
 #ifdef _MSC_VER

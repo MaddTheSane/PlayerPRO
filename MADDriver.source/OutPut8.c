@@ -23,7 +23,7 @@
 
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "PPPrivate.h"
+#include "MADPrivate.h"
 
 void Sampler8in8AddPolyStereo(Channel *curVoice, char* ASCBuffer, short chanNo, MADDriverRec *intDriver)
 {

@@ -27,7 +27,7 @@
 #ifdef _MAC_H
 #include "MADPlug.h"
 #endif
-#include "PPPrivate.h"
+#include "MADPrivate.h"
 #ifdef _MIDIHARDWARE_
 extern short		gOutNodeRefNum, gOutputPortRefNum;
 #endif

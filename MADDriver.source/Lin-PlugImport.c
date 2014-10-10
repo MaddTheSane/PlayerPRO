@@ -1,6 +1,6 @@
 #include "RDriver.h"
-#include "FileUtils.h"
-#include "PPPrivate.h"
+#include "MADFileUtils.h"
+#include "MADPrivate.h"
 #include <dlfcn.h>
 
 MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)

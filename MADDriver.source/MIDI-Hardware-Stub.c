@@ -4,7 +4,7 @@
 #include "MAD.h"
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "PPPrivate.h"
+#include "MADPrivate.h"
 
 #include <stdio.h>
 

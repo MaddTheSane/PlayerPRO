@@ -21,11 +21,11 @@
 //
 /********************						***********************/
 
-#ifdef __APPLE__
+#if defined(__APPLE__) && !(defined(EMBEDPLUGS) && EMBEDPLUGS)
 #include <PlayerPROCore/PlayerPROCore.h>
 #else
 #include "RDriver.h"
-#include "FileUtils.h"
+#include "MADFileUtils.h"
 #endif
 #include "DMF.h"
 

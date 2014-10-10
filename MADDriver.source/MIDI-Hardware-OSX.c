@@ -4,7 +4,7 @@
 #include "RDriverInt.h"
 //#include "MIDI.h"
 #include <stdio.h>
-#include "PPPrivate.h"
+#include "MADPrivate.h"
 
 #include <CoreMIDI/CoreMIDI.h>
 

@@ -27,7 +27,7 @@
 
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "FileUtils.h"
+#include "MADFileUtils.h"
 
 static Boolean LoadPlugLib(const char *name, PlugInfo* plug);
 static void ScanPlugDir(const char *name);

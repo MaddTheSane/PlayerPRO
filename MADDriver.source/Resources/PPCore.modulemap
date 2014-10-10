@@ -2,12 +2,12 @@ framework module PlayerPROCore {
 	umbrella header "PlayerPROCore.h"
 	
 	module Defines {
-		header "PPDefs.h"
+		header "MADDefs.h"
 		export *
 	}
 
 	module FileUtilities {
-		header "FileUtils.h"
+		header "MADFileUtils.h"
 		export *
 	}
 	

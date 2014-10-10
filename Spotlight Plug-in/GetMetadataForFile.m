@@ -1,10 +1,10 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreServices/CoreServices.h>
 #import <Foundation/Foundation.h>
-#include "PPDefs.h"
+#include "MADDefs.h"
 #include "MAD.h"
 #include "RDriver.h"
-#include "FileUtils.h"
+#include "MADFileUtils.h"
 #include "GetMetadataForFile.h"
 
 @interface NSString (PPextras)

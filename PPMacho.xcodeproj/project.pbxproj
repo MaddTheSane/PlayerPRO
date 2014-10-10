@@ -124,7 +124,7 @@
 		550A8FD819C74ED200588849 /* ComplexFadePlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550A8FD719C74ED200588849 /* ComplexFadePlug.swift */; };
 		550A8FDB19C7B19A00588849 /* PPAPPLObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550A8FDA19C7B19A00588849 /* PPAPPLObject.m */; };
 		550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
+		550B011510BA1E1C004FC5D7 /* MADPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* MADPrivate.h */; };
 		550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
 		550B1F361982B0100050790F /* PPPatternObject_PcmdHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D2921E18AADB4600EB7A7D /* PPPatternObject_PcmdHandling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		550D004F18CB808600FD0F17 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
@@ -344,9 +344,9 @@
 		5573A3CF10B5128000FF8B50 /* RDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47B0C2F21E400D6C081 /* RDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573A3D010B5128800FF8B50 /* RDriverInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47D0C2F21E400D6C081 /* RDriverInt.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		5573A3D110B5129100FF8B50 /* MADPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* MADPlug.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5573A3E410B513BD00FF8B50 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* FileUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5573A3E410B513BD00FF8B50 /* MADFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* MADFileUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573A3EA10B5147C00FF8B50 /* MyDebugStr.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A3E810B5147C00FF8B50 /* MyDebugStr.c */; settings = {COMPILER_FLAGS = "-x objective-c"; }; };
-		5573A41210B5160000FF8B50 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5573A41210B5160000FF8B50 /* MADDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* MADDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573AF0817DF8FD400B68127 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 552C716210CDC11400C0E0D4 /* README.rtf */; };
 		5573AF0917DF8FD500B68127 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 552C716210CDC11400C0E0D4 /* README.rtf */; };
 		5574BCEC169634DE00CF3C37 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -706,10 +706,10 @@
 		55F1BDAF1975C8EE00AD2C03 /* PlayerPROCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55F1BDB31975C9E100AD2C03 /* embeddedPlugs.h in Headers */ = {isa = PBXBuildFile; fileRef = 550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */; };
 		55F1BDB41975C9E100AD2C03 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		55F1BDB61975C9E100AD2C03 /* PPDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* PPDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55F1BDB71975C9E100AD2C03 /* FileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* FileUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55F1BDB61975C9E100AD2C03 /* MADDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* MADDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55F1BDB71975C9E100AD2C03 /* MADFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* MADFileUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55F1BDB81975C9E100AD2C03 /* MAD.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C4750C2F21E400D6C081 /* MAD.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55F1BDB91975C9E100AD2C03 /* PPPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* PPPrivate.h */; };
+		55F1BDB91975C9E100AD2C03 /* MADPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* MADPrivate.h */; };
 		55F1BDBA1975C9E100AD2C03 /* RDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47B0C2F21E400D6C081 /* RDriver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55F1BDBB1975C9E100AD2C03 /* RDriverInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47D0C2F21E400D6C081 /* RDriverInt.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		55F1BDBC1975C9E100AD2C03 /* VSTFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 550A474218A455CC0052AED7 /* VSTFunctions.h */; };
@@ -1955,7 +1955,7 @@
 		550A8FD919C7B19A00588849 /* PPAPPLObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLObject.h; sourceTree = "<group>"; };
 		550A8FDA19C7B19A00588849 /* PPAPPLObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLObject.m; sourceTree = "<group>"; };
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
-		550B011310BA1E1C004FC5D7 /* PPPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = PPPrivate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		550B011310BA1E1C004FC5D7 /* MADPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MADPrivate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "OSX-CoreAudio.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		550D005218CB808E00FD0F17 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPErrors.strings; sourceTree = "<group>"; };
 		550DBB85169FA4D6006F5C85 /* PPInstrumentCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentCellView.h; sourceTree = "<group>"; };
@@ -2264,7 +2264,7 @@
 		5573A3E810B5147C00FF8B50 /* MyDebugStr.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = MyDebugStr.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		5573A3ED10B5151700FF8B50 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		5573A3EF10B5151700FF8B50 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		5573A41010B5160000FF8B50 /* PPDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDefs.h; sourceTree = "<group>"; };
+		5573A41010B5160000FF8B50 /* MADDefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MADDefs.h; sourceTree = "<group>"; };
 		5573AF0717DF8F5500B68127 /* README */ = {isa = PBXFileReference; lastKnownFileType = text; lineEnding = 0; path = README; sourceTree = "<group>"; };
 		55771DC21873714800AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PPDocument.xib; sourceTree = "<group>"; };
 		55771DC71873851500AED8DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/NoteTranslateController.xib; sourceTree = "<group>"; };
@@ -2529,7 +2529,7 @@
 		55FEF84A1984506C00D2E79C /* ClassicalViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassicalViewController.m; sourceTree = "<group>"; };
 		55FEF84D1984509400D2E79C /* WaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveViewController.h; sourceTree = "<group>"; };
 		55FEF84E1984509400D2E79C /* WaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveViewController.m; sourceTree = "<group>"; };
-		88E0C3C40C2F21DD00D6C081 /* FileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = FileUtils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		88E0C3C40C2F21DD00D6C081 /* MADFileUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MADFileUtils.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = DelayOutPut.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C3D10C2F21DD00D6C081 /* Effects.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Effects.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		88E0C3D20C2F21DD00D6C081 /* Interrupt.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Interrupt.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -3159,6 +3159,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		550312F519E7848700064DDD /* Main sources */ = {
+			isa = PBXGroup;
+			children = (
+				550B001B10BA0243004FC5D7 /* PlayerPROCore.h */,
+				550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */,
+				55ADC3E617D7E4A4001F27D4 /* MADDriver.h */,
+				88E0C47F0C2F21E400D6C081 /* MADPlug.h */,
+				5573A41010B5160000FF8B50 /* MADDefs.h */,
+				88E0C3C40C2F21DD00D6C081 /* MADFileUtils.h */,
+				88E0C4750C2F21E400D6C081 /* MAD.h */,
+				550B011310BA1E1C004FC5D7 /* MADPrivate.h */,
+				88E0C47B0C2F21E400D6C081 /* RDriver.h */,
+				88E0C47D0C2F21E400D6C081 /* RDriverInt.h */,
+				550A474218A455CC0052AED7 /* VSTFunctions.h */,
+				554E105010D6C79E00BB619C /* SndUtils.c */,
+				55113CBB133688D60008C2AF /* FileUtils.c */,
+				55F013EA1880A2EA002488D5 /* MADDriver.c */,
+				88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */,
+				88E0C3D10C2F21DD00D6C081 /* Effects.c */,
+				88E0C3D20C2F21DD00D6C081 /* Interrupt.c */,
+				88E0C3D60C2F21DD00D6C081 /* MainDriver.c */,
+				88E0C3D90C2F21DD00D6C081 /* OutPut8.c */,
+				88E0C3DA0C2F21DD00D6C081 /* realft.c */,
+				88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */,
+				5573A3E810B5147C00FF8B50 /* MyDebugStr.c */,
+			);
+			name = "Main sources";
+			sourceTree = "<group>";
+		};
 		550A474118A455430052AED7 /* Stub-null implementations */ = {
 			isa = PBXGroup;
 			children = (
@@ -4205,28 +4234,7 @@
 				552097B7187B0DF0004FD220 /* OS X/iOS-specific */,
 				552097B8187B0E0A004FD220 /* Windows-specific */,
 				552097B9187B0E29004FD220 /* Linux/UNIX-specific */,
-				550B001B10BA0243004FC5D7 /* PlayerPROCore.h */,
-				550FFAA417CC3C290003A2F3 /* embeddedPlugs.h */,
-				55ADC3E617D7E4A4001F27D4 /* MADDriver.h */,
-				88E0C47F0C2F21E400D6C081 /* MADPlug.h */,
-				5573A41010B5160000FF8B50 /* PPDefs.h */,
-				88E0C3C40C2F21DD00D6C081 /* FileUtils.h */,
-				88E0C4750C2F21E400D6C081 /* MAD.h */,
-				550B011310BA1E1C004FC5D7 /* PPPrivate.h */,
-				88E0C47B0C2F21E400D6C081 /* RDriver.h */,
-				88E0C47D0C2F21E400D6C081 /* RDriverInt.h */,
-				550A474218A455CC0052AED7 /* VSTFunctions.h */,
-				554E105010D6C79E00BB619C /* SndUtils.c */,
-				55113CBB133688D60008C2AF /* FileUtils.c */,
-				55F013EA1880A2EA002488D5 /* MADDriver.c */,
-				88E0C3D00C2F21DD00D6C081 /* DelayOutPut.c */,
-				88E0C3D10C2F21DD00D6C081 /* Effects.c */,
-				88E0C3D20C2F21DD00D6C081 /* Interrupt.c */,
-				88E0C3D60C2F21DD00D6C081 /* MainDriver.c */,
-				88E0C3D90C2F21DD00D6C081 /* OutPut8.c */,
-				88E0C3DA0C2F21DD00D6C081 /* realft.c */,
-				88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */,
-				5573A3E810B5147C00FF8B50 /* MyDebugStr.c */,
+				550312F519E7848700064DDD /* Main sources */,
 				55268AA91877EECF00A82269 /* Resources */,
 			);
 			name = PlayerPROCore;
@@ -4706,12 +4714,12 @@
 				5573A3CF10B5128000FF8B50 /* RDriver.h in Headers */,
 				5573A3D010B5128800FF8B50 /* RDriverInt.h in Headers */,
 				5573A3D110B5129100FF8B50 /* MADPlug.h in Headers */,
-				5573A3E410B513BD00FF8B50 /* FileUtils.h in Headers */,
-				5573A41210B5160000FF8B50 /* PPDefs.h in Headers */,
+				5573A3E410B513BD00FF8B50 /* MADFileUtils.h in Headers */,
+				5573A41210B5160000FF8B50 /* MADDefs.h in Headers */,
 				550A474318A455CC0052AED7 /* VSTFunctions.h in Headers */,
 				550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */,
 				55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */,
-				550B011510BA1E1C004FC5D7 /* PPPrivate.h in Headers */,
+				550B011510BA1E1C004FC5D7 /* MADPrivate.h in Headers */,
 				55B23D0F1687D1D700DCE923 /* RDriverCarbon.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4720,15 +4728,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55F1BDB71975C9E100AD2C03 /* FileUtils.h in Headers */,
+				55F1BDB71975C9E100AD2C03 /* MADFileUtils.h in Headers */,
 				55F1BDBB1975C9E100AD2C03 /* RDriverInt.h in Headers */,
 				55F1BDB31975C9E100AD2C03 /* embeddedPlugs.h in Headers */,
-				55F1BDB91975C9E100AD2C03 /* PPPrivate.h in Headers */,
+				55F1BDB91975C9E100AD2C03 /* MADPrivate.h in Headers */,
 				55E382ED1981694300EC330B /* MADPlug.h in Headers */,
 				55F1BDBC1975C9E100AD2C03 /* VSTFunctions.h in Headers */,
 				55F1BE221975CEC900AD2C03 /* PlayerPROCore.h in Headers */,
 				55F1BDB41975C9E100AD2C03 /* MADDriver.h in Headers */,
-				55F1BDB61975C9E100AD2C03 /* PPDefs.h in Headers */,
+				55F1BDB61975C9E100AD2C03 /* MADDefs.h in Headers */,
 				55F1BDBA1975C9E100AD2C03 /* RDriver.h in Headers */,
 				55F1BDB81975C9E100AD2C03 /* MAD.h in Headers */,
 			);
@@ -9350,6 +9358,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"EMBEDPLUGS=1",
 					"NOEXPORTFUNCS=1",
@@ -9373,12 +9382,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"EMBEDPLUGS=1",
 					"NOEXPORTFUNCS=1",
 					"BUILDINGPPRO=1",
 					"$(inherited)",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"$PROJECT_DIR\"/MADDriver.source",
 					"$(inherited)",

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#include <PlayerPROCore/PPDefs.h>
+#include <PlayerPROCore/MADDefs.h>
 
 @protocol PPMIDIImportHelper <NSObject>
 

@@ -23,7 +23,7 @@
 
 #include "RDriver.h"
 #include "RDriverInt.h"
-#include "PPPrivate.h"
+#include "MADPrivate.h"
 
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)

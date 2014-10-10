@@ -10,9 +10,9 @@
 #ifndef __PLAYERPROCORE_H__
 #define __PLAYERPROCORE_H__
 
-#include "PPDefs.h"
+#include "MADDefs.h"
 #include "MAD.h"
-#include "FileUtils.h"
+#include "MADFileUtils.h"
 #include "RDriver.h"
 #include "MADPlug.h"
 
