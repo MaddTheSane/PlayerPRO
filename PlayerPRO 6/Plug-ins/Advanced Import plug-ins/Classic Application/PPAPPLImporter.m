@@ -79,60 +79,30 @@ static const OSType MADTypes[] = {'MADK', 'MADI', 'MADF', 'MADG', 'MADH'};
 		
 		if (Count1Resources('MADK') > 0) {
 			myRes = Get1IndResource('MADK', 1);
-			DetachResource(myRes);
 			
-			HLock(myRes);
-			canOpen = TESTMADk((MADSpec*)*myRes) == MADNoErr;
-			HUnlock(myRes);
-			DisposeHandle(myRes);
+			canOpen = YES;
 		} else if (Count1Resources('MADI') > 0) {
 			myRes = Get1IndResource('MADI', 1);
-			DetachResource(myRes);
 			
-			HLock(myRes);
-			canOpen = TESTMADI(*myRes) == MADNoErr;
-			HUnlock(myRes);
-			DisposeHandle(myRes);
+			canOpen = YES;
 		} else if (Count1Resources('MADH') > 0) {
 			myRes = Get1IndResource('MADH', 1);
-			DetachResource(myRes);
 			
-			HLock(myRes);
-			canOpen = TESTMADH(*myRes) == MADNoErr;
-			HUnlock(myRes);
-			DisposeHandle(myRes);
+			canOpen = YES;
 		} else if (Count1Resources('MADF') > 0) {
 			myRes = Get1IndResource('MADF', 1);
-			DetachResource(myRes);
 			
-			HLock(myRes);
-			canOpen = TestMADFGFile(*myRes) == MADNoErr;
-			HUnlock(myRes);
-			DisposeHandle(myRes);
+			canOpen = YES;
 		} else if (Count1Resources('MADG') > 0) {
 			myRes = Get1IndResource('MADG', 1);
-			DetachResource(myRes);
 			
-			HLock(myRes);
-			canOpen = TestMADFGFile(*myRes) == MADNoErr;
-			HUnlock(myRes);
-			DisposeHandle(myRes);
+			canOpen = YES;
 		}
 		
 		CloseResFile(iFileRefI);
 	}
 	
 	return canOpen;
-}
-
-- (IBAction)importMusicObject:(id)sender
-{
-	
-}
-
-- (IBAction)cancelImport:(id)sender
-{
-	
 }
 
 @end
