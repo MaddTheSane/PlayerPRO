@@ -1,9 +1,13 @@
 //
-//  Prefix header
+//  SpotlightPrefix.pch
+//  PPMacho
 //
-//  The contents of this file are implicitly included at the beginning of every source file.
+//  Created by C.W. Betts on 10/9/14.
+//
 //
 
+#ifndef PPMacho_SpotlightPrefix_pch
+#define PPMacho_SpotlightPrefix_pch
 
 #include <tgmath.h>
 #include <CoreFoundation/CoreFoundation.h>
@@ -16,3 +20,5 @@
 #include "MADDriver.h"
 #include "MADPlug.h"
 #include "MADPrivate.h"
+
+#endif

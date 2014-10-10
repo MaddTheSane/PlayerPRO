@@ -1941,6 +1941,7 @@
 /* Begin PBXFileReference section */
 		5501BEC618ABFFEB00602206 /* APPL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPL.h; sourceTree = "<group>"; };
 		5501BECB18AC560E00602206 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		550312F619E7883B00064DDD /* SpotlightPrefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpotlightPrefix.pch; sourceTree = "<group>"; };
 		55085D791836BAAA004A152F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MidiPrefs.xib; sourceTree = "<group>"; };
 		55085D7C1836BAB2004A152F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PianoPrefs.xib; sourceTree = "<group>"; };
 		55085D7E1836DD85004A152F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -4362,13 +4363,14 @@
 		55BE998517978BB100D6DECC /* Spotlight Plug-in */ = {
 			isa = PBXGroup;
 			children = (
-				55BE998617978BB100D6DECC /* InfoPlist.strings */,
-				55BE998817978BB100D6DECC /* schema.strings */,
 				55BE998B17978BB100D6DECC /* GetMetadataForFile.h */,
 				55BE998A17978BB100D6DECC /* GetMetadataForFile.m */,
 				55BE998D17978BB100D6DECC /* main.c */,
 				5578C53017DB94A60057D11B /* PPImport copy-Info.plist */,
+				55BE998617978BB100D6DECC /* InfoPlist.strings */,
+				55BE998817978BB100D6DECC /* schema.strings */,
 				55BE999117978BB200D6DECC /* schema.xml */,
+				550312F619E7883B00064DDD /* SpotlightPrefix.pch */,
 			);
 			path = "Spotlight Plug-in";
 			sourceTree = "<group>";
@@ -9358,7 +9360,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
 				GCC_INPUT_FILETYPE = sourcecode.c.objc;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Spotlight Plug-in/SpotlightPrefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"EMBEDPLUGS=1",
 					"NOEXPORTFUNCS=1",
@@ -9382,7 +9387,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
 				GCC_INPUT_FILETYPE = sourcecode.c.objc;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Spotlight Plug-in/SpotlightPrefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"EMBEDPLUGS=1",
 					"NOEXPORTFUNCS=1",
@@ -10296,6 +10304,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
+				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PPQuickView/PPQuickView-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -10320,6 +10330,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
+				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PPQuickView/PPQuickView-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
