@@ -2175,7 +2175,6 @@
 		554E101510D6C79E00BB619C /* Mix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Mix.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E101610D6C79E00BB619C /* Mix.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mix.r; sourceTree = "<group>"; };
 		554E102C10D6C79E00BB619C /* AIFF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AIFF.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E103F10D6C79E00BB619C /* old MINS.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "old MINS.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E104210D6C79E00BB619C /* PAT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAT.h; sourceTree = "<group>"; };
 		554E104C10D6C79E00BB619C /* QuicktimeGeneric.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = QuicktimeGeneric.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E104D10D6C79E00BB619C /* snd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; name = snd.c; path = ../snd.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -3254,7 +3253,6 @@
 				551FEAC910E727AD00EDF2F1 /* MINs-Info.plist */,
 				556BC18719CF5F2400508F49 /* PPMINsPlug.h */,
 				556BC18819CF5F2400508F49 /* PPMINsPlug.m */,
-				554E103F10D6C79E00BB619C /* old MINS.c */,
 			);
 			path = MINs;
 			sourceTree = "<group>";
