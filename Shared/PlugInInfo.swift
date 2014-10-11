@@ -62,10 +62,10 @@ class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
 	}
 	
 	override var description: String {
-		return "\(plugName): \(authorName)"
+		return "\(plugName): \(plugType)"
 	}
 	
-	override func isEqual(object: AnyObject!) -> Bool {
+	override func isEqual(object: AnyObject?) -> Bool {
 		if (object == nil) {
 			return false
 		}

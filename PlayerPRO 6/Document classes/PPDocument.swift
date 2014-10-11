@@ -32,7 +32,7 @@ import AudioToolbox
 	let exportController = SoundSettingsViewController.newSoundSettingWindow()!
 	dynamic let theDriver: PPDriver
 	dynamic private(set) var theMusic: PPMusicObject!
-	private var exportSettings = MADDriverSettings()
+	private var exportSettings = NewMADDriverSettings()
 	
 	dynamic var musicName: String {
 		get {
@@ -361,7 +361,7 @@ import AudioToolbox
 	}
 	
 	private func showExportSettingsWithExportType(expType: Int, URL theURL: NSURL) {
-		//MADGetBestDriver(&exportSettings);
+		exportSettings.resetToBestDriver()
 		exportSettings.driverMode = .NoHardwareDriver;
 		exportSettings.repeatMusic = false;
 		exportController.settingsFromDriverSettings(exportSettings)
