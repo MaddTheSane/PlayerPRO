@@ -8,11 +8,7 @@
 
 #import "PPSampleWaveformView.h"
 #import "PPSampleObject.h"
-
-@interface PPSampleObject (SwiftFunc)
-- (void)drawSampleWithStart:(NSInteger)start tSS:(NSInteger)tSS tSE:(NSInteger)tSE high:(NSInteger)high larg:(NSInteger)larg trueV:(NSInteger)trueV trueH:(NSInteger)trueH channel:(short)channel context:(CGContextRef)ctx;
-- (NSImage*)waveformImageUsingView:(NSView*)theView;
-@end
+#import <PlayerPROKit/PlayerPROKit-Swift.h>
 
 @interface PPSampleWaveformView ()
 @property (strong) NSImage *waveform;
