@@ -7,12 +7,7 @@
 #include "MADFileUtils.h"
 #include "GetMetadataForFile.h"
 
-@interface NSString (PPextras)
-+ (BOOL)PPstringIsEmpty:(NSString *)s;
-@end
-
-@implementation NSString (PPextras)
-+ (BOOL)PPstringIsEmpty:(NSString *)s
+static inline BOOL StringIsEmpty(NSString *s)
 {
 	NSString *copy;
 	NSMutableCharacterSet *mutSet;
@@ -31,7 +26,6 @@
 	
 	return NO;
 }
-@end
 
 #define kPPMDInstumentsList		@"net_sourceforge_playerpro_tracker_instumentlist"
 #define kPPMDPatternList		@"net_sourceforge_playerpro_tracker_patternlist"
@@ -188,14 +182,14 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			for (int i = 0; i < MAXINSTRU; i++) {
 				InstrData *tempData = &MADMusic1->fid[i];
 				NSString *temp = [[NSString alloc] initWithCString:tempData->name encoding:NSMacOSRomanStringEncoding];
-				if (![NSString PPstringIsEmpty:temp])
+				if (!StringIsEmpty(temp))
 					[InstruArray addObject:temp];
 				
 				int sDataCount = tempData->firstSample + tempData->numSamples;
 				for (int x = tempData->firstSample; x < sDataCount; x++) {
 					sData *tempSData = MADMusic1->sample[x];
 					temp = [[NSString alloc] initWithCString:tempSData->name encoding:NSMacOSRomanStringEncoding];
-					if (![NSString PPstringIsEmpty:temp])
+					if (!StringIsEmpty(temp))
 						[InstruArray addObject:temp];
 				}
 			}
@@ -208,7 +202,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			for (int i = 0; i < MAXPATTERN; i++) {
 				if (MADMusic1->partition != NULL && MADMusic1->partition[i] != NULL) {
 					NSString *temp = [[NSString alloc] initWithCString:MADMusic1->partition[i]->header.name encoding:NSMacOSRomanStringEncoding];
-					if (![NSString PPstringIsEmpty:temp])
+					if (!StringIsEmpty(temp))
 						[PatArray addObject:temp];
 				}
 			}
