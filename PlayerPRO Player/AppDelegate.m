@@ -965,7 +965,7 @@ return; \
 	self.currentlyPlayingIndex = [[CurrentlyPlayingIndex alloc] init];
 	[self.previouslyPlayingIndex movePlayingIndexToOtherIndex:self.currentlyPlayingIndex];
 	
-	exportController = [[SoundSettingsViewController alloc] init];
+	exportController = [SoundSettingsViewController newSoundSettingWindow];
 	exportController.delegate = self;
 	[exportSettingsBox setContentView:[exportController view]];
 	
