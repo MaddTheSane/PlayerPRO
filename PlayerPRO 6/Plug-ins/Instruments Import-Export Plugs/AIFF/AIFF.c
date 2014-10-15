@@ -151,4 +151,4 @@ static MADErr mainAIFF(void *unused, OSType order, InstrData *InsHeader, sData *
 #define PLUGINFACTORY AIFFFactory //The factory name as defined in the Info.plist file
 #define PLUGMAIN mainAIFF //The old main function, renamed please
 
-#include "CFPlugin-InstrBridge.c"
+#include "../CFPlugin-InstrBridge.c"

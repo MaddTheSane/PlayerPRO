@@ -476,4 +476,4 @@ End:
 #define PLUGMAIN Sys7Main
 
 //#include "../CFPlugin-InstrBridge.c"
-#include "CFPlugin-InstrBridge.c"
+#include "../CFPlugin-InstrBridge.c"

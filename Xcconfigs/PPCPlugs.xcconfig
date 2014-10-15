@@ -7,7 +7,7 @@
 //
 
 #include "Universal.xcconfig"
-INFOPLIST_FILE = ${PRODUCT_NAME}-Info.plist
+INFOPLIST_FILE = MADDriver.source/Import-Export/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist
 GENERATE_PKGINFO_FILE = YES
 SKIP_INSTALL = YES
 DEBUG_INFORMATION_FORMAT = dwarf-with-dsym

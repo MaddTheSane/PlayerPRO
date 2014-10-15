@@ -217,4 +217,4 @@ static OSErr mainQTInst(void					*unused,
 #define PLUGINFACTORY QTInstFactory
 #define PLUGMAIN mainQTInst
 
-#include "CFPlugin-InstrBridge.c"
+#include "../CFPlugin-InstrBridge.c"
