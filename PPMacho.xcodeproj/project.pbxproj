@@ -5924,9 +5924,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55F1BDA81975C83600AD2C03 /* Build configuration list for PBXNativeTarget "PlayerPROCore-iOS" */;
 			buildPhases = (
+				55F1BD8C1975C83400AD2C03 /* Headers */,
 				55F1BD8A1975C83400AD2C03 /* Sources */,
 				55F1BD8B1975C83400AD2C03 /* Frameworks */,
-				55F1BD8C1975C83400AD2C03 /* Headers */,
 				55F1BD8D1975C83400AD2C03 /* Resources */,
 			);
 			buildRules = (
