@@ -977,7 +977,7 @@ MADErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADD
 #ifdef WIN32
 		case DirectSound95NT:
 			if (!DirectSoundInit(MDriver))
-				theErr = MADUnknowErr;
+				theErr = MADUnknownErr;
 			if (theErr != MADNoErr) {
 				MADCloseEqualizer(MDriver);
 				MADDisposeReverb(MDriver);
@@ -989,7 +989,7 @@ MADErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADD
 			
 		case Wave95NT:
 			if (!W95_Init(MDriver))
-				theErr = MADUnknowErr;
+				theErr = MADUnknownErr;
 			if (theErr != MADNoErr) {
 				MADCloseEqualizer(MDriver);
 				MADDisposeReverb(MDriver);
