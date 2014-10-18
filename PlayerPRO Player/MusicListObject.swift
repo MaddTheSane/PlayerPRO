@@ -49,14 +49,14 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	let musicURL: NSURL
 
 	#if os(OSX)
-	@objc lazy var fileIcon: NSImage = {
+	@objc private(set) lazy var fileIcon: NSImage = {
 		let image = NSWorkspace.sharedWorkspace().iconForFile(self.musicURL.path!)
 		image.size = NSSize(width: 16, height: 16)
 		return image
 	}()
 	#endif
 	
-	@objc lazy var fileName: String = {
+	@objc private(set) lazy var fileName: String = {
 		var val: AnyObject? = nil;
 		var err: NSError? = nil;
 		
@@ -69,7 +69,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		}
 	}()
 	
-	@objc lazy var fileSize: UInt64 = {
+	@objc private(set) lazy var fileSize: UInt64 = {
 		var val: AnyObject? = nil;
 		var err: NSError? = nil;
 		if (!self.musicURL.getResourceValue(&val, forKey:NSURLTotalFileSizeKey, error: &err)) {
