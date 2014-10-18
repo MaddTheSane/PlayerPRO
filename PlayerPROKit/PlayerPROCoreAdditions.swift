@@ -33,30 +33,16 @@ public let PlugDoesExport = CFStringToString(kMadPlugDoesExport)
 public let PlugModeKey = CFStringToString(kMadPlugModeKey)
 
 public func OSTypeToString(theType: MADFourChar) -> String? {
-	let toRet = UTCreateStringForOSType(theType)
-	if toRet == nil {
+	if let toRet = UTCreateStringForOSType(theType) {
+		return CFStringToString(toRet.takeRetainedValue())
+	} else {
 		return nil
 	}
-	return CFStringToString(toRet.takeRetainedValue())
 }
 
 public func StringToOSType(theString: String) -> MADFourChar {
 	return UTGetOSTypeFromString(StringToCFString(theString))
 }
-
-/*
-	extension MADFourChar: StringLiteralConvertible {
-	public static func convertFromStringLiteral(value: String) -> MADFourChar {
-		return MADFourChar(value)
-	}
-	
-	public static func convertFromExtendedGraphemeClusterLiteral(value: String) -> MADFourChar {
-		var tmpStr = String.convertFromExtendedGraphemeClusterLiteral(value)
-		return self.convertFromStringLiteral(tmpStr)
-	}
-	
-}
-*/
 #else
 	public func OSTypeToString(theType: MADFourChar) -> String? {
 		var ourOSType = [Int8](count: 5, repeatedValue: 0)
@@ -85,8 +71,22 @@ public func StringToOSType(theString: String) -> MADFourChar {
 	}
 #endif
 
-extension MADFourChar {
+extension MADFourChar: StringLiteralConvertible {
 	public init(_ toInit: String) {
+		self = StringToOSType(toInit)
+	}
+	
+	public init(unicodeScalarLiteral usl: String) {
+		let tmpUnscaled = String(unicodeScalarLiteral: usl)
+		self = StringToOSType(tmpUnscaled)
+	}
+	
+	public init(extendedGraphemeClusterLiteral egcl: String) {
+		let tmpUnscaled = String(extendedGraphemeClusterLiteral: egcl)
+		self.init(tmpUnscaled)
+	}
+	
+	public init(stringLiteral toInit: String) {
 		self = StringToOSType(toInit)
 	}
 	
@@ -95,9 +95,7 @@ extension MADFourChar {
 	}
 	
 	public var OSTypeStringValue: String? {
-		get {
-			return OSTypeToString(self)
-		}
+		return OSTypeToString(self)
 	}
 	
 	public init(_ toInit: (Int8, Int8, Int8, Int8)) {
@@ -186,9 +184,7 @@ extension MADInfoRec: DebugPrintable {
 	}
 	
 	public var debugDescription: String {
-		get {
-			return "\(internalName), format \(format)"
-		}
+		return "\(internalName), format \(format)"
 	}
 }
 
@@ -218,33 +214,23 @@ extension PlugInfo {
 	}
 	
 	public var plugInURL: NSURL {
-		get {
-			return CFBundleCopyBundleURL(file.takeUnretainedValue()) as NSURL
-		}
+		return CFBundleCopyBundleURL(file.takeUnretainedValue()) as NSURL
 	}
 	
 	public var types: [String] {
-		get {
-			return UTItypes.takeUnretainedValue() as NSArray as [String]
-		}
+		return UTItypes.takeUnretainedValue() as NSArray as [String]
 	}
 	
 	public var fourCharType: MADFourChar {
-		get {
-			return MADFourChar(type)
-		}
+		return MADFourChar(type)
 	}
 	
 	public var name: String {
-		get {
-			return CFStringToString(MenuName.takeUnretainedValue())
-		}
+		return CFStringToString(MenuName.takeUnretainedValue())
 	}
 	
 	public var author: String {
-		get {
-			return CFStringToString(AuthorString.takeUnretainedValue())
-		}
+		return CFStringToString(AuthorString.takeUnretainedValue())
 	}
 }
 
@@ -268,9 +254,7 @@ public struct MADLibraryGenerator: GeneratorType {
 
 extension MADLibrary: SequenceType {
 	public var count: Int {
-		get {
-			return Int(TotalPlug)
-		}
+		return Int(TotalPlug)
 	}
 	
     public func generate() -> MADLibraryGenerator {
@@ -279,7 +263,7 @@ extension MADLibrary: SequenceType {
 }
 
 public func MADDebugString(line: UWord = __LINE__, file: String = __FILE__, text: String) {
-	MADDebugStr(Int16(line), file.fileSystemRepresentation(), (text as NSString).UTF8String)
+	MADDebugStr(Int16(line), file.fileSystemRepresentation(), text.cStringUsingEncoding(NSUTF8StringEncoding)!)
 }
 
 private let BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -299,7 +283,7 @@ extension sData32 {
 		self.data = 0
 	}
 	
-	public var toSData : sData { get {
+	public var toSData : sData {
 		var toRet = sData()
 		toRet.size = self.size
 		toRet.loopBeg = self.loopBeg
@@ -313,7 +297,7 @@ extension sData32 {
 		toRet.stereo = self.stereo
 		
 		return toRet
-		}}
+	}
 }
 
 extension sData {
@@ -322,7 +306,6 @@ extension sData {
 	public static let maximumVolume: MADByte = 64
 
 	public var toSData32 : sData32 {
-		get {
 		var toRet = sData32()
 		toRet.size = self.size
 		toRet.loopBeg = self.loopBeg
@@ -336,7 +319,6 @@ extension sData {
 		toRet.stereo = self.stereo
 		
 		return toRet
-		}
 	}
 	
 	public init() {
