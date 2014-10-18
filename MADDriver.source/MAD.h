@@ -281,9 +281,9 @@ typedef struct MADSpec
 	MADByte		MultiChan;					// MultiChannel per tracks?
 	int			EPitch;						// New Pitch
 	int			ESpeed;						// New Speed
-	MADByte		XMLinear;					// Linear picth table?
-	MADByte		MODMode;					// Limit pitch to MOD pitch table
-	MADByte		showCopyright;				// Show infos at startup? true or false
+	bool		XMLinear;					// Linear pitch table?
+	bool		MODMode;					// Limit pitch to MOD pitch table
+	bool		showCopyright;				// Show infos at startup? true or false
 	MADByte		generalPitch;				// General Pitch
 	MADByte		generalSpeed;				// General Speed
 	MADByte		generalVol;					// Software general volume
