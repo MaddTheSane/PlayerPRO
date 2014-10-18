@@ -2111,13 +2111,13 @@
 		5533411110BB547D005208D1 /* MOD.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MOD.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
 		5533411210BB547D005208D1 /* MOD-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MOD-Info.plist"; sourceTree = "<group>"; };
 		5533415310BB572C005208D1 /* 669.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 669.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		5533415710BB572C005208D1 /* 669-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "669-Info.plist"; path = "MADDriver.source/Import-Export/669/669-Info.plist"; sourceTree = SOURCE_ROOT; };
+		5533415710BB572C005208D1 /* 669-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "669-Info.plist"; sourceTree = "<group>"; };
 		553341D310BB5FE0005208D1 /* AMF.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AMF.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		553341D410BB5FE0005208D1 /* AMF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "AMF-Info.plist"; path = "MADDriver.source/Import-Export/AMF/AMF-Info.plist"; sourceTree = SOURCE_ROOT; };
+		553341D410BB5FE0005208D1 /* AMF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "AMF-Info.plist"; sourceTree = "<group>"; };
 		553341E910BB5FFA005208D1 /* DMF.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DMF.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		553341EA10BB5FFA005208D1 /* DMF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "DMF-Info.plist"; path = "MADDriver.source/Import-Export/DMF/DMF-Info.plist"; sourceTree = SOURCE_ROOT; };
+		553341EA10BB5FFA005208D1 /* DMF-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DMF-Info.plist"; sourceTree = "<group>"; };
 		553341FC10BB600A005208D1 /* IT.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IT.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
-		553341FD10BB600A005208D1 /* IT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "IT-Info.plist"; path = "MADDriver.source/Import-Export/IT/IT-Info.plist"; sourceTree = SOURCE_ROOT; };
+		553341FD10BB600A005208D1 /* IT-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IT-Info.plist"; sourceTree = "<group>"; };
 		5533C8F919942AD9003AEB16 /* SoundOutputController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundOutputController.swift; sourceTree = "<group>"; };
 		553507A419BC293C00B9E815 /* PPRevertPlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPRevertPlug.swift; sourceTree = "<group>"; };
 		553507A619BCA31000B9E815 /* PPNoteTranslatePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPNoteTranslatePlug.h; sourceTree = "<group>"; };
