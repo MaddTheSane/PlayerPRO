@@ -429,14 +429,14 @@ extension PPLibrary: SequenceType {
 	}
 	
 	public struct MusicFileInfo {
-		var totalPatterns: Int
-		var partitionLength: Int
-		var fileSize: Int
-		var totalTracks: Int
-		var totalInstruments: Int
-		var internalFileName: String
-		var formatDescription: String
-		var signature: String
+		public var totalPatterns: Int
+		public var partitionLength: Int
+		public var fileSize: Int
+		public var totalTracks: Int
+		public var totalInstruments: Int
+		public var internalFileName: String
+		public var formatDescription: String
+		public var signature: String
 
 		init(infoDict: NSDictionary) {
 			totalPatterns = infoDict[kPPTotalPatterns] as NSNumber as Int
