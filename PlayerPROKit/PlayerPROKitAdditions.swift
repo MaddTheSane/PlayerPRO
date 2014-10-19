@@ -12,7 +12,7 @@ import PlayerPROCore
 import CoreGraphics
 #if os(OSX)
 	import Cocoa
-#else
+#elseif os(iOS)
 	import UIKit
 #endif
 
@@ -426,6 +426,52 @@ extension PPPatternObject: SequenceType {
 extension PPLibrary: SequenceType {
 	public func generate() -> NSFastGenerator {
 		return NSFastGenerator(self)
+	}
+	
+	public func identifyFile(#URL: NSURL, inout type stringType: String) -> MADErr {
+		var ourStrType: NSString? = nil
+		let toRet = identifyFileAtURL(URL, stringType: &ourStrType)
+		if let unwrapped = ourStrType {
+			stringType = unwrapped
+		}
+		
+		return toRet
+	}
+	
+	public func identifyFile(#path: String, inout type stringType: String) -> MADErr {
+		var ourStrType: NSString? = nil
+		let toRet = identifyFileAtPath(path, stringType: &ourStrType)
+		if let unwrapped = ourStrType {
+			stringType = unwrapped
+		}
+		
+		return toRet
+	}
+	
+	public func getInformationFromFile(#URL: NSURL, type stringType: String, inout infoDictionary: [String: NSObject]) -> MADErr {
+		var ourDict: NSDictionary? = nil
+		let toRet = getInformationFromFileAtURL(URL, stringType: stringType, infoDictionary: &ourDict)
+		if let unwrapped = ourDict {
+			let furthurUnwrapped = unwrapped as [String: NSObject]
+			for (key, value) in furthurUnwrapped {
+				infoDictionary[key] = value
+			}
+		}
+		
+		return toRet
+	}
+	
+	public func getInformationFromFile(#path: String, type stringType: String, inout infoDictionary: [String: NSObject]) -> MADErr {
+		var ourDict: NSDictionary? = nil
+		let toRet = getInformationFromFileAtPath(path, stringType: stringType, infoDictionary: &ourDict)
+		if let unwrapped = ourDict {
+			let furthurUnwrapped = unwrapped as [String: NSObject]
+			for (key, value) in furthurUnwrapped {
+				infoDictionary[key] = value
+			}
+		}
+		
+		return toRet
 	}
 }
 

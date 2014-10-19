@@ -230,12 +230,30 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 	return [self getInformationFromFileAtURL:[NSURL fileURLWithPath:apath] stringType:atype infoDictionary:infoDict];
 }
 
+static inline NSString* OSTypeToNSString(OSType theOSType)
+{
+#if !TARGET_OS_IPHONE
+	NSString *checkForValid = CFBridgingRelease(UTCreateStringForOSType(theOSType));
+#else
+	char ourOSType[5] = {0};
+	
+	OSType2Ptr(theOSType, ourOSType);
+	NSString *checkForValid = [[NSString alloc] initWithBytes:ourOSType length:4 encoding:NSMacOSRomanStringEncoding];
+#endif
+	
+	if (!checkForValid) {
+		checkForValid = [[NSString alloc] initWithFormat:@"%X", (unsigned int)theOSType];
+	}
+	
+	return checkForValid;
+}
+
 + (NSDictionary*)infoRecToDictionary:(MADInfoRec)infoRec
 {
 	return @{kPPTotalPatterns:		@(infoRec.totalPatterns),
 			 kPPPartitionLength:	@(infoRec.partitionLength),
 			 kPPFileSize:			@(infoRec.fileSize),
-			 kPPSignature:			@(infoRec.signature),
+			 kPPSignature:			OSTypeToNSString(infoRec.signature),
 			 kPPTotalTracks:		@(infoRec.totalTracks),
 			 kPPTotalInstruments:	@(infoRec.totalInstruments),
 			 kPPInternalFileName:	[NSString stringWithCString:infoRec.internalFileName encoding:NSMacOSRomanStringEncoding],

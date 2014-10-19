@@ -100,12 +100,26 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		super.init();
 	}
 	
+	convenience init?(bookmarkData: NSData, resolutionOptions: NSURLBookmarkResolutionOptions = nil, relativeURL: NSURL? = nil) {
+		if let resolvedURL = NSURL(byResolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeToURL: relativeURL, bookmarkDataIsStale: nil, error: nil) {
+			self.init(URL: resolvedURL)
+		} else {
+			self.init(URL: NSURL())
+
+			return nil
+		}
+	}
+	
 	override var hash: Int {
 		return self.hashValue
 	}
 	
 	override var hashValue: Int {
-		return musicURL.absoluteURL!.hash
+		if let absURL = musicURL.absoluteString {
+			return absURL.hash
+		} else {
+			return super.hash
+		}
 	}
 
 	override var description: String {

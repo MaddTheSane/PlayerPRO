@@ -352,8 +352,8 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 						theHandle(theErr: lolwut)
 					} else {
 						var pathsURL = [MusicListObject]()
-						self.lostMusicCount = invalidAny as UInt
-						self.selectedMusic = selectedAny as Int
+						self.lostMusicCount = invalidAny as NSNumber as UInt
+						self.selectedMusic = selectedAny as NSNumber as Int
 						for aPath in pathsAny as NSArray as [NSString] {
 							if let tmpURL = NSURL.fileURLWithPath(aPath) {
 								let tmpObj = MusicListObject(URL: tmpURL)
