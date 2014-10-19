@@ -428,6 +428,28 @@ extension PPLibrary: SequenceType {
 		return NSFastGenerator(self)
 	}
 	
+	public struct MusicFileInfo {
+		var totalPatterns: Int
+		var partitionLength: Int
+		var fileSize: Int
+		var totalTracks: Int
+		var totalInstruments: Int
+		var internalFileName: String
+		var formatDescription: String
+		var signature: String
+
+		init(infoDict: NSDictionary) {
+			totalPatterns = infoDict[kPPTotalPatterns] as NSNumber as Int
+			partitionLength = infoDict[kPPPartitionLength] as NSNumber as Int
+			fileSize = infoDict[kPPFileSize] as NSNumber as Int
+			totalTracks = infoDict[kPPTotalTracks] as NSNumber as Int
+			totalInstruments = infoDict[kPPTotalInstruments] as NSNumber as Int
+			internalFileName = infoDict[kPPInternalFileName] as NSString
+			formatDescription = infoDict[kPPFormatDescription] as NSString
+			signature = infoDict[kPPSignature] as NSString
+		}
+	}
+	
 	public func identifyFile(#URL: NSURL, inout type stringType: String) -> MADErr {
 		var ourStrType: NSString? = nil
 		let toRet = identifyFileAtURL(URL, stringType: &ourStrType)
@@ -446,6 +468,20 @@ extension PPLibrary: SequenceType {
 		}
 		
 		return toRet
+	}
+	
+	public func identifyFile(#URL: NSURL) -> (error: MADErr, format: String?) {
+		var ourStrType: NSString? = nil
+		let toRet = identifyFileAtURL(URL, stringType: &ourStrType)
+		
+		return (toRet, ourStrType)
+	}
+	
+	public func identifyFile(#path: String) -> (error: MADErr, format: String?) {
+		var ourStrType: NSString? = nil
+		let toRet = identifyFileAtPath(path, stringType: &ourStrType)
+		
+		return (toRet, ourStrType)
 	}
 	
 	public func getInformationFromFile(#URL: NSURL, type stringType: String, inout infoDictionary: [String: NSObject]) -> MADErr {
@@ -472,6 +508,28 @@ extension PPLibrary: SequenceType {
 		}
 		
 		return toRet
+	}
+	
+	public func getInformationFromFile(#URL: NSURL, type stringType: String) -> (error: MADErr, musicInfo: MusicFileInfo?) {
+		var ourDict: NSDictionary? = nil
+		let toRet = getInformationFromFileAtURL(URL, stringType: stringType, infoDictionary: &ourDict)
+		if let unwrapped = ourDict {
+			let inf = MusicFileInfo(infoDict: unwrapped)
+			return (toRet, inf)
+		} else {
+			return (toRet, nil)
+		}
+	}
+	
+	public func getInformationFromFile(#path: String, type stringType: String) -> (error: MADErr, musicInfo: MusicFileInfo?) {
+		var ourDict: NSDictionary? = nil
+		let toRet = getInformationFromFileAtPath(path, stringType: stringType, infoDictionary: &ourDict)
+		if let unwrapped = ourDict {
+			let inf = MusicFileInfo(infoDict: unwrapped)
+			return (toRet, inf)
+		} else {
+			return (toRet, nil)
+		}
 	}
 }
 

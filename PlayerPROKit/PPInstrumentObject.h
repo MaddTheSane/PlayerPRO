@@ -20,7 +20,8 @@
 @interface PPEnvelopeObject : NSObject <PPObject>
 @property (readonly) EnvRec envelopeRec;
 @property short position;
-@property short value;
+@property short envelopeValue;
+@property short value DEPRECATED_ATTRIBUTE; // This value conflicts with a Swift property
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithEnvRec:(EnvRec)theRec NS_DESIGNATED_INITIALIZER;
 + (instancetype)envelopeWithEnvRec:(EnvRec)theRec;

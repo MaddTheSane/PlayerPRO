@@ -264,7 +264,7 @@ static NSData *startData()
 		memcpy(pth.what, [InsHeader what], 96);
 		for (i = 0; i < 24; i += 2) {
 			pth.volenv[i] = [(PPEnvelopeObject*)InsHeader.volumeEnvelope[i / 2] position];
-			pth.volenv[i + 1] = [(PPEnvelopeObject*)InsHeader.volumeEnvelope[i / 2] value];
+			pth.volenv[i + 1] = [(PPEnvelopeObject*)InsHeader.volumeEnvelope[i / 2] envelopeValue];
 		}
 #if __BIG_ENDIAN__
 		for (x = 0; x < 24; x++) {
@@ -282,7 +282,7 @@ static NSData *startData()
 		
 		for (i = 0; i < 24; i += 2) {
 			pth.panenv[i] = [(PPEnvelopeObject*)InsHeader.panningEnvelope[i / 2] position];
-			pth.panenv[i + 1] = [(PPEnvelopeObject*)InsHeader.panningEnvelope[i / 2] value];
+			pth.panenv[i + 1] = [(PPEnvelopeObject*)InsHeader.panningEnvelope[i / 2] envelopeValue];
 		}
 #if __BIG_ENDIAN__
 		for (x = 0; x < 24; x++) {

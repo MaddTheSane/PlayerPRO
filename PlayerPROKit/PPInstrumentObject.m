@@ -130,14 +130,24 @@ static const dispatch_block_t initUTIArray = ^{
 	writeBackVal->pos = position;
 }
 
-- (short)value
+- (short)envelopeValue
 {
 	return writeBackVal->val;
 }
 
-- (void)setValue:(short)value
+- (void)setEnvelopeValue:(short)value
 {
 	writeBackVal->val = value;
+}
+
+- (short)value
+{
+	return self.envelopeValue;
+}
+
+- (void)setValue:(short)value
+{
+	self.envelopeValue = value;
 }
 
 - (instancetype)init
