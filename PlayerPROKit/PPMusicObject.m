@@ -80,6 +80,56 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	currentMusic->header->showCopyright = showsCopyright;
 }
 
+- (int)newPitch
+{
+	return currentMusic->header->EPitch;
+}
+
+- (void)setNewPitch:(int)newPitch
+{
+	currentMusic->header->EPitch = newPitch;
+}
+
+- (int)newSpeed
+{
+	return currentMusic->header->ESpeed;
+}
+
+- (void)setNewSpeed:(int)newSpeed
+{
+	currentMusic->header->ESpeed = newSpeed;
+}
+
+- (MADByte)generalPitch
+{
+	return currentMusic->header->generalPitch;
+}
+
+- (void)setGeneralPitch:(MADByte)generalPitch
+{
+	currentMusic->header->generalPitch = generalPitch;
+}
+
+- (MADByte)generalSpeed
+{
+	return currentMusic->header->generalSpeed;
+}
+
+- (void)setGeneralSpeed:(MADByte)generalSpeed
+{
+	currentMusic->header->generalSpeed = generalSpeed;
+}
+
+- (MADByte)generalVolume
+{
+	return currentMusic->header->generalVol;
+}
+
+- (void)setGeneralVolume:(MADByte)generalVolume
+{
+	currentMusic->header->generalVol = generalVolume;
+}
+
 - (MADErr)exportInstrumentListToURL:(NSURL*)outURL
 {
 	NSMutableData *outData = [[NSMutableData alloc] init];

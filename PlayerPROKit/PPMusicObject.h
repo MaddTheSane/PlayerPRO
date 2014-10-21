@@ -36,6 +36,11 @@
 @property BOOL usesLinearPitchTable;
 @property BOOL limitPitchToMODTable;
 @property BOOL showsCopyright;
+@property int newPitch;
+@property int newSpeed;
+@property MADByte generalPitch;
+@property MADByte generalSpeed;
+@property MADByte generalVolume;
 
 - (instancetype)init;
 // Creates a music object from the supplied MADK file ONLY
