@@ -50,6 +50,36 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 @synthesize _currentMusic = currentMusic;
 @synthesize internalFileName;
 
+- (BOOL)usesLinearPitchTable
+{
+	return currentMusic->header->XMLinear;
+}
+
+- (void)setUsesLinearPitchTable:(BOOL)usesLinearPitchTable
+{
+	currentMusic->header->XMLinear = usesLinearPitchTable;
+}
+
+- (BOOL)limitPitchToMODTable
+{
+	return currentMusic->header->MODMode;
+}
+
+- (void)setLimitPitchToMODTable:(BOOL)limitPitchToMODTable
+{
+	currentMusic->header->MODMode = limitPitchToMODTable;
+}
+
+- (BOOL)showsCopyright
+{
+	return currentMusic->header->showCopyright;
+}
+
+- (void)setShowsCopyright:(BOOL)showsCopyright
+{
+	currentMusic->header->showCopyright = showsCopyright;
+}
+
 - (MADErr)exportInstrumentListToURL:(NSURL*)outURL
 {
 	NSMutableData *outData = [[NSMutableData alloc] init];

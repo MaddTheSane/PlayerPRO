@@ -33,6 +33,10 @@
 @property (readonly, weak) PPDriver *attachedDriver;
 @property (readonly) NSURL *filePath;
 
+@property BOOL usesLinearPitchTable;
+@property BOOL limitPitchToMODTable;
+@property BOOL showsCopyright;
+
 - (instancetype)init;
 // Creates a music object from the supplied MADK file ONLY
 - (instancetype)initWithURL:(NSURL *)url NS_DESIGNATED_INITIALIZER;
