@@ -169,7 +169,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 				instrumentLoopSize.integerValue = Int(untmpObj.loopSize)
 				instrumentVolume.integerValue = Int(untmpObj.volume)
 				instrumentRate.stringValue = "\(untmpObj.c2spd) Hz"
-				instrumentNote.stringValue = OctaveNameFromNote(UInt8(untmpObj.relativeNote))
+				instrumentNote.stringValue = OctaveNameFromNote(UInt8(untmpObj.relativeNote)) ?? "---"
 				instrumentBits.stringValue = "\(untmpObj.amplitude)-bit"
 				instrumentMode.stringValue = untmpObj.loopType == .PingPong ? "Ping-pong" : "Classic"
 				let tmpIm = PPSampleObject.waveformImage(fromSample: untmpObj, view: waveFormImage)

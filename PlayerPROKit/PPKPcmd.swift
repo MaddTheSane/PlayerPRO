@@ -118,7 +118,7 @@ public struct PPKPcmd: SequenceType {
 	}
 	
 	public mutating func addTrack() {
-		for i in length - 1 ... 0 {
+		for var i = length - 1; i > 0; i-- {
 			let acmd = Cmd()
 			myCmd.insert(Cmd(), atIndex: Int(i * tracks))
 		}

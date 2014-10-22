@@ -182,39 +182,36 @@ extension PPSampleObject {
 		let defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!
 		let bitMapFormat = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
 		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, bitMapFormat)
-		CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height))
+		
+		CGContextClearRect(bitmapContext, CGRect(origin: CGPointZero, size: imageSize))
 		let lineSize = view.convertSizeToBacking(NSSize(width: 1, height: 1))
 		CGContextSetLineWidth(bitmapContext, lineSize.height)
-		var colorRef = CGColorCreateGenericGray(0, 0)
 		if (datIsStereo) {
-			colorRef = CGColorCreateGenericRGB(0, 0, 1, 0.75)
-			CGContextSetStrokeColorWithColor(bitmapContext, colorRef)
+			CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(0, 0, 1, 0.75))
 			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
 		}
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		
-		colorRef = CGColorCreateGenericRGB(1, 0, 0, stereoTrans)
-		CGContextSetStrokeColorWithColor(bitmapContext, colorRef);
+		CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(1, 0, 0, stereoTrans));
 		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
 		
 		if (theDat.loopSize != 0) {
-			colorRef = CGColorCreateGenericRGB(1, 0.1, 0.5, 0.8)
-			CGContextSetStrokeColorWithColor(bitmapContext, colorRef)
+			CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(1, 0.1, 0.5, 0.8))
 			var loopRect = aRect
-			let lineSize = view.convertSizeToBacking(NSSize(width: 2, height: 2))
-			let padSize = view.convertSizeToBacking(NSSize(width: 1, height: 1))
-			CGContextSetLineWidth(bitmapContext, lineSize.height)
+			let lineSize = view.convertSizeToBacking(NSSize(width: 2, height: 2)).width
+			let padSize = view.convertSizeToBacking(NSSize(width: 1, height: 1)).width
+			CGContextSetLineWidth(bitmapContext, lineSize)
 			loopRect.origin.x =  CGFloat(theDat.loopBegin) * imageSize.width / CGFloat(theDat.data.length)
-			loopRect.origin.y += padSize.width
+			loopRect.origin.y += padSize
 			loopRect.size.width = CGFloat(theDat.loopSize) * imageSize.width / CGFloat(theDat.data.length)
-			loopRect.size.height -= padSize.width * 2
+			loopRect.size.height -= padSize * 2
 			CGContextStrokeRect(bitmapContext, loopRect)
 		}
 		
 		var theCGimg = CGBitmapContextCreateImage(bitmapContext)
 		return NSImage(CGImage: theCGimg, size: view.frame.size)
 	}
-#else
+#elseif os(iOS)
 	@objc(waveformImageUsingView:) public func waveformImage(#view: UIView) -> UIImage? {
 		return PPSampleObject.waveformImage(fromSample: self, view: view)
 	}
@@ -461,6 +458,10 @@ extension PPLibraryObject {
 
 }
 
+public func InfoRecToMusicInfo(infoRec: MADInfoRec) -> PPLibrary.MusicFileInfo {
+	return PPLibrary.infoRecToMusicInfo(infoRec)
+}
+
 extension PPLibrary: SequenceType {
 	public func generate() -> NSFastGenerator {
 		return NSFastGenerator(self)
@@ -476,7 +477,7 @@ extension PPLibrary: SequenceType {
 		public var formatDescription: String
 		public var signature: String
 
-		init(infoDict: NSDictionary) {
+		private init(infoDict: NSDictionary) {
 			totalPatterns = infoDict[kPPTotalPatterns] as NSNumber as Int
 			partitionLength = infoDict[kPPPartitionLength] as NSNumber as Int
 			fileSize = infoDict[kPPFileSize] as NSNumber as Int
