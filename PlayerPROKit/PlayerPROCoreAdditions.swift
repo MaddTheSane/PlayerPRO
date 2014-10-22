@@ -142,24 +142,23 @@ public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
 	let rhsNameMirror = reflect(rhs.name)
 	let lhsNameArray: [UInt8] = GetArrayFromMirror(lhsNameMirror)
 	let rhsNameArray: [UInt8] = GetArrayFromMirror(rhsNameMirror)
-	if let lhsCFName = CFStringCreateWithPascalString(kCFAllocatorDefault, lhsNameArray, CFStringBuiltInEncodings.MacRoman.rawValue) {
-		if let rhsCFName = CFStringCreateWithPascalString(kCFAllocatorDefault, rhsNameArray, CFStringBuiltInEncodings.MacRoman.rawValue) {
-			let lhsName = lhsCFName as String
-			let rhsName = rhsCFName as String
-			if lhsName != rhsName {
-				return false
-			}
+	let lhsName = (CFStringCreateWithPascalString(kCFAllocatorDefault, lhsNameArray, CFStringBuiltInEncodings.MacRoman.rawValue) as String?) ?? ""
+	let rhsName = (CFStringCreateWithPascalString(kCFAllocatorDefault, rhsNameArray, CFStringBuiltInEncodings.MacRoman.rawValue) as String?) ?? ""
+	if lhsName != rhsName {
+		return false
+	}
+	
+	let lhsValuesArray: [Float] = GetArrayFromMirror(reflect(lhs.values))
+	let rhsValuesArray: [Float] = GetArrayFromMirror(reflect(rhs.values))
+	// Ignore values that aren't accessed
+	for i in 0..<Int(lhs.noArg) {
+		if lhsValuesArray[i] != rhsValuesArray[i] {
+			return false
 		}
 	}
-	// TODO: implement
-	/*
-	if lhs.values != rhs.values {
-		return false
-	}*/
 
 	return true
 }
-
 
 // MARK: Bridges to more modern Swift code.
 public let MadID = StringToOSType("MADK")
@@ -305,24 +304,14 @@ extension MADDriverSettings: DebugPrintable, Equatable {
 
 extension MADInfoRec: DebugPrintable {
 	public var internalName: String! {
-		var toParse = [CChar]()
-		var mirror = reflect(internalFileName)
-		for i in 0..<mirror.count {
-			var aChar = mirror[i].1.value as CChar
-			toParse.append(aChar)
-		}
-		toParse.append(0)
+		let mirror = reflect(internalFileName)
+		let toParse: [CChar] = GetArrayFromMirror(mirror, appendLastObject: 0)
 		return NSString(CString: toParse, encoding: NSMacOSRomanStringEncoding)
 	}
 	
 	public var format: String! {
-		var toParse = [CChar]()
-		var mirror = reflect(formatDescription)
-		for i in 0..<mirror.count {
-			var aChar = mirror[i].1.value as CChar
-			toParse.append(aChar)
-		}
-		toParse.append(0)
+		let mirror = reflect(formatDescription)
+		let toParse: [CChar] = GetArrayFromMirror(mirror, appendLastObject: 0)
 		return NSString(CString: toParse, encoding: NSMacOSRomanStringEncoding)
 	}
 	
@@ -333,7 +322,6 @@ extension MADInfoRec: DebugPrintable {
 
 extension PlugInfo {
 	public var importer: Bool {
-		get {
 			switch (self.mode) {
 			case MADPlugModes.Import.rawValue, MADPlugModes.ImportExport.rawValue:
 				return true
@@ -341,11 +329,9 @@ extension PlugInfo {
 			default:
 				return false
 			}
-		}
 	}
 
 	public var exporter: Bool {
-		get {
 			switch (self.mode) {
 			case MADPlugModes.Export.rawValue, MADPlugModes.ImportExport.rawValue:
 				return true
@@ -353,11 +339,14 @@ extension PlugInfo {
 			default:
 				return false
 			}
-		}
 	}
 	
 	public var plugInURL: NSURL {
 		return CFBundleCopyBundleURL(file.takeUnretainedValue()) as NSURL
+	}
+	
+	public var plugInBundle: NSBundle? {
+		return NSBundle(URL: CFBundleCopyBundleURL(file.takeUnretainedValue()))
 	}
 	
 	public var types: [String] {
