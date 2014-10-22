@@ -18,6 +18,96 @@ internal func StringToCFString(string: String) -> CFString {
 	return string as NSString as CFString
 }
 
+public func ==(lhs: Cmd, rhs: Cmd) -> Bool {
+	// Don't worry about the "unused" variable for now
+	if lhs.ins != rhs.ins {
+		return false
+	}
+	if lhs.note != rhs.note {
+		return false
+	}
+	if lhs.cmd != rhs.cmd {
+		return false
+	}
+	if lhs.arg != rhs.arg {
+		return false
+	}
+	if lhs.vol != rhs.vol {
+		return false
+	}
+	
+	return true
+}
+
+public func ==(lhs: EnvRec, rhs: EnvRec) -> Bool {
+	if lhs.pos != rhs.pos {
+		return false
+	}
+	if lhs.val != rhs.val {
+		return false
+	}
+	
+	return true
+}
+
+public func ==(lhs: FXBus, rhs: FXBus) -> Bool {
+	if lhs.Active != rhs.Active {
+		return false
+	}
+	if lhs.ByPass != rhs.ByPass {
+		return false
+	}
+	if lhs.copyId != rhs.copyId {
+		return false
+	}
+	
+	return true
+}
+
+public func ==(lhs: MADDriverSettings, rhs: MADDriverSettings) -> Bool {
+	if lhs.driverMode != rhs.driverMode {
+		return false
+	}
+	if lhs.numChn != rhs.numChn {
+		return false
+	}
+	if lhs.outPutBits != rhs.outPutBits {
+		return false
+	}
+	if lhs.outPutMode != rhs.outPutMode {
+		return false
+	}
+	if lhs.outPutRate != rhs.outPutRate {
+		return false
+	}
+	if lhs.MicroDelaySize != rhs.MicroDelaySize {
+		return false
+	}
+	if lhs.ReverbSize != rhs.ReverbSize {
+		return false
+	}
+	if lhs.ReverbStrength != rhs.ReverbStrength {
+		return false
+	}
+	if lhs.oversampling != rhs.oversampling {
+		return false
+	}
+	if lhs.TickRemover != rhs.TickRemover {
+		return false
+	}
+	if lhs.surround != rhs.surround {
+		return false
+	}
+	if lhs.Reverb != rhs.Reverb {
+		return false
+	}
+	if lhs.repeatMusic != rhs.repeatMusic {
+		return false
+	}
+	
+	return true
+}
+
 // MARK: Bridges to more modern Swift code.
 public let MadID = StringToOSType("MADK")
 
@@ -44,31 +134,31 @@ public func StringToOSType(theString: String) -> MADFourChar {
 	return UTGetOSTypeFromString(StringToCFString(theString))
 }
 #else
-	public func OSTypeToString(theType: MADFourChar) -> String? {
-		var ourOSType = [Int8](count: 5, repeatedValue: 0)
-	
-		OSType2Ptr(theType, &ourOSType)
-		return NSString(bytes: ourOSType, length: 4, encoding: NSMacOSRomanStringEncoding);
+public func OSTypeToString(theType: MADFourChar) -> String? {
+	var ourOSType = [Int8](count: 5, repeatedValue: 0)
+
+	OSType2Ptr(theType, &ourOSType)
+	return NSString(bytes: ourOSType, length: 4, encoding: NSMacOSRomanStringEncoding);
+}
+
+public func StringToOSType(theString: String) -> MADFourChar {
+	var ourOSType = [Int8](count: 5, repeatedValue: 0)
+	let anNSStr = theString as NSString
+	var ourLen = anNSStr.lengthOfBytesUsingEncoding(NSMacOSRomanStringEncoding)
+	if ourLen > 4 {
+		ourLen = 4
+	} else if ourLen == 0 {
+		return 0
 	}
 	
-	public func StringToOSType(theString: String) -> MADFourChar {
-		var ourOSType = [Int8](count: 5, repeatedValue: 0)
-		let anNSStr = theString as NSString
-		var ourLen = anNSStr.lengthOfBytesUsingEncoding(NSMacOSRomanStringEncoding)
-		if ourLen > 4 {
-			ourLen = 4
-		} else if ourLen == 0 {
-			return 0
-		}
-		
-		let aData = anNSStr.cStringUsingEncoding(NSMacOSRomanStringEncoding)
-		
-		for i in 0 ..< ourLen {
-			ourOSType[i] = aData[i]
-		}
-		
-		return Ptr2OSType(ourOSType)
+	let aData = anNSStr.cStringUsingEncoding(NSMacOSRomanStringEncoding)
+	
+	for i in 0 ..< ourLen {
+		ourOSType[i] = aData[i]
 	}
+	
+	return Ptr2OSType(ourOSType)
+}
 #endif
 
 extension MADFourChar: StringLiteralConvertible {
@@ -132,7 +222,7 @@ public func NewMADDriverSettings(setToDefault: Bool = true) -> MADDriverSettings
 	return ourSett
 }
 
-extension MADDriverSettings: DebugPrintable {
+extension MADDriverSettings: DebugPrintable, Equatable {
 	public init() {
 		self.driverMode = .CoreAudioDriver
 		self.numChn = 4
@@ -336,14 +426,14 @@ extension sData {
 	}
 }
 
-extension EnvRec {
+extension EnvRec: Equatable {
 	public init() {
 		pos = 0
 		val = 0
 	}
 }
 
-extension FXBus {
+extension FXBus: Equatable {
 	public init() {
 		Active = false
 		ByPass = false
@@ -354,7 +444,7 @@ extension FXBus {
 extension InstrData {
 }
 
-extension Cmd {
+extension Cmd: Equatable {
 	public init() {
 		ins = 0
 		note = 0xFF
