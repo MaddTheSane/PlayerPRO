@@ -108,6 +108,59 @@ public func ==(lhs: MADDriverSettings, rhs: MADDriverSettings) -> Bool {
 	return true
 }
 
+private func GetArrayFromMirror<X>(mirror: MirrorType) -> [X] {
+	var anArray = [X]()
+	for i in 0..<mirror.count {
+		var aChar = mirror[i].1.value as X
+		anArray.append(aChar)
+	}
+	
+	return anArray
+}
+
+private func GetArrayFromMirror<X>(mirror: MirrorType, appendLastObject lastObj: X) -> [X] {
+	var anArray: [X] = GetArrayFromMirror(mirror)
+	anArray.append(lastObj)
+	return anArray
+}
+
+public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
+	//return lhs.theSet == rhs
+	if lhs.track != rhs.track {
+		return false
+	}
+	if lhs.id != rhs.id {
+		return false
+	}
+	if lhs.FXID != rhs.FXID {
+		return false
+	}
+	if lhs.noArg != rhs.noArg {
+		return false
+	}
+	let lhsNameMirror = reflect(lhs.name)
+	let rhsNameMirror = reflect(rhs.name)
+	let lhsNameArray: [UInt8] = GetArrayFromMirror(lhsNameMirror)
+	let rhsNameArray: [UInt8] = GetArrayFromMirror(rhsNameMirror)
+	if let lhsCFName = CFStringCreateWithPascalString(kCFAllocatorDefault, lhsNameArray, CFStringBuiltInEncodings.MacRoman.rawValue) {
+		if let rhsCFName = CFStringCreateWithPascalString(kCFAllocatorDefault, rhsNameArray, CFStringBuiltInEncodings.MacRoman.rawValue) {
+			let lhsName = lhsCFName as String
+			let rhsName = rhsCFName as String
+			if lhsName != rhsName {
+				return false
+			}
+		}
+	}
+	// TODO: implement
+	/*
+	if lhs.values != rhs.values {
+		return false
+	}*/
+
+	return true
+}
+
+
 // MARK: Bridges to more modern Swift code.
 public let MadID = StringToOSType("MADK")
 
@@ -439,6 +492,10 @@ extension FXBus: Equatable {
 		ByPass = false
 		copyId = 0
 	}
+}
+
+extension FXSets: Equatable {
+	
 }
 
 extension InstrData {

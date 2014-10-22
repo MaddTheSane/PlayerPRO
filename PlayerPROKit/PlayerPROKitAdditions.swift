@@ -16,6 +16,22 @@ import CoreGraphics
 	import UIKit
 #endif
 
+public func ==(lhs: PPMadCommandObject, rhs: Cmd) -> Bool {
+	return lhs.theCommand == rhs
+}
+
+public func ==(lhs: PPEnvelopeObject, rhs: EnvRec) -> Bool {
+	return lhs.envelopeRec == rhs
+}
+
+public func ==(lhs: PPFXBusObject, rhs: FXBus) -> Bool {
+	return lhs.theBus == rhs
+}
+
+public func ==(lhs: PPFXSetObject, rhs: FXSets) -> Bool {
+	return lhs.theSet == rhs
+}
+
 public func GetCommand(position: Int16, channel: Int16, aPat: PPPatternObject) -> Cmd {
 	var aCmd = aPat.getCommandFromPosition(position, channel: channel)
 	return aCmd.theCommand
