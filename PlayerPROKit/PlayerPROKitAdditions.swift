@@ -41,15 +41,18 @@ public func ErrorIsUserCancelled(theErr: NSError) -> Bool {
 	return PPErrorIsUserCancelled(theErr)
 }
 
-public func NoteFromString(myTT: String) -> UInt8 {
-	let toRet: Int16 = NoteFromString(myTT)
-	return UInt8(toRet)
+public func NoteFromString(myTT: String) -> UInt8? {
+	if let toRet: Int16 = NoteFromString(myTT) {
+		return UInt8(toRet)
+	} else {
+		return nil
+	}
 }
 
-public func NoteFromString(myTT: String) -> Int16
+public func NoteFromString(myTT: String) -> Int16?
 {
 	if ( myTT == "" || myTT == "---" || countElements(myTT) < 2) {
-		return 0xFF
+		return nil
 	}
 	
 	func findNote(inStr: String) -> (String, Bool) {
@@ -73,7 +76,7 @@ public func NoteFromString(myTT: String) -> Int16
 	let lastChar = myTT[--idx]
 	let octMaybe = String(lastChar).toInt()
 	if octMaybe == nil {
-		return 0xFF
+		return nil
 	}
 	
 	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
@@ -125,16 +128,20 @@ public func NoteFromString(myTT: String) -> Int16
 		}
 	}
 	
-	return Oct;
+	if Oct == 0xFF {
+		return nil
+	} else {
+		return Oct
+	}
 }
 
-public func OctaveNameFromNote(octNote: UInt8, letters isUseLetters: Bool = true) -> String {
+public func OctaveNameFromNote(octNote: UInt8, letters isUseLetters: Bool = true) -> String? {
 	return OctaveNameFromNote(Int16(octNote), letters: isUseLetters)
 }
 
-public func OctaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true) -> String {
+public func OctaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true) -> String? {
 	if (octNote > 95 || octNote < 0) {
-		return "---"
+		return nil
 	}
 	
 	if isUseLetters {
@@ -404,15 +411,15 @@ extension PPSampleObject {
 	}
 	
 	@objc public class func octaveNameFromNote(octNote: Int16) -> String {
-		return OctaveNameFromNote(octNote)
+		return OctaveNameFromNote(octNote) ?? "---"
 	}
 
 	@objc public class func octaveNameFromNote(octNote: Int16, usingSingularLetter: Bool) -> String {
-		return OctaveNameFromNote(octNote, letters: usingSingularLetter)
+		return OctaveNameFromNote(octNote, letters: usingSingularLetter) ?? "---"
 	}
 
 	@objc public class func noteFromString(myTT: String) -> Int16 {
-		return NoteFromString(myTT)
+		return NoteFromString(myTT) ?? 0xFF
 	}
 
 }
@@ -421,6 +428,37 @@ extension PPPatternObject: SequenceType {
 	public func generate() -> NSFastGenerator {
 		return NSFastGenerator(self)
 	}
+}
+
+extension PPLibraryObject {
+	public var types: [String] {
+		return UTItypes as [String]
+	}
+	
+	public var importer: Bool {
+		get {
+			switch (plugMode) {
+			case MADPlugModes.Import.rawValue, MADPlugModes.ImportExport.rawValue:
+				return true
+				
+			default:
+				return false
+			}
+		}
+	}
+	
+	public var exporter: Bool {
+		get {
+			switch (plugMode) {
+			case MADPlugModes.Export.rawValue, MADPlugModes.ImportExport.rawValue:
+				return true
+				
+			default:
+				return false
+			}
+		}
+	}
+
 }
 
 extension PPLibrary: SequenceType {
@@ -448,6 +486,12 @@ extension PPLibrary: SequenceType {
 			formatDescription = infoDict[kPPFormatDescription] as NSString
 			signature = infoDict[kPPSignature] as NSString
 		}
+	}
+	
+	public class func infoRecToMusicInfo(infoRec: MADInfoRec) -> MusicFileInfo {
+		let tmpDict = infoRecToDictionary(infoRec)
+		
+		return MusicFileInfo(infoDict: tmpDict)
 	}
 	
 	public func identifyFile(#URL: NSURL, inout type stringType: String) -> MADErr {
