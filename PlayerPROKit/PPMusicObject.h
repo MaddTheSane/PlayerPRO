@@ -72,8 +72,8 @@
 - (void)replaceObjectInInstrumentsAtIndex:(NSInteger)index withObject:(PPInstrumentObject *)object;
 @property (readonly) NSInteger countOfInstruments;
 - (PPInstrumentObject*)instrumentsObjectAtIndex:(NSInteger)idx;
-- (void)removeInstrumentsAtIndexes:(NSIndexSet *)indexes;
-- (void)removeinstrumentsObjectAtIndex:(NSInteger)index;
+- (void)clearInstrumentsAtIndexes:(NSIndexSet *)indexes;
+- (void)clearInstrumentObjectAtIndex:(NSInteger)index;
 
 @property (readonly) MADMusic *internalMadMusicStruct NS_RETURNS_INNER_POINTER;
 

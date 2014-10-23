@@ -318,6 +318,18 @@ static const dispatch_block_t initUTIArray = ^{
 	return toReturn;
 }
 
+- (BOOL)isBlankSample
+{
+	if (self.name && ![self.name isEqualToString:@""]) {
+		return NO;
+	}
+	if (self.data && ([self.data length] != 0)) {
+		return NO;
+	}
+	
+	return YES;
+}
+
 - (NSString*)description
 {
 	return [NSString stringWithFormat:@"%@: size: %ld stereo: %@ Loop type: %d start: %d size: %d volume: %d amp: %d", self.name, (long)[self.data length], self.stereo ? @"Yes": @"No", self.loopType, self.loopBegin, self.loopSize, self.volume, self.amplitude];

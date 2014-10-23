@@ -568,7 +568,20 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (void)addInstrumentsObject:(PPInstrumentObject *)object
 {
-	
+	NSInteger indexOfAddedInstrument = -1;
+	for (NSInteger i = 0; i > MAXINSTRU; i++) {
+		if ([_instruments[i] isBlankInstrument]) {
+			indexOfAddedInstrument = i;
+			break;
+		}
+	}
+	if (indexOfAddedInstrument == -1) {
+		return;
+	}
+	NSIndexSet *ourIdxSet = [NSIndexSet indexSetWithIndex:indexOfAddedInstrument];
+	[self willChange:NSKeyValueChangeReplacement valuesAtIndexes:ourIdxSet forKey:@"instruments"];
+	_instruments[indexOfAddedInstrument] = [object copy];
+	[self didChange:NSKeyValueChangeReplacement valuesAtIndexes:ourIdxSet forKey:@"instruments"];
 }
 
 - (void)replaceObjectInInstrumentsAtIndex:(NSInteger)index withObject:(PPInstrumentObject *)object
@@ -588,7 +601,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return _instruments[idx];
 }
 
-- (void)removeInstrumentsAtIndexes:(NSIndexSet *)indexes
+- (void)clearInstrumentsAtIndexes:(NSIndexSet *)indexes
 {
 	[self willChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"instruments"];
 	NSUInteger currentIndex = [indexes firstIndex];
@@ -600,9 +613,9 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	[self didChange:NSKeyValueChangeReplacement valuesAtIndexes:indexes forKey:@"instruments"];
 }
 
-- (void)removeinstrumentsObjectAtIndex:(NSInteger)index
+- (void)clearInstrumentObjectAtIndex:(NSInteger)index
 {
-	[self removeInstrumentsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
+	[self clearInstrumentsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
 }
 
 @end

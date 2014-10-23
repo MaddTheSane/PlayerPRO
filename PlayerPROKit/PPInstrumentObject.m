@@ -970,7 +970,17 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (BOOL)isBlankInstrument
 {
-	return NO;
+	if (self.name && ![self.name isEqualToString:@""]) {
+		return NO;
+	}
+	
+	for (PPSampleObject *samp in samples) {
+		if (!samp.isBlankSample) {
+			return NO;
+		}
+	}
+	
+	return YES;
 }
 
 #pragma mark NSCopying protocol

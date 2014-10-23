@@ -35,9 +35,9 @@
 @property (nonatomic, readonly, copy) NSArray *volumeEnvelope;
 @property (nonatomic, readonly, copy) NSArray *panningEnvelope;
 @property (nonatomic, readonly, copy) NSArray *pitchEnvelope;
-- (void)replaceObjectInPanningEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
-- (void)replaceObjectInVolumeEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
-- (void)replaceObjectInPitchEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
+- (void)replaceObjectInPanningEnvelopeAtIndex:(NSInteger)index withObject:(PPEnvelopeObject*)object;
+- (void)replaceObjectInVolumeEnvelopeAtIndex:(NSInteger)index withObject:(PPEnvelopeObject*)object;
+- (void)replaceObjectInPitchEnvelopeAtIndex:(NSInteger)index withObject:(PPEnvelopeObject*)object;
 - (PPEnvelopeObject*)panningEnvelopeObjectAtIndex:(NSInteger)index;
 - (PPEnvelopeObject*)volumeEnvelopeObjectAtIndex:(NSInteger)index;
 - (PPEnvelopeObject*)pitchEnvelopeObjectAtIndex:(NSInteger)index;

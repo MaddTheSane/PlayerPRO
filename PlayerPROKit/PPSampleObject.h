@@ -37,4 +37,7 @@
 @property (getter = isStereo) BOOL stereo;
 @property (copy) NSData *data;
 
+
+@property (readonly, getter=isBlankSample) BOOL blankSample;
+
 @end
