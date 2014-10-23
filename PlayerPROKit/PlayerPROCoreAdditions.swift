@@ -166,14 +166,6 @@ public let MadID = StringToOSType("MADK")
 #if os(OSX)
 import CoreServices
 
-public let PlugMenuNameKey = CFStringToString(kMadPlugMenuNameKey)
-public let PlugAuthorNameKey = CFStringToString(kMadPlugAuthorNameKey)
-public let PlugUTITypesKey = CFStringToString(kMadPlugUTITypesKey)
-public let PlugTypeKey = CFStringToString(kMadPlugTypeKey)
-public let PlugDoesImport = CFStringToString(kMadPlugDoesImport)
-public let PlugDoesExport = CFStringToString(kMadPlugDoesExport)
-public let PlugModeKey = CFStringToString(kMadPlugModeKey)
-
 public func OSTypeToString(theType: MADFourChar) -> String? {
 	if let toRet = UTCreateStringForOSType(theType) {
 		return CFStringToString(toRet.takeRetainedValue())
@@ -241,10 +233,10 @@ extension MADFourChar: StringLiteralConvertible {
 	}
 	
 	public init(_ toInit: (Int8, Int8, Int8, Int8)) {
-		let val0 = MADFourChar(toInit.0)
-		let val1 = MADFourChar(toInit.1)
-		let val2 = MADFourChar(toInit.2)
-		let val3 = MADFourChar(toInit.3)
+		let val0 = UInt32(toInit.0)
+		let val1 = UInt32(toInit.1)
+		let val2 = UInt32(toInit.2)
+		let val3 = UInt32(toInit.3)
 		self = MADFourChar((val0 << 24) | (val1 << 16) | (val2 << 8) | (val3))
 	}
 	
@@ -553,3 +545,15 @@ extension IntPcmd {
 		myCmd = nil
 	}
 }
+
+// MARK: MADFourChar
+// TODO: find out how Apple does this with CGFloat...
+/*
+public struct MADFourChar {
+	let value: OSType
+	typealias internalValue = OSType
+	init(_ type: OSType) {
+		value = type
+	}
+}
+*/

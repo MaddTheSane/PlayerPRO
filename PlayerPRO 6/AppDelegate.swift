@@ -370,7 +370,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 					return false;
 				}
 				let sigVala: AnyObject = rec![kPPSignature] ?? NSNumber(unsignedInt: StringToOSType("madk"))
-				let sigValb: MADFourChar = (sigVala as NSNumber).unsignedIntValue
+				let sigValb = MADFourChar((sigVala as NSNumber).unsignedIntValue)
 				let sigVal = OSTypeToString(sigValb)!
 				
 				let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(sigVal.lowercaseString);
