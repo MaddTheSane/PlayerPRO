@@ -56,6 +56,7 @@
 
 @implementation PPEnvelopeObject
 {
+@private
 	EnvRec envelopeRec;
 	EnvRec *writeBackVal;
 }
@@ -204,7 +205,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 @implementation PPInstrumentObject
 {
-	@protected
+	@private
 	InstrData theInstrument;
 	NSInteger number;			// Instrument number
 }

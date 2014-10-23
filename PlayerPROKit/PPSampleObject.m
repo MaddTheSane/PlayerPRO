@@ -28,7 +28,7 @@
 
 @implementation PPSampleObject
 {
-	@protected
+	@private
 	sData theSample;
 	sData *sampleWriteTo;
 }
