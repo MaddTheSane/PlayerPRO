@@ -19,7 +19,7 @@ private func GetArrayFromMirror<X>(mirror: MirrorType) -> [X] {
 	return anArray
 }
 
-public class PPLibraryObject: NSObject {
+public class PPLibraryObject: NSObject, Printable {
 	public let menuName: String
 	public let authorString: String
 	public let plugFile: NSBundle
@@ -38,6 +38,9 @@ public class PPLibraryObject: NSObject {
 		}
 	}
 	
+	override public var description: String {
+		return "Name: \(menuName); Author: \(authorString); plug-in file: \(plugFile), type: \(plugType), version: \(plugVersion)"
+	}
 	
 	internal init(plugInfo pi: UnsafePointer<PlugInfo>) {
 		let unwrapped = pi.memory
