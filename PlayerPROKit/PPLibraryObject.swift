@@ -19,7 +19,7 @@ private func GetArrayFromMirror<X>(mirror: MirrorType) -> [X] {
 	return anArray
 }
 
-public class PPLibraryObject: NSObject, Printable {
+public final class PPLibraryObject: NSObject, Printable {
 	public let menuName: String
 	public let authorString: String
 	public let plugFile: NSBundle
