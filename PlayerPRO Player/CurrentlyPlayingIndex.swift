@@ -16,11 +16,11 @@ class CurrentlyPlayingIndex: NSObject, DebugPrintable, Printable {
 		othIdx.playbackURL = playbackURL
 	}
 	
-	override var description: String { get {
+	override var description: String {
 		return "Index: \(index) URL: \(playbackURL)"
-	}}
+	}
 	
-	override var debugDescription: String { get {
+	override var debugDescription: String {
 		return "Index: \(index) URL: \(playbackURL) URL Path: \(playbackURL!.path)"
-	}}
+	}
 }

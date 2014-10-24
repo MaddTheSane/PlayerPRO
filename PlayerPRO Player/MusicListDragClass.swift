@@ -10,6 +10,7 @@ import Cocoa
 
 class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
 	let theIndexSet: NSIndexSet
+	
 	@objc init(indexSet: NSIndexSet) {
 		theIndexSet = indexSet
 		
@@ -57,6 +58,7 @@ class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NS
 		}
 	}
 
+	// MARK: Secure Coding protocol
 	class func supportsSecureCoding() -> Bool {
 		return true
 	}

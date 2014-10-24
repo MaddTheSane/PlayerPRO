@@ -18,14 +18,14 @@ private func URLsPointingToTheSameFile(urlA: NSURL, urlB: NSURL) -> Bool {
 	var dat2: AnyObject? = nil
 	var bothAreValid = true
 	var theSame = false
-	if !urlA.getResourceValue(&dat1, forKey:NSURLFileResourceIdentifierKey, error:nil) {
+	if !urlA.getResourceValue(&dat1, forKey: NSURLFileResourceIdentifierKey, error:nil) {
 		bothAreValid = false;
 	}
-	if !urlB.getResourceValue(&dat2, forKey:NSURLFileResourceIdentifierKey, error:nil) {
+	if !urlB.getResourceValue(&dat2, forKey: NSURLFileResourceIdentifierKey, error:nil) {
 		bothAreValid = false;
 	}
 	if bothAreValid {
-		theSame = (dat1! as NSData) == (dat2! as NSData)
+		theSame = (dat1 as NSData) == (dat2 as NSData)
 	}
 	return theSame
 }
@@ -104,7 +104,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		if let resolvedURL = NSURL(byResolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeToURL: relativeURL, bookmarkDataIsStale: nil, error: nil) {
 			self.init(URL: resolvedURL)
 		} else {
-			self.init(URL: NSURL())
+			self.init(URL: NSURL(fileURLWithPath: "/dev/null")!)
 
 			return nil
 		}

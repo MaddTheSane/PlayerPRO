@@ -4771,9 +4771,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 551292EA163DD68500C2C639 /* Build configuration list for PBXNativeTarget "PlayerPROKit" */;
 			buildPhases = (
+				551292D5163DD68500C2C639 /* Headers */,
 				551292D3163DD68500C2C639 /* Sources */,
 				551292D4163DD68500C2C639 /* Frameworks */,
-				551292D5163DD68500C2C639 /* Headers */,
 				551292D6163DD68500C2C639 /* Resources */,
 			);
 			buildRules = (
