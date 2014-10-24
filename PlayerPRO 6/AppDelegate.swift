@@ -75,7 +75,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 				
 				for objRaw in madLib {
 					let obj = objRaw as PPLibraryObject
-					tmpTrackerDict[obj.menuName] = (obj.UTItypes) as? [String]
+					tmpTrackerDict[obj.menuName] = obj.UTITypes
 				}
 				
 				for obj in complexImport {

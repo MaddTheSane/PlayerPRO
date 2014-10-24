@@ -8,6 +8,7 @@
 
 #import "PPLibrary.h"
 #import "PPLibrary_PPKPrivate.h"
+#import <PlayerPROKit/PlayerPROKit-Swift.h>
 
 @interface PPLibrary ()
 - (instancetype)initWithPlugInCPath:(const char*)cPath NS_DESIGNATED_INITIALIZER;
@@ -22,60 +23,8 @@ NSString * const kPPTotalInstruments = @"Total Instruments";
 NSString * const kPPInternalFileName = @"Internal File Name";
 NSString * const kPPFormatDescription = @"FormatDescription";
 
-@interface PPLibraryObject ()
-@property (readwrite, copy) NSString *menuName;
-@property (readwrite, copy) NSString *authorString;
-@property (readwrite, strong) NSBundle *plugFile;
-@property (readwrite, strong) NSString *plugType;
-@property (readwrite, copy) NSArray* UTItypes;
-@property (readwrite) BOOL canExport;
-@property (readwrite) BOOL canImport;
-@property (readwrite) UInt32 plugVersion;
-@end
-
-@implementation PPLibraryObject
-
-- (instancetype)initWithPlugInfo:(PlugInfo*)pi
-{
-	if (self = [super init]) {
-		self.menuName = (__bridge NSString *)pi->MenuName;
-		self.authorString = (__bridge NSString *)pi->AuthorString;
-		self.plugFile = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(pi->file))];
-		self.plugType = [NSString stringWithCString:pi->type encoding:NSMacOSRomanStringEncoding];
-		self.UTItypes = (__bridge NSArray *)pi->UTItypes;
-		self.plugVersion = pi->version;
-		
-		switch (pi->mode) {
-			case MADPlugImportExport:
-				self.canExport = YES;
-				self.canImport = YES;
-				break;
-				
-			case MADPlugExport:
-				self.canExport = YES;
-				self.canImport = NO;
-				break;
-				
-			case MADPlugImport:
-			default:
-				self.canExport = NO;
-				self.canImport = YES;
-				break;
-		}
-	}
-	return self;
-}
-
-- (MADFourChar)plugMode
-{
-	if (self.canExport && self.canImport)
-		return MADPlugImportExport;
-	else if (self.canExport)
-		return MADPlugExport;
-	else
-		return MADPlugImport;
-}
-
+@interface PPLibraryObject (SwiftInternal)
+- (instancetype)initWithPlugInfo:(const PlugInfo*)pi;
 @end
 
 @implementation PPLibrary

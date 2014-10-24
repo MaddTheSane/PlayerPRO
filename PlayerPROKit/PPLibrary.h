@@ -24,17 +24,7 @@ extern NSString * const kPPInternalFileName;
 extern NSString * const kPPFormatDescription;
 __END_DECLS
 
-@interface PPLibraryObject : NSObject
-@property (readonly, copy) NSString *menuName;
-@property (readonly, copy) NSString *authorString;
-@property (readonly, strong) NSBundle *plugFile;
-@property (readonly, strong) NSString *plugType;
-@property (readonly, copy) NSArray* UTItypes;
-@property (readonly) MADFourChar plugMode;
-@property (readonly) BOOL canExport;
-@property (readonly) BOOL canImport;
-@property (readonly) UInt32 plugVersion;
-@end
+@class PPLibraryObject;
 
 @interface PPLibrary : NSObject <NSFastEnumeration>
 - (instancetype)init;

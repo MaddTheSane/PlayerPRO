@@ -443,37 +443,6 @@ extension PPPatternObject: SequenceType {
 	}
 }
 
-extension PPLibraryObject {
-	public var types: [String] {
-		return UTItypes as [String]
-	}
-	
-	public var importer: Bool {
-		get {
-			switch (plugMode) {
-			case MADPlugModes.Import.rawValue, MADPlugModes.ImportExport.rawValue:
-				return true
-				
-			default:
-				return false
-			}
-		}
-	}
-	
-	public var exporter: Bool {
-		get {
-			switch (plugMode) {
-			case MADPlugModes.Export.rawValue, MADPlugModes.ImportExport.rawValue:
-				return true
-				
-			default:
-				return false
-			}
-		}
-	}
-
-}
-
 public func InfoRecToMusicInfo(infoRec: MADInfoRec) -> PPLibrary.MusicFileInfo {
 	return PPLibrary.infoRecToMusicInfo(infoRec)
 }

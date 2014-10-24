@@ -287,6 +287,8 @@
 		555C5FC818445C3600DBD5DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		555E014819FA33A10063F058 /* PPLibraryObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555E014719FA33A10063F058 /* PPLibraryObject.swift */; };
+		555E014919FA33A10063F058 /* PPLibraryObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555E014719FA33A10063F058 /* PPLibraryObject.swift */; };
 		555F447619A1411700B8C6EE /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
 		555F447719A1411800B8C6EE /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
 		555F5C611993327D0056AF01 /* OpenPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555F5C601993327D0056AF01 /* OpenPanelViewController.swift */; };
@@ -2206,6 +2208,7 @@
 		555A283619AFE4F000FB4D5B /* MIDIImporterController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MIDIImporterController.xib; sourceTree = "<group>"; };
 		555C0F8C19829663003B9347 /* CurrentlyPlayingIndex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentlyPlayingIndex.swift; sourceTree = "<group>"; };
 		555C125016378B3500735225 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
+		555E014719FA33A10063F058 /* PPLibraryObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPLibraryObject.swift; sourceTree = "<group>"; };
 		555F5C601993327D0056AF01 /* OpenPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenPanelViewController.swift; sourceTree = "<group>"; };
 		556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject_PPKPrivate.h; sourceTree = "<group>"; };
 		5561EF99199FC87B0054B3A7 /* PTMIDZAP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTMIDZAP.h; sourceTree = "<group>"; };
@@ -4155,6 +4158,7 @@
 				55DE87CC187E60F400C36533 /* PPFXSetObject.m */,
 				551292EE163DD7CE00C2C639 /* PPLibrary.h */,
 				551292EF163DD7CE00C2C639 /* PPLibrary.m */,
+				555E014719FA33A10063F058 /* PPLibraryObject.swift */,
 				558D4DD81666F14E00A333E8 /* PPDriver.h */,
 				558D4DD91666F14E00A333E8 /* PPDriver.m */,
 				55B1B4F5166A861900820424 /* PPMusicObject.h */,
@@ -6602,6 +6606,7 @@
 				5578C50117DB8A6E0057D11B /* PPInstrumentObject.m in Sources */,
 				55BD5AF519ADBBF500D63F54 /* PPKPcmd.swift in Sources */,
 				55DE87C8187E5B9100C36533 /* PPFXBusObject.m in Sources */,
+				555E014819FA33A10063F058 /* PPLibraryObject.swift in Sources */,
 				556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */,
 				55C8EDE2187CC8B200CC8C1B /* PPPatternObject.m in Sources */,
 				5560643C18C8FDD9002F72FC /* PPErrors.m in Sources */,
@@ -7307,6 +7312,7 @@
 				55F1BE131975CD7200AD2C03 /* PPFXSetObject.m in Sources */,
 				55F1BE0A1975CD7200AD2C03 /* PPInstrumentObject.m in Sources */,
 				55F1BE1B1975CD7200AD2C03 /* PPErrors.m in Sources */,
+				555E014919FA33A10063F058 /* PPLibraryObject.swift in Sources */,
 				55F1BE111975CD7200AD2C03 /* PPFXBusObject.m in Sources */,
 				555F447719A1411800B8C6EE /* PlayerPROKitAdditions.swift in Sources */,
 				55BD5AF619ADBBF500D63F54 /* PPKPcmd.swift in Sources */,

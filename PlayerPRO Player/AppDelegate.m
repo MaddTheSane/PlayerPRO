@@ -81,7 +81,7 @@ static NSInteger selMusFromList = -1;
 																						  @"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
 														NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI]}];
 		for (PPLibraryObject *obj in madLib) {
-			trackerDict[obj.menuName] = obj.UTItypes;
+			trackerDict[obj.menuName] = obj.UTITypes;
 		}
 		_trackerDict = [[NSDictionary alloc] initWithDictionary:trackerDict];
 	}
@@ -676,7 +676,7 @@ return; \
 				
 				return;
 			}
-			[savePanel setAllowedFileTypes:[madLib pluginAtIndex:tag].UTItypes];
+			[savePanel setAllowedFileTypes:[madLib pluginAtIndex:tag].UTITypes];
 			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", [madLib pluginAtIndex:tag].menuName]];
 			
 			[savePanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {

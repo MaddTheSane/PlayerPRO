@@ -448,7 +448,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 			}
 			let tmpObj = globalMadLib[tag];
 			
-			savePanel.allowedFileTypes = tmpObj.UTItypes
+			savePanel.allowedFileTypes = tmpObj.UTITypes
 			savePanel.title = "Export as \(tmpObj.menuName)"
 			
 			savePanel.beginSheetModalForWindow(self.currentDocument.windowForSheet!, completionHandler: { (result) -> Void in
