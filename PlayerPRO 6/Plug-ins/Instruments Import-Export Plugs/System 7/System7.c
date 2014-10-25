@@ -103,7 +103,7 @@ static OSStatus CFURLToFSSpec (CFURLRef pathURL, FSSpec *outSpec)
 static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, Boolean *stereo)
 {
 	short 			soundFormat, numChannels;
-	short 			numSynths, numCmds, CompressID;
+	short 			numSynths = 1, numCmds, CompressID;
 	long 			offset, MusSize;
 	SoundHeaderPtr 	header;
 	CmpSoundHeader	*CmpHeader;

@@ -247,7 +247,7 @@ static OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
 	_resources = theDict;
 	NSMutableArray *tmpArray = [[NSMutableArray alloc] initWithCapacity: [_resources.allKeys count]];
 	for (NSString *key in _resources) {
-		
+		[tmpArray addObjectsFromArray:theDict[key]];
 	}
 }
 

@@ -60,13 +60,13 @@ static const OSType MADTypes[] = {'MADK', 'MADI', 'MADF', 'MADG', 'MADH'};
 	
 	PPAPPLImporterViewController *controller = [[PPAPPLImporterViewController alloc] initWithWindowNibName:@"PPAPPLImporter"];
 	controller.resourceReference = iFileRefI;
+	[controller addResourceDictionary:applObjectDict];
 }
 
 - (BOOL)canImportURL:(NSURL*)theURL error:(out NSError**)outErr
 {
 	FSRef			fileRef;
 	ResFileRefNum	iFileRefI;
-	Handle			myRes;
 	BOOL			canOpen = NO;
 	
 	if (!CFURLGetFSRef((__bridge CFURLRef)theURL, &fileRef))
@@ -78,24 +78,14 @@ static const OSType MADTypes[] = {'MADK', 'MADI', 'MADF', 'MADG', 'MADH'};
 		UseResFile(iFileRefI);
 		
 		if (Count1Resources('MADK') > 0) {
-			myRes = Get1IndResource('MADK', 1);
-			
 			canOpen = YES;
 		} else if (Count1Resources('MADI') > 0) {
-			myRes = Get1IndResource('MADI', 1);
-			
 			canOpen = YES;
 		} else if (Count1Resources('MADH') > 0) {
-			myRes = Get1IndResource('MADH', 1);
-			
 			canOpen = YES;
 		} else if (Count1Resources('MADF') > 0) {
-			myRes = Get1IndResource('MADF', 1);
-			
 			canOpen = YES;
 		} else if (Count1Resources('MADG') > 0) {
-			myRes = Get1IndResource('MADG', 1);
-			
 			canOpen = YES;
 		}
 		

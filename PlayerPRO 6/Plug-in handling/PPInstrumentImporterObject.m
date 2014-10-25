@@ -41,7 +41,7 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 	if (self.canExport) {
 		cap |= PPMADCanExport;
 	}
-	MADPlugModes toRet;
+	MADPlugModes toRet = MADPlugNonePlug;
 	
 	switch (cap) {
 		case PPMADCanImport:
@@ -55,6 +55,7 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 		case PPMADCanDoBoth:
 			toRet = MADPlugImportExport;
 			break;
+			
 		default:
 			break;
 	}

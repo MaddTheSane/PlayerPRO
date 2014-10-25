@@ -21,4 +21,6 @@
 - (IBAction)importMusicObject:(id)sender;
 - (IBAction)cancelImport:(id)sender;
 
+- (void)addResourceDictionary:(NSDictionary*)theDict;
+
 @end
