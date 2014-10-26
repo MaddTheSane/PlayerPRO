@@ -241,7 +241,7 @@ extension PPSampleObject {
 		let defaultSpace = CGColorSpaceCreateDeviceRGB()
 		let bitMapFormat = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue) | CGBitmapInfo.ByteOrderDefault
 		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, bitMapFormat)
-		CGContextClearRect(bitmapContext, CGRectMake(0, 0, imageSize.width, imageSize.height))
+		CGContextClearRect(bitmapContext, CGRect(origin: CGPointZero, size: imageSize))
 		let lineSize = 1 * scale
 		CGContextSetLineWidth(bitmapContext, lineSize)
 		var colorRef: UIColor
