@@ -108,22 +108,6 @@ public func ==(lhs: MADDriverSettings, rhs: MADDriverSettings) -> Bool {
 	return true
 }
 
-private func GetArrayFromMirror<X>(mirror: MirrorType) -> [X] {
-	var anArray = [X]()
-	for i in 0..<mirror.count {
-		var aChar = mirror[i].1.value as X
-		anArray.append(aChar)
-	}
-	
-	return anArray
-}
-
-private func GetArrayFromMirror<X>(mirror: MirrorType, appendLastObject lastObj: X) -> [X] {
-	var anArray: [X] = GetArrayFromMirror(mirror)
-	anArray.append(lastObj)
-	return anArray
-}
-
 public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
 	//return lhs.theSet == rhs
 	if lhs.track != rhs.track {

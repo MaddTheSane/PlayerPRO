@@ -9,16 +9,6 @@
 import Foundation
 import PlayerPROCore
 
-private func GetArrayFromMirror<X>(mirror: MirrorType) -> [X] {
-	var anArray = [X]()
-	for i in 0..<mirror.count {
-		var aChar = mirror[i].1.value as X
-		anArray.append(aChar)
-	}
-	
-	return anArray
-}
-
 public final class PPLibraryObject: NSObject, Printable {
 	public let menuName: String
 	public let authorString: String
