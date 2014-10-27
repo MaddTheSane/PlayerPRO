@@ -278,24 +278,6 @@ static const dispatch_block_t initUTIArray = ^{
 	}
 }
 
-- (id)copyWithZone:(NSZone *)zone
-{
-	PPSampleObject *obj;
-	if ((obj = [[[self class] allocWithZone:zone] init])) {
-		obj.name = self.name;
-		obj.data = self.data;
-		obj.amplitude = self.amplitude;
-		obj.volume = self.volume;
-		obj.stereo = self.stereo;
-		obj.c2spd = self.c2spd;
-		obj.loopType = self.loopType;
-		obj.relativeNote = self.relativeNote;
-		obj.loopBegin = self.loopBegin;
-		obj.loopSize = self.loopSize;
-	}
-	return obj;
-}
-
 - (sData *)createSData
 {
 	sData *toReturn = malloc(sizeof(sData));
@@ -333,6 +315,36 @@ static const dispatch_block_t initUTIArray = ^{
 - (NSString*)description
 {
 	return [NSString stringWithFormat:@"%@: size: %ld stereo: %@ Loop type: %d start: %d size: %d volume: %d amp: %d", self.name, (long)[self.data length], self.stereo ? @"Yes": @"No", self.loopType, self.loopBegin, self.loopSize, self.volume, self.amplitude];
+}
+
+#pragma mark KVO/KVC helpers
++ (NSSet*)keyPathsForValuesAffectingTheSample
+{
+	return [NSSet setWithObjects:@"loopBegin", @"loopSize", @"volume", @"c2spd", @"loopType", @"amplitude", @"relativeNote", @"name", @"stereo", @"data", nil];
+}
+
++ (NSSet*)keyPathsForValuesAffectingBlankSample
+{
+	return [NSSet setWithObjects:@"name", @"data", nil];
+}
+
+#pragma mark NSCopying implementation
+- (id)copyWithZone:(NSZone *)zone
+{
+	PPSampleObject *obj;
+	if ((obj = [[[self class] allocWithZone:zone] init])) {
+		obj.name = self.name;
+		obj.data = self.data;
+		obj.amplitude = self.amplitude;
+		obj.volume = self.volume;
+		obj.stereo = self.stereo;
+		obj.c2spd = self.c2spd;
+		obj.loopType = self.loopType;
+		obj.relativeNote = self.relativeNote;
+		obj.loopBegin = self.loopBegin;
+		obj.loopSize = self.loopSize;
+	}
+	return obj;
 }
 
 #pragma mark NSCoding implementation

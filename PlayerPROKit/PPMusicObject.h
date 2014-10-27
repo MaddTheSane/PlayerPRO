@@ -68,10 +68,10 @@
 //This method sets the music object as the playback music
 - (void)attachToDriver:(PPDriver *)theDriv;
 
-- (void)addInstrumentsObject:(PPInstrumentObject *)object;
+- (void)addInstrumentObject:(PPInstrumentObject *)object;
 - (void)replaceObjectInInstrumentsAtIndex:(NSInteger)index withObject:(PPInstrumentObject *)object;
 @property (readonly) NSInteger countOfInstruments;
-- (PPInstrumentObject*)instrumentsObjectAtIndex:(NSInteger)idx;
+- (PPInstrumentObject*)instrumentObjectAtIndex:(NSInteger)idx;
 - (void)clearInstrumentsAtIndexes:(NSIndexSet *)indexes;
 - (void)clearInstrumentObjectAtIndex:(NSInteger)index;
 

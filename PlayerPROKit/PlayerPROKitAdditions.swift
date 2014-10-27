@@ -194,7 +194,7 @@ extension PPSampleObject {
 		imageSize.height *= 2
 		imageSize.width *= 2
 		let aRect = CGRect(origin: CGPointZero, size: imageSize)
-		let rowBytes: UInt = 4 * UInt(imageSize.width)
+		let rowBytes = 4 * UInt(imageSize.width)
 		let defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!
 		let bitMapFormat = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
 		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, bitMapFormat)
@@ -237,7 +237,7 @@ extension PPSampleObject {
 		let scale = view.contentScaleFactor
 		let datIsStereo = theDat.stereo;
 		let aRect = CGRect(origin: CGPointZero, size: imageSize)
-		let rowBytes: UInt = 4 * UInt(imageSize.width)
+		let rowBytes = 4 * UInt(imageSize.width)
 		let defaultSpace = CGColorSpaceCreateDeviceRGB()
 		let bitMapFormat = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue) | CGBitmapInfo.ByteOrderDefault
 		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, bitMapFormat)
@@ -275,7 +275,7 @@ extension PPSampleObject {
 	}
 #endif
 	
-	public func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect:CGRect, channel: Int16 = 0, context ctxRef: CGContext) {
+	public func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, context ctxRef: CGContext) {
 		PPSampleObject.drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: self, context:ctxRef)
 	}
 	
@@ -283,7 +283,7 @@ extension PPSampleObject {
 		PPSampleObject.drawSample(start: startI, tSS: tSS, tSE: tSE, high: high, larg: larg, trueV: trueV, trueH: trueH, channel: channel, currentData: self, context: ctxRef)
 	}
 	
-	public class func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect:CGRect, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
+	public class func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
 		drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: curData, context:ctxRef)
 	}
 

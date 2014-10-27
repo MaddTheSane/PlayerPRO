@@ -104,6 +104,13 @@ static const dispatch_block_t initUTIArray = ^{
 	theBus.Active = active;
 }
 
+#pragma mark KVO/KVC helpers
+
++ (NSSet*)keyPathsForValuesAffectingTheBus
+{
+	return [NSSet setWithObjects:@"bypass", @"copyID", @"active", nil];
+}
+
 #pragma mark NSCopying protocol
 
 - (id)copyWithZone:(NSZone *)zone

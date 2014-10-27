@@ -163,6 +163,13 @@ static const dispatch_block_t initUTIArray = ^{
 	return [NSString stringWithFormat:@"ins: %u note: %u cmd: %u arg: %u vol: %u", theCommand.ins, theCommand.note, theCommand.cmd, theCommand.arg, theCommand.vol];
 }
 
+#pragma mark KVO/KVC helpers
+
++ (NSSet*)keyPathsForValuesAffectingTheCommand
+{
+	return [NSSet setWithObjects:@"instrument", @"note", @"command", @"argument", @"volume", nil];
+}
+
 #pragma mark NSCoding protocol
 
 + (BOOL)supportsSecureCoding

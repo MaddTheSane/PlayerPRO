@@ -798,46 +798,38 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)setVolumeTypeOn:(BOOL)typeOn
 {
-	[self willChangeValueForKey:kPPVolumeType];
 	if (typeOn) {
 		theInstrument.volType |= EFTypeOn;
 	} else {
 		theInstrument.volType &= ~EFTypeOn;
 	}
-	[self didChangeValueForKey:kPPVolumeType];
 }
 
 - (void)setVolumeTypeSustain:(BOOL)typeSus
 {
-	[self willChangeValueForKey:kPPVolumeType];
 	if (typeSus) {
 		theInstrument.volType |= EFTypeSustain;
 	} else {
 		theInstrument.volType &= ~EFTypeSustain;
 	}
-	[self didChangeValueForKey:kPPVolumeType];
 }
 
 - (void)setVolumeTypeLoop:(BOOL)typeLoop
 {
-	[self willChangeValueForKey:kPPVolumeType];
 	if (typeLoop) {
 		theInstrument.volType |= EFTypeLoop;
 	} else {
 		theInstrument.volType &= ~EFTypeLoop;
 	}
-	[self didChangeValueForKey:kPPVolumeType];
 }
 
 - (void)setVolumeTypeNote:(BOOL)theLoop
 {
-	[self willChangeValueForKey:kPPVolumeType];
 	if (theLoop) {
 		theInstrument.volType |= EFTypeNote;
 	} else {
 		theInstrument.volType &= ~EFTypeNote;
 	}
-	[self didChangeValueForKey:kPPVolumeType];
 }
 
 - (BOOL)isVolumeTypeOn
@@ -872,46 +864,38 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)setPanningTypeOn:(BOOL)typeOn
 {
-	[self willChangeValueForKey:kPPPanningType];
 	if (typeOn) {
 		theInstrument.pannType |= EFTypeOn;
 	} else {
 		theInstrument.pannType &= ~EFTypeOn;
 	}
-	[self didChangeValueForKey:kPPPanningType];
 }
 
 - (void)setPanningTypeSustain:(BOOL)typeSus
 {
-	[self willChangeValueForKey:kPPPanningType];
 	if (typeSus) {
 		theInstrument.pannType |= EFTypeSustain;
 	} else {
 		theInstrument.pannType &= ~EFTypeSustain;
 	}
-	[self didChangeValueForKey:kPPPanningType];
 }
 
 - (void)setPanningTypeLoop:(BOOL)theLoop
 {
-	[self willChangeValueForKey:kPPPanningType];
 	if (theLoop) {
 		theInstrument.pannType |= EFTypeLoop;
 	} else {
 		theInstrument.pannType &= ~EFTypeLoop;
 	}
-	[self didChangeValueForKey:kPPPanningType];
 }
 
 - (void)setPanningTypeNote:(BOOL)theLoop
 {
-	[self willChangeValueForKey:kPPPanningType];
 	if (theLoop) {
 		theInstrument.pannType |= EFTypeNote;
 	} else {
 		theInstrument.pannType &= ~EFTypeNote;
 	}
-	[self didChangeValueForKey:kPPPanningType];
 }
 
 - (BOOL)isPanningTypeOn
@@ -982,6 +966,46 @@ static const dispatch_block_t initUTIArray = ^{
 	
 	return YES;
 }
+
+#pragma mark KVO/KVC helpers
++ (NSSet*)keyPathsForValuesAffectingBlankInstrument
+{
+	return [NSSet setWithObjects:@"samples", @"name", nil];
+}
+
++ (NSSet*)keyPathsForValuesAffectingPanningType
+{
+	return [NSSet setWithObjects:@"panningType", @"panningTypeOn", @"panningTypeSustain", @"panningTypeLoop", @"panningTypeNote", nil];
+}
+
+#define affectPannType(theType) \
++ (NSSet*)keyPathsForValuesAffectingPanningType ## theType \
+{ \
+return [NSSet setWithObject:@"panningType"];\
+}
+
+affectPannType(On)
+affectPannType(Sustain)
+affectPannType(Loop)
+affectPannType(Note)
+#undef affectPannType
+
++ (NSSet*)keyPathsForValuesAffectingVolumeType
+{
+	return [NSSet setWithObjects:@"volumeType", @"volumeTypeOn", @"volumeTypeSustain", @"volumeTypeLoop", @"volumeTypeNote", nil];
+}
+
+#define affectVolType(theType) \
++ (NSSet*)keyPathsForValuesAffectingVolumeType ## theType \
+{ \
+	return [NSSet setWithObject:@"volumeType"];\
+}
+
+affectVolType(On)
+affectVolType(Sustain)
+affectVolType(Loop)
+affectVolType(Note)
+#undef affectVolType
 
 #pragma mark NSCopying protocol
 

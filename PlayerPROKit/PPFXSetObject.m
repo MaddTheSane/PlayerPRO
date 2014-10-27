@@ -19,12 +19,13 @@
 #define kPPName @"PlayerPROKit FXSets Name"
 
 @interface PPFXSetObject ()
-@property (readwrite, strong) NSMutableArray *sets;
+@property (readwrite, nonatomic, strong) NSMutableArray *sets;
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 @end
 
 @implementation PPFXSetObject
 @synthesize theSet;
+@synthesize name = _name;
 
 #if !TARGET_OS_IPHONE
 NSString * const kPPKFXSetPasteboardUTI = @"net.sourceforge.playerpro.FXSet";
@@ -63,6 +64,28 @@ static const dispatch_block_t initUTIArray = ^{
 }
 #endif
 
+- (NSString*)name
+{
+	if (!_name) {
+		_name = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, theSet.name, kCFStringEncodingMacRoman));
+		if (!_name) {
+			self.name = @"";
+		}
+	}
+	
+	return _name;
+}
+
+- (void)setName:(NSString *)name
+{
+	if (![name isEqualToString:_name]) {
+		if (CFStringGetPascalString((__bridge CFStringRef)name, theSet.name, 63, kCFStringEncodingMacRoman) == false) {
+			memset(theSet.name, 0, sizeof(theSet.name));
+		}
+		_name = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, theSet.name, kCFStringEncodingMacRoman));
+	}
+}
+
 - (instancetype)initWithFXSet:(FXSets*)theSett
 {
 	if (self = [super init]) {
@@ -74,7 +97,6 @@ static const dispatch_block_t initUTIArray = ^{
 		for (int i = 0; i < 100; i++) {
 			[self.sets addObject:@(theSet.values[i])];
 		}
-		_name = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, theSet.name, kCFStringEncodingMacRoman));
 	}
 	return self;
 }
@@ -154,19 +176,30 @@ static const dispatch_block_t initUTIArray = ^{
 	NSParameterAssert(theLoc < 100 && theLoc > -1);
 	NSIndexSet *tmpIdx = [NSIndexSet indexSetWithIndex:theLoc];
 	[self willChange:NSKeyValueChangeReplacement valuesAtIndexes:tmpIdx forKey:@"sets"];
-	[self willChange:NSKeyValueChangeReplacement valuesAtIndexes:tmpIdx forKey:@"values"];
 	self.sets[theLoc] = theNum;
+	theSet.values[theLoc] = [theNum floatValue];
 	[self didChange:NSKeyValueChangeReplacement valuesAtIndexes:tmpIdx forKey:@"sets"];
-	[self didChange:NSKeyValueChangeReplacement valuesAtIndexes:tmpIdx forKey:@"values"];
 }
 
-- (void)writeBackToStruct
+- (void)setSets:(NSMutableArray *)sets
 {
-	//We only need to worry about the name and sets
+	_sets = sets;
 	dispatch_apply(100, dispatch_get_global_queue(0, 0), ^(size_t i) {
 		theSet.values[i] = [_sets[i] floatValue];
 	});
-	CFStringGetPascalString((__bridge CFStringRef)_name, theSet.name, 63, kCFStringEncodingMacRoman);
+
+}
+
+#pragma mark KVO/KVC helpers
+
++ (NSSet*)keyPathsForValuesAffectingTheSet
+{
+	return [NSSet setWithObjects:@"track", @"identifier", @"fxIdentifier", @"argumentNumbers", @"values", @"name", @"sets", nil];
+}
+
++ (NSSet *)keyPathsforValuesAffectingValues
+{
+	return [NSSet setWithObject:@"sets"];
 }
 
 #pragma mark NSCopying protocol
@@ -204,7 +237,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-	[aCoder encodeObject:_name forKey:kPPName];
+	[aCoder encodeObject:self.name forKey:kPPName];
 	[aCoder encodeObject:_sets forKey:kPPValues];
 	[aCoder encodeInt:theSet.FXID forKey:kPPFXIdentifier];
 	[aCoder encodeObject:@(theSet.track) forKey:kPPTrack];

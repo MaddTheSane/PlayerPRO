@@ -402,7 +402,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	int i;
 	self.internalFileName = [NSString stringWithCString:currentMusic->header->name encoding:NSMacOSRomanStringEncoding];
 	self.madInfo = [NSString stringWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
-	self.madAuthor = @"";
 	self.madType = currentMusic->header->MAD;
 	self.instruments = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU];
 	for (i = 0; i < MAXINSTRU; i++) {
@@ -422,11 +421,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	if ([[self instruments] count] >= MAXINSTRU) {
 		return NO;
 	}
-	NSIndexSet *addIDXSet =[NSIndexSet indexSetWithIndex:[self.instruments count]];
-	[self willChange:NSKeyValueChangeInsertion valuesAtIndexes:addIDXSet forKey:@"instruments"];
-	theIns.number = [self.instruments count];
-	[_instruments addObject:theIns];
-	[self didChange:NSKeyValueChangeInsertion valuesAtIndexes:addIDXSet forKey:@"instruments"];
+	[self addInstrumentObject:theIns];
 	return YES;
 }
 
@@ -565,8 +560,19 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	
 	return YES;
 }
+#pragma mark KVO/KVC helpers
 
-- (void)addInstrumentsObject:(PPInstrumentObject *)object
++ (NSSet*)keyPathsForValuesAffectingInternalMadMusicStruct
+{
+	return [NSSet setWithObjects:@"internalFileName", @"madInformation", @"usesLinearPitcchTable", @"limitPitchToMODTable", @"showsCopyright", @"newPitch", @"newSpeed", @"generalPitch", @"generalSpeed", @"generalVolume", @"instruments", @"patterns", @"buses", nil];
+}
+
++ (NSSet*)keyPathsForValuesAffectingSDatas
+{
+	return [NSSet setWithObject:@"instruments"];
+}
+
+- (void)addInstrumentObject:(PPInstrumentObject *)object
 {
 	NSInteger indexOfAddedInstrument = -1;
 	for (NSInteger i = 0; i > MAXINSTRU; i++) {
@@ -599,6 +605,11 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 {
 	NSParameterAssert(idx < MAXINSTRU);
 	return _instruments[idx];
+}
+
+- (PPInstrumentObject*)instrumentObjectAtIndex:(NSInteger)idx
+{
+	return [self instrumentsObjectAtIndex:idx];
 }
 
 - (void)clearInstrumentsAtIndexes:(NSIndexSet *)indexes
