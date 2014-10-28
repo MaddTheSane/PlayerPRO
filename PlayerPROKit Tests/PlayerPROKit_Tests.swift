@@ -6,8 +6,9 @@
 //
 //
 
-import Cocoa
+import Foundation
 import XCTest
+import PlayerPROKit
 
 class PlayerPROKit_Tests: XCTestCase {
     

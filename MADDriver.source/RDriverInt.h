@@ -34,6 +34,7 @@
 #define __RDRIVERINTH__
 
 #include <stdio.h>
+#include "RDriver.h"
 #include "MADFileUtils.h"
 
 //#define NUMBER_FINETUNES 16

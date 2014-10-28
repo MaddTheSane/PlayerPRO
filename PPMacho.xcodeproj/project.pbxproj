@@ -267,6 +267,19 @@
 		55510A4D19CDFC6800ACFC3B /* PPInstrumentPlugBridgeObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55510A4C19CDFC6800ACFC3B /* PPInstrumentPlugBridgeObject.m */; };
 		555143CA17B6EDCF00252657 /* PPToneGeneratorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 555143C817B6EDCF00252657 /* PPToneGeneratorController.m */; };
 		555269EF19CB53C300F8B95B /* ComplexFadeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555269EE19CB53C300F8B95B /* ComplexFadeController.swift */; };
+		555272511A00010E008B8616 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BDE31975CBFE00AD2C03 /* PlayerPROKit.framework */; };
+		555272551A0001CE008B8616 /* PPKPcmd_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555272541A0001CE008B8616 /* PPKPcmd_Tests.swift */; };
+		555272581A00025D008B8616 /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		555272591A00025E008B8616 /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5552725A1A00025F008B8616 /* AMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341D310BB5FE0005208D1 /* AMF.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5552725B1A00025F008B8616 /* DMF.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341E910BB5FFA005208D1 /* DMF.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5552725C1A000260008B8616 /* IT.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 553341FC10BB600A005208D1 /* IT.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5552725D1A000261008B8616 /* MADfg.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586870F10BF5C4700FCC24D /* MADfg.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5552725E1A000262008B8616 /* MADH.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586871E10BF5C4A00FCC24D /* MADH.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5552725F1A000263008B8616 /* MADI.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586872D10BF5C4E00FCC24D /* MADI.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		555272601A000263008B8616 /* MED.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586874D10BF5D3700FCC24D /* MED.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		555272611A000264008B8616 /* S3M.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 558687FA10BF624E00FCC24D /* S3M.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		555272621A000265008B8616 /* XM.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586883D10BF62FB00FCC24D /* XM.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55534ACE1817C387006D6BCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55534AD11817C387006D6BCB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55534AD01817C387006D6BCB /* main.m */; };
 		5557769617EBDA740019D008 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5557769517EBDA740019D008 /* Media.xcassets */; };
@@ -635,6 +648,8 @@
 		55C8EDE2187CC8B200CC8C1B /* PPPatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287316A8968C009013D8 /* PPPatternObject.m */; };
 		55C8EDE3187CC8B200CC8C1B /* PPMadCommandObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287616A89A9C009013D8 /* PPMadCommandObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55C8EDE4187CC8B200CC8C1B /* PPMadCommandObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287716A89A9C009013D8 /* PPMadCommandObject.m */; };
+		55C9191D1A000C3F0049F4E4 /* PlayerPROKit_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD23E19B4F858005588B5 /* PlayerPROKit_Tests.swift */; };
+		55C9191E1A000C3F0049F4E4 /* PPKPcmd_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555272541A0001CE008B8616 /* PPKPcmd_Tests.swift */; };
 		55C930391819E68700D9E072 /* CocoaFuncs.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C930381819E68700D9E072 /* CocoaFuncs.m */; };
 		55C9303B1819F6EC00D9E072 /* PPSoundSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55C9303D1819F6EC00D9E072 /* PPSoundSettingsViewController.xib */; };
 		55CBFAD211EB77ED0028C6BB /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -1046,6 +1061,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 554E11EF10D6F3E100BB619C;
 			remoteInfo = Propagate;
+		};
+		555272521A000119008B8616 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55F1BDE21975CBFE00AD2C03;
+			remoteInfo = "PlayerPROKit-iOS";
+		};
+		555272631A000273008B8616 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5533410810BB5460005208D1;
+			remoteInfo = "Import-export";
 		};
 		55534AE818183B0C006D6BCB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1698,6 +1727,13 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
+		55C98AEB1A001B1000435530 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5557769E17EBF8FD0019D008;
+			remoteInfo = "iOS PlayerPRO Player";
+		};
 		55CBF9FF11EB77AA0028C6BB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1757,6 +1793,27 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		555272571A000238008B8616 /* Copy PlugIns */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				555272581A00025D008B8616 /* MOD.ppimpexp in Copy PlugIns */,
+				555272591A00025E008B8616 /* 669.ppimpexp in Copy PlugIns */,
+				5552725A1A00025F008B8616 /* AMF.ppimpexp in Copy PlugIns */,
+				5552725B1A00025F008B8616 /* DMF.ppimpexp in Copy PlugIns */,
+				5552725C1A000260008B8616 /* IT.ppimpexp in Copy PlugIns */,
+				5552725D1A000261008B8616 /* MADfg.ppimpexp in Copy PlugIns */,
+				5552725E1A000262008B8616 /* MADH.ppimpexp in Copy PlugIns */,
+				5552725F1A000263008B8616 /* MADI.ppimpexp in Copy PlugIns */,
+				555272601A000263008B8616 /* MED.ppimpexp in Copy PlugIns */,
+				555272611A000264008B8616 /* S3M.ppimpexp in Copy PlugIns */,
+				555272621A000265008B8616 /* XM.ppimpexp in Copy PlugIns */,
+			);
+			name = "Copy PlugIns";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55680A321904661E00F7616D /* Embed XPC Services */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2194,6 +2251,8 @@
 		555143C717B6EDCF00252657 /* PPToneGeneratorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPToneGeneratorController.h; sourceTree = "<group>"; };
 		555143C817B6EDCF00252657 /* PPToneGeneratorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPToneGeneratorController.m; sourceTree = "<group>"; };
 		555269EE19CB53C300F8B95B /* ComplexFadeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexFadeController.swift; sourceTree = "<group>"; };
+		5552724F1A0000C8008B8616 /* PlayerPROKit-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PlayerPROKit-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		555272541A0001CE008B8616 /* PPKPcmd_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPKPcmd_Tests.swift; sourceTree = "<group>"; };
 		55534ACD1817C387006D6BCB /* updateInfoPlist */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = updateInfoPlist; sourceTree = BUILT_PRODUCTS_DIR; };
 		55534AD01817C387006D6BCB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55534AD31817C388006D6BCB /* updateInfoPlist-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "updateInfoPlist-Prefix.pch"; sourceTree = "<group>"; };
@@ -2436,6 +2495,7 @@
 		55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentPlugBridgeHelper.m; sourceTree = "<group>"; };
 		55C5754219CE32C6005109C9 /* PPInstrumentPlugBridgeHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPlugBridgeHelper.h; sourceTree = "<group>"; };
 		55C5754319CE3559005109C9 /* ARCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARCBridge.h; sourceTree = "<group>"; };
+		55C9191C1A000BFB0049F4E4 /* tmpHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tmpHeader.h; sourceTree = "<group>"; };
 		55C930381819E68700D9E072 /* CocoaFuncs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocoaFuncs.m; sourceTree = "<group>"; };
 		55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PlayerPRO 6.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55CBF9A811EB77760028C6BB /* Cocoa-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Cocoa-Info.plist"; path = "../../Cocoa-Info.plist"; sourceTree = "<group>"; };
@@ -2681,6 +2741,14 @@
 				554E122A10D6F3E600BB619C /* CoreFoundation.framework in Frameworks */,
 				5574BCEC169634DE00CF3C37 /* PlayerPROCore.framework in Frameworks */,
 				5535079D19BBD4D500B9E815 /* PlayerPROKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		555272491A0000C8008B8616 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				555272511A00010E008B8616 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4287,7 +4355,9 @@
 		55ADD23B19B4F858005588B5 /* PlayerPROKit Tests */ = {
 			isa = PBXGroup;
 			children = (
+				55C9191C1A000BFB0049F4E4 /* tmpHeader.h */,
 				55ADD23E19B4F858005588B5 /* PlayerPROKit_Tests.swift */,
+				555272541A0001CE008B8616 /* PPKPcmd_Tests.swift */,
 				55ADD23C19B4F858005588B5 /* Supporting Files */,
 			);
 			path = "PlayerPROKit Tests";
@@ -4620,6 +4690,7 @@
 				5591709519C24C1600998D7F /* System 7.plugin */,
 				5591709F19C26E1C00998D7F /* PPCoreInstrumentPlugBridge.xpc */,
 				556BC18219CF47FC00508F49 /* PPCoreInstrumentPlugBridge32.xpc */,
+				5552724F1A0000C8008B8616 /* PlayerPROKit-iOS Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5030,6 +5101,25 @@
 			productName = "Complex Fade";
 			productReference = 554E123010D6F3E600BB619C /* Revert.plugin */;
 			productType = "com.apple.product-type.bundle";
+		};
+		555272441A0000C8008B8616 /* PlayerPROKit-iOS Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5552724C1A0000C8008B8616 /* Build configuration list for PBXNativeTarget "PlayerPROKit-iOS Tests" */;
+			buildPhases = (
+				555272471A0000C8008B8616 /* Sources */,
+				555272491A0000C8008B8616 /* Frameworks */,
+				5552724B1A0000C8008B8616 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				555272531A000119008B8616 /* PBXTargetDependency */,
+				55C98AEC1A001B1000435530 /* PBXTargetDependency */,
+			);
+			name = "PlayerPROKit-iOS Tests";
+			productName = "PlayerPROKit Tests";
+			productReference = 5552724F1A0000C8008B8616 /* PlayerPROKit-iOS Tests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		55534ACC1817C387006D6BCB /* updateInfoPlist */ = {
 			isa = PBXNativeTarget;
@@ -5746,10 +5836,12 @@
 				55ADD23619B4F858005588B5 /* Sources */,
 				55ADD23719B4F858005588B5 /* Frameworks */,
 				55ADD23819B4F858005588B5 /* Resources */,
+				555272571A000238008B8616 /* Copy PlugIns */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				555272641A000273008B8616 /* PBXTargetDependency */,
 				5565AEB719D334D1002478E8 /* PBXTargetDependency */,
 			);
 			name = "PlayerPROKit Tests";
@@ -5931,6 +6023,9 @@
 					5513EACD19A5AE4200BCC483 = {
 						CreatedOnToolsVersion = 6.0;
 					};
+					555272441A0000C8008B8616 = {
+						TestTargetID = 5557769E17EBF8FD0019D008;
+					};
 					5557769E17EBF8FD0019D008 = {
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
@@ -5982,7 +6077,9 @@
 			projectRoot = "";
 			targets = (
 				55CBF9A511EB77760028C6BB /* PlayerPRO 6 */,
+				55ADD25519B4F8BA005588B5 /* PlayerPRO 6 Tests */,
 				5578C48017D9E8560057D11B /* PlayerPRO Player */,
+				55ADD24619B4F895005588B5 /* PlayerPRO Player Tests */,
 				5513EACD19A5AE4200BCC483 /* OS X Applications */,
 				5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */,
 				555776C217EBF8FF0019D008 /* iOS PlayerPRO PlayerTests */,
@@ -5995,7 +6092,9 @@
 				5573A33E10B50D2600FF8B50 /* PlayerPROCore */,
 				55F1BD8E1975C83400AD2C03 /* PlayerPROCore-iOS */,
 				551292D7163DD68500C2C639 /* PlayerPROKit */,
+				55ADD23919B4F858005588B5 /* PlayerPROKit Tests */,
 				55F1BDE21975CBFE00AD2C03 /* PlayerPROKit-iOS */,
+				555272441A0000C8008B8616 /* PlayerPROKit-iOS Tests */,
 				5533410810BB5460005208D1 /* Import-export */,
 				5533411010BB547C005208D1 /* MOD */,
 				5533414510BB572C005208D1 /* 669 */,
@@ -6045,9 +6144,6 @@
 				557DE90D10E08DB000177B4C /* Silence */,
 				557DE95010E08DB900177B4C /* Smooth */,
 				557DE99310E08DC100177B4C /* Tone Generator */,
-				55ADD23919B4F858005588B5 /* PlayerPROKit Tests */,
-				55ADD24619B4F895005588B5 /* PlayerPRO Player Tests */,
-				55ADD25519B4F8BA005588B5 /* PlayerPRO 6 Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -6159,6 +6255,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		554E122510D6F3E600BB619C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5552724B1A0000C8008B8616 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -6729,6 +6832,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		555272471A0000C8008B8616 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55C9191D1A000C3F0049F4E4 /* PlayerPROKit_Tests.swift in Sources */,
+				55C9191E1A000C3F0049F4E4 /* PPKPcmd_Tests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55534AC91817C387006D6BCB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -7173,6 +7285,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55ADD23F19B4F858005588B5 /* PlayerPROKit_Tests.swift in Sources */,
+				555272551A0001CE008B8616 /* PPKPcmd_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7514,6 +7627,16 @@
 			isa = PBXTargetDependency;
 			target = 554E11EF10D6F3E100BB619C /* Propagate */;
 			targetProxy = 554E126A10D6F51B00BB619C /* PBXContainerItemProxy */;
+		};
+		555272531A000119008B8616 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55F1BDE21975CBFE00AD2C03 /* PlayerPROKit-iOS */;
+			targetProxy = 555272521A000119008B8616 /* PBXContainerItemProxy */;
+		};
+		555272641A000273008B8616 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5533410810BB5460005208D1 /* Import-export */;
+			targetProxy = 555272631A000273008B8616 /* PBXContainerItemProxy */;
 		};
 		55534AE918183B0C006D6BCB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -7979,6 +8102,11 @@
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 55B797E110D6E6D00073E379 /* PBXContainerItemProxy */;
+		};
+		55C98AEC1A001B1000435530 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */;
+			targetProxy = 55C98AEB1A001B1000435530 /* PBXContainerItemProxy */;
 		};
 		55CBFA0011EB77AA0028C6BB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8934,6 +9062,53 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
+		5552724D1A0000C8008B8616 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				INFOPLIST_FILE = "PlayerPROKit Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPROKit Tests/tmpHeader.h";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS PlayerPRO Player.app/iOS PlayerPRO Player";
+			};
+			name = Release;
+		};
+		5552724E1A0000C8008B8616 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "PlayerPROKit Tests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPROKit Tests/tmpHeader.h";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS PlayerPRO Player.app/iOS PlayerPRO Player";
 			};
 			name = Debug;
 		};
@@ -10326,6 +10501,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPROKit Tests/tmpHeader.h";
 			};
 			name = Release;
 		};
@@ -10347,6 +10523,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPROKit Tests/tmpHeader.h";
 			};
 			name = Debug;
 		};
@@ -10912,6 +11089,15 @@
 			buildConfigurations = (
 				554E122E10D6F3E600BB619C /* Release */,
 				554E122F10D6F3E600BB619C /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5552724C1A0000C8008B8616 /* Build configuration list for PBXNativeTarget "PlayerPROKit-iOS Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5552724D1A0000C8008B8616 /* Release */,
+				5552724E1A0000C8008B8616 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

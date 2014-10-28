@@ -90,7 +90,7 @@ public struct PPKPcmd: SequenceType {
 		trackStart = startTrack
 		length = rows
 		positionStart = startPosition
-		for i in 0 ..< atr + rows {
+		for i in 0 ..< atr * rows {
 			myCmd.append(Cmd())
 		}
 	}
@@ -111,18 +111,42 @@ public struct PPKPcmd: SequenceType {
 	}
 	
 	public mutating func addRow() {
+		#if false
 		length += 1
 		for i in 0 ..< tracks {
 			myCmd.append(Cmd())
 		}
+	#else
+	// Brute forcing our way, because I can't get it to work the other way yet.
+	var anewPcmd = PPKPcmd(tracks: self.tracks, startTrack: self.trackStart, rows: length + 1, startPosition: positionStart)
+	
+	for i in 0 ..< (tracks * length) {
+	let oldCmd = getCommand(i % length, track: i / length)
+	anewPcmd.replaceCmdAtRow(i % length, track: i / length, command: oldCmd)
 	}
 	
+	self = anewPcmd
+	#endif
+	}
+
 	public mutating func addTrack() {
-		for var i = length - 1; i > 0; i-- {
+		#if false
+		for var i = length; i > 0; i-- {
 			let acmd = Cmd()
 			myCmd.insert(Cmd(), atIndex: Int(i * tracks))
 		}
 		tracks += 1
+			#else
+			// Brute forcing our way, because I can't get it to work the other way yet.
+			var anewPcmd = PPKPcmd(tracks: self.tracks + 1, startTrack: self.trackStart, rows: length, startPosition: positionStart)
+			
+			for i in 0 ..< (tracks * length) {
+				let oldCmd = getCommand(i % length, track: i / length)
+				anewPcmd.replaceCmdAtRow(i % length, track: i / length, command: oldCmd)
+			}
+			
+			self = anewPcmd
+			#endif
 	}
 	
 	public mutating func modifyCmdAtRow(row1: Int16, track track1: Int16, commandBlock: (inout Cmd)-> ()) {
