@@ -185,13 +185,12 @@ extension PPSampleObject {
 		imageSize.width *= 2
 		let aRect = CGRect(origin: CGPointZero, size: imageSize)
 		let rowBytes = 4 * UInt(imageSize.width)
-		let defaultSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!
-		let bitMapFormat = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
-		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, bitMapFormat)
+		let bitMapFormat = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue) | CGBitmapInfo.ByteOrderDefault
+		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!, bitMapFormat)!
 		
 		CGContextClearRect(bitmapContext, CGRect(origin: CGPointZero, size: imageSize))
-		let lineSize = view.convertSizeToBacking(NSSize(width: 1, height: 1))
-		CGContextSetLineWidth(bitmapContext, lineSize.height)
+		let lineSize = view.convertSizeToBacking(NSSize(width: 1, height: 1)).height
+		CGContextSetLineWidth(bitmapContext, lineSize)
 		if (datIsStereo) {
 			CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(0, 0, 1, 0.75))
 			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
@@ -214,8 +213,11 @@ extension PPSampleObject {
 			CGContextStrokeRect(bitmapContext, loopRect)
 		}
 		
-		var theCGimg = CGBitmapContextCreateImage(bitmapContext)
-		return NSImage(CGImage: theCGimg, size: view.frame.size)
+		if let theCGimg = CGBitmapContextCreateImage(bitmapContext) {
+			return NSImage(CGImage: theCGimg, size: view.frame.size)
+		} else {
+			return nil
+		}
 	}
 #elseif os(iOS)
 	@objc(waveformImageUsingView:) public func waveformImage(#view: UIView) -> UIImage? {
@@ -235,9 +237,8 @@ extension PPSampleObject {
 		let datIsStereo = theDat.stereo;
 		let aRect = CGRect(origin: CGPointZero, size: imageSize)
 		let rowBytes = 4 * UInt(imageSize.width)
-		let defaultSpace = CGColorSpaceCreateDeviceRGB()
 		let bitMapFormat = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue) | CGBitmapInfo.ByteOrderDefault
-		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, defaultSpace, bitMapFormat)
+		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, CGColorSpaceCreateDeviceRGB(), bitMapFormat)
 		CGContextClearRect(bitmapContext, CGRect(origin: CGPointZero, size: imageSize))
 		let lineSize = 1 * scale
 		CGContextSetLineWidth(bitmapContext, lineSize)
@@ -267,8 +268,11 @@ extension PPSampleObject {
 			CGContextStrokeRect(bitmapContext, loopRect)
 		}
 		
-		var theCGimg = CGBitmapContextCreateImage(bitmapContext)
-		return UIImage(CGImage: theCGimg)
+		if let theCGimg = CGBitmapContextCreateImage(bitmapContext) {
+			return UIImage(CGImage: theCGimg)
+		} else {
+			return nil
+		}
 	}
 #endif
 	
