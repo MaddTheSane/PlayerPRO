@@ -18,7 +18,7 @@
 @property (readonly) FXSets theSet;
 @property short track;
 @property short identifier;
-@property int fxIdentifier;
+@property int effectIdentifier;
 @property short argumentNumbers;
 @property (readonly, copy) NSArray *values;
 @property (copy) NSString *name;

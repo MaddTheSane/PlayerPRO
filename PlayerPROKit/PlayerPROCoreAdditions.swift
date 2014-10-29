@@ -530,6 +530,53 @@ extension IntPcmd {
 	}
 }
 
+public func GetCommand(arow: Int16, atrack: Int16, aIntPcmd: IntPcmd) -> Cmd {
+	var row = arow
+	var track = atrack
+	if (row < 0) {
+		row = 0;
+	} else if (row >= aIntPcmd.length) {
+		row = aIntPcmd.length - 1;
+	}
+	
+	if (track < 0) {
+		track = 0;
+	} else if (track >= aIntPcmd.tracks) {
+		track = aIntPcmd.tracks - 1;
+	}
+	
+	let ourAddr = Int(aIntPcmd.length) * Int(track) + Int(row)
+	
+	return aIntPcmd.myCmd[ourAddr]
+}
+
+public func ReplaceCmd(row: Int16, track: Int16, command: Cmd, inout aPcmd: IntPcmd) {
+	ModifyCmdAtRow(row, track, &aPcmd, {(inout aCmd: Cmd) -> () in
+		aCmd = command
+	})
+}
+
+public func ModifyCmdAtRow(arow: Int16, atrack: Int16, inout aPcmd: IntPcmd, commandBlock: (inout Cmd) -> ()) {
+	var row = arow
+	var track = atrack
+	if (row < 0) {
+		row = 0;
+	} else if (row >= aPcmd.length) {
+		row = aPcmd.length - 1;
+	}
+	
+	if (track < 0) {
+		track = 0;
+	} else if (track >= aPcmd.tracks) {
+		track = aPcmd.tracks - 1;
+	}
+	
+	let ourAddr = Int(aPcmd.length) * Int(track) + Int(row)
+
+	commandBlock(&aPcmd.myCmd[ourAddr])
+}
+
+
 // MARK: MADFourChar
 // TODO: find out how Apple does this with CGFloat...
 /*

@@ -122,12 +122,12 @@ static const dispatch_block_t initUTIArray = ^{
 	theSet.id = identifier;
 }
 
-- (int)fxIdentifier
+- (int)effectIdentifier
 {
 	return theSet.FXID;
 }
 
-- (void)setFxIdentifier:(int)fxIdentifier
+- (void)setEffectIdentifier:(int)fxIdentifier
 {
 	theSet.FXID = fxIdentifier;
 }
@@ -227,7 +227,7 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	if (self = [super init]) {
 		self.name = [aDecoder decodeObjectForKey:kPPName];
-		self.fxIdentifier = [aDecoder decodeIntForKey:kPPFXIdentifier];
+		self.effectIdentifier = [aDecoder decodeIntForKey:kPPFXIdentifier];
 		self.sets = [(NSArray*)[aDecoder decodeObjectForKey:kPPValues] mutableCopy];
 		self.track = [(NSNumber*)[aDecoder decodeObjectForKey:kPPTrack] shortValue];
 		self.identifier = [(NSNumber*)[aDecoder decodeObjectForKey:kPPIdentifier] shortValue];

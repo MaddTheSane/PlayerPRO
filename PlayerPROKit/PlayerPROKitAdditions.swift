@@ -171,16 +171,6 @@ public func OctaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true
 	}
 }
 
-#if os(iOS)
-	private func viewSize(view: UIView) -> CGSize {
-		var imageSize = view.bounds.size
-		let scale = view.contentScaleFactor
-		imageSize.width *= scale
-		imageSize.height *= scale
-		return imageSize
-	}
-#endif
-
 extension PPSampleObject {
 
 #if os(OSX)
@@ -233,6 +223,13 @@ extension PPSampleObject {
 	}
 	
 	@objc(waveformImageFromSample:usingView:) public class func waveformImage(fromSample theDat: PPSampleObject, view: UIView) -> UIImage? {
+		func viewSize(view: UIView) -> CGSize {
+			var imageSize = view.bounds.size
+			let scale = view.contentScaleFactor
+			imageSize.width *= scale
+			imageSize.height *= scale
+			return imageSize
+		}
 		let imageSize = viewSize(view)
 		let scale = view.contentScaleFactor
 		let datIsStereo = theDat.stereo;
@@ -444,7 +441,9 @@ extension PPPatternObject: SequenceType {
 }
 
 public func InfoRecToMusicInfo(infoRec: MADInfoRec) -> PPLibrary.MusicFileInfo {
-	return PPLibrary.infoRecToMusicInfo(infoRec)
+	let tmpDict = PPLibrary.infoRecToDictionary(infoRec)
+	
+	return PPLibrary.MusicFileInfo(infoDict: tmpDict)
 }
 
 extension PPLibrary: SequenceType {
@@ -474,32 +473,6 @@ extension PPLibrary: SequenceType {
 		}
 	}
 	
-	public class func infoRecToMusicInfo(infoRec: MADInfoRec) -> MusicFileInfo {
-		let tmpDict = infoRecToDictionary(infoRec)
-		
-		return MusicFileInfo(infoDict: tmpDict)
-	}
-	
-	public func identifyFile(#URL: NSURL, inout type stringType: String) -> MADErr {
-		var ourStrType: NSString? = nil
-		let toRet = identifyFileAtURL(URL, stringType: &ourStrType)
-		if let unwrapped = ourStrType {
-			stringType = unwrapped
-		}
-		
-		return toRet
-	}
-	
-	public func identifyFile(#path: String, inout type stringType: String) -> MADErr {
-		var ourStrType: NSString? = nil
-		let toRet = identifyFileAtPath(path, stringType: &ourStrType)
-		if let unwrapped = ourStrType {
-			stringType = unwrapped
-		}
-		
-		return toRet
-	}
-	
 	public func identifyFile(#URL: NSURL) -> (error: MADErr, format: String?) {
 		var ourStrType: NSString? = nil
 		let toRet = identifyFileAtURL(URL, stringType: &ourStrType)
@@ -512,32 +485,6 @@ extension PPLibrary: SequenceType {
 		let toRet = identifyFileAtPath(path, stringType: &ourStrType)
 		
 		return (toRet, ourStrType)
-	}
-	
-	public func getInformationFromFile(#URL: NSURL, type stringType: String, inout infoDictionary: [String: NSObject]) -> MADErr {
-		var ourDict: NSDictionary? = nil
-		let toRet = getInformationFromFileAtURL(URL, stringType: stringType, infoDictionary: &ourDict)
-		if let unwrapped = ourDict {
-			let furthurUnwrapped = unwrapped as [String: NSObject]
-			for (key, value) in furthurUnwrapped {
-				infoDictionary[key] = value
-			}
-		}
-		
-		return toRet
-	}
-	
-	public func getInformationFromFile(#path: String, type stringType: String, inout infoDictionary: [String: NSObject]) -> MADErr {
-		var ourDict: NSDictionary? = nil
-		let toRet = getInformationFromFileAtPath(path, stringType: stringType, infoDictionary: &ourDict)
-		if let unwrapped = ourDict {
-			let furthurUnwrapped = unwrapped as [String: NSObject]
-			for (key, value) in furthurUnwrapped {
-				infoDictionary[key] = value
-			}
-		}
-		
-		return toRet
 	}
 	
 	public func getInformationFromFile(#URL: NSURL, type stringType: String) -> (error: MADErr, musicInfo: MusicFileInfo?) {
