@@ -975,7 +975,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 + (NSSet*)keyPathsForValuesAffectingPanningType
 {
-	return [NSSet setWithObjects:@"panningType", @"panningTypeOn", @"panningTypeSustain", @"panningTypeLoop", @"panningTypeNote", nil];
+	return [NSSet setWithObjects:@"panningTypeOn", @"panningTypeSustain", @"panningTypeLoop", @"panningTypeNote", nil];
 }
 
 #define affectPannType(theType) \
@@ -992,7 +992,7 @@ affectPannType(Note)
 
 + (NSSet*)keyPathsForValuesAffectingVolumeType
 {
-	return [NSSet setWithObjects:@"volumeType", @"volumeTypeOn", @"volumeTypeSustain", @"volumeTypeLoop", @"volumeTypeNote", nil];
+	return [NSSet setWithObjects:@"volumeTypeOn", @"volumeTypeSustain", @"volumeTypeLoop", @"volumeTypeNote", nil];
 }
 
 #define affectVolType(theType) \

@@ -72,7 +72,7 @@
 - (MADErr)pause;
 - (MADErr)stop;
 
-//@property (readonly, getter=isPlayingMusic)		BOOL playingMusic;
+@property (readonly, getter=isPlayingMusic)		BOOL playingMusic;
 @property (readonly, getter=isDonePlayingMusic) BOOL donePlayingMusic;
 @property (getter=isPaused)						BOOL paused;
 

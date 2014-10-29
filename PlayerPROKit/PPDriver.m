@@ -258,6 +258,11 @@
 	}
 }
 
++ (NSSet*)keyPathsForValuesAffectingPlayingMusic
+{
+	return [NSSet setWithObjects:@"paused", @"donePlayingMusic", nil];
+}
+
 - (BOOL)isPlayingMusic
 {
 	return MADIsPlayingMusic(theRec);

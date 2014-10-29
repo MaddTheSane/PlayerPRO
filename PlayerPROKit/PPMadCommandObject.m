@@ -143,19 +143,11 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)resetCommand;
 {
-	[self willChangeValueForKey:@"instrument"];
-	[self willChangeValueForKey:@"note"];
-	[self willChangeValueForKey:@"command"];
-	[self willChangeValueForKey:@"argument"];
-	[self willChangeValueForKey:@"volume"];
+	[self willChangeValueForKey:@"theCommand"];
 
 	MADKillCmd(&theCommand);
 	
-	[self didChangeValueForKey:@"instrument"];
-	[self didChangeValueForKey:@"note"];
-	[self didChangeValueForKey:@"command"];
-	[self didChangeValueForKey:@"argument"];
-	[self didChangeValueForKey:@"volume"];
+	[self didChangeValueForKey:@"theCommand"];
 }
 
 - (NSString*)description
@@ -169,6 +161,20 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	return [NSSet setWithObjects:@"instrument", @"note", @"command", @"argument", @"volume", nil];
 }
+
+#define keyVal(theVal) \
++ (NSSet*)keyPathsForValuesAffecting ## theVal \
+{ \
+ return [NSSet setWithObject:@"theCommand"]; \
+}
+
+keyVal(Instrument)
+keyVal(Note)
+keyVal(Command)
+keyVal(Argument)
+keyVal(Volume)
+
+#undef keyVal
 
 #pragma mark NSCoding protocol
 
