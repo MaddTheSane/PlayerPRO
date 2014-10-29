@@ -489,13 +489,15 @@ static void BuildAvailableDriverList()
 bool MADSoundDriverIsAvalable(MADSoundOutput theDriver)
 {
 	if (theDriver == NoHardwareDriver) {
-		return TRUE;
+		return true;
+	} else if (theDriver > 31) {
+		return false;
 	}
 	BuildAvailableDriverList();
 	if (driverList & (1 << theDriver)) {
-		return TRUE;
+		return true;
 	} else {
-		return FALSE;
+		return false;
 	}
 }
 
