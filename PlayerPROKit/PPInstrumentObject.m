@@ -250,20 +250,24 @@ static const dispatch_block_t initUTIArray = ^{
 - (NSInteger)countOfPanningEnvelope { return 12; }
 - (NSInteger)countOfPitchEnvelope { return 12; }
 
-- (NSString*)name
-{
-	if (name != nil) {
-		name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
-	}
-	return name;
-}
-
 - (instancetype)init
 {
 	if (self = [super init]) {
 		MADResetInstrument(&theInstrument);
 	}
 	return self;
+}
+
+- (NSString*)name
+{
+	if (!name) {
+		name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
+		if (!name) {
+			name = @"";
+			memset(theInstrument.name, 0, sizeof(theInstrument.name));
+		}
+	}
+	return name;
 }
 
 - (void)setName:(NSString *)name1
@@ -278,7 +282,7 @@ static const dispatch_block_t initUTIArray = ^{
 	tmpCStr = nil;
 	
 	strlcpy(theInstrument.name, tempstr, sizeof(theInstrument.name));
-	name = name1;
+	name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
 }
 
 - (PPSampleObject *)objectAtIndexedSubscript:(NSInteger)index
@@ -398,7 +402,6 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)setSoundOut:(BOOL)soundOut
 {
-	[self willChangeValueForKey:@"MIDIType"];
 	if (soundOut) {
 		if (self.MIDIOut) {
 			theInstrument.MIDIType = 2;
@@ -412,7 +415,6 @@ static const dispatch_block_t initUTIArray = ^{
 			theInstrument.MIDIType = 3;
 		}
 	}
-	[self didChangeValueForKey:@"MIDIType"];
 }
 
 - (BOOL)isMIDIOut
@@ -431,7 +433,6 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)setMIDIOut:(BOOL)MIDIOut
 {
-	[self willChangeValueForKey:@"MIDIType"];
 	if (MIDIOut) {
 		if (self.soundOut) {
 			theInstrument.MIDIType = 2;
@@ -445,7 +446,6 @@ static const dispatch_block_t initUTIArray = ^{
 			theInstrument.MIDIType = 3;
 		}
 	}
-	[self didChangeValueForKey:@"MIDIType"];
 }
 
 - (Byte)volumeSize
@@ -616,49 +616,6 @@ static const dispatch_block_t initUTIArray = ^{
 	
 	return insObj;
 }
-
-#if 0
-- (void)setUpKVO
-{
-	[self addObserver:self forKeyPath:kPPVolumeTypeLoop options:NSKeyValueObservingOptionNew context:NULL];
-	[self addObserver:self forKeyPath:kPPVolumeTypeNote options:NSKeyValueObservingOptionNew context:NULL];
-	[self addObserver:self forKeyPath:kPPVolumeTypeOn options:NSKeyValueObservingOptionNew context:NULL];
-	[self addObserver:self forKeyPath:kPPVolumeTypeSustain options:NSKeyValueObservingOptionNew context:NULL];
-	
-	[self addObserver:self forKeyPath:kPPPanningTypeLoop options:NSKeyValueObservingOptionNew context:NULL];
-	[self addObserver:self forKeyPath:kPPPanningTypeNote options:NSKeyValueObservingOptionNew context:NULL];
-	[self addObserver:self forKeyPath:kPPPanningTypeOn options:NSKeyValueObservingOptionNew context:NULL];
-	[self addObserver:self forKeyPath:kPPPanningTypeSustain options:NSKeyValueObservingOptionNew context:NULL];
-	
-}
-
-- (void)shutDownKVO
-{
-	[self removeObserver:self forKeyPath:kPPVolumeTypeLoop];
-	[self removeObserver:self forKeyPath:kPPVolumeTypeNote];
-	[self removeObserver:self forKeyPath:kPPVolumeTypeOn];
-	[self removeObserver:self forKeyPath:kPPVolumeTypeSustain];
-	
-	[self removeObserver:self forKeyPath:kPPPanningTypeLoop];
-	[self removeObserver:self forKeyPath:kPPPanningTypeNote];
-	[self removeObserver:self forKeyPath:kPPPanningTypeOn];
-	[self removeObserver:self forKeyPath:kPPPanningTypeSustain];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-	//FIXME: is this right?
-	if ([keyPath isEqualToString:kPPVolumeTypeLoop] || [keyPath isEqualToString:kPPVolumeTypeNote] ||
-		[keyPath isEqualToString:kPPVolumeTypeOn] || [keyPath isEqualToString:kPPVolumeTypeSustain]) {
-		[self willChangeValueForKey:kPPVolumeType];
-		[self didChangeValueForKey:kPPVolumeType];
-	} else if ([keyPath isEqualToString:kPPPanningTypeLoop] || [keyPath isEqualToString:kPPPanningTypeNote] ||
-			   [keyPath isEqualToString:kPPPanningTypeOn] || [keyPath isEqualToString:kPPPanningTypeSustain]) {
-		[self willChangeValueForKey:kPPPanningType];
-		[self didChangeValueForKey:kPPPanningType];
-	}
-}
-#endif
 
 - (instancetype)initWithMusic:(PPMusicObject*)mus;
 {
@@ -1006,6 +963,11 @@ affectVolType(Sustain)
 affectVolType(Loop)
 affectVolType(Note)
 #undef affectVolType
+
++ (NSSet*)keyPathsForValuesAffectingMIDIType
+{
+	return [NSSet setWithObjects:@"soundOut", @"MIDIOut", nil];
+}
 
 #pragma mark NSCopying protocol
 

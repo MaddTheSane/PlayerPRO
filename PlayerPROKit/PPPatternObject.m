@@ -96,6 +96,34 @@ static const dispatch_block_t initUTIArray = ^{
 @synthesize commands;
 @synthesize index;
 @synthesize patternHeader;
+@synthesize patternName = _patternName;
+
+- (NSString*)patternName
+{
+	if (!_patternName) {
+		_patternName = [[NSString alloc] initWithCString:patternHeader.name encoding:NSMacOSRomanStringEncoding];
+		if (!_patternName) {
+			memset(patternHeader.name, 0, sizeof(patternHeader.name));
+			_patternName = @"";
+		}
+	}
+	return _patternName;
+}
+
+- (void)setPatternName:(NSString *)patternName
+{
+	char theName[32] = {0};
+	NSData *tmpCStr = [patternName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
+	NSInteger cStrLen = [tmpCStr length];
+	if (cStrLen > sizeof(theName) - 1) {
+		cStrLen = sizeof(theName) - 1;
+	}
+	[tmpCStr getBytes:theName length:cStrLen];
+	
+	strlcpy(patternHeader.name, theName, sizeof(patternHeader.name));
+	
+	_patternName = [[NSString alloc] initWithCString:patternHeader.name encoding:NSMacOSRomanStringEncoding];
+}
 
 - (PatHeader)patternHeader
 {

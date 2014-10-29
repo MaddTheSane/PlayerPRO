@@ -69,7 +69,8 @@ static const dispatch_block_t initUTIArray = ^{
 	if (!_name) {
 		_name = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, theSet.name, kCFStringEncodingMacRoman));
 		if (!_name) {
-			self.name = @"";
+			_name = @"";
+			memset(theSet.name, 0, sizeof(theSet.name));
 		}
 	}
 	
