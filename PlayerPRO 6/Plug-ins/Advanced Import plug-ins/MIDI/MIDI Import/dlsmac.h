@@ -19,14 +19,8 @@
 #ifndef _INC_DLSMAC
 #define _INC_DLSMAC
 
-/*
-	AIFF.h 
-	a standard Mac include that defines Mac IFF types 
-	and includes the required <MacTypes.h>
-*/
-
-//#include <AIFF.h>
-#include <Carbon/Carbon.h>
+#include <MacTypes.h>
+#include <CoreServices/CoreServices.h>
 
 /*
 	Data Type defs for compatibility with Windows headers
@@ -114,6 +108,7 @@ typedef UInt8		BYTE;
 */
 
 /* DLSID - a GUID struct */
+#if 0
 #ifndef _DLSID
 typedef struct _DLSID
 {
@@ -123,11 +118,14 @@ typedef struct _DLSID
 	BYTE		abData4[8];
 } DLSID;
 #endif
+#else
+typedef CFUUIDBytes DLSID;
+#endif
 
 /* DEFINE_DLSID    DLSID queries for <cdl-ck> */
 #ifndef DEFINE_DLSID
 #define DEFINE_DLSID(defName, ul1, us2, us3, ab40, ab41, ab42, ab43, ab44, ab45, ab46, ab47)	\
-		static const DLSID defName = { ul1, us2, us3, { ab40, ab41, ab42, ab43, ab44, ab45, ab46, ab47 } }
+		static const DLSID defName = { ((ul1 >> 24) & 0xFF), ((ul1 >> 16) & 0xFF), ((ul1 >> 8) & 0xFF), (ul1 & 0xFF), ((us2 >> 8) & 0xFF), (us2 & 0xFF), ((us3 >> 8) & 0xFF), (us3 & 0xFF), ab40, ab41, ab42, ab43, ab44, ab45, ab46, ab47 }
 #endif
 
 
