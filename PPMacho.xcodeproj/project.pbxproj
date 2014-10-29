@@ -2347,7 +2347,6 @@
 		5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentPlugHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigitalPlugHandler.swift; sourceTree = "<group>"; };
 		557DC36D19BBA76C003CACFE /* DocumentPluginHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentPluginHelper.swift; sourceTree = "<group>"; };
-		557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "CFPlugin-FilterBridge.c"; sourceTree = "<group>"; };
 		557DE43410E06BF200177B4C /* Amplitude.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amplitude.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE43510E06BF200177B4C /* Amplitude-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Amplitude-Info.plist"; sourceTree = "<group>"; };
 		557DE5C310E0876E00177B4C /* Backwards-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Backwards-Info.plist"; sourceTree = "<group>"; };
@@ -3975,7 +3974,6 @@
 				551520E210DEF08B0054ABC4 /* Silence */,
 				551520E310DEF0950054ABC4 /* Smooth */,
 				551520E410DEF09D0054ABC4 /* Tone Generator */,
-				557DE3BC10E06B7600177B4C /* CFPlugin-FilterBridge.c */,
 			);
 			path = "Filters Plugs";
 			sourceTree = "<group>";

@@ -84,7 +84,7 @@ class DepthController: NSWindowController {
 			
 		}
 
-		theData.data = NSData(data: ourData)
+		theData.data = ourData
 		(NSApp as NSApplication).endSheet(window!)
 		currentBlock(.NoErr);
 	}

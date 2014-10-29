@@ -91,7 +91,7 @@
 			break;
 	}
 	
-	theData.data = [ourData copy];
+	theData.data = ourData;
 	
 	return MADNoErr;
 }

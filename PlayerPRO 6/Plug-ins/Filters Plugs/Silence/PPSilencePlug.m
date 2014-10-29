@@ -61,7 +61,7 @@
 			break;
 	}
 	
-	theData.data = [ourOwnData copy];
+	theData.data = ourOwnData;
 	
 	return MADNoErr;
 }

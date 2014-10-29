@@ -357,7 +357,7 @@
 	
 	memcpy(resultPtr + self.selectionStart + audioLength, theData.data.bytes + self.selectionEnd, theData.data.length - self.selectionEnd);
 	
-	theData.data = [resultData copy];
+	theData.data = resultData;
 	[(NSApplication*)NSApp endSheet:self.window];
 	_currentBlock(MADNoErr);
 }

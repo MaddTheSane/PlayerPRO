@@ -16,7 +16,7 @@ import PlayerPROKit.PPSampleObject
 	public func runWithData(theData: PPSampleObject!, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver!) -> MADErr {
 		let ourData = NSMutableData(data: theData.data)
 		ourData.replaceBytesInRange(selRange, withBytes: nil, length: 0)
-		theData.data = NSData(data: ourData)
+		theData.data = ourData
 		return .NoErr
 	}
 }

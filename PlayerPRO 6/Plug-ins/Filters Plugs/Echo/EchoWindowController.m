@@ -78,7 +78,7 @@
 			break;
 	}
 	
-	theData.data = [ourData copy];
+	theData.data = ourData;
 	[(NSApplication*)NSApp endSheet:self.window];
 	_currentBlock(MADNoErr);
 }
