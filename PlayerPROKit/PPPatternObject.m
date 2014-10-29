@@ -284,9 +284,8 @@ static const dispatch_block_t initUTIArray = ^{
 	SwapPcmd([pcmdData mutableBytes]);
 	
 	thePcmd = [pcmdData bytes];
-	//TODO: put cmd data into the pattern
 	
-	return MADNoErr;
+	return [self importPcmdFromPointer:thePcmd];
 }
 
 static inline NSString *GetEffectString(short theEffect)
@@ -372,7 +371,7 @@ static BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL All
 	return Note;
 }
 
-+ (NSString *)stringFromPcmdData:(const Pcmd*)thePcmd
++ (NSString *)stringFromPcmdData:(in const Pcmd*)thePcmd
 {
 	int	i, x;
 	NSMutableString *myText = [[NSMutableString alloc] init];
@@ -422,7 +421,7 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 	return theCmd;
 }
 
-+ (NSData*)dataFromPcmd:(const Pcmd*)thePcmd
++ (NSData*)dataFromPcmd:(in const Pcmd*)thePcmd
 {
 	size_t structSize = thePcmd->structSize;
 	Pcmd *newPcmd = calloc(structSize, 1);
@@ -475,6 +474,21 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 	}
 	
 	return MADNoErr;
+}
+
+- (MADErr)importPcmdFromPointer:(in const Pcmd*)thePcmd
+{
+	//TODO: put cmd data into the pattern
+	
+	return MADNoErr;
+}
+
+- (MADErr)importIntPcmdFromPointer:(IntPcmd*)theIntPcmd freeCommandsWhenDone:(BOOL)freeCmds
+{
+	Pcmd *tmpPcmd = MADIntPcmdToPcmd(*theIntPcmd, freeCmds);
+	MADErr iErr = [self importPcmdFromPointer:tmpPcmd];
+	free(tmpPcmd);
+	return iErr;
 }
 
 @end

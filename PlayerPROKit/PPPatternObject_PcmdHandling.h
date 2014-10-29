@@ -14,11 +14,17 @@
 
 @interface PPPatternObject (PcmdHandling)
 + (MADErr)testPcmdFileAtURL:(NSURL*)theURL;
-+ (NSString *)stringFromPcmdData:(const Pcmd*)myPcmd;
-+ (NSData*)dataFromPcmd:(const Pcmd*)thePcmd;
++ (NSString *)stringFromPcmdData:(in const Pcmd*)myPcmd;
++ (NSData*)dataFromPcmd:(in const Pcmd*)thePcmd;
 - (Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
 - (MADErr)importPcmdFromURL:(NSURL*)theURL;
 - (MADErr)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
+- (MADErr)importPcmdFromPointer:(in const Pcmd*)thePcmd;
+
+/**
+ * For use with Swift, because it doesn't like variable-length C arrays used in \c Pcmd
+ */
+- (MADErr)importIntPcmdFromPointer:(IntPcmd*)theIntPcmd freeCommandsWhenDone:(BOOL)freeCmds;
 @end
 
 #endif
