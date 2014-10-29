@@ -16,7 +16,7 @@
  #define PLUGMAIN main669 //The old main function, renamed please
  */
 
-typedef struct _CFInstrPlugType {
+typedef struct CFInstrPlugType {
 	PPInstrumentPlugin	*_PPROCFPlugFormat;
 	CFUUIDRef			_factoryID;
 	UInt32				_refCount;

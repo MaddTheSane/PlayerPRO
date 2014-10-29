@@ -42,7 +42,7 @@
 static MADErr MADI2Mad(char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
 #endif
 
-enum {
+enum CompressedBitMask {
 	ins 	= 1 << 0,
 	note	= 1 << 1,
 	cmd		= 1 << 2,

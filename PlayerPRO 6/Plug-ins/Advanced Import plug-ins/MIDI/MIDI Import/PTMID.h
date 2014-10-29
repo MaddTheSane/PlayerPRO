@@ -69,7 +69,7 @@ struct SI_ {
 	SI *psiL, *psiR;
 };
 
-typedef struct { /** MS structure represents a mix of samples **/
+typedef struct MS { /** MS structure represents a mix of samples **/
 	char szName[22];
 	char bDefvol;
 	SI *psi;

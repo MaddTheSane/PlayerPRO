@@ -26,6 +26,9 @@
 #else
 #include "RDriver.h"
 #include "MADFileUtils.h"
+#ifdef __BLOCKS__
+#include <dispatch/dispatch.h>
+#endif
 #endif
 #include "MADH.h"
 
@@ -39,8 +42,7 @@
 static MADErr MADH2Mad(char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
 #endif
 
-enum
-{
+enum CompressedBitMask {
 	ins 	= 1 << 0,
 	note	= 1 << 1,
 	cmd		= 1 << 2,

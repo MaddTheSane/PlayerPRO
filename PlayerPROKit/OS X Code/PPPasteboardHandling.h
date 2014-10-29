@@ -24,23 +24,23 @@ extern NSString * const kPPKFXSetPasteboardUTI;
 extern NSString * const kPPKEnvelopePasteboardUTI;
 extern NSString * const kPPKInstrumentPasteboardUTI;
 
-@interface PPSampleObject() <NSPasteboardReading, NSPasteboardWriting>
+@interface PPSampleObject(CocoaPasteboard) <NSPasteboardReading, NSPasteboardWriting>
 @end
 
-@interface PPMadCommandObject() <NSPasteboardReading, NSPasteboardWriting>
+@interface PPMadCommandObject(CocoaPasteboard) <NSPasteboardReading, NSPasteboardWriting>
 @end
 
-@interface PPPatternObject() <NSPasteboardReading, NSPasteboardWriting>
+@interface PPPatternObject(CocoaPasteboard) <NSPasteboardReading, NSPasteboardWriting>
 @end
 
-@interface PPFXBusObject() <NSPasteboardReading, NSPasteboardWriting>
+@interface PPFXBusObject(CocoaPasteboard) <NSPasteboardReading, NSPasteboardWriting>
 @end
 
-@interface PPFXSetObject() <NSPasteboardReading, NSPasteboardWriting>
+@interface PPFXSetObject(CocoaPasteboard) <NSPasteboardReading, NSPasteboardWriting>
 @end
 
-@interface PPEnvelopeObject() <NSPasteboardReading, NSPasteboardWriting>
+@interface PPEnvelopeObject(CocoaPasteboard) <NSPasteboardReading, NSPasteboardWriting>
 @end
 
-@interface PPInstrumentObject() <NSPasteboardReading, NSPasteboardWriting>
+@interface PPInstrumentObject(CocoaPasteboard) <NSPasteboardReading, NSPasteboardWriting>
 @end

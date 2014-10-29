@@ -96,7 +96,7 @@ static void DebugLong(long type)
 
 /**** Resource Format QK25 ****/
 
-typedef struct {
+typedef struct QuictimeRsrc25 {
 	long	size;
 	OSType	type;
 	long	id;
@@ -106,8 +106,7 @@ typedef struct {
 } QuictimeRsrc25;
 
 
-typedef struct
-{
+typedef struct QuictimeSs25 {
 	long	from;
 	long	to;
 	
@@ -117,7 +116,7 @@ typedef struct
 	long	f;
 } QuictimeSs25;
 
-typedef struct {
+typedef struct QuicktimeInst25 {
 	char			unused[0x58];
 	Str31			name;
 	QuictimeSs25	Ss[];
@@ -127,7 +126,7 @@ typedef struct {
 
 
 /**** Resource Format ****/
-typedef struct {
+typedef struct QuictimeSs {
 	long	from;
 	long	to;
 	
@@ -137,7 +136,7 @@ typedef struct {
 	long	f;
 } QuictimeSs;
 
-typedef struct {
+typedef struct QuicktimeInst {
 	char			unused[0x62];
 	short			no;
 	QuictimeSs		Ss[];

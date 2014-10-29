@@ -10,8 +10,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 @import PlayerPROKit.PPPlugIns;
 
-typedef NS_ENUM(NSInteger, ToneGenerator)
-{
+typedef NS_ENUM(NSInteger, ToneGenerator) {
 	silence = 3,
 	triangle = 4,
 	square = 5,
