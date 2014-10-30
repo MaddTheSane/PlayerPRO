@@ -485,7 +485,7 @@ public func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePoint
 	return GetCommand(position, channel, aPat).memory
 }
 
-internal func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> UnsafeMutablePointer<Cmd> {
+private func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> UnsafeMutablePointer<Cmd> {
 	return GetMADCommand(position, channel, aPat)
 }
 
