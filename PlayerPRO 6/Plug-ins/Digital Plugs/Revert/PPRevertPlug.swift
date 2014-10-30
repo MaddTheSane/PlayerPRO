@@ -9,9 +9,17 @@
 import Foundation
 import PlayerPROKit
 
-@objc(PPRevertPlug) public class RevertPlug : NSObject, PPDigitalPlugin {
+@objc(PPRevertPlug) public final class RevertPlug : NSObject, PPDigitalPlugin {
 	public let hasUIConfiguration = false
 	
+	public convenience init(forPlugIn: ()) {
+		self.init()
+	}
+	
+	override public init() {
+		super.init()
+	}
+
 	public func runWithPcmd(myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver!) -> MADErr {
 		let srcCmd = PPKPcmd(myPcmd)
 		let maxLenth = srcCmd.length - 1

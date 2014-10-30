@@ -4451,6 +4451,8 @@
 			isa = PBXGroup;
 			children = (
 				557EF732168BDE95001BF077 /* PPPlugInCommon.h */,
+				552A662716B5EBEA007C63F7 /* PPPlugInObject.h */,
+				552A662816B5EBEB007C63F7 /* PPPlugInObject.m */,
 				557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */,
 				5523EC8216936FA80067B22A /* PPDigitalPlugInObject.h */,
 				5523EC8316936FA90067B22A /* PPDigitalPlugInObject.m */,
@@ -4458,8 +4460,6 @@
 				55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */,
 				55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */,
 				55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */,
-				552A662716B5EBEA007C63F7 /* PPPlugInObject.h */,
-				552A662816B5EBEB007C63F7 /* PPPlugInObject.m */,
 				55846BC819C3752000D26F94 /* PPInstrumentImporterObject-private.h */,
 				557EF733168CFD55001BF077 /* PPInstrumentImporterObject.h */,
 				557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */,
@@ -9347,6 +9347,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -9364,6 +9365,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -10311,6 +10313,7 @@
 		559170AF19C26E1D00998D7F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -10324,6 +10327,7 @@
 		559170B019C26E1D00998D7F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";

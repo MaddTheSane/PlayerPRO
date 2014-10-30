@@ -15,6 +15,7 @@
 
 @interface PPInstrumentImporterCompatObject ()
 @property BOOL is32Bit;
+@property (strong) NSXPCConnection *connectionToService;
 @end
 
 @implementation PPInstrumentImporterCompatObject
@@ -46,7 +47,7 @@
 		if (has32 && !has64) {
 			self.is32Bit = YES;
 		}
-		NSXPCConnection *_connectionToService = [[NSXPCConnection alloc] initWithServiceName: self.is32Bit ? @"PPCoreInstrumentPlugBridge32" : @"PPCoreInstrumentPlugBridge"];
+		_connectionToService = [[NSXPCConnection alloc] initWithServiceName: self.is32Bit ? @"PPCoreInstrumentPlugBridge32" : @"PPCoreInstrumentPlugBridge"];
 		_connectionToService.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPCoreInstrumentPlugBridgeProtocol)];
 		[_connectionToService resume];
 		__block BOOL toRet = NO;
@@ -57,7 +58,6 @@
 				toRet = isPlug;
 				self.sample = !isInstrument;
 				dispatch_semaphore_signal(ourSemaphore);
-				[_connectionToService invalidate];
 			}];
 		});
 		dispatch_semaphore_wait(ourSemaphore, dispatch_time(DISPATCH_TIME_NOW, 10000));
@@ -72,8 +72,6 @@
 
 - (BOOL)canImportFileAtURL:(NSURL *)fileURL
 {
-	NSXPCConnection *_connectionToService = [[NSXPCConnection alloc] initWithServiceName: self.is32Bit ? @"PPCoreInstrumentPlugBridge32" : @"PPCoreInstrumentPlugBridge"];
-	_connectionToService.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPCoreInstrumentPlugBridgeProtocol)];
 	[_connectionToService resume];
 	__block BOOL toRet = NO;
 	
@@ -83,12 +81,16 @@
 			toRet = ourReply;
 			usleep(5);
 			dispatch_semaphore_signal(ourSemaphore);
-			[_connectionToService invalidate];
 		}];
 	});
 	dispatch_semaphore_wait(ourSemaphore, dispatch_time(DISPATCH_TIME_NOW, 5000));
 
 	return toRet;
+}
+
+- (void)dealloc
+{
+	[_connectionToService invalidate];
 }
 
 - (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;

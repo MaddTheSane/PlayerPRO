@@ -123,7 +123,7 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 			return tryOldAPI(tempBundle);
 		}
 		
-		self.plugCode = [[bundClass alloc] init];
+		self.plugCode = [[bundClass alloc] initForPlugIn];
 		self.sample = ![self.plugCode isInstrument];
 		self.hasUI = [self.plugCode hasUIConfiguration];
 		

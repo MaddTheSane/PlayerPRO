@@ -12,11 +12,12 @@
 #define PPFilterLoadPlug(theBundle) (PPFiltersPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROFiltersPlugTypeID, kPlayerPROFiltersPlugInterfaceID)
 
 @interface PPFilterPlugObject ()
-@property (strong) id<PPFilterPlugin> plugData;
+@property (strong) id<PPFilterPlugin> plugCode;
+@property BOOL hasUI;
 @end
 
 @implementation PPFilterPlugObject
-@synthesize plugData;
+@synthesize plugCode;
 
 - (BOOL)isEqual:(id)object
 {
@@ -62,31 +63,30 @@
 			}
 		}
 		
-		NSURL *bundleURL = [aBund bundleURL];
-		CFBundleRef cfBundle = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)bundleURL);
+		Class bundClass = [aBund principalClass];
+		if ([bundClass conformsToProtocol:@protocol(PPFilterPlugin)]) {
+			self.plugCode = [[bundClass alloc] initForPlugIn];
+		}
 		
-		//plugData = PPFilterLoadPlug(cfBundle);
-		CFRelease(cfBundle);
-
-		if (!plugData)
+		if (!plugCode) {
 			return nil;
+		}
+		
+		self.hasUI = [self.plugCode hasUIConfiguration];
 		
 		type = 'PLug';
 	}
 	return self;
 }
 
-- (MADErr)callPluginWithData:(sData *)theData selectionStart:(long) SelectionStart selectionEnd:(long) SelectionEnd plugInInfo:(PPInfoPlug *)thePPInfoPlug stereoMode:(short)stereoMode
+- (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handler;
 {
-	CFBundleRef tempBund = CFBundleCreate(kCFAllocatorDefault, (__bridge CFURLRef)[self.file bundleURL]);
-	CFBundleRefNum refNum = CFBundleOpenBundleResourceMap(tempBund);
-	MADErr iErr = MADOrderNotImplemented;
-	
-	//OSErr iErr = (*plugData)->FiltersMain(plugData, theData, SelectionStart, SelectionEnd, thePPInfoPlug, stereoMode);
-	
-	CFBundleCloseBundleResourceMap(tempBund, refNum);
-	CFRelease(tempBund);
-	return iErr;
+	if (self.hasUI) {
+		[plugCode beginRunWithData:theData selectionRange:selRange onlyCurrentChannel:StereoMode driver:driver parentWindow:[document windowForSheet] handler:handler];
+	} else {
+		MADErr iErr = [plugCode runWithData:theData selectionRange:selRange onlyCurrentChannel:StereoMode driver:driver];
+		handler(iErr);
+	}
 }
 
 @end

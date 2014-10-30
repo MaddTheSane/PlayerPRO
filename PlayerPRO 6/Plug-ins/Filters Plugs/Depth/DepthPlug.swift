@@ -12,6 +12,14 @@ import PlayerPROKit
 @objc(PPDepthPlug) final public class DepthPlug: NSObject, PPFilterPlugin {
 	public let hasUIConfiguration = true;
 	
+	public convenience init(forPlugIn: ()) {
+		self.init()
+	}
+	
+	override public init() {
+		super.init()
+	}
+	
 	public func runWithData(theData: PPSampleObject!, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver!) -> MADErr {
 		return .OrderNotImplemented
 	}

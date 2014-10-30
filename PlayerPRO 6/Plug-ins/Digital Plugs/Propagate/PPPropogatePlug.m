@@ -15,6 +15,11 @@
 	return NO;
 }
 
+- (instancetype)initForPlugIn
+{
+	return self = [self init];
+}
+
 - (MADErr)runWithPcmd:(inout Pcmd*)myPcmd driver:(PPDriver *)driver
 {
 	for (short track = 0; track < myPcmd->tracks; track ++) {

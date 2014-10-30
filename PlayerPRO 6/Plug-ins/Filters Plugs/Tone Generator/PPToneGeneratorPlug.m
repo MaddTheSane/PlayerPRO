@@ -17,6 +17,11 @@
 	return YES;
 }
 
+- (instancetype)initForPlugIn
+{
+	return self = [self init];
+}
+
 - (MADErr)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver;
 {
 	return MADOrderNotImplemented;

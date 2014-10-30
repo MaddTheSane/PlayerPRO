@@ -11,9 +11,17 @@ import PlayerPROKit
 import AudioUnit
 import AudioToolbox
 
-@objc(PPWavePlug) public class PPWavePlug: NSObject, PPInstrumentImportPlugin, PPInstrumentExportPlugin {
+@objc(PPWavePlug) public final class PPWavePlug: NSObject, PPInstrumentImportPlugin, PPInstrumentExportPlugin {
 	public let hasUIConfiguration = false
 	public let isInstrument = false
+	
+	public convenience init(forPlugIn: ()) {
+		self.init()
+	}
+	
+	override public init() {
+		super.init()
+	}
 	
 	public func canImportSampleAtURL(sampleURL: NSURL!) -> Bool {
 		if let sampleHandle = NSFileHandle(forReadingFromURL: sampleURL, error: nil) {

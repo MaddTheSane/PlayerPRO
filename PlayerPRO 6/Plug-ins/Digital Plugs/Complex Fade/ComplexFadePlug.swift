@@ -12,6 +12,14 @@ import PlayerPROKit.PPPlugIns
 @objc(PPCompFadePlug) public final class ComplexFadePlug: NSObject, PPDigitalPlugin {
 	public let hasUIConfiguration = true
 	
+	public convenience init(forPlugIn: ()) {
+		self.init()
+	}
+	
+	override public init() {
+		super.init()
+	}
+	
 	public func runWithPcmd(aPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver!) -> MADErr {
 		return .OrderNotImplemented
 	}

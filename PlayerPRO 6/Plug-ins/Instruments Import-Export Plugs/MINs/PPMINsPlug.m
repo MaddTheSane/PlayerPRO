@@ -127,6 +127,11 @@ static inline MADErr TestOldMINs(const oldInstrData *CC)
 	return YES;
 }
 
+- (instancetype)initForPlugIn
+{
+	return self = [self init];
+}
+
 - (BOOL)canImportSampleAtURL:(NSURL *)sampleURL
 {
 	NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingFromURL:sampleURL error:NULL];

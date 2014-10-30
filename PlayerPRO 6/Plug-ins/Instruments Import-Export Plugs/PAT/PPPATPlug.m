@@ -187,6 +187,11 @@
 	return YES;
 }
 
+- (instancetype)initForPlugIn
+{
+	return self = [self init];
+}
+
 - (BOOL)canImportSampleAtURL:(NSURL *)sampleURL
 {
 	NSFileHandle *aHandle = [NSFileHandle fileHandleForReadingFromURL:sampleURL error:NULL];

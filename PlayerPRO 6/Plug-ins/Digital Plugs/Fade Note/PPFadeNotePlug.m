@@ -16,6 +16,11 @@
 	return YES;
 }
 
+- (instancetype)initForPlugIn
+{
+	return self = [self init];
+}
+
 - (MADErr)runWithPcmd:(inout Pcmd *)aPcmd driver:(PPDriver *)driver
 {
 	return MADOrderNotImplemented;

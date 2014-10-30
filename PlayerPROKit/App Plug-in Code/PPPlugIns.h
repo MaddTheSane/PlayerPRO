@@ -20,6 +20,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 @protocol PPPlugin <NSObject>
 @property (nonatomic, readonly) BOOL hasUIConfiguration;
+- (instancetype)initForPlugIn;
 @end
 
 @protocol PPDigitalPlugin <PPPlugin, NSObject>

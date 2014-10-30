@@ -67,7 +67,7 @@
 			return nil;
 		}
 		
-		self.plugCode = [[bundClass alloc] init];
+		self.plugCode = [[bundClass alloc] initForPlugIn];
 		self.hasUI = [self.plugCode hasUIConfiguration];
 		type = 'PPDG';
 	}

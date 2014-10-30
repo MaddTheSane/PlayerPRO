@@ -53,12 +53,14 @@
 	return [filterPlugs copy];
 }
 
+#if 0
 - (MADErr)callDigitalPlugAtIndex:(NSInteger)idx sampleData:(sData*)theInsData startLength:(long)start endLength:(long)end stereoMode:(short)stereo info:(PPInfoPlug *)theInfo
 {
 	PPFilterPlugObject *tmp = filterPlugs[idx];
 	theInfo->fileType = 'PLug';
 	return [tmp callPluginWithData:theInsData selectionStart:start selectionEnd:end plugInInfo:theInfo stereoMode:stereo];
 }
+#endif
 
 - (PPFilterPlugObject *)objectAtIndexedSubscript:(NSInteger)index;
 {
