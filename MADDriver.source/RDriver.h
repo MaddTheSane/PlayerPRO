@@ -691,7 +691,7 @@ PPEXPORT bool MADPlugAvailable(const MADLibrary *MADLib, const char *type);
  *				A pointer to the driver settings to modify. On return, is set to the best drivers
  *				for the current sound hardware and APIs.
  */
-PPEXPORT void				MADGetBestDriver(MADDriverSettings *DriverInitParam);
+PPEXPORT void	MADGetBestDriver(MADDriverSettings *DriverInitParam);
 
 /*!
  *	@function	MADSoundDriverIsAvalable
@@ -700,7 +700,7 @@ PPEXPORT void				MADGetBestDriver(MADDriverSettings *DriverInitParam);
  *				The driver to test for availability.
  *	@return		A \c bool indicating if the driver is available or not.
  */
-PPEXPORT bool				MADSoundDriverIsAvalable(MADSoundOutput theDriver);
+PPEXPORT bool	MADSoundDriverIsAvalable(MADSoundOutput theDriver);
 
 /*!
  *	@function	MADSoundDriverList
