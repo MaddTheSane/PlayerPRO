@@ -29,6 +29,11 @@ static const OSType MADTypes[] = {'MADK', 'MADI', 'MADF', 'MADG', 'MADH'};
 
 @implementation PPAPPLImporter
 
+- (instancetype)initForPlugIn
+{
+	return self = [self init];
+}
+
 + (ResourceCount)resourceCount:(OSType)theType
 {
 	return Count1Resources(theType);

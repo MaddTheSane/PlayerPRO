@@ -81,10 +81,10 @@
 
 - (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handler;
 {
-	if (self.hasUI) {
+	MADErr iErr = [plugCode runWithData:theData selectionRange:selRange onlyCurrentChannel:StereoMode driver:driver];
+	if (iErr == MADOrderNotImplemented) {
 		[plugCode beginRunWithData:theData selectionRange:selRange onlyCurrentChannel:StereoMode driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
-		MADErr iErr = [plugCode runWithData:theData selectionRange:selRange onlyCurrentChannel:StereoMode driver:driver];
 		handler(iErr);
 	}
 }

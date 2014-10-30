@@ -15,6 +15,14 @@ private func ==(rhs: NSData, lhs: NSData) -> Bool {
 }
 
 @objc(PPMIDIImporter) final public class MIDIImporter: NSObject, PPComplexImportPlugInterface {
+	
+	public convenience init(forPlugIn: ()) {
+		self.init()
+	}
+	
+	override public init() {
+		super.init()
+	}
 
 	public func beginImportOfURL(theURL: NSURL, withHandler handler: PPComplexImportHandler) {
 		let aImp = MIDIImporterController.newWithLocation(theURL, handler: handler)
@@ -47,9 +55,5 @@ private func ==(rhs: NSData, lhs: NSData) -> Bool {
 			}
 		}
 		return false
-	}
-	
-	public override init() {
-		super.init()
 	}
 }

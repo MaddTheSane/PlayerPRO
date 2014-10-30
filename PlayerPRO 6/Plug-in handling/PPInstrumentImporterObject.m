@@ -166,10 +166,10 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 		return;
 	}
 	
-	if (self.hasUI) {
+	MADErr ourErr = [plugCode importSampleAtURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver];
+	if (ourErr == MADOrderNotImplemented) {
 		[plugCode beginImportSampleAtURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
-		MADErr ourErr = [plugCode importSampleAtURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver];
 		handler(ourErr);
 	}
 }
@@ -181,13 +181,12 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 		return;
 	}
 	
-	if (self.hasUI) {
+	MADErr ourErr = [plugCode exportSampleToURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver];
+	if (ourErr == MADOrderNotImplemented) {
 		[plugCode beginExportSampleToURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
-		MADErr ourErr = [plugCode exportSampleToURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver];
 		handler(ourErr);
 	}
-
 }
 
 @end

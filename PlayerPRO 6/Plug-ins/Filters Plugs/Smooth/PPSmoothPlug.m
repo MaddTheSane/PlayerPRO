@@ -22,6 +22,11 @@
 	return NO;
 }
 
+- (instancetype)initForPlugIn
+{
+	return self = [self init];
+}
+
 - (MADErr)runWithData:(inout PPSampleObject *)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver *)driver
 {
 	long i, length, temp, prevtemp, nexttemp, work;

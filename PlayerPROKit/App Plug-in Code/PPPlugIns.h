@@ -29,7 +29,6 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 @optional
 - (void)beginRunWithPcmd:(Pcmd*)aPcmd driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
-
 @end
 
 static inline NSInteger PPSelectionStart(NSRange selRange)
@@ -48,34 +47,34 @@ static inline NSInteger PPSelectionEnd(NSRange selRange)
 
 @optional
 - (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
-
 @end
 
 @protocol PPInstrumentImportPlugin <PPPlugin, NSObject>
 
-- (BOOL)canImportSampleAtURL:(NSURL*)sampleURL;
 @property (nonatomic, readonly) BOOL isInstrument;
 
+- (BOOL)canImportSampleAtURL:(NSURL*)sampleURL;
 - (MADErr)importSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID driver:(PPDriver*)driver;
 
 @optional
 - (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
 - (void)beginImportSampleAtURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short*)sampleID driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
-
 @end
 
 @protocol PPInstrumentExportPlugin <PPPlugin, NSObject>
 
 @property (nonatomic, readonly) BOOL isInstrument;
+
 - (MADErr)exportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver;
 
 @optional
 - (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
-
 @end
 
 //This doesn't need to conform to PPPlugin because it will always have a UI.
 @protocol PPComplexImportPlugInterface <NSObject>
+- (instancetype)initForPlugIn;
+
 - (BOOL)canImportURL:(NSURL*)theURL error:(out NSError**)outErr;
 - (void)beginImportOfURL:(NSURL*)theURL withHandler:(PPComplexImportHandler)handler;
 @end

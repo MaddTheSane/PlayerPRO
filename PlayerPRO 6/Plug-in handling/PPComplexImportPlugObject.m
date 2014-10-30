@@ -22,7 +22,7 @@
 		if (![bundClass conformsToProtocol:@protocol(PPComplexImportPlugInterface)]) {
 			return nil;
 		}
-		self.plugInterface = [[bundClass alloc] init];
+		self.plugInterface = [[bundClass alloc] initForPlugIn];
 		NSMutableDictionary *tempDict = [[ourBundle infoDictionary] mutableCopy];
 		[tempDict addEntriesFromDictionary:[ourBundle localizedInfoDictionary]];
 		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugUTITypesKey];

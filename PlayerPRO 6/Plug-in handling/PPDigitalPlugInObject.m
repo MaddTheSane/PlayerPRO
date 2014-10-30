@@ -74,13 +74,13 @@
 	return self;
 }
 
-- (void)beginCallWithPcmd:(inout Pcmd*)myPcmd driver:(PPDriver*)driver parentDocument:(PPDocument*)theDoc handler:(PPPlugErrorBlock)handle
+- (void)beginCallWithPcmd:(inout Pcmd*)myPcmd driver:(PPDriver*)driver parentDocument:(PPDocument*)theDoc handler:(PPPlugErrorBlock)handler
 {
-	if (self.hasUI) {
-		[plugCode beginRunWithPcmd:myPcmd driver:driver parentWindow:[theDoc windowForSheet] handler:handle];
+	MADErr ourErr = [plugCode runWithPcmd:myPcmd driver:driver];
+	if (ourErr == MADOrderNotImplemented) {
+		[plugCode beginRunWithPcmd:myPcmd driver:driver parentWindow:[theDoc windowForSheet] handler:handler];
 	} else {
-		MADErr ourErr = [plugCode runWithPcmd:myPcmd driver:driver];
-		handle(ourErr);
+		handler(ourErr);
 	}
 }
 

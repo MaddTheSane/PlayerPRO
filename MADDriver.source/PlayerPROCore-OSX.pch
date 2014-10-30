@@ -1,10 +1,5 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <tgmath.h>
-#include "MAD.h"
-#include "RDriver.h"
-#include "MADDriver.h"
-#include "MADPlug.h"
-#include "MADPrivate.h"
 
 #ifdef __OBJC__
 #import <Foundation/Foundation.h>
