@@ -36,7 +36,7 @@
 	switch (theData.amplitude) {
 		case 8:
 		{
-			Ptr	orgPtr = (ourPtr) + PPSelectionStart(_selectionRange), destPtr = orgPtr + pDelay;
+			Ptr	orgPtr = (ourPtr) + _selectionRange.location, destPtr = orgPtr + pDelay;
 			
 			for (i = 0; i < (length - pDelay); i++) {
 				temp1 = *orgPtr++;
@@ -57,7 +57,7 @@
 			
 		case 16:
 		{
-			short	*orgPtr = (short*) ourPtr + (PPSelectionStart(_selectionRange) / 2),
+			short	*orgPtr = (short*) ourPtr + (_selectionRange.location / 2),
 			*destPtr = orgPtr + pDelay;
 			
 			for (i = 0; i < length / 2 - pDelay; i++) {

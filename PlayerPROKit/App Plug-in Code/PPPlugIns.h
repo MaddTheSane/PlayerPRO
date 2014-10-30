@@ -18,6 +18,14 @@
 typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
 typedef void (^PPPlugErrorBlock)(MADErr error);
 
+/*!
+ *	\protocol	PPPlugin
+ *	\abstract	base protocol for PlayerPRO 6 plug-ins.
+ *	\property	hasUIConfiguration
+ *				Does the plug-in have a UI?
+ *	\c			initForPlugIn
+ *				Initializer (constructor) for a plug-in
+ */
 @protocol PPPlugin <NSObject>
 @property (nonatomic, readonly) BOOL hasUIConfiguration;
 - (instancetype)initForPlugIn;
@@ -30,16 +38,6 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 @optional
 - (void)beginRunWithPcmd:(Pcmd*)aPcmd driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
 @end
-
-static inline NSInteger PPSelectionStart(NSRange selRange)
-{
-	return selRange.location;
-}
-
-static inline NSInteger PPSelectionEnd(NSRange selRange)
-{
-	return selRange.location + selRange.length;
-}
 
 @protocol PPFilterPlugin <PPPlugin, NSObject>
 

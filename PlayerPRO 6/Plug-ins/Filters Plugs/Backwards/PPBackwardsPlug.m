@@ -33,7 +33,7 @@
 			char *orgPtr = ourData.mutableBytes;
 			char *destPtr = ourData.mutableBytes;
 			
-			orgPtr += PPSelectionStart(selRange);
+			orgPtr += selRange.location;
 			destPtr += NSMaxRange(selRange) - 1;
 			
 			for (i = 0; i < selRange.length / 2; i++) {	//just swap values
@@ -57,8 +57,8 @@
 			unsigned short *orgPtr	= (unsigned short*)ourData.mutableBytes;
 			unsigned short *destPtr	= orgPtr;
 			
-			orgPtr += PPSelectionStart(selRange) / 2;
-			destPtr += (PPSelectionEnd(selRange) - 1) / 2;
+			orgPtr += selRange.location / 2;
+			destPtr += (NSMaxRange(selRange) - 1) / 2;
 			
 			for (i = 0; i < selRange.length / 4; i++) {
 				temp1 = *orgPtr;

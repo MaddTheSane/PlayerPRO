@@ -30,7 +30,7 @@
 	switch (theData.amplitude) {
 		case 8:
 		{
-			char *SamplePtr = (ourPtr) + PPSelectionStart(selRange);
+			char *SamplePtr = (ourPtr) + selRange.location;
 			for (i = 0; i < selRange.length; i++) {
 				temp = *SamplePtr;
 				temp = 0xFF - temp;

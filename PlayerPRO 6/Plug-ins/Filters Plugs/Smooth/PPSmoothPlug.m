@@ -38,7 +38,7 @@
 	switch (theData.amplitude) {
 		case 8:
 		{
-			Ptr	SamplePtr = ourModData8 + PPSelectionStart(selRange);
+			Ptr	SamplePtr = ourModData8 + selRange.location;
 			
 			prevtemp = *SamplePtr++;
 			temp = *SamplePtr++;
@@ -58,7 +58,7 @@
 		case 16:
 		{
 #if 1
-			short	*SamplePtr = (short*)ourModData8 + (PPSelectionStart(selRange) / 2);
+			short	*SamplePtr = (short*)ourModData8 + (selRange.location / 2);
 			
 			prevtemp = *SamplePtr++;
 			temp = *SamplePtr++;

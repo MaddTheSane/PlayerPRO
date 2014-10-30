@@ -30,7 +30,7 @@
 	switch (theData.amplitude) {
 		case 8:
 		{
-			Ptr	SamplePtr = (outPtr) + PPSelectionStart(selRange);
+			Ptr	SamplePtr = (outPtr) + selRange.location;
 			for (i = 0; i < selRange.length; i++) {
 				temp = *SamplePtr++;
 				
@@ -45,7 +45,7 @@
 			if (peak != 0) {
 				peak = (0x80 * 0x10000) / peak;
 				
-				SamplePtr = (outPtr) + PPSelectionStart(selRange);
+				SamplePtr = (outPtr) + selRange.location;
 				for (i = 0; i < selRange.length; i++) {
 					temp = *SamplePtr;
 					
@@ -68,7 +68,7 @@
 			
 		case 16:
 		{
-			short	*SamplePtr = (short*) outPtr + (PPSelectionStart(selRange) / 2);
+			short	*SamplePtr = (short*) outPtr + (selRange.location / 2);
 			
 			for (i = 0; i < (selRange.length) / 2; i++) {
 				temp = (int)*SamplePtr++;
@@ -83,7 +83,7 @@
 			if (peak != 0) {
 				peak = (0x8000 * 0x10000) / peak;
 				
-				SamplePtr = (short*) outPtr + (PPSelectionStart(selRange) / 2);
+				SamplePtr = (short*) outPtr + (selRange.location / 2);
 				for (i = 0; i < (selRange.length) / 2; i++) {
 					temp = (int)*SamplePtr;
 					
