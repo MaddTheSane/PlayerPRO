@@ -5,11 +5,8 @@
 
 //	Usage:
 
-#include <PlayerPROCore/PlayerPROCore.h>
 #include <Carbon/Carbon.h>
-
-Ptr MyExp1to3(Ptr sound, unsigned long numSampleFrames);
-Ptr MyExp1to6(Ptr sound, unsigned long numSampleFrames);
+#include <PlayerPROCore/PlayerPROCore.h>
 
 //Taken from OS X's Kerberos source code file FSpUtils.c, as found ot:
 // http://www.opensource.apple.com/source/Kerberos/Kerberos-47/KerberosFramework/Common/Sources/FSpUtils.c
@@ -100,20 +97,16 @@ static OSStatus CFURLToFSSpec (CFURLRef pathURL, FSSpec *outSpec)
 	return err;
 }
 
-static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, Boolean *stereo)
+static Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sampleSize, unsigned long *sampleRate, long *baseFreq, Boolean *stereo)
 {
 	short 			soundFormat, numChannels;
-	short 			numSynths = 1, numCmds, CompressID;
+	short 			numSynths, numCmds, CompressID;
 	long 			offset, MusSize;
 	SoundHeaderPtr 	header;
 	CmpSoundHeader	*CmpHeader;
 	ExtSoundHeader	*ExtHeader;
-	//SndCommand 		cmd;
 	OSErr 			result;
-	long i;
-	//long			i,x, numFrames;
-	//Boolean			change = false;
-	//Str255			aStr;
+	long			i;
 	
 	*loopStart = 0;
 	*loopEnd = 0;
@@ -127,7 +120,7 @@ static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *samp
 		case 1:						// format 1 sound.
 			// look inside the format 1 resource and deduce offsets.
 			numSynths = ((short*)soundPtr)[1];					// get # synths.
-			numCmds = *(short*)(soundPtr+4+numSynths*6);		// get # commands.
+			numCmds = *(short*)(soundPtr + 4 + numSynths * 6);		// get # commands.
 			break;
 			
 		case 2:						// format 2 sound.
@@ -142,13 +135,12 @@ static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *samp
 	
 	// compute address of sound header.
 	offset = 6 + 6*numSynths + 8*numCmds;
-	header = (SoundHeaderPtr) (((Ptr) soundPtr) + offset);
+	header = (SoundHeaderPtr)(((Ptr)soundPtr) + offset);
 	
 	switch (header->encode) {
-		case cmpSH:
-		{
-			CompressionInfo 		cp;
-			OSType					format;
+		case cmpSH: {
+			CompressionInfo	cp;
+			OSType			format;
 			
 			CmpHeader = (CmpSoundHeader*) header;
 			CompressID = CmpHeader->compressionID;
@@ -158,19 +150,17 @@ static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *samp
 			*loopStart = CmpHeader->loopStart;
 			*loopEnd = CmpHeader->loopEnd;
 			*sampleSize = CmpHeader->sampleSize;
-			if (numChannels == 2) *stereo = true;
-			else *stereo = false;
+			if (numChannels == 2)
+				*stereo = true;
+			else
+				*stereo = false;
 			
-			if (sampleRate != NULL)	*sampleRate	= CmpHeader->sampleRate;
-			if (baseFreq != NULL) 	*baseFreq 	= CmpHeader->baseFrequency;
+			if (sampleRate != NULL)
+				*sampleRate = CmpHeader->sampleRate;
+			if (baseFreq != NULL)
+				*baseFreq = CmpHeader->baseFrequency;
 			
 			MusSize = (*CmpHeader).numFrames;
-			
-			if (*stereo)
-			{
-				*loopStart *=2;
-				*loopEnd *=2;
-			}
 			
 			result = GetCompressionInfo((*CmpHeader).compressionID, (*CmpHeader).format, numChannels, *sampleSize, &cp);
 			if (result != noErr)
@@ -179,13 +169,12 @@ static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *samp
 			BlockMoveData((*CmpHeader).sampleArea, soundPtr, (*CmpHeader).numFrames * cp.bytesPerFrame);
 			
 			{
-				SoundConverter			sc;
-				SoundComponentData		inputFormat, outputFormat;
-				unsigned long			inputFrames, outputFrames;
-				unsigned long			outputBytes;
-				//Ptr						inputPtr, outputPtr;
-				OSErr					err;
-				Ptr						dstPtr;
+				SoundConverter		sc;
+				SoundComponentData	inputFormat, outputFormat;
+				unsigned long		inputFrames, outputFrames;
+				unsigned long		outputBytes;
+				OSErr				err;
+				Ptr					dstPtr;
 				
 				inputFormat.flags = 0;
 				inputFormat.format = format;
@@ -197,8 +186,10 @@ static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *samp
 				inputFormat.reserved = 0;
 				
 				outputFormat = inputFormat;
-				if (*sampleSize == 8) outputFormat.format = kOffsetBinary;
-				else outputFormat.format = k16BitBigEndianFormat;
+				if (*sampleSize == 8)
+					outputFormat.format = kOffsetBinary;
+				else
+					outputFormat.format = k16BitBigEndianFormat;
 				
 				err = SoundConverterOpen(&inputFormat, &outputFormat, &sc);
 				if (err != noErr)
@@ -211,8 +202,7 @@ static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *samp
 				inputFrames = MusSize;
 				
 				dstPtr = NewPtr(inputFrames * numChannels * (*sampleSize/8) * cp.samplesPerPacket);
-				if (dstPtr == NULL)
-				{
+				if (dstPtr == NULL) {
 					DisposePtr(soundPtr);
 					return NULL;
 				}
@@ -249,42 +239,37 @@ static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *samp
 			*loopEnd = ExtHeader->loopEnd;
 			*sampleSize = ExtHeader->sampleSize;
 			
-			if (sampleRate != NULL)	*sampleRate	= ExtHeader->sampleRate;
-			if (baseFreq != NULL) 	*baseFreq 	= ExtHeader->baseFrequency;
+			if (sampleRate != NULL)
+				*sampleRate	= ExtHeader->sampleRate;
+			if (baseFreq != NULL)
+				*baseFreq = ExtHeader->baseFrequency;
 			
-			if (numChannels == 2) *stereo = true;
-			else *stereo = false;
+			if (numChannels == 2)
+				*stereo = true;
+			else
+				*stereo = false;
 			
 			if (*stereo)
-			{
 				MusSize *= 2;
-				*loopStart *=2;
-				*loopEnd *=2;
-			}
 			
-			if (*sampleSize == 16)
-			{
+			if (*sampleSize == 16) {
 				MusSize *= 2;
 				*loopStart *= 2;
 				*loopEnd *= 2;
 			}
 			
-			if (numChannels == 1) BlockMoveData(ExtHeader->sampleArea, soundPtr, MusSize);
-			else if (numChannels == 2) BlockMoveData(ExtHeader->sampleArea, soundPtr, MusSize);
-			else
-			{
-				if (*sampleSize == 8)
-				{
-					for (i = 0; i < MusSize; i ++)
-					{
+			if (numChannels == 1)
+				BlockMoveData(ExtHeader->sampleArea, soundPtr, MusSize);
+			else if (numChannels == 2)
+				BlockMoveData(ExtHeader->sampleArea, soundPtr, MusSize);
+			else {
+				if (*sampleSize == 8) {
+					for (i = 0; i < MusSize; i ++) {
 						soundPtr[i] = ExtHeader->sampleArea[i * numChannels];
 					}
-				}
-				else
-				{
+				} else {
 					MusSize /= 2;
-					for (i = 0; i < MusSize; i ++)
-					{
+					for (i = 0; i < MusSize; i ++) {
 						((short*) soundPtr)[i] = ((short*) ExtHeader->sampleArea)[i * numChannels];
 					}
 					MusSize *= 2;
@@ -297,8 +282,10 @@ static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *samp
 			*loopStart = header->loopStart;
 			*loopEnd = header->loopEnd;
 			
-			if (sampleRate != NULL) *sampleRate	= header->sampleRate;
-			if (baseFreq != NULL) 	*baseFreq 	= header->baseFrequency;
+			if (sampleRate != NULL)
+				*sampleRate	= header->sampleRate;
+			if (baseFreq != NULL)
+				*baseFreq 	= header->baseFrequency;
 			
 			MusSize = header->length;
 			BlockMoveData((*header).sampleArea, soundPtr, MusSize);
@@ -306,88 +293,43 @@ static Ptr inNSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *samp
 	}
 	
 	if (*sampleSize == 8) {
-		ConvertInstrumentIn((Byte*) soundPtr, MusSize);
+		ConvertInstrumentIn((Byte*)soundPtr, MusSize);
 	}
 	
 	SetPtrSize(soundPtr, MusSize);
 	
-	if (*loopEnd - *loopStart < 4) { *loopEnd = 0;	*loopStart = 0;}
+	if (*loopEnd - *loopStart < 4) {
+		*loopEnd = 0;
+		*loopStart = 0;
+	}
 	
 	return soundPtr;
 }
 
-static Ptr IMPL(long *lS, long *lE, long *bFreq, short *sS, unsigned long *rate, FSSpec *AlienFileFSSpec, Boolean *stereo)
+static MADErr TestSND(short *soundPtr)
 {
-	Handle			tempHandle;
-	Ptr 			theSound = NULL;
-	ResFileRefNum	iFileRefI;
-	OSErr			myErr = noErr;
-	
-	iFileRefI = FSpOpenResFile(AlienFileFSSpec, fsCurPerm);
-	
-	if (ResError()) {
-		CloseResFile(iFileRefI);
-		myErr = ResError();
-		goto End;
-	}
-	
-	UseResFile(iFileRefI);
-	
-	if (Count1Resources('snd ') == 0) {
-		CloseResFile(iFileRefI);
-		myErr = ResError();
-		goto End;
-	}
-	
-	tempHandle = Get1IndResource('snd ', 1);
-	if (tempHandle != NULL)
-	{
-		DetachResource(tempHandle);
-		
-		theSound = NewPtr(GetHandleSize(tempHandle));
-		if (theSound != NULL) {
-			HLock(tempHandle);
-			BlockMoveData(*tempHandle, theSound, GetHandleSize(tempHandle));
-			HUnlock(tempHandle);
-			
-			theSound = inNSndToPtr(theSound, lS, lE, sS, rate, bFreq, stereo);
-			
-			if (theSound == NULL) {
-				DisposeHandle(tempHandle);
-				CloseResFile(iFileRefI);
-				myErr = MADNeedMemory;
-				goto End;
-			}
-		} else {
-			DisposeHandle(tempHandle);
-			CloseResFile(iFileRefI);
-			myErr = MADNeedMemory;
-			goto End;
-		}
-		
-		DisposeHandle(tempHandle);
-		tempHandle = NULL;
-	} else {
-		CloseResFile(iFileRefI);
-		myErr = MADNeedMemory;
-		goto End;
-	}
-	CloseResFile(iFileRefI);
-	
-End:;
-	
-	if (myErr != noErr)
-		return NULL;
+	short oldSound = *soundPtr;
+	MADBE16(&oldSound);
+	if (oldSound == 1 || oldSound == 2)
+		return MADNoErr;
 	else
-		return theSound;
+		return MADFileNotSupportedByThisPlug;
 }
 
-static MADErr Sys7Main(void* thisInterface, OSType order, InstrData* InsHeader, sData** sample, short* sampleID, CFURLRef alienFileURL, PPInfoPlug* thePPInfoPlug)
+static MADErr MacsndMain(void* thisInterface, OSType, InstrData*, sData**, short*, CFURLRef, PPInfoPlug*);
+
+OSErr MacsndMain(void		*thisInterface,
+				 OSType					order,				// Order to execute
+		   InstrData				*InsHeader,			// Ptr on instrument header
+		   sData					**sample,			// Ptr on samples data
+		   short					*sampleID,			// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+														// If sampleID == -1 : add sample else replace selected sample.
+		   CFURLRef					alienFileURL,	// IN/OUT file
+		   PPInfoPlug				*thePPInfoPlug)
 {
-	OSErr			myErr = noErr;
-	//Ptr			AlienFile;
-	ResFileRefNum	iFileRefI;
-	//long			inOutBytes;
+	OSErr	myErr;
+	FSIORefNum	iFileRefI;
+	long	inOutBytes;
 	FSSpec			ourSpec;
 	OSStatus		didConvert = CFURLToFSSpec(alienFileURL, &ourSpec);
 #define AlienFileFSSpec (&ourSpec)
@@ -396,68 +338,66 @@ static MADErr Sys7Main(void* thisInterface, OSType order, InstrData* InsHeader, 
 		return MADReadingErr;
 	}
 	
-	switch(order) {
-#if 0
-		case MADPlugPlay:
+	switch (order) {
+		case 'IMPL':
 		{
+			Ptr				theSound;
 			long			lS, lE, bFreq;
 			short			sS;
 			unsigned long	rate;
-			Ptr				theSound;
 			Boolean			stereo;
 			
-			theSound = IMPL(&lS, &lE, &bFreq, &sS, &rate, AlienFileFSSpec, &stereo);
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			if (myErr == noErr) {
+				SInt64 tmpForkSize = 0;
+				FSGetForkSize(iFileRefI, &tmpForkSize);
+				inOutBytes = (long)tmpForkSize;
+				
+				theSound = NewPtr(inOutBytes);
+				if (theSound == NULL)
+					myErr = MADNeedMemory;
+				else {
+					FSRead(iFileRefI, &inOutBytes, theSound);
+					
+					theSound = NSndToPtr(theSound, &lS, &lE, &sS, &rate, &bFreq, &stereo);
+					
+					if (theSound) {
+						size_t tmpSize = GetPtrSize(theSound);
+						void *tmpSound = malloc(tmpSize);
+						memcpy(tmpSound, theSound, tmpSize);
+						
+						inAddSoundToMAD(tmpSound, tmpSize, lS, lE, sS, bFreq, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
+					} else {
+						myErr = MADNeedMemory;
+					}
+					DisposePtr(theSound);
+				}
+				
+				FSCloseFork(iFileRefI);
+			}
+		}
+			break;
 			
-			if (theSound != 0L)
-			{
-				myErr = CallRPlaySoundUPP(theSound, GetPtrSize(theSound), 0, 0xFF, sS, lS, lE, rate, stereo);
+		case 'TEST':
+		{
+			Ptr	theSound;
+			
+			myErr = FSpOpenDF(AlienFileFSSpec, fsCurPerm, &iFileRefI);
+			if (myErr == noErr) {
+				inOutBytes = 50L;
+				theSound = NewPtr(inOutBytes);
+				if (theSound == NULL)
+					myErr = MADNeedMemory;
+				else {
+					FSRead(iFileRefI, &inOutBytes, theSound);
+					
+					myErr = TestSND((short*)theSound);
+				}
 				
 				DisposePtr(theSound);
-				theSound = 0L;
+				FSCloseFork(iFileRefI);
 			}
 		}
-			break;
-#endif
-			
-		case MADPlugImport:
-		{
-			long			lS, lE, bFreq;
-			short			sS;
-			unsigned long	rate;
-			Ptr				theSound;
-			Boolean			stereo;
-			
-			theSound = IMPL(&lS, &lE, &bFreq, &sS, &rate, AlienFileFSSpec, &stereo);
-			
-			if (theSound != NULL) {
-				size_t soundSize = GetPtrSize(theSound);
-				void *theCSound = malloc(soundSize);
-				memcpy(theCSound, theSound, soundSize);
-				inAddSoundToMAD(theCSound, soundSize, lS, lE, sS, bFreq, rate, stereo, AlienFileFSSpec->name, InsHeader, sample, sampleID);
-				myErr = noErr;
-				DisposePtr(theSound);
-			} else
-				myErr = MADNeedMemory;
-		}
-			break;
-			
-		case MADPlugTest:
-			myErr = noErr;
-			
-			iFileRefI = FSpOpenResFile(AlienFileFSSpec, fsCurPerm);
-			
-			if (ResError()) {
-				CloseResFile(iFileRefI);
-				myErr = ResError();
-				goto End;
-			}
-			
-			UseResFile(iFileRefI);
-			
-			if (Count1Resources('snd ') == 0)
-				myErr = MADFileNotSupportedByThisPlug;
-			
-			CloseResFile(iFileRefI);
 			break;
 			
 		default:
@@ -465,14 +405,13 @@ static MADErr Sys7Main(void* thisInterface, OSType order, InstrData* InsHeader, 
 			break;
 	}
 	
-End:
-	
 	return myErr;
 }
 
-// 94F2BEA7-89F4-440D-99BF-065198DB088B
-#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x94, 0xF2, 0xBE, 0xA7, 0x89, 0xF4, 0x44, 0x0D, 0x99, 0xBF, 0x06, 0x51, 0x98, 0xDB, 0x08, 0x8B)
-#define PLUGINFACTORY Sys7Factory
-#define PLUGMAIN Sys7Main
+// 96F7A141-84CF-4CEE-9FC9-11BFF33F6626
+#define PLUGUUID CFUUIDGetConstantUUIDWithBytes(kCFAllocatorSystemDefault, 0x96, 0xF7, 0xA1, 0x41, 0x84, 0xCF, 0x4C, 0xEE, 0x9F, 0xC9, 0x11, 0xBF, 0xF3, 0x3F, 0x66, 0x26)
+#define PLUGINFACTORY MacsndFactory
+#define PLUGMAIN MacsndMain
 
 #include "../CFPlugin-InstrBridge.c"
+
