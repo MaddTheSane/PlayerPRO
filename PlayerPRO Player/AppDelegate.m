@@ -507,6 +507,11 @@ static NSInteger selMusFromList = -1;
 							[musicInfoQTUser setKey:AVMetadataQuickTimeUserDataKeyInformation];
 							[musicInfoQTUser setValue:oldMusicInfo];
 							
+							AVMutableMetadataItem *musicNameQTUser = [AVMutableMetadataItem new];
+							musicNameQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData;
+							musicNameQTUser.key = AVMetadataQuickTimeUserDataKeyFullName;
+							musicNameQTUser.value = oldMusicName;
+
 							AVMutableMetadataItem *musicInfoiTunes = [AVMutableMetadataItem new];
 							[musicInfoiTunes setKeySpace:AVMetadataKeySpaceiTunes];
 							[musicInfoiTunes setKey:AVMetadataiTunesMetadataKeyUserComment];
@@ -517,7 +522,7 @@ static NSInteger selMusFromList = -1;
 							[musicInfoQTMeta setKey:AVMetadataQuickTimeMetadataKeyInformation];
 							[musicInfoQTMeta setValue:oldMusicInfo];
 							
-							metadataInfo = @[titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta];
+							metadataInfo = @[titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta, musicNameQTUser];
 						}
 						
 						oldMusicInfo = nil;
@@ -1150,7 +1155,7 @@ return; \
 	}
 }
 
-enum PPMusicToolbarTypes {
+typedef NS_ENUM(NSInteger, PPMusicToolbarTypes) {
 	PPToolbarSort = 1001,
 	PPToolbarAddMusic,
 	PPToolbarRemoveMusic,

@@ -80,9 +80,7 @@ final class Preferences: NSWindowController {
 	}
 
 	override var windowNibName: String {
-		get {
-			return "preferences"
-		}
+		return "preferences"
 	}
 	
     override func awakeFromNib() {
@@ -103,6 +101,18 @@ final class Preferences: NSWindowController {
     }
     
     @objc(displayViewControllerWithName:) func displayViewController(#name: String) {
-    	//TODO: implement
+		let ourController = viewControllers.filter { (aVal) -> Bool in
+			if let ourVal = aVal as? /*NSViewController where NSViewController:*/ PPPreferenceObject {
+				return ourVal.preferenceIdentifier == name
+			} else {
+				assert(false, "\(aVal.dynamicType) should implement the \"PPPreferenceObject\" protocol!")
+				return false
+			}
+		}
+		assert(ourController.count == 1 || ourController.count == 0, "There should only be one preference class is labeled \(name)")
+
+		if ourController.count == 1 {
+			displayViewController(ourController[0])
+		}
     }
 }

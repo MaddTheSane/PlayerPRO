@@ -310,6 +310,7 @@
 		5560643C18C8FDD9002F72FC /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
 		5561700A1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
 		5561F1C019A52A6C0085015B /* ExportObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FD192D19A241FC001E1D9C /* ExportObject.swift */; };
+		55624D4D1A03038900163B88 /* GeneralSwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583157819FECB92006B636E /* GeneralSwiftHelpers.swift */; };
 		5563A49E19AAC0D50051CC4B /* PPAPPLImporterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */; };
 		5565976A19B3BAD000806DF2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565976719B3BAD000806DF2 /* AppDelegate.swift */; };
 		5565976B19B3BAD000806DF2 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565976819B3BAD000806DF2 /* DetailViewController.swift */; };
@@ -7274,6 +7275,7 @@
 			files = (
 				553507AD19BCB13200B9E815 /* AudioFileExt.swift in Sources */,
 				553507AB19BCA86F00B9E815 /* PPWavePlug.swift in Sources */,
+				55624D4D1A03038900163B88 /* GeneralSwiftHelpers.swift in Sources */,
 				55ADC3DE17D7A51B001F27D4 /* WAVE-Conversion.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

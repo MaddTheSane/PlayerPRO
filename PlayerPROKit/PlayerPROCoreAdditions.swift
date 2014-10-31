@@ -10,14 +10,6 @@ import CoreFoundation
 import Foundation
 import PlayerPROCore
 
-internal func CFStringToString(cfStr: CFString) -> String {
-	return cfStr as NSString as String
-}
-
-internal func StringToCFString(string: String) -> CFString {
-	return string as NSString as CFString
-}
-
 public func ==(lhs: Cmd, rhs: Cmd) -> Bool {
 	// Don't worry about the "unused" variable for now
 	if lhs.ins != rhs.ins {
@@ -146,48 +138,6 @@ public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
 
 // MARK: Bridges to more modern Swift code.
 public let MadID = StringToOSType("MADK")
-
-#if os(OSX)
-import CoreServices
-
-public func OSTypeToString(theType: MADFourChar) -> String? {
-	if let toRet = UTCreateStringForOSType(theType) {
-		return CFStringToString(toRet.takeRetainedValue())
-	} else {
-		return nil
-	}
-}
-
-public func StringToOSType(theString: String) -> MADFourChar {
-	return UTGetOSTypeFromString(StringToCFString(theString))
-}
-#else
-public func OSTypeToString(theType: MADFourChar) -> String? {
-	var ourOSType = [Int8](count: 5, repeatedValue: 0)
-
-	OSType2Ptr(theType, &ourOSType)
-	return NSString(bytes: ourOSType, length: 4, encoding: NSMacOSRomanStringEncoding);
-}
-
-public func StringToOSType(theString: String) -> MADFourChar {
-	var ourOSType = [Int8](count: 5, repeatedValue: 0)
-	let anNSStr = theString as NSString
-	var ourLen = anNSStr.lengthOfBytesUsingEncoding(NSMacOSRomanStringEncoding)
-	if ourLen > 4 {
-		ourLen = 4
-	} else if ourLen == 0 {
-		return 0
-	}
-	
-	let aData = anNSStr.cStringUsingEncoding(NSMacOSRomanStringEncoding)
-	
-	for i in 0 ..< ourLen {
-		ourOSType[i] = aData[i]
-	}
-	
-	return Ptr2OSType(ourOSType)
-}
-#endif
 
 extension MADFourChar: StringLiteralConvertible {
 	public init(_ toInit: String) {
