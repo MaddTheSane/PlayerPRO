@@ -115,11 +115,13 @@ static Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sample
 	
 	// determine what format sound we have.
 	soundFormat = *(short*) soundPtr;
+	MADBE16(&soundFormat);
 	
 	switch (soundFormat) {
 		case 1:						// format 1 sound.
 			// look inside the format 1 resource and deduce offsets.
 			numSynths = ((short*)soundPtr)[1];					// get # synths.
+			MADBE16(&numSynths);
 			numCmds = *(short*)(soundPtr + 4 + numSynths * 6);		// get # commands.
 			break;
 			
@@ -129,9 +131,11 @@ static Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sample
 			break;
 			
 		default:					// jack says, what about 12? or 6?
-			DebugStr("\p NSndToHandle... Burkk");
+			MADDebugStr(__LINE__, __FILE__, "NSndToHandle... Burkk");
+			return NULL;
 			break;
 	}
+	MADBE16(&numCmds);
 	
 	// compute address of sound header.
 	offset = 6 + 6*numSynths + 8*numCmds;
@@ -160,13 +164,13 @@ static Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sample
 			if (baseFreq != NULL)
 				*baseFreq = CmpHeader->baseFrequency;
 			
-			MusSize = (*CmpHeader).numFrames;
+			MusSize = CmpHeader->numFrames;
 			
 			result = GetCompressionInfo((*CmpHeader).compressionID, (*CmpHeader).format, numChannels, *sampleSize, &cp);
 			if (result != noErr)
 				DebugStr("\pGetCompressionInfo");
 			
-			BlockMoveData((*CmpHeader).sampleArea, soundPtr, (*CmpHeader).numFrames * cp.bytesPerFrame);
+			memmove(soundPtr, CmpHeader->sampleArea, CmpHeader->numFrames * cp.bytesPerFrame);
 			
 			{
 				SoundConverter		sc;
@@ -193,11 +197,11 @@ static Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sample
 				
 				err = SoundConverterOpen(&inputFormat, &outputFormat, &sc);
 				if (err != noErr)
-					DebugStr("\pOpen failed");
+					MADDebugStr(__LINE__, __FILE__, "Open failed");
 				
 				err = SoundConverterBeginConversion(sc);
 				if (err != noErr)
-					DebugStr("\pBegin Conversion failed");
+					MADDebugStr(__LINE__, __FILE__, "Begin Conversion failed");
 				
 				inputFrames = MusSize;
 				
@@ -209,19 +213,19 @@ static Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sample
 				
 				err = SoundConverterConvertBuffer(sc, soundPtr, inputFrames, dstPtr, &outputFrames, &outputBytes);
 				if (err != noErr)
-					DebugStr("\pConversion failed");
+					MADDebugStr(__LINE__, __FILE__, "Conversion failed");
 				
 				MusSize = outputBytes;
 				
 				err = SoundConverterEndConversion(sc, dstPtr, &outputFrames, &outputBytes);
 				if (err != noErr)
-					DebugStr("\pEnd Conversion failed");
+					MADDebugStr(__LINE__, __FILE__, "End Conversion failed");
 				
-				if (outputBytes != 0) Debugger();
+				if (outputBytes != 0) MADDebugStr(__LINE__, __FILE__, "");
 				
 				err = SoundConverterClose(sc);
 				if (err != noErr)
-					DebugStr("\pClose failed");
+					MADDebugStr(__LINE__, __FILE__, "Close failed");
 				
 				DisposePtr(soundPtr);
 				soundPtr = dstPtr;
@@ -259,9 +263,9 @@ static Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sample
 			}
 			
 			if (numChannels == 1)
-				BlockMoveData(ExtHeader->sampleArea, soundPtr, MusSize);
+				memmove(soundPtr, ExtHeader->sampleArea, MusSize);
 			else if (numChannels == 2)
-				BlockMoveData(ExtHeader->sampleArea, soundPtr, MusSize);
+				memmove(soundPtr, ExtHeader->sampleArea, MusSize);
 			else {
 				if (*sampleSize == 8) {
 					for (i = 0; i < MusSize; i ++) {
@@ -306,7 +310,7 @@ static Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sample
 	return soundPtr;
 }
 
-static MADErr TestSND(short *soundPtr)
+static inline MADErr TestSND(short *soundPtr)
 {
 	short oldSound = *soundPtr;
 	MADBE16(&oldSound);
@@ -318,20 +322,20 @@ static MADErr TestSND(short *soundPtr)
 
 static MADErr MacsndMain(void* thisInterface, OSType, InstrData*, sData**, short*, CFURLRef, PPInfoPlug*);
 
-OSErr MacsndMain(void		*thisInterface,
-				 OSType					order,				// Order to execute
-		   InstrData				*InsHeader,			// Ptr on instrument header
-		   sData					**sample,			// Ptr on samples data
-		   short					*sampleID,			// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
-														// If sampleID == -1 : add sample else replace selected sample.
-		   CFURLRef					alienFileURL,	// IN/OUT file
-		   PPInfoPlug				*thePPInfoPlug)
+MADErr MacsndMain(void		*thisInterface,
+				  OSType	order,				// Order to execute
+				  InstrData	*InsHeader,			// Ptr on instrument header
+				  sData		**sample,			// Ptr on samples data
+				  short		*sampleID,			// If you need to replace/add only a sample, not replace the entire instrument (by example for 'AIFF' sound)
+												// If sampleID == -1 : add sample else replace selected sample.
+				  CFURLRef		alienFileURL,	// IN/OUT file
+				  PPInfoPlug	*thePPInfoPlug)
 {
-	OSErr	myErr;
+	OSErr		myErr;
 	FSIORefNum	iFileRefI;
-	long	inOutBytes;
-	FSSpec			ourSpec;
-	OSStatus		didConvert = CFURLToFSSpec(alienFileURL, &ourSpec);
+	long		inOutBytes;
+	FSSpec		ourSpec;
+	OSStatus	didConvert = CFURLToFSSpec(alienFileURL, &ourSpec);
 #define AlienFileFSSpec (&ourSpec)
 	
 	if (didConvert != noErr) {
@@ -414,4 +418,3 @@ OSErr MacsndMain(void		*thisInterface,
 #define PLUGMAIN MacsndMain
 
 #include "../CFPlugin-InstrBridge.c"
-
