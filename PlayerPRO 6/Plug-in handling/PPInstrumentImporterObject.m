@@ -167,7 +167,7 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 	}
 	
 	MADErr ourErr = [plugCode importSampleAtURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver];
-	if (ourErr == MADOrderNotImplemented) {
+	if (ourErr == MADOrderNotImplemented && [plugCode respondsToSelector:@selector(beginImportSampleAtURL:instrument:sample:sampleID:driver:parentWindow:handler:)]) {
 		[plugCode beginImportSampleAtURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
 		handler(ourErr);
@@ -182,7 +182,7 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 	}
 	
 	MADErr ourErr = [plugCode exportSampleToURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver];
-	if (ourErr == MADOrderNotImplemented) {
+	if (ourErr == MADOrderNotImplemented && [plugCode respondsToSelector:@selector(beginExportSampleToURL:instrument:sample:sampleID:driver:parentWindow:handler:)]) {
 		[plugCode beginExportSampleToURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
 		handler(ourErr);

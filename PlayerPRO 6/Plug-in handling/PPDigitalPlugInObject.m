@@ -77,7 +77,7 @@
 - (void)beginCallWithPcmd:(inout Pcmd*)myPcmd driver:(PPDriver*)driver parentDocument:(PPDocument*)theDoc handler:(PPPlugErrorBlock)handler
 {
 	MADErr ourErr = [plugCode runWithPcmd:myPcmd driver:driver];
-	if (ourErr == MADOrderNotImplemented) {
+	if (ourErr == MADOrderNotImplemented && [plugCode respondsToSelector:@selector(beginRunWithPcmd:driver:parentWindow:handler:)]) {
 		[plugCode beginRunWithPcmd:myPcmd driver:driver parentWindow:[theDoc windowForSheet] handler:handler];
 	} else {
 		handler(ourErr);
