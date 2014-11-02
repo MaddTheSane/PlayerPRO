@@ -53,10 +53,6 @@ public func CreateErrorFromMADErrorType(theErr: MADErr) -> NSError? {
 	return PPCreateErrorFromMADErrorType(theErr)
 }
 
-public func ErrorIsUserCancelled(theErr: NSError) -> Bool {
-	return PPErrorIsUserCancelled(theErr)
-}
-
 public func NoteFromString(myTT: String) -> UInt8? {
 	if let toRet: Int16 = NoteFromString(myTT) {
 		return UInt8(toRet)

@@ -9,19 +9,7 @@
 import Foundation
 import PlayerPROCore
 
-public func GetCommand(row: Int16, track: Int16, aPcmd: PPKPcmd) -> Cmd {
-	return aPcmd.getCommand(row, track: track)
-}
-
-public func ReplaceCmd(row: Int16, track: Int16, command: Cmd, inout aPat: PPKPcmd) {
-	aPat.replaceCmdAtRow(row, track: track, command: command)
-}
-
-public func ModifyCmdAtRow(row: Int16, track: Int16, inout aPcmd: PPKPcmd, commandBlock: (inout Cmd)-> ()) {
-	aPcmd.modifyCmdAtRow(row, track: track, commandBlock: commandBlock)
-}
-
-public struct PPKPcmd: SequenceType {
+public struct PPKPcmd: SequenceType, IterateCmd {
 	public var tracks: Int16
 	public var length: Int16
 	public var trackStart: Int16
@@ -72,9 +60,7 @@ public struct PPKPcmd: SequenceType {
 	}
 	
 	public var valid: Bool {
-		get {
-			return Int(tracks * length) == myCmd.count
-		}
+		return Int(tracks * length) == myCmd.count
 	}
 	
 	public init() {
@@ -187,6 +173,10 @@ public struct PPKPcmd: SequenceType {
 		}
 		
 		myCmd[Int((length * track) + row)] = command
+	}
+	
+	public mutating func replaceCmd(row: Int16, track: Int16, command: Cmd) {
+		replaceCmdAtRow(row, track: track, command: command)
 	}
 	
 	public func getCommand(row1: Int16, track track1: Int16) -> Cmd {

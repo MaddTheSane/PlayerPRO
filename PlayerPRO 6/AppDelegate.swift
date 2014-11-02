@@ -391,23 +391,23 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 				return false;
 			}
 		}
-			if (sharedWorkspace.type(theUTI, conformsToType:PPPCMDUTI)) {
-				var theOSErr = importPcmdFromURL(theURL)
-				if (theOSErr != MADErr.NoErr) {
-					let theErr = CreateErrorFromMADErrorType(theOSErr)!
-					NSAlert(error: theErr).runModal()
-					return false;
-				}
+		if (sharedWorkspace.type(theUTI, conformsToType:PPPCMDUTI)) {
+			var theOSErr = importPcmdFromURL(theURL)
+			if (theOSErr != MADErr.NoErr) {
+				let theErr = CreateErrorFromMADErrorType(theOSErr)!
+				NSAlert(error: theErr).runModal()
+				return false;
+			}
+			return true;
+		} else if (sharedWorkspace.type(theUTI, conformsToType:PPInstrumentListUTI)) {
+			var err: NSError? = nil
+			if (!importInstrumentListFromURL(theURL, error:&err)) {
+				NSAlert(error: err!).runModal()
+			} else {
 				return true;
-			} else if (sharedWorkspace.type(theUTI, conformsToType:PPInstrumentListUTI)) {
-				var err: NSError? = nil
-				if (!importInstrumentListFromURL(theURL, error:&err)) {
-					NSAlert(error: err!).runModal()
-				} else {
-					return true;
-				}
-			} //else
-
+			}
+		} //else
+		
 		//TODO: check for valid extension.
 		for aUTI in trackerUTIs {
 			if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
@@ -444,7 +444,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 								self.addDocument(aPPDoc)
 							} else {
 								let nsErr = CreateErrorFromMADErrorType(anErr)!
-								if ErrorIsUserCancelled(nsErr) == false {
+								if PPErrorIsUserCancelled(nsErr) == false {
 									NSAlert(error: nsErr).runModal()
 								} else {
 									NSBeep()
@@ -456,7 +456,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 				}
 			}
 		}
-
+		
 		return false;
 	}
 	

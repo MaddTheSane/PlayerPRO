@@ -469,7 +469,25 @@ public func ModifyCmdAtRow(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer
 	ReplaceCmd(row, track, aCmd, aPcmd)
 }
 
-extension IntPcmd {
+public protocol IterateCmd {
+	func getCommand(row: Int16, track: Int16) -> Cmd
+	mutating func modifyCmdAtRow(arow: Int16, track: Int16, commandBlock: (inout Cmd) -> ())
+	mutating func replaceCmd(row: Int16, track: Int16, command: Cmd)
+}
+
+public func GetCommand<X where X: IterateCmd>(row: Int16, track: Int16, aIntPcmd: X) -> Cmd {
+	return aIntPcmd.getCommand(row, track: track)
+}
+
+public func ReplaceCmd<X where X: IterateCmd>(row: Int16, track: Int16, command: Cmd, inout aPcmd: X) {
+	aPcmd.replaceCmd(row, track: track, command: command)
+}
+
+public func ModifyCmdAtRow<X where X: IterateCmd>(row: Int16, track: Int16, inout aPcmd: X, commandBlock: (inout Cmd) -> ()) {
+	aPcmd.modifyCmdAtRow(row, track: track, commandBlock: commandBlock)
+}
+
+extension IntPcmd: IterateCmd {
 	public init() {
 		tracks = 0
 		length = 0
@@ -479,7 +497,7 @@ extension IntPcmd {
 		myCmd = nil
 	}
 	
-	public func getCommand(arow: Int16, track atrack: Int16) -> Cmd {
+	private func getCommandIndex(row arow: Int16, track atrack: Int16) -> Int {
 		var row = arow
 		var track = atrack
 		if (row < 0) {
@@ -494,27 +512,17 @@ extension IntPcmd {
 			track = tracks - 1;
 		}
 		
-		let ourAddr = Int(length) * Int(track) + Int(row)
+		return Int(length) * Int(track) + Int(row)
+	}
+	
+	public func getCommand(row: Int16, track: Int16) -> Cmd {
+		let ourAddr = getCommandIndex(row: row, track: track)
 		
 		return myCmd[ourAddr]
 	}
 	
-	public mutating func modifyCmdAtRow(arow: Int16, track atrack: Int16, commandBlock: (inout Cmd) -> ()) {
-		var row = arow
-		var track = atrack
-		if (row < 0) {
-			row = 0;
-		} else if (row >= length) {
-			row = length - 1;
-		}
-		
-		if (track < 0) {
-			track = 0;
-		} else if (track >= tracks) {
-			track = tracks - 1;
-		}
-		
-		let ourAddr = Int(length) * Int(track) + Int(row)
+	public mutating func modifyCmdAtRow(row: Int16, track: Int16, commandBlock: (inout Cmd) -> ()) {
+		let ourAddr = getCommandIndex(row: row, track: track)
 		
 		commandBlock(&myCmd[ourAddr])
 	}
@@ -524,18 +532,6 @@ extension IntPcmd {
 			aCmd = command
 		})
 	}
-}
-
-public func GetCommand(arow: Int16, atrack: Int16, aIntPcmd: IntPcmd) -> Cmd {
-	return aIntPcmd.getCommand(arow, track: atrack)
-}
-
-public func ReplaceCmd(row: Int16, track: Int16, command: Cmd, inout aPcmd: IntPcmd) {
-	aPcmd.replaceCmd(row, track: track, command: command)
-}
-
-public func ModifyCmdAtRow(arow: Int16, atrack: Int16, inout aPcmd: IntPcmd, commandBlock: (inout Cmd) -> ()) {
-	aPcmd.modifyCmdAtRow(arow, track: atrack, commandBlock: commandBlock)
 }
 
 // MARK: MADFourChar
