@@ -61,7 +61,7 @@ import AudioToolbox
 		sample.data = NSData(bytesNoCopy: sndPtr, length: Int(soundSize), freeWhenDone: true)
 		
 		if sampleID.memory == -1 {
-			InsHeader.addSamplesObject(sample)
+			InsHeader.addSampleObject(sample)
 			sampleID.memory = Int16(InsHeader.countOfSamples - 1)
 		} else {
 			InsHeader.replaceObjectInSamplesAtIndex(Int(sampleID.memory), withObject: sample)

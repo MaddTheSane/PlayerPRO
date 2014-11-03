@@ -725,6 +725,11 @@ static const dispatch_block_t initUTIArray = ^{
 	theInstrument.numSamples++;
 }
 
+- (void)addSampleObject:(PPSampleObject *)object
+{
+	[self addSamplesObject:object];
+}
+
 - (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(PPSampleObject *)object
 {
 	NSAssert(number != -1, @"The instrument should be in a Music Object wrapper BEFORE adding samples");

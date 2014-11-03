@@ -96,7 +96,7 @@
 
 @property (readonly, getter=isBlankInstrument) BOOL blankInstrument;
 
-- (void)addSamplesObject:(PPSampleObject *)object;
+- (void)addSampleObject:(PPSampleObject *)object;
 - (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(PPSampleObject *)object;
 @property (readonly) NSInteger countOfSamples;
 - (PPSampleObject*)samplesObjectAtIndex:(NSInteger)idx;

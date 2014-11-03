@@ -171,7 +171,7 @@
 		
 		PATData += PATSamp->size;
 		
-		[insHeader addSamplesObject:curData];
+		[insHeader addSampleObject:curData];
 	}
 	
 	return MADNoErr;

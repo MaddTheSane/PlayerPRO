@@ -109,7 +109,7 @@ static void getSamplesFromArray(PPInstrumentObject *instrument, NSArray *ourArra
 		sampObj.c2spd = [(NSNumber*)sampleDict[C2SPDKEY] unsignedShortValue];
 		sampObj.relativeNote = [(NSNumber*)sampleDict[RELATIVENOTEKEY] charValue];
 		sampObj.stereo = [(NSNumber*)sampleDict[RELATIVENOTEKEY] boolValue];
-		[instrument addSamplesObject:sampObj];
+		[instrument addSampleObject:sampObj];
 	}
 }
 

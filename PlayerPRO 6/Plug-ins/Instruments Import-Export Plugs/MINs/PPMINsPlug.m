@@ -239,7 +239,7 @@ static inline MADErr TestOldMINs(const oldInstrData *CC)
 				});
 			}
 			
-			[InsHeader addSamplesObject:[[PPSampleObject alloc] initWithSData:curData]];
+			[InsHeader addSampleObject:[[PPSampleObject alloc] initWithSData:curData]];
 			free(curData->data);
 			free(curData);
 		}
@@ -298,7 +298,7 @@ static inline MADErr TestOldMINs(const oldInstrData *CC)
 				});
 			}
 			
-			[InsHeader addSamplesObject:[[PPSampleObject alloc] initWithSData:curData]];
+			[InsHeader addSampleObject:[[PPSampleObject alloc] initWithSData:curData]];
 			free(curData->data);
 			free(curData);
 		}

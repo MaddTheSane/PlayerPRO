@@ -232,7 +232,7 @@ static const int finetune[16] = {
 				}
 			}
 			for (NSDictionary* ourDict in tmpSamples) {
-				[InsHeader addSamplesObject:ourDict[@"Sample"]];
+				[InsHeader addSampleObject:ourDict[@"Sample"]];
 			}
 		}
 	} else {
