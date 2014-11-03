@@ -1,0 +1,3 @@
+[submodule "MaddsSwifts"]
+	path = MaddsSwifts
+	url = https://github.com/MaddTheSane/SwiftMacTypes.git

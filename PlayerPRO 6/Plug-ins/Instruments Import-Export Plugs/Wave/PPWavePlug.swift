@@ -10,6 +10,7 @@ import Cocoa
 import PlayerPROKit
 import AudioUnit
 import AudioToolbox
+import SwiftAdditions
 
 @objc(PPWavePlug) public final class PPWavePlug: NSObject, PPInstrumentImportPlugin, PPInstrumentExportPlugin {
 	public let hasUIConfiguration = false

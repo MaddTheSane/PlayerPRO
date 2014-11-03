@@ -11,6 +11,7 @@ import PlayerPROCore
 import PlayerPROKit
 import AVFoundation
 import AudioToolbox
+import SwiftAdditions
 
 class DocumentWindowController: NSWindowController, SoundSettingsViewControllerDelegate {
 	@IBOutlet weak var exportWindow:			NSWindow!

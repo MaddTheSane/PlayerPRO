@@ -231,13 +231,11 @@
 		553507A519BC293C00B9E815 /* PPRevertPlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553507A419BC293C00B9E815 /* PPRevertPlug.swift */; };
 		553507A819BCA31000B9E815 /* PPNoteTranslatePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 553507A719BCA31000B9E815 /* PPNoteTranslatePlug.m */; };
 		553507AB19BCA86F00B9E815 /* PPWavePlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553507AA19BCA86F00B9E815 /* PPWavePlug.swift */; };
-		553507AD19BCB13200B9E815 /* AudioFileExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553507AC19BCB13200B9E815 /* AudioFileExt.swift */; };
 		553626B817EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 553626B717EB9DEA00D3A3C8 /* Cocoa Editor Images.xcassets */; };
 		553672CF19C27FD900D4E2A5 /* PPBackwardsPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 553672CE19C27FD900D4E2A5 /* PPBackwardsPlug.m */; };
 		553672D219C283D100D4E2A5 /* PPAmplitudePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 553672D119C283D100D4E2A5 /* PPAmplitudePlug.m */; };
 		553672D419C2847900D4E2A5 /* DepthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553672D319C2847900D4E2A5 /* DepthController.swift */; };
 		553672D619C284AE00D4E2A5 /* DepthPlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553672D519C284AE00D4E2A5 /* DepthPlug.swift */; };
-		553672D719C2875300D4E2A5 /* AudioFileExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553507AC19BCB13200B9E815 /* AudioFileExt.swift */; };
 		553672DA19C2A05700D4E2A5 /* PPFadePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 553672D919C2A05700D4E2A5 /* PPFadePlug.m */; };
 		553B8B7219B3CD85007C2C64 /* xm-ios.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B6E19B3CD85007C2C64 /* xm-ios.png */; };
 		553B8B7319B3CD85007C2C64 /* xm-ios@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B6F19B3CD85007C2C64 /* xm-ios@2x.png */; };
@@ -648,6 +646,12 @@
 		55BF238E19A937C9005B1F96 /* PPAPPLImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */; };
 		55BF238F19A937C9005B1F96 /* PPAPPLImporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */; };
 		55BF239019A94077005B1F96 /* PPComplexImportPlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */; };
+		55C1A6871A071A3700C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
+		55C1A6881A071A3700C7A733 /* SwiftAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		55C1A68B1A071A4000C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
+		55C1A68C1A071A4000C7A733 /* SwiftAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		55C1A68F1A071A5C00C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
+		55C1A6941A071A8F00C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
 		55C5754019CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
 		55C5754119CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
 		55C8EDE1187CC8B200CC8C1B /* PPPatternObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287216A8968C009013D8 /* PPPatternObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1747,6 +1751,55 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
+		55C1A6811A0719D300C7A733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 550FBABE19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
+		55C1A6831A0719D300C7A733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 550FBAC919A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditionsTests;
+		};
+		55C1A6851A0719EE00C7A733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
+		55C1A6891A071A3800C7A733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
+		55C1A68D1A071A4100C7A733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
+		55C1A6901A071A8000C7A733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		55C1A6921A071A8700C7A733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
 		55C98AEB1A001B1000435530 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1851,6 +1904,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				55C1A6881A071A3700C7A733 /* SwiftAdditions.framework in Copy Frameworks */,
 				5573A1621658A3E700A5AECA /* PlayerPROCore.framework in Copy Frameworks */,
 				5578C4F917DAB28A0057D11B /* PlayerPROKit.framework in Copy Frameworks */,
 			);
@@ -1863,6 +1917,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				55C1A68C1A071A4000C7A733 /* SwiftAdditions.framework in Copy Frameworks */,
 				5578C49E17D9E8A00057D11B /* PlayerPROCore.framework in Copy Frameworks */,
 				5578C4FD17DB8A3B0057D11B /* PlayerPROKit.framework in Copy Frameworks */,
 			);
@@ -2209,7 +2264,6 @@
 		553507A719BCA31000B9E815 /* PPNoteTranslatePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPNoteTranslatePlug.m; sourceTree = "<group>"; };
 		553507A919BCA86D00B9E815 /* Wave-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Wave-Bridging-Header.h"; sourceTree = "<group>"; };
 		553507AA19BCA86F00B9E815 /* PPWavePlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPWavePlug.swift; sourceTree = "<group>"; };
-		553507AC19BCB13200B9E815 /* AudioFileExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFileExt.swift; sourceTree = "<group>"; };
 		5535A652197F2D1D00D36CC9 /* PPCore-private.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = "PPCore-private.modulemap"; sourceTree = "<group>"; };
 		5535A653197F2D1D00D36CC9 /* PPCore.modulemap */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.module-map"; path = PPCore.modulemap; sourceTree = "<group>"; };
 		553626AF17EA6F0900D3A3C8 /* Universal.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Universal.xcconfig; sourceTree = "<group>"; };
@@ -2512,6 +2566,7 @@
 		55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLImporter.h; sourceTree = "<group>"; };
 		55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLImporter.m; sourceTree = "<group>"; };
 		55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPAPPLImporter.xib; sourceTree = "<group>"; };
+		55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftAdditions.xcodeproj; path = MaddsSwifts/SwiftAdditions.xcodeproj; sourceTree = "<group>"; };
 		55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentPlugBridgeHelper.m; sourceTree = "<group>"; };
 		55C5754219CE32C6005109C9 /* PPInstrumentPlugBridgeHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPlugBridgeHelper.h; sourceTree = "<group>"; };
 		55C5754319CE3559005109C9 /* ARCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARCBridge.h; sourceTree = "<group>"; };
@@ -2633,6 +2688,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55C1A68F1A071A5C00C7A733 /* SwiftAdditions.framework in Frameworks */,
 				55B1D403187C9B25002754C5 /* CoreFoundation.framework in Frameworks */,
 				55B1D402187C9B0D002754C5 /* Foundation.framework in Frameworks */,
 				55085D821836EC8D004A152F /* CoreMIDI.framework in Frameworks */,
@@ -2852,6 +2908,7 @@
 				5578C4CF17DA6D2C0057D11B /* CoreFoundation.framework in Frameworks */,
 				557F296818790DDA009D4BC8 /* AudioToolbox.framework in Frameworks */,
 				5578C48217D9E8560057D11B /* Cocoa.framework in Frameworks */,
+				55C1A68B1A071A4000C7A733 /* SwiftAdditions.framework in Frameworks */,
 				5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */,
 				55149C621832D176009C850B /* AVFoundation.framework in Frameworks */,
 				5578C4FC17DB8A2F0057D11B /* PlayerPROKit.framework in Frameworks */,
@@ -3142,6 +3199,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55C1A6941A071A8F00C7A733 /* SwiftAdditions.framework in Frameworks */,
 				5535079419BBD4BE00B9E815 /* PlayerPROKit.framework in Frameworks */,
 				55ADC3D717D6F390001F27D4 /* CoreFoundation.framework in Frameworks */,
 				55ADC3D617D6F390001F27D4 /* PlayerPROCore.framework in Frameworks */,
@@ -3186,6 +3244,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55C1A6871A071A3700C7A733 /* SwiftAdditions.framework in Frameworks */,
 				55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */,
 				557F296918790DF2009D4BC8 /* AudioToolbox.framework in Frameworks */,
 				55085D811836EC82004A152F /* CoreMIDI.framework in Frameworks */,
@@ -3316,7 +3375,6 @@
 			children = (
 				5590896710E883AF00CE70B8 /* WAV.h */,
 				553507A919BCA86D00B9E815 /* Wave-Bridging-Header.h */,
-				553507AC19BCB13200B9E815 /* AudioFileExt.swift */,
 				553507AA19BCA86F00B9E815 /* PPWavePlug.swift */,
 				55ADC3DC17D6F411001F27D4 /* Wave-Info.plist */,
 				55FD51E819BCF51200986849 /* InfoPlist.strings */,
@@ -4475,6 +4533,15 @@
 			path = "Advanced Import plug-ins";
 			sourceTree = "<group>";
 		};
+		55C1A67D1A0719D300C7A733 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */,
+				55C1A6841A0719D300C7A733 /* SwiftAdditionsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		55CBFCD411EB7CA00028C6BB /* PlayerPRO 6 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4745,6 +4812,7 @@
 		88E0C4950C2F21E500D6C081 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */,
 				55413C4D1992AFFF001414D0 /* Foundation.framework */,
 				55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */,
 				55F1BD831975C27000AD2C03 /* AudioToolbox.framework */,
@@ -5310,6 +5378,7 @@
 				55886F7317DEDAA200021A82 /* PBXTargetDependency */,
 				5578C53917DB959B0057D11B /* PBXTargetDependency */,
 				55680A311904661700F7616D /* PBXTargetDependency */,
+				55C1A68E1A071A4100C7A733 /* PBXTargetDependency */,
 			);
 			name = "PlayerPRO Player";
 			productName = "PlayerPRO Player";
@@ -5878,6 +5947,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				55C1A6931A071A8700C7A733 /* PBXTargetDependency */,
+				55C1A6911A071A8000C7A733 /* PBXTargetDependency */,
 				55ADC3D017D6F390001F27D4 /* PBXTargetDependency */,
 			);
 			name = Wave;
@@ -5975,6 +6046,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55C1A6861A0719EE00C7A733 /* PBXTargetDependency */,
 				552363A419A55C9B000D191D /* PBXTargetDependency */,
 				552363A619A55C9B000D191D /* PBXTargetDependency */,
 				55534AE918183B0C006D6BCB /* PBXTargetDependency */,
@@ -5988,6 +6060,7 @@
 				559170AA19C26E1D00998D7F /* PBXTargetDependency */,
 				559170AD19C26E1D00998D7F /* PBXTargetDependency */,
 				556BC18C19CF75F900508F49 /* PBXTargetDependency */,
+				55C1A68A1A071A3800C7A733 /* PBXTargetDependency */,
 			);
 			name = "PlayerPRO 6";
 			productName = Cocoa;
@@ -6130,6 +6203,12 @@
 			mainGroup = 88E0C3A60C2F21DD00D6C081;
 			productRefGroup = 88E0C3B60C2F21DD00D6C081 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 55C1A67D1A0719D300C7A733 /* Products */;
+					ProjectRef = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				55CBF9A511EB77760028C6BB /* PlayerPRO 6 */,
@@ -6204,6 +6283,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftAdditions.framework;
+			remoteRef = 55C1A6811A0719D300C7A733 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55C1A6841A0719D300C7A733 /* SwiftAdditionsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SwiftAdditionsTests.xctest;
+			remoteRef = 55C1A6831A0719D300C7A733 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		550FFAE217CEA4570003A2F3 /* Resources */ = {
@@ -7346,7 +7442,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				553507AD19BCB13200B9E815 /* AudioFileExt.swift in Sources */,
 				553507AB19BCA86F00B9E815 /* PPWavePlug.swift in Sources */,
 				55624D4D1A03038900163B88 /* GeneralSwiftHelpers.swift in Sources */,
 				55ADC3DE17D7A51B001F27D4 /* WAVE-Conversion.c in Sources */,
@@ -7393,7 +7488,6 @@
 			files = (
 				5517A24519D9D4A8002D350D /* BoxViewController.swift in Sources */,
 				55A3CD4419A6DC8B00957845 /* PPDocument.swift in Sources */,
-				553672D719C2875300D4E2A5 /* AudioFileExt.swift in Sources */,
 				555F5C611993327D0056AF01 /* OpenPanelViewController.swift in Sources */,
 				55852E1C18D67CCB0009BF55 /* PPSmallPianoView.m in Sources */,
 				55FEF84519844FD600D2E79C /* DigitalViewController.m in Sources */,
@@ -8185,6 +8279,31 @@
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 55B797E110D6E6D00073E379 /* PBXContainerItemProxy */;
+		};
+		55C1A6861A0719EE00C7A733 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 55C1A6851A0719EE00C7A733 /* PBXContainerItemProxy */;
+		};
+		55C1A68A1A071A3800C7A733 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 55C1A6891A071A3800C7A733 /* PBXContainerItemProxy */;
+		};
+		55C1A68E1A071A4100C7A733 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 55C1A68D1A071A4100C7A733 /* PBXContainerItemProxy */;
+		};
+		55C1A6911A071A8000C7A733 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55C1A6901A071A8000C7A733 /* PBXContainerItemProxy */;
+		};
+		55C1A6931A071A8700C7A733 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 55C1A6921A071A8700C7A733 /* PBXContainerItemProxy */;
 		};
 		55C98AEC1A001B1000435530 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -9570,11 +9689,12 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
@@ -9590,12 +9710,13 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
@@ -10793,6 +10914,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = EditorIcon;
 				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -10815,6 +10937,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = EditorIcon;
 				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/PlayerPRO-PrefixHeader.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
