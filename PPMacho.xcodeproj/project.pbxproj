@@ -652,6 +652,10 @@
 		55C1A68C1A071A4000C7A733 /* SwiftAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55C1A68F1A071A5C00C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
 		55C1A6941A071A8F00C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
+		55C1A6A61A07209100C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
+		55C1A6A71A07209900C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
+		55C1A6AA1A0720B200C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
+		55C1A6AB1A0720B200C7A733 /* SwiftAdditions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55C5754019CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
 		55C5754119CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
 		55C8EDE1187CC8B200CC8C1B /* PPPatternObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287216A8968C009013D8 /* PPPatternObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1800,6 +1804,27 @@
 			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
 			remoteInfo = SwiftAdditions;
 		};
+		55C1A6A41A07208A00C7A733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
+		55C1A6A81A0720A300C7A733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
+		55C1A6AC1A0720B200C7A733 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
 		55C98AEB1A001B1000435530 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -2052,6 +2077,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				55C1A6AB1A0720B200C7A733 /* SwiftAdditions.framework in Embed Frameworks */,
 				55F1BDF91975CBFF00AD2C03 /* PlayerPROKit.framework in Embed Frameworks */,
 				55F1BDAF1975C8EE00AD2C03 /* PlayerPROCore.framework in Embed Frameworks */,
 			);
@@ -2840,6 +2866,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55C1A6AA1A0720B200C7A733 /* SwiftAdditions.framework in Frameworks */,
 				55F1BDAE1975C8EE00AD2C03 /* PlayerPROCore.framework in Frameworks */,
 				55680A4A190497FC00F7616D /* CoreFoundation.framework in Frameworks */,
 				55680A4B190497FC00F7616D /* Foundation.framework in Frameworks */,
@@ -3281,6 +3308,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55C1A6A61A07209100C7A733 /* SwiftAdditions.framework in Frameworks */,
 				55F1BDCE1975CAC100AD2C03 /* AudioToolbox.framework in Frameworks */,
 				55F1BDCD1975CABA00AD2C03 /* CoreFoundation.framework in Frameworks */,
 			);
@@ -3290,6 +3318,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55C1A6A71A07209900C7A733 /* SwiftAdditions.framework in Frameworks */,
 				55413C4E1992AFFF001414D0 /* Foundation.framework in Frameworks */,
 				55413C4C1992AFFE001414D0 /* CoreFoundation.framework in Frameworks */,
 				55F1BE041975CD2E00AD2C03 /* PlayerPROCore.framework in Frameworks */,
@@ -5260,6 +5289,7 @@
 				55F1BDB11975C8EE00AD2C03 /* PBXTargetDependency */,
 				55F1BDF71975CBFF00AD2C03 /* PBXTargetDependency */,
 				55F1BDFB1975CBFF00AD2C03 /* PBXTargetDependency */,
+				55C1A6AD1A0720B200C7A733 /* PBXTargetDependency */,
 			);
 			name = "iOS PlayerPRO Player";
 			productName = "iOS PlayerPRO Player";
@@ -6115,6 +6145,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55C1A6A51A07208A00C7A733 /* PBXTargetDependency */,
 			);
 			name = "PlayerPROCore-iOS";
 			productName = iOSPlayerPROCore;
@@ -6133,6 +6164,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55C1A6A91A0720A300C7A733 /* PBXTargetDependency */,
 				55F1BE241975D1CD00AD2C03 /* PBXTargetDependency */,
 			);
 			name = "PlayerPROKit-iOS";
@@ -8305,6 +8337,21 @@
 			name = SwiftAdditions;
 			targetProxy = 55C1A6921A071A8700C7A733 /* PBXContainerItemProxy */;
 		};
+		55C1A6A51A07208A00C7A733 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 55C1A6A41A07208A00C7A733 /* PBXContainerItemProxy */;
+		};
+		55C1A6A91A0720A300C7A733 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 55C1A6A81A0720A300C7A733 /* PBXContainerItemProxy */;
+		};
+		55C1A6AD1A0720B200C7A733 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 55C1A6AC1A0720B200C7A733 /* PBXContainerItemProxy */;
+		};
 		55C98AEC1A001B1000435530 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */;
@@ -9353,6 +9400,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				COMBINE_HIDPI_IMAGES = "";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
@@ -9380,6 +9428,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				COMBINE_HIDPI_IMAGES = "";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",

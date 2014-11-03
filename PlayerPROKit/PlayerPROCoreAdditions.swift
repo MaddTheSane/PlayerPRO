@@ -9,6 +9,7 @@
 import CoreFoundation
 import Foundation
 import PlayerPROCore
+import SwiftAdditions
 
 public func ==(lhs: Cmd, rhs: Cmd) -> Bool {
 	// Don't worry about the "unused" variable for now
@@ -139,55 +140,6 @@ public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
 // MARK: Bridges to more modern Swift code.
 public let MadID = StringToOSType("MADK")
 
-extension MADFourChar: StringLiteralConvertible {
-	public init(_ toInit: String) {
-		self = StringToOSType(toInit)
-	}
-	
-	public init(unicodeScalarLiteral usl: String) {
-		let tmpUnscaled = String(unicodeScalarLiteral: usl)
-		self = StringToOSType(tmpUnscaled)
-	}
-	
-	public init(extendedGraphemeClusterLiteral egcl: String) {
-		let tmpUnscaled = String(extendedGraphemeClusterLiteral: egcl)
-		self.init(tmpUnscaled)
-	}
-	
-	public init(stringLiteral toInit: String) {
-		self = StringToOSType(toInit)
-	}
-	
-	public init(_ toInit: (Int8, Int8, Int8, Int8, Int8)) {
-		self = MADFourChar((toInit.0, toInit.1, toInit.2, toInit.3))
-	}
-	
-	public var OSTypeStringValue: String? {
-		return OSTypeToString(self)
-	}
-	
-	public init(_ toInit: (Int8, Int8, Int8, Int8)) {
-		let val0 = UInt32(toInit.0)
-		let val1 = UInt32(toInit.1)
-		let val2 = UInt32(toInit.2)
-		let val3 = UInt32(toInit.3)
-		self = MADFourChar((val0 << 24) | (val1 << 16) | (val2 << 8) | (val3))
-	}
-	
-	public func toFourChar() -> (Int8, Int8, Int8, Int8) {
-		let var1 = (self >> 24) & 0xFF
-		let var2 = (self >> 16) & 0xFF
-		let var3 = (self >> 8) & 0xFF
-		let var4 = (self) & 0xFF
-		return (Int8(var1), Int8(var2), Int8(var3), Int8(var4))
-	}
-	
-	public func toFourChar() -> (Int8, Int8, Int8, Int8, Int8) {
-		let outVar: (Int8, Int8, Int8, Int8) = toFourChar()
-		return (outVar.0, outVar.1, outVar.2, outVar.3, 0)
-	}
-}
-
 // MARK: PlayerPRO MAD data types
 
 public func NewMADDriverSettings(setToDefault: Bool = true) -> MADDriverSettings {
@@ -243,52 +195,6 @@ extension MADInfoRec: DebugPrintable {
 	
 	public var debugDescription: String {
 		return "\(internalName), format \(format)"
-	}
-}
-
-extension PlugInfo {
-	public var importer: Bool {
-			switch (self.mode) {
-			case MADPlugModes.Import.rawValue, MADPlugModes.ImportExport.rawValue:
-				return true
-
-			default:
-				return false
-			}
-	}
-
-	public var exporter: Bool {
-			switch (self.mode) {
-			case MADPlugModes.Export.rawValue, MADPlugModes.ImportExport.rawValue:
-				return true
-
-			default:
-				return false
-			}
-	}
-	
-	public var plugInURL: NSURL {
-		return CFBundleCopyBundleURL(file.takeUnretainedValue()) as NSURL
-	}
-	
-	public var plugInBundle: NSBundle? {
-		return NSBundle(URL: CFBundleCopyBundleURL(file.takeUnretainedValue()))
-	}
-	
-	public var types: [String] {
-		return UTItypes.takeUnretainedValue() as NSArray as [String]
-	}
-	
-	public var fourCharType: MADFourChar {
-		return MADFourChar(type)
-	}
-	
-	public var name: String {
-		return CFStringToString(MenuName.takeUnretainedValue())
-	}
-	
-	public var author: String {
-		return CFStringToString(AuthorString.takeUnretainedValue())
 	}
 }
 

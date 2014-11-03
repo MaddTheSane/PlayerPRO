@@ -9,6 +9,7 @@
 import Cocoa
 import PlayerPROCore
 import PlayerPROKit
+import SwiftAdditions
 
 private func makeNSRGB(red: UInt16, green: UInt16, blue:UInt16) -> NSColor {
 	return NSColor(calibratedRed: CGFloat(red) / CGFloat(UInt16.max), green: CGFloat(green) / CGFloat(UInt16.max), blue: CGFloat(blue) / CGFloat(UInt16.max), alpha: 1)
