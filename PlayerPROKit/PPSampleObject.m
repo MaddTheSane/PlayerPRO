@@ -312,6 +312,11 @@ static const dispatch_block_t initUTIArray = ^{
 	return YES;
 }
 
+- (NSRange)loop
+{
+	return NSMakeRange(self.loopBegin, self.loopSize);
+}
+
 - (NSString*)description
 {
 	return [NSString stringWithFormat:@"%@: size: %ld stereo: %@ Loop type: %d start: %d size: %d volume: %d amp: %d", self.name, (long)[self.data length], self.stereo ? @"Yes": @"No", self.loopType, self.loopBegin, self.loopSize, self.volume, self.amplitude];
