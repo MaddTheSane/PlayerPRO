@@ -524,6 +524,7 @@
 		55A9351917F28F9700493DC5 /* Shared.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55A9351817F28F9700493DC5 /* Shared.xcassets */; };
 		55A9351A17F28F9700493DC5 /* Shared.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55A9351817F28F9700493DC5 /* Shared.xcassets */; };
 		55A9351B17F28F9700493DC5 /* Shared.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55A9351817F28F9700493DC5 /* Shared.xcassets */; };
+		55ABE82C1A081546006B6AF9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ABE82B1A081546006B6AF9 /* CoreGraphics.framework */; };
 		55ADC3D617D6F390001F27D4 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55ADC3D717D6F390001F27D4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		55ADC3DE17D7A51B001F27D4 /* WAVE-Conversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105710D6C79E00BB619C /* WAVE-Conversion.c */; };
@@ -2553,6 +2554,7 @@
 		55A3CD4319A6DC8B00957845 /* PPDocument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPDocument.swift; sourceTree = "<group>"; };
 		55A6201C18A6EFEC003B29B5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PreferenceNames.strings; sourceTree = "<group>"; };
 		55A9351817F28F9700493DC5 /* Shared.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Shared.xcassets; sourceTree = "<group>"; };
+		55ABE82B1A081546006B6AF9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		55ACD99A17C94CF40034BB8E /* PlayerPROCore-OSX.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "PlayerPROCore-OSX.pch"; path = "../PlayerPROCore-OSX.pch"; sourceTree = "<group>"; };
 		55ADC3DB17D6F390001F27D4 /* Wave.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Wave.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55ADC3DC17D6F411001F27D4 /* Wave-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Wave-Info.plist"; sourceTree = "<group>"; };
@@ -2714,6 +2716,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55ABE82C1A081546006B6AF9 /* CoreGraphics.framework in Frameworks */,
 				55C1A68F1A071A5C00C7A733 /* SwiftAdditions.framework in Frameworks */,
 				55B1D403187C9B25002754C5 /* CoreFoundation.framework in Frameworks */,
 				55B1D402187C9B0D002754C5 /* Foundation.framework in Frameworks */,
@@ -4842,6 +4845,7 @@
 			isa = PBXGroup;
 			children = (
 				55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */,
+				55ABE82B1A081546006B6AF9 /* CoreGraphics.framework */,
 				55413C4D1992AFFF001414D0 /* Foundation.framework */,
 				55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */,
 				55F1BD831975C27000AD2C03 /* AudioToolbox.framework */,

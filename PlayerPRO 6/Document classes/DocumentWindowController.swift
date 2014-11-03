@@ -13,6 +13,8 @@ import AVFoundation
 import AudioToolbox
 import SwiftAdditions
 
+internal let isLittleEndian = Int(OSHostByteOrder()) == OSLittleEndian
+
 class DocumentWindowController: NSWindowController, SoundSettingsViewControllerDelegate {
 	@IBOutlet weak var exportWindow:			NSWindow!
 	@IBOutlet weak var exportSettingsBox:		NSBox!
@@ -125,45 +127,45 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 	}
 	
 	func rawBESoundData(theSet: MADDriverSettings) -> NSData? {
-		#if __LITTLE_ENDIAN__
+		if isLittleEndian {
 			if let rsd = rawSoundData(theSet) {
-			if (theSet.outPutBits == 16) {
-			let sndSize = rsd.length;
-			let bePtr = UnsafeMutablePointer<UInt16>(rsd.mutableBytes)
-			dispatch_apply(UInt(sndSize) / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
-			let iInt = Int(i)
-			bePtr[iInt] = bePtr[iInt].bigEndian
-			return
-			})
-			}
-			return rsd.copy() as NSData
+				if (theSet.outPutBits == 16) {
+					let sndSize = rsd.length;
+					let bePtr = UnsafeMutablePointer<UInt16>(rsd.mutableBytes)
+					dispatch_apply(UInt(sndSize) / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
+						let iInt = Int(i)
+						bePtr[iInt] = bePtr[iInt].bigEndian
+						return
+					})
+				}
+				return (rsd.copy() as NSData)
 			} else {
-			return nil
+				return nil
 			}
-			#else
+		} else {
 			return (rawSoundData(theSet)?.copy() as NSData)
-		#endif
+		}
 	}
 	
 	func rawLESoundData(theSet: MADDriverSettings) -> NSData? {
-		#if __BIG_ENDIAN__
+		if !isLittleEndian {
 			if let rsd = rawSoundData(theSet) {
-			if (theSet.outPutBits == 16) {
-			let sndSize = rsd!.length;
-			let bePtr = UnsafeMutablePointer<UInt16>(rsd.mutableBytes)
-			dispatch_apply(UInt(sndSize) / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
-			let iInt = Int(i)
-			bePtr[iInt] = bePtr[iInt].littleEndian
-			return
-			})
-			}
-			return rsd.copy() as NSData
+				if (theSet.outPutBits == 16) {
+					let sndSize = rsd.length;
+					let bePtr = UnsafeMutablePointer<UInt16>(rsd.mutableBytes)
+					dispatch_apply(UInt(sndSize) / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
+						let iInt = Int(i)
+						bePtr[iInt] = bePtr[iInt].littleEndian
+						return
+					})
+				}
+				return (rsd.copy() as NSData)
 			} else {
-			return nil
+				return nil
 			}
-			#else
-			return (rawSoundData(theSet)?.copy() as NSData)
-		#endif
+		} else {
+			return rawSoundData(theSet)?.copy() as NSData?
+		}
 	}
 	
 	private func applyMetadataToFileID(theID: AudioFileID) {
