@@ -23,6 +23,6 @@
 	<key>MADPlugMenuName</key>
 	<string>Length</string>
 	<key>NSPrincipalClass</key>
-	<string>LengthWindowController</string>
+	<string>PPLengthPlug</string>
 </dict>
 </plist>

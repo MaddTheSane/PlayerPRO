@@ -12,4 +12,5 @@
 @property int dataSize;
 @property int samplesNumCount;
 @property BOOL isNewSize;
+@property (weak) IBOutlet NSTextField *samplesCount;
 @end
