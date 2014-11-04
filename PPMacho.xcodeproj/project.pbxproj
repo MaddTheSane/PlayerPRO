@@ -6878,9 +6878,9 @@
 				"$(SRCROOT)/.git/HEAD",
 			);
 			outputPaths = (
-				"PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist",
-				"Cocoa-Info.plistvers.plist",
-				"iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plistvers.plist",
+				"$(SRCROOT)/PlayerPRO Player/PlayerPRO Player-Info.plistvers.plist",
+				"$(SRCROOT)/Cocoa-Info.plistvers.plist",
+				"$(SRCROOT)/iOS PlayerPRO Player/iOS PlayerPRO Player-Info.plistvers.plist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
