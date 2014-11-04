@@ -15,11 +15,20 @@ class LengthWindowController: NSWindowController {
 	@IBOutlet weak var theCurrentBox: NSBox!
 	@IBOutlet weak var theNewBox: NSBox!
 	@IBOutlet weak var lengthCompensationMatrix: NSMatrix!
+	
+	dynamic var changeRate = false
+	
 	var selectionRange = NSRange(location: 0, length: 0)
 	var stereoMode = false
 	var currentBlock: PPPlugErrorBlock!
 	var theData: PPSampleObject!
 
+	enum LengthCompensation: Int {
+	case MoveLeft
+		case MoveRight
+		case Stretch
+	}
+	
 	override func windowDidLoad() {
 		super.windowDidLoad()
 
@@ -28,9 +37,23 @@ class LengthWindowController: NSWindowController {
 		self.theNewBox.contentView = self.newSize.view
 		currentSize.isNewSize = false
 		newSize.isNewSize = true
+		
+		var temp = theData.data.length
+		currentSize.dataSize = temp
+		newSize.dataSize = temp
+		
+		if (theData.stereo) {
+			temp /= 2;
+		}
+		if (theData.amplitude == 16) {
+			temp /= 2;
+		}
+		currentSize.samplesNumCount = temp
+		newSize.samplesNumCount = temp
 	}
 	
 	@IBAction func okay(sender: AnyObject?) {
+		var newSize = 0
 		NSApplication.sharedApplication().endSheet(self.window!)
 		currentBlock(.NoErr)
 	}
@@ -50,7 +73,7 @@ class LengthWindowController: NSWindowController {
 		var tempR = 0
 		var realsrcSize = srcSize
 		var left = 0
-		var right = 0
+		//var right = 0
 		var pos = 0
 		var newSize = dstSize
 		
@@ -68,7 +91,7 @@ class LengthWindowController: NSWindowController {
 		case 8:
 			for (var x = 0; x < newSize; x++) {
 				pos			= (x * srcSize << LRVAL) / dstSize
-				right		= pos & ((1 << LRVAL)-1)
+				var right		= pos & ((1 << LRVAL) - 1)
 				left		= (1 << LRVAL) - right
 				
 				if (stereoMode) {
@@ -104,9 +127,9 @@ class LengthWindowController: NSWindowController {
 			}
 			
 		case 16:
-			for (var x = 0; x < newSize/2; x++) {
+			for (var x = 0; x < newSize / 2; x++) {
 				pos			= (x * srcSize << LRVAL) / dstSize
-				right		= pos & ((1 << LRVAL)-1)
+				let right		= pos & ((1 << LRVAL) - 1)
 				left		= (1 << LRVAL) - right
 				
 				if (stereoMode) {
@@ -114,7 +137,7 @@ class LengthWindowController: NSWindowController {
 					pos /= 2
 					pos *= 2
 					
-					if (2 + pos >= realsrcSize/2) {
+					if (2 + pos >= realsrcSize / 2) {
 					} else {
 						tempL = (left * Int(src16[pos]) + right * Int(src16[2 + pos])) >> LRVAL
 					}
@@ -123,7 +146,7 @@ class LengthWindowController: NSWindowController {
 					
 					x++;
 					
-					if (3 + pos >= realsrcSize/2) {
+					if (3 + pos >= realsrcSize / 2) {
 					} else {
 						tempR = (left * Int(src16[1 + pos]) + right * Int(src16[3 + pos])) >> LRVAL
 					}
@@ -132,7 +155,7 @@ class LengthWindowController: NSWindowController {
 				} else {
 					pos >>= LRVAL;
 					
-					if (1 + pos >= realsrcSize/2) {
+					if (1 + pos >= realsrcSize / 2) {
 					} else {
 						tempL = (left * Int(src16[pos]) + right * Int(src16[1 + pos])) >> LRVAL
 					}

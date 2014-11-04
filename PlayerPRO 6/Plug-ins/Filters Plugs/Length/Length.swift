@@ -25,6 +25,13 @@ import PlayerPROKit.PPPlugIns
 	}
 	
 	public func beginRunWithData(theData: PPSampleObject!, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver!, parentWindow document: NSWindow!, handler handle: PPPlugErrorBlock!) {
+		var controller = LengthWindowController(windowNibName: "LengthWindowController")
+		controller.theData = theData
+		controller.selectionRange = selRange
+		controller.stereoMode = StereoMode
 		
+		document.beginSheet(controller.window!, completionHandler: { (returnCode) -> Void in
+			
+		})
 	}
 }
