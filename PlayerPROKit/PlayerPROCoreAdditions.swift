@@ -137,7 +137,6 @@ public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
 	return true
 }
 
-// MARK: Bridges to more modern Swift code.
 public let MadID = StringToOSType("MADK")
 
 // MARK: PlayerPRO MAD data types
@@ -189,6 +188,14 @@ extension MADInfoRec: DebugPrintable {
 	}
 }
 
+public let maximumPanning: MADByte = 64
+public let minimumVolume: MADByte = 0
+public let noFineTune: UInt16 = 8363
+public let maximumVolume: MADByte = 64
+public let maximumChannelVolume: MADByte = 128
+public let maximumArpeggio: Int32 = 3
+public let equalizerPacketElements = 512
+
 extension PlugInfo {
 	public var importer: Bool {
 			switch (self.mode) {
@@ -211,7 +218,7 @@ extension PlugInfo {
 	}
 	
 	public var plugInURL: NSURL {
-		return CFBundleCopyBundleURL(file.takeUnretainedValue()) as NSURL
+		return CFBundleCopyBundleURL(file.takeUnretainedValue())
 	}
 	
 	public var plugInBundle: NSBundle? {
@@ -274,8 +281,8 @@ extension sData32 {
 		self.size = 0
 		self.loopBeg = 0
 		self.loopSize = 0
-		self.vol = sData.maximumVolume
-		self.c2spd = sData.noFineTune
+		self.vol = maximumVolume
+		self.c2spd = noFineTune
 		self.loopType = .Classic
 		self.amp = 8
 		self.relNote = 0
@@ -302,10 +309,6 @@ extension sData32 {
 }
 
 extension sData {
-	public static let noFineTune: UInt16 = 8363
-	public static let minimumVolume: MADByte = 0
-	public static let maximumVolume: MADByte = 64
-
 	public var toSData32 : sData32 {
 		var toRet = sData32()
 		toRet.size = self.size
@@ -326,8 +329,8 @@ extension sData {
 		self.size = 0
 		self.loopBeg = 0
 		self.loopSize = 0
-		self.vol = sData.maximumVolume
-		self.c2spd = sData.noFineTune
+		self.vol = maximumVolume
+		self.c2spd = noFineTune
 		self.loopType = .Classic
 		self.amp = 8
 		self.relNote = 0

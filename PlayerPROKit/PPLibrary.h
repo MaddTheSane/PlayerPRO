@@ -38,9 +38,9 @@ __END_DECLS
 - (PPLibraryObject *)objectAtIndexedSubscript:(NSInteger)index;
 @property (readonly) NSUInteger pluginCount;
 
-- (MADErr)identifyFileAtPath:(NSString*)apath type:(out char*)atype;
+- (MADErr)identifyFileAtPath:(NSString*)apath type:(char*)atype;
 - (MADErr)identifyFileAtPath:(NSString*)apath stringType:(out NSString* __autoreleasing *)atype;
-- (MADErr)identifyFileAtURL:(NSURL*)apath type:(out char*)atype;
+- (MADErr)identifyFileAtURL:(NSURL*)apath type:(char*)atype;
 - (MADErr)identifyFileAtURL:(NSURL*)apath stringType:(out NSString* __autoreleasing *)atype;
 
 - (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(in const char*)atype info:(MADInfoRec*)infoRec;

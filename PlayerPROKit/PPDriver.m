@@ -350,7 +350,7 @@
 	return [self initWithLibrary:theLib settings:&theSet error:theErr];
 }
 
-- (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out NSError* __autoreleasing*)theErr
+- (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(inout MADDriverSettings *)theSettings error:(out NSError* __autoreleasing*)theErr
 {
 	if (self = [super init]) {
 		if (theErr)
@@ -376,8 +376,9 @@
 - (PPMusicObject *)loadMusicFile:(NSString *)path
 {
 	PPMusicObject *theMus = [[PPMusicObject alloc] initWithPath:path library:self.theLibrary];
-	if (theMus)
+	if (theMus) {
 		[theMus attachToDriver:self];
+	}
 	
 	return theMus;
 }
@@ -385,8 +386,9 @@
 - (PPMusicObject *)loadMusicURL:(NSURL*)url
 {
 	PPMusicObject *theMus = [[PPMusicObject alloc] initWithURL:url library:self.theLibrary];
-	if (theMus)
+	if (theMus) {
 		[theMus attachToDriver:self];
+	}
 	
 	return theMus;
 }

@@ -29,7 +29,7 @@
 
 - (instancetype)init UNAVAILABLE_REASON("PPDriver cannot be inited without a library");
 - (instancetype)initWithLibrary:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)theErr;
-- (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(MADDriverSettings *)theSettings error:(out NSError* __autoreleasing*)theErr NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(inout MADDriverSettings *)theSettings error:(out NSError* __autoreleasing*)theErr NS_DESIGNATED_INITIALIZER;
 
 - (MADErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett;
 

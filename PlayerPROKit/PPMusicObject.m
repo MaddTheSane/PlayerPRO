@@ -36,7 +36,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	MADMusic *currentMusic;
 	NSString *internalFileName;
 	NSString *madInfo;
-	NSDictionary* madClasses;
 	NSMutableArray	*_instruments;
 }
 @property (readwrite, strong) NSURL *filePath;
@@ -190,7 +189,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 - (NSArray *)instruments
 {
 	if (!_instruments) {
-		NSMutableArray *array = [NSMutableArray new];
+		NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU];
 		for (NSInteger i = 0; i < MAXINSTRU; i++) {
 			PPInstrumentObject *immIns = [[PPInstrumentObject alloc] initWithMusicStruct:currentMusic atIndex:i];
 			[array addObject:immIns];
@@ -298,13 +297,33 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib
 {
+	char type[5];
+	if (MADMusicIdentifyCFURL(theLib._madLib, type, (__bridge CFURLRef)(url)) != MADNoErr) {
+		return nil;
+	}
+	
+	return self = [self initWithURL:url type:type library:theLib];
+}
+
+- (instancetype)initWithPath:(NSString *)path type:(in const char*)type library:(PPLibrary *)theLib
+{
+	return self = [self initWithURL:[NSURL fileURLWithPath:path] type:type library:theLib];
+}
+
+- (instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type library:(PPLibrary *)theLib
+{
+	return self = [self initWithURL:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] library:theLib];
+}
+
+- (instancetype)initWithPath:(NSString *)url stringType:(NSString*)type library:(PPLibrary *)theLib
+{
+	return self = [self initWithPath:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] library:theLib];
+}
+
+- (instancetype)initWithURL:(NSURL *)url type:(in const char*)type library:(PPLibrary *)theLib
+{
 	if (self = [super init]) {
-		char type[5];
-		CFURLRef tmpURL = (__bridge CFURLRef)(url);
-		if (MADMusicIdentifyCFURL(theLib._madLib, type, tmpURL) != MADNoErr) {
-			return nil;
-		}
-		if (MADLoadMusicCFURLFile(theLib._madLib, &currentMusic, type, tmpURL) != MADNoErr) {
+		if (MADLoadMusicCFURLFile(theLib._madLib, &currentMusic, (char*)type, (__bridge CFURLRef)(url)) != MADNoErr) {
 			return nil;
 		}
 		self.filePath = url;
@@ -322,12 +341,35 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return self = [self initWithMusicStruct:CreateFreeMADK() copy:NO];
 }
 
+- (instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type driver:(PPDriver *)theDriv
+{
+	return [self initWithURL:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] driver:theDriv];
+}
+
+- (instancetype)initWithPath:(NSString *)url stringType:(NSString*)type driver:(PPDriver *)theDriv
+{
+	return [self initWithPath:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] driver:theDriv];
+}
+
+- (instancetype)initWithURL:(NSURL *)url type:(in const char*)type driver:(PPDriver *)theLib
+{
+	if (self = [self initWithURL:url type:type library:theLib.theLibrary]) {
+		[self attachToDriver:theLib];
+	}
+	return nil;
+}
+
 - (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib
 {
 	if (self = [self initWithURL:url library:theLib.theLibrary]) {
 		[self attachToDriver:theLib];
 	}
 	return nil;
+}
+
+- (instancetype)initWithPath:(NSString *)url type:(in const char*)type driver:(PPDriver *)theLib
+{
+	return [self initWithURL:[NSURL fileURLWithPath:url] type:type driver:theLib];
 }
 
 - (instancetype)initWithPath:(NSString *)url driver:(PPDriver *)theLib
@@ -384,15 +426,15 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	PPMusicObject *copyWrap = [[PPMusicObject alloc] init];
+	PPMusicObject *copyWrap = [[PPMusicObject alloc] initWithMusicStruct:currentMusic];
 	if (self.filePath) {
 		copyWrap.filePath = self.filePath;
 	}
 	
 	copyWrap.madInformation = self.madInformation;
-	copyWrap.internalFileName = internalFileName;
-	copyWrap.instruments = [[NSMutableArray alloc] initWithArray:_instruments copyItems:YES];
-	copyWrap.patterns = [[NSMutableArray alloc] initWithArray:_patterns copyItems:YES];
+	copyWrap.internalFileName = self.internalFileName;
+	//copyWrap.instruments = [[NSMutableArray alloc] initWithArray:_instruments copyItems:YES];
+	//copyWrap.patterns = [[NSMutableArray alloc] initWithArray:_patterns copyItems:YES];
 	return copyWrap;
 }
 
@@ -415,6 +457,17 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	}
 }
 #endif
+
+- (NSArray *)sDatas {
+	NSMutableArray *ourArray = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU * MAXSAMPLE];
+	for (PPInstrumentObject *instrument in self.instruments) {
+		for (PPSampleObject *sample in instrument.samples) {
+			[ourArray addObject:sample];
+		}
+	}
+	
+	return [ourArray copy];
+}
 
 - (BOOL)addInstrument:(PPInstrumentObject*)theIns
 {

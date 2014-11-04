@@ -24,7 +24,7 @@
 @property (readonly) int partitionLength;
 @property (readonly) short totalTracks;
 @property (readonly) short totalInstruments;
-@property (readonly, strong, nonatomic) NSMutableArray *sDatas;
+@property (readonly, strong, nonatomic) NSArray *sDatas;
 @property (readonly, strong, nonatomic) NSArray *instruments;
 @property (readonly, strong, nonatomic) NSMutableArray *patterns;
 @property (readonly, strong, nonatomic) NSMutableArray *buses;
@@ -48,14 +48,32 @@
 - (instancetype)initWithPath:(NSString *)url;
 
 // Creates a music object from any supported tracker type.
-- (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib;
 - (instancetype)initWithPath:(NSString *)url library:(PPLibrary *)theLib;
+
+// Creates a music object from the specified music type.
+// If the type isn't available, it returns nil.
+- (instancetype)initWithURL:(NSURL *)url type:(in const char*)type library:(PPLibrary *)theLib NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithPath:(NSString *)path type:(in const char*)type library:(PPLibrary *)theLib;
+- (instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type library:(PPLibrary *)theLib;
+- (instancetype)initWithPath:(NSString *)path stringType:(NSString*)type library:(PPLibrary *)theLib;
 
 // Creates a music object from any supported tracker type, also attaching a driver to the music.
 - (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib;
-- (instancetype)initWithPath:(NSString *)url driver:(PPDriver *)theLib;
+- (instancetype)initWithPath:(NSString *)path driver:(PPDriver *)theLib;
+- (instancetype)initWithURL:(NSURL *)url type:(in const char*)type driver:(PPDriver *)theLib;
+- (instancetype)initWithPath:(NSString *)path type:(in const char*)type driver:(PPDriver *)theLib;
+- (instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type driver:(PPDriver *)theDriv;
+- (instancetype)initWithPath:(NSString *)path stringType:(NSString*)type driver:(PPDriver *)theDriv;
 
+/*!
+ *	Initializes a music object based on a music struct, copying if specified.
+ */
 - (instancetype)initWithMusicStruct:(MADMusic*)theStruct copy:(BOOL)copyData NS_DESIGNATED_INITIALIZER;
+
+/*!
+ *	Initializes a music object based on a music struct, copying it.
+ */
 - (instancetype)initWithMusicStruct:(MADMusic*)theStruct;
 
 + (MADErr)info:(MADInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib;
