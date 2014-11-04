@@ -142,31 +142,22 @@ public let MadID = StringToOSType("MADK")
 
 // MARK: PlayerPRO MAD data types
 
-public func NewMADDriverSettings(setToDefault: Bool = true) -> MADDriverSettings {
-	var ourSett = MADDriverSettings()
-	
-	if setToDefault {
-		ourSett.resetToBestDriver()
-	}
-	
-	return ourSett
-}
-
 extension MADDriverSettings: DebugPrintable, Equatable {
 	public init() {
-		self.driverMode = .CoreAudioDriver
-		self.numChn = 4
-		self.outPutBits = 16
-		self.outPutMode = .DeluxeStereoOutPut
-		self.outPutRate = 44100
-		self.MicroDelaySize = 25
-		self.ReverbSize = 25
-		self.ReverbStrength = 25
-		self.oversampling = 1
-		self.TickRemover = false
-		self.surround = false
-		self.Reverb = false
-		self.repeatMusic = false
+		numChn			= 4
+		outPutBits		= 16
+		outPutMode		= .DeluxeStereoOutPut
+		outPutRate		= 44100
+		MicroDelaySize	= 25
+		ReverbSize		= 100
+		ReverbStrength	= 20
+		oversampling	= 1
+		TickRemover		= false
+		surround		= false
+		Reverb			= false
+		repeatMusic		= true
+		//Just going to use CoreAudio
+		driverMode		= .CoreAudioDriver;
 	}
 
 	public mutating func resetToBestDriver() {

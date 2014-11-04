@@ -73,6 +73,6 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 @protocol PPComplexImportPlugInterface <NSObject>
 - (instancetype)initForPlugIn;
 
-- (BOOL)canImportURL:(NSURL*)theURL error:(out NSError**)outErr;
+- (BOOL)canImportURL:(NSURL*)theURL error:(out NSError * __autoreleasing*)outErr;
 - (void)beginImportOfURL:(NSURL*)theURL withHandler:(PPComplexImportHandler)handler;
 @end

@@ -54,7 +54,7 @@ import AudioToolbox
 
 	private func resetPlayerPRODriver() {
 		var returnerr = MADErr.NoErr;
-		var theSett = NewMADDriverSettings()
+		var theSett = MADDriverSettings()
 		let defaults = NSUserDefaults.standardUserDefaults()
 		
 		//TODO: Sanity Checking
@@ -98,7 +98,7 @@ import AudioToolbox
 	}
 	
 	override init() {
-		var drivSettings = NewMADDriverSettings()
+		var drivSettings = MADDriverSettings()
 		let defaults = NSUserDefaults.standardUserDefaults()
 		
 		//TODO: Sanity Checking

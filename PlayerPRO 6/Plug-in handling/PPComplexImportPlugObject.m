@@ -43,7 +43,7 @@
 	[self.plugInterface beginImportOfURL:theURL withHandler:handler];
 }
 
-- (BOOL)canImportURL:(NSURL*)theURL error:(out NSError**)outErr
+- (BOOL)canImportURL:(NSURL*)theURL error:(out NSError*__autoreleasing*)outErr
 {
 	return [_plugInterface canImportURL:theURL error:outErr];
 }

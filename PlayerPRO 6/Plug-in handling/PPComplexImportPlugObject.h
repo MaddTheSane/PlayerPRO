@@ -21,7 +21,7 @@
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithBundle:(NSBundle*)ourBundle NS_DESIGNATED_INITIALIZER;
 
-- (BOOL)canImportURL:(NSURL*)theURL error:(out NSError**)outErr;
+- (BOOL)canImportURL:(NSURL*)theURL error:(out NSError*__autoreleasing*)outErr;
 - (void)beginImportOfURL:(NSURL*)theURL withHandler:(PPComplexImportHandler)handler;
 
 @end

@@ -32,7 +32,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 	@IBOutlet weak var waveController:		WaveViewController!
 	
 	weak var currentDocument: PPDocument!
-	private var exportSettings = NewMADDriverSettings()
+	private var exportSettings = MADDriverSettings()
 
 	let exportController = SoundSettingsViewController.newSoundSettingWindow()!
 
