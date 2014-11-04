@@ -24,10 +24,10 @@ class LengthWindowController: NSWindowController {
 		super.windowDidLoad()
 
 		// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-		self.theCurrentBox.contentView = self.currentSize.view;
-		self.theNewBox.contentView = self.newSize.view;
-		currentSize.isNewSize = false;
-		newSize.isNewSize = true;
+		self.theCurrentBox.contentView = self.currentSize.view
+		self.theNewBox.contentView = self.newSize.view
+		currentSize.isNewSize = false
+		newSize.isNewSize = true
 	}
 	
 	@IBAction func okay(sender: AnyObject?) {
@@ -61,17 +61,15 @@ class LengthWindowController: NSWindowController {
 		let dst16 = UnsafeMutablePointer<Int16>(dst)
 		let dst8 = UnsafeMutablePointer<Int8>(dst)
 		
-		realsrcSize = srcSize;
-		
-		srcSize /= 100;
-		dstSize /= 100;
+		srcSize /= 100
+		dstSize /= 100
 		
 		switch (amp) {
 		case 8:
 			for (var x = 0; x < newSize; x++) {
-				pos			= (x * srcSize << LRVAL) / dstSize;
-				right		= pos & ((1 << LRVAL)-1);
-				left		= (1 << LRVAL) - right;
+				pos			= (x * srcSize << LRVAL) / dstSize
+				right		= pos & ((1 << LRVAL)-1)
+				left		= (1 << LRVAL) - right
 				
 				if (stereoMode) {
 					pos >>= LRVAL
@@ -85,7 +83,7 @@ class LengthWindowController: NSWindowController {
 					
 					dst8[x] = Int8(tempL)
 					
-					x++;
+					x++
 					
 					if (3 + pos >= realsrcSize) {
 					} else {
@@ -94,7 +92,7 @@ class LengthWindowController: NSWindowController {
 					
 					dst8[x] = Int8(tempR)
 				} else {
-					pos >>= LRVAL;
+					pos >>= LRVAL
 					
 					if (1 + pos >= realsrcSize)	{
 					} else {
@@ -104,7 +102,6 @@ class LengthWindowController: NSWindowController {
 					dst8[x] = Int8(tempL)
 				}
 			}
-			break;
 			
 		case 16:
 			for (var x = 0; x < newSize/2; x++) {
@@ -143,15 +140,12 @@ class LengthWindowController: NSWindowController {
 					dst16[x] = Int16(tempR)
 				}
 			}
-			break;
 			
 		default:
 			free(dst)
 			return nil
 		}
 		
-		return dst;
+		return dst
 	}
-
-
 }

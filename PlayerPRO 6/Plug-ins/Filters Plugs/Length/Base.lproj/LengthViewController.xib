@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="LengthViewController">
+        <customObject id="-2" userLabel="File's Owner" customClass="LengthViewController" customModule="Length" customModuleProvider="target">
             <connections>
                 <outlet property="samplesCount" destination="3" id="28"/>
                 <outlet property="view" destination="1" id="2"/>
