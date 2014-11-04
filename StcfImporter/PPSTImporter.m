@@ -7,7 +7,7 @@
 //
 
 #import "PPSTImporter.h"
-@import CoreServices.CarbonCore;
+#include <Carbon/Carbon.h>
 
 static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 {
@@ -63,6 +63,9 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	if (CFURLGetFSRef((__bridge CFURLRef)toOpen, &theRef) == NO) {
 		return fnfErr;
 	}
+	if (FSIsFSRefValid(&theRef) == false) {
+		return fnfErr;
+	}
 	refNum = FSOpenResFile(&theRef, fsRdPerm);
 	OSErr resErr = ResError();
 	if (resErr) {
@@ -110,6 +113,27 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 		
 		NSString *CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman));
 		NSString *CFaStr2 = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman));
+		if (CFaStr == nil && CFaStr2 == nil) {
+			// Perhaps the string is in another encoding. Try using the system's encoding to test this theory.
+			CFStringEncoding MacCompatible = CFStringGetMostCompatibleMacStringEncoding(CFStringGetSystemEncoding());
+			CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, MacCompatible));
+			CFaStr2 = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, MacCompatible));
+			if (CFaStr == nil && CFaStr2 == nil) {
+				// Maybe GetApplicationTextEncoding can get the right format?
+				MacCompatible = GetApplicationTextEncoding();
+				CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, MacCompatible));
+				CFaStr2 = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, MacCompatible));
+			}
+		}
+		
+		// Final check to make sure we do have string values.
+		// If we don't have a valid object pointer, the XPC service will crash.
+		if (!CFaStr) {
+			CFaStr = @"";
+		}
+		if (!CFaStr2) {
+			CFaStr2 = @"";
+		}
 		
 		NSString *together = [@[CFaStr, CFaStr2] componentsJoinedByString:@":"];
 		
