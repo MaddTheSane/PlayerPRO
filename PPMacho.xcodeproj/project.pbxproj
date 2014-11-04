@@ -189,9 +189,6 @@
 		552C441617DFE24200AFCB5C /* AmplitudeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C441417DFE24200AFCB5C /* AmplitudeController.m */; };
 		552C442017DFE35700AFCB5C /* EchoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C441E17DFE35700AFCB5C /* EchoWindowController.m */; };
 		552C442517DFE3EF00AFCB5C /* FadeWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C442317DFE3EF00AFCB5C /* FadeWindowController.m */; };
-		552C442A17DFE48A00AFCB5C /* LengthWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C442817DFE48A00AFCB5C /* LengthWindowController.m */; };
-		552C442B17DFE48A00AFCB5C /* LengthWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C442917DFE48A00AFCB5C /* LengthWindowController.xib */; };
-		552C442F17DFE4B800AFCB5C /* LengthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C442D17DFE4B800AFCB5C /* LengthViewController.m */; };
 		552C443917DFE9D600AFCB5C /* SamplingRateWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C443717DFE9D600AFCB5C /* SamplingRateWindowController.m */; };
 		552C443B17DFEF6400AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		552C443C17DFEF7D00AFCB5C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
@@ -469,6 +466,10 @@
 		5582136517E4225500B84F51 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		5582136617E4225800B84F51 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
 		5582136717E4225A00B84F51 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		558229BD1A09709C0065B3E5 /* LengthWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 558229BF1A09709C0065B3E5 /* LengthWindowController.xib */; };
+		558229C11A0970D30065B3E5 /* Length.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558229C01A0970D30065B3E5 /* Length.swift */; };
+		558229C31A09720F0065B3E5 /* LengthWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558229C21A09720F0065B3E5 /* LengthWindowController.swift */; };
+		558229C51A09723B0065B3E5 /* LengthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558229C41A09723B0065B3E5 /* LengthViewController.swift */; };
 		5583157919FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583157819FECB92006B636E /* GeneralSwiftHelpers.swift */; };
 		5583157A19FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583157819FECB92006B636E /* GeneralSwiftHelpers.swift */; };
 		5583157B19FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583157819FECB92006B636E /* GeneralSwiftHelpers.swift */; };
@@ -512,7 +513,6 @@
 		559170A819C26E1D00998D7F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 559170A719C26E1D00998D7F /* main.m */; };
 		559170AB19C26E1D00998D7F /* PPCoreInstrumentPlugBridge.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 5591709F19C26E1C00998D7F /* PPCoreInstrumentPlugBridge.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		55993EF619A340FF00C2078E /* PPRunAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55993EF519A340FF00C2078E /* PPRunAlert.swift */; };
-		559953C21A08AE3F006D7960 /* PPLengthPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 559953C11A08AE3F006D7960 /* PPLengthPlug.m */; };
 		559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559C4188183EB4AB004A073C /* QuickLook.framework */; };
 		559C418E183EB4AB004A073C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		559C4194183EB4AB004A073C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 559C4192183EB4AB004A073C /* InfoPlist.strings */; };
@@ -2221,11 +2221,6 @@
 		552C441E17DFE35700AFCB5C /* EchoWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EchoWindowController.m; sourceTree = "<group>"; };
 		552C442217DFE3EF00AFCB5C /* FadeWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FadeWindowController.h; sourceTree = "<group>"; };
 		552C442317DFE3EF00AFCB5C /* FadeWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FadeWindowController.m; sourceTree = "<group>"; };
-		552C442717DFE48A00AFCB5C /* LengthWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LengthWindowController.h; sourceTree = "<group>"; };
-		552C442817DFE48A00AFCB5C /* LengthWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LengthWindowController.m; sourceTree = "<group>"; };
-		552C442917DFE48A00AFCB5C /* LengthWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LengthWindowController.xib; sourceTree = "<group>"; };
-		552C442C17DFE4B800AFCB5C /* LengthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LengthViewController.h; sourceTree = "<group>"; };
-		552C442D17DFE4B800AFCB5C /* LengthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LengthViewController.m; sourceTree = "<group>"; };
 		552C443117DFE84700AFCB5C /* MixWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MixWindowController.h; sourceTree = "<group>"; };
 		552C443217DFE84700AFCB5C /* MixWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MixWindowController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		552C443317DFE84700AFCB5C /* MixWindowController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MixWindowController.xib; sourceTree = "<group>"; };
@@ -2486,6 +2481,10 @@
 		557EF734168CFD55001BF077 /* PPInstrumentImporterObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentImporterObject.m; sourceTree = "<group>"; };
 		55801EAF13D1ED9A007E24FC /* NSColor+PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+PPPreferences.h"; sourceTree = "<group>"; };
 		55801EB013D1ED9A007E24FC /* NSColor+PPPreferences.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+PPPreferences.m"; sourceTree = "<group>"; };
+		558229BE1A09709C0065B3E5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LengthWindowController.xib; sourceTree = "<group>"; };
+		558229C01A0970D30065B3E5 /* Length.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Length.swift; sourceTree = "<group>"; };
+		558229C21A09720F0065B3E5 /* LengthWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LengthWindowController.swift; sourceTree = "<group>"; };
+		558229C41A09723B0065B3E5 /* LengthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LengthViewController.swift; sourceTree = "<group>"; };
 		5583157819FECB92006B636E /* GeneralSwiftHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSwiftHelpers.swift; sourceTree = "<group>"; };
 		55846BC519C3747900D26F94 /* PPInstrumentImporterCompatObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporterCompatObject.h; sourceTree = "<group>"; };
 		55846BC619C3747900D26F94 /* PPInstrumentImporterCompatObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentImporterCompatObject.m; sourceTree = "<group>"; };
@@ -2544,8 +2543,6 @@
 		55981C5111EE370D00656EE3 /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
 		55981C5411EE375400656EE3 /* preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = preferences.xib; sourceTree = "<group>"; };
 		55993EF519A340FF00C2078E /* PPRunAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPRunAlert.swift; sourceTree = "<group>"; };
-		559953C01A08AE3F006D7960 /* PPLengthPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLengthPlug.h; sourceTree = "<group>"; };
-		559953C11A08AE3F006D7960 /* PPLengthPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLengthPlug.m; sourceTree = "<group>"; };
 		559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPQuickView.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		559C4188183EB4AB004A073C /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
 		559C4191183EB4AB004A073C /* PPQuickView-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PPQuickView-Info.plist"; sourceTree = "<group>"; };
@@ -3561,13 +3558,10 @@
 			children = (
 				554E101210D6C79E00BB619C /* Length.c */,
 				554E101310D6C79E00BB619C /* Length.r */,
-				559953C01A08AE3F006D7960 /* PPLengthPlug.h */,
-				559953C11A08AE3F006D7960 /* PPLengthPlug.m */,
-				552C442717DFE48A00AFCB5C /* LengthWindowController.h */,
-				552C442817DFE48A00AFCB5C /* LengthWindowController.m */,
-				552C442C17DFE4B800AFCB5C /* LengthViewController.h */,
-				552C442D17DFE4B800AFCB5C /* LengthViewController.m */,
-				552C442917DFE48A00AFCB5C /* LengthWindowController.xib */,
+				558229C01A0970D30065B3E5 /* Length.swift */,
+				558229C21A09720F0065B3E5 /* LengthWindowController.swift */,
+				558229C41A09723B0065B3E5 /* LengthViewController.swift */,
+				558229BF1A09709C0065B3E5 /* LengthWindowController.xib */,
 				55771DE11873856E00AED8DC /* LengthViewController.xib */,
 				557DE5CA10E087C300177B4C /* Length-Info.plist */,
 			);
@@ -6614,7 +6608,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				552C442B17DFE48A00AFCB5C /* LengthWindowController.xib in Resources */,
+				558229BD1A09709C0065B3E5 /* LengthWindowController.xib in Resources */,
 				55771DDF1873856E00AED8DC /* LengthViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7267,9 +7261,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				559953C21A08AE3F006D7960 /* PPLengthPlug.m in Sources */,
-				552C442A17DFE48A00AFCB5C /* LengthWindowController.m in Sources */,
-				552C442F17DFE4B800AFCB5C /* LengthViewController.m in Sources */,
+				558229C51A09723B0065B3E5 /* LengthViewController.swift in Sources */,
+				558229C11A0970D30065B3E5 /* Length.swift in Sources */,
+				558229C31A09720F0065B3E5 /* LengthWindowController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8681,6 +8675,14 @@
 				55149C581832CEA3009C850B /* en */,
 			);
 			name = PPToneGeneratorController.xib;
+			sourceTree = "<group>";
+		};
+		558229BF1A09709C0065B3E5 /* LengthWindowController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				558229BE1A09709C0065B3E5 /* Base */,
+			);
+			name = LengthWindowController.xib;
 			sourceTree = "<group>";
 		};
 		5591708419C23C0600998D7F /* InfoPlist.strings */ = {
@@ -10134,6 +10136,7 @@
 		557DE84010E08D9E00177B4C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -10142,6 +10145,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -10150,6 +10154,7 @@
 		557DE84110E08D9E00177B4C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -10158,6 +10163,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
