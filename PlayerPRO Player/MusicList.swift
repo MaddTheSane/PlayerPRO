@@ -229,8 +229,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	private func loadMusicListFromData(theData: NSData) -> Bool {
-		var preList = NSKeyedUnarchiver.unarchiveObjectWithData(theData) as MusicList?
-		if let postList = preList {
+		if let postList = NSKeyedUnarchiver.unarchiveObjectWithData(theData) as MusicList? {
 			lostMusicCount = postList.lostMusicCount
 			loadMusicList(postList.musicList)
 			self.selectedMusic = postList.selectedMusic
@@ -241,8 +240,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	@objc func loadMusicListFromURL(fromURL: NSURL) -> Bool {
-		var listData: NSData? = NSData(contentsOfURL:fromURL)
-		if let unWrappedListData = listData {
+		if let unWrappedListData = NSData(contentsOfURL:fromURL) {
 			return loadMusicListFromData(unWrappedListData)
 		} else {
 			return false
