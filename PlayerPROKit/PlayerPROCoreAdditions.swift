@@ -198,6 +198,52 @@ extension MADInfoRec: DebugPrintable {
 	}
 }
 
+extension PlugInfo {
+	public var importer: Bool {
+			switch (self.mode) {
+			case MADPlugModes.Import.rawValue, MADPlugModes.ImportExport.rawValue:
+				return true
+
+			default:
+				return false
+			}
+	}
+
+	public var exporter: Bool {
+			switch (self.mode) {
+			case MADPlugModes.Export.rawValue, MADPlugModes.ImportExport.rawValue:
+				return true
+
+			default:
+				return false
+			}
+	}
+	
+	public var plugInURL: NSURL {
+		return CFBundleCopyBundleURL(file.takeUnretainedValue()) as NSURL
+	}
+	
+	public var plugInBundle: NSBundle? {
+		return NSBundle(URL: CFBundleCopyBundleURL(file.takeUnretainedValue()))
+	}
+	
+	public var types: [String] {
+		return UTItypes.takeUnretainedValue() as NSArray as [String]
+	}
+	
+	public var fourCharType: MADFourChar {
+		return MADFourChar(type)
+	}
+	
+	public var name: String {
+		return MenuName.takeUnretainedValue()
+	}
+	
+	public var author: String {
+		return AuthorString.takeUnretainedValue()
+	}
+}
+
 public struct MADLibraryGenerator: GeneratorType {
 	private let maxPlugs: Int
 	private var currentPlug = 0
