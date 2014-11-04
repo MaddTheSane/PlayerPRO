@@ -42,7 +42,6 @@
 // ***	PATTERN DESCRIPTION
 // ***	
 
-
 /*!
  *	\struct		Cmd
  *	\abstract	command function used in a pattern
@@ -271,8 +270,7 @@ typedef struct FXBus {
 	bool	Active;
 } FXBus;
 
-typedef struct MADSpec
-{
+typedef struct MADSpec {
 	MADFourChar	MAD;						// Mad Identification
 	char 		name[32];					// Music's name
 	char		infos[INFOSSIZE];			// Informations & Author name of the music

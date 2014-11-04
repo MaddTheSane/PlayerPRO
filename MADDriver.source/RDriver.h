@@ -31,6 +31,12 @@
 
 #include "MAD.h"
 #include <limits.h>
+#ifdef _MAC_H
+#include <CoreFoundation/CFString.h>
+#include <CoreFoundation/CFArray.h>
+#include <CoreFoundation/CFURL.h>
+#include <CoreFoundation/CFBundle.h>
+#endif
 
 ////////////////////////////////////////////////
 
@@ -264,8 +270,7 @@ typedef struct MADMusic {
  *	@constant	NoHardwareDriver
  *				NO HARDWARE CONNECTION, will not produce any sound
  */
-typedef MADENUM(short, MADSoundOutput)
-{
+typedef MADENUM(short, MADSoundOutput) {
 	CoreAudioDriver = 1,
 	DirectSound95NT,
 	Wave95NT,
@@ -285,8 +290,7 @@ typedef MADENUM(short, MADSoundOutput)
  *	@seealso	MADSoundOutput
  *	@seealso	MADSoundDriverList
  */
-typedef MADOPTIONS(unsigned int, MADSoundOutputBit)
-{
+typedef MADOPTIONS(unsigned int, MADSoundOutputBit) {
 	MIDISoundDriverBit	= 1 << MIDISoundDriver,
 	BeOSSoundDriverBit	= 1 << BeOSSoundDriver,
 	DirectSound95NTBit	= 1 << DirectSound95NT,
@@ -299,12 +303,23 @@ typedef MADOPTIONS(unsigned int, MADSoundOutputBit)
 	SoundManagerDriverBit= 1 << SoundManagerDriver
 };
 
-typedef MADENUM(short, MADOutputChannel)
-{
-	MonoOutPut = 1,		// NOT SUPPORTED anymore
-	StereoOutPut,		// NOT SUPPORTED anymore
-	DeluxeStereoOutPut,	// USE THIS ONE ONLY !!!!!!!!!!!!!!
-	PolyPhonic			// Do NOT use it! Standard hardware doesn't support it!
+/*!
+ *	@enum		MADOutputChannel
+ *	@abstract	The output channels to output to
+ *	@constant	MonoOutPut
+ *				NOT SUPPORTED anymore
+ *	@constant	StereoOutPut
+ *				NOT SUPPORTED anymore
+ *	@constant	DeluxeStereoOutPut
+ *				USE THIS ONE ONLY !!!!!!!!!!!!!!
+ *	@constant	PolyPhonic
+ *				Do NOT use this! Standard hardware doesn't support it!
+ */
+typedef MADENUM(short, MADOutputChannel) {
+	MonoOutPut = 1,
+	StereoOutPut,
+	DeluxeStereoOutPut,
+	PolyPhonic
 };
 
 #define oldMonoOutPut MonoOutPut
@@ -425,11 +440,6 @@ typedef MADENUM(MADFourChar, MADPlugModes) {
 #pragma pack(pop)
 
 #ifdef _MAC_H
-
-#include <CoreFoundation/CFString.h>
-#include <CoreFoundation/CFArray.h>
-#include <CoreFoundation/CFURL.h>
-#include <CoreFoundation/CFBundle.h>
 
 typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, MADInfoRec *, MADDriverSettings *);
 

@@ -26,6 +26,14 @@
 #include <esd.h>
 #endif
 
+#ifdef HAVE_PULSEAUDIO
+#warning TODO: import PulseAudio headers
+#endif
+
+#ifdef HAVE_PORTAUDIO
+#warning TODO: import PortAudio headers
+#endif
+
 #ifndef BUILDINGPPRO
 #warning this header should NOT be used outside of PlayerPROCore! The functions and datatypes here may change FOR ANY REASON, including differing compiler includes and defines.
 #endif
@@ -135,9 +143,16 @@ struct MADDriverRec {
 #endif
 	
 #ifdef _ESOUND
-	//TODO: EsounD driver
+	// TODO: EsounD driver
 #endif
 	
+#ifdef HAVE_PULSEAUDIO
+	// TODO: PulseAudio driver
+#endif
+	
+#ifdef HAVE_PORTAUDIO
+	// TODO: PortAudio driver
+#endif
 };
 
 
