@@ -76,7 +76,7 @@
                         </buttonCell>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="80">
-                        <rect key="frame" x="236" y="13" width="60" height="32"/>
+                        <rect key="frame" x="213" y="13" width="83" height="32"/>
                         <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="81">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -84,9 +84,12 @@
 DQ
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="okay:" target="-2" id="nl3-l7-Cy8"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="84">
-                        <rect key="frame" x="153" y="13" width="83" height="32"/>
+                        <rect key="frame" x="130" y="13" width="83" height="32"/>
                         <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="85">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
@@ -94,6 +97,9 @@ DQ
 Gw
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="cancel:" target="-2" id="RTG-3d-Z8o"/>
+                        </connections>
                     </button>
                     <box autoresizesSubviews="NO" title="Box" borderType="none" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="fM6-DB-PLd">
                         <rect key="frame" x="105" y="258" width="188" height="111"/>
@@ -152,6 +158,7 @@ Gw
                     <constraint firstItem="eUt-i6-8Gs" firstAttribute="trailing" secondItem="fM6-DB-PLd" secondAttribute="trailing" id="Kbp-S8-wQX"/>
                     <constraint firstItem="fM6-DB-PLd" firstAttribute="top" secondItem="2" secondAttribute="top" constant="20" symbolic="YES" id="P1q-po-NQX"/>
                     <constraint firstAttribute="trailing" secondItem="fM6-DB-PLd" secondAttribute="trailing" constant="20" symbolic="YES" id="QqT-rr-y6K"/>
+                    <constraint firstItem="80" firstAttribute="width" secondItem="84" secondAttribute="width" id="R6v-IU-UYd"/>
                     <constraint firstItem="eUt-i6-8Gs" firstAttribute="leading" secondItem="fM6-DB-PLd" secondAttribute="leading" id="Sxr-XV-85t"/>
                     <constraint firstItem="eUt-i6-8Gs" firstAttribute="top" secondItem="fM6-DB-PLd" secondAttribute="bottom" constant="8" symbolic="YES" id="T4J-RF-4ee"/>
                     <constraint firstItem="84" firstAttribute="baseline" secondItem="80" secondAttribute="baseline" id="Wy8-ua-h44"/>

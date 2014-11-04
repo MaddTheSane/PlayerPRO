@@ -24,4 +24,9 @@
 	return self;
 }
 
+- (NSString*)nibName
+{
+	return @"LengthViewController";
+}
+
 @end

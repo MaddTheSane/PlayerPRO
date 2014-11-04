@@ -9,8 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 @interface LengthViewController : NSViewController
+@property (weak) IBOutlet NSTextField *samplesCount;
+
 @property int dataSize;
 @property int samplesNumCount;
 @property BOOL isNewSize;
-@property (weak) IBOutlet NSTextField *samplesCount;
 @end
