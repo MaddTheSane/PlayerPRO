@@ -30,3 +30,13 @@ public func ModifyCmdAtRow<X where X: CommandIterator>(row: Int16, track: Int16,
 	aPcmd.modifyCmdAtRow(row, track: track, commandBlock: commandBlock)
 }
 
+public func IterateCommands<X where X: CommandIterator>(inout aPcmd: X, commandBlock block: (inout command: Cmd, row: Int16, track: Int16) -> Bool) {
+	for i in 0 ..< aPcmd.commandLength {
+		for x in 0 ..< aPcmd.commandTracks {
+			var aCmd = aPcmd.getCommand(i, track: x)
+			if block(command: &aCmd, row: i, track: x) {
+				aPcmd.replaceCmd(i, track: x, command: aCmd)
+			}
+		}
+	}
+}
