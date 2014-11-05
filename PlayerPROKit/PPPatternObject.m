@@ -513,7 +513,7 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 
 - (MADErr)importIntPcmdFromPointer:(IntPcmd*)theIntPcmd freeCommandsWhenDone:(BOOL)freeCmds
 {
-	Pcmd *tmpPcmd = MADIntPcmdToPcmd(*theIntPcmd, freeCmds);
+	Pcmd *tmpPcmd = MADIntPcmdToPcmd(theIntPcmd, freeCmds);
 	MADErr iErr = [self importPcmdFromPointer:tmpPcmd];
 	free(tmpPcmd);
 	return iErr;

@@ -97,8 +97,8 @@ PPEXPORT const CFStringRef kMadPlugModeKey;
 
 #pragma mark Swift helpers
 
-PPEXPORT IntPcmd MADPcmdToInt(Pcmd *inVal, bool copyValues);
-PPEXPORT Pcmd *MADIntPcmdToPcmd(IntPcmd inVal, bool freeIntPcmd);
+PPEXPORT IntPcmd *MADPcmdToInt(Pcmd *inVal, bool copyValues);
+PPEXPORT Pcmd *MADIntPcmdToPcmd(IntPcmd *inVal, bool freeIntPcmd);
 PPEXPORT MADErr MADCopyPcmdToPcmd(Pcmd* toCopy, Pcmd** outCopy);
 
 #ifdef __cplusplus

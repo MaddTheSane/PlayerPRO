@@ -87,36 +87,38 @@ MADErr inAddSoundToMAD(void			*theSound,
 	return theErr;
 }
 
-IntPcmd MADPcmdToInt(Pcmd *inVal, bool copyValues)
+IntPcmd *MADPcmdToInt(Pcmd *inVal, bool copyValues)
 {
-	IntPcmd toRet = {0};
-	toRet.tracks = inVal->tracks;
-	toRet.length = inVal->length;
-	toRet.trackStart = inVal->trackStart;
-	toRet.posStart = inVal->posStart;
-	toRet.cmdCount = (inVal->structSize - sizeof(Pcmd)) / sizeof(Cmd);
+	IntPcmd *toRet = malloc(sizeof(IntPcmd));
+	toRet->tracks = inVal->tracks;
+	toRet->length = inVal->length;
+	toRet->trackStart = inVal->trackStart;
+	toRet->posStart = inVal->posStart;
+	toRet->cmdCount = (inVal->structSize - sizeof(Pcmd)) / sizeof(Cmd);
 	if (copyValues) {
-		memcpy(toRet.myCmd, inVal->myCmd, inVal->structSize - sizeof(Pcmd));
+		size_t ourSize = inVal->structSize - sizeof(Pcmd);
+		toRet->myCmd = malloc(ourSize);
+		memcpy(toRet->myCmd, inVal->myCmd, ourSize);
 	} else {
-		toRet.myCmd = inVal->myCmd;
+		toRet->myCmd = inVal->myCmd;
 	}
 	
 	return toRet;
 }
 
-Pcmd *MADIntPcmdToPcmd(IntPcmd inVal, bool freeIntPcmd)
+Pcmd *MADIntPcmdToPcmd(IntPcmd *inVal, bool freeIntPcmd)
 {
-	size_t stuctSize = inVal.cmdCount * sizeof(Cmd) + sizeof(Pcmd);
+	size_t stuctSize = inVal->cmdCount * sizeof(Cmd) + sizeof(Pcmd);
 	Pcmd *toRet = malloc(stuctSize);
-	toRet->tracks = inVal.tracks;
-	toRet->length = inVal.length;
-	toRet->trackStart = inVal.trackStart;
-	toRet->posStart = inVal.posStart;
+	toRet->tracks = inVal->tracks;
+	toRet->length = inVal->length;
+	toRet->trackStart = inVal->trackStart;
+	toRet->posStart = inVal->posStart;
 	toRet->structSize = (int)stuctSize;
-	memcpy(toRet->myCmd, inVal.myCmd, inVal.cmdCount * sizeof(Cmd));
+	memcpy(toRet->myCmd, inVal->myCmd, inVal->cmdCount * sizeof(Cmd));
 	if (freeIntPcmd) {
-		free(inVal.myCmd);
-		inVal.myCmd = NULL;
+		free(inVal->myCmd);
+		inVal->myCmd = NULL;
 	}
 	
 	return toRet;

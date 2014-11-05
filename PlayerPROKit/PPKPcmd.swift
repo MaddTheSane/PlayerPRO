@@ -29,7 +29,19 @@ public struct PPKPcmd: SequenceType, IterateCmd {
 		return myCmd.generate()
 	}
 	
-	public func newIntPcmd() -> IntPcmd? {
+	public func newIntPcmd() -> UnsafeMutablePointer<IntPcmd>? {
+		if let newSize = structSize {
+			var ourIntPcmd = intPcmd!
+			let toRet = UnsafeMutablePointer<IntPcmd>.alloc(1)
+			toRet.initialize(ourIntPcmd)
+			
+			return toRet
+		} else {
+			return nil
+		}
+	}
+	
+	public var intPcmd: IntPcmd? {
 		if let newSize = structSize {
 			var toRet = IntPcmd()
 			toRet.tracks = tracks
@@ -37,7 +49,7 @@ public struct PPKPcmd: SequenceType, IterateCmd {
 			toRet.trackStart = trackStart
 			toRet.posStart = positionStart
 			toRet.cmdCount = Int32(myCmd.count)
-			toRet.myCmd = UnsafeMutablePointer<Cmd>(malloc(UInt(myCmd.count * sizeof(Cmd.Type))))
+			toRet.myCmd = UnsafeMutablePointer<Cmd>.alloc(myCmd.count)
 			
 			for i in 0 ..< myCmd.count {
 				toRet.myCmd[i] = myCmd[i]
@@ -53,6 +65,7 @@ public struct PPKPcmd: SequenceType, IterateCmd {
 		if let newSize = structSize {
 			var ourIntPcmd = newIntPcmd()!
 			var toRet = MADIntPcmdToPcmd(ourIntPcmd, true)
+			ourIntPcmd.destroy()
 			return toRet
 		} else {
 			return nil;
@@ -86,7 +99,8 @@ public struct PPKPcmd: SequenceType, IterateCmd {
 		self.init(intPcmd: ourIntPcmd)
 	}
 	
-	public init(intPcmd: IntPcmd) {
+	public init(intPcmd aTmp: UnsafeMutablePointer<IntPcmd>) {
+		var intPcmd = aTmp.memory
 		tracks = intPcmd.tracks
 		length = intPcmd.length
 		trackStart = intPcmd.trackStart
