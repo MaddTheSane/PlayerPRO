@@ -310,7 +310,6 @@
 		5560643C18C8FDD9002F72FC /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
 		5561700A1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
 		5561F1C019A52A6C0085015B /* ExportObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FD192D19A241FC001E1D9C /* ExportObject.swift */; };
-		55624D4D1A03038900163B88 /* GeneralSwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583157819FECB92006B636E /* GeneralSwiftHelpers.swift */; };
 		5563A49E19AAC0D50051CC4B /* PPAPPLImporterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */; };
 		5565976A19B3BAD000806DF2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565976719B3BAD000806DF2 /* AppDelegate.swift */; };
 		5565976B19B3BAD000806DF2 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565976819B3BAD000806DF2 /* DetailViewController.swift */; };
@@ -470,12 +469,6 @@
 		558229C11A0970D30065B3E5 /* Length.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558229C01A0970D30065B3E5 /* Length.swift */; };
 		558229C31A09720F0065B3E5 /* LengthWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558229C21A09720F0065B3E5 /* LengthWindowController.swift */; };
 		558229C51A09723B0065B3E5 /* LengthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 558229C41A09723B0065B3E5 /* LengthViewController.swift */; };
-		5583157919FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583157819FECB92006B636E /* GeneralSwiftHelpers.swift */; };
-		5583157A19FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583157819FECB92006B636E /* GeneralSwiftHelpers.swift */; };
-		5583157B19FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583157819FECB92006B636E /* GeneralSwiftHelpers.swift */; };
-		5583157C19FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583157819FECB92006B636E /* GeneralSwiftHelpers.swift */; };
-		5583157D19FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583157819FECB92006B636E /* GeneralSwiftHelpers.swift */; };
-		5583157E19FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5583157819FECB92006B636E /* GeneralSwiftHelpers.swift */; };
 		5583C5F716D015D70078ACE8 /* Invert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE7FF10E08D8900177B4C /* Invert.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5583C5FA16D016700078ACE8 /* Normalize.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE8C810E08DA800177B4C /* Normalize.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5583C5FB16D0172F0078ACE8 /* Silence.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE91B10E08DB000177B4C /* Silence.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -2485,7 +2478,6 @@
 		558229C01A0970D30065B3E5 /* Length.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Length.swift; sourceTree = "<group>"; };
 		558229C21A09720F0065B3E5 /* LengthWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LengthWindowController.swift; sourceTree = "<group>"; };
 		558229C41A09723B0065B3E5 /* LengthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LengthViewController.swift; sourceTree = "<group>"; };
-		5583157819FECB92006B636E /* GeneralSwiftHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSwiftHelpers.swift; sourceTree = "<group>"; };
 		55846BC519C3747900D26F94 /* PPInstrumentImporterCompatObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentImporterCompatObject.h; sourceTree = "<group>"; };
 		55846BC619C3747900D26F94 /* PPInstrumentImporterCompatObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentImporterCompatObject.m; sourceTree = "<group>"; };
 		55846BC819C3752000D26F94 /* PPInstrumentImporterObject-private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PPInstrumentImporterObject-private.h"; sourceTree = "<group>"; };
@@ -4682,7 +4674,6 @@
 				557139CE1684EF7500831A5A /* PPHilightableButton.m */,
 				555F5C601993327D0056AF01 /* OpenPanelViewController.swift */,
 				556AE4BB16E290650074BBF9 /* PPByteswap.h */,
-				5583157819FECB92006B636E /* GeneralSwiftHelpers.swift */,
 				55232AF411FDE5970041A4EC /* Preferences Controllers */,
 				5526AB10188C8655008D0C14 /* Resources */,
 			);
@@ -6908,7 +6899,6 @@
 				5523AE6C19E0AFE7006FC0E0 /* PPSampleWaveformView.m in Sources */,
 				55C8EDE4187CC8B200CC8C1B /* PPMadCommandObject.m in Sources */,
 				55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */,
-				5583157D19FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */,
 				5578C4FE17DB8A580057D11B /* PPSampleObject.m in Sources */,
 				5578C50117DB8A6E0057D11B /* PPInstrumentObject.m in Sources */,
 				55BD5AF519ADBBF500D63F54 /* PPKPcmd.swift in Sources */,
@@ -7052,7 +7042,6 @@
 				555C0F8E1982980C003B9347 /* CurrentlyPlayingIndex.swift in Sources */,
 				5565977319B3C1C000806DF2 /* UserDefaultKeys-Swift.swift in Sources */,
 				5565976B19B3BAD000806DF2 /* DetailViewController.swift in Sources */,
-				5583157B19FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */,
 				55771DBF1871482D00AED8DC /* PPTimeFormatter.m in Sources */,
 				5566883E19A6619800EE2FE3 /* MusicList.swift in Sources */,
 				55CDD02A1976F63600E3DDE1 /* MusicListObject.swift in Sources */,
@@ -7131,7 +7120,6 @@
 				5566883D19A65C8700EE2FE3 /* MusicList.swift in Sources */,
 				55E382EC1981509100EC330B /* PlugInInfo.swift in Sources */,
 				555F5C621993327D0056AF01 /* OpenPanelViewController.swift in Sources */,
-				5583157A19FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */,
 				552788031981C95100708906 /* MusicListDragClass.swift in Sources */,
 				55588A97199951B300C3D4EE /* PlugInInfoController.swift in Sources */,
 				5578C48A17D9E8560057D11B /* main.m in Sources */,
@@ -7479,7 +7467,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				553507AB19BCA86F00B9E815 /* PPWavePlug.swift in Sources */,
-				55624D4D1A03038900163B88 /* GeneralSwiftHelpers.swift in Sources */,
 				55ADC3DE17D7A51B001F27D4 /* WAVE-Conversion.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7551,7 +7538,6 @@
 				55C5754019CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */,
 				55E382EB1981509100EC330B /* PlugInInfo.swift in Sources */,
 				5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */,
-				5583157919FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */,
 				550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */,
 				55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */,
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
@@ -7615,7 +7601,6 @@
 				55F1BDD11975CAD700AD2C03 /* DMF.c in Sources */,
 				55F1BDCB1975CA4D00AD2C03 /* stub-VSTPlugIn.c in Sources */,
 				55F1BDD71975CB1200AD2C03 /* MTM.c in Sources */,
-				5583157C19FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */,
 				55F1BDC81975CA3900AD2C03 /* OSX-CoreAudio.c in Sources */,
 				55F1BDDC1975CB1200AD2C03 /* XM.c in Sources */,
 				55CDE86E19E5AA4400476AC8 /* PlayerPROCoreAdditions.swift in Sources */,
@@ -7648,7 +7633,6 @@
 				55F1BE0D1975CD7200AD2C03 /* PPPatternObject.m in Sources */,
 				55F1BE191975CD7200AD2C03 /* PPMusicObject.m in Sources */,
 				55F1BE0F1975CD7200AD2C03 /* PPMadCommandObject.m in Sources */,
-				5583157E19FECB92006B636E /* GeneralSwiftHelpers.swift in Sources */,
 				55F1BE151975CD7200AD2C03 /* PPLibrary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

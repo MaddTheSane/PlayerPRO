@@ -13,8 +13,6 @@ import AVFoundation
 import AudioToolbox
 import SwiftAdditions
 
-internal let isLittleEndian = Int(OSHostByteOrder()) == OSLittleEndian
-
 class DocumentWindowController: NSWindowController, SoundSettingsViewControllerDelegate {
 	@IBOutlet weak var exportWindow:			NSWindow!
 	@IBOutlet weak var exportSettingsBox:		NSBox!

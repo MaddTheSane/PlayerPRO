@@ -8,6 +8,7 @@
 
 import Foundation
 import PlayerPROCore
+import SwiftAdditions
 
 public final class PPLibraryObject: NSObject, Printable {
 	public let menuName: String
