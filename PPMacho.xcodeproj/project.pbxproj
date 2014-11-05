@@ -505,6 +505,8 @@
 		559170A619C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 559170A519C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m */; };
 		559170A819C26E1D00998D7F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 559170A719C26E1D00998D7F /* main.m */; };
 		559170AB19C26E1D00998D7F /* PPCoreInstrumentPlugBridge.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 5591709F19C26E1C00998D7F /* PPCoreInstrumentPlugBridge.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5599119E1A0ACB8C00D1D5C3 /* CommandIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5599119D1A0ACB8C00D1D5C3 /* CommandIterator.swift */; };
+		5599119F1A0ACB8C00D1D5C3 /* CommandIterator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5599119D1A0ACB8C00D1D5C3 /* CommandIterator.swift */; };
 		55993EF619A340FF00C2078E /* PPRunAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55993EF519A340FF00C2078E /* PPRunAlert.swift */; };
 		559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 559C4188183EB4AB004A073C /* QuickLook.framework */; };
 		559C418E183EB4AB004A073C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -2534,6 +2536,7 @@
 		559170A719C26E1D00998D7F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55981C5111EE370D00656EE3 /* PPPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreferences.h; sourceTree = "<group>"; };
 		55981C5411EE375400656EE3 /* preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = preferences.xib; sourceTree = "<group>"; };
+		5599119D1A0ACB8C00D1D5C3 /* CommandIterator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandIterator.swift; sourceTree = "<group>"; };
 		55993EF519A340FF00C2078E /* PPRunAlert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPRunAlert.swift; sourceTree = "<group>"; };
 		559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PPQuickView.qlgenerator; sourceTree = BUILT_PRODUCTS_DIR; };
 		559C4188183EB4AB004A073C /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
@@ -4248,6 +4251,7 @@
 		5561F1BF19A51CD40085015B /* Swift wrappers */ = {
 			isa = PBXGroup;
 			children = (
+				5599119D1A0ACB8C00D1D5C3 /* CommandIterator.swift */,
 				55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */,
 				55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */,
 			);
@@ -6892,6 +6896,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5547DA5919A570820014A620 /* SoundSettingsViewController.swift in Sources */,
+				5599119F1A0ACB8C00D1D5C3 /* CommandIterator.swift in Sources */,
 				555F447619A1411700B8C6EE /* PlayerPROKitAdditions.swift in Sources */,
 				55DE87CF187E60F400C36533 /* PPFXSetObject.m in Sources */,
 				551292F1163DD7CE00C2C639 /* PPLibrary.m in Sources */,
@@ -7608,6 +7613,7 @@
 				55F1BDC61975C9E100AD2C03 /* TickRemover.c in Sources */,
 				55F1BDCF1975CAC900AD2C03 /* 669.c in Sources */,
 				55F1BDD21975CAE000AD2C03 /* IT.c in Sources */,
+				5599119E1A0ACB8C00D1D5C3 /* CommandIterator.swift in Sources */,
 				55F1BDD51975CAF500AD2C03 /* MADI.c in Sources */,
 				55F1BDD31975CAE600AD2C03 /* MADfg.c in Sources */,
 				55F1BDC11975C9E100AD2C03 /* Effects.c in Sources */,

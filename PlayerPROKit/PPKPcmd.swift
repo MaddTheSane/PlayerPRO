@@ -9,7 +9,9 @@
 import Foundation
 import PlayerPROCore
 
-public struct PPKPcmd: SequenceType, IterateCmd {
+public struct PPKPcmd: MutableCollectionType, CommandIterator {
+	typealias Generator = IndexingGenerator<[Cmd]>
+	typealias Index = Int
 	public var tracks: Int16
 	public var length: Int16
 	public var trackStart: Int16
@@ -25,6 +27,23 @@ public struct PPKPcmd: SequenceType, IterateCmd {
 		}
 	}
 	
+	public var startIndex: Int {
+		return 0
+	}
+	
+	public var endIndex: Int {
+		return myCmd.count
+	}
+	
+	public subscript (position: Int) -> Cmd {
+		get {
+			return myCmd[position]
+		}
+		set {
+			myCmd[position] = newValue
+		}
+	}
+
 	public func generate() -> IndexingGenerator<[Cmd]> {
 		return myCmd.generate()
 	}
@@ -39,6 +58,14 @@ public struct PPKPcmd: SequenceType, IterateCmd {
 		} else {
 			return nil
 		}
+	}
+	
+	public var commandLength: Int16 {
+		return length
+	}
+	
+	public var commandTracks: Int16 {
+		return tracks
 	}
 	
 	public var intPcmd: IntPcmd? {

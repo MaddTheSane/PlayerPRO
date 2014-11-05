@@ -435,25 +435,7 @@ public func ModifyCmdAtRow(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer
 	ReplaceCmd(row, track, aCmd, aPcmd)
 }
 
-public protocol IterateCmd {
-	func getCommand(row: Int16, track: Int16) -> Cmd
-	mutating func modifyCmdAtRow(arow: Int16, track: Int16, commandBlock: (inout Cmd) -> ())
-	mutating func replaceCmd(row: Int16, track: Int16, command: Cmd)
-}
-
-public func GetCommand<X where X: IterateCmd>(row: Int16, track: Int16, aIntPcmd: X) -> Cmd {
-	return aIntPcmd.getCommand(row, track: track)
-}
-
-public func ReplaceCmd<X where X: IterateCmd>(row: Int16, track: Int16, command: Cmd, inout aPcmd: X) {
-	aPcmd.replaceCmd(row, track: track, command: command)
-}
-
-public func ModifyCmdAtRow<X where X: IterateCmd>(row: Int16, track: Int16, inout aPcmd: X, commandBlock: (inout Cmd) -> ()) {
-	aPcmd.modifyCmdAtRow(row, track: track, commandBlock: commandBlock)
-}
-
-extension IntPcmd: IterateCmd {
+extension IntPcmd: CommandIterator {
 	public init() {
 		tracks = 0
 		length = 0
@@ -461,6 +443,14 @@ extension IntPcmd: IterateCmd {
 		posStart = 0
 		cmdCount = 0
 		myCmd = nil
+	}
+	
+	public var commandLength: Int16 {
+		return length
+	}
+	
+	public var commandTracks: Int16 {
+		return tracks
 	}
 	
 	private func getCommandIndex(row arow: Int16, track atrack: Int16) -> Int {
