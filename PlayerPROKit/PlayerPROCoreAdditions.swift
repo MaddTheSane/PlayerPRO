@@ -471,20 +471,20 @@ extension IntPcmd: CommandIterator {
 		return Int(length) * Int(track) + Int(row)
 	}
 	
-	public func getCommand(row: Int16, track: Int16) -> Cmd {
+	public func getCommand(#row: Int16, track: Int16) -> Cmd {
 		let ourAddr = getCommandIndex(row: row, track: track)
 		
 		return myCmd[ourAddr]
 	}
 	
-	public mutating func modifyCmdAtRow(row: Int16, track: Int16, commandBlock: (inout Cmd) -> ()) {
+	public mutating func modifyCommand(#row: Int16, track: Int16, commandBlock: (inout Cmd) -> ()) {
 		let ourAddr = getCommandIndex(row: row, track: track)
 		
 		commandBlock(&myCmd[ourAddr])
 	}
 	
-	public mutating func replaceCmd(row: Int16, track: Int16, command: Cmd) {
-		modifyCmdAtRow(row, track: track, commandBlock: {(inout aCmd: Cmd) -> () in
+	public mutating func replaceCommand(#row: Int16, track: Int16, command: Cmd) {
+		modifyCommand(row: row, track: track, commandBlock: {(inout aCmd: Cmd) -> () in
 			aCmd = command
 		})
 	}
