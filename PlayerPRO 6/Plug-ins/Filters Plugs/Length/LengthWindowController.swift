@@ -91,107 +91,101 @@ class LengthWindowController: NSWindowController {
 		var dstSize = destinationSize
 		let src16 = UnsafePointer<Int16>(theData.data.bytes)
 		let src8 = UnsafePointer<Int8>(src16)
-		var tempL = 0
-		var tempR = 0
 		let realsrcSize = srcSize
-		var left = 0
-		//var right = 0
-		var pos = 0
-		let newSize = dstSize
 		
-		let dst = calloc(UInt(newSize), 1)
-		if (dst == nil) {
-			return nil
-		}
-		let dst16 = UnsafeMutablePointer<Int16>(dst)
-		let dst8 = UnsafeMutablePointer<Int8>(dst)
-		
-		srcSize /= 100
-		dstSize /= 100
-		
-		switch (theData.amplitude) {
-		case 8:
-			for (var x = 0; x < newSize; x++) {
-				pos			= (x * srcSize << LRVAL) / dstSize
-				var right		= pos & ((1 << LRVAL) - 1)
-				left		= (1 << LRVAL) - right
-				
-				if (theData.stereo) {
-					pos >>= LRVAL
-					pos /= 2
-					pos *= 2
+		if let dst = NSMutableData(length: destinationSize) {
+			var tempL = 0
+			var tempR = 0
+			let dst16 = UnsafeMutablePointer<Int16>(dst.mutableBytes)
+			let dst8 = UnsafeMutablePointer<Int8>(dst16)
+			
+			srcSize /= 100
+			dstSize /= 100
+			
+			switch (theData.amplitude) {
+			case 8:
+				for (var x = 0; x < destinationSize; x++) {
+					var pos		= (x * srcSize << LRVAL) / dstSize
+					let right	= pos & ((1 << LRVAL) - 1)
+					let left	= (1 << LRVAL) - right
 					
-					if (2 + pos >= realsrcSize) {
+					if (theData.stereo) {
+						pos >>= LRVAL
+						pos /= 2
+						pos *= 2
+						
+						if (2 + pos >= realsrcSize) {
+						} else {
+							tempL = (left * Int(src8[pos]) + right * Int(src8[2 + pos])) >> LRVAL
+						}
+						
+						dst8[x] = Int8(tempL)
+						
+						x++
+						
+						if (3 + pos >= realsrcSize) {
+						} else {
+							tempR = (left * Int(src8[1 + pos]) + right * Int(src8[3 + pos])) >> LRVAL
+						}
+						
+						dst8[x] = Int8(tempR)
 					} else {
-						tempL = (left * Int(src8[pos]) + right * Int(src8[2 + pos])) >> LRVAL
+						pos >>= LRVAL
+						
+						if (1 + pos >= realsrcSize)	{
+						} else {
+							tempL = (left * Int(src8[pos]) + right * Int(src8[1 + pos])) >> LRVAL
+						}
+						
+						dst8[x] = Int8(tempL)
 					}
-					
-					dst8[x] = Int8(tempL)
-					
-					x++
-					
-					if (3 + pos >= realsrcSize) {
-					} else {
-						tempR = (left * Int(src8[1 + pos]) + right * Int(src8[3 + pos])) >> LRVAL
-					}
-					
-					dst8[x] = Int8(tempR)
-				} else {
-					pos >>= LRVAL
-					
-					if (1 + pos >= realsrcSize)	{
-					} else {
-						tempL = (left * Int(src8[pos]) + right * Int(src8[1 + pos])) >> LRVAL
-					}
-					
-					dst8[x] = Int8(tempL)
 				}
+				
+			case 16:
+				for (var x = 0; x < destinationSize / 2; x++) {
+					var pos		= (x * srcSize << LRVAL) / dstSize
+					let right	= pos & ((1 << LRVAL) - 1)
+					let left	= (1 << LRVAL) - right
+					
+					if (theData.stereo) {
+						pos >>= LRVAL
+						pos /= 2
+						pos *= 2
+						
+						if (2 + pos >= realsrcSize / 2) {
+						} else {
+							tempL = (left * Int(src16[pos]) + right * Int(src16[2 + pos])) >> LRVAL
+						}
+						
+						dst16[x] = Int16(tempL)
+						
+						x++;
+						
+						if (3 + pos >= realsrcSize / 2) {
+						} else {
+							tempR = (left * Int(src16[1 + pos]) + right * Int(src16[3 + pos])) >> LRVAL
+						}
+						
+						dst16[x] = Int16(tempR)
+					} else {
+						pos >>= LRVAL;
+						
+						if (1 + pos >= realsrcSize / 2) {
+						} else {
+							tempL = (left * Int(src16[pos]) + right * Int(src16[1 + pos])) >> LRVAL
+						}
+						
+						dst16[x] = Int16(tempR)
+					}
+				}
+				
+			default:
+				return nil
 			}
 			
-		case 16:
-			for (var x = 0; x < newSize / 2; x++) {
-				pos			= (x * srcSize << LRVAL) / dstSize
-				let right		= pos & ((1 << LRVAL) - 1)
-				left		= (1 << LRVAL) - right
-				
-				if (theData.stereo) {
-					pos >>= LRVAL
-					pos /= 2
-					pos *= 2
-					
-					if (2 + pos >= realsrcSize / 2) {
-					} else {
-						tempL = (left * Int(src16[pos]) + right * Int(src16[2 + pos])) >> LRVAL
-					}
-					
-					dst16[x] = Int16(tempL)
-					
-					x++;
-					
-					if (3 + pos >= realsrcSize / 2) {
-					} else {
-						tempR = (left * Int(src16[1 + pos]) + right * Int(src16[3 + pos])) >> LRVAL
-					}
-					
-					dst16[x] = Int16(tempR)
-				} else {
-					pos >>= LRVAL;
-					
-					if (1 + pos >= realsrcSize / 2) {
-					} else {
-						tempL = (left * Int(src16[pos]) + right * Int(src16[1 + pos])) >> LRVAL
-					}
-					
-					dst16[x] = Int16(tempR)
-				}
-			}
-			
-		default:
-			free(dst)
+			return dst
+		} else {
 			return nil
 		}
-		let ourtmpData = NSMutableData(bytesNoCopy: dst, length: newSize)
-		
-		return ourtmpData
 	}
 }
