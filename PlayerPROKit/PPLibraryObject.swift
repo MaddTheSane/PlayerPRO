@@ -30,7 +30,7 @@ public final class PPLibraryObject: NSObject, Printable {
 	}
 	
 	override public var description: String {
-		return "Name: \(menuName); Author: \(authorString); plug-in file: \(plugFile), type: \(plugType), version: \(plugVersion)"
+		return "Name: \(menuName); Author: \(authorString); plug-in file: \(plugFile.bundlePath), type: \(plugType); version: \(plugVersion)"
 	}
 	
 	internal init(plugInfo pi: UnsafePointer<PlugInfo>) {
