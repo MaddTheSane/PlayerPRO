@@ -53,7 +53,29 @@ class LengthWindowController: NSWindowController {
 	}
 	
 	@IBAction func okay(sender: AnyObject?) {
-		var newSize = 0
+		var newSize: Int32 = 0
+		if theData.stereo {
+			newSize *= 2;
+		}
+		if theData.amplitude == 16 {
+			newSize *= 2;
+		}
+
+		if theData.loopBegin < 0 {
+			theData.loopSize += theData.loopBegin
+			theData.loopBegin = 0;
+		}
+		if theData.loopBegin > newSize {
+			theData.loopBegin = 0;
+			theData.loopSize = 0;
+		}
+		if theData.loopSize < 0 {
+			theData.loopSize = 0;
+		}
+		if (theData.loopBegin + theData.loopSize) > newSize {
+			theData.loopSize = newSize - theData.loopBegin
+		}
+
 		NSApplication.sharedApplication().endSheet(self.window!)
 		currentBlock(.NoErr)
 	}
@@ -63,19 +85,19 @@ class LengthWindowController: NSWindowController {
 		currentBlock(.UserCanceledErr)
 	}
 	
-	private func convertSampleSize(src: UnsafeMutablePointer<()>, sourceSize: Int, amplitude amp: Int16, destinationSize: Int) -> UnsafeMutablePointer<()> {
+	private func convertSample(size destinationSize: Int) -> NSMutableData? {
 		let LRVAL = 3
-		var srcSize = sourceSize
+		var srcSize = theData.data.length
 		var dstSize = destinationSize
-		var src16 = UnsafeMutablePointer<Int16>(src)
-		var src8 = UnsafeMutablePointer<Int8>(src)
+		let src16 = UnsafePointer<Int16>(theData.data.bytes)
+		let src8 = UnsafePointer<Int8>(src16)
 		var tempL = 0
 		var tempR = 0
-		var realsrcSize = srcSize
+		let realsrcSize = srcSize
 		var left = 0
 		//var right = 0
 		var pos = 0
-		var newSize = dstSize
+		let newSize = dstSize
 		
 		let dst = calloc(UInt(newSize), 1)
 		if (dst == nil) {
@@ -87,14 +109,14 @@ class LengthWindowController: NSWindowController {
 		srcSize /= 100
 		dstSize /= 100
 		
-		switch (amp) {
+		switch (theData.amplitude) {
 		case 8:
 			for (var x = 0; x < newSize; x++) {
 				pos			= (x * srcSize << LRVAL) / dstSize
 				var right		= pos & ((1 << LRVAL) - 1)
 				left		= (1 << LRVAL) - right
 				
-				if (stereoMode) {
+				if (theData.stereo) {
 					pos >>= LRVAL
 					pos /= 2
 					pos *= 2
@@ -132,7 +154,7 @@ class LengthWindowController: NSWindowController {
 				let right		= pos & ((1 << LRVAL) - 1)
 				left		= (1 << LRVAL) - right
 				
-				if (stereoMode) {
+				if (theData.stereo) {
 					pos >>= LRVAL
 					pos /= 2
 					pos *= 2
@@ -168,7 +190,8 @@ class LengthWindowController: NSWindowController {
 			free(dst)
 			return nil
 		}
+		let ourtmpData = NSMutableData(bytesNoCopy: dst, length: newSize)
 		
-		return dst
+		return ourtmpData
 	}
 }
