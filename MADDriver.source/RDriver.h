@@ -38,6 +38,13 @@
 #include <CoreFoundation/CFBundle.h>
 #endif
 
+#ifdef _BE_H
+#include <OS.h>
+#include <Entry.h>
+#include <File.h>
+#include <NodeInfo.h>
+#endif
+
 ////////////////////////////////////////////////
 
 #pragma pack(push, 2)
@@ -474,7 +481,6 @@ typedef struct PlugInfo
 #endif
 
 #ifdef _BE_H
-//TODO: include BeOS headers!
 typedef	MADErr (*MADPlug)(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 typedef struct PlugInfo

@@ -3803,8 +3803,8 @@
 		552097B6187B0DD7004FD220 /* BeOS-specific */ = {
 			isa = PBXGroup;
 			children = (
-				552097B3187B0917004FD220 /* Be-DriverClass.cpp */,
 				552097B4187B0917004FD220 /* Be-DriverClass.h */,
+				552097B3187B0917004FD220 /* Be-DriverClass.cpp */,
 				552097B5187B0917004FD220 /* Be-PlugImport.c */,
 			);
 			name = "BeOS-specific";

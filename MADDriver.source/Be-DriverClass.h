@@ -96,11 +96,11 @@ public:
 	}
 	
 	//	Data members:
-	OSErr				libraryError;	//	Last error returned by MADLibrary.
+	MADErr				libraryError;	//	Last error returned by MADLibrary.
 	bool				inited;			//	Successful initialization.
 	bool				musicPlay;		//	Music playing flag.
 	MADLibrary 			*MADLib;
-	MADDriverRec		*curDriverRec;	//	Current driver.
+	MADDriverRecPtr		curDriverRec;	//	Current driver.
 	MADMusic			*curMusic;		//	Current music.
 	MADDriverSettings	settings;		//	Current settings for driver.
 	
@@ -108,7 +108,7 @@ private:
 	
 	//	Library initialization.
 	static MADDriverSettings	CreateDefaultDriver(void);
-	bool						InitLibrary(MADDriverSettings *init);
+	bool						InitLibrary(MADDriverSettings &init);
 	
 	//	System streamers.
 	BSoundPlayer				*streamPlayer;

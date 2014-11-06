@@ -26,7 +26,6 @@
 /********************						***********************/
 
 //	System headers.
-
 #include <Path.h>
 #include <Directory.h>
 #include <List.h>
@@ -42,10 +41,6 @@
 static void trackerStreamPlay(void *theCookie, void *buffer, size_t size, const media_raw_audio_format &format);
 
 //	Low-level streaming function from PlayerPROCore.
-
-extern "C" {
-Boolean	DirectSave(char	*myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver);
-}
 
 //	Constructors.
 MADDriverClass::MADDriverClass()
@@ -78,7 +73,7 @@ MADDriverClass::~MADDriverClass()
 //	Driver initialization: optimal values for BeOS.
 static MADDriverSettings MADDriverClass::CreateDefaultDriver(void)
 {
-#if 0
+#if 1
 	MADDriverSettings	init = {0};
 	init.numChn			= 4;
 	init.outPutBits 	= 16;
@@ -113,7 +108,7 @@ static MADDriverSettings MADDriverClass::CreateDefaultDriver(void)
 
 //	Library initialization.
 
-bool MADDriverClass::InitLibrary(MADDriverSettings *init)
+bool MADDriverClass::InitLibrary(MADDriverSettings &init)
 {
 	//	Reset data members to indicate that initialization isn't complete.
 	
@@ -136,7 +131,7 @@ bool MADDriverClass::InitLibrary(MADDriverSettings *init)
 	
 	//	Init the driver.
 	
-	if ((libraryError = MADCreateDriver(init, MADLib, &curDriverRec)) != MADNoErr) {
+	if ((libraryError = MADCreateDriver(&init, MADLib, &curDriverRec)) != MADNoErr) {
 #if	DRIVERCLASS_DEBUG
 		debugger("Cannot create driver.");
 #else
@@ -147,13 +142,13 @@ bool MADDriverClass::InitLibrary(MADDriverSettings *init)
 	//	Init system streamers.
 	media_raw_audio_format format;
 	
-	format.frame_rate = init->outPutRate;
+	format.frame_rate = init.outPutRate;
 	format.channel_count = 2;			// Always stereo !
 	format.format = B_AUDIO_FLOAT;		// Always float !
 	format.byte_order = 1;
-	format.buffer_size = (curDriverRec->BufSize * sizeof(float)) / (init->outPutBits / 8);
+	format.buffer_size = (curDriverRec->BufSize * sizeof(float)) / (init.outPutBits / 8);
 	
-	streamPlayer = new BSoundPlayer(&format, "PP_player", trackerStreamPlay, NULL, this);
+	streamPlayer = new BSoundPlayer(&format, "PlayerPROCore", trackerStreamPlay, NULL, this);
 	
 	streamPlayer->SetHasData(true);
 	streamPlayer->Start();
@@ -197,7 +192,7 @@ void MADDriverClass::StartMusic(void)
 	if (!inited)
 		return;
 	
-	if (MADStartDriver(curDriverRec)) {
+	if (MADStartDriver(curDriverRec) != MADNoErr) {
 #if	DRIVERCLASS_DEBUG
 		debugger("Error in MADStartDriver()");
 #endif
