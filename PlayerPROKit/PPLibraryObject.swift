@@ -10,7 +10,7 @@ import Foundation
 import PlayerPROCore
 import SwiftAdditions
 
-public final class PPLibraryObject: NSObject, Printable {
+public final class PPLibraryObject: NSObject, Printable, DebugPrintable {
 	public let menuName: String
 	public let authorString: String
 	public let plugFile: NSBundle
@@ -29,8 +29,16 @@ public final class PPLibraryObject: NSObject, Printable {
 		}
 	}
 	
+	public var version: NumVersion {
+		return NumVersion(plugVersion)
+	}
+	
 	override public var description: String {
-		return "Name: \(menuName); Author: \(authorString); plug-in file: \(plugFile.bundlePath), type: \(plugType); version: \(plugVersion)"
+		return "Name: \(menuName); Author: \(authorString); plug-in file: \(plugFile.bundlePath), type: \(plugType); version: \(version)"
+	}
+	
+	override public var debugDescription: String {
+		return "Name: \(menuName); Author: \(authorString); plug-in file: \(plugFile), type: \(plugType); version: \(plugVersion), \(version)"
 	}
 	
 	internal init(plugInfo pi: UnsafePointer<PlugInfo>) {
