@@ -188,7 +188,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 			
 			var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: .SignedInteger | .Packed, bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 			
-			var res = AudioFileCreateWithURL(theURL, UInt32(kAudioFileWAVEType), &asbd, UInt32(kAudioFileFlags_EraseFile), &audioFile);
+			var res = AudioFileCreate(URL: theURL, fileType: .WAVE, format: &asbd, flags: .EraseFile, audioFile: &audioFile);
 			if (res != noErr) {
 				if (audioFile != nil) {
 					AudioFileClose(audioFile);
@@ -238,7 +238,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 			
 			var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: .SignedInteger | .Packed | .BigEndian, bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 			
-			var res = AudioFileCreate(withURL: theURL, fileType: .AIFF, format: &asbd, flags: .EraseFile, audioFile: &audioFile)
+			var res = AudioFileCreate(URL: theURL, fileType: .AIFF, format: &asbd, flags: .EraseFile, audioFile: &audioFile)
 			if (res != noErr) {
 				if (audioFile != nil) {
 					AudioFileClose(audioFile)
