@@ -7,7 +7,6 @@
 //
 
 #import "PPXIPlug.h"
-#import <Carbon/Carbon.h>
 @import PlayerPROKit;
 
 #ifndef WIN32
@@ -348,8 +347,12 @@ static NSData *startData()
 			
 			//	wh.panning = curData->panning;
 			wh.relnote = curData.relativeNote;
-			strlcpy(wh.samplename, [curData.name cStringUsingEncoding:NSASCIIStringEncoding], sizeof(wh.samplename));
-			
+			{
+				NSData *nameData = [curData.name dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+				char tempSampName[22] = {0};
+				[nameData getBytes:tempSampName length:MIN(sizeof(tempSampName), nameData.length)];
+				strlcpy(wh.samplename, tempSampName, sizeof(wh.samplename));
+			}
 			MADLE32(&wh.length);
 			MADLE32(&wh.loopstart);
 			MADLE32(&wh.looplength);
