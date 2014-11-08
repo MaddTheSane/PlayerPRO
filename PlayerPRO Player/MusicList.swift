@@ -137,7 +137,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 				if (BookmarkArray == nil) {
 					selectedMusic = -1
 					super.init()
-					return;
+					return
 				}
 				let dataBookArray = BookmarkArray! as [NSData]
 				

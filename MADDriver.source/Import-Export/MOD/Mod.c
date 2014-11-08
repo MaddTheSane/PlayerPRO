@@ -72,7 +72,7 @@ static void Convert16to8(char* srcPtr, char* destPtr, size_t size)
 	}
 }
 
-static void AnalyseSignatureMOD(long EOFo, MADFourChar temp, short *maxInstru, int *PatternSize, short *tracksNo, MODDef* aMOD)
+static void AnalyseSignatureMOD(size_t EOFo, MADFourChar temp, short *maxInstru, int *PatternSize, short *tracksNo, MODDef* aMOD)
 {
 	int		test, i;
 	bool	result;
@@ -322,7 +322,7 @@ static MADErr PPConvertMod2Mad(char* aMOD, long MODSize, MADMusic *theMAD, MADDr
 	int			sndSize, OffSetToSample, MPatSize, inOutCount;
 	char		*theInstrument[64], *MaxPtr;
 	int			lastIns[32], lastNote[32];
-	int			finetune[16] = {
+	const int	finetune[16] = {
 		8363,	8413,	8463,	8529,	8581,	8651,	8723,	8757,
 		7895,	7941,	7985,	8046,	8107,	8169,	8232,	8280
 	};

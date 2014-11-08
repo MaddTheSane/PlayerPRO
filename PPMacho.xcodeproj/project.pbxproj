@@ -315,7 +315,6 @@
 		5565976B19B3BAD000806DF2 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565976819B3BAD000806DF2 /* DetailViewController.swift */; };
 		5565976C19B3BAD000806DF2 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565976919B3BAD000806DF2 /* MasterViewController.swift */; };
 		5565976F19B3BB6E00806DF2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5565977119B3BB6E00806DF2 /* Main.storyboard */; };
-		5565977319B3C1C000806DF2 /* UserDefaultKeys-Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565977219B3C1C000806DF2 /* UserDefaultKeys-Swift.swift */; };
 		5565AEB819D33862002478E8 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		5566883D19A65C8700EE2FE3 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07F1999879C00A1B9A1 /* MusicList.swift */; };
 		5566883E19A6619800EE2FE3 /* MusicList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF07F1999879C00A1B9A1 /* MusicList.swift */; };
@@ -618,6 +617,7 @@
 		55B23D2916893DE300DCE923 /* XI.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55151F8010DEDBDB0054ABC4 /* XI.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55B5BFF119AFDDB100EF692E /* PPRunAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55993EF519A340FF00C2078E /* PPRunAlert.swift */; };
 		55B5DF0419A259370042E062 /* PPMIDIImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0319A259370042E062 /* PPMIDIImporter.swift */; };
+		55B6784C1A0DC96B00445927 /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		55B777A418E779ED001E5104 /* InstrumentInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55B777A318E77998001E5104 /* InstrumentInfoView.xib */; };
 		55B7E659161D1D3E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B7E65A161D1D4E000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
@@ -2376,7 +2376,6 @@
 		5565976819B3BAD000806DF2 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		5565976919B3BAD000806DF2 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		5565977019B3BB6E00806DF2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		5565977219B3C1C000806DF2 /* UserDefaultKeys-Swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaultKeys-Swift.swift"; sourceTree = "<group>"; };
 		55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "OSX-PlugImport.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = net.sourceforge.playerpro.StcfImporter.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		55680A2119045F0A00F7616D /* StcfImporter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StcfImporter-Info.plist"; sourceTree = "<group>"; };
@@ -4212,7 +4211,6 @@
 		555776A617EBF8FE0019D008 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5565977219B3C1C000806DF2 /* UserDefaultKeys-Swift.swift */,
 				55CDD02B1976F6F400E3DDE1 /* iOS Player-Bridging-Header.h */,
 				555776A717EBF8FE0019D008 /* iOS PlayerPRO Player-Info.plist */,
 				555776A817EBF8FE0019D008 /* InfoPlist.strings */,
@@ -7045,7 +7043,7 @@
 			files = (
 				5565976A19B3BAD000806DF2 /* AppDelegate.swift in Sources */,
 				555C0F8E1982980C003B9347 /* CurrentlyPlayingIndex.swift in Sources */,
-				5565977319B3C1C000806DF2 /* UserDefaultKeys-Swift.swift in Sources */,
+				55B6784C1A0DC96B00445927 /* UserDefaultKeys.m in Sources */,
 				5565976B19B3BAD000806DF2 /* DetailViewController.swift in Sources */,
 				55771DBF1871482D00AED8DC /* PPTimeFormatter.m in Sources */,
 				5566883E19A6619800EE2FE3 /* MusicList.swift in Sources */,

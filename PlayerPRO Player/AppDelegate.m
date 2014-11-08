@@ -745,7 +745,6 @@ return; \
 			NSURL *saveURL = [savePanel URL];
 			[self saveMusicToURL:saveURL];
 			[self addMusicToMusicList:saveURL loadIfPreferencesAllow:NO];
-			
 		}
 		[madDriver endExport];
 	}];
