@@ -2,6 +2,7 @@
 #include "MADFileUtils.h"
 #include "MADPrivate.h"
 #include <dlfcn.h>
+#include <alloca.h>
 
 MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 {
@@ -9,12 +10,12 @@ MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 	long		fileSize;
 	UNFILE		fileID;
 	
-	theMAD = (MADSpec*)malloc(sizeof(MADSpec) + 200);
+	theMAD = (MADSpec*)alloca(sizeof(MADSpec) + 200);
 	
 	fileID = iFileOpenRead(AlienFile);
 	if (!fileID) {
 		free(theMAD);
-		return -1;
+		return MADReadingErr;
 	}
 	fileSize = iGetEOF(fileID);
 	
@@ -31,7 +32,6 @@ MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 	InfoRec->totalInstruments = theMAD->numInstru;
 	InfoRec->fileSize = fileSize;
 	
-	free(theMAD);
 	theMAD = NULL;
 	
 	return MADNoErr;
@@ -53,16 +53,16 @@ typedef MADErr (*FILLPLUG)(PlugInfo *);
 
 void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 {
+	int i = 0;
+	int plugPaths = 0
 	inMADDriver->ThePlug = (PlugInfo*) calloc(MAXPLUG, sizeof(PlugInfo));
 	inMADDriver->TotalPlug = 0;
 	//TODO: iterate plug-in paths
-	int i =0;
-	{
+	for (i = 0; i < plugPaths; i++) {
 		inMADDriver->ThePlug[i].hLibrary = dlopen(NULL, RTLD_LAZY);
 		FILLPLUG plugFill = (FILLPLUG)dlsym(inMADDriver->ThePlug[i].hLibrary, "FillPlug");
 		inMADDriver->ThePlug[i].IOPlug = (MADPLUGFUNC)dlsym(inMADDriver->ThePlug[i].hLibrary, "PPImpExpMain");
-		if(plugFill && inMADDriver->ThePlug[i].IOPlug)
-		{
+		if(plugFill && inMADDriver->ThePlug[i].IOPlug) {
 			(*plugFill)(&inMADDriver->ThePlug[i]);
 			inMADDriver->TotalPlug++;
 		}
@@ -103,8 +103,9 @@ MADErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
 		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
 			*theNewMAD = (MADMusic*) calloc(sizeof(MADMusic), 1);
-			if (!theNewMAD)
+			if (!theNewMAD) {
 				return MADNeedMemory;
+			}
 			
 			return CallImportPlug(inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
 		}
