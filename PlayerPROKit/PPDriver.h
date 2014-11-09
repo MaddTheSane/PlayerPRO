@@ -66,7 +66,7 @@
 - (MADErr)playSoundDataFromData:(NSData*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo;
 #endif
 
-@property (readonly) int availableChannel;
+@property (readonly) short availableChannel;
 
 - (MADErr)play;
 - (MADErr)pause;

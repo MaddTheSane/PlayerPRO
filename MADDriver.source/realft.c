@@ -27,9 +27,7 @@
 #include "RDriverInt.h"
 #include "MADPrivate.h"
 
-static double EQInterpolate(double p,double p1,double p2,double v1,double v2);
-
-double EQInterpolate(double p,double p1,double p2,double v1,double v2)
+static double EQInterpolate(double p, double p1, double p2, double v1, double v2)
 {
 	double dp,dv,di;
 	
@@ -71,7 +69,7 @@ void MADCloseEqualizer(MADDriverRec *intDriver)
 
 #define SWAP(a,b) tempr=(a);(a)=(b);(b)=tempr
 
-void MADfour1(double *data, int nn, int isign)
+static void MADfour1(double *data, int nn, int isign)
 {
 	int 		n, mmax, m, j, istep, i;
 	double 		wtemp, wr, wpr, wpi, wi, theta;
@@ -208,19 +206,6 @@ void MADCallFFT(sData *SData, double *filter, MADDriverRec *intDriver, bool shif
 			else FFT16S((short*) SData->data, SData->size, filter, intDriver, 1, shift);
 			break;
 	}
-}
-
-double MADEQInterpolate(double p,double p1,double p2,double v1,double v2)
-{
-	double dp,dv,di;
-	
-	if (p1 == p2) return v1;
-	
-	dv=v2-v1;
-	dp=p2-p1;
-	di=p-p1;
-	
-	return v1 + ((di*dv) / dp);
 }
 
 void FFT8S(char* SData, size_t size, double *filter, MADDriverRec *intDriver, short nochan, bool shift)

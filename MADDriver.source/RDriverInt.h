@@ -99,16 +99,6 @@ PPEXPORT void 	GenerateSound(MADDriverRecPtr intDriver);
 PPEXPORT int	GetOldPeriod(short note, int c2spd, MADDriverRecPtr intDriver);
 PPEXPORT MADErr	MADResetInstrument(InstrData *curIns);
 PPEXPORT void	MADCheckSpeed(MADMusic *MDriver, MADDriverRecPtr intDriver);
-PPEXPORT MADErr	AddSoundToMAD(char			*theSound,
-							  int			lS,
-							  int			lE,
-							  short			sS,
-							  short			bFreq,
-							  uint32_t		rate,
-							  bool			stereo,
-							  MADPStr255	name,
-							  short			ins,
-							  short			*sampleID);
 
 PPEXPORT MADErr	MADCopyCurrentPartition(MADMusic *theNewMAD);
 PPEXPORT MADErr	MADLoadMADFileCString(MADMusic **, const char *fName);

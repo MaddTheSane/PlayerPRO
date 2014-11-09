@@ -134,9 +134,9 @@
 	return [self playSoundDataFromPointer:[theSnd bytes] withSize:[theSnd length] fromChannel:theChan amplitude:amp bitRate:rate isStereo:stereo withNote:theNote withLoopStartingAt:loopStart andLoopLength:loopLen];
 }
 
-- (int)availableChannel
+- (short)availableChannel
 {
-	return 0; //TODO:implement!
+	return FindAFreeChannel(theRec);
 }
 
 - (MADErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett
