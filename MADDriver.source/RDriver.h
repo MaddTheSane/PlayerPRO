@@ -76,7 +76,7 @@
 /*** 					   EFFECTS ID							***/
 /********************						***********************/
 
-typedef MADENUM(int, MADEffectID) {
+typedef MADENUM(MADByte, MADEffectID) {
 	MADEffectArpeggio		= 0,	//	0x00
 	MADEffectDownslide		= 1,	//	0x01
 	MADEffectUpslide 		= 2,	//	0x02
@@ -831,6 +831,7 @@ PPEXPORT void		UpdateTracksNumber(MADDriverRecPtr);
 PPEXPORT MADErr		MADCreateVolumeTable(MADDriverRecPtr intDriver);
 PPEXPORT void		MADDisposeVolumeTable(MADDriverRecPtr intDriver);
 PPEXPORT MADMusic*	CreateFreeMADK();
+PPEXPORT short		FindAFreeChannel(MADDriverRecPtr intDriver);
 
 #pragma mark Swift helpers
 PPEXPORT IntPatData MADPatDataToInt(PatData *inPat);

@@ -24,7 +24,7 @@
 @property (readonly) Cmd theCommand;
 @property MADByte instrument;
 @property MADByte note;
-@property MADByte command;
+@property MADEffectID command;
 @property MADByte argument;
 @property MADByte volume;
 - (void)resetCommand;

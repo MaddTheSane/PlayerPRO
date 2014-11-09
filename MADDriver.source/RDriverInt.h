@@ -132,7 +132,6 @@ void	FFT16S(short *SData, size_t size, double *filter, MADDriverRecPtr intDriver
 void	FFT8S(char *SData, size_t size, double *filter, MADDriverRecPtr intDriver, short nochan, bool);
 void	IntNoteOff(Channel *curVoice, MADDriverRecPtr intDriver);
 bool	NewMADCommand(Cmd *theNoteCmd);
-short	FindAFreeChannel(MADDriverRecPtr intDriver);
 
 // Effects.c
 

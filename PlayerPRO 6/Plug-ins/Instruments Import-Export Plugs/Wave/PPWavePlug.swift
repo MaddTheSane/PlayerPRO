@@ -80,25 +80,25 @@ import SwiftAdditions
 			var audioFile: AudioFileID = nil
 			var res: OSStatus = 0
 			var data: NSData
-			#if __BIG_ENDIAN__
-			if (curData.amplitude == 16) {
-				var mutData = curData.data.mutableCopy() as NSMutableData
-				var mutShortBytes = UnsafeMutablePointer<UInt16>(mutData.mutableBytes)
-				dispatch_apply(UInt(curData.data.length / 2), dispatch_get_global_queue(0, 0), { (i) -> Void in
-					let IntI = Int(i)
-					mutShortBytes[IntI] = mutShortBytes[IntI].littleEndian
-					return
-				})
-				
-				data = mutData
+			if isBigEndian {
+				if (curData.amplitude == 16) {
+					var mutData = curData.data.mutableCopy() as NSMutableData
+					var mutShortBytes = UnsafeMutablePointer<UInt16>(mutData.mutableBytes)
+					dispatch_apply(UInt(curData.data.length / 2), dispatch_get_global_queue(0, 0), { (i) -> Void in
+						let IntI = Int(i)
+						mutShortBytes[IntI] = mutShortBytes[IntI].littleEndian
+						return
+					})
+					
+					data = mutData
+				} else {
+					data = curData.data
+				}
 			} else {
-				data = curData.data;
-			}
-			#else
 				data = curData.data
-			#endif
+			}
 			
-			res = AudioFileCreateWithURL(sampleURL as CFURL, AudioFileTypeID(kAudioFileWAVEType), &asbd, UInt32(kAudioFileFlags_EraseFile), &audioFile);
+			res = AudioFileCreate(URL: sampleURL, fileType: .WAVE, format: &asbd, flags: .EraseFile, audioFile: &audioFile)
 			if (res != noErr) {
 				myErr = .WritingErr;
 			} else {

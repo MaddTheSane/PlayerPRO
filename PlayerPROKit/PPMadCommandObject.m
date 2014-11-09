@@ -83,12 +83,12 @@ static const dispatch_block_t initUTIArray = ^{
 	theCommand.note = note;
 }
 
-- (MADByte)command
+- (MADEffectID)command
 {
 	return theCommand.cmd;
 }
 
-- (void)setCommand:(MADByte)command
+- (void)setCommand:(MADEffectID)command
 {
 	theCommand.cmd = command;
 }
