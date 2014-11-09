@@ -44,12 +44,7 @@ int main(int argc, const char * argv[])
 			fprintf(stderr, "Version is invalid!\n");
 			return EXIT_FAILURE;
 		}
-		if (strcasecmp(argv[2], "player") == 0) {
-			plistDict[@"CFBundleVersion"] = outString;
-		} else {
-			plistDict[@"CFBundleVersion"] = [NSString stringWithFormat:@"%@.%@", plistDict[@"CFBundleVersion"], outString];
-		}
-		plistDict[@"CFBundleShortVersionString"] = [NSString stringWithFormat:@"%@.%@", plistDict[@"CFBundleShortVersionString"], outString];
+		plistDict[@"CFBundleVersion"] = outString;
 		
 		{
 			NSTask *hashTask = [[NSTask alloc] init];

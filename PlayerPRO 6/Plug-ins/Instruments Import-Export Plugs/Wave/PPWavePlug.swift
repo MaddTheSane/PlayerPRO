@@ -108,13 +108,13 @@ import SwiftAdditions
 				if (res != noErr) {
 					myErr = .WritingErr;
 				} else {
-					#if false
+					/*
 						if (curData.loopBegin != 0) {
 						var theLoop = AIFFLoop(playMode: 0, beginLoop: 0, endLoop: 0);
 						AudioFileSetUserData(audioFile, "LOOP", 0, UInt32(sizeof(AIFFLoop)), &theLoop);
 						}
 						AudioFileOptimize(audioFile);
-					#endif
+					*/
 					
 					res = AudioFileClose(audioFile);
 					if (res != noErr) {
