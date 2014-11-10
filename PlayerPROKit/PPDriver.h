@@ -20,7 +20,7 @@
 
 @interface PPDriver : NSObject
 @property (nonatomic, strong) PPMusicObject *currentMusic;
-@property (readonly) PPLibrary *theLibrary;
+@property (readonly, strong) PPLibrary *theLibrary;
 @property (readonly) MADDriverSettings driverSettings;
 @property NSTimeInterval musicPosition;
 @property (getter = isExporting) BOOL exporting;

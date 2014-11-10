@@ -31,7 +31,7 @@ class NotesConversion: XCTestCase {
 		}
 	}
 	
-	func testNoteConversionLetterInt16() {
+	func testNoteConversionLetter() {
 		var noteNames = getNotesWithLetters(useLetters: true)
 		
 		self.measureBlock { () -> Void in
@@ -46,20 +46,7 @@ class NotesConversion: XCTestCase {
 		}
 	}
 	
-	func testNoteConversionLetterUInt8() {
-		var noteNames = getNotesWithLetters(useLetters: true)
-		
-		var noteNums = [UInt8]()
-		for aStr in noteNames {
-			if let aNoteNum: UInt8 = NoteFromString(aStr) {
-				noteNums.append(aNoteNum)
-			}
-		}
-		
-		XCTAssert(noteNames.count == 96, "Didn't get all 96 note values converted back")
-	}
-	
-	func testNoteConversionDoReMiInt16() {
+	func testNoteConversionDoReMi() {
 		var noteNames = getNotesWithLetters(useLetters: false)
 		
 		self.measureBlock { () -> Void in
@@ -74,22 +61,8 @@ class NotesConversion: XCTestCase {
 		}
 	}
 	
-	func testNoteConversionDoReMiUInt8() {
-		var noteNames = getNotesWithLetters(useLetters: false)
-		
-		var noteNums = [UInt8]()
-		for aStr in noteNames {
-			if let aNoteNum: UInt8 = NoteFromString(aStr) {
-				noteNums.append(aNoteNum)
-			}
-		}
-		
-		XCTAssert(noteNames.count == 96, "Didn't get all 96 note values converted back")
-	}
-	
-	let edgeStrings = ["d♯4", "re-2", "mi♯5", "g5", "so1", "ti2"]
-
-	func testEdgeCaseStringsInt16() {
+	func testEdgeCaseStrings() {
+		let edgeStrings = ["d♯4", "re-2", "mi♯5", "g5", "so1", "ti2"]
 		for aStr in edgeStrings {
 			if let aNote: Int16 = NoteFromString(aStr) {
 				
@@ -99,18 +72,7 @@ class NotesConversion: XCTestCase {
 		}
 	}
 	
-	func testEdgeCaseStringsUInt8() {
-		for aStr in edgeStrings {
-			if let aNote: UInt8 = NoteFromString(aStr) {
-				
-			} else {
-				XCTFail("Could not decode \(aStr)")
-			}
-		}
-
-	}
-	
-	func testInvalidNotesFromStringInt16() {
+	func testInvalidNotesFromString() {
 		let invalidStrs = ["", "  ", "c", "C", "---", "B75", "adda5", "♯2"]
 		for aStr in invalidStrs {
 			if let aNote: Int16 = NoteFromString(aStr) {
@@ -119,7 +81,7 @@ class NotesConversion: XCTestCase {
 		}
 	}
 	
-	func testInvalidStringsFromNotesInt16() {
+	func testInvalidStringsFromNotes() {
 		let invalidNums: [Int16] = [-1, 96, 100, 0xFF]
 		for i in invalidNums {
 			if let aStr = OctaveNameFromNote(i) {

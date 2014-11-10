@@ -53,14 +53,6 @@ public func CreateErrorFromMADErrorType(theErr: MADErr) -> NSError? {
 	return PPCreateErrorFromMADErrorType(theErr)
 }
 
-public func NoteFromString(myTT: String) -> UInt8? {
-	if let toRet: Int16 = NoteFromString(myTT) {
-		return UInt8(toRet)
-	} else {
-		return nil
-	}
-}
-
 public func NoteFromString(myTT: String) -> Int16?
 {
 	if ( myTT == "" || myTT == "---" || countElements(myTT) < 2) {

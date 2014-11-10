@@ -13,8 +13,8 @@ import AVFoundation
 import AudioToolbox
 
 @objc(PPDocument) class PPDocument: NSDocument {	
-	weak var instrumentList: InstrumentPanelController! = nil
-	weak var mainViewController: DocumentWindowController! = nil
+	var instrumentList: InstrumentPanelController! = nil
+	var mainViewController: DocumentWindowController! = nil
 	dynamic let theDriver: PPDriver
 	dynamic private(set) var theMusic: PPMusicObject!
 	
@@ -40,7 +40,7 @@ import AudioToolbox
 		var docWinCon = DocumentWindowController(windowNibName: windowNibName)
 		addWindowController(docWinCon)
 		docWinCon.currentDocument = self
-		instrumentList = InstrumentPanelController()
+		instrumentList = InstrumentPanelController(windowNibName: "InsPanel")
 		addWindowController(instrumentList)
 		instrumentList.currentDocument = self
 		mainViewController = docWinCon
