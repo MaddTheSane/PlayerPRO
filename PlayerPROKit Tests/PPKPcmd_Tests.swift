@@ -14,16 +14,16 @@ class PPKPcmd_Tests: XCTestCase {
 
 	func testAddRow() {
 		var ourPcmd = PPKPcmd(tracks: 5, rows: 5)
-		ourPcmd.modifyCmdAtRow(2, track: 2) { (aCmd) -> () in
+		ourPcmd.modifyCommand(row: 2, track: 2) { (aCmd) -> () in
 			var tmpCmd = aCmd
 			tmpCmd.arg = 5
 			aCmd = tmpCmd
 		}
-		let ourCmd = ourPcmd.getCommand(2, track: 2)
+		let ourCmd = ourPcmd.getCommand(row: 2, track: 2)
 		
 		ourPcmd.addRow()
 		
-		let otherCmd = ourPcmd.getCommand(2, track: 2)
+		let otherCmd = ourPcmd.getCommand(row: 2, track: 2)
 		
 		XCTAssert(ourCmd == otherCmd, "Row added successfully")
 	}
@@ -31,19 +31,19 @@ class PPKPcmd_Tests: XCTestCase {
 	func testAddTrack() {
 		var ourPcmd = PPKPcmd(tracks: 5, rows: 5)
 		for i in 0 ..< 25 {
-			ourPcmd.modifyCmdAtRow(Int16(i % 5), track: Int16(i / 5)) { (aCmd) -> () in
+			ourPcmd.modifyCommand(row: Int16(i % 5), track: Int16(i / 5)) { (aCmd) -> () in
 				var tmpCmd = aCmd
 				tmpCmd.arg = MADByte(i)
 				aCmd = tmpCmd
 			}
 		}
-		let ourCmd = ourPcmd.getCommand(2, track: 2)
-		let ourCmd5 = ourPcmd.getCommand(4, track: 4)
+		let ourCmd = ourPcmd.getCommand(row: 2, track: 2)
+		let ourCmd5 = ourPcmd.getCommand(row: 4, track: 4)
 		
 		ourPcmd.addTrack()
 		
-		let otherCmd = ourPcmd.getCommand(2, track: 2)
-		let otherCmd5 = ourPcmd.getCommand(4, track: 4)
+		let otherCmd = ourPcmd.getCommand(row: 2, track: 2)
+		let otherCmd5 = ourPcmd.getCommand(row: 4, track: 4)
 		XCTAssert(ourCmd == otherCmd && ourCmd5 == otherCmd5, "Track added successfully")
 	}
 }

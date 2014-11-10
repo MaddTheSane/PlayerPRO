@@ -181,6 +181,8 @@
 		552711E5124881F4005120FC /* UserDefaultKeys.m in Sources */ = {isa = PBXBuildFile; fileRef = 552711E4124881F4005120FC /* UserDefaultKeys.m */; };
 		552788031981C95100708906 /* MusicListDragClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552788021981C95100708906 /* MusicListDragClass.swift */; };
 		55281D07199B32D400C998AF /* PPPasteboardHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = 55281D06199B32D400C998AF /* PPPasteboardHandling.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5528D1331A115AF9001E30CF /* NotesConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5528D1321A115AF9001E30CF /* NotesConversion.swift */; };
+		5528D1341A115AF9001E30CF /* NotesConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5528D1321A115AF9001E30CF /* NotesConversion.swift */; };
 		552A662916B5EBEC007C63F7 /* PPPlugInObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 552A662816B5EBEB007C63F7 /* PPPlugInObject.m */; };
 		552C440317DFDE1100AFCB5C /* ComplexFadeController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 552C440117DFDE1100AFCB5C /* ComplexFadeController.xib */; };
 		552C440717DFDF5A00AFCB5C /* FadeNoteController.m in Sources */ = {isa = PBXBuildFile; fileRef = 552C440517DFDF5A00AFCB5C /* FadeNoteController.m */; };
@@ -2201,6 +2203,7 @@
 		552711E4124881F4005120FC /* UserDefaultKeys.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = UserDefaultKeys.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		552788021981C95100708906 /* MusicListDragClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListDragClass.swift; sourceTree = "<group>"; };
 		55281D06199B32D400C998AF /* PPPasteboardHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPasteboardHandling.h; sourceTree = "<group>"; };
+		5528D1321A115AF9001E30CF /* NotesConversion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesConversion.swift; sourceTree = "<group>"; };
 		552A662716B5EBEA007C63F7 /* PPPlugInObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPlugInObject.h; sourceTree = "<group>"; };
 		552A662816B5EBEB007C63F7 /* PPPlugInObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPPlugInObject.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		552C440117DFDE1100AFCB5C /* ComplexFadeController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComplexFadeController.xib; sourceTree = "<group>"; };
@@ -4476,6 +4479,7 @@
 			isa = PBXGroup;
 			children = (
 				55C9191C1A000BFB0049F4E4 /* tmpHeader.h */,
+				5528D1321A115AF9001E30CF /* NotesConversion.swift */,
 				55ADD23E19B4F858005588B5 /* PlayerPROKit_Tests.swift */,
 				555272541A0001CE008B8616 /* PPKPcmd_Tests.swift */,
 				55ADD23C19B4F858005588B5 /* Supporting Files */,
@@ -7024,6 +7028,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5528D1341A115AF9001E30CF /* NotesConversion.swift in Sources */,
 				55C9191D1A000C3F0049F4E4 /* PlayerPROKit_Tests.swift in Sources */,
 				55C9191E1A000C3F0049F4E4 /* PPKPcmd_Tests.swift in Sources */,
 			);
@@ -7478,6 +7483,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5528D1331A115AF9001E30CF /* NotesConversion.swift in Sources */,
 				55ADD23F19B4F858005588B5 /* PlayerPROKit_Tests.swift in Sources */,
 				555272551A0001CE008B8616 /* PPKPcmd_Tests.swift in Sources */,
 			);

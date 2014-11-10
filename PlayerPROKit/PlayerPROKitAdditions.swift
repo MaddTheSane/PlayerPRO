@@ -99,8 +99,7 @@ public func NoteFromString(myTT: String) -> Int16?
 	
 	let theRest = myTT[myTT.startIndex ..< idx]
 	let theRet = findNote(theRest)
-	let tmpNote = theRet.0
-	let val1 = tmpNote.lowercaseString
+	let val1 = theRet.0.lowercaseString
 	switch val1 {
 	case "c", "do":
 		Oct += 0
