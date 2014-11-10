@@ -25,6 +25,12 @@ class NotesConversion: XCTestCase {
 		return noteNames
 	}
 	
+	func testNotesWithLettersTime() {
+		self.measureBlock {
+			var noteNames = self.getNotesWithLetters(useLetters: false)
+		}
+	}
+	
 	func testNoteConversionLetterInt16() {
 		var noteNames = getNotesWithLetters(useLetters: true)
 		
@@ -81,8 +87,9 @@ class NotesConversion: XCTestCase {
 		XCTAssert(noteNames.count == 96, "Didn't get all 96 note values converted back")
 	}
 	
+	let edgeStrings = ["d♯4", "re-2", "mi♯5", "g5", "so1", "ti2"]
+
 	func testEdgeCaseStringsInt16() {
-		let edgeStrings = ["d♯4", "re-2", "mi♯5"]
 		for aStr in edgeStrings {
 			if let aNote: Int16 = NoteFromString(aStr) {
 				
@@ -93,7 +100,6 @@ class NotesConversion: XCTestCase {
 	}
 	
 	func testEdgeCaseStringsUInt8() {
-		let edgeStrings = ["d♯4", "re-2", "mi♯5"]
 		for aStr in edgeStrings {
 			if let aNote: UInt8 = NoteFromString(aStr) {
 				
