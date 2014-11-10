@@ -12,7 +12,7 @@ import PlayerPROKit
 
 class NotesConversion: XCTestCase {
 	
-	func getNotesWithLetters(useLetters: Bool = true) -> [String] {
+	func getNotesWithLetters(#useLetters: Bool) -> [String] {
 		var noteNames = [String]()
 		for i in 0..<96 {
 			if let aNote = OctaveNameFromNote(Int16(i), letters: useLetters) {
@@ -49,5 +49,37 @@ class NotesConversion: XCTestCase {
 		}
 		
 		XCTAssert(noteNames.count == 96, "Didn't get all 96 note values converted back")
+	}
+	
+	func testEdgeCaseStrings() {
+		let edgeStrings = ["d♯4", "re-2", "mi♯5"]
+		for aStr in edgeStrings {
+			if let aNote: Int16 = NoteFromString(aStr) {
+				
+			} else {
+				XCTFail("Could not decode \(aStr)")
+			}
+		}
+	}
+	
+	func testInvalidNotesFromString() {
+		let invalidStrs = ["", "  ", "c", "C", "---", "B75", "adda5", "♯2"]
+		for aStr in invalidStrs {
+			var unwrappedNote: Int16 = -1
+			var aNote: Int16? = NoteFromString(aStr)
+			if aNote != nil {
+				unwrappedNote = aNote!
+			}
+			XCTAssert(aNote == nil, "Accidentally got a note back, \(aStr) got converted to \(unwrappedNote)")
+		}
+	}
+	
+	func testInvalidStringsFromNotes() {
+		let invalidNums: [Int16] = [-1, 96, 100, 0xFF]
+		for i in invalidNums {
+			if let aStr = OctaveNameFromNote(i) {
+				XCTFail("Accidentally got a number back, \(i) got converted to \(aStr)")
+			}
+		}
 	}
 }
