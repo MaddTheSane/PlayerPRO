@@ -25,12 +25,27 @@ class NotesConversion: XCTestCase {
 		return noteNames
 	}
 	
-	func testNoteConversionLetter() {
+	func testNoteConversionLetterInt16() {
 		var noteNames = getNotesWithLetters(useLetters: true)
 		
-		var noteNums = [Int16]()
+		self.measureBlock { () -> Void in
+			var noteNums = [Int16]()
+			for aStr in noteNames {
+				if let aNoteNum: Int16 = NoteFromString(aStr) {
+					noteNums.append(aNoteNum)
+				}
+			}
+			
+			XCTAssert(noteNames.count == 96, "Didn't get all 96 note values converted back")
+		}
+	}
+	
+	func testNoteConversionLetterUInt8() {
+		var noteNames = getNotesWithLetters(useLetters: true)
+		
+		var noteNums = [UInt8]()
 		for aStr in noteNames {
-			if let aNoteNum: Int16 = NoteFromString(aStr) {
+			if let aNoteNum: UInt8 = NoteFromString(aStr) {
 				noteNums.append(aNoteNum)
 			}
 		}
@@ -38,12 +53,27 @@ class NotesConversion: XCTestCase {
 		XCTAssert(noteNames.count == 96, "Didn't get all 96 note values converted back")
 	}
 	
-	func testNoteConversionDoReMi() {
+	func testNoteConversionDoReMiInt16() {
 		var noteNames = getNotesWithLetters(useLetters: false)
 		
-		var noteNums = [Int16]()
+		self.measureBlock { () -> Void in
+			var noteNums = [Int16]()
+			for aStr in noteNames {
+				if let aNoteNum: Int16 = NoteFromString(aStr) {
+					noteNums.append(aNoteNum)
+				}
+			}
+			
+			XCTAssert(noteNames.count == 96, "Didn't get all 96 note values converted back")
+		}
+	}
+	
+	func testNoteConversionDoReMiUInt8() {
+		var noteNames = getNotesWithLetters(useLetters: false)
+		
+		var noteNums = [UInt8]()
 		for aStr in noteNames {
-			if let aNoteNum: Int16 = NoteFromString(aStr) {
+			if let aNoteNum: UInt8 = NoteFromString(aStr) {
 				noteNums.append(aNoteNum)
 			}
 		}
@@ -51,7 +81,7 @@ class NotesConversion: XCTestCase {
 		XCTAssert(noteNames.count == 96, "Didn't get all 96 note values converted back")
 	}
 	
-	func testEdgeCaseStrings() {
+	func testEdgeCaseStringsInt16() {
 		let edgeStrings = ["d♯4", "re-2", "mi♯5"]
 		for aStr in edgeStrings {
 			if let aNote: Int16 = NoteFromString(aStr) {
@@ -62,7 +92,19 @@ class NotesConversion: XCTestCase {
 		}
 	}
 	
-	func testInvalidNotesFromString() {
+	func testEdgeCaseStringsUInt8() {
+		let edgeStrings = ["d♯4", "re-2", "mi♯5"]
+		for aStr in edgeStrings {
+			if let aNote: UInt8 = NoteFromString(aStr) {
+				
+			} else {
+				XCTFail("Could not decode \(aStr)")
+			}
+		}
+
+	}
+	
+	func testInvalidNotesFromStringInt16() {
 		let invalidStrs = ["", "  ", "c", "C", "---", "B75", "adda5", "♯2"]
 		for aStr in invalidStrs {
 			if let aNote: Int16 = NoteFromString(aStr) {
@@ -71,7 +113,7 @@ class NotesConversion: XCTestCase {
 		}
 	}
 	
-	func testInvalidStringsFromNotes() {
+	func testInvalidStringsFromNotesInt16() {
 		let invalidNums: [Int16] = [-1, 96, 100, 0xFF]
 		for i in invalidNums {
 			if let aStr = OctaveNameFromNote(i) {
