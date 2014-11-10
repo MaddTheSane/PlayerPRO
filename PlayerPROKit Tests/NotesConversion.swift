@@ -20,12 +20,13 @@ class NotesConversion: XCTestCase {
 			}
 		}
 		
+		XCTAssert(noteNames.count == 96, "Didn't get all 96 note strings")
+
 		return noteNames
 	}
 	
 	func testNoteConversionLetter() {
 		var noteNames = getNotesWithLetters(useLetters: true)
-		XCTAssert(noteNames.count == 96, "Didn't get all 96 note strings")
 		
 		var noteNums = [Int16]()
 		for aStr in noteNames {
@@ -39,7 +40,6 @@ class NotesConversion: XCTestCase {
 	
 	func testNoteConversionDoReMi() {
 		var noteNames = getNotesWithLetters(useLetters: false)
-		XCTAssert(noteNames.count == 96, "Didn't get all 96 note strings")
 		
 		var noteNums = [Int16]()
 		for aStr in noteNames {
@@ -65,12 +65,9 @@ class NotesConversion: XCTestCase {
 	func testInvalidNotesFromString() {
 		let invalidStrs = ["", "  ", "c", "C", "---", "B75", "adda5", "♯2"]
 		for aStr in invalidStrs {
-			var unwrappedNote: Int16 = -1
-			var aNote: Int16? = NoteFromString(aStr)
-			if aNote != nil {
-				unwrappedNote = aNote!
+			if let aNote: Int16 = NoteFromString(aStr) {
+				XCTFail("Accidentally got a note back, \(aStr) got converted to \(aNote)")
 			}
-			XCTAssert(aNote == nil, "Accidentally got a note back, \(aStr) got converted to \(unwrappedNote)")
 		}
 	}
 	
