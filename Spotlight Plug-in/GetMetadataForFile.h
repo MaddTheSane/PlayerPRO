@@ -11,6 +11,7 @@
 
 #include <CoreFoundation/CFDictionary.h>
 #include <CoreFoundation/CFString.h>
+#include <CoreFoundation/CFURL.h>
 
 #define __private_extern __attribute__((visibility("hidden")))
 

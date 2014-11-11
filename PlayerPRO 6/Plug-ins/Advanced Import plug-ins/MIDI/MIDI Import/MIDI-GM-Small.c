@@ -560,7 +560,11 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 						curData = MADCreateSample(curMusic, inst->no, inst->numSamples);
 					else {
 						curData = (sData*)calloc(sizeof(sData), 1);
-						if (curData == NULL) MADDebugStr(__LINE__, __FILE__, "");
+						if (curData == NULL) {
+							MADDebugStr(__LINE__, __FILE__, "");
+							//TODO: clean-up
+							return;
+						}
 						sample[inst->no * MAXSAMPLE + inst->numSamples] = curData;
 						
 						inst->numSamples++;
