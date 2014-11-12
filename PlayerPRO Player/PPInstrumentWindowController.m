@@ -95,13 +95,18 @@
 		[waveFormImage setImage:nil];
 		return;
 	}
-	[instrumentSize setIntegerValue:[object dataSize]];
-	[instrumentLoopStart setIntegerValue:[object loopBegin]];
-	[instrumentLoopSize setIntegerValue:[object loopSize]];
+	instrumentSize.integerValue = [(NSData*)[object data] length];
+	if ([object loopSize] == 0) {
+		instrumentLoopStart.stringValue = @"";
+		instrumentLoopSize.stringValue = @"";
+	} else {
+		[instrumentLoopStart setIntegerValue:[object loopBegin]];
+		[instrumentLoopSize setIntegerValue:[object loopSize]];
+	}
 	[instrumentVolume setIntegerValue:[(PPSampleObject*)object volume]];
-	[instrumentRate setStringValue:[NSString stringWithFormat:@"%u Hz", [object c2spd]]];
+	[instrumentRate setStringValue: [object c2spd] != 0 ? [NSString stringWithFormat:@"%u Hz", [object c2spd]] : PPDoubleDash];
 	instrumentNote.stringValue = [PPSampleObject octaveNameFromNote:[object relativeNote]]; 
-	[instrumentBits setStringValue:[NSString stringWithFormat:@"%u-bit", [object amplitude]]];
+	[instrumentBits setStringValue:[object amplitude] != 0 ? [NSString stringWithFormat:@"%u-bit", [object amplitude]] : PPDoubleDash];
 	[instrumentMode setStringValue: [object loopType] == MADLoopTypePingPong ? @"Ping-pong" : @"Classic"];
 	waveFormImage.image = [object waveformImageUsingView:waveFormImage];
 }

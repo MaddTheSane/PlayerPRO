@@ -112,7 +112,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		}
 	}
 	
-	func playSample(fromInstrument: Int16, sampleNumber: Int16, volume: Byte = 0xFF, note: Byte = 0xFF) {
+	func playSample(#instrument: Int16, sampleNumber: Int16, volume: Byte = 0xFF, note: Byte = 0xFF) {
 		
 	}
 	
@@ -154,8 +154,8 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		func updateOutlineView(obj: PPSampleObject?) {
 			if obj == nil {
 				instrumentSize.stringValue = PPDoubleDash
-				instrumentLoopStart.stringValue = PPDoubleDash
-				instrumentLoopSize.stringValue = PPDoubleDash
+				instrumentLoopStart.stringValue = ""
+				instrumentLoopSize.stringValue = ""
 				instrumentVolume.stringValue = PPDoubleDash
 				instrumentRate.stringValue = PPDoubleDash
 				instrumentNote.stringValue = PPDoubleDash
@@ -165,12 +165,17 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 			} else {
 				let untmpObj = obj!
 				instrumentSize.integerValue = untmpObj.data.length
-				instrumentLoopStart.integerValue = Int(untmpObj.loopBegin)
-				instrumentLoopSize.integerValue = Int(untmpObj.loopSize)
+				if untmpObj.loopSize != 0 {
+					instrumentLoopStart.integerValue = Int(untmpObj.loopBegin)
+					instrumentLoopSize.integerValue = Int(untmpObj.loopSize)
+				} else {
+					instrumentLoopStart.stringValue = ""
+					instrumentLoopSize.stringValue = ""
+				}
 				instrumentVolume.integerValue = Int(untmpObj.volume)
-				instrumentRate.stringValue = "\(untmpObj.c2spd) Hz"
+				instrumentRate.stringValue = untmpObj.c2spd != 0 ? "\(untmpObj.c2spd) Hz" : PPDoubleDash
 				instrumentNote.stringValue = OctaveNameFromNote(UInt8(untmpObj.relativeNote)) ?? "---"
-				instrumentBits.stringValue = "\(untmpObj.amplitude)-bit"
+				instrumentBits.stringValue = untmpObj.amplitude != 0 ? "\(untmpObj.amplitude)-bit" : PPDoubleDash
 				instrumentMode.stringValue = untmpObj.loopType == .PingPong ? "Ping-pong" : "Classic"
 				let tmpIm = PPSampleObject.waveformImage(fromSample: untmpObj, view: waveFormImage)
 				waveFormImage.image = tmpIm
@@ -181,6 +186,9 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 			if otherObj.countOfSamples > 0 {
 				let tmpObj = otherObj.samplesObjectAtIndex(0)
 				updateOutlineView(tmpObj)
+			} else {
+				updateOutlineView(nil)
+				return
 			}
 		} else if let otherObj = object as? PPSampleObject {
 			updateOutlineView(otherObj)
