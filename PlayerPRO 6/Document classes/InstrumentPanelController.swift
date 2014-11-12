@@ -34,7 +34,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		let tag = (sender as NSButtonCell).tag
 		let sampNum = tag % Int(MAXSAMPLE)
 		let instrNum = tag / Int(MAXSAMPLE)
-		playSample(instrument: instrNum, sample: sampNum)
+		playSample(instrument: Int16(instrNum), sample: Int16(sampNum))
 	}
 	
 	private func loadInstrumentsFromMusic() {
