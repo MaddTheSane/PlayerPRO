@@ -56,7 +56,6 @@ class OpenPanelViewController: NSViewController {
 				theUtiType = .other
 				
 			default:
-				// TODO: fail
 				theUtiType = .other
 			}
 			
@@ -64,11 +63,11 @@ class OpenPanelViewController: NSViewController {
 			name = nam
 		}
 		
-		var hashValue: Int { get {
-			return name.hashValue ^ theUtiType.hashValue ^ (utis as NSArray).hash
-			}}
+		var hashValue: Int {
+			return name.hashValue ^ theUtiType.hashValue ^ utis.count
+		}
 		
-		var debugDescription: String { get {
+		var debugDescription: String {
 			var des: String
 			if (theUtiType == .playlist) {
 				des = "Playlist";
@@ -83,9 +82,9 @@ class OpenPanelViewController: NSViewController {
 			}
 			
 			return "\(name): \(des) - \(utis.description)"
-			}}
+		}
 		
-		var description: String { get {
+		var description: String {
 			var des: String
 			if (theUtiType == .playlist) {
 				des = "Playlist";
@@ -99,137 +98,145 @@ class OpenPanelViewController: NSViewController {
 				des = "Unknown";
 			}
 			return "\(name): \(des)"
-			}}
+		}
 	}
 	
-	let openPanel: NSOpenPanel
-	private var utiObjects = [OpenPanelViewItem]()
-	private var multipleSelection: Bool
-	@IBOutlet weak var popUp: NSPopUpButton! = nil
+	var openPanel: NSOpenPanel
+	private let utiObjects: [OpenPanelViewItem]
+	@IBOutlet weak var popUp: NSPopUpButton? = nil
 	
-	var allowsMultipleSelectionOfTrackers:Bool { get {
-		return multipleSelection
+	var allowsMultipleSelectionOfTrackers: Bool = false {
+		didSet {
+			self.openPanel.allowsMultipleSelection = allowsMultipleSelectionOfTrackers
+		}
 	}
-	set {
-		multipleSelection = newValue
-		openPanel.allowsMultipleSelection = multipleSelection
-	}}
 	
 	required init?(coder: NSCoder) {
 		println("initWithCoder was called?")
-		multipleSelection = false
 		openPanel = NSOpenPanel()
-		
+		allowsMultipleSelectionOfTrackers = false
+		utiObjects = [OpenPanelViewItem]()
+
 		super.init(coder: coder)
 	}
 	
-	@IBAction func selectUTI(sender: AnyObject!) {
-		var tag = (sender as NSMenuItem).tag;
-		var allowedUTIs = [String]();
-		switch (tag) {
-		case utiType.allType.rawValue:
-			for obj in utiObjects {
-				allowedUTIs += obj.utis
-			}
-			openPanel.allowedFileTypes = allowedUTIs
-			if (allowsMultipleSelectionOfTrackers) {
-				openPanel.allowsMultipleSelection = true
-			}
-			
-		case utiType.trackerType.rawValue:
-			for obj in utiObjects {
-				if (obj.theUtiType == trackerType.tracker) {
+	@IBAction @objc func selectUTI(sender: AnyObject?) {
+		if let menuIte = sender as? NSMenuItem {
+			let tag = menuIte.tag;
+			var allowedUTIs = [String]();
+			switch (tag) {
+			case utiType.allType.rawValue:
+				for obj in utiObjects {
 					allowedUTIs += obj.utis
 				}
-			}
-			openPanel.allowedFileTypes = allowedUTIs
-			if (allowsMultipleSelectionOfTrackers) {
-				openPanel.allowsMultipleSelection = true
-			}
-			
-		case utiType.playlistType.rawValue:
-			for obj in utiObjects {
-				if (obj.theUtiType == .playlist) {
-					allowedUTIs += obj.utis
-				}
-			}
-			openPanel.allowedFileTypes = allowedUTIs
-			if (allowsMultipleSelectionOfTrackers) {
-				openPanel.allowsMultipleSelection = true
-			}
-			
-		case utiType.instrumentType.rawValue:
-			for obj in utiObjects {
-				if (obj.theUtiType == .instrument) {
-					allowedUTIs += obj.utis
-				}
-			}
-			openPanel.allowedFileTypes = allowedUTIs
-			if (allowsMultipleSelectionOfTrackers) {
-				openPanel.allowsMultipleSelection = true
-			}
-			
-		case utiType.otherType.rawValue:
-			for obj in utiObjects {
-				if (obj.theUtiType == .other) {
-					for uti in obj.utis {
-						allowedUTIs.append(uti)
-					}
-				}
-			}
-			openPanel.allowedFileTypes = allowedUTIs
-			if (allowsMultipleSelectionOfTrackers) {
-				openPanel.allowsMultipleSelection = true
-			}
-			break;
-			
-		default:
-			if (tag < utiObjects.count && tag >= 0) {
-				var selObj = utiObjects[tag];
-				openPanel.allowedFileTypes = selObj.utis
-				if (allowsMultipleSelectionOfTrackers == true) {
-					if (selObj.theUtiType == .tracker) {
-						openPanel.allowsMultipleSelection = true
-					} else {
-						openPanel.allowsMultipleSelection = false
-					}
+				openPanel.allowedFileTypes = allowedUTIs
+				if (allowsMultipleSelectionOfTrackers) {
+					openPanel.allowsMultipleSelection = true
 				}
 				
+			case utiType.trackerType.rawValue:
+				for obj in utiObjects {
+					if (obj.theUtiType == trackerType.tracker) {
+						allowedUTIs += obj.utis
+					}
+				}
+				openPanel.allowedFileTypes = allowedUTIs
+				if (allowsMultipleSelectionOfTrackers) {
+					openPanel.allowsMultipleSelection = true
+				}
+				
+			case utiType.playlistType.rawValue:
+				for obj in utiObjects {
+					if (obj.theUtiType == .playlist) {
+						allowedUTIs += obj.utis
+					}
+				}
+				openPanel.allowedFileTypes = allowedUTIs
+				if (allowsMultipleSelectionOfTrackers) {
+					openPanel.allowsMultipleSelection = true
+				}
+				
+			case utiType.instrumentType.rawValue:
+				for obj in utiObjects {
+					if (obj.theUtiType == .instrument) {
+						allowedUTIs += obj.utis
+					}
+				}
+				openPanel.allowedFileTypes = allowedUTIs
+				if (allowsMultipleSelectionOfTrackers) {
+					openPanel.allowsMultipleSelection = true
+				}
+				
+			case utiType.otherType.rawValue:
+				for obj in utiObjects {
+					if (obj.theUtiType == .other) {
+						for uti in obj.utis {
+							allowedUTIs.append(uti)
+						}
+					}
+				}
+				openPanel.allowedFileTypes = allowedUTIs
+				if (allowsMultipleSelectionOfTrackers) {
+					openPanel.allowsMultipleSelection = true
+				}
+				break;
+				
+			default:
+				if (tag < utiObjects.count && tag >= 0) {
+					var selObj = utiObjects[tag];
+					openPanel.allowedFileTypes = selObj.utis
+					if (allowsMultipleSelectionOfTrackers == true) {
+						if (selObj.theUtiType == .tracker) {
+							openPanel.allowsMultipleSelection = true
+						} else {
+							openPanel.allowsMultipleSelection = false
+						}
+					}
+				}
 			}
-			break;
+		} else {
+			NSBeep()
 		}
+	}
+	
+	override init?(nibName: String?, bundle: NSBundle?) {
+		openPanel = NSOpenPanel()
+		allowsMultipleSelectionOfTrackers = false
+		utiObjects = [OpenPanelViewItem]()
+
+		super.init(nibName: nibName, bundle: bundle)
 	}
 	
 	init?(openPanel panel: NSOpenPanel, trackerDictionary td: [String: [String]]? = nil, playlistDictionary pd: [String: [String]]? = nil, instrumentDictionary insDict: [String: [String]]? = nil, additionalDictionary adddict: [String: [String]]? = nil) {
 		openPanel = panel
-		multipleSelection = false
-		super.init(nibName: "OpenPanelViewController", bundle: nil)
+		allowsMultipleSelectionOfTrackers = false
+		var tmpUTIs = [OpenPanelViewItem]()
 		if let tdHere = td {
 			for (key, utis) in tdHere {
 				var obj = OpenPanelViewItem(type: .trackerType, utis: utis, name: key)
-				utiObjects.append(obj)
+				tmpUTIs.append(obj)
 			}
 		}
 		if let pdHere = pd {
 			for (key, utis) in pdHere {
 				var obj = OpenPanelViewItem(type: .playlistType, utis: utis, name: key)
-				utiObjects.append(obj)
+				tmpUTIs.append(obj)
 			}
 		}
 		if let insHere = insDict {
 			for (key, utis) in insHere {
 				var obj = OpenPanelViewItem(type: .instrumentType, utis: utis, name: key)
-				utiObjects.append(obj)
+				tmpUTIs.append(obj)
 			}
 		}
 		if let addHere = adddict {
 			for (key, utis) in addHere {
 				var obj = OpenPanelViewItem(type: .otherType, utis: utis, name: key)
-				utiObjects.append(obj)
+				tmpUTIs.append(obj)
 			}
 		}
 		
-		utiObjects.sort({(lhs, rhs) -> Bool in
+		tmpUTIs.sort({(lhs, rhs) -> Bool in
 			if (lhs.theUtiType.rawValue < rhs.theUtiType.rawValue) {
 				return true
 			} else if (lhs.theUtiType.rawValue > rhs.theUtiType.rawValue) {
@@ -240,13 +247,22 @@ class OpenPanelViewController: NSViewController {
 				return result == NSComparisonResult.OrderedAscending;
 			}
 			})
+		
+		utiObjects = tmpUTIs
+		super.init(nibName: "OpenPanelViewController", bundle: nil)
+	}
+	
+	@objc func runOpenPanel(#parentWindow: NSWindow, completionHandler resultHandle: (result: Int) -> Void) {
+		openPanel.beginSheetModalForWindow(parentWindow, completionHandler: { (result) -> Void in
+			resultHandle(result: result)
+		})
 	}
 	
 	override func awakeFromNib() {
-		super.awakeFromNib()
+		//super.awakeFromNib()
 		// Do view setup here.
 		
-		if let fileTypeSelectionMenu = popUp.menu {
+		if let fileTypeSelectionMenu = popUp?.menu {
 			let moreThanTwoTypes = hasMoreThanTwoTypes();
 			if (moreThanTwoTypes) {
 				let mi0 = NSMenuItem(title: "All Openable Files", action: "selectUTI:", keyEquivalent: "")
@@ -317,7 +333,7 @@ class OpenPanelViewController: NSViewController {
 				fileTypeSelectionMenu.addItem(mi)
 			}
 		}
-		popUp.selectItemAtIndex(0)
+		popUp?.selectItemAtIndex(0)
 	}
 	
 	func setupDefaults() {
