@@ -99,7 +99,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		let openPanel = NSOpenPanel()
 		if let vc = OpenPanelViewController(openPanel: openPanel, instrumentDictionary:fileDict) {
 			vc.setupDefaults()
-			openPanel.beginSheetModalForWindow(currentDocument.windowForSheet!, completionHandler: { (panelHandle) -> Void in
+			vc.beginOpenPanel(parentWindow: currentDocument.windowForSheet!, completionHandler: { (panelHandle) -> Void in
 				if panelHandle == NSFileHandlingPanelOKButton {
 					var err: NSError? = nil
 					if self.importSampleFromURL(openPanel.URL!, error: &err) == false {

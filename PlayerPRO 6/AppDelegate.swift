@@ -545,7 +545,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		
 		if let av = OpenPanelViewController(openPanel: panel, trackerDictionary: trackerDict, instrumentDictionary: samplesDict, additionalDictionary: otherDict) {
 			av.setupDefaults()
-			panel.beginWithCompletionHandler { (retval) -> Void in
+			av.beginWithCompletionHandler { (retval) -> Void in
 				if retval == NSFileHandlingPanelOKButton {
 					let panelURL = panel.URL!
 					let filename = panelURL.path!

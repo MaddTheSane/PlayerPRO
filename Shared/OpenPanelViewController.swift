@@ -20,6 +20,8 @@ private func ==(lhs: OpenPanelViewController.OpenPanelViewItem, rhs: OpenPanelVi
 	}
 }
 
+private var OpenPanelsInUse = [OpenPanelViewController]()
+
 class OpenPanelViewController: NSViewController {
 	enum utiType: Int {
 		case allType = -1
@@ -36,7 +38,7 @@ class OpenPanelViewController: NSViewController {
 		case other
 	}
 	
-	private class OpenPanelViewItem: DebugPrintable, Printable, Hashable {
+	private struct OpenPanelViewItem: DebugPrintable, Printable, Hashable {
 		let name: String
 		let theUtiType: trackerType
 		let utis: [String]
@@ -252,8 +254,27 @@ class OpenPanelViewController: NSViewController {
 		super.init(nibName: "OpenPanelViewController", bundle: nil)
 	}
 	
-	@objc func runOpenPanel(#parentWindow: NSWindow, completionHandler resultHandle: (result: Int) -> Void) {
+	func beginOpenPanel(#completionHandler: (result: Int) -> Void) {
+		beginWithCompletionHandler(completionHandler)
+	}
+	
+	func beginWithCompletionHandler(resultHandle: (result: Int) -> Void) {
+		OpenPanelsInUse.append(self)
+		openPanel.beginWithCompletionHandler({ (result) -> Void in
+			if let anInt = find(OpenPanelsInUse, self) {
+				OpenPanelsInUse.removeAtIndex(anInt)
+			}
+			resultHandle(result: result)
+		})
+
+	}
+
+	@objc func beginOpenPanel(#parentWindow: NSWindow, completionHandler resultHandle: (result: Int) -> Void) {
+		OpenPanelsInUse.append(self)
 		openPanel.beginSheetModalForWindow(parentWindow, completionHandler: { (result) -> Void in
+			if let anInt = find(OpenPanelsInUse, self) {
+				OpenPanelsInUse.removeAtIndex(anInt)
+			}
 			resultHandle(result: result)
 		})
 	}

@@ -1086,10 +1086,9 @@ return; \
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:self.trackerDict playlistDictionary:nil instrumentDictionary:nil additionalDictionary:nil];
 	[av setupDefaults];
 	av.allowsMultipleSelectionOfTrackers = YES;
-	[panel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
+	[av beginOpenPanelWithParentWindow:self.window completionHandler:^(NSInteger result) {
 		if (result == NSFileHandlingPanelOKButton) {
 			[self addMusicsToMusicList:[panel URLs]];
-
 		}
 	}];
 }
@@ -1288,7 +1287,7 @@ typedef NS_ENUM(NSInteger, PPMusicToolbarTypes) {
 	OpenPanelViewController *av = [[OpenPanelViewController alloc] initWithOpenPanel:panel trackerDictionary:self.trackerDict playlistDictionary:playlistDict instrumentDictionary:nil additionalDictionary:nil];
 	[av setupDefaults];
 	av.allowsMultipleSelectionOfTrackers = YES;
-	[panel beginSheetModalForWindow:[self window] completionHandler:^(NSInteger result) {
+	[av beginOpenPanelWithParentWindow:[self window] completionHandler:^(NSInteger result) {
 		if (result != NSFileHandlingPanelOKButton) {
 			return;
 		}
