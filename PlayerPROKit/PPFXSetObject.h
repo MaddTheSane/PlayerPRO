@@ -19,7 +19,7 @@
 @property short track;
 @property short identifier;
 @property int effectIdentifier;
-@property short argumentNumbers;
+@property short countOfArguments;
 @property (readonly, copy) NSArray *values;
 @property (copy) NSString *name;
 

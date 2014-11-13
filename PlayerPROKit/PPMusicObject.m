@@ -44,10 +44,10 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 @end
 
 @implementation PPMusicObject
-@synthesize madInformation = madInfo;
+@synthesize information = madInfo;
 @synthesize attachedDriver;
 @synthesize _currentMusic = currentMusic;
-@synthesize internalFileName;
+@synthesize title = internalFileName;
 
 - (BOOL)usesLinearPitchTable
 {
@@ -219,7 +219,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return MADMusicInfoCFURL(theLib._madLib, filetype, (__bridge CFURLRef)(thURL), theInfo);
 }
 
-- (NSString *)internalFileName
+- (NSString *)title
 {
 	if (!internalFileName) {
 		internalFileName = [[NSString alloc] initWithCString:currentMusic->header->name encoding:NSMacOSRomanStringEncoding];
@@ -227,7 +227,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return internalFileName;
 }
 
-- (void)setInternalFileName:(NSString*)newInfo
+- (void)setTitle:(NSString*)newInfo
 {
 	internalFileName = [newInfo copy];
 	NSData *outMacRoman = [internalFileName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
@@ -240,7 +240,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	}
 }
 
-- (void)setMadInformation:(NSString*)newInfo
+- (void)setInformation:(NSString*)newInfo
 {
 	madInfo = [newInfo copy];
 	NSData *outMacRoman = [madInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
@@ -253,7 +253,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	}
 }
 
-- (NSString*)madInformation
+- (NSString*)information
 {
 	if (!madInfo) {
 		madInfo = [[NSString alloc] initWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
@@ -431,8 +431,8 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		copyWrap.filePath = self.filePath;
 	}
 	
-	copyWrap.madInformation = self.madInformation;
-	copyWrap.internalFileName = self.internalFileName;
+	copyWrap.information = self.information;
+	copyWrap.title = self.title;
 	//copyWrap.instruments = [[NSMutableArray alloc] initWithArray:_instruments copyItems:YES];
 	//copyWrap.patterns = [[NSMutableArray alloc] initWithArray:_patterns copyItems:YES];
 	return copyWrap;
@@ -617,7 +617,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 + (NSSet*)keyPathsForValuesAffectingInternalMadMusicStruct
 {
-	return [NSSet setWithObjects:@"internalFileName", @"madInformation", @"usesLinearPitcchTable", @"limitPitchToMODTable", @"showsCopyright", @"newPitch", @"newSpeed", @"generalPitch", @"generalSpeed", @"generalVolume", @"instruments", @"patterns", @"buses", nil];
+	return [NSSet setWithObjects:@"title", @"information", @"usesLinearPitcchTable", @"limitPitchToMODTable", @"showsCopyright", @"newPitch", @"newSpeed", @"generalPitch", @"generalSpeed", @"generalVolume", @"instruments", @"patterns", @"buses", nil];
 }
 
 + (NSSet*)keyPathsForValuesAffectingSDatas

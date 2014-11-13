@@ -20,19 +20,19 @@ import AudioToolbox
 	
 	dynamic var musicName: String {
 		get {
-			return theMusic.internalFileName
+			return theMusic.title
 		}
 		set {
-			theMusic.internalFileName = newValue
+			theMusic.title = newValue
 		}
 	}
 	
 	dynamic var musicInfo: String {
 		get {
-			return theMusic.madInformation
+			return theMusic.information
 		}
 		set {
-			theMusic.madInformation = newValue
+			theMusic.information = newValue
 		}
 	}
 	

@@ -13,7 +13,7 @@ import SwiftAdditions
 public final class PPLibraryObject: NSObject, Printable, DebugPrintable {
 	public let menuName: String
 	public let authorString: String
-	public let plugFile: NSBundle
+	public let bundle: NSBundle
 	public let plugType: String
 	public let UTITypes: [String]
 	public let canExport: Bool
@@ -34,18 +34,18 @@ public final class PPLibraryObject: NSObject, Printable, DebugPrintable {
 	}
 	
 	override public var description: String {
-		return "Name: \(menuName); Author: \(authorString); plug-in file: \(plugFile.bundlePath), type: \(plugType); version: \(version)"
+		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle.bundlePath), type: \(plugType); version: \(version)"
 	}
 	
 	override public var debugDescription: String {
-		return "Name: \(menuName); Author: \(authorString); plug-in file: \(plugFile), type: \(plugType); version: \(plugVersion), \(version)"
+		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle), type: \(plugType); version: \(plugVersion), \(version)"
 	}
 	
 	internal init(plugInfo pi: UnsafePointer<PlugInfo>) {
 		let unwrapped = pi.memory
 		menuName = unwrapped.MenuName.takeUnretainedValue()
 		authorString = unwrapped.AuthorString.takeUnretainedValue()
-		plugFile = NSBundle(URL: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()))!
+		bundle = NSBundle(URL: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()))!
 		UTITypes = unwrapped.UTItypes.takeUnretainedValue() as NSArray as [String]
 		let tmpArray: [CChar] = GetArrayFromMirror(reflect(unwrapped.type))
 		plugType = String(CString: tmpArray, encoding: NSMacOSRomanStringEncoding)!

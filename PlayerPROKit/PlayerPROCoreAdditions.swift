@@ -270,7 +270,7 @@ extension MADLibrary: SequenceType {
     }
 }
 
-public func MADDebugString(line: UWord = __LINE__, file: String = __FILE__, text: String) {
+public func MADDebugString(text: String, line: UWord = __LINE__, file: String = __FILE__) {
 	MADDebugStr(Int16(line), file.fileSystemRepresentation(), text.cStringUsingEncoding(NSUTF8StringEncoding)!)
 }
 

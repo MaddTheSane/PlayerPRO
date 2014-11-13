@@ -681,8 +681,8 @@ return; \
 				
 				return;
 			}
-			[savePanel setAllowedFileTypes:[madLib pluginAtIndex:tag].UTITypes];
-			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", [madLib pluginAtIndex:tag].menuName]];
+			[savePanel setAllowedFileTypes:madLib[tag].UTITypes];
+			[savePanel setTitle:[NSString stringWithFormat:@"Export as %@", madLib[tag].menuName]];
 			
 			[savePanel beginSheetModalForWindow:self.window completionHandler:^(NSInteger result) {
 				if (result != NSFileHandlingPanelOKButton) {
@@ -691,7 +691,7 @@ return; \
 				}
 				
 				NSURL *fileURL = [savePanel URL];
-				OSErr err = [self.music exportMusicToURL:fileURL format:[madLib pluginAtIndex:tag].plugType library:madLib];
+				OSErr err = [self.music exportMusicToURL:fileURL format:madLib[tag].plugType library:madLib];
 				if (err != MADNoErr) {
 					if (isQuitting) {
 						[NSApp replyToApplicationShouldTerminate:YES];
@@ -896,7 +896,7 @@ return; \
 - (void)updatePlugInInfoMenu
 {
 	for (PPLibraryObject *obj in madLib) {
-		PlugInInfo *tmpInfo = [[PlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name") plugURL:[obj.plugFile bundleURL]];
+		PlugInInfo *tmpInfo = [[PlugInInfo alloc] initWithPlugName:obj.menuName author:obj.authorString plugType:NSLocalizedString(@"TrackerPlugName", @"Tracker plug-in name") plugURL:[obj.bundle bundleURL]];
 		if (![self.plugInInfos containsObject:tmpInfo]) {
 			[self.plugInInfos addObject:tmpInfo];
 		}
@@ -952,7 +952,7 @@ return; \
 	[self setTitleForSongLabelBasedOnMusic];
 	
 	for (NSInteger i = 0; i < [madLib pluginCount]; i++) {
-		PPLibraryObject *obj = [madLib pluginAtIndex:i];
+		PPLibraryObject *obj = madLib[i];
 		if (obj.canExport) {
 			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@...", obj.menuName] action:@selector(exportMusicAs:) keyEquivalent:@""];
 			[mi setTag:i];
@@ -1100,8 +1100,8 @@ return; \
 
 - (void)setTitleForSongLabelBasedOnMusic
 {
-	self.musicName = self.music.internalFileName;
-	self.musicInfo = self.music.madInformation;
+	self.musicName = self.music.title;
+	self.musicInfo = self.music.information;
 }
 
 - (void)clearMusic

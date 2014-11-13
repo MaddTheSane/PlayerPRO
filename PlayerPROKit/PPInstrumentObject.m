@@ -141,16 +141,6 @@ static const dispatch_block_t initUTIArray = ^{
 	writeBackVal->val = value;
 }
 
-- (short)value
-{
-	return self.envelopeValue;
-}
-
-- (void)setValue:(short)value
-{
-	self.envelopeValue = value;
-}
-
 - (instancetype)init
 {
 	if (self = [super init]) {
@@ -651,7 +641,7 @@ static const dispatch_block_t initUTIArray = ^{
 			int sDataCount = theInstrument.numSamples + theInstrument.firstSample;
 			
 			for (int i = theInstrument.firstSample; i < sDataCount; i++) {
-				PPSampleObject *sObj = [[PPSampleObject alloc] initWithsData:theMus->sample[i]];
+				PPSampleObject *sObj = [[PPSampleObject alloc] initWithSData:theMus->sample[i]];
 				sObj.sampleIndex = i % MAXSAMPLE;
 				sObj.instrumentIndex = ind;
 				[samples addObject:sObj];
@@ -683,7 +673,7 @@ static const dispatch_block_t initUTIArray = ^{
 			int sDataCount = theInstrument.numSamples + theInstrument.firstSample;
 			
 			for (int i = theInstrument.firstSample; i < sDataCount; i++) {
-				PPSampleObject *sObj = [[PPSampleObject alloc] initWithsData:mus._currentMusic->sample[i]];
+				PPSampleObject *sObj = [[PPSampleObject alloc] initWithSData:mus._currentMusic->sample[i]];
 				sObj.sampleIndex = i % MAXSAMPLE;
 				sObj.instrumentIndex = insIdx;
 				[samples addObject:sObj];

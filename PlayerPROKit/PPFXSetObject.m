@@ -132,12 +132,12 @@ static const dispatch_block_t initUTIArray = ^{
 	theSet.FXID = fxIdentifier;
 }
 
-- (short)argumentNumbers
+- (short)countOfArguments
 {
 	return theSet.noArg;
 }
 
-- (void)setArgumentNumbers:(short)argumentNumbers
+- (void)setCountOfArguments:(short)argumentNumbers
 {
 	theSet.noArg = argumentNumbers;
 }
@@ -231,7 +231,7 @@ static const dispatch_block_t initUTIArray = ^{
 		self.sets = [(NSArray*)[aDecoder decodeObjectForKey:kPPValues] mutableCopy];
 		self.track = [(NSNumber*)[aDecoder decodeObjectForKey:kPPTrack] shortValue];
 		self.identifier = [(NSNumber*)[aDecoder decodeObjectForKey:kPPIdentifier] shortValue];
-		self.argumentNumbers = [(NSNumber*)[aDecoder decodeObjectForKey:kPPArgumentNumbers] shortValue];
+		self.countOfArguments = [(NSNumber*)[aDecoder decodeObjectForKey:kPPArgumentNumbers] shortValue];
 	}
 	return self;
 }
@@ -240,10 +240,10 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	[aCoder encodeObject:self.name forKey:kPPName];
 	[aCoder encodeObject:_sets forKey:kPPValues];
-	[aCoder encodeInt:theSet.FXID forKey:kPPFXIdentifier];
-	[aCoder encodeObject:@(theSet.track) forKey:kPPTrack];
-	[aCoder encodeObject:@(theSet.noArg) forKey:kPPArgumentNumbers];
-	[aCoder encodeObject:@(theSet.id) forKey:kPPIdentifier];
+	[aCoder encodeInt:self.effectIdentifier forKey:kPPFXIdentifier];
+	[aCoder encodeInt:self.track forKey:kPPTrack];
+	[aCoder encodeInt:self.countOfArguments forKey:kPPArgumentNumbers];
+	[aCoder encodeInt:self.identifier forKey:kPPIdentifier];
 }
 
 @end

@@ -68,7 +68,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		return tracks
 	}
 	
-	public var intPcmd: IntPcmd? {
+	private var intPcmd: IntPcmd? {
 		if let newSize = structSize {
 			var toRet = IntPcmd()
 			toRet.tracks = tracks
@@ -78,8 +78,8 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 			toRet.cmdCount = Int32(myCmd.count)
 			toRet.myCmd = UnsafeMutablePointer<Cmd>.alloc(myCmd.count)
 			
-			for i in 0 ..< myCmd.count {
-				toRet.myCmd[i] = myCmd[i]
+			for (i, aCmd) in enumerate(myCmd) {
+				toRet.myCmd[i] = aCmd
 			}
 			
 			return toRet

@@ -82,12 +82,7 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 	return [self initWithPlugInCPath:[URL fileSystemRepresentation]];
 }
 
-- (PPLibraryObject *)pluginAtIndex:(NSUInteger)idx
-{
-	return trackerLibs[idx];
-}
-
-- (NSUInteger)pluginCount
+- (NSInteger)pluginCount
 {
 	return [trackerLibs count];
 }

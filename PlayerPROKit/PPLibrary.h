@@ -34,9 +34,8 @@ __END_DECLS
 + (void)registerDebugFunction:(void (*)(short, const char*, const char*))newDebugFunc;
 + (void)registerDebugBlock:(void (^)(short, const char*, const char*))newDebugFunc;
 
-- (PPLibraryObject *)pluginAtIndex:(NSUInteger)idx;
 - (PPLibraryObject *)objectAtIndexedSubscript:(NSInteger)index;
-@property (readonly) NSUInteger pluginCount;
+@property (readonly) NSInteger pluginCount;
 
 - (MADErr)identifyFileAtPath:(NSString*)apath type:(char*)atype;
 - (MADErr)identifyFileAtPath:(NSString*)apath stringType:(out NSString* __autoreleasing *)atype;

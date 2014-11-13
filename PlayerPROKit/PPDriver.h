@@ -25,7 +25,6 @@
 @property NSTimeInterval musicPosition;
 @property (getter = isExporting) BOOL exporting;
 @property (readonly) NSTimeInterval totalMusicPlaybackTime;
-@property (readonly) NSTimeInterval currentMusicPlaybackTime;
 
 - (instancetype)init UNAVAILABLE_REASON("PPDriver cannot be inited without a library");
 - (instancetype)initWithLibrary:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)theErr;

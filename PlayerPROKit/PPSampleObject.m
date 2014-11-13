@@ -236,12 +236,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (instancetype)init
 {
-	return [self initWithsData:NULL];
-}
-
-- (instancetype)initWithsData:(sData *)theData
-{
-	return self = [self initWithSData:theData];
+	return [self initWithSData:NULL];
 }
 
 - (instancetype)initWithSData:(sData *)theData
