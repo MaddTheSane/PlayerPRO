@@ -42,9 +42,7 @@ func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<
 }
 
 internal var globalMadLib: PPLibrary {
-	get {
-		return ((NSApp as NSApplication).delegate as AppDelegate).madLib
-	}
+	return ((NSApp as NSApplication).delegate as AppDelegate).madLib
 }
 
 @NSApplicationMain

@@ -50,7 +50,6 @@ class ExportObject: NSObject {
 	
 	func run() {
 		status = .Running
-		// TODO: multi-thread this!
 		dispatch_async(dispatch_get_global_queue(0, 0), { () -> Void in
 			var aStr: NSString? = nil
 			let errVal = self.exportBlock(theURL: self.destination, errStr: &aStr)
@@ -72,7 +71,6 @@ class ExportObject: NSObject {
 				})
 				self.status = .EncounteredError
 			}
-			
 		})
 	}
 }

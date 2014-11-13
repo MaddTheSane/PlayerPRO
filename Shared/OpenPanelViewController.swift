@@ -266,7 +266,6 @@ class OpenPanelViewController: NSViewController {
 			}
 			resultHandle(result: result)
 		})
-
 	}
 
 	@objc func beginOpenPanel(#parentWindow: NSWindow, completionHandler resultHandle: (result: Int) -> Void) {

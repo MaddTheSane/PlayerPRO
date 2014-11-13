@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import PlayerPROKit.PPPlugIns
-import PlayerPROKit.PPSampleObject
+import PlayerPROKit
 
 @objc(PPCropPlug) public final class CropPlug: NSObject, PPFilterPlugin {
 	public let hasUIConfiguration = false
