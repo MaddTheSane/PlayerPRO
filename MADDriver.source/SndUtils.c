@@ -87,7 +87,7 @@ MADErr inAddSoundToMAD(void			*theSound,
 	return theErr;
 }
 
-IntPcmd *MADPcmdToInt(Pcmd *inVal, bool copyValues)
+IntPcmd *MADPcmdToInt(Pcmd *inVal)
 {
 	IntPcmd *toRet = malloc(sizeof(IntPcmd));
 	toRet->tracks = inVal->tracks;
@@ -95,13 +95,9 @@ IntPcmd *MADPcmdToInt(Pcmd *inVal, bool copyValues)
 	toRet->trackStart = inVal->trackStart;
 	toRet->posStart = inVal->posStart;
 	toRet->cmdCount = (inVal->structSize - sizeof(Pcmd)) / sizeof(Cmd);
-	if (copyValues) {
-		size_t ourSize = inVal->structSize - sizeof(Pcmd);
-		toRet->myCmd = malloc(ourSize);
-		memcpy(toRet->myCmd, inVal->myCmd, ourSize);
-	} else {
-		toRet->myCmd = inVal->myCmd;
-	}
+	size_t ourSize = inVal->structSize - sizeof(Pcmd);
+	toRet->myCmd = malloc(ourSize);
+	memcpy(toRet->myCmd, inVal->myCmd, ourSize);
 	
 	return toRet;
 }
@@ -117,8 +113,7 @@ Pcmd *MADIntPcmdToPcmd(IntPcmd *inVal, bool freeIntPcmd)
 	toRet->structSize = (int)stuctSize;
 	memcpy(toRet->myCmd, inVal->myCmd, inVal->cmdCount * sizeof(Cmd));
 	if (freeIntPcmd) {
-		free(inVal->myCmd);
-		inVal->myCmd = NULL;
+		MADFreeIntPcmd(inVal);
 	}
 	
 	return toRet;
@@ -143,6 +138,15 @@ MADErr MADCopyPcmdToPcmd(Pcmd* toCopy, Pcmd** outCopy)
 	*outCopy = toRet;
 	
 	return MADNoErr;
+}
+
+void MADFreeIntPcmd(IntPcmd *toDelete)
+{
+	if (toDelete->myCmd) {
+		free(toDelete->myCmd);
+	}
+	
+	free(toDelete);
 }
 
 MADErr MADAddSoundToMAD(void			*theSound,

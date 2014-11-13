@@ -92,7 +92,6 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		if let newSize = structSize {
 			var ourIntPcmd = newIntPcmd()!
 			var toRet = MADIntPcmdToPcmd(ourIntPcmd, true)
-			ourIntPcmd.destroy()
 			return toRet
 		} else {
 			return nil;
@@ -122,8 +121,9 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	}
 	
 	public init(_ aPcmd: UnsafeMutablePointer<Pcmd>) {
-		var ourIntPcmd = MADPcmdToInt(aPcmd, false)
+		var ourIntPcmd = MADPcmdToInt(aPcmd)
 		self.init(intPcmd: ourIntPcmd)
+		MADFreeIntPcmd(ourIntPcmd)
 	}
 	
 	public init(intPcmd aTmp: UnsafeMutablePointer<IntPcmd>) {
