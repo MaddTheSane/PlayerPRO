@@ -79,7 +79,10 @@
 	return *writeBackVal;
 }
 
-@synthesize envelopeRec;
++ (NSSet*)keyPathsForValuesAffectingEnvelopeRec
+{
+	return [NSSet setWithObjects:@"position", @"envelopeValue", nil];
+}
 
 #if !TARGET_OS_IPHONE
 NSString * const kPPKEnvelopePasteboardUTI = @"net.sourceforge.playerpro.envelope";
