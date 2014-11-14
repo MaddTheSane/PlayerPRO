@@ -166,11 +166,16 @@ extension PPSampleObject {
 	}
 	
 	@objc(waveformImageFromSample:usingView:) public class func waveformImage(sample theDat: PPSampleObject, view: NSView) -> NSImage? {
-		var imageSize = view.convertSizeToBacking(view.frame.size)
+		func convertImageSize(view: NSView) -> NSSize {
+			var imageSize = view.convertSizeToBacking(view.frame.size)
+			imageSize.height *= 2
+			imageSize.width *= 2
+			
+			return imageSize
+		}
+		let imageSize = convertImageSize(view)
 		let datIsStereo = theDat.stereo
-		imageSize.height *= 2
-		imageSize.width *= 2
-		let aRect = CGRect(origin: CGPointZero, size: imageSize)
+		let aRect = CGRect(origin: CGPoint.zeroPoint, size: imageSize)
 		let rowBytes = 4 * UInt(imageSize.width)
 		let bitMapFormat = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue) | CGBitmapInfo.ByteOrderDefault
 		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!, bitMapFormat)!
@@ -222,7 +227,7 @@ extension PPSampleObject {
 		let imageSize = viewSize(view)
 		let scale = view.contentScaleFactor
 		let datIsStereo = theDat.stereo;
-		let aRect = CGRect(origin: CGPointZero, size: imageSize)
+		let aRect = CGRect(origin: CGPoint.zeroPoint, size: imageSize)
 		let rowBytes = 4 * UInt(imageSize.width)
 		let bitMapFormat = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue) | CGBitmapInfo.ByteOrderDefault
 		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, CGColorSpaceCreateDeviceRGB(), bitMapFormat)
@@ -422,7 +427,6 @@ extension PPSampleObject {
 	@objc public class func noteFromString(myTT: String) -> Int16 {
 		return NoteFromString(myTT) ?? 0xFF
 	}
-
 }
 
 extension PPPatternObject: SequenceType {
