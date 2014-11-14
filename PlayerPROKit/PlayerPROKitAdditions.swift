@@ -166,14 +166,14 @@ extension PPSampleObject {
 	}
 	
 	@objc(waveformImageFromSample:usingView:) public class func waveformImage(sample theDat: PPSampleObject, view: NSView) -> NSImage? {
-		func convertImageSize(view: NSView) -> NSSize {
+		func viewSize() -> NSSize {
 			var imageSize = view.convertSizeToBacking(view.frame.size)
 			imageSize.height *= 2
 			imageSize.width *= 2
 			
 			return imageSize
 		}
-		let imageSize = convertImageSize(view)
+		let imageSize = viewSize()
 		let datIsStereo = theDat.stereo
 		let aRect = CGRect(origin: CGPoint.zeroPoint, size: imageSize)
 		let rowBytes = 4 * UInt(imageSize.width)
@@ -217,14 +217,14 @@ extension PPSampleObject {
 	}
 	
 	@objc(waveformImageFromSample:usingView:) public class func waveformImage(sample theDat: PPSampleObject, view: UIView) -> UIImage? {
-		func viewSize(view: UIView) -> CGSize {
+		func viewSize() -> CGSize {
 			var imageSize = view.bounds.size
 			let scale = view.contentScaleFactor
 			imageSize.width *= scale
 			imageSize.height *= scale
 			return imageSize
 		}
-		let imageSize = viewSize(view)
+		let imageSize = viewSize()
 		let scale = view.contentScaleFactor
 		let datIsStereo = theDat.stereo;
 		let aRect = CGRect(origin: CGPoint.zeroPoint, size: imageSize)
