@@ -178,7 +178,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 				instrumentNote.stringValue = OctaveNameFromNote(UInt8(untmpObj.relativeNote)) ?? "---"
 				instrumentBits.stringValue = untmpObj.amplitude != 0 ? "\(untmpObj.amplitude)-bit" : PPDoubleDash
 				instrumentMode.stringValue = untmpObj.loopType == .PingPong ? "Ping-pong" : "Classic"
-				let tmpIm = PPSampleObject.waveformImage(fromSample: untmpObj, view: waveFormImage)
+				let tmpIm = untmpObj.waveformImage(view: waveFormImage)
 				waveFormImage.image = tmpIm
 			}
 		}
