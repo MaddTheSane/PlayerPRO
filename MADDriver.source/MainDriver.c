@@ -1291,8 +1291,9 @@ MADErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *Missi
 		}
 	}
 	
-	if (needToReset)
+	if (needToReset) {
 		MADReset(driver);
+	}
 	UpdateTracksNumber(driver);
 	
 	return MADNoErr;
@@ -1316,10 +1317,24 @@ MADErr MADLoadMADFileCString(MADMusic **music, const char *fName)
 	MADErr	theErr;
 	UNFILE	srcFile;
 	
-	if (fName == NULL || music == NULL)
+	if (fName == NULL || music == NULL) {
 		return MADParametersErr;
+	}
 	
 	//MADDisposeMusic(music);
+	
+#ifdef _MAC_H
+	CFURLRef theRef = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8*)fName, strlen(fName), false);
+	if (theRef) {
+		CFReadStreamRef tmpDatRef = CFReadStreamCreateWithFile(kCFAllocatorDefault, theRef);
+		CFRelease(theRef);
+		
+		theErr = MADReadMAD(music, NULL, MADCFReadStreamType, tmpDatRef, NULL);
+		
+		CFRelease(tmpDatRef);
+		return theErr;
+	} else {
+#endif
 	
 	srcFile = iFileOpenRead(fName);
 	if (srcFile == 0) return MADReadingErr;
@@ -1332,7 +1347,9 @@ MADErr MADLoadMADFileCString(MADMusic **music, const char *fName)
 	}
 	
 	iClose(srcFile);
-	
+#ifdef _MAC_H
+	}
+#endif
 	return MADNoErr;
 }
 
@@ -3340,7 +3357,7 @@ void UpdateTracksNumber(MADDriverRec *MDriver)
 
 MADErr MADCreateVibrato(MADDriverRec *MDriver)
 {
-	short vibrato_table[64] = {
+	static const short vibrato_table[64] = {
 		0,24,49,74,97,120,141,161,
 		180,197,212,224,235,244,250,253,
 		255,253,250,244,235,224,212,197,
