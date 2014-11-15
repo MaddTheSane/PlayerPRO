@@ -25,7 +25,7 @@ typealias PPSwiftExportBlock = (theURL: NSURL, inout errStr: String?) -> MADErr
 	@objc(PPExportAddObject:) func addExportObject(expObj: ExportObject)
 }
 
-class ExportObject: NSObject {
+final class ExportObject: NSObject {
 	weak var delegate: ExportObjectDelegate? = nil
 	let destination: NSURL
 	private let exportBlock: PPExportBlock
