@@ -18,11 +18,11 @@ set(PPC_SRCs
 )
 
 set(PPC_Headers
-    ${SRCDIR}/FileUtils.h
+    ${SRCDIR}/MADFileUtils.h
     ${SRCDIR}/MADDriver.h
     ${SRCDIR}/MAD.h
     ${SRCDIR}/PlayerPROCore.h
-    ${SRCDIR}/PPDefs.h
+    ${SRCDIR}/MADDefs.h
     ${SRCDIR}/RDriver.h
     ${SRCDIR}/VSTFunctions.h
 )

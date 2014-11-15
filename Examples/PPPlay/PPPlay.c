@@ -9,7 +9,7 @@
 #define PPbanner \
 "=======================================================================\n" \
 "PlayerPRO Driver v 6.0  - Portable version - Programmed by A.ROSSET '02\n" \
-"Maintained by Charles \"Madd the Sane \" Betts\n"\
+"Maintained by Charles \"Madd the Sane\" Betts\n"\
 "=======================================================================\n" \
 "       This program is FREEWARE - Read README.TXT for more info\n" \
 "\n" \

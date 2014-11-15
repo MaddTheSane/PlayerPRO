@@ -54,7 +54,7 @@ typedef MADErr (*FILLPLUG)(PlugInfo *);
 void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 {
 	int i = 0;
-	int plugPaths = 0
+	int plugPaths = 0;
 	inMADDriver->ThePlug = (PlugInfo*) calloc(MAXPLUG, sizeof(PlugInfo));
 	inMADDriver->TotalPlug = 0;
 	//TODO: iterate plug-in paths
