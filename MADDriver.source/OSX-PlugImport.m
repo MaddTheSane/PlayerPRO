@@ -490,7 +490,7 @@ MADErr CheckMADFile(char* name)
 {
 	UNFILE	refNum;
 	char	charl[CharlMADcheckLength];
-	OSErr	err;
+	MADErr	err;
 	
 	refNum = iFileOpenRead(name);
 	if (!refNum)

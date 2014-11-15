@@ -14,14 +14,40 @@
 "       This program is FREEWARE - Read README.TXT for more info\n" \
 "\n" \
 "     E-Mail : computers57@hotmail.com    \n"\
-"=======================================================================\n" \
-" Current settings: 44Khz-16bits-Stereo-MicroDelay 35ms-Interpolation \n" \
 "=======================================================================\n"
 
-void debugger(const char *a)
+static void debugger(const char *a)
 {
 	printf("%s", a);
 	getchar();
+}
+
+static void printMADDriverSettings(const MADDriverSettings *toPrint)
+{
+	printf(" Current settings: ");
+	printf("%ikHz-%ibits-", toPrint->outPutRate / 1000, toPrint->outPutBits);
+	switch (toPrint->outPutMode) {
+		case DeluxeStereoOutPut:
+		case StereoOutPut:
+			printf("stereo");
+			break;
+			
+		case MonoOutPut:
+			printf("mono");
+			break;
+			
+		case PolyPhonic:
+			printf("multi");
+			break;
+			
+		default:
+			printf("unknown");
+			break;
+	}
+	
+	printf("-MicroDelay %ims-Interpolation\n", toPrint->MicroDelaySize);
+	
+	printf("=======================================================================\n");
 }
 
 int main(int argc, char *argv[])
@@ -34,14 +60,15 @@ int main(int argc, char *argv[])
 	char 				type[5];
 	int					returntype = EXIT_SUCCESS;
 	
-	
 	printf("%s", PPbanner);
 	
 	if (argc != 2) {
 		fprintf(stderr ,"Usage: %s MyMusicFile\n", argv[0]);
 		return EXIT_FAILURE;
 	} else {
+#if 1
 		MADGetBestDriver(&init);
+#else
 		init.numChn				= 4;
 		init.outPutBits 		= 16;
 		init.outPutRate			= 44100;
@@ -58,6 +85,9 @@ int main(int argc, char *argv[])
 		init.ReverbStrength		= 50;
 		init.TickRemover		= false;
 		init.oversampling		= 1;
+#endif
+		
+		printMADDriverSettings(&init);
 		
 		if (MADInitLibrary("Plugins", &lib)) {
 			debugger("ERR MADInitLibrary\n");

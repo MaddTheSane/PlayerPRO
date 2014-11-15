@@ -57,6 +57,12 @@
             ReferencedContainer = "container:ppplay.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+         <CommandLineArgument
+            argument = "$(HOME)/makestuff/PlayerPRO/Examples/PPPlay/MAD.MADK"
+            isEnabled = "YES">
+         </CommandLineArgument>
+      </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
