@@ -1,5 +1,7 @@
 *.m diff=objc
 *.h diff=objc
-*.pdf	-text
+*.swift diff=swift
 *       text=auto
+*.pdf	-text
+*.png   -text
 Examples/PPPlay/Read.TXT text=crlf
