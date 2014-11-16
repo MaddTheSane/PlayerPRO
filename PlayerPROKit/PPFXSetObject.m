@@ -229,9 +229,9 @@ static const dispatch_block_t initUTIArray = ^{
 		self.name = [aDecoder decodeObjectForKey:kPPName];
 		self.effectIdentifier = [aDecoder decodeIntForKey:kPPFXIdentifier];
 		self.sets = [(NSArray*)[aDecoder decodeObjectForKey:kPPValues] mutableCopy];
-		self.track = [(NSNumber*)[aDecoder decodeObjectForKey:kPPTrack] shortValue];
-		self.identifier = [(NSNumber*)[aDecoder decodeObjectForKey:kPPIdentifier] shortValue];
-		self.countOfArguments = [(NSNumber*)[aDecoder decodeObjectForKey:kPPArgumentNumbers] shortValue];
+		self.track = [aDecoder decodeIntForKey:kPPTrack];
+		self.identifier = [aDecoder decodeIntForKey:kPPIdentifier];
+		self.countOfArguments = [aDecoder decodeIntForKey:kPPArgumentNumbers];
 	}
 	return self;
 }
