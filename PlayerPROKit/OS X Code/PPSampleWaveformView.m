@@ -6,9 +6,9 @@
 //
 //
 
+#import <PlayerPROKit/PlayerPROKit-Swift.h>
 #import "PPSampleWaveformView.h"
 #import "PPSampleObject.h"
-#import <PlayerPROKit/PlayerPROKit-Swift.h>
 
 @interface PPSampleWaveformView ()
 @property (strong) NSImage *waveform;

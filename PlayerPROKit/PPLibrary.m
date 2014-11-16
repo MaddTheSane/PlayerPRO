@@ -6,9 +6,9 @@
 //
 //
 
+#import <PlayerPROKit/PlayerPROKit-Swift.h>
 #import "PPLibrary.h"
 #import "PPLibrary_PPKPrivate.h"
-#import <PlayerPROKit/PlayerPROKit-Swift.h>
 
 @interface PPLibrary ()
 - (instancetype)initWithPlugInCPath:(const char*)cPath NS_DESIGNATED_INITIALIZER;
