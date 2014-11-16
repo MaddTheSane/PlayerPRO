@@ -131,7 +131,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (MADErr)exportInstrumentListToURL:(NSURL*)outURL
 {
-	NSMutableData *outData = [[NSMutableData alloc] init];
+	NSFileHandle *outData = [NSFileHandle fileHandleForWritingToURL:outURL error:nil];
 	if (!outData) {
 		return MADNeedMemory;
 	}
@@ -147,8 +147,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		dispatch_apply(MAXINSTRU, dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT , 0), ^(size_t x) {
 			ByteSwapInstrData(&tempInstrData[x]);
 		});
-		[outData appendBytes:tempInstrData length:sizeof(InstrData) * MAXINSTRU];
-		free(tempInstrData);
+		[outData writeData:[[NSData alloc] initWithBytesNoCopy:tempInstrData length:sizeof(InstrData)* MAXINSTRU]];
 	}
 	
 	for (i = 0; i < MAXINSTRU ; i++) {
@@ -159,7 +158,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			ByteSwapsData(&tempData);
 			memcpy(&writeData, &tempData, sizeof(sData32));
 			writeData.data = 0;
-			[outData appendBytes:&writeData length:sizeof(sData32)];
+			[outData writeData:[[NSData alloc] initWithBytes:&writeData length:sizeof(sData32)]];
 #ifdef __LITTLE_ENDIAN__
 			{
 				Ptr dataData = malloc(curData->size);
@@ -174,16 +173,15 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 						MADBE16(&shortPtr[y]);
 					});
 				}
-				[outData appendBytes:dataData length:curData->size];
-				free(dataData);
+				[outData writeData:[[NSData alloc] initWithBytesNoCopy:dataData length:curData->size]];
 			}
 #else
-			[outData appendBytes:curData->data length:curData->size]
+			[outdata writeData:[[NSData alloc] initWithBytes:curData->data length: curData->size]];
 #endif
 		}
 	}
-	BOOL successful = [outData writeToURL:outURL atomically:YES];
-	return successful ? MADNoErr : MADWritingErr;
+	
+	return MADNoErr;
 }
 
 - (NSArray *)instruments
