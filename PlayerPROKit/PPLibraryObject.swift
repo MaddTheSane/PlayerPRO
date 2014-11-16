@@ -14,12 +14,13 @@ public final class PPLibraryObject: NSObject, Printable, DebugPrintable {
 	public let menuName: String
 	public let authorString: String
 	public let bundle: NSBundle
-	public let plugType: String
+	public let tupleType: (Int8, Int8, Int8, Int8, Int8)
+	public let type: String
 	public let UTITypes: [String]
 	public let canExport: Bool
 	public let canImport: Bool
 	public let plugVersion: UInt32
-	public var plugMode: MADFourChar {
+	public var mode: MADFourChar {
 		if (self.canExport && self.canImport) {
 			return MADPlugModes.ImportExport.rawValue
 		} else if (self.canExport) {
@@ -34,11 +35,11 @@ public final class PPLibraryObject: NSObject, Printable, DebugPrintable {
 	}
 	
 	override public var description: String {
-		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle.bundlePath), type: \(plugType); version: \(version)"
+		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle.bundlePath), type: \(type); version: \(version)"
 	}
 	
 	override public var debugDescription: String {
-		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle), type: \(plugType); version: \(plugVersion), \(version)"
+		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle), type: \(type); version: \(plugVersion), \(version)"
 	}
 	
 	internal init(plugInfo pi: UnsafePointer<PlugInfo>) {
@@ -47,8 +48,9 @@ public final class PPLibraryObject: NSObject, Printable, DebugPrintable {
 		authorString = unwrapped.AuthorString.takeUnretainedValue()
 		bundle = NSBundle(URL: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()))!
 		UTITypes = unwrapped.UTItypes.takeUnretainedValue() as NSArray as [String]
-		let tmpArray: [CChar] = GetArrayFromMirror(reflect(unwrapped.type))
-		plugType = String(CString: tmpArray, encoding: NSMacOSRomanStringEncoding)!
+		tupleType = unwrapped.type
+		let tmpArray: [CChar] = GetArrayFromMirror(reflect(tupleType))
+		type = String(CString: tmpArray, encoding: NSMacOSRomanStringEncoding)!
 		plugVersion = unwrapped.version
 		switch (unwrapped.mode) {
 		case MADPlugModes.ImportExport.rawValue:

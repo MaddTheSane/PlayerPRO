@@ -455,7 +455,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 			savePanel.beginSheetModalForWindow(self.currentDocument.windowForSheet!, completionHandler: { (result) -> Void in
 				if result == NSFileHandlingPanelOKButton {
 					var expObj = ExportObject(destination: savePanel.URL!, exportBlock: { (theURL, errStr) -> MADErr in
-						var theErr = self.currentDocument.theMusic.exportMusicToURL(theURL, format: tmpObj.plugType, library: globalMadLib)
+						var theErr = self.currentDocument.theMusic.exportMusicToURL(theURL, format: tmpObj.type, library: globalMadLib)
 						self.currentDocument.theDriver.endExport()
 						return theErr
 					})

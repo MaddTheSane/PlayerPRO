@@ -691,7 +691,7 @@ return; \
 				}
 				
 				NSURL *fileURL = [savePanel URL];
-				OSErr err = [self.music exportMusicToURL:fileURL format:madLib[tag].plugType library:madLib];
+				OSErr err = [self.music exportMusicToURL:fileURL format:madLib[tag].type library:madLib];
 				if (err != MADNoErr) {
 					if (isQuitting) {
 						[NSApp replyToApplicationShouldTerminate:YES];
