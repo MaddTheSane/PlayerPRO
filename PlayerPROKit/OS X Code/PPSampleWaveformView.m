@@ -22,6 +22,32 @@
 	_sample = sample;
 }
 
+- (void)setDrawBackground:(BOOL)drawBackground
+{
+	_drawBackground = drawBackground;
+	[self setNeedsDisplay:YES];
+}
+
+- (void)setBackgroundColor:(NSColor *)backgroundColor
+{
+	_backgroundColor = backgroundColor;
+	self.needsDisplay = YES;
+}
+
+- (BOOL)isOpaque
+{
+	return !_drawBackground;
+}
+
+- (instancetype)initWithFrame:(NSRect)frame
+{
+	self = [super initWithFrame:frame];
+	if (self) {
+		_backgroundColor = [NSColor blackColor];
+	}
+	return self;
+}
+
 - (void)generateWaveform
 {
 	if (_sample == nil) {
