@@ -290,10 +290,10 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		if idxSet.containsIndex(selectedMusic) {
 			selectedMusic = -1;
 		}
-		musicList = musicList.filter({
-			var idx = find(self.musicList, $0)
-			return !idxSet.containsIndex(idx!)
-			})
+		
+		for var i = idxSet.lastIndex; i != NSNotFound; i = idxSet.indexLessThanIndex(i) {
+			musicList.removeAtIndex(i)
+		}
 	}
 	
 	@objc dynamic func removeObjectInMusicListAtIndex(atIndex: Int) {
@@ -309,6 +309,17 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 			var idx = find(self.musicList, include)
 			return theSet.containsIndex(idx!)
 		})
+	}
+	
+	func insertMusicLists(anObj: Array<MusicListObject>, atIndexes indexes: NSIndexSet) {
+		var idx = anObj.endIndex
+		for var i = indexes.lastIndex; i != NSNotFound; i = indexes.indexLessThanIndex(i) {
+			musicList.insert(anObj[--idx], atIndex: i)
+		}
+	}
+	
+	func insertObjects(objs: [MusicListObject], inMusicListAtIndexes indexes: NSIndexSet) {
+		insertMusicLists(objs, atIndexes: indexes)
 	}
 	
 	@objc func removeObjectsInMusicListAtIndexes(idxSet: NSIndexSet) {
