@@ -18,12 +18,10 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	public var positionStart: Int16
 	public var myCmd = [Cmd]()
 	public var structSize: Int32? {
-		get {
-			if self.valid {
-				return Int32(sizeof(Pcmd.Type) + myCmd.count * sizeof(Cmd.Type))
-			} else {
-				return nil
-			}
+		if self.valid {
+			return Int32(sizeof(Pcmd.Type) + myCmd.count * sizeof(Cmd.Type))
+		} else {
+			return nil
 		}
 	}
 	
@@ -68,7 +66,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		return tracks
 	}
 	
-	private var intPcmd: IntPcmd? {
+	public var intPcmd: IntPcmd? {
 		if let newSize = structSize {
 			var toRet = IntPcmd()
 			toRet.tracks = tracks
