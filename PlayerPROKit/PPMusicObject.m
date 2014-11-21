@@ -27,6 +27,176 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	MADMusic *toreturn = calloc(sizeof(MADMusic), 1);
 	memcpy(toreturn, oldMus, sizeof(MADMusic));
 	
+	short		i, x;
+	size_t		inOutCount, OffSetToSample = 0;
+	PatHeader	tempPatHeader;
+	
+	/**** HEADER ****/
+	inOutCount = sizeof(MADSpec);
+	
+	toreturn->header = (MADSpec*)calloc(inOutCount, 1);
+	
+	memcpy(toreturn->header, oldMus->header, inOutCount);
+	OffSetToSample += inOutCount;
+	
+	/**** PARTITION ****/
+	dispatch_apply(MAXPATTERN - toreturn->header->numPat, dispatch_get_global_queue(0, 0), ^(size_t iTmp) {
+		size_t i = iTmp + toreturn->header->numPat;
+		toreturn->partition[i] = NULL;
+	});
+	
+	for (i = 0; i < toreturn->header->numPat; i++) {
+		/** Lecture du header de la partition **/
+		inOutCount = sizeof(PatHeader);
+		
+		memcpy(&tempPatHeader, &oldMus->partition[i]->header, inOutCount);
+		
+		inOutCount = sizeof(PatHeader) + toreturn->header->numChn * tempPatHeader.size * sizeof(Cmd);
+		
+		toreturn->partition[i] = (PatData*)malloc(inOutCount);
+		if (toreturn->partition[i] == NULL) {
+			for (x = 0; x < i; x++) {
+				if (toreturn->partition[x] != NULL)
+					free(toreturn->partition[x]);
+			}
+			free(toreturn->header);
+			free(toreturn);
+			
+			return NULL;
+		}
+		
+		memcpy(toreturn->partition[i], oldMus->partition[i], inOutCount);
+		OffSetToSample += inOutCount;
+	}
+	
+	/**** INSTRUMENTS ****/
+	toreturn->fid = (InstrData*)calloc(sizeof(InstrData), MAXINSTRU);
+	if (!toreturn->fid) {
+		for (x = 0; x < toreturn->header->numPat; x++) {
+			if (toreturn->partition[x] != NULL)
+				free(toreturn->partition[x]);
+		}
+		free(toreturn->header);
+		free(toreturn);
+		
+		return NULL;
+	}
+	
+	inOutCount = sizeof(InstrData) * toreturn->header->numInstru;
+	memcpy(toreturn->fid, oldMus->fid, inOutCount);
+	OffSetToSample += inOutCount;
+	
+	for (i = toreturn->header->numInstru - 1; i >= 0 ; i--) {
+		InstrData *curIns = &toreturn->fid[i];
+		
+		if (i != curIns->no) {
+			toreturn->fid[curIns->no] = *curIns;
+			MADResetInstrument(curIns);
+		}
+	}
+	toreturn->header->numInstru = MAXINSTRU;
+	
+	/**** SAMPLES ****/
+	toreturn->sample = (sData**) calloc(sizeof(sData*), MAXINSTRU * MAXSAMPLE);
+	if (!toreturn->sample) {
+		for (x = 0; x < MAXINSTRU ; x++)
+			MADKillInstrument(toreturn, x);
+		
+		for (x = 0; x < toreturn->header->numPat; x++) {
+			if (toreturn->partition[x] != NULL)
+				free(toreturn->partition[x]);
+		}
+		free(toreturn->header);
+		free(toreturn);
+		
+		return NULL;
+	}
+	
+	for (i = 0; i < MAXINSTRU ; i++) {
+		for (x = 0; x < toreturn->fid[i].numSamples ; x++) {
+			sData	*curData;
+			sData	*oldData = oldMus->sample[i * MAXSAMPLE + x];
+			
+			// ** Read Sample header **
+			
+			curData = toreturn->sample[i * MAXSAMPLE + x] = (sData*)malloc(sizeof(sData));
+			if (curData == NULL) {
+				for (x = 0; x < MAXINSTRU ; x++)
+					MADKillInstrument(toreturn, x);
+				
+				for (x = 0; x < toreturn->header->numPat; x++) {
+					if (toreturn->partition[x] != NULL)
+						free(toreturn->partition[x]);
+				}
+				free(toreturn->header);
+				free(toreturn);
+				
+				return NULL;
+			}
+			
+			inOutCount = sizeof(sData);
+			
+			memcpy(curData, oldMus, inOutCount);
+			OffSetToSample += inOutCount;
+			
+			// ** Read Sample DATA
+			
+			curData->data = (char*)malloc(curData->size);
+			if (curData->data == NULL) {
+				for (x = 0; x < MAXINSTRU ; x++)
+					MADKillInstrument(toreturn, x);
+				
+				for (x = 0; x < toreturn->header->numPat; x++) {
+					if (toreturn->partition[x] != NULL)
+						free(toreturn->partition[x]);
+				}
+				free(toreturn->header);
+				free(toreturn);
+				
+				return NULL;
+			}
+			
+			inOutCount = curData->size;
+			memcpy(curData->data, oldData->data, inOutCount);
+			OffSetToSample += inOutCount;
+		}
+	}
+	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(0, 0), ^(size_t ixi) {
+		toreturn->fid[ixi].firstSample = ixi * MAXSAMPLE;
+	});
+	
+	// EFFECTS *** *** *** *** *** *** *** *** *** *** *** ***
+	
+	{
+		short	alpha;
+		
+		toreturn->sets = (FXSets*)calloc(sizeof(FXSets), MAXTRACK);
+		
+		alpha = 0;
+		
+		for (i = 0; i < 10 ; i++) {	// Global Effects
+			if (toreturn->header->globalEffect[i]) {
+				inOutCount = sizeof(FXSets);
+				toreturn->sets[alpha] = oldMus->sets[alpha];
+				OffSetToSample += inOutCount;
+				alpha++;
+			}
+		}
+		
+		for (i = 0; i < toreturn->header->numChn ; i++) {	// Channel Effects
+			for (x = 0; x < 4; x++) {
+				if (toreturn->header->chanEffect[i][x]) {
+					inOutCount = sizeof(FXSets);
+					toreturn->sets[alpha] = oldMus->sets[alpha];
+					OffSetToSample += inOutCount;
+					alpha++;
+				}
+			}
+		}
+	}
+	
+	toreturn->header->MAD = 'MADK';
+	
 	return toreturn;
 }
 
