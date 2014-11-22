@@ -90,7 +90,7 @@ void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 	//int plugPaths = 0;
 	inMADDriver->ThePlug = (PlugInfo*) calloc(MAXPLUG, sizeof(PlugInfo));
 	inMADDriver->TotalPlug = 0;
-	//TODO: iterate plug-in paths
+	//TODO: iterate other plug-in paths
 	if (plugNames == NULL) {
 		return;
 	}
@@ -103,6 +103,13 @@ void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 			inMADDriver->TotalPlug++;
 		}
 	}
+	
+	// clean-up
+	i = 0;
+	while ((plugName = plugNames[i++])) {
+		free(plugName);
+	}
+	free(plugNames);
 }
 
 void CloseImportPlug(MADLibrary *inMADDriver)
