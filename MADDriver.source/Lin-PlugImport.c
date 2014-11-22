@@ -3,6 +3,7 @@
 #include "MADPrivate.h"
 #include <dlfcn.h>
 #include <alloca.h>
+#include <dirent.h>
 
 MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 {
@@ -51,15 +52,50 @@ MADErr CallImportPlug(MADLibrary	*inMADDriver,
 
 typedef MADErr (*FILLPLUG)(PlugInfo *);
 
+static int fileCheck(const struct dirent *toTest)
+{
+	// Deliberately skip over non-regular files,
+	// including directories and symlinks.
+	// TODO: go through symlinks and check if pointing to an already-existing item.
+	if (toTest->d_type == DT_REG || toTest->d_type == DT_UNKNOWN) {
+		// Skip files starting with a dot, as these are regularly system files.
+		if (toTest->d_name[0] == '.') {
+			return 0;
+		}
+		return 1;
+	}
+	
+	return 0;
+}
+
+static char **listDirContents(const char *dirName)
+{
+	struct dirent **nameList;
+	int numTypes = scandir(dirName, &nameList, fileCheck, NULL);
+	char **toRet = calloc(numTypes + 1, sizeof(char));
+	
+	for (int i = 0; i < numTypes; i++) {
+		toRet[i] = strdup(nameList[i]->d_name);
+	}
+	free(nameList);
+	
+	return toRet;
+}
+
 void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 {
 	int i = 0;
-	int plugPaths = 0;
+	char **plugNames = listDirContents(PlugsFolderName);
+	char *plugName;
+	//int plugPaths = 0;
 	inMADDriver->ThePlug = (PlugInfo*) calloc(MAXPLUG, sizeof(PlugInfo));
 	inMADDriver->TotalPlug = 0;
 	//TODO: iterate plug-in paths
-	for (i = 0; i < plugPaths; i++) {
-		inMADDriver->ThePlug[i].hLibrary = dlopen(NULL, RTLD_LAZY);
+	if (plugNames == NULL) {
+		return;
+	}
+	while ((plugName = plugNames[i++]) && inMADDriver->TotalPlug < 40) {
+		inMADDriver->ThePlug[i].hLibrary = dlopen(plugName, RTLD_LAZY);
 		FILLPLUG plugFill = (FILLPLUG)dlsym(inMADDriver->ThePlug[i].hLibrary, "FillPlug");
 		inMADDriver->ThePlug[i].IOPlug = (MADPLUGFUNC)dlsym(inMADDriver->ThePlug[i].hLibrary, "PPImpExpMain");
 		if(plugFill && inMADDriver->ThePlug[i].IOPlug) {

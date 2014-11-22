@@ -25,6 +25,9 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		return NULL;
 	}
 	MADMusic *toreturn = calloc(sizeof(MADMusic), 1);
+	if (toreturn == NULL) {
+		return NULL;
+	}
 	memcpy(toreturn, oldMus, sizeof(MADMusic));
 	
 	short		i, x;
