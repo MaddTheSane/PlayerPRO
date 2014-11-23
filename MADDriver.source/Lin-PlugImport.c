@@ -5,6 +5,14 @@
 #include <alloca.h>
 #include <dirent.h>
 
+// TODO: get plug-in paths from an environment variable.
+
+#ifndef PPCPlugSuffix
+#define PPCPlugSuffix ".so"
+#endif
+#define CharlMADcheckLength 10
+typedef MADErr (*FILLPLUG)(PlugInfo *);
+
 MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 {
 	MADSpec		*theMAD;
@@ -50,18 +58,26 @@ MADErr CallImportPlug(MADLibrary	*inMADDriver,
 	return (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);
 }
 
-typedef MADErr (*FILLPLUG)(PlugInfo *);
-
-static int fileCheck(const struct dirent *toTest)
+static int PlugFileCheck(const struct dirent *toTest)
 {
 	// Deliberately skip over non-regular files,
 	// including directories and symlinks.
-	// TODO: go through symlinks and check if pointing to an already-existing item.
+	// TODO: go through symlinks and check if pointing to an already-existing item
 	if (toTest->d_type == DT_REG || toTest->d_type == DT_UNKNOWN) {
 		// Skip files starting with a dot, as these are regularly system files.
 		if (toTest->d_name[0] == '.') {
 			return 0;
 		}
+		// ...and exclude files that don't start with "lib"
+		if (strncmp("lib", toTest->d_name, 3) != 0) {
+			return 0;
+		}
+		// Also exclude items that don't have PPCPlugSuffix anywhere in it.
+		// The default is ".so" on *NIX platforms
+		if (strstr(toTest->d_name, PPCPlugSuffix) == NULL) {
+			return 0;
+		}
+		
 		return 1;
 	}
 	
@@ -71,7 +87,7 @@ static int fileCheck(const struct dirent *toTest)
 static char **listDirContents(const char *dirName)
 {
 	struct dirent **nameList;
-	int numTypes = scandir(dirName, &nameList, fileCheck, NULL);
+	int numTypes = scandir(dirName, &nameList, PlugFileCheck, NULL);
 	char **toRet = calloc(numTypes + 1, sizeof(char));
 	bool hasTrailingSlash = false;
 	do {
@@ -167,7 +183,6 @@ MADErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	return MADCannotFindPlug;
 }
 
-#define CharlMADcheckLength 10
 MADErr CheckMADFile(char* name)
 {
 	UNFILE	refNum;
