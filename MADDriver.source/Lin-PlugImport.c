@@ -73,9 +73,20 @@ static char **listDirContents(const char *dirName)
 	struct dirent **nameList;
 	int numTypes = scandir(dirName, &nameList, fileCheck, NULL);
 	char **toRet = calloc(numTypes + 1, sizeof(char));
+	bool hasTrailingSlash = false;
+	do {
+		size_t finalLen = strnlen(dirName, PATH_MAX);
+		if (finalLen == PATH_MAX) {
+			hasTrailingSlash = false;
+			break;
+		}
+		hasTrailingSlash = dirName[finalLen] == '/';
+	} while (0);
 	
 	for (int i = 0; i < numTypes; i++) {
-		toRet[i] = strdup(nameList[i]->d_name);
+		char aTmpPath[PATH_MAX] = {0};
+		snprintf(aTmpPath, PATH_MAX, "%s%s%s", dirName, hasTrailingSlash ? "" : "/", nameList[i]->d_name);
+		toRet[i] = strdup(aTmpPath);
 	}
 	free(nameList);
 	
