@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "PPPreferences.h"
 #include <PlayerPROCore/PlayerPROCore.h>
-@import PlayerPROKit;
+#import <PlayerPROKit/PlayerPROKit.h>
 
 @class PPInstrumentWindowController;
 @class SoundSettingsViewController;

@@ -15,7 +15,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 
 #ifdef __OBJC__
-	@import Foundation;
-	@import UIKit;
-	@import PlayerPROKit;
+	#import <Foundation/Foundation.h>
+	#import <UIKit/UIKit.h>
+	#import <PlayerPROKit/PlayerPROKit.h>
 #endif

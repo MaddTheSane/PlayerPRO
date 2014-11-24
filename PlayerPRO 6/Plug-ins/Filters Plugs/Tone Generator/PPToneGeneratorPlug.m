@@ -8,7 +8,7 @@
 
 #import "PPToneGeneratorPlug.h"
 #import "PPToneGeneratorController.h"
-@import PlayerPROKit.PPSampleObject;
+#import <PlayerPROKit/PPSampleObject.h>
 
 @implementation PPToneGeneratorPlug
 

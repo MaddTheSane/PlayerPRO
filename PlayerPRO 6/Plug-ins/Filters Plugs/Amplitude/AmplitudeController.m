@@ -8,7 +8,7 @@
 
 #import "AmplitudeController.h"
 #include <PlayerPROCore/PlayerPROCore.h>
-@import PlayerPROKit.PPSampleObject;
+#import <PlayerPROKit/PPSampleObject.h>
 
 @implementation AmplitudeController
 @synthesize theData;

@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #include <PlayerPROCore/PlayerPROCore.h>
-@import PlayerPROKit.PPPlugIns;
+#import <PlayerPROKit/PPPlugIns.h>
 
 typedef NS_ENUM(NSInteger, ToneGenerator) {
 	silence = 3,

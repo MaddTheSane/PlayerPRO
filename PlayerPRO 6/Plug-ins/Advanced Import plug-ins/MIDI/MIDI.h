@@ -13,8 +13,6 @@
 
 #import <Foundation/Foundation.h>
 #import <PlayerPROKit/PlayerPROKit.h>
-@import Foundation;
-@import PlayerPROKit;
 
 __private_extern extern PPMusicObject *MIDIReadFromData(NSData *fileData) NS_RETURNS_RETAINED;
 __private_extern extern NSInteger GetTracksNumber(NSURL *theURL);

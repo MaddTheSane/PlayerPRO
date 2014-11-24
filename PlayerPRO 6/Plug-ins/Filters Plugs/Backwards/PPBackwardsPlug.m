@@ -7,7 +7,7 @@
 //
 
 #import "PPBackwardsPlug.h"
-@import PlayerPROKit.PPSampleObject;
+#import <PlayerPROKit/PPSampleObject.h>
 
 @implementation PPBackwardsPlug
 

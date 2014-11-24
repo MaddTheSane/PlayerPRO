@@ -7,7 +7,7 @@
 //
 
 #import "PPXIPlug.h"
-@import PlayerPROKit;
+#import <PlayerPROKit/PlayerPROKit.h>
 
 #ifndef WIN32
 //Windows Defines

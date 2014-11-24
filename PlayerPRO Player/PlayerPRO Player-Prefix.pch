@@ -6,7 +6,7 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 
 #ifdef __OBJC__
-	@import Cocoa;
-	@import PlayerPROKit;
+	#import <Cocoa/Cocoa.h>
+	#import <PlayerPROKit/PlayerPROKit.h>
 	#import "PlayerPRO_Player-Swift.h"
 #endif

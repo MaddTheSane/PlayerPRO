@@ -7,7 +7,7 @@
 //
 
 #import "PPSilencePlug.h"
-@import PlayerPROKit.PPSampleObject;
+#import <PlayerPROKit/PPSampleObject.h>
 
 @implementation PPSilencePlug
 

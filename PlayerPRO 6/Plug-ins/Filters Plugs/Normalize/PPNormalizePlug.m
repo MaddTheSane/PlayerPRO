@@ -7,7 +7,7 @@
 //
 
 #import "PPNormalizePlug.h"
-@import PlayerPROKit.PPSampleObject;
+#import <PlayerPROKit/PPSampleObject.h>
 
 @implementation PPNormalizePlug
 

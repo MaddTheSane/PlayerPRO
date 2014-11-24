@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-@import PlayerPROKit;
+#import <PlayerPROKit/PlayerPROKit.h>
 
 @interface SamplingRateWindowController : NSWindowController
 @property unsigned int currentRate;

@@ -7,9 +7,9 @@
 //
 
 #include <Cocoa/Cocoa.h>
-@import PlayerPROCore;
+#include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
-@import PlayerPROKit;
+#import <PlayerPROKit/PlayerPROKit.h>
 #import "PPMIDIImporter.h"
 #import "MIDI.h"
 

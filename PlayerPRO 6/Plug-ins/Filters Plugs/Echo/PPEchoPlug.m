@@ -8,8 +8,8 @@
 
 #import "PPEchoPlug.h"
 #import "EchoWindowController.h"
-@import PlayerPROKit;
-@import Cocoa;
+#import <Cocoa/Cocoa.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
 @implementation PPEchoPlug
 

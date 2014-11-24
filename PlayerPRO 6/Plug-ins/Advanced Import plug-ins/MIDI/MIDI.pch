@@ -4,6 +4,6 @@
 //  The contents of this file are implicitly included at the beginning of every source file.
 //
 
-@import PlayerPROCore;
-@import Foundation;
-@import PlayerPROKit;
+#import <PlayerPROCore/PlayerPROCore.h>
+#import <Foundation/Foundation.h>
+#import <PlayerPROKit/PlayerPROKit.h>

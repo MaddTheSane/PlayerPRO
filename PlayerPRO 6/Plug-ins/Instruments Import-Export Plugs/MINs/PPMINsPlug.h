@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-@import PlayerPROKit.PPPlugIns;
+#import <PlayerPROKit/PPPlugIns.h>
 
 EXP @interface PPMINsPlug : NSObject <PPInstrumentExportPlugin, PPInstrumentImportPlugin>
 

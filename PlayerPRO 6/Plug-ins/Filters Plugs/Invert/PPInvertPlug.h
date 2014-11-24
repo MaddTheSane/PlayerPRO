@@ -6,8 +6,8 @@
 //
 //
 
-@import Foundation;
-@import PlayerPROKit.PPPlugIns;
+#import <Foundation/Foundation.h>
+#import <PlayerPROKit/PPPlugIns.h>
 
 EXP @interface PPInvertPlug : NSObject <PPFilterPlugin>
 

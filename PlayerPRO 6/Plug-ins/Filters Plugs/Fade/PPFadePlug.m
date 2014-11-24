@@ -8,7 +8,6 @@
 
 #import "PPFadePlug.h"
 #import "FadeWindowController.h"
-//@import PlayerPROKit.PPSampleObject;
 
 @implementation PPFadePlug
 

@@ -8,8 +8,7 @@
 
 #import "PPMINsPlug.h"
 #include <PlayerPROCore/PlayerPROCore.h>
-@import PlayerPROKit.PPInstrumentObject;
-@import PlayerPROKit.PPSampleObject;
+#import <PlayerPROKit/PlayerPROKit.h>
 
 @interface PPInstrumentObject (private)
 - (InstrData)theInstrument;

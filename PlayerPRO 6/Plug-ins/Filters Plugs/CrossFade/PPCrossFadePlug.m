@@ -7,7 +7,7 @@
 //
 
 #import "PPCrossFadePlug.h"
-@import PlayerPROKit.PPSampleObject;
+#import <PlayerPROKit/PPSampleObject.h>
 
 @implementation PPCrossFadePlug
 

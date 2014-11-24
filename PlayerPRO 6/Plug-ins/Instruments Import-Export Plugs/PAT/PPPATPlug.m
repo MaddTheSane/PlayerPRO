@@ -8,7 +8,7 @@
 
 #import "PPPATPlug.h"
 #include "PAT.h"
-@import PlayerPROKit;
+#import <PlayerPROKit/PlayerPROKit.h>
 
 @implementation PPPATPlug
 

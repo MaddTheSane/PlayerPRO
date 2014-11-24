@@ -9,7 +9,6 @@
 #import "PPInstrumentWindowController.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PlayerPROKit.h>
-@import PlayerPROKit;
 #include "PPByteswap.h"
 #import "UserDefaultKeys.h"
 #import "AppDelegate.h"
