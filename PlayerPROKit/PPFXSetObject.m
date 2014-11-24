@@ -142,7 +142,7 @@ static const dispatch_block_t initUTIArray = ^{
 	theSet.noArg = argumentNumbers;
 }
 
-- (NSArray*)values
+- (NSArray*)effectValues
 {
 	return [NSArray arrayWithArray:_sets];
 }
@@ -152,27 +152,27 @@ static const dispatch_block_t initUTIArray = ^{
 	return theSet;
 }
 
-- (void)replaceSetAtIndex:(NSInteger)theLoc withFloat:(float)theNum
+- (void)replaceEffectValueAtIndex:(NSInteger)theLoc withFloat:(float)theNum
 {
-	[self replaceSetAtIndex:theLoc withNumber:@(theNum)];
+	[self replaceEffectValueAtIndex:theLoc withNumber:@(theNum)];
 }
 
-- (void)replaceSetAtIndex:(NSInteger)theLoc withDouble:(double)theNum
+- (void)replaceEffectValueAtIndex:(NSInteger)theLoc withDouble:(double)theNum
 {
-	[self replaceSetAtIndex:theLoc withNumber:@(theNum)];
+	[self replaceEffectValueAtIndex:theLoc withNumber:@(theNum)];
 }
 
-- (void)replaceSetAtIndex:(NSInteger)theLoc withInt:(int)theNum
+- (void)replaceEffectValueAtIndex:(NSInteger)theLoc withInt:(int)theNum
 {
-	[self replaceSetAtIndex:theLoc withNumber:@(theNum)];
+	[self replaceEffectValueAtIndex:theLoc withNumber:@(theNum)];
 }
 
-- (void)replaceSetAtIndex:(NSInteger)theLoc withInteger:(NSInteger)theNum
+- (void)replaceEffectValueAtIndex:(NSInteger)theLoc withInteger:(NSInteger)theNum
 {
-	[self replaceSetAtIndex:theLoc withNumber:@(theNum)];
+	[self replaceEffectValueAtIndex:theLoc withNumber:@(theNum)];
 }
 
-- (void)replaceSetAtIndex:(NSInteger)theLoc withNumber:(NSNumber*)theNum
+- (void)replaceEffectValueAtIndex:(NSInteger)theLoc withNumber:(NSNumber*)theNum
 {
 	NSParameterAssert(theLoc < 100 && theLoc > -1);
 	NSIndexSet *tmpIdx = [NSIndexSet indexSetWithIndex:theLoc];
@@ -188,17 +188,62 @@ static const dispatch_block_t initUTIArray = ^{
 	dispatch_apply(100, dispatch_get_global_queue(0, 0), ^(size_t i) {
 		theSet.values[i] = [_sets[i] floatValue];
 	});
+}
 
+- (float)effectValueAtIndex:(NSInteger)idx
+{
+	return [_sets[idx] floatValue];
+}
+
+- (NSInteger)countOfValues
+{
+	return 100;
+}
+
+#pragma mark Equatable function
+
+- (BOOL)isEqual:(id)anObj
+{
+	if (anObj == NULL) {
+		return NO;
+	}
+	if ([anObj isKindOfClass:[PPFXSetObject class]]) {
+		PPFXSetObject *unwrapped = anObj;
+		if (unwrapped.track != self.track) {
+			return NO;
+		}
+		if (unwrapped.identifier != self.identifier) {
+			return NO;
+		}
+		if (unwrapped.effectIdentifier != self.effectIdentifier) {
+			return NO;
+		}
+		if (unwrapped.countOfArguments != self.countOfArguments) {
+			return NO;
+		}
+		if ([unwrapped.name isEqualToString:self.name]) {
+			return NO;
+		}
+		for (int i = 0; i < self.countOfArguments; i++) {
+			if ([self effectValueAtIndex:i] != [unwrapped effectValueAtIndex:i]) {
+				return NO;
+			}
+		}
+		
+		
+		return YES;
+	}
+	return NO;
 }
 
 #pragma mark KVO/KVC helpers
 
 + (NSSet*)keyPathsForValuesAffectingTheSet
 {
-	return [NSSet setWithObjects:@"track", @"identifier", @"fxIdentifier", @"argumentNumbers", @"values", @"name", @"sets", nil];
+	return [NSSet setWithObjects:@"track", @"identifier", @"fxIdentifier", @"argumentNumbers", @"effectValues", @"name", @"sets", nil];
 }
 
-+ (NSSet *)keyPathsforValuesAffectingValues
++ (NSSet *)keyPathsforValuesAffectingEffectValues
 {
 	return [NSSet setWithObject:@"sets"];
 }

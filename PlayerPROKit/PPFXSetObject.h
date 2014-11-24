@@ -20,18 +20,20 @@
 @property short identifier;
 @property int effectIdentifier;
 @property short countOfArguments;
-@property (readonly, copy) NSArray *values;
+@property (readonly, copy) NSArray *effectValues;
 @property (copy) NSString *name;
 
 - (instancetype)initWithFXSet:(FXSets*)theSet NS_DESIGNATED_INITIALIZER;
 
-- (void)replaceSetAtIndex:(NSInteger)theLoc withFloat:(float)theNum;
+- (float)effectValueAtIndex:(NSInteger)idx;
 
-// The native value of the sets is float.
+- (void)replaceEffectValueAtIndex:(NSInteger)theLoc withFloat:(float)theNum;
+
+// The native value of the effect values is float.
 // As such, passing a double will result in a loss of precision.
-- (void)replaceSetAtIndex:(NSInteger)theLoc withDouble:(double)theNum DEPRECATED_ATTRIBUTE;
-- (void)replaceSetAtIndex:(NSInteger)theLoc withInt:(int)theNum;
-- (void)replaceSetAtIndex:(NSInteger)theLoc withInteger:(NSInteger)theNum;
-- (void)replaceSetAtIndex:(NSInteger)theLoc withNumber:(NSNumber*)theNum;
+- (void)replaceEffectValueAtIndex:(NSInteger)theLoc withDouble:(double)theNum DEPRECATED_ATTRIBUTE;
+- (void)replaceEffectValueAtIndex:(NSInteger)theLoc withInt:(int)theNum;
+- (void)replaceEffectValueAtIndex:(NSInteger)theLoc withInteger:(NSInteger)theNum;
+- (void)replaceEffectValueAtIndex:(NSInteger)theLoc withNumber:(NSNumber*)theNum;
 
 @end
