@@ -161,11 +161,11 @@ public func OctaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true
 extension PPSampleObject {
 
 #if os(OSX)
-	@objc(waveformImageUsingView:) public func waveformImage(#view: NSView) -> NSImage? {
+	@objc(waveformImageUsingView:) final public func waveformImage(#view: NSView) -> NSImage? {
 		return PPSampleObject.waveformImage(sample: self, view: view)
 	}
 	
-	@objc(waveformImageFromSample:usingView:) public class func waveformImage(sample theDat: PPSampleObject, view: NSView) -> NSImage? {
+	@objc(waveformImageFromSample:usingView:) final public class func waveformImage(sample theDat: PPSampleObject, view: NSView) -> NSImage? {
 		func viewSize() -> NSSize {
 			var imageSize = view.convertSizeToBacking(view.frame.size)
 			imageSize.height *= 2
@@ -212,11 +212,11 @@ extension PPSampleObject {
 		}
 	}
 #elseif os(iOS)
-	@objc(waveformImageUsingView:) public func waveformImage(#view: UIView) -> UIImage? {
+	@objc(waveformImageUsingView:) final public func waveformImage(#view: UIView) -> UIImage? {
 		return PPSampleObject.waveformImage(sample: self, view: view)
 	}
 	
-	@objc(waveformImageFromSample:usingView:) public class func waveformImage(sample theDat: PPSampleObject, view: UIView) -> UIImage? {
+	@objc(waveformImageFromSample:usingView:) final public class func waveformImage(sample theDat: PPSampleObject, view: UIView) -> UIImage? {
 		func viewSize() -> CGSize {
 			var imageSize = view.bounds.size
 			let scale = view.contentScaleFactor
@@ -268,30 +268,22 @@ extension PPSampleObject {
 	}
 #endif
 	
-	public func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, context ctxRef: CGContext) {
+	final public func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, context ctxRef: CGContext) {
 		PPSampleObject.drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: self, context:ctxRef)
 	}
 	
-	public func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, context ctxRef: CGContext) {
+	final public func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, context ctxRef: CGContext) {
 		PPSampleObject.drawSample(start: startI, tSS: tSS, tSE: tSE, high: high, larg: larg, trueV: trueV, trueH: trueH, channel: channel, currentData: self, context: ctxRef)
 	}
 	
-	public class func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
+	final public class func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
 		drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: curData, context:ctxRef)
 	}
 
-	public class func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
+	final public class func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
 		CGContextSaveGState(ctxRef);
 		
-		var start = startI
-		var i = 0;
-		var sampleSize = curData.data.length
 		var temp: CGFloat = 0.0
-		let theSample = UnsafePointer<UInt8>(curData.data.bytes)
-		let theShortSample = UnsafePointer<UInt16>(curData.data.bytes)
-		var BS = 0
-		var BE = 0
-		var x = 0
 		let isStereo = curData.stereo
 		var minY: CGFloat = 0.0
 		var maxY: CGFloat = 0.0
@@ -299,10 +291,11 @@ extension PPSampleObject {
 		let oneShiftedBy8 = CGFloat(1 << 8)
 
 		if (curData.amplitude == 16) {
-			sampleSize /= 2
-			start /= 2
+			let theShortSample = UnsafePointer<UInt16>(curData.data.bytes)
+			let sampleSize = curData.data.length / 2
+			let start = startI / 2
 			
-			BS = start + (tSS * sampleSize) / larg
+			var BS = start + (tSS * sampleSize) / larg
 			if (isStereo) {
 				BS /= 2; BS *= 2;
 				BS += Int(channel)
@@ -314,7 +307,7 @@ extension PPSampleObject {
 			
 			for i in tSS ..< tSE {
 				BS = start + (i * sampleSize) / larg
-				BE = start + ((i + 1) * sampleSize) / larg
+				var BE = start + ((i + 1) * sampleSize) / larg
 				
 				if (isStereo) {
 					BS /= 2; BS *= 2;
@@ -331,7 +324,7 @@ extension PPSampleObject {
 				CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), temp + CGFloat(trueV))
 				
 				if (BS != BE) {
-					for (x = BS; x < BE; x++) {
+					for (var x = BS; x < BE; x++) {
 						temp = CGFloat(theShortSample[x] &+ 0x8000)
 						
 						if (temp > maxY) {
@@ -357,7 +350,11 @@ extension PPSampleObject {
 				}
 			}
 		} else {
-			BS = start + (tSS * sampleSize) / larg;
+			let start = startI
+			let sampleSize = curData.data.length
+			let theSample = UnsafePointer<UInt8>(curData.data.bytes)
+
+			var BS = start + (tSS * sampleSize) / larg;
 			if (isStereo) {
 				BS /= 2; BS *= 2;
 				BS += Int(channel)
@@ -369,9 +366,9 @@ extension PPSampleObject {
 			
 			CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(tSS), CGFloat(trueV) + temp)
 			
-			for i in tSS..<tSE {
+			for i in tSS ..< tSE {
 				BS = start + (i * sampleSize) / larg
-				BE = start + ((i + 1) * sampleSize) / larg
+				var BE = start + ((i + 1) * sampleSize) / larg
 				
 				if (isStereo) {
 					BS /= 2; BS *= 2;
@@ -388,7 +385,7 @@ extension PPSampleObject {
 				CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), temp + CGFloat(trueV))
 				
 				if (BS != BE) {
-					for (x = BS; x < BE; x++) {
+					for (var x = BS; x < BE; x++) {
 						temp = CGFloat(theSample[x] &- 0x80)
 						
 						if (temp > maxY) {
@@ -416,15 +413,15 @@ extension PPSampleObject {
 		CGContextRestoreGState(ctxRef);
 	}
 	
-	@objc public class func octaveNameFromNote(octNote: Int16) -> String {
+	@objc final public class func octaveNameFromNote(octNote: Int16) -> String {
 		return OctaveNameFromNote(octNote) ?? "---"
 	}
 
-	@objc public class func octaveNameFromNote(octNote: Int16, usingSingularLetter: Bool) -> String {
+	@objc final public class func octaveNameFromNote(octNote: Int16, usingSingularLetter: Bool) -> String {
 		return OctaveNameFromNote(octNote, letters: usingSingularLetter) ?? "---"
 	}
 
-	@objc public class func noteFromString(myTT: String) -> Int16 {
+	@objc final public class func noteFromString(myTT: String) -> Int16 {
 		return NoteFromString(myTT) ?? 0xFF
 	}
 }
