@@ -52,7 +52,7 @@ static NSInteger selMusFromList = -1;
 @property (strong) Preferences				*preferences;
 @property (strong) NSMutableArray			*plugInInfos;
 @property (readwrite, strong) NSString		*musicName;
-@property BOOL								isQuitting;
+@property (getter = isQuitting) BOOL		quitting;
 
 - (void)selectCurrentlyPlayingMusic;
 - (void)selectMusicAtIndex:(NSInteger)anIdx;
@@ -67,7 +67,7 @@ static NSInteger selMusFromList = -1;
 @synthesize instrumentController;
 @synthesize musicList;
 @synthesize preferences;
-@synthesize isQuitting;
+@synthesize quitting = isQuitting;
 @synthesize trackerUTIs = _trackerUTIs;
 @synthesize trackerDict = _trackerDict;
 
@@ -75,11 +75,11 @@ static NSInteger selMusFromList = -1;
 {
 	if (!_trackerDict) {
 		NSMutableDictionary *trackerDict =
-		[NSMutableDictionary dictionaryWithDictionary:@{
-														NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
-																						  [NSBundle mainBundle],
-																						  @"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
-														NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI]}];
+		[@{
+		   NSLocalizedStringWithDefaultValue(@"PPMADKFile", @"InfoPlist",
+											 [NSBundle mainBundle],
+											 @"MADK Tracker", @"MADK Tracker") : @[MADNativeUTI],
+		   NSLocalizedString(@"Generic MAD tracker", @"Generic MAD tracker"): @[MADGenericUTI]} mutableCopy];
 		for (PPLibraryObject *obj in madLib) {
 			trackerDict[obj.menuName] = obj.UTITypes;
 		}
@@ -922,7 +922,7 @@ return; \
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	isQuitting = NO;
+	self.quitting = NO;
 	srandom(time(NULL) & 0xffffffff);
 	MADRegisterDebugFunc(CocoaDebugStr);
 	madLib = [[PPLibrary alloc] init];
@@ -1003,7 +1003,7 @@ return; \
 			case NSAlertDefaultReturn:
 				//Double-check to make sure we're still exporting
 				if ([madDriver isExporting]) {
-					isQuitting = YES;
+					self.quitting = YES;
 					return NSTerminateLater;
 				} else {
 					return NSTerminateNow;
