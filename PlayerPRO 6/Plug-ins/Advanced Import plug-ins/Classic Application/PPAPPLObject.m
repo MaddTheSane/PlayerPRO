@@ -13,7 +13,6 @@
 @property (readwrite) ResID resourceID;
 @property (readwrite) ResType resourceType;
 @property (readwrite) long size;
-@property ResourceCount indStrIdx;
 @end
 
 @implementation PPAPPLObject
@@ -29,7 +28,6 @@
 		self.name = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, nameStr, kCFStringEncodingMacRoman));
 		self.resourceID = resIDShort;
 		self.resourceType = resTypeCode;
-		self.indStrIdx = resIdx;
 	}
 	
 	return self;
@@ -37,7 +35,7 @@
 
 - (NSData*)data
 {
-	Handle myRes = Get1IndResource(self.resourceType, self.indStrIdx);
+	Handle myRes = GetIndResource(self.resourceType, self.resourceID);
 	DetachResource(myRes);
 	
 	HLock(myRes);
