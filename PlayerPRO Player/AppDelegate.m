@@ -285,8 +285,7 @@ static NSInteger selMusFromList = -1;
 			if ([musicList countOfMusicList] > ++self.currentlyPlayingIndex.index) {
 				[self selectCurrentlyPlayingMusic];
 				NSError *err;
-				if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err])
-				{
+				if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
 					[[NSAlert alertWithError:err] runModal];
 				}
 			} else {
@@ -1646,6 +1645,15 @@ badTracker:
 	[pboard clearContents]; // clear pasteboard to take ownership
 	status = [pboard writeObjects:[[urlArrays copy] arrayByAddingObject:dragClass]]; // write the URLs
 	return status;
+}
+
+- (void)tableView:(NSTableView *)atableView sortDescriptorsDidChange:(NSArray *)oldDescriptors
+{
+	[self willChangeValueForKey:kMusicListKVO];
+	[musicList sortMusicListUsingDescriptors: [atableView sortDescriptors]];
+	[self didChangeValueForKey:kMusicListKVO];
+	
+	[self musicListContentsDidMove];
 }
 
 @end

@@ -86,6 +86,34 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		self.didChangeValueForKey(kMusicListKVO)
 	}
 	
+	@objc(sortMusicListUsingDescriptors:) func sortMusicList(#descriptors: [NSSortDescriptor]) {
+		for descriptor in descriptors {
+			switch descriptor.key()! {
+			case "fileName":
+				sortMusicList(block: { (lhs, rhs) -> Bool in
+					let result = lhs.fileName.localizedStandardCompare(rhs.fileName)
+					if descriptor.ascending {
+						return result == NSComparisonResult.OrderedAscending
+					} else {
+						return result == NSComparisonResult.OrderedDescending
+					}
+				})
+				
+			case "fileSize":
+				sortMusicList(block: { (lhs, rhs) -> Bool in
+					if descriptor.ascending {
+						return lhs.fileSize < rhs.fileSize
+					} else {
+						return lhs.fileSize > rhs.fileSize
+					}
+				})
+				
+			default:
+				break
+			}
+		}
+	}
+	
 	@objc func addMusicURL(theURL: NSURL?) -> Bool {
 		if theURL == nil {
 			return false
