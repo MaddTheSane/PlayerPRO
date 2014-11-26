@@ -90,6 +90,7 @@ static char **listDirContents(const char *dirName)
 	int numTypes = scandir(dirName, &nameList, PlugFileCheck, NULL);
 	char **toRet = calloc(numTypes + 1, sizeof(char));
 	bool hasTrailingSlash = false;
+	int i;
 	do {
 		size_t finalLen = strnlen(dirName, PATH_MAX);
 		if (finalLen == PATH_MAX) {
@@ -99,7 +100,7 @@ static char **listDirContents(const char *dirName)
 		hasTrailingSlash = dirName[finalLen] == '/';
 	} while (0);
 	
-	for (int i = 0; i < numTypes; i++) {
+	for (i = 0; i < numTypes; i++) {
 		char aTmpPath[PATH_MAX] = {0};
 		snprintf(aTmpPath, PATH_MAX, "%s%s%s", dirName, hasTrailingSlash ? "" : "/", nameList[i]->d_name);
 		toRet[i] = strdup(aTmpPath);
