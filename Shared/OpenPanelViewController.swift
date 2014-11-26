@@ -251,7 +251,7 @@ class OpenPanelViewController: NSViewController {
 			})
 		
 		utiObjects = tmpUTIs
-		super.init(nibName: "OpenPanelViewController", bundle: nil)
+		super.init(nibName: "PPOpenPanel", bundle: nil)
 	}
 	
 	func beginOpenPanel(#completionHandler: (result: Int) -> Void) {
