@@ -103,7 +103,7 @@ class OpenPanelViewController: NSViewController {
 		}
 	}
 	
-	var openPanel: NSOpenPanel
+	let openPanel: NSOpenPanel
 	private let utiObjects: [OpenPanelViewItem]
 	@IBOutlet weak var popUp: NSPopUpButton? = nil
 	
