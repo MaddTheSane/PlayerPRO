@@ -88,7 +88,12 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	
 	@objc(sortMusicListUsingDescriptors:) func sortMusicList(#descriptors: [NSSortDescriptor]) {
 		for descriptor in descriptors {
-			switch descriptor.key()! {
+			#if os(OSX)
+			let descriptorKey = descriptor.key()!
+				#elseif os(iOS)
+				let descriptorKey = descriptor.key!
+				#endif
+			switch descriptorKey {
 			case "fileName":
 				sortMusicList(block: { (lhs, rhs) -> Bool in
 					let result = lhs.fileName.localizedStandardCompare(rhs.fileName)
