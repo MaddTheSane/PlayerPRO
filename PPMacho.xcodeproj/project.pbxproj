@@ -123,7 +123,6 @@
 		55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		550A474318A455CC0052AED7 /* VSTFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 550A474218A455CC0052AED7 /* VSTFunctions.h */; };
 		550A8FD819C74ED200588849 /* ComplexFadePlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550A8FD719C74ED200588849 /* ComplexFadePlug.swift */; };
-		550A8FDB19C7B19A00588849 /* PPAPPLObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 550A8FDA19C7B19A00588849 /* PPAPPLObject.m */; };
 		550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		550B011510BA1E1C004FC5D7 /* MADPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B011310BA1E1C004FC5D7 /* MADPrivate.h */; };
 		550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
@@ -700,6 +699,8 @@
 		55E382EB1981509100EC330B /* PlugInInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EA1981509100EC330B /* PlugInInfo.swift */; };
 		55E382EC1981509100EC330B /* PlugInInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EA1981509100EC330B /* PlugInInfo.swift */; };
 		55E382ED1981694300EC330B /* MADPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* MADPlug.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		55E4D7FC1A2A3B1B0054675C /* APPLObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E4D7FB1A2A3B1B0054675C /* APPLObject.swift */; };
+		55E4D8021A2A3BCA0054675C /* PPAPPLHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E4D8011A2A3BCA0054675C /* PPAPPLHelpers.m */; };
 		55E52E2512455E5100315307 /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
 		55E898B010F17C2B004EB52B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55E898B110F17C2B004EB52B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -2113,8 +2114,6 @@
 		550A474218A455CC0052AED7 /* VSTFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VSTFunctions.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		550A474518A458380052AED7 /* stub-VSTPlugIn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "stub-VSTPlugIn.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		550A8FD719C74ED200588849 /* ComplexFadePlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexFadePlug.swift; sourceTree = "<group>"; };
-		550A8FD919C7B19A00588849 /* PPAPPLObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLObject.h; sourceTree = "<group>"; };
-		550A8FDA19C7B19A00588849 /* PPAPPLObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLObject.m; sourceTree = "<group>"; };
 		550B001B10BA0243004FC5D7 /* PlayerPROCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerPROCore.h; sourceTree = "<group>"; };
 		550B011310BA1E1C004FC5D7 /* MADPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MADPrivate.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "OSX-CoreAudio.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -2635,6 +2634,10 @@
 		55E32C2519E9B56B0041B43B /* DocumentWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentWindowController.swift; sourceTree = "<group>"; };
 		55E382EA1981509100EC330B /* PlugInInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlugInInfo.swift; sourceTree = "<group>"; };
 		55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPROCoreAdditions.swift; sourceTree = "<group>"; };
+		55E4D7FA1A2A3B190054675C /* Classic App-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Classic App-Bridging-Header.h"; sourceTree = "<group>"; };
+		55E4D7FB1A2A3B1B0054675C /* APPLObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APPLObject.swift; sourceTree = "<group>"; };
+		55E4D8001A2A3BCA0054675C /* PPAPPLHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLHelpers.h; sourceTree = "<group>"; };
+		55E4D8011A2A3BCA0054675C /* PPAPPLHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLHelpers.m; sourceTree = "<group>"; };
 		55E527A8186A2A690020F3D6 /* MIDI.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIDI.pch; sourceTree = "<group>"; };
 		55E898B710F17C2B004EB52B /* QuickTime.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickTime.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55E8997B10F17CCB004EB52B /* QuickTime-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "QuickTime-Info.plist"; sourceTree = "<group>"; };
@@ -3681,8 +3684,10 @@
 		551E166F10CCD619003C842A /* Classic Application */ = {
 			isa = PBXGroup;
 			children = (
-				550A8FD919C7B19A00588849 /* PPAPPLObject.h */,
-				550A8FDA19C7B19A00588849 /* PPAPPLObject.m */,
+				55E4D7FA1A2A3B190054675C /* Classic App-Bridging-Header.h */,
+				55E4D7FB1A2A3B1B0054675C /* APPLObject.swift */,
+				55E4D8001A2A3BCA0054675C /* PPAPPLHelpers.h */,
+				55E4D8011A2A3BCA0054675C /* PPAPPLHelpers.m */,
 				5563A49C19AAC0D50051CC4B /* PPAPPLImporterViewController.h */,
 				5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */,
 				55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */,
@@ -7428,9 +7433,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				55BF238E19A937C9005B1F96 /* PPAPPLImporter.m in Sources */,
+				55E4D7FC1A2A3B1B0054675C /* APPLObject.swift in Sources */,
+				55E4D8021A2A3BCA0054675C /* PPAPPLHelpers.m in Sources */,
 				5563A49E19AAC0D50051CC4B /* PPAPPLImporterViewController.m in Sources */,
 				5501BEC818AC05A400602206 /* MADH.c in Sources */,
-				550A8FDB19C7B19A00588849 /* PPAPPLObject.m in Sources */,
 				5501BEC918AC092500602206 /* MADI.c in Sources */,
 				5501BEC718AC029E00602206 /* MADfg.c in Sources */,
 			);
@@ -10575,6 +10581,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"MADAPPIMPORT=1",
 					"$(inherited)",
@@ -10583,6 +10590,7 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/APPL-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/Classic App-Bridging-Header.h";
 				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Release;
@@ -10591,6 +10599,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"MADAPPIMPORT=1",
 					"$(inherited)",
@@ -10599,6 +10608,8 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/APPL-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/Classic App-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Debug;

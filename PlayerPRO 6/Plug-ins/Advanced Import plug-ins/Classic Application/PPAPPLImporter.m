@@ -7,9 +7,9 @@
 //
 
 #import "PPAPPLImporter.h"
-#import "PPAPPLObject.h"
 #include "APPL.h"
 #import "PPAPPLImporterViewController.h"
+#import "Classic_App-Swift.h"
 
 @interface PPAPPLImporter ()
 
@@ -56,7 +56,7 @@ static const OSType MADTypes[] = {'MADK', 'MADI', 'MADF', 'MADG', 'MADH'};
 		for (ResourceCount j = 1; j <= n; j++) {
 			Handle resourceHandle = Get1IndResource(currentType, j);
 
-			PPAPPLObject *obj = [[PPAPPLObject alloc] initWithHandle:resourceHandle resourceIndex:j];
+			APPLObject *obj = [[APPLObject alloc] initWithHandle:resourceHandle];
 			[applObjectArray addObject:obj];
 			ReleaseResource(resourceHandle);
 		}
