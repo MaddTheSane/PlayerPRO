@@ -35,7 +35,7 @@
 
 - (NSData*)data
 {
-	Handle myRes = GetIndResource(self.resourceType, self.resourceID);
+	Handle myRes = Get1Resource(self.resourceType, self.resourceID);
 	DetachResource(myRes);
 	
 	HLock(myRes);
