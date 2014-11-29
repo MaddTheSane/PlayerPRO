@@ -26,10 +26,6 @@ public func ReplaceCommand<X where X: CommandIterator>(#row: Int16, #track: Int1
 	aPcmd.replaceCommand(row: row, track: track, command: command)
 }
 
-public func ModifyCmdAtRow<X where X: CommandIterator>(row: Int16, #track: Int16, inout #aPcmd: X, #commandBlock: (inout Cmd) -> ()) {
-	aPcmd.modifyCommand(row: row, track: track, commandBlock: commandBlock)
-}
-
 public func ModifyCommand<X where X: CommandIterator>(#row: Int16, #track: Int16, inout #aPcmd: X, #commandBlock: (inout Cmd) -> ()) {
 	aPcmd.modifyCommand(row: row, track: track, commandBlock: commandBlock)
 }
