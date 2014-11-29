@@ -311,7 +311,6 @@
 		5560643C18C8FDD9002F72FC /* PPErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = 5532334E16766E5700076604 /* PPErrors.m */; };
 		5561700A1889F90200698ED1 /* PPSampleObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */; };
 		5561F1C019A52A6C0085015B /* ExportObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FD192D19A241FC001E1D9C /* ExportObject.swift */; };
-		5563A49E19AAC0D50051CC4B /* PPAPPLImporterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */; };
 		5565976A19B3BAD000806DF2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565976719B3BAD000806DF2 /* AppDelegate.swift */; };
 		5565976B19B3BAD000806DF2 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565976819B3BAD000806DF2 /* DetailViewController.swift */; };
 		5565976C19B3BAD000806DF2 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5565976919B3BAD000806DF2 /* MasterViewController.swift */; };
@@ -701,6 +700,7 @@
 		55E382ED1981694300EC330B /* MADPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* MADPlug.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55E4D7FC1A2A3B1B0054675C /* APPLObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E4D7FB1A2A3B1B0054675C /* APPLObject.swift */; };
 		55E4D8021A2A3BCA0054675C /* PPAPPLHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E4D8011A2A3BCA0054675C /* PPAPPLHelpers.m */; };
+		55E4D8041A2A40EE0054675C /* ImportWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E4D8031A2A40EE0054675C /* ImportWindowController.swift */; };
 		55E52E2512455E5100315307 /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
 		55E898B010F17C2B004EB52B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
 		55E898B110F17C2B004EB52B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -2385,8 +2385,6 @@
 		555F5C601993327D0056AF01 /* OpenPanelViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenPanelViewController.swift; sourceTree = "<group>"; };
 		556170091889F90200698ED1 /* PPSampleObject_PPKPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSampleObject_PPKPrivate.h; sourceTree = "<group>"; };
 		5561EF99199FC87B0054B3A7 /* PTMIDZAP.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PTMIDZAP.h; sourceTree = "<group>"; };
-		5563A49C19AAC0D50051CC4B /* PPAPPLImporterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLImporterViewController.h; sourceTree = "<group>"; };
-		5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLImporterViewController.m; sourceTree = "<group>"; };
 		5565976719B3BAD000806DF2 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5565976819B3BAD000806DF2 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		5565976919B3BAD000806DF2 /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -2638,6 +2636,7 @@
 		55E4D7FB1A2A3B1B0054675C /* APPLObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APPLObject.swift; sourceTree = "<group>"; };
 		55E4D8001A2A3BCA0054675C /* PPAPPLHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLHelpers.h; sourceTree = "<group>"; };
 		55E4D8011A2A3BCA0054675C /* PPAPPLHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLHelpers.m; sourceTree = "<group>"; };
+		55E4D8031A2A40EE0054675C /* ImportWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportWindowController.swift; sourceTree = "<group>"; };
 		55E527A8186A2A690020F3D6 /* MIDI.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIDI.pch; sourceTree = "<group>"; };
 		55E898B710F17C2B004EB52B /* QuickTime.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickTime.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55E8997B10F17CCB004EB52B /* QuickTime-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "QuickTime-Info.plist"; sourceTree = "<group>"; };
@@ -3685,11 +3684,10 @@
 			isa = PBXGroup;
 			children = (
 				55E4D7FA1A2A3B190054675C /* Classic App-Bridging-Header.h */,
-				55E4D7FB1A2A3B1B0054675C /* APPLObject.swift */,
 				55E4D8001A2A3BCA0054675C /* PPAPPLHelpers.h */,
 				55E4D8011A2A3BCA0054675C /* PPAPPLHelpers.m */,
-				5563A49C19AAC0D50051CC4B /* PPAPPLImporterViewController.h */,
-				5563A49D19AAC0D50051CC4B /* PPAPPLImporterViewController.m */,
+				55E4D7FB1A2A3B1B0054675C /* APPLObject.swift */,
+				55E4D8031A2A40EE0054675C /* ImportWindowController.swift */,
 				55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */,
 				55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */,
 				553340DD10BB5368005208D1 /* APPL.c */,
@@ -7435,9 +7433,9 @@
 				55BF238E19A937C9005B1F96 /* PPAPPLImporter.m in Sources */,
 				55E4D7FC1A2A3B1B0054675C /* APPLObject.swift in Sources */,
 				55E4D8021A2A3BCA0054675C /* PPAPPLHelpers.m in Sources */,
-				5563A49E19AAC0D50051CC4B /* PPAPPLImporterViewController.m in Sources */,
 				5501BEC818AC05A400602206 /* MADH.c in Sources */,
 				5501BEC918AC092500602206 /* MADI.c in Sources */,
+				55E4D8041A2A40EE0054675C /* ImportWindowController.swift in Sources */,
 				5501BEC718AC029E00602206 /* MADfg.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

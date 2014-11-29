@@ -8,22 +8,12 @@
 
 #import "PPAPPLImporter.h"
 #include "APPL.h"
-#import "PPAPPLImporterViewController.h"
 #import "Classic_App-Swift.h"
 
 @interface PPAPPLImporter ()
 
 @end
 
-static inline MADErr TESTMADk(MADSpec* MADPtr)
-{
-	OSType madType = MADPtr->MAD;
-	MADBE32(&madType);
-	if (madType == 'MADK')
-		return MADNoErr;
-	else
-		return MADFileNotSupportedByThisPlug;
-}
 
 static const OSType MADTypes[] = {'MADK', 'MADI', 'MADF', 'MADG', 'MADH'};
 
@@ -63,7 +53,7 @@ static const OSType MADTypes[] = {'MADK', 'MADI', 'MADF', 'MADG', 'MADH'};
 		applObjectDict[CFBridgingRelease(UTCreateStringForOSType(currentType))] = [applObjectArray copy];
 	}
 	
-	PPAPPLImporterViewController *controller = [[PPAPPLImporterViewController alloc] initWithWindowNibName:@"PPAPPLImporter"];
+	ImportWindowController *controller = [[ImportWindowController alloc] initWithWindowNibName:@"PPAPPLImporter"];
 	controller.resourceReference = iFileRefI;
 	[controller addResourceDictionary:applObjectDict];
 }
