@@ -16,13 +16,16 @@ class ImportWindowController: NSWindowController, NSTableViewDelegate {
 	var resourceReference: ResFileRefNum = 0
 	var resourceArray = [APPLObject]()
 	var resourceDictionary = [String: [APPLObject]]()
+	private var modalSession: NSModalSession!
 	
 	@IBAction func importMusicObject(sender: AnyObject?) {
-		
+		NSApplication.sharedApplication().endModalSession(modalSession)
+		currentBlock(nil, .NoErr)
 	}
 	
 	@IBAction func cancelImport(sender: AnyObject?) {
-		
+		NSApplication.sharedApplication().endModalSession(modalSession)
+		currentBlock(nil, .UserCanceledErr)
 	}
 
 	func addResourceDictionary(theDict: NSDictionary) {
@@ -34,25 +37,19 @@ class ImportWindowController: NSWindowController, NSTableViewDelegate {
 		}
 	}
 	
-	/*
-	- (void)addResourceDictionary:(NSDictionary*)theDict;
-	{
-	_resources = theDict;
-	NSMutableArray *tmpArray = [[NSMutableArray alloc] initWithCapacity: [_resources.allKeys count]];
-	for (NSString *key in _resources) {
-	[tmpArray addObjectsFromArray:theDict[key]];
+	func beginImportModalSession() {
+		
+		
+		modalSession = NSApplication.sharedApplication().beginModalSessionForWindow(window!)
 	}
-	}
-*/
-	
-    override func windowDidLoad() {
-        super.windowDidLoad()
-    
-        // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    }
 
+	override func awakeFromNib() {
+		super.awakeFromNib()
+		
+		// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
+	}
+	
 	deinit {
 		PPCloseResFile(resourceReference)
 	}
-	
 }
