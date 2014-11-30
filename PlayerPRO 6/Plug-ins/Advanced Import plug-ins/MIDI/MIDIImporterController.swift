@@ -17,7 +17,7 @@ class MIDIImporterController: NSWindowController {
 	private var modalSession: NSModalSession!
 	
 	class func newWithLocation(loc: NSURL, handler hand: PPComplexImportHandler) -> MIDIImporterController {
-		let impCont = MIDIImporterController()
+		let impCont = MIDIImporterController(windowNibName: "MIDIImporterController")
 		impCont.locationOfFile = loc
 		impCont.handler = hand
 		

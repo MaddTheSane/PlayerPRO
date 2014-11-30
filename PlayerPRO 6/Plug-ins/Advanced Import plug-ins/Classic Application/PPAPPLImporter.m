@@ -56,6 +56,7 @@ static const OSType MADTypes[] = {'MADK', 'MADI', 'MADF', 'MADG', 'MADH'};
 	ImportWindowController *controller = [[ImportWindowController alloc] initWithWindowNibName:@"PPAPPLImporter"];
 	controller.resourceReference = iFileRefI;
 	[controller addResourceDictionary:applObjectDict];
+	[controller beginImportModalSession];
 }
 
 - (BOOL)canImportURL:(NSURL*)theURL error:(out NSError**)outErr

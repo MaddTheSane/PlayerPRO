@@ -19,8 +19,13 @@ class ImportWindowController: NSWindowController, NSTableViewDelegate {
 	private var modalSession: NSModalSession!
 	
 	@IBAction func importMusicObject(sender: AnyObject?) {
+		var madMusic = UnsafeMutablePointer<MADMusic>.alloc(1)
+		//TODO: implement
+		
+		let ppMusic = PPMusicObject(musicStruct: madMusic, copy: false)
+		
 		NSApplication.sharedApplication().endModalSession(modalSession)
-		currentBlock(nil, .NoErr)
+		currentBlock(ppMusic, .NoErr)
 	}
 	
 	@IBAction func cancelImport(sender: AnyObject?) {
