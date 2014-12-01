@@ -8,7 +8,7 @@
 
 import Foundation
 
-class APPLObject: NSObject {
+final class APPLObject: NSObject {
 	let resourceID: ResID
 	let resourceType: ResType
 	let size: Int

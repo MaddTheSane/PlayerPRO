@@ -7,6 +7,8 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ImportWindowController" customModule="Classic_App">
             <connections>
+                <outlet property="arrayCont" destination="ZnR-zf-KN7" id="pfe-vm-wVm"/>
+                <outlet property="dictionaryCont" destination="4ZV-mJ-nYD" id="WXR-0C-TVZ"/>
                 <outlet property="resourceIDsTable" destination="tMa-t6-LPg" id="aMt-Cd-dhS"/>
                 <outlet property="resourceNamesTable" destination="u8H-yv-Lz2" id="Y3s-5S-vVN"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
@@ -48,6 +50,9 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="4ZV-mJ-nYD" name="value" keyPath="arrangedObjects.key" id="53F-dj-jlH"/>
+                                            </connections>
                                         </tableColumn>
                                         <tableColumn width="67" minWidth="10" maxWidth="3.4028234663852886e+38" id="2VT-Lc-V3f">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Count">
@@ -62,11 +67,11 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="4ZV-mJ-nYD" name="value" keyPath="arrangedObjects.value.@count" id="60y-3R-cb9"/>
+                                            </connections>
                                         </tableColumn>
                                     </tableColumns>
-                                    <connections>
-                                        <outlet property="delegate" destination="-2" id="96S-4h-LQQ"/>
-                                    </connections>
                                 </tableView>
                             </subviews>
                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -165,9 +170,6 @@ Gw
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         </tableColumn>
                                     </tableColumns>
-                                    <connections>
-                                        <outlet property="delegate" destination="-2" id="Wlw-ZJ-WE7"/>
-                                    </connections>
                                 </tableView>
                             </subviews>
                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -208,5 +210,11 @@ Gw
             </connections>
             <point key="canvasLocation" x="220.5" y="147"/>
         </window>
+        <dictionaryController objectClassName="_NSControllerKeyValuePair" editable="NO" preservesSelection="NO" id="4ZV-mJ-nYD">
+            <connections>
+                <binding destination="-2" name="contentDictionary" keyPath="self.resourceDictionary" id="bgB-Ha-JWU"/>
+            </connections>
+        </dictionaryController>
+        <arrayController objectClassName="NSDictionary" id="ZnR-zf-KN7"/>
     </objects>
 </document>
