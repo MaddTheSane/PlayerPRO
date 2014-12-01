@@ -11,14 +11,13 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 
-MADErr TESTMADk(MADSpec* MADPtr)
+MADErr TESTMADK(const void* MADPtr)
 {
-	OSType madType = MADPtr->MAD;
-	MADBE32(&madType);
-	if (madType == 'MADK')
+	if (memcmp("MADK", MADPtr, 4) == 0) {
 		return MADNoErr;
-	else
+	} else {
 		return MADFileNotSupportedByThisPlug;
+	}
 }
 
 
@@ -54,7 +53,7 @@ void PPCloseResFile(ResFileRefNum refNum)
 }
 
 
-OSErr LoadMADH(char *MADPtr, MADMusic *MadFile, MADDriverSettings *init)
+MADErr LoadMADK(char *MADPtr, size_t aSize, MADMusic *MadFile, MADDriverSettings *init)
 {
 	short 		i = 0;
 	int			x = 0;

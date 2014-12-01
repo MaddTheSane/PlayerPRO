@@ -28,7 +28,7 @@ final class APPLObject: NSObject {
 		super.init()
 	}
 	
-	var data: NSData {
+	var data: NSData? {
 		return PPAPPLDataFromResource(resourceID, resourceType)
 	}
 }

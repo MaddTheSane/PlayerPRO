@@ -8,6 +8,7 @@
 
 import Cocoa
 import PlayerPROKit
+import SwiftAdditions
 
 class ImportWindowController: NSWindowController {
 	@IBOutlet weak var resourceNamesTable: NSTableView? = nil
@@ -23,12 +24,73 @@ class ImportWindowController: NSWindowController {
 	
 	@IBAction func importMusicObject(sender: AnyObject?) {
 		//TODO: implement
-		
-		var madMusic = UnsafeMutablePointer<MADMusic>.alloc(1)
-		let ppMusic = PPMusicObject(musicStruct: madMusic, copy: false)
-		
-		NSApplication.sharedApplication().endModalSession(modalSession)
-		currentBlock(ppMusic, .NoErr)
+		if let anObject = arrayCont.selectedObjects[0] as? APPLObject {
+			var madMusic: UnsafeMutablePointer<MADMusic>
+			var madTest: (UnsafePointer<Void>) -> MADErr
+			var madLoad: (UnsafeMutablePointer<Int8>, size_t, UnsafeMutablePointer<MADMusic>, UnsafeMutablePointer<MADDriverSettings>) -> MADErr
+			switch anObject.resourceType {
+			case "MADI":
+				madTest = TESTMADI
+				madLoad = MADI2Mad
+				
+			case "MADF", "MADG":
+				madTest = TestMADFGFile
+				madLoad = MADFG2Mad
+				
+			case "MADH":
+				madTest = TESTMADH
+				madLoad = MADH2Mad
+				
+			case "MADK":
+				madTest = TESTMADK
+				madLoad = LoadMADK
+				
+			default:
+				NSApplication.sharedApplication().endModalSession(modalSession)
+				currentBlock(nil, .ParametersErr)
+				return
+			}
+			
+			if let aData = anObject.data {
+				var errVal = madTest(aData.bytes)
+				
+				if errVal != .NoErr {
+					NSApplication.sharedApplication().endModalSession(modalSession)
+					currentBlock(nil, errVal)
+					return
+				}
+				
+				// We have to copy the data, because of how the loaders operate
+				let mutData = NSMutableData(data: aData)
+				var unusedDriverSettings = MADDriverSettings()
+				madMusic = UnsafeMutablePointer<MADMusic>.alloc(1)
+				errVal = madLoad(UnsafeMutablePointer<Int8>(mutData.mutableBytes), size_t(aData.length), madMusic, &unusedDriverSettings)
+				
+				if errVal != .NoErr {
+					// The importers should have cleaned up after themselves...
+					madMusic.dealloc(1)
+					NSApplication.sharedApplication().endModalSession(modalSession)
+					currentBlock(nil, errVal)
+					return
+				}
+				
+				let ppMusic = PPMusicObject(musicStruct: madMusic, copy: false)
+				
+				NSApplication.sharedApplication().endModalSession(modalSession)
+				currentBlock(ppMusic, .NoErr)
+
+			} else {
+				
+				NSApplication.sharedApplication().endModalSession(modalSession)
+				currentBlock(nil, .ReadingErr)
+
+				return
+			}
+		} else {
+			NSApplication.sharedApplication().endModalSession(modalSession)
+			currentBlock(nil, .UnknownErr)
+			return
+		}
 	}
 	
 	@IBAction func cancelImport(sender: AnyObject?) {

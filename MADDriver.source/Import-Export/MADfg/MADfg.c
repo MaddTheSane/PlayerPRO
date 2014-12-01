@@ -151,7 +151,7 @@ static void MOToldMADSpec(struct oldMADSpec * m)
 	}
 }
 
-MADErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init)
+MADErr MADFG2Mad(char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short		i, x;
 	long		inOutCount = 0, OffSetToSample = 0;
@@ -371,7 +371,7 @@ MADErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *i
 	return MADNoErr;
 }
 
-static MADErr TestoldMADFile(void *AlienFile)
+static MADErr TestoldMADFile(const void *AlienFile)
 {
 	MADFourChar myMADSign = *((MADFourChar*)AlienFile);
 	MADBE32(&myMADSign);
@@ -547,7 +547,7 @@ MADErr ExtractMADFGInfo(void *info, void *AlienFile)
 	return ExtractoldMADInfo(info, AlienFile);
 }
 
-MADErr TestMADFGFile(void *AlienFile)
+MADErr TestMADFGFile(const void *AlienFile)
 {
 	return TestoldMADFile(AlienFile);
 }

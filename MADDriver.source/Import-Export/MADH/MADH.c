@@ -365,7 +365,7 @@ MADErr MADH2Mad(char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *
 	return MADNoErr;
 }
 
-static MADErr TestoldMADFile(char* AlienFile)
+static MADErr TestoldMADFile(const char* AlienFile)
 {
 	MADFourChar	myMADSign = *((MADFourChar*) AlienFile);
 	MADBE32(&myMADSign);
@@ -445,7 +445,7 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 /*****************/
 
 #ifdef MADAPPIMPORT
-MADErr TESTMADH(void *AlienFile)
+MADErr TESTMADH(const void *AlienFile)
 {
 	return TestoldMADFile(AlienFile);
 }
