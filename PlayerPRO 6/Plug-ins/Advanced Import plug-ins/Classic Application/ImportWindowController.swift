@@ -54,6 +54,11 @@ class ImportWindowController: NSWindowController {
 		// Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 		dictionaryCont.bind(NSContentDictionaryBinding, toObject: self, withKeyPath: "resourceDictionary", options: nil)
 		dictionaryCont.addObserver(self, forKeyPath: "selectionIndexes", options: .New, context: nil)
+		
+		dictionaryCont.setSelectionIndex(0)
+		
+		resourceNamesTable?.sortDescriptors = [NSSortDescriptor(key: "key", ascending: true)]
+		resourceIDsTable?.sortDescriptors = [NSSortDescriptor(key: "resourceID", ascending: true)]
 	}
 	
 	override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {

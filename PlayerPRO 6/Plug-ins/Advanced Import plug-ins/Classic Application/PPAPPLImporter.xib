@@ -141,6 +141,9 @@ Gw
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="ZnR-zf-KN7" name="value" keyPath="arrangedObjects.resourceID" id="zWl-tM-UKb"/>
+                                            </connections>
                                         </tableColumn>
                                         <tableColumn width="201" minWidth="10" maxWidth="3.4028234663852886e+38" id="YGX-gU-HlW">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Name">
@@ -154,6 +157,9 @@ Gw
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="ZnR-zf-KN7" name="value" keyPath="arrangedObjects.name" id="7w3-yR-uOx"/>
+                                            </connections>
                                         </tableColumn>
                                         <tableColumn width="67" minWidth="10" maxWidth="3.4028234663852886e+38" id="gfK-6q-Md6">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Size">
@@ -168,6 +174,9 @@ Gw
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="ZnR-zf-KN7" name="value" keyPath="arrangedObjects.size" id="JmI-hq-ENb"/>
+                                            </connections>
                                         </tableColumn>
                                     </tableColumns>
                                 </tableView>
