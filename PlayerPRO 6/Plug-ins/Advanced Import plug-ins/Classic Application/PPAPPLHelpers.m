@@ -57,7 +57,7 @@ MADErr LoadMADK(char *MADPtr, size_t aSize, MADMusic *MadFile, MADDriverSettings
 {
 	short 		i = 0;
 	int			x = 0;
-	long 		inOutCount, OffSetToSample;
+	size_t 		inOutCount = 0, OffSetToSample = 0;
 	PatHeader	tempPatHeader;
 	MADSpec		*MadHeader;
 	
@@ -66,7 +66,6 @@ MADErr LoadMADK(char *MADPtr, size_t aSize, MADMusic *MadFile, MADDriverSettings
 	if (MadFile->header == NULL)
 		return MADNeedMemory;
 	
-	OffSetToSample = 0;
 	memcpy(MadFile->header, MADPtr, sizeof(MADSpec));
 	OffSetToSample += sizeof(MADSpec);
 	

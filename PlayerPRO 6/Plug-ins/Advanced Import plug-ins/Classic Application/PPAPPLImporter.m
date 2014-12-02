@@ -50,7 +50,9 @@ static const OSType MADTypes[] = {'MADK', 'MADI', 'MADF', 'MADG', 'MADH'};
 			[applObjectArray addObject:obj];
 			ReleaseResource(resourceHandle);
 		}
-		applObjectDict[CFBridgingRelease(UTCreateStringForOSType(currentType))] = [applObjectArray copy];
+		if (applObjectArray.count > 0) {
+			applObjectDict[CFBridgingRelease(UTCreateStringForOSType(currentType))] = [applObjectArray copy];
+		}
 	}
 	
 	ImportWindowController *controller = [[ImportWindowController alloc] initWithWindowNibName:@"PPAPPLImporter"];

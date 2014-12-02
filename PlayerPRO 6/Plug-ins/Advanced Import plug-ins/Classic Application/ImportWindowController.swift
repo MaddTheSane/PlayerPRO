@@ -18,7 +18,7 @@ class ImportWindowController: NSWindowController {
 	
 	var currentBlock: PPComplexImportHandler!
 	var resourceReference: ResFileRefNum = 0
-	var resourceArray = [APPLObject]()
+	dynamic var resourceArray = [APPLObject]()
 	var resourceDictionary = [String: [APPLObject]]()
 	private var modalSession: NSModalSession!
 	

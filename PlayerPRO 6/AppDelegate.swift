@@ -407,29 +407,6 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			}
 		} //else
 		
-		//TODO: check for valid extension.
-		for aUTI in trackerUTIs {
-			if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
-				let theWrap = PPMusicObject(URL: theURL1, library: madLib)
-				
-				self.addDocument(PPDocument(music: theWrap))
-				return true;
-			}
-		}
-		
-		for obj in instrumentPlugHandler {
-			for aUTI in obj.UTITypes as [String] {
-				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
-					var theErr:NSError? = nil
-					if (!importSampleFromURL(theURL, makeUserSelectInstrument: true, error:&theErr)) {
-						NSAlert(error: theErr!).runModal()
-						return false;
-					}
-					return true;
-				}
-			}
-		}
-		
 		for obj in complexImport {
 			for aUTI in obj.UTITypes as [String] {
 				if sharedWorkspace.type(theUTI, conformsToType: aUTI) {
@@ -452,6 +429,30 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 						})
 						return true
 					}
+				}
+			}
+		}
+
+		
+		//TODO: check for valid extension.
+		for aUTI in trackerUTIs {
+			if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
+				let theWrap = PPMusicObject(URL: theURL1, library: madLib)
+				
+				self.addDocument(PPDocument(music: theWrap))
+				return true;
+			}
+		}
+		
+		for obj in instrumentPlugHandler {
+			for aUTI in obj.UTITypes as [String] {
+				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
+					var theErr:NSError? = nil
+					if (!importSampleFromURL(theURL, makeUserSelectInstrument: true, error:&theErr)) {
+						NSAlert(error: theErr!).runModal()
+						return false;
+					}
+					return true;
 				}
 			}
 		}
