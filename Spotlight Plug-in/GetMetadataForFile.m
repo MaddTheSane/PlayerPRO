@@ -52,16 +52,17 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 		MADLibrary			*MADLib = NULL;
 		MADDriverSettings	init = {0};
 		NSMutableDictionary *NSattribs = (__bridge NSMutableDictionary*)attributes;
-		NSURL				*NSFileURL = (__bridge NSURL*)urlForFile;
 		
 		//Before we do anything else, check to make sure it's not the Windows file winoldap.mod
 		//This file seems to crash the metadata importer, even though
 		//the proper PlayerPRO plug-in should say that it can't open it.
 		{
-			NSString *lastPathName = [NSFileURL lastPathComponent];
+			NSURL		*NSFileURL = (__bridge NSURL*)urlForFile;
+			NSString	*lastPathName = [NSFileURL lastPathComponent];
 			NSComparisonResult result = [lastPathName compare:@"winoldap.mod" options:NSCaseInsensitiveSearch | NSWidthInsensitiveSearch];
-			if (result == NSOrderedSame)
+			if (result == NSOrderedSame) {
 				return FALSE;
+			}
 		}
 		
 		/* Pull any available metadata from the file at the specified path */
@@ -79,9 +80,9 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 		}
 		
 		{
-			char type[5];
+			char type[5] = {0};
 			char utiType[5] = {0};
-			OSType info;
+			OSType info = 0;
 			NSString *ostypes;
 			
 			//Try to get the OSType of the UTI.
@@ -100,9 +101,9 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			
 #ifdef DEBUG
 			if (strcmp(utiType, "!!!!") == 0) {
-				NSLog(@"PPImporter: Unable to determine file type based on UTI.");
+				printf("PPImporter: Unable to determine file type based on UTI.\n");
 			} else if (strcmp(utiType, type) != 0) {
-				NSLog(@"PPImporter: File types differ, UTI says %s, PlayerPRO says %s.", utiType, type);
+				printf("PPImporter: File types differ, UTI says %s, PlayerPRO says %s.", utiType, type);
 			}
 #endif
 			
@@ -112,8 +113,9 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 				if (err != MADNoErr) {
 					goto fail1;
 				}
-			} else
+			} else {
 				goto fail1;
+			}
 			
 			{
 				//Get info
@@ -134,7 +136,6 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 					if (MADMusicInfoCFURL(MADLib, type, urlForFile, &rec) != MADNoErr)
 						goto skipInfo;
 					NSString *NSSig = CFBridgingRelease(UTCreateStringForOSType(rec.signature));
-					NSArray *tmpCodecArray;
 					if (!NSSig) {
 						char sig[5];
 						OSType2Ptr(rec.signature, sig);
@@ -142,8 +143,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 					} else if (!NSSig) {
 						NSSig = [[NSString alloc] initWithFormat:@"0x%08X", (unsigned int)rec.signature];
 					}
-					tmpCodecArray = @[NSSig];
-					NSattribs[(NSString*)kMDItemCodecs] = tmpCodecArray;
+					NSattribs[(NSString*)kMDItemCodecs] = @[NSSig];
 				}
 				//Set the title metadata
 				
@@ -182,15 +182,17 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			for (int i = 0; i < MAXINSTRU; i++) {
 				InstrData *tempData = &MADMusic1->fid[i];
 				NSString *temp = [[NSString alloc] initWithCString:tempData->name encoding:NSMacOSRomanStringEncoding];
-				if (!StringIsEmpty(temp))
+				if (!StringIsEmpty(temp)) {
 					[InstruArray addObject:temp];
+				}
 				
 				int sDataCount = tempData->firstSample + tempData->numSamples;
 				for (int x = tempData->firstSample; x < sDataCount; x++) {
 					sData *tempSData = MADMusic1->sample[x];
 					temp = [[NSString alloc] initWithCString:tempSData->name encoding:NSMacOSRomanStringEncoding];
-					if (!StringIsEmpty(temp))
+					if (!StringIsEmpty(temp)) {
 						[InstruArray addObject:temp];
+					}
 				}
 			}
 			
