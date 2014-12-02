@@ -176,17 +176,15 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 				
 				//musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
 				for bookData in dataBookArray {
-					var isStale: ObjCBool = false;
-					if let fullURL = NSURL(byResolvingBookmarkData: bookData, options: .WithoutUI, relativeToURL: nil, bookmarkDataIsStale: &isStale, error: nil) {
-						let obj = MusicListObject(URL: fullURL)
-						musicList.append(obj)
+					if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI) {
+						musicList.append(fullURL)
 					} else {
 						lostMusicCount++
 					}
 				}
 				selectedMusic = -1;
 			} else {
-				var curSel = aDecoder.decodeObjectForKey(kMusicListLocation2) as NSNumber?
+				var curSel = aDecoder.decodeObjectForKey(kMusicListLocation2) as? NSNumber
 				if curSel != nil {
 					selectedMusic = curSel!.integerValue
 				} else {
@@ -195,9 +193,8 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 				let dataBookArray = BookmarkArray! as [NSData]
 				let aHomeURL = NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
 				for bookData in dataBookArray {
-					var isStale: ObjCBool = false
-					if let fullURL = NSURL(byResolvingBookmarkData: bookData, options: .WithoutUI, relativeToURL: aHomeURL, bookmarkDataIsStale: &isStale, error: nil) {
-						musicList.append(MusicListObject(URL: fullURL))
+					if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI, relativeURL: aHomeURL) {
+						musicList.append(fullURL)
 					} else {
 						if (selectedMusic == -1) {
 							//Do nothing
@@ -339,12 +336,12 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	
 	@objc dynamic func arrayOfObjectsInMusicListAtIndexes(theSet : NSIndexSet) -> [MusicListObject] {
 		return musicList.filter({ (include) -> Bool in
-			var idx = find(self.musicList, include)
-			return theSet.containsIndex(idx!)
+			var idx = find(self.musicList, include)!
+			return theSet.containsIndex(idx)
 		})
 	}
 	
-	func insertMusicLists(anObj: Array<MusicListObject>, atIndexes indexes: NSIndexSet) {
+	func insertMusicLists(anObj: [MusicListObject], atIndexes indexes: NSIndexSet) {
 		var idx = anObj.endIndex
 		for var i = indexes.lastIndex; i != NSNotFound; i = indexes.indexLessThanIndex(i) {
 			musicList.insert(anObj[--idx], atIndex: i)

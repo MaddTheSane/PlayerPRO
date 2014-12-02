@@ -13,6 +13,10 @@ import Foundation
 
 private let kMusicListURLKey = "URLKey";
 
+private func ==(lhs: NSData, rhs: NSData) -> Bool {
+	return lhs.isEqualToData(rhs)
+}
+
 private func URLsPointingToTheSameFile(urlA: NSURL, urlB: NSURL) -> Bool {
 	var dat1: AnyObject? = nil
 	var dat2: AnyObject? = nil
@@ -116,18 +120,18 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	
 	override var hashValue: Int {
 		if let absURL = musicURL.absoluteString {
-			return absURL.hash
+			return absURL.hashValue
 		} else {
 			return super.hash
 		}
 	}
 
 	override var description: String {
-		return "\(musicURL.path): \(self.fileName)"
+		return "\(musicURL.path): \(fileName)"
 	}
 	
 	override var debugDescription: String {
-		return "\(musicURL.description) \(musicURL.path): \(self.fileName)"
+		return "\(musicURL.description) \(musicURL.path): \(fileName) size: \(fileSize)"
 	}
 
 	override func isEqual(object: AnyObject?) -> Bool {
