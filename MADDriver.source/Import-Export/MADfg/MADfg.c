@@ -36,7 +36,7 @@
 #ifdef MADAPPIMPORT
 #include "APPL.h"
 #else
-static MADErr MADFG2Mad(char *MADPtr, long size, MADMusic *theMAD, MADDriverSettings *init);
+static MADErr MADFG2Mad(char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
 #endif
 
 static struct MusicPattern* oldDecompressPartitionMAD1(struct MusicPattern* myPat, short Tracks, MADDriverSettings *init)

@@ -224,6 +224,6 @@ Gw
                 <binding destination="-2" name="contentDictionary" keyPath="self.resourceDictionary" id="bgB-Ha-JWU"/>
             </connections>
         </dictionaryController>
-        <arrayController objectClassName="NSDictionary" id="ZnR-zf-KN7"/>
+        <arrayController objectClassName="Classic_App.APPLObject" editable="NO" id="ZnR-zf-KN7"/>
     </objects>
 </document>

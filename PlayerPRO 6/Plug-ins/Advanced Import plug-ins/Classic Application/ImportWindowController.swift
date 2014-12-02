@@ -23,7 +23,6 @@ class ImportWindowController: NSWindowController {
 	private var modalSession: NSModalSession!
 	
 	@IBAction func importMusicObject(sender: AnyObject?) {
-		//TODO: implement
 		if let anObject = arrayCont.selectedObjects[0] as? APPLObject {
 			var madMusic: UnsafeMutablePointer<MADMusic>
 			var madTest: (UnsafePointer<Void>) -> MADErr
@@ -48,6 +47,7 @@ class ImportWindowController: NSWindowController {
 			default:
 				NSApplication.sharedApplication().endModalSession(modalSession)
 				currentBlock(nil, .ParametersErr)
+				
 				return
 			}
 			
@@ -57,6 +57,7 @@ class ImportWindowController: NSWindowController {
 				if errVal != .NoErr {
 					NSApplication.sharedApplication().endModalSession(modalSession)
 					currentBlock(nil, errVal)
+					
 					return
 				}
 				
@@ -71,6 +72,7 @@ class ImportWindowController: NSWindowController {
 					madMusic.dealloc(1)
 					NSApplication.sharedApplication().endModalSession(modalSession)
 					currentBlock(nil, errVal)
+					
 					return
 				}
 				
@@ -78,9 +80,7 @@ class ImportWindowController: NSWindowController {
 				
 				NSApplication.sharedApplication().endModalSession(modalSession)
 				currentBlock(ppMusic, .NoErr)
-
 			} else {
-				
 				NSApplication.sharedApplication().endModalSession(modalSession)
 				currentBlock(nil, .ReadingErr)
 
@@ -89,6 +89,7 @@ class ImportWindowController: NSWindowController {
 		} else {
 			NSApplication.sharedApplication().endModalSession(modalSession)
 			currentBlock(nil, .UnknownErr)
+			
 			return
 		}
 	}
