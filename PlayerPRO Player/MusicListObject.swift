@@ -66,7 +66,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		
 		if (!self.musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey, error: &err)) {
 			println("PPMusicListObject: Could not find out if extension is hidden in file \(self.musicURL.path), error: \(err!.localizedDescription)")
-			return self.musicURL.lastPathComponent
+			return self.musicURL.lastPathComponent!
 		} else {
 			let retStr = val as NSString as String
 			return retStr
