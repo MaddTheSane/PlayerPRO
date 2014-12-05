@@ -9344,7 +9344,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Digital Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Digital Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -9978,7 +9977,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -10049,7 +10047,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-Ins/Filters Plugs/${PRODUCT_NAME}/${PRODUCT_NAME}-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				USER_HEADER_SEARCH_PATHS = "\"${SRCROOT}\"/\"PlayerPRO 6\"/Plug-Ins/\"Filters Plugs\"";
 				WRAPPER_EXTENSION = plugin;
 			};
@@ -10605,7 +10602,6 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/Classic App-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = ppextimp;
 			};
 			name = Debug;
@@ -10821,7 +10817,6 @@
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Wave/Wave-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;
