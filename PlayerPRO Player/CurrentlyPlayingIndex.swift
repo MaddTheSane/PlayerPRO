@@ -17,7 +17,7 @@ class CurrentlyPlayingIndex: NSObject, DebugPrintable, Printable {
 	}
 	
 	override var description: String {
-		return "Index: \(index) URL: \(playbackURL)"
+		return "Index: \(index) URL: \(playbackURL!.relativePath!)"
 	}
 	
 	override var debugDescription: String {
