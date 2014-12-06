@@ -49,7 +49,7 @@ public final class PPLibraryObject: NSObject, Printable, DebugPrintable {
 		bundle = NSBundle(URL: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()))!
 		UTITypes = unwrapped.UTItypes.takeUnretainedValue() as NSArray as [String]
 		tupleType = unwrapped.type
-		let tmpArray: [CChar] = GetArrayFromMirror(reflect(tupleType))
+		let tmpArray: [CChar] = GetArrayFromMirror(reflect(tupleType))!
 		type = String(CString: tmpArray, encoding: NSMacOSRomanStringEncoding)!
 		plugVersion = unwrapped.version
 		switch (unwrapped.mode) {
