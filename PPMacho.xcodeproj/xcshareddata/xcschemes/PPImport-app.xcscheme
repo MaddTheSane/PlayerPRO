@@ -62,6 +62,10 @@
             argument = "-g &quot;${TARGET_BUILD_DIR}&quot;/&quot;${PRODUCT_NAME}&quot;.${WRAPPER_EXTENSION}"
             isEnabled = "YES">
          </CommandLineArgument>
+         <CommandLineArgument
+            argument = "${HOME}/Music/Mod\ music/Energy.xm"
+            isEnabled = "YES">
+         </CommandLineArgument>
       </CommandLineArguments>
       <AdditionalOptions>
       </AdditionalOptions>

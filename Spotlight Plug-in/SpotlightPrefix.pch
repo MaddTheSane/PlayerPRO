@@ -13,7 +13,9 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <CoreFoundation/CFPlugInCOM.h>
 #include <CoreServices/CoreServices.h>
+#ifdef __OBJC__
 #import <Foundation/Foundation.h>
+#endif
 
 #include "MAD.h"
 #include "RDriver.h"

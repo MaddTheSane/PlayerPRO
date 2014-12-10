@@ -7,19 +7,34 @@
 #include "MADFileUtils.h"
 #include "GetMetadataForFile.h"
 
+static NSCharacterSet *ourSet;
+static dispatch_once_t charSetOnce;
+static dispatch_block_t charBlock = ^{
+	NSMutableCharacterSet *tmpSet = [[NSCharacterSet whitespaceCharacterSet] mutableCopy];
+	[tmpSet addCharactersInString:@"-."];
+	ourSet = [tmpSet copy];
+};
+
+static inline NSString *StripStringOfSpaces(NSString *s, BOOL andDashes) NS_RETURNS_RETAINED;
+NSString *StripStringOfSpaces(NSString *s, BOOL andDashes)
+{
+	dispatch_once(&charSetOnce, charBlock);
+	if (s == nil)
+		return nil;
+	
+	return [s stringByTrimmingCharactersInSet: andDashes ? ourSet : [NSCharacterSet whitespaceCharacterSet]];
+}
+
 static inline BOOL StringIsEmpty(NSString *s)
 {
 	NSString *copy;
-	NSMutableCharacterSet *mutSet;
 	if (s == nil)
 		return YES;
 	
 	if ([s isEqualTo:@""])
 		return YES;
 	
-	mutSet = [[NSCharacterSet whitespaceCharacterSet] mutableCopy];
-	[mutSet addCharactersInString:@"-"];
-	copy = [s stringByTrimmingCharactersInSet:mutSet];
+	copy = StripStringOfSpaces(s, YES);
 	
 	if ([copy isEqualTo:@""])
 		return YES;
@@ -123,10 +138,9 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 				//Hence why we're only letting the MADK tracker show it.
 				
 				NSString *infoString = [[NSString alloc] initWithCString:MADMusic1->header->infos encoding:NSMacOSRomanStringEncoding];
-				if (!infoString)
-					infoString = @"";
-				
-				NSattribs[kPPMDMADKInfo] = infoString;
+				if (infoString) {
+					NSattribs[kPPMDMADKInfo] = infoString;
+				}
 			}
 			
 			NSString *title;
@@ -148,7 +162,9 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 				//Set the title metadata
 				
 				title = [[NSString alloc] initWithCString:rec.internalFileName encoding:NSMacOSRomanStringEncoding];
-				NSattribs[(NSString*)kMDItemTitle] = title;
+				if (title != nil) {
+					NSattribs[(NSString*)kMDItemTitle] = StripStringOfSpaces(title, NO);
+				}
 				
 				NSattribs[kPPMDTotalPatterns] = @(rec.totalPatterns);
 				NSattribs[kPPMDPartitionLength] = @(rec.partitionLength);
@@ -162,7 +178,9 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 		skipInfo:
 			if (!title) {
 				title = [[NSString alloc] initWithCString:MADMusic1->header->name encoding:NSMacOSRomanStringEncoding];
-				NSattribs[(NSString*)kMDItemTitle] = title;
+				if (title != nil) {
+					NSattribs[(NSString*)kMDItemTitle] = title;
+				}
 			}
 		}
 		
@@ -208,7 +226,10 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 						[PatArray addObject:temp];
 				}
 			}
-			NSattribs[kPPMDPatternList] = PatArray;
+			
+			if ([PatArray count] > 0) {
+				NSattribs[kPPMDPatternList] = PatArray;
+			}
 		}
 		
 		MADCleanDriver(MADDriver);

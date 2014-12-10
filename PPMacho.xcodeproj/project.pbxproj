@@ -356,7 +356,7 @@
 		5573A3D010B5128800FF8B50 /* RDriverInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47D0C2F21E400D6C081 /* RDriverInt.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		5573A3D110B5129100FF8B50 /* MADPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* MADPlug.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573A3E410B513BD00FF8B50 /* MADFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* MADFileUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5573A3EA10B5147C00FF8B50 /* MyDebugStr.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A3E810B5147C00FF8B50 /* MyDebugStr.c */; settings = {COMPILER_FLAGS = "-x objective-c"; }; };
+		5573A3EA10B5147C00FF8B50 /* MyDebugStr.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A3E810B5147C00FF8B50 /* MyDebugStr.c */; };
 		5573A41210B5160000FF8B50 /* MADDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* MADDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573AF0817DF8FD400B68127 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 552C716210CDC11400C0E0D4 /* README.rtf */; };
 		5573AF0917DF8FD500B68127 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 552C716210CDC11400C0E0D4 /* README.rtf */; };
@@ -755,7 +755,7 @@
 		55F1BDC41975C9E100AD2C03 /* OutPut8.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D90C2F21DD00D6C081 /* OutPut8.c */; };
 		55F1BDC51975C9E100AD2C03 /* realft.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DA0C2F21DD00D6C081 /* realft.c */; };
 		55F1BDC61975C9E100AD2C03 /* TickRemover.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */; };
-		55F1BDC71975C9E100AD2C03 /* MyDebugStr.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A3E810B5147C00FF8B50 /* MyDebugStr.c */; settings = {COMPILER_FLAGS = "-x objective-c"; }; };
+		55F1BDC71975C9E100AD2C03 /* MyDebugStr.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A3E810B5147C00FF8B50 /* MyDebugStr.c */; };
 		55F1BDC81975CA3900AD2C03 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
 		55F1BDC91975CA3900AD2C03 /* iOS-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A1301656FCC100A5AECA /* iOS-PlugImport.c */; };
 		55F1BDCA1975CA4D00AD2C03 /* MIDI-Hardware-Stub.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */; };
@@ -9715,6 +9715,7 @@
 				DYLIB_CURRENT_VERSION = 6.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = B;
+				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9746,6 +9747,7 @@
 				DYLIB_CURRENT_VERSION = 6.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = B;
+				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9813,7 +9815,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = NO;
-				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Spotlight Plug-in/SpotlightPrefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9840,7 +9841,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = NO;
-				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Spotlight Plug-in/SpotlightPrefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -10731,7 +10731,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = NO;
-				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PPQuickView/PPQuickView-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -10757,7 +10756,6 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = NO;
-				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PPQuickView/PPQuickView-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -11138,6 +11136,7 @@
 				DYLIB_CURRENT_VERSION = 6.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -11175,6 +11174,7 @@
 				DYLIB_CURRENT_VERSION = 6.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
