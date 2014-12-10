@@ -10,11 +10,13 @@ import Foundation
 
 private let kMusicListKey1 = "Music List Key1"
 private let kMusicListKey2 = "Music List Key2"
+private let kMusicListKey3 = "Music List Key 3"
 
 private let kMusicListLocation2 = "Music Key Location2"
-
-private let kMusicListKey3 = "Music List Key 3"
 private let kMusicListLocation3 = "Music Key Location 3"
+
+private let kMusicListKey4 = "Music List Key 4"
+private let kMusicListLocation4 = "Music Key Location 4"
 
 private let kPlayerList = "Player List"
 
@@ -164,40 +166,58 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	
 	required init(coder aDecoder: NSCoder) {
 		lostMusicCount = 0;
-		var BookmarkArray: AnyObject? = aDecoder.decodeObjectForKey(kMusicListKey3);
-		if (BookmarkArray == nil) {
-			BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey2)
+		var BookmarkArray: AnyObject? = aDecoder.decodeObjectForKey(kMusicListKey4);
+		if BookmarkArray == nil {
+			BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey3);
 			if (BookmarkArray == nil) {
-				BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey1)
+				BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey2)
 				if (BookmarkArray == nil) {
-					selectedMusic = -1
-					super.init()
-					return
-				}
-				let dataBookArray = BookmarkArray! as [NSData]
-				
-				//musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
-				for bookData in dataBookArray {
-					if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI) {
-						musicList.append(fullURL)
+					BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey1)
+					if (BookmarkArray == nil) {
+						selectedMusic = -1
+						super.init()
+						return
+					}
+					let dataBookArray = BookmarkArray! as [NSData]
+					
+					//musicList = [[NSMutableArray alloc] initWithCapacity:[BookmarkArray count]];
+					for bookData in dataBookArray {
+						if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI) {
+							musicList.append(fullURL)
+						} else {
+							lostMusicCount++
+						}
+					}
+					selectedMusic = -1;
+				} else {
+					var curSel = aDecoder.decodeObjectForKey(kMusicListLocation2) as? NSNumber
+					if curSel != nil {
+						selectedMusic = curSel!.integerValue
 					} else {
-						lostMusicCount++
+						selectedMusic = -1
+					}
+					let dataBookArray = BookmarkArray! as [NSData]
+					let aHomeURL = NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
+					for bookData in dataBookArray {
+						if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI, relativeURL: aHomeURL) {
+							musicList.append(fullURL)
+						} else {
+							if (selectedMusic == -1) {
+								//Do nothing
+							} else if (selectedMusic == musicList.count + 1) {
+								selectedMusic = -1
+							} else if (selectedMusic > musicList.count + 1) {
+								selectedMusic--
+							}
+							lostMusicCount++
+						}
 					}
 				}
-				selectedMusic = -1;
 			} else {
-				var curSel = aDecoder.decodeObjectForKey(kMusicListLocation2) as? NSNumber
-				if curSel != nil {
-					selectedMusic = curSel!.integerValue
-				} else {
-					selectedMusic = -1
-				}
-				let dataBookArray = BookmarkArray! as [NSData]
-				let aHomeURL = NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
-				for bookData in dataBookArray {
-					if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI, relativeURL: aHomeURL) {
-						musicList.append(fullURL)
-					} else {
+				selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation3);
+				let URLBookArray = BookmarkArray! as [NSURL]
+				for bookURL in URLBookArray {
+					if (!bookURL.checkResourceIsReachableAndReturnError(nil)) {
 						if (selectedMusic == -1) {
 							//Do nothing
 						} else if (selectedMusic == musicList.count + 1) {
@@ -206,14 +226,17 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 							selectedMusic--
 						}
 						lostMusicCount++
+						continue
 					}
+					let obj = MusicListObject(URL: bookURL)
+					musicList.append(obj)
 				}
 			}
 		} else {
-			selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation3);
-			let URLBookArray = BookmarkArray! as [NSURL]
-			for bookURL in URLBookArray {
-				if (!bookURL.checkResourceIsReachableAndReturnError(nil)) {
+			selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation4);
+			let URLBookArray = BookmarkArray! as [MusicListObject]
+			for book in URLBookArray {
+				if (!book.checkResourceIsReachableAndReturnError(nil)) {
 					if (selectedMusic == -1) {
 						//Do nothing
 					} else if (selectedMusic == musicList.count + 1) {
@@ -224,23 +247,16 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 					lostMusicCount++
 					continue
 				}
-				let obj = MusicListObject(URL: bookURL)
-				musicList.append(obj)
+				musicList.append(book)
 			}
-			
+
 		}
 		super.init()
 	}
 
 	func encodeWithCoder(aCoder: NSCoder) {
-		var BookmarkArray = [NSURL]()
-		for obj in musicList {
-			let bookData = obj.musicURL
-			BookmarkArray.append(bookData)
-		}
-		//TODO: check for failed data initialization, and decrement changedIndex to match.
-		aCoder.encodeInteger(selectedMusic, forKey: kMusicListLocation3)
-		aCoder.encodeObject(BookmarkArray, forKey: kMusicListKey3)
+		aCoder.encodeInteger(selectedMusic, forKey: kMusicListLocation4)
+		aCoder.encodeObject(musicList as NSArray, forKey: kMusicListKey4)
 	}
 	
 	class func supportsSecureCoding() -> Bool {

@@ -12,6 +12,7 @@ import Foundation
 #endif
 
 private let kMusicListURLKey = "URLKey";
+private let kMusicListDateAddedKey = "DateAdded"
 
 private func ==(lhs: NSData, rhs: NSData) -> Bool {
 	return lhs.isEqualToData(rhs)
@@ -51,6 +52,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 
 @objc(PPMusicListObject) class MusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPrintable, Printable {
 	let musicURL: NSURL
+	let addedDate: NSDate
 
 	#if os(OSX)
 	@objc private(set) lazy var fileIcon: NSImage = {
@@ -94,24 +96,37 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		}
 	}()
 	
-	init(URL: NSURL) {
+	init(URL: NSURL, date: NSDate) {
 		if (URL.isFileReferenceURL()) {
 			musicURL = URL;
 		} else {
 			let tmpURL = URL.fileReferenceURL()
 			musicURL = tmpURL ?? URL
 		}
+		addedDate = date
 		super.init();
 	}
 	
-	convenience init?(bookmarkData: NSData, resolutionOptions: NSURLBookmarkResolutionOptions = nil, relativeURL: NSURL? = nil) {
+	convenience init(URL: NSURL) {
+		self.init(URL: URL, date: NSDate())
+	}
+	
+	convenience init?(bookmarkData: NSData, resolutionOptions: NSURLBookmarkResolutionOptions = nil, relativeURL: NSURL? = nil, date: NSDate? = nil) {
 		if let resolvedURL = NSURL(byResolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeToURL: relativeURL, bookmarkDataIsStale: nil, error: nil) {
-			self.init(URL: resolvedURL)
+			if let unwrapped = date {
+				self.init(URL: resolvedURL, date: unwrapped)
+			} else {
+				self.init(URL: resolvedURL)
+			}
 		} else {
 			self.init(URL: NSURL(fileURLWithPath: "/dev/null")!)
 
 			return nil
 		}
+	}
+	
+	func checkResourceIsReachableAndReturnError(error: NSErrorPointer) -> Bool {
+		return musicURL.checkResourceIsReachableAndReturnError(error)
 	}
 	
 	override var hash: Int {
@@ -120,9 +135,9 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	
 	override var hashValue: Int {
 		if let absURL = musicURL.absoluteString {
-			return absURL.hashValue
+			return absURL.hashValue ^ addedDate.hash
 		} else {
-			return super.hash
+			return super.hash ^ addedDate.hash
 		}
 	}
 
@@ -152,20 +167,35 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		}
 	}
 
+	@objc(pointsToFileAtURL:) func pointsToFile(#URL: NSURL?) -> Bool {
+		if let unwrapped = URL {
+			return URLsPointingToTheSameFile(musicURL, unwrapped)
+		} else {
+			return false
+		}
+	}
+	
+	// MARK: NSCopying protocol
+	/// This class is immutable, so it only returns itself
 	func copyWithZone(zone: NSZone) -> AnyObject {
 		//this class is immutable
 		return self;
 	}
 
+	// MARK: NSSecureCoding protocol
 	class func supportsSecureCoding() -> Bool {
 		return true;
 	}
 	
 	func encodeWithCoder(aCoder: NSCoder) {
 		aCoder.encodeObject(musicURL, forKey: kMusicListURLKey)
+		aCoder.encodeObject(addedDate, forKey: kMusicListDateAddedKey)
 	}
 	
 	convenience required init(coder aDecoder: NSCoder) {
-		self.init(URL:aDecoder.decodeObjectForKey(kMusicListURLKey) as NSURL);
+		let aURL = aDecoder.decodeObjectForKey(kMusicListURLKey) as NSURL
+		let aaddedDate = aDecoder.decodeObjectForKey(kMusicListDateAddedKey) as NSDate
+		
+		self.init(URL: aURL, date: aaddedDate)
 	}
 }
