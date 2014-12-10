@@ -541,7 +541,9 @@ static NSInteger selMusFromList = -1;
 							dispatch_async(dispatch_get_main_queue(), errBlock);
 							return;
 						}
-						[[NSFileManager defaultManager] removeItemAtURL:[savePanel URL] error:NULL];
+						if ([[savePanel URL] checkResourceIsReachableAndReturnError:NULL]) {
+							[[NSFileManager defaultManager] removeItemAtURL:[savePanel URL] error:NULL];
+						}
 						session.outputURL = [savePanel URL];
 						session.outputFileType = AVFileTypeAppleM4A;
 						session.metadata = metadataInfo;
@@ -554,6 +556,7 @@ static NSInteger selMusFromList = -1;
 						
 						BOOL didFinish = [session status] == AVAssetExportSessionStatusCompleted;
 						[[NSFileManager defaultManager] removeItemAtURL:tmpURL error:NULL];
+						[madDriver endExport];
 						
 						if (didFinish) {
 							dispatch_async(dispatch_get_main_queue(), ^{
@@ -572,6 +575,7 @@ static NSInteger selMusFromList = -1;
 				}];
 			}];
 		}
+			break;
 			
 		case -3: // wave
 		{
