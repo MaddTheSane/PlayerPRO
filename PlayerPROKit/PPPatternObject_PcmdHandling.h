@@ -9,7 +9,7 @@
 #ifndef __PLAYERPROKIT_PPPATTERNOBJECT_PCMDHANDLING__
 #define __PLAYERPROKIT_PPPATTERNOBJECT_PCMDHANDLING__
 
-#import "PPPatternObject.h"
+#import <PlayerPROKit/PPPatternObject.h>
 #include <PlayerPROCore/MADPlug.h>
 
 @interface PPPatternObject (PcmdHandling)

@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
-#import "PPMadCommandObject.h"
-#import "PPMusicObject.h"
-#import "PPObjectProtocol.h"
+#import <PlayerPROKit/PPObjectProtocol.h>
+@class PPMadCommandObject;
+@class PPMusicObject;
 
 #ifndef NS_DESIGNATED_INITIALIZER
 #define NS_DESIGNATED_INITIALIZER

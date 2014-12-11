@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
-#import "PPObjectProtocol.h"
+#import <PlayerPROKit/PPObjectProtocol.h>
 
 #ifndef NS_DESIGNATED_INITIALIZER
 #define NS_DESIGNATED_INITIALIZER

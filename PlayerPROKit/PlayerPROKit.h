@@ -15,19 +15,19 @@ FOUNDATION_EXPORT double PlayerPROKit_VersionNumber;
 //! Project version string for PlayerPROKit.
 FOUNDATION_EXPORT const unsigned char PlayerPROKit_VersionString[];
 
-#import "PPLibrary.h"
-#import "PPDriver.h"
-#import "PPMusicObject.h"
-#import "PPSampleObject.h"
-#import "PPInstrumentObject.h"
-#import "PPPatternObject.h"
-#import "PPMadCommandObject.h"
-#import "PPErrors.h"
-#import "PPFXBusObject.h"
-#import "PPFXSetObject.h"
-#import "PPPatternObject_PcmdHandling.h"
+#import <PlayerPROKit/PPLibrary.h>
+#import <PlayerPROKit/PPDriver.h>
+#import <PlayerPROKit/PPMusicObject.h>
+#import <PlayerPROKit/PPSampleObject.h>
+#import <PlayerPROKit/PPInstrumentObject.h>
+#import <PlayerPROKit/PPPatternObject.h>
+#import <PlayerPROKit/PPMadCommandObject.h>
+#import <PlayerPROKit/PPErrors.h>
+#import <PlayerPROKit/PPFXBusObject.h>
+#import <PlayerPROKit/PPFXSetObject.h>
+#import <PlayerPROKit/PPPatternObject_PcmdHandling.h>
 #if !TARGET_OS_IPHONE
-#import "PPSampleWaveformView.h"
-#import "PPPasteboardHandling.h"
-#import "PPPlugIns.h"
+#import <PlayerPROKit/PPSampleWaveformView.h>
+#import <PlayerPROKit/PPPasteboardHandling.h>
+#import <PlayerPROKit/PPPlugIns.h>
 #endif
