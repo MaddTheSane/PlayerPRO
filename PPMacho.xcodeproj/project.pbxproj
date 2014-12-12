@@ -356,7 +356,6 @@
 		5573A3D010B5128800FF8B50 /* RDriverInt.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47D0C2F21E400D6C081 /* RDriverInt.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		5573A3D110B5129100FF8B50 /* MADPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* MADPlug.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573A3E410B513BD00FF8B50 /* MADFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C3C40C2F21DD00D6C081 /* MADFileUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5573A3EA10B5147C00FF8B50 /* MyDebugStr.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A3E810B5147C00FF8B50 /* MyDebugStr.c */; };
 		5573A41210B5160000FF8B50 /* MADDefs.h in Headers */ = {isa = PBXBuildFile; fileRef = 5573A41010B5160000FF8B50 /* MADDefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5573AF0817DF8FD400B68127 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 552C716210CDC11400C0E0D4 /* README.rtf */; };
 		5573AF0917DF8FD500B68127 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 552C716210CDC11400C0E0D4 /* README.rtf */; };
@@ -635,6 +634,8 @@
 		55B7E667161D1DE1000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B7E668161D1DEB000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B7E669161D1DF3000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55B8E1B71A3BB5790010CE33 /* MADDebugStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */; };
+		55B8E1B81A3BB57A0010CE33 /* MADDebugStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */; };
 		55BD5AF519ADBBF500D63F54 /* PPKPcmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */; };
 		55BD5AF619ADBBF500D63F54 /* PPKPcmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */; };
 		55BF238919A93742005B1F96 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
@@ -755,7 +756,6 @@
 		55F1BDC41975C9E100AD2C03 /* OutPut8.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3D90C2F21DD00D6C081 /* OutPut8.c */; };
 		55F1BDC51975C9E100AD2C03 /* realft.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DA0C2F21DD00D6C081 /* realft.c */; };
 		55F1BDC61975C9E100AD2C03 /* TickRemover.c in Sources */ = {isa = PBXBuildFile; fileRef = 88E0C3DB0C2F21DD00D6C081 /* TickRemover.c */; };
-		55F1BDC71975C9E100AD2C03 /* MyDebugStr.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A3E810B5147C00FF8B50 /* MyDebugStr.c */; };
 		55F1BDC81975CA3900AD2C03 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
 		55F1BDC91975CA3900AD2C03 /* iOS-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A1301656FCC100A5AECA /* iOS-PlugImport.c */; };
 		55F1BDCA1975CA4D00AD2C03 /* MIDI-Hardware-Stub.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */; };
@@ -2590,6 +2590,7 @@
 		55B777A218E77998001E5104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/InstrumentInfoView.xib; sourceTree = "<group>"; };
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Complex Fade-Info.plist"; sourceTree = "<group>"; };
+		55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MADDebugStr.m; sourceTree = "<group>"; };
 		55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPKPcmd.swift; sourceTree = "<group>"; };
 		55BE998717978BB100D6DECC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		55BE998917978BB100D6DECC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/schema.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -3837,6 +3838,7 @@
 				55B23D111687D22700DCE923 /* MainDriverCarbon.c */,
 				55C930381819E68700D9E072 /* CocoaFuncs.m */,
 				557191D418A434A300F6DAD4 /* OSX-VSTPlugIn.c */,
+				55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */,
 			);
 			name = "OS X/iOS-specific";
 			sourceTree = "<group>";
@@ -7134,8 +7136,8 @@
 				5573A36010B50DEB00FF8B50 /* MainDriver.c in Sources */,
 				5573A36210B50DF200FF8B50 /* OutPut8.c in Sources */,
 				5573A36310B50DF600FF8B50 /* realft.c in Sources */,
+				55B8E1B71A3BB5790010CE33 /* MADDebugStr.m in Sources */,
 				5573A36410B50DFF00FF8B50 /* TickRemover.c in Sources */,
-				5573A3EA10B5147C00FF8B50 /* MyDebugStr.c in Sources */,
 				55C930391819E68700D9E072 /* CocoaFuncs.m in Sources */,
 				550B011810BA1E27004FC5D7 /* OSX-CoreAudio.c in Sources */,
 				55F013EB1880A2EA002488D5 /* MADDriver.c in Sources */,
@@ -7622,7 +7624,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55F1BDC71975C9E100AD2C03 /* MyDebugStr.c in Sources */,
 				55F1BDD01975CAD100AD2C03 /* AMF.c in Sources */,
 				55F1BDBF1975C9E100AD2C03 /* MADDriver.c in Sources */,
 				55F1BDD91975CB1200AD2C03 /* S3M.c in Sources */,
@@ -7634,6 +7635,7 @@
 				55F1BDDB1975CB1200AD2C03 /* UMX.c in Sources */,
 				55F1BDC41975C9E100AD2C03 /* OutPut8.c in Sources */,
 				55F1BDC91975CA3900AD2C03 /* iOS-PlugImport.c in Sources */,
+				55B8E1B81A3BB57A0010CE33 /* MADDebugStr.m in Sources */,
 				55F1BDC21975C9E100AD2C03 /* Interrupt.c in Sources */,
 				55F1BDD41975CAEB00AD2C03 /* MADH.c in Sources */,
 				55F1BDDA1975CB1200AD2C03 /* ULT.c in Sources */,
@@ -9713,7 +9715,6 @@
 				DYLIB_CURRENT_VERSION = 6.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = B;
-				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9745,7 +9746,6 @@
 				DYLIB_CURRENT_VERSION = 6.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_VERSION = B;
-				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9813,6 +9813,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = NO;
+				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Spotlight Plug-in/SpotlightPrefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -9839,6 +9840,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = NO;
+				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Spotlight Plug-in/SpotlightPrefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -10729,6 +10731,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = NO;
+				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PPQuickView/PPQuickView-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -10754,6 +10757,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_MODULES = NO;
+				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PPQuickView/PPQuickView-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -11122,7 +11126,6 @@
 				DYLIB_CURRENT_VERSION = 6.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -11160,7 +11163,6 @@
 				DYLIB_CURRENT_VERSION = 6.0;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MADDriver.source/PlayerPROCore-OSX.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
