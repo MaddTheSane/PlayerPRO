@@ -26,6 +26,9 @@
 #else
 #include "RDriver.h"
 #include "MADFileUtils.h"
+#ifdef __BLOCKS__
+#include <dispatch/dispatch.h>
+#endif
 #endif
 #include "MADfg.h"
 
@@ -143,12 +146,19 @@ static void MOToldInstrData(struct FileInstrData * i)
 
 static void MOToldMADSpec(struct oldMADSpec * m)
 {
+#ifndef __BLOCKS__
 	int i;
+#endif
 	MADBE32(&m->MADIdentification);
-	//TODO: dispatch this
+#ifdef __BLOCKS__
+	dispatch_apply(64, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		MOToldInstrData(&m->fid[i]);
+	});
+#else
 	for (i = 0; i < 64; i++) {
 		MOToldInstrData(&m->fid[i]);
 	}
+#endif
 }
 
 MADErr MADFG2Mad(const char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
@@ -200,9 +210,14 @@ MADErr MADFG2Mad(const char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSet
 	
 	
 	theMAD->sets = (FXSets*)calloc(MAXTRACK * sizeof(FXSets), 1);
-	//TODO: dispatch this
+#ifdef __BLOCKS__
+	dispatch_apply(MAXTRACK, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		theMAD->header->chanBus[i].copyId = i;
+	});
+#else
 	for (i = 0; i < MAXTRACK; i++)
 		theMAD->header->chanBus[i].copyId = i;
+#endif
 	
 	/**** Patterns *******/
 	
