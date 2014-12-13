@@ -53,7 +53,7 @@ void PPCloseResFile(ResFileRefNum refNum)
 }
 
 
-MADErr LoadMADK(char *MADPtr, size_t aSize, MADMusic *MadFile, MADDriverSettings *init)
+MADErr LoadMADK(const char *MADPtr, size_t aSize, MADMusic *MadFile, MADDriverSettings *init)
 {
 	short 		i = 0;
 	int			x = 0;

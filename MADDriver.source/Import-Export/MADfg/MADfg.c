@@ -36,7 +36,7 @@
 #ifdef MADAPPIMPORT
 #include "APPL.h"
 #else
-static MADErr MADFG2Mad(char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
+static MADErr MADFG2Mad(const char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
 #endif
 
 static struct MusicPattern* oldDecompressPartitionMAD1(struct MusicPattern* myPat, short Tracks, MADDriverSettings *init)
@@ -151,7 +151,7 @@ static void MOToldMADSpec(struct oldMADSpec * m)
 	}
 }
 
-MADErr MADFG2Mad(char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
+MADErr MADFG2Mad(const char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short		i, x;
 	long		inOutCount = 0, OffSetToSample = 0;
@@ -373,13 +373,11 @@ MADErr MADFG2Mad(char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings 
 
 static MADErr TestoldMADFile(const void *AlienFile)
 {
-	MADFourChar myMADSign = *((MADFourChar*)AlienFile);
-	MADBE32(&myMADSign);
-	
-	if (myMADSign == 'MADF' || myMADSign == 'MADG')
+	if ((memcmp("MADF", AlienFile, 4) == 0) || (memcmp("MADG", AlienFile, 4) == 0)) {
 		return MADNoErr;
-	else
-		return  MADFileNotSupportedByThisPlug;
+	} else {
+		return MADFileNotSupportedByThisPlug;
+	}
 }
 
 static MADErr ExtractoldMADInfo(MADInfoRec *info, void *AlienFile)

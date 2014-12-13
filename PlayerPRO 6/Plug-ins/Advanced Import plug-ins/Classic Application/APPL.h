@@ -13,15 +13,15 @@
 
 #define __private_extern __attribute__((visibility("hidden")))
 
-__private_extern MADErr MADFG2Mad(char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
+__private_extern MADErr MADFG2Mad(const char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
 __private_extern MADErr ExtractMADFGInfo(void *info, void *AlienFile);
 __private_extern MADErr TestMADFGFile(const void *AlienFile);
 
-__private_extern MADErr MADH2Mad(char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
+__private_extern MADErr MADH2Mad(const char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
 __private_extern MADErr ExtractMADHInfo(void *info, void *AlienFile);
 __private_extern MADErr TESTMADH(const void* alienFile);
 
-__private_extern MADErr MADI2Mad(char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
+__private_extern MADErr MADI2Mad(const char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
 __private_extern MADErr ExtractMADIInfo(void *info, void *AlienFile);
 __private_extern MADErr TESTMADI(const void* alienFile);
 

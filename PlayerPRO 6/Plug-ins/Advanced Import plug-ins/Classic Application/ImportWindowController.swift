@@ -26,7 +26,7 @@ class ImportWindowController: NSWindowController {
 		if let anObject = arrayCont.selectedObjects[0] as? APPLObject {
 			var madMusic: UnsafeMutablePointer<MADMusic>
 			var madTest: (UnsafePointer<Void>) -> MADErr
-			var madLoad: (UnsafeMutablePointer<Int8>, size_t, UnsafeMutablePointer<MADMusic>, UnsafeMutablePointer<MADDriverSettings>) -> MADErr
+			var madLoad: (UnsafePointer<Int8>, size_t, UnsafeMutablePointer<MADMusic>, UnsafeMutablePointer<MADDriverSettings>) -> MADErr
 			switch anObject.resourceType {
 			case "MADI":
 				madTest = TESTMADI
@@ -61,11 +61,9 @@ class ImportWindowController: NSWindowController {
 					return
 				}
 				
-				// We have to copy the data, because of how the loaders operate
-				let mutData = NSMutableData(data: aData)
 				var unusedDriverSettings = MADDriverSettings()
 				madMusic = UnsafeMutablePointer<MADMusic>.alloc(1)
-				errVal = madLoad(UnsafeMutablePointer<Int8>(mutData.mutableBytes), size_t(aData.length), madMusic, &unusedDriverSettings)
+				errVal = madLoad(UnsafePointer<Int8>(aData.bytes), size_t(aData.length), madMusic, &unusedDriverSettings)
 				
 				if errVal != .NoErr {
 					// The importers should have cleaned up after themselves...

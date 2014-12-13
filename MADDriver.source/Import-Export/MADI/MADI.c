@@ -39,7 +39,7 @@
 #ifdef MADAPPIMPORT
 #include "APPL.h"
 #else
-static MADErr MADI2Mad(char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
+static MADErr MADI2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
 #endif
 
 enum CompressedBitMask {
@@ -161,7 +161,7 @@ static void MOToldMADSpec(oldMADSpec * m)
 	MADBE32(&m->ESpeed);
 }
 
-MADErr MADI2Mad(char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
+MADErr MADI2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init)
 {
 	short		i, x;
 	long		inOutCount, OffSetToSample = 0, z;
@@ -404,13 +404,11 @@ MADErr MADI2Mad(char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *
 
 static MADErr TestoldMADFile(const void *AlienFile)
 {
-	MADFourChar myMADSign = *((MADFourChar*)AlienFile);
-	MADBE32(&myMADSign);
-	
-	if(	myMADSign == 'MADI')
+	if (memcmp("MADI", AlienFile, 4) == 0) {
 		return MADNoErr;
-	else
+	} else {
 		return MADFileNotSupportedByThisPlug;
+	}
 }
 
 static MADErr ExtractoldMADInfo(MADInfoRec *info, void *AlienFile)
