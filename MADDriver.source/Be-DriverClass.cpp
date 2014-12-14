@@ -275,7 +275,7 @@ static void	trackerStreamPlay(void *user, void *inbuffer, size_t count, const me
 		return;
 	
 	//	Check buffer size.
-	if (count/sizeof(float) != curMADDriver->BufSize / (curMADDriver->DriverSettings.outPutBits / 8)) {
+	if (count/sizeof(float) != curMADDriver->BufSize / (curMADDriver->base.DriverSettings.outPutBits / 8)) {
 #if	DRIVERCLASS_DEBUG
 		debugger("count error");
 #else
@@ -283,13 +283,13 @@ static void	trackerStreamPlay(void *user, void *inbuffer, size_t count, const me
 #endif
 	}
 	
-	DirectSave(curMADDriver->IntDataPtr, &curMADDriver->DriverSettings, curMADDriver);
+	DirectSave(curMADDriver->IntDataPtr, &curMADDriver->base.DriverSettings, curMADDriver);
 	
 	switch(format.format) {
 		case B_AUDIO_FLOAT:
 			float 	*floatbuffer = (float*)buffer;
 			
-			switch(curMADDriver->DriverSettings.outPutBits) {
+			switch(curMADDriver->base.DriverSettings.outPutBits) {
 				case 16:
 					short *shortbuffer = (short*)curMADDriver->IntDataPtr;
 					for(i = 0; i < count/sizeof(float); i++)

@@ -98,7 +98,7 @@ ULONG GetPos(MADDriverRec *WinMADDriver)
 		{
 			OnOff = false;
 			
-			if (!DirectSave(mydma, &WinMADDriver->DriverSettings, WinMADDriver))
+			if (!DirectSave(mydma, &WinMADDriver->base.DriverSettings, WinMADDriver))
 			{
 				for (i = 0; i < WIN95BUFFERSIZE/2; i++) mydma[i] = 0;
 			}
@@ -107,7 +107,7 @@ ULONG GetPos(MADDriverRec *WinMADDriver)
 		{
 			OnOff = true;
 			
-			if (!DirectSave(mydma + WIN95BUFFERSIZE/2, &WinMADDriver->DriverSettings, WinMADDriver))
+			if (!DirectSave(mydma + WIN95BUFFERSIZE/2, &WinMADDriver->base.DriverSettings, WinMADDriver))
 			{
 				for (i = 0; i < WIN95BUFFERSIZE/2; i++) mydma[i] = 0;
 			}
@@ -144,7 +144,7 @@ void CALLBACK TimeProc(
 			{
 				dmaDst = WinMADDriver->mydma + WinMADDriver->MICROBUFState*WinMADDriver->BufSize;
 				
-				if (!DirectSave(dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
+				if (!DirectSave(dmaDst, &WinMADDriver->base.DriverSettings, WinMADDriver))
 				{
 					memset(dmaDst, 0, WinMADDriver->BufSize);
 				}
@@ -163,7 +163,7 @@ void CALLBACK TimeProc(
 			{
 				dmaDst = WinMADDriver->mydma + WinMADDriver->WIN95BUFFERSIZE/2L + WinMADDriver->MICROBUFState*WinMADDriver->BufSize;
 				
-				if (!DirectSave(dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
+				if (!DirectSave(dmaDst, &WinMADDriver->base.DriverSettings, WinMADDriver))
 				{
 					memset(dmaDst, 0, WinMADDriver->BufSize);
 				}
@@ -209,7 +209,7 @@ void W95_PlayStart(MADDriverRec *WinMADDriver)
 
 void W95_PlayStop(MADDriverRec *WinMADDriver)
 {
-	WinMADDriver->Reading = false;
+	WinMADDriver->base.Reading = false;
 	MADStopDriver(WinMADDriver);
 	
 	
@@ -251,8 +251,8 @@ Boolean W95_Init(MADDriverRec *WinMADDriver)
 	
 	wf.wf.wFormatTag		=WAVE_FORMAT_PCM;
 	wf.wf.nChannels = 2;
-	wf.wf.nSamplesPerSec	= WinMADDriver->DriverSettings.outPutRate;
-	wf.wBitsPerSample		= WinMADDriver->DriverSettings.outPutBits;
+	wf.wf.nSamplesPerSec	= WinMADDriver->base.DriverSettings.outPutRate;
+	wf.wBitsPerSample		= WinMADDriver->base.DriverSettings.outPutBits;
 	wf.wf.nBlockAlign		= wf.wf.nChannels * (wf.wBitsPerSample/8);
 	wf.wf.nAvgBytesPerSec	= wf.wf.nSamplesPerSec * wf.wf.nBlockAlign;
 	

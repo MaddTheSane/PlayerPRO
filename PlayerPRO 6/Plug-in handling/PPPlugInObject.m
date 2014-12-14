@@ -44,12 +44,12 @@ OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, int chan
 			//DoGlobalNull();
 		}
 #if 0
-		if (theRec->chan[channel].samplePtr != NULL) {
-			theRec->chan[channel].curPtr 	= theRec->chan[channel].maxPtr;
-			theRec->chan[channel].samplePtr	= NULL;
-			theRec->chan[channel].lAC		= 0;
-			theRec->chan[channel].loopBeg	= 0;
-			theRec->chan[channel].loopSize 	= 0;
+		if (theRec->base.chan[channel].samplePtr != NULL) {
+			theRec->base.chan[channel].curPtr 	= theRec->base.chan[channel].maxPtr;
+			theRec->base.chan[channel].samplePtr	= NULL;
+			theRec->base.chan[channel].lAC		= 0;
+			theRec->base.chan[channel].loopBeg	= 0;
+			theRec->base.chan[channel].loopSize 	= 0;
 		}
 #endif
 	}

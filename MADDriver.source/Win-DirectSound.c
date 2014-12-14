@@ -92,8 +92,8 @@ BOOL AppCreateWritePrimaryBuffer(
     pcmwf.wFormatTag 		= WAVE_FORMAT_PCM;
     
     pcmwf.nChannels				= 2;
-    pcmwf.nSamplesPerSec		= WinMADDriver->DriverSettings.outPutRate;
-    pcmwf.wBitsPerSample		= WinMADDriver->DriverSettings.outPutBits;
+    pcmwf.nSamplesPerSec		= WinMADDriver->base.DriverSettings.outPutRate;
+    pcmwf.wBitsPerSample		= WinMADDriver->base.DriverSettings.outPutBits;
     pcmwf.nBlockAlign			= pcmwf.nChannels * (pcmwf.wBitsPerSample/8);
     pcmwf.nAvgBytesPerSec		= pcmwf.nSamplesPerSec * pcmwf.nBlockAlign;
     
@@ -206,8 +206,8 @@ BOOL LoadSamp(LPDIRECTSOUND lpDirectSound,
     memset(&pcmwf, 0, sizeof(WAVEFORMATEX));
     pcmwf.wFormatTag			= WAVE_FORMAT_PCM;
     pcmwf.nChannels				= 2;
-    pcmwf.nSamplesPerSec		= WinMADDriver->DriverSettings.outPutRate;
-    pcmwf.wBitsPerSample		= WinMADDriver->DriverSettings.outPutBits;
+    pcmwf.nSamplesPerSec		= WinMADDriver->base.DriverSettings.outPutRate;
+    pcmwf.wBitsPerSample		= WinMADDriver->base.DriverSettings.outPutBits;
     pcmwf.nBlockAlign			= pcmwf.nChannels * (pcmwf.wBitsPerSample/8);
     pcmwf.nAvgBytesPerSec		= pcmwf.nSamplesPerSec * pcmwf.nBlockAlign;
     
@@ -259,9 +259,9 @@ static void CALLBACK TimeProc(
 	{
 		MADDriverRec	*WinMADDriver = (MADDriverRec*) dwUser;
 		
-		if(WinMADDriver->Reading == false)
+		if(WinMADDriver->base.Reading == false)
 		{
-			switch(WinMADDriver->DriverSettings.outPutBits)
+			switch(WinMADDriver->base.DriverSettings.outPutBits)
 				{
 					case 8:
 						memset(WinMADDriver->currentBuf, 0x80, WinMADDriver->WIN95BUFFERSIZE);
@@ -281,7 +281,7 @@ static void CALLBACK TimeProc(
 			
 			if (!DirectSave(WinMADDriver->currentBuf, NULL, WinMADDriver))
 			{
-				switch(WinMADDriver->DriverSettings.outPutBits)
+				switch(WinMADDriver->base.DriverSettings.outPutBits)
 				{
 					case 8:
 						memset(WinMADDriver->currentBuf, 0x80, WinMADDriver->WIN95BUFFERSIZE/2);
@@ -304,7 +304,7 @@ static void CALLBACK TimeProc(
 			
 			if (!DirectSave(WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, NULL, WinMADDriver))
 			{
-				switch(WinMADDriver->DriverSettings.outPutBits)
+				switch(WinMADDriver->base.DriverSettings.outPutBits)
 				{
 					case 8:
 						memset(WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, 0x80, WinMADDriver->WIN95BUFFERSIZE/2);
@@ -322,8 +322,8 @@ static void CALLBACK TimeProc(
 			}
 		}
 		
-		if (WinMADDriver->WIN95BUFFERSIZE - pos > 1700)	WinMADDriver->OscilloWavePtr = WinMADDriver->currentBuf + pos;
-		else WinMADDriver->OscilloWavePtr = WinMADDriver->currentBuf;
+		if (WinMADDriver->WIN95BUFFERSIZE - pos > 1700)	WinMADDriver->base.OscilloWavePtr = WinMADDriver->currentBuf + pos;
+		else WinMADDriver->base.OscilloWavePtr = WinMADDriver->currentBuf;
 	}
 	timersema--;
 }
@@ -416,5 +416,5 @@ void DirectSoundClose(MADDriverRec* WinMADDriver)
 		WinMADDriver->lpDirectSound->lpVtbl->Release(WinMADDriver->lpDirectSound);
 		WinMADDriver->lpDirectSound = NULL;
 	}
-	WinMADDriver->OscilloWavePtr = NULL;
+	WinMADDriver->base.OscilloWavePtr = NULL;
 }

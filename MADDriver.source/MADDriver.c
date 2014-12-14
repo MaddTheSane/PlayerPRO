@@ -12,19 +12,24 @@
 
 void MADDriverClearChannel(MADDriverRec *theRec, int channel)
 {
-	if (theRec->chan[channel].samplePtr != NULL) {
-		theRec->chan[channel].curPtr 	= theRec->chan[channel].maxPtr;
-		theRec->chan[channel].samplePtr	= NULL;
-		theRec->chan[channel].lAC		= 0;
-		theRec->chan[channel].loopBeg	= 0;
-		theRec->chan[channel].loopSize 	= 0;
+	if (theRec->base.chan[channel].samplePtr != NULL) {
+		theRec->base.chan[channel].curPtr		= theRec->base.chan[channel].maxPtr;
+		theRec->base.chan[channel].samplePtr	= NULL;
+		theRec->base.chan[channel].lAC			= 0;
+		theRec->base.chan[channel].loopBeg		= 0;
+		theRec->base.chan[channel].loopSize 	= 0;
 	}
+}
+
+MADDriverBase *MADDriverGetBase(MADDriverRecPtr theRec)
+{
+	return &theRec->base;
 }
 
 bool MADDriverChannelIsDonePlaying(MADDriverRec *theRec, int channel)
 {
 	//TODO: more work here!
-	return theRec->chan[channel].samplePtr == NULL;
+	return theRec->base.chan[channel].samplePtr == NULL;
 }
 
 IntPatData MADPatDataToInt(PatData *inPat)

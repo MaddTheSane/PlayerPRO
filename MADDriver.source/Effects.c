@@ -121,29 +121,29 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 			break;
 			
 		case MADEffectSkip:							// OK
-			if (call == intDriver->speed - 1) {
+			if (call == intDriver->base.speed - 1) {
 				intDriver->endPattern = true;
 				
 				if (intDriver->JumpToNextPattern) {
-					if (intDriver->PartitionReader != 0) {
-						intDriver->PL++;
-						intDriver->Pat = intDriver->curMusic->header->oPointers[intDriver->PL];
+					if (intDriver->base.PartitionReader != 0) {
+						intDriver->base.PL++;
+						intDriver->base.Pat = intDriver->base.curMusic->header->oPointers[intDriver->base.PL];
 					}
 					
-					intDriver->PartitionReader = HI(ch->arg) * 10 + LOW(ch->arg);
+					intDriver->base.PartitionReader = HI(ch->arg) * 10 + LOW(ch->arg);
 					
-					if (intDriver->PL >= intDriver->curMusic->header->numPointers) {
-						intDriver->PL = 0;
-						intDriver->Pat = intDriver->curMusic->header->oPointers[intDriver->PL];
+					if (intDriver->base.PL >= intDriver->base.curMusic->header->numPointers) {
+						intDriver->base.PL = 0;
+						intDriver->base.Pat = intDriver->base.curMusic->header->oPointers[intDriver->base.PL];
 						
 						MADCleanDriver(intDriver);
-						if (!intDriver->DriverSettings.repeatMusic)
-							intDriver->Reading = false;
+						if (!intDriver->base.DriverSettings.repeatMusic)
+							intDriver->base.Reading = false;
 						
-						intDriver->musicEnd = true;
+						intDriver->base.musicEnd = true;
 					}
 				} else {
-					intDriver->PartitionReader = 0;
+					intDriver->base.PartitionReader = 0;
 				}
 				ch->cmd = 0;
 				ch->arg = 0;
@@ -151,32 +151,32 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 			break;
 			
 		case MADEffectFastSkip:						// OK
-			if (call == intDriver->speed - 1) {
+			if (call == intDriver->base.speed - 1) {
 				intDriver->endPattern = true;
 				
 				if (intDriver->JumpToNextPattern) {
-					if (intDriver->PL > ch->arg) {		// Evite les boucles
-						intDriver->musicEnd = true;
+					if (intDriver->base.PL > ch->arg) {		// Evite les boucles
+						intDriver->base.musicEnd = true;
 						
-						if (!intDriver->DriverSettings.repeatMusic)
-							intDriver->Reading = false;
+						if (!intDriver->base.DriverSettings.repeatMusic)
+							intDriver->base.Reading = false;
 					}
 					
-					intDriver->PL = ch->arg;
-					intDriver->Pat = intDriver->curMusic->header->oPointers[intDriver->PL];
+					intDriver->base.PL = ch->arg;
+					intDriver->base.Pat = intDriver->base.curMusic->header->oPointers[intDriver->base.PL];
 					
-					if (intDriver->PL >= intDriver->curMusic->header->numPointers) {
-						intDriver->PL = 0;
-						intDriver->Pat = intDriver->curMusic->header->oPointers[intDriver->PL];
+					if (intDriver->base.PL >= intDriver->base.curMusic->header->numPointers) {
+						intDriver->base.PL = 0;
+						intDriver->base.Pat = intDriver->base.curMusic->header->oPointers[intDriver->base.PL];
 						
 						MADCleanDriver(intDriver);
-						if (!intDriver->DriverSettings.repeatMusic)
-							intDriver->Reading = false;
+						if (!intDriver->base.DriverSettings.repeatMusic)
+							intDriver->base.Reading = false;
 						
-						intDriver->musicEnd = true;
+						intDriver->base.musicEnd = true;
 					}
 				}
-				intDriver->PartitionReader = 0;
+				intDriver->base.PartitionReader = 0;
 				ch->cmd = 0;
 				ch->arg = 0;
 			}
@@ -308,10 +308,10 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 					break;
 					
 				case 6:
-					if (call == intDriver->speed - 1) {
+					if (call == intDriver->base.speed - 1) {
 						if (LOW(ch->arg) == 0) { // Set Pattern loop
-							ch->PatternLoopE6 = intDriver->PartitionReader;
-							ch->PatternLoopE6ID = intDriver->PL;
+							ch->PatternLoopE6 = intDriver->base.PartitionReader;
+							ch->PatternLoopE6ID = intDriver->base.PL;
 						} else {
 							if (ch->PatternLoopE6Count == 0)
 								ch->PatternLoopE6Count = LOW(ch->arg);
@@ -319,9 +319,9 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 								ch->PatternLoopE6Count--;
 							
 							if (ch->PatternLoopE6Count > 0) {
-								intDriver->PartitionReader = ch->PatternLoopE6-1;
-								intDriver->PL = ch->PatternLoopE6ID;
-								intDriver->Pat = intDriver->curMusic->header->oPointers[intDriver->PL];
+								intDriver->base.PartitionReader = ch->PatternLoopE6-1;
+								intDriver->base.PL = ch->PatternLoopE6ID;
+								intDriver->base.Pat = intDriver->base.curMusic->header->oPointers[intDriver->base.PL];
 							}
 						}
 					}
@@ -336,7 +336,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 			break;
 	}
 #if 0
-	if (call == intDriver->speed - 1)
+	if (call == intDriver->base.speed - 1)
 	{
 		ch->arg = 0;
 		ch->cmd = 0;
@@ -639,10 +639,10 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 		case MADEffectSpeed:
 			if (ch->arg < 32) {
 				/** Setting de la speed + reset de la finespeed **/
-				if (ch->arg != 0) intDriver->speed = ch->arg;
+				if (ch->arg != 0) intDriver->base.speed = ch->arg;
 			} else {
 				/** Setting de finespeed **/
-				intDriver->finespeed = ch->arg;
+				intDriver->base.finespeed = ch->arg;
 			}
 			break;
 			

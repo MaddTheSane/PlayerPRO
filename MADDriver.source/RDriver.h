@@ -534,7 +534,7 @@ typedef struct AEffect AEffect;
 
 struct AEffect
 {
-	int magic;
+	MADFourChar magic;
 	int (__callback *dispatcher)(AEffect *effect, int opCode, int index, int value, void *ptr, float opt);
 	void (__callback *process)(AEffect *effect, float **inputs, float **outputs, int sampleframes);
 	void (__callback *setParameter)(AEffect *effect, int index, float parameter);
@@ -553,7 +553,7 @@ struct AEffect
 	float ioRatio;
 	void *object;
 	void *user;
-	int uniqueID;
+	MADFourChar uniqueID;
 	int version;
 	void (__callback *processReplacing)(AEffect *effect, float **inputs, float **outputs, int sampleframes);
 	char future[60];
@@ -600,6 +600,41 @@ typedef struct VSTEffect {
 	bool			ProcessReplacingNotAvailable;
 } VSTEffect;
 #endif
+
+typedef struct MADDriverBase {
+	/**********************/
+	/** Public variables **/
+	/**********************/
+	
+	MADDriverSettings		DriverSettings;									// Driver SetUp -- READ ONLY --
+	
+	/**  Current music in memory, loaded with RLoadMusic() by example **/
+	
+	MADMusic		*curMusic;										// Current music played by this driver, it can be NULL !!!
+	MADLibrary		*lib;
+	
+	/**  Drivers variables **/
+	
+	Channel			chan[MAXTRACK];									// Current driver channels -- READ ONLY --
+	bool			musicEnd;										// Is music playing finished? -- READ ONLY --
+	short			Tube[MAXTRACK];									// Used in 'Tracks View' Window - View menu
+	short			PartitionReader;								// Current position in pattern (0...999)
+	short			Pat;											// Current ID Pattern, see 'Patterns list'
+	short			PL;												// Current position in partition, see 'Partition list'
+	short			VolGlobal;										// Global SOFTWARE volume (This is NOT Mac hardware volume!) from 0 to 64
+	short			speed;											// Current speed, see speed Effect
+	short			finespeed;										// Current finespeed, see speed Effect
+	short			InstruTube[MAXINSTRU];							// Used in 'Instrument View' Window - View menu
+	short			VExt;											// External music speed, see 'Adaptators' window. 80 = normal
+	short			FreqExt;										// External music pitch, see 'Adaptators' window. 80 = normal
+	bool			Reading;										// Reading indicator
+	bool			Active[MAXTRACK];								// Channel Active?
+	bool			Equalizer;										// Is Equalizer Active?
+	
+	void			*OscilloWavePtr;								// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
+	size_t			OscilloWaveSize;								// Size of previous buffer
+
+} MADDriverBase;
 
 typedef struct MADDriverRec MADDriverRec, *MADDriverRecPtr;
 
@@ -804,7 +839,7 @@ PPEXPORT MADErr	MADPlaySoundDataSYNC(MADDriverRec	*MDriver,
 
 #pragma mark MAD Driver functions
 	
-PPEXPORT bool MADIsDonePlaying(MADDriverRecPtr MDriver);
+PPEXPORT bool	MADIsDonePlaying(MADDriverRecPtr MDriver);
 	
 PPEXPORT void	MADBeginExport(MADDriverRecPtr driver);
 PPEXPORT void	MADEndExport(MADDriverRecPtr driver);
@@ -820,6 +855,15 @@ PPEXPORT size_t MADGetMusicSize(const MADMusic *musSize);
 PPEXPORT void	MADDriverClearChannel(MADDriverRecPtr theRec, int channel);
 
 PPEXPORT bool	MADDriverChannelIsDonePlaying(MADDriverRecPtr theRec, int chan);
+
+/*!
+ *	@function	MADDriverGetBase
+ *	@abstract	Get the base driver from a \c MADDriverRecPtr
+ *	@param		theRec
+ *				The driver to get the base info from
+ *	@return		A pointer to a \c MADDriverBase struct.
+ */
+PPEXPORT MADDriverBase *MADDriverGetBase(MADDriverRecPtr theRec);
 
 #pragma mark General Functions
 

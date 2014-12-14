@@ -100,12 +100,12 @@ int DoVolPanning256(short whichChannel, Channel *ch, MADDriverRec *intDriver, bo
 	
 	if (Interpol) {
 		tVSYNC = intDriver->VSYNC;
-		tVSYNC /= intDriver->finespeed;
+		tVSYNC /= intDriver->base.finespeed;
 		tVSYNC *= 8000;
-		if (intDriver->VExt == 0) {
+		if (intDriver->base.VExt == 0) {
 			tVSYNC = 0;
 		} else
-			tVSYNC /= intDriver->VExt;
+			tVSYNC /= intDriver->base.VExt;
 		
 		volEnv = Interpolate(ch->volEnvInter, 0, tVSYNC, ch->volEnv*256L, ch->nextvolEnv*256L);
 	} else {
@@ -126,11 +126,11 @@ int DoVolPanning256(short whichChannel, Channel *ch, MADDriverRec *intDriver, bo
 	
 	temp = ((float) ch->vol * (float)volEnv * (float)volFade) /((float)(16*32767));
 	
-	if (!intDriver->Active[ch->TrackID])
+	if (!intDriver->base.Active[ch->TrackID])
 		return 0;
 	
-	if (intDriver->curMusic != NULL)
-		temp = (temp * intDriver->curMusic->header->chanVol[ch->TrackID]) / MAX_VOLUME;
+	if (intDriver->base.curMusic != NULL)
+		temp = (temp * intDriver->base.curMusic->header->chanVol[ch->TrackID]) / MAX_VOLUME;
 	else
 		temp = 256*256;
 	
@@ -160,7 +160,7 @@ int DoVolPanning256(short whichChannel, Channel *ch, MADDriverRec *intDriver, bo
 	
 	// Vol Global
 	
-	temp = (temp * intDriver->VolGlobal) / (MAX_VOLUME + 40);	// ICI !!! + 30);
+	temp = (temp * intDriver->base.VolGlobal) / (MAX_VOLUME + 40);	// ICI !!! + 30);
 	
 	return temp;
 }
@@ -170,7 +170,7 @@ void MADCleanDriver(MADDriverRec *intDriver)
 	int i, x;
 	
 #if 0
-	switch(intDriver->DriverSettings.outPutBits)
+	switch(intDriver->base.DriverSettings.outPutBits)
 	{
 		case 8:
 			for (i = 0; i < intDriver->ASCBUFFER*Tracks; i++)
@@ -183,95 +183,95 @@ void MADCleanDriver(MADDriverRec *intDriver)
 #endif
 	
 	for (i = 0; i < MAXTRACK; i++) {
-		intDriver->chan[i].ID		= i;
-		//intDriver->chan[i].TrackID	= i;
+		intDriver->base.chan[i].ID		= i;
+		//intDriver->base.chan[i].TrackID	= i;
 		
-		intDriver->chan[i].begPtr 	= NULL;
-		intDriver->chan[i].maxPtr 	= NULL;
-		intDriver->chan[i].curPtr 	= NULL;
-		intDriver->chan[i].sizePtr 	= 0;
+		intDriver->base.chan[i].begPtr 	= NULL;
+		intDriver->base.chan[i].maxPtr 	= NULL;
+		intDriver->base.chan[i].curPtr 	= NULL;
+		intDriver->base.chan[i].sizePtr 	= 0;
 		
-		intDriver->chan[i].amp		= 8;
+		intDriver->base.chan[i].amp		= 8;
 		
-		intDriver->chan[i].loopBeg 	= 0;
-		intDriver->chan[i].loopSize	= 0;
+		intDriver->base.chan[i].loopBeg 	= 0;
+		intDriver->base.chan[i].loopSize	= 0;
 		
-		intDriver->chan[i].ins 		= 0;
-		intDriver->chan[i].insOld 	= 0;
+		intDriver->base.chan[i].ins 		= 0;
+		intDriver->base.chan[i].insOld 	= 0;
 		
-		intDriver->chan[i].fineTune = NOFINETUNE;
+		intDriver->base.chan[i].fineTune = NOFINETUNE;
 		
-		intDriver->chan[i].note		= 0xFF;
-		intDriver->chan[i].noteOld	= 0xFF;
-		intDriver->chan[i].relNoteOld = 0;
+		intDriver->base.chan[i].note		= 0xFF;
+		intDriver->base.chan[i].noteOld	= 0xFF;
+		intDriver->base.chan[i].relNoteOld = 0;
 		
-		intDriver->chan[i].period	= GetOldPeriod(40, NOFINETUNE, intDriver);
-		intDriver->chan[i].periodOld= GetOldPeriod(40, NOFINETUNE, intDriver);
+		intDriver->base.chan[i].period	= GetOldPeriod(40, NOFINETUNE, intDriver);
+		intDriver->base.chan[i].periodOld= GetOldPeriod(40, NOFINETUNE, intDriver);
 		
-		intDriver->chan[i].vol		= 64;
-		intDriver->chan[i].cmd		= 0;
-		intDriver->chan[i].arg		= 0;
+		intDriver->base.chan[i].vol		= 64;
+		intDriver->base.chan[i].cmd		= 0;
+		intDriver->base.chan[i].arg		= 0;
 		
-		for (x = 0; x < MAX_ARP; x++) intDriver->chan[i].arp[x] = 0;
-		intDriver->chan[i].arpindex = 0;
-		intDriver->chan[i].arpUse = false;
+		for (x = 0; x < MAX_ARP; x++) intDriver->base.chan[i].arp[x] = 0;
+		intDriver->base.chan[i].arpindex = 0;
+		intDriver->base.chan[i].arpUse = false;
 		
-		intDriver->chan[i].viboffset	= 0;
-		intDriver->chan[i].vibdepth 	= 0;
-		intDriver->chan[i].vibrate 		= 0;
-		intDriver->chan[i].vibtype 		= 0;
-		intDriver->chan[i].slide 		= 0;
-		intDriver->chan[i].pitchgoal 	= 0;
-		intDriver->chan[i].pitchrate 	= 0;
-		intDriver->chan[i].volumerate 	= 0;
-		intDriver->chan[i].samplePtr 	= NULL;
-		intDriver->chan[i].volcmd		= 0;
+		intDriver->base.chan[i].viboffset	= 0;
+		intDriver->base.chan[i].vibdepth 	= 0;
+		intDriver->base.chan[i].vibrate 		= 0;
+		intDriver->base.chan[i].vibtype 		= 0;
+		intDriver->base.chan[i].slide 		= 0;
+		intDriver->base.chan[i].pitchgoal 	= 0;
+		intDriver->base.chan[i].pitchrate 	= 0;
+		intDriver->base.chan[i].volumerate 	= 0;
+		intDriver->base.chan[i].samplePtr 	= NULL;
+		intDriver->base.chan[i].volcmd		= 0;
 		
-		for (x = 0; x < 16; x++) intDriver->chan[i].oldArg[x] = 0;
+		for (x = 0; x < 16; x++) intDriver->base.chan[i].oldArg[x] = 0;
 		
-		intDriver->chan[i].oldVibdepth = 0;
-		intDriver->chan[i].oldVibrate = 0;
+		intDriver->base.chan[i].oldVibdepth = 0;
+		intDriver->base.chan[i].oldVibrate = 0;
 		
-		intDriver->chan[i].KeyOn		= false;
-		intDriver->chan[i].a			= 0;
-		intDriver->chan[i].b			= 1;
-		intDriver->chan[i].p			= 0;
-		intDriver->chan[i].volEnv		= 64;
-		intDriver->chan[i].volFade		= 32767;
-		intDriver->chan[i].nextvolFade	= 32767;
-		intDriver->chan[i].lAC			= 0;
+		intDriver->base.chan[i].KeyOn		= false;
+		intDriver->base.chan[i].a			= 0;
+		intDriver->base.chan[i].b			= 1;
+		intDriver->base.chan[i].p			= 0;
+		intDriver->base.chan[i].volEnv		= 64;
+		intDriver->base.chan[i].volFade		= 32767;
+		intDriver->base.chan[i].nextvolFade	= 32767;
+		intDriver->base.chan[i].lAC			= 0;
 		
-		intDriver->chan[i].lastWordR	= 0;
-		intDriver->chan[i].lastWordL	= 0;
-		intDriver->chan[i].curLevelL	= 0;
-		intDriver->chan[i].curLevelR	= 0;
-		intDriver->chan[i].prevPtr		= 0;
-		intDriver->chan[i].prevVol0		= DoVolPanning256(0, &intDriver->chan[i], intDriver, false);
-		intDriver->chan[i].prevVol1		= DoVolPanning256(1, &intDriver->chan[i], intDriver, false);
+		intDriver->base.chan[i].lastWordR	= 0;
+		intDriver->base.chan[i].lastWordL	= 0;
+		intDriver->base.chan[i].curLevelL	= 0;
+		intDriver->base.chan[i].curLevelR	= 0;
+		intDriver->base.chan[i].prevPtr		= 0;
+		intDriver->base.chan[i].prevVol0		= DoVolPanning256(0, &intDriver->base.chan[i], intDriver, false);
+		intDriver->base.chan[i].prevVol1		= DoVolPanning256(1, &intDriver->base.chan[i], intDriver, false);
 		
-		intDriver->chan[i].loopType	= MADLoopTypeClassic;
-		intDriver->chan[i].pingpong	= false;
-		intDriver->chan[i].PanningE8 = false;
-		intDriver->chan[i].PatternLoopE6 = 1;
-		intDriver->chan[i].PatternLoopE6Count = 0;
-		intDriver->chan[i].PatternLoopE6ID = 0;
-		intDriver->chan[i].trig			 = 0;
-		intDriver->chan[i].preOff		= 0xFFFFFFFF;
-		intDriver->chan[i].preVal2		= 0;
-		intDriver->chan[i].preVal2R		= 0;
+		intDriver->base.chan[i].loopType	= MADLoopTypeClassic;
+		intDriver->base.chan[i].pingpong	= false;
+		intDriver->base.chan[i].PanningE8 = false;
+		intDriver->base.chan[i].PatternLoopE6 = 1;
+		intDriver->base.chan[i].PatternLoopE6Count = 0;
+		intDriver->base.chan[i].PatternLoopE6ID = 0;
+		intDriver->base.chan[i].trig			 = 0;
+		intDriver->base.chan[i].preOff		= 0xFFFFFFFF;
+		intDriver->base.chan[i].preVal2		= 0;
+		intDriver->base.chan[i].preVal2R		= 0;
 		
-		intDriver->chan[i].spreVal2		= 0;
-		intDriver->chan[i].spreVal2R	= 0;
+		intDriver->base.chan[i].spreVal2		= 0;
+		intDriver->base.chan[i].spreVal2R	= 0;
 		
-		intDriver->chan[i].preVal		= 0;
-		intDriver->chan[i].spreVal		= 0;
+		intDriver->base.chan[i].preVal		= 0;
+		intDriver->base.chan[i].spreVal		= 0;
 		
-		intDriver->chan[i].LevelDirectionR = true;
-		intDriver->chan[i].LevelDirectionL = true;
+		intDriver->base.chan[i].LevelDirectionR = true;
+		intDriver->base.chan[i].LevelDirectionL = true;
 		
-		intDriver->chan[i].RemoverWorking	= false;
-		intDriver->chan[i].TICKREMOVESIZE	= 1;
-		intDriver->chan[i].TimeCounter		= 0;
+		intDriver->base.chan[i].RemoverWorking	= false;
+		intDriver->base.chan[i].TICKREMOVESIZE	= 1;
+		intDriver->base.chan[i].TimeCounter		= 0;
 	}
 	
 	intDriver->PatDelay = 0;
@@ -307,20 +307,20 @@ int InterpolateEnv(int p, EnvRec *a,EnvRec *b)
 
 void ProcessFadeOut(Channel *ch, MADDriverRec *intDriver)
 {
-	if (intDriver->curMusic != NULL) {
+	if (intDriver->base.curMusic != NULL) {
 		if (!ch->KeyOn) {
-			if ((intDriver->curMusic->fid[ch->ins].volType & EFTypeOn) && (intDriver->curMusic->fid[ch->ins].volType & EFTypeSustain)) {
-				if (intDriver->curMusic->fid[ch->ins].volType & EFTypeLoop)
+			if ((intDriver->base.curMusic->fid[ch->ins].volType & EFTypeOn) && (intDriver->base.curMusic->fid[ch->ins].volType & EFTypeSustain)) {
+				if (intDriver->base.curMusic->fid[ch->ins].volType & EFTypeLoop)
 					goto FADEOUT;
 			}
 			else FADEOUT:
 			{
-				if (intDriver->curMusic->fid[ch->ins].volFade == 0)
+				if (intDriver->base.curMusic->fid[ch->ins].volFade == 0)
 					ch->volFade = 0;
 				else
-					ch->volFade -= intDriver->curMusic->fid[ch->ins].volFade;
+					ch->volFade -= intDriver->base.curMusic->fid[ch->ins].volFade;
 				
-				ch->nextvolFade = ch->volFade - intDriver->curMusic->fid[ch->ins].volFade;
+				ch->nextvolFade = ch->volFade - intDriver->base.curMusic->fid[ch->ins].volFade;
 				
 				if (ch->volFade < 0) {
 					ch->volFade		= 0;
@@ -343,9 +343,9 @@ void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 	ch->nextvolEnv = ch->volEnv = 64;
 	if (ch->ins < 0 || ch->samplePtr != NULL)
 		return;
-	if (intDriver->curMusic == NULL)
+	if (intDriver->base.curMusic == NULL)
 		return;
-	curIns = &intDriver->curMusic->fid[ch->ins];
+	curIns = &intDriver->base.curMusic->fid[ch->ins];
 	if (curIns->volSize <= 0)
 		return;
 	
@@ -368,7 +368,7 @@ void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 			sData	*curData;
 			
 			if ((curIns->volType & EFTypeNote)) {
-				curData = intDriver->curMusic->sample[curIns->firstSample + ch->samp];
+				curData = intDriver->base.curMusic->sample[curIns->firstSample + ch->samp];
 				if (curData == NULL)
 					return;
 				
@@ -453,9 +453,9 @@ void ProcessPanning(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 		return;
 	if (ch->samplePtr != NULL)
 		return;
-	if (intDriver->curMusic == NULL)
+	if (intDriver->base.curMusic == NULL)
 		return;
-	curIns = &intDriver->curMusic->fid[ch->ins];
+	curIns = &intDriver->base.curMusic->fid[ch->ins];
 	if (curIns->pannSize <= 0)
 		return;
 	
@@ -479,7 +479,7 @@ void ProcessPanning(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 			if ((curIns->volType & EFTypeNote)) {
 				sData *curData;
 				
-				curData = intDriver->curMusic->sample[curIns->firstSample + ch->samp];
+				curData = intDriver->base.curMusic->sample[curIns->firstSample + ch->samp];
 				if (curData == NULL)
 					return;
 				basePeriod = GetOldPeriod(48 + curData->relNote, ch->fineTune, intDriver);
@@ -675,7 +675,7 @@ int GetOld2Period(short note, int c2spd, MADDriverRec *intDriver)
 	n = note % 12;
 	o = note / 12;
 	
-	period = ((8363U * ( intDriver->lib->mytab[n]) ) >> o ) / c2spd;
+	period = ((8363U * ( intDriver->base.lib->mytab[n]) ) >> o ) / c2spd;
 	
 	if (period == 0)
 		period = 7242;
@@ -759,7 +759,7 @@ void IntNoteOff(Channel *curVoice, MADDriverRec *intDriver)
 		return;
 	
 	curVoice->KeyOn	= false;
-	if (intDriver->DriverSettings.driverMode == MIDISoundDriver) {
+	if (intDriver->base.DriverSettings.driverMode == MIDISoundDriver) {
 		if (intDriver->NoteOld[curVoice->ID] != -1)
 			NoteOff(intDriver->InstuNoOld[curVoice->ID], intDriver->NoteOld[curVoice->ID], intDriver->VelocityOld[curVoice->ID], intDriver);
 		intDriver->NoteOld[curVoice->ID] = -1;
@@ -778,8 +778,8 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 	if (intCmd.cmd == 0x0E && (intCmd.arg >> 4) == 0x0D) {
 		if (intDriver->smallcounter == 0 && !curVoice->GEffect) {
 			curVoice->GEffect 	= true;
-			curVoice->GPat 		= intDriver->Pat;
-			curVoice->GReader 	= intDriver->PartitionReader;
+			curVoice->GPat 		= intDriver->base.Pat;
+			curVoice->GReader 	= intDriver->base.PartitionReader;
 		}
 		
 		if (intDriver->smallcounter >= (intCmd.arg & 0x0F)) {
@@ -814,10 +814,10 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 					if (ins >= MAXINSTRU)
 						ins = MAXINSTRU-1;
 					
-					if (curVoice->samp < intDriver->curMusic->fid[ins].numSamples) {
+					if (curVoice->samp < intDriver->base.curMusic->fid[ins].numSamples) {
 						sData *curData;
 						
-						curData					= intDriver->curMusic->sample[intDriver->curMusic->fid[ins].firstSample + curVoice->samp];
+						curData					= intDriver->base.curMusic->sample[intDriver->base.curMusic->fid[ins].firstSample + curVoice->samp];
 						curVoice->vol			= curData->vol;
 						if (curVoice->vol > MAX_VOLUME)
 							curVoice->vol = MAX_VOLUME;
@@ -839,10 +839,10 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 				if (ins >= MAXINSTRU)
 					ins = MAXINSTRU-1;
 				
-				if (curVoice->samp < intDriver->curMusic->fid[ins].numSamples) {
+				if (curVoice->samp < intDriver->base.curMusic->fid[ins].numSamples) {
 					sData	*curData;
 					
-					curData					= intDriver->curMusic->sample[intDriver->curMusic->fid[ins].firstSample + curVoice->samp];
+					curData					= intDriver->base.curMusic->sample[intDriver->base.curMusic->fid[ins].firstSample + curVoice->samp];
 					curVoice->noteOld		= intCmd.note + curData->relNote;
 					curVoice->relNoteOld	= curData->relNote;
 				}
@@ -869,13 +869,13 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 			ins = intCmd.ins - 1;
 			if (ins >= MAXINSTRU)
 				ins = MAXINSTRU - 1;
-			samp = intDriver->curMusic->fid[ins].what[intCmd.note];
+			samp = intDriver->base.curMusic->fid[ins].what[intCmd.note];
 			
-			if (intDriver->DriverSettings.driverMode == MIDISoundDriver)
+			if (intDriver->base.DriverSettings.driverMode == MIDISoundDriver)
 				curVoice->ins			= ins;
 			
-			if (samp < intDriver->curMusic->fid[ins].numSamples) {
-				curData					= intDriver->curMusic->sample[intDriver->curMusic->fid[ins].firstSample + samp];
+			if (samp < intDriver->base.curMusic->fid[ins].numSamples) {
+				curData					= intDriver->base.curMusic->sample[intDriver->base.curMusic->fid[ins].firstSample + samp];
 				
 				if (theNoteCmd->note != 0xFF) {
 					curVoice->ins			= ins;
@@ -918,7 +918,7 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 						
 						if(intCmd.cmd != MADEffectPanning) {
 							if (curVoice->PanningE8 == false) {
-								curVoice->pann = intDriver->curMusic->header->chanPan[curVoice->TrackID];
+								curVoice->pann = intDriver->base.curMusic->header->chanPan[curVoice->TrackID];
 								if (curVoice->pann > MAX_PANNING)
 									curVoice->pann = MAX_PANNING;
 							}
@@ -940,7 +940,7 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 					curVoice->volFade		= 32767;
 					curVoice->nextvolFade	= 32767;
 				}
-				intDriver->InstruTube[ins] 		= 64;
+				intDriver->base.InstruTube[ins]	= 64;
 				intDriver->InstruActif[ins] 	= curVoice->TrackID;
 			}
 		}
@@ -951,9 +951,9 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 			sData	*curData;
 			short	samp;
 			
-			samp = intDriver->curMusic->fid[curVoice->ins].what[intCmd.note];
-			if (samp < intDriver->curMusic->fid[curVoice->ins].numSamples) {
-				curData				= intDriver->curMusic->sample[intDriver->curMusic->fid[curVoice->ins].firstSample + samp];
+			samp = intDriver->base.curMusic->fid[curVoice->ins].what[intCmd.note];
+			if (samp < intDriver->base.curMusic->fid[curVoice->ins].numSamples) {
+				curData				= intDriver->base.curMusic->sample[intDriver->base.curMusic->fid[curVoice->ins].firstSample + samp];
 				
 				curVoice->note		= intCmd.note + curData->relNote;
 				curVoice->fineTune	= curData->c2spd;
@@ -968,7 +968,7 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 			/***********************/
 			/* Pour le MIDI Driver */
 			/***********************/
-			if (intDriver->DriverSettings.driverMode == MIDISoundDriver) {
+			if (intDriver->base.DriverSettings.driverMode == MIDISoundDriver) {
 				if (intDriver->NoteOld[curVoice->ID] != -1) {
 					NoteOff(intDriver->InstuNoOld[curVoice->ID], intDriver->NoteOld[curVoice->ID], intDriver->VelocityOld[curVoice->ID], intDriver);
 					intDriver->NoteOld[curVoice->ID] = -1;
@@ -1004,7 +1004,7 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 		curVoice->volcmd = 0;
 	
 	if (intCmd.ins != 0 && intCmd.note != 0xFF)
-		intDriver->Tube[curVoice->TrackID] = curVoice->vol;
+		intDriver->base.Tube[curVoice->TrackID] = curVoice->vol;
 	
 	
 	/**************/
@@ -1066,7 +1066,7 @@ short FindAFreeChannel(MADDriverRec *intDriver)
 	int			oldTick = 1000000; //FIXME: largest int value here?
 	
 	for (i = 0; i < intDriver->MultiChanNo; i++) {
-		curVoice = &intDriver->chan[i];
+		curVoice = &intDriver->base.chan[i];
 		
 		if (curVoice->curPtr >= curVoice->maxPtr && curVoice->loopSize == 0) {
 			chanID = i;
@@ -1078,7 +1078,7 @@ short FindAFreeChannel(MADDriverRec *intDriver)
 		chanID = 0;
 		
 		for (i = 0; i < intDriver->MultiChanNo; i++) {
-			curVoice = &intDriver->chan[i];
+			curVoice = &intDriver->base.chan[i];
 			
 			if (curVoice->eventTime < oldTick) {
 				chanID = i;
@@ -1095,8 +1095,8 @@ void ApplyVSTEffects(MADDriverRec *intDriver, bool ByPass)
 	int i;
 	if (!intDriver) return;
 
-	if (intDriver->curMusic != NULL) {
-		if (intDriver->curMusic->header != NULL) {
+	if (intDriver->base.curMusic != NULL) {
+		if (intDriver->base.curMusic->header != NULL) {
 			
 		}
 		else
@@ -1107,11 +1107,11 @@ void ApplyVSTEffects(MADDriverRec *intDriver, bool ByPass)
 	
 	for (i = 0; i < MAXCHANEFFECT; i++) {
 		if (intDriver->EffectBufferID[i] != -1) {
-			if (intDriver->curMusic->header->chanBus[intDriver->EffectBufferID[i]].ByPass == ByPass) {
+			if (intDriver->base.curMusic->header->chanBus[intDriver->EffectBufferID[i]].ByPass == ByPass) {
 				int *eee, *ASCBuffer, ii;
 				
-				if (intDriver->DriverSettings.oversampling > 1) {
-					int	*intempLong, mul = intDriver->DriverSettings.oversampling, x, tempL, tempR;
+				if (intDriver->base.DriverSettings.oversampling > 1) {
+					int	*intempLong, mul = intDriver->base.DriverSettings.oversampling, x, tempL, tempR;
 					
 					eee = intDriver->DASCEffectBuffer[i];
 					
@@ -1164,13 +1164,13 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	int		*DASCopy, *DASECopy[MAXCHANEFFECT];
 	short	*DASCopy8;
 	
-	if (intDriver->curMusic != NULL){
-		if (intDriver->curMusic->musicUnderModification) {	// SILENCE
+	if (intDriver->base.curMusic != NULL){
+		if (intDriver->base.curMusic->musicUnderModification) {	// SILENCE
 			int Tracks;
 			
-			switch(intDriver->DriverSettings.outPutMode) {
+			switch(intDriver->base.DriverSettings.outPutMode) {
 				case PolyPhonic:
-					Tracks = intDriver->DriverSettings.numChn;
+					Tracks = intDriver->base.DriverSettings.numChn;
 					break;
 					
 				default:
@@ -1180,7 +1180,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 			
 			Tracks = 1;
 			
-			switch(intDriver->DriverSettings.outPutBits) {
+			switch(intDriver->base.DriverSettings.outPutBits) {
 				case 8:
 					for (i = 0; i < intDriver->ASCBUFFER * Tracks; i++)
 						intDriver->IntDataPtr[i] = 0x80;
@@ -1227,7 +1227,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 			InterruptBufferSize		-= intDriver->ASCBUFFER;
 		}
 		
-		intDriver->ASCBUFFERReal = intDriver->ASCBUFFER / intDriver->DriverSettings.oversampling;
+		intDriver->ASCBUFFERReal = intDriver->ASCBUFFER / intDriver->base.DriverSettings.oversampling;
 		
 		/**************************/
 		/* Note & Effect Analyser */
@@ -1241,16 +1241,16 @@ void NoteAnalyse(MADDriverRec *intDriver)
 			/*********/
 			// GEffect : extrasmallpositionning
 			
-			if (intDriver->curMusic != NULL && intDriver->Reading) {
-				for (i = 0; i < intDriver->curMusic->header->numChn; i++) {
-					if (intDriver->chan[i].GEffect) {
-						if (intDriver->Reading && intDriver->OneMoreBeforeEnd == false && intDriver->TrackLineReading[i]) {
-							intDriver->chan[i].TrackID = i;
+			if (intDriver->base.curMusic != NULL && intDriver->base.Reading) {
+				for (i = 0; i < intDriver->base.curMusic->header->numChn; i++) {
+					if (intDriver->base.chan[i].GEffect) {
+						if (intDriver->base.Reading && intDriver->OneMoreBeforeEnd == false && intDriver->TrackLineReading[i]) {
+							intDriver->base.chan[i].TrackID = i;
 							if (intDriver->TrackReading[i]) {
-								ReadNote(&intDriver->chan[i], GetMADCommand(intDriver->chan[i].GReader, i, intDriver->curMusic->partition[intDriver->chan[i].GPat]), intDriver);
+								ReadNote(&intDriver->base.chan[i], GetMADCommand(intDriver->base.chan[i].GReader, i, intDriver->base.curMusic->partition[intDriver->base.chan[i].GPat]), intDriver);
 							}
 							
-							StartEffect(&intDriver->chan[i], GetMADCommand(intDriver->chan[i].GReader, i, intDriver->curMusic->partition[intDriver->chan[i].GPat]), intDriver);
+							StartEffect(&intDriver->base.chan[i], GetMADCommand(intDriver->base.chan[i].GReader, i, intDriver->base.curMusic->partition[intDriver->base.chan[i].GPat]), intDriver);
 						}
 					}
 				}
@@ -1260,32 +1260,32 @@ void NoteAnalyse(MADDriverRec *intDriver)
 			
 			
 			intDriver->smallcounter++;
-			if (intDriver->smallcounter >= intDriver->speed) {		// NEW LINE
+			if (intDriver->smallcounter >= intDriver->base.speed) {		// NEW LINE
 				intDriver->smallcounter = 0;
 				
 				if (intDriver->PatDelay)
 					intDriver->PatDelay--;
 				
-				if (intDriver->curMusic != NULL && intDriver->PatDelay == 0) {
-					for (i = 0; i < intDriver->MultiChanNo; i++)		//intDriver->curMusic->header->numChn
-						CloseEffect(&intDriver->chan[i], intDriver->smallcounter, intDriver);
+				if (intDriver->base.curMusic != NULL && intDriver->PatDelay == 0) {
+					for (i = 0; i < intDriver->MultiChanNo; i++)		//intDriver->base.curMusic->header->numChn
+						CloseEffect(&intDriver->base.chan[i], intDriver->smallcounter, intDriver);
 					
 					if (intDriver->OneMoreBeforeEnd == true) {
-						intDriver->PL = 0;
-						intDriver->Pat = intDriver->curMusic->header->oPointers[intDriver->PL];
+						intDriver->base.PL = 0;
+						intDriver->base.Pat = intDriver->base.curMusic->header->oPointers[intDriver->base.PL];
 						
-						intDriver->musicEnd = true;
+						intDriver->base.musicEnd = true;
 						intDriver->OneMoreBeforeEnd = false;
 						
 						MADCleanDriver(intDriver);
-						if (!intDriver->DriverSettings.repeatMusic) intDriver->Reading = false;
+						if (!intDriver->base.DriverSettings.repeatMusic) intDriver->base.Reading = false;
 						
 						tVSYNC =	intDriver->VSYNC;
-						tVSYNC /=	intDriver->finespeed;
+						tVSYNC /=	intDriver->base.finespeed;
 						tVSYNC *=	8000;
-						tVSYNC /=	intDriver->VExt;
+						tVSYNC /=	intDriver->base.VExt;
 						
-						intDriver->BytesToRemoveAtEnd = (InterruptBufferSize) / intDriver->DriverSettings.oversampling;
+						intDriver->BytesToRemoveAtEnd = (InterruptBufferSize) / intDriver->base.DriverSettings.oversampling;
 						if (intDriver->BytesToRemoveAtEnd < 0)
 							intDriver->BytesToRemoveAtEnd = 0;
 					}
@@ -1294,21 +1294,21 @@ void NoteAnalyse(MADDriverRec *intDriver)
 					// MULTI-CHANNEL MODE *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 					// *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 					
-					if (intDriver->curMusic->header->MultiChan && intDriver->DriverSettings.outPutMode != PolyPhonic) {
+					if (intDriver->base.curMusic->header->MultiChan && intDriver->base.DriverSettings.outPutMode != PolyPhonic) {
 						// Is a new Command? Else assign it to the last Channel used for this track
 						
-						for (i = 0; i < intDriver->curMusic->header->numChn; i++) {
-							if (intDriver->Reading && intDriver->OneMoreBeforeEnd == false && intDriver->TrackLineReading[i]) {
-								Cmd *tempcmd = GetMADCommand(intDriver->PartitionReader, i, intDriver->curMusic->partition[intDriver->Pat]);
+						for (i = 0; i < intDriver->base.curMusic->header->numChn; i++) {
+							if (intDriver->base.Reading && intDriver->OneMoreBeforeEnd == false && intDriver->TrackLineReading[i]) {
+								Cmd *tempcmd = GetMADCommand(intDriver->base.PartitionReader, i, intDriver->base.curMusic->partition[intDriver->base.Pat]);
 								
 								if (tempcmd->cmd == MADEffectNoteOff) {// G-Effet, Note-Off previous channel note
 									switch(tempcmd->arg) {
 										case 0:
-											KillChannel(&intDriver->chan[intDriver->lastChannelUsed[i]], intDriver);
+											KillChannel(&intDriver->base.chan[intDriver->lastChannelUsed[i]], intDriver);
 											break;
 											
 										case 1:
-											IntNoteOff(&intDriver->chan[intDriver->lastChannelUsed[i]], intDriver);
+											IntNoteOff(&intDriver->base.chan[intDriver->lastChannelUsed[i]], intDriver);
 											break;
 									}
 								}
@@ -1320,43 +1320,43 @@ void NoteAnalyse(MADDriverRec *intDriver)
 									
 									intDriver->lastChannelUsed[i] = chanID;
 									
-									intDriver->chan[chanID].TrackID = i;
-									intDriver->chan[chanID].TimeCounter = 100;
+									intDriver->base.chan[chanID].TrackID = i;
+									intDriver->base.chan[chanID].TimeCounter = 100;
 									
 									if (intDriver->TrackReading[i]) {
-										ReadNote(&intDriver->chan[chanID], tempcmd, intDriver);
+										ReadNote(&intDriver->base.chan[chanID], tempcmd, intDriver);
 									}
-									StartEffect(&intDriver->chan[chanID], tempcmd, intDriver);
+									StartEffect(&intDriver->base.chan[chanID], tempcmd, intDriver);
 								} else {
 									if (intDriver->TrackReading[i]) {
-										ReadNote(&intDriver->chan[intDriver->lastChannelUsed[i]], tempcmd, intDriver);
+										ReadNote(&intDriver->base.chan[intDriver->lastChannelUsed[i]], tempcmd, intDriver);
 									}
-									StartEffect(&intDriver->chan[intDriver->lastChannelUsed[i]], tempcmd, intDriver);
+									StartEffect(&intDriver->base.chan[intDriver->lastChannelUsed[i]], tempcmd, intDriver);
 								}
 							}
 						}
 					} else {
-						for (i = 0; i < intDriver->curMusic->header->numChn; i++) {
-							if (intDriver->Reading && intDriver->OneMoreBeforeEnd == false && intDriver->TrackLineReading[i]) {
-								intDriver->chan[i].TrackID = i;
+						for (i = 0; i < intDriver->base.curMusic->header->numChn; i++) {
+							if (intDriver->base.Reading && intDriver->OneMoreBeforeEnd == false && intDriver->TrackLineReading[i]) {
+								intDriver->base.chan[i].TrackID = i;
 								if (intDriver->TrackReading[i]) {
-									ReadNote(&intDriver->chan[i], GetMADCommand(intDriver->PartitionReader, i, intDriver->curMusic->partition[intDriver->Pat]), intDriver);
+									ReadNote(&intDriver->base.chan[i], GetMADCommand(intDriver->base.PartitionReader, i, intDriver->base.curMusic->partition[intDriver->base.Pat]), intDriver);
 								}
-								StartEffect(&intDriver->chan[i], GetMADCommand(intDriver->PartitionReader, i, intDriver->curMusic->partition[intDriver->Pat]), intDriver);
+								StartEffect(&intDriver->base.chan[i], GetMADCommand(intDriver->base.PartitionReader, i, intDriver->base.curMusic->partition[intDriver->base.Pat]), intDriver);
 							}
 						}
 					}
 					
 					for (i = 0; i < intDriver->MultiChanNo; i++) {
-						ProcessEnvelope(&intDriver->chan[i], intDriver, true);
-						ProcessPanning(&intDriver->chan[i], intDriver, true);
-						ProcessFadeOut(&intDriver->chan[i], intDriver);
+						ProcessEnvelope(&intDriver->base.chan[i], intDriver, true);
+						ProcessPanning(&intDriver->base.chan[i], intDriver, true);
+						ProcessFadeOut(&intDriver->base.chan[i], intDriver);
 					}
 					
-					if (intDriver->Reading) {
+					if (intDriver->base.Reading) {
 						if (intDriver->wasReading == false) {
 							//if (intDriver->SendMIDIClockData) SendMIDIClock(intDriver, 0xFB);
-							if (intDriver->PartitionReader == 0 && intDriver->PL == 0) SendMIDIClock(intDriver, 0xFA);
+							if (intDriver->base.PartitionReader == 0 && intDriver->base.PL == 0) SendMIDIClock(intDriver, 0xFA);
 							else SendMIDIClock(intDriver, 0xFB);
 							intDriver->wasReading = true;
 						}
@@ -1368,36 +1368,36 @@ void NoteAnalyse(MADDriverRec *intDriver)
 						
 						for (i = 0; i < MAXTRACK; i++) intDriver->TrackLineReading[i] = true;
 						
-						if (intDriver->PartitionReader == 0) {
+						if (intDriver->base.PartitionReader == 0) {
 							for (i = 0; i < intDriver->MultiChanNo; i++) {
-								intDriver->chan[i].PatternLoopE6 = 1;
-								intDriver->chan[i].PatternLoopE6ID = intDriver->PL;
+								intDriver->base.chan[i].PatternLoopE6 = 1;
+								intDriver->base.chan[i].PatternLoopE6ID = intDriver->base.PL;
 							}
 						}
 						
-						intDriver->PartitionReader++;
-						if (intDriver->PartitionReader >= intDriver->curMusic->partition[intDriver->Pat]->header.size) {
-							intDriver->PartitionReader = 0;
+						intDriver->base.PartitionReader++;
+						if (intDriver->base.PartitionReader >= intDriver->base.curMusic->partition[intDriver->base.Pat]->header.size) {
+							intDriver->base.PartitionReader = 0;
 							intDriver->endPattern = true;
 							
 							if (intDriver->JumpToNextPattern) {
-								intDriver->PL++;
-								intDriver->Pat = intDriver->curMusic->header->oPointers[intDriver->PL];
+								intDriver->base.PL++;
+								intDriver->base.Pat = intDriver->base.curMusic->header->oPointers[intDriver->base.PL];
 								
-								if (intDriver->speed == 1 && intDriver->PL >= intDriver->curMusic->header->numPointers) {
-									intDriver->PL = 0;
-									intDriver->Pat = intDriver->curMusic->header->oPointers[intDriver->PL];
+								if (intDriver->base.speed == 1 && intDriver->base.PL >= intDriver->base.curMusic->header->numPointers) {
+									intDriver->base.PL = 0;
+									intDriver->base.Pat = intDriver->base.curMusic->header->oPointers[intDriver->base.PL];
 									
 #if 0
 									MADCleanDriver(intDriver);
-									if (!intDriver->DriverSettings.repeatMusic) intDriver->Reading = false;
+									if (!intDriver->base.DriverSettings.repeatMusic) intDriver->base.Reading = false;
 									
 									tVSYNC 		= intDriver->VSYNC;
-									tVSYNC 		/= intDriver->finespeed;
+									tVSYNC 		/= intDriver->base.finespeed;
 									tVSYNC 		*= 8000;
-									tVSYNC 		/= intDriver->VExt;
+									tVSYNC 		/= intDriver->base.VExt;
 									
-									intDriver->BytesToRemoveAtEnd = (InterruptBufferSize - tVSYNC) / intDriver->DriverSettings.oversampling;	//
+									intDriver->BytesToRemoveAtEnd = (InterruptBufferSize - tVSYNC) / intDriver->base.DriverSettings.oversampling;	//
 									if (intDriver->BytesToRemoveAtEnd < 0) intDriver->BytesToRemoveAtEnd = 0;
 									intDriver->BytesToRemoveAtEnd = 0;
 #endif
@@ -1416,19 +1416,19 @@ void NoteAnalyse(MADDriverRec *intDriver)
 					}
 				}
 			} else {// SMALLCOUNTER
-				if (intDriver->curMusic != NULL) {
+				if (intDriver->base.curMusic != NULL) {
 					for (i = 0 ; i < intDriver->MultiChanNo; i++) {
-						DoVolCmd(&intDriver->chan[i], intDriver->smallcounter, intDriver);
-						DoEffect(&intDriver->chan[i], intDriver->smallcounter, intDriver);
-						ProcessEnvelope(&intDriver->chan[i], intDriver, true);
-						ProcessPanning(&intDriver->chan[i], intDriver, true);
-						ProcessFadeOut(&intDriver->chan[i], intDriver);
+						DoVolCmd(&intDriver->base.chan[i], intDriver->smallcounter, intDriver);
+						DoEffect(&intDriver->base.chan[i], intDriver->smallcounter, intDriver);
+						ProcessEnvelope(&intDriver->base.chan[i], intDriver, true);
+						ProcessPanning(&intDriver->base.chan[i], intDriver, true);
+						ProcessFadeOut(&intDriver->base.chan[i], intDriver);
 					}
 					
-					if (intDriver->Reading) {
+					if (intDriver->base.Reading) {
 						if (intDriver->wasReading == false) {
 							if (intDriver->SendMIDIClockData) {
-								if (intDriver->PartitionReader == 0 && intDriver->PL == 0)
+								if (intDriver->base.PartitionReader == 0 && intDriver->base.PL == 0)
 									SendMIDIClock(intDriver, 0xFA);
 								else
 									SendMIDIClock(intDriver, 0xFB);
@@ -1439,10 +1439,10 @@ void NoteAnalyse(MADDriverRec *intDriver)
 						if (intDriver->SendMIDIClockData)
 							SendMIDIClock(intDriver, 0xF8);
 						
-						if (intDriver->smallcounter == intDriver->speed - 1) {
-							if (intDriver->PL >= intDriver->curMusic->header->numPointers) {
+						if (intDriver->smallcounter == intDriver->base.speed - 1) {
+							if (intDriver->base.PL >= intDriver->base.curMusic->header->numPointers) {
 								intDriver->OneMoreBeforeEnd = true;
-								//	intDriver->musicEnd = true;
+								//	intDriver->base.musicEnd = true;
 							}
 						}
 					} else {
@@ -1456,13 +1456,13 @@ void NoteAnalyse(MADDriverRec *intDriver)
 			}
 			
 			tVSYNC = intDriver->VSYNC;
-			tVSYNC /= intDriver->finespeed;
+			tVSYNC /= intDriver->base.finespeed;
 			
 			tVSYNC *= 8000;
-			if (intDriver->VExt == 0) {
+			if (intDriver->base.VExt == 0) {
 				
 			} else
-				tVSYNC /= intDriver->VExt;
+				tVSYNC /= intDriver->base.VExt;
 			
 			intDriver->BytesToGenerate += tVSYNC;
 		}
@@ -1482,12 +1482,12 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	
 	// APPLY OVERSAMPLING
 	
-	if (intDriver->DriverSettings.oversampling > 1) {
-		switch(intDriver->DriverSettings.outPutBits) {
+	if (intDriver->base.DriverSettings.oversampling > 1) {
+		switch(intDriver->base.DriverSettings.outPutBits) {
 			case 8:
 			{
 				short	*tempShortIn = (short*) intDriver->DASCBuffer8, *intempShort;
-				int		mul = intDriver->DriverSettings.oversampling;
+				int		mul = intDriver->base.DriverSettings.oversampling;
 				int		x, tempL, tempR;
 				
 				for (i = 0; i < intDriver->ASCBUFFER / mul; i++) {
@@ -1509,7 +1509,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 			case 16:
 			{
 				int *tempLongIn = intDriver->DASCBuffer, *intempLong;
-				int mul = intDriver->DriverSettings.oversampling;
+				int mul = intDriver->base.DriverSettings.oversampling;
 				int x, tempL, tempR;
 				
 				for (i = 0; i < intDriver->ASCBUFFER / mul; i++) {
@@ -1534,14 +1534,14 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	
 	// Applique l'effect, puis l'additionne au DASCBuffer
 	
-	if (intDriver->DriverSettings.outPutBits == 16 && intDriver->hasVSTEnabled) {
+	if (intDriver->base.DriverSettings.outPutBits == 16 && intDriver->hasVSTEnabled) {
 		ApplyVSTEffects(intDriver, false);
 	}
 	
 	// *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 	
 	//TODO: Process VST Plug-in
-	if (intDriver->DriverSettings.outPutBits == 16) {
+	if (intDriver->base.DriverSettings.outPutBits == 16) {
 		if (intDriver->currentlyExporting) {
 			if (intDriver->thisExport) {
 				ProcessVSTPlug(intDriver, intDriver->DASCBuffer, intDriver->ASCBUFFERReal, -1);
@@ -1552,16 +1552,16 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	
 	// *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 	
-	if (intDriver->DriverSettings.outPutBits == 16 && intDriver->hasVSTEnabled) {
+	if (intDriver->base.DriverSettings.outPutBits == 16 && intDriver->hasVSTEnabled) {
 		ApplyVSTEffects(intDriver, true);
 	}
 	
 	// Sound Window Centering ! AND compute LEVELS ***** ***** ***** ***** ***** ***** *****
-	if (intDriver->DriverSettings.outPutBits == 16) {
+	if (intDriver->base.DriverSettings.outPutBits == 16) {
 		int maxL, maxR, minL, minR, tempL;
 		int *tempLong = intDriver->DASCBuffer, centerL, centerR;
 		
-		switch (intDriver->DriverSettings.outPutBits) {
+		switch (intDriver->base.DriverSettings.outPutBits) {
 			case 16:
 				maxL = maxR = -300000;
 				minL = minR = 300000;
@@ -1643,8 +1643,8 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	}
 	
 	// Convert 32 bytes data to 16 bits !***** ***** ***** ***** ***** ***** *****
-	if (intDriver->DriverSettings.outPutBits == 8) {
-		if (intDriver->DriverSettings.outPutMode != PolyPhonic) {
+	if (intDriver->base.DriverSettings.outPutBits == 8) {
+		if (intDriver->base.DriverSettings.outPutMode != PolyPhonic) {
 			short	*ttt;
 			char	*ASCBuffer;
 			
@@ -1717,10 +1717,10 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	
 	// APPLY MICRO DELAY *** *** *** *** *** *** *** *** *** *** *** *** *** ***
 	
-	if (intDriver->DriverSettings.MicroDelaySize) {
+	if (intDriver->base.DriverSettings.MicroDelaySize) {
 		int realMDelay = intDriver->MDelay;
 		
-		switch (intDriver->DriverSettings.outPutBits)
+		switch (intDriver->base.DriverSettings.outPutBits)
 		{
 				//TODO: 24-bit, maybe even 20-bit
 			case 16:
@@ -1747,8 +1747,8 @@ void NoteAnalyse(MADDriverRec *intDriver)
 				break;
 		}
 	} else {
-		if (intDriver->DriverSettings.outPutMode != PolyPhonic) {
-			switch (intDriver->DriverSettings.outPutBits)
+		if (intDriver->base.DriverSettings.outPutMode != PolyPhonic) {
+			switch (intDriver->base.DriverSettings.outPutBits)
 			{
 				case 16:
 					memset((intDriver->DASCBuffer), 0, intDriver->ASCBUFFER*8L);
@@ -1772,21 +1772,21 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	
 	
 	
-	if (intDriver->DriverSettings.surround)
+	if (intDriver->base.DriverSettings.surround)
 		ApplySurround(intDriver);
 	
-	if (intDriver->DriverSettings.Reverb && intDriver->ASCBUFFERReal < intDriver->RDelay) {
-		if (intDriver->DriverSettings.outPutMode == DeluxeStereoOutPut) {
-			switch (intDriver->DriverSettings.outPutBits)
+	if (intDriver->base.DriverSettings.Reverb && intDriver->ASCBUFFERReal < intDriver->RDelay) {
+		if (intDriver->base.DriverSettings.outPutMode == DeluxeStereoOutPut) {
+			switch (intDriver->base.DriverSettings.outPutBits)
 			{
 				case 8:
-					ComputeReverb8((MADByte*)intDriver->ReverbPtr, (MADByte*)intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->DriverSettings.ReverbStrength);
+					ComputeReverb8((MADByte*)intDriver->ReverbPtr, (MADByte*)intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->base.DriverSettings.ReverbStrength);
 					memmove(intDriver->ReverbPtr, (void*)((uintptr_t)intDriver->ReverbPtr + intDriver->ASCBUFFERReal*2L), intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L);
 					memmove((void*)((uintptr_t)intDriver->ReverbPtr + intDriver->RDelay*2L - intDriver->ASCBUFFERReal*2L), intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L);
 					break;
 					
 				case 16:
-					ComputeReverb16((short*) intDriver->ReverbPtr, (short*) intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->DriverSettings.ReverbStrength);
+					ComputeReverb16((short*) intDriver->ReverbPtr, (short*) intDriver->IntDataPtr, intDriver->ASCBUFFERReal*2L, intDriver->base.DriverSettings.ReverbStrength);
 					memmove(intDriver->ReverbPtr, (void*)((uintptr_t)intDriver->ReverbPtr + intDriver->ASCBUFFERReal*4), (intDriver->RDelay - intDriver->ASCBUFFERReal)*4);
 					memmove((void*)((uintptr_t)intDriver->ReverbPtr + intDriver->RDelay*4 - intDriver->ASCBUFFERReal*4), intDriver->IntDataPtr, intDriver->ASCBUFFERReal*4);
 					break;
@@ -1794,8 +1794,8 @@ void NoteAnalyse(MADDriverRec *intDriver)
 		}
 	}
 	
-	if (intDriver->Equalizer) {	// Apply Fourier Transform
-		switch (intDriver->DriverSettings.outPutBits)
+	if (intDriver->base.Equalizer) {	// Apply Fourier Transform
+		switch (intDriver->base.DriverSettings.outPutBits)
 		{
 			case 8:
 				ConvertInstrument((MADByte*)intDriver->IntDataPtr, (intDriver->ASCBUFFERReal*2));
@@ -1811,7 +1811,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 	
 #if defined(MAINPLAYERPRO)
 	//TODO: Process visual Plug-in
-	if (intDriver->DriverSettings.outPutBits == 16)
+	if (intDriver->base.DriverSettings.outPutBits == 16)
 	{
 		if (intDriver->currentlyExporting)
 		{
@@ -1824,9 +1824,9 @@ void NoteAnalyse(MADDriverRec *intDriver)
 
 void ApplySurround(MADDriverRec *intDriver)
 {
-	switch (intDriver->DriverSettings.outPutBits) {
+	switch (intDriver->base.DriverSettings.outPutBits) {
 		case 8:
-			switch (intDriver->DriverSettings.outPutMode) {
+			switch (intDriver->base.DriverSettings.outPutMode) {
 				case DeluxeStereoOutPut:
 				{
 					int		i = intDriver->ASCBUFFER;
@@ -1849,7 +1849,7 @@ void ApplySurround(MADDriverRec *intDriver)
 			break;
 			
 		case 16:
-			switch(intDriver->DriverSettings.outPutMode) {
+			switch(intDriver->base.DriverSettings.outPutMode) {
 				case DeluxeStereoOutPut:
 				{
 					int		i = intDriver->ASCBUFFER;
@@ -1877,12 +1877,12 @@ void GenerateSound(MADDriverRec *intDriver)
 {
 	int i;
 	
-	if (intDriver->DriverSettings.driverMode == MIDISoundDriver)
+	if (intDriver->base.DriverSettings.driverMode == MIDISoundDriver)
 		return;
 	
-	switch (intDriver->DriverSettings.outPutBits) {
+	switch (intDriver->base.DriverSettings.outPutBits) {
 		case 8:
-			switch (intDriver->DriverSettings.outPutMode) {
+			switch (intDriver->base.DriverSettings.outPutMode) {
 #if 0
 				case MonoOutPut:
 					Play8Mono(intDriver);
@@ -1906,13 +1906,13 @@ void GenerateSound(MADDriverRec *intDriver)
 				case PolyPhonic:
 					//case MultiFiles:
 					Play8PolyPhonic(intDriver);
-					intDriver->IntDataPtr	+= intDriver->ASCBUFFER * intDriver->DriverSettings.numChn;
+					intDriver->IntDataPtr	+= intDriver->ASCBUFFER * intDriver->base.DriverSettings.numChn;
 					break;
 			}
 			break;
 			
 		case 16:
-			switch (intDriver->DriverSettings.outPutMode) {
+			switch (intDriver->base.DriverSettings.outPutMode) {
 #if 0
 				case MonoOutPut:
 					Play16Mono(intDriver);
@@ -1939,7 +1939,7 @@ void GenerateSound(MADDriverRec *intDriver)
 				case PolyPhonic:
 					//case MultiFiles:
 					//Play16PolyPhonic(intDriver);
-					intDriver->IntDataPtr	+= intDriver->ASCBUFFER * 2L * intDriver->DriverSettings.numChn;
+					intDriver->IntDataPtr	+= intDriver->ASCBUFFER * 2L * intDriver->base.DriverSettings.numChn;
 					break;
 			}
 			break;
@@ -1957,13 +1957,13 @@ bool DirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRec *
 	/*** Copy values ***/
 	ptrCopy 		= intDriver->IntDataPtr;
 	if (driverType != NULL)
-		driverCopy	= intDriver->DriverSettings;
+		driverCopy	= intDriver->base.DriverSettings;
 	
 	/*** Install New Values ***/
 	
 	intDriver->IntDataPtr 		= myPtr;
 	if (driverType != NULL)
-		intDriver->DriverSettings	= *driverType;
+		intDriver->base.DriverSettings	= *driverType;
 	
 	/***/			/***/
 	/***/			/***/
@@ -1979,7 +1979,7 @@ bool DirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRec *
 	
 	intDriver->IntDataPtr 		= ptrCopy;
 	if (driverType != NULL)
-		intDriver->DriverSettings	= driverCopy;
+		intDriver->base.DriverSettings	= driverCopy;
 	
 	return true;
 }
@@ -1991,18 +1991,18 @@ bool DirectSave(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDri
 	
 	if (intDriver == NULL)
 		return false;
-	if (!intDriver->Reading)
+	if (!intDriver->base.Reading)
 		return false;
 	
 	/*** Copy values ***/
 	ptrCopy 		= intDriver->IntDataPtr;
-	if (driverType != NULL) driverCopy	= intDriver->DriverSettings;
+	if (driverType != NULL) driverCopy	= intDriver->base.DriverSettings;
 	
 	/*** Install New Values ***/
 	
 	intDriver->IntDataPtr 		= myPtr;
 	if (driverType != NULL)
-		intDriver->DriverSettings	= *driverType;
+		intDriver->base.DriverSettings	= *driverType;
 	
 	
 	NoteAnalyse(intDriver);
@@ -2012,15 +2012,15 @@ bool DirectSave(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDri
 	
 	intDriver->IntDataPtr 		= ptrCopy;
 	if (driverType != NULL)
-		intDriver->DriverSettings	= driverCopy;
+		intDriver->base.DriverSettings	= driverCopy;
 	
-	if (intDriver->musicEnd == true)
+	if (intDriver->base.musicEnd == true)
 		return false;
 	
 #if 0
-	if (intDriver->curMusic != NULL)
+	if (intDriver->base.curMusic != NULL)
 	{
-		if (intDriver->PL >= intDriver->curMusic->header->numPointers) return false;
+		if (intDriver->base.PL >= intDriver->base.curMusic->header->numPointers) return false;
 	}
 #endif
 	
