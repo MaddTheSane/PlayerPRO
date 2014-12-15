@@ -21,6 +21,7 @@
 
 #include <MacTypes.h>
 #include <CoreServices/CoreServices.h>
+#include <CoreFoundation/CFUUID.h>
 
 /*
 	Data Type defs for compatibility with Windows headers
@@ -108,8 +109,8 @@ typedef UInt8		BYTE;
 */
 
 /* DLSID - a GUID struct */
-#if 0
 #ifndef _DLSID
+#pragma pack(push, 2)
 typedef struct _DLSID
 {
 	ULONG		ulData1;
@@ -117,18 +118,20 @@ typedef struct _DLSID
 	USHORT		usData3;
 	BYTE		abData4[8];
 } DLSID;
-#endif
-#else
-typedef CFUUIDBytes DLSID;
+#pragma pack(pop)
 #endif
 
 /* DEFINE_DLSID    DLSID queries for <cdl-ck> */
 #ifndef DEFINE_DLSID
 #define DEFINE_DLSID(defName, ul1, us2, us3, ab40, ab41, ab42, ab43, ab44, ab45, ab46, ab47)	\
-		static const DLSID defName = { ((ul1 >> 24) & 0xFF), ((ul1 >> 16) & 0xFF), ((ul1 >> 8) & 0xFF), (ul1 & 0xFF), ((us2 >> 8) & 0xFF), (us2 & 0xFF), ((us3 >> 8) & 0xFF), (us3 & 0xFF), ab40, ab41, ab42, ab43, ab44, ab45, ab46, ab47 }
+		static const DLSID defName = { ul1, us2, us3, { ab40, ab41, ab42, ab43, ab44, ab45, ab46, ab47 } }
 #endif
 
-
+static inline CFUUIDBytes CFUUIDBytesFromDLSID(DLSID theBytes)
+{
+	CFUUIDBytes tmp = {0};
+	memcpy(&tmp, &theBytes, sizeof(CFUUIDBytes));
+	return tmp;
+}
 
 #endif /* _INC_DLSMAC */
-
