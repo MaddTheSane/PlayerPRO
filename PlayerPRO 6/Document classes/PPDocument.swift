@@ -135,12 +135,31 @@ import AudioToolbox
     }
 
 	override func writeToURL(url: NSURL, ofType typeName: String, error outError: NSErrorPointer) -> Bool {
-		outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
-		return false
+		if typeName != MADNativeUTI {
+			outError.memory = NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
+			return false
+		} else {
+			let anErr = theMusic.saveMusicToURL(url)
+			if anErr != .NoErr {
+				outError.memory = CreateErrorFromMADErrorType(anErr)
+				return false
+			} else {
+				return true
+			}
+		}
 	}
 	
 	override func readFromURL(url: NSURL, ofType typeName: String, error outError: NSErrorPointer) -> Bool {
-		outError.memory = NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
+		if typeName != MADNativeUTI {
+			outError.memory = NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
+			return false
+		}
+		if let aMusicObj = PPMusicObject(URL: url, driver: theDriver) {
+			theMusic = aMusicObj
+			
+			return true
+		}
+		outError.memory = CreateErrorFromMADErrorType(.ReadingErr)
 		return false
 	}
 	

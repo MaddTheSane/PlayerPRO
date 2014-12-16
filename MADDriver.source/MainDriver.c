@@ -2025,10 +2025,6 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 	
 	
 	/**** PARTITION ****/
-	//TODO: dispatch this
-	for (i = MDriver->header->numPat; i < MAXPATTERN; i++)
-		MDriver->partition[i] = NULL;
-	
 	for (i = 0; i < MDriver->header->numPat; i++) {
 		/** Lecture du header de la partition **/
 		inOutCount = sizeof(PatHeader);
