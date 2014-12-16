@@ -45,7 +45,7 @@ import SwiftAdditions
 		var rate: UInt32 = 0
 		var stereo = false
 		
-		let sndPtr = ConvertWAVCFURL(sampleURL as CFURL, &soundSize, &loopStart, &loopEnd, &sampleSize, &rate, &stereo)
+		let sndPtr = ConvertWAVCFURL(sampleURL, &soundSize, &loopStart, &loopEnd, &sampleSize, &rate, &stereo)
 		
 		if sndPtr == nil {
 			return .ReadingErr

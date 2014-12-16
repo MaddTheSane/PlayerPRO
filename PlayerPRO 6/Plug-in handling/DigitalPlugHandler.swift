@@ -19,12 +19,11 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, SequenceType, Sliceable {
 	override init() {
 		let defaultPlugLocs = swiftDefaultPlugInLocations()
 		for aPlugLoc in defaultPlugLocs {
-			let somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, "plugin")
-			if (somePlugs != nil) {
+			if let somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, "plugin") {
 				for var i = 0; i < CFArrayGetCount(somePlugs); i++ {
-					var tempCFBundle = unsafeBitCast(CFArrayGetValueAtIndex(somePlugs, i), CFBundle.self)
+					let tempCFBundle = unsafeBitCast(CFArrayGetValueAtIndex(somePlugs, i), Unmanaged<CFBundle>.self).takeRetainedValue()
 					let tempBundle = NSBundle(URL: CFBundleCopyBundleURL(tempCFBundle));
-					if let tempObj = PPDigitalPlugInObject(bundle: tempBundle) as PPDigitalPlugInObject? {
+					if let tempObj = PPDigitalPlugInObject(bundle: tempBundle) {
 						digitalPlugs.append(tempObj)
 					}
 				}

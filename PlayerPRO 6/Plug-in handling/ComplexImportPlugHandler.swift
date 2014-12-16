@@ -18,7 +18,7 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, SequenceType 
 		var defaultManager = NSFileManager.defaultManager()
 		
 		for url in defaultPlugLocs {
-			if let components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: NSDirectoryEnumerationOptions(0), error: nil) as [NSURL]? {
+			if let components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: nil, error: nil) as [NSURL]? {
 				for component in components {
 					if component.pathExtension != "ppextimp" {
 						continue
@@ -29,16 +29,8 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, SequenceType 
 						continue
 					}
 					
-					/*
-					let anonClass: AnyClass = aClass!
-					let ohaiClass = anonClass as NSObject.Type
-					
-					let aVal = ohaiClass()
-					*/
-					var aPlug = PPComplexImportPlugObject(bundle: theBundle) as PPComplexImportPlugObject?
-					
-					if aPlug != nil {
-						plugIns.append(aPlug!)
+					if let aPlug = PPComplexImportPlugObject(bundle: theBundle) {
+						plugIns.append(aPlug)
 					}
 				}
 			}

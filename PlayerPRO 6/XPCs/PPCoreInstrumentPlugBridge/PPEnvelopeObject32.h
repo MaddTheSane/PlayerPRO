@@ -13,7 +13,6 @@
 {
 	@private
 	EnvRec envelopeRec;
-	EnvRec *writeBackVal;
 }
 @property (readonly) EnvRec envelopeRec;
 @property short position;

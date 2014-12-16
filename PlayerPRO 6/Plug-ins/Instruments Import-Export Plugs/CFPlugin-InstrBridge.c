@@ -87,7 +87,7 @@ static PPInstrumentPlugin CFInstrPlugFormat =
 static CFInstrPlugType *_allocCFInstrPlugType(CFUUIDRef factoryID)
 {
 	//  Allocate memory for the new instance.
-	CFInstrPlugType *newOne = (CFInstrPlugType *)malloc(sizeof(CFInstrPlugType));
+	CFInstrPlugType *newOne = (CFInstrPlugType *)calloc(sizeof(CFInstrPlugType), 1);
 	
 	//  Point to the function table
 	newOne->_PPROCFPlugFormat = &CFInstrPlugFormat;
@@ -132,4 +132,3 @@ EXP void * PLUGINFACTORY(CFAllocatorRef allocator, CFUUIDRef typeID)
 		return NULL;
 	}
 }
-

@@ -65,7 +65,7 @@ static const int finetune[16] = {
 	NSData *testData = [aHandle readDataOfLength:headerLen];
 	[aHandle closeFile];
 	
-	return [testData isEqual:headerData];
+	return [testData isEqualToData:headerData];
 }
 
 - (MADErr)importSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID driver:(PPDriver *)driver
