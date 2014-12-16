@@ -1524,6 +1524,7 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 	if (!curFile) {
 		return MADWritingErr;
 	}
+	CFWriteStreamOpen(curFile);
 	CFStreamStatus theStat = CFWriteStreamGetStatus(curFile);
 	while (theStat != kCFStreamStatusOpen && theStat != kCFStreamStatusError) {
 		theStat = CFWriteStreamGetStatus(curFile);
