@@ -20,17 +20,19 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, SequenceType 
 		for url in defaultPlugLocs {
 			if let components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: nil, error: nil) as [NSURL]? {
 				for component in components {
-					if component.pathExtension != "ppextimp" {
-						continue
-					}
-					let theBundle = NSBundle(URL: component)
-					let aClass: AnyClass? = theBundle?.principalClass
-					if aClass == nil {
-						continue
-					}
-					
-					if let aPlug = PPComplexImportPlugObject(bundle: theBundle) {
-						plugIns.append(aPlug)
+					if let ext = component.pathExtension {
+						if ext.compare("ppextimp", options:  .CaseInsensitiveSearch) != .OrderedSame {
+							continue
+						}
+						let theBundle = NSBundle(URL: component)
+						let aClass: AnyClass? = theBundle?.principalClass
+						if aClass == nil {
+							continue
+						}
+						
+						if let aPlug = PPComplexImportPlugObject(bundle: theBundle) {
+							plugIns.append(aPlug)
+						}
 					}
 				}
 			}

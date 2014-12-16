@@ -24,13 +24,10 @@
 		self.filterPlugs = [[NSMutableArray alloc] initWithCapacity:20];
 		
 		NSArray *plugLocs = DefaultPlugInLocations();
-		NSInteger x;
 		for (NSURL *aPlugLoc in plugLocs) {
-			CFIndex		PlugNums;
-			CFArrayRef	somePlugs;
-			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef)aPlugLoc, CFSTR("plugin"));
-			PlugNums = CFArrayGetCount(somePlugs);
-			for (x = 0; x < PlugNums; x++) {
+			CFArrayRef	somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef)aPlugLoc, CFSTR("plugin"));
+			CFIndex		PlugNums = CFArrayGetCount(somePlugs);
+			for (NSInteger x = 0; x < PlugNums; x++) {
 				@autoreleasepool {
 					CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
 					NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(tempBundleRef))];
@@ -52,15 +49,6 @@
 {
 	return [filterPlugs copy];
 }
-
-#if 0
-- (MADErr)callDigitalPlugAtIndex:(NSInteger)idx sampleData:(sData*)theInsData startLength:(long)start endLength:(long)end stereoMode:(short)stereo info:(PPInfoPlug *)theInfo
-{
-	PPFilterPlugObject *tmp = filterPlugs[idx];
-	theInfo->fileType = 'PLug';
-	return [tmp callPluginWithData:theInsData selectionStart:start selectionEnd:end plugInInfo:theInfo stereoMode:stereo];
-}
-#endif
 
 - (PPFilterPlugObject *)objectAtIndexedSubscript:(NSInteger)index;
 {
@@ -94,6 +82,12 @@
 {
 	NSBundle *theBund = [NSBundle bundleWithPath:thePath];
 	[self addPlugInFromBundle:theBund];
+}
+
+- (void)beginWithPlugAtIndex:(NSInteger)idx data:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handler
+{
+	PPFilterPlugObject *obj = filterPlugs[idx];
+	[obj beginRunWithData:theData selectionRange:selRange onlyCurrentChannel:StereoMode driver:driver parentDocument:document handler:handler];
 }
 
 - (NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState *)state objects:(id __unsafe_unretained [])buffer count:(NSUInteger)len

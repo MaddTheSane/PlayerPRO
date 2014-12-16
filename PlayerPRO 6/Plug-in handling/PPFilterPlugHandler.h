@@ -19,7 +19,7 @@
 - (NSUInteger)plugInCount;
 - (PPFilterPlugObject *)objectAtIndexedSubscript:(NSInteger)index;
 
-//- (MADErr)callDigitalPlugAtIndex:(NSInteger)idx sampleData:(sData*)theInsData startLength:(long)start endLength:(long)end stereoMode:(short)stereo info:(PPInfoPlug *)theInfo;
+- (void)beginWithPlugAtIndex:(NSInteger)idx data:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handler;
 
 - (void)addPlugInFromPath:(NSString*)thePath;
 - (void)addPlugInFromURL:(NSURL *)urlpath;

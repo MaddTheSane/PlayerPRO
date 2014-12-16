@@ -34,7 +34,7 @@ private func ==(rhs: NSData, lhs: NSData) -> Bool {
 			var headerData = NSMutableData(data: "MThd".dataUsingEncoding(NSASCIIStringEncoding, allowLossyConversion: true)!)
 			let headerAddlData: [Int8] = [0, 0, 0, 6, 0]
 			headerData.appendBytes(headerAddlData, length: headerAddlData.count)
-			return headerData.copy() as NSData
+			return NSData(data: headerData)
 		}
 		var myErr = MADErr.NoErr;
 		if let aFile = NSFileHandle(forReadingFromURL:theURL, error: nil) {
