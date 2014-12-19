@@ -48,8 +48,6 @@ internal var globalMadLib: PPLibrary {
 @NSApplicationMain
 class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDelegate {
 	private var exportObjects = [ExportObject]()
-	private var _trackerDict = [String: [String]]()
-	private var _trackerUTIs = [String]()
 	var plugInInfos = [PlugInInfo]()
 	let madLib = PPLibrary()
 	let instrumentPlugHandler = PPInstrumentPlugHandler()
@@ -65,41 +63,40 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	@IBOutlet weak var newInstrumentMenu:		NSMenu!
 	@IBOutlet weak var exportStatusPanel:		NSPanel!
 	
-	var trackerDict: [String: [String]] {
-		get {
-			if _trackerDict.isEmpty || _trackerDict.count != (Int(madLib.pluginCount) + 2 + complexImport.count) {
-				let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
-				let localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
-				var tmpTrackerDict = [localMADKName: [MADNativeUTI], localGenericMADName: [MADGenericUTI]] as [String: [String]]
-				
-				for objRaw in madLib {
-					let obj = objRaw as PPLibraryObject
-					tmpTrackerDict[obj.menuName] = obj.UTITypes
-				}
-				
-				for obj in complexImport {
-					tmpTrackerDict[obj.menuName] = (obj.UTITypes) as? [String]
-				}
-				
-				_trackerDict = tmpTrackerDict
-			}
-			return _trackerDict
+	private(set) lazy var trackerDict: [String: [String]] = {
+		let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
+		let localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
+		var tmpTrackerDict = [localMADKName: [MADNativeUTI], localGenericMADName: [MADGenericUTI]] as [String: [String]]
+		
+		for objRaw in self.madLib {
+			let obj = objRaw as PPLibraryObject
+			tmpTrackerDict[obj.menuName] = obj.UTITypes
 		}
-	}
+		
+		return tmpTrackerDict
+		}()
 	
-	var trackerUTIs: [String] {
-		get {
-			if _trackerUTIs.isEmpty {
-				let arrayOfUTIs = trackerDict.values
-				var toAddUTI = [String]()
-				for anArray in arrayOfUTIs {
-					toAddUTI += anArray
-				}
-				_trackerUTIs = toAddUTI
-			}
-			return _trackerUTIs
+	private(set) lazy var importDict: [String: [String]] = {
+		let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
+		let localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
+		var tmpTrackerDict = self.trackerDict
+		
+		for obj in self.complexImport {
+			tmpTrackerDict[obj.menuName] = (obj.UTITypes) as? [String]
 		}
-	}
+		
+		return tmpTrackerDict
+		}()
+
+	
+	private(set) lazy var trackerUTIs: [String] = {
+		let arrayOfUTIs = self.trackerDict.values
+		var toAddUTI = [String]()
+		for anArray in arrayOfUTIs {
+			toAddUTI += anArray
+		}
+		return toAddUTI
+		}()
 	
 	class func globalMADLibrary() -> PPLibrary {
 		return globalMadLib
@@ -437,17 +434,20 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		//TODO: check for valid extension.
 		for aUTI in trackerUTIs {
 			if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
-				let theWrap = PPMusicObject(URL: theURL1, library: madLib)
-				
-				self.addDocument(PPDocument(music: theWrap))
-				return true;
+				if let theWrap = PPMusicObject(URL: theURL1, library: madLib, error: nil) {
+					
+					self.addDocument(PPDocument(music: theWrap))
+					return true;
+				} else {
+					return false
+				}
 			}
 		}
 		
 		for obj in instrumentPlugHandler {
 			for aUTI in obj.UTITypes as [String] {
 				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
-					var theErr:NSError? = nil
+					var theErr: NSError? = nil
 					if (!importSampleFromURL(theURL, makeUserSelectInstrument: true, error:&theErr)) {
 						NSAlert(error: theErr!).runModal()
 						return false;
@@ -542,7 +542,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			}
 		}
 		
-		if let av = OpenPanelViewController(openPanel: panel, trackerDictionary: trackerDict, instrumentDictionary: samplesDict, additionalDictionary: otherDict) {
+		if let av = OpenPanelViewController(openPanel: panel, trackerDictionary: importDict, instrumentDictionary: samplesDict, additionalDictionary: otherDict) {
 			av.setupDefaults()
 			av.beginWithCompletionHandler { (retval) -> Void in
 				if retval == NSFileHandlingPanelOKButton {

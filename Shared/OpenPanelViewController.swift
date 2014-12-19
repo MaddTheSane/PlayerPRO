@@ -283,7 +283,7 @@ class OpenPanelViewController: NSViewController {
 		// Do view setup here.
 		
 		if let fileTypeSelectionMenu = popUp?.menu {
-			let moreThanTwoTypes = hasMoreThanTwoTypes();
+			let moreThanTwoTypes = hasMoreThanTwoTypes
 			if (moreThanTwoTypes) {
 				let mi0 = NSMenuItem(title: "All Openable Files", action: "selectUTI:", keyEquivalent: "")
 				mi0.tag = utiType.allType.rawValue
@@ -371,17 +371,17 @@ class OpenPanelViewController: NSViewController {
 		openPanel.accessoryView = self.view
 	}
 	
-	private func hasMoreThanTwoTypes() -> Bool {
-		let utiCount = utiObjects.count;
+	private var hasMoreThanTwoTypes: Bool {
+		let utiCount = utiObjects.count
 		if (utiCount < 2) {
-			return false;
+			return false
 		}
 		
 		for i in 1 ..< utiCount {
-			let obj1 = utiObjects[i - 1];
-			let obj2 = utiObjects[i];
+			let obj1 = utiObjects[i - 1]
+			let obj2 = utiObjects[i]
 			if (obj1.theUtiType != obj2.theUtiType) {
-				return true;
+				return true
 			}
 		}
 		return false;

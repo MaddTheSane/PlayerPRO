@@ -779,6 +779,7 @@ return; \
 {
 	char fileType[5];
 	OSErr theOSErr = MADNoErr;
+	NSError *error;
 	if (self.music) {
 		[madDriver stop];
 		[madDriver stopDriver];
@@ -795,7 +796,7 @@ return; \
 		return NO;
 	}
 	
-	self.music = [[PPMusicObject alloc] initWithURL:musicToLoad library:madLib];
+	self.music = [[PPMusicObject alloc] initWithURL:musicToLoad library:madLib error:&error];
 	if (!self.music) {
 		theOSErr = MADReadingErr;
 	}
