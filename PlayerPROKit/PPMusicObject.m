@@ -449,62 +449,77 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return self;
 }
 
-- (instancetype)initWithURL:(NSURL *)url
+- (instancetype)initWithURL:(NSURL *)url error:(out NSError* __autoreleasing*)error
 {
 	if (self = [super init]) {
-		if (MADLoadMusicCFURLFile(NULL, &currentMusic, "MADK", (__bridge CFURLRef)url) != MADNoErr)
+		MADErr iErr = MADLoadMusicCFURLFile(NULL, &currentMusic, "MADK", (__bridge CFURLRef)url);
+		if (iErr != MADNoErr) {
+			if (error) {
+				*error = PPCreateErrorFromMADErrorType(iErr);
+			}
 			return nil;
+		}
 		
 		self.filePath = url;
+		if (error) {
+			*error = nil;
+		}
 	}
 	
 	return self;
 }
 
-- (instancetype)initWithPath:(NSString *)url
+- (instancetype)initWithPath:(NSString *)url error:(out NSError* __autoreleasing*)error
 {
-	return self = [self initWithURL:[NSURL fileURLWithPath:url]];
+	return self = [self initWithURL:[NSURL fileURLWithPath:url] error:error];
 }
 
-- (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib
+- (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error
 {
 	char type[5];
 	if (MADMusicIdentifyCFURL(theLib._madLib, type, (__bridge CFURLRef)(url)) != MADNoErr) {
 		return nil;
 	}
 	
-	return self = [self initWithURL:url type:type library:theLib];
+	return self = [self initWithURL:url type:type library:theLib error:error];
 }
 
-- (instancetype)initWithPath:(NSString *)path type:(in const char*)type library:(PPLibrary *)theLib
+- (instancetype)initWithPath:(NSString *)path type:(in const char*)type library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error
 {
-	return self = [self initWithURL:[NSURL fileURLWithPath:path] type:type library:theLib];
+	return self = [self initWithURL:[NSURL fileURLWithPath:path] type:type library:theLib error:error];
 }
 
-- (instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type library:(PPLibrary *)theLib
+- (instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error
 {
-	return self = [self initWithURL:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] library:theLib];
+	return self = [self initWithURL:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] library:theLib error:error];
 }
 
-- (instancetype)initWithPath:(NSString *)url stringType:(NSString*)type library:(PPLibrary *)theLib
+- (instancetype)initWithPath:(NSString *)url stringType:(NSString*)type library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error
 {
-	return self = [self initWithPath:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] library:theLib];
+	return self = [self initWithPath:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] library:theLib error:error];
 }
 
-- (instancetype)initWithURL:(NSURL *)url type:(in const char*)type library:(PPLibrary *)theLib
+- (instancetype)initWithURL:(NSURL *)url type:(in const char*)type library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error
 {
 	if (self = [super init]) {
-		if (MADLoadMusicCFURLFile(theLib._madLib, &currentMusic, (char*)type, (__bridge CFURLRef)(url)) != MADNoErr) {
+		MADErr iErr = MADLoadMusicCFURLFile(theLib._madLib, &currentMusic, (char*)type, (__bridge CFURLRef)(url));
+		if (iErr != MADNoErr) {
+			if (error) {
+				*error = PPCreateErrorFromMADErrorType(iErr);
+			}
 			return nil;
 		}
 		self.filePath = url;
+		if (error) {
+			*error = nil;
+		}
 	}
 	return self;
 }
 
-- (instancetype)initWithPath:(NSString *)url library:(PPLibrary *)theLib
+- (instancetype)initWithPath:(NSString *)url library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error
 {
-	return [self initWithURL:[NSURL fileURLWithPath:url] library:theLib];
+	return [self initWithURL:[NSURL fileURLWithPath:url] library:theLib error:error];
 }
 
 - (instancetype)init
@@ -512,40 +527,40 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return self = [self initWithMusicStruct:CreateFreeMADK() copy:NO];
 }
 
-- (instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type driver:(PPDriver *)theDriv
+- (instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type driver:(PPDriver *)theDriv error:(out NSError* __autoreleasing*)error
 {
-	return [self initWithURL:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] driver:theDriv];
+	return [self initWithURL:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] driver:theDriv error:error];
 }
 
-- (instancetype)initWithPath:(NSString *)url stringType:(NSString*)type driver:(PPDriver *)theDriv
+- (instancetype)initWithPath:(NSString *)url stringType:(NSString*)type driver:(PPDriver *)theDriv error:(out NSError* __autoreleasing*)error
 {
-	return [self initWithPath:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] driver:theDriv];
+	return [self initWithPath:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] driver:theDriv error:error];
 }
 
-- (instancetype)initWithURL:(NSURL *)url type:(in const char*)type driver:(PPDriver *)theLib
+- (instancetype)initWithURL:(NSURL *)url type:(in const char*)type driver:(PPDriver *)theLib error:(out NSError* __autoreleasing*)error
 {
-	if (self = [self initWithURL:url type:type library:theLib.theLibrary]) {
+	if (self = [self initWithURL:url type:type library:theLib.theLibrary error:error]) {
 		[self attachToDriver:theLib];
 	}
 	return nil;
 }
 
-- (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib
+- (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib error:(out NSError* __autoreleasing*)error
 {
-	if (self = [self initWithURL:url library:theLib.theLibrary]) {
+	if (self = [self initWithURL:url library:theLib.theLibrary error:error]) {
 		[self attachToDriver:theLib];
 	}
 	return nil;
 }
 
-- (instancetype)initWithPath:(NSString *)url type:(in const char*)type driver:(PPDriver *)theLib
+- (instancetype)initWithPath:(NSString *)url type:(in const char*)type driver:(PPDriver *)theLib error:(out NSError* __autoreleasing*)error
 {
-	return [self initWithURL:[NSURL fileURLWithPath:url] type:type driver:theLib];
+	return [self initWithURL:[NSURL fileURLWithPath:url] type:type driver:theLib error:error];
 }
 
-- (instancetype)initWithPath:(NSString *)url driver:(PPDriver *)theLib
+- (instancetype)initWithPath:(NSString *)url driver:(PPDriver *)theLib error:(out NSError* __autoreleasing*)error
 {
-	return [self initWithURL:[NSURL fileURLWithPath:url] driver:theLib];
+	return [self initWithURL:[NSURL fileURLWithPath:url] driver:theLib error:error];
 }
 
 - (void)attachToDriver:(PPDriver *)theDriv

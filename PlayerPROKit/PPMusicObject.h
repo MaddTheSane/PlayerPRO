@@ -43,27 +43,27 @@
 
 - (instancetype)init;
 // Creates a music object from the supplied MADK file ONLY
-- (instancetype)initWithURL:(NSURL *)url NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithPath:(NSString *)url;
+- (instancetype)initWithURL:(NSURL *)url error:(out NSError* __autoreleasing*)error NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithPath:(NSString *)url error:(out NSError* __autoreleasing*)error;
 
 // Creates a music object from any supported tracker type.
-- (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib;
-- (instancetype)initWithPath:(NSString *)url library:(PPLibrary *)theLib;
+- (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error;
+- (instancetype)initWithPath:(NSString *)url library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error;
 
 // Creates a music object from the specified music type.
 // If the type isn't available, it returns nil.
-- (instancetype)initWithURL:(NSURL *)url type:(in const char*)type library:(PPLibrary *)theLib NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithPath:(NSString *)path type:(in const char*)type library:(PPLibrary *)theLib;
-- (instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type library:(PPLibrary *)theLib;
-- (instancetype)initWithPath:(NSString *)path stringType:(NSString*)type library:(PPLibrary *)theLib;
+- (instancetype)initWithURL:(NSURL *)url type:(in const char*)type library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithPath:(NSString *)path type:(in const char*)type library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error;
+- (instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error;
+- (instancetype)initWithPath:(NSString *)path stringType:(NSString*)type library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error;
 
 // Creates a music object from any supported tracker type, also attaching a driver to the music.
-- (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib;
-- (instancetype)initWithPath:(NSString *)path driver:(PPDriver *)theLib;
-- (instancetype)initWithURL:(NSURL *)url type:(in const char*)type driver:(PPDriver *)theLib;
-- (instancetype)initWithPath:(NSString *)path type:(in const char*)type driver:(PPDriver *)theLib;
-- (instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type driver:(PPDriver *)theDriv;
-- (instancetype)initWithPath:(NSString *)path stringType:(NSString*)type driver:(PPDriver *)theDriv;
+- (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib error:(out NSError* __autoreleasing*)error;
+- (instancetype)initWithPath:(NSString *)path driver:(PPDriver *)theLib error:(out NSError* __autoreleasing*)error;
+- (instancetype)initWithURL:(NSURL *)url type:(in const char*)type driver:(PPDriver *)theLib error:(out NSError* __autoreleasing*)error;
+- (instancetype)initWithPath:(NSString *)path type:(in const char*)type driver:(PPDriver *)theLib error:(out NSError* __autoreleasing*)error;
+- (instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type driver:(PPDriver *)theDriv error:(out NSError* __autoreleasing*)error;
+- (instancetype)initWithPath:(NSString *)path stringType:(NSString*)type driver:(PPDriver *)theDriv error:(out NSError* __autoreleasing*)error;
 
 /*!
  *	Initializes a music object based on a music struct, copying if specified.

@@ -361,7 +361,7 @@
 
 - (PPMusicObject *)loadMusicFile:(NSString *)path
 {
-	PPMusicObject *theMus = [[PPMusicObject alloc] initWithPath:path library:self.theLibrary];
+	PPMusicObject *theMus = [[PPMusicObject alloc] initWithPath:path library:self.theLibrary error:nil];
 	if (theMus) {
 		[theMus attachToDriver:self];
 	}
@@ -371,7 +371,7 @@
 
 - (PPMusicObject *)loadMusicURL:(NSURL*)url
 {
-	PPMusicObject *theMus = [[PPMusicObject alloc] initWithURL:url library:self.theLibrary];
+	PPMusicObject *theMus = [[PPMusicObject alloc] initWithURL:url library:self.theLibrary error:nil];
 	if (theMus) {
 		[theMus attachToDriver:self];
 	}
