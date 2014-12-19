@@ -14,10 +14,6 @@ import Foundation
 private let kMusicListURLKey = "URLKey";
 private let kMusicListDateAddedKey = "DateAdded"
 
-private func ==(lhs: NSData, rhs: NSData) -> Bool {
-	return lhs.isEqualToData(rhs)
-}
-
 private func URLsPointingToTheSameFile(urlA: NSURL, urlB: NSURL) -> Bool {
 	var dat1: AnyObject? = nil
 	var dat2: AnyObject? = nil
@@ -30,7 +26,7 @@ private func URLsPointingToTheSameFile(urlA: NSURL, urlB: NSURL) -> Bool {
 		bothAreValid = false;
 	}
 	if bothAreValid {
-		theSame = (dat1 as NSData) == (dat2 as NSData)
+		theSame = (dat1 as NSData).isEqualToData((dat2 as NSData))
 	}
 	return theSame
 }
