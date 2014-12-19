@@ -606,8 +606,6 @@ typedef struct MADDriverBase {
 	/** Public variables **/
 	/**********************/
 	
-	MADDriverSettings		DriverSettings;									// Driver SetUp -- READ ONLY --
-	
 	/**  Current music in memory, loaded with RLoadMusic() by example **/
 	
 	MADMusic		*curMusic;										// Current music played by this driver, it can be NULL !!!

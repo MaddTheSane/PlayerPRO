@@ -89,7 +89,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	public func newPcmd() -> UnsafeMutablePointer<Pcmd>? {
 		if let newSize = structSize {
 			var ourIntPcmd = newIntPcmd()!
-			var toRet = MADIntPcmdToPcmd(ourIntPcmd, true)
+			let toRet = MADIntPcmdToPcmd(ourIntPcmd, true)
 			return toRet
 		} else {
 			return nil;
@@ -137,30 +137,30 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	
 	public mutating func addRow() {
 		#if false
-		length += 1
-		for i in 0 ..< tracks {
+			length += 1
+			for i in 0 ..< tracks {
 			myCmd.append(Cmd())
-		}
-	#else
-	// Brute forcing our way, because I can't get it to work the other way yet.
-	var anewPcmd = PPKPcmd(tracks: self.tracks, startTrack: self.trackStart, rows: length + 1, startPosition: positionStart)
-	
-	for i in 0 ..< (tracks * length) {
-	let oldCmd = getCommand(row: i % length, track: i / length)
-		anewPcmd.replaceCommand(row: i % length, track: i / length, command: oldCmd)
-	}
-	
-	self = anewPcmd
-	#endif
+			}
+			#else
+			// Brute forcing our way, because I can't get it to work the other way yet.
+			var anewPcmd = PPKPcmd(tracks: self.tracks, startTrack: self.trackStart, rows: length + 1, startPosition: positionStart)
+			
+			for i in 0 ..< (tracks * length) {
+				let oldCmd = getCommand(row: i % length, track: i / length)
+				anewPcmd.replaceCommand(row: i % length, track: i / length, command: oldCmd)
+			}
+			
+			self = anewPcmd
+		#endif
 	}
 
 	public mutating func addTrack() {
 		#if false
-		for var i = length; i > 0; i-- {
+			for var i = length; i > 0; i-- {
 			let acmd = Cmd()
 			myCmd.insert(Cmd(), atIndex: Int(i * tracks))
-		}
-		tracks += 1
+			}
+			tracks += 1
 			#else
 			// Brute forcing our way, because I can't get it to work the other way yet.
 			var anewPcmd = PPKPcmd(tracks: self.tracks + 1, startTrack: self.trackStart, rows: length, startPosition: positionStart)
@@ -171,7 +171,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 			}
 			
 			self = anewPcmd
-			#endif
+		#endif
 	}
 	
 	public mutating func modifyCommand(row row1: Int16, track track1: Int16, commandBlock: (inout Cmd)-> ()) {

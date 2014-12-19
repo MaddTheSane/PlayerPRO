@@ -26,7 +26,7 @@ static OSStatus CAAudioCallback(void						*inRefCon,
 	
 	MADDriverRec *theRec = (MADDriverRec*)inRefCon;
 	if (theRec->base.Reading == false) {
-		switch(theRec->base.DriverSettings.outPutBits) {
+		switch(theRec->DriverSettings.outPutBits) {
 			case 8:
 				memset(theRec->CABuffer, 0x80, theRec->BufSize);
 				break;
@@ -45,7 +45,7 @@ static OSStatus CAAudioCallback(void						*inRefCon,
 		while (remaining > 0) {
 			if (theRec->CABufOff >= theRec->BufSize) {
 				if (!DirectSave(theRec->CABuffer, NULL, theRec)) {
-					switch(theRec->base.DriverSettings.outPutBits) {
+					switch(theRec->DriverSettings.outPutBits) {
 						case 8:
 							memset(theRec->CABuffer, 0x80, theRec->BufSize);
 							break;
@@ -97,7 +97,7 @@ MADErr initCoreAudio(MADDriverRec *inMADDriver)
 	audDes.mFormatID = kAudioFormatLinearPCM;
 	audDes.mFormatFlags = kLinearPCMFormatFlagIsPacked | kLinearPCMFormatFlagIsSignedInteger | kAudioFormatFlagsNativeEndian;
 	
-	switch (inMADDriver->base.DriverSettings.outPutMode) {
+	switch (inMADDriver->DriverSettings.outPutMode) {
 		case MonoOutPut:
 			outChn = 1;
 			break;
@@ -113,8 +113,8 @@ MADErr initCoreAudio(MADDriverRec *inMADDriver)
 			break;
 	}
 	audDes.mChannelsPerFrame = outChn;
-	audDes.mSampleRate = inMADDriver->base.DriverSettings.outPutRate;
-	audDes.mBitsPerChannel = inMADDriver->base.DriverSettings.outPutBits;
+	audDes.mSampleRate = inMADDriver->DriverSettings.outPutRate;
+	audDes.mBitsPerChannel = inMADDriver->DriverSettings.outPutBits;
 	audDes.mFramesPerPacket = 1;
 	audDes.mBytesPerFrame = audDes.mBitsPerChannel * audDes.mChannelsPerFrame / 8;
 	audDes.mBytesPerPacket = audDes.mBytesPerFrame * audDes.mFramesPerPacket;

@@ -137,7 +137,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 						intDriver->base.Pat = intDriver->base.curMusic->header->oPointers[intDriver->base.PL];
 						
 						MADCleanDriver(intDriver);
-						if (!intDriver->base.DriverSettings.repeatMusic)
+						if (!intDriver->DriverSettings.repeatMusic)
 							intDriver->base.Reading = false;
 						
 						intDriver->base.musicEnd = true;
@@ -158,7 +158,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 					if (intDriver->base.PL > ch->arg) {		// Evite les boucles
 						intDriver->base.musicEnd = true;
 						
-						if (!intDriver->base.DriverSettings.repeatMusic)
+						if (!intDriver->DriverSettings.repeatMusic)
 							intDriver->base.Reading = false;
 					}
 					
@@ -170,7 +170,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 						intDriver->base.Pat = intDriver->base.curMusic->header->oPointers[intDriver->base.PL];
 						
 						MADCleanDriver(intDriver);
-						if (!intDriver->base.DriverSettings.repeatMusic)
+						if (!intDriver->DriverSettings.repeatMusic)
 							intDriver->base.Reading = false;
 						
 						intDriver->base.musicEnd = true;

@@ -35,11 +35,11 @@ void Sampler8in8AddPolyStereo(Channel *curVoice, char* ASCBuffer, short chanNo, 
 	
 #if defined(HAS_LONG_DOUBLE)
 	{
-		long double temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->base.DriverSettings.outPutRate) * intDriver->base.DriverSettings.oversampling);
+		long double temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 		aDD = temp * (1 << BYTEDIV);
 	}
 #else
-	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->base.DriverSettings.outPutRate) * intDriver->base.DriverSettings.oversampling);
+	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 #endif
 	
 	///
@@ -91,11 +91,11 @@ void Sampler8in8AddPoly(Channel *curVoice, char* ASCBuffer, short chanNo, MADDri
 	
 #if defined(HAS_LONG_DOUBLE)
 	{
-		long double temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->base.DriverSettings.outPutRate) * intDriver->base.DriverSettings.oversampling);
+		long double temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 		aDD = temp * (1 << BYTEDIV);
 	}
 #else
-	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->base.DriverSettings.outPutRate) * intDriver->base.DriverSettings.oversampling);
+	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 #endif
 	///
 	
@@ -141,11 +141,11 @@ void Sampler16in8AddPolyStereo(Channel *curVoice, char* ASCBuffer, short chanNo,
 	
 #if defined(HAS_LONG_DOUBLE)
 	{
-		long double temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->base.DriverSettings.outPutRate) * intDriver->base.DriverSettings.oversampling);
+		long double temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 		aDD = temp * (1 << BYTEDIV);
 	}
 #else
-	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->base.DriverSettings.outPutRate) * intDriver->base.DriverSettings.oversampling);
+	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 #endif
 	
 	///
@@ -197,11 +197,11 @@ void Sampler16in8AddPoly(Channel *curVoice, char* ASCBuffer, short chanNo, MADDr
 	
 #if defined(HAS_LONG_DOUBLE)
 	{
-		long double temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->base.DriverSettings.outPutRate) * intDriver->base.DriverSettings.oversampling);
+		long double temp = ((long double)AMIGA_CLOCKFREQ2) / (long double) (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 		aDD = temp * (1 << BYTEDIV);
 	}
 #else
-	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->base.DriverSettings.outPutRate) * intDriver->base.DriverSettings.oversampling);
+	aDD = (AMIGA_CLOCKFREQ2 << BYTEDIV) / (curVoice->period * (intDriver->DriverSettings.outPutRate) * intDriver->DriverSettings.oversampling);
 #endif
 	///
 	
@@ -256,7 +256,7 @@ void Play8PolyPhonic(MADDriverRec *intDriver)
 {
 	long i;
 	
-	for (i = 0 ; i < intDriver->base.DriverSettings.numChn; i++)	 {
-		Sample8BufferAddPoly(&intDriver->base.chan[i], intDriver->IntDataPtr + i, intDriver->base.DriverSettings.numChn, intDriver);
+	for (i = 0 ; i < intDriver->DriverSettings.numChn; i++)	 {
+		Sample8BufferAddPoly(&intDriver->base.chan[i], intDriver->IntDataPtr + i, intDriver->DriverSettings.numChn, intDriver);
 	}
 }
