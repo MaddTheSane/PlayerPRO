@@ -132,7 +132,7 @@ MADMusic* CreateFreeMADK()
 	}
 	// ******* PARTITION *********
 	
-	for(i=0; i < MADI->numPat; i++) {
+	for (i = 0; i < MADI->numPat; i++) {
 		music->partition[i] = (PatData*)calloc(sizeof(PatHeader) + MADI->numChn * 64 * sizeof(Cmd), 1);
 		if (music->partition[i] == NULL) {
 			for(i = 0; i < MADI->numPat; i++) {
@@ -147,7 +147,7 @@ MADMusic* CreateFreeMADK()
 		}
 		
 		
-		music->partition[i]->header.size 		= 64L;
+		music->partition[i]->header.size 		= 64;
 		music->partition[i]->header.compMode 	= 'NONE';
 		music->partition[i]->header.patBytes 	= 0;
 		music->partition[i]->header.unused2 	= 0;
