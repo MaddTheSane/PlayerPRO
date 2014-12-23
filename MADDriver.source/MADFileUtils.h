@@ -29,7 +29,7 @@
  *	@abstract	File operation API used by PlayerPRO.
  *	@discussion	This header was used as a bridge between Windows and Mac OS (pre-OS X) file APIs. <br>
  *				PlayerPROCore 6's version is a thin wrapper over the POSIX file APIs.
- *				If you need more functionality, use another API instead.
+ *				If you need more functionality, you can use another API instead.
  */
 
 #ifdef _MAC_H
@@ -89,7 +89,7 @@ PPEXPORT UNFILE	iFileOpenWrite(const char *name);
  * @discussion	\c type is ignored on platforms that aren't OS X. This includes iOS.<br>
  *				\c type is mostly used on pre-OS X versions of Mac OS, and is rarely used nowadays.
  *				It has been replaced by file extensions denoting the file type.<br>
- *				If \c type is zero, the file type is not set.
+ *				If \c type is \c 0, the file type is not set.
  */
 PPEXPORT void	iFileCreate(const char *path, MADFourChar type);
 
@@ -106,28 +106,28 @@ PPEXPORT long	iGetEOF(UNFILE iFileRefI);
 
 /*!
  * @function	iRead
- * @abstract	Reads data in file referenced from iFileRefI
- * @result		An error value. 0, or <code>MADNoErr</code> if there was no error.
+ * @abstract	Reads data in file referenced from \c iFileRefI
+ * @result		An error value. 0, or \c MADNoErr if there was no error.
  * @param		size
  *					The size of the data to read
  * @param		dest
  *					A pointer to put the data
  * @param		iFileRefI
- *					The file reference to read from. Must have been opened with iFileOpenRead()
+ *					The file reference to read from. Must have been opened with \c iFileOpenRead()
  * @discussion	The size cannot be larger than the data pointer, otherwise bad things will happen.
  */
 PPEXPORT MADErr	iRead(long size, void *dest, UNFILE iFileRefI);
 
 /*!
  * @function	iWrite
- * @abstract	Writes data to file reference from iFileRefI
- * @result		An error value. 0, or <code>MADNoErr</code> if there was no error.
+ * @abstract	Writes data to file reference from \c iFileRefI
+ * @result		An error value. 0, or \c MADNoErr if there was no error.
  * @param		size
  *					The size of the data to write
  * @param		src
  *					A pointer to read data from
  * @param		iFileRefI
- *					The file reference to write to; must have been opened with iFileOpenWrite()
+ *					The file reference to write to. Must have been opened with \c iFileOpenWrite()
  * @discussion	The size cannot be larger than the data pointer, otherwise bad things will happen.
  *				Data is written to the file from the file's current position.
  */
@@ -135,8 +135,8 @@ PPEXPORT MADErr	iWrite(long size, const void *src, UNFILE iFileRefI);
 
 /*!
  * @function	iSeekCur
- * @abstract	Change the file position of file pointed at by iFileRefI
- * @result		An error value. 0, or <code>MADNoErr</code> if there was no error.
+ * @abstract	Change the file position of file pointed at by \c iFileRefI
+ * @result		An error value. 0, or \c MADNoErr if there was no error.
  * @param		size
  *					The offset from the current position
  * @param		iFileRefI
@@ -162,7 +162,7 @@ PPEXPORT void	iClose(UNFILE iFileRefI);
  * @abstract    Byte-swaps a 32-bit value
  * @param       msg_buf
  *					A pointer to a 32-bit value. On return, the value will be byte-swapped.
- * @discussion  Refrain from using this function directly: use either MADLE32 or MADBE32
+ * @discussion  Refrain from using this function directly: use either \c MADLE32() or \c MADBE32()
  */
 static inline void MADByteSwap32(void *msg_buf)
 {
@@ -182,7 +182,7 @@ static inline void MADByteSwap32(void *msg_buf)
  * @abstract    Byte-swaps a 16-bit value
  * @param       msg_buf
  *					a pointer to a 16-bit value. On return, the value will be byte-swapped.
- * @discussion  Refrain from using this function directly: use either MADLE16 or MADBE16
+ * @discussion  Refrain from using this function directly: use either \c MADLE16() or \c MADBE16()
  */
 static inline void MADByteSwap16(void *msg_buf)
 {
@@ -199,6 +199,7 @@ static inline void MADByteSwap16(void *msg_buf)
  * @abstract    Gets the native value of a 32-bit big-endian value
  * @param       msg_buf
  *					A pointer to a 32-bit value from, or to, a big endian source. On return, the value is swapped on little-endian machines.
+ *	@discussion	On big-endian machines, this is a no-op.
  */
 static inline void MADBE32(void *msg_buf)
 {
@@ -212,6 +213,7 @@ static inline void MADBE32(void *msg_buf)
  * @abstract    Gets the native value of a 16-bit big-endian value
  * @param       msg_buf
  *					A pointer to a 16-bit value from, or to, a big endian source. On return, the value is swapped on little-endian machines.
+ *	@discussion	On big-endian machines, this is a no-op.
  */
 static inline void MADBE16(void *msg_buf)
 {
@@ -225,6 +227,7 @@ static inline void MADBE16(void *msg_buf)
  * @abstract    Gets the native value of a 32-bit little-endian value
  * @param       msg_buf
  *					A pointer to a 32-bit value from, or to, a little endian source. On return, the value is swapped on big-endian machines.
+ *	@discussion	On little-endian machines, this is a no-op.
  */
 static inline void MADLE32(void *msg_buf)
 {
@@ -238,6 +241,7 @@ static inline void MADLE32(void *msg_buf)
  * @abstract    Gets the native value of a 16-bit little-endian value
  * @param       msg_buf
  *					A pointer to a 16-bit value from, or to, a little endian source. On return, the value is swapped on big-endian machines.
+ *	@discussion	On little-endian machines, this is a no-op.
  */
 static inline void MADLE16(void *msg_buf)
 {
@@ -248,13 +252,14 @@ static inline void MADLE16(void *msg_buf)
 
 /*!
  * @function    OSType2Ptr
- * @abstract    Converts an OSType to a c-string.
+ * @abstract    Converts an \c OSType to a c string.
  * @param       type
- *					The OSType to convert
+ *					The \c OSType to convert
  * @param		str
  *					The address of the char array to write to
- * @discussion  <code>str</code> must be at least five chars long: four for the size of the \c OSType, and one for the terminating null. <br>
- *				Note that OSTypes use the Mac OS Roman encoding. If needed, use the iconv library to convert from the Mac OS Roman encoding.
+ * @discussion  \c str must be at least five chars long: four for the size of the \c OSType, and one for the terminating null. <br>
+ *				Note that <code>OSType</code>s use the Mac OS Roman string encoding.
+ *				If needed, use the iconv library (or similar) to convert from the Mac OS Roman encoding.
  */
 static inline void OSType2Ptr(MADFourChar type, char *str)
 {
@@ -265,11 +270,12 @@ static inline void OSType2Ptr(MADFourChar type, char *str)
 
 /*!
  * @function    Ptr2OSType
- * @abstract    Converts a c-string to an OSType
- * @result      The converted OSType.
+ * @abstract    Converts a c-string to an \c OSType
+ * @result      The converted \c OSType
  * @param       str
- *					The string to convert to an OSType, null-terminated.
- * @discussion  Note that OSTypes use the Mac OS Roman encoding. UTF-8 special characters may cause issues. If needed, use iconv to convert to the Mac OS Roman encoding.
+ *					The string to convert to an <code>OSType</code>, null-terminated.
+ * @discussion  Note that <code>OSType</code>s use the Mac OS Roman string encoding. UTF-8 special characters may cause issues.
+ *				If needed, use the iconv library (or similar) to convert to the Mac OS Roman encoding.
  */
 static inline MADFourChar Ptr2OSType(const char *str)
 {

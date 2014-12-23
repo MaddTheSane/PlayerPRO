@@ -1697,13 +1697,13 @@ MADErr MADLoadMusicFileCString(MADLibrary *lib, MADMusic **music, char *plugType
 
 MADErr MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV)
 {
-	short			i, x, y;
-	Cmd				*aCmd = NULL;
+	short	i, x, y;
+	Cmd		*aCmd = NULL;
 	
-	float			timeResult;
-	long			time;
-	long			speed, finespeed, fullTime, curTime;
-	long			dstTime;
+	float	timeResult;
+	long	time;
+	long	speed, finespeed, fullTime, curTime;
+	long	dstTime;
 	
 	if (MDriver == NULL)
 		return MADParametersErr;
@@ -1723,10 +1723,10 @@ MADErr MADSetMusicStatus(MADDriverRec *MDriver, long minV, long maxV, long curV)
 		dstTime = (curV * fullTime)/maxV;
 	else
 		dstTime = 0;
-	timeResult		= 0;
-	time			= 0;
-	speed			= MDriver->base.curMusic->header->speed;
-	finespeed		= MDriver->base.curMusic->header->tempo;
+	timeResult	= 0;
+	time		= 0;
+	speed		= MDriver->base.curMusic->header->speed;
+	finespeed	= MDriver->base.curMusic->header->tempo;
 	
 	for (i = 0; i < MDriver->base.curMusic->header->numPointers; i++) {
 		for (x = 0; x < MDriver->base.curMusic->partition[MDriver->base.curMusic->header->oPointers[i]]->header.size; x++) {
