@@ -1549,9 +1549,8 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 		}
 	}
 	
-	music->header->numInstru = x;
-	
 	aHeader = *music->header;
+	aHeader.numInstru = 0;
 	ByteSwapMADSpec(&aHeader);
 	CFWriteStreamWrite(curFile, (const UInt8*)&aHeader, sizeof(MADSpec));
 	
@@ -1647,7 +1646,6 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 	
 	CFWriteStreamClose(curFile);
 	CFRelease(curFile);
-	music->header->numInstru = MAXINSTRU;
 	
 	return theErr;
 }
@@ -2418,9 +2416,8 @@ MADErr MADMusicSaveCString(MADMusic *music, const char *cName, bool compressMAD)
 		}
 	}
 	
-	music->header->numInstru = x;
-	
 	aHeader = *music->header;
+	aHeader.numInstru = x;
 	ByteSwapMADSpec(&aHeader);
 	iWrite(sizeof(MADSpec), &aHeader, curFile);
 	
@@ -2522,7 +2519,6 @@ MADErr MADMusicSaveCString(MADMusic *music, const char *cName, bool compressMAD)
 	}
 	
 	iClose(curFile);
-	music->header->numInstru = MAXINSTRU;
 
 	return theErr;
 }

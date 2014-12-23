@@ -154,14 +154,12 @@ import AudioToolbox
 			outError.memory = NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
 			return false
 		}
-		var error: NSError? = nil
 		
-		if let aMusicObj = PPMusicObject(URL: url, driver: theDriver, error: &error) {
+		if let aMusicObj = PPMusicObject(URL: url, driver: theDriver, error: outError) {
 			theMusic = aMusicObj
 			
 			return true
 		}
-		outError.memory = error!
 		return false
 	}
 	

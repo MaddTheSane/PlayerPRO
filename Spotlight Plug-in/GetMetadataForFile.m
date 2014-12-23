@@ -68,9 +68,9 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 		MADDriverSettings	init = {0};
 		NSMutableDictionary *NSattribs = (__bridge NSMutableDictionary*)attributes;
 		
-		//Before we do anything else, check to make sure it's not the Windows file winoldap.mod
-		//This file seems to crash the metadata importer, even though
-		//the proper PlayerPRO plug-in should say that it can't open it.
+		// Before we do anything else, check to make sure it's not the Windows file winoldap.mod
+		// This file seems to crash the metadata importer, even though
+		// the proper PlayerPRO plug-in (MOD) should say that it can't open it.
 		{
 			NSURL		*NSFileURL = (__bridge NSURL*)urlForFile;
 			NSString	*lastPathName = [NSFileURL lastPathComponent];
@@ -79,10 +79,6 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 				return FALSE;
 			}
 		}
-		
-		/* Pull any available metadata from the file at the specified path */
-		/* Return the attribute keys and attribute values in the dict */
-		/* Return TRUE if successful, FALSE if there was no data provided */
 		
 		MADGetBestDriver(&init);
 		init.driverMode = NoHardwareDriver;
@@ -184,8 +180,8 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			}
 		}
 		
+		//Set duration metadata
 		{
-			//Set duration metadata
 			MADAttachDriverToMusic(MADDriver, MADMusic1, NULL);
 			long fT, cT;
 			MADGetMusicStatus(MADDriver, &fT, &cT);
@@ -194,6 +190,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			NSattribs[(NSString*)kMDItemDurationSeconds] = @(fTd);
 		}
 		
+		// Instrument and sample names
 		{
 			NSMutableArray *InstruArray = [[NSMutableArray alloc] initWithCapacity:MAXINSTRU * (MAXSAMPLE + 1)];
 			
@@ -217,6 +214,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			NSattribs[kPPMDInstumentsList] = InstruArray;
 		}
 		
+		// Pattern names
 		{
 			NSMutableArray *PatArray = [[NSMutableArray alloc] initWithCapacity:MAXPATTERN];
 			for (int i = 0; i < MAXPATTERN; i++) {
