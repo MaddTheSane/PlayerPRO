@@ -471,7 +471,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (instancetype)initWithPath:(NSString *)url error:(out NSError* __autoreleasing*)error
 {
-	return self = [self initWithURL:[NSURL fileURLWithPath:url] error:error];
+	return [self initWithURL:[NSURL fileURLWithPath:url] error:error];
 }
 
 - (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error
@@ -481,22 +481,22 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		return nil;
 	}
 	
-	return self = [self initWithURL:url type:type library:theLib error:error];
+	return [self initWithURL:url type:type library:theLib error:error];
 }
 
 - (instancetype)initWithPath:(NSString *)path type:(in const char*)type library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error
 {
-	return self = [self initWithURL:[NSURL fileURLWithPath:path] type:type library:theLib error:error];
+	return [self initWithURL:[NSURL fileURLWithPath:path] type:type library:theLib error:error];
 }
 
 - (instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error
 {
-	return self = [self initWithURL:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] library:theLib error:error];
+	return [self initWithURL:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] library:theLib error:error];
 }
 
 - (instancetype)initWithPath:(NSString *)url stringType:(NSString*)type library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error
 {
-	return self = [self initWithPath:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] library:theLib error:error];
+	return [self initWithPath:url type:[type cStringUsingEncoding:NSMacOSRomanStringEncoding] library:theLib error:error];
 }
 
 - (instancetype)initWithURL:(NSURL *)url type:(in const char*)type library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error
@@ -509,7 +509,9 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			}
 			return nil;
 		}
-		self.filePath = url;
+		if (strcmp(type, "MADK") == 0) {
+			self.filePath = url;
+		}
 		if (error) {
 			*error = nil;
 		}
@@ -524,7 +526,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (instancetype)init
 {
-	return self = [self initWithMusicStruct:CreateFreeMADK() copy:NO];
+	return [self initWithMusicStruct:CreateFreeMADK() copy:NO];
 }
 
 - (instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type driver:(PPDriver *)theDriv error:(out NSError* __autoreleasing*)error
@@ -542,7 +544,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	if (self = [self initWithURL:url type:type library:theLib.theLibrary error:error]) {
 		[self attachToDriver:theLib];
 	}
-	return nil;
+	return self;
 }
 
 - (instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib error:(out NSError* __autoreleasing*)error
@@ -550,7 +552,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	if (self = [self initWithURL:url library:theLib.theLibrary error:error]) {
 		[self attachToDriver:theLib];
 	}
-	return nil;
+	return self;
 }
 
 - (instancetype)initWithPath:(NSString *)url type:(in const char*)type driver:(PPDriver *)theLib error:(out NSError* __autoreleasing*)error

@@ -186,7 +186,7 @@ static inline NSString* OSTypeToNSString(OSType theOSType)
 #endif
 	
 	if (!checkForValid) {
-		checkForValid = [[NSString alloc] initWithFormat:@"%X", (unsigned int)theOSType];
+		checkForValid = [[NSString alloc] initWithFormat:@"0x%X", (unsigned int)theOSType];
 	}
 	
 	return checkForValid;
