@@ -477,7 +477,11 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 - (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error
 {
 	char type[5];
-	if (MADMusicIdentifyCFURL(theLib._madLib, type, (__bridge CFURLRef)(url)) != MADNoErr) {
+	MADErr iErr = MADMusicIdentifyCFURL(theLib._madLib, type, (__bridge CFURLRef)(url));
+	if (iErr != MADNoErr) {
+		if (error) {
+			*error = PPCreateErrorFromMADErrorType(iErr);
+		}
 		return nil;
 	}
 	
