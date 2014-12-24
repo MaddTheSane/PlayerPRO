@@ -35,7 +35,7 @@ bool MADDriverChannelIsDonePlaying(MADDriverRec *theRec, int channel)
 IntPatData MADPatDataToInt(PatData *inPat)
 {
 	IntPatData toRet = {0};
-	toRet.header = inPat->header;
+	toRet.header = &inPat->header;
 	toRet.Cmds = inPat->Cmds;
 	
 	return toRet;

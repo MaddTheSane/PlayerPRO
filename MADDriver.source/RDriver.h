@@ -45,6 +45,10 @@
 #include <NodeInfo.h>
 #endif
 
+#if (defined(__ELF__) && !(defined (_MAC_H) || defined (_BE_H)))
+#include <dlfcn.h>
+#include <sys/param.h>  //For PATH_MAX
+#endif
 ////////////////////////////////////////////////
 
 #pragma pack(push, 2)
@@ -497,8 +501,6 @@ typedef struct PlugInfo
 #endif
 
 #if (defined(__ELF__) && !(defined (_MAC_H) || defined (_BE_H)))
-#include <dlfcn.h>
-#include <sys/param.h>  //For PATH_MAX
 typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, MADInfoRec *, MADDriverSettings *);
 typedef struct PlugInfo
 {

@@ -66,6 +66,16 @@
                ReferencedContainer = "container:PPMacho.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "555272441A0000C8008B8616"
+               BuildableName = "PlayerPROKit-iOS Tests.xctest"
+               BlueprintName = "PlayerPROKit-iOS Tests"
+               ReferencedContainer = "container:PPMacho.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

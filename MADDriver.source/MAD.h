@@ -94,8 +94,12 @@ typedef struct PatHeader {
 	int					unused2;
 } PatHeader;
 
-typedef struct PatData		// DATA STRUCTURE : HEADER + COMMANDS
-{							// Pattern = 64 notes to play
+/*!
+ *	@struct		PatData
+ *	@abstract	data structure: header + commands
+ *				Pattern = 64 notes to play
+ */
+typedef struct PatData {
 	PatHeader	header;
 	Cmd			Cmds[1];
 } PatData;
@@ -103,7 +107,7 @@ typedef struct PatData		// DATA STRUCTURE : HEADER + COMMANDS
 //Internal Pattern Data
 //Because Swift is a dumb-dumb about C arrays in structs
 typedef struct IntPatData {
-	PatHeader	header;
+	PatHeader	*header;
 	Cmd			*Cmds;
 } IntPatData;
 
@@ -119,8 +123,7 @@ typedef struct IntPatData {
  *				Ping-pong looping, changing the playback direction of the sound when it reaches the beginning or end.
  *
  */
-typedef MADENUM(MADByte, MADLoopType)
-{
+typedef MADENUM(MADByte, MADLoopType) {
 	MADLoopTypeClassic	= 0,
 	MADLoopTypePingPong	= 1
 };
@@ -270,36 +273,96 @@ typedef struct FXBus {
 	bool	Active;
 } FXBus;
 
+/*!
+ *	@struct		MADSpec
+ *	@abstract	Basic MAD structure
+ *	@var		MAD
+ *					Mad identification
+ *	@var		name
+ *					Music's name
+ *	@var		infos
+ *					Informations & Author name of the music
+ *	@var		generalPan
+ *					General panning
+ *	@var		MultiChanNo
+ *					Number of channels for multichannel
+ *	@var		MultiChan
+ *					MultiChannel per tracks?
+ *	@var		EPitch
+ *					New Pitch
+ *	@var		ESpeed
+ *					New Speed
+ *	@var		XMLinear
+ *					Linear pitch table?
+ *	@var		MODMode
+ *					Limit pitch to MOD pitch table
+ *	@var		showCopyright
+ *					Show \c infos at startup? true or false
+ *	@var		generalPitch
+ *					General Pitch
+ *	@var		generalSpeed
+ *					General Speed
+ *	@var		generalVol
+ *					Software general volume
+ *	@var		numPat
+ *					Patterns number
+ *	@var		numChn
+ *					Channels number
+ *	@var		numPointers
+ *					Partition length
+ *	@var		numInstru
+ *					Instruments number
+ *	@var		numSamples
+ *					Samples number
+ *	@var		oPointers
+ *					Partition : Patterns ID List
+ *	@var		speed
+ *					Default speed
+ *	@var		tempo
+ *					Default tempo
+ *	@var		chanPan
+ *					Channel settings, from 0 to 256
+ *	@var		chanVol
+ *					Channel Volume, from 0 to 64
+ *	@var		globalEffect
+ *					Global Effects IDs
+ *	@var		globalFXActive
+ *					Global Effects active?
+ *	@var		chanEffect
+ *					Channel Effect IDs
+ *	@var		chanBus
+ *					Channel buses
+ */
 typedef struct MADSpec {
-	MADFourChar	MAD;						// Mad Identification
-	char 		name[32];					// Music's name
-	char		infos[INFOSSIZE];			// Informations & Author name of the music
-	MADByte		generalPan;					// General Panning
-	MADByte		MultiChanNo;				// Number of chan for multichannel
-	MADByte		MultiChan;					// MultiChannel per tracks?
-	int			EPitch;						// New Pitch
-	int			ESpeed;						// New Speed
-	bool		XMLinear;					// Linear pitch table?
-	bool		MODMode;					// Limit pitch to MOD pitch table
-	bool		showCopyright;				// Show infos at startup? true or false
-	MADByte		generalPitch;				// General Pitch
-	MADByte		generalSpeed;				// General Speed
-	MADByte		generalVol;					// Software general volume
-	MADByte		numPat;						// Patterns number
-	MADByte		numChn;						// Channels number
-	MADByte		numPointers;				// Partition length
-	MADByte		numInstru;					// Instruments number
-	MADByte		numSamples;					// Samples number
-	MADByte		oPointers[MAXPOINTER];		// Partition : Patterns ID List
-	short		speed;						// Default speed
-	short		tempo;						// Default tempo
-	MADByte		chanPan[MAXTRACK];			// Channel settings, from 0 to 256
-	MADByte		chanVol[MAXTRACK];			// Channel Volume, from 0 to 64
+	MADFourChar	MAD;
+	char 		name[32];
+	char		infos[INFOSSIZE];
+	MADByte		generalPan;
+	MADByte		MultiChanNo;
+	MADByte		MultiChan;
+	int			EPitch;
+	int			ESpeed;
+	bool		XMLinear;
+	bool		MODMode;
+	bool		showCopyright;
+	MADByte		generalPitch;
+	MADByte		generalSpeed;
+	MADByte		generalVol;
+	MADByte		numPat;
+	MADByte		numChn;
+	MADByte		numPointers;
+	MADByte		numInstru;
+	MADByte		numSamples;
+	MADByte		oPointers[MAXPOINTER];
+	short		speed;
+	short		tempo;
+	MADByte		chanPan[MAXTRACK];
+	MADByte		chanVol[MAXTRACK];
 	
-	int			globalEffect[10];			// Global Effects IDs
-	bool		globalFXActive;				// Global FX Active?
+	int			globalEffect[10];
+	bool		globalFXActive;
 	
-	int			chanEffect[MAXTRACK][4];	// Channel Effect IDs
+	int			chanEffect[MAXTRACK][4];
 	FXBus		chanBus[MAXTRACK];
 } MADSpec;
 
