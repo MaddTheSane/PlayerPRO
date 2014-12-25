@@ -64,35 +64,38 @@ colorObj = [[PPColorPreferenceObject alloc] initWithColor:[NSColor PPDecodeColor
 	self.colors = tmpColor;
 }
 
+- (NSInteger)indexOfColorWell:(NSColorWell*)cw
+{
+	NSView *collectionViewItem = [cw superview];
+	NSInteger index = [[_colorWells subviews] indexOfObject:collectionViewItem];
+	return index;
+}
+
 - (IBAction)changeColorWell:(id)sender
 {
 	NSColor *sentColor = [sender color];
 	NSData *encData = [sentColor PPencodeColor];
-	NSString *keyToChange = PPCColor1;
+	NSString *keyToChange;
+	NSInteger wellIdx = [self indexOfColorWell:sender];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPColorsDidChange
 														object:self
-													  userInfo:@{PPColorChangedValue: @(0),
+													  userInfo:@{PPColorChangedValue: @(wellIdx),
 																 PPColorChangedColor: sentColor}];
+#define PPCOLOR(num) case num - 1: \
+keyToChange = PPCColor ## num; \
+break
 	
-	[[NSUserDefaults standardUserDefaults] setObject:encData forKey:keyToChange];
-
-#if 0
-	NSString *keyToChange;
-#define PPCOLOR(num) } else if (sender == colorWell ## num) \
-{\
-keyToChange = PPCColor ## num
-
-	if (sender == nil) {
-		return;
-		PPCOLORPOPULATE();
-	} else {
-		return;
+	
+	switch (wellIdx) {
+			PPCOLORPOPULATE();
+		default:
+			break;
 	}
-	[[NSUserDefaults standardUserDefaults] setObject:[[sender color] PPencodeColor] forKey:keyToChange];
-	[[NSNotificationCenter defaultCenter] postNotificationName:PPColorsDidChange object:self];
 #undef PPCOLOR
-#endif
+	if (keyToChange != nil) {
+		[[NSUserDefaults standardUserDefaults] setObject:encData forKey:keyToChange];
+	}
 }
 
 @end
