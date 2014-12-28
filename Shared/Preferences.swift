@@ -44,9 +44,10 @@ final class Preferences: NSWindowController {
 	}
 	
 	@IBAction func changeViewController(sender: AnyObject!) {
-		let i = (sender as NSMenuItem).tag
-		let vc = viewControllers[i];
-		displayViewController(vc)
+		if let i = (sender as? NSMenuItem)?.tag {
+			let vc = viewControllers[i];
+			displayViewController(vc)
+		}
 	}
 	
 	private func displayViewController(vc: NSViewController) {
@@ -60,13 +61,13 @@ final class Preferences: NSWindowController {
 		}
 		
 		//Put the view in the box
-		var v = vc.view;
+		let v = vc.view;
 		
 		//Compute the new window frame
-		var currentSize = (box.contentView as NSView).frame.size
+		let currentSize = (box.contentView as NSView).frame.size
 		var newSize = v.frame.size;
-		var deltaWidth = newSize.width - currentSize.width;
-		var deltaHeight = newSize.height - currentSize.height;
+		let deltaWidth = newSize.width - currentSize.width;
+		let deltaHeight = newSize.height - currentSize.height;
 		var windowFrame = w.frame;
 		windowFrame.size.height += deltaHeight;
 		windowFrame.origin.y -= deltaHeight;
