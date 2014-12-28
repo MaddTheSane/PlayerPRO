@@ -240,6 +240,7 @@
 		553B8B7419B3CD85007C2C64 /* xm-ipad-large.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B7019B3CD85007C2C64 /* xm-ipad-large.png */; };
 		553B8B7519B3CD85007C2C64 /* xm-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 553B8B7119B3CD85007C2C64 /* xm-ipad.png */; };
 		553DD97219CF4055000CFC8D /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
+		553ED2581A50AE99005222E3 /* ColorPreferenceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553ED2571A50AE99005222E3 /* ColorPreferenceObject.swift */; };
 		55413C491991B947001414D0 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		55413C4B1992AFAB001414D0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 551292E1163DD68500C2C639 /* InfoPlist.strings */; };
 		55413C4C1992AFFE001414D0 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */; };
@@ -248,7 +249,6 @@
 		5547DA5619A5690E0014A620 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5519A5690E0014A620 /* Preferences.swift */; };
 		5547DA5719A5690E0014A620 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5519A5690E0014A620 /* Preferences.swift */; };
 		5547DA5919A570820014A620 /* SoundSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5819A570820014A620 /* SoundSettingsViewController.swift */; };
-		5549A3BA19A685CE004E95E2 /* PPColorPreferenceObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 5549A3B919A685CE004E95E2 /* PPColorPreferenceObject.m */; };
 		5549F2C719D09C250072FB25 /* PPMINsPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 556BC18819CF5F2400508F49 /* PPMINsPlug.m */; };
 		554E0E8A10D61C0600BB619C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		554E0E8B10D61C1600BB619C /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
@@ -2314,6 +2314,7 @@
 		553B8B6F19B3CD85007C2C64 /* xm-ios@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ios@2x.png"; sourceTree = "<group>"; };
 		553B8B7019B3CD85007C2C64 /* xm-ipad-large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ipad-large.png"; sourceTree = "<group>"; };
 		553B8B7119B3CD85007C2C64 /* xm-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ipad.png"; sourceTree = "<group>"; };
+		553ED2571A50AE99005222E3 /* ColorPreferenceObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPreferenceObject.swift; sourceTree = "<group>"; };
 		55413C4D1992AFFF001414D0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		5546217D163A345F0005F491 /* PlugExports-Mac.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; path = "PlugExports-Mac.exp"; sourceTree = "<group>"; };
 		55469C2516BF34D200175A1F /* PatternHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternHandler.h; sourceTree = "<group>"; };
@@ -2321,8 +2322,6 @@
 		554703D81834368F008E5B9B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/PPSoundSettingsViewController.strings; sourceTree = "<group>"; };
 		5547DA5519A5690E0014A620 /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		5547DA5819A570820014A620 /* SoundSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundSettingsViewController.swift; sourceTree = "<group>"; };
-		5549A3B819A685CE004E95E2 /* PPColorPreferenceObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPColorPreferenceObject.h; sourceTree = "<group>"; };
-		5549A3B919A685CE004E95E2 /* PPColorPreferenceObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPColorPreferenceObject.m; sourceTree = "<group>"; };
 		554E0FF310D6C79D00BB619C /* Read-Me */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Read-Me"; sourceTree = "<group>"; };
 		554E101210D6C79E00BB619C /* Length.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Length.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E101310D6C79E00BB619C /* Length.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Length.r; sourceTree = "<group>"; };
@@ -3869,8 +3868,7 @@
 				55232AD711FDDFEA0041A4EC /* PianoPreferencesController.m */,
 				55232AE511FDE2550041A4EC /* MusicListPreferenceController.h */,
 				55232AE611FDE2550041A4EC /* MusicListPreferenceController.m */,
-				5549A3B819A685CE004E95E2 /* PPColorPreferenceObject.h */,
-				5549A3B919A685CE004E95E2 /* PPColorPreferenceObject.m */,
+				553ED2571A50AE99005222E3 /* ColorPreferenceObject.swift */,
 				55232AE811FDE29B0041A4EC /* ColorPreferenceController.h */,
 				55232AE911FDE29B0041A4EC /* ColorPreferenceController.m */,
 				55232AEB11FDE2E40041A4EC /* MiscPreferenceController.h */,
@@ -7564,6 +7562,7 @@
 				55232AED11FDE2E40041A4EC /* MiscPreferenceController.m in Sources */,
 				55588A96199951B300C3D4EE /* PlugInInfoController.swift in Sources */,
 				55232AF011FDE5180041A4EC /* BoxEditorPreferenceController.m in Sources */,
+				553ED2581A50AE99005222E3 /* ColorPreferenceObject.swift in Sources */,
 				55232AF311FDE56D0041A4EC /* DigitalEditorPreferenceControler.m in Sources */,
 				55232AF711FDE5CB0041A4EC /* ClassicEditorPreferenceController.m in Sources */,
 				557DC36E19BBA76C003CACFE /* DocumentPluginHelper.swift in Sources */,
@@ -7582,7 +7581,6 @@
 				550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */,
 				55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */,
 				55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */,
-				5549A3BA19A685CE004E95E2 /* PPColorPreferenceObject.m in Sources */,
 				5561F1C019A52A6C0085015B /* ExportObject.swift in Sources */,
 				55E2CD4F19DA1AC000BDFC4C /* InstrumentPanelController.swift in Sources */,
 				5547DA5619A5690E0014A620 /* Preferences.swift in Sources */,

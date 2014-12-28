@@ -9,7 +9,7 @@
 #import "ColorPreferenceController.h"
 #import "UserDefaultKeys.h"
 #import "NSColor+PPPreferences.h"
-#import "PPColorPreferenceObject.h"
+#import "PlayerPRO_6-Swift.h"
 
 @implementation ColorPreferenceController
 {
@@ -26,7 +26,7 @@
 	_colors = [colors mutableCopy];
 }
 
-- (void)replaceObjectInColorsAtIndex:(NSInteger)index withObject:(PPColorPreferenceObject*)object
+- (void)replaceObjectInColorsAtIndex:(NSInteger)index withObject:(ColorPreferenceObject*)object
 {
 	_colors[index] = object;
 }
@@ -53,10 +53,10 @@
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSMutableArray *tmpColor = [[NSMutableArray alloc] initWithCapacity:96];
-	PPColorPreferenceObject *colorObj;
+	ColorPreferenceObject *colorObj;
 	
 #define PPCOLOR(num) { \
-colorObj = [[PPColorPreferenceObject alloc] initWithColor:[NSColor PPDecodeColorWithData:[defaults dataForKey: PPCColor ## num ]] index: num - 1 ];\
+colorObj = [[ColorPreferenceObject alloc] initWithColor:[NSColor PPDecodeColorWithData:[defaults dataForKey: PPCColor ## num ]] index: num - 1 ];\
 [tmpColor addObject:colorObj];\
 }
 	PPCOLORPOPULATE();

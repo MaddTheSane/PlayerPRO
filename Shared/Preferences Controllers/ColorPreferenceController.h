@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "PPPreferences.h"
 
-@class PPColorPreferenceObject;
+@class ColorPreferenceObject;
 
 @interface ColorPreferenceController : NSViewController <PPPreferenceObject>
 @property (weak) IBOutlet NSCollectionView *colorWells;
@@ -17,5 +17,5 @@
 
 - (IBAction)changeColorWell:(id)sender;
 
-- (void)replaceObjectInColorsAtIndex:(NSInteger)index withObject:(PPColorPreferenceObject*)object;
+- (void)replaceObjectInColorsAtIndex:(NSInteger)index withObject:(ColorPreferenceObject*)object;
 @end
