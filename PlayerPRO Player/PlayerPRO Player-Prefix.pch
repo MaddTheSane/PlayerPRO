@@ -8,5 +8,4 @@
 #ifdef __OBJC__
 	#import <Cocoa/Cocoa.h>
 	#import <PlayerPROKit/PlayerPROKit.h>
-	#import "PlayerPRO_Player-Swift.h"
 #endif
