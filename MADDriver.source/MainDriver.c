@@ -1550,7 +1550,7 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 	}
 	
 	aHeader = *music->header;
-	aHeader.numInstru = 0;
+	aHeader.numInstru = x;
 	ByteSwapMADSpec(&aHeader);
 	CFWriteStreamWrite(curFile, (const UInt8*)&aHeader, sizeof(MADSpec));
 	

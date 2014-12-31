@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 	weak var musicList: MusicList!
 
 	override init() {
-		let tmpDict = [PPRememberMusicList: true,
+		let tmpDict: [String: NSObject] = [PPRememberMusicList: true,
 		PPLoadMusicAtListLoad: false,
 		PPAfterPlayingMusic: PlaylistMode.StopPlaying.rawValue,
 		PPGotoStartupAfterPlaying: true,
