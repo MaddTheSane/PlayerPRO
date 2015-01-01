@@ -32,7 +32,7 @@
 extern short		gOutNodeRefNum, gOutputPortRefNum;
 #endif
 
-void SampleMIDI(Channel *curVoice, short channel, short curN, MADDriverRec *intDriver);
+void SampleMIDI(MADChannel *curVoice, short channel, short curN, MADDriverRec *intDriver);
 void ApplyFilters(MADDriverRec *intDriver);
 void ApplySurround(MADDriverRec *intDriver);
 void SendMIDIClock(MADDriverRec *intDriver, MADByte MIDIByte);
@@ -90,7 +90,7 @@ void ConvertInstrumentOut16(short *tempPtr, size_t sSize)
 	ConvertInstrument16(tempPtr, sSize);
 }
 
-int DoVolPanning256(short whichChannel, Channel *ch, MADDriverRec *intDriver, bool Interpol)	// MAX = 256
+int DoVolPanning256(short whichChannel, MADChannel *ch, MADDriverRec *intDriver, bool Interpol)	// MAX = 256
 {
 	// Compute Volume !
 	int pannValue, volFade;
@@ -305,7 +305,7 @@ int InterpolateEnv(int p, EnvRec *a,EnvRec *b)
 	return Interpolate(p,a->pos,b->pos,a->val,b->val);
 }
 
-void ProcessFadeOut(Channel *ch, MADDriverRec *intDriver)
+void ProcessFadeOut(MADChannel *ch, MADDriverRec *intDriver)
 {
 	if (intDriver->base.curMusic != NULL) {
 		if (!ch->KeyOn) {
@@ -333,7 +333,7 @@ void ProcessFadeOut(Channel *ch, MADDriverRec *intDriver)
 	}
 }
 
-void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
+void ProcessEnvelope(MADChannel *ch, MADDriverRec *intDriver, bool Recurrent)
 {
 	int			v;
 	InstrData	*curIns;
@@ -442,7 +442,7 @@ void ProcessEnvelope(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 	}
 }
 
-void ProcessPanning(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
+void ProcessPanning(MADChannel *ch, MADDriverRec *intDriver, bool Recurrent)
 {
 	int			v;
 	InstrData	*curIns;
@@ -534,7 +534,7 @@ void ProcessPanning(Channel *ch, MADDriverRec *intDriver, bool Recurrent)
 	}
 }
 
-void StartEnvelope(Channel *ch)
+void StartEnvelope(MADChannel *ch)
 {
 	if (!ch)
 		return;
@@ -544,7 +544,7 @@ void StartEnvelope(Channel *ch)
 	ch->b = 1;
 }
 
-void StartPanning(Channel *ch)
+void StartPanning(MADChannel *ch)
 {
 	if (!ch)
 		return;
@@ -743,7 +743,7 @@ bool NewMADCommand(Cmd *theNoteCmd)
 	return result;
 }
 
-void KillChannel(Channel *curVoice, MADDriverRec *intDriver)
+void KillChannel(MADChannel *curVoice, MADDriverRec *intDriver)
 {
 	if (!curVoice || !intDriver)
 		return;
@@ -753,7 +753,7 @@ void KillChannel(Channel *curVoice, MADDriverRec *intDriver)
 	curVoice->loopType	= MADLoopTypeClassic;
 }
 
-void IntNoteOff(Channel *curVoice, MADDriverRec *intDriver)
+void IntNoteOff(MADChannel *curVoice, MADDriverRec *intDriver)
 {
 	if (!curVoice || !intDriver)
 		return;
@@ -766,7 +766,7 @@ void IntNoteOff(Channel *curVoice, MADDriverRec *intDriver)
 	}
 }
 
-void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
+void ReadNote(MADChannel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 {
 	Cmd		intCmd = *theNoteCmd;
 	bool	ChangedInstru = false;
@@ -1014,7 +1014,7 @@ void ReadNote(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 		IntNoteOff(curVoice, intDriver);
 }
 
-void StartEffect(Channel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
+void StartEffect(MADChannel *curVoice, Cmd *theNoteCmd, MADDriverRec *intDriver)
 {
 	if (!curVoice || !theNoteCmd || !intDriver)
 		return;
@@ -1061,7 +1061,7 @@ void ComputeReverb16(short *orgPtr, short *destPtr, int xx, int strength)
 short FindAFreeChannel(MADDriverRec *intDriver)
 {
 	short		i;
-	Channel		*curVoice;
+	MADChannel		*curVoice;
 	short		chanID = -1;
 	int			oldTick = 1000000; //FIXME: largest int value here?
 	
@@ -2062,7 +2062,7 @@ void AllNoteOff(MADDriverRec *intDriver)
 	}
 }
 
-void SampleMIDI(Channel *curVoice, short channel, short curN, MADDriverRec *intDriver)
+void SampleMIDI(MADChannel *curVoice, short channel, short curN, MADDriverRec *intDriver)
 {
 	OMSMIDIPacket pack;
 	
@@ -2080,7 +2080,7 @@ void SampleMIDI(Channel *curVoice, short channel, short curN, MADDriverRec *intD
 	else pack.data[2] = 127;
 }
 #else
-void SampleMIDI(Channel *curVoice, short channel, short curN, MADDriverRec *intDriver){}
+void SampleMIDI(MADChannel *curVoice, short channel, short curN, MADDriverRec *intDriver){}
 void AllNoteOff(MADDriverRec *intDriver){}
 void NoteOff(short oldIns, short oldN, short oldV, MADDriverRec *intDriver){}
 #endif

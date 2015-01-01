@@ -28,7 +28,7 @@
 #define LOW(para) ((para) & 15)
 #define HI(para) ((para) >> 4)
 
-void parse_slidevol(Channel *ch, MADByte Arg)
+void parse_slidevol(MADChannel *ch, MADByte Arg)
 {
 	if (HI(Arg))
 		ch->volumerate = HI(Arg);
@@ -36,7 +36,7 @@ void parse_slidevol(Channel *ch, MADByte Arg)
 		ch->volumerate = -LOW(Arg);
 }
 
-void CloseEffect(Channel *ch, short notUsed, MADDriverRec *intDriver)
+void CloseEffect(MADChannel *ch, short notUsed, MADDriverRec *intDriver)
 {
 	switch (ch->cmd) {
 		case MADEffectArpeggio:
@@ -105,7 +105,7 @@ void CloseEffect(Channel *ch, short notUsed, MADDriverRec *intDriver)
 	ch->cmd = 0;
 }
 
-void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
+void DoEffect(MADChannel *ch, short call, MADDriverRec *intDriver)
 {
 	int offset = 0;
 	
@@ -344,7 +344,7 @@ void DoEffect(Channel *ch, short call, MADDriverRec *intDriver)
 #endif
 }
 
-void SetUpCmdEffect(Channel *ch, MADDriverRec *intDriver)
+void SetUpCmdEffect(MADChannel *ch, MADDriverRec *intDriver)
 {
 	short vol = ch->volcmd;
 	short volLO = vol & 0xf;
@@ -399,7 +399,7 @@ void SetUpCmdEffect(Channel *ch, MADDriverRec *intDriver)
 	ch->arg = argCopy;
 }
 
-void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
+void SetUpEffect(MADChannel *ch, MADDriverRec *intDriver)
 {
 	short 	temp, note;
 	long	aL;
@@ -740,7 +740,7 @@ void SetUpEffect(Channel *ch, MADDriverRec *intDriver)
 	}
 }
 
-void DoVolCmd(Channel *ch, short call, MADDriverRec *intDriver)
+void DoVolCmd(MADChannel *ch, short call, MADDriverRec *intDriver)
 {
 	short	vol = ch->volcmd;
 	short	volLO = vol & 0xf;

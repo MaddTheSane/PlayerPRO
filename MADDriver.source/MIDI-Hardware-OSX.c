@@ -34,7 +34,7 @@ unsigned MidiVolume[128] = {
 
 #define MySignature 'SNPL'
 
-void DoPlayInstruInt(short Note, short Instru, short effect, short arg, short vol, Channel *curVoice, int start, int end);
+void DoPlayInstruInt(short Note, short Instru, short effect, short arg, short vol, MADChannel *curVoice, int start, int end);
 void NPianoRecordProcess(short i, short, short, short);
 
 static MIDIClientRef MADMIDICliRef;

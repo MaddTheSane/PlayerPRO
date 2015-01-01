@@ -103,10 +103,10 @@ typedef MADENUM(MADByte, MADEffectID) {
 };
 
 /********************						***********************/
-/*** 			   Channel structure definition					***/
+/*** 			   MADChannel structure definition					***/
 /********************						***********************/
 
-typedef struct Channel
+typedef struct MADChannel
 {
 	int		ID;					// Channel ID - 0 to MAXTRACK
 	int		TrackID;			// TrackID - 0 to MAXTRACK (Used in multiChannel mode)
@@ -122,17 +122,17 @@ typedef struct Channel
 	size_t		loopSize;		// Loop Size
 	
 	int		ins;				// Current Instrument ID
-	int		insOld;				// Previous Instrument ID played on this channel
+	int		insOld;				// Previous Instrument ID played on this MADChannel
 	int		samp;				// Current Sample ID
 	
 	int		fineTune;			// Finetune
 	
 	int		note;				// Note
-	int		noteOld;			// Previous note played on this channel
+	int		noteOld;			// Previous note played on this MADChannel
 	int		relNoteOld;			// Previous realnote
 	
 	int		period;				// Current period
-	int		periodOld;			// Previous period played on this channel
+	int		periodOld;			// Previous period played on this MADChannel
 	
 	int		vol;				// Channel vol (0 to 64)
 	int		pann;				// Channel pan (0 to 64)
@@ -230,7 +230,7 @@ typedef struct Channel
 	short	PatternLoopE6, PatternLoopE6Count, PatternLoopE6ID;
 	
 	int		TimeCounter;
-} Channel;
+} MADChannel;
 
 /********************						***********************/
 /*** 		Music description - used in Import/Export filter	***/
@@ -615,7 +615,7 @@ typedef struct MADDriverBase {
 	
 	/**  Drivers variables **/
 	
-	Channel			chan[MAXTRACK];									// Current driver channels -- READ ONLY --
+	MADChannel			chan[MAXTRACK];									// Current driver channels -- READ ONLY --
 	bool			musicEnd;										// Is music playing finished? -- READ ONLY --
 	short			Tube[MAXTRACK];									// Used in 'Tracks View' Window - View menu
 	short			PartitionReader;								// Current position in pattern (0...999)

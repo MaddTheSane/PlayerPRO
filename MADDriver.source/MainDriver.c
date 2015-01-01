@@ -2810,7 +2810,7 @@ void MADCheckSpeed(MADMusic *MDriver, MADDriverRec *intDriver)
 		
 		for (x = curPartitionReader; x >= 0; x--) {
 			for (y = MDriver->header->numChn-1; y >= 0 ; y--) {
-				Channel	*ch = &intDriver->base.chan[y];
+				MADChannel	*ch = &intDriver->base.chan[y];
 				
 				aCmd = GetMADCommand(x, y, MDriver->partition[MDriver->header->oPointers[i]]);
 				
@@ -2873,7 +2873,7 @@ void MADCheckSpeedPattern(MADMusic *MDriver, MADDriverRec *intDriver)
 	
 	for (x = curPartitionReader; x >= 0; x--) {
 		for (y = MDriver->header->numChn-1; y >= 0 ; y--) {
-			//Channel	*ch = &intDriver->base.chan[y];
+			//MADChannel	*ch = &intDriver->base.chan[y];
 			
 			aCmd = GetMADCommand(x, y, MDriver->partition[intDriver->base.Pat]);
 			
@@ -3183,7 +3183,7 @@ MADErr MADPlaySoundDataSYNC(MADDriverRec *MDriver, char *soundPtr, long size, lo
 
 MADErr MADPlaySoundData(MADDriverRec *MDriver, const char *soundPtr, size_t size, int channel, MADByte note, int amplitude, size_t loopBeg, size_t loopSize, unsigned int rate, bool stereo)
 {
-	Channel *curVoice;
+	MADChannel *curVoice;
 	
 	if (channel < 0 || channel >= MDriver->DriverSettings.numChn)
 		return MADParametersErr;
