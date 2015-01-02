@@ -115,12 +115,8 @@ public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
 	if lhs.noArg != rhs.noArg {
 		return false
 	}
-	let lhsNameMirror = reflect(lhs.name)
-	let rhsNameMirror = reflect(rhs.name)
-	let lhsNameArray: [UInt8] = GetArrayFromMirror(lhsNameMirror)!
-	let rhsNameArray: [UInt8] = GetArrayFromMirror(rhsNameMirror)!
-	let lhsName = (CFStringCreateWithPascalString(kCFAllocatorDefault, lhsNameArray, CFStringBuiltInEncodings.MacRoman.rawValue) as String?) ?? ""
-	let rhsName = (CFStringCreateWithPascalString(kCFAllocatorDefault, rhsNameArray, CFStringBuiltInEncodings.MacRoman.rawValue) as String?) ?? ""
+	let lhsName = String(pascalString: lhs.name) ?? ""
+	let rhsName = String(pascalString: rhs.name) ?? ""
 	if lhsName != rhsName {
 		return false
 	}
@@ -270,8 +266,8 @@ extension MADLibrary: SequenceType {
     }
 }
 
-public func MADDebugString(text: String, line: UWord = __LINE__, file: String = __FILE__) {
-	MADDebugStr(Int16(line), file.fileSystemRepresentation(), text.cStringUsingEncoding(NSUTF8StringEncoding)!)
+public func MADDebugString(text: String, line: UWord = __LINE__, file: StaticString = __FILE__) {
+	MADDebugStr(Int16(line), file.stringValue.fileSystemRepresentation(), text.cStringUsingEncoding(NSUTF8StringEncoding)!)
 }
 
 private let BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -490,6 +486,7 @@ extension IntPcmd: CommandIterator {
 	}
 }
 
+/* This causes Swift to hang, or take too long to compile.
 extension MADDriverBase {
 	public var channels: [MADChannel] {
 		return GetArrayFromMirror(reflect(chan))!
@@ -499,6 +496,7 @@ extension MADDriverBase {
 		return GetArrayFromMirror(reflect(Active))!
 	}
 }
+*/
 
 extension MADChannel {
 	public var arpeggio: (values: [Int32], index: Int32, enabled: Bool) {
