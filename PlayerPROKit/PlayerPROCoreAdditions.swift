@@ -490,6 +490,16 @@ extension IntPcmd: CommandIterator {
 	}
 }
 
+extension MADChannel {
+	public var arpeggio: (values: [Int32], index: Int32, enabled: Bool) {
+		return (GetArrayFromMirror(reflect(arp))!, arpindex, arpUse)
+	}
+	
+	public var vibrato: (offset: Int8, depth: Int32, rate: Int32, type: Int32) {
+		return (viboffset, vibdepth, vibrate, vibtype)
+	}
+}
+
 // MARK: MADFourChar
 // TODO: find out how Apple does this with CGFloat...
 /*
