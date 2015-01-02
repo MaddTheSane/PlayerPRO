@@ -615,7 +615,7 @@ typedef struct MADDriverBase {
 	
 	/**  Drivers variables **/
 	
-	MADChannel			chan[MAXTRACK];									// Current driver channels -- READ ONLY --
+	MADChannel		chan[MAXTRACK];									// Current driver channels -- READ ONLY --
 	bool			musicEnd;										// Is music playing finished? -- READ ONLY --
 	short			Tube[MAXTRACK];									// Used in 'Tracks View' Window - View menu
 	short			PartitionReader;								// Current position in pattern (0...999)
