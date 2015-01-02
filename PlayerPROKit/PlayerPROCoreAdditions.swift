@@ -490,6 +490,16 @@ extension IntPcmd: CommandIterator {
 	}
 }
 
+extension MADDriverBase {
+	public var channels: [MADChannel] {
+		return GetArrayFromMirror(reflect(chan))!
+	}
+	
+	public var activeChannels: [Bool] {
+		return GetArrayFromMirror(reflect(Active))!
+	}
+}
+
 extension MADChannel {
 	public var arpeggio: (values: [Int32], index: Int32, enabled: Bool) {
 		return (GetArrayFromMirror(reflect(arp))!, arpindex, arpUse)

@@ -610,29 +610,29 @@ typedef struct MADDriverBase {
 	
 	/**  Current music in memory, loaded with RLoadMusic() by example **/
 	
-	MADMusic		*curMusic;										// Current music played by this driver, it can be NULL !!!
-	MADLibrary		*lib;
+	MADMusic	*curMusic;										// Current music played by this driver, it can be NULL !!!
+	MADLibrary	*lib;
 	
 	/**  Drivers variables **/
 	
-	MADChannel		chan[MAXTRACK];									// Current driver channels -- READ ONLY --
-	bool			musicEnd;										// Is music playing finished? -- READ ONLY --
-	short			Tube[MAXTRACK];									// Used in 'Tracks View' Window - View menu
-	short			PartitionReader;								// Current position in pattern (0...999)
-	short			Pat;											// Current ID Pattern, see 'Patterns list'
-	short			PL;												// Current position in partition, see 'Partition list'
-	short			VolGlobal;										// Global SOFTWARE volume (This is NOT Mac hardware volume!) from 0 to 64
-	short			speed;											// Current speed, see speed Effect
-	short			finespeed;										// Current finespeed, see speed Effect
-	short			InstruTube[MAXINSTRU];							// Used in 'Instrument View' Window - View menu
-	short			VExt;											// External music speed, see 'Adaptators' window. 80 = normal
-	short			FreqExt;										// External music pitch, see 'Adaptators' window. 80 = normal
-	bool			Reading;										// Reading indicator
-	bool			Active[MAXTRACK];								// Channel Active?
-	bool			Equalizer;										// Is Equalizer Active?
+	MADChannel	chan[MAXTRACK];									// Current driver channels -- READ ONLY --
+	bool		musicEnd;										// Is music playing finished? -- READ ONLY --
+	short		Tube[MAXTRACK];									// Used in 'Tracks View' Window - View menu
+	short		PartitionReader;								// Current position in pattern (0...999)
+	short		Pat;											// Current ID Pattern, see 'Patterns list'
+	short		PL;												// Current position in partition, see 'Partition list'
+	short		VolGlobal;										// Global SOFTWARE volume (This is NOT Mac hardware volume!) from 0 to 64
+	short		speed;											// Current speed, see speed Effect
+	short		finespeed;										// Current finespeed, see speed Effect
+	short		InstruTube[MAXINSTRU];							// Used in 'Instrument View' Window - View menu
+	short		VExt;											// External music speed, see 'Adaptators' window. 80 = normal
+	short		FreqExt;										// External music pitch, see 'Adaptators' window. 80 = normal
+	bool		Reading;										// Reading indicator
+	bool		Active[MAXTRACK];								// Channel Active?
+	bool		Equalizer;										// Is Equalizer Active?
 	
-	void			*OscilloWavePtr;								// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
-	size_t			OscilloWaveSize;								// Size of previous buffer
+	void		*OscilloWavePtr;								// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
+	size_t		OscilloWaveSize;								// Size of previous buffer
 
 } MADDriverBase;
 

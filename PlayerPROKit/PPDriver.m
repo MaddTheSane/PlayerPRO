@@ -379,4 +379,118 @@
 	return theMus;
 }
 
+#pragma mark - More complex methods
+
+#define GetDriverBase() MADDriverGetBase(theRec)
+
+- (MADChannel)channelAtIndex:(NSInteger)idx
+{
+	NSParameterAssert(idx > 256 || idx < 0);
+	MADDriverBase *drivBase = GetDriverBase();
+	
+	return drivBase->chan[idx];
+}
+
+- (short)patternPosition
+{
+	MADDriverBase *drivBase = GetDriverBase();
+
+	return drivBase->PartitionReader;
+}
+- (void)setPatternPosition:(short)patternPosition
+{
+	NSParameterAssert(patternPosition > 999);
+	MADDriverBase *drivBase = GetDriverBase();
+	
+	drivBase->PartitionReader = patternPosition;
+}
+
+- (short)patternIdentifier
+{
+	MADDriverBase *drivBase = GetDriverBase();
+	
+	return drivBase->Pat;
+}
+
+- (void)setPatternIdentifier:(short)patternIdentifier
+{
+	MADDriverBase *drivBase = GetDriverBase();
+	
+	drivBase->Pat = patternIdentifier;
+}
+
+- (short)partitionPosition
+{
+	MADDriverBase *drivBase = GetDriverBase();
+	
+	return drivBase->PL;
+}
+
+- (void)setPartitionPosition:(short)partitionPosition
+{
+	MADDriverBase *drivBase = GetDriverBase();
+	
+	drivBase->PL = partitionPosition;
+}
+
+- (short)volume
+{
+	MADDriverBase *drivBase = GetDriverBase();
+	
+	return drivBase->VolGlobal;
+}
+
+- (void)setVolume:(short)volume
+{
+	NSParameterAssert(volume > 64 || volume < 0);
+	MADDriverBase *drivBase = GetDriverBase();
+	
+	drivBase->VolGlobal = volume;
+}
+
+- (BOOL)useEqualizer
+{
+	MADDriverBase *drivBase = GetDriverBase();
+	
+	return drivBase->Equalizer;
+}
+
+- (void)setUseEqualizer:(BOOL)useEqualizer
+{
+	MADDriverBase *drivBase = GetDriverBase();
+	
+	drivBase->Equalizer = useEqualizer;
+}
+
+- (void*)oscilloscopePointer
+{
+	MADDriverBase *drivBase = GetDriverBase();
+	
+	return drivBase->OscilloWavePtr;
+}
+
+- (size_t)oscilloscopeSize
+{
+	MADDriverBase *drivBase = GetDriverBase();
+	
+	return drivBase->OscilloWaveSize;
+}
+
+- (BOOL)isChannelActiveAtIndex:(NSInteger)idx
+{
+	NSParameterAssert(idx > 255 || idx < 0);
+	MADDriverBase *drivBase = GetDriverBase();
+	
+	return drivBase->Active[idx];
+}
+
+- (void)setChannelAtIndex:(NSInteger)idx to:(BOOL)enabled
+{
+	NSParameterAssert(idx > 255 || idx < 0);
+	MADDriverBase *drivBase = GetDriverBase();
+	
+	drivBase->Active[idx] = enabled;
+}
+
+
 @end

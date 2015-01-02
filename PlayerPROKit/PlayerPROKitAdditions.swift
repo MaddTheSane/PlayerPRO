@@ -544,4 +544,8 @@ extension PPDriver {
 	public func playSoundData(data theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: Range<Int>) -> MADErr {
 		return playSoundData(data: theSnd, channel: theChan, amplitude: amp, bitRate: rate, stereo: stereo, note: theNote, loopInRange: NSRange(loopRange))
 	}
+	
+	public var oscilloscope: (size: size_t, pointer: UnsafePointer<Void>) {
+		return (oscilloscopeSize, UnsafePointer<Void>(oscilloscopePointer))
+	}
 }

@@ -78,6 +78,19 @@
 - (PPMusicObject *)loadMusicFile:(NSString*)path NS_RETURNS_RETAINED;
 - (PPMusicObject *)loadMusicURL:(NSURL*)url NS_RETURNS_RETAINED;
 
+// More in-depth modification of the driver:
+
+- (MADChannel)channelAtIndex:(NSInteger)idx; //Read-only
+@property short patternPosition;
+@property short patternIdentifier;
+@property short partitionPosition;
+@property short volume; //0 to 64
+@property BOOL useEqualizer;
+@property (readonly) void *oscilloscopePointer NS_RETURNS_INNER_POINTER;
+@property (readonly) size_t oscilloscopeSize;
+- (BOOL)isChannelActiveAtIndex:(NSInteger)idx;
+- (void)setChannelAtIndex:(NSInteger)idx to:(BOOL)enabled;
+
 @end
 
 @interface PPDriver (deprecated)
