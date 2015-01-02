@@ -100,9 +100,13 @@ void 	Filter8BitX(MADByte *myPtr, MADDriverRec *intDriver);
 void 	Filter16BitX(short *myPtr, MADDriverRec *intDriver);
 void 	BufferCopyM(MADDriverRec *intDriver);
 void 	BufferCopyS(MADDriverRec *intDriver);
+
+/*** MIDI functions ***/
+
 void 	NoteOff(short oldIns, short oldN, short oldV, MADDriverRec *intDriver);
 void 	SampleMIDI(MADChannel *curVoice, short channel, short curN, MADDriverRec *intDriver);
 void 	CleanDriver(MADDriverRec *intDriver);
+void	SendMIDITimingClock(MADDriverRec *intDriver);
 
 #ifdef _MAC_H
 #pragma mark Core Audio Functions

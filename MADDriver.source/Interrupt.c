@@ -32,12 +32,9 @@
 extern short		gOutNodeRefNum, gOutputPortRefNum;
 #endif
 
-void SampleMIDI(MADChannel *curVoice, short channel, short curN, MADDriverRec *intDriver);
-void ApplyFilters(MADDriverRec *intDriver);
-void ApplySurround(MADDriverRec *intDriver);
-void SendMIDIClock(MADDriverRec *intDriver, MADByte MIDIByte);
-void SendMIDITimingClock(MADDriverRec *intDriver);
-void ConvertInstrument(MADByte *tempPtr, size_t sSize);
+//void ApplyFilters(MADDriverRec *intDriver);
+static void ApplySurround(MADDriverRec *intDriver);
+static void ConvertInstrument(MADByte *tempPtr, size_t sSize);
 
 void ProcessVisualPlug(MADDriverRec*, short*, int);
 
@@ -189,37 +186,37 @@ void MADCleanDriver(MADDriverRec *intDriver)
 		intDriver->base.chan[i].begPtr 	= NULL;
 		intDriver->base.chan[i].maxPtr 	= NULL;
 		intDriver->base.chan[i].curPtr 	= NULL;
-		intDriver->base.chan[i].sizePtr 	= 0;
+		intDriver->base.chan[i].sizePtr	= 0;
 		
-		intDriver->base.chan[i].amp		= 8;
+		intDriver->base.chan[i].amp			= 8;
 		
 		intDriver->base.chan[i].loopBeg 	= 0;
 		intDriver->base.chan[i].loopSize	= 0;
 		
 		intDriver->base.chan[i].ins 		= 0;
-		intDriver->base.chan[i].insOld 	= 0;
+		intDriver->base.chan[i].insOld		= 0;
 		
 		intDriver->base.chan[i].fineTune = NOFINETUNE;
 		
 		intDriver->base.chan[i].note		= 0xFF;
-		intDriver->base.chan[i].noteOld	= 0xFF;
-		intDriver->base.chan[i].relNoteOld = 0;
+		intDriver->base.chan[i].noteOld		= 0xFF;
+		intDriver->base.chan[i].relNoteOld	= 0;
 		
-		intDriver->base.chan[i].period	= GetOldPeriod(40, NOFINETUNE, intDriver);
-		intDriver->base.chan[i].periodOld= GetOldPeriod(40, NOFINETUNE, intDriver);
+		intDriver->base.chan[i].period		= GetOldPeriod(40, NOFINETUNE, intDriver);
+		intDriver->base.chan[i].periodOld	= GetOldPeriod(40, NOFINETUNE, intDriver);
 		
-		intDriver->base.chan[i].vol		= 64;
-		intDriver->base.chan[i].cmd		= 0;
-		intDriver->base.chan[i].arg		= 0;
+		intDriver->base.chan[i].vol	= 64;
+		intDriver->base.chan[i].cmd	= 0;
+		intDriver->base.chan[i].arg	= 0;
 		
 		for (x = 0; x < MAX_ARP; x++) intDriver->base.chan[i].arp[x] = 0;
-		intDriver->base.chan[i].arpindex = 0;
-		intDriver->base.chan[i].arpUse = false;
+		intDriver->base.chan[i].arpindex	= 0;
+		intDriver->base.chan[i].arpUse		= false;
 		
 		intDriver->base.chan[i].viboffset	= 0;
 		intDriver->base.chan[i].vibdepth 	= 0;
-		intDriver->base.chan[i].vibrate 		= 0;
-		intDriver->base.chan[i].vibtype 		= 0;
+		intDriver->base.chan[i].vibrate 	= 0;
+		intDriver->base.chan[i].vibtype 	= 0;
 		intDriver->base.chan[i].slide 		= 0;
 		intDriver->base.chan[i].pitchgoal 	= 0;
 		intDriver->base.chan[i].pitchrate 	= 0;
@@ -229,8 +226,8 @@ void MADCleanDriver(MADDriverRec *intDriver)
 		
 		for (x = 0; x < 16; x++) intDriver->base.chan[i].oldArg[x] = 0;
 		
-		intDriver->base.chan[i].oldVibdepth = 0;
-		intDriver->base.chan[i].oldVibrate = 0;
+		intDriver->base.chan[i].oldVibdepth	= 0;
+		intDriver->base.chan[i].oldVibrate	= 0;
 		
 		intDriver->base.chan[i].KeyOn		= false;
 		intDriver->base.chan[i].a			= 0;
@@ -246,21 +243,21 @@ void MADCleanDriver(MADDriverRec *intDriver)
 		intDriver->base.chan[i].curLevelL	= 0;
 		intDriver->base.chan[i].curLevelR	= 0;
 		intDriver->base.chan[i].prevPtr		= 0;
-		intDriver->base.chan[i].prevVol0		= DoVolPanning256(0, &intDriver->base.chan[i], intDriver, false);
-		intDriver->base.chan[i].prevVol1		= DoVolPanning256(1, &intDriver->base.chan[i], intDriver, false);
+		intDriver->base.chan[i].prevVol0	= DoVolPanning256(0, &intDriver->base.chan[i], intDriver, false);
+		intDriver->base.chan[i].prevVol1	= DoVolPanning256(1, &intDriver->base.chan[i], intDriver, false);
 		
 		intDriver->base.chan[i].loopType	= MADLoopTypeClassic;
 		intDriver->base.chan[i].pingpong	= false;
-		intDriver->base.chan[i].PanningE8 = false;
-		intDriver->base.chan[i].PatternLoopE6 = 1;
-		intDriver->base.chan[i].PatternLoopE6Count = 0;
-		intDriver->base.chan[i].PatternLoopE6ID = 0;
-		intDriver->base.chan[i].trig			 = 0;
+		intDriver->base.chan[i].PanningE8	= false;
+		intDriver->base.chan[i].PatternLoopE6		= 1;
+		intDriver->base.chan[i].PatternLoopE6Count	= 0;
+		intDriver->base.chan[i].PatternLoopE6ID		= 0;
+		intDriver->base.chan[i].trig		= 0;
 		intDriver->base.chan[i].preOff		= 0xFFFFFFFF;
 		intDriver->base.chan[i].preVal2		= 0;
-		intDriver->base.chan[i].preVal2R		= 0;
+		intDriver->base.chan[i].preVal2R	= 0;
 		
-		intDriver->base.chan[i].spreVal2		= 0;
+		intDriver->base.chan[i].spreVal2	= 0;
 		intDriver->base.chan[i].spreVal2R	= 0;
 		
 		intDriver->base.chan[i].preVal		= 0;
@@ -278,10 +275,8 @@ void MADCleanDriver(MADDriverRec *intDriver)
 	intDriver->BufCounter = 0;
 	intDriver->BytesToGenerate = 0;
 	
-	for (i = 0; i < MAXTRACK; i++)
-		intDriver->TrackLineReading[i] = true;
-	for (i = 0; i < MAXTRACK; i++)
-		intDriver->TrackReading[i] = true;
+	for (i = 0; i < MAXTRACK; i++) intDriver->TrackLineReading[i] = true;
+	for (i = 0; i < MAXTRACK; i++) intDriver->TrackReading[i] = true;
 }
 
 int Interpolate(int p, int p1, int p2, int v1, int v2)
@@ -512,9 +507,9 @@ void ProcessPanning(MADChannel *ch, MADDriverRec *intDriver, bool Recurrent)
 				}
 			}
 		}
-		ch->aa=aa;
-		ch->bb=bb;
-		ch->pp=pp;
+		ch->aa = aa;
+		ch->bb = bb;
+		ch->pp = pp;
 		
 		ch->pannEnv = v;
 		
@@ -549,9 +544,9 @@ void StartPanning(MADChannel *ch)
 	if (!ch)
 		return;
 	
-	ch->pp=0;
-	ch->aa=0;
-	ch->bb=1;
+	ch->pp = 0;
+	ch->aa = 0;
+	ch->bb = 1;
 }
 
 static const uint32_t lineartable[800] = {
@@ -1636,8 +1631,8 @@ void NoteAnalyse(MADDriverRec *intDriver)
 				}
 			}
 				
-				intDriver->curCenterL = minL + (maxL-minL)/2;
-				intDriver->curCenterR = minR + (maxR-minR)/2;
+				intDriver->curCenterL = minL + (maxL - minL)/2;
+				intDriver->curCenterR = minR + (maxR - minR)/2;
 				break;
 		}
 	}
