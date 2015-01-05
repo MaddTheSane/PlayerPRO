@@ -56,6 +56,9 @@
                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="10" secondAttribute="trailing" constant="20" symbolic="YES" id="yhm-E2-OXb"/>
                 </constraints>
             </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="XEG-oi-bOp"/>
+            </connections>
         </window>
     </objects>
 </document>

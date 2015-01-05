@@ -15,13 +15,13 @@ extension TagCoupling {
 	}
 }
 
-final class Preferences: NSWindowController {
+final class Preferences: NSWindowController, NSWindowDelegate {
 	@IBOutlet weak var box:		NSBox! = nil
 	@IBOutlet weak var popUp:	NSPopUpButton! = nil
 	private var viewControllers = [NSViewController]()
 	
 	class func newPreferenceController() -> Self {
-		var ourself = self(windowNibName: "preferences")
+		let ourself = self(windowNibName: "preferences")
 		var tmpControllers = [NSViewController]()
 		tmpControllers.append(SoundOutputController.newPreferenceView()!)
 		#if PLAYERPRO6
@@ -65,7 +65,7 @@ final class Preferences: NSWindowController {
 		
 		//Compute the new window frame
 		let currentSize = (box.contentView as NSView).frame.size
-		var newSize = v.frame.size;
+		let newSize = v.frame.size;
 		let deltaWidth = newSize.width - currentSize.width;
 		let deltaHeight = newSize.height - currentSize.height;
 		var windowFrame = w.frame;
@@ -116,4 +116,15 @@ final class Preferences: NSWindowController {
 			displayViewController(ourController[0])
 		}
     }
+	
+	// MARK: NSWindowDelegate
+	func windowWillClose(notification: NSNotification) {
+		if let aWin = notification.object as? NSWindow {
+			if aWin === self.window {
+				if NSColorPanel.sharedColorPanelExists() {
+					NSColorPanel.sharedColorPanel().close()
+				}
+			}
+		}
+	}
 }

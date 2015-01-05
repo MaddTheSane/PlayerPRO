@@ -98,15 +98,4 @@ break
 	}
 }
 
-- (void)viewDidDisappear
-{
-	if ([super respondsToSelector:@selector(viewDidDisappear)]) {
-		[super viewDidDisappear];
-	}
-	
-	if ([NSColorPanel sharedColorPanelExists]) {
-		[[NSColorPanel sharedColorPanel] close];
-	}
-}
-
 @end
