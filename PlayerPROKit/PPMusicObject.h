@@ -30,7 +30,7 @@
 @property (readwrite, copy) NSString *title;
 @property (readwrite, copy) NSString *information;
 @property (readonly, weak) PPDriver *attachedDriver;
-@property (readonly) NSURL *filePath;
+@property (readonly, strong) NSURL *filePath;
 
 @property BOOL usesLinearPitchTable;
 @property BOOL limitPitchToMODTable;

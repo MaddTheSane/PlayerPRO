@@ -59,7 +59,7 @@ public func NoteFromString(myTT: String) -> Int16?
 		return nil
 	}
 	
-	func findNote(inStr: String) -> (String, Bool) {
+	func findNote(inStr: String) -> (outString: String, sharp: Bool) {
 		var idx = inStr.endIndex
 		--idx
 		var maybeSign = inStr[idx]
@@ -91,7 +91,7 @@ public func NoteFromString(myTT: String) -> Int16?
 	
 	let theRest = myTT[myTT.startIndex ..< idx]
 	let theRet = findNote(theRest)
-	let val1 = theRet.0.lowercaseString
+	let val1 = theRet.outString.lowercaseString
 	switch val1 {
 	case "c", "do":
 		Oct += 0
@@ -119,7 +119,7 @@ public func NoteFromString(myTT: String) -> Int16?
 	}
 	
 	if Oct != 0xFF {
-		if theRet.1 {
+		if theRet.sharp {
 			Oct++
 		}
 		
