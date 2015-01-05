@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6206.8" systemVersion="13E28" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6206.8"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="MiscPreferenceController">
+        <customObject id="-2" userLabel="File's Owner" customClass="MiscPreferenceController" customModule="PlayerPRO_6" customModuleProvider="target">
             <connections>
                 <outlet property="addExt" destination="7" id="kbf-4V-isO"/>
                 <outlet property="madCompression" destination="5" id="SEx-Zj-zwt"/>
@@ -76,7 +77,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button translatesAutoresizingMaskIntoConstraints="NO" id="20">
-                                <rect key="frame" x="16" y="12" width="188" height="18"/>
+                                <rect key="frame" x="16" y="12" width="185" height="18"/>
                                 <buttonCell key="cell" type="check" title="Draw lines between points" bezelStyle="regularSquare" imagePosition="left" alignment="left" state="on" inset="2" id="21">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -89,6 +90,7 @@
                     </view>
                     <constraints>
                         <constraint firstAttribute="bottom" secondItem="20" secondAttribute="bottom" constant="11" id="A3V-1n-Ydk"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="20" secondAttribute="trailing" constant="16" id="UT3-rv-5Vf"/>
                         <constraint firstItem="20" firstAttribute="top" secondItem="19" secondAttribute="top" constant="25" id="eom-GZ-VsL"/>
                         <constraint firstItem="20" firstAttribute="leading" secondItem="19" secondAttribute="leading" constant="16" id="pvf-5U-zo4"/>
                     </constraints>

@@ -162,7 +162,6 @@
 		5521F41E17FA573B002CDBA9 /* PPPlugInInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5521F42017FA573B002CDBA9 /* PPPlugInInfoController.xib */; };
 		55232AD811FDDFEA0041A4EC /* PianoPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AD711FDDFEA0041A4EC /* PianoPreferencesController.m */; };
 		55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AE911FDE29B0041A4EC /* ColorPreferenceController.m */; };
-		55232AED11FDE2E40041A4EC /* MiscPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AEC11FDE2E40041A4EC /* MiscPreferenceController.m */; };
 		55232AF011FDE5180041A4EC /* BoxEditorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AEF11FDE5180041A4EC /* BoxEditorPreferenceController.m */; };
 		55232AF311FDE56D0041A4EC /* DigitalEditorPreferenceControler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF211FDE56D0041A4EC /* DigitalEditorPreferenceControler.m */; };
 		55232AF711FDE5CB0041A4EC /* ClassicEditorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF611FDE5CB0041A4EC /* ClassicEditorPreferenceController.m */; };
@@ -399,7 +398,6 @@
 		5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		5578C4BD17DA4BC20057D11B /* PPTimeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55323352167687A200076604 /* PPTimeFormatter.m */; };
 		5578C4BF17DA4BF20057D11B /* MusicListPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AE611FDE2550041A4EC /* MusicListPreferenceController.m */; };
-		5578C4C017DA4C040057D11B /* MiscPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AEC11FDE2E40041A4EC /* MiscPreferenceController.m */; };
 		5578C4C117DA4C210057D11B /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
 		5578C4C217DA4C430057D11B /* MusicListPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6F016619E39005BDE4B /* MusicListPrefs.xib */; };
 		5578C4CD17DA6B170057D11B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5533600311EBC66400525CAF /* Localizable.strings */; };
@@ -708,6 +706,8 @@
 		55E8998510F18165004EB52B /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EC0100404EB00E75E63 /* QuickTime.framework */; };
 		55E8998710F18175004EB52B /* QuicktimeGeneric.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E104C10D6C79E00BB619C /* QuicktimeGeneric.c */; };
 		55E8999110F18AF1004EB52B /* WAVE-Conversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105710D6C79E00BB619C /* WAVE-Conversion.c */; };
+		55E99F951A5B39560015D878 /* MiscPreferenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E99F941A5B39560015D878 /* MiscPreferenceController.swift */; };
+		55E99F961A5B39560015D878 /* MiscPreferenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E99F941A5B39560015D878 /* MiscPreferenceController.swift */; };
 		55EA019816AF15B500D6AEA0 /* PPFilterPlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */; };
 		55EA019C16AF1D3900D6AEA0 /* Backwards.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE5DF10E0882800177B4C /* Backwards.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EA019F16AF25B800D6AEA0 /* PPFilterPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EA019E16AF25B800D6AEA0 /* PPFilterPlugHandler.m */; };
@@ -2187,8 +2187,6 @@
 		55232AE611FDE2550041A4EC /* MusicListPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MusicListPreferenceController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55232AE811FDE29B0041A4EC /* ColorPreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPreferenceController.h; sourceTree = "<group>"; };
 		55232AE911FDE29B0041A4EC /* ColorPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPreferenceController.m; sourceTree = "<group>"; };
-		55232AEB11FDE2E40041A4EC /* MiscPreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MiscPreferenceController.h; sourceTree = "<group>"; };
-		55232AEC11FDE2E40041A4EC /* MiscPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MiscPreferenceController.m; sourceTree = "<group>"; };
 		55232AEE11FDE5180041A4EC /* BoxEditorPreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BoxEditorPreferenceController.h; sourceTree = "<group>"; };
 		55232AEF11FDE5180041A4EC /* BoxEditorPreferenceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BoxEditorPreferenceController.m; sourceTree = "<group>"; };
 		55232AF111FDE56D0041A4EC /* DigitalEditorPreferenceControler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigitalEditorPreferenceControler.h; sourceTree = "<group>"; };
@@ -2639,6 +2637,7 @@
 		55E527A8186A2A690020F3D6 /* MIDI.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MIDI.pch; sourceTree = "<group>"; };
 		55E898B710F17C2B004EB52B /* QuickTime.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuickTime.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		55E8997B10F17CCB004EB52B /* QuickTime-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "QuickTime-Info.plist"; sourceTree = "<group>"; };
+		55E99F941A5B39560015D878 /* MiscPreferenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiscPreferenceController.swift; sourceTree = "<group>"; };
 		55EA019616AF15B500D6AEA0 /* PPFilterPlugObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPlugObject.h; sourceTree = "<group>"; };
 		55EA019716AF15B500D6AEA0 /* PPFilterPlugObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPlugObject.m; sourceTree = "<group>"; };
 		55EA019D16AF25B800D6AEA0 /* PPFilterPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPFilterPlugHandler.h; sourceTree = "<group>"; };
@@ -3871,8 +3870,7 @@
 				553ED2571A50AE99005222E3 /* ColorPreferenceObject.swift */,
 				55232AE811FDE29B0041A4EC /* ColorPreferenceController.h */,
 				55232AE911FDE29B0041A4EC /* ColorPreferenceController.m */,
-				55232AEB11FDE2E40041A4EC /* MiscPreferenceController.h */,
-				55232AEC11FDE2E40041A4EC /* MiscPreferenceController.m */,
+				55E99F941A5B39560015D878 /* MiscPreferenceController.swift */,
 				55232AEE11FDE5180041A4EC /* BoxEditorPreferenceController.h */,
 				55232AEF11FDE5180041A4EC /* BoxEditorPreferenceController.m */,
 				55232AF111FDE56D0041A4EC /* DigitalEditorPreferenceControler.h */,
@@ -7165,10 +7163,10 @@
 				5578C4B317DA4AD30057D11B /* UserDefaultKeys.m in Sources */,
 				557191D118A40D9900F6DAD4 /* MidiHardwarePreferenceController.m in Sources */,
 				5578C4B517DA4AE20057D11B /* PPHilightableButton.m in Sources */,
+				55E99F961A5B39560015D878 /* MiscPreferenceController.swift in Sources */,
 				5547DA5719A5690E0014A620 /* Preferences.swift in Sources */,
 				5578C4BD17DA4BC20057D11B /* PPTimeFormatter.m in Sources */,
 				5578C4BF17DA4BF20057D11B /* MusicListPreferenceController.m in Sources */,
-				5578C4C017DA4C040057D11B /* MiscPreferenceController.m in Sources */,
 				5578C4D617DA88460057D11B /* PPInstrumentWindowController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7559,7 +7557,6 @@
 				55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */,
 				55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */,
 				55FD192B19A1C12B001E1D9C /* ComplexImportPlugHandler.swift in Sources */,
-				55232AED11FDE2E40041A4EC /* MiscPreferenceController.m in Sources */,
 				55588A96199951B300C3D4EE /* PlugInInfoController.swift in Sources */,
 				55232AF011FDE5180041A4EC /* BoxEditorPreferenceController.m in Sources */,
 				553ED2581A50AE99005222E3 /* ColorPreferenceObject.swift in Sources */,
@@ -7575,6 +7572,7 @@
 				5579ADB819A4551500DEC0FF /* DigitalPlugHandler.swift in Sources */,
 				55993EF619A340FF00C2078E /* PPRunAlert.swift in Sources */,
 				557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */,
+				55E99F951A5B39560015D878 /* MiscPreferenceController.swift in Sources */,
 				55C5754019CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */,
 				55E382EB1981509100EC330B /* PlugInInfo.swift in Sources */,
 				5523EC8416936FAA0067B22A /* PPDigitalPlugInObject.m in Sources */,

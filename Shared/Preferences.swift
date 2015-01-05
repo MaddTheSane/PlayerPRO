@@ -36,7 +36,7 @@ final class Preferences: NSWindowController, NSWindowDelegate {
 		#if !PLAYERPRO6
 			tmpControllers.append(MusicListPreferenceController.newPreferenceView())
 		#endif
-		tmpControllers.append(MiscPreferenceController.newPreferenceView())
+		tmpControllers.append(MiscPreferenceController.newPreferenceView()!)
 
 		ourself.viewControllers = tmpControllers
 		

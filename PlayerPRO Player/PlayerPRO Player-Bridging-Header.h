@@ -7,5 +7,4 @@
 #import "AppDelegate.h"
 
 #import "MusicListPreferenceController.h"
-#import "MiscPreferenceController.h"
 #import "MidiHardwarePreferenceController.h"

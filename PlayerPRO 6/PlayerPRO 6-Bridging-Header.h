@@ -27,7 +27,6 @@
 //Preferences
 #import "PianoPreferencesController.h"
 #import "ColorPreferenceController.h"
-#import "MiscPreferenceController.h"
 #import "BoxEditorPreferenceController.h"
 #import "DigitalEditorPreferenceControler.h"
 #import "ClassicEditorPreferenceController.h"
