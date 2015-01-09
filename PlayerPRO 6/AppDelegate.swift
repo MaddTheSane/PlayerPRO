@@ -329,11 +329,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			PPCColor95: makeNSRGB(52428, 52428, 26214).PPencodeColor(),
 			PPCColor96: makeNSRGB(52428, 52428, 39321).PPencodeColor()]
 		
-		let alltogether = NSMutableDictionary(dictionary: tooLargeDict)
-		alltogether.addEntriesFromDictionary(defaults1)
-		alltogether.addEntriesFromDictionary(defaults2)
-		alltogether.addEntriesFromDictionary(defaults3)
-		alltogether.addEntriesFromDictionary(defaults4)
+		var alltogether = tooLargeDict
+		alltogether += defaults1
+		alltogether += defaults2
+		alltogether += defaults3
+		alltogether += defaults4
 		
 		NSUserDefaults.standardUserDefaults().registerDefaults(alltogether)
 	}

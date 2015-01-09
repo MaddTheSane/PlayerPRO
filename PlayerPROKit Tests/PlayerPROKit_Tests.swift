@@ -33,7 +33,8 @@ class PlayerPROKit_Tests: XCTestCase {
 	
 	func testDebugString() {
 		MADRegisterDebugBlock { (line, file, text) -> Void in
-			let fileStr = String(UTF8String: file)!
+			let manager = NSFileManager.defaultManager()
+			let fileStr = manager.stringWithFileSystemRepresentation(file, length: Int(strlen(file)))
 			let textStr = String(UTF8String: text)!
 			
 			println("\(fileStr):\(line) \(textStr)")
@@ -41,16 +42,4 @@ class PlayerPROKit_Tests: XCTestCase {
 		MADDebugString("A Quick Test")
 	}
 	
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
 }
