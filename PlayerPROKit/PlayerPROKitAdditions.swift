@@ -50,7 +50,35 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObjec
 	})
 }
 
-public func CreateErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [String: NSObject]? = nil) -> NSError? {
+public func CreateErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [String: NSObject]? = nil, convertToCocoa: Bool = false) -> NSError? {
+	if convertToCocoa {
+		switch theErr {
+		case .UserCanceledErr:
+			return NSError(domain: NSCocoaErrorDomain, code: NSUserCancelledError, userInfo: customUserDictionary)
+			
+		case .NeedMemory:
+			return NSError(domain: NSPOSIXErrorDomain, code: Int(ENOMEM), userInfo: customUserDictionary)
+			
+		case .ReadingErr:
+			return NSError(domain: NSCocoaErrorDomain, code: NSFileReadUnknownError, userInfo: customUserDictionary)
+			
+		case .WritingErr:
+			return NSError(domain: NSCocoaErrorDomain, code: NSFileWriteUnknownError, userInfo: customUserDictionary)
+			
+		case .IncompatibleFile, .FileNotSupportedByThisPlug:
+			return NSError(domain: NSCocoaErrorDomain, code: NSFileReadCorruptFileError, userInfo: customUserDictionary)
+			
+		case .ParametersErr:
+			#if !os(OSX)
+				let paramErr = -50
+			#endif
+			return NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: customUserDictionary)
+			
+		default:
+			break
+		}
+	}
+	
 	if let cud = customUserDictionary {
 		if let anErr = PPCreateErrorFromMADErrorType(theErr) {
 			var errDict: [String: NSObject] = [NSLocalizedDescriptionKey : anErr.localizedDescription,
