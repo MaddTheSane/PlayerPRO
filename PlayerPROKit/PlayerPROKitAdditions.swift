@@ -10,6 +10,7 @@ import CoreFoundation
 import Foundation
 import PlayerPROCore
 import CoreGraphics
+import SwiftAdditions
 #if os(OSX)
 	import Cocoa
 #elseif os(iOS)
@@ -49,7 +50,18 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObjec
 	})
 }
 
-public func CreateErrorFromMADErrorType(theErr: MADErr) -> NSError? {
+public func CreateErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [String: NSObject]? = nil) -> NSError? {
+	if let cud = customUserDictionary {
+		if let anErr = PPCreateErrorFromMADErrorType(theErr) {
+			var errDict: [String: NSObject] = [NSLocalizedDescriptionKey : anErr.localizedDescription,
+				NSLocalizedFailureReasonErrorKey: anErr.localizedFailureReason!,
+				NSLocalizedRecoverySuggestionErrorKey: anErr.localizedRecoverySuggestion!]
+			
+			errDict += cud
+			
+			return NSError(domain: PPMADErrorDomain, code: Int(theErr.rawValue), userInfo: errDict)
+		}
+	}
 	return PPCreateErrorFromMADErrorType(theErr)
 }
 
