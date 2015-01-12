@@ -291,7 +291,6 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	MADErr theErr = MADNoErr;
 	NSNumber *curNum;
-	unsigned long pcmdLen;
 	theErr = [[self class] testPcmdFileAtURL:theURL];
 	if (theErr) {
 		return theErr;

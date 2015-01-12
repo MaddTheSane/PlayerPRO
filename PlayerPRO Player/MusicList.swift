@@ -339,7 +339,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 			selectedMusic = -1;
 		}
 		
-		RemoveObjects(&musicList, atIndexes: idxSet)
+		removeObjects(inArray: &musicList, atIndexes: idxSet)
 	}
 	
 	func removeObjectInMusicListAtIndex(atIndex: Int) {
