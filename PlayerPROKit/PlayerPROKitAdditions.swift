@@ -433,7 +433,7 @@ extension PPPatternObject: SequenceType {
 }
 
 public func InfoRecToMusicInfo(infoRec: MADInfoRec) -> PPLibrary.MusicFileInfo {
-	let tmpDict = PPLibrary.infoRecToDictionary(infoRec)
+	let tmpDict = InfoRecToDictionary(infoRec)
 	
 	return PPLibrary.MusicFileInfo(infoDict: tmpDict)
 }
