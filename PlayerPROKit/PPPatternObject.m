@@ -303,12 +303,6 @@ static const dispatch_block_t initUTIArray = ^{
 	}
 	[theURL getResourceValue:&curNum forKey:NSURLFileSizeKey error:NULL];
 	
-	if (!curNum) {
-		pcmdLen = [pcmdData length];
-	} else {
-		pcmdLen = [curNum unsignedLongValue];
-	}
-	
 	SwapPcmd([pcmdData mutableBytes]);
 	
 	thePcmd = [pcmdData bytes];
