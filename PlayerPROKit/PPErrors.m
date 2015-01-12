@@ -10,6 +10,10 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import "PPMusicObject.h"
 
+#ifndef __MACERRORS__
+#define paramErr (-50)
+#endif
+
 NSString * const PPMADErrorDomain = @"net.sourceforge.playerpro.PlayerPROKit.ErrorDomain";
 
 #if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
@@ -45,10 +49,16 @@ BOOL PPErrorIsUserCancelled(NSError *theErr)
 
 NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 {
+	return PPCreateErrorFromMADErrorTypeConvertingToCocoa(theErr, NO);
+}
+
+NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL convertToCocoa)
+{
 	BUNDLEINIT;
 	NSString *ErrorDescription;
 	NSString *errorReason;
 	NSString *recoverySuggestion;
+	NSError *cocoaEquiv;
 	
 	switch (theErr) {
 		case MADNoErr:
@@ -59,18 +69,30 @@ NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 			ErrorDescription = PPErrorLocalizedString(@"Not enough memory for operation", @"Not enough memory");
 			errorReason = PPErrorLocalizedString(@"Ran out of memory", @"Ran out of memory");
 			recoverySuggestion = PPErrorLocalizedString(@"Try closing some applications or closing windows.", @"Close apps");
+			cocoaEquiv = [[NSError alloc] initWithDomain:NSPOSIXErrorDomain code:ENOMEM
+												userInfo:@{NSLocalizedDescriptionKey: ErrorDescription,
+														   NSLocalizedFailureReasonErrorKey: errorReason,
+														   NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion}];
 			break;
 			
 		case MADReadingErr:
 			ErrorDescription = PPErrorLocalizedString(@"Error reading file", @"Error reading file");
 			errorReason = PPErrorLocalizedString(@"Could not read file", @"");
 			recoverySuggestion = PPErrorLocalizedString(@"check to see if you have read permissions for the file.", @"Can you read it?");
+			cocoaEquiv = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSFileReadUnknownError
+												userInfo:@{NSLocalizedDescriptionKey: ErrorDescription,
+														   NSLocalizedFailureReasonErrorKey: errorReason,
+														   NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion}];
 			break;
 			
 		case MADIncompatibleFile:
 			ErrorDescription = PPErrorLocalizedString(@"The file is incompatible with PlayerPRO or one of it's plug-ins", @"Incompatible file");
 			errorReason = PPErrorLocalizedString(@"The file is incompatible", @"");
 			recoverySuggestion = PPErrorLocalizedString(@"Check the file to make sure it is a valid file.", @"Check file");
+			cocoaEquiv = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError
+												userInfo:@{NSLocalizedDescriptionKey: ErrorDescription,
+														   NSLocalizedFailureReasonErrorKey: errorReason,
+														   NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion}];
 			break;
 			
 		case MADLibraryNotInitialized:
@@ -83,6 +105,10 @@ NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 			ErrorDescription = PPErrorLocalizedString(@"Invalid paramaters were sent to a function", @"Invalid parameters");
 			errorReason = PPErrorLocalizedString(@"Invalid parameters", @"Invalid parameters");
 			recoverySuggestion = PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
+			cocoaEquiv = [[NSError alloc] initWithDomain:NSOSStatusErrorDomain code:paramErr
+												userInfo:@{NSLocalizedDescriptionKey: ErrorDescription,
+														   NSLocalizedFailureReasonErrorKey: errorReason,
+														   NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion}];
 			break;
 			
 		case MADSoundManagerErr:
@@ -101,6 +127,11 @@ NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 			ErrorDescription = PPErrorLocalizedString(@"The file is not supported by this plug-in", @"");
 			errorReason = PPErrorLocalizedString(@"Invalid file for plug-in", @"");
 			recoverySuggestion = PPErrorLocalizedString(@"Try using another plug-in, or checking to see if the file is okay.", @"try other plug-in");
+			cocoaEquiv = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError
+												userInfo:@{NSLocalizedDescriptionKey: ErrorDescription,
+														   NSLocalizedFailureReasonErrorKey: errorReason,
+														   NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion}];
+
 			break;
 			
 		case MADCannotFindPlug:
@@ -137,6 +168,11 @@ NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 			ErrorDescription = PPErrorLocalizedString(@"User Cancelled Action", @"");
 			errorReason = PPErrorLocalizedString(@"User Cancelled Action description", @"");
 			recoverySuggestion = PPErrorLocalizedString(@"No Recovery needed", @"");
+			cocoaEquiv = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSUserCancelledError
+												userInfo:@{NSLocalizedDescriptionKey: ErrorDescription,
+														   NSLocalizedFailureReasonErrorKey: errorReason,
+														   NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion}];
+
 			break;
 			
 		case MADUnknownErr:
@@ -148,6 +184,10 @@ NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 		default:
 			return [[NSError alloc] initWithDomain:NSOSStatusErrorDomain code:theErr userInfo:nil];
 			break;
+	}
+	
+	if (convertToCocoa && (cocoaEquiv != nil)) {
+		return cocoaEquiv;
 	}
 	
 	return [[NSError alloc] initWithDomain:PPMADErrorDomain code:theErr userInfo:

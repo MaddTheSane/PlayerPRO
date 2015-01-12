@@ -1854,6 +1854,13 @@
 			remoteGlobalIDString = 5533410810BB5460005208D1;
 			remoteInfo = "Import-export";
 		};
+		55D59C311A648B06008A6E51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
 		55E898AA10F17C2B004EB52B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -5011,6 +5018,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55D59C321A648B06008A6E51 /* PBXTargetDependency */,
 				551292EC163DD72E00C2C639 /* PBXTargetDependency */,
 			);
 			name = PlayerPROKit;
@@ -8393,6 +8401,11 @@
 			isa = PBXTargetDependency;
 			target = 5533410810BB5460005208D1 /* Import-export */;
 			targetProxy = 55CBF9FF11EB77AA0028C6BB /* PBXContainerItemProxy */;
+		};
+		55D59C321A648B06008A6E51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 55D59C311A648B06008A6E51 /* PBXContainerItemProxy */;
 		};
 		55E898A910F17C2B004EB52B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
