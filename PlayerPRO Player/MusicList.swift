@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftAdditions
 
 private let kMusicListKey1 = "Music List Key1"
 private let kMusicListKey2 = "Music List Key2"
@@ -338,9 +339,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 			selectedMusic = -1;
 		}
 		
-		for var i = idxSet.lastIndex; i != NSNotFound; i = idxSet.indexLessThanIndex(i) {
-			musicList.removeAtIndex(i)
-		}
+		RemoveObjects(&musicList, atIndexes: idxSet)
 	}
 	
 	func removeObjectInMusicListAtIndex(atIndex: Int) {
