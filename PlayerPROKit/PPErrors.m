@@ -203,12 +203,12 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 			ErrorDescription = PPErrorLocalizedString(@"User Cancelled Action", @"");
 			errorReason = PPErrorLocalizedString(@"User Cancelled Action description", @"");
 			recoverySuggestion = PPErrorLocalizedString(@"No Recovery needed", @"");
-			cocoaEquiv = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSUserCancelledError
-												userInfo:userInfo];
-
+			
 			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
 						 NSLocalizedFailureReasonErrorKey: errorReason,
 						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
+			cocoaEquiv = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSUserCancelledError
+												userInfo:userInfo];
 			break;
 			
 		case MADUnknownErr:
