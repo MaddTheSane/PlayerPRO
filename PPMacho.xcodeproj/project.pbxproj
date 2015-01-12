@@ -428,6 +428,8 @@
 		5578C53717DB957A0057D11B /* PPImport.mdimporter in Copy Spotlight */ = {isa = PBXBuildFile; fileRef = 5578C52F17DB94A50057D11B /* PPImport.mdimporter */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5578C53C17DB9F640057D11B /* PPInstrumentPlugHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */; };
 		5579ADB819A4551500DEC0FF /* DigitalPlugHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */; };
+		5579D7E01A648F3300401D75 /* CppIncludeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5579D7DF1A648F3300401D75 /* CppIncludeTest.mm */; };
+		5579D7E11A648F3300401D75 /* CppIncludeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5579D7DF1A648F3300401D75 /* CppIncludeTest.mm */; };
 		557DC36E19BBA76C003CACFE /* DocumentPluginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557DC36D19BBA76C003CACFE /* DocumentPluginHelper.swift */; };
 		557DE42E10E06BF200177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE5D910E0882800177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -2455,6 +2457,7 @@
 		5578C53017DB94A60057D11B /* PPImport-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PPImport-Info.plist"; sourceTree = "<group>"; };
 		5578C53A17DB9F630057D11B /* PPInstrumentPlugHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPlugHandler.h; sourceTree = "<group>"; };
 		5578C53B17DB9F630057D11B /* PPInstrumentPlugHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPInstrumentPlugHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5579D7DF1A648F3300401D75 /* CppIncludeTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CppIncludeTest.mm; sourceTree = "<group>"; };
 		557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigitalPlugHandler.swift; sourceTree = "<group>"; };
 		557DC36D19BBA76C003CACFE /* DocumentPluginHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentPluginHelper.swift; sourceTree = "<group>"; };
 		557DE43410E06BF200177B4C /* Amplitude.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amplitude.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4505,6 +4508,7 @@
 				5528D1321A115AF9001E30CF /* NotesConversion.swift */,
 				55ADD23E19B4F858005588B5 /* PlayerPROKit_Tests.swift */,
 				555272541A0001CE008B8616 /* PPKPcmd_Tests.swift */,
+				5579D7DF1A648F3300401D75 /* CppIncludeTest.mm */,
 				55ADD23C19B4F858005588B5 /* Supporting Files */,
 			);
 			path = "PlayerPROKit Tests";
@@ -7071,6 +7075,7 @@
 			files = (
 				5528D1341A115AF9001E30CF /* NotesConversion.swift in Sources */,
 				55C9191D1A000C3F0049F4E4 /* PlayerPROKit_Tests.swift in Sources */,
+				5579D7E11A648F3300401D75 /* CppIncludeTest.mm in Sources */,
 				55C9191E1A000C3F0049F4E4 /* PPKPcmd_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7526,6 +7531,7 @@
 			files = (
 				5528D1331A115AF9001E30CF /* NotesConversion.swift in Sources */,
 				55ADD23F19B4F858005588B5 /* PlayerPROKit_Tests.swift in Sources */,
+				5579D7E01A648F3300401D75 /* CppIncludeTest.mm in Sources */,
 				555272551A0001CE008B8616 /* PPKPcmd_Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

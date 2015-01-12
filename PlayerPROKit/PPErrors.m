@@ -16,20 +16,7 @@
 
 NSString * const PPMADErrorDomain = @"net.sourceforge.playerpro.PlayerPROKit.ErrorDomain";
 
-#if defined(NOEXPORTFUNCS) && NOEXPORTFUNCS
-#define BUNDLEINIT
-#define PPErrorLocalizedString(theKey, comment) NSLocalizedStringWithDefaultValue(theKey, @"PPErrors", [NSBundle mainBundle], theKey, comment)
-
-#else
-
-#define BUNDLEINIT static NSBundle *PPKBundle; \
-static dispatch_once_t errorOnceToken; \
-dispatch_once(&errorOnceToken, ^{ \
-PPKBundle = [NSBundle bundleForClass:[PPMusicObject class]]; \
-})
-
 #define PPErrorLocalizedString(theKey, comment) NSLocalizedStringWithDefaultValue(theKey, @"PPErrors", PPKBundle, theKey, comment)
-#endif
 
 BOOL PPErrorIsUserCancelled(NSError *theErr)
 {
@@ -54,7 +41,11 @@ NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 
 NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL convertToCocoa)
 {
-	BUNDLEINIT;
+	static NSBundle *PPKBundle;
+	static dispatch_once_t errorOnceToken;
+	dispatch_once(&errorOnceToken, ^{
+		PPKBundle = [NSBundle bundleForClass:[PPMusicObject class]];
+	});
 	NSString *ErrorDescription;
 	NSString *errorReason;
 	NSString *recoverySuggestion;
