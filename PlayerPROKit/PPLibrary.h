@@ -52,6 +52,6 @@ __END_DECLS
 @end
 
 __BEGIN_DECLS
-NSDictionary *InfoRecToDictionary(MADInfoRec infoRec);
+extern NSDictionary *PPInfoRecToDictionary(MADInfoRec infoRec);
 __END_DECLS
 

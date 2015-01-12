@@ -159,7 +159,7 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 		return theErr;
 	}
 	
-	*infoDict = InfoRecToDictionary(infoRec);
+	*infoDict = PPInfoRecToDictionary(infoRec);
 	return theErr;
 }
 
@@ -192,7 +192,7 @@ static inline NSString* OSTypeToNSString(OSType theOSType)
 	return checkForValid;
 }
 
-NSDictionary *InfoRecToDictionary(MADInfoRec infoRec)
+NSDictionary *PPInfoRecToDictionary(MADInfoRec infoRec)
 {
 	return @{kPPTotalPatterns:		@(infoRec.totalPatterns),
 			 kPPPartitionLength:	@(infoRec.partitionLength),

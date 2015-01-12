@@ -41,3 +41,8 @@
 @property (readonly, getter=isBlankSample) BOOL blankSample;
 
 @end
+
+__BEGIN_DECLS
+extern short PPNoteFromString(NSString *aNote);
+extern NSString *PPStringFromNote(short note);
+__END_DECLS

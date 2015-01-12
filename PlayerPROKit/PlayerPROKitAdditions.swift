@@ -180,14 +180,14 @@ extension PPSampleObject {
 		let bitMapFormat = CGBitmapInfo(alphaInfo: .PremultipliedLast, additionalInfo: .ByteOrderDefault)
 		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!, bitMapFormat)!
 		
-		CGContextClearRect(bitmapContext, CGRect(origin: CGPointZero, size: imageSize))
+		CGContextClearRect(bitmapContext, aRect)
 		let lineSize = view.convertSizeToBacking(NSSize(width: 1, height: 1)).height
 		CGContextSetLineWidth(bitmapContext, lineSize)
+		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		if (datIsStereo) {
-			CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(0, 0, 1, 0.75))
+			CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(0, 0, 1, stereoTrans))
 			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
 		}
-		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		
 		CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(1, 0, 0, stereoTrans));
 		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
@@ -231,16 +231,16 @@ extension PPSampleObject {
 		let rowBytes = 4 * UInt(imageSize.width)
 		let bitMapFormat = CGBitmapInfo(alphaInfo: .PremultipliedLast, additionalInfo: .ByteOrderDefault)
 		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, CGColorSpaceCreateDeviceRGB(), bitMapFormat)
-		CGContextClearRect(bitmapContext, CGRect(origin: CGPointZero, size: imageSize))
+		CGContextClearRect(bitmapContext, aRect)
 		let lineSize = 1 * scale
 		CGContextSetLineWidth(bitmapContext, lineSize)
 		var colorRef: UIColor
+		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		if (datIsStereo) {
-			colorRef = UIColor(red: 0, green: 0, blue: 1, alpha: 0.75)
+			colorRef = UIColor(red: 0, green: 0, blue: 1, alpha: stereoTrans)
 			CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor)
 			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
 		}
-		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		
 		colorRef = UIColor(red: 1, green: 0, blue: 0, alpha: stereoTrans)
 		CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor)
@@ -261,7 +261,7 @@ extension PPSampleObject {
 		}
 		
 		if let theCGimg = CGBitmapContextCreateImage(bitmapContext) {
-			return UIImage(CGImage: theCGimg)
+			return UIImage(CGImage: theCGimg, scale: scale, orientation: .Up)
 		} else {
 			return nil
 		}
@@ -433,7 +433,7 @@ extension PPPatternObject: SequenceType {
 }
 
 public func InfoRecToMusicInfo(infoRec: MADInfoRec) -> PPLibrary.MusicFileInfo {
-	let tmpDict = InfoRecToDictionary(infoRec)
+	let tmpDict = PPInfoRecToDictionary(infoRec)
 	
 	return PPLibrary.MusicFileInfo(infoDict: tmpDict)
 }

@@ -683,6 +683,8 @@
 		55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55D1BD58120FBAC0004FD083 /* Credits.rtf */; };
 		55D2921F18AADB7100EB7A7D /* PPPatternObject_PcmdHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D2921E18AADB4600EB7A7D /* PPPatternObject_PcmdHandling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55D57E1C18601BBC00192497 /* MIDI.ppextimp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppextimp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55D59C2C1A646F60008A6E51 /* PPKSwiftToC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D59C2B1A646F60008A6E51 /* PPKSwiftToC.m */; };
+		55D59C2D1A646F60008A6E51 /* PPKSwiftToC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D59C2B1A646F60008A6E51 /* PPKSwiftToC.m */; };
 		55DC597919A2E6B100212DD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DC597819A2E6B100212DD0 /* AppDelegate.swift */; };
 		55DC597B19A2FA9A00212DD0 /* SwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */; };
 		55DE87BC187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87BB187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h */; };
@@ -2611,6 +2613,7 @@
 		55D1BD58120FBAC0004FD083 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		55D2921E18AADB4600EB7A7D /* PPPatternObject_PcmdHandling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPatternObject_PcmdHandling.h; sourceTree = "<group>"; };
 		55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO-PrefixHeader.pch"; sourceTree = "<group>"; };
+		55D59C2B1A646F60008A6E51 /* PPKSwiftToC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPKSwiftToC.m; sourceTree = "<group>"; };
 		55DC597819A2E6B100212DD0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftBridge.swift; sourceTree = "<group>"; };
 		55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PlayerPROKitAdditions.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -4375,6 +4378,7 @@
 				55B1B4F6166A861900820424 /* PPMusicObject.m */,
 				5532334D16766E5700076604 /* PPErrors.h */,
 				5532334E16766E5700076604 /* PPErrors.m */,
+				55D59C2B1A646F60008A6E51 /* PPKSwiftToC.m */,
 				55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */,
 			);
 			name = Classes;
@@ -6941,6 +6945,7 @@
 				555E014819FA33A10063F058 /* PPLibraryObject.swift in Sources */,
 				556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */,
 				55C8EDE2187CC8B200CC8C1B /* PPPatternObject.m in Sources */,
+				55D59C2C1A646F60008A6E51 /* PPKSwiftToC.m in Sources */,
 				5560643C18C8FDD9002F72FC /* PPErrors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7669,6 +7674,7 @@
 				555F447719A1411800B8C6EE /* PlayerPROKitAdditions.swift in Sources */,
 				55BD5AF619ADBBF500D63F54 /* PPKPcmd.swift in Sources */,
 				55F1BE0D1975CD7200AD2C03 /* PPPatternObject.m in Sources */,
+				55D59C2D1A646F60008A6E51 /* PPKSwiftToC.m in Sources */,
 				55F1BE191975CD7200AD2C03 /* PPMusicObject.m in Sources */,
 				55F1BE0F1975CD7200AD2C03 /* PPMadCommandObject.m in Sources */,
 				55F1BE151975CD7200AD2C03 /* PPLibrary.m in Sources */,
