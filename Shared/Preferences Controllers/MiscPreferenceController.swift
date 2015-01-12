@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import SwiftAdditions
 
 final class MiscPreferenceController: NSViewController, PPPreferenceObject {
 	@IBOutlet weak var addExt: NSButtonCell!
@@ -34,10 +35,10 @@ final class MiscPreferenceController: NSViewController, PPPreferenceObject {
 	@IBAction func changePrefs(sender: AnyObject?) {
 		let defaults = NSUserDefaults.standardUserDefaults()
 		
-		defaults.setBool(addExt.state == NSOnState, forKey: PPMAddExtension)
-		defaults.setBool(madCompression.state == NSOnState, forKey: PPMMadCompression)
-		defaults.setBool(noLoadMixerFromFile.state == NSOnState, forKey: PPMNoLoadMixerFromFiles)
-		defaults.setBool(oscDrawLines.state == NSOnState, forKey: PPMOscilloscopeDrawLines)
+		defaults[PPMAddExtension] = addExt.state == NSOnState
+		defaults[PPMMadCompression] = madCompression.state == NSOnState
+		defaults[PPMNoLoadMixerFromFiles] = noLoadMixerFromFile.state == NSOnState
+		defaults[PPMOscilloscopeDrawLines] = oscDrawLines.state == NSOnState
 		
 		NSNotificationCenter.defaultCenter().postNotificationName(PPMiscPreferencesDidChange, object: self)
 	}
