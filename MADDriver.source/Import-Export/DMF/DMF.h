@@ -96,7 +96,7 @@ typedef struct ITInsForm
 //TODO: check pointer values use in files
 typedef struct ITForm
 {
-	int				ID;
+	MADFourChar		ID;
 	char			name[26];
 	char			no[2];
 	
