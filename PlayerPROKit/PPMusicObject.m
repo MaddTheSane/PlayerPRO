@@ -205,10 +205,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 @interface PPMusicObject ()
 {
-	@package
-	MADMusic *currentMusic;
-	NSString *internalFileName;
-	NSString *madInfo;
 	NSMutableArray	*_instruments;
 }
 @property (readwrite, strong) NSURL *filePath;
@@ -400,7 +396,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (void)setTitle:(NSString*)newInfo
 {
-	internalFileName = [newInfo copy];
+	internalFileName = nil;
 	NSData *outMacRoman = [internalFileName dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 	if (!outMacRoman || outMacRoman.length == 0) {
 		memset(currentMusic->header->infos, 0, sizeof(currentMusic->header->infos));
@@ -413,7 +409,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (void)setInformation:(NSString*)newInfo
 {
-	madInfo = [newInfo copy];
+	madInfo = nil;
 	NSData *outMacRoman = [madInfo dataUsingEncoding:NSMacOSRomanStringEncoding allowLossyConversion:YES];
 	if (!outMacRoman || outMacRoman.length == 0) {
 		memset(currentMusic->header->infos, 0, sizeof(currentMusic->header->infos));
