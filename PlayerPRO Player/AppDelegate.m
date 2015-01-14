@@ -354,7 +354,6 @@ static NSInteger selMusFromList = -1;
 	[theRec cleanDriver];
 	[theRec setCurrentMusic:self.music];
 	
-	char *soundPtr = NULL;
 	NSUInteger full = [theRec audioDataLength];
 	if (theSet->outPutBits == 16) {
 		full *= 2;
@@ -379,10 +378,10 @@ static NSInteger selMusFromList = -1;
 	[theRec play];
 	
 	NSMutableData *mutData = [[NSMutableData alloc] initWithCapacity:full * 60 * madDriver.totalMusicPlaybackTime / 2];
-	soundPtr = alloca(full);
 	
-	while ([theRec directSaveToPointer:soundPtr settings:theSet]) {
-		[mutData appendBytes:soundPtr length:full];
+	NSData *tmpData;
+	while ((tmpData = [theRec directSave])) {
+		[mutData appendData:tmpData];
 	}
 	
 	return mutData;
@@ -1431,19 +1430,20 @@ typedef NS_ENUM(NSInteger, PPMusicToolbarTypes) {
 		goto badTracker;
 	if ([madLib getInformationFromFileAtURL:musicURL type:info info:&theInfo] != MADNoErr)
 		goto badTracker;
-	[fileName setStringValue:obj.fileName];
-	[internalName setStringValue:[NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding]];
-	[fileSize setIntegerValue:theInfo.fileSize];
-	[musicInstrument setIntegerValue:theInfo.totalInstruments];
-	[musicPatterns setIntegerValue:theInfo.totalPatterns];
-	[musicPlugType setStringValue:[NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding]];
+	
+	fileName.stringValue = obj.fileName;
+	internalName.stringValue = [NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding];
+	fileSize.integerValue = obj.fileSize;
+	musicInstrument.integerValue = theInfo.totalInstruments;
+	musicPatterns.integerValue = theInfo.totalPatterns;
+	musicPlugType.stringValue = [NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding];
 	NSSig = CFBridgingRelease(UTCreateStringForOSType(theInfo.signature));
 	if (!NSSig) {
 		NSSig = [NSString stringWithFormat:@"0x%08X", (unsigned int)theInfo.signature];
 	}
-	[musicSignature setStringValue:NSSig];
+	musicSignature.stringValue = NSSig;
 	
-	[fileLocation setStringValue:[musicURL path]];
+	fileLocation.stringValue = musicURL.path;
 	return;
 	
 badTracker:
