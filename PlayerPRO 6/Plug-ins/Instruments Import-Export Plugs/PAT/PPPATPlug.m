@@ -12,15 +12,15 @@
 
 @implementation PPPATPlug
 
-+ (MADErr)importPAT:(inout PPInstrumentObject*)insHeader data:(in NSData*)data
++ (MADErr)importPAT:(inout PPInstrumentObject*)insHeader data:(NSData*)data
 {
-	const PatchHeader		*PATHeader;
+	const PatchHeader	*PATHeader;
 	const PatInsHeader	*PATIns;
 	//LayerHeader		*PATLayer;
 	const PatSampHeader	*PATSamp;
 	int				i, x;
 	const void*		PATData = data.bytes;
-	const unsigned int	scale_table[200] = {
+	const static unsigned int	scale_table[200] = {
 		16351, 17323, 18354, 19445, 20601, 21826, 23124, 24499, 25956, 27500, 29135, 30867,
 		32703, 34647, 36708, 38890, 41203, 43653, 46249, 48999, 51913, 54999, 58270, 61735,
 		65406, 69295, 73416, 77781, 82406, 87306, 92498, 97998, 103826, 109999, 116540, 123470,
@@ -202,7 +202,7 @@
 	NSData *fileData = [aHandle readDataOfLength:12];
 	NSData *headerData = [[NSData alloc] initWithBytes:headerStr length:12];
 	
-	return [fileData isEqual:headerData];
+	return [fileData isEqualToData:headerData];
 }
 
 - (MADErr)importSampleAtURL:(NSURL *)sampleURL instrument:(inout PPInstrumentObject *)InsHeader sample:(inout PPSampleObject *)sample sampleID:(inout short *)sampleID driver:(PPDriver *)driver

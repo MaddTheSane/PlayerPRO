@@ -31,10 +31,8 @@ private func ==(rhs: NSData, lhs: NSData) -> Bool {
 	
 	public func canImportURL(theURL: NSURL, error outErr: NSErrorPointer) -> Bool {
 		func getHeaderData() -> NSData {
-			var headerData = NSMutableData(data: "MThd".dataUsingEncoding(NSASCIIStringEncoding, allowLossyConversion: true)!)
-			let headerAddlData: [Int8] = [0, 0, 0, 6, 0]
-			headerData.appendBytes(headerAddlData, length: headerAddlData.count)
-			return NSData(data: headerData)
+			let headerData: [Int8] = [0x4D, 0x54, 0x68, 0x64, 0, 0, 0, 6, 0]
+			return NSData(bytes: headerData, length: headerData.count)
 		}
 		var myErr = MADErr.NoErr;
 		if let aFile = NSFileHandle(forReadingFromURL:theURL, error: nil) {
@@ -42,7 +40,7 @@ private func ==(rhs: NSData, lhs: NSData) -> Bool {
 			aFile.closeFile()
 			let headerData = getHeaderData()
 			
-			if fileData == headerData {
+			if fileData.isEqualToData(headerData) {
 				return true
 			} else {
 				if outErr != nil {
