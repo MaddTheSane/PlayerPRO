@@ -179,14 +179,13 @@ extension PPSampleObject {
 	}
 	
 	@objc(waveformImageFromSample:usingView:) final public class func waveformImage(sample theDat: PPSampleObject, view: NSView) -> NSImage? {
-		func viewSize() -> NSSize {
-			var imageSize = view.convertSizeToBacking(view.frame.size)
-			imageSize.height *= 2
-			imageSize.width *= 2
+		let imageSize: NSSize = {
+			var aimageSize = view.convertSizeToBacking(view.frame.size)
+			aimageSize.height *= 2
+			aimageSize.width *= 2
 			
-			return imageSize
-		}
-		let imageSize = viewSize()
+			return aimageSize
+			}()
 		let datIsStereo = theDat.stereo
 		let aRect = CGRect(origin: CGPoint.zeroPoint, size: imageSize)
 		let rowBytes = 4 * UInt(imageSize.width)
@@ -206,7 +205,7 @@ extension PPSampleObject {
 		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
 		
 		if (theDat.loopSize != 0) {
-			CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(1, 0.1, 0.5, 0.8))
+			CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(0.2, 0.1, 0.5, 0.8))
 			var loopRect = aRect
 			let lineSize = view.convertSizeToBacking(NSSize(width: 2, height: 2)).width
 			let padSize = view.convertSizeToBacking(NSSize(width: 1, height: 1)).width
@@ -230,15 +229,13 @@ extension PPSampleObject {
 	}
 	
 	@objc(waveformImageFromSample:usingView:) final public class func waveformImage(sample theDat: PPSampleObject, view: UIView) -> UIImage? {
-		func viewSize() -> CGSize {
-			var imageSize = view.bounds.size
-			let scale = view.contentScaleFactor
-			imageSize.width *= scale
-			imageSize.height *= scale
-			return imageSize
-		}
-		let imageSize = viewSize()
 		let scale = view.contentScaleFactor
+		let imageSize: CGSize = {
+			var viewSize = view.bounds.size
+			viewSize.width *= scale
+			viewSize.height *= scale
+			return viewSize
+			}()
 		let datIsStereo = theDat.stereo;
 		let aRect = CGRect(origin: CGPoint.zeroPoint, size: imageSize)
 		let rowBytes = 4 * UInt(imageSize.width)
@@ -260,7 +257,7 @@ extension PPSampleObject {
 		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
 		
 		if (theDat.loopSize != 0) {
-			colorRef = UIColor(red: 1, green: 0.1, blue: 0.5, alpha: 0.8)
+			colorRef = UIColor(red: 0.2, green: 0.1, blue: 0.5, alpha: 0.8)
 			CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor)
 			var loopRect = aRect
 			let lineSize = 2 * scale
