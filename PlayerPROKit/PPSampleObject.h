@@ -35,7 +35,7 @@
 @property (copy) NSString *name;
 @property (getter = isStereo) BOOL stereo;
 @property (copy) NSData *data;
-@property (readonly) NSRange loop;
+@property NSRange loop;
 
 
 @property (readonly, getter=isBlankSample) BOOL blankSample;

@@ -314,7 +314,21 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (NSRange)loop
 {
+	if (self.loopBegin == 0) {
+		return NSMakeRange(NSNotFound, 0);
+	}
 	return NSMakeRange(self.loopBegin, self.loopSize);
+}
+
+- (void)setLoop:(NSRange)loop
+{
+	if (loop.location == NSNotFound) {
+		sampleWriteTo->loopBeg = 0;
+		sampleWriteTo->loopSize = 0;
+	} else {
+		sampleWriteTo->loopBeg = (int)loop.location;
+		sampleWriteTo->loopSize = (int)loop.length;
+	}
 }
 
 - (NSString*)description
@@ -331,6 +345,21 @@ static const dispatch_block_t initUTIArray = ^{
 + (NSSet*)keyPathsForValuesAffectingBlankSample
 {
 	return [NSSet setWithObjects:@"name", @"data", nil];
+}
+
++ (NSSet*)keyPathsForValuesAffectingLoop
+{
+	return [NSSet setWithObjects:@"loopBegin", @"loopSize", nil];
+}
+
++ (NSSet*)keyPathsForValuesAffectingLoopBegin
+{
+	return [NSSet setWithObjects:@"loop", nil];
+}
+
++ (NSSet*)keyPathsForValuesAffectingLoopSize
+{
+	return [NSSet setWithObjects:@"loop", nil];
 }
 
 #pragma mark NSCopying implementation
