@@ -10,15 +10,35 @@
 #import "PPInstrumentImporterObject-private.h"
 #import "PPInstrumentImporterCompatObject.h"
 #import "PPCoreInstrumentPlugBridgeProtocol.h"
+#import "PPInstrumentPlugBridgeHelper.h"
 
 #define PPINLoadPlug(theBundle) (PPInstrumentPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROInstrumentPlugTypeID, kPlayerPROInstrumentPlugInterfaceID)
 
+static NSXPCConnection *sharedConnectionToService;
+static NSXPCConnection *sharedConnectionToService32;
+
+static void moveInfoOverToInstrumentObjectFrom(PPInstrumentObject* to, PPInstrumentObject* from) {
+	
+}
+
 @interface PPInstrumentImporterCompatObject ()
 @property BOOL is32Bit;
-@property (strong) NSXPCConnection *connectionToService;
+@property (weak) NSXPCConnection *connectionToService;
 @end
 
 @implementation PPInstrumentImporterCompatObject
+
++ (void)initialize
+{
+	static dispatch_once_t onceToken;
+	dispatch_once(&onceToken, ^{
+		sharedConnectionToService = [[NSXPCConnection alloc] initWithServiceName:@"PPCoreInstrumentPlugBridge"];
+		sharedConnectionToService.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPCoreInstrumentPlugBridgeProtocol)];
+		
+		sharedConnectionToService32 = [[NSXPCConnection alloc] initWithServiceName:@"PPCoreInstrumentPlugBridge32"];
+		sharedConnectionToService32.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPCoreInstrumentPlugBridgeProtocol)];
+	});
+}
 
 - (NSString*)description
 {
@@ -47,8 +67,7 @@
 		if (has32 && !has64) {
 			self.is32Bit = YES;
 		}
-		_connectionToService = [[NSXPCConnection alloc] initWithServiceName: self.is32Bit ? @"PPCoreInstrumentPlugBridge32" : @"PPCoreInstrumentPlugBridge"];
-		_connectionToService.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPCoreInstrumentPlugBridgeProtocol)];
+		_connectionToService = self.is32Bit ? sharedConnectionToService32 : sharedConnectionToService;
 		[_connectionToService resume];
 		__block BOOL toRet = NO;
 		
@@ -88,11 +107,6 @@
 	return toRet;
 }
 
-- (void)dealloc
-{
-	[_connectionToService invalidate];
-}
-
 - (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
 {
 	return MADOrderNotImplemented;
@@ -100,13 +114,32 @@
 
 - (void)beginImportSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler
 {
-	handler(MADOrderNotImplemented);
+	if (!self.sample) {
+		NSData *aDat = PPInstrumentToData(InsHeader);
+		[[_connectionToService remoteObjectProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL instrumentData:aDat instrumentNumber:InsHeader.number reply:^(MADErr error, NSData *outInsData) {
+			if (error == MADNoErr) {
+				PPInstrumentObject *aRet = PPDataToInstrument(outInsData);
+				moveInfoOverToInstrumentObjectFrom(InsHeader, aRet);
+			}
+			
+			handler(error);
+		}];
+	} else {
+		NSData *aDat = PPSampleToData(sample);
+		[[_connectionToService remoteObjectProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL sampleData:aDat instrumentNumber:InsHeader.number sampleNumber:sampleID ? *sampleID : 0 reply:^(MADErr error, NSData *outSampData, short newSampleNum) {
+			if (error == MADNoErr) {
+				*sampleID = newSampleNum;
+				[InsHeader replaceObjectInSamplesAtIndex:newSampleNum withObject:PPDataToSample(outSampData)];
+			}
+			
+			handler(error);
+		}];
+	}
 }
 
 - (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler
 {
 	handler(MADOrderNotImplemented);
 }
-
 
 @end

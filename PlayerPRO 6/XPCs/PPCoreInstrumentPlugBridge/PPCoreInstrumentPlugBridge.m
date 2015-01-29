@@ -8,6 +8,7 @@
 
 #import "PPCoreInstrumentPlugBridge.h"
 #import "PPInstrumentPlugBridgeObject.h"
+#import "PPInstrumentPlugBridgeHelper.h"
 #import "ARCBridge.h"
 
 #define kMadPlugIsSampleKey @"MADPlugIsSample"
@@ -19,6 +20,7 @@ static int nativeCPUArch()
 #elif __i386__
 	return NSBundleExecutableArchitectureI386;
 #else
+#error unknown architecture!
 	return 0;
 #endif
 }
@@ -221,14 +223,69 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 	reply(NO);
 }
 
-- (void)beginImportFileAtURL:(NSURL*)aFile withBundleURL:(NSURL*)bundle instrumentData:(NSData*)insData instrumentNumber:(short)insNum reply:(void (^)(MADErr error, NSData *outInsData))reply
-{
-	
+static void freeIns(InstrData* curIns, sData **samples) {
+	for (short i = 0; i < curIns->numSamples; i++) {
+		if (samples[i] != NULL) {
+			if (samples[i]->data != NULL) {
+				free(samples[i]->data);
+				samples[i]->data = NULL;
+			}
+			free(samples[i]);
+			samples[i] = NULL;
+		}
+	}
 }
 
+- (void)beginImportFileAtURL:(NSURL*)aFile withBundleURL:(NSURL*)bundle instrumentData:(NSData*)insData instrumentNumber:(short)insNum reply:(void (^)(MADErr error, NSData *outInsData))reply
+{
+	sData **samples;
+	InstrData *instrument = MADDataToInstrument(insData, &samples);
+	
+	for (PPInstrumentPlugBridgeObject *plug in plugIns) {
+		if ([plug.bundleFile.bundleURL isEqual:bundle]) {
+			NSData *ourData = nil;
+			short aSamp = -1;
+			MADErr iErr = [plug importURL:aFile instrument:instrument sampleArray:samples sampleIndex:&aSamp];
+			
+			if (iErr == noErr) {
+				ourData = MADInstrumentToData(instrument, samples);
+			}
+			reply(iErr, ourData);
+			
+			RELEASEOBJ(ourData);
+			break;
+		}
+	}
+	reply(MADCannotFindPlug, nil);
+	freeIns(instrument, samples);
+	free(samples);
+	free(instrument);
+}
+
+//TODO: Implement
 - (void)beginImportFileAtURL:(NSURL*)aFile withBundleURL:(NSURL*)bundle sampleData:(NSData*)sampData instrumentNumber:(short)insNum sampleNumber:(short)sampNum reply:(void (^)(MADErr error, NSData *outInsData, short newSampleNum))reply
 {
+	sData **samples = NULL;
+	InstrData *instrument = NULL;
+	//sData *sample = MADDataToSample(sampData);
 	
+	for (PPInstrumentPlugBridgeObject *plug in plugIns) {
+		if ([plug.bundleFile.bundleURL isEqual:bundle]) {
+			NSData *ourData = nil;
+			short aSamp = sampNum;
+			MADErr iErr = [plug importURL:aFile instrument:instrument sampleArray:samples sampleIndex:&aSamp];
+			
+			if (iErr == noErr) {
+				ourData = MADInstrumentToData(instrument, samples);
+			}
+			reply(iErr, ourData, aSamp);
+			
+			RELEASEOBJ(ourData);
+			break;
+		}
+	}
+	reply(MADCannotFindPlug, nil, -1);
+
 }
 
 

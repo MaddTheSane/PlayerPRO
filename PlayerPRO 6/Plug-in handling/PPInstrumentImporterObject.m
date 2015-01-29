@@ -119,7 +119,7 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 			self.canImport = YES;
 		}
 
-		if ((!self.canImport) && (!self.canExport)) {
+		if ((!_canImport) && (!_canExport)) {
 			return tryOldAPI(tempBundle);
 		}
 		

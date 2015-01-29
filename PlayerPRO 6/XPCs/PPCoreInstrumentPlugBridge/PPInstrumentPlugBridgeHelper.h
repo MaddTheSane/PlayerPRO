@@ -14,8 +14,14 @@
 
 #if __LP64__
 NSData *PPInstrumentToData(PPInstrumentObject *ourData) NS_RETURNS_RETAINED;
+NSData *PPSampleToData(PPSampleObject *sampObj) NS_RETURNS_RETAINED;
+
 PPInstrumentObject *PPDataToInstrument(NSData *ourData) NS_RETURNS_RETAINED;
+PPSampleObject *PPDataToSample(NSData *ourData) NS_RETURNS_RETAINED;
 #endif
 
-NSData *InstrumentToData(InstrData* insData, sData ** sampleData) NS_RETURNS_RETAINED;
-InstrData *DataToInstrument(NSData *ourData, sData ***sampleData);
+NSData *MADInstrumentToData(InstrData* insData, sData ** sampleData) NS_RETURNS_RETAINED;
+NSData *MADSampleToData(sData * sampleData) NS_RETURNS_RETAINED;
+
+InstrData *MADDataToInstrument(NSData *ourData, sData ***sampleData);
+sData *MADDataToSample(NSData *ourData);

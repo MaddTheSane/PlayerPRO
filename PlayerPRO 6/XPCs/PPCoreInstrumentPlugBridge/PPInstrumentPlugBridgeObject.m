@@ -46,6 +46,11 @@
 	return self;
 }
 
+- (MADErr)importURL:(NSURL*)fileURL instrument:(InstrData*)insData sampleArray:(sData**)sdataref sampleIndex:(short*)insSamp
+{
+	return [self callPlugWithOrder:MADPlugImport instrument:insData sampleArray:sdataref sampleIndex:insSamp URL:fileURL];
+}
+
 - (MADErr)callPlugWithOrder:(OSType)order instrument:(InstrData*)insData sampleArray:(sData**)sdataref sampleIndex:(short*)insSamp URL:(NSURL*)fileURL
 {
 	PPInfoPlug plugInfo = {0};

@@ -22,5 +22,6 @@
 - (instancetype)initWithBundle:(NSBundle *)tempBundle;
 
 - (BOOL)canLoadFileAtURL:(NSURL*)theURL;
+- (MADErr)importURL:(NSURL*)fileURL instrument:(InstrData*)insData sampleArray:(sData**)sdataref sampleIndex:(short*)insSamp;
 
 @end

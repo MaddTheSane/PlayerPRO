@@ -56,22 +56,39 @@ typedef PPEnvelopeObject PPEnvelopeClass;
 
 #if !__i386__
 
-static NSArray *EncodeSampleObjects(PPInstrumentObject *ourData)
+static NSDictionary *EncodeSampleObject(PPSampleObject *sampObj)
+{
+	NSMutableDictionary *toRet = [NSMutableDictionary new];
+	toRet[LOOPBEGINKEY] = @(sampObj.loopBegin);
+	toRet[LOOPSIZEKEY] = @(sampObj.loopSize);
+	toRet[VOLUMEKEY] = @(sampObj.volume);
+	toRet[C2SPDKEY] = @(sampObj.c2spd);
+	toRet[LOOPTYPEKEY] = @(sampObj.loopType);
+	toRet[AMPLITUDEKEY] = @(sampObj.amplitude);
+	toRet[RELATIVENOTEKEY] = @(sampObj.relativeNote);
+	toRet[NAMEKEY] = sampObj.name;
+	toRet[STEREOKEY] = @(sampObj.stereo);
+	toRet[DATAKEY] = sampObj.data;
+
+	return toRet;
+}
+
+NSData *PPSampleToData(PPSampleObject *sampObj)
+{
+	NSMutableData *ourEncData = [[NSMutableData alloc] init];
+	NSKeyedArchiver *ourArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:ourEncData];
+	NSDictionary *ourRet = EncodeSampleObject(sampObj);
+	[ourArchiver encodeObject:ourRet forKey:PPSamples];
+	[ourArchiver finishEncoding];
+
+	return [ourEncData copy];
+}
+
+static NSArray *EncodeSamplesObjects(PPInstrumentObject *ourData)
 {
 	NSMutableArray *ourArray = [[NSMutableArray alloc] initWithCapacity:ourData.countOfSamples];
 	for (PPSampleObject *sampObj in ourData.samples) {
-		NSMutableDictionary *toRet = [NSMutableDictionary new];
-		toRet[LOOPBEGINKEY] = @(sampObj.loopBegin);
-		toRet[LOOPSIZEKEY] = @(sampObj.loopSize);
-		toRet[VOLUMEKEY] = @(sampObj.volume);
-		toRet[C2SPDKEY] = @(sampObj.c2spd);
-		toRet[LOOPTYPEKEY] = @(sampObj.loopType);
-		toRet[AMPLITUDEKEY] = @(sampObj.amplitude);
-		toRet[RELATIVENOTEKEY] = @(sampObj.relativeNote);
-		toRet[NAMEKEY] = sampObj.name;
-		toRet[STEREOKEY] = @(sampObj.stereo);
-		toRet[DATAKEY] = sampObj.data;
-		[ourArray addObject:toRet];
+		[ourArray addObject:EncodeSampleObject(sampObj)];
 	}
 	
 	return ourArray;
@@ -82,7 +99,7 @@ NSData *PPInstrumentToData(PPInstrumentObject *ourData)
 	NSMutableData *ourEncData = [[NSMutableData alloc] init];
 	NSKeyedArchiver *ourArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:ourEncData];
 	[ourArchiver encodeObject:ourData.name forKey:PPName];
-	[ourArchiver encodeObject:EncodeSampleObjects(ourData) forKey:PPSamples];
+	[ourArchiver encodeObject:EncodeSamplesObjects(ourData) forKey:PPSamples];
 	[ourArchiver encodeInt32:ourData.volumeType forKey:PPVolType];
 	[ourArchiver encodeBytes:ourData.what length:96 forKey:PPWhat];
 	[ourArchiver encodeInt32:ourData.MIDI forKey:PPMIDI];
@@ -96,20 +113,36 @@ NSData *PPInstrumentToData(PPInstrumentObject *ourData)
 	return ourEncData;
 }
 
+static PPSampleObject *getSampleFromDictionary(NSDictionary *sampleDict) NS_RETURNS_RETAINED;
+
+PPSampleObject *getSampleFromDictionary(NSDictionary *sampleDict)
+{
+	PPSampleObject *sampObj = [[PPSampleObject alloc] init];
+	sampObj.name = sampleDict[NAMEKEY];
+	sampObj.data = sampleDict[DATAKEY];
+	sampObj.loopBegin = [(NSNumber*)sampleDict[LOOPBEGINKEY] intValue];
+	sampObj.loopSize = [(NSNumber*)sampleDict[LOOPSIZEKEY] intValue];
+	sampObj.loopType = [(NSNumber*)sampleDict[LOOPTYPEKEY] unsignedCharValue];
+	sampObj.volume = [(NSNumber*)sampleDict[VOLUMEKEY] unsignedCharValue];
+	sampObj.c2spd = [(NSNumber*)sampleDict[C2SPDKEY] unsignedShortValue];
+	sampObj.relativeNote = [(NSNumber*)sampleDict[RELATIVENOTEKEY] charValue];
+	sampObj.stereo = [(NSNumber*)sampleDict[STEREOKEY] boolValue];
+
+	return sampObj;
+}
+
+PPSampleObject *PPDataToSample(NSData *ourData)
+{
+	NSKeyedUnarchiver * ourUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:ourData];
+	NSDictionary *ourDict = [ourUnarchiver decodeObjectForKey:PPSamples];
+	
+	return getSampleFromDictionary(ourDict);
+}
+
 static void getSamplesFromArray(PPInstrumentObject *instrument, NSArray *ourArray)
 {
 	for (NSDictionary *sampleDict in ourArray) {
-		PPSampleObject *sampObj = [[PPSampleObject alloc] init];
-		sampObj.name = sampleDict[NAMEKEY];
-		sampObj.data = sampleDict[DATAKEY];
-		sampObj.loopBegin = [(NSNumber*)sampleDict[LOOPBEGINKEY] intValue];
-		sampObj.loopSize = [(NSNumber*)sampleDict[LOOPSIZEKEY] intValue];
-		sampObj.loopType = [(NSNumber*)sampleDict[LOOPTYPEKEY] unsignedCharValue];
-		sampObj.volume = [(NSNumber*)sampleDict[VOLUMEKEY] unsignedCharValue];
-		sampObj.c2spd = [(NSNumber*)sampleDict[C2SPDKEY] unsignedShortValue];
-		sampObj.relativeNote = [(NSNumber*)sampleDict[RELATIVENOTEKEY] charValue];
-		sampObj.stereo = [(NSNumber*)sampleDict[RELATIVENOTEKEY] boolValue];
-		[instrument addSampleObject:sampObj];
+		[instrument addSampleObject:getSampleFromDictionary(sampleDict)];
 	}
 }
 
@@ -152,13 +185,75 @@ PPInstrumentObject *PPDataToInstrument(NSData *ourData)
 
 #endif
 
-NSData *InstrumentToData(InstrData* insData, sData ** sampleData)
+NSData *MADInstrumentToData(InstrData* insData, sData ** sampleData)
 {
 	return nil;
 }
 
-InstrData *DataToInstrument(NSData *ourData, sData ***sampleData)
+InstrData *MADDataToInstrument(NSData *ourData, sData ***sampleData)
 {
 	*sampleData = NULL;
 	return NULL;
+}
+
+static NSDictionary *sampleToDictionary(sData *sampObj) NS_RETURNS_RETAINED;
+
+NSDictionary *sampleToDictionary(sData *sampObj)
+{
+	NSMutableDictionary *toRet = [NSMutableDictionary new];
+	toRet[LOOPBEGINKEY] = @(sampObj->loopBeg);
+	toRet[LOOPSIZEKEY] = @(sampObj->loopSize);
+	toRet[VOLUMEKEY] = @(sampObj->vol);
+	toRet[C2SPDKEY] = @(sampObj->c2spd);
+	toRet[LOOPTYPEKEY] = @(sampObj->loopType);
+	toRet[AMPLITUDEKEY] = @(sampObj->amp);
+	toRet[RELATIVENOTEKEY] = @(sampObj->relNote);
+	toRet[NAMEKEY] = [NSString stringWithCString:sampObj->name encoding:NSMacOSRomanStringEncoding];
+	toRet[STEREOKEY] = @(sampObj->stereo);
+	toRet[DATAKEY] = [NSData dataWithBytes:sampObj->data length:sampObj->size];
+
+	return toRet;
+}
+
+NSData *MADSampleToData(sData *sampObj)
+{
+	NSMutableData *ourEncData = nil;
+	@autoreleasepool {
+		NSDictionary *toRet = sampleToDictionary(sampObj);
+		
+		ourEncData = [[NSMutableData alloc] init];
+		NSKeyedArchiver *ourArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:ourEncData];
+		[ourArchiver encodeObject:toRet forKey:PPSamples];
+		[ourArchiver finishEncoding];
+		
+		RELEASEOBJ(toRet);
+		RELEASEOBJ(ourArchiver);
+	}
+	return [AUTORELEASEOBJ(ourEncData) copy];
+}
+
+sData *MADDataToSample(NSData *ourData)
+{
+	sData *toRet = calloc(sizeof(sData), 1);
+	@autoreleasepool {
+		NSKeyedUnarchiver *ourUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:ourData];
+		NSDictionary *sampleDict = [ourUnarchiver decodeObjectForKey:PPSamples];
+		strlcpy(toRet->name, [sampleDict[NAMEKEY] cStringUsingEncoding:NSMacOSRomanStringEncoding], sizeof(toRet->name));
+		NSData *aData = sampleDict[DATAKEY];
+		if (aData && [aData length] != 0) {
+			toRet->size = (int)aData.length;
+			toRet->data = malloc(toRet->size);
+			memcpy(toRet->data, aData.bytes, toRet->size);
+		}
+		toRet->loopBeg = [(NSNumber*)sampleDict[LOOPBEGINKEY] intValue];
+		toRet->loopSize = [(NSNumber*)sampleDict[LOOPSIZEKEY] intValue];
+		toRet->loopType = [(NSNumber*)sampleDict[LOOPTYPEKEY] unsignedCharValue];
+		toRet->vol = [(NSNumber*)sampleDict[VOLUMEKEY] unsignedCharValue];
+		toRet->c2spd = [(NSNumber*)sampleDict[C2SPDKEY] unsignedShortValue];
+		toRet->relNote = [(NSNumber*)sampleDict[RELATIVENOTEKEY] charValue];
+		toRet->stereo = [(NSNumber*)sampleDict[STEREOKEY] boolValue];
+
+		RELEASEOBJ(ourUnarchiver);
+	}
+	return toRet;
 }
