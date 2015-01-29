@@ -79,6 +79,11 @@
 		free(sampleWriteTo->data);
 		sampleWriteTo->data = NULL;
 	}
+	if (dataSize2 == 0) {
+		sampleWriteTo->data = NULL;
+		_data = [[NSData alloc] init];
+		return;
+	}
 	sampleWriteTo->data = malloc(dataSize2);
 	[data getBytes:sampleWriteTo->data length:dataSize2];
 	_data = [[NSData alloc] initWithBytesNoCopy:sampleWriteTo->data length:sampleWriteTo->size freeWhenDone:NO];
