@@ -218,8 +218,8 @@ MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 	
 	for (i = 0; i < oldMAD->numPat; i++)
 	{
-		struct oldPatData		*tempPat, *tempPat2;
-		struct oldPatHeader		tempPatHeader;
+		struct oldPatData		*tempPat = NULL, *tempPat2 = NULL;
+		struct oldPatHeader		tempPatHeader = {0};
 		
 		/** Lecture du header de la partition **/
 		inOutCount = sizeof(struct oldPatHeader);

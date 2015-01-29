@@ -167,8 +167,10 @@ static Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sample
 			MusSize = CmpHeader->numFrames;
 			
 			result = GetCompressionInfo((*CmpHeader).compressionID, (*CmpHeader).format, numChannels, *sampleSize, &cp);
-			if (result != noErr)
+			if (result != noErr) {
 				DebugStr("\pGetCompressionInfo");
+				return NULL;
+			}
 			
 			memmove(soundPtr, CmpHeader->sampleArea, CmpHeader->numFrames * cp.bytesPerFrame);
 			
