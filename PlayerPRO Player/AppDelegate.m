@@ -1625,7 +1625,7 @@ badTracker:
 		[self willChangeValueForKey:kMusicListKVO];
 		NSMutableArray *mutArray = [NSMutableArray new];
 		for (NSURL *curURL in tmpArray) {
-			[mutArray addObject:[[MusicListObject alloc] initWithURL:curURL]];
+			[mutArray addObject:[[MusicListObject alloc] initWithURL:curURL date:[NSDate date]]];
 		}
 		
 		[musicList insertObjects:mutArray inMusicListAtIndex:row];

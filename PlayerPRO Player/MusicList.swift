@@ -167,75 +167,9 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	
 	required init(coder aDecoder: NSCoder) {
 		lostMusicCount = 0;
-		var BookmarkArray: AnyObject? = aDecoder.decodeObjectForKey(kMusicListKey4);
-		if BookmarkArray == nil {
-			BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey3);
-			if (BookmarkArray == nil) {
-				BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey2)
-				if (BookmarkArray == nil) {
-					BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey1)
-					if (BookmarkArray == nil) {
-						selectedMusic = -1
-						super.init()
-						return
-					}
-					let dataBookArray = BookmarkArray! as [NSData]
-					
-					for bookData in dataBookArray {
-						if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI) {
-							musicList.append(fullURL)
-						} else {
-							lostMusicCount++
-						}
-					}
-					selectedMusic = -1;
-				} else {
-					var curSel = aDecoder.decodeObjectForKey(kMusicListLocation2) as? NSNumber
-					if curSel != nil {
-						selectedMusic = curSel!.integerValue
-					} else {
-						selectedMusic = -1
-					}
-					let dataBookArray = BookmarkArray! as [NSData]
-					let aHomeURL = NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
-					for bookData in dataBookArray {
-						if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI, relativeURL: aHomeURL) {
-							musicList.append(fullURL)
-						} else {
-							if (selectedMusic == -1) {
-								//Do nothing
-							} else if (selectedMusic == musicList.count + 1) {
-								selectedMusic = -1
-							} else if (selectedMusic > musicList.count + 1) {
-								selectedMusic--
-							}
-							lostMusicCount++
-						}
-					}
-				}
-			} else {
-				selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation3);
-				let URLBookArray = BookmarkArray! as [NSURL]
-				for bookURL in URLBookArray {
-					if (!bookURL.checkResourceIsReachableAndReturnError(nil)) {
-						if (selectedMusic == -1) {
-							//Do nothing
-						} else if (selectedMusic == musicList.count + 1) {
-							selectedMusic = -1
-						} else if (selectedMusic > musicList.count + 1) {
-							selectedMusic--
-						}
-						lostMusicCount++
-						continue
-					}
-					let obj = MusicListObject(URL: bookURL)
-					musicList.append(obj)
-				}
-			}
-		} else {
+		if let BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey4) as? [MusicListObject] {
 			selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation4);
-			let URLBookArray = BookmarkArray! as [MusicListObject]
-			for book in URLBookArray {
+			for book in BookmarkArray {
 				if (!book.checkResourceIsReachableAndReturnError(nil)) {
 					if (selectedMusic == -1) {
 						//Do nothing
@@ -249,8 +183,57 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 				}
 				musicList.append(book)
 			}
-
+		} else if let bookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey3) as? [NSURL] {
+			selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation3);
+			for bookURL in bookmarkArray {
+				if (!bookURL.checkResourceIsReachableAndReturnError(nil)) {
+					if (selectedMusic == -1) {
+						//Do nothing
+					} else if (selectedMusic == musicList.count + 1) {
+						selectedMusic = -1
+					} else if (selectedMusic > musicList.count + 1) {
+						selectedMusic--
+					}
+					lostMusicCount++
+					continue
+				}
+				let obj = MusicListObject(URL: bookURL)
+				musicList.append(obj)
+			}
+		} else if let bookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey2) as? [NSData] {
+			if let curSel = aDecoder.decodeObjectForKey(kMusicListLocation2) as? Int {
+				selectedMusic = curSel
+			} else {
+				selectedMusic = -1
+			}
+			let aHomeURL = NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
+			for bookData in bookmarkArray {
+				if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI, relativeURL: aHomeURL) {
+					musicList.append(fullURL)
+				} else {
+					if (selectedMusic == -1) {
+						//Do nothing
+					} else if (selectedMusic == musicList.count + 1) {
+						selectedMusic = -1
+					} else if (selectedMusic > musicList.count + 1) {
+						selectedMusic--
+					}
+					lostMusicCount++
+				}
+			}
+		} else if let bookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey1) as? [NSData] {
+			for bookData in bookmarkArray {
+				if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI) {
+					musicList.append(fullURL)
+				} else {
+					lostMusicCount++
+				}
+			}
+			selectedMusic = -1;
+		} else {
+			selectedMusic = -1
 		}
+		
 		super.init()
 	}
 

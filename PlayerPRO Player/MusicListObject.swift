@@ -92,7 +92,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		}
 	}()
 	
-	init(URL: NSURL, date: NSDate) {
+	init(URL: NSURL, date: NSDate = NSDate()) {
 		if (URL.isFileReferenceURL()) {
 			musicURL = URL;
 		} else {
@@ -101,10 +101,6 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		}
 		addedDate = date
 		super.init();
-	}
-	
-	convenience init(URL: NSURL) {
-		self.init(URL: URL, date: NSDate())
 	}
 	
 	convenience init?(bookmarkData: NSData, resolutionOptions: NSURLBookmarkResolutionOptions = nil, relativeURL: NSURL? = nil, date: NSDate? = nil) {

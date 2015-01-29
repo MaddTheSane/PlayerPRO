@@ -52,7 +52,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	return shared;
 }
 
-- (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen toDictionary:(NSDictionary **)outDict
+- (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen toDictionary:(out NSDictionary **)outDict
 {
 	NSUInteger		lostMusicCount = 0;
 	NSInteger		selectedMusic = -1;
