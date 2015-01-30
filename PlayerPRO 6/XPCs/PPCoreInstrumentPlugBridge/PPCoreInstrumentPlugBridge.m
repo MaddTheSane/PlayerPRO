@@ -192,7 +192,11 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 		reply((capabilities & PPMADCanImport) == PPMADCanImport, !isSample, (capabilities & PPMADCanImport) == PPMADCanImport);
 		
 		if ((capabilities & PPMADCanImport) == PPMADCanImport) {
-			[plugIns addObject:AUTORELEASEOBJ([[PPInstrumentPlugBridgeObject alloc] initWithBundle:preBundle])];
+			PPInstrumentPlugBridgeObject *obj = [[PPInstrumentPlugBridgeObject alloc] initWithBundle:preBundle];
+			if (obj != nil) {
+				[plugIns addObject:obj];
+			}
+			RELEASEOBJ(obj);
 		}
 	}
 }
@@ -288,5 +292,32 @@ static void freeIns(InstrData* curIns, sData **samples) {
 
 }
 
++ (instancetype)sharedImporter
+{
+	static dispatch_once_t onceToken;
+	static PPCoreInstrumentPlugBridge *shared;
+	dispatch_once(&onceToken, ^{
+		shared = [PPCoreInstrumentPlugBridge new];
+	});
+	return shared;
+}
+
+
+- (BOOL)listener:(NSXPCListener *)listener shouldAcceptNewConnection:(NSXPCConnection *)newConnection {
+	// This method is where the NSXPCListener configures, accepts, and resumes a new incoming NSXPCConnection.
+	
+	// Configure the connection.
+	// First, set the interface that the exported object implements.
+	newConnection.exportedInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPCoreInstrumentPlugBridgeProtocol)];
+	
+	// Next, set the object that the connection exports. All messages sent on the connection to this service will be sent to the exported object to handle. The connection retains the exported object.
+	newConnection.exportedObject = self;
+	
+	// Resuming the connection allows the system to deliver more incoming messages.
+	[newConnection resume];
+	
+	// Returning YES from this method tells the system that you have accepted this connection. If you want to reject the connection for some reason, call -invalidate on the connection and return NO.
+	return YES;
+}
 
 @end
