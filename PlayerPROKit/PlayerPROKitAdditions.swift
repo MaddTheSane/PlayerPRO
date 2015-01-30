@@ -207,8 +207,8 @@ extension PPSampleObject {
 		if (theDat.loopSize != 0) {
 			CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(0.2, 0.1, 0.5, 0.8))
 			var loopRect = aRect
-			let lineSize = view.convertSizeToBacking(NSSize(width: 2, height: 2)).width
-			let padSize = view.convertSizeToBacking(NSSize(width: 1, height: 1)).width
+			let lineSize = view.convertSizeToBacking(NSSize(width: 2, height: 2)).width * 2
+			let padSize = view.convertSizeToBacking(NSSize(width: 1, height: 1)).width * 2
 			CGContextSetLineWidth(bitmapContext, lineSize)
 			loopRect.origin.x =  CGFloat(theDat.loopBegin) * imageSize.width / CGFloat(theDat.data.length)
 			loopRect.origin.y += padSize
