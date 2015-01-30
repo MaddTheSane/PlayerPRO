@@ -47,7 +47,7 @@
 - (MADByte*)what NS_RETURNS_INNER_POINTER;
 
 - (PPSampleObject *)objectAtIndexedSubscript:(NSInteger)index;
-- (void)setObject:(PPSampleObject *)obj atIndexedSubscript:(NSUInteger)index;
+- (void)setObject:(PPSampleObject *)obj atIndexedSubscript:(NSInteger)index;
 - (void)resetInstrument;
 
 @property unsigned short volumeFadeOut;

@@ -278,7 +278,7 @@ static const dispatch_block_t initUTIArray = ^{
 	name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
 }
 
-- (void)setObject:(PPSampleObject *)obj atIndexedSubscript:(NSUInteger)idx
+- (void)setObject:(PPSampleObject *)obj atIndexedSubscript:(NSInteger)idx
 {
 	[self replaceObjectInSamplesAtIndex:idx withObject:obj];
 }
