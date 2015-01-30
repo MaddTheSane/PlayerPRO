@@ -23,8 +23,6 @@ NSString * const PPColorChangedValue = @"PPColor Preferences Changed Color Value
 NSString * const PPMusicDidChange = @"PP Music changed";
 NSString * const PPDriverDidChange = @"PlayerPRO Driver did change";
 
-NSString * const kMusicListKVO = @"musicList";
-
 NSString * const MADNativeUTI = @"com.quadmation.playerpro.madk";
 NSString * const MADGenericUTI = @"com.quadmation.playerpro.mad";
 NSString * const PPMusicListUTI = @"net.sourceforge.playerpro.musiclist";

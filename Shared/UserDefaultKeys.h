@@ -208,6 +208,6 @@ extern NSString * const PPCETrackHeight;
 
 #pragma mark Misc./other
 #define PPDoubleDash @"--"
-extern NSString * const kMusicListKVO;
+#define kMusicListKVO @"musicList"
 
 #pragma GCC visibility pop
