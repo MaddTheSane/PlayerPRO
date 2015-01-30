@@ -2685,7 +2685,6 @@
 		55EE8EC0100404EB00E75E63 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
 		55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPObjectProtocol.h; sourceTree = "<group>"; };
 		55F013EA1880A2EA002488D5 /* MADDriver.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MADDriver.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		55F16D1C186F918F00E75C3E /* getAIFF.mi */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc.preprocessed; lineEnding = 0; path = getAIFF.mi; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55F1BD831975C27000AD2C03 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -4720,7 +4719,6 @@
 				5547DA5519A5690E0014A620 /* Preferences.swift */,
 				552711E3124881F4005120FC /* UserDefaultKeys.h */,
 				552711E4124881F4005120FC /* UserDefaultKeys.m */,
-				55F16D1C186F918F00E75C3E /* getAIFF.mi */,
 				557139CD1684EF7500831A5A /* PPHilightableButton.h */,
 				557139CE1684EF7500831A5A /* PPHilightableButton.m */,
 				555F5C601993327D0056AF01 /* OpenPanelViewController.swift */,
