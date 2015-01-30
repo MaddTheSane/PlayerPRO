@@ -52,8 +52,8 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObjec
 
 public func CreateErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [String: NSObject]? = nil, convertToCocoa: Bool = false) -> NSError? {
 	
-	if let cud = customUserDictionary {
-		if let anErr = PPCreateErrorFromMADErrorTypeConvertingToCocoa(theErr, convertToCocoa) {
+	if let anErr = PPCreateErrorFromMADErrorTypeConvertingToCocoa(theErr, convertToCocoa) {
+		if let cud = customUserDictionary {
 			var errDict: [String: NSObject] = [NSLocalizedDescriptionKey : anErr.localizedDescription,
 				NSLocalizedFailureReasonErrorKey: anErr.localizedFailureReason!,
 				NSLocalizedRecoverySuggestionErrorKey: anErr.localizedRecoverySuggestion!]
@@ -61,9 +61,11 @@ public func CreateErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [S
 			errDict += cud
 			
 			return NSError(domain: anErr.domain, code: anErr.code, userInfo: errDict)
+		} else {
+			return anErr
 		}
 	}
-	return PPCreateErrorFromMADErrorTypeConvertingToCocoa(theErr, convertToCocoa)
+	return nil
 }
 
 public func NoteFromString(myTT: String) -> Int16?
