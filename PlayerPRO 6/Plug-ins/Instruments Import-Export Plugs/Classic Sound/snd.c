@@ -166,9 +166,10 @@ static Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sample
 			
 			MusSize = CmpHeader->numFrames;
 			
-			result = GetCompressionInfo((*CmpHeader).compressionID, (*CmpHeader).format, numChannels, *sampleSize, &cp);
+			result = GetCompressionInfo(CmpHeader->compressionID, CmpHeader->format, numChannels, *sampleSize, &cp);
 			if (result != noErr) {
 				DebugStr("\pGetCompressionInfo");
+				MADDebugStr(__LINE__, __FILE__, "GetCompressionInfo");
 				return NULL;
 			}
 			
@@ -188,7 +189,7 @@ static Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sample
 				inputFormat.sampleSize = *sampleSize;
 				inputFormat.sampleRate = *sampleRate;
 				inputFormat.sampleCount = 0;
-				inputFormat.buffer = nil;
+				inputFormat.buffer = NULL;
 				inputFormat.reserved = 0;
 				
 				outputFormat = inputFormat;
@@ -294,7 +295,7 @@ static Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sample
 				*baseFreq 	= header->baseFrequency;
 			
 			MusSize = header->length;
-			BlockMoveData((*header).sampleArea, soundPtr, MusSize);
+			memmove(soundPtr, header->sampleArea, MusSize);
 			break;
 	}
 	

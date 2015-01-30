@@ -20,6 +20,7 @@
 #include "RDriver.h"
 #include "MADPlug.h"
 #include "RDriverInt.h"
+#include <alloca.h>
 
 sData* inMADCreateSample();
 
