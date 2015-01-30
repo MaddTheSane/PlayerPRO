@@ -382,23 +382,23 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 				if error != nil {
 					theHandle(theErr: error)
 				} else {
-					let invalidAny: AnyObject? = bookmarkData["lostMusicCount"]
-					let selectedAny: AnyObject? = bookmarkData["SelectedMusic"]
-					let pathsAny: AnyObject? = bookmarkData["MusicPaths"]
+					let invalidAny = bookmarkData["lostMusicCount"] as? UInt
+					let selectedAny = bookmarkData["SelectedMusic"] as? Int
+					let pathsAny = bookmarkData["MusicPaths"] as? NSArray as? [String]
 					if (invalidAny == nil || selectedAny == nil || pathsAny == nil) {
-						let lolwut = CreateErrorFromMADErrorType(.UnknownErr)
+						let lolwut = CreateErrorFromMADErrorType(.UnknownErr)!
 						theHandle(theErr: lolwut)
 					} else {
 						var pathsURL = [MusicListObject]()
-						self.lostMusicCount = invalidAny as NSNumber as UInt
-						self.selectedMusic = selectedAny as NSNumber as Int
-						for aPath in pathsAny as NSArray as [NSString] {
+						for aPath in pathsAny! {
 							if let tmpURL = NSURL.fileURLWithPath(aPath) {
 								let tmpObj = MusicListObject(URL: tmpURL)
 								pathsURL.append(tmpObj)
 							}
 						}
 						self.loadMusicList(pathsURL)
+						self.lostMusicCount = invalidAny!
+						self.selectedMusic = selectedAny!
 						
 						theHandle(theErr: nil)
 					}
