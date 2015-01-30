@@ -27,15 +27,12 @@
 	if (self = [super init]) {
 		NSArray *plugLocs = DefaultPlugInLocations();
 		self.instrumentIEArray = [[NSMutableArray alloc] init];
-		NSInteger x, y;
 		
 		for (NSURL *aPlugLoc in plugLocs) {
-			CFIndex		PlugNums;
-			CFArrayRef	somePlugs;
-			somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef)aPlugLoc, CFSTR("plugin"));
-			PlugNums = CFArrayGetCount(somePlugs);
+			CFArrayRef	somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef)aPlugLoc, CFSTR("plugin"));
+			CFIndex		PlugNums = CFArrayGetCount(somePlugs);
 			if (PlugNums > 0) {
-				for (x = 0; x < PlugNums; x++) {
+				for (CFIndex x = 0; x < PlugNums; x++) {
 					@autoreleasepool {
 						CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
 						NSBundle *tempBundle = [NSBundle bundleWithURL:CFBridgingRelease(CFBundleCopyBundleURL(tempBundleRef))];
@@ -43,7 +40,7 @@
 						//You can ignore the Clang static warning of incorrect decrement here.
 						CFRelease(tempBundleRef);
 						if (tempObj) {
-							for (y = 0; y < [instrumentIEArray count]; y++) {
+							for (NSInteger y = 0; y < [instrumentIEArray count]; y++) {
 								PPInstrumentImporterObject *toComp = instrumentIEArray[y];
 								if (toComp.type == tempObj.type) {
 									if (toComp.version < tempObj.version) {

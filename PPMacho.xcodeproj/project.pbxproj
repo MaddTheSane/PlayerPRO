@@ -932,6 +932,20 @@
 			remoteGlobalIDString = 55868A5810BFB46100FCC24D;
 			remoteInfo = APPL;
 		};
+		5523FC8A1A7AF49900F01580 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55403A011A745003007A488E;
+			remoteInfo = ForceFeedbackAdditions;
+		};
+		5523FC8C1A7AF49900F01580 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55403A0B1A745003007A488E;
+			remoteInfo = ForceFeedbackAdditionsTests;
+		};
 		5533411910BB548E005208D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -4596,6 +4610,8 @@
 				55C1A6841A0719D300C7A733 /* SwiftAdditionsTests.xctest */,
 				55418FCC1A26497800E18A5F /* SwiftIOKitAdditions.framework */,
 				55418FCE1A26497800E18A5F /* SwiftIOKitAdditionsTests.xctest */,
+				5523FC8B1A7AF49900F01580 /* ForceFeedbackAdditions.framework */,
+				5523FC8D1A7AF49900F01580 /* ForceFeedbackAdditionsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6347,6 +6363,20 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		5523FC8B1A7AF49900F01580 /* ForceFeedbackAdditions.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ForceFeedbackAdditions.framework;
+			remoteRef = 5523FC8A1A7AF49900F01580 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		5523FC8D1A7AF49900F01580 /* ForceFeedbackAdditionsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ForceFeedbackAdditionsTests.xctest;
+			remoteRef = 5523FC8C1A7AF49900F01580 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		55418FCC1A26497800E18A5F /* SwiftIOKitAdditions.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -9605,9 +9635,7 @@
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
-				MACH_O_TYPE = mh_execute;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
-				WRAPPER_EXTENSION = xpc;
 			};
 			name = Release;
 		};
@@ -9627,9 +9655,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
-				MACH_O_TYPE = mh_execute;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
-				WRAPPER_EXTENSION = xpc;
 			};
 			name = Debug;
 		};

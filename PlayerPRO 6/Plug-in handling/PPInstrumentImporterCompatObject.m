@@ -14,31 +14,16 @@
 
 #define PPINLoadPlug(theBundle) (PPInstrumentPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROInstrumentPlugTypeID, kPlayerPROInstrumentPlugInterfaceID)
 
-static NSXPCConnection *sharedConnectionToService;
-static NSXPCConnection *sharedConnectionToService32;
-
 static void moveInfoOverToInstrumentObjectFrom(PPInstrumentObject* to, PPInstrumentObject* from) {
 	
 }
 
 @interface PPInstrumentImporterCompatObject ()
 @property BOOL is32Bit;
-@property (weak) NSXPCConnection *connectionToService;
+@property (strong) NSXPCConnection *connectionToService;
 @end
 
 @implementation PPInstrumentImporterCompatObject
-
-+ (void)initialize
-{
-	static dispatch_once_t onceToken;
-	dispatch_once(&onceToken, ^{
-		sharedConnectionToService = [[NSXPCConnection alloc] initWithServiceName:@"PPCoreInstrumentPlugBridge"];
-		sharedConnectionToService.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPCoreInstrumentPlugBridgeProtocol)];
-		
-		sharedConnectionToService32 = [[NSXPCConnection alloc] initWithServiceName:@"PPCoreInstrumentPlugBridge32"];
-		sharedConnectionToService32.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPCoreInstrumentPlugBridgeProtocol)];
-	});
-}
 
 - (NSString*)description
 {
@@ -48,7 +33,44 @@ static void moveInfoOverToInstrumentObjectFrom(PPInstrumentObject* to, PPInstrum
 
 - (instancetype)initWithBundleNoInit:(NSBundle *)tempBundle
 {
-	return self = [self initWithBundle:tempBundle];
+	return [self initWithBundle:tempBundle];
+}
+
+- (void)generateConnection
+{
+	self.connectionToService = [[NSXPCConnection alloc] initWithServiceName: self.is32Bit ? @"net.sourceforge.playerpro.PPCoreInstrumentPlugBridge32" : @"net.sourceforge.playerpro.PPCoreInstrumentPlugBridge"];
+	self.connectionToService.remoteObjectInterface = [NSXPCInterface interfaceWithProtocol:@protocol(PPCoreInstrumentPlugBridgeProtocol)];
+	
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-retain-cycles"
+	// We can ignore the retain cycle warning because a) the retain taken by the
+	// invalidation handler block is released by us setting it to nil when the block
+	// actually runs, and b) the retain taken by the block passed to -addOperationWithBlock:
+	// will be released when that operation completes and the operation itself is deallocated
+	// (notably self does not have a reference to the NSBlockOperation).
+	self.connectionToService.invalidationHandler = ^{
+		// If the connection gets invalidated then, on the main thread, nil out our
+		// reference to it.  This ensures that we attempt to rebuild it the next time around.
+		self.connectionToService.invalidationHandler = nil;
+		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
+			self.connectionToService = nil;
+			//[self logText:@"connection invalidated\n"];
+		}];
+	};
+#pragma clang diagnostic pop
+}
+
+- (id<PPCoreInstrumentPlugBridgeProtocol>)remoteConnectionProxy
+{
+	if (!_connectionToService) {
+		[self generateConnection];
+		
+		[_connectionToService resume];
+	}
+
+	return [_connectionToService remoteObjectProxyWithErrorHandler:^(NSError *error) {
+		NSLog(@"Error: %@", error);
+	}];
 }
 
 - (instancetype)initWithBundle:(NSBundle *)tempBundle
@@ -67,19 +89,19 @@ static void moveInfoOverToInstrumentObjectFrom(PPInstrumentObject* to, PPInstrum
 		if (has32 && !has64) {
 			self.is32Bit = YES;
 		}
-		_connectionToService = self.is32Bit ? sharedConnectionToService32 : sharedConnectionToService;
+		[self generateConnection];
 		[_connectionToService resume];
 		__block BOOL toRet = NO;
 		
 		dispatch_semaphore_t ourSemaphore = dispatch_semaphore_create(0);
-		dispatch_async(dispatch_get_global_queue(0, 0), ^{
-			[[_connectionToService remoteObjectProxy] checkBundleAtURLIsInstrumentBundle:tempBundle.bundleURL withReply:^(BOOL isPlug, BOOL isInstrument, BOOL isImport) {
-				toRet = isPlug;
-				self.sample = !isInstrument;
-				dispatch_semaphore_signal(ourSemaphore);
-			}];
-		});
-		dispatch_semaphore_wait(ourSemaphore, dispatch_time(DISPATCH_TIME_NOW, 10000));
+		[[self remoteConnectionProxy]
+		 checkBundleAtURLIsInstrumentBundle:tempBundle.bundleURL
+		 withReply:^(BOOL isPlug, BOOL isInstrument, BOOL isImport) {
+			toRet = isPlug;
+			self.sample = !isInstrument;
+			dispatch_semaphore_signal(ourSemaphore);
+		}];
+		dispatch_semaphore_wait(ourSemaphore, dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC));
 		if (toRet == NO) {
 			return nil;
 		}
@@ -95,16 +117,22 @@ static void moveInfoOverToInstrumentObjectFrom(PPInstrumentObject* to, PPInstrum
 	__block BOOL toRet = NO;
 	
 	dispatch_semaphore_t ourSemaphore = dispatch_semaphore_create(0);
-	dispatch_async(dispatch_get_global_queue(0, 0), ^{
-		[[_connectionToService remoteObjectProxy] canImportFileAtURL:fileURL bundleURL:self.file.bundleURL withReply:^(BOOL ourReply) {
-			toRet = ourReply;
-			usleep(5);
-			dispatch_semaphore_signal(ourSemaphore);
-		}];
-	});
-	dispatch_semaphore_wait(ourSemaphore, dispatch_time(DISPATCH_TIME_NOW, 5000));
+	[[self remoteConnectionProxy]
+	 canImportFileAtURL:fileURL bundleURL:self.file.bundleURL
+	 withReply:^(BOOL ourReply) {
+		toRet = ourReply;
+		usleep(5);
+		dispatch_semaphore_signal(ourSemaphore);
+	}];
+	dispatch_semaphore_wait(ourSemaphore, dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC));
 
 	return toRet;
+}
+
+- (void)dealloc
+{
+	self.connectionToService.invalidationHandler = nil;
+	[_connectionToService invalidate];
 }
 
 - (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
@@ -116,7 +144,7 @@ static void moveInfoOverToInstrumentObjectFrom(PPInstrumentObject* to, PPInstrum
 {
 	if (!self.sample) {
 		NSData *aDat = PPInstrumentToData(InsHeader);
-		[[_connectionToService remoteObjectProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL instrumentData:aDat instrumentNumber:InsHeader.number reply:^(MADErr error, NSData *outInsData) {
+		[[self remoteConnectionProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL instrumentData:aDat instrumentNumber:InsHeader.number reply:^(MADErr error, NSData *outInsData) {
 			if (error == MADNoErr) {
 				PPInstrumentObject *aRet = PPDataToInstrument(outInsData);
 				moveInfoOverToInstrumentObjectFrom(InsHeader, aRet);
@@ -126,7 +154,7 @@ static void moveInfoOverToInstrumentObjectFrom(PPInstrumentObject* to, PPInstrum
 		}];
 	} else {
 		NSData *aDat = PPSampleToData(sample);
-		[[_connectionToService remoteObjectProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL sampleData:aDat instrumentNumber:InsHeader.number sampleNumber:sampleID ? *sampleID : 0 reply:^(MADErr error, NSData *outSampData, short newSampleNum) {
+		[[self remoteConnectionProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL sampleData:aDat instrumentNumber:InsHeader.number sampleNumber:sampleID ? *sampleID : 0 reply:^(MADErr error, NSData *outSampData, short newSampleNum) {
 			if (error == MADNoErr) {
 				*sampleID = newSampleNum;
 				[InsHeader replaceObjectInSamplesAtIndex:newSampleNum withObject:PPDataToSample(outSampData)];
