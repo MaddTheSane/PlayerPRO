@@ -18,7 +18,6 @@
 
 #include "embeddedPlugs.h"
 // Pack it to save some bytes.
-#pragma pack(push, 1)
 typedef struct iPlugInfo {
 	OSType		mode;
 	UInt32		version;
@@ -29,7 +28,7 @@ typedef struct iPlugInfo {
 	char		type[5];
 } iPlugInfo;
 
-#define PLUGVERS(a, b, c, d) (a << 24 | b << 16 | c << 8 | d)
+#define PLUGVERS(a, b, c, d) (a << 24 | b << 16 | (c | finalStage) << 8 | d)
 
 static const iPlugInfo iOSPlugInfo[] = {
 	{
@@ -174,7 +173,6 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.UTIType = CFSTR("net.sourceforge.playerpro.xm"),
 	}
 };
-#pragma pack(pop)
 
 static MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 {
@@ -241,7 +239,7 @@ static void MovePluginInfoOver(const iPlugInfo *src, PlugInfo *dst)
 void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 {
 	if (PlugsFolderName) {
-		fprintf(stderr, "Custom plug-in path %s ignored: the static libraries cannot load custom binaries.\n", PlugsFolderName);
+		fprintf(stderr, "Custom plug-in path %s ignored: this configuration cannot load custom binaries.\n", PlugsFolderName);
 	}
 	CFIndex totalInterfaces = sizeof(iOSPlugInfo) / sizeof(iOSPlugInfo[0]);
 	inMADDriver->ThePlug = (PlugInfo*)calloc(sizeof(PlugInfo), totalInterfaces);
