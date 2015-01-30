@@ -6,8 +6,8 @@
 //
 //
 
-import Cocoa
 import PlayerPROCore
+import Cocoa
 
 private enum soundRate {
 	case rate11Khz
