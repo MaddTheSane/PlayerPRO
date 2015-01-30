@@ -44,7 +44,7 @@
 @property (readonly) NSInteger countOfPanningEnvelope;
 @property (readonly) NSInteger countOfPitchEnvelope;
 
-- (MADByte*)what NS_RETURNS_INNER_POINTER;
+@property (readonly) MADByte* what NS_RETURNS_INNER_POINTER;
 
 - (PPSampleObject *)objectAtIndexedSubscript:(NSInteger)index;
 - (void)setObject:(PPSampleObject *)obj atIndexedSubscript:(NSInteger)index;

@@ -63,10 +63,13 @@ static NSDictionary *sampleToDictionary(sData *sampObj) NS_RETURNS_RETAINED;
 #if !__i386__
 
 static PPSampleObject *getSampleFromDictionary(NSDictionary *sampleDict) NS_RETURNS_RETAINED;
+static NSDictionary *EncodeSampleObject(PPSampleObject *sampObj);
+static NSArray *EncodeSamplesObjects(PPInstrumentObject *ourData);
+static void getSamplesFromArray(PPInstrumentObject *instrument, NSArray *ourArray);
 
-static NSDictionary *EncodeSampleObject(PPSampleObject *sampObj)
+NSDictionary *EncodeSampleObject(PPSampleObject *sampObj)
 {
-	NSMutableDictionary *toRet = [NSMutableDictionary new];
+	NSMutableDictionary *toRet = [[NSMutableDictionary alloc] initWithCapacity:10];
 	toRet[LOOPBEGINKEY] = @(sampObj.loopBegin);
 	toRet[LOOPSIZEKEY] = @(sampObj.loopSize);
 	toRet[VOLUMEKEY] = @(sampObj.volume);
@@ -92,7 +95,7 @@ NSData *PPSampleToData(PPSampleObject *sampObj)
 	return [ourEncData copy];
 }
 
-static NSArray *EncodeSamplesObjects(PPInstrumentObject *ourData)
+NSArray *EncodeSamplesObjects(PPInstrumentObject *ourData)
 {
 	NSMutableArray *ourArray = [[NSMutableArray alloc] initWithCapacity:ourData.countOfSamples];
 	for (PPSampleObject *sampObj in ourData.samples) {
@@ -121,6 +124,23 @@ NSData *PPInstrumentToData(PPInstrumentObject *ourData)
 	[ourArchiver encodeObject:ourData.panningEnvelope forKey:PPPannEnv];
 	[ourArchiver encodeObject:ourData.pitchEnvelope forKey:PPPitchEnv];
 	
+	[ourArchiver encodeInt32:ourData.panningSustain forKey:PPPanSus];
+	[ourArchiver encodeInt32:ourData.panningBegin forKey:PPPanBeg];
+	[ourArchiver encodeInt32:ourData.panningEnd forKey:PPPanEnd];
+	
+	[ourArchiver encodeInt32:ourData.pitchSustain forKey:PPPitchSus];
+	[ourArchiver encodeInt32:ourData.pitchBegin forKey:PPPitchBeg];
+	[ourArchiver encodeInt32:ourData.pitchEnd forKey:PPPitchEnd];
+	
+	[ourArchiver encodeInt32:ourData.volumeType forKey:PPVolType];
+	[ourArchiver encodeInt32:ourData.panningType forKey:PPPannType];
+	
+	[ourArchiver encodeInt32:ourData.vibratoDepth forKey:PPVibDepth];
+	[ourArchiver encodeInt32:ourData.vibratoRate forKey:PPVibRate];
+	
+	[ourArchiver encodeInt32:ourData.panningSize forKey:PPPannSize];
+	[ourArchiver encodeInt32:ourData.pitchSize forKey:PPPitchSize];
+
 	[ourArchiver finishEncoding];
 	return ourEncData;
 }
@@ -149,7 +169,7 @@ PPSampleObject *PPDataToSample(NSData *ourData)
 	return getSampleFromDictionary(ourDict);
 }
 
-static void getSamplesFromArray(PPInstrumentObject *instrument, NSArray *ourArray)
+void getSamplesFromArray(PPInstrumentObject *instrument, NSArray *ourArray)
 {
 	for (NSDictionary *sampleDict in ourArray) {
 		[instrument addSampleObject:getSampleFromDictionary(sampleDict)];
@@ -166,7 +186,7 @@ PPInstrumentObject *PPDataToInstrument(NSData *ourData)
 	NSCAssert(whatLen == 96, @"How can \"what\" not be 96?");
 	memcpy(toRet.what, whatData, whatLen);
 	toRet.MIDI = [ourUnarchiver decodeInt32ForKey:PPMIDI];
-	switch ([ourUnarchiver decodeInt32ForKey:PPMIDI]) {
+	switch ([ourUnarchiver decodeInt32ForKey:PPMIDIType]) {
 		case 0:
 			toRet.MIDIOut = NO;
 			toRet.soundOut = YES;
@@ -190,6 +210,43 @@ PPInstrumentObject *PPDataToInstrument(NSData *ourData)
 	getSamplesFromArray(toRet, [ourUnarchiver decodeObjectForKey:PPSamples]);
 	
 	toRet.volumeType = [ourUnarchiver decodeInt32ForKey:PPVolType];
+	
+	NSArray *volEnvArray = [ourUnarchiver decodeObjectForKey:PPVolEnv];
+	NSArray *panEnvArray = [ourUnarchiver decodeObjectForKey:PPPannEnv];
+	NSArray *pitchEnvArray = [ourUnarchiver decodeObjectForKey:PPPitchEnv];
+	
+	for (int i = 0; i < 12; i++) {
+		PPEnvelopeObject *aVolEnv = volEnvArray[i];
+		PPEnvelopeObject *aPannEnv = panEnvArray[i];
+		PPEnvelopeObject *aPitchEnv = pitchEnvArray[i];
+
+		[toRet replaceObjectInPanningEnvelopeAtIndex:i withObject:aPannEnv];
+		[toRet replaceObjectInPitchEnvelopeAtIndex:i withObject:aPitchEnv];
+		[toRet replaceObjectInVolumeEnvelopeAtIndex:i withObject:aVolEnv];
+	}
+	toRet.volumeType = [ourUnarchiver decodeInt32ForKey:PPVolType];
+	//toRet.MIDIType = [ourUnarchiver decodeInt32ForKey:PPMIDIType];
+	toRet.volumeSize = [ourUnarchiver decodeInt32ForKey:PPVolSize];
+	toRet.volumeSustain = [ourUnarchiver decodeInt32ForKey:PPVolSus];
+	toRet.volumeBegin = [ourUnarchiver decodeInt32ForKey:PPVolBeg];
+	toRet.volumeEnd = [ourUnarchiver decodeInt32ForKey:PPVolEnd];
+	
+	toRet.panningSustain = [ourUnarchiver decodeInt32ForKey:PPPanSus];
+	toRet.panningBegin = [ourUnarchiver decodeInt32ForKey:PPPanBeg];
+	toRet.panningEnd = [ourUnarchiver decodeInt32ForKey:PPPitchEnv];
+	
+	toRet.pitchSustain = [ourUnarchiver decodeInt32ForKey:PPPitchSus];
+	toRet.pitchBegin = [ourUnarchiver decodeInt32ForKey:PPPitchBeg];
+	toRet.pitchEnd = [ourUnarchiver decodeInt32ForKey:PPPitchEnd];
+	
+	toRet.panningType = [ourUnarchiver decodeInt32ForKey:PPPannType];
+	
+	toRet.vibratoRate = [ourUnarchiver decodeInt32ForKey:PPVibRate];
+	toRet.vibratoDepth = [ourUnarchiver decodeInt32ForKey:PPVibDepth];
+	
+	toRet.panningSize = [ourUnarchiver decodeInt32ForKey:PPPannSize];
+	toRet.pitchSize = [ourUnarchiver decodeInt32ForKey:PPPitchSize];
+	
 	return toRet;
 }
 
@@ -233,6 +290,23 @@ NSData *MADInstrumentToData(InstrData* insData, sData ** sampleData)
 		[ourArchiver encodeObject:panningEnvelope forKey:PPPannEnv];
 		[ourArchiver encodeObject:pitchEnvelope forKey:PPPitchEnv];
 		
+		[ourArchiver encodeInt32:insData->volSize forKey:PPVolSize];
+		[ourArchiver encodeInt32:insData->pannSize forKey:PPPannSize];
+		[ourArchiver encodeInt32:insData->pitchSize forKey:PPPitchSize];
+		
+		[ourArchiver encodeInt32:insData->pannSus forKey:PPPanSus];
+		[ourArchiver encodeInt32:insData->pannBeg forKey:PPPanBeg];
+		[ourArchiver encodeInt32:insData->pannEnd forKey:PPPanEnd];
+		
+		[ourArchiver encodeInt32:insData->pitchSus forKey:PPPitchSus];
+		[ourArchiver encodeInt32:insData->pitchBeg forKey:PPPitchBeg];
+		[ourArchiver encodeInt32:insData->pitchEnd forKey:PPPitchEnd];
+		
+		[ourArchiver encodeInt32:insData->pannType forKey:PPPannType];
+		
+		[ourArchiver encodeInt32:insData->vibDepth forKey:PPVibDepth];
+		[ourArchiver encodeInt32:insData->vibRate forKey:PPVibRate];
+		
 		[ourArchiver finishEncoding];
 		RELEASEOBJ(ourArchiver);
 	}
@@ -242,8 +316,9 @@ NSData *MADInstrumentToData(InstrData* insData, sData ** sampleData)
 //TODO: implement
 InstrData *MADDataToInstrument(NSData *ourData, sData ***sampleData)
 {
-	*sampleData = NULL;
-	return NULL;
+	InstrData *toRet = calloc(sizeof(InstrData), 1);
+	*sampleData = calloc(sizeof(sData*), MAXSAMPLE);
+	return toRet;
 }
 
 NSDictionary *sampleToDictionary(sData *sampObj)

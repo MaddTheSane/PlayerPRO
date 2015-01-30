@@ -45,6 +45,7 @@
 #define PPPannType @"PlayerPROKit Sample Panning Type"
 #define PPVolFade @"PlayerPROKit Sample Volume Fade"
 #define PPNotes @"PlayerPROKit Sample Notes"
+#define PPSamples @"PlayerPROKit Samples"
 #define PPVolEnv @"PlayerPROKit Instrument Volume Envelope"
 #define PPPannEnv @"PlayerPROKit Instrument Panning Envelope"
 #define PPPitchEnv @"PlayerPROKit Instrument Pitch Envelope"
@@ -165,6 +166,8 @@ static const dispatch_block_t initUTIArray = ^{
 	return self;
 }
 
+#pragma mark NSCoding
+
 + (BOOL)supportsSecureCoding
 {
 	return YES;
@@ -192,6 +195,8 @@ static const dispatch_block_t initUTIArray = ^{
 }
 
 @end
+
+#pragma mark -
 
 @interface PPInstrumentObject ()
 @property (nonatomic, copy) NSMutableArray *internalVolumeEnvelope;
@@ -714,7 +719,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)addSamplesObject:(PPSampleObject *)object
 {
-	NSAssert(number != -1, @"The instrument should be in a Music Object wrapper BEFORE adding samples");
+	//NSAssert(number != -1, @"The instrument should be in a Music Object wrapper BEFORE adding samples");
 	if ([samples count] >= MAXSAMPLE) {
 		return;
 	}
@@ -733,7 +738,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(PPSampleObject *)object
 {
-	NSAssert(number != -1, @"The instrument should be in a Music Object wrapper BEFORE adding samples");
+	//NSAssert(number != -1, @"The instrument should be in a Music Object wrapper BEFORE adding samples");
 	if (index >= MAXSAMPLE || index < 0) {
 		return;
 	}
@@ -1003,7 +1008,59 @@ affectVolType(Note)
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	if (self = [super init]) {
+		number = -1;
+		samples = [[NSMutableArray alloc] init];
+		[self resetInstrument];
+		_panningEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		_volumeEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		_pitchEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+
+		self.name = [aDecoder decodeObjectForKey:PPName];
+		self.MIDI = [aDecoder decodeInt32ForKey:PPMIDI];
+		theInstrument.MIDIType = [aDecoder decodeInt32ForKey:PPMIDIType];
+		NSUInteger whatLen = 0;
+		const uint8_t *whatData = [aDecoder decodeBytesForKey:PPNotes returnedLength:&whatLen];
+		NSCAssert(whatLen == 96, @"How can \"what\" not be 96?");
+		memcpy(self.what, whatData, whatLen);
 		
+		NSArray *volEnvArray = [aDecoder decodeObjectForKey:PPVolEnv];
+		NSArray *panEnvArray = [aDecoder decodeObjectForKey:PPPannEnv];
+		NSArray *pitchEnvArray = [aDecoder decodeObjectForKey:PPPitchEnv];
+		
+		for (int i = 0; i < 12; i++) {
+			PPEnvelopeObject *aVolEnv = volEnvArray[i];
+			PPEnvelopeObject *aPannEnv = panEnvArray[i];
+			PPEnvelopeObject *aPitchEnv = pitchEnvArray[i];
+			
+			[self replaceObjectInPanningEnvelopeAtIndex:i withObject:aPannEnv];
+			[self replaceObjectInPitchEnvelopeAtIndex:i withObject:aPitchEnv];
+			[self replaceObjectInVolumeEnvelopeAtIndex:i withObject:aVolEnv];
+		}
+		self.volumeType = [aDecoder decodeInt32ForKey:PPVolType];
+		self.volumeSize = [aDecoder decodeInt32ForKey:PPVolSize];
+		self.volumeSustain = [aDecoder decodeInt32ForKey:PPVolSus];
+		self.volumeBegin = [aDecoder decodeInt32ForKey:PPVolBeg];
+		self.volumeEnd = [aDecoder decodeInt32ForKey:PPVolEnd];
+		
+		self.panningSustain = [aDecoder decodeInt32ForKey:PPPanSus];
+		self.panningBegin = [aDecoder decodeInt32ForKey:PPPanBeg];
+		self.panningEnd = [aDecoder decodeInt32ForKey:PPPitchEnv];
+		
+		self.pitchSustain = [aDecoder decodeInt32ForKey:PPPitchSus];
+		self.pitchBegin = [aDecoder decodeInt32ForKey:PPPitchBeg];
+		self.pitchEnd = [aDecoder decodeInt32ForKey:PPPitchEnd];
+		
+		self.panningType = [aDecoder decodeInt32ForKey:PPPannType];
+		
+		self.vibratoRate = [aDecoder decodeInt32ForKey:PPVibRate];
+		self.vibratoDepth = [aDecoder decodeInt32ForKey:PPVibDepth];
+		
+		self.panningSize = [aDecoder decodeInt32ForKey:PPPannSize];
+		self.pitchSize = [aDecoder decodeInt32ForKey:PPPitchSize];
+
+		for (PPSampleObject *sampObj in (NSArray*)[aDecoder decodeObjectForKey:PPSamples]) {
+			[self addSampleObject:sampObj];
+		}
 	}
 	return self;
 }
@@ -1013,35 +1070,37 @@ affectVolType(Note)
 	[aCoder encodeObject:self.name forKey:PPName];
 	[aCoder encodeInteger:number forKey:PPLocation];
 	[aCoder encodeInteger:self.firstSample forKey:PPSampCount];
-	[aCoder encodeInt:theInstrument.MIDI forKey:PPMIDI];
-	[aCoder encodeInt:theInstrument.MIDIType forKey:PPMIDIType];
-	[aCoder encodeBytes:&theInstrument.volSize length:1 forKey:PPVolSize];
-	[aCoder encodeBytes:&theInstrument.pannSize length:1 forKey:PPPannSize];
-	[aCoder encodeBytes:&theInstrument.pitchSize length:1 forKey:PPPitchSize];
+	[aCoder encodeInt32:self.MIDI forKey:PPMIDI];
+	[aCoder encodeInt32:self.MIDIType forKey:PPMIDIType];
+	[aCoder encodeInt32:self.volumeSize forKey:PPVolSize];
+	[aCoder encodeInt32:self.panningSize forKey:PPPannSize];
+	[aCoder encodeInt32:self.pitchSize forKey:PPPitchSize];
 	[aCoder encodeBytes:self.what length:sizeof(theInstrument.what) forKey:PPNotes];
-	[aCoder encodeInt:theInstrument.volFade forKey:PPVolFade];
+	[aCoder encodeInt32:self.volumeFadeOut forKey:PPVolFade];
 	
-	[aCoder encodeBytes:&theInstrument.volSus length:1 forKey:PPVolSus];
-	[aCoder encodeBytes:&theInstrument.volBeg length:1 forKey:PPVolBeg];
-	[aCoder encodeBytes:&theInstrument.volEnd length:1 forKey:PPVolEnd];
+	[aCoder encodeInt32:self.volumeSustain forKey:PPVolSus];
+	[aCoder encodeInt32:self.volumeBegin forKey:PPVolBeg];
+	[aCoder encodeInt32:self.volumeEnd forKey:PPVolEnd];
 	
-	[aCoder encodeBytes:&theInstrument.pannSus length:1 forKey:PPPanSus];
-	[aCoder encodeBytes:&theInstrument.pannBeg length:1 forKey:PPPanBeg];
-	[aCoder encodeBytes:&theInstrument.pannEnd length:1 forKey:PPPanEnd];
+	[aCoder encodeInt32:self.panningSustain forKey:PPPanSus];
+	[aCoder encodeInt32:self.panningBegin forKey:PPPanBeg];
+	[aCoder encodeInt32:self.panningEnd forKey:PPPanEnd];
 	
-	[aCoder encodeBytes:&theInstrument.pitchSus length:1 forKey:PPPitchSus];
-	[aCoder encodeBytes:&theInstrument.pitchBeg length:1 forKey:PPPitchBeg];
-	[aCoder encodeBytes:&theInstrument.pitchEnd length:1 forKey:PPPitchEnd];
+	[aCoder encodeInt32:self.pitchSustain forKey:PPPitchSus];
+	[aCoder encodeInt32:self.pitchBegin forKey:PPPitchBeg];
+	[aCoder encodeInt32:self.pitchEnd forKey:PPPitchEnd];
 	
-	[aCoder encodeBytes:&theInstrument.volType length:1 forKey:PPVolType];
-	[aCoder encodeBytes:&theInstrument.pannType length:1 forKey:PPPannType];
+	[aCoder encodeInt32:self.volumeType forKey:PPVolType];
+	[aCoder encodeInt32:self.panningType forKey:PPPannType];
 	
-	[aCoder encodeBytes:&theInstrument.vibDepth length:1 forKey:PPVibDepth];
-	[aCoder encodeBytes:&theInstrument.vibRate length:1 forKey:PPVibRate];
+	[aCoder encodeInt32:self.vibratoDepth forKey:PPVibDepth];
+	[aCoder encodeInt32:self.vibratoRate forKey:PPVibRate];
 	
 	[aCoder encodeObject:self.volumeEnvelope forKey:PPVolEnv];
 	[aCoder encodeObject:self.panningEnvelope forKey:PPPannEnv];
 	[aCoder encodeObject:self.pitchEnvelope forKey:PPPitchEnv];
+	
+	[aCoder encodeObject:self.samples forKey:PPSamples];
 }
 
 @end
