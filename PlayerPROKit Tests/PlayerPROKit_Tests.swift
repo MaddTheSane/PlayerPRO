@@ -8,6 +8,7 @@
 
 import Foundation
 import XCTest
+import PlayerPROCore
 import PlayerPROKit
 
 class PlayerPROKit_Tests: XCTestCase {

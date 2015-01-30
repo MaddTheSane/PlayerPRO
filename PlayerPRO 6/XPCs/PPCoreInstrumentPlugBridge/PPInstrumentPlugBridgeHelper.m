@@ -58,10 +58,10 @@ typedef PPEnvelopeObject PPEnvelopeClass;
 #define DATAKEY @"Data"
 
 static NSDictionary *sampleToDictionary(sData *sampObj) NS_RETURNS_RETAINED;
+static sData *dictionaryToSample(NSDictionary *sampleDict);
 
 
 #if !__i386__
-
 static PPSampleObject *getSampleFromDictionary(NSDictionary *sampleDict) NS_RETURNS_RETAINED;
 static NSDictionary *EncodeSampleObject(PPSampleObject *sampObj);
 static NSArray *EncodeSamplesObjects(PPInstrumentObject *ourData);
@@ -318,6 +318,68 @@ InstrData *MADDataToInstrument(NSData *ourData, sData ***sampleData)
 {
 	InstrData *toRet = calloc(sizeof(InstrData), 1);
 	*sampleData = calloc(sizeof(sData*), MAXSAMPLE);
+	 NSKeyedUnarchiver *ourUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:ourData];
+	toRet->MIDI = [ourUnarchiver decodeInt32ForKey:PPMIDI];
+	toRet->MIDIType = [ourUnarchiver decodeInt32ForKey:PPMIDIType];
+	NSUInteger whatLen = 0;
+	const uint8_t *whatData = [ourUnarchiver decodeBytesForKey:PPWhat returnedLength:&whatLen];
+	NSCAssert(whatLen == 96, @"How can \"what\" not be 96?");
+	NSString *aNam = [ourUnarchiver decodeObjectForKey:PPName];
+	if (aNam && [aNam lengthOfBytesUsingEncoding:NSMacOSRomanStringEncoding] != 0) {
+		strlcpy(toRet->name, [aNam cStringUsingEncoding:NSMacOSRomanStringEncoding], sizeof(toRet->name));
+	}
+	
+	memcpy(toRet->what, whatData, 96);
+	
+	NSArray *volEnvArray = [ourUnarchiver decodeObjectForKey:PPVolEnv];
+	NSArray *panEnvArray = [ourUnarchiver decodeObjectForKey:PPPannEnv];
+	NSArray *pitchEnvArray = [ourUnarchiver decodeObjectForKey:PPPitchEnv];
+	
+	toRet->volType = [ourUnarchiver decodeInt32ForKey:PPVolType];
+	
+	for (int i = 0; i < 12; i++) {
+		PPEnvelopeObject *aVolEnv = volEnvArray[i];
+		PPEnvelopeObject *aPannEnv = panEnvArray[i];
+		PPEnvelopeObject *aPitchEnv = pitchEnvArray[i];
+	 
+		toRet->pannEnv[i] = aPannEnv.envelopeRec;
+		toRet->volEnv[i] = aVolEnv.envelopeRec;
+		toRet->pitchEnv[i] = aPitchEnv.envelopeRec;
+		RELEASEOBJ(aVolEnv); RELEASEOBJ(aPannEnv); RELEASEOBJ(aPitchEnv);
+	}
+
+	toRet->volType = [ourUnarchiver decodeInt32ForKey:PPVolType];
+	toRet->volSize = [ourUnarchiver decodeInt32ForKey:PPVolSize];
+	toRet->volSus = [ourUnarchiver decodeInt32ForKey:PPVolSus];
+	toRet->volBeg = [ourUnarchiver decodeInt32ForKey:PPVolBeg];
+	toRet->volEnd = [ourUnarchiver decodeInt32ForKey:PPVolEnd];
+	
+	toRet->pannSus = [ourUnarchiver decodeInt32ForKey:PPPanSus];
+	toRet->pannBeg = [ourUnarchiver decodeInt32ForKey:PPPanBeg];
+	toRet->pannEnd = [ourUnarchiver decodeInt32ForKey:PPPitchEnv];
+	
+	toRet->pitchSus = [ourUnarchiver decodeInt32ForKey:PPPitchSus];
+	toRet->pitchBeg = [ourUnarchiver decodeInt32ForKey:PPPitchBeg];
+	toRet->pitchEnd = [ourUnarchiver decodeInt32ForKey:PPPitchEnd];
+	
+	toRet->pannType = [ourUnarchiver decodeInt32ForKey:PPPannType];
+	
+	toRet->vibRate = [ourUnarchiver decodeInt32ForKey:PPVibRate];
+	toRet->vibDepth = [ourUnarchiver decodeInt32ForKey:PPVibDepth];
+	
+	toRet->pannSize = [ourUnarchiver decodeInt32ForKey:PPPannSize];
+	toRet->pitchSize = [ourUnarchiver decodeInt32ForKey:PPPitchSize];
+
+	NSArray *ourSamps = [ourUnarchiver decodeObjectForKey:PPSamples];
+	
+	for (NSInteger i = 0; i < ourSamps.count; i++) {
+		(*sampleData)[i] = dictionaryToSample(ourSamps[i]);
+	}
+	
+	toRet->numSamples = ourSamps.count;
+	toRet->firstSample = 0;
+	
+	RELEASEOBJ(ourUnarchiver);
 	return toRet;
 }
 
@@ -333,7 +395,7 @@ NSDictionary *sampleToDictionary(sData *sampObj)
 	toRet[RELATIVENOTEKEY] = @(sampObj->relNote);
 	toRet[NAMEKEY] = [NSString stringWithCString:sampObj->name encoding:NSMacOSRomanStringEncoding];
 	toRet[STEREOKEY] = @(sampObj->stereo);
-	toRet[DATAKEY] = [NSData dataWithBytes:sampObj->data length:sampObj->size];
+	toRet[DATAKEY] = sampObj->size != 0 ? [NSData dataWithBytes:sampObj->data length:sampObj->size]: [NSData data];
 
 	return toRet;
 }
@@ -355,27 +417,35 @@ NSData *MADSampleToData(sData *sampObj)
 	return [AUTORELEASEOBJ(ourEncData) copy];
 }
 
-sData *MADDataToSample(NSData *ourData)
+sData *dictionaryToSample(NSDictionary *sampleDict)
 {
 	sData *toRet = calloc(sizeof(sData), 1);
+	strlcpy(toRet->name, [sampleDict[NAMEKEY] cStringUsingEncoding:NSMacOSRomanStringEncoding], sizeof(toRet->name));
+	NSData *aData = sampleDict[DATAKEY];
+	if (aData && [aData length] != 0) {
+		toRet->size = (int)aData.length;
+		toRet->data = malloc(toRet->size);
+		memcpy(toRet->data, aData.bytes, toRet->size);
+	}
+	toRet->loopBeg = [(NSNumber*)sampleDict[LOOPBEGINKEY] intValue];
+	toRet->loopSize = [(NSNumber*)sampleDict[LOOPSIZEKEY] intValue];
+	toRet->loopType = [(NSNumber*)sampleDict[LOOPTYPEKEY] unsignedCharValue];
+	toRet->vol = [(NSNumber*)sampleDict[VOLUMEKEY] unsignedCharValue];
+	toRet->c2spd = [(NSNumber*)sampleDict[C2SPDKEY] unsignedShortValue];
+	toRet->relNote = [(NSNumber*)sampleDict[RELATIVENOTEKEY] charValue];
+	toRet->stereo = [(NSNumber*)sampleDict[STEREOKEY] boolValue];
+	return toRet;
+}
+
+sData *MADDataToSample(NSData *ourData)
+{
+	sData *toRet = NULL;
 	@autoreleasepool {
 		NSKeyedUnarchiver *ourUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:ourData];
 		NSDictionary *sampleDict = [ourUnarchiver decodeObjectForKey:PPSamples];
-		strlcpy(toRet->name, [sampleDict[NAMEKEY] cStringUsingEncoding:NSMacOSRomanStringEncoding], sizeof(toRet->name));
-		NSData *aData = sampleDict[DATAKEY];
-		if (aData && [aData length] != 0) {
-			toRet->size = (int)aData.length;
-			toRet->data = malloc(toRet->size);
-			memcpy(toRet->data, aData.bytes, toRet->size);
-		}
-		toRet->loopBeg = [(NSNumber*)sampleDict[LOOPBEGINKEY] intValue];
-		toRet->loopSize = [(NSNumber*)sampleDict[LOOPSIZEKEY] intValue];
-		toRet->loopType = [(NSNumber*)sampleDict[LOOPTYPEKEY] unsignedCharValue];
-		toRet->vol = [(NSNumber*)sampleDict[VOLUMEKEY] unsignedCharValue];
-		toRet->c2spd = [(NSNumber*)sampleDict[C2SPDKEY] unsignedShortValue];
-		toRet->relNote = [(NSNumber*)sampleDict[RELATIVENOTEKEY] charValue];
-		toRet->stereo = [(NSNumber*)sampleDict[STEREOKEY] boolValue];
 
+		toRet = dictionaryToSample(sampleDict);
+		
 		RELEASEOBJ(ourUnarchiver);
 	}
 	return toRet;

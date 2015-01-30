@@ -327,6 +327,8 @@
 		55680A47190497E400F7616D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A46190497E400F7616D /* CoreGraphics.framework */; };
 		55680A4A190497FC00F7616D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A48190497FB00F7616D /* CoreFoundation.framework */; };
 		55680A4B190497FC00F7616D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A49190497FC00F7616D /* Foundation.framework */; };
+		556904201A7C27290073D7E9 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		556904261A7C27340073D7E9 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */; };
 		556BC17219CF477700508F49 /* PPEnvelopeObject32.m in Sources */ = {isa = PBXBuildFile; fileRef = 556BC17119CF460A00508F49 /* PPEnvelopeObject32.m */; };
 		556BC17719CF47FC00508F49 /* PPEnvelopeObject32.m in Sources */ = {isa = PBXBuildFile; fileRef = 556BC17119CF460A00508F49 /* PPEnvelopeObject32.m */; };
 		556BC17819CF47FC00508F49 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 559170A719C26E1D00998D7F /* main.m */; };
@@ -2889,6 +2891,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				556904261A7C27340073D7E9 /* PlayerPROCore.framework in Frameworks */,
 				555272511A00010E008B8616 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3277,6 +3280,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				556904201A7C27290073D7E9 /* PlayerPROCore.framework in Frameworks */,
 				5535079F19BBE8B300B9E815 /* PlayerPROKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4335,6 +4339,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		556904271A7C32370073D7E9 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5573A3EF10B5151700FF8B50 /* Foundation.framework */,
+				55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */,
+				551292DB163DD68500C2C639 /* AppKit.framework */,
+				551292DC163DD68500C2C639 /* CoreData.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
 		557191D318A4103800F6DAD4 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -4362,6 +4377,9 @@
 		5573A1321656FD1700A5AECA /* iOS Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				55413C4D1992AFFF001414D0 /* Foundation.framework */,
+				55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */,
+				55F1BD831975C27000AD2C03 /* AudioToolbox.framework */,
 				55680A48190497FB00F7616D /* CoreFoundation.framework */,
 				55680A49190497FC00F7616D /* Foundation.framework */,
 				55680A46190497E400F7616D /* CoreGraphics.framework */,
@@ -4369,6 +4387,7 @@
 				55085D861836EE7B004A152F /* AudioToolbox.framework */,
 				55085D871836EE7B004A152F /* AudioUnit.framework */,
 				55085D841836EE0F004A152F /* CoreAudio.framework */,
+				555776C417EBF8FF0019D008 /* XCTest.framework */,
 			);
 			name = "iOS Frameworks";
 			sourceTree = "<group>";
@@ -4884,27 +4903,20 @@
 		88E0C4950C2F21E500D6C081 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5573A3ED10B5151700FF8B50 /* Cocoa.framework */,
 				55ABE82B1A081546006B6AF9 /* CoreGraphics.framework */,
-				55413C4D1992AFFF001414D0 /* Foundation.framework */,
-				55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */,
-				55F1BD831975C27000AD2C03 /* AudioToolbox.framework */,
-				5573A1321656FD1700A5AECA /* iOS Frameworks */,
 				5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */,
 				552F12E116AE08AF00394143 /* AVFoundation.framework */,
 				555C125016378B3500735225 /* AudioUnit.framework */,
 				55EE8EBC100404EB00E75E63 /* CoreAudio.framework */,
-				55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */,
 				55EE8EC0100404EB00E75E63 /* QuickTime.framework */,
 				88E0C4960C2F21E500D6C081 /* Carbon.framework */,
-				5573A3ED10B5151700FF8B50 /* Cocoa.framework */,
-				5573A3EF10B5151700FF8B50 /* Foundation.framework */,
 				55ED547310D5F9CD00824C61 /* CoreMIDI.framework */,
 				559C4188183EB4AB004A073C /* QuickLook.framework */,
-				555776C417EBF8FF0019D008 /* XCTest.framework */,
 				55EE8EBF100404EB00E75E63 /* CoreServices.framework */,
 				55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */,
-				551292DB163DD68500C2C639 /* AppKit.framework */,
-				551292DC163DD68500C2C639 /* CoreData.framework */,
+				556904271A7C32370073D7E9 /* Other Frameworks */,
+				5573A1321656FD1700A5AECA /* iOS Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
