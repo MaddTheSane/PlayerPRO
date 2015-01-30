@@ -63,6 +63,7 @@
 	return self;
 }
 
+#pragma mark - NSCoding
 + (BOOL)supportsSecureCoding
 {
 	return YES;

@@ -42,6 +42,9 @@ typedef PPEnvelopeObject PPEnvelopeClass;
 #define PPNotes @"PlayerPROKit Sample Notes"
 #define PPSamples @"PlayerPROKit Samples"
 #define PPWhat @"PlayerPROKit what"
+#define PPVolEnv @"PlayerPROKit Instrument Volume Envelope"
+#define PPPannEnv @"PlayerPROKit Instrument Panning Envelope"
+#define PPPitchEnv @"PlayerPROKit Instrument Pitch Envelope"
 
 #define LOOPBEGINKEY @"Loop Begin"
 #define LOOPSIZEKEY @"Loop Size"
@@ -54,7 +57,12 @@ typedef PPEnvelopeObject PPEnvelopeClass;
 #define STEREOKEY @"Stereo"
 #define DATAKEY @"Data"
 
+static NSDictionary *sampleToDictionary(sData *sampObj) NS_RETURNS_RETAINED;
+
+
 #if !__i386__
+
+static PPSampleObject *getSampleFromDictionary(NSDictionary *sampleDict) NS_RETURNS_RETAINED;
 
 static NSDictionary *EncodeSampleObject(PPSampleObject *sampObj)
 {
@@ -109,11 +117,13 @@ NSData *PPInstrumentToData(PPInstrumentObject *ourData)
 	[ourArchiver encodeInt32:ourData.volumeBegin forKey:PPVolBeg];
 	[ourArchiver encodeInt32:ourData.volumeEnd forKey:PPVolEnd];
 
+	[ourArchiver encodeObject:ourData.volumeEnvelope forKey:PPVolEnv];
+	[ourArchiver encodeObject:ourData.panningEnvelope forKey:PPPannEnv];
+	[ourArchiver encodeObject:ourData.pitchEnvelope forKey:PPPitchEnv];
+	
 	[ourArchiver finishEncoding];
 	return ourEncData;
 }
-
-static PPSampleObject *getSampleFromDictionary(NSDictionary *sampleDict) NS_RETURNS_RETAINED;
 
 PPSampleObject *getSampleFromDictionary(NSDictionary *sampleDict)
 {
@@ -187,16 +197,54 @@ PPInstrumentObject *PPDataToInstrument(NSData *ourData)
 
 NSData *MADInstrumentToData(InstrData* insData, sData ** sampleData)
 {
-	return nil;
+	NSMutableData *ourEncData = nil;
+	@autoreleasepool {
+		ourEncData = [[NSMutableData alloc] init];
+		NSKeyedArchiver *ourArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:ourEncData];
+		NSMutableArray *sampArray = [NSMutableArray array];
+		for (int i = 0; i < insData->numSamples; i++) {
+			NSDictionary *sampDict = sampleToDictionary(sampleData[i]);
+			[sampArray addObject:sampDict];
+			RELEASEOBJ(sampDict);
+		}
+		[ourArchiver encodeObject:sampArray forKey:PPSamples];
+		[ourArchiver encodeInt32:insData->volType forKey:PPVolType];
+		[ourArchiver encodeBytes:insData->what length:96 forKey:PPWhat];
+		[ourArchiver encodeInt32:insData->MIDI forKey:PPMIDI];
+		[ourArchiver encodeInt32:insData->MIDIType forKey:PPMIDIType];
+		[ourArchiver encodeInt32:insData->volSize forKey:PPVolSize];
+		[ourArchiver encodeInt32:insData->volSus forKey:PPVolSus];
+		[ourArchiver encodeInt32:insData->volBeg forKey:PPVolBeg];
+		[ourArchiver encodeInt32:insData->volEnd forKey:PPVolEnd];
+		[ourArchiver encodeObject:[NSString stringWithCString:insData->name encoding:NSMacOSRomanStringEncoding] forKey:PPName];
+		NSMutableArray *volumeEnvelope = [NSMutableArray array];
+		NSMutableArray *panningEnvelope = [NSMutableArray array];
+		NSMutableArray *pitchEnvelope = [NSMutableArray array];
+		for (int i = 0; i < 12; i++) {
+			PPEnvelopeClass *aVolEnv = [[PPEnvelopeClass alloc] initWithEnvRec:insData->volEnv[i]];
+			PPEnvelopeClass *aPannEnv = [[PPEnvelopeClass alloc] initWithEnvRec:insData->pannEnv[i]];
+			PPEnvelopeClass *aPitchEnv = [[PPEnvelopeClass alloc] initWithEnvRec:insData->pitchEnv[i]];
+			[volumeEnvelope addObject:aVolEnv];
+			[panningEnvelope addObject:aPannEnv];
+			[pitchEnvelope addObject:aPitchEnv];
+			RELEASEOBJ(aVolEnv); RELEASEOBJ(aPannEnv); RELEASEOBJ(aPitchEnv);
+		}
+		[ourArchiver encodeObject:volumeEnvelope forKey:PPVolEnv];
+		[ourArchiver encodeObject:panningEnvelope forKey:PPPannEnv];
+		[ourArchiver encodeObject:pitchEnvelope forKey:PPPitchEnv];
+		
+		[ourArchiver finishEncoding];
+		RELEASEOBJ(ourArchiver);
+	}
+	return [AUTORELEASEOBJ(ourEncData) copy];
 }
 
+//TODO: implement
 InstrData *MADDataToInstrument(NSData *ourData, sData ***sampleData)
 {
 	*sampleData = NULL;
 	return NULL;
 }
-
-static NSDictionary *sampleToDictionary(sData *sampObj) NS_RETURNS_RETAINED;
 
 NSDictionary *sampleToDictionary(sData *sampObj)
 {

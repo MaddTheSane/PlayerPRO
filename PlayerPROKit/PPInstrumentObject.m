@@ -21,7 +21,7 @@
 #define PPEnvPos @"PlayerPROKit EnvRec Position"
 #define PPEnvVal @"PlayerPROKit EnvRec Value"
 
-#pragma mark PlayerPROKit Sample NSCoding keys
+#pragma mark PlayerPROKit Instrument NSCoding keys
 #define PPName @"PlayerPROKit Sample Name"
 #define PPLocation @"PlayerPROKit Sample Location"
 #define PPSampCount @"PlayerPROKit Sample Count"
@@ -45,6 +45,9 @@
 #define PPPannType @"PlayerPROKit Sample Panning Type"
 #define PPVolFade @"PlayerPROKit Sample Volume Fade"
 #define PPNotes @"PlayerPROKit Sample Notes"
+#define PPVolEnv @"PlayerPROKit Instrument Volume Envelope"
+#define PPPannEnv @"PlayerPROKit Instrument Panning Envelope"
+#define PPPitchEnv @"PlayerPROKit Instrument Pitch Envelope"
 
 #pragma mark PlayerPROKit KVO/KVC keys
 #define kPPVolumeType @"volumeType"
@@ -1035,6 +1038,10 @@ affectVolType(Note)
 	
 	[aCoder encodeBytes:&theInstrument.vibDepth length:1 forKey:PPVibDepth];
 	[aCoder encodeBytes:&theInstrument.vibRate length:1 forKey:PPVibRate];
+	
+	[aCoder encodeObject:self.volumeEnvelope forKey:PPVolEnv];
+	[aCoder encodeObject:self.panningEnvelope forKey:PPPannEnv];
+	[aCoder encodeObject:self.pitchEnvelope forKey:PPPitchEnv];
 }
 
 @end
