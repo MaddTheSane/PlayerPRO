@@ -14,6 +14,10 @@
 #define NS_DESIGNATED_INITIALIZER
 #endif
 
+/**
+ *	@class PPSampleObject
+ *	@seealso sData
+ */
 @interface PPSampleObject : NSObject <PPObject>
 @property (readwrite) NSInteger sampleIndex;
 @property (readwrite) NSInteger instrumentIndex;
@@ -24,20 +28,38 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 - (sData *)createSData;
 
+/**
+ *	Sample length
+ *	@deprecated get the length by calling <code>data.length</code>.
+ */
 - (int)dataSize DEPRECATED_ATTRIBUTE;
+
+/// The beginning of the loop
 @property int loopBegin;
+/// The length of the loop
 @property int loopSize;
+/// The base volume
 @property MADByte volume;
+/// The sound sample's sample rate
 @property unsigned short c2spd;
+/// The loop type, either classic or ping-pong
 @property MADLoopType loopType;
+/// The sound sample's amplitude. Currently limited to 8 or 16 bits
 @property MADByte amplitude;
+/// The sound sample's amplitude. Currently limited to 8 or 16 bits
 @property char relativeNote;
+/// Sample name
 @property (copy) NSString *name;
+/// Is the sample stereo?
 @property (getter = isStereo) BOOL stereo;
+/// The data of the sample's sound, wrapped in an \c NSData class object
 @property (copy) NSData *data;
+/// The range of the loop
 @property NSRange loop;
 
 
+/// Used to tell if a sample is blank
+/// @discussion A sample is blank if the name is blank (has a length of zero) and there's no data.
 @property (readonly, getter=isBlankSample) BOOL blankSample;
 
 @end

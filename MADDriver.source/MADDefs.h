@@ -156,57 +156,41 @@
 
 /*!
  *	@enum		MADErr
- *	@abstract	error values returned by most PlayerPRO functions
- *	@constant	MADNoErr
- *				No error was encountered
- *	@constant	MADNeedMemory
- *				There isn't enough memory to execute the command.
- *	@constant	MADReadingErr
- *				An error occured when trying to reading a file
- *	@constant	MADIncompatibleFile
- *				The file isn't compatible with PlayerPROCore
- *	@constant	MADLibraryNotInitialized
- *				A library function was called without an initialized library
- *	@constant	MADParametersErr
- *				Bad parapaters were sent to a function.
- *	@constant	MADUnknownErr
- *				An unknown error occured
- *	@constant	MADSoundManagerErr
- *				An error occured when trying to initialize the sound system
- *	@constant	MADOrderNotImplemented
- *				the plug-in doesn't implement the order specified.
- *	@constant	MADFileNotSupportedByThisPlug
- *				The file that a plug-in attempted to load was incompatible
- *				with said plug-in
- *	@constant	MADCannotFindPlug
- *				PlayerPRO couldn't find the plug-in specified.
- *	@constant	MADMusicHasNoDriver
- *				Attempted to use a music function that wasn't attached to a driver.
- *	@constant	MADDriverHasNoMusic
- *				Attempted to use a driver function that requires the use of a loaded music file
- *	@constant	MADSoundSystemUnavailable
- *				The sound system requested isn't available for the current architecture
- *	@constant	MADWritingErr
- *				An error occured when trying to write to a file
- *	@constant	MADUserCanceledErr
- *				The user cancelled an action. This shouldn't be seen by the user.
+ *	@abstract	Error values returned by most PlayerPRO functions
  */
 typedef MADENUM(short, MADErr) {
+	/// No error was encountered
 	MADNoErr						= 0,
+	/// There isn't enough memory to execute the command.
 	MADNeedMemory 					= -1,
+	/// An error occured when trying to reading a file.
 	MADReadingErr					= -2,
+	/// The file isn't compatible with PlayerPROCore.
 	MADIncompatibleFile				= -3,
+	/// A library function was called without an initialized library.
 	MADLibraryNotInitialized		= -4,
+	/// Bad paramaters were sent to a function.
 	MADParametersErr				= -5,
+	/// An unknown error occured.
 	MADUnknownErr					= -6,
+	/// An error occured when trying to initialize the sound system.
 	MADSoundManagerErr				= -7,
+	/// The plug-in doesn't implement the order specified.
 	MADOrderNotImplemented			= -8,
+	/// The file that a plug-in attempted to load was incompatible
+	/// with said plug-in
 	MADFileNotSupportedByThisPlug	= -9,
+	/// PlayerPRO couldn't find the plug-in specified.
 	MADCannotFindPlug				= -10,
+	/// Attempted to use a music function that wasn't attached to a driver.
 	MADMusicHasNoDriver				= -11,
+	/// Attempted to use a driver function that requires the use of a loaded music file.
 	MADDriverHasNoMusic				= -12,
+	/// The sound system requested isn't available for the current architecture.
 	MADSoundSystemUnavailable		= -13,
+	/// An error occured when trying to write to a file
 	MADWritingErr					= -14,
+	/// The user cancelled an action. This shouldn't be seen by the user.
 	MADUserCanceledErr				= -15
 };
 

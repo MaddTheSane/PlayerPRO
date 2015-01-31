@@ -38,59 +38,48 @@
 //#define MAXTRACKMULTI		99
 #define MADID				'MADK'
 
-// ***	
-// ***	PATTERN DESCRIPTION
-// ***	
+#pragma mark PATTERN DESCRIPTION
 
 /*!
  *	\struct		Cmd
  *	\abstract	command function used in a pattern
- *	\var		ins
- *				Instrument number \c 0x00 is no instrument command
- *	\var		note
- *				Note, see table. \c 0xFF is no note command
- *	\var		cmd
- *				effect command
- *	\var		arg
- *				Effect argument
- *	\var		vol
- *				Volume of the effect. \c 0xFF is no volume command
- *	\var		unused
- *				Unused, kept in for future use and/or padding.
  */
 typedef struct Cmd {
+	/// Instrument number. \c 0x00 is no instrument command
 	MADByte	ins;
+	/// Note, see table. \c 0xFF is no note command
 	MADByte note;
+	/// Effect command
 	MADByte cmd;
+	/// Effect argument
 	MADByte arg;
+	/// Volume of the effect. \c 0xFF is no volume command
 	MADByte	vol;
+	/// Unused, kept in for future use and/or padding.
 	MADByte	unused;
 } Cmd;
 
 typedef MADENUM(MADFourChar, PatternCompression) {
+	/// No compression
 	PatternCompressionNone = 'NONE',
+	/// MAD1 compression
 	PatternCompressionMAD1 = 'MAD1'
 };
 
 /*!
  *	@struct		PatHeader
  *	@abstract	Pattern header
- *	@var		size
- *				Length of pattern. Standard is 64
- *	@var		compMode
- *				Compression mode. No compression is \c'NONE'
- *	@var		name
- *				The name of the pattern
- *	@var		patBytes
- *				Pattern size in bytes
- *	@var		unused
- *				Unused, kept in for future use.
  */
 typedef struct PatHeader {
+	/// Length of pattern. Standard is \c 64
 	int					size;
+	/// Compression mode. No compression is \c'NONE'
 	PatternCompression	compMode;
+	/// The name of the pattern
 	char				name[32];
+	/// Pattern size in bytes
 	int					patBytes;
+	/// Unused, kept in for future use.
 	int					unused2;
 } PatHeader;
 
@@ -111,62 +100,48 @@ typedef struct IntPatData {
 	Cmd			*Cmds;
 } IntPatData;
 
-// ***
-// ***	INSTRUMENT DESCRIPTION
-// ***
+#pragma mark INSTRUMENT DESCRIPTION
 
 /*!
  *	@enum		MADLoopType
- *	@constant	MADLoopTypeClassic
- *				Classic looping, starting over from the beginning after reaching the end.
- *	@constant	MADLoopTypePingPong
- *				Ping-pong looping, changing the playback direction of the sound when it reaches the beginning or end.
- *
  */
 typedef MADENUM(MADByte, MADLoopType) {
+	/// Classic looping, starting over from the beginning after reaching the end.
 	MADLoopTypeClassic	= 0,
+	/// Ping-pong looping, changing the playback direction of the sound when it reaches the beginning or end.
 	MADLoopTypePingPong	= 1
 };
 
 /*!
  *	@struct		sData
  *	@abstract	Sample Data
- *	@var		size
- *				Sample Length
- *	@var		loopBeg
- *				The beginning of the loop
- *	@var		loopSize
- *				The length of the loop
- *	@var		vol
- *				The base volume
- *	@var		c2spd
- *				the sound sample's sample rate
- *	@var		loopType
- *				The loop type, either classic or ping-pong
- *	@var		amp
- *				the sound sample's amplitude. Currently limited to 8 or 16 bits
- *	@var		relNote
- *				Relative note
- *	@var		name
- *				Sample name
- *	@var		stereo
- *				Is the sample stereo?
- *	@var		data
- *				the data that represents the actual sound data. See <code>sData32</code>
- *				for more information.
  *	@seealso	sData32
  */
 typedef struct sData {
+	/// Sample Length
 	int 			size;
+	/// The beginning of the loop
 	int				loopBeg;
+	/// The length of the loop
 	int				loopSize;
+	/// The base volume
 	MADByte			vol;
+	/// The sound sample's sample rate
 	unsigned short	c2spd;
+	/// The loop type, either classic or ping-pong
 	MADLoopType		loopType;
+	/// The sound sample's amplitude. Currently limited to 8 or 16 bits
 	MADByte			amp;
+	/// Relative note
 	char			relNote;
+	/// Sample name
 	char 			name[32];
+	/// Is the sample stereo?
 	bool			stereo;
+	/** 
+	 *	The pointer to the sound data.
+	 *	@discussion See \c sData32 for more information.
+	 */
 	char			*data;
 } sData;
 
@@ -174,12 +149,10 @@ typedef struct sData {
  *	@struct		sData32
  *	@abstract	64-bit-safe sample data
  *				Used for file I/O
- *	@discussion	Only use this struct for reading/writing an <code>sData</code>
+ *	@discussion	Only use this struct for reading/writing an \c sData
  *				struct from a saved file.
- *				To read a sample data structure's data, it is directly after the <code>sData32</code> struct,
+ *				To read a sample data structure's data, it is directly after the \c sData32 struct,
  *				with the length of <code>size</code>.
- *	@var		data
- *				an unsigned 32-bit integer to keep reading/writing sample datas safe.
  *	@seealso	sData
  */
 typedef struct sData32 {
@@ -193,19 +166,18 @@ typedef struct sData32 {
 	char			relNote;
 	char 			name[32];
 	bool			stereo;
+	/// an unsigned 32-bit integer to keep reading/writing sample datas safe.
 	uint32_t		data;
 } sData32;
 
 /*!
  *	@struct		EnvRec
  *	@abstract	Volume Envelope
- *	@var		pos
- *				position
- *	@var		val
- *				value
  */
 typedef struct EnvRec {
+	/// position
 	short 	pos;
+	/// value
 	short	val;
 } EnvRec;
 
@@ -216,54 +188,78 @@ typedef MADOPTIONS(MADByte, EFType) {
 	EFTypeNote		= 1 << 3
 };
 
-typedef struct InstrData		// INSTRUMENT
+/// INSTRUMENT
+typedef struct InstrData
 {
-	char 	name[32];			// instrument name
-	MADByte type;				// Instrument type = 0
-	MADByte	no;					// Instrument number
+	/// instrument name
+	char 	name[32];
+	/// Instrument type = 0
+	MADByte type;
+	/// Instrument number
+	MADByte	no;					
 	
-	short	firstSample;		// First sample ID in sample list
-	short	numSamples;			// Number of samples in instrument
+	/// First sample ID in sample list
+	short	firstSample;
+	/// Number of samples in instrument
+	short	numSamples;
 	
-	short	MIDI;				// MIDI Channel Value
-
-	short	MIDIType;			// 0 Sound output only, 1 MIDI output only, 2 both
+	// MIDI Channel Value
+	short	MIDI;
+	// 0 Sound output only, 1 MIDI output only, 2 both
+	short	MIDIType;
 	
 	/**/
 	
-	MADByte	what[96];			// Sample number for all notes
-	EnvRec 	volEnv[12];			// Points for volume envelope
-	EnvRec	pannEnv[12];		// Points for panning envelope
-	EnvRec	pitchEnv[12];		// Points for panning envelope
+	/// Sample number for all notes
+	MADByte	what[96];
+	/// Points for volume envelope
+	EnvRec 	volEnv[12];
+	/// Points for panning envelope
+	EnvRec	pannEnv[12];
+	/// Points for panning envelope
+	EnvRec	pitchEnv[12];		
 
-	MADByte	volSize;			// Number of volume points
-	MADByte	pannSize;			// Number of panning points
-	MADByte	pitchSize;			// Number of panning points
+	/// Number of volume points
+	MADByte	volSize;
+	/// Number of panning points
+	MADByte	pannSize;
+	/// Number of panning points
+	MADByte	pitchSize;
 	
-	MADByte	volSus;				// Volume sustain point
-	MADByte	volBeg;				// Volume loop start point
-	MADByte	volEnd;				// Volume loop end point
+	/// Volume sustain point
+	MADByte	volSus;
+	/// Volume loop start point
+	MADByte	volBeg;
+	/// Volume loop end point
+	MADByte	volEnd;
 	
-	MADByte	pannSus;			// Panning sustain point
-	MADByte	pannBeg;			// Panning loop start point
-	MADByte	pannEnd;			// Panning loop end point
+	/// Panning sustain point
+	MADByte	pannSus;
+	/// Panning loop start point
+	MADByte	pannBeg;
+	/// Panning loop end point
+	MADByte	pannEnd;
 	
-	MADByte	pitchSus;			// Pitch sustain point
-	MADByte	pitchBeg;			// Pitch loop start point
-	MADByte	pitchEnd;			// Pitch loop end point
+	/// Pitch sustain point
+	MADByte	pitchSus;
+	/// Pitch loop start point
+	MADByte	pitchBeg;
+	/// Pitch loop end point
+	MADByte	pitchEnd;
 	
-	EFType	volType;			// Volume type: bit 0: On; 1: Sustain; 2: Loop
-	EFType	pannType;			// Panning type: bit 0: On; 1: Sustain; 2: Loop
+	/// Volume type
+	EFType	volType;
+	/// Panning type
+	EFType	pannType;
 	
-	unsigned short	volFade;	// Volume fadeout
+	/// Volume fadeout
+	unsigned short	volFade;
 	
 	MADByte	vibDepth;
 	MADByte	vibRate;
 } InstrData;
 
-// ***
-// ***	MAD FILE HEADER DESCRIPTION
-// ***
+#pragma mark MAD FILE HEADER DESCRIPTION
 
 #define INFOSSIZE 239
 
@@ -276,93 +272,65 @@ typedef struct FXBus {
 /*!
  *	@struct		MADSpec
  *	@abstract	Basic MAD structure
- *	@var		MAD
- *					Mad identification
- *	@var		name
- *					Music's name
- *	@var		infos
- *					Informations & Author name of the music
- *	@var		generalPan
- *					General panning
- *	@var		MultiChanNo
- *					Number of channels for multichannel
- *	@var		MultiChan
- *					MultiChannel per tracks?
- *	@var		EPitch
- *					New Pitch
- *	@var		ESpeed
- *					New Speed
- *	@var		XMLinear
- *					Linear pitch table?
- *	@var		MODMode
- *					Limit pitch to MOD pitch table
- *	@var		showCopyright
- *					Show \c infos at startup? true or false
- *	@var		generalPitch
- *					General Pitch
- *	@var		generalSpeed
- *					General Speed
- *	@var		generalVol
- *					Software general volume
- *	@var		numPat
- *					Patterns number
- *	@var		numChn
- *					Channels number
- *	@var		numPointers
- *					Partition length
- *	@var		numInstru
- *					Instruments number
- *	@var		numSamples
- *					Samples number
- *	@var		oPointers
- *					Partition : Patterns ID List
- *	@var		speed
- *					Default speed
- *	@var		tempo
- *					Default tempo
- *	@var		chanPan
- *					Channel settings, from 0 to 256
- *	@var		chanVol
- *					Channel Volume, from 0 to 64
- *	@var		globalEffect
- *					Global Effects IDs
- *	@var		globalFXActive
- *					Global Effects active?
- *	@var		chanEffect
- *					Channel Effect IDs
- *	@var		chanBus
- *					Channel buses
  */
 typedef struct MADSpec {
+	/// Mad identification
 	MADFourChar	MAD;
+	/// Music's name
 	char 		name[32];
+	/// Informations & Author name of the music
 	char		infos[INFOSSIZE];
+	/// General panning
 	MADByte		generalPan;
+	/// Number of channels for multichannel
 	MADByte		MultiChanNo;
+	/// MultiChannel per tracks?
 	MADByte		MultiChan;
+	/// New Pitch
 	int			EPitch;
+	/// New Speed
 	int			ESpeed;
+	/// Linear pitch table?
 	bool		XMLinear;
+	/// Limit pitch to MOD pitch table
 	bool		MODMode;
+	/// Show \c infos at startup? true or false
 	bool		showCopyright;
+	/// General pitch
 	MADByte		generalPitch;
+	/// General speed
 	MADByte		generalSpeed;
+	/// General vlume
 	MADByte		generalVol;
+	/// Patterns number
 	MADByte		numPat;
+	/// Channels number
 	MADByte		numChn;
+	/// Partition length
 	MADByte		numPointers;
+	/// Instruments number
 	MADByte		numInstru;
+	/// Samples number
 	MADByte		numSamples;
+	/// Partition : Patterns ID List
 	MADByte		oPointers[MAXPOINTER];
+	/// Default speed
 	short		speed;
+	/// Default tempo
 	short		tempo;
+	/// Channel settings, from 0 to 256
 	MADByte		chanPan[MAXTRACK];
+	/// Channel Volume, from 0 to 64
 	MADByte		chanVol[MAXTRACK];
 	
+	/// Global Effects IDs
 	int			globalEffect[10];
+	/// Global Effects active?
 	bool		globalFXActive;
 	
+	/// Channel Effect IDs
 	int			chanEffect[MAXTRACK][4];
+	/// Channel buses
 	FXBus		chanBus[MAXTRACK];
 } MADSpec;
 

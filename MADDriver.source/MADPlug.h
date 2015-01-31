@@ -33,20 +33,30 @@ typedef OSErr (*RPlaySoundUPP)(MADDriverRecPtr theRec, char *, long, int, int, i
 #pragma pack(push, 2)
 
 typedef struct Pcmd {
-	short	tracks;		// number of tracks in myCmd[]
-	short	length;		// number of rows in myCmd[]
-	short	trackStart;	// track ID of first track in myCmd[]
-	short	posStart;	// row ID of first row in myCmd[]
-	int		structSize;	// struct size in bytes - see Definition
+	/// Number of tracks in \c myCmd[]
+	short	tracks;
+	/// Number of rows in \c myCmd[]
+	short	length;
+	/// Track ID of first track in \c myCmd[]
+	short	trackStart;
+	/// Row ID of first row in \c myCmd[]
+	short	posStart;
+	/// Struct size in bytes - see Definition
+	int		structSize;
 	Cmd		myCmd[];
 } Pcmd;
 
 typedef struct IntPcmd {
-	short	tracks;		// number of tracks in myCmd[]
-	short	length;		// number of rows in myCmd[]
-	short	trackStart;	// track ID of first track in myCmd[]
-	short	posStart;	// row ID of first row in myCmd[]
-	int		cmdCount;	// count of Cmds in array
+	/// Number of tracks in \c myCmd[]
+	short	tracks;
+	/// Number of rows in \c myCmd[]
+	short	length;
+	/// Track ID of first track in \c myCmd[]
+	short	trackStart;
+	/// Row ID of first row in \c myCmd[]
+	short	posStart;
+	/// Count of Cmds in array
+	int		cmdCount;
 	Cmd		*myCmd;
 } IntPcmd;
 

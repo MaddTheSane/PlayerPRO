@@ -108,54 +108,87 @@ typedef MADENUM(MADByte, MADEffectID) {
 
 typedef struct MADChannel
 {
-	int		ID;					// Channel ID - 0 to MAXTRACK
-	int		TrackID;			// TrackID - 0 to MAXTRACK (Used in multiChannel mode)
+	/// Channel ID - \c 0 to \c MAXTRACK
+	int		ID;
+	/// TrackID - \c 0 to \c MAXTRACK (Used in multiChannel mode)
+	int		TrackID;
 	
-	char	*begPtr;			// Sample Data char* - Beginning of data
-	char	*maxPtr;			// Sample Data char* - End of data
-	char	*curPtr;			// Sample Data char* - Current position
-	size_t	sizePtr;			// Sample Size in bytes
+	/// Sample Data char* - Beginning of data
+	char	*begPtr;
+	/// Sample Data char* - End of data
+	char	*maxPtr;
+	/// Sample Data char* - Current position
+	char	*curPtr;
+	/// Sample Size in bytes
+	size_t	sizePtr;
 	
-	int		amp;				// Sample amplitude: 8 or 16 bits
+	/// Sample amplitude: 8 or 16 bits
+	int		amp;
 	
-	uintptr_t	loopBeg;		// Loop Beginning
-	size_t		loopSize;		// Loop Size
+	/// Loop Beginning
+	uintptr_t	loopBeg;
+	/// Loop Size
+	size_t		loopSize;
 	
-	int		ins;				// Current Instrument ID
-	int		insOld;				// Previous Instrument ID played on this MADChannel
-	int		samp;				// Current Sample ID
+	/// Current Instrument ID
+	int		ins;
+	/// Previous Instrument ID played on this Channel
+	int		insOld;
+	/// Current Sample ID
+	int		samp;
 	
-	int		fineTune;			// Finetune
+	/// Finetune
+	int		fineTune;
 	
-	int		note;				// Note
-	int		noteOld;			// Previous note played on this MADChannel
-	int		relNoteOld;			// Previous realnote
+	/// Note
+	int		note;
+	/// Previous note played on this Channel
+	int		noteOld;
+	/// Previous realnote
+	int		relNoteOld;
 	
-	int		period;				// Current period
-	int		periodOld;			// Previous period played on this MADChannel
+	/// Current period
+	int		period;
+	/// Previous period played on this Channel
+	int		periodOld;
 	
-	int		vol;				// Channel vol (0 to 64)
-	int		pann;				// Channel pan (0 to 64)
+	/// Channel volume (\c 0 to <code>64</code>)
+	int		vol;
+	/// Channel panning position (\c 0 to <code>64</code>)
+	int		pann;
 	
-	MADEffectID	cmd;			// Command
-	MADByte		arg;			// Argument of command
-	MADByte		volcmd;			// Volume Command
+	/// Command
+	MADEffectID	cmd;
+	/// Argument of command
+	MADByte		arg;
+	/// Volume Command
+	MADByte		volcmd;
 	
-	int		arp[MAX_ARP];		// Used for arpeggio command
-	int		arpindex;			// Used for arpeggio command
+	/// Used for arpeggio command
+	int		arp[MAX_ARP];
+	/// Used for arpeggio command
+	int		arpindex;
 	bool	arpUse;
 	
-	char	viboffset;			// Used for vibrato command
-	int		vibdepth;			// Used for vibrato command
-	int		vibrate;			// Used for vibrato command
-	int		vibtype;			// Used for vibrato command
+	/// Used for vibrato command
+	char	viboffset;
+	/// Used for vibrato command
+	int		vibdepth;
+	/// Used for vibrato command
+	int		vibrate;
+	/// Used for vibrato command
+	int		vibtype;
 	
-	int		slide;				// Used for slideUp and slideDown command
+	/// Used for slideUp and slideDown command
+	int		slide;
 	
-	int 	pitchgoal;			// Used for portamento command
-	int 	pitchrate;			// Used for portamento command
+	/// Used for portamento command
+	int 	pitchgoal;
+	/// Used for portamento command
+	int 	pitchrate;
 	
-	int 	volumerate;			// Used for slideVolume command
+	/// Used for slideVolume command
+	int 	volumerate;
 	
 	int		oldArg[16];
 	int		oldVibrate;
@@ -163,7 +196,8 @@ typedef struct MADChannel
 	
 	int		eventTime;
 	
-	char	*samplePtr;			// Used internaly by MADPlaySoundData
+	/// Used internaly by MADPlaySoundData
+	char	*samplePtr;
 	
 	/**/
 	
@@ -237,15 +271,23 @@ typedef struct MADChannel
 /********************						***********************/
 
 typedef struct MADMusic {
-	int			position, fullTime;
-	MADSpec		*header;					// Music Header - See 'MAD.h'
-	PatData		*partition[MAXPATTERN];		// Patterns
-	InstrData	*fid;						// Instruments
-	sData		**sample;					// Samples
-	FXSets		*sets;						// FXSettings
+	int			position;
+	int			fullTime;
+	/// Music Header - See MAD.h
+	MADSpec		*header;
+	/// Patterns
+	PatData		*partition[MAXPATTERN];
+	/// Instruments
+	InstrData	*fid;
+	/// Samples
+	sData		**sample;
+	/// FXSettings
+	FXSets		*sets;
 	MADFourChar	originalFormat;
-	MADPStr255	musicFileName;				// Pascal string
-	bool		musicUnderModification;		// Tell the driver to NOT access music data
+	/// Pascal string
+	MADPStr255	musicFileName;
+	/// Tell the driver to <b>not</b> access music data
+	bool		musicUnderModification;
 	bool		hasChanged;
 } MADMusic;
 
@@ -258,40 +300,29 @@ typedef struct MADMusic {
  *	@abstract	Driver Settings definition
  *	@seealso	MADSoundOutputBit
  *	@seealso	MADSoundDriverList
- *	@constant	CoreAudioDriver
- *				OSX ONLY Core Audio driver
- *	@constant	DirectSound95NT
- *				Only available on Windows
- *	@constant	Wave95NT
- *				Only available on Windows
- *	@constant	PortAudioDriver
- *				Can be present on multiple OSes
- *	@constant	PulseAudioDriver
- *				Mostly used by Linux/Unix
- *	@constant	ESDDriver
- *				ESound Driver. available on most UNIX Systems
- *	@constant	BeOSSoundDriver
- *				BeOS/Haiku Only
- *	@constant	MIDISoundDriver
- *				Not yet available
- *	@constant	ASIOSoundManager
- *				ASIO Sound Driver by Steinberg<br>NOT Available
- *	@constant	SoundManagerDriver
- *				Deprecated and removed
- *	@constant	NoHardwareDriver
- *				NO HARDWARE CONNECTION, will not produce any sound
  */
 typedef MADENUM(short, MADSoundOutput) {
+	/// OSX ONLY Core Audio driver
 	CoreAudioDriver = 1,
+	/// Only available on Windows
 	DirectSound95NT,
+	/// Only available on Windows
 	Wave95NT,
+	/// Can be present on multiple OSes
 	PortAudioDriver,
+	/// Mostly used by Linux/Unix
 	PulseAudioDriver,
+	/// ESound Driver. available on most UNIX Systems
 	ESDDriver,
+	/// BeOS/Haiku Only
 	BeOSSoundDriver,
+	/// Not yet available
 	MIDISoundDriver,
+	/// ASIO Sound Driver by Steinberg<br><b>Not</b> Available
 	ASIOSoundManager,
+	/// Deprecated and removed
 	SoundManagerDriver,
+	/// <b>No hardware connection</b>, will not produce any sound
 	NoHardwareDriver = SHRT_MAX
 };
 
@@ -316,20 +347,17 @@ typedef MADOPTIONS(unsigned int, MADSoundOutputBit) {
 
 /*!
  *	@enum		MADOutputChannel
- *	@abstract	The output channels to output to
- *	@constant	MonoOutPut
- *				NOT SUPPORTED anymore
- *	@constant	StereoOutPut
- *				NOT SUPPORTED anymore
- *	@constant	DeluxeStereoOutPut
- *				USE THIS ONE ONLY !!!!!!!!!!!!!!
- *	@constant	PolyPhonic
- *				Do NOT use this! Standard hardware doesn't support it!
+ *	@abstract	The number and kind of output channels
+ *				to output to.
  */
 typedef MADENUM(short, MADOutputChannel) {
+	/// <b>Not supported</b> anymore
 	MonoOutPut = 1,
+	/// <b>Not supported</b> anymore
 	StereoOutPut,
+	/// Use this one only!
 	DeluxeStereoOutPut,
+	/// Do <b>not</b> use this! Standard hardware doesn't support it!
 	PolyPhonic
 };
 
@@ -339,49 +367,36 @@ typedef MADENUM(short, MADOutputChannel) {
 #pragma pack(push, 8)
 /*!
  *	@struct	MADDriverSettings
- *	@var	numChn
- *			Active tracks from 2 to 32, automatically setup when a new music is loaded
- *	@var	outPutBits
- *			8 or 16 Bits TODO: 24 Bits
- *	@var	outPutMode
- *			Now, only \c DeluxeStereoOutPut is available!
- *	@var	driverMode
- *			The Playback driver
- *	@var	outPutRate
- *			Audio Sample Rate
- *	@var	MicroDelaySize
- *			Micro delay duration (in ms, max 1 sec = 1000 ms, min = 0 ms
- *	@var	ReverbSize
- *			Reverb delay duration (in ms, min = 25 ms, max 1 sec = 1000 ms)
- *	@var	ReverbStrength
- *			Reverb strength in % (0 <-> 70)
- *	@var	oversampling
- *			OverSampling value, 1 = normal; works on select compilers
- *	@var	TickRemover
- *			Remove volume/sample/loop ticks
- *	@var	surround
- *			Surround effect active?
- *	@var	Reverb
- *			Reverb effect active?
- *	@var	repeatMusic
- *			If music finished, repeat it or stop.
- *	@var	reserved
- *			For future use.
+ *	@abstract The driver settings
  */
 typedef struct MADDriverSettings {
+	/// Active tracks from 2 to 32, automatically setup when a new music is loaded
 	short				numChn;
+	/// 8 or 16 Bits TODO: 24 Bits
 	short				outPutBits;
+	/// Now, only \c DeluxeStereoOutPut is available!
 	MADOutputChannel	outPutMode;
+	/// The sound system used
 	MADSoundOutput		driverMode;
+	/// Audio sample rate
 	unsigned int		outPutRate;
+	/// Micro delay duration<br>(in ms, max 1 sec = 1000 ms, min = 0 ms)
 	int		MicroDelaySize;
+	/// Reverb delay duration<br> (in ms, min = 25 ms, max 1 sec = 1000 ms)
 	int		ReverbSize;
+	/// Reverb strength, in percentage (0 <-> 70)
 	int		ReverbStrength;
+	/// OverSampling value. 1 = normal; works on select compilers
 	int		oversampling;
+	/// Remove volume/sample/loop ticks
 	bool	TickRemover;
+	/// Is the surround effect active?
 	bool	surround;
+	/// is the reverb effect active?
 	bool	Reverb;
+	/// If the music is finished, either repeat it or stop.
 	bool	repeatMusic;
+	/// For future use
 	union reserved {
 		char padding[44];
 	} reserved;
@@ -456,14 +471,22 @@ typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, MADInfoRec *, MAD
 
 typedef struct PlugInfo
 {
-	OSType		mode;			// Mode support : Import +/ Export
-	UInt32		version;		// Plug-in version
-	MADPLUGFUNC	IOPlug;			// Plug CODE
-	CFStringRef	MenuName;		// Plug name
-	CFStringRef	AuthorString;	// Plug author
-	CFBundleRef	file;			// Location of plug file
-	CFArrayRef	UTItypes;		// CFStrings of supported UTIs
-	char		type[5];		// OSType of file support.
+	/// Mode support : Import +/ Export
+	OSType		mode;
+	/// Plug-in version
+	UInt32		version;
+	/// Plug CODE
+	MADPLUGFUNC	IOPlug;
+	/// Plug name
+	CFStringRef	MenuName;
+	/// Plug author
+	CFStringRef	AuthorString;
+	/// Location of plug-in
+	CFBundleRef	file;
+	/// CFStrings of supported UTIs
+	CFArrayRef	UTItypes;
+	/// OSType of file support.
+	char		type[5];
 } PlugInfo;
 #endif
 
@@ -473,45 +496,64 @@ typedef MADErr (*PLUGDLLFUNC)(MADFourChar, char *, MADMusic *, MADInfoRec *, MAD
 
 typedef struct PlugInfo
 {
-	MADFourChar	mode;				// Mode support : Import +/ Export
-	int			version;			// Plug-in version
+	/// Mode support : Import +/ Export
+	MADFourChar	mode;
+	/// Plug-in version
+	int			version;
 	HMODULE		hLibrary;
-	PLUGDLLFUNC	IOPlug;				// Plug CODE
-	char		MenuName[65];		// Plug name
-	char		AuthorString[65];	// Plug author
-	char		file[MAX_PATH * 2];	// Location of plug file
-	char		type[5];			// OSType of file support
+	/// Plug CODE
+	PLUGDLLFUNC	IOPlug;
+	/// Plug name
+	char		MenuName[65];
+	/// Plug author
+	char		AuthorString[65];
+	/// Location of plug file
+	char		file[MAX_PATH * 2];
+	/// OSType of file support
+	char		type[5];
 } PlugInfo;
 #endif
 
 #ifdef _BE_H
 typedef	MADErr (*MADPlug)(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
-typedef struct PlugInfo
-{
-	MADFourChar	mode;				// Mode support : Import +/ Export
-	int			version;			// Plug-in version
+typedef struct PlugInfo {
+	/// Mode support : Import +/ Export
+	MADFourChar	mode;
+	/// Plug-in version
+	int			version;
 	image_id	hLibrary;
-	MADPlug		IOPlug;				// Plug CODE
-	char		MenuName[65];		// Plug name
-	char		AuthorString[65];	// Plug author
-	char		file[1024];			// Location of plug file
-	char		type[5];			// OSType of file support
+	/// Plug CODE
+	MADPlug		IOPlug;
+	/// Plug name
+	char		MenuName[65];
+	/// Plug author
+	char		AuthorString[65];
+	/// Location of plug file
+	char		file[1024];
+	/// OSType of file support
+	char		type[5];
 } PlugInfo;
 #endif
 
 #if (defined(__ELF__) && !(defined (_MAC_H) || defined (_BE_H)))
 typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, MADInfoRec *, MADDriverSettings *);
-typedef struct PlugInfo
-{
-	MADFourChar	mode;				// Mode support : Import +/ Export
-	int			version;			// Plug-in version
+typedef struct PlugInfo {
+	/// Mode support : Import +/ Export
+	MADFourChar	mode;
+	/// Plug-in version
+	int			version;
 	void*		hLibrary;
-	MADPLUGFUNC	IOPlug;				// Plug CODE
-	char		MenuName[65];		// Plug name
-	char		AuthorString[65];	// Plug author
-	char		file[PATH_MAX];		// Location of plug file
-	char		type[5];			// OSType of file support
+	// Plug CODE
+	MADPLUGFUNC	IOPlug;
+	/// Plug name
+	char		MenuName[65];
+	/// Plug author
+	char		AuthorString[65];
+	/// Location of plug file
+	char		file[PATH_MAX];
+	/// OSType of file support
+	char		type[5];
 } PlugInfo;
 #endif
 
@@ -522,10 +564,13 @@ typedef struct PlugInfo
 typedef struct MADLibrary {
 	/** Plugs Import/Export variables **/
 	int			mytab[12];
-	PlugInfo	*ThePlug;	// Pointers on plugs code & infos
+	/// Pointers on plugs code & infos
+	PlugInfo	*ThePlug;
 	
-	MADFourChar	IDType;		// IDType = 'MADD' -- READ ONLY --
-	short		TotalPlug;	// Number of Plugs in pointer ThePlug
+	/// IDType = \c 'MADD' -- READ ONLY --
+	MADFourChar	IDType;		
+	/// Number of Plugs in pointer ThePlug
+	short		TotalPlug;
 } MADLibrary;
 
 #ifndef __callback
@@ -610,7 +655,8 @@ typedef struct MADDriverBase {
 	
 	/**  Current music in memory, loaded with RLoadMusic() by example **/
 	
-	MADMusic	*curMusic;										// Current music played by this driver, it can be NULL !!!
+	/// Current music played by this driver, it can be \c NULL !!!
+	MADMusic	*curMusic;
 	MADLibrary	*lib;
 	
 	/**  Drivers variables **/

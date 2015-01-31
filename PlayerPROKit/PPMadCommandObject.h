@@ -22,10 +22,15 @@
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
 @property (readonly) Cmd theCommand;
+/// Instrument number. \c 0x00 is no instrument command
 @property MADByte instrument;
+/// Note, see table. \c 0xFF is no note command
 @property MADByte note;
+/// Effect command
 @property MADEffectID command;
+/// Effect argument
 @property MADByte argument;
+/// Volume of the effect. \c 0xFF is no volume command
 @property MADByte volume;
 - (void)resetCommand;
 @end
