@@ -338,9 +338,9 @@ InstrData *MADDataToInstrument(NSData *ourData, sData ***sampleData)
 	toRet->volType = [ourUnarchiver decodeInt32ForKey:PPVolType];
 	
 	for (int i = 0; i < 12; i++) {
-		PPEnvelopeObject *aVolEnv = volEnvArray[i];
-		PPEnvelopeObject *aPannEnv = panEnvArray[i];
-		PPEnvelopeObject *aPitchEnv = pitchEnvArray[i];
+		PPEnvelopeClass *aVolEnv = volEnvArray[i];
+		PPEnvelopeClass *aPannEnv = panEnvArray[i];
+		PPEnvelopeClass *aPitchEnv = pitchEnvArray[i];
 	 
 		toRet->pannEnv[i] = aPannEnv.envelopeRec;
 		toRet->volEnv[i] = aVolEnv.envelopeRec;
