@@ -1923,11 +1923,40 @@ static inline void ByteSwapInstrData(InstrData *toSwap)
 
 static inline void ByteSwapMADSpec(MADSpec *toSwap)
 {
+#ifndef __BLOCKS__
+	int i;
+#endif
 	MADBE32(&toSwap->MAD);
 	MADBE16(&toSwap->speed);
 	MADBE16(&toSwap->tempo);
 	MADBE32(&toSwap->EPitch);
 	MADBE32(&toSwap->ESpeed);
+	
+#ifdef __BLOCKS__
+	dispatch_apply(10, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		MADBE32(&toSwap->globalEffect[i]);
+	});
+	
+	dispatch_apply(MAXTRACK * 4, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		MADBE32(&toSwap->chanEffect[i / 4][i % 4]);
+	});
+	
+	dispatch_apply(MAXTRACK, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		MADBE16(&toSwap->chanBus[i].copyId);
+	});	
+#else
+	for (i = 0; i < 10; i++) {
+		MADBE32(&toSwap->globalEffect[i]);
+	}
+	
+	for (i = 0; i < MAXTRACK * 4; i++) {
+		MADBE32(&toSwap->chanEffect[i / 4][i % 4]);
+	}
+	
+	for (i = 0; i < MAXTRACK; i++) {
+		MADBE16(&toSwap->chanBus[i].copyId);
+	}
+#endif
 }
 
 static inline void ByteSwapPatHeader(PatHeader *toSwap)

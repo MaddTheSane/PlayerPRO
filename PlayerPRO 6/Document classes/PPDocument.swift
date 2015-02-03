@@ -141,7 +141,7 @@ import AudioToolbox
 		} else {
 			let anErr = theMusic.saveMusicToURL(url)
 			if anErr != .NoErr {
-				outError.memory = CreateErrorFromMADErrorType(anErr)
+				outError.memory = CreateErrorFromMADErrorType(anErr, convertToCocoa: true)
 				return false
 			} else {
 				return true

@@ -9851,7 +9851,6 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
-				LLVM_LTO = NO;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
@@ -11050,7 +11049,6 @@
 				);
 				INFOPLIST_FILE = "Cocoa-Info.plistvers.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
-				LLVM_LTO = NO;
 				OTHER_SWIFT_FLAGS = "-DPLAYERPRO6 $(inherited)";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
@@ -11074,7 +11072,6 @@
 				);
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
-				LLVM_LTO = NO;
 				OTHER_SWIFT_FLAGS = "-DPLAYERPRO6 $(inherited)";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
