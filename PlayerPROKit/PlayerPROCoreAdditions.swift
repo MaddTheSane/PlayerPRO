@@ -382,12 +382,13 @@ extension Cmd: Equatable {
 	public init() {
 		ins = 0
 		note = 0xFF
-		cmd = 0
+		cmd = .Arpeggio
 		arg = 0
 		vol = 0xFF
 		unused = 0
 	}
 	
+	/// Reset the command
 	public mutating func kill() {
 		MADKillCmd(&self)
 	}
@@ -485,18 +486,6 @@ extension IntPcmd: CommandIterator {
 		})
 	}
 }
-
-/* This causes Swift to hang, or take too long to compile.
-extension MADDriverBase {
-	public var channels: [MADChannel] {
-		return GetArrayFromMirror(reflect(chan))!
-	}
-	
-	public var activeChannels: [Bool] {
-		return GetArrayFromMirror(reflect(Active))!
-	}
-}
-*/
 
 extension MADChannel {
 	public var arpeggio: (values: [Int32], index: Int32, enabled: Bool) {

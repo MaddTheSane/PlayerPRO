@@ -6981,6 +6981,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */,
 				5547DA5919A570820014A620 /* SoundSettingsViewController.swift in Sources */,
 				5599119F1A0ACB8C00D1D5C3 /* CommandIterator.swift in Sources */,
 				555F447619A1411700B8C6EE /* PlayerPROKitAdditions.swift in Sources */,
@@ -6995,7 +6996,6 @@
 				55BD5AF519ADBBF500D63F54 /* PPKPcmd.swift in Sources */,
 				55DE87C8187E5B9100C36533 /* PPFXBusObject.m in Sources */,
 				555E014819FA33A10063F058 /* PPLibraryObject.swift in Sources */,
-				556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */,
 				55C8EDE2187CC8B200CC8C1B /* PPPatternObject.m in Sources */,
 				55D59C2C1A646F60008A6E51 /* PPKSwiftToC.m in Sources */,
 				5560643C18C8FDD9002F72FC /* PPErrors.m in Sources */,
@@ -7679,6 +7679,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5599119E1A0ACB8C00D1D5C3 /* CommandIterator.swift in Sources */,
+				55CDE86E19E5AA4400476AC8 /* PlayerPROCoreAdditions.swift in Sources */,
 				55F1BDD01975CAD100AD2C03 /* AMF.c in Sources */,
 				55F1BDBF1975C9E100AD2C03 /* MADDriver.c in Sources */,
 				55F1BDD91975CB1200AD2C03 /* S3M.c in Sources */,
@@ -7699,12 +7701,10 @@
 				55F1BDD71975CB1200AD2C03 /* MTM.c in Sources */,
 				55F1BDC81975CA3900AD2C03 /* OSX-CoreAudio.c in Sources */,
 				55F1BDDC1975CB1200AD2C03 /* XM.c in Sources */,
-				55CDE86E19E5AA4400476AC8 /* PlayerPROCoreAdditions.swift in Sources */,
 				55F1BDD61975CB0000AD2C03 /* Mod.c in Sources */,
 				55F1BDC61975C9E100AD2C03 /* TickRemover.c in Sources */,
 				55F1BDCF1975CAC900AD2C03 /* 669.c in Sources */,
 				55F1BDD21975CAE000AD2C03 /* IT.c in Sources */,
-				5599119E1A0ACB8C00D1D5C3 /* CommandIterator.swift in Sources */,
 				55F1BDD51975CAF500AD2C03 /* MADI.c in Sources */,
 				55F1BDD31975CAE600AD2C03 /* MADfg.c in Sources */,
 				55F1BDC11975C9E100AD2C03 /* Effects.c in Sources */,
@@ -9851,6 +9851,7 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				INFOPLIST_FILE = "PlayerPRO Player/PlayerPRO Player-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
+				LLVM_LTO = NO;
 				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = NO;
@@ -11049,6 +11050,7 @@
 				);
 				INFOPLIST_FILE = "Cocoa-Info.plistvers.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
+				LLVM_LTO = NO;
 				OTHER_SWIFT_FLAGS = "-DPLAYERPRO6 $(inherited)";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;
@@ -11072,6 +11074,7 @@
 				);
 				INFOPLIST_FILE = "Cocoa-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks @executable_path/../Frameworks";
+				LLVM_LTO = NO;
 				OTHER_SWIFT_FLAGS = "-DPLAYERPRO6 $(inherited)";
 				PRODUCT_NAME = "PlayerPRO 6";
 				SKIP_INSTALL = NO;

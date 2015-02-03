@@ -77,37 +77,10 @@
 #define MAXCHANEFFECT		20
 
 /********************						***********************/
-/*** 					   EFFECTS ID							***/
+/*** 			   Channel structure definition					***/
 /********************						***********************/
 
-typedef MADENUM(MADByte, MADEffectID) {
-	MADEffectArpeggio		= 0,	//	0x00
-	MADEffectDownslide		= 1,	//	0x01
-	MADEffectUpslide 		= 2,	//	0x02
-	MADEffectPortamento 	= 3,	//	0x03
-	MADEffectVibrato 		= 4,	//	0x04
-	MADEffectPortaSlide 	= 5,	//	0x05
-	MADEffectVibratoSlide	= 6,	//	0x06
-	MADEffectNothing 		= 7,	//	0x07
-	MADEffectPanning		= 8,	//	0x08
-	MADEffectOffset 		= 9,	//	0x09
-	MADEffectSlideVolume 	= 10,	//	0x0A
-	MADEffectFastSkip		= 11,	//	0x0B
-	MADEffectVolume 		= 12,	//	0x0C
-	MADEffectSkip			= 13,	//	0x0D
-	MADEffectExtended		= 14,	//	0x0E
-	MADEffectSpeed			= 15,	//	0x0F
-	MADEffectNoteOff 		= 16,	//	0x0G
-	MADEffectLoop			= 17,	// 	0x0L
-	MADEffectNOffset		= 18	//  0x0O
-};
-
-/********************						***********************/
-/*** 			   MADChannel structure definition					***/
-/********************						***********************/
-
-typedef struct MADChannel
-{
+typedef struct MADChannel {
 	/// Channel ID - \c 0 to \c MAXTRACK
 	int		ID;
 	/// TrackID - \c 0 to \c MAXTRACK (Used in multiChannel mode)
@@ -661,24 +634,41 @@ typedef struct MADDriverBase {
 	
 	/**  Drivers variables **/
 	
-	MADChannel	chan[MAXTRACK];									// Current driver channels -- READ ONLY --
-	bool		musicEnd;										// Is music playing finished? -- READ ONLY --
-	short		Tube[MAXTRACK];									// Used in 'Tracks View' Window - View menu
-	short		PartitionReader;								// Current position in pattern (0...999)
-	short		Pat;											// Current ID Pattern, see 'Patterns list'
-	short		PL;												// Current position in partition, see 'Partition list'
-	short		VolGlobal;										// Global SOFTWARE volume (This is NOT Mac hardware volume!) from 0 to 64
-	short		speed;											// Current speed, see speed Effect
-	short		finespeed;										// Current finespeed, see speed Effect
-	short		InstruTube[MAXINSTRU];							// Used in 'Instrument View' Window - View menu
-	short		VExt;											// External music speed, see 'Adaptators' window. 80 = normal
-	short		FreqExt;										// External music pitch, see 'Adaptators' window. 80 = normal
-	bool		Reading;										// Reading indicator
-	bool		Active[MAXTRACK];								// Channel Active?
-	bool		Equalizer;										// Is Equalizer Active?
+	/// Current driver channels -- READ ONLY --
+	MADChannel	chan[MAXTRACK];
+	/// Is music playing finished? -- READ ONLY --
+	bool		musicEnd;
+	/// Used in 'Tracks View' Window - View menu
+	short		Tube[MAXTRACK];
+	/// Current position in pattern (0...999)
+	short		PartitionReader;
+	/// Current ID Pattern, see 'Patterns list'
+	short		Pat;
+	/// Current position in partition, see 'Partition list'
+	short		PL;
+	/// Global SOFTWARE volume (This is <b>not</b> Mac hardware volume!) from \c 0 to \c 64
+	short		VolGlobal;
+	/// Current speed, see speed Effect
+	short		speed;
+	/// Current finespeed, see speed Effect
+	short		finespeed;
+	/// Used in 'Instrument View' Window - View menu
+	short		InstruTube[MAXINSTRU];
+	/// External music speed, see 'Adaptators' window. \c 80 = normal
+	short		VExt;
+	/// External music pitch, see 'Adaptators' window. \c 80 = normal
+	short		FreqExt;
+	/// Reading indicator
+	bool		Reading;
+	/// Is the channel active?
+	bool		Active[MAXTRACK];
+	/// Is the equalizer active?
+	bool		Equalizer;
 	
-	void		*OscilloWavePtr;								// Contains actual sound wave of music, in char (8 bits) or in short (16 bits)
-	size_t		OscilloWaveSize;								// Size of previous buffer
+	/// Contains actual sound wave of music, in char (\c 8 bits) or in short (\c 16 bits)
+	void		*OscilloWavePtr;
+	/// Size of previous buffer
+	size_t		OscilloWaveSize;
 
 } MADDriverBase;
 
