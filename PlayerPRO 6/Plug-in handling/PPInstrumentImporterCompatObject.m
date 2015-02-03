@@ -94,13 +94,15 @@ static void moveInfoOverToInstrumentObjectFrom(PPInstrumentObject* to, PPInstrum
 		__block BOOL toRet = NO;
 		
 		dispatch_semaphore_t ourSemaphore = dispatch_semaphore_create(0);
-		[[self remoteConnectionProxy]
-		 checkBundleAtURLIsInstrumentBundle:tempBundle.bundleURL
-		 withReply:^(BOOL isPlug, BOOL isInstrument, BOOL isImport) {
-			toRet = isPlug;
-			self.sample = !isInstrument;
-			dispatch_semaphore_signal(ourSemaphore);
-		}];
+		dispatch_async(dispatch_get_global_queue(0, 0), ^{
+			[[self remoteConnectionProxy]
+			 checkBundleAtURLIsInstrumentBundle:tempBundle.bundleURL
+			 withReply:^(BOOL isPlug, BOOL isInstrument, BOOL isImport) {
+				 toRet = isPlug;
+				 self.sample = !isInstrument;
+				 dispatch_semaphore_signal(ourSemaphore);
+			 }];
+		});
 		dispatch_semaphore_wait(ourSemaphore, dispatch_time(DISPATCH_TIME_NOW, 3 * NSEC_PER_SEC));
 		if (toRet == NO) {
 			return nil;
@@ -117,13 +119,15 @@ static void moveInfoOverToInstrumentObjectFrom(PPInstrumentObject* to, PPInstrum
 	__block BOOL toRet = NO;
 	
 	dispatch_semaphore_t ourSemaphore = dispatch_semaphore_create(0);
-	[[self remoteConnectionProxy]
-	 canImportFileAtURL:fileURL bundleURL:self.file.bundleURL
-	 withReply:^(BOOL ourReply) {
-		toRet = ourReply;
-		usleep(5);
-		dispatch_semaphore_signal(ourSemaphore);
-	}];
+	dispatch_async(dispatch_get_global_queue(0, 0), ^{
+		[[self remoteConnectionProxy]
+		 canImportFileAtURL:fileURL bundleURL:self.file.bundleURL
+		 withReply:^(BOOL ourReply) {
+			 toRet = ourReply;
+			 usleep(5);
+			 dispatch_semaphore_signal(ourSemaphore);
+		 }];
+	});
 	dispatch_semaphore_wait(ourSemaphore, dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC));
 
 	return toRet;
