@@ -1294,7 +1294,7 @@ MADErr MADAttachDriverToMusic(MADDriverRec *driver, MADMusic *music, char *Missi
 	if (needToReset) {
 		MADReset(driver);
 	}
-	UpdateTracksNumber(driver);
+	MADUpdateTracksNumber(driver);
 	
 	return MADNoErr;
 }
@@ -3367,7 +3367,7 @@ void MADChangeTracks(MADDriverRec *MDriver, short newVal)
 		MADPlayMusic(MDriver);
 }
 
-void UpdateTracksNumber(MADDriverRec *MDriver)
+void MADUpdateTracksNumber(MADDriverRec *MDriver)
 {
 	if (MDriver->base.curMusic != NULL) {
 		if (MDriver->base.curMusic->header != NULL) {

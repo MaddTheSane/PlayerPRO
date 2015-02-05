@@ -907,7 +907,7 @@ PPEXPORT MADErr		MADKillInstrument(MADMusic*, short ins);
 PPEXPORT MADErr		MADKillSample(MADMusic *, short ins, short sample);
 PPEXPORT sData		*MADCreateSample(MADMusic *MDriver, short ins, short sample);
 PPEXPORT MADErr		MADKillCmd(Cmd*);
-PPEXPORT void		UpdateTracksNumber(MADDriverRecPtr);
+PPEXPORT void		MADUpdateTracksNumber(MADDriverRecPtr);
 PPEXPORT MADErr		MADCreateVolumeTable(MADDriverRecPtr intDriver);
 PPEXPORT void		MADDisposeVolumeTable(MADDriverRecPtr intDriver);
 PPEXPORT MADMusic*	CreateFreeMADK();
