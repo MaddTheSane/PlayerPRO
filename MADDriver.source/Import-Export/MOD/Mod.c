@@ -441,19 +441,26 @@ static MADErr PPConvertMod2Mad(char* aMOD, long MODSize, MADMusic *theMAD, MADDr
 	theMAD->header->MAD = 'MADK';
 	theMAD->header->MODMode = true;
 	
-	for(i=0; i<22; i++) theMAD->header->name[i] = theMOD->NameSignature[i];
+	strncpy(theMAD->header->name, theMOD->NameSignature, 20);
 	
 	theMAD->header->tempo = 125;
 	theMAD->header->speed = 6;
 	theMAD->header->numPat = PatMax;
 	theMAD->header->numPointers = MODInt->numPointers;
 	
-	//TODO: use libdispatch here
+#ifdef __BLOCKS__
+	dispatch_apply(128, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		theMAD->header->oPointers[i] = MODInt->oPointers[i];
+	});
+#else
 	for(i=0; i<128; i++)
 		theMAD->header->oPointers[i] = MODInt->oPointers[i];
+#endif
 	
 	theMAD->header->numChn = tracksNo;
 	
+	//TODO: dispatch this
+	//It's going to be tricky...
 	x = 1;
 	for (i = 0; i < MAXTRACK; i++) {
 		if (x > 0)

@@ -881,8 +881,13 @@ static char* ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndS
 	xmData->mh->songname[20] = 0x1a;
 	
 	memset(xmData->mh->orders, 0, sizeof(xmData->mh->orders));
-	//TODO: dispatch this
+#ifdef __BLOCKS__
+	dispatch_apply(theMAD->header->numPointers, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		xmData->mh->orders[i] = theMAD->header->oPointers[i];
+	});
+#else
 	for(i = 0; i < theMAD->header->numPointers; i++) xmData->mh->orders[i] = theMAD->header->oPointers[i];
+#endif
 	
 	WRITEXMFILE(xmData->mh, sizeof(XMHEADER));
 	

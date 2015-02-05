@@ -102,11 +102,22 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 		free(theMAD->header);
 		return MADNeedMemory;
 	}
-	//TODO: dispatch this
-	for (i = 0; i < MAXTRACK; i++) theMAD->header->chanBus[i].copyId = i;
-	
-	//TODO: dispatch this
+#ifdef __BLOCKS__
+	dispatch_apply(MAXTRACK, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		theMAD->header->chanBus[i].copyId = i;
+		
+		if (i % 2 == 0) {
+			theMAD->header->chanPan[i] = MAX_PANNING / 4;
+		} else {
+			theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING / 4;
+		}
+		
+		theMAD->header->chanVol[i] = MAX_VOLUME;
+	});
+#else
 	for (i = 0; i < MAXTRACK; i++) {
+		theMAD->header->chanBus[i].copyId = i;
+		
 		if (i % 2 == 0)
 			theMAD->header->chanPan[i] = MAX_PANNING / 4;
 		else
@@ -114,6 +125,7 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 		
 		theMAD->header->chanVol[i] = MAX_VOLUME;
 	}
+#endif
 	
 	theMAD->header->generalVol		= 64;
 	theMAD->header->generalSpeed	= 80;
@@ -134,8 +146,13 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 		return MADNeedMemory;
 	}
 	
-	//TODO: dispatch this
+#ifdef __BLOCKS__
+	dispatch_apply(MAXINSTRU, dispatch_get_global_queue(0, 0), ^(size_t i) {
+		theMAD->fid[i].firstSample = i * MAXSAMPLE;
+	});
+#else
 	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
+#endif
 	
 	for(i = 0; i < the669->NOS; i++) {
 		temp = (uintptr_t) the669;
@@ -237,8 +254,7 @@ static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, 
 		}
 		theMAD->partition[i]->header.size = 64;
 		theMAD->partition[i]->header.compMode = 'NONE';
-		//TODO: dispatch this
-		for (x = 0; x < 20; x++) theMAD->partition[i]->header.name[x] = 0;
+		memset(theMAD->partition[i]->header.name, 0, 20);
 		theMAD->partition[i]->header.patBytes = 0;
 		theMAD->partition[i]->header.unused2 = 0;
 		
