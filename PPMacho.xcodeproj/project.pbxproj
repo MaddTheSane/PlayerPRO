@@ -9725,7 +9725,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/Info-32.plist";
@@ -9742,7 +9742,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -9779,7 +9779,6 @@
 				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = PlayerPROCore;
-				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
 				VERSION_INFO_PREFIX = "";
@@ -9810,7 +9809,6 @@
 				MODULEMAP_PRIVATE_FILE = "MADDriver.source/Resources/PPCore-private.modulemap";
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = PlayerPROCore;
-				SDKROOT = macosx;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_EXPORT_DECL = "__attribute__((visibility(\"default\")))";
 				VERSION_INFO_PREFIX = "";
@@ -10697,7 +10695,8 @@
 		559170AF19C26E1D00998D7F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				INFOPLIST_FILE = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/Info.plist";
@@ -10710,7 +10709,8 @@
 		559170B019C26E1D00998D7F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "PlayerPRO 6/XPCs/PPCoreInstrumentPlugBridge/PPInsPlugBridge.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
