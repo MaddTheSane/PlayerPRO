@@ -46,14 +46,16 @@ typedef struct Pcmd {
 	Cmd		myCmd[];
 } Pcmd;
 
+/// defined because Swift is a dumb-dumb about
+/// declared variable-sized c arrays.
 typedef struct IntPcmd {
-	/// Number of tracks in \c myCmd[]
+	/// Number of tracks in \c myCmd
 	short	tracks;
-	/// Number of rows in \c myCmd[]
+	/// Number of rows in \c myCmd
 	short	length;
-	/// Track ID of first track in \c myCmd[]
+	/// Track ID of first track in \c myCmd
 	short	trackStart;
-	/// Row ID of first row in \c myCmd[]
+	/// Row ID of first row in \c myCmd
 	short	posStart;
 	/// Count of Cmds in array
 	int		cmdCount;
@@ -66,6 +68,7 @@ typedef struct IntPcmd {
 extern "C" {
 #endif
 
+/// Deprecated, do not use.
 PPEXPORT OSErr inAddSoundToMAD(void			*theSound,
 							   size_t		sndLen,
 							   long			lS,

@@ -766,7 +766,7 @@ PPEXPORT MADErr	MADDisposeLibrary(MADLibrary *MADLib);
  *				The library test for the availability of the plug-in
  *	@param		type
  *				The plug-in type to check for.
- *	@return		\c true if a the plug-in is available. Otherwise, \c false .
+ *	@return		\c true if a the plug-in is available. Otherwise, <code>false</code>.
  */
 PPEXPORT bool MADPlugAvailable(const MADLibrary *MADLib, const char *type);
 
@@ -798,33 +798,48 @@ PPEXPORT bool	MADSoundDriverIsAvalable(MADSoundOutput theDriver);
 PPEXPORT MADSoundOutputBit	MADSoundDriverList();
 
 #pragma mark -
-PPEXPORT MADErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRecPtr* returnDriver);		// Music Driver initialization and memory allocation
-PPEXPORT MADErr	MADDisposeDriver(MADDriverRecPtr MDriver);											// Dispose the music driver, use it after RInitMusic()
+//// Music Driver initialization and memory allocation
+PPEXPORT MADErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRecPtr* returnDriver);
+/// Dispose the music driver
+PPEXPORT MADErr	MADDisposeDriver(MADDriverRecPtr MDriver);
 
 PPEXPORT MADErr	MADChangeDriverSettings(MADDriverSettings *DriverInitParam, MADDriverRecPtr* returnDriver);
 
 PPEXPORT MADDriverSettings MADGetDriverSettings(const MADDriverRecPtr theDriver);
 
-PPEXPORT MADErr	MADStartDriver(MADDriverRecPtr MDriver);										// NEW - Activates the sound generating procedure (interruption)
-PPEXPORT MADErr	MADStopDriver(MADDriverRecPtr MDriver);										// NEW - DEActivates the sound generating procedure (interruption)
+/// Activates the sound generating procedure (interruption)
+PPEXPORT MADErr	MADStartDriver(MADDriverRecPtr MDriver);
+/// DEActivates the sound generating procedure (interruption)
+PPEXPORT MADErr	MADStopDriver(MADDriverRecPtr MDriver);
 
-PPEXPORT MADErr	MADPlayMusic(MADDriverRecPtr MDriver);										// NEW - Read and play current music in memory - Call MADStartInterruption BEFORE
-PPEXPORT MADErr	MADStopMusic(MADDriverRecPtr MDriver);										// NEW - Stop reading current music in memory, Use MADCleanDriver to stop sounds
-PPEXPORT bool MADIsPlayingMusic(MADDriverRecPtr driver);									// NEW - See if PlayerPRO is playing music
+/// Read and play current music in memory
+PPEXPORT MADErr	MADPlayMusic(MADDriverRecPtr MDriver);
+/// Stop reading current music in memory, Use \c MADCleanDriver to stop sounds
+PPEXPORT MADErr	MADStopMusic(MADDriverRecPtr MDriver);
+/// See if PlayerPRO is playing music
+PPEXPORT bool MADIsPlayingMusic(MADDriverRecPtr driver);
 
-PPEXPORT void	MADCleanDriver(MADDriverRecPtr intDriver);									// Clean the driver : stop playing sounds
+/// Clean the driver : stop playing sounds
+PPEXPORT void	MADCleanDriver(MADDriverRecPtr intDriver);
 
-PPEXPORT MADErr	MADReset(MADDriverRecPtr MDriver);											// Reset the current music at the start position
-PPEXPORT MADErr	MADGetMusicStatus(MADDriverRecPtr MDriver, long *fullTime, long *curTime);			// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
-PPEXPORT MADErr	MADSetMusicStatus(MADDriverRecPtr MDriver, long minV, long maxV, long curV);			// Change position of current music, by example MADSetMusicStatus(0, 100, 50) = go to the middle of the music
+/// Reset the current music at the start position
+PPEXPORT MADErr	MADReset(MADDriverRecPtr MDriver);
+
+/// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
+PPEXPORT MADErr	MADGetMusicStatus(MADDriverRecPtr MDriver, long *fullTime, long *curTime);
+/// Change position of current music, by example MADSetMusicStatus(0, 100, 50) = go to the middle of the music
+PPEXPORT MADErr	MADSetMusicStatus(MADDriverRecPtr MDriver, long minV, long maxV, long curV);
 
 PPEXPORT MADErr	MADAttachDriverToMusic(MADDriverRecPtr driver, MADMusic *music, char* missingPlugins);
 
-PPEXPORT MADErr	MADLoadMusicPtr(MADMusic **music, char *myPtr);								// MAD ONLY - Load a MAD char* into memory, you can free() your char* after this call
+/// MADK ONLY - Load a MAD pointer into memory, you can free() the memory after this call
+PPEXPORT MADErr	MADLoadMusicPtr(MADMusic **music, char *myPtr);
 
-PPEXPORT MADErr	MADLoadMusicFileCString(MADLibrary *, MADMusic **music, char *type, char *fName);			// Load a music file with plugs
+/// Load a music file with plugs
+PPEXPORT MADErr	MADLoadMusicFileCString(MADLibrary *, MADMusic **music, char *type, char *fName);
 
-PPEXPORT MADErr	MADMusicIdentifyCString(MADLibrary *, char *type, char *cName);			// Identify what kind of music format is cName file.
+/// Identify what kind of music format is cName file.
+PPEXPORT MADErr	MADMusicIdentifyCString(MADLibrary *, char *type, char *cName);
 
 PPEXPORT MADErr	MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, MADInfoRec *InfoRec);
 	
@@ -842,23 +857,42 @@ PPEXPORT MADErr	MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type
 PPEXPORT MADErr	MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD);
 #endif
 
-PPEXPORT MADErr	MADDisposeMusic(MADMusic **, MADDriverRecPtr MDriver);								// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
+/// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
+PPEXPORT MADErr	MADDisposeMusic(MADMusic **, MADDriverRecPtr MDriver);
 
-PPEXPORT void	MADChangeTracks(MADDriverRecPtr MDriver, short);				// Change current tracks number of the music driver
-PPEXPORT Cmd*	GetMADCommand(short		position,						// Extract a Command from a PatData structure
+/// Change current tracks number of the music driver
+PPEXPORT void	MADChangeTracks(MADDriverRecPtr MDriver, short);
+
+/// Extract a Command from a PatData structure
+PPEXPORT Cmd*	GetMADCommand(short		position,
 							  short		channel,
 							  PatData*	aPatData);
 
+/*!
+ *	@function	MADPlaySoundData
+ *	@abstract	play sound data to the driver on the specified channel.
+ *	@param		MDriver The driver to play sound on
+ *	@param		soundPtr Sound Pointer to data
+ *	@param		size Sound size in bytes
+ *	@param		channel channel ID on which to play sound
+ *	@param		note \c 0 to \c NUMBER_NOTES or \c 0xFF: play sound at 22 Khz
+ *	@param		amplitude \c 8 or \c 16 bits
+ *	@param		loopBeg loop beginning, in bytes
+ *	@param		loopSize loop size, in bytes
+ *	@param		rate sample rate of sound data
+ *	@param		stereo is the sample stereo or mono?
+ *	@return		An error type on failure, or \c MADNoErr on success
+ */
 PPEXPORT MADErr	MADPlaySoundData(MADDriverRecPtr	MDriver,
-								 const char		*soundPtr,				// Sound Pointer to data
-								 size_t			size,					// Sound size in bytes
-								 int			channel,				// channel ID on which to play sound
-								 MADByte		note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
-								 int			amplitude,				// 8 or 16 bits
-								 size_t			loopBeg,				// loop beginning
-								 size_t			loopSize,				// loop size in bytes
-								 unsigned int	rate,					// sample rate of the sound data, by ex: rate22khz
-								 bool			stereo);				// sample is in stereo or in mono?
+								 const char			*soundPtr,
+								 size_t				size,
+								 int				channel,
+								 MADByte			note,
+								 int				amplitude,
+								 size_t				loopBeg,
+								 size_t				loopSize,
+								 unsigned int		rate,
+								 bool				stereo);
 							
 #if 0
 PPEXPORT MADErr	MADPlaySoundDataSYNC(MADDriverRec	*MDriver,
@@ -914,6 +948,7 @@ PPEXPORT MADMusic*	CreateFreeMADK();
 PPEXPORT short		FindAFreeChannel(MADDriverRecPtr intDriver);
 
 #pragma mark Swift helpers
+/// Fills an \c IntPatData struct with pointers to the data in \c inPat
 PPEXPORT IntPatData MADPatDataToInt(PatData *inPat);
 	
 #ifdef __cplusplus

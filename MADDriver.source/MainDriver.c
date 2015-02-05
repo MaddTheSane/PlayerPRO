@@ -461,6 +461,7 @@ size_t MADMinimize(MADMusic *music)
 	return before - after;
 }
 
+#pragma mark - Driver list generation and checking
 static MADSoundOutputBit driverList = 0;
 static bool driverlistInited = false;
 
@@ -506,6 +507,7 @@ MADSoundOutputBit MADSoundDriverList()
 	BuildAvailableDriverList();
 	return driverList;
 }
+#pragma mark -
 
 void MADGetBestDriver(MADDriverSettings *Init)
 {
@@ -3400,8 +3402,7 @@ MADErr MADCreateVibrato(MADDriverRec *MDriver)
 	return MADNoErr;
 }
 
-enum
-{
+typedef MADOPTIONS(MADByte, MADCompBit) {
 	ins 	= 1 << 0,
 	note	= 1 << 1,
 	cmd		= 1 << 2,
@@ -3415,7 +3416,7 @@ PatData* DecompressPartitionMAD1(MADMusic *MDriver, PatData* myPat)
 	MADByte		*srcPtr;
 	Cmd			*myCmd;
 	short		maxCmd;
-	MADByte		set;
+	MADCompBit	set;
 	
 	finalPtr = (PatData*)malloc(sizeof(PatHeader) + myPat->header.size * MDriver->header->numChn * sizeof(Cmd));
 	if (finalPtr == NULL)
@@ -3459,8 +3460,9 @@ PatData* DecompressPartitionMAD1(MADMusic *MDriver, PatData* myPat)
 
 PatData* CompressPartitionMAD1(MADMusic *MDriver, PatData* myPat)
 {
-	PatData	*finalPtr;
-	uint8_t	*dstPtr, *setByte;
+	PatData		*finalPtr;
+	uint8_t		*dstPtr;
+	MADCompBit	*setByte;
 	Cmd		*myCmd;
 	int		maxCmd;
 	size_t	NewPtrSize = 0;

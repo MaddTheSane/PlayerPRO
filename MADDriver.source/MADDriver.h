@@ -39,7 +39,8 @@
 #endif
 
 struct MADDriverRec {
-	MADDriverSettings		DriverSettings;									// Driver SetUp -- READ ONLY --
+	/// Driver SetUp -- READ ONLY --
+	MADDriverSettings		DriverSettings;
 
 	MADDriverBase	base;
 	

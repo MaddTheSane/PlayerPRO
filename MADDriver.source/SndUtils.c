@@ -22,13 +22,6 @@
 #include "RDriverInt.h"
 #include <alloca.h>
 
-sData* inMADCreateSample();
-
-sData *MADCreateSampleRaw()
-{
-	return inMADCreateSample();
-}
-
 sData* inMADCreateSample()
 {
 	sData *curData;
@@ -44,6 +37,11 @@ sData* inMADCreateSample()
 	curData->data		= NULL;
 	
 	return curData;
+}
+
+sData *MADCreateSampleRaw()
+{
+	return inMADCreateSample();
 }
 
 Cmd* MADGetCmd(short row, short track, Pcmd* myPcmd)
@@ -167,7 +165,7 @@ MADErr MADAddSoundToMAD(void			*theSound,
 	sData	*curData;
 	
 	if (theSound == NULL || !sampleID || !InsHeader ||
-		!sample ||*sampleID > MAXSAMPLE)
+		!sample || *sampleID > MAXSAMPLE)
 		return MADParametersErr;
 	
 	inOutBytes = sndLen;

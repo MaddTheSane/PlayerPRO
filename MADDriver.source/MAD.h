@@ -65,8 +65,8 @@ typedef MADENUM(MADByte, MADEffectID) {
 #pragma mark PATTERN DESCRIPTION
 
 /*!
- *	\struct		Cmd
- *	\abstract	command function used in a pattern
+ *	@struct		Cmd
+ *	@abstract	command function used in a pattern
  */
 typedef struct Cmd {
 	/// Instrument number. \c 0x00 is no instrument command
@@ -117,8 +117,8 @@ typedef struct PatData {
 	Cmd			Cmds[1];
 } PatData;
 
-///Internal Pattern Data
-///Because Swift is a dumb-dumb about C arrays in structs
+/// Internal pattern data
+/// because Swift is a dumb-dumb about C arrays in structs.
 typedef struct IntPatData {
 	PatHeader	*header;
 	Cmd			*Cmds;
@@ -220,8 +220,7 @@ typedef MADOPTIONS(MADByte, EFType) {
 #pragma mark Instrument
 
 /// Instrument
-typedef struct InstrData
-{
+typedef struct InstrData {
 	/// instrument name
 	char 	name[32];
 	/// Instrument type = 0
@@ -309,7 +308,7 @@ typedef struct MADSpec {
 	MADFourChar	MAD;
 	/// Music's name
 	char 		name[32];
-	/// Informations & Author name of the music
+	/// Informations & author name of the music
 	char		infos[INFOSSIZE];
 	/// General panning
 	MADByte		generalPan;
