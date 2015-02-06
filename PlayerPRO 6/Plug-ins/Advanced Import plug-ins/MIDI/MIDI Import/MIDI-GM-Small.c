@@ -594,11 +594,11 @@ void Quicktime5(NoteRequest *NoteRequest, sData **sample, InstrData *inst)
 						switch(fmt.wBitsPerSample)
 						{
 							case 8:
-								ConvertInstrumentIn((Byte*)curData->data, dataAt.size);
+								MADConvertInstrument((Byte*)curData->data, dataAt.size);
 								break;
 								
 							case 16:
-								ConvertInstrumentIn16((short*)curData->data, dataAt.size);
+								MADConvertInstrument16((short*)curData->data, dataAt.size);
 								break;
 						}
 						
@@ -745,11 +745,11 @@ void TESTNEWSYSTEM(sData **sample, InstrData *inst, AtomicInstrument ai)
 							switch(GetNEShort(sdesc->sampleSize))
 							{
 								case 8:
-									ConvertInstrumentIn((Byte*)curData->data, inOutBytes);
+									MADConvertInstrument((Byte*)curData->data, inOutBytes);
 									break;
 									
 								case 16:
-									ConvertInstrumentIn16((short*)curData->data, inOutBytes);
+									MADConvertInstrument16((short*)curData->data, inOutBytes);
 									break;
 							}
 						}

@@ -96,8 +96,8 @@ PPEXPORT OSErr MADAddSoundToMAD(void			*theSound,
 								short			*sampleID);
 
 PPEXPORT sData *MADCreateSampleRaw();
-PPEXPORT void ConvertInstrumentIn(Byte *tempPtr, size_t sSize);
-PPEXPORT void ConvertInstrumentIn16(short *tempPtr, size_t sSize);
+PPEXPORT void MADConvertInstrument(Byte *tempPtr, size_t sSize);
+PPEXPORT void MADConvertInstrument16(short *tempPtr, size_t sSize);
 PPEXPORT Cmd* MADGetCmd(short row, short track, Pcmd* myPcmd);
 
 PPEXPORT const CFStringRef kMadPlugMenuNameKey;

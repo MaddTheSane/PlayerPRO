@@ -95,8 +95,8 @@ PPEXPORT bool MADDirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MA
 MADErr MADCreateVibrato(MADDriverRecPtr MDriver);
 PPEXPORT PatData* DecompressPartitionMAD1(MADMusic *MDriver, PatData* myPat);
 PPEXPORT PatData* CompressPartitionMAD1(MADMusic *MDriver, PatData* myPat);
-PPEXPORT void 	GenerateSound(MADDriverRecPtr intDriver);
-PPEXPORT int	GetOldPeriod(short note, int c2spd, MADDriverRecPtr intDriver);
+void 	GenerateSound(MADDriverRecPtr intDriver);
+int		GetOldPeriod(short note, int c2spd, MADDriverRecPtr intDriver);
 PPEXPORT MADErr	MADResetInstrument(InstrData *curIns);
 PPEXPORT void	MADCheckSpeed(MADMusic *MDriver, MADDriverRecPtr intDriver);
 

@@ -300,7 +300,7 @@ static Ptr NSndToPtr(Ptr soundPtr, long *loopStart, long *loopEnd, short *sample
 	}
 	
 	if (*sampleSize == 8) {
-		ConvertInstrumentIn((Byte*)soundPtr, MusSize);
+		MADConvertInstrument((Byte*)soundPtr, MusSize);
 	}
 	
 	SetPtrSize(soundPtr, MusSize);

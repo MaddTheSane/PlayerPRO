@@ -20,6 +20,7 @@
 #include "RDriver.h"
 #include "MADPlug.h"
 #include "RDriverInt.h"
+#include "MADPrivate.h"
 #include <alloca.h>
 
 sData* inMADCreateSample()
@@ -200,4 +201,14 @@ MADErr MADAddSoundToMAD(void			*theSound,
 	strlcpy(curData->name, name, sizeof(curData->name));
 	
 	return MADNoErr;
+}
+
+void MADConvertInstrument(Byte *tempPtr, size_t sSize)
+{
+	ConvertInstrumentIn(tempPtr, sSize);
+}
+
+void MADConvertInstrument16(short *tempPtr, size_t sSize)
+{
+	ConvertInstrumentIn16(tempPtr, sSize);
 }

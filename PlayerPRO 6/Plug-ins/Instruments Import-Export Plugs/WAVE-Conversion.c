@@ -154,7 +154,7 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, int *loopStart, int *loo
 		
 		switch (*sampleSize) {
 			case 8:
-				ConvertInstrumentIn((Byte*)WAVERsrc, *sndSize);
+				MADConvertInstrument((Byte*)WAVERsrc, *sndSize);
 				break;
 				
 			case 16:
