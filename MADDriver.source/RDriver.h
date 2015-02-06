@@ -945,7 +945,7 @@ PPEXPORT void		MADUpdateTracksNumber(MADDriverRecPtr);
 PPEXPORT MADErr		MADCreateVolumeTable(MADDriverRecPtr intDriver);
 PPEXPORT void		MADDisposeVolumeTable(MADDriverRecPtr intDriver);
 PPEXPORT MADMusic*	CreateFreeMADK();
-PPEXPORT short		FindAFreeChannel(MADDriverRecPtr intDriver);
+PPEXPORT short		MADFindAFreeChannel(MADDriverRecPtr intDriver);
 
 #pragma mark Swift helpers
 /// Fills an \c IntPatData struct with pointers to the data in \c inPat

@@ -279,7 +279,7 @@ static void CALLBACK TimeProc(
 		{
 			WinMADDriver->OnOff = false;
 			
-			if (!DirectSave(WinMADDriver->currentBuf, NULL, WinMADDriver))
+			if (!MADDirectSave(WinMADDriver->currentBuf, NULL, WinMADDriver))
 			{
 				switch(WinMADDriver->DriverSettings.outPutBits)
 				{
@@ -302,7 +302,7 @@ static void CALLBACK TimeProc(
 		{
 			WinMADDriver->OnOff = true;
 			
-			if (!DirectSave(WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, NULL, WinMADDriver))
+			if (!MADDirectSave(WinMADDriver->currentBuf + WinMADDriver->WIN95BUFFERSIZE/2, NULL, WinMADDriver))
 			{
 				switch(WinMADDriver->DriverSettings.outPutBits)
 				{

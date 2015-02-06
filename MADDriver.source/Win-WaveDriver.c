@@ -98,7 +98,7 @@ ULONG GetPos(MADDriverRec *WinMADDriver)
 		{
 			OnOff = false;
 			
-			if (!DirectSave(mydma, &WinMADDriver->DriverSettings, WinMADDriver))
+			if (!MADDirectSave(mydma, &WinMADDriver->DriverSettings, WinMADDriver))
 			{
 				for (i = 0; i < WIN95BUFFERSIZE/2; i++) mydma[i] = 0;
 			}
@@ -107,7 +107,7 @@ ULONG GetPos(MADDriverRec *WinMADDriver)
 		{
 			OnOff = true;
 			
-			if (!DirectSave(mydma + WIN95BUFFERSIZE/2, &WinMADDriver->DriverSettings, WinMADDriver))
+			if (!MADDirectSave(mydma + WIN95BUFFERSIZE/2, &WinMADDriver->DriverSettings, WinMADDriver))
 			{
 				for (i = 0; i < WIN95BUFFERSIZE/2; i++) mydma[i] = 0;
 			}
@@ -144,7 +144,7 @@ void CALLBACK TimeProc(
 			{
 				dmaDst = WinMADDriver->mydma + WinMADDriver->MICROBUFState*WinMADDriver->BufSize;
 				
-				if (!DirectSave(dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
+				if (!MADDirectSave(dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
 				{
 					memset(dmaDst, 0, WinMADDriver->BufSize);
 				}
@@ -163,7 +163,7 @@ void CALLBACK TimeProc(
 			{
 				dmaDst = WinMADDriver->mydma + WinMADDriver->WIN95BUFFERSIZE/2L + WinMADDriver->MICROBUFState*WinMADDriver->BufSize;
 				
-				if (!DirectSave(dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
+				if (!MADDirectSave(dmaDst, &WinMADDriver->DriverSettings, WinMADDriver))
 				{
 					memset(dmaDst, 0, WinMADDriver->BufSize);
 				}

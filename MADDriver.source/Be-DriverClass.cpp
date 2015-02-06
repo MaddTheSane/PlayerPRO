@@ -283,7 +283,7 @@ static void	trackerStreamPlay(void *user, void *inbuffer, size_t count, const me
 #endif
 	}
 	
-	DirectSave(curMADDriver->IntDataPtr, &curMADDriver->DriverSettings, curMADDriver);
+	MADDirectSave(curMADDriver->IntDataPtr, &curMADDriver->DriverSettings, curMADDriver);
 	
 	switch(format.format) {
 		case B_AUDIO_FLOAT:

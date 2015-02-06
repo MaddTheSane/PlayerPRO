@@ -1053,7 +1053,7 @@ void ComputeReverb16(short *orgPtr, short *destPtr, int xx, int strength)
 	}
 }
 
-short FindAFreeChannel(MADDriverRec *intDriver)
+short MADFindAFreeChannel(MADDriverRec *intDriver)
 {
 	short		i;
 	MADChannel		*curVoice;
@@ -1311,7 +1311,7 @@ void NoteAnalyse(MADDriverRec *intDriver)
 								if (NewMADCommand(tempcmd)) {
 									short chanID;		// Find a free channel
 									
-									chanID = FindAFreeChannel(intDriver);
+									chanID = MADFindAFreeChannel(intDriver);
 									
 									intDriver->lastChannelUsed[i] = chanID;
 									
@@ -1941,7 +1941,7 @@ void GenerateSound(MADDriverRec *intDriver)
 	}
 }
 
-bool DirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
+bool MADDirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
 	char				*ptrCopy;
 	MADDriverSettings	driverCopy;
@@ -1979,7 +1979,7 @@ bool DirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRec *
 	return true;
 }
 
-bool DirectSave(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
+bool MADDirectSave(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
 	char				*ptrCopy;
 	MADDriverSettings	driverCopy;

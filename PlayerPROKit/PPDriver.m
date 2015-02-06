@@ -122,7 +122,7 @@
 
 - (short)availableChannel
 {
-	return FindAFreeChannel(theRec);
+	return MADFindAFreeChannel(theRec);
 }
 
 - (MADErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett
@@ -210,7 +210,7 @@
 	void* thePtr = malloc(aSize);
 	MADDriverSettings ourSettings = self.driverSettings;
 	NSData *ourData = nil;
-	if (DirectSave(thePtr, &ourSettings, theRec)) {
+	if (MADDirectSave(thePtr, &ourSettings, theRec)) {
 		ourData = [[NSData alloc] initWithBytesNoCopy:thePtr length:aSize];
 	}
  
@@ -224,7 +224,7 @@
 	
 - (BOOL)directSaveToPointer:(void*)thePtr settings:(MADDriverSettings*)theSett
 {
-	return DirectSave(thePtr, theSett, theRec);
+	return MADDirectSave(thePtr, theSett, theRec);
 }
 
 - (BOOL)isPaused
