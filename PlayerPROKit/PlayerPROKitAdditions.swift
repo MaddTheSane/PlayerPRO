@@ -200,8 +200,7 @@ extension PPSampleObject {
 		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!, bitMapFormat)!
 		
 		CGContextClearRect(bitmapContext, aRect)
-		let lineSize = view.convertSizeToBacking(NSSize(width: 1, height: 1)).height
-		CGContextSetLineWidth(bitmapContext, lineSize)
+		CGContextSetLineWidth(bitmapContext, 1)
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		if (datIsStereo) {
 			CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(0, 0, 1, stereoTrans))
@@ -249,8 +248,7 @@ extension PPSampleObject {
 		let bitMapFormat = CGBitmapInfo(alphaInfo: .PremultipliedLast, additionalInfo: .ByteOrder32Host)
 		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, CGColorSpaceCreateDeviceRGB(), bitMapFormat)
 		CGContextClearRect(bitmapContext, aRect)
-		let lineSize = 1 * scale
-		CGContextSetLineWidth(bitmapContext, lineSize)
+		CGContextSetLineWidth(bitmapContext, 1)
 		var colorRef: UIColor
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		if (datIsStereo) {
@@ -304,8 +302,8 @@ extension PPSampleObject {
 		let isStereo = curData.stereo
 		var minY: CGFloat = 0.0
 		var maxY: CGFloat = 0.0
-		let oneShiftedBy16 = CGFloat(1 << 16)
-		let oneShiftedBy8 = CGFloat(1 << 8)
+		let oneShiftedBy16 = 1 / CGFloat(1 << 16)
+		let oneShiftedBy8 = 1 / CGFloat(1 << 8)
 
 		if (curData.amplitude == 16) {
 			let theShortSample = UnsafePointer<UInt16>(curData.data.bytes)
@@ -318,8 +316,7 @@ extension PPSampleObject {
 				BS += Int(channel)
 			}
 			temp = CGFloat(theShortSample[BS] &+ 0x8000)
-			temp *= CGFloat(high);
-			temp /= oneShiftedBy16;
+			temp *= CGFloat(high) * oneShiftedBy16
 			CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(tSS), CGFloat(trueV) + temp)
 			
 			for i in tSS ..< tSE {
@@ -336,34 +333,26 @@ extension PPSampleObject {
 				
 				temp = CGFloat(theShortSample[BS] &+ 0x8000)
 				minY = temp; maxY = temp;
-				temp *= CGFloat(high)
-				temp /= oneShiftedBy16
-				CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), temp + CGFloat(trueV))
+				temp *= CGFloat(high) * oneShiftedBy16
+				CGContextAddLineToPoint(ctxRef, CGFloat(trueH + i), temp + CGFloat(trueV))
 				
 				if (BS != BE) {
 					for (var x = BS; x < BE; x++) {
 						temp = CGFloat(theShortSample[x] &+ 0x8000)
 						
-						if (temp > maxY) {
-							maxY = temp
-						}
-						
-						if (temp < minY) {
-							minY = temp
-						}
+						maxY = max(temp, maxY)
+						minY = min(temp, minY)
 						
 						if (isStereo) {
 							x++
 						}
 					}
 					
-					maxY *= CGFloat(high)
-					maxY /= oneShiftedBy16
-					minY *= CGFloat(high)
-					minY /= oneShiftedBy16
+					maxY *= CGFloat(high) * oneShiftedBy16
+					minY *= CGFloat(high) * oneShiftedBy16
 					
-					CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), minY + CGFloat(trueV))
-					CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), maxY + CGFloat(trueV))
+					CGContextMoveToPoint(ctxRef, CGFloat(trueH + i), minY + CGFloat(trueV))
+					CGContextAddLineToPoint(ctxRef, CGFloat(trueH + i), maxY + CGFloat(trueV))
 				}
 			}
 		} else {
@@ -378,10 +367,9 @@ extension PPSampleObject {
 			}
 			
 			temp = CGFloat(theSample[BS] &- 0x80)
-			temp *= CGFloat(high)
-			temp /= oneShiftedBy8
+			temp *= CGFloat(high) * oneShiftedBy8
 			
-			CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(tSS), CGFloat(trueV) + temp)
+			CGContextMoveToPoint(ctxRef, CGFloat(trueH + tSS), CGFloat(trueV) + temp)
 			
 			for i in tSS ..< tSE {
 				BS = start + (i * sampleSize) / larg
@@ -397,29 +385,22 @@ extension PPSampleObject {
 				
 				temp = CGFloat(theSample[BS] &- 0x80);
 				minY = temp; maxY = temp;
-				temp *= CGFloat(high)
-				temp /= oneShiftedBy8
-				CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), temp + CGFloat(trueV))
+				temp *= CGFloat(high) * oneShiftedBy8
+				CGContextAddLineToPoint(ctxRef, CGFloat(trueH + i), temp + CGFloat(trueV))
 				
 				if (BS != BE) {
 					for (var x = BS; x < BE; x++) {
 						temp = CGFloat(theSample[x] &- 0x80)
 						
-						if (temp > maxY) {
-							maxY = temp
-						}
-						if (temp < minY) {
-							minY = temp
-						}
+						maxY = max(temp, maxY)
+						minY = min(temp, minY)
 						
 						if (isStereo) {
 							x++;
 						}
 					}
-					maxY *= CGFloat(high);
-					maxY /= oneShiftedBy8;
-					minY *= CGFloat(high);
-					minY /= oneShiftedBy8;
+					maxY *= CGFloat(high) * oneShiftedBy8
+					minY *= CGFloat(high) * oneShiftedBy8
 					
 					CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), minY + CGFloat(trueV))
 					CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), maxY + CGFloat(trueV))
