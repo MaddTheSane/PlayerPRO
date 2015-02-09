@@ -84,7 +84,8 @@
 @property short patternPosition;
 @property short patternIdentifier;
 @property short partitionPosition;
-@property short volume; //0 to 64
+///0 to 64
+@property short volume;
 @property BOOL useEqualizer;
 @property (readonly) void *oscilloscopePointer NS_RETURNS_INNER_POINTER;
 @property (readonly) size_t oscilloscopeSize;

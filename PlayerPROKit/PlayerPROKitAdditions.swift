@@ -50,6 +50,11 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObjec
 	})
 }
 
+/** 
+ Creates an \c NSError from a <code>MADErr</code>, optionally converting the error type to an
+ error in the Cocoa error domain.
+ @retruns an NSError value, or nil if passed \c NoErr
+ */
 public func CreateErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [String: NSObject]? = nil, convertToCocoa: Bool = false) -> NSError? {
 	
 	if let anErr = PPCreateErrorFromMADErrorTypeConvertingToCocoa(theErr, convertToCocoa) {
@@ -451,6 +456,7 @@ public func InfoRecToMusicInfo(infoRec: MADInfoRec) -> PPLibrary.MusicFileInfo {
 }
 
 extension PPLibrary: SequenceType {
+	/// the values are always PPLibraryObject
 	public func generate() -> NSFastGenerator {
 		return NSFastGenerator(self)
 	}
@@ -466,14 +472,14 @@ extension PPLibrary: SequenceType {
 		public var signature: String
 
 		private init(infoDict: NSDictionary) {
-			totalPatterns = infoDict[kPPTotalPatterns] as NSNumber as Int
-			partitionLength = infoDict[kPPPartitionLength] as NSNumber as Int
-			fileSize = infoDict[kPPFileSize] as NSNumber as Int
-			totalTracks = infoDict[kPPTotalTracks] as NSNumber as Int
-			totalInstruments = infoDict[kPPTotalInstruments] as NSNumber as Int
-			internalFileName = infoDict[kPPInternalFileName] as NSString
-			formatDescription = infoDict[kPPFormatDescription] as NSString
-			signature = infoDict[kPPSignature] as NSString
+			totalPatterns = infoDict[kPPTotalPatterns] as Int
+			partitionLength = infoDict[kPPPartitionLength] as Int
+			fileSize = infoDict[kPPFileSize] as Int
+			totalTracks = infoDict[kPPTotalTracks] as Int
+			totalInstruments = infoDict[kPPTotalInstruments] as Int
+			internalFileName = infoDict[kPPInternalFileName] as String
+			formatDescription = infoDict[kPPFormatDescription] as String
+			signature = infoDict[kPPSignature] as String
 		}
 	}
 	
