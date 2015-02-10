@@ -56,6 +56,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 @optional
 - (void)beginImportSampleAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(void (^)(MADErr error, PPSampleObject *sample))handler;
+- (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
 
 @end
 

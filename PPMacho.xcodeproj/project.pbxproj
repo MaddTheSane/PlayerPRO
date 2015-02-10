@@ -655,6 +655,9 @@
 		55C1A6A71A07209900C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
 		55C1A6AA1A0720B200C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
 		55C1A6AB1A0720B200C7A733 /* SwiftAdditions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		55C52CC51A8ABC1D00E448F5 /* SamplePlugHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C52CC41A8ABC1D00E448F5 /* SamplePlugHandler.swift */; };
+		55C52CC81A8ABC5100E448F5 /* PPSamplePlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C52CC71A8ABC5100E448F5 /* PPSamplePlugObject.m */; };
+		55C52CCE1A8AC1C100E448F5 /* PPSamplePlugCompatObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C52CCD1A8AC1C100E448F5 /* PPSamplePlugCompatObject.m */; };
 		55C5754019CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
 		55C5754119CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
 		55C8EDE1187CC8B200CC8C1B /* PPPatternObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287216A8968C009013D8 /* PPPatternObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2627,6 +2630,12 @@
 		55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLImporter.m; sourceTree = "<group>"; };
 		55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPAPPLImporter.xib; sourceTree = "<group>"; };
 		55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftAdditions.xcodeproj; path = MaddsSwifts/SwiftAdditions.xcodeproj; sourceTree = "<group>"; };
+		55C52CC41A8ABC1D00E448F5 /* SamplePlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SamplePlugHandler.swift; sourceTree = "<group>"; };
+		55C52CC61A8ABC5100E448F5 /* PPSamplePlugObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSamplePlugObject.h; sourceTree = "<group>"; };
+		55C52CC71A8ABC5100E448F5 /* PPSamplePlugObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSamplePlugObject.m; sourceTree = "<group>"; };
+		55C52CCB1A8AC02F00E448F5 /* PPSamplePlugObject-private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PPSamplePlugObject-private.h"; sourceTree = "<group>"; };
+		55C52CCC1A8AC1C100E448F5 /* PPSamplePlugCompatObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSamplePlugCompatObject.h; sourceTree = "<group>"; };
+		55C52CCD1A8AC1C100E448F5 /* PPSamplePlugCompatObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSamplePlugCompatObject.m; sourceTree = "<group>"; };
 		55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentPlugBridgeHelper.m; sourceTree = "<group>"; };
 		55C5754219CE32C6005109C9 /* PPInstrumentPlugBridgeHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPlugBridgeHelper.h; sourceTree = "<group>"; };
 		55C5754319CE3559005109C9 /* ARCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARCBridge.h; sourceTree = "<group>"; };
@@ -4668,6 +4677,12 @@
 				55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */,
 				55B5DF0519A25B6D0042E062 /* PPComplexImportPlugObject.h */,
 				55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */,
+				55C52CC41A8ABC1D00E448F5 /* SamplePlugHandler.swift */,
+				55C52CCB1A8AC02F00E448F5 /* PPSamplePlugObject-private.h */,
+				55C52CC61A8ABC5100E448F5 /* PPSamplePlugObject.h */,
+				55C52CC71A8ABC5100E448F5 /* PPSamplePlugObject.m */,
+				55C52CCC1A8AC1C100E448F5 /* PPSamplePlugCompatObject.h */,
+				55C52CCD1A8AC1C100E448F5 /* PPSamplePlugCompatObject.m */,
 			);
 			path = "Plug-in handling";
 			sourceTree = "<group>";
@@ -7615,8 +7630,10 @@
 				5533C8FA19942AD9003AEB16 /* SoundOutputController.swift in Sources */,
 				55FEF84F1984509400D2E79C /* WaveViewController.m in Sources */,
 				55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */,
+				55C52CCE1A8AC1C100E448F5 /* PPSamplePlugCompatObject.m in Sources */,
 				55FD192B19A1C12B001E1D9C /* ComplexImportPlugHandler.swift in Sources */,
 				55588A96199951B300C3D4EE /* PlugInInfoController.swift in Sources */,
+				55C52CC51A8ABC1D00E448F5 /* SamplePlugHandler.swift in Sources */,
 				55232AF011FDE5180041A4EC /* BoxEditorPreferenceController.m in Sources */,
 				553ED2581A50AE99005222E3 /* ColorPreferenceObject.swift in Sources */,
 				55232AF311FDE56D0041A4EC /* DigitalEditorPreferenceControler.m in Sources */,
@@ -7628,6 +7645,7 @@
 				55801EB113D1ED9A007E24FC /* NSColor+PPPreferences.m in Sources */,
 				55323353167687A200076604 /* PPTimeFormatter.m in Sources */,
 				557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */,
+				55C52CC81A8ABC5100E448F5 /* PPSamplePlugObject.m in Sources */,
 				5579ADB819A4551500DEC0FF /* DigitalPlugHandler.swift in Sources */,
 				55993EF619A340FF00C2078E /* PPRunAlert.swift in Sources */,
 				557EF735168CFD55001BF077 /* PPInstrumentImporterObject.m in Sources */,

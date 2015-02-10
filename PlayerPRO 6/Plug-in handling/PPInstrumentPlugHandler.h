@@ -26,7 +26,7 @@
 - (MADErr)exportInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo;
 - (MADErr)importInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo;
 - (MADErr)testInstrumentFile:(NSURL *)toTest type:(OSType)theType;
-- (BOOL)isPlugAvailable:(OSType)kind type:(OSType*)theType;
+- (BOOL)isPlugAvailable:(OSType)kind;
 - (MADErr)identifyInstrumentFile:(NSURL*)ref type:(OSType*)outType;
 
 @end

@@ -24,6 +24,8 @@
 #import "ClassicalViewController.h"
 #import "WaveViewController.h"
 
+#import "PPSamplePlugObject.h"
+
 //Preferences
 #import "PianoPreferencesController.h"
 #import "ColorPreferenceController.h"

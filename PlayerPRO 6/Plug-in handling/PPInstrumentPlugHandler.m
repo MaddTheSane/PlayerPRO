@@ -174,23 +174,14 @@
 	return MADCannotFindPlug;
 }
 
-- (BOOL)isPlugAvailable:(OSType)kind type:(OSType*)theType
+- (BOOL)isPlugAvailable:(OSType)kind
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		if (kind == obj.type) {
-			if (theType) {
-				if (obj.isSample) {
-					*theType = MADPlugSampleImporter;
-				} else {
-					*theType = MADPlugInstrumentImporter;
-				}
-			}
 			return YES;
 		}
 	}
-	if (theType) {
-		*theType = MADPlugNonePlug;
-	}
+
 	return NO;
 }
 
