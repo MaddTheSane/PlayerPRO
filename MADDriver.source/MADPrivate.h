@@ -154,7 +154,7 @@ MADFourChar	GetPPPlugType(MADLibrary *inMADDriver, short ID, MADFourChar type);
 void	MInitImportPlug(MADLibrary *inMADDriver, const char*);
 void	CloseImportPlug(MADLibrary *inMADDriver);
 MADErr	CheckMADFile(char *AlienFile);
-void ConvertInstrumentIn(Byte *tempPtr, size_t sSize);
+void ConvertInstrumentIn(MADByte *tempPtr, size_t sSize);
 void ConvertInstrumentIn16(short *tempPtr, size_t sSize);
 
 #if defined _MAC_H && !TARGET_OS_IPHONE
