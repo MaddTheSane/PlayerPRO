@@ -310,10 +310,15 @@ NSData *MADInstrumentToData(InstrData* insData, sData ** sampleData)
 		[ourArchiver finishEncoding];
 		RELEASEOBJ(ourArchiver);
 	}
-	return [AUTORELEASEOBJ(ourEncData) copy];
+#if __has_feature(objc_arc)
+	return [ourEncData copy];
+#else
+	NSData *toRet = [ourEncData copy];
+	RELEASEOBJ(ourEncData);
+	return toRet;
+#endif
 }
 
-//TODO: implement
 InstrData *MADDataToInstrument(NSData *ourData, sData ***sampleData)
 {
 	InstrData *toRet = calloc(sizeof(InstrData), 1);
@@ -345,7 +350,6 @@ InstrData *MADDataToInstrument(NSData *ourData, sData ***sampleData)
 		toRet->pannEnv[i] = aPannEnv.envelopeRec;
 		toRet->volEnv[i] = aVolEnv.envelopeRec;
 		toRet->pitchEnv[i] = aPitchEnv.envelopeRec;
-		RELEASEOBJ(aVolEnv); RELEASEOBJ(aPannEnv); RELEASEOBJ(aPitchEnv);
 	}
 
 	toRet->volType = [ourUnarchiver decodeInt32ForKey:PPVolType];
@@ -393,7 +397,7 @@ NSDictionary *sampleToDictionary(sData *sampObj)
 	toRet[LOOPTYPEKEY] = @(sampObj->loopType);
 	toRet[AMPLITUDEKEY] = @(sampObj->amp);
 	toRet[RELATIVENOTEKEY] = @(sampObj->relNote);
-	toRet[NAMEKEY] = [NSString stringWithCString:sampObj->name encoding:NSMacOSRomanStringEncoding];
+	toRet[NAMEKEY] = [NSString stringWithCString:sampObj->name encoding:NSMacOSRomanStringEncoding] ?: [NSString string];
 	toRet[STEREOKEY] = @(sampObj->stereo);
 	toRet[DATAKEY] = sampObj->size != 0 ? [NSData dataWithBytes:sampObj->data length:sampObj->size]: [NSData data];
 
@@ -414,27 +418,42 @@ NSData *MADSampleToData(sData *sampObj)
 		RELEASEOBJ(toRet);
 		RELEASEOBJ(ourArchiver);
 	}
-	return [AUTORELEASEOBJ(ourEncData) copy];
+#if __has_feature(objc_arc)
+	return [ourEncData copy];
+#else
+	NSData *toRet = [ourEncData copy];
+	RELEASEOBJ(ourEncData);
+	return toRet;
+#endif
 }
 
 sData *dictionaryToSample(NSDictionary *sampleDict)
 {
 	sData *toRet = calloc(sizeof(sData), 1);
-	strlcpy(toRet->name, [sampleDict[NAMEKEY] cStringUsingEncoding:NSMacOSRomanStringEncoding], sizeof(toRet->name));
-	NSData *aData = sampleDict[DATAKEY];
-	if (aData && [aData length] != 0) {
-		toRet->size = (int)aData.length;
-		toRet->data = malloc(toRet->size);
-		memcpy(toRet->data, aData.bytes, toRet->size);
+	@try {
+		strlcpy(toRet->name, [sampleDict[NAMEKEY] cStringUsingEncoding:NSMacOSRomanStringEncoding], sizeof(toRet->name));
+		NSData *aData = sampleDict[DATAKEY];
+		if (aData && [aData length] != 0) {
+			toRet->size = (int)aData.length;
+			toRet->data = malloc(toRet->size);
+			memcpy(toRet->data, aData.bytes, toRet->size);
+		}
+		toRet->loopBeg = [(NSNumber*)sampleDict[LOOPBEGINKEY] intValue];
+		toRet->loopSize = [(NSNumber*)sampleDict[LOOPSIZEKEY] intValue];
+		toRet->loopType = [(NSNumber*)sampleDict[LOOPTYPEKEY] unsignedCharValue];
+		toRet->vol = [(NSNumber*)sampleDict[VOLUMEKEY] unsignedCharValue];
+		toRet->c2spd = [(NSNumber*)sampleDict[C2SPDKEY] unsignedShortValue];
+		toRet->relNote = [(NSNumber*)sampleDict[RELATIVENOTEKEY] charValue];
+		toRet->stereo = [(NSNumber*)sampleDict[STEREOKEY] boolValue];
+		return toRet;
 	}
-	toRet->loopBeg = [(NSNumber*)sampleDict[LOOPBEGINKEY] intValue];
-	toRet->loopSize = [(NSNumber*)sampleDict[LOOPSIZEKEY] intValue];
-	toRet->loopType = [(NSNumber*)sampleDict[LOOPTYPEKEY] unsignedCharValue];
-	toRet->vol = [(NSNumber*)sampleDict[VOLUMEKEY] unsignedCharValue];
-	toRet->c2spd = [(NSNumber*)sampleDict[C2SPDKEY] unsignedShortValue];
-	toRet->relNote = [(NSNumber*)sampleDict[RELATIVENOTEKEY] charValue];
-	toRet->stereo = [(NSNumber*)sampleDict[STEREOKEY] boolValue];
-	return toRet;
+	@catch (NSException *exception) {
+		if (toRet->data) {
+			free(toRet->data);
+		}
+		free(toRet);
+		return NULL;
+	}
 }
 
 sData *MADDataToSample(NSData *ourData)

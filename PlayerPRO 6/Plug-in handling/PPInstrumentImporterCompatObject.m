@@ -158,10 +158,14 @@ static void moveInfoOverToInstrumentObjectFrom(PPInstrumentObject* to, PPInstrum
 		}];
 	} else {
 		NSData *aDat = PPSampleToData(sample);
-		[[self remoteConnectionProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL sampleData:aDat instrumentNumber:InsHeader.number sampleNumber:sampleID ? *sampleID : 0 reply:^(MADErr error, NSData *outSampData, short newSampleNum) {
+		[[self remoteConnectionProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL sampleData:aDat instrumentNumber:InsHeader.number sampleNumber:sampleID ? *sampleID : -1 reply:^(MADErr error, NSData *outSampData, BOOL isNewSample) {
 			if (error == MADNoErr) {
-				*sampleID = newSampleNum;
-				[InsHeader replaceObjectInSamplesAtIndex:newSampleNum withObject:PPDataToSample(outSampData)];
+				short aSample = *sampleID;
+				if (isNewSample) {
+					aSample++;
+				}
+				*sampleID = aSample;
+				[InsHeader replaceObjectInSamplesAtIndex:aSample withObject:PPDataToSample(outSampData)];
 			}
 			
 			handler(error);

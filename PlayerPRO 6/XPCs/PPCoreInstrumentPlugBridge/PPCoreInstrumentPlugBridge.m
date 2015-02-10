@@ -255,9 +255,12 @@ static void freeIns(InstrData* curIns, sData **samples) {
 				ourData = MADInstrumentToData(instrument, samples);
 			}
 			reply(iErr, ourData);
-			
+			freeIns(instrument, samples);
+			free(samples);
+			free(instrument);
 			RELEASEOBJ(ourData);
-			break;
+			
+			return;
 		}
 	}
 	reply(MADCannotFindPlug, nil);
@@ -266,30 +269,44 @@ static void freeIns(InstrData* curIns, sData **samples) {
 	free(instrument);
 }
 
-//TODO: Implement
-- (void)beginImportFileAtURL:(NSURL*)aFile withBundleURL:(NSURL*)bundle sampleData:(NSData*)sampData instrumentNumber:(short)insNum sampleNumber:(short)sampNum reply:(void (^)(MADErr error, NSData *outInsData, short newSampleNum))reply
+- (void)beginImportFileAtURL:(NSURL*)aFile withBundleURL:(NSURL*)bundle sampleData:(NSData*)sampData instrumentNumber:(short)insNum sampleNumber:(short)sampNum reply:(void (^)(MADErr error, NSData *outInsData, BOOL newSample))reply
 {
-	sData **samples = NULL;
-	InstrData *instrument = NULL;
-	//sData *sample = MADDataToSample(sampData);
+	sData **samples = calloc(sizeof(sData*), MAXINSTRU);
+	InstrData *instrument = calloc(sizeof(InstrData), 1);
+	
+	instrument->no = 0;
+	sData *sample = MADDataToSample(sampData);
+	if (sample != NULL) {
+		instrument->numSamples = 1;
+		samples[0] = sample;
+	} else {
+		instrument->numSamples = 0;
+	}
 	
 	for (PPInstrumentPlugBridgeObject *plug in plugIns) {
 		if ([plug.bundleFile.bundleURL isEqual:bundle]) {
 			NSData *ourData = nil;
-			short aSamp = sampNum;
+			short aSamp = sampNum != -1 ? 0 : -1;
+			short preSamp = sampNum;
 			MADErr iErr = [plug importURL:aFile instrument:instrument sampleArray:samples sampleIndex:&aSamp];
 			
 			if (iErr == noErr) {
-				ourData = MADInstrumentToData(instrument, samples);
+				ourData = MADSampleToData(samples[aSamp]);
 			}
-			reply(iErr, ourData, aSamp);
+			reply(iErr, ourData, aSamp != preSamp);
 			
+			freeIns(instrument, samples);
+			free(samples);
+			free(instrument);
 			RELEASEOBJ(ourData);
-			break;
+			
+			return;
 		}
 	}
 	reply(MADCannotFindPlug, nil, -1);
-
+	freeIns(instrument, samples);
+	free(samples);
+	free(instrument);
 }
 
 + (instancetype)sharedImporter
