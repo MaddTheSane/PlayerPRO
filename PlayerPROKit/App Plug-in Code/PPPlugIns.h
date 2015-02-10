@@ -18,16 +18,14 @@
 typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
 typedef void (^PPPlugErrorBlock)(MADErr error);
 
-/*!
- *	\protocol	PPPlugin
- *	\abstract	base protocol for PlayerPRO 6 plug-ins.
- *	\property	hasUIConfiguration
- *				Does the plug-in have a UI?
- *	\c			initForPlugIn
- *				Initializer (constructor) for a plug-in
+/**
+ *	@protocol	PPPlugin
+ *	@abstract	base protocol for PlayerPRO 6 plug-ins.
  */
 @protocol PPPlugin <NSObject>
+/// Does the plug-in have a UI?
 @property (nonatomic, readonly) BOOL hasUIConfiguration;
+/// Initializer (constructor) for a plug-in
 - (instancetype)initForPlugIn;
 @end
 
@@ -47,26 +45,55 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 - (void)beginRunWithData:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
 @end
 
-@protocol PPInstrumentImportPlugin <PPPlugin, NSObject>
 
-@property (nonatomic, readonly) BOOL isInstrument;
+@protocol PPSampleImportPlugin <NSObject>
+- (instancetype)initForPlugIn;
+
+@property (nonatomic, readonly) BOOL hasUIForImport;
 
 - (BOOL)canImportSampleAtURL:(NSURL*)sampleURL;
-- (MADErr)importSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID driver:(PPDriver*)driver;
+- (MADErr)importSampleAtURL:(NSURL*)sampleURL sample:(inout PPSampleObject**)sample driver:(PPDriver*)driver;
 
 @optional
-- (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
-- (void)beginImportSampleAtURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short*)sampleID driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
+- (void)beginImportSampleAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(void (^)(MADErr error, PPSampleObject *sample))handler;
+
 @end
 
-@protocol PPInstrumentExportPlugin <PPPlugin, NSObject>
+@protocol PPSampleExportPlugin <NSObject>
+- (instancetype)initForPlugIn;
 
-@property (nonatomic, readonly) BOOL isInstrument;
+@property (nonatomic, readonly) BOOL hasUIForExport;
 
-- (MADErr)exportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver;
+- (MADErr)exportSample:(PPSampleObject*)sample toURL:(NSURL*)sampleURL driver:(PPDriver*)driver;
 
 @optional
-- (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
+- (void)beginExportSample:(PPSampleObject*)asample toURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
+
+
+@end
+
+@protocol PPInstrumentImportPlugin <NSObject>
+- (instancetype)initForPlugIn;
+
+@property (nonatomic, readonly) BOOL hasUIForImport;
+
+- (BOOL)canImportInstrumentAtURL:(NSURL*)sampleURL;
+- (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID driver:(PPDriver*)driver;
+
+@optional
+- (MADErr)playInstrumentAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
+- (void)beginImportInstrumentAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(void (^)(MADErr error, PPInstrumentObject *sample))handler;
+@end
+
+@protocol PPInstrumentExportPlugin <NSObject>
+- (instancetype)initForPlugIn;
+
+@property (nonatomic, readonly) BOOL hasUIForExport;
+
+- (MADErr)exportInstrumentToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader driver:(PPDriver*)driver;
+
+@optional
+- (void)beginExportInstrumentToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
 @end
 
 //This doesn't need to conform to PPPlugin because it will always have a UI.
