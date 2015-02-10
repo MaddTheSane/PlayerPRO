@@ -78,7 +78,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 @property (nonatomic, readonly) BOOL hasUIForImport;
 
 - (BOOL)canImportInstrumentAtURL:(NSURL*)sampleURL;
-- (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID driver:(PPDriver*)driver;
+- (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject**)InsHeader driver:(PPDriver*)driver;
 
 @optional
 - (MADErr)playInstrumentAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
