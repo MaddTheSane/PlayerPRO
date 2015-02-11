@@ -29,13 +29,23 @@ PPSamplePlugCompatObject *tryOldAPI(NSBundle *theBundle)
 - (instancetype)initWithBundleNoInit:(NSBundle *)tempBundle
 {
 	if (self = [super initWithBundle:tempBundle]) {
-		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
-		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
-		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugUTITypesKey];
+		NSDictionary *tempDict = [tempBundle infoDictionary];
+		id DictionaryTemp;
+		
+		DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugUTITypesKey];
 		if ([DictionaryTemp isKindOfClass:[NSArray class]]) {
-			self.UTITypes = [DictionaryTemp copy];
+			self.UTITypes = DictionaryTemp;
 		} else if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 			self.UTITypes = @[[NSString stringWithString:DictionaryTemp]];
+		} else {
+			return nil;
+		}
+		
+		DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugTypeKey];
+		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
+			type = NSStringToOSType(DictionaryTemp);
+		} else if ([DictionaryTemp isKindOfClass:[NSNumber class]]) {
+			type = [(NSNumber*)DictionaryTemp unsignedIntValue];
 		} else {
 			return nil;
 		}
@@ -114,16 +124,6 @@ PPSamplePlugCompatObject *tryOldAPI(NSBundle *theBundle)
 		}
 		
 		self.plugCode = [[bundClass alloc] initForPlugIn];
-		
-		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
-		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugTypeKey];
-		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-			type = NSStringToOSType(DictionaryTemp);
-		} else if ([DictionaryTemp isKindOfClass:[NSNumber class]]) {
-			type = [(NSNumber*)DictionaryTemp unsignedIntValue];
-		} else {
-			return nil;
-		}
 	}
 	
 	return self;

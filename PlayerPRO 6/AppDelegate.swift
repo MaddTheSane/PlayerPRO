@@ -130,7 +130,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		
 		for rawObj in madLib {
 			let obj = rawObj as PPLibraryObject
-			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.menuName, plugType: trackerPlugName, plugURL: obj.bundle.bundleURL)
+			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: trackerPlugName, plugURL: obj.bundle.bundleURL)
 			if !contains(plugInInfos, tmpInfo) {
 				plugInInfos.append(tmpInfo)
 			}

@@ -22,18 +22,6 @@
 	<string>2.0</string>
 	<key>CFPlugInDynamicRegistration</key>
 	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>C4B85FAC-BD58-4661-9004-CBBF84BA4EDD</key>
-		<string>AIFFFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>FD7154D6-20BF-4007-881B-8E44970C3B0A</key>
-		<array>
-			<string>C4B85FAC-BD58-4661-9004-CBBF84BA4EDD</string>
-		</array>
-	</dict>
 	<key>MADPlugAuthorName</key>
 	<string>C.W. &quot;Madd the Sane&quot; Betts</string>
 	<key>MADPlugMenuName</key>

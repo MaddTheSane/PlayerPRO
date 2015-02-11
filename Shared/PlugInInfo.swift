@@ -31,7 +31,7 @@ class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
 	let plugCopyright: String
 	let plugURL: NSURL
 	
-	init(plugName pn: String, author aut: String? = nil, plugType pt: String = "unknown", plugURL pu: NSURL) {
+	init(plugName pn: String, author aut: String? = nil, plugType pt: String = "unknown", plugURL pu: NSURL = NSBundle.mainBundle().bundleURL) {
 		plugName = pn
 		authorName = aut ?? "Unknown Author"
 		plugType = pt

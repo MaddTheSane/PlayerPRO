@@ -92,14 +92,14 @@ OSErr inMADPlaySoundData(MADDriverRec *theRec, Ptr soundPtr, long size, int chan
 		[tempDict addEntriesFromDictionary:[aBund localizedInfoDictionary]];
 		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugMenuNameKey];
 		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-			self.menuName = [DictionaryTemp copy];
+			self.menuName = DictionaryTemp;
 		} else
 			return nil;
 		
 		DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugAuthorNameKey];
 		if (DictionaryTemp) {
 			if ([DictionaryTemp isKindOfClass:[NSString class]]) {
-				self.authorString = [DictionaryTemp copy];
+				self.authorString = DictionaryTemp;
 			} else {
 				self.authorString = NSLocalizedString(@"No Author", @"no author");
 			}
