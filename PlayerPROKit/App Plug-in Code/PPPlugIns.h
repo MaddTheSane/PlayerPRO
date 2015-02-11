@@ -37,6 +37,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 - (void)beginRunWithPcmd:(Pcmd*)aPcmd driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
 @end
 
+
 @protocol PPFilterPlugin <PPPlugin, NSObject>
 
 - (MADErr)runWithData:(inout PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver;
@@ -60,6 +61,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 @end
 
+
 @protocol PPSampleExportPlugin <NSObject>
 - (instancetype)initForPlugIn;
 
@@ -70,8 +72,8 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 @optional
 - (void)beginExportSample:(PPSampleObject*)asample toURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
 
-
 @end
+
 
 @protocol PPInstrumentImportPlugin <NSObject>
 - (instancetype)initForPlugIn;
@@ -85,6 +87,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 - (MADErr)playInstrumentAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
 - (void)beginImportInstrumentAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(void (^)(MADErr error, PPInstrumentObject *sample))handler;
 @end
+
 
 @protocol PPInstrumentExportPlugin <NSObject>
 - (instancetype)initForPlugIn;

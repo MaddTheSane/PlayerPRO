@@ -121,6 +121,8 @@
 		55085D881836EE7B004A152F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55085D861836EE7B004A152F /* AudioToolbox.framework */; };
 		5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508C3ED16CEB33B007CA458 /* SampleCellView.m */; };
 		55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
+		550993DE1A8C0432004D8A8A /* AIFFSamplePlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550993DD1A8C0432004D8A8A /* AIFFSamplePlug.swift */; };
+		550993E81A8C0494004D8A8A /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
 		550A474318A455CC0052AED7 /* VSTFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 550A474218A455CC0052AED7 /* VSTFunctions.h */; };
 		550A8FD819C74ED200588849 /* ComplexFadePlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550A8FD719C74ED200588849 /* ComplexFadePlug.swift */; };
 		550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -132,7 +134,6 @@
 		550DBB87169FA4D6006F5C85 /* PPInstrumentCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 550DBB86169FA4D6006F5C85 /* PPInstrumentCellView.m */; };
 		550FFAE617CEA4570003A2F3 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		550FFAE717CEA4570003A2F3 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		550FFAED17CEA5540003A2F3 /* AIFF.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E102C10D6C79E00BB619C /* AIFF.c */; };
 		55105C9C13BE638D00902106 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5511F05819B04EB10033A252 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5511F05B19B04EB10033A252 /* InfoPlist.strings */; };
 		5511F05919B04EB10033A252 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5511F05B19B04EB10033A252 /* InfoPlist.strings */; };
@@ -845,6 +846,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 551292D7163DD68500C2C639;
 			remoteInfo = PlayerPROKit;
+		};
+		550993E41A8C0480004D8A8A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		550993E61A8C0489004D8A8A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
 		};
 		550FFAE117CEA4570003A2F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2141,6 +2156,7 @@
 		55085D871836EE7B004A152F /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.0.sdk/System/Library/Frameworks/AudioUnit.framework; sourceTree = DEVELOPER_DIR; };
 		5508C3EC16CEB33B007CA458 /* SampleCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleCellView.h; sourceTree = "<group>"; };
 		5508C3ED16CEB33B007CA458 /* SampleCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleCellView.m; sourceTree = "<group>"; };
+		550993DD1A8C0432004D8A8A /* AIFFSamplePlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AIFFSamplePlug.swift; sourceTree = "<group>"; };
 		550A474218A455CC0052AED7 /* VSTFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = VSTFunctions.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		550A474518A458380052AED7 /* stub-VSTPlugIn.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "stub-VSTPlugIn.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		550A8FD719C74ED200588849 /* ComplexFadePlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexFadePlug.swift; sourceTree = "<group>"; };
@@ -2355,7 +2371,6 @@
 		554E101310D6C79E00BB619C /* Length.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Length.r; sourceTree = "<group>"; };
 		554E101510D6C79E00BB619C /* Mix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = Mix.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E101610D6C79E00BB619C /* Mix.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = Mix.r; sourceTree = "<group>"; };
-		554E102C10D6C79E00BB619C /* AIFF.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = AIFF.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E104210D6C79E00BB619C /* PAT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PAT.h; sourceTree = "<group>"; };
 		554E104C10D6C79E00BB619C /* QuicktimeGeneric.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = QuicktimeGeneric.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E104D10D6C79E00BB619C /* snd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = snd.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
@@ -2752,6 +2767,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				550993E81A8C0494004D8A8A /* SwiftAdditions.framework in Frameworks */,
 				5535079319BBD4BE00B9E815 /* PlayerPROKit.framework in Frameworks */,
 				550FFAE717CEA4570003A2F3 /* CoreFoundation.framework in Frameworks */,
 				550FFAE617CEA4570003A2F3 /* PlayerPROCore.framework in Frameworks */,
@@ -3467,7 +3483,7 @@
 			isa = PBXGroup;
 			children = (
 				550FFAEC17CEA4590003A2F3 /* AIFF-Info.plist */,
-				554E102C10D6C79E00BB619C /* AIFF.c */,
+				550993DD1A8C0432004D8A8A /* AIFFSamplePlug.swift */,
 			);
 			path = AIFF;
 			sourceTree = "<group>";
@@ -5044,6 +5060,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				550993E71A8C0489004D8A8A /* PBXTargetDependency */,
+				550993E51A8C0480004D8A8A /* PBXTargetDependency */,
 				550FFAE017CEA4570003A2F3 /* PBXTargetDependency */,
 			);
 			name = AIFF;
@@ -6988,7 +7006,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				550FFAED17CEA5540003A2F3 /* AIFF.c in Sources */,
+				550993DE1A8C0432004D8A8A /* AIFFSamplePlug.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7760,6 +7778,16 @@
 			isa = PBXTargetDependency;
 			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
 			targetProxy = 5502F55E19D1E1EB00408339 /* PBXContainerItemProxy */;
+		};
+		550993E51A8C0480004D8A8A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 550993E41A8C0480004D8A8A /* PBXContainerItemProxy */;
+		};
+		550993E71A8C0489004D8A8A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 550993E61A8C0489004D8A8A /* PBXContainerItemProxy */;
 		};
 		550FFAE017CEA4570003A2F3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8923,6 +8951,7 @@
 				);
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/AIFF/AIFF-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -8942,6 +8971,8 @@
 				);
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/AIFF/AIFF-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;

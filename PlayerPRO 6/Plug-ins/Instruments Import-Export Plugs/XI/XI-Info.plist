@@ -26,8 +26,6 @@
 	<true/>
 	<key>MADPlugAuthorName</key>
 	<string>Antoine ROSSET</string>
-	<key>MADPlugIsSample</key>
-	<false/>
 	<key>MADPlugMenuName</key>
 	<string>XI Instrument</string>
 	<key>MADPlugType</key>
