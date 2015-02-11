@@ -31,15 +31,14 @@ class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
 	let plugCopyright: String
 	let plugURL: NSURL
 	
-	init(plugName pn: String, author aut: String = "Unknown Author", plugType pt: String = "unknown", plugURL pu: NSURL) {
+	init(plugName pn: String, author aut: String? = nil, plugType pt: String = "unknown", plugURL pu: NSURL) {
 		plugName = pn
-		authorName = aut
+		authorName = aut ?? "Unknown Author"
 		plugType = pt
 		plugURL = pu
 		if let tmpBundle = NSBundle(URL: pu) {
-			let tmpCopy: AnyObject? = tmpBundle.infoDictionary!["NSHumanReadableCopyright"]
-			if let acopy: AnyObject = tmpCopy {
-				plugCopyright = acopy as NSString as String
+			if let acopy = tmpBundle.infoDictionary!["NSHumanReadableCopyright"] as? String {
+				plugCopyright = acopy
 			} else {
 				plugCopyright = "No copyright info available"
 			}

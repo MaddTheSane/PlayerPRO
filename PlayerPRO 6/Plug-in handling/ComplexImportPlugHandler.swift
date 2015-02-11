@@ -21,7 +21,7 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, SequenceType 
 			if let components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: nil, error: nil) as [NSURL]? {
 				for component in components {
 					if let ext = component.pathExtension {
-						if ext.compare("ppextimp", options:  .CaseInsensitiveSearch) != .OrderedSame {
+						if ext.compare("ppextimp", options: .CaseInsensitiveSearch) != .OrderedSame {
 							continue
 						}
 						let theBundle = NSBundle(URL: component)
