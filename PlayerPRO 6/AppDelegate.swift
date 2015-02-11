@@ -126,6 +126,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		let instrumentPlugName = NSLocalizedString("InstrumentPlugName", comment: "Instrument plug-in name")
 		let digitalPlugName = NSLocalizedString("DigitalPlugName", comment: "Digital plug-in name")
 		let filterPlugName = NSLocalizedString("FilterPlugName", comment: "Filter plug-in name")
+		let samplePlugName = NSLocalizedString("SamplePlugName", comment: "Sample plug-in name")
 		
 		for rawObj in madLib {
 			let obj = rawObj as PPLibraryObject

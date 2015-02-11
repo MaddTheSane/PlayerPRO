@@ -29,6 +29,9 @@
 /* Filter plug-in name */
 "FilterPlugName" = "Filter Plug-in";
 
+/* Sample plug-in name */
+"SamplePlugName" = "Sample Plug-in";
+
 /* Instrument plug-in name */
 "InstrumentPlugName" = "Instrument Plug-in";
 
