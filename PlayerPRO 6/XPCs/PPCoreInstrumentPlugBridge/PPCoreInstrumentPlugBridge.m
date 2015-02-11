@@ -102,6 +102,10 @@ static inline BOOL getBoolFromId(id NSType)
 	}
 }
 
+@interface PPCoreInstrumentPlugBridge ()
+- (void)isBundleAtURLIsInstrumentBundle:(NSURL*)bundle withReply:(void (^)(BOOL isPlug, BOOL isInstrument, BOOL isImport))reply;
+@end
+
 @implementation PPCoreInstrumentPlugBridge
 @synthesize plugIns;
 
@@ -115,7 +119,21 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 	return CFBridgingRelease(UTCreateStringForOSType(theOSType));
 }
 
-- (void)checkBundleAtURLIsInstrumentBundle:(NSURL*)bundle withReply:(void (^)(BOOL isPlug, BOOL isInstrument, BOOL isImport))reply
+- (void)checkBundleAtURLIsSampleBundle:(NSURL *)bundle withReply:(void (^)(BOOL))reply
+{
+	[self isBundleAtURLIsInstrumentBundle:bundle withReply:^(BOOL isPlug, BOOL isInstrument, BOOL isImport) {
+		reply(isPlug && !isInstrument);
+	}];
+}
+
+- (void)checkBundleAtURLIsInstrumentBundle:(NSURL *)bundle withReply:(void (^)(BOOL))reply
+{
+	[self isBundleAtURLIsInstrumentBundle:bundle withReply:^(BOOL isPlug, BOOL isInstrument, BOOL isImport) {
+		reply(isPlug && isInstrument);
+	}];
+}
+
+- (void)isBundleAtURLIsInstrumentBundle:(NSURL*)bundle withReply:(void (^)(BOOL isPlug, BOOL isInstrument, BOOL isImport))reply
 {
 	NSBundle *preBundle = [NSBundle bundleWithURL:bundle];
 	NSArray *archs = [preBundle executableArchitectures];

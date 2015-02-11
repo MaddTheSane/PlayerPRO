@@ -117,40 +117,11 @@
 	return [instrumentIEArray count];
 }
 
-- (MADErr)callInstumentPlugIn:(PPInstrumentImporterObject*)thePlug order:(OSType)theOrd instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo
-{
-	plugInfo->fileType = [thePlug type];
-	return MADOrderNotImplemented;
-	//return [thePlug importInstrument:theURL instrumentDataReference:ins sampleDataReference:sampRef instrumentSample:samp function:theOrd plugInfo:plugInfo];
-}
-
-- (MADErr)exportInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo
-{
-	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
-		if (theType == obj.type) {
-			return [self callInstumentPlugIn:obj order:MADPlugExport instrumentReference:ins sampleReference:sampRef sample:samp URL:theURL plugInfo:plugInfo];
-		}
-	}
-	return MADCannotFindPlug;
-}
-
-- (MADErr)importInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo
-{
-	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
-		if (theType == obj.type) {
-			return [self callInstumentPlugIn:obj order:MADPlugImport instrumentReference:ins sampleReference:sampRef sample:samp URL:theURL plugInfo:plugInfo];
-		}
-	}
-	return MADCannotFindPlug;
-}
-
 - (MADErr)testInstrumentFile:(NSURL *)toTest type:(OSType)theType
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		if (theType == obj.type) {
-			short temp;
-			PPInfoPlug tempPlug;
-			return [self callInstumentPlugIn:obj order:MADPlugTest instrumentReference:NULL sampleReference:NULL sample:&temp URL:toTest plugInfo:&tempPlug];
+			return [obj canImportFileAtURL:toTest] ? MADNoErr : MADFileNotSupportedByThisPlug ;
 		}
 	}
 	return MADCannotFindPlug;
@@ -159,9 +130,7 @@
 - (MADErr)identifyInstrumentFile:(NSURL*)ref type:(OSType*)outType
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
-		short temp;
-		PPInfoPlug tempPlug;
-		if ([self callInstumentPlugIn:obj order:MADPlugTest instrumentReference:NULL sampleReference:NULL sample:&temp URL:ref plugInfo:&tempPlug] == MADNoErr) {
+		if ([obj canImportFileAtURL:ref] == true) {
 			if (outType) {
 				*outType = obj.type;
 			}
@@ -174,23 +143,48 @@
 	return MADCannotFindPlug;
 }
 
-- (BOOL)isPlugAvailable:(OSType)kind type:(OSType*)theType
+- (void)beginExportingInstrument:(PPInstrumentObject*)theIns ofType:(OSType)aType toURL:(NSURL*)aURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler
+{
+	PPInstrumentImporterObject *aPlug;
+	for (PPInstrumentImporterObject *plug in instrumentIEArray) {
+		if (plug.type == aType) {
+			aPlug = plug;
+			break;
+		}
+	}
+	
+	if (aPlug == nil) {
+		handler(MADCannotFindPlug);
+	} else {
+		[aPlug beginExportInstrument:theIns toURL:aURL driver:driver parentDocument:document handler:handler];
+	}
+}
+
+- (void)beginImportingInstrumentOfType:(OSType)aType fromURL:(NSURL*)aURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(MADErr errorCode, PPInstrumentObject *createdIns))handler
+{
+	PPInstrumentImporterObject *aPlug;
+	for (PPInstrumentImporterObject *plug in instrumentIEArray) {
+		if (plug.type == aType) {
+			aPlug = plug;
+			break;
+		}
+	}
+	
+	if (aPlug == nil) {
+		handler(MADCannotFindPlug, nil);
+	} else {
+		[aPlug beginImportInstrumentAtURL:aURL driver:driver parentDocument:document handler:handler];
+	}
+}
+
+- (BOOL)isPlugAvailable:(OSType)kind
 {
 	for (PPInstrumentImporterObject *obj in instrumentIEArray) {
 		if (kind == obj.type) {
-			if (theType) {
-				if (obj.isSample) {
-					*theType = MADPlugSampleImporter;
-				} else {
-					*theType = MADPlugInstrumentImporter;
-				}
-			}
 			return YES;
 		}
 	}
-	if (theType) {
-		*theType = MADPlugNonePlug;
-	}
+
 	return NO;
 }
 

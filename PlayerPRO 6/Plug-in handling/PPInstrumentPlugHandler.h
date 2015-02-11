@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#import <PlayerPROKit/PlayerPROKit.h>
 
 @class PPInstrumentImporterObject;
+@class PPDocument;
 
 @interface PPInstrumentPlugHandler : NSObject <NSFastEnumeration>
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
@@ -23,10 +25,10 @@
 - (void)addPlugInFromURL:(NSURL *)urlpath;
 - (void)addPlugInFromBundle:(NSBundle *)theBund;
 
-- (MADErr)exportInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo;
-- (MADErr)importInstrumentOfType:(OSType)theType instrumentReference:(InstrData*)ins sampleReference:(sData**)sampRef sample:(short*)samp URL:(NSURL*)theURL plugInfo:(PPInfoPlug *)plugInfo;
+- (void)beginExportingInstrument:(PPInstrumentObject*)theIns ofType:(OSType)aType toURL:(NSURL*)aURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler;
+- (void)beginImportingInstrumentOfType:(OSType)aType fromURL:(NSURL*)aURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(MADErr errorCode, PPInstrumentObject *createdIns))handler;
 - (MADErr)testInstrumentFile:(NSURL *)toTest type:(OSType)theType;
-- (BOOL)isPlugAvailable:(OSType)kind type:(OSType*)theType;
+- (BOOL)isPlugAvailable:(OSType)kind;
 - (MADErr)identifyInstrumentFile:(NSURL*)ref type:(OSType*)outType;
 
 @end

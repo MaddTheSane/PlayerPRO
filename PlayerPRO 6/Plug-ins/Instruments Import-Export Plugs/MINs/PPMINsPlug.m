@@ -58,14 +58,14 @@ static inline OSErr TestMINS(const InstrData *CC)
 
 @implementation PPMINsPlug
 
-- (BOOL)hasUIConfiguration
+- (BOOL)hasUIForExport
 {
 	return NO;
 }
 
-- (BOOL)isInstrument
+- (BOOL)hasUIForImport
 {
-	return YES;
+	return NO;
 }
 
 - (instancetype)initForPlugIn
@@ -73,7 +73,7 @@ static inline OSErr TestMINS(const InstrData *CC)
 	return self = [self init];
 }
 
-- (BOOL)canImportSampleAtURL:(NSURL *)sampleURL
+- (BOOL)canImportInstrumentAtURL:(NSURL *)sampleURL
 {
 	NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingFromURL:sampleURL error:NULL];
 	if (!readHandle) {
@@ -86,12 +86,14 @@ static inline OSErr TestMINS(const InstrData *CC)
 	return TestMINS(theSound.bytes) == MADNoErr;
 }
 
-- (MADErr)importSampleAtURL:(NSURL *)sampleURL instrument:(inout PPInstrumentObject *)InsHeader sample:(inout PPSampleObject *)sample sampleID:(inout short *)sampleID driver:(PPDriver *)driver
+-(MADErr)importInstrumentAtURL:(NSURL *)sampleURL instrument:(out PPInstrumentObject *__autoreleasing *)outHeader driver:(PPDriver *)driver
 {
 	NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingFromURL:sampleURL error:NULL];
 	if (!readHandle) {
 		return MADReadingErr;
 	}
+	PPInstrumentObject *InsHeader = [PPInstrumentObject new];
+	
 	[InsHeader resetInstrument];
 	size_t inOutCount = sizeof(InstrData);
 	NSMutableData *aHeader = [[readHandle readDataOfLength:inOutCount] mutableCopy];
@@ -153,7 +155,7 @@ static inline OSErr TestMINS(const InstrData *CC)
 				InsHeader.soundOut = NO;
 				break;
 		}
-
+		
 	}
 	
 	for (int x = 0; x < ourData->numSamples; x++) {
@@ -178,11 +180,12 @@ static inline OSErr TestMINS(const InstrData *CC)
 		free(curData->data);
 		free(curData);
 	}
+	*outHeader = InsHeader;
 	
 	return MADNoErr;
 }
 
-- (MADErr)exportSampleToURL:(NSURL *)sampleURL instrument:(PPInstrumentObject *)InsHeader sample:(PPSampleObject *)sample sampleID:(short)sampleID driver:(PPDriver *)driver
+- (MADErr)exportInstrument:(PPInstrumentObject *)InsHeader toURL:(NSURL *)sampleURL driver:(PPDriver *)driver
 {
 	NSFileHandle *fileHand = [NSFileHandle fileHandleForWritingToURL:sampleURL error:NULL];
 	if (fileHand == nil) {

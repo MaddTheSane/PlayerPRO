@@ -177,14 +177,9 @@
 	return MADNoErr;
 }
 
-- (BOOL)hasUIConfiguration
+- (BOOL)hasUIForImport
 {
 	return NO;
-}
-
-- (BOOL)isInstrument
-{
-	return YES;
 }
 
 - (instancetype)initForPlugIn
@@ -192,7 +187,7 @@
 	return self = [self init];
 }
 
-- (BOOL)canImportSampleAtURL:(NSURL *)sampleURL
+- (BOOL)canImportInstrumentAtURL:(NSURL *)sampleURL
 {
 	NSFileHandle *aHandle = [NSFileHandle fileHandleForReadingFromURL:sampleURL error:NULL];
 	if (!aHandle) {
@@ -205,14 +200,23 @@
 	return [fileData isEqualToData:headerData];
 }
 
-- (MADErr)importSampleAtURL:(NSURL *)sampleURL instrument:(inout PPInstrumentObject *)InsHeader sample:(inout PPSampleObject *)sample sampleID:(inout short *)sampleID driver:(PPDriver *)driver
+-(MADErr)importInstrumentAtURL:(NSURL *)sampleURL instrument:(out PPInstrumentObject *__autoreleasing *)InsHeader driver:(PPDriver *)driver
 {
 	NSData *inData = [[NSData alloc] initWithContentsOfURL:sampleURL];
 	if (!inData) {
 		return MADReadingErr;
 	}
+
+	PPInstrumentObject *ourIns = [PPInstrumentObject new];
+	[ourIns resetInstrument];
 	
-	return [PPPATPlug importPAT:InsHeader data:inData];
+	MADErr iErr = [PPPATPlug importPAT:ourIns data:inData];
+	
+	if (iErr == noErr) {
+		*InsHeader = ourIns;
+	}
+	
+	return iErr;
 }
 
 @end

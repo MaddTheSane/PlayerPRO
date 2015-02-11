@@ -54,6 +54,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	let digitalHandler = DigitalPlugHandler()
 	let filterHandler = PPFilterPlugHandler()
 	let complexImport = ComplexImportPlugHandler()
+	let samplesHandler = SamplePlugHandler()
 	let preferences = Preferences.newPreferenceController()
 	var thePPColors = [NSColor]()
 	
@@ -125,6 +126,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		let instrumentPlugName = NSLocalizedString("InstrumentPlugName", comment: "Instrument plug-in name")
 		let digitalPlugName = NSLocalizedString("DigitalPlugName", comment: "Digital plug-in name")
 		let filterPlugName = NSLocalizedString("FilterPlugName", comment: "Filter plug-in name")
+		let samplePlugName = NSLocalizedString("SamplePlugName", comment: "Sample plug-in name")
 		
 		for rawObj in madLib {
 			let obj = rawObj as PPLibraryObject
@@ -135,6 +137,13 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 		
 		for obj in instrumentPlugHandler {
+			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: instrumentPlugName, plugURL: obj.file.bundleURL)
+			if !contains(plugInInfos, tmpInfo) {
+				plugInInfos.append(tmpInfo)
+			}
+		}
+		
+		for obj in samplesHandler {
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: instrumentPlugName, plugURL: obj.file.bundleURL)
 			if !contains(plugInInfos, tmpInfo) {
 				plugInInfos.append(tmpInfo)
@@ -447,7 +456,20 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			for aUTI in obj.UTITypes as [String] {
 				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
 					var theErr: NSError? = nil
-					if (!importSampleFromURL(theURL, makeUserSelectInstrument: true, error:&theErr)) {
+					if (!importInstrument(URL: theURL, makeUserSelectInstrument: true, error:&theErr)) {
+						NSAlert(error: theErr!).runModal()
+						return false;
+					}
+					return true;
+				}
+			}
+		}
+		
+		for obj in samplesHandler {
+			for aUTI in obj.UTITypes as [String] {
+				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
+					var theErr: NSError? = nil
+					if (!importSample(URL: theURL, makeUserSelectSample: true, error:&theErr)) {
 						NSAlert(error: theErr!).runModal()
 						return false;
 					}
@@ -459,7 +481,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		return false;
 	}
 	
-	func importSampleFromURL(theURL: NSURL, makeUserSelectInstrument: Bool = false, error: NSErrorPointer = nil) -> Bool {
+	func importSample(URL theURL: NSURL, makeUserSelectSample: Bool = false, error: NSErrorPointer = nil) -> Bool {
 		if error != nil {
 			error.memory = CreateErrorFromMADErrorType(.OrderNotImplemented)!
 		}
@@ -467,6 +489,14 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		return false
 	}
 	
+	func importInstrument(URL theURL: NSURL, makeUserSelectInstrument: Bool = false, error: NSErrorPointer = nil) -> Bool {
+		if error != nil {
+			error.memory = CreateErrorFromMADErrorType(.OrderNotImplemented)!
+		}
+		
+		return false
+	}
+
 	func importPcmdFromURL(url: NSURL) -> MADErr {
 		return .OrderNotImplemented
 	}
@@ -538,6 +568,12 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		for obj in instrumentPlugHandler {
 			if (obj.mode == .Import || obj.mode == .ImportExport) {
 				samplesDict[obj.menuName] = (obj.UTITypes as [String]);
+			}
+		}
+		
+		for obj in samplesHandler {
+			if obj.canImport {
+				samplesDict[obj.menuName] = (obj.UTITypes as [String])
 			}
 		}
 		

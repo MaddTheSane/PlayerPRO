@@ -37,14 +37,14 @@ static const int finetune[16] = {
 
 @implementation PPXIPlug
 
-- (BOOL)hasUIConfiguration
+- (BOOL)hasUIForImport
 {
 	return NO;
 }
 
-- (BOOL)isInstrument
+- (BOOL)hasUIForExport
 {
-	return YES;
+	return NO;
 }
 
 - (instancetype)initForPlugIn
@@ -52,7 +52,7 @@ static const int finetune[16] = {
 	return self = [self init];
 }
 
-- (BOOL)canImportSampleAtURL:(NSURL *)sampleURL
+- (BOOL)canImportInstrumentAtURL:(NSURL *)sampleURL
 {
 	NSFileHandle *aHandle = [NSFileHandle fileHandleForReadingFromURL:sampleURL error:NULL];
 	if (!aHandle) {
@@ -68,7 +68,7 @@ static const int finetune[16] = {
 	return [testData isEqualToData:headerData];
 }
 
-- (MADErr)importSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID driver:(PPDriver *)driver
+- (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject**)outHeader driver:(PPDriver*)driver
 {
 	Ptr				theXI;
 	XMPATCHHEADER	*pth;
@@ -77,6 +77,8 @@ static const int finetune[16] = {
 	
 	NSData *xiData = [[NSData alloc] initWithContentsOfURL:sampleURL];
 	if (xiData != NULL) {
+		PPInstrumentObject *InsHeader = [PPInstrumentObject new];
+		[InsHeader resetInstrument];
 		size_t inOutCount = xiData.length;
 		theXI = alloca(inOutCount);
 		memcpy(theXI, xiData.bytes, inOutCount);
@@ -193,39 +195,39 @@ static const int finetune[16] = {
 					
 					NSMutableData *sampData = [[NSMutableData alloc] initWithBytes:reader length: [dataLen integerValue]];
 					Ptr rawSampData = sampData.mutableBytes;
-						if (curData.amplitude == 16) {
-							short	*tt = (short*)rawSampData;
-							
+					if (curData.amplitude == 16) {
+						short	*tt = (short*)rawSampData;
+						
 #ifdef __BIG_ENDIAN__
-							for (long tL = 0; tL < curData->size / 2; tL++) {
-								MADLE16((Ptr)(tt + tL));
-							}
+						for (long tL = 0; tL < curData->size / 2; tL++) {
+							MADLE16((Ptr)(tt + tL));
+						}
 #endif
-							
-							{
-								/* Delta to Real */
-								long	oldV = 0, newV;
-								long	xL;
-								
-								for (xL = 0; xL < sampData.length / 2; xL++) {
-									newV = tt[xL] + oldV;
-									tt[xL] = newV;
-									oldV = newV;
-								}
-							}
-						} else {
+						
+						{
 							/* Delta to Real */
-							long	oldV, newV;
+							long	oldV = 0, newV;
 							long	xL;
 							
-							oldV = 0;
-							
-							for (xL = 0; xL < sampData.length; xL++) {
-								newV = rawSampData[xL] + oldV;
-								rawSampData[xL] = newV;
+							for (xL = 0; xL < sampData.length / 2; xL++) {
+								newV = tt[xL] + oldV;
+								tt[xL] = newV;
 								oldV = newV;
 							}
 						}
+					} else {
+						/* Delta to Real */
+						long	oldV, newV;
+						long	xL;
+						
+						oldV = 0;
+						
+						for (xL = 0; xL < sampData.length; xL++) {
+							newV = rawSampData[xL] + oldV;
+							rawSampData[xL] = newV;
+							oldV = newV;
+						}
+					}
 					curData.data = [sampData copy];
 					reader += curData.data.length;
 				}
@@ -233,6 +235,7 @@ static const int finetune[16] = {
 			for (NSDictionary* ourDict in tmpSamples) {
 				[InsHeader addSampleObject:ourDict[@"Sample"]];
 			}
+			*outHeader = InsHeader;
 		}
 	} else {
 		return MADReadingErr;
@@ -252,7 +255,7 @@ static NSData *startData()
 	return currentData;
 }
 
-- (MADErr)exportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver *)driver
+- (MADErr)exportInstrument:(PPInstrumentObject *)InsHeader toURL:(NSURL *)sampleURL driver:(PPDriver *)driver
 {
 	NSFileHandle *iFileRefI = [NSFileHandle fileHandleForWritingToURL:sampleURL error:NULL];
 	MADErr myErr = MADNoErr;

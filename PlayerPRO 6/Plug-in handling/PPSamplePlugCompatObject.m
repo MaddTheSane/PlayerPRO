@@ -1,32 +1,24 @@
 //
-//  PPInstrumentImporterObject.m
+//  PPSamplePlugCompatObject.m
 //  PPMacho
 //
-//  Created by C.W. Betts on 12/27/12.
+//  Created by C.W. Betts on 2/10/15.
 //
 //
 
-#import "PPPlugInCommon.h"
-#import "PPInstrumentImporterObject-private.h"
-#import "PPInstrumentImporterCompatObject.h"
+#import "PPSamplePlugCompatObject.h"
+#import "PPSamplePlugObject-private.h"
 #import "PPCoreInstrumentPlugBridgeProtocol.h"
 #import "PPInstrumentPlugBridgeHelper.h"
 
-#define PPINLoadPlug(theBundle) (PPInstrumentPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROInstrumentPlugTypeID, kPlayerPROInstrumentPlugInterfaceID)
-
-@interface PPInstrumentImporterCompatObject ()
+@interface PPSamplePlugCompatObject ()
 @property BOOL is32Bit;
 @property (strong) NSXPCConnection *connectionToService;
+- (instancetype)initWithBundleNoInit:(NSBundle *)tempBundle;
 @end
 
-@implementation PPInstrumentImporterCompatObject
 
-- (NSString*)description
-{
-	NSString *typeString = OSTypeToNSString(type);
-	return [NSString stringWithFormat:@"%@ - %@ Type: %@ UTIs: %@", self.menuName, [self.file bundlePath], typeString, [self.UTITypes description]];
-}
-
+@implementation PPSamplePlugCompatObject
 - (instancetype)initWithBundleNoInit:(NSBundle *)tempBundle
 {
 	return [self initWithBundle:tempBundle];
@@ -63,7 +55,7 @@
 		
 		[_connectionToService resume];
 	}
-
+	
 	return [_connectionToService remoteObjectProxyWithErrorHandler:^(NSError *error) {
 		NSLog(@"Error: %@", error);
 	}];
@@ -92,7 +84,7 @@
 		dispatch_semaphore_t ourSemaphore = dispatch_semaphore_create(0);
 		dispatch_async(dispatch_get_global_queue(0, 0), ^{
 			[[self remoteConnectionProxy]
-			 checkBundleAtURLIsInstrumentBundle:tempBundle.bundleURL
+			 checkBundleAtURLIsSampleBundle:tempBundle.bundleURL
 			 withReply:^(BOOL isPlug) {
 				 toRet = isPlug;
 				 dispatch_semaphore_signal(ourSemaphore);
@@ -108,26 +100,6 @@
 	return self;
 }
 
-- (BOOL)canImportFileAtURL:(NSURL *)fileURL
-{
-	[_connectionToService resume];
-	__block BOOL toRet = NO;
-	
-	dispatch_semaphore_t ourSemaphore = dispatch_semaphore_create(0);
-	dispatch_async(dispatch_get_global_queue(0, 0), ^{
-		[[self remoteConnectionProxy]
-		 canImportFileAtURL:fileURL bundleURL:self.file.bundleURL
-		 withReply:^(BOOL ourReply) {
-			 toRet = ourReply;
-			 usleep(5);
-			 dispatch_semaphore_signal(ourSemaphore);
-		 }];
-	});
-	dispatch_semaphore_wait(ourSemaphore, dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC));
-
-	return toRet;
-}
-
 - (void)dealloc
 {
 	self.connectionToService.invalidationHandler = nil;
@@ -139,21 +111,20 @@
 	return MADOrderNotImplemented;
 }
 
-- (void)beginImportInstrumentAtURL:(NSURL *)sampleURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(void (^)(MADErr, PPInstrumentObject *))handler
+-(void)beginImportSampleAtURL:(NSURL *)sampleURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(void (^)(MADErr, PPSampleObject *))handler
 {
-	NSData *aDat = PPInstrumentToData([PPInstrumentObject new]);
-	[[self remoteConnectionProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL instrumentData:aDat instrumentNumber:0 reply:^(MADErr error, NSData *outInsData) {
+	//NSData *aDat =  PPInstrumentToData(InsHeader);
+	NSData *aDat = PPSampleToData([PPSampleObject new]);
+	[[self remoteConnectionProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL sampleData:aDat instrumentNumber:0 sampleNumber: -1 reply:^(MADErr error, NSData *outSampData, BOOL isNewSample) {
 		if (error == MADNoErr) {
-			PPInstrumentObject *aRet = PPDataToInstrument(outInsData);
-			handler(error, aRet);
+			handler(error, PPDataToSample(outSampData));
 		} else {
 			handler(error, nil);
 		}
 	}];
-
 }
 
-- (void)beginExportInstrument:(PPInstrumentObject *)anIns toURL:(NSURL *)sampURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(PPPlugErrorBlock)handler
+- (void)beginExportSample:(PPSampleObject *)aSamp toURL:(NSURL *)sampleURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(PPPlugErrorBlock)handler
 {
 	handler(MADOrderNotImplemented);
 }
