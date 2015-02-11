@@ -72,9 +72,9 @@ NSString * const PPDEPatternWrappingPartition = @"Digital Editor Pattern Wrappin
 NSString * const PPDEDragAsPcmd = @"Digital Editor Drag as Pcmd?";
 
 #if !TARGET_OS_IPHONE
-#define PPCOLOR(num) NSString * const PPCColor##num = @"PPColor " @#num
-PPCOLORPOPULATE();
-#undef PPCOLOR
+//#define PPCOLOR(num) NSString * const PPCColor##num = @"PPColor " @#num
+//PPCOLORPOPULATE();
+//#undef PPCOLOR
 #endif
 
 NSString * const PPBEMarkersEnabled = @"Box Editor Markers On?";

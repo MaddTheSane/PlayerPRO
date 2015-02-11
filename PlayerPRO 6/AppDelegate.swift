@@ -181,7 +181,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 	
 	private func registerDefaults() {
-		let tooLargeDict: [String: AnyObject] = [PPSoundDriver: Int(MADSoundOutput.CoreAudioDriver.rawValue)]
+		var tooLargeDict: [String: AnyObject] = [PPSoundDriver: Int(MADSoundOutput.CoreAudioDriver.rawValue)]
 		
 		let defaults1: [String: AnyObject]  = [PPSoundOutBits: 16,
 			PPSoundOutRate: 44100,
@@ -231,7 +231,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			PPCETempoUnit: 4,
 			PPCETrackHeight: 130]
 		
-		let defaults4: [String: AnyObject]  = [
+		let colorDefaults = [
 			PPCColor1: makeNSRGB(61166, 0, 0).PPencodeColor(),
 			PPCColor2: makeNSRGB(35980, 48316, 7196).PPencodeColor(),
 			PPCColor3: makeNSRGB(13107, 65535, 65535).PPencodeColor(),
@@ -329,13 +329,12 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			PPCColor95: makeNSRGB(52428, 52428, 26214).PPencodeColor(),
 			PPCColor96: makeNSRGB(52428, 52428, 39321).PPencodeColor()]
 		
-		var alltogether = tooLargeDict
-		alltogether += defaults1
-		alltogether += defaults2
-		alltogether += defaults3
-		alltogether += defaults4
+		tooLargeDict += defaults1
+		tooLargeDict += defaults2
+		tooLargeDict += defaults3
+		tooLargeDict += (colorDefaults as [String: AnyObject])
 		
-		NSUserDefaults.standardUserDefaults().registerDefaults(alltogether)
+		NSUserDefaults.standardUserDefaults().registerDefaults(tooLargeDict)
 	}
 	
 	override init() {
