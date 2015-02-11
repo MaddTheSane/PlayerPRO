@@ -68,8 +68,7 @@ static const int finetune[16] = {
 	return [testData isEqualToData:headerData];
 }
 
-//- (MADErr)
-- (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject**)outHeader driver:(PPDriver*)driver
+- (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject**)outHeader driver:(PPDriver*)driver
 {
 	Ptr				theXI;
 	XMPATCHHEADER	*pth;
@@ -256,7 +255,7 @@ static NSData *startData()
 	return currentData;
 }
 
--(MADErr)exportInstrumentToURL:(NSURL *)sampleURL instrument:(PPInstrumentObject *)InsHeader driver:(PPDriver *)driver
+- (MADErr)exportInstrument:(PPInstrumentObject *)InsHeader toURL:(NSURL *)sampleURL driver:(PPDriver *)driver
 {
 	NSFileHandle *iFileRefI = [NSFileHandle fileHandleForWritingToURL:sampleURL error:NULL];
 	MADErr myErr = MADNoErr;

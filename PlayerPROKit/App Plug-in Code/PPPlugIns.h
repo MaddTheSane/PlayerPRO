@@ -52,7 +52,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 @property (nonatomic, readonly) BOOL hasUIForImport;
 
 - (BOOL)canImportSampleAtURL:(NSURL*)sampleURL;
-- (MADErr)importSampleAtURL:(NSURL*)sampleURL sample:(inout PPSampleObject**)sample driver:(PPDriver*)driver;
+- (MADErr)importSampleAtURL:(NSURL*)sampleURL sample:(out PPSampleObject**)sample driver:(PPDriver*)driver;
 
 @optional
 - (void)beginImportSampleAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(void (^)(MADErr error, PPSampleObject *sample))handler;
@@ -79,7 +79,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 @property (nonatomic, readonly) BOOL hasUIForImport;
 
 - (BOOL)canImportInstrumentAtURL:(NSURL*)sampleURL;
-- (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject**)InsHeader driver:(PPDriver*)driver;
+- (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject**)InsHeader driver:(PPDriver*)driver;
 
 @optional
 - (MADErr)playInstrumentAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
@@ -91,10 +91,10 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 @property (nonatomic, readonly) BOOL hasUIForExport;
 
-- (MADErr)exportInstrumentToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader driver:(PPDriver*)driver;
+- (MADErr)exportInstrument:(PPInstrumentObject*)InsHeader toURL:(NSURL*)sampleURL driver:(PPDriver*)driver;
 
 @optional
-- (void)beginExportInstrumentToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
+- (void)beginExportInstrument:(PPInstrumentObject*)instrument toURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(PPPlugErrorBlock)handler;
 @end
 
 //This doesn't need to conform to PPPlugin because it will always have a UI.

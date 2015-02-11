@@ -14,10 +14,6 @@
 
 #define PPINLoadPlug(theBundle) (PPInstrumentPlugin**)GetCOMPlugInterface(theBundle, kPlayerPROInstrumentPlugTypeID, kPlayerPROInstrumentPlugInterfaceID)
 
-static void moveInfoOverToInstrumentObjectFrom(PPInstrumentObject* to, PPInstrumentObject* from) {
-	
-}
-
 @interface PPInstrumentImporterCompatObject ()
 @property BOOL is32Bit;
 @property (strong) NSXPCConnection *connectionToService;
@@ -28,7 +24,7 @@ static void moveInfoOverToInstrumentObjectFrom(PPInstrumentObject* to, PPInstrum
 - (NSString*)description
 {
 	NSString *typeString = OSTypeToNSString(type);
-	return [NSString stringWithFormat:@"%@ - %@ Sample: %@ Type: %@ UTIs: %@", self.menuName, [self.file bundlePath], self.sample ? @"YES": @"NO", typeString, [self.UTITypes description]];
+	return [NSString stringWithFormat:@"%@ - %@ Type: %@ UTIs: %@", self.menuName, [self.file bundlePath], typeString, [self.UTITypes description]];
 }
 
 - (instancetype)initWithBundleNoInit:(NSBundle *)tempBundle
@@ -97,9 +93,8 @@ static void moveInfoOverToInstrumentObjectFrom(PPInstrumentObject* to, PPInstrum
 		dispatch_async(dispatch_get_global_queue(0, 0), ^{
 			[[self remoteConnectionProxy]
 			 checkBundleAtURLIsInstrumentBundle:tempBundle.bundleURL
-			 withReply:^(BOOL isPlug, BOOL isInstrument, BOOL isImport) {
+			 withReply:^(BOOL isPlug) {
 				 toRet = isPlug;
-				 self.sample = !isInstrument;
 				 dispatch_semaphore_signal(ourSemaphore);
 			 }];
 		});
@@ -139,41 +134,26 @@ static void moveInfoOverToInstrumentObjectFrom(PPInstrumentObject* to, PPInstrum
 	[_connectionToService invalidate];
 }
 
-- (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
+- (MADErr)playInstrumentAtURL:(NSURL *)aSample driver:(PPDriver *)driver
 {
 	return MADOrderNotImplemented;
 }
 
-- (void)beginImportSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler
+- (void)beginImportInstrumentAtURL:(NSURL *)sampleURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(void (^)(MADErr, PPInstrumentObject *))handler
 {
-	if (!self.sample) {
-		NSData *aDat = PPInstrumentToData(InsHeader);
-		[[self remoteConnectionProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL instrumentData:aDat instrumentNumber:InsHeader.number reply:^(MADErr error, NSData *outInsData) {
-			if (error == MADNoErr) {
-				PPInstrumentObject *aRet = PPDataToInstrument(outInsData);
-				moveInfoOverToInstrumentObjectFrom(InsHeader, aRet);
-			}
-			
-			handler(error);
-		}];
-	} else {
-		NSData *aDat = PPSampleToData(sample);
-		[[self remoteConnectionProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL sampleData:aDat instrumentNumber:InsHeader.number sampleNumber:sampleID ? *sampleID : -1 reply:^(MADErr error, NSData *outSampData, BOOL isNewSample) {
-			if (error == MADNoErr) {
-				short aSample = *sampleID;
-				if (isNewSample) {
-					aSample++;
-				}
-				*sampleID = aSample;
-				[InsHeader replaceObjectInSamplesAtIndex:aSample withObject:PPDataToSample(outSampData)];
-			}
-			
-			handler(error);
-		}];
-	}
+	NSData *aDat = PPInstrumentToData([PPInstrumentObject new]);
+	[[self remoteConnectionProxy] beginImportFileAtURL:sampleURL withBundleURL:self.file.bundleURL instrumentData:aDat instrumentNumber:0 reply:^(MADErr error, NSData *outInsData) {
+		if (error == MADNoErr) {
+			PPInstrumentObject *aRet = PPDataToInstrument(outInsData);
+			handler(error, aRet);
+		}
+		
+		handler(error, nil);
+	}];
+
 }
 
-- (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler
+- (void)beginExportInstrument:(PPInstrumentObject *)anIns toURL:(NSURL *)sampURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(PPPlugErrorBlock)handler
 {
 	handler(MADOrderNotImplemented);
 }

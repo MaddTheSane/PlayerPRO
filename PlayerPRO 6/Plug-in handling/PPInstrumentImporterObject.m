@@ -28,7 +28,6 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 
 @implementation PPInstrumentImporterObject
 @synthesize UTITypes;
-@synthesize sample = isSamp;
 @synthesize plugCode;
 
 - (MADPlugModes)mode
@@ -66,7 +65,7 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 - (NSString*)description
 {
 	NSString *typeString = OSTypeToNSString(type);
-	return [NSString stringWithFormat:@"%@ - %@ Sample: %@ Type: %@ UTIs: %@", self.menuName, [self.file bundlePath], isSamp ? @"YES": @"NO", typeString, [UTITypes description]];
+	return [NSString stringWithFormat:@"%@ - %@ Type: %@ UTIs: %@", self.menuName, [self.file bundlePath], typeString, [UTITypes description]];
 }
 
 - (instancetype)initWithBundleNoInit:(NSBundle *)tempBundle
@@ -124,8 +123,6 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 		}
 		
 		self.plugCode = [[bundClass alloc] initForPlugIn];
-		self.sample = ![self.plugCode isInstrument];
-		self.hasUI = [self.plugCode hasUIConfiguration];
 		
 		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
 		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
@@ -141,10 +138,10 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 	return self;
 }
 
-- (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
+- (MADErr)playInstrumentAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
 {
-	if ([plugCode conformsToProtocol:@protocol(PPInstrumentImportPlugin)] && [plugCode respondsToSelector:@selector(playSampleAtURL:driver:)]) {
-		return [plugCode playSampleAtURL:aSample driver:driver];
+	if ([plugCode conformsToProtocol:@protocol(PPInstrumentImportPlugin)] && [plugCode respondsToSelector:@selector(playInstrumentAtURL:driver:)]) {
+		return [plugCode playInstrumentAtURL:aSample driver:driver];
 	} else {
 		return MADOrderNotImplemented;
 	}
@@ -153,40 +150,44 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 - (BOOL)canImportFileAtURL:(NSURL *)fileURL
 {
 	if ([plugCode conformsToProtocol:@protocol(PPInstrumentImportPlugin)]) {
-		return [plugCode canImportSampleAtURL:fileURL];
+		return [plugCode canImportInstrumentAtURL:fileURL];
 	} else {
 		return NO;
 	}
 }
 
-- (void)beginImportSampleAtURL:(NSURL*)sampleURL instrument:(inout PPInstrumentObject*)InsHeader sample:(inout PPSampleObject*)sample sampleID:(inout short*)sampleID driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler
+- (void)beginImportInstrumentAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(void (^)(MADErr err, PPInstrumentObject* instrument))handler
 {
 	if (![plugCode conformsToProtocol:@protocol(PPInstrumentImportPlugin)]) {
-		handler(MADOrderNotImplemented);
+		handler(MADOrderNotImplemented, nil);
 		return;
 	}
-	
-	MADErr ourErr = [plugCode importSampleAtURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver];
-	if (ourErr == MADOrderNotImplemented && [plugCode respondsToSelector:@selector(beginImportSampleAtURL:instrument:sample:sampleID:driver:parentWindow:handler:)]) {
-		[plugCode beginImportSampleAtURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver parentWindow:[document windowForSheet] handler:handler];
+
+	PPInstrumentObject *outIns;
+	MADErr ourErr = [plugCode importInstrumentAtURL:sampleURL instrument:&outIns driver:driver ];
+
+	if (ourErr == MADOrderNotImplemented && [plugCode respondsToSelector:@selector(beginImportInstrumentAtURL:driver:parentWindow:handler:)]) {
+		[plugCode beginImportInstrumentAtURL:sampleURL driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
-		handler(ourErr);
+		handler(ourErr, outIns);
 	}
+
 }
 
-- (void)beginExportSampleToURL:(NSURL*)sampleURL instrument:(PPInstrumentObject*)InsHeader sample:(PPSampleObject*)sample sampleID:(short)sampleID driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler
+- (void)beginExportInstrument:(PPInstrumentObject*)anIns toURL:(NSURL*)sampURL driver:(PPDriver*)driver parentDocument:(PPDocument*)document handler:(PPPlugErrorBlock)handler
 {
 	if (![plugCode conformsToProtocol:@protocol(PPInstrumentExportPlugin)]) {
 		handler(MADOrderNotImplemented);
 		return;
 	}
 	
-	MADErr ourErr = [plugCode exportSampleToURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver];
-	if (ourErr == MADOrderNotImplemented && [plugCode respondsToSelector:@selector(beginExportSampleToURL:instrument:sample:sampleID:driver:parentWindow:handler:)]) {
-		[plugCode beginExportSampleToURL:sampleURL instrument:InsHeader sample:sample sampleID:sampleID driver:driver parentWindow:[document windowForSheet] handler:handler];
+	MADErr ourErr = [plugCode exportInstrument:anIns toURL:sampURL driver:driver];
+	if (ourErr == MADOrderNotImplemented && [plugCode respondsToSelector:@selector(beginExportInstrument:toURL:driver:parentWindow:handler:)]) {
+		[plugCode beginExportInstrument:anIns toURL:sampURL driver:driver parentWindow:[document windowForSheet] handler:handler];
 	} else {
 		handler(ourErr);
 	}
+
 }
 
 @end

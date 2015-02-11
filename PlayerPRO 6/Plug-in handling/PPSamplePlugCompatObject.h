@@ -9,5 +9,6 @@
 #import "PPSamplePlugObject.h"
 
 @interface PPSamplePlugCompatObject : PPSamplePlugObject
+- (instancetype)initWithBundle:(NSBundle *)tempBundle NS_DESIGNATED_INITIALIZER;
 
 @end

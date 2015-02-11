@@ -43,6 +43,45 @@ PPSamplePlugCompatObject *tryOldAPI(NSBundle *theBundle)
 	return self;
 }
 
+- (MADPlugModes)mode
+{
+	MADPlugCapabilities cap = PPMADCanDoNothing;
+	if (self.canImport) {
+		cap = PPMADCanImport;
+	}
+	
+	if (self.canExport) {
+		cap |= PPMADCanExport;
+	}
+	MADPlugModes toRet = MADPlugNonePlug;
+	
+	switch (cap) {
+		case PPMADCanImport:
+			toRet = MADPlugImport;
+			break;
+			
+		case PPMADCanExport:
+			toRet = MADPlugExport;
+			break;
+			
+		case PPMADCanDoBoth:
+			toRet = MADPlugImportExport;
+			break;
+			
+		default:
+			break;
+	}
+	
+	return toRet;
+}
+
+- (NSString*)description
+{
+	NSString *typeString = OSTypeToNSString(type);
+	return [NSString stringWithFormat:@"%@ - %@ Type: %@ UTIs: %@", self.menuName, [self.file bundlePath], typeString, [_UTITypes description]];
+}
+
+
 - (instancetype)initWithBundle:(NSBundle *)tempBundle
 {
 	if (self = [self initWithBundleNoInit:tempBundle]) {
@@ -151,6 +190,5 @@ PPSamplePlugCompatObject *tryOldAPI(NSBundle *theBundle)
 		handler(MADOrderNotImplemented);
 	}
 }
-
 
 @end

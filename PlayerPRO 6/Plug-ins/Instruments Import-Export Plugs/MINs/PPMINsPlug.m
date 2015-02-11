@@ -86,7 +86,7 @@ static inline OSErr TestMINS(const InstrData *CC)
 	return TestMINS(theSound.bytes) == MADNoErr;
 }
 
--(MADErr)importInstrumentAtURL:(NSURL *)sampleURL instrument:(inout PPInstrumentObject *__autoreleasing *)outHeader driver:(PPDriver *)driver
+-(MADErr)importInstrumentAtURL:(NSURL *)sampleURL instrument:(out PPInstrumentObject *__autoreleasing *)outHeader driver:(PPDriver *)driver
 {
 	NSFileHandle *readHandle = [NSFileHandle fileHandleForReadingFromURL:sampleURL error:NULL];
 	if (!readHandle) {
@@ -185,7 +185,7 @@ static inline OSErr TestMINS(const InstrData *CC)
 	return MADNoErr;
 }
 
--(MADErr)exportInstrumentToURL:(NSURL *)sampleURL instrument:(PPInstrumentObject *)InsHeader driver:(PPDriver *)driver
+- (MADErr)exportInstrument:(PPInstrumentObject *)InsHeader toURL:(NSURL *)sampleURL driver:(PPDriver *)driver
 {
 	NSFileHandle *fileHand = [NSFileHandle fileHandleForWritingToURL:sampleURL error:NULL];
 	if (fileHand == nil) {

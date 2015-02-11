@@ -200,7 +200,7 @@
 	return [fileData isEqualToData:headerData];
 }
 
--(MADErr)importInstrumentAtURL:(NSURL *)sampleURL instrument:(inout PPInstrumentObject *__autoreleasing *)InsHeader driver:(PPDriver *)driver
+-(MADErr)importInstrumentAtURL:(NSURL *)sampleURL instrument:(out PPInstrumentObject *__autoreleasing *)InsHeader driver:(PPDriver *)driver
 {
 	NSData *inData = [[NSData alloc] initWithContentsOfURL:sampleURL];
 	if (!inData) {
