@@ -54,6 +54,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	let digitalHandler = DigitalPlugHandler()
 	let filterHandler = PPFilterPlugHandler()
 	let complexImport = ComplexImportPlugHandler()
+	let samplesHandler = SamplePlugHandler()
 	let preferences = Preferences.newPreferenceController()
 	var thePPColors = [NSColor]()
 	
@@ -135,6 +136,13 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 		
 		for obj in instrumentPlugHandler {
+			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: instrumentPlugName, plugURL: obj.file.bundleURL)
+			if !contains(plugInInfos, tmpInfo) {
+				plugInInfos.append(tmpInfo)
+			}
+		}
+		
+		for obj in samplesHandler {
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: instrumentPlugName, plugURL: obj.file.bundleURL)
 			if !contains(plugInInfos, tmpInfo) {
 				plugInInfos.append(tmpInfo)

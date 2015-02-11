@@ -23,7 +23,6 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 
 @interface PPInstrumentImporterObject ()
 @property (strong) id<PPInstrumentImportPlugin, PPInstrumentExportPlugin> plugCode;
-@property BOOL hasUI;
 @end
 
 @implementation PPInstrumentImporterObject
@@ -125,7 +124,6 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 		self.plugCode = [[bundClass alloc] initForPlugIn];
 		
 		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
-		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
 		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugTypeKey];
 		if ([DictionaryTemp isKindOfClass:strClass]) {
 			type = NSStringToOSType(DictionaryTemp);
@@ -187,7 +185,6 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 	} else {
 		handler(ourErr);
 	}
-
 }
 
 @end

@@ -116,7 +116,6 @@ PPSamplePlugCompatObject *tryOldAPI(NSBundle *theBundle)
 		self.plugCode = [[bundClass alloc] initForPlugIn];
 		
 		NSMutableDictionary *tempDict = [[tempBundle infoDictionary] mutableCopy];
-		[tempDict addEntriesFromDictionary:[tempBundle localizedInfoDictionary]];
 		id DictionaryTemp = [tempDict valueForKey:(__bridge NSString*)kMadPlugTypeKey];
 		if ([DictionaryTemp isKindOfClass:[NSString class]]) {
 			type = NSStringToOSType(DictionaryTemp);

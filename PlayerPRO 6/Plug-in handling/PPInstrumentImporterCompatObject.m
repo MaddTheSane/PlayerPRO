@@ -146,9 +146,9 @@
 		if (error == MADNoErr) {
 			PPInstrumentObject *aRet = PPDataToInstrument(outInsData);
 			handler(error, aRet);
+		} else {
+			handler(error, nil);
 		}
-		
-		handler(error, nil);
 	}];
 
 }
