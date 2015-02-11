@@ -67,7 +67,7 @@
 "The file is incompatible" = "The file is incompatible";
 
 /* Incompatible file */
-"The file is incompatible with PlayerPRO or one of it's plug-ins" = "The file is incompatible with PlayerPRO or one of it's plug-ins";
+"The file is incompatible with PlayerPRO or one of it's plug-ins" = "The file is incompatible with PlayerPRO or one of its plug-ins";
 
 /* No comment provided by engineer. */
 "The file is not supported by this plug-in" = "The file is not supported by this plug-in";
@@ -100,7 +100,7 @@
 "Try selecting a different sound system." = "Try selecting a different sound system.";
 
 /* try other plug-in */
-"Try using another plug-in, or checking to see if the file is okay." = "Try using another plug-in, or checking to see if the file is okay.";
+"Try using another plug-in, or checking to see if the file is okay." = "Try using another plug-in, or check if the file is valid.";
 
 /* No comment provided by engineer. */
 "Unable to locate a plug-in" = "Unable to locate a plug-in";
