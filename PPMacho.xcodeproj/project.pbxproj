@@ -9922,14 +9922,11 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"$PROJECT_DIR\"/MADDriver.source",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = "Spotlight Plug-in/PPImport-Info.plist";
 				INSTALL_PATH = /Library/Spotlight;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = PPImport;
+				USER_HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source $(inherited)";
 				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Release;
@@ -9949,14 +9946,11 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"$PROJECT_DIR\"/MADDriver.source",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = "Spotlight Plug-in/PPImport-Info.plist";
 				INSTALL_PATH = /Library/Spotlight;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = PPImport;
+				USER_HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source $(inherited)";
 				WRAPPER_EXTENSION = mdimporter;
 			};
 			name = Debug;
@@ -10841,13 +10835,10 @@
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				HEADER_SEARCH_PATHS = (
-					"\"$PROJECT_DIR\"/MADDriver.source",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = "PPQuickView/PPQuickView-Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source $(inherited)";
 				WRAPPER_EXTENSION = qlgenerator;
 			};
 			name = Release;
@@ -10866,13 +10857,10 @@
 					"BUILDINGPPRO=1",
 					"$(inherited)",
 				);
-				HEADER_SEARCH_PATHS = (
-					"\"$PROJECT_DIR\"/MADDriver.source",
-					"$(inherited)",
-				);
 				INFOPLIST_FILE = "PPQuickView/PPQuickView-Info.plist";
 				INSTALL_PATH = /Library/QuickLook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "\"$PROJECT_DIR\"/MADDriver.source $(inherited)";
 				WRAPPER_EXTENSION = qlgenerator;
 			};
 			name = Debug;
