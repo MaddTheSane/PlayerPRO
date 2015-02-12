@@ -314,10 +314,10 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (NSRange)loop
 {
-	if (self.loopBegin == 0) {
+	if (sampleWriteTo->loopSize == 0) {
 		return NSMakeRange(NSNotFound, 0);
 	}
-	return NSMakeRange(self.loopBegin, self.loopSize);
+	return NSMakeRange(sampleWriteTo->loopBeg, sampleWriteTo->loopSize);
 }
 
 - (void)setLoop:(NSRange)loop
@@ -375,8 +375,7 @@ static const dispatch_block_t initUTIArray = ^{
 		obj.c2spd = self.c2spd;
 		obj.loopType = self.loopType;
 		obj.relativeNote = self.relativeNote;
-		obj.loopBegin = self.loopBegin;
-		obj.loopSize = self.loopSize;
+		obj.loop = self.loop;
 	}
 	return obj;
 }

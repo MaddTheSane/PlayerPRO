@@ -46,7 +46,7 @@
 @property MADLoopType loopType;
 /// The sound sample's amplitude. Currently limited to 8 or 16 bits
 @property MADByte amplitude;
-/// The sound sample's amplitude. Currently limited to 8 or 16 bits
+/// Relative note
 @property char relativeNote;
 /// Sample name
 @property (copy) NSString *name;
@@ -54,7 +54,8 @@
 @property (getter = isStereo) BOOL stereo;
 /// The data of the sample's sound, wrapped in an \c NSData class object
 @property (copy) NSData *data;
-/// The range of the loop
+/// The range of the loop.
+/// A range with a location of \c NSNotFound means a blank loop
 @property NSRange loop;
 
 
