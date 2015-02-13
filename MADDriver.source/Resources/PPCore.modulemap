@@ -21,11 +21,11 @@ framework module PlayerPROCore {
 		export *
 	}
 	
-	module PlugIns {
-		header "MADPlug.h"
-		export *
-	}
-	
 	export *
 	module * { export * }
+}
+
+module PlayerPROCore.PlugIns {
+	header "MADPlug.h"
+	export *
 }

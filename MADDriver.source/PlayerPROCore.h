@@ -14,7 +14,6 @@
 #include "MAD.h"
 #include "MADFileUtils.h"
 #include "RDriver.h"
-#include "MADPlug.h"
 
 #ifdef _MAC_H
 //! Project version number for PlayerPROCore.
