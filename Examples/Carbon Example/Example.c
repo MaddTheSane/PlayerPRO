@@ -136,6 +136,7 @@ int main( int argc, char* argv[])
 				HLock((Handle)openList);
 			
 			(*openList)->componentSignature = 'SNPL';
+			(*openList)->reserved			= 0;
 			(*openList)->osTypeCount		= 2;
 			(*openList)->osType[ 0] 		= 'MADK';
 			(*openList)->osType[ 1] 		= 'STrk';

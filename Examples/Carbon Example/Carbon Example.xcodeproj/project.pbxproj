@@ -17,13 +17,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		550FFADD17CD341A0003A2F3 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55C358C216C42D1800FB9FA6;
-			remoteInfo = PlayerPROCompact;
-		};
 		5526AB6C188C955D008D0C14 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
@@ -65,13 +58,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 559C4187183EB4AB004A073C;
 			remoteInfo = PPQuickView;
-		};
-		5526AB78188C955D008D0C14 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5578C50617DB8F9E0057D11B;
-			remoteInfo = libPlayerPROKit;
 		};
 		5526AB7A188C955D008D0C14 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -367,13 +353,6 @@
 			remoteGlobalIDString = 557DE84210E08D9E00177B4C;
 			remoteInfo = Length;
 		};
-		5570E9FD12A4C24900167E1A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 557DE88510E08DA300177B4C;
-			remoteInfo = Mix;
-		};
 		5570E9FF12A4C24900167E1A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
@@ -409,13 +388,6 @@
 			remoteGlobalIDString = 557DE9A110E08DC100177B4C;
 			remoteInfo = "Tone Generator";
 		};
-		558678A61659A7DD00BCFB70 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5573A1031656FAF100A5AECA;
-			remoteInfo = iOSPlayerPROCore;
-		};
 		559696F4194E82050068C5AC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
@@ -436,6 +408,76 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
+		};
+		55AD866A1A8D971800839E28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55ADD25619B4F8BA005588B5;
+			remoteInfo = "PlayerPRO 6 Tests";
+		};
+		55AD866C1A8D971800839E28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55ADD24719B4F895005588B5;
+			remoteInfo = "PlayerPRO Player Tests";
+		};
+		55AD866E1A8D971800839E28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5591709F19C26E1C00998D7F;
+			remoteInfo = PPCoreInstrumentPlugBridge;
+		};
+		55AD86701A8D971800839E28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 556BC18219CF47FC00508F49;
+			remoteInfo = PPCoreInstrumentPlugBridge32;
+		};
+		55AD86721A8D971800839E28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55F1BD8F1975C83400AD2C03;
+			remoteInfo = "PlayerPROCore-iOS";
+		};
+		55AD86741A8D971800839E28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55ADD23A19B4F858005588B5;
+			remoteInfo = "PlayerPROKit Tests";
+		};
+		55AD86761A8D971800839E28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5552724F1A0000C8008B8616;
+			remoteInfo = "PlayerPROKit-iOS Tests";
+		};
+		55AD86781A8D971800839E28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55ECD2751992C2ED00480788;
+			remoteInfo = "MIDI Import";
+		};
+		55AD867A1A8D971800839E28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5591709519C24C1600998D7F;
+			remoteInfo = "System 7";
+		};
+		55AD867C1A8D971800839E28 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5570E97512A4C24900167E1A /* PPMacho.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 555E85451A041E810018FDBC;
+			remoteInfo = "Classic Sound";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -561,19 +603,23 @@
 			isa = PBXGroup;
 			children = (
 				5570E9AE12A4C24900167E1A /* PlayerPRO 6.app */,
+				55AD866B1A8D971800839E28 /* PlayerPRO 6 Tests.xctest */,
 				5526AB6D188C955D008D0C14 /* PlayerPRO Player.app */,
-				5526AB6F188C955D008D0C14 /* updateInfoPlist */,
+				55AD866D1A8D971800839E28 /* PlayerPRO Player Tests.xctest */,
 				5526AB71188C955D008D0C14 /* iOS PlayerPRO Player.app */,
 				5526AB73188C955D008D0C14 /* iOS PlayerPRO PlayerTests.xctest */,
+				5526AB6F188C955D008D0C14 /* updateInfoPlist */,
 				5526AB75188C955D008D0C14 /* PPImport Cocoa.mdimporter */,
 				5526AB77188C955D008D0C14 /* PPQuickView.qlgenerator */,
 				559696F5194E82050068C5AC /* net.sourceforge.playerpro.StcfImporter.xpc */,
+				55AD866F1A8D971800839E28 /* PPCoreInstrumentPlugBridge.xpc */,
+				55AD86711A8D971800839E28 /* PPCoreInstrumentPlugBridge32.xpc */,
 				5570E9B412A4C24900167E1A /* PlayerPROCore.framework */,
-				558678A71659A7DD00BCFB70 /* PlayerPROCore.framework */,
+				55AD86731A8D971800839E28 /* PlayerPROCore.framework */,
 				5598692916432693008C55FC /* PlayerPROKit.framework */,
+				55AD86751A8D971800839E28 /* PlayerPROKit Tests.xctest */,
 				5526AB7B188C955D008D0C14 /* PlayerPROKit.framework */,
-				550FFADE17CD341A0003A2F3 /* libPlayerPROCompact.a */,
-				5526AB79188C955D008D0C14 /* libPlayerPROKit.a */,
+				55AD86771A8D971800839E28 /* PlayerPROKit-iOS Tests.xctest */,
 				5570E9B612A4C24900167E1A /* MOD.ppimpexp */,
 				5570E9B812A4C24900167E1A /* 669.ppimpexp */,
 				5570E9BA12A4C24900167E1A /* AMF.ppimpexp */,
@@ -590,6 +636,7 @@
 				5570E9D012A4C24900167E1A /* UMX.ppimpexp */,
 				5570E9D212A4C24900167E1A /* XM.ppimpexp */,
 				5570E9D412A4C24900167E1A /* MIDI.ppimpexp */,
+				55AD86791A8D971800839E28 /* net.sourceforge.playerpro.MIDI-Import.xpc */,
 				5570E9D612A4C24900167E1A /* APPL.ppimpexp */,
 				5570E9D812A4C24900167E1A /* Complex Fade.plugin */,
 				5570E9DA12A4C24900167E1A /* Fade Note.plugin */,
@@ -602,6 +649,8 @@
 				5570E9E612A4C24900167E1A /* MINs.plugin */,
 				5570E9E812A4C24900167E1A /* PAT.plugin */,
 				5526AB7F188C955D008D0C14 /* Wave.plugin */,
+				55AD867B1A8D971800839E28 /* System 7.plugin */,
+				55AD867D1A8D971800839E28 /* Classic Sound.plugin */,
 				5570E9EA12A4C24900167E1A /* QuickTime.plugin */,
 				5570E9EC12A4C24900167E1A /* Amplitude.plugin */,
 				5570E9EE12A4C24900167E1A /* Backwards.plugin */,
@@ -612,7 +661,6 @@
 				5570E9F812A4C24900167E1A /* Fade.plugin */,
 				5570E9FA12A4C24900167E1A /* Invert.plugin */,
 				5570E9FC12A4C24900167E1A /* Length.plugin */,
-				5570E9FE12A4C24900167E1A /* Mix.plugin */,
 				5570EA0012A4C24900167E1A /* Normalize.plugin */,
 				5570EA0212A4C24900167E1A /* Sampling Rate.plugin */,
 				5570EA0412A4C24900167E1A /* Silence.plugin */,
@@ -682,13 +730,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		550FFADE17CD341A0003A2F3 /* libPlayerPROCompact.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libPlayerPROCompact.a;
-			remoteRef = 550FFADD17CD341A0003A2F3 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		5526AB6D188C955D008D0C14 /* PlayerPRO Player.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
@@ -720,7 +761,7 @@
 		5526AB75188C955D008D0C14 /* PPImport Cocoa.mdimporter */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = "PPImport Cocoa.mdimporter";
+			path = PPImport.mdimporter;
 			remoteRef = 5526AB74188C955D008D0C14 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -729,13 +770,6 @@
 			fileType = wrapper.cfbundle;
 			path = PPQuickView.qlgenerator;
 			remoteRef = 5526AB76188C955D008D0C14 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		5526AB79188C955D008D0C14 /* libPlayerPROKit.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libPlayerPROKit.a;
-			remoteRef = 5526AB78188C955D008D0C14 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5526AB7B188C955D008D0C14 /* PlayerPROKit.framework */ = {
@@ -881,14 +915,14 @@
 		5570E9D412A4C24900167E1A /* MIDI.ppimpexp */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = MIDI.ppimpexp;
+			path = MIDI.ppextimp;
 			remoteRef = 5570E9D312A4C24900167E1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		5570E9D612A4C24900167E1A /* APPL.ppimpexp */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = APPL.ppimpexp;
+			path = "Classic App.ppextimp";
 			remoteRef = 5570E9D512A4C24900167E1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -1025,13 +1059,6 @@
 			remoteRef = 5570E9FB12A4C24900167E1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		5570E9FE12A4C24900167E1A /* Mix.plugin */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Mix.plugin;
-			remoteRef = 5570E9FD12A4C24900167E1A /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		5570EA0012A4C24900167E1A /* Normalize.plugin */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -1067,16 +1094,9 @@
 			remoteRef = 5570EA0712A4C24900167E1A /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		558678A71659A7DD00BCFB70 /* PlayerPROCore.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = PlayerPROCore.framework;
-			remoteRef = 558678A61659A7DD00BCFB70 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		559696F5194E82050068C5AC /* net.sourceforge.playerpro.StcfImporter.xpc */ = {
 			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
+			fileType = "wrapper.xpc-service";
 			path = net.sourceforge.playerpro.StcfImporter.xpc;
 			remoteRef = 559696F4194E82050068C5AC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
@@ -1086,6 +1106,76 @@
 			fileType = wrapper.framework;
 			path = PlayerPROKit.framework;
 			remoteRef = 5598692816432693008C55FC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55AD866B1A8D971800839E28 /* PlayerPRO 6 Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "PlayerPRO 6 Tests.xctest";
+			remoteRef = 55AD866A1A8D971800839E28 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55AD866D1A8D971800839E28 /* PlayerPRO Player Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "PlayerPRO Player Tests.xctest";
+			remoteRef = 55AD866C1A8D971800839E28 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55AD866F1A8D971800839E28 /* PPCoreInstrumentPlugBridge.xpc */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.xpc-service";
+			path = PPCoreInstrumentPlugBridge.xpc;
+			remoteRef = 55AD866E1A8D971800839E28 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55AD86711A8D971800839E28 /* PPCoreInstrumentPlugBridge32.xpc */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.xpc-service";
+			path = PPCoreInstrumentPlugBridge32.xpc;
+			remoteRef = 55AD86701A8D971800839E28 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55AD86731A8D971800839E28 /* PlayerPROCore.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = PlayerPROCore.framework;
+			remoteRef = 55AD86721A8D971800839E28 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55AD86751A8D971800839E28 /* PlayerPROKit Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "PlayerPROKit Tests.xctest";
+			remoteRef = 55AD86741A8D971800839E28 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55AD86771A8D971800839E28 /* PlayerPROKit-iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "PlayerPROKit-iOS Tests.xctest";
+			remoteRef = 55AD86761A8D971800839E28 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55AD86791A8D971800839E28 /* net.sourceforge.playerpro.MIDI-Import.xpc */ = {
+			isa = PBXReferenceProxy;
+			fileType = "wrapper.xpc-service";
+			path = "net.sourceforge.playerpro.MIDI-Import.xpc";
+			remoteRef = 55AD86781A8D971800839E28 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55AD867B1A8D971800839E28 /* System 7.plugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "System 7.plugin";
+			remoteRef = 55AD867A1A8D971800839E28 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55AD867D1A8D971800839E28 /* Classic Sound.plugin */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Classic Sound.plugin";
+			remoteRef = 55AD867C1A8D971800839E28 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1142,6 +1232,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
@@ -1155,6 +1246,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "PlayerPRO Example-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
