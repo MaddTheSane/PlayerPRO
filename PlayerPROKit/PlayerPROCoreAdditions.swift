@@ -192,80 +192,6 @@ public let maximumChannelVolume: MADByte = 128
 public let maximumArpeggio: Int32 = 3
 public let equalizerPacketElements = 512
 
-extension PlugInfo {
-	public var importer: Bool {
-			switch (self.mode) {
-			case MADPlugModes.Import.rawValue, MADPlugModes.ImportExport.rawValue:
-				return true
-
-			default:
-				return false
-			}
-	}
-
-	public var exporter: Bool {
-			switch (self.mode) {
-			case MADPlugModes.Export.rawValue, MADPlugModes.ImportExport.rawValue:
-				return true
-
-			default:
-				return false
-			}
-	}
-	
-	public var plugInURL: NSURL {
-		return CFBundleCopyBundleURL(file.takeUnretainedValue())
-	}
-	
-	public var plugInBundle: NSBundle? {
-		return NSBundle(URL: CFBundleCopyBundleURL(file.takeUnretainedValue()))
-	}
-	
-	public var types: [String] {
-		return UTItypes.takeUnretainedValue() as NSArray as [String]
-	}
-	
-	public var fourCharType: MADFourChar {
-		return MADFourChar(type)
-	}
-	
-	public var name: String {
-		return MenuName.takeUnretainedValue()
-	}
-	
-	public var author: String {
-		return AuthorString.takeUnretainedValue()
-	}
-}
-
-public struct MADLibraryGenerator: GeneratorType {
-	private let maxPlugs: Int
-	private var currentPlug = 0
-	private let currentLib: MADLibrary
-    mutating public func next() -> PlugInfo? {
-		if currentPlug >= maxPlugs {
-			return nil
-		} else {
-			return currentLib.ThePlug[currentPlug++]
-		}
-    }
-	
-	internal init(library: MADLibrary) {
-		currentLib = library
-		maxPlugs = library.count
-	}
-}
-
-extension MADLibrary: SequenceType {
-	public var count: Int {
-		return Int(TotalPlug)
-	}
-	
-    public func generate() -> MADLibraryGenerator {
-        return MADLibraryGenerator(library: self)
-    }
-}
-
 public func MADDebugString(text: String, line: UWord = __LINE__, file: StaticString = __FILE__) {
 	MADDebugStr(Int16(line), file.stringValue.fileSystemRepresentation(), text.cStringUsingEncoding(NSUTF8StringEncoding)!)
 }
@@ -352,30 +278,6 @@ extension FXBus: Equatable {
 }
 
 extension FXSets: Equatable {
-	public var setsName: String {
-		if let aStr = String(pascalString: name) {
-			return aStr
-		} else {
-			return ""
-		}
-	}
-	
-	public var floatValues: [Float] {
-		let aMirror = reflect(values)
-		return GetArrayFromMirror(aMirror)!
-	}
-	
-	public init() {
-		track = 0
-		id = 0
-		FXID = 0
-		noArg = 0
-		values = (0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-		name = (2, 72, 105, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-	}
-}
-
-extension InstrData {
 }
 
 extension Cmd: Equatable {
