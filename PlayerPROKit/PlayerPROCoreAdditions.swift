@@ -414,15 +414,11 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: UnsafeMutableP
 }
 
 public func GetCommand(#row: Int16, #track: Int16, #aPcmd: UnsafeMutablePointer<Pcmd>) -> Cmd {
-	return GetCommand(row, track, aPcmd).memory
-}
-
-private func GetCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>) -> UnsafeMutablePointer<Cmd> {
-	return MADGetCmd(row, track, aPcmd)
+	return MADGetCmd(row, track, aPcmd).memory
 }
 
 public func ReplaceCommand(#row: Int16, #track: Int16, #command: Cmd, #aPcmd: UnsafeMutablePointer<Pcmd>) {
-	var aCmd: UnsafeMutablePointer<Cmd> = GetCommand(row, track, aPcmd)
+	var aCmd = MADGetCmd(row, track, aPcmd)
 	aCmd.memory = command
 }
 
