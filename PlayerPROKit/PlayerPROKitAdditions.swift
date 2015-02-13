@@ -79,83 +79,82 @@ public func NoteFromString(myTT: String) -> Int16?
 		return nil
 	}
 	
-	func findNote(inStr: String) -> (outString: String, sharp: Bool) {
-		var idx = inStr.endIndex
-		--idx
-		var maybeSign = inStr[idx]
-		var maybeStr = inStr[inStr.startIndex ..< idx]
-		switch maybeSign {
-		case "#", "♯"/*Unicode sharp sign, just in case*/:
-			return (maybeStr, true)
-
-		case " ", "-":
-			return (maybeStr, false)
-			
-		default:
-			return (inStr, false)
-		}
-	}
-	
 	var idx = myTT.endIndex
 	let lastChar = myTT[--idx]
-	let octMaybe = String(lastChar).toInt()
-	if octMaybe == nil {
-		return nil
-	}
-	
-	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
-	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
-
-	var Oct = Int16(octMaybe!)
-	Oct *= 12
-	
-	let theRest = myTT[myTT.startIndex ..< idx]
-	let theRet = findNote(theRest)
-	let val1 = theRet.outString.lowercaseString
-	switch val1 {
-	case "c", "do":
-		Oct += 0
+	if let octMaybe = String(lastChar).toInt() {
+		//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
+		//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
 		
-	case "d", "ré", "re":
-		Oct += 2
+		var Oct = Int16(octMaybe)
+		Oct *= 12
 		
-	case "e", "mi":
-		Oct += 4
+		let theRest = myTT[myTT.startIndex ..< idx]
 		
-	case "f", "fa":
-		Oct += 5
+		let theRet: (outString: String, sharp: Bool) = {
+			var idx = theRest.endIndex
+			--idx
+			let maybeSign = theRest[idx]
+			let maybeStr = theRest[theRest.startIndex ..< idx]
+			switch maybeSign {
+			case "#", "♯"/*Unicode sharp sign, just in case*/:
+				return (maybeStr, true)
+				
+			case " ", "-":
+				return (maybeStr, false)
+				
+			default:
+				return (theRest, false)
+			}
+		}()
 		
-	case "g", "sol", "so":
-		Oct += 7
 		
-	case "a", "la":
-		Oct += 9
-		
-	case "b", "si", "ti":
-		Oct += 11
-		
-	default:
-		Oct = 0xFF
-	}
-	
-	if Oct != 0xFF {
-		if theRet.sharp {
-			Oct++
-		}
-		
-		if Oct > 95 {
+		let val1 = theRet.outString.lowercaseString
+		switch val1 {
+		case "c", "do":
+			Oct += 0
+			
+		case "d", "ré", "re":
+			Oct += 2
+			
+		case "e", "mi":
+			Oct += 4
+			
+		case "f", "fa":
+			Oct += 5
+			
+		case "g", "sol", "so":
+			Oct += 7
+			
+		case "a", "la":
+			Oct += 9
+			
+		case "b", "si", "ti":
+			Oct += 11
+			
+		default:
 			Oct = 0xFF
 		}
-		if Oct < 0 {
-			Oct = 0xFF
+		
+		if Oct != 0xFF {
+			if theRet.sharp {
+				Oct++
+			}
+			
+			if Oct > 95 {
+				Oct = 0xFF
+			}
+			if Oct < 0 {
+				Oct = 0xFF
+			}
+		}
+		
+		if Oct == 0xFF {
+			return nil
+		} else {
+			return Oct
 		}
 	}
-	
-	if Oct == 0xFF {
-		return nil
-	} else {
-		return Oct
-	}
+	return nil
 }
 
 public func OctaveNameFromNote(octNote: UInt8, letters isUseLetters: Bool = true) -> String? {

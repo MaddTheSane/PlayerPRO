@@ -170,13 +170,13 @@ extension MADInfoRec: DebugPrintable {
 	public var internalName: String! {
 		let mirror = reflect(internalFileName)
 		let toParse: [CChar] = GetArrayFromMirror(mirror, appendLastObject: 0)!
-		return NSString(CString: toParse, encoding: NSMacOSRomanStringEncoding)
+		return String(CString: toParse, encoding: NSMacOSRomanStringEncoding)
 	}
 	
 	public var format: String! {
 		let mirror = reflect(formatDescription)
 		let toParse: [CChar] = GetArrayFromMirror(mirror, appendLastObject: 0)!
-		return NSString(CString: toParse, encoding: NSMacOSRomanStringEncoding)
+		return String(CString: toParse, encoding: NSMacOSRomanStringEncoding)
 	}
 	
 	public var debugDescription: String {
@@ -423,7 +423,7 @@ public func ReplaceCommand(#row: Int16, #track: Int16, #command: Cmd, #aPcmd: Un
 }
 
 public func ModifyCommand(#row: Int16, #track: Int16, #aPcmd: UnsafeMutablePointer<Pcmd>, #commandBlock: (inout Cmd)-> ()) {
-	var aCmd: Cmd = GetCommand(row: row, track: track, aPcmd: aPcmd)
+	var aCmd = GetCommand(row: row, track: track, aPcmd: aPcmd)
 	commandBlock(&aCmd)
 	ReplaceCommand(row: row, track: track, command: aCmd, aPcmd: aPcmd)
 }
