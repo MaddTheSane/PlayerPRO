@@ -11,18 +11,18 @@ import AudioToolbox
 import PlayerPROKit
 import SwiftAdditions
 
-final class AIFFSamplePlug: NSObject, PPSampleExportPlugin {
-	let hasUIForExport = false
+public final class AIFFSamplePlug: NSObject, PPSampleExportPlugin {
+	public let hasUIForExport = false
 	
 	override init() {
 		super.init()
 	}
 	
-	required convenience init!(forPlugIn: ()) {
+	required convenience public init!(forPlugIn: ()) {
 		self.init()
 	}
 	
-	func exportSample(sample: PPSampleObject!, toURL sampleURL: NSURL!, driver: PPDriver!) -> MADErr {
+	public func exportSample(sample: PPSampleObject!, toURL sampleURL: NSURL!, driver: PPDriver!) -> MADErr {
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .LinearPCM, formatFlags: .SignedInteger | .Packed | .BigEndian, bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: sample.stereo ? 2 : 1)
 		
 		let datLen = sample.data.length
@@ -75,9 +75,9 @@ final class AIFFSamplePlug: NSObject, PPSampleExportPlugin {
 	
 	//MARK: import
 	//TODO: complete
-	let hasUIForImport = false
+	public let hasUIForImport = false
 	
-	func canImportSampleAtURL(AlienFileURL: NSURL!) -> Bool {
+	public func canImportSampleAtURL(AlienFileURL: NSURL!) -> Bool {
 		var myErr = MADErr.NoErr
 		var audioFile: AudioFileID = nil
 		var res: OSStatus = noErr
