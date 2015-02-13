@@ -562,7 +562,7 @@ static MADErr MED_Load(char* theMED, long MEDSize, MADMusic *theMAD, MADDriverSe
 
 static MADErr TestMEDFile(char* AlienFile)
 {
-	if (memcmp(AlienFile, "MMD0", 4) == 0 && memcmp(AlienFile, "MMD1", 4) == 0)
+	if (memcmp(AlienFile, "MMD0", 4) == 0 || memcmp(AlienFile, "MMD1", 4) == 0)
 		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
