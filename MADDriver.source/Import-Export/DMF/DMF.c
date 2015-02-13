@@ -942,11 +942,7 @@ static MADErr ExtractITInfo(MADInfoRec *info, char* AlienFile)
 
 static inline MADErr TestITFile(void *AlienFile)
 {
-	ITForm	*myIT = (ITForm*)AlienFile;
-	MADFourChar myID = myIT->ID;
-	MADBE32(&myID);
-	
-	if (myID == 'DDMF')
+	if (memcmp(AlienFile, "DDMF", 4) == 0)
 		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;

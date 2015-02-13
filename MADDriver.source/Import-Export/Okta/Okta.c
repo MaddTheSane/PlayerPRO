@@ -426,10 +426,7 @@ static MADErr ExtractOKTAInfo(MADInfoRec *info, char* theOkta, long MODSize)
 
 static MADErr TestOKTAFile(char* AlienFile)
 {
-	MADFourChar myOKTA = *((MADFourChar*) AlienFile);
-	MADBE32(&myOKTA);
-	
-	if (myOKTA == 'OKTA')
+	if (memcmp(AlienFile, "OKTA", 4) == 0)
 		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;

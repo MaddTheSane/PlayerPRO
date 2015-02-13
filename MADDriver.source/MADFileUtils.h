@@ -198,7 +198,8 @@ static inline void MADByteSwap16(void *msg_buf)
  * @function    MADBE32
  * @abstract    Gets the native value of a 32-bit big-endian value
  * @param       msg_buf
- *					A pointer to a 32-bit value from, or to, a big endian source. On return, the value is swapped on little-endian machines.
+ *					A pointer to a 32-bit value from, or to, a big endian source. 
+ *					On return, the value is swapped on little-endian machines.
  *	@discussion	On big-endian machines, this is a no-op.
  */
 static inline void MADBE32(void *msg_buf)
@@ -212,7 +213,8 @@ static inline void MADBE32(void *msg_buf)
  * @function    MADBE16
  * @abstract    Gets the native value of a 16-bit big-endian value
  * @param       msg_buf
- *					A pointer to a 16-bit value from, or to, a big endian source. On return, the value is swapped on little-endian machines.
+ *					A pointer to a 16-bit value from, or to, a big endian source.
+ *					On return, the value is swapped on little-endian machines.
  *	@discussion	On big-endian machines, this is a no-op.
  */
 static inline void MADBE16(void *msg_buf)
@@ -226,7 +228,8 @@ static inline void MADBE16(void *msg_buf)
  * @function    MADLE32
  * @abstract    Gets the native value of a 32-bit little-endian value
  * @param       msg_buf
- *					A pointer to a 32-bit value from, or to, a little endian source. On return, the value is swapped on big-endian machines.
+ *					A pointer to a 32-bit value from, or to, a little endian source.
+ *					On return, the value is swapped on big-endian machines.
  *	@discussion	On little-endian machines, this is a no-op.
  */
 static inline void MADLE32(void *msg_buf)
@@ -240,7 +243,8 @@ static inline void MADLE32(void *msg_buf)
  * @function    MADLE16
  * @abstract    Gets the native value of a 16-bit little-endian value
  * @param       msg_buf
- *					A pointer to a 16-bit value from, or to, a little endian source. On return, the value is swapped on big-endian machines.
+ *					A pointer to a 16-bit value from, or to, a little endian source. 
+ *					On return, the value is swapped on big-endian machines.
  *	@discussion	On little-endian machines, this is a no-op.
  */
 static inline void MADLE16(void *msg_buf)

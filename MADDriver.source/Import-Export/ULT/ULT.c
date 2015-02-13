@@ -265,11 +265,7 @@ static MADErr ExtractULTInfo(MADInfoRec *info, void *AlienFile)
 
 static MADErr TestULTFile(void *AlienFile)
 {
-	ULTForm	*myULT = (ULTForm*)AlienFile;
-	MADFourChar ultID = *((MADFourChar*)myULT->ID);
-	MADBE32(&ultID);
-	
-	if (ultID == 'MAS_')
+	if (memcmp(AlienFile, "MAS_", 4) == 0)
 		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;

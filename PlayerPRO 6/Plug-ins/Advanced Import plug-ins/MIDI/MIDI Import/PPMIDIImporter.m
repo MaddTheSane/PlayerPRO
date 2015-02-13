@@ -28,14 +28,9 @@ static unsigned char* MYC2PStr(Ptr cStr)
 	return (unsigned char*)cStr;
 }
 
-static inline bool compMem(const void *a, const void *b, size_t s)
-{
-	return memcmp(a, b, s) == 0;
-}
-
 static MADErr TestMIDIFile(const void *AlienFile)
 {
-	if (compMem(AlienFile, "MThd", 4))
+	if (memcmp(AlienFile, "MThd", 4) == 0)
 		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;

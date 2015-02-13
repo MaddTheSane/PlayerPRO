@@ -1185,14 +1185,9 @@ static char* ConvertMad2XM(MADMusic *theMAD, MADDriverSettings *init, long *sndS
 	return finalXMPtr;
 }
 
-static inline bool compMem(const void *a, const void *b, size_t s)
-{
-	return memcmp(a, b, s) == 0;
-}
-
 static MADErr TestXMFile(char* AlienFile, struct staticXMData *xmData)
 {
-	if (compMem(AlienFile, "Extended Module: ", 17)) {
+	if (memcmp(AlienFile, "Extended Module: ", 17) == 0) {
 		xmData->theXMRead = AlienFile;
 		
 		/********************/

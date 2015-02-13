@@ -304,9 +304,7 @@ static MADErr ExtractInfo(MADInfoRec *info, MTMDef *myFile)
 
 static inline MADErr TestFile(MTMDef *myFile)
 {
-	if (myFile->Id[0] == 'M' &&
-		myFile->Id[1] == 'T' &&
-		myFile->Id[2] == 'M')
+	if (memcmp(myFile, "MTM", 3) == 0)
 		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
