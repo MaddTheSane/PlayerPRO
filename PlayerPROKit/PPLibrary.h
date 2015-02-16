@@ -49,6 +49,21 @@ __END_DECLS
 - (MADErr)getInformationFromFileAtURL:(NSURL*)apath stringType:(NSString*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
 - (MADErr)getInformationFromFileAtPath:(NSString*)apath type:(in const char*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
 - (MADErr)getInformationFromFileAtPath:(NSString*)apath stringType:(NSString*)atype infoDictionary:(out NSDictionary* __autoreleasing *)infoDict;
+
+/**
+ *	@abstract Gets a plug-in type from a UTI
+ *	@param aUTI The UTI to find a plug-in type for.
+ *	@return A plug-in type, four characters long, or \c nil if there's
+ *	no plug-in that opens the UTI
+ */
+- (NSString*)typeFromUTI:(NSString*)aUTI;
+
+/**
+ *	@abstract Gets the first UTI from a plug-in type.
+ *	@param aType the four-character plug-in type to get a UTI for.
+ *	@return a UTI, or \c nil if the type isn't listed
+ */
+- (NSString*)typeToUTI:(NSString*)aType;
 @end
 
 __BEGIN_DECLS

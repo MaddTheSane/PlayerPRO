@@ -174,7 +174,7 @@ NSString * const kPPFormatDescription = @"FormatDescription";
 	return [self getInformationFromFileAtURL:[NSURL fileURLWithPath:apath] stringType:atype infoDictionary:infoDict];
 }
 
-static inline NSString* OSTypeToNSString(OSType theOSType)
+static NSString* OSTypeToNSString(OSType theOSType)
 {
 #if !TARGET_OS_IPHONE
 	NSString *checkForValid = CFBridgingRelease(UTCreateStringForOSType(theOSType));
@@ -202,6 +202,38 @@ NSDictionary *PPInfoRecToDictionary(MADInfoRec infoRec)
 			 kPPTotalInstruments:	@(infoRec.totalInstruments),
 			 kPPInternalFileName:	[NSString stringWithCString:infoRec.internalFileName encoding:NSMacOSRomanStringEncoding],
 			 kPPFormatDescription:	[NSString stringWithCString:infoRec.formatDescription encoding:NSMacOSRomanStringEncoding]};
+}
+
+- (NSString*)typeFromUTI:(NSString*)aUTI
+{
+	if ([aUTI isEqualToString:@"com.quadmation.playerpro.madk"]) {
+		return @"MADK";
+	}
+	
+	for (PPLibraryObject *obj in trackerLibs) {
+		for (NSString *bUTI in obj.UTITypes) {
+			if ([aUTI isEqualToString:bUTI]) {
+				return obj.type;
+			}
+		}
+	}
+	
+	return nil;
+}
+
+- (NSString*)typeToUTI:(NSString*)aType
+{
+	if ([aType isEqualToString:@"MADK"]) {
+		return @"com.quadmation.playerpro.madk";
+	}
+	
+	for (PPLibraryObject *obj in trackerLibs) {
+		if ([aType isEqualToString:obj.type]) {
+			return obj.UTITypes[0];
+		}
+	}
+	
+	return nil;
 }
 
 #pragma mark NSFastEnumeration protocol

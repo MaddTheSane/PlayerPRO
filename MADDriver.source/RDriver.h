@@ -442,8 +442,7 @@ typedef MADENUM(MADFourChar, MADPlugModes) {
 
 typedef MADErr (*MADPLUGFUNC)(MADFourChar, char *, MADMusic *, MADInfoRec *, MADDriverSettings *);
 
-typedef struct PlugInfo
-{
+typedef struct PlugInfo {
 	/// Mode support : Import +/ Export
 	OSType		mode;
 	/// Plug-in version
@@ -467,8 +466,7 @@ typedef struct PlugInfo
 #include <windows.h>
 typedef MADErr (*PLUGDLLFUNC)(MADFourChar, char *, MADMusic *, MADInfoRec *, MADDriverSettings *);
 
-typedef struct PlugInfo
-{
+typedef struct PlugInfo {
 	/// Mode support : Import +/ Export
 	MADFourChar	mode;
 	/// Plug-in version
