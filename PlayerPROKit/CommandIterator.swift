@@ -18,19 +18,19 @@ public protocol CommandIterator {
 	var commandTracks: Int16 {get}
 }
 
-public func GetCommand<X where X: CommandIterator>(#row: Int16, #track: Int16, aIntPcmd: X) -> Cmd {
+public func getCommand<X where X: CommandIterator>(#row: Int16, #track: Int16, aIntPcmd: X) -> Cmd {
 	return aIntPcmd.getCommand(row: row, track: track)
 }
 
-public func ReplaceCommand<X where X: CommandIterator>(#row: Int16, #track: Int16, #command: Cmd, inout #aPcmd: X) {
+public func replaceCommand<X where X: CommandIterator>(#row: Int16, #track: Int16, #command: Cmd, inout #aPcmd: X) {
 	aPcmd.replaceCommand(row: row, track: track, command: command)
 }
 
-public func ModifyCommand<X where X: CommandIterator>(#row: Int16, #track: Int16, inout #aPcmd: X, #commandBlock: (inout Cmd) -> ()) {
+public func modifyCommand<X where X: CommandIterator>(#row: Int16, #track: Int16, inout #aPcmd: X, #commandBlock: (inout Cmd) -> ()) {
 	aPcmd.modifyCommand(row: row, track: track, commandBlock: commandBlock)
 }
 
-public func IterateCommands<X where X: CommandIterator>(inout aPcmd: X, commandBlock block: (inout command: Cmd, row: Int16, track: Int16) -> Bool) {
+public func iterateCommands<X where X: CommandIterator>(inout aPcmd: X, commandBlock block: (inout command: Cmd, row: Int16, track: Int16) -> Bool) {
 	for i in 0 ..< aPcmd.commandLength {
 		for x in 0 ..< aPcmd.commandTracks {
 			var aCmd = aPcmd.getCommand(row: i, track: x)

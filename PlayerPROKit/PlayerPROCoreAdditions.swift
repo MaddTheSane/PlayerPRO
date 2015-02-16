@@ -296,38 +296,38 @@ extension Cmd: Equatable {
 	}
 }
 
-public func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> Cmd {
-	return GetCommand(position, channel, aPat).memory
+public func getCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> Cmd {
+	return getCommand(position, channel, aPat).memory
 }
 
-private func GetCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> UnsafeMutablePointer<Cmd> {
+private func getCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> UnsafeMutablePointer<Cmd> {
 	return GetMADCommand(position, channel, aPat)
 }
 
 public func ReplaceCmd(position: Int16, channel: Int16, command: Cmd, aPat: UnsafeMutablePointer<PatData>) {
-	var aCmd: UnsafeMutablePointer<Cmd> = GetCommand(position, channel, aPat)
+	var aCmd: UnsafeMutablePointer<Cmd> = getCommand(position, channel, aPat)
 	aCmd.memory = command
 }
 
 public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>, commandBlock: (inout Cmd)-> ()) {
-	var aCmd: Cmd = GetCommand(position, channel, aPat)
+	var aCmd: Cmd = getCommand(position, channel, aPat)
 	commandBlock(&aCmd)
 	ReplaceCmd(position, channel, aCmd, aPat)
 }
 
-public func GetCommand(#row: Int16, #track: Int16, #aPcmd: UnsafeMutablePointer<Pcmd>) -> Cmd {
+public func getCommand(#row: Int16, #track: Int16, #aPcmd: UnsafeMutablePointer<Pcmd>) -> Cmd {
 	return MADGetCmd(row, track, aPcmd).memory
 }
 
-public func ReplaceCommand(#row: Int16, #track: Int16, #command: Cmd, #aPcmd: UnsafeMutablePointer<Pcmd>) {
+public func replaceCommand(#row: Int16, #track: Int16, #command: Cmd, #aPcmd: UnsafeMutablePointer<Pcmd>) {
 	var aCmd = MADGetCmd(row, track, aPcmd)
 	aCmd.memory = command
 }
 
-public func ModifyCommand(#row: Int16, #track: Int16, #aPcmd: UnsafeMutablePointer<Pcmd>, #commandBlock: (inout Cmd)-> ()) {
-	var aCmd = GetCommand(row: row, track: track, aPcmd: aPcmd)
+public func modifyCommand(#row: Int16, #track: Int16, #aPcmd: UnsafeMutablePointer<Pcmd>, #commandBlock: (inout Cmd)-> ()) {
+	var aCmd = getCommand(row: row, track: track, aPcmd: aPcmd)
 	commandBlock(&aCmd)
-	ReplaceCommand(row: row, track: track, command: aCmd, aPcmd: aPcmd)
+	replaceCommand(row: row, track: track, command: aCmd, aPcmd: aPcmd)
 }
 
 extension IntPcmd: CommandIterator {
