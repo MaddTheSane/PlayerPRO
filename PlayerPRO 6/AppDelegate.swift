@@ -398,7 +398,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		if (sharedWorkspace.type(theUTI, conformsToType:PPPCMDUTI)) {
 			var theOSErr = importPcmdFromURL(theURL)
 			if (theOSErr != MADErr.NoErr) {
-				let theErr = CreateErrorFromMADErrorType(theOSErr)!
+				let theErr = createErrorFromMADErrorType(theOSErr)!
 				NSAlert(error: theErr).runModal()
 				return false;
 			}
@@ -424,7 +424,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 								
 								self.addDocument(aPPDoc)
 							} else {
-								let nsErr = CreateErrorFromMADErrorType(anErr)!
+								let nsErr = createErrorFromMADErrorType(anErr)!
 								if PPErrorIsUserCancelled(nsErr) == false {
 									NSAlert(error: nsErr).runModal()
 								} else {
@@ -483,7 +483,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	
 	func importSample(URL theURL: NSURL, makeUserSelectSample: Bool = false, error: NSErrorPointer = nil) -> Bool {
 		if error != nil {
-			error.memory = CreateErrorFromMADErrorType(.OrderNotImplemented)!
+			error.memory = createErrorFromMADErrorType(.OrderNotImplemented)!
 		}
 		
 		return false
@@ -491,7 +491,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	
 	func importInstrument(URL theURL: NSURL, makeUserSelectInstrument: Bool = false, error: NSErrorPointer = nil) -> Bool {
 		if error != nil {
-			error.memory = CreateErrorFromMADErrorType(.OrderNotImplemented)!
+			error.memory = createErrorFromMADErrorType(.OrderNotImplemented)!
 		}
 		
 		return false
@@ -503,7 +503,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	
 	func importInstrumentListFromURL(url: NSURL, error: NSErrorPointer) -> Bool {
 		if error != nil {
-			error.memory = CreateErrorFromMADErrorType(.OrderNotImplemented)!
+			error.memory = createErrorFromMADErrorType(.OrderNotImplemented)!
 		}
 		
 		return false

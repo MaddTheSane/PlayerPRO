@@ -44,12 +44,12 @@ private func ==(rhs: NSData, lhs: NSData) -> Bool {
 				return true
 			} else {
 				if outErr != nil {
-					outErr.memory = CreateErrorFromMADErrorType(.FileNotSupportedByThisPlug)
+					outErr.memory = createErrorFromMADErrorType(.FileNotSupportedByThisPlug)
 				}
 			}
 		} else {
 			if outErr != nil {
-				outErr.memory = CreateErrorFromMADErrorType(.ReadingErr)
+				outErr.memory = createErrorFromMADErrorType(.ReadingErr)
 			}
 		}
 		return false

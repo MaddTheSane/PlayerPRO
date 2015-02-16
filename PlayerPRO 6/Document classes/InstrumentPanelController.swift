@@ -51,7 +51,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		var theOSErr = importer.identifyInstrumentFile(sampURL, type: &plugType)
 		if (theOSErr != MADErr.NoErr) {
 			if (theErr != nil) {
-				theErr.memory = CreateErrorFromMADErrorType(theOSErr)
+				theErr.memory = createErrorFromMADErrorType(theOSErr)
 			}
 			return false;
 		};

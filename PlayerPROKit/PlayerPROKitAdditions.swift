@@ -50,18 +50,27 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObjec
 	})
 }
 
-/** 
- Creates an \c NSError from a <code>MADErr</code>, optionally converting the error type to an
- error in the Cocoa error domain.
- @retruns an NSError value, or nil if passed \c NoErr
- */
-public func CreateErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [String: NSObject]? = nil, convertToCocoa: Bool = false) -> NSError? {
+/// Creates an \c NSError from a <code>MADErr</code>, optionally converting the error type to an
+/// error in the Cocoa error domain.
+/// @param theErr The \c MADErr to convert to an \c NSError
+/// @param customUserDictionary A dictionary with additional information. May be <code>nil</code>,
+/// defaults to <code>nil</code>.
+/// @param convertToCocoa converts the \c MADErr code into a compatible error in Cocoa's error types.
+/// defaults to <code>false</code>.
+/// @retrun an \c NSError value, or \c nil if passed \c NoErr
+public func createErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [String: NSObject]? = nil, convertToCocoa: Bool = false) -> NSError? {
 	
 	if let anErr = PPCreateErrorFromMADErrorTypeConvertingToCocoa(theErr, convertToCocoa) {
 		if let cud = customUserDictionary {
-			var errDict: [String: NSObject] = [NSLocalizedDescriptionKey : anErr.localizedDescription,
-				NSLocalizedFailureReasonErrorKey: anErr.localizedFailureReason!,
-				NSLocalizedRecoverySuggestionErrorKey: anErr.localizedRecoverySuggestion!]
+			var errDict: [String: NSObject] = [NSLocalizedDescriptionKey : anErr.localizedDescription]
+			
+			if let aFailReason = anErr.localizedFailureReason {
+				errDict[NSLocalizedFailureReasonErrorKey] = aFailReason
+			}
+			
+			if let aRecoverySuggestion = anErr.localizedRecoverySuggestion {
+				errDict[NSLocalizedRecoverySuggestionErrorKey] = aRecoverySuggestion
+			}
 			
 			errDict += cud
 			

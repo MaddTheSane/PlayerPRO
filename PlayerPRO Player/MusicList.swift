@@ -386,7 +386,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 					let selectedAny = bookmarkData["SelectedMusic"] as? Int
 					let pathsAny = bookmarkData["MusicPaths"] as? NSArray as? [String]
 					if (invalidAny == nil || selectedAny == nil || pathsAny == nil) {
-						let lolwut = CreateErrorFromMADErrorType(.UnknownErr)!
+						let lolwut = createErrorFromMADErrorType(.UnknownErr)!
 						theHandle(theErr: lolwut)
 					} else {
 						var pathsURL = [MusicListObject]()

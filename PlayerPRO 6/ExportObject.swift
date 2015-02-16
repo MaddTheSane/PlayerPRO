@@ -61,7 +61,7 @@ final class ExportObject: NSObject {
 				self.status = .Done
 			} else {
 				if aStr == nil {
-					let tmpErr = CreateErrorFromMADErrorType(errVal)!
+					let tmpErr = createErrorFromMADErrorType(errVal)!
 					aStr = tmpErr.description
 				}
 				let bStr: NSString = aStr ?? "Unknown error"

@@ -82,7 +82,7 @@ import AudioToolbox
 		
 		if (returnerr != MADErr.NoErr) {
 			println("Unable to change driver, \(self)")
-			//NSAlert(error: CreateErrorFromMADErrorType(returnerr)).beginSheetModalForWindow(self.windowForSheet, completionHandler: { (returnCode) -> Void in
+			//NSAlert(error: createErrorFromMADErrorType(returnerr)).beginSheetModalForWindow(self.windowForSheet, completionHandler: { (returnCode) -> Void in
 				 //currently, do nothing
 			//})
 		}
@@ -141,7 +141,7 @@ import AudioToolbox
 		} else {
 			let anErr = theMusic.saveMusicToURL(url)
 			if anErr != .NoErr {
-				outError.memory = CreateErrorFromMADErrorType(anErr, convertToCocoa: true)
+				outError.memory = createErrorFromMADErrorType(anErr, convertToCocoa: true)
 				return false
 			} else {
 				return true
