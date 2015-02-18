@@ -84,7 +84,7 @@ public func createErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [S
 
 public func NoteFromString(myTT: String) -> Int16?
 {
-	if ( myTT == "" || myTT == "---" || countElements(myTT) < 2) {
+	if ( myTT == "" || myTT == "---" || count(myTT) < 2) {
 		return nil
 	}
 	
@@ -253,7 +253,8 @@ extension PPSampleObject {
 		let datIsStereo = theDat.stereo;
 		let aRect = CGRect(origin: CGPoint.zeroPoint, size: imageSize)
 		let rowBytes = 4 * UInt(imageSize.width)
-		let bitMapFormat = CGBitmapInfo(alphaInfo: .PremultipliedLast, additionalInfo: .ByteOrder32Host)
+		//let bitMapFormat = CGBitmapInfo(alphaInfo: .PremultipliedLast, additionalInfo: .ByteOrder32Host)
+		let bitMapFormat = CGBitmapInfo.ByteOrder32Host | CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
 		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, CGColorSpaceCreateDeviceRGB(), bitMapFormat)
 		CGContextClearRect(bitmapContext, aRect)
 		CGContextSetLineWidth(bitmapContext, 1)
@@ -461,14 +462,14 @@ extension PPLibrary: SequenceType {
 		public var signature: String
 
 		private init(infoDict: NSDictionary) {
-			totalPatterns = infoDict[kPPTotalPatterns] as Int
-			partitionLength = infoDict[kPPPartitionLength] as Int
-			fileSize = infoDict[kPPFileSize] as Int
-			totalTracks = infoDict[kPPTotalTracks] as Int
-			totalInstruments = infoDict[kPPTotalInstruments] as Int
-			internalFileName = infoDict[kPPInternalFileName] as String
-			formatDescription = infoDict[kPPFormatDescription] as String
-			signature = infoDict[kPPSignature] as String
+			totalPatterns = infoDict[kPPTotalPatterns] as! Int
+			partitionLength = infoDict[kPPPartitionLength] as! Int
+			fileSize = infoDict[kPPFileSize] as! Int
+			totalTracks = infoDict[kPPTotalTracks] as! Int
+			totalInstruments = infoDict[kPPTotalInstruments] as! Int
+			internalFileName = infoDict[kPPInternalFileName] as! String
+			formatDescription = infoDict[kPPFormatDescription] as! String
+			signature = infoDict[kPPSignature] as! String
 		}
 	}
 	
@@ -476,14 +477,14 @@ extension PPLibrary: SequenceType {
 		var ourStrType: NSString? = nil
 		let toRet = identifyFileAtURL(URL, stringType: &ourStrType)
 		
-		return (toRet, ourStrType)
+		return (toRet, ourStrType as? String)
 	}
 	
 	public func identifyFile(#path: String) -> (error: MADErr, format: String?) {
 		var ourStrType: NSString? = nil
 		let toRet = identifyFileAtPath(path, stringType: &ourStrType)
 		
-		return (toRet, ourStrType)
+		return (toRet, ourStrType as? String)
 	}
 	
 	public func getInformationFromFile(#URL: NSURL, type stringType: String) -> (error: MADErr, musicInfo: MusicFileInfo?) {
@@ -511,7 +512,7 @@ extension PPLibrary: SequenceType {
 
 extension PPInstrumentObject: SequenceType {
 	public func generate() -> IndexingGenerator<[PPSampleObject]> {
-		return (samples as [PPSampleObject]).generate()
+		return (samples as! [PPSampleObject]).generate()
 	}
 }
 

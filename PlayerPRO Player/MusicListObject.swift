@@ -26,7 +26,7 @@ private func URLsPointingToTheSameFile(urlA: NSURL, urlB: NSURL) -> Bool {
 		bothAreValid = false;
 	}
 	if bothAreValid {
-		theSame = (dat1 as NSData).isEqualToData((dat2 as NSData))
+		theSame = (dat1 as! NSData).isEqualToData((dat2 as! NSData))
 	}
 	return theSame
 }
@@ -66,7 +66,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 			println("PPMusicListObject: Could not find out if extension is hidden in file \(self.musicURL.path), error: \(err!.localizedDescription)")
 			return self.musicURL.lastPathComponent!
 		} else {
-			let retStr = val as NSString as String
+			let retStr = val as! NSString as String
 			return retStr
 		}
 	}()
@@ -78,7 +78,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 			let manager = NSFileManager.defaultManager();
 			if let theparam = manager.attributesOfItemAtPath(self.musicURL.path!, error: nil) {
 				if let tmpfilesize: AnyObject = theparam[NSFileSize] {
-					let aFileSize = tmpfilesize as NSNumber
+					let aFileSize = tmpfilesize as! NSNumber
 					return aFileSize.unsignedLongLongValue
 				} else {
 					return 0
@@ -87,7 +87,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 				return 0
 			}
 		} else {
-			let retNum = val as NSNumber
+			let retNum = val as! NSNumber
 			return retNum.unsignedLongLongValue
 		}
 	}()
@@ -185,8 +185,8 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	}
 	
 	convenience required init(coder aDecoder: NSCoder) {
-		let aURL = aDecoder.decodeObjectForKey(kMusicListURLKey) as NSURL
-		let aaddedDate = aDecoder.decodeObjectForKey(kMusicListDateAddedKey) as NSDate
+		let aURL = aDecoder.decodeObjectForKey(kMusicListURLKey) as! NSURL
+		let aaddedDate = aDecoder.decodeObjectForKey(kMusicListDateAddedKey) as! NSDate
 		
 		self.init(URL: aURL, date: aaddedDate)
 	}
