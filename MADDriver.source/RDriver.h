@@ -370,7 +370,7 @@ typedef struct MADDriverSettings {
 	/// If the music is finished, either repeat it or stop.
 	bool	repeatMusic;
 	/// For future use
-	union reserved {
+	union {
 		char padding[44];
 	} reserved;
 } MADDriverSettings;

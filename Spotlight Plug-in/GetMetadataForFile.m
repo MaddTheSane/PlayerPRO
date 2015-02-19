@@ -218,7 +218,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 		{
 			NSMutableArray *PatArray = [[NSMutableArray alloc] initWithCapacity:MAXPATTERN];
 			for (int i = 0; i < MAXPATTERN; i++) {
-				if (MADMusic1->partition != NULL && MADMusic1->partition[i] != NULL) {
+				if (MADMusic1->partition[i] != NULL) {
 					NSString *temp = [[NSString alloc] initWithCString:MADMusic1->partition[i]->header.name encoding:NSMacOSRomanStringEncoding];
 					if (!StringIsEmpty(temp))
 						[PatArray addObject:temp];
