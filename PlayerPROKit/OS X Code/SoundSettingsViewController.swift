@@ -347,7 +347,7 @@ public class SoundSettingsViewController: NSViewController {
 			}
 			oversamplingNum.selectItemAtIndex(toSet! - 1)
 			
-			if (delegate?.soundOutDriverDidChange? == nil) {
+			if (delegate?.soundOutDriverDidChange == nil) {
 				soundDriver.enabled = false;
 			}
 		}
@@ -443,13 +443,13 @@ public class SoundSettingsViewController: NSViewController {
 	}
 	
 	@IBAction func changeOversampling(sender: AnyObject!) {
-		var toSet = oversamplingFromTag((sender as NSMenuItem).tag)
+		var toSet = oversamplingFromTag((sender as! NSMenuItem).tag)
 		delegate?.soundOutOversamplingAmountDidChange(toSet)
 	}
 	
 	@IBAction public func changeReverbAmount(sender: AnyObject!) {
 		var toSet: Int32 = 0;
-		let tag = (sender as NSMenuItem).tag
+		let tag = (sender as! NSMenuItem).tag
 
 		for i in ReverbAmountCoupling {
 			if i.tag == tag {
@@ -467,7 +467,7 @@ public class SoundSettingsViewController: NSViewController {
 	
 	@IBAction public func changeReverbPercent(sender: AnyObject!) {
 		var toSet: Int32 = 0
-		let tag = (sender as NSMenuItem).tag
+		let tag = (sender as! NSMenuItem).tag
 		
 		for i in ReverbPercentCoupling {
 			if i.tag == tag {
@@ -483,7 +483,7 @@ public class SoundSettingsViewController: NSViewController {
 	}
 	
 	@IBAction public func changeStereoDelay(sender: AnyObject!) {
-		var toSet = stereoDelayFromTag((sender as NSMenuItem).tag)
+		var toSet = stereoDelayFromTag((sender as! NSMenuItem).tag)
 		delegate?.soundOutStereoDelayAmountDidChange(toSet)
 	}
 }

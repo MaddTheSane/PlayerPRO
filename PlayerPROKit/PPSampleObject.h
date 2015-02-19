@@ -24,9 +24,9 @@
 @property (readonly) sData theSample;
 
 - (instancetype)init;
-- (instancetype)initWithSData:(in sData *)theData NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
-- (sData *)createSData;
+- (instancetype)initWithSData:(nullable in sData *)theData NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCoder:(__nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+- (__nonnull sData *)createSData;
 
 /**
  *	Sample length
@@ -49,11 +49,11 @@
 /// Relative note
 @property char relativeNote;
 /// Sample name
-@property (copy) NSString *name;
+@property (copy, null_resettable) NSString *name;
 /// Is the sample stereo?
 @property (getter = isStereo) BOOL stereo;
 /// The data of the sample's sound, wrapped in an \c NSData class object
-@property (copy) NSData *data;
+@property (copy, null_resettable) NSData *data;
 /// The range of the loop.
 /// A range with a location of \c NSNotFound means a blank loop
 @property NSRange loop;
@@ -66,6 +66,6 @@
 @end
 
 __BEGIN_DECLS
-extern short PPNoteFromString(NSString *aNote);
-extern NSString *PPStringFromNote(short note);
+extern short PPNoteFromString(__nonnull NSString *aNote);
+extern __nonnull NSString *PPStringFromNote(short note);
 __END_DECLS

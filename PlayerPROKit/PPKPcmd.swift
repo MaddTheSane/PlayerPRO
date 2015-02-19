@@ -68,7 +68,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	
 	public var intPcmd: IntPcmd? {
 		if let newSize = structSize {
-			var toRet = IntPcmd()
+			var toRet = IntPcmd(tracks: tracks, length: length, trackStart: trackStart, posStart: positionStart, cmdCount: Int32(myCmd.count), myCmd: nil)
 			toRet.tracks = tracks
 			toRet.length = length
 			toRet.trackStart = trackStart
