@@ -165,6 +165,8 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		super.init();
 	}
 	
+	// MARK: - NSCoding
+	
 	required init(coder aDecoder: NSCoder) {
 		lostMusicCount = 0;
 		if let BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey4) as? [MusicListObject] {
@@ -246,6 +248,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return true
 	}
 	
+	//MARK: -
 	func URLAtIndex(index: Int) -> NSURL? {
 		if index >= musicList.count {
 			return nil
@@ -253,6 +256,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return musicList[index].musicURL
 	}
 	
+	// MARK: - saving/loading
 	private func loadMusicList(newArray: [MusicListObject]) {
 		self.willChangeValueForKey(kMusicListKVO)
 		musicList = newArray
