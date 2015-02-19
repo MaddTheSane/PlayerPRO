@@ -10,6 +10,26 @@ import Cocoa
 import PlayerPROCore
 import PlayerPROKit
 
+extension MADDriverSettings {
+	private init() {
+		numChn			= 4
+		outPutBits		= 16
+		outPutMode		= .DeluxeStereoOutPut
+		outPutRate		= 44100
+		MicroDelaySize	= 25
+		ReverbSize		= 100
+		ReverbStrength	= 20
+		oversampling	= 1
+		TickRemover		= false
+		surround		= false
+		Reverb			= false
+		repeatMusic		= true
+		//reserved = 0
+		//Just going to use CoreAudio
+		driverMode		= .CoreAudioDriver;
+	}
+}
+
 final class SoundOutputController: SoundSettingsViewController, SoundSettingsViewControllerDelegate, PPPreferenceObject {
 	let preferenceIdentifier = PPSoundSettPrefID
 	

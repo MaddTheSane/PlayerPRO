@@ -27,8 +27,8 @@
 @property (readonly) NSTimeInterval totalMusicPlaybackTime;
 
 - (instancetype)init UNAVAILABLE_REASON("PPDriver cannot be inited without a library");
-- (instancetype)initWithLibrary:(__nonnull PPLibrary *)theLib error:(out __nullable NSError* __autoreleasing*)theErr;
-- (instancetype)initWithLibrary:(__nonnull PPLibrary *)theLib settings:(inout __nullable MADDriverSettings *)theSettings error:(out __nullable NSError* __autoreleasing*)theErr NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithLibrary:(__nonnull PPLibrary *)theLib error:(out __nullable NSError* __autoreleasing* __nullable)theErr;
+- (instancetype)initWithLibrary:(__nonnull PPLibrary *)theLib settings:(inout __nullable MADDriverSettings *)theSettings error:(out __nullable NSError* __autoreleasing* __nullable)theErr NS_DESIGNATED_INITIALIZER;
 
 - (MADErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett;
 
