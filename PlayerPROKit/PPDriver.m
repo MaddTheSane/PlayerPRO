@@ -207,10 +207,30 @@
 - (NSData*)directSave
 {
 	size_t aSize = [self audioDataLength];
-	void* thePtr = malloc(aSize);
 	MADDriverSettings ourSettings = self.driverSettings;
+	if (ourSettings.outPutBits == 16) {
+		aSize *= 2;
+	} else if (ourSettings.outPutBits == 20 || ourSettings.outPutBits == 24 ) {
+		aSize *= 3;
+	}
+	
+	switch (ourSettings.outPutMode) {
+		case DeluxeStereoOutPut:
+		case StereoOutPut:
+			aSize *= 2;
+			break;
+			
+		case PolyPhonic:
+			aSize *= 4;
+			break;
+			
+		default:
+			break;
+	}
+
+	void* thePtr = malloc(aSize);
 	NSData *ourData = nil;
-	if (MADDirectSave(thePtr, &ourSettings, theRec)) {
+	if (MADDirectSave(thePtr, NULL, theRec)) {
 		ourData = [[NSData alloc] initWithBytesNoCopy:thePtr length:aSize];
 	}
  
