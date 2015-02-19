@@ -64,7 +64,7 @@ final class Preferences: NSWindowController, NSWindowDelegate {
 		let v = vc.view;
 		
 		//Compute the new window frame
-		let currentSize = (box.contentView as NSView).frame.size
+		let currentSize = (box.contentView as! NSView).frame.size
 		let newSize = v.frame.size;
 		let deltaWidth = newSize.width - currentSize.width;
 		let deltaHeight = newSize.height - currentSize.height;

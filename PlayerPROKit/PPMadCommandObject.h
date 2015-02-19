@@ -17,9 +17,9 @@
 @interface PPMadCommandObject : NSObject <PPObject>
 
 - (instancetype)init;
-- (instancetype)initWithCmdPtr:(Cmd *)theCmd NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCmdPtr:(__nullable Cmd *)theCmd NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCmd:(Cmd)theCmd;
-- (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCoder:(__nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
 @property (readonly) Cmd theCommand;
 /// Instrument number. \c 0x00 is no instrument command
@@ -32,5 +32,6 @@
 @property MADByte argument;
 /// Volume of the effect. \c 0xFF is no volume command
 @property MADByte volume;
-- (void)resetCommand;
+
+- (void)reset;
 @end

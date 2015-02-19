@@ -13,18 +13,18 @@
 #include <PlayerPROCore/MADPlug.h>
 
 @interface PPPatternObject (PcmdHandling)
-+ (MADErr)testPcmdFileAtURL:(NSURL*)theURL;
-+ (NSString *)stringFromPcmdData:(in const Pcmd*)myPcmd;
-+ (NSData*)dataFromPcmd:(in const Pcmd*)thePcmd;
-- (Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
-- (MADErr)importPcmdFromURL:(NSURL*)theURL;
-- (MADErr)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
-- (MADErr)importPcmdFromPointer:(in const Pcmd*)thePcmd;
++ (MADErr)testPcmdFileAtURL:(__nonnull NSURL*)theURL;
++ (__nonnull NSString *)stringFromPcmdData:(in __nonnull const Pcmd*)myPcmd;
++ (__nonnull NSData*)dataFromPcmd:(in __nonnull const Pcmd*)thePcmd;
+- (__nonnull Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
+- (MADErr)importPcmdFromURL:(__nonnull NSURL*)theURL;
+- (MADErr)exportPcmdToURL:(__nonnull NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
+- (MADErr)importPcmdFromPointer:(in __nonnull const Pcmd*)thePcmd;
 
 /**
  * For use with Swift, because it doesn't like variable-length C arrays used in \c Pcmd
  */
-- (MADErr)importIntPcmdFromPointer:(IntPcmd*)theIntPcmd freeCommandsWhenDone:(BOOL)freeCmds;
+- (MADErr)importIntPcmdFromPointer:(__nonnull IntPcmd*)theIntPcmd freeCommandsWhenDone:(BOOL)freeCmds;
 @end
 
 #endif

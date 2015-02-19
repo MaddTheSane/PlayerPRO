@@ -20,10 +20,10 @@
 @property short identifier;
 @property int effectIdentifier;
 @property short countOfArguments;
-@property (readonly, copy) NSArray *effectValues;
-@property (copy) NSString *name;
+@property (readonly, copy, nonnull) NSArray *effectValues;
+@property (copy, null_resettable) NSString *name;
 
-- (instancetype)initWithFXSet:(FXSets*)theSet NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithFXSet:(__nullable FXSets*)theSet NS_DESIGNATED_INITIALIZER;
 
 - (float)effectValueAtIndex:(NSInteger)idx;
 
@@ -34,6 +34,6 @@
 - (void)replaceEffectValueAtIndex:(NSInteger)theLoc withDouble:(double)theNum DEPRECATED_ATTRIBUTE;
 - (void)replaceEffectValueAtIndex:(NSInteger)theLoc withInt:(int)theNum;
 - (void)replaceEffectValueAtIndex:(NSInteger)theLoc withInteger:(NSInteger)theNum;
-- (void)replaceEffectValueAtIndex:(NSInteger)theLoc withNumber:(NSNumber*)theNum;
+- (void)replaceEffectValueAtIndex:(NSInteger)theLoc withNumber:(__nonnull NSNumber*)theNum;
 
 @end

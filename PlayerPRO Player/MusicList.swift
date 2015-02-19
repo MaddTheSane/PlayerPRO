@@ -373,7 +373,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	#if os(OSX)
 	@objc func beginLoadingOfOldMusicListAtURL(toOpen: NSURL, completionHandle theHandle: (theErr: NSError?) ->Void) {
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
-		conn.remoteObjectInterface = NSXPCInterface(`protocol`: PPSTImporterHelper.self)
+		conn.remoteObjectInterface = NSXPCInterface(`withProtocol`: PPSTImporterHelper.self)
 		
 		conn.resume()
 		

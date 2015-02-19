@@ -41,8 +41,8 @@ class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NS
 	
 	@objc convenience required init?(pasteboardPropertyList propertyList: AnyObject!, ofType type: String!) {
 		if (type == PPMLDCUTI) {
-			let unArchive = NSKeyedUnarchiver(forReadingWithData: propertyList as NSData)
-			self.init(indexSet:unArchive.decodeObjectForKey(PPMLDCUTI) as NSIndexSet)
+			let unArchive = NSKeyedUnarchiver(forReadingWithData: propertyList as! NSData)
+			self.init(indexSet:unArchive.decodeObjectForKey(PPMLDCUTI) as! NSIndexSet)
 		} else {
 			self.init()
 			
@@ -68,6 +68,6 @@ class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NS
 	}
 	
 	convenience required init(coder aDecoder: NSCoder) {
-		self.init(indexSet:aDecoder.decodeObjectForKey(PPMLDCUTI) as NSIndexSet)
+		self.init(indexSet:aDecoder.decodeObjectForKey(PPMLDCUTI) as! NSIndexSet)
 	}
 }

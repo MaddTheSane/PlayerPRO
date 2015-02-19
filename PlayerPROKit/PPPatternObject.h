@@ -18,19 +18,19 @@
 
 @interface PPPatternObject : NSObject <NSFastEnumeration, PPObject>
 @property (readonly) NSInteger index;
-@property (copy) NSString *patternName;
-@property (readonly, weak) PPMusicObject *musicWrapper;
+@property (copy, null_resettable) NSString *patternName;
+@property (readonly, weak, nullable) PPMusicObject *musicWrapper;
 @property int patternSize;
 
-- (PPMadCommandObject *)objectAtIndexedSubscript:(NSInteger)index;
+- (__nonnull PPMadCommandObject *)objectAtIndexedSubscript:(NSInteger)index;
 
-- (instancetype)initWithMusic:(PPMusicObject *)mus NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithMusic:(PPMusicObject *)mus patternAtIndex:(short)ptnIdx;
+- (instancetype)initWithMusic:(__nonnull PPMusicObject *)mus NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithMusic:(__nonnull PPMusicObject *)mus patternAtIndex:(short)ptnIdx;
 
-- (PPMadCommandObject*)getCommandFromPosition:(short)PosX channel:(short)TrackIdX;
+- (__nonnull PPMadCommandObject*)getCommandFromPosition:(short)PosX channel:(short)TrackIdX;
 - (void)replaceCommandAtPosition:(short)PosX channel:(short)TrackIdX cmd:(Cmd)aCmd;
-- (void)replaceCommandAtPosition:(short)PosX channel:(short)TrackIdX command:(PPMadCommandObject*)aCmd;
-- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX commandBlock:(void (^)(Cmd*))block;
-- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX madCommandBlock:(void (^)(PPMadCommandObject*))block;
+- (void)replaceCommandAtPosition:(short)PosX channel:(short)TrackIdX command:(__nonnull PPMadCommandObject*)aCmd;
+- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX commandBlock:(void (^ __nonnull )(__nonnull Cmd*))block;
+- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX madCommandBlock:(void (^ __nonnull)(__nonnull PPMadCommandObject*))block;
 
 @end

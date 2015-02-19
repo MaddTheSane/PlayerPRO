@@ -128,7 +128,7 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	if (self = [super init]) {
 		if (!theCmd) {
-			[self resetCommand];
+			[self reset];
 		} else {
 			theCommand = *theCmd;
 		}
@@ -141,7 +141,7 @@ static const dispatch_block_t initUTIArray = ^{
 	return [[[self class] alloc] initWithCmdPtr:&theCommand];
 }
 
-- (void)resetCommand;
+- (void)reset
 {
 	[self willChangeValueForKey:@"theCommand"];
 

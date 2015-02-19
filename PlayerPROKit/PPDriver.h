@@ -19,16 +19,16 @@
 #endif
 
 @interface PPDriver : NSObject
-@property (nonatomic, strong) PPMusicObject *currentMusic;
-@property (readonly, strong) PPLibrary *theLibrary;
+@property (nonatomic, strong, nullable) PPMusicObject *currentMusic;
+@property (readonly, strong, nonnull) PPLibrary *theLibrary;
 @property (readonly) MADDriverSettings driverSettings;
 @property NSTimeInterval musicPosition;
 @property (getter = isExporting) BOOL exporting;
 @property (readonly) NSTimeInterval totalMusicPlaybackTime;
 
 - (instancetype)init UNAVAILABLE_REASON("PPDriver cannot be inited without a library");
-- (instancetype)initWithLibrary:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)theErr;
-- (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(inout MADDriverSettings *)theSettings error:(out NSError* __autoreleasing*)theErr NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithLibrary:(__nonnull PPLibrary *)theLib error:(out __nullable NSError* __autoreleasing*)theErr;
+- (instancetype)initWithLibrary:(__nonnull PPLibrary *)theLib settings:(inout __nullable MADDriverSettings *)theSettings error:(out __nullable NSError* __autoreleasing*)theErr NS_DESIGNATED_INITIALIZER;
 
 - (MADErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett;
 
@@ -38,28 +38,28 @@
 - (void)cleanDriver;
 - (MADErr)stopDriver;
 
-- (BOOL)directSaveToPointer:(void*)thePtr settings:(MADDriverSettings*)theSett;
-- (NSData*)directSave;
+- (BOOL)directSaveToPointer:(__nonnull void*)thePtr settings:(__nonnull MADDriverSettings*)theSett;
+- (__nullable NSData*)directSave;
 @property (readonly) NSInteger audioDataLength;
 
-- (MADErr)getMusicStatusWithCurrentTime:(long*)curTime totalTime:(long*)totTime;
+- (MADErr)getMusicStatusWithCurrentTime:(__nonnull long*)curTime totalTime:(__nonnull long*)totTime;
 - (MADErr)setMusicStatusWithCurrentTime:(long)curTime maximumTime:(long)maxV minimumTime:(long)minV;
 
 //This is the main one that gets called
-- (MADErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen;
+- (MADErr)playSoundDataFromPointer:(__nonnull const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen;
 
-- (MADErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo;
-- (MADErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote;
-- (MADErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopInRange:(NSRange)loopRange;
-- (MADErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopInRange:(NSRange)loopRange;
-- (MADErr)playSoundDataFromPointer:(const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen;
+- (MADErr)playSoundDataFromPointer:(__nonnull const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo;
+- (MADErr)playSoundDataFromPointer:(__nonnull const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote;
+- (MADErr)playSoundDataFromPointer:(__nonnull const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopInRange:(NSRange)loopRange;
+- (MADErr)playSoundDataFromPointer:(__nonnull const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopInRange:(NSRange)loopRange;
+- (MADErr)playSoundDataFromPointer:(__nonnull const void*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen;
 
-- (MADErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo;
-- (MADErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote;
-- (MADErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopInRange:(NSRange)loopRange;
-- (MADErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopInRange:(NSRange)loopRange;
-- (MADErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen;
-- (MADErr)playSoundDataFromData:(NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen;
+- (MADErr)playSoundDataFromData:(__nonnull NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo;
+- (MADErr)playSoundDataFromData:(__nonnull NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote;
+- (MADErr)playSoundDataFromData:(__nonnull NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopInRange:(NSRange)loopRange;
+- (MADErr)playSoundDataFromData:(__nonnull NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopInRange:(NSRange)loopRange;
+- (MADErr)playSoundDataFromData:(__nonnull NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen;
+- (MADErr)playSoundDataFromData:(__nonnull NSData*)theSnd fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo withNote:(Byte)theNote withLoopStartingAt:(NSUInteger)loopStart andLoopLength:(NSUInteger)loopLen;
 
 #if 0
 - (MADErr)playSoundDataFromData:(NSData*)theSnd withSize:(NSUInteger)sndSize fromChannel:(int)theChan amplitude:(short)amp bitRate:(unsigned int)rate isStereo:(BOOL)stereo;
@@ -75,8 +75,8 @@
 @property (readonly, getter=isDonePlayingMusic) BOOL donePlayingMusic;
 @property (getter=isPaused)						BOOL paused;
 
-- (PPMusicObject *)loadMusicFile:(NSString*)path NS_RETURNS_RETAINED;
-- (PPMusicObject *)loadMusicURL:(NSURL*)url NS_RETURNS_RETAINED;
+- (__nullable PPMusicObject *)loadMusicFile:(__nonnull NSString*)path NS_RETURNS_RETAINED;
+- (__nullable PPMusicObject *)loadMusicURL:(__nonnull NSURL*)url NS_RETURNS_RETAINED;
 
 // More in-depth modification of the driver:
 
@@ -87,7 +87,7 @@
 ///0 to 64
 @property short volume;
 @property BOOL useEqualizer;
-@property (readonly) void *oscilloscopePointer NS_RETURNS_INNER_POINTER;
+@property (readonly, nullable) void *oscilloscopePointer NS_RETURNS_INNER_POINTER;
 @property (readonly) size_t oscilloscopeSize;
 - (BOOL)isChannelActiveAtIndex:(NSInteger)idx;
 - (void)setChannelAtIndex:(NSInteger)idx to:(BOOL)enabled;
