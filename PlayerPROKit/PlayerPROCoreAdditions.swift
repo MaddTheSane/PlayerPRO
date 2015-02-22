@@ -166,24 +166,6 @@ extension MADDriverSettings: DebugPrintable, Equatable {
 		}}
 }
 
-extension MADInfoRec: DebugPrintable {
-	public var internalName: String! {
-		let mirror = reflect(internalFileName)
-		let toParse: [CChar] = GetArrayFromMirror(mirror, appendLastObject: 0)!
-		return String(CString: toParse, encoding: NSMacOSRomanStringEncoding)
-	}
-	
-	public var format: String! {
-		let mirror = reflect(formatDescription)
-		let toParse: [CChar] = GetArrayFromMirror(mirror, appendLastObject: 0)!
-		return String(CString: toParse, encoding: NSMacOSRomanStringEncoding)
-	}
-	
-	public var debugDescription: String {
-		return "\(internalName), format \(format)"
-	}
-}
-
 public let maximumPanning: MADByte = 64
 public let minimumVolume: MADByte = 0
 public let noFineTune: UInt16 = 8363
@@ -262,18 +244,33 @@ extension sData {
 	}
 }
 
-extension EnvRec: Equatable {
+extension EnvRec: Hashable {
 	public init() {
 		pos = 0
 		val = 0
 	}
+	
+	public var hashValue: Int {
+		var aHi = UInt(pos)
+		aHi |= UInt(val) << 4
+		
+		return Int(aHi)
+	}
 }
 
-extension FXBus: Equatable {
+extension FXBus: Hashable {
 	public init() {
 		Active = false
 		ByPass = false
 		copyId = 0
+	}
+	
+	public var hashValue: Int {
+		var aVar = Int(copyId)
+		aVar |= Active ? 1 << 4 : 0
+		aVar |= ByPass ? 1 << 5 : 0
+		
+		return aVar
 	}
 }
 
