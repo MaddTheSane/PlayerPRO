@@ -32,6 +32,28 @@ public func ==(lhs: Cmd, rhs: Cmd) -> Bool {
 	return true
 }
 
+public func ==(lhs: IntPcmd, rhs: IntPcmd) -> Bool {
+	if lhs.tracks != rhs.tracks {
+		return false
+	} else if lhs.length != rhs.length {
+		return false
+	} else if lhs.trackStart != rhs.trackStart {
+		return false
+	} else if lhs.posStart != rhs.posStart {
+		return false
+	} else if lhs.cmdCount != rhs.cmdCount {
+		return false
+	} else {
+		for i in 0..<Int(lhs.cmdCount) {
+			if lhs.myCmd[i] != rhs.myCmd[i] {
+				return false
+			}
+		}
+	}
+
+	return true
+}
+
 public func ==(lhs: EnvRec, rhs: EnvRec) -> Bool {
 	if lhs.pos != rhs.pos {
 		return false
@@ -327,7 +349,7 @@ public func modifyCommand(#row: Int16, #track: Int16, #aPcmd: UnsafeMutablePoint
 	replaceCommand(row: row, track: track, command: aCmd, aPcmd: aPcmd)
 }
 
-extension IntPcmd: CommandIterator {
+extension IntPcmd: CommandIterator, Equatable {
 	public init() {
 		tracks = 0
 		length = 0
