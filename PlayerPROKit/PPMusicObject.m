@@ -6,8 +6,8 @@
 //
 //
 
+#import <PlayerPROKit/PlayerPROKit-Swift.h>
 #import "PPMusicObject.h"
-#import "PPLibrary.h"
 #import "PPLibrary_PPKPrivate.h"
 #import "PPDriver.h"
 #import "PPDriver_Private.h"
@@ -380,10 +380,10 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		return MADParametersErr;
 	}
 	
-	if ((theErr = MADMusicIdentifyCFURL(theLib._madLib, filetype, (__bridge CFURLRef)(thURL))) != MADNoErr)
+	if ((theErr = MADMusicIdentifyCFURL(theLib.theLibrary, filetype, (__bridge CFURLRef)(thURL))) != MADNoErr)
 		return theErr;
 	
-	return MADMusicInfoCFURL(theLib._madLib, filetype, (__bridge CFURLRef)(thURL), theInfo);
+	return MADMusicInfoCFURL(theLib.theLibrary, filetype, (__bridge CFURLRef)(thURL), theInfo);
 }
 
 - (NSString *)title
@@ -473,7 +473,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 - (instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error
 {
 	char type[5];
-	MADErr iErr = MADMusicIdentifyCFURL(theLib._madLib, type, (__bridge CFURLRef)(url));
+	MADErr iErr = MADMusicIdentifyCFURL(theLib.theLibrary, type, (__bridge CFURLRef)(url));
 	if (iErr != MADNoErr) {
 		if (error) {
 			*error = PPCreateErrorFromMADErrorType(iErr);
@@ -502,7 +502,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 - (instancetype)initWithURL:(NSURL *)url type:(in const char*)type library:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)error
 {
 	if (self = [super init]) {
-		MADErr iErr = MADLoadMusicCFURLFile(theLib._madLib, &currentMusic, (char*)type, (__bridge CFURLRef)(url));
+		MADErr iErr = MADLoadMusicCFURLFile(theLib.theLibrary, &currentMusic, (char*)type, (__bridge CFURLRef)(url));
 		if (iErr != MADNoErr) {
 			if (error) {
 				*error = PPCreateErrorFromMADErrorType(iErr);
@@ -599,7 +599,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	if ([form isEqualToString:@"MADK"]) {
 		return [self saveMusicToURL:tosave];
 	}
-	return MADMusicExportCFURL(otherLib._madLib, self._currentMusic, (char*)[form cStringUsingEncoding:NSMacOSRomanStringEncoding], (__bridge CFURLRef)tosave);
+	return MADMusicExportCFURL(otherLib.theLibrary, self._currentMusic, (char*)[form cStringUsingEncoding:NSMacOSRomanStringEncoding], (__bridge CFURLRef)tosave);
 }
 
 - (MADMusic *)copyMadMusicStruct

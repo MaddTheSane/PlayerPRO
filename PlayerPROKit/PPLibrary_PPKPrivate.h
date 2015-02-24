@@ -6,9 +6,9 @@
 //
 //
 
-#import "PPLibrary.h"
+#import <PlayerPROKit/PlayerPROKit-Swift.h>
 
-@interface PPLibrary ()
-@property (readonly) MADLibrary *_madLib;
-@property (readonly) NSArray *trackerLibs;
+@interface PPLibrary (internalSwift)
+@property (readonly) MADLibrary *theLibrary NS_RETURNS_INNER_POINTER;
+//@property (readonly) NSArray *trackerLibs;
 @end

@@ -42,8 +42,7 @@ public final class PPLibraryObject: NSObject, Printable, DebugPrintable {
 		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle), type: \(type); version: \(plugVersion), \(version)"
 	}
 	
-	internal init(plugInfo pi: UnsafePointer<PlugInfo>) {
-		let unwrapped = pi.memory
+	internal init(plugInfo unwrapped: PlugInfo) {
 		menuName = unwrapped.MenuName.takeUnretainedValue()
 		authorString = unwrapped.AuthorString.takeUnretainedValue()
 		bundle = NSBundle(URL: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()))!

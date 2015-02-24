@@ -49,7 +49,7 @@ internal var globalMadLib: PPLibrary {
 class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDelegate {
 	private var exportObjects = [ExportObject]()
 	var plugInInfos = [PlugInInfo]()
-	let madLib = PPLibrary()
+	let madLib = PPLibrary()!
 	let instrumentPlugHandler = PPInstrumentPlugHandler()
 	let digitalHandler = DigitalPlugHandler()
 	let filterHandler = PPFilterPlugHandler()
@@ -366,25 +366,32 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			let retVal = PPRunInformationalAlertPanel(NSLocalizedString("Invalid Extension", comment: "Invalid extension"), message: NSLocalizedString("The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", comment: "Invalid extension description"), defaultButton: NSLocalizedString("Rename", comment: "rename file"), alternateButton: NSLocalizedString("Open", comment:"Open a file"), otherButton: NSLocalizedString("Cancel", comment: "Cancel"), args: theURL.lastPathComponent!);
 			switch (retVal) {
 			case NSAlertDefaultReturn:
-				var rec: NSDictionary? = nil
+				var rec: NSDictionary = [:]
 				var ostype: NSString? = nil
 				
-				if (madLib.identifyFileAtURL(theURL, stringType: &ostype) != MADErr.NoErr) || madLib.getInformationFromFileAtURL(theURL, stringType: ostype, infoDictionary: &rec) != MADErr.NoErr {
+				let adds = madLib.identifyFile(URL: theURL)
+				if adds.error == .NoErr {
+					let addd = madLib.informationFromFile(URL: theURL, type: "")
+					if addd.error != .NoErr {
+						PPRunAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
+						return false;
+					}
+					let sigVal = addd.info!.signature
+					
+					let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(sigVal.lowercaseString);
+					var err: NSError? = nil
+					if (NSFileManager.defaultManager().moveItemAtURL(theURL, toURL:tmpURL, error:&err) == false) {
+						println("Could not move file, error: \(err!)");
+						PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), args: tmpURL.lastPathComponent!, theURL.lastPathComponent!);
+					} else {
+						theURL = tmpURL;
+						//TODO: regenerate the UTI
+					}
+
+				} else {
 					PPRunAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
 					return false;
-				}
-				let sigVala: AnyObject = rec?[kPPSignature] ?? NSNumber(unsignedInt: StringToOSType("madk"))
-				let sigValb = MADFourChar(sigVala as UInt)
-				let sigVal = OSTypeToString(sigValb)!
-				
-				let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(sigVal.lowercaseString);
-				var err: NSError? = nil
-				if (NSFileManager.defaultManager().moveItemAtURL(theURL, toURL:tmpURL, error:&err) == false) {
-					println("Could not move file, error: \(err!)");
-					PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), args: tmpURL.lastPathComponent!, theURL.lastPathComponent!);
-				} else {
-					theURL = tmpURL;
-					//TODO: regenerate the UTI
+
 				}
 				
 			case NSAlertAlternateReturn:

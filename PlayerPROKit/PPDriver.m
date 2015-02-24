@@ -6,8 +6,8 @@
 //
 //
 
+#import <PlayerPROKit/PlayerPROKit-Swift.h>
 #import "PPDriver.h"
-#import "PPLibrary.h"
 #import "PPLibrary_PPKPrivate.h"
 #import "PPDriver_Private.h"
 #import "PPMusicObject.h"
@@ -363,7 +363,7 @@
 			*theErr = nil;
 		
 		thePPLib = theLib;
-		MADErr iErr = MADCreateDriver(theSettings, theLib._madLib, &theRec);
+		MADErr iErr = MADCreateDriver(theSettings, theLib.theLibrary, &theRec);
 		if (iErr != MADNoErr) {
 			if (theErr)
 				*theErr = PPCreateErrorFromMADErrorType(iErr);
