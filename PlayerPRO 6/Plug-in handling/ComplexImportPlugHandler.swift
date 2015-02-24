@@ -9,9 +9,17 @@
 import Cocoa
 import PlayerPROKit
 
-final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, SequenceType {
+final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, CollectionType {
 	
 	private(set) var plugIns = [PPComplexImportPlugObject]()
+	
+	var startIndex: Int {
+		return 0
+	}
+	
+	var endIndex: Int {
+		return plugIns.count
+	}
 	
 	override init() {
 		let defaultPlugLocs = swiftDefaultPlugInLocations()

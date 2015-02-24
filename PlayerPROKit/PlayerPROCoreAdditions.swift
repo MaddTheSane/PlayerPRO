@@ -197,7 +197,7 @@ public let maximumArpeggio: Int32 = 3
 public let equalizerPacketElements = 512
 
 public func MADDebugString(text: String, line: UWord = __LINE__, file: StaticString = __FILE__) {
-	MADDebugStr(Int16(line), file.stringValue.fileSystemRepresentation(), text.cStringUsingEncoding(NSUTF8StringEncoding)!)
+	MADDebugStr(Int16(line), file.stringValue.fileSystemRepresentation(), text)
 }
 
 private let BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)

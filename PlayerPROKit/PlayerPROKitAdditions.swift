@@ -444,10 +444,26 @@ public func InfoRecToMusicInfo(infoRec: MADInfoRec) -> PPLibrary.MusicFileInfo {
 	return PPLibrary.MusicFileInfo(infoDict: tmpDict)
 }
 
-extension PPLibrary: SequenceType {
-	/// the values are always PPLibraryObject
-	public func generate() -> NSFastGenerator {
-		return NSFastGenerator(self)
+extension PPLibrary: SequenceType/*, CollectionType*/ {
+	typealias Index = Int
+	public typealias Generator = GeneratorOf<PPLibraryObject>
+	
+	public func generate() -> Generator {
+		var index = 0
+		return GeneratorOf {
+			if index < self.pluginCount {
+				return self[index++]
+			}
+			return nil
+		}
+	}
+
+	public var startIndex: Int {
+		return 0
+	}
+	
+	public var endIndex: Int {
+		return pluginCount
 	}
 	
 	public struct MusicFileInfo {

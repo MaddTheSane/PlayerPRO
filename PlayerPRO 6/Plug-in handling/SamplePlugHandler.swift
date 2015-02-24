@@ -9,7 +9,7 @@
 import Cocoa
 import PlayerPROKit
 
-class SamplePlugHandler: NSObject, SequenceType, NSFastEnumeration {
+class SamplePlugHandler: NSObject, CollectionType, NSFastEnumeration {
 	private(set) var plugIns = [PPSamplePlugObject]()
 	
 	override init() {
@@ -38,6 +38,14 @@ class SamplePlugHandler: NSObject, SequenceType, NSFastEnumeration {
 	}
 	
 	var count: Int {
+		return plugIns.count
+	}
+	
+	var startIndex: Int {
+		return 0
+	}
+	
+	var endIndex: Int {
 		return plugIns.count
 	}
 	

@@ -23,7 +23,7 @@ private let kPlayerList = "Player List"
 
 private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.ApplicationSupportDirectory, inDomain:.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player")
 
-@objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, SequenceType {
+@objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, CollectionType, Sliceable {
 	private(set)	dynamic var musicList = [MusicListObject]()
 	private(set)	var lostMusicCount: UInt
 	dynamic var		selectedMusic: Int
@@ -38,6 +38,18 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	
 	subscript (index: Int) -> MusicListObject {
 		return musicList[index]
+	}
+
+	var startIndex: Int {
+		return 0
+	}
+
+	var endIndex: Int {
+		return musicList.count
+	}
+	
+	subscript (subRange: Range<Int>) -> Slice<MusicListObject> {
+		return musicList[subRange]
 	}
 	
 	/// Returns NSNotFound if a URL couldn't be found

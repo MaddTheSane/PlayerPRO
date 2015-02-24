@@ -1196,11 +1196,6 @@ return; \
 	[timeChecker invalidate];
 	[self removeObserver:self forKeyPath:@"paused"];
 	
-	if (self.music) {
-		[madDriver stop];
-		[madDriver cleanDriver];
-		_music = nil;
-	}
 	[madDriver stopDriver];
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
 		[musicList saveApplicationMusicList];
