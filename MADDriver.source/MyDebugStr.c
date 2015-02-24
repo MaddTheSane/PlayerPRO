@@ -26,6 +26,7 @@ void MADRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*
 		MyDebugBlock = nil;
 #else
 		Block_release(MyDebugBlock);
+		MyDebugBlock = NULL;
 #endif
 	}
 	
@@ -35,8 +36,6 @@ void MADRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*
 #else
 		MyDebugBlock = Block_copy(newdebugBlock);
 #endif
-	} else {
-		MyDebugBlock = NULL;
 	}
 }
 
@@ -47,12 +46,11 @@ void MADRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const
 		MyDebugBlock = nil;
 #else
 		Block_release(MyDebugBlock);
+		MyDebugBlock = NULL;
 #endif
 	}
 	
-	if (debugFunc == NULL) {
-		MyDebugBlock = NULL;
-	} else {
+	if (debugFunc != NULL) {
 		typeof(MyDebugBlock) funcBlock = ^(short line, const char *file, const char *text){
 			(*debugFunc)(line, file, text);
 		};
