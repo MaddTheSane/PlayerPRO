@@ -693,6 +693,8 @@
 		55CDD02A1976F63600E3DDE1 /* MusicListObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F4C3E319763FDD000997BE /* MusicListObject.swift */; };
 		55CDE86E19E5AA4400476AC8 /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
 		55D1BD59120FBAC0004FD083 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 55D1BD58120FBAC0004FD083 /* Credits.rtf */; };
+		55D2626B1A9E809600A68CCE /* MusicNoteFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D2626A1A9E809600A68CCE /* MusicNoteFormatter.swift */; };
+		55D2626C1A9E809600A68CCE /* MusicNoteFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D2626A1A9E809600A68CCE /* MusicNoteFormatter.swift */; };
 		55D2921F18AADB7100EB7A7D /* PPPatternObject_PcmdHandling.h in Headers */ = {isa = PBXBuildFile; fileRef = 55D2921E18AADB4600EB7A7D /* PPPatternObject_PcmdHandling.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55D57E1C18601BBC00192497 /* MIDI.ppextimp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppextimp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55D59C2C1A646F60008A6E51 /* PPKSwiftToC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D59C2B1A646F60008A6E51 /* PPKSwiftToC.m */; };
@@ -2664,6 +2666,7 @@
 		55CBFC7011EB7BC90028C6BB /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		55CDD02B1976F6F400E3DDE1 /* iOS Player-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "iOS Player-Bridging-Header.h"; sourceTree = "<group>"; };
 		55D1BD58120FBAC0004FD083 /* Credits.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
+		55D2626A1A9E809600A68CCE /* MusicNoteFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicNoteFormatter.swift; sourceTree = "<group>"; };
 		55D2921E18AADB4600EB7A7D /* PPPatternObject_PcmdHandling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPatternObject_PcmdHandling.h; sourceTree = "<group>"; };
 		55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO-PrefixHeader.pch"; sourceTree = "<group>"; };
 		55D59C2B1A646F60008A6E51 /* PPKSwiftToC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPKSwiftToC.m; sourceTree = "<group>"; };
@@ -4451,6 +4454,7 @@
 				55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */,
 				55CAB9C51A9C59F50047F1D6 /* PPConstants.h */,
 				55CAB9CD1A9C5A320047F1D6 /* PPConstants.m */,
+				55D2626A1A9E809600A68CCE /* MusicNoteFormatter.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -7024,6 +7028,7 @@
 				555F447619A1411700B8C6EE /* PlayerPROKitAdditions.swift in Sources */,
 				55DE87CF187E60F400C36533 /* PPFXSetObject.m in Sources */,
 				558D4DDB1666F14E00A333E8 /* PPDriver.m in Sources */,
+				55D2626B1A9E809600A68CCE /* MusicNoteFormatter.swift in Sources */,
 				5523AE6C19E0AFE7006FC0E0 /* PPSampleWaveformView.m in Sources */,
 				55C8EDE4187CC8B200CC8C1B /* PPMadCommandObject.m in Sources */,
 				55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */,
@@ -7773,6 +7778,7 @@
 				55D59C2D1A646F60008A6E51 /* PPKSwiftToC.m in Sources */,
 				55F1BE191975CD7200AD2C03 /* PPMusicObject.m in Sources */,
 				55F1BE0F1975CD7200AD2C03 /* PPMadCommandObject.m in Sources */,
+				55D2626C1A9E809600A68CCE /* MusicNoteFormatter.swift in Sources */,
 				55CAB9D21A9C5ADB0047F1D6 /* PPLibrary.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
