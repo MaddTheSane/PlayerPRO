@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
+#if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+#endif
 #import <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PlayerPROKit.h>
 #import <PlayerPROKit/PlayerPROKit-Swift.h>
