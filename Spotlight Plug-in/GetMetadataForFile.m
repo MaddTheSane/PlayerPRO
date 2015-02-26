@@ -15,7 +15,7 @@ static dispatch_block_t charBlock = ^{
 	ourSet = [tmpSet copy];
 };
 
-static inline NSString *StripStringOfSpaces(NSString *s, BOOL andDashes) NS_RETURNS_RETAINED;
+static NSString *StripStringOfSpaces(NSString *s, BOOL andDashes) NS_RETURNS_RETAINED;
 NSString *StripStringOfSpaces(NSString *s, BOOL andDashes)
 {
 	dispatch_once(&charSetOnce, charBlock);
@@ -50,6 +50,25 @@ static inline BOOL StringIsEmpty(NSString *s)
 #define kPPMDTotalTracks		@"net_sourceforge_playerpro_tracker_totaltracks"
 #define kPPMDFormatDescription	@"net_sourceforge_playerpro_tracker_formatdescription"
 #define kPPMDMADKInfo			@"net_sourceforge_playerpro_tracker_madkinfo"
+
+static char *typeBasedOnUTI(NSString* theUTI, MADLibrary *theLib) {
+	if ([theUTI isEqualToString:@"com.quadmation.playerpro.madk"]) {
+		return "MADK";
+	} else if ([theUTI isEqualToString:@"com.quadmation.playerpro.mad"]) {
+		// This can happen if a file just ends with .mad
+		return "!!!!";
+	}
+	
+	for (int i = 0; i < theLib->TotalPlug; i++) {
+		for (NSString *aUTI in (__bridge NSArray*)theLib->ThePlug[i].UTItypes) {
+			if ([aUTI isEqualToString:theUTI]) {
+				return theLib->ThePlug[i].type;
+			}
+		}
+	}
+	
+	return "!!!!";
+}
 
 /* -----------------------------------------------------------------------------
     Get metadata attributes from file
@@ -92,46 +111,60 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 		
 		{
 			char type[5] = {0};
-			char utiType[5] = {0};
 			OSType info = 0;
-			NSString *ostypes;
 			
-			//Try to get the OSType of the UTI.
-			ostypes = CFBridgingRelease(UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType));
+			//first, iterate over the the library UTIs.
+			char *whutType = typeBasedOnUTI((__bridge NSString *)(contentTypeUTI), MADLib);
 			
-			info = UTGetOSTypeFromString((__bridge CFStringRef)(ostypes));
-			if (info)
-				OSType2Ptr(info, utiType);
-			else
-				strcpy(utiType, "!!!!");
-			
-			if (MADMusicIdentifyCFURL(MADLib, type, urlForFile) != MADNoErr) {
-				//Couldn't identify via raw file, try by UTI
-				strcpy(type, utiType);
+			strcpy(type, whutType);
+			if (strcmp(type, "!!!!") == 0) {
+				// We couldn't identify it based off of the UTI that way...
+				// So try via direct UTI access
+				char utiType[5] = {0};
+				NSString *ostypes = CFBridgingRelease(UTTypeCopyPreferredTagWithClass(contentTypeUTI, kUTTagClassOSType));
+				
+				info = UTGetOSTypeFromString((__bridge CFStringRef)(ostypes));
+				if (info)
+					OSType2Ptr(info, utiType);
+				else
+					strcpy(utiType, "!!!!");
+				// But is it still valid?
+				if (MADPlugAvailable(MADLib, utiType)) {
+					strcpy(type, utiType);
+				} else {
+					// NOW we use MADMusicIdentifyCFURL
+					if (MADMusicIdentifyCFURL(MADLib, type, urlForFile) != MADNoErr) {
+						// We failed :(
+						goto fail1;
+					}
+				}
 			}
-			
-#ifdef DEBUG
-			if (strcmp(utiType, "!!!!") == 0) {
-				printf("PPImporter: Unable to determine file type based on UTI.\n");
-			} else if (strcmp(utiType, type) != 0) {
-				printf("PPImporter: File types differ, UTI says %s, PlayerPRO says %s.", utiType, type);
-			}
-#endif
 			
 			if (MADPlugAvailable(MADLib, type)) {
-				OSErr err = MADNoErr;
+				MADErr err = MADNoErr;
 				err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, type, urlForFile);
 				if (err != MADNoErr) {
+					// wait! The file type might be incorrect!
+					err = MADMusicIdentifyCFURL(MADLib, type, urlForFile);
+					if (err == MADNoErr) {
+						// It says we can open it...
+						err = MADLoadMusicCFURLFile(MADLib, &MADMusic1, type, urlForFile);
+						if (err == MADNoErr) {
+							// ...and we can!
+							goto salvageable;
+						}
+					}
 					goto fail1;
 				}
 			} else {
 				goto fail1;
 			}
 			
+		salvageable:
 			{
-				//Get info
-				//Note that most trackers don't have an info field, so most will be "Converted by PlayerPRO..."
-				//Hence why we're only letting the MADK tracker show it.
+				// Get info
+				// Note that most trackers don't have an info field, so most will be "Converted by PlayerPRO..."
+				// Hence why we're only letting the MADK tracker show it.
 				
 				NSString *infoString = [[NSString alloc] initWithCString:MADMusic1->header->infos encoding:NSMacOSRomanStringEncoding];
 				if (infoString) {
@@ -175,7 +208,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			if (!title) {
 				title = [[NSString alloc] initWithCString:MADMusic1->header->name encoding:NSMacOSRomanStringEncoding];
 				if (title != nil) {
-					NSattribs[(NSString*)kMDItemTitle] = title;
+					NSattribs[(NSString*)kMDItemTitle] = StripStringOfSpaces(title, NO);
 				}
 			}
 		}

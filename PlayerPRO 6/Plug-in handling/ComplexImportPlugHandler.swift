@@ -27,20 +27,25 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, CollectionTyp
 		
 		for url in defaultPlugLocs {
 			if let components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: nil, error: nil) as? [NSURL] {
-				for component in components {
-					if let ext = component.pathExtension {
-						if ext.compare("ppextimp", options: .CaseInsensitiveSearch) != .OrderedSame {
-							continue
+				let aComp = filter(components, { (aURL) -> Bool in
+					if let ext = aURL.pathExtension {
+						if ext.compare("ppextimp", options: .CaseInsensitiveSearch) == .OrderedSame {
+							return true
 						}
-						let theBundle = NSBundle(URL: component)
-						let aClass: AnyClass? = theBundle?.principalClass
-						if aClass == nil {
-							continue
-						}
-						
-						if let aPlug = PPComplexImportPlugObject(bundle: theBundle) {
-							plugIns.append(aPlug)
-						}
+					}
+					
+					return false
+				})
+				
+				for component in aComp {
+					let theBundle = NSBundle(URL: component)
+					let aClass: AnyClass? = theBundle?.principalClass
+					if aClass == nil {
+						continue
+					}
+					
+					if let aPlug = PPComplexImportPlugObject(bundle: theBundle) {
+						plugIns.append(aPlug)
 					}
 				}
 			}

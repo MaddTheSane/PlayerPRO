@@ -17,7 +17,7 @@
 #define CharlMADcheckLength 10
 
 #include "embeddedPlugs.h"
-// Pack it to save some bytes.
+
 typedef struct iPlugInfo {
 	OSType		mode;
 	UInt32		version;
@@ -254,7 +254,7 @@ void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 
 void CloseImportPlug(MADLibrary *inMADDriver)
 {
-	short i;
+	int i;
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
 		CFRelease(inMADDriver->ThePlug[i].AuthorString);
@@ -270,7 +270,7 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 
 MADErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADInfoRec *InfoRec)
 {
-	short		i;
+	int			i;
 	MADMusic	aMAD;
 	
 	if (!strcmp(kindFile, "MADK"))
@@ -287,7 +287,7 @@ MADErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADI
 
 MADErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD)
 {
-	short		i;
+	int			i;
 	MADInfoRec	InfoRec;
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
@@ -296,7 +296,7 @@ MADErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 			if (!theNewMAD)
 				return MADNeedMemory;
 			
-			OSErr err = CallImportPlug(inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
+			MADErr err = CallImportPlug(inMADDriver, i, MADPlugImport, AlienFile, *theNewMAD, &InfoRec);
 			if (err != MADNoErr) {
 				free(*theNewMAD);
 				*theNewMAD = NULL;
@@ -308,11 +308,11 @@ MADErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	return MADCannotFindPlug;
 }
 
-OSErr CheckMADFile(char* name)
+MADErr CheckMADFile(char* name)
 {
 	UNFILE	refNum;
 	char	charl[CharlMADcheckLength];
-	OSErr	err;
+	MADErr	err;
 	
 	refNum = iFileOpenRead(name);
 	if (!refNum)
@@ -337,9 +337,9 @@ OSErr CheckMADFile(char* name)
 MADErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 {
 	UNFILE		refNum;
-	short		i;
+	int			i;
 	MADInfoRec	InfoRec;
-	OSErr		iErr = MADNoErr;
+	MADErr		iErr = MADNoErr;
 	
 	strcpy(type, "!!!!");
 	
@@ -374,7 +374,7 @@ MADErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 
 bool MADPlugAvailable(const MADLibrary *inMADDriver, const char* kindFile)
 {
-	short i;
+	int i;
 	
 	if (!strcmp(kindFile, "MADK"))
 		return TRUE;
@@ -388,7 +388,7 @@ bool MADPlugAvailable(const MADLibrary *inMADDriver, const char* kindFile)
 
 MADErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD)
 {
-	short		i;
+	int			i;
 	MADInfoRec	InfoRec;
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
@@ -398,9 +398,9 @@ MADErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	return MADCannotFindPlug;
 }
 
-OSErr PPTestFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile)
+MADErr PPTestFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile)
 {
-	short		i;
+	int			i;
 	MADMusic	aMAD;
 	MADInfoRec	InfoRec;
 	

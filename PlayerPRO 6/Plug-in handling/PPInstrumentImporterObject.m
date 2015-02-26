@@ -18,7 +18,23 @@ static Class numClass;
 static PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle) NS_RETURNS_RETAINED;
 PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 {
-	return [[PPInstrumentImporterCompatObject alloc] initWithBundle:theBundle];
+	NSDictionary *bundDict = theBundle.infoDictionary;
+	NSDictionary *plugInTypes = bundDict[@"CFPlugInTypes"];
+	if (!plugInTypes) {
+		return nil;
+	}
+	
+	for (NSString *key in plugInTypes) {
+		NSString *insString = CFBridgingRelease(CFUUIDCreateString(kCFAllocatorDefault, kPlayerPROInstrumentPlugTypeID));
+		NSUUID *insUUID = [[NSUUID alloc] initWithUUIDString:insString];
+		NSUUID *keyUUID = [[NSUUID alloc] initWithUUIDString:key];
+		
+		if ([keyUUID isEqual:insUUID]) {
+			return [[PPInstrumentImporterCompatObject alloc] initWithBundle:theBundle];
+		}
+	}
+	
+	return nil;
 }
 
 @interface PPInstrumentImporterObject ()
@@ -119,6 +135,10 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 		}
 		
 		Class bundClass = [tempBundle principalClass];
+		if (bundClass == nil) {
+			return tryOldAPI(tempBundle);
+		}
+		
 		if ([bundClass conformsToProtocol:@protocol(PPInstrumentExportPlugin)]) {
 			self.canExport = YES;
 		}
@@ -128,6 +148,17 @@ PPInstrumentImporterCompatObject *tryOldAPI(NSBundle *theBundle)
 		}
 
 		if ((!_canImport) && (!_canExport)) {
+			// exclude plug-ins that can be detected as a different class
+			if ([bundClass conformsToProtocol:@protocol(PPSampleImportPlugin)]) {
+				return nil;
+			} else if ([bundClass conformsToProtocol:@protocol(PPSampleExportPlugin)]) {
+				return nil;
+			} else if ([bundClass conformsToProtocol:@protocol(PPDigitalPlugin)]) {
+				return nil;
+			} else if ([bundClass conformsToProtocol:@protocol(PPFilterPlugin)]) {
+				return nil;
+			}
+
 			return tryOldAPI(tempBundle);
 		}
 		
