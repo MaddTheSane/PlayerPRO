@@ -65,12 +65,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	@IBOutlet weak var exportStatusPanel:		NSPanel!
 	
 	private(set) lazy var trackerDict: [String: [String]] = {
-		let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
+		let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", value: "MADK Tracker", comment: "MADK Tracker")
 		let localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
 		var tmpTrackerDict = [localMADKName: [MADNativeUTI], localGenericMADName: [MADGenericUTI]] as [String: [String]]
 		
-		for objRaw in self.madLib {
-			let obj = objRaw as PPLibraryObject
+		for obj in self.madLib {
 			tmpTrackerDict[obj.menuName] = obj.UTITypes
 		}
 		
@@ -78,8 +77,6 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}()
 	
 	private(set) lazy var importDict: [String: [String]] = {
-		let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
-		let localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
 		var tmpTrackerDict = self.trackerDict
 		
 		for obj in self.complexImport {
@@ -356,6 +353,26 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		var theURL = theURL1
 		if sharedWorkspace.type(theUTI, conformsToType: MADNativeUTI) {
 			// Document controller should automatically handle this.
+			// But just in case...
+			if let aDoc = documentForURL(theURL1) as? NSDocument {
+				return true
+			} else {
+				openDocumentWithContentsOfURL(theURL1, display: true, completionHandler: { (_, alreadyOpen, error) -> Void in
+					
+					if alreadyOpen {
+						println("\(theURL1) is already open? How did we not catch this?")
+					}
+					
+					if let aErr = error {
+						let alertErr = NSAlert(error: aErr)
+						dispatch_async(dispatch_get_main_queue()) {
+							alertErr.runModal()
+							
+							return
+						}
+					}
+				})
+			}
 			return true
 		} else if (theUTI  == MADGenericUTI) {
 			let invExt = NSLocalizedString("Invalid Extension", comment: "Invalid Extension")
@@ -430,6 +447,8 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 								let aPPDoc = PPDocument(music: ourObject)
 								
 								self.addDocument(aPPDoc)
+								aPPDoc.makeWindowControllers()
+								aPPDoc.showWindows()
 							} else {
 								let nsErr = createErrorFromMADErrorType(anErr)!
 								if PPErrorIsUserCancelled(nsErr) == false {
@@ -449,9 +468,13 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		//TODO: check for valid extension.
 		for aUTI in trackerUTIs {
 			if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
-				if let theWrap = PPMusicObject(URL: theURL1, library: madLib, error: nil) {
+				let aType = madLib.typeFromUTI(theUTI)!
+				if let theWrap = PPMusicObject(URL: theURL1, stringType: aType, library: madLib, error: nil) {
+					let aDoc = PPDocument(music: theWrap)
 					
-					self.addDocument(PPDocument(music: theWrap))
+					addDocument(aDoc)
+					aDoc.makeWindowControllers()
+					aDoc.showWindows()
 					return true;
 				} else {
 					return false

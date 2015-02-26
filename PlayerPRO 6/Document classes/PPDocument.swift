@@ -88,7 +88,7 @@ import AudioToolbox
 		}
 	}
 	
-	private func soundPreferencesDidChange(notification: NSNotification) {
+	@objc private func soundPreferencesDidChange(notification: NSNotification) {
 		resetPlayerPRODriver()
 	}
 	
@@ -119,7 +119,7 @@ import AudioToolbox
 			drivSettings.MicroDelaySize = 0;
 		}
 		
-		drivSettings.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver)))!
+		drivSettings.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver))) ?? .CoreAudioDriver
 		drivSettings.repeatMusic = false;
 		
 		theDriver = PPDriver(library: globalMadLib, settings: &drivSettings, error: nil)
