@@ -35,6 +35,8 @@
 #include "embeddedPlugs.h"
 #endif
 
+#include <alloca.h>
+
 #ifndef WIN32
 //Windows Defines
 typedef int16_t		WORD;
@@ -694,9 +696,13 @@ static MADErr XM_Load(char* theXM, size_t XMSize, MADMusic *theMAD, MADDriverSet
 	theMAD->header->MAD = 'MADK';
 	
 	for (i = 0; i < 20; i++) {
+		if (xmData->mh->songname[i] == 0x1a) {
+			theMAD->header->name[i] = 0;
+			break;
+		}
 		theMAD->header->name[i] = xmData->mh->songname[i];
 		if (theMAD->header->name[i] == 0)
-			i = 21;
+			break;
 	}
 	
 	theMAD->header->speed		= 	xmData->mh->tempo;
@@ -1218,7 +1224,7 @@ static MADErr TestXMFile(char* AlienFile, struct staticXMData *xmData)
 
 static MADErr ExtractXMInfo(MADInfoRec *info, void *AlienFile, struct staticXMData *xmData)
 {
-	short i;
+	int i;
 	
 	xmData->theXMRead = AlienFile;
 	
@@ -1255,7 +1261,7 @@ static MADErr ExtractXMInfo(MADInfoRec *info, void *AlienFile, struct staticXMDa
 		info->internalFileName[i] = xmData->mh->songname[i];
 		if (info->internalFileName[i] == 0 || info->internalFileName[i] == 0x1a) {
 			info->internalFileName[i] = 0;
-			i = 21;
+			break;
 		}
 	}
 	
@@ -1371,7 +1377,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = 1024;
 				
-				AlienFile = malloc(sndSize);
+				AlienFile = alloca(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
@@ -1380,7 +1386,6 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 					if (myErr == MADNoErr)
 						myErr = TestXMFile(AlienFile, &xmData);
 					
-					free(AlienFile);
 					AlienFile = NULL;
 				}
 				iClose(iFileRefI);
@@ -1395,7 +1400,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				
 				sndSize = 5000; // Read only 5000 first bytes for optimisation
 				
-				AlienFile = malloc(sndSize);
+				AlienFile = alloca(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
@@ -1405,7 +1410,6 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 						if (!myErr)
 							myErr = ExtractXMInfo(info, AlienFile, &xmData);
 					}
-					free(AlienFile);
 					AlienFile = NULL;
 				}
 				iClose(iFileRefI);

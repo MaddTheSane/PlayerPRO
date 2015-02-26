@@ -545,7 +545,6 @@ MADErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 		}
 	}
 	
-	strcpy(type, "!!!!");
 	return MADCannotFindPlug;
 }
 
