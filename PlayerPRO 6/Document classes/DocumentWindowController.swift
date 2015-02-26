@@ -13,6 +13,26 @@ import AVFoundation
 import AudioToolbox
 import SwiftAdditions
 
+extension MADDriverSettings {
+	private init() {
+		numChn			= 4
+		outPutBits		= 16
+		outPutMode		= .DeluxeStereoOutPut
+		outPutRate		= 44100
+		MicroDelaySize	= 25
+		ReverbSize		= 100
+		ReverbStrength	= 20
+		oversampling	= 1
+		TickRemover		= false
+		surround		= false
+		Reverb			= false
+		repeatMusic		= true
+		//reserved = 0
+		//Just going to use CoreAudio
+		driverMode		= .CoreAudioDriver;
+	}
+}
+
 class DocumentWindowController: NSWindowController, SoundSettingsViewControllerDelegate {
 	@IBOutlet weak var exportWindow:			NSWindow!
 	@IBOutlet weak var exportSettingsBox:		NSBox!
@@ -127,7 +147,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 	func rawSoundData(theSet1: MADDriverSettings) -> NSMutableData? {
 		var err: NSError? = nil
 		var theSet = theSet1
-		var theRec = PPDriver(library: globalMadLib, settings: &theSet, error: &err)
+		var theRec = PPDriver(library: globalMadLib, settings: &theSet, error: &err)!
 		
 		if (err != nil) {
 			dispatch_async(dispatch_get_main_queue()) {
@@ -180,18 +200,18 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 				if (theSet.outPutBits == 16) {
 					let sndSize = rsd.length;
 					let bePtr = UnsafeMutablePointer<UInt16>(rsd.mutableBytes)
-					dispatch_apply(UInt(sndSize) / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
+					dispatch_apply(sndSize / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
 						let iInt = Int(i)
 						bePtr[iInt] = bePtr[iInt].bigEndian
 						return
 					})
 				}
-				return (rsd.copy() as NSData)
+				return (rsd.copy() as! NSData)
 			} else {
 				return nil
 			}
 		} else {
-			return (rawSoundData(theSet)?.copy() as NSData)
+			return (rawSoundData(theSet)?.copy() as? NSData)
 		}
 	}
 	
@@ -201,18 +221,18 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 				if (theSet.outPutBits == 16) {
 					let sndSize = rsd.length;
 					let bePtr = UnsafeMutablePointer<UInt16>(rsd.mutableBytes)
-					dispatch_apply(UInt(sndSize) / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
+					dispatch_apply(sndSize / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
 						let iInt = Int(i)
 						bePtr[iInt] = bePtr[iInt].littleEndian
 						return
 					})
 				}
-				return (rsd.copy() as NSData)
+				return (rsd.copy() as? NSData)
 			} else {
 				return nil
 			}
 		} else {
-			return rawSoundData(theSet)?.copy() as NSData?
+			return rawSoundData(theSet)?.copy() as? NSData
 		}
 	}
 	
@@ -338,7 +358,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 						self.currentDocument.theDriver.endExport()
 						return theErr
 					})
-					(NSApplication.sharedApplication().delegate as AppDelegate).addExportObject(expObj)
+					(NSApplication.sharedApplication().delegate as! AppDelegate).addExportObject(expObj)
 					
 				case -2:
 					let expObj = ExportObject(destination: theURL, exportBlock: { (theURL, errStr) -> MADErr in
@@ -395,7 +415,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 							return theErr;
 						}
 						
-						var exportMov = AVAsset.assetWithURL(tmpURL) as AVAsset?
+						var exportMov = AVAsset.assetWithURL(tmpURL) as? AVAsset
 						let metadataInfo = generateAVMetadataInfo(oldMusicName, oldMusicInfo)
 						
 						if (exportMov == nil) {
@@ -438,7 +458,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 							return .WritingErr;
 						}
 					})
-					(NSApplication.sharedApplication().delegate as AppDelegate).addExportObject(expObj)
+					(NSApplication.sharedApplication().delegate as! AppDelegate).addExportObject(expObj)
 					
 				default:
 					self.currentDocument.theDriver.exporting = false
@@ -448,7 +468,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 	}
 	
 	@IBAction func exportMusicAs(sender: AnyObject!) {
-		let tag = (sender as NSMenuItem).tag
+		let tag = (sender as! NSMenuItem).tag
 		self.currentDocument.theDriver.beginExport()
 		let savePanel = NSSavePanel()
 		let musicName = self.currentDocument.musicName;

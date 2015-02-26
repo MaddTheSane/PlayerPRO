@@ -12,6 +12,26 @@ import PlayerPROKit
 import AVFoundation
 import AudioToolbox
 
+extension MADDriverSettings {
+	private init() {
+		numChn			= 4
+		outPutBits		= 16
+		outPutMode		= .DeluxeStereoOutPut
+		outPutRate		= 44100
+		MicroDelaySize	= 25
+		ReverbSize		= 100
+		ReverbStrength	= 20
+		oversampling	= 1
+		TickRemover		= false
+		surround		= false
+		Reverb			= false
+		repeatMusic		= true
+		//reserved = 0
+		//Just going to use CoreAudio
+		driverMode		= .CoreAudioDriver;
+	}
+}
+
 @objc(PPDocument) class PPDocument: NSDocument {	
 	var instrumentList: InstrumentPanelController! = nil
 	var mainViewController: DocumentWindowController! = nil
@@ -72,7 +92,7 @@ import AudioToolbox
 		theSett.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver)))!
 		theSett.repeatMusic = false;
 		
-		returnerr = theDriver.changeDriverSettingsToSettings(theSett)
+		returnerr = theDriver.changeDriverSettingsToSettings(&theSett)
 		
 		if (returnerr != MADErr.NoErr) {
 			println("Unable to change driver, \(self)")
@@ -116,7 +136,7 @@ import AudioToolbox
 		drivSettings.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver))) ?? .CoreAudioDriver
 		drivSettings.repeatMusic = false;
 		
-		theDriver = PPDriver(library: globalMadLib, settings: &drivSettings, error: nil)
+		theDriver = PPDriver(library: globalMadLib, settings: &drivSettings, error: nil)!
 		super.init()
 		
 		let defaultCenter = NSNotificationCenter.defaultCenter()

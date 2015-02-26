@@ -47,7 +47,7 @@ class ComplexFadeController: NSWindowController {
     }
 
 	@IBAction func changeFadeType(sender: AnyObject!) {
-		fadeType = PPFadeType(rawValue: (sender as NSButtonCell).tag)!
+		fadeType = PPFadeType(rawValue: (sender as! NSButtonCell).tag)!
 		switch (fadeType) {
 		case .Instrument:
 			valueInfo.stringValue = NSLocalizedString("From 1 to 64", bundle: NSBundle(forClass: ComplexFadeController.self), comment: "From 1 to 64")
@@ -75,7 +75,7 @@ class ComplexFadeController: NSWindowController {
 			badSettings.informativeText = "There is one or more invalid value.";
 			badSettings.addButtonWithTitle("OK")
 			
-			badSettings.beginSheetModalForWindow(window!, completionHandler: { (returnCode) -> Void in
+			badSettings.beginSheetModalForWindow(self.window!, completionHandler: { (returnCode) -> Void in
 				
 			})
 		}
@@ -192,12 +192,12 @@ class ComplexFadeController: NSWindowController {
 			}
 		}
 		
-		(NSApp as NSApplication).endSheet(window!)
+		(NSApp as! NSApplication).endSheet(window!)
 		currentBlock(.NoErr)
 	}
 	
 	@IBAction func cancel(sender: AnyObject!) {
-		(NSApp as NSApplication).endSheet(window!)
+		(NSApp as! NSApplication).endSheet(window!)
 		currentBlock(.UserCanceledErr)
 	}
 }

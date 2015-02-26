@@ -534,7 +534,7 @@ Tune *PtuneLoadFn(Ptr MIDIptr, short *channels)
 	wCount = vlqMin; /** Start from first event **/
 	wNcount = (wCount + wQuant2) % wQuant;
 	if (fStats) {
-		wDev = abs(wQuant2 - (int) wNcount);
+		wDev = (wQuant2 - (int) wNcount);
 		
 		if (wDev > 2) cDev++;
 		

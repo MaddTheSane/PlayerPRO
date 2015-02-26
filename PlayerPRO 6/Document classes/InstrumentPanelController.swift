@@ -209,14 +209,14 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		return 0
 	}
 	
-	func outlineView(outlineView: NSOutlineView!, child index: Int, ofItem item: AnyObject!) -> AnyObject! {
+	func outlineView(outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
 		if item == nil {
 			return currentDocument.theMusic.instruments[index]
 		}
 		if let obj = item as? PPInstrumentObject {
 			return obj.samplesObjectAtIndex(index)
 		}
-		return nil
+		return NSNull()
 	}
 	
 	func outlineView(outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
@@ -226,8 +226,11 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		return false
 	}
 	
-	func outlineView(outlineView: NSOutlineView!, viewForTableColumn tableColumn: NSTableColumn!, item: AnyObject!) -> NSView! {
-		let theView = outlineView.makeViewWithIdentifier(tableColumn.identifier, owner: nil) as! PPInstrumentCellView!
+	func outlineView(outlineView: NSOutlineView, viewForTableColumn tableColumn: NSTableColumn?, item: AnyObject) -> NSView? {
+		if tableColumn == nil {
+			return nil
+		}
+		let theView = outlineView.makeViewWithIdentifier(tableColumn!.identifier, owner: nil) as! PPInstrumentCellView!
 		theView.controller = self
 		if let obj = item as? PPInstrumentObject {
 			theView.sample = false
