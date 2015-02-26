@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SoundSettingsViewController" customModule="PlayerPROKit">
@@ -591,7 +591,7 @@
                         <constraint firstItem="142" firstAttribute="leading" secondItem="143" secondAttribute="leading" id="T31-0b-tPy"/>
                         <constraint firstItem="147" firstAttribute="leading" secondItem="p8c-59-wtp" secondAttribute="leading" id="USt-Nx-WaM"/>
                         <constraint firstItem="p8c-59-wtp" firstAttribute="top" secondItem="146" secondAttribute="bottom" constant="10" symbolic="YES" id="UeR-8T-7gt"/>
-                        <constraint firstAttribute="bottom" secondItem="145" secondAttribute="bottom" constant="11" id="XMc-O8-fPi"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="145" secondAttribute="bottom" constant="11" id="XMc-O8-fPi"/>
                         <constraint firstItem="147" firstAttribute="leading" secondItem="145" secondAttribute="leading" id="XWY-jq-0D2"/>
                         <constraint firstItem="142" firstAttribute="leading" secondItem="149" secondAttribute="leading" id="Zsj-5E-IU3"/>
                         <constraint firstItem="147" firstAttribute="top" secondItem="141" secondAttribute="top" constant="11" id="cbI-pi-ue6"/>

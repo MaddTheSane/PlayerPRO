@@ -122,7 +122,7 @@ class OpenPanelViewController: NSViewController {
 		super.init(coder: coder)
 	}
 	
-	@IBAction @objc func selectUTI(sender: AnyObject?) {
+	@IBAction func selectUTI(sender: AnyObject?) {
 		if let menuIte = sender as? NSMenuItem {
 			let tag = menuIte.tag;
 			var allowedUTIs = [String]();
@@ -279,7 +279,7 @@ class OpenPanelViewController: NSViewController {
 	}
 	
 	override func awakeFromNib() {
-		//super.awakeFromNib()
+		super.awakeFromNib()
 		// Do view setup here.
 		
 		if let fileTypeSelectionMenu = popUp?.menu {

@@ -13,7 +13,7 @@ func swiftDefaultPlugInLocations() -> [NSURL] {
 	return DefaultPlugInLocations() as [NSURL]
 }
 
-class DigitalPlugHandler: NSObject, NSFastEnumeration, SequenceType, Sliceable {
+class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType, Sliceable {
 	private var digitalPlugs = [PPDigitalPlugInObject]()
 	
 	override init() {
@@ -64,13 +64,13 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, SequenceType, Sliceable {
 		return digitalPlugs.generate()
 	}
 	
-	var startIndex: Int { get {
+	var startIndex: Int {
 		return digitalPlugs.startIndex
-		}}
+	}
 	
-	var endIndex: Int { get {
+	var endIndex: Int {
 		return digitalPlugs.endIndex
-		}}
+	}
 	
 	subscript (subRange: Range<Int>) -> Slice<PPDigitalPlugInObject> {
 		return digitalPlugs[subRange]

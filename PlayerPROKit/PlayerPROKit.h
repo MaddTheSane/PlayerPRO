@@ -15,7 +15,8 @@ FOUNDATION_EXPORT double PlayerPROKit_VersionNumber;
 //! Project version string for PlayerPROKit.
 FOUNDATION_EXPORT const unsigned char PlayerPROKit_VersionString[];
 
-#import <PlayerPROKit/PPLibrary.h>
+#import <PlayerPROKit/PPConstants.h>
+@class PPLibrary;
 #import <PlayerPROKit/PPDriver.h>
 #import <PlayerPROKit/PPMusicObject.h>
 #import <PlayerPROKit/PPSampleObject.h>

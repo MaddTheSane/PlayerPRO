@@ -32,6 +32,28 @@ public func ==(lhs: Cmd, rhs: Cmd) -> Bool {
 	return true
 }
 
+public func ==(lhs: IntPcmd, rhs: IntPcmd) -> Bool {
+	if lhs.tracks != rhs.tracks {
+		return false
+	} else if lhs.length != rhs.length {
+		return false
+	} else if lhs.trackStart != rhs.trackStart {
+		return false
+	} else if lhs.posStart != rhs.posStart {
+		return false
+	} else if lhs.cmdCount != rhs.cmdCount {
+		return false
+	} else {
+		for i in 0..<Int(lhs.cmdCount) {
+			if lhs.myCmd[i] != rhs.myCmd[i] {
+				return false
+			}
+		}
+	}
+
+	return true
+}
+
 public func ==(lhs: EnvRec, rhs: EnvRec) -> Bool {
 	if lhs.pos != rhs.pos {
 		return false
@@ -198,7 +220,7 @@ public let maximumArpeggio: Int32 = 3
 public let equalizerPacketElements = 512
 
 public func MADDebugString(text: String, line: UWord = __LINE__, file: StaticString = __FILE__) {
-	MADDebugStr(Int16(line), file.stringValue.fileSystemRepresentation(), text.cStringUsingEncoding(NSUTF8StringEncoding)!)
+	MADDebugStr(Int16(line), file.stringValue.fileSystemRepresentation(), text)
 }
 
 private let BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -267,18 +289,33 @@ extension sData {
 	}
 }
 
-extension EnvRec: Equatable {
+extension EnvRec: Hashable {
 	public init() {
 		pos = 0
 		val = 0
 	}
+	
+	public var hashValue: Int {
+		var aHi = UInt(pos)
+		aHi |= UInt(val) << 4
+		
+		return Int(aHi)
+	}
 }
 
-extension FXBus: Equatable {
+extension FXBus: Hashable {
 	public init() {
 		Active = false
 		ByPass = false
 		copyId = 0
+	}
+	
+	public var hashValue: Int {
+		var aVar = Int(copyId)
+		aVar |= Active ? 1 << 4 : 0
+		aVar |= ByPass ? 1 << 5 : 0
+		
+		return aVar
 	}
 }
 
@@ -335,7 +372,7 @@ public func modifyCommand(#row: Int16, #track: Int16, #aPcmd: UnsafeMutablePoint
 	replaceCommand(row: row, track: track, command: aCmd, aPcmd: aPcmd)
 }
 
-extension IntPcmd: CommandIterator {
+extension IntPcmd: CommandIterator, Equatable {
 	public init() {
 		tracks = 0
 		length = 0

@@ -949,7 +949,7 @@ return; \
 
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(out NSError *__autoreleasing*)theErr
 {
-	char fileType[5];
+	NSString *fileType;
 	OSErr theOSErr = MADNoErr;
 	NSError *error;
 	if (self.music) {
@@ -957,7 +957,7 @@ return; \
 		[madDriver stopDriver];
 	}
 	
-	theOSErr = [madLib identifyFileAtURL:musicToLoad type:fileType];
+	theOSErr = [madLib identifyFileAtURL:musicToLoad stringType:&fileType];
 	
 	if (theOSErr != MADNoErr) {
 		if (theErr) {
@@ -1101,7 +1101,7 @@ return; \
 	self.quitting = NO;
 	srandom(time(NULL) & 0xffffffff);
 	MADRegisterDebugFunc(CocoaDebugStr);
-	madLib = [[PPLibrary alloc] init];
+	madLib = [[PPLibrary alloc] init:YES];
 	//the NIB won't store the value anymore, so do this hackery to make sure there's some value in it.
 	[songTotalTime setIntegerValue:0];
 	[songCurTime setIntegerValue:0];
@@ -1196,11 +1196,6 @@ return; \
 	[timeChecker invalidate];
 	[self removeObserver:self forKeyPath:@"paused"];
 	
-	if (self.music) {
-		[madDriver stop];
-		[madDriver cleanDriver];
-		_music = nil;
-	}
 	[madDriver stopDriver];
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:PPRememberMusicList]) {
 		[musicList saveApplicationMusicList];
@@ -1381,15 +1376,15 @@ typedef NS_ENUM(NSInteger, PPMusicToolbarTypes) {
 		switch (retVal) {
 			case NSAlertDefaultReturn:
 			{
-				MADInfoRec rec;
+				NSDictionary *rec;
 				{
-					char ostype[5] = {0};
-					if ([madLib identifyFileAtURL:theURL type:ostype] != MADNoErr || [madLib getInformationFromFileAtURL:theURL type:ostype info:&rec]) {
+					NSString *ostype;
+					if ([madLib identifyFileAtURL:theURL stringType:&ostype] != MADNoErr || [madLib getInformationFromFileAtURL:theURL type:ostype info:&rec]) {
 						NSRunCriticalAlertPanel(NSLocalizedString(@"Unknown File", @"unknown file"), NSLocalizedString(@"The file type could not be identified.", @"Unidentified file"), nil, nil, nil);
 						return NO;
 					}
 				}
-				NSString *ostype = CFBridgingRelease(UTCreateStringForOSType(rec.signature));
+				NSString *ostype = rec[kPPSignature];
 				
 				NSURL *tmpURL = [[theURL URLByDeletingPathExtension] URLByAppendingPathExtension:[ostype lowercaseString]];
 				NSError *err;
@@ -1584,10 +1579,9 @@ typedef NS_ENUM(NSInteger, PPMusicToolbarTypes) {
 {
 	NSIndexSet *selected = [tableView selectedRowIndexes];
 	NSURL *musicURL;
-	MADInfoRec theInfo;
+	NSDictionary *theInfo;
 	MusicListObject *obj;
-	char info[5] = {0};
-	NSString *NSSig;
+	NSString *info;
 	
 	if ([selected count] > 0) {
 		musicList.selectedMusic = [selected firstIndex];
@@ -1599,24 +1593,20 @@ typedef NS_ENUM(NSInteger, PPMusicToolbarTypes) {
 	obj = [musicList objectInMusicListAtIndex:[selected lastIndex]];
 	
 	musicURL = obj.musicURL;
-	if ([madLib identifyFileAtURL:musicURL type:info] != MADNoErr)
+	if ([madLib identifyFileAtURL:musicURL stringType:&info] != MADNoErr)
 		goto badTracker;
 	if ([madLib getInformationFromFileAtURL:musicURL type:info info:&theInfo] != MADNoErr)
 		goto badTracker;
 	
 	fileName.stringValue = obj.fileName;
-	internalName.stringValue = [NSString stringWithCString:theInfo.internalFileName encoding:NSMacOSRomanStringEncoding];
+	internalName.stringValue = theInfo[kPPInternalFileName];
 	fileSize.integerValue = obj.fileSize;
-	musicInstrument.integerValue = theInfo.totalInstruments;
-	musicPatterns.integerValue = theInfo.totalPatterns;
-	musicPlugType.stringValue = [NSString stringWithCString:theInfo.formatDescription encoding:NSMacOSRomanStringEncoding];
-	NSSig = CFBridgingRelease(UTCreateStringForOSType(theInfo.signature));
-	if (!NSSig) {
-		NSSig = [NSString stringWithFormat:@"0x%08X", (unsigned int)theInfo.signature];
-	}
-	musicSignature.stringValue = NSSig;
+	musicInstrument.objectValue = theInfo[kPPTotalInstruments];
+	musicPatterns.objectValue = theInfo[kPPTotalPatterns];
+	musicPlugType.stringValue = theInfo[kPPFormatDescription];
+	musicSignature.stringValue = theInfo[kPPSignature];
 	
-	fileLocation.stringValue = musicURL.path;
+	fileLocation.stringValue = musicURL.absoluteURL.path;
 	return;
 	
 badTracker:

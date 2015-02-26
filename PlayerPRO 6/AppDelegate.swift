@@ -49,7 +49,7 @@ internal var globalMadLib: PPLibrary {
 class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDelegate {
 	private var exportObjects = [ExportObject]()
 	var plugInInfos = [PlugInInfo]()
-	let madLib = PPLibrary()
+	let madLib = PPLibrary()!
 	let instrumentPlugHandler = PPInstrumentPlugHandler()
 	let digitalHandler = DigitalPlugHandler()
 	let filterHandler = PPFilterPlugHandler()
@@ -65,12 +65,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	@IBOutlet weak var exportStatusPanel:		NSPanel!
 	
 	private(set) lazy var trackerDict: [String: [String]] = {
-		let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
+		let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", value: "MADK Tracker", comment: "MADK Tracker")
 		let localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
 		var tmpTrackerDict = [localMADKName: [MADNativeUTI], localGenericMADName: [MADGenericUTI]] as [String: [String]]
 		
-		for objRaw in self.madLib {
-			let obj = objRaw as PPLibraryObject
+		for obj in self.madLib {
 			tmpTrackerDict[obj.menuName] = obj.UTITypes
 		}
 		
@@ -78,8 +77,6 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}()
 	
 	private(set) lazy var importDict: [String: [String]] = {
-		let localMADKName = NSLocalizedString("PPMADKFile", tableName: "InfoPlist", comment: "MADK Tracker")
-		let localGenericMADName = NSLocalizedString("Generic MAD tracker", comment: "Generic MAD tracker")
 		var tmpTrackerDict = self.trackerDict
 		
 		for obj in self.complexImport {
@@ -356,6 +353,26 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		var theURL = theURL1
 		if sharedWorkspace.type(theUTI, conformsToType: MADNativeUTI) {
 			// Document controller should automatically handle this.
+			// But just in case...
+			if let aDoc = documentForURL(theURL1) as? NSDocument {
+				return true
+			} else {
+				openDocumentWithContentsOfURL(theURL1, display: true, completionHandler: { (_, alreadyOpen, error) -> Void in
+					
+					if alreadyOpen {
+						println("\(theURL1) is already open? How did we not catch this?")
+					}
+					
+					if let aErr = error {
+						let alertErr = NSAlert(error: aErr)
+						dispatch_async(dispatch_get_main_queue()) {
+							alertErr.runModal()
+							
+							return
+						}
+					}
+				})
+			}
 			return true
 		} else if (theUTI  == MADGenericUTI) {
 			let invExt = NSLocalizedString("Invalid Extension", comment: "Invalid Extension")
@@ -366,25 +383,32 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			let retVal = PPRunInformationalAlertPanel(NSLocalizedString("Invalid Extension", comment: "Invalid extension"), message: NSLocalizedString("The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", comment: "Invalid extension description"), defaultButton: NSLocalizedString("Rename", comment: "rename file"), alternateButton: NSLocalizedString("Open", comment:"Open a file"), otherButton: NSLocalizedString("Cancel", comment: "Cancel"), args: theURL.lastPathComponent!);
 			switch (retVal) {
 			case NSAlertDefaultReturn:
-				var rec: NSDictionary? = nil
+				var rec: NSDictionary = [:]
 				var ostype: NSString? = nil
 				
-				if (madLib.identifyFileAtURL(theURL, stringType: &ostype) != MADErr.NoErr) || madLib.getInformationFromFileAtURL(theURL, stringType: ostype, infoDictionary: &rec) != MADErr.NoErr {
+				let adds = madLib.identifyFile(URL: theURL)
+				if adds.error == .NoErr {
+					let addd = madLib.informationFromFile(URL: theURL, type: "")
+					if addd.error != .NoErr {
+						PPRunAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
+						return false;
+					}
+					let sigVal = addd.info!.signature
+					
+					let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(sigVal.lowercaseString);
+					var err: NSError? = nil
+					if (NSFileManager.defaultManager().moveItemAtURL(theURL, toURL:tmpURL, error:&err) == false) {
+						println("Could not move file, error: \(err!)");
+						PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), args: tmpURL.lastPathComponent!, theURL.lastPathComponent!);
+					} else {
+						theURL = tmpURL;
+						//TODO: regenerate the UTI
+					}
+
+				} else {
 					PPRunAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
 					return false;
-				}
-				let sigVala: AnyObject = rec?[kPPSignature] ?? NSNumber(unsignedInt: StringToOSType("madk"))
-				let sigValb = MADFourChar(sigVala as UInt)
-				let sigVal = OSTypeToString(sigValb)!
-				
-				let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(sigVal.lowercaseString);
-				var err: NSError? = nil
-				if (NSFileManager.defaultManager().moveItemAtURL(theURL, toURL:tmpURL, error:&err) == false) {
-					println("Could not move file, error: \(err!)");
-					PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), args: tmpURL.lastPathComponent!, theURL.lastPathComponent!);
-				} else {
-					theURL = tmpURL;
-					//TODO: regenerate the UTI
+
 				}
 				
 			case NSAlertAlternateReturn:
@@ -423,6 +447,9 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 								let aPPDoc = PPDocument(music: ourObject)
 								
 								self.addDocument(aPPDoc)
+								aPPDoc.makeWindowControllers()
+								aPPDoc.showWindows()
+								aPPDoc.setDisplayName(theURL1.lastPathComponent!.stringByDeletingPathExtension)
 							} else {
 								let nsErr = createErrorFromMADErrorType(anErr)!
 								if PPErrorIsUserCancelled(nsErr) == false {
@@ -442,9 +469,14 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		//TODO: check for valid extension.
 		for aUTI in trackerUTIs {
 			if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
-				if let theWrap = PPMusicObject(URL: theURL1, library: madLib, error: nil) {
+				let aType = madLib.typeFromUTI(theUTI)!
+				if let theWrap = PPMusicObject(URL: theURL1, stringType: aType, library: madLib, error: nil) {
+					let aDoc = PPDocument(music: theWrap)
 					
-					self.addDocument(PPDocument(music: theWrap))
+					addDocument(aDoc)
+					aDoc.makeWindowControllers()
+					aDoc.showWindows()
+					aDoc.setDisplayName(theURL1.lastPathComponent!.stringByDeletingPathExtension)
 					return true;
 				} else {
 					return false

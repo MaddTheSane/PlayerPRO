@@ -587,7 +587,7 @@ MADErr PPTestFile(MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
 
 MADFourChar GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
 {
-	short i, x;
+	int i, x;
 	
 	if (ID >= inMADDriver->TotalPlug)
 		MADDebugStr(__LINE__, __FILE__, "PP-Plug ERROR. ");

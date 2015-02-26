@@ -1540,7 +1540,7 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 	
 	//TODO: error-checking
 	
-	music->musicUnderModification = TRUE;
+	music->musicUnderModification = true;
 	
 	for (i = 0, x = 0; i < MAXINSTRU; i++) {
 		music->fid[i].no = i;
@@ -1645,6 +1645,8 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 			}
 		}
 	}
+	
+	music->musicUnderModification = false;
 	
 	CFWriteStreamClose(curFile);
 	CFRelease(curFile);
@@ -2436,7 +2438,7 @@ MADErr MADMusicSaveCString(MADMusic *music, const char *cName, bool compressMAD)
 	
 	//TODO: error-checking
 	
-	music->musicUnderModification = TRUE;
+	music->musicUnderModification = true;
 	
 	for (i = 0, x = 0; i < MAXINSTRU; i++) {
 		music->fid[i].no = i;
@@ -2551,6 +2553,8 @@ MADErr MADMusicSaveCString(MADMusic *music, const char *cName, bool compressMAD)
 	
 	iClose(curFile);
 
+	music->musicUnderModification = false;
+	
 	return theErr;
 }
 

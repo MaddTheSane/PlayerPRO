@@ -10,6 +10,7 @@
 #ifndef PPCPlugSuffix
 #define PPCPlugSuffix ".so"
 #endif
+
 #define CharlMADcheckLength 10
 typedef MADErr (*FILLPLUG)(PlugInfo *);
 
@@ -151,7 +152,7 @@ void CloseImportPlug(MADLibrary *inMADDriver)
 
 MADErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADInfoRec *InfoRec)
 {
-	short		i;
+	int			i;
 	MADMusic	aMAD;
 	
 	if (!strcmp(kindFile, "MADK")) {
@@ -168,7 +169,7 @@ MADErr PPInfoFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADI
 
 MADErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic **theNewMAD)
 {
-	short		i;
+	int			i;
 	MADInfoRec	InfoRec;
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
@@ -212,7 +213,7 @@ MADErr CheckMADFile(char* name)
 MADErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 {
 	UNFILE		refNum;
-	short		i;
+	int			i;
 	MADInfoRec	InfoRec;
 	MADErr		iErr = MADNoErr;
 	
@@ -250,7 +251,7 @@ MADErr PPIdentifyFile(MADLibrary *inMADDriver, char *type, char *AlienFile)
 
 bool MADPlugAvailable(const MADLibrary *inMADDriver, const char* kindFile)
 {
-	short		i;
+	int i;
 	
 	if (!strcmp(kindFile, "MADK"))
 		return TRUE;
@@ -263,7 +264,7 @@ bool MADPlugAvailable(const MADLibrary *inMADDriver, const char* kindFile)
 
 MADErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MADMusic *theNewMAD)
 {
-	short		i;
+	int			i;
 	MADInfoRec	InfoRec;
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
@@ -276,9 +277,9 @@ MADErr PPExportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 
 MADErr PPTestFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile)
 {
-	short			i;
-	MADMusic		aMAD;
-	MADInfoRec		InfoRec;
+	int			i;
+	MADMusic	aMAD;
+	MADInfoRec	InfoRec;
 	
 	for (i = 0; i < inMADDriver->TotalPlug; i++) {
 		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
@@ -290,7 +291,7 @@ MADErr PPTestFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile)
 
 MADFourChar GetPPPlugType(MADLibrary *inMADDriver, short ID, MADFourChar mode)
 {
-	short i, x;
+	int i, x;
 	
 	if (ID >= inMADDriver->TotalPlug) MADDebugStr(__LINE__, __FILE__, "PP-Plug ERROR. ");
 	

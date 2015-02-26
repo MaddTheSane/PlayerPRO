@@ -37,7 +37,7 @@ import AudioToolbox
 	}
 	
 	override func makeWindowControllers() {
-		var docWinCon = DocumentWindowController(windowNibName: windowNibName)
+		var docWinCon = DocumentWindowController(windowNibName: "PPDocument")
 		addWindowController(docWinCon)
 		docWinCon.currentDocument = self
 		instrumentList = InstrumentPanelController(windowNibName: "InsPanel")
@@ -45,12 +45,6 @@ import AudioToolbox
 		instrumentList.currentDocument = self
 		mainViewController = docWinCon
 	}
-
-    override var windowNibName: String {
-        // Override returning the nib file name of the document
-        // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
-        return "PPDocument"
-    }
 
 	private func resetPlayerPRODriver() {
 		var returnerr = MADErr.NoErr;
@@ -88,7 +82,7 @@ import AudioToolbox
 		}
 	}
 	
-	private func soundPreferencesDidChange(notification: NSNotification) {
+	@objc private func soundPreferencesDidChange(notification: NSNotification) {
 		resetPlayerPRODriver()
 	}
 	
@@ -119,7 +113,7 @@ import AudioToolbox
 			drivSettings.MicroDelaySize = 0;
 		}
 		
-		drivSettings.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver)))!
+		drivSettings.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver))) ?? .CoreAudioDriver
 		drivSettings.repeatMusic = false;
 		
 		theDriver = PPDriver(library: globalMadLib, settings: &drivSettings, error: nil)

@@ -23,7 +23,7 @@ private let kPlayerList = "Player List"
 
 private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.ApplicationSupportDirectory, inDomain:.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player")
 
-@objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, SequenceType {
+@objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, CollectionType, Sliceable {
 	private(set)	dynamic var musicList = [MusicListObject]()
 	private(set)	var lostMusicCount: UInt
 	dynamic var		selectedMusic: Int
@@ -38,6 +38,18 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	
 	subscript (index: Int) -> MusicListObject {
 		return musicList[index]
+	}
+
+	var startIndex: Int {
+		return 0
+	}
+
+	var endIndex: Int {
+		return musicList.count
+	}
+	
+	subscript (subRange: Range<Int>) -> Slice<MusicListObject> {
+		return musicList[subRange]
 	}
 	
 	/// Returns NSNotFound if a URL couldn't be found
@@ -165,6 +177,8 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		super.init();
 	}
 	
+	// MARK: - NSCoding
+	
 	required init(coder aDecoder: NSCoder) {
 		lostMusicCount = 0;
 		if let BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey4) as? [MusicListObject] {
@@ -246,6 +260,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return true
 	}
 	
+	//MARK: -
 	func URLAtIndex(index: Int) -> NSURL? {
 		if index >= musicList.count {
 			return nil
@@ -253,6 +268,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return musicList[index].musicURL
 	}
 	
+	// MARK: - saving/loading
 	private func loadMusicList(newArray: [MusicListObject]) {
 		self.willChangeValueForKey(kMusicListKVO)
 		musicList = newArray
