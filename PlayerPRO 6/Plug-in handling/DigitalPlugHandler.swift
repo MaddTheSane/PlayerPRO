@@ -10,7 +10,7 @@ import Cocoa
 import PlayerPROKit
 
 func swiftDefaultPlugInLocations() -> [NSURL] {
-	return DefaultPlugInLocations() as [NSURL]
+	return DefaultPlugInLocations() as! [NSURL]
 }
 
 class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType, Sliceable {

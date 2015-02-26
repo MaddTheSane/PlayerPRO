@@ -41,7 +41,7 @@ class MIDIImporterController: NSWindowController {
 	@IBAction func okayButtonPressed(sender: AnyObject) {
 		NSApplication.sharedApplication().endModalSession(modalSession)
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.MIDI-Import")
-		conn.remoteObjectInterface = NSXPCInterface(`protocol`: PPMIDIImportHelper.self)
+		conn.remoteObjectInterface = NSXPCInterface(withProtocol: PPMIDIImportHelper.self)
 		
 		conn.resume()
 		conn.remoteObjectProxy.importMIDIFileAtURL(locationOfFile, numberOfTracks: trackCount, useQTInstruments: true, withReply:{ (aDat, aErr) -> Void in

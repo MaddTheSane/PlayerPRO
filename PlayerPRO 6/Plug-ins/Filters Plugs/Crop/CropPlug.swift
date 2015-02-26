@@ -12,7 +12,7 @@ import PlayerPROKit
 @objc(PPCropPlug) public final class CropPlug: NSObject, PPFilterPlugin {
 	public let hasUIConfiguration = false
 	
-	public convenience init(forPlugIn: ()) {
+	@objc public convenience init(forPlugIn: ()) {
 		self.init()
 	}
 	

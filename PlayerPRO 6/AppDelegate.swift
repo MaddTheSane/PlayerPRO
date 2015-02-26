@@ -16,8 +16,8 @@ private func makeNSRGB(red: UInt16, green: UInt16, blue:UInt16) -> NSColor {
 }
 
 func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
-	let swiftFile: String = NSString(UTF8String: file)!
-	let swiftText: String = NSString(UTF8String: text)!
+	let swiftFile: String = NSString(UTF8String: file)! as String
+	let swiftText: String = NSString(UTF8String: text)! as String
 	println("\(swiftFile):\(line), error text: \(swiftText)")
 	let errStr = NSLocalizedString("MyDebugStr_Error", comment: "Error")
 	let mainStr = NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display")
@@ -42,7 +42,7 @@ func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<
 }
 
 internal var globalMadLib: PPLibrary {
-	return ((NSApp as NSApplication).delegate as AppDelegate).madLib
+	return (NSApplication.sharedApplication().delegate as! AppDelegate).madLib
 }
 
 @NSApplicationMain
@@ -106,7 +106,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 
 	@IBAction func showPlugInInfo(sender: AnyObject?) {
-		let tag = (sender as NSMenuItem).tag
+		let tag = (sender as! NSMenuItem).tag
 		if (tag < 0 || tag >= plugInInfos.count) {
 			return;
 		}
@@ -437,7 +437,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		} //else
 		
 		for obj in complexImport {
-			for aUTI in obj.UTITypes as [String] {
+			for aUTI in obj.UTITypes as! [String] {
 				if sharedWorkspace.type(theUTI, conformsToType: aUTI) {
 					var aErr: NSError? = nil
 					let canImport = obj.canImportURL(theURL1, error: &aErr)
@@ -485,7 +485,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 		
 		for obj in instrumentPlugHandler {
-			for aUTI in obj.UTITypes as [String] {
+			for aUTI in obj.UTITypes as! [String] {
 				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
 					var theErr: NSError? = nil
 					if (!importInstrument(URL: theURL, makeUserSelectInstrument: true, error:&theErr)) {
@@ -498,7 +498,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		}
 		
 		for obj in samplesHandler {
-			for aUTI in obj.UTITypes as [String] {
+			for aUTI in obj.UTITypes as! [String] {
 				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
 					var theErr: NSError? = nil
 					if (!importSample(URL: theURL, makeUserSelectSample: true, error:&theErr)) {
@@ -546,12 +546,12 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		registerDefaults()
 	}
 	
-	func addExportObject(expObj: ExportObject) {
+	@objc(PPExportAddObject:) func addExportObject(expObj: ExportObject) {
 		exportObjects.append(expObj);
 		expObj.run()
 	}
 	
-	func applicationDidFinishLaunching(notification: NSNotification!) {
+	func applicationDidFinishLaunching(notification: NSNotification) {
 		PPLibrary.registerDebugBlock(CocoaDebugStr)
 		let defaults = NSUserDefaults.standardUserDefaults()
 		
@@ -599,13 +599,13 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		var samplesDict = [String: [String]]()
 		for obj in instrumentPlugHandler {
 			if (obj.mode == .Import || obj.mode == .ImportExport) {
-				samplesDict[obj.menuName] = (obj.UTITypes as [String]);
+				samplesDict[obj.menuName] = (obj.UTITypes as! [String]);
 			}
 		}
 		
 		for obj in samplesHandler {
 			if obj.canImport {
-				samplesDict[obj.menuName] = (obj.UTITypes as [String])
+				samplesDict[obj.menuName] = (obj.UTITypes as! [String])
 			}
 		}
 		
@@ -637,11 +637,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		return handleFile(NSURL(fileURLWithPath: filename)!, ofType: utiFile!)
 	}
 	
-	func exportObjectDidFinish(theObj: ExportObject) {
+	@objc(PPExportObjectDidFinish:) func exportObjectDidFinish(theObj: ExportObject) {
 		
 	}
 	
-	func exportObjectEncounteredError(theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: NSString?) {
+	@objc(PPExportObjectEncounteredError:errorCode:errorString:) func exportObjectEncounteredError(theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: NSString?) {
 		
 	}
 }

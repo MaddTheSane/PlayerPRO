@@ -16,7 +16,7 @@ import SwiftAdditions
 	public let hasUIForImport = false
 	public let hasUIForExport = false
 	
-	public convenience init(forPlugIn: ()) {
+	@objc public convenience init!(forPlugIn: Void) {
 		self.init()
 	}
 	
@@ -38,7 +38,7 @@ import SwiftAdditions
 	}
 	
 	public func importSampleAtURL(sampleURL: NSURL!, sample asample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver!) -> MADErr {
-		var soundSize: UInt = 0;
+		var soundSize: Int = 0;
 		var loopStart:Int32 = 0
 		var loopEnd:Int32 = 0
 		var sampleSize: Int16 = 0
@@ -59,7 +59,7 @@ import SwiftAdditions
 		sample.c2spd = UInt16(rate)
 		sample.relativeNote = 0
 		sample.stereo = stereo
-		sample.data = NSData(bytesNoCopy: sndPtr, length: Int(soundSize), freeWhenDone: true)
+		sample.data = NSData(bytesNoCopy: sndPtr, length: soundSize, freeWhenDone: true)
 		
 		asample.memory = sample
 		
@@ -75,9 +75,9 @@ import SwiftAdditions
 		var data: NSData
 		if isBigEndian {
 			if (sample.amplitude == 16) {
-				var mutData = sample.data.mutableCopy() as NSMutableData
+				var mutData = NSMutableData(data: sample.data)
 				var mutShortBytes = UnsafeMutablePointer<UInt16>(mutData.mutableBytes)
-				dispatch_apply(UInt(sample.data.length / 2), dispatch_get_global_queue(0, 0), { (i) -> Void in
+				dispatch_apply(sample.data.length / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
 					let IntI = Int(i)
 					mutShortBytes[IntI] = mutShortBytes[IntI].littleEndian
 					return

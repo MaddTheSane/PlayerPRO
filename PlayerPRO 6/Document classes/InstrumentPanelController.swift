@@ -31,7 +31,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 	}
 	
 	@IBAction func playSample(sender: AnyObject!) {
-		let tag = (sender as NSButtonCell).tag
+		let tag = (sender as! NSButtonCell).tag
 		let sampNum = tag % Int(MAXSAMPLE)
 		let instrNum = tag / Int(MAXSAMPLE)
 		playSample(instrument: Int16(instrNum), sample: Int16(sampNum))
@@ -94,7 +94,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		let plugCount = importer.plugInCount
 		var fileDict = [String: [String]]()
 		for obj in importer {
-			fileDict[obj.menuName] = (obj.UTITypes as [String]);
+			fileDict[obj.menuName] = (obj.UTITypes as! [String]);
 		}
 		let openPanel = NSOpenPanel()
 		if let vc = OpenPanelViewController(openPanel: openPanel, instrumentDictionary:fileDict) {
@@ -113,7 +113,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		}
 	}
 	
-	func playSample(#instrument: Int16, sample sampleNumber: Int16, volume: Byte = 0xFF, note: Byte = 0xFF) {
+	func playSample(#instrument: Int16, sample sampleNumber: Int16, volume: UInt8 = 0xFF, note: UInt8 = 0xFF) {
 		
 	}
 	
@@ -149,37 +149,37 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		
 	}
 	
-	@objc func outlineViewSelectionDidChange(notification: NSNotification!) {
+	@objc func outlineViewSelectionDidChange(notification: NSNotification) {
 		var object: AnyObject! = instrumentOutline.itemAtRow(instrumentOutline.selectedRow)
 		
 		func updateOutlineView(obj: PPSampleObject?) {
 			if obj == nil {
-				instrumentSize.stringValue = PPDoubleDash
-				instrumentLoopStart.stringValue = ""
-				instrumentLoopSize.stringValue = ""
-				instrumentVolume.stringValue = PPDoubleDash
-				instrumentRate.stringValue = PPDoubleDash
-				instrumentNote.stringValue = PPDoubleDash
-				instrumentBits.stringValue = PPDoubleDash
-				instrumentMode.stringValue = PPDoubleDash
+				self.instrumentSize.stringValue = PPDoubleDash
+				self.instrumentLoopStart.stringValue = ""
+				self.instrumentLoopSize.stringValue = ""
+				self.instrumentVolume.stringValue = PPDoubleDash
+				self.instrumentRate.stringValue = PPDoubleDash
+				self.instrumentNote.stringValue = PPDoubleDash
+				self.instrumentBits.stringValue = PPDoubleDash
+				self.instrumentMode.stringValue = PPDoubleDash
 				self.waveFormImage.image = nil;
 			} else {
 				let untmpObj = obj!
-				instrumentSize.integerValue = untmpObj.data.length
+				self.instrumentSize.integerValue = untmpObj.data.length
 				if untmpObj.loopSize != 0 {
-					instrumentLoopStart.integerValue = Int(untmpObj.loopBegin)
-					instrumentLoopSize.integerValue = Int(untmpObj.loopSize)
+					self.instrumentLoopStart.integerValue = Int(untmpObj.loopBegin)
+					self.instrumentLoopSize.integerValue = Int(untmpObj.loopSize)
 				} else {
-					instrumentLoopStart.stringValue = ""
-					instrumentLoopSize.stringValue = ""
+					self.instrumentLoopStart.stringValue = ""
+					self.instrumentLoopSize.stringValue = ""
 				}
-				instrumentVolume.integerValue = Int(untmpObj.volume)
-				instrumentRate.stringValue = untmpObj.c2spd != 0 ? "\(untmpObj.c2spd) Hz" : PPDoubleDash
-				instrumentNote.stringValue = OctaveNameFromNote(UInt8(untmpObj.relativeNote)) ?? "---"
-				instrumentBits.stringValue = untmpObj.amplitude != 0 ? "\(untmpObj.amplitude)-bit" : PPDoubleDash
-				instrumentMode.stringValue = untmpObj.loopType == .PingPong ? "Ping-pong" : "Classic"
-				let tmpIm = untmpObj.waveformImage(view: waveFormImage)
-				waveFormImage.image = tmpIm
+				self.instrumentVolume.integerValue = Int(untmpObj.volume)
+				self.instrumentRate.stringValue = untmpObj.c2spd != 0 ? "\(untmpObj.c2spd) Hz" : PPDoubleDash
+				self.instrumentNote.stringValue = OctaveNameFromNote(UInt8(untmpObj.relativeNote)) ?? "---"
+				self.instrumentBits.stringValue = untmpObj.amplitude != 0 ? "\(untmpObj.amplitude)-bit" : PPDoubleDash
+				self.instrumentMode.stringValue = untmpObj.loopType == .PingPong ? "Ping-pong" : "Classic"
+				let tmpIm = untmpObj.waveformImage(view: self.waveFormImage)
+				self.waveFormImage.image = tmpIm
 			}
 		}
 		
@@ -198,7 +198,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		}
 	}
 	
-	func outlineView(outlineView: NSOutlineView!, numberOfChildrenOfItem item: AnyObject!) -> Int {
+	func outlineView(outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
 		if item == nil {
 			return currentDocument.theMusic.instruments.count
 		}
@@ -219,7 +219,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		return nil
 	}
 	
-	func outlineView(outlineView: NSOutlineView!, isItemExpandable item: AnyObject!) -> Bool {
+	func outlineView(outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
 		if let obj = item as? PPInstrumentObject {
 			return obj.countOfSamples != 0
 		}
@@ -227,12 +227,12 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 	}
 	
 	func outlineView(outlineView: NSOutlineView!, viewForTableColumn tableColumn: NSTableColumn!, item: AnyObject!) -> NSView! {
-		let theView = outlineView.makeViewWithIdentifier(tableColumn.identifier, owner: nil) as PPInstrumentCellView!
+		let theView = outlineView.makeViewWithIdentifier(tableColumn.identifier, owner: nil) as! PPInstrumentCellView!
 		theView.controller = self
 		if let obj = item as? PPInstrumentObject {
 			theView.sample = false
 			theView.textField!.stringValue = obj.name
-			theView.numField.stringValue = NSString(format:"%03ld", obj.number + 1)
+			theView.numField.stringValue = String(format:"%03ld", obj.number + 1)
 			theView.blank = obj.countOfSamples <= 0;
 		} else if let obj = item as? PPSampleObject {
 			theView.sample = true

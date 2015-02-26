@@ -17,7 +17,7 @@ class SamplePlugHandler: NSObject, CollectionType, NSFastEnumeration {
 		var defaultManager = NSFileManager.defaultManager()
 		
 		for url in defaultPlugLocs {
-			if let components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: nil, error: nil) as [NSURL]? {
+			if let components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: nil, error: nil) as? [NSURL] {
 				for component in components {
 					if let ext = component.pathExtension {
 						if ext.compare("plugin", options: .CaseInsensitiveSearch) != .OrderedSame {

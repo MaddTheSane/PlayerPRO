@@ -8,6 +8,10 @@
 
 import Foundation
 
+typealias ResType = OSType
+typealias ResID = Int16
+typealias Handle = UnsafeMutablePointer<UnsafeMutablePointer<Int8>>
+
 final class APPLObject: NSObject {
 	let resourceID: ResID
 	let resourceType: ResType
@@ -24,7 +28,7 @@ final class APPLObject: NSObject {
 		resourceID = aresourceID
 		resourceType = aresourceType
 		size = asize
-		name = aname ?? ""
+		name = (aname ?? "") as String
 		super.init()
 	}
 	

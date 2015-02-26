@@ -10,6 +10,8 @@ import Cocoa
 import PlayerPROKit
 import SwiftAdditions
 
+typealias ResFileRefNum = Int32
+
 class ImportWindowController: NSWindowController {
 	@IBOutlet weak var resourceNamesTable: NSTableView? = nil
 	@IBOutlet weak var resourceIDsTable: NSTableView? = nil
@@ -125,7 +127,7 @@ class ImportWindowController: NSWindowController {
 	override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
 		if object === dictionaryCont {
 			if dictionaryCont.selectedObjects.count > 0 {
-				let aSelect = dictionaryCont.selectedObjects[0] as NSObject // Actual class is a private class, _NSControllerKeyValuePair
+				let aSelect = dictionaryCont.selectedObjects[0] as! NSObject // Actual class is a private class, _NSControllerKeyValuePair
 				let aValue: AnyObject? = aSelect.value() // ...but it does respond to "value", which is public
 				if let anotherVal = aValue as? [APPLObject] {
 					self.resourceArray = anotherVal

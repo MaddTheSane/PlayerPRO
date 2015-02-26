@@ -13,7 +13,7 @@ private func PPRunAlertPanelBase(title: String, message msgFormat: String, defau
 	let theAlert = NSAlert()
 	theAlert.alertStyle = alertStyle
 	theAlert.messageText = title
-	theAlert.informativeText = NSString(format: msgFormat, arguments: args)
+	theAlert.informativeText = NSString(format: msgFormat, arguments: args) as String
 	if defaultButton == nil && alternateButton == nil && otherButton == nil {
 		let defButt = theAlert.addButtonWithTitle("OK")
 		defButt.tag = NSAlertDefaultReturn
