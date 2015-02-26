@@ -21,15 +21,21 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType, Sliceable
 		var defaultManager = NSFileManager.defaultManager()
 		for aPlugLoc in defaultPlugLocs {
 			if let components = defaultManager.contentsOfDirectoryAtURL(aPlugLoc, includingPropertiesForKeys: [], options: nil, error: nil) as? [NSURL] {
-				for component in components {
-					if let ext = component.pathExtension {
-						if ext.compare("plugin", options: .CaseInsensitiveSearch) != .OrderedSame {
-							continue
+				let aComp = filter(components, { (aURL) -> Bool in
+					if let ext = aURL.pathExtension {
+						if ext.compare("plugin", options: .CaseInsensitiveSearch) == .OrderedSame {
+							return true
 						}
-						let theBundle = NSBundle(URL: component)
-						if let tempObj = PPDigitalPlugInObject(bundle: theBundle) {
-							digitalPlugs.append(tempObj)
-						}
+					}
+					
+					return false
+				})
+				
+				
+				for component in aComp {
+					let theBundle = NSBundle(URL: component)
+					if let tempObj = PPDigitalPlugInObject(bundle: theBundle) {
+						digitalPlugs.append(tempObj)
 					}
 				}
 			}

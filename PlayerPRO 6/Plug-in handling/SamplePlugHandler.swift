@@ -17,17 +17,21 @@ class SamplePlugHandler: NSObject, CollectionType, NSFastEnumeration {
 		var defaultManager = NSFileManager.defaultManager()
 		
 		for url in defaultPlugLocs {
-			if let components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: nil, error: nil) as [NSURL]? {
-				for component in components {
-					if let ext = component.pathExtension {
-						if ext.compare("plugin", options: .CaseInsensitiveSearch) != .OrderedSame {
-							continue
+			if let components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: nil, error: nil) as? [NSURL] {
+				let aComp = filter(components, { (aURL) -> Bool in
+					if let ext = aURL.pathExtension {
+						if ext.compare("plugin", options: .CaseInsensitiveSearch) == .OrderedSame {
+							return true
 						}
-						if let theBundle = NSBundle(URL: component) {
-						
-							if let aPlug = PPSamplePlugObject(bundle: theBundle) {
-								plugIns.append(aPlug)
-							}
+					}
+					
+					return false
+				})
+				for component in aComp {
+					if let theBundle = NSBundle(URL: component) {
+					
+						if let aPlug = PPSamplePlugObject(bundle: theBundle) {
+							plugIns.append(aPlug)
 						}
 					}
 				}
