@@ -449,6 +449,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 								self.addDocument(aPPDoc)
 								aPPDoc.makeWindowControllers()
 								aPPDoc.showWindows()
+								aPPDoc.setDisplayName(theURL1.lastPathComponent!.stringByDeletingPathExtension)
 							} else {
 								let nsErr = createErrorFromMADErrorType(anErr)!
 								if PPErrorIsUserCancelled(nsErr) == false {
@@ -475,6 +476,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 					addDocument(aDoc)
 					aDoc.makeWindowControllers()
 					aDoc.showWindows()
+					aDoc.setDisplayName(theURL1.lastPathComponent!.stringByDeletingPathExtension)
 					return true;
 				} else {
 					return false

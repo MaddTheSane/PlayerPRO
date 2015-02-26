@@ -29,6 +29,10 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 	@IBOutlet weak var classicalController:	ClassicalViewController!
 	@IBOutlet weak var waveController:		WaveViewController!
 	
+	@IBOutlet weak var infoWindow:		NSWindow!
+	@IBOutlet weak var infoNameField:	NSTextField!
+	@IBOutlet weak var infoInfoField:	NSTextField!
+	
 	weak var currentDocument: PPDocument!
 	private var exportSettings = MADDriverSettings()
 
@@ -65,13 +69,59 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 	}
 	
 	@IBAction func okayExportSettings(sender: AnyObject!) {
-		(NSApp as NSApplication).endSheet(exportWindow, returnCode: NSAlertDefaultReturn)
+		currentDocument.windowForSheet!.endSheet(exportWindow, returnCode: NSAlertDefaultReturn)
 		exportWindow.close()
 	}
 	
 	@IBAction func cancelExportSettings(sender: AnyObject!) {
-		(NSApp as NSApplication).endSheet(exportWindow, returnCode: NSAlertAlternateReturn)
+		currentDocument.windowForSheet!.endSheet(exportWindow, returnCode: NSAlertAlternateReturn)
 		exportWindow.close()
+	}
+	
+	@IBAction func showMusicInfo(sender: AnyObject?) {
+		infoInfoField.stringValue = currentDocument.musicInfo
+		infoNameField.stringValue = currentDocument.musicName
+		
+		currentDocument.windowForSheet!.beginSheet(infoWindow, completionHandler: { (response) -> Void in
+			switch response {
+			case NSAlertDefaultReturn:
+				let um = self.currentDocument.undoManager!
+				um.beginUndoGrouping()
+				
+				//let aDoc: (DocumentWindowController) = um.prepareWithInvocationTarget(self) as (DocumentWindowController)
+				
+				if self.currentDocument.musicInfo != self.infoInfoField.stringValue {
+					um.registerUndoWithTarget(self.currentDocument, selector: "setMusicInfo:", object: self.currentDocument.musicInfo)
+					//aDoc.musicInfo = self.currentDocument.musicInfo
+					self.currentDocument.musicInfo = self.infoInfoField.stringValue
+				}
+				
+				if self.currentDocument.musicName != self.infoNameField.stringValue {
+					um.registerUndoWithTarget(self.currentDocument, selector: "setMusicName:", object: self.currentDocument.musicName)
+
+					//aDoc.musicName = self.currentDocument.musicName
+					self.currentDocument.musicName = self.infoNameField.stringValue
+				}
+				
+				um.endUndoGrouping()
+				
+				um.setActionName("Info Change")
+				
+			default:
+				break;
+			}
+			return
+		})
+	}
+	
+	@IBAction func okayMusicInfo(sender: AnyObject?) {
+		currentDocument.windowForSheet!.endSheet(infoWindow, returnCode: NSAlertDefaultReturn)
+		infoWindow.close()
+	}
+	
+	@IBAction func cancelMusicInfo(sender: AnyObject?) {
+		currentDocument.windowForSheet!.endSheet(infoWindow, returnCode: NSCancelButton)
+		infoWindow.close()
 	}
 	
 	func rawSoundData(theSet1: MADDriverSettings) -> NSMutableData? {

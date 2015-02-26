@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6250"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="DocumentWindowController" customModule="PlayerPRO_6" customModuleProvider="target">
@@ -15,6 +15,9 @@
                 <outlet property="exportSettingsBox" destination="100036" id="100042"/>
                 <outlet property="exportWindow" destination="100026" id="100041"/>
                 <outlet property="fastForwardButton" destination="uMf-5K-EbC" id="kSU-RY-Mmk"/>
+                <outlet property="infoInfoField" destination="mKY-GN-Jh0" id="BBc-YF-6Jn"/>
+                <outlet property="infoNameField" destination="Ave-wj-kMR" id="eiM-pW-ME6"/>
+                <outlet property="infoWindow" destination="Ava-CI-cGq" id="Zkq-nt-0Nc"/>
                 <outlet property="playButton" destination="Ldh-ec-MpH" id="Tvg-5A-q7q"/>
                 <outlet property="playbackPositionSlider" destination="oP5-bp-Z0e" id="e4y-UQ-cKW"/>
                 <outlet property="reverseButton" destination="3cJ-rm-kq9" id="8Sh-w9-ekG"/>
@@ -247,6 +250,103 @@ Gw
                 <outlet property="view" destination="UQt-sf-rgN" id="jMn-XP-STC"/>
             </connections>
         </viewController>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="Ava-CI-cGq">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="196" y="207" width="480" height="123"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1080"/>
+            <view key="contentView" id="hds-dF-iEH">
+                <rect key="frame" x="0.0" y="0.0" width="480" height="123"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="88C-j4-YtP">
+                        <rect key="frame" x="18" y="83" width="44" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Name:" id="Ir4-cZ-5nz">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="uz2-A3-PgQ">
+                        <rect key="frame" x="18" y="51" width="44" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Info:" id="09k-6d-OZM">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ave-wj-kMR">
+                        <rect key="frame" x="68" y="81" width="392" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="8HD-dG-xzt">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            <allowedInputSourceLocales>
+                                <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                            </allowedInputSourceLocales>
+                        </textFieldCell>
+                    </textField>
+                    <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mKY-GN-Jh0">
+                        <rect key="frame" x="68" y="49" width="392" height="22"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="XRT-C4-ctW">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            <allowedInputSourceLocales>
+                                <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                            </allowedInputSourceLocales>
+                        </textFieldCell>
+                    </textField>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dsj-Mt-WWd">
+                        <rect key="frame" x="383" y="13" width="83" height="32"/>
+                        <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="L8m-YS-UVc">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+DQ
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="okayMusicInfo:" target="-2" id="DWd-Ca-LoH"/>
+                        </connections>
+                    </button>
+                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="AY8-Jv-eyd">
+                        <rect key="frame" x="300" y="13" width="83" height="32"/>
+                        <buttonCell key="cell" type="push" title="Cancel" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zU3-KJ-tO4">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                            <string key="keyEquivalent" base64-UTF8="YES">
+Gw
+</string>
+                        </buttonCell>
+                        <connections>
+                            <action selector="cancelMusicInfo:" target="-2" id="6by-Ek-wNU"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="dsj-Mt-WWd" firstAttribute="width" secondItem="AY8-Jv-eyd" secondAttribute="width" id="3UZ-B9-rFy"/>
+                    <constraint firstAttribute="trailing" secondItem="dsj-Mt-WWd" secondAttribute="trailing" constant="20" symbolic="YES" id="5ih-HD-8YZ"/>
+                    <constraint firstItem="mKY-GN-Jh0" firstAttribute="top" secondItem="Ave-wj-kMR" secondAttribute="bottom" constant="10" symbolic="YES" id="9UN-xn-cOz"/>
+                    <constraint firstItem="dsj-Mt-WWd" firstAttribute="baseline" secondItem="AY8-Jv-eyd" secondAttribute="baseline" id="APb-vq-ibn"/>
+                    <constraint firstItem="88C-j4-YtP" firstAttribute="leading" secondItem="hds-dF-iEH" secondAttribute="leading" constant="20" symbolic="YES" id="CSo-my-IaP"/>
+                    <constraint firstItem="dsj-Mt-WWd" firstAttribute="top" secondItem="mKY-GN-Jh0" secondAttribute="bottom" constant="8" symbolic="YES" id="GiL-n2-FXz"/>
+                    <constraint firstItem="dsj-Mt-WWd" firstAttribute="leading" secondItem="AY8-Jv-eyd" secondAttribute="trailing" constant="12" symbolic="YES" id="Lmu-Dp-rap"/>
+                    <constraint firstAttribute="bottom" secondItem="dsj-Mt-WWd" secondAttribute="bottom" constant="20" symbolic="YES" id="Mq1-op-rFx"/>
+                    <constraint firstItem="mKY-GN-Jh0" firstAttribute="leading" secondItem="uz2-A3-PgQ" secondAttribute="trailing" constant="8" symbolic="YES" id="Ozf-TL-cI0"/>
+                    <constraint firstItem="Ave-wj-kMR" firstAttribute="leading" secondItem="88C-j4-YtP" secondAttribute="trailing" constant="8" symbolic="YES" id="Psg-eq-T5S"/>
+                    <constraint firstItem="mKY-GN-Jh0" firstAttribute="baseline" secondItem="uz2-A3-PgQ" secondAttribute="baseline" id="SS4-eK-o3o"/>
+                    <constraint firstItem="88C-j4-YtP" firstAttribute="baseline" secondItem="Ave-wj-kMR" secondAttribute="baseline" id="Sre-ms-7zt"/>
+                    <constraint firstItem="88C-j4-YtP" firstAttribute="trailing" secondItem="uz2-A3-PgQ" secondAttribute="trailing" id="TGh-X1-42Q"/>
+                    <constraint firstItem="88C-j4-YtP" firstAttribute="leading" secondItem="uz2-A3-PgQ" secondAttribute="leading" id="Zop-5D-reS"/>
+                    <constraint firstItem="mKY-GN-Jh0" firstAttribute="trailing" secondItem="Ave-wj-kMR" secondAttribute="trailing" id="aju-PI-1dh"/>
+                    <constraint firstItem="mKY-GN-Jh0" firstAttribute="leading" secondItem="Ave-wj-kMR" secondAttribute="leading" id="bHg-9A-JkA"/>
+                    <constraint firstItem="uz2-A3-PgQ" firstAttribute="leading" secondItem="hds-dF-iEH" secondAttribute="leading" constant="20" symbolic="YES" id="dIr-o6-CvP"/>
+                    <constraint firstAttribute="trailing" secondItem="Ave-wj-kMR" secondAttribute="trailing" constant="20" symbolic="YES" id="nUk-ac-382"/>
+                    <constraint firstItem="Ave-wj-kMR" firstAttribute="top" secondItem="hds-dF-iEH" secondAttribute="top" constant="20" symbolic="YES" id="zKk-pG-OA2"/>
+                </constraints>
+            </view>
+        </window>
     </objects>
     <resources>
         <image name="PPFastForward" width="26" height="26"/>
