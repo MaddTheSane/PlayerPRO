@@ -203,9 +203,9 @@ extension PPSampleObject {
 			}()
 		let datIsStereo = theDat.stereo
 		let aRect = CGRect(origin: CGPoint.zeroPoint, size: imageSize)
-		let rowBytes = 4 * UInt(imageSize.width)
+		let rowBytes = 4 * Int(imageSize.width)
 		let bitMapFormat = CGBitmapInfo.ByteOrder32Host | CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
-		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!, bitMapFormat)!
+		let bitmapContext = CGBitmapContextCreate(nil, Int(imageSize.width), Int(imageSize.height), 8, rowBytes, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!, bitMapFormat)!
 		
 		CGContextClearRect(bitmapContext, aRect)
 		CGContextSetLineWidth(bitmapContext, 1)
@@ -252,10 +252,10 @@ extension PPSampleObject {
 			}()
 		let datIsStereo = theDat.stereo;
 		let aRect = CGRect(origin: CGPoint.zeroPoint, size: imageSize)
-		let rowBytes = 4 * UInt(imageSize.width)
+		let rowBytes = 4 * Int(imageSize.width)
 		//let bitMapFormat = CGBitmapInfo(alphaInfo: .PremultipliedLast, additionalInfo: .ByteOrder32Host)
 		let bitMapFormat = CGBitmapInfo.ByteOrder32Host | CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
-		let bitmapContext = CGBitmapContextCreate(nil, UInt(imageSize.width), UInt(imageSize.height), 8, rowBytes, CGColorSpaceCreateDeviceRGB(), bitMapFormat)
+		let bitmapContext = CGBitmapContextCreate(nil, Int(imageSize.width), Int(imageSize.height), 8, rowBytes, CGColorSpaceCreateDeviceRGB(), bitMapFormat)
 		CGContextClearRect(bitmapContext, aRect)
 		CGContextSetLineWidth(bitmapContext, 1)
 		var colorRef: UIColor
