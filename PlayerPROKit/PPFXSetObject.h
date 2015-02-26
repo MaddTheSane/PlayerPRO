@@ -23,7 +23,7 @@
 @property (readonly, copy, nonnull) NSArray *effectValues;
 @property (copy, null_resettable) NSString *name;
 
-- (instancetype)initWithFXSet:(__nullable FXSets*)theSet NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithFXSet:(__nullable FXSets*)theSet NS_DESIGNATED_INITIALIZER;
 
 - (float)effectValueAtIndex:(NSInteger)idx;
 

@@ -21,15 +21,15 @@
 @property (readonly) EnvRec envelopeRec;
 @property short position;
 @property short envelopeValue;
-- (instancetype)init NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithEnvRec:(EnvRec)theRec NS_DESIGNATED_INITIALIZER;
-+ (instancetype)envelopeWithEnvRec:(EnvRec)theRec;
+- (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithEnvRec:(EnvRec)theRec NS_DESIGNATED_INITIALIZER;
++ (nonnull instancetype)envelopeWithEnvRec:(EnvRec)theRec;
 @end
 
 @interface PPInstrumentObject : NSObject <NSFastEnumeration, PPObject>
-+ (instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObject *)mus;
-- (instancetype)initWithMusic:(PPMusicObject *)mus instrumentIndex:(short)insIdx;
-- (instancetype)init;
++ (nullable instancetype)newInstrumentObjectByAddingToMusic:(nonnull PPMusicObject *)mus;
+- (nullable instancetype)initWithMusic:(nonnull PPMusicObject *)mus instrumentIndex:(short)insIdx;
+- (nullable instancetype)init;
 
 @property (nonatomic, readonly, copy, nonnull) NSArray *volumeEnvelope;
 @property (nonatomic, readonly, copy, nonnull) NSArray *panningEnvelope;

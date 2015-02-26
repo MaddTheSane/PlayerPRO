@@ -24,8 +24,8 @@
 
 - (__nonnull PPMadCommandObject *)objectAtIndexedSubscript:(NSInteger)index;
 
-- (instancetype)initWithMusic:(__nonnull PPMusicObject *)mus NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithMusic:(__nonnull PPMusicObject *)mus patternAtIndex:(short)ptnIdx;
+- (nullable instancetype)initWithMusic:(__nonnull PPMusicObject *)mus NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithMusic:(__nonnull PPMusicObject *)mus patternAtIndex:(short)ptnIdx;
 
 - (__nonnull PPMadCommandObject*)getCommandFromPosition:(short)PosX channel:(short)TrackIdX;
 - (void)replaceCommandAtPosition:(short)PosX channel:(short)TrackIdX cmd:(Cmd)aCmd;

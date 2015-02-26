@@ -16,10 +16,10 @@
 
 @interface PPMadCommandObject : NSObject <PPObject>
 
-- (instancetype)init;
-- (instancetype)initWithCmdPtr:(__nullable Cmd *)theCmd NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithCmd:(Cmd)theCmd;
-- (instancetype)initWithCoder:(__nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init;
+- (nonnull instancetype)initWithCmdPtr:(__nullable Cmd *)theCmd NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithCmd:(Cmd)theCmd;
+- (nonnull instancetype)initWithCoder:(__nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
 @property (readonly) Cmd theCommand;
 /// Instrument number. \c 0x00 is no instrument command

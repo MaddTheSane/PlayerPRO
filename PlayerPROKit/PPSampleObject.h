@@ -23,9 +23,9 @@
 @property (readwrite) NSInteger instrumentIndex;
 @property (readonly) sData theSample;
 
-- (instancetype)init;
-- (instancetype)initWithSData:(nullable in sData *)theData NS_DESIGNATED_INITIALIZER;
-- (instancetype)initWithCoder:(__nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init;
+- (nonnull instancetype)initWithSData:(nullable in sData *)theData NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithCoder:(__nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 - (__nonnull sData *)createSData;
 
 /**
