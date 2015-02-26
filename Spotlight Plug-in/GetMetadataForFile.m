@@ -114,7 +114,7 @@ Boolean GetMetadataForURL(void* thisInterface, CFMutableDictionaryRef attributes
 			if (strcmp(utiType, "!!!!") == 0) {
 				printf("PPImporter: Unable to determine file type based on UTI.\n");
 			} else if (strcmp(utiType, type) != 0) {
-				printf("PPImporter: File types differ, UTI says %s, PlayerPRO says %s.", utiType, type);
+				printf("PPImporter: File types differ, UTI says %s, PlayerPRO says %s.\n", utiType, type);
 			}
 #endif
 			
