@@ -16,4 +16,6 @@
 @property (copy) NSString* initialTo;
 @property (copy) PPPlugErrorBlock currentBlock;
 @property Pcmd* thePcmd;
+
+@property (strong) NSWindow *parentWindow;
 @end

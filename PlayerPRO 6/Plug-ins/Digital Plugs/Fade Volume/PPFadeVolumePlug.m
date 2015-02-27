@@ -33,6 +33,7 @@
 	controller.fadeFrom = 0.0;
 	controller.fadeTo = 1.0;
 	controller.currentBlock = handle;
+	controller.parentWindow = document;
 
 	[document beginSheet:controller.window completionHandler:^(NSModalResponse returnCode) {
 		

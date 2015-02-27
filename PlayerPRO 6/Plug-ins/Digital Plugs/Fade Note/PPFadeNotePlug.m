@@ -33,6 +33,7 @@
 	controller.initialFrom = @"C 3";
 	controller.initialTo = @"C 7";
 	controller.currentBlock = handle;
+	controller.parentWindow = document;
 	
 	[document beginSheet:controller.window completionHandler:^(NSModalResponse returnCode) {
 		

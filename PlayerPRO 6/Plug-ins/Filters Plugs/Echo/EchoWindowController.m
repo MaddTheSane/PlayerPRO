@@ -79,13 +79,13 @@
 	}
 	
 	theData.data = ourData;
-	[(NSApplication*)NSApp endSheet:self.window];
+	[_parentWindow endSheet:self.window];
 	_currentBlock(MADNoErr);
 }
 
 - (IBAction)cancel:(id)sender
 {
-	[(NSApplication*)NSApp endSheet:self.window];
+	[_parentWindow endSheet:self.window];
 	_currentBlock(MADUserCanceledErr);
 }
 

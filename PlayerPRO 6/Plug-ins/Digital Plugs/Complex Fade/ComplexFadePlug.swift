@@ -29,6 +29,7 @@ import PlayerPROKit.PPPlugIns
 		controller.thePcmd = aPcmd;
 		controller.fadeType = .Instrument;
 		controller.currentBlock = handler
+		controller.parentWindow = window
 
 		window.beginSheet(controller.window!, completionHandler: { (retVal) -> Void in
 			

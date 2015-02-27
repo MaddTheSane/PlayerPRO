@@ -33,7 +33,9 @@ typedef NS_ENUM(NSInteger, ToneGenerator) {
 @property double audioAmplitude;
 @property int audioFrequency;
 @property ToneGenerator generator;
-@property (strong) PPPlugErrorBlock currentBlock;
+@property (copy) PPPlugErrorBlock currentBlock;
+
+@property (strong) NSWindow *parentWindow;
 
 - (IBAction)toggleToneType:(id)sender;
 

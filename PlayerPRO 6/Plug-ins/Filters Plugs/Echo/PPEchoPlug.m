@@ -36,6 +36,7 @@
 	controller.theData = theData;
 	controller.selectionRange = selRange;
 	controller.currentBlock = handle;
+	controller.parentWindow = document;
 
 	[document beginSheet:controller.window completionHandler:^(NSModalResponse returnCode) {
 		

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import AppKit.NSWindow
 import PlayerPROKit
 
 @objc(PPDepthPlug) final public class DepthPlug: NSObject, PPFilterPlugin {
@@ -30,6 +31,7 @@ import PlayerPROKit
 		controller.theData = theData
 		controller.selectionRange = selRange
 		controller.stereoMode = StereoMode
+		controller.parentWindow = document
 
 		document.beginSheet(controller.window!, completionHandler: { (returnCode) -> Void in
 			

@@ -34,6 +34,7 @@
 	controller.currentBlock = handle;
 	controller.selectionRange = selRange;
 	controller.stereoMode = StereoMode;
+	controller.parentWindow = document;
 
 	[document beginSheet:controller.window completionHandler:^(NSModalResponse returnCode) {
 		

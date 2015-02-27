@@ -22,11 +22,11 @@ public func getCommand<X where X: CommandIterator>(#row: Int16, #track: Int16, a
 	return aIntPcmd.getCommand(row: row, track: track)
 }
 
-public func replaceCommand<X where X: CommandIterator>(#row: Int16, #track: Int16, #command: Cmd, inout #aPcmd: X) {
+public func replaceCommand<X where X: CommandIterator>(#row: Int16, #track: Int16, #command: Cmd, inout aPcmd: X) {
 	aPcmd.replaceCommand(row: row, track: track, command: command)
 }
 
-public func modifyCommand<X where X: CommandIterator>(#row: Int16, #track: Int16, inout #aPcmd: X, #commandBlock: (inout Cmd) -> ()) {
+public func modifyCommand<X where X: CommandIterator>(#row: Int16, #track: Int16, inout aPcmd: X, #commandBlock: (inout Cmd) -> ()) {
 	aPcmd.modifyCommand(row: row, track: track, commandBlock: commandBlock)
 }
 

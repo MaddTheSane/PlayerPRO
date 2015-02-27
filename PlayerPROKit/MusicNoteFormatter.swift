@@ -15,7 +15,7 @@ public final class MusicNoteFormatter: NSFormatter {
 	override public func stringForObjectValue(obj: AnyObject) -> String? {
 		if let objInt = obj as? Int {
 			switch objInt {
-			case 0xFF:
+			case 0xFF, 0xFE:
 				return "---"
 				
 			case 0..<96:

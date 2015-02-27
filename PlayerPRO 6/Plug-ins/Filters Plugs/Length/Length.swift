@@ -29,6 +29,7 @@ import PlayerPROKit.PPPlugIns
 		controller.theData = theData
 		controller.selectionRange = selRange
 		controller.stereoMode = StereoMode
+		controller.parentWindow = document
 		
 		document.beginSheet(controller.window!, completionHandler: { (returnCode) -> Void in
 			

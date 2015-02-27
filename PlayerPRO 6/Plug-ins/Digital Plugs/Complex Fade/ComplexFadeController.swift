@@ -40,6 +40,8 @@ class ComplexFadeController: NSWindowController {
 	var thePcmd: UnsafeMutablePointer<Pcmd> = nil
 	var currentBlock: PPPlugErrorBlock!
 	
+	var parentWindow: NSWindow!
+	
     override func windowDidLoad() {
         super.windowDidLoad()
     
@@ -192,12 +194,12 @@ class ComplexFadeController: NSWindowController {
 			}
 		}
 		
-		(NSApp as NSApplication).endSheet(window!)
+		parentWindow.endSheet(window!)
 		currentBlock(.NoErr)
 	}
 	
 	@IBAction func cancel(sender: AnyObject!) {
-		(NSApp as NSApplication).endSheet(window!)
+		parentWindow.endSheet(window!)
 		currentBlock(.UserCanceledErr)
 	}
 }

@@ -34,6 +34,7 @@
 	controller.stereoMode = StereoMode;
 	controller.currentBlock = handle;
 	controller.amplitudeAmount = 120;
+	controller.parentWindow = document;
 
 	[document beginSheet:controller.window completionHandler:^(NSModalResponse returnCode) {
 		
