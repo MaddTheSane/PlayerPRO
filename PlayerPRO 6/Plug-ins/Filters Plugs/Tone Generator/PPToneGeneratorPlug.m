@@ -51,6 +51,7 @@
 	controller.stereoMode = StereoMode;
 	controller.theDriver = driver;
 	controller.currentBlock = handle;
+	controller.parentWindow = document;
 
 	[document beginSheet:controller.window completionHandler:^(NSModalResponse returnCode) {
 		

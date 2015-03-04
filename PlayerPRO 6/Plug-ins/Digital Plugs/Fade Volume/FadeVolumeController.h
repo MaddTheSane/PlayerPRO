@@ -14,4 +14,6 @@
 @property double fadeTo;
 @property Pcmd *thePcmd;
 @property (copy) PPPlugErrorBlock currentBlock;
+
+@property (strong) NSWindow *parentWindow;
 @end

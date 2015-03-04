@@ -16,6 +16,8 @@ class DepthController: NSWindowController {
 	var currentBlock: PPPlugErrorBlock!
 	var theData: PPSampleObject!
 	
+	var parentWindow: NSWindow!
+	
     override func windowDidLoad() {
         super.windowDidLoad()
     
@@ -78,19 +80,19 @@ class DepthController: NSWindowController {
 			
 		default:
 			NSBeep()
-			(NSApp as! NSApplication).endSheet(window!)
+			parentWindow.endSheet(window!)
 			currentBlock(.ParametersErr)
 			return
 			
 		}
 
 		theData.data = ourData
-		(NSApp as! NSApplication).endSheet(window!)
+		parentWindow.endSheet(window!)
 		currentBlock(.NoErr);
 	}
 	
 	@IBAction func cancel(sender: AnyObject!) {
-		(NSApp as! NSApplication).endSheet(window!)
+		parentWindow.endSheet(window!)
 		currentBlock(.UserCanceledErr);
 	}
 

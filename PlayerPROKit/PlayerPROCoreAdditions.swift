@@ -361,15 +361,15 @@ public func getCommand(#row: Int16, #track: Int16, #aPcmd: UnsafeMutablePointer<
 	return MADGetCmd(row, track, aPcmd).memory
 }
 
-public func replaceCommand(#row: Int16, #track: Int16, #command: Cmd, #aPcmd: UnsafeMutablePointer<Pcmd>) {
+public func replaceCommand(#row: Int16, #track: Int16, #command: Cmd, aPcmd: UnsafeMutablePointer<Pcmd>) {
 	var aCmd = MADGetCmd(row, track, aPcmd)
 	aCmd.memory = command
 }
 
-public func modifyCommand(#row: Int16, #track: Int16, #aPcmd: UnsafeMutablePointer<Pcmd>, #commandBlock: (inout Cmd)-> ()) {
+public func modifyCommand(#row: Int16, #track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>, #commandBlock: (inout Cmd)-> ()) {
 	var aCmd = getCommand(row: row, track: track, aPcmd: aPcmd)
 	commandBlock(&aCmd)
-	replaceCommand(row: row, track: track, command: aCmd, aPcmd: aPcmd)
+	replaceCommand(row: row, track: track, command: aCmd, aPcmd)
 }
 
 extension IntPcmd: CommandIterator, Equatable {

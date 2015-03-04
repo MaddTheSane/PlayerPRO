@@ -18,6 +18,8 @@ class LengthWindowController: NSWindowController {
 	
 	dynamic var changeRate = false
 	
+	var parentWindow: NSWindow?
+	
 	var selectionRange = NSRange(location: 0, length: 0)
 	var stereoMode = false
 	var currentBlock: PPPlugErrorBlock!
@@ -76,12 +78,12 @@ class LengthWindowController: NSWindowController {
 			theData.loopSize = newSize - theData.loopBegin
 		}
 
-		NSApplication.sharedApplication().endSheet(self.window!)
+		parentWindow?.endSheet(self.window!)
 		currentBlock(.NoErr)
 	}
 	
 	@IBAction func cancel(sender: AnyObject?) {
-		NSApplication.sharedApplication().endSheet(self.window!)
+		parentWindow?.endSheet(self.window!)
 		currentBlock(.UserCanceledErr)
 	}
 	

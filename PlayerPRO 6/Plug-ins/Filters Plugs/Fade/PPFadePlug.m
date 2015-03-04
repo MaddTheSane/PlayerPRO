@@ -35,6 +35,7 @@
 	controller.fadeTo = 1.0;
 	controller.fadeFrom = .70;
 	controller.stereoMode = StereoMode;
+	controller.parentWindow = document;
 	
 	[document beginSheet:controller.window completionHandler:^(NSModalResponse returnCode) {
 		

@@ -141,7 +141,7 @@
 		theData.loopBegin = (theData.loopBegin * (newFreq / 100)) / (int) (theData.c2spd / 100);
 		theData.loopSize = (theData.loopSize * (newFreq / 100)) / (int) (theData.c2spd / 100);
 	} else {
-		[(NSApplication*)NSApp endSheet:self.window];
+		[_parentWindow endSheet:self.window];
 		_currentBlock(MADUnknownErr);
 		return;
 	}
@@ -160,13 +160,13 @@
 		theData.loopSize = (int)(theData.data.length - theData.loopBegin);
 
 	
-	[(NSApplication*)NSApp endSheet:self.window];
+	[_parentWindow endSheet:self.window];
 	_currentBlock(MADNoErr);
 }
 
 - (IBAction)cancel:(id)sender
 {
-	[(NSApplication*)NSApp endSheet:self.window];
+	[_parentWindow endSheet:self.window];
 	_currentBlock(MADUserCanceledErr);
 }
 

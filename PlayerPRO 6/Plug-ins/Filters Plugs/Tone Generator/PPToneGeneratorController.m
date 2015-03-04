@@ -308,7 +308,7 @@
 
 - (IBAction)cancel:(id)sender
 {
-	[(NSApplication*)NSApp endSheet:self.window];
+	[_parentWindow endSheet:self.window];
 	_currentBlock(MADUserCanceledErr);
 }
 
@@ -358,7 +358,7 @@
 	memcpy(resultPtr + self.selectionStart + audioLength, theData.data.bytes + self.selectionEnd, theData.data.length - self.selectionEnd);
 	
 	theData.data = resultData;
-	[(NSApplication*)NSApp endSheet:self.window];
+	[_parentWindow endSheet:self.window];
 	_currentBlock(MADNoErr);
 }
 

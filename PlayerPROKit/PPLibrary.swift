@@ -52,7 +52,7 @@ public func InfoRecToMusicInfo(infoRec: MADInfoRec) -> PPLibrary.MusicFileInfo {
 public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	internal let trackerLibs: [PPLibraryObject]
 	internal var theLibrary: UnsafeMutablePointer<MADLibrary> = nil
-	public struct MusicFileInfo {
+	public struct MusicFileInfo: Printable {
 		public var totalPatterns: Int
 		public var partitionLength: Int
 		public var fileSize: Int
@@ -72,6 +72,10 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 			formatDescription = infoDict[kPPFormatDescription] as! String
 			signature = infoDict[kPPSignature] as! String
 		}
+		
+		public var description: String {
+			return "patterns: \(totalPatterns), partition length: \(partitionLength), size: \(fileSize), tracks: \(totalTracks), instruments \(totalInstruments), title: \(internalFileName), format description: \(formatDescription), signature: \(signature)"
+		}
 	}
 
 	public class func deregisterDebugFunction() {
@@ -87,9 +91,9 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	}
 
 	typealias Index = Int
-	public typealias Generator = GeneratorOf<PPLibraryObject>
+	typealias Generator = GeneratorOf<PPLibraryObject>
 	
-	public func generate() -> Generator {
+	public func generate() -> GeneratorOf<PPLibraryObject> {
 		var index = 0
 		return GeneratorOf {
 			if index < self.trackerLibs.count {
@@ -256,10 +260,10 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	}
 	
 	/**
- *	@abstract Gets a plug-in type from a UTI
- *	@param aUTI The UTI to find a plug-in type for.
- *	@return A plug-in type, four characters long, or \c nil if there's
- *	no plug-in that opens the UTI
+ 	@abstract Gets a plug-in type from a UTI
+ 	@param aUTI The UTI to find a plug-in type for.
+ 	@return A plug-in type, four characters long, or \c nil if there's
+ 	no plug-in that opens the UTI
  */
 	public func typeFromUTI(aUTI: String) -> String? {
 		if aUTI == kPlayerPROMADKUTI {
@@ -278,9 +282,9 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	}
 	
 	/**
- *	@abstract Gets the first UTI from a plug-in type.
- *	@param aType the four-character plug-in type to get a UTI for.
- *	@return a UTI, or \c nil if the type isn't listed
+ 	@abstract Gets the first UTI from a plug-in type.
+ 	@param aType the four-character plug-in type to get a UTI for.
+ 	@return a UTI, or \c nil if the type isn't listed
  */
 	public func typeToUTI(aType: String) -> String? {
 		if aType == MadIDString {
