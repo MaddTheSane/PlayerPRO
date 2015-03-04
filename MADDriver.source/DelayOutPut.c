@@ -26,8 +26,6 @@
 #include "MADPrivate.h"
 #include "VSTFunctions.h"
 
-uint32_t getfrequency(uint32_t period);
-
 static inline void PrepareInline(int *VolInter, int* rVolInter, double p2, double v1, double v2)
 {
 	double temp = (v2 - v1) / p2;

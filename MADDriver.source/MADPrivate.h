@@ -157,6 +157,8 @@ MADErr	CheckMADFile(char *AlienFile);
 void ConvertInstrumentIn(MADByte *tempPtr, size_t sSize);
 void ConvertInstrumentIn16(short *tempPtr, size_t sSize);
 
+uint32_t getfrequency(uint32_t period);
+
 #if defined _MAC_H && !TARGET_OS_IPHONE
 void SetOSType(CFURLRef, OSType);
 #endif
