@@ -52,14 +52,10 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return musicList[subRange]
 	}
 	
-	/// Returns NSNotFound if a URL couldn't be found
-	/// use indexOfObjectSimilar(URL) on Swift instead of this one.
+	/// Returns NSNotFound if a URL couldn't be found.
+	/// Use indexOfObjectSimilar(URL) on Swift instead of this one.
 	func indexOfObjectSimilarToURL(theURL: NSURL) -> Int {
-		if let theInd = indexOfObjectSimilar(URL: theURL) {
-			return theInd
-		} else {
-			return NSNotFound
-		}
+		return indexOfObjectSimilar(URL: theURL) ?? NSNotFound
 	}
 	
 	/// This cannot be represented in Objective C
