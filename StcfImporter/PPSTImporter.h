@@ -10,12 +10,12 @@
 
 @protocol PPSTImporterHelper <NSObject>
 
-- (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary* bookmarkData, NSError *error))reply;
+- (void)loadStcfAtURL:(NSURL* __nonnull)theURL withReply:(void (^__nonnull)(__nullable NSDictionary* bookmarkData, __nullable NSError *error))reply;
 
 @end
 
 @interface PPSTImporter : NSObject <NSXPCListenerDelegate, PPSTImporterHelper>
 
-+ (instancetype)sharedImporter;
++ (nonnull instancetype)sharedImporter;
 
 @end

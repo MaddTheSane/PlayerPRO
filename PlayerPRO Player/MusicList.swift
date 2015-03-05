@@ -389,14 +389,14 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		
 		conn.resume()
 		
-		conn.remoteObjectProxy.loadStcfAtURL(toOpen, withReply: {(bookmarkData:[NSObject : AnyObject]!, error: NSError?) -> Void in
+		conn.remoteObjectProxy.loadStcfAtURL(toOpen, withReply: {(bookmarkData:[NSObject : AnyObject]?, error: NSError?) -> Void in
 			NSOperationQueue.mainQueue().addOperationWithBlock({
 				if error != nil {
 					theHandle(theErr: error)
 				} else {
-					let invalidAny = bookmarkData["lostMusicCount"] as? UInt
-					let selectedAny = bookmarkData["SelectedMusic"] as? Int
-					let pathsAny = bookmarkData["MusicPaths"] as? NSArray as? [String]
+					let invalidAny = bookmarkData!["lostMusicCount"] as? UInt
+					let selectedAny = bookmarkData!["SelectedMusic"] as? Int
+					let pathsAny = bookmarkData!["MusicPaths"] as? NSArray as? [String]
 					if (invalidAny == nil || selectedAny == nil || pathsAny == nil) {
 						let lolwut = createErrorFromMADErrorType(.UnknownErr)!
 						theHandle(theErr: lolwut)

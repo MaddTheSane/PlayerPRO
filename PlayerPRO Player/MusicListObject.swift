@@ -66,7 +66,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 			println("PPMusicListObject: Could not find out if extension is hidden in file \(self.musicURL.path), error: \(err!.localizedDescription)")
 			return self.musicURL.lastPathComponent!
 		} else {
-			let retStr = val as! NSString as String
+			let retStr = val as! String
 			return retStr
 		}
 	}()
@@ -87,8 +87,8 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 				return 0
 			}
 		} else {
-			let retNum = val as! NSNumber
-			return retNum.unsignedLongLongValue
+			let retNum = val as! UInt64
+			return retNum
 		}
 	}()
 	
@@ -168,10 +168,8 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	}
 	
 	// MARK: NSCopying protocol
-	/// This class is immutable, so it only returns itself
 	func copyWithZone(zone: NSZone) -> AnyObject {
-		//this class is immutable
-		return self;
+		return MusicListObject(URL: musicURL)
 	}
 
 	// MARK: NSSecureCoding protocol
