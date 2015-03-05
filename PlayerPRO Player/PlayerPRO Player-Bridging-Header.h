@@ -6,5 +6,4 @@
 #import "PPSTImporter.h"
 #import "AppDelegate.h"
 
-#import "MusicListPreferenceController.h"
 #import "MidiHardwarePreferenceController.h"

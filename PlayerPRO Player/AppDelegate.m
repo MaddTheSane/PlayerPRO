@@ -214,7 +214,7 @@ static NSInteger selMusFromList = -1;
 	 registerDefaults:
 	 @{PPRememberMusicList: @YES,
 	   PPLoadMusicAtListLoad: @NO,
-	   PPAfterPlayingMusic: @(PPStopPlaying),
+	   PPAfterPlayingMusic: @(PlaylistModeStopPlaying),
 	   PPGotoStartupAfterPlaying: @YES,
 	   PPSaveModList: @YES,
 	   PPLoadMusicAtMusicLoad: @NO,
@@ -266,7 +266,7 @@ static NSInteger selMusFromList = -1;
 {
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	switch ([userDefaults integerForKey:PPAfterPlayingMusic]) {
-		case PPStopPlaying:
+		case PlaylistModeStopPlaying:
 		default:
 			[madDriver stop];
 			[madDriver cleanDriver];
@@ -276,12 +276,12 @@ static NSInteger selMusFromList = -1;
 			self.paused = YES;
 			break;
 			
-		case PPLoopMusic:
+		case PlaylistModeLoopMusic:
 			madDriver.musicPosition = 0;
 			[madDriver play];
 			break;
 			
-		case PPLoadNext:
+		case PlaylistModeLoadNext:
 			if ([musicList countOfMusicList] > ++self.currentlyPlayingIndex.index) {
 				[self selectCurrentlyPlayingMusic];
 				NSError *err;
@@ -307,7 +307,7 @@ static NSInteger selMusFromList = -1;
 			}
 			break;
 			
-		case PPLoadRandom:
+		case PlaylistModeLoadRandom:
 			self.currentlyPlayingIndex.index = random() % [musicList countOfMusicList];
 			[self selectCurrentlyPlayingMusic];
 			NSError *err;

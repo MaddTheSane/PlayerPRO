@@ -180,7 +180,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		if let BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey4) as? [MusicListObject] {
 			selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation4);
 			for book in BookmarkArray {
-				if (!book.checkResourceIsReachableAndReturnError(nil)) {
+				if (!book.checkIsReachableAndReturnError(nil)) {
 					if (selectedMusic == -1) {
 						//Do nothing
 					} else if (selectedMusic == musicList.count + 1) {
@@ -385,7 +385,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	#if os(OSX)
 	@objc func beginLoadingOfOldMusicListAtURL(toOpen: NSURL, completionHandle theHandle: (theErr: NSError?) ->Void) {
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
-		conn.remoteObjectInterface = NSXPCInterface(`withProtocol`: PPSTImporterHelper.self)
+		conn.remoteObjectInterface = NSXPCInterface(withProtocol: PPSTImporterHelper.self)
 		
 		conn.resume()
 		

@@ -8,13 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef NS_ENUM(NSInteger, PPPlaylistMode) {
-	PPStopPlaying = 0,
-	PPLoopMusic,
-	PPLoadNext,
-	PPLoadRandom
-};
-
 #pragma pack(push)
 typedef struct TagCoupling {
 	int amount;
@@ -23,6 +16,6 @@ typedef struct TagCoupling {
 #pragma pack(pop)
 
 @protocol PPPreferenceObject <NSObject>
-+ (instancetype)newPreferenceView NS_RETURNS_RETAINED;
-@property (nonatomic, readonly) NSString *preferenceIdentifier;
++ (nullable instancetype)newPreferenceView NS_RETURNS_RETAINED;
+@property (nonatomic, readonly, nonnull) NSString *preferenceIdentifier;
 @end

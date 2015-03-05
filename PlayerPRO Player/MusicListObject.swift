@@ -55,7 +55,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		let image = NSWorkspace.sharedWorkspace().iconForFile(self.musicURL.path!)
 		image.size = NSSize(width: 16, height: 16)
 		return image
-	}()
+		}()
 	#endif
 	
 	@objc private(set) lazy var fileName: String = {
@@ -69,7 +69,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 			let retStr = val as! String
 			return retStr
 		}
-	}()
+		}()
 	
 	@objc private(set) lazy var fileSize: UInt64 = {
 		var val: AnyObject? = nil;
@@ -78,8 +78,8 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 			let manager = NSFileManager.defaultManager();
 			if let theparam = manager.attributesOfItemAtPath(self.musicURL.path!, error: nil) {
 				if let tmpfilesize: AnyObject = theparam[NSFileSize] {
-					let aFileSize = tmpfilesize as! NSNumber
-					return aFileSize.unsignedLongLongValue
+					let aFileSize = tmpfilesize as! UInt64
+					return aFileSize
 				} else {
 					return 0
 				}
@@ -90,7 +90,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 			let retNum = val as! UInt64
 			return retNum
 		}
-	}()
+		}()
 	
 	init(URL: NSURL, date: NSDate = NSDate()) {
 		if (URL.isFileReferenceURL()) {
@@ -117,7 +117,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		}
 	}
 	
-	func checkResourceIsReachableAndReturnError(error: NSErrorPointer) -> Bool {
+	func checkIsReachableAndReturnError(error: NSErrorPointer) -> Bool {
 		return musicURL.checkResourceIsReachableAndReturnError(error)
 	}
 	
