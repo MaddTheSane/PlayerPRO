@@ -17,6 +17,9 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	public var trackStart: Int16
 	public var positionStart: Int16
 	public var myCmd = [Cmd]()
+	
+	/// returns what the size of a Pcmd structure would be, or nil
+	/// if the Pcmd structure isn't valid.
 	public var structSize: Int32? {
 		if self.valid {
 			return Int32(sizeof(Pcmd.Type) + myCmd.count * sizeof(Cmd.Type))
@@ -68,7 +71,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	
 	public var intPcmd: IntPcmd? {
 		if let newSize = structSize {
-			var toRet = IntPcmd(tracks: tracks, length: length, trackStart: trackStart, posStart: positionStart, cmdCount: Int32(myCmd.count), myCmd: nil)
+			var toRet = IntPcmd()
 			toRet.tracks = tracks
 			toRet.length = length
 			toRet.trackStart = trackStart
@@ -96,6 +99,8 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		}
 	}
 	
+	/// returns false if the tracks and length don't match the count
+	/// of myCmd objects
 	public var valid: Bool {
 		return Int(tracks * length) == myCmd.count
 	}
