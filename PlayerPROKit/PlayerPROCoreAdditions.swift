@@ -124,7 +124,6 @@ public func ==(lhs: MADDriverSettings, rhs: MADDriverSettings) -> Bool {
 }
 
 public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
-	//return lhs.theSet == rhs
 	if lhs.track != rhs.track {
 		return false
 	}
@@ -177,7 +176,6 @@ extension MADDriverSettings: DebugPrintable, Equatable {
 		surround		= false
 		Reverb			= false
 		repeatMusic		= true
-		//reserved = 0
 		//Just going to use CoreAudio
 		driverMode		= .CoreAudioDriver;
 	}
@@ -191,24 +189,6 @@ extension MADDriverSettings: DebugPrintable, Equatable {
 		let offVal = "off"
 		return "Driver Mode: \(driverMode), output mode: \(outPutMode); Channel count: \(numChn), output Rate: \(outPutRate), surround: \(surround == true ? onVal : offVal); micro-delay size: \(MicroDelaySize), reverb, is \(Reverb == true ? onVal: offVal), size: \(ReverbSize), strength: \(ReverbStrength); oversampling \(oversampling); repeat music: \(repeatMusic == true ? onVal : offVal); "
 		}}
-}
-
-extension MADInfoRec: DebugPrintable {
-	public var internalName: String! {
-		let mirror = reflect(internalFileName)
-		let toParse: [CChar] = getArrayFromMirror(mirror, appendLastObject: 0)
-		return String(CString: toParse, encoding: NSMacOSRomanStringEncoding)
-	}
-	
-	public var format: String! {
-		let mirror = reflect(formatDescription)
-		let toParse: [CChar] = getArrayFromMirror(mirror, appendLastObject: 0)
-		return String(CString: toParse, encoding: NSMacOSRomanStringEncoding)
-	}
-	
-	public var debugDescription: String {
-		return "\(internalName), format \(format)"
-	}
 }
 
 public let maximumPanning: MADByte = 64
@@ -290,11 +270,6 @@ extension sData {
 }
 
 extension EnvRec: Hashable {
-	public init() {
-		pos = 0
-		val = 0
-	}
-	
 	public var hashValue: Int {
 		var aHi = UInt(pos)
 		aHi |= UInt(val) << 4
@@ -304,12 +279,6 @@ extension EnvRec: Hashable {
 }
 
 extension FXBus: Hashable {
-	public init() {
-		Active = false
-		ByPass = false
-		copyId = 0
-	}
-	
 	public var hashValue: Int {
 		var aVar = Int(copyId)
 		aVar |= Active ? 1 << 4 : 0
@@ -373,15 +342,6 @@ public func modifyCommand(#row: Int16, #track: Int16, aPcmd: UnsafeMutablePointe
 }
 
 extension IntPcmd: CommandIterator, Equatable {
-	public init() {
-		tracks = 0
-		length = 0
-		trackStart = 0
-		posStart = 0
-		cmdCount = 0
-		myCmd = nil
-	}
-	
 	public var commandLength: Int16 {
 		return length
 	}
