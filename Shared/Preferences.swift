@@ -25,11 +25,11 @@ final class Preferences: NSWindowController, NSWindowDelegate {
 		var tmpControllers = [NSViewController]()
 		tmpControllers.append(SoundOutputController.newPreferenceView()!)
 		#if PLAYERPRO6
-			tmpControllers.append(PianoPreferencesController.newPreferenceView())
-			tmpControllers.append(ColorPreferenceController.newPreferenceView())
-			tmpControllers.append(BoxEditorPreferenceController.newPreferenceView())
-			tmpControllers.append(DigitalEditorPreferenceControler.newPreferenceView())
-			tmpControllers.append(ClassicEditorPreferenceController.newPreferenceView())
+			tmpControllers.append(PianoPreferencesController.newPreferenceView()!)
+			tmpControllers.append(ColorPreferenceController.newPreferenceView()!)
+			tmpControllers.append(BoxEditorPreferenceController.newPreferenceView()!)
+			tmpControllers.append(DigitalEditorPreferenceControler.newPreferenceView()!)
+			tmpControllers.append(ClassicEditorPreferenceController.newPreferenceView()!)
 		#endif
 		
 		tmpControllers.append(MidiHardwarePreferenceController.newPreferenceView()!)

@@ -139,16 +139,16 @@ public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
 	}
 	let lhsNameMirror = reflect(lhs.name)
 	let rhsNameMirror = reflect(rhs.name)
-	let lhsNameArray: [UInt8] = GetArrayFromMirror(lhsNameMirror)
-	let rhsNameArray: [UInt8] = GetArrayFromMirror(rhsNameMirror)
-	let lhsName = (CFStringCreateWithPascalString(kCFAllocatorDefault, lhsNameArray, CFStringBuiltInEncodings.MacRoman.rawValue) as! String?) ?? ""
-	let rhsName = (CFStringCreateWithPascalString(kCFAllocatorDefault, rhsNameArray, CFStringBuiltInEncodings.MacRoman.rawValue) as! String?) ?? ""
+	let lhsNameArray: [UInt8] = getArrayFromMirror(lhsNameMirror)
+	let rhsNameArray: [UInt8] = getArrayFromMirror(rhsNameMirror)
+	let lhsName = String(pascalString: lhsNameArray) ?? ""
+	let rhsName = String(pascalString: rhsNameArray) ?? ""
 	if lhsName != rhsName {
 		return false
 	}
 	
-	let lhsValuesArray: [Float] = GetArrayFromMirror(reflect(lhs.values))
-	let rhsValuesArray: [Float] = GetArrayFromMirror(reflect(rhs.values))
+	let lhsValuesArray: [Float] = getArrayFromMirror(reflect(lhs.values))
+	let rhsValuesArray: [Float] = getArrayFromMirror(reflect(rhs.values))
 	// Ignore values that aren't accessed
 	for i in 0..<Int(lhs.noArg) {
 		if lhsValuesArray[i] != rhsValuesArray[i] {
@@ -196,13 +196,13 @@ extension MADDriverSettings: DebugPrintable, Equatable {
 extension MADInfoRec: DebugPrintable {
 	public var internalName: String! {
 		let mirror = reflect(internalFileName)
-		let toParse: [CChar] = GetArrayFromMirror(mirror, appendLastObject: 0)
+		let toParse: [CChar] = getArrayFromMirror(mirror, appendLastObject: 0)
 		return String(CString: toParse, encoding: NSMacOSRomanStringEncoding)
 	}
 	
 	public var format: String! {
 		let mirror = reflect(formatDescription)
-		let toParse: [CChar] = GetArrayFromMirror(mirror, appendLastObject: 0)
+		let toParse: [CChar] = getArrayFromMirror(mirror, appendLastObject: 0)
 		return String(CString: toParse, encoding: NSMacOSRomanStringEncoding)
 	}
 	
@@ -429,7 +429,7 @@ extension IntPcmd: CommandIterator, Equatable {
 
 extension MADChannel {
 	public var arpeggio: (values: [Int32], index: Int32, enabled: Bool) {
-		return (GetArrayFromMirror(reflect(arp)), arpindex, arpUse)
+		return (getArrayFromMirror(reflect(arp)), arpindex, arpUse)
 	}
 	
 	public var vibrato: (offset: Int8, depth: Int32, rate: Int32, type: Int32) {
