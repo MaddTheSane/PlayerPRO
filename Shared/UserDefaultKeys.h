@@ -22,15 +22,15 @@ extern NSString * const PPColorChangedColor;
 extern NSString * const PPColorChangedValue;
 
 #pragma mark UTIs
-extern NSString * const MADNativeUTI;
-extern NSString * const MADGenericUTI;
-extern NSString * const PPMusicListUTI;
-extern NSString * const PPOldMusicListUTI;
-extern NSString * const PPPCMDUTI;
-extern NSString * const PPGenericTrackerUTI;
-extern NSString * const PPGenericInstrumentUTI;
-extern NSString * const PPInstrumentListUTI;
-extern NSString * const PPMLDCUTI;
+#define MADNativeUTI @"com.quadmation.playerpro.madk"
+#define MADGenericUTI @"com.quadmation.playerpro.mad"
+#define PPMusicListUTI @"net.sourceforge.playerpro.musiclist"
+#define PPOldMusicListUTI @"com.quadmation.playerpro.stcfmusiclist"
+#define PPPCMDUTI @"com.quadmation.playerpro.pcmd"
+#define PPGenericTrackerUTI @"net.sourceforge.playerpro.tracker"
+#define PPGenericInstrumentUTI @"net.sourceforge.playerpro.instrumentfile"
+#define PPInstrumentListUTI @"com.quadmation.playerpro.list"
+#define PPMLDCUTI @"net.sourceforge.playerpro.PlayerPRO-Player.playerlistdragtype"
 
 #pragma mark Music list preference keys
 extern NSString * const PPRememberMusicList;

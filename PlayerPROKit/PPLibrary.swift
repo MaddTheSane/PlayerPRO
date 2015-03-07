@@ -29,8 +29,8 @@ extension MADInfoRec {
 }
 
 private func infoRecToDictionary(infoRec: MADInfoRec) -> NSDictionary {
-	let aArray: [Int8] = GetArrayFromMirror(reflect(infoRec.internalFileName), appendLastObject: 0)!
-	let bArray: [Int8] = GetArrayFromMirror(reflect(infoRec.formatDescription), appendLastObject: 0)!
+	let aArray: [Int8] = getArrayFromMirror(reflect(infoRec.internalFileName), appendLastObject: 0)
+	let bArray: [Int8] = getArrayFromMirror(reflect(infoRec.formatDescription), appendLastObject: 0)
 	
 	return [kPPTotalPatterns:	Int(infoRec.totalPatterns),
 		kPPPartitionLength:		Int(infoRec.partitionLength),

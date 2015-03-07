@@ -192,7 +192,7 @@ static NSInteger selMusFromList = -1;
 	if (!madDriver)
 		madDriver = [[PPDriver alloc] initWithLibrary:madLib settings:&init error:&returnerr];
 	else
-		returnerr = PPCreateErrorFromMADErrorType([madDriver changeDriverSettingsToSettings:init]);
+		returnerr = PPCreateErrorFromMADErrorType([madDriver changeDriverSettingsToSettings:&init]);
 	[[NSNotificationCenter defaultCenter] postNotificationName:PPDriverDidChange object:self];
 	if (returnerr != nil) {
 		[[NSAlert alertWithError:returnerr] runModal];

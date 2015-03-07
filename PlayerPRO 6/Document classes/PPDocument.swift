@@ -72,7 +72,7 @@ import AudioToolbox
 		theSett.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver)))!
 		theSett.repeatMusic = false;
 		
-		returnerr = theDriver.changeDriverSettingsToSettings(theSett)
+		returnerr = theDriver.changeDriverSettingsToSettings(&theSett)
 		
 		if (returnerr != MADErr.NoErr) {
 			println("Unable to change driver, \(self)")
@@ -116,7 +116,7 @@ import AudioToolbox
 		drivSettings.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver))) ?? .CoreAudioDriver
 		drivSettings.repeatMusic = false;
 		
-		theDriver = PPDriver(library: globalMadLib, settings: &drivSettings, error: nil)
+		theDriver = PPDriver(library: globalMadLib, settings: &drivSettings, error: nil)!
 		super.init()
 		
 		let defaultCenter = NSNotificationCenter.defaultCenter()

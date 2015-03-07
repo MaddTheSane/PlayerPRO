@@ -20,12 +20,14 @@ func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<
 	let swiftText: String = NSString(UTF8String: text)!
 	println("\(swiftFile):\(line), error text: \(swiftText)")
 	let errStr = NSLocalizedString("MyDebugStr_Error", comment: "Error")
-	let mainStr = NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display")
+	var mainStr = NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display")
 	let quitStr = NSLocalizedString("MyDebugStr_Quit", comment: "Quit")
 	let contStr = NSLocalizedString("MyDebugStr_Continue", comment: "Continue")
 	let debuStr = NSLocalizedString("MyDebugStr_Debug", comment: "Debug")
+	var ohai = mainStr.rangeOfString("%s")!
+	mainStr.replaceRange(ohai, with: swiftText)
 
-	let alert = PPRunCriticalAlertPanel(errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr, args: swiftText)
+	let alert = PPRunCriticalAlertPanel(errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr)
 	switch (alert) {
 	case NSAlertAlternateReturn:
 		break
@@ -380,7 +382,9 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			let renameFile =  NSLocalizedString("Rename", comment: "rename file")
 			let openFile = NSLocalizedString("Open", comment: "Open a file")
 			let cancelOp = NSLocalizedString("Cancel", comment: "Cancel")
-			let retVal = PPRunInformationalAlertPanel(NSLocalizedString("Invalid Extension", comment: "Invalid extension"), message: NSLocalizedString("The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", comment: "Invalid extension description"), defaultButton: NSLocalizedString("Rename", comment: "rename file"), alternateButton: NSLocalizedString("Open", comment:"Open a file"), otherButton: NSLocalizedString("Cancel", comment: "Cancel"), args: theURL.lastPathComponent!);
+			let unwrapped = NSString(format: invExtDes, theURL.lastPathComponent!) as String
+			
+			let retVal = PPRunInformationalAlertPanel(NSLocalizedString("Invalid Extension", comment: "Invalid extension"), message: unwrapped, defaultButton: NSLocalizedString("Rename", comment: "rename file"), alternateButton: NSLocalizedString("Open", comment:"Open a file"), otherButton: NSLocalizedString("Cancel", comment: "Cancel"));
 			switch (retVal) {
 			case NSAlertDefaultReturn:
 				var rec: NSDictionary = [:]
@@ -398,8 +402,9 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 					let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(sigVal.lowercaseString);
 					var err: NSError? = nil
 					if (NSFileManager.defaultManager().moveItemAtURL(theURL, toURL:tmpURL, error:&err) == false) {
-						println("Could not move file, error: \(err!)");
-						PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), args: tmpURL.lastPathComponent!, theURL.lastPathComponent!);
+						println("Could not move file, error: \(err!)")
+						let unwrapped = NSString(format: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), tmpURL.lastPathComponent!, theURL.lastPathComponent!) as String
+						PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: unwrapped);
 					} else {
 						theURL = tmpURL;
 						//TODO: regenerate the UTI
@@ -546,12 +551,12 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		registerDefaults()
 	}
 	
-	func addExportObject(expObj: ExportObject) {
+	@objc(PPExportAddObject:) func addExportObject(expObj: ExportObject) {
 		exportObjects.append(expObj);
 		expObj.run()
 	}
 	
-	func applicationDidFinishLaunching(notification: NSNotification!) {
+	func applicationDidFinishLaunching(notification: NSNotification) {
 		PPLibrary.registerDebugBlock(CocoaDebugStr)
 		let defaults = NSUserDefaults.standardUserDefaults()
 		
@@ -618,7 +623,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 					var err: NSError? = nil
 					let utiFile = NSWorkspace.sharedWorkspace().typeOfFile(filename, error: &err)
 					if err != nil {
-						PPRunAlertPanel("Error opening file", message: "Unable to open %@: %@", args: filename.lastPathComponent, err!.localizedFailureReason!);
+						PPRunAlertPanel("Error opening file", message: String(format:"Unable to open %@: %@", filename.lastPathComponent, err!.localizedFailureReason!))
 						return
 					}
 					self.handleFile(panelURL, ofType: utiFile!)
@@ -631,17 +636,17 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		var err: NSError? = nil
 		let utiFile = NSWorkspace.sharedWorkspace().typeOfFile(filename, error:&err)
 		if (err != nil) {
-			PPRunAlertPanel("Error opening file", message: "Unable to open %@: %@", args: filename.lastPathComponent, err!.localizedFailureReason!)
+			PPRunAlertPanel("Error opening file", message: String(format:"Unable to open %@: %@", filename.lastPathComponent, err!.localizedFailureReason!))
 			return false
 		}
 		return handleFile(NSURL(fileURLWithPath: filename)!, ofType: utiFile!)
 	}
 	
-	func exportObjectDidFinish(theObj: ExportObject) {
+	@objc(PPExportObjectDidFinish:) func exportObjectDidFinish(theObj: ExportObject) {
 		
 	}
 	
-	func exportObjectEncounteredError(theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: NSString?) {
+	@objc(PPExportObjectEncounteredError:errorCode:errorString:) func exportObjectEncounteredError(theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: NSString?) {
 		
 	}
 }

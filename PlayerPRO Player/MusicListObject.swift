@@ -55,7 +55,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		let image = NSWorkspace.sharedWorkspace().iconForFile(self.musicURL.path!)
 		image.size = NSSize(width: 16, height: 16)
 		return image
-	}()
+		}()
 	#endif
 	
 	@objc private(set) lazy var fileName: String = {
@@ -69,7 +69,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 			let retStr = val as NSString as String
 			return retStr
 		}
-	}()
+		}()
 	
 	@objc private(set) lazy var fileSize: UInt64 = {
 		var val: AnyObject? = nil;
@@ -90,7 +90,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 			let retNum = val as NSNumber
 			return retNum.unsignedLongLongValue
 		}
-	}()
+		}()
 	
 	init(URL: NSURL, date: NSDate = NSDate()) {
 		if (URL.isFileReferenceURL()) {
@@ -117,7 +117,7 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		}
 	}
 	
-	func checkResourceIsReachableAndReturnError(error: NSErrorPointer) -> Bool {
+	func checkIsReachableAndReturnError(error: NSErrorPointer) -> Bool {
 		return musicURL.checkResourceIsReachableAndReturnError(error)
 	}
 	
@@ -168,10 +168,8 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 	}
 	
 	// MARK: NSCopying protocol
-	/// This class is immutable, so it only returns itself
 	func copyWithZone(zone: NSZone) -> AnyObject {
-		//this class is immutable
-		return self;
+		return MusicListObject(URL: musicURL)
 	}
 
 	// MARK: NSSecureCoding protocol

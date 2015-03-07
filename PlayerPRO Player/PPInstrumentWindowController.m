@@ -12,7 +12,7 @@
 #include "PPByteswap.h"
 #import "UserDefaultKeys.h"
 #import "AppDelegate.h"
-#import "PlayerPRO_Player-Swift.h"
+//#import "PlayerPRO_Player-Swift.h"
 
 @implementation PPInstrumentWindowController
 @synthesize infoDrawer;

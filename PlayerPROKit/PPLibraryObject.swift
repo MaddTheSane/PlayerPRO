@@ -30,16 +30,12 @@ public final class PPLibraryObject: NSObject, Printable, DebugPrintable {
 		}
 	}
 	
-	public var version: NumVersion {
-		return NumVersion(plugVersion)
-	}
-	
 	override public var description: String {
-		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle.bundlePath), type: \(type); version: \(version)"
+		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle.bundlePath), type: \(type)"
 	}
 	
 	override public var debugDescription: String {
-		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle), type: \(type); version: \(plugVersion), \(version)"
+		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle), type: \(type); version: \(plugVersion)"
 	}
 	
 	internal init(plugInfo unwrapped: PlugInfo) {
@@ -48,7 +44,7 @@ public final class PPLibraryObject: NSObject, Printable, DebugPrintable {
 		bundle = NSBundle(URL: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()))!
 		UTITypes = unwrapped.UTItypes.takeUnretainedValue() as NSArray as [String]
 		tupleType = unwrapped.type
-		let tmpArray: [CChar] = GetArrayFromMirror(reflect(tupleType))!
+		let tmpArray: [CChar] = getArrayFromMirror(reflect(tupleType))
 		type = String(CString: tmpArray, encoding: NSMacOSRomanStringEncoding)!
 		plugVersion = unwrapped.version
 		switch (unwrapped.mode) {

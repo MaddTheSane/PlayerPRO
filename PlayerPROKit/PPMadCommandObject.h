@@ -32,5 +32,6 @@
 @property MADByte argument;
 /// Volume of the effect. \c 0xFF is no volume command
 @property MADByte volume;
-- (void)resetCommand;
+
+- (void)reset;
 @end

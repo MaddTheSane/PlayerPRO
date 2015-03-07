@@ -8,11 +8,11 @@
 
 import Cocoa
 
-class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
+final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NSSecureCoding {
 	let theIndexSet: NSIndexSet
 	
 	@objc init(indexSet: NSIndexSet) {
-		theIndexSet = indexSet
+		theIndexSet = NSIndexSet(indexSet: indexSet)
 		
 		super.init()
 	}
@@ -26,7 +26,7 @@ class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NS
 	}
 	
 	class func readingOptionsForType(type: String!, pasteboard: NSPasteboard!) -> NSPasteboardReadingOptions {
-		if (type == PPMLDCUTI) {
+		if type == PPMLDCUTI {
 			return .AsKeyedArchive;
 		} else {
 			return .AsData;
@@ -40,7 +40,7 @@ class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NS
 	}
 	
 	@objc convenience required init?(pasteboardPropertyList propertyList: AnyObject!, ofType type: String!) {
-		if (type == PPMLDCUTI) {
+		if type == PPMLDCUTI {
 			let unArchive = NSKeyedUnarchiver(forReadingWithData: propertyList as NSData)
 			self.init(indexSet:unArchive.decodeObjectForKey(PPMLDCUTI) as NSIndexSet)
 		} else {
@@ -51,7 +51,7 @@ class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriting, NS
 	}
 	
 	@objc func pasteboardPropertyListForType(type: String) -> AnyObject? {
-		if (type == PPMLDCUTI) {
+		if type == PPMLDCUTI {
 			return NSKeyedArchiver.archivedDataWithRootObject(self);
 		} else {
 			return nil;

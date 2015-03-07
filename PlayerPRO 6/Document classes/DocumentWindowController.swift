@@ -124,59 +124,53 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 		infoWindow.close()
 	}
 	
-	func rawSoundData(theSet1: MADDriverSettings) -> NSMutableData? {
+	func rawSoundData(inout settings: MADDriverSettings, handler: (NSData) -> MADErr, callback: (NSError?) -> Void) {
 		var err: NSError? = nil
-		var theSet = theSet1
-		var theRec = PPDriver(library: globalMadLib, settings: &theSet, error: &err)
-		
-		if (err != nil) {
-			dispatch_async(dispatch_get_main_queue()) {
-				let NSerr = err!
-				NSAlert(error: NSerr).beginSheetModalForWindow(self.currentDocument.windowForSheet!, completionHandler: { (returnCode) -> Void in
-					//Do nothing
-				})
-			}
-			
-			return nil;
-		}
-		
-		theRec.cleanDriver()
-		theRec.currentMusic = currentDocument.theMusic
-		
-		var full = theRec.audioDataLength
-		if (theSet.outPutBits == 16) {
-			full *= 2;
-		} else if (theSet.outPutBits == 20 || theSet.outPutBits == 24 ) {
-			full *= 3;
-		}
-		
-		switch (theSet.outPutMode) {
-		case .DeluxeStereoOutPut, .StereoOutPut:
-			full *= 2
-			
-		case .PolyPhonic:
-			full *= 4
-			
-		default:
-			break;
-		}
-		
-		theRec.play()
-		
-		if let mutData = NSMutableData(capacity: full * 60 * Int(theRec.totalMusicPlaybackTime) / 2) {
+		if let theRec = PPDriver(library: globalMadLib, settings: &settings, error: &err) {
+			theRec.cleanDriver()
+			theRec.currentMusic = currentDocument.theMusic
+			theRec.play()
+
 			while let newData = theRec.directSave() {
-				mutData.appendData(newData)
+				let anErr = handler(newData)
+				if anErr != .NoErr {
+					callback(createErrorFromMADErrorType(anErr))
+					return
+				}
 			}
 			
-			return mutData;
+			callback(nil)
 		} else {
-			return nil
+			callback(err)
 		}
 	}
 	
-	func rawBESoundData(theSet: MADDriverSettings) -> NSData? {
+	func rawSoundData(inout theSet1: MADDriverSettings) -> NSMutableData? {
+		let mutData = NSMutableData()
+		var err: NSError? = nil
+		
+		func compileRawData(theData: NSData) -> MADErr {
+			mutData.appendData(theData)
+			return .NoErr
+		}
+		
+		rawSoundData(&theSet1, handler: compileRawData) { (anErr) -> Void in
+			if anErr != nil {
+				err = anErr
+				dispatch_async(dispatch_get_main_queue()) {
+					NSAlert(error: err!).beginSheetModalForWindow(self.currentDocument.windowForSheet!, completionHandler: { (returnCode) -> Void in
+						//Do nothing
+					})
+				}
+			}
+		}
+		
+		return err == nil ? mutData : nil
+	}
+	
+	func rawBESoundData(inout theSet: MADDriverSettings) -> NSData? {
 		if isLittleEndian {
-			if let rsd = rawSoundData(theSet) {
+			if let rsd = rawSoundData(&theSet) {
 				if (theSet.outPutBits == 16) {
 					let sndSize = rsd.length;
 					let bePtr = UnsafeMutablePointer<UInt16>(rsd.mutableBytes)
@@ -191,13 +185,13 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 				return nil
 			}
 		} else {
-			return (rawSoundData(theSet)?.copy() as NSData)
+			return (rawSoundData(&theSet)?.copy() as? NSData)
 		}
 	}
 	
-	func rawLESoundData(theSet: MADDriverSettings) -> NSData? {
+	func rawLESoundData(inout theSet: MADDriverSettings) -> NSData? {
 		if !isLittleEndian {
-			if let rsd = rawSoundData(theSet) {
+			if let rsd = rawSoundData(&theSet) {
 				if (theSet.outPutBits == 16) {
 					let sndSize = rsd.length;
 					let bePtr = UnsafeMutablePointer<UInt16>(rsd.mutableBytes)
@@ -212,7 +206,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 				return nil
 			}
 		} else {
-			return rawSoundData(theSet)?.copy() as NSData?
+			return rawSoundData(&theSet)?.copy() as? NSData
 		}
 	}
 	
@@ -220,8 +214,8 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 		//TODO: implement, but how?
 	}
 	
-	private func saveMusic(waveToURL theURL: NSURL, theSett: MADDriverSettings) -> MADErr {
-		if let saveData = rawLESoundData(theSett) {
+	private func saveMusic(waveToURL theURL: NSURL, inout theSett: MADDriverSettings) -> MADErr {
+		if let saveData = rawLESoundData(&theSett) {
 			var audioFile: AudioFileID = nil;
 			var tmpChannels: UInt32 = 0
 			
@@ -270,8 +264,8 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 		}
 	}
 	
-	private func saveMusic(AIFFToURL theURL: NSURL, theSett: MADDriverSettings) -> MADErr {
-		if let saveData = rawBESoundData(theSett) {
+	private func saveMusic(AIFFToURL theURL: NSURL, inout theSett: MADDriverSettings) -> MADErr {
+		if let saveData = rawBESoundData(&theSett) {
 			var audioFile: AudioFileID = nil;
 			var tmpChannels: UInt32 = 0
 			
@@ -334,7 +328,8 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 						if errStr != nil {
 							errStr.memory = nil
 						}
-						var theErr = self.saveMusic(AIFFToURL: theURL, theSett: self.exportSettings)
+						var expSett = self.exportSettings
+						var theErr = self.saveMusic(AIFFToURL: theURL, theSett: &expSett)
 						self.currentDocument.theDriver.endExport()
 						return theErr
 					})
@@ -385,7 +380,8 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 						let oldMusicInfo = self.currentDocument.musicInfo;
 						let oldURL = self.currentDocument.fileURL;
 						let tmpURL = NSFileManager.defaultManager().URLForDirectory(.ItemReplacementDirectory, inDomain:.UserDomainMask, appropriateForURL:oldURL, create:true, error:nil)!.URLByAppendingPathComponent( (oldMusicName != "" ? oldMusicName : "untitled") + ".aiff", isDirectory: false)
-						theErr = self.saveMusic(AIFFToURL: tmpURL, theSett: self.exportSettings)
+						var expSett = self.exportSettings
+						theErr = self.saveMusic(AIFFToURL: tmpURL, theSett: &expSett)
 						self.currentDocument.theDriver.endExport()
 						if (theErr != MADErr.NoErr) {
 							if (errStr != nil) {
@@ -395,7 +391,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 							return theErr;
 						}
 						
-						var exportMov = AVAsset.assetWithURL(tmpURL) as AVAsset?
+						var exportMov = AVAsset.assetWithURL(tmpURL) as? AVAsset
 						let metadataInfo = generateAVMetadataInfo(oldMusicName, oldMusicInfo)
 						
 						if (exportMov == nil) {

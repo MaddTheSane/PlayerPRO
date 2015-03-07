@@ -30,7 +30,7 @@
 - (instancetype)initWithLibrary:(PPLibrary *)theLib error:(out NSError* __autoreleasing*)theErr;
 - (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(inout MADDriverSettings *)theSettings error:(out NSError* __autoreleasing*)theErr NS_DESIGNATED_INITIALIZER;
 
-- (MADErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett;
+- (MADErr)changeDriverSettingsToSettings:(MADDriverSettings*)theSett;
 
 - (void)beginExport;
 - (void)endExport;

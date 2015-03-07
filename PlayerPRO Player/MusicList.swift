@@ -52,14 +52,10 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return musicList[subRange]
 	}
 	
-	/// Returns NSNotFound if a URL couldn't be found
-	/// use indexOfObjectSimilar(URL) on Swift instead of this one.
+	/// Returns NSNotFound if a URL couldn't be found.
+	/// Use indexOfObjectSimilar(URL) on Swift instead of this one.
 	func indexOfObjectSimilarToURL(theURL: NSURL) -> Int {
-		if let theInd = indexOfObjectSimilar(URL: theURL) {
-			return theInd
-		} else {
-			return NSNotFound
-		}
+		return indexOfObjectSimilar(URL: theURL) ?? NSNotFound
 	}
 	
 	/// This cannot be represented in Objective C
@@ -184,7 +180,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		if let BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey4) as? [MusicListObject] {
 			selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation4);
 			for book in BookmarkArray {
-				if (!book.checkResourceIsReachableAndReturnError(nil)) {
+				if (!book.checkIsReachableAndReturnError(nil)) {
 					if (selectedMusic == -1) {
 						//Do nothing
 					} else if (selectedMusic == musicList.count + 1) {
@@ -393,14 +389,14 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		
 		conn.resume()
 		
-		conn.remoteObjectProxy.loadStcfAtURL(toOpen, withReply: {(bookmarkData:[NSObject : AnyObject]!, error: NSError?) -> Void in
+		conn.remoteObjectProxy.loadStcfAtURL(toOpen, withReply: {(bookmarkData:[NSObject : AnyObject]?, error: NSError?) -> Void in
 			NSOperationQueue.mainQueue().addOperationWithBlock({
 				if error != nil {
 					theHandle(theErr: error)
 				} else {
-					let invalidAny = bookmarkData["lostMusicCount"] as? UInt
-					let selectedAny = bookmarkData["SelectedMusic"] as? Int
-					let pathsAny = bookmarkData["MusicPaths"] as? NSArray as? [String]
+					let invalidAny = bookmarkData!["lostMusicCount"] as? UInt
+					let selectedAny = bookmarkData!["SelectedMusic"] as? Int
+					let pathsAny = bookmarkData!["MusicPaths"] as? NSArray as? [String]
 					if (invalidAny == nil || selectedAny == nil || pathsAny == nil) {
 						let lolwut = createErrorFromMADErrorType(.UnknownErr)!
 						theHandle(theErr: lolwut)

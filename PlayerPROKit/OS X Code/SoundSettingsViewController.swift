@@ -347,7 +347,7 @@ public class SoundSettingsViewController: NSViewController {
 			}
 			oversamplingNum.selectItemAtIndex(toSet! - 1)
 			
-			if (delegate?.soundOutDriverDidChange? == nil) {
+			if (delegate?.soundOutDriverDidChange == nil) {
 				soundDriver.enabled = false;
 			}
 		}

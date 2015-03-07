@@ -410,8 +410,8 @@ void Convqpm(unsigned qpm, int rgbTempo[2], int ticks)
 			j = k = 791 / qpm + 1; /** I hope these constraints are Ok **/
 			kMax = 6143 / qpm;
 			while (k++ < kMax)
-				if (fabs(modfl(ratio * k, &junk) - 0.5) >
-					fabs(modfl(ratio * j, &junk) - 0.5))
+				if (fabsl(modfl(ratio * k, &junk) - 0.5) >
+					fabsl(modfl(ratio * j, &junk) - 0.5))
 					j = k;
 			rgbTempo[0] = j;
 			rgbTempo[1] = j * ratio + 0.5;

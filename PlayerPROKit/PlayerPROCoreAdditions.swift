@@ -124,7 +124,6 @@ public func ==(lhs: MADDriverSettings, rhs: MADDriverSettings) -> Bool {
 }
 
 public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
-	//return lhs.theSet == rhs
 	if lhs.track != rhs.track {
 		return false
 	}
@@ -137,14 +136,18 @@ public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
 	if lhs.noArg != rhs.noArg {
 		return false
 	}
-	let lhsName = String(pascalString: lhs.name) ?? ""
-	let rhsName = String(pascalString: rhs.name) ?? ""
+	let lhsNameMirror = reflect(lhs.name)
+	let rhsNameMirror = reflect(rhs.name)
+	let lhsNameArray: [UInt8] = getArrayFromMirror(lhsNameMirror)
+	let rhsNameArray: [UInt8] = getArrayFromMirror(rhsNameMirror)
+	let lhsName = String(pascalString: lhsNameArray) ?? ""
+	let rhsName = String(pascalString: rhsNameArray) ?? ""
 	if lhsName != rhsName {
 		return false
 	}
 	
-	let lhsValuesArray: [Float] = GetArrayFromMirror(reflect(lhs.values))!
-	let rhsValuesArray: [Float] = GetArrayFromMirror(reflect(rhs.values))!
+	let lhsValuesArray: [Float] = getArrayFromMirror(reflect(lhs.values))
+	let rhsValuesArray: [Float] = getArrayFromMirror(reflect(rhs.values))
 	// Ignore values that aren't accessed
 	for i in 0..<Int(lhs.noArg) {
 		if lhsValuesArray[i] != rhsValuesArray[i] {
@@ -406,7 +409,7 @@ extension IntPcmd: CommandIterator, Equatable {
 
 extension MADChannel {
 	public var arpeggio: (values: [Int32], index: Int32, enabled: Bool) {
-		return (GetArrayFromMirror(reflect(arp))!, arpindex, arpUse)
+		return (getArrayFromMirror(reflect(arp)), arpindex, arpUse)
 	}
 	
 	public var vibrato: (offset: Int8, depth: Int32, rate: Int32, type: Int32) {

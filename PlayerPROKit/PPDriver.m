@@ -125,11 +125,11 @@
 	return MADFindAFreeChannel(theRec);
 }
 
-- (MADErr)changeDriverSettingsToSettings:(MADDriverSettings)theSett
+- (MADErr)changeDriverSettingsToSettings:(MADDriverSettings*)theSett
 {
 	MADErr theErr;
 	[self willChangeValueForKey:@"driverSettings"];
-	theErr = MADChangeDriverSettings(&theSett, &theRec);
+	theErr = MADChangeDriverSettings(theSett, &theRec);
 	[self didChangeValueForKey:@"driverSettings"];
 	return theErr;
 }
