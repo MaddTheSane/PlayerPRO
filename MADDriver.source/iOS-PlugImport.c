@@ -180,10 +180,11 @@ static MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 	long	fileSize;
 	UNFILE	fileID;
 	
-	theMAD = alloca(sizeof(MADSpec) + 200);
+	theMAD = malloc(sizeof(MADSpec) + 200);
 	
 	fileID = iFileOpenRead(AlienFile);
 	if (!fileID) {
+		free(theMAD);
 		return MADReadingErr;
 	}
 	fileSize = iGetEOF(fileID);
@@ -201,7 +202,7 @@ static MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 	InfoRec->totalInstruments = theMAD->numInstru;
 	InfoRec->fileSize = fileSize;
 	
-	theMAD = NULL;
+	free(theMAD); theMAD = NULL;
 	
 	return MADNoErr;
 }

@@ -35,8 +35,6 @@
 #include "embeddedPlugs.h"
 #endif
 
-#include <alloca.h>
-
 #ifndef WIN32
 //Windows Defines
 typedef int16_t		WORD;
@@ -1377,7 +1375,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = 1024;
 				
-				AlienFile = alloca(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
@@ -1386,7 +1384,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 					if (myErr == MADNoErr)
 						myErr = TestXMFile(AlienFile, &xmData);
 					
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else
@@ -1400,7 +1398,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				
 				sndSize = 5000; // Read only 5000 first bytes for optimisation
 				
-				AlienFile = alloca(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
@@ -1410,7 +1408,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 						if (!myErr)
 							myErr = ExtractXMInfo(info, AlienFile, &xmData);
 					}
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else

@@ -21,7 +21,6 @@
 #include "MADPlug.h"
 #include "RDriverInt.h"
 #include "MADPrivate.h"
-#include <alloca.h>
 
 sData* inMADCreateSample()
 {
@@ -76,9 +75,7 @@ MADErr inAddSoundToMAD(void			*theSound,
 					   short		*sampleID)
 {
 	MADErr theErr = MADNoErr;
-	char *cName = alloca(name[0] + 1);
-	if (!cName)
-		return MADNeedMemory;
+	char cName[256] = {0};
 	memset(cName, 0, name[0] + 1);
 	memcpy(cName, &name[1], name[0]);
 	

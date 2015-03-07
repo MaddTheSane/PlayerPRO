@@ -387,7 +387,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				} else {
 					free(AlienFile);
 					
-					AlienFile = alloca(sndSize);
+					AlienFile = malloc(sndSize);
 					myErr = iRead(sndSize, AlienFile,iFileRefI);
 					if (myErr == MADNoErr) {
 						myErr = TestAMFFile(AlienFile);
@@ -395,7 +395,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 							myErr = AMF2Mad(AlienFile, sndSize, MadFile, init);
 						}
 					}
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else
@@ -407,14 +407,14 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = 5000; // Read only 5000 first bytes for optimisation
 				
-				AlienFile = alloca(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					myErr = TestAMFFile(AlienFile);
 					
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else
@@ -428,7 +428,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 				
 				sndSize = 5000; // Read only 5000 first bytes for optimisation
 				
-				AlienFile = alloca(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
 					myErr = MADNeedMemory;
 				else {
@@ -436,7 +436,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 					if (myErr == MADNoErr)
 						myErr = ExtractAMFInfo(info, AlienFile);
 					
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else
