@@ -15,17 +15,18 @@ private func makeNSRGB(red: UInt16, green: UInt16, blue:UInt16) -> NSColor {
 	return NSColor(calibratedRed: CGFloat(red) / CGFloat(UInt16.max), green: CGFloat(green) / CGFloat(UInt16.max), blue: CGFloat(blue) / CGFloat(UInt16.max), alpha: 1)
 }
 
-func CocoaDebugStr (line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
-	let swiftFile: String = NSString(UTF8String: file)! as String
-	let swiftText: String = NSString(UTF8String: text)! as String
+func CocoaDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
+	let swiftFile = NSFileManager.defaultManager().stringWithFileSystemRepresentation(file, length: Int(strlen(file)))
+	let swiftText = String.fromCString(text)!
 	println("\(swiftFile):\(line), error text: \(swiftText)")
 	let errStr = NSLocalizedString("MyDebugStr_Error", comment: "Error")
 	var mainStr = NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display")
 	let quitStr = NSLocalizedString("MyDebugStr_Quit", comment: "Quit")
 	let contStr = NSLocalizedString("MyDebugStr_Continue", comment: "Continue")
 	let debuStr = NSLocalizedString("MyDebugStr_Debug", comment: "Debug")
-	var ohai = mainStr.rangeOfString("%s")!
-	mainStr.replaceRange(ohai, with: swiftText)
+	if let ohai = mainStr.rangeOfString("%s") {
+		mainStr.replaceRange(ohai, with: swiftText)
+	}
 
 	let alert = PPRunCriticalAlertPanel(errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr)
 	switch (alert) {
