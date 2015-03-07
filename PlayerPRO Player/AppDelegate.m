@@ -950,14 +950,28 @@ return; \
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(out NSError *__autoreleasing*)theErr
 {
 	NSString *fileType;
-	OSErr theOSErr = MADNoErr;
+	MADErr theOSErr = MADNoErr;
 	NSError *error;
 	if (self.music) {
 		[madDriver stop];
 		[madDriver stopDriver];
 	}
+	NSString *fileUTI = [[NSWorkspace sharedWorkspace] typeOfFile:[musicToLoad path] error:NULL];
 	
-	theOSErr = [madLib identifyFileAtURL:musicToLoad stringType:&fileType];
+	if (fileUTI) {
+		fileType = [madLib typeFromUTI:fileUTI];
+		if (fileType) {
+			NSDictionary *unused;
+			theOSErr = [madLib getInformationFromFileAtURL:musicToLoad type:fileType info:&unused];
+		} else {
+			theOSErr = -1;
+		}
+	} else {
+		theOSErr = -1;
+	}
+	if (theOSErr != MADNoErr) {
+		theOSErr = [madLib identifyFileAtURL:musicToLoad stringType:&fileType];
+	}
 	
 	if (theOSErr != MADNoErr) {
 		if (theErr) {
@@ -968,7 +982,7 @@ return; \
 		return NO;
 	}
 	
-	self.music = [[PPMusicObject alloc] initWithURL:musicToLoad library:madLib error:&error];
+	self.music = [[PPMusicObject alloc] initWithURL:musicToLoad stringType:fileType library:madLib error:&error];
 	if (!self.music) {
 		theOSErr = MADReadingErr;
 	}
@@ -1578,10 +1592,12 @@ typedef NS_ENUM(NSInteger, PPMusicToolbarTypes) {
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
 	NSIndexSet *selected = [tableView selectedRowIndexes];
+	NSWorkspace *ws = [NSWorkspace sharedWorkspace];
 	NSURL *musicURL;
 	NSDictionary *theInfo;
 	MusicListObject *obj;
 	NSString *info;
+	NSString *fileUTI;
 	
 	if ([selected count] > 0) {
 		musicList.selectedMusic = [selected firstIndex];
@@ -1591,12 +1607,22 @@ typedef NS_ENUM(NSInteger, PPMusicToolbarTypes) {
 		goto badTracker;
 	
 	obj = [musicList objectInMusicListAtIndex:[selected lastIndex]];
-	
 	musicURL = obj.musicURL;
-	if ([madLib identifyFileAtURL:musicURL stringType:&info] != MADNoErr)
-		goto badTracker;
-	if ([madLib getInformationFromFileAtURL:musicURL type:info info:&theInfo] != MADNoErr)
-		goto badTracker;
+	fileUTI = [ws typeOfFile:[musicURL path] error:NULL];
+	
+	if (!fileUTI) {
+	badValues:
+
+		if ([madLib identifyFileAtURL:musicURL stringType:&info] != MADNoErr)
+			goto badTracker;
+		if ([madLib getInformationFromFileAtURL:musicURL type:info info:&theInfo] != MADNoErr)
+			goto badTracker;
+	} else {
+		info = [madLib typeFromUTI:fileUTI];
+		if ([madLib getInformationFromFileAtURL:musicURL type:info info:&theInfo] != MADNoErr) {
+			goto badValues;
+		}
+	}
 	
 	fileName.stringValue = obj.fileName;
 	internalName.stringValue = theInfo[kPPInternalFileName];
