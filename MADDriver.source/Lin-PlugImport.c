@@ -2,7 +2,6 @@
 #include "MADFileUtils.h"
 #include "MADPrivate.h"
 #include <dlfcn.h>
-#include <alloca.h>
 #include <dirent.h>
 
 // TODO: get plug-in paths from an environment variable.
@@ -20,7 +19,7 @@ MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 	long		fileSize;
 	UNFILE		fileID;
 	
-	theMAD = (MADSpec*)alloca(sizeof(MADSpec) + 200);
+	theMAD = (MADSpec*)malloc(sizeof(MADSpec) + 200);
 	
 	fileID = iFileOpenRead(AlienFile);
 	if (!fileID) {
@@ -42,7 +41,7 @@ MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 	InfoRec->totalInstruments = theMAD->numInstru;
 	InfoRec->fileSize = fileSize;
 	
-	theMAD = NULL;
+	free(theMAD); theMAD = NULL;
 	
 	return MADNoErr;
 }

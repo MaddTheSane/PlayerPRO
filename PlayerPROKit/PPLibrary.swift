@@ -10,7 +10,7 @@ import Foundation
 import PlayerPROCore
 import SwiftAdditions
 
-let kPlayerPROMADKUTI = "com.quadmation.playerpro.madk"
+private let kPlayerPROMADKUTI = "com.quadmation.playerpro.madk"
 private let MadIDString = OSTypeToString(MadID)!
 
 extension MADInfoRec {
@@ -43,7 +43,7 @@ private func infoRecToDictionary(infoRec: MADInfoRec) -> NSDictionary {
 }
 
 
-public func InfoRecToMusicInfo(infoRec: MADInfoRec) -> PPLibrary.MusicFileInfo {
+public func infoRecToMusicInfo(infoRec: MADInfoRec) -> PPLibrary.MusicFileInfo {
 	let tmpDict = infoRecToDictionary(infoRec)
 	
 	return PPLibrary.MusicFileInfo(infoDict: tmpDict)
@@ -53,13 +53,30 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	internal let trackerLibs: [PPLibraryObject]
 	internal var theLibrary: UnsafeMutablePointer<MADLibrary> = nil
 	public struct MusicFileInfo: Printable {
+		///The total amount of patterns
 		public var totalPatterns: Int
+		
+		///The length of a partition
 		public var partitionLength: Int
+		
+		///The size of the file
 		public var fileSize: Int
+		
+		///The total number of tracks
 		public var totalTracks: Int
+		
+		///The total number of instruments
 		public var totalInstruments: Int
+		
+		///The title of the tracker file
 		public var internalFileName: String
+		
+		///A simple description of the format
 		public var formatDescription: String
+		
+		///The signature of the file.
+		///
+		///This may differ from the plug-in's type.
 		public var signature: String
 		
 		private init(infoDict: NSDictionary) {
@@ -207,17 +224,25 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		return aRet.error
 	}
 	
-	public func informationFromFile(URL apath: NSURL, type: String) -> (info: MusicFileInfo?, error: MADErr) {
-		var cStrType = type.cStringUsingEncoding(NSMacOSRomanStringEncoding)!
+	private func informationFromFile(#URL: NSURL, cType: [Int8]) -> (info: MADInfoRec, error: MADErr) {
+		var cStrType = cType
 		var infoRec = MADInfoRec()
+
+		let anErr = MADMusicInfoCFURL(theLibrary, &cStrType, URL, &infoRec)
 		
-		let anErr = MADMusicInfoCFURL(theLibrary, &cStrType, apath, &infoRec)
+		return (infoRec, anErr)
+	}
+	
+	public func informationFromFile(URL apath: NSURL, type: String) -> (info: MusicFileInfo?, error: MADErr) {
+		let cStrType = type.cStringUsingEncoding(NSMacOSRomanStringEncoding)!
 		
-		if anErr == .NoErr {
-			let anInfo = InfoRecToMusicInfo(infoRec)
-			return (anInfo, anErr)
+		let filInfo = informationFromFile(URL: apath, cType: cStrType)
+		
+		if filInfo.error == .NoErr {
+			let anInfo = infoRecToMusicInfo(filInfo.info)
+			return (anInfo, filInfo.error)
 		} else {
-			return (nil, anErr)
+			return (nil, filInfo.error)
 		}
 	}
 	
@@ -229,21 +254,16 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 	}
 	
-	@objc(getInformationFromFileAtURL:type:info:) public func getInformationFromFile(URL path: NSURL, type: String, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
+	@objc(getInformationFromFileAtURL:stringType:info:) public func getInformationFromFile(URL path: NSURL, type: String, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
 		if info == nil {
 			return .ParametersErr
 		}
-		let aRet = informationFromFile(URL: path, type: type)
+		let cStrType = type.cStringUsingEncoding(NSMacOSRomanStringEncoding)!
+		
+		let aRet = informationFromFile(URL: path, cType: cStrType)
 		
 		if aRet.error == .NoErr {
-			let tmpDict = [kPPTotalPatterns:	aRet.info!.totalPatterns,
-				kPPPartitionLength:				aRet.info!.partitionLength,
-				kPPFileSize:					aRet.info!.fileSize,
-				kPPSignature:					aRet.info!.signature,
-				kPPTotalTracks:					aRet.info!.totalTracks,
-				kPPTotalInstruments:			aRet.info!.totalInstruments,
-				kPPInternalFileName:			aRet.info!.internalFileName,
-				kPPFormatDescription:			aRet.info!.formatDescription]
+			let tmpDict = infoRecToDictionary(aRet.info)
 			
 			info.memory = tmpDict
 		}
@@ -251,7 +271,7 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		return aRet.error
 	}
 	
-	@objc(getInformationFromFileAtPath:type:info:) public func getInformationFromFile(#path: String, type: String, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
+	@objc(getInformationFromFileAtPath:stringType:info:) public func getInformationFromFile(#path: String, type: String, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
 		if let anURL = NSURL(fileURLWithPath: path) {
 			return getInformationFromFile(URL: anURL, type: type, info: info)
 		} else {
@@ -259,11 +279,11 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 	}
 	
-	/**
- 	@abstract Gets a plug-in type from a UTI
- 	@param aUTI The UTI to find a plug-in type for.
- 	@return A plug-in type, four characters long, or \c nil if there's
- 	no plug-in that opens the UTI
+/**
+Gets a plug-in type from a UTI
+
+:param: aUTI The UTI to find a plug-in type for.
+:returns: A plug-in type, four characters long, or `nil` if there's no plug-in that opens the UTI
  */
 	public func typeFromUTI(aUTI: String) -> String? {
 		if aUTI == kPlayerPROMADKUTI {
@@ -281,10 +301,11 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		return nil
 	}
 	
-	/**
- 	@abstract Gets the first UTI from a plug-in type.
- 	@param aType the four-character plug-in type to get a UTI for.
- 	@return a UTI, or \c nil if the type isn't listed
+/**
+Gets the first UTI from a plug-in type.
+
+:param: aType the four-character plug-in type to get a UTI for.
+:returns: a UTI, or `nil` if the type isn't listed
  */
 	public func typeToUTI(aType: String) -> String? {
 		if aType == MadIDString {

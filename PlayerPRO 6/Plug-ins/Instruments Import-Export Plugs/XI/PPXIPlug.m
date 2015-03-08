@@ -70,7 +70,6 @@ static const int finetune[16] = {
 
 - (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject**)outHeader driver:(PPDriver*)driver
 {
-	Ptr				theXI;
 	XMPATCHHEADER	*pth;
 	XMWAVHEADER		*wh = NULL;
 	short			numSamples;
@@ -79,9 +78,8 @@ static const int finetune[16] = {
 	if (xiData != NULL) {
 		PPInstrumentObject *InsHeader = [PPInstrumentObject new];
 		[InsHeader resetInstrument];
-		size_t inOutCount = xiData.length;
-		theXI = alloca(inOutCount);
-		memcpy(theXI, xiData.bytes, inOutCount);
+		NSMutableData *anXI = [xiData mutableCopy];
+		Ptr theXI = anXI.mutableBytes;
 		
 		//theXI = malloc(inOutCount);
 		if (theXI == NULL)

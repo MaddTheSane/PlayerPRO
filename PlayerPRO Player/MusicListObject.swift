@@ -35,15 +35,16 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	if lhs === rhs {
 		return true
 	}
-	return URLsPointingToTheSameFile(lhs.musicURL, rhs.musicURL)
-}
-
-func ==(lhs: MusicListObject, rhs: NSURL) -> Bool {
-	return URLsPointingToTheSameFile(lhs.musicURL, rhs)
-}
-
-func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
-	return rhs == lhs
+	
+	if !URLsPointingToTheSameFile(lhs.musicURL, rhs.musicURL) {
+		return false
+	}
+	
+	if lhs.addedDate != rhs.addedDate {
+		return false
+	}
+	
+	return true
 }
 
 @objc(PPMusicListObject) class MusicListObject: NSObject, NSCopying, NSSecureCoding, Hashable, DebugPrintable, Printable {
@@ -151,8 +152,6 @@ func ==(lhs: NSURL, rhs: MusicListObject) -> Bool {
 		}
 		
 		if let unwrapped = object as? MusicListObject {
-			return self == unwrapped
-		} else if let unwrapped = object as? NSURL {
 			return self == unwrapped
 		} else {
 			return false

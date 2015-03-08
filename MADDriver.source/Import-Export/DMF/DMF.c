@@ -28,7 +28,6 @@
 #include "MADFileUtils.h"
 #endif
 #include "DMF.h"
-#include <alloca.h>
 
 #if defined(EMBEDPLUGS) && EMBEDPLUGS
 #include "embeddedPlugs.h"
@@ -1014,7 +1013,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = 1024;
 				
-				AlienFile = alloca(sndSize);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
@@ -1022,7 +1021,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 					if(myErr == MADNoErr)
 						myErr = TestITFile(AlienFile);
 					
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else

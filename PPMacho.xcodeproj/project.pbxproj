@@ -149,6 +149,11 @@
 		55151F7A10DEDBDB0054ABC4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5517A24519D9D4A8002D350D /* BoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5517A24419D9D4A8002D350D /* BoxViewController.swift */; };
 		5517DAC5180CAD61001413D0 /* ULT.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		551E3B641AAB8CD000D3A530 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A49190497FC00F7616D /* Foundation.framework */; };
+		551E3B651AAB8D0000D3A530 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55085D861836EE7B004A152F /* AudioToolbox.framework */; };
+		551E3B661AAB8D4200D3A530 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A48190497FB00F7616D /* CoreFoundation.framework */; };
+		551E3B671AAB8D4300D3A530 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A48190497FB00F7616D /* CoreFoundation.framework */; };
+		551E3B681AAB8D5400D3A530 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A44190497B400F7616D /* UIKit.framework */; };
 		551FEA6510E727AD00EDF2F1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		551FEAD410E727B100EDF2F1 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		552097B2187AB8B9004FD220 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5511F4E5186CF3AD008F6BE1 /* AudioToolbox.framework */; };
@@ -241,8 +246,6 @@
 		553ED2581A50AE99005222E3 /* ColorPreferenceObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553ED2571A50AE99005222E3 /* ColorPreferenceObject.swift */; };
 		55413C491991B947001414D0 /* PPErrors.strings in Resources */ = {isa = PBXBuildFile; fileRef = 550D005118CB808600FD0F17 /* PPErrors.strings */; };
 		55413C4B1992AFAB001414D0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 551292E1163DD68500C2C639 /* InfoPlist.strings */; };
-		55413C4C1992AFFE001414D0 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */; };
-		55413C4E1992AFFF001414D0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55413C4D1992AFFF001414D0 /* Foundation.framework */; };
 		5546217B163A20D00005F491 /* Classic App.ppextimp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55868A6710BFB46100FCC24D /* Classic App.ppextimp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5547DA5619A5690E0014A620 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5519A5690E0014A620 /* Preferences.swift */; };
 		5547DA5719A5690E0014A620 /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5547DA5519A5690E0014A620 /* Preferences.swift */; };
@@ -776,8 +779,6 @@
 		55F1BDC91975CA3900AD2C03 /* iOS-PlugImport.c in Sources */ = {isa = PBXBuildFile; fileRef = 5573A1301656FCC100A5AECA /* iOS-PlugImport.c */; };
 		55F1BDCA1975CA4D00AD2C03 /* MIDI-Hardware-Stub.c in Sources */ = {isa = PBXBuildFile; fileRef = 5523EC7B1693619F0067B22A /* MIDI-Hardware-Stub.c */; };
 		55F1BDCB1975CA4D00AD2C03 /* stub-VSTPlugIn.c in Sources */ = {isa = PBXBuildFile; fileRef = 550A474518A458380052AED7 /* stub-VSTPlugIn.c */; };
-		55F1BDCD1975CABA00AD2C03 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */; };
-		55F1BDCE1975CAC100AD2C03 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BD831975C27000AD2C03 /* AudioToolbox.framework */; };
 		55F1BDCF1975CAC900AD2C03 /* 669.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340D910BB5368005208D1 /* 669.c */; };
 		55F1BDD01975CAD100AD2C03 /* AMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DB10BB5368005208D1 /* AMF.c */; };
 		55F1BDD11975CAD700AD2C03 /* DMF.c in Sources */ = {isa = PBXBuildFile; fileRef = 553340DE10BB5368005208D1 /* DMF.c */; };
@@ -2359,7 +2360,6 @@
 		553B8B7019B3CD85007C2C64 /* xm-ipad-large.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ipad-large.png"; sourceTree = "<group>"; };
 		553B8B7119B3CD85007C2C64 /* xm-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "xm-ipad.png"; sourceTree = "<group>"; };
 		553ED2571A50AE99005222E3 /* ColorPreferenceObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorPreferenceObject.swift; sourceTree = "<group>"; };
-		55413C4D1992AFFF001414D0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		5546217D163A345F0005F491 /* PlugExports-Mac.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; path = "PlugExports-Mac.exp"; sourceTree = "<group>"; };
 		55469C2516BF34D200175A1F /* PatternHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PatternHandler.h; sourceTree = "<group>"; };
 		55469C2616BF34D200175A1F /* PatternHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PatternHandler.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -2716,9 +2716,7 @@
 		55EE8EC0100404EB00E75E63 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
 		55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPObjectProtocol.h; sourceTree = "<group>"; };
 		55F013EA1880A2EA002488D5 /* MADDriver.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MADDriver.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		55F1BD831975C27000AD2C03 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/AudioToolbox.framework; sourceTree = DEVELOPER_DIR; };
 		55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
 		55F1BDE31975CBFE00AD2C03 /* PlayerPROKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		55F3D3FB19C2AB1E008172D7 /* CropPlug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropPlug.swift; sourceTree = "<group>"; };
 		55F3D3FD19C2AE8F008172D7 /* PPCrossFadePlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPCrossFadePlug.h; sourceTree = "<group>"; };
@@ -3381,9 +3379,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				551E3B661AAB8D4200D3A530 /* CoreFoundation.framework in Frameworks */,
 				55C1A6A61A07209100C7A733 /* SwiftAdditions.framework in Frameworks */,
-				55F1BDCE1975CAC100AD2C03 /* AudioToolbox.framework in Frameworks */,
-				55F1BDCD1975CABA00AD2C03 /* CoreFoundation.framework in Frameworks */,
+				551E3B651AAB8D0000D3A530 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3391,10 +3389,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				551E3B671AAB8D4300D3A530 /* CoreFoundation.framework in Frameworks */,
+				551E3B641AAB8CD000D3A530 /* Foundation.framework in Frameworks */,
 				55C1A6A71A07209900C7A733 /* SwiftAdditions.framework in Frameworks */,
-				55413C4E1992AFFF001414D0 /* Foundation.framework in Frameworks */,
-				55413C4C1992AFFE001414D0 /* CoreFoundation.framework in Frameworks */,
 				55F1BE041975CD2E00AD2C03 /* PlayerPROCore.framework in Frameworks */,
+				551E3B681AAB8D5400D3A530 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4406,9 +4405,6 @@
 		5573A1321656FD1700A5AECA /* iOS Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				55413C4D1992AFFF001414D0 /* Foundation.framework */,
-				55F1BDCC1975CABA00AD2C03 /* CoreFoundation.framework */,
-				55F1BD831975C27000AD2C03 /* AudioToolbox.framework */,
 				55680A48190497FB00F7616D /* CoreFoundation.framework */,
 				55680A49190497FC00F7616D /* Foundation.framework */,
 				55680A46190497E400F7616D /* CoreGraphics.framework */,
@@ -4860,7 +4856,19 @@
 		88E0C3B60C2F21DD00D6C081 /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */,
+				55ADD25619B4F8BA005588B5 /* PlayerPRO 6 Tests.xctest */,
+				5578C48117D9E8560057D11B /* PlayerPRO Player.app */,
+				55ADD24719B4F895005588B5 /* PlayerPRO Player Tests.xctest */,
+				5557769F17EBF8FE0019D008 /* iOS PlayerPRO Player.app */,
+				555776C317EBF8FF0019D008 /* iOS PlayerPRO PlayerTests.xctest */,
+				5578C52F17DB94A50057D11B /* PPImport.mdimporter */,
+				559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */,
 				5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */,
+				551292D8163DD68500C2C639 /* PlayerPROKit.framework */,
+				55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */,
+				5591709F19C26E1C00998D7F /* PPCoreInstrumentPlugBridge.xpc */,
+				556BC18219CF47FC00508F49 /* PPCoreInstrumentPlugBridge32.xpc */,
 				5533411110BB547D005208D1 /* MOD.ppimpexp */,
 				5533415310BB572C005208D1 /* 669.ppimpexp */,
 				553341D310BB5FE0005208D1 /* AMF.ppimpexp */,
@@ -4877,6 +4885,7 @@
 				5586882910BF62F500FCC24D /* UMX.ppimpexp */,
 				5586883D10BF62FB00FCC24D /* XM.ppimpexp */,
 				5586889710BF67F100FCC24D /* MIDI.ppextimp */,
+				55ECD2751992C2ED00480788 /* net.sourceforge.playerpro.MIDI-Import.xpc */,
 				55868A6710BFB46100FCC24D /* Classic App.ppextimp */,
 				55B797DC10D6E6C40073E379 /* Complex Fade.plugin */,
 				554E110510D6F09F00BB619C /* Fade Note.plugin */,
@@ -4902,28 +4911,15 @@
 				551FEA6B10E727AD00EDF2F1 /* MINs.plugin */,
 				551FEADA10E727B100EDF2F1 /* PAT.plugin */,
 				55E898B710F17C2B004EB52B /* QuickTime.plugin */,
-				55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */,
-				551292D8163DD68500C2C639 /* PlayerPROKit.framework */,
 				550FFAEB17CEA4570003A2F3 /* AIFF.plugin */,
 				55ADC3DB17D6F390001F27D4 /* Wave.plugin */,
-				5578C48117D9E8560057D11B /* PlayerPRO Player.app */,
-				5578C52F17DB94A50057D11B /* PPImport.mdimporter */,
-				5557769F17EBF8FE0019D008 /* iOS PlayerPRO Player.app */,
-				555776C317EBF8FF0019D008 /* iOS PlayerPRO PlayerTests.xctest */,
-				55534ACD1817C387006D6BCB /* updateInfoPlist */,
-				559C4187183EB4AB004A073C /* PPQuickView.qlgenerator */,
-				55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */,
-				55ECD2751992C2ED00480788 /* net.sourceforge.playerpro.MIDI-Import.xpc */,
+				5591709519C24C1600998D7F /* System 7.plugin */,
+				555E85451A041E810018FDBC /* Classic Sound.plugin */,
 				55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */,
 				55F1BDE31975CBFE00AD2C03 /* PlayerPROKit.framework */,
 				55ADD23A19B4F858005588B5 /* PlayerPROKit Tests.xctest */,
-				55ADD24719B4F895005588B5 /* PlayerPRO Player Tests.xctest */,
-				55ADD25619B4F8BA005588B5 /* PlayerPRO 6 Tests.xctest */,
-				5591709519C24C1600998D7F /* System 7.plugin */,
-				5591709F19C26E1C00998D7F /* PPCoreInstrumentPlugBridge.xpc */,
-				556BC18219CF47FC00508F49 /* PPCoreInstrumentPlugBridge32.xpc */,
 				5552724F1A0000C8008B8616 /* PlayerPROKit-iOS Tests.xctest */,
-				555E85451A041E810018FDBC /* Classic Sound.plugin */,
+				55534ACD1817C387006D6BCB /* updateInfoPlist */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -9550,10 +9546,6 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				COMBINE_HIDPI_IMAGES = "";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
 				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -9578,10 +9570,6 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				COMBINE_HIDPI_IMAGES = "";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(DEVELOPER_FRAMEWORKS_DIR)",
-				);
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
@@ -9880,7 +9868,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				CLANG_ENABLE_MODULES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -9901,7 +9888,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = PlayerIcon;
 				CLANG_ENABLE_MODULES = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PlayerPRO Player/PlayerPRO Player-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
