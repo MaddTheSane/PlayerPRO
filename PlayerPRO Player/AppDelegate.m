@@ -59,6 +59,7 @@ static NSInteger selMusFromList = -1;
 - (void)musicListContentsDidMove;
 - (BOOL)musicListWillChange;
 - (void)musicListDidChange;
+- (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(out NSError *__autoreleasing*)theErr autoPlay:(BOOL)autoplay;
 @end
 
 @implementation PlayerAppDelegate
@@ -114,7 +115,7 @@ static NSInteger selMusFromList = -1;
 - (void)addMusicToMusicList:(NSURL* )theURL loadIfPreferencesAllow:(BOOL)load
 {
 	[self willChangeValueForKey:kMusicListKVO];
-	BOOL okayMusic = [musicList addMusicURL:theURL];
+	BOOL okayMusic = [musicList addMusicURL:theURL force:NO];
 	[self didChangeValueForKey:kMusicListKVO];
 	if (!okayMusic) {
 		NSInteger similarMusicIndex = [musicList indexOfObjectSimilarToURL:theURL];
@@ -949,6 +950,11 @@ return; \
 
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(out NSError *__autoreleasing*)theErr
 {
+	return [self loadMusicURL:musicToLoad error:theErr autoPlay:YES];
+}
+
+- (BOOL)loadMusicURL:(NSURL*)musicToLoad error:(out NSError *__autoreleasing*)theErr autoPlay:(BOOL)autoplay
+{
 	NSString *fileType;
 	MADErr theOSErr = MADNoErr;
 	NSError *error;
@@ -997,7 +1003,9 @@ return; \
 	}
 	
 	[self.music attachToDriver:madDriver];
-	[madDriver play];
+	if (autoplay) {
+		[madDriver play];
+	}
 	self.paused = NO;
 	{
 		long fT, cT;
@@ -1018,7 +1026,7 @@ return; \
 
 - (BOOL)loadMusicURL:(NSURL*)musicToLoad
 {
-	return [self loadMusicURL:musicToLoad error:NULL];
+	return [self loadMusicURL:musicToLoad error:NULL autoPlay:YES];
 }
 
 - (IBAction)showPreferences:(id)sender
@@ -1137,9 +1145,6 @@ return; \
 	[defaultCenter addObserver:self selector:@selector(soundPreferencesDidChange:) name:PPSoundPreferencesDidChange object:nil];
 	
 	[self MADDriverWithPreferences];
-	self.music = [PPMusicObject new];
-	[self.music attachToDriver:madDriver];
-	[self setTitleForSongLabelBasedOnMusic];
 	
 	for (NSInteger i = 0; i < [madLib pluginCount]; i++) {
 		PPLibraryObject *obj = madLib[i];
@@ -1172,7 +1177,16 @@ return; \
 		NSRunAlertPanel(kUnresolvableFile, kUnresolvableFileDescription, nil, nil, nil, (unsigned long)lostCount);
 	}
 	if (selMus != -1) {
+		NSError *err;
+		
 		[self selectMusicAtIndex:selMus];
+		if (![self loadMusicURL:[musicList URLAtIndex:selMus] error:&err autoPlay:NO]) {
+			[[NSAlert alertWithError:err] runModal];
+		}
+	} else {
+		self.music = [PPMusicObject new];
+		[self.music attachToDriver:madDriver];
+		[self setTitleForSongLabelBasedOnMusic];
 	}
 }
 

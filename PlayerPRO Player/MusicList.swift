@@ -61,7 +61,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	/// This cannot be represented in Objective C
 	func indexOfObjectSimilar(URL theURL: NSURL) -> Int? {
 		for (i, obj) in enumerate(musicList) {
-			if obj == theURL {
+			if obj.pointsToFile(URL: theURL) {
 				return i
 			}
 		}
@@ -132,15 +132,26 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		}
 	}
 	
-	func addMusicURL(theURL: NSURL?) -> Bool {
+	enum AddMusicStatus: Int {
+		case Failure = 0
+		case Success
+		case SimilarURL
+	}
+	
+	func addMusicURL(theURL: NSURL?, force: Bool = false) -> Bool {
 		if theURL == nil {
 			return false
 		}
 		
 		let obj = MusicListObject(URL: theURL!)
 		
-		if contains(musicList, obj) {
-			return false
+		if !force {
+			let tmpArray = musicList.filter({ (obj2) -> Bool in
+				return obj2.pointsToFile(URL: obj.musicURL)
+			})
+			if tmpArray.count > 0 {
+				return false
+			}
 		}
 		
 		let theIndex = NSIndexSet(index:musicList.count);
@@ -257,10 +268,8 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	//MARK: -
-	func URLAtIndex(index: Int) -> NSURL? {
-		if index >= musicList.count {
-			return nil
-		}
+	func URLAtIndex(index: Int) -> NSURL {
+		assert(index < musicList.count)
 		return musicList[index].musicURL
 	}
 	
