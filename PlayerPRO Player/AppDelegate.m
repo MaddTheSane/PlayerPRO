@@ -962,7 +962,7 @@ return; \
 		fileType = [madLib typeFromUTI:fileUTI];
 		if (fileType) {
 			NSDictionary *unused;
-			theOSErr = [madLib getInformationFromFileAtURL:musicToLoad type:fileType info:&unused];
+			theOSErr = [madLib getInformationFromFileAtURL:musicToLoad stringType:fileType info:&unused];
 		} else {
 			theOSErr = -1;
 		}
@@ -1393,7 +1393,7 @@ typedef NS_ENUM(NSInteger, PPMusicToolbarTypes) {
 				NSDictionary *rec;
 				{
 					NSString *ostype;
-					if ([madLib identifyFileAtURL:theURL stringType:&ostype] != MADNoErr || [madLib getInformationFromFileAtURL:theURL type:ostype info:&rec]) {
+					if ([madLib identifyFileAtURL:theURL stringType:&ostype] != MADNoErr || [madLib getInformationFromFileAtURL:theURL stringType:ostype info:&rec]) {
 						NSRunCriticalAlertPanel(NSLocalizedString(@"Unknown File", @"unknown file"), NSLocalizedString(@"The file type could not be identified.", @"Unidentified file"), nil, nil, nil);
 						return NO;
 					}
@@ -1615,11 +1615,11 @@ typedef NS_ENUM(NSInteger, PPMusicToolbarTypes) {
 
 		if ([madLib identifyFileAtURL:musicURL stringType:&info] != MADNoErr)
 			goto badTracker;
-		if ([madLib getInformationFromFileAtURL:musicURL type:info info:&theInfo] != MADNoErr)
+		if ([madLib getInformationFromFileAtURL:musicURL stringType:info info:&theInfo] != MADNoErr)
 			goto badTracker;
 	} else {
 		info = [madLib typeFromUTI:fileUTI];
-		if ([madLib getInformationFromFileAtURL:musicURL type:info info:&theInfo] != MADNoErr) {
+		if ([madLib getInformationFromFileAtURL:musicURL stringType:info info:&theInfo] != MADNoErr) {
 			goto badValues;
 		}
 	}

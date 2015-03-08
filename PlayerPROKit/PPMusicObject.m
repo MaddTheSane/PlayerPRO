@@ -510,7 +510,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 			return nil;
 		}
 		if (strcmp(type, "MADK") == 0) {
-			self.filePath = url;
+			self.filePath = url.filePathURL;
 		}
 		if (error) {
 			*error = nil;
