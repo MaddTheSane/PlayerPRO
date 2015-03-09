@@ -115,33 +115,82 @@ static NSInteger selMusFromList = -1;
 - (void)addMusicToMusicList:(NSURL* )theURL loadIfPreferencesAllow:(BOOL)load
 {
 	[self willChangeValueForKey:kMusicListKVO];
-	BOOL okayMusic = [musicList addMusicURL:theURL force:NO];
+	AddMusicStatus okayMusic = [musicList addMusicURL:theURL force:NO];
 	[self didChangeValueForKey:kMusicListKVO];
-	if (!okayMusic) {
-		NSInteger similarMusicIndex = [musicList indexOfObjectSimilarToURL:theURL];
-		if (similarMusicIndex == NSNotFound) {
+	switch (okayMusic) {
+		case AddMusicStatusFailure:
 			return;
-		}
-		if (load && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
-			self.currentlyPlayingIndex.index = similarMusicIndex;
-			[self selectCurrentlyPlayingMusic];
-			NSError *err;
-			if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
-				[[NSAlert alertWithError:err] runModal];
+			break;
+			
+		case AddMusicStatusSimilarURL:
+		{
+			NSInteger similarMusicIndex = [musicList indexOfObjectSimilarToURL:theURL];
+			NSAlert *similarAlert = [[NSAlert alloc] init];
+			[similarAlert addButtonWithTitle:@"Add"];
+			{
+				NSButton *cancelButton = [similarAlert addButtonWithTitle:@"Cancel"];
+				cancelButton.keyEquivalent = @"\e";
 			}
-		} else {
-			[self selectMusicAtIndex:similarMusicIndex];
+			[similarAlert addButtonWithTitle:@"Load Existing"];
+			
+			NSInteger alertSelect = [similarAlert runModal];
+			
+			switch (alertSelect) {
+				case NSAlertFirstButtonReturn:
+					[musicList addMusicURL:theURL force:YES];
+					if (load && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
+						self.currentlyPlayingIndex.index = [musicList countOfMusicList] - 1;
+						//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
+						[self selectCurrentlyPlayingMusic];
+						NSError *err;
+						if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
+							[[NSAlert alertWithError:err] runModal];
+						}
+					} else {
+						[self selectMusicAtIndex:[musicList countOfMusicList] - 1];
+					}
+					break;
+					
+				case NSAlertSecondButtonReturn:
+					return;
+					break;
+					
+				case NSAlertThirdButtonReturn:
+					if (load && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
+						self.currentlyPlayingIndex.index = similarMusicIndex;
+						[self selectCurrentlyPlayingMusic];
+						NSError *err;
+						if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
+							[[NSAlert alertWithError:err] runModal];
+						}
+					} else {
+						[self selectMusicAtIndex:similarMusicIndex];
+					}
+
+					break;
+					
+				default:
+					break;
+			}
+			
 		}
-	} else if (load && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
-		self.currentlyPlayingIndex.index = [musicList countOfMusicList] - 1;
-		//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
-		[self selectCurrentlyPlayingMusic];
-		NSError *err;
-		if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
-			[[NSAlert alertWithError:err] runModal];
-		}
-	} else {
-		[self selectMusicAtIndex:[musicList countOfMusicList] - 1];
+			break;
+			
+		case AddMusicStatusSuccess:
+			if (load && [[NSUserDefaults standardUserDefaults] boolForKey:PPLoadMusicAtMusicLoad]) {
+				self.currentlyPlayingIndex.index = [musicList countOfMusicList] - 1;
+				//currentlyPlayingIndex.playbackURL = [musicList URLAtIndex:currentlyPlayingIndex.index];
+				[self selectCurrentlyPlayingMusic];
+				NSError *err;
+				if (![self loadMusicFromCurrentlyPlayingIndexWithError:&err]) {
+					[[NSAlert alertWithError:err] runModal];
+				}
+			} else {
+				[self selectMusicAtIndex:[musicList countOfMusicList] - 1];
+			}
+			
+		default:
+			break;
 	}
 }
 

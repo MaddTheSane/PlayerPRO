@@ -132,15 +132,15 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		}
 	}
 	
-	enum AddMusicStatus: Int {
+	@objc enum AddMusicStatus: Int {
 		case Failure = 0
 		case Success
 		case SimilarURL
 	}
 	
-	func addMusicURL(theURL: NSURL?, force: Bool = false) -> Bool {
+	func addMusicURL(theURL: NSURL?, force: Bool = false) -> AddMusicStatus {
 		if theURL == nil {
-			return false
+			return .Failure
 		}
 		
 		let obj = MusicListObject(URL: theURL!)
@@ -150,7 +150,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 				return obj2.pointsToFile(URL: obj.musicURL)
 			})
 			if tmpArray.count > 0 {
-				return false
+				return .SimilarURL
 			}
 		}
 		
@@ -158,7 +158,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		self.willChange(.Insertion, valuesAtIndexes: theIndex, forKey: kMusicListKVO)
 		musicList.append(obj)
 		self.didChange(.Insertion, valuesAtIndexes: theIndex, forKey: kMusicListKVO)
-		return true
+		return .Success
 	}
 	
 	func saveMusicListToURL(URL: NSURL) -> Bool {
