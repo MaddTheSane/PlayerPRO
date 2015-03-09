@@ -846,6 +846,8 @@ PPEXPORT MADErr	MADMusicExportCString(MADLibrary *lib, MADMusic *music, char *ty
 PPEXPORT MADErr	MADMusicSaveCString(MADMusic *music, const char *cName, bool compressMAD);
 //PPEXPORT MADErr	MADMusicSavePointer(MADMusic *music, void **outPtr, size_t *outPtrSize, bool compressMAD);
 
+PPEXPORT MADErr MADMusicTestCString(MADLibrary *inMADDriver, char *kindFile, const char *AlienFile);
+
 #ifdef _MAC_H
 #pragma mark OS X/iOS-only calls
 PPEXPORT MADErr	MADLoadMusicCFURLFile(MADLibrary *lib, MADMusic **music, char *type, CFURLRef theRef);
@@ -853,15 +855,29 @@ PPEXPORT MADErr	MADMusicIdentifyCFURL(MADLibrary *lib, char *type, CFURLRef URLR
 PPEXPORT MADErr	MADMusicInfoCFURL(MADLibrary *lib, char *type, CFURLRef theRef, MADInfoRec *InfoRec);
 PPEXPORT MADErr	MADMusicExportCFURL(MADLibrary *lib, MADMusic *music, char *type, CFURLRef fileURL);
 PPEXPORT MADErr	MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD);
+PPEXPORT MADErr MADMusicTestCFURL(MADLibrary *inMADDriver, char *kindFile, CFURLRef urlRef);
 #endif
 
-/// Dispose the current music, use it after RLoadMusic(), RLoadMusicRsrc(), RInstallMADF()
-PPEXPORT MADErr	MADDisposeMusic(MADMusic **, MADDriverRecPtr MDriver);
+/*!
+ *	@function	MADDisposeMusic
+ *	@abstract	Dispose the current music, freeing memory
+ *	@param		aMus A pointer to the music struct you want to free.<br>
+ *				On return, the data pointed to will be freed, and the pointer 
+ *		set to <code>NULL</code>.
+ *	@param		MDriver A pointer to the driver that has the music loaded.
+ *				May be <code>NULL</code>.
+ *	@return		An error type on failure, or \c MADNoErr on success
+ */
+PPEXPORT MADErr	MADDisposeMusic(MADMusic **aMus, MADDriverRecPtr MDriver);
 
 /// Change current tracks number of the music driver
 PPEXPORT void	MADChangeTracks(MADDriverRecPtr MDriver, short);
 
-/// Extract a Command from a PatData structure
+/*!
+ *	@abstract Extract a Command from a PatData structure
+ *
+ *	@return a pointer to the specified \c Cmd data.
+ */
 PPEXPORT Cmd*	GetMADCommand(short		position,
 							  short		channel,
 							  PatData*	aPatData);
@@ -893,16 +909,31 @@ PPEXPORT MADErr	MADPlaySoundData(MADDriverRecPtr	MDriver,
 								 bool				stereo);
 							
 #if 0
+/*!
+ *	@function	MADPlaySoundDataSYNC
+ *	@abstract	play sound data to the driver on the specified channel, waiting until it is done.
+ *	@param		MDriver The driver to play sound on
+ *	@param		soundPtr Sound Pointer to data
+ *	@param		size Sound size in bytes
+ *	@param		channel channel ID on which to play sound
+ *	@param		note \c 0 to \c NUMBER_NOTES or \c 0xFF: play sound at 22 Khz
+ *	@param		amplitude \c 8 or \c 16 bits
+ *	@param		loopBeg loop beginning, in bytes
+ *	@param		loopSize loop size, in bytes
+ *	@param		rate sample rate of sound data
+ *	@param		stereo is the sample stereo or mono?
+ *	@return		An error type on failure, or \c MADNoErr on success
+ */
 PPEXPORT MADErr	MADPlaySoundDataSYNC(MADDriverRec	*MDriver,
-									 char			*soundPtr,				// Sound Pointer to data
-									 long			size,					// Sound size in bytes
-									 long			channel,				// channel ID on which to play sound
-									 long			note,					// note: 0 to NUMBER_NOTES or 0xFF: play sound at 22 Khz
-									 long			amplitude,				// 8 or 16 bits
-									 long			loopBeg,				// loop beginning
-									 long			loopSize,				// loop size in bytes
-									 double			rate,					// sample rate of the sound data, by ex: rate22khz
-									 bool			stereo);				// sample is in stereo or in mono?
+									 char			*soundPtr,
+									 long			size,
+									 long			channel,
+									 long			note,
+									 long			amplitude,
+									 long			loopBeg,
+									 long			loopSize,
+									 double			rate,
+									 bool			stereo);
 #endif
 
 #pragma mark MAD Driver functions

@@ -1653,7 +1653,31 @@ MADErr MADMusicSaveCFURL(MADMusic *music, CFURLRef urlRef, bool compressMAD)
 	
 	return theErr;
 }
+
+MADErr MADMusicTestCFURL(MADLibrary *lib, char *type, CFURLRef theRef)
+{
+	char *URLcString = NULL;
+	MADErr theErr = getCStringFromCFURL(theRef, &URLcString);
+	
+	if (theErr != MADNoErr)
+		return theErr;
+	
+	theErr = MADMusicTestCString(lib, type, URLcString);
+	free(URLcString);
+	return theErr;
+}
 #endif
+
+MADErr MADMusicTestCString(MADLibrary *inMADDriver, char *kindFile, const char *AlienFile)
+{
+	if (!inMADDriver || !kindFile || !AlienFile) {
+		return MADParametersErr;
+	}
+	if (strcmp("MADK", kindFile) == 0) {
+		return CheckMADFile(AlienFile);
+	}
+	return PPTestFile(inMADDriver, kindFile, (char*)AlienFile);
+}
 
 MADErr MADMusicExportCString(MADLibrary *lib, MADMusic *music, char *type, char* cName)
 {

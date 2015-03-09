@@ -488,7 +488,7 @@ MADErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	return MADCannotFindPlug;
 }
 
-MADErr CheckMADFile(char* name)
+MADErr CheckMADFile(const char* name)
 {
 	UNFILE	refNum;
 	char	charl[CharlMADcheckLength];
@@ -500,13 +500,11 @@ MADErr CheckMADFile(char* name)
 	else {
 		iRead(CharlMADcheckLength, charl, refNum);
 		
-		if (charl[0] == 'M' &&							// MADK
-			charl[1] == 'A' &&
-			charl[2] == 'D' &&
-			charl[3] == 'K')
+		if (memcmp("MADK", charl, 4) == 0) {
 			err = MADNoErr;
-		else
+		} else {
 			err = MADIncompatibleFile;
+		}
 		
 		iClose(refNum);
 	}
