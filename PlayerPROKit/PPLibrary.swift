@@ -138,7 +138,9 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	}
 	
 	#else
-	
+	///Init a PPLibrary object without a specific plug-in directory
+	///
+	///:param: ignore unused, needed for Swift-ObjC interaction.
 	@objc(init:) public convenience init?(_ ignore: Bool = false) {
 		self.init(plugInCPath: nil)
 	}
@@ -279,6 +281,20 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 	}
 	
+	@objc(testFileAtURL:stringType:) public func testFile(#URL: NSURL, type: String) -> MADErr {
+		var cStrType = type.cStringUsingEncoding(NSMacOSRomanStringEncoding)!
+		
+		return MADMusicTestCFURL(theLibrary, &cStrType, URL)
+	}
+	
+	@objc(testFileAtPath:stringType:) public func testFile(#path: String, type: String) -> MADErr {
+		if let URL = NSURL(fileURLWithPath: path) {
+			return testFile(URL: URL, type: type)
+		} else {
+			return .ReadingErr
+		}
+	}
+	
 /**
 Gets a plug-in type from a UTI
 
@@ -324,4 +340,74 @@ Gets the first UTI from a plug-in type.
 	public func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (trackerLibs as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len)
 	}
+}
+
+///Deprecated functions
+extension PPLibrary {
+	///Deprecated: do not use
+	@objc(getInformationFromFileAtPath:type:info:) public func getInformationFromFile(#path: String, type: UnsafeMutablePointer<Int8>, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
+		if let anURL = NSURL(fileURLWithPath: path) {
+			return getInformationFromFile(URL: anURL, type: type, info: info)
+		} else {
+			return .ReadingErr
+		}
+	}
+
+	///Deprecated: do not use
+	@objc(getInformationFromFileAtURL:type:info:) public func getInformationFromFile(URL path: NSURL, type: UnsafeMutablePointer<Int8>, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
+		if info == nil {
+			return .ParametersErr
+		}
+		let sLen = strnlen(type, 4)
+		assert(sLen != 4, "Even if it's less than four chars long, the rest should be padded")
+		
+		#if false
+		var cStrType = [Int8](count: 4, repeatedValue: 0x20)
+		cStrType.append(0)
+			#else
+			var cStrType: [Int8] = [0x20, 0x20, 0x20, 0x20, 0]
+			#endif
+		for i in 0..<Int(sLen) {
+			cStrType[i] = type[i]
+		}
+		
+		let aRet = informationFromFile(URL: path, cType: cStrType)
+		
+		if aRet.error == .NoErr {
+			let tmpDict = infoRecToDictionary(aRet.info)
+			
+			info.memory = tmpDict
+		}
+		
+		return aRet.error
+	}
+	
+	///Deprecated: do not use
+	@objc(identifyFileAtURL:type:) public func identifyFile(URL apath: NSURL, type: UnsafeMutablePointer<Int8>) -> MADErr {
+		if type == nil {
+			return .ParametersErr
+		}
+		
+		let aRet = identifyFile(URL: apath)
+		if aRet.error == .NoErr {
+			strncpy(type, aRet.format!.cStringUsingEncoding(NSMacOSRomanStringEncoding)!, 4)
+		}
+		
+		return aRet.error
+	}
+	
+	///Deprecated: do not use
+	@objc(identifyFileAtPath:type:) public func identifyFile(path apath: String, type: UnsafeMutablePointer<Int8>) -> MADErr {
+		if type == nil {
+			return .ParametersErr
+		}
+		
+		let aRet = identifyFile(path: apath)
+		if aRet.error == .NoErr {
+			strncpy(type, aRet.format!.cStringUsingEncoding(NSMacOSRomanStringEncoding)!, 4)
+		}
+		
+		return aRet.error
+	}
+
 }

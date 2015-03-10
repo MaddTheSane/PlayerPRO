@@ -967,8 +967,7 @@ return; \
 	if (fileUTI) {
 		fileType = [madLib typeFromUTI:fileUTI];
 		if (fileType) {
-			NSDictionary *unused;
-			theOSErr = [madLib getInformationFromFileAtURL:musicToLoad stringType:fileType info:&unused];
+			theOSErr = [madLib testFileAtURL:musicToLoad stringType:fileType];
 		} else {
 			theOSErr = -1;
 		}
@@ -1629,7 +1628,7 @@ typedef NS_ENUM(NSInteger, PPMusicToolbarTypes) {
 
 		if ([madLib identifyFileAtURL:musicURL stringType:&info] != MADNoErr)
 			goto badTracker;
-		if ([madLib getInformationFromFileAtURL:musicURL stringType:info info:&theInfo] != MADNoErr)
+		if ([madLib testFileAtURL:musicURL stringType:info] != MADNoErr)
 			goto badTracker;
 	} else {
 		info = [madLib typeFromUTI:fileUTI];
