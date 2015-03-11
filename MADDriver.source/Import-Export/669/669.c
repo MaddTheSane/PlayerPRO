@@ -33,6 +33,10 @@
 #include "embeddedPlugs.h"
 #endif
 
+#ifdef __BLOCKS__
+#include <dispatch/dispatch.h>
+#endif
+
 static MADErr Convert6692Mad(char* AlienFile, size_t MODSize, MADMusic *theMAD, MADDriverSettings *init)
 {
 	SixSixNine	*the669;

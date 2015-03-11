@@ -35,6 +35,10 @@
 #include "embeddedPlugs.h"
 #endif
 
+#ifdef __BLOCKS__
+#include <dispatch/dispatch.h>
+#endif
+
 #ifndef WIN32
 //Windows Defines
 typedef int16_t		WORD;
