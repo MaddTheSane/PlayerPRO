@@ -235,18 +235,18 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		theView.controller = self
 		if let obj = item as? PPInstrumentObject {
 			theView.sample = false
-			//theView.textField!.stringValue = obj.name
-			theView.numField.stringValue = String(format:"%03ld", obj.number + 1)
+			theView.textField!.stringValue = obj.name
+			theView.numField!.stringValue = String(format:"%03ld", obj.number + 1)
 			theView.blank = obj.countOfSamples <= 0;
 		} else if let obj2 = item as? PPSampleObject {
 			theView.sample = true
-			//theView.textField!.stringValue = obj2.name
+			theView.textField!.stringValue = obj2.name
 			if item.loopSize != 0 {
 				theView.loopingSample = true
 			} else {
 				theView.loopingSample = false
 			}
-			theView.sampleButton.tag = obj2.instrumentIndex * Int(MAXSAMPLE) + obj2.sampleIndex
+			theView.sampleButton!.tag = obj2.instrumentIndex * Int(MAXSAMPLE) + obj2.sampleIndex
 			theView.blank = false
 		}
 		return theView

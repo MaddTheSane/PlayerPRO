@@ -19,13 +19,13 @@
 	BOOL isBlank;
 }
 
-@property (weak) IBOutlet NSTextField *numField;
-@property (weak) IBOutlet NSButton *sampleButton;
-@property (weak) InstrumentPanelController *controller;
+@property (weak, nullable) IBOutlet NSTextField *numField;
+@property (weak, nullable) IBOutlet NSButton *sampleButton;
+@property (weak, nullable) InstrumentPanelController *controller;
 @property (nonatomic, getter=isSample) BOOL sample;
 @property (nonatomic, getter=isLoopingSample) BOOL loopingSample;
 @property (nonatomic, getter=isBlank) BOOL blank;
 
-- (IBAction)playSample:(id)sender;
+- (IBAction)playSample:(nullable id)sender;
 
 @end
