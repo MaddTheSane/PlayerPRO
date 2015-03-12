@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import PlayerPROKit
 
 class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NSOutlineViewDelegate {
 	@IBOutlet weak var infoDrawer:			NSDrawer!
@@ -230,22 +231,22 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		if tableColumn == nil {
 			return nil
 		}
-		let theView = outlineView.makeViewWithIdentifier(tableColumn!.identifier, owner: nil) as! PPInstrumentCellView!
+		let theView = outlineView.makeViewWithIdentifier(tableColumn!.identifier, owner: nil) as! PPInstrumentCellView
 		theView.controller = self
 		if let obj = item as? PPInstrumentObject {
 			theView.sample = false
-			theView.textField!.stringValue = obj.name
+			//theView.textField!.stringValue = obj.name
 			theView.numField.stringValue = String(format:"%03ld", obj.number + 1)
 			theView.blank = obj.countOfSamples <= 0;
-		} else if let obj = item as? PPSampleObject {
+		} else if let obj2 = item as? PPSampleObject {
 			theView.sample = true
-			theView.textField!.stringValue = obj.name
+			//theView.textField!.stringValue = obj2.name
 			if item.loopSize != 0 {
 				theView.loopingSample = true
 			} else {
 				theView.loopingSample = false
 			}
-			theView.sampleButton.tag = obj.instrumentIndex * Int(MAXSAMPLE) + obj.sampleIndex
+			theView.sampleButton.tag = obj2.instrumentIndex * Int(MAXSAMPLE) + obj2.sampleIndex
 			theView.blank = false
 		}
 		return theView
