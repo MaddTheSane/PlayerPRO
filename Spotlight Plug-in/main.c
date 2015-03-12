@@ -53,7 +53,7 @@ typedef struct __MetadataImporterPluginType
 static MetadataImporterPluginType  *AllocMetadataImporterPluginType(CFUUIDRef inFactoryID);
 static void                      DeallocMetadataImporterPluginType(MetadataImporterPluginType *thisInstance);
 static HRESULT                   MetadataImporterQueryInterface(void *thisInstance,REFIID iid,LPVOID *ppv);
-void                     *PPMetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID);
+extern void                     *PPMetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID);
 static ULONG                     MetadataImporterPluginAddRef(void *thisInstance);
 static ULONG                     MetadataImporterPluginRelease(void *thisInstance);
 // -----------------------------------------------------------------------------
@@ -98,7 +98,7 @@ static MetadataImporterPluginType *AllocMetadataImporterPluginType(CFUUIDRef inF
 }
 
 // -----------------------------------------------------------------------------
-//	Dealloc«PROJECTNAMEASIDENTIFIER»MDImporterPluginType
+//	DeallocMetadataImporterPluginType
 // -----------------------------------------------------------------------------
 //	Utility function that deallocates the instance when
 //	the refCount goes to zero.
@@ -167,7 +167,7 @@ static ULONG MetadataImporterPluginAddRef(void *thisInstance)
 }
 
 // -----------------------------------------------------------------------------
-// SampleCMPluginRelease
+// MetadataImporterPluginRelease
 // -----------------------------------------------------------------------------
 //	When an interface is released, decrement the refCount.
 //	If the refCount goes to zero, deallocate the instance.
@@ -184,11 +184,11 @@ static ULONG MetadataImporterPluginRelease(void *thisInstance)
 }
 
 // -----------------------------------------------------------------------------
-//	«PROJECTNAMEASIDENTIFIER»MDImporterPluginFactory
+//	PPMetadataImporterPluginFactory
 // -----------------------------------------------------------------------------
 //	Implementation of the factory function for this type.
 //
-extern void *PPMetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID)
+void *PPMetadataImporterPluginFactory(CFAllocatorRef allocator,CFUUIDRef typeID)
 {
     MetadataImporterPluginType *result;
     CFUUIDRef                 uuid;
