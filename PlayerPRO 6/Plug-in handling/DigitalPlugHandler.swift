@@ -78,7 +78,7 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType, Sliceable
 		return digitalPlugs.endIndex
 	}
 	
-	subscript (subRange: Range<Int>) -> Slice<PPDigitalPlugInObject> {
+	subscript (subRange: Range<Int>) -> ArraySlice<PPDigitalPlugInObject> {
 		return digitalPlugs[subRange]
 	}
 	

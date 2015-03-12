@@ -48,7 +48,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return musicList.count
 	}
 	
-	subscript (subRange: Range<Int>) -> Slice<MusicListObject> {
+	subscript (subRange: Range<Int>) -> ArraySlice<MusicListObject> {
 		return musicList[subRange]
 	}
 	
