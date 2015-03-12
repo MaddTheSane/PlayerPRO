@@ -28,7 +28,7 @@
 
 //TODO: Move to unicode functions?
 
-MADErr CheckMADFile(char *name)
+MADErr CheckMADFile(const char *name)
 {
 	UNFILE	refNum;
 	char	charl[20];

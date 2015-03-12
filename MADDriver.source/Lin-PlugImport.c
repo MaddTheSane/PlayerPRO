@@ -184,7 +184,7 @@ MADErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	return MADCannotFindPlug;
 }
 
-MADErr CheckMADFile(char* name)
+MADErr CheckMADFile(const char* name)
 {
 	UNFILE	refNum;
 	char	charl[CharlMADcheckLength];

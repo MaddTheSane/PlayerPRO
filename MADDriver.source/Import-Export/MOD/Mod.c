@@ -33,6 +33,10 @@
 #include "embeddedPlugs.h"
 #endif
 
+#ifdef __BLOCKS__
+#include <dispatch/dispatch.h>
+#endif
+
 static short FoundNote(short Period)
 {
 	short	note = 0xFF;

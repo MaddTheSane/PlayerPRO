@@ -153,7 +153,7 @@ MADErr	PPIdentifyFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile);
 MADFourChar	GetPPPlugType(MADLibrary *inMADDriver, short ID, MADFourChar type);
 void	MInitImportPlug(MADLibrary *inMADDriver, const char*);
 void	CloseImportPlug(MADLibrary *inMADDriver);
-MADErr	CheckMADFile(char *AlienFile);
+MADErr	CheckMADFile(const char *AlienFile);
 void ConvertInstrumentIn(MADByte *tempPtr, size_t sSize);
 void ConvertInstrumentIn16(short *tempPtr, size_t sSize);
 
