@@ -1628,7 +1628,7 @@ typedef NS_ENUM(NSInteger, PPMusicToolbarTypes) {
 
 		if ([madLib identifyFileAtURL:musicURL stringType:&info] != MADNoErr)
 			goto badTracker;
-		if ([madLib testFileAtURL:musicURL stringType:info] != MADNoErr)
+		if ([madLib getInformationFromFileAtURL:musicURL stringType:info info:&theInfo] != MADNoErr)
 			goto badTracker;
 	} else {
 		info = [madLib typeFromUTI:fileUTI];

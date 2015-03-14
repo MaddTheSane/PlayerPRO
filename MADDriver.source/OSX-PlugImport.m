@@ -341,10 +341,9 @@ CFMutableArrayRef CreatePluginFolderLocationsWithFolderPath(const char *UserAdde
 {
 	CFMutableArrayRef FoldLocs = CreateDefaultPluginFolderLocations();
 	BOOL isTheSame = NO;
-	CFIndex i;
 	CFURLRef custfolder = CFURLCreateFromFileSystemRepresentation(kCFAllocatorDefault, (const UInt8*)UserAddedPlace, strlen(UserAddedPlace), true);
 
-	for (i = 0; i < CFArrayGetCount(FoldLocs); i++) {
+	for (CFIndex i = 0; i < CFArrayGetCount(FoldLocs); i++) {
 		CFURLRef index = CFArrayGetValueAtIndex(FoldLocs, i);
 		if (CompareTwoCFURLs(custfolder, index) == true) {
 			isTheSame = YES;
@@ -435,8 +434,7 @@ void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 			CFRelease(somePlugs);
 		}
 	}
-	CFRelease(PlugLocations);
-	PlugLocations = NULL;
+	CFRelease(PlugLocations); PlugLocations = NULL;
 }
 
 void CloseImportPlug(MADLibrary *inMADDriver)

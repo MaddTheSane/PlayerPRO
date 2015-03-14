@@ -42,14 +42,7 @@ private func infoRecToDictionary(infoRec: MADInfoRec) -> NSDictionary {
 		kPPFormatDescription:	String(CString: bArray, encoding: NSMacOSRomanStringEncoding) ?? ""]
 }
 
-
-public func infoRecToMusicInfo(infoRec: MADInfoRec) -> PPLibrary.MusicFileInfo {
-	let tmpDict = infoRecToDictionary(infoRec)
-	
-	return PPLibrary.MusicFileInfo(infoDict: tmpDict)
-}
-
-public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
+public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	internal let trackerLibs: [PPLibraryObject]
 	internal var theLibrary: UnsafeMutablePointer<MADLibrary> = nil
 	public struct MusicFileInfo: Printable {
@@ -78,6 +71,21 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		///
 		///This may differ from the plug-in's type.
 		public var signature: String
+		
+		///Initializes a `MusicFileInfo` from PlayerPROCore's `MADInfoRec`.
+		public init(infoRec: MADInfoRec) {
+			let aArray: [Int8] = getArrayFromMirror(reflect(infoRec.internalFileName), appendLastObject: 0)
+			let bArray: [Int8] = getArrayFromMirror(reflect(infoRec.formatDescription), appendLastObject: 0)
+			
+			totalPatterns = Int(infoRec.totalPatterns)
+			partitionLength = Int(infoRec.partitionLength)
+			fileSize = Int(infoRec.fileSize)
+			totalTracks = Int(infoRec.totalTracks)
+			totalInstruments = Int(infoRec.totalInstruments)
+			signature = OSTypeToString(infoRec.signature, useHexIfInvalid: ())
+			internalFileName = String(CString: aArray, encoding: NSMacOSRomanStringEncoding) ?? ""
+			formatDescription = String(CString: bArray, encoding: NSMacOSRomanStringEncoding) ?? ""
+		}
 		
 		private init(infoDict: NSDictionary) {
 			totalPatterns = infoDict[kPPTotalPatterns] as Int
@@ -170,19 +178,29 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 	}
 
+	///Init a PPLibrary object, including plug-ins from `plugInPath`.
+	///
+	///:param: path The path to a directory that has additional plug-ins.
 	public convenience init?(plugInPath path: String) {
 		self.init(plugInCPath: path.fileSystemRepresentation())
 	}
 	
+	///Init a PPLibrary object, including plug-ins from `plugInURL`.
+	///
+	///:param: URL The URL to a directory that has additional plug-ins. This must be a file URL
 	public convenience init?(plugInURL URL: NSURL) {
 		self.init(plugInCPath: URL.fileSystemRepresentation)
 	}
 	
-	
+	///The amount of plug-ins registered by the library.
 	public var pluginCount: Int {
 		return trackerLibs.count
 	}
 	
+	///Attempts to identify the file at the URL passed to it.
+	///
+	///:param: apath The tracker at URL to identify.
+	///:returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil
 	public func identifyFile(URL apath: NSURL) -> (format: String?, error: MADErr) {
 		var cType = [Int8](count: 5, repeatedValue: 0)
 		
@@ -192,6 +210,10 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		return (sRet, aRet)
 	}
 	
+	///Attempts to identify the file passed to it.
+	///
+	///:param: path The tracker at a POSIX-style path to identify
+	///:returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil
 	public func identifyFile(#path: String) -> (format: String?, error: MADErr) {
 		if let anURL = NSURL(fileURLWithPath: path) {
 			return identifyFile(URL: anURL)
@@ -200,6 +222,13 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 	}
 	
+	///Attempts to identify the tracker at the specified URL.
+	///
+	///:param: apath The tracker at URL to identify.
+	///:param: type A pointer to an `NSString` object. On return and if successful, set to the tracker type the file is.
+	///:returns: An error value, or `MADNoErr` on success.
+	///
+	///This is mainly for Objective C code. For Swift code, use `identifyFile(URL:)` instead
 	@objc(identifyFileAtURL:stringType:) public func identifyFile(URL apath: NSURL, type: AutoreleasingUnsafeMutablePointer<NSString>) -> MADErr {
 		if type == nil {
 			return .ParametersErr
@@ -213,6 +242,13 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		return aRet.error
 	}
 	
+	///Attempts to identify the tracker at the specified path.
+	///
+	///:param: apath The tracker file to identify.
+	///:param: type A pointer to an `NSString` object. On return and if successful, set to the tracker type the file is.
+	///:returns: An error value, or `MADNoErr` on success.
+	///
+	///This is mainly for Objective C code. For Swift code, use `identifyFile(path:)` instead
 	@objc(identifyFileAtPath:stringType:) public func identifyFile(path apath: String, type: AutoreleasingUnsafeMutablePointer<NSString>) -> MADErr {
 		if type == nil {
 			return .ParametersErr
@@ -241,7 +277,7 @@ public class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		let filInfo = informationFromFile(URL: apath, cType: cStrType)
 		
 		if filInfo.error == .NoErr {
-			let anInfo = infoRecToMusicInfo(filInfo.info)
+			let anInfo = MusicFileInfo(infoRec: filInfo.info)
 			return (anInfo, filInfo.error)
 		} else {
 			return (nil, filInfo.error)
