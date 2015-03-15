@@ -14,7 +14,7 @@ private let kPlayerPROMADKUTI = "com.quadmation.playerpro.madk"
 private let MadIDString = OSTypeToString(MadID)!
 
 extension MADInfoRec {
-	init() {
+	private init() {
 		totalPatterns = 0
 		partitionLength = 0
 		fileSize = 0
@@ -103,14 +103,25 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 	}
 
+	///Resets the debug function called by `MADDebugStr` to the default.
 	public class func deregisterDebugFunction() {
 		MADRegisterDebugFunc(nil)
 	}
 	
+	///Sets the debug function called by `MADDebugStr` to that of the passed in C function.
+	///
+	///:param: newDebugFunc The debug block to pass in. The first variable is the line number of the code the debug function was called from, the second is the file name of the function called in, the third is the developer-supplied text passed in.
+	///
+	///Swift functions can't be translated to `CFunctionPointer`s, so use `registerDebugBlock(_:)`, below, if you want to use a Swift version
 	@objc public class func registerDebugFunction(newDebugFunc: CFunctionPointer<((Int16, UnsafePointer<Int8>, UnsafePointer<Int8>) -> Void)>) {
 		MADRegisterDebugFunc(newDebugFunc)
 	}
 	
+	///Sets the debug function called by `MADDebugStr` to that of the passed in block.
+	///
+	///:param: newDebugFunc The debug block to pass in. The first variable is the line number of the code the debug function was called from, the second is the file name of the function called in, the third is the developer-supplied text passed in.
+	///
+	///Swift functions are interchangeable with blocks: use this method to set the debug catcher in Swift code.
 	public class func registerDebugBlock(newDebugFunc: (Int16, UnsafePointer<Int8>, UnsafePointer<Int8>) -> Void) {
 		MADRegisterDebugBlock(newDebugFunc)
 	}
@@ -187,7 +198,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	
 	///Init a PPLibrary object, including plug-ins from `plugInURL`.
 	///
-	///:param: URL The URL to a directory that has additional plug-ins. This must be a file URL
+	///:param: URL The URL to a directory that has additional plug-ins. This *must* be a file URL.
 	public convenience init?(plugInURL URL: NSURL) {
 		self.init(plugInCPath: URL.fileSystemRepresentation)
 	}
@@ -200,7 +211,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///Attempts to identify the file at the URL passed to it.
 	///
 	///:param: apath The tracker at URL to identify.
-	///:returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil
+	///:returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil.
 	public func identifyFile(URL apath: NSURL) -> (format: String?, error: MADErr) {
 		var cType = [Int8](count: 5, repeatedValue: 0)
 		
@@ -213,7 +224,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///Attempts to identify the file passed to it.
 	///
 	///:param: path The tracker at a POSIX-style path to identify
-	///:returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil
+	///:returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil.
 	public func identifyFile(#path: String) -> (format: String?, error: MADErr) {
 		if let anURL = NSURL(fileURLWithPath: path) {
 			return identifyFile(URL: anURL)
@@ -228,7 +239,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///:param: type A pointer to an `NSString` object. On return and if successful, set to the tracker type the file is.
 	///:returns: An error value, or `MADNoErr` on success.
 	///
-	///This is mainly for Objective C code. For Swift code, use `identifyFile(URL:)` instead
+	///This is mainly for Objective C code. For Swift code, use `identifyFile(URL:)` instead.
 	@objc(identifyFileAtURL:stringType:) public func identifyFile(URL apath: NSURL, type: AutoreleasingUnsafeMutablePointer<NSString>) -> MADErr {
 		if type == nil {
 			return .ParametersErr
@@ -248,7 +259,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///:param: type A pointer to an `NSString` object. On return and if successful, set to the tracker type the file is.
 	///:returns: An error value, or `MADNoErr` on success.
 	///
-	///This is mainly for Objective C code. For Swift code, use `identifyFile(path:)` instead
+	///This is mainly for Objective C code. For Swift code, use `identifyFile(path:)` instead.
 	@objc(identifyFileAtPath:stringType:) public func identifyFile(path apath: String, type: AutoreleasingUnsafeMutablePointer<NSString>) -> MADErr {
 		if type == nil {
 			return .ParametersErr
@@ -271,6 +282,11 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		return (infoRec, anErr)
 	}
 	
+	///Gathers information about a tracker at the specified URL.
+	///
+	///:param: apath A file NSURL pointing to the tracker.
+	///:param: type The tracker type of the file.
+	///:returns: A tuple with an optional `MusicFileInfo` type and an error value. If `error` is `.NoErr`, the `info` value will not be `nil`.
 	public func informationFromFile(URL apath: NSURL, type: String) -> (info: MusicFileInfo?, error: MADErr) {
 		let cStrType = type.cStringUsingEncoding(NSMacOSRomanStringEncoding)!
 		
@@ -284,6 +300,11 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 	}
 	
+	///Gathers information about a tracker at the specified path.
+	///
+	///:param: path The path pointing to the tracker.
+	///:param: type The tracker type of the file.
+	///:returns: A tuple with an optional `MusicFileInfo` type and an error value. If `error` is `.NoErr`, the `info` value will not be `nil`.
 	public func informationFromFile(#path: String, type: String) -> (info: MusicFileInfo?, error: MADErr) {
 		if let anURL = NSURL(fileURLWithPath: path) {
 			return informationFromFile(URL: anURL, type: type)
@@ -292,6 +313,14 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 	}
 	
+	///Gathers information about a tracker at the specified URL.
+	///
+	///:param: path The file URL pointing to the tracker.
+	///:param: type The tracker type of the file.
+	///:param: info A pointer to an NSDictionary. On return and success, the dictionary is populated with info about the tracker.
+	///:returns: An error value, or `MADNoErr` on success.
+	///
+	///This is mainly for Objective C code. For Swift code, use `informationFromFile(URL:type:)` instead.
 	@objc(getInformationFromFileAtURL:stringType:info:) public func getInformationFromFile(URL path: NSURL, type: String, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
 		if info == nil {
 			return .ParametersErr
@@ -309,6 +338,14 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		return aRet.error
 	}
 	
+	///Gathers information about a tracker at the specified path.
+	///
+	///:param: path The path pointing to the tracker.
+	///:param: type The tracker type of the file.
+	///:param: info A pointer to an NSDictionary. On return and success, the dictionary is populated with info about the tracker.
+	///:returns: An error value, or `MADNoErr` on success.
+	///
+	///This is mainly for Objective C code. For Swift code, use `informationFromFile(path:type:)` instead.
 	@objc(getInformationFromFileAtPath:stringType:info:) public func getInformationFromFile(#path: String, type: String, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
 		if let anURL = NSURL(fileURLWithPath: path) {
 			return getInformationFromFile(URL: anURL, type: type, info: info)
@@ -317,12 +354,22 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 	}
 	
+	///Test the tracker at the URL is actually of type `type`.
+	///
+	///:param: URL The file URL of the tracker to test.
+	///:param: type The type to test for.
+	///:returns: An error value, or `MADNoErr` if the tracker is of the specified type.
 	@objc(testFileAtURL:stringType:) public func testFile(#URL: NSURL, type: String) -> MADErr {
 		var cStrType = type.cStringUsingEncoding(NSMacOSRomanStringEncoding)!
 		
 		return MADMusicTestCFURL(theLibrary, &cStrType, URL)
 	}
 	
+	///Test the tracker at the path is actually of type `type`.
+	///
+	///:param: path The path of the tracker to test.
+	///:param: type The type to test for.
+	///:returns: An error value, or `MADNoErr` if the tracker is of the specified type.
 	@objc(testFileAtPath:stringType:) public func testFile(#path: String, type: String) -> MADErr {
 		if let URL = NSURL(fileURLWithPath: path) {
 			return testFile(URL: URL, type: type)
@@ -331,12 +378,10 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 	}
 	
-/**
-Gets a plug-in type from a UTI
-
-:param: aUTI The UTI to find a plug-in type for.
-:returns: A plug-in type, four characters long, or `nil` if there's no plug-in that opens the UTI
- */
+	///Gets a plug-in type from a UTI
+	///
+	///:param: aUTI The UTI to find a plug-in type for.
+	///:returns: A plug-in type, four characters long, or `nil` if there's no plug-in that opens the UTI.
 	public func typeFromUTI(aUTI: String) -> String? {
 		if aUTI == kPlayerPROMADKUTI {
 			return MadIDString
@@ -353,12 +398,10 @@ Gets a plug-in type from a UTI
 		return nil
 	}
 	
-/**
-Gets the first UTI from a plug-in type.
-
-:param: aType the four-character plug-in type to get a UTI for.
-:returns: a UTI, or `nil` if the type isn't listed
- */
+	///Gets the first UTI from a plug-in type.
+	///
+	///:param: aType the four-character plug-in type to get a UTI for.
+	///:returns: The first UTI in the plug-in's UTI list that corrisponds to the type, or `nil` if the type isn't listed.
 	public func typeToUTI(aType: String) -> String? {
 		if aType == MadIDString {
 			return kPlayerPROMADKUTI
