@@ -15,23 +15,23 @@ class PlayerPROKit_Tests: XCTestCase {
 	var ourBundle: NSBundle? = nil
 	var ourLib: PPLibrary? = nil
 	
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+	override func setUp() {
+		super.setUp()
+		// Put setup code here. This method is called before the invocation of each test method in the class.
 		ourBundle = NSBundle(forClass: PlayerPROKit_Tests.self)
 		if let ourPlugPath = ourBundle?.builtInPlugInsURL {
 			ourLib = PPLibrary(plugInURL: ourPlugPath)
 		} else {
 			ourLib = PPLibrary()
 		}
-    }
+	}
 	
-    override func tearDown() {
+	override func tearDown() {
 		ourLib = nil
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-
+		// Put teardown code here. This method is called after the invocation of each test method in the class.
+		super.tearDown()
+	}
+	
 	func testMADKInformation() {
 		let musicPath = ourBundle!.URLForResource("TestMADK", withExtension: "madk")!
 		let info = ourLib!.informationFromFile(URL: musicPath, type: "MADK")

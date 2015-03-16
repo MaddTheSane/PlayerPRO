@@ -21,18 +21,18 @@ func GlobalDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<
 
 class Error_Tests: XCTestCase {
 	var exampleVar = ""
-
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+	
+	override func setUp() {
+		super.setUp()
+		// Put setup code here. This method is called before the invocation of each test method in the class.
 		var exampleVar = ""
-    }
-    
-    override func tearDown() {
+	}
+	
+	override func tearDown() {
 		PPLibrary.deregisterDebugFunction()
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
+		// Put teardown code here. This method is called after the invocation of each test method in the class.
+		super.tearDown()
+	}
 	
 	func classDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
 		let manager = NSFileManager.defaultManager()
@@ -55,8 +55,12 @@ class Error_Tests: XCTestCase {
 		MADDebugString("Swift Test")
 		MADDebugStr(__LINE__, __FILE__, "C-Style test")
 	}
+	
 	func testGlobalDebugBlock() {
 		MADRegisterDebugBlock(GlobalDebugStr)
+		MADDebugString("Swift Test")
+		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		PPLibrary.registerDebugBlock(GlobalDebugStr)
 		MADDebugString("Swift Test")
 		MADDebugStr(__LINE__, __FILE__, "C-Style test")
 	}
@@ -72,4 +76,17 @@ class Error_Tests: XCTestCase {
 		MADDebugString("Swift Test")
 		MADDebugStr(__LINE__, __FILE__, "C-Style test")
 	}
+	
+	func testPPClassDebugBlock() {
+		PPLibrary.registerDebugBlock(classDebugStr)
+		MADDebugString("Swift Test")
+		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		exampleVar = "Variable 1"
+		MADDebugString("Swift Test")
+		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		exampleVar = "Variable 2"
+		MADDebugString("Swift Test")
+		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+	}
+
 }

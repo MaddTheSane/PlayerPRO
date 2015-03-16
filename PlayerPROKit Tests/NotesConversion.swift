@@ -12,6 +12,18 @@ import PlayerPROKit
 
 class NotesConversion: XCTestCase {
 	
+	#if false
+	override func setUp() {
+		super.setUp()
+		// Put setup code here. This method is called before the invocation of each test method in the class.
+	}
+	
+	override func tearDown() {
+		// Put teardown code here. This method is called after the invocation of each test method in the class.
+		super.tearDown()
+	}
+	#endif
+
 	func getNotesWithLetters(#useLetters: Bool) -> [String] {
 		var noteNames = [String]()
 		for i in 0..<96 {
@@ -21,7 +33,7 @@ class NotesConversion: XCTestCase {
 		}
 		
 		XCTAssert(noteNames.count == 96, "Didn't get all 96 note strings")
-
+		
 		return noteNames
 	}
 	
