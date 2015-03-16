@@ -32,7 +32,7 @@ class PlayerPROKit_Tests: XCTestCase {
         super.tearDown()
     }
 
-	func testInformation() {
+	func testMADKInformation() {
 		let musicPath = ourBundle!.URLForResource("TestMADK", withExtension: "madk")!
 		let info = ourLib!.informationFromFile(URL: musicPath, type: "MADK")
 		XCTAssert(info.error == .NoErr)
@@ -45,5 +45,12 @@ class PlayerPROKit_Tests: XCTestCase {
 		XCTAssertEqual(unwrapped.totalTracks, 6)
 		XCTAssertEqual(unwrapped.internalFileName, "Go For It")
 		XCTAssertEqual(unwrapped.formatDescription, "MADK")
+	}
+	
+	func testObjcMADKInformation() {
+		var dict: NSDictionary = [:]
+		let musicPath = ourBundle!.URLForResource("TestMADK", withExtension: "madk")!
+		let err = ourLib!.getInformationFromFile(URL: musicPath, type: "MADK", info: &dict)
+		XCTAssertEqual(err, MADErr.NoErr)
 	}
 }
