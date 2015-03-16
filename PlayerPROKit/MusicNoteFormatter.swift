@@ -19,7 +19,7 @@ public final class MusicNoteFormatter: NSFormatter {
 				return "---"
 				
 			case 0..<96:
-				return OctaveNameFromNote(Int16(objInt), letters: useSingleLetter)
+				return octaveNameFromNote(Int16(objInt), letters: useSingleLetter)
 				
 			default:
 				return nil
@@ -40,7 +40,7 @@ public final class MusicNoteFormatter: NSFormatter {
 			return true
 		}
 		
-		if let aNum = NoteFromString(string) {
+		if let aNum = noteFromString(string) {
 			obj.memory = Int(aNum)
 			if error != nil {
 				error.memory = nil

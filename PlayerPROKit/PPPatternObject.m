@@ -55,6 +55,11 @@ static inline Pcmd* CopyPcmd(const Pcmd* tocopy)
 	return commands[index1];
 }
 
+- (NSInteger)lengthOfCommands
+{
+	return commands.count;
+}
+
 #if !TARGET_OS_IPHONE
 NSString * const kPPKPatternPasteboardUTI = @"net.sourceforge.playerpro.pattern";
 

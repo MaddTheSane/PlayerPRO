@@ -50,14 +50,12 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObjec
 	})
 }
 
-/// Creates an \c NSError from a <code>MADErr</code>, optionally converting the error type to an
-/// error in the Cocoa error domain.
-/// @param theErr The \c MADErr to convert to an \c NSError
-/// @param customUserDictionary A dictionary with additional information. May be <code>nil</code>,
-/// defaults to <code>nil</code>.
-/// @param convertToCocoa converts the \c MADErr code into a compatible error in Cocoa's error types.
-/// defaults to <code>false</code>.
-/// @retrun an \c NSError value, or \c nil if passed \c NoErr
+///Creates an `NSError` from a `MADErr`, optionally converting the error type to an error in the Cocoa error domain.
+///
+///:param: theErr The `MADErr` to convert to an `NSError`
+///:param: customUserDictionary A dictionary with additional information. May be `nil`, defaults to `nil`.
+///:param: convertToCocoa Converts the `MADErr` code into a compatible error in Cocoa's error types. defaults to `false`.
+///:returns: An `NSError` value, or `nil` if passed `.NoErr`
 public func createErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [String: NSObject]? = nil, convertToCocoa: Bool = false) -> NSError? {
 	
 	if let anErr = PPCreateErrorFromMADErrorTypeConvertingToCocoa(theErr, convertToCocoa) {
@@ -82,7 +80,7 @@ public func createErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [S
 	return nil
 }
 
-public func NoteFromString(myTT: String) -> Int16?
+public func noteFromString(myTT: String) -> Int16?
 {
 	if ( myTT == "" || myTT == "---" || countElements(myTT) < 2) {
 		return nil
@@ -166,11 +164,11 @@ public func NoteFromString(myTT: String) -> Int16?
 	return nil
 }
 
-public func OctaveNameFromNote(octNote: UInt8, letters isUseLetters: Bool = true) -> String? {
-	return OctaveNameFromNote(Int16(octNote), letters: isUseLetters)
+public func octaveNameFromNote(octNote: UInt8, letters isUseLetters: Bool = true) -> String? {
+	return octaveNameFromNote(Int16(octNote), letters: isUseLetters)
 }
 
-public func OctaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true) -> String? {
+public func octaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true) -> String? {
 	if (octNote > 95 || octNote < 0) {
 		return nil
 	}
@@ -420,27 +418,40 @@ extension PPSampleObject {
 	}
 	
 	@objc final public class func octaveNameFromNote(octNote: Int16) -> String {
-		return OctaveNameFromNote(octNote) ?? "---"
+		return octaveNameFromNote(octNote) ?? "---"
 	}
 
 	@objc final public class func octaveNameFromNote(octNote: Int16, usingSingularLetter: Bool) -> String {
-		return OctaveNameFromNote(octNote, letters: usingSingularLetter) ?? "---"
+		return PlayerPROKit.octaveNameFromNote(octNote, letters: usingSingularLetter) ?? "---"
 	}
 
 	@objc final public class func noteFromString(myTT: String) -> Int16 {
-		return NoteFromString(myTT) ?? 0xFF
+		return noteFromString(myTT) ?? 0xFF
 	}
 }
 
 extension PPPatternObject: SequenceType {
-	public func generate() -> NSFastGenerator {
-		return NSFastGenerator(self)
+	public func generate() -> GeneratorOf<PPMadCommandObject> {
+		var index = 0
+		return GeneratorOf {
+			if index < self.lengthOfCommands {
+				return self[index++]
+			}
+			
+			return nil
+		}
 	}
 }
 
 extension PPInstrumentObject: SequenceType {
-	public func generate() -> IndexingGenerator<[PPSampleObject]> {
-		return (samples as [PPSampleObject]).generate()
+	public func generate() -> GeneratorOf<PPSampleObject> {
+		var index = 0
+		return GeneratorOf {
+			if index < self.samples.count {
+				return self[index++]
+			}
+			return nil
+		}
 	}
 }
 

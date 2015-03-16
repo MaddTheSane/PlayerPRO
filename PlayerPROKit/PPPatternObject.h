@@ -21,6 +21,7 @@
 @property (copy) NSString *patternName;
 @property (readonly, weak) PPMusicObject *musicWrapper;
 @property int patternSize;
+@property (readonly) NSInteger lengthOfCommands;
 
 - (PPMadCommandObject *)objectAtIndexedSubscript:(NSInteger)index;
 

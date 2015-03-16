@@ -124,8 +124,8 @@ class ComplexFadeController: NSWindowController {
 			}
 			
 		case .Note:
-			var tmpFrom: Int16 = NoteFromString(fromCell.stringValue) ?? 0xFF
-			var tmpTo: Int16 = NoteFromString(toCell.stringValue) ?? 0xFF
+			var tmpFrom: Int16 = noteFromString(fromCell.stringValue) ?? 0xFF
+			var tmpTo: Int16 = noteFromString(toCell.stringValue) ?? 0xFF
 			from = Int32(tmpFrom)
 			to = Int32(tmpTo)
 			
