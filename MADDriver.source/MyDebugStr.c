@@ -51,14 +51,11 @@ void MADRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const
 	}
 	
 	if (debugFunc != NULL) {
-		typeof(MyDebugBlock) funcBlock = ^(short line, const char *file, const char *text){
+		typeof(MyDebugBlock) funcBlock = ^(short line, const char *file, const char *text) {
 			(*debugFunc)(line, file, text);
 		};
-#if __has_feature(objc_arc)
-		MyDebugBlock = [funcBlock copy];
-#else
-		MyDebugBlock = Block_copy(funcBlock);
-#endif
+		
+		MADRegisterDebugBlock(funcBlock);
 	}
 }
 
