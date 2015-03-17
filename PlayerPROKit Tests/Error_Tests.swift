@@ -25,6 +25,9 @@ class Error_Tests: XCTestCase {
 	override func setUp() {
 		super.setUp()
 		// Put setup code here. This method is called before the invocation of each test method in the class.
+		currentTestClass = self
+		MADRegisterDebugFunc(cXTCFailFunc)
+
 		var exampleVar = ""
 	}
 	
@@ -89,4 +92,9 @@ class Error_Tests: XCTestCase {
 		MADDebugStr(__LINE__, __FILE__, "C-Style test")
 	}
 
+	func testCDebugFunc() {
+		PPLibrary.registerDebugFunction(cDebugFunc)
+		MADDebugString("Swift Test")
+		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+	}
 }

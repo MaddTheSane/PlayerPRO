@@ -18,6 +18,9 @@ class PlayerPROKit_Tests: XCTestCase {
 	override func setUp() {
 		super.setUp()
 		// Put setup code here. This method is called before the invocation of each test method in the class.
+		currentTestClass = self
+		MADRegisterDebugFunc(cXTCFailFunc)
+
 		ourBundle = NSBundle(forClass: PlayerPROKit_Tests.self)
 		if let ourPlugPath = ourBundle?.builtInPlugInsURL {
 			ourLib = PPLibrary(plugInURL: ourPlugPath)
