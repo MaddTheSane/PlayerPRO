@@ -13,6 +13,11 @@ import SwiftAdditions
 private let kPlayerPROMADKUTI = "com.quadmation.playerpro.madk"
 private let MadIDString = OSTypeToString(MadID)!
 
+public enum ReturnOrMADErr<X> {
+	case Failure(MADErr)
+	case Success(X)
+}
+
 extension MADInfoRec {
 	private init() {
 		totalPatterns = 0
@@ -273,13 +278,17 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		return aRet.error
 	}
 	
-	private func informationFromFile(#URL: NSURL, cType: [Int8]) -> (info: MADInfoRec, error: MADErr) {
+	private func informationFromFile(#URL: NSURL, cType: [Int8]) -> ReturnOrMADErr<MADInfoRec> {
 		var cStrType = cType
 		var infoRec = MADInfoRec()
 
 		let anErr = MADMusicInfoCFURL(theLibrary, &cStrType, URL, &infoRec)
 		
-		return (infoRec, anErr)
+		if anErr == .NoErr {
+			return .Success(infoRec)
+		} else {
+			return .Failure(anErr)
+		}
 	}
 	
 	///Gathers information about a tracker at the specified URL.
@@ -292,11 +301,14 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		
 		let filInfo = informationFromFile(URL: apath, cType: cStrType)
 		
-		if filInfo.error == .NoErr {
-			let anInfo = MusicFileInfo(infoRec: filInfo.info)
-			return (anInfo, filInfo.error)
-		} else {
-			return (nil, filInfo.error)
+		switch filInfo {
+		case .Failure(let aVal):
+			return (nil, aVal)
+			
+		case .Success(let aVal):
+			let anInfo = MusicFileInfo(infoRec: aVal)
+
+			return (anInfo, .NoErr)
 		}
 	}
 	
@@ -329,13 +341,17 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		
 		let aRet = informationFromFile(URL: path, cType: cStrType)
 		
-		if aRet.error == .NoErr {
-			let tmpDict = infoRecToDictionary(aRet.info)
+		switch aRet {
+		case .Failure(let aVal):
+			return aVal
+			
+		case .Success(let aVal):
+			let tmpDict = infoRecToDictionary(aVal)
 			
 			info.memory = tmpDict
+			
+			return .NoErr
 		}
-		
-		return aRet.error
 	}
 	
 	///Gathers information about a tracker at the specified path.
@@ -452,13 +468,16 @@ extension PPLibrary {
 		
 		let aRet = informationFromFile(URL: path, cType: cStrType)
 		
-		if aRet.error == .NoErr {
-			let tmpDict = infoRecToDictionary(aRet.info)
+		switch aRet {
+		case .Failure(let aVal):
+			return aVal
+			
+		case .Success(let aVal):
+			let tmpDict = infoRecToDictionary(aVal)
 			
 			info.memory = tmpDict
+			return .NoErr
 		}
-		
-		return aRet.error
 	}
 	
 	///Deprecated: do not use
