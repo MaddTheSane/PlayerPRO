@@ -18,13 +18,13 @@
 
 void testDebugFunc(short line, const char* file, const char* info)
 {
-	NSLog(@"%s:%d %s", file, line, info);
+	NSString *formattedStr = [NSString stringWithFormat:@"%s:%d %s", file, line, info];
+	NSLog(@"%@", formattedStr);
 }
 
 static void cXTCFail(short line, const char* file, const char* info)
 {
 	_XCTFailureHandler(currentTestClass, YES, file, line, @(info), @"");
-	//XCTFail();
 }
 
 void (*cDebugFunc)(short, const char*, const char*) = testDebugFunc;

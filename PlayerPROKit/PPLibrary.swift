@@ -105,14 +105,14 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 
 	///Resets the debug function called by `MADDebugStr` to the default.
 	public class func deregisterDebugFunction() {
-		MADRegisterDebugFunc(nil)
+		MADRegisterDebugBlock(nil)
 	}
 	
 	///Sets the debug function called by `MADDebugStr` to that of the passed in C function.
 	///
-	///:param: newDebugFunc The debug block to pass in. The first variable is the line number of the code the debug function was called from, the second is the file name of the function called in, the third is the developer-supplied text passed in.
+	///:param: newDebugFunc The debug function to pass in. The first variable is the line number of the code the debug function was called from, the second is the file name of the function called in, the third is the developer-supplied text passed in.
 	///
-	///Swift functions can't be translated to `CFunctionPointer`s, so use `registerDebugBlock(_:)`, below, if you want to use a Swift version
+	///Swift functions can't be translated to `CFunctionPointer`s, so use `registerDebugBlock(_:)`, below, if you want to set it via Swift.
 	@objc public class func registerDebugFunction(newDebugFunc: CFunctionPointer<((Int16, UnsafePointer<Int8>, UnsafePointer<Int8>) -> Void)>) {
 		MADRegisterDebugFunc(newDebugFunc)
 	}
@@ -198,7 +198,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	
 	///Init a PPLibrary object, including plug-ins from `plugInURL`.
 	///
-	///:param: URL The URL to a directory that has additional plug-ins. This *must* be a file URL.
+	///:param: URL The file URL to a directory that has additional plug-ins.
 	public convenience init?(plugInURL URL: NSURL) {
 		self.init(plugInCPath: URL.fileSystemRepresentation)
 	}
@@ -210,7 +210,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	
 	///Attempts to identify the file at the URL passed to it.
 	///
-	///:param: apath The tracker at URL to identify.
+	///:param: apath The tracker at the file URL to identify.
 	///:returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil.
 	public func identifyFile(URL apath: NSURL) -> (format: String?, error: MADErr) {
 		var cType = [Int8](count: 5, repeatedValue: 0)
@@ -235,7 +235,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	
 	///Attempts to identify the tracker at the specified URL.
 	///
-	///:param: apath The tracker at URL to identify.
+	///:param: apath The tracker at the file URL to identify.
 	///:param: type A pointer to an `NSString` object. On return and if successful, set to the tracker type the file is.
 	///:returns: An error value, or `MADNoErr` on success.
 	///
@@ -284,7 +284,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	
 	///Gathers information about a tracker at the specified URL.
 	///
-	///:param: apath A file NSURL pointing to the tracker.
+	///:param: apath A file URL pointing to the tracker.
 	///:param: type The tracker type of the file.
 	///:returns: A tuple with an optional `MusicFileInfo` type and an error value. If `error` is `.NoErr`, the `info` value will not be `nil`.
 	public func informationFromFile(URL apath: NSURL, type: String) -> (info: MusicFileInfo?, error: MADErr) {
@@ -354,7 +354,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 	}
 	
-	///Test the tracker at the URL is actually of type `type`.
+	///Test the tracker at the file URL is actually of type `type`.
 	///
 	///:param: URL The file URL of the tracker to test.
 	///:param: type The type to test for.

@@ -19,11 +19,10 @@ extern "C" {
 
 void testDebugFunc(short, const char*, const char*);
 extern void (*cDebugFunc)(short, const char*, const char*);
-	
-	
+
 extern void (*cXTCFailFunc)(short, const char*, const char*);
 
-	extern XCTestCase *currentTestClass;
+extern XCTestCase *currentTestClass;
 	
 #ifdef __cplusplus
 }
