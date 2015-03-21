@@ -981,27 +981,18 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = iGetEOF(iFileRefI);
 				
-				// ** MEMORY Test
-				AlienFile = malloc(sndSize * 2);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
-					free(AlienFile);
-					
-					AlienFile = malloc(sndSize);
-					if (AlienFile == NULL) {
-						myErr = MADNeedMemory;
-					} else {
-						myErr = iRead(sndSize, AlienFile, iFileRefI);
+					myErr = iRead(sndSize, AlienFile, iFileRefI);
+					if (myErr == MADNoErr) {
+						myErr = TestITFile(AlienFile);
 						if (myErr == MADNoErr) {
-							myErr = TestITFile(AlienFile);
-							if (myErr == MADNoErr) {
-								myErr = ConvertIT2Mad(AlienFile, sndSize, MadFile, init);
-							}
+							myErr = ConvertIT2Mad(AlienFile, sndSize, MadFile, init);
 						}
 					}
-					free(AlienFile);
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else
@@ -1044,8 +1035,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 					if (myErr == MADNoErr) {
 						myErr = ExtractITInfo(info, AlienFile);
 					}
-					free(AlienFile);
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else

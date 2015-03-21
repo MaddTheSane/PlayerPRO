@@ -380,14 +380,10 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = iGetEOF(iFileRefI);
 				
-				// ** MEMORY Test
-				AlienFile = malloc(sndSize * 2L);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
-					free(AlienFile);
-					
-					AlienFile = malloc(sndSize);
 					myErr = iRead(sndSize, AlienFile,iFileRefI);
 					if (myErr == MADNoErr) {
 						myErr = TestAMFFile(AlienFile);
