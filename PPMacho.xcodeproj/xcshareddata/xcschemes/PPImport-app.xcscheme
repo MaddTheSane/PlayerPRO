@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0610"
+   LastUpgradeVersion = "0620"
    version = "2.0">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -42,6 +42,7 @@
       allowLocationSimulation = "NO"
       viewDebuggingEnabled = "No">
       <PathRunnable
+         runnableDebuggingMode = "0"
          FilePath = "/usr/bin/mdimport">
       </PathRunnable>
       <MacroExpansion>

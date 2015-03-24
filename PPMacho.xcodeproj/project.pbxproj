@@ -3292,10 +3292,10 @@
 			files = (
 				559C418E183EB4AB004A073C /* CoreFoundation.framework in Frameworks */,
 				555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */,
-				555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */,
 				559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */,
 				55B1D404187C9B31002754C5 /* Foundation.framework in Frameworks */,
 				555C5FC818445C3600DBD5DA /* Cocoa.framework in Frameworks */,
+				555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6280,7 +6280,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0620;
 				TargetAttributes = {
 					5513EACD19A5AE4200BCC483 = {
 						CreatedOnToolsVersion = 6.0;
