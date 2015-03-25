@@ -10,10 +10,10 @@
 #include <PlayerPROCore/MADDefs.h>
 
 __BEGIN_DECLS
-extern __nonnull NSString * const PPMADErrorDomain;
+extern NSString * __nonnull const PPMADErrorDomain;
 
-extern __nullable NSError *PPCreateErrorFromMADErrorType(MADErr theErr) NS_RETURNS_RETAINED;
-extern __nullable NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL convertToCocoa) NS_RETURNS_RETAINED;
-extern BOOL PPErrorIsUserCancelled(__nonnull NSError *theErr);
+extern NSError* __nullable PPCreateErrorFromMADErrorType(MADErr theErr) NS_RETURNS_RETAINED;
+extern NSError* __nullable PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL convertToCocoa) NS_RETURNS_RETAINED;
+extern BOOL PPErrorIsUserCancelled(NSError * __nonnull theErr);
 
 __END_DECLS

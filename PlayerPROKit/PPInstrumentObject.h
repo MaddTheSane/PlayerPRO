@@ -34,20 +34,20 @@
 @property (nonatomic, readonly, copy, nonnull) NSArray *volumeEnvelope;
 @property (nonatomic, readonly, copy, nonnull) NSArray *panningEnvelope;
 @property (nonatomic, readonly, copy, nonnull) NSArray *pitchEnvelope;
-- (void)replaceObjectInPanningEnvelopeAtIndex:(NSInteger)index withObject:(__nonnull PPEnvelopeObject*)object;
-- (void)replaceObjectInVolumeEnvelopeAtIndex:(NSInteger)index withObject:(__nonnull PPEnvelopeObject*)object;
-- (void)replaceObjectInPitchEnvelopeAtIndex:(NSInteger)index withObject:(__nonnull PPEnvelopeObject*)object;
-- (__nonnull PPEnvelopeObject*)panningEnvelopeObjectAtIndex:(NSInteger)index;
-- (__nonnull PPEnvelopeObject*)volumeEnvelopeObjectAtIndex:(NSInteger)index;
-- (__nonnull PPEnvelopeObject*)pitchEnvelopeObjectAtIndex:(NSInteger)index;
+- (void)replaceObjectInPanningEnvelopeAtIndex:(NSInteger)index withObject:(nonnull PPEnvelopeObject *)object;
+- (void)replaceObjectInVolumeEnvelopeAtIndex:(NSInteger)index withObject:(nonnull PPEnvelopeObject *)object;
+- (void)replaceObjectInPitchEnvelopeAtIndex:(NSInteger)index withObject:(nonnull PPEnvelopeObject *)object;
+- (nonnull PPEnvelopeObject *)panningEnvelopeObjectAtIndex:(NSInteger)index;
+- (nonnull PPEnvelopeObject *)volumeEnvelopeObjectAtIndex:(NSInteger)index;
+- (nonnull PPEnvelopeObject *)pitchEnvelopeObjectAtIndex:(NSInteger)index;
 @property (readonly) NSInteger countOfVolumeEnvelope;
 @property (readonly) NSInteger countOfPanningEnvelope;
 @property (readonly) NSInteger countOfPitchEnvelope;
 
 @property (readonly, nonnull) MADByte* what NS_RETURNS_INNER_POINTER;
 
-- (__nonnull PPSampleObject *)objectAtIndexedSubscript:(NSInteger)index;
-- (void)setObject:(__nonnull PPSampleObject *)obj atIndexedSubscript:(NSInteger)index;
+- (nonnull PPSampleObject *)objectAtIndexedSubscript:(NSInteger)index;
+- (void)setObject:(nonnull PPSampleObject *)obj atIndexedSubscript:(NSInteger)index;
 - (void)resetInstrument;
 
 @property unsigned short volumeFadeOut;
@@ -96,10 +96,10 @@
 
 @property (readonly, getter=isBlankInstrument) BOOL blankInstrument;
 
-- (void)addSampleObject:(__nonnull PPSampleObject *)object;
-- (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(__nonnull PPSampleObject *)object;
+- (void)addSampleObject:(nonnull PPSampleObject *)object;
+- (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(nonnull PPSampleObject *)object;
 @property (readonly) NSInteger countOfSamples;
-- (__nonnull PPSampleObject*)samplesObjectAtIndex:(NSInteger)idx;
-- (void)removeSamplesAtIndexes:(__nonnull NSIndexSet *)indexes;
+- (nonnull PPSampleObject *)samplesObjectAtIndex:(NSInteger)idx;
+- (void)removeSamplesAtIndexes:(nonnull NSIndexSet *)indexes;
 
 @end
