@@ -434,6 +434,8 @@
 		5579D7E01A648F3300401D75 /* CppIncludeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5579D7DF1A648F3300401D75 /* CppIncludeTest.mm */; };
 		5579D7E11A648F3300401D75 /* CppIncludeTest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5579D7DF1A648F3300401D75 /* CppIncludeTest.mm */; };
 		557DC36E19BBA76C003CACFE /* DocumentPluginHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557DC36D19BBA76C003CACFE /* DocumentPluginHelper.swift */; };
+		557DC6C11AB6034F0091649A /* Error_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557DC6C01AB6034F0091649A /* Error_Tests.swift */; };
+		557DC6C21AB6034F0091649A /* Error_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557DC6C01AB6034F0091649A /* Error_Tests.swift */; };
 		557DE42E10E06BF200177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE5D910E0882800177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		557DE61C10E0884100177B4C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
@@ -659,6 +661,8 @@
 		55C52CC51A8ABC1D00E448F5 /* SamplePlugHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C52CC41A8ABC1D00E448F5 /* SamplePlugHandler.swift */; };
 		55C52CC81A8ABC5100E448F5 /* PPSamplePlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C52CC71A8ABC5100E448F5 /* PPSamplePlugObject.m */; };
 		55C52CCE1A8AC1C100E448F5 /* PPSamplePlugCompatObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C52CCD1A8AC1C100E448F5 /* PPSamplePlugCompatObject.m */; };
+		55C563D01AB659DD00F7E4FA /* TestMADK.madk in Resources */ = {isa = PBXBuildFile; fileRef = 55C563CF1AB659DD00F7E4FA /* TestMADK.madk */; };
+		55C563D11AB659DD00F7E4FA /* TestMADK.madk in Resources */ = {isa = PBXBuildFile; fileRef = 55C563CF1AB659DD00F7E4FA /* TestMADK.madk */; };
 		55C5754019CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
 		55C5754119CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
 		55C8EDE1187CC8B200CC8C1B /* PPPatternObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287216A8968C009013D8 /* PPPatternObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2494,6 +2498,7 @@
 		5579D7DF1A648F3300401D75 /* CppIncludeTest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CppIncludeTest.mm; sourceTree = "<group>"; };
 		557ACC2019A44FD100DE7EBC /* DigitalPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigitalPlugHandler.swift; sourceTree = "<group>"; };
 		557DC36D19BBA76C003CACFE /* DocumentPluginHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentPluginHelper.swift; sourceTree = "<group>"; };
+		557DC6C01AB6034F0091649A /* Error_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error_Tests.swift; sourceTree = "<group>"; };
 		557DE43410E06BF200177B4C /* Amplitude.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amplitude.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		557DE43510E06BF200177B4C /* Amplitude-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Amplitude-Info.plist"; sourceTree = "<group>"; };
 		557DE5C310E0876E00177B4C /* Backwards-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Backwards-Info.plist"; sourceTree = "<group>"; };
@@ -2651,6 +2656,7 @@
 		55C52CCB1A8AC02F00E448F5 /* PPSamplePlugObject-private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PPSamplePlugObject-private.h"; sourceTree = "<group>"; };
 		55C52CCC1A8AC1C100E448F5 /* PPSamplePlugCompatObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSamplePlugCompatObject.h; sourceTree = "<group>"; };
 		55C52CCD1A8AC1C100E448F5 /* PPSamplePlugCompatObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSamplePlugCompatObject.m; sourceTree = "<group>"; };
+		55C563CF1AB659DD00F7E4FA /* TestMADK.madk */ = {isa = PBXFileReference; lastKnownFileType = file; path = TestMADK.madk; sourceTree = "<group>"; };
 		55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInstrumentPlugBridgeHelper.m; sourceTree = "<group>"; };
 		55C5754219CE32C6005109C9 /* PPInstrumentPlugBridgeHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPInstrumentPlugBridgeHelper.h; sourceTree = "<group>"; };
 		55C5754319CE3559005109C9 /* ARCBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARCBridge.h; sourceTree = "<group>"; };
@@ -3285,10 +3291,10 @@
 			files = (
 				559C418E183EB4AB004A073C /* CoreFoundation.framework in Frameworks */,
 				555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */,
-				555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */,
 				559C4189183EB4AB004A073C /* QuickLook.framework in Frameworks */,
 				55B1D404187C9B31002754C5 /* Foundation.framework in Frameworks */,
 				555C5FC818445C3600DBD5DA /* Cocoa.framework in Frameworks */,
+				555C5FC918445C4500DBD5DA /* CoreMIDI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4566,7 +4572,9 @@
 				55C9191C1A000BFB0049F4E4 /* tmpHeader.h */,
 				5528D1321A115AF9001E30CF /* NotesConversion.swift */,
 				55ADD23E19B4F858005588B5 /* PlayerPROKit_Tests.swift */,
+				557DC6C01AB6034F0091649A /* Error_Tests.swift */,
 				555272541A0001CE008B8616 /* PPKPcmd_Tests.swift */,
+				55C563CF1AB659DD00F7E4FA /* TestMADK.madk */,
 				5579D7DF1A648F3300401D75 /* CppIncludeTest.mm */,
 				55ADD23C19B4F858005588B5 /* Supporting Files */,
 			);
@@ -6569,6 +6577,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55C563D11AB659DD00F7E4FA /* TestMADK.madk in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6890,6 +6899,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55C563D01AB659DD00F7E4FA /* TestMADK.madk in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7151,6 +7161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5528D1341A115AF9001E30CF /* NotesConversion.swift in Sources */,
+				557DC6C21AB6034F0091649A /* Error_Tests.swift in Sources */,
 				55C9191D1A000C3F0049F4E4 /* PlayerPROKit_Tests.swift in Sources */,
 				5579D7E11A648F3300401D75 /* CppIncludeTest.mm in Sources */,
 				55C9191E1A000C3F0049F4E4 /* PPKPcmd_Tests.swift in Sources */,
@@ -7607,6 +7618,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5528D1331A115AF9001E30CF /* NotesConversion.swift in Sources */,
+				557DC6C11AB6034F0091649A /* Error_Tests.swift in Sources */,
 				55ADD23F19B4F858005588B5 /* PlayerPROKit_Tests.swift in Sources */,
 				5579D7E01A648F3300401D75 /* CppIncludeTest.mm in Sources */,
 				555272551A0001CE008B8616 /* PPKPcmd_Tests.swift in Sources */,

@@ -409,14 +409,10 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = iGetEOF(iFileRefI);
 				
-				// ** MEMORY Test
-				AlienFile = malloc(sndSize * 2);
+				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
 				} else {
-					free(AlienFile);
-					
-					AlienFile = malloc(sndSize);
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					if (myErr == MADNoErr) {
 						myErr = Test669File(AlienFile);
@@ -433,7 +429,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI) {
-				sndSize = 1024L;
+				sndSize = 1024;
 				
 				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL)
@@ -455,7 +451,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				info->fileSize = iGetEOF(iFileRefI);
 				
-				sndSize = 5000L; // Read only 5000 first bytes for optimisation
+				sndSize = 5000; // Read only 5000 first bytes for optimisation
 				
 				AlienFile = (char*)malloc(sndSize);
 				if (AlienFile == NULL)

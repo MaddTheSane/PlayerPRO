@@ -1451,8 +1451,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 					iWrite(sndSize, AlienFile, iFileRefI);
 					iClose(iFileRefI);
 				}
-				free(AlienFile);
-				AlienFile = NULL;
+				free(AlienFile); AlienFile = NULL;
 			} else
 				myErr = MADNeedMemory;
 			break;
@@ -1462,28 +1461,17 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = iGetEOF(iFileRefI);
 				
-				// ** MEMORY Test Start
-				AlienFile = malloc(sndSize * 2);
-				if (AlienFile == NULL) myErr = MADNeedMemory;
-				// ** MEMORY Test End
-				
-				else
-				{
-					free(AlienFile);
+				AlienFile = malloc(sndSize);
+				if (AlienFile == NULL) {
+					myErr = MADNeedMemory;
+				} else {
+					iRead(sndSize, AlienFile, iFileRefI);
 					
-					AlienFile = malloc(sndSize);
-					if (AlienFile == NULL)
-						myErr = MADNeedMemory;
-					else {
-						iRead(sndSize, AlienFile, iFileRefI);
-						
-						myErr = TestS3MFile(AlienFile);
-						if (myErr == MADNoErr) {
-							myErr = ConvertS3M2Mad(AlienFile,  sndSize, MadFile, init);
-						}
+					myErr = TestS3MFile(AlienFile);
+					if (myErr == MADNoErr) {
+						myErr = ConvertS3M2Mad(AlienFile,  sndSize, MadFile, init);
 					}
-					free(AlienFile);
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else
@@ -1504,15 +1492,14 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 					if(myErr == MADNoErr)
 						myErr = TestS3MFile(AlienFile);
 					
-					free(AlienFile);
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else
 				myErr = MADReadingErr;
 			break;
 			
-		case 'INFO':
+		case MADPlugInfo:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI) {
 				info->fileSize = iGetEOF(iFileRefI);
@@ -1529,8 +1516,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 						if (!myErr)
 							myErr = ExtractS3MInfo(info, AlienFile);
 					}
-					free(AlienFile);
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else

@@ -11,4 +11,22 @@
 
 #include <PlayerPROCore/PlayerPROCore.h>
 
+@class XCTestCase;
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void testDebugFunc(short, const char*, const char*);
+extern void (*cDebugFunc)(short, const char*, const char*);
+
+extern void (*cXTCFailFunc)(short, const char*, const char*);
+
+extern XCTestCase *currentTestClass;
+	
+#ifdef __cplusplus
+}
+#endif
+
+
 #endif

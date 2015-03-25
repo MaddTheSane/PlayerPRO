@@ -7,18 +7,16 @@
 #include "MADFileUtils.h"
 #include "GetMetadataForFile.h"
 
-static NSCharacterSet *ourSet;
-static dispatch_once_t charSetOnce;
-static dispatch_block_t charBlock = ^{
-	NSMutableCharacterSet *tmpSet = [[NSCharacterSet whitespaceCharacterSet] mutableCopy];
-	[tmpSet addCharactersInString:@"-."];
-	ourSet = [tmpSet copy];
-};
-
 static NSString *StripStringOfSpaces(NSString *s, BOOL andDashes) NS_RETURNS_RETAINED;
 NSString *StripStringOfSpaces(NSString *s, BOOL andDashes)
 {
-	dispatch_once(&charSetOnce, charBlock);
+	static NSCharacterSet *ourSet;
+	static dispatch_once_t charSetOnce;
+	dispatch_once(&charSetOnce, ^{
+		NSMutableCharacterSet *tmpSet = [[NSCharacterSet whitespaceCharacterSet] mutableCopy];
+		[tmpSet addCharactersInString:@"-."];
+		ourSet = [tmpSet copy];
+	});
 	if (s == nil)
 		return nil;
 	

@@ -466,16 +466,10 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = iGetEOF(iFileRefI);
 				
-				// ** MEMORY Test Start
-				AlienFile = malloc(sndSize * 2);
-				if (AlienFile == NULL)
+				AlienFile = malloc(sndSize);
+				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
-				// ** MEMORY Test End
-				
-				else {
-					free(AlienFile);
-					
-					AlienFile = malloc(sndSize);
+				} else {
 					myErr = iRead(sndSize, AlienFile, iFileRefI);
 					if (myErr == MADNoErr) {
 						myErr = TestOKTAFile(AlienFile);
@@ -483,8 +477,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 							myErr = ConvertOKTA2Mad(AlienFile,  sndSize, MadFile, init);
 						}
 					}
-					free(AlienFile);
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else
@@ -493,9 +486,8 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 			
 		case MADPlugTest:
 			iFileRefI = iFileOpenRead(AlienFileName);
-			if (iFileRefI)
-			{
-				sndSize = 1024L;
+			if (iFileRefI) {
+				sndSize = 1024;
 				
 				AlienFile = malloc(sndSize);
 				if (AlienFile == NULL) myErr = MADNeedMemory;
@@ -504,15 +496,14 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 					if(myErr == MADNoErr)
 						myErr = TestOKTAFile(AlienFile);
 					
-					free(AlienFile);
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else
 				myErr = MADReadingErr;
 			break;
 			
-		case 'INFO':
+		case MADPlugInfo:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI)
 			{
@@ -526,8 +517,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 					if (myErr == MADNoErr) {
 						myErr = ExtractOKTAInfo(info, AlienFile, sndSize);
 					}
-					free(AlienFile);
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else

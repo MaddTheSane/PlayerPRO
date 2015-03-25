@@ -12,21 +12,33 @@ import PlayerPROKit
 
 class NotesConversion: XCTestCase {
 	
+	override func setUp() {
+		super.setUp()
+		// Put setup code here. This method is called before the invocation of each test method in the class.
+		currentTestClass = self
+		MADRegisterDebugFunc(cXTCFailFunc)
+	}
+	
+	override func tearDown() {
+		// Put teardown code here. This method is called after the invocation of each test method in the class.
+		super.tearDown()
+	}
+
 	func getNotesWithLetters(#useLetters: Bool) -> [String] {
 		var noteNames = [String]()
 		for i in 0..<96 {
-			if let aNote = OctaveNameFromNote(Int16(i), letters: useLetters) {
+			if let aNote = octaveNameFromNote(Int16(i), letters: useLetters) {
 				noteNames.append(aNote)
 			}
 		}
 		
 		XCTAssert(noteNames.count == 96, "Didn't get all 96 note strings")
-
+		
 		return noteNames
 	}
 	
 	func testNotesWithLettersTime() {
-		self.measureBlock {
+		measureBlock() {
 			var noteNames = self.getNotesWithLetters(useLetters: false)
 		}
 	}
@@ -34,10 +46,10 @@ class NotesConversion: XCTestCase {
 	func testNoteConversionLetter() {
 		var noteNames = getNotesWithLetters(useLetters: true)
 		
-		self.measureBlock { () -> Void in
+		measureBlock() {
 			var noteNums = [Int16]()
 			for aStr in noteNames {
-				if let aNoteNum: Int16 = NoteFromString(aStr) {
+				if let aNoteNum: Int16 = noteFromString(aStr) {
 					noteNums.append(aNoteNum)
 				}
 			}
@@ -49,10 +61,10 @@ class NotesConversion: XCTestCase {
 	func testNoteConversionDoReMi() {
 		var noteNames = getNotesWithLetters(useLetters: false)
 		
-		self.measureBlock { () -> Void in
+		measureBlock() {
 			var noteNums = [Int16]()
 			for aStr in noteNames {
-				if let aNoteNum: Int16 = NoteFromString(aStr) {
+				if let aNoteNum: Int16 = noteFromString(aStr) {
 					noteNums.append(aNoteNum)
 				}
 			}
@@ -64,7 +76,7 @@ class NotesConversion: XCTestCase {
 	func testEdgeCaseStrings() {
 		let edgeStrings = ["d♯4", "re-2", "mi♯5", "g5", "so1", "ti2"]
 		for aStr in edgeStrings {
-			if let aNote: Int16 = NoteFromString(aStr) {
+			if let aNote: Int16 = noteFromString(aStr) {
 				
 			} else {
 				XCTFail("Could not decode \(aStr)")
@@ -73,18 +85,18 @@ class NotesConversion: XCTestCase {
 	}
 	
 	func testInvalidNotesFromString() {
-		let invalidStrs = ["", "  ", "c", "C", "---", "B75", "adda5", "♯2"]
+		let invalidStrs = ["", "  ", "c", "C", "---", "B75", "adda5", "♯2", "b9"]
 		for aStr in invalidStrs {
-			if let aNote: Int16 = NoteFromString(aStr) {
+			if let aNote: Int16 = noteFromString(aStr) {
 				XCTFail("Accidentally got a note back, \(aStr) got converted to \(aNote)")
 			}
 		}
 	}
 	
 	func testInvalidStringsFromNotes() {
-		let invalidNums: [Int16] = [-1, 96, 100, 0xFF]
+		let invalidNums: [Int16] = [-1, 96, 100, 0xFF, 0xFE]
 		for i in invalidNums {
-			if let aStr = OctaveNameFromNote(i) {
+			if let aStr = octaveNameFromNote(i) {
 				XCTFail("Accidentally got a number back, \(i) got converted to \(aStr)")
 			}
 		}

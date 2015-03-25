@@ -642,16 +642,10 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 			if (iFileRefI) {
 				sndSize = iGetEOF(iFileRefI);
 				
-				// ** MEMORY Test Start
-				AlienFile = malloc(sndSize * 2L);
-				if (AlienFile == NULL)
+				AlienFile = malloc(sndSize);
+				if (AlienFile == NULL) {
 					myErr = MADNeedMemory;
-				// ** MEMORY Test End
-				
-				else {
-					free(AlienFile);
-					
-					AlienFile = malloc(sndSize);
+				} else {
 					iRead(sndSize, AlienFile, iFileRefI);
 					
 					myErr = TestMEDFile(AlienFile);
@@ -659,12 +653,10 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 						myErr = MED_Load(AlienFile,  sndSize, MadFile, init, &medInfo);
 					}
 					
-					free(AlienFile);
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
-			}
-			else
+			} else
 				myErr = MADReadingErr;
 			break;
 			
@@ -680,15 +672,14 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 					iRead(sndSize, AlienFile, iFileRefI);
 					myErr = TestMEDFile(AlienFile);
 					
-					free(AlienFile);
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else
 				myErr = MADReadingErr;
 			break;
 			
-		case 'INFO':
+		case MADPlugInfo:
 			iFileRefI = iFileOpenRead(AlienFileName);
 			if (iFileRefI) {
 				info->fileSize = iGetEOF(iFileRefI);
@@ -700,8 +691,7 @@ extern MADErr PPImpExpMain(MADFourChar order, char* AlienFileName, MADMusic *Mad
 				else {
 					iRead(sndSize, AlienFile, iFileRefI);
 					myErr = ExtractMEDInfo(info, AlienFile, &medInfo);
-					free(AlienFile);
-					AlienFile = NULL;
+					free(AlienFile); AlienFile = NULL;
 				}
 				iClose(iFileRefI);
 			} else
