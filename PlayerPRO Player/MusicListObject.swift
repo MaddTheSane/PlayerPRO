@@ -79,8 +79,8 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 			let manager = NSFileManager.defaultManager();
 			if let theparam = manager.attributesOfItemAtPath(self.musicURL.path!, error: nil) {
 				if let tmpfilesize: AnyObject = theparam[NSFileSize] {
-					let aFileSize = tmpfilesize as! UInt64
-					return aFileSize
+					let aFileSize = tmpfilesize as! NSNumber
+					return aFileSize.unsignedLongLongValue
 				} else {
 					return 0
 				}
@@ -88,8 +88,8 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 				return 0
 			}
 		} else {
-			let retNum = val as! UInt64
-			return retNum
+			let retNum = val as! NSNumber
+			return retNum.unsignedLongLongValue
 		}
 		}()
 	
