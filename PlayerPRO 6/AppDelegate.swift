@@ -383,7 +383,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			let renameFile =  NSLocalizedString("Rename", comment: "rename file")
 			let openFile = NSLocalizedString("Open", comment: "Open a file")
 			let cancelOp = NSLocalizedString("Cancel", comment: "Cancel")
-			let unwrapped = NSString(format: invExtDes, theURL.lastPathComponent!) as! String
+			let unwrapped = String(format: invExtDes, theURL.lastPathComponent!)
 			
 			let retVal = PPRunInformationalAlertPanel(NSLocalizedString("Invalid Extension", comment: "Invalid extension"), message: unwrapped, defaultButton: NSLocalizedString("Rename", comment: "rename file"), alternateButton: NSLocalizedString("Open", comment:"Open a file"), otherButton: NSLocalizedString("Cancel", comment: "Cancel"));
 			switch (retVal) {
@@ -404,7 +404,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 					var err: NSError? = nil
 					if (NSFileManager.defaultManager().moveItemAtURL(theURL, toURL:tmpURL, error:&err) == false) {
 						println("Could not move file, error: \(err!)")
-						let unwrapped = NSString(format: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), tmpURL.lastPathComponent!, theURL.lastPathComponent!) as! String
+						let unwrapped = String(format: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), tmpURL.lastPathComponent!, theURL.lastPathComponent!)
 						PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: unwrapped);
 					} else {
 						theURL = tmpURL;

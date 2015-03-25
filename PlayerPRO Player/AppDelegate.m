@@ -13,6 +13,7 @@
 #include "PPByteswap.h"
 #import <AVFoundation/AVFoundation.h>
 #import "PlayerPRO_Player-Swift.h"
+@import PlayerPROKit;
 
 #define kUnresolvableFile @"Unresolvable files"
 #define kUnresolvableFileDescription @"There were %lu file(s) that were unable to be resolved."
