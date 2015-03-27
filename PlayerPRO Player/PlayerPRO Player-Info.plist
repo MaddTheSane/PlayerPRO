@@ -612,41 +612,6 @@
 		<dict>
 			<key>UTTypeConformsTo</key>
 			<array>
-				<string>public.audio</string>
-				<string>public.data</string>
-			</array>
-			<key>UTTypeDescription</key>
-			<string>MIDI File</string>
-			<key>UTTypeIconFile</key>
-			<string>MIDI</string>
-			<key>UTTypeIdentifier</key>
-			<string>public.midi-audio</string>
-			<key>UTTypeReferenceURL</key>
-			<string>http://www.midi.org/about-midi/specinfo.shtml</string>
-			<key>UTTypeTagSpecification</key>
-			<dict>
-				<key>com.apple.ostype</key>
-				<array>
-					<string>Midi</string>
-				</array>
-				<key>public.filename-extension</key>
-				<array>
-					<string>mid</string>
-					<string>kar</string>
-					<string>smf</string>
-					<string>midi</string>
-				</array>
-				<key>public.mime-type</key>
-				<array>
-					<string>audio/mid</string>
-					<string>audio/midi</string>
-					<string>audio/x-midi</string>
-				</array>
-			</dict>
-		</dict>
-		<dict>
-			<key>UTTypeConformsTo</key>
-			<array>
 				<string>net.sourceforge.playerpro.tracker</string>
 				<string>public.data</string>
 			</array>

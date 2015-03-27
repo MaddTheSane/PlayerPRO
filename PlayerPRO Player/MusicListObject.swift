@@ -11,8 +11,8 @@ import Foundation
 	import Cocoa
 #endif
 
-private let kMusicListURLKey = "URLKey";
-private let kMusicListDateAddedKey = "DateAdded"
+private let kMusicListURLKey		= "URLKey"
+private let kMusicListDateAddedKey	= "DateAdded"
 
 private func URLsPointingToTheSameFile(urlA: NSURL, urlB: NSURL) -> Bool {
 	var dat1: AnyObject? = nil
@@ -104,7 +104,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		super.init();
 	}
 	
-	convenience init?(bookmarkData: NSData, resolutionOptions: NSURLBookmarkResolutionOptions = nil, relativeURL: NSURL? = nil, date: NSDate? = nil) {
+	convenience init?(bookmarkData: NSData, resolutionOptions: NSURLBookmarkResolutionOptions = nil, relativeURL: NSURL? = nil, date: NSDate? = NSDate()) {
 		if let resolvedURL = NSURL(byResolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeToURL: relativeURL, bookmarkDataIsStale: nil, error: nil) {
 			if let unwrapped = date {
 				self.init(URL: resolvedURL, date: unwrapped)

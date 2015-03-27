@@ -22,16 +22,16 @@ private func ==(lhs: OpenPanelViewController.OpenPanelViewItem, rhs: OpenPanelVi
 
 private var OpenPanelsInUse = [OpenPanelViewController]()
 
-class OpenPanelViewController: NSViewController {
-	enum utiType: Int {
+class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
+	private enum utiType: Int {
 		case allType = -1
 		case trackerType = -2
 		case playlistType = -3
 		case instrumentType = -4
 		case otherType = -5
-	};
+	}
 	
-	enum trackerType : UInt {
+	private enum trackerType: Int {
 		case tracker = 1
 		case playlist
 		case instrument
@@ -103,7 +103,7 @@ class OpenPanelViewController: NSViewController {
 		}
 	}
 	
-	let openPanel: NSOpenPanel
+	private let openPanel: NSOpenPanel
 	private let utiObjects: [OpenPanelViewItem]
 	@IBOutlet weak var popUp: NSPopUpButton? = nil
 	
@@ -252,6 +252,8 @@ class OpenPanelViewController: NSViewController {
 		
 		utiObjects = tmpUTIs
 		super.init(nibName: "PPOpenPanel", bundle: nil)
+		
+		openPanel.delegate = self
 	}
 	
 	func beginOpenPanel(#completionHandler: (result: Int) -> Void) {
@@ -367,7 +369,8 @@ class OpenPanelViewController: NSViewController {
 			openPanel.allowsMultipleSelection = false
 		}
 		
-		openPanel.allowedFileTypes = fileUTIs
+		self.openPanel.allowedFileTypes = fileUTIs
+		openPanel.canChooseFiles = true;
 		openPanel.accessoryView = self.view
 	}
 	
@@ -385,5 +388,13 @@ class OpenPanelViewController: NSViewController {
 			}
 		}
 		return false;
+	}
+	
+	func panel(sender: AnyObject, shouldEnableURL url: NSURL) -> Bool {
+		// We don't support non-file URLs yet.
+		if !url.fileURL {
+			return false
+		}
+		return true
 	}
 }
