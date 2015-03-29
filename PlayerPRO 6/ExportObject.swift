@@ -9,23 +9,23 @@
 import Cocoa
 import PlayerPROKit
 
-enum ExportStatus {
-	case NotRan
-	case Running
-	case Done
-	case EncounteredError
-}
-
 typealias PPExportBlock = @objc_block (theURL: NSURL, errStr: AutoreleasingUnsafeMutablePointer<NSString?>) -> MADErr
 typealias PPSwiftExportBlock = (theURL: NSURL, inout errStr: String?) -> MADErr
 
 @objc protocol ExportObjectDelegate: NSObjectProtocol {
 	@objc(PPExportObjectDidFinish:) func exportObjectDidFinish(theObj: ExportObject)
-	@objc(PPExportObjectEncounteredError:errorCode:errorString:) func exportObjectEncounteredError(theObj:ExportObject, errorCode errCode: MADErr, errorString errStr: NSString?)
+	@objc(PPExportObjectEncounteredError:errorCode:errorString:) func exportObjectEncounteredError(theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: String?)
 	@objc(PPExportAddObject:) func addExportObject(expObj: ExportObject)
 }
 
 final class ExportObject: NSObject {
+	enum ExportStatus {
+		case NotRan
+		case Running
+		case Done
+		case EncounteredError
+	}
+	
 	weak var delegate: ExportObjectDelegate? = nil
 	let destination: NSURL
 	private let exportBlock: PPExportBlock
@@ -64,7 +64,7 @@ final class ExportObject: NSObject {
 					let tmpErr = createErrorFromMADErrorType(errVal)!
 					aStr = tmpErr.description
 				}
-				let bStr: NSString = aStr ?? "Unknown error"
+				let bStr: String = (aStr ?? "Unknown error") as String
 				dispatch_async(dispatch_get_main_queue(), { () -> Void in
 					self.delegate?.exportObjectEncounteredError(self, errorCode: errVal, errorString: bStr)
 					return

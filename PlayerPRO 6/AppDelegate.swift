@@ -11,11 +11,11 @@ import PlayerPROCore
 import PlayerPROKit
 import SwiftAdditions
 
-private func makeNSRGB(red: UInt16, green: UInt16, blue:UInt16) -> NSColor {
+@inline(__always) private func makeNSRGB(red: UInt16, green: UInt16, blue:UInt16) -> NSColor {
 	return NSColor(calibratedRed: CGFloat(red) / CGFloat(UInt16.max), green: CGFloat(green) / CGFloat(UInt16.max), blue: CGFloat(blue) / CGFloat(UInt16.max), alpha: 1)
 }
 
-func CocoaDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
+private func CocoaDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
 	let swiftFile = NSFileManager.defaultManager().stringWithFileSystemRepresentation(file, length: Int(strlen(file)))
 	let swiftText = String.fromCString(text)!
 	println("\(swiftFile):\(line), error text: \(swiftText)")
@@ -225,7 +225,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			PPBEMarkersLoop: 3,
 			PPBEOctaveMarkers: true,
 			PPBENotesProjection: false,
-			PPDEMarkerColorPref: makeNSRGB(65535, 65535, 39321).PPencodeColor(),
+			PPDEMarkerColorPref: makeNSRGB(0xFFFF, 0xFFFF, 0x9999).PPencodeColor(),
 			
 			PPMAddExtension: true,
 			PPMMadCompression: true,
@@ -241,102 +241,102 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			PPCETrackHeight: 130]
 		
 		let colorDefaults = [
-			PPCColor1: makeNSRGB(61166, 0, 0).PPencodeColor(),
-			PPCColor2: makeNSRGB(35980, 48316, 7196).PPencodeColor(),
-			PPCColor3: makeNSRGB(13107, 65535, 65535).PPencodeColor(),
+			PPCColor1: makeNSRGB(0xEEEE, 0, 0).PPencodeColor(),
+			PPCColor2: makeNSRGB(0x8C8C, 0xBCBC, 0x1C1C).PPencodeColor(),
+			PPCColor3: makeNSRGB(0x3333, 0xFFFF, 0xFFFF).PPencodeColor(),
 			PPCColor4: NSColor.yellowColor().PPencodeColor(),
-			PPCColor5: makeNSRGB(24672, 51914, 36494).PPencodeColor(),
-			PPCColor6: makeNSRGB(13107, 65535, 65535).PPencodeColor(),
-			PPCColor7: makeNSRGB(26214, 52428, 65535).PPencodeColor(),
-			PPCColor8: makeNSRGB(65535, 25428, 65535).PPencodeColor(),
-			PPCColor9: makeNSRGB(52428, 39321, 26214).PPencodeColor(),
-			PPCColor10: makeNSRGB(13107, 26214, 13107).PPencodeColor(),
-			PPCColor11: makeNSRGB(65535, 26214, 65535).PPencodeColor(),
-			PPCColor12: makeNSRGB(65535, 39321, 0).PPencodeColor(),
-			PPCColor13: makeNSRGB(52428, 65535, 52428).PPencodeColor(),
-			PPCColor14: makeNSRGB(39321, 0, 26214).PPencodeColor(),
-			PPCColor15: makeNSRGB(26214, 52428, 0).PPencodeColor(),
-			PPCColor16: makeNSRGB(65535, 39321, 65535).PPencodeColor(),
-			PPCColor17: makeNSRGB(52428, 65535, 26214).PPencodeColor(),
-			PPCColor18: makeNSRGB(26214, 0, 39321).PPencodeColor(),
-			PPCColor19: makeNSRGB(52428, 0, 39321).PPencodeColor(),
-			PPCColor20: makeNSRGB(52428, 39321, 65535).PPencodeColor(),
-			PPCColor21: makeNSRGB(26214, 52428, 26214).PPencodeColor(),
-			PPCColor22: makeNSRGB(52428, 52428, 13107).PPencodeColor(),
-			PPCColor23: makeNSRGB(39321, 52428, 52428).PPencodeColor(),
-			PPCColor24: makeNSRGB(26214, 13109, 26214).PPencodeColor(),
-			PPCColor25: makeNSRGB(52428, 39321, 52428).PPencodeColor(),
-			PPCColor26: makeNSRGB(13107, 65535, 65535).PPencodeColor(),
-			PPCColor27: makeNSRGB(13107, 65535, 26214).PPencodeColor(),
-			PPCColor28: makeNSRGB(26214, 65535, 13107).PPencodeColor(),
-			PPCColor29: makeNSRGB(52428, 39321, 52428).PPencodeColor(),
-			PPCColor30: makeNSRGB(52428, 39321, 13107).PPencodeColor(),
-			PPCColor31: makeNSRGB(52428, 52428, 13107).PPencodeColor(),
-			PPCColor32: makeNSRGB(65535, 52428, 0).PPencodeColor(),
-			PPCColor33: makeNSRGB(61166, 0, 0).PPencodeColor(),
-			PPCColor34: makeNSRGB(0, 65535, 26214).PPencodeColor(),
+			PPCColor5: makeNSRGB(0x6060, 0xCACA, 36494).PPencodeColor(),
+			PPCColor6: makeNSRGB(0x3333, 0xFFFF, 0xFFFF).PPencodeColor(),
+			PPCColor7: makeNSRGB(0x6666, 0xCCCC, 0xFFFF).PPencodeColor(),
+			PPCColor8: makeNSRGB(0xFFFF, 0x6354, 0xFFFF).PPencodeColor(),
+			PPCColor9: makeNSRGB(0xCCCC, 0x9999, 0x6666).PPencodeColor(),
+			PPCColor10: makeNSRGB(0x3333, 0x6666, 0x3333).PPencodeColor(),
+			PPCColor11: makeNSRGB(0xFFFF, 0x6666, 0xFFFF).PPencodeColor(),
+			PPCColor12: makeNSRGB(0xFFFF, 0x9999, 0).PPencodeColor(),
+			PPCColor13: makeNSRGB(0xCCCC, 0xFFFF, 0xCCCC).PPencodeColor(),
+			PPCColor14: makeNSRGB(0x9999, 0, 0x6666).PPencodeColor(),
+			PPCColor15: makeNSRGB(0x6666, 0xCCCC, 0).PPencodeColor(),
+			PPCColor16: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).PPencodeColor(),
+			PPCColor17: makeNSRGB(0xCCCC, 0xFFFF, 0x6666).PPencodeColor(),
+			PPCColor18: makeNSRGB(0x6666, 0, 0x9999).PPencodeColor(),
+			PPCColor19: makeNSRGB(0xCCCC, 0, 0x9999).PPencodeColor(),
+			PPCColor20: makeNSRGB(0xCCCC, 0x9999, 0xFFFF).PPencodeColor(),
+			PPCColor21: makeNSRGB(0x6666, 0xCCCC, 0x6666).PPencodeColor(),
+			PPCColor22: makeNSRGB(0xCCCC, 0xCCCC, 0x3333).PPencodeColor(),
+			PPCColor23: makeNSRGB(0x9999, 0xCCCC, 0xCCCC).PPencodeColor(),
+			PPCColor24: makeNSRGB(0x6666, 13109, 0x6666).PPencodeColor(),
+			PPCColor25: makeNSRGB(0xCCCC, 0x9999, 0xCCCC).PPencodeColor(),
+			PPCColor26: makeNSRGB(0x3333, 0xFFFF, 0xFFFF).PPencodeColor(),
+			PPCColor27: makeNSRGB(0x3333, 0xFFFF, 0x6666).PPencodeColor(),
+			PPCColor28: makeNSRGB(0x6666, 0xFFFF, 0x3333).PPencodeColor(),
+			PPCColor29: makeNSRGB(0xCCCC, 0x9999, 0xCCCC).PPencodeColor(),
+			PPCColor30: makeNSRGB(0xCCCC, 0x9999, 0x3333).PPencodeColor(),
+			PPCColor31: makeNSRGB(0xCCCC, 0xCCCC, 0x3333).PPencodeColor(),
+			PPCColor32: makeNSRGB(0xFFFF, 0xCCCC, 0).PPencodeColor(),
+			PPCColor33: makeNSRGB(0xEEEE, 0, 0).PPencodeColor(),
+			PPCColor34: makeNSRGB(0, 0xFFFF, 0x6666).PPencodeColor(),
 			PPCColor35: NSColor.cyanColor().PPencodeColor(),
 			PPCColor36: NSColor.yellowColor().PPencodeColor(),
 			PPCColor37: NSColor.greenColor().PPencodeColor(),
-			PPCColor38: makeNSRGB(13107, 52428, 65535).PPencodeColor(),
-			PPCColor39: makeNSRGB(39321, 52428, 39321).PPencodeColor(),
-			PPCColor40: makeNSRGB(65535, 39321, 26214).PPencodeColor(),
-			PPCColor41: makeNSRGB(39321, 65535, 65535).PPencodeColor(),
-			PPCColor42: makeNSRGB(26214, 65535, 65535).PPencodeColor(),
-			PPCColor43: makeNSRGB(65535, 39321, 65535).PPencodeColor(),
-			PPCColor44: makeNSRGB(0, 21845, 0).PPencodeColor(),
-			PPCColor45: makeNSRGB(52428, 65535, 52428).PPencodeColor(),
-			PPCColor46: makeNSRGB(26214, 0, 0).PPencodeColor(),
-			PPCColor47: makeNSRGB(13107, 65535, 26214).PPencodeColor(),
-			PPCColor48: makeNSRGB(65535, 65535, 26214).PPencodeColor(),
-			PPCColor49: makeNSRGB(52428, 0, 0).PPencodeColor(),
-			PPCColor50: makeNSRGB(39321, 0, 13107).PPencodeColor(),
-			PPCColor51: makeNSRGB(39321, 65535, 39321).PPencodeColor(),
-			PPCColor52: makeNSRGB(39321, 52428, 52428).PPencodeColor(),
-			PPCColor53: makeNSRGB(52428, 52428, 0).PPencodeColor(),
-			PPCColor54: makeNSRGB(52428, 52428, 13107).PPencodeColor(),
-			PPCColor55: makeNSRGB(65535, 39321, 65535).PPencodeColor(),
+			PPCColor38: makeNSRGB(0x3333, 0xCCCC, 0xFFFF).PPencodeColor(),
+			PPCColor39: makeNSRGB(0x9999, 0xCCCC, 0x9999).PPencodeColor(),
+			PPCColor40: makeNSRGB(0xFFFF, 0x9999, 0x6666).PPencodeColor(),
+			PPCColor41: makeNSRGB(0x9999, 0xFFFF, 0xFFFF).PPencodeColor(),
+			PPCColor42: makeNSRGB(0x6666, 0xFFFF, 0xFFFF).PPencodeColor(),
+			PPCColor43: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).PPencodeColor(),
+			PPCColor44: makeNSRGB(0, 0x5555, 0).PPencodeColor(),
+			PPCColor45: makeNSRGB(0xCCCC, 0xFFFF, 0xCCCC).PPencodeColor(),
+			PPCColor46: makeNSRGB(0x6666, 0, 0).PPencodeColor(),
+			PPCColor47: makeNSRGB(0x3333, 0xFFFF, 0x6666).PPencodeColor(),
+			PPCColor48: makeNSRGB(0xFFFF, 0xFFFF, 0x6666).PPencodeColor(),
+			PPCColor49: makeNSRGB(0xCCCC, 0, 0).PPencodeColor(),
+			PPCColor50: makeNSRGB(0x9999, 0, 0x3333).PPencodeColor(),
+			PPCColor51: makeNSRGB(0x9999, 0xFFFF, 0x9999).PPencodeColor(),
+			PPCColor52: makeNSRGB(0x9999, 0xCCCC, 0xCCCC).PPencodeColor(),
+			PPCColor53: makeNSRGB(0xCCCC, 0xCCCC, 0).PPencodeColor(),
+			PPCColor54: makeNSRGB(0xCCCC, 0xCCCC, 0x3333).PPencodeColor(),
+			PPCColor55: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).PPencodeColor(),
 			PPCColor56: NSColor.redColor().PPencodeColor(),
-			PPCColor57: makeNSRGB(65535, 0, 26214).PPencodeColor(),
-			PPCColor58: makeNSRGB(26214, 65535, 65535).PPencodeColor(),
-			PPCColor59: makeNSRGB(26214, 65535, 52428).PPencodeColor(),
-			PPCColor60: makeNSRGB(39321, 52428, 26214).PPencodeColor(),
-			PPCColor61: makeNSRGB(39321, 52428, 39321).PPencodeColor(),
-			PPCColor62: makeNSRGB(39321, 52428, 26214).PPencodeColor(),
-			PPCColor63: makeNSRGB(52428, 52428, 26214).PPencodeColor(),
-			PPCColor64: makeNSRGB(52428, 52428, 39321).PPencodeColor(),
-			PPCColor65: makeNSRGB(61166, 0, 0).PPencodeColor(),
-			PPCColor66: makeNSRGB(0, 65535, 26214).PPencodeColor(),
-			PPCColor67: makeNSRGB(0, 65535, 65535).PPencodeColor(),
-			PPCColor68: makeNSRGB(65535, 65535, 0).PPencodeColor(),
+			PPCColor57: makeNSRGB(0xFFFF, 0, 0x6666).PPencodeColor(),
+			PPCColor58: makeNSRGB(0x6666, 0xFFFF, 0xFFFF).PPencodeColor(),
+			PPCColor59: makeNSRGB(0x6666, 0xFFFF, 0xCCCC).PPencodeColor(),
+			PPCColor60: makeNSRGB(0x9999, 0xCCCC, 0x6666).PPencodeColor(),
+			PPCColor61: makeNSRGB(0x9999, 0xCCCC, 0x9999).PPencodeColor(),
+			PPCColor62: makeNSRGB(0x9999, 0xCCCC, 0x6666).PPencodeColor(),
+			PPCColor63: makeNSRGB(0xCCCC, 0xCCCC, 0x6666).PPencodeColor(),
+			PPCColor64: makeNSRGB(0xCCCC, 0xCCCC, 0x9999).PPencodeColor(),
+			PPCColor65: makeNSRGB(0xEEEE, 0, 0).PPencodeColor(),
+			PPCColor66: makeNSRGB(0, 0xFFFF, 0x6666).PPencodeColor(),
+			PPCColor67: makeNSRGB(0, 0xFFFF, 0xFFFF).PPencodeColor(),
+			PPCColor68: makeNSRGB(0xFFFF, 0xFFFF, 0).PPencodeColor(),
 			PPCColor69: NSColor.greenColor().PPencodeColor(),
-			PPCColor70: makeNSRGB(13107, 52428, 65535).PPencodeColor(),
-			PPCColor71: makeNSRGB(39321, 52428, 39321).PPencodeColor(),
-			PPCColor72: makeNSRGB(65535, 39321, 26214).PPencodeColor(),
-			PPCColor73: makeNSRGB(39321, 65535, 65535).PPencodeColor(),
-			PPCColor74: makeNSRGB(26214, 65535, 65535).PPencodeColor(),
-			PPCColor75: makeNSRGB(65535, 39321, 65535).PPencodeColor(),
-			PPCColor76: makeNSRGB(0, 21845, 0).PPencodeColor(),
-			PPCColor77: makeNSRGB(52428, 65535, 52428).PPencodeColor(),
-			PPCColor78: makeNSRGB(26214, 0, 0).PPencodeColor(),
-			PPCColor79: makeNSRGB(13107, 65535, 26214).PPencodeColor(),
-			PPCColor80: makeNSRGB(65535, 65535, 26214).PPencodeColor(),
-			PPCColor81: makeNSRGB(52428, 0, 0).PPencodeColor(),
-			PPCColor82: makeNSRGB(39321, 0, 13107).PPencodeColor(),
-			PPCColor83: makeNSRGB(39321, 65535, 39321).PPencodeColor(),
-			PPCColor84: makeNSRGB(39321, 52428, 52428).PPencodeColor(),
-			PPCColor85: makeNSRGB(52428, 52428, 0).PPencodeColor(),
-			PPCColor86: makeNSRGB(52428, 52428, 13107).PPencodeColor(),
-			PPCColor87: makeNSRGB(65535, 39321, 65535).PPencodeColor(),
+			PPCColor70: makeNSRGB(0x3333, 0xCCCC, 0xFFFF).PPencodeColor(),
+			PPCColor71: makeNSRGB(0x9999, 0xCCCC, 0x9999).PPencodeColor(),
+			PPCColor72: makeNSRGB(0xFFFF, 0x9999, 0x6666).PPencodeColor(),
+			PPCColor73: makeNSRGB(0x9999, 0xFFFF, 0xFFFF).PPencodeColor(),
+			PPCColor74: makeNSRGB(0x6666, 0xFFFF, 0xFFFF).PPencodeColor(),
+			PPCColor75: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).PPencodeColor(),
+			PPCColor76: makeNSRGB(0, 0x5555, 0).PPencodeColor(),
+			PPCColor77: makeNSRGB(0xCCCC, 0xFFFF, 0xCCCC).PPencodeColor(),
+			PPCColor78: makeNSRGB(0x6666, 0, 0).PPencodeColor(),
+			PPCColor79: makeNSRGB(0x3333, 0xFFFF, 0x6666).PPencodeColor(),
+			PPCColor80: makeNSRGB(0xFFFF, 0xFFFF, 0x6666).PPencodeColor(),
+			PPCColor81: makeNSRGB(0xCCCC, 0, 0).PPencodeColor(),
+			PPCColor82: makeNSRGB(0x9999, 0, 0x3333).PPencodeColor(),
+			PPCColor83: makeNSRGB(0x9999, 0xFFFF, 0x9999).PPencodeColor(),
+			PPCColor84: makeNSRGB(0x9999, 0xCCCC, 0xCCCC).PPencodeColor(),
+			PPCColor85: makeNSRGB(0xCCCC, 0xCCCC, 0).PPencodeColor(),
+			PPCColor86: makeNSRGB(0xCCCC, 0xCCCC, 0x3333).PPencodeColor(),
+			PPCColor87: makeNSRGB(0xFFFF, 0x9999, 0xFFFF).PPencodeColor(),
 			PPCColor88: NSColor.redColor().PPencodeColor(),
-			PPCColor89: makeNSRGB(39321, 0, 26214).PPencodeColor(),
-			PPCColor90: makeNSRGB(26214, 65535, 65535).PPencodeColor(),
-			PPCColor91: makeNSRGB(26214, 65535, 52428).PPencodeColor(),
-			PPCColor92: makeNSRGB(39321, 52428, 26214).PPencodeColor(),
-			PPCColor93: makeNSRGB(39321, 52428, 39321).PPencodeColor(),
-			PPCColor94: makeNSRGB(39321, 52428, 26214).PPencodeColor(),
-			PPCColor95: makeNSRGB(52428, 52428, 26214).PPencodeColor(),
-			PPCColor96: makeNSRGB(52428, 52428, 39321).PPencodeColor()]
+			PPCColor89: makeNSRGB(0x9999, 0, 0x6666).PPencodeColor(),
+			PPCColor90: makeNSRGB(0x6666, 0xFFFF, 0xFFFF).PPencodeColor(),
+			PPCColor91: makeNSRGB(0x6666, 0xFFFF, 0xCCCC).PPencodeColor(),
+			PPCColor92: makeNSRGB(0x9999, 0xCCCC, 0x6666).PPencodeColor(),
+			PPCColor93: makeNSRGB(0x9999, 0xCCCC, 0x9999).PPencodeColor(),
+			PPCColor94: makeNSRGB(0x9999, 0xCCCC, 0x6666).PPencodeColor(),
+			PPCColor95: makeNSRGB(0xCCCC, 0xCCCC, 0x6666).PPencodeColor(),
+			PPCColor96: makeNSRGB(0xCCCC, 0xCCCC, 0x9999).PPencodeColor()]
 		
 		tooLargeDict += defaults1
 		tooLargeDict += defaults2
@@ -392,7 +392,8 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 				var ostype: NSString? = nil
 				
 				let adds = madLib.identifyFile(URL: theURL)
-				if adds.error == .NoErr {
+				switch adds {
+				case .Success(let aVal):
 					let addd = madLib.informationFromFile(URL: theURL, type: "")
 					if addd.error != .NoErr {
 						PPRunAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
@@ -411,7 +412,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 						//TODO: regenerate the UTI
 					}
 
-				} else {
+				default:
 					PPRunAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
 					return false;
 
@@ -647,7 +648,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		
 	}
 	
-	@objc(PPExportObjectEncounteredError:errorCode:errorString:) func exportObjectEncounteredError(theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: NSString?) {
+	@objc(PPExportObjectEncounteredError:errorCode:errorString:) func exportObjectEncounteredError(theObj: ExportObject, errorCode errCode: MADErr, errorString errStr: String?) {
 		
 	}
 }
