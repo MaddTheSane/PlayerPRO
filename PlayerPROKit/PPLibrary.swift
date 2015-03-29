@@ -212,24 +212,28 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///
 	///:param: apath The tracker at the file URL to identify.
 	///:returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil.
-	public func identifyFile(URL apath: NSURL) -> (format: String?, error: MADErr) {
+	public func identifyFile(URL apath: NSURL) -> StringOrMADErr {
 		var cType = [Int8](count: 5, repeatedValue: 0)
 		
 		let aRet = MADMusicIdentifyCFURL(theLibrary, &cType, apath)
 		let sRet = String(CString: cType, encoding: NSMacOSRomanStringEncoding)
 		
-		return (sRet, aRet)
+		if aRet == .NoErr {
+			return .Success(sRet!)
+		} else {
+			return .Failure(aRet)
+		}
 	}
 	
 	///Attempts to identify the file passed to it.
 	///
 	///:param: path The tracker at a POSIX-style path to identify
 	///:returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil.
-	public func identifyFile(#path: String) -> (format: String?, error: MADErr) {
+	public func identifyFile(#path: String) -> StringOrMADErr {
 		if let anURL = NSURL(fileURLWithPath: path) {
 			return identifyFile(URL: anURL)
 		} else {
-			return (nil, .ReadingErr)
+			return .Failure(.ReadingErr)
 		}
 	}
 	
@@ -246,11 +250,14 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 		
 		let aRet = identifyFile(URL: apath)
-		if aRet.error == .NoErr {
-			type.memory = aRet.format!
+		switch aRet {
+		case .Success(let aStr):
+			type.memory = aStr
+			return .NoErr
+			
+		case .Failure(let anErr):
+			return anErr
 		}
-		
-		return aRet.error
 	}
 	
 	///Attempts to identify the tracker at the specified path.
@@ -266,20 +273,27 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 		
 		let aRet = identifyFile(path: apath)
-		if aRet.error == .NoErr {
-			type.memory = aRet.format!
+		switch aRet {
+		case .Success(let aStr):
+			type.memory = aStr
+			return .NoErr
+			
+		case .Failure(let anErr):
+			return anErr
 		}
-		
-		return aRet.error
 	}
 	
-	private func informationFromFile(#URL: NSURL, cType: [Int8]) -> (info: MADInfoRec, error: MADErr) {
+	private func informationFromFile(#URL: NSURL, cType: [Int8]) -> InfoRecOrMADErr {
 		var cStrType = cType
 		var infoRec = MADInfoRec()
 
 		let anErr = MADMusicInfoCFURL(theLibrary, &cStrType, URL, &infoRec)
 		
-		return (infoRec, anErr)
+		if anErr == .NoErr {
+			return .Success(infoRec)
+		} else {
+			return .Failure(anErr)
+		}
 	}
 	
 	///Gathers information about a tracker at the specified URL.
@@ -292,11 +306,13 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		
 		let filInfo = informationFromFile(URL: apath, cType: cStrType)
 		
-		if filInfo.error == .NoErr {
-			let anInfo = MusicFileInfo(infoRec: filInfo.info)
-			return (anInfo, filInfo.error)
-		} else {
-			return (nil, filInfo.error)
+		switch filInfo {
+		case .Success(let aRet):
+			let anInfo = MusicFileInfo(infoRec: aRet)
+			return (anInfo, .NoErr)
+			
+		case .Failure(let anErr):
+			return (nil, anErr)
 		}
 	}
 	
@@ -329,13 +345,15 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		
 		let aRet = informationFromFile(URL: path, cType: cStrType)
 		
-		if aRet.error == .NoErr {
-			let tmpDict = infoRecToDictionary(aRet.info)
-			
+		switch aRet {
+		case .Success(let aRet):
+			let tmpDict = infoRecToDictionary(aRet)
 			info.memory = tmpDict
+			return .NoErr
+			
+		case .Failure(let anErr):
+			return anErr
 		}
-		
-		return aRet.error
 	}
 	
 	///Gathers information about a tracker at the specified path.
@@ -419,7 +437,24 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	public func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (trackerLibs as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len)
 	}
+	
+	public enum StringOrMADErr {
+		case Failure(MADErr)
+		case Success(String)
+	}
+	
+	private enum InfoRecOrMADErr {
+		case Failure(MADErr)
+		case Success(MADInfoRec)
+	}
+	//public typealias StringOrMADErr = ReturnOrMADErr<String>
+	//private typealias InfoRecOrMADErr = ReturnOrMADErr<MADInfoRec>
 }
+
+//public enum ReturnOrMADErr<X> {
+//	case Failure(MADErr)
+//	case Success(X)
+//}
 
 ///Deprecated functions
 extension PPLibrary {
@@ -440,25 +475,23 @@ extension PPLibrary {
 		let sLen = strnlen(type, 4)
 		assert(sLen != 4, "Even if it's less than four chars long, the rest should be padded")
 		
-		#if false
-		var cStrType = [Int8](count: 4, repeatedValue: 0x20)
-		cStrType.append(0)
-			#else
-			var cStrType: [Int8] = [0x20, 0x20, 0x20, 0x20, 0]
-			#endif
+		var cStrType: [Int8] = [0x20, 0x20, 0x20, 0x20, 0]
 		for i in 0..<Int(sLen) {
 			cStrType[i] = type[i]
 		}
 		
 		let aRet = informationFromFile(URL: path, cType: cStrType)
 		
-		if aRet.error == .NoErr {
-			let tmpDict = infoRecToDictionary(aRet.info)
-			
-			info.memory = tmpDict
-		}
 		
-		return aRet.error
+		switch aRet {
+		case .Success(let aRet):
+			let tmpDict = infoRecToDictionary(aRet)
+			info.memory = tmpDict
+			return .NoErr
+			
+		case .Failure(let anErr):
+			return anErr
+		}
 	}
 	
 	///Deprecated: do not use
@@ -468,11 +501,15 @@ extension PPLibrary {
 		}
 		
 		let aRet = identifyFile(URL: apath)
-		if aRet.error == .NoErr {
-			strncpy(type, aRet.format!.cStringUsingEncoding(NSMacOSRomanStringEncoding)!, 4)
+
+		switch aRet {
+		case .Success(let aStr):
+			strncpy(type, aStr.cStringUsingEncoding(NSMacOSRomanStringEncoding)!, 4)
+			return .NoErr
+			
+		case .Failure(let anErr):
+			return anErr
 		}
-		
-		return aRet.error
 	}
 	
 	///Deprecated: do not use
@@ -482,11 +519,13 @@ extension PPLibrary {
 		}
 		
 		let aRet = identifyFile(path: apath)
-		if aRet.error == .NoErr {
-			strncpy(type, aRet.format!.cStringUsingEncoding(NSMacOSRomanStringEncoding)!, 4)
+		switch aRet {
+		case .Success(let aStr):
+			strncpy(type, aStr.cStringUsingEncoding(NSMacOSRomanStringEncoding)!, 4)
+			return .NoErr
+			
+		case .Failure(let anErr):
+			return anErr
 		}
-		
-		return aRet.error
 	}
-
 }
