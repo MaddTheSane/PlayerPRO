@@ -128,8 +128,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		let filterPlugName = NSLocalizedString("FilterPlugName", comment: "Filter plug-in name")
 		let samplePlugName = NSLocalizedString("SamplePlugName", comment: "Sample plug-in name")
 		
-		for rawObj in madLib {
-			let obj = rawObj as PPLibraryObject
+		for obj in madLib {
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: trackerPlugName, plugURL: obj.bundle.bundleURL)
 			if !contains(plugInInfos, tmpInfo) {
 				plugInInfos.append(tmpInfo)
@@ -571,8 +570,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			}
 		}
 		
-		for (i, rawObj) in enumerate(madLib) {
-			let obj = rawObj as PPLibraryObject
+		for (i, obj) in enumerate(madLib) {
 			if (obj.canExport) {
 				let mi = NSMenuItem(title: "\(obj.menuName)…", action: "exportMusicAs:", keyEquivalent: "")
 				mi.tag = i

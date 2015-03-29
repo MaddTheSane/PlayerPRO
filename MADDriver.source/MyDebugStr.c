@@ -41,21 +41,14 @@ void MADRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*
 
 void MADRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*))
 {
-	if (MyDebugBlock) {
-#if __has_feature(objc_arc)
-		MyDebugBlock = nil;
-#else
-		Block_release(MyDebugBlock);
-		MyDebugBlock = NULL;
-#endif
-	}
-	
 	if (debugFunc != NULL) {
 		typeof(MyDebugBlock) funcBlock = ^(short line, const char *file, const char *text) {
 			(*debugFunc)(line, file, text);
 		};
 		
 		MADRegisterDebugBlock(funcBlock);
+	} else {
+		MADRegisterDebugBlock(NULL);
 	}
 }
 
