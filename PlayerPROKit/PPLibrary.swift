@@ -13,21 +13,6 @@ import SwiftAdditions
 private let kPlayerPROMADKUTI = "com.quadmation.playerpro.madk"
 private let MadIDString = OSTypeToString(MadID)!
 
-extension MADInfoRec {
-	private init() {
-		totalPatterns = 0
-		partitionLength = 0
-		fileSize = 0
-		signature = "!!!!"
-		
-		totalTracks = 0
-		totalInstruments = 0
-		
-		internalFileName = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-		formatDescription = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-	}
-}
-
 private func infoRecToDictionary(infoRec: MADInfoRec) -> NSDictionary {
 	let aArray: [Int8] = getArrayFromMirror(reflect(infoRec.internalFileName), appendLastObject: 0)
 	let bArray: [Int8] = getArrayFromMirror(reflect(infoRec.formatDescription), appendLastObject: 0)
@@ -44,7 +29,7 @@ private func infoRecToDictionary(infoRec: MADInfoRec) -> NSDictionary {
 
 public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	internal let trackerLibs: [PPLibraryObject]
-	internal var theLibrary: UnsafeMutablePointer<MADLibrary> = nil
+	private(set) internal var theLibrary: UnsafeMutablePointer<MADLibrary> = nil
 	public struct MusicFileInfo: Printable {
 		///The total amount of patterns
 		public var totalPatterns: Int
