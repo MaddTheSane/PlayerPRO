@@ -23,7 +23,7 @@ typedef struct iPlugInfo {
 	UInt32		version;
 	CFStringRef	MenuName;
 	CFStringRef	AuthorString;
-	CFStringRef UTIType;
+	CFStringRef *UTITypes;
 	MADPLUGFUNC	IOPlug;
 	char		type[5];
 } iPlugInfo;
@@ -38,7 +38,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "6669",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTIType = CFSTR("net.sourceforge.playerpro.669"),
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.669"), NULL},
 	},
 	{
 		.IOPlug = mainAMF,
@@ -47,7 +47,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "AMF ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTIType = CFSTR("net.sourceforge.playerpro.amf"),
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.amf"), NULL},
 	},
 	{
 		.IOPlug = mainDMF,
@@ -56,7 +56,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "DMF ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTIType = CFSTR("net.sourceforge.playerpro.dmf"),
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.dmf"), NULL},
 	},
 	//Disabled on iOS because it isn't playing correctly
 #if !TARGET_OS_IPHONE
@@ -67,7 +67,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "IT  ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTIType = CFSTR("net.sourceforge.playerpro.it"),
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.it"), NULL},
 	},
 #endif
 	{
@@ -77,7 +77,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "MADF",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTIType = CFSTR("com.quadmation.playerpro.madfg"),
+		.UTITypes = (CFStringRef[]){CFSTR("com.quadmation.playerpro.madfg"), NULL},
 	},
 	{
 		.IOPlug = mainMADH,
@@ -86,7 +86,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "MADH",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTIType = CFSTR("com.quadmation.playerpro.madh"),
+		.UTITypes = (CFStringRef[]){CFSTR("com.quadmation.playerpro.madh"), NULL},
 	},
 	{
 		.IOPlug = mainMADI,
@@ -95,7 +95,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "MADI",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTIType = CFSTR("com.quadmation.playerpro.madi"),
+		.UTITypes = (CFStringRef[]){CFSTR("com.quadmation.playerpro.madi"), NULL},
 	},
 	{
 		.IOPlug = mainMED,
@@ -104,7 +104,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "MED ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTIType = CFSTR("net.sourceforge.playerpro.med"),
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.med"), NULL},
 	},
 	{
 		.IOPlug = mainMOD,
@@ -113,7 +113,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "STrk",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImportExport,
-		.UTIType = CFSTR("net.sourceforge.playerpro.mod"),
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.mod"), NULL},
 	},
 	{
 		.IOPlug = mainMTM,
@@ -122,7 +122,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "MTM ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTIType = CFSTR("net.sourceforge.playerpro.mtm"),
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.mtm"), NULL},
 	},
 	{
 		.IOPlug = mainOkta,
@@ -131,7 +131,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "Okta",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTIType = CFSTR("net.sourceforge.playerpro.okta"),
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.okta"), NULL},
 	},
 	{
 		.IOPlug = mainS3M,
@@ -140,7 +140,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "S3M ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImportExport,
-		.UTIType = CFSTR("net.sourceforge.playerpro.med"),
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.med"), NULL},
 	},
 	{
 		.IOPlug = mainULT,
@@ -149,7 +149,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "ULT ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTIType = CFSTR("net.sourceforge.playerpro.ult"),
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.ult"), NULL},
 	},
 	//disabled because it conflicts with XM
 #if 0
@@ -160,7 +160,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "UMX ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImport,
-		.UTIType = CFSTR("net.sourceforge.playerpro.umx"),
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.umx"), NULL},
 	},
 #endif
 	{
@@ -170,7 +170,7 @@ static const iPlugInfo iOSPlugInfo[] = {
 		.type = "XM  ",
 		.version = PLUGVERS(2, 0, 0, 0),
 		.mode = MADPlugImportExport,
-		.UTIType = CFSTR("net.sourceforge.playerpro.xm"),
+		.UTITypes = (CFStringRef[]){CFSTR("net.sourceforge.playerpro.xm"), NULL},
 	}
 };
 
@@ -207,7 +207,7 @@ static MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 	return MADNoErr;
 }
 
-MADErr CallImportPlug(MADLibrary *inMADDriver, short PlugNo, OSType order, char *AlienFile, MADMusic *theNewMAD, MADInfoRec *info)
+MADErr CallImportPlug(MADLibrary *inMADDriver, int PlugNo, OSType order, char *AlienFile, MADMusic *theNewMAD, MADInfoRec *info)
 {
 	MADDriverSettings driverSettings = {0};
 	
@@ -222,10 +222,13 @@ static void MovePluginInfoOver(const iPlugInfo *src, PlugInfo *dst)
 	strcpy(dst->type, src->type);
 	dst->mode = src->mode;
 	dst->version = src->version;
-	CFMutableArrayRef tmpArray = CFArrayCreateMutable(kCFAllocatorDefault, 1, &kCFTypeArrayCallBacks);
-	CFStringRef tmpStr = CFStringCreateCopy(kCFAllocatorDefault, src->UTIType);
-	CFArrayAppendValue(tmpArray, tmpStr);
-	CFRelease(tmpStr);
+	CFMutableArrayRef tmpArray = CFArrayCreateMutable(kCFAllocatorDefault, 5, &kCFTypeArrayCallBacks);
+	int i = 0;
+	while (src->UTITypes[i]) {
+		CFStringRef tmpStr = CFStringCreateCopy(kCFAllocatorDefault, src->UTITypes[i++]);
+		CFArrayAppendValue(tmpArray, tmpStr);
+		CFRelease(tmpStr);
+	}
 	dst->UTItypes = CFArrayCreateCopy(kCFAllocatorDefault, tmpArray);
 	CFRelease(tmpArray);
 	dst->file = CFBundleGetBundleWithIdentifier(CFSTR("net.sourceforge.playerpro.PlayerPROCore"));

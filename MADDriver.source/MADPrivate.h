@@ -137,7 +137,7 @@ MADErr closePortAudio(MADDriverRec *inMADDriver);
 #endif
 
 MADErr	CallImportPlug(MADLibrary	*inMADDriver,
-					   short		PlugNo,			// CODE du plug
+					   int			PlugNo,			// CODE du plug
 					   MADFourChar	order,
 					   char			*AlienFile,
 					   MADMusic		*theNewMAD,

@@ -57,7 +57,7 @@ MADErr CheckMADFile(const char *name)
 MADErr TESTmain(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init);
 
 MADErr CallImportPlug(MADLibrary*	inMADDriver,
-					 short			PlugNo,				// CODE ID
+					 int			PlugNo,				// CODE ID
 					 MADFourChar	order,
 					 Ptr			AlienFile,
 					 MADMusic		*theNewMAD,

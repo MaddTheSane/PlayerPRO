@@ -390,18 +390,16 @@ static MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 }
 
 MADErr CallImportPlug(MADLibrary			*inMADDriver,
-					 short					PlugNo,			// CODE du plug
+					 int					PlugNo,			// CODE du plug
 					 OSType					order,
 					 char					*AlienFile,
 					 MADMusic				*theNewMAD,
 					 MADInfoRec				*info)
 {
 	MADErr				iErr = MADNoErr;
-	CFBundleRefNum		resFileNum = CFBundleOpenBundleResourceMap(inMADDriver->ThePlug[PlugNo].file);
 	MADDriverSettings	driverSettings = {0};
 	
 	iErr = (*inMADDriver->ThePlug[PlugNo].IOPlug)(order, AlienFile, theNewMAD, info, &driverSettings);
-	CFBundleCloseBundleResourceMap(inMADDriver->ThePlug[PlugNo].file, resFileNum);
 	
 	return iErr;
 }
