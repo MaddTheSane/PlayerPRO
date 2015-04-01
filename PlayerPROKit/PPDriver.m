@@ -405,7 +405,7 @@
 
 - (MADChannel)channelAtIndex:(NSInteger)idx
 {
-	NSParameterAssert(idx > 256 || idx < 0);
+	NSParameterAssert(idx > MAXTRACK || idx < 0);
 	MADDriverBase *drivBase = GetDriverBase();
 	
 	return drivBase->chan[idx];
@@ -419,7 +419,7 @@
 }
 - (void)setPatternPosition:(short)patternPosition
 {
-	NSParameterAssert(patternPosition > 999);
+	NSParameterAssert(patternPosition > MAXPOINTER);
 	MADDriverBase *drivBase = GetDriverBase();
 	
 	drivBase->PartitionReader = patternPosition;
@@ -468,14 +468,14 @@
 	drivBase->VolGlobal = volume;
 }
 
-- (BOOL)useEqualizer
+- (BOOL)usesEqualizer
 {
 	MADDriverBase *drivBase = GetDriverBase();
 	
 	return drivBase->Equalizer;
 }
 
-- (void)setUseEqualizer:(BOOL)useEqualizer
+- (void)setUsesEqualizer:(BOOL)useEqualizer
 {
 	MADDriverBase *drivBase = GetDriverBase();
 	
@@ -504,7 +504,7 @@
 	return drivBase->Active[idx];
 }
 
-- (void)setChannelAtIndex:(NSInteger)idx to:(BOOL)enabled
+- (void)setChannelAtIndex:(NSInteger)idx toActive:(BOOL)enabled
 {
 	NSParameterAssert(idx > 255 || idx < 0);
 	MADDriverBase *drivBase = GetDriverBase();

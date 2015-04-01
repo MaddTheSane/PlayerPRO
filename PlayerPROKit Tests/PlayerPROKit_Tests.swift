@@ -10,6 +10,7 @@ import Foundation
 import XCTest
 import PlayerPROCore
 import PlayerPROKit
+import CoreAudio
 
 class PlayerPROKit_Tests: XCTestCase {
 	var ourBundle: NSBundle? = nil

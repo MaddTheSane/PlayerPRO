@@ -86,11 +86,11 @@
 @property short partitionPosition;
 ///0 to 64
 @property short volume;
-@property BOOL useEqualizer;
+@property BOOL usesEqualizer;
 @property (readonly, nullable) void *oscilloscopePointer NS_RETURNS_INNER_POINTER;
 @property (readonly) size_t oscilloscopeSize;
 - (BOOL)isChannelActiveAtIndex:(NSInteger)idx;
-- (void)setChannelAtIndex:(NSInteger)idx to:(BOOL)enabled;
+- (void)setChannelAtIndex:(NSInteger)idx toActive:(BOOL)enabled;
 
 @end
 
