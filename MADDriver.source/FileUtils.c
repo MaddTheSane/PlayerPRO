@@ -123,7 +123,7 @@ MADErr iRead(long size, void *dest, FILE* iFileRefI)
 
 MADErr iSeekCur(long size, FILE* iFileRefI)
 {
-	return fseek(iFileRefI, size, SEEK_CUR);
+	return fseek(iFileRefI, size, SEEK_CUR) == 0 ? MADNoErr : MADReadingErr;
 }
 
 MADErr iWrite(long size, const void *src, FILE* iFileRefI)

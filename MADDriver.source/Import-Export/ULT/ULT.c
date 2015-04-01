@@ -230,7 +230,7 @@ static MADErr ExtractULTInfo(MADInfoRec *info, void *AlienFile)
 	/********************************/
 	
 	/**** Header principal *****/
-	memcpy(&ULTinfo, AlienFile, 49);
+	memcpy(&ULTinfo, AlienFile, 47);
 	
 	/*** Signature ***/
 	
@@ -265,7 +265,7 @@ static MADErr ExtractULTInfo(MADInfoRec *info, void *AlienFile)
 
 static MADErr TestULTFile(void *AlienFile)
 {
-	if (memcmp(AlienFile, "MAS_", 4) == 0)
+	if (memcmp(AlienFile, "MAS_UTrack_V001", 15) == 0)
 		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;

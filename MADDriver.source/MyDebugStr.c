@@ -21,22 +21,18 @@ static void (^MyDebugBlock)(short, const char*, const char*);
 
 void MADRegisterDebugBlock(void (^newdebugBlock)(short, const char*, const char*))
 {
-	if (MyDebugBlock) {
 #if __has_feature(objc_arc)
-		MyDebugBlock = nil;
+	MyDebugBlock = [newdebugBlock copy];
 #else
+	if (MyDebugBlock) {
 		Block_release(MyDebugBlock);
 		MyDebugBlock = NULL;
-#endif
 	}
 	
 	if (newdebugBlock) {
-#if __has_feature(objc_arc)
-		MyDebugBlock = [newdebugBlock copy];
-#else
 		MyDebugBlock = Block_copy(newdebugBlock);
-#endif
 	}
+#endif
 }
 
 void MADRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*))
