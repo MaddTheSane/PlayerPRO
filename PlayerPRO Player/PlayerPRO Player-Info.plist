@@ -75,6 +75,7 @@
 			<key>LSItemContentTypes</key>
 			<array>
 				<string>net.sourceforge.playerpro.mod</string>
+				<string>org.videolan.mod</string>
 			</array>
 			<key>LSTypeIsPackage</key>
 			<false/>
