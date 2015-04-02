@@ -391,7 +391,7 @@ static MADErr PPMADInfoFile(const char *AlienFile, MADInfoRec *InfoRec)
 
 MADErr CallImportPlug(MADLibrary			*inMADDriver,
 					 int					PlugNo,			// CODE du plug
-					 OSType					order,
+					 MADFourChar			order,
 					 char					*AlienFile,
 					 MADMusic				*theNewMAD,
 					 MADInfoRec				*info)
@@ -580,7 +580,7 @@ MADErr PPTestFile(MADLibrary *inMADDriver, char	*kindFile, char	*AlienFile)
 	return MADCannotFindPlug;
 }
 
-MADFourChar GetPPPlugType(MADLibrary *inMADDriver, short ID, OSType mode)
+MADFourChar GetPPPlugType(MADLibrary *inMADDriver, short ID, MADFourChar mode)
 {
 	int i, x;
 	

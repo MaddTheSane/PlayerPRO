@@ -720,19 +720,22 @@ return MADWritingErr; \
 							titleName.value = oldMusicName;
 							
 							AVMutableMetadataItem *dataInfo = [AVMutableMetadataItem new];
-							dataInfo.keySpace = AVMetadataKeySpaceCommon;
-							dataInfo.key = AVMetadataCommonKeySoftware;
+							dataInfo.keySpace = AVMetadataKeySpaceQuickTimeUserData;
+							dataInfo.key = AVMetadataQuickTimeUserDataKeySoftware;
 							dataInfo.value = @"PlayerPRO Player";
+							dataInfo.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US"];
 							
 							AVMutableMetadataItem *musicInfoQTUser = [AVMutableMetadataItem new];
 							[musicInfoQTUser setKeySpace:AVMetadataKeySpaceQuickTimeUserData];
 							[musicInfoQTUser setKey:AVMetadataQuickTimeUserDataKeyInformation];
 							[musicInfoQTUser setValue:oldMusicInfo];
+							musicInfoQTUser.locale = [NSLocale currentLocale];
 							
 							AVMutableMetadataItem *musicNameQTUser = [AVMutableMetadataItem new];
 							musicNameQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData;
 							musicNameQTUser.key = AVMetadataQuickTimeUserDataKeyFullName;
 							musicNameQTUser.value = oldMusicName;
+							musicNameQTUser.locale = [NSLocale currentLocale];
 
 							AVMutableMetadataItem *musicInfoiTunes = [AVMutableMetadataItem new];
 							[musicInfoiTunes setKeySpace:AVMetadataKeySpaceiTunes];
@@ -742,6 +745,7 @@ return MADWritingErr; \
 							AVMutableMetadataItem *musicInfoQTMeta = [AVMutableMetadataItem new];
 							[musicInfoQTMeta setKeySpace:AVMetadataKeySpaceQuickTimeMetadata];
 							[musicInfoQTMeta setKey:AVMetadataQuickTimeMetadataKeyInformation];
+							musicInfoQTMeta.locale = [NSLocale currentLocale];
 							[musicInfoQTMeta setValue:oldMusicInfo];
 							
 							metadataInfo = @[titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta, musicNameQTUser];

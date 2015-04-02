@@ -194,15 +194,12 @@ typedef MADENUM(short, MADErr) {
 	MADUserCanceledErr				= -15
 };
 
-#ifndef __APPLE__
 typedef uint8_t			MADByte;
-typedef uint32_t		MADFourChar;
 typedef unsigned char	MADPStr255[256], MADPStr63[64];
+#ifndef __APPLE__
+typedef uint32_t		MADFourChar;
 #else
-typedef Byte	MADByte;
 typedef OSType	MADFourChar;
-typedef Str255	MADPStr255;
-typedef Str63	MADPStr63;
 #endif
 
 #endif
