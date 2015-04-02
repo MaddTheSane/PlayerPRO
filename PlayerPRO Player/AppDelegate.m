@@ -745,8 +745,8 @@ return MADWritingErr; \
 							AVMutableMetadataItem *musicInfoQTMeta = [AVMutableMetadataItem new];
 							[musicInfoQTMeta setKeySpace:AVMetadataKeySpaceQuickTimeMetadata];
 							[musicInfoQTMeta setKey:AVMetadataQuickTimeMetadataKeyInformation];
-							musicInfoQTMeta.locale = [NSLocale currentLocale];
 							[musicInfoQTMeta setValue:oldMusicInfo];
+							musicInfoQTMeta.locale = [NSLocale currentLocale];
 							
 							metadataInfo = @[titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta, musicNameQTUser];
 						}

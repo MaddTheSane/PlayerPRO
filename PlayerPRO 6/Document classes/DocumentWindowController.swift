@@ -417,35 +417,39 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 					let expObj = ExportObject(destination: theURL, exportBlock: { (theURL, errStr) -> MADErr in
 						var theErr = MADErr.NoErr;
 						func generateAVMetadataInfo(oldMusicName: String, oldMusicInfo: String) -> [AVMetadataItem] {
-							var titleName = AVMutableMetadataItem()
+							let titleName = AVMutableMetadataItem()
 							titleName.keySpace = AVMetadataKeySpaceCommon
 							titleName.setKey(AVMetadataCommonKeyTitle)
 							titleName.setValue(oldMusicName)
 							
-							var dataInfo = AVMutableMetadataItem()
-							dataInfo.keySpace = AVMetadataKeySpaceCommon;
-							dataInfo.setKey(AVMetadataCommonKeySoftware)
+							let dataInfo = AVMutableMetadataItem()
+							dataInfo.keySpace = AVMetadataKeySpaceQuickTimeUserData;
+							dataInfo.setKey(AVMetadataQuickTimeUserDataKeySoftware)
 							dataInfo.setValue("PlayerPRO 6")
+							dataInfo.locale = NSLocale(localeIdentifier: "en_US")
 							
-							var musicInfoQTUser = AVMutableMetadataItem();
+							let musicInfoQTUser = AVMutableMetadataItem();
 							musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
 							musicInfoQTUser.setKey(AVMetadataQuickTimeUserDataKeyInformation)
 							musicInfoQTUser.setValue(oldMusicInfo)
+							musicInfoQTUser.locale = NSLocale.currentLocale()
+
+							let musicNameQTUser = AVMutableMetadataItem()
+							musicNameQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
+							musicNameQTUser.setKey(AVMetadataQuickTimeUserDataKeyFullName)
+							musicNameQTUser.setValue(oldMusicName)
+							musicNameQTUser.locale = NSLocale.currentLocale()
 							
-							var musicNameQTUser = AVMutableMetadataItem();
-							musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData
-							musicInfoQTUser.setKey(AVMetadataQuickTimeUserDataKeyFullName)
-							musicInfoQTUser.setValue(oldMusicName)
-							
-							var musicInfoiTunes = AVMutableMetadataItem();
+							let musicInfoiTunes = AVMutableMetadataItem()
 							musicInfoiTunes.keySpace = AVMetadataKeySpaceiTunes
 							musicInfoiTunes.setKey(AVMetadataiTunesMetadataKeyUserComment)
 							musicInfoiTunes.setValue(oldMusicInfo)
 							
-							var musicInfoQTMeta = AVMutableMetadataItem();
+							let musicInfoQTMeta = AVMutableMetadataItem();
 							musicInfoQTMeta.keySpace = AVMetadataKeySpaceQuickTimeMetadata
 							musicInfoQTMeta.setKey(AVMetadataQuickTimeMetadataKeyInformation)
 							musicInfoQTMeta.setValue(oldMusicInfo)
+							musicInfoQTMeta.locale = NSLocale.currentLocale()
 							
 							return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta, musicNameQTUser];
 						}
