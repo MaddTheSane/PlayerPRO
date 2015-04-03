@@ -18,12 +18,17 @@ import SwiftAdditions
 	/// The author of the tracker. Might be localized.
 	public let authorString: String
 	
-	/// The Bundle
+	/// The bundle referencing the plug-in.
 	public let bundle: NSBundle
 	
+	/// A tuple of the plug-in identifier.
+	///
+	/// Historically, this was the file type that the Classic Mac OS would use to identify the file.
 	public let tupleType: (Int8, Int8, Int8, Int8, Int8)
 	
-	/// An `NSString` of the `OSType` that a file can open.
+	/// An `NSString` of the plug-in identifier.
+	///
+	/// Historically, this was the file type that the Classic Mac OS would use to identify the file.
 	public let type: String
 	
 	/// An array of UTIs that the plug-in can open.
@@ -38,12 +43,10 @@ import SwiftAdditions
 	/// The version of the plug-in
 	public let plugVersion: UInt32
 	
-/**
-The plug-in mode.
-	
-The mode indicates, via `OSType`, the export and import capabilities of the plug-in.
-You can just use `canImport` and `canExport` instead.
-*/
+	///The plug-in mode.
+	///
+	///The mode indicates, via `OSType`, the export and import capabilities of the plug-in.
+	///You can just use `canImport` and `canExport` instead.
 	public var mode: MADFourChar {
 		if (self.canExport && self.canImport) {
 			return MADPlugModes.ImportExport.rawValue
