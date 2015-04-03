@@ -53,7 +53,8 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	/// Returns NSNotFound if a URL couldn't be found.
-	/// Use indexOfObjectSimilar(URL) on Swift instead of this one.
+	///
+	/// Use `indexOfObjectSimilar(URL:)` on Swift instead of this one.
 	func indexOfObjectSimilarToURL(theURL: NSURL) -> Int {
 		return indexOfObjectSimilar(URL: theURL) ?? NSNotFound
 	}

@@ -8,10 +8,10 @@
 
 import Foundation
 
-class CurrentlyPlayingIndex: NSObject, DebugPrintable, Printable {
-	internal var index = -1
-	internal var playbackURL: NSURL? = nil
-	internal func movePlayingIndexToOtherIndex(othIdx: CurrentlyPlayingIndex) {
+final class CurrentlyPlayingIndex: NSObject, DebugPrintable, Printable {
+	var index = -1
+	var playbackURL: NSURL? = nil
+	func movePlayingIndexToOtherIndex(othIdx: CurrentlyPlayingIndex) {
 		othIdx.index = index
 		othIdx.playbackURL = playbackURL
 	}

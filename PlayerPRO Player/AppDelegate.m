@@ -127,6 +127,8 @@ static NSInteger selMusFromList = -1;
 		{
 			NSInteger similarMusicIndex = [musicList indexOfObjectSimilarToURL:theURL];
 			NSAlert *similarAlert = [[NSAlert alloc] init];
+			similarAlert.messageText = @"Existing object";
+			similarAlert.informativeText = @"There is already a tracker file that points to the added file. Do you still wish to add it?";
 			[similarAlert addButtonWithTitle:@"Add"];
 			{
 				NSButton *cancelButton = [similarAlert addButtonWithTitle:@"Cancel"];
@@ -378,8 +380,8 @@ static NSInteger selMusFromList = -1;
 			[self songIsDonePlaying];
 			[madDriver getMusicStatusWithCurrentTime:&cT totalTime:&fT];
 		}
-		[songPos setDoubleValue:cT];
-		[songCurTime setIntegerValue:cT];
+		songPos.doubleValue = cT;
+		songCurTime.integerValue = cT;
 	}
 }
 
@@ -1202,7 +1204,7 @@ return; \
 	for (NSInteger i = 0; i < [madLib pluginCount]; i++) {
 		PPLibraryObject *obj = madLib[i];
 		if (obj.canExport) {
-			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@...", obj.menuName] action:@selector(exportMusicAs:) keyEquivalent:@""];
+			NSMenuItem *mi = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"%@…", obj.menuName] action:@selector(exportMusicAs:) keyEquivalent:@""];
 			[mi setTag:i];
 			[mi setTarget:self];
 			[musicExportMenu addItem:mi];
@@ -1235,6 +1237,9 @@ return; \
 		[self selectMusicAtIndex:selMus];
 		if (![self loadMusicURL:[musicList URLAtIndex:selMus] error:&err autoPlay:NO]) {
 			[[NSAlert alertWithError:err] runModal];
+		} else {
+			self.currentlyPlayingIndex.index = selMus;
+			[self.currentlyPlayingIndex movePlayingIndexToOtherIndex:self.previouslyPlayingIndex];
 		}
 	} else {
 		self.music = [PPMusicObject new];
