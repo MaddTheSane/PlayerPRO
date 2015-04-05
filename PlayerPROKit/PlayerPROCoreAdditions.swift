@@ -163,7 +163,7 @@ public let MadID = StringToOSType("MADK")
 // MARK: PlayerPRO MAD data types
 
 extension MADDriverSettings: DebugPrintable, Equatable {
-	public init() {
+	internal init() {
 		numChn			= 4
 		outPutBits		= 16
 		outPutMode		= .DeluxeStereoOutPut
@@ -178,6 +178,10 @@ extension MADDriverSettings: DebugPrintable, Equatable {
 		repeatMusic		= true
 		//Just going to use CoreAudio
 		driverMode		= .CoreAudioDriver;
+	}
+	
+	public static func new() -> MADDriverSettings {
+		return MADDriverSettings()
 	}
 
 	public mutating func resetToBestDriver() {
@@ -293,13 +297,17 @@ extension FXSets: Equatable {
 }
 
 extension Cmd: Equatable {
-	public init() {
+	internal init() {
 		ins = 0
 		note = 0xFF
 		cmd = .Arpeggio
 		arg = 0
 		vol = 0xFF
 		unused = 0
+	}
+	
+	public static func blankCmd() -> Cmd {
+		return Cmd()
 	}
 	
 	/// Reset the command

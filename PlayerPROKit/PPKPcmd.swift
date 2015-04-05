@@ -110,7 +110,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		trackStart = 0
 		length = 1
 		positionStart = 0
-		myCmd.append(Cmd())
+		myCmd.append(Cmd.blankCmd())
 	}
 	
 	public init(tracks atr: Int16, startTrack: Int16 = 0, rows: Int16, startPosition: Int16 = 0) {
@@ -119,7 +119,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		length = rows
 		positionStart = startPosition
 		for i in 0 ..< atr * rows {
-			myCmd.append(Cmd())
+			myCmd.append(Cmd.blankCmd())
 		}
 	}
 	
@@ -197,7 +197,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		commandBlock(&myCmd[Int((length * track) + row)])
 	}
 	
-	public mutating func addCmd(command: Cmd = Cmd()) {
+	public mutating func addCmd(command: Cmd = (Cmd.blankCmd())) {
 		myCmd.append(command)
 	}
 	
