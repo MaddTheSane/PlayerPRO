@@ -3,24 +3,11 @@
     {
       "idiom" : "universal",
       "filename" : "PPStop.pdf"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "PPStop.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "PPStopx2.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
     }
   ],
   "info" : {
     "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "template-rendering-intent" : "template"
   }
 }

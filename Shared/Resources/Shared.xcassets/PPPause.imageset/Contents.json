@@ -3,24 +3,11 @@
     {
       "idiom" : "universal",
       "filename" : "PPPause.pdf"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "PPPause.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "PPPausex2.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
     }
   ],
   "info" : {
     "version" : 1,
-    "author" : "xcode"
+    "author" : "xcode",
+    "template-rendering-intent" : "template"
   }
 }
