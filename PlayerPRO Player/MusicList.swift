@@ -70,6 +70,22 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return nil
 	}
 	
+	@objc(indexesOfObjectsSimilarToURL:) func indexesOfObjectsSimilar(URL theURL: NSURL) -> NSIndexSet? {
+		let anIDXSet = NSMutableIndexSet()
+		
+		for (i, obj) in enumerate(musicList) {
+			if obj.pointsToFile(URL: theURL) {
+				anIDXSet.addIndex(i)
+			}
+		}
+		
+		if anIDXSet.count == 0 {
+			return nil
+		} else {
+			return anIDXSet
+		}
+	}
+	
 	func clearMusicList() {
 		let theIndex = NSIndexSet(indexesInRange: NSRange(location: 0, length: musicList.count))
 		self.willChange(.Removal, valuesAtIndexes: theIndex, forKey: kMusicListKVO)
@@ -86,7 +102,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	@objc(sortMusicListUsingComparator:) func sortMusicList(#comparator: NSComparator) {
 		self.willChangeValueForKey(kMusicListKVO)
 		musicList.sort { (obj1, obj2) -> Bool in
-			return comparator(obj1, obj2) == NSComparisonResult.OrderedAscending
+			return comparator(obj1, obj2) == .OrderedAscending
 		}
 		self.didChangeValueForKey(kMusicListKVO)
 	}
@@ -95,7 +111,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		self.willChangeValueForKey(kMusicListKVO)
 		musicList.sort({ (var1, var2) -> Bool in
 			let result = var1.fileName.localizedStandardCompare(var2.fileName)
-			return result == NSComparisonResult.OrderedAscending
+			return result == .OrderedAscending
 			})
 		self.didChangeValueForKey(kMusicListKVO)
 	}
