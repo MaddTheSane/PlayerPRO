@@ -52,14 +52,16 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return musicList[subRange]
 	}
 	
-	/// Returns NSNotFound if a URL couldn't be found.
+	/// Returns `NSNotFound` if the URL couldn't be found.
 	///
 	/// Use `indexOfObjectSimilar(URL:)` on Swift instead of this one.
 	func indexOfObjectSimilarToURL(theURL: NSURL) -> Int {
 		return indexOfObjectSimilar(URL: theURL) ?? NSNotFound
 	}
 	
-	/// This cannot be represented in Objective C
+	/// Returns `nil` if the URL couldn't be found.
+	///
+	/// This cannot be represented in Objective C.
 	func indexOfObjectSimilar(URL theURL: NSURL) -> Int? {
 		for (i, obj) in enumerate(musicList) {
 			if obj.pointsToFile(URL: theURL) {
@@ -70,6 +72,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return nil
 	}
 	
+	/// Returns `nil` if the URL couldn't be found.
 	@objc(indexesOfObjectsSimilarToURL:) func indexesOfObjectsSimilar(URL theURL: NSURL) -> NSIndexSet? {
 		let anIDXSet = NSMutableIndexSet()
 		
@@ -327,6 +330,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 				//Technically we did succeed...
 				return true
 			}
+			//We couldn't load it, but it's still there, taking up space...
 			defaults.removeObjectForKey(musListDefName)
 		}
 		if (PPPPath.checkResourceIsReachableAndReturnError(nil) == false) {

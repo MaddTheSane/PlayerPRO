@@ -91,7 +91,7 @@ class ComplexFadeController: NSWindowController {
 		switch fadeType {
 		case .Instrument:
 			if numFormatter.getObjectValue(&ourUnknown, forString: fromCell.stringValue, errorDescription: nil) {
-				if let aNumber = ourUnknown! as? NSNumber {
+				if let aNumber = ourUnknown as? NSNumber {
 					from = Int32(aNumber as Int)
 				} else {
 					invalidSettings()
@@ -103,7 +103,7 @@ class ComplexFadeController: NSWindowController {
 			}
 			
 			if numFormatter.getObjectValue(&ourUnknown, forString: toCell.stringValue, errorDescription: nil) {
-				if let aNumber = ourUnknown! as? NSNumber {
+				if let aNumber = ourUnknown as? NSNumber {
 					to = Int32(aNumber as Int)
 				} else {
 					invalidSettings()
@@ -153,7 +153,7 @@ class ComplexFadeController: NSWindowController {
 		}
 		
 		if numFormatter.getObjectValue(&ourUnknown, forString: stepCell.stringValue, errorDescription: nil) {
-			if let aNumber = ourUnknown! as? NSNumber {
+			if let aNumber = ourUnknown as? NSNumber {
 				step = aNumber as Int
 			} else {
 				invalidSettings()
