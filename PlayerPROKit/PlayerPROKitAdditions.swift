@@ -493,6 +493,19 @@ extension PPDriver {
 		return playSoundData(data: theSnd, channel: theChan, amplitude: amp, bitRate: rate, stereo: stereo, note: theNote, loopInRange: NSRange(loopRange))
 	}
 	
+	///Returns nil on error.
+	///The time values are in 1/60th of a second.
+	public var musicStatusTime: (current: Int, total: Int)? {
+		var cT = 0
+		var tT = 0
+		let anErr = getMusicStatusWithCurrentTime(&cT, totalTime: &tT)
+		if anErr == .NoErr {
+			return (cT, tT)
+		} else {
+			return nil
+		}
+	}
+	
 	public var oscilloscope: (size: size_t, pointer: UnsafePointer<Void>) {
 		return (oscilloscopeSize, UnsafePointer<Void>(oscilloscopePointer))
 	}
