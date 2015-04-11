@@ -97,7 +97,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///
 	///:param: newDebugFunc The debug function to pass in. The first variable is the line number of the code the debug function was called from, the second is the file name of the function called in, the third is the developer-supplied text passed in.
 	///
-	///Swift functions can't be translated to `CFunctionPointer`s, so use `registerDebugBlock(_:)`, below, if you want to set it via Swift.
+	///Swift functions can't be translated to a `CFunctionPointer`, so use `registerDebugBlock(_:)`, below, if you want to set it via Swift.
 	@objc public class func registerDebugFunction(newDebugFunc: CFunctionPointer<((Int16, UnsafePointer<Int8>, UnsafePointer<Int8>) -> Void)>) {
 		MADRegisterDebugFunc(newDebugFunc)
 	}
