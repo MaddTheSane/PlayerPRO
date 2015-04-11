@@ -166,6 +166,40 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		}
 	}
 	
+	// MARK: - Sorting helper functions
+	
+	///Compare this music list object to another by the file name via localizedStandardCompare
+	///
+	///:param: other The other `MusicListObject` to compare to.
+	///:returns: How this object compares to the other one.
+	func localizedStandardCompareFileName(other: MusicListObject) -> NSComparisonResult {
+		return fileName.localizedStandardCompare(other.fileName)
+	}
+	
+	///Compare this music list object to another by the file size
+	///
+	///:param: other The other `MusicListObject` to compare to.
+	///:returns: How this object compares to the other one.
+	func compareByFileSize(other: MusicListObject) -> NSComparisonResult {
+		let otherSize = other.fileSize
+		if fileSize > otherSize {
+			return .OrderedAscending
+		} else if fileSize < otherSize {
+			return .OrderedDescending
+		} else {
+			// Should be equal
+			return .OrderedSame
+		}
+	}
+	
+	///Compare this music list object to another by the date added to the list
+	///
+	///:param: other The other `MusicListObject` to compare to.
+	///:returns: How this object compares to the other one.
+	func compareByAddedDate(other: MusicListObject) -> NSComparisonResult {
+		return addedDate.compare(other.addedDate)
+	}
+	
 	// MARK: NSCopying protocol
 	func copyWithZone(zone: NSZone) -> AnyObject {
 		return MusicListObject(URL: musicURL)
