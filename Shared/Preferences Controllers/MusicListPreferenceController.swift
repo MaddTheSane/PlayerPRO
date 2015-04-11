@@ -8,7 +8,7 @@
 
 import Cocoa
 
-@objc enum PlaylistMode: Int {
+enum PlaylistMode: Int {
 	case StopPlaying = 0
 	case LoopMusic
 	case LoadNext

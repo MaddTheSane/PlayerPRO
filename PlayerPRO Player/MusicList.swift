@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftAdditions
+import PlayerPROKit.Swift
 
 private let kMusicListKey1 = "Music List Key1"
 private let kMusicListKey2 = "Music List Key2"
@@ -181,22 +182,6 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return .Success
 	}
 	
-	func saveMusicListToURL(URL: NSURL) -> Bool {
-		var theList = NSKeyedArchiver.archivedDataWithRootObject(self)
-		return theList.writeToURL(URL, atomically: true)
-	}
-	
-	func saveApplicationMusicList() -> Bool {
-		let manager = NSFileManager.defaultManager()
-
-		if (!PPPPath.checkResourceIsReachableAndReturnError(nil)) {
-			//Just making sure...
-			manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories:true, attributes:nil, error:nil)
-		}
-		
-		return self.saveMusicListToURL(PPPPath.URLByAppendingPathComponent(kPlayerList, isDirectory:false))
-	}
-	
 	override init() {
 		lostMusicCount = 0
 		selectedMusic = -1
@@ -338,6 +323,22 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 			return false
 		}
 		return loadMusicListFromURL(PPPPath.URLByAppendingPathComponent(kPlayerList, isDirectory: false))
+	}
+	
+	func saveMusicListToURL(URL: NSURL) -> Bool {
+		var theList = NSKeyedArchiver.archivedDataWithRootObject(self)
+		return theList.writeToURL(URL, atomically: true)
+	}
+	
+	func saveApplicationMusicList() -> Bool {
+		let manager = NSFileManager.defaultManager()
+		
+		if (!PPPPath.checkResourceIsReachableAndReturnError(nil)) {
+			//Just making sure...
+			manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories:true, attributes:nil, error:nil)
+		}
+		
+		return self.saveMusicListToURL(PPPPath.URLByAppendingPathComponent(kPlayerList, isDirectory:false))
 	}
 	
 	// MARK: - Key-valued Coding

@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class PlugInInfoController: NSWindowController {
+final class PlugInInfoController: NSWindowController {
 	@IBOutlet weak var nameField:			NSTextField!
 	@IBOutlet weak var authorField:			NSTextField!
 	@IBOutlet weak var typeField:			NSTextField!

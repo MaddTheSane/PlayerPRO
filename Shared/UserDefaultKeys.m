@@ -12,7 +12,6 @@
 #endif
 
 NSString * const PPListPreferencesDidChange = @"Music List Preferences Changed";
-NSString * const PPSoundPreferencesDidChange = @"Sound Preferences changed";
 NSString * const PPDigitalEditorPrefrencesDidChange = @"Digital Editor Preferences changed";
 NSString * const PPBoxEditorPreferencesDidChange = @"Box Editor Preferences changed";
 NSString * const PPClassicalEditorPreferencesDidChange = @"Classical Preferences changed";
@@ -20,8 +19,6 @@ NSString * const PPMiscPreferencesDidChange = @"Misc. Preferences Changed";
 NSString * const PPColorsDidChange = @"PPColor Preferences changed";
 NSString * const PPColorChangedColor = @"PPColor Preferences Changed Color";
 NSString * const PPColorChangedValue = @"PPColor Preferences Changed Color Value";
-NSString * const PPMusicDidChange = @"PP Music changed";
-NSString * const PPDriverDidChange = @"PlayerPRO Driver did change";
 
 NSString * const PPRememberMusicList = @"Remember Music List";
 NSString * const PPLoadMusicAtListLoad = @"Load music when loading list";

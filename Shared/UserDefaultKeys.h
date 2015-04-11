@@ -10,14 +10,14 @@
 #pragma GCC visibility push(hidden)
 #pragma mark Notifications
 extern NSString * const PPListPreferencesDidChange;
-extern NSString * const PPSoundPreferencesDidChange;
+#define PPSoundPreferencesDidChange @"Sound Preferences changed"
 extern NSString * const PPDigitalEditorPrefrencesDidChange;
 extern NSString * const PPBoxEditorPreferencesDidChange;
 extern NSString * const PPClassicalEditorPreferencesDidChange;
 extern NSString * const PPMiscPreferencesDidChange;
 extern NSString * const PPColorsDidChange;
-extern NSString * const PPMusicDidChange;
-extern NSString * const PPDriverDidChange;
+#define PPMusicDidChange @"PP Music changed"
+#define PPDriverDidChange @"PlayerPRO Driver did change"
 extern NSString * const PPColorChangedColor;
 extern NSString * const PPColorChangedValue;
 
@@ -209,5 +209,6 @@ extern NSString * const PPCETrackHeight;
 #pragma mark Misc./other
 #define PPDoubleDash @"--"
 #define kMusicListKVO @"musicList"
+#define PPEscapeValue @"\e"
 
 #pragma GCC visibility pop
