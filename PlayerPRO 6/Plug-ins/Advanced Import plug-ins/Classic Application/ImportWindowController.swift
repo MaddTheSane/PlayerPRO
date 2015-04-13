@@ -12,25 +12,6 @@ import SwiftAdditions
 
 typealias ResFileRefNum = Int32
 
-extension MADDriverSettings {
-	private init() {
-		numChn			= 4
-		outPutBits		= 16
-		outPutMode		= .DeluxeStereoOutPut
-		outPutRate		= 44100
-		MicroDelaySize	= 25
-		ReverbSize		= 100
-		ReverbStrength	= 20
-		oversampling	= 1
-		TickRemover		= false
-		surround		= false
-		Reverb			= false
-		repeatMusic		= true
-		//Just going to use CoreAudio
-		driverMode		= .CoreAudioDriver;
-	}
-}
-
 class ImportWindowController: NSWindowController {
 	@IBOutlet weak var resourceNamesTable: NSTableView? = nil
 	@IBOutlet weak var resourceIDsTable: NSTableView? = nil
@@ -82,7 +63,7 @@ class ImportWindowController: NSWindowController {
 					return
 				}
 				
-				var unusedDriverSettings = MADDriverSettings()
+				var unusedDriverSettings = MADDriverSettings.new()
 				madMusic = UnsafeMutablePointer<MADMusic>.alloc(1)
 				errVal = madLoad(UnsafePointer<Int8>(aData.bytes), size_t(aData.length), madMusic, &unusedDriverSettings)
 				

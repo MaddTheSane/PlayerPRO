@@ -13,26 +13,6 @@ import AVFoundation
 import AudioToolbox
 import SwiftAdditions
 
-extension MADDriverSettings {
-	private init() {
-		numChn			= 4
-		outPutBits		= 16
-		outPutMode		= .DeluxeStereoOutPut
-		outPutRate		= 44100
-		MicroDelaySize	= 25
-		ReverbSize		= 100
-		ReverbStrength	= 20
-		oversampling	= 1
-		TickRemover		= false
-		surround		= false
-		Reverb			= false
-		repeatMusic		= true
-		//reserved = 0
-		//Just going to use CoreAudio
-		driverMode		= .CoreAudioDriver;
-	}
-}
-
 class DocumentWindowController: NSWindowController, SoundSettingsViewControllerDelegate {
 	@IBOutlet weak var exportWindow:			NSWindow!
 	@IBOutlet weak var exportSettingsBox:		NSBox!
@@ -54,7 +34,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 	@IBOutlet weak var infoInfoField:	NSTextField!
 	
 	weak var currentDocument: PPDocument!
-	private var exportSettings = MADDriverSettings()
+	private var exportSettings = MADDriverSettings.new()
 
 	let exportController = SoundSettingsViewController.newSoundSettingWindow()!
 

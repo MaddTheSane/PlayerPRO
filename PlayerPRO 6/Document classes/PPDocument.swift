@@ -12,26 +12,6 @@ import PlayerPROKit
 import AVFoundation
 import AudioToolbox
 
-extension MADDriverSettings {
-	private init() {
-		numChn			= 4
-		outPutBits		= 16
-		outPutMode		= .DeluxeStereoOutPut
-		outPutRate		= 44100
-		MicroDelaySize	= 25
-		ReverbSize		= 100
-		ReverbStrength	= 20
-		oversampling	= 1
-		TickRemover		= false
-		surround		= false
-		Reverb			= false
-		repeatMusic		= true
-		//reserved = 0
-		//Just going to use CoreAudio
-		driverMode		= .CoreAudioDriver;
-	}
-}
-
 @objc(PPDocument) class PPDocument: NSDocument {	
 	var instrumentList: InstrumentPanelController! = nil
 	var mainViewController: DocumentWindowController! = nil
@@ -68,7 +48,7 @@ extension MADDriverSettings {
 
 	private func resetPlayerPRODriver() {
 		var returnerr = MADErr.NoErr;
-		var theSett = MADDriverSettings()
+		var theSett = MADDriverSettings.new()
 		let defaults = NSUserDefaults.standardUserDefaults()
 		
 		//TODO: Sanity Checking
@@ -112,7 +92,7 @@ extension MADDriverSettings {
 	}
 	
 	override init() {
-		var drivSettings = MADDriverSettings()
+		var drivSettings = MADDriverSettings.new()
 		let defaults = NSUserDefaults.standardUserDefaults()
 		
 		//TODO: Sanity Checking
@@ -190,5 +170,4 @@ extension MADDriverSettings {
 	deinit {
 		NSNotificationCenter.defaultCenter().removeObserver(self)
 	}
-	
 }
