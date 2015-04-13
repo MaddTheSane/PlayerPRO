@@ -211,7 +211,7 @@ public func MADDebugString(text: String, line: UWord = __LINE__, file: StaticStr
 private let BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
 extension sData32 {
-	public init() {
+	private init() {
 		self.size = 0
 		self.loopBeg = 0
 		self.loopSize = 0
@@ -225,41 +225,53 @@ extension sData32 {
 		self.data = 0
 	}
 	
+	public static func new() -> sData32 {
+		return sData32()
+	}
+	
 	public var toSData : sData {
-		var toRet = sData()
-		toRet.size = self.size
-		toRet.loopBeg = self.loopBeg
-		toRet.loopSize = self.loopSize
-		toRet.vol = self.vol
-		toRet.c2spd = self.c2spd
-		toRet.loopType = self.loopType
-		toRet.amp = self.amp
-		toRet.relNote = self.relNote
-		toRet.name = self.name
-		toRet.stereo = self.stereo
-		
-		return toRet
+		return sData(self)
+	}
+	
+	public init(_ fromSData32: sData) {
+		size = fromSData32.size
+		loopBeg = fromSData32.loopBeg
+		loopSize = fromSData32.loopSize
+		vol = fromSData32.vol
+		c2spd = fromSData32.c2spd
+		loopType = fromSData32.loopType
+		amp = fromSData32.amp
+		relNote = fromSData32.relNote
+		name = fromSData32.name
+		stereo = fromSData32.stereo
+		data = 0
 	}
 }
 
 extension sData {
-	public var toSData32 : sData32 {
-		var toRet = sData32()
-		toRet.size = self.size
-		toRet.loopBeg = self.loopBeg
-		toRet.loopSize = self.loopSize
-		toRet.vol = self.vol
-		toRet.c2spd = self.c2spd
-		toRet.loopType = self.loopType
-		toRet.amp = self.amp
-		toRet.relNote = self.relNote
-		toRet.name = self.name
-		toRet.stereo = self.stereo
-		
-		return toRet
+	public static func new() -> sData {
+		return sData()
 	}
 	
-	public init() {
+	public var toSData32 : sData32 {
+		return sData32(self)
+	}
+	
+	public init(_ fromSData32: sData32) {
+		size = fromSData32.size
+		loopBeg = fromSData32.loopBeg
+		loopSize = fromSData32.loopSize
+		vol = fromSData32.vol
+		c2spd = fromSData32.c2spd
+		loopType = fromSData32.loopType
+		amp = fromSData32.amp
+		relNote = fromSData32.relNote
+		name = fromSData32.name
+		stereo = fromSData32.stereo
+		data = nil
+	}
+	
+	private init() {
 		self.size = 0
 		self.loopBeg = 0
 		self.loopSize = 0
