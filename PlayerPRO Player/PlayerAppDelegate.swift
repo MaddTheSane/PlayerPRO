@@ -160,26 +160,26 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 	}
 	
-	private func changeValueForMusicListKey(theClosure: () -> Void) {
-		self.willChangeValueForKey(kMusicListKVO)
+	private func changeValueForMusicListKey(@noescape theClosure: () -> Void) {
+		willChangeValueForKey(kMusicListKVO)
 		theClosure()
-		self.didChangeValueForKey(kMusicListKVO)
+		didChangeValueForKey(kMusicListKVO)
 	}
 	
 	private func musicListContentsDidMove() {
 		var i = 0;
-		if (self.currentlyPlayingIndex.index != -1) {
+		if (currentlyPlayingIndex.index != -1) {
 			for (i = 0; i < musicList.countOfMusicList; i++) {
-				if (self.currentlyPlayingIndex.playbackURL == musicList.URLAtIndex(i)) {
-					self.currentlyPlayingIndex.index = i;
+				if (currentlyPlayingIndex.playbackURL == musicList.URLAtIndex(i)) {
+					currentlyPlayingIndex.index = i;
 					break;
 				}
 			}
 		}
-		if (self.previouslyPlayingIndex.index != -1) {
+		if (previouslyPlayingIndex.index != -1) {
 			for (i = 0; i < musicList.countOfMusicList; i++) {
-				if (self.previouslyPlayingIndex.playbackURL == musicList.URLAtIndex(i)) {
-					self.previouslyPlayingIndex.index = i;
+				if (previouslyPlayingIndex.playbackURL == musicList.URLAtIndex(i)) {
+					previouslyPlayingIndex.index = i;
 					break;
 				}
 			}
@@ -636,12 +636,12 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		var sharedWorkspace = NSWorkspace.sharedWorkspace()
 		var theURL = theURL1
 		if (theUTI  == MADGenericUTI) {
-			var invExt = NSLocalizedString("Invalid Extension", comment: "Invalid Extension")
-			var invExtDes = String(format: NSLocalizedString("The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", comment: "Invalid extension description"), theURL.lastPathComponent!)
-			var renameFile =  NSLocalizedString("Rename", comment: "rename file")
-			var openFile = NSLocalizedString("Open", comment: "Open a file")
-			var cancelOp = NSLocalizedString("Cancel", comment: "Cancel")
-			var retVal = PPRunInformationalAlertPanel(NSLocalizedString("Invalid Extension", comment: "Invalid extension"), message:invExtDes, defaultButton: NSLocalizedString("Rename", comment: "rename file"), alternateButton: NSLocalizedString("Open", comment:"Open a file"), otherButton: NSLocalizedString("Cancel", comment: "Cancel"));
+			let invExt = NSLocalizedString("Invalid Extension", comment: "Invalid Extension")
+			let invExtDes = String(format: NSLocalizedString("The file %@ is identified as as a generic MAD tracker, and not a specific one. Renaming it will fix this. Do you want to rename the file extension?", comment: "Invalid extension description"), theURL.lastPathComponent!)
+			let renameFile =  NSLocalizedString("Rename", comment: "rename file")
+			let openFile = NSLocalizedString("Open", comment: "Open a file")
+			let cancelOp = NSLocalizedString("Cancel", comment: "Cancel")
+			let retVal = PPRunInformationalAlertPanel(invExt, message:invExtDes, defaultButton: renameFile, alternateButton:openFile, otherButton: cancelOp)
 			switch (retVal) {
 			case NSAlertDefaultReturn:
 				
@@ -668,7 +668,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 						} else {
 							theURL = tmpURL
 							//TODO: regenerate the UTI
-
 						}
 					}
 				}
@@ -963,7 +962,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	@IBAction func playButtonPressed(sender: AnyObject!) {
 		if (self.music != nil) {
 			madDriver.play()
-			self.paused = false;
+			paused = false;
 		}
 	}
 	
@@ -972,7 +971,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			madDriver.stop()
 			madDriver.cleanDriver()
 			madDriver.setMusicStatusWithCurrentTime(0, maximumTime: 100, minimumTime: 0)
-			self.paused = true;
+			paused = true;
 		}
 	}
 
@@ -983,7 +982,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			} else {
 				madDriver.pause()
 			}
-			self.paused = !paused;
+			paused = !paused;
 		}
 	}
 
@@ -1026,7 +1025,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		exportWindow.close()
 	}
 	
-	func beginExportSettingsWithHandler(theHandle: (Int) -> Void) {
+	private func beginExportSettingsWithHandler(theHandle: (Int) -> Void) {
 		exportSettings.resetToBestDriver()
 		exportSettings.driverMode = .NoHardwareDriver;
 		exportSettings.repeatMusic = false;
@@ -1034,7 +1033,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		window.beginSheet(exportWindow, completionHandler: theHandle)
 	}
 	
-	func rawSoundData(inout settings: MADDriverSettings, handler: (NSData) -> MADErr, callback: (NSError?) -> Void) {
+	private func rawSoundData(inout settings: MADDriverSettings, handler: (NSData) -> MADErr, @noescape callback: (NSError?) -> Void) {
 		var err: NSError? = nil
 		if let theRec = PPDriver(library: madLib, settings: &settings, error: &err) {
 			theRec.cleanDriver()
@@ -1128,10 +1127,10 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			if (audioFile != nil) {
 				AudioFileClose(audioFile)
 			}
-			return MADErr.WritingErr
+			return .WritingErr
 		}
 		
-		return MADErr.NoErr
+		return .NoErr
 	}
 	
 	private func saveMusic(AIFFToURL theURL: NSURL, inout theSett: MADDriverSettings) -> MADErr {
@@ -1207,10 +1206,10 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			if (audioFile != nil) {
 				AudioFileClose(audioFile)
 			}
-			return MADErr.WritingErr
+			return .WritingErr
 		}
 		
-		return MADErr.NoErr
+		return .NoErr
 	}
 	
 	private func applyMetadataToFileID(theID: AudioFileID) {
@@ -1590,7 +1589,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			fileLocation.stringValue = PPDoubleDash
 		}
 		
-		var selected = tableView.selectedRowIndexes
+		let selected = tableView.selectedRowIndexes
 		var theInfo: NSDictionary? = nil
 		var info = ""
 		var NSSig = ""
@@ -1606,9 +1605,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 		
 		let obj = musicList.objectInMusicListAtIndex(selected.lastIndex)
-		
 		let musicURL = obj.musicURL;
-		
 		var aPPInfo: (info: PPLibrary.MusicFileInfo?, error: MADErr)? = nil
 		
 		func badValues() {
@@ -1659,8 +1656,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		let dragPB = info.draggingPasteboard()
 		if let tmpArray = dragPB.readObjectsForClasses([MusicListDragClass.self], options: nil) where tmpArray.count != 0 {
 			var minRow = 0;
-			let tmpDragClass: AnyObject = tmpArray[0]
-			let dragClass = tmpDragClass as! MusicListDragClass
+			let dragClass = (tmpArray[0]) as! MusicListDragClass
 			let dragIndexSet = dragClass.theIndexSet;
 			
 			var currentIndex = dragIndexSet.firstIndex;
@@ -1672,9 +1668,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			}
 			
 			changeValueForMusicListKey({
-				var selArray = self.musicList.arrayOfObjectsInMusicListAtIndexes(dragIndexSet)
-				self.musicList.removeObjectsInMusicListAtIndexes(dragIndexSet)
-				self.musicList.insertObjects(selArray, inMusicListAtIndex: row - minRow)
+				var selArray = musicList.arrayOfObjectsInMusicListAtIndexes(dragIndexSet)
+				musicList.removeObjectsInMusicListAtIndexes(dragIndexSet)
+				musicList.insertObjects(selArray, inMusicListAtIndex: row - minRow)
 			})
 			musicListContentsDidMove()
 			return true;
@@ -1707,17 +1703,17 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			//TODO: check for number of indexes that are greater than the drop row.
 			tableView1.setDropRow(row, dropOperation: .Above)
 		} else {
-			var pb = info.draggingPasteboard();
+			let pb = info.draggingPasteboard();
 			
 			//list the file type UTIs we want to accept
-			var acceptedTypes = self.trackerUTIs;
+			let acceptedTypes = trackerUTIs;
 			
 			if let urls = pb.readObjectsForClasses([NSURL.self], options: [NSPasteboardURLReadingFileURLsOnlyKey : true,
 				NSPasteboardURLReadingContentsConformToTypesKey : acceptedTypes]) {
 					if urls.count > 0 {
-				result = .Copy
-				tableView1.setDropRow(row, dropOperation: .Above)
-			}
+						result = .Copy
+						tableView1.setDropRow(row, dropOperation: .Above)
+					}
 			}
 		}
 		
@@ -1734,17 +1730,24 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	func tableView(tableView: NSTableView, writeRowsWithIndexes rowIndexes: NSIndexSet, toPasteboard pboard: NSPasteboard) -> Bool {
 		var status = false;
 		let dragClass = MusicListDragClass(indexSet: rowIndexes)
-		var urlArrays = [NSURL]()
-		var ppmobjects = musicList.arrayOfObjectsInMusicListAtIndexes(rowIndexes)
-		for obj in ppmobjects {
-			urlArrays.append(obj.musicURL)
-		}
-		var tmpObjs:[AnyObject] = [dragClass] + urlArrays
+		let ppmobjects = musicList.arrayOfObjectsInMusicListAtIndexes(rowIndexes)
+		let urlArrays = ppmobjects.map({ (mlo) -> NSURL in
+			return mlo.musicURL
+		})
+		var tmpObjs: [AnyObject] = [dragClass] + urlArrays
 		pboard.clearContents(); // clear pasteboard to take ownership
 		status = pboard.writeObjects(tmpObjs) // write the URLs
 		return status;
 	}
-
+	
+	
+	func tableView(atableView: NSTableView, sortDescriptorsDidChange oldDescriptors: [AnyObject]) {
+		changeValueForMusicListKey({
+			self.musicList.sortMusicList(descriptors: atableView.sortDescriptors as! [NSSortDescriptor])
+		})
+		atableView.reloadData()
+		musicListContentsDidMove()
+	}
 	
 	//MARK: - PPSoundSettingsViewController delegate methods
 	func soundOutBitsDidChange(bits: Int16) {
@@ -1790,5 +1793,4 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	func soundOutStereoDelayAmountDidChange(std: Int32) {
 		exportSettings.MicroDelaySize = std;
 	}
-
 }

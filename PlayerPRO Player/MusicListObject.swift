@@ -26,7 +26,7 @@ private func URLsPointingToTheSameFile(urlA: NSURL, urlB: NSURL) -> Bool {
 		bothAreValid = false;
 	}
 	if bothAreValid {
-		theSame = (dat1 as! NSData).isEqualToData((dat2 as! NSData))
+		theSame = (dat1 as! NSObject) == (dat2 as! NSObject)
 	}
 	return theSame
 }

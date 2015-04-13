@@ -121,39 +121,11 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	@objc(sortMusicListUsingDescriptors:) func sortMusicList(#descriptors: [NSSortDescriptor]) {
-		for descriptor in descriptors {
-			#if os(OSX)
-				let descriptorKey = descriptor.key()!
-			#elseif os(iOS)
-				let descriptorKey = descriptor.key!
-			#endif
-			switch descriptorKey {
-			case "fileName":
-				sortMusicList(block: { (lhs, rhs) -> Bool in
-					let result = lhs.fileName.localizedStandardCompare(rhs.fileName)
-					if descriptor.ascending {
-						return result == NSComparisonResult.OrderedAscending
-					} else {
-						return result == NSComparisonResult.OrderedDescending
-					}
-				})
-				
-			case "fileSize":
-				sortMusicList(block: { (lhs, rhs) -> Bool in
-					if descriptor.ascending {
-						return lhs.fileSize < rhs.fileSize
-					} else {
-						return lhs.fileSize > rhs.fileSize
-					}
-				})
-				
-			default:
-				break
-			}
-		}
+		let anArray = sortedArray(musicList, usingDescriptors: descriptors)
+		musicList = anArray as! [MusicListObject]
 	}
 	
-	@objc enum AddMusicStatus: Int {
+	enum AddMusicStatus: Int {
 		case Failure = 0
 		case Success
 		case SimilarURL
