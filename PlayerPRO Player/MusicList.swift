@@ -55,7 +55,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	
 	/// Returns `NSNotFound` if the URL couldn't be found.
 	///
-	/// Use `indexOfObjectSimilar(URL:)` on Swift instead of this one.
+	/// Use `indexOfObjectSimilar(URL:)` on Swift instead.
 	func indexOfObjectSimilarToURL(theURL: NSURL) -> Int {
 		return indexOfObjectSimilar(URL: theURL) ?? NSNotFound
 	}
@@ -125,8 +125,8 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		musicList = anArray as! [MusicListObject]
 	}
 	
-	enum AddMusicStatus: Int {
-		case Failure = 0
+	enum AddMusicStatus {
+		case Failure
 		case Success
 		case SimilarURL
 	}
@@ -183,6 +183,8 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 			}
 		} else if let bookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey3) as? [NSURL] {
 			selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation3);
+			// Have all the new MusicListObjects use the same date
+			let currentDate = NSDate()
 			for bookURL in bookmarkArray {
 				if (!bookURL.checkResourceIsReachableAndReturnError(nil)) {
 					if (selectedMusic == -1) {
@@ -195,7 +197,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 					lostMusicCount++
 					continue
 				}
-				let obj = MusicListObject(URL: bookURL)
+				let obj = MusicListObject(URL: bookURL, date: currentDate)
 				musicList.append(obj)
 			}
 		} else if let bookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey2) as? [NSData] {
@@ -205,8 +207,10 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 				selectedMusic = -1
 			}
 			let aHomeURL = NSURL(fileURLWithPath: NSHomeDirectory(), isDirectory: true)
+			// Have all the new MusicListObjects use the same date
+			let currentDate = NSDate()
 			for bookData in bookmarkArray {
-				if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI, relativeURL: aHomeURL) {
+				if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI, relativeURL: aHomeURL, date: currentDate) {
 					musicList.append(fullURL)
 				} else {
 					if (selectedMusic == -1) {
@@ -220,8 +224,10 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 				}
 			}
 		} else if let bookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey1) as? [NSData] {
+			// Have all the new MusicListObjects use the same date
+			let currentDate = NSDate()
 			for bookData in bookmarkArray {
-				if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI) {
+				if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI, date: currentDate) {
 					musicList.append(fullURL)
 				} else {
 					lostMusicCount++
@@ -405,9 +411,11 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 						theHandle(theErr: lolwut)
 					} else {
 						var pathsURL = [MusicListObject]()
+						// Have all the new MusicListObjects use the same date
+						let currentDate = NSDate()
 						for aPath in pathsAny! {
 							if let tmpURL = NSURL.fileURLWithPath(aPath) {
-								let tmpObj = MusicListObject(URL: tmpURL)
+								let tmpObj = MusicListObject(URL: tmpURL, date: currentDate)
 								pathsURL.append(tmpObj)
 							}
 						}

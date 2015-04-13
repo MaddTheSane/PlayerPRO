@@ -106,11 +106,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	
 	convenience init?(bookmarkData: NSData, resolutionOptions: NSURLBookmarkResolutionOptions = nil, relativeURL: NSURL? = nil, date: NSDate? = NSDate()) {
 		if let resolvedURL = NSURL(byResolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeToURL: relativeURL, bookmarkDataIsStale: nil, error: nil) {
-			if let unwrapped = date {
-				self.init(URL: resolvedURL, date: unwrapped)
-			} else {
-				self.init(URL: resolvedURL)
-			}
+			self.init(URL: resolvedURL, date: date ?? NSDate())
 		} else {
 			self.init(URL: NSURL(fileURLWithPath: "/dev/null")!)
 
