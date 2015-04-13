@@ -8,6 +8,7 @@
 
 #import <Foundation/NSFormatter.h>
 
+IB_DESIGNABLE
 @interface PPTimeFormatter : NSFormatter
 
 @end

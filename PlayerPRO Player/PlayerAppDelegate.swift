@@ -1261,7 +1261,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 							if (self.isQuitting) {
 								NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
 							} else {
-								var retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
+								let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
 								if (retVal == NSAlertAlternateReturn) {
 									NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL!])
 								}
@@ -1380,9 +1380,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 									if (self.isQuitting) {
 										NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
 									} else {
-										var retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(saveURL.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
+										let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
 										if (retVal == NSAlertAlternateReturn) {
-											NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([saveURL])
+											NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL!])
 										}
 									}
 								}
@@ -1434,7 +1434,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 							if (self.isQuitting) {
 								NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
 							} else {
-								var retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
+								let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
 								if (retVal == NSAlertAlternateReturn) {
 									NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL!])
 								}
@@ -1447,8 +1447,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			break;
 			
 		default:
-			let utag =  Int(tag)
-			if utag > madLib.pluginCount || tag < 0 {
+			if tag > madLib.pluginCount || tag < 0 {
 				NSBeep();
 				
 				madDriver.endExport()
@@ -1458,8 +1457,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 				
 				return;
 			}
-			savePanel.allowedFileTypes = madLib[(utag)].UTITypes
-			savePanel.title = "Export as \(madLib[utag].menuName)"
+			savePanel.allowedFileTypes = madLib[tag].UTITypes
+			savePanel.title = "Export as \(madLib[tag].menuName)"
 			
 			savePanel.beginSheetModalForWindow(self.window, completionHandler: {(result) -> Void in
 				if (result != NSFileHandlingPanelOKButton) {
@@ -1468,7 +1467,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 				}
 				
 				let fileURL = savePanel.URL
-				var err = self.music.exportMusicToURL(fileURL!, format :self.madLib[utag].type, library: self.madLib)
+				var err = self.music.exportMusicToURL(fileURL!, format: self.madLib[tag].type, library: self.madLib)
 				self.madDriver.endExport()
 				if (err != .NoErr) {
 					if (self.isQuitting) {
@@ -1482,7 +1481,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 					if (self.isQuitting) {
 						NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
 					} else {
-						let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
+						let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
 						if (retVal == NSAlertAlternateReturn) {
 							NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([fileURL!])
 						}
@@ -1674,8 +1673,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			})
 			musicListContentsDidMove()
 			return true;
-		}
-		if let tmpArray = dragPB.readObjectsForClasses([NSURL.self], options:[NSPasteboardURLReadingFileURLsOnlyKey : true,
+		} else if let tmpArray = dragPB.readObjectsForClasses([NSURL.self], options:[NSPasteboardURLReadingFileURLsOnlyKey : true,
 			NSPasteboardURLReadingContentsConformToTypesKey : self.trackerUTIs]) {
 			if (tmpArray.count < 1) {
 				return false;
@@ -1739,7 +1737,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		status = pboard.writeObjects(tmpObjs) // write the URLs
 		return status;
 	}
-	
 	
 	func tableView(atableView: NSTableView, sortDescriptorsDidChange oldDescriptors: [AnyObject]) {
 		changeValueForMusicListKey({
