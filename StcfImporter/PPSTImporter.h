@@ -10,7 +10,7 @@
 
 @protocol PPSTImporterHelper <NSObject>
 
-- (void)loadStcfAtURL:(NSURL* __nonnull)theURL withReply:(void (^__nonnull)(NSDictionary* __nullable  bookmarkData, NSError * __nullable error))reply;
+- (void)loadStcfAtURL:(nonnull NSURL*)theURL withReply:(nonnull void (^)(NSDictionary* __nullable  bookmarkData, NSError * __nullable error))reply;
 
 @end
 

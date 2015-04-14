@@ -11,16 +11,6 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 
-MADErr TESTMADK(const void* MADPtr)
-{
-	if (memcmp("MADK", MADPtr, 4) == 0) {
-		return MADNoErr;
-	} else {
-		return MADFileNotSupportedByThisPlug;
-	}
-}
-
-
 void PPGetResInfo(Handle resHandle, ResID *resIDShort, ResType *resTypeCode, long *size, NSString **name)
 {
 	Str255 nameStr = {0};
@@ -52,6 +42,16 @@ void PPCloseResFile(ResFileRefNum refNum)
 	CloseResFile(refNum);
 }
 
+#pragma mark -
+
+MADErr TESTMADK(const void* MADPtr)
+{
+	if (memcmp("MADK", MADPtr, 4) == 0) {
+		return MADNoErr;
+	} else {
+		return MADFileNotSupportedByThisPlug;
+	}
+}
 
 MADErr LoadMADK(const char *MADPtr, size_t aSize, MADMusic *MadFile, MADDriverSettings *init)
 {

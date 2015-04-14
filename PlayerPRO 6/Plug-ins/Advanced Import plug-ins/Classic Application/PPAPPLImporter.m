@@ -24,11 +24,6 @@ static const OSType MADTypes[] = {'MADK', 'MADI', 'MADF', 'MADG', 'MADH'};
 	return self = [self init];
 }
 
-+ (ResourceCount)resourceCount:(OSType)theType
-{
-	return Count1Resources(theType);
-}
-
 - (void)beginImportOfURL:(NSURL*)theURL withHandler:(PPComplexImportHandler)handler
 {
 	FSRef			fileRef;

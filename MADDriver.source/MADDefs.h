@@ -195,6 +195,8 @@ typedef MADENUM(short, MADErr) {
 };
 
 typedef uint8_t			MADByte;
+
+///Pascal Strings. Kept for legacy reasons.
 typedef unsigned char	MADPStr255[256], MADPStr63[64];
 #ifndef __APPLE__
 typedef uint32_t		MADFourChar;

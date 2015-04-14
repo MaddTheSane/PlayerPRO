@@ -8,7 +8,6 @@
 
 import Foundation
 import SwiftAdditions
-import PlayerPROKit.Swift
 
 private let kMusicListKey1 = "Music List Key1"
 private let kMusicListKey2 = "Music List Key2"
@@ -407,7 +406,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 					let selectedAny = bookmarkData!["SelectedMusic"] as? Int
 					let pathsAny = bookmarkData!["MusicPaths"] as? NSArray as? [String]
 					if (invalidAny == nil || selectedAny == nil || pathsAny == nil) {
-						let lolwut = createErrorFromMADErrorType(.UnknownErr)!
+						let lolwut = NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionReplyInvalid, userInfo: [NSLocalizedDescriptionKey: "Invalid data returned from helper"])
 						theHandle(theErr: lolwut)
 					} else {
 						var pathsURL = [MusicListObject]()

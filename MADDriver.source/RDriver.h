@@ -239,10 +239,7 @@ typedef struct MADChannel {
 	int		TimeCounter;
 } MADChannel;
 
-/********************						***********************/
-/*** 		Music description - used in Import/Export filter	***/
-/********************						***********************/
-
+/** Music description - used in Import/Export filter */
 typedef struct MADMusic {
 	int			position;
 	int			fullTime;
@@ -261,6 +258,7 @@ typedef struct MADMusic {
 	MADPStr255	musicFileName;
 	/// Tell the driver to <b>not</b> access music data
 	bool		musicUnderModification;
+	/// Has the music changed since last saved?
 	bool		hasChanged;
 } MADMusic;
 

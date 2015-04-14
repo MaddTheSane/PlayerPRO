@@ -65,7 +65,7 @@ class ImportWindowController: NSWindowController {
 				
 				var unusedDriverSettings = MADDriverSettings.new()
 				madMusic = UnsafeMutablePointer<MADMusic>.alloc(1)
-				errVal = madLoad(UnsafePointer<Int8>(aData.bytes), size_t(aData.length), madMusic, &unusedDriverSettings)
+				errVal = madLoad(UnsafePointer<Int8>(aData.bytes), aData.length, madMusic, &unusedDriverSettings)
 				
 				if errVal != .NoErr {
 					// The importers should have cleaned up after themselves...
