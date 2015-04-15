@@ -76,7 +76,6 @@ MADErr inAddSoundToMAD(void			*theSound,
 {
 	MADErr theErr = MADNoErr;
 	char cName[256] = {0};
-	memset(cName, 0, name[0] + 1);
 	memcpy(cName, &name[1], name[0]);
 	
 	theErr = MADAddSoundToMAD(theSound, sndLen, (int)lS, (int)lE, sS, bFreq, rate, stereo, cName, InsHeader, sample, sampleID);

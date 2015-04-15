@@ -546,38 +546,13 @@ typedef struct MADLibrary {
 #define __callback
 #endif
 
+#pragma pack(push, 8)
+
 typedef struct AEffect AEffect;
 
-struct AEffect
-{
-	MADFourChar magic;
-	int (__callback *dispatcher)(AEffect *effect, int opCode, int index, int value, void *ptr, float opt);
-	void (__callback *process)(AEffect *effect, float **inputs, float **outputs, int sampleframes);
-	void (__callback *setParameter)(AEffect *effect, int index, float parameter);
-	float (__callback *getParameter)(AEffect *effect, int index);
+typedef	ptrdiff_t (__callback *MADAudioMasterCallback) (AEffect* effect, int32_t opcode, int32_t index, ptrdiff_t value, void* ptr, float opt);
 	
-	int numPrograms;
-	int numParams;
-	int numInputs;
-	int numOutputs;
-	int flags;
-	int resvd1;
-	int resvd2;
-	int initialDelay;
-	int realQualities;
-	int offQualities;
-	float ioRatio;
-	void *object;
-	void *user;
-	MADFourChar uniqueID;
-	int version;
-	void (__callback *processReplacing)(AEffect *effect, float **inputs, float **outputs, int sampleframes);
-	char future[60];
-};
-
-typedef	int (*audioMasterCallback)(AEffect *effect, int opcode, int index, int value, void *ptr, float opt);
-	
-typedef AEffect *(*VSTPlugInPtr)(audioMasterCallback cb);
+typedef AEffect *(*VSTPlugInPtr)(MADAudioMasterCallback cb);
 
 #if defined(_MAC_H)
 
@@ -616,6 +591,8 @@ typedef struct VSTEffect {
 	bool			ProcessReplacingNotAvailable;
 } VSTEffect;
 #endif
+
+#pragma pack(pop)
 
 typedef struct MADDriverBase {
 	/**********************/
