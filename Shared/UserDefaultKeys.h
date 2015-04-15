@@ -42,17 +42,17 @@ extern NSString * const PPLoadMusicAtMusicLoad;
 extern NSString * const PPLoopMusicWhenDone;
 
 #pragma mark Sound driver Preference keys
-extern NSString * const PPSoundOutBits;
-extern NSString * const PPSoundOutRate;
-extern NSString * const PPSoundDriver;
-extern NSString * const PPStereoDelayToggle;
-extern NSString * const PPReverbToggle;
-extern NSString * const PPSurroundToggle;
-extern NSString * const PPOversamplingToggle;
-extern NSString * const PPStereoDelayAmount;
-extern NSString * const PPReverbAmount;
-extern NSString * const PPReverbStrength;
-extern NSString * const PPOversamplingAmount;
+#define PPSoundOutBits @"Sound output bits"
+#define PPSoundOutRate @"Sound output rate"
+#define PPSoundDriver @"Sound Driver"
+#define PPStereoDelayToggle @"Stereo delay?"
+#define PPReverbToggle @"Reverb?"
+#define PPSurroundToggle @"Surround?"
+#define PPOversamplingToggle @"Oversampling?"
+#define PPStereoDelayAmount @"Stereo Delay amount"
+#define PPReverbAmount @"Reverb Amount"
+#define PPReverbStrength @"Reverb Strength"
+#define PPOversamplingAmount @"Oversampling Amount"
 
 #pragma mark Digital Editor preference keys
 extern NSString * const PPDEShowInstrument;

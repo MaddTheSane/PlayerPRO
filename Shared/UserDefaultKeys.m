@@ -28,18 +28,6 @@ NSString * const PPSaveModList = @"Ask to save modified Mod list";
 NSString * const PPLoadMusicAtMusicLoad = @"Play music on Music load";
 NSString * const PPLoopMusicWhenDone = @"Loop music";
 
-NSString * const PPSoundOutBits = @"Sound output bits";
-NSString * const PPSoundOutRate = @"Sound output rate";
-NSString * const PPSoundDriver = @"Sound Driver";
-NSString * const PPStereoDelayToggle = @"Stereo delay?";
-NSString * const PPReverbToggle = @"Reverb?";
-NSString * const PPSurroundToggle = @"Surround?";
-NSString * const PPOversamplingToggle = @"Oversampling?";
-NSString * const PPStereoDelayAmount = @"Stereo Delay amount";
-NSString * const PPReverbAmount = @"Reverb Amount";
-NSString * const PPReverbStrength = @"Reverb Strength";
-NSString * const PPOversamplingAmount = @"Oversampling Amount";
-
 NSString * const PPDEShowInstrument = @"Digital Editor Show Instrument";
 NSString * const PPDEShowNote = @"Digital Editor Show Note";
 NSString * const PPDEShowEffect = @"Digital Editor Show Effect";
