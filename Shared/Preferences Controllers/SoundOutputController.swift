@@ -102,7 +102,7 @@ final class SoundOutputController: SoundSettingsViewController, SoundSettingsVie
 		var drivSet = MADDriverSettings.new()
 		
 		drivSet.surround = defaults.boolForKey(PPSurroundToggle);
-		drivSet.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver)))!
+		drivSet.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver))) ?? .CoreAudioDriver
 		drivSet.outPutBits = Int16(defaults.integerForKey(PPSoundOutBits))
 		drivSet.outPutRate = UInt32(defaults.integerForKey(PPSoundOutRate))
 		drivSet.outPutMode = .DeluxeStereoOutPut;

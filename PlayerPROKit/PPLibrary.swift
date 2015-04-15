@@ -111,9 +111,6 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		MADRegisterDebugBlock(newDebugFunc)
 	}
 
-	typealias Index = Int
-	typealias Generator = GeneratorOf<PPLibraryObject>
-	
 	public func generate() -> GeneratorOf<PPLibraryObject> {
 		var index = 0
 		return GeneratorOf {
