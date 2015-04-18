@@ -34,28 +34,28 @@
  */
 - (int)dataSize DEPRECATED_ATTRIBUTE;
 
-/// The beginning of the loop
+/// The beginning of the loop.
 @property int loopBegin;
-/// The length of the loop
+/// The length of the loop.
 @property int loopSize;
-/// The base volume
+/// The base volume.
 @property MADByte volume;
-/// The sound sample's sample rate
+/// The sound sample's sample rate.
 @property unsigned short c2spd;
-/// The loop type, either classic or ping-pong
+/// The loop type, either classic or ping-pong.
 @property MADLoopType loopType;
-/// The sound sample's amplitude. Currently limited to 8 or 16 bits
+/// The sound sample's amplitude. Currently limited to 8 or 16 bits.
 @property MADByte amplitude;
-/// Relative note
+/// Relative note.
 @property char relativeNote;
-/// Sample name
+/// Sample name.
 @property (copy, null_resettable) NSString *name;
 /// Is the sample stereo?
 @property (getter = isStereo) BOOL stereo;
-/// The data of the sample's sound, wrapped in an \c NSData class object
+/// The data of the sample's sound, wrapped in an \c NSData class object.
 @property (copy, null_resettable) NSData *data;
 /// The range of the loop.
-/// A range with a location of \c NSNotFound means a blank loop
+/// A range with a location of \c NSNotFound means a blank loop.
 @property NSRange loop;
 
 

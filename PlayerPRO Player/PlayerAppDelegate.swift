@@ -1057,8 +1057,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	private func saveMusic(waveToURL theURL: NSURL, inout theSett: MADDriverSettings) -> MADErr {
 		var iErr: NSError? = nil
 		
-		var audioFile: AudioFileID = nil;
-		var tmpChannels: UInt32
+		var audioFile: ExtAudioFileRef = nil;
+		let tmpChannels: UInt32
+		var res: OSStatus = noErr
 		
 		switch (theSett.outPutMode) {
 		case .MonoOutPut:
@@ -1072,38 +1073,39 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 		
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: .SignedInteger | .Packed, bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+		var realFormat = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: .SignedInteger | .Packed | .NativeEndian, bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		
-		var res = AudioFileCreate(URL: theURL, fileType: .WAVE, format: &asbd, flags: .EraseFile, audioFile: &audioFile)
+		res = ExtAudioFileCreate(URL: theURL, fileType: .WAVE, streamDescription: &asbd, flags: .EraseFile, audioFile: &audioFile)
+		
+		if res != noErr {
+			return .WritingErr
+		}
+		
+		res = ExtAudioFileSetProperty(audioFile, propertyID: .ClientDataFormat, dataSize: UInt32(sizeof(AudioStreamBasicDescription)), data: &realFormat)
 		if (res != noErr) {
 			if (audioFile != nil) {
-				AudioFileClose(audioFile)
+				ExtAudioFileDispose(audioFile)
 			}
 			return .WritingErr
 		}
 		
-		var location = 0
-		
 		func handler(data: NSData) -> MADErr {
 			var toWriteSize = data.length
-			if let mutData = NSMutableData(length: data.length) {
-				let tmpData = UnsafePointer<Int16>(data.bytes)
-				var toWriteBytes = UnsafeMutablePointer<Int16>(mutData.mutableBytes)
-				
-				for i in 0..<(toWriteSize / 2) {
-					toWriteBytes[i] = tmpData[i].littleEndian
-				}
-				var tmpToWrite = UInt32(toWriteSize)
-				let res = AudioFileWriteBytes(audioFile, true, Int64(location), &tmpToWrite, toWriteBytes)
-				location += toWriteSize
-				
-				if res != noErr {
-					return .WritingErr
-				}
-				
-				return .NoErr
-			} else {
-				return .NeedMemory
+			
+			var audBufList = AudioBufferList()
+			audBufList.mNumberBuffers = 1
+			audBufList.mBuffers.mNumberChannels = tmpChannels
+			audBufList.mBuffers.mDataByteSize = UInt32(data.length)
+			audBufList.mBuffers.mData = UnsafeMutablePointer<Void>(data.bytes)
+			
+			
+			let res = ExtAudioFileWrite(audioFile, UInt32(toWriteSize) / realFormat.mBytesPerFrame, &audBufList)
+			
+			if res != noErr {
+				return .WritingErr
 			}
+			
+			return .NoErr
 		}
 		
 		rawSoundData(&theSett, handler: handler, callback: { (anErr) -> Void in
@@ -1111,7 +1113,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		})
 		
 		if let iErr = iErr {
-			res = AudioFileClose(audioFile)
+			res = ExtAudioFileDispose(audioFile)
 			audioFile = nil
 			if iErr.domain == PPMADErrorDomain {
 				return MADErr(rawValue: OSErr(iErr.code)) ?? .UnknownErr
@@ -1121,11 +1123,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 		
 		applyMetadataToFileID(audioFile)
-		res = AudioFileClose(audioFile)
+		res = ExtAudioFileDispose(audioFile)
 		audioFile = nil
 		if (res != noErr) {
 			if (audioFile != nil) {
-				AudioFileClose(audioFile)
+				ExtAudioFileDispose(audioFile)
 			}
 			return .WritingErr
 		}
@@ -1136,8 +1138,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	private func saveMusic(AIFFToURL theURL: NSURL, inout theSett: MADDriverSettings) -> MADErr {
 		var iErr: NSError? = nil
 		
-		var audioFile: AudioFileID = nil;
-		var tmpChannels: UInt32
+		var audioFile: ExtAudioFileRef = nil;
+		let tmpChannels: UInt32
+		var res: OSStatus = noErr
 		
 		switch (theSett.outPutMode) {
 		case .MonoOutPut:
@@ -1151,38 +1154,39 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 		
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: .SignedInteger | .Packed | .BigEndian, bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
+		var realFormat = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: .SignedInteger | .Packed | .NativeEndian, bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		
-		var res = AudioFileCreate(URL: theURL, fileType: .AIFF, format: &asbd, flags: .EraseFile, audioFile: &audioFile)
+		res = ExtAudioFileCreate(URL: theURL, fileType: .AIFF, streamDescription: &asbd, flags: .EraseFile, audioFile: &audioFile)
+		
+		if res != noErr {
+			return .WritingErr
+		}
+		
+		res = ExtAudioFileSetProperty(audioFile, propertyID: .ClientDataFormat, dataSize: UInt32(sizeof(AudioStreamBasicDescription)), data: &realFormat)
 		if (res != noErr) {
 			if (audioFile != nil) {
-				AudioFileClose(audioFile)
+				ExtAudioFileDispose(audioFile)
 			}
 			return .WritingErr
 		}
 		
-		var location = 0
-		
 		func handler(data: NSData) -> MADErr {
 			var toWriteSize = data.length
-			if let mutData = NSMutableData(length: data.length) {
-				let tmpData = UnsafePointer<Int16>(data.bytes)
-				var toWriteBytes = UnsafeMutablePointer<Int16>(mutData.mutableBytes)
-				
-				for i in 0..<(toWriteSize / 2) {
-					toWriteBytes[i] = tmpData[i].bigEndian
-				}
-				var tmpToWrite = UInt32(toWriteSize)
-				let res = AudioFileWriteBytes(audioFile, true, Int64(location), &tmpToWrite, toWriteBytes)
-				location += toWriteSize
-				
-				if res != noErr {
-					return .WritingErr
-				}
-				
-				return .NoErr
-			} else {
-				return .NeedMemory
+			
+			var audBufList = AudioBufferList()
+			audBufList.mNumberBuffers = 1
+			audBufList.mBuffers.mNumberChannels = tmpChannels
+			audBufList.mBuffers.mDataByteSize = UInt32(data.length)
+			audBufList.mBuffers.mData = UnsafeMutablePointer<Void>(data.bytes)
+			
+			
+			let res = ExtAudioFileWrite(audioFile, UInt32(toWriteSize) / realFormat.mBytesPerFrame, &audBufList)
+			
+			if res != noErr {
+				return .WritingErr
 			}
+			
+			return .NoErr
 		}
 		
 		rawSoundData(&theSett, handler: handler, callback: { (anErr) -> Void in
@@ -1190,7 +1194,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		})
 		
 		if let iErr = iErr {
-			res = AudioFileClose(audioFile)
+			res = ExtAudioFileDispose(audioFile)
 			audioFile = nil
 			if iErr.domain == PPMADErrorDomain {
 				return MADErr(rawValue: OSErr(iErr.code)) ?? .UnknownErr
@@ -1200,11 +1204,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 		
 		applyMetadataToFileID(audioFile)
-		res = AudioFileClose(audioFile)
+		res = ExtAudioFileDispose(audioFile)
 		audioFile = nil
 		if (res != noErr) {
 			if (audioFile != nil) {
-				AudioFileClose(audioFile)
+				ExtAudioFileDispose(audioFile)
 			}
 			return .WritingErr
 		}
@@ -1232,9 +1236,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			savePanel.allowedFileTypes = [AVFileTypeAIFF]
 			savePanel.title = "Export as AIFF audio"
 			savePanel.beginSheetModalForWindow(self.window, completionHandler: { (result) -> Void in
-				
-			})
-			savePanel.beginSheetModalForWindow(self.window, completionHandler: { (result) -> Void in
 				if (result != NSFileHandlingPanelOKButton) {
 					self.madDriver.endExport()
 					return
@@ -1247,8 +1248,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 					}
 					
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+						var thErr = MADErr.NoErr
 						autoreleasepool {
-							var thErr = self.saveMusic(AIFFToURL: savePanel.URL!, theSett: &self.exportSettings);
+							thErr = self.saveMusic(AIFFToURL: savePanel.URL!, theSett: &self.exportSettings);
 							self.madDriver.endExport()
 							if (thErr != .NoErr) {
 								if (self.isQuitting) {
@@ -1257,13 +1259,24 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 								return;
 							}
 						}
-						dispatch_async(dispatch_get_main_queue()) {
-							if (self.isQuitting) {
-								NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
-							} else {
-								let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
-								if (retVal == NSAlertAlternateReturn) {
-									NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL!])
+						if thErr == .NoErr {
+							dispatch_async(dispatch_get_main_queue()) {
+								if (self.isQuitting) {
+									NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
+								} else {
+									let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
+									if (retVal == NSAlertAlternateReturn) {
+										NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL!])
+									}
+								}
+							}
+						} else {
+							dispatch_async(dispatch_get_main_queue()) {
+								
+								if self.isQuitting {
+									NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
+								} else {
+									NSAlert(error: createErrorFromMADErrorType(thErr)!).runModal()
 								}
 							}
 						}
@@ -1310,7 +1323,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 							let dataInfo = AVMutableMetadataItem()
 							dataInfo.keySpace = AVMetadataKeySpaceQuickTimeUserData;
 							dataInfo.setKey(AVMetadataQuickTimeUserDataKeySoftware)
-							dataInfo.setValue("PlayerPRO 6")
+							dataInfo.setValue("PlayerPRO Player")
 							dataInfo.locale = NSLocale(localeIdentifier: "en_US")
 							
 							let musicInfoQTUser = AVMutableMetadataItem();
@@ -1338,7 +1351,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 							
 							return [titleName, dataInfo, musicInfoQTUser, musicInfoiTunes, musicInfoQTMeta, musicNameQTUser];
 						}
-
+						
 						let tmpName = oldMusicName != "" ? oldMusicName : "untitled"
 						let tmpURL = NSFileManager.defaultManager().URLForDirectory(.ItemReplacementDirectory, inDomain: .UserDomainMask, appropriateForURL: oldURL, create: true, error: nil)!.URLByAppendingPathComponent("\(tmpName).aiff", isDirectory: false)
 						
@@ -1351,7 +1364,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 						
 						if let exportMov = AVAsset.assetWithURL(tmpURL) as? AVAsset {
 							var metadataInfo = generateAVMetadataInfo()
-
+							
 							var session = AVAssetExportSession(asset:exportMov, presetName:AVAssetExportPresetAppleM4A)
 							#if false
 								if (session == nil) {
@@ -1420,8 +1433,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 					}
 					
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
+						var thErr = MADErr.NoErr
 						autoreleasepool {
-							var thErr = self.saveMusic(waveToURL: savePanel.URL!, theSett: &self.exportSettings);
+							thErr = self.saveMusic(waveToURL: savePanel.URL!, theSett: &self.exportSettings);
 							self.madDriver.endExport()
 							if (thErr != .NoErr) {
 								if (self.isQuitting) {
@@ -1433,11 +1447,14 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 						dispatch_async(dispatch_get_main_queue()) {
 							if (self.isQuitting) {
 								NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
-							} else {
+							} else if thErr == .NoErr {
 								let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
 								if (retVal == NSAlertAlternateReturn) {
 									NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL!])
 								}
+							} else {
+								let expErr = createErrorFromMADErrorType(thErr)!
+								PPRunAlertPanel("Export failed", message: "Export/coversion of the music file failed:\n\(expErr.localizedDescription)");
 							}
 						}
 					}
