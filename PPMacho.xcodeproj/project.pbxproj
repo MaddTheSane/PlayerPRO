@@ -1887,13 +1887,6 @@
 			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
 			remoteInfo = SwiftAdditions;
 		};
-		55C98AEB1A001B1000435530 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5557769E17EBF8FD0019D008;
-			remoteInfo = "iOS PlayerPRO Player";
-		};
 		55CBF9FF11EB77AA0028C6BB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -5348,7 +5341,6 @@
 			);
 			dependencies = (
 				555272531A000119008B8616 /* PBXTargetDependency */,
-				55C98AEC1A001B1000435530 /* PBXTargetDependency */,
 			);
 			name = "PlayerPROKit-iOS Tests";
 			productName = "PlayerPROKit Tests";
@@ -6282,9 +6274,6 @@
 				TargetAttributes = {
 					5513EACD19A5AE4200BCC483 = {
 						CreatedOnToolsVersion = 6.0;
-					};
-					555272441A0000C8008B8616 = {
-						TestTargetID = 5557769E17EBF8FD0019D008;
 					};
 					5557769E17EBF8FD0019D008 = {
 						SystemCapabilities = {
@@ -8504,11 +8493,6 @@
 			name = SwiftAdditions;
 			targetProxy = 55C1A6AC1A0720B200C7A733 /* PBXContainerItemProxy */;
 		};
-		55C98AEC1A001B1000435530 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5557769E17EBF8FD0019D008 /* iOS PlayerPRO Player */;
-			targetProxy = 55C98AEB1A001B1000435530 /* PBXContainerItemProxy */;
-		};
 		55CBFA0011EB77AA0028C6BB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5533410810BB5460005208D1 /* Import-export */;
@@ -9494,7 +9478,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPROKit Tests/tmpHeader.h";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS PlayerPRO Player.app/iOS PlayerPRO Player";
 			};
 			name = Release;
 		};
@@ -9516,7 +9499,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPROKit Tests/tmpHeader.h";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iOS PlayerPRO Player.app/iOS PlayerPRO Player";
 			};
 			name = Debug;
 		};
@@ -9607,7 +9589,6 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = "";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);
@@ -9631,7 +9612,6 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COMBINE_HIDPI_IMAGES = "";
 				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
 					"$(DEVELOPER_FRAMEWORKS_DIR)",
 				);

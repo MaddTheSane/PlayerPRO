@@ -11,6 +11,10 @@ import XCTest
 import PlayerPROCore
 import PlayerPROKit
 import CoreAudio
+#if os(iOS)
+	import CoreImage
+	import UIKit
+#endif
 
 class PlayerPROKit_Tests: XCTestCase {
 	var ourBundle: NSBundle? = nil

@@ -263,7 +263,7 @@ extension MADDriverSettings: DebugPrintable, Equatable {
 	public var debugDescription: String { get {
 		let onVal = "on"
 		let offVal = "off"
-		return "Driver Mode: \(driverMode.stringValue), output mode: \(outPutMode); Channel count: \(numChn), output Rate: \(outPutRate), surround: \(surround == true ? onVal : offVal); micro-delay size: \(MicroDelaySize), reverb, is \(Reverb == true ? onVal: offVal), size: \(ReverbSize), strength: \(ReverbStrength); oversampling \(oversampling); repeat music: \(repeatMusic == true ? onVal : offVal); "
+		return "Driver Mode: \(driverMode.description), output mode: \(outPutMode.description.capitalizedString); Channel count: \(numChn), output Rate: \(outPutRate), surround: \(surround == true ? onVal : offVal); micro-delay size: \(MicroDelaySize), reverb, is \(Reverb == true ? onVal: offVal), size: \(ReverbSize), strength: \(ReverbStrength); oversampling \(oversampling); repeat music: \(repeatMusic == true ? onVal : offVal); "
 		}}
 }
 
