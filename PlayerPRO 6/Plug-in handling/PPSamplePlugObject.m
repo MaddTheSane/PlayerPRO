@@ -79,7 +79,7 @@ PPSamplePlugCompatObject *tryOldAPI(NSBundle *theBundle)
 	if (self.canExport) {
 		cap |= PPMADCanExport;
 	}
-	MADPlugModes toRet = MADPlugNonePlug;
+	MADPlugModes toRet;
 	
 	switch (cap) {
 		case PPMADCanImport:
@@ -95,6 +95,7 @@ PPSamplePlugCompatObject *tryOldAPI(NSBundle *theBundle)
 			break;
 			
 		default:
+			toRet = MADPlugNonePlug;
 			break;
 	}
 	
