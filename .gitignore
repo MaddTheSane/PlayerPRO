@@ -1,24 +1,25 @@
-**/build/
-**/.DS_Store
-*xcuserdata
+build/
+.DS_Store
+xcuserdata/
 PlayerPROCore.opensdf
 PlayerPROCore.sdf
 Debug
 Release
 *.vcxproj.user
 ipch
-**/*vers.plist
+*vers.plist
 PlayerPROCore.suo
-**/project.xcworkspace
+project.xcworkspace/
+*.xccheckout
 
 **~
 
-**/CMakeCache.txt
-**/Makefile
+CMakeCache.txt
+Makefile
 **/CMakeFiles
 **/cmake_install.cmake
 MADDriver.source/libPlayerPROCore*
-**/lib*.so
+lib*.so
 
 Examples/PPPlay/PPPlay
 Examples/PPPlay/PPPlay.exe
