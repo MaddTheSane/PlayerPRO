@@ -36,15 +36,18 @@
 	// actually runs, and b) the retain taken by the block passed to -addOperationWithBlock:
 	// will be released when that operation completes and the operation itself is deallocated
 	// (notably self does not have a reference to the NSBlockOperation).
-	self.connectionToService.invalidationHandler = ^{
+	dispatch_block_t errorHandler = ^{
 		// If the connection gets invalidated then, on the main thread, nil out our
 		// reference to it.  This ensures that we attempt to rebuild it the next time around.
 		self.connectionToService.invalidationHandler = nil;
+		self.connectionToService.interruptionHandler = nil;
 		[[NSOperationQueue mainQueue] addOperationWithBlock:^{
 			self.connectionToService = nil;
 			//[self logText:@"connection invalidated\n"];
 		}];
 	};
+	self.connectionToService.invalidationHandler = errorHandler;
+	self.connectionToService.interruptionHandler = errorHandler;
 #pragma clang diagnostic pop
 }
 

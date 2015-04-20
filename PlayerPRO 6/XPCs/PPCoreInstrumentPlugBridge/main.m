@@ -9,8 +9,20 @@
 #import <Foundation/Foundation.h>
 #import "PPCoreInstrumentPlugBridge.h"
 
+static void midiDebugFunc(short line, const char *file, const char *text)
+{
+	NSLog(@"%s:%u, error text:%s!", file, line, text);
+	// Invalidate our listener...
+	[[NSXPCListener serviceListener] invalidate];
+	// ...sleep for a bit...
+	usleep(5000);
+	// ...then crash!
+	abort();
+}
+
 int main(int argc, const char *argv[])
 {
+	MADRegisterDebugFunc(midiDebugFunc);
     // Create the delegate for the service.
     PPCoreInstrumentPlugBridge *delegate = [PPCoreInstrumentPlugBridge sharedImporter];
     
