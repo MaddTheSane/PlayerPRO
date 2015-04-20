@@ -380,7 +380,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	func loadMusicFromCurrentlyPlayingIndexWithError(theErr: NSErrorPointer) -> Bool {
 		currentlyPlayingIndex.playbackURL = musicList.URLAtIndex(currentlyPlayingIndex.index)
 		let isGood = loadMusicURL(currentlyPlayingIndex.playbackURL!, error: theErr)
-		currentlyPlayingIndex.movePlayingIndexToOtherIndex(previouslyPlayingIndex)
+		previouslyPlayingIndex = currentlyPlayingIndex
 		return isGood;
 	}
 	
@@ -479,7 +479,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		self.paused = true;
 		currentlyPlayingIndex.index = -1;
 		currentlyPlayingIndex.playbackURL = nil;
-		currentlyPlayingIndex.movePlayingIndexToOtherIndex(previouslyPlayingIndex)
+		previouslyPlayingIndex = currentlyPlayingIndex
 		self.music = PPMusicObject();
 		setTitleForSongLabelBasedOnMusic()
 		NSNotificationCenter.defaultCenter().postNotificationName(PPMusicDidChange, object:self)
@@ -863,7 +863,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			} else {
 				currentlyPlayingIndex.index = selMus
 				currentlyPlayingIndex.playbackURL = musicList.URLAtIndex(selMus)
-				currentlyPlayingIndex.movePlayingIndexToOtherIndex(previouslyPlayingIndex)
+				previouslyPlayingIndex = currentlyPlayingIndex
 			}
 		} else {
 			self.music = PPMusicObject();

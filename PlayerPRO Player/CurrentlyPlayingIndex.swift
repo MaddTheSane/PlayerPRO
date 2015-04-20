@@ -8,13 +8,9 @@
 
 import Foundation
 
-final class CurrentlyPlayingIndex: DebugPrintable, Printable {
+struct CurrentlyPlayingIndex: DebugPrintable, Printable {
 	var index = -1
 	var playbackURL: NSURL? = nil
-	func movePlayingIndexToOtherIndex(othIdx: CurrentlyPlayingIndex) {
-		othIdx.index = index
-		othIdx.playbackURL = playbackURL
-	}
 	
 	var description: String {
 		return "Index: \(index) URL: \(playbackURL!.relativePath!)"
