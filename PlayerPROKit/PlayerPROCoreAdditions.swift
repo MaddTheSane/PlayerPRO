@@ -162,6 +162,78 @@ public let MadID = StringToOSType("MADK")
 
 // MARK: PlayerPRO MAD data types
 
+extension MADOutputChannel: Printable {
+	public var stringValue: String {
+		switch self {
+		case .MonoOutPut:
+			return "mono"
+			
+		case .StereoOutPut:
+			return "stereo"
+			
+		case .DeluxeStereoOutPut:
+			return "deluxe stereo"
+			
+		case .PolyPhonic:
+			return "Polyphonic"
+			
+		default:
+			return "invalid"
+		}
+	}
+	
+	public var description: String {
+		return self.stringValue
+	}
+}
+
+extension MADSoundOutput: Printable {
+	public var stringValue: String {
+		switch self {
+		case .CoreAudioDriver:
+			return "CoreAudio"
+			
+		case .DirectSound95NT:
+			return "DirectSound"
+			
+		case .Wave95NT:
+			return "Windows WaveOut"
+			
+		case .PortAudioDriver:
+			return "PortAudio"
+			
+		case .PulseAudioDriver:
+			return "PulseAudio"
+			
+		case .ESDDriver:
+			return "ESound Daemon"
+			
+		case .BeOSSoundDriver:
+			return "BeOS/Haiku"
+			
+		case .MIDISoundDriver:
+			return "MIDI"
+			
+		case .ASIOSoundManager:
+			return "ASIO"
+			
+		case .SoundManagerDriver:
+			return "Carbon Sound Manager"
+			
+		case .NoHardwareDriver:
+			return "none"
+		}
+	}
+	
+	public var description: String {
+		return self.stringValue
+	}
+	
+	public var available: Bool {
+		return MADSoundDriverIsAvalable(self)
+	}
+}
+
 extension MADDriverSettings: DebugPrintable, Equatable {
 	private init() {
 		numChn			= 4
@@ -191,7 +263,7 @@ extension MADDriverSettings: DebugPrintable, Equatable {
 	public var debugDescription: String { get {
 		let onVal = "on"
 		let offVal = "off"
-		return "Driver Mode: \(driverMode), output mode: \(outPutMode); Channel count: \(numChn), output Rate: \(outPutRate), surround: \(surround == true ? onVal : offVal); micro-delay size: \(MicroDelaySize), reverb, is \(Reverb == true ? onVal: offVal), size: \(ReverbSize), strength: \(ReverbStrength); oversampling \(oversampling); repeat music: \(repeatMusic == true ? onVal : offVal); "
+		return "Driver Mode: \(driverMode.stringValue), output mode: \(outPutMode); Channel count: \(numChn), output Rate: \(outPutRate), surround: \(surround == true ? onVal : offVal); micro-delay size: \(MicroDelaySize), reverb, is \(Reverb == true ? onVal: offVal), size: \(ReverbSize), strength: \(ReverbStrength); oversampling \(oversampling); repeat music: \(repeatMusic == true ? onVal : offVal); "
 		}}
 }
 

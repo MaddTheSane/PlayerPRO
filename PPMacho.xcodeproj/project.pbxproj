@@ -164,6 +164,8 @@
 		5521F41C17FA54B8002CDBA9 /* Player-only.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5521F41B17FA54B8002CDBA9 /* Player-only.xcassets */; };
 		5521F41D17FA573B002CDBA9 /* PPPlugInInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5521F42017FA573B002CDBA9 /* PPPlugInInfoController.xib */; };
 		5521F41E17FA573B002CDBA9 /* PPPlugInInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5521F42017FA573B002CDBA9 /* PPPlugInInfoController.xib */; };
+		5522FB041AE586A100FB47E8 /* PlayerPROCoreSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5522FB031AE586A100FB47E8 /* PlayerPROCoreSwiftTests.swift */; };
+		5522FB051AE586A100FB47E8 /* PlayerPROCoreSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5522FB031AE586A100FB47E8 /* PlayerPROCoreSwiftTests.swift */; };
 		55232AD811FDDFEA0041A4EC /* PianoPreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AD711FDDFEA0041A4EC /* PianoPreferencesController.m */; };
 		55232AEA11FDE29B0041A4EC /* ColorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AE911FDE29B0041A4EC /* ColorPreferenceController.m */; };
 		55232AF011FDE5180041A4EC /* BoxEditorPreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AEF11FDE5180041A4EC /* BoxEditorPreferenceController.m */; };
@@ -2235,6 +2237,7 @@
 		5521F40217F65F19002CDBA9 /* PPFilterPlugController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPFilterPlugController.m; sourceTree = "<group>"; };
 		5521F41617FA541C002CDBA9 /* Trackers.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Trackers.xcassets; sourceTree = "<group>"; };
 		5521F41B17FA54B8002CDBA9 /* Player-only.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Player-only.xcassets"; sourceTree = "<group>"; };
+		5522FB031AE586A100FB47E8 /* PlayerPROCoreSwiftTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerPROCoreSwiftTests.swift; sourceTree = "<group>"; };
 		55232AD611FDDFEA0041A4EC /* PianoPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PianoPreferencesController.h; sourceTree = "<group>"; };
 		55232AD711FDDFEA0041A4EC /* PianoPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PianoPreferencesController.m; sourceTree = "<group>"; };
 		55232AE811FDE29B0041A4EC /* ColorPreferenceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPreferenceController.h; sourceTree = "<group>"; };
@@ -4569,6 +4572,7 @@
 				55ADD23E19B4F858005588B5 /* PlayerPROKit_Tests.swift */,
 				557DC6C01AB6034F0091649A /* Error_Tests.swift */,
 				555272541A0001CE008B8616 /* PPKPcmd_Tests.swift */,
+				5522FB031AE586A100FB47E8 /* PlayerPROCoreSwiftTests.swift */,
 				55C563CF1AB659DD00F7E4FA /* TestMADK.madk */,
 				5579D7DF1A648F3300401D75 /* CppIncludeTest.mm */,
 				55ADD23C19B4F858005588B5 /* Supporting Files */,
@@ -7157,6 +7161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5528D1341A115AF9001E30CF /* NotesConversion.swift in Sources */,
+				5522FB051AE586A100FB47E8 /* PlayerPROCoreSwiftTests.swift in Sources */,
 				557DC6C21AB6034F0091649A /* Error_Tests.swift in Sources */,
 				55C9191D1A000C3F0049F4E4 /* PlayerPROKit_Tests.swift in Sources */,
 				5579D7E11A648F3300401D75 /* CppIncludeTest.mm in Sources */,
@@ -7614,6 +7619,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5528D1331A115AF9001E30CF /* NotesConversion.swift in Sources */,
+				5522FB041AE586A100FB47E8 /* PlayerPROCoreSwiftTests.swift in Sources */,
 				557DC6C11AB6034F0091649A /* Error_Tests.swift in Sources */,
 				55ADD23F19B4F858005588B5 /* PlayerPROKit_Tests.swift in Sources */,
 				5579D7E01A648F3300401D75 /* CppIncludeTest.mm in Sources */,
