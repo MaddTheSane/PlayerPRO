@@ -243,7 +243,7 @@ static void MovePluginInfoOver(const iPlugInfo *src, PlugInfo *dst)
 void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 {
 	if (PlugsFolderName) {
-		fprintf(stderr, "Custom plug-in path %s ignored: this configuration cannot load custom binaries.\n", PlugsFolderName);
+		fprintf(stderr, "PlayerPROCore: Custom plug-in path %s ignored: This configuration cannot load custom binaries.\n", PlugsFolderName);
 	}
 	CFIndex totalInterfaces = sizeof(iOSPlugInfo) / sizeof(iOSPlugInfo[0]);
 	inMADDriver->ThePlug = (PlugInfo*)calloc(sizeof(PlugInfo), totalInterfaces);
