@@ -1272,7 +1272,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 							}
 						} else {
 							dispatch_async(dispatch_get_main_queue()) {
-								
 								if self.isQuitting {
 									NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
 								} else {

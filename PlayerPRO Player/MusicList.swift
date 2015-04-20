@@ -257,9 +257,9 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	
 	// MARK: - saving/loading
 	private func loadMusicList(newArray: [MusicListObject]) {
-		self.willChangeValueForKey(kMusicListKVO)
+		willChangeValueForKey(kMusicListKVO)
 		musicList = newArray
-		self.didChangeValueForKey(kMusicListKVO)
+		didChangeValueForKey(kMusicListKVO)
 	}
 	
 	private func loadMusicListFromData(theData: NSData) -> Bool {

@@ -52,6 +52,25 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	return shared;
 }
 
+static NSString *pascalStringToNSString(StringPtr aStr)
+{
+	NSString *CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman));
+	if (CFaStr == nil) {
+		// Perhaps the string is in another encoding. Try using the system's encoding to test this theory.
+		CFStringEncoding MacCompatible = CFStringGetMostCompatibleMacStringEncoding(CFStringGetSystemEncoding());
+		CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, MacCompatible));
+		if (CFaStr == nil) {
+			// Maybe GetApplicationTextEncoding can get the right format?
+			MacCompatible = GetApplicationTextEncoding();
+			CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, MacCompatible));
+		}
+	}
+	
+	// Final check to make sure we do have a string value.
+	// If we don't have a valid object pointer, the XPC service will crash.
+	return CFaStr ?: @"";
+}
+
 - (OSErr)loadOldMusicListAtURL:(NSURL *)toOpen toDictionary:(out NSDictionary **)outDict
 {
 	NSUInteger		lostMusicCount = 0;
@@ -111,33 +130,21 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 			break;
 		}
 		
-		NSString *CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, kCFStringEncodingMacRoman));
-		NSString *CFaStr2 = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, kCFStringEncodingMacRoman));
-		if (CFaStr == nil && CFaStr2 == nil) {
-			// Perhaps the string is in another encoding. Try using the system's encoding to test this theory.
-			CFStringEncoding MacCompatible = CFStringGetMostCompatibleMacStringEncoding(CFStringGetSystemEncoding());
-			CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, MacCompatible));
-			CFaStr2 = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, MacCompatible));
-			if (CFaStr == nil && CFaStr2 == nil) {
-				// Maybe GetApplicationTextEncoding can get the right format?
-				MacCompatible = GetApplicationTextEncoding();
-				CFaStr = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr, MacCompatible));
-				CFaStr2 = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, aStr2, MacCompatible));
-			}
+		NSString *CFaStr = pascalStringToNSString(aStr);
+		NSString *CFaStr2 = pascalStringToNSString(aStr2);
+		NSURL *fullPath;
+		
+		NSURL *tmpPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)CFaStr, kCFURLHFSPathStyle, true));
+		fullPath = [tmpPath URLByAppendingPathComponent:CFaStr2];
+		if (![fullPath checkResourceIsReachableAndReturnError:NULL]) {
+			fullPath = nil;
 		}
 		
-		// Final check to make sure we do have string values.
-		// If we don't have a valid object pointer, the XPC service will crash.
-		if (!CFaStr) {
-			CFaStr = @"";
+		if (fullPath == nil) {
+			NSString *together = [@[CFaStr, CFaStr2] componentsJoinedByString:@":"];
+			
+			fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)together, kCFURLHFSPathStyle, false));
 		}
-		if (!CFaStr2) {
-			CFaStr2 = @"";
-		}
-		
-		NSString *together = [@[CFaStr, CFaStr2] componentsJoinedByString:@":"];
-		
-		NSURL *fullPath = CFBridgingRelease(CFURLCreateWithFileSystemPath(kCFAllocatorDefault, (__bridge CFStringRef)together, kCFURLHFSPathStyle, false));
 		if ([fullPath checkResourceIsReachableAndReturnError:NULL]) {
 			[newArray addObject:[fullPath path]];
 		} else {
@@ -152,7 +159,7 @@ static StringPtr GetStringFromHandle(Handle aResource, ResourceIndex aId)
 	HUnlock(aHandle);
 	DisposeHandle(aHandle);
 	
-	selectedMusic = (location >= [newArray count]) ? location : -1;
+	selectedMusic = (location <= [newArray count]) ? location : -1;
 	
 	*outDict = @{@"MusicPaths":		newArray,
 				 @"SelectedMusic":	@(selectedMusic),
