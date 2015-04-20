@@ -62,7 +62,7 @@ static sData *dictionaryToSample(NSDictionary *sampleDict);
 
 
 #if !__i386__
-static PPSampleObject *getSampleFromDictionary(NSDictionary *sampleDict) NS_RETURNS_RETAINED;
+static PPSampleObject *newSampleFromDictionary(NSDictionary *sampleDict) NS_RETURNS_RETAINED;
 static NSDictionary *EncodeSampleObject(PPSampleObject *sampObj);
 static NSArray *EncodeSamplesObjects(PPInstrumentObject *ourData);
 static void getSamplesFromArray(PPInstrumentObject *instrument, NSArray *ourArray);
@@ -145,7 +145,7 @@ NSData *PPInstrumentToData(PPInstrumentObject *ourData)
 	return ourEncData;
 }
 
-PPSampleObject *getSampleFromDictionary(NSDictionary *sampleDict)
+PPSampleObject *newSampleFromDictionary(NSDictionary *sampleDict)
 {
 	PPSampleObject *sampObj = [[PPSampleObject alloc] init];
 	sampObj.name = sampleDict[NAMEKEY];
@@ -166,13 +166,13 @@ PPSampleObject *PPDataToSample(NSData *ourData)
 	NSKeyedUnarchiver * ourUnarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:ourData];
 	NSDictionary *ourDict = [ourUnarchiver decodeObjectForKey:PPSamples];
 	
-	return getSampleFromDictionary(ourDict);
+	return newSampleFromDictionary(ourDict);
 }
 
 void getSamplesFromArray(PPInstrumentObject *instrument, NSArray *ourArray)
 {
 	for (NSDictionary *sampleDict in ourArray) {
-		[instrument addSampleObject:getSampleFromDictionary(sampleDict)];
+		[instrument addSampleObject:newSampleFromDictionary(sampleDict)];
 	}
 }
 
@@ -390,17 +390,19 @@ InstrData *MADDataToInstrument(NSData *ourData, sData ***sampleData)
 NSDictionary *sampleToDictionary(sData *sampObj)
 {
 	NSMutableDictionary *toRet = [NSMutableDictionary new];
-	toRet[LOOPBEGINKEY] = @(sampObj->loopBeg);
-	toRet[LOOPSIZEKEY] = @(sampObj->loopSize);
-	toRet[VOLUMEKEY] = @(sampObj->vol);
-	toRet[C2SPDKEY] = @(sampObj->c2spd);
-	toRet[LOOPTYPEKEY] = @(sampObj->loopType);
-	toRet[AMPLITUDEKEY] = @(sampObj->amp);
-	toRet[RELATIVENOTEKEY] = @(sampObj->relNote);
-	toRet[NAMEKEY] = [NSString stringWithCString:sampObj->name encoding:NSMacOSRomanStringEncoding] ?: [NSString string];
-	toRet[STEREOKEY] = @(sampObj->stereo);
-	toRet[DATAKEY] = sampObj->size != 0 ? [NSData dataWithBytes:sampObj->data length:sampObj->size]: [NSData data];
-
+	@autoreleasepool {
+		toRet[LOOPBEGINKEY] = @(sampObj->loopBeg);
+		toRet[LOOPSIZEKEY] = @(sampObj->loopSize);
+		toRet[VOLUMEKEY] = @(sampObj->vol);
+		toRet[C2SPDKEY] = @(sampObj->c2spd);
+		toRet[LOOPTYPEKEY] = @(sampObj->loopType);
+		toRet[AMPLITUDEKEY] = @(sampObj->amp);
+		toRet[RELATIVENOTEKEY] = @(sampObj->relNote);
+		toRet[NAMEKEY] = [NSString stringWithCString:sampObj->name encoding:NSMacOSRomanStringEncoding] ?: [NSString string];
+		toRet[STEREOKEY] = @(sampObj->stereo);
+		toRet[DATAKEY] = sampObj->size != 0 ? [NSData dataWithBytes:sampObj->data length:sampObj->size] : [NSData data];
+	}
+	
 	return toRet;
 }
 
