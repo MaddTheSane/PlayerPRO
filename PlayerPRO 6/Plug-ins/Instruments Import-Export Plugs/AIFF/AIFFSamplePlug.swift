@@ -10,6 +10,7 @@ import Cocoa
 import AudioToolbox
 import PlayerPROKit
 import SwiftAdditions
+import SwiftAudioAdditions
 
 public final class AIFFSamplePlug: NSObject, PPSampleExportPlugin /*, PPSampleImportPlugin*/ {
 	public let hasUIForExport = false

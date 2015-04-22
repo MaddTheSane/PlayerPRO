@@ -12,6 +12,7 @@ import PlayerPROKit
 import AVFoundation
 import AudioToolbox
 import SwiftAdditions
+import SwiftAudioAdditions
 
 class DocumentWindowController: NSWindowController, SoundSettingsViewControllerDelegate {
 	@IBOutlet weak var exportWindow:			NSWindow!

@@ -12,6 +12,7 @@ import PlayerPROKit
 import AVFoundation
 import AudioToolbox
 import SwiftAdditions
+import SwiftAudioAdditions
 
 private let kUnresolvableFile = "Unresolvable files"
 private let kUnresolvableFileDescription = "There were %lu file(s) that were unable to be resolved."
