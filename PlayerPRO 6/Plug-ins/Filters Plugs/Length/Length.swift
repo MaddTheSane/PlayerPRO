@@ -9,7 +9,7 @@
 import Cocoa
 import PlayerPROKit.PPPlugIns
 
-@objc(PPLengthPlug) public final class LengthPlug: NSObject, PPFilterPlugin {
+public final class LengthPlug: NSObject, PPFilterPlugin {
 	public let hasUIConfiguration = true
 	
 	override init() {

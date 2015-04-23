@@ -9,7 +9,7 @@
 import Foundation
 import PlayerPROKit
 
-@objc(PPCropPlug) public final class CropPlug: NSObject, PPFilterPlugin {
+public final class Crop: NSObject, PPFilterPlugin {
 	public let hasUIConfiguration = false
 	
 	@objc public convenience init(forPlugIn: ()) {
@@ -20,7 +20,7 @@ import PlayerPROKit
 		super.init()
 	}
 	
-	public func runWithData(theData: PPSampleObject!, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver!) -> MADErr {
+	public func runWithData(theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver) -> MADErr {
 		let ourData = NSMutableData(data: theData.data)
 		ourData.replaceBytesInRange(selRange, withBytes: nil, length: 0)
 		theData.data = ourData

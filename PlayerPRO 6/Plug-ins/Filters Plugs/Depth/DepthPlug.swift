@@ -10,7 +10,7 @@ import Foundation
 import AppKit.NSWindow
 import PlayerPROKit
 
-@objc(PPDepthPlug) final public class DepthPlug: NSObject, PPFilterPlugin {
+final public class Depth: NSObject, PPFilterPlugin {
 	public let hasUIConfiguration = true;
 	
 	public convenience init(forPlugIn: ()) {

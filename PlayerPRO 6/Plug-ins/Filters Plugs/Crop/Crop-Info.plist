@@ -23,6 +23,6 @@
 	<key>MADPlugMenuName</key>
 	<string>Crop</string>
 	<key>NSPrincipalClass</key>
-	<string>PPCropPlug</string>
+	<string>${PRODUCT_MODULE_NAME}.Crop</string>
 </dict>
 </plist>

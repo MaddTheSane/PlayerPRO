@@ -13,7 +13,7 @@ import AudioToolbox
 import SwiftAdditions
 import SwiftAudioAdditions
 
-@objc(PPWavePlug) public final class PPWavePlug: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
+public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 	public let hasUIForImport = false
 	public let hasUIForExport = false
 	

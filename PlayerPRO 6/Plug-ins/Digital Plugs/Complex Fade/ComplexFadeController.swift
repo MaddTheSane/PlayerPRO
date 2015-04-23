@@ -153,8 +153,8 @@ class ComplexFadeController: NSWindowController {
 		}
 		
 		if numFormatter.getObjectValue(&ourUnknown, forString: stepCell.stringValue, errorDescription: nil) {
-			if let aNumber = ourUnknown as? NSNumber {
-				step = aNumber as Int
+			if let aNumber = ourUnknown as? Int {
+				step = aNumber
 			} else {
 				invalidSettings()
 				return

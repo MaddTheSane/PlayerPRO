@@ -8,11 +8,12 @@
 
 import Cocoa
 import AudioToolbox
+import PlayerPROCore
 import PlayerPROKit
 import SwiftAdditions
 import SwiftAudioAdditions
 
-public final class AIFFSamplePlug: NSObject, PPSampleExportPlugin /*, PPSampleImportPlugin*/ {
+public final class AIFF: NSObject, PPSampleExportPlugin /*, PPSampleImportPlugin*/ {
 	public let hasUIForExport = false
 	
 	override init() {
@@ -102,7 +103,7 @@ public final class AIFFSamplePlug: NSObject, PPSampleExportPlugin /*, PPSampleIm
 		return myErr == .NoErr
 	}
 	
-	func importSampleAtURL(sampleURL: NSURL!, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver!) -> MADErr {
+	func importSampleAtURL(sampleURL: NSURL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
 		var fileRef: ExtAudioFileRef = nil
 		var iErr = ExtAudioFileOpenURL(sampleURL, &fileRef)
 		if iErr != noErr {

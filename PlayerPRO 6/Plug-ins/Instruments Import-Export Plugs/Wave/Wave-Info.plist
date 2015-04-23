@@ -33,6 +33,6 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 1996 Antoine ROSSET</string>
 	<key>NSPrincipalClass</key>
-	<string>PPWavePlug</string>
+	<string>${PRODUCT_MODULE_NAME}.Wave</string>
 </dict>
 </plist>

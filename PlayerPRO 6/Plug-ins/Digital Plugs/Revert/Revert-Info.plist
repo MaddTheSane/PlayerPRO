@@ -23,6 +23,6 @@
 	<key>MADPlugMenuName</key>
 	<string>Revert</string>
 	<key>NSPrincipalClass</key>
-	<string>PPRevertPlug</string>
+	<string>${PRODUCT_MODULE_NAME}.Revert</string>
 </dict>
 </plist>

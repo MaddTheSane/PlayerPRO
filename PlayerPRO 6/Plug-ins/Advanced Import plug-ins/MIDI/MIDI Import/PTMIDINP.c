@@ -11,13 +11,11 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-//#include <io.h>
 #include <fcntl.h>
 #include <string.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <Carbon/Carbon.h>
 #include "PTMID.h"
-//#include <unix.h>
 #include <tgmath.h>
 
 #define BUFSIZE 512

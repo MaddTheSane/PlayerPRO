@@ -9,7 +9,7 @@
 import Foundation
 import PlayerPROKit
 
-@objc(PPRevertPlug) public final class RevertPlug : NSObject, PPDigitalPlugin {
+public final class Revert: NSObject, PPDigitalPlugin {
 	public let hasUIConfiguration = false
 	
 	public convenience init(forPlugIn: ()) {
@@ -20,13 +20,13 @@ import PlayerPROKit
 		super.init()
 	}
 
-	public func runWithPcmd(myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver!) -> MADErr {
+	public func runWithPcmd(myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver) -> MADErr {
 		let srcCmd = PPKPcmd(myPcmd)
 		let maxLenth = srcCmd.length - 1
 		
 		for track in 0 ..< srcCmd.tracks {
 			for row in 0 ... maxLenth {
-				var myCmdsrc = getCommand(row: maxLenth - row, track: track, srcCmd)
+				let myCmdsrc = getCommand(row: maxLenth - row, track: track, srcCmd)
 				replaceCommand(row: row, track: track, command: myCmdsrc, myPcmd)
 			}
 		}

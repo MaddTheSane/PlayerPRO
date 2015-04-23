@@ -23,7 +23,7 @@
 	<key>CFPlugInDynamicRegistration</key>
 	<false/>
 	<key>MADPlugAuthorName</key>
-	<string>C.W. &quot;Madd the Sane&quot; Betts</string>
+	<string>C.W. "Madd the Sane" Betts</string>
 	<key>MADPlugMenuName</key>
 	<string>AIFF</string>
 	<key>MADPlugType</key>
@@ -34,8 +34,8 @@
 		<string>public.aifc-audio</string>
 	</array>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2014, Charles &quot;Madd the Sane&quot; Betts, Sourceforge</string>
+	<string>Copyright © 2014, Charles "Madd the Sane" Betts, Sourceforge</string>
 	<key>NSPrincipalClass</key>
-	<string>${PRODUCT_MODULE_NAME}.AIFFSamplePlug</string>
+	<string>${PRODUCT_MODULE_NAME}.AIFF</string>
 </dict>
 </plist>

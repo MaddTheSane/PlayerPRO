@@ -23,6 +23,6 @@
 	<key>MADPlugMenuName</key>
 	<string>Depth</string>
 	<key>NSPrincipalClass</key>
-	<string>PPDepthPlug</string>
+	<string>${PRODUCT_MODULE_NAME}.Depth</string>
 </dict>
 </plist>

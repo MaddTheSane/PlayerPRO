@@ -23,6 +23,6 @@
 	<key>MADPlugMenuName</key>
 	<string>Complex Fade</string>
 	<key>NSPrincipalClass</key>
-	<string>PPCompFadePlug</string>
+	<string>${PRODUCT_MODULE_NAME}.ComplexFade</string>
 </dict>
 </plist>

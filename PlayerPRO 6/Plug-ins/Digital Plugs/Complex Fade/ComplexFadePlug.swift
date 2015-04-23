@@ -9,7 +9,7 @@
 import Foundation
 import PlayerPROKit.PPPlugIns
 
-@objc(PPCompFadePlug) public final class ComplexFadePlug: NSObject, PPDigitalPlugin {
+public final class ComplexFade: NSObject, PPDigitalPlugin {
 	public let hasUIConfiguration = true
 	
 	public convenience init(forPlugIn: ()) {
@@ -20,11 +20,11 @@ import PlayerPROKit.PPPlugIns
 		super.init()
 	}
 	
-	public func runWithPcmd(aPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver!) -> MADErr {
+	public func runWithPcmd(aPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver) -> MADErr {
 		return .OrderNotImplemented
 	}
 	
-	public func beginRunWithPcmd(aPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver!, parentWindow window: NSWindow!, handler: PPPlugErrorBlock!) {
+	public func beginRunWithPcmd(aPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentWindow window: NSWindow, handler: PPPlugErrorBlock) {
 		let controller = ComplexFadeController(windowNibName: "ComplexFadeController")
 		controller.thePcmd = aPcmd;
 		controller.fadeType = .Instrument;
