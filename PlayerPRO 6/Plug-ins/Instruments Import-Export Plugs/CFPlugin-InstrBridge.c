@@ -67,7 +67,7 @@ static ULONG CFInstrPlugAddRef(void *myInstance)
 
 static ULONG CFInstrPlugRelease(void *myInstance)
 {
-	((CFInstrPlugType*)myInstance)->_refCount -= 1;
+	((CFInstrPlugType*)myInstance)->_refCount--;
 	if (((CFInstrPlugType*)myInstance)->_refCount == 0 ) {
 		_deallocCFInstrPlugType((CFInstrPlugType*)myInstance);
 		return 0;

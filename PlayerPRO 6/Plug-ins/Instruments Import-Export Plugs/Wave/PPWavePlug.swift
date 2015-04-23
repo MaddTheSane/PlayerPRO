@@ -102,6 +102,9 @@ import SwiftAudioAdditions
 			if (res != noErr) {
 				myErr = .WritingErr;
 			} else {
+				if sample.loop != .notFound {
+					
+				}
 				/*
 				if (curData.loopBegin != 0) {
 				var theLoop = AIFFLoop(playMode: 0, beginLoop: 0, endLoop: 0);

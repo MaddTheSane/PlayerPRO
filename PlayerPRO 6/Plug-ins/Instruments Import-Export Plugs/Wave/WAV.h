@@ -13,6 +13,7 @@
 #define __PP_WAV_H_
 
 #include <PlayerPROCore/MAD.h>
+#include <PlayerPROCore/MADPlug.h>
 #include <CoreServices/CoreServices.h>
 
 #define __private_extern __attribute__((visibility("hidden")))
@@ -65,10 +66,10 @@ typedef struct waveformat_tag {
 } WAVEFORMAT;
 
 typedef struct _pcwaveformat_tag {
-	FOURCC		ckid;
+	char		ckid[4];
 	DWORD		cksize;
-	FOURCC		fccType;
-	FOURCC		fmtType;
+	char		fccType[4];
+	char		fmtType[4];
 	DWORD		dwDataOffset;
 	WORD		wFormatTag;
 	WORD		nCannels;
@@ -76,7 +77,7 @@ typedef struct _pcwaveformat_tag {
 	DWORD		nAvgBytesPerSec;
 	WORD		nBlockAlign;
 	WORD		wBitsPerSample;
-	FOURCC		dataType;
+	char		dataType[4];
 	DWORD		dataSize;
 	char		theData[];
 } PCMWaveRec, *PCMWavePtr, **PCMWaveHnd;

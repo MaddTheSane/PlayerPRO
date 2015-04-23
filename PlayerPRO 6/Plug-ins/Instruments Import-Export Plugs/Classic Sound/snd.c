@@ -7,6 +7,7 @@
 
 #include <Carbon/Carbon.h>
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/MADPlug.h>
 
 //Taken from OS X's Kerberos source code file FSpUtils.c, as found ot:
 // http://www.opensource.apple.com/source/Kerberos/Kerberos-47/KerberosFramework/Common/Sources/FSpUtils.c

@@ -22,9 +22,9 @@ enum {
 #define USEDEPRECATEDFUNCS 1
 #endif
 
-OSErr TestWAV(const PCMWavePtr CC)
+MADErr TestWAV(const PCMWavePtr CC)
 {
-	if (CFSwapInt32BigToHost(CC->ckid) =='RIFF')
+	if (memcmp(CC->ckid, "RIFF", 4) == 0)
 		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
@@ -89,13 +89,13 @@ void *ConvertWAVCFURL(CFURLRef theURL, size_t *sndSize, int *loopStart, int *loo
 			return NULL;
 		}
 		
-		if (CFSwapInt32BigToHost(WAVERsrc->ckid) =='RIFF') {
+		if (memcmp(WAVERsrc->ckid, "RIFF", 4) == 0) {
 			WAVERsrc->cksize = longswap(WAVERsrc->cksize);
 			
-			if (CFSwapInt32BigToHost(WAVERsrc->fccType) =='WAVE') {
+			if (memcmp(WAVERsrc->fccType, "WAVE", 4) == 0) {
 				WAVERsrc->dwDataOffset = longswap(WAVERsrc->dwDataOffset);
 				
-				if (CFSwapInt32BigToHost(WAVERsrc->fmtType) == 'fmt ') {
+				if (memcmp(WAVERsrc->fmtType, "fmt ", 4) == 0) {
 					WAVERsrc->wFormatTag		= shrtswap(WAVERsrc->wFormatTag);
 					WAVERsrc->nCannels			= shrtswap(WAVERsrc->nCannels);
 					WAVERsrc->nSamplesPerSec	= longswap(WAVERsrc->nSamplesPerSec);
