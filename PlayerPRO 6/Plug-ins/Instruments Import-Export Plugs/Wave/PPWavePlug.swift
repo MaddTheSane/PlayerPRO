@@ -25,9 +25,9 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		super.init()
 	}
 	
-	public func canImportSampleAtURL(sampleURL: NSURL!) -> Bool {
+	public func canImportSampleAtURL(sampleURL: NSURL) -> Bool {
 		if let sampleHandle = NSFileHandle(forReadingFromURL: sampleURL, error: nil) {
-			let headerDat = sampleHandle.readDataOfLength(sizeof(PCMWaveRec.Type) + 20)
+			let headerDat = sampleHandle.readDataOfLength(sizeof(PCMWaveRec) + 20)
 			sampleHandle.closeFile()
 			
 			let aErr = TestWAV(PCMWavePtr(headerDat.bytes))
@@ -38,7 +38,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		}
 	}
 	
-	public func importSampleAtURL(sampleURL: NSURL!, sample asample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver!) -> MADErr {
+	public func importSampleAtURL(sampleURL: NSURL, sample asample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
 		var soundSize: Int = 0;
 		var loopStart:Int32 = 0
 		var loopEnd:Int32 = 0
@@ -67,21 +67,19 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		return .NoErr
 	}
 	
-	public func exportSample(sample: PPSampleObject!, toURL sampleURL: NSURL!, driver: PPDriver!) -> MADErr {
+	public func exportSample(sample: PPSampleObject, toURL sampleURL: NSURL, driver: PPDriver) -> MADErr {
 		var myErr = MADErr.NoErr
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .LinearPCM, formatFlags: .SignedInteger | .Packed, bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: sample.stereo ? 2 : 1)
 		
 		var audioFile: AudioFileID = nil
 		var res: OSStatus = 0
-		var data: NSData
+		let data: NSData
 		if isBigEndian {
 			if (sample.amplitude == 16) {
 				var mutData = NSMutableData(data: sample.data)
 				var mutShortBytes = UnsafeMutablePointer<UInt16>(mutData.mutableBytes)
 				dispatch_apply(sample.data.length / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
-					let IntI = Int(i)
-					mutShortBytes[IntI] = mutShortBytes[IntI].littleEndian
-					return
+					mutShortBytes[i] = mutShortBytes[i].littleEndian
 				})
 				
 				data = mutData

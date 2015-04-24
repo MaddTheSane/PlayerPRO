@@ -63,7 +63,6 @@ static const int finetune[16] = {
 	
 	NSData *headerData = [[NSData alloc] initWithBytes:header length:headerLen];
 	NSData *testData = [aHandle readDataOfLength:headerLen];
-	[aHandle closeFile];
 	
 	return [testData isEqualToData:headerData];
 }
@@ -74,12 +73,11 @@ static const int finetune[16] = {
 	XMWAVHEADER		*wh = NULL;
 	short			numSamples;
 	
-	NSData *xiData = [[NSData alloc] initWithContentsOfURL:sampleURL];
+	NSMutableData *xiData = [[NSMutableData alloc] initWithContentsOfURL:sampleURL];
 	if (xiData != NULL) {
-		PPInstrumentObject *InsHeader = [PPInstrumentObject new];
+		PPInstrumentObject *InsHeader = [[PPInstrumentObject alloc] init];
 		[InsHeader resetInstrument];
-		NSMutableData *anXI = [xiData mutableCopy];
-		Ptr theXI = anXI.mutableBytes;
+		Ptr theXI = xiData.mutableBytes;
 		
 		//theXI = malloc(inOutCount);
 		if (theXI == NULL)
@@ -118,7 +116,7 @@ static const int finetune[16] = {
 			InsHeader.volumeType	= pth->volflg;
 			InsHeader.volumeSustain	= pth->volsus;
 			InsHeader.volumeBegin	= pth->volbeg;
-			InsHeader.volumeEnd	= pth->volend;
+			InsHeader.volumeEnd		= pth->volend;
 			InsHeader.volumeFadeOut	= pth->volfade;
 			
 			{
@@ -168,14 +166,14 @@ static const int finetune[16] = {
 					curData.amplitude = 16;
 				}
 				
-				if (!(wh->type & 0x3)) {
+				if (!(wh->type & 0x03)) {
 					curData.loopBegin	= 0;
 					curData.loopSize	= 0;
 				}
 				
 				//curData->panning	= wh->panning;
 				curData.relativeNote	= wh->relnote;
-				curData.name			= @(wh->samplename);
+				curData.name			= [[NSString alloc] initWithBytes:wh->samplename length:strnlen(wh->samplename, 22) encoding:NSASCIIStringEncoding];
 				[tmpSamples addObject:@{@"Sample": curData,
 										@"DataLen": @(wh->length)}];
 			}

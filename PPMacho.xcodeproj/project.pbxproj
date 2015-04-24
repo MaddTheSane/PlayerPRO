@@ -113,6 +113,7 @@
 		5504A6E516619E1C005BDE4B /* DigitalPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6E716619E1C005BDE4B /* DigitalPrefs.xib */; };
 		5504A6E816619E25005BDE4B /* BoxPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6EA16619E25005BDE4B /* BoxPrefs.xib */; };
 		5504A6EB16619E2E005BDE4B /* MiscPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5504A6ED16619E2E005BDE4B /* MiscPrefs.xib */; };
+		55080A8F1AEAAAAF009E9422 /* FortePatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55080A8E1AEAAAAF009E9422 /* FortePatch.swift */; };
 		55085D781836BAAA004A152F /* MidiPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55085D7A1836BAAA004A152F /* MidiPrefs.xib */; };
 		55085D7B1836BAB2004A152F /* PianoPrefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55085D7D1836BAB2004A152F /* PianoPrefs.xib */; };
 		55085D811836EC82004A152F /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; };
@@ -498,7 +499,6 @@
 		5591707319C2296300998D7F /* PPFadeVolumePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 5591707219C2296300998D7F /* PPFadeVolumePlug.m */; };
 		5591707619C2317300998D7F /* PPNormalizePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 5591707519C2317300998D7F /* PPNormalizePlug.m */; };
 		5591707919C234C100998D7F /* PPInvertPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 5591707819C234C100998D7F /* PPInvertPlug.m */; };
-		5591707F19C23A2300998D7F /* PPPATPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 5591707E19C23A2300998D7F /* PPPATPlug.m */; };
 		5591708219C23C0600998D7F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5591708419C23C0600998D7F /* InfoPlist.strings */; };
 		5591708E19C24C1600998D7F /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5591708F19C24C1600998D7F /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88E0C4960C2F21E500D6C081 /* Carbon.framework */; };
@@ -2198,6 +2198,8 @@
 		5501BEC618ABFFEB00602206 /* APPL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = APPL.h; sourceTree = "<group>"; };
 		5501BECB18AC560E00602206 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		550312F619E7883B00064DDD /* SpotlightPrefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SpotlightPrefix.pch; sourceTree = "<group>"; };
+		55080A8D1AEAAAAD009E9422 /* PAT-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PAT-Bridging-Header.h"; sourceTree = "<group>"; };
+		55080A8E1AEAAAAF009E9422 /* FortePatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FortePatch.swift; sourceTree = "<group>"; };
 		55085D791836BAAA004A152F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MidiPrefs.xib; sourceTree = "<group>"; };
 		55085D7C1836BAB2004A152F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/PianoPrefs.xib; sourceTree = "<group>"; };
 		55085D7E1836DD85004A152F /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -2622,8 +2624,6 @@
 		5591707519C2317300998D7F /* PPNormalizePlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPNormalizePlug.m; sourceTree = "<group>"; };
 		5591707719C234C100998D7F /* PPInvertPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInvertPlug.h; sourceTree = "<group>"; };
 		5591707819C234C100998D7F /* PPInvertPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInvertPlug.m; sourceTree = "<group>"; };
-		5591707D19C23A2300998D7F /* PPPATPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPATPlug.h; sourceTree = "<group>"; };
-		5591707E19C23A2300998D7F /* PPPATPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPATPlug.m; sourceTree = "<group>"; };
 		5591708319C23C0600998D7F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5591708519C24C0700998D7F /* System-7Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "System-7Info.plist"; sourceTree = "<group>"; };
 		5591709519C24C1600998D7F /* System 7.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "System 7.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3541,9 +3541,9 @@
 		551520BA10DEEB370054ABC4 /* PAT */ = {
 			isa = PBXGroup;
 			children = (
+				55080A8D1AEAAAAD009E9422 /* PAT-Bridging-Header.h */,
 				554E104210D6C79E00BB619C /* PAT.h */,
-				5591707D19C23A2300998D7F /* PPPATPlug.h */,
-				5591707E19C23A2300998D7F /* PPPATPlug.m */,
+				55080A8E1AEAAAAF009E9422 /* FortePatch.swift */,
 				551FEB2810E727B100EDF2F1 /* PAT-Info.plist */,
 				5591708419C23C0600998D7F /* InfoPlist.strings */,
 			);
@@ -7124,7 +7124,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5591707F19C23A2300998D7F /* PPPATPlug.m in Sources */,
+				55080A8F1AEAAAAF009E9422 /* FortePatch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9230,6 +9230,7 @@
 		551FEAD810E727B100EDF2F1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -9242,6 +9243,9 @@
 				);
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/PAT/PAT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)InstrumentPlug";
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/PAT/PAT-Bridging-Header.h";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Release;
@@ -9249,6 +9253,7 @@
 		551FEAD910E727B100EDF2F1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					ISUSINGPPPLUG,
@@ -9261,6 +9266,10 @@
 				);
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/PAT/PAT-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)InstrumentPlug";
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/PAT/PAT-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = plugin;
 			};
 			name = Debug;

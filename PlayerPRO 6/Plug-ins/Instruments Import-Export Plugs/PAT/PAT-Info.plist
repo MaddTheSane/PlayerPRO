@@ -33,6 +33,6 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 1999 Antoine ROSSET</string>
 	<key>NSPrincipalClass</key>
-	<string>PPPATPlug</string>
+	<string>${PRODUCT_MODULE_NAME}.FortePatch</string>
 </dict>
 </plist>
