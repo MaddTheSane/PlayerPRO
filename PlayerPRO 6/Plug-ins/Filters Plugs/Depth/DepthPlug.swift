@@ -21,11 +21,11 @@ final public class Depth: NSObject, PPFilterPlugin {
 		super.init()
 	}
 	
-	public func runWithData(theData: PPSampleObject!, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver!) -> MADErr {
+	public func runWithData(theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver) -> MADErr {
 		return .OrderNotImplemented
 	}
 	
-	public func beginRunWithData(theData: PPSampleObject!, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver!, parentWindow document: NSWindow!, handler handle: PPPlugErrorBlock!) {
+	public func beginRunWithData(theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver, parentWindow document: NSWindow, handler handle: PPPlugErrorBlock) {
 		var controller = DepthController(windowNibName: "DepthController")
 		controller.depthAmmount = 8
 		controller.theData = theData

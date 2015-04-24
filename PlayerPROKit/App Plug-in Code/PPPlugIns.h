@@ -15,7 +15,9 @@
 @class PPDriver;
 @class NSWindow;
 
-typedef void (^PPComplexImportHandler)(PPMusicObject* inMus, MADErr inErr);
+NS_ASSUME_NONNULL_BEGIN
+
+typedef void (^PPComplexImportHandler)(PPMusicObject* __nullable inMus, MADErr inErr);
 typedef void (^PPPlugErrorBlock)(MADErr error);
 
 /**
@@ -25,8 +27,8 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 @protocol PPPlugin <NSObject>
 /// Does the plug-in have a UI?
 @property (nonatomic, readonly) BOOL hasUIConfiguration;
-/// Initializer (constructor) for a plug-in
-- (instancetype)initForPlugIn;
+/// Initializer (constructor) for a plug-in.
+- (null_unspecified instancetype)initForPlugIn;
 @end
 
 @protocol PPDigitalPlugin <PPPlugin, NSObject>
@@ -48,12 +50,12 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 
 @protocol PPSampleImportPlugin <NSObject>
-- (instancetype)initForPlugIn;
+- (null_unspecified instancetype)initForPlugIn;
 
 @property (nonatomic, readonly) BOOL hasUIForImport;
 
 - (BOOL)canImportSampleAtURL:(NSURL*)sampleURL;
-- (MADErr)importSampleAtURL:(NSURL*)sampleURL sample:(out PPSampleObject**)sample driver:(PPDriver*)driver;
+- (MADErr)importSampleAtURL:(NSURL*)sampleURL sample:(out PPSampleObject* __nonnull* __nullable)sample driver:(PPDriver*)driver;
 
 @optional
 - (void)beginImportSampleAtURL:(NSURL*)sampleURL driver:(PPDriver*)driver parentWindow:(NSWindow*)window handler:(void (^)(MADErr error, PPSampleObject *sample))handler;
@@ -63,7 +65,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 
 @protocol PPSampleExportPlugin <NSObject>
-- (instancetype)initForPlugIn;
+- (null_unspecified instancetype)initForPlugIn;
 
 @property (nonatomic, readonly) BOOL hasUIForExport;
 
@@ -76,12 +78,12 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 
 @protocol PPInstrumentImportPlugin <NSObject>
-- (instancetype)initForPlugIn;
+- (null_unspecified instancetype)initForPlugIn;
 
 @property (nonatomic, readonly) BOOL hasUIForImport;
 
 - (BOOL)canImportInstrumentAtURL:(NSURL*)sampleURL;
-- (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject**)InsHeader driver:(PPDriver*)driver;
+- (MADErr)importInstrumentAtURL:(NSURL*)sampleURL instrument:(out PPInstrumentObject* __nonnull* __nullable)InsHeader driver:(PPDriver*)driver;
 
 @optional
 - (MADErr)playInstrumentAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
@@ -90,7 +92,7 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 
 @protocol PPInstrumentExportPlugin <NSObject>
-- (instancetype)initForPlugIn;
+- (null_unspecified instancetype)initForPlugIn;
 
 @property (nonatomic, readonly) BOOL hasUIForExport;
 
@@ -102,8 +104,10 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 
 //This doesn't need to conform to PPPlugin because it will always have a UI.
 @protocol PPComplexImportPlugInterface <NSObject>
-- (instancetype)initForPlugIn;
+- (null_unspecified instancetype)initForPlugIn;
 
-- (BOOL)canImportURL:(NSURL*)theURL error:(out NSError * __autoreleasing*)outErr;
+- (BOOL)canImportURL:(NSURL*)theURL error:(out NSError * __nullable __autoreleasing* __nullable)outErr;
 - (void)beginImportOfURL:(NSURL*)theURL withHandler:(PPComplexImportHandler)handler;
 @end
+
+NS_ASSUME_NONNULL_END

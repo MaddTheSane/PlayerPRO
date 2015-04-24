@@ -450,7 +450,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 					if canImport {
 						obj.beginImportOfURL(theURL1, withHandler: { (ourObject, anErr) -> Void in
 							if anErr == .NoErr {
-								let aPPDoc = PPDocument(music: ourObject)
+								let aPPDoc = PPDocument(music: ourObject!)
 								
 								self.addDocument(aPPDoc)
 								aPPDoc.makeWindowControllers()

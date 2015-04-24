@@ -20,11 +20,11 @@ public final class LengthPlug: NSObject, PPFilterPlugin {
 		self.init()
 	}
 	
-	public func runWithData(theData: PPSampleObject!, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver!) -> MADErr {
+	public func runWithData(theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver) -> MADErr {
 		return .OrderNotImplemented
 	}
 	
-	public func beginRunWithData(theData: PPSampleObject!, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver!, parentWindow document: NSWindow!, handler handle: PPPlugErrorBlock!) {
+	public func beginRunWithData(theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver, parentWindow document: NSWindow, handler handle: PPPlugErrorBlock){
 		var controller = LengthWindowController(windowNibName: "LengthWindowController")
 		controller.theData = theData
 		controller.selectionRange = selRange

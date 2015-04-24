@@ -13,8 +13,9 @@ import PlayerPROKit
 import SwiftAdditions
 import SwiftAudioAdditions
 
-public final class AIFF: NSObject, PPSampleExportPlugin /*, PPSampleImportPlugin*/ {
+public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 	public let hasUIForExport = false
+	public let hasUIForImport = false
 	
 	override init() {
 		super.init()
@@ -24,7 +25,7 @@ public final class AIFF: NSObject, PPSampleExportPlugin /*, PPSampleImportPlugin
 		self.init()
 	}
 	
-	public func exportSample(sample: PPSampleObject!, toURL sampleURL: NSURL!, driver: PPDriver!) -> MADErr {
+	public func exportSample(sample: PPSampleObject, toURL sampleURL: NSURL, driver: PPDriver) -> MADErr {
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .LinearPCM, formatFlags: .SignedInteger | .Packed | .BigEndian, bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: sample.stereo ? 2 : 1)
 		
 		let datLen = sample.data.length
@@ -81,9 +82,8 @@ public final class AIFF: NSObject, PPSampleExportPlugin /*, PPSampleImportPlugin
 	
 	//MARK: import
 	//TODO: complete
-	public let hasUIForImport = false
 	
-	public func canImportSampleAtURL(AlienFileURL: NSURL!) -> Bool {
+	public func canImportSampleAtURL(AlienFileURL: NSURL) -> Bool {
 		var myErr = MADErr.NoErr
 		var audioFile: AudioFileID = nil
 		var res: OSStatus = noErr
@@ -103,7 +103,7 @@ public final class AIFF: NSObject, PPSampleExportPlugin /*, PPSampleImportPlugin
 		return myErr == .NoErr
 	}
 	
-	func importSampleAtURL(sampleURL: NSURL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
+	public func importSampleAtURL(sampleURL: NSURL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
 		var fileRef: ExtAudioFileRef = nil
 		var iErr = ExtAudioFileOpenURL(sampleURL, &fileRef)
 		if iErr != noErr {
