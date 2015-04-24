@@ -100,6 +100,7 @@ PPEXPORT void MADConvertInstrument(Byte *tempPtr, size_t sSize);
 PPEXPORT void MADConvertInstrument16(short *tempPtr, size_t sSize);
 PPEXPORT Cmd* MADGetCmd(short row, short track, Pcmd* myPcmd);
 
+CF_IMPLICIT_BRIDGING_ENABLED
 PPEXPORT const CFStringRef kMadPlugMenuNameKey;
 PPEXPORT const CFStringRef kMadPlugAuthorNameKey;
 PPEXPORT const CFStringRef kMadPlugUTITypesKey;
@@ -107,6 +108,7 @@ PPEXPORT const CFStringRef kMadPlugTypeKey;
 PPEXPORT const CFStringRef kMadPlugDoesImport;
 PPEXPORT const CFStringRef kMadPlugDoesExport;
 PPEXPORT const CFStringRef kMadPlugModeKey;
+CF_IMPLICIT_BRIDGING_DISABLED
 
 #pragma mark Swift helpers
 

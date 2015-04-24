@@ -285,27 +285,43 @@ CFMutableArrayRef CreateDefaultPluginFolderLocations()
 	@autoreleasepool {
 		NSFileManager *fm = [NSFileManager defaultManager];
 		NSMutableArray *PlugFolds = [NSMutableArray arrayWithCapacity:6];
+		NSURL *aURL;
 		//Application Main Bundle
 		NSBundle *mainBundle = [NSBundle mainBundle];
 		if (mainBundle != nil) {
-			[PlugFolds addObject:[mainBundle builtInPlugInsURL]];
+			aURL = [mainBundle builtInPlugInsURL];
+			if ([aURL checkResourceIsReachableAndReturnError:NULL]) {
+				[PlugFolds addObject:aURL];
+			}
 		}
 		
 		mainBundle = [NSBundle bundleWithIdentifier:@"net.sourceforge.playerpro.PlayerPROCore"];
 		if (mainBundle != nil) {
-			[PlugFolds addObject:[mainBundle builtInPlugInsURL]];
+			aURL = [mainBundle builtInPlugInsURL];
+			if ([aURL checkResourceIsReachableAndReturnError:NULL]) {
+				[PlugFolds addObject:aURL];
+			}
 		}
 		
 		mainBundle = [NSBundle bundleWithIdentifier:@"net.sourceforge.playerpro.PlayerPROKit"];
 		if (mainBundle != nil) {
-			[PlugFolds addObject:[mainBundle builtInPlugInsURL]];
+			aURL = [mainBundle builtInPlugInsURL];
+			if ([aURL checkResourceIsReachableAndReturnError:NULL]) {
+				[PlugFolds addObject:aURL];
+			}
 		}
 		
 		//Local systemwide plugins
-		[PlugFolds addObject:[NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
+		aURL = [NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSLocalDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]];
+		if ([aURL checkResourceIsReachableAndReturnError:NULL]) {
+			[PlugFolds addObject:aURL];
+		}
 		
 		//User plugins
-		[PlugFolds addObject:[NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]]];
+		aURL = [NSURL fileURLWithPathComponents: @[[[fm URLForDirectory:NSApplicationSupportDirectory inDomain:NSUserDomainMask appropriateForURL:nil create:NO error:NULL] path], @"PlayerPRO", @"Plugins"]];
+		if ([aURL checkResourceIsReachableAndReturnError:NULL]) {
+			[PlugFolds addObject:aURL];
+		}
 		
 		return (CFMutableArrayRef)CFBridgingRetain(PlugFolds);
 	}
@@ -416,11 +432,11 @@ void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 		PlugLocations = CreatePluginFolderLocationsWithFolderPath(PlugsFolderName);
 	}
 	
-	CFIndex PlugLocNums = CFArrayGetCount(PlugLocations);
 	@autoreleasepool {
-		for (CFIndex i = 0; i < PlugLocNums; i++) {
-			CFURLRef aPlugLoc = CFArrayGetValueAtIndex(PlugLocations, i);
-			CFArrayRef somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, aPlugLoc, CFSTR("ppimpexp"));
+		NSMutableArray *plugLoc = CFBridgingRelease(PlugLocations);
+		PlugLocations = NULL;
+		for (NSURL *aPlugLoc in plugLoc) {
+			CFArrayRef somePlugs = CFBundleCreateBundlesFromDirectory(kCFAllocatorDefault, (__bridge CFURLRef)aPlugLoc, CFSTR("ppimpexp"));
 			CFIndex PlugNums = CFArrayGetCount(somePlugs);
 			for (CFIndex x = 0; x < PlugNums; x++) {
 				CFBundleRef tempBundleRef = (CFBundleRef)CFArrayGetValueAtIndex(somePlugs, x);
@@ -432,7 +448,6 @@ void MInitImportPlug(MADLibrary *inMADDriver, const char *PlugsFolderName)
 			CFRelease(somePlugs);
 		}
 	}
-	CFRelease(PlugLocations); PlugLocations = NULL;
 }
 
 void CloseImportPlug(MADLibrary *inMADDriver)

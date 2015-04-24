@@ -18,7 +18,10 @@ NSArray *DefaultPlugInLocations()
 		// Disregard files in the system domain: We wouldn't install anything there.
 		NSArray *fmLocs = [[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory inDomains:NSAllDomainsMask & ~NSSystemDomainMask];
 		for (NSURL *aURL in fmLocs) {
-			[plugLocs addObject:[NSURL fileURLWithPathComponents:@[[aURL path], @"PlayerPRO", @"Plugins"]]];
+			NSURL *bURL = [NSURL fileURLWithPathComponents:@[[aURL path], @"PlayerPRO", @"Plugins"]];
+			if ([bURL checkResourceIsReachableAndReturnError:NULL]) {
+				[plugLocs addObject:bURL];
+			}
 		}
 		
 		immPlugLocs = [[NSArray alloc] initWithArray:plugLocs];

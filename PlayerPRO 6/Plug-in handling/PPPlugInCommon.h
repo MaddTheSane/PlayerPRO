@@ -11,6 +11,6 @@
 
 #import <Foundation/NSArray.h>
 
-NSArray *DefaultPlugInLocations();
+NSArray * __nonnull DefaultPlugInLocations();
 
 #endif

@@ -22,7 +22,7 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, CollectionTyp
 	}
 	
 	override init() {
-		let defaultPlugLocs = swiftDefaultPlugInLocations()
+		let defaultPlugLocs = DefaultPlugInLocations() as! [NSURL]
 		var defaultManager = NSFileManager.defaultManager()
 		
 		for url in defaultPlugLocs {

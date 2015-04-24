@@ -9,15 +9,11 @@
 import Cocoa
 import PlayerPROKit
 
-func swiftDefaultPlugInLocations() -> [NSURL] {
-	return DefaultPlugInLocations() as! [NSURL]
-}
-
 class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType, Sliceable {
 	private var digitalPlugs = [PPDigitalPlugInObject]()
 	
 	override init() {
-		let defaultPlugLocs = swiftDefaultPlugInLocations()
+		let defaultPlugLocs = DefaultPlugInLocations() as! [NSURL]
 		var defaultManager = NSFileManager.defaultManager()
 		for aPlugLoc in defaultPlugLocs {
 			if let components = defaultManager.contentsOfDirectoryAtURL(aPlugLoc, includingPropertiesForKeys: [], options: nil, error: nil) as? [NSURL] {

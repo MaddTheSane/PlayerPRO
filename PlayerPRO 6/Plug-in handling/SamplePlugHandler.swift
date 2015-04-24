@@ -13,7 +13,7 @@ class SamplePlugHandler: NSObject, CollectionType, NSFastEnumeration {
 	private(set) var plugIns = [PPSamplePlugObject]()
 	
 	override init() {
-		let defaultPlugLocs = swiftDefaultPlugInLocations()
+		let defaultPlugLocs = DefaultPlugInLocations() as! [NSURL]
 		var defaultManager = NSFileManager.defaultManager()
 		
 		for url in defaultPlugLocs {
