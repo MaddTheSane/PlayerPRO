@@ -191,7 +191,9 @@ MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 	// Conversion
 	inOutCount = sizeof(MADSpec);
 	theMAD->header = (MADSpec*) calloc(inOutCount, 1);
-	if (theMAD->header == NULL) return MADNeedMemory;
+	if (theMAD->header == NULL) {
+		return MADNeedMemory;
+	}
 	
 	theMAD->header->MAD = 'MADK';
 	
@@ -204,6 +206,11 @@ MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 	theMAD->header->tempo			= oldMAD->tempo;
 	
 	theMAD->sets = (FXSets*)calloc(sizeof(FXSets), MAXTRACK);
+	if (theMAD->sets == NULL) {
+		free(theMAD->header);
+		
+		return MADNeedMemory;
+	}
 #ifdef __BLOCKS__
 	dispatch_apply(MAXTRACK, dispatch_get_global_queue(0, 0), ^(size_t i) {
 		theMAD->header->chanBus[i].copyId = i;
@@ -216,8 +223,7 @@ MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 	
 	/**** Patterns *******/
 	
-	for (i = 0; i < oldMAD->numPat; i++)
-	{
+	for (i = 0; i < oldMAD->numPat; i++) {
 		struct oldPatData		*tempPat = NULL, *tempPat2 = NULL;
 		struct oldPatHeader		tempPatHeader = {0};
 		
@@ -231,25 +237,29 @@ MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 		/** Lecture du header + contenu de la partition **/
 		/*************************************************/
 		
-		if (tempPatHeader.compMode == 'MAD1')
-		{
+		if (tempPatHeader.compMode == 'MAD1') {
 			inOutCount = sizeof(oldPatData) + tempPatHeader.patBytes;
-		}
-		else
-		{
+		} else {
 			inOutCount = sizeof(oldPatData) + oldMAD->numChn * tempPatHeader.size * sizeof(oldCmd);
 		}
 		
 		tempPat = (struct oldPatData*) malloc(inOutCount);
-		if (tempPat == NULL) //DebugStr("\pMemory Prob1");
+		if (tempPat == NULL) {
+			int y;
+			free(theMAD->header);
+			free(theMAD->sets);
+			for (y = 0; y > i; y++) {
+				free(theMAD->partition[i]);
+			}
+			
 			return MADNeedMemory;
+		}
 		
 		memcpy(tempPat, MADPtr + OffSetToSample, inOutCount);
 		MOToldPatHeader(&tempPat->header);
 		OffSetToSample += inOutCount;
 		
-		if (tempPat->header.compMode == 'MAD1')
-		{
+		if (tempPat->header.compMode == 'MAD1') {
 			tempPat2 = oldDecompressPartitionMAD1(oldMAD, tempPat);
 			
 			free(tempPat);
@@ -262,7 +272,18 @@ MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 		/**************/
 		
 		theMAD->partition[i] = (PatData*) calloc(sizeof(PatHeader) + theMAD->header->numChn * tempPat->header.size * sizeof(Cmd), 1);
-		if (theMAD->partition[i] == NULL) return MADNeedMemory;
+		if (theMAD->partition[i] == NULL) {
+			int y;
+			free(theMAD->header);
+			free(theMAD->sets);
+			for (y = 0; y > i; y++) {
+				free(theMAD->partition[i]);
+			}
+
+			free(tempPat);
+			
+			return MADNeedMemory;
+		}
 		
 		theMAD->partition[i]->header.size 		= tempPat->header.size;
 		theMAD->partition[i]->header.compMode 	= 'NONE';
@@ -271,18 +292,14 @@ MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 		
 		theMAD->partition[i]->header.patBytes = 0;		theMAD->partition[i]->header.unused2 = 0;
 		
-		for (x = 0; x < theMAD->partition[i]->header.size; x++)
-		{
-			for (z = 0; z < theMAD->header->numChn; z++)
-			{
+		for (x = 0; x < theMAD->partition[i]->header.size; x++) {
+			for (z = 0; z < theMAD->header->numChn; z++) {
 				struct oldCmd *oldCmd;
 				Cmd	*aCmd;
 				
-				aCmd = GetMADCommand( x,  z, theMAD->partition[i]);
+				aCmd = GetMADCommand(x, z, theMAD->partition[i]);
 				
-				oldCmd 	= GetOldCommand(	x,
-										z,
-										tempPat);
+				oldCmd 	= GetOldCommand(x, z, tempPat);
 				
 				aCmd->ins 		= oldCmd->ins;
 				aCmd->note 		= oldCmd->note;
@@ -298,8 +315,7 @@ MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 	}
 	for (i = theMAD->header->numPat; i < MAXPATTERN ; i++) theMAD->partition[i] = NULL;
 	
-	for (i = 0; i < MAXTRACK; i++)
-	{
+	for (i = 0; i < MAXTRACK; i++) {
 		if (i % 2 == 0) theMAD->header->chanPan[i] = MAX_PANNING/4;
 		else theMAD->header->chanPan[i] = MAX_PANNING - MAX_PANNING/4;
 		
@@ -313,15 +329,32 @@ MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 	/**** Instruments header *****/
 	
 	theMAD->fid = (InstrData*) calloc(sizeof(InstrData) * (long) MAXINSTRU, 1);
-	if (!theMAD->fid) return MADNeedMemory;
-	
+	if (!theMAD->fid) {
+		int y;
+		free(theMAD->header);
+		free(theMAD->sets);
+		for (y = 0; y > oldMAD->numPat; y++) {
+			free(theMAD->partition[i]);
+		}
+		
+		return MADNeedMemory;
+	}
 	theMAD->sample = (sData**) calloc(sizeof(sData*) * (long) MAXINSTRU * (long) MAXSAMPLE, 1);
-	if (!theMAD->sample) return MADNeedMemory;
+	if (!theMAD->sample) {
+		int y;
+		free(theMAD->header);
+		free(theMAD->sets);
+		for (y = 0; y > oldMAD->numPat; y++) {
+			free(theMAD->partition[i]);
+		}
+		free(theMAD->fid);
+		
+		return MADNeedMemory;
+	}
 	
 	for (i = 0; i < MAXINSTRU; i++) theMAD->fid[i].firstSample = i * MAXSAMPLE;
 	
-	for (i = 0; i < 64; i++)
-	{
+	for (i = 0; i < 64; i++) {
 		//InstrData	*curIns = &theMAD->fid[i];
 		
 		memcpy(theMAD->fid[i].name, oldMAD->fid[i].name, 32);
@@ -345,8 +378,7 @@ MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 		theMAD->fid[i].vibDepth = oldMAD->fid[i].vibDepth;
 		theMAD->fid[i].vibRate = oldMAD->fid[i].vibRate;
 		
-		for (x = 0; x < oldMAD->fid[i].numSamples ; x++)
-		{
+		for (x = 0; x < oldMAD->fid[i].numSamples ; x++) {
 			oldsData	 *oldcurData;
 			sData		 *curData;
 			
@@ -355,6 +387,28 @@ MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 			OffSetToSample += sizeof(oldsData);
 			
 			curData = theMAD->sample[i*MAXSAMPLE + x] = (sData*) calloc(sizeof(sData), 1);
+			if (curData == NULL) {
+				int y;
+				free(theMAD->header);
+				free(theMAD->sets);
+				for (y = 0; y > oldMAD->numPat; y++) {
+					free(theMAD->partition[i]);
+				}
+				free(theMAD->fid);
+				
+				for (y = 0; y > MAXSAMPLE * MAXINSTRU; y++) {
+					if (theMAD->sample[y]) {
+						if (theMAD->sample[y]->data) {
+							free(theMAD->sample[y]->data);
+						}
+						free(theMAD->sample[y]);
+					}
+				}
+				
+				free(theMAD->sample);
+				
+				return MADNeedMemory;
+			}
 			
 			curData->size		= oldcurData->size;
 			curData->loopBeg 	= oldcurData->loopBeg;
@@ -367,12 +421,32 @@ MADErr MADH2Mad(const char* MADPtr, size_t size, MADMusic *theMAD, MADDriverSett
 			curData->relNote	= oldcurData->relNote;
 			
 			curData->data 		= malloc(curData->size);
-			if (curData->data == NULL) return MADNeedMemory;
+			if (curData->data == NULL) {
+				int y;
+				free(theMAD->header);
+				free(theMAD->sets);
+				for (y = 0; y > oldMAD->numPat; y++) {
+					free(theMAD->partition[i]);
+				}
+				free(theMAD->fid);
+				
+				for (y = 0; y > MAXSAMPLE * MAXINSTRU; y++) {
+					if (theMAD->sample[y]) {
+						if (theMAD->sample[y]->data) {
+							free(theMAD->sample[y]->data);
+						}
+						free(theMAD->sample[y]);
+					}
+				}
+				
+				free(theMAD->sample);
+				
+				return MADNeedMemory;
+			}
 			
 			memcpy(curData->data, MADPtr + OffSetToSample, curData->size);
 			OffSetToSample += curData->size;
-			if (curData->amp == 16)
-			{
+			if (curData->amp == 16) {
 				int		ll;
 				short	*shortPtr = (short*) curData->data;
 				
