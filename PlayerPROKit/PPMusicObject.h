@@ -6,6 +6,9 @@
 //
 //
 
+#ifndef __PLAYERPROKIT_PPMUSICOBJECT_H__
+#define __PLAYERPROKIT_PPMUSICOBJECT_H__
+
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 
@@ -99,3 +102,5 @@
 - (BOOL)importInstrumentListFromURL:(nonnull NSURL *)insURL error:(out NSError * __nullable __autoreleasing*__nullable)theErr;
 
 @end
+
+#endif

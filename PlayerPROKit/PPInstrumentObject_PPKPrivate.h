@@ -6,8 +6,8 @@
 //
 //
 
-#import "PPInstrumentObject.h"
-#import "PPMusicObject.h"
+#import <PlayerPROKit/PPInstrumentObject.h>
+#import <PlayerPROKit/PPMusicObject.h>
 
 @interface PPEnvelopeObject ()
 - (instancetype)initWithEnvRecPointer:(EnvRec*)theEnv;

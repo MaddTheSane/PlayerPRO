@@ -6,7 +6,7 @@
 //
 //
 
-#import "PPMusicObject.h"
+#import <PlayerPROKit/PPMusicObject.h>
 
 @interface PPMusicObject ()
 @property (readonly) MADMusic *_currentMusic;

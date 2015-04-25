@@ -6,6 +6,9 @@
 //
 //
 
+#ifndef __PLAYERPROKIT_PPPLUGINS_H__
+#define __PLAYERPROKIT_PPPLUGINS_H__
+
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <Foundation/Foundation.h>
 
@@ -111,3 +114,5 @@ typedef void (^PPPlugErrorBlock)(MADErr error);
 @end
 
 NS_ASSUME_NONNULL_END
+
+#endif

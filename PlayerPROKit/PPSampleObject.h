@@ -6,6 +6,9 @@
 //
 //
 
+#ifndef __PLAYERPROKIT_PPSAMPLEOBJECT_H__
+#define __PLAYERPROKIT_PPSAMPLEOBJECT_H__
+
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
@@ -69,3 +72,5 @@ __BEGIN_DECLS
 extern short PPNoteFromString(NSString * __nonnull aNote);
 extern NSString * __nonnull PPStringFromNote(short note);
 __END_DECLS
+
+#endif

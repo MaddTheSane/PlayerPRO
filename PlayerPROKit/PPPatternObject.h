@@ -6,6 +6,9 @@
 //
 //
 
+#ifndef __PLAYERPROKIT_PPPATTERNOBJECT_H__
+#define __PLAYERPROKIT_PPPATTERNOBJECT_H__
+
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
@@ -35,3 +38,5 @@
 - (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX madCommandBlock:(void (^ __nonnull)(PPMadCommandObject*__nonnull))block;
 
 @end
+
+#endif

@@ -6,6 +6,9 @@
 //
 //
 
+#ifndef __PLAYERPROKIT_PPPASTEBOARDHANDLING_H__
+#define __PLAYERPROKIT_PPPASTEBOARDHANDLING_H__
+
 #import <AppKit/NSPasteboard.h>
 
 #import <PlayerPROKit/PPSampleObject.h>
@@ -24,23 +27,25 @@ extern NSString * const kPPKFXSetPasteboardUTI;
 extern NSString * const kPPKEnvelopePasteboardUTI;
 extern NSString * const kPPKInstrumentPasteboardUTI;
 
-@interface PPSampleObject(CocoaPasteboard) <NSPasteboardReading, NSPasteboardWriting>
+@interface PPSampleObject() <NSPasteboardReading, NSPasteboardWriting>
 @end
 
-@interface PPMadCommandObject(CocoaPasteboard) <NSPasteboardReading, NSPasteboardWriting>
+@interface PPMadCommandObject() <NSPasteboardReading, NSPasteboardWriting>
 @end
 
-@interface PPPatternObject(CocoaPasteboard) <NSPasteboardReading, NSPasteboardWriting>
+@interface PPPatternObject() <NSPasteboardReading, NSPasteboardWriting>
 @end
 
-@interface PPFXBusObject(CocoaPasteboard) <NSPasteboardReading, NSPasteboardWriting>
+@interface PPFXBusObject() <NSPasteboardReading, NSPasteboardWriting>
 @end
 
-@interface PPFXSetObject(CocoaPasteboard) <NSPasteboardReading, NSPasteboardWriting>
+@interface PPFXSetObject() <NSPasteboardReading, NSPasteboardWriting>
 @end
 
-@interface PPEnvelopeObject(CocoaPasteboard) <NSPasteboardReading, NSPasteboardWriting>
+@interface PPEnvelopeObject() <NSPasteboardReading, NSPasteboardWriting>
 @end
 
-@interface PPInstrumentObject(CocoaPasteboard) <NSPasteboardReading, NSPasteboardWriting>
+@interface PPInstrumentObject() <NSPasteboardReading, NSPasteboardWriting>
 @end
+
+#endif

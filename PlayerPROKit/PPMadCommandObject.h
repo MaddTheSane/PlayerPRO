@@ -6,6 +6,9 @@
 //
 //
 
+#ifndef __PLAYERPROKIT_PPMADCOMMANDOBJECT_H__
+#define __PLAYERPROKIT_PPMADCOMMANDOBJECT_H__
+
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
@@ -35,3 +38,5 @@
 
 - (void)reset;
 @end
+
+#endif

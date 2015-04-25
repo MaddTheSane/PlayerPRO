@@ -6,6 +6,9 @@
 //
 //
 
+#ifndef __PLAYERPROKIT_PPFXSETOBJECT_H__
+#define __PLAYERPROKIT_PPFXSETOBJECT_H__
+
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
@@ -29,11 +32,13 @@
 
 - (void)replaceEffectValueAtIndex:(NSInteger)theLoc withFloat:(float)theNum;
 
-// The native value of the effect values is float.
-// As such, passing a double will result in a loss of precision.
+/// The native value of the effect values is float.
+/// As such, passing a double will result in a loss of precision.
 - (void)replaceEffectValueAtIndex:(NSInteger)theLoc withDouble:(double)theNum DEPRECATED_ATTRIBUTE;
 - (void)replaceEffectValueAtIndex:(NSInteger)theLoc withInt:(int)theNum;
 - (void)replaceEffectValueAtIndex:(NSInteger)theLoc withInteger:(NSInteger)theNum;
 - (void)replaceEffectValueAtIndex:(NSInteger)theLoc withNumber:(nonnull NSNumber*)theNum;
 
 @end
+
+#endif

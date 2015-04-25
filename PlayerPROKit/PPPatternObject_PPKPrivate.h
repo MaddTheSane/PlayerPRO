@@ -7,7 +7,7 @@
 //
 
 #include <PlayerPROCore/PlayerPROCore.h>
-#import "PPPatternObject.h"
+#import <PlayerPROKit/PPPatternObject.h>
 
 @interface PPPatternObject ()
 @property (nonatomic) PatHeader patternHeader;

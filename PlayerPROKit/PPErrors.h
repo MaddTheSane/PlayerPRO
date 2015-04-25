@@ -6,6 +6,9 @@
 //
 //
 
+#ifndef __PLAYERPROKIT_PPERRORS_H__
+#define __PLAYERPROKIT_PPERRORS_H__
+
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/MADDefs.h>
 
@@ -17,3 +20,5 @@ extern NSError* __nullable PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr
 extern BOOL PPErrorIsUserCancelled(NSError * __nonnull theErr);
 
 __END_DECLS
+
+#endif

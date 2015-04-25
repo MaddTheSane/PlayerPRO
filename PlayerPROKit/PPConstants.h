@@ -6,8 +6,8 @@
 //
 //
 
-#ifndef PPMacho_PPConstants_h
-#define PPMacho_PPConstants_h
+#ifndef __PLAYERPROKIT_PPConstants_h__
+#define __PLAYERPROKIT_PPConstants_h__
 
 #import <Foundation/Foundation.h>
 

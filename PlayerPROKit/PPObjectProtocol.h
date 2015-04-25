@@ -6,7 +6,12 @@
 //
 //
 
+#ifndef __PLAYERPROKIT_PPOBJECTPROTOCOL_H__
+#define __PLAYERPROKIT_PPOBJECTPROTOCOL_H__
+
 #import <Foundation/Foundation.h>
 
 @protocol PPObject <NSCopying, NSSecureCoding, NSObject>
 @end
+
+#endif

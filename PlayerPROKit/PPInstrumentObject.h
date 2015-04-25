@@ -6,6 +6,9 @@
 //
 //
 
+#ifndef __PLAYERPROKIT_PPINSTRUMENTOBJECT_H__
+#define __PLAYERPROKIT_PPINSTRUMENTOBJECT_H__
+
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
@@ -103,3 +106,5 @@
 - (void)removeSamplesAtIndexes:(nonnull NSIndexSet *)indexes;
 
 @end
+
+#endif

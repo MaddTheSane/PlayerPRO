@@ -6,6 +6,9 @@
 //
 //
 
+#ifndef __PLAYERPROKIT_PPFXBUSOBJECT_H__
+#define __PLAYERPROKIT_PPFXBUSOBJECT_H__
+
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
@@ -23,3 +26,5 @@
 - (nonnull instancetype)initWithFXBus:(nullable FXBus *)set NS_DESIGNATED_INITIALIZER;
 
 @end
+
+#endif

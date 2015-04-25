@@ -6,6 +6,9 @@
 //
 //
 
+#ifndef __PLAYERPROKIT_PPDRIVER_H__
+#define __PLAYERPROKIT_PPDRIVER_H__
+
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 
@@ -99,3 +102,5 @@
 
 - (NSInteger)audioLength DEPRECATED_ATTRIBUTE;
 @end
+
+#endif

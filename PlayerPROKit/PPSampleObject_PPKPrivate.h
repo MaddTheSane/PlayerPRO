@@ -6,7 +6,7 @@
 //
 //
 
-#import "PPSampleObject.h"
+#import <PlayerPROKit/PPSampleObject.h>
 
 @interface PPSampleObject ()
 - (instancetype)initWithSDataPointer:(inout sData *)theData;
