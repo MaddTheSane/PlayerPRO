@@ -65,7 +65,7 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 	
 	// SAMPLES
 	for x in 0..<sampleCount {
-		let	curData = PPSampleObject();
+		let curData = PPSampleObject();
 		var signedData: Bool
 		
 		PATSamp = UnsafePointer<PatSampHeader>(PATData)

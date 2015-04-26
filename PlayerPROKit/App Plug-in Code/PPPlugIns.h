@@ -10,6 +10,7 @@
 #define __PLAYERPROKIT_PPPLUGINS_H__
 
 #include <PlayerPROCore/PlayerPROCore.h>
+#include <PlayerPROCore/MADPlug.h>
 #import <Foundation/Foundation.h>
 
 @class PPSampleObject;

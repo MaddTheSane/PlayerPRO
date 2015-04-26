@@ -9,6 +9,7 @@
 import Foundation
 import PlayerPROCore
 
+/// A Swift-friendly way of messing with Pcmds.
 public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	typealias Generator = IndexingGenerator<[Cmd]>
 	typealias Index = Int
@@ -18,7 +19,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	public var positionStart: Int16
 	public var myCmd = [Cmd]()
 	
-	/// returns what the size of a Pcmd structure would be, or nil
+	/// returns what the size of a Pcmd structure would be, or `nil`
 	/// if the Pcmd structure isn't valid.
 	public var structSize: Int32? {
 		if self.valid {
@@ -49,6 +50,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		return myCmd.generate()
 	}
 	
+	/// Must be freed after use, otherwise memory *will* leak.
 	public func newIntPcmd() -> UnsafeMutablePointer<IntPcmd>? {
 		if let newSize = structSize {
 			var ourIntPcmd = intPcmd!
@@ -89,6 +91,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		}
 	}
 	
+	/// Must be freed after use, otherwise memory *will* leak.
 	public func newPcmd() -> UnsafeMutablePointer<Pcmd>? {
 		if let newSize = structSize {
 			var ourIntPcmd = newIntPcmd()!
@@ -99,8 +102,8 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		}
 	}
 	
-	/// returns false if the tracks and length don't match the count
-	/// of myCmd objects
+	/// returns `false` if the tracks and length don't match the count
+	/// of `myCmd` objects.
 	public var valid: Bool {
 		return Int(tracks * length) == myCmd.count
 	}
@@ -113,22 +116,32 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		myCmd.append(Cmd.blankCmd())
 	}
 	
-	public init(tracks atr: Int16, startTrack: Int16 = 0, rows: Int16, startPosition: Int16 = 0) {
-		tracks = atr
+	/// Initializes a `PPKPcmd` structure with the specified tracks and rows.
+	///
+	/// :param: tracks The amount of tracks.
+	/// :param: startTrack The starting location of the tracks. Default is `0`.
+	/// :param: rows The amount of rows.
+	/// :param: startPosition The starting location of the rows. Default is `0`.
+	public init(tracks: Int16, startTrack: Int16 = 0, rows: Int16, startPosition: Int16 = 0) {
+		self.tracks = tracks
 		trackStart = startTrack
 		length = rows
 		positionStart = startPosition
-		for i in 0 ..< atr * rows {
+		for i in 0 ..< tracks * rows {
 			myCmd.append(Cmd.blankCmd())
 		}
 	}
 	
+	/// The data in `aPcmd` is copied, so you don't have to worry about
+	/// keeping track of it afterwards.
 	public init(_ aPcmd: UnsafeMutablePointer<Pcmd>) {
 		var ourIntPcmd = MADPcmdToInt(aPcmd)
 		self.init(intPcmd: ourIntPcmd)
 		MADFreeIntPcmd(ourIntPcmd)
 	}
 	
+	/// The data in `aTmp` is copied, so you don't have to worry about
+	/// keeping track of it afterwards.
 	public init(intPcmd aTmp: UnsafeMutablePointer<IntPcmd>) {
 		var intPcmd = aTmp.memory
 		tracks = intPcmd.tracks
@@ -140,6 +153,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		}
 	}
 	
+	/// Adds a row to the struct.
 	public mutating func addRow() {
 		#if false
 			length += 1
@@ -159,6 +173,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		#endif
 	}
 
+	/// Adds a track to the struct.
 	public mutating func addTrack() {
 		#if false
 			for var i = length; i > 0; i-- {
@@ -197,7 +212,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		commandBlock(&myCmd[Int((length * track) + row)])
 	}
 	
-	public mutating func addCmd(command: Cmd = (Cmd.blankCmd())) {
+	public mutating func addCmd(command: Cmd = Cmd.blankCmd()) {
 		myCmd.append(command)
 	}
 	

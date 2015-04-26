@@ -390,10 +390,14 @@ extension Cmd: Equatable {
 		unused = 0
 	}
 	
+	/// Returns a `Cmd` with all bytes to zero, except `note`
+	/// and `vol`, which are `0xFF`.
 	public static func blankCmd() -> Cmd {
 		return Cmd()
 	}
 	
+	/// Returns a `Cmd` with all bytes to zero, except `note`
+	/// and `vol`, which are `0xFF`.
 	public static func new() -> Cmd {
 		return Cmd()
 	}
