@@ -18,15 +18,25 @@ private let kMusicListLocation3 = "Music Key Location 3"
 
 private let kMusicListKey4 = "Music List Key 4"
 private let kMusicListLocation4 = "Music Key Location 4"
+private let kMusicListName4 = "Music List Name 4"
 
 private let kPlayerList = "Player List"
 
-private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.ApplicationSupportDirectory, inDomain:.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player")
+#if os(OSX)
+	private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.ApplicationSupportDirectory, inDomain:.UserDomainMask, appropriateForURL:nil, create:true, error:nil)!.URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player", isDirectory: true)
+	#elseif os(iOS)
+	private let listExtension = "pplist"
+	private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true, error: nil)!.URLByAppendingPathComponent("Playlists", isDirectory: true)
+#endif
 
 @objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, CollectionType, Sliceable {
 	private(set)	dynamic var musicList = [MusicListObject]()
 	private(set)	var lostMusicCount: UInt
 	dynamic var		selectedMusic: Int
+	#if os(iOS)
+	dynamic var		name = "New Music List"
+	private(set)	var fileUUID = NSUUID()
+	#endif
 	
 	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (musicList as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len)
@@ -160,12 +170,54 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		super.init();
 	}
 	
+	#if os(iOS)
+	class func availablePlaylistUUIDs() -> [NSUUID]! {
+		let fm = NSFileManager.defaultManager()
+		if let docDir = fm.URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true, error: nil) {
+			let playlistDir = docDir.URLByAppendingPathComponent("Playlists")
+			fm.createDirectoryAtURL(playlistDir, withIntermediateDirectories: true, attributes: nil, error: nil)
+			//if playlistDir.checkre
+			if let dirConts = fm.contentsOfDirectoryAtURL(playlistDir, includingPropertiesForKeys: nil, options: nil, error: nil) as? [NSURL] {
+				var toRetUUIDs = [NSUUID]()
+				for url in dirConts {
+					if let fileUUIDStr = url.lastPathComponent?.stringByDeletingPathExtension, fileUUID = NSUUID(UUIDString: fileUUIDStr) {
+						toRetUUIDs.append(fileUUID)
+					}
+				}
+				return toRetUUIDs
+			}
+		}
+		
+		
+		return nil
+	}
+	
+	convenience init?(UUID: NSUUID) {
+		let path = PPPPath.URLByAppendingPathComponent(UUID.UUIDString).URLByAppendingPathExtension(listExtension)
+		self.init()
+		fileUUID = UUID
+		if !loadMusicListFromURL(path) {
+			return nil
+		}
+	}
+	
+	func save() -> Bool {
+		let saveURL = PPPPath.URLByAppendingPathComponent(fileUUID.UUIDString).URLByAppendingPathExtension(listExtension)
+		return saveMusicList(URL: saveURL)
+	}
+	#endif
+	
 	// MARK: - NSCoding
 	
 	required init(coder aDecoder: NSCoder) {
 		lostMusicCount = 0;
 		if let BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey4) as? [MusicListObject] {
 			selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation4);
+			#if os(iOS)
+				if let aName = aDecoder.decodeObjectForKey(kMusicListName4) as? String {
+					name = aName
+				}
+			#endif
 			for book in BookmarkArray {
 				if (!book.checkIsReachableAndReturnError(nil)) {
 					if (selectedMusic == -1) {
@@ -243,6 +295,9 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	func encodeWithCoder(aCoder: NSCoder) {
 		aCoder.encodeInteger(selectedMusic, forKey: kMusicListLocation4)
 		aCoder.encodeObject(musicList as NSArray, forKey: kMusicListKey4)
+		#if os(iOS)
+			aCoder.encodeObject(name, forKey: kMusicListName4)
+		#endif
 	}
 	
 	class func supportsSecureCoding() -> Bool {
@@ -267,6 +322,9 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 			lostMusicCount = postList.lostMusicCount
 			loadMusicList(postList.musicList)
 			self.selectedMusic = postList.selectedMusic
+			#if os(iOS)
+				name = postList.name
+			#endif
 			return true
 		} else {
 			return false
@@ -274,7 +332,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	func loadMusicListFromURL(fromURL: NSURL) -> Bool {
-		if let unWrappedListData = NSData(contentsOfURL:fromURL) {
+		if let unWrappedListData = NSData(contentsOfURL: fromURL) {
 			return loadMusicListFromData(unWrappedListData)
 		} else {
 			return false
@@ -282,9 +340,10 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 	}
 	
 	func loadApplicationMusicList() -> Bool {
+		let manager = NSFileManager.defaultManager()
+		#if os(OSX)
 		let musListDefName = "PlayerPRO Music List"
 		let defaults = NSUserDefaults.standardUserDefaults()
-		let manager = NSFileManager.defaultManager()
 		if let listData = defaults.dataForKey(musListDefName) {
 			if loadMusicListFromData(listData) {
 				defaults.removeObjectForKey(musListDefName) //Otherwise the preference file is abnormally large.
@@ -295,6 +354,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 			//We couldn't load it, but it's still there, taking up space...
 			defaults.removeObjectForKey(musListDefName)
 		}
+		#endif
 		if (PPPPath.checkResourceIsReachableAndReturnError(nil) == false) {
 			manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories: true, attributes: nil, error: nil)
 			return false
@@ -302,7 +362,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 		return loadMusicListFromURL(PPPPath.URLByAppendingPathComponent(kPlayerList, isDirectory: false))
 	}
 	
-	func saveMusicListToURL(URL: NSURL) -> Bool {
+	@objc(saveMusicListToURL:) func saveMusicList(#URL: NSURL) -> Bool {
 		var theList = NSKeyedArchiver.archivedDataWithRootObject(self)
 		return theList.writeToURL(URL, atomically: true)
 	}
@@ -315,7 +375,7 @@ private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.Applicatio
 			manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories:true, attributes:nil, error:nil)
 		}
 		
-		return self.saveMusicListToURL(PPPPath.URLByAppendingPathComponent(kPlayerList, isDirectory:false))
+		return self.saveMusicList(URL: PPPPath.URLByAppendingPathComponent(kPlayerList, isDirectory:false))
 	}
 	
 	// MARK: - Key-valued Coding

@@ -617,7 +617,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		savePanel.canSelectHiddenExtension = true
 		savePanel.beginSheetModalForWindow(self.window, completionHandler: { (result) -> Void in
 			if result == NSFileHandlingPanelOKButton {
-				self.musicList.saveMusicListToURL(savePanel.URL!)
+				self.musicList.saveMusicList(URL: savePanel.URL!)
 			}
 		})
 	}

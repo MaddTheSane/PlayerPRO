@@ -17,6 +17,8 @@ enum PlaylistMode: Int {
 	case LoadRandom
 };
 
+let PPPCurrentlySelectedList = "Currently selected list UUID"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
@@ -25,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 	var madDriver: PPDriver!
 	var musicLists = [MusicList]()
 	var musicFiles = [MusicListObject]()
-	weak var musicList: MusicList!
+	weak var currentMusicList: MusicList!
 
 	override init() {
 		let tmpDict: [String: NSObject] = [PPRememberMusicList: true,
@@ -63,11 +65,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 	}
 
 	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
+		let defaults = NSUserDefaults.standardUserDefaults()
 		// Override point for customization after application launch.
 		let splitViewController = self.window!.rootViewController as! UISplitViewController
 		let navigationController = splitViewController.viewControllers[splitViewController.viewControllers.count-1] as! UINavigationController
 		navigationController.topViewController.navigationItem.leftBarButtonItem = splitViewController.displayModeButtonItem()
 		splitViewController.delegate = self
+		
+		for uuid in MusicList.availablePlaylistUUIDs()! {
+			if let newMusList = MusicList(UUID: uuid) {
+				musicLists.append(newMusList)
+			}
+			//musicLists
+		}
+		
+		if musicLists.count == 0 {
+			musicLists.append(MusicList())
+		} else {
+			
+		}
+		
+		//TODO: Select music list from preferences.
+		if currentMusicList == nil {
+			currentMusicList = musicLists[0]
+		}
 		
 		return true
 	}
@@ -80,6 +101,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 	func applicationDidEnterBackground(application: UIApplication) {
 		// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
 		// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+		for musiclist in musicLists {
+			musiclist.save()
+		}
+		
+		if let selMusLis = currentMusicList {
+			NSUserDefaults.standardUserDefaults().setValue(selMusLis.fileUUID.UUIDString, forKey: PPPCurrentlySelectedList)
+		}
 	}
 
 	func applicationWillEnterForeground(application: UIApplication) {
@@ -107,6 +135,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 	    }
 	    return false
 	}
-
 }
-
