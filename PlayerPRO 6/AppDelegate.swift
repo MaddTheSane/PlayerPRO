@@ -20,13 +20,10 @@ private func CocoaDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafeP
 	let swiftText = String.fromCString(text)!
 	println("\(swiftFile):\(line), error text: \(swiftText)")
 	let errStr = NSLocalizedString("MyDebugStr_Error", comment: "Error")
-	var mainStr = NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display")
+	let mainStr = String(format: NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display"), text)
 	let quitStr = NSLocalizedString("MyDebugStr_Quit", comment: "Quit")
 	let contStr = NSLocalizedString("MyDebugStr_Continue", comment: "Continue")
 	let debuStr = NSLocalizedString("MyDebugStr_Debug", comment: "Debug")
-	if let ohai = mainStr.rangeOfString("%s") {
-		mainStr.replaceRange(ohai, with: swiftText)
-	}
 
 	let alert = PPRunCriticalAlertPanel(errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr)
 	switch (alert) {
@@ -387,34 +384,33 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			let retVal = PPRunInformationalAlertPanel(NSLocalizedString("Invalid Extension", comment: "Invalid extension"), message: unwrapped, defaultButton: NSLocalizedString("Rename", comment: "rename file"), alternateButton: NSLocalizedString("Open", comment:"Open a file"), otherButton: NSLocalizedString("Cancel", comment: "Cancel"));
 			switch (retVal) {
 			case NSAlertDefaultReturn:
-				var rec: NSDictionary = [:]
-				var ostype: NSString? = nil
 				
-				let adds = madLib.identifyFile(URL: theURL)
-				switch adds {
-				case .Success(let aVal):
-					let addd = madLib.informationFromFile(URL: theURL, type: "")
-					if addd.error != .NoErr {
-						PPRunAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
-						return false;
-					}
-					let sigVal = addd.info!.signature
+				let identRet = madLib.identifyFile(URL: theURL)
+				switch identRet {
+				case .Failure(_):
+					PPRunCriticalAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"))
+					return false
 					
-					let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(sigVal.lowercaseString);
-					var err: NSError? = nil
-					if (NSFileManager.defaultManager().moveItemAtURL(theURL, toURL:tmpURL, error:&err) == false) {
-						println("Could not move file, error: \(err!)")
-						let unwrapped = String(format: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), tmpURL.lastPathComponent!, theURL.lastPathComponent!)
-						PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: unwrapped);
-					} else {
-						theURL = tmpURL;
-						//TODO: regenerate the UTI
+				case .Success(let madSubtype):
+					let infoRet = madLib.informationFromFile(URL: theURL, type: madSubtype)
+					switch infoRet {
+					case .Failure(_):
+						PPRunCriticalAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"))
+						return false
+						
+					case .Success(let info):
+						let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(info.signature.lowercaseString)
+						
+						var err: NSError?
+						if !NSFileManager.defaultManager().moveItemAtURL(theURL, toURL: tmpURL, error: &err) {
+							println("Could not move file, error \(err!)")
+							let couldNotRenameStr = String(format: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), tmpURL.lastPathComponent!, theURL.lastPathComponent!)
+							PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: couldNotRenameStr)
+						} else {
+							theURL = tmpURL
+							//TODO: regenerate the UTI
+						}
 					}
-
-				default:
-					PPRunAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"));
-					return false;
-
 				}
 				
 			case NSAlertAlternateReturn:

@@ -22,13 +22,10 @@ private func cocoaDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafeP
 	let swiftText = String.fromCString(text)!
 	println("\(swiftFile):\(line), error text: \(swiftText)")
 	let errStr = NSLocalizedString("MyDebugStr_Error", comment: "Error")
-	var mainStr = NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display")
+	let mainStr = String(format: NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display"), text)
 	let quitStr = NSLocalizedString("MyDebugStr_Quit", comment: "Quit")
 	let contStr = NSLocalizedString("MyDebugStr_Continue", comment: "Continue")
 	let debuStr = NSLocalizedString("MyDebugStr_Debug", comment: "Debug")
-	if let ohai = mainStr.rangeOfString("%s") {
-		mainStr.replaceRange(ohai, with: swiftText)
-	}
 	
 	let alert = PPRunCriticalAlertPanel(errStr, message: mainStr, defaultButton: quitStr, alternateButton: contStr, otherButton: debuStr)
 	switch (alert) {
@@ -229,15 +226,13 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	
 	@objc private func updateMusicStats(theTimer: NSTimer?) {
 		if (self.music != nil) {
-			var fT = 0
-			var cT = 0;
-			madDriver.getMusicStatusWithCurrentTime(&cT, totalTime: &fT)
+			var time = madDriver.musicStatusTime!
 			if (madDriver.donePlayingMusic && paused == false && madDriver.exporting == false) {
 				songIsDonePlaying()
-				madDriver.getMusicStatusWithCurrentTime(&cT, totalTime: &fT)
+				time = madDriver.musicStatusTime!
 			}
-			songPos.doubleValue = Double(cT)
-			songCurTime.integerValue = cT
+			songPos.doubleValue = Double(time.current)
+			songCurTime.integerValue = time.current
 		}
 	}
 	
@@ -454,13 +449,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		
 		paused = false
 		
-		var cT = 0
-		var fT = 0
-		madDriver.getMusicStatusWithCurrentTime(&cT, totalTime:&fT)
-		songPos.maxValue = Double(fT)
+		let time = madDriver.musicStatusTime!
+		songPos.maxValue = Double(time.total)
 		songPos.minValue = 0
 		setTitleForSongLabelBasedOnMusic()
-		songTotalTime.integerValue = fT
+		songTotalTime.integerValue = time.total
 		
 		NSNotificationCenter.defaultCenter().postNotificationName(PPMusicDidChange, object:self)
 		
@@ -654,11 +647,12 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 					
 				case .Success(let madSubtype):
 					let infoRet = madLib.informationFromFile(URL: theURL, type: madSubtype)
-					if infoRet.error != .NoErr {
+					switch infoRet {
+					case .Failure(_):
 						PPRunCriticalAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"))
 						return false
-					} else {
-						let info = infoRet.info!
+						
+					case .Success(let info):
 						let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(info.signature.lowercaseString)
 						
 						var err: NSError?
@@ -1622,7 +1616,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		
 		let obj = musicList.objectInMusicListAtIndex(selected.lastIndex)
 		let musicURL = obj.musicURL;
-		var aPPInfo: (info: PPLibrary.MusicFileInfo?, error: MADErr)? = nil
+		var aPPInfo: PPLibrary.MusicFileInfoOrMADErr? = nil
 		
 		func badValues() {
 			let iInfo = madLib.identifyFile(URL: musicURL)
@@ -1633,9 +1627,13 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 				
 			case .Success(let strType):
 				aPPInfo = madLib.informationFromFile(URL: musicURL, type: strType)
-				if aPPInfo!.error != .NoErr {
+				switch aPPInfo! {
+				case .Failure(_):
 					aPPInfo = nil
 					return
+					
+				default:
+					break
 				}
 			}
 		}
@@ -1644,8 +1642,12 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		if let fileUTI = NSWorkspace.sharedWorkspace().typeOfFile(musicURL.path!, error: nil) {
 			if let info = madLib.typeFromUTI(fileUTI) {
 				aPPInfo = madLib.informationFromFile(URL:musicURL, type: info)
-				if aPPInfo!.error != .NoErr {
+				switch aPPInfo! {
+				case .Failure(_):
 					badValues()
+					
+				default:
+					break
 				}
 			} else {
 				badValues()

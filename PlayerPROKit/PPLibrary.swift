@@ -283,7 +283,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///:param: apath A file URL pointing to the tracker.
 	///:param: type The tracker type of the file.
 	///:returns: A tuple with an optional `MusicFileInfo` type and an error value. If `error` is `.NoErr`, the `info` value will not be `nil`.
-	public func informationFromFile(URL apath: NSURL, type: String) -> (info: MusicFileInfo?, error: MADErr) {
+	public func informationFromFile(URL apath: NSURL, type: String) -> MusicFileInfoOrMADErr {
 		let cStrType = type.cStringUsingEncoding(NSMacOSRomanStringEncoding)!
 		
 		let filInfo = informationFromFile(URL: apath, cType: cStrType)
@@ -291,10 +291,10 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		switch filInfo {
 		case .Success(let aRet):
 			let anInfo = MusicFileInfo(infoRec: aRet)
-			return (anInfo, .NoErr)
+			return .Success(anInfo)
 			
 		case .Failure(let anErr):
-			return (nil, anErr)
+			return .Failure(anErr)
 		}
 	}
 	
@@ -303,11 +303,11 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///:param: path The path pointing to the tracker.
 	///:param: type The tracker type of the file.
 	///:returns: A tuple with an optional `MusicFileInfo` type and an error value. If `error` is `.NoErr`, the `info` value will not be `nil`.
-	public func informationFromFile(#path: String, type: String) -> (info: MusicFileInfo?, error: MADErr) {
+	public func informationFromFile(#path: String, type: String) -> MusicFileInfoOrMADErr {
 		if let anURL = NSURL(fileURLWithPath: path) {
 			return informationFromFile(URL: anURL, type: type)
 		} else {
-			return (nil, .ReadingErr)
+			return .Failure(.ReadingErr)
 		}
 	}
 	
@@ -416,6 +416,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		return nil
 	}
 	
+	/// NSFastEnumeration protocol method.
 	public func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (trackerLibs as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len)
 	}
@@ -423,6 +424,41 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	public enum StringOrMADErr {
 		case Failure(MADErr)
 		case Success(String)
+		
+		public var error: MADErr {
+			switch self {
+			case .Success(_):
+				return .NoErr
+				
+			case .Failure(let anErr):
+				return anErr
+			}
+		}
+	}
+	
+	public enum MusicFileInfoOrMADErr {
+		case Failure(MADErr)
+		case Success(MusicFileInfo)
+		
+		public var info: MusicFileInfo? {
+			switch self {
+			case .Failure(_):
+				return nil
+				
+			case .Success(let aret):
+				return aret
+			}
+		}
+		
+		public var error: MADErr {
+			switch self {
+			case .Success(_):
+				return .NoErr
+			
+			case .Failure(let anErr):
+				return anErr
+			}
+		}
 	}
 	
 	private enum InfoRecOrMADErr {
@@ -433,10 +469,23 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	//private typealias InfoRecOrMADErr = ReturnOrMADErr<MADInfoRec>
 }
 
-//public enum ReturnOrMADErr<X> {
-//	case Failure(MADErr)
-//	case Success(X)
-//}
+/*
+public enum ReturnOrMADErr<X> {
+	case Failure(MADErr)
+	case Success(X)
+
+	public var error: MADErr {
+		switch self {
+		case .Success(_):
+			return .NoErr
+
+		case .Failure(let anErr):
+			return anErr
+		}
+	}
+
+}
+*/
 
 ///Deprecated functions
 extension PPLibrary {
