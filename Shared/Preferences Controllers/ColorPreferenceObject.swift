@@ -8,7 +8,7 @@
 
 import Cocoa
 
-@objc(PPColorPreferenceObject) class ColorPreferenceObject: NSObject {
+class ColorPreferenceObject: NSObject {
 	var color: NSColor
 	let colorIndex: Int
 	
