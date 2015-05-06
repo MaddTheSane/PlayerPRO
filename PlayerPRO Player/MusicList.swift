@@ -167,7 +167,7 @@ private let kPlayerList = "Player List"
 		lostMusicCount = 0
 		selectedMusic = -1
 		
-		super.init();
+		super.init()
 	}
 	
 	#if os(iOS)
@@ -212,7 +212,7 @@ private let kPlayerList = "Player List"
 	required init(coder aDecoder: NSCoder) {
 		lostMusicCount = 0;
 		if let BookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey4) as? [MusicListObject] {
-			selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation4);
+			selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation4)
 			#if os(iOS)
 				if let aName = aDecoder.decodeObjectForKey(kMusicListName4) as? String {
 					name = aName
@@ -233,7 +233,7 @@ private let kPlayerList = "Player List"
 				musicList.append(book)
 			}
 		} else if let bookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey3) as? [NSURL] {
-			selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation3);
+			selectedMusic = aDecoder.decodeIntegerForKey(kMusicListLocation3)
 			// Have all the new MusicListObjects use the same date
 			let currentDate = NSDate()
 			for bookURL in bookmarkArray {
