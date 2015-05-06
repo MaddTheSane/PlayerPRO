@@ -20,14 +20,6 @@ NSString * const PPColorsDidChange = @"PPColor Preferences changed";
 NSString * const PPColorChangedColor = @"PPColor Preferences Changed Color";
 NSString * const PPColorChangedValue = @"PPColor Preferences Changed Color Value";
 
-NSString * const PPRememberMusicList = @"Remember Music List";
-NSString * const PPLoadMusicAtListLoad = @"Load music when loading list";
-NSString * const PPAfterPlayingMusic = @"After playing music";
-NSString * const PPGotoStartupAfterPlaying = @"Go to startup pos. after playing";
-NSString * const PPSaveModList = @"Ask to save modified Mod list";
-NSString * const PPLoadMusicAtMusicLoad = @"Play music on Music load";
-NSString * const PPLoopMusicWhenDone = @"Loop music";
-
 NSString * const PPDEShowInstrument = @"Digital Editor Show Instrument";
 NSString * const PPDEShowNote = @"Digital Editor Show Note";
 NSString * const PPDEShowEffect = @"Digital Editor Show Effect";

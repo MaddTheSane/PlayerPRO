@@ -14,6 +14,8 @@
 __BEGIN_DECLS
 #pragma mark PPLibrary info keys
 
+NS_ASSUME_NONNULL_BEGIN
+
 /// The total number of patterns. Type is <code>NSNumber</code>.
 extern NSString * const kPPTotalPatterns;
 /// The length of a partition. Type is <code>NSNumber</code>.
@@ -34,7 +36,9 @@ extern NSString * const kPPTotalInstruments;
 extern NSString * const kPPInternalFileName;
 /// The description of the tracker. Type is <code>NSString</code>.
 extern NSString * const kPPFormatDescription;
-__END_DECLS
 
+NS_ASSUME_NONNULL_END
+
+__END_DECLS
 
 #endif

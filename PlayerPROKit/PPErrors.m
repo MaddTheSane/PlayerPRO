@@ -65,8 +65,8 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
 						 NSLocalizedFailureReasonErrorKey: errorReason,
 						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
-			cocoaEquiv = [[NSError alloc] initWithDomain:NSPOSIXErrorDomain code:ENOMEM
-												userInfo:userInfo];
+			cocoaEquiv = [NSError errorWithDomain:NSPOSIXErrorDomain code:ENOMEM
+										 userInfo:userInfo];
 			break;
 			
 		case MADReadingErr:
@@ -77,8 +77,8 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
 						 NSLocalizedFailureReasonErrorKey: errorReason,
 						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
-			cocoaEquiv = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSFileReadUnknownError
-												userInfo:userInfo];
+			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadUnknownError
+										 userInfo:userInfo];
 			break;
 			
 		case MADIncompatibleFile:
@@ -89,8 +89,8 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
 						 NSLocalizedFailureReasonErrorKey: errorReason,
 						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
-			cocoaEquiv = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError
-												userInfo:userInfo];
+			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError
+										 userInfo:userInfo];
 			break;
 			
 		case MADLibraryNotInitialized:
@@ -111,8 +111,8 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
 						 NSLocalizedFailureReasonErrorKey: errorReason,
 						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
-			cocoaEquiv = [[NSError alloc] initWithDomain:NSOSStatusErrorDomain code:paramErr
-												userInfo:userInfo];
+			cocoaEquiv = [NSError errorWithDomain:NSOSStatusErrorDomain code:paramErr
+										 userInfo:userInfo];
 			break;
 			
 		case MADSoundManagerErr:
@@ -145,8 +145,8 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
 						 NSLocalizedFailureReasonErrorKey: errorReason,
 						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
-			cocoaEquiv = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError
-												userInfo:userInfo];
+			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError
+										 userInfo:userInfo];
 			break;
 			
 		case MADCannotFindPlug:
@@ -207,8 +207,8 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
 						 NSLocalizedFailureReasonErrorKey: errorReason,
 						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
-			cocoaEquiv = [[NSError alloc] initWithDomain:NSCocoaErrorDomain code:NSUserCancelledError
-												userInfo:userInfo];
+			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError
+										 userInfo:userInfo];
 			break;
 			
 		case MADUnknownErr:
@@ -222,7 +222,7 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 			break;
 			
 		default:
-			return [[NSError alloc] initWithDomain:NSOSStatusErrorDomain code:theErr userInfo:nil];
+			return [NSError errorWithDomain:NSOSStatusErrorDomain code:theErr userInfo:nil];
 			break;
 	}
 	
@@ -230,6 +230,6 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 		return cocoaEquiv;
 	}
 	
-	return [[NSError alloc] initWithDomain:PPMADErrorDomain code:theErr userInfo:userInfo];
+	return [NSError errorWithDomain:PPMADErrorDomain code:theErr userInfo:userInfo];
 }
 

@@ -274,19 +274,9 @@
 	return MADIsPlayingMusic(theRec);
 }
 
-- (BOOL)isDonePlaying
-{
-	return [self isDonePlayingMusic];
-}
-
 - (BOOL)isDonePlayingMusic
 {
 	return MADIsDonePlaying(theRec);
-}
-
-- (NSInteger)audioLength
-{
-	return [self audioDataLength];
 }
 
 - (NSInteger)audioDataLength
@@ -512,5 +502,18 @@
 	drivBase->Active[idx] = enabled;
 }
 
+@end
+
+@implementation PPDriver (deprecated)
+
+- (BOOL)isDonePlaying
+{
+	return [self isDonePlayingMusic];
+}
+
+- (NSInteger)audioLength
+{
+	return [self audioDataLength];
+}
 
 @end

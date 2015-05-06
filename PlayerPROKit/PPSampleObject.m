@@ -133,7 +133,7 @@ static const dispatch_block_t initUTIArray = ^{
 		free(theData->data);
 		theData->data = NULL;
 	}
-	NSData *currentData = self.data;
+	NSData *currentData = [self.data mutableCopy];
 	self.data = nil;
 	memmove(theData, sampleWriteTo, sizeof(sData));
 	sampleWriteTo = theData;
@@ -154,12 +154,12 @@ static const dispatch_block_t initUTIArray = ^{
 	return *sampleWriteTo;
 }
 
-- (void)setAmplitude:(Byte)amplitude
+- (void)setAmplitude:(MADByte)amplitude
 {
 	sampleWriteTo->amp = amplitude;
 }
 
-- (Byte)amplitude
+- (MADByte)amplitude
 {
 	return sampleWriteTo->amp;
 }
@@ -214,12 +214,12 @@ static const dispatch_block_t initUTIArray = ^{
 	return sampleWriteTo->relNote;
 }
 
-- (Byte)volume
+- (MADByte)volume
 {
 	return sampleWriteTo->vol;
 }
 
-- (void)setVolume:(Byte)avolume
+- (void)setVolume:(MADByte)avolume
 {
 	sampleWriteTo->vol = avolume;
 }
