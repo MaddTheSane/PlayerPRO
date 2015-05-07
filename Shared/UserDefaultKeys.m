@@ -11,6 +11,8 @@
 #import "NSColor+PPPreferences.h"
 #endif
 
+#pragma GCC visibility push(hidden)
+
 NSString * const PPListPreferencesDidChange = @"Music List Preferences Changed";
 NSString * const PPDigitalEditorPrefrencesDidChange = @"Digital Editor Preferences changed";
 NSString * const PPBoxEditorPreferencesDidChange = @"Box Editor Preferences changed";
@@ -62,3 +64,5 @@ NSString * const PPCEMarkerLoop = @"Classical Editor Marker Loop";
 NSString * const PPCETempoNum = @"Classical Editor Temo Num.";
 NSString * const PPCETempoUnit = @"Classical Editor Tempo Unit";
 NSString * const PPCETrackHeight = @"Classical Editor Track Height";
+
+#pragma GCC visibility pop
