@@ -2449,6 +2449,7 @@
 		555269EE19CB53C300F8B95B /* ComplexFadeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexFadeController.swift; sourceTree = "<group>"; };
 		5552724F1A0000C8008B8616 /* PlayerPROKit-iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PlayerPROKit-iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		555272541A0001CE008B8616 /* PPKPcmd_Tests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPKPcmd_Tests.swift; sourceTree = "<group>"; };
+		5553275B1AF9C6E40039EB18 /* NSPreferences.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSPreferences.h; sourceTree = "<group>"; };
 		55534ACD1817C387006D6BCB /* updateInfoPlist */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = updateInfoPlist; sourceTree = BUILT_PRODUCTS_DIR; };
 		55534AD01817C387006D6BCB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55534AD31817C388006D6BCB /* updateInfoPlist-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "updateInfoPlist-Prefix.pch"; sourceTree = "<group>"; };
@@ -4810,6 +4811,7 @@
 		55F16D1B186F918F00E75C3E /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				5553275B1AF9C6E40039EB18 /* NSPreferences.h */,
 				55993EF519A340FF00C2078E /* PPRunAlert.swift */,
 				55E382EA1981509100EC330B /* PlugInInfo.swift */,
 				55588A95199951B300C3D4EE /* PlugInInfoController.swift */,

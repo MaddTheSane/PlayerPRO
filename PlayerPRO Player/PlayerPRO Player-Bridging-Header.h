@@ -6,3 +6,4 @@
 #import "PPSTImporter.h"
 
 #import "MidiHardwarePreferenceController.h"
+#import "NSPreferences.h"
