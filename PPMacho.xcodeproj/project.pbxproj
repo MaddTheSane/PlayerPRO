@@ -123,7 +123,6 @@
 		5508C3EE16CEB33B007CA458 /* SampleCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5508C3ED16CEB33B007CA458 /* SampleCellView.m */; };
 		55096A3B10E0A744000EFFE6 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		550993DE1A8C0432004D8A8A /* AIFFSamplePlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550993DD1A8C0432004D8A8A /* AIFFSamplePlug.swift */; };
-		550993E81A8C0494004D8A8A /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
 		550A474318A455CC0052AED7 /* VSTFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 550A474218A455CC0052AED7 /* VSTFunctions.h */; };
 		550A8FD819C74ED200588849 /* ComplexFadePlug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 550A8FD719C74ED200588849 /* ComplexFadePlug.swift */; };
 		550B001C10BA0243004FC5D7 /* PlayerPROCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 550B001B10BA0243004FC5D7 /* PlayerPROCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -648,16 +647,6 @@
 		55BF238E19A937C9005B1F96 /* PPAPPLImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */; };
 		55BF238F19A937C9005B1F96 /* PPAPPLImporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */; };
 		55BF239019A94077005B1F96 /* PPComplexImportPlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */; };
-		55C1A6871A071A3700C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
-		55C1A6881A071A3700C7A733 /* SwiftAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		55C1A68B1A071A4000C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
-		55C1A68C1A071A4000C7A733 /* SwiftAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		55C1A68F1A071A5C00C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
-		55C1A6941A071A8F00C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
-		55C1A6A61A07209100C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
-		55C1A6A71A07209900C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
-		55C1A6AA1A0720B200C7A733 /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; };
-		55C1A6AB1A0720B200C7A733 /* SwiftAdditions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55C52CC51A8ABC1D00E448F5 /* SamplePlugHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C52CC41A8ABC1D00E448F5 /* SamplePlugHandler.swift */; };
 		55C52CC81A8ABC5100E448F5 /* PPSamplePlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C52CC71A8ABC5100E448F5 /* PPSamplePlugObject.m */; };
 		55C52CCE1A8AC1C100E448F5 /* PPSamplePlugCompatObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C52CCD1A8AC1C100E448F5 /* PPSamplePlugCompatObject.m */; };
@@ -705,6 +694,11 @@
 		55D57E1C18601BBC00192497 /* MIDI.ppextimp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5586889710BF67F100FCC24D /* MIDI.ppextimp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55D59C2C1A646F60008A6E51 /* PPKSwiftToC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D59C2B1A646F60008A6E51 /* PPKSwiftToC.m */; };
 		55D59C2D1A646F60008A6E51 /* PPKSwiftToC.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D59C2B1A646F60008A6E51 /* PPKSwiftToC.m */; };
+		55D5E9661B01471300EB2C84 /* System7Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9651B01471300EB2C84 /* System7Sound.swift */; };
+		55D5E98A1B0149FE00EB2C84 /* FVDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9841B0149FE00EB2C84 /* FVDataReader.swift */; };
+		55D5E98B1B0149FE00EB2C84 /* FVResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9851B0149FE00EB2C84 /* FVResource.swift */; };
+		55D5E98C1B0149FE00EB2C84 /* FVResourceFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9871B0149FE00EB2C84 /* FVResourceFile.m */; };
+		55D5E98D1B0149FE00EB2C84 /* FVResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */; };
 		55D64A8C1AA805020017158E /* MusicListPreferenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D64A8B1AA805020017158E /* MusicListPreferenceController.swift */; };
 		55DC597919A2E6B100212DD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DC597819A2E6B100212DD0 /* AppDelegate.swift */; };
 		55DC597B19A2FA9A00212DD0 /* SwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */; };
@@ -714,10 +708,6 @@
 		55DE87C8187E5B9100C36533 /* PPFXBusObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DE87C5187E5B9100C36533 /* PPFXBusObject.m */; };
 		55DE87CD187E60F400C36533 /* PPFXSetObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87CB187E60F400C36533 /* PPFXSetObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55DE87CF187E60F400C36533 /* PPFXSetObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55DE87CC187E60F400C36533 /* PPFXSetObject.m */; };
-		55E11E171AE713F500815555 /* SwiftAudioAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E11E141AE713F500815555 /* SwiftAudioAdditions.framework */; };
-		55E11E181AE713F500815555 /* SwiftAudioAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55E11E141AE713F500815555 /* SwiftAudioAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		55E11E1B1AE7145D00815555 /* SwiftAudioAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55E11E141AE713F500815555 /* SwiftAudioAdditions.framework */; };
-		55E11E1C1AE7145D00815555 /* SwiftAudioAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55E11E141AE713F500815555 /* SwiftAudioAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		55E2CD4F19DA1AC000BDFC4C /* InstrumentPanelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E2CD4E19DA1AC000BDFC4C /* InstrumentPanelController.swift */; };
 		55E2CD5119DA1B3400BDFC4C /* InsPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55E2CD5019DA1B3400BDFC4C /* InsPanel.xib */; };
 		55E32C2619E9B56B0041B43B /* DocumentWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E32C2519E9B56B0041B43B /* DocumentWindowController.swift */; };
@@ -867,13 +857,6 @@
 			remoteGlobalIDString = 551292D7163DD68500C2C639;
 			remoteInfo = PlayerPROKit;
 		};
-		550993E61A8C0489004D8A8A /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
-			remoteInfo = SwiftAdditions;
-		};
 		550FFAE117CEA4570003A2F3 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -965,20 +948,6 @@
 			remoteGlobalIDString = 55868A5810BFB46100FCC24D;
 			remoteInfo = APPL;
 		};
-		5523FC8A1A7AF49900F01580 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55403A011A745003007A488E;
-			remoteInfo = ForceFeedbackAdditions;
-		};
-		5523FC8C1A7AF49900F01580 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55403A0B1A745003007A488E;
-			remoteInfo = ForceFeedbackAdditionsTests;
-		};
 		5533411910BB548E005208D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1048,20 +1017,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5533411010BB547C005208D1;
 			remoteInfo = MOD;
-		};
-		55418FCB1A26497800E18A5F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55706D8F1A1EC2440000FD93;
-			remoteInfo = SwiftIOKitAdditions;
-		};
-		55418FCD1A26497800E18A5F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 55706D991A1EC2440000FD93;
-			remoteInfo = SwiftIOKitAdditionsTests;
 		};
 		554E10F510D6F09500BB619C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1819,75 +1774,12 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
-		55C1A6811A0719D300C7A733 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 550FBABE19A7ADC500EFBD3D;
-			remoteInfo = SwiftAdditions;
-		};
-		55C1A6831A0719D300C7A733 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 550FBAC919A7ADC500EFBD3D;
-			remoteInfo = SwiftAdditionsTests;
-		};
-		55C1A6851A0719EE00C7A733 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
-			remoteInfo = SwiftAdditions;
-		};
-		55C1A6891A071A3800C7A733 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
-			remoteInfo = SwiftAdditions;
-		};
-		55C1A68D1A071A4100C7A733 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
-			remoteInfo = SwiftAdditions;
-		};
 		55C1A6901A071A8000C7A733 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 551292D7163DD68500C2C639;
 			remoteInfo = PlayerPROKit;
-		};
-		55C1A6921A071A8700C7A733 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
-			remoteInfo = SwiftAdditions;
-		};
-		55C1A6A41A07208A00C7A733 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
-			remoteInfo = SwiftAdditions;
-		};
-		55C1A6A81A0720A300C7A733 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
-			remoteInfo = SwiftAdditions;
-		};
-		55C1A6AC1A0720B200C7A733 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
-			remoteInfo = SwiftAdditions;
 		};
 		55CBF9FF11EB77AA0028C6BB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1896,49 +1788,77 @@
 			remoteGlobalIDString = 5533410810BB5460005208D1;
 			remoteInfo = "Import-export";
 		};
-		55D59C311A648B06008A6E51 /* PBXContainerItemProxy */ = {
+		55D5E9731B01496100EB2C84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			proxyType = 2;
+			remoteGlobalIDString = 550FBABE19A7ADC500EFBD3D;
 			remoteInfo = SwiftAdditions;
 		};
-		55E11E131AE713F500815555 /* PBXContainerItemProxy */ = {
+		55D5E9751B01496100EB2C84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 550FBAC919A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditionsTests;
+		};
+		55D5E9771B01496100EB2C84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55706D8F1A1EC2440000FD93;
+			remoteInfo = SwiftIOKitAdditions;
+		};
+		55D5E9791B01496100EB2C84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55706D991A1EC2440000FD93;
+			remoteInfo = SwiftIOKitAdditionsTests;
+		};
+		55D5E97B1B01496100EB2C84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55403A011A745003007A488E;
+			remoteInfo = ForceFeedbackAdditions;
+		};
+		55D5E97D1B01496100EB2C84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 55403A0B1A745003007A488E;
+			remoteInfo = ForceFeedbackAdditionsTests;
+		};
+		55D5E97F1B01496100EB2C84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 55E11DE11AE7114000815555;
 			remoteInfo = SwiftAudioAdditions;
 		};
-		55E11E151AE713F500815555 /* PBXContainerItemProxy */ = {
+		55D5E9811B01496100EB2C84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 55E11DEB1AE7114000815555;
 			remoteInfo = SwiftAudioAdditionsTests;
 		};
-		55E11E191AE713F700815555 /* PBXContainerItemProxy */ = {
+		55D5E98E1B014A4B00EB2C84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55E11DE01AE7114000815555;
-			remoteInfo = SwiftAudioAdditions;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
 		};
-		55E11E1D1AE7145E00815555 /* PBXContainerItemProxy */ = {
+		55D5E9901B014A4B00EB2C84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 55E11DE01AE7114000815555;
-			remoteInfo = SwiftAudioAdditions;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
 		};
-		55E11E1F1AE714CD00815555 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 55E11DE01AE7114000815555;
-			remoteInfo = SwiftAudioAdditions;
-		};
-		55E11E211AE714FE00815555 /* PBXContainerItemProxy */ = {
+		55D5E9921B014A4B00EB2C84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
 			proxyType = 1;
@@ -2035,10 +1955,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				55C1A6881A071A3700C7A733 /* SwiftAdditions.framework in Copy Frameworks */,
 				5573A1621658A3E700A5AECA /* PlayerPROCore.framework in Copy Frameworks */,
 				5578C4F917DAB28A0057D11B /* PlayerPROKit.framework in Copy Frameworks */,
-				55E11E1C1AE7145D00815555 /* SwiftAudioAdditions.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2049,10 +1967,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				55C1A68C1A071A4000C7A733 /* SwiftAdditions.framework in Copy Frameworks */,
 				5578C49E17D9E8A00057D11B /* PlayerPROCore.framework in Copy Frameworks */,
 				5578C4FD17DB8A3B0057D11B /* PlayerPROKit.framework in Copy Frameworks */,
-				55E11E181AE713F500815555 /* SwiftAudioAdditions.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2185,7 +2101,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				55C1A6AB1A0720B200C7A733 /* SwiftAdditions.framework in Embed Frameworks */,
 				55F1BDF91975CBFF00AD2C03 /* PlayerPROKit.framework in Embed Frameworks */,
 				55F1BDAF1975C8EE00AD2C03 /* PlayerPROCore.framework in Embed Frameworks */,
 			);
@@ -2689,7 +2604,7 @@
 		55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLImporter.h; sourceTree = "<group>"; };
 		55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLImporter.m; sourceTree = "<group>"; };
 		55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPAPPLImporter.xib; sourceTree = "<group>"; };
-		55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftAdditions.xcodeproj; path = MaddsSwifts/SwiftAdditions.xcodeproj; sourceTree = "<group>"; };
+		55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftAdditions.xcodeproj; path = SwiftAdditions/SwiftAdditions.xcodeproj; sourceTree = "<group>"; };
 		55C52CC41A8ABC1D00E448F5 /* SamplePlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SamplePlugHandler.swift; sourceTree = "<group>"; };
 		55C52CC61A8ABC5100E448F5 /* PPSamplePlugObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSamplePlugObject.h; sourceTree = "<group>"; };
 		55C52CC71A8ABC5100E448F5 /* PPSamplePlugObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSamplePlugObject.m; sourceTree = "<group>"; };
@@ -2714,6 +2629,16 @@
 		55D2921E18AADB4600EB7A7D /* PPPatternObject_PcmdHandling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPatternObject_PcmdHandling.h; sourceTree = "<group>"; };
 		55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO-PrefixHeader.pch"; sourceTree = "<group>"; };
 		55D59C2B1A646F60008A6E51 /* PPKSwiftToC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPKSwiftToC.m; sourceTree = "<group>"; };
+		55D5E9581B01466D00EB2C84 /* Sys7SwiftSound.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Sys7SwiftSound.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		55D5E95B1B01466D00EB2C84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55D5E9651B01471300EB2C84 /* System7Sound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = System7Sound.swift; sourceTree = "<group>"; };
+		55D5E9671B0148CA00EB2C84 /* BridgeHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeader.h; sourceTree = "<group>"; };
+		55D5E9841B0149FE00EB2C84 /* FVDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FVDataReader.swift; sourceTree = "<group>"; };
+		55D5E9851B0149FE00EB2C84 /* FVResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FVResource.swift; sourceTree = "<group>"; };
+		55D5E9861B0149FE00EB2C84 /* FVResourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FVResourceFile.h; sourceTree = "<group>"; };
+		55D5E9871B0149FE00EB2C84 /* FVResourceFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FVResourceFile.m; sourceTree = "<group>"; };
+		55D5E9881B0149FE00EB2C84 /* FVResourceFilePriv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FVResourceFilePriv.h; sourceTree = "<group>"; };
+		55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FVResourceType.swift; sourceTree = "<group>"; };
 		55D64A8B1AA805020017158E /* MusicListPreferenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListPreferenceController.swift; sourceTree = "<group>"; };
 		55DC597819A2E6B100212DD0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftBridge.swift; sourceTree = "<group>"; };
@@ -2816,7 +2741,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				550993E81A8C0494004D8A8A /* SwiftAdditions.framework in Frameworks */,
 				5535079319BBD4BE00B9E815 /* PlayerPROKit.framework in Frameworks */,
 				550FFAE717CEA4570003A2F3 /* CoreFoundation.framework in Frameworks */,
 				5511F4E6186CF3AD008F6BE1 /* AudioToolbox.framework in Frameworks */,
@@ -2828,7 +2752,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55ABE82C1A081546006B6AF9 /* CoreGraphics.framework in Frameworks */,
-				55C1A68F1A071A5C00C7A733 /* SwiftAdditions.framework in Frameworks */,
 				55B1D403187C9B25002754C5 /* CoreFoundation.framework in Frameworks */,
 				55B1D402187C9B0D002754C5 /* Foundation.framework in Frameworks */,
 				55085D821836EC8D004A152F /* CoreMIDI.framework in Frameworks */,
@@ -2981,7 +2904,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55C1A6AA1A0720B200C7A733 /* SwiftAdditions.framework in Frameworks */,
 				55F1BDAE1975C8EE00AD2C03 /* PlayerPROCore.framework in Frameworks */,
 				55680A4A190497FC00F7616D /* CoreFoundation.framework in Frameworks */,
 				55680A4B190497FC00F7616D /* Foundation.framework in Frameworks */,
@@ -3050,11 +2972,9 @@
 				5578C4CF17DA6D2C0057D11B /* CoreFoundation.framework in Frameworks */,
 				557F296818790DDA009D4BC8 /* AudioToolbox.framework in Frameworks */,
 				5578C48217D9E8560057D11B /* Cocoa.framework in Frameworks */,
-				55C1A68B1A071A4000C7A733 /* SwiftAdditions.framework in Frameworks */,
 				5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */,
 				55149C621832D176009C850B /* AVFoundation.framework in Frameworks */,
 				5578C4FC17DB8A2F0057D11B /* PlayerPROKit.framework in Frameworks */,
-				55E11E171AE713F500815555 /* SwiftAudioAdditions.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3342,7 +3262,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55C1A6941A071A8F00C7A733 /* SwiftAdditions.framework in Frameworks */,
 				5535079419BBD4BE00B9E815 /* PlayerPROKit.framework in Frameworks */,
 				55ADC3D717D6F390001F27D4 /* CoreFoundation.framework in Frameworks */,
 				552097B2187AB8B9004FD220 /* AudioToolbox.framework in Frameworks */,
@@ -3393,9 +3312,14 @@
 				55CBFC3811EB78580028C6BB /* Cocoa.framework in Frameworks */,
 				55149C611832D16C009C850B /* AVFoundation.framework in Frameworks */,
 				55105C9C13BE638D00902106 /* PlayerPROCore.framework in Frameworks */,
-				55C1A6871A071A3700C7A733 /* SwiftAdditions.framework in Frameworks */,
-				55E11E1B1AE7145D00815555 /* SwiftAudioAdditions.framework in Frameworks */,
 				5578C4F817DAB2830057D11B /* PlayerPROKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55D5E9551B01466D00EB2C84 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3426,7 +3350,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				551E3B661AAB8D4200D3A530 /* CoreFoundation.framework in Frameworks */,
-				55C1A6A61A07209100C7A733 /* SwiftAdditions.framework in Frameworks */,
 				551E3B651AAB8D0000D3A530 /* AudioToolbox.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3437,7 +3360,6 @@
 			files = (
 				551E3B671AAB8D4300D3A530 /* CoreFoundation.framework in Frameworks */,
 				551E3B641AAB8CD000D3A530 /* Foundation.framework in Frameworks */,
-				55C1A6A71A07209900C7A733 /* SwiftAdditions.framework in Frameworks */,
 				55F1BE041975CD2E00AD2C03 /* PlayerPROCore.framework in Frameworks */,
 				551E3B681AAB8D5400D3A530 /* UIKit.framework in Frameworks */,
 			);
@@ -4217,6 +4139,7 @@
 				551520BA10DEEB370054ABC4 /* PAT */,
 				551520C410DEED460054ABC4 /* QuickTime */,
 				551520BB10DEEB5E0054ABC4 /* System 7 Sound */,
+				55D5E9591B01466D00EB2C84 /* Sys7SwiftSound */,
 				555E85361A041E580018FDBC /* Classic Sound */,
 				551520A310DEE9570054ABC4 /* Wave */,
 				551520A210DEE93E0054ABC4 /* XI */,
@@ -4694,21 +4617,6 @@
 			path = "Advanced Import plug-ins";
 			sourceTree = "<group>";
 		};
-		55C1A67D1A0719D300C7A733 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */,
-				55C1A6841A0719D300C7A733 /* SwiftAdditionsTests.xctest */,
-				55418FCC1A26497800E18A5F /* SwiftIOKitAdditions.framework */,
-				55418FCE1A26497800E18A5F /* SwiftIOKitAdditionsTests.xctest */,
-				5523FC8B1A7AF49900F01580 /* ForceFeedbackAdditions.framework */,
-				5523FC8D1A7AF49900F01580 /* ForceFeedbackAdditionsTests.xctest */,
-				55E11E141AE713F500815555 /* SwiftAudioAdditions.framework */,
-				55E11E161AE713F500815555 /* SwiftAudioAdditionsTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		55CBFCD411EB7CA00028C6BB /* PlayerPRO 6 */ = {
 			isa = PBXGroup;
 			children = (
@@ -4719,6 +4627,62 @@
 			);
 			path = "PlayerPRO 6";
 			sourceTree = "<group>";
+		};
+		55D5E9591B01466D00EB2C84 /* Sys7SwiftSound */ = {
+			isa = PBXGroup;
+			children = (
+				55D5E9651B01471300EB2C84 /* System7Sound.swift */,
+				55D5E95A1B01466D00EB2C84 /* Supporting Files */,
+				55D5E9671B0148CA00EB2C84 /* BridgeHeader.h */,
+			);
+			path = Sys7SwiftSound;
+			sourceTree = "<group>";
+		};
+		55D5E95A1B01466D00EB2C84 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				55D5E95B1B01466D00EB2C84 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		55D5E9681B01494400EB2C84 /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */,
+				55D5E9831B0149FE00EB2C84 /* ForkView */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		55D5E9691B01496100EB2C84 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */,
+				55D5E9761B01496100EB2C84 /* SwiftAdditionsTests.xctest */,
+				55D5E9781B01496100EB2C84 /* SwiftIOKitAdditions.framework */,
+				55D5E97A1B01496100EB2C84 /* SwiftIOKitAdditionsTests.xctest */,
+				55D5E97C1B01496100EB2C84 /* ForceFeedbackAdditions.framework */,
+				55D5E97E1B01496100EB2C84 /* ForceFeedbackAdditionsTests.xctest */,
+				55D5E9801B01496100EB2C84 /* SwiftAudioAdditions.framework */,
+				55D5E9821B01496100EB2C84 /* SwiftAudioAdditionsTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55D5E9831B0149FE00EB2C84 /* ForkView */ = {
+			isa = PBXGroup;
+			children = (
+				55D5E9841B0149FE00EB2C84 /* FVDataReader.swift */,
+				55D5E9851B0149FE00EB2C84 /* FVResource.swift */,
+				55D5E9861B0149FE00EB2C84 /* FVResourceFile.h */,
+				55D5E9871B0149FE00EB2C84 /* FVResourceFile.m */,
+				55D5E9881B0149FE00EB2C84 /* FVResourceFilePriv.h */,
+				55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */,
+			);
+			path = ForkView;
+			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		55DD5A9819A1BF1A00F8AD1F /* Plug-in handling */ = {
 			isa = PBXGroup;
@@ -4879,7 +4843,7 @@
 			isa = PBXGroup;
 			children = (
 				550E25101AE58442003D34B1 /* PlayerPRO.playground */,
-				55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */,
+				55D5E9681B01494400EB2C84 /* Vendor */,
 				55F41A2217EF800B00605DF8 /* version.sh */,
 				553626AE17EA6ED200D3A3C8 /* Xcconfigs */,
 				552C70C210CDAF8C00C0E0D4 /* Documentation */,
@@ -4969,6 +4933,7 @@
 				55ADD23A19B4F858005588B5 /* PlayerPROKit Tests.xctest */,
 				5552724F1A0000C8008B8616 /* PlayerPROKit-iOS Tests.xctest */,
 				55534ACD1817C387006D6BCB /* updateInfoPlist */,
+				55D5E9581B01466D00EB2C84 /* Sys7SwiftSound.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5111,8 +5076,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				55E11E201AE714CD00815555 /* PBXTargetDependency */,
-				550993E71A8C0489004D8A8A /* PBXTargetDependency */,
 				550993E51A8C0480004D8A8A /* PBXTargetDependency */,
 				550FFAE017CEA4570003A2F3 /* PBXTargetDependency */,
 			);
@@ -5133,7 +5096,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				55D59C321A648B06008A6E51 /* PBXTargetDependency */,
 				551292EC163DD72E00C2C639 /* PBXTargetDependency */,
 			);
 			name = PlayerPROKit;
@@ -5429,7 +5391,6 @@
 				55F1BDB11975C8EE00AD2C03 /* PBXTargetDependency */,
 				55F1BDF71975CBFF00AD2C03 /* PBXTargetDependency */,
 				55F1BDFB1975CBFF00AD2C03 /* PBXTargetDependency */,
-				55C1A6AD1A0720B200C7A733 /* PBXTargetDependency */,
 			);
 			name = "iOS PlayerPRO Player";
 			productName = "iOS PlayerPRO Player";
@@ -5548,8 +5509,6 @@
 				55886F7317DEDAA200021A82 /* PBXTargetDependency */,
 				5578C53917DB959B0057D11B /* PBXTargetDependency */,
 				55680A311904661700F7616D /* PBXTargetDependency */,
-				55C1A68E1A071A4100C7A733 /* PBXTargetDependency */,
-				55E11E1A1AE713F700815555 /* PBXTargetDependency */,
 			);
 			name = "PlayerPRO Player";
 			productName = "PlayerPRO Player";
@@ -6118,8 +6077,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				55E11E221AE714FE00815555 /* PBXTargetDependency */,
-				55C1A6931A071A8700C7A733 /* PBXTargetDependency */,
 				55C1A6911A071A8000C7A733 /* PBXTargetDependency */,
 				55ADC3D017D6F390001F27D4 /* PBXTargetDependency */,
 			);
@@ -6218,7 +6175,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				55C1A6861A0719EE00C7A733 /* PBXTargetDependency */,
 				552363A419A55C9B000D191D /* PBXTargetDependency */,
 				552363A619A55C9B000D191D /* PBXTargetDependency */,
 				55534AE918183B0C006D6BCB /* PBXTargetDependency */,
@@ -6232,13 +6188,31 @@
 				559170AA19C26E1D00998D7F /* PBXTargetDependency */,
 				559170AD19C26E1D00998D7F /* PBXTargetDependency */,
 				556BC18C19CF75F900508F49 /* PBXTargetDependency */,
-				55C1A68A1A071A3800C7A733 /* PBXTargetDependency */,
-				55E11E1E1AE7145E00815555 /* PBXTargetDependency */,
 			);
 			name = "PlayerPRO 6";
 			productName = Cocoa;
 			productReference = 55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */;
 			productType = "com.apple.product-type.application";
+		};
+		55D5E9571B01466D00EB2C84 /* Sys7SwiftSound */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55D5E9641B01466D00EB2C84 /* Build configuration list for PBXNativeTarget "Sys7SwiftSound" */;
+			buildPhases = (
+				55D5E9541B01466D00EB2C84 /* Sources */,
+				55D5E9551B01466D00EB2C84 /* Frameworks */,
+				55D5E9561B01466D00EB2C84 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55D5E98F1B014A4B00EB2C84 /* PBXTargetDependency */,
+				55D5E9911B014A4B00EB2C84 /* PBXTargetDependency */,
+				55D5E9931B014A4B00EB2C84 /* PBXTargetDependency */,
+			);
+			name = Sys7SwiftSound;
+			productName = Sys7SwiftSound;
+			productReference = 55D5E9581B01466D00EB2C84 /* Sys7SwiftSound.plugin */;
+			productType = "com.apple.product-type.bundle";
 		};
 		55E898A810F17C2B004EB52B /* QuickTime */ = {
 			isa = PBXNativeTarget;
@@ -6288,7 +6262,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				55C1A6A51A07208A00C7A733 /* PBXTargetDependency */,
 			);
 			name = "PlayerPROCore-iOS";
 			productName = iOSPlayerPROCore;
@@ -6307,7 +6280,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				55C1A6A91A0720A300C7A733 /* PBXTargetDependency */,
 				55F1BE241975D1CD00AD2C03 /* PBXTargetDependency */,
 			);
 			name = "PlayerPROKit-iOS";
@@ -6351,6 +6323,9 @@
 						CreatedOnToolsVersion = 6.0;
 						TestTargetID = 55CBF9A511EB77760028C6BB;
 					};
+					55D5E9571B01466D00EB2C84 = {
+						CreatedOnToolsVersion = 6.3.1;
+					};
 					55F1BD8E1975C83400AD2C03 = {
 						CreatedOnToolsVersion = 6.0;
 					};
@@ -6377,7 +6352,7 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 55C1A67D1A0719D300C7A733 /* Products */;
+					ProductGroup = 55D5E9691B01496100EB2C84 /* Products */;
 					ProjectRef = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
 				},
 			);
@@ -6435,6 +6410,7 @@
 				551FEACB10E727B100EDF2F1 /* PAT */,
 				55ADC3CF17D6F390001F27D4 /* Wave */,
 				5591708619C24C1600998D7F /* System 7 */,
+				55D5E9571B01466D00EB2C84 /* Sys7SwiftSound */,
 				555E85381A041E810018FDBC /* Classic Sound */,
 				55E898A810F17C2B004EB52B /* QuickTime */,
 				557DE3BD10E06BB500177B4C /* Filters Plugs */,
@@ -6457,60 +6433,60 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		5523FC8B1A7AF49900F01580 /* ForceFeedbackAdditions.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ForceFeedbackAdditions.framework;
-			remoteRef = 5523FC8A1A7AF49900F01580 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		5523FC8D1A7AF49900F01580 /* ForceFeedbackAdditionsTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = ForceFeedbackAdditionsTests.xctest;
-			remoteRef = 5523FC8C1A7AF49900F01580 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		55418FCC1A26497800E18A5F /* SwiftIOKitAdditions.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = SwiftIOKitAdditions.framework;
-			remoteRef = 55418FCB1A26497800E18A5F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		55418FCE1A26497800E18A5F /* SwiftIOKitAdditionsTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = SwiftIOKitAdditionsTests.xctest;
-			remoteRef = 55418FCD1A26497800E18A5F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		55C1A6821A0719D300C7A733 /* SwiftAdditions.framework */ = {
+		55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = SwiftAdditions.framework;
-			remoteRef = 55C1A6811A0719D300C7A733 /* PBXContainerItemProxy */;
+			remoteRef = 55D5E9731B01496100EB2C84 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		55C1A6841A0719D300C7A733 /* SwiftAdditionsTests.xctest */ = {
+		55D5E9761B01496100EB2C84 /* SwiftAdditionsTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = SwiftAdditionsTests.xctest;
-			remoteRef = 55C1A6831A0719D300C7A733 /* PBXContainerItemProxy */;
+			remoteRef = 55D5E9751B01496100EB2C84 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		55E11E141AE713F500815555 /* SwiftAudioAdditions.framework */ = {
+		55D5E9781B01496100EB2C84 /* SwiftIOKitAdditions.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SwiftIOKitAdditions.framework;
+			remoteRef = 55D5E9771B01496100EB2C84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55D5E97A1B01496100EB2C84 /* SwiftIOKitAdditionsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SwiftIOKitAdditionsTests.xctest;
+			remoteRef = 55D5E9791B01496100EB2C84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55D5E97C1B01496100EB2C84 /* ForceFeedbackAdditions.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ForceFeedbackAdditions.framework;
+			remoteRef = 55D5E97B1B01496100EB2C84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55D5E97E1B01496100EB2C84 /* ForceFeedbackAdditionsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ForceFeedbackAdditionsTests.xctest;
+			remoteRef = 55D5E97D1B01496100EB2C84 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		55D5E9801B01496100EB2C84 /* SwiftAudioAdditions.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = SwiftAudioAdditions.framework;
-			remoteRef = 55E11E131AE713F500815555 /* PBXContainerItemProxy */;
+			remoteRef = 55D5E97F1B01496100EB2C84 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		55E11E161AE713F500815555 /* SwiftAudioAdditionsTests.xctest */ = {
+		55D5E9821B01496100EB2C84 /* SwiftAudioAdditionsTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = SwiftAudioAdditionsTests.xctest;
-			remoteRef = 55E11E151AE713F500815555 /* PBXContainerItemProxy */;
+			remoteRef = 55D5E9811B01496100EB2C84 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -7007,6 +6983,13 @@
 				55771DC11873714800AED8DC /* PPDocument.xib in Resources */,
 				5521F41717FA541C002CDBA9 /* Trackers.xcassets in Resources */,
 				5573AF0817DF8FD400B68127 /* README.rtf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55D5E9561B01466D00EB2C84 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7761,6 +7744,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55D5E9541B01466D00EB2C84 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55D5E98A1B0149FE00EB2C84 /* FVDataReader.swift in Sources */,
+				55D5E98B1B0149FE00EB2C84 /* FVResource.swift in Sources */,
+				55D5E9661B01471300EB2C84 /* System7Sound.swift in Sources */,
+				55D5E98D1B0149FE00EB2C84 /* FVResourceType.swift in Sources */,
+				55D5E98C1B0149FE00EB2C84 /* FVResourceFile.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55E898AC10F17C2B004EB52B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -7858,11 +7853,6 @@
 			isa = PBXTargetDependency;
 			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
 			targetProxy = 550993E41A8C0480004D8A8A /* PBXContainerItemProxy */;
-		};
-		550993E71A8C0489004D8A8A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftAdditions;
-			targetProxy = 550993E61A8C0489004D8A8A /* PBXContainerItemProxy */;
 		};
 		550FFAE017CEA4570003A2F3 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8519,75 +8509,30 @@
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 55B797E110D6E6D00073E379 /* PBXContainerItemProxy */;
 		};
-		55C1A6861A0719EE00C7A733 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftAdditions;
-			targetProxy = 55C1A6851A0719EE00C7A733 /* PBXContainerItemProxy */;
-		};
-		55C1A68A1A071A3800C7A733 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftAdditions;
-			targetProxy = 55C1A6891A071A3800C7A733 /* PBXContainerItemProxy */;
-		};
-		55C1A68E1A071A4100C7A733 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftAdditions;
-			targetProxy = 55C1A68D1A071A4100C7A733 /* PBXContainerItemProxy */;
-		};
 		55C1A6911A071A8000C7A733 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
 			targetProxy = 55C1A6901A071A8000C7A733 /* PBXContainerItemProxy */;
-		};
-		55C1A6931A071A8700C7A733 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftAdditions;
-			targetProxy = 55C1A6921A071A8700C7A733 /* PBXContainerItemProxy */;
-		};
-		55C1A6A51A07208A00C7A733 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftAdditions;
-			targetProxy = 55C1A6A41A07208A00C7A733 /* PBXContainerItemProxy */;
-		};
-		55C1A6A91A0720A300C7A733 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftAdditions;
-			targetProxy = 55C1A6A81A0720A300C7A733 /* PBXContainerItemProxy */;
-		};
-		55C1A6AD1A0720B200C7A733 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftAdditions;
-			targetProxy = 55C1A6AC1A0720B200C7A733 /* PBXContainerItemProxy */;
 		};
 		55CBFA0011EB77AA0028C6BB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5533410810BB5460005208D1 /* Import-export */;
 			targetProxy = 55CBF9FF11EB77AA0028C6BB /* PBXContainerItemProxy */;
 		};
-		55D59C321A648B06008A6E51 /* PBXTargetDependency */ = {
+		55D5E98F1B014A4B00EB2C84 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = SwiftAdditions;
-			targetProxy = 55D59C311A648B06008A6E51 /* PBXContainerItemProxy */;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 55D5E98E1B014A4B00EB2C84 /* PBXContainerItemProxy */;
 		};
-		55E11E1A1AE713F700815555 /* PBXTargetDependency */ = {
+		55D5E9911B014A4B00EB2C84 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 55D5E9901B014A4B00EB2C84 /* PBXContainerItemProxy */;
+		};
+		55D5E9931B014A4B00EB2C84 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftAudioAdditions;
-			targetProxy = 55E11E191AE713F700815555 /* PBXContainerItemProxy */;
-		};
-		55E11E1E1AE7145E00815555 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftAudioAdditions;
-			targetProxy = 55E11E1D1AE7145E00815555 /* PBXContainerItemProxy */;
-		};
-		55E11E201AE714CD00815555 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftAudioAdditions;
-			targetProxy = 55E11E1F1AE714CD00815555 /* PBXContainerItemProxy */;
-		};
-		55E11E221AE714FE00815555 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftAudioAdditions;
-			targetProxy = 55E11E211AE714FE00815555 /* PBXContainerItemProxy */;
+			targetProxy = 55D5E9921B014A4B00EB2C84 /* PBXContainerItemProxy */;
 		};
 		55E898A910F17C2B004EB52B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -11125,6 +11070,41 @@
 			};
 			name = Debug;
 		};
+		55D5E95C1B01466D00EB2C84 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/BridgeHeader.h";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Release;
+		};
+		55D5E95D1B01466D00EB2C84 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/Sys7SwiftSound/BridgeHeader.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				WRAPPER_EXTENSION = plugin;
+			};
+			name = Debug;
+		};
 		55E898B510F17C2B004EB52B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -11922,6 +11902,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		55D5E9641B01466D00EB2C84 /* Build configuration list for PBXNativeTarget "Sys7SwiftSound" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55D5E95C1B01466D00EB2C84 /* Release */,
+				55D5E95D1B01466D00EB2C84 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		55E898B410F17C2B004EB52B /* Build configuration list for PBXNativeTarget "QuickTime" */ = {
 			isa = XCConfigurationList;

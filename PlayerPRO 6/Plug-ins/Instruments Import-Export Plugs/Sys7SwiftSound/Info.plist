@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1</string>
+	<key>MADCanExport</key>
+	<false/>
+	<key>MADCanImport</key>
+	<true/>
+	<key>MADPlugAuthorName</key>
+	<string>C.W. Betts</string>
+	<key>MADPlugMenuName</key>
+	<string>System 7</string>
+	<key>MADPlugType</key>
+	<string>sfil</string>
+	<key>MADPlugUTITypes</key>
+	<array>
+		<string>net.sourceforge.playerpro.oldmacsfilAudio</string>
+	</array>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright @ 2015 C.W. "Madd the Sane" Betts</string>
+	<key>NSPrincipalClass</key>
+	<string>${PRODUCT_MODULE_NAME}.System7Sound</string>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeConformsTo</key>
+			<array>
+				<string>public.audio</string>
+			</array>
+			<key>UTTypeIdentifier</key>
+			<string>net.sourceforge.playerpro.oldmacsfilAudio</string>
+			<key>UTTypeTagSpecification</key>
+			<dict>
+				<key>com.apple.ostype</key>
+				<array>
+					<string>sfil</string>
+				</array>
+				<key>public.filename-extension</key>
+				<array>
+					<string>sfil</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
