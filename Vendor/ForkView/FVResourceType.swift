@@ -12,7 +12,7 @@ final public class FVResourceType: NSObject {
     public var type: OSType = 0
     public var count: UInt32 = 0
     public var offset: UInt32 = 0
-    public var resources: NSArray = []
+    public var resources: [FVResource] = []
 
     public var typeString: String {
 		if let aType = UTCreateStringForOSType(type)?.takeRetainedValue() as? String {

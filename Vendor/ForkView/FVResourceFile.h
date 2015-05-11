@@ -15,7 +15,7 @@ typedef struct FVResourceMap FVResourceMap;
 
 + (nullable instancetype)resourceFileWithContentsOfURL:(nonnull NSURL *)fileURL error:(NSError * __nullable * __nullable)error;
 
-@property (readonly, nonnull) NSArray *types;
+@property (readonly, copy, nonnull) NSArray *types;
 
 @property (readonly) BOOL isResourceFork;
 
