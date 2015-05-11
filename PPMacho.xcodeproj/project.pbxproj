@@ -699,6 +699,8 @@
 		55D5E98B1B0149FE00EB2C84 /* FVResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9851B0149FE00EB2C84 /* FVResource.swift */; };
 		55D5E98C1B0149FE00EB2C84 /* FVResourceFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9871B0149FE00EB2C84 /* FVResourceFile.m */; };
 		55D5E98D1B0149FE00EB2C84 /* FVResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */; };
+		55D5E9991B014EEF00EB2C84 /* AIFFToSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9981B014EEF00EB2C84 /* AIFFToSample.swift */; };
+		55D5E9A11B014EF900EB2C84 /* AIFFToSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9981B014EEF00EB2C84 /* AIFFToSample.swift */; };
 		55D64A8C1AA805020017158E /* MusicListPreferenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D64A8B1AA805020017158E /* MusicListPreferenceController.swift */; };
 		55DC597919A2E6B100212DD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DC597819A2E6B100212DD0 /* AppDelegate.swift */; };
 		55DC597B19A2FA9A00212DD0 /* SwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */; };
@@ -2639,6 +2641,7 @@
 		55D5E9871B0149FE00EB2C84 /* FVResourceFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FVResourceFile.m; sourceTree = "<group>"; };
 		55D5E9881B0149FE00EB2C84 /* FVResourceFilePriv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FVResourceFilePriv.h; sourceTree = "<group>"; };
 		55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FVResourceType.swift; sourceTree = "<group>"; };
+		55D5E9981B014EEF00EB2C84 /* AIFFToSample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AIFFToSample.swift; sourceTree = "<group>"; };
 		55D64A8B1AA805020017158E /* MusicListPreferenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListPreferenceController.swift; sourceTree = "<group>"; };
 		55DC597819A2E6B100212DD0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftBridge.swift; sourceTree = "<group>"; };
@@ -3456,6 +3459,7 @@
 			children = (
 				550FFAEC17CEA4590003A2F3 /* AIFF-Info.plist */,
 				550993DD1A8C0432004D8A8A /* AIFFSamplePlug.swift */,
+				55D5E9981B014EEF00EB2C84 /* AIFFToSample.swift */,
 			);
 			path = AIFF;
 			sourceTree = "<group>";
@@ -7056,6 +7060,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				55D5E9991B014EEF00EB2C84 /* AIFFToSample.swift in Sources */,
 				550993DE1A8C0432004D8A8A /* AIFFSamplePlug.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7750,6 +7755,7 @@
 			files = (
 				55D5E98A1B0149FE00EB2C84 /* FVDataReader.swift in Sources */,
 				55D5E98B1B0149FE00EB2C84 /* FVResource.swift in Sources */,
+				55D5E9A11B014EF900EB2C84 /* AIFFToSample.swift in Sources */,
 				55D5E9661B01471300EB2C84 /* System7Sound.swift in Sources */,
 				55D5E98D1B0149FE00EB2C84 /* FVResourceType.swift in Sources */,
 				55D5E98C1B0149FE00EB2C84 /* FVResourceFile.m in Sources */,
@@ -11910,6 +11916,7 @@
 				55D5E95D1B01466D00EB2C84 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		55E898B410F17C2B004EB52B /* Build configuration list for PBXNativeTarget "QuickTime" */ = {
 			isa = XCConfigurationList;

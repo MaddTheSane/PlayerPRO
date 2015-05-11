@@ -36,24 +36,23 @@ import SwiftAdditions
             if fileSizeNum!.integerValue == 0 || fileSizeNum!.integerValue >= maxResourceSize {
                 return nil
             }
-            let data = NSData(contentsOfURL: URL)
-            if data == nil {
+            if let data = NSData(contentsOfURL: URL) {
+                self.data = data
+            } else {
                 return nil
             }
-            self.data = data!
         } else {
             let rsrcSize = getxattr(URL.path!, XATTR_RESOURCEFORK_NAME, nil, 0, 0, 0)
             if rsrcSize <= 0 || rsrcSize >= maxResourceSize {
                 return nil
             }
-            let data = NSMutableData(length: rsrcSize)
-            if data == nil {
+            if let data = NSMutableData(length: rsrcSize) {
+                if getxattr(URL.path!, XATTR_RESOURCEFORK_NAME, data.mutableBytes, rsrcSize, 0, 0) != rsrcSize {
+                    return nil
+                }
+            } else {
                 return nil
             }
-            if getxattr(URL.path!, XATTR_RESOURCEFORK_NAME, data!.mutableBytes, rsrcSize, 0, 0) != rsrcSize {
-                return nil
-            }
-            self.data = data!
         }
     }
     
@@ -87,41 +86,73 @@ import SwiftAdditions
         return true
     }
     
-    enum Endian {
-        case Little, Big
-    }
-    
-    func readUInt16(endian: Endian, inout _ val: UInt16) -> Bool {
+    func readUInt16(endian: ByteOrder, inout _ val: UInt16) -> Bool {
         if let dat = read(sizeof(UInt16)) {
 			dat.getBytes(&val, length: sizeof(UInt16))
-            val = endian == .Big ? UInt16(bigEndian: val) : UInt16(littleEndian: val)
+            switch endian {
+            case .Big:
+                val = val.bigEndian
+                
+            case .Little:
+                val = val.littleEndian
+                
+            case .Unknown:
+                break;
+            }
             return true
         }
         return false
     }
 
-    func readInt16(endian: Endian, inout _ val: Int16) -> Bool {
+    func readInt16(endian: ByteOrder, inout _ val: Int16) -> Bool {
         if let dat = read(sizeof(Int16)) {
             dat.getBytes(&val, length: sizeof(Int16))
-            val = endian == .Big ? Int16(bigEndian: val) : Int16(littleEndian: val)
+            switch endian {
+            case .Big:
+                val = val.bigEndian
+                
+            case .Little:
+                val = val.littleEndian
+                
+            case .Unknown:
+                break;
+            }
             return true
         }
         return false
     }
 
-    func readUInt32(endian: Endian, inout _ val: UInt32) -> Bool {
+    func readUInt32(endian: ByteOrder, inout _ val: UInt32) -> Bool {
         if let dat = read(sizeof(UInt32)) {
-            dat.getBytes(&val)
-            val = endian == .Big ? UInt32(bigEndian: val) : UInt32(littleEndian: val)
+            dat.getBytes(&val, length: sizeof(UInt32))
+            switch endian {
+            case .Big:
+                val = val.bigEndian
+                
+            case .Little:
+                val = val.littleEndian
+                
+            case .Unknown:
+                break;
+            }
             return true
         }
         return false
     }
     
-    func readInt32(endian: Endian, inout _ val: Int32) -> Bool {
+    func readInt32(endian: ByteOrder, inout _ val: Int32) -> Bool {
         if let dat = read(sizeof(Int32)) {
-            dat.getBytes(&val)
-            val = endian == .Big ? Int32(bigEndian: val) : Int32(littleEndian: val)
+            dat.getBytes(&val, length: sizeof(Int32))
+            switch endian {
+            case .Big:
+                val = val.bigEndian
+                
+            case .Little:
+                val = val.littleEndian
+                
+            case .Unknown:
+                break;
+            }
             return true
         }
         return false
@@ -129,7 +160,7 @@ import SwiftAdditions
     
     func readUInt8(inout val: UInt8) -> Bool {
         if let dat = read(sizeof(UInt8)) {
-            dat.getBytes(&val)
+            dat.getBytes(&val, length: sizeof(UInt8))
             return true
         }
         return false
@@ -137,7 +168,7 @@ import SwiftAdditions
 
     func readInt8(inout val: Int8) -> Bool {
         if let dat = read(sizeof(Int8)) {
-            dat.getBytes(&val)
+            dat.getBytes(&val, length: sizeof(Int8))
             return true
         }
         return false
