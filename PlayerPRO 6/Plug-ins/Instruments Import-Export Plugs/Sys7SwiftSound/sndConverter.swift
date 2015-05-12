@@ -18,22 +18,23 @@ private func fixedToFloat(a: UInt32) -> Double {
 	return Double(a) / fixed1
 }
 
+private let firstSoundFormat: Int16  = 0x0001 /*general sound format*/
+private let secondSoundFormat: Int16 = 0x0002 /*special sampled sound format (HyperCard)*/
+private let initMono:   Int32 = 0x0080 /*monophonic channel*/
+private let initStereo: Int32 = 0x00C0 /*stereo channel*/
+private let initMACE3:  Int32 = 0x0300 /*MACE 3:1*/
+private let initMACE6:  Int32 = 0x0400 /*MACE 6:1*/
+private let nullCmd: UInt16   = 0
+private let soundCmd: UInt16  = 80
+private let bufferCmd: UInt16 = 81
+private let stdSH: UInt8 = 0x00 /*Standard sound header encode value*/
+private let extSH: UInt8 = 0xFF /*Extended sound header encode value*/
+private let cmpSH: UInt8 = 0xFE /*Compressed sound header encode value*/
+
 
 internal func assetForSND(data: NSData, inout errmsg: String) -> NSURL? {
 	// See Sound.h in Carbon
 	// Also see "Sound Manager" legacy PDF
-	let firstSoundFormat: Int16  = 0x0001 /*general sound format*/
-	let secondSoundFormat: Int16 = 0x0002 /*special sampled sound format (HyperCard)*/
-	let initMono:   Int32 = 0x0080 /*monophonic channel*/
-	let initStereo: Int32 = 0x00C0 /*stereo channel*/
-	let initMACE3:  Int32 = 0x0300 /*MACE 3:1*/
-	let initMACE6:  Int32 = 0x0400 /*MACE 6:1*/
-	let nullCmd: UInt16   = 0
-	let soundCmd: UInt16  = 80
-	let bufferCmd: UInt16 = 81
-	let stdSH: UInt8 = 0x00 /*Standard sound header encode value*/
-	let extSH: UInt8 = 0xFF /*Extended sound header encode value*/
-	let cmpSH: UInt8 = 0xFE /*Compressed sound header encode value*/
 	struct ModRef {
 		var modNumber: UInt16 = 0
 		var modInit: Int32 = 0

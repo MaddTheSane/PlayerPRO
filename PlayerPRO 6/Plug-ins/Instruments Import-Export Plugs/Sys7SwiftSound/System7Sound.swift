@@ -26,11 +26,11 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 	}
 
 	public func canImportSampleAtURL(AlienFileURL: NSURL) -> Bool {
-		if let rv = FVResourceFile(contentsOfURL: AlienFileURL, error: nil) {
+		if let rv = FVResourceFile.resourceFileWithContentsOfURL(AlienFileURL, error: nil) {
 			if !rv.isResourceFork {
 				return false
 			}
-			for res in rv.types as! [FVResourceType] {
+			for res in rv.types {
 				if res.type == "snd " {
 					return true
 				}

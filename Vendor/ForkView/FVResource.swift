@@ -8,15 +8,15 @@
 
 import Foundation
 
-final public class FVResource: NSObject {
-    public var ident: UInt16 = 0
-    public var name: String = ""
-    public var dataSize: UInt32 = 0
-    public var dataOffset: UInt32 = 0
-    public var type: FVResourceType? = nil
-    public var file: FVResourceFile? = nil
+final class FVResource: NSObject {
+    var ident: UInt16 = 0
+    var name: String = ""
+    var dataSize: UInt32 = 0
+    var dataOffset: UInt32 = 0
+    var type: FVResourceType? = nil
+    var file: FVResourceFile? = nil
     
-    public var data: NSData? {
+    var data: NSData? {
         return file?.dataForResource(self)
     }
 }

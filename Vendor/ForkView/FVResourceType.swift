@@ -7,17 +7,18 @@
 //
 
 import Foundation
+import SwiftAdditions
 
-final public class FVResourceType: NSObject {
-    public var type: OSType = 0
-    public var count: UInt32 = 0
-    public var offset: UInt32 = 0
-    public var resources: [FVResource] = []
+final class FVResourceType: NSObject {
+    var type: OSType = 0
+    var count: UInt32 = 0
+    var offset: UInt32 = 0
+    var resources: [FVResource] = []
 
-    public var typeString: String {
-		if let aType = UTCreateStringForOSType(type)?.takeRetainedValue() as? String {
-			return aType
-		}
+    var typeString: String {
+        if let aType = OSTypeToString(type) {
+            return aType
+        }
 		
         return String(format:"%c%c%c%c",
             (type & 0xFF000000) >> 24,

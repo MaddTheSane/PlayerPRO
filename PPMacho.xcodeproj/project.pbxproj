@@ -640,6 +640,7 @@
 		55B7E669161D1DF3000D988C /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		55B8E1B71A3BB5790010CE33 /* MADDebugStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */; };
 		55B8E1B81A3BB57A0010CE33 /* MADDebugStr.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */; };
+		55BB99611B027F3D009B3EDD /* FVResourceFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB995F1B027ED5009B3EDD /* FVResourceFile.swift */; };
 		55BD5AF519ADBBF500D63F54 /* PPKPcmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */; };
 		55BD5AF619ADBBF500D63F54 /* PPKPcmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */; };
 		55BF238919A93742005B1F96 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
@@ -697,7 +698,6 @@
 		55D5E9661B01471300EB2C84 /* System7Sound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9651B01471300EB2C84 /* System7Sound.swift */; };
 		55D5E98A1B0149FE00EB2C84 /* FVDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9841B0149FE00EB2C84 /* FVDataReader.swift */; };
 		55D5E98B1B0149FE00EB2C84 /* FVResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9851B0149FE00EB2C84 /* FVResource.swift */; };
-		55D5E98C1B0149FE00EB2C84 /* FVResourceFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9871B0149FE00EB2C84 /* FVResourceFile.m */; };
 		55D5E98D1B0149FE00EB2C84 /* FVResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */; };
 		55D5E9991B014EEF00EB2C84 /* AIFFToSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9981B014EEF00EB2C84 /* AIFFToSample.swift */; };
 		55D5E9A11B014EF900EB2C84 /* AIFFToSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9981B014EEF00EB2C84 /* AIFFToSample.swift */; };
@@ -2597,6 +2597,7 @@
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Complex Fade-Info.plist"; sourceTree = "<group>"; };
 		55B8E1B51A3BB54D0010CE33 /* MADDebugStr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MADDebugStr.m; sourceTree = "<group>"; };
+		55BB995F1B027ED5009B3EDD /* FVResourceFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FVResourceFile.swift; sourceTree = "<group>"; };
 		55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PPKPcmd.swift; sourceTree = "<group>"; };
 		55BE998717978BB100D6DECC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
 		55BE998917978BB100D6DECC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; lineEnding = 0; name = English; path = English.lproj/schema.strings; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.simpleColoring; };
@@ -2638,9 +2639,6 @@
 		55D5E9671B0148CA00EB2C84 /* BridgeHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeader.h; sourceTree = "<group>"; };
 		55D5E9841B0149FE00EB2C84 /* FVDataReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FVDataReader.swift; sourceTree = "<group>"; };
 		55D5E9851B0149FE00EB2C84 /* FVResource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FVResource.swift; sourceTree = "<group>"; };
-		55D5E9861B0149FE00EB2C84 /* FVResourceFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FVResourceFile.h; sourceTree = "<group>"; };
-		55D5E9871B0149FE00EB2C84 /* FVResourceFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FVResourceFile.m; sourceTree = "<group>"; };
-		55D5E9881B0149FE00EB2C84 /* FVResourceFilePriv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FVResourceFilePriv.h; sourceTree = "<group>"; };
 		55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FVResourceType.swift; sourceTree = "<group>"; };
 		55D5E9981B014EEF00EB2C84 /* AIFFToSample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AIFFToSample.swift; sourceTree = "<group>"; };
 		55D5E9A21B0151A500EB2C84 /* sndConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sndConverter.swift; sourceTree = "<group>"; };
@@ -4638,9 +4636,9 @@
 			isa = PBXGroup;
 			children = (
 				55D5E9651B01471300EB2C84 /* System7Sound.swift */,
+				55D5E9A21B0151A500EB2C84 /* sndConverter.swift */,
 				55D5E95A1B01466D00EB2C84 /* Supporting Files */,
 				55D5E9671B0148CA00EB2C84 /* BridgeHeader.h */,
-				55D5E9A21B0151A500EB2C84 /* sndConverter.swift */,
 			);
 			path = Sys7SwiftSound;
 			sourceTree = "<group>";
@@ -4682,9 +4680,7 @@
 			children = (
 				55D5E9841B0149FE00EB2C84 /* FVDataReader.swift */,
 				55D5E9851B0149FE00EB2C84 /* FVResource.swift */,
-				55D5E9861B0149FE00EB2C84 /* FVResourceFile.h */,
-				55D5E9871B0149FE00EB2C84 /* FVResourceFile.m */,
-				55D5E9881B0149FE00EB2C84 /* FVResourceFilePriv.h */,
+				55BB995F1B027ED5009B3EDD /* FVResourceFile.swift */,
 				55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */,
 			);
 			path = ForkView;
@@ -7759,10 +7755,10 @@
 				55D5E98A1B0149FE00EB2C84 /* FVDataReader.swift in Sources */,
 				55D5E9A31B0151A500EB2C84 /* sndConverter.swift in Sources */,
 				55D5E98B1B0149FE00EB2C84 /* FVResource.swift in Sources */,
+				55BB99611B027F3D009B3EDD /* FVResourceFile.swift in Sources */,
 				55D5E9A11B014EF900EB2C84 /* AIFFToSample.swift in Sources */,
 				55D5E9661B01471300EB2C84 /* System7Sound.swift in Sources */,
 				55D5E98D1B0149FE00EB2C84 /* FVResourceType.swift in Sources */,
-				55D5E98C1B0149FE00EB2C84 /* FVResourceFile.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
