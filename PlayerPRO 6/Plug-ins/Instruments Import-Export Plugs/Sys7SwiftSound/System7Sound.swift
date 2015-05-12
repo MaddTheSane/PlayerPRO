@@ -40,6 +40,30 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 	}
 	
 	public func importSampleAtURL(sampleURL: NSURL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
-		return .OrderNotImplemented
+		if let rv = FVResourceFile.resourceFileWithContentsOfURL(sampleURL, error: nil) {
+			for res in rv.types {
+				if res.type == "snd " {
+					for aRes in res.resources {
+						var errStr = ""
+						if let data = aRes.data, asset = assetForSND(data, &errStr) {
+							var asample = PPSampleObject()
+							if AIFFAtURL(asset, toSample: asample) {
+								asample.name = sampleURL.lastPathComponent!.stringByDeletingPathExtension
+								sample.memory = asample
+								
+								return .NoErr
+							}
+							
+							return .IncompatibleFile
+						} else {
+							return .IncompatibleFile
+						}
+					}
+				}
+			}
+			return .IncompatibleFile
+		} else {
+			return .ReadingErr
+		}
 	}
 }

@@ -104,29 +104,13 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 	}
 	
 	public func importSampleAtURL(sampleURL: NSURL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
-		var fileRef: ExtAudioFileRef = nil
-		var iErr = ExtAudioFileOpenURL(sampleURL, &fileRef)
-		if iErr != noErr {
-			return .ReadingErr
+		let aSamp = PPSampleObject()
+		if AIFFAtURL(sampleURL, toSample: aSamp) {
+			aSamp.name = sampleURL.lastPathComponent!.stringByDeletingPathExtension
+			sample.memory = aSamp
+			return .NoErr
+		} else {
+			return .IncompatibleFile
 		}
-		let mutableData = NSMutableData()
-		
-		var realFormat = AudioStreamBasicDescription()
-		
-		var asbdSize = UInt32(sizeof(AudioStreamBasicDescription))
-		iErr = ExtAudioFileGetProperty(fileRef, propertyID: .FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
-		realFormat.mSampleRate = ceil(realFormat.mSampleRate)
-		var forFlags = realFormat.formatFlags
-		forFlags &= ~AudioFormatFlag.BigEndian
-		forFlags |= .NativeEndian
-		iErr = ExtAudioFileSetProperty(fileRef, propertyID: .ClientDataFormat, dataSize: UInt32(sizeof(AudioStreamBasicDescription)), data: &realFormat)
-
-		var bufferCount: UInt32 = 0
-		var bufferList = AudioBufferList.allocate(maximumBuffers: 5)
-		//bufferList.count
-		//iErr = ExtAudioFileRead(fileRef, &bufferCount, bufferList.unsafeMutablePointer)
-		free(bufferList.unsafeMutablePointer)
-		ExtAudioFileDispose(fileRef)
-		return .OrderNotImplemented
 	}
 }
