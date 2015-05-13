@@ -105,12 +105,12 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 	
 	public func importSampleAtURL(sampleURL: NSURL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
 		let aSamp = PPSampleObject()
-		if AIFFAtURL(sampleURL, toSample: aSamp) {
+		let iErr = AIFFAtURL(sampleURL, toSample: aSamp)
+		if iErr == .NoErr {
 			aSamp.name = sampleURL.lastPathComponent!.stringByDeletingPathExtension
 			sample.memory = aSamp
-			return .NoErr
-		} else {
-			return .IncompatibleFile
 		}
+		
+		return iErr
 	}
 }

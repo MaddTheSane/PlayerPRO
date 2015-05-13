@@ -23,9 +23,9 @@ framework module PlayerPROCore {
 	
 	export *
 	module * { export * }
-}
-
-module PlayerPROCore.PlugIns {
-	header "MADPlug.h"
-	export *
+	
+	explicit module PlugIns {
+		header "MADPlug.h"
+		export *
+	}
 }

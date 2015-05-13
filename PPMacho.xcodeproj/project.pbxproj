@@ -25,13 +25,12 @@
 			buildPhases = (
 			);
 			dependencies = (
+				5518A4191B03E492005AF928 /* PBXTargetDependency */,
 				5511F4E8186CFC39008F6BE1 /* PBXTargetDependency */,
 				551FEB7910E7282700EDF2F1 /* PBXTargetDependency */,
 				551FEB7710E7282700EDF2F1 /* PBXTargetDependency */,
 				55151F8410DEDC0F0054ABC4 /* PBXTargetDependency */,
 				55ADC3F017D7F016001F27D4 /* PBXTargetDependency */,
-				5591709A19C2565900998D7F /* PBXTargetDependency */,
-				555E85491A041FA70018FDBC /* PBXTargetDependency */,
 				55A9351D17F2990600493DC5 /* PBXTargetDependency */,
 			);
 			name = "Instrument Plugs";
@@ -148,6 +147,7 @@
 		55151F7A10DEDBDB0054ABC4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5517A24519D9D4A8002D350D /* BoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5517A24419D9D4A8002D350D /* BoxViewController.swift */; };
 		5517DAC5180CAD61001413D0 /* ULT.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5518A41A1B03E4E3005AF928 /* Sys7SwiftSound.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55D5E9581B01466D00EB2C84 /* Sys7SwiftSound.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		551E3B641AAB8CD000D3A530 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A49190497FC00F7616D /* Foundation.framework */; };
 		551E3B651AAB8D0000D3A530 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55085D861836EE7B004A152F /* AudioToolbox.framework */; };
 		551E3B661AAB8D4200D3A530 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A48190497FB00F7616D /* CoreFoundation.framework */; };
@@ -504,7 +504,6 @@
 		5591709119C24C1600998D7F /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		5591709619C24E7D00998D7F /* System7.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105410D6C79E00BB619C /* System7.c */; };
 		5591709719C2564400998D7F /* QuickTime.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55E898B710F17C2B004EB52B /* QuickTime.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		5591709819C2564500998D7F /* System 7.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5591709519C24C1600998D7F /* System 7.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		559170A619C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 559170A519C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m */; };
 		559170A819C26E1D00998D7F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 559170A719C26E1D00998D7F /* main.m */; };
 		559170AB19C26E1D00998D7F /* PPCoreInstrumentPlugBridge.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 5591709F19C26E1C00998D7F /* PPCoreInstrumentPlugBridge.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -909,6 +908,13 @@
 			remoteGlobalIDString = 55151F7210DEDBDB0054ABC4;
 			remoteInfo = XI;
 		};
+		5518A4181B03E492005AF928 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 55D5E9571B01466D00EB2C84;
+			remoteInfo = Sys7SwiftSound;
+		};
 		551FEA5E10E727AD00EDF2F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1146,13 +1152,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
-		};
-		555E85481A041FA70018FDBC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 555E85381A041E810018FDBC;
-			remoteInfo = "Classic Sound";
 		};
 		5561EF97199FBE480054B3A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1595,13 +1594,6 @@
 			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
 			remoteInfo = PlayerPROCore;
 		};
-		5591709919C2565900998D7F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5591708619C24C1600998D7F;
-			remoteInfo = "System 7";
-		};
 		559170A919C26E1D00998D7F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -2040,8 +2032,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				5518A41A1B03E4E3005AF928 /* Sys7SwiftSound.plugin in Copy PlugIns */,
 				5591709719C2564400998D7F /* QuickTime.plugin in Copy PlugIns */,
-				5591709819C2564500998D7F /* System 7.plugin in Copy PlugIns */,
 				5511F4E9186CFC63008F6BE1 /* AIFF.plugin in Copy PlugIns */,
 				55D57E1C18601BBC00192497 /* MIDI.ppextimp in Copy PlugIns */,
 				55EE2D8817E12F9300FED42A /* Amplitude.plugin in Copy PlugIns */,
@@ -7895,6 +7887,11 @@
 			target = 55151F7210DEDBDB0054ABC4 /* XI */;
 			targetProxy = 55151F8310DEDC0F0054ABC4 /* PBXContainerItemProxy */;
 		};
+		5518A4191B03E492005AF928 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 55D5E9571B01466D00EB2C84 /* Sys7SwiftSound */;
+			targetProxy = 5518A4181B03E492005AF928 /* PBXContainerItemProxy */;
+		};
 		551FEA5D10E727AD00EDF2F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
@@ -8064,11 +8061,6 @@
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 555E853A1A041E810018FDBC /* PBXContainerItemProxy */;
-		};
-		555E85491A041FA70018FDBC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 555E85381A041E810018FDBC /* Classic Sound */;
-			targetProxy = 555E85481A041FA70018FDBC /* PBXContainerItemProxy */;
 		};
 		5561EF98199FBE480054B3A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8384,11 +8376,6 @@
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
 			targetProxy = 5591708819C24C1600998D7F /* PBXContainerItemProxy */;
-		};
-		5591709A19C2565900998D7F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5591708619C24C1600998D7F /* System 7 */;
-			targetProxy = 5591709919C2565900998D7F /* PBXContainerItemProxy */;
 		};
 		559170AA19C26E1D00998D7F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

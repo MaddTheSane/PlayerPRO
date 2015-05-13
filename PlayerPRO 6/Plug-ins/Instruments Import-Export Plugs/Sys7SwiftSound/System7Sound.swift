@@ -21,7 +21,7 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 		super.init()
 	}
 	
-	required convenience public init!(forPlugIn: ()) {
+	required convenience public init(forPlugIn: ()) {
 		self.init()
 	}
 
@@ -44,19 +44,22 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 			for res in rv.types {
 				if res.type == "snd " {
 					for aRes in res.resources {
-						var errStr = ""
+						var errStr = MADErr.NoErr
 						if let data = aRes.data, asset = assetForSND(data, &errStr) {
 							var asample = PPSampleObject()
-							if AIFFAtURL(asset, toSample: asample) {
+							errStr = AIFFAtURL(asset, toSample: asample)
+							if errStr == .NoErr {
 								asample.name = sampleURL.lastPathComponent!.stringByDeletingPathExtension
 								sample.memory = asample
 								
 								return .NoErr
 							}
 							
-							return .IncompatibleFile
+							NSFileManager.defaultManager().removeItemAtURL(asset, error: nil)
+							
+							return errStr
 						} else {
-							return .IncompatibleFile
+							return errStr
 						}
 					}
 				}

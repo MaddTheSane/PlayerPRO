@@ -14,6 +14,20 @@ extension NSError {
     }
 }
 
+private func ==(lhs: FVResourceFile.ResourceHeader, rhs: FVResourceFile.ResourceHeader) -> Bool {
+    if lhs.dataOffset != rhs.dataOffset {
+        return false
+    } else if lhs.mapOffset != rhs.mapOffset {
+        return false
+    } else if lhs.dataLength != rhs.dataLength {
+        return false
+    } else if lhs.mapLength != rhs.mapLength {
+        return false
+    }
+    
+    return true
+}
+
 class FVResourceFile: NSObject {
     private(set) var types: [FVResourceType] = []
     private(set) var isResourceFork = false
@@ -21,7 +35,7 @@ class FVResourceFile: NSObject {
     private var map = ResourceMap()
     private let dataReader: FVDataReader!
     
-    private struct ResourceHeader {
+    private struct ResourceHeader: Equatable {
         var dataOffset: UInt32 = 0
         var mapOffset: UInt32 = 0
         var dataLength: UInt32 = 0
@@ -124,7 +138,7 @@ class FVResourceFile: NSObject {
         }
 
         let zeros = [Int8](count: 16, repeatedValue: 0)
-        if (memcmp(&map.headerCopy, &header, sizeof(ResourceHeader)) != 0) && (memcmp(&map.headerCopy, zeros, zeros.count) != 0) {
+        if (map.headerCopy == header) && (memcmp(&map.headerCopy, zeros, zeros.count) != 0) {
             println("Bad match!")
         }
         
@@ -216,7 +230,7 @@ class FVResourceFile: NSObject {
                 var nameLength: UInt8 = 0
                 
                 if (nameOffset != -1) && (dataReader.seekTo(Int(header.mapOffset) + Int(map.namesOffset) + Int(nameOffset))) {
-                    if !dataReader.read(UInt32(sizeofValue(nameLength)), into:&nameLength) || !dataReader.read(UInt32(nameLength), into:&name) {
+                    if !dataReader.read(UInt32(sizeofValue(nameLength)), into: &nameLength) || !dataReader.read(UInt32(nameLength), into: &name) {
                         nameLength = 0;
                     }
                 }

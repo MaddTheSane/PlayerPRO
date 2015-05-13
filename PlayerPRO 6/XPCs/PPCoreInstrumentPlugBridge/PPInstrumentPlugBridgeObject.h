@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <PlayerPROCore/PlayerPROCore.h>
+#import <PlayerPROCore/MADPlug.h>
 
 @interface PPInstrumentPlugBridgeObject : NSObject
 {
