@@ -8,7 +8,6 @@
 
 import Foundation
 import AudioToolbox
-import SwiftAdditions
 import SwiftAudioAdditions
 import PlayerPROCore.Defines
 
@@ -18,7 +17,7 @@ private func fixedToFloat(a: UInt32) -> Double {
 	return Double(a) / fixed1
 }
 
-private let firstSoundFormat:	Int16  = 0x0001 /*general sound format*/
+private let firstSoundFormat:	Int16 = 0x0001 /*general sound format*/
 private let secondSoundFormat:	Int16 = 0x0002 /*special sampled sound format (HyperCard)*/
 
 private let initMono:   Int32 = 0x0080 /*monophonic channel*/
@@ -26,8 +25,8 @@ private let initStereo: Int32 = 0x00C0 /*stereo channel*/
 private let initMACE3:  Int32 = 0x0300 /*MACE 3:1*/
 private let initMACE6:  Int32 = 0x0400 /*MACE 6:1*/
 
-private let nullCmd:	UInt16   = 0
-private let soundCmd:	UInt16  = 80
+private let nullCmd:	UInt16 = 0
+private let soundCmd:	UInt16 = 80
 private let bufferCmd:	UInt16 = 81
 
 private let stdSH: UInt8 = 0x00 /*Standard sound header encode value*/
@@ -35,43 +34,93 @@ private let extSH: UInt8 = 0xFF /*Extended sound header encode value*/
 private let cmpSH: UInt8 = 0xFE /*Compressed sound header encode value*/
 
 
+private struct ModRef {
+	var modNumber: UInt16 = 0
+	var modInit: Int32 = 0
+}
+private struct SndCommand {
+	var cmd: UInt16 = 0
+	var param1: Int16 = 0
+	var param2: Int32 = 0
+}
+private struct SndListResource {
+	var format: Int16 = 0
+	var numModifiers: Int16 = 0
+	var modifierPart = ModRef()
+	var numCommands: Int16 = 0
+	var commandPart = SndCommand()
+}
+private struct Snd2ListResource {
+	var format: Int16 = 0
+	var refCount: Int16 = 0
+	var numCommands: Int16 = 0
+	var commandPart = SndCommand()
+}
+private struct SoundHeader {
+	var samplePtr: UInt32 = 0
+	var length: UInt32 = 0
+	var sampleRate: UInt32 = 0
+	var loopStart: UInt32 = 0
+	var loopEnd: UInt32 = 0
+	var encode: UInt8 = 0
+	var baseFrequency: UInt8 = 0
+}
+
+internal func canOpenData(data: NSData) -> Bool {
+	#if false
+	var soundPtr = UnsafePointer<Int16>(data.bytes)
+	let oldSound = soundPtr.memory.bigEndian
+	if oldSound == firstSoundFormat || oldSound == secondSoundFormat {
+		return true
+	} else {
+		return false
+	}
+	#else
+		let reader = FVDataReader(data)
+		
+		// Read the SndListResource or Snd2ListResource
+		var format: Int16 = 0
+		if !reader.readInt16(.Big, &format) {
+			return false
+		}
+		if format == firstSoundFormat {
+			var numModifiers: Int16 = 0
+			var modifierPart = ModRef()
+			if !reader.readInt16(.Big, &numModifiers) ||
+				!reader.readUInt16(.Big, &modifierPart.modNumber) ||
+				!reader.readInt32(.Big, &modifierPart.modInit) {
+					return false
+			}
+			if numModifiers != 1 {
+				return false
+			}
+			if modifierPart.modNumber != 5  {
+				return false
+			}
+			if modifierPart.modInit & initStereo == 1 {
+				return false
+			}
+			if (modifierPart.modInit & initMACE3) == initMACE3 || (modifierPart.modInit & initMACE6) == initMACE6 {
+				return false
+			}
+		} else if format == secondSoundFormat {
+			var refCount = Int16()
+			if !reader.readInt16(.Big, &refCount) {
+				return false
+			}
+		} else {
+			return false
+		}
+		return true
+	#endif
+}
+
 internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 	func errmsg(@autoclosure(escaping) message: () -> String) {
 		println("Sys7 import: \(message())")
 	}
 	// See Sound.h in Carbon
 	// Also see "Sound Manager" legacy PDF
-	struct ModRef {
-		var modNumber: UInt16 = 0
-		var modInit: Int32 = 0
-	}
-	struct SndCommand {
-		var cmd: UInt16 = 0
-		var param1: Int16 = 0
-		var param2: Int32 = 0
-	}
-	struct SndListResource {
-		var format: Int16 = 0
-		var numModifiers: Int16 = 0
-		var modifierPart = ModRef()
-		var numCommands: Int16 = 0
-		var commandPart = SndCommand()
-	}
-	struct Snd2ListResource {
-		var format: Int16 = 0
-		var refCount: Int16 = 0
-		var numCommands: Int16 = 0
-		var commandPart = SndCommand()
-	}
-	struct SoundHeader {
-		var samplePtr: UInt32 = 0
-		var length: UInt32 = 0
-		var sampleRate: UInt32 = 0
-		var loopStart: UInt32 = 0
-		var loopEnd: UInt32 = 0
-		var encode: UInt8 = 0
-		var baseFrequency: UInt8 = 0
-	}
 	
 	let reader = FVDataReader(data)
 	
@@ -204,7 +253,7 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 	var stream = AudioStreamBasicDescription(sampleRate: fixedToFloat(header.sampleRate), formatFlags: .SignedInteger, bitsPerChannel: 8, channelsPerFrame: 1)
 	
 	// Create a temporary file for storage
-	if let url = NSURL(fileURLWithPath: NSTemporaryDirectory().stringByAppendingPathComponent(String(format: "%d-%f.aif", arc4random(), NSDate().timeIntervalSinceReferenceDate))) {
+	if let url = NSURL(fileURLWithPath: NSTemporaryDirectory().stringByAppendingPathComponent("\(arc4random())-\(NSDate.timeIntervalSinceReferenceDate()).aif")) {
 		var audioFile: ExtAudioFileRef = nil
 		var createStatus = ExtAudioFileCreate(URL: url, fileType: .AIFF, streamDescription: &stream, flags: .EraseFile, audioFile: &audioFile)
 		if createStatus != noErr {
@@ -245,7 +294,7 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 		return url
 	} else {
 		error = .WritingErr
-		//errmsg = "Can't make url for conversion"
+		errmsg("Can't make url for conversion")
 		return nil
 	}
 }

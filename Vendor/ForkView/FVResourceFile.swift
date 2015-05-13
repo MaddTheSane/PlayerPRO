@@ -28,7 +28,7 @@ private func ==(lhs: FVResourceFile.ResourceHeader, rhs: FVResourceFile.Resource
     return true
 }
 
-class FVResourceFile: NSObject {
+final class FVResourceFile: NSObject {
     private(set) var types: [FVResourceType] = []
     private(set) var isResourceFork = false
     private var header = ResourceHeader()

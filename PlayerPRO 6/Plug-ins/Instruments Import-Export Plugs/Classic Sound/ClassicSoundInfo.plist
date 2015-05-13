@@ -52,6 +52,8 @@
 	</array>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright @ 1996 Antoine ROSSET</string>
+	<key>NSPrincipalClass</key>
+	<string>${PRODUCT_MODULE_NAME}.ClassicSound</string>
 	<key>UTExportedTypeDeclarations</key>
 	<array>
 		<dict>
