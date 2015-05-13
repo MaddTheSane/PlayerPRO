@@ -2,46 +2,26 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleAllowMixedLocalizations</key>
-	<true/>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en_US</string>
+	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
 	<string>net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0</string>
+	<string>3.0</string>
 	<key>CFBundleSignature</key>
 	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>2.0</string>
-	<key>CFPlugInDynamicRegistration</key>
-	<false/>
-	<key>CFPlugInFactories</key>
-	<dict>
-		<key>96F7A141-84CF-4CEE-9FC9-11BFF33F6626</key>
-		<string>MacsndFactory</string>
-	</dict>
-	<key>CFPlugInTypes</key>
-	<dict>
-		<key>FD7154D6-20BF-4007-881B-8E44970C3B0A</key>
-		<array>
-			<string>96F7A141-84CF-4CEE-9FC9-11BFF33F6626</string>
-		</array>
-	</dict>
-	<key>MADCanExport</key>
-	<false/>
-	<key>MADCanImport</key>
-	<true/>
+	<string>3.0</string>
 	<key>MADPlugAuthorName</key>
-	<string>Antoine ROSSET</string>
-	<key>MADPlugIsSample</key>
-	<true/>
+	<string>C.W. "Madd The Sane" Betts</string>
 	<key>MADPlugMenuName</key>
 	<string>Mac Classic Sound</string>
 	<key>MADPlugType</key>
@@ -51,10 +31,10 @@
 		<string>net.sourceforge.playerpro.oldmacsnd_Audio</string>
 	</array>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright @ 1996 Antoine ROSSET</string>
+	<string>Copyright @ 2015 C.W. "Madd The Sane" Betts</string>
 	<key>NSPrincipalClass</key>
 	<string>${PRODUCT_MODULE_NAME}.ClassicSound</string>
-	<key>UTExportedTypeDeclarations</key>
+	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
 			<key>UTTypeConformsTo</key>

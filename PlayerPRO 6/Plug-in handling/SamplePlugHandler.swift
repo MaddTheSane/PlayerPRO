@@ -28,11 +28,8 @@ class SamplePlugHandler: NSObject, CollectionType, NSFastEnumeration {
 					return false
 				})
 				for component in aComp {
-					if let theBundle = NSBundle(URL: component) {
-					
-						if let aPlug = PPSamplePlugObject(bundle: theBundle) {
-							plugIns.append(aPlug)
-						}
+					if let theBundle = NSBundle(URL: component), aPlug = PPSamplePlugObject(bundle: theBundle) {
+						plugIns.append(aPlug)
 					}
 				}
 			}

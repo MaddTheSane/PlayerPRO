@@ -15,15 +15,11 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>3.0</string>
 	<key>CFBundleSignature</key>
-	<string>????</string>
+	<string>SNPL</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
-	<key>MADCanExport</key>
-	<false/>
-	<key>MADCanImport</key>
-	<true/>
+	<string>3.0</string>
 	<key>MADPlugAuthorName</key>
 	<string>C.W. Betts</string>
 	<key>MADPlugMenuName</key>
@@ -38,7 +34,7 @@
 	<string>Copyright @ 2015 C.W. "Madd the Sane" Betts</string>
 	<key>NSPrincipalClass</key>
 	<string>${PRODUCT_MODULE_NAME}.System7Sound</string>
-	<key>UTExportedTypeDeclarations</key>
+	<key>UTImportedTypeDeclarations</key>
 	<array>
 		<dict>
 			<key>UTTypeConformsTo</key>

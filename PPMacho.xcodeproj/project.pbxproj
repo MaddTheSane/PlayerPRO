@@ -147,7 +147,7 @@
 		55151F7A10DEDBDB0054ABC4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5517A24519D9D4A8002D350D /* BoxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5517A24419D9D4A8002D350D /* BoxViewController.swift */; };
 		5517DAC5180CAD61001413D0 /* ULT.ppimpexp in Copy Plug-ins */ = {isa = PBXBuildFile; fileRef = 5586881B10BF62F100FCC24D /* ULT.ppimpexp */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		5518A41A1B03E4E3005AF928 /* Sys7SwiftSound.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55D5E9581B01466D00EB2C84 /* Sys7SwiftSound.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5518A41A1B03E4E3005AF928 /* System 7.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55D5E9581B01466D00EB2C84 /* System 7.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5518A4391B03F561005AF928 /* ClassicSound.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5518A4381B03F561005AF928 /* ClassicSound.swift */; };
 		5518A43A1B03F59F005AF928 /* FVDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9841B0149FE00EB2C84 /* FVDataReader.swift */; };
 		5518A43B1B03F59F005AF928 /* FVResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9851B0149FE00EB2C84 /* FVResource.swift */; };
@@ -155,6 +155,7 @@
 		5518A43D1B03F59F005AF928 /* FVResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */; };
 		5518A43E1B03F5CE005AF928 /* sndConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9A21B0151A500EB2C84 /* sndConverter.swift */; };
 		5518A43F1B03F94C005AF928 /* AIFFToSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9981B014EEF00EB2C84 /* AIFFToSample.swift */; };
+		5518A44A1B03FFD1005AF928 /* Classic Sound.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 555E85451A041E810018FDBC /* Classic Sound.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		551E3B641AAB8CD000D3A530 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A49190497FC00F7616D /* Foundation.framework */; };
 		551E3B651AAB8D0000D3A530 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55085D861836EE7B004A152F /* AudioToolbox.framework */; };
 		551E3B661AAB8D4200D3A530 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A48190497FB00F7616D /* CoreFoundation.framework */; };
@@ -308,7 +309,6 @@
 		555C5FCA18445C6C00DBD5DA /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		555E014819FA33A10063F058 /* PPLibraryObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555E014719FA33A10063F058 /* PPLibraryObject.swift */; };
 		555E014919FA33A10063F058 /* PPLibraryObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555E014719FA33A10063F058 /* PPLibraryObject.swift */; };
-		555E853F1A041E810018FDBC /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		555F447619A1411700B8C6EE /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
 		555F447719A1411800B8C6EE /* PlayerPROKitAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */; };
 		555F5C611993327D0056AF01 /* OpenPanelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555F5C601993327D0056AF01 /* OpenPanelViewController.swift */; };
@@ -503,7 +503,6 @@
 		5591707619C2317300998D7F /* PPNormalizePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 5591707519C2317300998D7F /* PPNormalizePlug.m */; };
 		5591707919C234C100998D7F /* PPInvertPlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 5591707819C234C100998D7F /* PPInvertPlug.m */; };
 		5591708219C23C0600998D7F /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5591708419C23C0600998D7F /* InfoPlist.strings */; };
-		5591709619C24E7D00998D7F /* System7.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105410D6C79E00BB619C /* System7.c */; };
 		5591709719C2564400998D7F /* QuickTime.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55E898B710F17C2B004EB52B /* QuickTime.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		559170A619C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 559170A519C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m */; };
 		559170A819C26E1D00998D7F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 559170A719C26E1D00998D7F /* main.m */; };
@@ -916,6 +915,20 @@
 			remoteGlobalIDString = 55D5E9571B01466D00EB2C84;
 			remoteInfo = Sys7SwiftSound;
 		};
+		5518A44B1B03FFFA005AF928 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 551292D7163DD68500C2C639;
+			remoteInfo = PlayerPROKit;
+		};
+		5518A44D1B04000A005AF928 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 55E11DE01AE7114000815555;
+			remoteInfo = SwiftAudioAdditions;
+		};
 		551FEA5E10E727AD00EDF2F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1146,13 +1159,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 551292D7163DD68500C2C639;
 			remoteInfo = PlayerPROKit;
-		};
-		555E853A1A041E810018FDBC /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
-			remoteInfo = PlayerPROCore;
 		};
 		5561EF97199FBE480054B3A7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1588,13 +1594,6 @@
 			remoteGlobalIDString = 551292D7163DD68500C2C639;
 			remoteInfo = PlayerPROKit;
 		};
-		5591708819C24C1600998D7F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
-			remoteInfo = PlayerPROCore;
-		};
 		559170A919C26E1D00998D7F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1840,13 +1839,6 @@
 			remoteGlobalIDString = 55E11DEB1AE7114000815555;
 			remoteInfo = SwiftAudioAdditionsTests;
 		};
-		55D5E98E1B014A4B00EB2C84 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
-			remoteInfo = PlayerPROCore;
-		};
 		55D5E9901B014A4B00EB2C84 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -2033,7 +2025,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				5518A41A1B03E4E3005AF928 /* Sys7SwiftSound.plugin in Copy PlugIns */,
+				5518A44A1B03FFD1005AF928 /* Classic Sound.plugin in Copy PlugIns */,
+				5518A41A1B03E4E3005AF928 /* System 7.plugin in Copy PlugIns */,
 				5591709719C2564400998D7F /* QuickTime.plugin in Copy PlugIns */,
 				5511F4E9186CFC63008F6BE1 /* AIFF.plugin in Copy PlugIns */,
 				55D57E1C18601BBC00192497 /* MIDI.ppextimp in Copy PlugIns */,
@@ -2336,7 +2329,6 @@
 		554E104C10D6C79E00BB619C /* QuicktimeGeneric.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = QuicktimeGeneric.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E104D10D6C79E00BB619C /* snd.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = snd.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E105010D6C79E00BB619C /* SndUtils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = SndUtils.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
-		554E105410D6C79E00BB619C /* System7.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = System7.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E105710D6C79E00BB619C /* WAVE-Conversion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = "WAVE-Conversion.c"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		554E106510D6C9E100BB619C /* Read-Me.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = "Read-Me.rtf"; sourceTree = "<group>"; };
 		554E110510D6F09F00BB619C /* Fade Note.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Fade Note.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2537,8 +2529,6 @@
 		5591707719C234C100998D7F /* PPInvertPlug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPInvertPlug.h; sourceTree = "<group>"; };
 		5591707819C234C100998D7F /* PPInvertPlug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPInvertPlug.m; sourceTree = "<group>"; };
 		5591708319C23C0600998D7F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		5591708519C24C0700998D7F /* System-7Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "System-7Info.plist"; sourceTree = "<group>"; };
-		5591709519C24C1600998D7F /* System 7.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "System 7.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5591709F19C26E1C00998D7F /* PPCoreInstrumentPlugBridge.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = PPCoreInstrumentPlugBridge.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		559170A219C26E1D00998D7F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		559170A319C26E1D00998D7F /* PPCoreInstrumentPlugBridgeProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPCoreInstrumentPlugBridgeProtocol.h; sourceTree = "<group>"; };
@@ -2627,7 +2617,7 @@
 		55D2921E18AADB4600EB7A7D /* PPPatternObject_PcmdHandling.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPPatternObject_PcmdHandling.h; sourceTree = "<group>"; };
 		55D42F11168E45800027EBF0 /* PlayerPRO-PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO-PrefixHeader.pch"; sourceTree = "<group>"; };
 		55D59C2B1A646F60008A6E51 /* PPKSwiftToC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPKSwiftToC.m; sourceTree = "<group>"; };
-		55D5E9581B01466D00EB2C84 /* Sys7SwiftSound.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Sys7SwiftSound.plugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		55D5E9581B01466D00EB2C84 /* System 7.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "System 7.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55D5E95B1B01466D00EB2C84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55D5E9651B01471300EB2C84 /* System7Sound.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = System7Sound.swift; sourceTree = "<group>"; };
 		55D5E9671B0148CA00EB2C84 /* BridgeHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgeHeader.h; sourceTree = "<group>"; };
@@ -2925,7 +2915,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				555E853F1A041E810018FDBC /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3456,16 +3445,6 @@
 				5591708419C23C0600998D7F /* InfoPlist.strings */,
 			);
 			path = PAT;
-			sourceTree = "<group>";
-		};
-		551520BB10DEEB5E0054ABC4 /* System 7 Sound */ = {
-			isa = PBXGroup;
-			children = (
-				554E105410D6C79E00BB619C /* System7.c */,
-				5591708519C24C0700998D7F /* System-7Info.plist */,
-			);
-			name = "System 7 Sound";
-			path = "System 7";
 			sourceTree = "<group>";
 		};
 		551520C310DEED260054ABC4 /* MINs */ = {
@@ -4124,7 +4103,6 @@
 				551520C310DEED260054ABC4 /* MINs */,
 				551520BA10DEEB370054ABC4 /* PAT */,
 				551520C410DEED460054ABC4 /* QuickTime */,
-				551520BB10DEEB5E0054ABC4 /* System 7 Sound */,
 				55D5E9591B01466D00EB2C84 /* Sys7SwiftSound */,
 				555E85361A041E580018FDBC /* Classic Sound */,
 				551520A310DEE9570054ABC4 /* Wave */,
@@ -4621,7 +4599,6 @@
 				55D5E9651B01471300EB2C84 /* System7Sound.swift */,
 				55D5E9A21B0151A500EB2C84 /* sndConverter.swift */,
 				55D5E95A1B01466D00EB2C84 /* Supporting Files */,
-				55D5E9671B0148CA00EB2C84 /* BridgeHeader.h */,
 			);
 			path = Sys7SwiftSound;
 			sourceTree = "<group>";
@@ -4629,6 +4606,7 @@
 		55D5E95A1B01466D00EB2C84 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				55D5E9671B0148CA00EB2C84 /* BridgeHeader.h */,
 				55D5E95B1B01466D00EB2C84 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -4912,14 +4890,13 @@
 				55E898B710F17C2B004EB52B /* QuickTime.plugin */,
 				550FFAEB17CEA4570003A2F3 /* AIFF.plugin */,
 				55ADC3DB17D6F390001F27D4 /* Wave.plugin */,
-				5591709519C24C1600998D7F /* System 7.plugin */,
 				555E85451A041E810018FDBC /* Classic Sound.plugin */,
 				55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */,
 				55F1BDE31975CBFE00AD2C03 /* PlayerPROKit.framework */,
 				55ADD23A19B4F858005588B5 /* PlayerPROKit Tests.xctest */,
 				5552724F1A0000C8008B8616 /* PlayerPROKit-iOS Tests.xctest */,
 				55534ACD1817C387006D6BCB /* updateInfoPlist */,
-				55D5E9581B01466D00EB2C84 /* Sys7SwiftSound.plugin */,
+				55D5E9581B01466D00EB2C84 /* System 7.plugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5406,14 +5383,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 555E85421A041E810018FDBC /* Build configuration list for PBXNativeTarget "Classic Sound" */;
 			buildPhases = (
-				555E853B1A041E810018FDBC /* Resources */,
 				555E853C1A041E810018FDBC /* Sources */,
 				555E853E1A041E810018FDBC /* Frameworks */,
+				555E853B1A041E810018FDBC /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				555E85391A041E810018FDBC /* PBXTargetDependency */,
+				5518A44E1B04000A005AF928 /* PBXTargetDependency */,
+				5518A44C1B03FFFA005AF928 /* PBXTargetDependency */,
 			);
 			name = "Classic Sound";
 			productName = "Complex Fade";
@@ -5998,23 +5976,6 @@
 			productReference = 55868A6710BFB46100FCC24D /* Classic App.ppextimp */;
 			productType = "com.apple.product-type.bundle";
 		};
-		5591708619C24C1600998D7F /* System 7 */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 5591709219C24C1600998D7F /* Build configuration list for PBXNativeTarget "System 7" */;
-			buildPhases = (
-				5591708919C24C1600998D7F /* Resources */,
-				5591708A19C24C1600998D7F /* Sources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				5591708719C24C1600998D7F /* PBXTargetDependency */,
-			);
-			name = "System 7";
-			productName = "Complex Fade";
-			productReference = 5591709519C24C1600998D7F /* System 7.plugin */;
-			productType = "com.apple.product-type.bundle";
-		};
 		5591709E19C26E1C00998D7F /* PPCoreInstrumentPlugBridge */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 559170AE19C26E1D00998D7F /* Build configuration list for PBXNativeTarget "PPCoreInstrumentPlugBridge" */;
@@ -6179,9 +6140,9 @@
 			productReference = 55CBF9A611EB77760028C6BB /* PlayerPRO 6.app */;
 			productType = "com.apple.product-type.application";
 		};
-		55D5E9571B01466D00EB2C84 /* Sys7SwiftSound */ = {
+		55D5E9571B01466D00EB2C84 /* System 7 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 55D5E9641B01466D00EB2C84 /* Build configuration list for PBXNativeTarget "Sys7SwiftSound" */;
+			buildConfigurationList = 55D5E9641B01466D00EB2C84 /* Build configuration list for PBXNativeTarget "System 7" */;
 			buildPhases = (
 				55D5E9541B01466D00EB2C84 /* Sources */,
 				55D5E9551B01466D00EB2C84 /* Frameworks */,
@@ -6190,13 +6151,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				55D5E98F1B014A4B00EB2C84 /* PBXTargetDependency */,
 				55D5E9911B014A4B00EB2C84 /* PBXTargetDependency */,
 				55D5E9931B014A4B00EB2C84 /* PBXTargetDependency */,
 			);
-			name = Sys7SwiftSound;
+			name = "System 7";
 			productName = Sys7SwiftSound;
-			productReference = 55D5E9581B01466D00EB2C84 /* Sys7SwiftSound.plugin */;
+			productReference = 55D5E9581B01466D00EB2C84 /* System 7.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 		55E898A810F17C2B004EB52B /* QuickTime */ = {
@@ -6394,8 +6354,7 @@
 				551FEA5C10E727AD00EDF2F1 /* MINs */,
 				551FEACB10E727B100EDF2F1 /* PAT */,
 				55ADC3CF17D6F390001F27D4 /* Wave */,
-				5591708619C24C1600998D7F /* System 7 */,
-				55D5E9571B01466D00EB2C84 /* Sys7SwiftSound */,
+				55D5E9571B01466D00EB2C84 /* System 7 */,
 				555E85381A041E810018FDBC /* Classic Sound */,
 				55E898A810F17C2B004EB52B /* QuickTime */,
 				557DE3BD10E06BB500177B4C /* Filters Plugs */,
@@ -6878,13 +6837,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				55BF238F19A937C9005B1F96 /* PPAPPLImporter.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		5591708919C24C1600998D7F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7573,14 +7525,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5591708A19C24C1600998D7F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				5591709619C24E7D00998D7F /* System7.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5591709B19C26E1C00998D7F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -7885,8 +7829,18 @@
 		};
 		5518A4191B03E492005AF928 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 55D5E9571B01466D00EB2C84 /* Sys7SwiftSound */;
+			target = 55D5E9571B01466D00EB2C84 /* System 7 */;
 			targetProxy = 5518A4181B03E492005AF928 /* PBXContainerItemProxy */;
+		};
+		5518A44C1B03FFFA005AF928 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
+			targetProxy = 5518A44B1B03FFFA005AF928 /* PBXContainerItemProxy */;
+		};
+		5518A44E1B04000A005AF928 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAudioAdditions;
+			targetProxy = 5518A44D1B04000A005AF928 /* PBXContainerItemProxy */;
 		};
 		551FEA5D10E727AD00EDF2F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8052,11 +8006,6 @@
 			isa = PBXTargetDependency;
 			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
 			targetProxy = 555A283A19B01AB800FB4D5B /* PBXContainerItemProxy */;
-		};
-		555E85391A041E810018FDBC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
-			targetProxy = 555E853A1A041E810018FDBC /* PBXContainerItemProxy */;
 		};
 		5561EF98199FBE480054B3A7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -8368,11 +8317,6 @@
 			target = 551292D7163DD68500C2C639 /* PlayerPROKit */;
 			targetProxy = 55886F7217DEDAA200021A82 /* PBXContainerItemProxy */;
 		};
-		5591708719C24C1600998D7F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
-			targetProxy = 5591708819C24C1600998D7F /* PBXContainerItemProxy */;
-		};
 		559170AA19C26E1D00998D7F /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5591709E19C26E1C00998D7F /* PPCoreInstrumentPlugBridge */;
@@ -8507,11 +8451,6 @@
 			isa = PBXTargetDependency;
 			target = 5533410810BB5460005208D1 /* Import-export */;
 			targetProxy = 55CBF9FF11EB77AA0028C6BB /* PBXContainerItemProxy */;
-		};
-		55D5E98F1B014A4B00EB2C84 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
-			targetProxy = 55D5E98E1B014A4B00EB2C84 /* PBXContainerItemProxy */;
 		};
 		55D5E9911B014A4B00EB2C84 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10637,42 +10576,6 @@
 			};
 			name = Debug;
 		};
-		5591709319C24C1600998D7F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					ISUSINGPPPLUG,
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/System 7/System-7Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				ONLY_ACTIVE_ARCH = NO;
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = Release;
-		};
-		5591709419C24C1600998D7F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					ISUSINGPPPLUG,
-					"$(inherited)",
-				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Instruments Import-Export Plugs/System 7/System-7Info.plist";
-				INSTALL_PATH = "$(HOME)/Library/Bundles";
-				ONLY_ACTIVE_ARCH = NO;
-				WRAPPER_EXTENSION = plugin;
-			};
-			name = Debug;
-		};
 		559170AF19C26E1D00998D7F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -11803,15 +11706,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5591709219C24C1600998D7F /* Build configuration list for PBXNativeTarget "System 7" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				5591709319C24C1600998D7F /* Release */,
-				5591709419C24C1600998D7F /* Debug */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		559170AE19C26E1D00998D7F /* Build configuration list for PBXNativeTarget "PPCoreInstrumentPlugBridge" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -11893,7 +11787,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		55D5E9641B01466D00EB2C84 /* Build configuration list for PBXNativeTarget "Sys7SwiftSound" */ = {
+		55D5E9641B01466D00EB2C84 /* Build configuration list for PBXNativeTarget "System 7" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				55D5E95C1B01466D00EB2C84 /* Release */,
