@@ -28,7 +28,7 @@ void MyPPBeep()
 Boolean CFPreferencesHaveBeenSet()
 {
 	BOOL isSet = NO;
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	isSet = [[NSUserDefaults standardUserDefaults] boolForKey:PPPreferencesSet];
 	[pool drain];
 	
@@ -37,7 +37,7 @@ Boolean CFPreferencesHaveBeenSet()
 
 void RegisterCFDefaults()
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSArray *pianoArray = [[NSArray alloc] initWithObjects:
 						   [NSNumber numberWithShort:-4400],
 						   [NSNumber numberWithShort:-1],
@@ -342,113 +342,109 @@ void RegisterCFDefaults()
 						   nil];
 	
 	NSMutableArray *filters = [NSMutableArray arrayWithCapacity:EQPACKET * 2];
-	{
-		NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
-		for (int i = 0; i < EQPACKET*2; i++) {
-			[filters addObject:[NSNumber numberWithDouble:1.0]];
-		}
-		[innerPool drain];
+	for (int i = 0; i < EQPACKET*2; i++) {
+		[filters addObject:[NSNumber numberWithDouble:1.0]];
 	}
 	
 	static NSArray *theColors = nil;
 	if (!theColors) {
 		theColors = [NSArray arrayWithObjects:
-					 [makeNSRGB(61166, 0, 0) PPencodeColor],
-					 [makeNSRGB(35980, 48316, 7196) PPencodeColor],
-					 [makeNSRGB(13107, 65535, 65535) PPencodeColor],
+					 [makeNSRGB(0xEEEE, 0x0000, 0x0000) PPencodeColor],
+					 [makeNSRGB(0x8C8C, 0xBCBC, 0x1C1C) PPencodeColor],
+					 [makeNSRGB(0x3333, 0xFFFF, 0xFFFF) PPencodeColor],
 					 [[NSColor yellowColor] PPencodeColor],
-					 [makeNSRGB(24672, 51914, 36494) PPencodeColor],
-					 [makeNSRGB(13107, 65535, 65535) PPencodeColor],
-					 [makeNSRGB(26214, 52428, 65535) PPencodeColor],
-					 [makeNSRGB(65535, 25428, 65535) PPencodeColor],
-					 [makeNSRGB(52428, 39321, 26214) PPencodeColor],
-					 [makeNSRGB(13107, 26214, 13107) PPencodeColor],
-					 [makeNSRGB(65535, 26214, 65535) PPencodeColor],
-					 [makeNSRGB(65535, 39321, 0) PPencodeColor],
-					 [makeNSRGB(52428, 65535, 52428) PPencodeColor],
-					 [makeNSRGB(39321, 0, 26214) PPencodeColor],
-					 [makeNSRGB(26214, 52428, 0) PPencodeColor],
-					 [makeNSRGB(65535, 39321, 65535) PPencodeColor],
-					 [makeNSRGB(52428, 65535, 26214) PPencodeColor],
-					 [makeNSRGB(26214, 0, 39321) PPencodeColor],
-					 [makeNSRGB(52428, 0, 39321) PPencodeColor],
-					 [makeNSRGB(52428, 39321, 65535) PPencodeColor],
-					 [makeNSRGB(26214, 52428, 26214) PPencodeColor],
-					 [makeNSRGB(52428, 52428, 13107) PPencodeColor],
-					 [makeNSRGB(39321, 52428, 52428) PPencodeColor],
-					 [makeNSRGB(26214, 13109, 26214) PPencodeColor],
-					 [makeNSRGB(52428, 39321, 52428) PPencodeColor],
-					 [makeNSRGB(13107, 65535, 65535) PPencodeColor],
-					 [makeNSRGB(13107, 65535, 26214) PPencodeColor],
-					 [makeNSRGB(26214, 65535, 13107) PPencodeColor],
-					 [makeNSRGB(52428, 39321, 52428) PPencodeColor],
-					 [makeNSRGB(52428, 39321, 13107) PPencodeColor],
-					 [makeNSRGB(52428, 52428, 13107) PPencodeColor],
-					 [makeNSRGB(65535, 52428, 0) PPencodeColor],
-					 [makeNSRGB(61166, 0, 0) PPencodeColor],
-					 [makeNSRGB(0, 65535, 26214) PPencodeColor],
+					 [makeNSRGB(0x6060, 0xCACA, 0x8E8E) PPencodeColor],
+					 [makeNSRGB(0x3333, 0xFFFF, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0x6666, 0xCCCC, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0xFFFF, 0x6354, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0x9999, 0x6666) PPencodeColor],
+					 [makeNSRGB(0x3333, 0x6666, 0x3333) PPencodeColor],
+					 [makeNSRGB(0xFFFF, 0x6666, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0xFFFF, 0x9999, 0x0000) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0xFFFF, 0xCCCC) PPencodeColor],
+					 [makeNSRGB(0x9999, 0x0000, 0x6666) PPencodeColor],
+					 [makeNSRGB(0x6666, 0xCCCC, 0x0000) PPencodeColor],
+					 [makeNSRGB(0xFFFF, 0x9999, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0xFFFF, 0x6666) PPencodeColor],
+					 [makeNSRGB(0x6666, 0x0000, 0x9999) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0x0000, 0x9999) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0x9999, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0x6666, 0xCCCC, 0x6666) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0xCCCC, 0x3333) PPencodeColor],
+					 [makeNSRGB(0x9999, 0xCCCC, 0xCCCC) PPencodeColor],
+					 [makeNSRGB(0x6666, 0x3333, 0x6666) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0x9999, 0xCCCC) PPencodeColor],
+					 [makeNSRGB(0x3333, 0xFFFF, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0x3333, 0xFFFF, 0x6666) PPencodeColor],
+					 [makeNSRGB(0x6666, 0xFFFF, 0x3333) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0x9999, 0xCCCC) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0x9999, 0x3333) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0xCCCC, 0x3333) PPencodeColor],
+					 [makeNSRGB(0xFFFF, 0xCCCC, 0x0000) PPencodeColor],
+					 [makeNSRGB(0xEEEE, 0x0000, 0x0000) PPencodeColor],
+					 [makeNSRGB(0x0000, 0xFFFF, 0x6666) PPencodeColor],
 					 [[NSColor cyanColor] PPencodeColor], 
 					 [[NSColor yellowColor] PPencodeColor],
 					 [[NSColor greenColor] PPencodeColor],
-					 [makeNSRGB(13107, 52428, 65535) PPencodeColor],
-					 [makeNSRGB(39321, 52428, 39321) PPencodeColor],
-					 [makeNSRGB(65535, 39321, 26214) PPencodeColor],
-					 [makeNSRGB(39321, 65535, 65535) PPencodeColor],
-					 [makeNSRGB(26214, 65535, 65535) PPencodeColor],
-					 [makeNSRGB(65535, 39321, 65535) PPencodeColor],
-					 [makeNSRGB(0, 21845, 0) PPencodeColor],
-					 [makeNSRGB(52428, 65535, 52428) PPencodeColor],
-					 [makeNSRGB(26214, 0, 0) PPencodeColor],
-					 [makeNSRGB(13107, 65535, 26214) PPencodeColor],
-					 [makeNSRGB(65535, 65535, 26214) PPencodeColor],
-					 [makeNSRGB(52428, 0, 0) PPencodeColor],
-					 [makeNSRGB(39321, 0, 13107) PPencodeColor],
-					 [makeNSRGB(39321, 65535, 39321) PPencodeColor],
-					 [makeNSRGB(39321, 52428, 52428) PPencodeColor],
-					 [makeNSRGB(52428, 52428, 0) PPencodeColor],
-					 [makeNSRGB(52428, 52428, 13107) PPencodeColor],
-					 [makeNSRGB(65535, 39321, 65535) PPencodeColor],
+					 [makeNSRGB(0x3333, 0xCCCC, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0x9999, 0xCCCC, 0x9999) PPencodeColor],
+					 [makeNSRGB(0xFFFF, 0x9999, 0x6666) PPencodeColor],
+					 [makeNSRGB(0x9999, 0xFFFF, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0x6666, 0xFFFF, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0xFFFF, 0x9999, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0x0000, 0x5555, 0x0000) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0xFFFF, 0xCCCC) PPencodeColor],
+					 [makeNSRGB(0x6666, 0x0000, 0x0000) PPencodeColor],
+					 [makeNSRGB(0x3333, 0xFFFF, 0x6666) PPencodeColor],
+					 [makeNSRGB(0xFFFF, 0xFFFF, 0x6666) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0x0000, 0x0000) PPencodeColor],
+					 [makeNSRGB(0x9999, 0x0000, 0x3333) PPencodeColor],
+					 [makeNSRGB(0x9999, 0xFFFF, 0x9999) PPencodeColor],
+					 [makeNSRGB(0x9999, 0xCCCC, 0xCCCC) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0xCCCC, 0x0000) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0xCCCC, 0x3333) PPencodeColor],
+					 [makeNSRGB(0xFFFF, 0x9999, 0xFFFF) PPencodeColor],
 					 [[NSColor redColor] PPencodeColor],
-					 [makeNSRGB(65535, 0, 26214) PPencodeColor],
-					 [makeNSRGB(26214, 65535, 65535) PPencodeColor],
-					 [makeNSRGB(26214, 65535, 52428) PPencodeColor],
-					 [makeNSRGB(39321, 52428, 26214) PPencodeColor],
-					 [makeNSRGB(39321, 52428, 39321) PPencodeColor],
-					 [makeNSRGB(39321, 52428, 26214) PPencodeColor],
-					 [makeNSRGB(52428, 52428, 26214) PPencodeColor],
-					 [makeNSRGB(52428, 52428, 39321) PPencodeColor],
-					 [makeNSRGB(61166, 0, 0) PPencodeColor],
-					 [makeNSRGB(0, 65535, 26214) PPencodeColor],
-					 [makeNSRGB(0, 65535, 65535) PPencodeColor],
-					 [makeNSRGB(65535, 65535, 0) PPencodeColor],
+					 [makeNSRGB(0xFFFF, 0x0000, 0x6666) PPencodeColor],
+					 [makeNSRGB(0x6666, 0xFFFF, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0x6666, 0xFFFF, 0xCCCC) PPencodeColor],
+					 [makeNSRGB(0x9999, 0xCCCC, 0x6666) PPencodeColor],
+					 [makeNSRGB(0x9999, 0xCCCC, 0x9999) PPencodeColor],
+					 [makeNSRGB(0x9999, 0xCCCC, 0x6666) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0xCCCC, 0x6666) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0xCCCC, 0x9999) PPencodeColor],
+					 [makeNSRGB(0xEEEE, 0x0000, 0x0000) PPencodeColor],
+					 [makeNSRGB(0x0000, 0xFFFF, 0x6666) PPencodeColor],
+					 [makeNSRGB(0x0000, 0xFFFF, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0xFFFF, 0xFFFF, 0x0000) PPencodeColor],
 					 [[NSColor greenColor] PPencodeColor],
-					 [makeNSRGB(13107, 52428, 65535) PPencodeColor],
-					 [makeNSRGB(39321, 52428, 39321) PPencodeColor],
-					 [makeNSRGB(65535, 39321, 26214) PPencodeColor],
-					 [makeNSRGB(39321, 65535, 65535) PPencodeColor],
-					 [makeNSRGB(26214, 65535, 65535) PPencodeColor],
-					 [makeNSRGB(65535, 39321, 65535) PPencodeColor],
-					 [makeNSRGB(0, 21845, 0) PPencodeColor],
-					 [makeNSRGB(52428, 65535, 52428) PPencodeColor],
-					 [makeNSRGB(26214, 0, 0) PPencodeColor],
-					 [makeNSRGB(13107, 65535, 26214) PPencodeColor],
-					 [makeNSRGB(65535, 65535, 26214) PPencodeColor], 
-					 [makeNSRGB(52428, 0, 0) PPencodeColor],
-					 [makeNSRGB(39321, 0, 13107) PPencodeColor],
-					 [makeNSRGB(39321, 65535, 39321) PPencodeColor],
-					 [makeNSRGB(39321, 52428, 52428) PPencodeColor],
-					 [makeNSRGB(52428, 52428, 0) PPencodeColor], 
-					 [makeNSRGB(52428, 52428, 13107) PPencodeColor], 
-					 [makeNSRGB(65535, 39321, 65535) PPencodeColor], 
+					 [makeNSRGB(0x3333, 0xCCCC, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0x9999, 0xCCCC, 0x9999) PPencodeColor],
+					 [makeNSRGB(0xFFFF, 0x9999, 0x6666) PPencodeColor],
+					 [makeNSRGB(0x9999, 0xFFFF, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0x6666, 0xFFFF, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0xFFFF, 0x9999, 0xFFFF) PPencodeColor],
+					 [makeNSRGB(0x0000, 0x5555, 0x0000) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0xFFFF, 0xCCCC) PPencodeColor],
+					 [makeNSRGB(0x6666, 0x0000, 0x0000) PPencodeColor],
+					 [makeNSRGB(0x3333, 0xFFFF, 0x6666) PPencodeColor],
+					 [makeNSRGB(0xFFFF, 0xFFFF, 0x6666) PPencodeColor], 
+					 [makeNSRGB(0xCCCC, 0x0000, 0x0000) PPencodeColor],
+					 [makeNSRGB(0x9999, 0x0000, 0x3333) PPencodeColor],
+					 [makeNSRGB(0x9999, 0xFFFF, 0x9999) PPencodeColor],
+					 [makeNSRGB(0x9999, 0xCCCC, 0xCCCC) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0xCCCC, 0x0000) PPencodeColor],
+					 [makeNSRGB(0xCCCC, 0xCCCC, 0x3333) PPencodeColor], 
+					 [makeNSRGB(0xFFFF, 0x9999, 0xFFFF) PPencodeColor], 
 					 [[NSColor redColor] PPencodeColor], 
-					 [makeNSRGB(39321, 0, 26214) PPencodeColor], 
-					 [makeNSRGB(26214, 65535, 65535) PPencodeColor], 
-					 [makeNSRGB(26214, 65535, 52428) PPencodeColor], 
-					 [makeNSRGB(39321, 52428, 26214) PPencodeColor], 
-					 [makeNSRGB(39321, 52428, 39321) PPencodeColor], 
-					 [makeNSRGB(39321, 52428, 26214) PPencodeColor], 
-					 [makeNSRGB(52428, 52428, 26214) PPencodeColor], 
-					 [makeNSRGB(52428, 52428, 39321) PPencodeColor], nil];
+					 [makeNSRGB(0x9999, 0x0000, 0x6666) PPencodeColor],
+					 [makeNSRGB(0x6666, 0xFFFF, 0xFFFF) PPencodeColor], 
+					 [makeNSRGB(0x6666, 0xFFFF, 0xCCCC) PPencodeColor], 
+					 [makeNSRGB(0x9999, 0xCCCC, 0x6666) PPencodeColor], 
+					 [makeNSRGB(0x9999, 0xCCCC, 0x9999) PPencodeColor], 
+					 [makeNSRGB(0x9999, 0xCCCC, 0x6666) PPencodeColor], 
+					 [makeNSRGB(0xCCCC, 0xCCCC, 0x6666) PPencodeColor], 
+					 [makeNSRGB(0xCCCC, 0xCCCC, 0x9999) PPencodeColor], nil];
 		[theColors retain];
 	}
 	
@@ -465,8 +461,8 @@ void RegisterCFDefaults()
 	  [NSNumber numberWithInt:0], PPStartNumber,
 	  pianoArray, PPPianoKeys,
 	  [NSNumber numberWithShort:1], PPLoopType,
-	  [NSNumber numberWithShort:3], PPVolumeLevel,
-	  [NSNumber numberWithFloat:FixedToFloat(rate44khz)], PPSoundOutRate,
+	  [NSNumber numberWithShort:27], PPVolumeLevel,
+	  [NSNumber numberWithFloat:FixedToFloat((unsigned)rate44khz)], PPSoundOutRate,
 	  [NSNumber numberWithShort:SoundManagerDriver], PPSoundDriver,
 	  [NSNumber numberWithShort:16], PPSoundOutBits,
 	  [NSNumber numberWithBool:NO], PPSurroundToggle,
@@ -484,7 +480,7 @@ void RegisterCFDefaults()
 	  [NSNumber numberWithShort:4], PPCETempoNum,
 	  [NSNumber numberWithShort:4], PPCETempoUnit,
 	  
-	  [makeNSRGB(65535, 65535, 39321) PPencodeColor], PPDEMarkerColorPref,
+	  [makeNSRGB(0xFFFF, 0xFFFF, 0x9999) PPencodeColor], PPDEMarkerColorPref,
 	  [NSNumber numberWithBool:YES], PPDEShowArgument,
 	  [NSNumber numberWithBool:YES], PPDEShowEffect,
 	  [NSNumber numberWithBool:YES], PPDEShowInstrument,
@@ -500,7 +496,8 @@ void RegisterCFDefaults()
 	  [NSNumber numberWithBool:NO], PPUseEQ,
 	  [NSNumber numberWithBool:NO], PPDontUseFileMixer,
 	  filters, PPFilterArray,
-	  
+	  [NSNumber numberWithBool:NO], PPAutomaticOpen,
+	  [NSNumber numberWithInt:1], PPRecordAllTrack,
 	  nil]];
 	
 	[pianoArray release];
@@ -509,7 +506,7 @@ void RegisterCFDefaults()
 
 void ResetCFPreferences()
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
 	[[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
 	[pool drain];
@@ -517,7 +514,7 @@ void ResetCFPreferences()
 
 void ReadCFPreferences()
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *tempStr = nil;
 	NSArray *tempArray = nil;
@@ -591,6 +588,8 @@ void ReadCFPreferences()
 	thePrefs.SendMIDIClockData = [defaults boolForKey:PPMIDISendClock];
 	
 	thePrefs.DontUseFilesMix = [defaults boolForKey:PPDontUseFileMixer];
+	thePrefs.AutomaticOpen = [defaults boolForKey:PPAutomaticOpen];
+	thePrefs.RecordAllTrack = [defaults integerForKey:PPRecordAllTrack];
 	
 	NSArray *filterArray = [defaults objectForKey:PPFilterArray];
 	NSUInteger count = [filterArray count];
@@ -603,10 +602,11 @@ void ReadCFPreferences()
 
 void WriteCFPreferences()
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSMutableArray *tmpMutable = nil;
 	int i;
+	NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
 	[defaults setBool:thePrefs.addExtension forKey:PPMAddExtension];
 	[defaults setBool:thePrefs.MADCompression forKey:PPMMadCompression];
 #define PPCOLOR(val) WriteCFPreferencesArrayWithQDColor(val, thePrefs.tracksColor[val - 1])
@@ -621,8 +621,9 @@ void WriteCFPreferences()
 		[tmpMutable addObject:[NSNumber numberWithShort:thePrefs.PianoKey[i]]];
 	}
 	[defaults setObject:tmpMutable forKey:PPPianoKeys];
-	[tmpMutable release];
-	tmpMutable = nil;
+	[tmpMutable release]; tmpMutable = nil;
+	[innerPool drain]; innerPool = nil;
+	
 	[defaults setInteger:thePrefs.LoopType forKey:PPLoopType];
 	[defaults setInteger:thePrefs.volumeLevel forKey:PPVolumeLevel];
 	[defaults setInteger:thePrefs.ReverbStrength forKey:PPReverbStrength];
@@ -661,18 +662,18 @@ void WriteCFPreferences()
 	[defaults setBool:thePrefs.patternWrapping forKey:PPDEPatternWrappingPartition];
 	
 	[defaults setBool:thePrefs.SendMIDIClockData forKey:PPMIDISendClock];
-	{
-		NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
-		NSMutableArray *filterArray = [[NSMutableArray alloc] initWithCapacity:EQPACKET * 2];
-		for (int i = 0; i < EQPACKET * 2; i++) {
-			[filterArray addObject:[NSNumber numberWithDouble:thePrefs.Filter[i]]];
-		}
-		
-		[filterArray release];
-		[innerPool drain];
+
+	tmpMutable = [[NSMutableArray alloc] initWithCapacity:EQPACKET * 2];
+	for (int i = 0; i < EQPACKET * 2; i++) {
+		[tmpMutable addObject:[NSNumber numberWithDouble:thePrefs.Filter[i]]];
 	}
+	[defaults setObject:tmpMutable forKey:PPFilterArray];
+	[tmpMutable release]; tmpMutable = nil;
+
 	[defaults setBool:thePrefs.useEQ forKey:PPUseEQ];
 	[defaults setBool:thePrefs.DontUseFilesMix forKey:PPDontUseFileMixer];
+	[defaults setBool:thePrefs.AutomaticOpen forKey:PPAutomaticOpen];
+	[defaults setInteger:thePrefs.RecordAllTrack forKey:PPRecordAllTrack];
 	
 	[defaults synchronize];
 	
@@ -681,7 +682,7 @@ void WriteCFPreferences()
 
 void WriteCFPreferencesArrayWithQDColor(NSInteger valueNum, RGBColor valVal)
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSMutableArray *colorsArray = [[defaults valueForKey:PPCColorArray] mutableCopy];
 	NSData *colorData = [[NSColor PPColorFromQDColor:valVal] PPencodeColor];
@@ -695,14 +696,14 @@ void WriteCFPreferencesArrayWithQDColor(NSInteger valueNum, RGBColor valVal)
 
 void WriteCFPreferencesWithQDColor(NSString *valName, RGBColor valVal)
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	[[NSUserDefaults standardUserDefaults] setObject:[[NSColor PPColorFromQDColor:valVal] PPencodeColor] forKey:valName];
 	[pool drain];
 }
 
 BOOL ReadCFPreferencesWithQDColor(NSString *valName, RGBColor *valVal)
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSData *colorDat = [[NSUserDefaults standardUserDefaults] valueForKey:valName];
 	if (colorDat) {
 		NSColor *colorClass = [NSColor PPDecodeColorWithData:colorDat];
@@ -718,7 +719,7 @@ BOOL ReadCFPreferencesWithQDColor(NSString *valName, RGBColor *valVal)
 
 BOOL ReadCFPreferencesArrayWithQDColor(NSInteger valueNum, RGBColor *valVal)
 {
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSArray *colorArray = [[NSUserDefaults standardUserDefaults] valueForKey:PPCColorArray];
 	if (colorArray) {
 		NSData *colorDat = [colorArray objectAtIndex:valueNum - 1];

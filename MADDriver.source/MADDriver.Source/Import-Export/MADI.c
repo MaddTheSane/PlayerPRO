@@ -90,11 +90,6 @@ static oldCmd* GetOldCommand(short PosX, short	TrackIdX, oldPatData*	tempMusicPa
 	return(&(tempMusicPat->Cmds[(tempMusicPat->header.size * TrackIdX) + PosX]));
 }
 
-static inline void MADHmystrcpy(Ptr a, BytePtr b)
-{
-	BlockMoveData(b + 1, a, b[0]);
-}
-
 static void MOToldsData(struct oldsData * s)
 {
 	MOT32(&s->size);

@@ -87,6 +87,8 @@
 
 #define PPUseEQ @"UseEq"
 #define PPDontUseFileMixer @"Don't use File Mixer"
+#define PPAutomaticOpen @"Automatic Open"
+#define PPRecordAllTrack @"Record all tracks?"
 
 #define PPFilterArray @"Filter array"
 

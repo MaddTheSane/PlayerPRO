@@ -7,6 +7,7 @@
 #include "FileUtils.h"
 #include <Carbon/Carbon.h>
 #include <QuickTime/QuickTime.h>
+#include <stdbool.h>
 
 #define IsCodeOK() false
 static inline OSErr CallPlug(short item)
@@ -18,10 +19,10 @@ static inline OSErr CallPlug(short item)
 
 typedef struct MIDISettings
 {
-	Boolean		MIDIVelocity;
+	bool		MIDIVelocity;
 	long		Factor;
-	Boolean		MIDIChannel;
-	Boolean		MIDINoteOff;
+	bool		MIDIChannel;
+	bool		MIDINoteOff;
 } MIDISettings;
 
 enum
@@ -45,9 +46,9 @@ struct OLDMADSpec
 	Byte		MultiChan;					// MultiChannel per tracks?
 	long		EPitch;						// New Pitch
 	long		ESpeed;						// New Speed
-	Byte		XMLinear;					// Linear picth table?
-	Byte		MODMode;					// Limit pitch to MOD pitch table
-	Byte		showCopyright;				// Show infos at startup? true or false
+	bool		XMLinear;					// Linear picth table?
+	bool		MODMode;					// Limit pitch to MOD pitch table
+	bool		showCopyright;				// Show infos at startup? true or false
 	Byte		generalPitch;				// General Pitch
 	Byte		generalSpeed;				// General Speed
 	Byte		generalVol;					// Software general volume
@@ -65,8 +66,8 @@ struct OLDMADSpec
 
 typedef struct
 {
-	Boolean			PPCMachine;
-	Boolean			AutoCreator;
+	bool			PPCMachine;
+	bool			AutoCreator;
 	short			NoStart;
 	short			PianoKey[300];
 	short			LoopType;
@@ -74,26 +75,26 @@ typedef struct
 	RGBColor		tracksColor[96];
 	short			PianoPos;
 	short			volumeLevel;
-	Boolean			MADCompression;
+	bool			MADCompression;
 	//Boolean			SSText;
 	//Boolean			SSStars;
 	//Boolean			SSJumping;
 	//Boolean			FText;
 	//Boolean			FStars;
 	//Boolean			FBalls;
-	Boolean			ThreadUse;
+	bool			ThreadUse;
 	//Boolean			FSinScroll;
-	Boolean			RememberMusicList;
-	Boolean			OscilloLine;
-	Boolean			DigitalInstru;
-	Boolean			DigitalNote;
-	Boolean			DigitalEffect;
-	Boolean			DigitalArgu;
-	Boolean			DigitalVol;
-	Boolean			GoToStop;
+	bool			RememberMusicList;
+	bool			OscilloLine;
+	bool			DigitalInstru;
+	bool			DigitalNote;
+	bool			DigitalEffect;
+	bool			DigitalArgu;
+	bool			DigitalVol;
+	bool			GoToStop;
 	short			OscilloSize;
 	short			OscilloType;
-	Boolean			ActiveHelp;
+	bool			ActiveHelp;
 	short			SpectrumSize;
 	short			SpectrumType;
 	
@@ -104,63 +105,63 @@ typedef struct
 	UnsignedFixed	outPutRate;							// Fixed number, by example : rate44khz, rate22050hz, rate22khz, rate11khz, rate11025hz
 	short			outPutMode;							// MonoOutPut, StereoOutPut or DeluxeStereoOutPut ?
 	short			driverMode;							// ASCSoundDriver, AWACSoundDriver, MIDISoundDriver or SoundManagerDriver
-	Boolean			antiAliasing;						// Use AntiAliasing filter ?
+	bool			antiAliasing;						// Use AntiAliasing filter ?
 
 	/** Mozart Prefs **/
 
-	Boolean			UseOctaveMarkers;
-	Boolean			UseMarkers;
+	bool			UseOctaveMarkers;
+	bool			UseMarkers;
 	short			MarkersSize;
 	short			MarkersOffSet;
 	short			MozartX;
 
 	/** News 4.5	**/
 	
-	Boolean			SpectrumScale;
-	Boolean			ClassicalProjection;
-	Boolean			PianoOctaveMarkers;
-	Boolean			SmallPiano;
-	Boolean			FastMusicList;
+	bool			SpectrumScale;
+	bool			ClassicalProjection;
+	bool			PianoOctaveMarkers;
+	bool			SmallPiano;
+	bool			FastMusicList;
 	long			FastDigitalEdition;
 	
-	Boolean			MacKeyBoard;
-	Boolean			MidiKeyBoard;
+	bool			MacKeyBoard;
+	bool			MidiKeyBoard;
 	
-	Boolean			MIDIVelocity;
-	Boolean			MIDIChanInsTrack;
+	bool			MIDIVelocity;
+	bool			MIDIChanInsTrack;
 	
 	short			KeyUpMode;
 	
 	/** News 4.5.1	**/
 	
 	long			MicroDelaySize;
-	Boolean			surround;
+	bool			surround;
 
 	/** News 4.5.2	**/
 
-	Boolean			OCArrow[MAXINSTRU];
+	bool			OCArrow[MAXINSTRU];
 	short			MozartC1h, MozartC2h;
 	OSType			SoundTypeSamp;
 	OSType			SoundTypeIns;
 	short			LinesHeight;
-	Boolean			SaveMusicList;
+	bool			SaveMusicList;
 	short			softVolumeLevel;
 	
-	Boolean			osciTile;
+	bool			osciTile;
 	
-	Boolean			addExtension;
+	bool			addExtension;
 	
-	Boolean			AutoPlayWhenOpen;
+	bool			AutoPlayWhenOpen;
 	
-	Boolean			Reverb;
+	bool			Reverb;
 	long			ReverbSize;
 	long			ReverbStrength;
 
 	/** News 4.5.3 **/
 	
-	Boolean			TickRemover;
-	Boolean			AutomaticOpen;
-	Boolean			FinePositioning;
+	bool			TickRemover;
+	bool			AutomaticOpen;
+	bool			FinePositioning;
 	
 	//short			ChannelType;
 	short			amplitude;
@@ -171,8 +172,8 @@ typedef struct
 	
 	/** News 4.5.4	**/
 	
-	Boolean			StaffShowAllNotes;
-	Boolean			StaffShowLength;
+	bool			StaffShowAllNotes;
+	bool			StaffShowLength;
 	short			TempsNum;
 	short			TempsUnit;
 	short			TrackHeight;
@@ -183,23 +184,23 @@ typedef struct
 	
 	/** News 4.5.8 **/
 	
-	Boolean			keyMapNote;
+	bool			keyMapNote;
 	
 	/** News 5.0.0 **/
 	
 	RGBColor		yellC;
 	short			whichEditorPatterns;
-	Boolean			MusicTrace;
+	bool			MusicTrace;
 	long			oversampling;
 	
 	/** News 5.0.3 **/
 	
 	short			RAWBits;
 	long			RAWRate;
-	Boolean			RAWStereo;
-	Boolean			RAWSigned;
-	Boolean			RAWLittleEndian;
-	Boolean			RAWEOF;
+	bool			RAWStereo;
+	bool			RAWSigned;
+	bool			RAWLittleEndian;
+	bool			RAWEOF;
 	long			RAWLength;
 	long			RAWHeader;
 	
@@ -208,13 +209,13 @@ typedef struct
 	Str32			WinNames[3];
 	
 	// 5.2
-	Boolean			clickSound;
-	Boolean			patternWrapping;
-	Boolean			SendMIDIClockData;
+	bool			clickSound;
+	bool			patternWrapping;
+	bool			SendMIDIClockData;
 	short			pianoOffset;
 	
 	// 5.3
-	Boolean				DontUseFilesMix;
+	bool				DontUseFilesMix;
 	struct OLDMADSpec	previousSpec;
 	
 	// 5.5
@@ -230,20 +231,20 @@ typedef struct
 	short			WinLarg[MAXWINDOWS];
 	long			WinID[MAXWINDOWS];
 	double			Filter[EQPACKET * 2];
-	Boolean			useEQ;
+	bool			useEQ;
 	
 	// 5.6
 	
 	short				lastVisualPlugin;
-	Boolean				editorSoundDrag;
+	bool				editorSoundDrag;
 	MADDriverSettings	DirectDriverType;
 	short				channelNumber;
-	Boolean				FKeyTracks;
+	bool				FKeyTracks;
 	
 	// 5.7
 	
 	long				Previous_globalEffect[10];
-	Boolean				Previous_globalFXActive;
+	bool				Previous_globalFXActive;
 	long				Previous_chanEffect[MAXTRACK][4];
 	FXBus				Previous_chanBus[MAXTRACK];
 	FXSets				Previous_Sets[MAXTRACK];
@@ -398,7 +399,7 @@ pascal OSStatus CarbonWindowEventHandler(EventHandlerCallRef myHandler, EventRef
 		Boolean		gUseControlSize, MusicPlayActive, UseAEErreur;
 		short		gScrollBarID, curvRefNum;
 		long		MacOSXSystem, curparID, StartTime;
-		Boolean		gUseNavigation, Micro, hasASC, End, Record;
+		Boolean		gUseNavigation, Micro, End, Record;
 		DialogPtr	ToolsDlog;
 		Str63		lastLoadMODListName;
 		Cursor		watchCrsr, qdarrow;
@@ -436,7 +437,7 @@ extern	MADLibrary		*gMADLib;
 extern	Boolean		gUseControlSize, MusicPlayActive, UseAEErreur;
 extern	short		gScrollBarID, VolumeH, SpeedH, PitchH, curvRefNum;
 extern	long		MacOSXSystem, curparID, StartTime;
-extern	Boolean		gUseNavigation, Micro, hasASC, End, Record;
+extern	Boolean		gUseNavigation, Micro, End, Record;
 extern	DialogPtr	ToolsDlog;
 extern	Str63		lastLoadMODListName, curSoundName;
 extern	Cursor		watchCrsr, qdarrow;

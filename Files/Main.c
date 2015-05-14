@@ -5159,22 +5159,6 @@ static void LoadOldFilePrefs(FSIORefNum fRefNum)
 		oldPrefs.Frequence = EndianS32_BtoN(oldPrefs.Frequence);
 		oldPrefs.oldShort = EndianS16_BtoN(oldPrefs.oldShort);
 		oldPrefs.NoStart = EndianS16_BtoN(oldPrefs.NoStart);
-		for (i=0; i < 30; i++) {
-			oldPrefs.a1[i].v = EndianS16_BtoN(oldPrefs.a1[i].v);
-			oldPrefs.a1[i].h = EndianS16_BtoN(oldPrefs.a1[i].h);
-			oldPrefs.a2[i] = EndianS16_BtoN(oldPrefs.a2[i]);
-			oldPrefs.a3[i] = EndianS16_BtoN(oldPrefs.a3[i]);
-			oldPrefs.a4[i] = EndianS16_BtoN(oldPrefs.a4[i]);
-			oldPrefs.a5[i] = EndianS32_BtoN(oldPrefs.a5[i]);
-			for (x = 0; x<3; x++) {
-				oldPrefs.a6[x][i].v = EndianS16_BtoN(oldPrefs.a6[x][i].v);
-				oldPrefs.a6[x][i].h = EndianS16_BtoN(oldPrefs.a6[x][i].h);
-				oldPrefs.a7[x][i] = EndianS16_BtoN(oldPrefs.a7[x][i]);
-				oldPrefs.a8[x][i] = EndianS16_BtoN(oldPrefs.a8[x][i]);
-				oldPrefs.a9[x][i] = EndianS16_BtoN(oldPrefs.a9[x][i]);
-				oldPrefs.a10[x][i] = EndianS32_BtoN(oldPrefs.a10[x][i]);
-			}
-		}
 		for (i=0; i < 300; i++) {
 			oldPrefs.PianoKey[i] = EndianS16_BtoN(oldPrefs.PianoKey[i]);
 		}
@@ -5442,9 +5426,10 @@ static void LoadOldFilePrefs(FSIORefNum fRefNum)
 void DoPreferences()
 {
 	OSErr	iErr;
-	short	vRefNum, fRefNum;
 	long	DirID;
-	FSSpec	spec;
+	FSSpec	spec = {0};
+	FSIORefNum		fRefNum;
+	FSVolumeRefNum	vRefNum;
 	
 	RegisterCFDefaults();
 	ReadCFPreferences();
@@ -5476,7 +5461,6 @@ void DoPreferences()
 	}
 #else
 	Stereo = StereoMixing = Audio16 = true;
-	hasASC = false;
 #endif
 	
 	// Look for and load old preferences
