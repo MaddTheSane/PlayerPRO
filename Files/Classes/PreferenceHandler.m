@@ -341,6 +341,15 @@ void RegisterCFDefaults()
 						   [NSNumber numberWithShort:102],
 						   nil];
 	
+	NSMutableArray *filters = [NSMutableArray arrayWithCapacity:EQPACKET * 2];
+	{
+		NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
+		for (int i = 0; i < EQPACKET*2; i++) {
+			[filters addObject:[NSNumber numberWithDouble:1.0]];
+		}
+		[innerPool drain];
+	}
+	
 	static NSArray *theColors = nil;
 	if (!theColors) {
 		theColors = [NSArray arrayWithObjects:
@@ -457,11 +466,11 @@ void RegisterCFDefaults()
 	  pianoArray, PPPianoKeys,
 	  [NSNumber numberWithShort:1], PPLoopType,
 	  [NSNumber numberWithShort:3], PPVolumeLevel,
-	  [NSNumber numberWithLong:rate44khz], PPSoundOutRate,
+	  [NSNumber numberWithFloat:FixedToFloat(rate44khz)], PPSoundOutRate,
 	  [NSNumber numberWithShort:SoundManagerDriver], PPSoundDriver,
 	  [NSNumber numberWithShort:16], PPSoundOutBits,
 	  [NSNumber numberWithBool:NO], PPSurroundToggle,
-	  [NSNumber numberWithLong:NO], PPReverbToggle,
+	  [NSNumber numberWithBool:NO], PPReverbToggle,
 	  [NSNumber numberWithLong:25], PPReverbAmount,
 	  [NSNumber numberWithLong:60], PPReverbStrength,
 	  [NSNumber numberWithLong:1], PPOversamplingAmount,
@@ -482,8 +491,15 @@ void RegisterCFDefaults()
 	  [NSNumber numberWithBool:YES], PPDEShowMarkers,
 	  [NSNumber numberWithBool:YES], PPDEShowNote,
 	  [NSNumber numberWithBool:YES], PPDEShowVolume,
+	  [NSNumber numberWithBool:NO], PPDEPatternWrappingPartition,
 	  
 	  theColors, PPCColorArray,
+	  
+	  [NSNumber numberWithBool:NO], PPMIDISendClock,
+	  
+	  [NSNumber numberWithBool:NO], PPUseEQ,
+	  [NSNumber numberWithBool:NO], PPDontUseFileMixer,
+	  filters, PPFilterArray,
 	  
 	  nil]];
 	
@@ -505,7 +521,7 @@ void ReadCFPreferences()
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSString *tempStr = nil;
 	NSArray *tempArray = nil;
-	int i;
+	NSUInteger i;
 	memset(&thePrefs, 0, sizeof(Prefs));
 	thePrefs.addExtension = [defaults boolForKey:PPMAddExtension];
 	thePrefs.MADCompression = [defaults boolForKey:PPMMadCompression];
@@ -536,12 +552,13 @@ void ReadCFPreferences()
 	thePrefs.outPutMode = thePrefs.DirectDriverType.outPutMode = DeluxeStereoOutPut;	// force DeluxeStereoOutPut
 	thePrefs.channelNumber = 2;
 	thePrefs.DirectDriverType.numChn = 4;
+	thePrefs.useEQ = [defaults boolForKey:PPUseEQ];
 	thePrefs.DirectDriverType.TickRemover = thePrefs.TickRemover = true;
 	
 	thePrefs.Reverb = thePrefs.DirectDriverType.Reverb = [defaults boolForKey:PPReverbToggle];
 	thePrefs.ReverbSize = thePrefs.DirectDriverType.ReverbSize = [defaults integerForKey:PPReverbAmount];
 	thePrefs.ReverbStrength = thePrefs.DirectDriverType.ReverbStrength = [defaults integerForKey:PPReverbStrength];
-	thePrefs.outPutRate = thePrefs.FrequenceSpeed = thePrefs.DirectDriverType.outPutRate = [defaults integerForKey:PPSoundOutRate];
+	thePrefs.outPutRate = thePrefs.FrequenceSpeed = thePrefs.DirectDriverType.outPutRate = FloatToFixed([defaults floatForKey:PPSoundOutRate]);
 	thePrefs.outPutBits = thePrefs.amplitude = thePrefs.DirectDriverType.outPutBits = [defaults integerForKey:PPSoundOutBits];
 	thePrefs.driverMode = thePrefs.DirectDriverType.driverMode = [defaults integerForKey:PPSoundDriver];
 	thePrefs.surround = thePrefs.DirectDriverType.surround = [defaults boolForKey:PPSurroundToggle];
@@ -569,7 +586,18 @@ void ReadCFPreferences()
 	thePrefs.DigitalInstru = [defaults boolForKey:PPDEShowInstrument];
 	thePrefs.DigitalNote = [defaults boolForKey:PPDEShowNote];
 	thePrefs.DigitalVol = [defaults boolForKey:PPDEShowVolume];
+	thePrefs.patternWrapping = [defaults boolForKey:PPDEPatternWrappingPartition];
 	
+	thePrefs.SendMIDIClockData = [defaults boolForKey:PPMIDISendClock];
+	
+	thePrefs.DontUseFilesMix = [defaults boolForKey:PPDontUseFileMixer];
+	
+	NSArray *filterArray = [defaults objectForKey:PPFilterArray];
+	NSUInteger count = [filterArray count];
+	for (i = 0; i < count; i++) {
+		NSNumber * obj = [filterArray objectAtIndex:i];
+		thePrefs.Filter[i] = obj.doubleValue;
+	}
 	[pool drain];
 }
 
@@ -600,7 +628,7 @@ void WriteCFPreferences()
 	[defaults setInteger:thePrefs.ReverbStrength forKey:PPReverbStrength];
 	[defaults setInteger:thePrefs.ReverbSize forKey:PPReverbAmount];
 	[defaults setBool:thePrefs.Reverb forKey:PPReverbToggle];
-	[defaults setInteger:thePrefs.outPutRate forKey:PPSoundOutRate];
+	[defaults setFloat: FixedToFloat(thePrefs.outPutRate) forKey:PPSoundOutRate];
 	[defaults setInteger:thePrefs.outPutBits forKey:PPSoundOutBits];
 	[defaults setInteger:thePrefs.driverMode forKey:PPSoundDriver];
 	[defaults setBool:thePrefs.surround forKey:PPSurroundToggle];
@@ -630,6 +658,21 @@ void WriteCFPreferences()
 	[defaults setBool:thePrefs.DigitalInstru forKey:PPDEShowInstrument];
 	[defaults setBool:thePrefs.DigitalNote forKey:PPDEShowNote];
 	[defaults setBool:thePrefs.DigitalVol forKey:PPDEShowVolume];
+	[defaults setBool:thePrefs.patternWrapping forKey:PPDEPatternWrappingPartition];
+	
+	[defaults setBool:thePrefs.SendMIDIClockData forKey:PPMIDISendClock];
+	{
+		NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
+		NSMutableArray *filterArray = [[NSMutableArray alloc] initWithCapacity:EQPACKET * 2];
+		for (int i = 0; i < EQPACKET * 2; i++) {
+			[filterArray addObject:[NSNumber numberWithDouble:thePrefs.Filter[i]]];
+		}
+		
+		[filterArray release];
+		[innerPool drain];
+	}
+	[defaults setBool:thePrefs.useEQ forKey:PPUseEQ];
+	[defaults setBool:thePrefs.DontUseFilesMix forKey:PPDontUseFileMixer];
 	
 	[defaults synchronize];
 	

@@ -84,3 +84,10 @@
 #define PPWindowName1 @"PPWindowName1"
 #define PPWindowName2 @"PPWindowName2"
 #define PPWindowName3 @"PPWindowName3"
+
+#define PPUseEQ @"UseEq"
+#define PPDontUseFileMixer @"Don't use File Mixer"
+
+#define PPFilterArray @"Filter array"
+
+#define PPMIDISendClock @"Send MIDI Clock?"

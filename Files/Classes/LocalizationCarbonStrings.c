@@ -20,6 +20,10 @@ void GetCFIndexString(Str255 outStr, short listID, short indexID)
 		CFStringGetPascalString(localizedStr, outStr, sizeof(Str255), kCFStringEncodingMacRoman);
 	}
 	
-	CFRelease(strLocation);
-	CFRelease(localizedStr);
+	if (strLocation) {
+		CFRelease(strLocation);
+	}
+	if (localizedStr) {
+		CFRelease(localizedStr);
+	}
 }

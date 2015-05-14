@@ -5675,8 +5675,8 @@ void DoPreferences()
 		thePrefs.RAWLength		= 0;
 		thePrefs.RAWHeader		= 0;
 		thePrefs.SendMIDIClockData	= false;
-		thePrefs.pianoOffset	= 0;
-		thePrefs.DontUseFilesMix = false;
+		thePrefs.pianoOffset		= 0;
+		thePrefs.DontUseFilesMix	= false;
 		
 		thePrefs.previousSpec.generalPitch = 252;
 		thePrefs.previousSpec.generalSpeed = 252;
@@ -5688,8 +5688,7 @@ void DoPreferences()
 		for (i = 0 ; i < MAXTRACK; i++) thePrefs.previousSpec.chanPan[i] = 256;
 		for (i = 0 ; i < MAXTRACK; i++) thePrefs.previousSpec.chanVol[i] = 64;
 		
-		for (i = 0; i < 20; i++)
-		{
+		for (i = 0; i < 20; i++) {
 			thePrefs.FKeyActive[i]		= false;
 			thePrefs.FKeyItem[i] 		= 0;
 			thePrefs.FKeyWind[i]		= 0;
