@@ -10,14 +10,16 @@
 
 @class PPDocument;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PPSamplePlugObject : PPPlugInObject
 @property (readonly, copy) NSArray *UTITypes;
 @property (readonly) MADPlugModes mode;
 @property (readonly) BOOL canImport;
 @property (readonly) BOOL canExport;
 
-- (instancetype)init UNAVAILABLE_ATTRIBUTE;
-- (instancetype)initWithBundle:(NSBundle *)theBund;
+- (nullable instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (nullable instancetype)initWithBundle:(NSBundle *)theBund;
 
 - (BOOL)canImportFileAtURL:(NSURL *)fileURL;
 - (MADErr)playSampleAtURL:(NSURL*)aSample driver:(PPDriver*)driver;
@@ -25,3 +27,5 @@
 - (void)beginExportSample:(PPSampleObject*)aSamp toURL:(NSURL*)sampleURL driver:(PPDriver *)driver parentDocument:(PPDocument *)document handler:(PPPlugErrorBlock)handler;
 
 @end
+
+NS_ASSUME_NONNULL_END

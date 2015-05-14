@@ -13,6 +13,8 @@
 @class PPInstrumentImporterObject;
 @class PPDocument;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PPInstrumentPlugHandler : NSObject <NSFastEnumeration>
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
@@ -32,3 +34,5 @@
 - (MADErr)identifyInstrumentFile:(NSURL*)ref type:(OSType*)outType;
 
 @end
+
+NS_ASSUME_NONNULL_END

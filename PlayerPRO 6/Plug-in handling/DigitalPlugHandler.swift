@@ -29,8 +29,7 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType, Sliceable
 				
 				
 				for component in aComp {
-					let theBundle = NSBundle(URL: component)
-					if let tempObj = PPDigitalPlugInObject(bundle: theBundle) {
+					if let theBundle = NSBundle(URL: component), tempObj = PPDigitalPlugInObject(bundle: theBundle) {
 						digitalPlugs.append(tempObj)
 					}
 				}

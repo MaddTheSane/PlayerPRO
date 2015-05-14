@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <PlayerPROKit/PPPlugIns.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PPPlugInObject : NSObject
 {
 	@package
@@ -21,6 +23,8 @@
 @property (readonly) OSType type;
 @property (readonly) UInt32 version;
 
-- (instancetype)init UNAVAILABLE_ATTRIBUTE;
-- (instancetype)initWithBundle:(NSBundle *)aBund NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (nullable instancetype)initWithBundle:(NSBundle *)aBund NS_DESIGNATED_INITIALIZER;
 @end
+
+NS_ASSUME_NONNULL_END

@@ -18,12 +18,15 @@ typedef NS_OPTIONS(unsigned char, MADPlugCapabilities) {
 	PPMADCanDoBoth		= PPMADCanImport | PPMADCanExport
 };
 
+
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PPInstrumentImporterObject ()
 @property (readwrite, copy) NSArray *UTITypes;
 @property (readwrite) BOOL canImport;
 @property (readwrite) BOOL canExport;
 
-- (instancetype)initWithBundleNoInit:(NSBundle *)tempBundle NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithBundleNoInit:(NSBundle *)tempBundle NS_DESIGNATED_INITIALIZER;
 
 @end
 
@@ -32,8 +35,9 @@ static inline OSType NSStringToOSType(NSString *CFstri)
 	return UTGetOSTypeFromString((__bridge CFStringRef)(CFstri));
 }
 
-static inline NSString* OSTypeToNSString(OSType theOSType)
+static inline NSString*__nullable OSTypeToNSString(OSType theOSType)
 {
 	return CFBridgingRelease(UTCreateStringForOSType(theOSType));
 }
 
+NS_ASSUME_NONNULL_END

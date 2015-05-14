@@ -11,6 +11,6 @@
 #import "PPInstrumentImporterObject.h"
 
 @interface PPInstrumentImporterCompatObject : PPInstrumentImporterObject
-- (instancetype)init UNAVAILABLE_ATTRIBUTE;
-- (instancetype)initWithBundle:(NSBundle *)theBund NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (nullable instancetype)initWithBundle:(nonnull NSBundle *)theBund NS_DESIGNATED_INITIALIZER;
 @end

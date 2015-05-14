@@ -10,11 +10,15 @@
 #import "PPInstrumentImporterObject-private.h"
 
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PPSamplePlugObject ()
 @property (readwrite, copy) NSArray *UTITypes;
 @property (readwrite) BOOL canImport;
 @property (readwrite) BOOL canExport;
 
-- (instancetype)initWithBundleNoInit:(NSBundle *)tempBundle NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithBundleNoInit:(NSBundle *)tempBundle NS_DESIGNATED_INITIALIZER;
 
 @end
+
+NS_ASSUME_NONNULL_END

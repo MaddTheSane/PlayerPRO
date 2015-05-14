@@ -11,6 +11,8 @@
 
 @class PPFilterPlugObject;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PPFilterPlugHandler : NSObject <NSFastEnumeration>
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
@@ -25,3 +27,5 @@
 - (void)addPlugInFromURL:(NSURL *)urlpath;
 - (void)addPlugInFromBundle:(NSBundle *)theBund;
 @end
+
+NS_ASSUME_NONNULL_END

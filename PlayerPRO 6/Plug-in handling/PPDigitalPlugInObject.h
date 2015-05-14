@@ -12,9 +12,13 @@
 
 @class PPDocument;
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PPDigitalPlugInObject : PPPlugInObject
-- (instancetype)init UNAVAILABLE_ATTRIBUTE;
-- (instancetype)initWithBundle:(NSBundle*)toInit NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)init UNAVAILABLE_ATTRIBUTE;
+- (nullable instancetype)initWithBundle:(NSBundle*)toInit NS_DESIGNATED_INITIALIZER;
 
 - (void)beginCallWithPcmd:(inout Pcmd*)myPcmd driver:(PPDriver*)driver parentDocument:(PPDocument*)theDoc handler:(PPPlugErrorBlock)handle;
 @end
+
+NS_ASSUME_NONNULL_END

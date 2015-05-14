@@ -38,13 +38,7 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, CollectionTyp
 				})
 				
 				for component in aComp {
-					let theBundle = NSBundle(URL: component)
-					let aClass: AnyClass? = theBundle?.principalClass
-					if aClass == nil {
-						continue
-					}
-					
-					if let aPlug = PPComplexImportPlugObject(bundle: theBundle) {
+					if let theBundle = NSBundle(URL: component), aPlug = PPComplexImportPlugObject(bundle: theBundle) {
 						plugIns.append(aPlug)
 					}
 				}
