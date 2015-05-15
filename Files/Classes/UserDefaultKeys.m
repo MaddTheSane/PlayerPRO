@@ -14,6 +14,7 @@
 #define PPPianoKeys @"Piano Keys"
 #define PPLoopType @"Loop Type"
 #define PPVolumeLevel @"Volume Level"
+#define PPSoftVolume @"Software Volume"
 
 #define MADNativeUTI @"com.quadmation.playerpro.madk"
 #define MADGenericUTI @"com.quadmation.playerpro.mad"
@@ -86,10 +87,12 @@
 #define PPWindowName3 @"PPWindowName3"
 
 #define PPUseEQ @"UseEq"
-#define PPDontUseFileMixer @"Don't use File Mixer"
 #define PPAutomaticOpen @"Automatic Open"
 #define PPRecordAllTrack @"Record all tracks?"
 
 #define PPFilterArray @"Filter array"
 
 #define PPMIDISendClock @"Send MIDI Clock?"
+#define PPMIDIKeyboard @"Use MIDI keyboard?"
+#define PPMIDIVelocity @"MIDI velocity"
+#define PPMIDIChanInsTrack @"MIDIChanInsTrack"

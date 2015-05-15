@@ -29,7 +29,7 @@ Boolean CFPreferencesHaveBeenSet()
 {
 	BOOL isSet = NO;
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	isSet = [[NSUserDefaults standardUserDefaults] boolForKey:PPPreferencesSet];
+	isSet = [[NSUserDefaults standardUserDefaults] objectForKey:PPPreferencesSet] != nil;
 	[pool drain];
 	
 	return isSet;
@@ -494,10 +494,11 @@ void RegisterCFDefaults()
 	  [NSNumber numberWithBool:NO], PPMIDISendClock,
 	  
 	  [NSNumber numberWithBool:NO], PPUseEQ,
-	  [NSNumber numberWithBool:NO], PPDontUseFileMixer,
+	  [NSNumber numberWithBool:NO], PPMNoLoadMixerFromFiles,
 	  filters, PPFilterArray,
 	  [NSNumber numberWithBool:NO], PPAutomaticOpen,
 	  [NSNumber numberWithInt:1], PPRecordAllTrack,
+	  [NSNumber numberWithShort:64], PPSoftVolume,
 	  nil]];
 	
 	[pianoArray release];
@@ -587,9 +588,10 @@ void ReadCFPreferences()
 	
 	thePrefs.SendMIDIClockData = [defaults boolForKey:PPMIDISendClock];
 	
-	thePrefs.DontUseFilesMix = [defaults boolForKey:PPDontUseFileMixer];
+	thePrefs.DontUseFilesMix = [defaults boolForKey:PPMNoLoadMixerFromFiles];
 	thePrefs.AutomaticOpen = [defaults boolForKey:PPAutomaticOpen];
 	thePrefs.RecordAllTrack = [defaults integerForKey:PPRecordAllTrack];
+	thePrefs.softVolumeLevel = [defaults integerForKey:PPSoftVolume];
 	
 	NSArray *filterArray = [defaults objectForKey:PPFilterArray];
 	NSUInteger count = [filterArray count];
@@ -671,9 +673,10 @@ void WriteCFPreferences()
 	[tmpMutable release]; tmpMutable = nil;
 
 	[defaults setBool:thePrefs.useEQ forKey:PPUseEQ];
-	[defaults setBool:thePrefs.DontUseFilesMix forKey:PPDontUseFileMixer];
+	[defaults setBool:thePrefs.DontUseFilesMix forKey:PPMNoLoadMixerFromFiles];
 	[defaults setBool:thePrefs.AutomaticOpen forKey:PPAutomaticOpen];
 	[defaults setInteger:thePrefs.RecordAllTrack forKey:PPRecordAllTrack];
+	[defaults setInteger:thePrefs.softVolumeLevel forKey:PPSoftVolume];
 	
 	[defaults synchronize];
 	
