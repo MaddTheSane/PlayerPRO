@@ -8,8 +8,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-// Disabled because Xcode wants it to be in a custom framework. ick.
-//IB_DESIGNABLE
+@protocol PPSmallPianoDelegate;
+
+IB_DESIGNABLE
 @interface PPSmallPianoView : NSView
+@property (weak) id<PPSmallPianoDelegate> delegate;
+@property (copy) IBInspectable NSColor *selectedColor;
+@end
+
+@protocol PPSmallPianoDelegate <NSObject>
 
 @end

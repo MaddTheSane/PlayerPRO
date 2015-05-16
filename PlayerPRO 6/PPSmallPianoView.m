@@ -14,6 +14,7 @@
 {
 	self = [super initWithFrame:frame];
 	if (self) {
+		self.selectedColor = [NSColor redColor];
 		// Initialization code here.
 	}
 	return self;
@@ -31,6 +32,13 @@
 	[NSBezierPath setDefaultLineWidth:1];
 	[NSBezierPath strokeRect:tmpRect];
 	// Drawing code here.
+	[_selectedColor setFill];
+	tmpRect.origin.x += 2;
+	tmpRect.origin.y += 2;
+	tmpRect.size.height -= 4;
+	tmpRect.size.width -= 4;
+
+	[NSBezierPath fillRect:tmpRect];
 }
 
 @end
