@@ -13,7 +13,7 @@ final class FVResource: NSObject {
     var name: String = ""
     var dataSize: UInt32 = 0
     var dataOffset: UInt32 = 0
-    var type: FVResourceType? = nil
+    weak var type: FVResourceType? = nil
     var file: FVResourceFile? = nil
     
     var data: NSData? {

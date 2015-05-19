@@ -10,8 +10,6 @@ import Cocoa
 import PlayerPROKit
 import SwiftAdditions
 
-typealias ResFileRefNum = Int32
-
 class ImportWindowController: NSWindowController {
 	@IBOutlet weak var resourceNamesTable: NSTableView? = nil
 	@IBOutlet weak var resourceIDsTable: NSTableView? = nil
@@ -19,17 +17,16 @@ class ImportWindowController: NSWindowController {
 	@IBOutlet weak var arrayCont: NSArrayController!
 	
 	var currentBlock: PPComplexImportHandler!
-	var resourceReference: ResFileRefNum = 0
-	dynamic var resourceArray = [APPLObject]()
-	var resourceDictionary = [String: [APPLObject]]()
+	dynamic var resourceArray = [FVResource]()
+	var resourceDictionary = [String: [FVResource]]()
 	private var modalSession: NSModalSession!
 	
 	@IBAction func importMusicObject(sender: AnyObject?) {
-		if let anObject = arrayCont.selectedObjects[0] as? APPLObject {
+		if let anObject = arrayCont.selectedObjects[0] as? FVResource {
 			var madMusic: UnsafeMutablePointer<MADMusic>
 			var madTest: (UnsafePointer<Void>) -> MADErr
 			var madLoad: (UnsafePointer<Int8>, size_t, UnsafeMutablePointer<MADMusic>, UnsafeMutablePointer<MADDriverSettings>) -> MADErr
-			switch anObject.resourceType {
+			switch anObject.type!.type {
 			case "MADI":
 				madTest = TESTMADI
 				madLoad = MADI2Mad
@@ -100,7 +97,7 @@ class ImportWindowController: NSWindowController {
 	}
 
 	func addResourceDictionary(theDict: NSDictionary) {
-		if let aDict = theDict as? [String: [APPLObject]] {
+		if let aDict = theDict as? [String: [FVResource]] {
 			resourceDictionary = aDict
 		}
 	}
@@ -129,7 +126,7 @@ class ImportWindowController: NSWindowController {
 			if dictionaryCont.selectedObjects.count > 0 {
 				let aSelect = dictionaryCont.selectedObjects[0] as! NSObject // Actual class is a private class, _NSControllerKeyValuePair
 				let aValue: AnyObject? = aSelect.value() // ...but it does respond to "value", which is public
-				if let anotherVal = aValue as? [APPLObject] {
+				if let anotherVal = aValue as? [FVResource] {
 					self.resourceArray = anotherVal
 				}
 
@@ -142,6 +139,5 @@ class ImportWindowController: NSWindowController {
 	
 	deinit {
 		dictionaryCont?.removeObserver(self, forKeyPath: "selectionIndexes")
-		PPCloseResFile(resourceReference)
 	}
 }

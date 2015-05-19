@@ -644,7 +644,6 @@
 		55BD5AF619ADBBF500D63F54 /* PPKPcmd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BD5AF419ADBBF500D63F54 /* PPKPcmd.swift */; };
 		55BF238919A93742005B1F96 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55BF238A19A93775005B1F96 /* PlayerPROKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 551292D8163DD68500C2C639 /* PlayerPROKit.framework */; };
-		55BF238E19A937C9005B1F96 /* PPAPPLImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */; };
 		55BF238F19A937C9005B1F96 /* PPAPPLImporter.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */; };
 		55BF239019A94077005B1F96 /* PPComplexImportPlugObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B5DF0619A25B6D0042E062 /* PPComplexImportPlugObject.m */; };
 		55C52CC51A8ABC1D00E448F5 /* SamplePlugHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C52CC41A8ABC1D00E448F5 /* SamplePlugHandler.swift */; };
@@ -716,7 +715,6 @@
 		55E382EB1981509100EC330B /* PlugInInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EA1981509100EC330B /* PlugInInfo.swift */; };
 		55E382EC1981509100EC330B /* PlugInInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EA1981509100EC330B /* PlugInInfo.swift */; };
 		55E382ED1981694300EC330B /* MADPlug.h in Headers */ = {isa = PBXBuildFile; fileRef = 88E0C47F0C2F21E400D6C081 /* MADPlug.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		55E4D7FC1A2A3B1B0054675C /* APPLObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E4D7FB1A2A3B1B0054675C /* APPLObject.swift */; };
 		55E4D8021A2A3BCA0054675C /* PPAPPLHelpers.m in Sources */ = {isa = PBXBuildFile; fileRef = 55E4D8011A2A3BCA0054675C /* PPAPPLHelpers.m */; };
 		55E4D8041A2A40EE0054675C /* ImportWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E4D8031A2A40EE0054675C /* ImportWindowController.swift */; };
 		55E52E2512455E5100315307 /* preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = 55981C5411EE375400656EE3 /* preferences.xib */; };
@@ -752,6 +750,11 @@
 		55EE2D8B17E12F9300FED42A /* Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE7BC10E08D8400177B4C /* Fade.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EE2D8C17E12F9300FED42A /* Length.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE84210E08D9E00177B4C /* Length.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55EE2D8E17E12F9300FED42A /* Sampling Rate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE90B10E08DAC00177B4C /* Sampling Rate.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		55EF657C1B0AD6A400B556D4 /* FVDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9841B0149FE00EB2C84 /* FVDataReader.swift */; };
+		55EF657D1B0AD6A400B556D4 /* FVResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9851B0149FE00EB2C84 /* FVResource.swift */; };
+		55EF657E1B0AD6A400B556D4 /* FVResourceFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB995F1B027ED5009B3EDD /* FVResourceFile.swift */; };
+		55EF657F1B0AD6A400B556D4 /* FVResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */; };
+		55EF658A1B0AD7BF00B556D4 /* APPLImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EF65891B0AD7BF00B556D4 /* APPLImporter.swift */; };
 		55F013E5187F5AB6002488D5 /* PPObjectProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55F013EB1880A2EA002488D5 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
 		55F1BDAE1975C8EE00AD2C03 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */; };
@@ -2645,7 +2648,6 @@
 		55E382EA1981509100EC330B /* PlugInInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlugInInfo.swift; sourceTree = "<group>"; };
 		55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PlayerPROCoreAdditions.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		55E4D7FA1A2A3B190054675C /* Classic App-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Classic App-Bridging-Header.h"; sourceTree = "<group>"; };
-		55E4D7FB1A2A3B1B0054675C /* APPLObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APPLObject.swift; sourceTree = "<group>"; };
 		55E4D8001A2A3BCA0054675C /* PPAPPLHelpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLHelpers.h; sourceTree = "<group>"; };
 		55E4D8011A2A3BCA0054675C /* PPAPPLHelpers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = PPAPPLHelpers.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		55E4D8031A2A40EE0054675C /* ImportWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportWindowController.swift; sourceTree = "<group>"; };
@@ -2671,6 +2673,7 @@
 		55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		55EE8EBF100404EB00E75E63 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
 		55EE8EC0100404EB00E75E63 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = System/Library/Frameworks/QuickTime.framework; sourceTree = SDKROOT; };
+		55EF65891B0AD7BF00B556D4 /* APPLImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APPLImporter.swift; sourceTree = "<group>"; };
 		55F013E4187F5AB6002488D5 /* PPObjectProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPObjectProtocol.h; sourceTree = "<group>"; };
 		55F013EA1880A2EA002488D5 /* MADDriver.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = MADDriver.c; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.c; };
 		55F1BD8F1975C83400AD2C03 /* PlayerPROCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PlayerPROCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3675,8 +3678,8 @@
 				55E4D7FA1A2A3B190054675C /* Classic App-Bridging-Header.h */,
 				55E4D8001A2A3BCA0054675C /* PPAPPLHelpers.h */,
 				55E4D8011A2A3BCA0054675C /* PPAPPLHelpers.m */,
-				55E4D7FB1A2A3B1B0054675C /* APPLObject.swift */,
 				55E4D8031A2A40EE0054675C /* ImportWindowController.swift */,
+				55EF65891B0AD7BF00B556D4 /* APPLImporter.swift */,
 				55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */,
 				55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */,
 				5501BEC618ABFFEB00602206 /* APPL.h */,
@@ -7513,12 +7516,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55BF238E19A937C9005B1F96 /* PPAPPLImporter.m in Sources */,
-				55E4D7FC1A2A3B1B0054675C /* APPLObject.swift in Sources */,
+				55EF657E1B0AD6A400B556D4 /* FVResourceFile.swift in Sources */,
 				55E4D8021A2A3BCA0054675C /* PPAPPLHelpers.m in Sources */,
 				5501BEC818AC05A400602206 /* MADH.c in Sources */,
+				55EF657D1B0AD6A400B556D4 /* FVResource.swift in Sources */,
 				5501BEC918AC092500602206 /* MADI.c in Sources */,
 				55E4D8041A2A40EE0054675C /* ImportWindowController.swift in Sources */,
+				55EF658A1B0AD7BF00B556D4 /* APPLImporter.swift in Sources */,
+				55EF657C1B0AD6A400B556D4 /* FVDataReader.swift in Sources */,
+				55EF657F1B0AD6A400B556D4 /* FVResourceType.swift in Sources */,
 				5501BEC718AC029E00602206 /* MADfg.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
