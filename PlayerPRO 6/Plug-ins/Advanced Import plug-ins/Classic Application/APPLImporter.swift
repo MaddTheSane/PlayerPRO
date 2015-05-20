@@ -11,6 +11,7 @@ import PlayerPROKit
 import SwiftAdditions
 
 final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
+	//let madTypes: [OSType] = ["MADK", "MADI", "MADF", "MADG", "MADH"]
 	override init() {
 		super.init()
 	}
@@ -21,7 +22,22 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 	
 	public func beginImportOfURL(theURL: NSURL, withHandler handler: PPComplexImportHandler) {
 		if let resFile = FVResourceFile.resourceFileWithContentsOfURL(theURL, error: nil) {
+			var aRet = [String: [FVResource]]()
+			for resourceType in resFile.types {
+				switch resourceType.type {
+				case "MADK", "MADI", "MADH", "MADF", "MADG":
+					aRet[resourceType.typeString] = resourceType.resources
+					
+				default:
+					continue
+				}
+			}
 			
+			let controller = ImportWindowController(windowNibName: "PPAPPLImporter")
+			controller.currentBlock = handler
+			controller.resourceFile = resFile
+			controller.addResourceDictionary(aRet)
+			controller.beginImportModalSession()
 		} else {
 			handler(nil, .ReadingErr)
 		}

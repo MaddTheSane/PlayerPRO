@@ -17,6 +17,7 @@ class ImportWindowController: NSWindowController {
 	@IBOutlet weak var arrayCont: NSArrayController!
 	
 	var currentBlock: PPComplexImportHandler!
+	var resourceFile: FVResourceFile!
 	dynamic var resourceArray = [FVResource]()
 	var resourceDictionary = [String: [FVResource]]()
 	private var modalSession: NSModalSession!
@@ -96,10 +97,8 @@ class ImportWindowController: NSWindowController {
 		currentBlock(nil, .UserCanceledErr)
 	}
 
-	func addResourceDictionary(theDict: NSDictionary) {
-		if let aDict = theDict as? [String: [FVResource]] {
-			resourceDictionary = aDict
-		}
+	func addResourceDictionary(theDict: [String: [FVResource]]) {
+		resourceDictionary = theDict
 	}
 	
 	func beginImportModalSession() {

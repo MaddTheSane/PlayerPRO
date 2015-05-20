@@ -24,8 +24,6 @@
 	<string>Antoine ROSSET</string>
 	<key>MADPlugMenuName</key>
 	<string>MADK Application</string>
-	<key>MADPlugMode</key>
-	<string>IMPL</string>
 	<key>MADPlugType</key>
 	<string>APPL</string>
 	<key>MADPlugUTITypes</key>
@@ -35,6 +33,6 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Written by A.ROSSET © 1995</string>
 	<key>NSPrincipalClass</key>
-	<string>PPAPPLImporter</string>
+	<string>${PRODUCT_MODULE_NAME}.APPLImporter</string>
 </dict>
 </plist>

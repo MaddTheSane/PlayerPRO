@@ -2591,8 +2591,6 @@
 		55BE998B17978BB100D6DECC /* GetMetadataForFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GetMetadataForFile.h; sourceTree = "<group>"; };
 		55BE998D17978BB100D6DECC /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		55BE999117978BB200D6DECC /* schema.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; lineEnding = 0; path = schema.xml; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.xml; };
-		55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPAPPLImporter.h; sourceTree = "<group>"; };
-		55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPAPPLImporter.m; sourceTree = "<group>"; };
 		55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PPAPPLImporter.xib; sourceTree = "<group>"; };
 		55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftAdditions.xcodeproj; path = SwiftAdditions/SwiftAdditions.xcodeproj; sourceTree = "<group>"; };
 		55C52CC41A8ABC1D00E448F5 /* SamplePlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SamplePlugHandler.swift; sourceTree = "<group>"; };
@@ -3680,8 +3678,6 @@
 				55E4D8011A2A3BCA0054675C /* PPAPPLHelpers.m */,
 				55E4D8031A2A40EE0054675C /* ImportWindowController.swift */,
 				55EF65891B0AD7BF00B556D4 /* APPLImporter.swift */,
-				55BF238B19A937C9005B1F96 /* PPAPPLImporter.h */,
-				55BF238C19A937C9005B1F96 /* PPAPPLImporter.m */,
 				5501BEC618ABFFEB00602206 /* APPL.h */,
 				55BF238D19A937C9005B1F96 /* PPAPPLImporter.xib */,
 				55868A6810BFB46100FCC24D /* APPL-Info.plist */,

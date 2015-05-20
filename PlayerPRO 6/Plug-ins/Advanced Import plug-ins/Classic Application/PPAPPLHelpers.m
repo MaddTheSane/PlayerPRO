@@ -11,39 +11,6 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <PlayerPROCore/RDriverInt.h>
 
-void PPGetResInfo(Handle resHandle, ResID *resIDShort, ResType *resTypeCode, long *size, NSString **name)
-{
-	Str255 nameStr = {0};
-	GetResInfo(resHandle, resIDShort, resTypeCode, nameStr);
-	*size = GetResourceSizeOnDisk(resHandle);
-	NSString *ourName = CFBridgingRelease(CFStringCreateWithPascalString(kCFAllocatorDefault, nameStr, kCFStringEncodingMacRoman));
-	if (!ourName) {
-		ourName = @"";
-	}
-	
-	*name = ourName;
-}
-
-NSData *PPAPPLDataFromResource(ResID resourceID, ResType resourceType)
-{
-	Handle myRes = Get1Resource(resourceType, resourceID);
-	DetachResource(myRes);
-	
-	HLock(myRes);
-	NSData *ourData = [[NSData alloc] initWithBytes:*myRes length:GetHandleSize(myRes)];
-	HUnlock(myRes);
-	DisposeHandle(myRes);
-	
-	return ourData;
-}
-
-void PPCloseResFile(ResFileRefNum refNum)
-{
-	CloseResFile(refNum);
-}
-
-#pragma mark -
-
 MADErr TESTMADK(const void* MADPtr)
 {
 	if (memcmp("MADK", MADPtr, 4) == 0) {
