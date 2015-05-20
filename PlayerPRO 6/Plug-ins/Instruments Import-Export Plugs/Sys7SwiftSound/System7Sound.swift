@@ -51,8 +51,6 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 							if errStr == .NoErr {
 								asample.name = sampleURL.lastPathComponent!.stringByDeletingPathExtension
 								sample.memory = asample
-								
-								return .NoErr
 							}
 							
 							NSFileManager.defaultManager().removeItemAtURL(asset, error: nil)
@@ -64,7 +62,7 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 					}
 				}
 			}
-			return .IncompatibleFile
+			return .FileNotSupportedByThisPlug
 		} else {
 			return .ReadingErr
 		}

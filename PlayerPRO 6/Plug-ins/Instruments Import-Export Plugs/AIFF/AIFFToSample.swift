@@ -88,6 +88,7 @@ internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
 				mutableData.appendData(tmpMutDat)
 				free(fillBufList.unsafeMutablePointer)
 			} else {
+				ExtAudioFileDispose(fileRef)
 				return .NeedMemory
 			}
 		}
@@ -99,6 +100,8 @@ internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
 		sample.amplitude = MADByte(realFormat.mBitsPerChannel)
 		sample.stereo = realFormat.mChannelsPerFrame == 2
 		sample.data = mutableData
+		
+		ExtAudioFileDispose(fileRef)
 		
 		return .NoErr
 	} else {

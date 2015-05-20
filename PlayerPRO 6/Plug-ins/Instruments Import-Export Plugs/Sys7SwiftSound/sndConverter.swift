@@ -17,6 +17,8 @@ private func fixedToFloat(a: UInt32) -> Double {
 	return Double(a) / fixed1
 }
 
+// See Sound.h in Carbon
+// Also see "Sound Manager" legacy PDF
 private let firstSoundFormat:	Int16 = 0x0001 /*general sound format*/
 private let secondSoundFormat:	Int16 = 0x0002 /*special sampled sound format (HyperCard)*/
 
@@ -119,15 +121,13 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 	func errmsg(@autoclosure(escaping) message: () -> String) {
 		println("Sys7 import: \(message())")
 	}
-	// See Sound.h in Carbon
-	// Also see "Sound Manager" legacy PDF
 	
 	let reader = FVDataReader(data)
 	
 	// Read the SndListResource or Snd2ListResource
 	var format = Int16()
 	if !reader.readInt16(.Big, &format) {
-		error = .ReadingErr
+		error = .FileNotSupportedByThisPlug
 		errmsg("Missing header")
 		return nil
 	}
@@ -137,7 +137,7 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 		if !reader.readInt16(.Big, &numModifiers) ||
 			!reader.readUInt16(.Big, &modifierPart.modNumber) ||
 			!reader.readInt32(.Big, &modifierPart.modInit) {
-				error = .ReadingErr
+				error = .FileNotSupportedByThisPlug
 				errmsg("Missing header")
 				return nil
 		}
@@ -164,7 +164,7 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 	} else if format == secondSoundFormat {
 		var refCount = Int16()
 		if !reader.readInt16(.Big, &refCount) {
-			error = .ReadingErr
+			error = .FileNotSupportedByThisPlug
 			errmsg("Missing header")
 			return nil
 		}
@@ -179,12 +179,12 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 	var numCommands = Int16()
 	var commandPart = SndCommand()
 	if !reader.readInt16(.Big, &numCommands) {
-		error = .ReadingErr
+		error = .FileNotSupportedByThisPlug
 		errmsg("Missing header")
 		return nil
 	}
 	if numCommands == 0 {
-		error = .IncompatibleFile
+		error = .FileNotSupportedByThisPlug
 		errmsg("Bad header")
 		return nil
 	}
@@ -192,7 +192,7 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 		if !reader.readUInt16(.Big, &commandPart.cmd) ||
 			!reader.readInt16(.Big, &commandPart.param1) ||
 			!reader.readInt32(.Big, &commandPart.param2) {
-				error = .ReadingErr
+				error = .FileNotSupportedByThisPlug
 				errmsg("Missing command")
 				return nil
 		}
@@ -225,13 +225,13 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 		!reader.readUInt32(.Big, &header.loopEnd) ||
 		!reader.readUInt8(&header.encode) ||
 		!reader.readUInt8(&header.baseFrequency) {
-			error = .ReadingErr
+			error = .FileNotSupportedByThisPlug
 			errmsg("Missing header data")
 			return nil
 	}
 	let sampleData = reader.read(Int(header.length))
 	if sampleData == nil {
-		error = .ReadingErr
+		error = .FileNotSupportedByThisPlug
 		errmsg("Missing samples")
 		return nil
 	}
