@@ -57,7 +57,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 			}
 			
 			if outErr != nil {
-				outErr.memory = createErrorFromMADErrorType(.IncompatibleFile)
+				outErr.memory = createErrorFromMADErrorType(.FileNotSupportedByThisPlug)
 			}
 			return false
 		}

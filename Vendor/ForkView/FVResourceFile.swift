@@ -138,7 +138,7 @@ final class FVResourceFile: NSObject {
         }
 
         let zeros = [Int8](count: 16, repeatedValue: 0)
-        if (map.headerCopy == header) && (memcmp(&map.headerCopy, zeros, zeros.count) != 0) {
+        if (map.headerCopy != header) && (memcmp(&map.headerCopy, zeros, zeros.count) != 0) {
             println("Bad match!")
         }
         
