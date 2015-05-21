@@ -66,10 +66,10 @@ import SwiftAdditions
 	}
 	
 	internal init(plugInfo unwrapped: PlugInfo) {
-		menuName = unwrapped.MenuName.takeUnretainedValue() as! String
-		authorString = unwrapped.AuthorString.takeUnretainedValue() as! String
+		menuName = unwrapped.MenuName.takeUnretainedValue() as String
+		authorString = unwrapped.AuthorString.takeUnretainedValue() as String
 		bundle = NSBundle(URL: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()))!
-		UTITypes = unwrapped.UTItypes.takeUnretainedValue() as NSArray as! [String]
+		UTITypes = unwrapped.UTItypes.takeUnretainedValue() as! [String]
 		tupleType = unwrapped.type
 		let tmpArray: [CChar] = getArrayFromMirror(reflect(tupleType))
 		type = String(CString: tmpArray, encoding: NSMacOSRomanStringEncoding)!

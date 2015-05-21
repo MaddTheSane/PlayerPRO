@@ -36,6 +36,7 @@
 #include <File.h>
 #include <Bitmap.h>
 #include <NodeInfo.h>
+#include <string>
 
 //	Low-level music driver.
 #include "RDriver.h"
@@ -61,6 +62,10 @@ static inline char* TypeToString(OSType type, char *string)
 	OSType2Ptr(type, string);
 	return string;
 }
+
+#ifndef _EXPORT
+#define _EXPORT extern __attribute__((visibility("default")))
+#endif
 
 //	Main MADDriver class:
 #pragma	mark	MADDriverClass
@@ -95,6 +100,11 @@ public:
 		return curMusic != NULL;
 	}
 	
+	inline void setBSoundName(std::string newName)
+	{
+		BSoundName = newName;
+	}
+	
 	//	Data members:
 	MADErr				libraryError;	//	Last error returned by MADLibrary.
 	bool				inited;			//	Successful initialization.
@@ -104,11 +114,14 @@ public:
 	MADMusic			*curMusic;		//	Current music.
 	MADDriverSettings	settings;		//	Current settings for driver.
 	
+	
 private:
 	
 	//	Library initialization.
 	static MADDriverSettings	CreateDefaultDriver(void);
 	bool						InitLibrary(MADDriverSettings &init);
+	
+	std::string					BSoundName;
 	
 	//	System streamers.
 	BSoundPlayer				*streamPlayer;

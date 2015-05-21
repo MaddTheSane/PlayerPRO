@@ -9,7 +9,9 @@
 #ifndef PPMacho_MIDI_h
 #define PPMacho_MIDI_h
 
+#ifndef __private_extern
 #define __private_extern __attribute__((visibility("hidden")))
+#endif
 
 #import <Foundation/Foundation.h>
 #import <PlayerPROKit/PlayerPROKit.h>

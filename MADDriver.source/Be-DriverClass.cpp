@@ -148,7 +148,7 @@ bool MADDriverClass::InitLibrary(MADDriverSettings &init)
 	format.byte_order = 1;
 	format.buffer_size = (curDriverRec->BufSize * sizeof(float)) / (init.outPutBits / 8);
 	
-	streamPlayer = new BSoundPlayer(&format, "PlayerPROCore", trackerStreamPlay, NULL, this);
+	streamPlayer = new BSoundPlayer(&format, BSoundName, trackerStreamPlay, NULL, this);
 	
 	streamPlayer->SetHasData(true);
 	streamPlayer->Start();
