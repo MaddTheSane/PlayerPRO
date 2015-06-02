@@ -11,6 +11,8 @@
 #import "ARCBridge.h"
 #import "PPInstrumentPlugBridgeHelper.h"
 
+#define kMadPlugIsSampleKey @"MADPlugIsSample"
+
 @interface PPInstrumentPlugBridgeObject ()
 @property (retain, readwrite) NSBundle *bundleFile;
 - (MADErr)callPlugWithOrder:(OSType)order instrument:(InstrData*)instr sampleArray:(sData**)samps sampleIndex:(short*)sampIdx URL:(NSURL*)fileURL;
@@ -19,6 +21,7 @@
 @implementation PPInstrumentPlugBridgeObject
 @synthesize xxxx;
 @synthesize bundleFile = _bundleFile;
+@synthesize sample = _isSample;
 
 - (instancetype)init
 {
@@ -34,6 +37,8 @@
 - (instancetype)initWithBundle:(NSBundle *)tempBundle
 {
 	if (self = [super init]) {
+		id sampleObj = [tempBundle infoDictionary][kMadPlugIsSampleKey];
+		_isSample = [sampleObj boolValue];
 		NSURL *tempBundURL = [tempBundle bundleURL];
 		CFBundleRef tempCFBundle = CFBundleCreate(kCFAllocatorDefault, BRIDGE(CFURLRef, tempBundURL));
 		xxxx = (PPInstrumentPlugin**)PPINLoadPlug(tempCFBundle);

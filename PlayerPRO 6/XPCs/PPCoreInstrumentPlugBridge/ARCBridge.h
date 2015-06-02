@@ -36,7 +36,7 @@
 #define RETAINOBJNORETURN(obj) [obj retain]
 #define AUTORELEASEOBJ(obj) [obj autorelease]
 #define AUTORELEASEOBJNORETURN(obj) [obj autorelease]
-#define BRIDGE(toType, obj) (toType)obj
+#define BRIDGE(toType, obj) (toType)(obj)
 #define arcstrong retain
 #define arcweak assign
 #define __arcweak

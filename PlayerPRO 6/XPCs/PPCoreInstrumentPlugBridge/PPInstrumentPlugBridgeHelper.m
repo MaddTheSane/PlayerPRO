@@ -142,7 +142,7 @@ NSData *PPInstrumentToData(PPInstrumentObject *ourData)
 	[ourArchiver encodeInt32:ourData.pitchSize forKey:PPPitchSize];
 
 	[ourArchiver finishEncoding];
-	return ourEncData;
+	return [ourEncData copy];
 }
 
 PPSampleObject *newSampleFromDictionary(NSDictionary *sampleDict)
@@ -258,13 +258,14 @@ NSData *MADInstrumentToData(InstrData* insData, sData ** sampleData)
 	@autoreleasepool {
 		ourEncData = [[NSMutableData alloc] init];
 		NSKeyedArchiver *ourArchiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:ourEncData];
-		NSMutableArray *sampArray = [NSMutableArray array];
+		NSMutableArray *sampArray = [[NSMutableArray alloc] init];
 		for (int i = 0; i < insData->numSamples; i++) {
 			NSDictionary *sampDict = sampleToDictionary(sampleData[i]);
 			[sampArray addObject:sampDict];
 			RELEASEOBJ(sampDict);
 		}
 		[ourArchiver encodeObject:sampArray forKey:PPSamples];
+		RELEASEOBJ(sampArray); sampArray = nil;
 		[ourArchiver encodeInt32:insData->volType forKey:PPVolType];
 		[ourArchiver encodeBytes:insData->what length:96 forKey:PPWhat];
 		[ourArchiver encodeInt32:insData->MIDI forKey:PPMIDI];
@@ -274,9 +275,9 @@ NSData *MADInstrumentToData(InstrData* insData, sData ** sampleData)
 		[ourArchiver encodeInt32:insData->volBeg forKey:PPVolBeg];
 		[ourArchiver encodeInt32:insData->volEnd forKey:PPVolEnd];
 		[ourArchiver encodeObject:[NSString stringWithCString:insData->name encoding:NSMacOSRomanStringEncoding] forKey:PPName];
-		NSMutableArray *volumeEnvelope = [NSMutableArray array];
-		NSMutableArray *panningEnvelope = [NSMutableArray array];
-		NSMutableArray *pitchEnvelope = [NSMutableArray array];
+		NSMutableArray *volumeEnvelope = [[NSMutableArray alloc] init];
+		NSMutableArray *panningEnvelope = [[NSMutableArray alloc] init];
+		NSMutableArray *pitchEnvelope = [[NSMutableArray alloc] init];
 		for (int i = 0; i < 12; i++) {
 			PPEnvelopeClass *aVolEnv = [[PPEnvelopeClass alloc] initWithEnvRec:insData->volEnv[i]];
 			PPEnvelopeClass *aPannEnv = [[PPEnvelopeClass alloc] initWithEnvRec:insData->pannEnv[i]];
@@ -289,6 +290,9 @@ NSData *MADInstrumentToData(InstrData* insData, sData ** sampleData)
 		[ourArchiver encodeObject:volumeEnvelope forKey:PPVolEnv];
 		[ourArchiver encodeObject:panningEnvelope forKey:PPPannEnv];
 		[ourArchiver encodeObject:pitchEnvelope forKey:PPPitchEnv];
+		RELEASEOBJ(volumeEnvelope); volumeEnvelope = nil;
+		RELEASEOBJ(panningEnvelope); panningEnvelope = nil;
+		RELEASEOBJ(pitchEnvelope); pitchEnvelope = nil;
 		
 		[ourArchiver encodeInt32:insData->volSize forKey:PPVolSize];
 		[ourArchiver encodeInt32:insData->pannSize forKey:PPPannSize];
@@ -389,7 +393,7 @@ InstrData *MADDataToInstrument(NSData *ourData, sData ***sampleData)
 
 NSDictionary *sampleToDictionary(sData *sampObj)
 {
-	NSMutableDictionary *toRet = [NSMutableDictionary new];
+	NSMutableDictionary *toRet = [[NSMutableDictionary alloc] initWithCapacity:10];
 	@autoreleasepool {
 		toRet[LOOPBEGINKEY] = @(sampObj->loopBeg);
 		toRet[LOOPSIZEKEY] = @(sampObj->loopSize);

@@ -9,16 +9,20 @@
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 // The protocol that this service will vend as its API. This header file will also need to be visible to the process hosting the service.
 @protocol PPCoreInstrumentPlugBridgeProtocol <NSObject>
 - (void)checkBundleAtURLIsInstrumentBundle:(NSURL*)bundle withReply:(void (^)(BOOL isPlug))reply;
 - (void)canImportFileAtURL:(NSURL*)aFile bundleURL:(NSURL*)bundle withReply:(void (^)(BOOL))reply;
 
-- (void)beginImportFileAtURL:(NSURL*)aFile withBundleURL:(NSURL*)bundle instrumentData:(NSData*)insData instrumentNumber:(short)insNum reply:(void (^)(MADErr error, NSData *outInsData))reply;
-- (void)beginImportFileAtURL:(NSURL*)aFile withBundleURL:(NSURL*)bundle sampleData:(NSData*)sampData instrumentNumber:(short)insNum sampleNumber:(short)sampNum reply:(void (^)(MADErr error, NSData *outInsData, BOOL newSample))reply;
+- (void)beginImportFileAtURL:(NSURL*)aFile withBundleURL:(NSURL*)bundle instrumentData:(NSData*)insData instrumentNumber:(short)insNum reply:(void (^)(MADErr error, NSData *__nullable outInsData))reply;
+- (void)beginImportFileAtURL:(NSURL*)aFile withBundleURL:(NSURL*)bundle sampleData:(NSData*)sampData instrumentNumber:(short)insNum sampleNumber:(short)sampNum reply:(void (^)(MADErr error, NSData *__nullable outInsData, BOOL newSample))reply;
 
 - (void)checkBundleAtURLIsSampleBundle:(NSURL*)bundle withReply:(void (^)(BOOL isPlug))reply;
 @end
+
+NS_ASSUME_NONNULL_END
 
 /*
  To use the service from an application or other process, use NSXPCConnection to establish a connection to the service by doing something like this:

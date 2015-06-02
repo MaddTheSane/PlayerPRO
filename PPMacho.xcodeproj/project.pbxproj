@@ -343,7 +343,6 @@
 		556BC17A19CF47FC00508F49 /* PPCoreInstrumentPlugBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 559170A519C26E1D00998D7F /* PPCoreInstrumentPlugBridge.m */; };
 		556BC17B19CF47FC00508F49 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
 		556BC18419CF482600508F49 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
-		556BC18519CF482D00508F49 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		556BC18A19CF75F900508F49 /* PPCoreInstrumentPlugBridge32.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 556BC18219CF47FC00508F49 /* PPCoreInstrumentPlugBridge32.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
@@ -653,6 +652,7 @@
 		55C563D11AB659DD00F7E4FA /* TestMADK.madk in Resources */ = {isa = PBXBuildFile; fileRef = 55C563CF1AB659DD00F7E4FA /* TestMADK.madk */; };
 		55C5754019CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
 		55C5754119CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 55C5753F19CE32B1005109C9 /* PPInstrumentPlugBridgeHelper.m */; };
+		55C5F27D1B1DE63300EBC776 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55C8EDE1187CC8B200CC8C1B /* PPPatternObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287216A8968C009013D8 /* PPPatternObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55C8EDE2187CC8B200CC8C1B /* PPPatternObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F4287316A8968C009013D8 /* PPPatternObject.m */; };
 		55C8EDE3187CC8B200CC8C1B /* PPMadCommandObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55F4287616A89A9C009013D8 /* PPMadCommandObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2931,7 +2931,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				556BC18519CF482D00508F49 /* Cocoa.framework in Frameworks */,
+				55C5F27D1B1DE63300EBC776 /* Foundation.framework in Frameworks */,
 				556BC18419CF482600508F49 /* PlayerPROCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

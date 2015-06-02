@@ -109,9 +109,9 @@ static inline BOOL getBoolFromId(id NSType)
 @implementation PPCoreInstrumentPlugBridge
 @synthesize plugIns;
 
-__unused static inline OSType NSStringToOSType(NSString *CFstri)
+static inline OSType NSStringToOSType(NSString *CFstri)
 {
-	return UTGetOSTypeFromString((__bridge CFStringRef)(CFstri));
+	return UTGetOSTypeFromString(BRIDGE(CFStringRef, CFstri));
 }
 
 __unused static inline NSString* OSTypeToNSString(OSType theOSType) 
@@ -131,6 +131,27 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 	[self isBundleAtURLIsInstrumentBundle:bundle withReply:^(BOOL isPlug, BOOL isInstrument, BOOL isImport) {
 		reply(isPlug && isInstrument);
 	}];
+}
+
+- (PPInstrumentPlugBridgeObject*)plugInAtURL:(NSURL*)url
+{
+	for (PPInstrumentPlugBridgeObject *obj in plugIns) {
+		if ([obj.bundleFile.bundleURL isEqual:url]) {
+			return obj;
+		}
+	}
+	
+	//Make sure we have the bundle object set up, as the helper may have been invalidated.
+	NSBundle *bundle = [NSBundle bundleWithURL:url];
+	PPInstrumentPlugBridgeObject *obj = nil;
+	if (bundle != nil) {
+		obj = [[PPInstrumentPlugBridgeObject alloc] initWithBundle:bundle];
+	}
+	if (obj != nil) {
+		[plugIns addObject:obj];
+	}
+	
+	return AUTORELEASEOBJ(obj);
 }
 
 - (void)isBundleAtURLIsInstrumentBundle:(NSURL*)bundle withReply:(void (^)(BOOL isPlug, BOOL isInstrument, BOOL isImport))reply
@@ -234,12 +255,11 @@ __unused static inline NSString* OSTypeToNSString(OSType theOSType)
 
 - (void)canImportFileAtURL:(NSURL*)aFile bundleURL:(NSURL*)bundle withReply:(void (^)(BOOL))reply
 {
-	for (PPInstrumentPlugBridgeObject *obj in plugIns) {
-		if ([obj.bundleFile.bundleURL isEqual:bundle]) {
-			BOOL toRet = [obj canLoadFileAtURL:aFile];
-			reply(toRet);
-			break;
-		}
+	PPInstrumentPlugBridgeObject* obj = [self plugInAtURL:bundle];
+	if (obj != nil) {
+		BOOL toRet = [obj canLoadFileAtURL:aFile];
+		reply(toRet);
+		return;
 	}
 	
 	reply(NO);
@@ -260,35 +280,45 @@ static void freeIns(InstrData* curIns, sData **samples) {
 
 - (void)beginImportFileAtURL:(NSURL*)aFile withBundleURL:(NSURL*)bundle instrumentData:(NSData*)insData instrumentNumber:(short)insNum reply:(void (^)(MADErr error, NSData *outInsData))reply
 {
+	PPInstrumentPlugBridgeObject *plug = [self plugInAtURL:bundle];
+	if (plug == nil) {
+		reply(MADCannotFindPlug, nil);
+		return;
+	}
+	
+	if (plug.sample) {
+		reply(MADOrderNotImplemented, nil);
+		return;
+	}
 	sData **samples;
 	InstrData *instrument = MADDataToInstrument(insData, &samples);
 	
-	for (PPInstrumentPlugBridgeObject *plug in plugIns) {
-		if ([plug.bundleFile.bundleURL isEqual:bundle]) {
-			NSData *ourData = nil;
-			short aSamp = -1;
-			MADErr iErr = [plug importURL:aFile instrument:instrument sampleArray:samples sampleIndex:&aSamp];
-			
-			if (iErr == noErr) {
-				ourData = MADInstrumentToData(instrument, samples);
-			}
-			reply(iErr, ourData);
-			freeIns(instrument, samples);
-			free(samples);
-			free(instrument);
-			RELEASEOBJ(ourData);
-			
-			return;
-		}
+	NSData *ourData = nil;
+	short aSamp = -1;
+	MADErr iErr = [plug importURL:aFile instrument:instrument sampleArray:samples sampleIndex:&aSamp];
+	
+	if (iErr == noErr) {
+		ourData = MADInstrumentToData(instrument, samples);
 	}
-	reply(MADCannotFindPlug, nil);
+	reply(iErr, ourData);
 	freeIns(instrument, samples);
 	free(samples);
 	free(instrument);
+	RELEASEOBJ(ourData);
 }
 
 - (void)beginImportFileAtURL:(NSURL*)aFile withBundleURL:(NSURL*)bundle sampleData:(NSData*)sampData instrumentNumber:(short)insNum sampleNumber:(short)sampNum reply:(void (^)(MADErr error, NSData *outInsData, BOOL newSample))reply
 {
+	PPInstrumentPlugBridgeObject *plug = [self plugInAtURL:bundle];
+	if (plug == nil) {
+		reply(MADCannotFindPlug, nil, NO);
+		return;
+	}
+	
+	if (!plug.sample) {
+		reply(MADOrderNotImplemented, nil, NO);
+		return;
+	}
 	sData **samples = calloc(sizeof(sData*), MAXINSTRU);
 	InstrData *instrument = calloc(sizeof(InstrData), 1);
 	
@@ -301,30 +331,20 @@ static void freeIns(InstrData* curIns, sData **samples) {
 		instrument->numSamples = 0;
 	}
 	
-	for (PPInstrumentPlugBridgeObject *plug in plugIns) {
-		if ([plug.bundleFile.bundleURL isEqual:bundle]) {
-			NSData *ourData = nil;
-			short aSamp = sampNum != -1 ? 0 : -1;
-			short preSamp = sampNum;
-			MADErr iErr = [plug importURL:aFile instrument:instrument sampleArray:samples sampleIndex:&aSamp];
-			
-			if (iErr == noErr) {
-				ourData = MADSampleToData(samples[aSamp]);
-			}
-			reply(iErr, ourData, aSamp != preSamp);
-			
-			freeIns(instrument, samples);
-			free(samples);
-			free(instrument);
-			RELEASEOBJ(ourData);
-			
-			return;
-		}
+	NSData *ourData = nil;
+	short aSamp = sampNum != -1 ? 0 : -1;
+	short preSamp = sampNum;
+	MADErr iErr = [plug importURL:aFile instrument:instrument sampleArray:samples sampleIndex:&aSamp];
+	
+	if (iErr == noErr) {
+		ourData = MADSampleToData(samples[aSamp]);
 	}
-	reply(MADCannotFindPlug, nil, -1);
+	reply(iErr, ourData, aSamp != preSamp);
+	
 	freeIns(instrument, samples);
 	free(samples);
 	free(instrument);
+	RELEASEOBJ(ourData);
 }
 
 + (instancetype)sharedImporter

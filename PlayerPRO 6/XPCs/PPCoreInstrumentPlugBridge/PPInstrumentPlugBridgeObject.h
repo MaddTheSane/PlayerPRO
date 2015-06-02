@@ -15,9 +15,11 @@
 @private
 	NSBundle *_bundleFile;
 	PPInstrumentPlugin **xxxx;
+	BOOL _isSample;
 }
 @property (retain, readonly) NSBundle *bundleFile;
 @property PPInstrumentPlugin **xxxx;
+@property (readonly, getter=isSample) BOOL sample;
 
 - (instancetype)init UNAVAILABLE_ATTRIBUTE;
 - (instancetype)initWithBundle:(NSBundle *)tempBundle;
