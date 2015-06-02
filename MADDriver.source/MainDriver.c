@@ -2067,6 +2067,13 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 			break;
 	}
 	
+	if (theErr != MADNoErr) {
+		free(MDriver->header);
+		free(MDriver);
+		
+		return theErr;
+	}
+	
 	ByteSwapMADSpec(MDriver->header);
 	
 	if (MDriver->header->MAD != 'MADK' || MDriver->header->numInstru > MAXINSTRU) {
@@ -2104,6 +2111,17 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 			case MADPtrType:
 				memcpy(&tempPatHeader, MADPtr + OffSetToSample, inOutCount);
 				break;
+		}
+		
+		if (theErr != MADNoErr) {
+			for (x = 0; x < i; x++) {
+				if (MDriver->partition[x] != NULL)
+					free(MDriver->partition[x]);
+			}
+			free(MDriver->header);
+			free(MDriver);
+			
+			return theErr;
 		}
 		
 		ByteSwapPatHeader(&tempPatHeader);
@@ -2157,6 +2175,17 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 				memcpy(MDriver->partition[i], MADPtr + OffSetToSample, inOutCount);
 				OffSetToSample += inOutCount;
 				break;
+		}
+		
+		if (theErr != MADNoErr) {
+			for (x = 0; x < i; x++) {
+				if (MDriver->partition[x] != NULL)
+					free(MDriver->partition[x]);
+			}
+			free(MDriver->header);
+			free(MDriver);
+			
+			return theErr;
 		}
 		
 		if (InPutType != MADCFReadStreamType)
@@ -2215,6 +2244,20 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 			memcpy(MDriver->fid, MADPtr + OffSetToSample, inOutCount);
 			OffSetToSample += inOutCount;
 			break;
+	}
+	
+	if (theErr != MADNoErr) {
+		for (x = 0; x < MAXINSTRU ; x++)
+			MADKillInstrument(MDriver, x);
+		
+		for (x = 0; x < i; x++) {
+			if (MDriver->partition[x] != NULL)
+				free(MDriver->partition[x]);
+		}
+		free(MDriver->header);
+		free(MDriver);
+		
+		return theErr;
 	}
 	
 	for (i = MDriver->header->numInstru - 1; i >= 0 ; i--) {
@@ -2288,6 +2331,20 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 					memcpy(curData, MADPtr + OffSetToSample, inOutCount);
 					OffSetToSample += inOutCount;
 					break;
+			}
+			
+			if (theErr != MADNoErr) {
+				for (x = 0; x < MAXINSTRU ; x++)
+					MADKillInstrument(MDriver, x);
+				
+				for (x = 0; x < i; x++) {
+					if (MDriver->partition[x] != NULL)
+						free(MDriver->partition[x]);
+				}
+				free(MDriver->header);
+				free(MDriver);
+				
+				return theErr;
 			}
 			
 			ByteSwapsData(curData);
@@ -2388,6 +2445,21 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 						OffSetToSample += inOutCount;
 						break;
 				}
+				
+				if (theErr != MADNoErr) {
+					for (x = 0; x < MAXINSTRU ; x++)
+						MADKillInstrument(MDriver, x);
+					
+					for (x = 0; x < i; x++) {
+						if (MDriver->partition[x] != NULL)
+							free(MDriver->partition[x]);
+					}
+					free(MDriver->header);
+					free(MDriver);
+					
+					return theErr;
+				}
+
 				SwapFXSets(&MDriver->sets[alpha]);
 				alpha++;
 			}
@@ -2418,6 +2490,20 @@ MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFRe
 							OffSetToSample += inOutCount;
 							break;
 					}
+					if (theErr != MADNoErr) {
+						for (x = 0; x < MAXINSTRU ; x++)
+							MADKillInstrument(MDriver, x);
+						
+						for (x = 0; x < i; x++) {
+							if (MDriver->partition[x] != NULL)
+								free(MDriver->partition[x]);
+						}
+						free(MDriver->header);
+						free(MDriver);
+						
+						return theErr;
+					}
+					
 					SwapFXSets(&MDriver->sets[alpha]);
 					alpha++;
 				}
