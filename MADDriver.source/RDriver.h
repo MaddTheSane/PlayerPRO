@@ -711,13 +711,12 @@ PPEXPORT void MADRegisterDebugBlock(void (^newdebugBlock)(short, const char*, co
 /*!
  *	@function	MADInitLibrary
  *	@abstract	MADLibrary initialization
- *	@result		The error encountered, if any. Will be of type MADErrors unless \c MADNoErr
  *	@param		PlugsFolderName
  *				The folder location for the plug-ins for PlayerPROCore to look for. <br>
  *				On certain platforms, this can be \c NULL
  *	@param		MADLib
  *				Usually a pointer passed by reference. If successful, it will return an initialized \c MADLibrary struct.
- *	@return		An error type on failure, or \c MADNoErr on success
+ *	@return		An error type on failure, or \c MADNoErr on success.
  *	@discussion	You must call this function if you want to use other functions & variables.<br>
  *				Needed to help set up the MADDriver structure and load non-MADK audio trackers.
  */

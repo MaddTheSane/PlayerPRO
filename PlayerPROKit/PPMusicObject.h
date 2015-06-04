@@ -45,22 +45,22 @@
 @property MADByte generalVolume;
 
 - (nonnull instancetype)init;
-// Creates a music object from the supplied MADK file ONLY
+/// Creates a music object from the supplied MADK file ONLY
 - (nullable instancetype)initWithURL:(nonnull NSURL *)url error:(out NSError* __nullable __autoreleasing* __nullable)error NS_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithPath:(nonnull NSString *)url error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
 
-// Creates a music object from any supported tracker type.
+/// Creates a music object from any supported tracker type.
 - (nullable instancetype)initWithURL:(nonnull NSURL *)url library:(nonnull PPLibrary *)theLib error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
 - (nullable instancetype)initWithPath:(nonnull NSString *)url library:(nonnull PPLibrary *)theLib error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
 
-// Creates a music object from the specified music type.
-// If the type isn't available, it returns nil.
+/// Creates a music object from the specified music type.
+/// If the type isn't available, it returns nil.
 - (nullable instancetype)initWithURL:(nonnull NSURL *)url type:(in nonnull const char*)type library:(nonnull PPLibrary *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error NS_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithPath:(nonnull NSString *)path type:(in nonnull const char*)type library:(nonnull PPLibrary *)theLib error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
 - (nullable instancetype)initWithURL:(nonnull NSURL *)url stringType:(nonnull NSString*)type library:(nonnull PPLibrary *)theLib error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
 - (nullable instancetype)initWithPath:(nonnull NSString *)path stringType:(nonnull NSString*)type library:(nonnull PPLibrary *)theLib error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
 
-// Creates a music object from any supported tracker type, also attaching a driver to the music.
+/// Creates a music object from any supported tracker type, also attaching a driver to the music.
 - (nullable instancetype)initWithURL:(nonnull NSURL *)url driver:(nonnull PPDriver *)theLib error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
 - (nullable instancetype)initWithPath:(nonnull NSString *)path driver:(nonnull PPDriver *)theLib error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
 - (nullable instancetype)initWithURL:(nonnull NSURL *)url type:(in const char* __nonnull)type driver:(nonnull PPDriver *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error;
@@ -80,12 +80,12 @@
 
 + (MADErr)info:(nonnull MADInfoRec*)theInfo fromTrackerAtURL:(nonnull NSURL*)thURL usingLibrary:(nonnull PPLibrary*)theLib;
 
-// Save music to a URL in MADK format.
+/// Save music to a URL in MADK format.
 - (MADErr)saveMusicToURL:(nonnull NSURL *)tosave;
 - (MADErr)saveMusicToURL:(nonnull NSURL *)tosave compress:(BOOL)mad1Comp;
 - (MADErr)exportMusicToURL:(nonnull NSURL *)tosave format:(nonnull NSString*)form library:(nonnull PPLibrary*)otherLib;
 
-//This method sets the music object as the playback music
+/// This method sets the music object as the playback music
 - (void)attachToDriver:(nonnull PPDriver *)theDriv;
 
 - (void)addInstrumentObject:(nonnull PPInstrumentObject *)object;

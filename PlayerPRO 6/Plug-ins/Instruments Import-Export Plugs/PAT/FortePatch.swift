@@ -93,24 +93,24 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 		curData.volume = 64;
 		curData.loopType = MADLoopType.Classic
 		
-		if (PATSamp.memory.Flag & 0x01) {
+		if (PATSamp.memory.Flag & 0x01) != 0 {
 			curData.amplitude = 16;
 		} else {
 			curData.amplitude = 8;
 		}
 		
-		if (PATSamp.memory.Flag & 0x02) {
+		if (PATSamp.memory.Flag & 0x02) != 0 {
 			signedData = true;
 		} else {
 			signedData = false;
 		}
 		
-		if (!(PATSamp.memory.Flag & 0x04)) {
+		if (PATSamp.memory.Flag & 0x04) == 0 {
 			curData.loopBegin = 0;
 			curData.loopSize = 0;
 		}
 		
-		if (PATSamp.memory.Flag & 0x08) {
+		if (PATSamp.memory.Flag & 0x08) != 0 {
 			curData.loopType = .PingPong;
 		} else {
 			curData.loopType = .Classic;

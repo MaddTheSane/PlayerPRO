@@ -27,6 +27,7 @@ private func infoRecToDictionary(infoRec: MADInfoRec) -> NSDictionary {
 		kPPFormatDescription:	String(CString: bArray, encoding: NSMacOSRomanStringEncoding) ?? ""]
 }
 
+/// Class that represents the additional tracker types that PlayerPRO can load via plug-ins.
 public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	internal let trackerLibs: [PPLibraryObject]
 	private(set) internal var theLibrary: UnsafeMutablePointer<MADLibrary> = nil
@@ -141,7 +142,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	#else
 	///Init a PPLibrary object without a specific plug-in directory
 	///
-	///:param: ignore unused, needed for Swift-ObjC interaction.
+	///:param: ignore unused, needed for Swift-ObjC interop.
 	@objc(init:) public convenience init?(_ ignore: Bool = false) {
 		self.init(plugInCPath: nil)
 	}
