@@ -345,6 +345,18 @@
 		556BC18419CF482600508F49 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
 		556BC18A19CF75F900508F49 /* PPCoreInstrumentPlugBridge32.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 556BC18219CF47FC00508F49 /* PPCoreInstrumentPlugBridge32.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		556DC1C619A27A5C00928BB4 /* PlayerPROCoreAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */; };
+		557003361B2261B300C623AB /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; };
+		557003371B2261B300C623AB /* SwiftAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5570033A1B2261B400C623AB /* SwiftAudioAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9801B01496100EB2C84 /* SwiftAudioAdditions.framework */; };
+		5570033B1B2261B400C623AB /* SwiftAudioAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9801B01496100EB2C84 /* SwiftAudioAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5570033E1B2261C300C623AB /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; };
+		5570033F1B2261C300C623AB /* SwiftAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		557003421B2261C400C623AB /* SwiftAudioAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9801B01496100EB2C84 /* SwiftAudioAdditions.framework */; };
+		557003431B2261C400C623AB /* SwiftAudioAdditions.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9801B01496100EB2C84 /* SwiftAudioAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		557003461B2261DA00C623AB /* SwiftAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; };
+		557003471B2261DA00C623AB /* SwiftAdditions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9741B01496100EB2C84 /* SwiftAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		5570034A1B2261DB00C623AB /* SwiftAudioAdditions.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9801B01496100EB2C84 /* SwiftAudioAdditions.framework */; };
+		5570034B1B2261DB00C623AB /* SwiftAudioAdditions.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 55D5E9801B01496100EB2C84 /* SwiftAudioAdditions.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		557139CF1684EF7500831A5A /* PPHilightableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 557139CE1684EF7500831A5A /* PPHilightableButton.m */; };
 		557139E71685007B00831A5A /* PPOpenPanel.xib in Resources */ = {isa = PBXBuildFile; fileRef = 557139E51685007B00831A5A /* PPOpenPanel.xib */; };
 		557191D118A40D9900F6DAD4 /* MidiHardwarePreferenceController.m in Sources */ = {isa = PBXBuildFile; fileRef = 55232AF911FDE5F90041A4EC /* MidiHardwarePreferenceController.m */; };
@@ -1205,6 +1217,97 @@
 			remoteGlobalIDString = 556BC17319CF47FC00508F49;
 			remoteInfo = PPCoreInstrumentPlugBridge32;
 		};
+		557003281B2260D600C623AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
+		5570032A1B2260E400C623AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
+		5570032C1B2260E400C623AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 55E11DE01AE7114000815555;
+			remoteInfo = SwiftAudioAdditions;
+		};
+		5570032E1B2260F600C623AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
+		557003301B2260F600C623AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 55E11DE01AE7114000815555;
+			remoteInfo = SwiftAudioAdditions;
+		};
+		557003321B22616500C623AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
+		557003341B22617F00C623AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
+		557003381B2261B400C623AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
+		5570033C1B2261B500C623AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 55E11DE01AE7114000815555;
+			remoteInfo = SwiftAudioAdditions;
+		};
+		557003401B2261C400C623AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
+		557003441B2261C500C623AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 55E11DE01AE7114000815555;
+			remoteInfo = SwiftAudioAdditions;
+		};
+		557003481B2261DB00C623AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
+		5570034C1B2261DB00C623AB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 55E11DE01AE7114000815555;
+			remoteInfo = SwiftAudioAdditions;
+		};
 		5578C49817D9E86D0057D11B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -1946,8 +2049,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				5570033F1B2261C300C623AB /* SwiftAdditions.framework in Copy Frameworks */,
 				5573A1621658A3E700A5AECA /* PlayerPROCore.framework in Copy Frameworks */,
 				5578C4F917DAB28A0057D11B /* PlayerPROKit.framework in Copy Frameworks */,
+				557003431B2261C400C623AB /* SwiftAudioAdditions.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1958,8 +2063,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				557003371B2261B300C623AB /* SwiftAdditions.framework in Copy Frameworks */,
 				5578C49E17D9E8A00057D11B /* PlayerPROCore.framework in Copy Frameworks */,
 				5578C4FD17DB8A3B0057D11B /* PlayerPROKit.framework in Copy Frameworks */,
+				5570033B1B2261B400C623AB /* SwiftAudioAdditions.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2093,8 +2200,10 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				557003471B2261DA00C623AB /* SwiftAdditions.framework in Embed Frameworks */,
 				55F1BDF91975CBFF00AD2C03 /* PlayerPROKit.framework in Embed Frameworks */,
 				55F1BDAF1975C8EE00AD2C03 /* PlayerPROCore.framework in Embed Frameworks */,
+				5570034B1B2261DB00C623AB /* SwiftAudioAdditions.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2891,10 +3000,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				557003461B2261DA00C623AB /* SwiftAdditions.framework in Frameworks */,
 				55F1BDAE1975C8EE00AD2C03 /* PlayerPROCore.framework in Frameworks */,
 				55680A4A190497FC00F7616D /* CoreFoundation.framework in Frameworks */,
 				55680A4B190497FC00F7616D /* Foundation.framework in Frameworks */,
 				55680A47190497E400F7616D /* CoreGraphics.framework in Frameworks */,
+				5570034A1B2261DB00C623AB /* SwiftAudioAdditions.framework in Frameworks */,
 				55F1BDF81975CBFF00AD2C03 /* PlayerPROKit.framework in Frameworks */,
 				55680A45190497B400F7616D /* UIKit.framework in Frameworks */,
 				55085D881836EE7B004A152F /* AudioToolbox.framework in Frameworks */,
@@ -2956,9 +3067,11 @@
 				5578C4CF17DA6D2C0057D11B /* CoreFoundation.framework in Frameworks */,
 				557F296818790DDA009D4BC8 /* AudioToolbox.framework in Frameworks */,
 				5578C48217D9E8560057D11B /* Cocoa.framework in Frameworks */,
+				557003361B2261B300C623AB /* SwiftAdditions.framework in Frameworks */,
 				5578C49D17D9E89B0057D11B /* PlayerPROCore.framework in Frameworks */,
 				55149C621832D176009C850B /* AVFoundation.framework in Frameworks */,
 				5578C4FC17DB8A2F0057D11B /* PlayerPROKit.framework in Frameworks */,
+				5570033A1B2261B400C623AB /* SwiftAudioAdditions.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3280,6 +3393,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				557003421B2261C400C623AB /* SwiftAudioAdditions.framework in Frameworks */,
+				5570033E1B2261C300C623AB /* SwiftAdditions.framework in Frameworks */,
 				55CBFC3911EB786B0028C6BB /* CoreFoundation.framework in Frameworks */,
 				557F296918790DF2009D4BC8 /* AudioToolbox.framework in Frameworks */,
 				55085D811836EC82004A152F /* CoreMIDI.framework in Frameworks */,
@@ -5056,6 +5171,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				557003291B2260D600C623AB /* PBXTargetDependency */,
 				551292EC163DD72E00C2C639 /* PBXTargetDependency */,
 			);
 			name = PlayerPROKit;
@@ -5351,6 +5467,8 @@
 				55F1BDB11975C8EE00AD2C03 /* PBXTargetDependency */,
 				55F1BDF71975CBFF00AD2C03 /* PBXTargetDependency */,
 				55F1BDFB1975CBFF00AD2C03 /* PBXTargetDependency */,
+				557003491B2261DB00C623AB /* PBXTargetDependency */,
+				5570034D1B2261DB00C623AB /* PBXTargetDependency */,
 			);
 			name = "iOS PlayerPRO Player";
 			productName = "iOS PlayerPRO Player";
@@ -5464,12 +5582,16 @@
 			buildRules = (
 			);
 			dependencies = (
+				5570032B1B2260E400C623AB /* PBXTargetDependency */,
+				5570032D1B2260E400C623AB /* PBXTargetDependency */,
 				55534AEB18183B17006D6BCB /* PBXTargetDependency */,
 				5578C49917D9E86D0057D11B /* PBXTargetDependency */,
 				5578C49B17D9E8730057D11B /* PBXTargetDependency */,
 				55886F7317DEDAA200021A82 /* PBXTargetDependency */,
 				5578C53917DB959B0057D11B /* PBXTargetDependency */,
 				55680A311904661700F7616D /* PBXTargetDependency */,
+				557003391B2261B400C623AB /* PBXTargetDependency */,
+				5570033D1B2261B500C623AB /* PBXTargetDependency */,
 			);
 			name = "PlayerPRO Player";
 			productName = "PlayerPRO Player";
@@ -6118,6 +6240,8 @@
 			buildRules = (
 			);
 			dependencies = (
+				5570032F1B2260F600C623AB /* PBXTargetDependency */,
+				557003311B2260F600C623AB /* PBXTargetDependency */,
 				552363A419A55C9B000D191D /* PBXTargetDependency */,
 				552363A619A55C9B000D191D /* PBXTargetDependency */,
 				55534AE918183B0C006D6BCB /* PBXTargetDependency */,
@@ -6131,6 +6255,8 @@
 				559170AA19C26E1D00998D7F /* PBXTargetDependency */,
 				559170AD19C26E1D00998D7F /* PBXTargetDependency */,
 				556BC18C19CF75F900508F49 /* PBXTargetDependency */,
+				557003411B2261C400C623AB /* PBXTargetDependency */,
+				557003451B2261C500C623AB /* PBXTargetDependency */,
 			);
 			name = "PlayerPRO 6";
 			productName = Cocoa;
@@ -6204,6 +6330,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				557003331B22616500C623AB /* PBXTargetDependency */,
 			);
 			name = "PlayerPROCore-iOS";
 			productName = iOSPlayerPROCore;
@@ -6222,6 +6349,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				557003351B22617F00C623AB /* PBXTargetDependency */,
 				55F1BE241975D1CD00AD2C03 /* PBXTargetDependency */,
 			);
 			name = "PlayerPROKit-iOS";
@@ -8036,6 +8164,71 @@
 			isa = PBXTargetDependency;
 			target = 556BC17319CF47FC00508F49 /* PPCoreInstrumentPlugBridge32 */;
 			targetProxy = 556BC18B19CF75F900508F49 /* PBXContainerItemProxy */;
+		};
+		557003291B2260D600C623AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 557003281B2260D600C623AB /* PBXContainerItemProxy */;
+		};
+		5570032B1B2260E400C623AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 5570032A1B2260E400C623AB /* PBXContainerItemProxy */;
+		};
+		5570032D1B2260E400C623AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAudioAdditions;
+			targetProxy = 5570032C1B2260E400C623AB /* PBXContainerItemProxy */;
+		};
+		5570032F1B2260F600C623AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 5570032E1B2260F600C623AB /* PBXContainerItemProxy */;
+		};
+		557003311B2260F600C623AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAudioAdditions;
+			targetProxy = 557003301B2260F600C623AB /* PBXContainerItemProxy */;
+		};
+		557003331B22616500C623AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 557003321B22616500C623AB /* PBXContainerItemProxy */;
+		};
+		557003351B22617F00C623AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 557003341B22617F00C623AB /* PBXContainerItemProxy */;
+		};
+		557003391B2261B400C623AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 557003381B2261B400C623AB /* PBXContainerItemProxy */;
+		};
+		5570033D1B2261B500C623AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAudioAdditions;
+			targetProxy = 5570033C1B2261B500C623AB /* PBXContainerItemProxy */;
+		};
+		557003411B2261C400C623AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 557003401B2261C400C623AB /* PBXContainerItemProxy */;
+		};
+		557003451B2261C500C623AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAudioAdditions;
+			targetProxy = 557003441B2261C500C623AB /* PBXContainerItemProxy */;
+		};
+		557003491B2261DB00C623AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 557003481B2261DB00C623AB /* PBXContainerItemProxy */;
+		};
+		5570034D1B2261DB00C623AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAudioAdditions;
+			targetProxy = 5570034C1B2261DB00C623AB /* PBXContainerItemProxy */;
 		};
 		5578C49917D9E86D0057D11B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
