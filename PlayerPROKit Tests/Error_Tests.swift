@@ -16,7 +16,7 @@ func GlobalDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<
 	let fileStr = manager.stringWithFileSystemRepresentation(file, length: Int(strlen(file)))
 	let textStr = String(UTF8String: text)!
 
-	println("\(fileStr):\(line) Global Test: \(textStr)")
+	print("\(fileStr):\(line) Global Test: \(textStr)")
 }
 
 class Error_Tests: XCTestCase {
@@ -44,7 +44,7 @@ class Error_Tests: XCTestCase {
 		var textStr = String.fromCString(text)!
 		textStr += ", var: \"\(exampleVar)\""
 		
-		println("\(fileStr):\(line) Class Test: \(textStr)")
+		print("\(fileStr):\(line) Class Test: \(textStr)")
 	}
 	
 	func testInlineDebugBlock() {
@@ -53,7 +53,7 @@ class Error_Tests: XCTestCase {
 			let fileStr = manager.stringWithFileSystemRepresentation(file, length: Int(strlen(file)))
 			let textStr = String(UTF8String: text)!
 			
-			println("\(fileStr):\(line) Inline Test: \(textStr)")
+			print("\(fileStr):\(line) Inline Test: \(textStr)")
 		}
 		MADDebugString("Swift Test")
 		MADDebugStr(__LINE__, __FILE__, "C-Style test")

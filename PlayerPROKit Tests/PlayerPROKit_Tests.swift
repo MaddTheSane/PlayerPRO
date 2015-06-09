@@ -27,7 +27,7 @@ class PlayerPROKit_Tests: XCTestCase {
 		MADRegisterDebugFunc(cXTCFailFunc)
 
 		ourBundle = NSBundle(forClass: PlayerPROKit_Tests.self)
-		if let ourPlugPath = ourBundle?.builtInPlugInsURL where ourPlugPath.checkResourceIsReachableAndReturnError(nil) {
+		if let ourPlugPath = ourBundle?.builtInPlugInsURL where ourPlugPath.checkResourceIsReachableAndReturnError() {
 			ourLib = PPLibrary(plugInURL: ourPlugPath)
 		} else {
 			ourLib = PPLibrary()

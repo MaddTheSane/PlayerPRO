@@ -34,7 +34,7 @@ public func ==(lhs: PPFXSetObject, rhs: FXSets) -> Bool {
 }
 
 public func getCommand(position: Int16, channel: Int16, aPat: PPPatternObject) -> Cmd {
-	var aCmd = aPat.getCommandFromPosition(position, channel: channel)
+	let aCmd = aPat.getCommandFromPosition(position, channel: channel)
 	return aCmd.theCommand
 }
 
@@ -52,10 +52,10 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObjec
 
 ///Creates an `NSError` from a `MADErr`, optionally converting the error type to an error in the Cocoa error domain.
 ///
-///:param: theErr The `MADErr` to convert to an `NSError`
-///:param: customUserDictionary A dictionary with additional information. May be `nil`, defaults to `nil`.
-///:param: convertToCocoa Converts the `MADErr` code into a compatible error in Cocoa's error types. defaults to `false`.
-///:returns: An `NSError` value, or `nil` if passed `.NoErr`
+///- parameter theErr: The `MADErr` to convert to an `NSError`
+///- parameter customUserDictionary: A dictionary with additional information. May be `nil`, defaults to `nil`.
+///- parameter convertToCocoa: Converts the `MADErr` code into a compatible error in Cocoa's error types. defaults to `false`.
+///- returns: An `NSError` value, or `nil` if passed `.NoErr`
 public func createErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [String: NSObject]? = nil, convertToCocoa: Bool = false) -> NSError? {
 	
 	if let anErr = PPCreateErrorFromMADErrorTypeConvertingToCocoa(theErr, convertToCocoa) {
@@ -82,13 +82,13 @@ public func createErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [S
 
 public func noteFromString(myTT: String) -> Int16?
 {
-	if ( myTT == "" || myTT == "---" || count(myTT) < 2) {
+	if ( myTT == "" || myTT == "---" || myTT.characters.count < 2) {
 		return nil
 	}
 	
 	var idx = myTT.endIndex
 	let lastChar = myTT[--idx]
-	if let octMaybe = String(lastChar).toInt() {
+	if let octMaybe = Int(String(lastChar)) {
 		//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
 		//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
 		
@@ -187,7 +187,7 @@ public func octaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true
 extension PPSampleObject {
 
 #if os(OSX)
-	@objc(waveformImageUsingView:) final public func waveformImage(#view: NSView) -> NSImage? {
+	@objc(waveformImageUsingView:) final public func waveformImage(view view: NSView) -> NSImage? {
 		return PPSampleObject.waveFormImage(sample: self, view: view)
 	}
 	
@@ -202,8 +202,8 @@ extension PPSampleObject {
 		let datIsStereo = theDat.stereo
 		let aRect = CGRect(origin: CGPoint.zeroPoint, size: imageSize)
 		let rowBytes = 4 * Int(imageSize.width)
-		let bitMapFormat = CGBitmapInfo.ByteOrder32Host | CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
-		let bitmapContext = CGBitmapContextCreate(nil, Int(imageSize.width), Int(imageSize.height), 8, rowBytes, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!, bitMapFormat)!
+		let bitMapFormat: CGBitmapInfo = [CGBitmapInfo.ByteOrder32Host, CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)]
+		let bitmapContext = CGBitmapContextCreate(nil, Int(imageSize.width), Int(imageSize.height), 8, rowBytes, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!, bitMapFormat.rawValue)!
 		
 		CGContextClearRect(bitmapContext, aRect)
 		CGContextSetLineWidth(bitmapContext, 1)
@@ -236,7 +236,7 @@ extension PPSampleObject {
 		}
 	}
 #elseif os(iOS)
-	@objc(waveformImageUsingView:) final public func waveformImage(#view: UIView) -> UIImage? {
+	@objc(waveformImageUsingView:) final public func waveformImage(view view: UIView) -> UIImage? {
 		return PPSampleObject.waveFormImage(sample: self, view: view)
 	}
 	
@@ -432,9 +432,9 @@ extension PPSampleObject {
 }
 
 extension PPPatternObject: SequenceType {
-	public func generate() -> GeneratorOf<PPMadCommandObject> {
+	public func generate() -> AnyGenerator<PPMadCommandObject> {
 		var index = 0
-		return GeneratorOf {
+		return anyGenerator {
 			if index < self.lengthOfCommands {
 				return self[index++]
 			}
@@ -445,9 +445,9 @@ extension PPPatternObject: SequenceType {
 }
 
 extension PPInstrumentObject: SequenceType {
-	public func generate() -> GeneratorOf<PPSampleObject> {
+	public func generate() -> AnyGenerator<PPSampleObject> {
 		var index = 0
-		return GeneratorOf {
+		return anyGenerator {
 			if index < self.samples.count {
 				return self[index++]
 			}

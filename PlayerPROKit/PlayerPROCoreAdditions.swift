@@ -162,7 +162,7 @@ public let MadID = StringToOSType("MADK")
 
 // MARK: PlayerPRO MAD data types
 
-extension MADOutputChannel: Printable {
+extension MADOutputChannel: CustomStringConvertible {
 	public var stringValue: String {
 		switch self {
 		case .MonoOutPut:
@@ -187,7 +187,7 @@ extension MADOutputChannel: Printable {
 	}
 }
 
-extension MADSoundOutput: Printable {
+extension MADSoundOutput: CustomStringConvertible {
 	public var stringValue: String {
 		switch self {
 		case .CoreAudioDriver:
@@ -234,7 +234,7 @@ extension MADSoundOutput: Printable {
 	}
 }
 
-extension MADDriverSettings: DebugPrintable, Equatable {
+extension MADDriverSettings: CustomDebugStringConvertible, Equatable {
 	private init() {
 		numChn			= 4
 		outPutBits		= 16
@@ -409,7 +409,7 @@ extension Cmd: Equatable {
 }
 
 public func getCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> Cmd {
-	return getCommand(position, channel, aPat).memory
+	return getCommand(position, channel: channel, aPat: aPat).memory
 }
 
 private func getCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> UnsafeMutablePointer<Cmd> {
@@ -417,29 +417,29 @@ private func getCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePoin
 }
 
 public func ReplaceCmd(position: Int16, channel: Int16, command: Cmd, aPat: UnsafeMutablePointer<PatData>) {
-	var aCmd: UnsafeMutablePointer<Cmd> = getCommand(position, channel, aPat)
+	var aCmd: UnsafeMutablePointer<Cmd> = getCommand(position, channel: channel, aPat: aPat)
 	aCmd.memory = command
 }
 
 public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>, commandBlock: (inout Cmd)-> ()) {
-	var aCmd: Cmd = getCommand(position, channel, aPat)
+	var aCmd: Cmd = getCommand(position, channel: channel, aPat: aPat)
 	commandBlock(&aCmd)
-	ReplaceCmd(position, channel, aCmd, aPat)
+	ReplaceCmd(position, channel: channel, command: aCmd, aPat: aPat)
 }
 
-public func getCommand(#row: Int16, #track: Int16, #aPcmd: UnsafeMutablePointer<Pcmd>) -> Cmd {
+public func getCommand(row row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>) -> Cmd {
 	return MADGetCmd(row, track, aPcmd).memory
 }
 
-public func replaceCommand(#row: Int16, #track: Int16, #command: Cmd, aPcmd: UnsafeMutablePointer<Pcmd>) {
-	var aCmd = MADGetCmd(row, track, aPcmd)
+public func replaceCommand(row row: Int16, track: Int16, command: Cmd, aPcmd: UnsafeMutablePointer<Pcmd>) {
+	let aCmd = MADGetCmd(row, track, aPcmd)
 	aCmd.memory = command
 }
 
-public func modifyCommand(#row: Int16, #track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>, #commandBlock: (inout Cmd)-> ()) {
+public func modifyCommand(row row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>, commandBlock: (inout Cmd)-> ()) {
 	var aCmd = getCommand(row: row, track: track, aPcmd: aPcmd)
 	commandBlock(&aCmd)
-	replaceCommand(row: row, track: track, command: aCmd, aPcmd)
+	replaceCommand(row: row, track: track, command: aCmd, aPcmd: aPcmd)
 }
 
 extension IntPcmd: CommandIterator, Equatable {
@@ -469,19 +469,19 @@ extension IntPcmd: CommandIterator, Equatable {
 		return Int(length) * Int(track) + Int(row)
 	}
 	
-	public func getCommand(#row: Int16, track: Int16) -> Cmd {
+	public func getCommand(row row: Int16, track: Int16) -> Cmd {
 		let ourAddr = getCommandIndex(row: row, track: track)
 		
 		return myCmd[ourAddr]
 	}
 	
-	public mutating func modifyCommand(#row: Int16, track: Int16, commandBlock: (inout Cmd) -> ()) {
+	public mutating func modifyCommand(row row: Int16, track: Int16, commandBlock: (inout Cmd) -> ()) {
 		let ourAddr = getCommandIndex(row: row, track: track)
 		
 		commandBlock(&myCmd[ourAddr])
 	}
 	
-	public mutating func replaceCommand(#row: Int16, track: Int16, command: Cmd) {
+	public mutating func replaceCommand(row row: Int16, track: Int16, command: Cmd) {
 		modifyCommand(row: row, track: track, commandBlock: {(inout aCmd: Cmd) -> () in
 			aCmd = command
 		})

@@ -24,7 +24,7 @@ class NotesConversion: XCTestCase {
 		super.tearDown()
 	}
 
-	func getNotesWithLetters(#useLetters: Bool) -> [String] {
+	func getNotesWithLetters(useLetters useLetters: Bool) -> [String] {
 		var noteNames = [String]()
 		for i in 0..<96 {
 			if let aNote = octaveNameFromNote(Int16(i), letters: useLetters) {

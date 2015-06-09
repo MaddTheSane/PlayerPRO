@@ -53,7 +53,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	/// Must be freed after use, otherwise memory *will* leak.
 	public func newIntPcmd() -> UnsafeMutablePointer<IntPcmd>? {
 		if let newSize = structSize {
-			var ourIntPcmd = intPcmd!
+			let ourIntPcmd = intPcmd!
 			let toRet = UnsafeMutablePointer<IntPcmd>.alloc(1)
 			toRet.initialize(ourIntPcmd)
 			
@@ -81,7 +81,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 			toRet.cmdCount = Int32(myCmd.count)
 			toRet.myCmd = UnsafeMutablePointer<Cmd>.alloc(myCmd.count)
 			
-			for (i, aCmd) in enumerate(myCmd) {
+			for (i, aCmd) in myCmd.enumerate() {
 				toRet.myCmd[i] = aCmd
 			}
 			
@@ -94,7 +94,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	/// Must be freed after use, otherwise memory *will* leak.
 	public func newPcmd() -> UnsafeMutablePointer<Pcmd>? {
 		if let newSize = structSize {
-			var ourIntPcmd = newIntPcmd()!
+			let ourIntPcmd = newIntPcmd()!
 			let toRet = MADIntPcmdToPcmd(ourIntPcmd, true)
 			return toRet
 		} else {
@@ -118,10 +118,10 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	
 	/// Initializes a `PPKPcmd` structure with the specified tracks and rows.
 	///
-	/// :param: tracks The amount of tracks.
-	/// :param: startTrack The starting location of the tracks. Default is `0`.
-	/// :param: rows The amount of rows.
-	/// :param: startPosition The starting location of the rows. Default is `0`.
+	/// - parameter tracks: The amount of tracks.
+	/// - parameter startTrack: The starting location of the tracks. Default is `0`.
+	/// - parameter rows: The amount of rows.
+	/// - parameter startPosition: The starting location of the rows. Default is `0`.
 	public init(tracks: Int16, startTrack: Int16 = 0, rows: Int16, startPosition: Int16 = 0) {
 		self.tracks = tracks
 		trackStart = startTrack
@@ -135,7 +135,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	/// The data in `aPcmd` is copied, so you don't have to worry about
 	/// keeping track of it afterwards.
 	public init(_ aPcmd: UnsafeMutablePointer<Pcmd>) {
-		var ourIntPcmd = MADPcmdToInt(aPcmd)
+		let ourIntPcmd = MADPcmdToInt(aPcmd)
 		self.init(intPcmd: ourIntPcmd)
 		MADFreeIntPcmd(ourIntPcmd)
 	}

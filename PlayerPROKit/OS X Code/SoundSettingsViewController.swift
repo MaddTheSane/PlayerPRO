@@ -113,6 +113,7 @@ public class SoundSettingsViewController: NSViewController {
 	@IBOutlet weak public var reverbPercent:	NSPopUpButton!
 	@IBOutlet weak public var delegate:			SoundSettingsViewControllerDelegate? = nil
 	
+    @available(OSX 10.10, *)
     override public func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
@@ -443,7 +444,7 @@ public class SoundSettingsViewController: NSViewController {
 	}
 	
 	@IBAction func changeOversampling(sender: AnyObject!) {
-		var toSet = oversamplingFromTag((sender as! NSMenuItem).tag)
+		let toSet = oversamplingFromTag((sender as! NSMenuItem).tag)
 		delegate?.soundOutOversamplingAmountDidChange(toSet)
 	}
 	
@@ -483,7 +484,7 @@ public class SoundSettingsViewController: NSViewController {
 	}
 	
 	@IBAction public func changeStereoDelay(sender: AnyObject!) {
-		var toSet = stereoDelayFromTag((sender as! NSMenuItem).tag)
+		let toSet = stereoDelayFromTag((sender as! NSMenuItem).tag)
 		delegate?.soundOutStereoDelayAmountDidChange(toSet)
 	}
 }
