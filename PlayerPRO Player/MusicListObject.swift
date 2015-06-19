@@ -164,7 +164,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	
 	// MARK: - Sorting helper functions
 	
-	///Compare this music list object to another by the file name via localizedStandardCompare
+	///Compare this music list object to another by the file name via `localizedStandardCompare`.
 	///
 	///:param: other The other `MusicListObject` to compare to.
 	///:returns: How this object compares to the other one.
@@ -172,7 +172,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		return fileName.localizedStandardCompare(other.fileName)
 	}
 	
-	///Compare this music list object to another by the file size
+	///Compare this music list object to another by the file size.
 	///
 	///:param: other The other `MusicListObject` to compare to.
 	///:returns: How this object compares to the other one.
@@ -188,7 +188,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		}
 	}
 	
-	///Compare this music list object to another by the date added to the list
+	///Compare this music list object to another by the date added to the list.
 	///
 	///:param: other The other `MusicListObject` to compare to.
 	///:returns: How this object compares to the other one.

@@ -481,8 +481,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	}
 	
 	private func setTitleForSongLabelBasedOnMusic() {
-		self.musicName = music!.title
-		self.musicInfo = music!.information
+		self.musicName = music.title
+		self.musicInfo = music.information
 	}
 	
 	private func MADDriverWithPreferences() {
@@ -752,7 +752,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	func saveMusicToURL(tosave: NSURL) {
 		music.saveMusicToURL(tosave)
 	}
-
 	
 	@IBAction func saveMusicAs(sender: AnyObject?) {
 		madDriver.beginExport()

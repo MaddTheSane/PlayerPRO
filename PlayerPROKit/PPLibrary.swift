@@ -194,7 +194,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///Attempts to identify the file at the URL passed to it.
 	///
 	///:param: apath The tracker at the file URL to identify.
-	///:returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil.
+	///:returns: An enum idicating success or failure. The enum is populated with either a `String` indicating the format, or a `MADErr` error value.
 	public func identifyFile(URL apath: NSURL) -> StringOrMADErr {
 		var cType = [Int8](count: 5, repeatedValue: 0)
 		
@@ -211,7 +211,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///Attempts to identify the file passed to it.
 	///
 	///:param: path The tracker at a POSIX-style path to identify
-	///:returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil.
+	///:returns: An enum idicating success or failure. The enum is populated with either a `String` indicating the format, or a `MADErr` error value.
 	public func identifyFile(#path: String) -> StringOrMADErr {
 		if let anURL = NSURL(fileURLWithPath: path) {
 			return identifyFile(URL: anURL)
@@ -283,7 +283,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///
 	///:param: apath A file URL pointing to the tracker.
 	///:param: type The tracker type of the file.
-	///:returns: A tuple with an optional `MusicFileInfo` type and an error value. If `error` is `.NoErr`, the `info` value will not be `nil`.
+	///:returns: An enum idicating success or failure. The enum is populated with either a `MusicFileInfo` struct, or a `MADErr` error value.
 	public func informationFromFile(URL apath: NSURL, type: String) -> MusicFileInfoOrMADErr {
 		let cStrType = type.cStringUsingEncoding(NSMacOSRomanStringEncoding)!
 		
@@ -303,7 +303,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///
 	///:param: path The path pointing to the tracker.
 	///:param: type The tracker type of the file.
-	///:returns: A tuple with an optional `MusicFileInfo` type and an error value. If `error` is `.NoErr`, the `info` value will not be `nil`.
+	///:returns: An enum idicating success or failure. The enum is populated with either a `MusicFileInfo` struct, or a `MADErr` error value.
 	public func informationFromFile(#path: String, type: String) -> MusicFileInfoOrMADErr {
 		if let anURL = NSURL(fileURLWithPath: path) {
 			return informationFromFile(URL: anURL, type: type)
@@ -484,7 +484,15 @@ public enum ReturnOrMADErr<X> {
 			return anErr
 		}
 	}
+	public var value: X? {
+		switch self {
+			case .Success(let aVal):
+			return aVal
 
+			case .Failure(_):
+			return nil
+		}
+	}
 }
 */
 
