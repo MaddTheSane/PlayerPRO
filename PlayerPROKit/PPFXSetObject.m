@@ -87,6 +87,15 @@ static const dispatch_block_t initUTIArray = ^{
 	}
 }
 
+- (instancetype)init
+{
+	FXSets tmpSets = {0};
+	if (self = [self initWithFXSet:&tmpSets]) {
+		
+	}
+	return self;
+}
+
 - (instancetype)initWithFXSet:(FXSets*)theSett
 {
 	if (self = [super init]) {
