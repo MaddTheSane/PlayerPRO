@@ -195,7 +195,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	}
 	
 	override init() {
-		let ourDefaults: [NSObject: AnyObject] = [PPRememberMusicList: true,
+		let ourDefaults: [String: AnyObject] = [PPRememberMusicList: true,
 			PPLoadMusicAtListLoad: false,
 			PPAfterPlayingMusic: Int(PlaylistMode.StopPlaying.rawValue),
 			PPGotoStartupAfterPlaying: true,

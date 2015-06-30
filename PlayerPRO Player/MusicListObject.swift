@@ -123,11 +123,8 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	}
 	
 	override var hashValue: Int {
-		if let absURL = musicURL.absoluteString {
-			return absURL.hashValue ^ addedDate.hash
-		} else {
-			return super.hash ^ addedDate.hash
-		}
+		let absURL = musicURL.absoluteString!
+		return absURL.hashValue ^ addedDate.hash
 	}
 
 	override var description: String {
