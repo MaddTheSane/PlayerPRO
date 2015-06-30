@@ -195,16 +195,17 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///
 	///- parameter apath: The tracker at the file URL to identify.
 	///- returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil.
-	public func identifyFile(URL apath: NSURL) -> StringOrMADErr {
+	public func identifyFile(URL apath: NSURL) throws -> String {
 		var cType = [Int8](count: 5, repeatedValue: 0)
 		
 		let aRet = MADMusicIdentifyCFURL(theLibrary, &cType, apath)
 		let sRet = String(CString: cType, encoding: NSMacOSRomanStringEncoding)
 		
 		if aRet == .NoErr {
-			return .Success(sRet!)
+			return sRet!
 		} else {
-			return .Failure(aRet)
+			let aThrowable = PPCreateErrorFromMADErrorType(aRet)!
+			throw aThrowable
 		}
 	}
 	
@@ -212,12 +213,9 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///
 	///- parameter path: The tracker at a POSIX-style path to identify
 	///- returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil.
-	public func identifyFile(path path: String) -> StringOrMADErr {
-		if let anURL = NSURL(fileURLWithPath: path) {
-			return identifyFile(URL: anURL)
-		} else {
-			return .Failure(.ReadingErr)
-		}
+	public func identifyFile(path path: String) throws -> String {
+		let anURL = NSURL(fileURLWithPath: path)
+		return try identifyFile(URL: anURL)
 	}
 	
 	///Attempts to identify the tracker at the specified URL.
@@ -232,15 +230,17 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 			return .ParametersErr
 		}
 		
-		let aRet = identifyFile(URL: apath)
-		switch aRet {
-		case .Success(let aStr):
-			type.memory = aStr
+		do {
+			type.memory = try identifyFile(URL: apath)
 			return .NoErr
-			
-		case .Failure(let anErr):
-			return anErr
+		} catch {
+			if let anErr = error as? NSError {
+				if anErr.domain == PPMADErrorDomain {
+					return MADErr(rawValue: Int16(anErr.code)) ?? .UnknownErr
+				}
+			}
 		}
+		return .UnknownErr
 	}
 	
 	///Attempts to identify the tracker at the specified path.
@@ -255,27 +255,27 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 			return .ParametersErr
 		}
 		
-		let aRet = identifyFile(path: apath)
-		switch aRet {
-		case .Success(let aStr):
-			type.memory = aStr
+		do {
+			type.memory = try identifyFile(path: apath)
 			return .NoErr
-			
-		case .Failure(let anErr):
-			return anErr
+		} catch {
+			if let anErr = error as? NSError where anErr.domain == PPMADErrorDomain {
+				return MADErr(rawValue: Int16(anErr.code)) ?? .UnknownErr
+			}
 		}
+		return .UnknownErr
 	}
 	
-	private func informationFromFile(URL URL: NSURL, cType: [Int8]) -> InfoRecOrMADErr {
+	private func informationFromFile(URL URL: NSURL, cType: [Int8]) throws -> MADInfoRec {
 		var cStrType = cType
 		var infoRec = MADInfoRec()
 
 		let anErr = MADMusicInfoCFURL(theLibrary, &cStrType, URL, &infoRec)
 		
 		if anErr == .NoErr {
-			return .Success(infoRec)
+			return infoRec
 		} else {
-			return .Failure(anErr)
+			throw PPCreateErrorFromMADErrorType(anErr)!
 		}
 	}
 	
@@ -284,18 +284,13 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///- parameter apath: A file URL pointing to the tracker.
 	///- parameter type: The tracker type of the file.
 	///- returns: A tuple with an optional `MusicFileInfo` type and an error value. If `error` is `.NoErr`, the `info` value will not be `nil`.
-	public func informationFromFile(URL apath: NSURL, type: String) -> MusicFileInfoOrMADErr {
+	public func informationFromFile(URL apath: NSURL, type: String) throws -> MusicFileInfo {
 		let cStrType = type.cStringUsingEncoding(NSMacOSRomanStringEncoding)!
 		
-		let filInfo = informationFromFile(URL: apath, cType: cStrType)
-		
-		switch filInfo {
-		case .Success(let aRet):
-			let anInfo = MusicFileInfo(infoRec: aRet)
-			return .Success(anInfo)
-			
-		case .Failure(let anErr):
-			return .Failure(anErr)
+		do {
+			let filInfo = try informationFromFile(URL: apath, cType: cStrType)
+			let anInfo = MusicFileInfo(infoRec: filInfo)
+			return anInfo
 		}
 	}
 	
@@ -304,12 +299,9 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///- parameter path: The path pointing to the tracker.
 	///- parameter type: The tracker type of the file.
 	///- returns: A tuple with an optional `MusicFileInfo` type and an error value. If `error` is `.NoErr`, the `info` value will not be `nil`.
-	public func informationFromFile(path path: String, type: String) -> MusicFileInfoOrMADErr {
-		if let anURL = NSURL(fileURLWithPath: path) {
-			return informationFromFile(URL: anURL, type: type)
-		} else {
-			return .Failure(.ReadingErr)
-		}
+	public func informationFromFile(path path: String, type: String) throws -> MusicFileInfo {
+		let anURL = NSURL(fileURLWithPath: path)
+		return try informationFromFile(URL: anURL, type: type)
 	}
 	
 	///Gathers information about a tracker at the specified URL.
@@ -326,17 +318,18 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 		let cStrType = type.cStringUsingEncoding(NSMacOSRomanStringEncoding)!
 		
-		let aRet = informationFromFile(URL: path, cType: cStrType)
-		
-		switch aRet {
-		case .Success(let aRet):
+		do {
+		let aRet = try informationFromFile(URL: path, cType: cStrType)
 			let tmpDict = infoRecToDictionary(aRet)
 			info.memory = tmpDict
 			return .NoErr
-			
-		case .Failure(let anErr):
-			return anErr
+		} catch {
+			if let anErr = error as? NSError where anErr.domain == PPMADErrorDomain {
+				return MADErr(rawValue: Int16(anErr.code)) ?? .UnknownErr
+			}
 		}
+		
+		return .UnknownErr
 	}
 	
 	///Gathers information about a tracker at the specified path.
@@ -348,11 +341,8 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///
 	///This is mainly for Objective C code. For Swift code, use `informationFromFile(path:type:)` instead.
 	@objc(getInformationFromFileAtPath:stringType:info:) public func getInformationFromFile(path path: String, type: String, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
-		if let anURL = NSURL(fileURLWithPath: path) {
-			return getInformationFromFile(URL: anURL, type: type, info: info)
-		} else {
-			return .ReadingErr
-		}
+		let anURL = NSURL(fileURLWithPath: path)
+		return getInformationFromFile(URL: anURL, type: type, info: info)
 	}
 	
 	///Test the tracker at the file URL is actually of type `type`.
@@ -372,11 +362,8 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///- parameter type: The type to test for.
 	///- returns: An error value, or `MADNoErr` if the tracker is of the specified type.
 	@objc(testFileAtPath:stringType:) public func testFile(path path: String, type: String) -> MADErr {
-		if let URL = NSURL(fileURLWithPath: path) {
-			return testFile(URL: URL, type: type)
-		} else {
-			return .ReadingErr
-		}
+		let URL = NSURL(fileURLWithPath: path)
+		return testFile(URL: URL, type: type)
 	}
 	
 	///Gets a plug-in type from a UTI
@@ -492,11 +479,8 @@ public enum ReturnOrMADErr<X> {
 extension PPLibrary {
 	///Deprecated: do not use
 	@objc(getInformationFromFileAtPath:type:info:) public func getInformationFromFile(path path: String, type: UnsafeMutablePointer<Int8>, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
-		if let anURL = NSURL(fileURLWithPath: path) {
+		let anURL = NSURL(fileURLWithPath: path)
 			return getInformationFromFile(URL: anURL, type: type, info: info)
-		} else {
-			return .ReadingErr
-		}
 	}
 
 	///Deprecated: do not use
@@ -512,18 +496,17 @@ extension PPLibrary {
 			cStrType[i] = type[i]
 		}
 		
-		let aRet = informationFromFile(URL: path, cType: cStrType)
-		
-		
-		switch aRet {
-		case .Success(let aRet):
+		do {
+			let aRet = try informationFromFile(URL: path, cType: cStrType)
 			let tmpDict = infoRecToDictionary(aRet)
 			info.memory = tmpDict
 			return .NoErr
-			
-		case .Failure(let anErr):
-			return anErr
+		} catch {
+			if let anErr = error as? NSError where anErr.domain == PPMADErrorDomain {
+				return MADErr(rawValue: Int16(anErr.code)) ?? .UnknownErr
+			}
 		}
+		return .UnknownErr
 	}
 	
 	///Deprecated: do not use
@@ -532,16 +515,16 @@ extension PPLibrary {
 			return .ParametersErr
 		}
 		
-		let aRet = identifyFile(URL: apath)
-
-		switch aRet {
-		case .Success(let aStr):
-			strncpy(type, aStr.cStringUsingEncoding(NSMacOSRomanStringEncoding)!, 4)
+		do {
+			let aRet = try identifyFile(URL: apath)
+			strncpy(type, aRet.cStringUsingEncoding(NSMacOSRomanStringEncoding)!, 4)
 			return .NoErr
-			
-		case .Failure(let anErr):
-			return anErr
+		} catch {
+			if let anErr = error as? NSError where anErr.domain == PPMADErrorDomain {
+				return MADErr(rawValue: Int16(anErr.code)) ?? .UnknownErr
+			}
 		}
+		return .UnknownErr
 	}
 	
 	///Deprecated: do not use
@@ -550,14 +533,16 @@ extension PPLibrary {
 			return .ParametersErr
 		}
 		
-		let aRet = identifyFile(path: apath)
-		switch aRet {
-		case .Success(let aStr):
+		do {
+			let aStr = try identifyFile(path: apath)
 			strncpy(type, aStr.cStringUsingEncoding(NSMacOSRomanStringEncoding)!, 4)
 			return .NoErr
-			
-		case .Failure(let anErr):
-			return anErr
+		} catch {
+			if let anErr = error as? NSError where anErr.domain == PPMADErrorDomain {
+				return MADErr(rawValue: Int16(anErr.code)) ?? .UnknownErr
+			}
 		}
+		
+		return .UnknownErr
 	}
 }
