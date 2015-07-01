@@ -327,9 +327,7 @@
 		55672F4810CAE90B008C5C3D /* OSX-PlugImport.m in Sources */ = {isa = PBXBuildFile; fileRef = 55672E8F10CAD830008C5C3D /* OSX-PlugImport.m */; };
 		55680A1E19045F0A00F7616D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
 		55680A2419045F0A00F7616D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55680A2219045F0A00F7616D /* InfoPlist.strings */; };
-		55680A2719045F0A00F7616D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A2619045F0A00F7616D /* main.m */; };
 		55680A331904662A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc in Embed XPC Services */ = {isa = PBXBuildFile; fileRef = 55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		55680A3A19046D9800F7616D /* PPSTImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 55680A3919046D9800F7616D /* PPSTImporter.m */; };
 		55680A45190497B400F7616D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A44190497B400F7616D /* UIKit.framework */; };
 		55680A47190497E400F7616D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A46190497E400F7616D /* CoreGraphics.framework */; };
 		55680A4A190497FC00F7616D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55680A48190497FB00F7616D /* CoreFoundation.framework */; };
@@ -547,6 +545,13 @@
 		55ADD23F19B4F858005588B5 /* PlayerPROKit_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD23E19B4F858005588B5 /* PlayerPROKit_Tests.swift */; };
 		55ADD24C19B4F895005588B5 /* PlayerPRO_Player_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD24B19B4F895005588B5 /* PlayerPRO_Player_Tests.m */; };
 		55ADD25B19B4F8BA005588B5 /* PlayerPRO_6_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55ADD25A19B4F8BA005588B5 /* PlayerPRO_6_Tests.swift */; };
+		55AF17321B4452DA00378157 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AF17311B4452DA00378157 /* main.swift */; };
+		55AF173B1B44532100378157 /* FVDataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9841B0149FE00EB2C84 /* FVDataReader.swift */; };
+		55AF173C1B44532100378157 /* FVResource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9851B0149FE00EB2C84 /* FVResource.swift */; };
+		55AF173D1B44532100378157 /* FVResourceFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55BB995F1B027ED5009B3EDD /* FVResourceFile.swift */; };
+		55AF173E1B44532100378157 /* FVResourceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9891B0149FE00EB2C84 /* FVResourceType.swift */; };
+		55AF17401B44539600378157 /* StcfImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55AF173F1B44539600378157 /* StcfImporter.swift */; };
+		55AF17451B445FB700378157 /* OldCFURLBridge.c in Sources */ = {isa = PBXBuildFile; fileRef = 55AF17441B445FB700378157 /* OldCFURLBridge.c */; };
 		55AF3F3819C9FF9500F75AC1 /* SndUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105010D6C79E00BB619C /* SndUtils.c */; };
 		55AF3F3919C9FF9500F75AC1 /* FileUtils.c in Sources */ = {isa = PBXBuildFile; fileRef = 55113CBB133688D60008C2AF /* FileUtils.c */; };
 		55AF3F3A19C9FF9500F75AC1 /* MADDriver.c in Sources */ = {isa = PBXBuildFile; fileRef = 55F013EA1880A2EA002488D5 /* MADDriver.c */; };
@@ -1867,6 +1872,13 @@
 			remoteGlobalIDString = 55CBF9A511EB77760028C6BB;
 			remoteInfo = "PlayerPRO 6";
 		};
+		55AF17411B44561900378157 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 55C1A67C1A0719D300C7A733 /* SwiftAdditions.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 550FBABD19A7ADC500EFBD3D;
+			remoteInfo = SwiftAdditions;
+		};
 		55B797E110D6E6D00073E379 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -2497,11 +2509,8 @@
 		55680A1D19045F0A00F7616D /* net.sourceforge.playerpro.StcfImporter.xpc */ = {isa = PBXFileReference; explicitFileType = "wrapper.xpc-service"; includeInIndex = 0; path = net.sourceforge.playerpro.StcfImporter.xpc; sourceTree = BUILT_PRODUCTS_DIR; };
 		55680A2119045F0A00F7616D /* StcfImporter-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "StcfImporter-Info.plist"; sourceTree = "<group>"; };
 		55680A2319045F0A00F7616D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		55680A2519045F0A00F7616D /* StcfImporter-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StcfImporter-Prefix.pch"; sourceTree = "<group>"; };
 		55680A2619045F0A00F7616D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		55680A3819046D9800F7616D /* PPSTImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPSTImporter.h; sourceTree = "<group>"; };
-		55680A3919046D9800F7616D /* PPSTImporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPSTImporter.m; sourceTree = "<group>"; };
-		55680A4319048FA700F7616D /* STCFExport.exp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.exports; path = STCFExport.exp; sourceTree = "<group>"; };
 		55680A44190497B400F7616D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		55680A46190497E400F7616D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		55680A48190497FB00F7616D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreFoundation.framework; sourceTree = DEVELOPER_DIR; };
@@ -2674,6 +2683,11 @@
 		55ADD25619B4F8BA005588B5 /* PlayerPRO 6 Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PlayerPRO 6 Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55ADD25919B4F8BA005588B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55ADD25A19B4F8BA005588B5 /* PlayerPRO_6_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerPRO_6_Tests.swift; sourceTree = "<group>"; };
+		55AF17301B4452D700378157 /* StcfImporter-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StcfImporter-Bridging-Header.h"; sourceTree = "<group>"; };
+		55AF17311B4452DA00378157 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		55AF173F1B44539600378157 /* StcfImporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StcfImporter.swift; sourceTree = "<group>"; };
+		55AF17431B445F9300378157 /* OldCFURLBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OldCFURLBridge.h; sourceTree = "<group>"; };
+		55AF17441B445FB700378157 /* OldCFURLBridge.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = OldCFURLBridge.c; sourceTree = "<group>"; };
 		55B0679C19ABCE7E00E2BFF7 /* PlayerPROKit-Bridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPROKit-Bridge.h"; sourceTree = "<group>"; };
 		55B0EF2018CE13410000E4CA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		55B1B4F2166A850D00820424 /* PPDriver_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPDriver_Private.h; sourceTree = "<group>"; };
@@ -4392,8 +4406,11 @@
 			isa = PBXGroup;
 			children = (
 				55680A2619045F0A00F7616D /* main.m */,
+				55AF17311B4452DA00378157 /* main.swift */,
+				55AF173F1B44539600378157 /* StcfImporter.swift */,
+				55AF17431B445F9300378157 /* OldCFURLBridge.h */,
+				55AF17441B445FB700378157 /* OldCFURLBridge.c */,
 				55680A3819046D9800F7616D /* PPSTImporter.h */,
-				55680A3919046D9800F7616D /* PPSTImporter.m */,
 				55680A2019045F0A00F7616D /* Supporting Files */,
 			);
 			name = StcfImporter;
@@ -4403,10 +4420,9 @@
 		55680A2019045F0A00F7616D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				55AF17301B4452D700378157 /* StcfImporter-Bridging-Header.h */,
 				55680A2119045F0A00F7616D /* StcfImporter-Info.plist */,
 				55680A2219045F0A00F7616D /* InfoPlist.strings */,
-				55680A2519045F0A00F7616D /* StcfImporter-Prefix.pch */,
-				55680A4319048FA700F7616D /* STCFExport.exp */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -5523,6 +5539,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				55AF17421B44561900378157 /* PBXTargetDependency */,
 			);
 			name = StcfImporter;
 			productName = StcfImporter;
@@ -7318,8 +7335,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				55680A3A19046D9800F7616D /* PPSTImporter.m in Sources */,
-				55680A2719045F0A00F7616D /* main.m in Sources */,
+				55AF173D1B44532100378157 /* FVResourceFile.swift in Sources */,
+				55AF173E1B44532100378157 /* FVResourceType.swift in Sources */,
+				55AF173C1B44532100378157 /* FVResource.swift in Sources */,
+				55AF17451B445FB700378157 /* OldCFURLBridge.c in Sources */,
+				55AF173B1B44532100378157 /* FVDataReader.swift in Sources */,
+				55AF17401B44539600378157 /* StcfImporter.swift in Sources */,
+				55AF17321B4452DA00378157 /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8628,6 +8650,11 @@
 			target = 55CBF9A511EB77760028C6BB /* PlayerPRO 6 */;
 			targetProxy = 55ADD25C19B4F8BA005588B5 /* PBXContainerItemProxy */;
 		};
+		55AF17421B44561900378157 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftAdditions;
+			targetProxy = 55AF17411B44561900378157 /* PBXContainerItemProxy */;
+		};
 		55B797E210D6E6D00073E379 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
@@ -9804,16 +9831,16 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				EXPORTED_SYMBOLS_FILE = StcfImporter/STCFExport.exp;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					STCF_XPC_SERVICE,
 					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks @executable_path/../../../../Frameworks";
+				PRODUCT_MODULE_NAME = StcfImport;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				SWIFT_OBJC_BRIDGING_HEADER = "StcfImporter/StcfImporter-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -9822,9 +9849,6 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				EXPORTED_SYMBOLS_FILE = StcfImporter/STCFExport.exp;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "StcfImporter/StcfImporter-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					STCF_XPC_SERVICE,
 					"$(inherited)",
@@ -9832,7 +9856,11 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
 				INFOPLIST_FILE = "StcfImporter/StcfImporter-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks @executable_path/../../../../Frameworks";
+				PRODUCT_MODULE_NAME = StcfImport;
 				PRODUCT_NAME = "net.sourceforge.playerpro.$(TARGET_NAME:rfc1034identifier)";
+				SWIFT_OBJC_BRIDGING_HEADER = "StcfImporter/StcfImporter-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};

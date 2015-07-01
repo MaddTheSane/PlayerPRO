@@ -281,6 +281,19 @@ final class FVResourceFile: NSObject {
         return nil
     }
     
+    func resource(#type: OSType, index: UInt16) -> FVResource? {
+        for resType in types {
+            if resType.type == type {
+                for res in resType.resources {
+                    if res.ident == index {
+                        return res
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
     class func resourceFileWithContentsOfURL(fileURL: NSURL, error: NSErrorPointer) -> FVResourceFile? {
         var tmpError: NSError?
         

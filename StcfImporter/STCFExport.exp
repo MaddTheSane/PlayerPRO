@@ -1,9 +1,0 @@
-#  STCFExport.exp
-#  PPMacho
-#
-#  Created by C.W. Betts on 4/20/14.
-#
-
-.objc_class_name_PPSTImporter
-_main
-__mh_execute_header
