@@ -52,7 +52,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	
 	/// Must be freed after use, otherwise memory *will* leak.
 	public func newIntPcmd() -> UnsafeMutablePointer<IntPcmd>? {
-		if let newSize = structSize {
+		if let _ = structSize {
 			let ourIntPcmd = intPcmd!
 			let toRet = UnsafeMutablePointer<IntPcmd>.alloc(1)
 			toRet.initialize(ourIntPcmd)
@@ -72,7 +72,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	}
 	
 	public var intPcmd: IntPcmd? {
-		if let newSize = structSize {
+		if let _ = structSize {
 			var toRet = IntPcmd()
 			toRet.tracks = tracks
 			toRet.length = length
@@ -93,7 +93,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	
 	/// Must be freed after use, otherwise memory *will* leak.
 	public func newPcmd() -> UnsafeMutablePointer<Pcmd>? {
-		if let newSize = structSize {
+		if let _ = structSize {
 			let ourIntPcmd = newIntPcmd()!
 			let toRet = MADIntPcmdToPcmd(ourIntPcmd, true)
 			return toRet
@@ -127,7 +127,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 		trackStart = startTrack
 		length = rows
 		positionStart = startPosition
-		for i in 0 ..< tracks * rows {
+		for _ in 0 ..< tracks * rows {
 			myCmd.append(Cmd.blankCmd())
 		}
 	}
