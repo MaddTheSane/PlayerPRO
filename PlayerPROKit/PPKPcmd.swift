@@ -11,8 +11,8 @@ import PlayerPROCore
 
 /// A Swift-friendly way of messing with Pcmds.
 public struct PPKPcmd: MutableCollectionType, CommandIterator {
-	typealias Generator = IndexingGenerator<[Cmd]>
-	typealias Index = Int
+	public typealias Generator = IndexingGenerator<[Cmd]>
+	public typealias Index = Int
 	public var tracks: Int16
 	public var length: Int16
 	public var trackStart: Int16

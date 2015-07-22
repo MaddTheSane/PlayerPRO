@@ -11,7 +11,7 @@ import PlayerPROCore
 import SwiftAdditions
 
 /// A plug-in that PlayerPROKit can use to import and/or export tracker files.
-@objc public final class PPLibraryObject: CustomStringConvertible, CustomDebugStringConvertible {
+public final class PPLibraryObject: NSObject {
 	/// The menu name of the tracker importer. Might be localized.
 	public let menuName: String
 	
@@ -57,11 +57,11 @@ import SwiftAdditions
 		}
 	}
 	
-	public var description: String {
+	public override var description: String {
 		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle.bundlePath), type: \(type)"
 	}
 	
-	public var debugDescription: String {
+	public override var debugDescription: String {
 		return "Name: \(menuName); Author: \(authorString); plug-in file: \(bundle), type: \(type); version: \(plugVersion)"
 	}
 	
@@ -71,7 +71,7 @@ import SwiftAdditions
 		bundle = NSBundle(URL: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()))!
 		UTITypes = unwrapped.UTItypes.takeUnretainedValue() as! [String]
 		tupleType = unwrapped.type
-		let tmpArray: [CChar] = getArrayFromMirror(reflect(tupleType))
+		let tmpArray: [CChar] = getArrayFromMirror(Mirror(reflecting: tupleType))
 		type = String(CString: tmpArray, encoding: NSMacOSRomanStringEncoding)!
 		plugVersion = unwrapped.version
 		switch (unwrapped.mode) {
@@ -89,5 +89,6 @@ import SwiftAdditions
 			canExport = false
 
 		}
+		super.init()
 	}
 }

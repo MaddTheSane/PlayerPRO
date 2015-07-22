@@ -136,8 +136,8 @@ public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
 	if lhs.noArg != rhs.noArg {
 		return false
 	}
-	let lhsNameMirror = reflect(lhs.name)
-	let rhsNameMirror = reflect(rhs.name)
+	let lhsNameMirror = Mirror(reflecting: lhs.name)
+	let rhsNameMirror = Mirror(reflecting: rhs.name)
 	let lhsNameArray: [UInt8] = getArrayFromMirror(lhsNameMirror)
 	let rhsNameArray: [UInt8] = getArrayFromMirror(rhsNameMirror)
 	let lhsName = String(pascalString: lhsNameArray) ?? ""
@@ -146,8 +146,8 @@ public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
 		return false
 	}
 	
-	let lhsValuesArray: [Float] = getArrayFromMirror(reflect(lhs.values))
-	let rhsValuesArray: [Float] = getArrayFromMirror(reflect(rhs.values))
+	let lhsValuesArray: [Float] = getArrayFromMirror(Mirror(reflecting: lhs.values))
+	let rhsValuesArray: [Float] = getArrayFromMirror(Mirror(reflecting: rhs.values))
 	// Ignore values that aren't accessed
 	for i in 0..<Int(lhs.noArg) {
 		if lhsValuesArray[i] != rhsValuesArray[i] {
@@ -417,7 +417,7 @@ private func getCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePoin
 }
 
 public func ReplaceCmd(position: Int16, channel: Int16, command: Cmd, aPat: UnsafeMutablePointer<PatData>) {
-	var aCmd: UnsafeMutablePointer<Cmd> = getCommand(position, channel: channel, aPat: aPat)
+	let aCmd: UnsafeMutablePointer<Cmd> = getCommand(position, channel: channel, aPat: aPat)
 	aCmd.memory = command
 }
 
@@ -490,7 +490,7 @@ extension IntPcmd: CommandIterator, Equatable {
 
 extension MADChannel {
 	public var arpeggio: (values: [Int32], index: Int32, enabled: Bool) {
-		return (getArrayFromMirror(reflect(arp)), arpindex, arpUse)
+		return (getArrayFromMirror(Mirror(reflecting: arp)), arpindex, arpUse)
 	}
 	
 	public var vibrato: (offset: Int8, depth: Int32, rate: Int32, type: Int32) {

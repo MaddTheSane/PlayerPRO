@@ -14,8 +14,8 @@ private let kPlayerPROMADKUTI = "com.quadmation.playerpro.madk"
 private let MadIDString = OSTypeToString(MadID)!
 
 private func infoRecToDictionary(infoRec: MADInfoRec) -> NSDictionary {
-	let aArray: [Int8] = getArrayFromMirror(reflect(infoRec.internalFileName), appendLastObject: 0)
-	let bArray: [Int8] = getArrayFromMirror(reflect(infoRec.formatDescription), appendLastObject: 0)
+	let aArray: [Int8] = getArrayFromMirror(Mirror(reflecting: infoRec.internalFileName), appendLastObject: 0)
+	let bArray: [Int8] = getArrayFromMirror(Mirror(reflecting: infoRec.formatDescription), appendLastObject: 0)
 	
 	return [kPPTotalPatterns:	Int(infoRec.totalPatterns),
 		kPPPartitionLength:		Int(infoRec.partitionLength),
@@ -60,8 +60,8 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		
 		///Initializes a `MusicFileInfo` from PlayerPROCore's `MADInfoRec`.
 		public init(infoRec: MADInfoRec) {
-			let aArray: [Int8] = getArrayFromMirror(reflect(infoRec.internalFileName), appendLastObject: 0)
-			let bArray: [Int8] = getArrayFromMirror(reflect(infoRec.formatDescription), appendLastObject: 0)
+			let aArray: [Int8] = getArrayFromMirror(Mirror(reflecting: infoRec.internalFileName), appendLastObject: 0)
+			let bArray: [Int8] = getArrayFromMirror(Mirror(reflecting: infoRec.formatDescription), appendLastObject: 0)
 			
 			totalPatterns = Int(infoRec.totalPatterns)
 			partitionLength = Int(infoRec.partitionLength)
