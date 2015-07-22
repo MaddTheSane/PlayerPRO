@@ -387,7 +387,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 	}
 	
-	@objc(loadMusicFromCurrentlyPlayingIndex:) func loadMusicFromCurrentlyPlayingIndex() throws {
+	@objc(loadMusicFromCurrentlyPlayingIndexAndReturnError:) func loadMusicFromCurrentlyPlayingIndex() throws {
 		var theErr: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
 		currentlyPlayingIndex.playbackURL = musicList.URLAtIndex(currentlyPlayingIndex.index)
 		let isGood: Bool
@@ -452,11 +452,10 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			}
 		}
 		
-		if theOSErr != .NoErr {
-			error = createErrorFromMADErrorType(theOSErr)
+		if theOSErr != .NoErr || error != nil {
 			paused = true
 			clearMusic()
-			throw error
+			throw error ?? createErrorFromMADErrorType(theOSErr)!
 		}
 
 		do {
@@ -668,11 +667,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			case NSAlertDefaultReturn:
 				
 				do {
-				let identRet = try madLib.identifyFile(URL: theURL)
+					let identRet = try madLib.identifyFile(URL: theURL)
 					let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(identRet.lowercaseString)
 					
 					do {
-					try NSFileManager.defaultManager().moveItemAtURL(theURL, toURL: tmpURL)
+						try NSFileManager.defaultManager().moveItemAtURL(theURL, toURL: tmpURL)
 						theURL = tmpURL
 						//TODO: regenerate the UTI
 					} catch let err as NSError {
@@ -680,7 +679,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 						let couldNotRenameStr = String(format: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), tmpURL.lastPathComponent!, theURL.lastPathComponent!)
 						PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: couldNotRenameStr)
 					}
-
+					
 				} catch {
 					PPRunCriticalAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"))
 					return false
@@ -731,7 +730,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 				let theRet = madLib.testFile(URL: theURL, type: aType)
 				if theRet == .NoErr {
 					addMusicToMusicList(theURL)
-
 				}
 			} catch _ {
 				
@@ -753,7 +751,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 					return
 				}
 				let ws = NSWorkspace.sharedWorkspace()
-				let panelURLs = panel.URLs 
+				let panelURLs = panel.URLs
 				for theURL in panelURLs {
 					let fileName = theURL.path!
 					var err: NSError?
@@ -872,8 +870,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 		
 		if selMus != -1 {
-			var err: NSError?
-			
 			selectMusicAtIndex(selMus)
 			do {
 				try loadMusicURL(musicList.URLAtIndex(selMus), autoPlay: false)
@@ -881,8 +877,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 				currentlyPlayingIndex.playbackURL = musicList.URLAtIndex(selMus)
 				previouslyPlayingIndex = currentlyPlayingIndex
 			} catch let error1 as NSError {
-				err = error1
-				NSAlert(error: err!).runModal()
+				NSAlert(error: error1).runModal()
 			}
 		} else {
 			self.music = PPMusicObject();
@@ -1058,7 +1053,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	private func rawSoundData(inout settings: MADDriverSettings, handler: (NSData) -> MADErr, @noescape callback: (NSError?) -> Void) {
 		var err: NSError? = nil
 		do {
-		let theRec = try PPDriver(library: madLib, settings: &settings)
+			let theRec = try PPDriver(library: madLib, settings: &settings)
 			theRec.cleanDriver()
 			theRec.currentMusic = music
 			theRec.play()
@@ -1181,15 +1176,17 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		
 		res = ExtAudioFileCreate(URL: theURL, fileType: .AIFF, streamDescription: &asbd, flags: .EraseFile, audioFile: &audioFile)
 		
+		defer {
+			if (audioFile != nil) {
+				ExtAudioFileDispose(audioFile)
+			}
+		}
 		if res != noErr {
 			return .WritingErr
 		}
 		
 		res = ExtAudioFileSetProperty(audioFile, propertyID: .ClientDataFormat, dataSize: UInt32(sizeof(AudioStreamBasicDescription)), data: &realFormat)
 		if (res != noErr) {
-			if (audioFile != nil) {
-				ExtAudioFileDispose(audioFile)
-			}
 			return .WritingErr
 		}
 		
@@ -1230,9 +1227,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		res = ExtAudioFileDispose(audioFile)
 		audioFile = nil
 		if (res != noErr) {
-			if (audioFile != nil) {
-				ExtAudioFileDispose(audioFile)
-			}
 			return .WritingErr
 		}
 		
@@ -1378,19 +1372,22 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 						let tmpURL = (try! NSFileManager.defaultManager().URLForDirectory(.ItemReplacementDirectory, inDomain: .UserDomainMask, appropriateForURL: oldURL, create: true)).URLByAppendingPathComponent("\(tmpName).aiff", isDirectory: false)
 						
 						theErr = self.saveMusic(AIFFToURL: tmpURL, theSett: &self.exportSettings)
-						if theErr != .NoErr {
-							expErr = createErrorFromMADErrorType(theErr);
+						defer {
 							do {
-							try NSFileManager.defaultManager().removeItemAtURL(tmpURL)
+								try NSFileManager.defaultManager().removeItemAtURL(tmpURL)
 							} catch _ {
 								
 							}
+						}
+						if theErr != .NoErr {
+							expErr = createErrorFromMADErrorType(theErr);
 							dispatch_async(dispatch_get_main_queue(), errBlock);
+							return
 						}
 						
 						let exportMov = AVAsset(URL: tmpURL)
-							let metadataInfo = generateAVMetadataInfo()
-							
+						let metadataInfo = generateAVMetadataInfo()
+						
 						if let session = AVAssetExportSession(asset:exportMov, presetName:AVAssetExportPresetAppleM4A) {
 							#if false
 								if (session == nil) {
@@ -1415,10 +1412,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 							dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER)
 							
 							let didFinish = session.status == .Completed;
-							do {
-								try NSFileManager.defaultManager().removeItemAtURL(tmpURL)
-							} catch _ {
-							}
 							
 							if (didFinish) {
 								dispatch_async(dispatch_get_main_queue()) {
@@ -1438,10 +1431,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 						} else {
 							expErr = NSError(domain: NSCocoaErrorDomain, code: NSFileWriteUnknownError, userInfo: nil)
 							NSLog("Init Failed for %@, error: %@", oldMusicName, expErr!.localizedDescription)
-							do {
-								try NSFileManager.defaultManager().removeItemAtURL(tmpURL)
-							} catch _ {
-							}
 							dispatch_async(dispatch_get_main_queue(), errBlock)
 							return;
 						}
@@ -1662,14 +1651,13 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		
 		func badValues() {
 			do {
-			let strType = try madLib.identifyFile(URL: musicURL)
+				let strType = try madLib.identifyFile(URL: musicURL)
 				aPPInfo = try madLib.informationFromFile(URL: musicURL, type: strType)
-
+				
 			} catch {
 				aPPInfo = nil
 			}
 		}
-
 		
 		do {
 			let fileUTI = try NSWorkspace.sharedWorkspace().typeOfFile(musicURL.path!)
