@@ -26,7 +26,7 @@ private let kPlayerList = "Player List"
 	private let PPPPath = (try! NSFileManager.defaultManager().URLForDirectory(.ApplicationSupportDirectory, inDomain:.UserDomainMask, appropriateForURL:nil, create:true)).URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player", isDirectory: true)
 	#elseif os(iOS)
 	private let listExtension = "pplist"
-	private let PPPPath = NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true, error: nil)!.URLByAppendingPathComponent("Playlists", isDirectory: true)
+	private let PPPPath = (try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)).URLByAppendingPathComponent("Playlists", isDirectory: true)
 #endif
 
 @objc(PPMusicList) class MusicList: NSObject, NSSecureCoding, NSFastEnumeration, CollectionType {
@@ -173,23 +173,22 @@ private let kPlayerList = "Player List"
 	#if os(iOS)
 	class func availablePlaylistUUIDs() -> [NSUUID]! {
 		let fm = NSFileManager.defaultManager()
-		if let docDir = fm.URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true, error: nil) {
-			let playlistDir = docDir.URLByAppendingPathComponent("Playlists")
-			fm.createDirectoryAtURL(playlistDir, withIntermediateDirectories: true, attributes: nil, error: nil)
-			//if playlistDir.checkre
-			if let dirConts = fm.contentsOfDirectoryAtURL(playlistDir, includingPropertiesForKeys: nil, options: nil, error: nil) as? [NSURL] {
-				var toRetUUIDs = [NSUUID]()
-				for url in dirConts {
-					if let fileUUIDStr = url.lastPathComponent?.stringByDeletingPathExtension, fileUUID = NSUUID(UUIDString: fileUUIDStr) {
-						toRetUUIDs.append(fileUUID)
-					}
+		let docDir = try! fm.URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)
+		let playlistDir = docDir.URLByAppendingPathComponent("Playlists")
+		do {
+			try fm.createDirectoryAtURL(playlistDir, withIntermediateDirectories: true, attributes: nil)
+			let dirConts = try fm.contentsOfDirectoryAtURL(playlistDir, includingPropertiesForKeys: nil, options: [])
+			var toRetUUIDs = [NSUUID]()
+			for url in dirConts {
+				if let fileUUIDStr = url.lastPathComponent?.stringByDeletingPathExtension, fileUUID = NSUUID(UUIDString: fileUUIDStr) {
+					toRetUUIDs.append(fileUUID)
 				}
-				return toRetUUIDs
 			}
+			return toRetUUIDs
+			
+		} catch {
+			return nil
 		}
-		
-		
-		return nil
 	}
 	
 	convenience init?(UUID: NSUUID) {

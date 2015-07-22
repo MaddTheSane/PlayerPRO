@@ -31,7 +31,7 @@ class MasterViewController: UITableViewController {
 		self.navigationItem.rightBarButtonItem = addButton
 		if let split = self.splitViewController {
 		    let controllers = split.viewControllers
-		    self.detailViewController = controllers[controllers.count-1].topViewController as? DetailViewController
+		    self.detailViewController = controllers[(controllers.count - 1)] as? DetailViewController
 		}
 	}
 
@@ -50,8 +50,8 @@ class MasterViewController: UITableViewController {
 
 	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 		if segue.identifier == "showDetail" {
-		    let indexPath = self.tableView.indexPathForSelectedRow()
-		    let object = objects[indexPath!.row] as! NSDate
+		    let indexPath = self.tableView.indexPathForSelectedRow!
+		    let object = objects[indexPath.row] as! NSDate
 		    let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
 		    controller.detailItem = object
 		    controller.navigationItem.leftBarButtonItem = self.splitViewController!.displayModeButtonItem()
@@ -70,7 +70,7 @@ class MasterViewController: UITableViewController {
 	}
 
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+		let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
 
 		let object = objects[indexPath.row] as! NSDate
 		cell.textLabel?.text = object.description
