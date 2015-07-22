@@ -97,8 +97,6 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///Sets the debug function called by `MADDebugStr` to that of the passed in C function.
 	///
 	///- parameter newDebugFunc: The debug function to pass in. The first variable is the line number of the code the debug function was called from, the second is the file name of the function called in, the third is the developer-supplied text passed in.
-	///
-	///Swift functions can't be translated to a `CFunctionPointer`, so use `registerDebugBlock(_:)`, below, if you want to set it via Swift.
 	@objc public class func registerDebugFunction(newDebugFunc: @convention(c) (Int16, UnsafePointer<Int8>, UnsafePointer<Int8>) -> Void) {
 		MADRegisterDebugFunc(newDebugFunc)
 	}
@@ -108,7 +106,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///- parameter newDebugFunc: The debug block to pass in. The first variable is the line number of the code the debug function was called from, the second is the file name of the function called in, the third is the developer-supplied text passed in.
 	///
 	///Swift functions are interchangeable with blocks: use this method to set the debug catcher in Swift code.
-	public class func registerDebugBlock(newDebugFunc: (Int16, UnsafePointer<Int8>, UnsafePointer<Int8>) -> Void) {
+	public class func registerDebugBlock(newDebugFunc: @convention(block) (Int16, UnsafePointer<Int8>, UnsafePointer<Int8>) -> Void) {
 		MADRegisterDebugBlock(newDebugFunc)
 	}
 
@@ -194,7 +192,8 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///Attempts to identify the file at the URL passed to it.
 	///
 	///- parameter apath: The tracker at the file URL to identify.
-	///- returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil.
+	///- returns: The identified format of the file, represented as a string.
+	///- throws: A `MADErr` wrapped in an `NSError`.
 	public func identifyFile(URL apath: NSURL) throws -> String {
 		var cType = [Int8](count: 5, repeatedValue: 0)
 		
@@ -212,7 +211,8 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///Attempts to identify the file passed to it.
 	///
 	///- parameter path: The tracker at a POSIX-style path to identify
-	///- returns: A tuple with an optional string identifying the format, and an error value. If the error is `.NoErr`, then format should be non-nil.
+	///- returns: The identified format of the file, represented as a string.
+	///- throws: A `MADErr` wrapped in an `NSError`.
 	public func identifyFile(path path: String) throws -> String {
 		let anURL = NSURL(fileURLWithPath: path)
 		return try identifyFile(URL: anURL)
@@ -281,22 +281,22 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///
 	///- parameter apath: A file URL pointing to the tracker.
 	///- parameter type: The tracker type of the file.
-	///- returns: A tuple with an optional `MusicFileInfo` type and an error value. If `error` is `.NoErr`, the `info` value will not be `nil`.
+	///- returns: A `MusicFileInfo` struct describing the file pointed to in `URL`.
+	///- throws: A `MADErr` wrapped in an `NSError`.
 	public func informationFromFile(URL apath: NSURL, type: String) throws -> MusicFileInfo {
 		let cStrType = type.cStringUsingEncoding(NSMacOSRomanStringEncoding)!
 		
-		do {
-			let filInfo = try informationFromFile(URL: apath, cType: cStrType)
-			let anInfo = MusicFileInfo(infoRec: filInfo)
-			return anInfo
-		}
+		let filInfo = try informationFromFile(URL: apath, cType: cStrType)
+		let anInfo = MusicFileInfo(infoRec: filInfo)
+		return anInfo
 	}
 	
 	///Gathers information about a tracker at the specified path.
 	///
 	///- parameter path: The path pointing to the tracker.
 	///- parameter type: The tracker type of the file.
-	///- returns: A tuple with an optional `MusicFileInfo` type and an error value. If `error` is `.NoErr`, the `info` value will not be `nil`.
+	///- returns: A `MusicFileInfo` struct describing the file pointed to in `path`.
+	///- throws: A `MADErr` wrapped in an `NSError`.
 	public func informationFromFile(path path: String, type: String) throws -> MusicFileInfo {
 		let anURL = NSURL(fileURLWithPath: path)
 		return try informationFromFile(URL: anURL, type: type)
@@ -451,35 +451,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		case Failure(MADErr)
 		case Success(MADInfoRec)
 	}
-	//public typealias StringOrMADErr = ReturnOrMADErr<String>
-	//private typealias InfoRecOrMADErr = ReturnOrMADErr<MADInfoRec>
 }
-
-/*
-public enum ReturnOrMADErr<X> {
-	case Failure(MADErr)
-	case Success(X)
-
-	public var error: MADErr {
-		switch self {
-		case .Success(_):
-			return .NoErr
-
-		case .Failure(let anErr):
-			return anErr
-		}
-	}
-	public var value: X? {
-		switch self {
-			case .Success(let aVal):
-			return aVal
-
-			case .Failure(_):
-			return nil
-		}
-	}
-}
-*/
 
 ///Deprecated functions
 extension PPLibrary {

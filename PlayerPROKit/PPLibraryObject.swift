@@ -69,7 +69,7 @@ public final class PPLibraryObject: NSObject {
 		menuName = unwrapped.MenuName.takeUnretainedValue() as String
 		authorString = unwrapped.AuthorString.takeUnretainedValue() as String
 		bundle = NSBundle(URL: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()))!
-		UTITypes = unwrapped.UTItypes.takeUnretainedValue() as! [String]
+		UTITypes = unwrapped.UTItypes.takeUnretainedValue() as NSArray as! [String]
 		tupleType = unwrapped.type
 		let tmpArray: [CChar] = getArrayFromMirror(Mirror(reflecting: tupleType))
 		type = String(CString: tmpArray, encoding: NSMacOSRomanStringEncoding)!
