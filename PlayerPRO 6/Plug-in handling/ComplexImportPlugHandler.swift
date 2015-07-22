@@ -22,12 +22,13 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, CollectionTyp
 	}
 	
 	override init() {
-		let defaultPlugLocs = DefaultPlugInLocations() as! [NSURL]
-		var defaultManager = NSFileManager.defaultManager()
+		let defaultPlugLocs = DefaultPlugInLocations() 
+		let defaultManager = NSFileManager.defaultManager()
 		
 		for url in defaultPlugLocs {
-			if let components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: nil, error: nil) as? [NSURL] {
-				let aComp = filter(components, { (aURL) -> Bool in
+			do {
+				let components = try defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: [])
+				let aComp = components.filter({ (aURL) -> Bool in
 					if let ext = aURL.pathExtension {
 						if ext.compare("ppextimp", options: .CaseInsensitiveSearch) == .OrderedSame {
 							return true
@@ -42,6 +43,8 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, CollectionTyp
 						plugIns.append(aPlug)
 					}
 				}
+			} catch {
+				
 			}
 		}
 		

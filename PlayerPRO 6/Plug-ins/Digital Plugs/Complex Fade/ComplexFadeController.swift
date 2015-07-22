@@ -11,7 +11,7 @@ import PlayerPROCore
 import PlayerPROKit
 
 private func StringToHex(str: String) -> Int32 {
-	var tmpScanner = NSScanner(string: str)
+	let tmpScanner = NSScanner(string: str)
 	var tmpVal: UInt32  = 0;
 	if !tmpScanner.scanHexInt(&tmpVal) {
 		return -1;
@@ -72,7 +72,7 @@ class ComplexFadeController: NSWindowController {
 	@IBAction func okay(sender: AnyObject!) {
 		func invalidSettings() {
 			NSBeep()
-			var badSettings = NSAlert()
+			let badSettings = NSAlert()
 			badSettings.messageText = "Invalid Value";
 			badSettings.informativeText = "There is one or more invalid value.";
 			badSettings.addButtonWithTitle("OK")
@@ -124,8 +124,8 @@ class ComplexFadeController: NSWindowController {
 			}
 			
 		case .Note:
-			var tmpFrom: Int16 = noteFromString(fromCell.stringValue) ?? 0xFF
-			var tmpTo: Int16 = noteFromString(toCell.stringValue) ?? 0xFF
+			let tmpFrom: Int16 = noteFromString(fromCell.stringValue) ?? 0xFF
+			let tmpTo: Int16 = noteFromString(toCell.stringValue) ?? 0xFF
 			from = Int32(tmpFrom)
 			to = Int32(tmpTo)
 			
@@ -174,7 +174,7 @@ class ComplexFadeController: NSWindowController {
 		let pcmdLength = tmpPPKPcmd.length
 		for track in 0 ..< tmpPPKPcmd.tracks {
 			for var row: Int16 = 0; row < pcmdLength; row += step {
-				var myCmd = MADGetCmd(row, track, thePcmd);
+				let myCmd = MADGetCmd(row, track, thePcmd);
 				
 				if pcmdLength > 1 {			// no zero div !!
 					switch fadeType {

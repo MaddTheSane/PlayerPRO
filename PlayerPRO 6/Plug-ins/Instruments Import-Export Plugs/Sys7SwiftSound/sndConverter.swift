@@ -119,7 +119,7 @@ internal func canOpenData(data: NSData) -> Bool {
 
 internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 	func errmsg(@autoclosure(escaping) message: () -> String) {
-		println("Sys7 import: \(message())")
+		print("Sys7 import: \(message())")
 	}
 	
 	let reader = FVDataReader(data)
@@ -253,9 +253,9 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 	var stream = AudioStreamBasicDescription(sampleRate: fixedToFloat(header.sampleRate), formatFlags: .SignedInteger, bitsPerChannel: 8, channelsPerFrame: 1)
 	
 	// Create a temporary file for storage
-	if let url = NSURL(fileURLWithPath: NSTemporaryDirectory().stringByAppendingPathComponent("\(arc4random())-\(NSDate.timeIntervalSinceReferenceDate()).aif")) {
+	let url = NSURL(fileURLWithPath: NSTemporaryDirectory().stringByAppendingPathComponent("\(arc4random())-\(NSDate.timeIntervalSinceReferenceDate()).aif"))
 		var audioFile: ExtAudioFileRef = nil
-		var createStatus = ExtAudioFileCreate(URL: url, fileType: .AIFF, streamDescription: &stream, flags: .EraseFile, audioFile: &audioFile)
+		let createStatus = ExtAudioFileCreate(URL: url, fileType: .AIFF, streamDescription: &stream, flags: .EraseFile, audioFile: &audioFile)
 		if createStatus != noErr {
 			error = .WritingErr
 			errmsg("ExtAudioFileCreateWithURL failed with status \(createStatus)")
@@ -268,7 +268,7 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 		audioBuffer.mNumberChannels = 1
 		audioBuffer.mDataByteSize = header.length
 		audioBuffer.mData = UnsafeMutablePointer(srcData)
-		var audioBufferData = UnsafeMutablePointer<UInt8>(audioBuffer.mData)
+		let audioBufferData = UnsafeMutablePointer<UInt8>(audioBuffer.mData)
 		for var i = 0; i < Int(header.length); ++i {
 			audioBufferData[i] ^= 0x80
 		}
@@ -292,9 +292,4 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 		
 		// Generate an AVAsset
 		return url
-	} else {
-		error = .WritingErr
-		errmsg("Can't make url for conversion")
-		return nil
-	}
 }

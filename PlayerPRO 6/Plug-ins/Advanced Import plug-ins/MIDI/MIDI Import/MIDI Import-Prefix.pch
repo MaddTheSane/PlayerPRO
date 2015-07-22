@@ -9,14 +9,14 @@
 #ifndef PPMacho_MIDI_pch
 #define PPMacho_MIDI_pch
 
+#ifdef __OBJC__
+#import <Foundation/Foundation.h>
+#endif
+
 #include <Carbon/Carbon.h>
 #include <QuickTime/QuickTime.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #include <tgmath.h>
-
-#ifdef __OBJC__
-#import <Foundation/Foundation.h>
-#endif
 
 #if 0
 #define Debugger() oldDebug(__LINE__, __FILE__)

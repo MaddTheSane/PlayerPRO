@@ -12,6 +12,7 @@ class BoxViewController: NSViewController {
 
 	@IBOutlet weak var currentDocument: PPDocument!
 	
+    @available(OSX 10.10, *)
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.

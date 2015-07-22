@@ -9,7 +9,7 @@
 import Cocoa
 import PlayerPROKit
 
-typealias PPExportBlock = @objc_block (theURL: NSURL, errStr: AutoreleasingUnsafeMutablePointer<NSString?>) -> MADErr
+typealias PPExportBlock = @convention(block) (theURL: NSURL, errStr: AutoreleasingUnsafeMutablePointer<NSString?>) -> MADErr
 typealias PPSwiftExportBlock = (theURL: NSURL, inout errStr: String?) -> MADErr
 
 @objc protocol ExportObjectDelegate: NSObjectProtocol {

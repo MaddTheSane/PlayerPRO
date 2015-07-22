@@ -11,14 +11,14 @@ import PlayerPROCore
 import PlayerPROKit
 import SwiftAdditions
 
-@inline(__always) private func makeNSRGB(red: UInt16, green: UInt16, blue:UInt16) -> NSColor {
+@inline(__always) private func makeNSRGB(red: UInt16, _ green: UInt16, _ blue:UInt16) -> NSColor {
 	return NSColor(calibratedRed: CGFloat(red) / CGFloat(UInt16.max), green: CGFloat(green) / CGFloat(UInt16.max), blue: CGFloat(blue) / CGFloat(UInt16.max), alpha: 1)
 }
 
 private func CocoaDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
 	let swiftFile = NSFileManager.defaultManager().stringWithFileSystemRepresentation(file, length: Int(strlen(file)))
 	let swiftText = String.fromCString(text)!
-	println("\(swiftFile):\(line), error text: \(swiftText)")
+	print("\(swiftFile):\(line), error text: \(swiftText)")
 	let errStr = NSLocalizedString("MyDebugStr_Error", comment: "Error")
 	let mainStr = String(format: NSLocalizedString("MyDebugStr_MainText", comment: "The Main text to display"), text)
 	let quitStr = NSLocalizedString("MyDebugStr_Quit", comment: "Quit")
@@ -34,7 +34,7 @@ private func CocoaDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafeP
 		assert(false, "Chose to go to debugger.")
 		
 	case NSAlertDefaultReturn:
-		println("Choosing to fail!")
+		print("Choosing to fail!")
 		fallthrough
 	default:
 		abort()
@@ -123,51 +123,51 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		let instrumentPlugName = NSLocalizedString("InstrumentPlugName", comment: "Instrument plug-in name")
 		let digitalPlugName = NSLocalizedString("DigitalPlugName", comment: "Digital plug-in name")
 		let filterPlugName = NSLocalizedString("FilterPlugName", comment: "Filter plug-in name")
-		let samplePlugName = NSLocalizedString("SamplePlugName", comment: "Sample plug-in name")
+		//let samplePlugName = NSLocalizedString("SamplePlugName", comment: "Sample plug-in name")
 		
 		for obj in madLib {
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: trackerPlugName, plugURL: obj.bundle.bundleURL)
-			if !contains(plugInInfos, tmpInfo) {
+			if !plugInInfos.contains(tmpInfo) {
 				plugInInfos.append(tmpInfo)
 			}
 		}
 		
 		for obj in instrumentPlugHandler {
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: instrumentPlugName, plugURL: obj.file.bundleURL)
-			if !contains(plugInInfos, tmpInfo) {
+			if !plugInInfos.contains(tmpInfo) {
 				plugInInfos.append(tmpInfo)
 			}
 		}
 		
 		for obj in samplesHandler {
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: instrumentPlugName, plugURL: obj.file.bundleURL)
-			if !contains(plugInInfos, tmpInfo) {
+			if !plugInInfos.contains(tmpInfo) {
 				plugInInfos.append(tmpInfo)
 			}
 		}
 		
 		for obj in digitalHandler {
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: digitalPlugName, plugURL: obj.file.bundleURL)
-			if !contains(plugInInfos, tmpInfo) {
+			if !plugInInfos.contains(tmpInfo) {
 				plugInInfos.append(tmpInfo)
 			}
 		}
 		
 		for obj in filterHandler {
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: filterPlugName, plugURL: obj.file.bundleURL)
-			if !contains(plugInInfos, tmpInfo) {
+			if !plugInInfos.contains(tmpInfo) {
 				plugInInfos.append(tmpInfo)
 			}
 		}
 		
 		for obj in complexImport {
 			let tmpInfo = PlugInInfo(plugName: obj.menuName, author: obj.authorString, plugType: complexTrackerPlugName, plugURL: obj.file.bundleURL)
-			if !contains(plugInInfos, tmpInfo) {
+			if !plugInInfos.contains(tmpInfo) {
 				plugInInfos.append(tmpInfo)
 			}
 		}
 		
-		plugInInfos.sort({ (obj1, obj2) -> Bool in
+		plugInInfos.sortInPlace({ (obj1, obj2) -> Bool in
 			let menuNam1 = obj1.plugName
 			let menuNam2 = obj2.plugName
 			let res = menuNam1.localizedStandardCompare(menuNam2)
@@ -177,7 +177,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		
 		aboutPlugInMenu.removeAllItems()
 		
-		for (i, pi) in enumerate(plugInInfos) {
+		for (i, pi) in plugInInfos.enumerate() {
 			let mi = NSMenuItem(title: pi.plugName, action: "showPlugInInfo:", keyEquivalent: "")
 			mi.tag = i
 			mi.target = self
@@ -353,13 +353,13 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		if sharedWorkspace.type(theUTI, conformsToType: MADNativeUTI) {
 			// Document controller should automatically handle this.
 			// But just in case...
-			if let aDoc = documentForURL(theURL1) as? NSDocument {
+			if let _ = documentForURL(theURL1) {
 				return true
 			} else {
 				openDocumentWithContentsOfURL(theURL1, display: true, completionHandler: { (_, alreadyOpen, error) -> Void in
 					
 					if alreadyOpen {
-						println("\(theURL1) is already open? How did we not catch this?")
+						print("\(theURL1) is already open? How did we not catch this?")
 					}
 					
 					if let aErr = error {
@@ -381,36 +381,25 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			let cancelOp = NSLocalizedString("Cancel", comment: "Cancel")
 			let unwrapped = String(format: invExtDes, theURL.lastPathComponent!)
 			
-			let retVal = PPRunInformationalAlertPanel(NSLocalizedString("Invalid Extension", comment: "Invalid extension"), message: unwrapped, defaultButton: NSLocalizedString("Rename", comment: "rename file"), alternateButton: NSLocalizedString("Open", comment:"Open a file"), otherButton: NSLocalizedString("Cancel", comment: "Cancel"));
+			let retVal = PPRunInformationalAlertPanel(invExt, message: unwrapped, defaultButton: renameFile, alternateButton: openFile, otherButton: cancelOp);
 			switch (retVal) {
 			case NSAlertDefaultReturn:
-				
-				let identRet = madLib.identifyFile(URL: theURL)
-				switch identRet {
-				case .Failure(_):
+				do {
+					let identRet = try madLib.identifyFile(URL: theURL)
+					let info = try! madLib.informationFromFile(URL: theURL, type: identRet)
+					let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(info.signature.lowercaseString)
+					do {
+						try NSFileManager.defaultManager().moveItemAtURL(theURL, toURL: tmpURL)
+						theURL = tmpURL
+						//TODO: regenerate the UTI
+						
+					} catch {
+						let couldNotRenameStr = String(format: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), tmpURL.lastPathComponent!, theURL.lastPathComponent!)
+						PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: couldNotRenameStr)
+					}
+				} catch {
 					PPRunCriticalAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"))
 					return false
-					
-				case .Success(let madSubtype):
-					let infoRet = madLib.informationFromFile(URL: theURL, type: madSubtype)
-					switch infoRet {
-					case .Failure(_):
-						PPRunCriticalAlertPanel(NSLocalizedString("Unknown File", comment: "unknown file"), message: NSLocalizedString("The file type could not be identified.", comment: "Unidentified file"))
-						return false
-						
-					case .Success(let info):
-						let tmpURL = theURL.URLByDeletingPathExtension!.URLByAppendingPathExtension(info.signature.lowercaseString)
-						
-						var err: NSError?
-						if !NSFileManager.defaultManager().moveItemAtURL(theURL, toURL: tmpURL, error: &err) {
-							println("Could not move file, error \(err!)")
-							let couldNotRenameStr = String(format: NSLocalizedString("The file could not be renamed to \"%@\".\n\nThe music file \"%@\" will still be loaded.", comment: "Could not rename file"), tmpURL.lastPathComponent!, theURL.lastPathComponent!)
-							PPRunInformationalAlertPanel(NSLocalizedString("Rename Error", comment: "Rename Error"), message: couldNotRenameStr)
-						} else {
-							theURL = tmpURL
-							//TODO: regenerate the UTI
-						}
-					}
 				}
 				
 			case NSAlertAlternateReturn:
@@ -422,7 +411,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			}
 		}
 		if (sharedWorkspace.type(theUTI, conformsToType:PPPCMDUTI)) {
-			var theOSErr = importPcmdFromURL(theURL)
+			let theOSErr = importPcmdFromURL(theURL)
 			if (theOSErr != MADErr.NoErr) {
 				let theErr = createErrorFromMADErrorType(theOSErr)!
 				NSAlert(error: theErr).runModal()
@@ -430,11 +419,12 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			}
 			return true;
 		} else if (sharedWorkspace.type(theUTI, conformsToType:PPInstrumentListUTI)) {
-			var err: NSError? = nil
-			if (!importInstrumentListFromURL(theURL, error:&err)) {
-				NSAlert(error: err!).runModal()
-			} else {
-				return true;
+			do {
+				try importInstrumentListFromURL(theURL)
+				return true
+			} catch let err as NSError {
+				NSAlert(error: err).runModal()
+				return false
 			}
 		} //else
 		
@@ -442,7 +432,14 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			for aUTI in obj.UTITypes as! [String] {
 				if sharedWorkspace.type(theUTI, conformsToType: aUTI) {
 					var aErr: NSError? = nil
-					let canImport = obj.canImportURL(theURL1, error: &aErr)
+					let canImport: Bool
+					do {
+						try obj.canImportURL(theURL1)
+						canImport = true
+					} catch let error as NSError {
+						aErr = error
+						canImport = false
+					}
 					if canImport {
 						obj.beginImportOfURL(theURL1, withHandler: { (ourObject, anErr) -> Void in
 							if anErr == .NoErr {
@@ -466,13 +463,14 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 				}
 			}
 		}
-
+		
 		
 		//TODO: check for valid extension.
 		for aUTI in trackerUTIs {
 			if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
 				let aType = madLib.typeFromUTI(theUTI)!
-				if let theWrap = PPMusicObject(URL: theURL1, stringType: aType, library: madLib, error: nil) {
+				do {
+					let theWrap = try PPMusicObject(URL: theURL1, stringType: aType, library: madLib)
 					let aDoc = PPDocument(music: theWrap)
 					
 					addDocument(aDoc)
@@ -480,34 +478,36 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 					aDoc.showWindows()
 					aDoc.setDisplayName(theURL1.lastPathComponent!.stringByDeletingPathExtension)
 					return true;
-				} else {
+				} catch {
 					return false
 				}
 			}
 		}
 		
 		for obj in instrumentPlugHandler {
-			for aUTI in obj.UTITypes as! [String] {
+			for aUTI in obj.UTITypes {
 				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
-					var theErr: NSError? = nil
-					if (!importInstrument(URL: theURL, makeUserSelectInstrument: true, error:&theErr)) {
-						NSAlert(error: theErr!).runModal()
+					do {
+						try importInstrument(URL: theURL, makeUserSelectInstrument: true)
+						return true
+					} catch let theErr as NSError {
+						NSAlert(error: theErr).runModal()
 						return false;
 					}
-					return true;
 				}
 			}
 		}
 		
 		for obj in samplesHandler {
-			for aUTI in obj.UTITypes as! [String] {
+			for aUTI in obj.UTITypes {
 				if sharedWorkspace.type(theUTI, conformsToType:aUTI) {
-					var theErr: NSError? = nil
-					if (!importSample(URL: theURL, makeUserSelectSample: true, error:&theErr)) {
-						NSAlert(error: theErr!).runModal()
+					do {
+						try importSample(URL: theURL, makeUserSelectSample: true)
+						return true
+					} catch let theErr as NSError {
+						NSAlert(error: theErr).runModal()
 						return false;
 					}
-					return true;
 				}
 			}
 		}
@@ -515,32 +515,29 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		return false;
 	}
 	
-	func importSample(URL theURL: NSURL, makeUserSelectSample: Bool = false, error: NSErrorPointer = nil) -> Bool {
-		if error != nil {
-			error.memory = createErrorFromMADErrorType(.OrderNotImplemented)!
-		}
+	func importSample(URL theURL: NSURL, makeUserSelectSample: Bool = false) throws {
+		var error: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
+		error = createErrorFromMADErrorType(.OrderNotImplemented)!
 		
-		return false
+		throw error
 	}
 	
-	func importInstrument(URL theURL: NSURL, makeUserSelectInstrument: Bool = false, error: NSErrorPointer = nil) -> Bool {
-		if error != nil {
-			error.memory = createErrorFromMADErrorType(.OrderNotImplemented)!
-		}
+	func importInstrument(URL theURL: NSURL, makeUserSelectInstrument: Bool = false) throws {
+		var error: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
+		error = createErrorFromMADErrorType(.OrderNotImplemented)!
 		
-		return false
+		throw error
 	}
 
 	func importPcmdFromURL(url: NSURL) -> MADErr {
 		return .OrderNotImplemented
 	}
 	
-	func importInstrumentListFromURL(url: NSURL, error: NSErrorPointer) -> Bool {
-		if error != nil {
-			error.memory = createErrorFromMADErrorType(.OrderNotImplemented)!
-		}
+	func importInstrumentListFromURL(url: NSURL) throws {
+		var error: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
+		error = createErrorFromMADErrorType(.OrderNotImplemented)!
 		
-		return false
+		throw error
 	}
 	
 	required init?(coder: NSCoder) {
@@ -557,7 +554,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		PPLibrary.registerDebugBlock(CocoaDebugStr)
 		let defaults = NSUserDefaults.standardUserDefaults()
 		
-		for (i, obj) in enumerate(instrumentPlugHandler) {
+		for (i, obj) in instrumentPlugHandler.enumerate() {
 			if (obj.mode == MADPlugModes.ImportExport || obj.mode == MADPlugModes.Export) {
 				let mi = NSMenuItem(title: obj.menuName, action: "exportInstrument:", keyEquivalent: "")
 				mi.tag = i;
@@ -566,7 +563,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			}
 		}
 		
-		for (i, obj) in enumerate(madLib) {
+		for (i, obj) in (madLib).enumerate() {
 			if (obj.canExport) {
 				let mi = NSMenuItem(title: "\(obj.menuName)…", action: "exportMusicAs:", keyEquivalent: "")
 				mi.tag = i
@@ -583,14 +580,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		updatePlugInInfoMenu()
 	}
 	
-	override func makeUntitledDocumentOfType(typeName: String, error outError: NSErrorPointer) -> AnyObject? {
+	/*override*/ func makeUntitledDocumentOfType(typeName: String, error: ()) throws -> AnyObject {
+		//override func makeUntitledDocumentOfType(typeName: String) throws -> AnyObject {
 		assert(typeName == MADNativeUTI, "Unknown type passed to \(__FUNCTION__): \(typeName)")
 		let theDoc = PPDocument(music: PPMusicObject())
 
-		if outError != nil {
-			outError.memory = nil
-		}
-		
 		return theDoc
 	}
 	
@@ -600,13 +594,13 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		var samplesDict = [String: [String]]()
 		for obj in instrumentPlugHandler {
 			if (obj.mode == .Import || obj.mode == .ImportExport) {
-				samplesDict[obj.menuName] = (obj.UTITypes as! [String]);
+				samplesDict[obj.menuName] = (obj.UTITypes );
 			}
 		}
 		
 		for obj in samplesHandler {
 			if obj.canImport {
-				samplesDict[obj.menuName] = (obj.UTITypes as! [String])
+				samplesDict[obj.menuName] = obj.UTITypes
 			}
 		}
 		
@@ -617,7 +611,15 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 					let panelURL = panel.URL!
 					let filename = panelURL.path!
 					var err: NSError? = nil
-					let utiFile = NSWorkspace.sharedWorkspace().typeOfFile(filename, error: &err)
+					let utiFile: String?
+					do {
+						utiFile = try NSWorkspace.sharedWorkspace().typeOfFile(filename)
+					} catch let error as NSError {
+						err = error
+						utiFile = nil
+					} catch {
+						fatalError()
+					}
 					if err != nil {
 						PPRunAlertPanel("Error opening file", message: String(format:"Unable to open %@: %@", filename.lastPathComponent, err!.localizedFailureReason!))
 						return
@@ -629,13 +631,14 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 	
 	func application(theApplication: NSApplication, openFile filename: String) -> Bool {
-		var err: NSError? = nil
-		let utiFile = NSWorkspace.sharedWorkspace().typeOfFile(filename, error:&err)
-		if (err != nil) {
-			PPRunAlertPanel("Error opening file", message: String(format:"Unable to open %@: %@", filename.lastPathComponent, err!.localizedFailureReason!))
+		let utiFile: String?
+		do {
+			utiFile = try NSWorkspace.sharedWorkspace().typeOfFile(filename)
+		} catch let err as NSError {
+			PPRunAlertPanel("Error opening file", message: String(format:"Unable to open %@: %@", filename.lastPathComponent, err.localizedFailureReason!))
 			return false
 		}
-		return handleFile(NSURL(fileURLWithPath: filename)!, ofType: utiFile!)
+		return handleFile(NSURL(fileURLWithPath: filename), ofType: utiFile!)
 	}
 	
 	@objc(PPExportObjectDidFinish:) func exportObjectDidFinish(theObj: ExportObject) {

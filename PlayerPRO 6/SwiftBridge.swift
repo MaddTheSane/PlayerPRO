@@ -12,7 +12,7 @@ public func ==(lhs: PPPlugInObject, rhs: PPPlugInObject) -> Bool {
 	return lhs.isEqual(rhs)
 }
 
-extension PPPlugInObject: Hashable {
+extension PPPlugInObject {
 	override public var hashValue: Int {
 		return self.hash
 	}

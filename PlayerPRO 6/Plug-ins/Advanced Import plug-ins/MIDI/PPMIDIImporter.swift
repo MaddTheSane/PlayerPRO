@@ -29,29 +29,24 @@ private func ==(rhs: NSData, lhs: NSData) -> Bool {
 		aImp.beginImportModalSession()
 	}
 	
-	public func canImportURL(theURL: NSURL, error outErr: NSErrorPointer) -> Bool {
+	public func canImportURL(theURL: NSURL) throws {
+		var outErr: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
 		func getHeaderData() -> NSData {
 			let headerData: [Int8] = [0x4D, 0x54, 0x68, 0x64, 0, 0, 0, 6, 0]
 			return NSData(bytes: headerData, length: headerData.count)
 		}
-		var myErr = MADErr.NoErr;
-		if let aFile = NSFileHandle(forReadingFromURL:theURL, error: nil) {
+		//var myErr = MADErr.NoErr;
+		do {
+			let aFile = try NSFileHandle(forReadingFromURL:theURL)
 			let fileData = aFile.readDataOfLength(9)
 			aFile.closeFile()
 			let headerData = getHeaderData()
 			
 			if fileData.isEqualToData(headerData) {
-				return true
+				return
 			} else {
-				if outErr != nil {
-					outErr.memory = createErrorFromMADErrorType(.FileNotSupportedByThisPlug)
-				}
-			}
-		} else {
-			if outErr != nil {
-				outErr.memory = createErrorFromMADErrorType(.ReadingErr)
+				outErr = createErrorFromMADErrorType(.FileNotSupportedByThisPlug)
 			}
 		}
-		return false
 	}
 }

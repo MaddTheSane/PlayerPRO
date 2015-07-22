@@ -25,9 +25,11 @@ public final class ClassicSound: NSObject, PPSampleImportPlugin {
 	}
 	
 	public func canImportSampleAtURL(AlienFileURL: NSURL) -> Bool {
-		if let fileRef = NSFileHandle(forUpdatingURL: AlienFileURL, error: nil) {
+		do {
+			let fileRef = try NSFileHandle(forUpdatingURL: AlienFileURL)
 			let data = fileRef.readDataOfLength(128)
 			return canOpenData(data)
+		} catch _ {
 		}
 		
 		return false
@@ -36,11 +38,15 @@ public final class ClassicSound: NSObject, PPSampleImportPlugin {
 	public func importSampleAtURL(sampleURL: NSURL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
 		let aSamp = PPSampleObject()
 		var iErr = MADErr.NoErr
-		if let data = NSData(contentsOfURL: sampleURL), tmpURL = assetForSND(data, &iErr) where iErr == .NoErr {
+		if let data = NSData(contentsOfURL: sampleURL), tmpURL = assetForSND(data, error: &iErr) where iErr == .NoErr {
 			iErr = AIFFAtURL(tmpURL, toSample: aSamp)
 			if iErr == .NoErr {
 				sample.memory = aSamp
-				NSFileManager.defaultManager().removeItemAtURL(tmpURL, error: nil)
+				do {
+				try NSFileManager.defaultManager().removeItemAtURL(tmpURL)
+				} catch {
+					
+				}
 			}
 		}
 		

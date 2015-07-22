@@ -46,15 +46,13 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		}
 	}
 	
-	func importSampleFromURL(sampURL: NSURL, makeUserSelectInstrument selIns: Bool = false, error theErr: NSErrorPointer = nil) -> Bool {
+	func importSampleFromURL(sampURL: NSURL, makeUserSelectInstrument selIns: Bool = false) throws {
+		var theErr: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
 		//TODO: handle selIns
 		var plugType: MADFourChar = 0;
 		var theOSErr = importer.identifyInstrumentFile(sampURL, type: &plugType)
 		if (theOSErr != MADErr.NoErr) {
-			if (theErr != nil) {
-				theErr.memory = createErrorFromMADErrorType(theOSErr)
-			}
-			return false;
+			throw createErrorFromMADErrorType(theOSErr)!
 		};
 		var theSamp: Int16 = 0;
 		var theIns: Int16  = 0;
@@ -79,7 +77,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		return YES;
 		}
 		*/
-		return false
+		throw theErr
 	}
 	
 	
@@ -87,34 +85,37 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		return currentDocument.theMusic.exportInstrumentListToURL(outURL)
 	}
 	
-	func importInstrumentListFromURL(insURL: NSURL, error theErr: NSErrorPointer = nil) -> Bool {
-		return currentDocument.theMusic.importInstrumentListFromURL(insURL, error: theErr)
+	func importInstrumentListFromURL(insURL: NSURL) throws {
+		try currentDocument.theMusic.importInstrumentListFromURL(insURL)
 	}
 	
 	@IBAction func importInstrument(sender: AnyObject!) {
 		let plugCount = importer.plugInCount
 		var fileDict = [String: [String]]()
 		for obj in importer {
-			fileDict[obj.menuName] = (obj.UTITypes as! [String]);
+			fileDict[obj.menuName] = obj.UTITypes
 		}
 		let openPanel = NSOpenPanel()
 		if let vc = OpenPanelViewController(openPanel: openPanel, instrumentDictionary:fileDict) {
 			vc.setupDefaults()
-			vc.beginOpenPanel(parentWindow: currentDocument.windowForSheet!, completionHandler: { (panelHandle) -> Void in
-				if panelHandle == NSFileHandlingPanelOKButton {
-					var err: NSError? = nil
-					if self.importSampleFromURL(openPanel.URL!, error: &err) == false {
-						NSAlert(error:err!).beginSheetModalForWindow(self.currentDocument.windowForSheet!, completionHandler: { (returnCode) -> Void in
-							//do nothing
-							return
-						})
+			vc.beginOpenPanel(parentWindow: currentDocument.windowForSheet!, completionHandler: { (panelHandle: Int) -> Void in
+				do {
+					if panelHandle == NSFileHandlingPanelOKButton {
+						do {
+							try self.importSampleFromURL(openPanel.URL!)
+						} catch let err as NSError {
+							NSAlert(error: err).beginSheetModalForWindow(self.currentDocument.windowForSheet!, completionHandler: { (returnCode) -> Void in
+								//do nothing
+								return
+							})
+						}
 					}
-				}
+				} catch _ {}
 			})
 		}
 	}
 	
-	func playSample(#instrument: Int16, sample sampleNumber: Int16, volume: UInt8 = 0xFF, note: UInt8 = 0xFF) {
+	func playSample(instrument instrument: Int16, sample sampleNumber: Int16, volume: UInt8 = 0xFF, note: UInt8 = 0xFF) {
 		
 	}
 	

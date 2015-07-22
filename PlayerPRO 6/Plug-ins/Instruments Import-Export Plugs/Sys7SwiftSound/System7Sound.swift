@@ -26,7 +26,8 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 	}
 
 	public func canImportSampleAtURL(AlienFileURL: NSURL) -> Bool {
-		if let rv = FVResourceFile.resourceFileWithContentsOfURL(AlienFileURL, error: nil) {
+		do {
+			let rv = try FVResourceFile.resourceFileWithContentsOfURL(AlienFileURL)
 			if !rv.isResourceFork {
 				return false
 			}
@@ -35,25 +36,30 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 					return true
 				}
 			}
+		} catch _ {
 		}
 		return false
 	}
 	
 	public func importSampleAtURL(sampleURL: NSURL, sample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
-		if let rv = FVResourceFile.resourceFileWithContentsOfURL(sampleURL, error: nil) {
+		do {
+		let rv = try FVResourceFile.resourceFileWithContentsOfURL(sampleURL)
 			for res in rv.types {
 				if res.type == "snd " {
 					for aRes in res.resources {
 						var errStr = MADErr.NoErr
-						if let data = aRes.data, asset = assetForSND(data, &errStr) {
-							var asample = PPSampleObject()
+						if let data = aRes.data, asset = assetForSND(data, error: &errStr) {
+							let asample = PPSampleObject()
 							errStr = AIFFAtURL(asset, toSample: asample)
 							if errStr == .NoErr {
 								asample.name = sampleURL.lastPathComponent!.stringByDeletingPathExtension
 								sample.memory = asample
 							}
-							
-							NSFileManager.defaultManager().removeItemAtURL(asset, error: nil)
+							do {
+							try NSFileManager.defaultManager().removeItemAtURL(asset)
+							} catch {
+								
+							}
 							
 							return errStr
 						} else {
@@ -63,7 +69,7 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 				}
 			}
 			return .FileNotSupportedByThisPlug
-		} else {
+		} catch {
 			return .ReadingErr
 		}
 	}

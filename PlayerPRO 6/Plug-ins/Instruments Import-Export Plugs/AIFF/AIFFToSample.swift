@@ -36,7 +36,7 @@ internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
 		//Constrain the audio conversion to values supported by PlayerPRO
 		realFormat.mSampleRate = ceil(realFormat.mSampleRate)
 		realFormat.mSampleRate = clamp(realFormat.mSampleRate, minimum: 5000, maximum: 44100)
-		realFormat.formatFlags = .NativeEndian | .Packed | .SignedInteger
+		realFormat.formatFlags = [.NativeEndian, .Packed, .SignedInteger]
 		switch realFormat.mBitsPerChannel {
 		case 8, 16:
 			break
@@ -64,7 +64,7 @@ internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
 		
 		while true {
 			if let tmpMutDat = NSMutableData(length: Int(kSrcBufSize)) {
-				var fillBufList = AudioBufferList.allocate(maximumBuffers: 1)
+				let fillBufList = AudioBufferList.allocate(maximumBuffers: 1)
 				var err: OSStatus = noErr
 				fillBufList[0].mNumberChannels = realFormat.mChannelsPerFrame
 				fillBufList[0].mDataByteSize = kSrcBufSize

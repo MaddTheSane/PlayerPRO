@@ -15,7 +15,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PPInstrumentImporterObject : PPPlugInObject
-@property (readonly, copy) NSArray *UTITypes;
+@property (readonly, copy) NSArray<NSString*> *UTITypes;
 @property (readonly) MADPlugModes mode;
 @property (readonly) BOOL canImport;
 @property (readonly) BOOL canExport;

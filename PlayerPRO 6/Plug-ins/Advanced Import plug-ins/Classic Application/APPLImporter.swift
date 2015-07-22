@@ -16,12 +16,17 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 		super.init()
 	}
 	
-	public convenience init(forPlugIn: ()) {
-		self.init()
+	public convenience init?(forPlugIn: ()) {
+		//if #available(OSX 10.11, *) {
+			self.init()
+		//} else {
+		//	return nil
+		//}
 	}
 	
 	public func beginImportOfURL(theURL: NSURL, withHandler handler: PPComplexImportHandler) {
-		if let resFile = FVResourceFile.resourceFileWithContentsOfURL(theURL, error: nil) {
+		do {
+			let resFile = try FVResourceFile.resourceFileWithContentsOfURL(theURL)
 			var aRet = [String: [FVResource]]()
 			for resourceType in resFile.types {
 				switch resourceType.type {
@@ -38,30 +43,32 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 			controller.resourceFile = resFile
 			controller.addResourceDictionary(aRet)
 			controller.beginImportModalSession()
-		} else {
+		} catch _ {
 			handler(nil, .ReadingErr)
 		}
 	}
 	
-	public func canImportURL(theURL: NSURL, error outErr: NSErrorPointer) -> Bool {
-		if let resFile = FVResourceFile.resourceFileWithContentsOfURL(theURL, error: outErr) {
+	public func canImportURL(theURL: NSURL) throws {
+		var outErr: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
+		do {
+			let resFile = try FVResourceFile.resourceFileWithContentsOfURL(theURL)
 			for resType in resFile.types {
 				switch resType.type {
 					
 				case "MADK", "MADI", "MADH", "MADF", "MADG":
-					return true
+					return
 					
 				default:
 					continue
 				}
 			}
 			
-			if outErr != nil {
-				outErr.memory = createErrorFromMADErrorType(.FileNotSupportedByThisPlug)
-			}
-			return false
+			outErr = createErrorFromMADErrorType(.FileNotSupportedByThisPlug)!
+			throw outErr
+		} catch let error as NSError {
+			outErr = error
 		}
 		
-		return false
+		throw outErr
 	}
 }

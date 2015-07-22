@@ -15,6 +15,7 @@ class LengthViewController: NSViewController {
 	dynamic var isNewSize = false
 	
 	
+    @available(OSX 10.10, *)
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.

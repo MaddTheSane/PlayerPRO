@@ -25,7 +25,7 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 	}
 	
 	public func exportSample(sample: PPSampleObject, toURL sampleURL: NSURL, driver: PPDriver) -> MADErr {
-		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .LinearPCM, formatFlags: .SignedInteger | .Packed | .BigEndian, bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: sample.stereo ? 2 : 1)
+		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .LinearPCM, formatFlags: [.SignedInteger, .Packed, .BigEndian], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: sample.stereo ? 2 : 1)
 		
 		let datLen = sample.data.length
 		var audioFile: AudioFileID = nil
@@ -48,7 +48,7 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 					var toWriteSize = 16
 					var toWriteBytes = [Int16](count: 8, repeatedValue: 0)
 					let tmpData = UnsafePointer<Int16>(sample.data.bytes)
-					do {
+					repeat {
 						for i in 0..<(toWriteSize / 2) {
 							toWriteBytes[i] = tmpData[location / 2 + i].bigEndian
 						}
@@ -88,9 +88,9 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 		var audioFile: AudioFileID = nil
 		var res: OSStatus = noErr
 		
-		res = AudioFileOpen(URL: AlienFileURL, permissions: 0x01, fileTypeHint: .AIFF, audioFile: &audioFile);
+		res = AudioFileOpen(URL: AlienFileURL, permissions: .ReadPermission, fileTypeHint: .AIFF, audioFile: &audioFile);
 		if (res != noErr) {
-			res = AudioFileOpen(URL: AlienFileURL, permissions: 0x01, fileTypeHint: .AIFC, audioFile: &audioFile);
+			res = AudioFileOpen(URL: AlienFileURL, permissions: .ReadPermission, fileTypeHint: .AIFC, audioFile: &audioFile);
 			if (res != noErr) {
 				myErr = .FileNotSupportedByThisPlug;
 			} else {

@@ -32,7 +32,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		var audioFile: AudioFileID = nil
 		var res: OSStatus = noErr
 		
-		res = AudioFileOpen(URL: sampleURL, permissions: 0x01, fileTypeHint: .AIFF, audioFile: &audioFile);
+		res = AudioFileOpen(URL: sampleURL, permissions: .ReadPermission, fileTypeHint: .AIFF, audioFile: &audioFile);
 		if (res != noErr) {
 			myErr = .FileNotSupportedByThisPlug;
 		} else {
@@ -64,7 +64,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			//Constrain the audio conversion to values supported by PlayerPRO
 			realFormat.mSampleRate = ceil(realFormat.mSampleRate)
 			realFormat.mSampleRate = clamp(realFormat.mSampleRate, minimum: 5000, maximum: 44100)
-			realFormat.formatFlags = .NativeEndian | .Packed | .SignedInteger
+			realFormat.formatFlags = [.NativeEndian, .Packed, .SignedInteger]
 			switch realFormat.mBitsPerChannel {
 			case 8, 16:
 				break
@@ -92,7 +92,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 
 			while true {
 				if let tmpMutDat = NSMutableData(length: Int(kSrcBufSize)) {
-					var fillBufList = AudioBufferList.allocate(maximumBuffers: 1)
+					let fillBufList = AudioBufferList.allocate(maximumBuffers: 1)
 					var err: OSStatus = noErr
 					fillBufList[0].mNumberChannels = realFormat.mChannelsPerFrame
 					fillBufList[0].mDataByteSize = kSrcBufSize
@@ -141,15 +141,15 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 	
 	public func exportSample(sample: PPSampleObject, toURL sampleURL: NSURL, driver: PPDriver) -> MADErr {
 		var myErr = MADErr.NoErr
-		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .LinearPCM, formatFlags: .SignedInteger | .Packed, bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: sample.stereo ? 2 : 1)
+		var asbd = AudioStreamBasicDescription(sampleRate: Float64(sample.c2spd), formatID: .LinearPCM, formatFlags: [.SignedInteger, .Packed], bitsPerChannel: UInt32(sample.amplitude), channelsPerFrame: sample.stereo ? 2 : 1)
 		
 		var audioFile: AudioFileID = nil
 		var res: OSStatus = 0
 		let data: NSData
 		if isBigEndian {
 			if (sample.amplitude == 16) {
-				var mutData = NSMutableData(data: sample.data)
-				var mutShortBytes = UnsafeMutablePointer<UInt16>(mutData.mutableBytes)
+				let mutData = NSMutableData(data: sample.data)
+				let mutShortBytes = UnsafeMutablePointer<UInt16>(mutData.mutableBytes)
 				dispatch_apply(sample.data.length / 2, dispatch_get_global_queue(0, 0), { (i) -> Void in
 					mutShortBytes[i] = mutShortBytes[i].littleEndian
 				})

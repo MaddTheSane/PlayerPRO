@@ -37,7 +37,7 @@ import AudioToolbox
 	}
 	
 	override func makeWindowControllers() {
-		var docWinCon = DocumentWindowController(windowNibName: "PPDocument")
+		let docWinCon = DocumentWindowController(windowNibName: "PPDocument")
 		addWindowController(docWinCon)
 		docWinCon.currentDocument = self
 		instrumentList = InstrumentPanelController(windowNibName: "InsPanel")
@@ -75,7 +75,7 @@ import AudioToolbox
 		returnerr = theDriver.changeDriverSettingsToSettings(&theSett)
 		
 		if (returnerr != MADErr.NoErr) {
-			println("Unable to change driver, \(self)")
+			print("Unable to change driver, \(self)")
 			//NSAlert(error: createErrorFromMADErrorType(returnerr)).beginSheetModalForWindow(self.windowForSheet, completionHandler: { (returnCode) -> Void in
 				 //currently, do nothing
 			//})
@@ -116,7 +116,7 @@ import AudioToolbox
 		drivSettings.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver))) ?? .CoreAudioDriver
 		drivSettings.repeatMusic = false;
 		
-		theDriver = PPDriver(library: globalMadLib, settings: &drivSettings, error: nil)!
+		theDriver = try! PPDriver(library: globalMadLib, settings: &drivSettings)
 		super.init()
 		
 		let defaultCenter = NSNotificationCenter.defaultCenter()
@@ -128,33 +128,27 @@ import AudioToolbox
         // Add any code here that needs to be executed once the windowController has loaded the document's window.
     }
 
-	override func writeToURL(url: NSURL, ofType typeName: String, error outError: NSErrorPointer) -> Bool {
+	override func writeToURL(url: NSURL, ofType typeName: String) throws {
+		var outError: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
 		if typeName != MADNativeUTI {
-			outError.memory = NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
-			return false
+			throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
 		} else {
 			let anErr = theMusic.saveMusicToURL(url)
 			if anErr != .NoErr {
-				outError.memory = createErrorFromMADErrorType(anErr, convertToCocoa: true)
-				return false
+				outError = createErrorFromMADErrorType(anErr, convertToCocoa: true)
+				throw outError
 			} else {
-				return true
+				return
 			}
 		}
 	}
 	
-	override func readFromURL(url: NSURL, ofType typeName: String, error outError: NSErrorPointer) -> Bool {
+	override func readFromURL(url: NSURL, ofType typeName: String) throws {
 		if typeName != MADNativeUTI {
-			outError.memory = NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
-			return false
+			throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
 		}
 		
-		if let aMusicObj = PPMusicObject(URL: url, driver: theDriver, error: outError) {
-			theMusic = aMusicObj
-			
-			return true
-		}
-		return false
+		theMusic = try PPMusicObject(URL: url, driver: theDriver)
 	}
 	
     override class func autosavesInPlace() -> Bool {

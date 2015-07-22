@@ -47,11 +47,11 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 	// INS HEADER -- Read only the first instrument
 	PATIns = UnsafePointer<PatInsHeader>(PATData)
 
-	let patSize = PATIns.memory.size.littleEndian
+	//let patSize = PATIns.memory.size.littleEndian
 	PATData += 63;
 	
 	insHeader.name = {
-		let insNameBytes: [Int8] = getArrayFromMirror(reflect(PATIns.memory.name), appendLastObject: 0)
+		let insNameBytes: [Int8] = getArrayFromMirror(Mirror(reflecting: PATIns.memory.name), appendLastObject: 0)
 		let allowable = insNameBytes.map { (i) -> UInt8 in
 			return UInt8(i)
 		}
@@ -59,7 +59,7 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 		}()
 	
 	// LAYERS
-	for i in 0..<PATIns.memory.layer {
+	for _ in 0..<PATIns.memory.layer {
 		PATData += 47;
 	}
 	
@@ -72,7 +72,7 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 		//curData = sample[x] = inMADCreateSample();
 		
 		curData.name = {
-			let insNameBytes: [Int8] = getArrayFromMirror(reflect(PATSamp.memory.name), appendLastObject: 0)
+			let insNameBytes: [Int8] = getArrayFromMirror(Mirror(reflecting: PATSamp.memory.name), appendLastObject: 0)
 			let allowable = insNameBytes.map { (i) -> UInt8 in
 				return UInt8(i)
 			}
@@ -202,11 +202,12 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 	}
 	
 	public func canImportInstrumentAtURL(url: NSURL) -> Bool {
-		if let aHandle = NSFileHandle(forReadingFromURL:url, error: nil) {
+		do {
+			let aHandle = try NSFileHandle(forReadingFromURL:url)
 			let fileData = aHandle.readDataOfLength(headerData.length)
 			
 			return fileData.isEqualToData(headerData)
-		} else {
+		} catch _ {
 			return false
 		}
 	}
@@ -216,7 +217,7 @@ public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 			if let ourIns = PPInstrumentObject() {
 				ourIns.resetInstrument()
 				
-				let iErr = importPAT(ourIns, inData)
+				let iErr = importPAT(ourIns, data: inData)
 				if iErr == .NoErr {
 					InsHeader.memory = ourIns
 				}

@@ -13,12 +13,13 @@ class SamplePlugHandler: NSObject, CollectionType, NSFastEnumeration {
 	private(set) var plugIns = [PPSamplePlugObject]()
 	
 	override init() {
-		let defaultPlugLocs = DefaultPlugInLocations() as! [NSURL]
-		var defaultManager = NSFileManager.defaultManager()
+		let defaultPlugLocs = DefaultPlugInLocations()
+		let defaultManager = NSFileManager.defaultManager()
 		
 		for url in defaultPlugLocs {
-			if let components = defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: nil, error: nil) as? [NSURL] {
-				let aComp = filter(components, { (aURL) -> Bool in
+			do {
+				let components = try defaultManager.contentsOfDirectoryAtURL(url, includingPropertiesForKeys: [], options: [])
+				let aComp = components.filter({ (aURL) -> Bool in
 					if let ext = aURL.pathExtension {
 						if ext.compare("plugin", options: .CaseInsensitiveSearch) == .OrderedSame {
 							return true
@@ -32,6 +33,8 @@ class SamplePlugHandler: NSObject, CollectionType, NSFastEnumeration {
 						plugIns.append(aPlug)
 					}
 				}
+			} catch {
+				
 			}
 		}
 		
@@ -75,7 +78,7 @@ class SamplePlugHandler: NSObject, CollectionType, NSFastEnumeration {
 		}
 	}
 	
-	func beginImportingSample(#type: OSType, URL url: NSURL, driver: PPDriver, parentDocument document: PPDocument, handler: (errorCode: MADErr, createdIns: PPSampleObject?) -> Void) {
+	func beginImportingSample(type type: OSType, URL url: NSURL, driver: PPDriver, parentDocument document: PPDocument, handler: (errorCode: MADErr, createdIns: PPSampleObject?) -> Void) {
 		var aPlug: PPSamplePlugObject? = nil
 		
 		for plug in plugIns {

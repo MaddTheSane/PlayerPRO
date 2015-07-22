@@ -9,15 +9,16 @@
 import Cocoa
 import PlayerPROKit
 
-class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType, Sliceable {
+class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType {
 	private var digitalPlugs = [PPDigitalPlugInObject]()
 	
 	override init() {
-		let defaultPlugLocs = DefaultPlugInLocations() as! [NSURL]
-		var defaultManager = NSFileManager.defaultManager()
+		let defaultPlugLocs = DefaultPlugInLocations()
+		let defaultManager = NSFileManager.defaultManager()
 		for aPlugLoc in defaultPlugLocs {
-			if let components = defaultManager.contentsOfDirectoryAtURL(aPlugLoc, includingPropertiesForKeys: [], options: nil, error: nil) as? [NSURL] {
-				let aComp = filter(components, { (aURL) -> Bool in
+			do {
+				let components = try defaultManager.contentsOfDirectoryAtURL(aPlugLoc, includingPropertiesForKeys: [], options: [])
+				let aComp = components.filter({ (aURL) -> Bool in
 					if let ext = aURL.pathExtension {
 						if ext.compare("plugin", options: .CaseInsensitiveSearch) == .OrderedSame {
 							return true
@@ -33,6 +34,8 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType, Sliceable
 						digitalPlugs.append(tempObj)
 					}
 				}
+			} catch {
+				
 			}
 		}
 		super.init()

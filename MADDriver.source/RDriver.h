@@ -31,6 +31,7 @@
 
 #include "MAD.h"
 #include <limits.h>
+#include <stddef.h>
 #ifdef _MAC_H
 #include <CoreFoundation/CFString.h>
 #include <CoreFoundation/CFArray.h>

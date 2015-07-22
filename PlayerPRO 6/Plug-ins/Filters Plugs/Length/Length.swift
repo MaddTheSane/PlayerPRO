@@ -25,7 +25,7 @@ public final class LengthPlug: NSObject, PPFilterPlugin {
 	}
 	
 	public func beginRunWithData(theData: PPSampleObject, selectionRange selRange: NSRange, onlyCurrentChannel StereoMode: Bool, driver: PPDriver, parentWindow document: NSWindow, handler handle: PPPlugErrorBlock){
-		var controller = LengthWindowController(windowNibName: "LengthWindowController")
+		let controller = LengthWindowController(windowNibName: "LengthWindowController")
 		controller.theData = theData
 		controller.selectionRange = selRange
 		controller.stereoMode = StereoMode

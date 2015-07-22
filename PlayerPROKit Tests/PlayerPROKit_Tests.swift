@@ -25,11 +25,16 @@ class PlayerPROKit_Tests: XCTestCase {
 		// Put setup code here. This method is called before the invocation of each test method in the class.
 		currentTestClass = self
 		MADRegisterDebugFunc(cXTCFailFunc)
-
+		
 		ourBundle = NSBundle(forClass: PlayerPROKit_Tests.self)
-		if let ourPlugPath = ourBundle?.builtInPlugInsURL where ourPlugPath.checkResourceIsReachableAndReturnError() {
-			ourLib = PPLibrary(plugInURL: ourPlugPath)
-		} else {
+		do {
+			if let ourPlugPath = ourBundle?.builtInPlugInsURL {
+				try ourPlugPath.checkResourceIsReachable()
+				ourLib = PPLibrary(plugInURL: ourPlugPath)
+			} else {
+				throw NSError(domain: PPMADErrorDomain, code: 0, userInfo: nil)
+			}
+		} catch {
 			ourLib = PPLibrary()
 		}
 	}
@@ -42,17 +47,19 @@ class PlayerPROKit_Tests: XCTestCase {
 	
 	func testMADKInformation() {
 		let musicPath = ourBundle!.URLForResource("TestMADK", withExtension: "madk")!
-		let info = ourLib!.informationFromFile(URL: musicPath, type: "MADK")
-		XCTAssert(info.error == .NoErr)
-		let unwrapped = info.info!
-		println(unwrapped)
-		XCTAssertEqual("MADK", unwrapped.signature)
-		XCTAssertEqual(unwrapped.totalPatterns, 7)
-		XCTAssertEqual(unwrapped.partitionLength, 14)
-		XCTAssertEqual(unwrapped.fileSize, 83671)
-		XCTAssertEqual(unwrapped.totalTracks, 6)
-		XCTAssertEqual(unwrapped.internalFileName, "Go For It")
-		XCTAssertEqual(unwrapped.formatDescription, "MADK")
+		do {
+		let info = try ourLib!.informationFromFile(URL: musicPath, type: "MADK")
+			print(info)
+			XCTAssertEqual("MADK", info.signature)
+			XCTAssertEqual(info.totalPatterns, 7)
+			XCTAssertEqual(info.partitionLength, 14)
+			XCTAssertEqual(info.fileSize, 83671)
+			XCTAssertEqual(info.totalTracks, 6)
+			XCTAssertEqual(info.internalFileName, "Go For It")
+			XCTAssertEqual(info.formatDescription, "MADK")
+		} catch {
+			XCTAssert(false, "Failed to get info")
+		}
 	}
 	
 	func testObjcMADKInformation() {
