@@ -42,7 +42,7 @@ import SwiftAdditions
                 return nil
             }
         } else {
-            let rsrcSize = getxattr(URL.path!, XATTR_RESOURCEFORK_NAME, nil, 0, 0, 0)
+            let rsrcSize = getxattr(URL.fileSystemRepresentation, XATTR_RESOURCEFORK_NAME, nil, 0, 0, 0)
             if rsrcSize <= 0 || rsrcSize >= maxResourceSize {
                 return nil
             }

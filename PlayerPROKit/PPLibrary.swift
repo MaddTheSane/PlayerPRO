@@ -469,7 +469,15 @@ public enum ReturnOrMADErr<X> {
 			return anErr
 		}
 	}
+	public var value: X? {
+		switch self {
+			case .Success(let aVal):
+			return aVal
 
+			case .Failure(_):
+			return nil
+		}
+	}
 }
 */
 

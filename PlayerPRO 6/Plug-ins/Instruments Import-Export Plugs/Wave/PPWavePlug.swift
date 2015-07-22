@@ -13,6 +13,8 @@ import AudioToolbox
 import SwiftAdditions
 import SwiftAudioAdditions
 
+private let kSrcBufSize: UInt32 = 32768;
+
 public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 	public let hasUIForImport = false
 	public let hasUIForExport = false
@@ -26,45 +28,115 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 	}
 	
 	public func canImportSampleAtURL(sampleURL: NSURL) -> Bool {
-		if let sampleHandle = NSFileHandle(forReadingFromURL: sampleURL, error: nil) {
-			let headerDat = sampleHandle.readDataOfLength(sizeof(PCMWaveRec) + 20)
-			sampleHandle.closeFile()
-			
-			let aErr = TestWAV(PCMWavePtr(headerDat.bytes))
-			
-			return aErr == .NoErr
+		var myErr = MADErr.NoErr
+		var audioFile: AudioFileID = nil
+		var res: OSStatus = noErr
+		
+		res = AudioFileOpen(URL: sampleURL, permissions: 0x01, fileTypeHint: .AIFF, audioFile: &audioFile);
+		if (res != noErr) {
+			myErr = .FileNotSupportedByThisPlug;
 		} else {
-			return false
+			AudioFileClose(audioFile);
 		}
+		
+		return myErr == .NoErr
 	}
 	
-	public func importSampleAtURL(sampleURL: NSURL, sample asample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
-		var soundSize: Int = 0;
-		var loopStart:Int32 = 0
-		var loopEnd:Int32 = 0
-		var sampleSize: Int16 = 0
-		var rate: UInt32 = 0
-		var stereo = false
-		
-		let sndPtr = ConvertWAVCFURL(sampleURL, &soundSize, &loopStart, &loopEnd, &sampleSize, &rate, &stereo)
-		
-		if sndPtr == nil {
+	public func importSampleAtURL(url: NSURL, sample asample: AutoreleasingUnsafeMutablePointer<PPSampleObject?>, driver: PPDriver) -> MADErr {
+		let newSample = PPSampleObject()
+		var fileRef: ExtAudioFileRef = nil
+		var iErr = ExtAudioFileOpenURL(url, &fileRef)
+		if iErr != noErr {
 			return .ReadingErr
 		}
-		
-		var sample = PPSampleObject()
-		sample.loopBegin = loopStart
-		sample.loopSize = loopEnd - loopStart
-		sample.volume = 64
-		sample.amplitude = MADByte(sampleSize)
-		sample.c2spd = UInt16(rate)
-		sample.relativeNote = 0
-		sample.stereo = stereo
-		sample.data = NSData(bytesNoCopy: sndPtr, length: soundSize, freeWhenDone: true)
-		
-		asample.memory = sample
-		
-		return .NoErr
+
+		if let mutableData = NSMutableData(capacity: Int(kSrcBufSize) * 8) {
+			var realFormat = AudioStreamBasicDescription()
+			
+			var asbdSize = UInt32(sizeof(AudioStreamBasicDescription))
+			iErr = ExtAudioFileGetProperty(fileRef, propertyID: .FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
+			if iErr != noErr {
+				ExtAudioFileDispose(fileRef)
+				
+				return .UnknownErr
+			}
+			
+			//Constrain the audio conversion to values supported by PlayerPRO
+			realFormat.mSampleRate = ceil(realFormat.mSampleRate)
+			realFormat.mSampleRate = clamp(realFormat.mSampleRate, minimum: 5000, maximum: 44100)
+			realFormat.formatFlags = .NativeEndian | .Packed | .SignedInteger
+			switch realFormat.mBitsPerChannel {
+			case 8, 16:
+				break
+			case 1...7:
+				realFormat.mBitsPerChannel = 8
+				//case 9...15:
+				//	realFormat.mBitsPerChannel = 16
+				//case 20, 24:
+			default:
+				realFormat.mBitsPerChannel = 16
+			}
+			
+			switch realFormat.mChannelsPerFrame {
+			case 1, 2:
+				break
+			default:
+				realFormat.mChannelsPerFrame = 2
+			}
+			
+			iErr = ExtAudioFileSetProperty(fileRef, propertyID: .ClientDataFormat, dataSize: sizeof(AudioStreamBasicDescription), data: &realFormat)
+			if iErr != noErr {
+				ExtAudioFileDispose(fileRef)
+				return .UnknownErr
+			}
+
+			while true {
+				if let tmpMutDat = NSMutableData(length: Int(kSrcBufSize)) {
+					var fillBufList = AudioBufferList.allocate(maximumBuffers: 1)
+					var err: OSStatus = noErr
+					fillBufList[0].mNumberChannels = realFormat.mChannelsPerFrame
+					fillBufList[0].mDataByteSize = kSrcBufSize
+					fillBufList[0].mData = tmpMutDat.mutableBytes
+					
+					// client format is always linear PCM - so here we determine how many frames of lpcm
+					// we can read/write given our buffer size
+					var numFrames = (kSrcBufSize / realFormat.mBytesPerFrame);
+					
+					// printf("test %d\n", numFrames);
+					
+					err = ExtAudioFileRead(fileRef, &numFrames, fillBufList.unsafeMutablePointer);
+					//XThrowIfError (err, "ExtAudioFileRead");
+					if numFrames == 0 {
+						// this is our termination condition
+						free(fillBufList.unsafeMutablePointer)
+						break;
+					}
+					
+					tmpMutDat.length = Int(numFrames * realFormat.mBytesPerFrame)
+					mutableData.appendData(tmpMutDat)
+					free(fillBufList.unsafeMutablePointer)
+				} else {
+					ExtAudioFileDispose(fileRef)
+					return .NeedMemory
+				}
+			}
+			
+			newSample.volume = 64
+			newSample.c2spd = UInt16(realFormat.mSampleRate)
+			newSample.loopType = .Classic
+			newSample.relativeNote = 0
+			newSample.amplitude = MADByte(realFormat.mBitsPerChannel)
+			newSample.stereo = realFormat.mChannelsPerFrame == 2
+			newSample.data = mutableData
+			
+			ExtAudioFileDispose(fileRef)
+
+			asample.memory = newSample
+			
+			return .NoErr
+		} else {
+			return .NeedMemory
+		}
 	}
 	
 	public func exportSample(sample: PPSampleObject, toURL sampleURL: NSURL, driver: PPDriver) -> MADErr {

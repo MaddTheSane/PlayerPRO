@@ -24,7 +24,7 @@ func ==(lhs: PlugInInfo, rhs: PlugInInfo) -> Bool {
 	}
 }
 
-class PlugInInfo: NSObject, CustomDebugStringConvertible {
+final class PlugInInfo: Hashable, CustomDebugStringConvertible, CustomStringConvertible {
 	let plugName: String
 	let authorName: String
 	let plugType: String
@@ -45,26 +45,25 @@ class PlugInInfo: NSObject, CustomDebugStringConvertible {
 		} else {
 			plugCopyright = "No copyright info available"
 		}
-		super.init()
 	}
 	
-	override var hash: Int {
+	var hash: Int {
 		return self.hashValue
 	}
 	
-	override var hashValue: Int {
+	var hashValue: Int {
 		return plugName.hashValue ^ plugType.hashValue ^ authorName.hashValue ^ plugCopyright.hashValue
 	}
 	
-	override var debugDescription: String {
+	var debugDescription: String {
 		return "\(plugName): \(authorName) (\(plugCopyright)), \(plugType)"
 	}
 	
-	override var description: String {
+	var description: String {
 		return "\(plugName): \(plugType)"
 	}
 	
-	override func isEqual(object: AnyObject?) -> Bool {
+	func isEqual(object: AnyObject?) -> Bool {
 		if (object == nil) {
 			return false
 		}

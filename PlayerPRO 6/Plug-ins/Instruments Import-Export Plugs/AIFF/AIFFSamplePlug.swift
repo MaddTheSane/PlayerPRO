@@ -15,7 +15,6 @@ import SwiftAudioAdditions
 
 public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 	public let hasUIForExport = false
-	public let hasUIForImport = false
 	
 	override init() {
 		super.init()
@@ -81,7 +80,8 @@ public final class AIFF: NSObject, PPSampleExportPlugin, PPSampleImportPlugin {
 	}
 	
 	//MARK: import
-	//TODO: complete
+	
+	public let hasUIForImport = false
 	
 	public func canImportSampleAtURL(AlienFileURL: NSURL) -> Bool {
 		var myErr = MADErr.NoErr

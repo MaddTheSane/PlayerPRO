@@ -535,7 +535,6 @@
 		55A9351B17F28F9700493DC5 /* Shared.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55A9351817F28F9700493DC5 /* Shared.xcassets */; };
 		55ABE82C1A081546006B6AF9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ABE82B1A081546006B6AF9 /* CoreGraphics.framework */; };
 		55ADC3D717D6F390001F27D4 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
-		55ADC3DE17D7A51B001F27D4 /* WAVE-Conversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E105710D6C79E00BB619C /* WAVE-Conversion.c */; };
 		55ADC3E217D7B484001F27D4 /* Wave.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55ADC3DB17D6F390001F27D4 /* Wave.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55ADC3E717D7E4A6001F27D4 /* MADDriver.h in Headers */ = {isa = PBXBuildFile; fileRef = 55ADC3E617D7E4A4001F27D4 /* MADDriver.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		55ADC3F117D7F475001F27D4 /* Complex Fade.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 55B797DC10D6E6C40073E379 /* Complex Fade.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
@@ -7714,7 +7713,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				553507AB19BCA86F00B9E815 /* PPWavePlug.swift in Sources */,
-				55ADC3DE17D7A51B001F27D4 /* WAVE-Conversion.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

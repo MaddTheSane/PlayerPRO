@@ -76,7 +76,7 @@ internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
 				
 				// printf("test %d\n", numFrames);
 				
-				err = ExtAudioFileRead (fileRef, &numFrames, fillBufList.unsafeMutablePointer);
+				err = ExtAudioFileRead(fileRef, &numFrames, fillBufList.unsafeMutablePointer);
 				//XThrowIfError (err, "ExtAudioFileRead");
 				if numFrames == 0 {
 					// this is our termination condition
@@ -108,4 +108,3 @@ internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
 		return .NeedMemory
 	}
 }
-
