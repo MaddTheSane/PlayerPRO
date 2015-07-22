@@ -17,15 +17,15 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 		super.init()
 	}
 	
-	class func readableTypesForPasteboard(pasteboard: NSPasteboard!) -> [AnyObject] {
+	class func readableTypesForPasteboard(pasteboard: NSPasteboard) -> [String] {
 		return [PPMLDCUTI]
 	}
 	
-	func writableTypesForPasteboard(pasteboard: NSPasteboard!) -> [AnyObject] {
+	func writableTypesForPasteboard(pasteboard: NSPasteboard) -> [String] {
 		return [PPMLDCUTI]
 	}
 	
-	class func readingOptionsForType(type: String!, pasteboard: NSPasteboard!) -> NSPasteboardReadingOptions {
+	class func readingOptionsForType(type: String, pasteboard: NSPasteboard) -> NSPasteboardReadingOptions {
 		if type == PPMLDCUTI {
 			return .AsKeyedArchive;
 		} else {
@@ -39,7 +39,7 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 		super.init()
 	}
 	
-	@objc convenience required init?(pasteboardPropertyList propertyList: AnyObject!, ofType type: String!) {
+	@objc convenience required init?(pasteboardPropertyList propertyList: AnyObject, ofType type: String) {
 		if type == PPMLDCUTI {
 			let unArchive = NSKeyedUnarchiver(forReadingWithData: propertyList as! NSData)
 			self.init(indexSet:unArchive.decodeObjectForKey(PPMLDCUTI) as! NSIndexSet)
@@ -67,7 +67,7 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 		aCoder.encodeObject(theIndexSet, forKey: PPMLDCUTI)
 	}
 	
-	convenience required init(coder aDecoder: NSCoder) {
+	convenience required init?(coder aDecoder: NSCoder) {
 		self.init(indexSet:aDecoder.decodeObjectForKey(PPMLDCUTI) as! NSIndexSet)
 	}
 }

@@ -38,7 +38,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		case other
 	}
 	
-	private struct OpenPanelViewItem: DebugPrintable, Printable, Hashable {
+	private struct OpenPanelViewItem: CustomDebugStringConvertible, CustomStringConvertible, Hashable {
 		let name: String
 		let theUtiType: trackerType
 		let utis: [String]
@@ -114,7 +114,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 	}
 	
 	required init?(coder: NSCoder) {
-		println("initWithCoder was called?")
+		print("initWithCoder was called?")
 		openPanel = NSOpenPanel()
 		allowsMultipleSelectionOfTrackers = false
 		utiObjects = [OpenPanelViewItem]()
@@ -185,7 +185,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 				
 			default:
 				if (tag < utiObjects.count && tag >= 0) {
-					var selObj = utiObjects[tag];
+					let selObj = utiObjects[tag];
 					openPanel.allowedFileTypes = selObj.utis
 					if (allowsMultipleSelectionOfTrackers == true) {
 						if (selObj.theUtiType == .tracker) {
@@ -215,30 +215,30 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		var tmpUTIs = [OpenPanelViewItem]()
 		if let tdHere = td {
 			for (key, utis) in tdHere {
-				var obj = OpenPanelViewItem(type: .trackerType, utis: utis, name: key)
+				let obj = OpenPanelViewItem(type: .trackerType, utis: utis, name: key)
 				tmpUTIs.append(obj)
 			}
 		}
 		if let pdHere = pd {
 			for (key, utis) in pdHere {
-				var obj = OpenPanelViewItem(type: .playlistType, utis: utis, name: key)
+				let obj = OpenPanelViewItem(type: .playlistType, utis: utis, name: key)
 				tmpUTIs.append(obj)
 			}
 		}
 		if let insHere = insDict {
 			for (key, utis) in insHere {
-				var obj = OpenPanelViewItem(type: .instrumentType, utis: utis, name: key)
+				let obj = OpenPanelViewItem(type: .instrumentType, utis: utis, name: key)
 				tmpUTIs.append(obj)
 			}
 		}
 		if let addHere = adddict {
 			for (key, utis) in addHere {
-				var obj = OpenPanelViewItem(type: .otherType, utis: utis, name: key)
+				let obj = OpenPanelViewItem(type: .otherType, utis: utis, name: key)
 				tmpUTIs.append(obj)
 			}
 		}
 		
-		tmpUTIs.sort({(lhs, rhs) -> Bool in
+		tmpUTIs.sortInPlace({(lhs, rhs) -> Bool in
 			if (lhs.theUtiType.rawValue < rhs.theUtiType.rawValue) {
 				return true
 			} else if (lhs.theUtiType.rawValue > rhs.theUtiType.rawValue) {
@@ -256,24 +256,24 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		openPanel.delegate = self
 	}
 	
-	func beginOpenPanel(#completionHandler: (result: Int) -> Void) {
+	func beginOpenPanel(completionHandler completionHandler: (result: Int) -> Void) {
 		beginWithCompletionHandler(completionHandler)
 	}
 	
 	func beginWithCompletionHandler(resultHandle: (result: Int) -> Void) {
 		OpenPanelsInUse.append(self)
 		openPanel.beginWithCompletionHandler({ (result) -> Void in
-			if let anInt = find(OpenPanelsInUse, self) {
+			if let anInt = OpenPanelsInUse.indexOf(self) {
 				OpenPanelsInUse.removeAtIndex(anInt)
 			}
 			resultHandle(result: result)
 		})
 	}
 
-	@objc func beginOpenPanel(#parentWindow: NSWindow, completionHandler resultHandle: (result: Int) -> Void) {
+	@objc func beginOpenPanel(parentWindow parentWindow: NSWindow, completionHandler resultHandle: (result: Int) -> Void) {
 		OpenPanelsInUse.append(self)
 		openPanel.beginSheetModalForWindow(parentWindow, completionHandler: { (result) -> Void in
-			if let anInt = find(OpenPanelsInUse, self) {
+			if let anInt = OpenPanelsInUse.indexOf(self) {
 				OpenPanelsInUse.removeAtIndex(anInt)
 			}
 			resultHandle(result: result)
@@ -340,7 +340,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			}
 			fileTypeSelectionMenu.addItem(NSMenuItem.separatorItem())
 			
-			for (i, curItem) in enumerate(utiObjects)  {
+			for (i, curItem) in utiObjects.enumerate()  {
 				if (moreThanTwoTypes) {
 					if (i - 1 >= 0) {
 						let prevItem = utiObjects[i - 1];

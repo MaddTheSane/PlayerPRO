@@ -219,8 +219,8 @@ public class SoundSettingsViewController: NSViewController {
 		}
 	}
 	
-	required override public init?(nibName: String!, bundle: NSBundle!) {
-		super.init(nibName: nibName, bundle: bundle)
+	required override public init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+		super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 	}
 	
 	public class func newSoundSettingWindow() -> Self? {

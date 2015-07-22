@@ -14,13 +14,21 @@ final class SoundOutputController: SoundSettingsViewController, SoundSettingsVie
 	let preferenceIdentifier = PPSoundSettPrefID
 	
 	class func newPreferenceView() -> Self? {
-		return self.newSoundSettingWindow()
+		if let ourself = self.init(nibName: "PPSoundSettingsViewController", bundle: NSBundle(forClass: SoundSettingsViewController.self)) {
+			ourself.delegate = (ourself as SoundOutputController)
+			let aTitle = NSLocalizedString("Sound Output", tableName:"PreferenceNames", comment: "Sound Output");
+			ourself.title = aTitle
+			
+			return ourself
+		} else {
+			return nil
+		}
 	}
 	
 	override class func newSoundSettingWindow() -> Self? {
-		if let ourself = self(nibName: "PPSoundSettingsViewController", bundle: NSBundle(forClass: SoundSettingsViewController.self)) {
+		if let ourself = self.init(nibName: "PPSoundSettingsViewController", bundle: NSBundle(forClass: SoundSettingsViewController.self)) {
 			ourself.delegate = (ourself as SoundOutputController)
-			var aTitle = NSLocalizedString("Sound Output", tableName:"PreferenceNames", comment: "Sound Output");
+			let aTitle = NSLocalizedString("Sound Output", tableName:"PreferenceNames", comment: "Sound Output");
 			ourself.title = aTitle
 			
 			return ourself

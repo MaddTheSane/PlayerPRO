@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct CurrentlyPlayingIndex: DebugPrintable, Printable {
+struct CurrentlyPlayingIndex: CustomDebugStringConvertible, CustomStringConvertible {
 	var index = -1
 	var playbackURL: NSURL? = nil
 	

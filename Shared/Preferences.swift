@@ -21,7 +21,7 @@ final class Preferences: NSWindowController, NSWindowDelegate {
 	private var viewControllers = [NSViewController]()
 	
 	class func newPreferenceController() -> Self {
-		let ourself = self(windowNibName: "preferences")
+		let ourself = self.init(windowNibName: "preferences")
 		var tmpControllers = [NSViewController]()
 		tmpControllers.append(SoundOutputController.newPreferenceView()!)
 		#if PLAYERPRO6
@@ -64,7 +64,7 @@ final class Preferences: NSWindowController, NSWindowDelegate {
 		let v = vc.view;
 		
 		//Compute the new window frame
-		let currentSize = (box.contentView as! NSView).frame.size
+		let currentSize = (box.contentView)!.frame.size
 		let newSize = v.frame.size;
 		let deltaWidth = newSize.width - currentSize.width;
 		let deltaHeight = newSize.height - currentSize.height;
@@ -90,7 +90,7 @@ final class Preferences: NSWindowController, NSWindowDelegate {
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 		let menu = popUp.menu!
 		
-		for (i, vc) in enumerate(viewControllers) {
+		for (i, vc) in viewControllers.enumerate() {
 			let mi = NSMenuItem(title: vc.title!, action: "changeViewController:", keyEquivalent: "")
 			mi.tag = i
 			menu.addItem(mi)
@@ -101,7 +101,7 @@ final class Preferences: NSWindowController, NSWindowDelegate {
 		popUp.selectItemAtIndex(0)
     }
     
-    @objc(displayViewControllerWithName:) func displayViewController(#name: String) {
+    @objc(displayViewControllerWithName:) func displayViewController(name name: String) {
 		let ourController = viewControllers.filter { (aVal) -> Bool in
 			if let ourVal = aVal as? /*NSViewController where NSViewController:*/ PPPreferenceObject {
 				return ourVal.preferenceIdentifier == name

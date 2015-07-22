@@ -17,7 +17,7 @@ final class PlugInInfoController: NSWindowController {
 	private var info:						PlugInInfo!
 
 	class func windowControllerFromInfo(plugInfo: PlugInInfo) -> Self {
-		var toRet = self(windowNibName:"PPPlugInInfoController")
+		let toRet = self.init(windowNibName:"PPPlugInInfoController")
 		toRet.info = plugInfo
 		
 		return toRet

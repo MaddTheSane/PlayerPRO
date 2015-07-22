@@ -233,11 +233,9 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		do {
 			type.memory = try identifyFile(URL: apath)
 			return .NoErr
-		} catch {
-			if let anErr = error as? NSError {
-				if anErr.domain == PPMADErrorDomain {
-					return MADErr(rawValue: Int16(anErr.code)) ?? .UnknownErr
-				}
+		} catch let anErr as NSError {
+			if anErr.domain == PPMADErrorDomain {
+				return MADErr(rawValue: Int16(anErr.code)) ?? .UnknownErr
 			}
 		}
 		return .UnknownErr
@@ -258,8 +256,8 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		do {
 			type.memory = try identifyFile(path: apath)
 			return .NoErr
-		} catch {
-			if let anErr = error as? NSError where anErr.domain == PPMADErrorDomain {
+		} catch let anErr as NSError {
+			if anErr.domain == PPMADErrorDomain {
 				return MADErr(rawValue: Int16(anErr.code)) ?? .UnknownErr
 			}
 		}
@@ -323,8 +321,8 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 			let tmpDict = infoRecToDictionary(aRet)
 			info.memory = tmpDict
 			return .NoErr
-		} catch {
-			if let anErr = error as? NSError where anErr.domain == PPMADErrorDomain {
+		} catch let anErr as NSError {
+			if anErr.domain == PPMADErrorDomain {
 				return MADErr(rawValue: Int16(anErr.code)) ?? .UnknownErr
 			}
 		}
@@ -501,8 +499,8 @@ extension PPLibrary {
 			let tmpDict = infoRecToDictionary(aRet)
 			info.memory = tmpDict
 			return .NoErr
-		} catch {
-			if let anErr = error as? NSError where anErr.domain == PPMADErrorDomain {
+		} catch let anErr as NSError {
+			if anErr.domain == PPMADErrorDomain {
 				return MADErr(rawValue: Int16(anErr.code)) ?? .UnknownErr
 			}
 		}
@@ -519,8 +517,8 @@ extension PPLibrary {
 			let aRet = try identifyFile(URL: apath)
 			strncpy(type, aRet.cStringUsingEncoding(NSMacOSRomanStringEncoding)!, 4)
 			return .NoErr
-		} catch {
-			if let anErr = error as? NSError where anErr.domain == PPMADErrorDomain {
+		} catch let anErr as NSError {
+			if anErr.domain == PPMADErrorDomain {
 				return MADErr(rawValue: Int16(anErr.code)) ?? .UnknownErr
 			}
 		}
@@ -537,8 +535,8 @@ extension PPLibrary {
 			let aStr = try identifyFile(path: apath)
 			strncpy(type, aStr.cStringUsingEncoding(NSMacOSRomanStringEncoding)!, 4)
 			return .NoErr
-		} catch {
-			if let anErr = error as? NSError where anErr.domain == PPMADErrorDomain {
+		} catch let anErr as NSError {
+			if anErr.domain == PPMADErrorDomain {
 				return MADErr(rawValue: Int16(anErr.code)) ?? .UnknownErr
 			}
 		}

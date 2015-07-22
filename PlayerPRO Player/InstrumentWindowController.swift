@@ -29,7 +29,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	}
 	
 	class func newInstrumentWindow() -> Self {
-		var ourself = self(windowNibName:"InstrumentWindow")
+		let ourself = self.init(windowNibName:"InstrumentWindow")
 		
 		(NSApplication.sharedApplication().delegate as! PlayerAppDelegate).addObserver(ourself, forKeyPath: "music", options: .New, context: nil)
 		
@@ -43,7 +43,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 		instrumentView?.selectRowIndexes(NSIndexSet(index:0), byExtendingSelection:false)
     }
 
-	override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<()>) {
+	override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<()>) {
 		if (keyPath == "music") {
 			instrumentView?.reloadData()
 		}
@@ -80,7 +80,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 			waveFormImage!.image = nil
 			return;
 		} else {
-			var sampleObj = object as! PPSampleObject
+			let sampleObj = object as! PPSampleObject
 			
 			instrumentSize!.integerValue = sampleObj.data.length
 			instrumentLoopStart!.integerValue = Int(sampleObj.loopBegin)

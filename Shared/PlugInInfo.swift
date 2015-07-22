@@ -24,7 +24,7 @@ func ==(lhs: PlugInInfo, rhs: PlugInInfo) -> Bool {
 	}
 }
 
-class PlugInInfo: NSObject, Hashable, DebugPrintable, Printable {
+class PlugInInfo: NSObject, CustomDebugStringConvertible {
 	let plugName: String
 	let authorName: String
 	let plugType: String
