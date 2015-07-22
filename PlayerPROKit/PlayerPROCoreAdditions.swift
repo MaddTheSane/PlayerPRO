@@ -8,7 +8,7 @@
 
 import CoreFoundation
 import Foundation
-import PlayerPROCore
+import PlayerPROCore.PlugIns
 import SwiftAdditions
 
 public func ==(lhs: Cmd, rhs: Cmd) -> Bool {
@@ -176,9 +176,6 @@ extension MADOutputChannel: CustomStringConvertible {
 			
 		case .PolyPhonic:
 			return "Polyphonic"
-			
-		default:
-			return "invalid"
 		}
 	}
 	
@@ -234,26 +231,11 @@ extension MADSoundOutput: CustomStringConvertible {
 	}
 }
 
-extension MADDriverSettings: CustomDebugStringConvertible, Equatable {
-	private init() {
-		numChn			= 4
-		outPutBits		= 16
-		outPutMode		= .DeluxeStereoOutPut
-		outPutRate		= 44100
-		MicroDelaySize	= 25
-		ReverbSize		= 100
-		ReverbStrength	= 20
-		oversampling	= 1
-		TickRemover		= false
-		surround		= false
-		Reverb			= false
-		repeatMusic		= true
-		//Just going to use CoreAudio
-		driverMode		= .CoreAudioDriver;
-	}
-	
+extension MADDriverSettings: CustomDebugStringConvertible, Equatable {	
 	public static func new() -> MADDriverSettings {
-		return MADDriverSettings()
+		var mdriverSettings = MADDriverSettings()
+		mdriverSettings.resetToBestDriver()
+		return mdriverSettings
 	}
 
 	public mutating func resetToBestDriver() {

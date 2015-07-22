@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import PlayerPROCore
+//import PlayerPROCore
 
 public protocol CommandIterator {
 	func getCommand(row row: Int16, track: Int16) -> Cmd
@@ -16,6 +16,19 @@ public protocol CommandIterator {
 	
 	var commandLength: Int16 {get}
 	var commandTracks: Int16 {get}
+}
+
+extension CommandIterator {
+	public mutating func iterateCommands(commandBlock block: (inout command: Cmd, row: Int16, track: Int16) -> Bool) {
+		for i in 0 ..< commandLength {
+			for x in 0 ..< commandTracks {
+				var aCmd = getCommand(row: i, track: x)
+				if block(command: &aCmd, row: i, track: x) {
+					replaceCommand(row: i, track: x, command: aCmd)
+				}
+			}
+		}
+	}
 }
 
 public func getCommand<X where X: CommandIterator>(row row: Int16, track: Int16, aIntPcmd: X) -> Cmd {
@@ -31,12 +44,5 @@ public func modifyCommand<X where X: CommandIterator>(row row: Int16, track: Int
 }
 
 public func iterateCommands<X where X: CommandIterator>(inout aPcmd: X, commandBlock block: (inout command: Cmd, row: Int16, track: Int16) -> Bool) {
-	for i in 0 ..< aPcmd.commandLength {
-		for x in 0 ..< aPcmd.commandTracks {
-			var aCmd = aPcmd.getCommand(row: i, track: x)
-			if block(command: &aCmd, row: i, track: x) {
-				aPcmd.replaceCommand(row: i, track: x, command: aCmd)
-			}
-		}
-	}
+	aPcmd.iterateCommands(commandBlock: block)
 }

@@ -252,8 +252,8 @@ extension PPSampleObject {
 		let aRect = CGRect(origin: CGPoint.zeroPoint, size: imageSize)
 		let rowBytes = 4 * Int(imageSize.width)
 		//let bitMapFormat = CGBitmapInfo(alphaInfo: .PremultipliedLast, additionalInfo: .ByteOrder32Host)
-		let bitMapFormat = CGBitmapInfo.ByteOrder32Host | CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)
-		let bitmapContext = CGBitmapContextCreate(nil, Int(imageSize.width), Int(imageSize.height), 8, rowBytes, CGColorSpaceCreateDeviceRGB(), bitMapFormat)
+		let bitMapFormat: CGBitmapInfo = [CGBitmapInfo.ByteOrder32Host, CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)]
+		let bitmapContext = CGBitmapContextCreate(nil, Int(imageSize.width), Int(imageSize.height), 8, rowBytes, CGColorSpaceCreateDeviceRGB(), bitMapFormat.rawValue)
 		CGContextClearRect(bitmapContext, aRect)
 		CGContextSetLineWidth(bitmapContext, 1)
 		var colorRef: UIColor
@@ -290,19 +290,19 @@ extension PPSampleObject {
 	}
 #endif
 	
-	final public func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, context ctxRef: CGContext) {
+	final public func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, context ctxRef: CGContext?) {
 		PPSampleObject.drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: self, context:ctxRef)
 	}
 	
-	final public func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, context ctxRef: CGContext) {
+	final public func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, context ctxRef: CGContext?) {
 		PPSampleObject.drawSample(start: startI, tSS: tSS, tSE: tSE, high: high, larg: larg, trueV: trueV, trueH: trueH, channel: channel, currentData: self, context: ctxRef)
 	}
 	
-	final public class func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
+	final public class func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext?) {
 		drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: curData, context:ctxRef)
 	}
 
-	final public class func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
+	final public class func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext?) {
 		CGContextSaveGState(ctxRef);
 		
 		var temp: CGFloat = 0.0
