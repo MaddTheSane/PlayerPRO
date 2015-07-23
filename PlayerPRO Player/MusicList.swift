@@ -219,7 +219,7 @@ private let kPlayerList = "Player List"
 			#endif
 			for book in BookmarkArray {
 				do {
-					try book.checkIsReachableAndReturnError()
+					try book.checkIsReachable()
 				} catch {
 					if (selectedMusic == -1) {
 						//Do nothing
@@ -345,28 +345,28 @@ private let kPlayerList = "Player List"
 	func loadApplicationMusicList() -> Bool {
 		let manager = NSFileManager.defaultManager()
 		#if os(OSX)
-		let musListDefName = "PlayerPRO Music List"
-		let defaults = NSUserDefaults.standardUserDefaults()
-		if let listData = defaults.dataForKey(musListDefName) {
-			if loadMusicListFromData(listData) {
-				defaults.removeObjectForKey(musListDefName) //Otherwise the preference file is abnormally large.
-				saveApplicationMusicList()
-				//Technically we did succeed...
-				return true
+			let musListDefName = "PlayerPRO Music List"
+			let defaults = NSUserDefaults.standardUserDefaults()
+			if let listData = defaults.dataForKey(musListDefName) {
+				if loadMusicListFromData(listData) {
+					defaults.removeObjectForKey(musListDefName) //Otherwise the preference file is abnormally large.
+					saveApplicationMusicList()
+					//Technically we did succeed...
+					return true
+				}
+				//We couldn't load it, but it's still there, taking up space...
+				defaults.removeObjectForKey(musListDefName)
 			}
-			//We couldn't load it, but it's still there, taking up space...
-			defaults.removeObjectForKey(musListDefName)
-		}
 		#endif
 		do {
-		try PPPPath.checkResourceIsReachable()
+			try PPPPath.checkResourceIsReachable()
 		} catch {
 			do {
 				try manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories: true, attributes: nil)
 			} catch _ {
+				return false
 			}
-			return false
-
+			
 		}
 		return loadMusicListFromURL(PPPPath.URLByAppendingPathComponent(kPlayerList, isDirectory: false))
 	}
@@ -386,6 +386,7 @@ private let kPlayerList = "Player List"
 				//Just making sure...
 				try manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories:true, attributes:nil)
 			} catch _ {
+				return false
 			}
 		}
 		

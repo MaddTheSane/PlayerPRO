@@ -121,7 +121,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		}
 	}
 	
-	func checkIsReachableAndReturnError() throws {
+	@objc(checkIsReachableAndReturnError:) func checkIsReachable() throws {
 		try musicURL.checkResourceIsReachable()
 	}
 	

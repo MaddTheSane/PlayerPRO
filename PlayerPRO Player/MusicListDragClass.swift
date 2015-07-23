@@ -68,6 +68,9 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	}
 	
 	convenience required init?(coder aDecoder: NSCoder) {
-		self.init(indexSet:aDecoder.decodeObjectForKey(PPMLDCUTI) as! NSIndexSet)
+		guard let decoded = aDecoder.decodeObjectForKey(PPMLDCUTI) as? NSIndexSet else {
+			return nil
+		}
+		self.init(indexSet: decoded)
 	}
 }
