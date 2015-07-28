@@ -77,10 +77,7 @@
 #define EQPACKET			512
 #define MAXCHANEFFECT		20
 
-/********************						***********************/
-/*** 			   Channel structure definition					***/
-/********************						***********************/
-
+/** Channel structure definition */
 typedef struct MADChannel {
 	/// Channel ID - \c 0 to \c MAXTRACK
 	int		ID;
@@ -263,9 +260,7 @@ typedef struct MADMusic {
 	bool		hasChanged;
 } MADMusic;
 
-/********************						***********************/
-/*** 			     Driver Settings definition					***/
-/********************						***********************/
+#pragma mark - Driver Settings definition
 
 /*!
  *	@enum		MADSoundOutput
@@ -743,7 +738,7 @@ PPEXPORT MADErr	MADDisposeLibrary(MADLibrary *MADLib);
  */
 PPEXPORT bool MADPlugAvailable(const MADLibrary *MADLib, const char *type);
 
-#pragma mark back-end (driver) availability
+#pragma mark - back-end (driver) availability
 /*!
  *	@function	MADGetBestDriver
  *	@abstract	Find and identify the current sound hardware and APIs and fill DriverInitParam.
@@ -771,7 +766,7 @@ PPEXPORT bool	MADSoundDriverIsAvalable(MADSoundOutput theDriver);
 PPEXPORT MADSoundOutputBit	MADSoundDriverList();
 
 #pragma mark -
-//// Music Driver initialization and memory allocation
+/// Music Driver initialization and memory allocation
 PPEXPORT MADErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRecPtr* returnDriver);
 /// Dispose the music driver
 PPEXPORT MADErr	MADDisposeDriver(MADDriverRecPtr MDriver);

@@ -19,6 +19,8 @@
 #import <PlayerPROKit/PPFXBusObject.h>
 #import <PlayerPROKit/PPFXSetObject.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern NSString * const kPPKSamplePasteboardUTI;
 extern NSString * const kPPKMADCommandPasteboardUTI;
 extern NSString * const kPPKPatternPasteboardUTI;
@@ -26,6 +28,8 @@ extern NSString * const kPPKFXBusPasteboardUTI;
 extern NSString * const kPPKFXSetPasteboardUTI;
 extern NSString * const kPPKEnvelopePasteboardUTI;
 extern NSString * const kPPKInstrumentPasteboardUTI;
+
+NS_ASSUME_NONNULL_END
 
 @interface PPSampleObject() <NSPasteboardReading, NSPasteboardWriting>
 @end

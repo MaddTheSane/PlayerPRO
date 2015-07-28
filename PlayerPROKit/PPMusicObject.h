@@ -21,6 +21,9 @@ NS_ASSUME_NONNULL_BEGIN
 @class PPDriver;
 @class PPLibrary;
 @class PPInstrumentObject;
+@class PPSampleObject;
+@class PPPatternObject;
+@class PPFXBusObject;
 
 @interface PPMusicObject : NSObject <NSCopying>
 @property (readonly) int totalPatterns;
@@ -28,10 +31,10 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) int partitionLength;
 @property (readonly) short totalTracks;
 @property (readonly) short totalInstruments;
-@property (readonly, strong, nonatomic) NSArray *sDatas;
-@property (readonly, strong, nonatomic) NSArray *instruments;
-@property (readonly, strong, nonatomic) NSMutableArray *patterns;
-@property (readonly, strong, nonatomic) NSMutableArray *buses;
+@property (readonly, strong, nonatomic) NSArray<PPSampleObject*> *sDatas;
+@property (readonly, strong, nonatomic) NSArray<PPInstrumentObject*> *instruments;
+@property (readonly, strong, nonatomic) NSMutableArray<PPPatternObject*> *patterns;
+@property (readonly, strong, nonatomic) NSMutableArray<PPFXBusObject*> *buses;
 @property (readwrite, copy, null_resettable) NSString *title;
 @property (readwrite, copy, null_resettable) NSString *information;
 @property (readonly, weak, nullable) PPDriver *attachedDriver;

@@ -23,7 +23,7 @@
 @property short identifier;
 @property int effectIdentifier;
 @property short countOfArguments;
-@property (readonly, copy, nonnull) NSArray *effectValues;
+@property (readonly, copy, nonnull) NSArray<NSNumber*> *effectValues;
 @property (copy, null_resettable) NSString *name;
 
 - (nonnull instancetype)initWithFXSet:(nullable FXSets*)theSet NS_DESIGNATED_INITIALIZER;

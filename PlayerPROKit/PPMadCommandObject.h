@@ -24,7 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (instancetype)init;
 - (instancetype)initWithCmdPtr:(nullable Cmd *)theCmd NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithCmd:(Cmd)theCmd;
-- (nonnull instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER; //Needs to return nullable in Swift 2.0
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 
 @property (readonly) Cmd theCommand;
 /// Instrument number. \c 0x00 is no instrument command

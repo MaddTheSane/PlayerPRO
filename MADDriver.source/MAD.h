@@ -66,7 +66,7 @@ typedef MADENUM(MADByte, MADEffectID) {
 
 /*!
  *	@struct		Cmd
- *	@abstract	command function used in a pattern
+ *	@abstract	Command function used in a pattern
  */
 typedef struct Cmd {
 	/// Instrument number. \c 0x00 is no instrument command
@@ -117,8 +117,8 @@ typedef struct PatData {
 	Cmd			Cmds[1];
 } PatData;
 
-/// Internal pattern data
-/// because Swift is a dumb-dumb about C arrays in structs.
+/// Internal pattern data.<br>
+/// Because Swift is a dumb-dumb about variable-length C arrays in structs.
 typedef struct IntPatData {
 	PatHeader	*header;
 	Cmd			*Cmds;

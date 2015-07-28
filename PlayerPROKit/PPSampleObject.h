@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)init;
 - (instancetype)initWithSData:(nullable in sData *)theData NS_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER; //Needs to be nullable in Swift 2.0
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 - (sData *)createSData;
 
 /**

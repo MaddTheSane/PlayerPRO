@@ -36,9 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (nullable instancetype)initWithMusic:(PPMusicObject *)mus instrumentIndex:(short)insIdx;
 - (nullable instancetype)init;
 
-@property (nonatomic, readonly, copy) NSArray *volumeEnvelope;
-@property (nonatomic, readonly, copy) NSArray *panningEnvelope;
-@property (nonatomic, readonly, copy) NSArray *pitchEnvelope;
+@property (nonatomic, readonly, copy) NSArray<PPEnvelopeObject*> *volumeEnvelope;
+@property (nonatomic, readonly, copy) NSArray<PPEnvelopeObject*> *panningEnvelope;
+@property (nonatomic, readonly, copy) NSArray<PPEnvelopeObject*> *pitchEnvelope;
 - (void)replaceObjectInPanningEnvelopeAtIndex:(NSInteger)index withObject:(PPEnvelopeObject *)object;
 - (void)replaceObjectInVolumeEnvelopeAtIndex:(NSInteger)index withObject:(PPEnvelopeObject *)object;
 - (void)replaceObjectInPitchEnvelopeAtIndex:(NSInteger)index withObject:(PPEnvelopeObject *)object;
