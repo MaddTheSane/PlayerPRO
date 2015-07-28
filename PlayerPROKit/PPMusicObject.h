@@ -16,6 +16,8 @@
 #define NS_DESIGNATED_INITIALIZER
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class PPDriver;
 @class PPLibrary;
 @class PPInstrumentObject;
@@ -26,10 +28,10 @@
 @property (readonly) int partitionLength;
 @property (readonly) short totalTracks;
 @property (readonly) short totalInstruments;
-@property (readonly, strong, nonatomic, nonnull) NSArray *sDatas;
-@property (readonly, strong, nonatomic, nonnull) NSArray *instruments;
-@property (readonly, strong, nonatomic, nonnull) NSMutableArray *patterns;
-@property (readonly, strong, nonatomic, nonnull) NSMutableArray *buses;
+@property (readonly, strong, nonatomic) NSArray *sDatas;
+@property (readonly, strong, nonatomic) NSArray *instruments;
+@property (readonly, strong, nonatomic) NSMutableArray *patterns;
+@property (readonly, strong, nonatomic) NSMutableArray *buses;
 @property (readwrite, copy, null_resettable) NSString *title;
 @property (readwrite, copy, null_resettable) NSString *information;
 @property (readonly, weak, nullable) PPDriver *attachedDriver;
@@ -44,63 +46,65 @@
 @property MADByte generalSpeed;
 @property MADByte generalVolume;
 
-- (nonnull instancetype)init;
+- (instancetype)init;
 /// Creates a music object from the supplied MADK file ONLY
-- (nullable instancetype)initWithURL:(nonnull NSURL *)url error:(out NSError* __nullable __autoreleasing* __nullable)error NS_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithPath:(nonnull NSString *)url error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
+- (nullable instancetype)initWithURL:(NSURL *)url error:(out NSError* __nullable __autoreleasing* __nullable)error NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithPath:(NSString *)url error:(out NSError* __nullable __autoreleasing* __nullable)error;
 
 /// Creates a music object from any supported tracker type.
-- (nullable instancetype)initWithURL:(nonnull NSURL *)url library:(nonnull PPLibrary *)theLib error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
-- (nullable instancetype)initWithPath:(nonnull NSString *)url library:(nonnull PPLibrary *)theLib error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
+- (nullable instancetype)initWithURL:(NSURL *)url library:(PPLibrary *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error;
+- (nullable instancetype)initWithPath:(NSString *)url library:(PPLibrary *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error;
 
 /// Creates a music object from the specified music type.
 /// If the type isn't available, it returns nil.
-- (nullable instancetype)initWithURL:(nonnull NSURL *)url type:(in nonnull const char*)type library:(nonnull PPLibrary *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error NS_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithPath:(nonnull NSString *)path type:(in nonnull const char*)type library:(nonnull PPLibrary *)theLib error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
-- (nullable instancetype)initWithURL:(nonnull NSURL *)url stringType:(nonnull NSString*)type library:(nonnull PPLibrary *)theLib error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
-- (nullable instancetype)initWithPath:(nonnull NSString *)path stringType:(nonnull NSString*)type library:(nonnull PPLibrary *)theLib error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
+- (nullable instancetype)initWithURL:(NSURL *)url type:(in const char*)type library:(PPLibrary *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithPath:(NSString *)path type:(in const char*)type library:(PPLibrary *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error;
+- (nullable instancetype)initWithURL:(NSURL *)url stringType:(NSString*)type library:(PPLibrary *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error;
+- (nullable instancetype)initWithPath:(NSString *)path stringType:(NSString*)type library:(PPLibrary *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error;
 
 /// Creates a music object from any supported tracker type, also attaching a driver to the music.
-- (nullable instancetype)initWithURL:(nonnull NSURL *)url driver:(nonnull PPDriver *)theLib error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
-- (nullable instancetype)initWithPath:(nonnull NSString *)path driver:(nonnull PPDriver *)theLib error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
-- (nullable instancetype)initWithURL:(nonnull NSURL *)url type:(in const char* __nonnull)type driver:(nonnull PPDriver *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error;
-- (nullable instancetype)initWithPath:(nonnull NSString *)path type:(in const char* __nonnull)type driver:(nonnull PPDriver *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error;
-- (nullable instancetype)initWithURL:(nonnull NSURL *)url stringType:(nonnull NSString *)type driver:(nonnull PPDriver *)theDriv error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
-- (nullable instancetype)initWithPath:(nonnull NSString *)path stringType:(nonnull NSString*)type driver:(nonnull PPDriver *)theDriv error:(out  NSError* __nullable  __autoreleasing* __nullable)error;
+- (nullable instancetype)initWithURL:(NSURL *)url driver:(PPDriver *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error;
+- (nullable instancetype)initWithPath:(NSString *)path driver:(PPDriver *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error;
+- (nullable instancetype)initWithURL:(NSURL *)url type:(in const char*)type driver:(PPDriver *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error;
+- (nullable instancetype)initWithPath:(NSString *)path type:(in const char*)type driver:(PPDriver *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)error;
+- (nullable instancetype)initWithURL:(NSURL *)url stringType:(NSString *)type driver:(PPDriver *)theDriv error:(out NSError* __nullable __autoreleasing* __nullable)error;
+- (nullable instancetype)initWithPath:(NSString *)path stringType:(NSString*)type driver:(PPDriver *)theDriv error:(out NSError* __nullable __autoreleasing* __nullable)error;
 
 /*!
  *	Initializes a music object based on a music struct, copying if specified.
  */
-- (nonnull instancetype)initWithMusicStruct:(nonnull MADMusic*)theStruct copy:(BOOL)copyData NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithMusicStruct:(MADMusic*)theStruct copy:(BOOL)copyData NS_DESIGNATED_INITIALIZER;
 
 /*!
  *	Initializes a music object based on a music struct, copying it.
  */
-- (nonnull instancetype)initWithMusicStruct:(nonnull MADMusic*)theStruct;
+- (instancetype)initWithMusicStruct:(MADMusic*)theStruct;
 
-+ (MADErr)info:(nonnull MADInfoRec*)theInfo fromTrackerAtURL:(nonnull NSURL*)thURL usingLibrary:(nonnull PPLibrary*)theLib;
++ (MADErr)info:(MADInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib;
 
 /// Save music to a URL in MADK format.
-- (MADErr)saveMusicToURL:(nonnull NSURL *)tosave;
-- (MADErr)saveMusicToURL:(nonnull NSURL *)tosave compress:(BOOL)mad1Comp;
-- (MADErr)exportMusicToURL:(nonnull NSURL *)tosave format:(nonnull NSString*)form library:(nonnull PPLibrary*)otherLib;
+- (MADErr)saveMusicToURL:(NSURL *)tosave;
+- (MADErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp;
+- (MADErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib;
 
 /// This method sets the music object as the playback music
-- (void)attachToDriver:(nonnull PPDriver *)theDriv;
+- (void)attachToDriver:(PPDriver *)theDriv;
 
-- (void)addInstrumentObject:(nonnull PPInstrumentObject *)object;
-- (void)replaceObjectInInstrumentsAtIndex:(NSInteger)index withObject:(nonnull PPInstrumentObject *)object;
+- (void)addInstrumentObject:(PPInstrumentObject *)object;
+- (void)replaceObjectInInstrumentsAtIndex:(NSInteger)index withObject:(PPInstrumentObject *)object;
 @property (readonly) NSInteger countOfInstruments;
-- (nonnull PPInstrumentObject*)instrumentObjectAtIndex:(NSInteger)idx;
-- (void)clearInstrumentsAtIndexes:(nonnull NSIndexSet *)indexes;
+- (PPInstrumentObject*)instrumentObjectAtIndex:(NSInteger)idx;
+- (void)clearInstrumentsAtIndexes:(NSIndexSet *)indexes;
 - (void)clearInstrumentObjectAtIndex:(NSInteger)index;
 
-@property (readonly, nonnull) MADMusic *internalMadMusicStruct NS_RETURNS_INNER_POINTER;
+@property (readonly) MADMusic *internalMadMusicStruct NS_RETURNS_INNER_POINTER;
 
-- (MADErr)exportInstrumentListToURL:(nonnull NSURL*)outURL;
-- (BOOL)addInstrument:(nonnull PPInstrumentObject*)theIns;
-- (BOOL)importInstrumentListFromURL:(nonnull NSURL *)insURL error:(out NSError * __nullable __autoreleasing*__nullable)theErr;
+- (MADErr)exportInstrumentListToURL:(NSURL*)outURL;
+- (BOOL)addInstrument:(PPInstrumentObject*)theIns;
+- (BOOL)importInstrumentListFromURL:(NSURL *)insURL error:(out NSError * __nullable __autoreleasing*__nullable)theErr;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif

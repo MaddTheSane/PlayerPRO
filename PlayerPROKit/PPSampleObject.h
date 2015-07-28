@@ -17,6 +17,8 @@
 #define NS_DESIGNATED_INITIALIZER
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  *	@class PPSampleObject
  *	@seealso sData
@@ -26,10 +28,10 @@
 @property (readwrite) NSInteger instrumentIndex;
 @property (readonly) sData theSample;
 
-- (nonnull instancetype)init;
-- (nonnull instancetype)initWithSData:(nullable in sData *)theData NS_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
-- (sData *__nonnull)createSData;
+- (instancetype)init;
+- (instancetype)initWithSData:(nullable in sData *)theData NS_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER; //Needs to be nullable in Swift 2.0
+- (sData *)createSData;
 
 /**
  *	Sample length
@@ -69,8 +71,10 @@
 @end
 
 __BEGIN_DECLS
-extern short PPNoteFromString(NSString * __nonnull aNote);
-extern NSString * __nonnull PPStringFromNote(short note);
+extern short PPNoteFromString(NSString *aNote);
+extern NSString *PPStringFromNote(short note);
 __END_DECLS
+
+NS_ASSUME_NONNULL_END
 
 #endif

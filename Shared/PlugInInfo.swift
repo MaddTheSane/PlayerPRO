@@ -37,7 +37,7 @@ final class PlugInInfo: Hashable, CustomDebugStringConvertible, CustomStringConv
 		plugType = pt
 		plugURL = pu
 		if let tmpBundle = NSBundle(URL: pu) {
-			if let acopy = tmpBundle.infoDictionary!["NSHumanReadableCopyright"] as? String {
+			if let acopy = tmpBundle.infoDictionary?["NSHumanReadableCopyright"] as? String {
 				plugCopyright = acopy
 			} else {
 				plugCopyright = "No copyright info available"

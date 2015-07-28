@@ -12,19 +12,23 @@
 #import <PlayerPROKit/PPPatternObject.h>
 #include <PlayerPROCore/MADPlug.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PPPatternObject (PcmdHandling)
-+ (MADErr)testPcmdFileAtURL:(nonnull NSURL*)theURL;
-+ (nonnull NSString *)stringFromPcmdData:(in nonnull const Pcmd*)myPcmd;
-+ (nonnull NSData*)dataFromPcmd:(in nonnull const Pcmd*)thePcmd;
-- (nonnull Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
-- (MADErr)importPcmdFromURL:(nonnull NSURL*)theURL;
-- (MADErr)exportPcmdToURL:(nonnull NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
-- (MADErr)importPcmdFromPointer:(in nonnull const Pcmd*)thePcmd;
++ (MADErr)testPcmdFileAtURL:(NSURL*)theURL;
++ (NSString *)stringFromPcmdData:(in const Pcmd*)myPcmd;
++ (NSData*)dataFromPcmd:(in const Pcmd*)thePcmd;
+- (Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
+- (MADErr)importPcmdFromURL:(NSURL*)theURL;
+- (MADErr)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange;
+- (MADErr)importPcmdFromPointer:(in const Pcmd*)thePcmd;
 
 /**
  * For use with Swift, because it doesn't like variable-length C arrays used in \c Pcmd
  */
-- (MADErr)importIntPcmdFromPointer:(nonnull IntPcmd*)theIntPcmd freeCommandsWhenDone:(BOOL)freeCmds;
+- (MADErr)importIntPcmdFromPointer:(IntPcmd*)theIntPcmd freeCommandsWhenDone:(BOOL)freeCmds;
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif

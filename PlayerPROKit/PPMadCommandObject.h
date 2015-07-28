@@ -17,12 +17,14 @@
 #define NS_DESIGNATED_INITIALIZER
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface PPMadCommandObject : NSObject <PPObject>
 
-- (nonnull instancetype)init;
-- (nonnull instancetype)initWithCmdPtr:(nullable Cmd *)theCmd NS_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithCmd:(Cmd)theCmd;
-- (nonnull instancetype)initWithCoder:(nonnull NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
+- (instancetype)init;
+- (instancetype)initWithCmdPtr:(nullable Cmd *)theCmd NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithCmd:(Cmd)theCmd;
+- (nonnull instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER; //Needs to return nullable in Swift 2.0
 
 @property (readonly) Cmd theCommand;
 /// Instrument number. \c 0x00 is no instrument command
@@ -38,5 +40,7 @@
 
 - (void)reset;
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif
