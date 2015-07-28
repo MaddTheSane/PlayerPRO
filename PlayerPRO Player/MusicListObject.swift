@@ -68,7 +68,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		var err: NSError? = nil;
 		
 		do {
-		try self.musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey)
+			try self.musicURL.getResourceValue(&val, forKey:NSURLLocalizedNameKey)
 			let retStr = val as! String
 			return retStr
 		} catch {
@@ -80,7 +80,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		var val: AnyObject? = nil;
 		var err: NSError? = nil;
 		do {
-		try self.musicURL.getResourceValue(&val, forKey:NSURLTotalFileSizeKey)
+			try self.musicURL.getResourceValue(&val, forKey:NSURLTotalFileSizeKey)
 			let retNum = val as! NSNumber
 			return retNum.unsignedLongLongValue
 		} catch {
