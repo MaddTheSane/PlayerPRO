@@ -172,9 +172,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			case utiType.otherType.rawValue:
 				for obj in utiObjects {
 					if (obj.theUtiType == .other) {
-						for uti in obj.utis {
-							allowedUTIs.append(uti)
-						}
+						allowedUTIs.extend(obj.utis)
 					}
 				}
 				openPanel.allowedFileTypes = allowedUTIs

@@ -290,6 +290,8 @@ private let kPlayerList = "Player List"
 			selectedMusic = -1;
 		} else {
 			selectedMusic = -1
+			super.init()
+			return nil
 		}
 		
 		super.init()

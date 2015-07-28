@@ -416,7 +416,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	}
 	
 	func loadMusicURL(musicToLoad: NSURL, autoPlay: Bool = true) throws {
-		var error: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
+		var error: NSError? = nil
 		var fileType: String? = nil
 		var theOSErr = MADErr.NoErr
 		if music != nil {
