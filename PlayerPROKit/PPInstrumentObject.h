@@ -17,6 +17,8 @@
 #define NS_DESIGNATED_INITIALIZER
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class PPSampleObject;
 @class PPMusicObject;
 
@@ -30,27 +32,27 @@
 @end
 
 @interface PPInstrumentObject : NSObject <NSFastEnumeration, PPObject>
-+ (nullable instancetype)newInstrumentObjectByAddingToMusic:(nonnull PPMusicObject *)mus;
-- (nullable instancetype)initWithMusic:(nonnull PPMusicObject *)mus instrumentIndex:(short)insIdx;
++ (nullable instancetype)newInstrumentObjectByAddingToMusic:(PPMusicObject *)mus;
+- (nullable instancetype)initWithMusic:(PPMusicObject *)mus instrumentIndex:(short)insIdx;
 - (nullable instancetype)init;
 
-@property (nonatomic, readonly, copy, nonnull) NSArray *volumeEnvelope;
-@property (nonatomic, readonly, copy, nonnull) NSArray *panningEnvelope;
-@property (nonatomic, readonly, copy, nonnull) NSArray *pitchEnvelope;
-- (void)replaceObjectInPanningEnvelopeAtIndex:(NSInteger)index withObject:(nonnull PPEnvelopeObject *)object;
-- (void)replaceObjectInVolumeEnvelopeAtIndex:(NSInteger)index withObject:(nonnull PPEnvelopeObject *)object;
-- (void)replaceObjectInPitchEnvelopeAtIndex:(NSInteger)index withObject:(nonnull PPEnvelopeObject *)object;
-- (nonnull PPEnvelopeObject *)panningEnvelopeObjectAtIndex:(NSInteger)index;
-- (nonnull PPEnvelopeObject *)volumeEnvelopeObjectAtIndex:(NSInteger)index;
-- (nonnull PPEnvelopeObject *)pitchEnvelopeObjectAtIndex:(NSInteger)index;
+@property (nonatomic, readonly, copy) NSArray *volumeEnvelope;
+@property (nonatomic, readonly, copy) NSArray *panningEnvelope;
+@property (nonatomic, readonly, copy) NSArray *pitchEnvelope;
+- (void)replaceObjectInPanningEnvelopeAtIndex:(NSInteger)index withObject:(PPEnvelopeObject *)object;
+- (void)replaceObjectInVolumeEnvelopeAtIndex:(NSInteger)index withObject:(PPEnvelopeObject *)object;
+- (void)replaceObjectInPitchEnvelopeAtIndex:(NSInteger)index withObject:(PPEnvelopeObject *)object;
+- (PPEnvelopeObject *)panningEnvelopeObjectAtIndex:(NSInteger)index;
+- (PPEnvelopeObject *)volumeEnvelopeObjectAtIndex:(NSInteger)index;
+- (PPEnvelopeObject *)pitchEnvelopeObjectAtIndex:(NSInteger)index;
 @property (readonly) NSInteger countOfVolumeEnvelope;
 @property (readonly) NSInteger countOfPanningEnvelope;
 @property (readonly) NSInteger countOfPitchEnvelope;
 
-@property (readonly, nonnull) MADByte* what NS_RETURNS_INNER_POINTER;
+@property (readonly) MADByte* what NS_RETURNS_INNER_POINTER;
 
-- (nonnull PPSampleObject *)objectAtIndexedSubscript:(NSInteger)index;
-- (void)setObject:(nonnull PPSampleObject *)obj atIndexedSubscript:(NSInteger)index;
+- (PPSampleObject *)objectAtIndexedSubscript:(NSInteger)index;
+- (void)setObject:(PPSampleObject *)obj atIndexedSubscript:(NSInteger)index;
 - (void)resetInstrument;
 
 @property unsigned short volumeFadeOut;
@@ -59,7 +61,7 @@
 @property (copy, null_resettable) NSString *name;
 @property (readonly) NSInteger number;
 @property (nonatomic, readonly) short firstSample;
-@property (nonatomic, copy, readonly, nonnull) NSArray *samples;
+@property (nonatomic, copy, readonly) NSArray *samples;
 
 @property short MIDI;
 @property (readonly) short MIDIType;
@@ -99,12 +101,14 @@
 
 @property (readonly, getter=isBlankInstrument) BOOL blankInstrument;
 
-- (void)addSampleObject:(nonnull PPSampleObject *)object;
-- (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(nonnull PPSampleObject *)object;
+- (void)addSampleObject:(PPSampleObject *)object;
+- (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(PPSampleObject *)object;
 @property (readonly) NSInteger countOfSamples;
 - (nonnull PPSampleObject *)samplesObjectAtIndex:(NSInteger)idx;
 - (void)removeSamplesAtIndexes:(nonnull NSIndexSet *)indexes;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif

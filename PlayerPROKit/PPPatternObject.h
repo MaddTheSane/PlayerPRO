@@ -12,12 +12,15 @@
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
+
 @class PPMadCommandObject;
 @class PPMusicObject;
 
 #ifndef NS_DESIGNATED_INITIALIZER
 #define NS_DESIGNATED_INITIALIZER
 #endif
+
+NS_ASSUME_NONNULL_BEGIN
 
 @interface PPPatternObject : NSObject <NSFastEnumeration, PPObject>
 @property (readonly) NSInteger index;
@@ -26,17 +29,19 @@
 @property int patternSize;
 @property (readonly) NSInteger lengthOfCommands;
 
-- (nonnull PPMadCommandObject *)objectAtIndexedSubscript:(NSInteger)index;
+- (PPMadCommandObject *)objectAtIndexedSubscript:(NSInteger)index;
 
-- (nullable instancetype)initWithMusic:(nonnull PPMusicObject *)mus NS_DESIGNATED_INITIALIZER;
-- (nullable instancetype)initWithMusic:(nonnull PPMusicObject *)mus patternAtIndex:(short)ptnIdx;
+- (nullable instancetype)initWithMusic:(PPMusicObject *)mus NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithMusic:(PPMusicObject *)mus patternAtIndex:(short)ptnIdx;
 
-- (nonnull PPMadCommandObject*)getCommandFromPosition:(short)PosX channel:(short)TrackIdX;
+- (PPMadCommandObject*)getCommandFromPosition:(short)PosX channel:(short)TrackIdX;
 - (void)replaceCommandAtPosition:(short)PosX channel:(short)TrackIdX cmd:(Cmd)aCmd;
-- (void)replaceCommandAtPosition:(short)PosX channel:(short)TrackIdX command:(nonnull PPMadCommandObject*)aCmd;
-- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX commandBlock:(void (^ __nonnull )(Cmd *__nonnull))block;
-- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX madCommandBlock:(void (^ __nonnull)(PPMadCommandObject*__nonnull))block;
+- (void)replaceCommandAtPosition:(short)PosX channel:(short)TrackIdX command:(PPMadCommandObject*)aCmd;
+- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX commandBlock:(void (^)(Cmd *))block;
+- (void)modifyCommandAtPosition:(short)PosX channel:(short)TrackIdX madCommandBlock:(void (^)(PPMadCommandObject*))block;
 
 @end
+
+NS_ASSUME_NONNULL_END
 
 #endif
