@@ -209,6 +209,7 @@ static const dispatch_block_t initUTIArray = ^{
 	@private
 	InstrData theInstrument;
 	NSInteger number;			// Instrument number
+	InstrData *writebackAddr;
 }
 @synthesize theInstrument;
 @synthesize number;
@@ -254,7 +255,20 @@ static const dispatch_block_t initUTIArray = ^{
 - (instancetype)init
 {
 	if (self = [super init]) {
+		samples = [[NSMutableArray alloc] init];
+		theInstrument.no = number = -1;
+		theInstrument.firstSample = 0;
 		MADResetInstrument(&theInstrument);
+		self.name = @"";
+		_panningEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		_volumeEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		_pitchEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
+		for (int i = 0; i < 12; i++) {
+			[_panningEnvelope addObject:[PPEnvelopeObject new]];
+			[_volumeEnvelope addObject:[PPEnvelopeObject new]];
+			[_pitchEnvelope addObject:[PPEnvelopeObject new]];
+		}
+
 	}
 	return self;
 }
@@ -262,10 +276,10 @@ static const dispatch_block_t initUTIArray = ^{
 - (NSString*)name
 {
 	if (!name) {
-		name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
+		name = [[NSString alloc] initWithCString:writebackAddr->name encoding:NSMacOSRomanStringEncoding];
 		if (!name) {
 			name = @"";
-			memset(theInstrument.name, 0, sizeof(theInstrument.name));
+			memset(writebackAddr->name, 0, sizeof(writebackAddr->name));
 		}
 	}
 	return name;
@@ -282,8 +296,8 @@ static const dispatch_block_t initUTIArray = ^{
 	[tmpCStr getBytes:tempstr length:cStrLen];
 	tmpCStr = nil;
 	
-	strlcpy(theInstrument.name, tempstr, sizeof(theInstrument.name));
-	name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
+	strlcpy(writebackAddr->name, tempstr, sizeof(writebackAddr->name));
+	name = [[NSString alloc] initWithCString:writebackAddr->name encoding:NSMacOSRomanStringEncoding];
 }
 
 - (void)setObject:(PPSampleObject *)obj atIndexedSubscript:(NSInteger)idx
@@ -327,7 +341,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (MADByte*)what
 {
-	return theInstrument.what;
+	return writebackAddr->what;
 }
 
 - (void)writeBackToStruct
@@ -357,39 +371,39 @@ static const dispatch_block_t initUTIArray = ^{
 - (void)replaceObjectInVolumeEnvelopeAtIndex:(NSInteger)index withObject:(id)object;
 {
 	_volumeEnvelope[index] = object;
-	theInstrument.volEnv[index] = [_volumeEnvelope[index] envelopeRec];
+	writebackAddr->volEnv[index] = [_volumeEnvelope[index] envelopeRec];
 }
 
 - (void)replaceObjectInPanningEnvelopeAtIndex:(NSInteger)index withObject:(id)object
 {
 	_panningEnvelope[index] = object;
-	theInstrument.pannEnv[index] = [_panningEnvelope[index] envelopeRec];
+	writebackAddr->pannEnv[index] = [_panningEnvelope[index] envelopeRec];
 }
 
 - (void)replaceObjectInPitchEnvelopeAtIndex:(NSInteger)index withObject:(id)object
 {
 	_pitchEnvelope[index] = object;
-	theInstrument.pitchEnv[index] = [_pitchEnvelope[index] envelopeRec];
+	writebackAddr->pitchEnv[index] = [_pitchEnvelope[index] envelopeRec];
 }
 
 - (short)firstSample
 {
-	return theInstrument.firstSample;
+	return writebackAddr->firstSample;
 }
 
 - (short)MIDI
 {
-	return theInstrument.MIDI;
+	return writebackAddr->MIDI;
 }
 
 - (void)setMIDI:(short)MIDI
 {
-	theInstrument.MIDI = MIDI;
+	writebackAddr->MIDI = MIDI;
 }
 
 - (BOOL)isSoundOut
 {
-	switch (theInstrument.MIDIType) {
+	switch (writebackAddr->MIDIType) {
 		case 0:
 		case 2:
 			return YES;
@@ -403,29 +417,29 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (short)MIDIType
 {
-	return theInstrument.MIDIType;
+	return writebackAddr->MIDIType;
 }
 
 - (void)setSoundOut:(BOOL)soundOut
 {
 	if (soundOut) {
 		if (self.MIDIOut) {
-			theInstrument.MIDIType = 2;
+			writebackAddr->MIDIType = 2;
 		} else {
-			theInstrument.MIDIType = 0;
+			writebackAddr->MIDIType = 0;
 		}
 	} else {
 		if (self.MIDIOut) {
-			theInstrument.MIDIType = 1;
+			writebackAddr->MIDIType = 1;
 		} else {
-			theInstrument.MIDIType = 3;
+			writebackAddr->MIDIType = 3;
 		}
 	}
 }
 
 - (BOOL)isMIDIOut
 {
-	switch (theInstrument.MIDIType) {
+	switch (writebackAddr->MIDIType) {
 		case 1:
 		case 2:
 			return YES;
@@ -441,157 +455,157 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	if (MIDIOut) {
 		if (self.soundOut) {
-			theInstrument.MIDIType = 2;
+			writebackAddr->MIDIType = 2;
 		} else {
-			theInstrument.MIDIType = 1;
+			writebackAddr->MIDIType = 1;
 		}
 	} else {
 		if (self.soundOut) {
-			theInstrument.MIDIType = 0;
+			writebackAddr->MIDIType = 0;
 		} else {
-			theInstrument.MIDIType = 3;
+			writebackAddr->MIDIType = 3;
 		}
 	}
 }
 
 - (Byte)volumeSize
 {
-	return theInstrument.volSize;
+	return writebackAddr->volSize;
 }
 
 - (void)setVolumeSize:(Byte)volumeSize
 {
-	theInstrument.volSize = volumeSize;
+	writebackAddr->volSize = volumeSize;
 }
 
 - (Byte)panningSize
 {
-	return theInstrument.pannSize;
+	return writebackAddr->pannSize;
 }
 
 - (void)setPanningSize:(Byte)panningSize
 {
-	theInstrument.pannSize = panningSize;
+	writebackAddr->pannSize = panningSize;
 }
 
 - (Byte)pitchSize
 {
-	return theInstrument.pitchSize;
+	return writebackAddr->pitchSize;
 }
 
 - (void)setPitchSize:(Byte)pitchSize
 {
-	theInstrument.pitchSize = pitchSize;
+	writebackAddr->pitchSize = pitchSize;
 }
 
 - (Byte)volumeSustain
 {
-	return theInstrument.volSus;
+	return writebackAddr->volSus;
 }
 
 - (void)setVolumeSustain:(Byte)volumeSustain
 {
-	theInstrument.volSus = volumeSustain;
+	writebackAddr->volSus = volumeSustain;
 }
 
 - (Byte)volumeBegin
 {
-	return theInstrument.volBeg;
+	return writebackAddr->volBeg;
 }
 
 - (void)setVolumeBegin:(Byte)volumeBegin
 {
-	theInstrument.volBeg = volumeBegin;
+	writebackAddr->volBeg = volumeBegin;
 }
 
 - (Byte)volumeEnd
 {
-	return theInstrument.volEnd;
+	return writebackAddr->volEnd;
 }
 
 - (void)setVolumeEnd:(Byte)volumeEnd
 {
-	theInstrument.volEnd = volumeEnd;
+	writebackAddr->volEnd = volumeEnd;
 }
 
 - (Byte)panningSustain
 {
-	return theInstrument.pannSus;
+	return writebackAddr->pannSus;
 }
 
 - (void)setPanningSustain:(Byte)panningSustain
 {
-	theInstrument.pannSus = panningSustain;
+	writebackAddr->pannSus = panningSustain;
 }
 
 - (Byte)panningBegin
 {
-	return theInstrument.pannBeg;
+	return writebackAddr->pannBeg;
 }
 
 - (void)setPanningBegin:(Byte)panningBegin
 {
-	theInstrument.pannBeg = panningBegin;
+	writebackAddr->pannBeg = panningBegin;
 }
 
 - (Byte)panningEnd
 {
-	return theInstrument.pannEnd;
+	return writebackAddr->pannEnd;
 }
 
 - (void)setPanningEnd:(Byte)panningEnd
 {
-	theInstrument.pannEnd = panningEnd;
+	writebackAddr->pannEnd = panningEnd;
 }
 
 - (Byte)pitchSustain
 {
-	return theInstrument.pitchSus;
+	return writebackAddr->pitchSus;
 }
 
 - (void)setPitchSustain:(Byte)pitchSustain
 {
-	theInstrument.pitchSus = pitchSustain;
+	writebackAddr->pitchSus = pitchSustain;
 }
 
 - (Byte)pitchBegin
 {
-	return theInstrument.pitchBeg;
+	return writebackAddr->pitchBeg;
 }
 
 - (void)setPitchBegin:(Byte)pitchBegin
 {
-	theInstrument.pitchBeg = pitchBegin;
+	writebackAddr->pitchBeg = pitchBegin;
 }
 
 - (Byte)pitchEnd
 {
-	return theInstrument.pitchEnd;
+	return writebackAddr->pitchEnd;
 }
 
 - (void)setPitchEnd:(Byte)pitchEnd
 {
-	theInstrument.pitchEnd = pitchEnd;
+	writebackAddr->pitchEnd = pitchEnd;
 }
 
 - (Byte)vibratoDepth
 {
-	return theInstrument.vibDepth;
+	return writebackAddr->vibDepth;
 }
 
 - (void)setVibratoDepth:(Byte)vibratoDepth
 {
-	theInstrument.vibDepth = vibratoDepth;
+	writebackAddr->vibDepth = vibratoDepth;
 }
 
 - (Byte)vibratoRate
 {
-	return theInstrument.vibRate;
+	return writebackAddr->vibRate;
 }
 
 - (void)setVibratoRate:(Byte)vibratoRate
 {
-	theInstrument.vibRate = vibratoRate;
+	writebackAddr->vibRate = vibratoRate;
 }
 
 - (NSArray*)samples
@@ -606,8 +620,8 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)setNumber:(NSInteger)numberr
 {
-	theInstrument.no = number = numberr;
-	theInstrument.firstSample = MAXSAMPLE * numberr;
+	writebackAddr->no = number = numberr;
+	writebackAddr->firstSample = MAXSAMPLE * numberr;
 }
 
 - (NSInteger)number
@@ -643,7 +657,7 @@ static const dispatch_block_t initUTIArray = ^{
 			[_volumeEnvelope addObject:[PPEnvelopeObject new]];
 			[_pitchEnvelope addObject:[PPEnvelopeObject new]];
 		}
-
+		writebackAddr = &theInstrument;
 	}
 	return self;
 }
@@ -652,6 +666,7 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	if (self = [super init]) {
 		theInstrument = theMus->fid[ind];
+		writebackAddr = &theMus->fid[ind];
 		samples = [[NSMutableArray alloc] initWithCapacity:theInstrument.numSamples];
 		{
 			int sDataCount = theInstrument.numSamples + theInstrument.firstSample;
@@ -666,7 +681,7 @@ static const dispatch_block_t initUTIArray = ^{
 		name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
 		theInstrument.no = number = ind;
 		// In case it's malformed, i.e. from CreateFreeMADK()
-		theInstrument.firstSample = MAXSAMPLE * ind; /*tempData->firstSample;*/
+		writebackAddr->firstSample = MAXSAMPLE * ind; /*tempData->firstSample;*/
 		_panningEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
 		_volumeEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
 		_pitchEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
@@ -684,6 +699,7 @@ static const dispatch_block_t initUTIArray = ^{
 {
 	if (self = [self initWithMusic:mus]) {
 		theInstrument = mus._currentMusic->fid[insIdx];
+		writebackAddr = &mus._currentMusic->fid[insIdx];
 		samples = [[NSMutableArray alloc] initWithCapacity:theInstrument.numSamples];
 		{
 			int sDataCount = theInstrument.numSamples + theInstrument.firstSample;
@@ -698,7 +714,7 @@ static const dispatch_block_t initUTIArray = ^{
 		name = [[NSString alloc] initWithCString:theInstrument.name encoding:NSMacOSRomanStringEncoding];
 		theInstrument.no = number = insIdx;
 		//In case it's malformed, i.e. from CreateFreeMADK()
-		theInstrument.firstSample = MAXSAMPLE * insIdx; /*tempData->firstSample;*/
+		writebackAddr->firstSample = MAXSAMPLE * insIdx; /*tempData->firstSample;*/
 		_panningEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
 		_volumeEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
 		_pitchEnvelope = [[NSMutableArray alloc] initWithCapacity:12];
@@ -706,7 +722,6 @@ static const dispatch_block_t initUTIArray = ^{
 			[_panningEnvelope addObject:[[PPEnvelopeObject alloc] initWithEnvRec:theInstrument.pannEnv[i]]];
 			[_volumeEnvelope addObject:[[PPEnvelopeObject alloc] initWithEnvRec:theInstrument.volEnv[i]]];
 			[_pitchEnvelope addObject:[[PPEnvelopeObject alloc] initWithEnvRec:theInstrument.pitchEnv[i]]];
-
 		}
 	}
 	return self;
@@ -728,7 +743,10 @@ static const dispatch_block_t initUTIArray = ^{
 	object.instrumentIndex = number;
 	
 	[samples addObject:object];
-	theInstrument.numSamples++;
+	writebackAddr->numSamples++;
+	if (_theMus) {
+		//TODO: copy sample data over
+	}
 }
 
 - (void)addSampleObject:(PPSampleObject *)object
@@ -756,134 +774,134 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (EFType)volumeType
 {
-	return theInstrument.volType;
+	return writebackAddr->volType;
 }
 
 - (void)setVolumeType:(EFType)volumeType
 {
-	theInstrument.volType = volumeType;
+	writebackAddr->volType = volumeType;
 }
 
 - (void)setVolumeTypeOn:(BOOL)typeOn
 {
 	if (typeOn) {
-		theInstrument.volType |= EFTypeOn;
+		writebackAddr->volType |= EFTypeOn;
 	} else {
-		theInstrument.volType &= ~EFTypeOn;
+		writebackAddr->volType &= ~EFTypeOn;
 	}
 }
 
 - (void)setVolumeTypeSustain:(BOOL)typeSus
 {
 	if (typeSus) {
-		theInstrument.volType |= EFTypeSustain;
+		writebackAddr->volType |= EFTypeSustain;
 	} else {
-		theInstrument.volType &= ~EFTypeSustain;
+		writebackAddr->volType &= ~EFTypeSustain;
 	}
 }
 
 - (void)setVolumeTypeLoop:(BOOL)typeLoop
 {
 	if (typeLoop) {
-		theInstrument.volType |= EFTypeLoop;
+		writebackAddr->volType |= EFTypeLoop;
 	} else {
-		theInstrument.volType &= ~EFTypeLoop;
+		writebackAddr->volType &= ~EFTypeLoop;
 	}
 }
 
 - (void)setVolumeTypeNote:(BOOL)theLoop
 {
 	if (theLoop) {
-		theInstrument.volType |= EFTypeNote;
+		writebackAddr->volType |= EFTypeNote;
 	} else {
-		theInstrument.volType &= ~EFTypeNote;
+		writebackAddr->volType &= ~EFTypeNote;
 	}
 }
 
 - (BOOL)isVolumeTypeOn
 {
-	return theInstrument.volType & EFTypeOn;
+	return !!(writebackAddr->volType & EFTypeOn);
 }
 
 - (BOOL)isVolumeTypeSustain
 {
-	return theInstrument.volType & EFTypeSustain;
+	return !!(writebackAddr->volType & EFTypeSustain);
 }
 
 - (BOOL)isVolumeTypeLoop
 {
-	return theInstrument.volType & EFTypeLoop;
+	return !!(writebackAddr->volType & EFTypeLoop);
 }
 
 - (BOOL)isVolumeTypeNote
 {
-	return theInstrument.volType & EFTypeNote;
+	return !!(writebackAddr->volType & EFTypeNote);
 }
 
 - (EFType)panningType
 {
-	return theInstrument.pannType;
+	return writebackAddr->pannType;
 }
 
 - (void)setPanningType:(EFType)panningType
 {
-	theInstrument.pannType = panningType;
+	writebackAddr->pannType = panningType;
 }
 
 - (void)setPanningTypeOn:(BOOL)typeOn
 {
 	if (typeOn) {
-		theInstrument.pannType |= EFTypeOn;
+		writebackAddr->pannType |= EFTypeOn;
 	} else {
-		theInstrument.pannType &= ~EFTypeOn;
+		writebackAddr->pannType &= ~EFTypeOn;
 	}
 }
 
 - (void)setPanningTypeSustain:(BOOL)typeSus
 {
 	if (typeSus) {
-		theInstrument.pannType |= EFTypeSustain;
+		writebackAddr->pannType |= EFTypeSustain;
 	} else {
-		theInstrument.pannType &= ~EFTypeSustain;
+		writebackAddr->pannType &= ~EFTypeSustain;
 	}
 }
 
 - (void)setPanningTypeLoop:(BOOL)theLoop
 {
 	if (theLoop) {
-		theInstrument.pannType |= EFTypeLoop;
+		writebackAddr->pannType |= EFTypeLoop;
 	} else {
-		theInstrument.pannType &= ~EFTypeLoop;
+		writebackAddr->pannType &= ~EFTypeLoop;
 	}
 }
 
 - (void)setPanningTypeNote:(BOOL)theLoop
 {
 	if (theLoop) {
-		theInstrument.pannType |= EFTypeNote;
+		writebackAddr->pannType |= EFTypeNote;
 	} else {
-		theInstrument.pannType &= ~EFTypeNote;
+		writebackAddr->pannType &= ~EFTypeNote;
 	}
 }
 
 - (BOOL)isPanningTypeOn
 {
-	return theInstrument.pannType & EFTypeOn;
+	return !!(writebackAddr->pannType & EFTypeOn);
 }
 
 - (BOOL)isPanningTypeSustain
 {
-	return theInstrument.pannType & EFTypeSustain;
+	return !!(writebackAddr->pannType & EFTypeSustain);
 }
 
 - (BOOL)isPanningTypeLoop
 {
-	return theInstrument.pannType & EFTypeLoop;
+	return !!(writebackAddr->pannType & EFTypeLoop);
 }
 
 - (BOOL)isPanningTypeNote
 {
-	return theInstrument.pannType & EFTypeNote;
+	return !!(writebackAddr->pannType & EFTypeNote);
 }
 
 - (PPSampleObject*)samplesObjectAtIndex:(NSInteger)idx
@@ -893,12 +911,12 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (unsigned short)volumeFadeOut
 {
-	return theInstrument.volFade;
+	return writebackAddr->volFade;
 }
 
 - (void)setVolumeFadeOut:(unsigned short)volumeFadeOut
 {
-	theInstrument.volFade = volumeFadeOut;
+	writebackAddr->volFade = volumeFadeOut;
 }
 
 - (void)removeSamplesAtIndexes:(NSIndexSet *)indexes
@@ -908,9 +926,9 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)resetInstrument
 {
-	[self removeSamplesAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, samples.count)]];
-	theInstrument.no = number = -1;
-	theInstrument.firstSample = 0;
+	[self removeSamplesAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, samples.count - 1)]];
+	writebackAddr->no = number = -1;
+	writebackAddr->firstSample = 0;
 	MADResetInstrument(&theInstrument);
 	self.name = @"";
 	for (int i = 0; i < 12; i++) {
@@ -1061,6 +1079,7 @@ affectVolType(Note)
 		for (PPSampleObject *sampObj in (NSArray*)[aDecoder decodeObjectForKey:PPSamples]) {
 			[self addSampleObject:sampObj];
 		}
+		writebackAddr = &theInstrument;
 	}
 	return self;
 }
@@ -1101,6 +1120,12 @@ affectVolType(Note)
 	[aCoder encodeObject:self.pitchEnvelope forKey:PPPitchEnv];
 	
 	[aCoder encodeObject:self.samples forKey:PPSamples];
+}
+
+- (void)dealloc
+{
+	//reset the instrument so the samples aren't freed twice.
+	[self resetInstrument];
 }
 
 @end

@@ -11,7 +11,7 @@ import XCTest
 import PlayerPROCore
 import PlayerPROKit
 
-func GlobalDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
+private func GlobalDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
 	let manager = NSFileManager.defaultManager()
 	let fileStr = manager.stringWithFileSystemRepresentation(file, length: Int(strlen(file)))
 	let textStr = String(UTF8String: text)!
@@ -26,9 +26,9 @@ class Error_Tests: XCTestCase {
 		super.setUp()
 		// Put setup code here. This method is called before the invocation of each test method in the class.
 		currentTestClass = self
-		MADRegisterDebugFunc(cXTCFailFunc)
+		MADRegisterDebugFunc(cXTCFail)
 
-		var exampleVar = ""
+		//var exampleVar = ""
 	}
 	
 	override func tearDown() {
@@ -37,7 +37,7 @@ class Error_Tests: XCTestCase {
 		super.tearDown()
 	}
 	
-	func classDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
+	private func classDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
 		let manager = NSFileManager.defaultManager()
 		let fileStr = manager.stringWithFileSystemRepresentation(file, length: Int(strlen(file)))
 		XCTAssertEqual(fileStr, __FILE__, "files aren't equal...")
@@ -55,6 +55,12 @@ class Error_Tests: XCTestCase {
 			
 			print("\(fileStr):\(line) Inline Test: \(textStr)")
 		}
+		MADDebugString("Swift Test")
+		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+	}
+	
+	func testSwiftCDebugFunc() {
+		MADRegisterDebugFunc(GlobalDebugStr)
 		MADDebugString("Swift Test")
 		MADDebugStr(__LINE__, __FILE__, "C-Style test")
 	}
@@ -92,8 +98,14 @@ class Error_Tests: XCTestCase {
 		MADDebugStr(__LINE__, __FILE__, "C-Style test")
 	}
 
-	func testCDebugFunc() {
+	func testPPClassCDebugFunc() {
 		PPLibrary.registerDebugFunction(cDebugFunc)
+		MADDebugString("Swift Test")
+		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+	}
+	
+	func testPPClassSwiftCDebugFunc() {
+		PPLibrary.registerDebugFunction(GlobalDebugStr)
 		MADDebugString("Swift Test")
 		MADDebugStr(__LINE__, __FILE__, "C-Style test")
 	}

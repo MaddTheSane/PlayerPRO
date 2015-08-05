@@ -205,7 +205,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 @interface PPMusicObject ()
 {
-	NSMutableArray	*_instruments;
+	NSMutableArray<PPInstrumentObject*>	*_instruments;
 }
 @property (readwrite, strong) NSURL *filePath;
 @property (readwrite, strong, nonatomic) NSMutableArray *patterns;
@@ -367,8 +367,9 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	return _instruments;
 }
 
-- (void)setInstruments:(NSArray *)instruments
+- (void)setInstruments:(NSArray<PPInstrumentObject*> *)instruments
 {
+	//TODO: write back to struct
 	_instruments = [instruments mutableCopy];
 }
 
@@ -573,6 +574,9 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 
 - (void)dealloc
 {
+	if (self.attachedDriver && self.attachedDriver.currentMusic == self) {
+		self.attachedDriver.currentMusic = nil;
+	}
 	if (currentMusic) {
 		MADDisposeMusic(&currentMusic, NULL);
 		currentMusic = NULL;
@@ -828,6 +832,7 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	NSIndexSet *ourIdxSet = [NSIndexSet indexSetWithIndex:indexOfAddedInstrument];
 	[self willChange:NSKeyValueChangeReplacement valuesAtIndexes:ourIdxSet forKey:@"instruments"];
 	_instruments[indexOfAddedInstrument] = [object copy];
+	_instruments[indexOfAddedInstrument].number = indexOfAddedInstrument * MAXSAMPLE;
 	[self didChange:NSKeyValueChangeReplacement valuesAtIndexes:ourIdxSet forKey:@"instruments"];
 }
 
@@ -868,6 +873,21 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 - (void)clearInstrumentObjectAtIndex:(NSInteger)index
 {
 	[self clearInstrumentsAtIndexes:[NSIndexSet indexSetWithIndex:index]];
+}
+
+- (NSInteger)countOfPatterns
+{
+	return [_patterns count];
+}
+
+- (NSInteger)lengthOfPartitions
+{
+	return currentMusic->header->numPointers;
+}
+
+- (NSInteger)totalTracks
+{
+	return currentMusic->header->numChn;
 }
 
 @end

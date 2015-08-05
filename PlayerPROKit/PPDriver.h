@@ -32,9 +32,16 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) NSTimeInterval totalMusicPlaybackTime;
 
 - (nullable instancetype)init UNAVAILABLE_REASON("PPDriver cannot be inited without a library");
-- (nullable instancetype)initWithLibrary:(nonnull PPLibrary *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)theErr;
-- (nullable instancetype)initWithLibrary:(nonnull PPLibrary *)theLib settings:(inout nullable MADDriverSettings *)theSettings error:(out NSError* __nullable __autoreleasing* __nullable)theErr NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithLibrary:(PPLibrary *)theLib error:(out NSError* __nullable __autoreleasing* __nullable)theErr;
+- (nullable instancetype)initWithLibrary:(PPLibrary *)theLib settings:(inout nullable MADDriverSettings *)theSettings error:(out NSError* __nullable __autoreleasing* __nullable)theErr NS_DESIGNATED_INITIALIZER;
 
+/*!
+ *	@method changeDriverSettingsToSettings:
+ *	@abstract changes the sound format used by the driver.
+ *	@param theSett
+ *		The new sound settings to use.
+ *	@return An error type on failure, or \c MADNoErr on success.
+ */
 - (MADErr)changeDriverSettingsToSettings:(MADDriverSettings*)theSett;
 
 - (void)beginExport;
@@ -72,18 +79,36 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (readonly) short availableChannel;
 
+/*!
+ *	@method play
+ *	@abstract Plays the song loaded in <code>currentMusic</code>.
+ *	@return An error type on failure, or \c MADNoErr on success.
+ */
 - (MADErr)play;
+
+/*!
+ *	@method pause
+ *	@abstract Pauses the currently playing song.
+ *	@return An error type on failure, or \c MADNoErr on success.
+ */
 - (MADErr)pause;
+
+/*!
+ *	@method stop
+ *	@abstract Pauses the currently playing song and sets the position at
+ *	the beginning of the song
+ *	@return An error type on failure, or \c MADNoErr on success.
+ */
 - (MADErr)stop;
 
 @property (readonly, getter=isPlayingMusic)		BOOL playingMusic;
 @property (readonly, getter=isDonePlayingMusic) BOOL donePlayingMusic;
 @property (getter=isPaused)						BOOL paused;
 
-- (nullable PPMusicObject *)loadMusicFile:(nonnull NSString*)path NS_RETURNS_RETAINED;
-- (nullable PPMusicObject *)loadMusicURL:(nonnull NSURL*)url NS_RETURNS_RETAINED;
+- (nullable PPMusicObject *)loadMusicFile:(NSString*)path NS_RETURNS_RETAINED;
+- (nullable PPMusicObject *)loadMusicURL:(NSURL*)url NS_RETURNS_RETAINED;
 
-// More in-depth modification of the driver:
+#pragma mark - More in-depth modification of the driver:
 
 - (MADChannel)channelAtIndex:(NSInteger)idx; //Read-only
 @property short patternPosition;

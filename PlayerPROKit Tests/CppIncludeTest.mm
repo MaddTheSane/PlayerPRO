@@ -22,7 +22,7 @@ void testDebugFunc(short line, const char* file, const char* info)
 	NSLog(@"%@", formattedStr);
 }
 
-static void cXTCFail(short line, const char* file, const char* info)
+void cXTCFail(short line, const char* file, const char* info)
 {
 	_XCTFailureHandler(currentTestClass, YES, file, line, @(info), @"");
 }

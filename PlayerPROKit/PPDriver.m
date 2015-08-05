@@ -36,7 +36,17 @@
 {
 	if (curMusic != currentMusic) {
 		currentMusic = curMusic;
-		MADAttachDriverToMusic(theRec, currentMusic._currentMusic, NULL);
+		if (curMusic == nil) {
+			MADDriverBase *ourBase = MADDriverGetBase(theRec);
+			ourBase->curMusic = NULL;
+			MADReset(theRec);
+		} else {
+			MADErr iErr = MADAttachDriverToMusic(theRec, currentMusic._currentMusic, NULL);
+			if (iErr != MADNoErr) {
+				NSError *err = PPCreateErrorFromMADErrorType(iErr);
+				[[[NSException alloc] initWithName:@"MADAttachDriverToMusic err" reason:@"MADAttachDriverToMusic returned failure state" userInfo:err.userInfo] raise];
+			}
+		}
 	}
 }
 

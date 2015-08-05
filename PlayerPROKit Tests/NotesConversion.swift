@@ -16,7 +16,7 @@ class NotesConversion: XCTestCase {
 		super.setUp()
 		// Put setup code here. This method is called before the invocation of each test method in the class.
 		currentTestClass = self
-		MADRegisterDebugFunc(cXTCFailFunc)
+		MADRegisterDebugFunc(cXTCFail)
 	}
 	
 	override func tearDown() {
@@ -39,7 +39,7 @@ class NotesConversion: XCTestCase {
 	
 	func testNotesWithLettersTime() {
 		measureBlock() {
-			var noteNames = self.getNotesWithLetters(useLetters: false)
+			_ = self.getNotesWithLetters(useLetters: false)
 		}
 	}
 	
@@ -76,7 +76,7 @@ class NotesConversion: XCTestCase {
 	func testEdgeCaseStrings() {
 		let edgeStrings = ["d♯4", "re-2", "mi♯5", "g5", "so1", "ti2"]
 		for aStr in edgeStrings {
-			if let aNote: Int16 = noteFromString(aStr) {
+			if let _: Int16 = noteFromString(aStr) {
 				
 			} else {
 				XCTFail("Could not decode \(aStr)")

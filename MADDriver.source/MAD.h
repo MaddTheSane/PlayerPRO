@@ -233,9 +233,9 @@ typedef struct InstrData {
 	/// Number of samples in instrument
 	short	numSamples;
 	
-	// MIDI Channel Value
+	/// MIDI Channel Value
 	short	MIDI;
-	// 0 Sound output only, 1 MIDI output only, 2 both
+	/// 0 Sound output only, 1 MIDI output only, 2 both
 	short	MIDIType;
 	
 	/**/

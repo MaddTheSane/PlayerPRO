@@ -20,7 +20,7 @@ extern "C" {
 void testDebugFunc(short, const char*, const char*);
 extern void (*cDebugFunc)(short, const char*, const char*);
 
-extern void (*cXTCFailFunc)(short, const char*, const char*);
+void cXTCFail(short line, const char* file, const char* info);
 
 extern XCTestCase *currentTestClass;
 	

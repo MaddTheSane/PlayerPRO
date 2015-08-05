@@ -272,9 +272,9 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)dealloc
 {
-	if (sampleWriteTo == &theSample && theSample.data) {
-		free(theSample.data);
-		theSample.data = NULL;
+	if (sampleWriteTo->data) {
+		free(sampleWriteTo->data);
+		sampleWriteTo->data = NULL;
 	}
 }
 
