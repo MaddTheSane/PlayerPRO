@@ -9,6 +9,7 @@
 #import "PPErrors.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 #import "PPMusicObject.h"
+#import "PPErrors_PPKPrivate.h"
 
 #ifndef __MACERRORS__
 #define paramErr (-50)
@@ -17,6 +18,183 @@
 NSString * const PPMADErrorDomain = @"net.sourceforge.playerpro.PlayerPROKit.ErrorDomain";
 
 #define PPErrorLocalizedString(theKey, comment) NSLocalizedStringWithDefaultValue(theKey, @"PPErrors", PPKBundle, theKey, comment)
+
+inline NSString *stringForKeyAndError(NSString *userInfoKey, MADErr errCode)
+{
+	static NSBundle *PPKBundle;
+	static dispatch_once_t errorOnceToken;
+	dispatch_once(&errorOnceToken, ^{
+		PPKBundle = [NSBundle bundleForClass:[PPMusicObject class]];
+	});
+
+	switch (errCode) {
+			//Just in case...
+		case MADNoErr:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"You should not be seeing this. File a bug report!", @"No error failure reason");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"There is no error", @"No error description");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"No Recovery needed", @"No error recovery suggestion");
+			}
+			break;
+
+		case MADNeedMemory:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"Not enough memory for operation", @"Not enough memory");;
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"Ran out of memory", @"Ran out of memory");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"Try closing some applications or closing windows.", @"Close apps");
+			}
+			break;
+			
+		case MADReadingErr:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"Error reading file", @"Error reading file");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"Could not read file", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"check to see if you have read permissions for the file.", @"Can you read it?");
+			}
+			break;
+			
+		case MADIncompatibleFile:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"The file is incompatible with PlayerPRO or one of it's plug-ins", @"Incompatible file");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"The file is incompatible", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"Check the file to make sure it is a valid file.", @"Check file");
+			}
+			break;
+			
+		case MADLibraryNotInitialized:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"The library is not initialized", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"library not initalized", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
+			}
+			break;
+			
+		case MADParametersErr:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"Invalid paramaters were sent to a function", @"Invalid parameters");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"Invalid parameters", @"Invalid parameters");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
+			}
+			break;
+			
+		case MADUnknownErr:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"An unknown error occured", @"Unknown error");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"Unknown reason", @"unknown reason");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
+			}
+			break;
+			
+		case MADSoundManagerErr:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"Error initalizing the sound system", @"Sound system error");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"Sound system initialization failure", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"Make sure that the sound settings are supported by the sound system", @"");
+			}
+			break;
+			
+		case MADOrderNotImplemented:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"The selected order is not implemented in the plug-in", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"order not implemented", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
+			}
+			break;
+			
+		case MADFileNotSupportedByThisPlug:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"The file is not supported by this plug-in", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"Invalid file for plug-in", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"Try using another plug-in, or checking to see if the file is okay.", @"try other plug-in");
+			}
+			break;
+			
+		case MADCannotFindPlug:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"Unable to locate a plug-in to play this file", @"unknown plug-in");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"Unable to locate a plug-in", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"Make sure that the file is valid. Also try looking for a compatible plug-in.", @"");
+			}
+			break;
+			
+		case MADMusicHasNoDriver:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"The MAD music has no driver", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"Music has no driver", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
+			}
+			break;
+			
+		case MADDriverHasNoMusic:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"The MAD Driver has no music", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"Driver has no music", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"Try attaching music to the driver by selecting the music.", @"");
+			}
+			break;
+			
+		case MADSoundSystemUnavailable:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"The selected sound system is not available", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"Sound system is unavailable", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"Try selecting a different sound system.", @"");
+			}
+			break;
+			
+		case MADWritingErr:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"Unable to write to file", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"Unable to write", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"Make sure you have write permissions at the location you selected.", @"");
+			}
+			break;
+			
+		case MADUserCanceledErr:
+			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
+				return PPErrorLocalizedString(@"User Cancelled Action", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedFailureReasonErrorKey]) {
+				return PPErrorLocalizedString(@"User Cancelled Action description", @"");
+			} else if ([userInfoKey isEqualToString:NSLocalizedRecoverySuggestionErrorKey]) {
+				return PPErrorLocalizedString(@"No Recovery needed", @"");
+			}
+			break;
+
+		default:
+			break;
+	}
+	
+	return nil;
+}
 
 BOOL PPErrorIsUserCancelled(NSError *theErr)
 {
@@ -41,15 +219,12 @@ NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 
 NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL convertToCocoa)
 {
-	static NSBundle *PPKBundle;
-	static dispatch_once_t errorOnceToken;
-	dispatch_once(&errorOnceToken, ^{
-		PPKBundle = [NSBundle bundleForClass:[PPMusicObject class]];
-	});
-	NSString *ErrorDescription;
-	NSString *errorReason;
-	NSString *recoverySuggestion;
-	NSDictionary *userInfo;
+	NSString *ErrorDescription = stringForKeyAndError(NSLocalizedDescriptionKey, theErr);
+	NSString *errorReason = stringForKeyAndError(NSLocalizedFailureReasonErrorKey, theErr);
+	NSString *recoverySuggestion = stringForKeyAndError(NSLocalizedRecoverySuggestionErrorKey, theErr);
+	NSDictionary *userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
+							   NSLocalizedFailureReasonErrorKey: errorReason,
+							   NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
 	NSError *cocoaEquiv;
 	
 	switch (theErr) {
@@ -58,167 +233,60 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 			break;
 			
 		case MADNeedMemory:
-			ErrorDescription = PPErrorLocalizedString(@"Not enough memory for operation", @"Not enough memory");
-			errorReason = PPErrorLocalizedString(@"Ran out of memory", @"Ran out of memory");
-			recoverySuggestion = PPErrorLocalizedString(@"Try closing some applications or closing windows.", @"Close apps");
-			
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
 			cocoaEquiv = [NSError errorWithDomain:NSPOSIXErrorDomain code:ENOMEM
 										 userInfo:userInfo];
 			break;
 			
 		case MADReadingErr:
-			ErrorDescription = PPErrorLocalizedString(@"Error reading file", @"Error reading file");
-			errorReason = PPErrorLocalizedString(@"Could not read file", @"");
-			recoverySuggestion = PPErrorLocalizedString(@"check to see if you have read permissions for the file.", @"Can you read it?");
-			
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
 			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadUnknownError
 										 userInfo:userInfo];
 			break;
 			
 		case MADIncompatibleFile:
-			ErrorDescription = PPErrorLocalizedString(@"The file is incompatible with PlayerPRO or one of it's plug-ins", @"Incompatible file");
-			errorReason = PPErrorLocalizedString(@"The file is incompatible", @"");
-			recoverySuggestion = PPErrorLocalizedString(@"Check the file to make sure it is a valid file.", @"Check file");
-			
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
 			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError
 										 userInfo:userInfo];
 			break;
 			
 		case MADLibraryNotInitialized:
-			ErrorDescription = PPErrorLocalizedString(@"The library is not initialized", @"");
-			errorReason = PPErrorLocalizedString(@"library not initalized", @"");
-			recoverySuggestion = PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
-
 			break;
 			
 		case MADParametersErr:
-			ErrorDescription = PPErrorLocalizedString(@"Invalid paramaters were sent to a function", @"Invalid parameters");
-			errorReason = PPErrorLocalizedString(@"Invalid parameters", @"Invalid parameters");
-			recoverySuggestion = PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
-			
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
 			cocoaEquiv = [NSError errorWithDomain:NSOSStatusErrorDomain code:paramErr
 										 userInfo:userInfo];
 			break;
 			
 		case MADSoundManagerErr:
-			ErrorDescription = PPErrorLocalizedString(@"Error initalizing the sound system", @"Sound system error");
-			errorReason = PPErrorLocalizedString(@"Sound system initialization failure", @"");
-			recoverySuggestion = PPErrorLocalizedString(@"Make sure that the sound settings are supported by the sound system", @"");
-			
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
-
 			break;
 			
 		case MADOrderNotImplemented:
-			ErrorDescription = PPErrorLocalizedString(@"The selected order is not implemented in the plug-in", @"");
-			errorReason = PPErrorLocalizedString(@"order not implemented", @"");
-			recoverySuggestion = PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
-			
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
-
 			break;
 			
 		case MADFileNotSupportedByThisPlug:
-			ErrorDescription = PPErrorLocalizedString(@"The file is not supported by this plug-in", @"");
-			errorReason = PPErrorLocalizedString(@"Invalid file for plug-in", @"");
-			recoverySuggestion = PPErrorLocalizedString(@"Try using another plug-in, or checking to see if the file is okay.", @"try other plug-in");
-			
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
 			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError
 										 userInfo:userInfo];
 			break;
 			
 		case MADCannotFindPlug:
-			ErrorDescription = PPErrorLocalizedString(@"Unable to locate a plug-in to play this file", @"unknown plug-in");
-			errorReason = PPErrorLocalizedString(@"Unable to locate a plug-in", @"");
-			recoverySuggestion = PPErrorLocalizedString(@"Make sure that the file is valid. Also try looking for a compatible plug-in.", @"");
-			
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
 			break;
 			
 		case MADMusicHasNoDriver:
-			ErrorDescription = PPErrorLocalizedString(@"The MAD music has no driver", @"");
-			errorReason = PPErrorLocalizedString(@"Music has no driver", @"");
-			recoverySuggestion = PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
-			
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
 			break;
 			
 		case MADDriverHasNoMusic:
-			ErrorDescription = PPErrorLocalizedString(@"The MAD Driver has no music", @"");
-			errorReason = PPErrorLocalizedString(@"Driver has no music", @"");
-			recoverySuggestion = PPErrorLocalizedString(@"Try attaching music to the driver by selecting the music.", @"");
-			
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
 			break;
 			
 		case MADSoundSystemUnavailable:
-			ErrorDescription = PPErrorLocalizedString(@"The selected sound system is not available", @"");
-			errorReason = PPErrorLocalizedString(@"Sound system is unavailable", @"");
-			recoverySuggestion = PPErrorLocalizedString(@"Try selecting a different sound system.", @"");
-			
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
 			break;
 			
 		case MADWritingErr:
-			ErrorDescription = PPErrorLocalizedString(@"Unable to write to file", @"");
-			errorReason = PPErrorLocalizedString(@"Unable to write", @"");
-			recoverySuggestion = PPErrorLocalizedString(@"Make sure you have write permissions at the location you selected.", @"");
-			
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
 			break;
 			
 		case MADUserCanceledErr:
-			ErrorDescription = PPErrorLocalizedString(@"User Cancelled Action", @"");
-			errorReason = PPErrorLocalizedString(@"User Cancelled Action description", @"");
-			recoverySuggestion = PPErrorLocalizedString(@"No Recovery needed", @"");
-			
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
 			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError
 										 userInfo:userInfo];
 			break;
 			
 		case MADUnknownErr:
-			ErrorDescription = PPErrorLocalizedString(@"An unknown error occured", @"Unknown error");
-			errorReason = PPErrorLocalizedString(@"Unknown reason", @"unknown reason");
-			recoverySuggestion = PPErrorLocalizedString(@"Contact the developer with what you were doing to cause this error.", @"Contact Developer");
-			
-			userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-						 NSLocalizedFailureReasonErrorKey: errorReason,
-						 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
 			break;
 			
 		default:

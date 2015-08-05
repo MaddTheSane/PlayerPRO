@@ -4,7 +4,7 @@ import Cocoa
 import PlayerPROCore
 import PlayerPROKit
 
-println(MadID)
+print(MadID)
 
 let aSetting = MADDriverSettings.new()
 var bSetting = MADDriverSettings()
@@ -15,6 +15,6 @@ bSetting.resetToBestDriver()
 
 aSetting == bSetting
 
-println(aSetting)
+print(aSetting)
 
 var str = "Hello, playground"

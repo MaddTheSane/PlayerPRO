@@ -9,7 +9,7 @@
 import Foundation
 import AppKit.NSAlert
 
-private func PPRunAlertPanelBase(title: String, @autoclosure(escaping) message msgFormat: () -> String, defaultButton: String?, alternateButton: String?, otherButton: String?, alertStyle: NSAlertStyle) -> Int {
+private func PPRunAlertPanelBase(title: String, @autoclosure message msgFormat: () -> String, defaultButton: String?, alternateButton: String?, otherButton: String?, alertStyle: NSAlertStyle) -> Int {
 	let theAlert = NSAlert()
 	theAlert.alertStyle = alertStyle
 	theAlert.messageText = title
@@ -34,14 +34,14 @@ private func PPRunAlertPanelBase(title: String, @autoclosure(escaping) message m
 	return theAlert.runModal()
 }
 
-internal func PPRunInformationalAlertPanel(title: String, @autoclosure(escaping) message msgFormat: () -> String, defaultButton: String? = nil, alternateButton: String? = nil, otherButton: String? = nil) -> Int {
+internal func PPRunInformationalAlertPanel(title: String, @autoclosure message msgFormat: () -> String, defaultButton: String? = nil, alternateButton: String? = nil, otherButton: String? = nil) -> Int {
 	return PPRunAlertPanelBase(title, message: msgFormat, defaultButton: defaultButton, alternateButton: alternateButton, otherButton: otherButton, alertStyle: .InformationalAlertStyle)
 }
 
-internal func PPRunAlertPanel(title: String, @autoclosure(escaping) message msgFormat: () -> String, defaultButton: String? = nil, alternateButton: String? = nil, otherButton: String? = nil) -> Int {
+internal func PPRunAlertPanel(title: String, @autoclosure message msgFormat: () -> String, defaultButton: String? = nil, alternateButton: String? = nil, otherButton: String? = nil) -> Int {
 	return PPRunAlertPanelBase(title, message: msgFormat, defaultButton: defaultButton, alternateButton: alternateButton, otherButton: otherButton, alertStyle: .WarningAlertStyle)
 }
 
-internal func PPRunCriticalAlertPanel(title: String, @autoclosure(escaping) message msgFormat: () -> String, defaultButton: String? = nil, alternateButton: String? = nil, otherButton: String? = nil) -> Int {
+internal func PPRunCriticalAlertPanel(title: String, @autoclosure message msgFormat: () -> String, defaultButton: String? = nil, alternateButton: String? = nil, otherButton: String? = nil) -> Int {
 	return PPRunAlertPanelBase(title, message: msgFormat, defaultButton: defaultButton, alternateButton: alternateButton, otherButton: otherButton, alertStyle: .CriticalAlertStyle)
 }

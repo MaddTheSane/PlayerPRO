@@ -122,3 +122,9 @@
 "User Cancelled Action" = "User Cancelled Action";
 
 "User Cancelled Action description" = "You cancelled an operation.";
+
+/* No error description */
+"There is no error" = "There is no error";
+
+/* No error failure reason */
+"You should not be seeing this. File a bug report!" = "You should not be seeing this…\nFile a bug report!";

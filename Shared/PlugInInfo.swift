@@ -36,12 +36,8 @@ final class PlugInInfo: Hashable, CustomDebugStringConvertible, CustomStringConv
 		authorName = aut ?? "Unknown Author"
 		plugType = pt
 		plugURL = pu
-		if let tmpBundle = NSBundle(URL: pu) {
-			if let acopy = tmpBundle.infoDictionary?["NSHumanReadableCopyright"] as? String {
-				plugCopyright = acopy
-			} else {
-				plugCopyright = "No copyright info available"
-			}
+		if let tmpBundle = NSBundle(URL: pu), acopy = tmpBundle.infoDictionary?["NSHumanReadableCopyright"] as? String {
+			plugCopyright = acopy
 		} else {
 			plugCopyright = "No copyright info available"
 		}

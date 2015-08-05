@@ -14,11 +14,23 @@
 #import "PPMusicObject_PPKPrivate.h"
 #include <PlayerPROCore/RDriverInt.h>
 #import "PPErrors.h"
+#import "PPErrors_PPKPrivate.h"
 
 @implementation PPDriver
 @synthesize rec = theRec;
 @synthesize currentMusic;
 @synthesize theLibrary = thePPLib;
+
+#if defined(__IPHONE_9_0) || defined(__OSX_10_11)
++ (void)load
+{
+	if ([[NSError class] respondsToSelector:@selector(setUserInfoValueProviderForDomain:provider:)]) {
+		[NSError setUserInfoValueProviderForDomain:PPMADErrorDomain provider:^id (NSError *err, NSString *userInfoKey) {
+			return stringForKeyAndError(userInfoKey, err.code);
+		}];
+	}
+}
+#endif
 
 - (void)setCurrentMusic:(PPMusicObject *)curMusic
 {

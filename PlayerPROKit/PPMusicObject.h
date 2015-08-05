@@ -26,11 +26,11 @@ NS_ASSUME_NONNULL_BEGIN
 @class PPFXBusObject;
 
 @interface PPMusicObject : NSObject <NSCopying>
-@property (readonly) int totalPatterns;
-@property (readonly) int totalPartitions;
-@property (readonly) int partitionLength;
-@property (readonly) short totalTracks;
-@property (readonly) short totalInstruments;
+@property (readonly) NSInteger totalPatterns;
+@property (readonly) NSInteger totalPartitions;
+@property (readonly) NSInteger partitionLength;
+@property (readonly) NSInteger totalTracks;
+@property (readonly) NSInteger totalInstruments;
 @property (readonly, strong, nonatomic) NSArray<PPSampleObject*> *sDatas;
 @property (readonly, strong, nonatomic) NSArray<PPInstrumentObject*> *instruments;
 @property (readonly, strong, nonatomic) NSMutableArray<PPPatternObject*> *patterns;
