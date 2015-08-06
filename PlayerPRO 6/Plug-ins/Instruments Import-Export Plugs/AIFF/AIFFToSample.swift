@@ -22,14 +22,15 @@ internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
 	if iErr != noErr {
 		return .ReadingErr
 	}
+	defer {
+		ExtAudioFileDispose(fileRef)
+	}
 	if let mutableData = NSMutableData(capacity: Int(kSrcBufSize) * 8) {
 		var realFormat = AudioStreamBasicDescription()
 		
 		var asbdSize = UInt32(sizeof(AudioStreamBasicDescription))
 		iErr = ExtAudioFileGetProperty(fileRef, propertyID: .FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
 		if iErr != noErr {
-			ExtAudioFileDispose(fileRef)
-			
 			return .UnknownErr
 		}
 		
@@ -58,13 +59,15 @@ internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
 		
 		iErr = ExtAudioFileSetProperty(fileRef, propertyID: .ClientDataFormat, dataSize: sizeof(AudioStreamBasicDescription), data: &realFormat)
 		if iErr != noErr {
-			ExtAudioFileDispose(fileRef)
 			return .UnknownErr
 		}
 		
 		while true {
 			if let tmpMutDat = NSMutableData(length: Int(kSrcBufSize)) {
 				let fillBufList = AudioBufferList.allocate(maximumBuffers: 1)
+				defer {
+					free(fillBufList.unsafeMutablePointer)
+				}
 				var err: OSStatus = noErr
 				fillBufList[0].mNumberChannels = realFormat.mChannelsPerFrame
 				fillBufList[0].mDataByteSize = kSrcBufSize
@@ -77,18 +80,18 @@ internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
 				// printf("test %d\n", numFrames);
 				
 				err = ExtAudioFileRead(fileRef, &numFrames, fillBufList.unsafeMutablePointer);
+				if err != noErr {
+					return .UnknownErr
+				}
 				//XThrowIfError (err, "ExtAudioFileRead");
 				if numFrames == 0 {
 					// this is our termination condition
-					free(fillBufList.unsafeMutablePointer)
 					break;
 				}
 				
 				tmpMutDat.length = Int(numFrames * realFormat.mBytesPerFrame)
 				mutableData.appendData(tmpMutDat)
-				free(fillBufList.unsafeMutablePointer)
 			} else {
-				ExtAudioFileDispose(fileRef)
 				return .NeedMemory
 			}
 		}
@@ -100,8 +103,6 @@ internal func AIFFAtURL(url: NSURL, toSample sample: PPSampleObject) -> MADErr {
 		sample.amplitude = MADByte(realFormat.mBitsPerChannel)
 		sample.stereo = realFormat.mChannelsPerFrame == 2
 		sample.data = mutableData
-		
-		ExtAudioFileDispose(fileRef)
 		
 		return .NoErr
 	} else {

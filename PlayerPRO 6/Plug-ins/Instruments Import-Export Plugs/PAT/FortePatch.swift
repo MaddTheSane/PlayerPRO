@@ -27,7 +27,8 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 		2093007, 2217464, 2349321, 2489019, 2637024, 2793830, 2959960, 3135968, 3322443, 3520006, 3729316, 3951073,
 		4186073, 4434930, 4698645, 4978041, 5274051, 5587663, 5919922, 6271939, 6644889, 7040015, 7458636, 7902150]
 		
-		//let toRemain =
+		let toRemain = [UInt32](count: 200 - toRet.count, repeatedValue: toRet.last!)
+		toRet += toRemain
 		
 		return toRet
 	}()

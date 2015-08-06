@@ -253,7 +253,7 @@ internal func assetForSND(data: NSData, inout error: MADErr) -> NSURL? {
 	var stream = AudioStreamBasicDescription(sampleRate: fixedToFloat(header.sampleRate), formatFlags: .SignedInteger, bitsPerChannel: 8, channelsPerFrame: 1)
 	
 	// Create a temporary file for storage
-	let url = NSURL(fileURLWithPath: NSTemporaryDirectory().stringByAppendingPathComponent("\(arc4random())-\(NSDate.timeIntervalSinceReferenceDate()).aif"))
+	let url = NSURL(fileURLWithPath: (NSTemporaryDirectory() as NSString).stringByAppendingPathComponent("\(arc4random())-\(NSDate.timeIntervalSinceReferenceDate()).aif"))
 		var audioFile: ExtAudioFileRef = nil
 		let createStatus = ExtAudioFileCreate(URL: url, fileType: .AIFF, streamDescription: &stream, flags: .EraseFile, audioFile: &audioFile)
 		if createStatus != noErr {

@@ -81,7 +81,7 @@
 			}
 			
 			if (peak != 0) {
-				peak = (0x8000 * 0x10000) / peak;
+				peak = ((long long)0x8000 * 0x10000) / peak;
 				
 				SamplePtr = (short*) outPtr + (selRange.location / 2);
 				for (i = 0; i < (selRange.length) / 2; i++) {
@@ -101,7 +101,6 @@
 			break;
 	}
 	theData.data = ourData;
-	
 	
 	return MADNoErr;
 }

@@ -746,7 +746,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 						self.handleFile(theURL, ofType: utiFile) //TODO: more efficient way of doing this!
 					} catch let error as NSError {
 						err = error
-						PPRunAlertPanel("Error opening file", message: "Unable to open \(fileName.lastPathComponent): \(err!.localizedFailureReason)")
+						PPRunAlertPanel("Error opening file", message: "Unable to open \((fileName as NSString).lastPathComponent): \(err!.localizedFailureReason)")
 						return
 					} catch {
 						fatalError()
@@ -923,7 +923,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			let tmpAlert = NSAlert()
 			tmpAlert.alertStyle = .WarningAlertStyle
 			tmpAlert.messageText = "Error opening file"
-			tmpAlert.informativeText = "Unable to open \(filename.lastPathComponent): \(err.localizedFailureReason)"
+			tmpAlert.informativeText = "Unable to open \((filename as NSString).lastPathComponent): \(err.localizedFailureReason)"
 			tmpAlert.runModal()
 			return false;
 		}

@@ -218,9 +218,7 @@ private let kPlayerList = "Player List"
 				}
 			#endif
 			for book in BookmarkArray {
-				do {
-					try book.checkIsReachable()
-				} catch {
+				if !book.checkIsReachableAndReturnError(nil) {
 					if (selectedMusic == -1) {
 						//Do nothing
 					} else if (selectedMusic == musicList.count + 1) {
@@ -238,9 +236,7 @@ private let kPlayerList = "Player List"
 			// Have all the new MusicListObjects use the same date
 			let currentDate = NSDate()
 			for bookURL in bookmarkArray {
-				do {
-				try bookURL.checkResourceIsReachable()
-				} catch {
+				if !bookURL.checkResourceIsReachableAndReturnError(nil) {
 					if (selectedMusic == -1) {
 						//Do nothing
 					} else if (selectedMusic == musicList.count + 1) {
@@ -360,9 +356,7 @@ private let kPlayerList = "Player List"
 				defaults.removeObjectForKey(musListDefName)
 			}
 		#endif
-		do {
-			try PPPPath.checkResourceIsReachable()
-		} catch {
+		if !PPPPath.checkResourceIsReachableAndReturnError(nil) {
 			do {
 				try manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories: true, attributes: nil)
 			} catch _ {
@@ -381,9 +375,7 @@ private let kPlayerList = "Player List"
 	func saveApplicationMusicList() -> Bool {
 		let manager = NSFileManager.defaultManager()
 		
-		do {
-			try PPPPath.checkResourceIsReachable()
-		} catch {
+		if !PPPPath.checkResourceIsReachableAndReturnError(nil) {
 			do {
 				//Just making sure...
 				try manager.createDirectoryAtURL(PPPPath, withIntermediateDirectories:true, attributes:nil)

@@ -174,7 +174,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///
 	///- parameter path: The path to a directory that has additional plug-ins.
 	public convenience init?(plugInPath path: String) {
-		self.init(plugInCPath: path.fileSystemRepresentation())
+		self.init(plugInCPath: (path as NSString).fileSystemRepresentation)
 	}
 	
 	///Init a PPLibrary object, including plug-ins from `plugInURL`.

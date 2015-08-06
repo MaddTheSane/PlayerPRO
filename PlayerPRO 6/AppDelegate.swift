@@ -431,13 +431,11 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		for obj in complexImport {
 			for aUTI in obj.UTITypes as! [String] {
 				if sharedWorkspace.type(theUTI, conformsToType: aUTI) {
-					var aErr: NSError? = nil
 					let canImport: Bool
 					do {
 						try obj.canImportURL(theURL1)
 						canImport = true
-					} catch let error as NSError {
-						aErr = error
+					} catch _ {
 						canImport = false
 					}
 					if canImport {
@@ -448,7 +446,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 								self.addDocument(aPPDoc)
 								aPPDoc.makeWindowControllers()
 								aPPDoc.showWindows()
-								aPPDoc.setDisplayName(theURL1.lastPathComponent!.stringByDeletingPathExtension)
+								aPPDoc.setDisplayName((theURL1.lastPathComponent! as NSString).stringByDeletingPathExtension)
 							} else {
 								let nsErr = createErrorFromMADErrorType(anErr)!
 								if PPErrorIsUserCancelled(nsErr) == false {
@@ -476,7 +474,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 					addDocument(aDoc)
 					aDoc.makeWindowControllers()
 					aDoc.showWindows()
-					aDoc.setDisplayName(theURL1.lastPathComponent!.stringByDeletingPathExtension)
+					aDoc.setDisplayName((theURL1.lastPathComponent! as NSString).stringByDeletingPathExtension)
 					return true;
 				} catch {
 					return false
@@ -620,8 +618,8 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 					} catch {
 						fatalError()
 					}
-					if err != nil {
-						PPRunAlertPanel("Error opening file", message: String(format:"Unable to open %@: %@", filename.lastPathComponent, err!.localizedFailureReason!))
+					if let err = err {
+						PPRunAlertPanel("Error opening file", message: String(format:"Unable to open %@: %@", (filename as NSString).lastPathComponent, err.localizedFailureReason!))
 						return
 					}
 					self.handleFile(panelURL, ofType: utiFile!)
@@ -635,7 +633,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		do {
 			utiFile = try NSWorkspace.sharedWorkspace().typeOfFile(filename)
 		} catch let err as NSError {
-			PPRunAlertPanel("Error opening file", message: String(format:"Unable to open %@: %@", filename.lastPathComponent, err.localizedFailureReason!))
+			PPRunAlertPanel("Error opening file", message: String(format:"Unable to open %@: %@", (filename as NSString).lastPathComponent, err.localizedFailureReason!))
 			return false
 		}
 		return handleFile(NSURL(fileURLWithPath: filename), ofType: utiFile!)

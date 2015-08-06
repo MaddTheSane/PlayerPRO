@@ -49,6 +49,9 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		if iErr != noErr {
 			return .ReadingErr
 		}
+		defer {
+			ExtAudioFileDispose(fileRef)
+		}
 
 		if let mutableData = NSMutableData(capacity: Int(kSrcBufSize) * 8) {
 			var realFormat = AudioStreamBasicDescription()
@@ -56,8 +59,6 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			var asbdSize = UInt32(sizeof(AudioStreamBasicDescription))
 			iErr = ExtAudioFileGetProperty(fileRef, propertyID: .FileDataFormat, propertyDataSize: &asbdSize, propertyData: &realFormat)
 			if iErr != noErr {
-				ExtAudioFileDispose(fileRef)
-				
 				return .UnknownErr
 			}
 			
@@ -86,13 +87,15 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 			
 			iErr = ExtAudioFileSetProperty(fileRef, propertyID: .ClientDataFormat, dataSize: sizeof(AudioStreamBasicDescription), data: &realFormat)
 			if iErr != noErr {
-				ExtAudioFileDispose(fileRef)
 				return .UnknownErr
 			}
 
 			while true {
 				if let tmpMutDat = NSMutableData(length: Int(kSrcBufSize)) {
 					let fillBufList = AudioBufferList.allocate(maximumBuffers: 1)
+					defer {
+						free(fillBufList.unsafeMutablePointer)
+					}
 					var err: OSStatus = noErr
 					fillBufList[0].mNumberChannels = realFormat.mChannelsPerFrame
 					fillBufList[0].mDataByteSize = kSrcBufSize
@@ -105,16 +108,16 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 					// printf("test %d\n", numFrames);
 					
 					err = ExtAudioFileRead(fileRef, &numFrames, fillBufList.unsafeMutablePointer);
-					//XThrowIfError (err, "ExtAudioFileRead");
+					if err != noErr {
+						return .UnknownErr
+					}
 					if numFrames == 0 {
 						// this is our termination condition
-						free(fillBufList.unsafeMutablePointer)
 						break;
 					}
 					
 					tmpMutDat.length = Int(numFrames * realFormat.mBytesPerFrame)
 					mutableData.appendData(tmpMutDat)
-					free(fillBufList.unsafeMutablePointer)
 				} else {
 					ExtAudioFileDispose(fileRef)
 					return .NeedMemory
@@ -168,7 +171,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		} else {
 			var numBytes = UInt32(data.length);
 			
-			res = AudioFileWriteBytes(audioFile, 0, 0, &numBytes, data.bytes);
+			res = AudioFileWriteBytes(audioFile, false, 0, &numBytes, data.bytes);
 			if (res != noErr) {
 				myErr = .WritingErr;
 			} else {

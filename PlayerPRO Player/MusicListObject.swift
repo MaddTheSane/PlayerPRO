@@ -121,8 +121,8 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		}
 	}
 	
-	@objc(checkIsReachableAndReturnError:) func checkIsReachable() throws {
-		try musicURL.checkResourceIsReachable()
+	func checkIsReachableAndReturnError(error: NSErrorPointer) -> Bool {
+		return musicURL.checkResourceIsReachableAndReturnError(error)
 	}
 	
 	override var hash: Int {

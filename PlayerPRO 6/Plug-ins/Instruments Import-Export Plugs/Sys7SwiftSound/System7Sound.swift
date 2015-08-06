@@ -52,11 +52,11 @@ public final class System7Sound: NSObject, PPSampleImportPlugin {
 							let asample = PPSampleObject()
 							errStr = AIFFAtURL(asset, toSample: asample)
 							if errStr == .NoErr {
-								asample.name = sampleURL.lastPathComponent!.stringByDeletingPathExtension
+								asample.name = (sampleURL.lastPathComponent! as NSString).stringByDeletingPathExtension
 								sample.memory = asample
 							}
 							do {
-							try NSFileManager.defaultManager().removeItemAtURL(asset)
+								try NSFileManager.defaultManager().removeItemAtURL(asset)
 							} catch {
 								
 							}

@@ -257,9 +257,9 @@ public let maximumChannelVolume: MADByte = 128
 public let maximumArpeggio: Int32 = 3
 public let equalizerPacketElements = 512
 
-public func MADDebugString(text: String, line: UWord = __LINE__, file: StaticString = __FILE__) {
+public func MADDebugString(text: String, line: UInt = __LINE__, file: StaticString = __FILE__) {
 	//We have to have StaticStrings in this, otherwise Swift complains about an overflow.
-	MADDebugStr(Int16(line), "\(file)".fileSystemRepresentation(), text)
+	MADDebugStr(Int16(line), ("\(file)" as NSString).fileSystemRepresentation, text)
 }
 
 private let BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
