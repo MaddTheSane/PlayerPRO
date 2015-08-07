@@ -8,14 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol PPSTImporterHelper <NSObject>
 
-- (void)loadStcfAtURL:(nonnull NSURL*)theURL withReply:(nonnull void (^)(NSDictionary* __nullable  bookmarkData, NSError * __nullable error))reply;
+- (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary* __nullable  bookmarkData, NSError * __nullable error))reply;
 
 @end
 
 @interface PPSTImporter : NSObject <NSXPCListenerDelegate, PPSTImporterHelper>
 
-+ (nonnull instancetype)sharedImporter;
++ (instancetype)sharedImporter;
 
 @end
+
+NS_ASSUME_NONNULL_END

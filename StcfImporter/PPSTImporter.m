@@ -170,6 +170,11 @@ static NSString *pascalStringToNSString(StringPtr aStr)
 
 - (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary* bookmarkData, NSError *error))reply
 {
+	NSError *error;
+	if (![theURL checkResourceIsReachableAndReturnError:&error]) {
+		reply(nil, error);
+		return;
+	}
 	NSDictionary *myDict;
 	OSErr myErr = [self loadOldMusicListAtURL:theURL toDictionary:&myDict];
 	if (myErr != noErr) {
