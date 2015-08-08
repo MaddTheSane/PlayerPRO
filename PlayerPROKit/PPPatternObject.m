@@ -6,6 +6,7 @@
 //
 //
 
+#include <PlayerPROCore/MADPlug.h>
 #import <PlayerPROKit/PlayerPROKit-Swift.h>
 #import "PPPatternObject.h"
 #import "PPPatternObject_PPKPrivate.h"

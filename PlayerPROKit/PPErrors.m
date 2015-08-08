@@ -233,17 +233,20 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 			break;
 			
 		case MADNeedMemory:
-			cocoaEquiv = [NSError errorWithDomain:NSPOSIXErrorDomain code:ENOMEM
+			cocoaEquiv = [NSError errorWithDomain:NSPOSIXErrorDomain
+											 code:ENOMEM
 										 userInfo:userInfo];
 			break;
 			
 		case MADReadingErr:
-			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadUnknownError
+			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain
+											 code:NSFileReadUnknownError
 										 userInfo:userInfo];
 			break;
 			
 		case MADIncompatibleFile:
-			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError
+			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain
+											 code:NSFileReadCorruptFileError
 										 userInfo:userInfo];
 			break;
 			
@@ -251,7 +254,8 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 			break;
 			
 		case MADParametersErr:
-			cocoaEquiv = [NSError errorWithDomain:NSOSStatusErrorDomain code:paramErr
+			cocoaEquiv = [NSError errorWithDomain:NSOSStatusErrorDomain
+											 code:paramErr
 										 userInfo:userInfo];
 			break;
 			
@@ -262,7 +266,8 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 			break;
 			
 		case MADFileNotSupportedByThisPlug:
-			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain code:NSFileReadCorruptFileError
+			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain
+											 code:NSFileReadCorruptFileError
 										 userInfo:userInfo];
 			break;
 			
@@ -279,10 +284,14 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 			break;
 			
 		case MADWritingErr:
+			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain
+											 code:NSFileWriteUnknownError
+										 userInfo:userInfo];
 			break;
 			
 		case MADUserCanceledErr:
-			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain code:NSUserCancelledError
+			cocoaEquiv = [NSError errorWithDomain:NSCocoaErrorDomain
+											 code:NSUserCancelledError
 										 userInfo:userInfo];
 			break;
 			
