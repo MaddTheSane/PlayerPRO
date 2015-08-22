@@ -9,17 +9,20 @@
 #import "PPErrors.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 #import "PPMusicObject.h"
-#import "PPErrors_PPKPrivate.h"
 
 #ifndef __MACERRORS__
 #define paramErr (-50)
+#endif
+
+#ifndef __private_extern
+#define __private_extern __attribute__((visibility("hidden")))
 #endif
 
 NSString * const PPMADErrorDomain = @"net.sourceforge.playerpro.PlayerPROKit.ErrorDomain";
 
 #define PPErrorLocalizedString(theKey, comment) NSLocalizedStringWithDefaultValue(theKey, @"PPErrors", PPKBundle, theKey, comment)
 
-inline NSString *stringForKeyAndError(NSString *userInfoKey, MADErr errCode)
+static NSString *stringForKeyAndError(NSString *userInfoKey, MADErr errCode)
 {
 	static NSBundle *PPKBundle;
 	static dispatch_once_t errorOnceToken;
@@ -211,6 +214,24 @@ BOOL PPErrorIsUserCancelled(NSError *theErr)
 	
 	return NO;
 }
+
+#if defined(__IPHONE_9_0) || defined(__OSX_10_11)
+__private_extern @interface PPPrivateErrorLoading : NSObject
+@end
+
+@implementation PPPrivateErrorLoading
+
++ (void)load
+{
+	if ([[NSError class] respondsToSelector:@selector(setUserInfoValueProviderForDomain:provider:)]) {
+		[NSError setUserInfoValueProviderForDomain:PPMADErrorDomain provider:^id (NSError *err, NSString *userInfoKey) {
+			return stringForKeyAndError(userInfoKey, err.code);
+		}];
+	}
+}
+
+@end
+#endif
 
 NSError *PPCreateErrorFromMADErrorType(MADErr theErr)
 {
