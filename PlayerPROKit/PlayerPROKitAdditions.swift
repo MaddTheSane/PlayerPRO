@@ -200,7 +200,7 @@ extension PPSampleObject {
 			return aimageSize
 			}()
 		let datIsStereo = theDat.stereo
-		let aRect = CGRect(origin: CGPoint.zeroPoint, size: imageSize)
+		let aRect = CGRect(origin: CGPoint.zero, size: imageSize)
 		let rowBytes = 4 * Int(imageSize.width)
 		let bitMapFormat: CGBitmapInfo = [CGBitmapInfo.ByteOrder32Host, CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)]
 		let bitmapContext = CGBitmapContextCreate(nil, Int(imageSize.width), Int(imageSize.height), 8, rowBytes, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!, bitMapFormat.rawValue)!
@@ -249,7 +249,7 @@ extension PPSampleObject {
 			return viewSize
 			}()
 		let datIsStereo = theDat.stereo;
-		let aRect = CGRect(origin: CGPoint.zeroPoint, size: imageSize)
+		let aRect = CGRect(origin: CGPoint.zero, size: imageSize)
 		let rowBytes = 4 * Int(imageSize.width)
 		//let bitMapFormat = CGBitmapInfo(alphaInfo: .PremultipliedLast, additionalInfo: .ByteOrder32Host)
 		let bitMapFormat: CGBitmapInfo = [CGBitmapInfo.ByteOrder32Host, CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)]

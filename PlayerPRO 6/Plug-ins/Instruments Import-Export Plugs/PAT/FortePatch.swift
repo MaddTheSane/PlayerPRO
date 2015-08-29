@@ -156,12 +156,12 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 		
 		// DATA
 		let aDataObj = NSMutableData(bytes: UnsafePointer<Void>(PATData), length: Int(sampSize))
-		var aData = UnsafeMutablePointer<UInt8>(aDataObj.mutableBytes)
+		let aData = UnsafeMutablePointer<UInt8>(aDataObj.mutableBytes)
 		
 		if aData != nil {
 			
 			if (curData.amplitude == 16) {
-				var tt = UnsafeMutablePointer<UInt16>(aData)
+				let tt = UnsafeMutablePointer<UInt16>(aData)
 				
 				dispatch_apply(Int(sampSize / 2), dispatch_get_global_queue(0, 0), { (tL) -> Void in
 					tt[tL] = tt[tL].littleEndian

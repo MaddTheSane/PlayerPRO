@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol PPSTImporterHelper <NSObject>
 
-- (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary* __nullable  bookmarkData, NSError * __nullable error))reply;
+- (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary<NSString*, id>* __nullable bookmarkData, NSError * __nullable error))reply;
 
 @end
 
