@@ -241,3 +241,9 @@ MADErr LoadMADK(const char *MADPtr, size_t aSize, MADMusic *MadFile, MADDriverSe
 	
 	return MADNoErr;
 }
+
+id GetValueUsingKVO(id object)
+{
+	return [object value];
+}
+

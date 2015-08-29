@@ -11,6 +11,7 @@
 
 #define __private_extern __attribute__((visibility("hidden")))
 
-__private_extern MADErr LoadMADK(const char *MADPtr, size_t size, MADMusic *theMAD, MADDriverSettings *init);
-__private_extern MADErr TESTMADK(const void* MADPtr);
+__private_extern MADErr LoadMADK(const char *_Null_unspecified MADPtr, size_t size, MADMusic * _Null_unspecified theMAD, MADDriverSettings *_Null_unspecified init);
+__private_extern MADErr TESTMADK(const void *_Null_unspecified MADPtr);
 
+__private_extern id __nullable GetValueUsingKVO(id _Null_unspecified object);

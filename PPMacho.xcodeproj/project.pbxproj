@@ -10751,7 +10751,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/APPL-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/Classic App-Bridging-Header.h";
 				WRAPPER_EXTENSION = ppextimp;
 			};
@@ -10769,7 +10768,6 @@
 				INFOPLIST_FILE = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/APPL-Info.plist";
 				INSTALL_PATH = "$(HOME)/Library/Bundles";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				SWIFT_OBJC_BRIDGING_HEADER = "PlayerPRO 6/Plug-ins/Advanced Import plug-ins/Classic Application/Classic App-Bridging-Header.h";
 				WRAPPER_EXTENSION = ppextimp;
 			};

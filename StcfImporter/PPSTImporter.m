@@ -168,7 +168,7 @@ static NSString *pascalStringToNSString(StringPtr aStr)
 	return noErr;
 }
 
-- (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary* bookmarkData, NSError *error))reply
+- (void)loadStcfAtURL:(NSURL*)theURL withReply:(void (^)(NSDictionary<NSString*, id>* bookmarkData, NSError * error))reply
 {
 	NSError *error;
 	if (![theURL checkResourceIsReachableAndReturnError:&error]) {

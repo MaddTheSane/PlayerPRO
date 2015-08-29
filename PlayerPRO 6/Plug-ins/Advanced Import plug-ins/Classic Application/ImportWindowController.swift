@@ -66,7 +66,7 @@ class ImportWindowController: NSWindowController {
 				errVal = madLoad(UnsafePointer<Int8>(aData.bytes), aData.length, madMusic, &unusedDriverSettings)
 				
 				if errVal != .NoErr {
-					// The importers should have cleaned up after themselves...
+					// The importers *should* have cleaned up after themselves...
 					madMusic.dealloc(1)
 					NSApplication.sharedApplication().endModalSession(modalSession)
 					currentBlock(nil, errVal)
@@ -123,8 +123,17 @@ class ImportWindowController: NSWindowController {
 	override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
 		if object === dictionaryCont {
 			if dictionaryCont.selectedObjects.count > 0 {
-				let aSelect = dictionaryCont.selectedObjects[0] as! NSDictionaryControllerKeyValuePair // Actual class is a private class, _NSControllerKeyValuePair
-				let aValue: AnyObject? = aSelect.value // ...but it does respond to "value", which is public
+				let aValue: AnyObject?
+				if #available(OSX 10.11, *) {
+				    let aSelect = dictionaryCont.selectedObjects[0] as! NSDictionaryControllerKeyValuePair
+					aValue = aSelect.value // ...but it does respond to "value", which is public
+				} else {
+					// Actual class is a private class, _NSControllerKeyValuePair
+					// ...but it does respond to "value", which is public
+					// ...but the NSObject informal protocol was hidden in OS X 10.11,
+					// so we call a wrapper function.
+					aValue = GetValueUsingKVO(dictionaryCont.selectedObjects[0])
+				}
 				if let anotherVal = aValue as? [FVResource] {
 					self.resourceArray = anotherVal
 				}
