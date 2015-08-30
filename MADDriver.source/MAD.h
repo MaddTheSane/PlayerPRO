@@ -365,11 +365,17 @@ typedef struct MADSpec {
 } MADSpec;
 
 typedef struct FXSets {
+	/// Track to apply the effect set.
 	short		track;
+	/// Identifier of the effect set.
 	short		id;
+	/// The effect identifier.
 	int			FXID;
+	/// The number of arguments.
 	short		noArg;
+	/// The values used by the effect set.
 	float		values[100];
+	/// The name of the effect set, as a pascal string.
 	MADPStr63	name;
 } FXSets;	// and then float values
 
