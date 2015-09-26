@@ -662,9 +662,9 @@ extern "C" {
  *	@param		file
  *				The file that has the problem
  *	@param		text
- *				Developer text that is used to help debug the issue. IT CANNOT BE NULL,
+ *				Developer text that is used to help debug the issue. <b>It cannot be null</b>,
  *				although an empty string is fine.
- *	@discussion NORMALLY it is never called, only when a FATAL error has occured. <br>
+ *	@discussion <b>Normally</b> it is never called, only when a FATAL error has occured. <br>
  *				This function is usually invoked using the macros \c __LINE__ and
  *				\c __FILE__ for the line and file paramaters.
  */
@@ -674,11 +674,11 @@ PPEXPORT void	MADDebugStr(short line, const char* file, const char* text);
  *	@function	MADRegisterDebugFunc
  *	@abstract	used to set a callback for MADDebugStr
  *	@param		debugFunc
- *				The function to call when MADDebugStr is called, hopefully to have your
+ *				The function to call when \c MADDebugStr is called, hopefully to have your
  *				app fail gracefully instead of instantly calling \c abort()
- *	@discussion	Use this function to call your own debug function when MADDebugStr is
- *				called, otherwise calls to MADDebugStr will crash your app.<br>
- *				You can reset to the default MADDebugStr implementation by calling this
+ *	@discussion	Use this function to call your own debug function when \c MADDebugStr is
+ *				called, otherwise calls to \c MADDebugStr will crash your app.<br>
+ *				You can reset to the default \c MADDebugStr behavior by calling this
  *				function and passing \c NULL to it.
  */
 PPEXPORT void	MADRegisterDebugFunc(void (__callback *debugFunc)(short, const char*, const char*));
@@ -690,9 +690,9 @@ PPEXPORT void	MADRegisterDebugFunc(void (__callback *debugFunc)(short, const cha
  *	@param		newdebugBlock
  *				The block to call when \c MADDebugStr is called, hopefully to have your app
  *				fail gracefully instead of instantly calling \c abort()
- *	@discussion	Use this function to call your own debug function when MADDebugStr is
- *				called, otherwise calls to MADDebugStr will crash your app.
- *				You can reset to the default MADDebugStr implementation by calling this
+ *	@discussion	Use this function to call your own debug block when \c MADDebugStr is
+ *				called, otherwise calls to \c MADDebugStr will crash your app.
+ *				You can reset to the default \c MADDebugStr implementation by calling this
  *				function and passing \c NULL to it. <br>
  *				This function is only available if your compiler supports blocks (Clang),
  *				otherwise it is unavailable. <br>

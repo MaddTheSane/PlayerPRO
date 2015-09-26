@@ -11,7 +11,7 @@ import PlayerPROCore
 import SwiftAdditions
 
 /// A plug-in that PlayerPROKit can use to import and/or export tracker files.
-public final class PPLibraryObject: NSObject {
+public final class PPLibraryObject: NSObject, CustomDebugStringConvertible {
 	/// The menu name of the tracker importer. Might be localized.
 	public let menuName: String
 	

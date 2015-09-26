@@ -180,7 +180,7 @@ private let kPlayerList = "Player List"
 			let dirConts = try fm.contentsOfDirectoryAtURL(playlistDir, includingPropertiesForKeys: nil, options: [])
 			var toRetUUIDs = [NSUUID]()
 			for url in dirConts {
-				if let fileUUIDStr = url.lastPathComponent?.stringByDeletingPathExtension, fileUUID = NSUUID(UUIDString: fileUUIDStr) {
+				if let fileUUIDStr = (url.lastPathComponent as NSString?)?.stringByDeletingPathExtension, fileUUID = NSUUID(UUIDString: fileUUIDStr) {
 					toRetUUIDs.append(fileUUID)
 				}
 			}
