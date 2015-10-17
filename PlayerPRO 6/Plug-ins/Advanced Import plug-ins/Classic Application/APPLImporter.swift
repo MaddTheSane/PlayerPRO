@@ -17,11 +17,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 	}
 	
 	public convenience init?(forPlugIn: ()) {
-		//if #available(OSX 10.11, *) {
-			self.init()
-		//} else {
-		//	return nil
-		//}
+		self.init()
 	}
 	
 	public func beginImportOfURL(theURL: NSURL, withHandler handler: PPComplexImportHandler) {
