@@ -1,7 +1,15 @@
-*.m diff=objc
-*.h diff=objc
-*.swift diff=swift
-*       text=auto
-*.pdf	-text
-*.png   -text
+* text=auto
+*.m text diff=objc eol=lf
+*.h text diff=objc
+*.c text
+*.cpp text
+*.swift text diff=swift eol=lf
+
+*.pbxproj eol=lf
+
 Examples/PPPlay/Read.TXT text=crlf
+
+*.pdf binary
+*.gif binary
+*.jpg binary
+*.png binary
