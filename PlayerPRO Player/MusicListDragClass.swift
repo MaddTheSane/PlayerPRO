@@ -41,8 +41,13 @@ final class MusicListDragClass: NSObject, NSPasteboardReading, NSPasteboardWriti
 	
 	@objc convenience required init?(pasteboardPropertyList propertyList: AnyObject, ofType type: String) {
 		if type == PPMLDCUTI {
-			let unArchive = NSKeyedUnarchiver(forReadingWithData: propertyList as! NSData)
-			self.init(indexSet:unArchive.decodeObjectForKey(PPMLDCUTI) as! NSIndexSet)
+			if let plistData = propertyList as? NSData, unArchive = NSKeyedUnarchiver(forReadingWithData: plistData).decodeObjectForKey(PPMLDCUTI) as? NSIndexSet {
+				self.init(indexSet: unArchive)
+			} else {
+				self.init()
+				
+				return nil
+			}
 		} else {
 			self.init()
 			

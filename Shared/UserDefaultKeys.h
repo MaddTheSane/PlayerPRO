@@ -8,6 +8,9 @@
 #import <Foundation/NSString.h>
 
 #pragma GCC visibility push(hidden)
+
+NS_ASSUME_NONNULL_BEGIN
+
 #pragma mark Notifications
 extern NSString * const PPListPreferencesDidChange;
 #define PPSoundPreferencesDidChange @"Sound Preferences changed"
@@ -210,5 +213,7 @@ extern NSString * const PPCETrackHeight;
 #define PPDoubleDash	@"--"
 #define kMusicListKVO	@"musicList"
 #define PPEscapeValue	@"\e"
+
+NS_ASSUME_NONNULL_END
 
 #pragma GCC visibility pop

@@ -192,7 +192,15 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 public final class FortePatch: NSObject, PPInstrumentImportPlugin {
 	public let hasUIForImport = false
 	//const char headerStr[20] = "GF1PATCH110\0\0";
-	private let headerData = NSData(byteArray: [0x47, 0x46, 0x31, 0x50, 0x41,0x54, 0x43, 0x48, 0x31, 0x31, 0x30, 0])
+	private let headerData: NSData = {
+		var headerChar: [ASCIICharacter] = [.LetterUppercaseG, .LetterUppercaseF, .NumberOne, .LetterUppercaseP, .LetterUppercaseA,
+		.LetterUppercaseT, .LetterUppercaseC, .LetterUppercaseH, .NumberOne, .NumberOne, .NumberZero, .NullCharacter]
+		var headerStr = headerChar.map({ (aChar) -> UInt8 in
+			return UInt8(aChar.rawValue)
+		})
+		
+		return NSData(byteArray: headerStr)
+	}()
 
 	override public init() {
 		super.init()
