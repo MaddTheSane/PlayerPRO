@@ -460,7 +460,7 @@ private let kPlayerList = "Player List"
 	}
 	
 	#if os(OSX)
-	@objc func beginLoadingOfOldMusicListAtURL(toOpen: NSURL, completionHandle theHandle: (theErr: NSError?) ->Void) {
+	@objc func beginLoadingOfOldMusicListAtURL(toOpen: NSURL, completionHandle theHandle: (theErr: NSError?) -> Void) {
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
 		conn.remoteObjectInterface = NSXPCInterface(withProtocol: PPSTImporterHelper.self)
 		
