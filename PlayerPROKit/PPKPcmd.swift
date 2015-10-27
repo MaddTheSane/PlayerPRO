@@ -143,7 +143,7 @@ public struct PPKPcmd: MutableCollectionType, CommandIterator {
 	/// The data in `aTmp` is copied, so you don't have to worry about
 	/// keeping track of it afterwards.
 	public init(intPcmd aTmp: UnsafeMutablePointer<IntPcmd>) {
-		var intPcmd = aTmp.memory
+		let intPcmd = aTmp.memory
 		tracks = intPcmd.tracks
 		length = intPcmd.length
 		trackStart = intPcmd.trackStart

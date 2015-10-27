@@ -32,7 +32,7 @@ public final class Wave: NSObject, PPSampleImportPlugin, PPSampleExportPlugin {
 		var audioFile: AudioFileID = nil
 		var res: OSStatus = noErr
 		
-		res = AudioFileOpen(URL: sampleURL, permissions: .ReadPermission, fileTypeHint: .AIFF, audioFile: &audioFile);
+		res = AudioFileOpen(URL: sampleURL, permissions: .ReadPermission, fileTypeHint: .WAVE, audioFile: &audioFile);
 		if (res != noErr) {
 			myErr = .FileNotSupportedByThisPlug;
 		} else {
