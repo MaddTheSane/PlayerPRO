@@ -48,7 +48,7 @@ final class SoundOutputController: SoundSettingsViewController, SoundSettingsVie
 	}
 	
 	func soundOutRateDidChange(rat: UInt32) {
-		NSUserDefaults.standardUserDefaults().setInteger(Int(rat), forKey:PPSoundOutBits);
+		NSUserDefaults.standardUserDefaults().setInteger(Int(rat), forKey: PPSoundOutRate);
 		
 		NSNotificationCenter.defaultCenter().postNotificationName(PPSoundPreferencesDidChange, object: self)
 	}
