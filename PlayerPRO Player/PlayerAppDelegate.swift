@@ -502,7 +502,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		var madWasReading = false;
 		var fullTime = 0, curTime = 0;
 		var returnerr: NSError?
-		if (madDriver != nil) {
+		if madDriver != nil {
 			madWasReading = !madDriver.paused
 			madDriver.stop()
 			//[madDriver stopDriver];
@@ -534,7 +534,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		theSettinit.repeatMusic = false;
 		
 		//OSErr returnerr = MADCreateDriver(&init, madLib, &madDriver);
-		if (madDriver == nil) {
+		if madDriver == nil {
 			madDriver = try! PPDriver(library: madLib, settings: &theSettinit)
 		} else {
 			returnerr = createErrorFromMADErrorType(madDriver.changeDriverSettingsToSettings(&theSettinit))
@@ -545,10 +545,10 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			return;
 		}
 		//MADStartDriver(madDriver);
-		if (self.music != nil) {
+		if self.music != nil {
 			//MADAttachDriverToMusic(madDriver, music, NULL);
-			if (madWasReading) {
-				//MADSetMusicStatus(madDriver, 0, fullTime, curTime);
+			if madWasReading {
+				madDriver.setMusicStatusWithCurrentTime(curTime, maximumTime: fullTime, minimumTime: 0)
 				madDriver.play()
 			}
 		}
