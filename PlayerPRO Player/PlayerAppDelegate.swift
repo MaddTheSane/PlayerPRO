@@ -1037,19 +1037,17 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	}
 	
 	private func rawSoundData(inout settings: MADDriverSettings, handler: (NSData) throws -> Void) throws {
-			let theRec = try PPDriver(library: madLib, settings: &settings)
-			theRec.cleanDriver()
-			theRec.currentMusic = music
-			theRec.play()
-			
-			while let newData = theRec.directSave() {
-				try handler(newData)
-			}
+		let theRec = try PPDriver(library: madLib, settings: &settings)
+		theRec.cleanDriver()
+		theRec.currentMusic = music
+		theRec.play()
+		
+		while let newData = theRec.directSave() {
+			try handler(newData)
+		}
 	}
 	
 	private func saveMusic(waveToURL theURL: NSURL, inout theSett: MADDriverSettings) throws {
-		var iErr: NSError? = nil
-		
 		var audioFile: ExtAudioFileRef = nil;
 		let tmpChannels: UInt32
 		var res: OSStatus = noErr
@@ -1115,8 +1113,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	}
 	
 	private func saveMusic(AIFFToURL theURL: NSURL, inout theSett: MADDriverSettings) throws {
-		//var iErr: NSError? = nil
-		
 		var audioFile: ExtAudioFileRef = nil;
 		let tmpChannels: UInt32
 		var res: OSStatus = noErr
@@ -1212,8 +1208,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
 						autoreleasepool {
 							do {
-							try self.saveMusic(AIFFToURL: savePanel.URL!, theSett: &self.exportSettings);
-							self.madDriver.endExport()
+								try self.saveMusic(AIFFToURL: savePanel.URL!, theSett: &self.exportSettings);
+								self.madDriver.endExport()
 								dispatch_async(dispatch_get_main_queue()) {
 									if (self.isQuitting) {
 										NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
@@ -1227,7 +1223,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 							} catch let thErr as NSError {
 								if (self.isQuitting) {
 									NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
-									return
 								} else {
 									NSAlert(error: thErr).runModal()
 								}
@@ -1397,17 +1392,17 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
 						autoreleasepool {
 							do {
-							try self.saveMusic(waveToURL: savePanel.URL!, theSett: &self.exportSettings);
-							self.madDriver.endExport()
+								try self.saveMusic(waveToURL: savePanel.URL!, theSett: &self.exportSettings);
+								self.madDriver.endExport()
 								dispatch_async(dispatch_get_main_queue()) {
-								if self.isQuitting {
-									NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
-								} else {
-									let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
-									if (retVal == NSAlertAlternateReturn) {
-										NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL!])
+									if self.isQuitting {
+										NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
+									} else {
+										let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
+										if (retVal == NSAlertAlternateReturn) {
+											NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL!])
+										}
 									}
-								}
 								}
 							} catch let error as NSError {
 								if (self.isQuitting) {
@@ -1569,7 +1564,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		var theInfo: NSDictionary? = nil
 		var info = ""
 		var NSSig = ""
-		
 		
 		if (selected.count > 0) {
 			musicList.selectedMusic = selected.firstIndex
