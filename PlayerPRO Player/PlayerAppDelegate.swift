@@ -1076,7 +1076,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		
 		if res != noErr {
 			throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
-			//throw createErrorFromMADErrorType(.WritingErr)!
 		}
 		
 		res = ExtAudioFileSetProperty(audioFile, propertyID: .ClientDataFormat, dataSize: UInt32(sizeof(AudioStreamBasicDescription)), data: &realFormat)
@@ -1109,7 +1108,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		if (res != noErr) {
 			throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
 		}
-		
 	}
 	
 	private func saveMusic(AIFFToURL theURL: NSURL, inout theSett: MADDriverSettings) throws {
@@ -1169,7 +1167,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		applyMetadataToFileID(audioFile)
 		res = ExtAudioFileDispose(audioFile)
 		audioFile = nil
-		if (res != noErr) {
+		if res != noErr {
 			throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
 		}
 	}
@@ -1194,15 +1192,15 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			savePanel.allowedFileTypes = [AVFileTypeAIFF]
 			savePanel.title = "Export as AIFF audio"
 			savePanel.beginSheetModalForWindow(self.window, completionHandler: { (result) -> Void in
-				if (result != NSFileHandlingPanelOKButton) {
+				guard result == NSFileHandlingPanelOKButton else {
 					self.madDriver.endExport()
 					return
 				}
 				
 				self.beginExportSettingsWithHandler( { (result) -> Void in
-					if (result != NSAlertDefaultReturn) {
+					guard result == NSAlertDefaultReturn else {
 						self.madDriver.endExport()
-						return;
+						return
 					}
 					
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
@@ -1211,7 +1209,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 								try self.saveMusic(AIFFToURL: savePanel.URL!, theSett: &self.exportSettings);
 								self.madDriver.endExport()
 								dispatch_async(dispatch_get_main_queue()) {
-									if (self.isQuitting) {
+									if self.isQuitting {
 										NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
 									} else {
 										let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
@@ -1224,7 +1222,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 								if (self.isQuitting) {
 									NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
 								} else {
-									NSAlert(error: thErr).runModal()
+									dispatch_async(dispatch_get_main_queue()) {
+										NSAlert(error: thErr).runModal()
+									}
 								}
 							}
 						}
@@ -1269,7 +1269,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 							titleName.value = oldMusicName
 							
 							let dataInfo = AVMutableMetadataItem()
-							dataInfo.keySpace = AVMetadataKeySpaceQuickTimeUserData;
+							dataInfo.keySpace = AVMetadataKeySpaceQuickTimeUserData
 							dataInfo.key = AVMetadataQuickTimeUserDataKeySoftware
 							dataInfo.value = "PlayerPRO Player"
 							dataInfo.locale = NSLocale(localeIdentifier: "en_US")
@@ -1321,7 +1321,13 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 						let exportMov = AVAsset(URL: tmpURL)
 						let metadataInfo = generateAVMetadataInfo()
 						
-						if let session = AVAssetExportSession(asset:exportMov, presetName:AVAssetExportPresetAppleM4A) {
+						guard let session = AVAssetExportSession(asset:exportMov, presetName: AVAssetExportPresetAppleM4A) else {
+							expErr = NSError(domain: NSCocoaErrorDomain, code: NSFileWriteUnknownError, userInfo: nil)
+							NSLog("Init Failed for %@, error: %@", oldMusicName, expErr!.localizedDescription)
+							dispatch_async(dispatch_get_main_queue(), errBlock)
+							return;
+
+						}
 							#if false
 								if (session == nil) {
 									expErr = NSError(domain: NSCocoaErrorDomain, code: NSFileWriteUnknownError, userInfo: nil)
@@ -1346,7 +1352,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 							
 							let didFinish = session.status == .Completed;
 							
-							if (didFinish) {
+							if didFinish {
 								dispatch_async(dispatch_get_main_queue()) {
 									if (self.isQuitting) {
 										NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
@@ -1359,18 +1365,13 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 								}
 							} else {
 								NSLog("\(session.error)");
+								if self.isQuitting {
+									NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
+								}
 							}
-							
-						} else {
-							expErr = NSError(domain: NSCocoaErrorDomain, code: NSFileWriteUnknownError, userInfo: nil)
-							NSLog("Init Failed for %@, error: %@", oldMusicName, expErr!.localizedDescription)
-							dispatch_async(dispatch_get_main_queue(), errBlock)
-							return;
-						}
 					}
 				})
-				
-			});
+			})
 			
 		case -3: // wave
 			savePanel.allowedFileTypes = [AVFileTypeWAVE]
@@ -1381,7 +1382,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 					return;
 				}
 				self.beginExportSettingsWithHandler({ (result) -> Void in
-					if result != NSAlertDefaultReturn {
+					guard result == NSAlertDefaultReturn else {
 						self.madDriver.endExport()
 						if (self.isQuitting) {
 							NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
@@ -1408,7 +1409,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 								if (self.isQuitting) {
 									NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
 								} else {
-									PPRunAlertPanel("Export failed", message: "Export/coversion of the music file failed:\n\(error.localizedDescription)");
+									dispatch_async(dispatch_get_main_queue()) {
+									PPRunAlertPanel("Export failed", message: "Export/coversion of the music file failed:\n\(error.localizedDescription)")
+									}
 								}
 							}
 						}
@@ -1448,7 +1451,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 						NSAlert(error: aerr).runModal()
 					}
 				} else {
-					self.addMusicToMusicList(fileURL!, loadIfPreferencesAllow:false)
+					self.addMusicToMusicList(fileURL!, loadIfPreferencesAllow: false)
 					if (self.isQuitting) {
 						NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
 					} else {
