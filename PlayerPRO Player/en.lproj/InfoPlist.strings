@@ -1,7 +1,7 @@
 /* Localized versions of Info.plist keys */
 
 CFBundleName = "PlayerPRO Player";
-NSHumanReadableCopyright = "Copyright © 2013-2014 SourceForge.";
+NSHumanReadableCopyright = "Copyright © 2013-2015 SourceForge.";
 
 "Music Tracker" = "Music Tracker";
 
