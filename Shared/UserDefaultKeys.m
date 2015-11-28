@@ -12,6 +12,7 @@
 #endif
 
 NSString * const PPListPreferencesDidChange = @"Music List Preferences Changed";
+NSString * const PPSoundPreferencesDidChange = @"Sound Preferences changed";
 NSString * const PPDigitalEditorPrefrencesDidChange = @"Digital Editor Preferences changed";
 NSString * const PPBoxEditorPreferencesDidChange = @"Box Editor Preferences changed";
 NSString * const PPClassicalEditorPreferencesDidChange = @"Classical Preferences changed";
@@ -19,6 +20,41 @@ NSString * const PPMiscPreferencesDidChange = @"Misc. Preferences Changed";
 NSString * const PPColorsDidChange = @"PPColor Preferences changed";
 NSString * const PPColorChangedColor = @"PPColor Preferences Changed Color";
 NSString * const PPColorChangedValue = @"PPColor Preferences Changed Color Value";
+NSString * const PPMusicDidChange = @"PP Music changed";
+NSString * const PPDriverDidChange = @"PlayerPRO Driver did change";
+
+NSString * const kMusicListKVO = @"musicList";
+NSString * const PPDoubleDash = @"--";
+
+NSString * const MADNativeUTI = @"com.quadmation.playerpro.madk";
+NSString * const MADGenericUTI = @"com.quadmation.playerpro.mad";
+NSString * const PPMusicListUTI = @"net.sourceforge.playerpro.musiclist";
+NSString * const PPOldMusicListUTI = @"com.quadmation.playerpro.stcfmusiclist";
+NSString * const PPPCMDUTI = @"com.quadmation.playerpro.pcmd";
+NSString * const PPGenericTrackerUTI = @"net.sourceforge.playerpro.tracker";
+NSString * const PPGenericInstrumentUTI = @"net.sourceforge.playerpro.instrumentfile";
+NSString * const PPInstrumentListUTI = @"com.quadmation.playerpro.list";
+NSString * const PPMLDCUTI = @"net.sourceforge.playerpro.PlayerPRO-Player.playerlistdragtype";
+
+NSString * const PPRememberMusicList = @"Remember Music List";
+NSString * const PPLoadMusicAtListLoad = @"Load music when loading list";
+NSString * const PPAfterPlayingMusic = @"After playing music";
+NSString * const PPGotoStartupAfterPlaying = @"Go to startup pos. after playing";
+NSString * const PPSaveModList = @"Ask to save modified Mod list";
+NSString * const PPLoadMusicAtMusicLoad = @"Play music on Music load";
+NSString * const PPLoopMusicWhenDone = @"Loop music";
+
+NSString * const PPSoundOutBits = @"Sound output bits";
+NSString * const PPSoundOutRate = @"Sound output rate";
+NSString * const PPSoundDriver = @"Sound Driver";
+NSString * const PPStereoDelayToggle = @"Stereo delay?";
+NSString * const PPReverbToggle = @"Reverb?";
+NSString * const PPSurroundToggle = @"Surround?";
+NSString * const PPOversamplingToggle = @"Oversampling?";
+NSString * const PPStereoDelayAmount = @"Stereo Delay amount";
+NSString * const PPReverbAmount = @"Reverb Amount";
+NSString * const PPReverbStrength = @"Reverb Strength";
+NSString * const PPOversamplingAmount = @"Oversampling Amount";
 
 NSString * const PPDEShowInstrument = @"Digital Editor Show Instrument";
 NSString * const PPDEShowNote = @"Digital Editor Show Note";

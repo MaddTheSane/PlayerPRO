@@ -293,18 +293,21 @@ static const dispatch_block_t initUTIArray = ^{
 	return err;
 }
 
-- (MADErr)importPcmdFromURL:(NSURL*)theURL
+- (BOOL)importPcmdFromURL:(NSURL*)theURL error:(NSError * _Nullable __autoreleasing * _Nullable)error
 {
 	MADErr theErr = MADNoErr;
 	NSNumber *curNum;
 	theErr = [[self class] testPcmdFileAtURL:theURL];
 	if (theErr) {
-		return theErr;
+		if (error) {
+			*error = PPCreateErrorFromMADErrorType(theErr);
+		}
+		return NO;
 	}
 	const Pcmd *thePcmd;
-	NSMutableData *pcmdData = [[NSMutableData alloc] initWithContentsOfURL:theURL];
+	NSMutableData *pcmdData = [[NSMutableData alloc] initWithContentsOfURL:theURL options:(NSDataReadingOptions)0 error:error];
 	if (!pcmdData) {
-		return MADReadingErr;
+		return false;
 	}
 	[theURL getResourceValue:&curNum forKey:NSURLFileSizeKey error:NULL];
 	
@@ -312,7 +315,7 @@ static const dispatch_block_t initUTIArray = ^{
 	
 	thePcmd = [pcmdData bytes];
 	
-	return [self importPcmdFromPointer:thePcmd];
+	return [self importPcmdFromPointer:thePcmd error:error];
 }
 
 static inline NSString *GetEffectString(short theEffect)
@@ -503,17 +506,17 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 	return MADNoErr;
 }
 
-- (MADErr)importPcmdFromPointer:(in const Pcmd*)thePcmd
+- (BOOL)importPcmdFromPointer:(in const Pcmd*)thePcmd error:(NSError**)error
 {
 	//TODO: put cmd data into the pattern
 	
-	return MADNoErr;
+	return YES;
 }
 
-- (MADErr)importIntPcmdFromPointer:(IntPcmd*)theIntPcmd freeCommandsWhenDone:(BOOL)freeCmds
+- (BOOL)importIntPcmdFromPointer:(IntPcmd*)theIntPcmd freeCommandsWhenDone:(BOOL)freeCmds error:(NSError**)error;
 {
 	Pcmd *tmpPcmd = MADIntPcmdToPcmd(theIntPcmd, freeCmds);
-	MADErr iErr = [self importPcmdFromPointer:tmpPcmd];
+	BOOL iErr = [self importPcmdFromPointer:tmpPcmd error:error];
 	free(tmpPcmd);
 	return iErr;
 }

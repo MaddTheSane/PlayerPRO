@@ -120,7 +120,7 @@ static NSString *pascalStringToNSString(StringPtr aStr)
 	DisposeHandle(locHand);
 	locHand = NULL;
 	
-	NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:theNo];
+	NSMutableArray<NSString*> *newArray = [[NSMutableArray alloc] initWithCapacity:theNo];
 	
 	for (int i = 0; i < theNo * 2; i += 2) {
 		StringPtr aStr, aStr2;

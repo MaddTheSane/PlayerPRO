@@ -13,49 +13,49 @@ NS_ASSUME_NONNULL_BEGIN
 
 #pragma mark Notifications
 extern NSString * const PPListPreferencesDidChange;
-#define PPSoundPreferencesDidChange @"Sound Preferences changed"
+extern NSString * const PPSoundPreferencesDidChange;
 extern NSString * const PPDigitalEditorPrefrencesDidChange;
 extern NSString * const PPBoxEditorPreferencesDidChange;
 extern NSString * const PPClassicalEditorPreferencesDidChange;
 extern NSString * const PPMiscPreferencesDidChange;
 extern NSString * const PPColorsDidChange;
-#define PPMusicDidChange	@"PP Music changed"
-#define PPDriverDidChange	@"PlayerPRO Driver did change"
+extern NSString * const PPMusicDidChange;
+extern NSString * const PPDriverDidChange;
 extern NSString * const PPColorChangedColor;
 extern NSString * const PPColorChangedValue;
 
 #pragma mark UTIs
-#define MADNativeUTI			@"com.quadmation.playerpro.madk"
-#define MADGenericUTI			@"com.quadmation.playerpro.mad"
-#define PPMusicListUTI			@"net.sourceforge.playerpro.musiclist"
-#define PPOldMusicListUTI		@"com.quadmation.playerpro.stcfmusiclist"
-#define PPPCMDUTI				@"com.quadmation.playerpro.pcmd"
-#define PPGenericTrackerUTI		@"net.sourceforge.playerpro.tracker"
-#define PPGenericInstrumentUTI	@"net.sourceforge.playerpro.instrumentfile"
-#define PPInstrumentListUTI		@"com.quadmation.playerpro.list"
-#define PPMLDCUTI				@"net.sourceforge.playerpro.PlayerPRO-Player.playerlistdragtype"
+extern NSString * const MADNativeUTI;
+extern NSString * const MADGenericUTI;
+extern NSString * const PPMusicListUTI;
+extern NSString * const PPOldMusicListUTI;
+extern NSString * const PPPCMDUTI;
+extern NSString * const PPGenericTrackerUTI;
+extern NSString * const PPGenericInstrumentUTI;
+extern NSString * const PPInstrumentListUTI;
+extern NSString * const PPMLDCUTI;
 
 #pragma mark Music list preference keys
-#define PPRememberMusicList			@"Remember Music List"
-#define PPLoadMusicAtListLoad		@"Load music when loading list"
-#define PPAfterPlayingMusic			@"After playing music"
-#define PPGotoStartupAfterPlaying	@"Go to startup pos. after playing"
-#define PPSaveModList				@"Ask to save modified Mod list"
-#define PPLoadMusicAtMusicLoad		@"Play music on Music load"
-#define PPLoopMusicWhenDone			@"Loop music"
+extern NSString * const PPRememberMusicList;
+extern NSString * const PPLoadMusicAtListLoad;
+extern NSString * const PPAfterPlayingMusic;
+extern NSString * const PPGotoStartupAfterPlaying;
+extern NSString * const PPSaveModList;
+extern NSString * const PPLoadMusicAtMusicLoad;
+extern NSString * const PPLoopMusicWhenDone;
 
 #pragma mark Sound driver Preference keys
-#define PPSoundOutBits			@"Sound output bits"
-#define PPSoundOutRate			@"Sound output rate"
-#define PPSoundDriver			@"Sound Driver"
-#define PPStereoDelayToggle		@"Stereo delay?"
-#define PPReverbToggle			@"Reverb?"
-#define PPSurroundToggle		@"Surround?"
-#define PPOversamplingToggle	@"Oversampling?"
-#define PPStereoDelayAmount		@"Stereo Delay amount"
-#define PPReverbAmount			@"Reverb Amount"
-#define PPReverbStrength		@"Reverb Strength"
-#define PPOversamplingAmount	@"Oversampling Amount"
+extern NSString * const PPSoundOutBits;
+extern NSString * const PPSoundOutRate;
+extern NSString * const PPSoundDriver;
+extern NSString * const PPStereoDelayToggle;
+extern NSString * const PPReverbToggle;
+extern NSString * const PPSurroundToggle;
+extern NSString * const PPOversamplingToggle;
+extern NSString * const PPStereoDelayAmount;
+extern NSString * const PPReverbAmount;
+extern NSString * const PPReverbStrength;
+extern NSString * const PPOversamplingAmount;
 
 #pragma mark Digital Editor preference keys
 extern NSString * const PPDEShowInstrument;
@@ -210,8 +210,8 @@ extern NSString * const PPCETrackHeight;
 #define PPClassicPrefID		@"PPClassical"
 
 #pragma mark Misc./other
-#define PPDoubleDash	@"--"
-#define kMusicListKVO	@"musicList"
+extern NSString * const PPDoubleDash;
+extern NSString * const kMusicListKVO;
 #define PPEscapeValue	@"\e"
 
 NS_ASSUME_NONNULL_END
