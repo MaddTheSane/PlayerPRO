@@ -388,11 +388,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		do {
 			try loadMusicURL(currentlyPlayingIndex.playbackURL!)
 			isGood = true
+			previouslyPlayingIndex = currentlyPlayingIndex
 		} catch let error as NSError {
 			theErr = error
 			isGood = false
 		}
-		previouslyPlayingIndex = currentlyPlayingIndex
 		if isGood {
 			return
 		}
@@ -464,9 +464,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		
 		if autoPlay {
 			madDriver.play()
+			
+			paused = false
 		}
-		
-		paused = false
 		
 		let time = madDriver.musicStatusTime!
 		songPos.maxValue = Double(time.total)
@@ -716,6 +716,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 				let theRet = madLib.testFile(URL: theURL, type: aType)
 				if theRet == .NoErr {
 					addMusicToMusicList(theURL)
+				} else {
+					throw createErrorFromMADErrorType(theRet)!
 				}
 			} catch _ {
 				

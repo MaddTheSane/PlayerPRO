@@ -22,6 +22,35 @@ private func ==(lhs: OpenPanelViewController.OpenPanelViewItem, rhs: OpenPanelVi
 
 private var OpenPanelsInUse = [OpenPanelViewController]()
 
+private func allOpenableTypesFromUTI(anUTI: String) -> [String] {
+	var theOpenables = [anUTI]
+	
+	if #available(OSX 10.10, *) {
+		let utiTagClasses = [kUTTagClassFilenameExtension as String, kUTTagClassMIMEType as String,
+			/*kUTTagClassNSPboardType as String,*/ /*kUTTagClassOSType as String*/]
+		
+		for utiTag in utiTagClasses {
+			guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI, utiTag) else {
+				continue
+			}
+			
+			let preArr = unPreArr.takeRetainedValue() as NSArray
+			
+			guard let anArr = preArr as? [String] else {
+				continue
+			}
+			theOpenables += anArr
+		}
+	} else {
+		// Fallback on earlier versions
+		if let aType = UTTypeCopyPreferredTagWithClass(anUTI, kUTTagClassFilenameExtension)?.takeRetainedValue() {
+			theOpenables.append(aType as NSString as String)
+		}
+	}
+	
+	return theOpenables
+}
+
 class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 	private enum utiType: Int {
 		case allType = -1
@@ -131,7 +160,18 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 				for obj in utiObjects {
 					allowedUTIs += obj.utis
 				}
-				openPanel.allowedFileTypes = allowedUTIs
+				
+				let fileTypes: [String] = {
+					var aTyp = [String]()
+					
+					for uti in allowedUTIs {
+						aTyp += allOpenableTypesFromUTI(uti)
+					}
+					
+					return aTyp
+				}()
+				
+				openPanel.allowedFileTypes = fileTypes
 				if (allowsMultipleSelectionOfTrackers) {
 					openPanel.allowsMultipleSelection = true
 				}
@@ -142,7 +182,18 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 						allowedUTIs += obj.utis
 					}
 				}
-				openPanel.allowedFileTypes = allowedUTIs
+				
+				let fileTypes: [String] = {
+					var aTyp = [String]()
+					
+					for uti in allowedUTIs {
+						aTyp += allOpenableTypesFromUTI(uti)
+					}
+					
+					return aTyp
+				}()
+				
+				openPanel.allowedFileTypes = fileTypes
 				if (allowsMultipleSelectionOfTrackers) {
 					openPanel.allowsMultipleSelection = true
 				}
@@ -153,7 +204,18 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 						allowedUTIs += obj.utis
 					}
 				}
-				openPanel.allowedFileTypes = allowedUTIs
+				
+				let fileTypes: [String] = {
+					var aTyp = [String]()
+					
+					for uti in allowedUTIs {
+						aTyp += allOpenableTypesFromUTI(uti)
+					}
+					
+					return aTyp
+				}()
+				
+				openPanel.allowedFileTypes = fileTypes
 				if (allowsMultipleSelectionOfTrackers) {
 					openPanel.allowsMultipleSelection = true
 				}
@@ -164,7 +226,18 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 						allowedUTIs += obj.utis
 					}
 				}
-				openPanel.allowedFileTypes = allowedUTIs
+				
+				let fileTypes: [String] = {
+					var aTyp = [String]()
+					
+					for uti in allowedUTIs {
+						aTyp += allOpenableTypesFromUTI(uti)
+					}
+					
+					return aTyp
+				}()
+				
+				openPanel.allowedFileTypes = fileTypes
 				if (allowsMultipleSelectionOfTrackers) {
 					openPanel.allowsMultipleSelection = true
 				}
@@ -175,7 +248,18 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 						allowedUTIs.appendContentsOf(obj.utis)
 					}
 				}
-				openPanel.allowedFileTypes = allowedUTIs
+				
+				let fileTypes: [String] = {
+					var aTyp = [String]()
+					
+					for uti in allowedUTIs {
+						aTyp += allOpenableTypesFromUTI(uti)
+					}
+					
+					return aTyp
+				}()
+
+				openPanel.allowedFileTypes = fileTypes
 				if (allowsMultipleSelectionOfTrackers) {
 					openPanel.allowsMultipleSelection = true
 				}
@@ -184,7 +268,17 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			default:
 				if (tag < utiObjects.count && tag >= 0) {
 					let selObj = utiObjects[tag];
-					openPanel.allowedFileTypes = selObj.utis
+					let fileTypes: [String] = {
+						var aTyp = [String]()
+						
+						for uti in selObj.utis {
+							aTyp += allOpenableTypesFromUTI(uti)
+						}
+						
+						return aTyp
+					}()
+					
+					openPanel.allowedFileTypes = fileTypes
 					if (allowsMultipleSelectionOfTrackers == true) {
 						if (selObj.theUtiType == .tracker) {
 							openPanel.allowsMultipleSelection = true
@@ -367,7 +461,13 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			openPanel.allowsMultipleSelection = false
 		}
 		
-		self.openPanel.allowedFileTypes = fileUTIs
+		var allowedTypes = [String]()
+		
+		for uti in fileUTIs {
+			allowedTypes += allOpenableTypesFromUTI(uti)
+		}
+		
+		self.openPanel.allowedFileTypes = allowedTypes
 		openPanel.canChooseFiles = true;
 		openPanel.accessoryView = self.view
 	}
