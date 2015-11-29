@@ -40,6 +40,7 @@ static inline Pcmd* CopyPcmd(const Pcmd* tocopy)
 	memcpy(toret, tocopy, structlen);
 	return toret;
 }
+
 @interface PPPatternObject ()
 - (instancetype)initWithCoder:(NSCoder *)aDecoder NS_DESIGNATED_INITIALIZER;
 @end
@@ -405,13 +406,12 @@ static BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL All
 {
 	int	i, x;
 	NSMutableString *myText = [[NSMutableString alloc] init];
-	NSMutableString *myStr;
 	Pcmd *myPcmd = CopyPcmd(thePcmd);
 	size_t	mSize = 5 + myPcmd->tracks * myPcmd->length * 16;
 	
 	for (i = 0; i < myPcmd->length; i++) {
 		for (x = 0; x < myPcmd->tracks; x++) {
-			myStr = [[NSMutableString alloc] init];
+			NSMutableString *myStr = [[NSMutableString alloc] init];
 			Cmd *myCmd = MADGetCmd(i, x, myPcmd);
 			
 			if (CreateNoteString(myCmd, myStr, YES)) {
@@ -433,7 +433,7 @@ static BOOL CreateNoteString(Cmd *theCommand, NSMutableString *mainStr, BOOL All
 	return [[NSString alloc] initWithString:myText];
 }
 
-static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPatternObject *tempMusicPat)
+static Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPatternObject *tempMusicPat)
 {
 	Cmd *theCmd, tmpCmd;
 	if (tempMusicPat == NULL)
@@ -463,10 +463,12 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 - (Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange
 {
 	NSInteger count = (trackRange.length) * (posRange.length), X, Y;
-	Cmd *cmd, *cmd2;
 	
 	size_t theSize = sizeof(Pcmd) + count * sizeof(Cmd);
 	Pcmd *thePcmd = calloc(theSize, 1);
+	if (!thePcmd) {
+		return NULL;
+	}
 	thePcmd->structSize = (int)theSize;
 	thePcmd->tracks		= trackRange.length;
 	thePcmd->length		= posRange.length;
@@ -475,6 +477,7 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 	
 	for (X = trackRange.location; X <= NSMaxRange(trackRange); X++) {
 		for (Y = posRange.location; Y <= NSMaxRange(posRange); Y++) {
+			Cmd *cmd, *cmd2;
 			cmd = GetMADCommandFromPatternObj(Y, X, self);
 			cmd2 = MADGetCmd(Y - NSMaxRange(posRange), X - NSMaxRange(trackRange), thePcmd);
 			
@@ -486,24 +489,31 @@ static inline Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPat
 	return thePcmd;
 }
 
-- (MADErr)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange
+- (BOOL)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange error:(NSError**)error;
 {
 	NSData *datToWrite;
 	if (trackRange.length == 0 || posRange.length) {
-		return MADParametersErr;
+		if (error) {
+			*error = PPCreateErrorFromMADErrorType(MADParametersErr);
+		}
+		return false;
 	}
 	Pcmd *thePcmd = [self newPcmdWithTrackRange:trackRange positionRange:posRange];
 	SwapPcmd(thePcmd);
 	if (!thePcmd) {
-		return MADNeedMemory;
+		if (error) {
+			*error = PPCreateErrorFromMADErrorType(MADNeedMemory);
+		}
+		return false;
 	}
 	datToWrite = [[NSData alloc] initWithBytesNoCopy:thePcmd length:thePcmd->structSize];
 	
-	if (![datToWrite writeToURL:theURL atomically:YES]) {
-		return MADWritingErr;
+	if (![datToWrite writeToURL:theURL options:NSDataWritingAtomic error:error]) {
+		//The Foundation method will fill out the error data for us.
+		return false;
 	}
 	
-	return MADNoErr;
+	return true;
 }
 
 - (BOOL)importPcmdFromPointer:(in const Pcmd*)thePcmd error:(NSError**)error

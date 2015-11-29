@@ -13,10 +13,6 @@
 #include <PlayerPROCore/PlayerPROCore.h>
 #import <PlayerPROKit/PPObjectProtocol.h>
 
-#ifndef NS_DESIGNATED_INITIALIZER
-#define NS_DESIGNATED_INITIALIZER
-#endif
-
 NS_ASSUME_NONNULL_BEGIN
 
 @class PPSampleObject;
@@ -26,9 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (readonly) EnvRec envelopeRec;
 @property short position;
 @property short envelopeValue;
-- (nonnull instancetype)init NS_DESIGNATED_INITIALIZER;
-- (nonnull instancetype)initWithEnvRec:(EnvRec)theRec NS_DESIGNATED_INITIALIZER;
-+ (nonnull instancetype)envelopeWithEnvRec:(EnvRec)theRec;
+- (instancetype)init NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithEnvRec:(EnvRec)theRec NS_DESIGNATED_INITIALIZER;
++ (instancetype)envelopeWithEnvRec:(EnvRec)theRec;
 @end
 
 @interface PPInstrumentObject : NSObject <NSFastEnumeration, PPObject>
@@ -61,7 +57,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (copy, null_resettable) NSString *name;
 @property (readonly) NSInteger number;
 @property (nonatomic, readonly) short firstSample;
-@property (nonatomic, copy, readonly) NSArray *samples;
+@property (nonatomic, copy, readonly) NSArray<PPSampleObject*> *samples;
 
 @property short MIDI;
 @property (readonly) short MIDIType;
@@ -104,8 +100,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)addSampleObject:(PPSampleObject *)object;
 - (void)replaceObjectInSamplesAtIndex:(NSInteger)index withObject:(PPSampleObject *)object;
 @property (readonly) NSInteger countOfSamples;
-- (nonnull PPSampleObject *)samplesObjectAtIndex:(NSInteger)idx;
-- (void)removeSamplesAtIndexes:(nonnull NSIndexSet *)indexes;
+- (PPSampleObject *)samplesObjectAtIndex:(NSInteger)idx;
+- (void)removeSamplesAtIndexes:(NSIndexSet *)indexes;
 
 @end
 

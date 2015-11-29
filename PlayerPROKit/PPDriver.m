@@ -23,6 +23,7 @@
 - (void)setCurrentMusic:(PPMusicObject *)curMusic
 {
 	if (curMusic != currentMusic) {
+		PPMusicObject *tmpMus = currentMusic;
 		currentMusic = curMusic;
 		if (curMusic == nil) {
 			MADDriverBase *ourBase = MADDriverGetBase(theRec);
@@ -35,6 +36,7 @@
 				[[[NSException alloc] initWithName:@"MADAttachDriverToMusic err" reason:@"MADAttachDriverToMusic returned failure state" userInfo:err.userInfo] raise];
 			}
 		}
+		tmpMus = nil;
 	}
 }
 

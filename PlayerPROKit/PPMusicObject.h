@@ -12,10 +12,6 @@
 #import <Foundation/Foundation.h>
 #include <PlayerPROCore/PlayerPROCore.h>
 
-#ifndef NS_DESIGNATED_INITIALIZER
-#define NS_DESIGNATED_INITIALIZER
-#endif
-
 NS_ASSUME_NONNULL_BEGIN
 
 @class PPDriver;
@@ -48,6 +44,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property MADByte generalVolume;
 
 - (instancetype)init;
+
 /// Creates a music object from the supplied MADK file ONLY
 - (nullable instancetype)initWithURL:(NSURL *)url error:(out NSError* __nullable __autoreleasing* __nullable)error NS_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithPath:(NSString *)url error:(out NSError* __nullable __autoreleasing* __nullable)error;
