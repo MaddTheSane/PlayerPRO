@@ -24,7 +24,7 @@ private let kPlayerList = "Player List"
 
 #if os(OSX)
 	private let PPPPath = (try! NSFileManager.defaultManager().URLForDirectory(.ApplicationSupportDirectory, inDomain:.UserDomainMask, appropriateForURL:nil, create:true)).URLByAppendingPathComponent("PlayerPRO").URLByAppendingPathComponent("Player", isDirectory: true)
-	#elseif os(iOS)
+#elseif os(iOS)
 	private let listExtension = "pplist"
 	private let PPPPath = (try! NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: .UserDomainMask, appropriateForURL: nil, create: true)).URLByAppendingPathComponent("Playlists", isDirectory: true)
 #endif
@@ -130,8 +130,8 @@ private let kPlayerList = "Player List"
 	}
 	
 	@objc(sortMusicListUsingDescriptors:) func sortMusicList(descriptors descriptors: [NSSortDescriptor]) {
-		let anArray = sortedArray(musicList, usingDescriptors: descriptors)
-		musicList = anArray as! [MusicListObject]
+		let anArray = musicList.sortUsingDescriptors(descriptors)
+		musicList = anArray
 	}
 	
 	enum AddMusicStatus {
@@ -444,7 +444,7 @@ private let kPlayerList = "Player List"
 		removeMusicListAtIndexes(idxSet)
 	}
 	
-	func insertObjects(anObj: [MusicListObject], inMusicListAtIndex idx:Int) {
+	func insertObjects(anObj: [MusicListObject], inMusicListAtIndex idx: Int) {
 		let theIndexSet = NSIndexSet(indexesInRange: NSRange(location: idx, length: anObj.count))
 		self.willChange(.Insertion, valuesAtIndexes: theIndexSet, forKey: kMusicListKVO)
 		var currentIndex = theIndexSet.firstIndex
@@ -460,7 +460,7 @@ private let kPlayerList = "Player List"
 	}
 	
 	#if os(OSX)
-	@objc func beginLoadingOfOldMusicListAtURL(toOpen: NSURL, completionHandle theHandle: (theErr: NSError?) -> Void) {
+	func beginLoadingOfOldMusicListAtURL(toOpen: NSURL, completionHandle theHandle: (theErr: NSError?) -> Void) {
 		let conn = NSXPCConnection(serviceName: "net.sourceforge.playerpro.StcfImporter")
 		conn.remoteObjectInterface = NSXPCInterface(withProtocol: PPSTImporterHelper.self)
 		
@@ -471,27 +471,26 @@ private let kPlayerList = "Player List"
 				if error != nil {
 					theHandle(theErr: error)
 				} else {
-					let invalidAny = bookmarkData!["lostMusicCount"] as? UInt
-					let selectedAny = bookmarkData!["SelectedMusic"] as? Int
-					let pathsAny = bookmarkData!["MusicPaths"] as? NSArray as? [String]
-					if (invalidAny == nil || selectedAny == nil || pathsAny == nil) {
-						let lolwut = NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionReplyInvalid, userInfo: [NSLocalizedDescriptionKey: "Invalid data returned from helper"])
-						theHandle(theErr: lolwut)
-					} else {
+					guard let invalidAny = bookmarkData!["lostMusicCount"] as? UInt,
+						selectedAny = bookmarkData!["SelectedMusic"] as? Int,
+						pathsAny = bookmarkData!["MusicPaths"] as? NSArray as? [String] else {
+							let lolwut = NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionReplyInvalid, userInfo: [NSLocalizedDescriptionKey: "Invalid data returned from helper"])
+							theHandle(theErr: lolwut)
+							return;
+					}
 						var pathsURL = [MusicListObject]()
 						// Have all the new MusicListObjects use the same date
 						let currentDate = NSDate()
-						for aPath in pathsAny! {
+						for aPath in pathsAny {
 							let tmpURL = NSURL.fileURLWithPath(aPath)
 							let tmpObj = MusicListObject(URL: tmpURL, date: currentDate)
 							pathsURL.append(tmpObj)
 						}
 						self.loadMusicList(pathsURL)
-						self.lostMusicCount = invalidAny!
-						self.selectedMusic = selectedAny!
+						self.lostMusicCount = invalidAny
+						self.selectedMusic = selectedAny
 						
 						theHandle(theErr: nil)
-					}
 				}
 				conn.invalidate()
 			})

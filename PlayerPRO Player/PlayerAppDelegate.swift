@@ -323,7 +323,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	
 	private func songIsDonePlaying() {
 		let userDefaults = NSUserDefaults.standardUserDefaults()
-		switch (PlaylistMode(rawValue: userDefaults.integerForKey(PPAfterPlayingMusic))!) {
+		switch PlaylistMode(rawValue: userDefaults.integerForKey(PPAfterPlayingMusic))! {
 			
 		case .LoopMusic:
 			madDriver.musicPosition = 0;
@@ -331,7 +331,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			break;
 			
 		case .LoadNext:
-			if (musicList.countOfMusicList > ++self.currentlyPlayingIndex.index) {
+			if musicList.countOfMusicList > ++self.currentlyPlayingIndex.index {
 				selectCurrentlyPlayingMusic()
 				do {
 					try loadMusicFromCurrentlyPlayingIndex()
@@ -1206,7 +1206,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 					}
 					
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-						autoreleasepool {
 							do {
 								try self.saveMusic(AIFFToURL: savePanel.URL!, theSett: &self.exportSettings);
 								self.madDriver.endExport()
@@ -1230,7 +1229,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 								}
 							}
 						}
-					}
 				})
 			})
 			
