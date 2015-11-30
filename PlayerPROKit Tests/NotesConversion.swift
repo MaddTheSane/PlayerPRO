@@ -44,7 +44,7 @@ class NotesConversion: XCTestCase {
 	}
 	
 	func testNoteConversionLetter() {
-		var noteNames = getNotesWithLetters(useLetters: true)
+		let noteNames = getNotesWithLetters(useLetters: true)
 		
 		measureBlock() {
 			var noteNums = [Int16]()
@@ -59,7 +59,7 @@ class NotesConversion: XCTestCase {
 	}
 	
 	func testNoteConversionDoReMi() {
-		var noteNames = getNotesWithLetters(useLetters: false)
+		let noteNames = getNotesWithLetters(useLetters: false)
 		
 		measureBlock() {
 			var noteNums = [Int16]()

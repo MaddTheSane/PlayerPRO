@@ -71,7 +71,7 @@ public final class PPLibraryObject: NSObject, CustomDebugStringConvertible {
 		bundle = NSBundle(URL: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()))!
 		UTITypes = unwrapped.UTItypes.takeUnretainedValue() as NSArray as! [String]
 		tupleType = unwrapped.type
-		let tmpArray: [CChar] = getArrayFromMirror(Mirror(reflecting: tupleType))
+		let tmpArray: [CChar] = try! arrayFromObject(reflecting: tupleType)
 		type = String(CString: tmpArray, encoding: NSMacOSRomanStringEncoding)!
 		plugVersion = unwrapped.version
 		switch (unwrapped.mode) {

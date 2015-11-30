@@ -24,7 +24,7 @@ void testDebugFunc(short line, const char* file, const char* info)
 
 void cXTCFail(short line, const char* file, const char* info)
 {
-	_XCTFailureHandler(currentTestClass, YES, file, line, @(info), @"");
+	_XCTFailureHandler(currentTestClass, NO, file, line, @"MADDebugStr was called!", @"%s", info);
 }
 
 void (*cDebugFunc)(short, const char*, const char*) = testDebugFunc;
@@ -53,12 +53,12 @@ XCTestCase *currentTestClass = nil;
 - (void)testError
 {
 	NSError *err1 = PPCreateErrorFromMADErrorType(MADReadingErr);
-	XCTAssert([err1.domain isEqual:PPMADErrorDomain]);
+	XCTAssertEqualObjects(err1.domain, PPMADErrorDomain);
 	NSError *err2 = PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADReadingErr, NO);
-	XCTAssert([err2.domain isEqual:PPMADErrorDomain]);
+	XCTAssertEqualObjects(err2.domain, PPMADErrorDomain);
 
 	NSError *err3 = PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADReadingErr, YES);
-	XCTAssert(![err3.domain isEqual:PPMADErrorDomain]);
+	XCTAssertNotEqualObjects(err3.domain, PPMADErrorDomain);
 }
 
 @end

@@ -61,23 +61,23 @@ public func createErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [S
 	guard let anErr = PPCreateErrorFromMADErrorTypeConvertingToCocoa(theErr, convertToCocoa) else {
 		return nil
 	}
-		if let cud = customUserDictionary {
-			var errDict: [String: NSObject] = [NSLocalizedDescriptionKey : anErr.localizedDescription]
-			
-			if let aFailReason = anErr.localizedFailureReason {
-				errDict[NSLocalizedFailureReasonErrorKey] = aFailReason
-			}
-			
-			if let aRecoverySuggestion = anErr.localizedRecoverySuggestion {
-				errDict[NSLocalizedRecoverySuggestionErrorKey] = aRecoverySuggestion
-			}
-			
-			errDict += cud
-			
-			return NSError(domain: anErr.domain, code: anErr.code, userInfo: errDict)
-		} else {
-			return anErr
+	if let cud = customUserDictionary {
+		var errDict: [String: NSObject] = [NSLocalizedDescriptionKey : anErr.localizedDescription]
+		
+		if let aFailReason = anErr.localizedFailureReason {
+			errDict[NSLocalizedFailureReasonErrorKey] = aFailReason
 		}
+		
+		if let aRecoverySuggestion = anErr.localizedRecoverySuggestion {
+			errDict[NSLocalizedRecoverySuggestionErrorKey] = aRecoverySuggestion
+		}
+		
+		errDict += cud
+		
+		return NSError(domain: anErr.domain, code: anErr.code, userInfo: errDict)
+	} else {
+		return anErr
+	}
 }
 
 public func noteFromString(myTT: String) -> Int16?

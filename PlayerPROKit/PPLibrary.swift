@@ -60,8 +60,8 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		
 		///Initializes a `MusicFileInfo` from PlayerPROCore's `MADInfoRec`.
 		public init(infoRec: MADInfoRec) {
-			let aArray: [Int8] = getArrayFromMirror(Mirror(reflecting: infoRec.internalFileName), appendLastObject: 0)
-			let bArray: [Int8] = getArrayFromMirror(Mirror(reflecting: infoRec.formatDescription), appendLastObject: 0)
+			let aArray: [Int8] = try! arrayFromObject(reflecting: infoRec.internalFileName, appendLastObject: 0)
+			let bArray: [Int8] = try! arrayFromObject(reflecting: infoRec.formatDescription, appendLastObject: 0)
 			
 			totalPatterns = Int(infoRec.totalPatterns)
 			partitionLength = Int(infoRec.partitionLength)
@@ -97,7 +97,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	///Sets the debug function called by `MADDebugStr` to that of the passed in C function.
 	///
 	///- parameter newDebugFunc: The debug function to pass in. The first variable is the line number of the code the debug function was called from, the second is the file name of the function called in, the third is the developer-supplied text passed in.
-	@objc public class func registerDebugFunction(newDebugFunc: @convention(c) (Int16, UnsafePointer<Int8>, UnsafePointer<Int8>) -> Void) {
+	public class func registerDebugFunction(newDebugFunc: @convention(c) (Int16, UnsafePointer<Int8>, UnsafePointer<Int8>) -> Void) {
 		MADRegisterDebugFunc(newDebugFunc)
 	}
 	
@@ -120,11 +120,11 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		}
 	}
 	
-	public var startIndex: Int {
+	@nonobjc public var startIndex: Int {
 		return 0
 	}
 	
-	public var endIndex: Int {
+	@nonobjc public var endIndex: Int {
 		return trackerLibs.count
 	}
 
@@ -273,7 +273,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		if anErr == .NoErr {
 			return infoRec
 		} else {
-			throw PPCreateErrorFromMADErrorType(anErr)!
+			throw createErrorFromMADErrorType(anErr)!
 		}
 	}
 	
@@ -317,7 +317,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		let cStrType = type.cStringUsingEncoding(NSMacOSRomanStringEncoding)!
 		
 		do {
-		let aRet = try informationFromFile(URL: path, cType: cStrType)
+			let aRet = try informationFromFile(URL: path, cType: cStrType)
 			let tmpDict = infoRecToDictionary(aRet)
 			info.memory = tmpDict
 			return .NoErr
