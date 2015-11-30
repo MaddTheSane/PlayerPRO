@@ -406,51 +406,6 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	public func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (trackerLibs as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len)
 	}
-	
-	public enum StringOrMADErr {
-		case Failure(MADErr)
-		case Success(String)
-		
-		public var error: MADErr {
-			switch self {
-			case .Success(_):
-				return .NoErr
-				
-			case .Failure(let anErr):
-				return anErr
-			}
-		}
-	}
-	
-	public enum MusicFileInfoOrMADErr {
-		case Failure(MADErr)
-		case Success(MusicFileInfo)
-		
-		public var info: MusicFileInfo? {
-			switch self {
-			case .Failure(_):
-				return nil
-				
-			case .Success(let aret):
-				return aret
-			}
-		}
-		
-		public var error: MADErr {
-			switch self {
-			case .Success(_):
-				return .NoErr
-			
-			case .Failure(let anErr):
-				return anErr
-			}
-		}
-	}
-	
-	private enum InfoRecOrMADErr {
-		case Failure(MADErr)
-		case Success(MADInfoRec)
-	}
 }
 
 ///Deprecated functions
