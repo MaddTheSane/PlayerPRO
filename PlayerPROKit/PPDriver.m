@@ -23,7 +23,7 @@
 - (void)setCurrentMusic:(PPMusicObject *)curMusic
 {
 	if (curMusic != currentMusic) {
-		PPMusicObject *tmpMus = currentMusic;
+		NS_VALID_UNTIL_END_OF_SCOPE PPMusicObject *tmpMus = currentMusic;
 		currentMusic = curMusic;
 		if (curMusic == nil) {
 			MADDriverBase *ourBase = MADDriverGetBase(theRec);
