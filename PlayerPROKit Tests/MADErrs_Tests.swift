@@ -23,7 +23,9 @@ class MADErrs_Tests: XCTestCase {
     }
 
     func testPPCreateError() {
-		let errors: [(MADErr, Int)] = [(.NeedMemory, -1)]
+		let errors: [(MADErr, Int)] = [(.NeedMemory, -1),
+		(.ReadingErr, -2), (.IncompatibleFile, -3),
+		(.LibraryNotInitialized, -4), (.ParametersErr, -5)]
 		for (mad, raw) in errors {
 			let anErr = PPCreateErrorFromMADErrorType(mad)
 			XCTAssertNotNil(anErr)
