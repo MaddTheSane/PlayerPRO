@@ -81,9 +81,10 @@ NS_ASSUME_NONNULL_BEGIN
 + (MADErr)info:(MADInfoRec*)theInfo fromTrackerAtURL:(NSURL*)thURL usingLibrary:(PPLibrary*)theLib;
 
 /// Save music to a URL in MADK format.
-- (MADErr)saveMusicToURL:(NSURL *)tosave;
-- (MADErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp;
-- (MADErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib;
+- (BOOL)saveMusicToURL:(NSURL *)tosave error:(out NSError* __nullable __autoreleasing* __nullable)error;
+- (BOOL)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp error:(out NSError* __nullable __autoreleasing* __nullable)error;
+
+- (BOOL)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib error:(out NSError* __nullable __autoreleasing* __nullable)error;
 
 /// This method sets the music object as the playback music
 - (void)attachToDriver:(PPDriver *)theDriv;

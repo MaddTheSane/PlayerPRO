@@ -52,7 +52,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		var plugType: MADFourChar = 0;
 		var theOSErr = importer.identifyInstrumentFile(sampURL, type: &plugType)
 		if (theOSErr != MADErr.NoErr) {
-			throw createErrorFromMADErrorType(theOSErr)!
+			throw theOSErr
 		};
 		var theSamp: Int16 = 0;
 		var theIns: Int16  = 0;

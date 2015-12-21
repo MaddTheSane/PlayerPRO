@@ -411,13 +411,13 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 			}
 		}
 		if (sharedWorkspace.type(theUTI, conformsToType:PPPCMDUTI)) {
-			let theOSErr = importPcmdFromURL(theURL)
-			if (theOSErr != MADErr.NoErr) {
-				let theErr = createErrorFromMADErrorType(theOSErr)!
-				NSAlert(error: theErr).runModal()
-				return false;
+			do {
+				try importPcmdFromURL(theURL)
+				return true
+			} catch let error as NSError {
+				NSAlert(error: error).runModal()
+				return false
 			}
-			return true;
 		} else if (sharedWorkspace.type(theUTI, conformsToType:PPInstrumentListUTI)) {
 			do {
 				try importInstrumentListFromURL(theURL)
@@ -514,28 +514,23 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 	
 	func importSample(URL theURL: NSURL, makeUserSelectSample: Bool = false) throws {
-		var error: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
-		error = createErrorFromMADErrorType(.OrderNotImplemented)!
+		throw MADErr.OrderNotImplemented
 		
-		throw error
 	}
 	
 	func importInstrument(URL theURL: NSURL, makeUserSelectInstrument: Bool = false) throws {
-		var error: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
-		error = createErrorFromMADErrorType(.OrderNotImplemented)!
+		throw MADErr.OrderNotImplemented
 		
-		throw error
 	}
 
-	func importPcmdFromURL(url: NSURL) -> MADErr {
-		return .OrderNotImplemented
+	func importPcmdFromURL(url: NSURL) throws {
+		throw MADErr.OrderNotImplemented
+		
 	}
 	
 	func importInstrumentListFromURL(url: NSURL) throws {
-		var error: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
-		error = createErrorFromMADErrorType(.OrderNotImplemented)!
+		throw MADErr.OrderNotImplemented
 		
-		throw error
 	}
 	
 	required init?(coder: NSCoder) {
@@ -578,11 +573,10 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		updatePlugInInfoMenu()
 	}
 	
-	/*override*/ func makeUntitledDocumentOfType(typeName: String, error: ()) throws -> AnyObject {
-		//override func makeUntitledDocumentOfType(typeName: String) throws -> AnyObject {
+	override func makeUntitledDocumentOfType(typeName: String) throws -> NSDocument {
 		assert(typeName == MADNativeUTI, "Unknown type passed to \(__FUNCTION__): \(typeName)")
 		let theDoc = PPDocument(music: PPMusicObject())
-
+		
 		return theDoc
 	}
 	

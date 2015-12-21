@@ -59,6 +59,19 @@ extension MADErr: ErrorType {
 	public var _code: Int {
 		return Int(rawValue)
 	}
+	
+	public func throwIfNotNoErr() throws {
+		if self != .NoErr {
+			throw self
+		}
+	}
+	
+	public func convertToCocoaType() -> NSError {
+		guard let anErr = PPCreateErrorFromMADErrorTypeConvertingToCocoa(self, true) else {
+			return NSError(domain: NSCocoaErrorDomain, code: 0, userInfo: [NSLocalizedDescriptionKey: "Throwing MADNoErr!"])
+		}
+		return anErr
+	}
 }
 
 ///Creates an `NSError` from a `MADErr`, optionally converting the error type to an error in the Cocoa error domain.

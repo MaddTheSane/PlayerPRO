@@ -30,7 +30,6 @@ private func ==(rhs: NSData, lhs: NSData) -> Bool {
 	}
 	
 	public func canImportURL(theURL: NSURL) throws {
-		var outErr: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
 		func getHeaderData() -> NSData {
 			let headerData: [Int8] = [0x4D, 0x54, 0x68, 0x64, 0, 0, 0, 6, 0]
 			return NSData(bytes: headerData, length: headerData.count)
@@ -45,7 +44,7 @@ private func ==(rhs: NSData, lhs: NSData) -> Bool {
 			if fileData.isEqualToData(headerData) {
 				return
 			} else {
-				outErr = createErrorFromMADErrorType(.FileNotSupportedByThisPlug)
+				throw MADErr.FileNotSupportedByThisPlug
 			}
 		}
 	}

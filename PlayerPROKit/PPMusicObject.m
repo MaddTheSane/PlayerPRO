@@ -583,27 +583,40 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	}
 }
 
-- (MADErr)saveMusicToURL:(NSURL *)tosave
+- (BOOL)saveMusicToURL:(NSURL *)tosave error:(out NSError**)error;
 {
-	return [self saveMusicToURL:tosave compress:NO];
+	return [self saveMusicToURL:tosave compress:NO error:error];
 }
 
-- (MADErr)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp
+- (BOOL)saveMusicToURL:(NSURL *)tosave compress:(BOOL)mad1Comp error:(out NSError**)error;
 {
 	MADErr retErr;
 	if ((retErr = MADMusicSaveCFURL(currentMusic, (__bridge CFURLRef)tosave, mad1Comp)) == MADNoErr) {
 		currentMusic->hasChanged = false;
 		self.filePath = tosave;
 	}
-	return retErr;
+	
+	if (error) {
+		*error = PPCreateErrorFromMADErrorType(retErr);
+	}
+	
+	return retErr == MADNoErr;
 }
 
-- (MADErr)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib
+- (BOOL)exportMusicToURL:(NSURL *)tosave format:(NSString*)form library:(PPLibrary*)otherLib error:(out NSError**)error;
 {
+	MADErr theErr = MADNoErr;
 	if ([form isEqualToString:@"MADK"]) {
-		return [self saveMusicToURL:tosave];
+		return [self saveMusicToURL:tosave error:error];
+	} else {
+		theErr = MADMusicExportCFURL(otherLib.theLibrary, self._currentMusic, (char*)[form cStringUsingEncoding:NSMacOSRomanStringEncoding], (__bridge CFURLRef)tosave);
 	}
-	return MADMusicExportCFURL(otherLib.theLibrary, self._currentMusic, (char*)[form cStringUsingEncoding:NSMacOSRomanStringEncoding], (__bridge CFURLRef)tosave);
+	
+	if (error) {
+		*error = PPCreateErrorFromMADErrorType(theErr);
+	}
+	
+	return theErr == MADNoErr;
 }
 
 - (MADMusic *)copyMadMusicStruct

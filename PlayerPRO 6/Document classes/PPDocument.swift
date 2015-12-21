@@ -47,7 +47,6 @@ import AudioToolbox
 	}
 
 	private func resetPlayerPRODriver() {
-		var returnerr = MADErr.NoErr;
 		var theSett = MADDriverSettings.new()
 		let defaults = NSUserDefaults.standardUserDefaults()
 		
@@ -69,16 +68,17 @@ import AudioToolbox
 			theSett.MicroDelaySize = 0;
 		}
 		
-		theSett.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver)))!
+		theSett.driverMode = MADSoundOutput(rawValue: Int16(defaults.integerForKey(PPSoundDriver))) ?? .CoreAudioDriver
 		theSett.repeatMusic = false;
 		
-		returnerr = theDriver.changeDriverSettingsToSettings(&theSett)
-		
-		if (returnerr != MADErr.NoErr) {
-			print("Unable to change driver, \(self)")
+		do {
+			try theDriver.changeDriverSettingsToSettings(&theSett)
+		} catch let error as NSError {
+			print("Unable to change driver for \(self), error \(error)")
 			//NSAlert(error: createErrorFromMADErrorType(returnerr)).beginSheetModalForWindow(self.windowForSheet, completionHandler: { (returnCode) -> Void in
-				 //currently, do nothing
+			//currently, do nothing
 			//})
+
 		}
 	}
 	
@@ -129,16 +129,20 @@ import AudioToolbox
     }
 
 	override func writeToURL(url: NSURL, ofType typeName: String) throws {
-		var outError: NSError! = NSError(domain: "Migrator", code: 0, userInfo: nil)
 		if typeName != MADNativeUTI {
 			throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
 		} else {
-			let anErr = theMusic.saveMusicToURL(url)
-			if anErr != .NoErr {
-				outError = createErrorFromMADErrorType(anErr, convertToCocoa: true)
-				throw outError
-			} else {
-				return
+			do {
+				try theMusic.saveMusicToURL(url)
+			} catch {
+				if let error = error as? MADErr {
+					throw error.convertToCocoaType()
+				} else if (error as NSError).domain == PPMADErrorDomain {
+					let bErr = MADErr(rawValue: Int16((error as NSError).code))!
+					throw bErr.convertToCocoaType()
+				} else {
+					throw error
+				}
 			}
 		}
 	}

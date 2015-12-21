@@ -59,8 +59,7 @@ final public class APPLImporter: NSObject, PPComplexImportPlugInterface {
 				}
 			}
 			
-			outErr = createErrorFromMADErrorType(.FileNotSupportedByThisPlug)!
-			throw outErr
+			throw MADErr.FileNotSupportedByThisPlug
 		} catch let error as NSError {
 			outErr = error
 		}

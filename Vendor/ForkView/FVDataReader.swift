@@ -8,6 +8,7 @@
 
 import Foundation
 import SwiftAdditions
+import Darwin.POSIX.sys.xattr
 
 final class FVDataReader {
     private var data = NSData()

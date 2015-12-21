@@ -778,7 +778,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	}
 	
 	func saveMusicToURL(tosave: NSURL) {
-		music.saveMusicToURL(tosave)
+		do {
+			try music.saveMusicToURL(tosave)
+		} catch let error as NSError {
+			NSAlert(error: error).runModal()
+		}
 	}
 	
 	@IBAction func saveMusicAs(sender: AnyObject?) {
@@ -1460,16 +1464,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 				}
 				
 				let fileURL = savePanel.URL
-				let err = self.music.exportMusicToURL(fileURL!, format: self.madLib[tag].type, library: self.madLib)
-				self.madDriver.endExport()
-				if (err != .NoErr) {
-					if (self.isQuitting) {
-						NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
-					} else {
-						let aerr = createErrorFromMADErrorType(err)!
-						NSAlert(error: aerr).runModal()
-					}
-				} else {
+				defer {
+					self.madDriver.endExport()
+				}
+				do {
+				try self.music.exportMusicToURL(fileURL!, format: self.madLib[tag].type, library: self.madLib)
 					self.addMusicToMusicList(fileURL!, loadIfPreferencesAllow: false)
 					if (self.isQuitting) {
 						NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
@@ -1479,6 +1478,13 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 							NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([fileURL!])
 						}
 					}
+				} catch let error as NSError {
+					if (self.isQuitting) {
+						NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
+					} else {
+						NSAlert(error: error).runModal()
+					}
+
 				}
 			})
 		}

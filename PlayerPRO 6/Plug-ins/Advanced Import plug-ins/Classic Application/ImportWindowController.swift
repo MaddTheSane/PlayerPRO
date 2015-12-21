@@ -125,8 +125,8 @@ class ImportWindowController: NSWindowController {
 			if dictionaryCont.selectedObjects.count > 0 {
 				let aValue: AnyObject?
 				if #available(OSX 10.11, *) {
-				    let aSelect = dictionaryCont.selectedObjects[0] as! NSDictionaryControllerKeyValuePair
-					aValue = aSelect.value // ...but it does respond to "value", which is public
+				    let aSelect = dictionaryCont.selectedObjects[0] as? NSDictionaryControllerKeyValuePair
+					aValue = aSelect?.value
 				} else {
 					// Actual class is a private class, _NSControllerKeyValuePair
 					// ...but it does respond to "value", which is public
@@ -134,8 +134,8 @@ class ImportWindowController: NSWindowController {
 					// so we call a wrapper function.
 					aValue = GetValueUsingKVO(dictionaryCont.selectedObjects[0])
 				}
-				if let anotherVal = aValue as? [FVResource] {
-					self.resourceArray = anotherVal
+				if let aValue = aValue as? [FVResource] {
+					self.resourceArray = aValue
 				}
 
 				arrayCont.bind(NSContentArrayBinding, toObject: self, withKeyPath: "resourceArray", options: nil)
