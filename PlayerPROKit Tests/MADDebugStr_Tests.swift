@@ -19,7 +19,7 @@ private func GlobalDebugStr(line: Int16, file: UnsafePointer<Int8>, text: Unsafe
 	print("\(fileStr):\(line) Global Test: \(textStr)")
 }
 
-class Error_Tests: XCTestCase {
+class MADDebugStr_Tests: XCTestCase {
 	var exampleVar = ""
 	
 	override func setUp() {

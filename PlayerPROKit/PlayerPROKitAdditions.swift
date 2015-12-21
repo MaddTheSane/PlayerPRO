@@ -50,6 +50,17 @@ public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObjec
 	})
 }
 
+extension MADErr: ErrorType {
+	/// PlayerPROKit's `PPMADErrorDomain`
+	public var _domain: String {
+		return PPMADErrorDomain
+	}
+	/// PlayerPROCore's `MADErr` raw value
+	public var _code: Int {
+		return Int(rawValue)
+	}
+}
+
 ///Creates an `NSError` from a `MADErr`, optionally converting the error type to an error in the Cocoa error domain.
 ///
 ///- parameter theErr: The `MADErr` to convert to an `NSError`
