@@ -511,7 +511,7 @@ MADSoundOutputBit MADSoundDriverList()
 
 void MADGetBestDriver(MADDriverSettings *Init)
 {
-	memset(Init->reserved.padding, 0, sizeof(Init->reserved));
+	memset(Init->additionalSettings.padding, 0, sizeof(Init->additionalSettings));
 	Init->outPutBits		= 16;
 	Init->outPutMode		= DeluxeStereoOutPut;
 	Init->outPutRate		= 44100;
@@ -530,6 +530,7 @@ void MADGetBestDriver(MADDriverSettings *Init)
 #elif defined(WIN32)
 	Init->driverMode		= Wave95NT;
 #else
+#warning no default audio device set!
 	//Fall-through: If we reach this, it's probably becasue we don't have an audio device for this platform.
 	Init->driverMode		= NoHardwareDriver;
 #endif

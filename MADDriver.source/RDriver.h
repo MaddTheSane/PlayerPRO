@@ -364,9 +364,9 @@ typedef struct MADDriverSettings {
 	/// If the music is finished, either repeat it or stop.
 	bool	repeatMusic;
 	/// For future use
-	union {
+	union AdditionalSettings {
 		char padding[44];
-	} reserved;
+	} additionalSettings;
 } MADDriverSettings;
 #pragma pack(pop)
 

@@ -194,13 +194,16 @@ typedef MADENUM(short, MADErr) {
 	MADUserCanceledErr				= -15
 };
 
+/// A byte, represented as an unsigned number.
 typedef uint8_t			MADByte;
 
 ///Pascal Strings. Kept for legacy reasons.
 typedef unsigned char	MADPStr255[256], MADPStr63[64];
 #ifndef __APPLE__
+/// A four-character string, in Mac OS Roman encoding.
 typedef uint32_t		MADFourChar;
 #else
+/// A four-character string, in Mac OS Roman encoding.
 typedef OSType	MADFourChar;
 #endif
 
