@@ -137,13 +137,23 @@
 	return MADFindAFreeChannel(theRec);
 }
 
-- (MADErr)changeDriverSettingsToSettings:(MADDriverSettings*)theSett
+- (BOOL)changeDriverSettingsToSettings:(MADDriverSettings*)theSett error:(out NSError* __nullable __autoreleasing* __nullable)error;
 {
+	// let's nip this in the bud before we get farther along:
+	if (!theSett) {
+		if (error) {
+			*error = PPCreateErrorFromMADErrorType(MADParametersErr);
+		}
+		return NO;
+	}
 	MADErr theErr;
 	[self willChangeValueForKey:@"driverSettings"];
 	theErr = MADChangeDriverSettings(theSett, &theRec);
 	[self didChangeValueForKey:@"driverSettings"];
-	return theErr;
+	if (error) {
+		*error = PPCreateErrorFromMADErrorType(theErr);
+	}
+	return theErr == MADNoErr;
 }
 
 - (void)beginExport

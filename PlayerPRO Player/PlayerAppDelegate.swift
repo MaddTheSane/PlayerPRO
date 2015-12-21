@@ -501,7 +501,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	private func MADDriverWithPreferences() {
 		var madWasReading = false;
 		var fullTime = 0, curTime = 0;
-		var returnerr: NSError?
 		if madDriver != nil {
 			madWasReading = !madDriver.paused
 			madDriver.stop()
@@ -535,15 +534,35 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		
 		//OSErr returnerr = MADCreateDriver(&init, madLib, &madDriver);
 		if madDriver == nil {
-			madDriver = try! PPDriver(library: madLib, settings: &theSettinit)
+			do {
+				madDriver = try PPDriver(library: madLib, settings: &theSettinit)
+			} catch let error as NSError {
+				let defaults = NSUserDefaults.standardUserDefaults()
+				for pref in [PPSoundOutBits, PPSoundOutRate, PPSoundDriver, PPStereoDelayToggle,
+					PPReverbToggle, PPSurroundToggle, PPOversamplingToggle, PPStereoDelayAmount,
+					PPReverbAmount, PPReverbStrength, PPOversamplingAmount] {
+					defaults.removeObjectForKey(pref)
+				}
+				defaults.synchronize()
+
+				let alert = NSAlert()
+				alert.messageText = "Sound Driver failure"
+				alert.informativeText = "Unable to create the PlayerPRO sound driver due to error type \(error.code). Sound preferences will be reset.\n\nPlayerPRO will now close."
+				alert.runModal()
+				
+				print("Could not create initial driver, error \(error)")
+				exit(EXIT_FAILURE)
+			}
 		} else {
-			returnerr = createErrorFromMADErrorType(madDriver.changeDriverSettingsToSettings(&theSettinit))
+			do {
+				try madDriver.changeDriverSettingsToSettings(&theSettinit)
+			} catch let error as NSError {
+				NSNotificationCenter.defaultCenter().postNotificationName(PPDriverDidChange, object: self)
+				NSAlert(error: error).runModal()
+				return;
+			}
 		}
 		NSNotificationCenter.defaultCenter().postNotificationName(PPDriverDidChange, object: self)
-		if let returnerr = returnerr {
-			NSAlert(error: returnerr).runModal()
-			return;
-		}
 		//MADStartDriver(madDriver);
 		if self.music != nil {
 			//MADAttachDriverToMusic(madDriver, music, NULL);

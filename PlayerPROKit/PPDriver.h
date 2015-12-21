@@ -36,9 +36,11 @@ NS_ASSUME_NONNULL_BEGIN
  *	@abstract changes the sound format used by the driver.
  *	@param theSett
  *		The new sound settings to use.
- *	@return An error type on failure, or \c MADNoErr on success.
+ *	@param error
+ *		A pointer to an \c NSError object. On failure, is populated with an error in the \c PPMADErrorDomain
+ *	@return \c YES if successful, otherwise <code>NO</code>.
  */
-- (MADErr)changeDriverSettingsToSettings:(MADDriverSettings*)theSett;
+- (BOOL)changeDriverSettingsToSettings:(MADDriverSettings*)theSett error:(out NSError* __nullable __autoreleasing* __nullable)error;
 
 - (void)beginExport;
 - (void)endExport;
