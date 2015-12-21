@@ -449,7 +449,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		if theOSErr != .NoErr || error != nil {
 			paused = true
 			clearMusic()
-			throw error ?? createErrorFromMADErrorType(theOSErr)!
+			throw error ?? theOSErr
 		}
 		
 		do {
@@ -717,7 +717,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 				if theRet == .NoErr {
 					addMusicToMusicList(theURL)
 				} else {
-					throw createErrorFromMADErrorType(theRet)!
+					throw theRet
 				}
 			} catch _ {
 				

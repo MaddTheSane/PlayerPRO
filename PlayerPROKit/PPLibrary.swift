@@ -203,8 +203,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		if aRet == .NoErr {
 			return sRet!
 		} else {
-			let aThrowable = PPCreateErrorFromMADErrorType(aRet)!
-			throw aThrowable
+			throw aRet
 		}
 	}
 	
@@ -273,7 +272,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		if anErr == .NoErr {
 			return infoRec
 		} else {
-			throw createErrorFromMADErrorType(anErr)!
+			throw anErr
 		}
 	}
 	
