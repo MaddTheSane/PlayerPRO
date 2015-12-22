@@ -15,7 +15,7 @@
 
 @interface PPInstrumentObject ()
 {
-	NSMutableArray	*samples;
+	NSMutableArray<PPSampleObject*>	*samples;
 }
 - (instancetype)initWithMusic:(PPMusicObject *)mus;
 - (instancetype)initWithMusicStruct:(MADMusic *)theMus atIndex:(NSInteger)ind;

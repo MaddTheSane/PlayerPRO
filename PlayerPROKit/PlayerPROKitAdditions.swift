@@ -197,15 +197,14 @@ public func octaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true
 		return nil
 	}
 	
-	if isUseLetters {
-		let NNames = ["C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "]
-		
-		return "\(NNames[Int(octNote % 12)])\(octNote / 12)"
-	} else {
-		let NNames_nonEnglish = ["Do", "Do#", "Ré", "Ré#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"]
+	let NNames: [String]
 	
-		return "\(NNames_nonEnglish[Int(octNote % 12)])\(octNote / 12)"
+	if isUseLetters {
+		NNames = ["C ", "C#", "D ", "D#", "E ", "F ", "F#", "G ", "G#", "A ", "A#", "B "]
+	} else {
+		NNames = ["Do", "Do#", "Ré", "Ré#", "Mi", "Fa", "Fa#", "Sol", "Sol#", "La", "La#", "Si"]
 	}
+	return "\(NNames[Int(octNote % 12)])\(octNote / 12)"
 }
 
 extension PPSampleObject {
@@ -326,7 +325,7 @@ extension PPSampleObject {
 		drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: curData, context:ctxRef)
 	}
 
-	final public class func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext?) {
+	final public class func drawSample(var start start: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext?) {
 		CGContextSaveGState(ctxRef);
 		
 		var temp: CGFloat = 0.0
@@ -339,7 +338,7 @@ extension PPSampleObject {
 		if (curData.amplitude == 16) {
 			let theShortSample = UnsafePointer<UInt16>(curData.data.bytes)
 			let sampleSize = curData.data.length / 2
-			let start = startI / 2
+			start /= 2
 			
 			var BS = start + (tSS * sampleSize) / larg
 			if (isStereo) {
@@ -387,7 +386,6 @@ extension PPSampleObject {
 				}
 			}
 		} else {
-			let start = startI
 			let sampleSize = curData.data.length
 			let theSample = UnsafePointer<UInt8>(curData.data.bytes)
 

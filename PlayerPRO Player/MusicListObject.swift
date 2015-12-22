@@ -78,7 +78,6 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	
 	@objc private(set) lazy var fileSize: UInt64 = {
 		var val: AnyObject? = nil;
-		var err: NSError? = nil;
 		do {
 			try self.musicURL.getResourceValue(&val, forKey:NSURLTotalFileSizeKey)
 			let retNum = val as! NSNumber

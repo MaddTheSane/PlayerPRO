@@ -64,7 +64,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 			}
 		}
 		
-		if !(object! is PPSampleObject) {
+		if !(object is PPSampleObject) {
 			object = nil
 		}
 		

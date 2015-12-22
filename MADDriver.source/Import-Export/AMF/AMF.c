@@ -299,10 +299,7 @@ static MADErr AMF2Mad(char *AMFCopyPtr, long size, MADMusic *theMAD, MADDriverSe
 
 static MADErr TestAMFFile(void *AlienFile)
 {
-	MADFourChar	myMADSign = *((MADFourChar*) AlienFile);
-	MADBE32(&myMADSign);
-	
-	if ((myMADSign & 0xFFFFFF00) == 0x414D4600)
+	if (memcmp(AlienFile, "AMF", 3) == 0)
 		return MADNoErr;
 	else
 		return MADFileNotSupportedByThisPlug;
