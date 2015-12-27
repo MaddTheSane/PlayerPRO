@@ -492,13 +492,14 @@ static Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPatternObj
 - (BOOL)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange error:(NSError**)error;
 {
 	NSData *datToWrite;
-	if (trackRange.length == 0 || posRange.length) {
+	if (trackRange.length == 0 || posRange.length == 0) {
 		if (error) {
 			*error = PPCreateErrorFromMADErrorType(MADParametersErr);
 		}
 		return false;
 	}
 	Pcmd *thePcmd = [self newPcmdWithTrackRange:trackRange positionRange:posRange];
+    NSInteger theLength = thePcmd->structSize;
 	SwapPcmd(thePcmd);
 	if (!thePcmd) {
 		if (error) {
@@ -506,7 +507,7 @@ static Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPatternObj
 		}
 		return false;
 	}
-	datToWrite = [[NSData alloc] initWithBytesNoCopy:thePcmd length:thePcmd->structSize];
+	datToWrite = [[NSData alloc] initWithBytesNoCopy:thePcmd length:theLength];
 	
 	if (![datToWrite writeToURL:theURL options:NSDataWritingAtomic error:error]) {
 		//The Foundation method will fill out the error data for us.
