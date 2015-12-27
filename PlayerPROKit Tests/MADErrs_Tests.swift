@@ -47,4 +47,15 @@ class MADErrs_Tests: XCTestCase {
 			XCTAssertEqual(error.code, anErr.code)
 		}
 	}
+	
+	func testSwiftToNSError() {
+		if let anNSErr = MADErr.NeedMemory.toNSError(convertToCocoa: false) {
+			XCTAssertEqual(anNSErr.domain, PPMADErrorDomain)
+		}
+		
+		if let anNSErr = MADErr.NeedMemory.toNSError(customUserDictionary:["CustomInfo": "Hello"], convertToCocoa: false) {
+			XCTAssertEqual(anNSErr.domain, PPMADErrorDomain)
+		}
+
+	}
 }

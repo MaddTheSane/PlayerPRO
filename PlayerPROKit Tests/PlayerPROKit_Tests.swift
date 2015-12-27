@@ -75,14 +75,14 @@ class PlayerPROKit_Tests: XCTestCase {
 		do {
 			let driver = try PPDriver(library: ourLib!, settings: &drivSettings)
 			let musicPath = ourBundle!.URLForResource("TestMADK", withExtension: "madk")!
-			var mus: PPMusicObject? = try! PPMusicObject(URL: musicPath)
+			var mus: PPMusicObject? = try PPMusicObject(URL: musicPath)
 			driver.currentMusic = mus
 			driver.play()
 			sleep(10)
 			driver.stop()
 			mus = nil
 			driver.currentMusic = nil
-			mus = try! PPMusicObject(URL: musicPath)
+			mus = try PPMusicObject(URL: musicPath)
 			driver.currentMusic = mus
 			mus = nil
 			driver.play()

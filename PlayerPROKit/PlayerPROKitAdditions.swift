@@ -13,7 +13,7 @@ import CoreGraphics
 import SwiftAdditions
 #if os(OSX)
 	import Cocoa
-#elseif os(iOS)
+#else
 	import UIKit
 #endif
 
@@ -55,22 +55,67 @@ extension MADErr: ErrorType {
 	public var _domain: String {
 		return PPMADErrorDomain
 	}
+	
 	/// PlayerPROCore's `MADErr` raw value
 	public var _code: Int {
 		return Int(rawValue)
 	}
 	
+	/// Causes `self` to throw if the `rawValue` is anything other than `.NoErr`.
 	public func throwIfNotNoErr() throws {
 		if self != .NoErr {
 			throw self
 		}
 	}
 	
+	/// Converts to an error to one in the built-in Cocoa error domains, if possible.
 	public func convertToCocoaType() -> NSError {
 		guard let anErr = PPCreateErrorFromMADErrorTypeConvertingToCocoa(self, true) else {
-			return NSError(domain: NSCocoaErrorDomain, code: 0, userInfo: [NSLocalizedDescriptionKey: "Throwing MADNoErr!"])
+			return NSError(domain: PPMADErrorDomain, code: 0, userInfo: [NSLocalizedDescriptionKey: "Throwing MADNoErr! This shouldn't happen!"])
 		}
 		return anErr
+	}
+	
+	///Creates an `NSError` from `self`, optionally converting the error type to an error in the Cocoa error domain.
+	///
+	///- parameter customUserDictionary: A dictionary with additional information. May be `nil`, default is `nil`.
+	///- parameter convertToCocoa: Converts `self` into a comparable error in Cocoa's error types. Default is `true`.
+	///- returns: An `NSError` value, or `nil` if `self` is `.NoErr`
+	@warn_unused_result public func toNSError(customUserDictionary cud: [String: NSObject]? = nil, convertToCocoa: Bool = true) -> NSError? {
+		if self == .NoErr {
+			return nil
+		}
+		
+		func populateErrors(error: NSError) -> NSError {
+			if let cud = cud {
+				var errDict: [NSObject: AnyObject] = error.userInfo
+				errDict[NSLocalizedDescriptionKey] = error.localizedDescription
+				if let aFailReason = error.localizedFailureReason {
+					errDict[NSLocalizedFailureReasonErrorKey] = aFailReason
+				}
+				
+				if let aRecoverySuggestion = error.localizedRecoverySuggestion {
+					errDict[NSLocalizedRecoverySuggestionErrorKey] = aRecoverySuggestion
+				}
+				
+				errDict += cud
+				
+				return NSError(domain: error.domain, code: error.code, userInfo: errDict)
+			} else {
+				return error
+			}
+		}
+		
+		if convertToCocoa {
+			let cocoaErr = PPCreateErrorFromMADErrorTypeConvertingToCocoa(self, true)!
+			return populateErrors(cocoaErr)
+		}
+		
+		do {
+			throw self
+		} catch let error as NSError {
+			return populateErrors(error)
+		}
 	}
 }
 
@@ -81,27 +126,7 @@ extension MADErr: ErrorType {
 ///- parameter convertToCocoa: Converts the `MADErr` code into a compatible error in Cocoa's error types. defaults to `false`.
 ///- returns: An `NSError` value, or `nil` if passed `.NoErr`
 public func createErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [String: NSObject]? = nil, convertToCocoa: Bool = false) -> NSError? {
-	
-	guard let anErr = PPCreateErrorFromMADErrorTypeConvertingToCocoa(theErr, convertToCocoa) else {
-		return nil
-	}
-	if let cud = customUserDictionary {
-		var errDict: [String: NSObject] = [NSLocalizedDescriptionKey : anErr.localizedDescription]
-		
-		if let aFailReason = anErr.localizedFailureReason {
-			errDict[NSLocalizedFailureReasonErrorKey] = aFailReason
-		}
-		
-		if let aRecoverySuggestion = anErr.localizedRecoverySuggestion {
-			errDict[NSLocalizedRecoverySuggestionErrorKey] = aRecoverySuggestion
-		}
-		
-		errDict += cud
-		
-		return NSError(domain: anErr.domain, code: anErr.code, userInfo: errDict)
-	} else {
-		return anErr
-	}
+	return theErr.toNSError(customUserDictionary: customUserDictionary, convertToCocoa: convertToCocoa)
 }
 
 public func noteFromString(myTT: String) -> Int16?
