@@ -468,6 +468,9 @@ private let kPlayerList = "Player List"
 		
 		conn.remoteObjectProxy.loadStcfAtURL(toOpen, withReply: {(bookmarkData:[String : AnyObject]?, error: NSError?) -> Void in
 			NSOperationQueue.mainQueue().addOperationWithBlock({
+				defer {
+					conn.invalidate()
+				}
 				if error != nil {
 					theHandle(theErr: error)
 				} else {
@@ -492,7 +495,6 @@ private let kPlayerList = "Player List"
 						
 						theHandle(theErr: nil)
 				}
-				conn.invalidate()
 			})
 		})
 	}

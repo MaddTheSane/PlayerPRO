@@ -1458,17 +1458,16 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			savePanel.title = "Export as \(madLib[tag].menuName)"
 			
 			savePanel.beginSheetModalForWindow(self.window, completionHandler: {(result) -> Void in
-				if (result != NSFileHandlingPanelOKButton) {
+				defer {
 					self.madDriver.endExport()
+				}
+				if (result != NSFileHandlingPanelOKButton) {
 					return;
 				}
 				
 				let fileURL = savePanel.URL
-				defer {
-					self.madDriver.endExport()
-				}
 				do {
-				try self.music.exportMusicToURL(fileURL!, format: self.madLib[tag].type, library: self.madLib)
+					try self.music.exportMusicToURL(fileURL!, format: self.madLib[tag].type, library: self.madLib)
 					self.addMusicToMusicList(fileURL!, loadIfPreferencesAllow: false)
 					if (self.isQuitting) {
 						NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
@@ -1484,7 +1483,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 					} else {
 						NSAlert(error: error).runModal()
 					}
-
 				}
 			})
 		}

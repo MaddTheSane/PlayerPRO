@@ -27,16 +27,11 @@ class PlayerPROKit_Tests: XCTestCase {
 		MADRegisterDebugFunc(cXTCFail)
 		
 		ourBundle = NSBundle(forClass: PlayerPROKit_Tests.self)
-		do {
-			if let ourPlugPath = ourBundle?.builtInPlugInsURL {
-				ourPlugPath.checkResourceIsReachableAndReturnError(nil)
+			if let ourPlugPath = ourBundle?.builtInPlugInsURL where ourPlugPath.checkResourceIsReachableAndReturnError(nil) {
 				ourLib = PPLibrary(plugInURL: ourPlugPath)
 			} else {
-				throw NSError(domain: PPMADErrorDomain, code: 0, userInfo: nil)
+				ourLib = PPLibrary()
 			}
-		} catch {
-			ourLib = PPLibrary()
-		}
 	}
 	
 	override func tearDown() {
