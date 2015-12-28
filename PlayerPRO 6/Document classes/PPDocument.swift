@@ -133,7 +133,7 @@ import AudioToolbox
 			throw NSError(domain: NSOSStatusErrorDomain, code: paramErr, userInfo: nil)
 		} else {
 			do {
-				try theMusic.saveMusicToURL(url)
+				try theMusic.saveMusicToURL(url, compress: NSUserDefaults.standardUserDefaults().boolForKey(PPMMadCompression))
 			} catch {
 				if let error = error as? MADErr {
 					throw error.convertToCocoaType()
