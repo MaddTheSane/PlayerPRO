@@ -33,6 +33,7 @@
 	<key>MADPlugUTITypes</key>
 	<array>
 		<string>net.sourceforge.playerpro.xm</string>
+		<string>org.videolan.xm</string>
 	</array>
 	<key>NSHumanReadableCopyright</key>
 	<string>Written by A.ROSSET © 1995</string>

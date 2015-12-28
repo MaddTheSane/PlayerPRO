@@ -33,6 +33,7 @@
 	<key>MADPlugUTITypes</key>
 	<array>
 		<string>net.sourceforge.playerpro.it</string>
+		<string>org.videolan.it</string>
 	</array>
 	<key>NSHumanReadableCopyright</key>
 	<string>Written by A.ROSSET © 1996</string>
