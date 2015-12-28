@@ -52,7 +52,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	let madLib = PPLibrary()!
 	let instrumentPlugHandler = PPInstrumentPlugHandler()
 	let digitalHandler = DigitalPlugHandler()
-	let filterHandler = PPFilterPlugHandler()
+	let filterHandler = FilterPlugHandler()
 	let complexImport = ComplexImportPlugHandler()
 	let samplesHandler = SamplePlugHandler()
 	let preferences = Preferences.newPreferenceController()

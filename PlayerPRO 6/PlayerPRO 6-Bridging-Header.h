@@ -9,7 +9,6 @@
 #import "PPTimeFormatter.h"
 #import "PPInstrumentImporterObject.h"
 
-#import "PPFilterPlugHandler.h"
 #import "PPInstrumentPlugHandler.h"
 #import "PPPreferences.h"
 #import "PPComplexImportPlugObject.h"

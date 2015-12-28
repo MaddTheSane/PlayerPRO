@@ -23,9 +23,3 @@ extension PPInstrumentPlugHandler: SequenceType {
 		return (plugInArray).generate();
 	}
 }
-
-extension PPFilterPlugHandler: SequenceType {
-	public func generate() -> IndexingGenerator<[PPFilterPlugObject]> {
-		return (plugInArray).generate();
-	}
-}

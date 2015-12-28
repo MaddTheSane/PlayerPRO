@@ -24,7 +24,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 	
 	@IBOutlet weak var currentDocument: PPDocument!
 	weak var importer: PPInstrumentPlugHandler!
-	weak var filterHandler: PPFilterPlugHandler!
+	weak var filterHandler: FilterPlugHandler!
 	weak var theDriver: PPDriver!
 	
 	func colorsDidChange(aNot: NSNotification) {
