@@ -263,11 +263,10 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		return .UnknownErr
 	}
 	
-	private func informationFromFile(URL URL: NSURL, cType: [Int8]) throws -> MADInfoRec {
-		var cStrType = cType
+	private func informationFromFile(URL URL: NSURL, var cType: [Int8]) throws -> MADInfoRec {
 		var infoRec = MADInfoRec()
 
-		let anErr = MADMusicInfoCFURL(theLibrary, &cStrType, URL, &infoRec)
+		let anErr = MADMusicInfoCFURL(theLibrary, &cType, URL, &infoRec)
 		
 		if anErr == .NoErr {
 			return infoRec

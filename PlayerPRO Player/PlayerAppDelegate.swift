@@ -1608,7 +1608,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			do {
 				let strType = try madLib.identifyFile(URL: musicURL)
 				aPPInfo = try madLib.informationFromFile(URL: musicURL, type: strType)
-				
 			} catch {
 				aPPInfo = nil
 			}
