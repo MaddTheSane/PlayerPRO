@@ -24,41 +24,42 @@ func ==(lhs: DigitalPlugInObject, rhs: DigitalPlugInObject) -> Bool {
 	return true
 }
 
-class DigitalPlugInObject : PPPlugInObject {
+final class DigitalPlugInObject : PPPlugInObject {
 	private let hasUI: Bool
 	private var plugCode: PPDigitalPlugin!
 	override init?(bundle toInit: NSBundle) {
-		if let archs = toInit.executableArchitectures  {
-			var hasArch = false
-			for arch in archs {
-				if arch == NSBundleExecutableArchitectureX86_64 {
-					hasArch = true
-					break
-				}
-			}
-			
-			if !hasArch {
-				hasUI = false
-				super.init(bundle: toInit)
-				return nil
-			}
-			
-			if let rawBundClass: AnyClass = toInit.principalClass, bundClass = rawBundClass as? PPDigitalPlugin.Type {
-				plugCode = bundClass.init(forPlugIn: ())
-			} else {
-				hasUI = false
-				super.init(bundle: toInit)
-				return nil
-			}
-			
-			hasUI = plugCode.hasUIConfiguration
-			super.init(bundle: toInit)
-			
-		} else {
+		guard let archs = toInit.executableArchitectures else {
 			hasUI = false
 			super.init(bundle: toInit)
 			return nil
 		}
+		
+		var hasArch = false
+		for arch in archs {
+			if arch == NSBundleExecutableArchitectureX86_64 {
+				hasArch = true
+				break
+			}
+		}
+		
+		guard hasArch else {
+			hasUI = false
+			super.init(bundle: toInit)
+			return nil
+		}
+		
+		guard let rawBundClass: AnyClass = toInit.principalClass,
+			bundClass = rawBundClass as? PPDigitalPlugin.Type,
+			aPlugCode = bundClass.init(forPlugIn: ()) else {
+				hasUI = false
+				super.init(bundle: toInit)
+				return nil
+		}
+		
+		plugCode = aPlugCode
+		
+		hasUI = plugCode.hasUIConfiguration
+		super.init(bundle: toInit)
 	}
 	
 	override var hashValue: Int {
@@ -80,11 +81,11 @@ class DigitalPlugInObject : PPPlugInObject {
 	func beginCallWithPcmd(myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentDocument theDoc: PPDocument, handler: PPPlugErrorBlock) {
 		let outError = plugCode.runWithPcmd(myPcmd, driver: driver)
 		if outError == .OrderNotImplemented {
-			guard let aVoid = plugCode.beginRunWithPcmd else {
+			guard let UIFunc = plugCode.beginRunWithPcmd else {
 				handler(outError)
 				return
 			}
-			aVoid(myPcmd, driver: driver, parentWindow: theDoc.windowForSheet!, handler: handler)
+			UIFunc(myPcmd, driver: driver, parentWindow: theDoc.windowForSheet!, handler: handler)
 		}
 		handler(outError)
 	}

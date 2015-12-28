@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PPInstrumentPlugHandler : NSObject <NSFastEnumeration>
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
-@property (readonly) NSArray *plugInArray;
+@property (readonly, copy) NSArray<PPInstrumentImporterObject*> *plugInArray;
 @property (readonly) NSInteger plugInCount;
 - (PPInstrumentImporterObject*)plugInAtIndex:(NSUInteger)idx;
 - (PPInstrumentImporterObject *)objectAtIndexedSubscript:(NSInteger)index;

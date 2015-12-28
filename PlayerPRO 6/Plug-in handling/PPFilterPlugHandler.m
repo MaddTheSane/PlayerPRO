@@ -60,7 +60,7 @@
 	return filterPlugs[idx];
 }
 
-- (NSUInteger)plugInCount
+- (NSInteger)plugInCount
 {
 	return [filterPlugs count];
 }

@@ -9,8 +9,8 @@
 import Cocoa
 import PlayerPROKit
 
-class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType {
-	private var digitalPlugs = [DigitalPlugInObject]()
+final class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType {
+	private(set) var digitalPlugs = [DigitalPlugInObject]()
 	
 	override init() {
 		let defaultPlugLocs = DefaultPlugInLocations()
@@ -34,9 +34,7 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType {
 						digitalPlugs.append(tempObj)
 					}
 				}
-			} catch {
-				
-			}
+			} catch _ { }
 		}
 		super.init()
 	}
@@ -64,15 +62,19 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType {
 		}
 	}
 	
+	var plugInCount: Int {
+		return self.count
+	}
+	
 	func generate() -> IndexingGenerator<[DigitalPlugInObject]> {
 		return digitalPlugs.generate()
 	}
 	
-	var startIndex: Int {
+	@nonobjc var startIndex: Int {
 		return digitalPlugs.startIndex
 	}
 	
-	var endIndex: Int {
+	@nonobjc var endIndex: Int {
 		return digitalPlugs.endIndex
 	}
 	

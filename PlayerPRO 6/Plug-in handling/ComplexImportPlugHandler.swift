@@ -10,14 +10,13 @@ import Cocoa
 import PlayerPROKit
 
 final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, CollectionType {
-	
 	private(set) var plugIns = [PPComplexImportPlugObject]()
 	
-	var startIndex: Int {
+	@nonobjc var startIndex: Int {
 		return 0
 	}
 	
-	var endIndex: Int {
+	@nonobjc var endIndex: Int {
 		return plugIns.count
 	}
 	
@@ -52,9 +51,11 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, CollectionTyp
 	}
 	
 	var count: Int {
-		get {
-			return plugIns.count
-		}
+		return plugIns.count
+	}
+	
+	var plugInCount: Int {
+		return self.count
 	}
 	
 	func generate() -> IndexingGenerator<[PPComplexImportPlugObject]> {
@@ -68,5 +69,4 @@ final class ComplexImportPlugHandler: NSObject, NSFastEnumeration, CollectionTyp
 	func countByEnumeratingWithState(state: UnsafeMutablePointer<NSFastEnumerationState>, objects buffer: AutoreleasingUnsafeMutablePointer<AnyObject?>, count len: Int) -> Int {
 		return (plugIns as NSArray).countByEnumeratingWithState(state, objects: buffer, count: len)
 	}
-	
 }

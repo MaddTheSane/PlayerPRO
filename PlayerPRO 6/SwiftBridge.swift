@@ -20,12 +20,12 @@ extension PPPlugInObject {
 
 extension PPInstrumentPlugHandler: SequenceType {
 	public func generate() -> IndexingGenerator<[PPInstrumentImporterObject]> {
-		return (plugInArray as! [PPInstrumentImporterObject]).generate();
+		return (plugInArray).generate();
 	}
 }
 
 extension PPFilterPlugHandler: SequenceType {
 	public func generate() -> IndexingGenerator<[PPFilterPlugObject]> {
-		return (plugInArray as! [PPFilterPlugObject]).generate();
+		return (plugInArray).generate();
 	}
 }

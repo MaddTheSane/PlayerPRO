@@ -16,9 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface PPFilterPlugHandler : NSObject <NSFastEnumeration>
 - (instancetype)init NS_DESIGNATED_INITIALIZER;
 
-@property (readonly) NSArray *plugInArray;
+@property (readonly, copy) NSArray<PPFilterPlugObject*> *plugInArray;
 - (PPFilterPlugObject*)plugInAtIndex:(NSUInteger)idx;
-- (NSUInteger)plugInCount;
+@property (readonly) NSInteger plugInCount;
 - (PPFilterPlugObject *)objectAtIndexedSubscript:(NSInteger)index;
 
 - (void)beginWithPlugAtIndex:(NSInteger)idx data:(PPSampleObject*)theData selectionRange:(NSRange)selRange onlyCurrentChannel:(BOOL)StereoMode driver:(PPDriver*)driver parentDocument:(NSDocument*)document handler:(PPPlugErrorBlock)handler;

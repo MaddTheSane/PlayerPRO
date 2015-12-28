@@ -18,7 +18,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-#if __LP64__
+#if !__i386__
 __private_extern NSData * PPInstrumentToData(PPInstrumentObject *ourData) NS_RETURNS_RETAINED;
 __private_extern NSData *PPSampleToData(PPSampleObject *sampObj) NS_RETURNS_RETAINED;
 
