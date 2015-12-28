@@ -926,7 +926,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)resetInstrument
 {
-	[self removeSamplesAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, samples.count - 1)]];
+	[self removeSamplesAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, samples.count)]];
 	writebackAddr->no = number = -1;
 	writebackAddr->firstSample = 0;
 	MADResetInstrument(&theInstrument);
