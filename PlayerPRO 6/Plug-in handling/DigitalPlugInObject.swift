@@ -24,11 +24,11 @@ func ==(lhs: DigitalPlugInObject, rhs: DigitalPlugInObject) -> Bool {
 	return true
 }
 
-class DigitalPlugInObject : PPPlugInObject, Hashable {
+class DigitalPlugInObject : PPPlugInObject {
 	private let hasUI: Bool
 	private var plugCode: PPDigitalPlugin!
 	override init?(bundle toInit: NSBundle) {
-		if let archs = toInit.executableArchitectures as? [NSNumber] {
+		if let archs = toInit.executableArchitectures  {
 			var hasArch = false
 			for arch in archs {
 				if arch == NSBundleExecutableArchitectureX86_64 {
@@ -44,7 +44,7 @@ class DigitalPlugInObject : PPPlugInObject, Hashable {
 			}
 			
 			if let rawBundClass: AnyClass = toInit.principalClass, bundClass = rawBundClass as? PPDigitalPlugin.Type {
-				plugCode = bundClass(forPlugIn: ())
+				plugCode = bundClass.init(forPlugIn: ())
 			} else {
 				hasUI = false
 				super.init(bundle: toInit)
@@ -80,9 +80,11 @@ class DigitalPlugInObject : PPPlugInObject, Hashable {
 	func beginCallWithPcmd(myPcmd: UnsafeMutablePointer<Pcmd>, driver: PPDriver, parentDocument theDoc: PPDocument, handler: PPPlugErrorBlock) {
 		let outError = plugCode.runWithPcmd(myPcmd, driver: driver)
 		if outError == .OrderNotImplemented {
-			if let aVoid: Void = plugCode.beginRunWithPcmd?(myPcmd, driver: driver, parentWindow: theDoc.windowForSheet!, handler: handler) {
+			guard let aVoid = plugCode.beginRunWithPcmd else {
+				handler(outError)
 				return
 			}
+			aVoid(myPcmd, driver: driver, parentWindow: theDoc.windowForSheet!, handler: handler)
 		}
 		handler(outError)
 	}

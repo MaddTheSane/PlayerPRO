@@ -13,7 +13,6 @@
 #import "PPInstrumentPlugHandler.h"
 #import "PPPreferences.h"
 #import "PPComplexImportPlugObject.h"
-#import "PPDigitalPlugInObject.h"
 #import "PPFilterPlugObject.h"
 #import "NSColor+PPPreferences.h"
 #import "PPInstrumentImporterCompatObject.h"

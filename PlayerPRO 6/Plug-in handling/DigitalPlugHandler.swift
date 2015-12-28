@@ -10,7 +10,7 @@ import Cocoa
 import PlayerPROKit
 
 class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType {
-	private var digitalPlugs = [PPDigitalPlugInObject]()
+	private var digitalPlugs = [DigitalPlugInObject]()
 	
 	override init() {
 		let defaultPlugLocs = DefaultPlugInLocations()
@@ -30,7 +30,7 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType {
 				
 				
 				for component in aComp {
-					if let theBundle = NSBundle(URL: component), tempObj = PPDigitalPlugInObject(bundle: theBundle) {
+					if let theBundle = NSBundle(URL: component), tempObj = DigitalPlugInObject(bundle: theBundle) {
 						digitalPlugs.append(tempObj)
 					}
 				}
@@ -47,7 +47,7 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType {
 	}
 	
 	func addPlugInFromBundle(theBund: NSBundle) {
-		if let obj = PPDigitalPlugInObject(bundle: theBund) as PPDigitalPlugInObject? {
+		if let obj = DigitalPlugInObject(bundle: theBund) {
 			digitalPlugs.append(obj)
 		}
 	}
@@ -64,7 +64,7 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType {
 		}
 	}
 	
-	func generate() -> IndexingGenerator<[PPDigitalPlugInObject]> {
+	func generate() -> IndexingGenerator<[DigitalPlugInObject]> {
 		return digitalPlugs.generate()
 	}
 	
@@ -76,11 +76,11 @@ class DigitalPlugHandler: NSObject, NSFastEnumeration, CollectionType {
 		return digitalPlugs.endIndex
 	}
 	
-	subscript (subRange: Range<Int>) -> ArraySlice<PPDigitalPlugInObject> {
+	subscript (subRange: Range<Int>) -> ArraySlice<DigitalPlugInObject> {
 		return digitalPlugs[subRange]
 	}
 	
-	@objc subscript (index: Int) -> PPDigitalPlugInObject {
+	@objc subscript (index: Int) -> DigitalPlugInObject {
 		return digitalPlugs[index]
 	}
 	
