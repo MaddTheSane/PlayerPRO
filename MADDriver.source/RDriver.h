@@ -534,7 +534,7 @@ typedef struct MADLibrary {
 	
 	/// IDType = \c 'MADD' -- READ ONLY --
 	MADFourChar	IDType;		
-	/// Number of Plugs in pointer ThePlug
+	/// Number of Plugs in pointer \c ThePlug
 	short		TotalPlug;
 } MADLibrary;
 
@@ -643,16 +643,13 @@ typedef struct MADDriverBase {
 
 typedef struct MADDriverRec MADDriverRec, *MADDriverRecPtr;
 
-/********************						***********************/
-/*** 					   FUNCTIONS							***/
-/********************						***********************/
-
-
 #ifdef __cplusplus
 extern "C" {
 #endif
+	
+#pragma mark - FUNCTIONS
 
-#pragma mark Debug functions that will crash
+#pragma mark Debug functions that *will* crash
 
 /*!
  *	@function	MADDebugStr
@@ -738,7 +735,7 @@ PPEXPORT MADErr	MADDisposeLibrary(MADLibrary *MADLib);
  */
 PPEXPORT bool MADPlugAvailable(const MADLibrary *MADLib, const char *type);
 
-#pragma mark - back-end (driver) availability
+#pragma mark back-end (driver) availability
 /*!
  *	@function	MADGetBestDriver
  *	@abstract	Find and identify the current sound hardware and APIs and fill DriverInitParam.
@@ -765,8 +762,11 @@ PPEXPORT bool	MADSoundDriverIsAvalable(MADSoundOutput theDriver);
  */
 PPEXPORT MADSoundOutputBit	MADSoundDriverList();
 
-#pragma mark -
-/// Music Driver initialization and memory allocation
+#pragma mark Music Driver initialization and memory allocation
+/*!
+ *	@function	MADCreateDriver
+ *	@abstract	Creates a new driver from the specified parameters
+ */
 PPEXPORT MADErr	MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *MADLib, MADDriverRecPtr* returnDriver);
 /// Dispose the music driver
 PPEXPORT MADErr	MADDisposeDriver(MADDriverRecPtr MDriver);
@@ -793,20 +793,20 @@ PPEXPORT void	MADCleanDriver(MADDriverRecPtr intDriver);
 /// Reset the current music at the start position
 PPEXPORT MADErr	MADReset(MADDriverRecPtr MDriver);
 
-/// Get informations about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
+/// Get information about music position and duration, IN 1/60th SECS !! NOT IN SECS ANYMORE !!!!!!!
 PPEXPORT MADErr	MADGetMusicStatus(MADDriverRecPtr MDriver, long *fullTime, long *curTime);
 /// Change position of current music, by example MADSetMusicStatus(0, 100, 50) = go to the middle of the music
 PPEXPORT MADErr	MADSetMusicStatus(MADDriverRecPtr MDriver, long minV, long maxV, long curV);
 
 PPEXPORT MADErr	MADAttachDriverToMusic(MADDriverRecPtr driver, MADMusic *music, char* missingPlugins);
 
-/// MADK ONLY - Load a MAD pointer into memory, you can free() the memory after this call
+/// <b>MADK only</b> - Load a MAD pointer into memory, you can \c free() the memory after this call
 PPEXPORT MADErr	MADLoadMusicPtr(MADMusic **music, char *myPtr);
 
 /// Load a music file with plugs
 PPEXPORT MADErr	MADLoadMusicFileCString(MADLibrary *, MADMusic **music, char *type, char *fName);
 
-/// Identify what kind of music format is cName file.
+/// Identify what kind of music format is \c cName file.
 PPEXPORT MADErr	MADMusicIdentifyCString(MADLibrary *, char *type, char *cName);
 
 PPEXPORT MADErr	MADMusicInfoCString(MADLibrary *lib, char *type, char* cName, MADInfoRec *InfoRec);
@@ -919,6 +919,7 @@ PPEXPORT void	MADSetReading(MADDriverRecPtr driver, bool toSet) DEPRECATED_ATTRI
 
 PPEXPORT int	MADAudioLength(MADDriverRecPtr theRec);
 
+/// Returns a rough estimation of the size of the music struct passed to it.
 PPEXPORT size_t MADGetMusicSize(const MADMusic *musSize);
 
 PPEXPORT void	MADDriverClearChannel(MADDriverRecPtr theRec, int channel);
