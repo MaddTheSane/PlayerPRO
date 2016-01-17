@@ -255,6 +255,10 @@
 	if (MADDirectSave(thePtr, NULL, theRec)) {
 		ourData = [[NSData alloc] initWithBytesNoCopy:thePtr length:aSize];
 	}
+	// Prevent leak if MADDirectSave didn't populate thePtr.
+	if (ourData == nil) {
+		free(thePtr);
+	}
  
 	return ourData;
 }
