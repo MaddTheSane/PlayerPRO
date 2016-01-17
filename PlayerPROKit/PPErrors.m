@@ -243,9 +243,14 @@ NSError *PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL conv
 	NSString *ErrorDescription = stringForKeyAndError(NSLocalizedDescriptionKey, theErr);
 	NSString *errorReason = stringForKeyAndError(NSLocalizedFailureReasonErrorKey, theErr);
 	NSString *recoverySuggestion = stringForKeyAndError(NSLocalizedRecoverySuggestionErrorKey, theErr);
-	NSDictionary *userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
-							   NSLocalizedFailureReasonErrorKey: errorReason,
-							   NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
+	NSDictionary *userInfo;
+	if (!ErrorDescription) {
+		userInfo = nil;
+	} else {
+		userInfo = @{NSLocalizedDescriptionKey: ErrorDescription,
+					 NSLocalizedFailureReasonErrorKey: errorReason,
+					 NSLocalizedRecoverySuggestionErrorKey: recoverySuggestion};
+	}
 	NSError *cocoaEquiv;
 	
 	switch (theErr) {
