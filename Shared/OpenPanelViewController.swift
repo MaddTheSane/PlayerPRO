@@ -27,7 +27,7 @@ private func allOpenableTypesFromUTI(anUTI: String) -> [String] {
 	
 	if #available(OSX 10.10, *) {
 		let utiTagClasses = [kUTTagClassFilenameExtension as String, kUTTagClassMIMEType as String,
-			/*kUTTagClassNSPboardType as String,*/ /*kUTTagClassOSType as String*/]
+			/*kUTTagClassNSPboardType as String*/]
 		
 		for utiTag in utiTagClasses {
 			guard let unPreArr = UTTypeCopyAllTagsWithClass(anUTI, utiTag) else {
@@ -40,6 +40,11 @@ private func allOpenableTypesFromUTI(anUTI: String) -> [String] {
 				continue
 			}
 			theOpenables += anArr
+		}
+		if let unPreArr = UTTypeCopyAllTagsWithClass(anUTI, kUTTagClassOSType),
+			let anArr = unPreArr.takeRetainedValue() as NSArray as? [String] {
+				let convertedArr = anArr.map({UTGetOSTypeFromString($0)}).map({NSFileTypeForHFSTypeCode($0)!})
+				theOpenables += convertedArr
 		}
 	} else {
 		// Fallback on earlier versions

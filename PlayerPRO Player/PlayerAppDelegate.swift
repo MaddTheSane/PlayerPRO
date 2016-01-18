@@ -166,9 +166,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	}
 	
 	private func musicListContentsDidMove() {
-		var i = 0;
 		if (currentlyPlayingIndex.index != -1) {
-			for (i = 0; i < musicList.countOfMusicList; i++) {
+			for i in 0..<musicList.countOfMusicList {
 				if (currentlyPlayingIndex.playbackURL == musicList.URLAtIndex(i)) {
 					currentlyPlayingIndex.index = i;
 					break;
@@ -176,7 +175,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			}
 		}
 		if (previouslyPlayingIndex.index != -1) {
-			for (i = 0; i < musicList.countOfMusicList; i++) {
+			for i in 0..<musicList.countOfMusicList {
 				if (previouslyPlayingIndex.playbackURL == musicList.URLAtIndex(i)) {
 					previouslyPlayingIndex.index = i;
 					break;
@@ -933,6 +932,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		timeChecker.invalidate()
 		
 		madDriver.stopDriver()
+		musicList.selectedMusic = currentlyPlayingIndex.index
 		if NSUserDefaults.standardUserDefaults().boolForKey(PPRememberMusicList) {
 			musicList.saveApplicationMusicList()
 		}
@@ -1587,7 +1587,6 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 		
 		let selected = tableView.selectedRowIndexes
-		var theInfo: NSDictionary? = nil
 		var info = ""
 		var NSSig = ""
 		
@@ -1601,7 +1600,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		}
 		
 		let obj = musicList.objectInMusicListAtIndex(selected.lastIndex)
-		let musicURL = obj.musicURL;
+		let musicURL = obj.musicURL
 		var aPPInfo: PPLibrary.MusicFileInfo? = nil
 		
 		func badValues() {
