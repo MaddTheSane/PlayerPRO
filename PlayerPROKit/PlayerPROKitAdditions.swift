@@ -61,7 +61,7 @@ extension MADErr: ErrorType {
 		return Int(rawValue)
 	}
 	
-	/// Causes `self` to throw if the `rawValue` is anything other than `.NoErr`.
+	/// Throws `self` if `self` is anything other than `.NoErr`.
 	public func throwIfNotNoErr() throws {
 		if self != .NoErr {
 			throw self

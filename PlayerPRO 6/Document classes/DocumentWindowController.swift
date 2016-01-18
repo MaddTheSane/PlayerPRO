@@ -408,7 +408,7 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 							dataInfo.keySpace = AVMetadataKeySpaceQuickTimeUserData;
 							dataInfo.key = (AVMetadataQuickTimeUserDataKeySoftware)
 							dataInfo.value = ("PlayerPRO 6")
-							dataInfo.locale = NSLocale(localeIdentifier: "en_US")
+							dataInfo.locale = NSLocale(localeIdentifier: "en")
 							
 							let musicInfoQTUser = AVMutableMetadataItem();
 							musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData

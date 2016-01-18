@@ -1295,7 +1295,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 							dataInfo.keySpace = AVMetadataKeySpaceQuickTimeUserData
 							dataInfo.key = AVMetadataQuickTimeUserDataKeySoftware
 							dataInfo.value = "PlayerPRO Player"
-							dataInfo.locale = NSLocale(localeIdentifier: "en_US")
+							dataInfo.locale = NSLocale(localeIdentifier: "en")
 							
 							let musicInfoQTUser = AVMutableMetadataItem();
 							musicInfoQTUser.keySpace = AVMetadataKeySpaceQuickTimeUserData

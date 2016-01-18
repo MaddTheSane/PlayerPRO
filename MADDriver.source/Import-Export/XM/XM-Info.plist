@@ -5,7 +5,7 @@
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en_US</string>
+	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
@@ -27,7 +27,7 @@
 	<key>MADPlugAuthorName</key>
 	<string>Antoine ROSSET</string>
 	<key>MADPlugMenuName</key>
-	<string>Extreme Tracker</string>
+	<string>FastTracker 2 (XM)</string>
 	<key>MADPlugType</key>
 	<string>XM  </string>
 	<key>MADPlugUTITypes</key>

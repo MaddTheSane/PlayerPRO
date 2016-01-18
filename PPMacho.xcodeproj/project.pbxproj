@@ -2752,7 +2752,7 @@
 		55DEBFEF1801DFF70089B940 /* Example.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Example.h; sourceTree = "<group>"; };
 		55E2CD4E19DA1AC000BDFC4C /* InstrumentPanelController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstrumentPanelController.swift; sourceTree = "<group>"; };
 		55E2CD5019DA1B3400BDFC4C /* InsPanel.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InsPanel.xib; sourceTree = "<group>"; };
-		55E32C2519E9B56B0041B43B /* DocumentWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentWindowController.swift; sourceTree = "<group>"; };
+		55E32C2519E9B56B0041B43B /* DocumentWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = DocumentWindowController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		55E382EA1981509100EC330B /* PlugInInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlugInInfo.swift; sourceTree = "<group>"; };
 		55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PlayerPROCoreAdditions.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		55E4D7FA1A2A3B190054675C /* Classic App-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Classic App-Bridging-Header.h"; sourceTree = "<group>"; };

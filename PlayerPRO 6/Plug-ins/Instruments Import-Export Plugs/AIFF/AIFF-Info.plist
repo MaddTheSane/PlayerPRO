@@ -5,7 +5,7 @@
 	<key>CFBundleAllowMixedLocalizations</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
-	<string>en_US</string>
+	<string>en</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIdentifier</key>
@@ -23,7 +23,7 @@
 	<key>CFPlugInDynamicRegistration</key>
 	<false/>
 	<key>MADPlugAuthorName</key>
-	<string>C.W. "Madd the Sane" Betts</string>
+	<string>C.W. &quot;Madd the Sane&quot; Betts</string>
 	<key>MADPlugMenuName</key>
 	<string>AIFF</string>
 	<key>MADPlugType</key>
@@ -34,7 +34,7 @@
 		<string>public.aifc-audio</string>
 	</array>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2014, Charles "Madd the Sane" Betts, Sourceforge</string>
+	<string>Copyright © 2014, Charles &quot;Madd the Sane&quot; Betts, Sourceforge</string>
 	<key>NSPrincipalClass</key>
 	<string>${PRODUCT_MODULE_NAME}.AIFF</string>
 </dict>

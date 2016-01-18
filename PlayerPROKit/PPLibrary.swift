@@ -268,11 +268,9 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 
 		let anErr = MADMusicInfoCFURL(theLibrary, &cType, URL, &infoRec)
 		
-		if anErr == .NoErr {
-			return infoRec
-		} else {
-			throw anErr
-		}
+		try anErr.throwIfNotNoErr()
+		
+		return infoRec
 	}
 	
 	///Gathers information about a tracker at the specified URL.
