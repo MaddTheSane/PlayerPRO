@@ -715,6 +715,8 @@
 		55D5E9A11B014EF900EB2C84 /* AIFFToSample.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9981B014EEF00EB2C84 /* AIFFToSample.swift */; };
 		55D5E9A31B0151A500EB2C84 /* sndConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D5E9A21B0151A500EB2C84 /* sndConverter.swift */; };
 		55D64A8C1AA805020017158E /* MusicListPreferenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55D64A8B1AA805020017158E /* MusicListPreferenceController.swift */; };
+		55D8E1911C4EC0BB00C2B397 /* PlayerPROCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A33F10B50D2600FF8B50 /* PlayerPROCore.framework */; };
+		55D8E1961C4EC12900C2B397 /* ITv2.c in Sources */ = {isa = PBXBuildFile; fileRef = 55D8E1881C4EC0A600C2B397 /* ITv2.c */; };
 		55DC597919A2E6B100212DD0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DC597819A2E6B100212DD0 /* AppDelegate.swift */; };
 		55DC597B19A2FA9A00212DD0 /* SwiftBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */; };
 		55DE87BC187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 55DE87BB187DFDF400C36533 /* PPInstrumentObject_PPKPrivate.h */; };
@@ -1960,6 +1962,13 @@
 			remoteGlobalIDString = 55E11DE01AE7114000815555;
 			remoteInfo = SwiftAudioAdditions;
 		};
+		55D8E18C1C4EC0BB00C2B397 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5573A33E10B50D2600FF8B50;
+			remoteInfo = PlayerPROCore;
+		};
 		55E898AA10F17C2B004EB52B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88E0C3A80C2F21DD00D6C081 /* Project object */;
@@ -2737,6 +2746,11 @@
 		55D5E9981B014EEF00EB2C84 /* AIFFToSample.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AIFFToSample.swift; sourceTree = "<group>"; };
 		55D5E9A21B0151A500EB2C84 /* sndConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = sndConverter.swift; sourceTree = "<group>"; };
 		55D64A8B1AA805020017158E /* MusicListPreferenceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListPreferenceController.swift; sourceTree = "<group>"; };
+		55D8E1871C4EC0A600C2B397 /* ITv2-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ITv2-Info.plist"; sourceTree = "<group>"; };
+		55D8E1881C4EC0A600C2B397 /* ITv2.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = ITv2.c; sourceTree = "<group>"; };
+		55D8E1891C4EC0A600C2B397 /* ITv2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ITv2.h; sourceTree = "<group>"; };
+		55D8E1951C4EC0BC00C2B397 /* ITv2.ppimpexp */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ITv2.ppimpexp; sourceTree = BUILT_PRODUCTS_DIR; };
+		55D8E1971C4EC65C00C2B397 /* IT Info.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "IT Info.txt"; sourceTree = "<group>"; };
 		55DC597819A2E6B100212DD0 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55DC597A19A2FA9A00212DD0 /* SwiftBridge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftBridge.swift; sourceTree = "<group>"; };
 		55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = PlayerPROKitAdditions.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -3411,6 +3425,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		55D8E1901C4EC0BB00C2B397 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55D8E1911C4EC0BB00C2B397 /* PlayerPROCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		55E898AF10F17C2B004EB52B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -4078,6 +4100,7 @@
 				551E166D10CCD5F3003C842A /* AMF */,
 				551E166E10CCD607003C842A /* DMF */,
 				551E167010CCD628003C842A /* IT */,
+				55D8E1861C4EC0A600C2B397 /* ITv2 */,
 				551E167110CCD642003C842A /* MADfg */,
 				551E167210CCD652003C842A /* MADH */,
 				551E167310CCD660003C842A /* MADI */,
@@ -4759,6 +4782,17 @@
 			sourceTree = "<group>";
 			usesTabs = 0;
 		};
+		55D8E1861C4EC0A600C2B397 /* ITv2 */ = {
+			isa = PBXGroup;
+			children = (
+				55D8E1971C4EC65C00C2B397 /* IT Info.txt */,
+				55D8E1871C4EC0A600C2B397 /* ITv2-Info.plist */,
+				55D8E1881C4EC0A600C2B397 /* ITv2.c */,
+				55D8E1891C4EC0A600C2B397 /* ITv2.h */,
+			);
+			path = ITv2;
+			sourceTree = "<group>";
+		};
 		55DD5A9819A1BF1A00F8AD1F /* Plug-in handling */ = {
 			isa = PBXGroup;
 			children = (
@@ -5006,6 +5040,7 @@
 				5552724F1A0000C8008B8616 /* PlayerPROKit-iOS Tests.xctest */,
 				55534ACD1817C387006D6BCB /* updateInfoPlist */,
 				55D5E9581B01466D00EB2C84 /* System 7.plugin */,
+				55D8E1951C4EC0BC00C2B397 /* ITv2.ppimpexp */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6279,6 +6314,24 @@
 			productReference = 55D5E9581B01466D00EB2C84 /* System 7.plugin */;
 			productType = "com.apple.product-type.bundle";
 		};
+		55D8E18A1C4EC0BB00C2B397 /* ITv2 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 55D8E1921C4EC0BB00C2B397 /* Build configuration list for PBXNativeTarget "ITv2" */;
+			buildPhases = (
+				55D8E18D1C4EC0BB00C2B397 /* Resources */,
+				55D8E18E1C4EC0BB00C2B397 /* Sources */,
+				55D8E1901C4EC0BB00C2B397 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				55D8E18B1C4EC0BB00C2B397 /* PBXTargetDependency */,
+			);
+			name = ITv2;
+			productName = MOD;
+			productReference = 55D8E1951C4EC0BC00C2B397 /* ITv2.ppimpexp */;
+			productType = "com.apple.product-type.bundle";
+		};
 		55E898A810F17C2B004EB52B /* QuickTime */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 55E898B410F17C2B004EB52B /* Build configuration list for PBXNativeTarget "QuickTime" */;
@@ -6452,6 +6505,7 @@
 				553341C510BB5FE0005208D1 /* AMF */,
 				553341DB10BB5FFA005208D1 /* DMF */,
 				553341EE10BB600A005208D1 /* IT */,
+				55D8E18A1C4EC0BB00C2B397 /* ITv2 */,
 				5586870310BF5C4700FCC24D /* MADfg */,
 				5586871210BF5C4A00FCC24D /* MADH */,
 				5586872110BF5C4E00FCC24D /* MADI */,
@@ -7048,6 +7102,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		55D5E9561B01466D00EB2C84 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55D8E18D1C4EC0BB00C2B397 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -7819,6 +7880,14 @@
 				55D5E9A11B014EF900EB2C84 /* AIFFToSample.swift in Sources */,
 				55D5E9661B01471300EB2C84 /* System7Sound.swift in Sources */,
 				55D5E98D1B0149FE00EB2C84 /* FVResourceType.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		55D8E18E1C4EC0BB00C2B397 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				55D8E1961C4EC12900C2B397 /* ITv2.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8654,6 +8723,11 @@
 			isa = PBXTargetDependency;
 			name = SwiftAudioAdditions;
 			targetProxy = 55D5E9921B014A4B00EB2C84 /* PBXContainerItemProxy */;
+		};
+		55D8E18B1C4EC0BB00C2B397 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5573A33E10B50D2600FF8B50 /* PlayerPROCore */;
+			targetProxy = 55D8E18C1C4EC0BB00C2B397 /* PBXContainerItemProxy */;
 		};
 		55E898A910F17C2B004EB52B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -11308,6 +11382,26 @@
 			};
 			name = Debug;
 		};
+		55D8E1931C4EC0BB00C2B397 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
+			buildSettings = {
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		55D8E1941C4EC0BB00C2B397 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 553626B017EA6F2600D3A3C8 /* PPCPlugs.xcconfig */;
+			buildSettings = {
+				INSTALL_PATH = "$(HOME)/Library/Bundles";
+				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
 		55E898B510F17C2B004EB52B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -12114,6 +12208,15 @@
 			buildConfigurations = (
 				55D5E95C1B01466D00EB2C84 /* Release */,
 				55D5E95D1B01466D00EB2C84 /* Debug */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		55D8E1921C4EC0BB00C2B397 /* Build configuration list for PBXNativeTarget "ITv2" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				55D8E1931C4EC0BB00C2B397 /* Release */,
+				55D8E1941C4EC0BB00C2B397 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
