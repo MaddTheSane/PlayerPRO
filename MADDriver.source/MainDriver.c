@@ -46,8 +46,10 @@ static inline void ByteSwapPatHeader(PatHeader *toSwap);
 
 typedef enum InputType {
 	MADFileType = 1,
-	MADCFReadStreamType,
-	MADPtrType
+#ifdef _MAC_H
+	MADCFReadStreamType = 2,
+#endif
+	MADPtrType = 3
 } MADInputType;
 
 static MADErr MADReadMAD(MADMusic **music, UNFILE srcFile, MADInputType InPutType, CFReadStreamRef MADRsrc, char *MADPtr);
@@ -1394,6 +1396,7 @@ static MADErr getCStringFromCFURL(CFURLRef theRef, char **cStrOut)
 		return MADReadingErr;
 	}
 	trimURLcString = realloc(URLcString, strlen(URLcString) + 1);
+	//So realloc failed... No biggie. Just use the bigger string.
 	if (!trimURLcString) {
 		*cStrOut = URLcString;
 		return MADNoErr;

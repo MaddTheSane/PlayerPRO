@@ -483,7 +483,7 @@ MADErr PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 	
 	for (int i = 0; i < inMADDriver->TotalPlug; i++) {
 		if (!strcmp(kindFile, inMADDriver->ThePlug[i].type)) {
-			OSErr iErr;
+			MADErr iErr;
 			*theNewMAD = (MADMusic*)calloc(sizeof(MADMusic), 1);
 			if (!theNewMAD)
 				return MADNeedMemory;

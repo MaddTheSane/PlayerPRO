@@ -1590,11 +1590,11 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		var info = ""
 		var NSSig = ""
 		
-		if (selected.count > 0) {
+		if selected.count > 0 {
 			musicList.selectedMusic = selected.firstIndex
 		}
 		
-		if (selected.count != 1) {
+		guard selected.count == 1 else {
 			badTracker()
 			return
 		}

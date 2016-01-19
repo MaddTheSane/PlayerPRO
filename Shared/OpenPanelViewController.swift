@@ -473,7 +473,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		}
 		
 		self.openPanel.allowedFileTypes = allowedTypes
-		openPanel.canChooseFiles = true;
+		openPanel.canChooseFiles = true
 		openPanel.accessoryView = self.view
 	}
 	
