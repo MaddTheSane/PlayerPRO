@@ -803,10 +803,7 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 	s3mform s3minfo;
 	/********************************/
 	
-	for (i = 0 ; i < MAXINSTRU; i ++)
-	{
-		theInstrument[i] = NULL;
-	}
+	for (i = 0 ; i < MAXINSTRU; i ++) { theInstrument[i] = NULL; }
 	
 	/**** Header principal *****/
 	theS3MCopy = (MADByte*) theS3M;
@@ -816,12 +813,12 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 	memcpy(&s3minfo, theS3MCopy, 96);
 	theS3MCopy += 96;
 	
-	MADLE16( &s3minfo.ordernum);
-	MADLE16( &s3minfo.insnum);
-	MADLE16( &s3minfo.patnum);
-	MADLE16( &s3minfo.flags);
-	MADLE16( &s3minfo.cwtv);
-	MADLE16( &s3minfo.ffv);
+	MADLE16(&s3minfo.ordernum);
+	MADLE16(&s3minfo.insnum);
+	MADLE16(&s3minfo.patnum);
+	MADLE16(&s3minfo.flags);
+	MADLE16(&s3minfo.cwtv);
+	MADLE16(&s3minfo.ffv);
 	
 	/**** Order Num *****/
 	s3minfo.orders = (unsigned char *) malloc(s3minfo.ordernum);
@@ -889,13 +886,10 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 		MADLE16(&s3minfo.insdata[i].memsegl);
 		MADLE32(&s3minfo.insdata[i].inslength);
 		
-		if (s3minfo.insdata[i].insflags&1)
-		{
+		if (s3minfo.insdata[i].insflags&1) {
 			MADLE32(&s3minfo.insdata[i].insloopbeg);
 			MADLE32(&s3minfo.insdata[i].insloopend);
-		}
-		else
-		{
+		} else {
 			s3minfo.insdata[i].insloopbeg		= 0;
 			s3minfo.insdata[i].insloopend		= 0;
 		}
@@ -906,10 +900,7 @@ static MADErr ConvertS3M2Mad(char* theS3M, size_t size, MADMusic *theMAD, MADDri
 		MADLE32( &s3minfo.insdata[i].insintlastused);
 		
 		if (s3minfo.insdata[i].instype == 1 && s3minfo.insdata[i].inspack == 0 &&
-			s3minfo.insdata[i].inssig[0] == 'S' &&
-			s3minfo.insdata[i].inssig[1] == 'C' &&
-			s3minfo.insdata[i].inssig[2] == 'R' &&
-			s3minfo.insdata[i].inssig[3] == 'S')
+			memcmp(s3minfo.insdata[i].inssig, "SCRS", 4) == 0)
 		{
 			int tempL;
 			

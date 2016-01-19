@@ -392,6 +392,9 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 	if (!internalFileName) {
 		internalFileName = [[NSString alloc] initWithCString:currentMusic->header->name encoding:NSMacOSRomanStringEncoding];
 	}
+	if (!internalFileName) {
+		internalFileName = @"";
+	}
 	return internalFileName;
 }
 
@@ -425,6 +428,9 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 {
 	if (!madInfo) {
 		madInfo = [[NSString alloc] initWithCString:currentMusic->header->infos encoding:NSMacOSRomanStringEncoding];
+	}
+	if (!madInfo) {
+		madInfo = @"";
 	}
 	return madInfo;
 }
