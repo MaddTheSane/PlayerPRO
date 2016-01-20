@@ -532,4 +532,14 @@ static Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPatternObj
 	return iErr;
 }
 
+- (BOOL)importPcmdFromString:(NSString*)pcmdStr error:(NSError**)error
+{
+	//TODO: implement
+	
+	if (error) {
+		*error = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:nil];
+	}
+	return NO;
+}
+
 @end

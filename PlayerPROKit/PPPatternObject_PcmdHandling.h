@@ -23,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (BOOL)exportPcmdToURL:(NSURL*)theURL withTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange error:(NSError**)error;
 - (BOOL)importPcmdFromPointer:(in const Pcmd*)thePcmd error:(NSError**)error;
 
+- (BOOL)importPcmdFromString:(NSString*)pcmdStr error:(NSError**)error;
+
 /**
  * For use with Swift, because it doesn't like variable-length C arrays used in \c Pcmd
  */
