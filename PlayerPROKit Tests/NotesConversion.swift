@@ -74,7 +74,7 @@ class NotesConversion: XCTestCase {
 	}
 	
 	func testEdgeCaseStrings() {
-		let edgeStrings = ["d♯4", "re-2", "mi♯5", "g5", "so1", "ti2"]
+		let edgeStrings = ["d♯4", "C-1", "re-2", "mi♯5", "g5", "so1", "ti2", "tI3", "FA♯2", "rÉ 1", "rÉ#1", "RÉ♯1"]
 		for aStr in edgeStrings {
 			if let _: Int16 = noteFromString(aStr) {
 				

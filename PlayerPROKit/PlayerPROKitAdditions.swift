@@ -131,86 +131,84 @@ public func createErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [S
 
 public func noteFromString(myTT: String) -> Int16?
 {
-	if ( myTT == "" || myTT == "---" || myTT.characters.count < 2) {
+	if myTT == "" || myTT == "---" || myTT.characters.count < 2 {
 		return nil
 	}
 	
-	var idx = myTT.endIndex
-	let lastChar = myTT[--idx]
-	if let octMaybe = Int(String(lastChar)) {
-		//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
-		//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
-		
-		var Oct = Int16(octMaybe)
-		Oct *= 12
-		
-		let theRest = myTT[myTT.startIndex ..< idx]
-		
-		let theRet: (outString: String, sharp: Bool) = {
-			var idx = theRest.endIndex
-			--idx
-			let maybeSign = theRest[idx]
-			let maybeStr = theRest[theRest.startIndex ..< idx]
-			switch maybeSign {
-			case "#", "♯"/*Unicode sharp sign, just in case*/:
-				return (maybeStr, true)
-				
-			case " ", "-":
-				return (maybeStr, false)
-				
-			default:
-				return (theRest, false)
-			}
-		}()
-		
-		
-		let val1 = theRet.outString.lowercaseString
-		switch val1 {
-		case "c", "do":
-			Oct += 0
+	let idx = myTT.endIndex.predecessor()
+	let lastChar = myTT[idx]
+	guard let octMaybe = Int(String(lastChar)) else {
+		return nil
+	}
+	//	0	1	 2	 3	 4	 5	 6	 7 	 8	 9	 10	 11
+	//	C-  C#   D-  D#  E-  F-  F#  G-  G#  A-  A#  B-
+	
+	var Oct = Int16(octMaybe)
+	Oct *= 12
+	
+	let theRest = myTT[myTT.startIndex ..< idx]
+	
+	let theRet: (outString: String, sharp: Bool) = {
+		let idx2 = idx.predecessor()
+		let maybeSign = myTT[idx2]
+		let maybeStr = myTT[myTT.startIndex ..< idx2]
+		switch maybeSign {
+		case "#", "♯"/*Unicode sharp sign, just in case*/:
+			return (maybeStr, true)
 			
-		case "d", "ré", "re":
-			Oct += 2
-			
-		case "e", "mi":
-			Oct += 4
-			
-		case "f", "fa":
-			Oct += 5
-			
-		case "g", "sol", "so":
-			Oct += 7
-			
-		case "a", "la":
-			Oct += 9
-			
-		case "b", "si", "ti":
-			Oct += 11
+		case " ", "-":
+			return (maybeStr, false)
 			
 		default:
+			return (theRest, false)
+		}
+	}()
+	
+	let val1 = theRet.outString.lowercaseString
+	switch val1 {
+	case "c", "do":
+		Oct += 0
+		
+	case "d", "ré", "re":
+		Oct += 2
+		
+	case "e", "mi":
+		Oct += 4
+		
+	case "f", "fa":
+		Oct += 5
+		
+	case "g", "sol", "so":
+		Oct += 7
+		
+	case "a", "la":
+		Oct += 9
+		
+	case "b", "si", "ti":
+		Oct += 11
+		
+	default:
+		Oct = 0xFF
+	}
+	
+	if Oct != 0xFF {
+		if theRet.sharp {
+			Oct++
+		}
+		
+		if Oct > 95 {
 			Oct = 0xFF
 		}
-		
-		if Oct != 0xFF {
-			if theRet.sharp {
-				Oct++
-			}
-			
-			if Oct > 95 {
-				Oct = 0xFF
-			}
-			if Oct < 0 {
-				Oct = 0xFF
-			}
-		}
-		
-		if Oct == 0xFF {
-			return nil
-		} else {
-			return Oct
+		if Oct < 0 {
+			Oct = 0xFF
 		}
 	}
-	return nil
+	
+	if Oct == 0xFF {
+		return nil
+	} else {
+		return Oct
+	}
 }
 
 public func octaveNameFromNote(octNote: UInt8, letters isUseLetters: Bool = true) -> String? {
