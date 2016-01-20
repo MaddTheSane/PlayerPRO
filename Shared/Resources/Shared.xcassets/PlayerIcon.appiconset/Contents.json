@@ -73,6 +73,12 @@
       "scale" : "2x"
     },
     {
+      "size" : "83.5x83.5",
+      "idiom" : "ipad",
+      "filename" : "main-icon-app-iPadPro.png",
+      "scale" : "2x"
+    },
+    {
       "size" : "16x16",
       "idiom" : "mac",
       "filename" : "icon_16x16.png",
