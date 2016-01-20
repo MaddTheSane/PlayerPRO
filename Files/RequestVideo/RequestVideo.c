@@ -50,13 +50,8 @@
 #include "DisplayManagerHidden.h"
 #include <ConditionalMacros.h>
 
-#if 0
-//#include <StdIO.h>
-//#include <stdlib.h>
-#else
-#define abs(x) ( ( (x) < 0 ) ? -(x) : (x) )
-#endif
-
+#include <stdlib.h>
+#include "RequestVideoPrivate.h"
 //--------------------------------------------------------------
 //
 // Internal defines, structs, typedefs, and routine declarations
@@ -69,7 +64,6 @@
 #define		iRevertItem			1						// User buttons
 #define		iConfirmItem		2						//
 #define		kSecondsToConfirm	8						// seconds before confirm dialog is taken down
-#define		rConfirmSwtchAlrt	2735					// ID of alert dialog
 
 struct DepthInfo {
 	VDSwitchInfoRec			depthSwitchInfo;			// This is the switch mode to choose this timing/depth
@@ -84,8 +78,10 @@ struct ListIteratorDataRec {
 };
 typedef struct ListIteratorDataRec ListIteratorDataRec;
 
+#if 0
 void GetRequestTheDM1Way (		VideoRequestRecPtr requestRecPtr,
 								GDHandle walkDevice);
+#endif
 
 void GetRequestTheDM2Way (		VideoRequestRecPtr requestRecPtr,
 								GDHandle walkDevice,
@@ -171,8 +167,8 @@ OSErr RVSetVideoRequest (VideoRequestRecPtr requestRecPtr)
 }
 
 // This extern should be removed once this function is formally defined in Displays.h
-extern pascal OSErr DMUseScreenPrefs(Boolean usePrefs, Handle displayState)
- THREEWORDINLINE(0x303C, 0x03EC, 0xABEB);
+//extern pascal OSErr DMUseScreenPrefs(Boolean usePrefs, Handle displayState)
+// THREEWORDINLINE(0x303C, 0x03EC, 0xABEB);
 
 OSErr RVSetVideoAsScreenPrefs (void)
 {
@@ -185,7 +181,7 @@ OSErr RVSetVideoAsScreenPrefs (void)
 	if (displayMgrPresent)
 	{
 		DMBeginConfigureDisplays (&displaystate);	// Tell the world it is about to change
-		DMUseScreenPrefs (true, displaystate);		// Make the change
+		//DMUseScreenPrefs (true, displaystate);		// Make the change
 		DMEndConfigureDisplays (displaystate);		// Tell the world the change is over
 		
 		return (noErr);	// we (maybe) set the world back to a known setting
@@ -197,10 +193,10 @@ OSErr RVGetCurrentVideoSetting (VideoRequestRecPtr requestRecPtr)
 {
 	unsigned long		displayMgrVersion;
 	OSErr				error = paramErr;
-	CntrlParam			pBlock;
+	//CntrlParam			pBlock;
 	VDSwitchInfoRec		switchInfo;
-	AuxDCEHandle		theDCE;
-	VDSwitchInfoRec		videoMode;		
+	//AuxDCEHandle		theDCE;
+	//VDSwitchInfoRec		videoMode;
 
 	requestRecPtr->availBitDepth			= 0;	// init to default - you can do it if it is important to you
 	requestRecPtr->availHorizontal			= 0;
@@ -220,11 +216,7 @@ OSErr RVGetCurrentVideoSetting (VideoRequestRecPtr requestRecPtr)
 //DL -	must also make sure that Display Library is installed, otherwise
 //		calling DMGetDisplayMode() will branch to nil.
 //DL		if (displayMgrVersion >= 0x00020000)
-#if GENERATINGCFM
-		if (displayMgrVersion >= 0x00020000 && (Ptr) DMGetDisplayMode != (Ptr) kUnresolvedCFragSymbolAddress)
-#else
 		if (displayMgrVersion >= 0x00020000)
-#endif
 		{	// get the info the DM 2.0 way
 			error = DMGetDisplayMode(requestRecPtr->screenDevice, &switchInfo);
 			if (noErr == error)
@@ -236,6 +228,7 @@ OSErr RVGetCurrentVideoSetting (VideoRequestRecPtr requestRecPtr)
 			}
 			return (error);	// we (maybe) set the world back to a known setting
 		}
+#if 0
 		else
 		{	// get the info the DM 1.0 way
 			videoMode.csMode = -1;		// init to bogus value
@@ -270,6 +263,7 @@ OSErr RVGetCurrentVideoSetting (VideoRequestRecPtr requestRecPtr)
 			}
 			return (error);	// we (maybe) set the world back to a known setting
 		}
+#endif
 	}
 	return (-1);
 }
@@ -320,9 +314,9 @@ OSErr RVConfirmVideoRequest (VideoRequestRecPtr requestRecPtr)
 	
 	if (requestRecPtr->availFlags & 1<<kModeValidNotSafeBit)
 	{	// new mode is valid but not safe, so ask user to confirm
-		SetCursor(&qd.arrow);										// have to show the arrow
+		SetCursor(GetQDGlobalsArrow(NULL));							// have to show the arrow
 
-		confirmFilterUPP = NewModalFilterProc (ConfirmAlertFilter);	// create a new modal filter proc UPP
+		confirmFilterUPP = NewModalFilterUPP(ConfirmAlertFilter);	// create a new modal filter proc UPP
 		alertReturn = Alert(rConfirmSwtchAlrt, confirmFilterUPP);	// alert the user
 		DisposeRoutineDescriptor (confirmFilterUPP);				// of course there is no DisposeModalFilterProc...
 		
@@ -339,7 +333,6 @@ OSErr RVRequestVideoSetting (VideoRequestRecPtr requestRecPtr)
 	Boolean							displayMgrPresent;
 	short							iCount = 0;					// just a counter of GDevices we have seen
 	DMDisplayModeListIteratorUPP	myModeIteratorProc = nil;	// for DM2.0 searches
-	SpBlock							spBlock;
 	Boolean							suppliedGDevice;	
 	DisplayIDType					theDisplayID;				// for DM2.0 searches
 	DMListIndexType					theDisplayModeCount;		// for DM2.0 searches
@@ -354,10 +347,6 @@ OSErr RVRequestVideoSetting (VideoRequestRecPtr requestRecPtr)
 	
 	gestaltErr = Gestalt(gestaltDisplayMgrVers, (long*)&displayMgrVersion);
 	if (	gestaltErr == noErr &&
-#if GENERATINGCFM
-			(Ptr) DMNewDisplayModeList != (Ptr) kUnresolvedCFragSymbolAddress &&
-			(Ptr) DMDisposeList != (Ptr) kUnresolvedCFragSymbolAddress &&
-#endif
 			displayMgrVersion >= 0x00020000	)
 	{
 		hasDM2 = true;
@@ -367,7 +356,7 @@ OSErr RVRequestVideoSetting (VideoRequestRecPtr requestRecPtr)
 	Gestalt(gestaltDisplayMgrAttr,&value);
 	displayMgrPresent=value&(1<<gestaltDisplayMgrPresent);
 //DL	displayMgrPresent=displayMgrPresent && (SVersion(&spBlock)==noErr);	// need slot manager
-	hasSlotMgr = (SVersion(&spBlock)==noErr);	//DL
+	hasSlotMgr = false;	//DL
 	displayMgrPresent=displayMgrPresent && (hasDM2 || hasSlotMgr);	//DL - need slot manager only if using DM 1.0.
 	if (displayMgrPresent)
 	{
@@ -383,7 +372,7 @@ OSErr RVRequestVideoSetting (VideoRequestRecPtr requestRecPtr)
 			suppliedGDevice = false;
 		}
 		
-		myModeIteratorProc = NewDMDisplayModeListIteratorProc(ModeListIterator);	// for DM2.0 searches
+		myModeIteratorProc = NewDMDisplayModeListIteratorUPP(ModeListIterator);	// for DM2.0 searches
 	
 		// Note that we are hosed if somebody changes the gdevice list behind our backs while we are iterating....
 		// ...now do the loop if we can start
@@ -404,7 +393,7 @@ OSErr RVRequestVideoSetting (VideoRequestRecPtr requestRecPtr)
 				else if (hasSlotMgr)	//DL
 				{
 					// search NuBus only the old disgusting way through the slot manager
-					GetRequestTheDM1Way (requestRecPtr, walkDevice);
+					//GetRequestTheDM1Way (requestRecPtr, walkDevice);
 				}
 			}
 		} while ( !suppliedGDevice && nil != (walkDevice = DMGetNextScreenDevice ( walkDevice, dmOnlyActiveDisplays )) );	// go until no more gdevices
@@ -415,6 +404,7 @@ OSErr RVRequestVideoSetting (VideoRequestRecPtr requestRecPtr)
 	return (-1);		// return a generic error
 }
 
+#if 0
 void GetRequestTheDM1Way (VideoRequestRecPtr requestRecPtr, GDHandle walkDevice)
 {
 	AuxDCEHandle myAuxDCEHandle;
@@ -515,8 +505,9 @@ void GetRequestTheDM1Way (VideoRequestRecPtr requestRecPtr, GDHandle walkDevice)
 	}
 
 }
+#endif
 
-pascal void ModeListIterator(void *userData, DMListIndexType, DMDisplayModeListEntryPtr displaymodeInfo)
+pascal void ModeListIterator(void *userData, DMListIndexType unused, DMDisplayModeListEntryPtr displaymodeInfo)
 {
 	unsigned long			depthCount;
 	short					iCount;
@@ -608,7 +599,7 @@ Boolean FindBestMatch (VideoRequestRecPtr requestRecPtr, short bitDepth, unsigne
 	//						(bounds are greater/equal or kMaximizeRes not set) and
 	//						(depth is less/equal or kShallowDepth not set) and
 	//						(request match or kAbsoluteRequest not set)
-	if	(	nil == requestRecPtr->displayMode
+	if	(	0 == requestRecPtr->displayMode
 			&&
 			(	(horizontal >= requestRecPtr->reqHorizontal &&
 				vertical >= requestRecPtr->reqVertical)

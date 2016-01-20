@@ -1523,7 +1523,8 @@
 		555D5D041C50212500D3E950 /* RequestVideo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = RequestVideo.c; sourceTree = "<group>"; };
 		555D5D051C50212500D3E950 /* RequestVideo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RequestVideo.h; sourceTree = "<group>"; };
 		555D5D061C50212500D3E950 /* RequestVideo.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = RequestVideo.r; sourceTree = "<group>"; };
-		555D5D0A1C50223E00D3E950 /* DisplayManagerHidden.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DisplayManagerHidden.h; sourceTree = "<group>"; };
+		555D5D0A1C50223E00D3E950 /* DisplayManagerHidden.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DisplayManagerHidden.h; sourceTree = "<group>"; };
+		555D5D0B1C5040CC00D3E950 /* RequestVideoPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RequestVideoPrivate.h; sourceTree = "<group>"; };
 		555E9B491101912100986239 /* MIDI-Hardware-Mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Mac.c"; path = "Files/MIDI-Hardware-Mac.c"; sourceTree = "<group>"; };
 		555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-OSX.c"; path = "Files/MIDI-Hardware-OSX.c"; sourceTree = "<group>"; };
 		555E9B4B1101912100986239 /* MIDI-Hardware-Stub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Stub.c"; path = "Files/MIDI-Hardware-Stub.c"; sourceTree = "<group>"; };
@@ -3048,6 +3049,7 @@
 			isa = PBXGroup;
 			children = (
 				555D5D051C50212500D3E950 /* RequestVideo.h */,
+				555D5D0B1C5040CC00D3E950 /* RequestVideoPrivate.h */,
 				555D5D041C50212500D3E950 /* RequestVideo.c */,
 				555D5D061C50212500D3E950 /* RequestVideo.r */,
 				555D5D0A1C50223E00D3E950 /* DisplayManagerHidden.h */,

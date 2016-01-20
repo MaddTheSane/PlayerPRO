@@ -1,10 +1,11 @@
 #include <Carbon/Carbon.r>
+#include "RequestVideoPrivate.h"
 
-data 'ALRT' (2735, "Confirmation Alert") {
+data 'ALRT' (rConfirmSwtchAlrt, "Confirmation Alert") {
 	$"0064 0087 00E0 01EE 0AAF 4444"                      /* .d.‡.à.îÂ¯DD */
 };
 
-resource 'DITL' (2735, "Confirmation Alert") {
+resource 'DITL' (rConfirmSwtchAlrt, "Confirmation Alert") {
 	{	/* array DITLarray: 4 elements */
 		/* [1] */
 		{91, 193, 111, 263},
