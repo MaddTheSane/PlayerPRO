@@ -532,6 +532,10 @@ static Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPatternObj
 	return iErr;
 }
 
+#ifndef __MACERRORS__
+#define unimpErr (-4)
+#endif
+
 - (BOOL)importPcmdFromString:(NSString*)pcmdStr error:(NSError**)error
 {
 	//TODO: implement
