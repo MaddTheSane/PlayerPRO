@@ -23,7 +23,7 @@
 #pragma pack (push, 2)
 
 enum {
-	invalColReq		= -1    /*invalid color table request*/
+	invalColReq = -1    /*invalid color table request*/
 };
 
 typedef UInt32		AVIDType;
@@ -33,33 +33,33 @@ typedef UInt32		VideoDeviceType;
 typedef UInt32		GammaTableID;
 
 enum {
-	kFontIDNewYork		= 2,
-	kFontIDGeneva		= 3,
-	kFontIDMonaco		= 4,
-	kFontIDVenice		= 5,
-	kFontIDLondon		= 6,
-	kFontIDAthens		= 7,
-	kFontIDSanFrancisco	= 8,
-	kFontIDToronto		= 9,
-	kFontIDCairo		= 11,
-	kFontIDLosAngeles	= 12,
-	kFontIDTimes		= 20,
-	kFontIDHelvetica	= 21,
-	kFontIDCourier		= 22,
-	kFontIDSymbol		= 23,
-	kFontIDMobile		= 24
+	kFontIDNewYork = 2,
+	kFontIDGeneva,
+	kFontIDMonaco,
+	kFontIDVenice,
+	kFontIDLondon,
+	kFontIDAthens,
+	kFontIDSanFrancisco,
+	kFontIDToronto,
+	kFontIDCairo = 11,
+	kFontIDLosAngeles,
+	kFontIDTimes = 20,
+	kFontIDHelvetica,
+	kFontIDCourier,
+	kFontIDSymbol,
+	kFontIDMobile
 };
 
 enum {
-	systemFont	= 0,
-	applFont	= 1
+	systemFont = 0,
+	applFont
 };
 
 enum {
 	commandMark	= 17,
-	checkMark	= 18,
-	diamondMark	= 19,
-	appleMark	= 20
+	checkMark,
+	diamondMark,
+	appleMark
 };
 
 enum {
@@ -95,7 +95,7 @@ enum {
 };
 
 enum {
-	italicBit	= 1,
+	italicBit = 1,
 	ulineBit,
 	outlineBit,
 	shadowBit,
@@ -104,16 +104,15 @@ enum {
 };
 
 enum {
-	/* QuickDraw color separation constants */
-	normalBit	= 0,    /*normal screen mapping*/
-	inverseBit	= 1,    /*inverse screen mapping*/
-	redBit		= 4,    /*RGB additive mapping*/
-	greenBit	= 3,
-	blueBit		= 2,
-	cyanBit		= 8,    /*CMYBk subtractive mapping*/
-	magentaBit	= 7,
-	yellowBit	= 6,
-	blackBit	= 5
+	normalBit = 0,
+	inverseBit,
+	blueBit,
+	greenBit,
+	redBit,
+	blackBit,
+	yellowBit,
+	magentaBit,
+	cyanBit
 };
 
 enum {
@@ -128,36 +127,33 @@ enum {
 };
 
 enum {
-	picLParen	= 0,    /*standard picture comments*/
+	picLParen	= 0,	/*standard picture comments*/
 	picRParen	= 1,
-	clutType	= 0,    /*0 if lookup table*/
-	fixedType	= 1,    /*1 if fixed table*/
-	directType	= 2,    /*2 if direct values*/
-	gdDevType	= 0     /*0 = monochrome 1 = color*/
+	clutType	= 0,	/*0 if lookup table*/
+	fixedType	= 1,	/*1 if fixed table*/
+	directType	= 2,	/*2 if direct values*/
+	gdDevType	= 0		/*0 = monochrome 1 = color*/
 };
 
 enum {
-	interlacedDevice	= 2,    /* 1 if single pixel lines look bad */
-	hwMirroredDevice	= 4,    /* 1 if device is HW mirrored */
-	roundedDevice		= 5,    /* 1 if device has been “rounded” into the GrayRgn */
-	hasAuxMenuBar		= 6,    /* 1 if device has an aux menu bar on it */
-	burstDevice			= 7,
-	ext32Device			= 8,
-	ramInit				= 10,   /*1 if initialized from 'scrn' resource*/
-	mainScreen			= 11,   /* 1 if main screen */
-	allInit				= 12,   /* 1 if all devices initialized */
-	screenDevice		= 13,   /*1 if screen device [not used]*/
-	noDriver			= 14,   /* 1 if no driver for this GDevice */
-	screenActive		= 15,   /*1 if in use*/
-	hiliteBit			= 7,    /*flag bit in LMGet/SetHiliteMode*/
-	pHiliteBit			= 0,    /*flag bit in LMGet/SetHiliteMode when used with BitClr*/
-	defQDColors			= 127,  /*resource ID of clut for default QDColors*/
-	/* pixel type */
-	RGBDirect			= 16,   /* 16 & 32 bits/pixel pixelType value */
-	/* pmVersion values */
-	baseAddr32			= 4     /*pixmap base address is 32-bit address*/
+	interlacedDevice	= 2,
+	hwMirroredDevice	= 4,
+	roundedDevice,
+	hasAuxMenuBar,
+	burstDevice,
+	ext32Device,
+	ramInit				= 10,
+	mainScreen,
+	allInit,
+	screenDevice,
+	noDriver,
+	screenActive,
+	hiliteBit			= 7,
+	pHiliteBit			= 0,
+	defQDColors			= 127,
+	RGBDirect			= 16,
+	baseAddr32			= 4
 };
-
 
 enum {
 	sysPatListID = 0,
@@ -192,14 +188,58 @@ typedef struct PenState {
 } PenState;
 
 typedef struct GammaTbl {
-	short	gVersion;               /*gamma version number*/
-	short	gType;                  /*gamma data type*/
-	short	gFormulaSize;           /*Formula data size*/
-	short	gChanCnt;               /*number of channels of data*/
-	short	gDataCnt;               /*number of values/channel*/
-	short	gDataWidth;             /*bits/corrected value (data packed to next larger byte size)*/
-	short	gFormulaData[1];        /*data for formulas followed by gamma values*/
+	short	gVersion;
+	short	gType;
+	short	gFormulaSize;
+	short	gChanCnt;
+	short	gDataCnt;
+	short	gDataWidth;
+	short	gFormulaData[1];
 } GammaTbl, *GammaTblPtr, **GammaTblHandle;
+
+enum {
+	pixPurgeBit = 0,
+	noNewDeviceBit,
+	useTempMemBit,
+	keepLocalBit,
+	useDistantHdwrMemBit,
+	useLocalHdwrMemBit,
+	pixelsPurgeableBit,
+	pixelsLockedBit,
+	nativeEndianPixMapBit,
+	mapPixBit = 16,
+	newDepthBit,
+	alignPixBit,
+	newRowBytesBit,
+	reallocPixBit,
+	clipPixBit = 28,
+	stretchPixBit,
+	ditherPixBit,
+	gwFlagErrBit
+};
+
+enum {
+	pixPurge				= 1L << pixPurgeBit,
+	noNewDevice				= 1L << noNewDeviceBit,
+	useTempMem				= 1L << useTempMemBit,
+	keepLocal				= 1L << keepLocalBit,
+	useDistantHdwrMem		= 1L << useDistantHdwrMemBit,
+	useLocalHdwrMem			= 1L << useLocalHdwrMemBit,
+	pixelsPurgeable			= 1L << pixelsPurgeableBit,
+	pixelsLocked			= 1L << pixelsLockedBit,
+	kNativeEndianPixMap		= 1L << nativeEndianPixMapBit,
+	kAllocDirectDrawSurface	= 1L << 14,
+	mapPix					= 1L << mapPixBit,
+	newDepth				= 1L << newDepthBit,
+	alignPix				= 1L << alignPixBit,
+	newRowBytes				= 1L << newRowBytesBit,
+	reallocPix				= 1L << reallocPixBit,
+	clipPix					= 1L << clipPixBit,
+	stretchPix				= 1L << stretchPixBit,
+	ditherPix				= 1L << ditherPixBit,
+	gwFlagErr				= 1L << gwFlagErrBit
+};
+
 
 #if TARGET_OS_MAC
 #define MacInvertRect InvertRect
@@ -221,10 +261,7 @@ typedef struct GammaTbl {
 #define MacInvertRgn InvertRgn
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
+__BEGIN_DECLS
 extern void GetPort(GrafPtr *);
 extern short GetPortTextFont(CGrafPtr);
 extern short GetPortTextSize(CGrafPtr);
@@ -316,8 +353,15 @@ extern Boolean EmptyRgn(RgnHandle);
 extern void Pt2Rect(Point, Point, Rect *);
 extern Rect *GetPixBounds(PixMapHandle, Rect *);
 extern void SetOrigin(short, short);
-extern void MacInvertRgn(RgnHandle rgn);
-	
+extern void MacInvertRgn(RgnHandle);
+extern void PenNormal();
+extern const BitMap *GetPortBitMapForCopyBits(CGrafPtr);
+extern void GetForeColor(RGBColor *);
+extern void Index2Color(long, RGBColor *);
+extern void CopyMask(const BitMap *, const BitMap *, const BitMap *, const Rect *, const Rect *, const Rect *);
+extern void ObscureCursor();
+extern CGrafPtr GetQDGlobalsThePort();
+
 //Text funcs
 extern void TextFont(short);
 extern void TextSize(short);
@@ -335,19 +379,23 @@ extern Boolean LockPixels(PixMapHandle pm);
 extern void SetGWorld(CGrafPtr, GDHandle);
 extern void UnlockPixels(PixMapHandle);
 extern void DisposeGWorld(GWorldPtr);
+extern void SetGDevice(GDHandle);
+
+#pragma mark - Pen functions
+extern void PenPat(const Pattern *);
 
 //misc.
 extern GDHandle DMGetFirstScreenDevice(Boolean);
 extern GDHandle DMGetNextScreenDevice(GDHandle, Boolean);
 extern OSErr DMGetDisplayIDByGDevice(GDHandle, DisplayIDType *, Boolean);
 extern OSErr SetDepth(GDHandle, short, short, short);
+extern Pattern *GetQDGlobalsGray(Pattern *);
 
-#ifdef __cplusplus
-}
-#endif
+__END_DECLS
 
 #pragma pack (pop)
 
 #endif
+
 
 #endif
