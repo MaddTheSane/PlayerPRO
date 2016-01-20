@@ -6,13 +6,17 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "1x",
-      "filename" : "PPRecord.png"
+      "filename" : "PPRecord.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "PPRecordx2.png"
+      "filename" : "PPRecordx2.png",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
     }
   ],
   "info" : {
