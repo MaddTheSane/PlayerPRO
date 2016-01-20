@@ -109,6 +109,9 @@ protected:
 	GrafPtr					mContextRef;
 	RgnHandle				mMenuBarRgn;
 	long					mMenuBarHeight;
+	GWorldPtr				mWorld;
+	long					mBytesPerPix;
+	long					mBytesPerRow;
 #elif EG_WIN
 	LPDIRECTDRAWPALETTE FAR	mFS_Palette;
 	LPDIRECTDRAWSURFACE		mContextRef;

@@ -240,6 +240,15 @@ enum {
 	gwFlagErr				= 1L << gwFlagErrBit
 };
 
+struct VDSwitchInfoRec {
+	unsigned short      csMode;                 /*(word) mode depth*/
+	unsigned long       csData;                 /*(long) functional sResource of mode*/
+	unsigned short      csPage;                 /*(word) page to switch in*/
+	Ptr                 csBaseAddr;             /*(long) base address of page (return value)*/
+	unsigned long       csReserved;             /*(long) Reserved (set to 0) */
+};
+typedef struct VDSwitchInfoRec          VDSwitchInfoRec;
+typedef VDSwitchInfoRec *               VDSwitchInfoPtr;
 
 #if TARGET_OS_MAC
 #define MacInvertRect InvertRect
@@ -388,8 +397,10 @@ extern void PenPat(const Pattern *);
 extern GDHandle DMGetFirstScreenDevice(Boolean);
 extern GDHandle DMGetNextScreenDevice(GDHandle, Boolean);
 extern OSErr DMGetDisplayIDByGDevice(GDHandle, DisplayIDType *, Boolean);
+extern OSErr DMGetGDeviceByDisplayID(DisplayIDType, GDHandle *, Boolean);
 extern OSErr SetDepth(GDHandle, short, short, short);
 extern Pattern *GetQDGlobalsGray(Pattern *);
+extern void SetEntries(short, short, CSpecArray);
 
 __END_DECLS
 
