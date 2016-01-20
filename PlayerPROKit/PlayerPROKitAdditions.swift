@@ -188,27 +188,20 @@ public func noteFromString(myTT: String) -> Int16?
 		Oct += 11
 		
 	default:
-		Oct = 0xFF
-	}
-	
-	if Oct != 0xFF {
-		if theRet.sharp {
-			Oct++
-		}
-		
-		if Oct > 95 {
-			Oct = 0xFF
-		}
-		if Oct < 0 {
-			Oct = 0xFF
-		}
-	}
-	
-	if Oct == 0xFF {
 		return nil
-	} else {
-		return Oct
 	}
+	
+	if theRet.sharp {
+		Oct++
+	}
+	
+	if Oct > 95 {
+		return nil
+	} else if Oct < 0 {
+		return nil
+	}
+	
+	return Oct
 }
 
 public func octaveNameFromNote(octNote: UInt8, letters isUseLetters: Bool = true) -> String? {
