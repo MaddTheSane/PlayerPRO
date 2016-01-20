@@ -217,6 +217,22 @@
 		555D5D071C50212500D3E950 /* RequestVideo.c in Sources */ = {isa = PBXBuildFile; fileRef = 555D5D041C50212500D3E950 /* RequestVideo.c */; };
 		555D5D081C50212500D3E950 /* RequestVideo.h in Headers */ = {isa = PBXBuildFile; fileRef = 555D5D051C50212500D3E950 /* RequestVideo.h */; };
 		555D5D091C50212500D3E950 /* RequestVideo.r in Rez */ = {isa = PBXBuildFile; fileRef = 555D5D061C50212500D3E950 /* RequestVideo.r */; };
+		555D5D151C5046C200D3E950 /* IT.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D0C1C5046C200D3E950 /* IT.iconset */; };
+		555D5D161C5046C200D3E950 /* MAD.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D0D1C5046C200D3E950 /* MAD.iconset */; };
+		555D5D171C5046C200D3E950 /* MED.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D0E1C5046C200D3E950 /* MED.iconset */; };
+		555D5D181C5046C200D3E950 /* MOD.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D0F1C5046C200D3E950 /* MOD.iconset */; };
+		555D5D191C5046C200D3E950 /* MTM.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D101C5046C200D3E950 /* MTM.iconset */; };
+		555D5D1A1C5046C200D3E950 /* OKTA.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D111C5046C200D3E950 /* OKTA.iconset */; };
+		555D5D1B1C5046C200D3E950 /* S3M.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D121C5046C200D3E950 /* S3M.iconset */; };
+		555D5D1C1C5046C200D3E950 /* UMX.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D131C5046C200D3E950 /* UMX.iconset */; };
+		555D5D1D1C5046C200D3E950 /* XM.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D141C5046C200D3E950 /* XM.iconset */; };
+		555D5D1F1C50476600D3E950 /* List.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D1E1C50476600D3E950 /* List.iconset */; };
+		555D5D261C5047A900D3E950 /* INS.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D201C5047A800D3E950 /* INS.iconset */; };
+		555D5D271C5047A900D3E950 /* MIDI.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D211C5047A900D3E950 /* MIDI.iconset */; };
+		555D5D281C5047A900D3E950 /* PATN.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D221C5047A900D3E950 /* PATN.iconset */; };
+		555D5D291C5047A900D3E950 /* PCMD.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D231C5047A900D3E950 /* PCMD.iconset */; };
+		555D5D2A1C5047A900D3E950 /* WAV.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D241C5047A900D3E950 /* WAV.iconset */; };
+		555D5D2B1C5047A900D3E950 /* XI.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 555D5D251C5047A900D3E950 /* XI.iconset */; };
 		555E9B4E110192F900986239 /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */; };
 		55672E1C10CAD641008C5C3D /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55672E1D10CAD641008C5C3D /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
@@ -1525,6 +1541,22 @@
 		555D5D061C50212500D3E950 /* RequestVideo.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = RequestVideo.r; sourceTree = "<group>"; };
 		555D5D0A1C50223E00D3E950 /* DisplayManagerHidden.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DisplayManagerHidden.h; sourceTree = "<group>"; };
 		555D5D0B1C5040CC00D3E950 /* RequestVideoPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RequestVideoPrivate.h; sourceTree = "<group>"; };
+		555D5D0C1C5046C200D3E950 /* IT.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = IT.iconset; sourceTree = "<group>"; };
+		555D5D0D1C5046C200D3E950 /* MAD.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = MAD.iconset; sourceTree = "<group>"; };
+		555D5D0E1C5046C200D3E950 /* MED.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = MED.iconset; sourceTree = "<group>"; };
+		555D5D0F1C5046C200D3E950 /* MOD.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = MOD.iconset; sourceTree = "<group>"; };
+		555D5D101C5046C200D3E950 /* MTM.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = MTM.iconset; sourceTree = "<group>"; };
+		555D5D111C5046C200D3E950 /* OKTA.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = OKTA.iconset; sourceTree = "<group>"; };
+		555D5D121C5046C200D3E950 /* S3M.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = S3M.iconset; sourceTree = "<group>"; };
+		555D5D131C5046C200D3E950 /* UMX.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = UMX.iconset; sourceTree = "<group>"; };
+		555D5D141C5046C200D3E950 /* XM.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = XM.iconset; sourceTree = "<group>"; };
+		555D5D1E1C50476600D3E950 /* List.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = List.iconset; sourceTree = "<group>"; };
+		555D5D201C5047A800D3E950 /* INS.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = INS.iconset; sourceTree = "<group>"; };
+		555D5D211C5047A900D3E950 /* MIDI.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = MIDI.iconset; sourceTree = "<group>"; };
+		555D5D221C5047A900D3E950 /* PATN.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = PATN.iconset; sourceTree = "<group>"; };
+		555D5D231C5047A900D3E950 /* PCMD.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = PCMD.iconset; sourceTree = "<group>"; };
+		555D5D241C5047A900D3E950 /* WAV.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = WAV.iconset; sourceTree = "<group>"; };
+		555D5D251C5047A900D3E950 /* XI.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = XI.iconset; sourceTree = "<group>"; };
 		555E9B491101912100986239 /* MIDI-Hardware-Mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Mac.c"; path = "Files/MIDI-Hardware-Mac.c"; sourceTree = "<group>"; };
 		555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-OSX.c"; path = "Files/MIDI-Hardware-OSX.c"; sourceTree = "<group>"; };
 		555E9B4B1101912100986239 /* MIDI-Hardware-Stub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Stub.c"; path = "Files/MIDI-Hardware-Stub.c"; sourceTree = "<group>"; };
@@ -1717,7 +1749,7 @@
 		88E0C4910C2F21E500D6C081 /* SoundJamAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = SoundJamAPI.h; path = Files/wds_views/SoundJamAPI.h; sourceTree = SOURCE_ROOT; };
 		88E0C4930C2F21E500D6C081 /* aeffectx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = aeffectx.h; path = Files/VSTHeaders/aeffectx.h; sourceTree = SOURCE_ROOT; };
 		88E0C4960C2F21E500D6C081 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		88E0C4980C2F21E500D6C081 /* MIDI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MIDI.h; path = "MADDriver.source/MADDriver.Source/Import-Export/MIDI Folder/MIDI.h"; sourceTree = SOURCE_ROOT; };
+		88E0C4980C2F21E500D6C081 /* MIDI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = MIDI.h; path = "MADDriver.source/Import-Export/MIDI Folder/MIDI.h"; sourceTree = SOURCE_ROOT; };
 		88E0C49A0C2F21E500D6C081 /* 3D.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = 3D.proto.h; path = "(Proto)/3D.proto.h"; sourceTree = "<group>"; };
 		88E0C49C0C2F21E500D6C081 /* About.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = About.proto.h; path = "(Proto)/About.proto.h"; sourceTree = "<group>"; };
 		88E0C49E0C2F21E500D6C081 /* ActiveHelp.proto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; name = ActiveHelp.proto.h; path = "(Proto)/ActiveHelp.proto.h"; sourceTree = "<group>"; };
@@ -2287,25 +2319,41 @@
 		550B00CF10BA17BC004FC5D7 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
-				55C400CF1C500D3D00F82AE7 /* 669.iconset */,
 				55FA5FBA102D2D6C00CB63DA /* ppApp.icns */,
 				550B00D010BA17BC004FC5D7 /* 669.icns */,
-				55E89D3A10F26A4B004EB52B /* PATN.icns */,
+				55C400CF1C500D3D00F82AE7 /* 669.iconset */,
 				55E89D3B10F26A4B004EB52B /* INS.icns */,
+				555D5D201C5047A800D3E950 /* INS.iconset */,
 				550B00D110BA17BC004FC5D7 /* IT.icns */,
+				555D5D0C1C5046C200D3E950 /* IT.iconset */,
 				550B00D210BA17BC004FC5D7 /* List.icns */,
+				555D5D1E1C50476600D3E950 /* List.iconset */,
 				550B00D310BA17BC004FC5D7 /* MAD.icns */,
+				555D5D0D1C5046C200D3E950 /* MAD.iconset */,
 				550B00D410BA17BC004FC5D7 /* MED.icns */,
+				555D5D0E1C5046C200D3E950 /* MED.iconset */,
 				550B00D510BA17BC004FC5D7 /* MIDI.icns */,
+				555D5D211C5047A900D3E950 /* MIDI.iconset */,
 				550B00D610BA17BC004FC5D7 /* MOD.icns */,
+				555D5D0F1C5046C200D3E950 /* MOD.iconset */,
 				550B00D710BA17BC004FC5D7 /* MTM.icns */,
+				555D5D101C5046C200D3E950 /* MTM.iconset */,
 				550B00D810BA17BC004FC5D7 /* OKTA.icns */,
+				555D5D111C5046C200D3E950 /* OKTA.iconset */,
+				55E89D3A10F26A4B004EB52B /* PATN.icns */,
+				555D5D221C5047A900D3E950 /* PATN.iconset */,
 				550B00D910BA17BC004FC5D7 /* PCMD.icns */,
+				555D5D231C5047A900D3E950 /* PCMD.iconset */,
 				550B00DA10BA17BC004FC5D7 /* S3M.icns */,
+				555D5D121C5046C200D3E950 /* S3M.iconset */,
 				550B00DB10BA17BC004FC5D7 /* UMX.icns */,
+				555D5D131C5046C200D3E950 /* UMX.iconset */,
 				550B00DC10BA17BC004FC5D7 /* WAV.icns */,
+				555D5D241C5047A900D3E950 /* WAV.iconset */,
 				550B00DD10BA17BC004FC5D7 /* XI.icns */,
+				555D5D251C5047A900D3E950 /* XI.iconset */,
 				550B00DE10BA17BC004FC5D7 /* XM.icns */,
+				555D5D141C5046C200D3E950 /* XM.iconset */,
 			);
 			name = Icons;
 			path = Files/Icons;
@@ -4821,19 +4869,35 @@
 			files = (
 				55FA5FBB102D2D6C00CB63DA /* ppApp.icns in Resources */,
 				550B00EF10BA17E6004FC5D7 /* InfoPlist.strings in Resources */,
+				555D5D281C5047A900D3E950 /* PATN.iconset in Resources */,
 				550B00DF10BA17BC004FC5D7 /* 669.icns in Resources */,
+				555D5D2A1C5047A900D3E950 /* WAV.iconset in Resources */,
 				550B00E010BA17BC004FC5D7 /* IT.icns in Resources */,
+				555D5D191C5046C200D3E950 /* MTM.iconset in Resources */,
 				550B00E110BA17BC004FC5D7 /* List.icns in Resources */,
 				550B00E210BA17BC004FC5D7 /* MAD.icns in Resources */,
 				550B00E310BA17BC004FC5D7 /* MED.icns in Resources */,
 				550B00E410BA17BC004FC5D7 /* MIDI.icns in Resources */,
+				555D5D1A1C5046C200D3E950 /* OKTA.iconset in Resources */,
 				550B00E510BA17BC004FC5D7 /* MOD.icns in Resources */,
+				555D5D271C5047A900D3E950 /* MIDI.iconset in Resources */,
 				550B00E610BA17BC004FC5D7 /* MTM.icns in Resources */,
+				555D5D1C1C5046C200D3E950 /* UMX.iconset in Resources */,
+				555D5D151C5046C200D3E950 /* IT.iconset in Resources */,
+				555D5D291C5047A900D3E950 /* PCMD.iconset in Resources */,
+				555D5D2B1C5047A900D3E950 /* XI.iconset in Resources */,
 				550B00E710BA17BC004FC5D7 /* OKTA.icns in Resources */,
 				550B00E810BA17BC004FC5D7 /* PCMD.icns in Resources */,
+				555D5D1B1C5046C200D3E950 /* S3M.iconset in Resources */,
 				550B00E910BA17BC004FC5D7 /* S3M.icns in Resources */,
+				555D5D1D1C5046C200D3E950 /* XM.iconset in Resources */,
+				555D5D171C5046C200D3E950 /* MED.iconset in Resources */,
+				555D5D161C5046C200D3E950 /* MAD.iconset in Resources */,
+				555D5D1F1C50476600D3E950 /* List.iconset in Resources */,
+				555D5D261C5047A900D3E950 /* INS.iconset in Resources */,
 				550B00EA10BA17BC004FC5D7 /* UMX.icns in Resources */,
 				550B00EB10BA17BC004FC5D7 /* WAV.icns in Resources */,
+				555D5D181C5046C200D3E950 /* MOD.iconset in Resources */,
 				550B00EC10BA17BC004FC5D7 /* XI.icns in Resources */,
 				55C400D01C500D3D00F82AE7 /* 669.iconset in Resources */,
 				550B00ED10BA17BC004FC5D7 /* XM.icns in Resources */,
