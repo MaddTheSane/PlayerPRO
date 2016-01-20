@@ -48,7 +48,7 @@
 
 // Internal includes
 #include "DisplayManagerHidden.h"
-#include <ConditionalMacros.h>
+#include <Carbon/Carbon.h>
 
 #include <stdlib.h>
 #include "RequestVideoPrivate.h"
