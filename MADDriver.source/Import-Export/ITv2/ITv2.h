@@ -15,6 +15,7 @@
 #include <PlayerPROCore/MADDefs.h>
 
 typedef struct ITHEADER {
+	MADFourChar	ID;
 	char		songname[26];
 	MADByte		blank01[2];
 	uint16_t	ordnum;

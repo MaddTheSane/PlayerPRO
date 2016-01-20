@@ -33,6 +33,15 @@
 #include "embeddedPlugs.h"
 #endif
 
+static const char* IT_Version[]={
+	"ImpulseTracker",
+	"Compressed ImpulseTracker",
+	"ImpulseTracker 2.14p3",
+	"Compressed ImpulseTracker 2.14p3",
+	"ImpulseTracker 2.14p4",
+	"Compressed ImpulseTracker 2.14p4",
+};
+
 
 static inline MADByte _mm_read_UBYTE(char **samplePtr)
 {
@@ -66,6 +75,15 @@ EXP MADErr FillPlug(PlugInfo *p)		// Function USED IN DLL - For PC & BeOS
 #endif
 
 
+static MADErr TestITFile(const void *AlienFile)
+{
+	if (memcmp(AlienFile, "IMPM", 4) == 0)
+		return MADNoErr;
+	else
+		return MADFileNotSupportedByThisPlug;
+}
+
+
 #if defined(EMBEDPLUGS) && EMBEDPLUGS
 MADErr mainIT(MADFourChar order, char *AlienFileName, MADMusic *MadFile, MADInfoRec *info, MADDriverSettings *init)
 #else
@@ -78,7 +96,24 @@ extern MADErr PPImpExpMain(MADFourChar order, char *AlienFileName, MADMusic *Mad
 	UNFILE	iFileRefI;
 
 	switch (order) {
-			
+		case MADPlugTest:
+			iFileRefI = iFileOpenRead(AlienFileName);
+			if (iFileRefI) {
+				sndSize = 8;
+				
+				AlienFile = malloc(sndSize);
+				if (AlienFile == NULL)
+					myErr = MADNeedMemory;
+				else {
+					myErr = iRead(sndSize, AlienFile, iFileRefI);
+					if(myErr == MADNoErr)
+						myErr = TestITFile(AlienFile);
+					
+					free(AlienFile); AlienFile = NULL;
+				}
+				iClose(iFileRefI);
+			}
+			break;
 			
 		default:
 			myErr = MADOrderNotImplemented;
