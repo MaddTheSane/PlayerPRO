@@ -1,4 +1,4 @@
-#define USE_DRAW_SPROCKETS 1
+//#define USE_DRAW_SPROCKETS 1
 //#define USE_DISP_MGR 1
 #define EG_MAC 1
 
@@ -6,6 +6,11 @@
 #include "ScreenDevice.h"
 
 #include <Carbon/Carbon.h>
+#ifdef USE_DISP_MGR
+extern "C" {
+#include "RequestVideo.h"
+}
+#endif
 
 static ScreenDevice *mScreenDevice = NULL;
 
@@ -65,17 +70,17 @@ bool ScreenDevice::EnterFullscreen(long inDispID, Point& ioSize, int inBitDepth,
 	
 	// Hide that pesky menubar...
 	RgnHandle grayRgn;
-	grayRgn = ::LMGetGrayRgn();
-	mMenuBarHeight	= ::LMGetMBarHeight();
-	::LMSetMBarHeight(0);
-	r = qd.screenBits.bounds;
+	grayRgn = ::GetGrayRgn();
+	mMenuBarHeight	= ::GetMBarHeight();
+	HideMenuBar();
+	r = ::GetQDGlobalsScreenBits(NULL)->bounds;
 	r.bottom = r.top + mMenuBarHeight;
 	mMenuBarRgn	= ::NewRgn();
 	::RectRgn(mMenuBarRgn, &r);
 	::UnionRgn(grayRgn, mMenuBarRgn, grayRgn);
 	
 	// Fetch a ptr to the device given by inDispNum
-	if (::DMGetGDeviceByDisplayID(inDispNum, &theGDevice, false) != noErr)
+	if (::DMGetGDeviceByDisplayID(inDispID, &theGDevice, false) != noErr)
 		theGDevice = NULL;
 	if (!theGDevice)
 		theGDevice = ::GetMainDevice();
@@ -91,8 +96,8 @@ bool ScreenDevice::EnterFullscreen(long inDispID, Point& ioSize, int inBitDepth,
 	requestRec.requestFlags		=	0;						
 	if (RVRequestVideoSetting(&requestRec) == noErr) {
 		if (RVSetVideoRequest(&requestRec) == noErr) {
-			outSize.h = requestRec.availHorizontal;
-			outSize.v = requestRec.availVertical;
+			ioSize.h = requestRec.availHorizontal;
+			ioSize.v = requestRec.availVertical;
 			ok = true;
 		}
 	}
@@ -101,16 +106,16 @@ bool ScreenDevice::EnterFullscreen(long inDispID, Point& ioSize, int inBitDepth,
 		
 		// Make the window cover the device
 		::MoveWindow(inWin, 0, 0, true);
-		::SizeWindow(inWin, outSize.h, outSize.v, true); 
+		::SizeWindow(inWin, ioSize.h, ioSize.v, true);
 		::ShowWindow(inWin);
 		
 		// Setup the window as the main grafport
-		mContextRef = inWin;
-		mX			= outSize.h;
-		mY			= outSize.v;
+		mContextRef = GetWindowPort(inWin);
+		int mX			= ioSize.h;
+		int mY			= ioSize.v;
 		::SetRect(&r, 0, 0, mX, mY + 2);
-		::NewGWorld(&mWorld, inBitDepth, &r, NULL, NULL, useTempMem);
-		mBM = ::GetGWorldPixMap(mWorld);
+		::NewGWorld(&mWorld, inBitDepth, &r, NULL, NULL, false);
+		PixMapHandle mBM = ::GetGWorldPixMap(mWorld);
 		mBytesPerRow	= (**mBM).rowBytes & 0xFFF;
 		mBytesPerPix	= (**mBM).pixelSize / 8;
 	}
@@ -208,8 +213,12 @@ bool ScreenDevice::EnterFullscreen(long inDispID, Point& ioSize, int inBitDepth,
 	
 void ScreenDevice::ExitFullscreen()
 {
+	GDHandle    prevDev;
+	GWorldPtr   prevPort;
+	::GetGWorld(&prevPort, &prevDev);
+	
 	EndFrame();
-	if (!IsFullscreen()) 
+	if (!IsFullscreen())
 		return;
 	
 #if USE_DRAW_SPROCKETS
@@ -227,15 +236,15 @@ void ScreenDevice::ExitFullscreen()
 	
 	// Make the menu bar visible again
 	RgnHandle grayRgn;
-	grayRgn = ::LMGetGrayRgn();
-	::LMSetMBarHeight(mMenuBarHeight);
+	grayRgn = ::GetGrayRgn();
+	ShowMenuBar();
 	::DiffRgn(grayRgn, mMenuBarRgn, grayRgn);	// remove the menu bar from the desktop
 	::PaintOne(NULL, mMenuBarRgn);				// redraw the menubar 
 	::DisposeRgn(mMenuBarRgn);
 	
 	// Restore the original color table for the main device
-	if (sOSDepth == 8 && mBytesPerPix == 1)
-		::SetEntries(0, 255, sOSPalette);
+	//if (sOSDepth == 8 && mBytesPerPix == 1)
+	//	::SetEntries(0, 255, sOSPalette);
 	::InitCursor();
 #endif
 	
@@ -271,8 +280,8 @@ GrafPtr ScreenDevice::BeginFrame()
 #endif
 		
 #if USE_DISP_MGR
-		mBM	= ::GetGWorldPixMap(mWorld);
-		fix me!
+		PixMapHandle mBM	= ::GetGWorldPixMap(mWorld);
+		//TODO: fix me!
 #endif
 	}
 	

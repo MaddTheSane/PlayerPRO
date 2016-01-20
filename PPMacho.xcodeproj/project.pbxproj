@@ -214,6 +214,9 @@
 		554E126410D6F4F700BB619C /* Propagate.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF010D6C79D00BB619C /* Propagate.c */; };
 		554E126610D6F50500BB619C /* Revert.c in Sources */ = {isa = PBXBuildFile; fileRef = 554E0FF410D6C79D00BB619C /* Revert.c */; };
 		5559096F19783D570026A7DC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5559096E19783D570026A7DC /* Localizable.strings */; };
+		555D5D071C50212500D3E950 /* RequestVideo.c in Sources */ = {isa = PBXBuildFile; fileRef = 555D5D041C50212500D3E950 /* RequestVideo.c */; };
+		555D5D081C50212500D3E950 /* RequestVideo.h in Headers */ = {isa = PBXBuildFile; fileRef = 555D5D051C50212500D3E950 /* RequestVideo.h */; };
+		555D5D091C50212500D3E950 /* RequestVideo.r in Rez */ = {isa = PBXBuildFile; fileRef = 555D5D061C50212500D3E950 /* RequestVideo.r */; };
 		555E9B4E110192F900986239 /* MIDI-Hardware-OSX.c in Sources */ = {isa = PBXBuildFile; fileRef = 555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */; };
 		55672E1C10CAD641008C5C3D /* MOD.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533411110BB547D005208D1 /* MOD.ppimpexp */; };
 		55672E1D10CAD641008C5C3D /* 669.ppimpexp in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 5533415310BB572C005208D1 /* 669.ppimpexp */; };
@@ -368,6 +371,7 @@
 		55BDD38C10DC9EDE00813A3A /* Note Translate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11B910D6F32900BB619C /* Note Translate.plugin */; };
 		55BDD38D10DC9EDE00813A3A /* Propagate.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E11FD10D6F3E100BB619C /* Propagate.plugin */; };
 		55BDD38E10DC9EDE00813A3A /* Revert.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 554E123010D6F3E600BB619C /* Revert.plugin */; };
+		55C400D01C500D3D00F82AE7 /* 669.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 55C400CF1C500D3D00F82AE7 /* 669.iconset */; };
 		55DB45D50FEAB8CD0088C375 /* DFTB.r in Rez */ = {isa = PBXBuildFile; fileRef = 55DB45D40FEAB8CD0088C375 /* DFTB.r */; };
 		55E4DFA71630F3EF00E4F4F9 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBB100404EB00E75E63 /* ApplicationServices.framework */; };
 		55E4DFA81630F3F600E4F4F9 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
@@ -1516,6 +1520,10 @@
 		554E15FF10D8BD0600BB619C /* FileUtils.exp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.exports; lineEnding = 0; path = FileUtils.exp; sourceTree = "<group>"; };
 		5550D057189C1DD200FCF88F /* Navigation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Navigation.h; path = Files/Navigation.h; sourceTree = "<group>"; };
 		5559096C19783D400026A7DC /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/Localizable.strings; sourceTree = "<group>"; };
+		555D5D041C50212500D3E950 /* RequestVideo.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; lineEnding = 0; path = RequestVideo.c; sourceTree = "<group>"; };
+		555D5D051C50212500D3E950 /* RequestVideo.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = RequestVideo.h; sourceTree = "<group>"; };
+		555D5D061C50212500D3E950 /* RequestVideo.r */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.rez; path = RequestVideo.r; sourceTree = "<group>"; };
+		555D5D0A1C50223E00D3E950 /* DisplayManagerHidden.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = DisplayManagerHidden.h; sourceTree = "<group>"; };
 		555E9B491101912100986239 /* MIDI-Hardware-Mac.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Mac.c"; path = "Files/MIDI-Hardware-Mac.c"; sourceTree = "<group>"; };
 		555E9B4A1101912100986239 /* MIDI-Hardware-OSX.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-OSX.c"; path = "Files/MIDI-Hardware-OSX.c"; sourceTree = "<group>"; };
 		555E9B4B1101912100986239 /* MIDI-Hardware-Stub.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "MIDI-Hardware-Stub.c"; path = "Files/MIDI-Hardware-Stub.c"; sourceTree = "<group>"; };
@@ -1594,6 +1602,7 @@
 		55B1953D17FD5CC200E6F160 /* ScreenDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScreenDevice.cpp; path = Files/ScreenDevice.cpp; sourceTree = "<group>"; };
 		55B797DC10D6E6C40073E379 /* Complex Fade.plugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Complex Fade.plugin"; sourceTree = BUILT_PRODUCTS_DIR; };
 		55B797DD10D6E6C50073E379 /* Complex Fade-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Complex Fade-Info.plist"; path = "../../../Complex Fade-Info.plist"; sourceTree = "<group>"; };
+		55C400CF1C500D3D00F82AE7 /* 669.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; path = 669.iconset; sourceTree = "<group>"; };
 		55DB45D40FEAB8CD0088C375 /* DFTB.r */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.rez; name = DFTB.r; path = Files/DFTB.r; sourceTree = "<group>"; };
 		55E8877B19784CDC0045041F /* LocalizationCarbonStrings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalizationCarbonStrings.h; sourceTree = "<group>"; };
 		55E8877C19784CDC0045041F /* LocalizationCarbonStrings.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LocalizationCarbonStrings.c; sourceTree = "<group>"; };
@@ -2277,6 +2286,7 @@
 		550B00CF10BA17BC004FC5D7 /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				55C400CF1C500D3D00F82AE7 /* 669.iconset */,
 				55FA5FBA102D2D6C00CB63DA /* ppApp.icns */,
 				550B00D010BA17BC004FC5D7 /* 669.icns */,
 				55E89D3A10F26A4B004EB52B /* PATN.icns */,
@@ -3034,6 +3044,18 @@
 			name = Revert;
 			sourceTree = "<group>";
 		};
+		555D5D031C5020F600D3E950 /* RequestVideo */ = {
+			isa = PBXGroup;
+			children = (
+				555D5D051C50212500D3E950 /* RequestVideo.h */,
+				555D5D041C50212500D3E950 /* RequestVideo.c */,
+				555D5D061C50212500D3E950 /* RequestVideo.r */,
+				555D5D0A1C50223E00D3E950 /* DisplayManagerHidden.h */,
+			);
+			name = RequestVideo;
+			path = Files/RequestVideo;
+			sourceTree = "<group>";
+		};
 		55868B1810BFC0BB00FCC24D /* Main Driver Source */ = {
 			isa = PBXGroup;
 			children = (
@@ -3296,6 +3318,7 @@
 		88E0C40C0C2F21DD00D6C081 /* Utils Group */ = {
 			isa = PBXGroup;
 			children = (
+				555D5D031C5020F600D3E950 /* RequestVideo */,
 				88E0C40E0C2F21DD00D6C081 /* GetFileIcon.h */,
 				88E0C40D0C2F21DD00D6C081 /* GetFileIcon.c */,
 				88E0C40F0C2F21DD00D6C081 /* InternetMapping.c */,
@@ -3422,6 +3445,7 @@
 				88E0C4C90C2F21E500D6C081 /* Help.proto.h in Headers */,
 				88E0C4CB0C2F21E500D6C081 /* HelpOnline.proto.h in Headers */,
 				88E0C4CD0C2F21E500D6C081 /* InstruList.proto.h in Headers */,
+				555D5D081C50212500D3E950 /* RequestVideo.h in Headers */,
 				88E0C4CF0C2F21E500D6C081 /* InstruView.proto.h in Headers */,
 				88E0C4D10C2F21E500D6C081 /* LDEF.proto.h in Headers */,
 				88E0C4D30C2F21E500D6C081 /* Liste.proto.h in Headers */,
@@ -4809,6 +4833,7 @@
 				550B00EA10BA17BC004FC5D7 /* UMX.icns in Resources */,
 				550B00EB10BA17BC004FC5D7 /* WAV.icns in Resources */,
 				550B00EC10BA17BC004FC5D7 /* XI.icns in Resources */,
+				55C400D01C500D3D00F82AE7 /* 669.iconset in Resources */,
 				550B00ED10BA17BC004FC5D7 /* XM.icns in Resources */,
 				55E89D3C10F26A4B004EB52B /* PATN.icns in Resources */,
 				55E89D3D10F26A4B004EB52B /* INS.icns in Resources */,
@@ -4970,6 +4995,7 @@
 				88E0C4690C2F21DE00D6C081 /* Carbon.r in Rez */,
 				55DB45D50FEAB8CD0088C375 /* DFTB.r in Rez */,
 				55EE8C741003E83A00E75E63 /* General-rez.r in Rez */,
+				555D5D091C50212500D3E950 /* RequestVideo.r in Rez */,
 				55784A1117FA2A7100B78840 /* PPMenus.r in Rez */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5403,6 +5429,7 @@
 				88E0C4350C2F21DE00D6C081 /* DigitalInfo.c in Sources */,
 				88E0C4360C2F21DE00D6C081 /* FileUtils.c in Sources */,
 				88E0C4380C2F21DE00D6C081 /* InstruView.c in Sources */,
+				555D5D071C50212500D3E950 /* RequestVideo.c in Sources */,
 				88E0C4390C2F21DE00D6C081 /* MODList.c in Sources */,
 				88E0C43A0C2F21DE00D6C081 /* LDEF.c in Sources */,
 				88E0C43B0C2F21DE00D6C081 /* Progress.c in Sources */,
@@ -6623,6 +6650,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				EXPORTED_SYMBOLS_FILE = Files/FileUtils.exp;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -7578,6 +7606,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -7592,6 +7621,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -7685,6 +7715,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				GCC_ENABLE_SYMBOL_SEPARATION = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -7770,6 +7801,7 @@
 		55E898B510F17C2B004EB52B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -7788,6 +7820,7 @@
 		55E898B610F17C2B004EB52B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -7850,13 +7883,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				GCC_ENABLE_SYMBOL_SEPARATION = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "(Proto)/Proto.c";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					USE_DRAW_SPROCKETS,
+					USE_DISP_MGR,
 					MAINPLAYERPRO,
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -8190,6 +8224,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -8432,6 +8467,7 @@
 		55F03E6D1804F9700043C72C /* Recent OS-debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -8455,6 +8491,7 @@
 		55F03E6E1804F9700043C72C /* Recent OS-debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -8822,6 +8859,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				EXPORTED_SYMBOLS_FILE = Files/FileUtils.exp;
 				GCC_ENABLE_CPP_EXCEPTIONS = NO;
@@ -8830,7 +8868,7 @@
 				GCC_PREFIX_HEADER = "(Proto)/Proto.c";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"$(inherited)",
-					USE_DRAW_SPROCKETS,
+					USE_DISP_MGR,
 					MAINPLAYERPRO,
 				);
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -9132,6 +9170,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_MODULES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -9356,6 +9395,7 @@
 		55F4764C17FD4FB20082C85D /* Recent OS */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -9378,6 +9418,7 @@
 		55F4764D17FD4FB20082C85D /* Recent OS */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -9677,6 +9718,7 @@
 		55F48ABA17E25F6800DB4584 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
@@ -9699,6 +9741,7 @@
 		55F48ABB17E25F6800DB4584 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = NO;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
