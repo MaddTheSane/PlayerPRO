@@ -955,7 +955,7 @@ MADErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADD
 			
 			/*	MDriver->gOutNodeRefNum = -1;
 			 OMSAddPort('SNPL', 'out ', omsPortTypeOutput, NULL, NULL, &MDriver->MIDIPortRefNum);*/
-			
+#if !defined(NOSOUND)
 #if 0
 			theErr = InitDBSoundManager(MDriver, initStereo);
 			if (theErr != MADNoErr) {
@@ -1045,9 +1045,9 @@ MADErr MADCreateDriver(MADDriverSettings *DriverInitParam, MADLibrary *lib, MADD
 			}
 			break;
 #endif
-			
-		case NoHardwareDriver:
 		case BeOSSoundDriver:
+#endif
+		case NoHardwareDriver:
 			break;
 			
 		default:
@@ -1073,6 +1073,7 @@ MADErr MADDisposeDriver(MADDriverRec* MDriver)
 			CloseMIDIHarware();
 			break;
 			
+#if !defined(NOSOUND)
 #ifdef _MAC_H
 		case CoreAudioDriver:
 			closeCoreAudio(MDriver);
@@ -1105,6 +1106,7 @@ MADErr MADDisposeDriver(MADDriverRec* MDriver)
 		case PortAudioDriver:
 			closeOSS(MDriver);
 			break;
+#endif
 #endif
 			
 		default:

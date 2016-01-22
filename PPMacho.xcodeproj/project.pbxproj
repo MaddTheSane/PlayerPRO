@@ -435,8 +435,6 @@
 		5578C52317DB94A50057D11B /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBD100404EB00E75E63 /* CoreFoundation.framework */; };
 		5578C52417DB94A50057D11B /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
 		5578C52517DB94A50057D11B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3EF10B5151700FF8B50 /* Foundation.framework */; };
-		5578C52617DB94A50057D11B /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 555C125016378B3500735225 /* AudioUnit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		5578C52717DB94A50057D11B /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55ED547310D5F9CD00824C61 /* CoreMIDI.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		5578C52917DB94A50057D11B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55BE998617978BB100D6DECC /* InfoPlist.strings */; };
 		5578C52A17DB94A50057D11B /* schema.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55BE998817978BB100D6DECC /* schema.strings */; };
 		5578C52B17DB94A50057D11B /* schema.xml in Resources */ = {isa = PBXBuildFile; fileRef = 55BE999117978BB200D6DECC /* schema.xml */; };
@@ -613,7 +611,6 @@
 		55AF3F7419CA011D00F75AC1 /* UMX.c in Sources */ = {isa = PBXBuildFile; fileRef = 5533410010BB5368005208D1 /* UMX.c */; };
 		55AF3F7519CA011D00F75AC1 /* XM.c in Sources */ = {isa = PBXBuildFile; fileRef = 5533410310BB5368005208D1 /* XM.c */; };
 		55AF3F7619CA013700F75AC1 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
-		55AF3F7719CA013800F75AC1 /* OSX-CoreAudio.c in Sources */ = {isa = PBXBuildFile; fileRef = 550B011610BA1E27004FC5D7 /* OSX-CoreAudio.c */; };
 		55B1B4F3166A850E00820424 /* PPDriver_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F2166A850D00820424 /* PPDriver_Private.h */; };
 		55B1B4F7166A861900820424 /* PPMusicObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 55B1B4F5166A861900820424 /* PPMusicObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		55B1B4F8166A861900820424 /* PPMusicObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 55B1B4F6166A861900820424 /* PPMusicObject.m */; };
@@ -2815,6 +2812,7 @@
 		55F4C3E319763FDD000997BE /* MusicListObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListObject.swift; sourceTree = "<group>"; };
 		55F8C06C1C52A42E00F8A4BC /* ErrorWrappers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorWrappers.swift; sourceTree = "<group>"; };
 		55F8C0771C52A4D200F8A4BC /* PlayerPROKit.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = PlayerPROKit.modulemap; sourceTree = "<group>"; };
+		55F8C0781C52AAAE00F8A4BC /* Spotlight.exp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.exports; path = Spotlight.exp; sourceTree = "<group>"; };
 		55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexImportPlugHandler.swift; sourceTree = "<group>"; };
 		55FD192D19A241FC001E1D9C /* ExportObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportObject.swift; sourceTree = "<group>"; };
 		55FD51E719BCF51200986849 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3099,8 +3097,6 @@
 				5578C52317DB94A50057D11B /* CoreFoundation.framework in Frameworks */,
 				5578C52417DB94A50057D11B /* CoreServices.framework in Frameworks */,
 				5578C52517DB94A50057D11B /* Foundation.framework in Frameworks */,
-				5578C52617DB94A50057D11B /* AudioUnit.framework in Frameworks */,
-				5578C52717DB94A50057D11B /* CoreMIDI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4701,6 +4697,7 @@
 		55BE998517978BB100D6DECC /* Spotlight Plug-in */ = {
 			isa = PBXGroup;
 			children = (
+				55F8C0781C52AAAE00F8A4BC /* Spotlight.exp */,
 				55BE998B17978BB100D6DECC /* GetMetadataForFile.h */,
 				55BE998A17978BB100D6DECC /* GetMetadataForFile.m */,
 				55BE998D17978BB100D6DECC /* main.c */,
@@ -7479,7 +7476,6 @@
 				55AF3F6D19CA011D00F75AC1 /* MADI.c in Sources */,
 				55AF3F6E19CA011D00F75AC1 /* MED.c in Sources */,
 				55AF3F7319CA011D00F75AC1 /* ULT.c in Sources */,
-				55AF3F7719CA013800F75AC1 /* OSX-CoreAudio.c in Sources */,
 				55AF3F4219C9FF9500F75AC1 /* MyDebugStr.c in Sources */,
 				55AF3F3819C9FF9500F75AC1 /* SndUtils.c in Sources */,
 				55AF3F7519CA011D00F75AC1 /* XM.c in Sources */,
@@ -10158,6 +10154,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = NO;
+				EXPORTED_SYMBOLS_FILE = "Spotlight Plug-in/Spotlight.exp";
 				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Spotlight Plug-in/SpotlightPrefix.pch";
@@ -10165,6 +10162,7 @@
 					"EMBEDPLUGS=1",
 					"NOEXPORTFUNCS=1",
 					"BUILDINGPPRO=1",
+					"NOSOUND=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
@@ -10182,6 +10180,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = NO;
+				EXPORTED_SYMBOLS_FILE = "Spotlight Plug-in/Spotlight.exp";
 				GCC_INPUT_FILETYPE = sourcecode.c.objc;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Spotlight Plug-in/SpotlightPrefix.pch";
@@ -10189,6 +10188,7 @@
 					"EMBEDPLUGS=1",
 					"NOEXPORTFUNCS=1",
 					"BUILDINGPPRO=1",
+					"NOSOUND=1",
 					"$(inherited)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
