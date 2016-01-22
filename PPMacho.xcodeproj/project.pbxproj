@@ -846,6 +846,8 @@
 		55F3D3FF19C2AE8F008172D7 /* PPCrossFadePlug.m in Sources */ = {isa = PBXBuildFile; fileRef = 55F3D3FE19C2AE8F008172D7 /* PPCrossFadePlug.m */; };
 		55F3D40219C2B139008172D7 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 55F3D40419C2B139008172D7 /* InfoPlist.strings */; };
 		55F4C3E519763FDD000997BE /* MusicListObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F4C3E319763FDD000997BE /* MusicListObject.swift */; };
+		55F8C06D1C52A42E00F8A4BC /* ErrorWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F8C06C1C52A42E00F8A4BC /* ErrorWrappers.swift */; };
+		55F8C06E1C52A42E00F8A4BC /* ErrorWrappers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55F8C06C1C52A42E00F8A4BC /* ErrorWrappers.swift */; };
 		55F8C3DD17B9968B00DFE937 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5573A3ED10B5151700FF8B50 /* Cocoa.framework */; };
 		55F8C3DE17B9973400DFE937 /* Tone Generator.plugin in Copy PlugIns */ = {isa = PBXBuildFile; fileRef = 557DE9A110E08DC100177B4C /* Tone Generator.plugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		55FBD1501651E3F800B1259F /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 55EE8EBF100404EB00E75E63 /* CoreServices.framework */; };
@@ -2811,6 +2813,8 @@
 		55F4287716A89A9C009013D8 /* PPMadCommandObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPMadCommandObject.m; sourceTree = "<group>"; };
 		55F4C3E119763FDB000997BE /* PlayerPRO Player-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerPRO Player-Bridging-Header.h"; sourceTree = "<group>"; };
 		55F4C3E319763FDD000997BE /* MusicListObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListObject.swift; sourceTree = "<group>"; };
+		55F8C06C1C52A42E00F8A4BC /* ErrorWrappers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorWrappers.swift; sourceTree = "<group>"; };
+		55F8C0771C52A4D200F8A4BC /* PlayerPROKit.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = PlayerPROKit.modulemap; sourceTree = "<group>"; };
 		55FD192A19A1C12B001E1D9C /* ComplexImportPlugHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplexImportPlugHandler.swift; sourceTree = "<group>"; };
 		55FD192D19A241FC001E1D9C /* ExportObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExportObject.swift; sourceTree = "<group>"; };
 		55FD51E719BCF51200986849 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3535,6 +3539,7 @@
 				551292E1163DD68500C2C639 /* InfoPlist.strings */,
 				550D005118CB808600FD0F17 /* PPErrors.strings */,
 				551292E4163DD68500C2C639 /* PlayerPROKit-Prefix.pch */,
+				55F8C0771C52A4D200F8A4BC /* PlayerPROKit.modulemap */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -4394,6 +4399,7 @@
 				5599119D1A0ACB8C00D1D5C3 /* CommandIterator.swift */,
 				55E382EE198169C000EC330B /* PlayerPROCoreAdditions.swift */,
 				55DCF079199983ED00A1B9A1 /* PlayerPROKitAdditions.swift */,
+				55F8C06C1C52A42E00F8A4BC /* ErrorWrappers.swift */,
 			);
 			name = "Swift wrappers";
 			sourceTree = "<group>";
@@ -7207,6 +7213,7 @@
 				55D59C2C1A646F60008A6E51 /* PPKSwiftToC.m in Sources */,
 				5560643C18C8FDD9002F72FC /* PPErrors.m in Sources */,
 				55CAB9D11A9C5ADB0047F1D6 /* PPLibrary.swift in Sources */,
+				55F8C06D1C52A42E00F8A4BC /* ErrorWrappers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7973,6 +7980,7 @@
 				55F1BE0F1975CD7200AD2C03 /* PPMadCommandObject.m in Sources */,
 				55D2626C1A9E809600A68CCE /* MusicNoteFormatter.swift in Sources */,
 				55CAB9D21A9C5ADB0047F1D6 /* PPLibrary.swift in Sources */,
+				55F8C06E1C52A42E00F8A4BC /* ErrorWrappers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9226,6 +9234,7 @@
 				);
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MODULEMAP_FILE = PlayerPROKit/PlayerPROKit.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -9250,6 +9259,7 @@
 				);
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MODULEMAP_FILE = PlayerPROKit/PlayerPROKit.modulemap;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -11582,6 +11592,7 @@
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = PlayerPROKit/PlayerPROKit.modulemap;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = PlayerPROKit;
@@ -11612,6 +11623,7 @@
 				INFOPLIST_FILE = "PlayerPROKit/PlayerPROKit-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = PlayerPROKit/PlayerPROKit.modulemap;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "net.sourceforge.playerpro.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = PlayerPROKit;

@@ -1,0 +1,8 @@
+framework module PlayerPROKit {
+	umbrella header "PlayerPROKit.h"
+	
+	export *
+	module * { export * }
+	
+	link framework "PlayerPROCore"
+}
