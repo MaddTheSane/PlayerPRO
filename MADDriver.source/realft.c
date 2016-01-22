@@ -161,6 +161,7 @@ void MADrealft(double *data,int n,int isign)
 	}
 }
 
+/*
 void twofft(double *data1,double *data2,double *fft1,double *fft2, int n)
 {
 	int nn3,nn2,jj,j;
@@ -189,6 +190,7 @@ void twofft(double *data1,double *data2,double *fft1,double *fft2, int n)
 		fft2[nn3-j]=rem;
 	}
 }
+*/
 
 void MADCallFFT(sData *SData, double *filter, MADDriverRec *intDriver, bool shift)
 {

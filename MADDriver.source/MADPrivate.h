@@ -22,6 +22,14 @@
 #warning this header should NOT be used outside of PlayerPROCore! The functions and datatypes here may change FOR ANY REASON, including differing compiler includes and defines.
 #endif
 
+#if !(defined(__has_feature) && defined(__has_attribute))
+#define __attribute__(...)
+#endif
+
+#ifndef __private_extern
+#define __private_extern __attribute__((visibility("hidden")))
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -110,32 +118,33 @@ void	SendMIDITimingClock(MADDriverRec *intDriver);
 
 #ifdef _MAC_H
 #pragma mark Core Audio Functions
-MADErr	initCoreAudio(MADDriverRec *inMADDriver);
-MADErr	closeCoreAudio(MADDriverRec *inMADDriver);
+__private_extern MADErr	initCoreAudio(MADDriverRec *inMADDriver);
+__private_extern MADErr	closeCoreAudio(MADDriverRec *inMADDriver);
 #endif
 
 #ifdef _ESOUND
-MADErr initESD(MADDriverRec *inMADDriver);
-MADErr closeESD(MADDriverRec *inMADDriver);
+__private_extern MADErr initESD(MADDriverRec *inMADDriver);
+__private_extern MADErr closeESD(MADDriverRec *inMADDriver);
 #endif
 
 #ifdef WIN32
-Boolean	DirectSoundInit(MADDriverRec* driver);
-void	DirectSoundClose(MADDriverRec* driver);
-Boolean	W95_Init(MADDriverRec* driver);
-void	W95_Exit(MADDriverRec* driver);
+__private_extern Boolean	DirectSoundInit(MADDriverRec* driver);
+__private_extern void	DirectSoundClose(MADDriverRec* driver);
+__private_extern Boolean	W95_Init(MADDriverRec* driver);
+__private_extern void	W95_Exit(MADDriverRec* driver);
 #endif
 
 #ifdef HAVE_PULSEAUDIO
-MADErr initPulseAudio(MADDriverRec *inMADDriver);
-MADErr closePulseAudio(MADDriverRec *inMADDriver);
+__private_extern MADErr initPulseAudio(MADDriverRec *inMADDriver);
+__private_extern MADErr closePulseAudio(MADDriverRec *inMADDriver);
 #endif
 
 #ifdef HAVE_PORTAUDIO
-MADErr initPortAudio(MADDriverRec *inMADDriver);
-MADErr closePortAudio(MADDriverRec *inMADDriver);
+__private_extern MADErr initPortAudio(MADDriverRec *inMADDriver);
+__private_extern MADErr closePortAudio(MADDriverRec *inMADDriver);
 #endif
 
+__private_extern
 MADErr	CallImportPlug(MADLibrary	*inMADDriver,
 					   int			PlugNo,			// CODE du plug
 					   MADFourChar	order,
@@ -151,19 +160,19 @@ MADErr	PPImportFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile, MA
 MADErr	PPIdentifyFile(MADLibrary *inMADDriver, char *kindFile, char *AlienFile);
 
 MADFourChar	GetPPPlugType(MADLibrary *inMADDriver, short ID, MADFourChar type);
-void	MInitImportPlug(MADLibrary *inMADDriver, const char*);
-void	CloseImportPlug(MADLibrary *inMADDriver);
-MADErr	CheckMADFile(const char *AlienFile);
+__private_extern void	MInitImportPlug(MADLibrary *inMADDriver, const char*);
+__private_extern void	CloseImportPlug(MADLibrary *inMADDriver);
+__private_extern MADErr	CheckMADFile(const char *AlienFile);
 void ConvertInstrumentIn(MADByte *tempPtr, size_t sSize);
 void ConvertInstrumentIn16(short *tempPtr, size_t sSize);
 
-uint32_t getfrequency(uint32_t period);
+__private_extern uint32_t getfrequency(uint32_t period);
 
 #if defined _MAC_H && !TARGET_OS_IPHONE
-void SetOSType(CFURLRef, OSType);
+__private_extern void SetOSType(CFURLRef, OSType);
 #endif
 
-sData* inMADCreateSample();
+__private_extern sData* inMADCreateSample();
 
 #ifdef __cplusplus
 }

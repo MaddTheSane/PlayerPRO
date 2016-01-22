@@ -135,7 +135,7 @@ bool	NewMADCommand(Cmd *theNoteCmd);
 
 // Effects.c
 
-void parse_slidevol(MADChannel *ch, MADByte Arg);
+//void parse_slidevol(MADChannel *ch, MADByte Arg);
 void ConvertTo64Rows(MADMusic *music);
 
 // MIDI
