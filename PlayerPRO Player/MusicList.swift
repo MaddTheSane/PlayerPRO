@@ -481,19 +481,19 @@ private let kPlayerList = "Player List"
 							theHandle(theErr: lolwut)
 							return;
 					}
-						var pathsURL = [MusicListObject]()
-						// Have all the new MusicListObjects use the same date
-						let currentDate = NSDate()
-						for aPath in pathsAny {
-							let tmpURL = NSURL.fileURLWithPath(aPath)
-							let tmpObj = MusicListObject(URL: tmpURL, date: currentDate)
-							pathsURL.append(tmpObj)
-						}
-						self.loadMusicList(pathsURL)
-						self.lostMusicCount = invalidAny
-						self.selectedMusic = selectedAny
-						
-						theHandle(theErr: nil)
+					var pathsURL = [MusicListObject]()
+					// Have all the new MusicListObjects use the same date
+					let currentDate = NSDate()
+					for aPath in pathsAny {
+						let tmpURL = NSURL.fileURLWithPath(aPath)
+						let tmpObj = MusicListObject(URL: tmpURL, date: currentDate)
+						pathsURL.append(tmpObj)
+					}
+					self.loadMusicList(pathsURL)
+					self.lostMusicCount = invalidAny
+					self.selectedMusic = selectedAny
+					
+					theHandle(theErr: nil)
 				}
 			})
 		})
