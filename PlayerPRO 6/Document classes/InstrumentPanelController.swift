@@ -51,7 +51,7 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		//TODO: handle selIns
 		var plugType: MADFourChar = 0;
 		var theOSErr = importer.identifyInstrumentFile(sampURL, type: &plugType)
-		if (theOSErr != MADErr.NoErr) {
+		if theOSErr != .NoErr {
 			throw theOSErr
 		};
 		var theSamp: Int16 = 0;
@@ -90,7 +90,6 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 	}
 	
 	@IBAction func importInstrument(sender: AnyObject!) {
-		let plugCount = importer.plugInCount
 		var fileDict = [String: [String]]()
 		for obj in importer {
 			fileDict[obj.menuName] = obj.UTITypes
@@ -99,7 +98,6 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 		if let vc = OpenPanelViewController(openPanel: openPanel, instrumentDictionary:fileDict) {
 			vc.setupDefaults()
 			vc.beginOpenPanel(parentWindow: currentDocument.windowForSheet!, completionHandler: { (panelHandle: Int) -> Void in
-				do {
 					if panelHandle == NSFileHandlingPanelOKButton {
 						do {
 							try self.importSampleFromURL(openPanel.URL!)
@@ -110,7 +108,6 @@ class InstrumentPanelController: NSWindowController, NSOutlineViewDataSource, NS
 							})
 						}
 					}
-				} catch _ {}
 			})
 		}
 	}

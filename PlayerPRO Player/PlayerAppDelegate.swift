@@ -1103,7 +1103,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
 		}
 		
-		res = ExtAudioFileSetProperty(audioFile, propertyID: .ClientDataFormat, dataSize: UInt32(sizeof(AudioStreamBasicDescription)), data: &realFormat)
+		res = ExtAudioFileSetProperty(audioFile, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: UInt32(sizeof(AudioStreamBasicDescription)), data: &realFormat)
 		if (res != noErr) {
 			throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
 		}
@@ -1165,7 +1165,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
 		}
 		
-		res = ExtAudioFileSetProperty(audioFile, propertyID: .ClientDataFormat, dataSize: UInt32(sizeof(AudioStreamBasicDescription)), data: &realFormat)
+		res = ExtAudioFileSetProperty(audioFile, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: UInt32(sizeof(AudioStreamBasicDescription)), data: &realFormat)
 		if (res != noErr) {
 			throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
 		}
