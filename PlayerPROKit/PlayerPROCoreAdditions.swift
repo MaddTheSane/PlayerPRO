@@ -156,7 +156,7 @@ public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
 	return true
 }
 
-public let MadID = StringToOSType("MADK")
+public let MadID = stringToOSType("MADK")
 
 // MARK: PlayerPRO MAD data types
 

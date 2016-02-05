@@ -330,7 +330,7 @@ static void XM_Convert2XM(Cmd *aCmd)
 	
 	if (aCmd->vol == 0xFF)
 		aCmd->vol = 0;
-	if (aCmd->cmd == 0xFF)
+	if ((MADByte)aCmd->cmd == 0xFF)
 		aCmd->cmd = 0;
 }
 
