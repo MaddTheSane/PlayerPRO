@@ -3,6 +3,4 @@ framework module PlayerPROKit {
 	
 	export *
 	module * { export * }
-	
-	link framework "PlayerPROCore"
 }
