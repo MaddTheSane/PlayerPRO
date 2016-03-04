@@ -1184,29 +1184,29 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 					}
 					
 					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
-							do {
-								try self.saveMusic(AIFFToURL: savePanel.URL!, theSett: &self.exportSettings);
-								self.madDriver.endExport()
-								dispatch_async(dispatch_get_main_queue()) {
-									if self.isQuitting {
-										NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
-									} else {
-										let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
-										if (retVal == NSAlertAlternateReturn) {
-											NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL!])
-										}
-									}
-								}
-							} catch let thErr as NSError {
-								if (self.isQuitting) {
+						do {
+							try self.saveMusic(AIFFToURL: savePanel.URL!, theSett: &self.exportSettings);
+							self.madDriver.endExport()
+							dispatch_async(dispatch_get_main_queue()) {
+								if self.isQuitting {
 									NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
 								} else {
-									dispatch_async(dispatch_get_main_queue()) {
-										NSAlert(error: thErr).runModal()
+									let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
+									if (retVal == NSAlertAlternateReturn) {
+										NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL!])
 									}
 								}
 							}
+						} catch let thErr as NSError {
+							if (self.isQuitting) {
+								NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
+							} else {
+								dispatch_async(dispatch_get_main_queue()) {
+									NSAlert(error: thErr).runModal()
+								}
+							}
 						}
+					}
 				})
 			})
 			
@@ -1303,38 +1303,38 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 							dispatch_async(dispatch_get_main_queue(), errBlock)
 							return;
 						}
-							do {
-								try NSFileManager.defaultManager().removeItemAtURL(saveURL)
-							} catch _ { }
-							session.outputURL = saveURL
-							session.outputFileType = AVFileTypeAppleM4A
-							session.metadata = metadataInfo
-							let sessionWaitSemaphore = dispatch_semaphore_create(0)
-							session.exportAsynchronouslyWithCompletionHandler({ () -> Void in
-								_ = dispatch_semaphore_signal(sessionWaitSemaphore)
-							})
-							dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER)
-							
-							let didFinish = session.status == .Completed
-							self.madDriver.endExport()
-							
-							if didFinish {
-								dispatch_async(dispatch_get_main_queue()) {
-									if (self.isQuitting) {
-										NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
-									} else {
-										let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
-										if (retVal == NSAlertAlternateReturn) {
-											NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL!])
-										}
+						do {
+							try NSFileManager.defaultManager().removeItemAtURL(saveURL)
+						} catch _ { }
+						session.outputURL = saveURL
+						session.outputFileType = AVFileTypeAppleM4A
+						session.metadata = metadataInfo
+						let sessionWaitSemaphore = dispatch_semaphore_create(0)
+						session.exportAsynchronouslyWithCompletionHandler({ () -> Void in
+							_ = dispatch_semaphore_signal(sessionWaitSemaphore)
+						})
+						dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER)
+						
+						let didFinish = session.status == .Completed
+						self.madDriver.endExport()
+						
+						if didFinish {
+							dispatch_async(dispatch_get_main_queue()) {
+								if (self.isQuitting) {
+									NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
+								} else {
+									let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
+									if (retVal == NSAlertAlternateReturn) {
+										NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([savePanel.URL!])
 									}
 								}
-							} else {
-								NSLog("\(session.error)");
-								if self.isQuitting {
-									NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
-								}
 							}
+						} else {
+							NSLog("\(session.error)");
+							if self.isQuitting {
+								NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
+							}
+						}
 					}
 				})
 			})
@@ -1376,7 +1376,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 									NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
 								} else {
 									dispatch_async(dispatch_get_main_queue()) {
-									PPRunAlertPanel("Export failed", message: "Export/coversion of the music file failed:\n\(error.localizedDescription)")
+										PPRunAlertPanel("Export failed", message: "Export/coversion of the music file failed:\n\(error.localizedDescription)")
 									}
 								}
 							}
