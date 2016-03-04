@@ -1073,9 +1073,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	}
 	
 	private func saveMusic(waveToURL theURL: NSURL, inout theSett: MADDriverSettings) throws {
-		var audioFile: ExtAudioFileRef = nil;
+		var audioFile: ExtAudioFile!
 		let tmpChannels: UInt32
-		var res: OSStatus = noErr
 		
 		switch (theSett.outPutMode) {
 		case .MonoOutPut:
@@ -1091,22 +1090,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.SignedInteger, .Packed], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		var realFormat = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.SignedInteger, .Packed, .NativeEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		
-		res = ExtAudioFileCreate(URL: theURL, fileType: .WAVE, streamDescription: &asbd, flags: .EraseFile, audioFile: &audioFile)
+		audioFile = try ExtAudioFile(createURL: theURL, fileType: .WAVE, streamDescription: &asbd, flags: .EraseFile)
 		
-		defer {
-			if (audioFile != nil) {
-				ExtAudioFileDispose(audioFile)
-			}
-		}
-		
-		if res != noErr {
-			throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
-		}
-		
-		res = ExtAudioFileSetProperty(audioFile, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: UInt32(sizeof(AudioStreamBasicDescription)), data: &realFormat)
-		if (res != noErr) {
-			throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
-		}
+		audioFile.clientDataFormat = realFormat
 		
 		func handler(data: NSData) throws {
 			let toWriteSize = data.length
@@ -1117,28 +1103,18 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			audBufList.mBuffers.mDataByteSize = UInt32(data.length)
 			audBufList.mBuffers.mData = UnsafeMutablePointer<Void>(data.bytes)
 			
-			
-			let res = ExtAudioFileWrite(audioFile, UInt32(toWriteSize) / realFormat.mBytesPerFrame, &audBufList)
-			
-			if res != noErr {
-				throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
-			}
+			try audioFile.write(UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 		}
 		
 		try rawSoundData(&theSett, handler: handler)
 		
 		applyMetadataToFileID(audioFile)
-		res = ExtAudioFileDispose(audioFile)
 		audioFile = nil
-		if (res != noErr) {
-			throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
-		}
 	}
 	
 	private func saveMusic(AIFFToURL theURL: NSURL, inout theSett: MADDriverSettings) throws {
-		var audioFile: ExtAudioFileRef = nil;
+		var audioFile: ExtAudioFile!
 		let tmpChannels: UInt32
-		var res: OSStatus = noErr
 		
 		switch (theSett.outPutMode) {
 		case .MonoOutPut:
@@ -1154,21 +1130,9 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		var asbd = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.SignedInteger, .Packed, .BigEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		var realFormat = AudioStreamBasicDescription(sampleRate: Float64(theSett.outPutRate), formatFlags: [.SignedInteger, .Packed, .NativeEndian], bitsPerChannel: UInt32(theSett.outPutBits), channelsPerFrame: tmpChannels)
 		
-		res = ExtAudioFileCreate(URL: theURL, fileType: .AIFF, streamDescription: &asbd, flags: .EraseFile, audioFile: &audioFile)
+		audioFile = try ExtAudioFile(createURL: theURL, fileType: .AIFF, streamDescription: &asbd, flags: .EraseFile)
 		
-		defer {
-			if (audioFile != nil) {
-				ExtAudioFileDispose(audioFile)
-			}
-		}
-		if res != noErr {
-			throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
-		}
-		
-		res = ExtAudioFileSetProperty(audioFile, propertyID: kExtAudioFileProperty_ClientDataFormat, dataSize: UInt32(sizeof(AudioStreamBasicDescription)), data: &realFormat)
-		if (res != noErr) {
-			throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
-		}
+		audioFile.clientDataFormat = realFormat
 		
 		func handler(data: NSData) throws {
 			let toWriteSize = data.length
@@ -1179,25 +1143,16 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			audBufList.mBuffers.mDataByteSize = UInt32(data.length)
 			audBufList.mBuffers.mData = UnsafeMutablePointer<Void>(data.bytes)
 			
-			
-			let res = ExtAudioFileWrite(audioFile, UInt32(toWriteSize) / realFormat.mBytesPerFrame, &audBufList)
-			
-			if res != noErr {
-				throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
-			}
+			try audioFile.write(UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 		}
 		
 		try rawSoundData(&theSett, handler: handler)
 		
 		applyMetadataToFileID(audioFile)
-		res = ExtAudioFileDispose(audioFile)
 		audioFile = nil
-		if res != noErr {
-			throw NSError(domain: NSOSStatusErrorDomain, code: Int(res), userInfo: nil)
-		}
 	}
 	
-	private func applyMetadataToFileID(theID: AudioFileID) {
+	private func applyMetadataToFileID(theID: ExtAudioFile) {
 		//TODO: implement, but how?
 	}
 	
@@ -1283,8 +1238,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 								PPRunAlertPanel("Export failed", message: "Export/coversion of the music file failed:\n\(expErr!.localizedDescription)");
 							}
 						};
-						let oldMusicName = self.musicName;
-						let oldMusicInfo = self.musicInfo;
+						let oldMusicName = self.musicName
+						let oldMusicInfo = self.musicInfo
 						func generateAVMetadataInfo() -> [AVMetadataItem] {
 							let titleName = AVMutableMetadataItem()
 							titleName.keySpace = AVMetadataKeySpaceCommon
@@ -1336,9 +1291,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 						defer {
 							do {
 								try NSFileManager.defaultManager().removeItemAtURL(tmpURL)
-							} catch _ {
-								
-							}
+							} catch _ { }
 						}
 						
 						let exportMov = AVAsset(URL: tmpURL)
@@ -1349,31 +1302,21 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 							NSLog("Init Failed for %@, error: %@", oldMusicName, expErr!.localizedDescription)
 							dispatch_async(dispatch_get_main_queue(), errBlock)
 							return;
-
 						}
-							#if false
-								if (session == nil) {
-									expErr = NSError(domain: NSCocoaErrorDomain, code: NSFileWriteUnknownError, userInfo: nil)
-									NSLog("Export session creation for %@ failed, error: %@", oldMusicName, expErr!.localizedDescription);
-									NSFileManager.defaultManager().removeItemAtURL(tmpURL, error: nil)
-									dispatch_async(dispatch_get_main_queue(), errBlock);
-									return;
-								}
-							#endif
 							do {
 								try NSFileManager.defaultManager().removeItemAtURL(saveURL)
-							} catch _ {
-							}
+							} catch _ { }
 							session.outputURL = saveURL
 							session.outputFileType = AVFileTypeAppleM4A
-							session.metadata = metadataInfo;
-							let sessionWaitSemaphore = dispatch_semaphore_create(0);
+							session.metadata = metadataInfo
+							let sessionWaitSemaphore = dispatch_semaphore_create(0)
 							session.exportAsynchronouslyWithCompletionHandler({ () -> Void in
 								_ = dispatch_semaphore_signal(sessionWaitSemaphore)
 							})
 							dispatch_semaphore_wait(sessionWaitSemaphore, DISPATCH_TIME_FOREVER)
 							
-							let didFinish = session.status == .Completed;
+							let didFinish = session.status == .Completed
+							self.madDriver.endExport()
 							
 							if didFinish {
 								dispatch_async(dispatch_get_main_queue()) {
