@@ -1103,7 +1103,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			audBufList.mBuffers.mDataByteSize = UInt32(data.length)
 			audBufList.mBuffers.mData = UnsafeMutablePointer<Void>(data.bytes)
 			
-			try audioFile.write(UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
+			try audioFile.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 		}
 		
 		try rawSoundData(&theSett, handler: handler)
@@ -1143,7 +1143,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			audBufList.mBuffers.mDataByteSize = UInt32(data.length)
 			audBufList.mBuffers.mData = UnsafeMutablePointer<Void>(data.bytes)
 			
-			try audioFile.write(UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
+			try audioFile.write(frames: UInt32(toWriteSize) / realFormat.mBytesPerFrame, data: &audBufList)
 		}
 		
 		try rawSoundData(&theSett, handler: handler)
