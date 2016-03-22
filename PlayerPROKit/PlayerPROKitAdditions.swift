@@ -113,7 +113,7 @@ public func noteFromString(myTT: String) -> Int16?
 	}
 	
 	if theRet.sharp {
-		Oct++
+		Oct += 1
 	}
 	
 	if Oct > 95 {
@@ -262,7 +262,8 @@ extension PPSampleObject {
 		drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: curData, context:ctxRef)
 	}
 
-	final public class func drawSample(var start start: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext?) {
+	final public class func drawSample(start start1: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext?) {
+		var start = start1
 		CGContextSaveGState(ctxRef);
 		
 		var temp: CGFloat = 0.0
@@ -304,15 +305,17 @@ extension PPSampleObject {
 				CGContextAddLineToPoint(ctxRef, CGFloat(trueH + i), temp + CGFloat(trueV))
 				
 				if (BS != BE) {
-					for (var x = BS; x < BE; x++) {
+					var x = BS
+					while x < BE {
 						temp = CGFloat(theShortSample[x] &+ 0x8000)
 						
 						maxY = max(temp, maxY)
 						minY = min(temp, minY)
 						
 						if (isStereo) {
-							x++
+							x += 1
 						}
+						x += 1
 					}
 					
 					maxY *= CGFloat(high) * oneShiftedBy16
@@ -355,15 +358,17 @@ extension PPSampleObject {
 				CGContextAddLineToPoint(ctxRef, CGFloat(trueH + i), temp + CGFloat(trueV))
 				
 				if (BS != BE) {
-					for (var x = BS; x < BE; x++) {
+					var x = BS
+					while x < BE {
 						temp = CGFloat(theSample[x] &- 0x80)
 						
 						maxY = max(temp, maxY)
 						minY = min(temp, minY)
 						
 						if (isStereo) {
-							x++;
+							x += 1;
 						}
+						x += 1
 					}
 					maxY *= CGFloat(high) * oneShiftedBy8
 					minY *= CGFloat(high) * oneShiftedBy8
@@ -393,9 +398,11 @@ extension PPSampleObject {
 extension PPPatternObject: SequenceType {
 	public func generate() -> AnyGenerator<PPMadCommandObject> {
 		var index = 0
-		return anyGenerator {
+		return AnyGenerator {
 			if index < self.lengthOfCommands {
-				return self[index++]
+				let idx = self[index]
+				index += 1
+				return idx
 			}
 			
 			return nil
@@ -406,9 +413,11 @@ extension PPPatternObject: SequenceType {
 extension PPInstrumentObject: SequenceType {
 	public func generate() -> AnyGenerator<PPSampleObject> {
 		var index = 0
-		return anyGenerator {
+		return AnyGenerator {
 			if index < self.samples.count {
-				return self[index++]
+				let idx = self[index]
+				index += 1
+				return idx
 			}
 			return nil
 		}

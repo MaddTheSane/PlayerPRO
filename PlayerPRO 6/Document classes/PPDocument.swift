@@ -120,7 +120,7 @@ import AudioToolbox
 		super.init()
 		
 		let defaultCenter = NSNotificationCenter.defaultCenter()
-		defaultCenter.addObserver(self, selector: "soundPreferencesDidChange:", name: PPSoundPreferencesDidChange, object: nil)
+		defaultCenter.addObserver(self, selector: #selector(PPDocument.soundPreferencesDidChange(_:)), name: PPSoundPreferencesDidChange, object: nil)
 	}
 	
     override func windowControllerDidLoadNib(aController: NSWindowController) {

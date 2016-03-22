@@ -224,9 +224,9 @@ private let kPlayerList = "Player List"
 					} else if (selectedMusic == musicList.count + 1) {
 						selectedMusic = -1
 					} else if (selectedMusic > musicList.count + 1) {
-						selectedMusic--
+						selectedMusic -= 1
 					}
-					lostMusicCount++
+					lostMusicCount += 1
 					continue
 				}
 				musicList.append(book)
@@ -242,9 +242,9 @@ private let kPlayerList = "Player List"
 					} else if (selectedMusic == musicList.count + 1) {
 						selectedMusic = -1
 					} else if (selectedMusic > musicList.count + 1) {
-						selectedMusic--
+						selectedMusic -= 1
 					}
-					lostMusicCount++
+					lostMusicCount += 1
 					continue
 				}
 				let obj = MusicListObject(URL: bookURL, date: currentDate)
@@ -268,9 +268,9 @@ private let kPlayerList = "Player List"
 					} else if (selectedMusic == musicList.count + 1) {
 						selectedMusic = -1
 					} else if (selectedMusic > musicList.count + 1) {
-						selectedMusic--
+						selectedMusic -= 1
 					}
-					lostMusicCount++
+					lostMusicCount += 1
 				}
 			}
 		} else if let bookmarkArray = aDecoder.decodeObjectForKey(kMusicListKey1) as? [NSData] {
@@ -280,7 +280,7 @@ private let kPlayerList = "Player List"
 				if let fullURL = MusicListObject(bookmarkData: bookData, resolutionOptions: .WithoutUI, date: currentDate) {
 					musicList.append(fullURL)
 				} else {
-					lostMusicCount++
+					lostMusicCount += 1
 				}
 			}
 			selectedMusic = -1;
@@ -431,8 +431,11 @@ private let kPlayerList = "Player List"
 	
 	func insertMusicLists(anObj: [MusicListObject], atIndexes indexes: NSIndexSet) {
 		var idx = anObj.endIndex
-		for var i = indexes.lastIndex; i != NSNotFound; i = indexes.indexLessThanIndex(i) {
-			musicList.insert(anObj[--idx], atIndex: i)
+		var i = indexes.lastIndex
+		while i != NSNotFound {
+			idx -= 1
+			musicList.insert(anObj[idx], atIndex: i)
+			i = indexes.indexLessThanIndex(i)
 		}
 	}
 	

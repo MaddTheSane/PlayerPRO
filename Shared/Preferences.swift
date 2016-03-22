@@ -91,7 +91,7 @@ final class Preferences: NSWindowController, NSWindowDelegate {
 		let menu = popUp.menu!
 		
 		for (i, vc) in viewControllers.enumerate() {
-			let mi = NSMenuItem(title: vc.title!, action: "changeViewController:", keyEquivalent: "")
+			let mi = NSMenuItem(title: vc.title!, action: #selector(Preferences.changeViewController(_:)), keyEquivalent: "")
 			mi.tag = i
 			menu.addItem(mi)
 		}

@@ -123,30 +123,30 @@ private func importPAT(insHeader: PPInstrumentObject, data: NSData) -> MADErr {
 		tmpHeader.maxFreq = tmpHeader.maxFreq.littleEndian
 		tmpHeader.originRate = tmpHeader.originRate.littleEndian
 		
-		for var i = 0; i < 107; i++ {
+		for i in 0..<107 {
 			if scale_table[i] >= UInt32(PATSamp.memory.originRate) {
 				tmpHeader.originRate = Int32(i);
-				i = 108;
+				break
 			}
 		}
 		
 		curData.relativeNote = Int8(60 - (12 + PATSamp.memory.originRate))
 		
-		for var i = 0; i < 107; i++ {
+		for i in 0..<107 {
 			if scale_table[i] >= UInt32(PATSamp.memory.minFreq) {
 				tmpHeader.minFreq = Int32(i)
-				i = 108;
+				break
 			}
 		}
 		
-		for var i = 0; i < 107; i++ {
+		for i in 0..<107{
 			if scale_table[i] >= UInt32(PATSamp.memory.maxFreq) {
 				tmpHeader.maxFreq = Int32(i)
-				i = 108;
+				break
 			}
 		}
 		
-		for var i = PATSamp.memory.minFreq; i < PATSamp.memory.maxFreq; i++ {
+		for i in PATSamp.memory.minFreq ..< PATSamp.memory.maxFreq {
 			if (i < 96 && i >= 0) {
 				insHeader.what[Int(i)] = UInt8(x)
 			}

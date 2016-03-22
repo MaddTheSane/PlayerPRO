@@ -106,7 +106,8 @@ class LengthWindowController: NSWindowController {
 			
 			switch (theData.amplitude) {
 			case 8:
-				for (var x = 0; x < destinationSize; x++) {
+				var x = 0
+				while x < destinationSize {
 					var pos		= (x * srcSize << LRVAL) / dstSize
 					let right	= pos & ((1 << LRVAL) - 1)
 					let left	= (1 << LRVAL) - right
@@ -123,7 +124,7 @@ class LengthWindowController: NSWindowController {
 						
 						dst8[x] = Int8(tempL)
 						
-						x++
+						x += 1
 						
 						if (3 + pos >= realsrcSize) {
 						} else {
@@ -141,10 +142,12 @@ class LengthWindowController: NSWindowController {
 						
 						dst8[x] = Int8(tempL)
 					}
+					x += 1
 				}
 				
 			case 16:
-				for (var x = 0; x < destinationSize / 2; x++) {
+				var x = 0
+				while x < destinationSize / 2 {
 					var pos		= (x * srcSize << LRVAL) / dstSize
 					let right	= pos & ((1 << LRVAL) - 1)
 					let left	= (1 << LRVAL) - right
@@ -161,7 +164,7 @@ class LengthWindowController: NSWindowController {
 						
 						dst16[x] = Int16(tempL)
 						
-						x++;
+						x += 1;
 						
 						if (3 + pos >= realsrcSize / 2) {
 						} else {
@@ -179,6 +182,7 @@ class LengthWindowController: NSWindowController {
 						
 						dst16[x] = Int16(tempR)
 					}
+					x += 1
 				}
 				
 			default:

@@ -51,7 +51,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	return true
 }
 
-@objc(PPMusicListObject) class MusicListObject: NSObject, NSCopying, NSSecureCoding, CustomDebugStringConvertible {
+@objc(PPMusicListObject) class MusicListObject: NSObject, NSCopying, NSSecureCoding {
 	let musicURL: NSURL
 	let addedDate: NSDate
 

@@ -330,7 +330,8 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			break;
 			
 		case .LoadNext:
-			if musicList.countOfMusicList > ++self.currentlyPlayingIndex.index {
+			self.currentlyPlayingIndex.index += 1
+			if musicList.countOfMusicList > self.currentlyPlayingIndex.index {
 				selectCurrentlyPlayingMusic()
 				do {
 					try loadMusicFromCurrentlyPlayingIndex()
@@ -595,7 +596,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		aboutPlugInMenu.removeAllItems()
 		
 		for (i, pi) in plugInInfos.enumerate() {
-			let mi = NSMenuItem(title: pi.plugName, action: "showPlugInInfo:", keyEquivalent: "")
+			let mi = NSMenuItem(title: pi.plugName, action: #selector(PlayerAppDelegate.showPlugInInfo(_:)), keyEquivalent: "")
 			mi.tag = i
 			mi.target = self
 			aboutPlugInMenu.addItem(mi)
@@ -847,15 +848,15 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		let selMus = musicList.selectedMusic;
 		didChangeValueForKey(kMusicListKVO)
 		
-		tableView.doubleAction = "doubleClickMusicList"
+		tableView.doubleAction = #selector(PlayerAppDelegate.doubleClickMusicList)
 		
 		let defaultCenter = NSNotificationCenter.defaultCenter()
-		defaultCenter.addObserver(self, selector: "soundPreferencesDidChange:", name: PPSoundPreferencesDidChange, object: nil)
+		defaultCenter.addObserver(self, selector: #selector(PlayerAppDelegate.soundPreferencesDidChange(_:)), name: PPSoundPreferencesDidChange, object: nil)
 		
 		MADDriverWithPreferences()
 		for (i, obj) in (madLib).enumerate() {
 			if obj.canExport {
-				let mi = NSMenuItem(title: "\(obj.menuName)…", action: "exportMusicAs:", keyEquivalent: "")
+				let mi = NSMenuItem(title: "\(obj.menuName)…", action: #selector(PlayerAppDelegate.exportMusicAs(_:)), keyEquivalent: "")
 				mi.tag = i
 				mi.target = self
 				musicExportMenu.addItem(mi)
@@ -870,7 +871,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 		
 		instrumentController = InstrumentWindowController.newInstrumentWindow()
 		
-		timeChecker = NSTimer(fireDate: NSDate(), interval:1.0/8.0, target:self, selector: "updateMusicStats:", userInfo: nil, repeats: true)
+		timeChecker = NSTimer(fireDate: NSDate(), interval:1.0/8.0, target:self, selector: #selector(PlayerAppDelegate.updateMusicStats(_:)), userInfo: nil, repeats: true)
 		NSRunLoop.mainRunLoop().addTimer(timeChecker, forMode: NSRunLoopCommonModes)
 		let lostCount = musicList.lostMusicCount
 		
@@ -966,7 +967,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	
 	@IBAction func nextButtonPressed(sender: AnyObject!) {
 		if (self.currentlyPlayingIndex.index + 1 < musicList.countOfMusicList) {
-			currentlyPlayingIndex.index++;
+			currentlyPlayingIndex.index += 1;
 			selectCurrentlyPlayingMusic()
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
@@ -1015,7 +1016,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 	
 	@IBAction func prevButtonPressed(sender: AnyObject!) {
 		if (currentlyPlayingIndex.index > 0) {
-			currentlyPlayingIndex.index--;
+			currentlyPlayingIndex.index -= 1;
 			selectCurrentlyPlayingMusic()
 			do {
 				try loadMusicFromCurrentlyPlayingIndex()
@@ -1590,7 +1591,7 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 			var currentIndex = dragIndexSet.firstIndex;
 			while currentIndex != NSNotFound {
 				if currentIndex <= row {
-					minRow++;
+					minRow += 1;
 				}
 				currentIndex = dragIndexSet.indexGreaterThanIndex(currentIndex)
 			}

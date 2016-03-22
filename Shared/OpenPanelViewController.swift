@@ -384,7 +384,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		if let fileTypeSelectionMenu = popUp?.menu {
 			let moreThanTwoTypes = hasMoreThanTwoTypes
 			if (moreThanTwoTypes) {
-				let mi0 = NSMenuItem(title: "All Openable Files", action: "selectUTI:", keyEquivalent: "")
+				let mi0 = NSMenuItem(title: "All Openable Files", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 				mi0.tag = utiType.allType.rawValue
 				mi0.target = self
 				fileTypeSelectionMenu.addItem(mi0)
@@ -394,7 +394,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			
 			for item in utiObjects {
 				if (item.theUtiType == .tracker) {
-					let mi0 = NSMenuItem(title: "All Trackers", action: "selectUTI:", keyEquivalent: "")
+					let mi0 = NSMenuItem(title: "All Trackers", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.trackerType.rawValue
 					mi0.target = self
 					fileTypeSelectionMenu.addItem(mi0)
@@ -405,7 +405,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			
 			for item in utiObjects {
 				if (item.theUtiType == .playlist) {
-					let mi0 = NSMenuItem(title: "All Playlists", action: "selectUTI:", keyEquivalent: "")
+					let mi0 = NSMenuItem(title: "All Playlists", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.playlistType.rawValue
 					mi0.target = self
 					fileTypeSelectionMenu.addItem(mi0)
@@ -416,7 +416,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			
 			for item in utiObjects {
 				if (item.theUtiType == .instrument) {
-					let mi0 = NSMenuItem(title: "All Instruments", action: "selectUTI:", keyEquivalent: "")
+					let mi0 = NSMenuItem(title: "All Instruments", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.instrumentType.rawValue
 					mi0.target = self
 					fileTypeSelectionMenu.addItem(mi0)
@@ -427,7 +427,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			
 			for item in utiObjects {
 				if (item.theUtiType == .other) {
-					let mi0 = NSMenuItem(title: "All Other", action: "selectUTI:", keyEquivalent: "")
+					let mi0 = NSMenuItem(title: "All Other", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.otherType.rawValue
 					mi0.target = self
 					fileTypeSelectionMenu.addItem(mi0)
@@ -446,7 +446,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 						}
 					}
 				}
-				let mi = NSMenuItem(title: curItem.name, action: "selectUTI:", keyEquivalent: "")
+				let mi = NSMenuItem(title: curItem.name, action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 				mi.tag = i
 				mi.target = self
 				fileTypeSelectionMenu.addItem(mi)

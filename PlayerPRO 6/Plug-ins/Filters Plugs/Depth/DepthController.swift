@@ -37,7 +37,8 @@ class DepthController: NSWindowController {
 		switch theData.amplitude {
 		case 8:
 			Sample8Ptr = Sample8Ptr.advancedBy(selectionRange.location)
-			for (var i = 0; i < selectionRange.length; i++) {
+			var i = 0
+			while i < selectionRange.length {
 				var temp = Int32(Sample8Ptr.memory)
 				
 				temp *= Inc;
@@ -49,17 +50,17 @@ class DepthController: NSWindowController {
 				Sample8Ptr.memory = Int8(temp)
 				
 				if stereoMode {
-					Sample8Ptr++
-					i++
+					Sample8Ptr = Sample8Ptr.successor()
+					i += 1
 				}
 				
-				Sample8Ptr++
-
+				Sample8Ptr = Sample8Ptr.successor()
+				i += 1
 			}
 		case 16:
 			Sample16Ptr = Sample16Ptr.advancedBy(selectionRange.location)
-			
-			for (var i = 0; i < selectionRange.length / 2; i++) {	// Div 2, because it's in bytes !!!
+			var i = 0
+			while i < selectionRange.length / 2 {	// Div 2, because it's in bytes !!!
 				var temp = Int32(Sample16Ptr.memory)
 				
 				temp *= Inc;
@@ -71,11 +72,12 @@ class DepthController: NSWindowController {
 				Sample16Ptr.memory = Int16(temp)
 				
 				if stereoMode {
-					Sample16Ptr++
-					i++
+					Sample16Ptr = Sample16Ptr.successor()
+					i += 1
 				}
 				
-				Sample16Ptr++
+				Sample16Ptr = Sample16Ptr.successor()
+				i += 1
 			}
 			
 		default:

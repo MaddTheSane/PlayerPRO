@@ -178,7 +178,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		aboutPlugInMenu.removeAllItems()
 		
 		for (i, pi) in plugInInfos.enumerate() {
-			let mi = NSMenuItem(title: pi.plugName, action: "showPlugInInfo:", keyEquivalent: "")
+			let mi = NSMenuItem(title: pi.plugName, action: #selector(AppDelegate.showPlugInInfo(_:)), keyEquivalent: "")
 			mi.tag = i
 			mi.target = self
 			aboutPlugInMenu.addItem(mi)
@@ -549,7 +549,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		
 		for (i, obj) in instrumentPlugHandler.enumerate() {
 			if (obj.mode == MADPlugModes.ImportExport || obj.mode == MADPlugModes.Export) {
-				let mi = NSMenuItem(title: obj.menuName, action: "exportInstrument:", keyEquivalent: "")
+				let mi = NSMenuItem(title: obj.menuName, action: Selector("exportInstrument:"), keyEquivalent: "")
 				mi.tag = i;
 				mi.target = nil
 				instrumentExportMenu.addItem(mi);
@@ -558,7 +558,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 		
 		for (i, obj) in (madLib).enumerate() {
 			if (obj.canExport) {
-				let mi = NSMenuItem(title: "\(obj.menuName)…", action: "exportMusicAs:", keyEquivalent: "")
+				let mi = NSMenuItem(title: "\(obj.menuName)…", action: Selector("exportMusicAs:"), keyEquivalent: "")
 				mi.tag = i
 				mi.target = nil
 				musicExportMenu.addItem(mi)
@@ -574,7 +574,7 @@ class AppDelegate: NSDocumentController, NSApplicationDelegate, ExportObjectDele
 	}
 	
 	override func makeUntitledDocumentOfType(typeName: String) throws -> NSDocument {
-		assert(typeName == MADNativeUTI, "Unknown type passed to \(__FUNCTION__): \(typeName)")
+		assert(typeName == MADNativeUTI, "Unknown type passed to \(#function): \(typeName)")
 		let theDoc = PPDocument(music: PPMusicObject())
 		
 		return theDoc

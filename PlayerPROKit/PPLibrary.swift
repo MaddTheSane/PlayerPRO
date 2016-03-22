@@ -112,9 +112,11 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 
 	public func generate() -> AnyGenerator<PPLibraryObject> {
 		var index = 0
-		return anyGenerator {
+		return AnyGenerator {
 			if index < self.trackerLibs.count {
-				return self[index++]
+				let idx = self[index]
+				index += 1
+				return idx
 			}
 			return nil
 		}
@@ -263,10 +265,11 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 		return .UnknownErr
 	}
 	
-	private func informationFromFile(URL URL: NSURL, var cType: [Int8]) throws -> MADInfoRec {
+	private func informationFromFile(URL URL: NSURL, cType: [Int8]) throws -> MADInfoRec {
+		var cStrType = cType
 		var infoRec = MADInfoRec()
 
-		let anErr = MADMusicInfoCFURL(theLibrary, &cType, URL, &infoRec)
+		let anErr = MADMusicInfoCFURL(theLibrary, &cStrType, URL, &infoRec)
 		
 		try anErr.throwIfNotNoErr()
 		

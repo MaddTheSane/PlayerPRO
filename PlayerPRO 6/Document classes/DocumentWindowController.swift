@@ -92,13 +92,13 @@ class DocumentWindowController: NSWindowController, SoundSettingsViewControllerD
 				//let aDoc: (DocumentWindowController) = um.prepareWithInvocationTarget(self) as (DocumentWindowController)
 				
 				if self.currentDocument.musicInfo != self.infoInfoField.stringValue {
-					um.registerUndoWithTarget(self.currentDocument, selector: "setMusicInfo:", object: self.currentDocument.musicInfo)
+					um.registerUndoWithTarget(self.currentDocument, selector: Selector("setMusicInfo:"), object: self.currentDocument.musicInfo)
 					//aDoc.musicInfo = self.currentDocument.musicInfo
 					self.currentDocument.musicInfo = self.infoInfoField.stringValue
 				}
 				
 				if self.currentDocument.musicName != self.infoNameField.stringValue {
-					um.registerUndoWithTarget(self.currentDocument, selector: "setMusicName:", object: self.currentDocument.musicName)
+					um.registerUndoWithTarget(self.currentDocument, selector: Selector("setMusicName:"), object: self.currentDocument.musicName)
 
 					//aDoc.musicName = self.currentDocument.musicName
 					self.currentDocument.musicName = self.infoNameField.stringValue

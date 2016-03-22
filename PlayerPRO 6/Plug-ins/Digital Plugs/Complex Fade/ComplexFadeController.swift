@@ -173,7 +173,8 @@ class ComplexFadeController: NSWindowController {
 		
 		let pcmdLength = tmpPPKPcmd.length
 		for track in 0 ..< tmpPPKPcmd.tracks {
-			for var row: Int16 = 0; row < pcmdLength; row += step {
+			var row: Int16 = 0
+			while row < pcmdLength {
 				let myCmd = MADGetCmd(row, track, thePcmd);
 				
 				if pcmdLength > 1 {			// no zero div !!
@@ -191,6 +192,7 @@ class ComplexFadeController: NSWindowController {
 						myCmd.memory.vol	= UInt8(from + ((to - from) * Int32(row)) / (Int32(pcmdLength) - 1))
 					}
 				}
+				row += step
 			}
 		}
 		
