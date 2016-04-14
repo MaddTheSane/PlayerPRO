@@ -1944,7 +1944,7 @@ void GenerateSound(MADDriverRec *intDriver)
 bool MADDirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
 	char				*ptrCopy;
-	MADDriverSettings	driverCopy;
+	MADDriverSettings	driverCopy = {0};
 	
 	if (intDriver == NULL)
 		return false;
@@ -1982,7 +1982,7 @@ bool MADDirectSaveAlways(char *myPtr, MADDriverSettings *driverType, MADDriverRe
 bool MADDirectSave(char *myPtr, MADDriverSettings *driverType, MADDriverRec *intDriver)
 {
 	char				*ptrCopy;
-	MADDriverSettings	driverCopy;
+	MADDriverSettings	driverCopy = {0};
 	
 	if (intDriver == NULL)
 		return false;

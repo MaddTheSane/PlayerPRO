@@ -411,7 +411,7 @@ private let kPlayerList = "Player List"
 			selectedMusic = -1;
 		}
 		
-		removeObjects(inArray: &musicList, atIndexes: idxSet)
+		musicList.removeAtIndexes(idxSet)
 	}
 	
 	func removeObjectInMusicListAtIndex(atIndex: Int) {
