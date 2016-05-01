@@ -36,11 +36,11 @@ extension MADErr: ErrorType {
 		return anErr
 	}
 	
-	///Creates an `NSError` from `self`, optionally converting the error type to an error in the Cocoa error domain.
+	/// Creates an `NSError` from `self`, optionally converting the error type to an error in the Cocoa error domain.
 	///
-	///- parameter customUserDictionary: A dictionary with additional information. May be `nil`, default is `nil`.
-	///- parameter convertToCocoa: Converts `self` into a comparable error in Cocoa's error types. Default is `true`.
-	///- returns: An `NSError` value, or `nil` if `self` is `.NoErr`
+	/// - parameter customUserDictionary: A dictionary with additional information. May be `nil`, default is `nil`.
+	/// - parameter convertToCocoa: Converts `self` into a comparable error in Cocoa's error types. Default is `true`.
+	/// - returns: An `NSError` value, or `nil` if `self` is `.NoErr`
 	@warn_unused_result public func toNSError(customUserDictionary cud: [String: NSObject]? = nil, convertToCocoa: Bool = true) -> NSError? {
 		if self == .NoErr {
 			return nil
@@ -79,12 +79,12 @@ extension MADErr: ErrorType {
 	}
 }
 
-///Creates an `NSError` from a `MADErr`, optionally converting the error type to an error in the Cocoa error domain.
+/// Creates an `NSError` from a `MADErr`, optionally converting the error type to an error in the Cocoa error domain.
 ///
-///- parameter theErr: The `MADErr` to convert to an `NSError`
-///- parameter customUserDictionary: A dictionary with additional information. May be `nil`, defaults to `nil`.
-///- parameter convertToCocoa: Converts the `MADErr` code into a compatible error in Cocoa's error types. defaults to `false`.
-///- returns: An `NSError` value, or `nil` if passed `.NoErr`
+/// - parameter theErr: The `MADErr` to convert to an `NSError`
+/// - parameter customUserDictionary: A dictionary with additional information. May be `nil`, defaults to `nil`.
+/// - parameter convertToCocoa: Converts the `MADErr` code into a compatible error in Cocoa's error types. defaults to `false`.
+/// - returns: An `NSError` value, or `nil` if passed `.NoErr`
 public func createErrorFromMADErrorType(theErr: MADErr, customUserDictionary: [String: NSObject]? = nil, convertToCocoa: Bool = false) -> NSError? {
 	return theErr.toNSError(customUserDictionary: customUserDictionary, convertToCocoa: convertToCocoa)
 }
