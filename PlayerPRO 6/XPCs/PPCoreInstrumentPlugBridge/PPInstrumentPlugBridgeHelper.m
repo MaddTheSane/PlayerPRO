@@ -262,10 +262,10 @@ NSData *MADInstrumentToData(InstrData* insData, sData ** sampleData)
 		for (int i = 0; i < insData->numSamples; i++) {
 			NSDictionary *sampDict = sampleToDictionary(sampleData[i]);
 			[sampArray addObject:sampDict];
-			RELEASEOBJ(sampDict);
+			DESTROYOBJ(sampDict);
 		}
 		[ourArchiver encodeObject:sampArray forKey:PPSamples];
-		RELEASEOBJ(sampArray); sampArray = nil;
+		DESTROYOBJ(sampArray);
 		[ourArchiver encodeInt32:insData->volType forKey:PPVolType];
 		[ourArchiver encodeBytes:insData->what length:96 forKey:PPWhat];
 		[ourArchiver encodeInt32:insData->MIDI forKey:PPMIDI];
@@ -290,9 +290,9 @@ NSData *MADInstrumentToData(InstrData* insData, sData ** sampleData)
 		[ourArchiver encodeObject:volumeEnvelope forKey:PPVolEnv];
 		[ourArchiver encodeObject:panningEnvelope forKey:PPPannEnv];
 		[ourArchiver encodeObject:pitchEnvelope forKey:PPPitchEnv];
-		RELEASEOBJ(volumeEnvelope); volumeEnvelope = nil;
-		RELEASEOBJ(panningEnvelope); panningEnvelope = nil;
-		RELEASEOBJ(pitchEnvelope); pitchEnvelope = nil;
+		DESTROYOBJ(volumeEnvelope);
+		DESTROYOBJ(panningEnvelope);
+		DESTROYOBJ(pitchEnvelope);
 		
 		[ourArchiver encodeInt32:insData->volSize forKey:PPVolSize];
 		[ourArchiver encodeInt32:insData->pannSize forKey:PPPannSize];

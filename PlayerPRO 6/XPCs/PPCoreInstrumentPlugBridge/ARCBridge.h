@@ -28,6 +28,8 @@
 #define __arcweak __unsafe_unretained
 #endif
 
+#define DESTROYOBJ(obj) obj = nil
+
 #else
 
 #define SUPERDEALLOC [super dealloc]
@@ -40,6 +42,9 @@
 #define arcstrong retain
 #define arcweak assign
 #define __arcweak
+
+#define DESTROYOBJ(obj) [obj release]; obj = nil
+
 
 #endif
 
