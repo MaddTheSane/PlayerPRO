@@ -464,9 +464,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		}
 		
 		self.filePath = url;
-		if (error) {
-			*error = nil;
-		}
 	}
 	
 	return self;
@@ -518,9 +515,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		}
 		if (strcmp(type, "MADK") == 0) {
 			self.filePath = url.filePathURL;
-		}
-		if (error) {
-			*error = nil;
 		}
 	}
 	return self;
@@ -798,10 +792,6 @@ static MADMusic *DeepCopyMusic(MADMusic* oldMus)
 		}
 	}
 	// *********************
-	
-	if (theErr) {
-		*theErr = nil;
-	}
 	
 	for (x = 0; x < MAXINSTRU ; x++) MADKillInstrument(currentMusic, x);
 	memcpy(currentMusic->fid, tempInstrData, inOutCount);

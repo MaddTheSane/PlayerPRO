@@ -308,7 +308,7 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 	/// - parameter info: A pointer to an NSDictionary. On return and success, the dictionary is populated with info about the tracker.
 	/// - returns: An error value, or `MADNoErr` on success.
 	///
-	/// This is mainly for Objective C code. For Swift code, use `informationFromFile(URL:type:)` instead.
+	/// This is mainly for Objective-C code. For Swift code, use `informationFromFile(URL:type:)` instead.
 	@objc(getInformationFromFileAtURL:stringType:info:) public func getInformationFromFile(URL path: NSURL, type: String, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
 		if info == nil {
 			return .ParametersErr
@@ -410,12 +410,14 @@ public final class PPLibrary: NSObject, CollectionType, NSFastEnumeration {
 ///Deprecated functions
 extension PPLibrary {
 	///Deprecated: do not use
+	@available(*, deprecated, message="Use -getInformationFromFileAtPath:stringType:info: (Obj-C) or informationFromFile(path:type:) (Swift) instead")
 	@objc(getInformationFromFileAtPath:type:info:) public func getInformationFromFile(path path: String, type: UnsafeMutablePointer<Int8>, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
 		let anURL = NSURL(fileURLWithPath: path)
 			return getInformationFromFile(URL: anURL, type: type, info: info)
 	}
 
 	///Deprecated: do not use
+	@available(*, deprecated, message="Use -getInformationFromFileAtURL:stringType:info: (Obj-C) or informationFromFile(URL:type:) (Swift) instead")
 	@objc(getInformationFromFileAtURL:type:info:) public func getInformationFromFile(URL path: NSURL, type: UnsafeMutablePointer<Int8>, info: AutoreleasingUnsafeMutablePointer<NSDictionary>) -> MADErr {
 		if info == nil {
 			return .ParametersErr
@@ -442,6 +444,7 @@ extension PPLibrary {
 	}
 	
 	///Deprecated: do not use
+	@available(*, deprecated, message="Use -identifyFileAtURL:stringType: (Obj-C) or identifyFile(URL:) (Swift) instead")
 	@objc(identifyFileAtURL:type:) public func identifyFile(URL apath: NSURL, type: UnsafeMutablePointer<Int8>) -> MADErr {
 		if type == nil {
 			return .ParametersErr
@@ -460,6 +463,7 @@ extension PPLibrary {
 	}
 	
 	///Deprecated: do not use
+	@available(*, deprecated, message="Use -identifyFileAtPath:stringType: (Obj-C) or identifyFile(path:) (Swift) instead")
 	@objc(identifyFileAtPath:type:) public func identifyFile(path apath: String, type: UnsafeMutablePointer<Int8>) -> MADErr {
 		if type == nil {
 			return .ParametersErr

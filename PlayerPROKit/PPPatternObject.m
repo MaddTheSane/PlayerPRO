@@ -84,10 +84,11 @@ static const dispatch_block_t initUTIArray = ^{
 }
 - (id)pasteboardPropertyListForType:(NSString *)type
 {
-	if ([type isEqualToString:kPPKPatternPasteboardUTI])
+	if ([type isEqualToString:kPPKPatternPasteboardUTI]) {
 		return [NSKeyedArchiver archivedDataWithRootObject:self];
-	else
+	} else {
 		return nil;
+	}
 }
 
 + (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type pasteboard:(NSPasteboard *)pasteboard
@@ -260,7 +261,7 @@ static const dispatch_block_t initUTIArray = ^{
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-	[aCoder encodeObject:_patternName forKey:kPPPatternName];
+	[aCoder encodeObject:self.patternName forKey:kPPPatternName];
 	[aCoder encodeObject:commands forKey:kPPPatternCommands];
 	[aCoder encodeInteger:index forKey:kPPPatternIndex];
 }
@@ -462,7 +463,7 @@ static Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPatternObj
 
 - (Pcmd*)newPcmdWithTrackRange:(NSRange)trackRange positionRange:(NSRange)posRange
 {
-	NSInteger count = (trackRange.length) * (posRange.length), X, Y;
+	NSInteger count = (trackRange.length) * (posRange.length);
 	
 	size_t theSize = sizeof(Pcmd) + count * sizeof(Cmd);
 	Pcmd *thePcmd = calloc(theSize, 1);
@@ -475,8 +476,8 @@ static Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPatternObj
 	thePcmd->trackStart = trackRange.location;
 	thePcmd->posStart	= posRange.location;
 	
-	for (X = trackRange.location; X <= NSMaxRange(trackRange); X++) {
-		for (Y = posRange.location; Y <= NSMaxRange(posRange); Y++) {
+	for (NSInteger X = trackRange.location; X <= NSMaxRange(trackRange); X++) {
+		for (NSInteger Y = posRange.location; Y <= NSMaxRange(posRange); Y++) {
 			Cmd *cmd, *cmd2;
 			cmd = GetMADCommandFromPatternObj(Y, X, self);
 			cmd2 = MADGetCmd(Y - NSMaxRange(posRange), X - NSMaxRange(trackRange), thePcmd);
@@ -499,14 +500,14 @@ static Cmd *GetMADCommandFromPatternObj(short PosX, short TrackIdX, PPPatternObj
 		return false;
 	}
 	Pcmd *thePcmd = [self newPcmdWithTrackRange:trackRange positionRange:posRange];
-    NSInteger theLength = thePcmd->structSize;
-	SwapPcmd(thePcmd);
 	if (!thePcmd) {
 		if (error) {
 			*error = PPCreateErrorFromMADErrorType(MADNeedMemory);
 		}
 		return false;
 	}
+	NSInteger theLength = thePcmd->structSize;
+	SwapPcmd(thePcmd);
 	datToWrite = [[NSData alloc] initWithBytesNoCopy:thePcmd length:theLength];
 	
 	if (![datToWrite writeToURL:theURL options:NSDataWritingAtomic error:error]) {

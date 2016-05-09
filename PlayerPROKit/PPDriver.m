@@ -374,10 +374,7 @@
 
 - (instancetype)initWithLibrary:(PPLibrary *)theLib settings:(inout MADDriverSettings *)theSettings error:(out NSError* __autoreleasing*)theErr
 {
-	if (self = [super init]) {
-		if (theErr)
-			*theErr = nil;
-		
+	if (self = [super init]) {		
 		thePPLib = theLib;
 		MADErr iErr = MADCreateDriver(theSettings, theLib.theLibrary, &theRec);
 		if (iErr != MADNoErr) {

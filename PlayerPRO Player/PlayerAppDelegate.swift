@@ -1409,21 +1409,21 @@ class PlayerAppDelegate: NSObject, NSApplicationDelegate, SoundSettingsViewContr
 					return;
 				}
 				
-				let fileURL = savePanel.URL
+				let fileURL = savePanel.URL!
 				do {
-					try self.music.exportMusicToURL(fileURL!, format: self.madLib[tag].type, library: self.madLib)
-					self.addMusicToMusicList(fileURL!, loadIfPreferencesAllow: false)
+					try self.music.exportMusicToURL(fileURL, format: self.madLib[tag].type, library: self.madLib)
+					self.addMusicToMusicList(fileURL, loadIfPreferencesAllow: false)
 					if (self.isQuitting) {
 						NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
 					} else {
 						let retVal = PPRunInformationalAlertPanel("Export complete", message: "The export of the file \"\(savePanel.URL!.lastPathComponent!)\" is complete.", defaultButton: "OK", alternateButton: "Show File");
 						if (retVal == NSAlertAlternateReturn) {
-							NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([fileURL!])
+							NSWorkspace.sharedWorkspace().activateFileViewerSelectingURLs([fileURL])
 						}
 					}
 				} catch let error as NSError {
 					if (self.isQuitting) {
-						NSApplication.sharedApplication().replyToApplicationShouldTerminate(true)
+						NSApp.replyToApplicationShouldTerminate(true)
 					} else {
 						NSAlert(error: error).runModal()
 					}
