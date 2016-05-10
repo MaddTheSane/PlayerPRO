@@ -9,7 +9,7 @@
 #ifndef __PLAYERPROKIT_PPERRORS_H__
 #define __PLAYERPROKIT_PPERRORS_H__
 
-#import <Foundation/Foundation.h>
+#import <Foundation/NSString.h>
 #include <PlayerPROCore/MADDefs.h>
 
 __BEGIN_DECLS
@@ -49,8 +49,9 @@ extern NSError* __nullable PPCreateErrorFromMADErrorType(MADErr theErr) NS_RETUR
 extern NSError* __nullable PPCreateErrorFromMADErrorTypeConvertingToCocoa(MADErr theErr, BOOL convertToCocoa) NS_RETURNS_RETAINED;
 
 //! Checks if the error sent to it is a user cancelled error.
-//! This checks for \c MADUserCanceledErr in the \c PPMADErrorDomain and
-//! \c NSUserCancelledError in the <code>NSCocoaErrorDomain</code>.
+//! This checks for \c MADUserCanceledErr in the <code>PPMADErrorDomain</code>,
+//! \c NSUserCancelledError in the <code>NSCocoaErrorDomain</code>, and \c userCanceledErr
+//! in the <code>NSOSStatusErrorDomain</code>.
 extern BOOL PPErrorIsUserCancelled(NSError * __nonnull theErr);
 
 __END_DECLS

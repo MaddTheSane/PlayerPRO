@@ -6,12 +6,14 @@
 //
 //
 
+#import <Foundation/Foundation.h>
 #import "PPErrors.h"
 #include <PlayerPROCore/PlayerPROCore.h>
 #import "PPMusicObject.h"
 
 #ifndef __MACERRORS__
 #define paramErr (-50)
+#define userCanceledErr (-128)
 #endif
 
 #ifndef __private_extern
@@ -31,7 +33,7 @@ static NSString *stringForKeyAndError(NSString *userInfoKey, MADErr errCode)
 	});
 
 	switch (errCode) {
-			//Just in case...
+			// MADNoErr handled just in case...
 		case MADNoErr:
 			if ([userInfoKey isEqualToString:NSLocalizedDescriptionKey]) {
 				return PPErrorLocalizedString(@"You should not be seeing this. File a bug report!", @"No error failure reason");
@@ -208,6 +210,11 @@ BOOL PPErrorIsUserCancelled(NSError *theErr)
 	} else if([theErr.domain isEqualToString:NSCocoaErrorDomain]) {
 		// Also catch Cocoa's user cancelled error.
 		if (theErr.code == NSUserCancelledError) {
+			return YES;
+		}
+	} else if([theErr.domain isEqualToString:NSOSStatusErrorDomain]) {
+		// Also catch Carbon's user cancelled error.
+		if (theErr.code == userCanceledErr) {
 			return YES;
 		}
 	}
