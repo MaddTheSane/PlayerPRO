@@ -31,7 +31,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	class func newInstrumentWindow() -> Self {
 		let ourself = self.init(windowNibName:"InstrumentWindow")
 		
-		(NSApplication.sharedApplication().delegate as! PlayerAppDelegate).addObserver(ourself, forKeyPath: "music", options: .New, context: nil)
+		(NSApplication.shared().delegate as! PlayerAppDelegate).addObserver(ourself, forKeyPath: "music", options: .new, context: nil)
 		
 		return ourself
 	}
@@ -43,14 +43,14 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 		instrumentView?.selectRowIndexes(NSIndexSet(index:0), byExtendingSelection:false)
     }
 
-	override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<()>) {
+	override func observeValue(forKeyPath keyPath: String?, of object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<()>?) {
 		if (keyPath == "music") {
 			instrumentView?.reloadData()
 		}
 	}
 	
-	func outlineViewSelectionDidChange(notification: NSNotification) {
-		var object: AnyObject? = instrumentView!.itemAtRow(instrumentView!.selectedRow)
+	func outlineViewSelectionDidChange(_ notification: NSNotification) {
+		var object: AnyObject? = instrumentView!.item(atRow: instrumentView!.selectedRow)
 		
 		if object == nil {
 			return
@@ -58,7 +58,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 		
 		if let unwrapped = object as? PPInstrumentObject {
 			if (unwrapped.countOfSamples > 0) {
-				object = unwrapped.samplesObjectAtIndex(0)
+				object = unwrapped.samplesObject(at: 0)
 			} else {
 				object = nil
 			}
@@ -87,17 +87,17 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 			instrumentLoopSize!.integerValue = Int(sampleObj.loopSize)
 			instrumentVolume!.integerValue = Int(sampleObj.volume)
 			instrumentRate!.stringValue = "\(sampleObj.c2spd) Hz"
-			instrumentNote!.stringValue = octaveNameFromNote(UInt8(sampleObj.relativeNote)) ?? "None"
+			instrumentNote!.stringValue = octaveName(from: UInt8(sampleObj.relativeNote)) ?? "None"
 			instrumentBits!.stringValue = "\(sampleObj.amplitude)-bit"
-			instrumentMode!.stringValue = sampleObj.loopType == .PingPong ? "Ping-Pong" : "Classic"
+			instrumentMode!.stringValue = sampleObj.loopType == .pingPong ? "Ping-Pong" : "Classic"
 			let sampImage = sampleObj.waveformImage(view: waveFormImage!)
 			waveFormImage!.image = sampImage
 		}
 	}
 	
-	func outlineView(outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
+	func outlineView(_ outlineView: NSOutlineView, numberOfChildrenOfItem item: AnyObject?) -> Int {
 		if (item == nil) {
-			return (NSApplication.sharedApplication().delegate as! PlayerAppDelegate).music.instruments.count
+			return (NSApplication.shared().delegate as! PlayerAppDelegate).music.instruments.count
 		}
 		if let item = item as? PPInstrumentObject {
 			return item.countOfSamples
@@ -105,17 +105,17 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 		return 0
 	}
 	
-	func outlineView(outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
+	func outlineView(_ outlineView: NSOutlineView, child index: Int, ofItem item: AnyObject?) -> AnyObject {
 		if (item == nil) {
-			return (NSApplication.sharedApplication().delegate as! PlayerAppDelegate).music.instruments[index];
+			return (NSApplication.shared().delegate as! PlayerAppDelegate).music.instruments[index];
 		}
 		if let item = item as? PPInstrumentObject {
-			return (item).samplesObjectAtIndex(index)
+			return (item).samplesObject(at: index)
 		}
 		return NSNull();
 	}
 	
-	func outlineView(outlineView: NSOutlineView, objectValueForTableColumn tableColumn: NSTableColumn?, byItem item: AnyObject?) -> AnyObject? {
+	func outlineView(_ outlineView: NSOutlineView, objectValueFor tableColumn: NSTableColumn?, byItem item: AnyObject?) -> AnyObject? {
 		var toRet: String? = nil
 		if let item = item as? PPInstrumentObject {
 			toRet = item.name
@@ -125,7 +125,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 		return toRet
 	}
 	
-	func outlineView(outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
+	func outlineView(_ outlineView: NSOutlineView, isItemExpandable item: AnyObject) -> Bool {
 		if let item = item as? PPInstrumentObject {
 			return item.countOfSamples != 0
 		}
@@ -133,7 +133,7 @@ class InstrumentWindowController: NSWindowController, NSOutlineViewDataSource, N
 	}
 	
 	deinit {
-		NSNotificationCenter.defaultCenter().removeObserver(self)
-		(NSApplication.sharedApplication().delegate as! PlayerAppDelegate).removeObserver(self, forKeyPath: "music")
+		NSNotificationCenter.default().removeObserver(self)
+		(NSApplication.shared().delegate as! PlayerAppDelegate).removeObserver(self, forKeyPath: "music")
 	}
 }

@@ -49,11 +49,11 @@ public final class PPLibraryObject: NSObject {
 	///You can just use `canImport` and `canExport` instead.
 	public var mode: MADFourChar {
 		if (self.canExport && self.canImport) {
-			return MADPlugModes.ImportExport.rawValue
+			return MADPlugModes.importExport.rawValue
 		} else if (self.canExport) {
-			return MADPlugModes.Export.rawValue
+			return MADPlugModes.export.rawValue
 		} else {
-			return MADPlugModes.Import.rawValue
+			return MADPlugModes.import.rawValue
 		}
 	}
 	
@@ -68,18 +68,18 @@ public final class PPLibraryObject: NSObject {
 	internal init(plugInfo unwrapped: PlugInfo) {
 		menuName = unwrapped.MenuName.takeUnretainedValue() as String
 		authorString = unwrapped.AuthorString.takeUnretainedValue() as String
-		bundle = NSBundle(URL: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()))!
+		bundle = NSBundle(url: CFBundleCopyBundleURL(unwrapped.file.takeUnretainedValue()))!
 		UTITypes = unwrapped.UTItypes.takeUnretainedValue() as NSArray as! [String]
 		tupleType = unwrapped.type
 		let tmpArray: [CChar] = try! arrayFromObject(reflecting: tupleType)
-		type = String(CString: tmpArray, encoding: NSMacOSRomanStringEncoding)!
+		type = String(cString: tmpArray, encoding: NSMacOSRomanStringEncoding)!
 		plugVersion = unwrapped.version
 		switch (unwrapped.mode) {
-		case MADPlugModes.ImportExport.rawValue:
+		case MADPlugModes.importExport.rawValue:
 			canImport = true
 			canExport = true
 			
-		case MADPlugModes.Export.rawValue:
+		case MADPlugModes.export.rawValue:
 			canImport = false
 			canExport = true
 			

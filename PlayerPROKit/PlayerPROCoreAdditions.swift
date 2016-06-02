@@ -156,7 +156,7 @@ public func ==(lhs: FXSets, rhs: FXSets) -> Bool {
 	return true
 }
 
-public let MadID = stringToOSType("MADK")
+public let MadID = toOSType(string: "MADK")
 
 // MARK: PlayerPRO MAD data types
 
@@ -243,7 +243,7 @@ extension MADDriverSettings: CustomDebugStringConvertible, Equatable {
 	public var debugDescription: String {
 		let onVal = "on"
 		let offVal = "off"
-		return "Driver Mode: \(driverMode.description), output mode: \(outPutMode.description.capitalizedString); Channel count: \(numChn), output Rate: \(outPutRate), surround: \(surround == true ? onVal : offVal); micro-delay size: \(MicroDelaySize), reverb, is \(Reverb == true ? onVal: offVal), size: \(ReverbSize), strength: \(ReverbStrength); oversampling \(oversampling); repeat music: \(repeatMusic == true ? onVal : offVal); "
+		return "Driver Mode: \(driverMode.description), output mode: \(outPutMode.description.capitalized); Channel count: \(numChn), output Rate: \(outPutRate), surround: \(surround == true ? onVal : offVal); micro-delay size: \(MicroDelaySize), reverb, is \(Reverb == true ? onVal: offVal), size: \(ReverbSize), strength: \(ReverbStrength); oversampling \(oversampling); repeat music: \(repeatMusic == true ? onVal : offVal); "
 	}
 }
 
@@ -255,8 +255,8 @@ public let maximumChannelVolume: MADByte = 128
 public let maximumArpeggio: Int32 = 3
 public let equalizerPacketElements = 512
 
-public func MADDebugString(text: String, line: UInt = #line, file: StaticString = #file) {
-	MADDebugStr(Int16(line), (file.stringValue as NSString).fileSystemRepresentation, text)
+public func MADDebug(string text: String, line: UInt = #line, file: StaticString = #file) {
+	MADDebugStr(Int16(line), (String(file) as NSString).fileSystemRepresentation, text)
 }
 
 private let BlankNameChar32: (Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8, Int8) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -268,7 +268,7 @@ extension sData32 {
 		self.loopSize = 0
 		self.vol = maximumVolume
 		self.c2spd = noFineTune
-		self.loopType = .Classic
+		self.loopType = .classic
 		self.amp = 8
 		self.relNote = 0
 		self.name = BlankNameChar32
@@ -328,7 +328,7 @@ extension sData {
 		self.loopSize = 0
 		self.vol = maximumVolume
 		self.c2spd = noFineTune
-		self.loopType = .Classic
+		self.loopType = .classic
 		self.amp = 8
 		self.relNote = 0
 		self.name = BlankNameChar32
@@ -363,7 +363,7 @@ extension Cmd: Equatable {
 	private init() {
 		ins = 0
 		note = 0xFF
-		cmd = .Arpeggio
+		cmd = .arpeggio
 		arg = 0
 		vol = 0xFF
 		unused = 0
@@ -388,7 +388,7 @@ extension Cmd: Equatable {
 }
 
 public func getCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> Cmd {
-	return getCommand(position, channel: channel, aPat: aPat).memory
+	return getCommand(position: position, channel: channel, aPat: aPat).pointee
 }
 
 private func getCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>) -> UnsafeMutablePointer<Cmd> {
@@ -396,26 +396,26 @@ private func getCommand(position: Int16, channel: Int16, aPat: UnsafeMutablePoin
 }
 
 public func ReplaceCmd(position: Int16, channel: Int16, command: Cmd, aPat: UnsafeMutablePointer<PatData>) {
-	let aCmd: UnsafeMutablePointer<Cmd> = getCommand(position, channel: channel, aPat: aPat)
-	aCmd.memory = command
+	let aCmd: UnsafeMutablePointer<Cmd> = getCommand(position: position, channel: channel, aPat: aPat)
+	aCmd.pointee = command
 }
 
 public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: UnsafeMutablePointer<PatData>, commandBlock: (inout Cmd)-> ()) {
-	var aCmd: Cmd = getCommand(position, channel: channel, aPat: aPat)
+	var aCmd: Cmd = getCommand(position: position, channel: channel, aPat: aPat)
 	commandBlock(&aCmd)
-	ReplaceCmd(position, channel: channel, command: aCmd, aPat: aPat)
+	ReplaceCmd(position: position, channel: channel, command: aCmd, aPat: aPat)
 }
 
-public func getCommand(row row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>) -> Cmd {
-	return MADGetCmd(row, track, aPcmd).memory
+public func getCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>) -> Cmd {
+	return MADGetCmd(row, track, aPcmd).pointee
 }
 
-public func replaceCommand(row row: Int16, track: Int16, command: Cmd, aPcmd: UnsafeMutablePointer<Pcmd>) {
-	let aCmd = MADGetCmd(row, track, aPcmd)
-	aCmd.memory = command
+public func replaceCommand(row: Int16, track: Int16, command: Cmd, aPcmd: UnsafeMutablePointer<Pcmd>) {
+	let aCmd = MADGetCmd(row, track, aPcmd)!
+	aCmd.pointee = command
 }
 
-public func modifyCommand(row row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>, commandBlock: (inout Cmd)-> ()) {
+public func modifyCommand(row: Int16, track: Int16, aPcmd: UnsafeMutablePointer<Pcmd>, commandBlock: (inout Cmd)-> ()) {
 	var aCmd = getCommand(row: row, track: track, aPcmd: aPcmd)
 	commandBlock(&aCmd)
 	replaceCommand(row: row, track: track, command: aCmd, aPcmd: aPcmd)
@@ -448,20 +448,20 @@ extension IntPcmd: CommandIterator, Equatable {
 		return Int(length) * Int(track) + Int(row)
 	}
 	
-	public func getCommand(row row: Int16, track: Int16) -> Cmd {
+	public func getCommand(row: Int16, track: Int16) -> Cmd {
 		let ourAddr = getCommandIndex(row: row, track: track)
 		
 		return myCmd[ourAddr]
 	}
 	
-	public mutating func modifyCommand(row row: Int16, track: Int16, commandBlock: (inout Cmd) -> ()) {
+	public mutating func modifyCommand(row: Int16, track: Int16, commandBlock: (inout Cmd) -> ()) {
 		let ourAddr = getCommandIndex(row: row, track: track)
 		
 		commandBlock(&myCmd[ourAddr])
 	}
 	
-	public mutating func replaceCommand(row row: Int16, track: Int16, command: Cmd) {
-		modifyCommand(row: row, track: track, commandBlock: {(inout aCmd: Cmd) -> () in
+	public mutating func replaceCommand(row: Int16, track: Int16, command: Cmd) {
+		modifyCommand(row: row, track: track, commandBlock: {( aCmd: inout Cmd) -> () in
 			aCmd = command
 		})
 	}

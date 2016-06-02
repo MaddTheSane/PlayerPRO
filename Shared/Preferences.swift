@@ -43,14 +43,14 @@ final class Preferences: NSWindowController, NSWindowDelegate {
 		return ourself
 	}
 	
-	@IBAction func changeViewController(sender: AnyObject!) {
+	@IBAction func changeViewController(_ sender: AnyObject!) {
 		if let i = (sender as? NSMenuItem)?.tag {
 			let vc = viewControllers[i];
 			displayViewController(vc)
 		}
 	}
 	
-	private func displayViewController(vc: NSViewController) {
+	private func displayViewController(_ vc: NSViewController) {
 		//try to end editing
 		let w = box.window!
 		let ended = w.makeFirstResponder(w)
@@ -90,18 +90,18 @@ final class Preferences: NSWindowController, NSWindowDelegate {
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
 		let menu = popUp.menu!
 		
-		for (i, vc) in viewControllers.enumerate() {
+		for (i, vc) in viewControllers.enumerated() {
 			let mi = NSMenuItem(title: vc.title!, action: #selector(Preferences.changeViewController(_:)), keyEquivalent: "")
 			mi.tag = i
-			menu.addItem(mi)
+			menu.add(mi)
 		}
 		
 		//initially show the first controller
 		displayViewController(viewControllers[0])
-		popUp.selectItemAtIndex(0)
+		popUp.selectItem(at: 0)
     }
     
-    @objc(displayViewControllerWithName:) func displayViewController(name name: String) {
+    @objc(displayViewControllerWithName:) func displayViewController(name: String) {
 		let ourController = viewControllers.filter { (aVal) -> Bool in
 			if let ourVal = aVal as? /*NSViewController where NSViewController:*/ PPPreferenceObject {
 				return ourVal.preferenceIdentifier == name
@@ -118,11 +118,11 @@ final class Preferences: NSWindowController, NSWindowDelegate {
     }
 	
 	// MARK: NSWindowDelegate
-	func windowWillClose(notification: NSNotification) {
+	func windowWillClose(_ notification: NSNotification) {
 		if let aWin = notification.object as? NSWindow {
 			if aWin === self.window {
 				if NSColorPanel.sharedColorPanelExists() {
-					NSColorPanel.sharedColorPanel().close()
+					NSColorPanel.shared().close()
 				}
 			}
 		}

@@ -17,12 +17,12 @@
 extern "C" {
 #endif
 
-void testDebugFunc(short, const char*, const char*);
-extern void (*cDebugFunc)(short, const char*, const char*);
+void testDebugFunc(short, const char*__nullable, const char*__nullable);
+extern void (*__null_unspecified cDebugFunc)(short, const char*__nullable, const char*__nullable);
 
-void cXTCFail(short line, const char* file, const char* info);
+void cXTCFail(short line, const char* __nullable file, const char*__nullable info);
 
-extern XCTestCase *currentTestClass;
+extern XCTestCase *__nullable currentTestClass;
 	
 #ifdef __cplusplus
 }

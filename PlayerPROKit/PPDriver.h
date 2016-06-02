@@ -45,8 +45,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)beginExport;
 - (void)endExport;
 
-- (void)cleanDriver;
-- (MADErr)stopDriver;
+- (void)cleanDriver NS_SWIFT_NAME(cleanDriver());
+- (MADErr)stopDriver NS_SWIFT_NAME(stopDriver());
 
 - (BOOL)directSaveToPointer:(void*)thePtr settings:(nullable MADDriverSettings*)theSett;
 - (nullable NSData*)directSave;

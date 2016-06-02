@@ -31,12 +31,12 @@ final class PlugInInfo: Hashable, CustomDebugStringConvertible, CustomStringConv
 	let plugCopyright: String
 	let plugURL: NSURL
 	
-	init(plugName pn: String, author aut: String? = nil, plugType pt: String = "unknown", plugURL pu: NSURL = NSBundle.mainBundle().bundleURL) {
+	init(plugName pn: String, author aut: String? = nil, plugType pt: String = "unknown", plugURL pu: NSURL = NSBundle.main().bundleURL) {
 		plugName = pn
 		authorName = aut ?? "Unknown Author"
 		plugType = pt
 		plugURL = pu
-		if let tmpBundle = NSBundle(URL: pu), acopy = tmpBundle.infoDictionary?["NSHumanReadableCopyright"] as? String {
+		if let tmpBundle = NSBundle(url: pu), acopy = tmpBundle.infoDictionary?["NSHumanReadableCopyright"] as? String {
 			plugCopyright = acopy
 		} else {
 			plugCopyright = "No copyright info available"

@@ -33,7 +33,7 @@ internal struct TagCoupling {
 	}
 }
 
-private func stereoDelayFromTag(theTag: Int) -> Int32 {
+private func stereoDelayFromTag(_ theTag: Int) -> Int32 {
 	var toSet: Int32 = 0;
 
 	for i in StereoDelayCoupling {
@@ -50,7 +50,7 @@ private func stereoDelayFromTag(theTag: Int) -> Int32 {
 	return toSet;
 }
 
-private func oversamplingFromTag(theTag: Int) -> Int32 {
+private func oversamplingFromTag(_ theTag: Int) -> Int32 {
 	var toSet: Int32 = 0;
 	
 	for i in OversamplingCoupling {
@@ -80,18 +80,18 @@ private let OversamplingCoupling = [TagCoupling(1, 1), TagCoupling(2, 2), TagCou
 	TagCoupling(6, 5), TagCoupling(8, 6), TagCoupling(10, 7), TagCoupling(16, 8), TagCoupling(20, 9), TagCoupling(25, 10), TagCoupling(30, 11)];
 
 @objc public protocol SoundSettingsViewControllerDelegate : NSObjectProtocol {
-	func soundOutBitsDidChange(bits: Int16)
-	func soundOutRateDidChange(rat: UInt32)
-	func soundOutReverbDidChangeActive(isAct: Bool)
-	func soundOutOversamplingDidChangeActive(isAct: Bool)
-	func soundOutStereoDelayDidChangeActive(isAct: Bool)
-	func soundOutSurroundDidChangeActive(isAct: Bool)
-	func soundOutReverbStrengthDidChange(rev: Int32)
-	func soundOutReverbSizeDidChange(rev: Int32)
-	func soundOutOversamplingAmountDidChange(ovs: Int32)
-	func soundOutStereoDelayAmountDidChange(std: Int32)
+	func soundOutBitsDidChange(_ bits: Int16)
+	func soundOutRateDidChange(_ rat: UInt32)
+	func soundOutReverbDidChangeActive(_ isAct: Bool)
+	func soundOutOversamplingDidChangeActive(_ isAct: Bool)
+	func soundOutStereoDelayDidChangeActive(_ isAct: Bool)
+	func soundOutSurroundDidChangeActive(_ isAct: Bool)
+	func soundOutReverbStrengthDidChange(_ rev: Int32)
+	func soundOutReverbSizeDidChange(_ rev: Int32)
+	func soundOutOversamplingAmountDidChange(_ ovs: Int32)
+	func soundOutStereoDelayAmountDidChange(_ std: Int32)
 	
-	optional func soundOutDriverDidChange(driv: MADSoundOutput)
+	@objc optional func soundOutDriverDidChange(_ driv: MADSoundOutput)
 }
 
 public class SoundSettingsViewController: NSViewController {
@@ -119,85 +119,85 @@ public class SoundSettingsViewController: NSViewController {
         // Do view setup here.
     }
 	
-	private func setCurrentBits(bits: bitRate) {
+	private func set(bits: bitRate) {
 		switch (bits) {
 		case .bits8:
-			outputBits.selectCellAtRow(0, column: 0)
+			outputBits.selectCell(atRow: 0, column: 0)
 			break;
 			
 		case .bits20:
-			outputBits.selectCellAtRow(0, column: 2)
+			outputBits.selectCell(atRow: 0, column: 2)
 			break;
 			
 		case .bits24:
-			outputBits.selectCellAtRow(0, column: 3)
+			outputBits.selectCell(atRow: 0, column: 3)
 			break;
 			
 		default:
-			outputBits.selectCellAtRow(0, column: 1)
+			outputBits.selectCell(atRow: 0, column: 1)
 			break;
 		}
 	}
 	
-	private func setCurrentRate(currRate: soundRate) {
+	private func set(rate currRate: soundRate) {
 		switch (currRate) {
 		case .rate11Khz:
-			rate.selectCellAtRow(0, column: 0)
+			rate.selectCell(atRow: 0, column: 0)
 			break;
 			
 		case .rate22Khz:
-			rate.selectCellAtRow(0, column: 1)
+			rate.selectCell(atRow: 0, column: 1)
 			break;
 			
 			
 		case .rate48Khz:
-			rate.selectCellAtRow(0, column: 3)
+			rate.selectCell(atRow: 0, column: 3)
 			break;
 			
 		default:
-			rate.selectCellAtRow(0, column: 2)
+			rate.selectCell(atRow: 0, column: 2)
 			break;
 		}
 	}
 	
 	private func currentRate() -> soundRate {
 		let curSelected: AnyObject! = rate.selectedCell()
-		if (rate.cellAtRow(0, column: 0) === curSelected) {
+		if (rate.cell(atRow: 0, column: 0) === curSelected) {
 			return .rate11Khz;
-		} else if (rate.cellAtRow(0, column: 1) === curSelected) {
+		} else if (rate.cell(atRow: 0, column: 1) === curSelected) {
 			return .rate22Khz;
-		} else if (rate.cellAtRow(0, column: 2) === curSelected) {
+		} else if (rate.cell(atRow: 0, column: 2) === curSelected) {
 			return .rate44Khz;
-		} else if (rate.cellAtRow(0, column: 3) === curSelected) {
+		} else if (rate.cell(atRow: 0, column: 3) === curSelected) {
 			return .rate48Khz;
 		} else {
 			return .rate44Khz;
 		}
 	}
 	
-	private func setCurrentSoundDriver(theDriver: MADSoundOutput) {
+	private func setCurrentSoundDriver(_ theDriver: MADSoundOutput) {
 		switch (theDriver) {
 		case .CoreAudioDriver:
-			soundDriver.selectCellAtRow(0, column:0)
+			soundDriver.selectCell(atRow: 0, column:0)
 			break;
 			
 		case .MIDISoundDriver:
-			soundDriver.selectCellAtRow(2, column:0)
+			soundDriver.selectCell(atRow: 2, column:0)
 			break;
 			
 		default:
-			soundDriver.selectCellAtRow(3, column:0)
+			soundDriver.selectCell(atRow: 3, column:0)
 			break;
 		}
 	}
 	
 	private func currentSoundDriver() -> MADSoundOutput {
 		let curSelected: AnyObject! = soundDriver.selectedCell()
-		if (soundDriver.cellAtRow(0, column: 0) === curSelected) {
+		if (soundDriver.cell(atRow: 0, column: 0) === curSelected) {
 			return .CoreAudioDriver;
 			//} else if ([soundDriver cellAtRow:1 column:0] == curSelected) {
 			//	return NoHardwareDriver;
-		} else if (soundDriver.cellAtRow(2, column: 0) === curSelected) {
+		} else if (soundDriver.cell(atRow: 2, column: 0) === curSelected) {
 			return .MIDISoundDriver;
 		} else {
 			return .NoHardwareDriver;
@@ -206,13 +206,13 @@ public class SoundSettingsViewController: NSViewController {
 	
 	private func currentBits() -> bitRate {
 		let curSelected: AnyObject! = outputBits.selectedCell();
-		if (outputBits.cellAtRow(0, column: 0) === curSelected) {
+		if (outputBits.cell(atRow: 0, column: 0) === curSelected) {
 			return .bits8;
-		} else if (outputBits.cellAtRow(0, column: 1) === curSelected) {
+		} else if (outputBits.cell(atRow: 0, column: 1) === curSelected) {
 			return .bits16;
-		} else if (outputBits.cellAtRow(0, column: 2) === curSelected) {
+		} else if (outputBits.cell(atRow: 0, column: 2) === curSelected) {
 			return .bits20;
-		} else if (outputBits.cellAtRow(0, column: 3) === curSelected) {
+		} else if (outputBits.cell(atRow: 0, column: 3) === curSelected) {
 			return .bits24;
 		} else {
 			return .bits16;
@@ -224,10 +224,10 @@ public class SoundSettingsViewController: NSViewController {
 	}
 	
 	public class func newSoundSettingWindow() -> Self? {
-		return self.init(nibName: "PPSoundSettingsViewController", bundle: NSBundle(forClass: SoundSettingsViewController.self))
+		return self.init(nibName: "PPSoundSettingsViewController", bundle: NSBundle(for: SoundSettingsViewController.self))
 	}
 
-	public func settingsFromDriverSettings(sett: MADDriverSettings) {
+	public func settingsFromDriverSettings(_ sett: MADDriverSettings) {
 		let oversamplingState: Bool = sett.oversampling > 1;
 		let reverbState = sett.Reverb;
 		let stereoDelayState: Bool = sett.MicroDelaySize > 0;
@@ -242,10 +242,10 @@ public class SoundSettingsViewController: NSViewController {
 			stereoDelay.state = Int(stereoDelayState)
 			surround.state = Int(sett.surround)
 			
-			oversamplingNum.enabled = oversamplingState
-			reverbNum.enabled = reverbState
-			reverbPercent.enabled = reverbState
-			stereoDelayNum.enabled = stereoDelayState
+			oversamplingNum.isEnabled = oversamplingState
+			reverbNum.isEnabled = reverbState
+			reverbPercent.isEnabled = reverbState
+			stereoDelayNum.isEnabled = stereoDelayState
 			
 			setCurrentSoundDriver(sett.driverMode)
 			
@@ -268,7 +268,7 @@ public class SoundSettingsViewController: NSViewController {
 				ConvBits = .bits16;
 				break;
 			}
-			setCurrentBits(ConvBits)
+			set(bits: ConvBits)
 			
 			let unConvRate = sett.outPutRate
 			var convRate = soundRate.rate11Khz
@@ -289,7 +289,7 @@ public class SoundSettingsViewController: NSViewController {
 				convRate = .rate44Khz;
 				break;
 			}
-			setCurrentRate(convRate)
+		set(rate: convRate)
 			
 			let theRate = sett.MicroDelaySize
 			var toSet: Int? = nil
@@ -304,7 +304,7 @@ public class SoundSettingsViewController: NSViewController {
 				toSet = 4;
 			}
 			
-			stereoDelayNum.selectItemAtIndex(toSet! - 1)
+			stereoDelayNum.selectItem(at: toSet! - 1)
 			
 			toSet = nil
 			let reverbAmount = sett.ReverbSize
@@ -318,7 +318,7 @@ public class SoundSettingsViewController: NSViewController {
 			if toSet == nil {
 				toSet = 4;
 			}
-			reverbNum.selectItemAtIndex(toSet! - 1)
+			reverbNum.selectItem(at: toSet! - 1)
 			
 			toSet = nil
 			let reverbPercentage = sett.ReverbStrength;
@@ -332,7 +332,7 @@ public class SoundSettingsViewController: NSViewController {
 			if toSet == nil {
 				toSet = 3;
 			}
-			reverbPercent.selectItemAtIndex(toSet! - 1)
+			reverbPercent.selectItem(at: toSet! - 1)
 			
 			toSet = nil
 			let oversamplingAmount = sett.oversampling;
@@ -346,10 +346,10 @@ public class SoundSettingsViewController: NSViewController {
 			if toSet == nil {
 				toSet = 1;
 			}
-			oversamplingNum.selectItemAtIndex(toSet! - 1)
+			oversamplingNum.selectItem(at: toSet! - 1)
 			
 			if (delegate?.soundOutDriverDidChange == nil) {
-				soundDriver.enabled = false;
+				soundDriver.isEnabled = false;
 			}
 		}
 
@@ -414,10 +414,10 @@ public class SoundSettingsViewController: NSViewController {
 		let oversamplingState = oversampling.state == 0 ? false : true
 		let surroundState = surround.state == 0 ? false : true
 		
-		oversamplingNum.enabled = oversamplingState
-		reverbNum.enabled = reverbState
-		reverbPercent.enabled = reverbState
-		stereoDelayNum.enabled = stereoDelayState
+		oversamplingNum.isEnabled = oversamplingState
+		reverbNum.isEnabled = reverbState
+		reverbPercent.isEnabled = reverbState
+		stereoDelayNum.isEnabled = stereoDelayState
 		
 			if (reverbState != reverbActive) {
 				delegate?.soundOutReverbDidChangeActive(reverbState)

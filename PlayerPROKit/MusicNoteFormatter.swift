@@ -12,14 +12,14 @@ import Foundation
 public final class MusicNoteFormatter: NSFormatter {
 	@IBInspectable public var useSingleLetter = true
 	
-	override public func stringForObjectValue(obj: AnyObject) -> String? {
+	override public func string(for obj: AnyObject) -> String? {
 		if let objInt = obj as? Int {
 			switch objInt {
 			case 0xFF, 0xFE:
 				return "---"
 				
 			case 0..<96:
-				return octaveNameFromNote(Int16(objInt), letters: useSingleLetter)
+				return octaveName(from: Int16(objInt), letters: useSingleLetter)
 				
 			default:
 				return nil
@@ -30,26 +30,26 @@ public final class MusicNoteFormatter: NSFormatter {
 		return nil
 	}
 	
-	override public func getObjectValue(obj: AutoreleasingUnsafeMutablePointer<AnyObject?>, forString string: String, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>) -> Bool {
-		obj.memory = nil
+	override public func getObjectValue(_ obj: AutoreleasingUnsafeMutablePointer<AnyObject?>?, for string: String, errorDescription error: AutoreleasingUnsafeMutablePointer<NSString?>?) -> Bool {
+		obj?.pointee = nil
 		if string == "---" {
-			obj.memory = 0xFF
-			if error != nil {
-				error.memory = nil
+			obj?.pointee = 0xFF
+			if let error = error {
+				error.pointee = nil
 			}
 			return true
 		}
 		
-		if let aNum = noteFromString(string) {
-			obj.memory = Int(aNum)
-			if error != nil {
-				error.memory = nil
+		if let aNum = note(from: string) {
+			obj?.pointee = Int(aNum)
+			if let error = error {
+				error.pointee = nil
 			}
 			return true
 		}
 		
-		if error != nil {
-			error.memory = "String outside of range"
+		if let error = error {
+			error.pointee = "String outside of range"
 		}
 
 		return false

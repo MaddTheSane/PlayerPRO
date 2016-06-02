@@ -14,7 +14,7 @@ import Foundation
 private let kMusicListURLKey		= "URLKey"
 private let kMusicListDateAddedKey	= "DateAdded"
 
-private func URLsPointingToTheSameFile(urlA: NSURL, urlB: NSURL) -> Bool {
+private func URLsPointingToTheSameFile(_ urlA: NSURL, _ urlB: NSURL) -> Bool {
 	var dat1: AnyObject? = nil
 	var dat2: AnyObject? = nil
 	var bothAreValid = true
@@ -40,7 +40,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		return true
 	}
 	
-	if !URLsPointingToTheSameFile(lhs.musicURL, urlB: rhs.musicURL) {
+	if !URLsPointingToTheSameFile(lhs.musicURL, rhs.musicURL) {
 		return false
 	}
 	
@@ -57,7 +57,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 
 	#if os(OSX)
 	@objc private(set) lazy var fileIcon: NSImage = {
-		let image = NSWorkspace.sharedWorkspace().iconForFile(self.musicURL.path!)
+		let image = NSWorkspace.shared().icon(forFile: self.musicURL.path!)
 		image.size = NSSize(width: 16, height: 16)
 		return image
 		}()
@@ -81,14 +81,14 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		do {
 			try self.musicURL.getResourceValue(&val, forKey:NSURLTotalFileSizeKey)
 			let retNum = val as! NSNumber
-			return retNum.unsignedLongLongValue
+			return retNum.uint64Value
 		} catch {
-			let manager = NSFileManager.defaultManager();
+			let manager = NSFileManager.default();
 			do {
-				let theparam = try manager.attributesOfItemAtPath(self.musicURL.path!)
+				let theparam = try manager.attributesOfItem(atPath: self.musicURL.path!)
 				if let tmpfilesize: AnyObject = theparam[NSFileSize] {
 					let aFileSize = tmpfilesize as! NSNumber
-					return aFileSize.unsignedLongLongValue
+					return aFileSize.uint64Value
 				} else {
 					return 0
 				}
@@ -98,7 +98,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		}
 		}()
 	
-	init(URL: NSURL, date: NSDate = NSDate()) {
+	init(url URL: NSURL, date: NSDate = NSDate()) {
 		if URL.isFileReferenceURL() {
 			musicURL = URL;
 		} else {
@@ -111,10 +111,10 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	
 	convenience init?(bookmarkData: NSData, resolutionOptions: NSURLBookmarkResolutionOptions = [], relativeURL: NSURL? = nil, date: NSDate? = NSDate()) {
 		do {
-			let resolvedURL = try NSURL(byResolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeToURL: relativeURL, bookmarkDataIsStale: nil)
-			self.init(URL: resolvedURL, date: date ?? NSDate())
+			let resolvedURL = try NSURL(resolvingBookmarkData: bookmarkData, options: resolutionOptions, relativeTo: relativeURL, bookmarkDataIsStale: nil)
+			self.init(url: resolvedURL, date: date ?? NSDate())
 		} catch _ {
-			self.init(URL: NSURL(fileURLWithPath: "/dev/null"))
+			self.init(url: NSURL(fileURLWithPath: "/dev/null"))
 
 			return nil
 		}
@@ -140,7 +140,7 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		return "\(musicURL.description) \(musicURL.path!): \(fileName) size: \(fileSize), added: \(addedDate)"
 	}
 
-	override func isEqual(object: AnyObject?) -> Bool {
+	override func isEqual(_ object: AnyObject?) -> Bool {
 		if object == nil {
 			return false;
 		}
@@ -156,9 +156,9 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		}
 	}
 
-	@objc(pointsToFileAtURL:) func pointsToFile(URL URL: NSURL?) -> Bool {
+	@objc(pointsToFileAtURL:) func pointsToFile(url URL: NSURL?) -> Bool {
 		if let unwrapped = URL {
-			return URLsPointingToTheSameFile(musicURL, urlB: unwrapped)
+			return URLsPointingToTheSameFile(musicURL, unwrapped)
 		} else {
 			return false
 		}
@@ -181,12 +181,12 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	func compareByFileSize(other: MusicListObject) -> NSComparisonResult {
 		let otherSize = other.fileSize
 		if fileSize > otherSize {
-			return .OrderedAscending
+			return .orderedAscending
 		} else if fileSize < otherSize {
-			return .OrderedDescending
+			return .orderedDescending
 		} else {
 			// Should be equal
-			return .OrderedSame
+			return .orderedSame
 		}
 	}
 	
@@ -199,8 +199,8 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 	}
 	
 	// MARK: NSCopying protocol
-	func copyWithZone(zone: NSZone) -> AnyObject {
-		return MusicListObject(URL: musicURL)
+	func copy(with: NSZone?) -> AnyObject {
+		return MusicListObject(url: musicURL)
 	}
 
 	// MARK: NSSecureCoding protocol
@@ -208,17 +208,17 @@ func ==(lhs: MusicListObject, rhs: MusicListObject) -> Bool {
 		return true;
 	}
 	
-	func encodeWithCoder(aCoder: NSCoder) {
-		aCoder.encodeObject(musicURL, forKey: kMusicListURLKey)
-		aCoder.encodeObject(addedDate, forKey: kMusicListDateAddedKey)
+	func encode(with aCoder: NSCoder) {
+		aCoder.encode(musicURL, forKey: kMusicListURLKey)
+		aCoder.encode(addedDate, forKey: kMusicListDateAddedKey)
 	}
 	
 	convenience required init?(coder aDecoder: NSCoder) {
-		guard let aURL = aDecoder.decodeObjectForKey(kMusicListURLKey) as? NSURL,
-			aaddedDate = aDecoder.decodeObjectForKey(kMusicListDateAddedKey) as? NSDate else {
+		guard let aURL = aDecoder.decodeObject(forKey: kMusicListURLKey) as? NSURL,
+			aaddedDate = aDecoder.decodeObject(forKey: kMusicListDateAddedKey) as? NSDate else {
 				return nil
 		}
 		
-		self.init(URL: aURL, date: aaddedDate)
+		self.init(url: aURL, date: aaddedDate)
 	}
 }

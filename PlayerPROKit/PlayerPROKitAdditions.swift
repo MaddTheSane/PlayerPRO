@@ -39,24 +39,24 @@ public func getCommand(position: Int16, channel: Int16, aPat: PPPatternObject) -
 }
 
 public func ReplaceCmd(position: Int16, channel: Int16, command: Cmd, aPat: PPPatternObject) {
-	aPat.replaceCommandAtPosition(position, channel: channel, cmd: command)
+	aPat.replaceCommand(atPosition: position, channel: channel, cmd: command)
 }
 
 public func ModifyCmdAtRow(position: Int16, channel: Int16, aPat: PPPatternObject, commandBlock: (inout Cmd)-> ()) {
-	aPat.modifyCommandAtPosition(position, channel: channel, commandBlock: { (aCmd) -> Void in
-		var tmpCmd = aCmd.memory
+	aPat.modifyCommand(atPosition: position, channel: channel, command: { (aCmd) -> Void in
+		var tmpCmd = aCmd.pointee
 		commandBlock(&tmpCmd)
-		aCmd.memory = tmpCmd
+		aCmd.pointee = tmpCmd
 	})
 }
 
-public func noteFromString(myTT: String) -> Int16?
+public func note(from myTT: String) -> Int16?
 {
 	if myTT == "" || myTT == "---" || myTT.characters.count < 2 {
 		return nil
 	}
 	
-	let idx = myTT.endIndex.predecessor()
+	let idx = myTT.index(before: myTT.endIndex)
 	let lastChar = myTT[idx]
 	guard let octMaybe = Int(String(lastChar)) else {
 		return nil
@@ -70,7 +70,7 @@ public func noteFromString(myTT: String) -> Int16?
 	let theRest = myTT[myTT.startIndex ..< idx]
 	
 	let theRet: (outString: String, sharp: Bool) = {
-		let idx2 = idx.predecessor()
+		let idx2 = myTT.index(after: idx)
 		let maybeSign = myTT[idx2]
 		let maybeStr = myTT[myTT.startIndex ..< idx2]
 		switch maybeSign {
@@ -85,7 +85,7 @@ public func noteFromString(myTT: String) -> Int16?
 		}
 	}()
 	
-	let val1 = theRet.outString.lowercaseString
+	let val1 = theRet.outString.lowercased()
 	switch val1 {
 	case "c", "do":
 		Oct += 0
@@ -125,11 +125,11 @@ public func noteFromString(myTT: String) -> Int16?
 	return Oct
 }
 
-public func octaveNameFromNote(octNote: UInt8, letters isUseLetters: Bool = true) -> String? {
-	return octaveNameFromNote(Int16(octNote), letters: isUseLetters)
+public func octaveName(from octNote: UInt8, letters isUseLetters: Bool = true) -> String? {
+	return octaveName(from: Int16(octNote), letters: isUseLetters)
 }
 
-public func octaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true) -> String? {
+public func octaveName(from octNote: Int16, letters isUseLetters: Bool = true) -> String? {
 	if (octNote > 95 || octNote < 0) {
 		return nil
 	}
@@ -147,7 +147,7 @@ public func octaveNameFromNote(octNote: Int16, letters isUseLetters: Bool = true
 extension PPSampleObject {
 
 #if os(OSX)
-	@objc(waveformImageUsingView:) final public func waveformImage(view view: NSView) -> NSImage? {
+	@objc(waveformImageUsingView:) final public func waveformImage(view: NSView) -> NSImage? {
 		return PPSampleObject.waveFormImage(sample: self, view: view)
 	}
 	
@@ -159,44 +159,44 @@ extension PPSampleObject {
 			
 			return aimageSize
 			}()
-		let datIsStereo = theDat.stereo
+		let datIsStereo = theDat.isStereo
 		let aRect = CGRect(origin: CGPoint.zero, size: imageSize)
 		let rowBytes = 4 * Int(imageSize.width)
-		let bitMapFormat: CGBitmapInfo = [CGBitmapInfo.ByteOrder32Host, CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)]
-		let bitmapContext = CGBitmapContextCreate(nil, Int(imageSize.width), Int(imageSize.height), 8, rowBytes, CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB)!, bitMapFormat.rawValue)!
+		let bitMapFormat: CGBitmapInfo = [CGBitmapInfo.byteOrder32Host, CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)]
+		let bitmapContext = CGContext(data: nil, width: Int(imageSize.width), height: Int(imageSize.height), bitsPerComponent: 8, bytesPerRow: rowBytes, space: CGColorSpace(name: CGColorSpace.genericRGBLinear)!, bitmapInfo: bitMapFormat.rawValue)!
 		
-		CGContextClearRect(bitmapContext, aRect)
-		CGContextSetLineWidth(bitmapContext, 1)
+		bitmapContext.clear(aRect)
+		bitmapContext.setLineWidth(1)
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		if (datIsStereo) {
-			CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(0, 0, 1, stereoTrans))
+			bitmapContext.setStrokeColor(CGColor(red: 0, green: 0, blue: 1, alpha: stereoTrans))
 			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
 		}
 		
-		CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(1, 0, 0, stereoTrans));
+		bitmapContext.setStrokeColor(CGColor(red: 1, green: 0, blue: 0, alpha: stereoTrans));
 		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
 		
 		if (theDat.loopSize != 0) {
-			CGContextSetStrokeColorWithColor(bitmapContext, CGColorCreateGenericRGB(0.2, 0.1, 0.5, 0.8))
+			bitmapContext.setStrokeColor(CGColor(red: 0.2, green: 0.1, blue: 0.5, alpha: 0.8))
 			var loopRect = aRect
 			let lineSize = view.convertSizeToBacking(NSSize(width: 2, height: 2)).width * 2
 			let padSize = view.convertSizeToBacking(NSSize(width: 1, height: 1)).width * 2
-			CGContextSetLineWidth(bitmapContext, lineSize)
+			bitmapContext.setLineWidth(lineSize)
 			loopRect.origin.x =  CGFloat(theDat.loopBegin) * imageSize.width / CGFloat(theDat.data.length)
 			loopRect.origin.y += padSize
 			loopRect.size.width = CGFloat(theDat.loopSize) * imageSize.width / CGFloat(theDat.data.length)
 			loopRect.size.height -= padSize * 2
-			CGContextStrokeRect(bitmapContext, loopRect)
+			bitmapContext.stroke(loopRect)
 		}
 		
-		if let theCGimg = CGBitmapContextCreateImage(bitmapContext) {
-			return NSImage(CGImage: theCGimg, size: view.frame.size)
+		if let theCGimg = bitmapContext.makeImage() {
+			return NSImage(cgImage: theCGimg, size: view.frame.size)
 		} else {
 			return nil
 		}
 	}
 #elseif os(iOS)
-	@objc(waveformImageUsingView:) final public func waveformImage(view view: UIView) -> UIImage? {
+	@objc(waveformImageUsingView:) final public func waveformImage(view: UIView) -> UIImage? {
 		return PPSampleObject.waveFormImage(sample: self, view: view)
 	}
 	
@@ -208,66 +208,71 @@ extension PPSampleObject {
 			viewSize.height *= scale
 			return viewSize
 			}()
-		let datIsStereo = theDat.stereo;
+		let datIsStereo = theDat.isStereo;
 		let aRect = CGRect(origin: CGPoint.zero, size: imageSize)
 		let rowBytes = 4 * Int(imageSize.width)
 		//let bitMapFormat = CGBitmapInfo(alphaInfo: .PremultipliedLast, additionalInfo: .ByteOrder32Host)
-		let bitMapFormat: CGBitmapInfo = [CGBitmapInfo.ByteOrder32Host, CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedLast.rawValue)]
-		let bitmapContext = CGBitmapContextCreate(nil, Int(imageSize.width), Int(imageSize.height), 8, rowBytes, CGColorSpaceCreateDeviceRGB(), bitMapFormat.rawValue)
-		CGContextClearRect(bitmapContext, aRect)
-		CGContextSetLineWidth(bitmapContext, 1)
+		let bitMapFormat: CGBitmapInfo = [CGBitmapInfo.byteOrder32Host, CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)]
+		guard let bitmapContext = CGContext(data: nil, width: Int(imageSize.width), height: Int(imageSize.height), bitsPerComponent: 8, bytesPerRow: rowBytes, space: CGColorSpaceCreateDeviceRGB(), bitmapInfo: bitMapFormat.rawValue) else {
+			return nil
+		}
+		bitmapContext.clear(aRect)
+		bitmapContext.setLineWidth(1)
 		var colorRef: UIColor
 		let stereoTrans: CGFloat = datIsStereo ? 0.75 : 1
 		if (datIsStereo) {
 			colorRef = UIColor(red: 0, green: 0, blue: 1, alpha: stereoTrans)
-			CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor)
+			bitmapContext.setStrokeColor(colorRef.cgColor)
 			drawSample(rectangle: aRect, channel: 1, currentData: theDat, context: bitmapContext)
 		}
 		
 		colorRef = UIColor(red: 1, green: 0, blue: 0, alpha: stereoTrans)
-		CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor)
+		bitmapContext.setStrokeColor(colorRef.cgColor)
 		drawSample(rectangle: aRect, channel: 0, currentData: theDat, context: bitmapContext)
 		
 		if (theDat.loopSize != 0) {
 			colorRef = UIColor(red: 0.2, green: 0.1, blue: 0.5, alpha: 0.8)
-			CGContextSetStrokeColorWithColor(bitmapContext, colorRef.CGColor)
+			bitmapContext.setStrokeColor(colorRef.cgColor)
 			var loopRect = aRect
 			let lineSize = 2 * scale
 			let padSize = 1 * scale
-			CGContextSetLineWidth(bitmapContext, lineSize)
+			bitmapContext.setLineWidth(lineSize)
 			loopRect.origin.x =  CGFloat(theDat.loopBegin) * imageSize.width / CGFloat(theDat.data.length)
 			loopRect.origin.y += padSize
 			loopRect.size.width = CGFloat(theDat.loopSize) * imageSize.width / CGFloat(theDat.data.length)
 			loopRect.size.height -= padSize * 2
-			CGContextStrokeRect(bitmapContext, loopRect)
+			bitmapContext.stroke(loopRect)
 		}
 		
-		if let theCGimg = CGBitmapContextCreateImage(bitmapContext) {
-			return UIImage(CGImage: theCGimg, scale: scale, orientation: .Up)
+		if let theCGimg = bitmapContext.makeImage() {
+			return UIImage(cgImage: theCGimg, scale: scale, orientation: .up)
 		} else {
 			return nil
 		}
 	}
 #endif
 	
-	final public func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, context ctxRef: CGContext?) {
+	final public func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, context ctxRef: CGContext) {
 		PPSampleObject.drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: self, context:ctxRef)
 	}
 	
-	final public func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, context ctxRef: CGContext?) {
+	final public func drawSample(start startI: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, context ctxRef: CGContext) {
 		PPSampleObject.drawSample(start: startI, tSS: tSS, tSE: tSE, high: high, larg: larg, trueV: trueV, trueH: trueH, channel: channel, currentData: self, context: ctxRef)
 	}
 	
-	final public class func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext?) {
+	final public class func drawSample(start: Int = 0, tSS: Int = 0, rectangle rect: CGRect, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
 		drawSample(start: start, tSS: tSS, tSE: Int(rect.size.width), high: Int(rect.size.height), larg: Int(rect.size.width), trueV: Int(rect.origin.x), trueH: Int(rect.origin.y), channel: channel, currentData: curData, context:ctxRef)
 	}
 
-	final public class func drawSample(start start1: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext?) {
+	final public class func drawSample(start start1: Int = 0, tSS: Int = 0, tSE: Int, high: Int, larg: Int, trueV: Int = 0, trueH: Int = 0, channel: Int16 = 0, currentData curData: PPSampleObject, context ctxRef: CGContext) {
 		var start = start1
-		CGContextSaveGState(ctxRef);
+		ctxRef.saveGState();
+		defer {
+			ctxRef.restoreGState()
+		}
 		
 		var temp: CGFloat = 0.0
-		let isStereo = curData.stereo
+		let isStereo = curData.isStereo
 		var minY: CGFloat = 0.0
 		var maxY: CGFloat = 0.0
 		let oneShiftedBy16 = 1 / CGFloat(1 << 16)
@@ -285,7 +290,7 @@ extension PPSampleObject {
 			}
 			temp = CGFloat(theShortSample[BS] &+ 0x8000)
 			temp *= CGFloat(high) * oneShiftedBy16
-			CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(tSS), CGFloat(trueV) + temp)
+			ctxRef.moveTo(x: CGFloat(trueH) + CGFloat(tSS), y: CGFloat(trueV) + temp)
 			
 			for i in tSS ..< tSE {
 				BS = start + (i * sampleSize) / larg
@@ -302,7 +307,7 @@ extension PPSampleObject {
 				temp = CGFloat(theShortSample[BS] &+ 0x8000)
 				minY = temp; maxY = temp;
 				temp *= CGFloat(high) * oneShiftedBy16
-				CGContextAddLineToPoint(ctxRef, CGFloat(trueH + i), temp + CGFloat(trueV))
+				ctxRef.addLineTo(x: CGFloat(trueH + i), y: temp + CGFloat(trueV))
 				
 				if (BS != BE) {
 					var x = BS
@@ -321,8 +326,8 @@ extension PPSampleObject {
 					maxY *= CGFloat(high) * oneShiftedBy16
 					minY *= CGFloat(high) * oneShiftedBy16
 					
-					CGContextMoveToPoint(ctxRef, CGFloat(trueH + i), minY + CGFloat(trueV))
-					CGContextAddLineToPoint(ctxRef, CGFloat(trueH + i), maxY + CGFloat(trueV))
+					ctxRef.moveTo(x: CGFloat(trueH + i), y: minY + CGFloat(trueV))
+					ctxRef.addLineTo(x: CGFloat(trueH + i), y: maxY + CGFloat(trueV))
 				}
 			}
 		} else {
@@ -338,7 +343,7 @@ extension PPSampleObject {
 			temp = CGFloat(theSample[BS] &- 0x80)
 			temp *= CGFloat(high) * oneShiftedBy8
 			
-			CGContextMoveToPoint(ctxRef, CGFloat(trueH + tSS), CGFloat(trueV) + temp)
+			ctxRef.moveTo(x: CGFloat(trueH + tSS), y: CGFloat(trueV) + temp)
 			
 			for i in tSS ..< tSE {
 				BS = start + (i * sampleSize) / larg
@@ -355,7 +360,7 @@ extension PPSampleObject {
 				temp = CGFloat(theSample[BS] &- 0x80);
 				minY = temp; maxY = temp;
 				temp *= CGFloat(high) * oneShiftedBy8
-				CGContextAddLineToPoint(ctxRef, CGFloat(trueH + i), temp + CGFloat(trueV))
+				ctxRef.addLineTo(x: CGFloat(trueH + i), y: temp + CGFloat(trueV))
 				
 				if (BS != BE) {
 					var x = BS
@@ -373,32 +378,31 @@ extension PPSampleObject {
 					maxY *= CGFloat(high) * oneShiftedBy8
 					minY *= CGFloat(high) * oneShiftedBy8
 					
-					CGContextMoveToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), minY + CGFloat(trueV))
-					CGContextAddLineToPoint(ctxRef, CGFloat(trueH) + CGFloat(i), maxY + CGFloat(trueV))
+					ctxRef.moveTo(x: CGFloat(trueH) + CGFloat(i), y: minY + CGFloat(trueV))
+					ctxRef.addLineTo(x: CGFloat(trueH) + CGFloat(i), y: maxY + CGFloat(trueV))
 				}
 			}
 		}
-		CGContextStrokePath(ctxRef);
-		CGContextRestoreGState(ctxRef);
+		ctxRef.strokePath();
 	}
 	
-	@objc final public class func octaveNameFromNote(octNote: Int16) -> String {
-		return octaveNameFromNote(octNote) ?? "---"
+	@objc(octaveNameFromNote:) final public class func octaveName(from octNote: Int16) -> String {
+		return octaveName(from: octNote) ?? "---"
 	}
 
-	@objc final public class func octaveNameFromNote(octNote: Int16, usingSingularLetter: Bool) -> String {
-		return PlayerPROKit.octaveNameFromNote(octNote, letters: usingSingularLetter) ?? "---"
+	@objc(octaveNameFromNote:usingSingularLetter:) final public class func octaveName(from octNote: Int16, usingSingularLetter: Bool) -> String {
+		return PlayerPROKit.octaveName(from: octNote, letters: usingSingularLetter) ?? "---"
 	}
 
-	@objc final public class func noteFromString(myTT: String) -> Int16 {
-		return noteFromString(myTT) ?? 0xFF
+	@objc(noteFromString:) final public class func noteFromString(myTT: String) -> Int16 {
+		return note(from: myTT) ?? 0xFF
 	}
 }
 
-extension PPPatternObject: SequenceType {
-	public func generate() -> AnyGenerator<PPMadCommandObject> {
+extension PPPatternObject: Sequence {
+	public func makeIterator() -> AnyIterator<PPMadCommandObject> {
 		var index = 0
-		return AnyGenerator {
+		return AnyIterator {
 			if index < self.lengthOfCommands {
 				let idx = self[index]
 				index += 1
@@ -410,10 +414,10 @@ extension PPPatternObject: SequenceType {
 	}
 }
 
-extension PPInstrumentObject: SequenceType {
-	public func generate() -> AnyGenerator<PPSampleObject> {
+extension PPInstrumentObject: Sequence {
+	public func makeIterator() -> AnyIterator<PPSampleObject> {
 		var index = 0
-		return AnyGenerator {
+		return AnyIterator {
 			if index < self.samples.count {
 				let idx = self[index]
 				index += 1
@@ -432,11 +436,11 @@ extension PPDriver {
 			loopStart = 0
 			loopLen = 0
 		}
-		return self.playSoundDataFromPointer(theSnd, withSize: UInt(sndSize), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopStart), andLoopLength: UInt(loopLen))
+		return self.playSoundData(fromPointer: theSnd, withSize: UInt(sndSize), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopStart), andLoopLength: UInt(loopLen))
 	}
 
 	public func playSoundData(pointer theSnd: UnsafePointer<()>, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
-		return self.playSoundDataFromPointer(theSnd, withSize: UInt(sndSize), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopInRange: loopRange)
+		return self.playSoundData(fromPointer: theSnd, withSize: UInt(sndSize), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopIn: loopRange)
 	}
 	
 	public func playSoundData(pointer theSnd: UnsafePointer<()>, size sndSize: Int, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: Range<Int>) -> MADErr {
@@ -450,11 +454,11 @@ extension PPDriver {
 			loopStart = 0
 			loopLen = 0
 		}
-		return self.playSoundDataFromPointer(theSnd.bytes, withSize: UInt(theSnd.length), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopStart), andLoopLength: UInt(loopLen))
+		return self.playSoundData(fromPointer: theSnd.bytes, withSize: UInt(theSnd.length), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopStartingAt: UInt(loopStart), andLoopLength: UInt(loopLen))
 	}
 	
 	public func playSoundData(data theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: NSRange) -> MADErr {
-		return self.playSoundDataFromPointer(theSnd.bytes, withSize: UInt(theSnd.length), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopInRange: loopRange)
+		return self.playSoundData(fromPointer: theSnd.bytes, withSize: UInt(theSnd.length), fromChannel: theChan, amplitude: amp, bitRate: rate, isStereo: stereo, withNote: theNote, withLoopIn: loopRange)
 	}
 	
 	public func playSoundData(data theSnd: NSData, channel theChan: Int32, amplitude amp: Int16, bitRate rate: UInt32, stereo: Bool, note theNote: MADByte = 0xFF, loopInRange loopRange: Range<Int>) -> MADErr {
@@ -466,15 +470,15 @@ extension PPDriver {
 	public var musicStatusTime: (current: Int, total: Int)? {
 		var cT = 0
 		var tT = 0
-		let anErr = getMusicStatusWithCurrentTime(&cT, totalTime: &tT)
-		if anErr == .NoErr {
+		let anErr = getMusicStatus(withCurrentTime: &cT, totalTime: &tT)
+		if anErr == .noErr {
 			return (cT, tT)
 		} else {
 			return nil
 		}
 	}
 	
-	public var oscilloscope: (size: size_t, pointer: UnsafePointer<Void>) {
+	public var oscilloscope: (size: size_t, pointer: UnsafePointer<Void>?) {
 		return (oscilloscopeSize, UnsafePointer<Void>(oscilloscopePointer))
 	}
 }

@@ -26,7 +26,7 @@ class PlayerPROKit_Tests: XCTestCase {
 		currentTestClass = self
 		MADRegisterDebugFunc(cXTCFail)
 		
-		ourBundle = NSBundle(forClass: PlayerPROKit_Tests.self)
+		ourBundle = NSBundle(for: PlayerPROKit_Tests.self)
 			if let ourPlugPath = ourBundle?.builtInPlugInsURL where ourPlugPath.checkResourceIsReachableAndReturnError(nil) {
 				ourLib = PPLibrary(plugInURL: ourPlugPath)
 			} else {
@@ -41,7 +41,7 @@ class PlayerPROKit_Tests: XCTestCase {
 	}
 	
 	func testMADKInformation() {
-		let musicPath = ourBundle!.URLForResource("TestMADK", withExtension: "madk")!
+		let musicPath = ourBundle!.urlForResource("TestMADK", withExtension: "madk")!
 		do {
 			let info = try ourLib!.informationFromFile(URL: musicPath, type: "MADK")
 			print(info)
@@ -59,9 +59,9 @@ class PlayerPROKit_Tests: XCTestCase {
 	
 	func testObjcMADKInformation() {
 		var dict: NSDictionary = [:]
-		let musicPath = ourBundle!.URLForResource("TestMADK", withExtension: "madk")!
+		let musicPath = ourBundle!.urlForResource("TestMADK", withExtension: "madk")!
 		let err = ourLib!.getInformationFromFile(URL: musicPath, type: "MADK", info: &dict)
-		XCTAssertEqual(err, MADErr.NoErr)
+		XCTAssertEqual(err, MADErr.noErr)
 	}
 	
 	func testLoadingUnloadingMusicFromDriver() {
@@ -69,15 +69,15 @@ class PlayerPROKit_Tests: XCTestCase {
 		//drivSettings.driverMode = .NoHardwareDriver
 		do {
 			let driver = try PPDriver(library: ourLib!, settings: &drivSettings)
-			let musicPath = ourBundle!.URLForResource("TestMADK", withExtension: "madk")!
-			var mus: PPMusicObject? = try PPMusicObject(URL: musicPath)
+			let musicPath = ourBundle!.urlForResource("TestMADK", withExtension: "madk")!
+			var mus: PPMusicObject? = try PPMusicObject(url: musicPath)
 			driver.currentMusic = mus
 			driver.play()
 			sleep(10)
 			driver.stop()
 			mus = nil
 			driver.currentMusic = nil
-			mus = try PPMusicObject(URL: musicPath)
+			mus = try PPMusicObject(url: musicPath)
 			driver.currentMusic = mus
 			mus = nil
 			driver.play()

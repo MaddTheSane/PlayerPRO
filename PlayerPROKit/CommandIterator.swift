@@ -10,9 +10,9 @@ import Foundation
 //import PlayerPROCore
 
 public protocol CommandIterator {
-	func getCommand(row row: Int16, track: Int16) -> Cmd
-	mutating func modifyCommand(row row: Int16, track: Int16, commandBlock: (inout Cmd) -> ())
-	mutating func replaceCommand(row row: Int16, track: Int16, command: Cmd)
+	func getCommand(row: Int16, track: Int16) -> Cmd
+	mutating func modifyCommand(row: Int16, track: Int16, commandBlock: (inout Cmd) -> ())
+	mutating func replaceCommand(row: Int16, track: Int16, command: Cmd)
 	
 	var commandLength: Int16 {get}
 	var commandTracks: Int16 {get}
@@ -31,18 +31,18 @@ extension CommandIterator {
 	}
 }
 
-public func getCommand<X where X: CommandIterator>(row row: Int16, track: Int16, aIntPcmd: X) -> Cmd {
+public func getCommand<X where X: CommandIterator>(row: Int16, track: Int16, aIntPcmd: X) -> Cmd {
 	return aIntPcmd.getCommand(row: row, track: track)
 }
 
-public func replaceCommand<X where X: CommandIterator>(row row: Int16, track: Int16, command: Cmd, inout aPcmd: X) {
+public func replaceCommand<X where X: CommandIterator>(row: Int16, track: Int16, command: Cmd, aPcmd: inout X) {
 	aPcmd.replaceCommand(row: row, track: track, command: command)
 }
 
-public func modifyCommand<X where X: CommandIterator>(row row: Int16, track: Int16, inout aPcmd: X, commandBlock: (inout Cmd) -> ()) {
+public func modifyCommand<X where X: CommandIterator>(row: Int16, track: Int16, aPcmd: inout X, commandBlock: (inout Cmd) -> ()) {
 	aPcmd.modifyCommand(row: row, track: track, commandBlock: commandBlock)
 }
 
-public func iterateCommands<X where X: CommandIterator>(inout aPcmd: X, commandBlock block: (inout command: Cmd, row: Int16, track: Int16) -> Bool) {
+public func iterateCommands<X where X: CommandIterator>( aPcmd: inout X, commandBlock block: (inout command: Cmd, row: Int16, track: Int16) -> Bool) {
 	aPcmd.iterateCommands(commandBlock: block)
 }

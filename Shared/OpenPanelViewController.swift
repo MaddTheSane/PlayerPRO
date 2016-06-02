@@ -22,7 +22,7 @@ private func ==(lhs: OpenPanelViewController.OpenPanelViewItem, rhs: OpenPanelVi
 
 private var OpenPanelsInUse = [OpenPanelViewController]()
 
-private func allOpenableTypesFromUTI(anUTI: String) -> [String] {
+private func allOpenableTypes(uti anUTI: String) -> [String] {
 	var theOpenables = [anUTI]
 	
 	if #available(OSX 10.10, *) {
@@ -156,7 +156,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		super.init(coder: coder)
 	}
 	
-	@IBAction func selectUTI(sender: AnyObject?) {
+	@IBAction func selectUTI(_ sender: AnyObject?) {
 		if let menuIte = sender as? NSMenuItem {
 			let tag = menuIte.tag;
 			var allowedUTIs = [String]();
@@ -170,7 +170,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					var aTyp = [String]()
 					
 					for uti in allowedUTIs {
-						aTyp += allOpenableTypesFromUTI(uti)
+						aTyp += allOpenableTypes(uti: uti)
 					}
 					
 					return aTyp
@@ -192,7 +192,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					var aTyp = [String]()
 					
 					for uti in allowedUTIs {
-						aTyp += allOpenableTypesFromUTI(uti)
+						aTyp += allOpenableTypes(uti: uti)
 					}
 					
 					return aTyp
@@ -214,7 +214,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					var aTyp = [String]()
 					
 					for uti in allowedUTIs {
-						aTyp += allOpenableTypesFromUTI(uti)
+						aTyp += allOpenableTypes(uti: uti)
 					}
 					
 					return aTyp
@@ -236,7 +236,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					var aTyp = [String]()
 					
 					for uti in allowedUTIs {
-						aTyp += allOpenableTypesFromUTI(uti)
+						aTyp += allOpenableTypes(uti: uti)
 					}
 					
 					return aTyp
@@ -250,7 +250,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			case utiType.otherType.rawValue:
 				for obj in utiObjects {
 					if (obj.theUtiType == .other) {
-						allowedUTIs.appendContentsOf(obj.utis)
+						allowedUTIs.append(contentsOf: obj.utis)
 					}
 				}
 				
@@ -258,7 +258,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					var aTyp = [String]()
 					
 					for uti in allowedUTIs {
-						aTyp += allOpenableTypesFromUTI(uti)
+						aTyp += allOpenableTypes(uti: uti)
 					}
 					
 					return aTyp
@@ -277,7 +277,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 						var aTyp = [String]()
 						
 						for uti in selObj.utis {
-							aTyp += allOpenableTypesFromUTI(uti)
+							aTyp += allOpenableTypes(uti: uti)
 						}
 						
 						return aTyp
@@ -335,7 +335,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			}
 		}
 		
-		tmpUTIs.sortInPlace({(lhs, rhs) -> Bool in
+		tmpUTIs.sort(isOrderedBefore: {(lhs, rhs) -> Bool in
 			if (lhs.theUtiType.rawValue < rhs.theUtiType.rawValue) {
 				return true
 			} else if (lhs.theUtiType.rawValue > rhs.theUtiType.rawValue) {
@@ -343,7 +343,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 			} else {
 				
 				let result = lhs.name.localizedStandardCompare(rhs.name);
-				return result == NSComparisonResult.OrderedAscending;
+				return result == NSComparisonResult.orderedAscending;
 			}
 			})
 		
@@ -353,25 +353,25 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		openPanel.delegate = self
 	}
 	
-	func beginOpenPanel(completionHandler completionHandler: (result: Int) -> Void) {
+	func beginOpenPanel(_ completionHandler: (result: Int) -> Void) {
 		beginWithCompletionHandler(completionHandler)
 	}
 	
-	func beginWithCompletionHandler(resultHandle: (result: Int) -> Void) {
+	func beginWithCompletionHandler(_ resultHandle: (result: Int) -> Void) {
 		OpenPanelsInUse.append(self)
-		openPanel.beginWithCompletionHandler({ (result) -> Void in
-			if let anInt = OpenPanelsInUse.indexOf(self) {
-				OpenPanelsInUse.removeAtIndex(anInt)
+		openPanel.begin(completionHandler: { (result) -> Void in
+			if let anInt = OpenPanelsInUse.index(of: self) {
+				OpenPanelsInUse.remove(at: anInt)
 			}
 			resultHandle(result: result)
 		})
 	}
 
-	@objc func beginOpenPanel(parentWindow parentWindow: NSWindow, completionHandler resultHandle: (result: Int) -> Void) {
+	@objc func beginOpenPanel(parentWindow: NSWindow, completionHandler resultHandle: (result: Int) -> Void) {
 		OpenPanelsInUse.append(self)
-		openPanel.beginSheetModalForWindow(parentWindow, completionHandler: { (result) -> Void in
-			if let anInt = OpenPanelsInUse.indexOf(self) {
-				OpenPanelsInUse.removeAtIndex(anInt)
+		openPanel.beginSheetModal(for: parentWindow, completionHandler: { (result) -> Void in
+			if let anInt = OpenPanelsInUse.index(of: self) {
+				OpenPanelsInUse.remove(at: anInt)
 			}
 			resultHandle(result: result)
 		})
@@ -387,9 +387,9 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 				let mi0 = NSMenuItem(title: "All Openable Files", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 				mi0.tag = utiType.allType.rawValue
 				mi0.target = self
-				fileTypeSelectionMenu.addItem(mi0)
+				fileTypeSelectionMenu.add(mi0)
 				
-				fileTypeSelectionMenu.addItem(NSMenuItem.separatorItem())
+				fileTypeSelectionMenu.add(NSMenuItem.separator())
 			}
 			
 			for item in utiObjects {
@@ -397,7 +397,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					let mi0 = NSMenuItem(title: "All Trackers", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.trackerType.rawValue
 					mi0.target = self
-					fileTypeSelectionMenu.addItem(mi0)
+					fileTypeSelectionMenu.add(mi0)
 					
 					break;
 				}
@@ -408,7 +408,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					let mi0 = NSMenuItem(title: "All Playlists", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.playlistType.rawValue
 					mi0.target = self
-					fileTypeSelectionMenu.addItem(mi0)
+					fileTypeSelectionMenu.add(mi0)
 					
 					break;
 				}
@@ -419,7 +419,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					let mi0 = NSMenuItem(title: "All Instruments", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.instrumentType.rawValue
 					mi0.target = self
-					fileTypeSelectionMenu.addItem(mi0)
+					fileTypeSelectionMenu.add(mi0)
 					
 					break;
 				}
@@ -430,29 +430,29 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 					let mi0 = NSMenuItem(title: "All Other", action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 					mi0.tag = utiType.otherType.rawValue
 					mi0.target = self
-					fileTypeSelectionMenu.addItem(mi0)
+					fileTypeSelectionMenu.add(mi0)
 					
 					break;
 				}
 			}
-			fileTypeSelectionMenu.addItem(NSMenuItem.separatorItem())
+			fileTypeSelectionMenu.add(NSMenuItem.separator())
 			
-			for (i, curItem) in utiObjects.enumerate()  {
+			for (i, curItem) in utiObjects.enumerated()  {
 				if (moreThanTwoTypes) {
 					if (i - 1 >= 0) {
 						let prevItem = utiObjects[i - 1];
 						if (curItem.theUtiType != prevItem.theUtiType) {
-							fileTypeSelectionMenu.addItem(NSMenuItem.separatorItem())
+							fileTypeSelectionMenu.add(NSMenuItem.separator())
 						}
 					}
 				}
 				let mi = NSMenuItem(title: curItem.name, action: #selector(OpenPanelViewController.selectUTI(_:)), keyEquivalent: "")
 				mi.tag = i
 				mi.target = self
-				fileTypeSelectionMenu.addItem(mi)
+				fileTypeSelectionMenu.add(mi)
 			}
 		}
-		popUp?.selectItemAtIndex(0)
+		popUp?.selectItem(at: 0)
 	}
 	
 	func setupDefaults() {
@@ -469,7 +469,7 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		var allowedTypes = [String]()
 		
 		for uti in fileUTIs {
-			allowedTypes += allOpenableTypesFromUTI(uti)
+			allowedTypes += allOpenableTypes(uti: uti)
 		}
 		
 		self.openPanel.allowedFileTypes = allowedTypes
@@ -493,9 +493,9 @@ class OpenPanelViewController: NSViewController, NSOpenSavePanelDelegate {
 		return false;
 	}
 	
-	func panel(sender: AnyObject, shouldEnableURL url: NSURL) -> Bool {
+	func panel(_ sender: AnyObject, shouldEnable url: NSURL) -> Bool {
 		// We don't support non-file URLs yet.
-		if !url.fileURL {
+		if !url.isFileURL {
 			return false
 		}
 		return true

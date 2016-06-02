@@ -23,9 +23,9 @@ class MADErrs_Tests: XCTestCase {
     }
 
     func testPPCreateError() {
-		let errors: [(MADErr, Int)] = [(.NeedMemory, -1),
-		(.ReadingErr, -2), (.IncompatibleFile, -3),
-		(.LibraryNotInitialized, -4), (.ParametersErr, -5)]
+		let errors: [(MADErr, Int)] = [(.needMemory, -1),
+		(.readingErr, -2), (.incompatibleFile, -3),
+		(.libraryNotInitialized, -4), (.parametersErr, -5)]
 		for (mad, raw) in errors {
 			let anErr = PPCreateErrorFromMADErrorType(mad)
 			XCTAssertNotNil(anErr)
@@ -37,9 +37,9 @@ class MADErrs_Tests: XCTestCase {
 	
 	func testSwiftMADErrErrorType() {
 		do {
-			throw MADErr.NeedMemory
+			throw MADErr.needMemory
 		} catch let error as NSError {
-			guard let anErr = PPCreateErrorFromMADErrorType(.NeedMemory) else {
+			guard let anErr = PPCreateErrorFromMADErrorType(.needMemory) else {
 				XCTAssert(false, "huh!?")
 				return
 			}
@@ -49,11 +49,11 @@ class MADErrs_Tests: XCTestCase {
 	}
 	
 	func testSwiftToNSError() {
-		if let anNSErr = MADErr.NeedMemory.toNSError(convertToCocoa: false) {
+		if let anNSErr = MADErr.needMemory.toNSError(convertToCocoa: false) {
 			XCTAssertEqual(anNSErr.domain, PPMADErrorDomain)
 		}
 		
-		if let anNSErr = MADErr.NeedMemory.toNSError(customUserDictionary:["CustomInfo": "Hello"], convertToCocoa: false) {
+		if let anNSErr = MADErr.needMemory.toNSError(customUserDictionary:["CustomInfo": "Hello"], convertToCocoa: false) {
 			XCTAssertEqual(anNSErr.domain, PPMADErrorDomain)
 		}
 

@@ -10,7 +10,7 @@ import Foundation
 import PlayerPROCore
 import SwiftAdditions
 
-extension MADErr: ErrorType {
+extension MADErr: ErrorProtocol {
 	/// PlayerPROKit's `PPMADErrorDomain`
 	public var _domain: String {
 		return PPMADErrorDomain
@@ -23,7 +23,7 @@ extension MADErr: ErrorType {
 	
 	/// Throws `self` if `self` is anything other than `.NoErr`.
 	public func throwIfNotNoErr() throws {
-		if self != .NoErr {
+		if self != .noErr {
 			throw self
 		}
 	}
@@ -42,11 +42,11 @@ extension MADErr: ErrorType {
 	/// - parameter convertToCocoa: Converts `self` into a comparable error in Cocoa's error types. Default is `true`.
 	/// - returns: An `NSError` value, or `nil` if `self` is `.NoErr`
 	@warn_unused_result public func toNSError(customUserDictionary cud: [String: NSObject]? = nil, convertToCocoa: Bool = true) -> NSError? {
-		if self == .NoErr {
+		if self == .noErr {
 			return nil
 		}
 		
-		func populateErrors(error: NSError) -> NSError {
+		func populate(error: NSError) -> NSError {
 			if let cud = cud {
 				var errDict: [NSObject: AnyObject] = error.userInfo
 				errDict[NSLocalizedDescriptionKey] = error.localizedDescription
@@ -68,13 +68,13 @@ extension MADErr: ErrorType {
 		
 		if convertToCocoa {
 			let cocoaErr = PPCreateErrorFromMADErrorTypeConvertingToCocoa(self, true)!
-			return populateErrors(cocoaErr)
+			return populate(error: cocoaErr)
 		}
 		
 		do {
 			throw self
 		} catch let error as NSError {
-			return populateErrors(error)
+			return populate(error: error)
 		}
 	}
 }
