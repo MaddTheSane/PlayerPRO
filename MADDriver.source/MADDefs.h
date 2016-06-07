@@ -191,7 +191,12 @@ typedef MADENUM(short, MADErr) {
 	/// An error occured when trying to write to a file
 	MADWritingErr					= -14,
 	/// The user cancelled an action. This shouldn't be seen by the user.
-	MADUserCanceledErr				= -15
+	MADUserCanceledErr				= -15,
+	
+	
+	
+	/// Use \c MADUnknownErr instead.
+	MADUnknowErr					= MADUnknownErr
 };
 
 /// A byte, represented as an unsigned number.
