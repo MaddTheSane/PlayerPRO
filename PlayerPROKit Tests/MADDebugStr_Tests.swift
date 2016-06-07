@@ -40,7 +40,7 @@ class MADDebugStr_Tests: XCTestCase {
 	private func classDebugStr(line: Int16, file: UnsafePointer<Int8>, text: UnsafePointer<Int8>) {
 		let manager = NSFileManager.defaultManager()
 		let fileStr = manager.stringWithFileSystemRepresentation(file, length: Int(strlen(file)))
-		XCTAssertEqual(fileStr, __FILE__, "files aren't equal...")
+		XCTAssertEqual(fileStr, #file, "files aren't equal...")
 		var textStr = String.fromCString(text)!
 		textStr += ", var: \"\(exampleVar)\""
 		
@@ -56,57 +56,57 @@ class MADDebugStr_Tests: XCTestCase {
 			print("\(fileStr):\(line) Inline Test: \(textStr)")
 		}
 		MADDebugString("Swift Test")
-		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		MADDebugStr(#line, #file, "C-Style test")
 	}
 	
 	func testSwiftCDebugFunc() {
 		MADRegisterDebugFunc(GlobalDebugStr)
 		MADDebugString("Swift Test")
-		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		MADDebugStr(#line, #file, "C-Style test")
 	}
 	
 	func testGlobalDebugBlock() {
 		MADRegisterDebugBlock(GlobalDebugStr)
 		MADDebugString("Swift Test")
-		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		MADDebugStr(#line, #file, "C-Style test")
 		PPLibrary.registerDebugBlock(GlobalDebugStr)
 		MADDebugString("Swift Test")
-		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		MADDebugStr(#line, #file, "C-Style test")
 	}
 	
 	func testClassDebugBlock() {
 		MADRegisterDebugBlock(classDebugStr)
 		MADDebugString("Swift Test")
-		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		MADDebugStr(#line, #file, "C-Style test")
 		exampleVar = "Variable 1"
 		MADDebugString("Swift Test")
-		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		MADDebugStr(#line, #file, "C-Style test")
 		exampleVar = "Variable 2"
 		MADDebugString("Swift Test")
-		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		MADDebugStr(#line, #file, "C-Style test")
 	}
 	
 	func testPPClassDebugBlock() {
 		PPLibrary.registerDebugBlock(classDebugStr)
 		MADDebugString("Swift Test")
-		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		MADDebugStr(#line, #file, "C-Style test")
 		exampleVar = "Variable 1"
 		MADDebugString("Swift Test")
-		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		MADDebugStr(#line, #file, "C-Style test")
 		exampleVar = "Variable 2"
 		MADDebugString("Swift Test")
-		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		MADDebugStr(#line, #file, "C-Style test")
 	}
 
 	func testPPClassCDebugFunc() {
 		PPLibrary.registerDebugFunction(cDebugFunc)
 		MADDebugString("Swift Test")
-		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		MADDebugStr(#line, #file, "C-Style test")
 	}
 	
 	func testPPClassSwiftCDebugFunc() {
 		PPLibrary.registerDebugFunction(GlobalDebugStr)
 		MADDebugString("Swift Test")
-		MADDebugStr(__LINE__, __FILE__, "C-Style test")
+		MADDebugStr(#line, #file, "C-Style test")
 	}
 }
